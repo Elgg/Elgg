@@ -9,7 +9,7 @@
  *
  * @return ElggCache
  */
-function elgg_get_system_cache() {
+function elgg_get_system_cache(): \ElggCache {
 	return _elgg_services()->fileCache;
 }
 
@@ -18,7 +18,7 @@ function elgg_get_system_cache() {
  *
  * @return void
  */
-function elgg_reset_system_cache() {
+function elgg_reset_system_cache(): void {
 	_elgg_services()->systemCache->reset();
 }
 
@@ -30,7 +30,7 @@ function elgg_reset_system_cache() {
  *
  * @return bool
  */
-function elgg_save_system_cache($type, $data) {
+function elgg_save_system_cache($type, $data): bool {
 	return _elgg_services()->systemCache->save($type, $data);
 }
 
@@ -52,7 +52,7 @@ function elgg_load_system_cache($type) {
  * @return bool
  * @since 3.0
  */
-function elgg_delete_system_cache($type) {
+function elgg_delete_system_cache($type): bool {
 	return _elgg_services()->systemCache->delete($type);
 }
 
@@ -62,7 +62,7 @@ function elgg_delete_system_cache($type) {
  * @return bool
  * @since 2.2.0
  */
-function elgg_is_system_cache_enabled() {
+function elgg_is_system_cache_enabled(): bool {
 	return _elgg_services()->systemCache->isEnabled();
 }
 
@@ -74,7 +74,7 @@ function elgg_is_system_cache_enabled() {
  *
  * @return void
  */
-function elgg_enable_system_cache() {
+function elgg_enable_system_cache(): void {
 	_elgg_services()->systemCache->enable();
 }
 
@@ -86,7 +86,7 @@ function elgg_enable_system_cache() {
  *
  * @return void
  */
-function elgg_disable_system_cache() {
+function elgg_disable_system_cache(): void {
 	_elgg_services()->systemCache->disable();
 }
 
@@ -107,7 +107,7 @@ function elgg_disable_system_cache() {
  * @see elgg_get_simplecache_url()
  * @since 1.8.0
  */
-function elgg_register_simplecache_view($view_name) {
+function elgg_register_simplecache_view($view_name): void {
 	_elgg_services()->views->registerCacheableView($view_name);
 }
 
@@ -135,7 +135,7 @@ function elgg_register_simplecache_view($view_name) {
  * @return string
  * @since 1.8.0
  */
-function elgg_get_simplecache_url($view, $subview = '') {
+function elgg_get_simplecache_url($view, $subview = ''): string {
 	return _elgg_services()->simpleCache->getUrl($view, $subview);
 }
 
@@ -145,7 +145,7 @@ function elgg_get_simplecache_url($view, $subview = '') {
  * @return bool
  * @since 1.8.0
  */
-function elgg_is_simplecache_enabled() {
+function elgg_is_simplecache_enabled(): bool {
 	return _elgg_services()->simpleCache->isEnabled();
 }
 
@@ -156,7 +156,7 @@ function elgg_is_simplecache_enabled() {
  * @return void
  * @since 1.8.0
  */
-function elgg_enable_simplecache() {
+function elgg_enable_simplecache(): void {
 	_elgg_services()->simpleCache->enable();
 }
 
@@ -169,7 +169,7 @@ function elgg_enable_simplecache() {
  * @return void
  * @since 1.8.0
  */
-function elgg_disable_simplecache() {
+function elgg_disable_simplecache(): void {
 	_elgg_services()->simpleCache->disable();
 }
 
@@ -179,7 +179,7 @@ function elgg_disable_simplecache() {
  * @return void
  * @since 3.3
  */
-function elgg_invalidate_caches() {
+function elgg_invalidate_caches(): void {
 	// this event sequence could take while, make sure there is no timeout
 	set_time_limit(0);
 	
@@ -194,7 +194,7 @@ function elgg_invalidate_caches() {
  * @return void
  * @since 3.3
  */
-function elgg_clear_caches() {
+function elgg_clear_caches(): void {
 	// this event sequence could take while, make sure there is no timeout
 	set_time_limit(0);
 	
@@ -209,7 +209,7 @@ function elgg_clear_caches() {
  * @return void
  * @since 3.3
  */
-function elgg_purge_caches() {
+function elgg_purge_caches(): void {
 	// this event sequence could take while, make sure there is no timeout
 	set_time_limit(0);
 	
@@ -222,7 +222,7 @@ function elgg_purge_caches() {
  * @return bool
  * @internal
  */
-function _elgg_is_cache_symlinked() {
+function _elgg_is_cache_symlinked(): bool {
 	$root_path = elgg_get_root_path();
 
 	$simplecache_path = elgg_get_asset_path();
@@ -240,7 +240,7 @@ function _elgg_is_cache_symlinked() {
  * @return bool
  * @internal
  */
-function _elgg_symlink_cache() {
+function _elgg_symlink_cache(): bool {
 
 	if (_elgg_is_cache_symlinked()) {
 		// Symlink exists, no need to proceed

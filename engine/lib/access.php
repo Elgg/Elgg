@@ -13,7 +13,7 @@
  * @return bool
  * @since 1.7.0
  */
-function elgg_get_ignore_access() {
+function elgg_get_ignore_access(): bool {
 	return elgg()->session->getIgnoreAccess();
 }
 
@@ -35,7 +35,7 @@ function elgg_get_ignore_access() {
  *
  * @return array An array of access collections ids
  */
-function get_access_array(int $user_guid = 0) {
+function get_access_array(int $user_guid = 0): array {
 	return _elgg_services()->accessCollections->getAccessArray($user_guid);
 }
 
@@ -51,7 +51,7 @@ function get_access_array(int $user_guid = 0) {
  *
  * @return int default access id (see ACCESS defines in elgglib.php)
  */
-function get_default_access(ElggUser $user = null, array $input_params = []) {
+function get_default_access(ElggUser $user = null, array $input_params = []): int {
 	// site default access
 	$default_access = _elgg_services()->config->default_access;
 
@@ -92,7 +92,7 @@ function get_default_access(ElggUser $user = null, array $input_params = []) {
  *
  * @return bool
  */
-function has_access_to_entity(\ElggEntity $entity, \ElggUser $user = null) {
+function has_access_to_entity(\ElggEntity $entity, \ElggUser $user = null): bool {
 	return _elgg_services()->accessCollections->hasAccessToEntity($entity, $user);
 }
 
@@ -122,7 +122,7 @@ function has_access_to_entity(\ElggEntity $entity, \ElggUser $user = null) {
  *
  * @return array List of access permissions
  */
-function get_write_access_array(int $user_guid = 0, $ignored = 0, bool $flush = false, array $input_params = []) {
+function get_write_access_array(int $user_guid = 0, $ignored = 0, bool $flush = false, array $input_params = []): array {
 	return _elgg_services()->accessCollections->getWriteAccessArray($user_guid, $flush, $input_params);
 }
 
@@ -140,7 +140,7 @@ function get_write_access_array(int $user_guid = 0, $ignored = 0, bool $flush = 
  * @param mixed $user_guid     The user GUID to check for. Defaults to logged in user.
  * @return bool
  */
-function can_edit_access_collection(int $collection_id, int $user_guid = null) {
+function can_edit_access_collection(int $collection_id, int $user_guid = null): bool {
 	return _elgg_services()->accessCollections->canEdit($collection_id, $user_guid);
 }
 
@@ -174,7 +174,7 @@ function create_access_collection(string $name, int $owner_guid = 0, $subtype = 
  * @return bool
  * @see create_access_collection()
  */
-function delete_access_collection(int $collection_id) {
+function delete_access_collection(int $collection_id): bool {
 	return _elgg_services()->accessCollections->delete($collection_id);
 }
 
@@ -204,7 +204,7 @@ function get_access_collection(int $collection_id) {
  *
  * @return bool
  */
-function add_user_to_access_collection(int $user_guid, int $collection_id) {
+function add_user_to_access_collection(int $user_guid, int $collection_id): bool {
 	return _elgg_services()->accessCollections->addUser($user_guid, $collection_id);
 }
 
@@ -218,7 +218,7 @@ function add_user_to_access_collection(int $user_guid, int $collection_id) {
  *
  * @return bool
  */
-function remove_user_from_access_collection(int $user_guid, int $collection_id) {
+function remove_user_from_access_collection(int $user_guid, int $collection_id): bool {
 	return _elgg_services()->accessCollections->removeUser($user_guid, $collection_id);
 }
 
@@ -275,6 +275,6 @@ function get_members_of_access_collection(int $collection_id, bool $guids_only =
  * @return string
  * @since 1.7.0
  */
-function get_readable_access_level(int $entity_access_id) {
+function get_readable_access_level(int $entity_access_id): string {
 	return _elgg_services()->accessCollections->getReadableAccessLevel($entity_access_id);
 }

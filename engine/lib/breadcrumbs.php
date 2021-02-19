@@ -18,7 +18,7 @@
  * @since 1.8.0
  * @see elgg_get_breadcrumbs()
  */
-function elgg_push_breadcrumb($text, $href = false) {
+function elgg_push_breadcrumb($text, $href = false): void {
 	$breadcrumbs = (array) _elgg_services()->config->breadcrumbs;
 	
 	$breadcrumbs[] = [
@@ -35,7 +35,7 @@ function elgg_push_breadcrumb($text, $href = false) {
  * @return array popped breadcrumb array or empty array
  * @since 1.8.0
  */
-function elgg_pop_breadcrumb() {
+function elgg_pop_breadcrumb(): array {
 	$breadcrumbs = (array) _elgg_services()->config->breadcrumbs;
 
 	if (empty($breadcrumbs)) {
@@ -68,7 +68,7 @@ function elgg_pop_breadcrumb() {
  * @since 1.8.0
  * @see \Elgg\Page\PrepareBreadcrumbsHandler::class
  */
-function elgg_get_breadcrumbs(array $breadcrumbs = null) {
+function elgg_get_breadcrumbs(array $breadcrumbs = null): array {
 	if (!isset($breadcrumbs)) {
 		// if no crumbs set, still allow hook to populate it
 		$breadcrumbs = (array) _elgg_services()->config->breadcrumbs;
@@ -106,7 +106,7 @@ function elgg_get_breadcrumbs(array $breadcrumbs = null) {
  *
  * @return void
  */
-function elgg_push_entity_breadcrumbs(ElggEntity $entity, $link_self = true) {
+function elgg_push_entity_breadcrumbs(ElggEntity $entity, $link_self = true): void {
 
 	$container = $entity->getContainerEntity() ? : null;
 	elgg_push_collection_breadcrumbs($entity->type, $entity->subtype, $container);
@@ -125,7 +125,7 @@ function elgg_push_entity_breadcrumbs(ElggEntity $entity, $link_self = true) {
  *
  * @return void
  */
-function elgg_push_collection_breadcrumbs($entity_type, $entity_subtype, ElggEntity $container = null, $friends = false) {
+function elgg_push_collection_breadcrumbs($entity_type, $entity_subtype, ElggEntity $container = null, $friends = false): void {
 
 	if ($container) {
 		if (!$container instanceof \ElggSite) {

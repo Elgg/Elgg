@@ -60,7 +60,7 @@ function elgg_add_admin_notice(string $id, string $message) {
  * @return bool
  * @since 1.8.0
  */
-function elgg_delete_admin_notice(string $id) {
+function elgg_delete_admin_notice(string $id): bool {
 	return _elgg_services()->adminNotices->delete($id);
 }
 
@@ -84,6 +84,6 @@ function elgg_get_admin_notices(array $options = []) {
  * @return bool
  * @since 1.8.0
  */
-function elgg_admin_notice_exists(string $id) {
+function elgg_admin_notice_exists(string $id): bool {
 	return _elgg_services()->adminNotices->exists($id);
 }

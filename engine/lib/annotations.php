@@ -24,7 +24,7 @@ function elgg_get_annotation_from_id(int $id) {
  *
  * @return bool
  */
-function elgg_delete_annotation_by_id(int $id) {
+function elgg_delete_annotation_by_id(int $id): bool {
 	$annotation = elgg_get_annotation_from_id($id);
 	if (!$annotation) {
 		return false;
@@ -62,7 +62,7 @@ function elgg_get_annotations(array $options = []) {
  * @return string The list of entities
  * @since 1.8.0
  */
-function elgg_list_annotations(array $options = []) {
+function elgg_list_annotations(array $options = []): string {
 	$defaults = [
 		'limit' => 25,
 		'offset' => (int) max(get_input('annoff', 0), 0),
@@ -84,7 +84,7 @@ function elgg_list_annotations(array $options = []) {
  * @return bool|null true on success, false on failure, null if no annotations to delete.
  * @since 1.8.0
  */
-function elgg_delete_annotations(array $options) {
+function elgg_delete_annotations(array $options): ?bool {
 	return _elgg_services()->annotationsTable->deleteAll($options);
 }
 
@@ -97,7 +97,7 @@ function elgg_delete_annotations(array $options) {
  * @return bool|null true on success, false on failure, null if no annotations disabled.
  * @since 1.8.0
  */
-function elgg_disable_annotations(array $options) {
+function elgg_disable_annotations(array $options): ?bool {
 	return _elgg_services()->annotationsTable->disableAll($options);
 }
 
@@ -110,7 +110,7 @@ function elgg_disable_annotations(array $options) {
  * @return bool|null true on success, false on failure, null if no metadata enabled.
  * @since 1.8.0
  */
-function elgg_enable_annotations(array $options) {
+function elgg_enable_annotations(array $options): ?bool {
 	return _elgg_services()->annotationsTable->enableAll($options);
 }
 
@@ -124,7 +124,7 @@ function elgg_enable_annotations(array $options) {
  * @return bool
  * @since 1.8.0
  */
-function elgg_annotation_exists(int $entity_guid, string $name, int $owner_guid = 0) {
+function elgg_annotation_exists(int $entity_guid, string $name, int $owner_guid = 0): bool {
 	if ($owner_guid < 1) {
 		$owner_guid = elgg_get_logged_in_user_guid();
 	}
