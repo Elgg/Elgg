@@ -15,11 +15,7 @@ if (!$owner instanceof ElggEntity) {
 	return;
 }
 
-$owner_link = elgg_view('output/url', [
-	'href' => $owner->getURL(),
-	'text' => $owner->getDisplayName(),
-	'is_trusted' => true,
-]);
+$owner_link = elgg_view_entity_url($owner);
 
 $likes_string = elgg_echo('likes:this');
 

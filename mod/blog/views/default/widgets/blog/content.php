@@ -37,9 +37,4 @@ if ($owner instanceof \ElggGroup) {
 	$url = elgg_generate_url('collection:object:blog:owner', ['username' => $owner->username]);
 }
 
-$more_link = elgg_view('output/url', [
-	'text' => elgg_echo('blog:moreblogs'),
-	'href' => $url,
-	'is_trusted' => true,
-]);
-echo elgg_format_element('div', ['class' => 'elgg-widget-more'], $more_link);
+echo elgg_format_element('div', ['class' => 'elgg-widget-more'], elgg_view_url($url, elgg_echo('blog:moreblogs')));

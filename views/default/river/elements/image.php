@@ -12,6 +12,4 @@ if (!$item instanceof ElggRiverItem) {
 	return;
 }
 
-$subject = $item->getSubjectEntity();
-
-echo elgg_view_entity_icon($subject, 'small');
+echo elgg_view_entity_icon($item->getSubjectEntity(), 'small');

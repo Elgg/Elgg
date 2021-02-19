@@ -36,10 +36,8 @@ if ($full_view) {
 		elgg_register_menu_item('title', $item);
 	}
 } else {
-	$title = elgg_view('output/url', [
-		'text' => $collection->name,
-		'href' => $collection->getURL(),
-	]);
+	$title = elgg_view_url($collection->getURL(), $collection->name);
+	
 	$members = $collection->getMembers([
 		'limit' => 10,
 	]);

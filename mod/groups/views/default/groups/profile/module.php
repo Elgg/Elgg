@@ -36,11 +36,7 @@ if (!isset($all_link) && $can_default) {
 		'guid' => $group->guid,
 	]);
 	if (!empty($all_href)) {
-		$all_link = elgg_view('output/url', [
-			'href' => $all_href,
-			'text' => elgg_echo('link:view:all'),
-			'is_trusted' => true,
-		]);
+		$all_link = elgg_view_url($all_href, elgg_echo('link:view:all'));
 	}
 }
 
@@ -78,19 +74,13 @@ if (!isset($add_link) && $can_default) {
 		'guid' => $group->guid,
 	]);
 	if (!empty($add_href)) {
-		$add_link = elgg_view('output/url', [
-			'href' => $add_href,
-			'text' => elgg_echo("add:{$entity_type}:{$entity_subtype}"),
-			'is_trusted' => true,
-		]);
+		$add_link = elgg_view_url($add_href, elgg_echo("add:{$entity_type}:{$entity_subtype}"));
 	}
 }
 
 if (!empty($add_link) && !empty($entity_type) && !empty($entity_subtype)) {
 	if ($group->canWriteToContainer(0, $entity_type, $entity_subtype)) {
-		$footer = elgg_format_element('span', [
-			'class' => 'elgg-widget-more',
-		], $add_link);
+		$footer = elgg_format_element('span', ['class' => 'elgg-widget-more'], $add_link);
 	}
 }
 

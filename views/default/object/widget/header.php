@@ -6,24 +6,21 @@
  */
 
 $widget = elgg_extract('entity', $vars);
-if (!($widget instanceof \ElggWidget)) {
+if (!$widget instanceof \ElggWidget) {
 	return;
 }
 
 $title_text = $widget->getDisplayName();
 $url = $widget->getURL();
 if (!empty($url)) {
-	$title_text = elgg_view('output/url', [
-		'text' => $title_text,
-		'href' => $url,
-		'is_trusted' => true,
-	]);
+	$title_text = elgg_view_url($url, $title_text);
 }
 
-$title = "<h3 class='elgg-widget-title'>{$title_text}</h3>";
-$controls = elgg_view('object/widget/elements/controls', [
+$title = elgg_format_element('h3', ['class' => 'elgg-widget-title'], $title_text);
+
+echo elgg_format_element('div', ['class' => 'elgg-widget-handle'], $title);
+
+echo elgg_view('object/widget/elements/controls', [
 	'widget' => $widget,
 	'show_edit' => elgg_extract('show_edit', $vars, $widget->canEdit()),
 ]);
-
-echo "<div class='elgg-widget-handle'>{$title}</div>{$controls}";

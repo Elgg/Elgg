@@ -37,9 +37,5 @@ foreach ($stats as $name => $num) {
 echo '</table>';
 
 echo '<div class="mtm elgg-widget-more">';
-echo elgg_view('output/url', [
-	'href' => 'admin/statistics/numentities',
-	'text' => elgg_echo('more'),
-	'is_trusted' => true,
-]);
+echo elgg_view_url('admin/statistics/numentities', elgg_echo('more'));
 echo '</div>';

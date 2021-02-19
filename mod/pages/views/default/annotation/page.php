@@ -18,11 +18,7 @@ if (!$owner instanceof ElggEntity) {
 	return;
 }
 
-$title_link = elgg_view('output/url', [
-	'href' => $annotation->getURL(),
-	'text' => $page->getDisplayName(),
-	'is_trusted' => true,
-]);
+$title_link = elgg_view_url($annotation->getURL(), $page->getDisplayName());
 
 $params = [
 	'title' => elgg_format_element('h3', [], $title_link),

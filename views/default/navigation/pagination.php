@@ -144,11 +144,7 @@ foreach ($pages as $page_num => $page) {
 		}
 		
 		if ($href && !$disabled) {
-			$link = elgg_view('output/url', [
-				'href' => $href,
-				'text' => $text,
-				'is_trusted' => true,
-			]);
+			$link = elgg_view_url($href, $text);
 		} else {
 			$link = elgg_format_element('span', [], $page['text']);
 		}

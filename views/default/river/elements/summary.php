@@ -20,13 +20,7 @@ if (!$object instanceof ElggEntity) {
 	return;
 }
 
-$subject_link = elgg_view('output/url', [
-	'href' => $subject->getURL(),
-	'text' => $subject->getDisplayName(),
-	'class' => 'elgg-river-subject',
-	'is_trusted' => true,
-]);
-
+$subject_link = elgg_view_entity_url($subject, ['class' => 'elgg-river-subject']);
 
 $object_link = elgg_view('output/url', [
 	'href' => $object->getURL(),
@@ -43,12 +37,7 @@ $subtype = $item->subtype;
 $group_string = '';
 $container = $object->getContainerEntity();
 if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_guid()) {
-	$group_link = elgg_view('output/url', [
-		'href' => $container->getURL(),
-		'text' => $container->getDisplayName(),
-		'is_trusted' => true,
-	]);
-	$group_string = elgg_echo('river:ingroup', [$group_link]);
+	$group_string = elgg_echo('river:ingroup', [elgg_view_entity_url($container)]);
 }
 
 // check summary translation keys

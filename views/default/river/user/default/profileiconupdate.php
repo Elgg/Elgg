@@ -13,12 +13,7 @@ if (!$subject instanceof ElggUser) {
 	return;
 }
 
-$subject_link = elgg_view('output/url', [
-	'href' => $subject->getURL(),
-	'text' => $subject->getDisplayName(),
-	'class' => 'elgg-river-subject',
-	'is_trusted' => true,
-]);
+$subject_link = elgg_view_entity_url($subject, ['class' => 'elgg-river-subject']);
 
 $vars['summary'] = elgg_echo('river:update:user:avatar', [$subject_link]);
 $vars['attachments'] = elgg_view_entity_icon($subject, 'tiny', [

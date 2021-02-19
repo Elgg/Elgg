@@ -84,4 +84,3 @@ echo elgg_view('core.css');
 		float: none;
 	}
 }
-

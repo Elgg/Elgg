@@ -20,15 +20,7 @@ $byline_str = elgg_extract('byline', $vars, false);
 if ($byline_str === true) {
 	$owner = elgg_extract('byline_owner_entity', $vars, $annotation->getOwnerEntity());
 	if ($owner instanceof ElggEntity) {
-		if ($show_links) {
-			$owner_text = elgg_view('output/url', [
-				'href' => $owner->getURL(),
-				'text' => $owner->getDisplayName(),
-				'is_trusted' => true,
-			]);
-		} else {
-			$owner_text = $owner->getDisplayName();
-		}
+		$owner_text = $show_links ? elgg_view_entity_url($owner) : $owner->getDisplayName();
 
 		$byline_str = elgg_echo('byline', [$owner_text]);
 	}

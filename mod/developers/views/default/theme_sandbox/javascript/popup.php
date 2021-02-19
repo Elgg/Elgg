@@ -2,13 +2,12 @@
 
 $ipsum = elgg_view('developers/ipsum');
 
-$link = elgg_view('output/url', [
+echo elgg_view('output/url', [
 	'text' => 'Popup content',
 	'href' => "#elgg-popup-test",
 	'rel' => 'popup',
-		]);
+]);
 
-echo $link;
 echo elgg_view_module('popup', 'Popup Test', $ipsum, [
 	'id' => 'elgg-popup-test',
 	'class' => 'hidden theme-sandbox-content-thin',

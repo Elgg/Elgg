@@ -15,7 +15,4 @@ if (get_input('inspect_type')) {
 	]);
 }
 
-echo elgg_view('output/url', [
-	'href' => $href,
-	'text' => $text,
-]);
+echo elgg_view_url($href, $text);

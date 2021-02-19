@@ -25,11 +25,7 @@ if (!isset($byline_str)) {
 	$owner = elgg_extract('byline_owner_entity', $vars, $entity->getOwnerEntity());
 	if ($owner instanceof ElggEntity) {
 		if ($show_links) {
-			$owner_text = elgg_view('output/url', [
-				'href' => $owner->getURL(),
-				'text' => $owner->getDisplayName(),
-				'is_trusted' => true,
-			]);
+			$owner_text = elgg_view_entity_url($owner);
 		} else {
 			$owner_text = $owner->getDisplayName();
 		}
@@ -40,11 +36,7 @@ if (!isset($byline_str)) {
 	$container_entity = elgg_extract('byline_container_entity', $vars, $entity->getContainerEntity());
 	if ($container_entity instanceof ElggGroup && $container_entity->guid !== elgg_get_page_owner_guid()) {
 		if ($show_links) {
-			$group_text = elgg_view('output/url', [
-				'href' => $container_entity->getURL(),
-				'text' => $container_entity->getDisplayName(),
-				'is_trusted' => true,
-			]);
+			$group_text = elgg_view_entity_url($container_entity);
 		} else {
 			$group_text = $container_entity->getDisplayName();
 		}

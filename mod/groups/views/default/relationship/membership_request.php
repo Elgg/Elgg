@@ -21,11 +21,7 @@ if (!$group instanceof ElggGroup || !$user instanceof ElggUser) {
 $page_owner = elgg_get_page_owner_entity();
 if ($page_owner->guid === $group->guid) {
 	$vars['icon_entity'] = $user;
-	$vars['title'] = elgg_view('output/url', [
-		'text' => $user->getDisplayName(),
-		'href' => $user->getURL(),
-		'is_trusted' => true,
-	]);
+	$vars['title'] = elgg_view_entity_url($user);
 }
 
 echo elgg_view('relationship/elements/summary', $vars);

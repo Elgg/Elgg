@@ -40,9 +40,4 @@ if ($owner instanceof \ElggGroup) {
 	$url = elgg_generate_url('collection:object:page:owner', ['username' => $owner->username]);
 }
 
-$more_link = elgg_view('output/url', [
-	'text' => elgg_echo('pages:more'),
-	'href' => $url,
-	'is_trusted' => true,
-]);
-echo elgg_format_element('div', ['class' => 'elgg-widget-more'], $more_link);
+echo elgg_format_element('div', ['class' => 'elgg-widget-more'], elgg_view_url($url, elgg_echo('pages:more')));

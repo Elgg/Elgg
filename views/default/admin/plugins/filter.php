@@ -20,18 +20,12 @@ foreach ($categories as $key => $category) {
 	}
 
 	$key = preg_replace('/[^a-z0-9-]/i', '-', elgg_strtolower($key));
-	$link = elgg_view('output/url', [
-		'text' => $category,
-		'href' => '#',
-		'rel' => $key
-	]);
-
 	
 	$options = [];
 	if ($key === $input_filter) {
 		$options['class'] = 'elgg-state-selected';
 	}
-	$list_items .= elgg_format_element('li', $options, $link);
+	$list_items .= elgg_format_element('li', $options, elgg_view_url('#', $category, ['rel' => $key]));
 }
 
 $body = elgg_format_element([
