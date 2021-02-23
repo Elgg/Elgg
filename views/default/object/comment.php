@@ -50,10 +50,7 @@ if ($full_view) {
 
 	$friendlytime = elgg_view_friendly_time($comment->time_created);
 
-	$commenter_link = elgg_view('output/url', [
-		'href' => $commenter->getURL(),
-		'text' => $commenter->getDisplayName(),
-	]);
+	$commenter_link = elgg_view_entity_url($commenter);
 
 	$entity_link = elgg_view('output/url', [
 		'href' => $entity->getURL(),

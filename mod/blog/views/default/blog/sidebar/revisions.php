@@ -48,13 +48,9 @@ $load_base_url = elgg_generate_url('edit:object:blog', [
 // show the "published revision"
 $published_item = '';
 if ($blog->status == 'published') {
-	$load = elgg_view('output/url', [
-		'href' => $load_base_url,
-		'text' => elgg_echo('status:published'),
-		'is_trusted' => true,
-	]);
-
+	$load = elgg_view_url($load_base_url, elgg_echo('status:published'));
 	$time = elgg_format_element('span', ['class' => 'elgg-subtext'], elgg_view_friendly_time($blog->time_created));
+
 	$published_item = elgg_format_element('li', [], "$load: $time");
 }
 
@@ -69,11 +65,7 @@ foreach ($revisions as $revision) {
 		$revision_lang = elgg_echo('blog:revision') . " $n";
 	}
 	
-	$load = elgg_view('output/url', [
-		'href' => "$load_base_url/$revision->id",
-		'text' => $revision_lang,
-		'is_trusted' => true,
-	]);
+	$load = elgg_view_url("{$load_base_url}/{$revision->id}", $revision_lang);
 
 	$revisions_list .= elgg_format_element('li', ['class' => 'auto-saved'], "$load: $time");
 	

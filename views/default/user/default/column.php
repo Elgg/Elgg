@@ -16,13 +16,7 @@ $size = elgg_extract('size', $vars, 'small');
 
 $icon = elgg_view_entity_icon($entity, $size, $vars);
 
-$title = elgg_extract('title', $vars);
-if (!$title) {
-	$title = elgg_view('output/url', [
-		'href' => $entity->getUrl(),
-		'text' => $entity->getDisplayName(),
-	]);
-}
+$title = elgg_extract('title', $vars) ?: elgg_view_entity_url($entity);
 
 $params = [
 	'entity' => $entity,

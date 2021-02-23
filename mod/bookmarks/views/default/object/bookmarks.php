@@ -18,10 +18,7 @@ $link = elgg_view('output/url', [
 ]);
 
 if (elgg_in_context('gallery')) {
-	$owner_link = elgg_view('output/url', [
-		'href' => $owner->getURL(),
-		'text' => $owner->getDisplayName(),
-	]);
+	$owner_link = elgg_view_entity_url($owner);
 	$date = elgg_view_friendly_time($entity->time_created);
 
 	echo <<<HTML

@@ -2167,3 +2167,34 @@ function _elgg_map_icon_glyph_class(array $classes) {
 
 	return elgg_trigger_plugin_hook('classes', 'icon', null, $classes);
 }
+
+/**
+ * Helper function for outputting urls. Using this helper function defaults to trusted urls
+ *
+ * @param string $href    The URL
+ * @param string $text    The visible text
+ * @param array  $options Additional options to pass to the output/url View
+ *
+ * @return string
+ * @since 4.0
+ */
+function elgg_view_url(string $href, string $text = null, array $options = []): string {
+	$options['is_trusted'] = elgg_extract('is_trusted', $options, true);
+	$options['href'] = $href;
+	$options['text'] = $text;
+	
+	return elgg_view('output/url', $options);
+}
+
+/**
+ * Helper function for outputting a link to an entity
+ *
+ * @param \ElggEntity $entity  The entity to draw the link for
+ * @param array       $options Additional options to pass to the output view
+ *
+ * @return string
+ * @since 4.0
+ */
+function elgg_view_entity_url(\ElggEntity $entity, array $options = []): string {
+	return elgg_view_url($entity->getURL(), $entity->getDisplayName(), $options);
+}

@@ -71,14 +71,9 @@ if ($full_view) {
 		$last_comment = $comments[0];
 		
 		$poster = $last_comment->getOwnerEntity();
-		$comment_time = elgg_view_friendly_time($last_comment->time_created);
 		
-		$comment_text = elgg_view('output/url', [
-			'text' => elgg_echo('discussion:updated', [$poster->getDisplayName(), $comment_time]),
-			'href' => $last_comment->getURL(),
-			'is_trusted' => true,
-		]);
-		$comment_text = elgg_format_element('span', ['class' => 'float-alt'], $comment_text);
+		$comment_text = elgg_echo('discussion:updated', [$poster->getDisplayName(), elgg_view_friendly_time($last_comment->time_created)]);
+		$comment_text = elgg_format_element('span', ['class' => 'float-alt'], elgg_view_url($last_comment->getURL(), $comment_text));
 	}
 	
 	// brief view

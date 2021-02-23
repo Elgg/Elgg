@@ -38,11 +38,8 @@ foreach ($periods as $period) {
 			'class' => 'hidden',
 		], $msg);
 		
-		$msg = elgg_view('output/url', [
-			'href' => "#cron_{$period}",
-			'text' => elgg_echo('show'),
-			'rel' => 'toggle',
-		]) . $wrapped_message;
+		$msg = elgg_view_url("#cron_{$period}", elgg_echo('show'), ['rel' => 'toggle']);
+		$msg .= $wrapped_message;
 	}
 	$row[] = elgg_format_element('td', [], $msg);
 	

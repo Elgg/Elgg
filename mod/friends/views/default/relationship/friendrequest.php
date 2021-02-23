@@ -25,13 +25,7 @@ if (!empty($current_user)) {
 	}
 	
 	if ($friend instanceof ElggUser && !empty($lan_key)) {
-		$friend_link = elgg_view('output/url', [
-			'text' => $friend->getDisplayName(),
-			'href' => $friend->getURL(),
-			'is_trusted' => true,
-		]);
-		
-		$vars['title'] = elgg_echo($lan_key, [$friend_link]);
+		$vars['title'] = elgg_echo($lan_key, [elgg_view_entity_url($friend)]);
 	}
 }
 

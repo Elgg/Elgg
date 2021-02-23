@@ -13,12 +13,8 @@ $actor = $entity->getActor();
 
 $icon = $actor ? elgg_view_entity_icon($actor, 'small') : '';
 
-$url = $entity->getURL();
-if ($url) {
-	$text = elgg_view('output/url', [
-		'text' => $text,
-		'href' => elgg_generate_entity_url($entity, 'redirect'),
-	]);
+if ($entity->getURL()) {
+	$text = elgg_view_url(elgg_generate_entity_url($entity, 'redirect'), $text);
 }
 
 $checkbox = elgg_view('input/checkbox', [

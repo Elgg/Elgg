@@ -19,18 +19,6 @@ if ($title === '' && $relationship instanceof ElggRelationship) {
 		return;
 	}
 	
-	$entity_one_link = elgg_view('output/url', [
-		'text' => $entity_one->getDisplayName(),
-		'href' => $entity_one->getURL(),
-		'is_trusted' => true,
-	]);
-	
-	$entity_two_link = elgg_view('output/url', [
-		'text' => $entity_two->getDisplayName(),
-		'href' => $entity_two->getURL(),
-		'is_trusted' => true,
-	]);
-	
 	$key = false;
 	$keys = [
 		"relationship:{$relationship->relationship}",
@@ -44,7 +32,7 @@ if ($title === '' && $relationship instanceof ElggRelationship) {
 	}
 	
 	if (!empty($key)) {
-		$title = elgg_echo($key, [$entity_one_link, $entity_two_link]);
+		$title = elgg_echo($key, [elgg_view_entity_url($entity_one), elgg_view_entity_url($entity_two)]);
 	}
 }
 

@@ -26,11 +26,7 @@ $content = elgg_view_friendly_time($time);
 
 $time_href = elgg_extract('time_href', $vars);
 if (!empty($time_href)) {
-	$content = elgg_view('output/url', [
-		'href' => $time_href,
-		'text' => $content,
-		'is_trusted' => true,
-	]);
+	$content = elgg_view_url($time_href, $content);
 }
 
 if (elgg_is_empty($content)) {

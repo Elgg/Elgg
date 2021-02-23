@@ -38,27 +38,15 @@ foreach ($log_entries as $entry) {
 
 	$user = get_entity($entry->performed_by_guid);
 	if ($user) {
-		$user_link = elgg_view('output/url', [
-			'href' => $user->getURL(),
-			'text' => $user->getDisplayName(),
-			'is_trusted' => true,
-		]);
-		$user_guid_link = elgg_view('output/url', [
-			'href' => "admin/administer_utilities/logbrowser?user_guid={$user->guid}",
-			'text' => $user->getGUID(),
-			'is_trusted' => true,
-		]);
+		$user_link = elgg_view_entity_url($user);
+		$user_guid_link = elgg_view_url("admin/administer_utilities/logbrowser?user_guid={$user->guid}", $user->guid);
 	} else {
 		$user_guid_link = $user_link = '&nbsp;';
 	}
 
 	$object = $entry->getObject();
 	if (is_callable([$object, 'getURL'])) {
-		$object_link = elgg_view('output/url', [
-			'href' => $object->getURL(),
-			'text' => $entry->object_class,
-			'is_trusted' => true,
-		]);
+		$object_link = elgg_view_url($object->getURL(), $entry->object_class);
 	} else {
 		$object_link = $entry->object_class;
 	}

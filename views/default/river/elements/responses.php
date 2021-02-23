@@ -33,7 +33,7 @@ if ($comment_count) {
 	$comments = elgg_get_entities([
 		'type' => 'object',
 		'subtype' => 'comment',
-		'container_guid' => $object->getGUID(),
+		'container_guid' => $object->guid,
 		'limit' => 3,
 		'order_by' => [new OrderByClause('time_created', 'DESC')],
 		'distinct' => false,
@@ -51,11 +51,8 @@ if ($comment_count) {
 	]);
 	
 	if ($comment_count > count($comments)) {
-		echo elgg_format_element('div', ['class' => 'elgg-river-more'], elgg_view('output/url', [
-			'href' => $object->getURL(),
-			'text' => elgg_echo('river:comments:all', [$comment_count]),
-			'is_trusted' => true,
-		]));
+		$all_link = elgg_view_url($object->getURL(), elgg_echo('river:comments:all', [$comment_count]));
+		echo elgg_format_element('div', ['class' => 'elgg-river-more'], $all_link);
 	}
 }
 

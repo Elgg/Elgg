@@ -15,16 +15,8 @@ $simple_cache = elgg_get_config('simplecache_enabled');
 $system_cache = elgg_is_system_cache_enabled();
 
 if ($simple_cache || $system_cache) {
-	$advanced = elgg_view('output/url', [
-		'text' => 'Advanced Settings',
-		'href' => 'admin/site_settings',
-		'is_trusted' => true
-	]);
-	$developers = elgg_view('output/url', [
-		'text' => 'Developers\' Plugin Settings',
-		'href' => 'admin/developers/settings',
-		'is_trusted' => true
-	]);
+	$advanced = elgg_view_url('admin/site_settings', 'Advanced Settings');
+	$developers = elgg_view_url('admin/developers/settings', 'Developers\' Plugin Settings');
 	
 	$body = "Caches are enabled. Changes you make to CSS and views might not appear. It is
 	always recommended to disable caches while developing themes and plugins. To

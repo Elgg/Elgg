@@ -24,11 +24,7 @@ $extra_info = $entity->getVolatileData('search_matched_extra');
 $icon = $entity->getVolatileData('search_icon');
 $url = $entity->getVolatileData('search_url');
 
-$title = elgg_view('output/url', [
-	'text' => $title,
-	'href' => $url,
-	'class' => 'search-matched-title',
-]);
+$title = elgg_view_url($url, $title, ['class' => 'search-matched-title']);
 
 $type = $entity->getType();
 

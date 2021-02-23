@@ -6,7 +6,6 @@ $message = elgg_view('output/url', [
 	'is_trusted' => true,
 	'href' => '#',
 	'id' => 'developers-system-message',
-//	'onclick' => "elgg.system_message('Elgg System Message');"
 ]);
 
 $error = elgg_view('output/url', [

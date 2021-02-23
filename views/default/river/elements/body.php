@@ -10,7 +10,7 @@
  */
 
 $item = elgg_extract('item', $vars);
-if (!($item instanceof \ElggRiverItem)) {
+if (!$item instanceof \ElggRiverItem) {
 	return;
 }
 
@@ -52,12 +52,7 @@ if (!isset($summary)) {
 if ($summary === false) {
 	$subject = $item->getSubjectEntity();
 	if ($subject instanceof ElggEntity) {
-		$summary = elgg_view('output/url', [
-			'href' => $subject->getURL(),
-			'text' => $subject->getDisplayName(),
-			'class' => 'elgg-river-subject',
-			'is_trusted' => true,
-		]);
+		$summary = elgg_view_entity_url($subject, ['class' => 'elgg-river-subject']);
 	}
 }
 

@@ -21,10 +21,7 @@ foreach ($data as $key => $arr) {
 	echo "<td>";
 	if ($arr[1]) {
 		$view_id = "z" . md5("resources/{$arr[1]}");
-		$info = elgg_view('output/url', [
-			'text' => $arr[1],
-			'href' => "admin/develop_tools/inspect?inspect_type=Views#$view_id",
-		]);
+		$info = elgg_view_url("admin/develop_tools/inspect?inspect_type=Views#{$view_id}", $arr[1]);
 		$label = elgg_echo('developers:inspect:resource');
 		echo "<b>{$label}</b>:<br /> {$info}";
 	} else if ($arr[2]) {
