@@ -1,6 +1,6 @@
 <?php
 
-namespace Elgg\Upgrade;
+namespace Elgg\Helpers\Upgrade;
 
 class InvalidBatch {
 	

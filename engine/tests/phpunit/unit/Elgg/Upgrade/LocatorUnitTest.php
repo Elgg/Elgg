@@ -3,6 +3,8 @@
 namespace Elgg\Upgrade;
 
 use ElggUpgrade;
+use Elgg\Helpers\Upgrade\TestBatch;
+use Elgg\Helpers\Upgrade\NonRequiredTestBatch;
 
 /**
  * @group UpgradeService

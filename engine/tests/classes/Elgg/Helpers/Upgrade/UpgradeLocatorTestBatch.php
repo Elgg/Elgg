@@ -12,7 +12,10 @@ class UpgradeLocatorTestBatch implements AsynchronousUpgrade {
 	
 	protected $_version;
 	
-	public function getVersion() {
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getVersion(): int {
 		if (!isset($this->_version)) {
 			$this->_version = date('Ymd') . rand(10, 99);
 		}
@@ -20,19 +23,33 @@ class UpgradeLocatorTestBatch implements AsynchronousUpgrade {
 		return $this->_version;
 	}
 	
-	public function needsIncrementOffset() {
+	/**
+	 * {@inheritDoc}
+	 */
+	public function needsIncrementOffset(): bool {
 		return true;
 	}
 	
-	public function shouldBeSkipped() {
+	/**
+	 * {@inheritDoc}
+	 */
+	public function shouldBeSkipped(): bool {
 		return false;
 	}
 	
-	public function countItems() {
+	/**
+	 * {@inheritDoc}
+	 */
+	public function countItems(): int {
 		return 100;
 	}
 	
-	public function run(Result $result, $offset) {
+	/**
+	 * {@inheritDoc}
+	 */
+	public function run(Result $result, $offset): Result {
 		$result->addSuccesses(10);
+		
+		return $result;
 	}
 }

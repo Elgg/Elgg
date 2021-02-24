@@ -2,10 +2,10 @@
 
 namespace Elgg;
 
-use Elgg\Upgrade\TestBatch;
-use Elgg\Upgrade\TestNoIncrementBatch;
-use Elgg\Upgrade\UnknownSizeTestBatch;
 use ElggUpgrade;
+use Elgg\Helpers\Upgrade\TestBatch;
+use Elgg\Helpers\Upgrade\TestNoIncrementBatch;
+use Elgg\Helpers\Upgrade\UnknownSizeTestBatch;
 
 /**
  * @group UpgradeService

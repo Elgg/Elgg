@@ -13,28 +13,28 @@ class DeleteDiagnosticsPlugin implements SystemUpgrade {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getVersion() {
+	public function getVersion(): int {
 		return 2020102301;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function needsIncrementOffset() {
+	public function needsIncrementOffset(): bool {
 		return false;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function shouldBeSkipped() {
+	public function shouldBeSkipped(): bool {
 		return empty($this->countItems());
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function countItems() {
+	public function countItems(): int {
 		$plugin = elgg_get_plugin_from_id('diagnostics');
 		if ($plugin instanceof \ElggPlugin) {
 			return 1;
@@ -46,7 +46,7 @@ class DeleteDiagnosticsPlugin implements SystemUpgrade {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function run(Result $result, $offset) {
+	public function run(Result $result, $offset): Result {
 		$plugin = elgg_get_plugin_from_id('diagnostics');
 		if (!$plugin instanceof \ElggPlugin) {
 			$result->addSuccesses(1);

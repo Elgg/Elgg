@@ -249,10 +249,11 @@ To change the ``banned`` state use the functions ``ban()`` and ``unban()``
 Type hinted functions
 ---------------------
 
-The following functions now have their arguments type-hinted, this can cause ``TypeError`` errors.
+The following functions now have their arguments type-hinted, this can cause ``TypeError`` errors. 
+Also some class functions have their return value type hinted and you should update your function definition.
 
-Class functions
-~~~~~~~~~~~~~~~
+Class function parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * ``ElggEntity::setLatLong()`` now requires a ``float`` for ``$lat`` and ``$long``
 * ``Elgg\Database\Seeds\Seed::__construct()`` now requires an ``int`` for ``$limit``
@@ -264,8 +265,17 @@ Class functions
 * ``SiteNotification::setURL()`` now requires a ``string`` for ``$url``
 * ``SiteNotification::setRead()`` now requires a ``bool`` for ``$read``
 
-Lib functions
-~~~~~~~~~~~~~
+Class function return type
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* ``Elgg\Upgrade\Batch::getVersion()`` now requires an ``int`` return value
+* ``Elgg\Upgrade\Batch::shouldBeSkipped()`` now requires an ``bool`` return value
+* ``Elgg\Upgrade\Batch::needsIncrementOffset()`` now requires an ``bool`` return value
+* ``Elgg\Upgrade\Batch::countItems()`` now requires an ``int`` return value
+* ``Elgg\Upgrade\Batch::run()`` now requires an ``Elgg\Upgrade\Result`` return value
+
+Lib function parameters
+~~~~~~~~~~~~~~~~~~~~~~~
 
 * ``add_user_to_access_collection()`` now requires an ``int`` for ``$user_guid`` and ``$collection_id``
 * ``can_edit_access_collection()`` now requires an ``int`` for ``$collection_id`` and ``$user_guid``

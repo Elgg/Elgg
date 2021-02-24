@@ -105,21 +105,21 @@ class AlterDatabaseToMultiByteCharset implements AsynchronousUpgrade {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getVersion() {
+	public function getVersion(): int {
 		return 2017080900;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function needsIncrementOffset() {
+	public function needsIncrementOffset(): bool {
 		return false;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function shouldBeSkipped() {
+	public function shouldBeSkipped(): bool {
 
 		$config = _elgg_services()->dbConfig->getConnectionConfig();
 		$rows = elgg()->db->getData("SHOW TABLE STATUS FROM `{$config['database']}`");
@@ -140,14 +140,14 @@ class AlterDatabaseToMultiByteCharset implements AsynchronousUpgrade {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function countItems() {
+	public function countItems(): int {
 		return 1;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function run(Result $result, $offset) {
+	public function run(Result $result, $offset): Result {
 
 		$config = _elgg_services()->dbConfig->getConnectionConfig();
 
