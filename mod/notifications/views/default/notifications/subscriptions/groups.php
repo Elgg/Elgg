@@ -22,8 +22,8 @@ echo elgg_list_entities([
 	'joins' => [
 		new JoinClause('entity_relationships', 'ers', function(QueryBuilder $qb, $joined_alias, $main_alias) use ($user) {
 			return $qb->merge([
-				$qb->compare("$joined_alias.guid_two", '=', "$main_alias.guid"),
-				$qb->compare("$joined_alias.guid_one", '=', $user->guid, ELGG_VALUE_INTEGER),
+				$qb->compare("{$joined_alias}.guid_two", '=', "{$main_alias}.guid"),
+				$qb->compare("{$joined_alias}.guid_one", '=', $user->guid, ELGG_VALUE_INTEGER),
 			], 'AND');
 		}),
 	],
@@ -31,7 +31,7 @@ echo elgg_list_entities([
 		function(QueryBuilder $qb) {
 			return $qb->merge([
 				$qb->compare('ers.relationship', '=', 'member', ELGG_VALUE_STRING),
-				$qb->compare('ers.relationship', 'LIKE', 'notify%', ELGG_VALUE_STRING),
+				$qb->compare('ers.relationship', 'LIKE', 'notify:%', ELGG_VALUE_STRING),
 			], 'OR');
 		},
 	],

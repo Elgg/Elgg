@@ -109,7 +109,7 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$select->select('guid_one AS guid')
 			->addSelect("GROUP_CONCAT(relationship SEPARATOR ',') AS methods")
 			->where($select->compare('guid_two', '=', $this->containerGuid, ELGG_VALUE_GUID))
-			->andWhere($select->compare('relationship', 'in', ['notifyapples', 'notifybananas'], ELGG_VALUE_STRING));
+			->andWhere($select->compare('relationship', 'in', ['notify:apples', 'notify:bananas'], ELGG_VALUE_STRING));
 		
 		$this->db->expects($this->once())
 			->method('getData')
@@ -127,11 +127,11 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$queryResult = [
 			$this->createObjectFromArray([
 				'guid' => '22',
-				'methods' => 'notifyapples'
+				'methods' => 'notify:apples'
 			]),
 			$this->createObjectFromArray([
 				'guid' => '567',
-				'methods' => 'notifybananas,notifyapples'
+				'methods' => 'notify:bananas,notify:apples'
 			]),
 		];
 		$subscriptions = [
@@ -165,11 +165,11 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$queryResult = [
 			$this->createObjectFromArray([
 				'guid' => '22',
-				'methods' => 'notifyapples'
+				'methods' => 'notify:apples'
 			]),
 			$this->createObjectFromArray([
 				'guid' => '567',
-				'methods' => 'notifybananas,notifyapples'
+				'methods' => 'notify:bananas,notify:apples'
 			]),
 		];
 		$subscriptions = [

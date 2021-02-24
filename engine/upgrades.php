@@ -9,4 +9,5 @@
 return [
 	\Elgg\Upgrades\AlterDatabaseToMultiByteCharset::class,
 	\Elgg\Upgrades\DeleteDiagnosticsPlugin::class,
+	\Elgg\Upgrades\NotificationsPrefix::class,
 ];

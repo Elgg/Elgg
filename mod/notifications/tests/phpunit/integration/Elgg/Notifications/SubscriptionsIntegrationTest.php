@@ -27,11 +27,11 @@ class SubscriptionsIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($user1->isFriendsWith($user2->guid));
 		
 		elgg_add_subscription($user1->guid, 'test', $user2->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, check_entity_relationship($user1->guid, 'notifytest', $user2->guid));
+		$this->assertInstanceOf(\ElggRelationship::class, check_entity_relationship($user1->guid, 'notify:test', $user2->guid));
 
 		$user1->removeFriend($user2->guid);
 		$this->assertFalse($user1->isFriendsWith($user2->guid));
-		$this->assertFalse(check_entity_relationship($user1->guid, 'notifytest', $user2->guid));
+		$this->assertFalse(check_entity_relationship($user1->guid, 'notify:test', $user2->guid));
 		
 		$user1->delete();
 		$user2->delete();
@@ -46,7 +46,7 @@ class SubscriptionsIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($group->isMember($user));
 
 		elgg_add_subscription($user->guid, 'test', $group->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, check_entity_relationship($user->guid, 'notifytest', $group->guid));
+		$this->assertInstanceOf(\ElggRelationship::class, check_entity_relationship($user->guid, 'notify:test', $group->guid));
 
 		$group->leave($user);
 		$this->assertFalse($group->isMember($user));

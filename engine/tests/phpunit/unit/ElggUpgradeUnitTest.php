@@ -87,11 +87,11 @@ class ElggUpgradeUnitTest extends \Elgg\UnitTestCase {
 		$this->obj->setClass('\InvalidClass');
 		$this->assertFalse($this->obj->getBatch());
 
-		$this->obj->setClass(\Elgg\Upgrade\InvalidBatch::class);
+		$this->obj->setClass(\Elgg\Helpers\Upgrade\InvalidBatch::class);
 		$this->assertFalse($this->obj->getBatch());
 
-		$this->obj->setClass(\Elgg\Upgrade\TestBatch::class);
-		$this->assertInstanceOf(\Elgg\Upgrade\TestBatch::class, $this->obj->getBatch());
+		$this->obj->setClass(\Elgg\Helpers\Upgrade\TestBatch::class);
+		$this->assertInstanceOf(\Elgg\Helpers\Upgrade\TestBatch::class, $this->obj->getBatch());
 
 		_elgg_services()->logger->enable();
 	}

@@ -28,7 +28,7 @@ interface Batch {
 	 *
 	 * @return int E.g. 2016123101
 	 */
-	public function getVersion();
+	public function getVersion(): int;
 
 	/**
 	 * Should this upgrade be skipped?
@@ -37,7 +37,7 @@ interface Batch {
 	 *
 	 * @return bool
 	 */
-	public function shouldBeSkipped();
+	public function shouldBeSkipped(): bool;
 
 	/**
 	 * Should the run() method receive an offset representing all processed items?
@@ -52,7 +52,7 @@ interface Batch {
 	 *
 	 * @return bool
 	 */
-	public function needsIncrementOffset();
+	public function needsIncrementOffset(): bool;
 
 	/**
 	 * The total number of items to process during the upgrade
@@ -62,7 +62,7 @@ interface Batch {
 	 *
 	 * @return int
 	 */
-	public function countItems();
+	public function countItems(): int;
 
 	/**
 	 * Runs upgrade on a single batch of items
@@ -75,5 +75,5 @@ interface Batch {
 	 *
 	 * @return Result
 	 */
-	public function run(Result $result, $offset);
+	public function run(Result $result, $offset): Result;
 }

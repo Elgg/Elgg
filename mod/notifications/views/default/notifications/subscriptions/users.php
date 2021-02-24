@@ -1,13 +1,13 @@
 <?php
-
-use Elgg\Database\QueryBuilder;
-use Elgg\Database\Clauses\JoinClause;
-
 /**
  * Friends preferences
  *
  * @uses $vars['user'] Subscriber
  */
+
+use Elgg\Database\QueryBuilder;
+use Elgg\Database\Clauses\JoinClause;
+
 $user = elgg_extract('user', $vars);
 if (!$user instanceof ElggUser) {
 	return;
@@ -20,8 +20,8 @@ echo elgg_list_entities([
 	'joins' => [
 		new JoinClause('entity_relationships', 'ers', function(QueryBuilder $qb, $joined_alias, $main_alias) use ($user) {
 			return $qb->merge([
-				$qb->compare("$joined_alias.guid_two", '=', "$main_alias.guid"),
-				$qb->compare("$joined_alias.guid_one", '=', $user->guid, ELGG_VALUE_INTEGER),
+				$qb->compare("{$joined_alias}.guid_two", '=', "{$main_alias}.guid"),
+				$qb->compare("{$joined_alias}.guid_one", '=', $user->guid, ELGG_VALUE_INTEGER),
 			], 'AND');
 		}),
 	],
@@ -29,7 +29,7 @@ echo elgg_list_entities([
 		function(QueryBuilder $qb) {
 			return $qb->merge([
 				$qb->compare('ers.relationship', '=', 'friend', ELGG_VALUE_STRING),
-				$qb->compare('ers.relationship', 'LIKE', 'notify%', ELGG_VALUE_STRING),
+				$qb->compare('ers.relationship', 'LIKE', 'notify:%', ELGG_VALUE_STRING),
 			], 'OR');
 		},
 	],

@@ -1,54 +1,47 @@
 <?php
 
-namespace Elgg\Helpers\Actions\Admin;
+namespace Elgg\Helpers\Upgrade;
 
-use Elgg\Upgrade\AsynchronousUpgrade;
+use Elgg\Upgrade\Batch;
 use Elgg\Upgrade\Result;
 
-/**
- * @see \Elgg\Actions\Admin\UpgradeTest
- */
-class UpgradeTestBatch implements AsynchronousUpgrade {
-	
-	protected $_version;
-	
+class TestBatch implements Batch {
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function getVersion(): int {
-		if (!isset($this->_version)) {
-			$this->_version = date('Ymd') . rand(10, 99);
-		}
-		
-		return $this->_version;
+		return 2016101900;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function needsIncrementOffset(): bool {
 		return true;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function shouldBeSkipped(): bool {
 		return false;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function countItems(): int {
 		return 100;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function run(Result $result, $offset): Result {
-		$result->addSuccesses(10);
+		$result->addError($offset);
+		$result->addSuccesses(15);
+		$result->addFailures(10);
 		
 		return $result;
 	}
