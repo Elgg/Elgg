@@ -66,7 +66,7 @@
  * @return void
  * @since 1.9
  */
-function elgg_register_notification_event($object_type, $object_subtype, array $actions = []) {
+function elgg_register_notification_event($object_type, $object_subtype, array $actions = []): void {
 	_elgg_services()->notifications->registerEvent($object_type, $object_subtype, $actions);
 }
 
@@ -81,7 +81,7 @@ function elgg_register_notification_event($object_type, $object_subtype, array $
  * @since 1.9
  * @see elgg_register_notification_event()
  */
-function elgg_unregister_notification_event($object_type, $object_subtype, array $actions = []) {
+function elgg_unregister_notification_event($object_type, $object_subtype, array $actions = []): bool {
 	return _elgg_services()->notifications->unregisterEvent($object_type, $object_subtype, $actions);
 }
 
@@ -97,7 +97,7 @@ function elgg_unregister_notification_event($object_type, $object_subtype, array
  * @see elgg_unregister_notification_method()
  * @since 1.9
  */
-function elgg_register_notification_method($name) {
+function elgg_register_notification_method($name): void {
 	_elgg_services()->notifications->registerMethod($name);
 }
 
@@ -113,7 +113,7 @@ function elgg_register_notification_method($name) {
  * @return array
  * @since 2.3
  */
-function elgg_get_notification_methods() {
+function elgg_get_notification_methods(): array {
 	return _elgg_services()->notifications->getMethods();
 }
 
@@ -125,7 +125,7 @@ function elgg_get_notification_methods() {
  * @see elgg_register_notification_method()
  * @since 1.9
  */
-function elgg_unregister_notification_method($name) {
+function elgg_unregister_notification_method($name): bool {
 	return _elgg_services()->notifications->unregisterMethod($name);
 }
 
@@ -139,7 +139,7 @@ function elgg_unregister_notification_method($name) {
  * @return bool
  * @since 1.9
  */
-function elgg_add_subscription(int $user_guid, string $method, int $target_guid) {
+function elgg_add_subscription(int $user_guid, string $method, int $target_guid): bool {
 	return _elgg_services()->subscriptions->addSubscription($user_guid, $method, $target_guid);
 }
 
@@ -153,7 +153,7 @@ function elgg_add_subscription(int $user_guid, string $method, int $target_guid)
  * @return bool
  * @since 1.9
  */
-function elgg_remove_subscription(int $user_guid, string $method, int $target_guid) {
+function elgg_remove_subscription(int $user_guid, string $method, int $target_guid): bool {
 	return _elgg_services()->subscriptions->removeSubscription($user_guid, $method, $target_guid);
 }
 
@@ -172,7 +172,7 @@ function elgg_remove_subscription(int $user_guid, string $method, int $target_gu
  * @since 1.9
  * @todo deprecate once new subscriptions system has been added
  */
-function elgg_get_subscriptions_for_container(int $container_guid) {
+function elgg_get_subscriptions_for_container(int $container_guid): array {
 	$methods = _elgg_services()->notifications->getMethods();
 	
 	return _elgg_services()->subscriptions->getSubscriptionsForContainer($container_guid, $methods);
@@ -202,7 +202,7 @@ function elgg_get_subscriptions_for_container(int $container_guid) {
  *
  * @return array Compound array of each delivery user/delivery method's success or failure.
  */
-function notify_user($to, $from = 0, $subject = '', $message = '', array $params = [], $methods_override = null) {
+function notify_user($to, $from = 0, $subject = '', $message = '', array $params = [], $methods_override = null): array {
 
 	$params['subject'] = $subject;
 	$params['body'] = $message;
@@ -237,7 +237,7 @@ function notify_user($to, $from = 0, $subject = '', $message = '', array $params
  * @return bool
  * @since 1.7.2
  */
-function elgg_send_email(\Elgg\Email $email) {
+function elgg_send_email(\Elgg\Email $email): bool {
 	return _elgg_services()->emails->send($email);
 }
 
@@ -252,6 +252,6 @@ function elgg_send_email(\Elgg\Email $email) {
  * @param \Laminas\Mail\Transport\TransportInterface $mailer Transport
  * @return void
  */
-function elgg_set_email_transport(\Laminas\Mail\Transport\TransportInterface $mailer) {
+function elgg_set_email_transport(\Laminas\Mail\Transport\TransportInterface $mailer): void {
 	_elgg_services()->setValue('mailer', $mailer);
 }
