@@ -65,6 +65,11 @@ Notifications
 
 Pre Elgg 1.9 notification handling has been removed. Related functions and hooks no longer exist.
 
+Subscriptions
+~~~~~~~~~~~~~
+
+The relationship in the database which stores the subscription method for notifications has been changed from ``notifymethod`` to ``notify:method``.
+
 Diagnostics Plugin
 ------------------
 

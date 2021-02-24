@@ -77,7 +77,7 @@ class SubscriptionsService {
 
 		// get subscribers only for \ElggEntity if it isn't private
 		if (($object instanceof \ElggEntity) && ($object->access_id !== ACCESS_PRIVATE)) {
-			$prefixLength = strlen(self::RELATIONSHIP_PREFIX);
+			$prefixLength = strlen(self::RELATIONSHIP_PREFIX . ':');
 			
 			$records = $this->getSubscriptionRecords($object->getContainerGUID(), $methods);
 			foreach ($records as $record) {
@@ -120,7 +120,7 @@ class SubscriptionsService {
 
 		$subscriptions = [];
 
-		$prefixLength = strlen(self::RELATIONSHIP_PREFIX);
+		$prefixLength = strlen(self::RELATIONSHIP_PREFIX . ':');
 		
 		$records = $this->getSubscriptionRecords($container_guid, $methods);
 		foreach ($records as $record) {
@@ -149,7 +149,7 @@ class SubscriptionsService {
 	public function addSubscription(int $userGuid, string $method, int $targetGuid) {
 		$prefix = self::RELATIONSHIP_PREFIX;
 		
-		return $this->relationshipsTable->add($userGuid, "{$prefix}{$method}", $targetGuid);
+		return $this->relationshipsTable->add($userGuid, "{$prefix}:{$method}", $targetGuid);
 	}
 
 	/**
@@ -164,7 +164,7 @@ class SubscriptionsService {
 	public function removeSubscription(int $userGuid, string $method, int $targetGuid) {
 		$prefix = self::RELATIONSHIP_PREFIX;
 		
-		return $this->relationshipsTable->remove($userGuid, "{$prefix}{$method}", $targetGuid);
+		return $this->relationshipsTable->remove($userGuid, "{$prefix}:{$method}", $targetGuid);
 	}
 
 	/**
@@ -206,7 +206,7 @@ class SubscriptionsService {
 		
 		$names = [];
 		foreach ($methods as $method) {
-			$names[] = "{$prefix}{$method}";
+			$names[] = "{$prefix}:{$method}";
 		}
 		
 		return $names;

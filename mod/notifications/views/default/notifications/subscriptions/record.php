@@ -35,14 +35,14 @@ $relationships_concat = $entity->getVolatileData('select:relationships');
 if (isset($relationships_concat)) {
 	$relationships = explode(',', $relationships_concat);
 	foreach ($relationships as $relationship) {
-		if (0 === strpos($relationship, 'notify')) {
-			$method = str_replace('notify', '', $relationship);
+		if (0 === strpos($relationship, 'notify:')) {
+			$method = str_replace('notify:', '', $relationship);
 			$preferred_methods[$method] = $method;
 		}
 	}
 } else {
 	foreach ($methods as $method) {
-		if (check_entity_relationship($user->guid, "notify{$method}", $entity->guid)) {
+		if (check_entity_relationship($user->guid, "notify:{$method}", $entity->guid)) {
 			$preferred_methods[$method] = $method;
 		}
 	}

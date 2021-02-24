@@ -37,7 +37,7 @@ class Title {
 		$subscribed = false;
 		$methods = elgg_get_notification_methods();
 		foreach ($methods as $method) {
-			$subscribed = check_entity_relationship($user->guid, 'notify' . $method, $group->guid);
+			$subscribed = check_entity_relationship($user->guid, "notify:{$method}", $group->guid);
 			if ($subscribed) {
 				break;
 			}

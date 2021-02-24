@@ -54,13 +54,7 @@ class Relationships {
 			}
 			if (in_array($collection_id, $collections_preferences)) {
 				// notifications are on for this collection so we add/remove
-				if ($hook->getName() == 'access:collections:add_user') {
-					add_entity_relationship($user->guid, "notify$method", $member_guid);
-				} elseif ($hook->getName() == 'access:collections:remove_user') {
-					// removing someone from an access collection is not a guarantee
-					// that they should be removed from notifications
-					//remove_entity_relationship($user->guid, "notify$method", $member_guid);
-				}
+				elgg_add_subscription($user->guid, $method, $member_guid);
 			}
 		}
 	}
@@ -124,7 +118,7 @@ class Relationships {
 				if (is_array($collections_preferences)) {
 					// -1 means all friends is on - should be a define
 					if (in_array(-1, $collections_preferences)) {
-						add_entity_relationship($user_guid, 'notify' . $method, $friend_guid);
+						elgg_add_subscription($user_guid, $method, $friend_guid);
 					}
 				}
 			}

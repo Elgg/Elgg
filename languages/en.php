@@ -1973,4 +1973,7 @@ Global variables:
 	
 	"core:upgrade:2020102301:title" => "Remove the diagnostics plugin",
 	"core:upgrade:2020102301:description" => "Deletes the entity associated with the Diagnostics plugin removed in Elgg 4.0",
+	
+	"core:upgrade:2021022401:title" => "Migrate notification subscriptions",
+	"core:upgrade:2021022401:description" => "Notifcation subscriptions are stored differently in the database. Use this upgrade to migrate all subscriptions to the new form.",
 );
