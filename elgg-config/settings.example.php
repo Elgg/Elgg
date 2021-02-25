@@ -385,6 +385,11 @@ $CONFIG->allow_phpinfo = false;
 //$CONFIG->emailer_transport = 'sendmail';
 
 /**
+ * Configure sendmail related settings
+ */
+//$CONFIG->emailer_sendmail_settings = '';
+
+/**
  * Configure emailer SMTP settings
  *
  * This setting is only necessary if the above emailer transport is set to 'smtp'.
