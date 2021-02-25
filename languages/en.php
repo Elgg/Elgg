@@ -262,6 +262,9 @@ return array(
 	'collection:user' => 'Users',
 	'item:user:user' => 'User',
 	'collection:user:user' => 'Users',
+	'notification:user:user:make_admin' => "Send a notification when a user receives admin rights",
+	'notification:user:user:remove_admin' => "Send a notification when the admin rights of a user are revoked",
+	'notification:user:user:unban' => "Send a notification when a user is unbanned",
 
 	'friends' => "Friends",
 	'collection:friends' => 'Friends\' %s',
@@ -1600,6 +1603,7 @@ To go the the website, click here:
 	'comments:count' => "%s comments",
 	'item:object:comment' => 'Comment',
 	'collection:object:comment' => 'Comments',
+	'notification:object:comment:create' => "Send a notification when a comment is created",
 
 	'river:object:default:comment' => '%s commented on %s',
 

@@ -220,6 +220,7 @@ Datamodel / Schema changes
 
 * The ``access_id``, ``owner_guid`` and  ``enabled`` columns in the ``metadata`` table have been removed
 * The ``enabled`` column in the ``river`` table has been removed
+* The ``relationship`` column in the ``entity_relationships`` table now has a max length of 255 (up from 50) 
 
 ElggEntity attributes
 ---------------------
@@ -633,6 +634,7 @@ Miscellaneous API changes
 * ``ElggData::save()`` now always returns a ``bool`` as documented. All extending classes have been updated (eg. ``ElggEntity``, ``ElggMetadata``, ``ElggRelationship``, etc.)
 * ``Elgg\Email::getTo()`` now always returns an ``array``
 * ``ElggPlugin::activate()`` and ``ElggPlugin::deactivate()`` now can throw an ``Elgg\Exceptions\PluginException`` with more details about the failure
+* ``\ElggRelationship::RELATIONSHIP_LIMIT`` has been removed use \Elgg\Database\RelationshipsTable::RELATIONSHIP_COLUMN_LENGTH``
 
 Deprecated APIs
 ---------------

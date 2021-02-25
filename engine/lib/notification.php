@@ -130,17 +130,39 @@ function elgg_unregister_notification_method($name): bool {
 }
 
 /**
+ * Get the registered notification events in the format
+ *
+ * array (
+ * 		<type> => array (
+ * 			<subtype> => array (
+ * 				<action1>,
+ * 				<action2>,
+ * 			)
+ * 		)
+ * )
+ *
+ * @return array
+ * @since 4.0
+ */
+function elgg_get_notification_events(): array {
+	return _elgg_services()->notifications->getEvents();
+}
+
+/**
  * Subscribe a user to notifications about a target entity
  *
  * @param int    $user_guid   The GUID of the user to subscribe to notifications
  * @param string $method      The delivery method of the notifications
  * @param int    $target_guid The entity to receive notifications about
+ * @param string $type        (optional) entity type
+ * @param string $subtype     (optional) entity subtype
+ * @param string $action      (optional) notification action (eg. 'create')
  *
  * @return bool
  * @since 1.9
  */
-function elgg_add_subscription(int $user_guid, string $method, int $target_guid): bool {
-	return _elgg_services()->subscriptions->addSubscription($user_guid, $method, $target_guid);
+function elgg_add_subscription(int $user_guid, string $method, int $target_guid, string $type = null, string $subtype = null, string $action = null): bool {
+	return _elgg_services()->subscriptions->addSubscription($user_guid, $method, $target_guid, $type, $subtype, $action);
 }
 
 /**
@@ -149,12 +171,15 @@ function elgg_add_subscription(int $user_guid, string $method, int $target_guid)
  * @param int    $user_guid   The GUID of the user to unsubscribe to notifications
  * @param string $method      The delivery method of the notifications to stop
  * @param int    $target_guid The entity to stop receiving notifications about
+ * @param string $type        (optional) entity type
+ * @param string $subtype     (optional) entity subtype
+ * @param string $action      (optional) notification action (eg. 'create')
  *
  * @return bool
  * @since 1.9
  */
-function elgg_remove_subscription(int $user_guid, string $method, int $target_guid): bool {
-	return _elgg_services()->subscriptions->removeSubscription($user_guid, $method, $target_guid);
+function elgg_remove_subscription(int $user_guid, string $method, int $target_guid, string $type = null, string $subtype = null, string $action = null): bool {
+	return _elgg_services()->subscriptions->removeSubscription($user_guid, $method, $target_guid, $type, $subtype, $action);
 }
 
 /**

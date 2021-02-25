@@ -16,16 +16,22 @@ if (empty($methods)) {
 }
 
 $subscriptions = (array) get_input('subscriptions', []);
-foreach ($subscriptions as $target_guid => $preferred_methods) {
-	if (!is_array($preferred_methods)) {
-		$preferred_methods = [];
-	}
-	
-	foreach ($methods as $method) {
-		if (in_array($method, $preferred_methods)) {
-			elgg_add_subscription($user->guid, $method, $target_guid);
-		} else {
-			elgg_remove_subscription($user->guid, $method, $target_guid);
+
+foreach ($subscriptions as $target_guid => $keys) {
+	foreach ($keys as $key => $preferred_methods) {
+		list (, $type, $subtype, $action) = explode(':', $key);
+		
+		if (!is_array($preferred_methods)) {
+			$preferred_methods = [];
+		}
+		
+		elgg_log("{$target_guid}:{$key}:{$type}:{$subtype}:{$action} => " . var_export($preferred_methods, true), 'ERROR');
+		foreach ($methods as $method) {
+			if (in_array($method, $preferred_methods)) {
+				elgg_add_subscription($user->guid, $method, $target_guid, $type, $subtype, $action);
+			} else {
+				elgg_remove_subscription($user->guid, $method, $target_guid, $type, $subtype, $action);
+			}
 		}
 	}
 }

@@ -77,16 +77,23 @@ class SubscriptionsService {
 
 		// get subscribers only for \ElggEntity if it isn't private
 		if (($object instanceof \ElggEntity) && ($object->access_id !== ACCESS_PRIVATE)) {
-			$prefixLength = strlen(self::RELATIONSHIP_PREFIX . ':');
-			
-			$records = $this->getSubscriptionRecords($object->getContainerGUID(), $methods);
+			$records = $this->getSubscriptionRecords($object->getContainerGUID(), $methods, $object->type, $object->subtype, $event->getAction());
 			foreach ($records as $record) {
 				if (empty($record->guid)) {
 					// happens when no records are found
 					continue;
 				}
+				
+				if (!isset($subscriptions[$record->guid])) {
+					$subscriptions[$record->guid] = [];
+				}
+				
 				$deliveryMethods = explode(',', $record->methods);
-				$subscriptions[$record->guid] = substr_replace($deliveryMethods, '', 0, $prefixLength);
+				foreach ($deliveryMethods as $relationship) {
+					$relationship_array = explode(':', $relationship);
+					
+					$subscriptions[$record->guid][] = end($relationship_array);
+				}
 			}
 		}
 
@@ -120,16 +127,23 @@ class SubscriptionsService {
 
 		$subscriptions = [];
 
-		$prefixLength = strlen(self::RELATIONSHIP_PREFIX . ':');
-		
 		$records = $this->getSubscriptionRecords($container_guid, $methods);
 		foreach ($records as $record) {
 			if (empty($record->guid)) {
 				// happens when no records are found
 				continue;
 			}
+			
+			if (!isset($subscriptions[$record->guid])) {
+				$subscriptions[$record->guid] = [];
+			}
+			
 			$deliveryMethods = explode(',', $record->methods);
-			$subscriptions[$record->guid] = substr_replace($deliveryMethods, '', 0, $prefixLength);
+			foreach ($deliveryMethods as $relationship) {
+				$relationship_array = explode(':', $relationship);
+				
+				$subscriptions[$record->guid][] = end($relationship_array);
+			}
 		}
 
 		return $subscriptions;
@@ -143,13 +157,26 @@ class SubscriptionsService {
 	 * @param int    $userGuid   The GUID of the user to subscribe to notifications
 	 * @param string $method     The delivery method of the notifications
 	 * @param int    $targetGuid The entity to receive notifications about
+	 * @param string $type       (optional) entity type
+	 * @param string $subtype    (optional) entity subtype
+	 * @param string $action     (optional) notification action (eg. 'create')
 	 *
 	 * @return bool
 	 */
-	public function addSubscription(int $userGuid, string $method, int $targetGuid) {
-		$prefix = self::RELATIONSHIP_PREFIX;
+	public function addSubscription(int $userGuid, string $method, int $targetGuid, string $type = null, string $subtype = null, string $action = null) {
+		$rel = [
+			self::RELATIONSHIP_PREFIX,
+		];
 		
-		return $this->relationshipsTable->add($userGuid, "{$prefix}:{$method}", $targetGuid);
+		if (!empty($type) && !empty($subtype) && !empty($action)) {
+			$rel[] = $type;
+			$rel[] = $subtype;
+			$rel[] = $action;
+		}
+		
+		$rel[] = $method;
+		
+		return $this->relationshipsTable->add($userGuid, implode(':', $rel), $targetGuid);
 	}
 
 	/**
@@ -158,13 +185,26 @@ class SubscriptionsService {
 	 * @param int    $userGuid   The GUID of the user to unsubscribe to notifications
 	 * @param string $method     The delivery method of the notifications to stop
 	 * @param int    $targetGuid The entity to stop receiving notifications about
+	 * @param string $type       (optional) entity type
+	 * @param string $subtype    (optional) entity subtype
+	 * @param string $action     (optional) notification action (eg. 'create')
 	 *
 	 * @return bool
 	 */
-	public function removeSubscription(int $userGuid, string $method, int $targetGuid) {
-		$prefix = self::RELATIONSHIP_PREFIX;
+	public function removeSubscription(int $userGuid, string $method, int $targetGuid, string $type = null, string $subtype = null, string $action = null) {
+		$rel = [
+			self::RELATIONSHIP_PREFIX,
+		];
 		
-		return $this->relationshipsTable->remove($userGuid, "{$prefix}:{$method}", $targetGuid);
+		if (!empty($type) && !empty($subtype) && !empty($action)) {
+			$rel[] = $type;
+			$rel[] = $subtype;
+			$rel[] = $action;
+		}
+		
+		$rel[] = $method;
+		
+		return $this->relationshipsTable->remove($userGuid, implode(':', $rel), $targetGuid);
 	}
 
 	/**
@@ -173,14 +213,17 @@ class SubscriptionsService {
 	 * Records are an object with two vars: guid and methods with the latter
 	 * being a comma-separated list of subscription relationship names.
 	 *
-	 * @param int   $container_guid The GUID of the subscription target
-	 * @param array $methods        Notification methods
+	 * @param int    $container_guid The GUID of the subscription target
+	 * @param array  $methods        Notification methods
+	 * @param string $type           (optional) entity type
+	 * @param string $subtype        (optional) entity subtype
+	 * @param string $action         (optional) notification action (eg. 'create')
 	 *
 	 * @return array
 	 */
-	protected function getSubscriptionRecords(int $container_guid, array $methods) {
+	protected function getSubscriptionRecords(int $container_guid, array $methods, string $type = null, string $subtype = null, string $action = null): array {
 		// create IN clause
-		$rels = $this->getMethodRelationships($methods);
+		$rels = $this->getMethodRelationships($methods, $type, $subtype, $action);
 		if (!$rels) {
 			return [];
 		}
@@ -197,16 +240,23 @@ class SubscriptionsService {
 	/**
 	 * Get the relationship names for notifications
 	 *
-	 * @param array $methods Notification methods
+	 * @param array  $methods  Notification methods
+	 * @param string $type     (optional) entity type
+	 * @param string $subtype  (optional) entity subtype
+	 * @param string $action   (optional) notification action (eg. 'create')
 	 *
 	 * @return array
 	 */
-	protected function getMethodRelationships(array $methods) {
+	protected function getMethodRelationships(array $methods, string $type = null, string $subtype = null, string $action = null): array {
 		$prefix = self::RELATIONSHIP_PREFIX;
 		
 		$names = [];
 		foreach ($methods as $method) {
 			$names[] = "{$prefix}:{$method}";
+			
+			if (!empty($type) && !empty($subtype) && !empty($action)) {
+				$names[] = "{$prefix}:{$type}:{$subtype}:{$action}:{$method}";
+			}
 		}
 		
 		return $names;
