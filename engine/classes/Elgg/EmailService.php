@@ -73,7 +73,7 @@ class EmailService {
 			'email' => $email,
 		];
 
-		$is_valid = $email->getFrom() && $email->getTo();
+		$is_valid = $email->getFrom() && !empty($email->getTo());
 		if (!$this->hooks->trigger('validate', 'system:email', $hook_params, $is_valid)) {
 			return false;
 		}
@@ -105,6 +105,8 @@ class EmailService {
 		$message->setSender($email->getFrom());
 		$message->addFrom($email->getFrom());
 		$message->addTo($email->getTo());
+		$message->addCc($email->getCc());
+		$message->addBcc($email->getBcc());
 		
 		// set headers
 		$headers = [
