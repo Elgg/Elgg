@@ -372,6 +372,14 @@ $CONFIG->allow_phpinfo = false;
  */
 //$CONFIG->image_processor = 'imagick';
 
+/**
+ * Email subject length limit
+ *
+ * The length limit for email subjects, defaults to 998 as described in http://www.faqs.org/rfcs/rfc2822.html
+ *
+ * @global int $CONFIG->emailer_transport
+ */
+//$CONFIG->email_subject_limit = 998;
 
 /**
  * Configure emailer transport

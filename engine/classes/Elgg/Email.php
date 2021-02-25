@@ -228,10 +228,13 @@ final class Email {
 
 	/**
 	 * Returns the subject
+	 *
+	 * It is possible to limit the length of the subject string. This is sometimes needed for certain mail servers / clients.
+	 *
 	 * @return string
 	 */
 	public function getSubject() {
-		return $this->subject;
+		return elgg_substr($this->subject, 0, (int) _elgg_services()->config->email_subject_limit);
 	}
 
 	/**

@@ -297,4 +297,12 @@ class EmailUnitTest extends UnitTestCase {
 		$email->setSender('bar');
 		$this->assertEquals('bar', $email->getSender());
 	}
+	
+	function testSubjectIsLimited() {
+		_elgg_services()->config->email_subject_limit = 7;
+		$email = new Email();
+		$email->setSubject('too long text');
+		
+		$this->assertEquals('too lon', $email->getSubject());
+	}
 }
