@@ -88,6 +88,7 @@ use Elgg\Project\Paths;
  * @property array         $profile_fields
  * @property string        $profiling_minimum_percentage
  * @property bool          $profiling_sql
+ * @property array         $proxy                                   Contains proxy related settings
  * @property bool          $redis
  * @property array         $redis_options
  * @property array         $redis_servers

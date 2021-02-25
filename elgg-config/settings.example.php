@@ -406,6 +406,19 @@ $CONFIG->allow_phpinfo = false;
 //);
 
 /**
+ * Proxy configuration
+ *
+ * These settings can be used whenever there is the need to (optionally) configure a proxy
+ */
+$CONFIG->proxy = [
+// 	'host' => '127.0.0.1',
+// 	'port' => 25,
+// 	'verify_ssl' => false,
+// 	'username' => 'user',
+// 	'password' => 'pass',
+];
+
+/**
  * Logging level
  *
  * By default, the logging level at boot-time is calculated from PHP's error_reporting(), and during boot
