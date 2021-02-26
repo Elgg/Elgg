@@ -149,40 +149,6 @@ function elgg_get_notification_events(): array {
 }
 
 /**
- * Subscribe a user to notifications about a target entity
- *
- * @param int    $user_guid   The GUID of the user to subscribe to notifications
- * @param string $method      The delivery method of the notifications
- * @param int    $target_guid The entity to receive notifications about
- * @param string $type        (optional) entity type
- * @param string $subtype     (optional) entity subtype
- * @param string $action      (optional) notification action (eg. 'create')
- *
- * @return bool
- * @since 1.9
- */
-function elgg_add_subscription(int $user_guid, string $method, int $target_guid, string $type = null, string $subtype = null, string $action = null): bool {
-	return _elgg_services()->subscriptions->addSubscription($user_guid, $method, $target_guid, $type, $subtype, $action);
-}
-
-/**
- * Unsubscribe a user to notifications about a target entity
- *
- * @param int    $user_guid   The GUID of the user to unsubscribe to notifications
- * @param string $method      The delivery method of the notifications to stop
- * @param int    $target_guid The entity to stop receiving notifications about
- * @param string $type        (optional) entity type
- * @param string $subtype     (optional) entity subtype
- * @param string $action      (optional) notification action (eg. 'create')
- *
- * @return bool
- * @since 1.9
- */
-function elgg_remove_subscription(int $user_guid, string $method, int $target_guid, string $type = null, string $subtype = null, string $action = null): bool {
-	return _elgg_services()->subscriptions->removeSubscription($user_guid, $method, $target_guid, $type, $subtype, $action);
-}
-
-/**
  * Get the subscriptions for the content created inside this container.
  *
  * The return array is of the form:

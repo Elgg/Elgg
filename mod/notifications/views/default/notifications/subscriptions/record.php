@@ -49,7 +49,7 @@ if (isset($relationships_concat)) {
 	}
 } else {
 	foreach ($methods as $method) {
-		if (check_entity_relationship($user->guid, "notify:{$method}", $entity->guid)) {
+		if ($entity->hasSubscription($user->guid, $method)) {
 			$preferred_methods[$method] = $method;
 		}
 	}

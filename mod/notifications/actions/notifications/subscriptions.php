@@ -16,8 +16,20 @@ if (empty($methods)) {
 }
 
 $subscriptions = (array) get_input('subscriptions', []);
+if (empty($subscriptions)) {
+	return elgg_error_response(elgg_echo('error:missing_data'));
+}
 
-foreach ($subscriptions as $target_guid => $keys) {
+$targets = elgg_get_entities([
+	'guids' => array_keys($subscriptions),
+	'limit' => false,
+	'batch' => true,
+]);
+
+/* @var $target \ElggEntity */
+foreach ($targets as $target) {
+	$keys = $subscriptions[$target->guid];
+	
 	foreach ($keys as $key => $preferred_methods) {
 		list (, $type, $subtype, $action) = explode(':', $key);
 		
@@ -25,12 +37,11 @@ foreach ($subscriptions as $target_guid => $keys) {
 			$preferred_methods = [];
 		}
 		
-		elgg_log("{$target_guid}:{$key}:{$type}:{$subtype}:{$action} => " . var_export($preferred_methods, true), 'ERROR');
 		foreach ($methods as $method) {
 			if (in_array($method, $preferred_methods)) {
-				elgg_add_subscription($user->guid, $method, $target_guid, $type, $subtype, $action);
+				$target->addSubscription($user->guid, $method, $type, $subtype, $action);
 			} else {
-				elgg_remove_subscription($user->guid, $method, $target_guid, $type, $subtype, $action);
+				$target->removeSubscription($user->guid, $method, $type, $subtype, $action);
 			}
 		}
 	}

@@ -82,7 +82,7 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testGetSubscriptionsWithNoMethodsProvided() {
-		$this->assertEquals([], $this->service->getSubscriptions($this->event, []));
+		$this->assertEquals([], $this->service->getNotificationEventSubscriptions($this->event, []));
 	}
 
 	public function testGetSubscriptionsWithBadObject() {
@@ -96,7 +96,7 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 			'one',
 			'two'
 		];
-		$this->assertEquals([], $this->service->getSubscriptions($this->event, $methods));
+		$this->assertEquals([], $this->service->getNotificationEventSubscriptions($this->event, $methods));
 	}
 
 	public function testQueryGenerationForRetrievingSubscriptionRelationships() {
@@ -116,7 +116,7 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 			->with($this->equalTo($select))
 			->will($this->returnValue([]));
 
-		$this->assertEquals([], $this->service->getSubscriptions($this->event, $methods));
+		$this->assertEquals([], $this->service->getNotificationEventSubscriptions($this->event, $methods));
 	}
 
 	public function testGetSubscriptionsWithProperInput() {
@@ -146,7 +146,7 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 			->method('getData')
 			->will($this->returnValue($queryResult));
 
-		$this->assertEquals($subscriptions, $this->service->getSubscriptions($this->event, $methods));
+		$this->assertEquals($subscriptions, $this->service->getNotificationEventSubscriptions($this->event, $methods));
 	}
 
 	public function testGetSubscriptionsForContainerWithNoMethodsProvided() {

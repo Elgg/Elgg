@@ -247,18 +247,13 @@ Example:
 Subscriptions
 =============
 
-In most cases Elgg core takes care of handling the subscriptions,
-so notification plugins don't usually have to alter them.
+In most cases Elgg core takes care of handling the subscriptions, so notification plugins don't usually have to alter them.
 
 Subscriptions can however be:
- - Added using the `elgg_add_subscription()`__ function
- - Removed using the `elgg_remove_subscription()`__ function
+ - Added using the `\ElggEntity::addSubscription()` function
+ - Removed using the `\ElggEntity::removeSubscription()` function
 
-__ http://reference.elgg.org/notification_8php.html#ab793c2e2a7027cfe3a1db3395f85917b
-__ http://reference.elgg.org/notification_8php.html#a619fcbadea86921f7a19fb09a6319de7
-
-It's possible to modify the recipients of a notification dynamically
-with the ``'get', 'subscriptions'`` hook.
+It's possible to modify the recipients of a notification dynamically with the ``'get', 'subscriptions'`` hook.
 
 Example:
 --------

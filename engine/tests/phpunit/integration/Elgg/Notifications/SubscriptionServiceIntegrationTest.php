@@ -15,6 +15,12 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	 * {@inheritDoc}
 	 */
 	public function up() {
+		$this->createApplication([
+			'isolate' => true,
+		]);
+		_elgg_services()->notifications->registerMethod('apples');
+		_elgg_services()->notifications->registerMethod('bananas');
+		
 		$this->service = _elgg_services()->subscriptions;
 	}
 
@@ -30,20 +36,20 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$target = $this->createGroup();
 		
 		// add subscription
-		$this->assertTrue($this->service->addSubscription($user->guid, 'mail', $target->guid));
+		$this->assertTrue($this->service->addSubscription($user->guid, 'apples', $target->guid));
 		
 		$expected = [
-			$user->guid => ['mail'],
+			$user->guid => ['apples'],
 		];
-		$this->assertEquals($expected, $this->service->getSubscriptionsForContainer($target->guid, ['mail', 'site']));
+		$this->assertEquals($expected, $this->service->getSubscriptionsForContainer($target->guid, ['apples', 'bananas']));
 		
 		// remove subscription
-		$this->assertTrue($this->service->removeSubscription($user->guid, 'mail', $target->guid));
+		$this->assertTrue($this->service->removeSubscription($user->guid, 'apples', $target->guid));
 		// remove non existing subscription
-		$this->assertFalse($this->service->removeSubscription($user->guid, 'site', $target->guid));
+		$this->assertFalse($this->service->removeSubscription($user->guid, 'bananas', $target->guid));
 		
 		// check if all was removed
-		$this->assertEmpty($this->service->getSubscriptionsForContainer($target->guid, ['mail', 'site']));
+		$this->assertEmpty($this->service->getSubscriptionsForContainer($target->guid, ['apples', 'bananas']));
 		
 		$user->delete();
 		$target->delete();
@@ -67,26 +73,26 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$event2 = new SubscriptionNotificationEvent($object2, 'create', $object->getOwnerEntity());
 		
 		// add subscription
-		$this->assertTrue($this->service->addSubscription($user->guid, 'mail', $target->guid, $object->type, $object->subtype, $event->getAction()));
+		$this->assertTrue($this->service->addSubscription($user->guid, 'apples', $target->guid, $object->type, $object->subtype, $event->getAction()));
 		
 		// check subscriptions
 		$expected = [
-			$user->guid => ['mail'],
+			$user->guid => ['apples'],
 		];
-		$this->assertEquals($expected, $this->service->getSubscriptions($event, ['mail', 'site']));
+		$this->assertEquals($expected, $this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
 		
 		// test with a different notification
-		$this->assertEmpty($this->service->getSubscriptions($event2, ['mail', 'site']));
+		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event2, ['apples', 'bananas']));
 		
 		// remove subscription
-		$this->assertFalse($this->service->removeSubscription($user->guid, 'mail', $target->guid));
-		$this->assertTrue($this->service->removeSubscription($user->guid, 'mail', $target->guid, $object->type, $object->subtype, $event->getAction()));
+		$this->assertFalse($this->service->removeSubscription($user->guid, 'apples', $target->guid));
+		$this->assertTrue($this->service->removeSubscription($user->guid, 'apples', $target->guid, $object->type, $object->subtype, $event->getAction()));
 		
 		// remove non existing subscription
-		$this->assertFalse($this->service->removeSubscription($user->guid, 'site', $target->guid, $object->type, $object->subtype, $event->getAction()));
+		$this->assertFalse($this->service->removeSubscription($user->guid, 'bananas', $target->guid, $object->type, $object->subtype, $event->getAction()));
 		
 		// check if all was removed
-		$this->assertEmpty($this->service->getSubscriptions($event, ['mail', 'site']));
+		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
 		
 		$user->delete();
 		$target->delete();

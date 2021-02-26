@@ -6,6 +6,8 @@ use Elgg\Database;
 use Elgg\Database\RelationshipsTable;
 use Elgg\PluginHooksService;
 use Elgg\Database\Select;
+use Elgg\Database\Delete;
+use Elgg\Database\QueryBuilder;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -62,7 +64,7 @@ class SubscriptionsService {
 	 *
 	 * @return array
 	 */
-	public function getSubscriptions(NotificationEvent $event, array $methods) {
+	public function getNotificationEventSubscriptions(NotificationEvent $event, array $methods) {
 
 		if (empty($methods)) {
 			return [];
@@ -168,6 +170,10 @@ class SubscriptionsService {
 			self::RELATIONSHIP_PREFIX,
 		];
 		
+		if (!_elgg_services()->notifications->isRegisteredMethod($method)) {
+			return false;
+		}
+		
 		if (!empty($type) && !empty($subtype) && !empty($action)) {
 			$rel[] = $type;
 			$rel[] = $subtype;
@@ -177,6 +183,74 @@ class SubscriptionsService {
 		$rel[] = $method;
 		
 		return $this->relationshipsTable->add($user_guid, implode(':', $rel), $target_guid);
+	}
+	
+	/**
+	 * Check if a subscription exists
+	 *
+	 * @param int    $user_guid   The GUID of the user to check subscriptions for
+	 * @param string $method      The delivery method of the notifications
+	 * @param int    $target_guid The entity to receive notifications about
+	 * @param string $type        (optional) entity type
+	 * @param string $subtype     (optional) entity subtype
+	 * @param string $action      (optional) notification action (eg. 'create')
+	 *
+	 * @return bool
+	 * @since 4.0
+	 */
+	public function hasSubscription(int $user_guid, string $method, int $target_guid, string $type = null, string $subtype = null, string $action = null): bool {
+		$rel = [
+			self::RELATIONSHIP_PREFIX,
+		];
+		
+		if (!empty($type) && !empty($subtype) && !empty($action)) {
+			$rel[] = $type;
+			$rel[] = $subtype;
+			$rel[] = $action;
+		}
+		
+		$rel[] = $method;
+		
+		return $this->relationshipsTable->check($user_guid, implode(':', $rel), $target_guid) instanceof \ElggRelationship;
+	}
+	
+	/**
+	 * Check if any subscription exists
+	 *
+	 * @param int   $user_guid   The GUID of the user to check subscriptions for
+	 * @param int   $target_guid The entity to receive notifications about
+	 * @param array $methods     The delivery method of the notifications
+	 *
+	 * @return bool
+	 * @since 4.0
+	 */
+	public function hasSubscriptions(int $user_guid, int $target_guid, array $methods = []): bool {
+		if (empty($methods)) {
+			// all currently registered methods
+			$methods = _elgg_services()->notifications->getMethods();
+		}
+		
+		if (empty($methods)) {
+			// no methods available
+			return false;
+		}
+		
+		$select = Select::fromTable('entity_relationships');
+		$select->select('count(*) as total')
+			->where($select->compare('guid_one', '=', $user_guid, ELGG_VALUE_GUID))
+			->andWhere($select->compare('guid_two', '=', $target_guid, ELGG_VALUE_GUID));
+		
+		$ors = [];
+		foreach ($methods as $method) {
+			$ors[] = $select->compare('relationship', '=', self::RELATIONSHIP_PREFIX . ':' . $method, ELGG_VALUE_STRING);
+			$ors[] = $select->compare('relationship', 'like', self::RELATIONSHIP_PREFIX . ':%:' . $method, ELGG_VALUE_STRING);
+		}
+		
+		$select->andWhere($select->merge($ors, 'OR'));
+		
+		$result = $this->db->getDataRow($select);
+		
+		return (bool) $result->total;
 	}
 
 	/**
@@ -205,6 +279,138 @@ class SubscriptionsService {
 		$rel[] = $method;
 		
 		return $this->relationshipsTable->remove($user_guid, implode(':', $rel), $target_guid);
+	}
+	
+	/**
+	 * Unsubscribe a user from all notifications about the target entity
+	 *
+	 * @param int   $user_guid   The GUID of the user to unsubscribe to notifications
+	 * @param int   $target_guid The entity to stop receiving notifications about
+	 * @param array $methods     (optional) The delivery method of the notifications to stop
+	 *
+	 * @return bool
+	 * @since 4.0
+	 */
+	public function removeSubscriptions(int $user_guid, int $target_guid, array $methods = []): bool {
+		$delete = Delete::fromTable('entity_relationships');
+		$delete->where($delete->compare('guid_one', '=', $user_guid, ELGG_VALUE_GUID))
+			->andWhere($delete->compare('guid_two', '=', $target_guid, ELGG_VALUE_GUID));
+		
+		if (empty($methods)) {
+			$delete->andWhere($delete->compare('relationship', 'like', self::RELATIONSHIP_PREFIX . ':%', ELGG_VALUE_STRING));
+		} else {
+			$ors = [];
+			foreach ($methods as $method) {
+				$ors[] = $delete->compare('relationship', '=', self::RELATIONSHIP_PREFIX . ':' . $method, ELGG_VALUE_STRING);
+				$ors[] = $delete->compare('relationship', 'like', self::RELATIONSHIP_PREFIX . ':%:' . $method, ELGG_VALUE_STRING);
+			}
+			
+			$delete->andWhere($delete->merge($ors, 'OR'));
+		}
+		
+		return (bool) $this->db->deleteData($delete);
+	}
+	
+	/**
+	 * Get all subscribers of the target guid
+	 *
+	 * @param int   $target_guid the entity of the subscriptions
+	 * @param array $methods     (optional) The delivery method of the notifications
+	 *
+	 * @return \ElggEntity[]
+	 */
+	public function getSubscribers(int $target_guid, array $methods = []): array {
+		return elgg_get_entities([
+			'limit' => false,
+			'wheres' => [
+				function(QueryBuilder $qb, $main_alias) use ($target_guid) {
+					$rel = $qb->joinRelationshipTable($main_alias, 'guid', null, true);
+					
+					return $qb->compare("{$rel}.guid_two", '=', $target_guid, ELGG_VALUE_GUID);
+				},
+				function(QueryBuilder $qb, $main_alias) use ($methods) {
+					$rel = $qb->joinRelationshipTable($main_alias, 'guid', null, true);
+					
+					if (empty($methods)) {
+						return $qb->compare("{$rel}.relationship", 'like', self::RELATIONSHIP_PREFIX . ':%', ELGG_VALUE_STRING);
+					}
+					
+					$ors = [];
+					foreach ($methods as $method) {
+						$ors[] = $qb->compare("{$rel}.relationship", '=', self::RELATIONSHIP_PREFIX . ':' . $method, ELGG_VALUE_STRING);
+						$ors[] = $qb->compare("{$rel}.relationship", 'like', self::RELATIONSHIP_PREFIX . ':%:' . $method, ELGG_VALUE_STRING);
+					}
+					
+					return $qb->merge($ors, 'OR');
+				},
+			],
+		]);
+	}
+	
+	/**
+	 * Get the current subscriptions for the given entity
+	 *
+	 * @param int    $target_guid The GUID of the entity to get subscriptions for
+	 * @param int    $user_guid   The GUID of the user to check subscriptions for
+	 * @param string $methods     The delivery method of the notifications
+	 * @param string $type        (optional) entity type
+	 * @param string $subtype     (optional) entity subtype
+	 * @param string $action      (optional) notification action (eg. 'create')
+	 *
+	 * @return \ElggRelationship[]
+	 */
+	public function getEntitySubscriptions(int $target_guid = 0, int $user_guid = 0, array $methods = [], string $type = null, string $subtype = null, string $action = null): array {
+		if (empty($target_guid) && empty($user_guid)) {
+			return [];
+		}
+		
+		if (empty($target_guid)) {
+			$target_guid = ELGG_ENTITIES_ANY_VALUE;
+		}
+		
+		return elgg_get_relationships([
+			'limit' => false,
+			'wheres' => [
+				function(QueryBuilder $qb, $main_alias) use ($target_guid) {
+					if (empty($target_guid)) {
+						return;
+					}
+					
+					return $qb->compare("{$main_alias}.guid_two", '=', $target_guid, ELGG_VALUE_GUID);
+				},
+				function(QueryBuilder $qb, $main_alias) use ($user_guid) {
+					if (empty($user_guid)) {
+						return;
+					}
+					
+					return $qb->compare("{$main_alias}.guid_one", '=', $user_guid, ELGG_VALUE_GUID);
+				},
+				function(QueryBuilder $qb, $main_alias) use ($methods, $type, $subtype, $action) {
+					if (empty($methods) && (empty($type) || empty($subtype) || empty($action))) {
+						return $qb->compare("{$main_alias}.relationship", 'like', self::RELATIONSHIP_PREFIX . ':%', ELGG_VALUE_STRING);
+					}
+					
+					if (!empty($methods)) {
+						if (empty($type) || empty($subtype) || empty($action)) {
+							// only methods
+							$ors = [];
+							foreach ($methods as $method) {
+								$ors[] = $qb->compare("{$main_alias}.relationship", '=', self::RELATIONSHIP_PREFIX . ':' . $method, ELGG_VALUE_STRING);
+								$ors[] = $qb->compare("{$main_alias}.relationship", 'like', self::RELATIONSHIP_PREFIX . ':%:' . $method, ELGG_VALUE_STRING);
+							}
+							
+							return $qb->merge($ors, 'OR');
+						} else {
+							// with type limitation
+							return $qb->compare("{$main_alias}.relationship", 'in', $this->getMethodRelationships($methods, $type, $subtype, $action), ELGG_VALUE_STRING);
+						}
+					}
+					
+					// only type limitation
+					return $qb->compare("{$main_alias}.relationship", 'like', self::RELATIONSHIP_PREFIX . ":{$type}:{$subtype}:{$action}:%", ELGG_VALUE_STRING);
+				}
+			],
+		]);
 	}
 
 	/**
@@ -240,10 +446,10 @@ class SubscriptionsService {
 	/**
 	 * Get the relationship names for notifications
 	 *
-	 * @param array  $methods  Notification methods
-	 * @param string $type     (optional) entity type
-	 * @param string $subtype  (optional) entity subtype
-	 * @param string $action   (optional) notification action (eg. 'create')
+	 * @param array  $methods Notification methods
+	 * @param string $type    (optional) entity type
+	 * @param string $subtype (optional) entity subtype
+	 * @param string $action  (optional) notification action (eg. 'create')
 	 *
 	 * @return array
 	 */

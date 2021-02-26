@@ -26,16 +26,22 @@ class Relationships {
 		if (!$collection instanceof \ElggAccessCollection) {
 			return;
 		}
-		$user = get_entity($collection->owner_guid);
+		
+		$user = $collection->getOwnerEntity();
 		if (!$user instanceof \ElggUser) {
 			return;
 		}
-	
+		
 		$member_guid = (int) $hook->getParam('user_guid');
 		if (empty($member_guid)) {
 			return;
 		}
-	
+		
+		$member = get_entity($member_guid);
+		if (!$member instanceof \ElggEntity) {
+			return;
+		}
+		
 		// loop through all notification types
 		$methods = elgg_get_notification_methods();
 		foreach ($methods as $method) {
@@ -52,9 +58,10 @@ class Relationships {
 				// since must be a friend to be in an access collection
 				continue;
 			}
+			
 			if (in_array($collection_id, $collections_preferences)) {
 				// notifications are on for this collection so we add/remove
-				elgg_add_subscription($user->guid, $method, $member_guid);
+				$member->addSubscription($user->guid, $method);
 			}
 		}
 	}
@@ -76,10 +83,13 @@ class Relationships {
 			return;
 		}
 		
-		$methods = elgg_get_notification_methods();
-		foreach ($methods as $method) {
-			elgg_remove_subscription($relationship->guid_one, $method, $relationship->guid_two);
+		$user = get_entity($relationship->guid_one);
+		$target = get_entity($relationship->guid_two);
+		if (empty($user) || empty($target)) {
+			return;
 		}
+		
+		$target->removeSubscriptions($user->guid);
 	}
 	
 	/**
@@ -97,7 +107,7 @@ class Relationships {
 		
 		// The handler gets triggered regardless of which relationship was
 		// created, so proceed only if dealing with a 'friend' relationship.
-		if ($relationship->relationship != 'friend') {
+		if ($relationship->relationship !== 'friend') {
 			return;
 		}
 	
@@ -105,22 +115,31 @@ class Relationships {
 		$friend_guid = $relationship->guid_two;
 	
 		$user = get_entity($user_guid);
+		$friend = get_entity($friend_guid);
+		if (empty($user) || empty($friend)) {
+			return;
+		}
 	
 		// loop through all notification types
 		$methods = elgg_get_notification_methods();
 		foreach ($methods as $method) {
 			$metaname = 'collections_notifications_preferences_' . $method;
 			$collections_preferences = $user->$metaname;
-			if ($collections_preferences) {
-				if (!empty($collections_preferences) && !is_array($collections_preferences)) {
-					$collections_preferences = [$collections_preferences];
-				}
-				if (is_array($collections_preferences)) {
-					// -1 means all friends is on - should be a define
-					if (in_array(-1, $collections_preferences)) {
-						elgg_add_subscription($user_guid, $method, $friend_guid);
-					}
-				}
+			if (empty($collections_preferences)) {
+				continue;
+			}
+			
+			if (!empty($collections_preferences) && !is_array($collections_preferences)) {
+				$collections_preferences = [$collections_preferences];
+			}
+			
+			if (!is_array($collections_preferences)) {
+				continue;
+			}
+			
+			// -1 means all friends is on - should be a define
+			if (in_array(-1, $collections_preferences)) {
+				$friend->addSubscription($user->guid, $method);
 			}
 		}
 	}

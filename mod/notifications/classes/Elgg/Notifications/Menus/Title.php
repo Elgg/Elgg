@@ -34,15 +34,8 @@ class Title {
 			return;
 		}
 		
-		$subscribed = false;
-		$methods = elgg_get_notification_methods();
-		foreach ($methods as $method) {
-			$subscribed = check_entity_relationship($user->guid, "notify:{$method}", $group->guid);
-			if ($subscribed) {
-				break;
-			}
-		}
-			
+		$subscribed = $group->hasSubscriptions($user->guid);
+		
 		$items[] = \ElggMenuItem::factory([
 			'name' => 'notifications',
 			'parent_name' => 'group-dropdown',
