@@ -41,11 +41,26 @@ class Page {
 		]);
 		
 		$return[] = \ElggMenuItem::factory([
+			'name' => 'develop_tools:entity_explorer',
+			'href' => 'admin/develop_tools/entity_explorer',
+			'text' => elgg_echo('admin:develop_tools:entity_explorer'),
+			'section' => 'develop',
+		]);
+		
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'develop_tools:sandbox',
+			'href' => 'theme_sandbox/intro',
+			'text' => elgg_echo('admin:develop_tools:sandbox'),
+			'section' => 'develop',
+			'target' => '_blank',
+		]);
+		
+		$return[] = \ElggMenuItem::factory([
 			'name' => 'inspect',
 			'text' => elgg_echo('admin:inspect'),
 			'section' => 'develop',
 		]);
-	
+		
 		$inspect_options = self::getInspectOptions();
 		foreach ($inspect_options as $key => $value) {
 			$return[] = \ElggMenuItem::factory([
@@ -58,29 +73,6 @@ class Page {
 				'parent_name' => 'inspect',
 			]);
 		}
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'develop_tools',
-			'text' => elgg_echo('admin:develop_tools'),
-			'section' => 'develop',
-		]);
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'develop_tools:sandbox',
-			'href' => 'theme_sandbox/intro',
-			'text' => elgg_echo('admin:develop_tools:sandbox'),
-			'parent_name' => 'develop_tools',
-			'section' => 'develop',
-			'target' => '_blank',
-		]);
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'develop_tools:entity_explorer',
-			'href' => 'admin/develop_tools/entity_explorer',
-			'text' => elgg_echo('admin:develop_tools:entity_explorer'),
-			'parent_name' => 'develop_tools',
-			'section' => 'develop',
-		]);
 		
 		return $return;
 	}
