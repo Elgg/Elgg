@@ -49,13 +49,10 @@ class EmailUnitTest extends UnitTestCase {
 		// We never send email from users
 		$site = elgg_get_site_entity();
 		$this->assertEquals(new Address($site->getEmailAddress(), $site->getDisplayName()), $email->getFrom());
-		$this->assertEquals(new Address($to->email, $to->getDisplayName()), $email->getTo());
+		$this->assertEquals(new Address($to->email, $to->getDisplayName()), $email->getTo()[0]);
 		
 		$this->assertInstanceOf(\ElggUser::class, $email->getSender());
 		$this->assertEquals($from->guid, $email->getSender()->guid);
-		
-		$this->assertInstanceOf(\ElggUser::class, $email->getRecipient());
-		$this->assertEquals($to->guid, $email->getRecipient()->guid);
 	}
 
 	public function testFactoryFromEmailString() {
@@ -68,7 +65,7 @@ class EmailUnitTest extends UnitTestCase {
 		]);
 
 		$this->assertEquals(Address::fromString('from@elgg.org'), $email->getFrom());
-		$this->assertEquals(Address::fromString('to@elgg.org'), $email->getTo());
+		$this->assertEquals(Address::fromString('to@elgg.org'), $email->getTo()[0]);
 	}
 
 	public function testFactoryFromContactString() {
@@ -81,7 +78,7 @@ class EmailUnitTest extends UnitTestCase {
 		]);
 
 		$this->assertEquals(new Address('from@elgg.org', 'From'), $email->getFrom());
-		$this->assertEquals(new Address('to@elgg.org', 'To'), $email->getTo());
+		$this->assertEquals(new Address('to@elgg.org', 'To'), $email->getTo()[0]);
 	}
 
 	public function testFactory() {
@@ -105,7 +102,7 @@ class EmailUnitTest extends UnitTestCase {
 		$email->addHeader('Foo2', 'Bar2');
 
 		$this->assertEquals($from, $email->getFrom());
-		$this->assertEquals($to, $email->getTo());
+		$this->assertEquals($to, $email->getTo()[0]);
 		$this->assertEquals('Subject', $email->getSubject());
 		$this->assertEquals('Body', $email->getBody());
 		$this->assertEquals('Subject', $email->getSubject());
@@ -301,12 +298,11 @@ class EmailUnitTest extends UnitTestCase {
 		$this->assertEquals('bar', $email->getSender());
 	}
 	
-	function testRecipientSetAndGet() {
-		
+	function testSubjectIsLimited() {
+		_elgg_services()->config->email_subject_limit = 7;
 		$email = new Email();
-		$this->assertNull($email->getRecipient());
+		$email->setSubject('too long text');
 		
-		$email->setRecipient('bar');
-		$this->assertEquals('bar', $email->getRecipient());
+		$this->assertEquals('too lon', $email->getSubject());
 	}
 }

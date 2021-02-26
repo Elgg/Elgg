@@ -70,6 +70,11 @@ Subscriptions
 
 The relationship in the database which stores the subscription method for notifications has been changed from ``notifymethod`` to ``notify:method``.
 
+Multiple Recipients
+~~~~~~~~~~~~~~~~~~~
+
+An Elgg\Email now supports multiple recipients in To, Cc and Bcc. The related getter functions like ``getTo()`` will now always return an array.
+
 Diagnostics Plugin
 ------------------
 
@@ -600,6 +605,7 @@ Miscellaneous API changes
 * An ``\Elgg\Event`` no longer implements the interfaces ``\Elgg\ObjectEvent`` and ``\Elgg\UserEvent`` but still has the same features
 * The view ``output/icon`` no longer uses the ``convert`` view var
 * ``ElggData::save()`` now always returns a ``bool`` as documented. All extending classes have been updated (eg. ``ElggEntity``, ``ElggMetadata``, ``ElggRelationship``, etc.)
+* ``Elgg\Email::getTo()`` now always returns an ``array``
 
 Deprecated APIs
 ---------------
@@ -616,6 +622,8 @@ Class functions
 * ``Elgg\Notifications\NotificationsService::getMethodsAsDeprecatedGlobal()`` use ``elgg_get_notification_methods()``
 * ``Elgg\Notifications\NotificationsService::registerDeprecatedHandler()``
 * ``Elgg\Notifications\NotificationsService::setDeprecatedNotificationSubject()``
+* ``Elgg\Email::getRecipient()`` use ``Elgg\Email::getTo()``
+* ``Elgg\Email::setRecipient()``
 * ``Elgg\Entity::getLocation()`` use ``$entity->location``
 * ``Elgg\Entity::setLocation()`` use ``$entity->location = $location``
 

@@ -372,6 +372,14 @@ $CONFIG->allow_phpinfo = false;
  */
 //$CONFIG->image_processor = 'imagick';
 
+/**
+ * Email subject length limit
+ *
+ * The length limit for email subjects, defaults to 998 as described in http://www.faqs.org/rfcs/rfc2822.html
+ *
+ * @global int $CONFIG->emailer_transport
+ */
+//$CONFIG->email_subject_limit = 998;
 
 /**
  * Configure emailer transport
@@ -383,6 +391,11 @@ $CONFIG->allow_phpinfo = false;
  * @global string $CONFIG->emailer_transport
  */
 //$CONFIG->emailer_transport = 'sendmail';
+
+/**
+ * Configure sendmail related settings
+ */
+//$CONFIG->emailer_sendmail_settings = '';
 
 /**
  * Configure emailer SMTP settings
@@ -404,6 +417,19 @@ $CONFIG->allow_phpinfo = false;
 //		'use_complete_quit' => '', // OPTIONAL
 //	],
 //);
+
+/**
+ * Proxy configuration
+ *
+ * These settings can be used whenever there is the need to (optionally) configure a proxy
+ */
+$CONFIG->proxy = [
+// 	'host' => '127.0.0.1',
+// 	'port' => 25,
+// 	'verify_ssl' => false,
+// 	'username' => 'user',
+// 	'password' => 'pass',
+];
 
 /**
  * Logging level

@@ -497,7 +497,7 @@ class ServiceProvider extends DiContainer {
 					$transport->setOptions($transportOptions);
 					return $transport;
 				default:
-					return new \Laminas\Mail\Transport\Sendmail();
+					return new \Laminas\Mail\Transport\Sendmail($c->config->emailer_sendmail_settings);
 			}
 		});
 

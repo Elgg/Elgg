@@ -52,8 +52,10 @@ use Elgg\Project\Paths;
  * @property bool          $elgg_maintenance_mode
  * @property string        $elgg_settings_file
  * @property bool          $elgg_config_set_secret
+ * @property int           $email_subject_limit                     The length limit for email subjects, defaults to 998 as described in http://www.faqs.org/rfcs/rfc2822.html
  * @property bool          $enable_profiling
  * @property string        $emailer_transport                       This is an override for Elgg's default email handling transport (default sendmail)
+ * @property array         $emailer_sendmail_settings               This configures SendMail if $emailer_transport is set to "sendmail" or default
  * @property array         $emailer_smtp_settings                   This configures SMTP if $emailer_transport is set to "smtp"
  * @property mixed         $embed_tab
  * @property string        $exception_include						This is an optional script used to override Elgg's default handling of uncaught exceptions.
@@ -88,6 +90,7 @@ use Elgg\Project\Paths;
  * @property array         $profile_fields
  * @property string        $profiling_minimum_percentage
  * @property bool          $profiling_sql
+ * @property array         $proxy                                   Contains proxy related settings
  * @property bool          $redis
  * @property array         $redis_options
  * @property array         $redis_servers
@@ -179,6 +182,7 @@ class Config {
 		'comment_box_collapses' => true,
 		'comments_latest_first' => true,
 		'comments_per_page' => 25,
+		'email_subject_limit' => 998,
 		'icon_sizes' => [
 			'topbar' => ['w' => 16, 'h' => 16, 'square' => true, 'upscale' => true],
 			'tiny' => ['w' => 25, 'h' => 25, 'square' => true, 'upscale' => true],
