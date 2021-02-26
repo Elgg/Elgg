@@ -154,16 +154,16 @@ class SubscriptionsService {
 	 *
 	 * This method will return false if the subscription already exists.
 	 *
-	 * @param int    $userGuid   The GUID of the user to subscribe to notifications
-	 * @param string $method     The delivery method of the notifications
-	 * @param int    $targetGuid The entity to receive notifications about
-	 * @param string $type       (optional) entity type
-	 * @param string $subtype    (optional) entity subtype
-	 * @param string $action     (optional) notification action (eg. 'create')
+	 * @param int    $user_guid   The GUID of the user to subscribe to notifications
+	 * @param string $method      The delivery method of the notifications
+	 * @param int    $target_guid The entity to receive notifications about
+	 * @param string $type        (optional) entity type
+	 * @param string $subtype     (optional) entity subtype
+	 * @param string $action      (optional) notification action (eg. 'create')
 	 *
 	 * @return bool
 	 */
-	public function addSubscription(int $userGuid, string $method, int $targetGuid, string $type = null, string $subtype = null, string $action = null) {
+	public function addSubscription(int $user_guid, string $method, int $target_guid, string $type = null, string $subtype = null, string $action = null) {
 		$rel = [
 			self::RELATIONSHIP_PREFIX,
 		];
@@ -176,22 +176,22 @@ class SubscriptionsService {
 		
 		$rel[] = $method;
 		
-		return $this->relationshipsTable->add($userGuid, implode(':', $rel), $targetGuid);
+		return $this->relationshipsTable->add($user_guid, implode(':', $rel), $target_guid);
 	}
 
 	/**
 	 * Unsubscribe a user to notifications about a target entity
 	 *
-	 * @param int    $userGuid   The GUID of the user to unsubscribe to notifications
-	 * @param string $method     The delivery method of the notifications to stop
-	 * @param int    $targetGuid The entity to stop receiving notifications about
-	 * @param string $type       (optional) entity type
-	 * @param string $subtype    (optional) entity subtype
-	 * @param string $action     (optional) notification action (eg. 'create')
+	 * @param int    $user_guid   The GUID of the user to unsubscribe to notifications
+	 * @param string $method      The delivery method of the notifications to stop
+	 * @param int    $target_guid The entity to stop receiving notifications about
+	 * @param string $type        (optional) entity type
+	 * @param string $subtype     (optional) entity subtype
+	 * @param string $action      (optional) notification action (eg. 'create')
 	 *
 	 * @return bool
 	 */
-	public function removeSubscription(int $userGuid, string $method, int $targetGuid, string $type = null, string $subtype = null, string $action = null) {
+	public function removeSubscription(int $user_guid, string $method, int $target_guid, string $type = null, string $subtype = null, string $action = null) {
 		$rel = [
 			self::RELATIONSHIP_PREFIX,
 		];
@@ -204,7 +204,7 @@ class SubscriptionsService {
 		
 		$rel[] = $method;
 		
-		return $this->relationshipsTable->remove($userGuid, implode(':', $rel), $targetGuid);
+		return $this->relationshipsTable->remove($user_guid, implode(':', $rel), $target_guid);
 	}
 
 	/**
