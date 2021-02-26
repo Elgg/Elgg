@@ -65,7 +65,8 @@ class NotificationsService {
 	 */
 	public function __construct(
 			SubscriptionsService $subscriptions,
-			Queue $queue, PluginHooksService $hooks,
+			Queue $queue,
+			PluginHooksService $hooks,
 			ElggSession $session,
 			Translator $translator,
 			EntityTable $entities,
