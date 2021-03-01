@@ -273,4 +273,19 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 
 		$this->assertEquals($expected, _elgg_services()->html_formatter->formatAttributes($attrs));
 	}
+	
+	public function testInlineCss() {
+		$html = '<p>test</p>';
+		$css = 'p { color: red; }';
+		$expected = '<p style="color: red;">test</p>';
+		
+		$this->assertEquals($expected, _elgg_services()->html_formatter->inlineCss($html, $css, true));
+	}
+	
+	public function testNormalizeUrls() {
+		$text = 'foo <a href="/blog">link</a> /bar.php <img src="/link_to_image.jpg"/>';
+		$expected = 'foo <a href="' . elgg_get_site_url() . 'blog">link</a> /bar.php <img src="' . elgg_get_site_url() . 'link_to_image.jpg"/>';
+		
+		$this->assertEquals($expected, _elgg_services()->html_formatter->normalizeUrls($text));
+	}
 }

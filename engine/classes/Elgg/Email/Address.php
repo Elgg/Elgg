@@ -15,6 +15,11 @@ use Laminas\Validator\Hostname;
 class Address extends ZendAddress {
 	
 	/**
+	 * @var \ElggEntity The related entity
+	 */
+	protected $entity = null;
+	
+	/**
 	 * {@inheritdoc}
 	 */
 	public function __construct($email, $name = null, $comment = null) {
@@ -86,12 +91,36 @@ class Address extends ZendAddress {
 	}
 	
 	/**
+	 * Store the Entity related to this Address
+	 *
+	 * @param \ElggEntity $entity
+	 *
+	 * @return void
+	 *
+	 * @since 4.0
+	 */
+	public function setEntity(\ElggEntity $entity): void {
+		$this->entity = $entity;
+	}
+	
+	/**
+	 * Returns the saved entity
+	 *
+	 * @return \ElggEntity|null
+	 *
+	 * @since 4.0
+	 */
+	public function getEntity(): ?\ElggEntity {
+		return $this->entity;
+	}
+	
+	/**
 	 * Parses strings like "Evan <evan@elgg.org>" into name/email objects.
 	 *
 	 * This is not very sophisticated and only used to provide a light BC effort.
 	 *
 	 * @param string $contact e.g. "Evan <evan@elgg.org>"
-	 * @param string $ignored Ignored
+	 * @param string $ignored Ignored (required for Laminas\Mail\Address)
 	 *
 	 * @return \Elgg\Email\Address
 	 * @throws \Laminas\Mail\Exception\InvalidArgumentException
@@ -105,6 +134,21 @@ class Address extends ZendAddress {
 		} else {
 			return new self(trim($contact));
 		}
+	}
+	
+	/**
+	 * Create an Address based on a Entity
+	 *
+	 * @param \ElggEntity $entity the entity to create the address for
+	 *
+	 * @return self
+	 *
+	 * @since 4.0
+	 */
+	public static function fromEntity(\ElggEntity $entity): self {
+		$address = new Address($entity->email, $entity->getDisplayName());
+		$address->setEntity($entity);
+		return $address;
 	}
 	
 	/**

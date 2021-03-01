@@ -55,9 +55,15 @@ class Bootstrap extends DefaultPluginBootstrap {
 				$handler->pushProcessor(new \Elgg\Logger\BacktraceProcessor());
 	
 				$hooks->registerHandler('view_vars', 'page/elements/html', function(\Elgg\Hook $hook)  use ($handler) {
+					$vars = $hook->getValue();
+
+					// prevent logs from showing up in html mails
+					if (elgg_extract('email', $vars) instanceof \Elgg\Email) {
+						return;
+					}
+					
 					$handler->close();
 					
-					$vars = $hook->getValue();
 					$vars['body'] .= elgg_view('developers/log');
 					
 					return $vars;

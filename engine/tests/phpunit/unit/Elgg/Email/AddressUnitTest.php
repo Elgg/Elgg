@@ -134,6 +134,25 @@ class AddressUnitTest extends \Elgg\UnitTestCase {
 		Address::fromString('invalid_email');
 	}
 	
+	public function testFromEntity() {
+		$entity = $this->createUser();
+		$address = Address::fromEntity($entity);
+		
+		$this->assertEquals($entity->email, $address->getEmail());
+		$this->assertEquals($entity->getDisplayName(), $address->getName());
+		$this->assertEquals($entity, $address->getEntity());
+	}
+	
+	public function testEntityGetterAndSetter() {
+		$entity = $this->createUser();
+		$address = Address::fromString('example@elgg.org');
+		
+		$this->assertNull($address->getEntity());
+		
+		$address->setEntity($entity);
+		$this->assertEquals($entity, $address->getEntity());
+	}
+	
 	public function testGetFormattedEmailAddressEmail() {
 		
 		$address_string = Address::getFormattedEmailAddress('example@elgg.org');

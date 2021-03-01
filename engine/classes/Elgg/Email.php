@@ -368,7 +368,7 @@ final class Email {
 		} else if ($from instanceof ElggEntity) {
 			// If there's an email address, use it - but only if it's not from a user.
 			if (!$from instanceof ElggUser && $from->email) {
-				$from = new Address($from->email, $from->getDisplayName());
+				$from = Address::fromEntity($from);
 			} else {
 				// get the site email address
 				$site = elgg_get_site_entity();
@@ -411,7 +411,7 @@ final class Email {
 			}
 			
 			if ($recipient instanceof ElggEntity) {
-				$recipient = new Address($recipient->email, $recipient->getDisplayName());
+				$recipient = Address::fromEntity($recipient);
 			} elseif (is_string($recipient)) {
 				$recipient = Address::fromString($recipient);
 			}

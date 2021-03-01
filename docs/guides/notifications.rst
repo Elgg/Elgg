@@ -181,9 +181,7 @@ Registering a new notification method
 
 By default Elgg has two notification methods: email and the bundled
 site_notifications plugin. You can register a new notification
-method with the `elgg_register_notification_method()`__ function.
-
-__ http://reference.elgg.org/notification_8php.html#ac9e7b5583afbb992b8222ae1db072dd1
+method with the `elgg_register_notification_method()` function.
 
 Example:
 --------
@@ -195,11 +193,11 @@ Register a handler that will send the notifications via SMS.
 	/**
 	 * Initialize the plugin
 	 */
-	function sms_notifications_init () {
+	function sms_notifications_init() {
 		elgg_register_notification_method('sms');
 	}
 
-After registering the new method, it will appear to the notification
+After registering the new method, it will appear on the notification
 settings page at ``www.example.com/notifications/personal/[username]``.
 
 Sending the notifications using your own method
@@ -295,41 +293,3 @@ Example:
 
 		return ($subscriptions + $group_subscribers);
 	}
-
-E-mail attachments
-==================
-
-``notify_user()`` or enqueued notifications support attachments for e-mail notifications if provided in ``$params``. To add one or more attachments
-add a key ``attachments`` in ``$params`` which is an array of the attachments. An attachment should be in one of the following formats:
-
-- An ``ElggFile`` which points to an existing file
-- An array with the file contents
-- An array with a filepath
-
-.. code-block:: php
-
-	// this example is for notify_user()
-	$params['attachments'] = [];
-
-	// Example of an ElggFile attachment
-	$file = new \ElggFile();
-	$file->owner_guid = <some owner_guid>;
-	$file->setFilename('<some filename>');
-
-	$params['attachments'][] = $file;
-
-	// Example of array with content  
-	$params['attachments'][] = [
-		'content' => 'The file content',
-		'filename' => 'test_file.txt',
-		'type' => 'text/plain',
-	];
-
-	// Example of array with filepath
-	// 'filename' can be provided, if not basename() of filepath will be used
-	// 'type' can be provided, if not will try a best guess
-	$params['attachments'][] = [
-		'filepath' => '<path to a valid file>',
-	];
-
-	notify_user($to_guid, $from_guid, $subject, $body, $params);

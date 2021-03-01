@@ -7,6 +7,9 @@ use Elgg\Loggable;
 use Elgg\PluginHooksService;
 use Elgg\ViewsService;
 use Psr\Log\LoggerInterface;
+use Cake\Utility\Text;
+use Laminas\Mail\Header\ContentDisposition;
+use Pelago\Emogrifier\CssInliner;
 
 /**
  * Various helper method for formatting and sanitizing output
@@ -380,5 +383,65 @@ class HtmlFormatter {
 			$string
 		);
 		return $string;
+	}
+	
+	/**
+	 * Adds inline style to html content
+	 *
+	 * @param string $html      html content
+	 * @param string $css       style text
+	 * @param bool   $body_only toggle to return the body contents instead of a full html
+	 *
+	 * @return string
+	 *
+	 * @since 4.0
+	 */
+	public function inlineCss(string $html, string $css, bool $body_only = false): string {
+		if (empty($html) || empty($css)) {
+			return $html;
+		}
+		
+		$inliner = CssInliner::fromHtml($html)->disableStyleBlocksParsing()->inlineCss($css);
+		
+		return $body_only ? $inliner->renderBodyContent() : $inliner->render();
+	}
+	
+	/**
+	 * Replaces relative urls in href or src attributes in text
+	 *
+	 * @param string $text source content
+	 *
+	 * @return string
+	 *
+	 * @since 4.0
+	 */
+	public function normalizeUrls(string $text): string {
+		$pattern = '/\s(?:href|src)=([\'"]\S+[\'"])/i';
+		
+		// find all matches
+		$matches = [];
+		preg_match_all($pattern, $text, $matches);
+		
+		if (empty($matches) || !isset($matches[1])) {
+			return $text;
+		}
+		
+		// go through all the matches
+		$urls = $matches[1];
+		$urls = array_unique($urls);
+		
+		foreach ($urls as $url) {
+			// remove wrapping quotes from the url
+			$real_url = substr($url, 1, -1);
+			// normalize url
+			$new_url = elgg_normalize_url($real_url);
+			// make the correct replacement string
+			$replacement = str_replace($real_url, $new_url, $url);
+			
+			// replace the url in the content
+			$text = str_replace($url, $replacement, $text);
+		}
+		
+		return $text;
 	}
 }
