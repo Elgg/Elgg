@@ -50,6 +50,7 @@ function htmlawed_filter_tags($hook, $type, $result, $params = null) {
 		'comment' => 1,
 		'cdata' => 1,
 
+		'elements' => '*-applet-button-form-input-textarea-iframe-script-style-embed-object',
 		'deny_attribute' => 'class, on*',
 		'hook_tag' => 'htmlawed_tag_post_processor',
 
@@ -84,7 +85,7 @@ function htmLawedArray(&$v, $k, $htmlawed_config) {
 
 /**
  * Post processor for tags in htmlawed
- * 
+ *
  * This runs after htmlawed has filtered. It runs for each tag and filters out
  * style attributes we don't want.
  *

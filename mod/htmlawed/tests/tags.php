@@ -173,7 +173,12 @@ class HtmLawedTest extends ElggCoreUnitTest {
 
 			// 'deny_attribute' => 'class, on*',
 			'<span class="elgg-inner">Test</span>' => '<span>Test</span>',
-			'<button onclick="javascript:alert(\'test\')">Test</button>' => '<button>Test</button>',
+			'<a onclick="javascript:alert(\'test\')">Test</a>' => '<a>Test</a>',
+			
+			// some of the prevented 'elements'
+			'<button>Test</button>' => 'Test',
+			'<form>Test</form>' => 'Test',
+			'<textarea>Test</textarea>' => 'Test',
 		);
 
 		// test elements filtered by "safe" option
@@ -190,5 +195,4 @@ class HtmLawedTest extends ElggCoreUnitTest {
 			$this->assertEqual($expected, $result);
 		}
 	}
-
 }
