@@ -232,6 +232,7 @@ function _elgg_htmlawed_filter_tags(\Elgg\Hook $hook) {
 		// @see https://github.com/Elgg/Elgg/issues/12934
 		'unique_ids' => 0,
 
+		'elements' => '*-applet-button-form-input-textarea-iframe-script-style-embed-object',
 		'deny_attribute' => 'class, on*, formaction',
 		'hook_tag' => '_elgg_htmlawed_tag_post_processor',
 
