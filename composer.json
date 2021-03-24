@@ -39,6 +39,7 @@
         "npm-asset/requirejs": "^2.3.6",
         "npm-asset/requirejs-text": "^2.0.4",
         "npm-asset/sprintf-js": "~1.0.3",
+        "pelago/emogrifier": "^5.0.0",
         "peppeocchi/php-cron-scheduler": "2.*",
         "php-di/php-di": "~6.3.0",
         "react/promise": "^2.5",

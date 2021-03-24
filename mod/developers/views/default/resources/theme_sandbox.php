@@ -12,6 +12,7 @@ elgg_load_external_file('css', 'dev.theme_sandbox');
 $pages = [
 	'buttons',
 	'components',
+	'email',
 	'forms',
 	'grid',
 	'icons',

@@ -7,7 +7,6 @@
 
 return array(
 	// menu
-	'admin:develop_tools' => 'Tools',
 	'admin:develop_tools:sandbox' => 'Theme Sandbox',
 	'admin:develop_tools:inspect' => 'Inspect',
 	'admin:inspect' => 'Inspect',
@@ -113,6 +112,7 @@ return array(
 	'theme_sandbox:breakout' => 'Break out of iframe',
 	'theme_sandbox:buttons' => 'Buttons',
 	'theme_sandbox:components' => 'Components',
+	'theme_sandbox:email' => 'Email',
 	'theme_sandbox:forms' => 'Forms',
 	'theme_sandbox:grid' => 'Grid',
 	'theme_sandbox:icons' => 'Icons',
@@ -123,6 +123,9 @@ return array(
 	'theme_sandbox:typography' => 'Typography',
 
 	'theme_sandbox:icons:blurb' => 'Use <em>elgg_view_icon($name)</em> to display icons.',
+	
+	'theme_sandbox:test_email:button' => "Send Test Mail",
+	'theme_sandbox:test_email:success' => "Test mail sent to: %s",
 
 	// status messages
 	'developers:settings:success' => 'Settings saved and caches flushed',

@@ -188,11 +188,18 @@ class SendActionTest extends ActionResponseTestCase {
 			$recipient->language
 		);
 
-		$notification_subject = $notification->getSubject();
-		$notification_body = $notification->getBodyText();
+		$plain_text_part = null;
+		foreach ($notification->getBody()->getParts() as $part) {
+			if ($part->getId() === 'plaintext') {
+				$plain_text_part = $part;
+				break;
+			}
+		}
+		
+		$this->assertNotEmpty($plain_text_part);
 
-		$this->assertEquals($expected_subject, $notification_subject);
-		$this->assertEquals(preg_replace('/\\n/m', ' ', $expected_body), preg_replace('/\\n/m', ' ', $notification_body));
+		$this->assertEquals($expected_subject, $notification->getSubject());
+		$this->assertEquals(preg_replace('/\\n/m', ' ', $expected_body), preg_replace('/\\n/m', ' ', $plain_text_part->getRawContent()));
 
 		_elgg_services()->session->removeLoggedInUser();
 	}

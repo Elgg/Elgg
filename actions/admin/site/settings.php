@@ -102,6 +102,9 @@ if (!elgg()->config->hasInitialValue('debug')) {
 $remove_branding = ('on' === get_input('remove_branding', false));
 elgg_save_config('remove_branding', $remove_branding);
 
+elgg_save_config('email_html_part', (bool) get_input('email_html_part'));
+elgg_save_config('email_html_part_images', get_input('email_html_part_images'));
+
 $disable_rss = ('on' === get_input('disable_rss', false));
 elgg_save_config('disable_rss', $disable_rss);
 

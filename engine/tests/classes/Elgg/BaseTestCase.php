@@ -97,6 +97,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 			'profile_custom_fields' => [],
 			'elgg_maintenance_mode' => false,
 			'testing_mode' => true,
+			'email_html_part' => false,
 
 			'icon_sizes' => [
 				'topbar' => [

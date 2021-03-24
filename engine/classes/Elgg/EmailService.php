@@ -7,10 +7,16 @@ use RuntimeException;
 use Laminas\Mail\Header\ContentType;
 use Laminas\Mail\Message as MailMessage;
 use Laminas\Mail\Transport\TransportInterface;
-use Laminas\Mime\Mime;
 use Laminas\Mime\Message as MimeMessage;
-use Laminas\Mime\Part;
 use Laminas\Mime\Exception\InvalidArgumentException;
+use Laminas\Mime\Part;
+use Laminas\Mime\Mime;
+use Elgg\Email\Attachment;
+use Elgg\Email\HtmlPart;
+use Elgg\Email\PlainTextPart;
+use Elgg\Assets\CssCompiler;
+use Elgg\Assets\ImageFetcherService;
+use Elgg\Views\HtmlFormatter;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -27,30 +33,67 @@ class EmailService {
 	/**
 	 * @var Config
 	 */
-	private $config;
+	protected $config;
 
 	/**
 	 * @var PluginHooksService
 	 */
-	private $hooks;
+	protected $hooks;
 
 	/**
 	 * @var TransportInterface
 	 */
-	private $mailer;
+	protected $mailer;
+
+	/**
+	 * @var HtmlFormatter
+	 */
+	protected $html_formatter;
+
+	/**
+	 * @var ImageFetcherService
+	 */
+	protected $image_fetcher;
+
+	/**
+	 * @var ViewsService
+	 */
+	protected $views;
+
+	/**
+	 * @var CssCompiler
+	 */
+	protected $css_compiler;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Config             $config Config
-	 * @param PluginHooksService $hooks  Hook registration service
-	 * @param TransportInterface $mailer Mailer
-	 * @param LoggerInterface    $logger Logger
+	 * @param Config              $config         Config
+	 * @param PluginHooksService  $hooks          Hook registration service
+	 * @param TransportInterface  $mailer         Mailer
+	 * @param HtmlFormatter       $html_formatter Html formatter
+	 * @param ViewsService        $views          Views service
+	 * @param ImageFetcherService $image_fetcher  Image fetcher
+	 * @param CssCompiler         $css_compiler   Css compiler
+	 * @param LoggerInterface     $logger         Logger
 	 */
-	public function __construct(Config $config, PluginHooksService $hooks, TransportInterface $mailer, LoggerInterface $logger) {
+	public function __construct(
+			Config $config,
+			PluginHooksService $hooks,
+			TransportInterface $mailer,
+			HtmlFormatter $html_formatter,
+			ViewsService $views,
+			ImageFetcherService $image_fetcher,
+			CssCompiler $css_compiler,
+			LoggerInterface $logger
+		) {
 		$this->config = $config;
 		$this->hooks = $hooks;
 		$this->mailer = $mailer;
+		$this->html_formatter = $html_formatter;
+		$this->views = $views;
+		$this->image_fetcher = $image_fetcher;
+		$this->css_compiler = $css_compiler;
 		$this->logger = $logger;
 	}
 
@@ -91,11 +134,7 @@ class EmailService {
 	 */
 	public function transport(Email $email) {
 
-		$hook_params = [
-			'email' => $email,
-		];
-
-		if ($this->hooks->trigger('transport', 'system:email', $hook_params, false)) {
+		if ($this->hooks->trigger('transport', 'system:email', ['email' => $email], false)) {
 			return true;
 		}
 
@@ -110,8 +149,8 @@ class EmailService {
 		
 		// set headers
 		$headers = [
-			"MIME-Version" => "1.0",
-			"Content-Transfer-Encoding" => "8bit",
+			'MIME-Version' => '1.0',
+			'Content-Transfer-Encoding' => '8bit',
 		];
 		$headers = array_merge($headers, $email->getHeaders());
 
@@ -125,28 +164,18 @@ class EmailService {
 		
 		// add the body to the message
 		try {
-			$body = $this->buildMessageBody($email);
+			$message = $this->setMessageBody($message, $email);
 		} catch (InvalidArgumentException $e) {
 			$this->logger->error($e->getMessage());
 			
 			return false;
 		}
 		
+		$message->setSubject($this->prepareSubject($email->getSubject()));
 		
-		$message->setBody($body);
-		
-		// set Subject
-		$subject = elgg_strip_tags($email->getSubject());
-		$subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-		// Sanitise subject by stripping line endings
-		$subject = preg_replace("/(\r\n|\r|\n)/", " ", $subject);
-		$subject = trim($subject);
-		
-		$message->setSubject($subject);
-
 		// allow others to modify the $message content
 		// eg. add html body, add attachments
-		$message = $this->hooks->trigger('zend:message', 'system:email', $hook_params, $message);
+		$message = $this->hooks->trigger('zend:message', 'system:email', ['email' => $email], $message);
 
 		// fix content type header
 		// @see https://github.com/Elgg/Elgg/issues/12555
@@ -167,35 +196,258 @@ class EmailService {
 	}
 	
 	/**
+	 * Prepare the subject string
+	 *
+	 * @param string $subject initial subject string
+	 *
+	 * @return string
+	 */
+	protected function prepareSubject(string $subject): string {
+		$subject = elgg_strip_tags($subject);
+		$subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
+		// Sanitise subject by stripping line endings
+		$subject = preg_replace("/(\r\n|\r|\n)/", " ", $subject);
+		return trim($subject);
+	}
+	
+	/**
 	 * Build the body part of the e-mail message
 	 *
-	 * @param Email $email Email
+	 * @param MailMessage $message Current message
+	 * @param Email       $email   Email
 	 *
-	 * @return \Laminas\Mime\Message
+	 * @return \Laminas\Mail\Message
 	 */
-	protected function buildMessageBody(Email $email) {
+	protected function setMessageBody(MailMessage $message, Email $email): MailMessage {
 		// create body
-		$body = new MimeMessage();
+		$multipart = new MimeMessage();
+		$raw_body = $email->getBody();
+		$message_content_type = '';
 		
 		// add plain text part
-		$plain_text = elgg_strip_tags($email->getBody());
-		$plain_text = html_entity_decode($plain_text, ENT_QUOTES, 'UTF-8');
-		$plain_text = wordwrap($plain_text);
+		$plain_text_part = new PlainTextPart($raw_body);
+		$multipart->addPart($plain_text_part);
 		
-		$plain_text_part = new Part($plain_text);
-		$plain_text_part->setId('plaintext');
-		$plain_text_part->setType(Mime::TYPE_TEXT);
-		$plain_text_part->setCharset('UTF-8');
+		$make_html = (bool) elgg_get_config('email_html_part');
 		
-		$body->addPart($plain_text_part);
+		if ($make_html) {
+			$multipart->addPart($this->makeHtmlPart($email));
+			$message_content_type = Mime::MULTIPART_ALTERNATIVE;
+		}
+		
+		$body = $multipart;
 		
 		// process attachments
 		$attachments = $email->getAttachments();
-		foreach ($attachments as $attachement) {
-			$body->addPart($attachement);
+		if (!empty($attachments)) {
+			if ($make_html) {
+				$multipart_content = new Part($multipart->generateMessage());
+				$multipart_content->setType(Mime::MULTIPART_ALTERNATIVE);
+				$multipart_content->setBoundary($multipart->getMime()->boundary());
+			
+				$body = new MimeMessage();
+				$body->addPart($multipart_content);
+			}
+			
+			foreach ($attachments as $attachement) {
+				$body->addPart($attachement);
+			}
+			
+			$message_content_type = Mime::MULTIPART_MIXED;
 		}
 		
-		return $body;
+		$message->setBody($body);
+		
+		if (!empty($message_content_type)) {
+			// set correct message content type
+			
+			$headers = $message->getHeaders();
+			foreach ($headers as $header) {
+				if (!$header instanceof ContentType) {
+					continue;
+				}
+				
+				$header->setType($message_content_type);
+				$header->addParameter('boundary', $body->getMime()->boundary());
+				break;
+			}
+		}
+		
+		return $message;
 	}
-
+	
+	/**
+	 * Make the html part of the e-mail message
+	 *
+	 * @param \Elgg\Email $email the e-mail to get information from
+	 *
+	 * @return \Laminas\Mime\Part
+	 */
+	protected function makeHtmlPart(\Elgg\Email $email): Part {
+		$mail_params = $email->getParams();
+		$html_text = elgg_extract('html_message', $mail_params);
+		if ($html_text instanceof Part) {
+			return $html_text;
+		}
+	
+		if (is_string($html_text)) {
+			// html text already provided
+			if (elgg_extract('convert_css', $mail_params, true)) {
+				// still needs to be converted to inline CSS
+				$css = (string) elgg_extract('css', $mail_params);
+				$html_text = $this->html_formatter->inlineCss($html_text, $css);
+			}
+		} else {
+			$html_text = $this->makeHtmlBody([
+				'subject' => $email->getSubject(),
+				'body' => $email->getBody(),
+				'email' => $email,
+			]);
+		}
+		
+		// normalize urls in text
+		$html_text = $this->html_formatter->normalizeUrls($html_text);
+		if (empty($html_text)) {
+			return new HtmlPart($html_text);
+		}
+		
+		$email_html_part_images = elgg_get_config('email_html_part_images');
+		if ($email_html_part_images !== 'base64' && $email_html_part_images !== 'attach') {
+			return new HtmlPart($html_text);
+		}
+		
+		$images = $this->findImages($html_text);
+		if (empty($images)) {
+			return new HtmlPart($html_text);
+		}
+		
+		if ($email_html_part_images === 'base64') {
+			foreach ($images as $url) {
+				// remove wrapping quotes from the url
+				$image_url = substr($url, 1, -1);
+				
+				// get the image contents
+				$image = $this->image_fetcher->getImage($image_url);
+				if (empty($image)) {
+					continue;
+				}
+				
+				// build a valid uri
+				// https://en.wikipedia.org/wiki/Data_URI_scheme
+				$base64image = $image['content-type'] . ';charset=UTF-8;base64,' . base64_encode($image['data']);
+				
+				// build inline image
+				$replacement = str_replace($image_url, "data:{$base64image}", $url);
+				
+				// replace in text
+				$html_text = str_replace($url, $replacement, $html_text);
+			}
+			
+			return new HtmlPart($html_text);
+		}
+		
+		// attach images
+		$attachments = [];
+		foreach ($images as $url) {
+			// remove wrapping quotes from the url
+			$image_url = substr($url, 1, -1);
+			
+			// get the image contents
+			$image = $this->image_fetcher->getImage($image_url);
+			if (empty($image)) {
+				continue;
+			}
+			
+			// Unique ID
+			$uid = uniqid();
+			
+			$attachments[$uid] = $image;
+			
+			// replace url in the text with uid
+			$replacement = str_replace($image_url, "cid:{$uid}", $url);
+			
+			$html_text = str_replace($url, $replacement, $html_text);
+		}
+		
+		// split html body and related images
+		$message = new MimeMessage();
+		$message->addPart(new HtmlPart($html_text));
+		
+		foreach ($attachments as $uid => $image_data) {
+			$attachment = Attachment::factory([
+				'id' => $uid,
+				'content' => $image_data['data'],
+				'type' => $image_data['content-type'],
+				'filename' => $image_data['name'],
+				'encoding' => Mime::ENCODING_BASE64,
+				'disposition' => Mime::DISPOSITION_INLINE,
+				'charset' => 'UTF-8',
+			]);
+			
+			$message->addPart($attachment);
+		}
+		
+		$part = new Part($message->generateMessage());
+		$part->setType(Mime::MULTIPART_RELATED);
+		$part->setBoundary($message->getMime()->boundary());
+		
+		return $part;
+	}
+	
+	/**
+	 * Create the HTML content for use in a HTML email part
+	 *
+	 * @param array $options additional options to pass through to views
+	 *
+	 * @return string
+	 */
+	protected function makeHtmlBody(array $options = []): string {
+		$defaults = [
+			'subject' => '',
+			'body' => '',
+			'language' => get_current_language(),
+		];
+		
+		$options = array_merge($defaults, $options);
+		
+		$options['body'] = $this->html_formatter->formatBlock($options['body']);
+	
+		// generate HTML mail body
+		$options['body'] = $this->views->renderView('email/elements/body', $options);
+		
+		$cssmin = new \CSSmin();
+		$css = $cssmin->run($this->css_compiler->compile($this->views->renderView('email/email.css', $options)));
+		
+		$options['css'] = $css;
+		
+		$html = $this->views->renderView('email/elements/html', $options);
+		
+		return $this->html_formatter->inlineCss($html, $css);
+	}
+	
+	/**
+	 * Find img src's in text. The results contain the original quotes surrounding the image src url.
+	 *
+	 * @param string $text the text to search though
+	 *
+	 * @return string[]
+	 */
+	protected function findImages(string $text): array {
+		if (empty($text)) {
+			return [];
+		}
+		
+		// find all matches
+		$matches = [];
+		$pattern = '/\ssrc=([\'"]\S+[\'"])/i';
+		
+		preg_match_all($pattern, $text, $matches);
+		
+		if (empty($matches) || !isset($matches[1])) {
+			return [];
+		}
+		
+		// return all the found image urls
+		return array_unique($matches[1]);
+	}
 }

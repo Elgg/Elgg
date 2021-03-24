@@ -14,6 +14,7 @@ return [
 		'developers/entity_explorer_delete' => [
 			'access' => 'admin',
 		],
+		'developers/test_email' => [],
 	],
 	'routes' => [
 		'default:theme_sandbox' => [
@@ -26,6 +27,13 @@ return [
 		'default:developers:ajax_demo' => [
 			'path' => '/developers_ajax_demo',
 			'resource' => 'developers/ajax_demo',
+		],
+		'default:developers:email' => [
+			'path' => '/developers_email',
+			'resource' => 'developers/email',
+			'middleware' => [
+				\Elgg\Router\Middleware\AdminGatekeeper::class,
+			],
 		],
 	],
 	'hooks' => [

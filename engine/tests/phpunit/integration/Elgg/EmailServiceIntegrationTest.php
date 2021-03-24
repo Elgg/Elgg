@@ -4,6 +4,9 @@ namespace Elgg;
 
 use Laminas\Mail\Transport\InMemory as InMemoryTransport;
 use Elgg\Email\Address;
+use Laminas\Mime\Mime;
+use Laminas\Mail\Header\ContentType;
+use Elgg\Email\HtmlPart;
 
 class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 
@@ -15,7 +18,10 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 	public $mailer;
 
 	public function up() {
-		self::createApplication(['isolate'=> true]);
+		self::createApplication([
+			'isolate'=> true,
+			'custom_config_values' => ['email_html_part' => true],
+		]);
 	}
 
 	public function down() {
@@ -23,7 +29,7 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 
 	function testElggSendEmailPassesAllFieldsAsMessageToMailer() {
 		$body = str_repeat("<p>You &amp; me &lt; she.</p>\n", 10);
-		$body_expected = trim(wordwrap(str_repeat("You & me < she.\n", 10)));
+		$body_expected = wordwrap(str_repeat("You & me < she.\n", 10));
 
 		$subject = "<p>You &amp;\r\nme &lt;\rshe.</p>\n\n";
 		$subject_expected = "You & me < she.";
@@ -35,12 +41,24 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 			'body' => $body,
 		]));
 
+		/* @var $message \Laminas\Mail\Message */
 		$message = _elgg_services()->mailer->getLastMessage();
 		
 		$this->assertEquals('Tō', $message->getTo()->get('to@elgg.org')->getName());
 		$this->assertEquals('Frōm', $message->getFrom()->get('from@elgg.org')->getName());
 		$this->assertEquals($subject_expected, $message->getSubject());
-		$this->assertEquals($body_expected, $message->getBodyText());
+		
+		$plain_text_part = null;
+		foreach ($message->getBody()->getParts() as $part) {
+			if ($part->getId() === 'plaintext') {
+				$plain_text_part = $part;
+				break;
+			}
+		}
+		
+		$this->assertNotEmpty($plain_text_part);
+		
+		$this->assertEquals($body_expected, $plain_text_part->getRawContent());
 		$this->assertEquals('UTF-8', $message->getEncoding());
 	}
 
@@ -78,8 +96,18 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 		$this->assertEquals(['foo' => 1], $original_email->getParams());
 		
 		$message = _elgg_services()->mailer->getLastMessage();
+		
+		$plain_text_part = null;
+		foreach ($message->getBody()->getParts() as $part) {
+			if ($part->getId() === 'plaintext') {
+				$plain_text_part = $part;
+				break;
+			}
+		}
+		
+		$this->assertNotEmpty($plain_text_part);
 
-		$this->assertEquals("<Hello>", $message->getBodyText());
+		$this->assertEquals("<Hello>", $plain_text_part->getRawContent());
 	}
 
 	function testElggSendEmailBypass() {
@@ -215,5 +243,306 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 				}
 			}
 		}
+	}
+	
+	function testPlainTextMessage() {
+		$body = '<p>Foo <a href="http://elgg.org">link</a> bar</p>';
+		$subject = 'subject' . uniqid();
+		
+		// no email part
+		elgg_set_config('email_html_part', false);
+		
+		elgg_send_email(\Elgg\Email::factory([
+			'from' => 'from@elgg.org',
+			'to' => 'to@elgg.org',
+			'subject' => $subject,
+			'body' => $body,
+		]));
+
+		/* @var $message \Laminas\Mail\Message */
+		$message = _elgg_services()->mailer->getLastMessage();
+		$this->assertEquals($subject, $message->getSubject());
+		
+		$parts = $message->getBody()->getParts();
+		$this->assertCount(1, $parts);
+		
+		$this->assertInstanceOf(\Elgg\Email\PlainTextPart::class, $parts[0]);
+		$content_type = $message->getHeaders()->get('content-type');
+		$this->assertInstanceOf(ContentType::class, $content_type);
+		$this->assertEquals(Mime::TYPE_TEXT, $content_type->getType());
+	}
+
+	function testPlainTextMessageWithAttachments() {
+		$body = '<p>Foo <a href="http://elgg.org">link</a> bar</p>';
+		$subject = 'subject' . uniqid();
+		
+		// no email part
+		elgg_set_config('email_html_part', false);
+		
+		$file = new \ElggFile();
+		$file->owner_guid = 1;
+		$file->setFilename('foobar.txt');
+
+		$this->assertTrue($file->exists());
+		
+		elgg_send_email(\Elgg\Email::factory([
+			'from' => 'from@elgg.org',
+			'to' => 'to@elgg.org',
+			'subject' => $subject,
+			'body' => $body,
+			'params' => [
+				'attachments' =>[$file],
+			],
+		]));
+
+		/* @var $message \Laminas\Mail\Message */
+		$message = _elgg_services()->mailer->getLastMessage();
+		$this->assertEquals($subject, $message->getSubject());
+		
+		$parts = $message->getBody()->getParts();
+		$this->assertCount(2, $parts);
+		
+		$this->assertInstanceOf(\Elgg\Email\PlainTextPart::class, $parts[0]);
+		$this->assertInstanceOf(\Elgg\Email\Attachment::class, $parts[1]);
+		
+		$content_type = $message->getHeaders()->get('content-type');
+		$this->assertInstanceOf(ContentType::class, $content_type);
+		$this->assertEquals(Mime::MULTIPART_MIXED, $content_type->getType());
+	}
+	
+	function testHtmlMessage() {
+		$body = '<p>Foo <a href="http://elgg.org">link</a> bar</p>';
+		$subject = 'subject' . uniqid();
+				
+		elgg_send_email(\Elgg\Email::factory([
+			'from' => 'from@elgg.org',
+			'to' => 'to@elgg.org',
+			'subject' => $subject,
+			'body' => $body,
+		]));
+
+		/* @var $message \Laminas\Mail\Message */
+		$message = _elgg_services()->mailer->getLastMessage();
+		$this->assertEquals($subject, $message->getSubject());
+		
+		$parts = $message->getBody()->getParts();
+		$this->assertCount(2, $parts);
+		
+		$this->assertInstanceOf(\Elgg\Email\PlainTextPart::class, $parts[0]);
+		$this->assertInstanceOf(\Elgg\Email\HtmlPart::class, $parts[1]);
+		
+		$content_type = $message->getHeaders()->get('content-type');
+		$this->assertInstanceOf(ContentType::class, $content_type);
+		$this->assertEquals(Mime::MULTIPART_ALTERNATIVE, $content_type->getType());
+	}
+	
+	function testHtmlMessageWithAttachments() {
+		$body = '<p>Foo <a href="http://elgg.org">link</a> bar</p>';
+		$subject = 'subject' . uniqid();
+				
+		$file = new \ElggFile();
+		$file->owner_guid = 1;
+		$file->setFilename('foobar.txt');
+
+		$this->assertTrue($file->exists());
+		
+		elgg_send_email(\Elgg\Email::factory([
+			'from' => 'from@elgg.org',
+			'to' => 'to@elgg.org',
+			'subject' => $subject,
+			'body' => $body,
+			'params' => [
+				'attachments' =>[$file],
+			],
+		]));
+
+		/* @var $message \Laminas\Mail\Message */
+		$message = _elgg_services()->mailer->getLastMessage();
+		$this->assertEquals($subject, $message->getSubject());
+		
+		$parts = $message->getBody()->getParts();
+		$this->assertCount(2, $parts);
+		
+		$this->assertInstanceOf(\Laminas\Mime\Part::class, $parts[0]);
+		$this->assertInstanceOf(\Elgg\Email\Attachment::class, $parts[1]);
+		
+		$this->assertEquals(Mime::MULTIPART_ALTERNATIVE, $parts[0]->getType());
+		
+		$content_type = $message->getHeaders()->get('content-type');
+		$this->assertInstanceOf(ContentType::class, $content_type);
+		$this->assertEquals(Mime::MULTIPART_MIXED, $content_type->getType());
+	}
+	
+	function testHtmlMessageFormatting() {
+		$body = '<p>Foo <a href="http://elgg.org">link</a> bar</p>';
+		$subject = 'subject' . uniqid();
+		
+		elgg_send_email(\Elgg\Email::factory([
+			'from' => 'from@elgg.org',
+			'to' => 'to@elgg.org',
+			'subject' => $subject,
+			'body' => $body,
+		]));
+
+		/* @var $message \Laminas\Mail\Message */
+		$message = _elgg_services()->mailer->getLastMessage();
+		$this->assertEquals($subject, $message->getSubject());
+		
+		$parts = $message->getBody()->getParts();
+		$this->assertCount(2, $parts);
+		
+		$this->assertInstanceOf(\Elgg\Email\PlainTextPart::class, $parts[0]);
+		$this->assertInstanceOf(\Elgg\Email\HtmlPart::class, $parts[1]);
+		
+		// validate plain text
+		$this->assertEquals('Foo link bar', $parts[0]->getRawContent());
+		
+		// validate html text
+		$html_content = $parts[1]->getRawContent();
+		
+		$this->assertStringContainsString('<html', $html_content);
+		$this->assertStringContainsString('</html>', $html_content);
+		$this->assertStringContainsString('<head>', $html_content);
+		$this->assertStringContainsString('</head>', $html_content);
+		$this->assertStringContainsString('<body', $html_content);
+		$this->assertStringContainsString('</body>', $html_content);
+		$this->assertStringContainsString($subject, $html_content);
+		$this->assertStringContainsString('http://elgg.org', $html_content);
+	}
+	
+	function testHtmlMessageCustomPart() {
+		$body = '<p>Foo <a href="http://elgg.org">link</a> bar</p>';
+		$subject = 'subject' . uniqid();
+		
+		$custom_part = new HtmlPart($body);
+		$custom_part->setId('custom_html');
+		elgg_send_email(\Elgg\Email::factory([
+			'from' => 'from@elgg.org',
+			'to' => 'to@elgg.org',
+			'subject' => $subject,
+			'body' => $body,
+			'params' => ['html_message' => $custom_part],
+		]));
+
+		/* @var $message \Laminas\Mail\Message */
+		$message = _elgg_services()->mailer->getLastMessage();
+		$this->assertEquals($subject, $message->getSubject());
+		
+		$parts = $message->getBody()->getParts();
+
+		$this->assertInstanceOf(\Elgg\Email\HtmlPart::class, $parts[1]);
+
+		$this->assertEquals($body, $parts[1]->getRawContent());
+		$this->assertEquals('custom_html', $parts[1]->getId());
+	}
+	
+	function testHtmlMessageCustomHtmlMessageNoCss() {
+		$body = '<p>Foo <a href="http://elgg.org">link</a> bar</p>';
+		$subject = 'subject' . uniqid();
+		
+		elgg_send_email(\Elgg\Email::factory([
+			'from' => 'from@elgg.org',
+			'to' => 'to@elgg.org',
+			'subject' => $subject,
+			'body' => $body,
+			'params' => [
+				'html_message' => $body,
+				'convert_css' => false
+			],
+		]));
+
+		/* @var $message \Laminas\Mail\Message */
+		$message = _elgg_services()->mailer->getLastMessage();
+		$this->assertEquals($subject, $message->getSubject());
+		
+		$parts = $message->getBody()->getParts();
+
+		$this->assertInstanceOf(\Elgg\Email\HtmlPart::class, $parts[1]);
+
+		$this->assertEquals($body, $parts[1]->getRawContent());
+	}
+	
+	function testHtmlMessageCustomHtmlMessageWithCss() {
+		$body = '<p>Foo <a href="http://elgg.org">link</a> bar</p>';
+		$expected_body = '<p style="color: red;">Foo <a href="http://elgg.org">link</a> bar</p>';
+		$subject = 'subject' . uniqid();
+		
+		elgg_send_email(\Elgg\Email::factory([
+			'from' => 'from@elgg.org',
+			'to' => 'to@elgg.org',
+			'subject' => $subject,
+			'body' => $body,
+			'params' => [
+				'html_message' => $body,
+				'convert_css' => true,
+				'css' => 'p { color: red; }',
+			],
+		]));
+
+		/* @var $message \Laminas\Mail\Message */
+		$message = _elgg_services()->mailer->getLastMessage();
+		$this->assertEquals($subject, $message->getSubject());
+		
+		$parts = $message->getBody()->getParts();
+
+		$this->assertInstanceOf(\Elgg\Email\HtmlPart::class, $parts[1]);
+
+		$this->assertStringContainsString('<html', $parts[1]->getRawContent());
+		$this->assertStringContainsString('</html>', $parts[1]->getRawContent());
+		$this->assertStringContainsString($expected_body, $parts[1]->getRawContent());
+	}
+	
+	function testHtmlMessageImagesBase64() {
+		$image_url = 'https://raw.githubusercontent.com/Elgg/Elgg/70c2f4535af7b67b690617ebeba74fc59a2b55d2/engine/tests/test_files/dataroot/1/1/300x300.jpg';
+		$body = "<p>Foo <img src='{$image_url}'/> bar</p>";
+		$subject = 'subject' . uniqid();
+		
+		elgg_set_config('email_html_part_images', 'base64');
+		
+		elgg_send_email(\Elgg\Email::factory([
+			'from' => 'from@elgg.org',
+			'to' => 'to@elgg.org',
+			'subject' => $subject,
+			'body' => $body,
+		]));
+
+		/* @var $message \Laminas\Mail\Message */
+		$message = _elgg_services()->mailer->getLastMessage();
+		$this->assertEquals($subject, $message->getSubject());
+
+		$parts = $message->getBody()->getParts();
+		
+		$this->assertInstanceOf(\Elgg\Email\HtmlPart::class, $parts[1]);
+		
+		$html_content = $parts[1]->getRawContent();
+		$this->assertStringNotContainsString($image_url, $html_content);
+		$this->assertStringContainsString('src="data:image/jpeg;charset=UTF-8;base64,', $html_content);
+	}
+	
+	function testHtmlMessageImagesAttachments() {
+		$image_url = 'https://raw.githubusercontent.com/Elgg/Elgg/70c2f4535af7b67b690617ebeba74fc59a2b55d2/engine/tests/test_files/dataroot/1/1/300x300.jpg';
+		$body = "<p>Foo <img src='{$image_url}'/> bar</p>";
+		$subject = 'subject' . uniqid();
+
+		elgg_set_config('email_html_part_images', 'attach');
+		
+		elgg_send_email(\Elgg\Email::factory([
+			'from' => 'from@elgg.org',
+			'to' => 'to@elgg.org',
+			'subject' => $subject,
+			'body' => $body,
+		]));
+
+		/* @var $message \Laminas\Mail\Message */
+		$message = _elgg_services()->mailer->getLastMessage();
+		$this->assertEquals($subject, $message->getSubject());
+
+		$parts = $message->getBody()->getParts();
+		
+		$this->assertInstanceOf(\Laminas\Mime\Part::class, $parts[1]);
+		
+		$msg_content = $parts[1]->getRawContent();
+		$this->assertStringContainsString('Content-ID: <htmltext>', $msg_content);
+		$this->assertStringContainsString('Content-Disposition: inline; filename="300x300.jpg"', $msg_content);
 	}
 }

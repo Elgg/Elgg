@@ -80,11 +80,18 @@ class MessagesPluginTest extends IntegrationTestCase {
 			$recipient->language
 		);
 
-		$notification_subject = $notification->getSubject();
-		$notification_body = $notification->getBodyText();
+		$plain_text_part = null;
+		foreach ($notification->getBody()->getParts() as $part) {
+			if ($part->getId() === 'plaintext') {
+				$plain_text_part = $part;
+				break;
+			}
+		}
+		
+		$this->assertNotEmpty($plain_text_part);
 
-		$this->assertEquals($expected_subject, $notification_subject);
-		$this->assertEquals($expected_body, $notification_body);
+		$this->assertEquals($expected_subject, $notification->getSubject());
+		$this->assertEquals($expected_body, $plain_text_part->getRawContent());
 
 	}
 }

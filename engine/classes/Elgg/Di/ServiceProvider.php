@@ -79,6 +79,7 @@ use Elgg\Security\PasswordGeneratorService;
  * @property-read \Elgg\Views\HtmlFormatter                       $html_formatter
  * @property-read \Elgg\PluginHooksService                        $hooks
  * @property-read \Elgg\EntityIconService                         $iconService
+ * @property-read \Elgg\Assets\ImageFetcherService                $imageFetcher
  * @property-read \Elgg\ImageService                              $imageService
  * @property-read \Elgg\Invoker                                   $invoker
  * @property-read \Elgg\I18n\LocaleService                        $localeService
@@ -346,7 +347,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('emails', function(ServiceProvider $c) {
-			return new \Elgg\EmailService($c->config, $c->hooks, $c->mailer, $c->logger);
+			return new \Elgg\EmailService($c->config, $c->hooks, $c->mailer, $c->html_formatter, $c->views, $c->imageFetcher, $c->cssCompiler, $c->logger);
 		});
 
 		$this->setFactory('entityCache', function(ServiceProvider $c) {
@@ -449,6 +450,10 @@ class ServiceProvider extends DiContainer {
 			);
 		});
 
+		$this->setFactory('imageFetcher', function(ServiceProvider $c) {
+			return new \Elgg\Assets\ImageFetcherService($c->config, $c->systemCache, $c->session);
+		});
+		
 		$this->setFactory('imageService', function(ServiceProvider $c) {
 			switch ($c->config->image_processor) {
 				case 'imagick':
