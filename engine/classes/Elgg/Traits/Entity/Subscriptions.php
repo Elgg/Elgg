@@ -130,7 +130,7 @@ trait Subscriptions {
 	/**
 	 * Get all the subscriptions to this entity
 	 *
-	 * @param int             $user_guid user for subscriptions
+	 * @param int             $user_guid user for subscriptions (default: current user)
 	 * @param string|string[] $methods   notification method (default: current registered methods)
 	 * @param string          $type      entity type
 	 * @param string          $subtype   entity subtype
@@ -159,6 +159,51 @@ trait Subscriptions {
 		$methods = (array) $methods;
 		
 		return _elgg_services()->subscriptions->getSubscribers($this->guid, $methods);
+	}
+	
+	/**
+	 * Mute notifications about events affecting this entity
+	 *
+	 * @param int $user_guid The GUID of the user to mute notifcations for (default: current user)
+	 *
+	 * @return bool
+	 */
+	public function muteNotifictions(int $user_guid = 0): bool {
+		if ($user_guid === 0) {
+			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
+		}
+		
+		return _elgg_services()->subscriptions->muteNotifications($user_guid, $this->guid);
+	}
+	
+	/**
+	 * Check if the user has notifications muted about events affecting this entity
+	 *
+	 * @param int $user_guid The GUID of the user to check muted notifcations for (default: current user)
+	 *
+	 * @return bool
+	 */
+	public function hasMutedNotifications(int $user_guid = 0): bool {
+		if ($user_guid === 0) {
+			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
+		}
+		
+		return _elgg_services()->subscriptions->hasMutedNotifications($user_guid, $this->guid);
+	}
+	
+	/**
+	 * No longer nute notifications about events affecting this entity
+	 *
+	 * @param int $user_guid The GUID of the user to unmute notifcations for (default: current user)
+	 *
+	 * @return bool
+	 */
+	public function unmuteNotifications(int $user_guid = 0): bool {
+		if ($user_guid === 0) {
+			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
+		}
+		
+		return _elgg_services()->subscriptions->unmuteNotifications($user_guid, $this->guid);
 	}
 	
 	/**

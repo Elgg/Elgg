@@ -23,6 +23,11 @@ class SubscriptionsService {
 	const RELATIONSHIP_PREFIX = 'notify';
 
 	/**
+	 * @var string Used when an entity no longer wishes to recieve notifications
+	 */
+	const MUTE_NOTIFICATIONS_RELATIONSHIP = 'mute_notifications';
+	
+	/**
 	 * @var Database
 	 */
 	protected $db;
@@ -104,7 +109,9 @@ class SubscriptionsService {
 			'origin' => Notification::ORIGIN_SUBSCRIPTIONS,
 			'methods' => $methods,
 		];
-		return $this->hooks->trigger('get', 'subscriptions', $params, $subscriptions);
+		$subscriptions = $this->hooks->trigger('get', 'subscriptions', $params, $subscriptions);
+		
+		return $this->filterMutedNotifications($subscriptions, $event);
 	}
 
 	/**
@@ -173,6 +180,9 @@ class SubscriptionsService {
 		if (!_elgg_services()->notifications->isRegisteredMethod($method)) {
 			return false;
 		}
+		
+		// remove the muted notification relationship
+		$this->unmuteNotifications($user_guid, $target_guid);
 		
 		if (!empty($type) && !empty($subtype) && !empty($action)) {
 			$rel[] = $type;
@@ -408,9 +418,105 @@ class SubscriptionsService {
 					
 					// only type limitation
 					return $qb->compare("{$main_alias}.relationship", 'like', self::RELATIONSHIP_PREFIX . ":{$type}:{$subtype}:{$action}:%", ELGG_VALUE_STRING);
-				}
+				},
 			],
 		]);
+	}
+	
+	/**
+	 * Mute notifications about events affecting the target
+	 *
+	 * @param int $user_guid   The GUID of the user to mute notifcations for
+	 * @param int $target_guid The GUID of the entity to for which to mute notifications
+	 *
+	 * @return bool
+	 */
+	public function muteNotifications(int $user_guid, int $target_guid): bool {
+		// remove all current subscriptions
+		$this->removeSubscriptions($user_guid, $target_guid);
+		
+		return $this->relationshipsTable->add($user_guid, self::MUTE_NOTIFICATIONS_RELATIONSHIP, $target_guid);
+	}
+	
+	/**
+	 * No longer nute notifications about events affecting the target
+	 *
+	 * @param int $user_guid   The GUID of the user to unmute notifcations for
+	 * @param int $target_guid The GUID of the entity to for which to unmute notifications
+	 *
+	 * @return bool
+	 */
+	public function unmuteNotifications(int $user_guid, int $target_guid): bool {
+		return $this->relationshipsTable->remove($user_guid, self::MUTE_NOTIFICATIONS_RELATIONSHIP, $target_guid);
+	}
+	
+	/**
+	 * Check if the user has notifications muted about events affecting the target
+	 *
+	 * @param int $user_guid   The GUID of the user to check muted notifcations for
+	 * @param int $target_guid The GUID of the entity to for which to check muted notifications
+	 *
+	 * @return bool
+	 */
+	public function hasMutedNotifications(int $user_guid, int $target_guid): bool {
+		return $this->relationshipsTable->check($user_guid, self::MUTE_NOTIFICATIONS_RELATIONSHIP, $target_guid) instanceof \ElggRelationship;
+	}
+	
+	/**
+	 * Filter subscriptions based on muted notification settings related to the notification event
+	 *
+	 * This filters out muted notifications based on:
+	 * - Event actor
+	 * - Event entity
+	 * - Event entity owner
+	 * - Event entity container
+	 *
+	 * @param array             $subscriptions List of subscribers to filter
+	 * @param NotificationEvent $event         Notification event from which to get information
+	 *
+	 * @return array
+	 */
+	public function filterMutedNotifications(array $subscriptions, NotificationEvent $event): array {
+		$guids_to_check = [];
+		
+		// Event actor
+		$guids_to_check[] = $event->getActorGUID();
+		
+		// Event object
+		$entity = false;
+		$object = $event->getObject();
+		if ($object instanceof \ElggEntity) {
+			$entity = $object;
+		} elseif ($object instanceof \ElggAnnotation) {
+			$entity = $object->getEntity();
+		}
+		
+		if ($entity instanceof \ElggEntity) {
+			$guids_to_check[] = $entity->guid;
+			$guids_to_check[] = $entity->owner_guid;
+			$guids_to_check[] = $entity->container_guid;
+		}
+		
+		// are there GUIDs to check
+		$guids_to_check = array_filter($guids_to_check);
+		if (empty($guids_to_check)) {
+			return $subscriptions;
+		}
+		
+		// get muted relations
+		$select = Select::fromTable('entity_relationships');
+		$select->select('guid_one')
+			->where($select->compare('relationship', '=', self::MUTE_NOTIFICATIONS_RELATIONSHIP, ELGG_VALUE_STRING))
+			->andWhere($select->compare('guid_two', 'in', $guids_to_check, ELGG_VALUE_GUID));
+		
+		$muted = $this->db->getData($select, function($row) {
+			return (int) $row->guid_one;
+		});
+		
+		// filter subscriptions
+		return array_filter($subscriptions, function($value, $key) use ($muted) {
+			return !in_array($key, $muted);
+		}, ARRAY_FILTER_USE_BOTH);
 	}
 
 	/**

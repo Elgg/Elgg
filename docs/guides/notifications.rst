@@ -288,3 +288,21 @@ Example:
 
 		return ($subscriptions + $group_subscribers);
 	}
+
+Muted notifications
+===================
+
+Notifications can be muted in order to no longer receive notifications, for example no longer receive notifications about new comments on a discussion.
+
+In order to mute notifications call ``\ElggEntity::muteNotifictions($user_guid)`` the ``$user_guid`` is defaulted to the current logged in user.
+This will cause all subscriptions on the entity to be removed and a special flag will be set to know that notifications are muted.
+
+The muting rules are applied after the subscribers of a notification event are requested and are applied for the following entities of the notification event:
+- the event actor ``\Elgg\Notifications\NotificationEvent::getActor()``
+- the event object entity ``\Elgg\Notifications\NotificationEvent::getObject()``
+- the event object container entity ``\Elgg\Notifications\NotificationEvent::getObject()::getContainerEntity()``
+- the event object owner entity ``\Elgg\Notifications\NotificationEvent::getObject()::getOwnerEntity()``
+
+To unmute the notifications call ``\ElggEntity::unmuteNotifictions($user_guid)`` the ``$user_guid`` is defaulted to the current logged in user.
+
+To check if a user has the notifications muted call ``\ElggEntity::hasMutedNotifications($user_guid)`` the ``$user_guid`` is defaulted to the current logged in user.

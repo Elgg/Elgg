@@ -263,4 +263,25 @@ abstract class ElggEntitySubscriptionsIntegrationTestCase extends IntegrationTes
 		$subscribers = $this->target->getSubscribers(['bananas']);
 		$this->assertCount(1, $subscribers);
 	}
+	
+	public function testMuteUnmuteNotifications() {
+		$this->assertTrue($this->target->addSubscription($this->user->guid, ['apples', 'bananas']));
+		$this->assertTrue($this->target->hasSubscription($this->user->guid, ['apples']));
+		$this->assertTrue($this->target->hasSubscription($this->user->guid, ['bananas']));
+		$this->assertNotEmpty($this->target->getSubscribers(['apples', 'bananas']));
+		
+		$this->assertTrue($this->target->muteNotifictions($this->user->guid));
+		
+		$this->assertTrue($this->target->hasMutedNotifications($this->user->guid));
+		$this->assertFalse($this->target->hasSubscription($this->user->guid, ['apples']));
+		$this->assertFalse($this->target->hasSubscription($this->user->guid, ['bananas']));
+		$this->assertEmpty($this->target->getSubscribers(['apples', 'bananas']));
+		
+		$this->assertTrue($this->target->unmuteNotifications($this->user->guid));
+		
+		$this->assertFalse($this->target->hasMutedNotifications($this->user->guid));
+		$this->assertFalse($this->target->hasSubscription($this->user->guid, ['apples']));
+		$this->assertFalse($this->target->hasSubscription($this->user->guid, ['bananas']));
+		$this->assertEmpty($this->target->getSubscribers(['apples', 'bananas']));
+	}
 }
