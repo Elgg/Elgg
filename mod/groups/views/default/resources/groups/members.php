@@ -15,7 +15,7 @@ elgg_set_page_owner_guid($guid);
 elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
-if ($group->canEdit()) {
+if ($group->canEdit() && elgg_is_active_plugin('friends')) {
 	elgg_register_menu_item('title', [
 		'name' => 'groups:invite',
 		'icon' => 'user-plus',
