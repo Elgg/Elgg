@@ -16,6 +16,22 @@ class ElggPlugin extends ElggObject {
 	const STATIC_CONFIG_FILENAME = 'elgg-plugin.php';
 	
 	/**
+	 * The optional files that can be read and served through the markdown page handler
+	 *
+	 * @var string[]
+	 */
+	const ADDITIONAL_TEXT_FILES = [
+		'README.txt',
+		'CHANGES.txt',
+		'INSTALL.txt',
+		'COPYRIGHT.txt',
+		'LICENSE.txt',
+		'README',
+		'README.md',
+		'README.markdown',
+	];
+	
+	/**
 	 * @var \Elgg\Plugin\Composer
 	 */
 	protected $composer;

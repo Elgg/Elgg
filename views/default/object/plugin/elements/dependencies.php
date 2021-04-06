@@ -54,7 +54,7 @@ if ($deps) {
 	
 	$deps_info .= '</tbody></table>';
 	
-	echo elgg_view_module('info', 'Plugin dependencies', $deps_info);
+	echo $deps_info;
 }
 
 try {

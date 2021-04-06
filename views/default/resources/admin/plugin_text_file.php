@@ -20,7 +20,11 @@ if (!$plugin) {
 	return true;
 }
 
-$file_contents = file_get_contents($plugin->getPath() . $filename);
+$file_contents = false;
+if (in_array($filename, \ElggPlugin::ADDITIONAL_TEXT_FILES)) {
+	$file_contents = file_get_contents($plugin->getPath() . $filename);
+}
+
 if (!$file_contents) {
 	$error = elgg_echo('admin:plugins:markdown:unknown_file');
 	$body = elgg_view_layout('admin', ['content' => $error, 'title' => $error]);

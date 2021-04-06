@@ -10,7 +10,7 @@ General
 This error is usually accompanied by more details explaining why the plugin is invalid. This is usually
 caused by an incorrectly installed plugin.
 
-If you are installing a plugin called "test", there will be a test directory under mod. In that test directory there needs to be a composer.json file ``/mod/test/composer.json``.
+If you are installing a plugin called "test", there will be a test directory under mod. In that test directory there needs to be a ``composer.json`` file ``/mod/test/composer.json``.
 
 If this file does not exist, it could be caused by:
 	* installing a plugin to the wrong directory

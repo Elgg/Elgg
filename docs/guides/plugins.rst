@@ -48,7 +48,7 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 				],
 				'file' => [
 					'position' => 'before',
-					'version' => '>2', // semver notation of required version
+					'version' => '>2', // composer notation of required version constraint
 				],
 			],
 		],

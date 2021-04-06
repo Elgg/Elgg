@@ -110,19 +110,8 @@ if (!empty($resources_html)) {
 }
 
 // show links to text files
-$files = [
-	'README.txt',
-	'CHANGES.txt',
-	'INSTALL.txt',
-	'COPYRIGHT.txt',
-	'LICENSE.txt',
-	'README',
-	'README.md',
-	'README.markdown'
-];
-
 $files_html = '';
-foreach ($files as $file) {
+foreach (\ElggPlugin::ADDITIONAL_TEXT_FILES as $file) {
 	$file_path = $plugin->getPath() . $file;
 	if (!is_file($file_path) || !is_readable($file_path)) {
 		continue;
