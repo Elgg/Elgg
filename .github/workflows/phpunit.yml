@@ -74,6 +74,7 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           coverage: none
           extensions: gd,pdo,xml,json,memcached,redis-4.3.0,mysqli,pdo_mysql,libxml,mbstring
+          ini-values: max_execution_time=180
       
       - name: Install Composer v1
         run: composer self-update --1
