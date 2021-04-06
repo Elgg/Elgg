@@ -1,0 +1,24 @@
+{
+	"name": "elgg/friends_collections",
+	"type": "elgg-plugin",
+	"description": "Provides an interface for users to manage their friend collections",
+	"license": "GPL-2.0-only",
+	"keywords": ["friends", "social"],
+	"homepage": "https://elgg.org",
+	"authors": [
+		{
+			"name": "Elgg Core Team",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"source": "https://github.com/elgg/elgg",
+		"issues": "https://github.com/elgg/elgg/issues"
+	},
+	"require": {
+		"composer/installers": "^1.0.8"
+	},
+	"conflict": {
+		"elgg/elgg": "<3.3"
+	}
+}

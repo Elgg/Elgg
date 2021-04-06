@@ -5,6 +5,10 @@ use Elgg\Discussions\GroupToolContainerLogicCheck;
 require_once(__DIR__ . '/lib/functions.php');
 
 return [
+	'plugin' => [
+		'name' => 'Discussions',
+		'activate_on_install' => true,
+	],
 	'bootstrap' => \Elgg\Discussions\Bootstrap::class,
 	'entities' => [
 		[

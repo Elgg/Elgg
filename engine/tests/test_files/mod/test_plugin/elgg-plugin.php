@@ -1,6 +1,11 @@
 <?php
 
 return [
+	'plugin' => [
+		'name' => 'Test Plugin',
+		'version' => '1.9',
+		'activate_on_install' => true,
+	],
 	'entities' => [
 		[
 			'type' => 'object',

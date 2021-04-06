@@ -3,6 +3,10 @@
 require_once(__DIR__ . '/lib/functions.php');
 
 return [
+	'plugin' => [
+		'name' => 'Messages',
+		'activate_on_install' => true,
+	],
 	'entities' => [
 		[
 			'type' => 'object',

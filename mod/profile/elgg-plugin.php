@@ -1,6 +1,10 @@
 <?php
 
 return [
+	'plugin' => [
+		'name' => 'Profile',
+		'activate_on_install' => true,
+	],
 	'actions' => [
 		'profile/edit' => [],
 		'profile/fields/reset' => [

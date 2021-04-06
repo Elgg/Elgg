@@ -51,7 +51,7 @@ class PluginsListCommandTest extends UnitTestCase {
 
 	public function testCommandOutputContainsInfo() {
 		$plugin = \ElggPlugin::fromId('test_plugin', $this->normalizeTestFilePath('mod/'));
-		$plugin->activate();
+		$this->assertTrue($plugin->activate());
 
 		_elgg_services()->plugins->addTestingPlugin($plugin);
 

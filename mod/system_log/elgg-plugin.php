@@ -1,6 +1,10 @@
 <?php
 
 return [
+	'plugin' => [
+		'name' => 'System Log',
+		'activate_on_install' => true,
+	],
 	'settings' => [
 		'period' => 'never',
 		'delete' => 'never',

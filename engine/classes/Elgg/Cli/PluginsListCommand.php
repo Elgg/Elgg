@@ -53,12 +53,10 @@ class PluginsListCommand extends Command {
 			$plugins = elgg_get_plugins($status);
 
 			foreach ($plugins as $plugin) {
-				$manifest = $plugin->getManifest();
-
 				$table->addRow([
 					$plugin->guid,
 					$plugin->getID(),
-					$manifest ? $manifest->getVersion() : 'INVALID PACKAGE',
+					$plugin->getVersion(),
 					$plugin->isActive() ? elgg_echo('status:active') : elgg_echo('status:inactive'),
 					$plugin->getPriority(),
 				]);

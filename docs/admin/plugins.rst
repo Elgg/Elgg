@@ -75,7 +75,7 @@ Language packs can extend and include translations for language strings
 found in the core, core plugins and/or third-party plugins.
 
 Some of the language packs are already included in the core, and can be found in
-``languages`` directory off Elgg's root directory. Individual plugins tend to
+``languages`` directory in Elgg's root directory. Individual plugins tend to
 include their translations under the ``languages`` directory within the plugin's
 root.
 
@@ -89,11 +89,7 @@ All plugins reside in the ``mod`` directory of your Elgg installation.
 
 To install a new plugin:
  * extract (unzip) contents of the plugin distribution package
- * copy/FTP the extracted folder into the ``mod`` directory of your Elgg
-   installation, making sure that ``manifest.xml`` is
-   directly under the plugin directory (e.g. if you were to install a plugin called
-   ``my_elgg_plugin``, plugin's manifest would need to be found at
-   ``mod/my_elgg_plugin/manifest.xml``)
+ * copy/FTP the extracted folder into the ``mod`` directory of your Elgg installation
  * activate the plugin from your admin panel
 
 To activate a plugin:

@@ -18,7 +18,7 @@ Prerequisites:
 
  - :doc:`Install Elgg</intro/install>`
 
-Create the plugin's directory and manifest file
+Create the plugin's directory and composer file
 ===============================================
 
 First, choose a simple and descriptive name for your plugin.
@@ -29,26 +29,11 @@ in ``/mod/``. In this case, the name of the directory should
 be ``/mod/my_blog/``. This directory is the root of your plugin and all the
 files that you create for the new plugin will go somewhere under it.
 
-Next, in the root of the plugin, create the plugin's manifest file,
-``manifest.xml``:
-
-.. code-block:: xml
-
-    <?xml version="1.0" encoding="UTF-8"?>
-    <plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
-        <name>My Blog</name>
-        <id>my_blog</id>
-        <author>Your Name Here</author>
-        <version>0.1</version>
-        <description>Adds blogging capabilities.</description>
-        <requires>
-            <type>elgg_release</type>
-            <version>2.0</version>
-        </requires>
-    </plugin_manifest>
+Next, in the root of the plugin, create the plugin's composer file,
+``composer.json``.
 
 See :doc:`Plugins</guides/plugins>` for more information
-about the manifest file.
+about the composer file.
 
 Create the form for creating a new blog post
 ============================================

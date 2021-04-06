@@ -1,6 +1,10 @@
 <?php
 
 return [
+	'plugin' => [
+		'name' => 'Notifications',
+		'activate_on_install' => true,
+	],
 	'actions' => [
 		'notifications/settings' => [],
 		'notifications/subscriptions' => [],

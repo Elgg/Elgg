@@ -5,6 +5,10 @@ use Elgg\Bookmarks\GroupToolContainerLogicCheck;
 require_once(__DIR__ . '/lib/functions.php');
 
 return [
+	'plugin' => [
+		'name' => 'Bookmarks',
+		'activate_on_install' => true,
+	],
 	'bootstrap' => \Elgg\Bookmarks\Bootstrap::class,
 	'entities' => [
 		[

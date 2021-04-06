@@ -217,7 +217,7 @@ Create your plugin as described in the :doc:`developer guide </guides/index>`.
 
 -  Create a new directory under mod/
 -  Create a new elgg-plugin.php
--  Create a manifest.xml file describing your theme.
+-  Create a composer.json file describing your theme.
 
 Customize the CSS
 =================

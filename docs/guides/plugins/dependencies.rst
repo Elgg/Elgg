@@ -10,14 +10,12 @@ In Elgg the plugin dependencies system is there to prevent plugins from being us
 Overview
 ========
 
-The dependencies system is controlled through a plugin's ``manifest.xml`` file. Plugin authors can specify that a plugin:
+The dependencies system is controlled through a plugin's ``elgg-plugin.php`` file or ``composer.json``. Plugin authors can specify that a plugin:
 
-- Requires certain Elgg versions, Elgg plugins, PHP extensions, and PHP settings.
-- Suggests certain Elgg versions, Elgg plugins, PHP extensions, and PHP settings.
-- Conflicts with certain Elgg versions or Elgg plugins.
-- Provides the equivalent of another Elgg plugin or PHP extension.
+- Requires certain Elgg plugins, PHP version or PHP extensions.
+- Conflicts with certain Elgg versions or plugins.
 
-The dependency system uses the four verbs above (``requires``, ``suggests``, ``conflicts``, and ``provides``) as parent elements to indicate what type of dependency is described by its children. All dependencies have a similar format with similar options:
+The dependency system uses the four verbs above (``requires`` and ``conflicts``) as parent elements to indicate what type of dependency is described by its children. All dependencies have a similar format with similar options:
 
 .. code-block:: xml
 
@@ -55,32 +53,6 @@ Using elgg_release:
       <version>1.8</version>
    </requires>
 
-Suggests
---------
-
-``suggests`` dependencies signify that the plugin author suggests a specific system configuration, but it is not required to use the plugin. The suggestions can also be another plugin itself which could interact, extend, or be extended by this plugin, but is not required for it to function.
-
-Suggest another plugin:
-
-.. code-block:: xml
-
-   <suggests>
-      <type>plugin</type>
-      <name>profile</name>
-      <version>1.0</version>
-   </suggests>
-
-Suggest a certain PHP setting:
-
-.. code-block:: xml
-
-   <suggests>
-      <type>php_ini</type>
-      <name>memory_limit</name>
-      <value>64M</value>
-      <comparison>ge</comparison>
-   </suggests>
-
 Conflicts
 ---------
 
@@ -105,25 +77,6 @@ Conflict with a specific release of Elgg:
       <comparison>==</comparison>
    </conflicts>
 
-Provides
---------
-
-``provides`` dependencies tell Elgg that this plugin is providing the functionality of another plugin or PHP extension. Unlike the other verbs, it only supports two types: ``plugin`` and ``php_extension``.
-
-The purpose of this is to provide interchangeable APIs implemented by different plugins. For example, the twitter_services plugin provides an API for other plugins to Tweet on behalf of the user via curl and Oauth. A plugin author could write a compatible plugin for servers without curl support that uses sockets streams and specify that it provides twitter_services. Any plugins that suggest or require twitter_services would then know they can work.
-
-.. code-block:: xml
-
-   <provides>
-      <type>plugin</type>
-      <name>twitter_services</name>
-      <version>1.8</version>
-   </provides>
-
-.. note::
-
-   All plugins provide themselves as their plugin id (directory name) at the version defined in the their manifest.
-
 Types
 =====
 
@@ -133,8 +86,7 @@ Every dependency verb has a mandatory ``<type>`` element that must be one of the
 2. **plugin** - An Elgg plugin
 3. **priority** - A plugin load priority
 4. **php_extension** - A PHP extension
-5. **php_ini** - A PHP setting
-6. **php_version** - A PHP version
+5. **php_version** - A PHP version
 
 .. note::
 
@@ -197,18 +149,6 @@ The following option elements are supported, but not required:
 
    The format of extension versions varies greatly among PHP extensions and is sometimes not even set. This is generally worthless to check.
 
-php_ini
--------
-
-This checks PHP settings. The following option elements are required:
-
-- **name** - The name of the setting to check
-- **value** - The value of the setting to compare against
-
-The following options are supported, but not required:
-
-- **comparison** - The comparison operator to use. Defaults to ==
-
 php_version
 -----------
 
@@ -239,7 +179,6 @@ If ``<comparison>`` is not passed, the follow are used as defaults, depending up
 - requires->elgg_release: >=
 - requires->plugin: >=
 - requires->php_extension: =
-- requires->php_ini: =
 - all conflicts: =
 
 .. note::
@@ -289,18 +228,6 @@ Conflicts with The Wire plugin
       <type>plugin</type>
       <name>thewire</name>
    </conflicts>
-
-Requires at least 256 MB memory in PHP
---------------------------------------
-
-.. code-block:: xml
-
-   <requires>
-      <type>php_ini</type>
-      <name>memory_limit</name>
-      <value>256M</value>
-      <comparison>ge</comparison>
-   </requires>
 
 
 Requires at least PHP version 5.3

@@ -2,8 +2,6 @@
 
 namespace Elgg\Integration;
 
-use ElggXMLElement;
-
 /**
  * Elgg Regression Tests -- GitHub Bugfixes
  * Any bugfixes from GitHub that require testing belong here.
@@ -259,26 +257,6 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 
 		// delete group and annotations
 		$group->delete();
-	}
-
-	/**
-	 * @group XML
-	 */
-	public function testElggXMLElementDoesNotLoadExternalEntities() {
-		// build payload that should trigger loading of external entity
-		$payload = file_get_contents($this->normalizeTestFilePath('xxe/request.xml'));
-		$path = realpath($this->normalizeTestFilePath('xxe/external_entity.txt'));
-		$path = str_replace('\\', '/', $path);
-		if ($path[0] != '/') {
-			$path = '/' . $path;
-		}
-		$path = 'file://' . $path;
-		$payload = sprintf($payload, $path);
-
-		$el = new ElggXMLElement($payload);
-		$chidren = $el->getChildren();
-		$content = $chidren[0]->getContent();
-		$this->assertNotRegExp('/secret/', $content);
 	}
 
 	/**

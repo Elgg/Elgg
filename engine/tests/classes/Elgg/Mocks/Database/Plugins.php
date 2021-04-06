@@ -5,12 +5,15 @@ namespace Elgg\Mocks\Database;
 use Elgg\BaseTestCase;
 use Elgg\Database\Plugins as DbPlugins;
 use ElggPlugin;
+use Elgg\Testing;
 
 /**
  * @group Plugins
  */
 class Plugins extends DbPlugins {
 
+	use Testing;
+	
 	/**
 	 * @var ElggPlugin[]
 	 */
@@ -74,7 +77,7 @@ class Plugins extends DbPlugins {
 
 	public function generateEntities() {
 		parent::generateEntities();
-		$this->addTestingPlugin(ElggPlugin::fromId('test_plugin', ''));
+		$this->addTestingPlugin(ElggPlugin::fromId('test_plugin', $this->normalizeTestFilePath('mod/')));
 		return true;
 	}
 

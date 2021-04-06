@@ -5,6 +5,10 @@ use Elgg\Pages\GroupToolContainerLogicCheck;
 require_once(__DIR__ . '/lib/pages.php');
 
 return [
+	'plugin' => [
+		'name' => 'Pages',
+		'activate_on_install' => true,
+	],
 	'bootstrap' => \Elgg\Pages\Bootstrap::class,
 	'entities' => [
 		[

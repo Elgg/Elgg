@@ -9,32 +9,23 @@ In this tutorial we will pretend your site's URL is ``https://elgg.example.com``
 
 First, create a directory that will contain the plugin's files. It should be located under the ``mod/`` directory which is located in your Elgg installation directory. So in this case, create ``mod/hello/``.
 
-Manifest file
+Composer file
 =============
 
-Elgg requires that your plugin has a manifest file that contains information about the plugin. Therefore, in the directory you just created, create a file called ``manifest.xml`` and copy this code into it:
+Elgg requires that your plugin has a composer file that contains information about the plugin. Therefore, in the directory you just created, create a file called ``composer.json`` and copy this code into it:
 
-.. code-block:: xml
+.. code-block:: json
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
-        <name>Hello world</name>
-        <id>hello</id>
-        <author>Your Name Here</author>
-        <version>0.1</version>
-        <description>Hello world, testing.</description>
-        <requires>
-            <type>elgg_release</type>
-            <version>2.0</version>
-        </requires>
-    </plugin_manifest>
+    {
+		"name": "elgg/hello",
+		"type": "elgg-plugin",
+		"description": "Hello World plugin",
+		"license": "GPL-2.0-only",
+		"require": {
+			"composer/installers": "^1.0.8"
+		}
+	}
 
-This is the minimum amount of information in a manifest file:
-
-- ``<name>`` is the display name of the plugin
-- ``<id>`` must be the same as the directory you just created
-- ``<requires>`` must include which version of Elgg your plugin requires
-- ``<author>``, ``<version>`` and ``<description>`` should have some appropriate values but can be filled freely
 
 Registering a route
 ===================

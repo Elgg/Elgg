@@ -114,31 +114,6 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 		$plugin->delete();
 	}
 
-	public function testCanGetTextFiles() {
-		$plugin = ElggPlugin::fromId('test_plugin', $this->normalizeTestFilePath('mod/'));
-
-		$files = $plugin->getAvailableTextFiles();
-
-		$this->assertEquals([
-			'CHANGES.txt' => $this->normalizeTestFilePath('mod/test_plugin/CHANGES.txt'),
-			'README' => $this->normalizeTestFilePath('mod/test_plugin/README'),
-		], $files);
-
-		$plugin->delete();
-	}
-
-	public function testCanReadManifest() {
-
-		$plugin = ElggPlugin::fromId('test_plugin', $this->normalizeTestFilePath('mod/'));
-
-		$manifest = $plugin->getManifest();
-		$this->assertInstanceOf(ElggPluginManifest::class, $manifest);
-
-		$this->assertEquals('Test Plugin', $plugin->getDisplayName());
-
-		$plugin->delete();
-	}
-
 	public function testUsesBootstrapOnActivate() {
 
 		$plugin = ElggPlugin::fromId('bootstrap_plugin', $this->normalizeTestFilePath('mod/'));
@@ -283,5 +258,11 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 	public function testUsesBootstrapOnShutdown() {
 		// @todo Test that bootstrap handlers are called during the shutdown event
 		$this->markTestIncomplete();
+	}
+	
+	public function testGetVersion() {
+		$plugin = ElggPlugin::fromId('test_plugin', $this->normalizeTestFilePath('mod/'));
+		
+		$this->assertEquals('1.9', $plugin->getVersion());
 	}
 }

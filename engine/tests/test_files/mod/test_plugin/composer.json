@@ -1,8 +1,24 @@
 {
-    "name": "elgg/test_plugin",
-    "type": "elgg-plugin",
-    "require": {
-        "composer/installers": ">=1.0.8"
-    },
-    "license": "GPL-2.0-only"
+	"name": "elgg/test_plugin",
+	"type": "elgg-plugin",
+	"description": "Adds test_pluginging capabilities to Elgg",
+	"license": "GPL-2.0-only",
+	"keywords": ["plugin", "content", "widget"],
+	"homepage": "https://elgg.org",
+	"authors": [
+		{
+			"name": "Elgg Core Team",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"source": "https://github.com/elgg/elgg",
+		"issues": "https://github.com/elgg/elgg/issues"
+	},
+	"require": {
+		"composer/installers": "^1.0.8"
+	},
+	"conflict": {
+		"elgg/elgg": "<1.9"
+	}
 }

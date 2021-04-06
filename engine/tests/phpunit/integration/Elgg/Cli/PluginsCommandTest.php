@@ -51,6 +51,9 @@ class PluginsCommandTest extends IntegrationTestCase {
 	public function testActivatesPluginsWithDependencies() {
 		$application = new Application();
 
+		$this->assertFalse(elgg_is_active_plugin('parent_plugin'));
+		$this->assertFalse(elgg_is_active_plugin('dependent_plugin'));
+		
 		$command = new PluginsActivateCommand();
 		$application->add($command);
 
@@ -72,6 +75,9 @@ class PluginsCommandTest extends IntegrationTestCase {
 		elgg_get_plugin_from_id('parent_plugin')->activate();
 
 		$application = new Application();
+		
+		$this->assertTrue(elgg_is_active_plugin('parent_plugin'));
+		$this->assertFalse(elgg_is_active_plugin('conflicting_plugin'));
 
 		$command = new PluginsActivateCommand();
 		$application->add($command);

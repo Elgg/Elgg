@@ -1470,12 +1470,8 @@ class ElggInstaller {
 			$plugins = $app->_services->plugins->find('any');
 
 			foreach ($plugins as $plugin) {
-				$manifest = $plugin->getManifest();
-				if (!$manifest instanceof ElggPluginManifest) {
-					continue;
-				}
-
-				if (!$manifest->getActivateOnInstall()) {
+				$plugin_config = $plugin->getStaticConfig('plugin', []);
+				if (!elgg_extract('activate_on_install', $plugin_config, false)) {
 					continue;
 				}
 

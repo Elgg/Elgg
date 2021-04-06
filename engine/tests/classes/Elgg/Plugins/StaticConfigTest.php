@@ -12,7 +12,7 @@ class StaticConfigTest extends UnitTestCase {
 	/**
 	 * @var \ElggPlugin
 	 */
-	private $plugin;
+	protected $plugin;
 
 	public function up() {
 		$this->plugin = $this->startPlugin();
