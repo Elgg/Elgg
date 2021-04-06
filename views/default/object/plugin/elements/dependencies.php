@@ -11,7 +11,6 @@ $plugin = elgg_extract('plugin', $vars, false);
 // elgg-plugin dependencies
 $deps = $plugin->getDependencies();
 if ($deps) {
-	
 	$deps_info = '<table class="elgg-table">';
 	$deps_info .= '<thead><tr><th>' . elgg_echo('item:object:plugin') . '</th><th>' . elgg_echo('ElggPlugin:Dependencies:MustBeActive') . '</th><th>' . elgg_echo('ElggPlugin:Dependencies:Position') . '</th></tr></thead>';
 	$deps_info .= '<tbody>';
@@ -60,6 +59,6 @@ if ($deps) {
 
 try {
 	$plugin->assertDependencies();
-} catch(Exception $e) {
+} catch (Exception $e) {
 	echo elgg_view_message('error', $e->getMessage());
 }
