@@ -7,6 +7,7 @@ use Elgg\Cache\SystemCache;
 use Elgg\Filesystem\Directory;
 use Elgg\Http\Request as HttpRequest;
 use Psr\Log\LoggerInterface;
+use Elgg\Project\Paths;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -712,14 +713,13 @@ class ViewsService {
 	/**
 	 * Register a plugin's views
 	 *
-	 * @param string $path       Base path of the plugin
-	 * @param string $failed_dir This var is set to the failed directory if registration fails
+	 * @param string $path Base path of the plugin
 	 *
 	 * @return bool
 	 */
-	public function registerPluginViews($path, &$failed_dir = '') {
-		$path = rtrim($path, "\\/");
-		$view_dir = "$path/views/";
+	public function registerPluginViews($path) {
+		$path = Paths::sanitize($path);
+		$view_dir = "{$path}views/";
 
 		// plugins don't have to have views.
 		if (!is_dir($view_dir)) {
@@ -729,7 +729,7 @@ class ViewsService {
 		// but if they do, they have to be readable
 		$handle = opendir($view_dir);
 		if (!$handle) {
-			$failed_dir = $view_dir;
+			$this->logger->notice("Unable to register views from the directory: {$view_dir}");
 
 			return false;
 		}
@@ -739,8 +739,6 @@ class ViewsService {
 
 			if ('.' !== substr($view_type, 0, 1) && is_dir($view_type_dir)) {
 				if (!$this->autoregisterViews('', $view_type_dir, $view_type)) {
-					$failed_dir = $view_type_dir;
-
 					return false;
 				}
 			}

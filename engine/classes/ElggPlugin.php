@@ -972,10 +972,8 @@ class ElggPlugin extends ElggObject {
 		}
 
 		// Allow /views directory files to override
-		if (!$views->registerPluginViews($this->getPath(), $failed_dir)) {
-			$key = 'ElggPlugin:Exception:CannotRegisterViews';
-			$args = [$this->getID(), $this->guid, $failed_dir];
-			$msg = elgg_echo($key, $args);
+		if (!$views->registerPluginViews($this->getPath())) {
+			$msg = elgg_echo('ElggPlugin:Exception:CannotRegisterViews', [$this->getID(), $this->guid, $this->getPath()]);
 
 			throw PluginException::factory('CannotRegisterViews', $this, $msg);
 		}
