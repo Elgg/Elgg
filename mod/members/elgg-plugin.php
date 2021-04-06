@@ -1,6 +1,10 @@
 <?php
 
 return [
+	'plugin' => [
+		'name' => 'Members',
+		'activate_on_install' => true,
+	],
 	'routes' => [
 		'collection:user:user' => [
 			'path' => '/members',

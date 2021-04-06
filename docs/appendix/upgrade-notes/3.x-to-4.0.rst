@@ -60,6 +60,30 @@ Miscellaneous changes
 * The config value for ``servicehandler`` has been removed
 * In certain edge cases the default value of an API parameter will not be applied
 
+Plugin Manifest
+---------------
+
+The plugin manifest file is no longer used. Features of the manifest have been removed or moved to different locations.
+
+It is no longer possible to require a specific php ini setting.
+
+php version requirement -> composer require
+php extension requirement -> composer require
+plugin conflicts -> composer conflicts
+plugin requirement -> elgg-plugin
+plugin position requirement -> elgg-plugin
+
+plugin version -> elgg-plugin
+plugin activate on install -> elgg-plugin
+plugin name -> elgg-plugin
+plugin description -> composer.json
+plugin categories -> composer.json
+plugin license -> composer.json
+plugin repo link -> composer.json
+plugin issues link -> composer.json
+plugin homepage link -> composer.json
+plugin authors/contributors -> composer.json
+
 Notifications
 -------------
 
@@ -600,6 +624,8 @@ Miscellaneous API changes
 * The defaults for ``ignore_empty_body`` and ``prevent_double_submit`` when using ``elgg_view_form`` have been changed to ``true``.
 * The plugin settings forms (``plugins/{$plugin_id}/settings``) no longer receive ``$vars['plugin']`` use ``$vars['entity']``
 * ``Elgg\Router\Middleware\WalledGarden::isPublicPage()`` can no longer be called statically
+* ``Elgg\Cli\PluginsHelper::getDependents()`` is no longer publically available
+* ``ElggPlugin::getLanguagesPath()`` is no longer publically available
 * An ``\ElggBatch`` no longer implements the interface ``Elgg\BatchResult`` but still has the same features
 * An ``\ElggEntity`` no longer implements the interface ``Locatable`` but still has the same features
 * An ``\Elgg\Event`` no longer implements the interfaces ``\Elgg\ObjectEvent`` and ``\Elgg\UserEvent`` but still has the same features
@@ -618,6 +644,7 @@ Removed functions
 Class functions
 ~~~~~~~~~~~~~~~
 
+* ``ElggPlugin::getDependencyReport()``
 * ``Elgg\Notifications\NotificationsService::getDeprecatedHandler()``
 * ``Elgg\Notifications\NotificationsService::getMethodsAsDeprecatedGlobal()`` use ``elgg_get_notification_methods()``
 * ``Elgg\Notifications\NotificationsService::registerDeprecatedHandler()``
@@ -659,6 +686,7 @@ Removed views / resources
 * ``elgg/thewire.js``
 * ``messages/js`` moved to ``forms/messages/process.js``
 * ``navigation/menu/elements/item_deps`` the functionality has been merged into ``navigation/menu/elements/item``
+* ``object/plugin/elements/contributors``
 * ``resources/comments/view`` use ``\Elgg\Controllers\CommentEntityRedirector``
 * ``reportedcontent/admin_css``
 * ``thewire/previous``

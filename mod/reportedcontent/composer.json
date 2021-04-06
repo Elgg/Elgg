@@ -1,0 +1,24 @@
+{
+	"name": "elgg/reportedcontent",
+	"type": "elgg-plugin",
+	"description": "Adds the option for users to report content and for admins to investigate it",
+	"license": "GPL-2.0-only",
+	"keywords": ["content", "admin"],
+	"homepage": "https://elgg.org",
+	"authors": [
+		{
+			"name": "Elgg Core Team",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"source": "https://github.com/elgg/elgg",
+		"issues": "https://github.com/elgg/elgg/issues"
+	},
+	"require": {
+		"composer/installers": "^1.0.8"
+	},
+	"conflict": {
+		"elgg/elgg": "<3.3"
+	}
+}

@@ -25,10 +25,6 @@ trait PluginsHelper {
 			throw new InvalidParameterException(elgg_echo('PluginException:InvalidID', [$id]));
 		}
 
-		if (!$plugin->getManifest()) {
-			throw new InvalidParameterException(elgg_echo('PluginException:InvalidManifest', [$id]));
-		}
-
 		if (!$force) {
 			return $plugin->activate();
 		}
@@ -61,10 +57,6 @@ trait PluginsHelper {
 			throw new InvalidParameterException(elgg_echo('PluginException:InvalidID', [$id]));
 		}
 
-		if (!$plugin->getManifest()) {
-			throw new InvalidParameterException(elgg_echo('PluginException:InvalidManifest', [$id]));
-		}
-
 		if (!$force) {
 			return $plugin->deactivate();
 		}
@@ -84,28 +76,23 @@ trait PluginsHelper {
 	 *
 	 * @return string[]
 	 */
-	public function getDependents($id) {
-		$result = [];
+	protected function getDependents($id) {
+		$dependents = [];
 
 		$active_plugins = elgg_get_plugins();
 
 		foreach ($active_plugins as $plugin) {
-			$manifest = $plugin->getManifest();
-			if (!$manifest) {
+			$dependencies = $plugin->getDependencies();
+			if (!array_key_exists($id, $dependencies)) {
 				continue;
 			}
-
-			$requires = $manifest->getRequires();
-
-			foreach ($requires as $required) {
-				if ($required['type'] == 'plugin' && $required['name'] == $id) {
-					// there are active dependents
-					$result[] = $manifest->getPluginID();
-				}
+				
+			if (elgg_extract('must_be_active', $dependencies[$id], true)) {
+				$dependents[] = $plugin->getID();
 			}
 		}
 
-		return $result;
+		return $dependents;
 	}
 
 	/**
@@ -119,15 +106,12 @@ trait PluginsHelper {
 		$result = [];
 
 		$plugin = elgg_get_plugin_from_id($id);
+		$conflicts = $plugin->getConflicts();
 
-		$conflicts = $plugin->getManifest()->getConflicts();
-
-		foreach ($conflicts as $conflict) {
-			if ($conflict['type'] === 'plugin') {
-				$name = $conflict['name'];
-				if (elgg_get_plugin_from_id($name)) {
-					$result[] = $name;
-				}
+		foreach ($conflicts as $plugin_id => $plugin_version) {
+			// @todo need to validate version
+			if (elgg_get_plugin_from_id($plugin_id)) {
+				$result[] = $plugin_id;
 			}
 		}
 
@@ -145,16 +129,16 @@ trait PluginsHelper {
 		$result = [];
 
 		$plugin = elgg_get_plugin_from_id($id);
-
-		$requires = $plugin->getManifest()->getRequires();
-
-		foreach ($requires as $require) {
-			if ($require['type'] === 'plugin') {
-				$name = $require['name'];
-				if (elgg_get_plugin_from_id($name)) {
-					$result[] = $name;
-				}
+		foreach ($plugin->getDependencies() as $plugin_id => $config) {
+			if (!elgg_extract('must_be_activate', $config, true)) {
+				continue;
 			}
+			
+			if (!elgg_get_plugin_from_id($plugin_id)) {
+				continue;
+			}
+			
+			$result[] = $plugin_id;
 		}
 
 		return $result;

@@ -1,0 +1,28 @@
+{
+	"name": "elgg/search",
+	"type": "elgg-plugin",
+	"description": "Adds UI for user, object and group search",
+	"license": "GPL-2.0-only",
+	"keywords": ["search"],
+	"homepage": "https://elgg.org",
+	"authors": [
+		{
+			"name": "Elgg Core Team",
+			"role": "Developer"
+		},
+		{
+			"name": "The MITRE Corporation",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"source": "https://github.com/elgg/elgg",
+		"issues": "https://github.com/elgg/elgg/issues"
+	},
+	"require": {
+		"composer/installers": "^1.0.8"
+	},
+	"conflict": {
+		"elgg/elgg": "<3.3"
+	}
+}

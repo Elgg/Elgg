@@ -56,7 +56,7 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		$config->system_cache_enabled = true;
 		$config->boot_cache_ttl = 600;
 		$config->plugins_path = elgg_extract('plugins_path', $params);
-
+		
 		// persistentLogin service needs this set to instantiate without calling DB
 		$sp->config->getCookieConfig();
 
@@ -105,11 +105,14 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		$app->_services->events->unregisterHandler('log', 'systemlog', 'Elgg\SystemLog\Logger::log');
 
 		$app->bootCore();
+		
+		// set correct base classes for testing purposes
+		$app->_services->entityTable->setEntityClass('object', 'plugin', \Elgg\Mocks\ElggPlugin::class);
 
 		if (!$isolate) {
 			self::$_testing_app = $app;
 		}
-
+		
 		return $app;
 	}
 

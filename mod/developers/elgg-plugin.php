@@ -3,6 +3,9 @@
 require_once(__DIR__ . '/lib/functions.php');
 
 return [
+	'plugin' => [
+		'name' => 'Elgg Developer Tools',
+	],
 	'bootstrap' => \Elgg\Developers\Bootstrap::class,
 	'actions' => [
 		'developers/settings' => [

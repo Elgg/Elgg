@@ -16,7 +16,7 @@ Requirements
    -  GD (for graphics processing)
    -  PDO (for database connection)
    -  JSON (for AJAX responses, etc.)
-   -  XML (for reading plugin manifest files, etc.)
+   -  XML (for xml resource and web services, etc.)
    -  `Multibyte String support`_ (for i18n)
    -  Proper configuration and ability to send email through an MTA
 

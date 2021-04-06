@@ -1,6 +1,10 @@
 <?php
 
 return [
+	'plugin' => [
+		'name' => 'Invite Friends',
+		'activate_on_install' => true,
+	],
 	'actions' => [
 		'friends/invite' => [],
 	],

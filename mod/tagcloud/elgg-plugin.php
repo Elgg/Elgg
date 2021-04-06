@@ -1,6 +1,9 @@
 <?php
 
 return [
+	'plugin' => [
+		'name' => 'Tag Cloud',
+	],
 	'routes' => [
 		'tagcloud' => [
 			'path' => '/tags',

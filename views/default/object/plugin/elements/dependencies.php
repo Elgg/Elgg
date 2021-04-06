@@ -5,8 +5,12 @@
  * This uses a table because it's a table of data.
  */
 
+/** @var $plugin ElggPlugin **/
 $plugin = elgg_extract('plugin', $vars, false);
-$deps = $plugin->getPackage()->checkDependencies(true);
+return; // @todo needs fixing
+if (empty($deps)) {
+	return;
+}
 
 $columns = ['type', 'name', 'expected_value', 'local_value', 'comment'];
 
@@ -20,7 +24,7 @@ foreach ($columns as $column) {
 echo '</tr>';
 
 foreach ($deps as $dep) {
-	$fields = _elgg_services()->plugins->getDependencyStrings($dep);
+// 	$fields = _elgg_services()->plugins->getDependencyStrings($dep);
 	$type = $dep['type'];
 
 	if ($dep['status']) {
@@ -34,7 +38,7 @@ foreach ($deps as $dep) {
 	echo "<tr>";
 
 	foreach ($columns as $column) {
-		echo "<td class=\"pas $class\">{$fields[$column]}</td>";
+		echo "<td class=\"pas $class\">{$column}</td>";
 	}
 
 	echo '</tr>';

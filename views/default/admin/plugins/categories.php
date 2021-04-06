@@ -26,13 +26,10 @@ foreach ($plugins as $plugin) {
 		continue;
 	}
 
-	$plugin_categories = $plugin->getManifest()->getCategories();
-
-	if (isset($plugin_categories)) {
-		foreach ($plugin_categories as $category) {
-			if (!array_key_exists($category, $categories)) {
-				$categories[$category] = ElggPluginManifest::getFriendlyCategory($category);
-			}
+	$plugin_categories = $plugin->getCategories();
+	foreach ($plugin_categories as $category => $category_title) {
+		if (!array_key_exists($category, $categories)) {
+			$categories[$category] = $category_title;
 		}
 	}
 }
@@ -40,16 +37,10 @@ foreach ($plugins as $plugin) {
 
 asort($categories);
 
-// we want bundled/nonbundled pulled to be at the top of the list
-unset($categories['bundled']);
-unset($categories['nonbundled']);
-
 $common_categories = [
 	'all' => elgg_echo('admin:plugins:category:all'),
 	'active' => elgg_echo('admin:plugins:category:active'),
 	'inactive' => elgg_echo('admin:plugins:category:inactive'),
-	'bundled' => elgg_echo('admin:plugins:category:bundled'),
-	'nonbundled' => elgg_echo('admin:plugins:category:nonbundled'),
 ];
 
 $categories = array_merge($common_categories, $categories);

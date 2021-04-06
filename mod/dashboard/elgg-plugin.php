@@ -1,6 +1,9 @@
 <?php
 
 return [
+	'plugin' => [
+		'name' => 'User Dashboard',
+	],
 	'routes' => [
 		'default:dashboard' => [
 			'path' => '/dashboard',

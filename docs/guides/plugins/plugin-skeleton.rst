@@ -60,21 +60,20 @@ The following files for plugin ``example`` would go in ``/mod/example/``
     COPYRIGHT.txt
     INSTALL.txt
     LICENSE.txt
-    manifest.xml
     README.txt
     composer.json
 
 Required Files
 --------------
 
-Plugins **must** provide a ``manifest.xml`` file in the plugin root in order to be recognized by Elgg.
+Plugins **must** provide a ``composer.json`` file in the plugin root in order to be recognized by Elgg.
 
 Therefore the following is the minimally compliant structure:
 
 .. code-block:: text
 
     mod/example/
-        manifest.xml
+        composer.json
 
 Actions
 -------
@@ -94,7 +93,7 @@ README.txt
     *should* provide additional information about the plugin of an unspecified nature 
 
 COPYRIGHT.txt 
-    If included, **must** provide an explanation of the plugin's copyright, besides what is included in ``manifest.xml`` 
+    If included, **must** provide an explanation of the plugin's copyright. 
 
 LICENSE.txt 
     If included, **must** provide the text of the license that the plugin is released under. 

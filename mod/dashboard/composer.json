@@ -1,0 +1,24 @@
+{
+	"name": "elgg/dashboard",
+	"type": "elgg-plugin",
+	"description": "A widget-based dashboard for your users",
+	"license": "GPL-2.0-only",
+	"keywords": ["widget"],
+	"homepage": "https://elgg.org",
+	"authors": [
+		{
+			"name": "Elgg Core Team",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"source": "https://github.com/elgg/elgg",
+		"issues": "https://github.com/elgg/elgg/issues"
+	},
+	"require": {
+		"composer/installers": "^1.0.8"
+	},
+	"conflict": {
+		"elgg/elgg": "<3.3"
+	}
+}

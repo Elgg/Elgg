@@ -1,6 +1,10 @@
 <?php
 
 return [
+	'plugin' => [
+		'name' => 'Search',
+		'activate_on_install' => true,
+	],
 	'routes' => [
 		'default:search' => [
 			'path' => '/search/{route_query?}',
