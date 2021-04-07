@@ -73,4 +73,7 @@ To view the friendship request, click here:
 	
 	'friends:action:friendrequest:accept:fail' => "An error occured while accepting the friendship request, please try again",
 	'friends:action:friendrequest:accept:success' => "The friendship request has been accepted",
+	
+	// notification settings
+	'friends:notification:settings:description' => 'Default notification settings for users you add as a friend',
 );

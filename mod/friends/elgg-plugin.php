@@ -32,13 +32,15 @@ return [
 	'events' => [
 		'create' => [
 			'relationship' => [
-				'Elgg\Friends\Relationships::createFriendRelationship' => [],
+				'Elgg\Friends\Relationships::removePendingFriendRequest' => [],
+				'Elgg\Friends\Relationships::applyFriendNotificationsSettings' => [],
 				'Elgg\Friends\Notifications::sendFriendNotification' => [],
 			],
 		],
 		'delete' => [
 			'relationship' => [
 				'Elgg\Friends\Relationships::deleteFriendRelationship' => [],
+				'Elgg\Friends\Relationships::deleteFriendNotificationSubscription' => [],
 			],
 		],
 	],
@@ -112,6 +114,11 @@ return [
 			'menu:user_hover' => [
 				'Elgg\Friends\Menus\UserHover::register' => [],
 			],
+		],
+	],
+	'view_extensions' => [
+		'notifications/settings/records' => [
+			'notifications/settings/friends' => [],
 		],
 	],
 ];

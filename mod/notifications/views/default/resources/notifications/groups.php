@@ -5,26 +5,18 @@
  * @uses $user ElggUser
  */
 
-use Elgg\Exceptions\Http\EntityPermissionsException;
-
 $user = elgg_get_page_owner_entity();
-if (!$user instanceof ElggUser) {
-	$user = elgg_get_logged_in_user_entity();
-}
-
-if (!$user instanceof ElggUser || !$user->canEdit()) {
-	throw new EntityPermissionsException();
-}
-
-elgg_set_page_owner_guid($user->guid);
 
 // Set the context to settings
 elgg_set_context('settings');
 
 elgg_push_breadcrumb(elgg_echo('settings'), elgg_generate_url('settings:account', ['username' => $user->username]));
 
-echo elgg_view_page(elgg_echo('notifications:subscriptions:changesettings:groups'), [
-	'content' => elgg_view('notifications/groups', [
+echo elgg_view_page(elgg_echo('notifications:subscriptions:groups:title'), [
+	'content' => elgg_view_form('notifications/subscriptions/groups', [
+		'action' => elgg_normalize_url('action/notifications/subscriptions'),
+		'class' => 'elgg-subscription-module',
+	], [
 		'user' => $user,
 	]),
 	'show_owner_block_menu' => false,

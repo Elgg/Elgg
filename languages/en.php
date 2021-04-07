@@ -1961,4 +1961,7 @@ Global variables:
 	
 	"core:upgrade:2021022401:title" => "Migrate notification subscriptions",
 	"core:upgrade:2021022401:description" => "Notifcation subscriptions are stored differently in the database. Use this upgrade to migrate all subscriptions to the new form.",
+	
+	"core:upgrade:2021040701:title" => "Migrate user notification settings",
+	"core:upgrade:2021040701:description" => "In order to have a more developer friendly way to store notification settings of a user a migration is needed to the new naming convention.",
 );

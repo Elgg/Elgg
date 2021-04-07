@@ -39,7 +39,7 @@ class Title {
 		$items[] = \ElggMenuItem::factory([
 			'name' => 'notifications',
 			'parent_name' => 'group-dropdown',
-			'text' => elgg_echo('notifications:subscriptions:changesettings:groups'),
+			'text' => elgg_echo('notifications:subscriptions:groups:title'),
 			'href' => elgg_generate_url('settings:notification:groups', [
 				'username' => $user->username,
 			]),

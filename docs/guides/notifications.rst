@@ -306,3 +306,27 @@ The muting rules are applied after the subscribers of a notification event are r
 To unmute the notifications call ``\ElggEntity::unmuteNotifictions($user_guid)`` the ``$user_guid`` is defaulted to the current logged in user.
 
 To check if a user has the notifications muted call ``\ElggEntity::hasMutedNotifications($user_guid)`` the ``$user_guid`` is defaulted to the current logged in user.
+
+Notification settings
+=====================
+
+You can store and retreive notification settings of users with ``\ElggUser::setNotificationSetting()`` and ``\ElggUser::getNotificationSettings()``.
+
+.. code-block:: php
+
+	// Setting a notification preference
+	// notification method: mail
+	// notification is enabled
+	// for the purpose 'group_join' (when omitted this is 'default')
+	$user->setNotificationSetting('mail', true, 'group_join');
+	
+	// retrieving the preference
+	$settings = $user->getNotificationSettings('group_join');
+	// this wil result in an array with all the current notification methods and their state like:
+	// [
+	//	'mail' => true,
+	//	'site' => false,
+	//	'sms' => false,
+	// ]
+
+When a user has no setting yet for a non default purpose the system will fallback to the 'default' notification setting.

@@ -502,11 +502,18 @@ class ElggUser extends \ElggEntity
 	 * Enable or disable a notification delivery method
 	 *
 	 * @param string $method  Method name
-	 * @param bool   $enabled Enabled or disabled
+	 * @param bool   $enabled Enabled or disabled (default: true)
+	 * @param string $purpose For what purpose is the notification setting used (default: 'default')
+	 *
 	 * @return bool
+	 * @throws \InvalidArgumentException
 	 */
-	public function setNotificationSetting($method, $enabled = true) {
-		$this->{"notification:method:$method"} = (int) $enabled;
+	public function setNotificationSetting(string $method, bool $enabled = true, string $purpose = 'default') {
+		if (empty($purpose)) {
+			throw new \InvalidArgumentException(__METHOD__ . ' requires $purpose to be set to a non-empty string');
+		}
+		
+		$this->{"notification:{$purpose}:{$method}"} = (int) $enabled;
 		return $this->save();
 	}
 
@@ -519,15 +526,26 @@ class ElggUser extends \ElggEntity
 	 *    ]
 	 * </code>
 	 *
+	 * @param string $purpose For what purpose to get the notification settings (default: 'default')
+	 *
 	 * @return array
+	 * @throws \InvalidArgumentException
 	 */
-	public function getNotificationSettings() {
-
+	public function getNotificationSettings(string $purpose = 'default') {
+		if (empty($purpose)) {
+			throw new \InvalidArgumentException(__METHOD__ . ' requires $purpose to be set to a non-empty string');
+		}
+		
 		$settings = [];
 
 		$methods = _elgg_services()->notifications->getMethods();
 		foreach ($methods as $method) {
-			$settings[$method] = (bool) $this->{"notification:method:$method"};
+			if ($purpose !== 'default' && !isset($this->{"notification:{$purpose}:{$method}"})) {
+				// fallback to the default settings
+				$settings[$method] = (bool) $this->{"notification:default:{$method}"};
+			} else {
+				$settings[$method] = (bool) $this->{"notification:{$purpose}:{$method}"};
+			}
 		}
 
 		return $settings;

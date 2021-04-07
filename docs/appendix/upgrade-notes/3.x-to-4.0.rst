@@ -99,6 +99,21 @@ Multiple Recipients
 
 An Elgg\Email now supports multiple recipients in To, Cc and Bcc. The related getter functions like ``getTo()`` will now always return an array.
 
+Settings
+~~~~~~~~
+
+A generic storage for notification preferences has been introduced in ``\ElggUser::setNotificationSetting()`` and ``\ElggUser::getNotificationSettings()``, 
+the notification settings now have a 'purpose'. 
+
+For example ``group_join`` can be used to manage the default subscription you get with a group when you join the group.
+
+The Notifications plugin has generic handling of displaying and saving the settings.
+To display the setting extend the view ``notifications/settings/records`` (plural) with a view which uses ``notifications/settings/record`` (singular).
+
+When requesting notification settings other than the default setting, if the user hasn't saved a setting yet it'll fall back to the default notification settings.
+
+Management of the notification preferences for adding a new users to a friend collection has been removed.
+
 Diagnostics Plugin
 ------------------
 
@@ -291,6 +306,7 @@ Class function parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * ``ElggEntity::setLatLong()`` now requires a ``float`` for ``$lat`` and ``$long``
+* ``ElggUser::setNotificationSetting()`` now requires a ``string`` for ``$method`` and a ``bool`` for ``$enabled``
 * ``Elgg\Database\Seeds\Seed::__construct()`` now requires an ``int`` for ``$limit``
 * ``Elgg\Http\ErrorResponse::__construct()`` now requires an ``int`` for ``$status_code``
 * ``Elgg\Http\OkResponse::__construct()`` now requires an ``int`` for ``$status_code``
@@ -528,6 +544,7 @@ Plugins
 * ``Elgg\Friends\FilterMenu::addFriendRequestTabs`` changed to ``Elgg\Friends\Menus\Filter::addFriendRequestTabs``
 * ``Elgg\Friends\RelationshipMenu::addPendingFriendRequestItems`` changed to ``Elgg\Friends\Menus\Relationship::addPendingFriendRequestItems``
 * ``Elgg\Friends\RelationshipMenu::addPendingFriendRequestItems`` changed to ``Elgg\Friends\Menus\Relationship::addPendingFriendRequestItems``
+* ``Elgg\Friends\Relationships::createFriendRelationship`` changed to ``Elgg\Friends\Relationships::removePendingFriendRequest``
 
 * ``_groups_gatekeeper_allow_profile_page`` changed to ``Elgg\Groups\Access::allowProfilePage``
 * ``_groups_page_menu`` changed to ``Elgg\Groups\Menus\Page::register``
@@ -567,8 +584,8 @@ Plugins
 * ``messages_user_hover_menu`` changed to ``Elgg\Messages\Menus\UserHover::register`` and ``Elgg\Messages\Menus\Title::register``
 
 * ``notifications_update_collection_notify`` changed to ``Elgg\Notifications\Relationships::updateUserNotificationsPreferencesOnACLChange`` 
-* ``notifications_update_friend_notify`` changed to ``Elgg\Notifications\Relationships::createFriendNotificationsRelationship`` 
-* ``notifications_relationship_remove`` changed to ``Elgg\Notifications\Relationships::deleteFriendNotificationsSubscription`` 
+* ``notifications_update_friend_notify`` changed to ``Elgg\Friends\Relationships::applyFriendNotificationsSettings`` 
+* ``notifications_relationship_remove`` changed to ``Elgg\Friends\Relationships::deleteFriendNotificationSubscription`` and ``Elgg\Groups\Relationships::removeGroupNotificationSubscriptions`` 
 * ``_notifications_page_menu`` changed to ``Elgg\Notifications\Menus\Page::register`` 
 * ``_notification_groups_title_menu`` changed to ``Elgg\Notifications\Menus\Title::register`` 
 
@@ -691,6 +708,13 @@ Removed views / resources
 * ``messages/js`` moved to ``forms/messages/process.js``
 * ``navigation/menu/elements/item_deps`` the functionality has been merged into ``navigation/menu/elements/item``
 * ``object/plugin/elements/contributors``
+* ``notifications/groups``
+* ``notifications/personal`` use ``notifications/settings`` or ``notifications/users``
+* ``notifications/settings/personal`` moved to ``notifications/settings/records``
+* ``notifications/settings/collections``
+* ``notifications/settings/other`` extend ``notifications/settings/records``
+* ``notifications/subscriptions/groups`` use ``forms/notifications/subscriptions/groups``
+* ``notifications/subscriptions/users`` use ``forms/notifications/subscriptions/users``
 * ``resources/comments/view`` use ``\Elgg\Controllers\CommentEntityRedirector``
 * ``reportedcontent/admin_css``
 * ``thewire/previous``

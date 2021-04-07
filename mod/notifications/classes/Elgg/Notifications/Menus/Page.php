@@ -41,7 +41,7 @@ class Page {
 		if (elgg_is_active_plugin('groups')) {
 			$return[] = \ElggMenuItem::factory([
 				'name' => '2_group_notify',
-				'text' => elgg_echo('notifications:subscriptions:changesettings:groups'),
+				'text' => elgg_echo('notifications:subscriptions:groups:title'),
 				'href' => elgg_generate_url('settings:notification:groups', [
 					'username' => $user->username,
 				]),
