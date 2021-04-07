@@ -23,6 +23,8 @@ if (empty($plugins)) {
 	return elgg_ok_response();
 }
 
+$errors = [];
+
 do {
 	$additional_plugins_activated = false;
 	foreach ($plugins as $key => $plugin) {
@@ -31,11 +33,16 @@ do {
 			continue;
 		}
 		
-		if (!$plugin->activate()) {
-			// plugin could not be activated in this loop, maybe in the next loop
+		try {
+			if (!$plugin->activate()) {
+				$errors[$plugin->getID()] = elgg_echo('admin:plugins:activate:no', [$plugin->getDisplayName()]);
+				continue;
+			}
+		} catch (\Exception $e) {
+			$errors[$plugin->getID()] = elgg_echo('admin:plugins:activate:no_with_msg', [$plugin->getDisplayName(), $e->getMessage()]);
 			continue;
 		}
-
+		
 		$ids = [
 			'cannot_start' . $plugin->getID(),
 			'invalid_and_deactivated_' . $plugin->getID()
@@ -48,6 +55,9 @@ do {
 		// mark that something has changed in this loop
 		$additional_plugins_activated = true;
 		unset($plugins[$key]);
+		
+		// remove errors set from previous loop
+		unset($errors[$plugin->getDisplayName()]);
 	}
 	
 	if (!$additional_plugins_activated) {
@@ -56,13 +66,13 @@ do {
 	}
 } while (count($plugins) > 0);
 
-if (count($plugins) > 0) {
-	foreach ($plugins as $plugin) {
-		$msg = $plugin->getError();
-		$string = ($msg) ? 'admin:plugins:activate:no_with_msg' : 'admin:plugins:activate:no';
 
-		return elgg_error_response(elgg_echo($string, [$plugin->getDisplayName(), $msg]));
-	}
+if (count($errors) < 1) {
+	return elgg_ok_response();
 }
 
-return elgg_ok_response();
+foreach ($errors as $error) {
+	register_error($error);
+}
+
+return elgg_error_response();

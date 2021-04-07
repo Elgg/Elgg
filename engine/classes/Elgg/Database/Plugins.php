@@ -335,7 +335,11 @@ class Plugins {
 				// was this plugin deleted and its entity disabled?
 				if (!$plugin->isEnabled()) {
 					$plugin->enable();
-					$plugin->deactivate();
+					try {
+						$plugin->deactivate();
+					} catch (\Elgg\Exceptions\PluginException $e) {
+						// do nothing
+					}
 					$plugin->setPriority('new');
 				}
 
@@ -360,8 +364,13 @@ class Plugins {
 			$reindex = true;
 			
 			if ($plugin->isActive()) {
-				$plugin->deactivate();
+				try {
+					$plugin->deactivate();
+				} catch (\Elgg\Exceptions\PluginException $e) {
+					// do nothing
+				}
 			}
+			
 			// remove the priority.
 			$name = $this->namespacePrivateSetting('internal', 'priority');
 			$plugin->removePrivateSetting($name);
@@ -809,6 +818,8 @@ class Plugins {
 					'plugin' => $plugin,
 				],
 			]);
+		} catch (\Elgg\Exceptions\PluginException $e) {
+			// do nothing
 		}
 	}
 

@@ -12,17 +12,18 @@ $categories = [];
 foreach ($plugins as $plugin) {
 	if (!$plugin->isValid()) {
 		if ($plugin->isActive()) {
-			$disable_plugins = elgg_get_config('auto_disable_plugins');
-			if ($disable_plugins === null) {
-				$disable_plugins = true;
-			}
-			if ($disable_plugins) {
-				// force disable and warn
-				elgg_add_admin_notice('invalid_and_deactivated_' . $plugin->getID(),
-						elgg_echo('ElggPlugin:InvalidAndDeactivated', [$plugin->getID()]));
-				$plugin->deactivate();
+			if (elgg_get_config('auto_disable_plugins', true)) {
+				try {
+					// force disable and warn
+					$plugin->deactivate();
+					
+					elgg_add_admin_notice('invalid_and_deactivated_' . $plugin->getID(), elgg_echo('ElggPlugin:InvalidAndDeactivated', [$plugin->getID()]));
+				} catch (\Elgg\Exceptions\PluginException $e) {
+					// do nothing
+				}
 			}
 		}
+		
 		continue;
 	}
 
@@ -33,7 +34,6 @@ foreach ($plugins as $plugin) {
 		}
 	}
 }
-
 
 asort($categories);
 

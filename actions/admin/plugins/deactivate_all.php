@@ -15,7 +15,7 @@ if (empty($guids)) {
 		'type' => 'object',
 		'subtype' => 'plugin',
 		'guids' => explode(',', $guids),
-		'limit' => false
+		'limit' => false,
 	]);
 }
 
@@ -23,17 +23,27 @@ if (empty($plugins)) {
 	return elgg_ok_response();
 }
 
+$errors = [];
 foreach ($plugins as $plugin) {
 	if (!$plugin->isActive()) {
 		continue;
 	}
 	
-	if (!$plugin->deactivate()) {
-		$msg = $plugin->getError();
-		$string = ($msg) ? 'admin:plugins:deactivate:no_with_msg' : 'admin:plugins:deactivate:no';
-		
-		return elgg_error_response(elgg_echo($string, [$plugin->getDisplayName(), $msg]));
+	try {
+		if (!$plugin->deactivate()) {
+			$errors[] = elgg_echo('admin:plugins:deactivate:no', [$plugin->getDisplayName()]);
+		}
+	} catch (\Elgg\Exceptions\PluginException $e) {
+		$errors[] = elgg_echo('admin:plugins:deactivate:no_with_msg', [$plugin->getDisplayName(), $e->getMessage()]);
 	}
 }
 
-return elgg_ok_response();
+if (empty($errors)) {
+	return elgg_ok_response();
+}
+
+foreach ($errors as $error) {
+	register_error($error);
+}
+
+return elgg_error_response();

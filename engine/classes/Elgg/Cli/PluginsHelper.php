@@ -26,7 +26,11 @@ trait PluginsHelper {
 		}
 
 		if (!$force) {
-			return $plugin->activate();
+			try {
+				return $plugin->activate();
+			} catch (PluginException $e) {
+				return false;
+			}
 		}
 
 		$conflicts = $this->getConflicts($id);
@@ -39,7 +43,11 @@ trait PluginsHelper {
 			$this->activate($require, true);
 		}
 
-		return $plugin->activate();
+		try {
+			return $plugin->activate();
+		} catch (PluginException $e) {
+			return false;
+		}
 	}
 
 	/**
@@ -58,15 +66,23 @@ trait PluginsHelper {
 		}
 
 		if (!$force) {
-			return $plugin->deactivate();
+			try {
+				return $plugin->deactivate();
+			} catch (PluginException $e) {
+				return false;
+			}
 		}
 
 		$dependents = $this->getDependents($id);
 		foreach ($dependents as $dependent) {
-			$this->deactivate($dependent);
+			$this->deactivate($dependent, true);
 		}
 
-		return $plugin->deactivate();
+		try {
+			return $plugin->deactivate();
+		} catch (PluginException $e) {
+			return false;
+		}
 	}
 
 	/**

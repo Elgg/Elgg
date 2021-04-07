@@ -12,6 +12,7 @@ use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\LoginException;
 use Elgg\Http\Request;
 use Elgg\Project\Paths;
+use Elgg\Exceptions\PluginException;
 
 /**
  * Elgg Installer.
@@ -1474,8 +1475,12 @@ class ElggInstaller {
 				if (!elgg_extract('activate_on_install', $plugin_config, false)) {
 					continue;
 				}
-
-				$plugin->activate();
+				
+				try {
+					$plugin->activate();
+				} catch (PluginException $e) {
+					// do nothing
+				}
 			}
 
 			// Wo don't need to run upgrades on new installations
