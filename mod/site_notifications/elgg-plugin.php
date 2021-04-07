@@ -72,4 +72,13 @@ return [
 			],
 		],
 	],
+	'events' => [
+		'create' => [
+			'user' => [
+				'Elgg\SiteNotifications\Users::enableSiteNotifications' => [
+					'priority' => 400, // simple way to prevent priority issues with other developers
+				],
+			],
+		],
+	],
 ];
