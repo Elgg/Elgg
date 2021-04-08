@@ -54,7 +54,7 @@ class UnmuteIntegrationTest extends ActionResponseTestCase {
 	}
 	
 	public function testMute() {
-		$this->entity->muteNotifictions($this->user->guid);
+		$this->entity->muteNotifications($this->user->guid);
 		
 		$response = $this->executeAction('entity/unmute', [
 			'guid' => $this->entity->guid,

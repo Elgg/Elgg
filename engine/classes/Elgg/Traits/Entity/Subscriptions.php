@@ -180,7 +180,7 @@ trait Subscriptions {
 	 *
 	 * @return bool
 	 */
-	public function muteNotifictions(int $user_guid = 0): bool {
+	public function muteNotifications(int $user_guid = 0): bool {
 		if ($user_guid === 0) {
 			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
 		}

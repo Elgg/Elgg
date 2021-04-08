@@ -162,7 +162,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		
 		// mute actor
 		$actor = $event->getActor();
-		$this->assertTrue($actor->muteNotifictions($user->guid));
+		$this->assertTrue($actor->muteNotifications($user->guid));
 		
 		$subscriptions = [
 			$user->guid => ['apples'],
@@ -178,7 +178,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		
 		// mute owner
 		$owner = $event->getObject()->getOwnerEntity();
-		$this->assertTrue($owner->muteNotifictions($user->guid));
+		$this->assertTrue($owner->muteNotifications($user->guid));
 		
 		$subscriptions = [
 			$user->guid => ['apples'],
@@ -194,7 +194,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		
 		// mute container
 		$container = $event->getObject()->getContainerEntity();
-		$this->assertTrue($container->muteNotifictions($user->guid));
+		$this->assertTrue($container->muteNotifications($user->guid));
 		
 		$subscriptions = [
 			$user->guid => ['apples'],
@@ -211,7 +211,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		
 		// mute entity
 		$object = $event->getObject();
-		$this->assertTrue($object->muteNotifictions($user->guid));
+		$this->assertTrue($object->muteNotifications($user->guid));
 		
 		$subscriptions = [
 			$user->guid => ['apples'],
@@ -234,7 +234,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		
 		// mute actor
 		$actor = $event->getActor();
-		$this->assertTrue($actor->muteNotifictions($user->guid));
+		$this->assertTrue($actor->muteNotifications($user->guid));
 		
 		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
 	}
@@ -253,7 +253,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		
 		// mute owner
 		$owner = $object->getOwnerEntity();
-		$this->assertTrue($owner->muteNotifictions($user->guid));
+		$this->assertTrue($owner->muteNotifications($user->guid));
 		
 		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
 	}
@@ -272,7 +272,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		
 		// mute container
 		$container = $object->getContainerEntity();
-		$this->assertTrue($container->muteNotifictions($user->guid));
+		$this->assertTrue($container->muteNotifications($user->guid));
 		
 		// create a subscription which should exist in the system
 		$this->assertTrue(add_entity_relationship($user->guid, SubscriptionsService::RELATIONSHIP_PREFIX . ':apples', $container->guid));
@@ -296,7 +296,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertNotEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
 		
 		// mute entity
-		$this->assertTrue($object->muteNotifictions($user->guid));
+		$this->assertTrue($object->muteNotifications($user->guid));
 		
 		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
 	}
@@ -318,7 +318,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		
 		// mute actor
 		$actor = $event->getActor();
-		$this->assertTrue($actor->muteNotifictions($user->guid));
+		$this->assertTrue($actor->muteNotifications($user->guid));
 		
 		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
 	}
@@ -343,7 +343,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		
 		// mute owner
 		$owner = $object->getOwnerEntity();
-		$this->assertTrue($owner->muteNotifictions($user->guid));
+		$this->assertTrue($owner->muteNotifications($user->guid));
 		
 		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
 	}
@@ -368,7 +368,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		
 		// mute container
 		$container = $object->getContainerEntity();
-		$this->assertTrue($container->muteNotifictions($user->guid));
+		$this->assertTrue($container->muteNotifications($user->guid));
 		
 		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
 	}
@@ -392,7 +392,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertNotEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
 		
 		// mute entity
-		$this->assertTrue($object->muteNotifictions($user->guid));
+		$this->assertTrue($object->muteNotifications($user->guid));
 		
 		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
 	}

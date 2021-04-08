@@ -21,7 +21,7 @@ if (!$user instanceof \ElggUser || !$user->canEdit()) {
 
 $display_name = $entity->getDisplayName() ?: elgg_echo('item');
 
-if (!$entity->muteNotifictions($user->guid)) {
+if (!$entity->muteNotifications($user->guid)) {
 	return elgg_error_response(elgg_echo('entity:mute:fail', [$display_name]));
 }
 

@@ -278,7 +278,7 @@ abstract class ElggEntitySubscriptionsIntegrationTestCase extends IntegrationTes
 		$this->assertTrue($this->target->hasSubscription($this->user->guid, ['bananas']));
 		$this->assertNotEmpty($this->target->getSubscribers(['apples', 'bananas']));
 		
-		$this->assertTrue($this->target->muteNotifictions($this->user->guid));
+		$this->assertTrue($this->target->muteNotifications($this->user->guid));
 		
 		$this->assertTrue($this->target->hasMutedNotifications($this->user->guid));
 		$this->assertFalse($this->target->hasSubscription($this->user->guid, ['apples']));
