@@ -1120,6 +1120,7 @@ These changes will only affect new users on the site.',
 	'activity' => 'Activity',
 	'members' => 'Members',
 	'menu' => 'Menu',
+	'item' => 'Item',
 
 	'up' => 'Up',
 	'down' => 'Down',
@@ -1665,7 +1666,19 @@ To view %s's profile, click here:
 	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
 	'entity:delete:success' => '%s has been deleted.',
 	'entity:delete:fail' => '%s could not be deleted.',
-
+	
+	'entity:subscribe:success' => "You've successfully subscribed to %s",
+	'entity:subscribe:fail' => "An error occured while subscribing to %s",
+	
+	'entity:unsubscribe:success' => "You've successfully unsubscribed from %s",
+	'entity:unsubscribe:fail' => "An error occured while unsubscribing from %s",
+	
+	'entity:mute:success' => "You've successfully muted notifications of %s",
+	'entity:mute:fail' => "An error occured while muting notifications of %s",
+	
+	'entity:unmute:success' => "You've successfully unmuted notifications of %s",
+	'entity:unmute:fail' => "An error occured while unmuting notifications of %s",
+	
 	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 
 /**

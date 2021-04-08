@@ -26,6 +26,18 @@ trait Subscriptions {
 			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
 		}
 		
+		if (!empty($user_guid) && is_array($methods) && empty($methods)) {
+			$user = get_user($user_guid);
+			if ($user instanceof \ElggUser) {
+				$prefered = $user->getNotificationSettings();
+				$methods = array_keys(array_filter($prefered));
+				
+				if (empty($methods)) {
+					return true;
+				}
+			}
+		}
+		
 		$methods = $this->normalizeSubscriptionMethods($methods);
 		
 		$result = true;

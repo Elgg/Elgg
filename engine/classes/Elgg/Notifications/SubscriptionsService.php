@@ -288,6 +288,11 @@ class SubscriptionsService {
 		
 		$rel[] = $method;
 		
+		if (!$this->relationshipsTable->check($user_guid, implode(':', $rel), $target_guid)) {
+			// subscription doesn't exist
+			return true;
+		}
+		
 		return $this->relationshipsTable->remove($user_guid, implode(':', $rel), $target_guid);
 	}
 	

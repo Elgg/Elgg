@@ -77,7 +77,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		// remove subscription
 		$this->assertTrue($this->service->removeSubscription($user->guid, 'apples', $target->guid));
 		// remove non existing subscription
-		$this->assertFalse($this->service->removeSubscription($user->guid, 'bananas', $target->guid));
+		$this->assertTrue($this->service->removeSubscription($user->guid, 'bananas', $target->guid));
 		
 		// check if all was removed
 		$this->assertEmpty($this->service->getSubscriptionsForContainer($target->guid, ['apples', 'bananas']));
@@ -113,11 +113,10 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event2, ['apples', 'bananas']));
 		
 		// remove subscription
-		$this->assertFalse($this->service->removeSubscription($user->guid, 'apples', $target->guid));
 		$this->assertTrue($this->service->removeSubscription($user->guid, 'apples', $target->guid, $object->type, $object->subtype, $event->getAction()));
 		
 		// remove non existing subscription
-		$this->assertFalse($this->service->removeSubscription($user->guid, 'bananas', $target->guid, $object->type, $object->subtype, $event->getAction()));
+		$this->assertTrue($this->service->removeSubscription($user->guid, 'bananas', $target->guid, $object->type, $object->subtype, $event->getAction()));
 		
 		// check if all was removed
 		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));

@@ -23,6 +23,9 @@ abstract class ElggEntitySubscriptionsIntegrationTestCase extends IntegrationTes
 		$this->setupApplication();
 		
 		$this->user = $this->createUser();
+		$this->user->setNotificationSetting('apples', true);
+		$this->user->setNotificationSetting('bananas', false);
+		
 		$this->target = $this->getEntity();
 	}
 
@@ -50,7 +53,8 @@ abstract class ElggEntitySubscriptionsIntegrationTestCase extends IntegrationTes
 	public function testSubscription() {
 		$this->assertTrue($this->target->addSubscription($this->user->guid));
 		
-		$this->assertTrue($this->target->hasSubscription($this->user->guid));
+		$this->assertTrue($this->target->hasSubscription($this->user->guid, ['apples']));
+		$this->assertFalse($this->target->hasSubscription($this->user->guid, 'bananas'));
 		$this->assertTrue($this->target->hasSubscriptions($this->user->guid));
 		
 		$this->assertTrue($this->target->removeSubscription($this->user->guid));
@@ -68,7 +72,7 @@ abstract class ElggEntitySubscriptionsIntegrationTestCase extends IntegrationTes
 		$this->assertTrue($this->target->hasSubscriptions($this->user->guid, ['apples']));
 		$this->assertTrue($this->target->hasSubscriptions($this->user->guid, []));
 		
-		$this->assertFalse($this->target->removeSubscription($this->user->guid, ['bananas'])); // valid method but not subscribed
+		$this->assertTrue($this->target->removeSubscription($this->user->guid, ['bananas'])); // valid method but not subscribed
 		$this->assertTrue($this->target->removeSubscription($this->user->guid, ['apples']));
 		
 		$this->assertFalse($this->target->hasSubscription($this->user->guid, ['apples', 'bananas']));
@@ -114,6 +118,10 @@ abstract class ElggEntitySubscriptionsIntegrationTestCase extends IntegrationTes
 			[1.0],
 			[true],
 			[false],
+			[''],
+			[['']],
+			[[1]],
+			[[false]],
 		];
 	}
 	
@@ -126,7 +134,7 @@ abstract class ElggEntitySubscriptionsIntegrationTestCase extends IntegrationTes
 		$this->assertTrue($this->target->hasSubscriptions($this->user->guid, ['apples']));
 		$this->assertTrue($this->target->hasSubscriptions($this->user->guid, []));
 		
-		$this->assertFalse($this->target->removeSubscription($this->user->guid, ['bananas'], 'object', 'foo', 'create')); // valid method but not subscribed
+		$this->assertTrue($this->target->removeSubscription($this->user->guid, ['bananas'], 'object', 'foo', 'create')); // valid method but not subscribed
 		$this->assertTrue($this->target->removeSubscription($this->user->guid, ['apples'], 'object', 'foo', 'create'));
 		
 		$this->assertFalse($this->target->hasSubscription($this->user->guid, ['apples', 'bananas'], 'object', 'foo', 'create'));
