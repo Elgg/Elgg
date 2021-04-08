@@ -149,13 +149,13 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
 /**
  * Convenience function for registering a button to the title menu
  *
- * The URL must be $handler/$name/$guid where $guid is the guid of the page owner.
- * The label of the button is "$handler:$name" so that must be defined in a
+ * The URL must be resolvable in a route definition with the name "$name:$entity_type:$entity_subtype".
+ * The label of the button is "$name:$entity_type:$entity_subtype" so that must be defined in a
  * language file.
  *
  * This is used primarily to support adding an add content button
  *
- * @param string $handler        The handler to use or null to autodetect from context
+ * @param string $handler        (deprecated) The handler to use or null to autodetect from context
  * @param string $name           Name of the button (defaults to 'add')
  * @param string $entity_type    Optional entity type to be added (used to verify canWriteToContainer permission)
  * @param string $entity_subtype Optional entity subtype to be added (used to verify canWriteToContainer permission)
@@ -187,18 +187,13 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
 	$href = elgg_generate_url("$name:$entity_type:$entity_subtype", [
 		'guid' => $owner->guid,
 	]);
-		
-	if (!$href) {
-		if (!$handler) {
-			$handler = elgg_get_context();
-		}
-		$href = "$handler/$name/$owner->guid";
+	
+	if (empty($href) && isset($handler)) {
+		elgg_deprecated_notice('Using handler for fallback HREF determination is no longer supported in ' . __METHOD__, '4.0');
 	}
 	
 	if (elgg_language_key_exists("$name:$entity_type:$entity_subtype")) {
 		$text = elgg_echo("$name:$entity_type:$entity_subtype");
-	} elseif (elgg_language_key_exists("$handler:$name")) {
-		$text = elgg_echo("$handler:$name");
 	} else {
 		$text = elgg_echo($name);
 	}
