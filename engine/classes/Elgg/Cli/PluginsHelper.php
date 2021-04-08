@@ -3,6 +3,7 @@
 namespace Elgg\Cli;
 
 use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\PluginException;
 
 /**
  * Trait shared by CLI commands to simplify plugin management

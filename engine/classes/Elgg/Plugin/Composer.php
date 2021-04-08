@@ -77,10 +77,9 @@ class Composer {
 	public function getLicense() {
 		$license = $this->configuration->license();
 		if (!empty($license)) {
-			if (is_array($license)) {
-				$license = implode(', ', $license);
-			}
+			$license = implode(', ', $license);
 		}
+		
 		return (string) $license;
 	}
 	

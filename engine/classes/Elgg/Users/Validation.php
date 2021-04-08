@@ -80,7 +80,7 @@ class Validation {
 			$session->set('admin_validation', true);
 			
 			if (elgg_get_config('admin_validation_notification') === 'direct') {
-				self::notifyAdminsAboutPendingUsers();
+				self::notifyAdminsAboutPendingUsers($hook);
 			}
 		});
 	}

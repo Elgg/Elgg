@@ -126,7 +126,7 @@ class ElggRewriteTester {
 					'timeout' => 5,
 				],
 			]);
-			$response = @file_get_contents($url, null, $ctx);
+			$response = @file_get_contents($url, false, $ctx);
 		}
 
 		if (!$response && function_exists('curl_init')) {

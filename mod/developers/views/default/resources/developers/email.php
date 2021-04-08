@@ -13,8 +13,7 @@ $plain_message = elgg_echo('useradd:body', [
 	$user->username,
 	'test123',
 ]);
-
-$email = new Email([
+$email = Email::factory([
 	'from' => $site,
 	'to' => $user,
 	'subject' => $subject,
