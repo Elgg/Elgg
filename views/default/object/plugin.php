@@ -12,7 +12,11 @@ if (!elgg_in_context('admin')) {
 	echo elgg_view('object/default', $vars);
 	return;
 }
-if (!$plugin->isValid()) {
+
+try {
+	$plugin->assertValid();
+} catch (\Elgg\Exceptions\PluginException $e) {
+	$vars['error'] = $e->getMessage();
 	echo elgg_view('object/plugin/invalid', $vars);
 	return;
 }

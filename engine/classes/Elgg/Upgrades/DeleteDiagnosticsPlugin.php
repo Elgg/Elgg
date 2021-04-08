@@ -59,7 +59,6 @@ class DeleteDiagnosticsPlugin implements SystemUpgrade {
 			$result->addSuccesses(1);
 		} else {
 			$result->addFailures(1);
-			$result->addError($plugin->getError());
 		}
 		
 		_elgg_services()->logger->enable();

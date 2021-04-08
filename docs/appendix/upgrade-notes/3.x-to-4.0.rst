@@ -632,6 +632,7 @@ Miscellaneous API changes
 * The view ``output/icon`` no longer uses the ``convert`` view var
 * ``ElggData::save()`` now always returns a ``bool`` as documented. All extending classes have been updated (eg. ``ElggEntity``, ``ElggMetadata``, ``ElggRelationship``, etc.)
 * ``Elgg\Email::getTo()`` now always returns an ``array``
+* ``ElggPlugin::activate()`` and ``ElggPlugin::deactivate()`` now can throw an ``Elgg\Exceptions\PluginException`` with more details about the failure
 
 Deprecated APIs
 ---------------
@@ -645,6 +646,7 @@ Class functions
 ~~~~~~~~~~~~~~~
 
 * ``ElggPlugin::getDependencyReport()``
+* ``ElggPlugin::getError()``
 * ``Elgg\Notifications\NotificationsService::getDeprecatedHandler()``
 * ``Elgg\Notifications\NotificationsService::getMethodsAsDeprecatedGlobal()`` use ``elgg_get_notification_methods()``
 * ``Elgg\Notifications\NotificationsService::registerDeprecatedHandler()``

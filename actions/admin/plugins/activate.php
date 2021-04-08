@@ -23,10 +23,13 @@ foreach ($plugin_guids as $guid) {
 		continue;
 	}
 
-	if (!$plugin->activate()) {
-		$msg = $plugin->getError();
-		$string = ($msg) ? 'admin:plugins:activate:no_with_msg' : 'admin:plugins:activate:no';
-		register_error(elgg_echo($string, [$plugin->getDisplayName(), $plugin->getError()]));
+	try {
+		if (!$plugin->activate()) {
+			register_error(elgg_echo('admin:plugins:activate:no', [$plugin->getDisplayName()]));
+			continue;
+		}
+	} catch (\Elgg\Exceptions\PluginException $e) {
+		register_error(elgg_echo('admin:plugins:activate:no_with_msg', [$plugin->getDisplayName(), $e->getMessage()]));
 		continue;
 	}
 	

@@ -3,6 +3,8 @@
  * Enables all core plugins
  */
 
+use Elgg\Exceptions\PluginException;
+
 $root = dirname(dirname(__DIR__));
 require_once "$root/autoloader.php";
 
@@ -59,9 +61,13 @@ foreach ($ordered_plugins as $priority => $plugin_id) {
 		exit(1);
 	}
 	
-	if (!$plugin->isActive() && !$plugin->activate()) {
-		echo "Unable to activate plugin {$plugin_id}";
-		exit(1);
+	if (!$plugin->isActive()) {
+		try {
+			$plugin->activate();
+		} catch (PluginException $e) {
+			echo "Unable to activate plugin {$plugin_id}";
+			exit(1);
+		}
 	}
 }
 

@@ -2,14 +2,15 @@
 /**
  * Displays an invalid plugin on the admin screen.
  *
- * An invalid plugin is a plugin whose isValid() method returns false.
+ * An invalid plugin is a plugin whose assertValid() method throws an exception.
  * This usually means there are required files missing, unreadable or in the
  * wrong format.
  */
+
 /* @var ElggPlugin $plugin */
 $plugin = elgg_extract('entity', $vars);
 
-$error = elgg_echo('admin:plugins:warning:invalid', [$plugin->getError()]);
+$error = elgg_echo('admin:plugins:warning:invalid', [elgg_extract('error', $vars)]);
 $error .= ' ' . elgg_echo('admin:plugins:label:location') . ": " . htmlspecialchars($plugin->getPath());
 
 $body = elgg_view_message('error', $error, ['title' => false, 'class' => 'elgg-subtext']);

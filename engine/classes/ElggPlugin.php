@@ -47,11 +47,6 @@ class ElggPlugin extends ElggObject {
 	 * @var array|null
 	 */
 	protected $static_config;
-
-	/**
-	 * @var string
-	 */
-	protected $errorMsg = '';
 	
 	/**
 	 * @var bool
@@ -552,24 +547,32 @@ class ElggPlugin extends ElggObject {
 	 * @return bool
 	 */
 	public function isValid() {
-		if (!$this->getID()) {
-			$this->errorMsg = elgg_echo('ElggPlugin:MissingID', [$this->guid]);
+		try {
+			$this->assertValid();
+			return true;
+		} catch (\Elgg\Exceptions\PluginException $e) {
 			return false;
+		}
+	}
+	
+	/**
+	 * Asserts if a plugin is valid
+	 *
+	 * @return void
+	 * @throws \Elgg\Exceptions\PluginException
+	 *
+	 * @since 4.0
+	 */
+	public function assertValid(): void {
+		if (!$this->getID()) {
+			throw new \Elgg\Exceptions\PluginException(elgg_echo('ElggPlugin:MissingID', [$this->guid]));
 		}
 		
-		try {
-			$this->getComposer()->assertPluginId();
-		} catch (\Elgg\Exceptions\PluginException $e) {
-			$this->errorMsg = $e->getMessage();
-			return false;
-		}
+		$this->getComposer()->assertPluginId();
 		
 		if (file_exists($this->getPath() . 'start.php')) {
-			$this->errorMsg = elgg_echo('ElggPlugin:StartFound', [$this->getID()]);
-			return false;
+			throw new \Elgg\Exceptions\PluginException(elgg_echo('ElggPlugin:StartFound', [$this->getID()]));
 		}
-
-		return true;
 	}
 
 	/**
@@ -597,11 +600,25 @@ class ElggPlugin extends ElggObject {
 			return false;
 		}
 		
-		if (!$this->isValid()) {
+		try {
+			$this->assertCanActivate();
+			return true;
+		} catch (\Elgg\Exceptions\PluginException $e) {
 			return false;
 		}
+	}
 
-		return $this->meetsDependencies();
+	/**
+	 * Asserts if a plugin can activate
+	 *
+	 * @return void
+	 * @throws \Elgg\Exceptions\PluginException
+	 *
+	 * @since 4.0
+	 */
+	public function assertCanActivate(): void {
+		$this->assertValid();
+		$this->assertDependencies();
 	}
 
 	// activating and deactivating
@@ -610,21 +627,18 @@ class ElggPlugin extends ElggObject {
 	 * Activates the plugin for the current site.
 	 *
 	 * @return bool
+	 * @throws \Elgg\Exceptions\PluginException
 	 */
 	public function activate() {
 		if ($this->isActive()) {
 			return false;
 		}
 
-		if (!$this->canActivate()) {
-			return false;
-		}
+		$this->assertCanActivate();
 
 		// Check this before setting status because the file could potentially throw
-		if (!$this->isStaticConfigValid()) {
-			return false;
-		}
-
+		$this->assertStaticConfigValid();
+		
 		if (!$this->setStatus(true)) {
 			return false;
 		}
@@ -705,6 +719,23 @@ class ElggPlugin extends ElggObject {
 			return false;
 		}
 
+		try {
+			$this->assertcanDeactivate();
+			return true;
+		} catch (\Elgg\Exceptions\PluginException $e) {
+			return false;
+		}
+	}
+	
+	/**
+	 * Asserts if a plugin can be deactivated
+	 *
+	 * @return void
+	 * @throws \Elgg\Exceptions\PluginException
+	 *
+	 * @since 4.0
+	 */
+	public function assertCanDeactivate(): void {
 		$dependents = [];
 
 		$active_plugins = elgg_get_plugins();
@@ -721,9 +752,9 @@ class ElggPlugin extends ElggObject {
 		}
 
 		if (empty($dependents)) {
-			return true;
+			return;
 		}
-			
+
 		$list = array_map(function (\ElggPlugin $plugin) {
 			$css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
 
@@ -733,26 +764,23 @@ class ElggPlugin extends ElggObject {
 			]);
 		}, $dependents);
 		
-		$name = $this->getDisplayName();
 		$list = implode(', ', $list);
-		$this->errorMsg = elgg_echo('ElggPlugin:Dependencies:ActiveDependent', [$name, $list]);
-
-		return false;
+		throw new \Elgg\Exceptions\PluginException(elgg_echo('ElggPlugin:Dependencies:ActiveDependent', [$this->getDisplayName(), $list]));
 	}
 
 	/**
 	 * Deactivates the plugin.
 	 *
 	 * @return bool
+	 *
+	 * @throws \Elgg\Exceptions\PluginException
 	 */
 	public function deactivate() {
 		if (!$this->isActive()) {
 			return false;
 		}
 
-		if (!$this->canDeactivate()) {
-			return false;
-		}
+		$this->assertCanDeactivate();
 
 		// emit an event. returning false will cause this to not be deactivated.
 		$params = [
@@ -926,30 +954,25 @@ class ElggPlugin extends ElggObject {
 	/**
 	 * If a static config file is present, is it a serializable array?
 	 *
-	 * @return bool
+	 * @return void
+	 * @throws \Elgg\Exceptions\PluginException
 	 */
-	protected function isStaticConfigValid() {
+	protected function assertStaticConfigValid(): void {
 		if (!$this->canReadFile(self::STATIC_CONFIG_FILENAME)) {
-			return true;
+			return;
 		}
 
 		ob_start();
 		$value = $this->includeFile(self::STATIC_CONFIG_FILENAME);
 		if (ob_get_clean() !== '') {
-			$this->errorMsg = elgg_echo('ElggPlugin:activate:ConfigSentOutput');
-
-			return false;
+			throw new \Elgg\Exceptions\PluginException(elgg_echo('ElggPlugin:activate:ConfigSentOutput'));
 		}
 
 		// make sure can serialize
 		$value = @unserialize(serialize($value));
 		if (!is_array($value)) {
-			$this->errorMsg = elgg_echo('ElggPlugin:activate:BadConfigFormat');
-
-			return false;
+			throw new \Elgg\Exceptions\PluginException(elgg_echo('ElggPlugin:activate:BadConfigFormat'));
 		}
-
-		return true;
 	}
 
 	/**
@@ -1372,15 +1395,6 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
-	 * Returns the last error message registered.
-	 *
-	 * @return string|null
-	 */
-	public function getError() {
-		return $this->errorMsg;
-	}
-
-	/**
 	 * {@inheritdoc}
 	 */
 	public function isCacheable() {
@@ -1445,6 +1459,8 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 * @throws \Elgg\Exceptions\PluginException
+	 *
+	 * @since 4.0
 	 */
 	public function assertDependencies() {
 		try {
@@ -1453,7 +1469,6 @@ class ElggPlugin extends ElggObject {
 			$this->getComposer()->assertRequiredPhpVersion();
 			$this->getComposer()->assertRequiredPhpExtensions();
 		} catch (\Elgg\Exceptions\PluginException $e) {
-			$this->errorMsg = $e->getMessage();
 			throw $e;
 		}
 	}

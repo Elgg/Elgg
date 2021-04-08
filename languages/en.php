@@ -865,7 +865,6 @@ See the full list of users here:
 
 	'admin:plugins:set_priority:yes' => "Reordered %s.",
 	'admin:plugins:set_priority:no' => "Could not reorder %s.",
-	'admin:plugins:set_priority:no_with_msg' => "Could not reorder %s. Error: %s",
 	'admin:plugins:deactivate:yes' => "Deactivated %s.",
 	'admin:plugins:deactivate:no' => "Could not deactivate %s.",
 	'admin:plugins:deactivate:no_with_msg' => "Could not deactivate %s. Error: %s",

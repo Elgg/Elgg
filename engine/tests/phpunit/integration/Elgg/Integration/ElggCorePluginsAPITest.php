@@ -23,6 +23,9 @@ class ElggCorePluginsAPITest extends \Elgg\IntegrationTestCase {
 	public function testElggPluginIsValid() {
 		$test_plugin = ElggPlugin::fromId('profile');
 		$this->assertTrue($test_plugin->isValid());
+
+		// check if no exceptions are thrown
+		$test_plugin->assertValid();
 	}
 
 	public function testElggPluginGetID() {

@@ -19,12 +19,25 @@ $active = $plugin->isActive();
 $classes = ['elgg-plugin'];
 $classes[] = $reordering ? 'elgg-state-draggable' : 'elgg-state-undraggable';
 
+$error = '';
 if ($active) {
 	$can_activate = false;
-	$can_deactivate = $plugin->canDeactivate();
+	try {
+		$plugin->assertCanDeactivate();
+		$can_deactivate = true;
+	} catch (\Elgg\Exceptions\PluginException $e) {
+		$error = $e->getMessage();
+		$can_deactivate = false;
+	}
 } else {
 	$can_deactivate = false;
-	$can_activate = $plugin->canActivate();
+	try {
+		$plugin->assertCanActivate();
+		$can_activate = true;
+	} catch (\Elgg\Exceptions\PluginException $e) {
+		$error = $e->getMessage();
+		$can_activate = false;
+	}
 }
 
 // activate / deactivate button
@@ -96,7 +109,6 @@ $title = elgg_view('output/url', [
 
 $content = '';
 
-$error = $plugin->getError();
 if ($error) {
 	$type = $active ? 'notice' : 'error';
 
