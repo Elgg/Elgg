@@ -95,11 +95,14 @@ if ($server !== 'mysql' || version_compare($version, '5.5.3', '<')) {
 echo $view_module($icon, elgg_echo('admin:server:requirements:database:server'), "{$server} v{$version}", $subtext);
 
 // db client information
-$client = $db->getDriver()->getName();
+$client_parts = explode('\\', get_class($db->getDriver()));
+$client_parts = array_slice($client_parts, 3);
+$client = implode(' ', $client_parts);
+
 $subtext = '';
 $icon = $icon_ok;
 
-if ($client !== 'pdo_mysql') {
+if ($client !== 'PDO MySQL Driver') {
 	$subtext = elgg_echo('admin:server:requirements:database:client:required');
 	$icon = $icon_error;
 }
