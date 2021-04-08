@@ -21,7 +21,8 @@ return [
 		"font-awesome/" => "vendor/fortawesome/font-awesome/",
 
 		"jquery-ui/" => "vendor/npm-asset/components-jqueryui/ui",
-
+		"tagify/" => "vendor/npm-asset/yaireo--tagify/dist",
+		
 		/**
 		 * __DIR__ should be utilized when referring to assets that are checked in to version control.
 		 */

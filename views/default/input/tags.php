@@ -9,6 +9,8 @@
  * @uses $vars['entity']   Optional. Entity whose tags are being displayed (metadata ->tags)
  */
 
+elgg_require_css('input/tags');
+
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-tags');
 
 $defaults = [
@@ -40,3 +42,17 @@ if (is_array($vars['value'])) {
 }
 
 echo elgg_format_element('input', $vars);
+
+if (isset($vars['id'])) {
+	$selector = "#{$vars['id']}";
+} else {
+	$name = elgg_extract('name', $vars);
+	$selector = ".elgg-input-tags[name='{$name}']";
+}
+
+?>
+<script>
+	require(['input/tags'], function (tags) {
+		tags.init(<?= json_encode($selector) ?>);
+	});
+</script>
