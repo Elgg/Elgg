@@ -328,6 +328,14 @@ $ipsum = elgg_view('developers/ipsum');
 		]);
 
 		echo elgg_view_field([
+			'#type' => 'tags',
+			'name' => 'f9b',
+			'id' => 'f9b',
+			'data-tagify-opts' => json_encode(['whitelist' => ['one', 'two', 'three'], 'dropdown' => ['enabled' => 0]]),
+			'#label' => 'Tags input (.elgg-input-tags) with custom options:',
+		]);
+
+		echo elgg_view_field([
 			'#type' => 'email',
 			'name' => 'f101-email',
 			'id' => 'f101-email',
