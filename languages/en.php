@@ -344,6 +344,8 @@ return array(
 
 	'notification:subject' => 'Notification about %s',
 	'notification:body' => 'View the new activity at %s',
+	
+	'notification:settings:create_comment:description' => "Default notification setting when you comment on content in order to follow the rest of the conversation",
 
 /**
  * Search
