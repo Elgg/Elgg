@@ -20,7 +20,7 @@ function file_register_toggle() {
 
 	$url = elgg_http_add_url_query_elements(current_page_url(), ['list_type' => $list_type]);
 	
-	elgg_register_menu_item('filter:file', [
+	elgg_register_menu_item('filter:filter', [
 		'name' => 'file_list',
 		'text' => $icon,
 		'href' => $url,

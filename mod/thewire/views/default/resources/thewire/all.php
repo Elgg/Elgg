@@ -5,8 +5,6 @@
 
 elgg_push_collection_breadcrumbs('object', 'thewire');
 
-$title = elgg_echo('collection:object:thewire:all');
-
 $content = '';
 if (elgg_is_logged_in()) {
 	$content .= elgg_view_form('thewire/add', [
@@ -21,11 +19,8 @@ $content .= elgg_list_entities([
 	'limit' => get_input('limit', 15),
 ]);
 
-$body = elgg_view_layout('content', [
-	'filter_context' => 'all',
+echo elgg_view_page(elgg_echo('collection:object:thewire:all'), [
+	'filter_value' => 'all',
 	'content' => $content,
-	'title' => $title,
 	'sidebar' => elgg_view('thewire/sidebar'),
 ]);
-
-echo elgg_view_page($title, $body);

@@ -10,8 +10,6 @@ if (!$owner instanceof ElggUser) {
 	throw new EntityNotFoundException();
 }
 
-$title = elgg_echo('collection:object:thewire:friends');
-
 elgg_push_collection_breadcrumbs('object', 'thewire', $owner, true);
 
 $content = '';
@@ -30,10 +28,7 @@ $content .= elgg_list_entities([
 	'relationship_join_on' => 'container_guid',
 ]);
 
-$body = elgg_view_layout('content', [
-	'filter_context' => 'friends',
+echo elgg_view_page(elgg_echo('collection:object:thewire:friends'), [
+	'filter_value' => 'friends',
 	'content' => $content,
-	'title' => $title,
 ]);
-
-echo elgg_view_page($title, $body);
