@@ -46,6 +46,7 @@ return [
 	'create' => [
 		'object' => [
 			\Elgg\Upgrade\CreateAdminNoticeHandler::class => [],
+			\Elgg\Comments\AutoSubscribeHandler::class => [],
 		],
 		'relationship' => [
 			\Elgg\Friends\AddToAclHandler::class => [],

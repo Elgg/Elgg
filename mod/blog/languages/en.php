@@ -14,6 +14,7 @@ return array(
 	'collection:object:blog:friends' => 'Friends\' blogs',
 	'add:object:blog' => 'Add blog post',
 	'edit:object:blog' => 'Edit blog post',
+	'notification:object:blog:publish' => "Send a notification when a blog is published",
 
 	'blog:revisions' => 'Revisions',
 	'blog:archives' => 'Archives',

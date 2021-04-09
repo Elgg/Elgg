@@ -57,7 +57,7 @@ class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		
-		$str = str_repeat('Foo', \ElggRelationship::RELATIONSHIP_LIMIT);
+		$str = str_repeat('Foo', RelationshipsTable::RELATIONSHIP_COLUMN_LENGTH);
 		
 		$this->expectException(InvalidArgumentException::class);
 		$this->service->add($object1->guid, $str, $object2->guid);

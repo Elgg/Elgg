@@ -10,8 +10,6 @@
  * @property int    $time_created A UNIX timestamp of when the relationship was created (read-only, set on first save)
  */
 class ElggRelationship extends \ElggData {
-	// database column limit
-	const RELATIONSHIP_LIMIT = 50;
 
 	/**
 	 * @var string[] database columns

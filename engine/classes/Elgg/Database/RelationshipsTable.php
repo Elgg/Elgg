@@ -23,6 +23,11 @@ class RelationshipsTable {
 	use \Elgg\TimeUsing;
 	
 	/**
+	 * @var integer The max length of the relationship column data
+	 */
+	const RELATIONSHIP_COLUMN_LENGTH = 255;
+	
+	/**
 	 * @var Database
 	 */
 	protected $db;
@@ -116,8 +121,8 @@ class RelationshipsTable {
 	 * @throws InvalidArgumentException
 	 */
 	public function add($guid_one, $relationship, $guid_two, $return_id = false) {
-		if (strlen($relationship) > \ElggRelationship::RELATIONSHIP_LIMIT) {
-			throw new InvalidArgumentException('Relationship name cannot be longer than ' . \ElggRelationship::RELATIONSHIP_LIMIT);
+		if (strlen($relationship) > self::RELATIONSHIP_COLUMN_LENGTH) {
+			throw new InvalidArgumentException('Relationship name cannot be longer than ' . self::RELATIONSHIP_COLUMN_LENGTH);
 		}
 
 		// Check for duplicates

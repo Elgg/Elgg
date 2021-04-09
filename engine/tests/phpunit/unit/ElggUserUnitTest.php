@@ -42,6 +42,29 @@ class ElggUserUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($user_settings['registered2']);
 		$this->assertArrayNotHasKey('unregistered', $user_settings);
 	}
+	
+	public function testCanSetNotificationSettingsWithPurpose() {
+
+		$obj = $this->getMockBuilder(ElggUser::class)
+				->setMethods(['save'])
+				->getMock();
+		$obj->expects($this->any())
+				->method('save')
+				->will($this->returnValue(true));
+
+		_elgg_services()->notifications->registerMethod('registered1');
+		_elgg_services()->notifications->registerMethod('registered2');
+
+		$obj->setNotificationSetting('registered1', false);
+		$obj->setNotificationSetting('registered1', true, 'my_purpose');
+		$obj->setNotificationSetting('registered2', true); // test fallback
+		$obj->setNotificationSetting('unregistered', true);
+		
+		$user_settings = $obj->getNotificationSettings('my_purpose');
+		$this->assertTrue($user_settings['registered1']);
+		$this->assertTrue($user_settings['registered2']);
+		$this->assertArrayNotHasKey('unregistered', $user_settings);
+	}
 
 	public function testCanExport() {
 		$user = $this->createUser();

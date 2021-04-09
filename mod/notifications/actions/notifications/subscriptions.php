@@ -16,16 +16,33 @@ if (empty($methods)) {
 }
 
 $subscriptions = (array) get_input('subscriptions', []);
-foreach ($subscriptions as $target_guid => $preferred_methods) {
-	if (!is_array($preferred_methods)) {
-		$preferred_methods = [];
-	}
+if (empty($subscriptions)) {
+	return elgg_error_response(elgg_echo('error:missing_data'));
+}
+
+$targets = elgg_get_entities([
+	'guids' => array_keys($subscriptions),
+	'limit' => false,
+	'batch' => true,
+]);
+
+/* @var $target \ElggEntity */
+foreach ($targets as $target) {
+	$keys = $subscriptions[$target->guid];
 	
-	foreach ($methods as $method) {
-		if (in_array($method, $preferred_methods)) {
-			elgg_add_subscription($user->guid, $method, $target_guid);
-		} else {
-			elgg_remove_subscription($user->guid, $method, $target_guid);
+	foreach ($keys as $key => $preferred_methods) {
+		list (, $type, $subtype, $action) = explode(':', $key);
+		
+		if (!is_array($preferred_methods)) {
+			$preferred_methods = [];
+		}
+		
+		foreach ($methods as $method) {
+			if (in_array($method, $preferred_methods)) {
+				$target->addSubscription($user->guid, $method, $type, $subtype, $action);
+			} else {
+				$target->removeSubscription($user->guid, $method, $type, $subtype, $action);
+			}
 		}
 	}
 }

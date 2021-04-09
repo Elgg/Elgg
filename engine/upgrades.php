@@ -8,6 +8,7 @@
 
 return [
 	\Elgg\Upgrades\AlterDatabaseToMultiByteCharset::class,
+	\Elgg\Upgrades\ChangeUserNotificationSettingsNamespace::class,
 	\Elgg\Upgrades\DeleteDiagnosticsPlugin::class,
 	\Elgg\Upgrades\NotificationsPrefix::class,
 ];

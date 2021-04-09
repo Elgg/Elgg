@@ -125,6 +125,8 @@ return array(
 	
 	'Security:InvalidPasswordCharacterRequirementsException' => "The provided password is doesn't meet the character requirements",
 	'Security:InvalidPasswordLengthException' => "The provided password doesn't meet the minimal length requirement of %s characters",
+	
+	'Entity:Subscriptions:InvalidMethodsException' => '%s requires $methods to be a string or an array of strings',
 
 	'pageownerunavailable' => 'Warning: The page owner %d is not accessible!',
 	'viewfailure' => 'There was an internal failure in the view %s',
@@ -262,6 +264,9 @@ return array(
 	'collection:user' => 'Users',
 	'item:user:user' => 'User',
 	'collection:user:user' => 'Users',
+	'notification:user:user:make_admin' => "Send a notification when a user receives admin rights",
+	'notification:user:user:remove_admin' => "Send a notification when the admin rights of a user are revoked",
+	'notification:user:user:unban' => "Send a notification when a user is unbanned",
 
 	'friends' => "Friends",
 	'collection:friends' => 'Friends\' %s',
@@ -339,6 +344,8 @@ return array(
 
 	'notification:subject' => 'Notification about %s',
 	'notification:body' => 'View the new activity at %s',
+	
+	'notification:settings:create_comment:description' => "Default notification setting when you comment on content in order to follow the rest of the conversation",
 
 /**
  * Search
@@ -1113,6 +1120,7 @@ These changes will only affect new users on the site.',
 	'activity' => 'Activity',
 	'members' => 'Members',
 	'menu' => 'Menu',
+	'item' => 'Item',
 
 	'up' => 'Up',
 	'down' => 'Down',
@@ -1600,6 +1608,7 @@ To go the the website, click here:
 	'comments:count' => "%s comments",
 	'item:object:comment' => 'Comment',
 	'collection:object:comment' => 'Comments',
+	'notification:object:comment:create' => "Send a notification when a comment is created",
 
 	'river:object:default:comment' => '%s commented on %s',
 
@@ -1657,7 +1666,19 @@ To view %s's profile, click here:
 	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
 	'entity:delete:success' => '%s has been deleted.',
 	'entity:delete:fail' => '%s could not be deleted.',
-
+	
+	'entity:subscribe:success' => "You've successfully subscribed to %s",
+	'entity:subscribe:fail' => "An error occured while subscribing to %s",
+	
+	'entity:unsubscribe:success' => "You've successfully unsubscribed from %s",
+	'entity:unsubscribe:fail' => "An error occured while unsubscribing from %s",
+	
+	'entity:mute:success' => "You've successfully muted notifications of %s",
+	'entity:mute:fail' => "An error occured while muting notifications of %s",
+	
+	'entity:unmute:success' => "You've successfully unmuted notifications of %s",
+	'entity:unmute:fail' => "An error occured while unmuting notifications of %s",
+	
 	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 
 /**
@@ -1955,4 +1976,7 @@ Global variables:
 	
 	"core:upgrade:2021022401:title" => "Migrate notification subscriptions",
 	"core:upgrade:2021022401:description" => "Notifcation subscriptions are stored differently in the database. Use this upgrade to migrate all subscriptions to the new form.",
+	
+	"core:upgrade:2021040701:title" => "Migrate user notification settings",
+	"core:upgrade:2021040701:description" => "In order to have a more developer friendly way to store notification settings of a user a migration is needed to the new naming convention.",
 );

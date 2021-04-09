@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper;
+
 return [
 	'plugin' => [
 		'name' => 'Notifications',
@@ -13,12 +15,18 @@ return [
 		'settings:notification:personal' => [
 			'path' => '/notifications/personal/{username?}',
 			'resource' => 'notifications/index',
+			'middleware' => [
+				UserPageOwnerCanEditGatekeeper::class,
+			],
 		],
 		'settings:notification:groups' => [
 			'path' => '/notifications/group/{username?}',
 			'resource' => 'notifications/groups',
 			'required_plugins' => [
 				'groups',
+			],
+			'middleware' => [
+				UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
 	],
@@ -29,25 +37,21 @@ return [
 		'forms/usersettings/save' => [
 			'core/settings/account/notifications' => ['unextend' => true],
 		],
+		'notifications/settings' => [
+			'notifications/users' => [],
+		],
 	],
 	'events' => [
 		'create' => [
-			'relationship' => [
-				'Elgg\Notifications\Relationships::createFriendNotificationsRelationship' => [],
+			'group' => [
+				'Elgg\Notifications\Subscriptions::createContent' => [],
 			],
-		],
-		'delete' => [
-			'relationship' => [
-				'Elgg\Notifications\Relationships::deleteFriendNotificationsSubscription' =>[],
+			'object' => [
+				'Elgg\Notifications\Subscriptions::createContent' => [],
 			],
 		],
 	],
 	'hooks' => [
-		'access:collections:add_user' => [
-			'collection' => [
-				'Elgg\Notifications\Relationships::updateUserNotificationsPreferencesOnACLChange' => [],
-			],
-		],
 		'register' => [
 			'menu:page' => [
 				'Elgg\Notifications\Menus\Page::register' => [],
@@ -61,5 +65,8 @@ return [
 				'Elgg\Notifications\SaveUserSettingsHandler' => ['unregister' => true],
 			],
 		],
+	],
+	'upgrades' => [
+		\Elgg\Notifications\Upgrades\MigrateACLNotificationPreferences::class,
 	],
 ];

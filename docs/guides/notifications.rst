@@ -247,18 +247,13 @@ Example:
 Subscriptions
 =============
 
-In most cases Elgg core takes care of handling the subscriptions,
-so notification plugins don't usually have to alter them.
+In most cases Elgg core takes care of handling the subscriptions, so notification plugins don't usually have to alter them.
 
 Subscriptions can however be:
- - Added using the `elgg_add_subscription()`__ function
- - Removed using the `elgg_remove_subscription()`__ function
+ - Added using the `\ElggEntity::addSubscription()` function
+ - Removed using the `\ElggEntity::removeSubscription()` function
 
-__ http://reference.elgg.org/notification_8php.html#ab793c2e2a7027cfe3a1db3395f85917b
-__ http://reference.elgg.org/notification_8php.html#a619fcbadea86921f7a19fb09a6319de7
-
-It's possible to modify the recipients of a notification dynamically
-with the ``'get', 'subscriptions'`` hook.
+It's possible to modify the recipients of a notification dynamically with the ``'get', 'subscriptions'`` hook.
 
 Example:
 --------
@@ -293,3 +288,45 @@ Example:
 
 		return ($subscriptions + $group_subscribers);
 	}
+
+Muted notifications
+===================
+
+Notifications can be muted in order to no longer receive notifications, for example no longer receive notifications about new comments on a discussion.
+
+In order to mute notifications call ``\ElggEntity::muteNotifications($user_guid)`` the ``$user_guid`` is defaulted to the current logged in user.
+This will cause all subscriptions on the entity to be removed and a special flag will be set to know that notifications are muted.
+
+The muting rules are applied after the subscribers of a notification event are requested and are applied for the following entities of the notification event:
+- the event actor ``\Elgg\Notifications\NotificationEvent::getActor()``
+- the event object entity ``\Elgg\Notifications\NotificationEvent::getObject()``
+- the event object container entity ``\Elgg\Notifications\NotificationEvent::getObject()::getContainerEntity()``
+- the event object owner entity ``\Elgg\Notifications\NotificationEvent::getObject()::getOwnerEntity()``
+
+To unmute the notifications call ``\ElggEntity::unmuteNotifications($user_guid)`` the ``$user_guid`` is defaulted to the current logged in user.
+
+To check if a user has the notifications muted call ``\ElggEntity::hasMutedNotifications($user_guid)`` the ``$user_guid`` is defaulted to the current logged in user.
+
+Notification settings
+=====================
+
+You can store and retreive notification settings of users with ``\ElggUser::setNotificationSetting()`` and ``\ElggUser::getNotificationSettings()``.
+
+.. code-block:: php
+
+	// Setting a notification preference
+	// notification method: mail
+	// notification is enabled
+	// for the purpose 'group_join' (when omitted this is 'default')
+	$user->setNotificationSetting('mail', true, 'group_join');
+	
+	// retrieving the preference
+	$settings = $user->getNotificationSettings('group_join');
+	// this wil result in an array with all the current notification methods and their state like:
+	// [
+	//	'mail' => true,
+	//	'site' => false,
+	//	'sms' => false,
+	// ]
+
+When a user has no setting yet for a non default purpose the system will fallback to the 'default' notification setting.

@@ -7,6 +7,7 @@ use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\Filesystem\IOException;
 use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Traits\Entity\Subscriptions;
 
 /**
  * The parent class for all Elgg Entities.
@@ -45,6 +46,8 @@ use Elgg\Exceptions\InvalidArgumentException;
  */
 abstract class ElggEntity extends \ElggData implements EntityIcon {
 
+	use Subscriptions;
+	
 	public const PRIMARY_ATTR_NAMES = [
 		'guid',
 		'type',

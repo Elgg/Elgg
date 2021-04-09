@@ -182,4 +182,7 @@ or click below to view the group's join requests:
 	'groups:joinrequestkilled' => 'The join request has been deleted.',
 	'groups:error:addedtogroup' => "Could not add %s to the group",
 	'groups:add:alreadymember' => "%s is already a member of this group",
+	
+	// Notification settings
+	'groups:notification:settings:group_join:description' => "Default notification settings for the group when joining a new group",
 );

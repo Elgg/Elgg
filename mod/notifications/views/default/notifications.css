@@ -2,7 +2,7 @@
 	display: table;
 	margin-bottom: 20px;
 	width: 100%;
-	border-top: 1px solid #DCDCDC;
+	border-top: 1px solid $(border-color-mild);
 	
 	.elgg-subscription-record {
 		display: table-row;
@@ -13,11 +13,11 @@
 			width: 50%;
 			vertical-align: middle;
 			padding: 10px;
-			border-bottom: 1px solid #DCDCDC;
+			border-bottom: 1px solid $(border-color-mild);
 		}
 	}
 	
 	.elgg-subscription-record:nth-child(even) {
-		background-color: #e6e6ea;
+		background-color: $(border-color-soft);
 	}
 }

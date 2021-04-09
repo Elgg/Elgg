@@ -99,6 +99,21 @@ Multiple Recipients
 
 An Elgg\Email now supports multiple recipients in To, Cc and Bcc. The related getter functions like ``getTo()`` will now always return an array.
 
+Settings
+~~~~~~~~
+
+A generic storage for notification preferences has been introduced in ``\ElggUser::setNotificationSetting()`` and ``\ElggUser::getNotificationSettings()``, 
+the notification settings now have a 'purpose'. 
+
+For example ``group_join`` can be used to manage the default subscription you get with a group when you join the group.
+
+The Notifications plugin has generic handling of displaying and saving the settings.
+To display the setting extend the view ``notifications/settings/records`` (plural) with a view which uses ``notifications/settings/record`` (singular).
+
+When requesting notification settings other than the default setting, if the user hasn't saved a setting yet it'll fall back to the default notification settings.
+
+Management of the notification preferences for adding a new users to a friend collection has been removed.
+
 Diagnostics Plugin
 ------------------
 
@@ -220,6 +235,7 @@ Datamodel / Schema changes
 
 * The ``access_id``, ``owner_guid`` and  ``enabled`` columns in the ``metadata`` table have been removed
 * The ``enabled`` column in the ``river`` table has been removed
+* The ``relationship`` column in the ``entity_relationships`` table now has a max length of 255 (up from 50) 
 
 ElggEntity attributes
 ---------------------
@@ -290,6 +306,7 @@ Class function parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * ``ElggEntity::setLatLong()`` now requires a ``float`` for ``$lat`` and ``$long``
+* ``ElggUser::setNotificationSetting()`` now requires a ``string`` for ``$method`` and a ``bool`` for ``$enabled``
 * ``Elgg\Database\Seeds\Seed::__construct()`` now requires an ``int`` for ``$limit``
 * ``Elgg\Http\ErrorResponse::__construct()`` now requires an ``int`` for ``$status_code``
 * ``Elgg\Http\OkResponse::__construct()`` now requires an ``int`` for ``$status_code``
@@ -317,7 +334,6 @@ Lib function parameters
 * ``delete_access_collection()`` now requires an ``int`` for ``$collection_id``
 * ``elgg_action_exists()`` now requires a ``string`` for ``$action``
 * ``elgg_add_admin_notice()`` now requires a ``string`` for ``$id`` and ``$message``
-* ``elgg_add_subscription()`` now requires an ``int`` for ``$user_guid`` and ``$target_guid`` and a ``string`` for ``$method``
 * ``elgg_admin_notice_exists()`` now requires a ``string`` for ``$id``
 * ``elgg_annotation_exists()`` now requires a ``int`` for ``$entity_guid``, a ``string`` for ``$name`` and ``int`` for ``$owner_guid``
 * ``elgg_delete_admin_notice()`` now requires a ``string`` for ``$id``
@@ -330,7 +346,6 @@ Lib function parameters
 * ``elgg_ok_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_redirect_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_register_action()`` now requires a ``string`` for ``$action`` and ``$access``
-* ``elgg_remove_subscription()`` now requires an ``int`` for ``$user_guid`` and ``$target_guid`` and a ``string`` for ``$method``
 * ``elgg_send_email()`` now requires an ``\Elgg\Email`` for ``$email``
 * ``elgg_unregister_action()`` now requires a ``string`` for ``$action``
 * ``get_access_array()`` now requires an ``int`` for ``$user_guid``
@@ -529,6 +544,7 @@ Plugins
 * ``Elgg\Friends\FilterMenu::addFriendRequestTabs`` changed to ``Elgg\Friends\Menus\Filter::addFriendRequestTabs``
 * ``Elgg\Friends\RelationshipMenu::addPendingFriendRequestItems`` changed to ``Elgg\Friends\Menus\Relationship::addPendingFriendRequestItems``
 * ``Elgg\Friends\RelationshipMenu::addPendingFriendRequestItems`` changed to ``Elgg\Friends\Menus\Relationship::addPendingFriendRequestItems``
+* ``Elgg\Friends\Relationships::createFriendRelationship`` changed to ``Elgg\Friends\Relationships::removePendingFriendRequest``
 
 * ``_groups_gatekeeper_allow_profile_page`` changed to ``Elgg\Groups\Access::allowProfilePage``
 * ``_groups_page_menu`` changed to ``Elgg\Groups\Menus\Page::register``
@@ -568,8 +584,8 @@ Plugins
 * ``messages_user_hover_menu`` changed to ``Elgg\Messages\Menus\UserHover::register`` and ``Elgg\Messages\Menus\Title::register``
 
 * ``notifications_update_collection_notify`` changed to ``Elgg\Notifications\Relationships::updateUserNotificationsPreferencesOnACLChange`` 
-* ``notifications_update_friend_notify`` changed to ``Elgg\Notifications\Relationships::createFriendNotificationsRelationship`` 
-* ``notifications_relationship_remove`` changed to ``Elgg\Notifications\Relationships::deleteFriendNotificationsSubscription`` 
+* ``notifications_update_friend_notify`` changed to ``Elgg\Friends\Relationships::applyFriendNotificationsSettings`` 
+* ``notifications_relationship_remove`` changed to ``Elgg\Friends\Relationships::deleteFriendNotificationSubscription`` and ``Elgg\Groups\Relationships::removeGroupNotificationSubscriptions`` 
 * ``_notifications_page_menu`` changed to ``Elgg\Notifications\Menus\Page::register`` 
 * ``_notification_groups_title_menu`` changed to ``Elgg\Notifications\Menus\Title::register`` 
 
@@ -633,6 +649,7 @@ Miscellaneous API changes
 * ``ElggData::save()`` now always returns a ``bool`` as documented. All extending classes have been updated (eg. ``ElggEntity``, ``ElggMetadata``, ``ElggRelationship``, etc.)
 * ``Elgg\Email::getTo()`` now always returns an ``array``
 * ``ElggPlugin::activate()`` and ``ElggPlugin::deactivate()`` now can throw an ``Elgg\Exceptions\PluginException`` with more details about the failure
+* ``\ElggRelationship::RELATIONSHIP_LIMIT`` has been removed use \Elgg\Database\RelationshipsTable::RELATIONSHIP_COLUMN_LENGTH``
 
 Deprecated APIs
 ---------------
@@ -661,11 +678,13 @@ Lib functions
 
 * ``access_get_show_hidden_status()`` use ``elgg()->session->getDisabledEntityVisibility()``
 * ``diagnostics_md5_dir()``
+* ``elgg_add_subscription()`` use ``\ElggEntity::addSubscription()``
 * ``elgg_get_available_languages()`` use ``elgg()->translator->getAvailableLanguages()``
 * ``elgg_get_loaded_css()`` use ``elgg_get_loaded_external_files('css', 'head')``
 * ``elgg_get_loaded_js()`` use ``elgg_get_loaded_external_files('js', $location)``
 * ``elgg_get_system_messages()`` use ``elgg()->system_messages->loadRegisters()``
 * ``elgg_prepend_css_urls()``
+* ``elgg_remove_subscription()`` use ``\ElggEntity::removeSubscription()``
 * ``elgg_set_system_messages()`` use ``elgg()->system_messages->saveRegisters()``
 * ``get_language_completeness()``  use ``elgg()->translator->getLanguageCompleteness()``
 * ``get_installed_translations()``  use ``elgg()->translator->getInstalledTranslations()``
@@ -689,6 +708,13 @@ Removed views / resources
 * ``messages/js`` moved to ``forms/messages/process.js``
 * ``navigation/menu/elements/item_deps`` the functionality has been merged into ``navigation/menu/elements/item``
 * ``object/plugin/elements/contributors``
+* ``notifications/groups``
+* ``notifications/personal`` use ``notifications/settings`` or ``notifications/users``
+* ``notifications/settings/personal`` moved to ``notifications/settings/records``
+* ``notifications/settings/collections``
+* ``notifications/settings/other`` extend ``notifications/settings/records``
+* ``notifications/subscriptions/groups`` use ``forms/notifications/subscriptions/groups``
+* ``notifications/subscriptions/users`` use ``forms/notifications/subscriptions/users``
 * ``resources/comments/view`` use ``\Elgg\Controllers\CommentEntityRedirector``
 * ``reportedcontent/admin_css``
 * ``thewire/previous``

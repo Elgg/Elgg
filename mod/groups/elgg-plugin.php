@@ -137,11 +137,22 @@ return [
 		'elgg.css' => [
 			'groups/groups.css' => [],
 		],
+		'notifications/settings/records' => [
+			'notifications/settings/group_join' => [],
+		],
 	],
 	'events' => [
 		'create' => [
 			'group' => [
 				'Elgg\Groups\Group::createAccessCollection' => [],
+			],
+			'relationship' => [
+				'Elgg\Groups\Relationships::applyGroupNotificationSettings' => [],
+			],
+		],
+		'delete' => [
+			'relationship' => [
+				'Elgg\Groups\Relationships::removeGroupNotificationSubscriptions' => [],
 			],
 		],
 		'init' => [

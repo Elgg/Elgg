@@ -15,17 +15,9 @@ echo elgg_view_field([
 	'value' => $user->guid,
 ]);
 
-$records = elgg_view('notifications/settings/personal', $vars);
-if (elgg_is_active_plugin('friends')) {
-	$records .= elgg_view('notifications/settings/collections', $vars);
-}
-if (elgg_view_exists('notifications/settings/other')) {
-	$records .= elgg_view('notifications/settings/other', $vars);
-}
-
 echo elgg_format_element('div', [
 	'class' => 'elgg-subscriptions',
-], $records);
+], elgg_view('notifications/settings/records', $vars));
 
 $footer = elgg_view_field([
 	'#type' => 'submit',

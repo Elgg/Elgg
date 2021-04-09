@@ -65,7 +65,8 @@ class NotificationsService {
 	 */
 	public function __construct(
 			SubscriptionsService $subscriptions,
-			Queue $queue, PluginHooksService $hooks,
+			Queue $queue,
+			PluginHooksService $hooks,
 			ElggSession $session,
 			Translator $translator,
 			EntityTable $entities,
@@ -91,7 +92,6 @@ class NotificationsService {
 	 *                        to elgg_trigger_event(). Examples include
 	 *                        'create', 'update', and 'publish'. The default is 'create'.
 	 * @return void
-	 *
 	 * @see elgg_register_notification_event()
 	 */
 	public function registerEvent($type, $subtype, array $actions = []) {
@@ -119,7 +119,6 @@ class NotificationsService {
 	 * @param array  $actions The notification action to unregister, leave empty for all actions
 	 *
 	 * @return bool
-	 *
 	 * @see elgg_unregister_notification_event()
 	 */
 	public function unregisterEvent($type, $subtype, array $actions = []) {
@@ -158,8 +157,8 @@ class NotificationsService {
 	 * Register a delivery method for notifications
 	 *
 	 * @param string $name The notification method name
-	 * @return void
 	 *
+	 * @return void
 	 * @see elgg_register_notification_method()
 	 */
 	public function registerMethod($name) {
@@ -170,15 +169,17 @@ class NotificationsService {
 	 * Unregister a delivery method for notifications
 	 *
 	 * @param string $name The notification method name
-	 * @return bool
 	 *
+	 * @return bool
 	 * @see elgg_unregister_notification_method()
 	 */
 	public function unregisterMethod($name) {
-		if (isset($this->methods[$name])) {
+		if ($this->isRegisteredMethod($name)) {
 			unset($this->methods[$name]);
+			
 			return true;
 		}
+		
 		return false;
 	}
 
@@ -186,11 +187,21 @@ class NotificationsService {
 	 * Returns registered delivery methods for notifications
 	 *
 	 * @return string[]
-	 *
 	 * @see elgg_get_notification_methods()
 	 */
 	public function getMethods() {
 		return $this->methods;
+	}
+	
+	/**
+	 * Check if a notification method is registed
+	 *
+	 * @param string $method the notification method
+	 *
+	 * @return bool
+	 */
+	public function isRegisteredMethod(string $method): bool {
+		return in_array($method, $this->methods);
 	}
 
 	/**
@@ -199,6 +210,7 @@ class NotificationsService {
 	 * @param string   $action Action name
 	 * @param string   $type   Type of the object of the action
 	 * @param ElggData $object The object of the action
+	 *
 	 * @return void
 	 */
 	public function enqueueEvent($action, $type, $object) {
@@ -231,6 +243,7 @@ class NotificationsService {
 	 *
 	 * @param int  $stopTime The Unix time to stop sending notifications
 	 * @param bool $matrix   If true, will return delivery matrix instead of a notifications event count
+	 *
 	 * @return int|array The number of notification events handled, or a delivery matrix
 	 */
 	public function processQueue($stopTime, $matrix = false) {
@@ -258,7 +271,7 @@ class NotificationsService {
 				continue;
 			}
 
-			$subscriptions = $this->subscriptions->getSubscriptions($event, $this->methods);
+			$subscriptions = $this->subscriptions->getNotificationEventSubscriptions($event, $this->methods);
 			
 			// return false to stop the default notification sender
 			$params = [
@@ -301,6 +314,7 @@ class NotificationsService {
 	 * @param NotificationEvent $event         Notification event
 	 * @param array             $subscriptions Subscriptions for this event
 	 * @param array             $params        Default notification parameters
+	 *
 	 * @return array
 	 */
 	protected function sendNotifications($event, $subscriptions, array $params = []) {
@@ -313,7 +327,7 @@ class NotificationsService {
 		foreach ($subscriptions as $guid => $methods) {
 			foreach ($methods as $method) {
 				$result[$guid][$method] = false;
-				if (in_array($method, $this->methods)) {
+				if ($this->isRegisteredMethod($method)) {
 					$result[$guid][$method] = $this->sendNotification($event, $guid, $method, $params);
 				}
 			}
@@ -409,6 +423,7 @@ class NotificationsService {
 			'methods_override' => $methods_override,
 		];
 		$subscriptions = $this->hooks->trigger('get', 'subscriptions', $hook_params, $subscriptions);
+		$subscriptions = $this->subscriptions->filterMutedNotifications($subscriptions, $event);
 		
 		$params['subscriptions'] = $subscriptions;
 
@@ -429,6 +444,7 @@ class NotificationsService {
 	 * @param int               $guid   The guid of the subscriber
 	 * @param string            $method The notification method
 	 * @param array             $params Default notification params
+	 *
 	 * @return bool
 	 */
 	protected function sendNotification(NotificationEvent $event, $guid, $method, array $params = []) {
@@ -535,6 +551,7 @@ class NotificationsService {
 	 *
 	 * @param NotificationEvent $event     Notification event
 	 * @param ElggUser          $recipient Notification recipient
+	 *
 	 * @return string Notification subject in the recipient's language
 	 */
 	private function getNotificationSubject(NotificationEvent $event, ElggUser $recipient) {
@@ -595,6 +612,7 @@ class NotificationsService {
 	 *
 	 * @param NotificationEvent $event     Notification event
 	 * @param ElggUser          $recipient Notification recipient
+	 *
 	 * @return string Notification body in the recipient's language
 	 */
 	private function getNotificationBody(NotificationEvent $event, ElggUser $recipient) {
