@@ -479,10 +479,6 @@ function elgg_view_layout($layout_name, $vars = []) {
 		$timer->end(['build page']);
 	}
 	$timer->begin([__FUNCTION__]);
-
-	if (in_array($layout_name, ['content'])) {
-		elgg_deprecated_notice("Using the '{$layout_name}' layout is deprecated. Please update your code to use the 'default' layout.", '3.3');
-	}
 	
 	if ($layout_name !== 'content' && isset($vars['filter_context'])) {
 		elgg_deprecated_notice("Using 'filter_context' to set the active menu item is not supported. Please update your code to use the 'filter_value' var.", '3.3');
@@ -490,11 +486,6 @@ function elgg_view_layout($layout_name, $vars = []) {
 	
 	// Help plugins transition without breaking them
 	switch ($layout_name) {
-		case 'content' :
-			$layout_name = 'default';
-			$vars = _elgg_normalize_content_layout_vars($vars);
-			break;
-
 		case 'default' :
 			$filter_id = elgg_extract('filter_id', $vars, 'filter');
 			$filter_value = elgg_extract('filter_value', $vars);
@@ -530,34 +521,6 @@ function elgg_view_layout($layout_name, $vars = []) {
 
 	$timer->end([__FUNCTION__]);
 	return $output;
-}
-
-/**
- * Normalizes deprecated content layout $vars for use in default layout
- * Helper function to assist plugins transitioning to 3.0
- *
- * @param array $vars Vars
- * @return array
- * @internal
- */
-function _elgg_normalize_content_layout_vars(array $vars = []) {
-
-	$context = elgg_extract('context', $vars, elgg_get_context());
-
-	$vars['title'] = elgg_extract('title', $vars, '');
-	if (!$vars['title'] && $vars['title'] !== false) {
-		$vars['title'] = elgg_echo($context);
-	}
-
-	// register the default content filters
-	if (!isset($vars['filter']) && $context) {
-		$selected = elgg_extract('filter_context', $vars);
-		$vars['filter'] = elgg_get_filter_tabs($context, $selected, null, $vars);
-		$vars['filter_id'] = $context;
-		$vars['filter_value'] = $selected;
-	}
-
-	return $vars;
 }
 
 /**

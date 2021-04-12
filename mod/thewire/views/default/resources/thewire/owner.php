@@ -10,8 +10,6 @@ if (!$owner instanceof ElggUser) {
 	throw new EntityNotFoundException();
 }
 
-$title = elgg_echo('collection:object:thewire:owner', [$owner->getDisplayName()]);
-
 elgg_push_collection_breadcrumbs('object', 'thewire', $owner);
 
 $context = '';
@@ -32,11 +30,8 @@ $content .= elgg_list_entities([
 	'limit' => get_input('limit', 15),
 ]);
 
-$body = elgg_view_layout('content', [
-	'filter_context' => $context,
+echo elgg_view_page(elgg_echo('collection:object:thewire:owner', [$owner->getDisplayName()]), [
+	'filter_value' => $context,
 	'content' => $content,
-	'title' => $title,
 	'sidebar' => elgg_view('thewire/sidebar'),
 ]);
-
-echo elgg_view_page($title, $body);

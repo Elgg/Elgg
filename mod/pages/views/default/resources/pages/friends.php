@@ -22,10 +22,7 @@ $content = elgg_view('pages/listing/friends', [
 	'entity' => $owner,
 ]);
 
-$body = elgg_view_layout('content', [
-	'filter_context' => 'friends',
+echo elgg_view_page($title, [
+	'filter_value' => 'friends',
 	'content' => $content,
-	'title' => $title,
 ]);
-
-echo elgg_view_page($title, $body);
