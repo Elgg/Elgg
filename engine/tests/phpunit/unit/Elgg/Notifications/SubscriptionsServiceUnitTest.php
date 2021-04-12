@@ -109,7 +109,8 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$select->select('guid_one AS guid')
 			->addSelect("GROUP_CONCAT(relationship SEPARATOR ',') AS methods")
 			->where($select->compare('guid_two', '=', $this->containerGuid, ELGG_VALUE_GUID))
-			->andWhere($select->compare('relationship', 'in', ['notify:apples', 'notify:bananas'], ELGG_VALUE_STRING));
+			->andWhere($select->compare('relationship', 'in', ['notify:apples', 'notify:bananas'], ELGG_VALUE_STRING))
+			->groupBy('guid_one');
 		
 		$this->db->expects($this->once())
 			->method('getData')

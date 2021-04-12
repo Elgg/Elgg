@@ -549,7 +549,8 @@ class SubscriptionsService {
 		$select->select('guid_one AS guid')
 			->addSelect("GROUP_CONCAT(relationship SEPARATOR ',') AS methods")
 			->where($select->compare('guid_two', '=', $container_guid, ELGG_VALUE_GUID))
-			->andWhere($select->compare('relationship', 'in', $rels, ELGG_VALUE_STRING));
+			->andWhere($select->compare('relationship', 'in', $rels, ELGG_VALUE_STRING))
+			->groupBy('guid_one');
 		
 		return $this->db->getData($select);
 	}
