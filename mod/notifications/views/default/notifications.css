@@ -21,3 +21,21 @@
 		background-color: $(border-color-soft);
 	}
 }
+
+.elgg-notifications-settings {
+	display: table;
+	
+	> div {
+		display: table-row;
+		
+		> div {
+			display: table-cell;
+			width: 50%;
+			padding: 10px;
+		}
+		
+		&:nth-child(even) {
+			background-color: $(border-color-soft);
+		}
+	}
+}
