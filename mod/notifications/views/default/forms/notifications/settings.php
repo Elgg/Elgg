@@ -16,7 +16,7 @@ echo elgg_view_field([
 ]);
 
 echo elgg_format_element('div', [
-	'class' => 'elgg-subscriptions',
+	'class' => 'elgg-notifications-settings',
 ], elgg_view('notifications/settings/records', $vars));
 
 $footer = elgg_view_field([

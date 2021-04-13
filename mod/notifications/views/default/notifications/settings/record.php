@@ -30,15 +30,14 @@ foreach ($methods as $method) {
 }
 
 ?>
-<div class="elgg-subscription-record">
-	<div class="elgg-subscription-description">
+<div>
+	<div>
 		<?= $description; ?>
 	</div>
 	<?php
 	$value = array_keys(array_filter($user->getNotificationSettings($purpose)));
 	echo elgg_view_field([
 		'#type' => 'checkboxes',
-		'#class' => 'elgg-subscription-methods',
 		'name' => "notification_setting[{$purpose}]",
 		'options' => $method_options,
 		'default' => 0,

@@ -1,23 +1,113 @@
 .elgg-subscriptions {
-	display: table;
-	margin-bottom: 20px;
-	width: 100%;
-	border-top: 1px solid $(border-color-mild);
 	
-	.elgg-subscription-record {
-		display: table-row;
+	margin-bottom: 1rem;
+	
+	& > li {
+		padding: .5rem 1rem;
+	}
+	
+	.elgg-subscription-container {
+		> .elgg-subscription-methods {
+			font-size: .9rem;
+			margin: 0;
+		}
+
+		.elgg-subscription-details-toggle {
+			cursor: pointer;
+			margin-top: .25rem;
+			color: $(background-color-strong);
+
+			&.elgg-state-active,
+			&:hover {
+				text-decoration: none;
+				color: $(background-color-highlight);
+			}
+		}
+	}
+
+	.elgg-subscription-container-details {
+		display: none;
+	}
+
+	.elgg-subscription-details {
+		margin-bottom: 0rem;
 		
-		.elgg-subscription-description,
-		.elgg-subscription-methods {
-			display: table-cell;
-			width: 50%;
-			vertical-align: middle;
-			padding: 10px;
-			border-bottom: 1px solid $(border-color-mild);
+		&:hover {
+			background: $(background-color-mild);
+		}
+		
+		> .elgg-field-input {
+			max-width: 100%;
+			font-size: .9rem;
+		}
+	}
+}
+
+@media $(media-tablet-up) {
+	.elgg-subscriptions {
+		.elgg-subscription-container {
+			display: flex;
+			
+			> .elgg-subscription-description {
+				width: 600px;
+				max-width: 60%;
+				padding-right: 2rem;
+			}
+			
+			> .elgg-subscription-methods {
+				max-width: 100%;
+			}
+
+			.elgg-subscription-details-toggle > .elgg-anchor-label {
+				display: none;
+			}
 		}
 	}
 	
-	.elgg-subscription-record:nth-child(even) {
+	.elgg-subscription-details {
+		display: flex;
+		
+		> .elgg-field-label {
+			width: 600px;
+			max-width: 60%;
+			padding-right: 2rem;
+			
+			border-left: 1px solid $(background-color-mild);
+			padding-left: 2rem;
+		}
+	}
+}
+
+@media $(media-mobile-only) {
+	.elgg-subscriptions {
+		.elgg-subscription-container-details {
+			border-left: 1px solid $(background-color-mild);
+			padding-left: 1rem;
+		}
+	}
+}
+
+.elgg-notifications-settings > div {
+	> div {
+		padding: .5rem;
+	}
+	
+	&:nth-child(even) {
 		background-color: $(border-color-soft);
+	}
+}
+
+@media $(media-tablet-up) {
+	.elgg-notifications-settings {
+		display: table;
+		
+		> div {
+			display: table-row;
+			
+			> div {
+				display: table-cell;
+				width: 50%;
+			}
+		}
 	}
 }

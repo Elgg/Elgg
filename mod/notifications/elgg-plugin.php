@@ -41,6 +41,9 @@ return [
 			'notifications/users' => [],
 		],
 	],
+	'view_options' => [
+		'notifications/subscriptions/details' => ['ajax' => true],
+	],
 	'events' => [
 		'create' => [
 			'group' => [
