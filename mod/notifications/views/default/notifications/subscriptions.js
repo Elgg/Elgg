@@ -34,6 +34,19 @@ define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 		
 		$record.find('.elgg-subscription-methods input').prop('disabled', false);
 		$record.find('.elgg-subscription-details-toggle').removeClass('elgg-state-active');
+	});
+	
+	// prevent email and delayed email from being enabled at the same time
+	$(document).on('change', '.elgg-subscription-record .elgg-input-checkbox:checked', function() {
+		if ($(this).val() !== 'delayed_email' && $(this).val() !== 'email') {
+			return;
+		}
 		
+		var $methods = $(this).closest('.elgg-field-input');
+		if ($(this).val() === 'delayed_email') {
+			$methods.find('.elgg-input-checkbox[value="email"]').prop('checked', false);
+		} else {
+			$methods.find('.elgg-input-checkbox[value="delayed_email"]').prop('checked', false);
+		}
 	});
 });

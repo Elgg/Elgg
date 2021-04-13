@@ -55,6 +55,7 @@ use Elgg\Project\Paths;
  * @property bool          $email_html_part                         Determines if email has a html part
  * @property string        $email_html_part_images                  How to deal with images in html part of email
  * @property int           $email_subject_limit                     The length limit for email subjects, defaults to 998 as described in http://www.faqs.org/rfcs/rfc2822.html
+ * @property bool          $enable_delayed_email                    Is the delivery method 'delayed_email' enabled
  * @property bool          $enable_profiling
  * @property string        $emailer_transport                       This is an override for Elgg's default email handling transport (default sendmail)
  * @property array         $emailer_sendmail_settings               This configures SendMail if $emailer_transport is set to "sendmail" or default
@@ -187,6 +188,7 @@ class Config {
 		'email_html_part' => true,
 		'email_html_part_images' => 'no',
 		'email_subject_limit' => 998,
+		'enable_delayed_email' => true,
 		'icon_sizes' => [
 			'topbar' => ['w' => 16, 'h' => 16, 'square' => true, 'upscale' => true],
 			'tiny' => ['w' => 25, 'h' => 25, 'square' => true, 'upscale' => true],

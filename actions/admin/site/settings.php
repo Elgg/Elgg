@@ -104,6 +104,7 @@ elgg_save_config('remove_branding', $remove_branding);
 
 elgg_save_config('email_html_part', (bool) get_input('email_html_part'));
 elgg_save_config('email_html_part_images', get_input('email_html_part_images'));
+elgg_save_config('enable_delayed_email', (bool) get_input('enable_delayed_email'));
 
 $disable_rss = ('on' === get_input('disable_rss', false));
 elgg_save_config('disable_rss', $disable_rss);

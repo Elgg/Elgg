@@ -14,7 +14,7 @@ class SendEmailHandler {
 	 *
 	 * @param \Elgg\Hook $hook 'send', 'notification:email'
 	 *
-	 * @return bool
+	 * @return void|bool
 	 */
 	public function __invoke(\Elgg\Hook $hook) {
 		if ($hook->getValue() === true) {

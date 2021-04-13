@@ -156,6 +156,10 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testFilterMutedNotificationsActor() {
+		$reflector = new \ReflectionClass($this->service);
+		$method = $reflector->getMethod('filterMutedNotifications');
+		$method->setAccessible(true);
+		
 		$this->entities[] = $user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
@@ -168,10 +172,14 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 			$user->guid => ['apples'],
 		];
 		
-		$this->assertEmpty($this->service->filterMutedNotifications($subscriptions, $event));
+		$this->assertEmpty($method->invoke($this->service, $subscriptions, $event));
 	}
 	
 	public function testFilterMutedNotificationsOwner() {
+		$reflector = new \ReflectionClass($this->service);
+		$method = $reflector->getMethod('filterMutedNotifications');
+		$method->setAccessible(true);
+		
 		$this->entities[] = $user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
@@ -184,10 +192,14 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 			$user->guid => ['apples'],
 		];
 		
-		$this->assertEmpty($this->service->filterMutedNotifications($subscriptions, $event));
+		$this->assertEmpty($method->invoke($this->service, $subscriptions, $event));
 	}
 	
 	public function testFilterMutedNotificationsContainer() {
+		$reflector = new \ReflectionClass($this->service);
+		$method = $reflector->getMethod('filterMutedNotifications');
+		$method->setAccessible(true);
+		
 		$this->entities[] = $user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
@@ -200,10 +212,14 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 			$user->guid => ['apples'],
 		];
 		
-		$this->assertEmpty($this->service->filterMutedNotifications($subscriptions, $event));
+		$this->assertEmpty($method->invoke($this->service, $subscriptions, $event));
 	}
 	
 	public function testFilterMutedNotificationsEntity() {
+		$reflector = new \ReflectionClass($this->service);
+		$method = $reflector->getMethod('filterMutedNotifications');
+		$method->setAccessible(true);
+		
 		$user = $this->createUser();
 		$this->entities[] = $user = $this->createUser();
 		
@@ -217,7 +233,69 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 			$user->guid => ['apples'],
 		];
 		
-		$this->assertEmpty($this->service->filterMutedNotifications($subscriptions, $event));
+		$this->assertEmpty($method->invoke($this->service, $subscriptions, $event));
+	}
+	
+	public function testFilterDelayedEmailSubscribers() {
+		$reflector = new \ReflectionClass($this->service);
+		$method = $reflector->getMethod('filterDelayedEmailSubscribers');
+		$method->setAccessible(true);
+		
+		$subscriptions = [
+			1 => ['apples'],
+			2 => ['email'],
+			3 => ['delayed_email'],
+			4 => ['email', 'delayed_email'],
+			5 => ['delayed_email', 'email'],
+			6 => ['email', 'apples'],
+		];
+		
+		$expected = [
+			1 => ['apples'],
+			2 => ['email'],
+			3 => ['delayed_email'],
+			4 => ['email'],
+			5 => ['email'],
+			6 => ['email', 'apples'],
+		];
+		
+		$this->assertEquals($expected, $method->invoke($this->service, $subscriptions));
+	}
+	
+	public function testFilterSubscriptionsUniqueMethods() {
+		$event = $this->getSubscriptionNotificationEvent();
+		
+		$subscriptions = [
+			1 => ['apples', 'apples', 'bananas'],
+			2 => ['apples', 'apples', 'bananas', 'bananas'],
+			3 => ['apples', 'bananas', 'apples', 'bananas'],
+		];
+		
+		$expected = [
+			1 => ['apples', 'bananas'],
+			2 => ['apples', 'bananas'],
+			3 => ['apples', 'bananas'],
+		];
+		
+		$this->assertEquals($expected, $this->service->filterSubscriptions($subscriptions, $event));
+	}
+	
+	public function testFilterSubscriptionsEmptyMethods() {
+		$event = $this->getSubscriptionNotificationEvent();
+		
+		$subscriptions = [
+			1 => ['apples', ''],
+			2 => ['0', 'bananas'],
+			3 => [false, 'bananas', 'apples'],
+		];
+		
+		$expected = [
+			1 => ['apples'],
+			2 => ['bananas'],
+			3 => ['bananas', 'apples'],
+		];
+		
+		$this->assertEquals($expected, $this->service->filterSubscriptions($subscriptions, $event));
 	}
 	
 	function testGetNotificationEventSubscriptionsWithMutedActorBySubscription() {

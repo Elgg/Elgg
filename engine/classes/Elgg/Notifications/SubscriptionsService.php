@@ -111,7 +111,7 @@ class SubscriptionsService {
 		];
 		$subscriptions = $this->hooks->trigger('get', 'subscriptions', $params, $subscriptions);
 		
-		return $this->filterMutedNotifications($subscriptions, $event);
+		return $this->filterSubscriptions($subscriptions, $event);
 	}
 
 	/**
@@ -468,6 +468,27 @@ class SubscriptionsService {
 	}
 	
 	/**
+	 * Apply filtering to subscriptions, like muted notifications etc
+	 *
+	 * @param array             $subscriptions List of subscribers to filter
+	 * @param NotificationEvent $event         Notification event from which to get information
+	 *
+	 * @return array
+	 */
+	public function filterSubscriptions(array $subscriptions, NotificationEvent $event): array {
+		// make methods unique and remove emptys
+		$subscriptions = array_map(function($user_methods) {
+			return array_values(array_filter(array_unique($user_methods)));
+		}, $subscriptions);
+		
+		// apply filters
+		$subscriptions = $this->filterMutedNotifications($subscriptions, $event);
+		$subscriptions = $this->filterDelayedEmailSubscribers($subscriptions);
+		
+		return $subscriptions;
+	}
+	
+	/**
 	 * Filter subscriptions based on muted notification settings related to the notification event
 	 *
 	 * This filters out muted notifications based on:
@@ -481,7 +502,7 @@ class SubscriptionsService {
 	 *
 	 * @return array
 	 */
-	public function filterMutedNotifications(array $subscriptions, NotificationEvent $event): array {
+	protected function filterMutedNotifications(array $subscriptions, NotificationEvent $event): array {
 		$guids_to_check = [];
 		
 		// Event actor
@@ -522,6 +543,25 @@ class SubscriptionsService {
 		return array_filter($subscriptions, function($value, $key) use ($muted) {
 			return !in_array($key, $muted);
 		}, ARRAY_FILTER_USE_BOTH);
+	}
+	
+	/**
+	 * When a user has both 'email' and 'delayed_email' subscription remove the delayed email as it would be a duplicate
+	 *
+	 * @param array $subscriptions List of subscribers to filter
+	 *
+	 * @return array
+	 */
+	protected function filterDelayedEmailSubscribers(array $subscriptions): array {
+		return array_map(function ($user_methods) {
+			if (!in_array('delayed_email', $user_methods) || !in_array('email', $user_methods)) {
+				return $user_methods;
+			}
+			$pos = array_search('delayed_email', $user_methods);
+			unset($user_methods[$pos]);
+			
+			return array_values($user_methods);
+		}, $subscriptions);
 	}
 
 	/**

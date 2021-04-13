@@ -300,7 +300,7 @@ class EmailService {
 		} else {
 			$html_text = $this->makeHtmlBody([
 				'subject' => $email->getSubject(),
-				'body' => $email->getBody(),
+				'body' => elgg_extract('html_body', $mail_params, $email->getBody()),
 				'email' => $email,
 			]);
 		}
