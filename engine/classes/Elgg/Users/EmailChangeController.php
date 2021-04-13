@@ -59,7 +59,6 @@ class EmailChangeController {
 			'to' => new Address($old_email, $user->getDisplayName()),
 			'subject' => $translator->translate('email:confirm:email:old:subject', [], $user->getLanguage()),
 			'body' => $translator->translate('email:confirm:email:old:body', [
-				$user->getDisplayName(),
 				$site->getDisplayName(),
 				$new_email,
 				$site->getURL(),
@@ -70,7 +69,6 @@ class EmailChangeController {
 		
 		$subject = $translator->translate('email:confirm:email:new:subject', [], $user->getLanguage());
 		$body = $translator->translate('email:confirm:email:new:body', [
-			$user->getDisplayName(),
 			$site->getDisplayName(),
 			$site->getURL(),
 		], $user->getLanguage());

@@ -27,7 +27,7 @@ if (!force_user_password_reset($user->guid, $password)) {
 notify_user($user->guid,
 	elgg_get_site_entity()->guid,
 	elgg_echo('email:resetpassword:subject', [], $user->language),
-	elgg_echo('email:resetpassword:body', [$user->username, $password], $user->language),
+	elgg_echo('email:resetpassword:body', [$password], $user->language),
 	[
 		'object' => $user,
 		'action' => 'resetpassword',

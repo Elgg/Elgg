@@ -91,7 +91,7 @@ class MessagesPluginTest extends IntegrationTestCase {
 		$this->assertNotEmpty($plain_text_part);
 
 		$this->assertEquals($expected_subject, $notification->getSubject());
-		$this->assertEquals($expected_body, $plain_text_part->getRawContent());
+		$this->assertStringContainsString($expected_body, $plain_text_part->getRawContent());
 
 	}
 }

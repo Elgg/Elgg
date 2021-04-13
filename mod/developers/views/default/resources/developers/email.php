@@ -1,13 +1,13 @@
 <?php
 
 use Elgg\Email;
+use Elgg\Notifications\Notification;
 
 $user = elgg_get_logged_in_user_entity();
 $site = elgg_get_site_entity();
 
 $subject = elgg_echo('useradd:subject');
 $plain_message = elgg_echo('useradd:body', [
-	$user->getDisplayName(),
 	$site->getDisplayName(),
 	$site->getURL(),
 	$user->username,
@@ -22,9 +22,22 @@ $email = Email::factory([
 
 $formatter = elgg()->html_formatter;
 
+$prepared_body = '';
+
+elgg_register_plugin_hook_handler('send', 'notification:email', function (\Elgg\Hook $hook) use (&$prepared_body) {
+	$notification = $hook->getParam('notification');
+	if ($notification instanceof Notification) {
+		$prepared_body = $notification->body;
+	}
+
+	return true;
+}, 1);
+
+notify_user($user->guid, $site->guid, $subject, $plain_message, [], 'email');
+
 $options = [
 	'subject' => $subject,
-	'body' => $plain_message,
+	'body' => $prepared_body,
 	'language' => get_current_language(),
 	'email' => $email,
 ];

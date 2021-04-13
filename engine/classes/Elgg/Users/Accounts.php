@@ -414,7 +414,6 @@ class Accounts {
 			'to' => new Address($email, $user->getDisplayName()),
 			'subject' => $this->translator->translate('email:request:email:subject', [], $user->getLanguage()),
 			'body' => $this->translator->translate('email:request:email:body', [
-				$user->getDisplayName(),
 				$site->getDisplayName(),
 				$url,
 			], $user->getLanguage()),

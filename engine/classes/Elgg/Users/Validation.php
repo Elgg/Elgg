@@ -34,7 +34,6 @@ class Validation {
 		
 		$subject = elgg_echo('account:notification:validation:subject', [$site->getDisplayName()], $user->getLanguage());
 		$body = elgg_echo('account:notification:validation:body', [
-			$user->getDisplayName(),
 			$site->getDisplayName(),
 			$site->getURL(),
 		], $user->getLanguage());
@@ -128,7 +127,6 @@ class Validation {
 			
 			$subject = elgg_echo('admin:notification:unvalidated_users:subject', [$site->getDisplayName()], $admin->getLanguage());
 			$body = elgg_echo('admin:notification:unvalidated_users:body', [
-				$admin->getDisplayName(),
 				$unvalidated_count,
 				$site->getDisplayName(),
 				$url,

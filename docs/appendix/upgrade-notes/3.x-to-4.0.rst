@@ -114,6 +114,13 @@ When requesting notification settings other than the default setting, if the use
 
 Management of the notification preferences for adding a new users to a friend collection has been removed.
 
+Notification Salutation & Sign-off
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To be able to have a more generic salutation and sign-off for outgoing mail notifications we have removed these texts from various translation strings and moved them to
+generic translations. This will mean you have to update your translations to reflect the new text and also check your code for uses of notifications where you provide your own
+salutation or sign-off text. You can find out more about this new behaviour in :doc:`/guides/notifications`.
+
 Diagnostics Plugin
 ------------------
 

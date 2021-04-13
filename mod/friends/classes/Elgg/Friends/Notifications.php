@@ -22,7 +22,6 @@ class Notifications {
 		
 		$subject = elgg_echo('friends:notification:request:accept:subject', [$sender->getDisplayName()], $recipient->getLanguage());
 		$message = elgg_echo('friends:notification:request:accept:message', [
-			$recipient->getDisplayName(),
 			$sender->getDisplayName(),
 		], $recipient->getLanguage());
 		

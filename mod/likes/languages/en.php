@@ -29,18 +29,13 @@ return array(
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s likes your post "%s"',
 	'likes:notifications:body' =>
-'Hi %1$s,
-
-%2$s likes your post "%3$s" on %4$s
+'%1$s likes your post "%2$s" on %3$s
 
 See your original post here:
 
-%5$s
+%4$s
 
-or view %2$s\'s profile here:
+or view %1$s\'s profile here:
 
-%6$s
-
-Thanks,
-%4$s',
+%5$s',
 );

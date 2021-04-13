@@ -47,7 +47,6 @@ foreach ($user_guid as $u_guid) {
 	$subject = elgg_echo('groups:welcome:subject', [$group->getDisplayName()], $user->language);
 
 	$body = elgg_echo('groups:welcome:body', [
-		$user->getDisplayName(),
 		$group->getDisplayName(),
 		$group->getURL(),
 	], $user->language);

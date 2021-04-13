@@ -90,8 +90,6 @@ class CreateNotification {
 			$commenter->getDisplayName(),
 			$comment->description,
 			$comment->getURL(),
-			$commenter->getDisplayName(),
-			$commenter->getURL(),
 		], $language);
 		
 		return $returnvalue;
@@ -132,8 +130,6 @@ class CreateNotification {
 			$commenter->getDisplayName(),
 			$comment->description,
 			$comment->getURL(),
-			$commenter->getDisplayName(),
-			$commenter->getURL(),
 		], $language);
 		
 		$returnvalue->url = $comment->getURL();

@@ -71,7 +71,6 @@ class UnbanUserNotification {
 	
 		$return_value->subject = elgg_echo('user:notification:unban:subject', [$site->getDisplayName()], $language);
 		$return_value->body = elgg_echo('user:notification:unban:body', [
-			$recipient->getDisplayName(),
 			$site->getDisplayName(),
 			$site->getURL(),
 		], $language);

@@ -33,7 +33,6 @@ class BanUserNotificationHandler {
 	
 		$subject = elgg_echo('user:notification:ban:subject', [$site->getDisplayName()], $language);
 		$body = elgg_echo('user:notification:ban:body', [
-			$user->getDisplayName(),
 			$site->getDisplayName(),
 			$site->getURL(),
 		], $language);
