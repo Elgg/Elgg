@@ -95,7 +95,6 @@ class AddFriendController {
 			
 			$subject = elgg_echo('friends:notification:request:subject', [$user->getDisplayName()], $friend->getLanguage());
 			$message = elgg_echo('friends:notification:request:message', [
-				$friend->getDisplayName(),
 				$user->getDisplayName(),
 				$site->getDisplayName(),
 				elgg_generate_url('collection:relationship:friendrequest:pending', [

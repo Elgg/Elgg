@@ -57,7 +57,6 @@ foreach ($user_guids as $guid) {
 	], $user->getLanguage());
 
 	$body = elgg_echo('groups:invite:body', [
-		$user->getDisplayName(),
 		$logged_in_user->getDisplayName(),
 		$group->getDisplayName(),
 		$url,

@@ -59,7 +59,6 @@ try {
 
 	$subject = elgg_echo('useradd:subject', [], $new_user->language);
 	$body = elgg_echo('useradd:body', [
-		$name,
 		elgg_get_site_entity()->getDisplayName(),
 		elgg_get_site_entity()->getURL(),
 		$username,

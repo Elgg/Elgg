@@ -7,7 +7,6 @@ $site = elgg_get_site_entity();
 
 $subject = elgg_echo('useradd:subject');
 $plain_message = elgg_echo('useradd:body', [
-	$user->getDisplayName(),
 	$site->getDisplayName(),
 	$site->getURL(),
 	$user->username,

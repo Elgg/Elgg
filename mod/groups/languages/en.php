@@ -139,25 +139,19 @@ return array(
 	'groups:invite:subject' => "%s you have been invited to join %s!",
 	'groups:joinrequest:remove:check' => 'Are you sure you want to remove this join request?',
 	'groups:invite:remove:check' => 'Are you sure you want to remove this invitation?',
-	'groups:invite:body' => "Hi %s,
-
-%s invited you to join the '%s' group.
+	'groups:invite:body' => "%s invited you to join the '%s' group.
 
 Click below to view your invitations:
 %s",
 
 	'groups:welcome:subject' => "Welcome to the %s group!",
-	'groups:welcome:body' => "Hi %s!
-
-You are now a member of the '%s' group.
+	'groups:welcome:body' => "You are now a member of the '%s' group.
 
 Click below to begin posting!
 %s",
 
 	'groups:request:subject' => "%s has requested to join %s",
-	'groups:request:body' => "Hi %s,
-
-%s has requested to join the '%s' group.
+	'groups:request:body' => "%s has requested to join the '%s' group.
 
 Click below to view their profile:
 %s

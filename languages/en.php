@@ -342,6 +342,10 @@ return array(
 	'notifications:usersettings:save:ok' => "Notification settings were successfully saved.",
 	'notifications:usersettings:save:fail' => "There was a problem saving the notification settings.",
 
+	'notification:default:salutation' => 'Dear %s,',
+	'notification:default:sign-off' => 'Regards,
+
+%s',
 	'notification:subject' => 'Notification about %s',
 	'notification:body' => 'View the new activity at %s',
 	
@@ -745,61 +749,41 @@ Having icons session bound makes icon urls not shareable between sessions. The s
 	'admin:site:secret:prevented' => "The regeneration of the site secret was prevented",
 	
 	'admin:notification:make_admin:admin:subject' => 'A new site administrator was added to %s',
-	'admin:notification:make_admin:admin:body' => 'Hi %s,
-
-%s made %s a site administrator of %s.
+	'admin:notification:make_admin:admin:body' => '%s made %s a site administrator of %s.
 
 To view the profile of the new administrator, click here:
-%s
-
-To go to the site, click here:
 %s',
 	
 	'admin:notification:make_admin:user:subject' => 'You were added as a site administator of %s',
-	'admin:notification:make_admin:user:body' => 'Hi %s,
-
-%s made you a site administrator of %s.
+	'admin:notification:make_admin:user:body' => '%s made you a site administrator of %s.
 
 To go to the site, click here:
 %s',
 	'admin:notification:remove_admin:admin:subject' => 'A site administrator was removed from %s',
-	'admin:notification:remove_admin:admin:body' => 'Hi %s,
-
-%s removed %s as a site administrator of %s.
+	'admin:notification:remove_admin:admin:body' => '%s removed %s as a site administrator of %s.
 
 To view the profile of the old administrator, click here:
-%s
-
-To go to the site, click here:
 %s',
 	
 	'admin:notification:remove_admin:user:subject' => 'You were removed as a site administator from %s',
-	'admin:notification:remove_admin:user:body' => 'Hi %s,
-
-%s removed you as site administrator of %s.
+	'admin:notification:remove_admin:user:body' => '%s removed you as site administrator of %s.
 
 To go to the site, click here:
 %s',
 	'user:notification:ban:subject' => 'Your account on %s was banned',
-	'user:notification:ban:body' => 'Hi %s,
-
-Your account on %s was banned.
+	'user:notification:ban:body' => 'Your account on %s was banned.
 
 To go to the site, click here:
 %s',
 	
 	'user:notification:unban:subject' => 'Your account on %s is no longer banned',
-	'user:notification:unban:body' => 'Hi %s,
-
-Your account on %s is no longer banned. You can use the site again.
+	'user:notification:unban:body' => 'Your account on %s is no longer banned. You can use the site again.
 
 To go to the site, click here:
 %s',
 	
 	'user:notification:password_change:subject' => 'Your password has been changed!',
-	'user:notification:password_change:body' => "Hi %s,
-
-Your password on '%s' has been changed! If you made this change than you're all set.
+	'user:notification:password_change:body' => "Your password on '%s' has been changed! If you made this change than you're all set.
 
 If you didn't make this change, please reset your password here:
 %s
@@ -808,9 +792,7 @@ Or contact a site administrator:
 %s",
 	
 	'admin:notification:unvalidated_users:subject' => "Users awaiting approval on %s",
-	'admin:notification:unvalidated_users:body' => "Hi %s,
-
-%d users of '%s' are awaiting approval by an administrator.
+	'admin:notification:unvalidated_users:body' => "%d users of '%s' are awaiting approval by an administrator.
 
 See the full list of users here:
 %s",
@@ -1249,9 +1231,7 @@ These changes will only affect new users on the site.',
  */
 
 	'useradd:subject' => 'User account created',
-	'useradd:body' => '%s,
-
-A user account has been created for you at %s. To log in, visit:
+	'useradd:body' => 'A user account has been created for you at %s. To log in, visit:
 
 %s
 
@@ -1528,19 +1508,13 @@ To view their profile, click here:
 %s",
 
 	'email:changepassword:subject' => "Password changed!",
-	'email:changepassword:body' => "Hi %s,
-
-Your password has been changed.",
+	'email:changepassword:body' => "Your password has been changed.",
 
 	'email:resetpassword:subject' => "Password reset!",
-	'email:resetpassword:body' => "Hi %s,
-
-Your password has been reset to: %s",
+	'email:resetpassword:body' => "Your password has been reset to: %s",
 
 	'email:changereq:subject' => "Request for password change.",
-	'email:changereq:body' => "Hi %s,
-
-Somebody (from the IP address %s) has requested a password change for this account.
+	'email:changereq:body' => "Somebody (from the IP address %s) has requested a password change for this account.
 
 If you requested this, click on the link below. Otherwise ignore this email.
 
@@ -1548,9 +1522,7 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	
 	'account:email:request:success' => "Your new e-mail address will be saved after confirmation, please check the inbox of '%s' for more instructions.",
 	'email:request:email:subject' => "Please confirm your e-mail address",
-	'email:request:email:body' => "Hi %s,
-
-You requested to change your e-mail address on '%s'.
+	'email:request:email:body' => "You requested to change your e-mail address on '%s'.
 If you didn't request this change, you can ignore this email.
 
 In order to confirm the e-mail address change, please click this link:
@@ -1561,18 +1533,14 @@ Please note this link is only valid for 1 hour.",
 	'account:email:request:error:no_new_email' => "No e-mail address change pending",
 	
 	'email:confirm:email:old:subject' => "You're e-mail address was changed",
-	'email:confirm:email:old:body' => "Hi %s,
-
-Your e-mail address on '%s' was changed.
+	'email:confirm:email:old:body' => "Your e-mail address on '%s' was changed.
 From now on you'll receive notifications on '%s'.
 
 If you didn't request this change, please contact a site administrator.
 %s",
 	
 	'email:confirm:email:new:subject' => "You're e-mail address was changed",
-	'email:confirm:email:new:body' => "Hi %s,
-
-Your e-mail address on '%s' was changed.
+	'email:confirm:email:new:body' => "Your e-mail address on '%s' was changed.
 From now on you'll receive notifications on this e-mail address.
 
 If you didn't request this change, please contact a site administrator.
@@ -1585,9 +1553,7 @@ If you didn't request this change, please contact a site administrator.
 	'account:validation:pending:content' => "Your account has been registered successfully! However before you can use you account a site administrator needs to validate you account. You'll receive an e-mail when you account is validated.",
 	
 	'account:notification:validation:subject' => "Your account on %s has been validated!",
-	'account:notification:validation:body' => "Hi %s,
-
-Your account on '%s' has been validated. You can now use your account.
+	'account:notification:validation:body' => "Your account on '%s' has been validated. You can now use your account.
 
 To go the the website, click here:
 %s",
@@ -1636,9 +1602,6 @@ To go the the website, click here:
 %s
 
 To reply or view the original item, click here:
-%s
-
-To view %s's profile, click here:
 %s",
 	
 	'generic_comment:notification:user:subject' => 'A new comment on: %s',
@@ -1648,9 +1611,6 @@ To view %s's profile, click here:
 %s
 
 To reply or view the original item, click here:
-%s
-
-To view %s's profile, click here:
 %s",
 
 /**

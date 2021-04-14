@@ -501,6 +501,7 @@ class NotificationsService {
 		$params['language'] = $language;
 		$params['object'] = $object;
 		$params['action'] = $event->getAction();
+		$params['add_salutation'] = elgg_extract('add_salutation', $params, true);
 
 		$notification = new Notification($actor, $recipient, $language, $subject, $body, $summary, $params);
 
@@ -515,6 +516,11 @@ class NotificationsService {
 			throw new RuntimeException("'prepare','$type' hook must return an instance of " . Notification::class);
 		}
 
+		if (elgg_extract('add_salutation', $notification->params) === true) {
+			$viewtype = elgg_view_exists('notifications/body') ? '' : 'default';
+			$notification->body = _elgg_view_under_viewtype('notifications/body', ['notification' => $notification], $viewtype);
+		}
+		
 		$notification = $this->hooks->trigger('format', "notification:$method", [], $notification);
 		if (!$notification instanceof Notification) {
 			throw new RuntimeException("'format','notification:$method' hook must return an instance of " . Notification::class);

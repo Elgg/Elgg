@@ -91,12 +91,10 @@ class ChangeAdminNotification {
 		
 		$return_value->subject = elgg_echo('admin:notification:make_admin:admin:subject', [$site->getDisplayName()], $language);
 		$return_value->body = elgg_echo('admin:notification:make_admin:admin:body', [
-			$recipient->getDisplayName(),
 			$actor->getDisplayName(),
 			$object->getDisplayName(),
 			$site->getDisplayName(),
 			$object->getURL(),
-			$site->getURL(),
 		], $language);
 	
 		$return_value->url = elgg_normalize_url('admin/users/admins');
@@ -136,12 +134,10 @@ class ChangeAdminNotification {
 		
 		$return_value->subject = elgg_echo('admin:notification:remove_admin:admin:subject', [$site->getDisplayName()], $language);
 		$return_value->body = elgg_echo('admin:notification:remove_admin:admin:body', [
-			$recipient->getDisplayName(),
 			$actor->getDisplayName(),
 			$object->getDisplayName(),
 			$site->getDisplayName(),
 			$object->getURL(),
-			$site->getURL(),
 		], $language);
 	
 		$return_value->url = elgg_normalize_url('admin/users/admins');
@@ -215,7 +211,6 @@ class ChangeAdminNotification {
 		
 		$return_value->subject = elgg_echo('admin:notification:make_admin:user:subject', [$site->getDisplayName()], $language);
 		$return_value->body = elgg_echo('admin:notification:make_admin:user:body', [
-			$recipient->getDisplayName(),
 			$actor->getDisplayName(),
 			$site->getDisplayName(),
 			$site->getURL(),
@@ -258,7 +253,6 @@ class ChangeAdminNotification {
 		
 		$return_value->subject = elgg_echo('admin:notification:remove_admin:user:subject', [$site->getDisplayName()], $language);
 		$return_value->body = elgg_echo('admin:notification:remove_admin:user:body', [
-			$recipient->getDisplayName(),
 			$actor->getDisplayName(),
 			$site->getDisplayName(),
 			$site->getURL(),

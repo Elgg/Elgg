@@ -44,7 +44,6 @@ class DeclineFriendRequestController {
 		if ($requesting_user instanceof \ElggUser) {
 			$subject = elgg_echo('friends:notification:request:decline:subject', [$receiving_user->getDisplayName()], $requesting_user->getLanguage());
 			$message = elgg_echo('friends:notification:request:decline:message', [
-				$requesting_user->getDisplayName(),
 				$receiving_user->getDisplayName(),
 			], $requesting_user->getLanguage());
 			

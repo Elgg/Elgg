@@ -175,6 +175,15 @@ the contents of the notification when a new objects of subtype 'photo' is create
 
 	Make sure the notification will be in the correct language by passing
 	the reciepient's language into the ``elgg_echo()`` function.
+	
+Notification salutation and sign-off
+====================================
+
+Elgg will by default prepend a salutation to all outgoing notification body text. Also a sign-off will be appended.
+This means you will not need to add text like ``Hi Admin,`` or ``Kind regards, your friendly site administrator`` to your notifications body.
+If for some reason you do not need this magic to happen, you can prevent it by setting the notification parameter ``add_salutation`` to ``false``.
+You can do this as part of the parameters in ``notify_user()`` or in the ``prepare, notifications`` hook. 
+You can change the salutation and sign-off texts in the translations.
 
 Registering a new notification method
 ======================================

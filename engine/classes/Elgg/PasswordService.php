@@ -86,7 +86,6 @@ final class PasswordService {
 		// generate email
 		$ip_address = _elgg_services()->request->getClientIp();
 		$message = _elgg_services()->translator->translate('email:changereq:body', [
-			$user->name,
 			$ip_address,
 			$link,
 		], $user->language);

@@ -66,7 +66,6 @@ $subject = elgg_echo('likes:notifications:subject', [
 );
 
 $body = elgg_echo('likes:notifications:body', [
-		$owner->getDisplayName(),
 		$user->getDisplayName(),
 		$title_str,
 		$site->getDisplayName(),

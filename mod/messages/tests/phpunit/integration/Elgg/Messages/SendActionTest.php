@@ -199,7 +199,7 @@ class SendActionTest extends ActionResponseTestCase {
 		$this->assertNotEmpty($plain_text_part);
 
 		$this->assertEquals($expected_subject, $notification->getSubject());
-		$this->assertEquals(preg_replace('/\\n/m', ' ', $expected_body), preg_replace('/\\n/m', ' ', $plain_text_part->getRawContent()));
+		$this->assertStringContainsString(preg_replace('/\\n/m', ' ', $expected_body), preg_replace('/\\n/m', ' ', $plain_text_part->getRawContent()));
 
 		_elgg_services()->session->removeLoggedInUser();
 	}

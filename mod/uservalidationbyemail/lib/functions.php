@@ -42,11 +42,8 @@ function uservalidationbyemail_request_validation($user_guid) {
 	);
 
 	$body = elgg_echo('email:validate:body', [
-			$user->getDisplayName(),
 			$site->getDisplayName(),
 			$link,
-			$site->getDisplayName(),
-			$site->getURL(),
 		], $user->language
 	);
 

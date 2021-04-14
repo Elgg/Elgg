@@ -48,22 +48,16 @@ After enabling friendship requests when user A wants to be friends with user B, 
 	'widgets:friends:description' => "Displays some of your friends.",
 	
 	'friends:notification:request:subject' => "%s wants to be your friend!",
-	'friends:notification:request:message' => "Hi %s,
-
-%s has requested to be your friend on %s.
+	'friends:notification:request:message' => "%s has requested to be your friend on %s.
 
 To view the friendship request, click here:
 %s",
 	
 	'friends:notification:request:decline:subject' => "%s has declined your friendship request",
-	'friends:notification:request:decline:message' => "Hi %s,
-
-%s has declined your friendship request.",
+	'friends:notification:request:decline:message' => "%s has declined your friendship request.",
 	
 	'friends:notification:request:accept:subject' => "%s has accepted your friendship request",
-	'friends:notification:request:accept:message' => "Hi %s,
-
-%s has accepted your friendship request.",
+	'friends:notification:request:accept:message' => "%s has accepted your friendship request.",
 	
 	'friends:action:friendrequest:revoke:fail' => "An error occured while revoking the friendship request, please try again",
 	'friends:action:friendrequest:revoke:success' => "The friendship request has been revoked",

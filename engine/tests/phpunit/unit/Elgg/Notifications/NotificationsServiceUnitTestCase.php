@@ -504,7 +504,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 			$call_count++;
 			$this->assertInstanceOf(Notification::class, $hook->getParam('notification'));
 			$this->assertEquals($this->translator->translate('notification:subject', [$event->getActor()->name], $recipient->language), $hook->getParam('notification')->subject);
-			$this->assertEquals($this->translator->translate('notification:body', [$event->getObject()->getURL()], $recipient->language), $hook->getParam('notification')->body);
+			$this->assertStringContainsString($this->translator->translate('notification:body', [$event->getObject()->getURL()], $recipient->language), $hook->getParam('notification')->body);
 			$this->assertEquals($event->toObject(), $hook->getParam('event')->toObject());
 
 			return true;
@@ -595,7 +595,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 				$event->getActor()->name,
 				$display_name,
 			], $recipient->language), $hook->getParam('notification')->subject);
-			$this->assertEquals($this->translator->translate("notification:{$event->getDescription()}:body", [
+			$this->assertStringContainsString($this->translator->translate("notification:{$event->getDescription()}:body", [
 				$recipient->name,
 				$event->getActor()->name,
 				$display_name,
@@ -804,7 +804,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 
 			$this->assertInstanceOf(Notification::class, $notification);
 			$this->assertEquals($notification->subject, $subject);
-			$this->assertEquals($notification->body, $body);
+			$this->assertStringContainsString($body, $notification->body);
 			$this->assertEquals($notification->summary, $subject);
 			$this->assertEquals($event->toObject(), $hook->getParam('event')->toObject());
 
@@ -894,7 +894,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 
 			$this->assertInstanceOf(Notification::class, $notification);
 			$this->assertEquals($notification->subject, $subject);
-			$this->assertEquals($notification->body, $body);
+			$this->assertStringContainsString($body, $notification->body);
 			$this->assertEquals($event->toObject(), $hook->getParam('event')->toObject());
 
 			$this->assertTrue($notification->prepare_hook);

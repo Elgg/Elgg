@@ -61,7 +61,6 @@ $subject = elgg_echo('groups:request:subject', [
 ], $owner->language);
 
 $body = elgg_echo('groups:request:body', [
-	$group->getOwnerEntity()->getDisplayName(),
 	$user->getDisplayName(),
 	$group->getDisplayName(),
 	$user->getURL(),
