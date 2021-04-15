@@ -339,10 +339,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = []) {
 	$vars['sysmessages'] = $messages;
 	$vars['page_shell'] = $page_shell;
 
-	// head has keys 'title', 'metas', 'links'
-	$head_params = _elgg_views_prepare_head($title);
-
-	$vars['head'] = elgg_trigger_plugin_hook('head', 'page', $vars, $head_params);
+	$vars['head'] = elgg_trigger_plugin_hook('head', 'page', $vars, ['metas' => [], 'links' => []]);
 
 	$vars = elgg_trigger_plugin_hook('output:before', 'page', null, $vars);
 
@@ -384,68 +381,6 @@ function elgg_view_resource($name, array $vars = []) {
 }
 
 /**
- * Prepare the variables for the html head
- *
- * @param string $title Page title for <head>
- * @return array
- * @internal
- */
-function _elgg_views_prepare_head($title) {
-	$params = [
-		'links' => [],
-		'metas' => [],
-	];
-
-	if (empty($title)) {
-		$params['title'] = _elgg_services()->config->sitename;
-	} else {
-		$params['title'] = $title . ' : ' . _elgg_services()->config->sitename;
-	}
-
-	$params['metas']['content-type'] = [
-		'http-equiv' => 'Content-Type',
-		'content' => 'text/html; charset=utf-8',
-	];
-
-	$params['metas']['description'] = [
-		'name' => 'description',
-		'content' => _elgg_services()->config->sitedescription
-	];
-
-	// https://developer.chrome.com/multidevice/android/installtohomescreen
-	$params['metas']['viewport'] = [
-		'name' => 'viewport',
-		'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0',
-	];
-	$params['metas']['mobile-web-app-capable'] = [
-		'name' => 'mobile-web-app-capable',
-		'content' => 'yes',
-	];
-	$params['metas']['apple-mobile-web-app-capable'] = [
-		'name' => 'apple-mobile-web-app-capable',
-		'content' => 'yes',
-	];
-
-	// RSS feed link
-	if (_elgg_has_rss_link()) {
-		$url = current_page_url();
-		if (elgg_substr_count($url, '?')) {
-			$url .= "&view=rss";
-		} else {
-			$url .= "?view=rss";
-		}
-		$params['links']['rss'] = [
-			'rel' => 'alternative',
-			'type' => 'application/rss+xml',
-			'title' => 'RSS',
-			'href' => $url,
-		];
-	}
-
-	return $params;
-}
-
-/**
  * Displays a layout with optional parameters.
  *
  * Layouts are templates provide consistency by organizing blocks of content on the page.
@@ -479,10 +414,6 @@ function elgg_view_layout($layout_name, $vars = []) {
 		$timer->end(['build page']);
 	}
 	$timer->begin([__FUNCTION__]);
-	
-	if ($layout_name !== 'content' && isset($vars['filter_context'])) {
-		elgg_deprecated_notice("Using 'filter_context' to set the active menu item is not supported. Please update your code to use the 'filter_value' var.", '3.3');
-	}
 	
 	// Help plugins transition without breaking them
 	switch ($layout_name) {
@@ -799,7 +730,6 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = []) {
  *                        'url_fragment'     URL fragment to add to links if not present in base_url (optional)
  *                        'position'         Position of the pagination: before, after, or both
  *                        'list_type'        List type: 'list' (default), 'gallery'
- *                        'list_type_toggle' Display the list type toggle?
  *                        'no_results'       Message to display if no results (string|true|Closure)
  *
  * @return string The rendered list of entities
@@ -816,7 +746,6 @@ function elgg_view_entity_list($entities, array $vars = []) {
 		'full_view' => true,
 		'pagination' => true,
 		'list_type' => $list_type,
-		'list_type_toggle' => false,
 		'offset' => $offset,
 		'limit' => null,
 	];

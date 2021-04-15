@@ -23,7 +23,6 @@ elgg_push_context('admin');
 $plugins_list = elgg_view_entity_list($installed_plugins, [
 	'limit' => 0,
 	'full_view' => true,
-	'list_type_toggle' => false,
 	'pagination' => false,
 	'display_reordering' => true,
 	'active_filter' => $active_filter,

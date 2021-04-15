@@ -17,7 +17,6 @@ if (elgg_get_logged_in_user_guid() == $owner->guid) {
 	$content .= elgg_view_form('thewire/add', [
 		'class' => 'thewire-form',
 	]);
-	$content .= elgg_view('input/urlshortener');
 }
 
 $content .= elgg_list_entities([

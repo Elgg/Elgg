@@ -19,8 +19,8 @@ if ($title === '' && $entity instanceof ElggEntity) {
 	]);
 }
 
-echo elgg_format_element('h3', [
+echo elgg_format_element('div', [
 	'class' => [
 		'elgg-listing-summary-title',
 	]
-], $title);
+], elgg_format_element('h3', [], $title));

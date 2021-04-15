@@ -566,7 +566,6 @@ function elgg_count_entities(array $options = []) {
  *                          - full_view => BOOL Display full view of entities (default: false)
  *                          - list_type => STR 'list', 'gallery', or 'table'
  *                          - columns => ARR instances of Elgg\Views\TableColumn if list_type is "table"
- *                          - list_type_toggle => BOOL Display gallery / list switch
  *                          - pagination => BOOL Display pagination links
  *                          - no_results => STR|true for default notfound text|Closure Message to display when there are no entities
  *
@@ -586,7 +585,6 @@ function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities', 
 		'offset' => (int) max(get_input($offset_key, 0), 0),
 		'limit' => (int) max(get_input('limit', _elgg_services()->config->default_limit), 0),
 		'full_view' => false,
-		'list_type_toggle' => false,
 		'pagination' => true,
 		'no_results' => '',
 		'preload_owners' => true,

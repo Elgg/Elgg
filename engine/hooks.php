@@ -89,6 +89,9 @@ return [
 		'page' => [
 			\Elgg\Page\AddFaviconLinksHandler::class => [],
 			\Elgg\Page\AddManifestLinkHandler::class => [],
+			\Elgg\Page\AddMetasHandler::class => ['priority' => 20],
+			\Elgg\Page\AddRssLinkHandler::class => ['priority' => 30],
+			\Elgg\Page\AddTitleHandler::class => ['priority' => 10],
 		],
 	],
 	'likes:is_likable' => [

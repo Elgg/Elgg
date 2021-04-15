@@ -10,7 +10,6 @@ if (elgg_is_logged_in()) {
 	$content .= elgg_view_form('thewire/add', [
 		'class' => 'thewire-form',
 	]);
-	$content .= elgg_view('input/urlshortener');
 }
 
 $content .= elgg_list_entities([
