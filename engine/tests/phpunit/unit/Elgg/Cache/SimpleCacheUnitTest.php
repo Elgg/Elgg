@@ -23,21 +23,21 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 
 		$url = _elgg_services()->simpleCache->getUrl($view);
 
-		$this->assertRegExp("#default/view.js#", $url);
+		$this->assertMatchesRegularExpression("#default/view.js#", $url);
 	}
 
 	public function testGetUrlHandlesTwoArguments() {
 		elgg_register_simplecache_view('js/view.js');
 		$url = _elgg_services()->simpleCache->getUrl('js', 'view.js');
 
-		$this->assertRegExp("#default/view.js$#", $url);
+		$this->assertMatchesRegularExpression("#default/view.js$#", $url);
 	}
 
 	public function testGetUrlHandlesTwoArgumentsWhereSecondArgHasRedundantPrefix() {
 		elgg_register_simplecache_view('js/view.js');
 		$url = _elgg_services()->simpleCache->getUrl('js', 'js/view.js');
 
-		$this->assertRegExp("#default/view.js$#", $url);
+		$this->assertMatchesRegularExpression("#default/view.js$#", $url);
 	}
 
 	public function testRespectsViewAliases() {

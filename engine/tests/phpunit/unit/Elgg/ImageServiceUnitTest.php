@@ -38,12 +38,12 @@ class ImageServiceUnitTest extends \Elgg\UnitTestCase {
 		if (file_exists($this->temp_source_image_location)) {
 			$this->assertTrue(unlink($this->temp_source_image_location));
 		}
-		$this->assertFileNotExists($this->temp_source_image_location);
+		$this->assertFileDoesNotExist($this->temp_source_image_location);
 
 		if (file_exists($this->temp_destination_image_location)) {
 			$this->assertTrue(unlink($this->temp_destination_image_location));
 		}
-		$this->assertFileNotExists($this->temp_destination_image_location);
+		$this->assertFileDoesNotExist($this->temp_destination_image_location);
 	}
 
 	public function testResizeFromImageExtension() {

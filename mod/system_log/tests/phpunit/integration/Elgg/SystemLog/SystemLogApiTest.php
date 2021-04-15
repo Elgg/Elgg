@@ -59,7 +59,7 @@ class SystemLogApiTest extends IntegrationTestCase {
 		$this->assertEquals($object->getSubtype(), $entry->object_subtype);
 		$this->assertEquals($event, $entry->event);
 		$this->assertEquals($object->owner_guid, $entry->owner_guid);
-		$this->assertRegExp('/\d+\.\d+\.\d+\.\d+/', $entry->ip_address);
+		$this->assertMatchesRegularExpression('/\d+\.\d+\.\d+\.\d+/', $entry->ip_address);
 		$this->assertEquals(elgg()->system_log->getCurrentTime()->getTimestamp(), $entry->time_created);
 		
 		$loaded_entry = SystemLog::instance()->get($entry->id);

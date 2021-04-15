@@ -120,7 +120,7 @@ class CronServiceUnitTest extends UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		ob_get_clean();
 
-		$this->assertRegExp('/Cron hook handler called/im', $response->getContent());
+		$this->assertMatchesRegularExpression('/Cron hook handler called/im', $response->getContent());
 
 		elgg_unregister_plugin_hook_handler('cron', 'yearly', $handler);
 	}
@@ -149,7 +149,7 @@ class CronServiceUnitTest extends UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		ob_get_clean();
 
-		$this->assertRegExp('/Cron hook handler called/im', $response->getContent());
+		$this->assertMatchesRegularExpression('/Cron hook handler called/im', $response->getContent());
 
 		elgg_unregister_plugin_hook_handler('cron', 'yearly', $handler);
 	}
