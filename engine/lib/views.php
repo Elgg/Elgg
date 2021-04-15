@@ -339,10 +339,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = []) {
 	$vars['sysmessages'] = $messages;
 	$vars['page_shell'] = $page_shell;
 
-	// head has keys 'title', 'metas', 'links'
-	$head_params = _elgg_views_prepare_head($title);
-
-	$vars['head'] = elgg_trigger_plugin_hook('head', 'page', $vars, $head_params);
+	$vars['head'] = elgg_trigger_plugin_hook('head', 'page', $vars, ['metas' => [], 'links' => []]);
 
 	$vars = elgg_trigger_plugin_hook('output:before', 'page', null, $vars);
 
@@ -381,68 +378,6 @@ function elgg_view_resource($name, array $vars = []) {
 
 	// only works for default viewtype
 	throw new PageNotFoundException();
-}
-
-/**
- * Prepare the variables for the html head
- *
- * @param string $title Page title for <head>
- * @return array
- * @internal
- */
-function _elgg_views_prepare_head($title) {
-	$params = [
-		'links' => [],
-		'metas' => [],
-	];
-
-	if (empty($title)) {
-		$params['title'] = _elgg_services()->config->sitename;
-	} else {
-		$params['title'] = $title . ' : ' . _elgg_services()->config->sitename;
-	}
-
-	$params['metas']['content-type'] = [
-		'http-equiv' => 'Content-Type',
-		'content' => 'text/html; charset=utf-8',
-	];
-
-	$params['metas']['description'] = [
-		'name' => 'description',
-		'content' => _elgg_services()->config->sitedescription
-	];
-
-	// https://developer.chrome.com/multidevice/android/installtohomescreen
-	$params['metas']['viewport'] = [
-		'name' => 'viewport',
-		'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0',
-	];
-	$params['metas']['mobile-web-app-capable'] = [
-		'name' => 'mobile-web-app-capable',
-		'content' => 'yes',
-	];
-	$params['metas']['apple-mobile-web-app-capable'] = [
-		'name' => 'apple-mobile-web-app-capable',
-		'content' => 'yes',
-	];
-
-	// RSS feed link
-	if (_elgg_has_rss_link()) {
-		$url = current_page_url();
-		if (elgg_substr_count($url, '?')) {
-			$url .= "&view=rss";
-		} else {
-			$url .= "?view=rss";
-		}
-		$params['links']['rss'] = [
-			'rel' => 'alternative',
-			'type' => 'application/rss+xml',
-			'title' => 'RSS',
-			'href' => $url,
-		];
-	}
-
-	return $params;
 }
 
 /**
