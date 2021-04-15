@@ -493,65 +493,6 @@ class Database {
 	}
 
 	/**
-	 * Runs a full database script from disk.
-	 *
-	 * The file specified should be a standard SQL file as created by
-	 * mysqldump or similar.  Statements must be terminated with ;
-	 * and a newline character (\n or \r\n).
-	 *
-	 * The special string 'prefix_' is replaced with the database prefix
-	 * as defined in {@link $this->tablePrefix}.
-	 *
-	 * @warning Only single line comments are supported. A comment
-	 * must start with '-- ' or '# ', where the comment sign is at the
-	 * very beginning of each line.
-	 *
-	 * @warning Errors do not halt execution of the script.  If a line
-	 * generates an error, the error message is saved and the
-	 * next line is executed.  After the file is run, any errors
-	 * are displayed as a {@link DatabaseException}
-	 *
-	 * @param string $scriptlocation The full path to the script
-	 *
-	 * @return void
-	 * @throws DatabaseException
-	 */
-	public function runSqlScript($scriptlocation) {
-		$script = file_get_contents($scriptlocation);
-		if ($script) {
-			$errors = [];
-
-			// Remove MySQL '-- ' and '# ' style comments
-			$script = preg_replace('/^(?:--|#) .*$/m', '', $script);
-
-			// Statements must end with ; and a newline
-			$sql_statements = preg_split('/;[\n\r]+/', "$script\n");
-
-			foreach ($sql_statements as $statement) {
-				$statement = trim($statement);
-				$statement = str_replace("prefix_", $this->table_prefix, $statement);
-				if (!empty($statement)) {
-					try {
-						$this->updateData($statement);
-					} catch (DatabaseException $e) {
-						$errors[] = $e->getMessage();
-					}
-				}
-			}
-			if (!empty($errors)) {
-				$errortxt = "";
-				foreach ($errors as $error) {
-					$errortxt .= " {$error};";
-				}
-
-				throw new DatabaseException("There were a number of issues: " . $errortxt);
-			}
-		} else {
-			throw new DatabaseException("Elgg couldn't find the requested database script at " . $scriptlocation . ".");
-		}
-	}
-
-	/**
 	 * Queue a query for execution upon shutdown.
 	 *
 	 * You can specify a callback if you care about the result. This function will always
