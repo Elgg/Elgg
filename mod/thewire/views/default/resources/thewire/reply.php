@@ -18,7 +18,6 @@ $content .= elgg_view_form('thewire/add', [
 ], [
 	'post' => $post,
 ]);
-$content .= elgg_view('input/urlshortener');
 
 echo elgg_view_page(elgg_echo('reply'), [
 	'content' => $content,
