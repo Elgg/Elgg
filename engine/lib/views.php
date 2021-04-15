@@ -730,7 +730,6 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = []) {
  *                        'url_fragment'     URL fragment to add to links if not present in base_url (optional)
  *                        'position'         Position of the pagination: before, after, or both
  *                        'list_type'        List type: 'list' (default), 'gallery'
- *                        'list_type_toggle' Display the list type toggle?
  *                        'no_results'       Message to display if no results (string|true|Closure)
  *
  * @return string The rendered list of entities
@@ -747,7 +746,6 @@ function elgg_view_entity_list($entities, array $vars = []) {
 		'full_view' => true,
 		'pagination' => true,
 		'list_type' => $list_type,
-		'list_type_toggle' => false,
 		'offset' => $offset,
 		'limit' => null,
 	];

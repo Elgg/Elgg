@@ -9,7 +9,6 @@
 $list_params = [
 	'type' => 'object',
 	'limit' => 4,
-	'list_type_toggle' => false,
 	'pagination' => false,
 	'no_results' => true,
 ];
