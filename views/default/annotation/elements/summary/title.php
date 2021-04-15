@@ -18,7 +18,7 @@ if ($title === '' && $annotation instanceof ElggAnnotation) {
 		return;
 	}
 	
-	$title = elgg_format_element('h3', [], elgg_view_entity_url($owner));
+	$title = elgg_view_entity_url($owner);
 }
 
 if (elgg_is_empty($title)) {
