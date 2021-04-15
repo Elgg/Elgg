@@ -480,10 +480,6 @@ function elgg_view_layout($layout_name, $vars = []) {
 	}
 	$timer->begin([__FUNCTION__]);
 	
-	if ($layout_name !== 'content' && isset($vars['filter_context'])) {
-		elgg_deprecated_notice("Using 'filter_context' to set the active menu item is not supported. Please update your code to use the 'filter_value' var.", '3.3');
-	}
-	
 	// Help plugins transition without breaking them
 	switch ($layout_name) {
 		case 'default' :
