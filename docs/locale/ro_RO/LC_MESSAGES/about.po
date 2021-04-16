@@ -3,29 +3,30 @@
 # This file is distributed under the same license as the Elgg package.
 # 
 # Translators:
+# Stelian Cioarec <garmadonlloyd73@gmail.com>, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg Core 2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-18 09:45+0100\n"
-"PO-Revision-Date: 2017-09-23 21:30+0000\n"
-"Last-Translator: iionly_de <iionly@gmx.de>\n"
-"Language-Team: German (http://www.transifex.com/elgg/elgg-core-2/language/de/)\n"
+"PO-Revision-Date: 2021-04-15 16:13+0000\n"
+"Last-Translator: Stelian Cioarec <garmadonlloyd73@gmail.com>\n"
+"Language-Team: Romanian (Romania) (http://www.transifex.com/elgg/elgg-core-2/language/ro_RO/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: ro_RO\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
 
 #: ../../about/contributing.rst:4
 msgid "Contributor Guide"
-msgstr "Leitfaden für Mitwirkende"
+msgstr "Ghidul Contribuitorului"
 
 #: ../../about/contributing.rst:6 ../../about/history.rst:6
 #: ../../about/index.rst:6 ../../about/releases.rst:6
 #: ../../about/roadmap.rst:6
 msgid "This page has moved."
-msgstr "Diese Seite wurde verschoben."
+msgstr "Pagina a fost mutată."
 
 #: ../../about/contributing.rst:8
 msgid ":doc:`/contribute/index`"
@@ -33,7 +34,7 @@ msgstr ":doc:`/contribute/index`"
 
 #: ../../about/history.rst:4
 msgid "History"
-msgstr "Entwicklungsgeschichte"
+msgstr "Istoric"
 
 #: ../../about/history.rst:8
 msgid ":doc:`/appendix/history`"
@@ -41,7 +42,7 @@ msgstr ":doc:`/appendix/history`"
 
 #: ../../about/index.rst:4
 msgid "About"
-msgstr "Über Elgg"
+msgstr "Despre"
 
 #: ../../about/index.rst:8
 msgid ":doc:`/appendix/index`"
@@ -49,7 +50,7 @@ msgstr ":doc:`/appendix/index`"
 
 #: ../../about/releases.rst:4
 msgid "Release Policy"
-msgstr "Veröffentlichungsrichtlinien"
+msgstr "Politica"
 
 #: ../../about/releases.rst:8
 msgid ":doc:`/appendix/releases`"
@@ -57,7 +58,7 @@ msgstr ":doc:`/appendix/releases`"
 
 #: ../../about/roadmap.rst:4
 msgid "Roadmap"
-msgstr "Roadmap"
+msgstr "Foaie de parcurs"
 
 #: ../../about/roadmap.rst:8
 msgid ":doc:`/appendix/roadmap`"
