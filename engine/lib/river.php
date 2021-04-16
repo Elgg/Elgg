@@ -133,8 +133,9 @@ function elgg_create_river_item(array $options = []) {
  *   posted_time_lower    => INT     The lower bound on the time posted
  *   posted_time_upper    => INT     The upper bound on the time posted
  *
- *   Additionally accepts all "annotation_*" options supported by {@link elgg_get_entities()}
  *   annotation_ids       => INT|ARR The identifier of the annotation(s)
+ *
+ *   Additionally accepts all "annotation_*" options supported by {@link elgg_get_entities()} but not annotation_ids as that applies to the river table
  *
  *   types                => STR|ARR Entity type string(s)
  *   subtypes             => STR|ARR Entity subtype string(s)

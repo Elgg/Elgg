@@ -387,7 +387,7 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($expected, $service->parseContext());
 	}
 
-	function requestContextDataProvider() {
+	public function requestContextDataProvider() {
 		return [
 			['ajax/view/foo/bar/', 'view:foo/bar'],
 			['ajax/form/foo/bar/baz/', 'form:foo/bar/baz'],
@@ -400,4 +400,32 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		];
 	}
 
+	/**
+	 * @dataProvider stringifyProvider
+	 */
+	public function testStringify($input, $expected_output) {
+		$this->createService();
+		
+		$this->assertEquals($expected_output, $this->response_factory->stringify($input));
+	}
+	
+	public function stringifyProvider() {
+		$std = new \stdClass();
+		$std->foo = 'bar';
+		
+		return [
+			['foo', 'foo'],
+			[['foo'], '["foo"]'],
+			['', ''],
+			[[], ''],
+			[false, ''],
+			[true, '1'],
+			[0, '0'],
+			[0.0, '0'],
+			[0.1, '0.1'],
+			[null, ''],
+			[new \stdClass(), '{}'],
+			[$std, '{"foo":"bar"}'],
+		];
+	}
 }
