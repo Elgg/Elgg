@@ -94,6 +94,6 @@ Seall an còmhradh is thoir freagairt dha:
 	'discussion:topic:edit' => 'Deasaich an cuspair',
 	'discussion:topic:description' => 'Teachdaireachd a\' chuspair',
 
-	'discussion:reply:edited' => "Tha thu air post an fhòraim a dheasachadh.",
+	'discussion:reply:edited' => "Tha thu air post a' chòmhraidh a dheasachadh.",
 	'discussion:reply:error' => "Bha duilgheadas ann le deasachadh post an fhòraim.",
 );
