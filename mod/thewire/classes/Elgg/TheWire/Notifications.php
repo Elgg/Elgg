@@ -41,7 +41,7 @@ class Notifications {
 		$notification = $hook->getValue();
 		$notification->subject = $subject;
 		$notification->body = $body;
-		$notification->summary = elgg_echo('thewire:notify:summary', [$descr], $language);
+		$notification->summary = elgg_echo('thewire:notify:summary', [elgg_get_excerpt($descr)], $language);
 		$notification->url = $entity->getURL();
 		
 		return $notification;

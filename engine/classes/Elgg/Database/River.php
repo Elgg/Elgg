@@ -53,6 +53,11 @@ class River extends Repository {
 		];
 
 		$options = array_merge($defaults, $options);
+		
+		// prevent conflicts with annotation ids for annotation where clause
+		$options['river_annotation_ids'] = elgg_extract('river_annotation_ids', $options, $options['annotation_ids']);
+		unset($options['annotation_ids']);
+		
 		parent::__construct($options);
 	}
 
@@ -258,6 +263,7 @@ class River extends Repository {
 		$where->target_guids = $this->options->target_guids;
 		$where->created_after = $this->options->created_after;
 		$where->created_before = $this->options->created_before;
+		$where->annotation_ids = $this->options->river_annotation_ids;
 
 		return $where->prepare($qb, 'rv');
 	}

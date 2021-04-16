@@ -186,7 +186,7 @@ class ElggHtmLawedTest extends IntegrationTestCase {
 			
 			// 'deny_attribute' => 'class, on*',
 			['<div class="elgg-inner">Test</div>', '<div>Test</div>'],
-			['<button onclick="javascript:alert(\'test\')">Test</button>', '<button>Test</button>'],
+			['<a onclick="javascript:alert(\'test\')">Test</a>', '<a>Test</a>'],
 			
 			// naked span stripping
 			// https://github.com/vanilla/htmlawed/commit/995ef0ae4865d817a391ac62978f9d0e41d8a18b
@@ -200,6 +200,11 @@ class ElggHtmLawedTest extends IntegrationTestCase {
 			['<iframe></iframe>Test', 'Test'],
 			['<object>Test</object>', 'Test'],
 			['<script>Test</script>', 'Test'],
+			
+			// some of the prevented 'elements'
+			['<button>Test</button>', 'Test',],
+			['<form>Test</form>', 'Test'],
+			['<textarea>Test</textarea>', 'Test'],
 		];
 		
 		return $tests;

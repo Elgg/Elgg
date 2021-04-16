@@ -1,3 +1,19 @@
+<a name="3.3.17"></a>
+### 3.3.17  (2021-04-16)
+
+#### Contributors
+
+* Jeroen Dalsem (2)
+* Jerôme Bakker (2)
+* Nikolai Shcherbin (1)
+
+#### Bug Fixes
+
+* **groups:** don't show 'Invite friends' menu item on the group's members page when 'Friends' plugin is deactivated ([5d2f8a32](https://github.com/Elgg/Elgg/commit/5d2f8a320f6d1a078bcb6f9648ba158358a302b0))
+* **river:** river options annotation_ids now work as expected ([e1d61594](https://github.com/Elgg/Elgg/commit/e1d61594d278befae6d1edc300c33f13ccd6c40f))
+* **thewire:** do not put unlimited description in notification summary ([657be642](https://github.com/Elgg/Elgg/commit/657be6420180d5638d219cbac5f621df4d1ff18e))
+
+
 <a name="3.3.16"></a>
 ### 3.3.16  (2021-02-12)
 
@@ -2025,6 +2041,14 @@ keyword `all` no longer has any effect on calling order. ([1b0cc64d](https://git
 var `$DEFAULT_FILE_STORE`.
  ([618c79d3](https://github.com/Elgg/Elgg/commit/618c79d301eda1b265441b14f3bfbda2235ee3fd))
 * The `resources/file/download` view is no longer used. ([1e736aeb](https://github.com/Elgg/Elgg/commit/1e736aebb953051ec1b8a2c165ab3c9595e72b40))
+
+
+<a name="2.3.17"></a>
+### 2.3.17  (2021-04-16)
+
+#### Contributors
+
+* Jerôme Bakker (2)
 
 
 <a name="2.3.16"></a>
