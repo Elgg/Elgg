@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec2f2f75e2b457b847d3a49dc896de49",
+    "content-hash": "9572b1582d1871a79947d3f3a02f10e5",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
             "version": "5.12.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/FortAwesome/Font-Awesome.git",
+                "url": "git@github.com:FortAwesome/Font-Awesome.git",
                 "reference": "d8db3d032d22e7a5e21f3b40905b7867be19bb02"
             },
             "dist": {
@@ -26,7 +26,7 @@
             "version": "2.2.4",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jquery/jquery-dist.git",
+                "url": "https://github.com/jquery/jquery-dist.git",
                 "reference": "c0185ab7c75aab88762c5aae780b9d83b80eda72"
             },
             "dist": {
@@ -198,7 +198,7 @@
             "version": "8.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/necolas/normalize.css.git",
+                "url": "git@github.com:necolas/normalize.css.git",
                 "reference": "fc091cce1534909334c1911709a39c22d406977b"
             },
             "dist": {
