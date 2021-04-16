@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "42a5571fbc99b4dbf9a3f3da3c1007dd",
+    "content-hash": "040daf20647188f94eeb1149d47bdfae",
     "packages": [
         {
             "name": "bower-asset/jquery",
@@ -2148,6 +2148,7 @@
                 "faker",
                 "fixtures"
             ],
+            "abandoned": true,
             "time": "2016-04-29T12:21:54+00:00"
         },
         {
@@ -2503,6 +2504,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2016-11-15T14:06:22+00:00"
         },
         {
