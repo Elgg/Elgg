@@ -46,7 +46,7 @@ class DatabaseSeedCommandTest extends UnitTestCase {
 		]);
 
 		$seeder = preg_quote(CliSeeder::class);
-		$this->assertRegExp("/{$seeder}::seed/im", $commandTester->getDisplay());
+		$this->assertMatchesRegularExpression("/{$seeder}::seed/im", $commandTester->getDisplay());
 
 		$hook->unregister();
 	}
@@ -68,7 +68,7 @@ class DatabaseSeedCommandTest extends UnitTestCase {
 		]);
 
 		$seeder = preg_quote(CliSeeder::class);
-		$this->assertRegExp("/{$seeder}::unseed/im", $commandTester->getDisplay());
+		$this->assertMatchesRegularExpression("/{$seeder}::unseed/im", $commandTester->getDisplay());
 
 		$hook->unregister();
 	}

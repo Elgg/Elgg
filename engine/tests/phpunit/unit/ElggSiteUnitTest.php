@@ -55,7 +55,7 @@ class ElggSiteUnitTest extends \Elgg\UnitTestCase {
 	public function testNoreplyEmailAddressBasedOnUrl() {
 		$site = new \ElggSite();
 		$domain = $site->getDomain();
-		$this->assertRegExp("/noreply[\w-]+@{$domain}/", $site->getEmailAddress());
+		$this->assertMatchesRegularExpression("/noreply[\w-]+@{$domain}/", $site->getEmailAddress());
 	}
 	
 	public function testGetEmailAddress() {

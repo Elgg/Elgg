@@ -31,7 +31,7 @@ class MultibyteTest extends IntegrationTestCase {
 
 		$object = get_entity($object->guid);
 
-		$this->assertRegExp('/\\x{1f600}/u', $object->title);
+		$this->assertMatchesRegularExpression('/\\x{1f600}/u', $object->title);
 		$this->assertEquals($title, $object->title);
 	}
 
@@ -58,7 +58,7 @@ class MultibyteTest extends IntegrationTestCase {
 
 		$object = array_shift($entities);
 
-		$this->assertRegExp('/\\x{1f600}/u', $object->title);
+		$this->assertMatchesRegularExpression('/\\x{1f600}/u', $object->title);
 		$this->assertEquals($title, $object->title);
 	}
 
@@ -98,6 +98,6 @@ class MultibyteTest extends IntegrationTestCase {
 
 		$grinning_face = array_shift($entities);
 
-		$this->assertRegExp('/\\x{1f600}/u', $grinning_face->title);
+		$this->assertMatchesRegularExpression('/\\x{1f600}/u', $grinning_face->title);
 	}
 }

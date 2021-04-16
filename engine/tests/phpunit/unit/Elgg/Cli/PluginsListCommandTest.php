@@ -66,9 +66,9 @@ class PluginsListCommandTest extends UnitTestCase {
 			'command' => $command->getName(),
 		]);
 
-		$this->assertRegExp('/test_plugin/im', $commandTester->getDisplay());
-		$this->assertRegExp('/1.9/im', $commandTester->getDisplay());
-		$this->assertRegExp('/active/im', $commandTester->getDisplay());
+		$this->assertMatchesRegularExpression('/test_plugin/im', $commandTester->getDisplay());
+		$this->assertMatchesRegularExpression('/1.9/im', $commandTester->getDisplay());
+		$this->assertMatchesRegularExpression('/active/im', $commandTester->getDisplay());
 	}
 
 	public function testRefreshOption() {
@@ -83,7 +83,7 @@ class PluginsListCommandTest extends UnitTestCase {
 			'command' => $command->getName(),
 		]);
 
-		$this->assertNotRegExp('/test_plugin/im', $commandTester->getDisplay());
+		$this->assertDoesNotMatchRegularExpression('/test_plugin/im', $commandTester->getDisplay());
 
 		$commandTester = new CommandTester($command);
 		$commandTester->execute([
@@ -91,7 +91,7 @@ class PluginsListCommandTest extends UnitTestCase {
 			'--refresh' => true,
 		]);
 
-		$this->assertRegExp('/test_plugin/im', $commandTester->getDisplay());
+		$this->assertMatchesRegularExpression('/test_plugin/im', $commandTester->getDisplay());
 	}
 
 }

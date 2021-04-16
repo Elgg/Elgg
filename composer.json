@@ -43,7 +43,7 @@
         "npm-asset/sprintf-js": "~1.0.3",
         "npm-asset/yaireo--tagify": "~4.0.3",
         "pelago/emogrifier": "^5.0.0",
-        "peppeocchi/php-cron-scheduler": "2.*",
+        "peppeocchi/php-cron-scheduler": "~3.1",
         "php-di/php-di": "~6.3.0",
         "react/promise": "^2.5",
         "roave/security-advisories": "dev-master",
@@ -93,8 +93,7 @@
     },
     "require-dev": {
     	"elgg/sniffs": "4.x-dev",
-        "phpdocumentor/reflection-docblock": "~2.0",
-        "phpunit/phpunit": "~8.5"
+    	"phpunit/phpunit": "~9.5"
     },
     "repositories": [
         {

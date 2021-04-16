@@ -54,7 +54,7 @@ class ElggCoreFilestoreTest extends IntegrationTestCase {
 		// ensure file removed on user delete
 		// deleting the user should remove all users files
 		$this->assertTrue($user->delete());
-		$this->assertFileNotExists($filepath);
+		$this->assertFileDoesNotExist($filepath);
 	}
 
 	function testElggFileDelete() {
@@ -75,6 +75,6 @@ class ElggCoreFilestoreTest extends IntegrationTestCase {
 		$this->assertFileExists($filepath);
 
 		$this->assertTrue($file->delete());
-		$this->assertFileNotExists($filepath);
+		$this->assertFileDoesNotExist($filepath);
 	}
 }

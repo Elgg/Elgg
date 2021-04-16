@@ -1,16 +1,39 @@
-<phpunit bootstrap="./engine/tests/phpunit/bootstrap.php"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
->
-
-    <php>
-        <!-- You can specify your own settings.php path -->
-        <!-- <env name="ELGG_SETTINGS_FILE" value="path/to/settings.php"/> -->
-
-        <!-- or configure individual settings via env-->
-        <!--
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="./engine/tests/phpunit/bootstrap.php" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage includeUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">./actions</directory>
+      <directory suffix=".php">./engine/classes</directory>
+      <directory suffix=".php">./engine/lib</directory>
+      <directory suffix=".php">./mod/*/actions</directory>
+      <directory suffix=".php">./mod/*/lib</directory>
+      <directory suffix=".php">./mod/*/classes</directory>
+      <directory suffix="start.php">./mod/*</directory>
+    </include>
+    <exclude>
+      <directory suffix=".php">./elgg-config</directory>
+      <directory suffix=".php">./install</directory>
+      <directory suffix=".php">*/vendor/*</directory>
+      <directory suffix=".php">*/vendors/*</directory>
+      <directory suffix=".php">*/tests/*</directory>
+      <directory suffix=".php">*/bower_components/*</directory>
+      <directory suffix=".php">*/node_modules/*</directory>
+      <directory suffix=".php">*/docs/*</directory>
+      <directory suffix=".php">*/engine/schema/*</directory>
+      <directory suffix=".php">*/engine/lib/upgrades/*</directory>
+      <directory suffix=".php">./languages</directory>
+      <directory suffix=".php">./views</directory>
+      <directory suffix=".php">./mod/*/languages</directory>
+      <directory suffix=".php">./mod/*/views</directory>
+      <file>./engine/lib/deprecated-*.php</file>
+      <file>./engine/lib/constants.php</file>
+    </exclude>
+  </coverage>
+  <php>
+    <!-- You can specify your own settings.php path -->
+    <!-- <env name="ELGG_SETTINGS_FILE" value="path/to/settings.php"/> -->
+    <!-- or configure individual settings via env-->
+    <!--
         <env name="ELGG_DB_HOST" value="localhost"/>
         <env name="ELGG_DB_NAME" value=""/>
         <env name="ELGG_DB_USER" value=""/>
@@ -33,57 +56,22 @@
         
         <env name="ELGG_SEEDER_LOCAL_IMAGE_FOLDER" value=""/>
         -->
-
-        <ini name="memory_limit" value="-1"/>
-        <ini name="max_execution_time" value="0"/>
-        <ini name="max_input_time" value="0"/>
-    </php>
-
-    <testsuites>
-        <testsuite name="unit">
-            <directory>./engine/tests/phpunit/unit/</directory>
-        </testsuite>
-        <testsuite name="integration">
-            <directory>./engine/tests/phpunit/integration/</directory>
-        </testsuite>
-        <testsuite name="plugins-unit">
-            <directory>./mod/*/tests/phpunit/unit/</directory>
-        </testsuite>
-        <testsuite name="plugins-integration">
-            <directory>./mod/*/tests/phpunit/integration/</directory>
-        </testsuite>
-    </testsuites>
-
-    <filter>
-		<!-- Do not use processUncoveredFilesFromWhitelist="true" because action and view files can not be processed -->
-        <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./actions</directory>
-            <directory suffix=".php">./engine/classes</directory>
-            <directory suffix=".php">./engine/lib</directory>
-            <directory suffix=".php">./mod/*/actions</directory>
-            <directory suffix=".php">./mod/*/lib</directory>
-            <directory suffix=".php">./mod/*/classes</directory>
-            <directory suffix="start.php">./mod/*</directory>
-
-            <exclude>
-                <directory suffix=".php">./elgg-config</directory>
-                <directory suffix=".php">./install</directory>
-                <directory suffix=".php">*/vendor/*</directory>
-                <directory suffix=".php">*/vendors/*</directory>
-                <directory suffix=".php">*/tests/*</directory>
-                <directory suffix=".php">*/bower_components/*</directory>
-                <directory suffix=".php">*/node_modules/*</directory>
-                <directory suffix=".php">*/docs/*</directory>
-                <directory suffix=".php">*/engine/schema/*</directory>
-                <directory suffix=".php">*/engine/lib/upgrades/*</directory>
-                <directory suffix=".php">./languages</directory>
-                <directory suffix=".php">./views</directory>
-                <directory suffix=".php">./mod/*/languages</directory>
-                <directory suffix=".php">./mod/*/views</directory>
-                <file>./engine/lib/deprecated-*.php</file>
-                <file>./engine/lib/constants.php</file>
-            </exclude>
-        </whitelist>
-    </filter>
-
+    <ini name="memory_limit" value="-1"/>
+    <ini name="max_execution_time" value="0"/>
+    <ini name="max_input_time" value="0"/>
+  </php>
+  <testsuites>
+    <testsuite name="unit">
+      <directory>./engine/tests/phpunit/unit/</directory>
+    </testsuite>
+    <testsuite name="integration">
+      <directory>./engine/tests/phpunit/integration/</directory>
+    </testsuite>
+    <testsuite name="plugins-unit">
+      <directory>./mod/*/tests/phpunit/unit/</directory>
+    </testsuite>
+    <testsuite name="plugins-integration">
+      <directory>./mod/*/tests/phpunit/integration/</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>

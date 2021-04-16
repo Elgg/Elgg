@@ -420,7 +420,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_NOT_FOUND, $response->getStatusCode());
 		$this->assertEquals($output, $response->getContent());
-		$this->assertRegExp('/I am not here/im', $output);
+		$this->assertMatchesRegularExpression('/I am not here/im', $output);
 	}
 
 	function testHandlesRequestToRegisteredRouteThatThrowsWithRedirect() {

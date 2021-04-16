@@ -6,6 +6,7 @@ use Elgg\Config;
 use Elgg\Database\SiteSecret;
 use phpDocumentor\Reflection\DocBlock;
 use Laminas\Mail\Transport\InMemory;
+use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
  * @group Application
@@ -110,13 +111,14 @@ class ServiceProviderUnitTest extends \Elgg\UnitTestCase {
 
 	public static function servicesListProvider() {
 		$class = new \ReflectionClass(ServiceProvider::class);
-		$phpdoc = new DocBlock($class);
+		$factory  = \phpDocumentor\Reflection\DocBlockFactory::createInstance();
+		$phpdoc = $factory->create($class);
+		
 		$readonly_props = $phpdoc->getTagsByName('property-read');
 		$sets = [];
-		
-		/* @var \phpDocumentor\Reflection\DocBlock\Tag\PropertyReadTag[] $readonly_props */
+		/* @var Tag[] $readonly_props */
 		foreach ($readonly_props as $prop) {
-			$name = substr($prop->getVariableName(), 1);
+			$name = $prop->getVariableName();
 			$type = $prop->getType();
 
 			// stuff set in PHPUnit bootstrap

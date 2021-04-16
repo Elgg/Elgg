@@ -29,7 +29,7 @@ class CacheInvalidateCommandTest extends IntegrationTestCase {
 		$commandTester = new CommandTester($command);
 		$commandTester->execute(['command' => $command->getName()]);
 
-		$this->assertRegExp('/' . elgg_echo('admin:cache:invalidated') . '/im', $commandTester->getDisplay());
+		$this->assertMatchesRegularExpression('/' . elgg_echo('admin:cache:invalidated') . '/im', $commandTester->getDisplay());
 	}
 
 	public function testExecuteWithQuietOutput() {
