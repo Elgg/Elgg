@@ -20,6 +20,7 @@ $fields = [
 		'values' => $recipients,
 		'limit' => 1,
 		'required' => true,
+		'only_friends' => (bool) elgg_get_plugin_setting('friends_only', 'messages'),
 	],
 	[
 		'#type' => 'text',
