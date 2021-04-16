@@ -19,6 +19,7 @@
 	
 	> .elgg-body {
 		flex: 1;
+		min-width: 1%;
 	}
 	
 	> .elgg-sidebar {
