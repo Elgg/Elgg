@@ -9,7 +9,6 @@ return [
 		'name' => 'Bookmarks',
 		'activate_on_install' => true,
 	],
-	'bootstrap' => \Elgg\Bookmarks\Bootstrap::class,
 	'entities' => [
 		[
 			'type' => 'object',
@@ -125,6 +124,13 @@ return [
 	'view_extensions' => [
 		'elgg.js' => [
 			'bookmarks.js' => [],
+		],
+	],
+	'notifications' => [
+		'object' => [
+			'bookmarks' => [
+				'create' => true,
+			],
 		],
 	],
 ];

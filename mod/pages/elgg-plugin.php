@@ -150,4 +150,11 @@ return [
 	'group_tools' => [
 		'pages' => [],
 	],
+	'notifications' => [
+		'object' => [
+			'page' => [
+				'create' => true,
+			],
+		],
+	],
 ];

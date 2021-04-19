@@ -30,6 +30,7 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
  * ``theme`` - an array of theme variables
  * ``group_tools`` - an array of available group tool options
  * ``view_options`` - an array of views with extra options
+ * ``notifications`` - an array of notification events
 
 
 .. code-block:: php
@@ -210,6 +211,16 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 			],
 			'manifest.json' => [
 				'simplecache' => true, // register view as usable in the simplecache
+			],
+		],
+		'notifications' => [
+			'object' => [
+				'blog' => [
+					'publish' => true, // registers the event to be notified
+				],
+				'thewire' => [
+					'create' => false, // unregisters the event to be notified
+				],
 			],
 		],
 	];

@@ -9,7 +9,6 @@ return [
 		'name' => 'Discussions',
 		'activate_on_install' => true,
 	],
-	'bootstrap' => \Elgg\Discussions\Bootstrap::class,
 	'entities' => [
 		[
 			'type' => 'object',
@@ -122,5 +121,12 @@ return [
 	],
 	'group_tools' => [
 		'forum' => [],
+	],
+	'notifications' => [
+		'object' => [
+			'discussion' => [
+				'create' => true,
+			],
+		],
 	],
 ];

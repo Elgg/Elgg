@@ -9,7 +9,6 @@ return [
 		'name' => 'Blog',
 		'activate_on_install' => true,
 	],
-	'bootstrap' => \Elgg\Blog\Bootstrap::class,
 	'entities' => [
 		[
 			'type' => 'object',
@@ -140,5 +139,12 @@ return [
 	],
 	'group_tools' => [
 		'blog' => [],
+	],
+	'notifications' => [
+		'object' => [
+			'blog' => [
+				'publish' => true,
+			],
+		],
 	],
 ];

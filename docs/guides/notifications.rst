@@ -73,7 +73,7 @@ such an event might remarkably slow down page loading speed. This is why sending
 of such notifications shoud be left for Elgg's notification queue.
 
 New notification events can be registered with the `elgg_register_notification_event()`__
-function. Notifications about registered events will be sent automatically to all
+function or in the :doc:`elgg-plugin </guides/plugins>` configuration. Notifications about registered events will be sent automatically to all
 subscribed users.
 
 This is the workflow of the notifications system:

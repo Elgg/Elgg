@@ -144,4 +144,11 @@ return [
 			'file/theme_sandbox/icons/files' => [],
 		],
 	],
+	'notifications' => [
+		'object' => [
+			'file' => [
+				'create' => true,
+			],
+		],
+	],
 ];
