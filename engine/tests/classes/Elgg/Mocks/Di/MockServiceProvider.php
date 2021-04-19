@@ -135,7 +135,7 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 		$this->setFactory('notifications', function(MockServiceProvider $c) {
 			$queue = new \Elgg\Queue\MemoryQueue();
 			
-			return new \Elgg\Notifications\NotificationsService($c->subscriptions, $queue, $c->hooks, $c->session, $c->translator, $c->entityTable, $c->logger);
+			return new \Elgg\Notifications\NotificationsService($queue, $c->hooks, $c->session);
 		});
 
 		$this->setFactory('mutex', function(MockServiceProvider $sp) {

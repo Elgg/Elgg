@@ -2,18 +2,12 @@
 
 namespace Elgg\Notifications;
 
-use Elgg\Database\EntityTable;
-use Elgg\I18n\Translator;
-use Elgg\Loggable;
 use Elgg\PluginHooksService;
 use Elgg\Queue\Queue;
 use ElggData;
 use ElggEntity;
 use ElggSession;
 use ElggUser;
-use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
-use RuntimeException;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -24,12 +18,7 @@ use RuntimeException;
  */
 class NotificationsService {
 
-	use Loggable;
-
 	const QUEUE_NAME = 'notifications';
-
-	/** @var SubscriptionsService */
-	protected $subscriptions;
 
 	/** @var Queue */
 	protected $queue;
@@ -39,12 +28,6 @@ class NotificationsService {
 
 	/** @var ElggSession */
 	protected $session;
-
-	/** @var Translator */
-	protected $translator;
-
-	/** @var EntityTable */
-	protected $entities;
 	
 	/** @var array Registered notification events */
 	protected $events = [];
@@ -55,31 +38,19 @@ class NotificationsService {
 	/**
 	 * Constructor
 	 *
-	 * @param SubscriptionsService $subscriptions Subscription service
-	 * @param Queue                $queue         Queue
-	 * @param PluginHooksService   $hooks         Plugin hook service
-	 * @param ElggSession          $session       Session service
-	 * @param Translator           $translator    Translator
-	 * @param EntityTable          $entities      Entity table
-	 * @param LoggerInterface      $logger        Logger
+	 * @param Queue              $queue   Queue
+	 * @param PluginHooksService $hooks   Plugin hook service
+	 * @param ElggSession        $session Session service
 	 */
 	public function __construct(
-			SubscriptionsService $subscriptions,
 			Queue $queue,
 			PluginHooksService $hooks,
-			ElggSession $session,
-			Translator $translator,
-			EntityTable $entities,
-			LoggerInterface $logger
+			ElggSession $session
 	) {
 
-		$this->subscriptions = $subscriptions;
 		$this->queue = $queue;
 		$this->hooks = $hooks;
 		$this->session = $session;
-		$this->translator = $translator;
-		$this->entities = $entities;
-		$this->logger = $logger;
 	}
 
 	/**
@@ -237,6 +208,18 @@ class NotificationsService {
 			}
 		}
 	}
+	
+	/**
+	 * Returns notification event handler based on event
+	 *
+	 * @param NotificationEvent $event event to get event handler for
+	 *
+	 * @return NotificationEventHandler
+	 */
+	protected function getNotificationHandler(NotificationEvent $event): NotificationEventHandler {
+		// @todo create new notification handler based on config
+		return new NotificationEventHandler($event, $this);
+	}
 
 	/**
 	 * Pull notification events from queue until stop time is reached
@@ -271,23 +254,11 @@ class NotificationsService {
 				continue;
 			}
 
-			$subscriptions = $this->subscriptions->getNotificationEventSubscriptions($event, $this->methods);
-			
-			// return false to stop the default notification sender
-			$params = [
-				'event' => $event,
-				'subscriptions' => $subscriptions
-			];
-			
-			$deliveries = [];
-			if ($this->hooks->trigger('send:before', 'notifications', $params, true)) {
-				$deliveries = $this->sendNotifications($event, $subscriptions);
-			}
-			$params['deliveries'] = $deliveries;
-			$this->hooks->trigger('send:after', 'notifications', $params);
-			$count++;
+			$handler = $this->getNotificationHandler($event);
 
-			$delivery_matrix[$event->getDescription()] = $deliveries;
+			$delivery_matrix[$event->getDescription()] = $handler->send();
+			
+			$count++;
 		}
 
 		// release mutex
@@ -295,46 +266,6 @@ class NotificationsService {
 		$this->session->setIgnoreAccess($ia);
 
 		return $matrix ? $delivery_matrix : $count;
-	}
-
-	/**
-	 * Sends the notifications based on subscriptions
-	 *
-	 * Returns an array in the form:
-	 * <code>
-	 * [
-	 *    25 => [
-	 *      'email' => true,
-	 *      'sms' => false,
-	 *    ],
-	 *    55 => [],
-	 * ]
-	 * </code>
-	 *
-	 * @param NotificationEvent $event         Notification event
-	 * @param array             $subscriptions Subscriptions for this event
-	 * @param array             $params        Default notification parameters
-	 *
-	 * @return array
-	 */
-	protected function sendNotifications($event, $subscriptions, array $params = []) {
-
-		if (empty($this->methods)) {
-			return [];
-		}
-
-		$result = [];
-		foreach ($subscriptions as $guid => $methods) {
-			foreach ($methods as $method) {
-				$result[$guid][$method] = false;
-				if ($this->isRegisteredMethod($method)) {
-					$result[$guid][$method] = $this->sendNotification($event, $guid, $method, $params);
-				}
-			}
-		}
-
-		$this->logger->info("Results for the notification event {$event->getDescription()}: " . print_r($result, true));
-		return $result;
 	}
 
 	/**
@@ -374,285 +305,21 @@ class NotificationsService {
 	 * @return array
 	 */
 	public function sendInstantNotifications(\ElggEntity $sender, array $recipients = [], array $params = []) {
-
-		$deliveries = [];
-
 		if (empty($this->methods)) {
-			return $deliveries;
+			return [];
 		}
 		
-		$recipients = array_filter($recipients, function($e) {
+		$params['recipients'] = array_filter($recipients, function($e) {
 			return ($e instanceof \ElggUser);
 		});
 		
 		$object = elgg_extract('object', $params);
 		$action = elgg_extract('action', $params);
-
-		$methods_override = elgg_extract('methods_override', $params);
-		unset($params['methods_override']);
-		if ($methods_override && !is_array($methods_override)) {
-			$methods_override = [$methods_override];
-		}
-
+		
 		$event = new InstantNotificationEvent($object, $action, $sender);
-
-		$params['event'] = $event;
-		$params['origin'] = Notification::ORIGIN_INSTANT;
-
-		$subscriptions = [];
-
-		foreach ($recipients as $recipient) {
-			// Are we overriding delivery?
-			$methods = $methods_override;
-			if (empty($methods)) {
-				$methods = [];
-				$user_settings = $recipient->getNotificationSettings();
-				foreach ($user_settings as $method => $enabled) {
-					if ($enabled) {
-						$methods[] = $method;
-					}
-				}
-			}
-
-			$subscriptions[$recipient->guid] = $methods;
-		}
-
-		$hook_params = [
-			'event' => $params['event'],
-			'origin' => $params['origin'],
-			'methods_override' => $methods_override,
-		];
-		$subscriptions = $this->hooks->trigger('get', 'subscriptions', $hook_params, $subscriptions);
-		$subscriptions = $this->subscriptions->filterSubscriptions($subscriptions, $event);
 		
-		$params['subscriptions'] = $subscriptions;
-
-		// return false to stop the default notification sender
-		if ($this->hooks->trigger('send:before', 'notifications', $params, true)) {
-			$deliveries = $this->sendNotifications($event, $subscriptions, $params);
-		}
-		$params['deliveries'] = $deliveries;
-		$this->hooks->trigger('send:after', 'notifications', $params);
-
-		return $deliveries;
-	}
-
-	/**
-	 * Send a notification to a subscriber
-	 *
-	 * @param NotificationEvent $event  The notification event
-	 * @param int               $guid   The guid of the subscriber
-	 * @param string            $method The notification method
-	 * @param array             $params Default notification params
-	 *
-	 * @return bool
-	 */
-	protected function sendNotification(NotificationEvent $event, $guid, $method, array $params = []) {
-
-		if (!$this->hooks->hasHandler('send', "notification:$method")) {
-			// no way to deliver given the current method, so quitting early
-			return false;
-		}
-
-		$actor = $event->getActor();
-		$object = $event->getObject();
-
-		if ($event instanceof InstantNotificationEvent) {
-			$recipient = $this->entities->get($guid);
-			/* @var \ElggEntity $recipient */
-			$subject = elgg_extract('subject', $params, '');
-			$body = elgg_extract('body', $params, '');
-			$summary = elgg_extract('summary', $params, '');
-		} else {
-			$recipient = $this->entities->get($guid, 'user');
-			/* @var \ElggUser $recipient */
-			if (!$recipient || $recipient->isBanned()) {
-				return false;
-			}
+		$handler = new InstantNotificationEventHandler($event, $this, $params);
 		
-			if ($recipient->getGUID() == $event->getActorGUID()) {
-				// Content creators should not be receiving subscription
-				// notifications about their own content
-				return false;
-			}
-			
-			if (!$actor || !$object) {
-				return false;
-			}
-
-			if ($object instanceof ElggEntity && !has_access_to_entity($object, $recipient)) {
-				// Recipient does not have access to the notification object
-				// The access level may have changed since the event was enqueued
-				return false;
-			}
-
-			$subject = $this->getNotificationSubject($event, $recipient);
-			$body = $this->getNotificationBody($event, $recipient);
-			$summary = '';
-			
-			$params['origin'] = Notification::ORIGIN_SUBSCRIPTIONS;
-		}
-
-		$language = $recipient->getLanguage();
-		$params['event'] = $event;
-		$params['method'] = $method;
-		$params['sender'] = $actor;
-		$params['recipient'] = $recipient;
-		$params['language'] = $language;
-		$params['object'] = $object;
-		$params['action'] = $event->getAction();
-		$params['add_salutation'] = elgg_extract('add_salutation', $params, true);
-
-		$notification = new Notification($actor, $recipient, $language, $subject, $body, $summary, $params);
-
-		$notification = $this->hooks->trigger('prepare', 'notification', $params, $notification);
-		if (!$notification instanceof Notification) {
-			throw new RuntimeException("'prepare','notification' hook must return an instance of " . Notification::class);
-		}
-
-		$type = 'notification:' . $event->getDescription();
-		$notification = $this->hooks->trigger('prepare', $type, $params, $notification);
-		if (!$notification instanceof Notification) {
-			throw new RuntimeException("'prepare','$type' hook must return an instance of " . Notification::class);
-		}
-
-		if (elgg_extract('add_salutation', $notification->params) === true) {
-			$viewtype = elgg_view_exists('notifications/body') ? '' : 'default';
-			$notification->body = _elgg_view_under_viewtype('notifications/body', ['notification' => $notification], $viewtype);
-		}
-		
-		$notification = $this->hooks->trigger('format', "notification:$method", [], $notification);
-		if (!$notification instanceof Notification) {
-			throw new RuntimeException("'format','notification:$method' hook must return an instance of " . Notification::class);
-		}
-
-		// return true to indicate the notification has been sent
-		$params = [
-			'notification' => $notification,
-			'event' => $event,
-		];
-
-		$result = $this->hooks->trigger('send', "notification:$method", $params, false);
-		if ($this->logger->isLoggable(LogLevel::INFO)) {
-			$logger_data = print_r((array) $notification->toObject(), true);
-			if ($result) {
-				$this->logger->info("Notification sent: " . $logger_data);
-			} else {
-				$this->logger->info("Notification was not sent: " . $logger_data);
-			}
-		}
-		
-		return $result;
-	}
-
-	/**
-	 * Get subject for the notification
-	 *
-	 * Plugins can define a subtype specific subject simply by providing a
-	 * translation for the string "notification:subject:<action>:<type>:<subtype".
-	 *
-	 * For example in mod/blog/languages/en.php:
-	 *
-	 *     'notification:subject:publish:object:blog' => '%s published a blog called %s'
-	 *
-	 * @param NotificationEvent $event     Notification event
-	 * @param ElggUser          $recipient Notification recipient
-	 *
-	 * @return string Notification subject in the recipient's language
-	 */
-	private function getNotificationSubject(NotificationEvent $event, ElggUser $recipient) {
-		$actor = $event->getActor();
-		$object = $event->getObject();
-		
-		$language = $recipient->getLanguage();
-
-		// Check custom notification subject for the action/type/subtype combination
-		$subject_key = "notification:{$event->getDescription()}:subject";
-		if ($this->translator->languageKeyExists($subject_key, $language)) {
-			$display_name = '';
-			if ($object instanceof \ElggEntity) {
-				$display_name = $object->getDisplayName();
-			}
-			
-			return $this->translator->translate($subject_key, [
-				$actor->getDisplayName(),
-				$display_name,
-			], $language);
-		}
-
-		// Fall back to default subject
-		return $this->translator->translate('notification:subject', [$actor->getDisplayName()], $language);
-	}
-
-	/**
-	 * Get body for the notification
-	 *
-	 * Plugin can define a subtype specific body simply by providing a
-	 * translation for the string "notification:body:<action>:<type>:<subtype".
-	 *
-	 * For example in mod/blog/languages/en.php:
-	 *
-	 *    'notification:body:publish:object:blog' => '
-	 *         Hi %s!
-	 *
-	 *         %s has created a new post called "%s" in the group %s.
-	 *
-	 *         It says:
-	 *
-	 *         "%s"
-	 *
-	 *         You can comment the post here:
-	 *         %s
-	 *     ',
-	 *
-	 * The arguments passed into the translation are:
-	 *     1. Recipient's name
-	 *     2. Name of the user who triggered the notification
-	 *     3. Title of the content
-	 *     4. Name of the content's container
-	 *     5. The actual content (entity's 'description' field)
-	 *     6. URL to the content
-	 *
-	 * Argument swapping can be used to change the order of the parameters.
-	 * See http://php.net/manual/en/function.sprintf.php#example-5427
-	 *
-	 * @param NotificationEvent $event     Notification event
-	 * @param ElggUser          $recipient Notification recipient
-	 *
-	 * @return string Notification body in the recipient's language
-	 */
-	private function getNotificationBody(NotificationEvent $event, ElggUser $recipient) {
-		$actor = $event->getActor();
-		$object = $event->getObject();
-		/* @var \ElggObject $object */
-		$language = $recipient->getLanguage();
-
-		// Check custom notification body for the action/type/subtype combination
-		$body_key = "notification:{$event->getDescription()}:body";
-		if ($this->translator->languageKeyExists($body_key, $language)) {
-			if ($object instanceof \ElggEntity) {
-				$display_name = $object->getDisplayName();
-				$container_name = '';
-				$container = $object->getContainerEntity();
-				if ($container) {
-					$container_name = $container->getDisplayName();
-				}
-			} else {
-				$display_name = '';
-				$container_name = '';
-			}
-
-			return $this->translator->translate($body_key, [
-				$recipient->getDisplayName(),
-				$actor->getDisplayName(),
-				$display_name,
-				$container_name,
-				$object->description,
-				$object->getURL(),
-			], $language);
-		}
-
-		// Fall back to default body
-		return $this->translator->translate('notification:body', [$object->getURL()], $language);
+		return $handler->send();
 	}
 }

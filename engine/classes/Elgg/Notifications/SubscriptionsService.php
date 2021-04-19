@@ -105,14 +105,7 @@ class SubscriptionsService {
 			}
 		}
 
-		$params = [
-			'event' => $event,
-			'origin' => Notification::ORIGIN_SUBSCRIPTIONS,
-			'methods' => $methods,
-		];
-		$subscriptions = $this->hooks->trigger('get', 'subscriptions', $params, $subscriptions);
-		
-		return $this->filterSubscriptions($subscriptions, $event);
+		return $subscriptions;
 	}
 
 	/**

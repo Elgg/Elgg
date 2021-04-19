@@ -4,7 +4,7 @@ namespace Elgg\Notifications;
 
 use Elgg\UnitTestCase;
 
-class NotificationsSerivceUnitTest extends UnitTestCase {
+class NotificationsServiceUnitTest extends UnitTestCase {
 
 	/**
 	 * {@inheritDoc}

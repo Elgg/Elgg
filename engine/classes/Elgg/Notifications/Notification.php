@@ -8,9 +8,6 @@ namespace Elgg\Notifications;
  * @since 1.10
  */
 class Notification {
-
-	const ORIGIN_SUBSCRIPTIONS = 'subscriptions_service';
-	const ORIGIN_INSTANT = 'instant_notifications';
 	
 	/**
 	 * @var \ElggEntity The entity causing or creating the notification
