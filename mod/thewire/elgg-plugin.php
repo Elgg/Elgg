@@ -9,7 +9,6 @@ return [
 		'name' => 'The Wire',
 		'activate_on_install' => true,
 	],
-	'bootstrap' => \Elgg\TheWire\Bootstrap::class,
 	'entities' => [
 		[
 			'type' => 'object',
@@ -105,6 +104,13 @@ return [
 		'seeds' => [
 			'database' => [
 				'Elgg\TheWire\Seeder::register' => [],
+			],
+		],
+	],
+	'notifications' => [
+		'object' => [
+			'thewire' => [
+				'create' => true,
 			],
 		],
 	],

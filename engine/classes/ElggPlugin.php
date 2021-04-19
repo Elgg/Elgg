@@ -900,6 +900,7 @@ class ElggPlugin extends ElggObject {
 		$this->registerViewExtensions();
 		$this->registerGroupTools();
 		$this->registerViewOptions();
+		$this->registerNotifications();
 
 		$this->getBootstrap()->init();
 	}
@@ -1301,6 +1302,27 @@ class ElggPlugin extends ElggObject {
 			
 			if (isset($options['simplecache']) && $options['simplecache'] === true) {
 				_elgg_services()->views->registerCacheableView($view_name);
+			}
+		}
+	}
+	
+	/**
+	 * Registers the plugin's notification events
+	 *
+	 * @return void
+	 */
+	protected function registerNotifications() {
+		$spec = (array) $this->getStaticConfig('notifications', []);
+
+		foreach ($spec as $type => $subtypes) {
+			foreach ($subtypes as $subtype => $actions) {
+				foreach ($actions as $action => $callback) {
+					if ($callback === true) {
+						_elgg_services()->notifications->registerEvent($type, $subtype, [$action]);
+					} elseif ($callback === false) {
+						_elgg_services()->notifications->unregisterEvent($type, $subtype, [$action]);
+					}
+				}
 			}
 		}
 	}
