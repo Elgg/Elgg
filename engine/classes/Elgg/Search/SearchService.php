@@ -99,8 +99,8 @@ class SearchService {
 		}
 
 		$options = $this->hooks->trigger('search:options', $entity_type, $options, $options);
-		if ($entity_subtype) {
-			$options = $this->hooks->trigger('search:options', "$entity_type:$entity_subtype", $options, $options);
+		if (!empty($entity_subtype) && is_string($entity_subtype)) {
+			$options = $this->hooks->trigger('search:options', "{$entity_type}:{$entity_subtype}", $options, $options);
 		}
 
 		$options = $this->hooks->trigger('search:options', $search_type, $options, $options);
