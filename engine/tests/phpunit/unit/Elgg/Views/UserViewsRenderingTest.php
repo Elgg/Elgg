@@ -16,7 +16,6 @@ class UserViewsRenderingTest extends ViewRenderingTestCase {
 			'core/settings/account/email',
 			'core/settings/account/language',
 			'core/settings/account/name',
-			'core/settings/account/notifications',
 			'core/settings/account/password',
 			'core/settings/account/username',
 			'core/settings/statistics/numentities',

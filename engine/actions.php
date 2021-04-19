@@ -44,6 +44,8 @@ return [
 	'plugins/usersettings/save' => [],
 	'register' => ['access' => 'public'],
 	'river/delete' => [],
+	'settings/notifications' => [],
+	'settings/notifications/subscriptions' => [],
 	'user/changepassword' => ['access' => 'public'],
 	'user/requestnewpassword' => ['access' => 'public'],
 	'useradd' => ['access' => 'admin'],

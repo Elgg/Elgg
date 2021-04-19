@@ -2,21 +2,21 @@
 
 namespace Elgg\Groups;
 
+use Elgg\Plugins\PluginTesting;
+
 /**
  * @group IntegrationTests
  */
 class ElggGroupsIntegrationTest extends \Elgg\IntegrationTestCase {
 
+	use PluginTesting;
+	
 	/**
 	 * @var \ElggGroup
 	 */
 	private $group;
 
 	public function up() {
-		if (!elgg_is_active_plugin('groups')) {
-			$this->markTestSkipped();
-		}
-
 		$this->group = $this->createGroup();
 	}
 

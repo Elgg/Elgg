@@ -121,6 +121,14 @@ To be able to have a more generic salutation and sign-off for outgoing mail noti
 generic translations. This will mean you have to update your translations to reflect the new text and also check your code for uses of notifications where you provide your own
 salutation or sign-off text. You can find out more about this new behaviour in :doc:`/guides/notifications`.
 
+Notifications plugin
+~~~~~~~~~~~~~~~~~~~~~
+
+The Notifications plugin has been removed. All the features of the plugin are now part of Elgg core. 
+Some pages (like the group notification settings) have been moved to the correct plugin.
+
+This means that event handlers, hook handlers, actions, views and languages keys have been (re)moved or renamed. 
+
 Diagnostics Plugin
 ------------------
 

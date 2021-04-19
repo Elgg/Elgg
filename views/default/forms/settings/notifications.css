@@ -1,0 +1,24 @@
+.elgg-notifications-settings > div {
+	> div {
+		padding: .5rem;
+	}
+	
+	&:nth-child(even) {
+		background-color: $(border-color-soft);
+	}
+}
+
+@media $(media-tablet-up) {
+	.elgg-notifications-settings {
+		display: table;
+		
+		> div {
+			display: table-row;
+			
+			> div {
+				display: table-cell;
+				width: 50%;
+			}
+		}
+	}
+}

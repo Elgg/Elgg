@@ -38,6 +38,7 @@ class SystemEventHandlers {
 		elgg_register_ajax_view('river/elements/responses');
 		elgg_register_ajax_view('forms/admin/user/change_email');
 		elgg_register_ajax_view('navigation/menu/user_hover/contents');
+		elgg_register_ajax_view('notifications/subscriptions/details');
 		elgg_register_ajax_view('object/plugin/details');
 		
 		elgg_extend_view('admin.css', 'lightbox/elgg-colorbox-theme/colorbox.css');
@@ -49,8 +50,6 @@ class SystemEventHandlers {
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/email', 100);
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/language', 100);
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/default_access', 100);
-		elgg_extend_view('forms/usersettings/save', 'core/settings/account/notifications');
-		elgg_extend_view('forms/usersettings/save', 'core/settings/account/delayed_email');
 		elgg_extend_view('notifications/settings/records', 'notifications/settings/create_comment');
 		
 		elgg_register_simplecache_view('admin.css');

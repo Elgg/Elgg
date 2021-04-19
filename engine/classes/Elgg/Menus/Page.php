@@ -356,6 +356,15 @@ class Page {
 		]);
 		
 		$return[] = \ElggMenuItem::factory([
+			'name' => '1_notifications',
+			'text' => elgg_echo('usersettings:notifications:menu:page'),
+			'href' => elgg_generate_url('settings:notifications', [
+				'username' => $user->username,
+			]),
+			'section' => 'configure',
+		]);
+		
+		$return[] = \ElggMenuItem::factory([
 			'name' => '1_statistics',
 			'text' => elgg_echo('usersettings:statistics:opt:linktext'),
 			'href' => elgg_generate_url('settings:statistics', [

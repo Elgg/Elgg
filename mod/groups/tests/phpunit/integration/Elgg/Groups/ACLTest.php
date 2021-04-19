@@ -2,11 +2,15 @@
 
 namespace Elgg\Groups;
 
+use Elgg\Plugins\PluginTesting;
+
 /**
  * @group IntegrationTests
  */
 class ACLTest extends \Elgg\IntegrationTestCase {
 
+	use PluginTesting;
+	
 	/**
 	 * @var \ElggGroup
 	 */
@@ -18,10 +22,6 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 	protected $user;
 	
 	public function up() {
-		if (!elgg_is_active_plugin('groups')) {
-			$this->markTestSkipped();
-		}
-
 		$this->user = $this->createUser();
 		_elgg_services()->session->setLoggedInUser($this->user);
 		

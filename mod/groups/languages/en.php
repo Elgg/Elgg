@@ -178,5 +178,8 @@ or click below to view the group's join requests:
 	'groups:add:alreadymember' => "%s is already a member of this group",
 	
 	// Notification settings
-	'groups:notification:settings:group_join:description' => "Default notification settings for the group when joining a new group",
+	'groups:usersettings:notification:group_join:description' => "Default notification settings for the group when joining a new group",
+	
+	'groups:usersettings:notifications:title' => 'Group notifications',
+	'groups:usersettings:notifications:description' => 'To receive notifications when new content is added to a group you are a member of, find it below and select the notification method(s) you would like to use.',
 );
