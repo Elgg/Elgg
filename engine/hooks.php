@@ -39,6 +39,7 @@ return [
 	],
 	'cron' => [
 		'daily' => [
+			\Elgg\Email\DelayedQueue\CronHandler::class => [],
 			'Elgg\Users\Validation::notifyAdminsAboutPendingUsers' => [],
 			\Elgg\Users\CleanupPersistentLoginHandler::class => [],
 		],
@@ -46,6 +47,7 @@ return [
 			\Elgg\Notifications\ProcessQueueCronHandler::class => ['priority' => 100],
 		],
 		'weekly' => [
+			\Elgg\Email\DelayedQueue\CronHandler::class => [],
 			'Elgg\Users\Validation::notifyAdminsAboutPendingUsers' => [],
 		],
 	],
@@ -269,6 +271,9 @@ return [
 		],
 	],
 	'send' => [
+		'notification:delayed_email' => [
+			\Elgg\Email\DelayedQueue\EnqueueHandler::class => [],
+		],
 		'notification:email' => [
 			\Elgg\Notifications\SendEmailHandler::class => [],
 		],
@@ -285,6 +290,7 @@ return [
 	],
 	'usersettings:save' => [
 		'user' => [
+			\Elgg\Email\SaveUserSettingsHandler::class => [],
 			'Elgg\Users\Settings::setAdminValidationNotification' => [],
 			\Elgg\Notifications\SaveUserSettingsHandler::class => [],
 			'Elgg\Users\Settings::setDefaultAccess' => [],

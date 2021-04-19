@@ -27,4 +27,15 @@ $body .= elgg_view_field([
 	],
 ]);
 
+$body .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('config:delayed_email:label'),
+	'#help' => elgg_echo('config:delayed_email:help'),
+	'name' => 'enable_delayed_email',
+	'checked' => (bool) elgg_get_config('enable_delayed_email'),
+	'switch' => true,
+	'value' => 1,
+	'default' => 0,
+]);
+
 echo elgg_view_module('info', elgg_echo('config:email'), $body);

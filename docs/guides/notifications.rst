@@ -185,12 +185,38 @@ If for some reason you do not need this magic to happen, you can prevent it by s
 You can do this as part of the parameters in ``notify_user()`` or in the ``prepare, notifications`` hook. 
 You can change the salutation and sign-off texts in the translations.
 
+You can also customize the salutation by overruling the view ``notifications/elements/salutation`` the sign-off can be customized by overruling the view
+``notifications/elements/sign-off``.
+
+Notification methods
+====================
+
+By default Elgg has three notification methods: email, delayed_email and the bundled site_notifications plugin.
+
+Email
+-----
+
+Will send an email notification to to the recipient.
+
+Delayed email
+-------------
+
+Will save the notifications and deliver them in one bundled email at the interval the recipient has configured (daily or weekly).
+
+The availability of this delivery method can be configured by the site administrator in the Site settings section.
+
+The layout of the bundled email can be customized by overruling the view ``email/delayed_email/plain_text`` for the plain text part of the email and 
+``email/delayed_email/html`` for the HTML part of the email.
+
+Site notification
+-----------------
+
+Will show the notification on the site.
+
 Registering a new notification method
 ======================================
 
-By default Elgg has two notification methods: email and the bundled
-site_notifications plugin. You can register a new notification
-method with the `elgg_register_notification_method()` function.
+You can register a new notification method with the ``elgg_register_notification_method()`` function.
 
 Example:
 --------
@@ -259,8 +285,8 @@ Subscriptions
 In most cases Elgg core takes care of handling the subscriptions, so notification plugins don't usually have to alter them.
 
 Subscriptions can however be:
- - Added using the `\ElggEntity::addSubscription()` function
- - Removed using the `\ElggEntity::removeSubscription()` function
+ - Added using the ``\ElggEntity::addSubscription()`` function
+ - Removed using the ``\ElggEntity::removeSubscription()`` function
 
 It's possible to modify the recipients of a notification dynamically with the ``'get', 'subscriptions'`` hook.
 

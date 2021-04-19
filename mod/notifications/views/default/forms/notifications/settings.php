@@ -19,6 +19,11 @@ echo elgg_format_element('div', [
 	'class' => 'elgg-notifications-settings',
 ], elgg_view('notifications/settings/records', $vars));
 
+$params = $vars;
+$params['show_module'] = false;
+$params['entity'] = $user;
+echo elgg_view('core/settings/account/delayed_email', $params);
+
 $footer = elgg_view_field([
 	'#type' => 'submit',
 	'value' => elgg_echo('save'),

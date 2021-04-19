@@ -423,7 +423,7 @@ class NotificationsService {
 			'methods_override' => $methods_override,
 		];
 		$subscriptions = $this->hooks->trigger('get', 'subscriptions', $hook_params, $subscriptions);
-		$subscriptions = $this->subscriptions->filterMutedNotifications($subscriptions, $event);
+		$subscriptions = $this->subscriptions->filterSubscriptions($subscriptions, $event);
 		
 		$params['subscriptions'] = $subscriptions;
 

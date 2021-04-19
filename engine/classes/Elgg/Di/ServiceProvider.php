@@ -58,6 +58,8 @@ use Elgg\Security\PasswordGeneratorService;
  * @property-read \Elgg\Cache\DataCache                           $dataCache
  * @property-read \Elgg\Database                                  $db
  * @property-read \Elgg\Database\DbConfig                         $dbConfig
+ * @property-read \Elgg\Database\DelayedEmailQueueTable           $delayedEmailQueueTable
+ * @property-read \Elgg\Email\DelayedEmailService                 $delayedEmailService
  * @property-read \Elgg\DeprecationService                        $deprecation
  * @property-read \Elgg\DI\PublicContainer                        $dic
  * @property-read \Di\ContainerBuilder                            $dic_builder
@@ -321,6 +323,14 @@ class ServiceProvider extends DiContainer {
 			unset($config->dbpass);
 
 			return $db_config;
+		});
+		
+		$this->setFactory('delayedEmailQueueTable', function (ServiceProvider $c) {
+			return new \Elgg\Database\DelayedEmailQueueTable($c->db);
+		});
+		
+		$this->setFactory('delayedEmailService', function (ServiceProvider $c) {
+			return new \Elgg\Email\DelayedEmailService($c->delayedEmailQueueTable, $c->emails, $c->views, $c->translator, $c->invoker);
 		});
 
 		$this->setFactory('deprecation', function(ServiceProvider $c) {

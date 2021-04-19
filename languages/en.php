@@ -338,6 +338,7 @@ return array(
 	'notifications:usersettings' => "Notification settings",
 	'notifications:usersettings:description' => "How do you wish to be notified about activity on the site?",
 	'notification:method:email' => 'Email',
+	'notification:method:delayed_email' => 'Delayed email',
 
 	'notifications:usersettings:save:ok' => "Notification settings were successfully saved.",
 	'notifications:usersettings:save:fail' => "There was a problem saving the notification settings.",
@@ -351,6 +352,9 @@ return array(
 	
 	'notification:settings:create_comment:description' => "Default notification setting when you comment on content in order to follow the rest of the conversation",
 
+	'notifications:delayed_email:subject:daily' => "Daily notifications",
+	'notifications:delayed_email:subject:weekly' => "Weekly notifications",
+	
 /**
  * Search
  */
@@ -1006,6 +1010,10 @@ These changes will only affect new users on the site.',
 	'usersettings:statistics:label:email' => "Email",
 	'usersettings:statistics:label:membersince' => "Member since",
 	'usersettings:statistics:label:lastlogin' => "Last logged in",
+	
+	'usersettings:delayed_email' => "Delayed email settings",
+	'usersettings:delayed_email:interval' => "Configure the interval at which delayed email notifications will be delivered",
+	'usersettings:delayed_email:interval:help' => "All delayed email notifications will be saved up and delivered in one combined mail at the configured interval",
 
 /**
  * Activity river
@@ -1433,6 +1441,8 @@ Once you have logged in, we highly recommend that you change your password.',
 	'config:email_html_part_images:help' => "Control if and how images in outgoing emails should be processed. When enabled all images will be embedded in the e-mails. Not all e-mail clients support the different options, be sure to test the chosen option.",
 	'config:email_html_part_images:base64' => "Base64 encoded",
 	'config:email_html_part_images:attach' => "Attachments",
+	'config:delayed_email:label' => "Enable delayed email notifications",
+	'config:delayed_email:help' => "Offer users delayed email notifications to bundle notifications received in a period (daily, weekly)",
 
 	'upgrading' => 'Upgrading...',
 	'upgrade:core' => 'Your Elgg installation was upgraded.',

@@ -36,6 +36,7 @@ return [
 		],
 		'forms/usersettings/save' => [
 			'core/settings/account/notifications' => ['unextend' => true],
+			'core/settings/account/delayed_email' => ['unextend' => true],
 		],
 		'notifications/settings' => [
 			'notifications/users' => [],
@@ -65,6 +66,7 @@ return [
 		],
 		'usersettings:save' => [
 			'user' => [
+				\Elgg\Email\SaveUserSettingsHandler::class => ['unregister' => true],
 				'Elgg\Notifications\SaveUserSettingsHandler' => ['unregister' => true],
 			],
 		],

@@ -20,6 +20,9 @@ class SystemEventHandlers {
 		elgg_register_entity_type('user', 'user');
 		
 		elgg_register_notification_method('email');
+		if ((bool) elgg_get_config('enable_delayed_email')) {
+			elgg_register_notification_method('delayed_email');
+		}
 		
 		elgg_register_notification_event('object', 'comment', ['create']);
 		elgg_register_notification_event('user', 'user', ['make_admin', 'remove_admin']);
@@ -47,6 +50,7 @@ class SystemEventHandlers {
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/language', 100);
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/default_access', 100);
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/notifications');
+		elgg_extend_view('forms/usersettings/save', 'core/settings/account/delayed_email');
 		elgg_extend_view('notifications/settings/records', 'notifications/settings/create_comment');
 		
 		elgg_register_simplecache_view('admin.css');

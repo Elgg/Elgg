@@ -5,18 +5,19 @@ namespace Elgg\Mocks\Di;
 /**
  * Mocking service
  *
- * @property-read \Elgg\Mocks\Database                      $db                      Database
- * @property-read \Elgg\Mocks\Database\EntityTable          $entityTable             Entity mocks
- * @property-read \Elgg\Mocks\Database\MetadataTable        $metadataTable           Metadata mocks
- * @property-read \Elgg\Mocks\Database\AnnotationsTable     $annotationsTable        Annotation mocks
- * @property-read \Elgg\Mocks\Database\RelationshipsTable   $relationshipsTable      Annotation mocks
- * @property-read \Elgg\Mocks\Database\AccessCollections    $accessCollections       ACL table mock
- * @property-read \Elgg\Mocks\Database\PrivateSettingsTable $privateSettings         Private settings table mock
- * @property-read \Elgg\Mocks\I18n\Translator				$translator              Translator
- * @property-read \Elgg\Mocks\Database\UsersTable           $usersTable              Users table
- * @property-read \Elgg\Notifications\NotificationsService  $notifications           Notification service (with memory queue)
- * @property-read \Elgg\Mocks\Database\Mutex                $mutex                   Mutex
- * @property-read \Elgg\Mocks\Database\HMACCacheTable       $hmacCacheTable          HMAC Cache table
+ * @property-read \Elgg\Mocks\Database\AccessCollections      $accessCollections       ACL table mock
+ * @property-read \Elgg\Mocks\Database\AnnotationsTable       $annotationsTable        Annotation mocks
+ * @property-read \Elgg\Mocks\Database                        $db                      Database
+ * @property-read \Elgg\Mocks\Database\DelayedEmailQueueTable $delayedEmailQueueTable  Delayed Email Queue Table mock
+ * @property-read \Elgg\Mocks\Database\EntityTable            $entityTable             Entity mocks
+ * @property-read \Elgg\Mocks\Database\HMACCacheTable         $hmacCacheTable          HMAC Cache table
+ * @property-read \Elgg\Mocks\Database\MetadataTable          $metadataTable           Metadata mocks
+ * @property-read \Elgg\Mocks\Database\Mutex                  $mutex                   Mutex
+ * @property-read \Elgg\Notifications\NotificationsService    $notifications           Notification service (with memory queue)
+ * @property-read \Elgg\Mocks\Database\PrivateSettingsTable   $privateSettings         Private settings table mock
+ * @property-read \Elgg\Mocks\Database\RelationshipsTable     $relationshipsTable      Annotation mocks
+ * @property-read \Elgg\Mocks\I18n\Translator				  $translator              Translator
+ * @property-read \Elgg\Mocks\Database\UsersTable             $usersTable              Users table
  *
  * @since 2.3
  */
@@ -55,6 +56,10 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 				$sp->translator,
 				$sp->logger
 			);
+		});
+		
+		$this->setFactory('delayedEmailQueueTable', function (MockServiceProvider $sp) {
+			return new \Elgg\Mocks\Database\DelayedEmailQueueTable($sp->db);
 		});
 
 		$this->setFactory('metadataTable', function (MockServiceProvider $sp) {
