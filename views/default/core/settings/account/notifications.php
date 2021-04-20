@@ -1,43 +1,37 @@
 <?php
 /**
  * User settings for notifications.
+ *
+ * @uses $vars['entity'] the user to set settings for
  */
 
-$page_owner = elgg_get_page_owner_entity();
-if (!$page_owner instanceof ElggUser) {
+$user = elgg_extract('entity', $vars, elgg_get_page_owner_entity());
+if (!$user instanceof ElggUser) {
 	return;
 }
 
-$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
-$notification_settings = $page_owner->getNotificationSettings();
-
-$title = elgg_echo('notifications:usersettings');
-
-$rows = '';
-
-// Loop through options
-foreach ($NOTIFICATION_HANDLERS as $k => $v) {
-	if ($notification_settings[$k]) {
-		$val = "yes";
-	} else {
-		$val = "no";
-	}
-
-	$radio = elgg_view('input/radio', [
-		'name' => "method[$k]",
-		'value' => $val,
-		'options' => [
-			elgg_echo('option:yes') => 'yes',
-			elgg_echo('option:no') => 'no'
-		],
-	]);
-
-	$cells = '<td class="prm pbl">' . elgg_echo("notification:method:$k") . ': </td>';
-	$cells .= "<td>$radio</td>";
-
-	$rows .= "<tr>$cells</tr>";
+$methods = elgg_get_notification_methods();
+if (empty($methods)) {
+	return;
 }
 
-$content = "<table>$rows</table>";
+$notification_settings = $user->getNotificationSettings();
 
-echo elgg_view_module('info', $title, $content);
+$content = '';
+
+// Loop through options
+foreach ($methods as $method) {
+	$content .= elgg_view_field([
+		'#type' => 'radio',
+		'#label' => elgg_echo("notification:method:{$method}"),
+		'name' => "method[{$method}]",
+		'value' => (bool) elgg_extract($method, $notification_settings, false) ? 'yes' : 'no',
+		'options' => [
+			elgg_echo('option:yes') => 'yes',
+			elgg_echo('option:no') => 'no',
+		],
+		'align' => 'horizontal',
+	]);
+}
+
+echo elgg_view_module('info', elgg_echo('notifications:usersettings'), $content);

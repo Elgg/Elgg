@@ -106,7 +106,10 @@ function _elgg_set_user_name(\Elgg\Hook $hook) {
 
 	$user = $hook->getUserParam();
 	$request = $hook->getParam('request');
-	/* @var $request \Elgg\Request */
+
+	if (!$user instanceof ElggUser || !$request instanceof Request) {
+		return;
+	}
 
 	$name = $request->getParam('name');
 	if (!isset($name)) {
@@ -124,10 +127,9 @@ function _elgg_set_user_name(\Elgg\Hook $hook) {
 		return null;
 	}
 
-	$request->validation()->pass('name', $name, elgg_echo('user:name:success'));
-
 	$user->name = $name;
 
+	$request->validation()->pass('name', $name, elgg_echo('user:name:success'));
 }
 
 /**
@@ -341,7 +343,10 @@ function _elgg_set_user_default_access(\Elgg\Hook $hook) {
 
 	$user = $hook->getUserParam();
 	$request = $hook->getParam('request');
-	/* @var $request \Elgg\Request */
+
+	if (!$user instanceof ElggUser || !$request instanceof Request) {
+		return null;
+	}
 
 	$default_access = $request->getParam('default_access');
 	if (!isset($default_access)) {

@@ -3,10 +3,11 @@
  * User account settings.
  *
  * Plugins should extend this form to add to the settings.
+ *
+ * @uses $vars['entity'] the user to set settings for
  */
 
 $user = elgg_extract('entity', $vars, elgg_get_page_owner_entity());
-
 if (!$user instanceof ElggUser) {
 	return;
 }
@@ -18,6 +19,7 @@ echo elgg_view_field([
 	'value' => $user->guid,
 ]);
 
+// form footer
 $footer = elgg_view_field([
 	'#type' => 'submit',
 	'value' => elgg_echo('save'),
