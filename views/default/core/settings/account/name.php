@@ -1,9 +1,11 @@
 <?php
 /**
  * Provide a way of setting your full name.
+ *
+ * @uses $vars['entity'] the user to set settings for
  */
 
-$user = elgg_get_page_owner_entity();
+$user = elgg_extract('entity', $vars, elgg_get_page_owner_entity());
 if (!$user instanceof ElggUser) {
 	return;
 }
@@ -11,9 +13,9 @@ if (!$user instanceof ElggUser) {
 $title = elgg_echo('user:name:label');
 $content = elgg_view_field([
 	'#type' => 'text',
+	'#label' => elgg_echo('name'),
 	'name' => 'name',
 	'value' => $user->name,
-	'#label' => elgg_echo('name'),
 ]);
 
 echo elgg_view_module('info', $title, $content);

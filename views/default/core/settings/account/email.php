@@ -1,10 +1,11 @@
 <?php
 /**
  * Provide a way of setting your email
+ *
+ * @uses $vars['entity'] the user to set settings for
  */
 
-$user = elgg_get_page_owner_entity();
-
+$user = elgg_extract('entity', $vars, elgg_get_page_owner_entity());
 if (!$user instanceof ElggUser) {
 	return;
 }
