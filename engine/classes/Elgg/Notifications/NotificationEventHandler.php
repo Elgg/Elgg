@@ -170,12 +170,6 @@ class NotificationEventHandler {
 				return false;
 			}
 		
-			if ($recipient->guid === $this->event->getActorGUID()) {
-				// Content creators should not be receiving subscription
-				// notifications about their own content
-				return false;
-			}
-			
 			if (!$actor || !$object) {
 				return false;
 			}

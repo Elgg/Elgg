@@ -4,6 +4,7 @@ namespace Elgg\Notifications;
 
 use Elgg\Database;
 use Elgg\Database\Select;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @group NotificationsService
@@ -25,6 +26,11 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 	 * @var Database
 	 */
 	protected $db;
+	
+	/**
+	 * @var MockObject
+	 */
+	protected $event;
 
 	public function up() {
 		$this->containerGuid = 42;
@@ -42,6 +48,10 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->event->expects($this->any())
 			->method('getObject')
 			->will($this->returnValue($object));
+		
+		$this->event->expects($this->any())
+			->method('getActorGUID')
+			->will($this->returnValue(0));
 
 		$this->db = $this->createMock('\Elgg\Database');
 		
