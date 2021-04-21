@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dfe213a72e3a2b0f1b6d74ad0e7f3f34",
+    "content-hash": "aa4fc89baa721a5a23546b085dd3056c",
     "packages": [
         {
             "name": "cakephp/cache",
@@ -2831,10 +2831,10 @@
         },
         {
             "name": "npm-asset/sprintf-js",
-            "version": "1.0.3",
+            "version": "1.1.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz"
+                "url": "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.1.2.tgz"
             },
             "type": "npm-asset",
             "license": [
