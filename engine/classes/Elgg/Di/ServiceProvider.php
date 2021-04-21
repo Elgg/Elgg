@@ -547,7 +547,7 @@ class ServiceProvider extends DiContainer {
 			$queue_name = \Elgg\Notifications\NotificationsService::QUEUE_NAME;
 			$queue = new \Elgg\Queue\DatabaseQueue($queue_name, $c->db);
 			
-			return new \Elgg\Notifications\NotificationsService($c->subscriptions, $queue, $c->hooks, $c->session, $c->translator, $c->entityTable, $c->logger);
+			return new \Elgg\Notifications\NotificationsService($queue, $c->hooks, $c->session);
 		});
 
 		$this->setFactory('pageOwner', function(ServiceProvider $c) {

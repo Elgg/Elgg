@@ -360,13 +360,15 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$container = $object->getContainerEntity();
 		$this->assertTrue($container->addSubscription($user->guid, 'apples'));
 		
-		$this->assertNotEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
+		$subscriptions = $this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']);
+		$this->assertNotEmpty($subscriptions);
+		$this->assertNotEmpty($this->service->filterSubscriptions($subscriptions, $event));
 		
 		// mute actor
 		$actor = $event->getActor();
 		$this->assertTrue($actor->muteNotifications($user->guid));
 		
-		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
+		$this->assertEmpty($this->service->filterSubscriptions($subscriptions, $event));
 	}
 	
 	function testGetNotificationEventSubscriptionsWithMutedOwnerBySubscription() {
@@ -379,13 +381,15 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$container = $object->getContainerEntity();
 		$this->assertTrue($container->addSubscription($user->guid, 'apples'));
 		
-		$this->assertNotEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
+		$subscriptions = $this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']);
+		$this->assertNotEmpty($subscriptions);
+		$this->assertNotEmpty($this->service->filterSubscriptions($subscriptions, $event));
 		
 		// mute owner
 		$owner = $object->getOwnerEntity();
 		$this->assertTrue($owner->muteNotifications($user->guid));
 		
-		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
+		$this->assertEmpty($this->service->filterSubscriptions($subscriptions, $event));
 	}
 	
 	function testGetNotificationEventSubscriptionsWithMutedContainerBySubscription() {
@@ -398,7 +402,9 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$container = $object->getContainerEntity();
 		$this->assertTrue($container->addSubscription($user->guid, 'apples'));
 		
-		$this->assertNotEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
+		$subscriptions = $this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']);
+		$this->assertNotEmpty($subscriptions);
+		$this->assertNotEmpty($this->service->filterSubscriptions($subscriptions, $event));
 		
 		// mute container
 		$container = $object->getContainerEntity();
@@ -410,7 +416,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($container->hasMutedNotifications($user->guid));
 		$this->assertTrue($container->hasSubscription($user->guid, ['apples']));
 		
-		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
+		$this->assertEmpty($this->service->filterSubscriptions($subscriptions, $event));
 	}
 	
 	function testGetNotificationEventSubscriptionsWithMutedEntityBySubscription() {
@@ -423,107 +429,13 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$container = $object->getContainerEntity();
 		$this->assertTrue($container->addSubscription($user->guid, 'apples'));
 		
-		$this->assertNotEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
+		$subscriptions = $this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']);
+		$this->assertNotEmpty($subscriptions);
+		$this->assertNotEmpty($this->service->filterSubscriptions($subscriptions, $event));
 		
 		// mute entity
 		$this->assertTrue($object->muteNotifications($user->guid));
 		
-		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
-	}
-	
-	function testGetNotificationEventSubscriptionsWithMutedActorByHook() {
-		$this->entities[] = $user = $this->createUser();
-		
-		$event = $this->getSubscriptionNotificationEvent();
-		
-		$this->testing_hook = $this->registerTestingHook('get', 'subscriptions', function(\Elgg\Hook $hook) use ($user) {
-			$subs = $hook->getValue();
-			
-			$subs[$user->guid] = ['apples'];
-			
-			return $subs;
-		});
-		
-		$this->assertNotEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
-		
-		// mute actor
-		$actor = $event->getActor();
-		$this->assertTrue($actor->muteNotifications($user->guid));
-		
-		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
-	}
-	
-	function testGetNotificationEventSubscriptionsWithMutedOwnerByHook() {
-		$this->entities[] = $user = $this->createUser();
-		
-		$event = $this->getSubscriptionNotificationEvent();
-		
-		$this->testing_hook = $this->registerTestingHook('get', 'subscriptions', function(\Elgg\Hook $hook) use ($user) {
-			$subs = $hook->getValue();
-			
-			$subs[$user->guid] = ['apples'];
-			
-			return $subs;
-		});
-		
-		/* @var $object \ElggObject */
-		$object = $event->getObject();
-		
-		$this->assertNotEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
-		
-		// mute owner
-		$owner = $object->getOwnerEntity();
-		$this->assertTrue($owner->muteNotifications($user->guid));
-		
-		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
-	}
-	
-	function testGetNotificationEventSubscriptionsWithMutedContainerByHook() {
-		$this->entities[] = $user = $this->createUser();
-		
-		$event = $this->getSubscriptionNotificationEvent();
-		
-		$this->testing_hook = $this->registerTestingHook('get', 'subscriptions', function(\Elgg\Hook $hook) use ($user) {
-			$subs = $hook->getValue();
-			
-			$subs[$user->guid] = ['apples'];
-			
-			return $subs;
-		});
-		
-		/* @var $object \ElggObject */
-		$object = $event->getObject();
-		
-		$this->assertNotEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
-		
-		// mute container
-		$container = $object->getContainerEntity();
-		$this->assertTrue($container->muteNotifications($user->guid));
-		
-		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
-	}
-	
-	function testGetNotificationEventSubscriptionsWithMutedEntityByHook() {
-		$this->entities[] = $user = $this->createUser();
-		
-		$event = $this->getSubscriptionNotificationEvent();
-		
-		$this->testing_hook = $this->registerTestingHook('get', 'subscriptions', function(\Elgg\Hook $hook) use ($user) {
-			$subs = $hook->getValue();
-			
-			$subs[$user->guid] = ['apples'];
-			
-			return $subs;
-		});
-		
-		/* @var $object \ElggObject */
-		$object = $event->getObject();
-		
-		$this->assertNotEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
-		
-		// mute entity
-		$this->assertTrue($object->muteNotifications($user->guid));
-		
-		$this->assertEmpty($this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
+		$this->assertEmpty($this->service->filterSubscriptions($subscriptions, $event));
 	}
 }

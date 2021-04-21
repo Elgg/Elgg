@@ -129,6 +129,11 @@ Some pages (like the group notification settings) have been moved to the correct
 
 This means that event handlers, hook handlers, actions, views and languages keys have been (re)moved or renamed. 
 
+Notification Event Handling
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The notification hooks no longer receive the ``origin`` parameter.
+
 Diagnostics Plugin
 ------------------
 
@@ -665,6 +670,7 @@ Miscellaneous API changes
 * ``Elgg\Email::getTo()`` now always returns an ``array``
 * ``ElggPlugin::activate()`` and ``ElggPlugin::deactivate()`` now can throw an ``Elgg\Exceptions\PluginException`` with more details about the failure
 * ``\ElggRelationship::RELATIONSHIP_LIMIT`` has been removed use \Elgg\Database\RelationshipsTable::RELATIONSHIP_COLUMN_LENGTH``
+* The constants ``ORIGIN_SUBSCRIPTIONS`` and ``ORIGIN_INSTANT`` in ``\Elgg\Notifications\Notification`` have been removed
 
 Deprecated APIs
 ---------------

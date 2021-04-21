@@ -81,8 +81,6 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		$this->entities = _elgg_services()->entityTable;
 		$this->time = $this->entities->getCurrentTime()->getTimestamp();
 
-		$this->subscriptions = _elgg_services()->subscriptions;
-
 		$this->session = _elgg_services()->session;
 
 		$this->logger = _elgg_services()->logger;
@@ -102,13 +100,9 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 
 	public function setupServices() {
 		$this->notifications = new NotificationsService(
-			$this->subscriptions,
 			$this->queue,
 			$this->hooks,
-			$this->session,
-			$this->translator,
-			$this->entities,
-			$this->logger
+			$this->session
 		);
 		_elgg_services()->setValue('notifications', $this->notifications);
 	}
@@ -312,7 +306,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 			->method('getNotificationEventSubscriptions')
 			->will($this->returnValue([]));
 
-		$this->subscriptions = $mock;
+		_elgg_services()->subscriptions = $mock;
 
 		$this->setupServices();
 
@@ -333,6 +327,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		$this->session->removeLoggedInUser();
 
 		$this->assertEquals(3, $this->notifications->processQueue($this->time + 10));
+		_elgg_services()->reset('subscriptions');
 	}
 
 	public function testProcessQueueTimesout() {
@@ -342,7 +337,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 			->method('getNotificationEventSubscriptions')
 			->will($this->returnValue([]));
 
-		$this->subscriptions = $mock;
+		_elgg_services()->subscriptions = $mock;
 
 		$this->setupServices();
 
@@ -363,6 +358,8 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		$this->session->removeLoggedInUser();
 
 		$this->assertEquals(0, $this->notifications->processQueue($this->time));
+		
+		_elgg_services()->reset('subscriptions');
 	}
 
 	public function testCanUseEnqueueHookToPreventSubscriptionNotificationEventFromQueueing() {
@@ -385,7 +382,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 				],
 			]));
 
-		$this->subscriptions = $mock;
+		_elgg_services()->subscriptions = $mock;
 
 		$this->hooks->registerHandler('enqueue', 'notification', function (\Elgg\Hook $hook) use (&$call_count, $object) {
 			$call_count++;
@@ -411,6 +408,8 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		$this->session->removeLoggedInUser();
 
 		$this->assertEquals(0, $this->notifications->processQueue($this->time + 10));
+		
+		_elgg_services()->reset('subscriptions');
 	}
 
 	public function testCanUseHooksBeforeAndAfterSubscriptionNotificationsQueue() {
@@ -431,8 +430,11 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		$mock->expects($this->exactly(1))
 			->method('getNotificationEventSubscriptions')
 			->will($this->returnValue($subscribers));
+		$mock->expects($this->exactly(1))
+			->method('filterSubscriptions')
+			->will($this->returnValue($subscribers));
 
-		$this->subscriptions = $mock;
+		_elgg_services()->subscriptions = $mock;
 
 		$this->session->setLoggedInUser($this->actor);
 
@@ -469,6 +471,8 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 
 		$this->assertEquals(1, $before_call_count);
 		$this->assertEquals(1, $after_call_count);
+		
+		_elgg_services()->reset('subscriptions');
 	}
 
 	public function testCanProcessSubscriptionNotificationsQueue() {
@@ -488,8 +492,16 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 					'bad_method'
 				],
 			]));
+		$mock->expects($this->exactly(1))
+			->method('filterSubscriptions')
+			->will($this->returnValue([
+				$recipient->guid => [
+					'test_method',
+					'bad_method'
+				],
+			]));
 
-		$this->subscriptions = $mock;
+		_elgg_services()->subscriptions = $mock;
 
 		$this->session->setLoggedInUser($this->actor);
 
@@ -542,6 +554,8 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		$result = $this->notifications->processQueue($this->time + 10, true);
 		$this->assertEquals(1, $call_count);
 		$this->assertEquals($deliveries, $result);
+		
+		_elgg_services()->reset('subscriptions');
 	}
 
 	public function testCanAlterSubscriptionNotificationTranslations() {
@@ -563,8 +577,16 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 					'bad_method'
 				],
 			]));
-
-		$this->subscriptions = $mock;
+		$mock->expects($this->exactly(1))
+			->method('filterSubscriptions')
+			->will($this->returnValue([
+				$recipient->guid => [
+					'test_method',
+					'bad_method'
+				],
+			]));
+			
+		_elgg_services()->subscriptions = $mock;
 
 		$this->session->setLoggedInUser($this->actor);
 
@@ -620,6 +642,8 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		$this->notifications->processQueue($this->time + 10);
 
 		$this->assertEquals(1, $call_count);
+		
+		_elgg_services()->reset('subscriptions');
 	}
 
 	public function testCanPrepareSubscriptionNotification() {
@@ -641,7 +665,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 				]
 			));
 
-		$this->subscriptions = $mock;
+		_elgg_services()->subscriptions = $mock;
 
 		$this->session->setLoggedInUser($this->actor);
 
@@ -687,6 +711,8 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		$this->session->removeLoggedInUser();
 
 		$this->assertEquals(1, $this->notifications->processQueue($this->time + 10));
+		
+		_elgg_services()->reset('subscriptions');
 	}
 
 	public function testValidatesObjectExistenceForDequeuedSubscriptionNotificationEvent() {
@@ -701,7 +727,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 			->method('getNotificationEventSubscriptions')
 			->will($this->returnValue([]));
 
-		$this->subscriptions = $mock;
+		_elgg_services()->subscriptions = $mock;
 
 		$this->setupServices();
 
@@ -717,6 +743,8 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		$this->session->removeLoggedInUser();
 
 		$this->assertEquals(0, $this->notifications->processQueue($this->time + 10));
+		
+		_elgg_services()->reset('subscriptions');
 	}
 
 	public function testValidatesActorExistenceForDequeuedSubscriptionNotificationEvent() {
@@ -731,7 +759,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 			->method('getNotificationEventSubscriptions')
 			->will($this->returnValue([]));
 
-		$this->subscriptions = $mock;
+		_elgg_services()->subscriptions = $mock;
 
 		$this->setupServices();
 
@@ -745,6 +773,8 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		$this->session->removeLoggedInUser();
 
 		$this->assertEquals(0, $this->notifications->processQueue($this->time + 10));
+		
+		_elgg_services()->reset('subscriptions');
 	}
 
 	/**
@@ -893,7 +923,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 			$notification = $hook->getParam('notification');
 
 			$this->assertInstanceOf(Notification::class, $notification);
-			$this->assertEquals($notification->subject, $subject);
+			$this->assertEquals($subject, $notification->subject);
 			$this->assertStringContainsString($body, $notification->body);
 			$this->assertEquals($event->toObject(), $hook->getParam('event')->toObject());
 
