@@ -342,6 +342,11 @@ To unmute the notifications call ``\ElggEntity::unmuteNotifications($user_guid)`
 
 To check if a user has the notifications muted call ``\ElggEntity::hasMutedNotifications($user_guid)`` the ``$user_guid`` is defaulted to the current logged in user.
 
+Temporarily disable notifications
+=================================
+
+Users can temporarily disable all notifications by going to the Notification settings and set a start and end date for the period they don't wish to receive any notifications.
+
 Notification settings
 =====================
 

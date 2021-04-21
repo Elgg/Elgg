@@ -298,6 +298,58 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals($expected, $this->service->filterSubscriptions($subscriptions, $event));
 	}
 	
+	public function testFilterTimedMutedSubscribersExpired() {
+		$this->entities[] = $user1 = $this->createUser();
+		$this->entities[] = $user2 = $this->createUser();
+		$event = $this->getSubscriptionNotificationEvent();
+		
+		$user1->setPrivateSetting('timed_muting_start', time() - 20);
+		$user1->setPrivateSetting('timed_muting_end', time() - 10);
+		
+		$subscriptions = [
+			$user1->guid => ['apples', 'bananas'],
+			$user2->guid => ['bananas'],
+		];
+		
+		$this->assertEquals($subscriptions, $this->service->filterSubscriptions($subscriptions, $event));
+	}
+	
+	public function testFilterTimedMutedSubscribersActive() {
+		$this->entities[] = $user1 = $this->createUser();
+		$this->entities[] = $user2 = $this->createUser();
+		$event = $this->getSubscriptionNotificationEvent();
+		
+		$user1->setPrivateSetting('timed_muting_start', time() - 20);
+		$user1->setPrivateSetting('timed_muting_end', time() + 10);
+		
+		$subscriptions = [
+			$user1->guid => ['apples', 'bananas'],
+			$user2->guid => ['bananas'],
+		];
+		
+		$expected = [
+			$user2->guid => ['bananas'],
+		];
+		
+		$this->assertEquals($expected, $this->service->filterSubscriptions($subscriptions, $event));
+	}
+	
+	public function testFilterTimedMutedSubscribersScheduled() {
+		$this->entities[] = $user1 = $this->createUser();
+		$this->entities[] = $user2 = $this->createUser();
+		$event = $this->getSubscriptionNotificationEvent();
+		
+		$user1->setPrivateSetting('timed_muting_start', time() + 20);
+		$user1->setPrivateSetting('timed_muting_end', time() + 40);
+		
+		$subscriptions = [
+			$user1->guid => ['apples', 'bananas'],
+			$user2->guid => ['bananas'],
+		];
+		
+		$this->assertEquals($subscriptions, $this->service->filterSubscriptions($subscriptions, $event));
+	}
+	
 	function testGetNotificationEventSubscriptionsWithMutedActorBySubscription() {
 		$this->entities[] = $user = $this->createUser();
 		

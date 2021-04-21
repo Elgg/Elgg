@@ -8,6 +8,7 @@ use Elgg\PluginHooksService;
 use Elgg\Database\Select;
 use Elgg\Database\Delete;
 use Elgg\Database\QueryBuilder;
+use Elgg\Database\Entities;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -484,6 +485,7 @@ class SubscriptionsService {
 		// apply filters
 		$subscriptions = $this->filterMutedNotifications($subscriptions, $event);
 		$subscriptions = $this->filterDelayedEmailSubscribers($subscriptions);
+		$subscriptions = $this->filterTimedMutedSubscribers($subscriptions);
 		
 		return $subscriptions;
 	}
@@ -540,9 +542,7 @@ class SubscriptionsService {
 		});
 		
 		// filter subscriptions
-		return array_filter($subscriptions, function($value, $key) use ($muted) {
-			return !in_array($key, $muted);
-		}, ARRAY_FILTER_USE_BOTH);
+		return array_diff_key($subscriptions, array_flip($muted));
 	}
 	
 	/**
@@ -562,6 +562,38 @@ class SubscriptionsService {
 			
 			return array_values($user_methods);
 		}, $subscriptions);
+	}
+	
+	/**
+	 * Filter users who have set a period in which not to receive notifications
+	 *
+	 * @param array $subscriptions List of subscribers to filter
+	 *
+	 * @return array
+	 */
+	protected function filterTimedMutedSubscribers(array $subscriptions): array {
+		$muted = Entities::find([
+			'type' => 'user',
+			'guids' => array_keys($subscriptions),
+			'limit' => false,
+			'callback' => function ($row) {
+				return (int) $row->guid;
+			},
+			'private_setting_name_value_pairs' => [
+				[
+					'name' => 'timed_muting_start',
+					'value' => time(),
+					'operand' => '<=',
+				],
+				[
+					'name' => 'timed_muting_end',
+					'value' => time(),
+					'operand' => '>=',
+				],
+			],
+		]);
+		
+		return array_diff_key($subscriptions, array_flip($muted));
 	}
 
 	/**
