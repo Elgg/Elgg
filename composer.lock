@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aa4fc89baa721a5a23546b085dd3056c",
+    "content-hash": "c125dd3d31dd8f6642e989edcecbb17e",
     "packages": [
         {
             "name": "cakephp/cache",
@@ -1610,23 +1610,23 @@
         },
         {
             "name": "hackzilla/password-generator",
-            "version": "1.4.1",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hackzilla/password-generator.git",
-                "reference": "1d4fce950424b5222d6404d7d74db7c002955522"
+                "reference": "53c13507b5b9875a07618f1f2a7db95e5b8c0638"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hackzilla/password-generator/zipball/1d4fce950424b5222d6404d7d74db7c002955522",
-                "reference": "1d4fce950424b5222d6404d7d74db7c002955522",
+                "url": "https://api.github.com/repos/hackzilla/password-generator/zipball/53c13507b5b9875a07618f1f2a7db95e5b8c0638",
+                "reference": "53c13507b5b9875a07618f1f2a7db95e5b8c0638",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2"
+                "php": ">=7.1.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.8|^5.5|^6.5"
+                "phpunit/phpunit": "^9.0"
             },
             "type": "library",
             "autoload": {
@@ -1642,15 +1642,15 @@
                 {
                     "name": "Daniel Platt",
                     "email": "github@ofdan.co.uk",
-                    "homepage": "http://www.hackzilla.org"
+                    "homepage": "https://www.hackzilla.org"
                 }
             ],
             "description": "Password Generator Library",
             "support": {
                 "issues": "https://github.com/hackzilla/password-generator/issues",
-                "source": "https://github.com/hackzilla/password-generator/tree/1.4.1"
+                "source": "https://github.com/hackzilla/password-generator/tree/1.6.0"
             },
-            "time": "2019-04-19T13:22:10+00:00"
+            "time": "2021-01-13T23:18:24+00:00"
         },
         {
             "name": "imagine/imagine",

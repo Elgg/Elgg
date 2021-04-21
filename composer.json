@@ -22,7 +22,7 @@
         "fortawesome/font-awesome": "~5.14",
         "fzaninotto/faker": "^1.9",
         "guzzlehttp/guzzle": "~6.5.2",
-        "hackzilla/password-generator": "~1.4.1",
+        "hackzilla/password-generator": "~1.6.0",
         "imagine/imagine": "~1.2.4",
         "laminas/laminas-mail": "~2.4",
         "laminas/laminas-servicemanager": "^3.3.1",
