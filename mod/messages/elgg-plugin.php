@@ -81,7 +81,7 @@ return [
 		],
 	],
 	'events' => [
-		'delete' => [
+		'delete:after' => [
 			'user' => [
 				'Elgg\Messages\User::purgeMessages' => [],
 			],

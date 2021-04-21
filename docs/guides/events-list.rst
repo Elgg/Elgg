@@ -166,8 +166,14 @@ Entity events
     The entity method ``getOriginalAttributes()`` can be used to identify which attributes have changed since
     the entity was last saved.
 
-**delete, <entity type>**
+**delete:before, <entity type>**
     Triggered before entity deletion. Return false to prevent deletion.
+
+**delete, <entity type>**
+    Triggered before entity deletion.
+
+**delete:after, <entity type>**
+    Triggered after entity deletion.
 
 **disable, <entity type>**
     Triggered before the entity is disabled. Return false to prevent disabling.

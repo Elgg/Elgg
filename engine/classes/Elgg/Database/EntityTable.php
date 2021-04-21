@@ -625,6 +625,8 @@ class EntityTable {
 		if (!$this->events->triggerBefore('delete', $entity->type, $entity)) {
 			return false;
 		}
+		
+		$this->events->trigger('delete', $entity->type, $entity);
 
 		if ($entity instanceof ElggUser) {
 			// ban to prevent using the site during delete
