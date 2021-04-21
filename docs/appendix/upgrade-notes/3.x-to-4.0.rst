@@ -671,6 +671,7 @@ Miscellaneous API changes
 * ``ElggPlugin::activate()`` and ``ElggPlugin::deactivate()`` now can throw an ``Elgg\Exceptions\PluginException`` with more details about the failure
 * ``\ElggRelationship::RELATIONSHIP_LIMIT`` has been removed use \Elgg\Database\RelationshipsTable::RELATIONSHIP_COLUMN_LENGTH``
 * The constants ``ORIGIN_SUBSCRIPTIONS`` and ``ORIGIN_INSTANT`` in ``\Elgg\Notifications\Notification`` have been removed
+* You can no longer use the ``delete, <entity_type>`` event to prevent deletion of an entity. Use the ``delete:before, <entity_type>`` event
 
 Deprecated APIs
 ---------------
