@@ -85,7 +85,7 @@ class SubscriptionsService {
 
 		// get subscribers only for \ElggEntity if it isn't private
 		if (($object instanceof \ElggEntity) && ($object->access_id !== ACCESS_PRIVATE)) {
-			$records = $this->getSubscriptionRecords($object->getContainerGUID(), $methods, $object->type, $object->subtype, $event->getAction());
+			$records = $this->getSubscriptionRecords($object->getContainerGUID(), $methods, $object->type, $object->subtype, $event->getAction(), $event->getActorGUID());
 			foreach ($records as $record) {
 				if (empty($record->guid)) {
 					// happens when no records are found
@@ -600,10 +600,11 @@ class SubscriptionsService {
 	 * @param string $type           (optional) entity type
 	 * @param string $subtype        (optional) entity subtype
 	 * @param string $action         (optional) notification action (eg. 'create')
+	 * @param int    $actor_guid     (optional) Notification event actor to exclude from the database subscriptions
 	 *
 	 * @return array
 	 */
-	protected function getSubscriptionRecords(int $container_guid, array $methods, string $type = null, string $subtype = null, string $action = null): array {
+	protected function getSubscriptionRecords(int $container_guid, array $methods, string $type = null, string $subtype = null, string $action = null, int $actor_guid = 0): array {
 		// create IN clause
 		$rels = $this->getMethodRelationships($methods, $type, $subtype, $action);
 		if (!$rels) {
@@ -616,6 +617,10 @@ class SubscriptionsService {
 			->where($select->compare('guid_two', '=', $container_guid, ELGG_VALUE_GUID))
 			->andWhere($select->compare('relationship', 'in', $rels, ELGG_VALUE_STRING))
 			->groupBy('guid_one');
+		
+		if (!empty($actor_guid)) {
+			$select->andWhere($select->compare('guid_one', '!=', $actor_guid, ELGG_VALUE_GUID));
+		}
 		
 		return $this->db->getData($select);
 	}

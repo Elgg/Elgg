@@ -170,17 +170,11 @@ class NotificationEventHandler {
 				return false;
 			}
 		
-			if ($recipient->guid === $this->event->getActorGUID()) {
-				// Content creators should not be receiving subscription
-				// notifications about their own content
-				return false;
-			}
-			
 			if (!$actor || !$object) {
 				return false;
 			}
 
-			if ($object instanceof ElggEntity && !_elgg_services()->accessCollections->hasAccessToEntity($object, $recipient)) {
+			if ($object instanceof \ElggEntity && !_elgg_services()->accessCollections->hasAccessToEntity($object, $recipient)) {
 				// Recipient does not have access to the notification object
 				// The access level may have changed since the event was enqueued
 				return false;
@@ -205,13 +199,13 @@ class NotificationEventHandler {
 
 		$notification = _elgg_services()->hooks->trigger('prepare', 'notification', $params, $notification);
 		if (!$notification instanceof Notification) {
-			throw new RuntimeException("'prepare','notification' hook must return an instance of " . Notification::class);
+			throw new \RuntimeException("'prepare','notification' hook must return an instance of " . Notification::class);
 		}
 
 		$type = 'notification:' . $this->event->getDescription();
 		$notification = _elgg_services()->hooks->trigger('prepare', $type, $params, $notification);
 		if (!$notification instanceof Notification) {
-			throw new RuntimeException("'prepare','{$type}' hook must return an instance of " . Notification::class);
+			throw new \RuntimeException("'prepare','{$type}' hook must return an instance of " . Notification::class);
 		}
 
 		if (elgg_extract('add_salutation', $notification->params) === true) {
@@ -221,7 +215,7 @@ class NotificationEventHandler {
 		
 		$notification = _elgg_services()->hooks->trigger('format', "notification:{$method}", [], $notification);
 		if (!$notification instanceof Notification) {
-			throw new RuntimeException("'format','notification:{$method}' hook must return an instance of " . Notification::class);
+			throw new \RuntimeException("'format','notification:{$method}' hook must return an instance of " . Notification::class);
 		}
 
 		// return true to indicate the notification has been sent

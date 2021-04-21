@@ -350,7 +350,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals($subscriptions, $this->service->filterSubscriptions($subscriptions, $event));
 	}
 	
-	function testGetNotificationEventSubscriptionsWithMutedActorBySubscription() {
+	public function testGetNotificationEventSubscriptionsWithMutedActorBySubscription() {
 		$this->entities[] = $user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
@@ -371,7 +371,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertEmpty($this->service->filterSubscriptions($subscriptions, $event));
 	}
 	
-	function testGetNotificationEventSubscriptionsWithMutedOwnerBySubscription() {
+	public function testGetNotificationEventSubscriptionsWithMutedOwnerBySubscription() {
 		$this->entities[] = $user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
@@ -392,7 +392,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertEmpty($this->service->filterSubscriptions($subscriptions, $event));
 	}
 	
-	function testGetNotificationEventSubscriptionsWithMutedContainerBySubscription() {
+	public function testGetNotificationEventSubscriptionsWithMutedContainerBySubscription() {
 		$this->entities[] = $user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
@@ -419,7 +419,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertEmpty($this->service->filterSubscriptions($subscriptions, $event));
 	}
 	
-	function testGetNotificationEventSubscriptionsWithMutedEntityBySubscription() {
+	public function testGetNotificationEventSubscriptionsWithMutedEntityBySubscription() {
 		$this->entities[] = $user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
@@ -437,5 +437,26 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($object->muteNotifications($user->guid));
 		
 		$this->assertEmpty($this->service->filterSubscriptions($subscriptions, $event));
+	}
+	
+	public function testGetNotificationEventSubscriptionsWhereEventActorIsNotPresentInResult() {
+		$event = $this->getSubscriptionNotificationEvent();
+		
+		$this->entities[] = $user = $this->createUser();
+		$actor = $event->getActor();
+		
+		/* @var $object \ElggObject */
+		$object = $event->getObject();
+		$container = $object->getContainerEntity();
+		$this->assertTrue($container->addSubscription($actor->guid, 'apples'));
+		$this->assertTrue($container->addSubscription($user->guid, 'bananas'));
+		
+		$expected = [
+			$user->guid => [
+				'bananas',
+			],
+		];
+		
+		$this->assertEquals($expected, $this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
 	}
 }
