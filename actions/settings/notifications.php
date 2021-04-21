@@ -3,6 +3,8 @@
  * Saves user notification settings
  */
 
+use Elgg\Values;
+
 $guid = (int) get_input('guid');
 
 $user = get_user($guid);
@@ -37,6 +39,22 @@ if ((bool) elgg_get_config('enable_delayed_email')) {
 		// update all queued notifications to the new interval
 		_elgg_services()->delayedEmailQueueTable->updateRecipientInterval($user->guid, $delayed_email_interval);
 	}
+}
+
+// timed muting
+$start = (int) get_input('timed_muting_start');
+$end = (int) get_input('timed_muting_end');
+if (!empty($start) && !empty($end) && $start <= $end) {
+	// change end to [date 23:59:59] instead of [date 00:00:00]
+	$end_date = Values::normalizeTime($end);
+	$end_date->setTime(23, 59, 59);
+	$end = $end_date->getTimestamp();
+	
+	$user->setPrivateSetting('timed_muting_start', $start);
+	$user->setPrivateSetting('timed_muting_end', $end);
+} else {
+	$user->removePrivateSetting('timed_muting_start');
+	$user->removePrivateSetting('timed_muting_end');
 }
 
 return elgg_ok_response('', elgg_echo('usersettings:notifications:save:ok'));

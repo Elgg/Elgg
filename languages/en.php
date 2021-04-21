@@ -348,6 +348,12 @@ return array(
 	'usersettings:notifications:default:description' => 'Default notification settings for events from the system',
 	'usersettings:notifications:content_create:description' => 'Default notification settings for new content you created, this can cause notifications when others take action on you content like leaving a comment',
 	'usersettings:notifications:create_comment:description' => "Default notification setting when you comment on content in order to follow the rest of the conversation",
+
+	'usersettings:notifications:timed_muting' => "Temporarily disable notifications",
+	'usersettings:notifications:timed_muting:help' => "If you don't wish to receive any notifications during a certain period (for example a holiday) you can set a start and end date to temporarily disable all notifications",
+	'usersettings:notifications:timed_muting:start' => "First day",
+	'usersettings:notifications:timed_muting:end' => "Last day",
+	'usersettings:notifications:timed_muting:warning' => "Currently your notifications are temporarily disabled",
 	
 	'usersettings:notifications:save:ok' => "Notification settings were successfully saved.",
 	'usersettings:notifications:save:fail' => "There was a problem saving the notification settings.",

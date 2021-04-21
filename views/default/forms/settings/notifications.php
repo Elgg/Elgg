@@ -26,6 +26,8 @@ echo elgg_format_element('div', [
 
 echo elgg_view('notifications/settings/delayed_email', $vars);
 
+echo elgg_view('notifications/settings/timed_muting', $vars);
+
 // form footer
 $footer = elgg_view_field([
 	'#type' => 'submit',
