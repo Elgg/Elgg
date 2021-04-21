@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "04999e8626edba108c91b2558f824a8a",
+    "content-hash": "dab00a06035dcdd337730487a7be9473",
     "packages": [
         {
             "name": "cakephp/cache",
@@ -386,16 +386,16 @@
         },
         {
             "name": "ckeditor/ckeditor",
-            "version": "4.12.1",
+            "version": "4.16.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ckeditor/ckeditor-releases.git",
-                "reference": "b1a25e93ae0b038f45dcba458f4c2c18bd7318e5"
+                "url": "https://github.com/ckeditor/ckeditor4-releases.git",
+                "reference": "98a1bce9c9237e2ee141c0d2e01c3f0576655d5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/b1a25e93ae0b038f45dcba458f4c2c18bd7318e5",
-                "reference": "b1a25e93ae0b038f45dcba458f4c2c18bd7318e5",
+                "url": "https://api.github.com/repos/ckeditor/ckeditor4-releases/zipball/98a1bce9c9237e2ee141c0d2e01c3f0576655d5d",
+                "reference": "98a1bce9c9237e2ee141c0d2e01c3f0576655d5d",
                 "shasum": ""
             },
             "type": "library",
@@ -408,13 +408,14 @@
             "authors": [
                 {
                     "name": "CKSource",
-                    "homepage": "http://cksource.com"
+                    "homepage": "https://cksource.com"
                 }
             ],
             "description": "JavaScript WYSIWYG web text editor.",
-            "homepage": "http://ckeditor.com",
+            "homepage": "https://ckeditor.com/ckeditor-4/",
             "keywords": [
                 "CKEditor",
+                "ckeditor4",
                 "editor",
                 "fckeditor",
                 "html",
@@ -423,7 +424,13 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2019-06-28T10:41:23+00:00"
+            "support": {
+                "forum": "https://stackoverflow.com/tags/ckeditor",
+                "issues": "https://github.com/ckeditor/ckeditor4/issues",
+                "source": "https://github.com/ckeditor/ckeditor4",
+                "wiki": "https://ckeditor.com/docs/ckeditor4/latest/"
+            },
+            "time": "2021-01-27T08:14:09+00:00"
         },
         {
             "name": "composer/installers",
@@ -7348,5 +7355,5 @@
     "platform-overrides": {
         "php": "7.4"
     },
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }
