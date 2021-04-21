@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dab00a06035dcdd337730487a7be9473",
+    "content-hash": "e5d8589528c820c77709ffeaa99105dd",
     "packages": [
         {
             "name": "cakephp/cache",
@@ -2738,10 +2738,10 @@
         },
         {
             "name": "npm-asset/cropperjs",
-            "version": "1.4.3",
+            "version": "1.5.9",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/cropperjs/-/cropperjs-1.4.3.tgz"
+                "url": "https://registry.npmjs.org/cropperjs/-/cropperjs-1.5.9.tgz"
             },
             "type": "npm-asset",
             "license": [
