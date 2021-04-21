@@ -50,4 +50,39 @@ class Filter {
 		
 		return $return;
 	}
+	
+	/**
+	 * Register the settings tab to the notification settings pages
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:filter:settings/notifications'
+	 *
+	 * @return void|MenuItems
+	 */
+	public static function registerNotificationSettings(\Elgg\Hook $hook) {
+		$page_owner = elgg_get_page_owner_entity();
+		if (!$page_owner instanceof \ElggUser || !$page_owner->canEdit()) {
+			return;
+		}
+		
+		/* @var $result MenuItems */
+		$result = $hook->getValue();
+		
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'settings',
+			'text' => elgg_echo('usersettings:notifications:menu:filter:settings'),
+			'href' => elgg_generate_url('settings:notifications', [
+				'username' => $page_owner->username,
+			]),
+			'priority' => 100,
+		]);
+		
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'users',
+			'text' => elgg_echo('collection:user:user'),
+			'href' => elgg_generate_url('settings:notifications:users', [
+				'username' => $page_owner->username,
+			]),
+			'priority' => 200,
+		]);
+	}
 }

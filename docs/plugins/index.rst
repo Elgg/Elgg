@@ -34,7 +34,6 @@ The following plugins are also bundled with Elgg, but are not (yet) documented
 - invitefriends
 - likes
 - members
-- notifications
 - reportedcontent
 - search
 - system_log

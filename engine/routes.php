@@ -171,6 +171,20 @@ return [
 			\Elgg\Router\Middleware\Gatekeeper::class,
 		],
 	],
+	'settings:notifications' => [
+		'path' => '/settings/notifications/{username}',
+		'resource' => 'settings/notifications',
+		'middleware' => [
+			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
+		],
+	],
+	'settings:notifications:users' => [
+		'path' => '/settings/notifications/users/{username}',
+		'resource' => 'settings/notifications/users',
+		'middleware' => [
+			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
+		],
+	],
 	'settings:statistics' => [
 		'path' => '/settings/statistics/{username?}',
 		'resource' => 'settings/statistics',

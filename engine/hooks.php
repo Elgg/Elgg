@@ -181,6 +181,9 @@ return [
 		'menu:filter:admin/upgrades' => [
 			'Elgg\Menus\Filter::registerAdminUpgrades' => [],
 		],
+		'menu:filter:settings/notifications' => [
+			'Elgg\Menus\Filter::registerNotificationSettings' => [],
+		],
 		'menu:footer' => [
 			'Elgg\Menus\Footer::registerRSS' => [],
 			'Elgg\Menus\Footer::registerElggBranding' => [],
@@ -290,9 +293,7 @@ return [
 	],
 	'usersettings:save' => [
 		'user' => [
-			\Elgg\Email\SaveUserSettingsHandler::class => [],
 			'Elgg\Users\Settings::setAdminValidationNotification' => [],
-			\Elgg\Notifications\SaveUserSettingsHandler::class => [],
 			'Elgg\Users\Settings::setDefaultAccess' => [],
 			'Elgg\Users\Settings::setEmail' => [],
 			'Elgg\Users\Settings::setLanguage' => [],

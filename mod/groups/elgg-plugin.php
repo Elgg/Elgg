@@ -127,6 +127,13 @@ return [
 			],
 			'detect_page_owner' => true,
 		],
+		'settings:notification:groups' => [
+			'path' => '/settings/notifications/groups/{username}',
+			'resource' => 'settings/notifications/groups',
+			'middleware' => [
+				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
+			],
+		],
 	],
 	'widgets' => [
 		'a_users_groups' => [
@@ -145,6 +152,7 @@ return [
 		'create' => [
 			'group' => [
 				'Elgg\Groups\Group::createAccessCollection' => [],
+				\Elgg\Notifications\CreateContentEventHandler::class => [],
 			],
 			'relationship' => [
 				'Elgg\Groups\Relationships::applyGroupNotificationSettings' => [],
@@ -210,6 +218,9 @@ return [
 			],
 			'menu:filter:groups/all' => [
 				'Elgg\Groups\Menus\Filter::registerGroupsAll' => [],
+			],
+			'menu:filter:settings/notifications' => [
+				'Elgg\Groups\Menus\Filter::registerNotificationSettings' => [],
 			],
 			'menu:groups_members' => [
 				'Elgg\Groups\Menus\GroupsMembers::register' => [],

@@ -335,13 +335,25 @@ return array(
 /**
  * Notifications
  */
-	'notifications:usersettings' => "Notification settings",
-	'notifications:usersettings:description' => "How do you wish to be notified about activity on the site?",
 	'notification:method:email' => 'Email',
 	'notification:method:delayed_email' => 'Delayed email',
-
-	'notifications:usersettings:save:ok' => "Notification settings were successfully saved.",
-	'notifications:usersettings:save:fail' => "There was a problem saving the notification settings.",
+	
+	'usersettings:notifications:title' => "Notification settings",
+	'usersettings:notifications:users:title' => 'Notifications per user',
+	'usersettings:notifications:users:description' => 'To receive notifications from your friends (on an individual basis) when they create new content, find them below and select the notification method you would like to use.',
+	
+	'usersettings:notifications:menu:page' => "Notification settings",
+	'usersettings:notifications:menu:filter:settings' => "Settings",
+	
+	'usersettings:notifications:default:description' => 'Default notification settings for events from the system',
+	'usersettings:notifications:content_create:description' => 'Default notification settings for new content you created, this can cause notifications when others take action on you content like leaving a comment',
+	'usersettings:notifications:create_comment:description' => "Default notification setting when you comment on content in order to follow the rest of the conversation",
+	
+	'usersettings:notifications:save:ok' => "Notification settings were successfully saved.",
+	'usersettings:notifications:save:fail' => "There was a problem saving the notification settings.",
+	
+	'usersettings:notifications:subscriptions:save:ok' => "Notification subscriptions were successfully saved.",
+	'usersettings:notifications:subscriptions:save:fail' => "There was a problem saving the notification subscriptions.",
 
 	'notification:default:salutation' => 'Dear %s,',
 	'notification:default:sign-off' => 'Regards,
@@ -350,11 +362,11 @@ return array(
 	'notification:subject' => 'Notification about %s',
 	'notification:body' => 'View the new activity at %s',
 	
-	'notification:settings:create_comment:description' => "Default notification setting when you comment on content in order to follow the rest of the conversation",
-
 	'notifications:delayed_email:subject:daily' => "Daily notifications",
 	'notifications:delayed_email:subject:weekly' => "Weekly notifications",
 	
+	'notifications:subscriptions:no_results' => 'There are no subscription records yet',
+
 /**
  * Search
  */
@@ -1949,4 +1961,10 @@ Global variables:
 	
 	"core:upgrade:2021040701:title" => "Migrate user notification settings",
 	"core:upgrade:2021040701:description" => "In order to have a more developer friendly way to store notification settings of a user a migration is needed to the new naming convention.",
+	
+	'core:upgrade:2021040801:title' => "Migrate Access collection notification preferences",
+	'core:upgrade:2021040801:description' => "A new way to store notification preferences has been introduced. This upgrade migrates the old settings to the new logic.",
+	
+	'core:upgrade:2021041901:title' => "Remove the notifications plugin",
+	'core:upgrade:2021041901:description' => "Deletes the entity associated with the Notifications plugin removed in Elgg 4.0",
 );

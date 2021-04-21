@@ -31,7 +31,6 @@ $ordered_plugins = [
 	'members',
 	'messageboard',
 	'messages',
-	'notifications',
 	'pages',
 	'profile',
 	'reportedcontent',

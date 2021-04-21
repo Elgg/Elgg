@@ -59,4 +59,33 @@ class Filter {
 		
 		return $return;
 	}
+	
+	/**
+	 * Setup filter tabs on notification settings page
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:filter:settings/notifications'
+	 *
+	 * @return void|\Elgg\Menu\MenuItems
+	 */
+	public static function registerNotificationSettings(\Elgg\Hook $hook) {
+	
+		$page_owner = elgg_get_page_owner_entity();
+		if (!$page_owner instanceof \ElggUser || !$page_owner->canEdit()) {
+			return;
+		}
+		
+		/* @var $return \Elgg\Menu\MenuItems */
+		$return = $hook->getValue();
+		
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'groups',
+			'text' => elgg_echo('collection:group:group'),
+			'href' => elgg_generate_url('settings:notification:groups', [
+				'username' => $page_owner->username,
+			]),
+			'priority' => 300,
+		]);
+		
+		return $return;
+	}
 }

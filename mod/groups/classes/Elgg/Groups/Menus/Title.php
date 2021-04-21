@@ -66,11 +66,26 @@ class Title {
 				]),
 			]);
 			
+			// leave group
 			$leave_group = groups_get_group_leave_menu_item($group, $user);
 			if ($leave_group instanceof \ElggMenuItem) {
 				$leave_group->setParentName('group-dropdown');
 				$result[] = $leave_group;
 			}
+			
+			// subscription settings
+			$subscribed = $group->hasSubscriptions($user->guid);
+			
+			$result[] = \ElggMenuItem::factory([
+				'name' => 'notifications',
+				'parent_name' => 'group-dropdown',
+				'text' => elgg_echo('groups:usersettings:notifications:title'),
+				'href' => elgg_generate_url('settings:notification:groups', [
+					'username' => $user->username,
+				]),
+				'badge' => $subscribed ? elgg_echo('on') : elgg_echo('off'),
+				'icon' => $subscribed ? 'bell' : 'bell-slash',
+			]);
 		} else {
 			$join_group = groups_get_group_join_menu_item($group, $user);
 			if ($join_group instanceof \ElggMenuItem) {

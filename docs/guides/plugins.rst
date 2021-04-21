@@ -182,7 +182,7 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 				],
 			],
 			'forms/usersettings/save' => [
-				'core/settings/account/notifications' => [
+				'core/settings/account/password' => [
 					'unextend' => true,
 				],
 			],
