@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e5d8589528c820c77709ffeaa99105dd",
+    "content-hash": "dfe213a72e3a2b0f1b6d74ad0e7f3f34",
     "packages": [
         {
             "name": "cakephp/cache",
@@ -2750,10 +2750,10 @@
         },
         {
             "name": "npm-asset/jquery",
-            "version": "3.5.1",
+            "version": "3.6.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/jquery/-/jquery-3.5.1.tgz"
+                "url": "https://registry.npmjs.org/jquery/-/jquery-3.6.0.tgz"
             },
             "type": "npm-asset",
             "license": [
