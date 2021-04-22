@@ -300,6 +300,8 @@ function elgg_get_view_extensions($view) {
 function elgg_view_page($title, $body, $page_shell = 'default', $vars = []) {
 	
 	if (is_array($body)) {
+		$vars['entity'] = elgg_extract('entity', $body, elgg_extract('entity', $vars));
+
 		$body['title'] = elgg_extract('title', $body, $title);
 		$body = elgg_view_layout('default', $body);
 	}
