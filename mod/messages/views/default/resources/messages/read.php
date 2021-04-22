@@ -49,5 +49,6 @@ if ($inbox) {
 
 echo elgg_view_page($message->getDisplayName(), [
 	'content' => $content,
+	'entity' => $message,
 	'show_owner_block_menu' => false,
 ]);

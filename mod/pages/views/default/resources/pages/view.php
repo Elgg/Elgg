@@ -41,6 +41,4 @@ echo elgg_view_page($page->getDisplayName(), [
 		'page' => $page,
 	]),
 	'entity' => $page,
-], 'default', [
-	'entity' => $page,
 ]);

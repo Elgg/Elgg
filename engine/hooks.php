@@ -213,6 +213,9 @@ return [
 		],
 		'menu:title' => [
 			'Elgg\Menus\Title::registerAvatarEdit' => [],
+			'Elgg\Menus\Title::registerEntityToTitle' => [
+				'priority' => 600,
+			],
 		],
 		'menu:topbar' => [
 			'Elgg\Menus\Topbar::registerUserLinks' => [],
