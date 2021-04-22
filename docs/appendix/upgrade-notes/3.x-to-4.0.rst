@@ -154,6 +154,20 @@ Setting them to ``true`` will give you the same effect. This allows for individu
 
 The automatic marking as 'selected' of parent menu items of the selected menu item will now always happen for every menu.
 
+Title menu
+~~~~~~~~~~
+
+The ``title`` menu will now be populated with the ``entity`` menu if the ``entity`` is provided to the layout. This is mostly usefull on the detail
+page of an entity (eg. ``blog/view``). Most of the entries for the ``entity`` menu will be added to a dropdown menu, except the ``edit`` menu item 
+(when available) this item will be presented next to the dropdown menu.
+
+.. code-block:: php
+
+	echo elgg_view_page('title', [
+		'content' => elgg_view_entity($entity),
+		'entity' => $entity, // <= will make sure the entity menu is available in the title menu
+	]);
+
 Registering tag metadatanames
 -----------------------------
 
