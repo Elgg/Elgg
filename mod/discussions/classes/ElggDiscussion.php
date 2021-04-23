@@ -3,7 +3,7 @@
 /**
  * Discussion topic
  *
- * @property string $status The published status of the blog post (published, draft)
+ * @property string $status The published status of the discussion (open|closed)
  */
 class ElggDiscussion extends ElggObject {
 
@@ -13,6 +13,6 @@ class ElggDiscussion extends ElggObject {
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
-		$this->attributes['subtype'] = "discussion";
+		$this->attributes['subtype'] = 'discussion';
 	}
 }
