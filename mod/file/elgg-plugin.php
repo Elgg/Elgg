@@ -111,6 +111,9 @@ return [
 			'menu:site' => [
 				'Elgg\File\Menus\Site::register' => [],
 			],
+			'menu:title:object:file' => [
+				\Elgg\Notifications\RegisterSubscriptionMenuItemsHandler::class => [],
+			],
 		],
 		'seeds' => [
 			'database' => [

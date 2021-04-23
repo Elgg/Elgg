@@ -370,3 +370,11 @@ You can store and retreive notification settings of users with ``\ElggUser::setN
 	// ]
 
 When a user has no setting yet for a non default purpose the system will fallback to the 'default' notification setting.
+
+Notification management
+=======================
+
+A generic menu hook handler is provided to manage notification subscription and muting. If you wish to make it easy for users to subscribe to 
+your entities register a menu hook on ``register`` ``menu:<menu name>:<entity type>:<entity subtype>`` with the callback 
+``Elgg\Notifications\RegisterSubscriptionMenuItemsHandler`` make sure an ``\ElggEntity`` in ``$params['entity']`` is provided. 
+This will work for most ``elgg_view_menu()`` calls.

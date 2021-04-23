@@ -125,6 +125,9 @@ return [
 			'menu:site' => [
 				'Elgg\Blog\Menus\Site::register' => [],
 			],
+			'menu:title:object:blog' => [
+				\Elgg\Notifications\RegisterSubscriptionMenuItemsHandler::class => [],
+			],
 		],
 		'seeds' => [
 			'database' => [
