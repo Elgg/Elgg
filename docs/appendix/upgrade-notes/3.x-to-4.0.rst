@@ -699,6 +699,8 @@ Class functions
 ~~~~~~~~~~~~~~~
 
 * ``Elgg\Config::getEntityTypes()`` use ``Elgg\Config::ENTITY_TYPES`` constant
+* ``ElggGroup::addObjectToGroup()``
+* ``ElggGroup::removeObjectFromGroup()``
 * ``ElggPlugin::getDependencyReport()``
 * ``ElggPlugin::getError()``
 * ``Elgg\Notifications\NotificationsService::getDeprecatedHandler()``
