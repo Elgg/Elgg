@@ -699,6 +699,7 @@ Class functions
 ~~~~~~~~~~~~~~~
 
 * ``Elgg\Config::getEntityTypes()`` use ``Elgg\Config::ENTITY_TYPES`` constant
+* ``ElggFile::setDescription()`` use ``$file->description = $new_description``
 * ``ElggGroup::addObjectToGroup()``
 * ``ElggGroup::removeObjectFromGroup()``
 * ``ElggPlugin::getDependencyReport()``
