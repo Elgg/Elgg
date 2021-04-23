@@ -10,52 +10,6 @@ namespace Elgg\Comments;
 class CreateNotification {
 	
 	/**
-	 * Add the owner of the content being commented on to the subscribers
-	 *
-	 * @param \Elgg\Hook $hook 'get', 'subscribers'
-	 *
-	 * @return void|array
-	 */
-	public static function addOwnerToSubscribers(\Elgg\Hook $hook) {
-		$event = $hook->getParam('event');
-		if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
-			return;
-		}
-		
-		if ($event->getAction() !== 'create') {
-			return;
-		}
-		
-		$object = $event->getObject();
-		if (!$object instanceof \ElggComment) {
-			return;
-		}
-		
-		$content_owner = $object->getContainerEntity()->getOwnerEntity();
-		if (!$content_owner instanceof \ElggUser) {
-			return;
-		}
-		
-		$notification_settings = $content_owner->getNotificationSettings();
-		if (empty($notification_settings)) {
-			return;
-		}
-		
-		$returnvalue = $hook->getValue();
-		
-		$returnvalue[$content_owner->guid] = [];
-		foreach ($notification_settings as $method => $enabled) {
-			if (empty($enabled)) {
-				continue;
-			}
-			
-			$returnvalue[$content_owner->guid][] = $method;
-		}
-		
-		return $returnvalue;
-	}
-	
-	/**
 	 * Set the notification message for the owner of the content being commented on
 	 *
 	 * @param \Elgg\Hook $hook 'prepare', 'notification:create:object:comment'

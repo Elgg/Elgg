@@ -84,7 +84,6 @@ return [
 			'Elgg\Notifications\ChangeAdminNotification::addSiteAdminSubscribers' => [],
 			'Elgg\Notifications\ChangeAdminNotification::addUserSubscriber' => [],
 			'Elgg\Notifications\UnbanUserNotification::getUnbanSubscribers' => [],
-			'Elgg\Comments\CreateNotification::addOwnerToSubscribers' => [],
 		],
 	],
 	'head' => [
