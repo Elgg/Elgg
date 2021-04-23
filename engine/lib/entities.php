@@ -723,7 +723,7 @@ function get_entity_statistics(int $owner_guid = 0) {
  */
 function elgg_register_entity_type($type, $subtype = null) {
 	$type = strtolower($type);
-	if (!in_array($type, \Elgg\Config::getEntityTypes())) {
+	if (!in_array($type, \Elgg\Config::ENTITY_TYPES)) {
 		return false;
 	}
 
@@ -764,7 +764,7 @@ function elgg_register_entity_type($type, $subtype = null) {
  */
 function elgg_unregister_entity_type($type, $subtype = null) {
 	$type = strtolower($type);
-	if (!in_array($type, \Elgg\Config::getEntityTypes())) {
+	if (!in_array($type, \Elgg\Config::ENTITY_TYPES)) {
 		return false;
 	}
 

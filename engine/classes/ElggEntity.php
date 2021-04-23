@@ -1370,9 +1370,9 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	protected function create() {
 
 		$type = $this->attributes['type'];
-		if (!in_array($type, \Elgg\Config::getEntityTypes())) {
+		if (!in_array($type, \Elgg\Config::ENTITY_TYPES)) {
 			throw new InvalidParameterException('Entity type must be one of the allowed types: '
-					. implode(', ', \Elgg\Config::getEntityTypes()));
+				. implode(', ', \Elgg\Config::ENTITY_TYPES));
 		}
 
 		$subtype = $this->attributes['subtype'];

@@ -698,6 +698,7 @@ Removed functions
 Class functions
 ~~~~~~~~~~~~~~~
 
+* ``Elgg\Config::getEntityTypes()`` use ``Elgg\Config::ENTITY_TYPES`` constant
 * ``ElggPlugin::getDependencyReport()``
 * ``ElggPlugin::getError()``
 * ``Elgg\Notifications\NotificationsService::getDeprecatedHandler()``

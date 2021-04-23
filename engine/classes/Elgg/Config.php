@@ -210,6 +210,13 @@ class Config {
 		'system_cache_enabled' => false,
 		'testing_mode' => false,
 	];
+	
+	/**
+	 * Core entity types
+	 *
+	 * @var array
+	 */
+	const ENTITY_TYPES = ['group', 'object', 'site', 'user'];
 
 	/**
 	 * Constructor
@@ -580,38 +587,14 @@ class Config {
 	}
 
 	/**
-	 * Set the config table service (must be set)
+	 * Get the config table API
 	 *
 	 * This is a necessary evil until we refactor so that the service provider has no dependencies.
-	 *
-	 * @param ConfigTable $table the config table service
-	 * @return void
-	 */
-	public function setConfigTable(ConfigTable $table) {
-		$this->config_table = $table;
-	}
-
-	/**
-	 * Get the core entity types
-	 *
-	 * @return string[]
-	 */
-	public static function getEntityTypes() {
-		return ['group', 'object', 'site', 'user'];
-	}
-
-	/**
-	 * Get the config table API
 	 *
 	 * @return ConfigTable
 	 */
 	private function getConfigTable() {
 		if (!$this->config_table) {
-			if (!function_exists('_elgg_services')) {
-				throw new \RuntimeException('setConfigTable() must be called before using API that' .
-					' uses the database.');
-			}
-
 			$this->config_table = _elgg_services()->configTable;
 		}
 

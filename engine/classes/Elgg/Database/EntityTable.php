@@ -143,7 +143,7 @@ class EntityTable {
 	 * @throws InvalidParameterException
 	 */
 	public function setEntityClass($type, $subtype, $class = '') {
-		if (!in_array($type, Config::getEntityTypes())) {
+		if (!in_array($type, Config::ENTITY_TYPES)) {
 			throw new InvalidParameterException("$type is not a valid entity type");
 		}
 

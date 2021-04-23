@@ -91,7 +91,7 @@ class SearchService {
 		$entity_subtype = elgg_extract('subtype', $options);
 		$search_type = elgg_extract('search_type', $options, 'entities');
 
-		if ($entity_type !== 'all' && !in_array($entity_type, Config::getEntityTypes())) {
+		if ($entity_type !== 'all' && !in_array($entity_type, Config::ENTITY_TYPES)) {
 			throw new InvalidParameterException("'$entity_type' is not a valid entity type");
 		}
 
