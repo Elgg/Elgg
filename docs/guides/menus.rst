@@ -68,6 +68,10 @@ have been registered so far by Elgg core and other enabled plugins. In the
 handler we can loop through the menu items and use the class methods to
 interact with the properties of the menu item.
 
+In some cases a more granular version of the ``register`` and ``prepare`` menu hooks exist with ``menu:<menu name>:<type>:<subtype>``,
+this applies when the menu gets provided an ``\ElggEntity`` in ``$params['entity']`` or an ``\ElggAnnotation`` in ``$params['annotation']``
+or an ``\ElggRelationship`` in ``$params['relationship']``.
+
 Examples
 --------
 
