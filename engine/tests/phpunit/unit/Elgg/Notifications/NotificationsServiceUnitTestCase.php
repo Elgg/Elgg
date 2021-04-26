@@ -135,9 +135,10 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 				$metadata->entity_guid = $object->guid;
 				$metadata->name = 'test_metadata_name';
 				$metadata->value = 'test_metadata_value';
-				$metadata->save();
+				$id = _elgg_services()->metadataTable->create($metadata);
 
-				return $metadata;
+				// return fully loaded object
+				return elgg_get_metadata_from_id($id);
 
 			case \ElggAnnotation::class :
 				$object = $this->createObject();

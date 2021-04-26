@@ -38,8 +38,10 @@ $simple_settings = [
 	'forward_email',
 	'enable_error_log',
 ];
+
+$plugin = elgg_get_plugin_from_id('developers');
 foreach ($simple_settings as $setting) {
-	elgg_set_plugin_setting($setting, get_input($setting), 'developers');
+	$plugin->setSetting($setting, get_input($setting));
 }
 
 elgg_invalidate_caches();

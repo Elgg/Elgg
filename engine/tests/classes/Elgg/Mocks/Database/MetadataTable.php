@@ -59,6 +59,24 @@ class MetadataTable extends DbMetadataTabe {
 			return false;
 		}
 		
+		if ($metadata->id) {
+			if ($this->update($metadata)) {
+				return $metadata->id;
+			}
+		}
+
+		if (!$allow_multiple) {
+			$id = $this->getIDsByName($metadata->entity_guid, $metadata->name);
+
+			if ($id > 0) {
+				$metadata->id = $id;
+
+				if ($this->update($metadata)) {
+					return $metadata->id;
+				}
+			}
+		}
+		
 		static::$iterator++;
 		$id = static::$iterator;
 
@@ -180,6 +198,23 @@ class MetadataTable extends DbMetadataTabe {
 			},
 		]);
 
+		// getIDsByName
+		$qb = Select::fromTable('metadata');
+		$qb->select('id');
+		$qb->where($qb->compare('entity_guid', '=', $row->entity_guid, ELGG_VALUE_INTEGER))
+			->andWhere($qb->compare('name', '=', $row->name, ELGG_VALUE_STRING));
+
+		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
+			'sql' => $qb->getSQL(),
+			'params' => $qb->getParameters(),
+			'results' => function() use ($row) {
+				if (isset($this->rows[$row->id])) {
+					return [$this->rows[$row->id]];
+				}
+				return [];
+			},
+		]);
+		
 		$qb = Insert::intoTable('metadata');
 		$qb->values([
 			'name' => $qb->param($row->name, ELGG_VALUE_STRING),

@@ -131,7 +131,7 @@ class ElggPlugin extends ElggObject {
 	 * @return string
 	 */
 	public function getID() {
-		return $this->title;
+		return (string) $this->title;
 	}
 
 	/**
@@ -228,7 +228,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return int|null
 	 */
-	public function getPriority() {
+	public function getPriority(): ?int {
 		$name = _elgg_services()->plugins->namespacePrivateSetting('internal', 'priority');
 
 		$priority = $this->getPrivateSetting($name);
@@ -264,7 +264,7 @@ class ElggPlugin extends ElggObject {
 	 * @return int
 	 * @internal
 	 */
-	protected function normalizePriority($priority) {
+	protected function normalizePriority($priority): int {
 		// if no priority assume a priority of 1
 		$old_priority = $this->getPriority();
 		$old_priority = $old_priority ? : 1;
@@ -297,7 +297,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return mixed
 	 */
-	public function getSetting($name, $default = null) {
+	public function getSetting(string $name, $default = null) {
 		$values = $this->getAllSettings();
 		return elgg_extract($name, $values, $default);
 	}
@@ -309,7 +309,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return array An array of key/value pairs.
 	 */
-	public function getAllSettings() {
+	public function getAllSettings(): array {
 
 		try {
 			$defaults = [];
@@ -339,7 +339,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function setSetting($name, $value) {
+	public function setSetting(string $name, $value): bool {
 
 		$value = _elgg_services()->hooks->trigger('setting', 'plugin', [
 			'plugin_id' => $this->getID(),
@@ -364,7 +364,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function unsetSetting($name) {
+	public function unsetSetting(string $name): bool {
 		return $this->removePrivateSetting($name);
 	}
 
@@ -372,19 +372,19 @@ class ElggPlugin extends ElggObject {
 	 * Removes all settings for this plugin
 	 * @return bool
 	 */
-	public function unsetAllSettings() {
+	public function unsetAllSettings(): bool {
 		$settings = $this->getAllSettings();
 
 		foreach ($settings as $name => $value) {
 			if (strpos($name, 'elgg:internal:') === 0) {
 				continue;
 			}
+			
 			$this->unsetSetting($name);
 		}
 
 		return true;
 	}
-
 
 	// User settings
 
@@ -397,7 +397,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return mixed The setting string value, the default value or false if there is no user
 	 */
-	public function getUserSetting($name, $user_guid = 0, $default = null) {
+	public function getUserSetting(string $name, int $user_guid = 0, $default = null) {
 		$values = $this->getAllUserSettings($user_guid);
 		if ($values === false) {
 			return false;
@@ -415,8 +415,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return array An array of key/value pairs
 	 */
-	public function getAllUserSettings($user_guid = 0) {
-
+	public function getAllUserSettings(int $user_guid = 0): array {
 		$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
 		if (!$user instanceof ElggUser) {
 			return [];
@@ -433,12 +432,12 @@ class ElggPlugin extends ElggObject {
 	 * Sets a user setting for a plugin
 	 *
 	 * @param string $name      The setting name
-	 * @param string $value     The setting value
+	 * @param mixed  $value     The setting value
 	 * @param int    $user_guid The user GUID
 	 *
-	 * @return mixed The new setting ID or false
+	 * @return bool
 	 */
-	public function setUserSetting($name, $value, $user_guid = 0) {
+	public function setUserSetting(string $name, $value, int $user_guid = 0): bool {
 		$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
 		if (!$user instanceof ElggUser) {
 			return false;
@@ -471,9 +470,8 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function unsetUserSetting($name, $user_guid = 0) {
+	public function unsetUserSetting(string $name, int $user_guid = 0): bool {
 		$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
-
 		if (!$user instanceof ElggUser) {
 			return false;
 		}
@@ -490,9 +488,8 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function unsetAllUserSettings($user_guid = 0) {
+	public function unsetAllUserSettings(int $user_guid = 0): bool {
 		$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
-
 		if (!$user instanceof ElggUser) {
 			return false;
 		}
@@ -513,7 +510,7 @@ class ElggPlugin extends ElggObject {
 	 * @return bool
 	 * @since 3.3
 	 */
-	public function unsetAllUserAndPluginSettings() {
+	public function unsetAllUserAndPluginSettings(): bool {
 		// remove all plugin settings
 		$result = $this->unsetAllSettings();
 		
@@ -546,7 +543,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function isValid() {
+	public function isValid(): bool {
 		try {
 			$this->assertValid();
 			return true;
@@ -580,7 +577,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function isActive() {
+	public function isActive(): bool {
 		if (isset($this->activated)) {
 			return $this->activated;
 		}
@@ -595,7 +592,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function canActivate() {
+	public function canActivate(): bool {
 		if ($this->isActive()) {
 			return false;
 		}
@@ -629,7 +626,7 @@ class ElggPlugin extends ElggObject {
 	 * @return bool
 	 * @throws \Elgg\Exceptions\PluginException
 	 */
-	public function activate() {
+	public function activate(): bool {
 		if ($this->isActive()) {
 			return false;
 		}
@@ -702,7 +699,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return array
 	 */
-	public function getDependencies() {
+	public function getDependencies(): array {
 		$plugin_config = $this->getStaticConfig('plugin', []);
 		return (array) elgg_extract('dependencies', $plugin_config, []);
 	}
@@ -714,7 +711,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function canDeactivate() {
+	public function canDeactivate(): bool {
 		if (!$this->isActive()) {
 			return false;
 		}
@@ -760,7 +757,7 @@ class ElggPlugin extends ElggObject {
 
 			return elgg_view('output/url', [
 				'text' => $plugin->getDisplayName(),
-				'href' => "#$css_id",
+				'href' => "#{$css_id}",
 			]);
 		}, $dependents);
 		
@@ -775,7 +772,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @throws \Elgg\Exceptions\PluginException
 	 */
-	public function deactivate() {
+	public function deactivate(): bool {
 		if (!$this->isActive()) {
 			return false;
 		}
@@ -810,7 +807,7 @@ class ElggPlugin extends ElggObject {
 	 * @throws PluginException
 	 * @internal
 	 */
-	public function getBootstrap() {
+	public function getBootstrap(): \Elgg\PluginBootstrapInterface {
 		$bootstrap = $this->getStaticConfig('bootstrap');
 		if ($bootstrap) {
 			if (!is_subclass_of($bootstrap, \Elgg\PluginBootstrapInterface::class)) {
@@ -836,7 +833,7 @@ class ElggPlugin extends ElggObject {
 	 * @return void
 	 * @internal
 	 */
-	public function autoload() {
+	public function autoload(): void {
 		$this->registerClasses();
 
 		$autoload_file = 'vendor/autoload.php';
@@ -864,7 +861,7 @@ class ElggPlugin extends ElggObject {
 	 * @return void
 	 * @internal
 	 */
-	public function register() {
+	public function register(): void {
 		$this->autoload();
 
 		$this->activateEntities();
@@ -880,7 +877,7 @@ class ElggPlugin extends ElggObject {
 	 * @return void
 	 * @internal
 	 */
-	public function boot() {
+	public function boot(): void {
 		$this->getBootstrap()->boot();
 	}
 
@@ -890,7 +887,7 @@ class ElggPlugin extends ElggObject {
 	 * @return void
 	 * @internal
 	 */
-	public function init() {
+	public function init(): void {
 		$this->registerRoutes();
 		$this->registerActions();
 		$this->registerEntities();
@@ -913,7 +910,7 @@ class ElggPlugin extends ElggObject {
 	 * @return mixed The return value of the included file (or 1 if there is none)
 	 * @throws PluginException
 	 */
-	protected function includeFile($filename) {
+	protected function includeFile(string $filename) {
 		$filepath = "{$this->getPath()}{$filename}";
 
 		if (!$this->canReadFile($filename)) {
@@ -946,7 +943,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	protected function canReadFile($filename) {
+	protected function canReadFile(string $filename): bool {
 		$path = "{$this->getPath()}{$filename}";
 
 		return is_file($path) && is_readable($path);
@@ -982,7 +979,7 @@ class ElggPlugin extends ElggObject {
 	 * @return void
 	 * @throws PluginException
 	 */
-	protected function registerViews() {
+	protected function registerViews(): void {
 		if (_elgg_services()->config->system_cache_loaded) {
 			return;
 		}
@@ -1008,7 +1005,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 */
-	protected function registerEntities() {
+	protected function registerEntities(): void {
 		$spec = (array) $this->getStaticConfig('entities', []);
 		
 		foreach ($spec as $entity) {
@@ -1023,7 +1020,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 */
-	protected function registerActions() {
+	protected function registerActions(): void {
 		$actions = _elgg_services()->actions;
 		$root_path = rtrim($this->getPath(), '/\\');
 
@@ -1052,7 +1049,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 */
-	protected function registerRoutes() {
+	protected function registerRoutes(): void {
 		$routes = _elgg_services()->routes;
 
 		$spec = (array) $this->getStaticConfig('routes', []);
@@ -1070,7 +1067,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 */
-	protected function registerWidgets() {
+	protected function registerWidgets(): void {
 		$widgets = _elgg_services()->widgets;
 
 		$spec = (array) $this->getStaticConfig('widgets', []);
@@ -1095,7 +1092,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 */
-	public function registerLanguages() {
+	public function registerLanguages(): void {
 		$languages_path = $this->getLanguagesPath();
 		if (empty($languages_path)) {
 			return;
@@ -1113,7 +1110,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 */
-	protected function loadLanguages() {
+	protected function loadLanguages(): void {
 		$languages_path = $this->getLanguagesPath();
 		if (empty($languages_path)) {
 			return;
@@ -1127,10 +1124,8 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 */
-	protected function registerClasses() {
-		$classes_path = "{$this->getPath()}classes";
-
-		_elgg_services()->autoloadManager->addClasses($classes_path);
+	protected function registerClasses(): void {
+		_elgg_services()->autoloadManager->addClasses("{$this->getPath()}classes");
 	}
 
 	/**
@@ -1138,12 +1133,12 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 */
-	protected function activateEntities() {
+	protected function activateEntities(): void {
 		$spec = (array) $this->getStaticConfig('entities', []);
 		
 		foreach ($spec as $entity) {
 			if (isset($entity['type'], $entity['subtype'], $entity['class'])) {
-				elgg_set_entity_class($entity['type'], $entity['subtype'], $entity['class']);
+				_elgg_services()->entityTable->setEntityClass($entity['type'], $entity['subtype'], $entity['class']);
 			}
 		}
 	}
@@ -1153,12 +1148,12 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 */
-	protected function deactivateEntities() {
+	protected function deactivateEntities(): void {
 		$spec = (array) $this->getStaticConfig('entities', []);
 		
 		foreach ($spec as $entity) {
 			if (isset($entity['type'], $entity['subtype'], $entity['class'])) {
-				elgg_set_entity_class($entity['type'], $entity['subtype']);
+				_elgg_services()->entityTable->setEntityClass($entity['type'], $entity['subtype']);
 			}
 		}
 	}
@@ -1168,7 +1163,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 */
-	protected function registerHooks() {
+	protected function registerHooks(): void {
 		$hooks = _elgg_services()->hooks;
 
 		$spec = (array) $this->getStaticConfig('hooks', []);
@@ -1199,7 +1194,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 */
-	protected function registerEvents() {
+	protected function registerEvents(): void {
 		$events = _elgg_services()->events;
 
 		$spec = (array) $this->getStaticConfig('events', []);
@@ -1230,7 +1225,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 */
-	protected function registerViewExtensions() {
+	protected function registerViewExtensions(): void {
 		$views = _elgg_services()->views;
 		
 		$spec = (array) $this->getStaticConfig('view_extensions', []);
@@ -1259,7 +1254,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 */
-	protected function registerGroupTools() {
+	protected function registerGroupTools(): void {
 		$tools = _elgg_services()->group_tools;
 		
 		$spec = (array) $this->getStaticConfig('group_tools', []);
@@ -1284,7 +1279,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 */
-	protected function registerViewOptions() {
+	protected function registerViewOptions(): void {
 		$spec = (array) $this->getStaticConfig('view_options', []);
 
 		foreach ($spec as $view_name => $options) {
@@ -1311,7 +1306,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 */
-	protected function registerNotifications() {
+	protected function registerNotifications(): void {
 		$spec = (array) $this->getStaticConfig('notifications', []);
 
 		foreach ($spec as $type => $subtypes) {
@@ -1395,16 +1390,16 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	protected function setStatus($active) {
+	protected function setStatus(bool $active): bool {
 		if (!$this->guid) {
 			return false;
 		}
 
 		$site = elgg_get_site_entity();
 		if ($active) {
-			$result = add_entity_relationship($this->guid, 'active_plugin', $site->guid);
+			$result = _elgg_services()->relationshipsTable->add($this->guid, 'active_plugin', $site->guid);
 		} else {
-			$result = remove_entity_relationship($this->guid, 'active_plugin', $site->guid);
+			$result = _elgg_services()->relationshipsTable->remove($this->guid, 'active_plugin', $site->guid);
 		}
 		
 		if ($result) {
@@ -1450,7 +1445,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @since 4.0
 	 */
-	protected function getComposer() {
+	protected function getComposer(): \Elgg\Plugin\Composer {
 		if (isset($this->composer)) {
 			return $this->composer;
 		}
@@ -1466,7 +1461,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @since 4.0
 	 */
-	public function meetsDependencies() {
+	public function meetsDependencies(): bool {
 		try {
 			$this->assertDependencies();
 			
@@ -1484,7 +1479,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @since 4.0
 	 */
-	public function assertDependencies() {
+	public function assertDependencies(): void {
 		try {
 			$this->getComposer()->assertConflicts();
 			$this->getComposer()->assertActivePluginConflicts();
@@ -1500,7 +1495,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return string
 	 */
-	public function getVersion() {
+	public function getVersion(): string {
 		// composer version
 		$version = $this->getComposer()->getConfiguration()->version();
 		if (!elgg_is_empty($version)) {
@@ -1529,7 +1524,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @since 4.0
 	 */
-	public function getCategories() {
+	public function getCategories(): array {
 		return $this->getComposer()->getCategories();
 	}
 	
@@ -1540,7 +1535,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @since 4.0
 	 */
-	public function getLicense() {
+	public function getLicense(): string {
 		return $this->getComposer()->getLicense();
 	}
 	
@@ -1551,7 +1546,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @since 4.0
 	 */
-	public function getDescription() {
+	public function getDescription(): string {
 		return (string) $this->getComposer()->getConfiguration()->description();
 	}
 	
@@ -1562,7 +1557,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @since 4.0
 	 */
-	public function getRepositoryURL() {
+	public function getRepositoryURL(): string {
 		return (string) $this->getComposer()->getConfiguration()->support()->source();
 	}
 	
@@ -1573,7 +1568,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @since 4.0
 	 */
-	public function getBugTrackerURL() {
+	public function getBugTrackerURL(): string {
 		return (string) $this->getComposer()->getConfiguration()->support()->issues();
 	}
 	
@@ -1584,7 +1579,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @since 4.0
 	 */
-	public function getWebsite() {
+	public function getWebsite(): string {
 		return (string) $this->getComposer()->getConfiguration()->homepage();
 	}
 	
@@ -1595,7 +1590,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @since 4.0
 	 */
-	public function getAuthors() {
+	public function getAuthors(): array {
 		return (array) $this->getComposer()->getConfiguration()->authors();
 	}
 	
@@ -1606,7 +1601,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @since 4.0
 	 */
-	public function getConflicts() {
+	public function getConflicts(): array {
 		return $this->getComposer()->getConflicts();
 	}
 }

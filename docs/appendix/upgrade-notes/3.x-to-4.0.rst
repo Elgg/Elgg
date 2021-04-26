@@ -376,11 +376,17 @@ Lib function parameters
 * ``elgg_get_access_collections()`` now requires an ``array`` for ``$options``
 * ``elgg_get_annotation_from_id()`` now requires an ``int`` for ``$id``
 * ``elgg_get_subscriptions_for_container()`` now requires an ``int`` for ``$container_guid``
+* ``elgg_get_plugin_from_id()`` now requires a ``string`` for ``$plugin_id``
+* ``elgg_get_plugin_setting()`` now requires a ``string`` for ``$name`` and ``$plugin_id``
+* ``elgg_get_plugin_user_setting()`` now requires a ``string`` for ``$name`` and ``$plugin_id`` and ``int`` for ``$user_guid``
+* ``elgg_get_plugins()`` now requires a ``string`` for ``$status``
 * ``elgg_list_annotations()`` now requires an ``array`` for ``$options``
 * ``elgg_ok_response()`` now requires an ``int`` for ``$status_code``
+* ``elgg_plugin_exists()`` now requires a ``string`` for ``$plugin_id``
 * ``elgg_redirect_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_register_action()`` now requires a ``string`` for ``$action`` and ``$access``
 * ``elgg_send_email()`` now requires an ``\Elgg\Email`` for ``$email``
+* ``elgg_set_plugin_user_setting()`` now requires a ``string`` for ``$name`` and ``$plugin_id`` and ``int`` for ``$user_guid``
 * ``elgg_unregister_action()`` now requires a ``string`` for ``$action``
 * ``get_access_array()`` now requires an ``int`` for ``$user_guid``
 * ``get_access_collection()`` now requires an ``int`` for ``$collection_id``
@@ -728,12 +734,17 @@ Lib functions
 * ``diagnostics_md5_dir()``
 * ``elgg_add_subscription()`` use ``\ElggEntity::addSubscription()``
 * ``elgg_get_available_languages()`` use ``elgg()->translator->getAvailableLanguages()``
+* ``elgg_get_all_plugin_user_settings()`` use ``$plugin->getAllUserSettings($user_guid)``
+* ``elgg_get_entities_from_plugin_user_settings()`` use ``elgg_get_entities()`` with private settings parameters and prefix your setting name with ``ELGG_PLUGIN_USER_SETTING_PREFIX``
 * ``elgg_get_loaded_css()`` use ``elgg_get_loaded_external_files('css', 'head')``
 * ``elgg_get_loaded_js()`` use ``elgg_get_loaded_external_files('js', $location)``
 * ``elgg_get_system_messages()`` use ``elgg()->system_messages->loadRegisters()``
 * ``elgg_prepend_css_urls()``
 * ``elgg_remove_subscription()`` use ``\ElggEntity::removeSubscription()``
+* ``elgg_set_plugin_setting()`` use ``$plugin->setSetting($name, $value)``
 * ``elgg_set_system_messages()`` use ``elgg()->system_messages->saveRegisters()``
+* ``elgg_unset_plugin_setting()`` use ``$plugin->unsetSetting($name)``
+* ``elgg_unset_plugin_user_setting()`` use ``$plugin->unsetUserSetting($name, $user_guid)``
 * ``get_language_completeness()``  use ``elgg()->translator->getLanguageCompleteness()``
 * ``get_installed_translations()``  use ``elgg()->translator->getInstalledTranslations()``
 * ``group_access_options()``
