@@ -710,6 +710,8 @@ Class functions
 * ``ElggGroup::removeObjectFromGroup()``
 * ``ElggPlugin::getDependencyReport()``
 * ``ElggPlugin::getError()``
+* ``ElggWidget::getContext()`` use ``$entity->context``
+* ``ElggWidget::setContext()`` use ``$entity->context = $context``
 * ``Elgg\Notifications\NotificationsService::getDeprecatedHandler()``
 * ``Elgg\Notifications\NotificationsService::getMethodsAsDeprecatedGlobal()`` use ``elgg_get_notification_methods()``
 * ``Elgg\Notifications\NotificationsService::registerDeprecatedHandler()``

@@ -19,13 +19,14 @@ class ElggWidget extends \ElggObject {
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
-		$this->attributes['subtype'] = "widget";
+		$this->attributes['subtype'] = 'widget';
 	}
 
 	/**
 	 * Get a value from attributes, metadata or private settings
 	 *
 	 * @param string $name The name of the value
+	 *
 	 * @return mixed
 	 */
 	public function __get($name) {
@@ -47,6 +48,7 @@ class ElggWidget extends \ElggObject {
 	 *
 	 * @param string $name  The name of the value to set
 	 * @param mixed  $value The value to set
+	 *
 	 * @return void
 	 */
 	public function __set($name, $value) {
@@ -90,43 +92,21 @@ class ElggWidget extends \ElggObject {
 		if (in_array($name, ['title', 'description'])) {
 			return parent::__isset($name);
 		}
-		
-		$private_setting = $this->getPrivateSetting($name);
-		return !is_null($private_setting);
+
+		return !is_null($this->getPrivateSetting($name));
 	}
 
-	/**
-	 * Set the widget context
-	 *
-	 * @param string $context The widget context
-	 * @return bool
-	 * @since 1.8.0
-	 */
-	public function setContext($context) {
-		$this->context = $context;
-		return true;
-	}
-
-	/**
-	 * Get the widget context
-	 *
-	 * @return string
-	 * @since 1.8.0
-	 */
-	public function getContext() {
-		return (string) $this->context;
-	}
-	
 	/**
 	 * {@inheritDoc}
 	 */
 	public function getDisplayName() {
 		$result = parent::getDisplayName();
-		if (!$result) {
-			$container = $this->getContainerEntity() ? : null;
-			$result = _elgg_services()->widgets->getNameById($this->handler, $this->getContext(), $container);
+		if ($result) {
+			return $result;
 		}
-		return $result;
+		
+		$container = $this->getContainerEntity() ? : null;
+		return _elgg_services()->widgets->getNameById($this->handler, (string) $this->context, $container);
 	}
 
 	/**
@@ -134,22 +114,23 @@ class ElggWidget extends \ElggObject {
 	 *
 	 * @param int $column The widget column
 	 * @param int $rank   Zero-based rank from the top of the column
+	 *
 	 * @return void
 	 * @since 1.8.0
 	 */
 	public function move($column, $rank) {
-		$options = [
+		/* @var $widgets \ElggWidget[] */
+		$widgets = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'widget',
 			'container_guid' => $this->container_guid,
 			'limit' => false,
 			'private_setting_name_value_pairs' => [
-				['name' => 'context', 'value' => $this->getContext()],
-				['name' => 'column', 'value' => $column]
-			]
-		];
-		/* @var $widgets \ElggWidget[] */
-		$widgets = elgg_get_entities($options);
+				['name' => 'context', 'value' => (string) $this->context],
+				['name' => 'column', 'value' => $column],
+			],
+		]);
+		
 		if (empty($widgets)) {
 			$this->column = (int) $column;
 			$this->order = 0;
@@ -165,6 +146,7 @@ class ElggWidget extends \ElggObject {
 			'context' => $this->context,
 			'container' => $this->getContainerEntity(),
 		]);
+		
 		$inactive_widgets = [];
 		foreach ($widgets as $index => $widget) {
 			if (!array_key_exists($widget->handler, $widget_types)) {
@@ -264,6 +246,7 @@ class ElggWidget extends \ElggObject {
 					$this->$name = $value;
 				}
 			}
+			
 			$this->save();
 		}
 
