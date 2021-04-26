@@ -72,7 +72,24 @@ class Service {
 			$params['sort_by'] = 'priority';
 		}
 
-		$items = $this->hooks->trigger('register', "menu:$name", $params, $items);
+		// trigger specific menu hooks
+		$entity = elgg_extract('entity', $params);
+		if ($entity instanceof \ElggEntity) {
+			$items = $this->hooks->trigger('register', "menu:{$name}:{$entity->type}:{$entity->subtype}", $params, $items);
+		}
+
+		$annotation = elgg_extract('annotation', $params);
+		if ($annotation instanceof \ElggAnnotation) {
+			$items = $this->hooks->trigger('register', "menu:{$name}:{$annotation->getType()}:{$annotation->getSubtype()}", $params, $items);
+		}
+
+		$relationship = elgg_extract('relationship', $params);
+		if ($relationship instanceof \ElggRelationship) {
+			$items = $this->hooks->trigger('register', "menu:{$name}:{$relationship->getType()}:{$relationship->getSubtype()}", $params, $items);
+		}
+
+		// trigger generic menu hook
+		$items = $this->hooks->trigger('register', "menu:{$name}", $params, $items);
 
 		return new UnpreparedMenu($params, $items);
 	}
@@ -96,6 +113,23 @@ class Service {
 		$params['menu'] = $builder->getMenu($sort_by);
 		$params['selected_item'] = $builder->getSelected();
 
+		// trigger specific menu hooks
+		$entity = elgg_extract('entity', $params);
+		if ($entity instanceof \ElggEntity) {
+			$params['menu'] = $this->hooks->trigger('prepare', "menu:{$name}:{$entity->type}:{$entity->subtype}", $params, $params['menu']);
+		}
+
+		$annotation = elgg_extract('annotation', $params);
+		if ($annotation instanceof \ElggAnnotation) {
+			$params['menu'] = $this->hooks->trigger('prepare', "menu:{$name}:{$annotation->getType()}:{$annotation->getSubtype()}", $params, $params['menu']);
+		}
+
+		$relationship = elgg_extract('relationship', $params);
+		if ($relationship instanceof \ElggRelationship) {
+			$params['menu'] = $this->hooks->trigger('prepare', "menu:{$name}:{$relationship->getType()}:{$relationship->getSubtype()}", $params, $params['menu']);
+		}
+
+		// trigger generic menu hook
 		$params['menu'] = $this->hooks->trigger('prepare', "menu:$name", $params, $params['menu']);
 		
 		$params['menu'] = $this->prepareVerticalMenu($params['menu'], $params);

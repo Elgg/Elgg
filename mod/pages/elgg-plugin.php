@@ -117,7 +117,7 @@ return [
 			],
 		],
 		'register' => [
-			'menu:entity' => [
+			'menu:entity:object:page' => [
 				'Elgg\Pages\Menus\Entity::register' => [],
 			],
 			'menu:owner_block' => [
@@ -129,6 +129,9 @@ return [
 			],
 			'menu:site' => [
 				'Elgg\Pages\Menus\Site::register' => [],
+			],
+			'menu:title:object:page' => [
+				\Elgg\Notifications\RegisterSubscriptionMenuItemsHandler::class => [],
 			],
 		],
 		'seeds' => [

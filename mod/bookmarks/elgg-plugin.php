@@ -106,6 +106,9 @@ return [
 			'menu:site' => [
 				'Elgg\Bookmarks\Menus\Site::register' => [],
 			],
+			'menu:title:object:bookmarks' => [
+				\Elgg\Notifications\RegisterSubscriptionMenuItemsHandler::class => [],
+			],
 		],
 		'seeds' => [
 			'database' => [

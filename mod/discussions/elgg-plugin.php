@@ -112,6 +112,9 @@ return [
 			'menu:site' => [
 				'Elgg\Discussions\Menus\Site::register' => [],
 			],
+			'menu:title:object:discussion' => [
+				\Elgg\Notifications\RegisterSubscriptionMenuItemsHandler::class => [],
+			],
 		],
 		'seeds' => [
 			'database' => [

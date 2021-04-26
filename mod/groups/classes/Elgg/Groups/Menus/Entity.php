@@ -14,7 +14,7 @@ class Entity {
 	/**
 	 * Add join/leave menu items
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
+	 * @param \Elgg\Hook $hook 'register', 'menu:entity:group:group'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
@@ -46,7 +46,7 @@ class Entity {
 	/**
 	 * Add (un)feature toggle
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
+	 * @param \Elgg\Hook $hook 'register', 'menu:entity:group:group'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */

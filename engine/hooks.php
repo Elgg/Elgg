@@ -84,7 +84,6 @@ return [
 			'Elgg\Notifications\ChangeAdminNotification::addSiteAdminSubscribers' => [],
 			'Elgg\Notifications\ChangeAdminNotification::addUserSubscriber' => [],
 			'Elgg\Notifications\UnbanUserNotification::getUnbanSubscribers' => [],
-			'Elgg\Comments\CreateNotification::addOwnerToSubscribers' => [],
 		],
 	],
 	'head' => [
@@ -172,8 +171,12 @@ return [
 		'menu:entity' => [
 			'Elgg\Menus\Entity::registerDelete' => [],
 			'Elgg\Menus\Entity::registerEdit' => [],
+		],
+		'menu:entity:object:elgg_upgrade' => [
+			'Elgg\Menus\Entity::registerUpgrade' => [],
+		],
+		'menu:entity:object:plugin' => [
 			'Elgg\Menus\Entity::registerPlugin' => [],
-			'Elgg\Menus\Entity::registerUpgrade' => ['priority' => 501],
 		],
 		'menu:entity_navigation' => [
 			'Elgg\Menus\EntityNavigation::registerPreviousNext' => [],

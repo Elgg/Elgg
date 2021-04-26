@@ -86,9 +86,17 @@ System hooks
 
 	The ``$params`` array will contain parameters returned by ``parameters, menu:<menu_name>`` hook.
 
-	The return value is an instance of ``\Elgg\Collections\Collection`` containing ``\ElggMenuItem`` objects.
+	The return value is an instance of ``\Elgg\Menu\MenuItems`` containing ``\ElggMenuItem`` objects.
 
 	Hook handlers can add/remove items to the collection using the collection API, as well as array access operations.
+
+**register, menu:<menu_name>:<type>:<subtype>**
+	More granualar version of the menu hook triggered before the **register, menu:<menu_name>** hook.
+	
+	Only applied if menu params contain
+	- params['entity'] with an ``\ElggEntity`` (``<type>`` is ``\ElggEntity::type`` and ``<subtype>`` is ``\ElggEntity::subtype``) or
+	- params['annotation'] with an ``\ElggAnnotation`` (``<type>`` is ``\ElggAnnotation::getType()`` and ``<subtype>`` is ``\ElggAnnotation::getSubtype()``) or
+	- params['relationship'] with an ``\ElggRelationship`` (``<type>`` is ``\ElggRelationship::getType()`` and ``<subtype>`` is ``\ElggRelationship::getSubtype()``)
 
 **prepare, menu:<menu_name>**
 	Filters the array of menu sections before they're displayed. Each section is a string key mapping to
@@ -101,6 +109,14 @@ System hooks
 
 	The return value is an instance of ``\Elgg\Menu\PreparedMenu``. The prepared menu is a collection of ``\Elgg\Menu\MenuSection``,
 	which in turn are collections of ``\ElggMenuItem`` objects.
+
+**prepare, menu:<menu_name>:<type>:<subtype>**
+	More granualar version of the menu hook triggered before the **prepare, menu:<menu_name>** hook.
+	
+	Only applied if menu params contain
+	- params['entity'] with an ``\ElggEntity`` (``<type>`` is ``\ElggEntity::type`` and ``<subtype>`` is ``\ElggEntity::subtype``) or
+	- params['annotation'] with an ``\ElggAnnotation`` (``<type>`` is ``\ElggAnnotation::getType()`` and ``<subtype>`` is ``\ElggAnnotation::getSubtype()``) or
+	- params['relationship'] with an ``\ElggRelationship`` (``<type>`` is ``\ElggRelationship::getType()`` and ``<subtype>`` is ``\ElggRelationship::getSubtype()``)
 
 **register, menu:filter:<filter_id>**
 	Allows plugins to modify layout filter tabs on layouts that specify ``<filter_id>`` parameter. Parameters and return values

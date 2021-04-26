@@ -13,7 +13,7 @@ class Entity {
 	/**
 	 * Registers menu items
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
+	 * @param \Elgg\Hook $hook 'register', 'menu:entity:object:page'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */

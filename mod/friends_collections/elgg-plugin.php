@@ -74,7 +74,7 @@ return [
 			],
 		],
 		'register' => [
-			'menu:entity' => [
+			'menu:entity:user:user' => [
 				EntityMenuHandler::class => [],
 			],
 			'menu:friends:collection' => [

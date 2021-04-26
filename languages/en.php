@@ -1655,15 +1655,19 @@ To reply or view the original item, click here:
 	'entity:delete:success' => '%s has been deleted.',
 	'entity:delete:fail' => '%s could not be deleted.',
 	
+	'entity:subscribe' => "Subscribe",
 	'entity:subscribe:success' => "You've successfully subscribed to %s",
 	'entity:subscribe:fail' => "An error occured while subscribing to %s",
 	
+	'entity:unsubscribe' => "Unsubscribe",
 	'entity:unsubscribe:success' => "You've successfully unsubscribed from %s",
 	'entity:unsubscribe:fail' => "An error occured while unsubscribing from %s",
 	
+	'entity:mute' => "Mute notifications",
 	'entity:mute:success' => "You've successfully muted notifications of %s",
 	'entity:mute:fail' => "An error occured while muting notifications of %s",
 	
+	'entity:unmute' => "Unmute notifications",
 	'entity:unmute:success' => "You've successfully unmuted notifications of %s",
 	'entity:unmute:fail' => "An error occured while unmuting notifications of %s",
 	

@@ -90,7 +90,7 @@ class Entity {
 	/**
 	 * Registers menu items for the entity menu of a plugin
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
+	 * @param \Elgg\Hook $hook 'register', 'menu:entity:object:plugin'
 	 *
 	 * @return void|MenuItems
 	 */
@@ -184,7 +184,7 @@ class Entity {
 	/**
 	 * Add menu items to the entity menu of ElggUpgrade
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
+	 * @param \Elgg\Hook $hook 'register', 'menu:entity:object:elgg_upgrade'
 	 *
 	 * @return void|MenuItems
 	 */
@@ -207,6 +207,7 @@ class Entity {
 					'core/js/upgrader',
 				],
 				'data-guid' => $entity->guid,
+				'priority' => 600,
 			]);
 		} elseif ($batch = $entity->getBatch()) {
 			if (!$batch->shouldBeSkipped()) {
@@ -218,6 +219,7 @@ class Entity {
 					'href' => elgg_generate_action_url('admin/upgrade/reset', [
 						'guid' => $entity->guid,
 					]),
+					'priority' => 600,
 				]);
 			}
 		}

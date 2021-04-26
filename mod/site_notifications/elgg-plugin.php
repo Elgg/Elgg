@@ -51,7 +51,7 @@ return [
 			],
 		],
 		'register' => [
-			'menu:entity' => [
+			'menu:entity:object:site_notification' => [
 				'Elgg\SiteNotifications\Menus\Entity::register' => [],
 			],
 			'menu:filter:site_notifications' => [
