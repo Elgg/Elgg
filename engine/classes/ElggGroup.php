@@ -28,47 +28,6 @@ class ElggGroup extends \ElggEntity {
 	public function getType() {
 		return 'group';
 	}
-	
-	/**
-	 * {@inheritDoc}
-	 * @see ElggEntity::getMetadata()
-	 */
-	public function getMetadata($name) {
-		return parent::getMetadata($name);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 * @see ElggEntity::setMetadata()
-	 */
-	public function setMetadata($name, $value, $value_type = '', $multiple = false) {
-		return parent::setMetadata($name, $value, $value_type, $multiple);
-	}
-
-	/**
-	 * Add an \ElggObject to this group.
-	 *
-	 * @param \ElggObject $object The object.
-	 *
-	 * @return bool
-	 */
-	public function addObjectToGroup(\ElggObject $object) {
-		$object->container_guid = $this->guid;
-		return $object->save();
-	}
-
-	/**
-	 * Remove an object from this containing group and sets the container to be
-	 * object's owner
-	 *
-	 * @param \ElggObject $object The object.
-	 *
-	 * @return bool
-	 */
-	public function removeObjectFromGroup(ElggObject $object) {
-		$object->container_guid = $object->owner_guid;
-		return $object->save();
-	}
 
 	/**
 	 * Get an array of group members.

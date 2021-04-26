@@ -129,13 +129,12 @@ function elgg_unrequire_css(string $view) {
  * @param string $name     Identifier used as key
  * @param string $url      URL
  * @param string $location Location in the page to include the file (default = 'head')
- * @param int    $priority Loading priority of the file
  *
  * @return bool
  * @since 1.8.0
  */
-function elgg_register_external_file($type, $name, $url, $location = 'head', $priority = 500) {
-	return _elgg_services()->externalFiles->register($type, $name, $url, $location, $priority);
+function elgg_register_external_file(string $type, string $name, string $url, string $location = 'head'): bool {
+	return _elgg_services()->externalFiles->register($type, $name, $url, $location);
 }
 
 /**
@@ -147,7 +146,7 @@ function elgg_register_external_file($type, $name, $url, $location = 'head', $pr
  * @return bool
  * @since 1.8.0
  */
-function elgg_unregister_external_file($type, $name) {
+function elgg_unregister_external_file(string $type, string $name): bool {
 	return _elgg_services()->externalFiles->unregister($type, $name);
 }
 
@@ -160,7 +159,7 @@ function elgg_unregister_external_file($type, $name) {
  * @return void
  * @since 1.8.0
  */
-function elgg_load_external_file($type, $name) {
+function elgg_load_external_file(string $type, string $name): void {
 	_elgg_services()->externalFiles->load($type, $name);
 }
 
@@ -173,7 +172,7 @@ function elgg_load_external_file($type, $name) {
  * @return array
  * @since 1.8.0
  */
-function elgg_get_loaded_external_files($type, $location) {
+function elgg_get_loaded_external_files(string $type, string $location): array {
 	return _elgg_services()->externalFiles->getLoadedFiles($type, $location);
 }
 

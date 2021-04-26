@@ -72,11 +72,6 @@ class ElggCoreWidgetTest extends IntegrationTestCase {
 		$this->assertFalse(isset($this->widget->order));
 	}
 		
-	public function testSettingContext() {
-		$this->widget->setContext('my_dashboard');
-		$this->assertEquals('my_dashboard', $this->widget->getContext());
-	}
-		
 	public function testGetTitle() {
 		$this->widget->title = 'get_title';
 		$this->widget->handler = 'widget_handler';

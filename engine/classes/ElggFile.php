@@ -139,17 +139,6 @@ class ElggFile extends ElggObject {
 	}
 
 	/**
-	 * Set the optional file description.
-	 *
-	 * @param string $description The description.
-	 *
-	 * @return bool
-	 */
-	public function setDescription($description) {
-		$this->description = $description;
-	}
-
-	/**
 	 * Open the file with the given mode
 	 *
 	 * @param string $mode Either read/write/append
