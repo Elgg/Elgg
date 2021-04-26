@@ -15,7 +15,7 @@ class EntityMenuHandler {
 	/**
 	 * Setup entity menu
 	 *
-	 * @param \Elgg\Hook $hook 'register' 'menu:entity'
+	 * @param \Elgg\Hook $hook 'register' 'menu:entity:user:user'
 	 *
 	 * @return void|\ElggMenuItem[]
 	 */

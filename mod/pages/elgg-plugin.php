@@ -117,7 +117,7 @@ return [
 			],
 		],
 		'register' => [
-			'menu:entity' => [
+			'menu:entity:object:page' => [
 				'Elgg\Pages\Menus\Entity::register' => [],
 			],
 			'menu:owner_block' => [

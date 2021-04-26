@@ -212,7 +212,7 @@ return [
 			],
 		],
 		'register' => [
-			'menu:entity' => [
+			'menu:entity:group:group' => [
 				'Elgg\Groups\Menus\Entity::register' => [],
 				'Elgg\Groups\Menus\Entity::registerFeature' => [],
 			],

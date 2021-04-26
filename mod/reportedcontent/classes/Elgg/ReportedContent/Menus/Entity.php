@@ -13,7 +13,7 @@ class Entity {
 	/**
 	 * Add items to entity menu for archiving
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
+	 * @param \Elgg\Hook $hook 'register', 'menu:entity:object:reported_content'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */

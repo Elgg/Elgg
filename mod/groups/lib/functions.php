@@ -28,7 +28,7 @@ function groups_get_group_leave_menu_item(\ElggGroup $group, $user = null) {
 	
 	return \ElggMenuItem::factory([
 		'name' => 'groups:leave',
-		'icon' => 'sign-out',
+		'icon' => 'sign-out-alt',
 		'text' => elgg_echo('groups:leave'),
 		'href' => elgg_generate_action_url('groups/leave', [
 			'group_guid' => $group->guid,
@@ -68,7 +68,7 @@ function groups_get_group_join_menu_item(\ElggGroup $group, $user = null) {
 	
 	return \ElggMenuItem::factory([
 		'name' => $menu_name,
-		'icon' => 'sign-in',
+		'icon' => 'sign-in-alt',
 		'text' => elgg_echo($menu_name),
 		'href' => elgg_generate_action_url('groups/join', [
 			'group_guid' => $group->guid,
