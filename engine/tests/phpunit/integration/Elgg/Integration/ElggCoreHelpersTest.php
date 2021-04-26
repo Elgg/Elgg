@@ -96,9 +96,9 @@ class ElggCoreHelpersTest extends IntegrationTestCase {
 		$js_urls = elgg_get_loaded_external_files('js', 'head');
 		$this->assertIsArray($js_urls);
 
-		$this->assertEquals($urls['id1'], $js_urls[500]);
-		$this->assertEquals($urls['id2'], $js_urls[501]);
-		$this->assertEquals($urls['id3'], $js_urls[502]);
+		$this->assertEquals($urls['id1'], $js_urls['id1']);
+		$this->assertEquals($urls['id2'], $js_urls['id2']);
+		$this->assertEquals($urls['id3'], $js_urls['id3']);
 
 		$js_urls = elgg_get_loaded_external_files('js', 'footer');
 		$this->assertEquals([], $js_urls);

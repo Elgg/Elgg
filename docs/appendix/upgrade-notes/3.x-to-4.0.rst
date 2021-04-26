@@ -392,6 +392,10 @@ Lib function parameters
 * ``remove_user_from_access_collection()`` now requires an ``int`` for ``$user_guid`` and ``$collection_id``
 * ``system_log_get_log()`` now requires an ``array`` for ``$options``
 * ``messageboard_add()`` now requires an ``ElggUser``, ``ElggUser``, ``string`` and an ``int``
+* ``elgg_register_external_file()`` now requires all arguments to be of the type ``string``
+* ``elgg_unregister_external_file()`` now requires all arguments to be of the type ``string``
+* ``elgg_load_external_file()`` now requires all arguments to be of the type ``string``
+* ``elgg_get_loaded_external_files()`` now requires all arguments to be of the type ``string``
 
 Change in function parameters
 -----------------------------
@@ -407,6 +411,7 @@ Lib functions
 
 * ``elgg_get_page_owner_guid()`` no longer accepts ``$guid`` as a parameter
 * ``get_access_array()`` no longer accepts ``$flush`` as a parameter
+* ``elgg_register_external_file()`` no longer accepts ``$priority`` as a parameter
 
 Renamed hook/event handler callbacks
 ------------------------------------
@@ -686,6 +691,7 @@ Miscellaneous API changes
 * ``\ElggRelationship::RELATIONSHIP_LIMIT`` has been removed use \Elgg\Database\RelationshipsTable::RELATIONSHIP_COLUMN_LENGTH``
 * The constants ``ORIGIN_SUBSCRIPTIONS`` and ``ORIGIN_INSTANT`` in ``\Elgg\Notifications\Notification`` have been removed
 * You can no longer use the ``delete, <entity_type>`` event to prevent deletion of an entity. Use the ``delete:before, <entity_type>`` event
+* External Files are no longer ordered by priority but will be returned in the same order as they are registered
 
 Deprecated APIs
 ---------------
