@@ -275,15 +275,12 @@ function serialise_parameters($method, $parameters) {
 				break;
 			case 'bool':
 			case 'boolean':
-				// change word false to boolean false
-				if (strcasecmp(trim($parameters[$key]), "false") == 0) {
-					$serialised_parameters .= ',false';
-				} else if ($parameters[$key] == 0) {
-					$serialised_parameters .= ',false';
-				} else {
-					$serialised_parameters .= ',true';
+				// change word 'true' or '1' to boolean true, everything else is false
+				if ($parameters[$key] === 'true' OR $parameters[$key] === '1' ) {
+                                    $serialised_parameters .= ',true';
+                                }else {
+                                    $serialised_parameters .= ',false';
 				}
-
 				break;
 			case 'string':
 				$serialised_parameters .= ',' . var_export(trim($parameters[$key]), true);
