@@ -39,6 +39,7 @@ return [
 	'entity/unsubscribe' => [],
 	'login' => ['access' => 'public'],
 	'logout' => [],
+	'notifications/mute' => ['access' => 'public'],
 	'plugins/settings/remove' => ['access' => 'admin'],
 	'plugins/settings/save' => ['access' => 'admin'],
 	'plugins/usersettings/save' => [],

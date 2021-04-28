@@ -342,6 +342,15 @@ To unmute the notifications call ``\ElggEntity::unmuteNotifications($user_guid)`
 
 To check if a user has the notifications muted call ``\ElggEntity::hasMutedNotifications($user_guid)`` the ``$user_guid`` is defaulted to the current logged in user.
 
+Helper page
+-----------
+
+A helper page has been added which can be linked (for example in an email footer) to manage muting based on a notification.
+
+The page is required to be signed and use the route ``notifications:mute`` which needs:
+- ``entity_guid`` the entity the notification is about
+- ``recipient_guid`` the recipient of the notification
+
 Temporarily disable notifications
 =================================
 

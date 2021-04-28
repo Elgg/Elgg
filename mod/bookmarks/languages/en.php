@@ -19,6 +19,7 @@ return array(
 	'add:object:bookmarks' => "Add a bookmark",
 	'edit:object:bookmarks' => "Edit bookmark",
 	'notification:object:bookmarks:create' => "Send a notification when a bookmark is created",
+	'notifications:mute:object:bookmarks' => "about the bookmark '%s'",
 
 	'bookmarks:this' => "Bookmark this page",
 	'bookmarks:this:group' => "Bookmark in %s",

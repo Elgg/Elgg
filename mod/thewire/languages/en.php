@@ -18,6 +18,7 @@ return array(
 	'collection:object:thewire:owner' => "%s's wire posts",
 	'collection:object:thewire:friends' => "Friends' wire posts",
 	'notification:object:thewire:create' => "Send a notification when a wire post is created",
+	'notifications:mute:object:thewire' => "about the wire post '%s'",
 
 	'thewire:replying' => "Replying to %s (@%s) who wrote",
 	'thewire:thread' => "Thread",
