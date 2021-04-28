@@ -276,7 +276,8 @@ function serialise_parameters($method, $parameters) {
 			case 'bool':
 			case 'boolean':
 				// change word 'true' or '1' to boolean true, everything else is false
-				if ($parameters[$key] === 'true' OR $parameters[$key] === '1' ) {
+				if (strcasecmp(trim($parameters[$key]), "true") == 0
+                                        OR strcasecmp(trim($parameters[$key]), "1") == 0 ) {
                                     $serialised_parameters .= ',true';
                                 }else {
                                     $serialised_parameters .= ',false';
