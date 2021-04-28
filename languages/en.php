@@ -373,6 +373,18 @@ return array(
 	
 	'notifications:subscriptions:no_results' => 'There are no subscription records yet',
 
+	'notifications:mute:title' => "Mute notifications",
+	'notifications:mute:description' => "If you no longer wish to receive notifications like the one you received configure one or more of the following reasons to block all notifications:",
+	'notifications:mute:error:content' => "No notification settings could be determined",
+	'notifications:mute:entity' => "about '%s'",
+	'notifications:mute:container' => "from '%s'",
+	'notifications:mute:owner' => "by '%s'",
+	'notifications:mute:actor' => "initiated by '%s'",
+	'notifications:mute:group' => "written in the group '%s'",
+	'notifications:mute:user' => "written by the user '%s'",
+	
+	'notifications:mute:save:success' => "Your notification settings have been saved",
+
 /**
  * Search
  */

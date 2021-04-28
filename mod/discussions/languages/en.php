@@ -14,6 +14,7 @@ return array(
 	'collection:object:discussion:group' => 'Group discussions',
 	'collection:object:discussion:my_groups' => 'Discussions in my groups',
 	'notification:object:discussion:create' => "Send a notification when a discussion is created",
+	'notifications:mute:object:discussion' => "about the discussion '%s'",
 	
 	'discussion:settings:enable_global_discussions' => 'Enable global discussions',
 	'discussion:settings:enable_global_discussions:help' => 'Allow discussions to be created outside of groups',

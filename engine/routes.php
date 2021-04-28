@@ -228,4 +228,16 @@ return [
 			\Elgg\Router\Middleware\Gatekeeper::class,
 		],
 	],
+	'notifications:mute' => [
+		'path' => 'notifications/mute/{entity_guid}/{recipient_guid}',
+		'resource' => 'notifications/mute',
+		'requirements' => [
+			'entity_guid' => '\d+',
+			'recipient_guid' => '\d+',
+		],
+		'middleware' => [
+			\Elgg\Router\Middleware\SignedRequestGatekeeper::class,
+		],
+		'walled' => false,
+	],
 ];

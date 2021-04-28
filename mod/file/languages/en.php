@@ -15,6 +15,8 @@ return array(
 	'collection:object:file:group' => "Group files",
 	'add:object:file' => "Upload a file",
 	'edit:object:file' => "Edit file",
+	'notification:object:file:create' => "Send a notification when a file is created",
+	'notifications:mute:object:file' => "about the file '%s'",
 
 	'file:more' => "More files",
 	'file:list' => "list view",

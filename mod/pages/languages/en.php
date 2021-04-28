@@ -20,6 +20,7 @@ return array(
 	'add:object:page' => "Add a page",
 	'edit:object:page' => "Edit this page",
 	'notification:object:page:create' => "Send a notification when a page is created",
+	'notifications:mute:object:page' => "about the page '%s'",
 
 	'groups:tool:pages' => 'Enable group pages',
 	
