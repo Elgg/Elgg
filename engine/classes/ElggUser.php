@@ -4,6 +4,7 @@ use Elgg\Entity\ProfileData;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\Configuration\RegistrationException;
+use Elgg\Traits\Entity\Friends;
 
 /**
  * A user entity
@@ -22,9 +23,9 @@ use Elgg\Exceptions\Configuration\RegistrationException;
  * @property-read int    $last_login       A UNIX timestamp of the last login
  * @property-read int    $prev_last_login  A UNIX timestamp of the previous login
  */
-class ElggUser extends \ElggEntity
-	implements Friendable {
+class ElggUser extends \ElggEntity {
 
+	use Friends;
 	use ProfileData;
 	
 	/**
@@ -317,99 +318,6 @@ class ElggUser extends \ElggEntity
 	}
 
 	/**
-	 * Adds a user as a friend
-	 *
-	 * @param int  $friend_guid       The GUID of the user to add
-	 * @param bool $create_river_item Create the river item announcing this friendship
-	 *
-	 * @return bool
-	 */
-	public function addFriend($friend_guid, $create_river_item = false) {
-		if (!get_user($friend_guid)) {
-			return false;
-		}
-
-		if (!add_entity_relationship($this->guid, "friend", $friend_guid)) {
-			return false;
-		}
-
-		if ($create_river_item) {
-			elgg_create_river_item([
-				'view' => 'river/relationship/friend/create',
-				'action_type' => 'friend',
-				'subject_guid' => $this->guid,
-				'object_guid' => $friend_guid,
-			]);
-		}
-
-		return true;
-	}
-
-	/**
-	 * Removes a user as a friend
-	 *
-	 * @param int $friend_guid The GUID of the user to remove
-	 * @return bool
-	 */
-	public function removeFriend($friend_guid) {
-		return $this->removeRelationship($friend_guid, 'friend');
-	}
-
-	/**
-	 * Determines whether or not this user is a friend of the currently logged in user
-	 *
-	 * @return bool
-	 */
-	public function isFriend() {
-		return $this->isFriendOf(_elgg_services()->session->getLoggedInUserGuid());
-	}
-
-	/**
-	 * Determines whether this user is friends with another user
-	 *
-	 * @param int $user_guid The GUID of the user to check against
-	 *
-	 * @return bool
-	 */
-	public function isFriendsWith($user_guid) {
-		return (bool) check_entity_relationship($this->guid, "friend", $user_guid);
-	}
-
-	/**
-	 * Determines whether or not this user is another user's friend
-	 *
-	 * @param int $user_guid The GUID of the user to check against
-	 *
-	 * @return bool
-	 */
-	public function isFriendOf($user_guid) {
-		return (bool) check_entity_relationship($user_guid, "friend", $this->guid);
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getFriends(array $options = []) {
-		$options['relationship'] = 'friend';
-		$options['relationship_guid'] = $this->getGUID();
-		$options['type'] = 'user';
-
-		return elgg_get_entities($options);
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getFriendsOf(array $options = []) {
-		$options['relationship'] = 'friend';
-		$options['relationship_guid'] = $this->getGUID();
-		$options['inverse_relationship'] = true;
-		$options['type'] = 'user';
-
-		return elgg_get_entities($options);
-	}
-
-	/**
 	 * Gets the user's groups
 	 *
 	 * @param array $options Options array.
@@ -429,19 +337,7 @@ class ElggUser extends \ElggEntity
 	 */
 	public function getObjects(array $options = []) {
 		$options['type'] = 'object';
-		$options['owner_guid'] = $this->getGUID();
-
-		return elgg_get_entities($options);
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getFriendsObjects(array $options = []) {
-		$options['type'] = 'object';
-		$options['relationship'] = 'friend';
-		$options['relationship_guid'] = $this->getGUID();
-		$options['relationship_join_on'] = 'container_guid';
+		$options['owner_guid'] = $this->guid;
 
 		return elgg_get_entities($options);
 	}

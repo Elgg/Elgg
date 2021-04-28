@@ -46,15 +46,11 @@ This is a full example using the context to determine if the entity has write ac
    <?php
 
    function myaccess_init() {
-      // Register cron hook
-      if (!elgg_get_plugin_setting('period', 'myaccess')) {
-         elgg_set_plugin_setting('period', 'fiveminute', 'myaccess');
-      }
-
       // override permissions for the myaccess context
       elgg_register_plugin_hook_handler('permissions_check', 'all', 'myaccess_permissions_check');
 
-      elgg_register_plugin_hook_handler('cron', elgg_get_plugin_setting('period', 'myaccess'), 'myaccess_cron');
+      // Register cron hook
+      elgg_register_plugin_hook_handler('cron', elgg_get_plugin_setting('period', 'myaccess', 'fiveminute'), 'myaccess_cron');
    }
 
    /**

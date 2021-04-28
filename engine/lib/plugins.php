@@ -14,7 +14,7 @@
  * @since 1.8.0
  * @internal
  */
-function _elgg_generate_plugin_entities() {
+function _elgg_generate_plugin_entities(): bool {
 	return _elgg_services()->plugins->generateEntities();
 }
 
@@ -22,10 +22,11 @@ function _elgg_generate_plugin_entities() {
  * Returns an \ElggPlugin object with the path $path.
  *
  * @param string $plugin_id The id (dir name) of the plugin. NOT the guid.
+ *
  * @return \ElggPlugin|null
  * @since 1.8.0
  */
-function elgg_get_plugin_from_id($plugin_id) {
+function elgg_get_plugin_from_id(string $plugin_id): ?\ElggPlugin {
 	return _elgg_services()->plugins->get($plugin_id);
 }
 
@@ -36,22 +37,24 @@ function elgg_get_plugin_from_id($plugin_id) {
  * If the plugin cache is outdated, be sure to regenerate it with
  * {@link _elgg_generate_plugin_objects()} first.
  *
- * @param string $id The plugin ID.
- * @since 1.8.0
+ * @param string $plugin_id The plugin ID.
+ *
  * @return bool
+ * @since 1.8.0
  */
-function elgg_plugin_exists($id) {
-	return _elgg_services()->plugins->exists($id);
+function elgg_plugin_exists(string $plugin_id): bool {
+	return _elgg_services()->plugins->exists($plugin_id);
 }
 
 /**
  * Returns if a plugin is active for a current site.
  *
  * @param string $plugin_id The plugin ID
- * @since 1.8.0
+ *
  * @return bool
+ * @since 1.8.0
  */
-function elgg_is_active_plugin($plugin_id) {
+function elgg_is_active_plugin(string $plugin_id): bool {
 	return _elgg_services()->plugins->isActive($plugin_id);
 }
 
@@ -59,34 +62,12 @@ function elgg_is_active_plugin($plugin_id) {
  * Returns an ordered list of plugins
  *
  * @param string $status The status of the plugins. active, inactive, or all.
+ *
  * @return \ElggPlugin[]
  * @since 1.8.0
  */
-function elgg_get_plugins($status = 'active') {
+function elgg_get_plugins(string $status = 'active'): array {
 	return _elgg_services()->plugins->find($status);
-}
-
-/**
- * Returns an array of all plugin user settings for a user.
- *
- * @param int    $user_guid  The user GUID or 0 for the currently logged in user.
- * @param string $plugin_id  The plugin ID (Required)
- * @param bool   $return_obj Return settings as an object? This can be used to in reusable
- *                           views where the settings are passed as $vars['entity'].
- *
- * @return array|object
- * @since 1.8.0
- * @see   \ElggPlugin::getAllUserSettings()
- */
-function elgg_get_all_plugin_user_settings($user_guid = 0, $plugin_id = null, $return_obj = false) {
-	$plugin = _elgg_services()->plugins->get($plugin_id);
-	if (!$plugin) {
-		return [];
-	}
-
-	$settings = $plugin->getAllUserSettings($user_guid);
-
-	return $return_obj ? (object) $settings : $settings;
 }
 
 /**
@@ -101,33 +82,13 @@ function elgg_get_all_plugin_user_settings($user_guid = 0, $plugin_id = null, $r
  * @since 1.8.0
  * @see \ElggPlugin::setUserSetting()
  */
-function elgg_set_plugin_user_setting($name, $value, $user_guid = 0, $plugin_id = null) {
+function elgg_set_plugin_user_setting(string $name, $value, int $user_guid = 0, string $plugin_id = ''): bool {
 	$plugin = _elgg_services()->plugins->get($plugin_id);
 	if (!$plugin) {
 		return false;
 	}
 	
-	return $plugin->setUserSetting($name, $value, (int) $user_guid);
-}
-
-/**
- * Unsets a user-specific plugin setting
- *
- * @param string $name      Name of the setting
- * @param int    $user_guid The user GUID or 0 for the currently logged in user.
- * @param string $plugin_id The plugin ID (Required)
- *
- * @return bool
- * @since 1.8.0
- * @see \ElggPlugin::unsetUserSetting()
- */
-function elgg_unset_plugin_user_setting($name, $user_guid = 0, $plugin_id = null) {
-	$plugin = _elgg_services()->plugins->get($plugin_id);
-	if (!$plugin) {
-		return false;
-	}
-	
-	return $plugin->unsetUserSetting($name, (int) $user_guid);
+	return $plugin->setUserSetting($name, $value, $user_guid);
 }
 
 /**
@@ -142,33 +103,13 @@ function elgg_unset_plugin_user_setting($name, $user_guid = 0, $plugin_id = null
  * @since 1.8.0
  * @see \ElggPlugin::getUserSetting()
  */
-function elgg_get_plugin_user_setting($name, $user_guid = 0, $plugin_id = null, $default = null) {
+function elgg_get_plugin_user_setting(string $name, int $user_guid = 0, string $plugin_id = '', $default = null) {
 	$plugin = _elgg_services()->plugins->get($plugin_id);
 	if (!$plugin) {
 		return false;
 	}
 	
-	return $plugin->getUserSetting($name, (int) $user_guid, $default);
-}
-
-/**
- * Set a setting for a plugin.
- *
- * @param string $name      The name of the setting - note, can't be "title".
- * @param mixed  $value     The value.
- * @param string $plugin_id The plugin ID (Required)
- *
- * @return bool
- * @since 1.8.0
- * @see \ElggPlugin::setSetting()
- */
-function elgg_set_plugin_setting($name, $value, $plugin_id) {
-	$plugin = _elgg_services()->plugins->get($plugin_id);
-	if (!$plugin) {
-		return false;
-	}
-	
-	return $plugin->setSetting($name, $value);
+	return $plugin->getUserSetting($name, $user_guid, $default);
 }
 
 /**
@@ -182,53 +123,11 @@ function elgg_set_plugin_setting($name, $value, $plugin_id) {
  * @since 1.8.0
  * @see \ElggPlugin::getSetting()
  */
-function elgg_get_plugin_setting($name, $plugin_id, $default = null) {
+function elgg_get_plugin_setting(string $name, string $plugin_id, $default = null) {
 	$plugin = _elgg_services()->plugins->get($plugin_id);
 	if (!$plugin) {
 		return false;
 	}
 	
 	return $plugin->getSetting($name, $default);
-}
-
-/**
- * Unsets a plugin setting.
- *
- * @param string $name      The name of the setting.
- * @param string $plugin_id The plugin ID (Required)
- *
- * @return bool
- * @since 1.8.0
- * @see \ElggPlugin::unsetSetting()
- */
-function elgg_unset_plugin_setting($name, $plugin_id) {
-	$plugin = _elgg_services()->plugins->get($plugin_id);
-	if (!$plugin) {
-		return false;
-	}
-	
-	return $plugin->unsetSetting($name);
-}
-
-/**
- * Returns entities based upon plugin user settings.
- * Takes all the options for {@link elgg_get_entities()}
- * in addition to the ones below.
- *
- * @param array $options Array in the format:
- *                       - plugin_id => STR The plugin id. Required.
- *                       - plugin_user_setting_names => null|ARR private setting names
- *                       - plugin_user_setting_values => null|ARR metadata values
- *
- *                       - plugin_user_setting_name_value_pairs => null|ARR (name => 'name', value => 'value', 'operand' => '=')
- *                       Currently if multiple values are sent via an array (value => array('value1', 'value2')) the pair's operand will be forced to "IN".
- *
- * 	                     - plugin_user_setting_name_value_pairs_operator => null|STR The operator to use for combining
- *                       (name = value) OPERATOR (name = value); default AND
- *
- * @return mixed int If count, int. If not count, array. false on errors.
- * @since 1.8.0
- */
-function elgg_get_entities_from_plugin_user_settings(array $options = []) {
-	return _elgg_services()->plugins->getEntitiesFromUserSettings($options);
 }

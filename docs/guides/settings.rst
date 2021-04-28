@@ -77,7 +77,8 @@ Values may also be set from within your plugin code, to do this use one of the f
 
 .. code-block:: php
 
-   elgg_set_plugin_setting($name, $value, $plugin_id);
+   $plugin = elgg_get_plugin_from_id($plugin_id);
+   $plugin->setSetting($name, $value);
 
 or 
 

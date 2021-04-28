@@ -273,7 +273,7 @@ class Plugins {
 	 *
 	 * @return bool
 	 */
-	public function generateEntities() {
+	public function generateEntities(): bool {
 
 		$mod_dir = $this->getPath();
 
@@ -426,7 +426,7 @@ class Plugins {
 	 *
 	 * @return ElggPlugin|null
 	 */
-	public function get($plugin_id) {
+	public function get(string $plugin_id): ?\ElggPlugin {
 		if (!$plugin_id) {
 			return null;
 		}
@@ -472,7 +472,7 @@ class Plugins {
 	 *
 	 * @return bool
 	 */
-	public function exists($id) {
+	public function exists(string $id): bool {
 		return $this->get($id) instanceof ElggPlugin;
 	}
 
@@ -506,7 +506,7 @@ class Plugins {
 	 *
 	 * @return bool
 	 */
-	public function isActive($plugin_id) {
+	public function isActive(string $plugin_id): bool {
 		if (isset($this->boot_plugins) && is_array($this->boot_plugins)) {
 			return array_key_exists($plugin_id, $this->boot_plugins);
 		}
@@ -830,7 +830,7 @@ class Plugins {
 	 *
 	 * @return ElggPlugin[]
 	 */
-	public function find($status = 'active') {
+	public function find(string $status = 'active'): array {
 		if (!$this->db || !$this->config->installed) {
 			return [];
 		}
@@ -1114,73 +1114,6 @@ class Plugins {
 		}
 
 		return $settings;
-	}
-
-	/**
-	 * Returns entities based upon plugin user settings.
-	 * Takes all the options for {@link elgg_get_entities()}
-	 * in addition to the ones below.
-	 *
-	 * Commonly used options:
-	 *    plugin_id => STR The plugin id. Required.
-	 *
-	 *    plugin_user_setting_names => null|ARR private setting names
-	 *
-	 *    plugin_user_setting_values => null|ARR metadata values
-	 *
-	 *    plugin_user_setting_name_value_pairs => null|ARR (
-	 *                                         name => 'name',
-	 *                                         value => 'value',
-	 *                                         'operand' => '=',
-	 *                                        )
-	 *                                 Currently if multiple values are sent via
-	 *                               an array (value => array('value1', 'value2')
-	 *                               the pair's operand will be forced to "IN".
-	 *
-	 *    plugin_user_setting_name_value_pairs_operator => null|STR The operator to use for combining
-	 *                                        (name = value) OPERATOR (name = value); default AND
-	 *
-	 * @param array $options array of options
-	 *
-	 * @return mixed int If count, int. If not count, array. false on errors.
-	 */
-	public function getEntitiesFromUserSettings(array $options = []) {
-		$singulars = [
-			'plugin_user_setting_name',
-			'plugin_user_setting_value',
-			'plugin_user_setting_name_value_pair'
-		];
-
-		$options = LegacyQueryOptionsAdapter::normalizePluralOptions($options, $singulars);
-
-		// rewrite plugin_user_setting_name_* to the right PS ones.
-		$map = [
-			'plugin_user_setting_names' => 'private_setting_names',
-			'plugin_user_setting_values' => 'private_setting_values',
-			'plugin_user_setting_name_value_pairs' => 'private_setting_name_value_pairs',
-			'plugin_user_setting_name_value_pairs_operator' => 'private_setting_name_value_pairs_operator',
-		];
-
-		foreach ($map as $plugin => $private) {
-			if (!isset($options[$plugin])) {
-				continue;
-			}
-
-			if (isset($options[$private])) {
-				if (!is_array($options[$private])) {
-					$options[$private] = [$options[$private]];
-				}
-
-				$options[$private] = array_merge($options[$private], $options[$plugin]);
-			} else {
-				$options[$private] = $options[$plugin];
-			}
-		}
-
-		$prefix = $this->namespacePrivateSetting('user_setting', '', $options['plugin_id']);
-		$options['private_setting_name_prefix'] = $prefix;
-
-		return elgg_get_entities($options);
 	}
 
 	/**

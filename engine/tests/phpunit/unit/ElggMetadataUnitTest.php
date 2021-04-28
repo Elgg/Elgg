@@ -132,6 +132,23 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		_elgg_services()->session->removeLoggedInUser();
 	}
 	
+	public function testCanUpdateMetadata() {
+		$owner = $this->createUser();
+		_elgg_services()->session->setLoggedInUser($owner);
+
+		$object = $this->createObject([
+			'owner_guid' => $owner->guid,
+		]);
+		
+		$object->title = 'foo';
+		$this->assertEquals('foo', $object->title);
+		
+		$object->title = 'foo2';
+		$this->assertEquals('foo2', $object->title);
+		
+		_elgg_services()->session->removeLoggedInUser();
+	}
+	
 	public function testCantSaveMetadataForNonExisingEntity() {
 		$metadata = new ElggMetadata();
 		$metadata->entity_guid = 123456789;
