@@ -698,6 +698,7 @@ Miscellaneous API changes
 * The constants ``ORIGIN_SUBSCRIPTIONS`` and ``ORIGIN_INSTANT`` in ``\Elgg\Notifications\Notification`` have been removed
 * You can no longer use the ``delete, <entity_type>`` event to prevent deletion of an entity. Use the ``delete:before, <entity_type>`` event
 * External Files are no longer ordered by priority but will be returned in the same order as they are registered
+* The interface ``Friendable`` has been removed. Implemented functions in ``ElggUser`` have been moved to ``Elgg\Traits\Entity\Friends``
 
 Deprecated APIs
 ---------------
