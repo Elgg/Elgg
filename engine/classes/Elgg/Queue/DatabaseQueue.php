@@ -45,9 +45,9 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 			VALUES
 			(:name, :data, :timestamp)";
 		$params = [
-			':name' => $this->name,
-			':data' => serialize($item),
-			':timestamp' => time(),
+			'name' => $this->name,
+			'data' => serialize($item),
+			'timestamp' => time(),
 		];
 		return $this->db->insertData($query, $params) !== false;
 	}
@@ -65,8 +65,8 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 			WHERE name = :name AND worker IS NULL
 			ORDER BY id ASC LIMIT 1";
 		$update_params = [
-			':worker' => $worker_id,
-			':name' => $name,
+			'worker' => $worker_id,
+			'name' => $name,
 		];
 		$num = $this->db->updateData($update, true, $update_params);
 		if ($num !== 1) {
@@ -78,8 +78,8 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 			WHERE worker = :worker
 			AND name = :name";
 		$select_params = [
-			':worker' => $worker_id,
-			':name' => $name,
+			'worker' => $worker_id,
+			'name' => $name,
 		];
 		$obj = $this->db->getDataRow($select, null, $select_params);
 		if (empty($obj)) {
@@ -90,8 +90,8 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 			WHERE name = :name
 			AND worker = :worker";
 		$delete_params = [
-			':worker' => $worker_id,
-			':name' => $name,
+			'worker' => $worker_id,
+			'name' => $name,
 		];
 		$this->db->deleteData($delete, $delete_params);
 		
@@ -107,7 +107,7 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 		$sql = "DELETE FROM {$prefix}queue
 			WHERE name = :name";
 		$params = [
-			':name' => $this->name,
+			'name' => $this->name,
 		];
 
 		$this->db->deleteData($sql, $params);
@@ -123,7 +123,7 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 			FROM {$prefix}queue
 			WHERE name = :name";
 		$params = [
-			':name' => $this->name,
+			'name' => $this->name,
 		];
 		
 		$result = $this->db->getDataRow($sql, null, $params);

@@ -206,14 +206,14 @@ class EntityTable {
 		";
 
 		return $this->db->insertData($sql, [
-			':type' => $row->type,
-			':subtype' => $row->subtype,
-			':owner_guid' => $row->owner_guid,
-			':container_guid' => $row->container_guid,
-			':access_id' => $row->access_id,
-			':time_created' => $row->time_created,
-			':time_updated' => $row->time_updated,
-			':last_action' => $row->last_action,
+			'type' => $row->type,
+			'subtype' => $row->subtype,
+			'owner_guid' => $row->owner_guid,
+			'container_guid' => $row->container_guid,
+			'access_id' => $row->access_id,
+			'time_created' => $row->time_created,
+			'time_updated' => $row->time_updated,
+			'last_action' => $row->last_action,
 		]);
 	}
 
@@ -237,12 +237,12 @@ class EntityTable {
 		";
 
 		$params = [
-			':owner_guid' => $row->owner_guid,
-			':access_id' => $row->access_id,
-			':container_guid' => $row->container_guid,
-			':time_created' => $row->time_created,
-			':time_updated' => $row->time_updated,
-			':guid' => $guid,
+			'owner_guid' => $row->owner_guid,
+			'access_id' => $row->access_id,
+			'container_guid' => $row->container_guid,
+			'time_created' => $row->time_created,
+			'time_updated' => $row->time_updated,
+			'guid' => $guid,
 		];
 
 		return $this->db->updateData($sql, false, $params);
@@ -520,8 +520,8 @@ class EntityTable {
 		";
 
 		$params = [
-			':last_action' => (int) $posted,
-			':guid' => (int) $entity->guid,
+			'last_action' => (int) $posted,
+			'guid' => (int) $entity->guid,
 		];
 
 		$this->db->updateData($query, true, $params);

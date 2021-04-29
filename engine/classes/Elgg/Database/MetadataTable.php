@@ -374,7 +374,7 @@ class MetadataTable {
 			->addOrderBy('time_created', 'asc')
 			->addOrderBy('id', 'asc');
 		
-		return $qb->execute()->fetchAll();
+		return $this->db->getData($qb);
 	}
 
 	/**

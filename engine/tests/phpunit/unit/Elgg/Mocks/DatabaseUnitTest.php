@@ -38,7 +38,7 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->db->addQuerySpec([
 			'sql' => 'INSERT INTO A WHERE b = :b',
 			'params' => [
-				':b' => 'b',
+				'b' => 'b',
 			],
 			'insert_id' => 123,
 		]);
@@ -46,12 +46,12 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->db->addQuerySpec([
 			'sql' => 'INSERT INTO A WHERE c = :c',
 			'params' => [
-				':c' => 'c',
+				'c' => 'c',
 			],
 		]);
 
-		$this->assertEquals(123, elgg()->db->insertData('INSERT INTO A WHERE b = :b', [':b' => 'b']));
-		$this->assertEquals(0, elgg()->db->insertData('INSERT INTO A WHERE c = :c', [':c' => 'c']));
+		$this->assertEquals(123, elgg()->db->insertData('INSERT INTO A WHERE b = :b', ['b' => 'b']));
+		$this->assertEquals(0, elgg()->db->insertData('INSERT INTO A WHERE c = :c', ['c' => 'c']));
 	}
 
 	public function testCanUpdateData() {
@@ -59,8 +59,8 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->db->addQuerySpec([
 			'sql' => 'UPDATE A SET b = :b WHERE c = :c',
 			'params' => [
-				':b' => 'b',
-				':c' => 'c'
+				'b' => 'b',
+				'c' => 'c'
 			],
 			'row_count' => 20,
 		]);
@@ -68,30 +68,30 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->db->addQuerySpec([
 			'sql' => 'UPDATE A SET b = :b WHERE d = :d',
 			'params' => [
-				':b' => 'b',
-				':d' => 'd'
+				'b' => 'b',
+				'd' => 'd'
 			],
 			'row_count' => 0,
 		]);
 
 		$this->assertTrue(elgg()->db->updateData('UPDATE A SET b = :b WHERE c = :c', false, [
-			':b' => 'b',
-			':c' => 'c'
+			'b' => 'b',
+			'c' => 'c'
 		]));
 
 		$this->assertEquals(20, elgg()->db->updateData('UPDATE A SET b = :b WHERE c = :c', true, [
-			':b' => 'b',
-			':c' => 'c'
+			'b' => 'b',
+			'c' => 'c'
 		]));
 
 		$this->assertTrue(elgg()->db->updateData('UPDATE A SET b = :b WHERE d = :d', false, [
-			':b' => 'b',
-			':d' => 'd'
+			'b' => 'b',
+			'd' => 'd'
 		]));
 
 		$this->assertEquals(0, elgg()->db->updateData('UPDATE A SET b = :b WHERE d = :d', true, [
-			':b' => 'b',
-			':d' => 'd'
+			'b' => 'b',
+			'd' => 'd'
 		]));
 	}
 
@@ -100,7 +100,7 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->db->addQuerySpec([
 			'sql' => 'DELETE FROM A WHERE b = :b',
 			'params' => [
-				':b' => 'b',
+				'b' => 'b',
 			],
 			'row_count' => 20,
 		]);
@@ -108,7 +108,7 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->db->addQuerySpec([
 			'sql' => 'DELETE FROM A WHERE c = :c',
 			'params' => [
-				':c' => 'c',
+				'c' => 'c',
 			],
 		]);
 
@@ -136,7 +136,7 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->db->addQuerySpec([
 			'sql' => 'SELECT FROM A WHERE foo = :foo',
 			'params' => [
-				':foo' => 'bar1',
+				'foo' => 'bar1',
 			],
 			'results' => function() use ($data) {
 			$results = [];
@@ -150,8 +150,8 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 		]);
 
 
-		$this->assertEquals([$data[0], $data[2]], elgg()->db->getData('SELECT FROM A WHERE foo = :foo', [$this, 'rowToArray'], [':foo' => 'bar1']));
-		$this->assertEquals($data[0], elgg()->db->getDataRow('SELECT FROM A WHERE foo = :foo', [$this, 'rowToArray'], [':foo' => 'bar1']));
+		$this->assertEquals([$data[0], $data[2]], elgg()->db->getData('SELECT FROM A WHERE foo = :foo', [$this, 'rowToArray'], ['foo' => 'bar1']));
+		$this->assertEquals($data[0], elgg()->db->getDataRow('SELECT FROM A WHERE foo = :foo', [$this, 'rowToArray'], ['foo' => 'bar1']));
 		
 	}
 

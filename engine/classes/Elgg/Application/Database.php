@@ -41,7 +41,7 @@ class Database {
 	 *
 	 * @param string   $query    The query being passed.
 	 * @param callable $callback Optionally, the name of a function to call back to on each row
-	 * @param array    $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param array    $params   Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
@@ -59,7 +59,7 @@ class Database {
 	 *
 	 * @param string   $query    The query to execute.
 	 * @param callable $callback A callback function to apply to the row
-	 * @param array    $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param array    $params   Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
 	 *
 	 * @return mixed A single database result object or the result of the callback function.
 	 */
@@ -73,7 +73,7 @@ class Database {
 	 * @note Altering the DB invalidates all queries in the query cache.
 	 *
 	 * @param string $query  The query to execute.
-	 * @param array  $params Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param array  $params Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
 	 *
 	 * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is
 	 *                   defined, 0 if not, and false on failure.
@@ -89,7 +89,7 @@ class Database {
 	 *
 	 * @param string $query      The query to run.
 	 * @param bool   $getNumRows Return the number of rows affected (default: false).
-	 * @param array  $params     Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param array  $params     Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
 	 *
 	 * @return bool|int
 	 */
@@ -103,7 +103,7 @@ class Database {
 	 * @note Altering the DB invalidates all queries in query cache.
 	 *
 	 * @param string $query  The SQL query to run
-	 * @param array  $params Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param array  $params Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
 	 *
 	 * @return int The number of affected rows
 	 */
@@ -132,7 +132,7 @@ class Database {
 	 * @param string   $query    The query to execute
 	 * @param string   $type     The query type ('read' or 'write')
 	 * @param callable $callback A callback function to pass the results array to
-	 * @param array    $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param array    $params   Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
 	 *
 	 * @return boolean Whether registering was successful.
 	 * @internal

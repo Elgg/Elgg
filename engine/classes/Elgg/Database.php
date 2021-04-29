@@ -155,7 +155,6 @@ class Database {
 
 		try {
 			$this->connections[$type] = DriverManager::getConnection($params);
-			$this->connections[$type]->setFetchMode(\PDO::FETCH_OBJ);
 
 			// https://github.com/Elgg/Elgg/issues/8121
 			$sub_query = "SELECT REPLACE(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY', '')";
@@ -185,7 +184,7 @@ class Database {
 	 *
 	 * @param QueryBuilder|string $query    The query being passed.
 	 * @param callable            $callback Optionally, the name of a function to call back to on each row
-	 * @param array               $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param array               $params   Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
@@ -203,7 +202,7 @@ class Database {
 	 *
 	 * @param QueryBuilder|string $query    The query to execute.
 	 * @param callable            $callback A callback function to apply to the row
-	 * @param array               $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param array               $params   Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
 	 *
 	 * @return mixed A single database result object or the result of the callback function.
 	 */
@@ -217,7 +216,7 @@ class Database {
 	 * @note Altering the DB invalidates all queries in the query cache.
 	 *
 	 * @param QueryBuilder|string $query  The query to execute.
-	 * @param array               $params Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param array               $params Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
 	 *
 	 * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is
 	 *                   defined, 0 if not, and false on failure.
@@ -246,7 +245,7 @@ class Database {
 	 *
 	 * @param QueryBuilder|string $query        The query to run.
 	 * @param bool                $get_num_rows Return the number of rows affected (default: false).
-	 * @param array               $params       Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param array               $params       Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
 	 *
 	 * @return bool|int
 	 */
@@ -275,7 +274,7 @@ class Database {
 	 * @note Altering the DB invalidates all queries in query cache.
 	 *
 	 * @param QueryBuilder|string $query  The SQL query to run
-	 * @param array               $params Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param array               $params Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
 	 *
 	 * @return int The number of affected rows
 	 */
@@ -331,7 +330,7 @@ class Database {
 	 * @param QueryBuilder|string $query    The select query to execute
 	 * @param callable            $callback An optional callback function to run on each row
 	 * @param bool                $single   Return only a single result?
-	 * @param array               $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param array               $params   Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
@@ -375,16 +374,17 @@ class Database {
 			$stmt = $this->executeQuery($query, $this->getConnection('read'), $params);
 		}
 		
-		while ($row = $stmt->fetch()) {
+		while ($row = $stmt->fetchAssociative()) {
+			$row_obj = (object) $row;
 			if ($callback) {
-				$row = call_user_func($callback, $row);
+				$row_obj = call_user_func($callback, $row_obj);
 			}
 
 			if ($single) {
-				$return = $row;
+				$return = $row_obj;
 				break;
 			} else {
-				$return[] = $row;
+				$return[] = $row_obj;
 			}
 		}
 
@@ -402,7 +402,7 @@ class Database {
 	 *
 	 * @param QueryBuilder|string $query      The query
 	 * @param Connection          $connection The DB connection
-	 * @param array               $params     Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param array               $params     Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
 	 *
 	 * @return Statement|int The result of the query
 	 * @throws DatabaseException
@@ -416,6 +416,17 @@ class Database {
 		if ($query instanceof QueryBuilder) {
 			$params = $query->getParameters();
 			$sql = $query->getSQL();
+		}
+		
+		foreach ($params as $param_key => $value) {
+			if (substr($param_key, 0, 1) !== ':') {
+				continue;
+			}
+			
+			$this->getLogger()->warning('Unsupported colon detected in named param: ' . $param_key);
+			
+			unset($params[$param_key]);
+			$params[substr($param_key, 1)] = $value;
 		}
 				
 		try {
@@ -495,7 +506,7 @@ class Database {
 	 * @param string   $query    The query to execute
 	 * @param string   $type     The query type ('read' or 'write')
 	 * @param callable $callback A callback function to pass the results array to
-	 * @param array    $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param array    $params   Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
 	 *
 	 * @return boolean Whether registering was successful
 	 */

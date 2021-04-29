@@ -117,11 +117,11 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		_elgg_services()->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
-				':entity_guid' => $metadata->entity_guid,
-				':name' => 'foo',
-				':value' => 'bar',
-				':value_type' => 'text',
-				':time_created' => $metadata->time_created,
+				'entity_guid' => $metadata->entity_guid,
+				'name' => 'foo',
+				'value' => 'bar',
+				'value_type' => 'text',
+				'time_created' => $metadata->time_created,
 			],
 			'insert_id' => $id,
 		]);
@@ -185,7 +185,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		_elgg_services()->db->addQuerySpec([
 			'sql' => "DELETE FROM {$dbprefix}metadata WHERE id = :id",
 			'params' => [
-				':id' => $metadata->id,
+				'id' => $metadata->id,
 			],
 			'row_count' => 1,
 			'times' => 1,

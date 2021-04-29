@@ -54,7 +54,7 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 			FROM {$this->prefix}entities
 			WHERE guid = :guid
 		", null, [
-			':guid' => $this->user->guid,
+			'guid' => $this->user->guid,
 		]);
 		$row3 = $row3[0];
 
@@ -65,7 +65,7 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 		", function ($row) {
 			return (array)$row;
 		}, [
-			':guid' => $this->user->guid,
+			'guid' => $this->user->guid,
 		]);
 		$row4 = $row4[0];
 
@@ -95,7 +95,7 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 			FROM {$this->prefix}entities
 			WHERE guid = :guid
 		", null, [
-			':guid' => $this->user->guid,
+			'guid' => $this->user->guid,
 		]);
 
 		$this->assertInstanceOf(\stdClass::class, $row1);
@@ -119,10 +119,10 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 			VALUES (:guid1,   :rel,         :guid2,   :time)
 			ON DUPLICATE KEY UPDATE time_created = :time
 		", [
-			':guid1' => $this->user->guid,
-			':guid2' => $this->user->guid,
-			':rel' => 'test_self2',
-			':time' => $time,
+			'guid1' => $this->user->guid,
+			'guid2' => $this->user->guid,
+			'rel' => 'test_self2',
+			'time' => $time,
 		]);
 
 		$rows = elgg()->db->getData("
@@ -174,8 +174,8 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 			SET relationship = :rel
 			WHERE id = :id
 		", true, [
-			':rel' => 'test_self4',
-			':id' => $rel->id,
+			'rel' => 'test_self4',
+			'id' => $rel->id,
 		]);
 		$rel = get_relationship($rel->id);
 
@@ -204,7 +204,7 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 			DELETE FROM {$this->prefix}entity_relationships
 			WHERE id = :id
 		", [
-			':id' => $rel->id,
+			'id' => $rel->id,
 		]);
 		$this->assertEquals(1, $res);
 		$this->assertFalse(check_entity_relationship($this->user->guid, 'test_self1', $this->user->guid));
@@ -217,7 +217,7 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 			WHERE guid = :guid
 		";
 		$params = [
-			':guid' => $this->user->guid,
+			'guid' => $this->user->guid,
 		];
 
 		// capture what's passed to callback
@@ -230,11 +230,10 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 
 		_elgg_services()->db->executeDelayedQueries();
 
-		/* @var \Doctrine\DBAL\Driver\Statement $captured */
+		/* @var \Doctrine\DBAL\Result $captured */
+		$this->assertInstanceOf(\Doctrine\DBAL\Result::class, $captured);
 
-		$this->assertInstanceOf(\Doctrine\DBAL\Driver\Statement::class, $captured);
-
-		$rows = $captured->fetchAll(\PDO::FETCH_OBJ);
-		$this->assertEquals($this->user->guid, $rows[0]->guid);
+		$rows = $captured->fetchAllAssociative();
+		$this->assertEquals($this->user->guid, $rows[0]['guid']);
 	}
 }

@@ -333,17 +333,17 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$pattern = '~INSERT INTO users_remember_me_cookies \(code, guid, timestamp\)\\s+VALUES \(:hash, :guid, :time\)~';
 		$this->assertMatchesRegularExpression($pattern, $sql);
 		
-		$this->assertArrayHasKey(':hash', $params);
-		$this->assertEquals($this->mockHash, $params[':hash']);
-		$this->assertArrayHasKey(':guid', $params);
-		$this->assertEquals(123, $params[':guid']);
+		$this->assertArrayHasKey('hash', $params);
+		$this->assertEquals($this->mockHash, $params['hash']);
+		$this->assertArrayHasKey('guid', $params);
+		$this->assertEquals(123, $params['guid']);
 	}
 
 	function mock_deleteData($sql, $params) {
 		$pattern = '~DELETE FROM users_remember_me_cookies\\s+WHERE code = :hash~';
 		$this->assertMatchesRegularExpression($pattern, $sql);
 		$this->assertEquals([
-			':hash' => $this->mockHash,
+			'hash' => $this->mockHash,
 		], $params);
 	}
 
@@ -351,7 +351,7 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$pattern = '~SELECT guid\\s+FROM users_remember_me_cookies\\s+WHERE code = :hash~';
 		$this->assertMatchesRegularExpression($pattern, $sql);
 		$this->assertEquals([
-			':hash' => $this->mockHash,
+			'hash' => $this->mockHash,
 		], $params);
 
 		return (object) array('guid' => 123);
@@ -361,7 +361,7 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$pattern = '~DELETE FROM users_remember_me_cookies\\s+WHERE guid = :guid~';
 		$this->assertMatchesRegularExpression($pattern, $sql);
 		$this->assertEquals([
-			':guid' => 123,
+			'guid' => 123,
 		], $params);
 	}
 
@@ -369,11 +369,11 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$pattern = '~UPDATE users_remember_me_cookies\\s+SET timestamp = :time\\s+WHERE guid = :guid\\s+AND code = :hash~';
 		$this->assertMatchesRegularExpression($pattern, $sql);
 		
-		$this->assertArrayHasKey(':hash', $params);
-		$this->assertEquals($this->mockHash, $params[':hash']);
+		$this->assertArrayHasKey('hash', $params);
+		$this->assertEquals($this->mockHash, $params['hash']);
 		
 		$this->assertNotContains($params, [
-			':guid' => 123,
+			'guid' => 123,
 		]);
 	}
 	
@@ -381,10 +381,10 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$pattern = '~UPDATE users_remember_me_cookies\\s+SET timestamp = :time\\s+WHERE guid = :guid\\s+AND code = :hash~';
 		$this->assertMatchesRegularExpression($pattern, $sql);
 		
-		$this->assertArrayHasKey(':hash', $params);
-		$this->assertEquals($this->mockHash, $params[':hash']);
-		$this->assertArrayHasKey(':guid', $params);
-		$this->assertEquals(123, $params[':guid']);
+		$this->assertArrayHasKey('hash', $params);
+		$this->assertEquals($this->mockHash, $params['hash']);
+		$this->assertArrayHasKey('guid', $params);
+		$this->assertEquals(123, $params['guid']);
 		
 		return 1;
 	}
@@ -392,7 +392,7 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 	function mock_deleteExpiredTokens($sql, $params) {
 		$pattern = '~DELETE FROM users_remember_me_cookies\\s+WHERE timestamp < :time~';
 		$this->assertMatchesRegularExpression($pattern, $sql);
-		$this->assertArrayHasKey(':time', $params);
+		$this->assertArrayHasKey('time', $params);
 		
 		return 1;
 	}

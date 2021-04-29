@@ -98,7 +98,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 			return $db->getDataRow($qb);
 		});
 
-		$this->assertEquals(1, $result);
+		$this->assertEquals((object) 1, $result);
 	}
 
 	function testStartsTimer() {

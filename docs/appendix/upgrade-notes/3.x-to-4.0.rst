@@ -45,6 +45,13 @@ The following related functionality has been replaced by this new way:
 * The hook ``profile:fields, group`` has been replaced by the new hook ``fields, group:group``
 * The hook ``profile:fields, user`` has been replaced by the new hook ``fields, user:user``
 
+Doctrine DBAL
+-------------
+
+Elgg replaced v2 with v3 of the ``doctrine/dbal`` dependency. On of the most notable changes is that if you work with QueryBuilders and use the ``$qb->fetch()``
+function you will no longer get an object, but an array. If you want your rows to be useable as classes, you can use ``elgg()->db->getData($qb)``. 
+Another important change is that if you provide your own query parameters, you should no longer prefix keys with a colon in the parameters but still do so in the query.
+
 Web services
 ------------
 

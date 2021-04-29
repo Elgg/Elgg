@@ -183,7 +183,7 @@ class PersistentLoginService {
 			FROM {$this->table}
 			WHERE code = :hash";
 		$params = [
-			':hash' => $hash,
+			'hash' => $hash,
 		];
 		try {
 			$user_row = $this->db->getDataRow($query, null, $params);
@@ -217,9 +217,9 @@ class PersistentLoginService {
 			WHERE guid = :guid
 			AND code = :hash";
 		$params = [
-			':time' => time(),
-			':guid' => $user->guid,
-			':hash' => $this->hashToken($this->cookie_token),
+			'time' => time(),
+			'guid' => $user->guid,
+			'hash' => $this->hashToken($this->cookie_token),
 		];
 		try {
 			$res = (bool) $this->db->updateData($query, false, $params);
@@ -256,7 +256,7 @@ class PersistentLoginService {
 		$query = "DELETE FROM {$this->table}
 			WHERE timestamp < :time";
 		$params = [
-			':time' => $time->getTimestamp(),
+			'time' => $time->getTimestamp(),
 		];
 		try {
 			return (bool) $this->db->deleteData($query, $params);
@@ -283,9 +283,9 @@ class PersistentLoginService {
 		$query = "INSERT INTO {$this->table} (code, guid, timestamp)
 		    VALUES (:hash, :guid, :time)";
 		$params = [
-			':hash' => $hash,
-			':guid' => $user->guid,
-			':time' => time(),
+			'hash' => $hash,
+			'guid' => $user->guid,
+			'time' => time(),
 		];
 		try {
 			$this->db->insertData($query, $params);
@@ -304,7 +304,7 @@ class PersistentLoginService {
 		$query = "DELETE FROM {$this->table}
 			WHERE code = :hash";
 		$params = [
-			':hash' => $hash,
+			'hash' => $hash,
 		];
 		try {
 			$this->db->deleteData($query, $params);
@@ -343,7 +343,7 @@ class PersistentLoginService {
 		$query = "DELETE FROM {$this->table}
 			WHERE guid = :guid";
 		$params = [
-			':guid' => $user->guid,
+			'guid' => $user->guid,
 		];
 		try {
 			$this->db->deleteData($query, $params);
