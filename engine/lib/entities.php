@@ -525,7 +525,7 @@ function elgg_get_site_entity() {
  *
  *
  * @see    elgg_list_entities()
- * @see    \Elgg\Database\LegacyQueryOptionsAdapter
+ * @see    \Elgg\Traits\Database\LegacyQueryOptionsAdapter
  *
  * @param array $options Options
  *

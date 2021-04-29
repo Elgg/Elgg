@@ -2,7 +2,7 @@
 
 namespace Elgg\WebServices;
 
-use Elgg\TimeUsing;
+use Elgg\Traits\TimeUsing;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;

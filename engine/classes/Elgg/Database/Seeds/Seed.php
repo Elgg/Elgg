@@ -2,7 +2,8 @@
 
 namespace Elgg\Database\Seeds;
 
-use Elgg\Cli\Progressing;
+use Elgg\Traits\Cli\Progressing;
+use Elgg\Traits\Seeding;
 
 /**
  * Abstract seed

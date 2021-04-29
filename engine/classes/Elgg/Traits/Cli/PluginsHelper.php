@@ -1,12 +1,14 @@
 <?php
 
-namespace Elgg\Cli;
+namespace Elgg\Traits\Cli;
 
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\PluginException;
 
 /**
  * Trait shared by CLI commands to simplify plugin management
+ *
+ * @internal
  */
 trait PluginsHelper {
 

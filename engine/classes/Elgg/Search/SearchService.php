@@ -9,12 +9,10 @@ use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\AttributeWhereClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\PrivateSettingWhereClause;
-use Elgg\Database\LegacyQueryOptionsAdapter;
 use Elgg\Database\QueryBuilder;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\PluginHooksService;
-use ElggBatch;
-use ElggEntity;
+use Elgg\Traits\Database\LegacyQueryOptionsAdapter;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -72,7 +70,7 @@ class SearchService {
 	 * @option bool   $tokenize      Break down search query into tokens,
 	 *                               e.g. find 'elgg has been released' when searching for 'elgg released'
 	 *
-	 * @return ElggBatch|ElggEntity[]|int|false
+	 * @return \ElggBatch|\ElggEntity[]|int|false
 	 * @throws InvalidParameterException
 	 *
 	 * @see    elgg_get_entities()

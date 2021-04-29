@@ -5,7 +5,7 @@
  */
 
 use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
-use Elgg\TimeUsing;
+use Elgg\Traits\TimeUsing;
 use Elgg\Upgrade\Batch;
 
 /**

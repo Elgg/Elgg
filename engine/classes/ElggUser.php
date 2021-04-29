@@ -1,10 +1,10 @@
 <?php
 
-use Elgg\Entity\ProfileData;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Traits\Entity\Friends;
+use Elgg\Traits\Entity\ProfileData;
 
 /**
  * A user entity

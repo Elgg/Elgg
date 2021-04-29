@@ -2,7 +2,6 @@
 
 namespace Elgg\Database;
 
-use Elgg\Cacheable;
 use Elgg\Cache\PrivateSettingsCache;
 use Elgg\Config;
 use Elgg\Context;
@@ -12,16 +11,12 @@ use Elgg\Exceptions\Http\PluginException;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\I18n\Translator;
 use Elgg\Includer;
-use Elgg\Loggable;
-use Elgg\Debug\Profilable;
 use Elgg\Project\Paths;
 use Elgg\SystemMessagesService;
+use Elgg\Traits\Cacheable;
+use Elgg\Traits\Debug\Profilable;
+use Elgg\Traits\Loggable;
 use Elgg\ViewsService;
-use ElggCache;
-use ElggPlugin;
-use ElggSession;
-use ElggUser;
-use Exception;
 use Psr\Log\LogLevel;
 
 /**
@@ -74,7 +69,7 @@ class Plugins {
 	];
 
 	/**
-	 * @var ElggPlugin[]
+	 * @var \ElggPlugin[]
 	 */
 	protected $boot_plugins;
 
@@ -84,7 +79,7 @@ class Plugins {
 	protected $db;
 
 	/**
-	 * @var ElggSession
+	 * @var \ElggSession
 	 */
 	protected $session;
 
@@ -127,9 +122,9 @@ class Plugins {
 	/**
 	 * Constructor
 	 *
-	 * @param ElggCache             $cache                  Cache for referencing plugins by ID
+	 * @param \ElggCache            $cache                  Cache for referencing plugins by ID
 	 * @param Database              $db                     Database
-	 * @param ElggSession           $session                Session
+	 * @param \ElggSession          $session                Session
 	 * @param EventsService         $events                 Events
 	 * @param Translator            $translator             Translator
 	 * @param ViewsService          $views                  Views service
@@ -139,9 +134,9 @@ class Plugins {
 	 * @param Context               $context                Context
 	 */
 	public function __construct(
-		ElggCache $cache,
+		\ElggCache $cache,
 		Database $db,
-		ElggSession $session,
+		\ElggSession $session,
 		EventsService $events,
 		Translator $translator,
 		ViewsService $views,
@@ -178,8 +173,8 @@ class Plugins {
 	/**
 	 * Set the list of active plugins according to the boot data cache
 	 *
-	 * @param ElggPlugin[]|null $plugins       Set of active plugins
-	 * @param bool              $order_plugins Make sure plugins are saved in the correct order (set to false if provided plugins are already sorted)
+	 * @param \ElggPlugin[]|null $plugins       Set of active plugins
+	 * @param bool               $order_plugins Make sure plugins are saved in the correct order (set to false if provided plugins are already sorted)
 	 *
 	 * @return void
 	 */
@@ -197,7 +192,7 @@ class Plugins {
 		}
 		
 		foreach ($plugins as $plugin) {
-			if (!$plugin instanceof ElggPlugin) {
+			if (!$plugin instanceof \ElggPlugin) {
 				continue;
 			}
 			
@@ -348,7 +343,7 @@ class Plugins {
 			} else {
 				// create new plugin
 				// priority is forced to last in save() if not set.
-				$plugin = ElggPlugin::fromId($plugin_id);
+				$plugin = \ElggPlugin::fromId($plugin_id);
 				$plugin->cache();
 			}
 		}
@@ -391,11 +386,11 @@ class Plugins {
 	/**
 	 * Cache a reference to this plugin by its ID
 	 *
-	 * @param ElggPlugin $plugin the plugin to cache
+	 * @param \ElggPlugin $plugin the plugin to cache
 	 *
 	 * @return void
 	 */
-	public function cache(ElggPlugin $plugin) {
+	public function cache(\ElggPlugin $plugin) {
 		if (!$plugin->getID()) {
 			return;
 		}
@@ -424,7 +419,7 @@ class Plugins {
 	 *
 	 * @param string $plugin_id The id (dir name) of the plugin. NOT the guid.
 	 *
-	 * @return ElggPlugin|null
+	 * @return \ElggPlugin|null
 	 */
 	public function get(string $plugin_id): ?\ElggPlugin {
 		if (!$plugin_id) {
@@ -453,7 +448,7 @@ class Plugins {
 		$plugin = $this->cache->load($plugin_id);
 		if (!isset($plugin)) {
 			$plugin = $fallback();
-			if ($plugin instanceof ElggPlugin) {
+			if ($plugin instanceof \ElggPlugin) {
 				$plugin->cache();
 			}
 		}
@@ -473,7 +468,7 @@ class Plugins {
 	 * @return bool
 	 */
 	public function exists(string $id): bool {
-		return $this->get($id) instanceof ElggPlugin;
+		return $this->get($id) instanceof \ElggPlugin;
 	}
 
 	/**
@@ -568,10 +563,11 @@ class Plugins {
 			$this->timer->begin([__METHOD__]);
 		}
 
+		/* @var $plugin \ElggPlugin */
 		foreach ($plugins as $plugin) {
 			try {
 				$plugin->register();
-			} catch (Exception $ex) {
+			} catch (\Exception $ex) {
 				$this->disable($plugin, $ex);
 			}
 		}
@@ -602,7 +598,7 @@ class Plugins {
 		foreach ($plugins as $plugin) {
 			try {
 				$plugin->boot();
-			} catch (Exception $ex) {
+			} catch (\Exception $ex) {
 				$this->disable($plugin, $ex);
 			}
 		}
@@ -681,7 +677,7 @@ class Plugins {
 		foreach ($plugins as $plugin) {
 			try {
 				$plugin->init();
-			} catch (Exception $ex) {
+			} catch (\Exception $ex) {
 				$this->disable($plugin, $ex);
 			}
 		}
@@ -710,7 +706,7 @@ class Plugins {
 		foreach ($plugins as $plugin) {
 			try {
 				$plugin->getBootstrap()->ready();
-			} catch (Exception $ex) {
+			} catch (\Exception $ex) {
 				$this->disable($plugin, $ex);
 			}
 		}
@@ -739,7 +735,7 @@ class Plugins {
 		foreach ($plugins as $plugin) {
 			try {
 				$plugin->getBootstrap()->upgrade();
-			} catch (Exception $ex) {
+			} catch (\Exception $ex) {
 				$this->disable($plugin, $ex);
 			}
 		}
@@ -768,7 +764,7 @@ class Plugins {
 		foreach ($plugins as $plugin) {
 			try {
 				$plugin->getBootstrap()->shutdown();
-			} catch (Exception $ex) {
+			} catch (\Exception $ex) {
 				$this->disable($plugin, $ex);
 			}
 		}
@@ -781,12 +777,12 @@ class Plugins {
 	/**
 	 * Disable a plugin upon exception
 	 *
-	 * @param ElggPlugin $plugin   Plugin entity to disable
-	 * @param Exception  $previous Exception thrown
+	 * @param \ElggPlugin $plugin   Plugin entity to disable
+	 * @param \Exception  $previous Exception thrown
 	 *
 	 * @return void
 	 */
-	protected function disable(ElggPlugin $plugin, Exception $previous) {
+	protected function disable(\ElggPlugin $plugin, \Exception $previous) {
 		$this->getLogger()->log(LogLevel::ERROR, $previous, [
 			'context' => [
 				'plugin' => $plugin,
@@ -828,7 +824,7 @@ class Plugins {
 	 *
 	 * @param string $status The status of the plugins. active, inactive, or all.
 	 *
-	 * @return ElggPlugin[]
+	 * @return \ElggPlugin[]
 	 */
 	public function find(string $status = 'active'): array {
 		if (!$this->db || !$this->config->installed) {
@@ -904,7 +900,7 @@ class Plugins {
 	 * @param \ElggPlugin[] $plugins            Array of plugins
 	 * @param string        $volatile_data_name Use an optional volatile data name to retrieve priority
 	 *
-	 * @return ElggPlugin[]
+	 * @return \ElggPlugin[]
 	 */
 	protected function orderPluginsByPriority($plugins = [], $volatile_data_name = null) {
 		$priorities = [];
@@ -953,8 +949,8 @@ class Plugins {
 		// though we do start with 1
 		$order = array_values($order);
 
+		/* @var \ElggPlugin[] $missing_plugins */
 		$missing_plugins = [];
-		/* @var ElggPlugin[] $missing_plugins */
 
 		$priority = 0;
 		foreach ($plugins as $plugin) {
@@ -1045,7 +1041,7 @@ class Plugins {
 	 *
 	 * @return string[]
 	 */
-	public function getAllSettings(ElggPlugin $plugin) {
+	public function getAllSettings(\ElggPlugin $plugin) {
 		if (!$plugin->guid) {
 			return [];
 		}
@@ -1082,13 +1078,13 @@ class Plugins {
 	/**
 	 * Returns an array of all plugin user settings for a user
 	 *
-	 * @param ElggPlugin $plugin Plugin
-	 * @param ElggUser   $user   User
+	 * @param \ElggPlugin $plugin Plugin
+	 * @param \ElggUser   $user   User
 	 *
 	 * @return array
-	 * @see  ElggPlugin::getAllUserSettings()
+	 * @see  \ElggPlugin::getAllUserSettings()
 	 */
-	public function getAllUserSettings(ElggPlugin $plugin, ElggUser $user = null) {
+	public function getAllUserSettings(\ElggPlugin $plugin, \ElggUser $user = null) {
 
 		// send an empty name so we just get the first part of the namespace
 		$prefix = $this->namespacePrivateSetting('user_setting', '', $plugin->getID());
@@ -1119,12 +1115,12 @@ class Plugins {
 	/**
 	 * Set plugin priority and adjust the priorities of other plugins
 	 *
-	 * @param ElggPlugin $plugin   Plugin
-	 * @param int        $priority New priority
+	 * @param \ElggPlugin $plugin   Plugin
+	 * @param int         $priority New priority
 	 *
 	 * @return int|false
 	 */
-	public function setPriority(ElggPlugin $plugin, $priority) {
+	public function setPriority(\ElggPlugin $plugin, $priority) {
 
 		$old_priority = $plugin->getPriority() ? : 1;
 

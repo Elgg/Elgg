@@ -5,8 +5,7 @@ namespace Elgg\Application;
 use Elgg\Application;
 use Elgg\Exceptions\Configuration\InstallationException;
 use Elgg\Http\Request;
-use Elgg\Loggable;
-use Exception;
+use Elgg\Traits\Loggable;
 use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -33,7 +32,7 @@ class ExceptionHandler {
 	 *
 	 * @see     http://www.php.net/set-exception-handler
 	 *
-	 * @param Exception|\Error $exception The exception/error being handled
+	 * @param \Exception|\Error $exception The exception/error being handled
 	 *
 	 * @return void
 	 */
@@ -121,7 +120,7 @@ class ExceptionHandler {
 			$response->prepare($services->request);
 			$response->setContent(elgg_view_page(elgg_echo('exception:title'), $body));
 			$response->send();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$timestamp = time();
 
 			$e->timestamp = $timestamp;

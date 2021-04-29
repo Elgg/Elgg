@@ -3,13 +3,11 @@
 namespace Elgg\Views;
 
 use Elgg\Exceptions\InvalidArgumentException;
-use Elgg\Loggable;
 use Elgg\PluginHooksService;
+use Elgg\Traits\Loggable;
 use Elgg\ViewsService;
-use Psr\Log\LoggerInterface;
-use Cake\Utility\Text;
-use Laminas\Mail\Header\ContentDisposition;
 use Pelago\Emogrifier\CssInliner;
+use Psr\Log\LoggerInterface;
 
 /**
  * Various helper method for formatting and sanitizing output

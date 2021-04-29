@@ -2,8 +2,13 @@
 
 namespace Elgg;
 
-use Psr\Log\LoggerInterface;
-use RuntimeException;
+use Elgg\Assets\CssCompiler;
+use Elgg\Assets\ImageFetcherService;
+use Elgg\Email\Attachment;
+use Elgg\Email\HtmlPart;
+use Elgg\Email\PlainTextPart;
+use Elgg\Traits\Loggable;
+use Elgg\Views\HtmlFormatter;
 use Laminas\Mail\Header\ContentType;
 use Laminas\Mail\Message as MailMessage;
 use Laminas\Mail\Transport\TransportInterface;
@@ -11,12 +16,8 @@ use Laminas\Mime\Message as MimeMessage;
 use Laminas\Mime\Exception\InvalidArgumentException;
 use Laminas\Mime\Part;
 use Laminas\Mime\Mime;
-use Elgg\Email\Attachment;
-use Elgg\Email\HtmlPart;
-use Elgg\Email\PlainTextPart;
-use Elgg\Assets\CssCompiler;
-use Elgg\Assets\ImageFetcherService;
-use Elgg\Views\HtmlFormatter;
+use Psr\Log\LoggerInterface;
+use RuntimeException;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.

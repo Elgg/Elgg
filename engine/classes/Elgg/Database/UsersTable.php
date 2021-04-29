@@ -2,9 +2,10 @@
 
 namespace Elgg\Database;
 
-use Elgg\Config as Conf;
+use Elgg\Config;
 use Elgg\Database;
 use Elgg\Database\Clauses\OrderByClause;
+use Elgg\Traits\TimeUsing;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -15,10 +16,10 @@ use Elgg\Database\Clauses\OrderByClause;
  */
 class UsersTable {
 
-	use \Elgg\TimeUsing;
+	use TimeUsing;
 
 	/**
-	 * @var Conf
+	 * @var Config
 	 */
 	protected $config;
 
@@ -35,11 +36,11 @@ class UsersTable {
 	/**
 	 * Constructor
 	 *
-	 * @param Conf          $config   Config
+	 * @param Config        $config   Config
 	 * @param Database      $db       Database
 	 * @param MetadataTable $metadata Metadata table
 	 */
-	public function __construct(Conf $config, Database $db, MetadataTable $metadata) {
+	public function __construct(Config $config, Database $db, MetadataTable $metadata) {
 		$this->config = $config;
 		$this->db = $db;
 		$this->metadata = $metadata;

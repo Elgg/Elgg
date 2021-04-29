@@ -1,7 +1,9 @@
 <?php
 
-namespace Elgg;
+namespace Elgg\Traits;
 
+use Elgg\Application;
+use Elgg\Logger;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -12,7 +14,7 @@ use Psr\Log\LoggerInterface;
 trait Loggable {
 
 	/**
-	 * @var Logger|null
+	 * @var LoggerInterface|null
 	 */
 	private $logger;
 
@@ -29,6 +31,7 @@ trait Loggable {
 
 	/**
 	 * Returns logger
+	 *
 	 * @return LoggerInterface
 	 */
 	public function getLogger() {
@@ -65,5 +68,4 @@ trait Loggable {
 		$logged = $this->getLogger()->log($level, $message, $context);
 		return isset($logged) ? $logged : true;
 	}
-
 }

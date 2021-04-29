@@ -4,7 +4,7 @@ namespace Elgg\WebServices\Di;
 
 use Elgg\Collections\Collection;
 use Elgg\Collections\CollectionItemInterface;
-use Elgg\Di\ServiceFacade;
+use Elgg\Traits\Di\ServiceFacade;
 use Elgg\WebServices\ApiMethod;
 
 /**

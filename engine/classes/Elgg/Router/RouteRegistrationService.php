@@ -3,9 +3,9 @@
 namespace Elgg\Router;
 
 use Elgg\Exceptions\InvalidParameterException;
-use Elgg\Loggable;
 use Elgg\PluginHooksService;
 use Elgg\Router\Middleware\WalledGarden;
+use Elgg\Traits\Loggable;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -113,6 +113,7 @@ class RouteRegistrationService {
 			// look for segments that are defined as optional with added ?
 			// e.g. /blog/owner/{username?}
 
+			$matches = [];
 			if (!preg_match('/\{(\w*)(\?)?\}/i', $segment, $matches)) {
 				continue;
 			}

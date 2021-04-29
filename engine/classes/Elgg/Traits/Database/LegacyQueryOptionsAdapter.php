@@ -1,6 +1,6 @@
 <?php
 
-namespace Elgg\Database;
+namespace Elgg\Traits\Database;
 
 use Elgg\Config;
 use Elgg\Database\Clauses\AnnotationWhereClause;
@@ -20,6 +20,8 @@ use ElggEntity;
 
 /**
  * This trait serves as an adapter between legacy ege* options and new OO query builder
+ *
+ * @internal
  */
 trait LegacyQueryOptionsAdapter {
 

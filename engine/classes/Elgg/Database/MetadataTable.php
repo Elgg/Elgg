@@ -7,8 +7,8 @@ use Elgg\Database;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\EventsService as Events;
-use Elgg\TimeUsing;
-use ElggMetadata;
+use Elgg\Traits\Database\LegacyQueryOptionsAdapter;
+use Elgg\Traits\TimeUsing;
 
 /**
  * This class interfaces with the database to perform CRUD operations on metadata
@@ -153,7 +153,7 @@ class MetadataTable {
 	 *
 	 * @param int $id The id of the metadata object being retrieved.
 	 *
-	 * @return ElggMetadata|false  false if not found
+	 * @return \ElggMetadata|false  false if not found
 	 */
 	public function get($id) {
 		$qb = Select::fromTable('metadata');
@@ -165,7 +165,7 @@ class MetadataTable {
 
 		$row = $this->db->getDataRow($qb);
 		if (!empty($row)) {
-			return new ElggMetadata($row);
+			return new \ElggMetadata($row);
 		}
 
 		return false;
@@ -174,11 +174,11 @@ class MetadataTable {
 	/**
 	 * Deletes metadata using its ID
 	 *
-	 * @param ElggMetadata $metadata Metadata
+	 * @param \ElggMetadata $metadata Metadata
 	 *
 	 * @return bool
 	 */
-	public function delete(ElggMetadata $metadata) {
+	public function delete(\ElggMetadata $metadata) {
 		if (!$metadata->id) {
 			return false;
 		}
@@ -205,13 +205,13 @@ class MetadataTable {
 	 * Metadata can be an array by setting allow_multiple to true, but it is an
 	 * indexed array with no control over the indexing
 	 *
-	 * @param ElggMetadata $metadata       Metadata
-	 * @param bool         $allow_multiple Allow multiple values for one key. Default is false
+	 * @param \ElggMetadata $metadata       Metadata
+	 * @param bool          $allow_multiple Allow multiple values for one key. Default is false
 	 *
 	 * @return int|false id of metadata or false if failure
 	 * @throws \LogicException
 	 */
-	public function create(ElggMetadata $metadata, $allow_multiple = false) {
+	public function create(\ElggMetadata $metadata, $allow_multiple = false) {
 		if (!isset($metadata->value) || !isset($metadata->entity_guid)) {
 			elgg_log("Metadata must have a value and entity guid", 'ERROR');
 			return false;
@@ -296,11 +296,11 @@ class MetadataTable {
 	/**
 	 * Update a specific piece of metadata
 	 *
-	 * @param ElggMetadata $metadata Updated metadata
+	 * @param \ElggMetadata $metadata Updated metadata
 	 *
 	 * @return bool
 	 */
-	public function update(ElggMetadata $metadata) {
+	public function update(\ElggMetadata $metadata) {
 
 		if (!$this->entityTable->exists($metadata->entity_guid)) {
 			elgg_log("Can't update metadata to a non-existing entity_guid", 'ERROR');
@@ -344,7 +344,7 @@ class MetadataTable {
 	 *
 	 * @param array $options Options
 	 *
-	 * @return ElggMetadata[]|mixed
+	 * @return \ElggMetadata[]|mixed
 	 */
 	public function getAll(array $options = []) {
 

@@ -4,8 +4,8 @@ namespace Elgg\GarbageCollector;
 
 use function DI\object;
 use Elgg\Application\Database;
-use Elgg\Di\ServiceFacade;
 use Elgg\I18n\Translator;
+use Elgg\Traits\Di\ServiceFacade;
 
 /**
  * Garbage collecting service

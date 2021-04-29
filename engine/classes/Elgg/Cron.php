@@ -2,8 +2,9 @@
 
 namespace Elgg;
 
-use DateTime;
 use Elgg\Exceptions\CronException;
+use Elgg\Traits\Loggable;
+use Elgg\Traits\TimeUsing;
 use GO\Job;
 use GO\Scheduler;
 
@@ -101,12 +102,12 @@ class Cron {
 	/**
 	 * Execute commands before cron interval is run
 	 *
-	 * @param string   $interval Interval name
-	 * @param DateTime $time     Time of the cron initialization
+	 * @param string    $interval Interval name
+	 * @param \DateTime $time     Time of the cron initialization
 	 *
 	 * @return void
 	 */
-	protected function before($interval, DateTime $time = null) {
+	protected function before($interval, \DateTime $time = null) {
 
 		if (!isset($time)) {
 			$time = $this->getCurrentTime();
@@ -117,7 +118,7 @@ class Cron {
 		// give every period at least 'max_execution_time' (PHP ini setting)
 		set_time_limit((int) ini_get('max_execution_time'));
 
-		$now = new DateTime();
+		$now = new \DateTime();
 
 		$msg = elgg_echo('admin:cron:started', [$interval, $time->format(DATE_RFC2822)]) . PHP_EOL;
 		$msg .= elgg_echo('admin:cron:started:actual', [$interval, $now->format(DATE_RFC2822)]) . PHP_EOL;
@@ -128,18 +129,18 @@ class Cron {
 	/**
 	 * Execute handlers attached to a specific cron interval
 	 *
-	 * @param string   $interval Cron interval to execute
-	 * @param DateTime $time     Time of cron initialization
+	 * @param string    $interval Cron interval to execute
+	 * @param \DateTime $time     Time of cron initialization
 	 *
 	 * @return string
 	 */
-	protected function execute($interval, DateTime $time = null) {
+	protected function execute($interval, \DateTime $time = null) {
 
 		if (!isset($time)) {
 			$time = $this->getCurrentTime();
 		}
 
-		$now = new DateTime();
+		$now = new \DateTime();
 
 		$output = [];
 
@@ -156,7 +157,7 @@ class Cron {
 		$output[] = ob_get_clean();
 		$output[] = $old_stdout;
 
-		$now = new DateTime();
+		$now = new \DateTime();
 
 		$output[] = elgg_echo('admin:cron:complete', [$interval, $now->format(DATE_RFC2822)]);
 
@@ -173,7 +174,7 @@ class Cron {
 	 */
 	protected function after($output, $interval) {
 
-		$time = new DateTime();
+		$time = new \DateTime();
 
 		$this->log('output', $interval, $output);
 		$this->log('completion', $interval, $time->getTimestamp());

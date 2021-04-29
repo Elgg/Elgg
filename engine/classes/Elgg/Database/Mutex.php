@@ -4,7 +4,7 @@ namespace Elgg\Database;
 
 use Elgg\Database;
 use Elgg\Exceptions\InvalidParameterException;
-use Elgg\Loggable;
+use Elgg\Traits\Loggable;
 use Psr\Log\LoggerInterface;
 
 /**

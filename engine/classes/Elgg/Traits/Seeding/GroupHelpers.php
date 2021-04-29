@@ -1,6 +1,6 @@
 <?php
 
-namespace Elgg\Database\Seeds\Seeding;
+namespace Elgg\Traits\Seeding;
 
 /**
  * Group helpers for seeding

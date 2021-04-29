@@ -2,7 +2,7 @@
 
 namespace Elgg\WebServices\Di;
 
-use Elgg\Di\ServiceFacade;
+use Elgg\Traits\Di\ServiceFacade;
 use Elgg\WebServices\ApiMethod;
 
 /**

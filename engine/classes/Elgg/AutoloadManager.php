@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use Elgg\Traits\Cacheable;
+
 /**
  * Manages core autoloading and caching of class maps
  *

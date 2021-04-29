@@ -3,6 +3,7 @@
 namespace Elgg\Notifications;
 
 use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Traits\Notifications\EventSerialization;
 
 /**
  * Subscription notification event
@@ -122,6 +123,7 @@ class SubscriptionNotificationEvent implements NotificationEvent {
 	 */
 	public function toObject() {
 		$obj = new \stdClass();
+		
 		$vars = get_object_vars($this);
 		foreach ($vars as $key => $value) {
 			if (is_object($value) && is_callable([$value, 'toObject'])) {
@@ -130,6 +132,7 @@ class SubscriptionNotificationEvent implements NotificationEvent {
 				$obj->$key = $value;
 			}
 		}
+		
 		return $obj;
 	}
 }

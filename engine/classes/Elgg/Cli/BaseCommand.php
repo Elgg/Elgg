@@ -2,7 +2,7 @@
 
 namespace Elgg\Cli;
 
-use Elgg\Loggable;
+use Elgg\Traits\Loggable;
 use Psr\Log\LogLevel;
 use Symfony\Component\Console\Helper\FormatterHelper;
 use Symfony\Component\Console\Helper\QuestionHelper;

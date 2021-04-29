@@ -1,6 +1,6 @@
 <?php
 
-namespace Elgg\Debug;
+namespace Elgg\Traits\Debug;
 
 use Elgg\Timer;
 

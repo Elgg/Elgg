@@ -2,7 +2,6 @@
 
 namespace Elgg\Database;
 
-use ArrayObject;
 use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\EntitySortByClause;
 use Elgg\Database\Clauses\GroupByClause;
@@ -14,6 +13,7 @@ use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Database\Clauses\SelectClause;
 use Elgg\Database\Clauses\WhereClause;
+use Elgg\Traits\Database\LegacyQueryOptionsAdapter;
 
 /**
  * This class aggregates and standardizes various parameters that have been added to
@@ -69,7 +69,7 @@ use Elgg\Database\Clauses\WhereClause;
  * @property boolean                     $batch_inc_offset
  * @property int                         $batch_size
  */
-class QueryOptions extends ArrayObject implements QueryFiltering {
+class QueryOptions extends \ArrayObject implements QueryFiltering {
 
 	use LegacyQueryOptionsAdapter;
 

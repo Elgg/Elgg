@@ -3,7 +3,7 @@
 namespace Elgg\SystemLog;
 
 use Elgg\Cache\CompositeCache;
-use Elgg\Di\ServiceFacade;
+use Elgg\Traits\Di\ServiceFacade;
 
 /**
  * System log cache

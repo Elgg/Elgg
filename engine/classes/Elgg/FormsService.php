@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Traits\Loggable;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -154,6 +155,7 @@ class FormsService {
 
 	/**
 	 * Returns currently set footer, or false if not in the form rendering stack
+	 *
 	 * @return string|false
 	 */
 	public function getFooter() {

@@ -4,11 +4,11 @@ namespace Elgg;
 
 use Elgg\Cli\Application as CliApplication;
 use Elgg\Cli\BaseCommand;
-use Exception;
+use Elgg\Cli\Command;
+use Elgg\Traits\Loggable;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Elgg\Cli\Command;
 
 /**
  * CLI bootstrap
@@ -147,7 +147,7 @@ class Cli {
 	 * @param bool $bootstrap Is bootstrap needed?
 	 *
 	 * @return void
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function run(bool $bootstrap = true) {
 		if ($bootstrap) {

@@ -6,8 +6,9 @@ use Elgg\Application\CacheHandler;
 use Elgg\Cache\SystemCache;
 use Elgg\Filesystem\Directory;
 use Elgg\Http\Request as HttpRequest;
-use Psr\Log\LoggerInterface;
 use Elgg\Project\Paths;
+use Elgg\Traits\Loggable;
+use Psr\Log\LoggerInterface;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.

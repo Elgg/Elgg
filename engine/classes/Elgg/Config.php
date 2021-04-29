@@ -5,6 +5,7 @@ namespace Elgg;
 use Elgg\Database\ConfigTable;
 use Elgg\Exceptions\ConfigurationException;
 use Elgg\Project\Paths;
+use Elgg\Traits\Loggable;
 
 /**
  * Access to configuration values
@@ -138,6 +139,7 @@ use Elgg\Project\Paths;
  * @internal
  */
 class Config {
+	
 	use Loggable;
 
 	/**

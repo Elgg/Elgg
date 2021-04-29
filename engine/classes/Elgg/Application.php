@@ -24,8 +24,7 @@ use Elgg\Http\ResponseBuilder;
 use Elgg\Http\ResponseTransport;
 use Elgg\Project\Paths;
 use Elgg\Security\UrlSigner;
-use ElggInstaller;
-use Exception;
+use Elgg\Traits\Loggable;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -339,7 +338,7 @@ class Application {
 			} else {
 				$response = new Response($content, $status, $headers);
 			}
-		} catch (Exception $ex) {
+		} catch (\Exception $ex) {
 			$response = new Response($ex->getMessage(), 500);
 		}
 
@@ -481,9 +480,9 @@ class Application {
 		ini_set('display_errors', 1);
 
 		try {
-			$installer = new ElggInstaller();
+			$installer = new \ElggInstaller();
 			$response = $installer->run();
-		} catch (Exception $ex) {
+		} catch (\Exception $ex) {
 			$response = new ErrorResponse($ex->getMessage(), 500);
 		}
 
@@ -532,7 +531,7 @@ class Application {
 			}
 
 			$response = new RedirectResponse($url, ELGG_HTTP_PERMANENTLY_REDIRECT);
-		} catch (Exception $ex) {
+		} catch (\Exception $ex) {
 			$response = new ErrorResponse($ex->getMessage(), $ex->getCode() ? : ELGG_HTTP_INTERNAL_SERVER_ERROR);
 		}
 

@@ -9,8 +9,9 @@ use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Elgg\Cache\QueryCache;
 use Elgg\Database\DbConfig;
-use Elgg\Debug\Profilable;
 use Elgg\Exceptions\DatabaseException;
+use Elgg\Traits\Debug\Profilable;
+use Elgg\Traits\Loggable;
 use Psr\Log\LogLevel;
 
 /**
@@ -21,6 +22,7 @@ use Psr\Log\LogLevel;
  * @property-read string $prefix Elgg table prefix (read only)
  */
 class Database {
+	
 	use Profilable;
 	use Loggable;
 

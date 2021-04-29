@@ -2,7 +2,7 @@
 
 namespace Elgg\Cache;
 
-use Elgg\Loggable;
+use Elgg\Traits\Loggable;
 
 /**
  * Volatile cache for select queries
@@ -15,6 +15,7 @@ use Elgg\Loggable;
  * @internal
  */
 class QueryCache extends LRUCache {
+	
 	use Loggable;
 	
 	/**

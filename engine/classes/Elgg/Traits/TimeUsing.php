@@ -1,8 +1,6 @@
 <?php
 
-namespace Elgg;
-
-use DateTime;
+namespace Elgg\Traits;
 
 /**
  * Adds methods for setting the current time (for testing)
@@ -12,20 +10,20 @@ use DateTime;
 trait TimeUsing {
 
 	/**
-	 * @var DateTime
+	 * @var \DateTime
 	 */
 	private $time;
 
 	/**
 	 * Get the (cloned) time. If setCurrentTime() has not been set, this will return a new DateTime().
 	 *
-	 * @see DateTime::modify
-	 *
 	 * @param string $modifier Time modifier
-	 * @return DateTime
+	 *
+	 * @return \DateTime
+	 * @see \DateTime::modify
 	 */
 	public function getCurrentTime($modifier = '') {
-		$time = $this->time ? $this->time : new DateTime();
+		$time = $this->time ? $this->time : new \DateTime();
 		$time = clone $time;
 		if ($modifier) {
 			$time->modify($modifier);
@@ -36,12 +34,13 @@ trait TimeUsing {
 	/**
 	 * Set the current time.
 	 *
-	 * @param DateTime $time Current time (empty for now)
+	 * @param \DateTime $time Current time (empty for now)
+	 *
 	 * @return void
 	 */
-	public function setCurrentTime(DateTime $time = null) {
+	public function setCurrentTime(\DateTime $time = null) {
 		if (!$time) {
-			$time = new DateTime();
+			$time = new \DateTime();
 		}
 		$this->time = clone $time;
 	}

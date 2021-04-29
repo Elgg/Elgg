@@ -1,6 +1,6 @@
 <?php
 
-namespace Elgg\Di;
+namespace Elgg\Traits\Di;
 
 /**
  * Utility trait that can be used by public services to provide better IDE support and type-hinting
@@ -9,21 +9,26 @@ trait ServiceFacade {
 
 	/**
 	 * Returns registered service name
+	 *
 	 * @return string
 	 */
 	abstract public static function name();
 
 	/**
 	 * Returns service instance
+	 *
 	 * @return static
 	 */
 	public static function instance() {
 		$name = static::name();
+		
 		return elgg()->$name;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Call the DI service
+	 *
+	 * @return mixed
 	 */
 	public static function call() {
 		$arguments = func_get_args();
