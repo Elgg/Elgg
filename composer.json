@@ -16,7 +16,7 @@
         "ckeditor/ckeditor": "~4.16.0",
         "composer/semver": "~1.7.0",
         "css-crush/css-crush": "^2.4.0",
-        "doctrine/cache": "^1.6",
+        "doctrine/cache": "~1.11.0",
         "doctrine/dbal": "~3.1.0",
         "eloquent/composer-config-reader": "~3.0.0",
         "fortawesome/font-awesome": "~5.14",
