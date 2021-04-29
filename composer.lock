@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "31c4694bbe87fec67f216a362fee1df8",
+    "content-hash": "226dc835121849b3083c9651769b8cdd",
     "packages": [
         {
             "name": "cakephp/cache",
@@ -3110,25 +3110,25 @@
         },
         {
             "name": "peppeocchi/php-cron-scheduler",
-            "version": "v3.1",
+            "version": "v4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/peppeocchi/php-cron-scheduler.git",
-                "reference": "18fcf4c98d4cf0cd4f3eb64728a8b0d082bbc2f9"
+                "reference": "0acfa032e60f0ea22a27b96a6b15a673a31d3448"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/peppeocchi/php-cron-scheduler/zipball/18fcf4c98d4cf0cd4f3eb64728a8b0d082bbc2f9",
-                "reference": "18fcf4c98d4cf0cd4f3eb64728a8b0d082bbc2f9",
+                "url": "https://api.github.com/repos/peppeocchi/php-cron-scheduler/zipball/0acfa032e60f0ea22a27b96a6b15a673a31d3448",
+                "reference": "0acfa032e60f0ea22a27b96a6b15a673a31d3448",
                 "shasum": ""
             },
             "require": {
                 "dragonmantank/cron-expression": "^3.0",
-                "php": "^7.1"
+                "php": "^7.3 || ^8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~5.7",
-                "satooshi/php-coveralls": "^1.0",
+                "php-coveralls/php-coveralls": "^2.4",
+                "phpunit/phpunit": "~9.5",
                 "swiftmailer/swiftmailer": "~5.4 || ^6.0"
             },
             "suggest": {
@@ -3163,9 +3163,9 @@
             ],
             "support": {
                 "issues": "https://github.com/peppeocchi/php-cron-scheduler/issues",
-                "source": "https://github.com/peppeocchi/php-cron-scheduler/tree/v3.1"
+                "source": "https://github.com/peppeocchi/php-cron-scheduler/tree/v4.0"
             },
-            "time": "2020-10-19T09:21:17+00:00"
+            "time": "2021-04-22T21:32:03+00:00"
         },
         {
             "name": "php-di/invoker",
