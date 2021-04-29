@@ -13,7 +13,7 @@ class ElggLogFormatter extends LineFormatter {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function format(array $record) {
+	public function format(array $record): string {
 
 		$context = elgg_extract('context', $record, []);
 		$exception = elgg_extract('exception', $context);

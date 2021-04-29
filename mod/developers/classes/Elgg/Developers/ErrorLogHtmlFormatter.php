@@ -19,7 +19,7 @@ class ErrorLogHtmlFormatter extends HtmlFormatter {
 	 *
 	 * @return string
 	 */
-	protected function addRow($th, $td = ' ', $escapeTd = true) {
+	protected function addRow(string $th, string $td = ' ', bool $escapeTd = true): string {
 		$th = htmlspecialchars($th, ENT_NOQUOTES, 'UTF-8');
 		if ($escapeTd) {
 			$td = '<pre>' . htmlspecialchars($td, ENT_NOQUOTES, 'UTF-8') . '</pre>';
@@ -35,7 +35,7 @@ class ErrorLogHtmlFormatter extends HtmlFormatter {
 	 *
 	 * @return mixed The formatted record
 	 */
-	public function format(array $record) {
+	public function format(array $record): string {
 		
 		if (elgg_get_viewtype() !== 'default') {
 			// prevent 'view not found' deadloops in other viewtypes (eg failsafe)
@@ -90,5 +90,4 @@ class ErrorLogHtmlFormatter extends HtmlFormatter {
 		
 		return elgg_view_message($level, $output, $message_vars);
 	}
-
 }

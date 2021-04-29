@@ -121,9 +121,7 @@ abstract class BaseCommand extends \Symfony\Component\Console\Command\Command {
 	 * @return void
 	 */
 	public function error($message) {
-		if (!$this->log(LogLevel::ERROR, $message)) {
-			$this->write($message, LogLevel::ERROR);
-		}
+		$this->write($message, LogLevel::ERROR);
 	}
 
 	/**
@@ -134,9 +132,7 @@ abstract class BaseCommand extends \Symfony\Component\Console\Command\Command {
 	 * @return void
 	 */
 	public function notice($message) {
-		if (!$this->log(LogLevel::NOTICE, $message)) {
-			$this->write($message, LogLevel::NOTICE);
-		}
+		$this->write($message, LogLevel::NOTICE);
 	}
 
 	/**

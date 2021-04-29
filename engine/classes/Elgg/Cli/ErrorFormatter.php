@@ -16,7 +16,7 @@ class ErrorFormatter extends ElggLogFormatter {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function format(array $record) {
+	public function format(array $record): string {
 		$message = parent::format($record);
 
 		$formatter = new FormatterHelper();

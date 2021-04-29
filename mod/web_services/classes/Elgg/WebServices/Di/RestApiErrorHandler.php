@@ -23,7 +23,7 @@ class RestApiErrorHandler extends AbstractHandler {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function handle(array $record) {
+	public function handle(array $record): bool {
 		$this->errors[] = $this->getFormatter()->format($record);
 		
 		return false;

@@ -31,7 +31,7 @@
         "mrclay/minify": "~2.0",
         "michelf/php-markdown": "^1.5.0",
         "misd/linkify": "~1.1.2",
-        "monolog/monolog": "^1.23",
+        "monolog/monolog": "~2.2.0",
         "npm-asset/components-jqueryui": "~1.12.1",
         "npm-asset/cropperjs": "~1.5.9",
         "npm-asset/jquery": "~3.6.0",
