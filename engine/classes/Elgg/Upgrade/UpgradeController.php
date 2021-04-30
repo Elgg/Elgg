@@ -4,8 +4,8 @@ namespace Elgg\Upgrade;
 
 use Elgg\Exceptions\HttpException;
 use Elgg\Http\ResponseBuilder;
-use Elgg\Loggable;
 use Elgg\Request;
+use Elgg\Traits\Loggable;
 use Psr\Log\LogLevel;
 
 /**

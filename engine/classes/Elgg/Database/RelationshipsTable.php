@@ -2,6 +2,7 @@
 
 namespace Elgg\Database;
 
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Elgg\Database;
 use Elgg\Database\Clauses\GroupByClause;
 use Elgg\Database\Clauses\OrderByClause;
@@ -9,7 +10,7 @@ use Elgg\Database\Clauses\SelectClause;
 use Elgg\EventsService;
 use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\InvalidArgumentException;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Elgg\Traits\TimeUsing;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -20,7 +21,7 @@ use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
  */
 class RelationshipsTable {
 
-	use \Elgg\TimeUsing;
+	use TimeUsing;
 	
 	/**
 	 * @var integer The max length of the relationship column data

@@ -26,7 +26,8 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->hooks = new PluginHooksService(_elgg_services()->events);
 		$logger = $this->createMock('\Elgg\Logger', array(), array(), '', false);
 
-		$this->views = new ViewsService($this->hooks, $logger);
+		$this->views = new ViewsService($this->hooks);
+		$this->views->setLogger($logger);
 		$this->views->autoregisterViews('', "$this->viewsDir/default", 'default');
 
 		// supports deprecation wrapper for $vars['user']

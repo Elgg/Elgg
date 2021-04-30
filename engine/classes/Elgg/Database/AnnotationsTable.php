@@ -5,8 +5,8 @@ namespace Elgg\Database;
 use Elgg\Database;
 use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\EventsService;
-use ElggAnnotation;
-use ElggEntity;
+use Elgg\Traits\Database\LegacyQueryOptionsAdapter;
+use Elgg\Traits\TimeUsing;
 
 /**
  * Interfaces with the database to perform CRUD operations on annotations
@@ -17,7 +17,7 @@ use ElggEntity;
  */
 class AnnotationsTable {
 
-	use \Elgg\TimeUsing;
+	use TimeUsing;
 
 	/**
 	 * @var Database
@@ -45,7 +45,7 @@ class AnnotationsTable {
 	 *
 	 * @param int $id The id of the annotation object
 	 *
-	 * @return ElggAnnotation|false
+	 * @return \ElggAnnotation|false
 	 */
 	public function get(int $id) {
 		$qb = Select::fromTable('annotations');
@@ -57,7 +57,7 @@ class AnnotationsTable {
 
 		$row = $this->db->getDataRow($qb);
 		if (!empty($row)) {
-			return new ElggAnnotation($row);
+			return new \ElggAnnotation($row);
 		}
 
 		return false;
@@ -66,11 +66,11 @@ class AnnotationsTable {
 	/**
 	 * Deletes an annotation using its ID
 	 *
-	 * @param ElggAnnotation $annotation Annotation
+	 * @param \ElggAnnotation $annotation Annotation
 	 *
 	 * @return bool
 	 */
-	public function delete(ElggAnnotation $annotation) {
+	public function delete(\ElggAnnotation $annotation) {
 		if (!$annotation->canEdit()) {
 			return false;
 		}
@@ -96,12 +96,12 @@ class AnnotationsTable {
 	/**
 	 * Create a new annotation and return its ID
 	 *
-	 * @param ElggAnnotation $annotation Annotation
-	 * @param ElggEntity     $entity     Entity being annotated
+	 * @param \ElggAnnotation $annotation Annotation
+	 * @param \ElggEntity     $entity     Entity being annotated
 	 *
 	 * @return int|bool
 	 */
-	public function create(ElggAnnotation $annotation, ElggEntity $entity) {
+	public function create(\ElggAnnotation $annotation, \ElggEntity $entity) {
 		if ($annotation->id) {
 			return $this->update($annotation);
 		}
@@ -160,11 +160,11 @@ class AnnotationsTable {
 	 *
 	 * @todo Add canAnnotate check if entity guid changes
 	 *
-	 * @param ElggAnnotation $annotation Annotation to store
+	 * @param \ElggAnnotation $annotation Annotation to store
 	 *
 	 * @return bool
 	 */
-	public function update(ElggAnnotation $annotation) {
+	public function update(\ElggAnnotation $annotation) {
 		if (!$annotation->canEdit()) {
 			return false;
 		}
@@ -196,12 +196,12 @@ class AnnotationsTable {
 	/**
 	 * Disable the annotation.
 	 *
-	 * @param ElggAnnotation $annotation Annotation
+	 * @param \ElggAnnotation $annotation Annotation
 	 *
 	 * @return bool
 	 * @since 1.8
 	 */
-	public function disable(ElggAnnotation $annotation) {
+	public function disable(\ElggAnnotation $annotation) {
 		if ($annotation->enabled == 'no') {
 			return true;
 		}
@@ -232,12 +232,12 @@ class AnnotationsTable {
 	/**
 	 * Enable the annotation
 	 *
-	 * @param ElggAnnotation $annotation Annotation
+	 * @param \ElggAnnotation $annotation Annotation
 	 *
 	 * @return bool
 	 * @since 1.8
 	 */
-	public function enable(ElggAnnotation $annotation) {
+	public function enable(\ElggAnnotation $annotation) {
 		if ($annotation->enabled == 'yes') {
 			return true;
 		}
@@ -272,7 +272,7 @@ class AnnotationsTable {
 	 *
 	 * @param array $options Options
 	 *
-	 * @return ElggAnnotation[]|mixed
+	 * @return \ElggAnnotation[]|mixed
 	 */
 	public function find(array $options = []) {
 		$options['metastring_type'] = 'annotations';

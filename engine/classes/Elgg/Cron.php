@@ -2,8 +2,9 @@
 
 namespace Elgg;
 
-use DateTime;
 use Elgg\Exceptions\CronException;
+use Elgg\Traits\Loggable;
+use Elgg\Traits\TimeUsing;
 use GO\Job;
 use GO\Scheduler;
 
@@ -46,12 +47,10 @@ class Cron {
 	 * Constructor
 	 *
 	 * @param PluginHooksService $hooks  Hooks service
-	 * @param Logger             $logger Logger
 	 * @param EventsService      $events Events service
 	 */
-	public function __construct(PluginHooksService $hooks, Logger $logger, EventsService $events) {
+	public function __construct(PluginHooksService $hooks, EventsService $events) {
 		$this->hooks = $hooks;
-		$this->logger = $logger;
 		$this->events = $events;
 	}
 
@@ -101,12 +100,12 @@ class Cron {
 	/**
 	 * Execute commands before cron interval is run
 	 *
-	 * @param string   $interval Interval name
-	 * @param DateTime $time     Time of the cron initialization
+	 * @param string    $interval Interval name
+	 * @param \DateTime $time     Time of the cron initialization
 	 *
 	 * @return void
 	 */
-	protected function before($interval, DateTime $time = null) {
+	protected function before($interval, \DateTime $time = null) {
 
 		if (!isset($time)) {
 			$time = $this->getCurrentTime();
@@ -117,7 +116,7 @@ class Cron {
 		// give every period at least 'max_execution_time' (PHP ini setting)
 		set_time_limit((int) ini_get('max_execution_time'));
 
-		$now = new DateTime();
+		$now = new \DateTime();
 
 		$msg = elgg_echo('admin:cron:started', [$interval, $time->format(DATE_RFC2822)]) . PHP_EOL;
 		$msg .= elgg_echo('admin:cron:started:actual', [$interval, $now->format(DATE_RFC2822)]) . PHP_EOL;
@@ -128,18 +127,18 @@ class Cron {
 	/**
 	 * Execute handlers attached to a specific cron interval
 	 *
-	 * @param string   $interval Cron interval to execute
-	 * @param DateTime $time     Time of cron initialization
+	 * @param string    $interval Cron interval to execute
+	 * @param \DateTime $time     Time of cron initialization
 	 *
 	 * @return string
 	 */
-	protected function execute($interval, DateTime $time = null) {
+	protected function execute($interval, \DateTime $time = null) {
 
 		if (!isset($time)) {
 			$time = $this->getCurrentTime();
 		}
 
-		$now = new DateTime();
+		$now = new \DateTime();
 
 		$output = [];
 
@@ -156,7 +155,7 @@ class Cron {
 		$output[] = ob_get_clean();
 		$output[] = $old_stdout;
 
-		$now = new DateTime();
+		$now = new \DateTime();
 
 		$output[] = elgg_echo('admin:cron:complete', [$interval, $now->format(DATE_RFC2822)]);
 
@@ -173,12 +172,12 @@ class Cron {
 	 */
 	protected function after($output, $interval) {
 
-		$time = new DateTime();
+		$time = new \DateTime();
 
 		$this->log('output', $interval, $output);
 		$this->log('completion', $interval, $time->getTimestamp());
 
-		$this->logger->info($output);
+		$this->getLogger()->info($output);
 
 		$this->events->triggerAfter('cron', $interval, $time);
 	}
@@ -242,7 +241,7 @@ class Cron {
 	public function getConfiguredIntervals(bool $only_names = false) {
 		$result = $this->hooks->trigger('cron:intervals', 'system', [], $this->default_intervals);
 		if (!is_array($result)) {
-			$this->getLogger()->log(Logger::WARNING, "The plugin hook 'cron:intervals', 'system' should return an array, " . gettype($result) . ' given');
+			$this->getLogger()->warning("The plugin hook 'cron:intervals', 'system' should return an array, " . gettype($result) . ' given');
 			
 			$result = $this->default_intervals;
 		}

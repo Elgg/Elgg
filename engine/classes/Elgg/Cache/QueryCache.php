@@ -2,7 +2,7 @@
 
 namespace Elgg\Cache;
 
-use Elgg\Loggable;
+use Elgg\Traits\Loggable;
 
 /**
  * Volatile cache for select queries
@@ -15,6 +15,7 @@ use Elgg\Loggable;
  * @internal
  */
 class QueryCache extends LRUCache {
+	
 	use Loggable;
 	
 	/**
@@ -85,7 +86,7 @@ class QueryCache extends LRUCache {
 		parent::clear();
 		
 		if ($this->logger) {
-			$this->logger->info('Query cache invalidated');
+			$this->getLogger()->info('Query cache invalidated');
 		}
 	}
 	
@@ -100,7 +101,7 @@ class QueryCache extends LRUCache {
 		$result = parent::get($key, $default);
 		
 		if ($this->logger) {
-			$this->logger->info("DB query results returned from cache (hash: $key)");
+			$this->getLogger()->info("DB query results returned from cache (hash: $key)");
 		}
 			
 		return $result;
@@ -117,7 +118,7 @@ class QueryCache extends LRUCache {
 		parent::set($key, $value);
 		
 		if ($this->logger) {
-			$this->logger->info("DB query results cached (hash: $key)");
+			$this->getLogger()->info("DB query results cached (hash: $key)");
 		}
 	}
 	

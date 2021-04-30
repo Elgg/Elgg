@@ -2,9 +2,9 @@
 
 namespace Elgg\Database;
 
-use Elgg\TimeUsing;
 use Elgg\Database;
 use Elgg\Email\DelayedQueue\DatabaseRecord;
+use Elgg\Traits\TimeUsing;
 
 /**
  * Interfaces with the database to perform operations on the delayed_email_queue table

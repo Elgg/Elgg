@@ -3,8 +3,7 @@
 namespace Elgg\Application;
 
 use Elgg\Application;
-use Elgg\Loggable;
-use Exception;
+use Elgg\Traits\Loggable;
 use Psr\Log\LogLevel;
 
 /**
@@ -35,7 +34,7 @@ class ErrorHandler {
 	 * @param int    $linenum  The line number the error was raised at
 	 *
 	 * @return true
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function __invoke($errno, $errmsg, $filename = '', $linenum = 0) {
 		$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
@@ -49,7 +48,7 @@ class ErrorHandler {
 				}
 
 				// Since this is a fatal error, we want to stop any further execution but do so gracefully.
-				throw new Exception($error);
+				throw new \Exception($error);
 
 			case E_WARNING :
 			case E_USER_WARNING :

@@ -2,13 +2,12 @@
 
 namespace Elgg\SystemLog;
 
-use DateTime;
 use Elgg\Application\Database;
 use Elgg\Database\Delete;
 use Elgg\Database\Insert;
 use Elgg\Database\Select;
-use Elgg\Di\ServiceFacade;
-use Elgg\TimeUsing;
+use Elgg\Traits\Di\ServiceFacade;
+use Elgg\Traits\TimeUsing;
 
 /**
  * Inserts log entry into the database
@@ -181,11 +180,11 @@ class SystemLog {
 	/**
 	 * Archive records created before a date
 	 *
-	 * @param DateTime $created_before Date of last creation
+	 * @param \DateTime $created_before Date of last creation
 	 *
 	 * @return bool
 	 */
-	public function archive(DateTime $created_before) {
+	public function archive(\DateTime $created_before) {
 
 		$dbprefix = $this->db->prefix;
 
@@ -233,11 +232,11 @@ class SystemLog {
 	/**
 	 * Deleted system log archive tables
 	 *
-	 * @param DateTime $archived_before Date of last archival
+	 * @param \DateTime $archived_before Date of last archival
 	 *
 	 * @return bool
 	 */
-	public function deleteArchive(DateTime $archived_before) {
+	public function deleteArchive(\DateTime $archived_before) {
 
 		$dbprefix = $this->db->prefix;
 

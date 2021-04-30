@@ -2,9 +2,7 @@
 
 namespace Elgg\Notifications;
 
-use ElggData;
-use ElggEntity;
-use stdClass;
+use Elgg\Traits\Notifications\EventSerialization;
 
 /**
  * Instant notification event
@@ -29,18 +27,18 @@ class InstantNotificationEvent implements NotificationEvent {
 	protected $object;
 
 	/**
-	 * @var ElggEntity User who triggered the event
+	 * @var \ElggEntity User who triggered the event
 	 */
 	protected $actor;
 
 	/**
 	 * Constructor
 	 *
-	 * @param ElggData   $object The object of the event (ElggEntity)
-	 * @param string     $action The name of the action (default: create)
-	 * @param ElggEntity $actor  The entity that caused the event (default: logged in user)
+	 * @param \ElggData   $object The object of the event (ElggEntity)
+	 * @param string      $action The name of the action (default: create)
+	 * @param \ElggEntity $actor  The entity that caused the event (default: logged in user)
 	 */
-	public function __construct(ElggData $object = null, string $action = null, ElggEntity $actor = null) {
+	public function __construct(\ElggData $object = null, string $action = null, \ElggEntity $actor = null) {
 
 		$this->object = $object;
 
@@ -59,7 +57,7 @@ class InstantNotificationEvent implements NotificationEvent {
 	 * may have been deleted/disabled since the event was serialized and
 	 * stored in the database.
 	 *
-	 * @return ElggEntity|false|null
+	 * @return \ElggEntity|false|null
 	 */
 	public function getActor() {
 		return $this->actor;
@@ -85,7 +83,7 @@ class InstantNotificationEvent implements NotificationEvent {
 	 * may have been deleted/disabled since the event was serialized and
 	 * stored in the database.
 	 *
-	 * @return ElggData|false|null
+	 * @return \ElggData|false|null
 	 */
 	public function getObject() {
 		return $this->object;
@@ -121,10 +119,11 @@ class InstantNotificationEvent implements NotificationEvent {
 	 * Export the notification event into a serializable object
 	 * This method is mainly used for logging purposes
 	 *
-	 * @return stdClass
+	 * @return \stdClass
 	 */
 	public function toObject() {
-		$obj = new stdClass();
+		$obj = new \stdClass();
+		
 		$vars = get_object_vars($this);
 		foreach ($vars as $key => $value) {
 			if (is_object($value) && is_callable([$value, 'toObject'])) {
@@ -133,6 +132,7 @@ class InstantNotificationEvent implements NotificationEvent {
 				$obj->$key = $value;
 			}
 		}
+		
 		return $obj;
 	}
 }

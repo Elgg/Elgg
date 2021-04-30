@@ -1,15 +1,15 @@
 <?php
 
-namespace Elgg\Database\Seeds;
+namespace Elgg\Traits;
 
 use Elgg\Collections\Collection;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Seeds\Providers\LocalImage;
-use Elgg\Database\Seeds\Seeding\GroupHelpers;
-use Elgg\Database\Seeds\Seeding\TimeHelpers;
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Groups\Tool;
+use Elgg\Traits\Seeding\GroupHelpers;
+use Elgg\Traits\Seeding\TimeHelpers;
 use Faker\Factory;
 use Psr\Log\LogLevel;
 
@@ -48,6 +48,7 @@ trait Seeding {
 
 	/**
 	 * Get site domain
+	 *
 	 * @return string
 	 */
 	public function getDomain() {
@@ -56,6 +57,7 @@ trait Seeding {
 
 	/**
 	 * Get valid domain for emails
+	 *
 	 * @return string
 	 */
 	public function getEmailDomain() {
@@ -75,6 +77,7 @@ trait Seeding {
 
 	/**
 	 * Returns random unique subtype
+	 *
 	 * @return bool|string
 	 */
 	public function getRandomSubtype() {
@@ -598,6 +601,7 @@ trait Seeding {
 	 * Generate a random valid email
 	 *
 	 * @param string $base Email username part
+	 *
 	 * @return string
 	 */
 	public function getRandomEmail($base = null) {

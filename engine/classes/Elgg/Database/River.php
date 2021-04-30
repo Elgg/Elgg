@@ -8,8 +8,7 @@ use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Database\Clauses\RiverWhereClause;
 use Elgg\Exceptions\InvalidArgumentException;
-use ElggEntity;
-use ElggRiverItem;
+use Elgg\Traits\Database\LegacyQueryOptionsAdapter;
 
 /**
  * River repository contains methods for fetching/counting river items
@@ -66,7 +65,7 @@ class River extends Repository {
 	 *
 	 * @param array $options Options
 	 *
-	 * @return ElggRiverItem[]|int|mixed
+	 * @return \ElggRiverItem[]|int|mixed
 	 */
 	public static function find(array $options = []) {
 		return parent::find($options);
@@ -139,7 +138,7 @@ class River extends Repository {
 	 * @param int      $offset   Offset
 	 * @param callable $callback Custom callback
 	 *
-	 * @return ElggEntity[]
+	 * @return \ElggEntity[]
 	 */
 	public function get($limit = null, $offset = null, $callback = null) {
 
@@ -166,7 +165,7 @@ class River extends Repository {
 		$callback = $callback ? : $this->options->callback;
 		if (!isset($callback)) {
 			$callback = function ($row) {
-				return new ElggRiverItem($row);
+				return new \ElggRiverItem($row);
 			};
 		}
 
@@ -174,7 +173,7 @@ class River extends Repository {
 
 		if (!empty($items)) {
 			$preload = array_filter($items, function($e) {
-				return $e instanceof ElggRiverItem;
+				return $e instanceof \ElggRiverItem;
 			});
 
 			_elgg_services()->entityPreloader->preload($preload, [
@@ -190,7 +189,7 @@ class River extends Repository {
 	/**
 	 * Execute the query resolving calculation, count and/or batch options
 	 *
-	 * @return array|\ElggData[]|ElggEntity[]|false|int
+	 * @return array|\ElggData[]|\ElggEntity[]|false|int
 	 * @throws \LogicException
 	 */
 	public function execute() {

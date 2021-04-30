@@ -6,7 +6,7 @@ use Elgg\Exceptions\Http\EntityNotFoundException;
 use Elgg\Http\OkResponse;
 use Elgg\Http\ResponseBuilder;
 use Elgg\Request;
-use Elgg\TimeUsing;
+use Elgg\Traits\TimeUsing;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 

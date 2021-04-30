@@ -1,12 +1,14 @@
 <?php
 
-namespace Elgg;
+namespace Elgg\Traits;
 
 use Elgg\Cache\CompositeCache;
 use ElggCache;
 
 /**
  * Utility trait for injecting cache
+ *
+ * @internal
  */
 trait Cacheable {
 
@@ -28,6 +30,7 @@ trait Cacheable {
 
 	/**
 	 * Get cache
+	 *
 	 * @return ElggCache
 	 */
 	public function getCache() {

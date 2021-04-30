@@ -1,7 +1,8 @@
 <?php
+
 namespace Elgg;
 
-use Elgg\Debug\Profilable;
+use Elgg\Traits\Debug\Profilable;
 
 /**
  * Events service
@@ -9,6 +10,7 @@ use Elgg\Debug\Profilable;
  * Use elgg()->events
  */
 class EventsService extends HooksRegistrationService {
+	
 	use Profilable;
 
 	const OPTION_STOPPABLE = 'stoppable';

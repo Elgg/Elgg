@@ -4,6 +4,7 @@ namespace Elgg\Database;
 
 use Elgg\Database;
 use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Traits\TimeUsing;
 
 /**
  * Manage the contents of the hmac_cache table
@@ -13,7 +14,7 @@ use Elgg\Exceptions\InvalidArgumentException;
  */
 class HMACCacheTable {
 	
-	use \Elgg\TimeUsing;
+	use TimeUsing;
 	
 	/**
 	 * @var Database

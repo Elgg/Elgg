@@ -3,10 +3,8 @@
 namespace Elgg\Upgrade;
 
 use Elgg\Cli\Progress;
-use Elgg\Loggable;
 use Elgg\Logger;
-use ElggUpgrade;
-use Psr\Log\LogLevel;
+use Elgg\Traits\Loggable;
 use Symfony\Component\Console\Helper\ProgressBar;
 
 /**
@@ -18,7 +16,7 @@ class Loop {
 	use Loggable;
 
 	/**
-	 * @var ElggUpgrade
+	 * @var \ElggUpgrade
 	 */
 	protected $upgrade;
 
@@ -60,13 +58,13 @@ class Loop {
 	/**
 	 * Constructor
 	 *
-	 * @param ElggUpgrade $upgrade  Upgrade instance
-	 * @param Result      $result   Upgrade result
-	 * @param Progress    $progress CLI progress helper
-	 * @param Logger      $logger   Logger
+	 * @param \ElggUpgrade $upgrade  Upgrade instance
+	 * @param Result       $result   Upgrade result
+	 * @param Progress     $progress CLI progress helper
+	 * @param Logger       $logger   Logger
 	 */
 	public function __construct(
-		ElggUpgrade $upgrade,
+		\ElggUpgrade $upgrade,
 		Result $result,
 		Progress $progress,
 		Logger $logger
@@ -146,7 +144,7 @@ class Loop {
 		try {
 			$this->batch->run($this->result, $this->offset);
 		} catch (\Exception $e) {
-			$this->logger->error($e);
+			$this->getLogger()->error($e);
 
 			$this->result->addError($e->getMessage());
 			$this->result->addFailures(1);
@@ -211,7 +209,7 @@ class Loop {
 		}
 
 		foreach ($this->result->getErrors() as $error) {
-			$this->logger->log(LogLevel::ERROR, $error);
+			$this->getLogger()->error($error);
 		}
 	}
 

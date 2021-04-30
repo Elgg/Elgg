@@ -9,8 +9,9 @@ use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Elgg\Cache\QueryCache;
 use Elgg\Database\DbConfig;
-use Elgg\Debug\Profilable;
 use Elgg\Exceptions\DatabaseException;
+use Elgg\Traits\Debug\Profilable;
+use Elgg\Traits\Loggable;
 use Psr\Log\LogLevel;
 
 /**
@@ -21,6 +22,7 @@ use Psr\Log\LogLevel;
  * @property-read string $prefix Elgg table prefix (read only)
  */
 class Database {
+	
 	use Profilable;
 	use Loggable;
 
@@ -228,7 +230,7 @@ class Database {
 		}
 
 		if ($this->logger) {
-			$this->logger->info("DB insert query $query (params: " . print_r($params, true) . ")");
+			$this->getLogger()->info("DB insert query $query (params: " . print_r($params, true) . ")");
 		}
 
 		$connection = $this->getConnection('write');
@@ -258,7 +260,7 @@ class Database {
 		}
 
 		if ($this->logger) {
-			$this->logger->info("DB update query $query (params: " . print_r($params, true) . ")");
+			$this->getLogger()->info("DB update query $query (params: " . print_r($params, true) . ")");
 		}
 
 		$this->query_cache->clear();
@@ -289,7 +291,7 @@ class Database {
 		}
 
 		if ($this->logger) {
-			$this->logger->info("DB delete query $query (params: " . print_r($params, true) . ")");
+			$this->getLogger()->info("DB delete query $query (params: " . print_r($params, true) . ")");
 		}
 
 		$connection = $this->getConnection('write');
@@ -370,7 +372,7 @@ class Database {
 		}
 		
 		if ($this->logger) {
-			$this->logger->info("DB select query $sql (params: " . print_r($params, true) . ")");
+			$this->getLogger()->info("DB select query $sql (params: " . print_r($params, true) . ")");
 		}
 		
 		$return = [];
@@ -543,7 +545,7 @@ class Database {
 			} catch (\Exception $e) {
 				if ($this->logger) {
 					// Suppress all exceptions since page already sent to requestor
-					$this->logger->error($e);
+					$this->getLogger()->error($e);
 				}
 			}
 		}

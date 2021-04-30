@@ -3,9 +3,9 @@
 namespace Elgg;
 
 use Elgg\Database\SiteSecret;
-use Elgg\Debug\Profilable;
 use Elgg\Di\ServiceProvider;
-use ElggCache;
+use Elgg\Traits\Cacheable;
+use Elgg\Traits\Debug\Profilable;
 use Psr\Log\LogLevel;
 
 /**
@@ -34,9 +34,9 @@ class BootService {
 	/**
 	 * Cache
 	 *
-	 * @param ElggCache $cache Cache
+	 * @param \ElggCache $cache Cache
 	 */
-	public function __construct(ElggCache $cache) {
+	public function __construct(\ElggCache $cache) {
 		$this->cache = $cache;
 	}
 
@@ -136,15 +136,6 @@ class BootService {
 		_elgg_services()->plugins->setBootPlugins(null);
 		_elgg_services()->config->system_cache_loaded = false;
 		_elgg_services()->config->_boot_cache_hit = false;
-	}
-	
-	/**
-	 * Get the boot cache
-	 *
-	 * @return ElggCache
-	 */
-	public function getCache() {
-		return $this->cache;
 	}
 
 	/**

@@ -2,8 +2,13 @@
 
 namespace Elgg;
 
-use Psr\Log\LoggerInterface;
-use RuntimeException;
+use Elgg\Assets\CssCompiler;
+use Elgg\Assets\ImageFetcherService;
+use Elgg\Email\Attachment;
+use Elgg\Email\HtmlPart;
+use Elgg\Email\PlainTextPart;
+use Elgg\Traits\Loggable;
+use Elgg\Views\HtmlFormatter;
 use Laminas\Mail\Header\ContentType;
 use Laminas\Mail\Message as MailMessage;
 use Laminas\Mail\Transport\TransportInterface;
@@ -11,12 +16,7 @@ use Laminas\Mime\Message as MimeMessage;
 use Laminas\Mime\Exception\InvalidArgumentException;
 use Laminas\Mime\Part;
 use Laminas\Mime\Mime;
-use Elgg\Email\Attachment;
-use Elgg\Email\HtmlPart;
-use Elgg\Email\PlainTextPart;
-use Elgg\Assets\CssCompiler;
-use Elgg\Assets\ImageFetcherService;
-use Elgg\Views\HtmlFormatter;
+use RuntimeException;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -75,7 +75,6 @@ class EmailService {
 	 * @param ViewsService        $views          Views service
 	 * @param ImageFetcherService $image_fetcher  Image fetcher
 	 * @param CssCompiler         $css_compiler   Css compiler
-	 * @param LoggerInterface     $logger         Logger
 	 */
 	public function __construct(
 			Config $config,
@@ -84,8 +83,7 @@ class EmailService {
 			HtmlFormatter $html_formatter,
 			ViewsService $views,
 			ImageFetcherService $image_fetcher,
-			CssCompiler $css_compiler,
-			LoggerInterface $logger
+			CssCompiler $css_compiler
 		) {
 		$this->config = $config;
 		$this->hooks = $hooks;
@@ -94,7 +92,6 @@ class EmailService {
 		$this->views = $views;
 		$this->image_fetcher = $image_fetcher;
 		$this->css_compiler = $css_compiler;
-		$this->logger = $logger;
 	}
 
 	/**
@@ -166,7 +163,7 @@ class EmailService {
 		try {
 			$message = $this->setMessageBody($message, $email);
 		} catch (InvalidArgumentException $e) {
-			$this->logger->error($e->getMessage());
+			$this->getLogger()->error($e->getMessage());
 			
 			return false;
 		}
@@ -187,7 +184,7 @@ class EmailService {
 		try {
 			$this->mailer->send($message);
 		} catch (RuntimeException $e) {
-			$this->logger->error($e->getMessage());
+			$this->getLogger()->error($e->getMessage());
 
 			return false;
 		}

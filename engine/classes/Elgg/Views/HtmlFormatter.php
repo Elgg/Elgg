@@ -3,12 +3,9 @@
 namespace Elgg\Views;
 
 use Elgg\Exceptions\InvalidArgumentException;
-use Elgg\Loggable;
 use Elgg\PluginHooksService;
+use Elgg\Traits\Loggable;
 use Elgg\ViewsService;
-use Psr\Log\LoggerInterface;
-use Cake\Utility\Text;
-use Laminas\Mail\Header\ContentDisposition;
 use Pelago\Emogrifier\CssInliner;
 
 /**
@@ -36,22 +33,18 @@ class HtmlFormatter {
 	/**
 	 * Output constructor.
 	 *
-	 * @param LoggerInterface    $logger Logger
-	 * @param ViewsService       $views  Views service
-	 * @param PluginHooksService $hooks  Hooks
-	 * @param \ElggAutoP         $autop  Paragraph wrapper
+	 * @param ViewsService       $views Views service
+	 * @param PluginHooksService $hooks Hooks
+	 * @param \ElggAutoP         $autop Paragraph wrapper
 	 */
 	public function __construct(
-		LoggerInterface $logger,
 		ViewsService $views,
 		PluginHooksService $hooks,
 		\ElggAutoP $autop
 	) {
-		$this->logger = $logger;
 		$this->views = $views;
 		$this->hooks = $hooks;
 		$this->autop = $autop;
-
 	}
 
 	/**
@@ -151,7 +144,7 @@ class HtmlFormatter {
 				return $result;
 			}
 		} catch (\RuntimeException $e) {
-			$this->logger->warning('ElggAutoP failed to process the string: ' . $e->getMessage());
+			$this->getLogger()->warning('ElggAutoP failed to process the string: ' . $e->getMessage());
 		}
 		
 		return $string;

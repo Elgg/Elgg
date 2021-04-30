@@ -1,19 +1,15 @@
 <?php
-/**
- *
- */
 
 namespace Elgg;
 
-use Elgg\Database\Seeds\Seeding;
-use ElggEntity;
+use Elgg\Traits\Seeding;
 
 trait TestSeeding {
 
 	use Seeding;
 
 	/**
-	 * @var ElggEntity
+	 * @var \ElggEntity
 	 */
 	private $_seeds = [];
 
@@ -37,7 +33,7 @@ trait TestSeeding {
 	 * @param array  $attributes Entity attributes
 	 * @param array  $metadata   Entity metadata
 	 *
-	 * @return ElggEntity
+	 * @return \ElggEntity
 	 */
 	public function createOne($types = 'object', array $attributes = [], array $metadata = []) {
 		$seeds = $this->createMany($types, 1, $attributes, $metadata);
@@ -51,7 +47,7 @@ trait TestSeeding {
 	 * @param mixed $types An array of entity types
 	 * @param int   $limit Number of entities to seed
 	 *
-	 * @return ElggEntity[]
+	 * @return \ElggEntity[]
 	 */
 	public function createMany($types = 'object', $limit = 2, array $attributes = [], array $metadata = []) {
 

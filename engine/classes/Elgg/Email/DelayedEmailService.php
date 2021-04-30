@@ -6,12 +6,12 @@ use Elgg\Database\DelayedEmailQueueTable;
 use Elgg\Email;
 use Elgg\Email\DelayedQueue\DatabaseRecord;
 use Elgg\EmailService;
-use Elgg\Loggable;
-use Elgg\Notifications\Notification;
 use Elgg\Exceptions\DatabaseException;
-use Elgg\ViewsService;
 use Elgg\I18n\Translator;
 use Elgg\Invoker;
+use Elgg\Notifications\Notification;
+use Elgg\Traits\Loggable;
+use Elgg\ViewsService;
 
 /**
  * Handle storing and processing delayed emails

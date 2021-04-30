@@ -3,7 +3,7 @@
 namespace Elgg\Database;
 
 use Elgg\Database;
-use Elgg\TimeUsing;
+use Elgg\Traits\TimeUsing;
 
 /**
  * Manage the contents of the users_apisessions table

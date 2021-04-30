@@ -853,3 +853,22 @@ Removed composer dependencies
 * ``npm-asset/jquery-form`` use native FormData functionality
 * ``npm-asset/weakmap-polyfill`` all modern browser have support, no longer a need for a polyfill
 * ``simpletest/simpletest``
+
+Moved Traits
+------------
+
+In order to better organize the Elgg namespace all Traits have been moved to the ``Elgg\Traits`` namespace
+
+* ``Elgg\Cacheable`` moved to ``Elgg\Traits\Cacheable``
+* ``Elgg\Cli\PluginsHelper`` moved to ``Elgg\Traits\Cli\PluginsHelper``
+* ``Elgg\Cli\Progressing`` moved to ``Elgg\Traits\Cli\Progressing``
+* ``Elgg\Database\Seeds\Seeding\GroupHelpers`` moved to ``Elgg\Traits\Seeding\GroupHelpers``
+* ``Elgg\Database\Seeds\Seeding\TimeHelpers`` moved to ``Elgg\Traits\Seeding\TimeHelpers``
+* ``Elgg\Database\Seeds\Seeding`` moved to ``Elgg\Traits\Seeding``
+* ``Elgg\Database\LegacyQueryOptionsAdapter`` moved to ``Elgg\Traits\Database\LegacyQueryOptionsAdapter``
+* ``Elgg\Debug\Profilable`` moved to ``Elgg\Traits\Debug\Profilable``
+* ``Elgg\Di\ServiceFacade`` moved to ``Elgg\Traits\Di\ServiceFacade``
+* ``Elgg\Entity\ProfileData`` moved to ``Elgg\Traits\Entity\ProfileData``
+* ``Elgg\Loggable`` moved to ``Elgg\Traits\Loggable``
+* ``Elgg\Notifications\EventSerialization`` moved to ``Elgg\Traits\Notifications\EventSerialization``
+* ``Elgg\TimeUsing`` moved to ``Elgg\Traits\TimeUsing``

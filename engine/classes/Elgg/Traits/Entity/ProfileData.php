@@ -1,6 +1,6 @@
 <?php
 
-namespace Elgg\Entity;
+namespace Elgg\Traits\Entity;
 
 /**
  * Adds methods to save profile data to an ElggEntity.

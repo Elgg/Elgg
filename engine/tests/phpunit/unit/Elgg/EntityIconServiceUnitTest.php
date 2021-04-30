@@ -111,16 +111,23 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		elgg_delete_directory($this->owner_dir_path);
 	}
 
+	/**
+	 * Create a service for testing
+	 *
+	 * @return \Elgg\EntityIconService
+	 */
 	protected function createService() {
-		return new \Elgg\EntityIconService(
+		$service = new \Elgg\EntityIconService(
 			_elgg_services()->config,
 			$this->hooks,
-			$this->logger,
 			$this->entities,
 			$this->uploads,
 			$this->images,
 			$this->mimetype
 		);
+		$service->setLogger($this->logger);
+		
+		return $service;
 	}
 	
 	public static function getDefaultIconSizes() {

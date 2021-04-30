@@ -5,9 +5,7 @@ namespace Elgg\Security;
 use Elgg\Config;
 use Elgg\Exceptions\Http\CsrfException;
 use Elgg\Request;
-use Elgg\TimeUsing;
-use ElggCrypto;
-use ElggSession;
+use Elgg\Traits\TimeUsing;
 
 /**
  * CSRF Protection
@@ -22,12 +20,12 @@ class Csrf {
 	protected $config;
 
 	/**
-	 * @var ElggSession
+	 * @var \ElggSession
 	 */
 	protected $session;
 
 	/**
-	 * @var ElggCrypto
+	 * @var \ElggCrypto
 	 */
 	protected $crypto;
 
@@ -39,15 +37,15 @@ class Csrf {
 	/**
 	 * Constructor
 	 *
-	 * @param Config      $config  Elgg config
-	 * @param ElggSession $session Session
-	 * @param ElggCrypto  $crypto  Crypto service
-	 * @param HmacFactory $hmac    HMAC service
+	 * @param Config       $config  Elgg config
+	 * @param \ElggSession $session Session
+	 * @param \ElggCrypto  $crypto  Crypto service
+	 * @param HmacFactory  $hmac    HMAC service
 	 */
 	public function __construct(
 		Config $config,
-		ElggSession $session,
-		ElggCrypto $crypto,
+		\ElggSession $session,
+		\ElggCrypto $crypto,
 		HmacFactory $hmac
 	) {
 

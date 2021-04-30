@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Collections\CollectionItemInterface;
+use Elgg\Traits\TimeUsing;
 
 /**
  * A generic class that contains shared code among
@@ -12,7 +13,7 @@ abstract class ElggData implements CollectionItemInterface,
 								   Iterator,
 								   ArrayAccess {
 
-	use \Elgg\TimeUsing;
+	use TimeUsing;
 
 	/**
 	 * The main attributes of an entity.

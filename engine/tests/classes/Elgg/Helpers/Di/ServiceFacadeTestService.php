@@ -2,12 +2,13 @@
 
 namespace Elgg\Helpers\Di;
 
-use Elgg\Di\ServiceFacade;
+use Elgg\Traits\Di\ServiceFacade;
 
 /**
  * @see Elgg\Di\ServiceFacadeTest
  */
 class ServiceFacadeTestService {
+	
 	use ServiceFacade;
 	
 	public static function name() {

@@ -2,13 +2,13 @@
 
 namespace Elgg;
 
-use Exception;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Filesystem\MimeTypeService;
+use Elgg\Traits\Loggable;
+use Imagine\Filter\Basic\Autorotate;
 use Imagine\Image\Box;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\Point;
-use Imagine\Filter\Basic\Autorotate;
 
 /**
  * Image manipulation service
@@ -17,6 +17,7 @@ use Imagine\Filter\Basic\Autorotate;
  * @internal
  */
 class ImageService {
+	
 	use Loggable;
 
 	const JPEG_QUALITY = 75;
@@ -115,7 +116,7 @@ class ImageService {
 
 			unset($image);
 			unset($thumbnail);
-		} catch (Exception $ex) {
+		} catch (\Exception $ex) {
 			$logger = $this->logger ? $this->logger : _elgg_services()->logger;
 			$logger->error($ex);
 			return false;
@@ -146,7 +147,7 @@ class ImageService {
 			$image->strip()->save($filename);
 			
 			return true;
-		} catch (Exception $ex) {
+		} catch (\Exception $ex) {
 			$logger = $this->logger ? $this->logger : _elgg_services()->logger;
 			$logger->notice($ex);
 		}

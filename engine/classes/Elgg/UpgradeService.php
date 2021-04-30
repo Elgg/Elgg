@@ -3,18 +3,16 @@
 namespace Elgg;
 
 use Elgg\Cli\Progress;
+use Elgg\Database\Clauses\EntitySortByClause;
 use Elgg\Database\Mutex;
-use Elgg\i18n\Translator;
+use Elgg\I18n\Translator;
+use Elgg\Traits\Loggable;
 use Elgg\Upgrade\Locator;
 use Elgg\Upgrade\Loop;
 use Elgg\Upgrade\Result;
-use ElggUpgrade;
 use function React\Promise\all;
 use React\Promise\Deferred;
 use React\Promise\Promise;
-use RuntimeException;
-use Throwable;
-use Elgg\Database\Clauses\EntitySortByClause;
 
 /**
  * Upgrade service for Elgg
@@ -67,7 +65,6 @@ class UpgradeService {
 	 * @param Translator            $translator      Translation service
 	 * @param EventsService         $events          Events service
 	 * @param Config                $config          Config
-	 * @param Logger                $logger          Logger
 	 * @param Mutex                 $mutex           Database mutex service
 	 * @param SystemMessagesService $system_messages System messages
 	 * @param Progress              $progress        Progress
@@ -77,7 +74,6 @@ class UpgradeService {
 		Translator $translator,
 		EventsService $events,
 		Config $config,
-		Logger $logger,
 		Mutex $mutex,
 		SystemMessagesService $system_messages,
 		Progress $progress
@@ -86,7 +82,6 @@ class UpgradeService {
 		$this->translator = $translator;
 		$this->events = $events;
 		$this->config = $config;
-		$this->logger = $logger;
 		$this->mutex = $mutex;
 		$this->system_messages = $system_messages;
 		$this->progress = $progress;
@@ -101,12 +96,12 @@ class UpgradeService {
 			Application::migrate();
 
 			if (!$this->events->triggerBefore('upgrade', 'system', null)) {
-				return $reject(new RuntimeException($this->translator->translate('upgrade:terminated')));
+				return $reject(new \RuntimeException($this->translator->translate('upgrade:terminated')));
 			}
 
 			// prevent someone from running the upgrade script in parallel (see #4643)
 			if (!$this->mutex->lock('upgrade')) {
-				return $reject(new RuntimeException($this->translator->translate('upgrade:locked')));
+				return $reject(new \RuntimeException($this->translator->translate('upgrade:locked')));
 			}
 
 			// Clear system caches
@@ -140,7 +135,7 @@ class UpgradeService {
 	/**
 	 * Run system and async upgrades
 	 *
-	 * @param ElggUpgrade[] $upgrades Upgrades to run
+	 * @param \ElggUpgrade[] $upgrades Upgrades to run
 	 *
 	 * @return Promise
 	 */
@@ -148,13 +143,13 @@ class UpgradeService {
 		$promises = [];
 
 		foreach ($upgrades as $upgrade) {
-			if (!$upgrade instanceof ElggUpgrade) {
+			if (!$upgrade instanceof \ElggUpgrade) {
 				continue;
 			}
 			$promises[] = new Promise(function ($resolve, $reject) use ($upgrade) {
 				try {
 					$result = $this->executeUpgrade($upgrade, false);
-				} catch (Throwable $ex) {
+				} catch (\Throwable $ex) {
 					return $reject($ex);
 				}
 
@@ -163,7 +158,7 @@ class UpgradeService {
 						$upgrade->getDisplayName(),
 					]);
 
-					return $reject(new RuntimeException($msg));
+					return $reject(new \RuntimeException($msg));
 				} else {
 					return $resolve($result);
 				}
@@ -176,10 +171,10 @@ class UpgradeService {
 	/**
 	 * Run the upgrade process
 	 *
-	 * @param ElggUpgrade[] $upgrades Upgrades to run
+	 * @param \ElggUpgrade[] $upgrades Upgrades to run
 	 *
 	 * @return Promise
-	 * @throws RuntimeException
+	 * @throws \RuntimeException
 	 */
 	public function run($upgrades = null) {
 		// turn off time limit
@@ -228,7 +223,7 @@ class UpgradeService {
 	 *
 	 * @param bool $async Include async upgrades
 	 *
-	 * @return ElggUpgrade[]
+	 * @return \ElggUpgrade[]
 	 */
 	public function getPendingUpgrades($async = true) {
 		$pending = [];
@@ -249,7 +244,7 @@ class UpgradeService {
 		}
 
 		if (!$async) {
-			$pending = array_filter($pending, function(ElggUpgrade $upgrade) {
+			$pending = array_filter($pending, function(\ElggUpgrade $upgrade) {
 				return !$upgrade->isAsynchronous();
 			});
 		}
@@ -262,7 +257,7 @@ class UpgradeService {
 	 *
 	 * @param bool $async Include async upgrades
 	 *
-	 * @return ElggUpgrade[]
+	 * @return \ElggUpgrade[]
 	 */
 	public function getCompletedUpgrades($async = true) {
 		// make sure always to return all upgrade entities
@@ -299,7 +294,7 @@ class UpgradeService {
 				}
 		
 				if (!$async) {
-					$completed = array_filter($completed, function(ElggUpgrade $upgrade) {
+					$completed = array_filter($completed, function(\ElggUpgrade $upgrade) {
 						return !$upgrade->isAsynchronous();
 					});
 				}
@@ -312,14 +307,14 @@ class UpgradeService {
 	/**
 	 * Call the upgrade's run() for a specified period of time, or until it completes
 	 *
-	 * @param ElggUpgrade $upgrade      Upgrade to run
-	 * @param int         $max_duration Maximum duration in seconds
-	 *                                  Set to false to execute an entire upgrade
+	 * @param \ElggUpgrade $upgrade      Upgrade to run
+	 * @param int          $max_duration Maximum duration in seconds
+	 *                                   Set to false to execute an entire upgrade
 	 *
 	 * @return Result
-	 * @throws RuntimeException
+	 * @throws \RuntimeException
 	 */
-	public function executeUpgrade(ElggUpgrade $upgrade, $max_duration = null) {
+	public function executeUpgrade(\ElggUpgrade $upgrade, $max_duration = null) {
 		// Upgrade also disabled data, so the compatibility is
 		// preserved in case the data ever gets enabled again
 		return elgg_call(
@@ -332,7 +327,7 @@ class UpgradeService {
 						$upgrade,
 						$result,
 						$this->progress,
-						$this->logger
+						$this->getLogger()
 					);
 					
 					$loop->loop($max_duration);

@@ -2,8 +2,8 @@
 
 namespace Elgg\WebServices\Di;
 
+use Elgg\Traits\Di\ServiceFacade;
 use Monolog\Handler\AbstractHandler;
-use Elgg\Di\ServiceFacade;
 use Monolog\Formatter\LineFormatter;
 
 /**

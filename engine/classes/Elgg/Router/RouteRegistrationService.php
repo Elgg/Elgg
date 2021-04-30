@@ -3,10 +3,9 @@
 namespace Elgg\Router;
 
 use Elgg\Exceptions\InvalidParameterException;
-use Elgg\Loggable;
 use Elgg\PluginHooksService;
 use Elgg\Router\Middleware\WalledGarden;
-use Psr\Log\LoggerInterface;
+use Elgg\Traits\Loggable;
 
 /**
  * Route registration service
@@ -36,18 +35,15 @@ class RouteRegistrationService {
 	 * Constructor
 	 *
 	 * @param PluginHooksService $hooks     Hook service
-	 * @param LoggerInterface    $logger    Logger
 	 * @param RouteCollection    $routes    Route collection
 	 * @param UrlGenerator       $generator URL Generator
 	 */
 	public function __construct(
 		PluginHooksService $hooks,
-		LoggerInterface $logger,
 		RouteCollection $routes,
 		UrlGenerator $generator
 	) {
 		$this->hooks = $hooks;
-		$this->logger = $logger;
 		$this->routes = $routes;
 		$this->generator = $generator;
 	}
@@ -113,6 +109,7 @@ class RouteRegistrationService {
 			// look for segments that are defined as optional with added ?
 			// e.g. /blog/owner/{username?}
 
+			$matches = [];
 			if (!preg_match('/\{(\w*)(\?)?\}/i', $segment, $matches)) {
 				continue;
 			}
@@ -210,7 +207,7 @@ class RouteRegistrationService {
 			// make sure the url is always normalized so it is also usable in CLI
 			return elgg_normalize_url($url);
 		} catch (\Exception $exception) {
-			$this->logger->notice($exception->getMessage());
+			$this->getLogger()->notice($exception->getMessage());
 		}
 		
 		return false;

@@ -3,7 +3,6 @@
 namespace Elgg;
 
 use Elgg\Database\Plugins;
-use Elgg\Debug\Profilable;
 use Elgg\Exceptions\Http\BadRequestException ;
 use Elgg\Exceptions\Http\PageNotFoundException;
 use Elgg\Http\Request as HttpRequest;
@@ -11,6 +10,7 @@ use Elgg\Http\ResponseBuilder;
 use Elgg\Http\ResponseFactory;
 use Elgg\Router\RouteCollection;
 use Elgg\Router\UrlMatcher;
+use Elgg\Traits\Debug\Profilable;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 

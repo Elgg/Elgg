@@ -1,11 +1,13 @@
 <?php
 
-namespace Elgg\Cli;
+namespace Elgg\Traits\Cli;
 
 use Symfony\Component\Console\Helper\ProgressBar;
 
 /**
  * Progress reporting
+ *
+ * @internal
  */
 trait Progressing {
 

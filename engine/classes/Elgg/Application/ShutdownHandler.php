@@ -3,8 +3,7 @@
 namespace Elgg\Application;
 
 use Elgg\Application;
-use Elgg\Loggable;
-use Exception;
+use Elgg\Traits\Loggable;
 use Psr\Log\LogLevel;
 
 /**
