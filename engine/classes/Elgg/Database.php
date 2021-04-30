@@ -230,7 +230,7 @@ class Database {
 		}
 
 		if ($this->logger) {
-			$this->logger->info("DB insert query $query (params: " . print_r($params, true) . ")");
+			$this->getLogger()->info("DB insert query $query (params: " . print_r($params, true) . ")");
 		}
 
 		$connection = $this->getConnection('write');
@@ -260,7 +260,7 @@ class Database {
 		}
 
 		if ($this->logger) {
-			$this->logger->info("DB update query $query (params: " . print_r($params, true) . ")");
+			$this->getLogger()->info("DB update query $query (params: " . print_r($params, true) . ")");
 		}
 
 		$this->query_cache->clear();
@@ -291,7 +291,7 @@ class Database {
 		}
 
 		if ($this->logger) {
-			$this->logger->info("DB delete query $query (params: " . print_r($params, true) . ")");
+			$this->getLogger()->info("DB delete query $query (params: " . print_r($params, true) . ")");
 		}
 
 		$connection = $this->getConnection('write');
@@ -372,7 +372,7 @@ class Database {
 		}
 		
 		if ($this->logger) {
-			$this->logger->info("DB select query $sql (params: " . print_r($params, true) . ")");
+			$this->getLogger()->info("DB select query $sql (params: " . print_r($params, true) . ")");
 		}
 		
 		$return = [];
@@ -545,7 +545,7 @@ class Database {
 			} catch (\Exception $e) {
 				if ($this->logger) {
 					// Suppress all exceptions since page already sent to requestor
-					$this->logger->error($e);
+					$this->getLogger()->error($e);
 				}
 			}
 		}

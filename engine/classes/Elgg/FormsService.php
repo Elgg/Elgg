@@ -3,7 +3,6 @@
 namespace Elgg;
 
 use Elgg\Traits\Loggable;
-use Psr\Log\LoggerInterface;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -35,12 +34,10 @@ class FormsService {
 	/**
 	 * Constructor
 	 *
-	 * @param ViewsService    $views  Views service
-	 * @param LoggerInterface $logger Logger service
+	 * @param ViewsService $views Views service
 	 */
-	public function __construct(ViewsService $views, LoggerInterface $logger) {
+	public function __construct(ViewsService $views) {
 		$this->views = $views;
-		$this->logger = $logger;
 	}
 
 	/**
@@ -144,7 +141,7 @@ class FormsService {
 	public function setFooter($footer = '') {
 
 		if (!$this->rendering) {
-			$this->logger->error('Form footer can only be set and retrieved during form rendering, '
+			$this->getLogger()->error('Form footer can only be set and retrieved during form rendering, '
 					. 'anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)');
 			return false;
 		}
@@ -160,7 +157,7 @@ class FormsService {
 	 */
 	public function getFooter() {
 		if (!$this->rendering) {
-			$this->logger->error('Form footer can only be set and retrieved during form rendering, '
+			$this->getLogger()->error('Form footer can only be set and retrieved during form rendering, '
 					. 'anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)');
 			return false;
 		}

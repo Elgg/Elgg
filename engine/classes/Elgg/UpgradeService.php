@@ -65,7 +65,6 @@ class UpgradeService {
 	 * @param Translator            $translator      Translation service
 	 * @param EventsService         $events          Events service
 	 * @param Config                $config          Config
-	 * @param Logger                $logger          Logger
 	 * @param Mutex                 $mutex           Database mutex service
 	 * @param SystemMessagesService $system_messages System messages
 	 * @param Progress              $progress        Progress
@@ -75,7 +74,6 @@ class UpgradeService {
 		Translator $translator,
 		EventsService $events,
 		Config $config,
-		Logger $logger,
 		Mutex $mutex,
 		SystemMessagesService $system_messages,
 		Progress $progress
@@ -84,7 +82,6 @@ class UpgradeService {
 		$this->translator = $translator;
 		$this->events = $events;
 		$this->config = $config;
-		$this->logger = $logger;
 		$this->mutex = $mutex;
 		$this->system_messages = $system_messages;
 		$this->progress = $progress;
@@ -330,7 +327,7 @@ class UpgradeService {
 						$upgrade,
 						$result,
 						$this->progress,
-						$this->logger
+						$this->getLogger()
 					);
 					
 					$loop->loop($max_duration);

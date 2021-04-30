@@ -5,7 +5,6 @@ namespace Elgg\Database;
 use Elgg\Database;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Traits\Loggable;
-use Psr\Log\LoggerInterface;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -26,19 +25,12 @@ class Mutex {
 	private $db;
 
 	/**
-	 * @var \Elgg\Logger
-	 */
-	private $logger;
-
-	/**
 	 * Constructor
 	 *
-	 * @param Database        $db     Database
-	 * @param LoggerInterface $logger Logger
+	 * @param Database $db Database
 	 */
-	public function __construct(Database $db, LoggerInterface $logger) {
+	public function __construct(Database $db) {
 		$this->db = $db;
-		$this->logger = $logger;
 	}
 
 	/**
@@ -53,11 +45,11 @@ class Mutex {
 		if (!$this->isLocked($namespace)) {
 			// Lock it
 			$this->db->insertData("CREATE TABLE {$this->db->prefix}{$namespace}_lock (id INT)");
-			$this->logger->info("Locked mutex for $namespace");
+			$this->getLogger()->info("Locked mutex for $namespace");
 			return true;
 		}
 
-		$this->logger->warning("Cannot lock mutex for {$namespace}: already locked.");
+		$this->getLogger()->warning("Cannot lock mutex for {$namespace}: already locked.");
 		return false;
 	}
 
@@ -71,7 +63,7 @@ class Mutex {
 		$this->assertNamespace($namespace);
 
 		$this->db->deleteData("DROP TABLE {$this->db->prefix}{$namespace}_lock");
-		$this->logger->notice("Mutex unlocked for $namespace.");
+		$this->getLogger()->notice("Mutex unlocked for $namespace.");
 	}
 
 	/**

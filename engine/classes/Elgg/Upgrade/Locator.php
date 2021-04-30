@@ -6,8 +6,6 @@ use Elgg\Database\Plugins;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Includer;
 use Elgg\Project\Paths;
-use Elgg\Traits\Loggable;
-use Psr\Log\LoggerInterface;
 
 /**
  * Locates and registers both core and plugin upgrades
@@ -19,27 +17,18 @@ use Psr\Log\LoggerInterface;
  */
 class Locator {
 
-	use Loggable;
-
 	/**
 	 * @var Plugins $plugins
 	 */
 	private $plugins;
 
 	/**
-	 * @var LoggerInterface $logger
-	 */
-	private $logger;
-
-	/**
 	 * Constructor
 	 *
-	 * @param Plugins         $plugins Plugins
-	 * @param LoggerInterface $logger  Logger
+	 * @param Plugins $plugins Plugins
 	 */
-	public function __construct(Plugins $plugins, LoggerInterface $logger) {
+	public function __construct(Plugins $plugins) {
 		$this->plugins = $plugins;
-		$this->logger = $logger;
 	}
 
 	/**

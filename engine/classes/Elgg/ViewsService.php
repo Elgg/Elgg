@@ -8,7 +8,6 @@ use Elgg\Filesystem\Directory;
 use Elgg\Http\Request as HttpRequest;
 use Elgg\Project\Paths;
 use Elgg\Traits\Loggable;
-use Psr\Log\LoggerInterface;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -90,12 +89,10 @@ class ViewsService {
 	 * Constructor
 	 *
 	 * @param PluginHooksService $hooks   The hooks service
-	 * @param LoggerInterface    $logger  Logger
 	 * @param \Elgg\Http\Request $request Http Request
 	 */
-	public function __construct(PluginHooksService $hooks, LoggerInterface $logger, HttpRequest $request = null) {
+	public function __construct(PluginHooksService $hooks, HttpRequest $request = null) {
 		$this->hooks = $hooks;
-		$this->logger = $logger;
 		$this->request = $request;
 	}
 
@@ -232,14 +229,14 @@ class ViewsService {
 		$view_base = rtrim($view_base, '/\\');
 
 		if (!is_dir($folder) || !is_readable($folder)) {
-			$this->logger->notice("Unable to register views from the directory: {$folder}");
+			$this->getLogger()->notice("Unable to register views from the directory: {$folder}");
 			return false;
 		}
 
 		try {
 			$dir = new \DirectoryIterator($folder);
 		} catch (\Exception $e) {
-			$this->logger->error($e->getMessage());
+			$this->getLogger()->error($e->getMessage());
 			return false;
 		}
 
@@ -402,7 +399,7 @@ class ViewsService {
 		$view = self::canonicalizeViewName($view);
 
 		if (!is_string($view) || !is_string($viewtype)) {
-			$this->logger->notice("View and Viewtype in views must be a strings: $view");
+			$this->getLogger()->notice("View and Viewtype in views must be a strings: $view");
 
 			return '';
 		}
@@ -413,7 +410,7 @@ class ViewsService {
 
 		// check for extension deadloops
 		if (in_array($view, $extensions_tree)) {
-			$this->logger->error("View $view is detected as an extension of itself. This is not allowed");
+			$this->getLogger()->error("View $view is detected as an extension of itself. This is not allowed");
 
 			return '';
 		}
@@ -504,7 +501,7 @@ class ViewsService {
 		$file = $this->findViewFile($view, $viewtype);
 		if (!$file) {
 			if ($issue_missing_notice) {
-				$this->logger->notice("$viewtype/$view view does not exist.");
+				$this->getLogger()->notice("$viewtype/$view view does not exist.");
 			}
 
 			return false;
@@ -730,7 +727,7 @@ class ViewsService {
 		// but if they do, they have to be readable
 		$handle = opendir($view_dir);
 		if (!$handle) {
-			$this->logger->notice("Unable to register views from the directory: {$view_dir}");
+			$this->getLogger()->notice("Unable to register views from the directory: {$view_dir}");
 
 			return false;
 		}

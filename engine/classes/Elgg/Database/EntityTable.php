@@ -14,9 +14,8 @@ use Elgg\Exceptions\Database\UserFetchFailureException;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\ClassException;
 use Elgg\I18n\Translator;
-use Elgg\Logger;
+use Elgg\Traits\Loggable;
 use Elgg\Traits\TimeUsing;
-use Psr\Log\LoggerInterface;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -27,6 +26,7 @@ use Psr\Log\LoggerInterface;
  */
 class EntityTable {
 
+	use Loggable;
 	use TimeUsing;
 
 	/**
@@ -85,11 +85,6 @@ class EntityTable {
 	protected $translator;
 
 	/**
-	 * @var Logger
-	 */
-	protected $logger;
-
-	/**
 	 * Constructor
 	 *
 	 * @param Config               $config                 Config
@@ -100,7 +95,6 @@ class EntityTable {
 	 * @param EventsService        $events                 Events service
 	 * @param \ElggSession         $session                Session
 	 * @param Translator           $translator             Translator
-	 * @param LoggerInterface      $logger                 Logger
 	 */
 	public function __construct(
 		Config $config,
@@ -110,8 +104,7 @@ class EntityTable {
 		PrivateSettingsCache $private_settings_cache,
 		EventsService $events,
 		\ElggSession $session,
-		Translator $translator,
-		LoggerInterface $logger
+		Translator $translator
 	) {
 		$this->config = $config;
 		$this->db = $db;
@@ -122,7 +115,6 @@ class EntityTable {
 		$this->events = $events;
 		$this->session = $session;
 		$this->translator = $translator;
-		$this->logger = $logger;
 	}
 
 	/**
@@ -277,7 +269,7 @@ class EntityTable {
 
 		$class_name = $this->getEntityClass($row->type, $row->subtype);
 		if ($class_name && !class_exists($class_name)) {
-			$this->logger->error("Class '$class_name' was not found, missing plugin?");
+			$this->getLogger()->error("Class '$class_name' was not found, missing plugin?");
 			$class_name = '';
 		}
 

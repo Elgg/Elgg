@@ -7,7 +7,6 @@ use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Filesystem\MimeTypeService;
 use Elgg\Traits\Loggable;
 use Elgg\Traits\TimeUsing;
-use Psr\Log\LoggerInterface;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -57,7 +56,6 @@ class EntityIconService {
 	 *
 	 * @param Config             $config   Config
 	 * @param PluginHooksService $hooks    Hook registration service
-	 * @param LoggerInterface    $logger   Logger
 	 * @param EntityTable        $entities Entity table
 	 * @param UploadService      $uploads  Upload service
 	 * @param ImageService       $images   Image service
@@ -66,7 +64,6 @@ class EntityIconService {
 	public function __construct(
 		Config $config,
 		PluginHooksService $hooks,
-		LoggerInterface $logger,
 		EntityTable $entities,
 		UploadService $uploads,
 		ImageService $images,
@@ -74,7 +71,6 @@ class EntityIconService {
 	) {
 		$this->config = $config;
 		$this->hooks = $hooks;
-		$this->logger = $logger;
 		$this->entities = $entities;
 		$this->uploads = $uploads;
 		$this->images = $images;
@@ -202,7 +198,7 @@ class EntityIconService {
 
 		$type = (string) $type;
 		if (!strlen($type)) {
-			$this->logger->error('Icon type passed to ' . __METHOD__ . ' can not be empty');
+			$this->getLogger()->error('Icon type passed to ' . __METHOD__ . ' can not be empty');
 			return false;
 		}
 		
@@ -214,7 +210,7 @@ class EntityIconService {
 		], $file);
 		
 		if (!$file instanceof \ElggFile || !$file->exists() || $file->getSimpleType() !== 'image') {
-			$this->logger->error('Source file passed to ' . __METHOD__ . ' can not be resolved to a valid image');
+			$this->getLogger()->error('Source file passed to ' . __METHOD__ . ' can not be resolved to a valid image');
 			return false;
 		}
 		
@@ -316,7 +312,7 @@ class EntityIconService {
 	protected function generateIcon(\ElggEntity $entity, \ElggFile $file, $type = 'icon', $coords = [], $icon_size = '') {
 		
 		if (!$file->exists()) {
-			$this->logger->error('Trying to generate an icon from a non-existing file');
+			$this->getLogger()->error('Trying to generate an icon from a non-existing file');
 			return false;
 		}
 		
@@ -328,7 +324,7 @@ class EntityIconService {
 		$sizes = $this->getSizes($entity->getType(), $entity->getSubtype(), $type);
 		
 		if (!empty($icon_size) && !isset($sizes[$icon_size])) {
-			$this->logger->warning("The provided icon size '{$icon_size}' doesn't exist for icon type '{$type}'");
+			$this->getLogger()->warning("The provided icon size '{$icon_size}' doesn't exist for icon type '{$type}'");
 			return false;
 		}
 		
@@ -372,7 +368,7 @@ class EntityIconService {
 			$image_service->setLogger($this->logger);
 
 			if (!_elgg_services()->imageService->resize($source, $destination, $resize_params)) {
-				$this->logger->error("Failed to create {$size} icon from
+				$this->getLogger()->error("Failed to create {$size} icon from
 					{$file->getFilenameOnFilestore()} with coords [{$x1}, {$y1}],[{$x2}, {$y2}]");
 				return false;
 			}

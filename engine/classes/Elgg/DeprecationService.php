@@ -3,7 +3,6 @@
 namespace Elgg;
 
 use Elgg\Traits\Loggable;
-use Psr\Log\LoggerInterface;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -19,15 +18,6 @@ class DeprecationService {
 	use Loggable;
 
 	/**
-	 * Constructor
-	 *
-	 * @param LoggerInterface $logger Logger service
-	 */
-	public function __construct(LoggerInterface $logger) {
-		$this->logger = $logger;
-	}
-
-	/**
 	 * Sends a notice about deprecated use of a function, view, etc.
 	 *
 	 * @param string $msg         Message to log
@@ -36,7 +26,7 @@ class DeprecationService {
 	 * @return bool
 	 */
 	public function sendNotice($msg, $dep_version) {
-		$this->logger->warning("Deprecated in $dep_version: $msg");
+		$this->getLogger()->warning("Deprecated in $dep_version: $msg");
 
 		return true;
 	}

@@ -16,7 +16,6 @@ use Laminas\Mime\Message as MimeMessage;
 use Laminas\Mime\Exception\InvalidArgumentException;
 use Laminas\Mime\Part;
 use Laminas\Mime\Mime;
-use Psr\Log\LoggerInterface;
 use RuntimeException;
 
 /**
@@ -76,7 +75,6 @@ class EmailService {
 	 * @param ViewsService        $views          Views service
 	 * @param ImageFetcherService $image_fetcher  Image fetcher
 	 * @param CssCompiler         $css_compiler   Css compiler
-	 * @param LoggerInterface     $logger         Logger
 	 */
 	public function __construct(
 			Config $config,
@@ -85,8 +83,7 @@ class EmailService {
 			HtmlFormatter $html_formatter,
 			ViewsService $views,
 			ImageFetcherService $image_fetcher,
-			CssCompiler $css_compiler,
-			LoggerInterface $logger
+			CssCompiler $css_compiler
 		) {
 		$this->config = $config;
 		$this->hooks = $hooks;
@@ -95,7 +92,6 @@ class EmailService {
 		$this->views = $views;
 		$this->image_fetcher = $image_fetcher;
 		$this->css_compiler = $css_compiler;
-		$this->logger = $logger;
 	}
 
 	/**
@@ -167,7 +163,7 @@ class EmailService {
 		try {
 			$message = $this->setMessageBody($message, $email);
 		} catch (InvalidArgumentException $e) {
-			$this->logger->error($e->getMessage());
+			$this->getLogger()->error($e->getMessage());
 			
 			return false;
 		}
@@ -188,7 +184,7 @@ class EmailService {
 		try {
 			$this->mailer->send($message);
 		} catch (RuntimeException $e) {
-			$this->logger->error($e->getMessage());
+			$this->getLogger()->error($e->getMessage());
 
 			return false;
 		}

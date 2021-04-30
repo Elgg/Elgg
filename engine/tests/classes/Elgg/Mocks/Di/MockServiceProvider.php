@@ -39,7 +39,6 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 		$this->setFactory('db', function (MockServiceProvider $sp) {
 			$config = $sp->dbConfig;
 			$db = new \Elgg\Mocks\Database($config, $sp->queryCache);
-			$db->setLogger($sp->logger);
 
 			return $db;
 		});
@@ -53,8 +52,7 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 				$sp->privateSettingsCache,
 				$sp->events,
 				$sp->session,
-				$sp->translator,
-				$sp->logger
+				$sp->translator
 			);
 		});
 		
@@ -96,7 +94,7 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 		});
 
 		$this->setFactory('configTable', function (MockServiceProvider $sp) {
-			return new \Elgg\Mocks\Database\ConfigTable($sp->db, $sp->boot, $sp->logger);
+			return new \Elgg\Mocks\Database\ConfigTable($sp->db, $sp->boot);
 		});
 
 		$this->setFactory('mailer', function (MockServiceProvider $sp) {
@@ -139,7 +137,7 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 		});
 
 		$this->setFactory('mutex', function(MockServiceProvider $sp) {
-			return new \Elgg\Mocks\Database\Mutex($sp->db, $sp->logger);
+			return new \Elgg\Mocks\Database\Mutex($sp->db);
 		});
 		
 		$this->setFactory('hmacCacheTable', function(MockServiceProvider $sp) {

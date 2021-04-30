@@ -4,7 +4,7 @@ namespace Elgg\Database;
 
 use Elgg\BootService;
 use Elgg\Database;
-use Psr\Log\LoggerInterface;
+use Elgg\Traits\Loggable;
 
 /**
  * Manipulates values in the dbprefix_config table. Do not use to read/write $CONFIG.
@@ -15,7 +15,9 @@ use Psr\Log\LoggerInterface;
  * @since 1.10.0
  */
 class ConfigTable {
-		
+	
+	use Loggable;
+	
 	/**
 	 * @var Database
 	 */
@@ -27,25 +29,17 @@ class ConfigTable {
 	protected $boot;
 	
 	/**
-	 * @var \Elgg\Logger
-	 */
-	protected $logger;
-
-	/**
 	 * Constructor
 	 *
-	 * @param Database        $db     Database
-	 * @param BootService     $boot   BootService
-	 * @param LoggerInterface $logger Logger
+	 * @param Database    $db   Database
+	 * @param BootService $boot BootService
 	 */
 	public function __construct(
 		Database $db,
-		BootService $boot,
-		LoggerInterface $logger
+		BootService $boot
 	) {
 		$this->db = $db;
 		$this->boot = $boot;
-		$this->logger = $logger;
 	}
 
 	/**
@@ -90,7 +84,7 @@ class ConfigTable {
 	public function set($name, $value) {
 		// cannot store anything longer than 255 characters in db, so catch before we set
 		if (strlen($name) > 255) {
-			$this->logger->error("The name length for configuration variables cannot be greater than 255");
+			$this->getLogger()->error("The name length for configuration variables cannot be greater than 255");
 			return false;
 		}
 	

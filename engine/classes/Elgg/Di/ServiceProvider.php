@@ -18,7 +18,6 @@ use Elgg\Groups\Tools;
 use Elgg\Invoker;
 use Elgg\Logger;
 use Elgg\Project\Paths;
-use Elgg\Router\RouteRegistrationService;
 use Elgg\Security\Csrf;
 use Laminas\Mail\Transport\TransportInterface as Mailer;
 use Elgg\I18n\LocaleService;
@@ -286,11 +285,11 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('configTable', function(ServiceProvider $sp) {
-			return new \Elgg\Database\ConfigTable($sp->db, $sp->boot, $sp->logger);
+			return new \Elgg\Database\ConfigTable($sp->db, $sp->boot);
 		});
 
 		$this->setFactory('cron', function(ServiceProvider $sp) {
-			return new Cron($sp->hooks, $sp->logger, $sp->events);
+			return new Cron($sp->hooks, $sp->events);
 		});
 
 		$this->setClassName('crypto', \ElggCrypto::class);
@@ -301,7 +300,6 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('db', function (ServiceProvider $sp) {
 			$db = new \Elgg\Database($sp->dbConfig, $sp->queryCache);
-			$db->setLogger($sp->logger);
 
 			if ($sp->config->profiling_sql) {
 				$db->setTimer($sp->timer);
@@ -333,9 +331,7 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\Email\DelayedEmailService($sp->delayedEmailQueueTable, $sp->emails, $sp->views, $sp->translator, $sp->invoker);
 		});
 
-		$this->setFactory('deprecation', function(ServiceProvider $sp) {
-			return new \Elgg\DeprecationService($sp->logger);
-		});
+		$this->setClassName('deprecation', \Elgg\DeprecationService::class);
 
 		$this->setFactory('dic', function (ServiceProvider $sp) {
 			$definitions = $sp->dic_loader->getDefinitions();
@@ -357,7 +353,15 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('emails', function(ServiceProvider $sp) {
-			return new \Elgg\EmailService($sp->config, $sp->hooks, $sp->mailer, $sp->html_formatter, $sp->views, $sp->imageFetcher, $sp->cssCompiler, $sp->logger);
+			return new \Elgg\EmailService(
+				$sp->config,
+				$sp->hooks,
+				$sp->mailer,
+				$sp->html_formatter,
+				$sp->views,
+				$sp->imageFetcher,
+				$sp->cssCompiler
+			);
 		});
 
 		$this->setFactory('entityCache', function(ServiceProvider $sp) {
@@ -377,8 +381,7 @@ class ServiceProvider extends DiContainer {
 				$sp->privateSettingsCache,
 				$sp->events,
 				$sp->session,
-				$sp->translator,
-				$sp->logger
+				$sp->translator
 			);
 		});
 
@@ -403,7 +406,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('forms', function(ServiceProvider $sp) {
-			return new \Elgg\FormsService($sp->views, $sp->logger);
+			return new \Elgg\FormsService($sp->views);
 		});
 
 		$this->setFactory('gatekeeper', function(ServiceProvider $sp) {
@@ -437,7 +440,6 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('html_formatter', function(ServiceProvider $sp) {
 			return new \Elgg\Views\HtmlFormatter(
-				$sp->logger,
 				$sp->views,
 				$sp->hooks,
 				$sp->autoP
@@ -452,7 +454,6 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\EntityIconService(
 				$sp->config,
 				$sp->hooks,
-				$sp->logger,
 				$sp->entityTable,
 				$sp->uploads,
 				$sp->imageService,
@@ -537,8 +538,7 @@ class ServiceProvider extends DiContainer {
 		
 		$this->setFactory('mutex', function(ServiceProvider $sp) {
 			return new \Elgg\Database\Mutex(
-				$sp->db,
-				$sp->logger
+				$sp->db
 			);
 		});
 
@@ -619,7 +619,6 @@ class ServiceProvider extends DiContainer {
 			$config_disabled = $sp->config->db_disable_query_cache === true;
 						
 			$cache = new \Elgg\Cache\QueryCache($cache_size, $config_disabled);
-			$cache->setLogger($sp->logger);
 			
 			return $cache;
 		});
@@ -660,9 +659,8 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('routes', function(ServiceProvider $sp) {
-			return new RouteRegistrationService(
+			return new \Elgg\Router\RouteRegistrationService(
 				$sp->hooks,
-				$sp->logger,
 				$sp->routeCollection,
 				$sp->urlGenerator
 			);
@@ -756,7 +754,6 @@ class ServiceProvider extends DiContainer {
 				$sp->translator,
 				$sp->events,
 				$sp->config,
-				$sp->logger,
 				$sp->mutex,
 				$sp->systemMessages,
 				$sp->cli_progress
@@ -797,13 +794,12 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('upgradeLocator', function(ServiceProvider $sp) {
 			return new \Elgg\Upgrade\Locator(
-				$sp->plugins,
-				$sp->logger
+				$sp->plugins
 			);
 		});
 
 		$this->setFactory('views', function(ServiceProvider $sp) {
-			return new \Elgg\ViewsService($sp->hooks, $sp->logger, $sp->request);
+			return new \Elgg\ViewsService($sp->hooks, $sp->request);
 		});
 
 		$this->setFactory('viewCacher', function(ServiceProvider $sp) {
