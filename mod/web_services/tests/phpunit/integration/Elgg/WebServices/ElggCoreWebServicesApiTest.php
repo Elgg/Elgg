@@ -346,95 +346,45 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 		api_auth_key();
 	}
 
-	public function testSerialiseParametersCasting() {
-		$types = [
-			'int' => [
-				[
-					"0",
-					0
-				],
-				[
-					"1",
-					1
-				],
-				[
-					" 1",
-					1
-				],
-			],
-			'bool' => [
-				[
-					"0",
-					false
-				],
-				[
-					" 1",
-					true
-				],
+	/**
+	 * @dataProvider serialiseParametersCastingProvider
+	 */
+	public function testSerialiseParametersCasting($type, $input, $expected) {
+		set_input('param', $input);
+		$this->registerFunction(false, false, [
+			'param' => ['type' => $type],
+		]);
 
-				// BC with 2.0
-				[
-					" false",
-					false
-				],
-				[
-					"true",
-					false
-				],
-			],
-			'float' => [
-				[
-					"1.65",
-					1.65
-				],
-				[
-					" 1.65 ",
-					1.65
-				],
-			],
-			'array' => [
-				[
-					[
-						"2 ",
-						" bar"
-					],
-					[
-						"2 ",
-						" bar"
-					]
-				],
-				[
-					["' \""],
-					["' \\\""]
-				],
-			],
-			'string' => [
-				[
-					" foo ",
-					"foo"
-				],
-			],
+		$serialized = serialise_parameters('test', [
+			// get_input() necessary because it does recursive trimming
+			'param' => get_input('param'),
+		]);
+
+		$serialized = trim($serialized, ", ");
+
+		// evaled
+		$value = eval("return $serialized;");
+		$this->assertEquals($expected, $value);
+	}
+	
+	public function serialiseParametersCastingProvider() {
+		return [
+			['int', '0', 0],
+			['int', '1', 1],
+			['int', ' 1', 1],
+			['bool', '0', false],
+			['bool', 0, false],
+			['bool', ' 0', false],
+			['bool', ' 1', true],
+			['bool', ' false', false],
+			['bool', 'true', true],
+			['bool', 'foo', true],
+			['float', '1.65', 1.65],
+			['float', ' 1.56', 1.56],
+			['array', ['2 ', ' bar'], ['2 ', ' bar']],
+			['array', ["' \""], ["' \\\""]],
+			['string', ' foo ', 'foo'],
 		];
-
-		foreach ($types as $type => $tests) {
-			foreach ($tests as $test) {
-				set_input('param', $test[0]);
-				$this->registerFunction(false, false, [
-					'param' => ['type' => $type],
-				]);
-
-				$serialized = serialise_parameters('test', [
-					// get_input() necessary because it does recursive trimming
-					'param' => get_input('param'),
-				]);
-
-				$serialized = trim($serialized, ", ");
-
-				// evaled
-				$value = eval("return $serialized;");
-				$this->assertEquals($test[1], $value);
-			}
-		}
 	}
 
 	public function testExecuteMethod() {

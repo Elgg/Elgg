@@ -108,7 +108,7 @@ Values submitted with the API request for each parameter should match the declar
 Recognized parameter types are:	
 
  - ``integer`` (or ``int``)
- - ``boolean`` (or ``bool``)
+ - ``boolean`` (or ``bool``) ``'false'``, ``0`` and ``'0'`` will evaluate to ``false`` the rest will evaluate to ``true``
  - ``string``
  - ``float``
  - ``array``
