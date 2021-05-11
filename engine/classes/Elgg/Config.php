@@ -539,9 +539,8 @@ class Config {
 		}
 
 		if (strlen($name) > 255) {
-			if ($this->logger) {
-				$this->logger->error("The name length for configuration variables cannot be greater than 255");
-			}
+			$this->getLogger()->error("The name length for configuration variables cannot be greater than 255");
+
 			return false;
 		}
 
@@ -582,9 +581,8 @@ class Config {
 			return false;
 		}
 
-		if ($this->logger) {
-			$this->logger->warning("The property $name is read-only.");
-		}
+		$this->getLogger()->warning("The property {$name} is read-only.");
+
 		return true;
 	}
 

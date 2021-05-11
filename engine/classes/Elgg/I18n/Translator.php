@@ -4,6 +4,7 @@ namespace Elgg\I18n;
 
 use Elgg\Config;
 use Elgg\Includer;
+use Elgg\Traits\Loggable;
 
 /**
  * Translator
@@ -14,6 +15,8 @@ use Elgg\Includer;
  */
 class Translator {
 
+	use Loggable;
+	
 	/**
 	 * @var Config
 	 */
@@ -102,9 +105,7 @@ class Translator {
 	 */
 	public function translate($message_key, array $args = [], $language = "") {
 		if (!is_string($message_key) || strlen($message_key) < 1) {
-			_elgg_services()->logger->warning(
-				'$message_key needs to be a string in ' . __METHOD__ . '(), ' . gettype($message_key) . ' provided'
-			);
+			$this->getLogger()->warning('$message_key needs to be a string in ' . __METHOD__ . '(), ' . gettype($message_key) . ' provided');
 			return '';
 		}
 
@@ -132,7 +133,6 @@ class Translator {
 		$langs = array_intersect_key($langs, array_flip($this->getAllowedLanguages()));
 
 		// try to translate
-		$logger = _elgg_services()->logger;
 		$string = $message_key;
 		foreach (array_keys($langs) as $try_lang) {
 			$this->ensureTranslationsLoaded($try_lang);
@@ -155,9 +155,9 @@ class Translator {
 				);
 				
 				if ($try_lang === 'en') {
-					$logger->notice($message);
+					$this->getLogger()->notice($message);
 				} else {
-					$logger->info($message);
+					$this->getLogger()->info($message);
 				}
 			}
 		}
@@ -343,14 +343,14 @@ class Translator {
 		
 		// don't need to register translations as the folder is missing
 		if (!is_dir($path)) {
-			_elgg_services()->logger->info("No translations could be loaded from: $path");
+			$this->getLogger()->info("No translations could be loaded from: {$path}");
 			return true;
 		}
 
 		// Make a note of this path just in case we need to register this language later
 		$this->registerLanguagePath($path);
 
-		_elgg_services()->logger->info("Translations loaded from: $path");
+		$this->getLogger()->info("Translations loaded from: {$path}");
 
 		if ($language) {
 			$load_language_files = ["$language.php"];
@@ -381,7 +381,7 @@ class Translator {
 			}
 			closedir($handle);
 		} else {
-			_elgg_services()->logger->error("Could not open language path: $path");
+			$this->getLogger()->error("Could not open language path: {$path}");
 			$return = false;
 		}
 
@@ -404,7 +404,7 @@ class Translator {
 			return true;
 		}
 		
-		_elgg_services()->logger->warning("Language file did not return an array: $path");
+		$this->getLogger()->warning("Language file did not return an array: {$path}");
 		
 		return false;
 	}

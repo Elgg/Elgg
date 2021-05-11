@@ -365,7 +365,7 @@ class EntityIconService {
 			$resize_params = array_merge($opts, $coords);
 
 			$image_service = _elgg_services()->imageService;
-			$image_service->setLogger($this->logger);
+			$image_service->setLogger($this->getLogger());
 
 			if (!_elgg_services()->imageService->resize($source, $destination, $resize_params)) {
 				$this->getLogger()->error("Failed to create {$size} icon from

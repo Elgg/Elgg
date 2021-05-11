@@ -4,6 +4,7 @@ namespace Elgg\Database\Clauses;
 
 use Doctrine\DBAL\Query\Expression\CompositeExpression;
 use Elgg\Database\QueryBuilder;
+use Elgg\Traits\Loggable;
 
 /**
  * Interface that allows resolving statements and/or extending query builder
@@ -12,6 +13,8 @@ use Elgg\Database\QueryBuilder;
  */
 abstract class Clause {
 
+	use Loggable;
+	
 	/**
 	 * Build an expression and/or apply it to an instance of query builder
 	 *
@@ -48,8 +51,7 @@ abstract class Clause {
 		$callable = $service->resolveCallable($callback);
 		if (!is_callable($callable)) {
 			$description = static::class . ' (QueryBuilder, table_alias)';
-			$msg = "Handler for {$description} is not callable: " . $service->describeCallable($callback);
-			_elgg_services()->logger->warning($msg);
+			$this->getLogger()->warning("Handler for {$description} is not callable: " . $service->describeCallable($callback));
 			
 			return false;
 		}
@@ -73,8 +75,7 @@ abstract class Clause {
 		$callable = $service->resolveCallable($callback);
 		if (!is_callable($callable)) {
 			$description = static::class . ' (QueryBuilder, joined_alias, table_alias)';
-			$msg = "Handler for {$description} is not callable: " . $service->describeCallable($callback);
-			_elgg_services()->logger->warning($msg);
+			$this->getLogger()->warning("Handler for {$description} is not callable: " . $service->describeCallable($callback));
 			
 			return false;
 		}
