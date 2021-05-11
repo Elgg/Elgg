@@ -163,11 +163,6 @@ return [
 				'Elgg\Groups\Relationships::removeGroupNotificationSubscriptions' => [],
 			],
 		],
-		'init' => [
-			'system' => [
-				'Elgg\Groups\Group::setupProfileFields' => ['priority' => 10000],
-			],
-		],
 		'join' => [
 			'group' => [
 				'Elgg\Groups\Group::joinGroup' => [],
@@ -199,6 +194,11 @@ return [
 			'access' => [
 				'Elgg\Groups\Access::getDefaultAccess' => [],
 				'Elgg\Groups\Access::overrideDefaultAccess' => [],
+			],
+		],
+		'fields' => [
+			'group:group' => [
+				\Elgg\Groups\FieldsHandler::class => [],
 			],
 		],
 		'gatekeeper' => [

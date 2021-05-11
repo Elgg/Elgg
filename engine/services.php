@@ -8,6 +8,7 @@ return [
 	'csrf' => function(RequestedEntry $entry) { return _elgg_services()->{$entry->getName()}; },
 	'db' => function(RequestedEntry $entry) { return _elgg_services()->publicDb; },
 	'events' => function(RequestedEntry $entry) { return _elgg_services()->{$entry->getName()}; },
+	'fields' => function(RequestedEntry $entry) { return _elgg_services()->{$entry->getName()}; },
 	'gatekeeper' => function(RequestedEntry $entry) { return _elgg_services()->{$entry->getName()}; },
 	'group_tools' => function(RequestedEntry $entry) { return _elgg_services()->{$entry->getName()}; },
 	'html_formatter' => function(RequestedEntry $entry) { return _elgg_services()->{$entry->getName()}; },

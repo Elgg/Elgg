@@ -47,13 +47,13 @@ return [
 				\Elgg\Widgets\CreateDefaultWidgetsHandler::class => [],
 			],
 		],
-		'ready' => [
-			'system' => [
-				'Elgg\Profile\ProfileFields::setup' => ['priority' => 1],
-			],
-		],
 	],
 	'hooks' => [
+		'fields' => [
+			'user:user' => [
+				\Elgg\Profile\FieldsHandler::class => [],
+			],
+		],
 		'get_list' => [
 			'default_widgets' => [
 				'Elgg\Profile\Widgets::getDefaultWidgetsList' => [],

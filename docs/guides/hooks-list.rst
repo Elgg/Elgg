@@ -1002,6 +1002,21 @@ Other
 	``getUrl()`` method of ElggEntity. This hook should be used when it's not possible to subclass
 	(like if you want to extend a bundled plugin without overriding many views).
 
+**fields, <entity_type>:<entity_subtype>**
+	Return an array of fields usable for ``elgg_view_field()``. The result should be returned as an array of fields. 
+	It is required to provide ``name`` and ``#type`` for each field.
+
+.. code-block:: php
+
+	$result = [];
+	
+	$result[] = [
+		'#type' => 'longtext',
+		'name' => 'description',
+	];
+	
+	return $result;
+
 **to:object, <entity_type|metadata|annotation|relationship|river_item>**
 	Converts the entity ``$params['entity']`` to a StdClass object. This is used mostly for exporting
 	entity properties for portable data formats like JSON and XML.
@@ -1034,27 +1049,6 @@ Other
 
 **relationship:url, <relationship_name>**
 	Filter the URL for the relationship object ``$params['relationship']``.
-
-**profile:fields, group**
-	Filter an array of profile fields. The result should be returned as an array in the format
-	``name => input view name``. For example:
-
-.. code-block:: php
-
-	array(
-		'about' => 'longtext'
-	);
-
-
-**profile:fields, profile**
-	Filter an array of profile fields. The result should be returned as an array in the format
-	``name => input view name``. For example:
-
-.. code-block:: php
-
-	array(
-		'about' => 'longtext'
-	);
 
 **widget_settings, <widget_handler>**
 	Triggered when saving a widget settings ``$params['params']`` for widget ``$params['widget']``.

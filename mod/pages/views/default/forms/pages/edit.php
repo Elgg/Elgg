@@ -3,7 +3,7 @@
  * Page edit form body
  */
 
-$fields = elgg_get_config('pages');
+$fields = elgg()->fields->get('object', 'page');
 if (empty($fields)) {
 	return;
 }
@@ -16,19 +16,10 @@ if ($entity instanceof ElggPage && $entity->getOwnerEntity()) {
 	$can_change_access = $entity->getOwnerEntity()->canEdit();
 }
 
-foreach ($fields as $name => $type) {
-	$field = [
-		'name' => $name,
-		'value' => $vars[$name],
-		'#type' => $type,
-		'#label' => elgg_echo("pages:$name"),
-	];
-
+foreach ($fields as $field) {
+	$name = $field['name'];
+	
 	switch ($name) {
-		case 'title' :
-			$field['required'] = true;
-			break;
-
 		case 'access_id' :
 		case 'write_access_id' :
 			if (!$can_change_access) {
@@ -37,26 +28,20 @@ foreach ($fields as $name => $type) {
 			}
 
 			$field['entity'] = $entity;
-			$field['entity_type'] = 'object';
-			$field['entity_subtype'] = 'page';
-
-			if ($name === 'write_access_id') {
-				$field['purpose'] = 'write';
-				// no access change warning for write access input
-				$field['entity_allows_comments'] = false;
-			}
 			break;
 
 		case 'parent_guid' :
-			if ($parent_guid) {
-				$field['entity'] = $entity;
-			} else {
+			if (empty($parent_guid)) {
 				// skip field if there is no parent_guid
 				continue(2);
 			}
+			
+			$field['entity'] = $entity;
 			break;
 	}
 
+	$field['value'] = elgg_extract($name, $vars);
+	
 	echo elgg_view_field($field);
 }
 

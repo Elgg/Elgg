@@ -4,8 +4,6 @@
  *
  */
 
-$vars['fields'] = elgg_get_config('profile_fields');
-
 $details = elgg_view('profile/fields', $vars);
 if (!$details) {
 	return;

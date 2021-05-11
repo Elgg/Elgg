@@ -9,7 +9,6 @@ return [
 		'name' => 'Pages',
 		'activate_on_install' => true,
 	],
-	'bootstrap' => \Elgg\Pages\Bootstrap::class,
 	'entities' => [
 		[
 			'type' => 'object',
@@ -99,6 +98,11 @@ return [
 		'extender:url' => [
 			'annotation' => [
 				'Elgg\Pages\Extender::setRevisionUrl' => [],
+			],
+		],
+		'fields' => [
+			'object:page' => [
+				\Elgg\Pages\FieldsHandler::class => [],
 			],
 		],
 		'likes:is_likable' => [

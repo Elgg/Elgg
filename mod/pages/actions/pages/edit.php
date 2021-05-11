@@ -3,15 +3,17 @@
  * Create or edit a page
  */
 
-$variables = elgg_get_config('pages');
+$variables = elgg()->fields->get('object', 'page');
 $input = [];
-foreach ($variables as $name => $type) {
-	if ($name == 'title') {
+foreach ($variables as $field) {
+	$name = $field['name'];
+	
+	if ($name === 'title') {
 		$input[$name] = elgg_get_title_input();
 	} else {
 		$input[$name] = get_input($name);
 	}
-	if ($type == 'tags') {
+	if ($field['#type'] === 'tags') {
 		$input[$name] = string_to_tag_array($input[$name]);
 	}
 }

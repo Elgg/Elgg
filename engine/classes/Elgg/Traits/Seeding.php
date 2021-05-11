@@ -493,8 +493,13 @@ trait Seeding {
 		}
 
 		if ($allow_create) {
+			$profile_fields_config = elgg()->fields->get('user', 'user');
+			$profile_fields = [];
+			foreach ($profile_fields_config as $field) {
+				$profile_fields[$field['name']] = $field['#type'];
+			}
 			return $this->createUser([], [], [
-				'profile_fields' => (array) elgg_get_config('profile_fields'),
+				'profile_fields' => $profile_fields,
 			]);
 		}
 
@@ -530,13 +535,19 @@ trait Seeding {
 		}
 
 		if ($allow_create) {
+			$profile_fields_config = elgg()->fields->get('group', 'group');
+			$profile_fields = [];
+			foreach ($profile_fields_config as $field) {
+				$profile_fields[$field['name']] = $field['#type'];
+			}
+		
 			return $this->createGroup([
 				'access_id' => $this->getRandomGroupVisibility(),
 			], [
 				'content_access_mode' => $this->getRandomGroupContentAccessMode(),
 				'membership' => $this->getRandomGroupMembership(),
 			], [
-				'profile_fields' => (array) elgg_get_config('group'),
+				'profile_fields' => $profile_fields,
 				'group_tool_options' => elgg()->group_tools->all(),
 			]);
 		}

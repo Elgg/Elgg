@@ -1170,7 +1170,14 @@ class SearchServiceTest extends UnitTestCase {
 		]);
 
 		$this->assertEquals(['username', 'name', 'description'], $options['fields']['metadata']);
-		$this->assertEquals((array) elgg_get_config('profile_fields'), $options['fields']['annotations']);
+		
+		$fields = elgg()->fields->get('user', 'user');
+		$profile_fields = [];
+		foreach ($fields as $field) {
+			$profile_fields[] = "profile:{$field['name']}";
+		}
+		
+		$this->assertEquals($profile_fields, $options['fields']['annotations']);
 
 	}
 

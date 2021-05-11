@@ -29,10 +29,16 @@ class Users extends Seed {
 
 		$this->advance($this->getCount());
 
+		$profile_fields_config = elgg()->fields->get('user', 'user');
+		$profile_fields = [];
+		foreach ($profile_fields_config as $field) {
+			$profile_fields[$field['name']] = $field['#type'];
+		}
+		
 		while ($this->getCount() < $this->limit) {
 			if ($this->create) {
 				$user = $this->createUser([], [], [
-					'profile_fields' => (array) elgg_get_config('profile_fields'),
+					'profile_fields' => $profile_fields,
 				]);
 			} else {
 				$user = $this->getRandomUser($exclude);
