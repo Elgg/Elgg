@@ -56,8 +56,8 @@ class PluginHooksService extends HooksRegistrationService {
 			if (in_array($name, ['forward', 'action', 'route'])) {
 				// assume the handler is going to exit the request...
 				$exit_warning = function () use ($name, $type, $handler, $handlers) {
-					_elgg_services()->deprecation->sendNotice(
-						"'$name', '$type' plugin hook should not be used to serve a response. Instead return an "
+					$this->logDeprecatedMessage(
+						"'{$name}', '{$type}' plugin hook should not be used to serve a response. Instead return an "
 						. "appropriate ResponseBuilder instance from an action or page handler. Do not terminate "
 						. "code execution with exit() or die() in {$handlers->describeCallable($handler)}",
 						'2.3'

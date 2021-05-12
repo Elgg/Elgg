@@ -401,6 +401,7 @@ Lib function parameters
 * ``elgg_annotation_exists()`` now requires a ``int`` for ``$entity_guid``, a ``string`` for ``$name`` and ``int`` for ``$owner_guid``
 * ``elgg_delete_admin_notice()`` now requires a ``string`` for ``$id``
 * ``elgg_delete_annotation_by_id()`` now requires a ``int`` for ``$id``
+* ``elgg_deprecated_notice()`` now requires a ``string`` for ``$msg`` and ``$dep_version``
 * ``elgg_error_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_get_access_collections()`` now requires an ``array`` for ``$options``
 * ``elgg_get_annotation_from_id()`` now requires an ``int`` for ``$id``
