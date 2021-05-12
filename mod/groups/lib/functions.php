@@ -132,12 +132,9 @@ function groups_prepare_form_vars($group = null) {
 	];
 
 	// handle customizable profile fields
-	$fields = elgg_get_config('group');
-
-	if ($fields) {
-		foreach ($fields as $name => $type) {
-			$values[$name] = '';
-		}
+	$fields = elgg()->fields->get('group', 'group');
+	foreach ($fields as $field) {
+		$values[$field['name']] = '';
 	}
 
 	// get current group settings

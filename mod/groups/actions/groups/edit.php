@@ -10,7 +10,11 @@ elgg_make_sticky_form('groups');
 
 // Get group fields
 $input = [];
-foreach (elgg_get_config('group') as $shortname => $valuetype) {
+
+$fields = elgg()->fields->get('group', 'group');
+foreach ($fields as $field) {
+	$shortname = $field['name'];
+	
 	$value = get_input($shortname);
 
 	if ($value === null) {
@@ -29,7 +33,7 @@ foreach (elgg_get_config('group') as $shortname => $valuetype) {
 		$input[$shortname] = elgg_html_decode($input[$shortname]);
 	}
 
-	if ($valuetype == 'tags') {
+	if ($field['#type'] == 'tags') {
 		$input[$shortname] = string_to_tag_array($input[$shortname]);
 	}
 }

@@ -27,6 +27,12 @@ class Groups extends Seed {
 
 		$exclude = [];
 
+		$profile_fields_config = elgg()->fields->get('group', 'group');
+		$profile_fields = [];
+		foreach ($profile_fields_config as $field) {
+			$profile_fields[$field['name']] = $field['#type'];
+		}
+		
 		while ($this->getCount() < $this->limit) {
 			if ($this->create) {
 				$group = $this->createGroup([
@@ -35,7 +41,7 @@ class Groups extends Seed {
 					'content_access_mode' => $this->getRandomGroupContentAccessMode(),
 					'membership' => $this->getRandomGroupMembership(),
 				], [
-					'profile_fields' => (array) elgg_get_config('group'),
+					'profile_fields' => $profile_fields,
 					'group_tool_options' => elgg()->group_tools->all(),
 				]);
 			} else {

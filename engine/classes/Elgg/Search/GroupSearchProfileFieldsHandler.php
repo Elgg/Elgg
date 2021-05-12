@@ -20,7 +20,6 @@ class GroupSearchProfileFieldsHandler {
 	 * @return array
 	 */
 	public function __invoke(Hook $hook) {
-
 		$value = (array) $hook->getValue();
 
 		$defaults = [
@@ -29,9 +28,10 @@ class GroupSearchProfileFieldsHandler {
 
 		$value = array_merge($defaults, $value);
 
-		$profile_fields = array_keys((array) elgg_get_config('group'));
-
-		$value['metadata'] = array_merge($value['metadata'], $profile_fields);
+		$profile_fields = elgg()->fields->get('group', 'group');
+		foreach ($profile_fields as $field) {
+			$value['metadata'][] = $field['name'];
+		}
 
 		return $value;
 	}

@@ -22,56 +22,57 @@ echo elgg_view_field([
 
 $sticky_values = elgg_get_sticky_values('profile:edit');
 
-$profile_fields = elgg_get_config('profile_fields');
-if (is_array($profile_fields) && count($profile_fields) > 0) {
-	foreach ($profile_fields as $shortname => $valtype) {
-		$annotations = $entity->getAnnotations([
-			'annotation_names' => "profile:$shortname",
-			'limit' => false,
-		]);
-		$access_id = ACCESS_DEFAULT;
-		if ($annotations) {
-			$value = '';
-			foreach ($annotations as $annotation) {
-				if (!empty($value)) {
-					$value .= ', ';
-				}
-				$value .= $annotation->value;
-				$access_id = $annotation->access_id;
+$profile_fields = elgg()->fields->get('user', 'user');
+foreach ($profile_fields as $field) {
+	$shortname = $field['name'];
+	$valtype = $field['#type'];
+	
+	$annotations = $entity->getAnnotations([
+		'annotation_names' => "profile:$shortname",
+		'limit' => false,
+	]);
+	
+	$access_id = ACCESS_DEFAULT;
+	$value = '';
+	
+	if ($annotations) {
+		foreach ($annotations as $annotation) {
+			if (!empty($value)) {
+				$value .= ', ';
 			}
-		} else {
-			$value = '';
+			$value .= $annotation->value;
+			$access_id = $annotation->access_id;
 		}
-
-		// sticky form values take precedence over saved ones
-		if (isset($sticky_values[$shortname])) {
-			$value = $sticky_values[$shortname];
-		}
-		if (isset($sticky_values['accesslevel'][$shortname])) {
-			$access_id = $sticky_values['accesslevel'][$shortname];
-		}
-
-		$id = "profile-$shortname";
-		$input = elgg_view("input/$valtype", [
-			'name' => $shortname,
-			'value' => $value,
-			'id' => $id,
-		]);
-		$access_input = elgg_view('input/access', [
-			'name' => "accesslevel[$shortname]",
-			'value' => $access_id,
-		]);
-		
-		echo elgg_view('elements/forms/field', [
-			'input' => elgg_format_element('div', [
-					'class' => 'elgg-field-input',
-				], $input . $access_input),
-			'label' => elgg_view('elements/forms/label', [
-				'label' => elgg_echo("profile:$shortname"),
-				'id' => $id,
-			])
-		]);
 	}
+
+	// sticky form values take precedence over saved ones
+	if (isset($sticky_values[$shortname])) {
+		$value = $sticky_values[$shortname];
+	}
+	if (isset($sticky_values['accesslevel'][$shortname])) {
+		$access_id = $sticky_values['accesslevel'][$shortname];
+	}
+
+	$id = "profile-{$shortname}";
+	$input = elgg_view("input/{$valtype}", [
+		'name' => $shortname,
+		'value' => $value,
+		'id' => $id,
+	]);
+	$access_input = elgg_view('input/access', [
+		'name' => "accesslevel[{$shortname}]",
+		'value' => $access_id,
+	]);
+	
+	echo elgg_view('elements/forms/field', [
+		'input' => elgg_format_element('div', [
+				'class' => 'elgg-field-input',
+			], $input . $access_input),
+		'label' => elgg_view('elements/forms/label', [
+			'label' => $field['#label'],
+			'id' => $id,
+		])
+	]);
 }
 
 elgg_clear_sticky_form('profile:edit');

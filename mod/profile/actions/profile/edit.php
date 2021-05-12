@@ -22,8 +22,11 @@ if (!is_array($accesslevel)) {
 	$accesslevel = [];
 }
 
-$profile_fields = elgg_get_config('profile_fields');
-foreach ($profile_fields as $shortname => $valuetype) {
+$profile_fields = elgg()->fields->get('user', 'user');
+foreach ($profile_fields as $field) {
+	$shortname = $field['name'];
+	$valuetype = $field['#type'];
+	
 	$value = get_input($shortname);
 	
 	if ($value === null) {

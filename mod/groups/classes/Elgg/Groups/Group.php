@@ -9,30 +9,7 @@ namespace Elgg\Groups;
  * @internal
  */
 class Group {
-	
-	/**
-	 * This function loads a set of default fields into the profile, then triggers
-	 * a hook letting other plugins to edit add and delete fields.
-	 *
-	 * Note: This is a system:init event triggered function and is run at a super
-	 * low priority to guarantee that it is called after all other plugins have
-	 * initialized.
-	 *
-	 * @return void
-	 */
-	public static function setupProfileFields() {
-	
-		$profile_defaults = [
-			'description' => 'longtext',
-			'briefdescription' => 'text',
-			'interests' => 'tags',
-		];
-	
-		$profile_defaults = elgg_trigger_plugin_hook('profile:fields', 'group', null, $profile_defaults);
-	
-		elgg_set_config('group', $profile_defaults);
-	}
-	
+
 	/**
 	 * Groups created so create an access list for it
 	 *

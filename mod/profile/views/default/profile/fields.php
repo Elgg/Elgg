@@ -2,8 +2,17 @@
 /**
  * @uses $vars['entity']       The user entity
  * @uses $vars['microformats'] Mapping of fieldnames to microformats
- * @uses $vars['fields']       Array of profile fields to show
  */
+
+$user = elgg_extract('entity', $vars);
+if (!$user instanceof \ElggUser) {
+	return;
+}
+
+$fields = elgg()->fields->get('user', 'user');
+if (empty($fields)) {
+	return;
+}
 
 $microformats = [
 	'mobile' => 'tel p-tel',
@@ -13,26 +22,11 @@ $microformats = [
 ];
 $microformats = array_merge($microformats, (array) elgg_extract('microformats', $vars, []));
 
-$user = elgg_extract('entity', $vars);
-if (!($user instanceof ElggUser)) {
-	return;
-}
-
-$fields = (array) elgg_extract('fields', $vars, []);
-if (empty($fields)) {
-	return;
-}
-
-// move description to the bottom of the list
-if (isset($fields['description'])) {
-	$temp = $fields['description'];
-	unset($fields['description']);
-	$fields['description'] = $temp;
-}
-
 $output = '';
-
-foreach ($fields as $shortname => $valtype) {
+foreach ($fields as $field) {
+	$shortname = $field['name'];
+	$valtype = $field['#type'];
+	
 	$value = $user->getProfileData($shortname);
 	if (elgg_is_empty($value)) {
 		continue;
@@ -46,7 +40,7 @@ foreach ($fields as $shortname => $valtype) {
 	$class = elgg_extract($shortname, $microformats, '');
 
 	$output .= elgg_view('object/elements/field', [
-		'label' => elgg_echo("profile:{$shortname}"),
+		'label' => elgg_extract('#label', $field),
 		'value' => elgg_format_element('span', [
 			'class' => $class,
 		], elgg_view("output/{$valtype}", [
@@ -56,6 +50,8 @@ foreach ($fields as $shortname => $valtype) {
 	]);
 }
 
-if ($output) {
-	echo elgg_format_element('div', ['class' => 'elgg-profile-fields'], $output);
+if (empty($output)) {
+	return;
 }
+
+echo elgg_format_element('div', ['class' => 'elgg-profile-fields'], $output);

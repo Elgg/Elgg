@@ -69,6 +69,7 @@ use Elgg\Security\PasswordGeneratorService;
  * @property-read \Elgg\Database\EntityTable                      $entityTable
  * @property-read \Elgg\EventsService                             $events
  * @property-read \Elgg\Assets\ExternalFiles                      $externalFiles
+ * @property-read \Elgg\Forms\FieldsService                       $fields
  * @property-read \ElggCache                                      $fileCache
  * @property-read \ElggDiskFilestore                              $filestore
  * @property-read \Elgg\FormsService                              $forms
@@ -396,6 +397,10 @@ class ServiceProvider extends DiContainer {
 
 		$this->setClassName('externalFiles', \Elgg\Assets\ExternalFiles::class);
 
+		$this->setFactory('fields', function(ServiceProvider $sp) {
+			return new \Elgg\Forms\FieldsService($sp->hooks, $sp->translator);
+		});
+		
 		$this->setFactory('fileCache', function(ServiceProvider $sp) {
 			$flags = ELGG_CACHE_PERSISTENT | ELGG_CACHE_FILESYSTEM | ELGG_CACHE_RUNTIME;
 			return new CompositeCache("elgg_system_cache", $sp->config, $flags);

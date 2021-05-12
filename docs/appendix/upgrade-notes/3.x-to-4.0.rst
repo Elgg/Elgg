@@ -23,6 +23,28 @@ Because of the `deprecation`_ of the ``Zend\Mail`` library and it's replacement 
 
 .. _deprecation: https://www.zend.com/blog/evolution-zend-framework-laminas-project
 
+Hookable field configurations
+-----------------------------
+
+Some plugins had the option to configure entity fields in config. These features have been replaced by a central service that provides a mechanisme to request a hookable field config for a certain type/subtype.
+
+You can request these configuration using the following code:
+
+.. code-block:: php
+
+	$fields = elgg()->fields->get('<entity_type>', '<entity_subtype');
+	
+The results will be an array with field configurations usable in ``elgg_view_field($field)``
+
+The following related functionality has been replaced by this new way:
+
+* The config for ``pages`` is no longer available in ``elgg_get_config('pages')`` use ``elgg()->fields->get('object', 'page')``
+* The config for ``group`` is no longer available in ``elgg_get_config('group')`` use ``elgg()->fields->get('group', 'group')``
+* The config for ``profile_fields`` is no longer available in ``elgg_get_config('profile_fields')`` use ``elgg()->fields->get('user', 'user')``
+* Setting the config for ``pages``, ``group`` and ``user:profile`` via ``elgg_set_config`` is no longer possible. Use a hook callback for ``fields, <entity_type>:<entity_subtype>``.
+* The hook ``profile:fields, group`` has been replaced by the new hook ``fields, group:group``
+* The hook ``profile:fields, user`` has been replaced by the new hook ``fields, user:user``
+
 Web services
 ------------
 
@@ -603,7 +625,7 @@ Plugins
 * ``groups_create_event_listener`` changed to ``Elgg\Groups\Group::createAccessCollection``
 * ``groups_default_page_owner_handler`` changed to ``Elgg\Groups\PageOwner::detectPageOwner``
 * ``groups_entity_menu_setup`` changed to ``Elgg\Groups\Menus\Entity::register`` and ``Elgg\Groups\Menus\Entity::registerFeature``
-* ``groups_fields_setup`` changed to ``Elgg\Groups\Group::setupProfileFields``
+* ``groups_fields_setup`` changed to ``Elgg\Groups\FieldsHandler``
 * ``groups_members_menu_setup`` changed to ``Elgg\Groups\Menus\GroupsMembers::register``
 * ``groups_set_access_collection_name`` changed to ``Elgg\Groups\Access::getAccessCollectionName``
 * ``groups_set_url`` changed to ``Elgg\Groups\Group::getEntityUrl``
@@ -647,7 +669,7 @@ Plugins
 * ``Elgg\Pages\Menus::registerPageMenuItems`` changed to ``Elgg\Pages\Menus\PagesNav::register``
 
 * ``_profile_admin_page_menu`` changed to ``Elgg\Profile\Menus\Page::registerAdminProfileFields``
-* ``_profile_fields_setup`` changed to ``Elgg\Profile\ProfileFields::setup``
+* ``_profile_fields_setup`` changed to ``Elgg\Profile\FieldsHandler``
 * ``_profile_title_menu`` changed to ``Elgg\Profile\Menus\Title::register``
 * ``_profile_topbar_menu`` changed to ``Elgg\Profile\Menus\Topbar::register``
 * ``_profile_user_hover_menu`` changed to ``Elgg\Profile\Menus\UserHover::register``
@@ -699,6 +721,7 @@ Miscellaneous API changes
 * You can no longer use the ``delete, <entity_type>`` event to prevent deletion of an entity. Use the ``delete:before, <entity_type>`` event
 * External Files are no longer ordered by priority but will be returned in the same order as they are registered
 * The interface ``Friendable`` has been removed. Implemented functions in ``ElggUser`` have been moved to ``Elgg\Traits\Entity\Friends``
+* The config flag ``profile_using_custom`` is no longer available
 
 Deprecated APIs
 ---------------

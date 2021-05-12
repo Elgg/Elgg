@@ -4,46 +4,45 @@
  */
 
 $group = elgg_extract('entity', $vars);
-if (!$group instanceof ElggGroup) {
+if (!$group instanceof \ElggGroup) {
 	return;
 }
 
-$profile_fields = elgg_get_config('group');
-if (empty($profile_fields) || !is_array($profile_fields)) {
-	return;
-}
+$profile_fields = elgg()->fields->get('group', 'group');
 
 $output = '';
-foreach ($profile_fields as $key => $valtype) {
+foreach ($profile_fields as $field) {
+	$field_name = $field['name'];
+	$field_type = $field['#type'];
+
 	// do not show the name
-	if ($key == 'name') {
+	if ($field_name == 'name') {
 		continue;
 	}
 
-	$value = $group->$key;
+	$value = $group->$field_name;
 	if (is_null($value)) {
 		continue;
 	}
 
-	$options = ['value' => $group->$key];
-	if ($valtype == 'tags') {
-		$options['tag_names'] = $key;
+	$options = ['value' => $group->$field_name];
+	if ($field_type == 'tags') {
+		$options['tag_names'] = $field_name;
 	}
 
-	$field_title = elgg_echo("groups:{$key}");
-	$field_value = elgg_view("output/$valtype", $options);
+	$field_value = elgg_view("output/{$field_type}", $options);
 	$field_value = elgg_format_element('span', [], $field_value);
 
 	$output .= elgg_view('object/elements/field', [
-		'label' => $field_title,
+		'label' => $field['#label'],
 		'value' => $field_value,
 		'class' => 'group-profile-field',
-		'name' => $key,
+		'name' => $field_name,
 	]);
 }
 
-if ($output) {
-	echo elgg_format_element('div', [
-		'class' => 'elgg-profile-fields',
-	], $output);
+if (empty($output)) {
+	return;
 }
+
+echo elgg_format_element('div', ['class' => 'elgg-profile-fields'], $output);
