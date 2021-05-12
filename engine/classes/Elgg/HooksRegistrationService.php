@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Traits\Loggable;
 use Psr\Log\LogLevel;
 
 /**
@@ -11,6 +12,8 @@ use Psr\Log\LogLevel;
  */
 abstract class HooksRegistrationService {
 
+	use Loggable;
+	
 	const REG_KEY_PRIORITY = 0;
 	const REG_KEY_INDEX = 1;
 	const REG_KEY_HANDLER = 2;
@@ -53,9 +56,9 @@ abstract class HooksRegistrationService {
 		}
 		
 		$services = _elgg_services();
-		if (in_array($services->logger->getLevel(false), [LogLevel::WARNING, LogLevel::NOTICE, LogLevel::INFO, LogLevel::DEBUG])) {
+		if (in_array($this->getLogger()->getLevel(false), [LogLevel::WARNING, LogLevel::NOTICE, LogLevel::INFO, LogLevel::DEBUG])) {
 			if (!$services->handlers->isCallable($callback)) {
-				$services->logger->warning('Handler: ' . $services->handlers->describeCallable($callback) . ' is not callable');
+				$this->getLogger()->warning('Handler: ' . $services->handlers->describeCallable($callback) . ' is not callable');
 			}
 		}
 				

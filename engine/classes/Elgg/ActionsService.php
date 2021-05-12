@@ -8,6 +8,7 @@ use Elgg\Router\Middleware\AdminGatekeeper;
 use Elgg\Router\Middleware\CsrfFirewall;
 use Elgg\Router\Middleware\Gatekeeper as MiddlewareGateKeeper;
 use Elgg\Router\RouteRegistrationService;
+use Elgg\Traits\Loggable;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -19,6 +20,8 @@ use Elgg\Router\RouteRegistrationService;
  */
 class ActionsService {
 
+	use Loggable;
+	
 	/**
 	 * @var string[]
 	 */
@@ -86,7 +89,7 @@ class ActionsService {
 		}
 
 		if (!in_array($access, self::$access_levels)) {
-			_elgg_services()->logger->error("Unrecognized value '$access' for \$access in " . __METHOD__);
+			$this->getLogger()->error("Unrecognized value '{$access}' for \$access in " . __METHOD__);
 			$access = 'admin';
 		}
 

@@ -45,8 +45,8 @@ class EventsService extends HooksRegistrationService {
 	public function registerHandler($name, $type, $callback, $priority = 500) {
 		if (in_array($type, ['member', 'friend', 'attached'])
 				&& in_array($name, ['create', 'update', 'delete'])) {
-			_elgg_services()->logger->error("'$name, $type' event is no longer triggered. "
-				. "Update your event registration to use '$name, relationship'");
+			$this->getLogger()->error("'{$name}, {$type}' event is no longer triggered. "
+				. "Update your event registration to use '{$name}, relationship'");
 		}
 
 		return parent::registerHandler($name, $type, $callback, $priority);

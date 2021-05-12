@@ -6,7 +6,7 @@ use Elgg\Ajax\Service as AjaxService;
 use Elgg\EventsService;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\PluginHooksService;
-use ElggEntity;
+use Elgg\Traits\Loggable;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
@@ -20,6 +20,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  * @internal
  */
 class ResponseFactory {
+
+	use Loggable;
 
 	/**
 	 * @var Request
@@ -217,7 +219,7 @@ class ResponseFactory {
 
 		if ($this->response_sent) {
 			if ($this->response_sent !== $response) {
-				_elgg_services()->logger->error('Unable to send the following response: ' . PHP_EOL
+				$this->getLogger()->error('Unable to send the following response: ' . PHP_EOL
 						. (string) $response . PHP_EOL
 						. 'because another response has already been sent: ' . PHP_EOL
 						. (string) $this->response_sent);
@@ -231,7 +233,7 @@ class ResponseFactory {
 			$method = $request->getRealMethod() ? : 'GET';
 			$path = $request->getElggPath();
 
-			_elgg_services()->logger->notice("Responding to {$method} {$path}");
+			$this->getLogger()->notice("Responding to {$method} {$path}");
 			if (!$this->transport->send($response)) {
 				return false;
 			}
@@ -584,7 +586,7 @@ class ResponseFactory {
 	 * @return mixed
 	 */
 	public function normalize($content = '') {
-		if ($content instanceof ElggEntity) {
+		if ($content instanceof \ElggEntity) {
 			$content = (array) $content->toObject();
 		}
 		if (is_array($content)) {

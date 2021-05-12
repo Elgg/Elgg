@@ -229,9 +229,7 @@ class Database {
 			$query = $query->getSQL();
 		}
 
-		if ($this->logger) {
-			$this->getLogger()->info("DB insert query $query (params: " . print_r($params, true) . ")");
-		}
+		$this->getLogger()->info("DB insert query {$query} (params: " . print_r($params, true) . ")");
 
 		$connection = $this->getConnection('write');
 
@@ -259,9 +257,7 @@ class Database {
 			$query = $query->getSQL();
 		}
 
-		if ($this->logger) {
-			$this->getLogger()->info("DB update query $query (params: " . print_r($params, true) . ")");
-		}
+		$this->getLogger()->info("DB update query {$query} (params: " . print_r($params, true) . ")");
 
 		$this->query_cache->clear();
 
@@ -290,9 +286,7 @@ class Database {
 			$query = $query->getSQL();
 		}
 
-		if ($this->logger) {
-			$this->getLogger()->info("DB delete query $query (params: " . print_r($params, true) . ")");
-		}
+		$this->getLogger()->info("DB delete query {$query} (params: " . print_r($params, true) . ")");
 
 		$connection = $this->getConnection('write');
 
@@ -371,9 +365,7 @@ class Database {
 			return $cached_results;
 		}
 		
-		if ($this->logger) {
-			$this->getLogger()->info("DB select query $sql (params: " . print_r($params, true) . ")");
-		}
+		$this->getLogger()->info("DB select query {$sql} (params: " . print_r($params, true) . ")");
 		
 		$return = [];
 
@@ -543,10 +535,8 @@ class Database {
 					call_user_func($handler, $stmt);
 				}
 			} catch (\Exception $e) {
-				if ($this->logger) {
-					// Suppress all exceptions since page already sent to requestor
-					$this->getLogger()->error($e);
-				}
+				// Suppress all exceptions since page already sent to requestor
+				$this->getLogger()->error($e);
 			}
 		}
 

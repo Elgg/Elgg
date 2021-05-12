@@ -85,9 +85,7 @@ class QueryCache extends LRUCache {
 	public function clear() {
 		parent::clear();
 		
-		if ($this->logger) {
-			$this->getLogger()->info('Query cache invalidated');
-		}
+		$this->getLogger()->info('Query cache invalidated');
 	}
 	
 	/**
@@ -100,10 +98,8 @@ class QueryCache extends LRUCache {
 		
 		$result = parent::get($key, $default);
 		
-		if ($this->logger) {
-			$this->getLogger()->info("DB query results returned from cache (hash: $key)");
-		}
-			
+		$this->getLogger()->info("DB query results returned from cache (hash: {$key})");
+		
 		return $result;
 	}
 	
@@ -117,9 +113,7 @@ class QueryCache extends LRUCache {
 		
 		parent::set($key, $value);
 		
-		if ($this->logger) {
-			$this->getLogger()->info("DB query results cached (hash: $key)");
-		}
+		$this->getLogger()->info("DB query results cached (hash: {$key})");
 	}
 	
 	/**

@@ -12,6 +12,7 @@ use ElggCache;
 use ElggEntity;
 use ElggSession;
 use ElggUser;
+use Elgg\Traits\Loggable;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -21,6 +22,8 @@ use ElggUser;
  * @since 1.10.0
  */
 class AccessCollections {
+
+	use Loggable;
 
 	/**
 	 * @var Config
@@ -440,7 +443,7 @@ class AccessCollections {
 		if (isset($subtype)) {
 			$subtype = trim($subtype);
 			if (strlen($subtype) > 255) {
-				_elgg_services()->logger->error("The subtype length for access collections cannot be greater than 255");
+				$this->getLogger()->error("The subtype length for access collections cannot be greater than 255");
 				return false;
 			}
 		}

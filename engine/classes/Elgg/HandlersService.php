@@ -5,6 +5,7 @@ namespace Elgg;
 use Elgg\Di\DiContainer;
 use Elgg\HooksRegistrationService\Event as HrsEvent;
 use Elgg\HooksRegistrationService\Hook as HrsHook;
+use Elgg\Traits\Loggable;
 
 /**
  * Helpers for providing callable-based APIs
@@ -15,6 +16,8 @@ use Elgg\HooksRegistrationService\Hook as HrsHook;
  * @internal
  */
 class HandlersService {
+	
+	use Loggable;
 	
 	/**
 	 * Call the handler with the hook/event object
@@ -32,8 +35,8 @@ class HandlersService {
 		if (!is_callable($callable)) {
 			$type = is_string($object) ? $object : $object::EVENT_TYPE;
 			$description = $type . " [{$args[0]}, {$args[1]}]";
-			$msg = "Handler for $description is not callable: " . $this->describeCallable($original);
-			_elgg_services()->logger->warning($msg);
+
+			$this->getLogger()->warning("Handler for {$description} is not callable: " . $this->describeCallable($original));
 
 			return [false, null, $object];
 		}
