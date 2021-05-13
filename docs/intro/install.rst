@@ -38,6 +38,14 @@ By "official support", we mean that:
 -  Priority on bug reports is given to Apache and Nginx users if the bug is web server specific
    (but those are rare).
 
+.. note::
+
+   If using RHEL, CentOS, or any other distribution with SELinux enabled, you
+   will need to make sure that the appropriate contexts and permissions are configured:
+
+   - Give your project root, your data directory, and all of their children the ``httpd_sys_rw_content_t`` context
+   - Enable the ``httpd_can_network_connect`` and ``httpd_can_network_connect_db`` booleans
+
 .. _Multibyte String support: http://www.php.net/mbstring
 .. _rewrite module: https://httpd.apache.org/docs/2.0/mod/mod_rewrite.html
 
