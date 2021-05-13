@@ -326,7 +326,7 @@ I get the following messages after the requirements check step (step 2) of the i
     A less likely cause is Apache is configured with an alias for your Elgg directory and you need to set the RewriteBase in
     your .htaccess. There are further instructions in the .htaccess file in your Elgg directory.
     
-After this error, everinteraction with the web interface results in a error 500 (Internal Server Error)
+After this error, every interaction with the web interface results in a error 500 (Internal Server Error)
 
 This is likely caused by not loading the "filter module by un-commenting the
 
