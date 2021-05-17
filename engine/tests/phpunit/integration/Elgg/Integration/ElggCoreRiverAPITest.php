@@ -93,7 +93,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		$this->assertTrue(elgg_delete_river(['id' => $item->id]));
 	}
 
-	public function testRiverCreationEmitsHookAndEvent() {
+	public function testRiverCreationEmitsEvents() {
 		$params = [
 			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
@@ -104,38 +104,27 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		];
 
 		$captured = [];
-		$hook_handler = function (\Elgg\Hook $hook) use (&$captured) {
-			$captured['hook_value'] = $hook->getValue();
+		$before_handler = function (\Elgg\Event $event) use (&$captured) {
+			$captured['before_object'] = $event->getObject();
 		};
-		$event_handler = function (\Elgg\Event $event) use (&$captured) {
-			$captured['event_object'] = $event->getObject();
+		$after_handler = function (\Elgg\Event $event) use (&$captured) {
+			$captured['after_object'] = $event->getObject();
 		};
 
-		elgg_register_plugin_hook_handler('creating', 'river', $hook_handler);
-		elgg_register_event_handler('created', 'river', $event_handler);
+		elgg_register_event_handler('create:before', 'river', $before_handler);
+		elgg_register_event_handler('create:after', 'river', $after_handler);
 		$item = elgg_create_river_item($params);
 		$this->assertInstanceOf(ElggRiverItem::class, $item);
-		elgg_unregister_plugin_hook_handler('creating', 'river', $hook_handler);
-		elgg_unregister_event_handler('created', 'river', $event_handler);
+		elgg_unregister_event_handler('create:before', 'river', $before_handler);
+		elgg_unregister_event_handler('create:after', 'river', $after_handler);
 
-		$expected_values = [
-			'action_type' => $params['action_type'],
-			'view' => $params['view'],
-			'subject_guid' => $params['subject_guid'],
-			'object_guid' => $params['object_guid'],
-			'target_guid' => 0,
-			'annotation_id' => 0,
-			'posted' => $params['posted'],
-		];
-		foreach ($expected_values as $key => $value) {
-			$this->assertEquals($captured['hook_value'][$key], $value);
-		}
-		$this->assertSame($item, $captured['event_object']);
+		$this->assertSame($item, $captured['before_object']);
+		$this->assertSame($item, $captured['after_object']);
 
 		$this->assertTrue($item->delete());
 	}
 
-	public function testCanCancelRiverItemViaHook() {
+	public function testCanCancelRiverItemViaEvent() {
 		$params = [
 			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
@@ -143,17 +132,17 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 			'object_guid' => $this->entity->guid,
 		];
 
-		elgg_register_plugin_hook_handler('creating', 'river', [
+		elgg_register_event_handler('create:before', 'river', [
 			Values::class,
 			'getFalse'
 		]);
 		$id = elgg_create_river_item($params);
-		elgg_unregister_plugin_hook_handler('creating', 'river', [
+		elgg_unregister_event_handler('create:before', 'river', [
 			Values::class,
 			'getFalse'
 		]);
 
-		$this->assertTrue($id); // prevented
+		$this->assertFalse($id); // prevented
 	}
 
 	public function testCanCancelRiverDeleteByEvent() {

@@ -2,7 +2,12 @@
 
 namespace Elgg;
 
+use Elgg\Database\Delete;
+use Elgg\Database\Insert;
+use Elgg\Database\Select;
+use Elgg\Database\Update;
 use Elgg\Exceptions\DatabaseException;
+use Elgg\Traits\TimeUsing;
 
 /**
  * \Elgg\PersistentLoginService
@@ -15,15 +20,17 @@ use Elgg\Exceptions\DatabaseException;
  */
 class PersistentLoginService {
 	
+	use TimeUsing;
+	
+	/**
+	 * @var string name of the persistent cookies database table
+	 */
+	const TABLE_NAME = 'users_remember_me_cookies';
+	
 	/**
 	 * @var Database
 	 */
 	protected $db;
-	
-	/**
-	 * @var string
-	 */
-	protected $table;
 	
 	/**
 	 * @var array
@@ -44,11 +51,6 @@ class PersistentLoginService {
 	 * @var \ElggCrypto
 	 */
 	protected $crypto;
-	
-	/**
-	 * @var int
-	 */
-	protected $time;
 	
 	/**
 	 * @var callable
@@ -76,24 +78,18 @@ class PersistentLoginService {
 	 * @param \ElggCrypto  $crypto        The cryptography service
 	 * @param array        $cookie_config The persistent login cookie settings
 	 * @param string       $cookie_token  The token from the request cookie
-	 * @param int          $time          The current time
 	 */
 	public function __construct(
 			Database $db,
 			\ElggSession $session,
 			\ElggCrypto $crypto,
 			array $cookie_config,
-			$cookie_token,
-			$time = null) {
+			$cookie_token) {
 		$this->db = $db;
 		$this->session = $session;
 		$this->crypto = $crypto;
 		$this->cookie_config = $cookie_config;
 		$this->cookie_token = $cookie_token;
-
-		$prefix = $this->db->prefix;
-		$this->table = "{$prefix}users_remember_me_cookies";
-		$this->time = is_numeric($time) ? (int) $time : time();
 	}
 
 	/**
@@ -103,7 +99,7 @@ class PersistentLoginService {
 	 *
 	 * @return void
 	 */
-	public function makeLoginPersistent(\ElggUser $user) {
+	public function makeLoginPersistent(\ElggUser $user): void {
 		$token = $this->generateToken();
 		$hash = $this->hashToken($token);
 
@@ -117,14 +113,14 @@ class PersistentLoginService {
 	 *
 	 * @return void
 	 */
-	public function removePersistentLogin() {
+	public function removePersistentLogin(): void {
 		if ($this->cookie_token) {
 			$client_hash = $this->hashToken($this->cookie_token);
 			$this->removeHash($client_hash);
 		}
 
-		$this->setCookie("");
-		$this->setSessionToken("");
+		$this->setCookie('');
+		$this->setSessionToken('');
 	}
 
 	/**
@@ -135,7 +131,7 @@ class PersistentLoginService {
 	 *
 	 * @return void
 	 */
-	public function handlePasswordChange(\ElggUser $subject, \ElggUser $modifier = null) {
+	public function handlePasswordChange(\ElggUser $subject, \ElggUser $modifier = null): void {
 		$this->removeAllHashes($subject);
 		if (!$modifier || ($modifier->guid !== $subject->guid) || !$this->cookie_token) {
 			return;
@@ -150,9 +146,9 @@ class PersistentLoginService {
 	 *
 	 * @return \ElggUser|null
 	 */
-	public function bootSession() {
+	public function bootSession(): ?\ElggUser {
 		if (!$this->cookie_token) {
-			return;
+			return null;
 		}
 
 		// is this token good?
@@ -165,6 +161,7 @@ class PersistentLoginService {
 		}
 		
 		$this->setCookie('');
+		return null;
 	}
 
 	/**
@@ -174,29 +171,28 @@ class PersistentLoginService {
 	 *
 	 * @return \ElggUser|null
 	 */
-	public function getUserFromHash($hash) {
+	public function getUserFromHash(string $hash): ?\ElggUser {
 		if (!$hash) {
 			return null;
 		}
 
-		$query = "SELECT guid
-			FROM {$this->table}
-			WHERE code = :hash";
-		$params = [
-			'hash' => $hash,
-		];
+		$select = Select::fromTable(self::TABLE_NAME);
+		$select->select('guid')
+			->where($select->compare('code', '=', $hash, ELGG_VALUE_STRING));
+
 		try {
-			$user_row = $this->db->getDataRow($query, null, $params);
+			$user_row = $this->db->getDataRow($select);
 		} catch (DatabaseException $e) {
 			$this->handleDbException($e);
 			return null;
 		}
+		
 		if (empty($user_row)) {
 			return null;
 		}
 
 		$user = call_user_func($this->_callable_get_user, $user_row->guid);
-		return $user ? $user : null;
+		return ($user instanceof \ElggUser) ? $user : null;
 	}
 	
 	/**
@@ -206,28 +202,25 @@ class PersistentLoginService {
 	 *
 	 * @return bool|null
 	 */
-	public function updateTokenUsage(\ElggUser $user) {
+	public function updateTokenUsage(\ElggUser $user): ?bool {
 		if (!$this->cookie_token) {
 			return null;
 		}
 		
 		// update the database record
-		$query = "UPDATE {$this->table}
-			SET timestamp = :time
-			WHERE guid = :guid
-			AND code = :hash";
-		$params = [
-			'time' => time(),
-			'guid' => $user->guid,
-			'hash' => $this->hashToken($this->cookie_token),
-		];
+		$update = Update::table(self::TABLE_NAME);
+		$update->set('timestamp', $update->param($this->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP))
+			->where($update->compare('guid', '=', $user->guid, ELGG_VALUE_GUID))
+			->andWhere($update->compare('code', '=', $this->hashToken($this->cookie_token), ELGG_VALUE_STRING));
+		
 		try {
-			$res = (bool) $this->db->updateData($query, false, $params);
-			if ($res) {
-				// also update the cookie lifetime client-side
-				$this->setCookie($this->cookie_token);
-			}
-			return $res;
+			// not interested in number of updated rows, as an update in the same second won't update the row
+			$this->db->updateData($update);
+			
+			// also update the cookie lifetime client-side
+			$this->setCookie($this->cookie_token);
+			
+			return true;
 		} catch (DatabaseException $e) {
 			$this->handleDbException($e);
 		}
@@ -242,7 +235,7 @@ class PersistentLoginService {
 	 *
 	 * @return bool
 	 */
-	public function removeExpiredTokens($time) {
+	public function removeExpiredTokens($time): bool {
 		$time = Values::normalizeTime($time);
 		
 		$expires = Values::normalizeTime($this->cookie_config['expire']);
@@ -253,13 +246,11 @@ class PersistentLoginService {
 			return false;
 		}
 		
-		$query = "DELETE FROM {$this->table}
-			WHERE timestamp < :time";
-		$params = [
-			'time' => $time->getTimestamp(),
-		];
+		$delete = Delete::fromTable(self::TABLE_NAME);
+		$delete->where($delete->compare('timestamp', '<', $time->getTimestamp(), ELGG_VALUE_TIMESTAMP));
+		
 		try {
-			return (bool) $this->db->deleteData($query, $params);
+			return (bool) $this->db->deleteData($delete);
 		} catch (DatabaseException $e) {
 			$this->handleDbException($e);
 		}
@@ -275,20 +266,20 @@ class PersistentLoginService {
 	 *
 	 * @return void
 	 */
-	protected function storeHash(\ElggUser $user, $hash) {
+	protected function storeHash(\ElggUser $user, string $hash): void {
 		// This prevents inserting the same hash twice, which seems to be happening in some rare cases
 		// and for unknown reasons. See https://github.com/Elgg/Elgg/issues/8104
 		$this->removeHash($hash);
 
-		$query = "INSERT INTO {$this->table} (code, guid, timestamp)
-		    VALUES (:hash, :guid, :time)";
-		$params = [
-			'hash' => $hash,
-			'guid' => $user->guid,
-			'time' => time(),
-		];
+		$insert = Insert::intoTable(self::TABLE_NAME);
+		$insert->values([
+			'code' => $insert->param($hash, ELGG_VALUE_STRING),
+			'guid' => $insert->param($user->guid, ELGG_VALUE_GUID),
+			'timestamp' => $insert->param($this->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP),
+		]);
+		
 		try {
-			$this->db->insertData($query, $params);
+			$this->db->insertData($insert);
 		} catch (DatabaseException $e) {
 			$this->handleDbException($e);
 		}
@@ -298,16 +289,15 @@ class PersistentLoginService {
 	 * Remove a hash from the DB
 	 *
 	 * @param string $hash The hashed token to remove (unused before 1.9)
+	 *
 	 * @return void
 	 */
-	protected function removeHash($hash) {
-		$query = "DELETE FROM {$this->table}
-			WHERE code = :hash";
-		$params = [
-			'hash' => $hash,
-		];
+	protected function removeHash(string $hash): void {
+		$delete = Delete::fromTable(self::TABLE_NAME);
+		$delete->where($delete->compare('code', '=', $hash, ELGG_VALUE_STRING));
+		
 		try {
-			$this->db->deleteData($query, $params);
+			$this->db->deleteData($delete);
 		} catch (DatabaseException $e) {
 			$this->handleDbException($e);
 		}
@@ -317,16 +307,14 @@ class PersistentLoginService {
 	 * Swallow a schema not upgraded exception, otherwise rethrow it
 	 *
 	 * @param DatabaseException $exception The exception to handle
-	 * @param string            $default   The value to return if the table doesn't exist yet
 	 *
-	 * @return mixed
-	 *
+	 * @return void
 	 * @throws DatabaseException
 	 */
-	protected function handleDbException(DatabaseException $exception, $default = null) {
-		if (false !== strpos($exception->getMessage(), "users_remember_me_cookies' doesn't exist")) {
+	protected function handleDbException(DatabaseException $exception): void {
+		if (false !== strpos($exception->getMessage(), self::TABLE_NAME . "' doesn't exist")) {
 			// schema has not been updated so we swallow this exception
-			return $default;
+			return;
 		}
 		
 		throw $exception;
@@ -339,14 +327,12 @@ class PersistentLoginService {
 	 *
 	 * @return void
 	 */
-	public function removeAllHashes(\ElggUser $user) {
-		$query = "DELETE FROM {$this->table}
-			WHERE guid = :guid";
-		$params = [
-			'guid' => $user->guid,
-		];
+	public function removeAllHashes(\ElggUser $user): void {
+		$delete = Delete::fromTable(self::TABLE_NAME);
+		$delete->where($delete->compare('guid', '=', $user->guid, ELGG_VALUE_GUID));
+		
 		try {
-			$this->db->deleteData($query, $params);
+			$this->db->deleteData($delete);
 		} catch (DatabaseException $e) {
 			$this->handleDbException($e);
 		}
@@ -359,7 +345,7 @@ class PersistentLoginService {
 	 *
 	 * @return string
 	 */
-	protected function hashToken($token) {
+	protected function hashToken(string $token): string {
 		// note: with user passwords, you'd want legit password hashing, but since these are randomly
 		// generated and long tokens, rainbow tables aren't any help.
 		return md5($token);
@@ -372,15 +358,17 @@ class PersistentLoginService {
 	 *
 	 * @return void
 	 */
-	protected function setCookie($token) {
+	protected function setCookie(string $token): void {
 		$cookie = new \ElggCookie($this->cookie_config['name']);
 		foreach (['expire', 'path', 'domain', 'secure', 'httpOnly'] as $key) {
 			$cookie->$key = $this->cookie_config[strtolower($key)];
 		}
+		
 		$cookie->value = $token;
 		if (!$token) {
-			$cookie->expire = $this->time - (86400 * 30);
+			$cookie->expire = $this->getCurrentTime('-30 days')->getTimestamp();
 		}
+		
 		call_user_func($this->_callable_elgg_set_cookie, $cookie);
 	}
 
@@ -391,7 +379,7 @@ class PersistentLoginService {
 	 *
 	 * @return void
 	 */
-	protected function setSessionToken($token) {
+	protected function setSessionToken(string $token): void {
 		if ($token) {
 			$this->session->set('code', $token);
 		} else {
@@ -407,7 +395,7 @@ class PersistentLoginService {
 	 *
 	 * @return string
 	 */
-	protected function generateToken() {
+	protected function generateToken(): string {
 		return 'z' . $this->crypto->getRandomString(31);
 	}
 }

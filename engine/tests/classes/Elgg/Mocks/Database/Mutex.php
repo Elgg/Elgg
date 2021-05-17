@@ -6,17 +6,25 @@ class Mutex extends \Elgg\Database\Mutex {
 
 	protected $locks = [];
 
-	public function lock($namespace) {
+	/**
+	 * {@inheritDoc}
+	 */
+	public function lock(string $namespace): bool {
 		$this->locks[$namespace] = true;
 		return true;
 	}
 
-	public function isLocked($namespace) {
+	/**
+	 * {@inheritDoc}
+	 */
+	public function isLocked(string $namespace): bool {
 		return isset($this->locks[$namespace]);
 	}
 
-	public function unlock($namespace) {
+	/**
+	 * {@inheritDoc}
+	 */
+	public function unlock(string $namespace): void {
 		$this->locks[$namespace] = false;
-		return true;
 	}
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\EntityIcon;
+use Elgg\Database\EntityTable;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Update;
 use Elgg\Exceptions\InvalidParameterException;
@@ -1689,7 +1690,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
 		$this->disableAnnotations();
 
-		$qb = Update::table('entities');
+		$qb = Update::table(EntityTable::TABLE_NAME);
 		$qb->set('enabled', $qb->param('no', ELGG_VALUE_STRING))
 			->where($qb->compare('guid', '=', $guid, ELGG_VALUE_GUID));
 		
@@ -1731,7 +1732,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		}
 
 		$result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid, $recursive) {
-			$qb = Update::table('entities');
+			$qb = Update::table(EntityTable::TABLE_NAME);
 			$qb->set('enabled', $qb->param('yes', ELGG_VALUE_STRING))
 				->where($qb->compare('guid', '=', $guid, ELGG_VALUE_GUID));
 

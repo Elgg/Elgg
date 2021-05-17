@@ -102,15 +102,16 @@ class Database {
 	 *
 	 * @return Connection
 	 */
-	public function getConnection($type) {
+	public function getConnection(string $type): Connection {
 		if (isset($this->connections[$type])) {
 			return $this->connections[$type];
 		} else if (isset($this->connections['readwrite'])) {
 			return $this->connections['readwrite'];
-		} else {
-			$this->setupConnections();
-			return $this->getConnection($type);
 		}
+		
+		$this->setupConnections();
+		
+		return $this->getConnection($type);
 	}
 
 	/**
@@ -121,7 +122,7 @@ class Database {
 	 *
 	 * @return void
 	 */
-	public function setupConnections() {
+	public function setupConnections(): void {
 		if ($this->config->isDatabaseSplit()) {
 			$this->connect('read');
 			$this->connect('write');
@@ -140,7 +141,7 @@ class Database {
 	 * @return void
 	 * @throws DatabaseException
 	 */
-	public function connect($type = "readwrite") {
+	public function connect(string $type = 'readwrite'): void {
 		$conf = $this->config->getConnectionConfig($type);
 
 		$params = [
@@ -190,6 +191,10 @@ class Database {
 	 *               returned nothing, an empty array.
 	 */
 	public function getData($query, $callback = null, array $params = []) {
+		if (!$query instanceof QueryBuilder) {
+			$this->logDeprecatedMessage('The use of non ' . QueryBuilder::class . ' queries in ' . __METHOD__ . ' has been deprecated', '4.0');
+		}
+
 		return $this->getResults($query, $callback, false, $params);
 	}
 
@@ -207,6 +212,10 @@ class Database {
 	 * @return mixed A single database result object or the result of the callback function.
 	 */
 	public function getDataRow($query, $callback = null, array $params = []) {
+		if (!$query instanceof QueryBuilder) {
+			$this->logDeprecatedMessage('The use of non ' . QueryBuilder::class . ' queries in ' . __METHOD__ . ' has been deprecated', '4.0');
+		}
+
 		return $this->getResults($query, $callback, true, $params);
 	}
 
@@ -222,6 +231,9 @@ class Database {
 	 *                   defined, 0 if not, and false on failure.
 	 */
 	public function insertData($query, array $params = []) {
+		if (!$query instanceof QueryBuilder) {
+			$this->logDeprecatedMessage('The use of non ' . QueryBuilder::class . ' queries in ' . __METHOD__ . ' has been deprecated', '4.0');
+		}
 
 		if ($query instanceof QueryBuilder) {
 			$params = $query->getParameters();
@@ -249,7 +261,10 @@ class Database {
 	 *
 	 * @return bool|int
 	 */
-	public function updateData($query, $get_num_rows = false, array $params = []) {
+	public function updateData($query, bool $get_num_rows = false, array $params = []) {
+		if (!$query instanceof QueryBuilder) {
+			$this->logDeprecatedMessage('The use of non ' . QueryBuilder::class . ' queries in ' . __METHOD__ . ' has been deprecated', '4.0');
+		}
 
 		if ($query instanceof QueryBuilder) {
 			$params = $query->getParameters();
@@ -263,9 +278,9 @@ class Database {
 		$stmt = $this->executeQuery($query, $this->getConnection('write'), $params);
 		if ($get_num_rows) {
 			return $stmt->rowCount();
-		} else {
-			return true;
 		}
+
+		return true;
 	}
 
 	/**
@@ -279,6 +294,9 @@ class Database {
 	 * @return int The number of affected rows
 	 */
 	public function deleteData($query, array $params = []) {
+		if (!$query instanceof QueryBuilder) {
+			$this->logDeprecatedMessage('The use of non ' . QueryBuilder::class . ' queries in ' . __METHOD__ . ' has been deprecated', '4.0');
+		}
 
 		if ($query instanceof QueryBuilder) {
 			$params = $query->getParameters();
@@ -306,21 +324,25 @@ class Database {
 	 * @return string A string that is unique for each callable passed in
 	 * @since 1.9.4
 	 */
-	protected function fingerprintCallback($callback) {
+	protected function fingerprintCallback($callback): string {
 		if (is_string($callback)) {
 			return $callback;
 		}
+
 		if (is_object($callback)) {
-			return spl_object_hash($callback) . "::__invoke";
+			return spl_object_hash($callback) . '::__invoke';
 		}
+
 		if (is_array($callback)) {
 			if (is_string($callback[0])) {
 				return "{$callback[0]}::{$callback[1]}";
 			}
+
 			return spl_object_hash($callback[0]) . "::{$callback[1]}";
 		}
+
 		// this should not happen
-		return "";
+		return '';
 	}
 
 	/**
@@ -336,7 +358,7 @@ class Database {
 	 *               returned nothing, an empty array.
 	 * @throws \RuntimeException
 	 */
-	protected function getResults($query, $callback = null, $single = false, array $params = []) {
+	protected function getResults($query, $callback = null, bool $single = false, array $params = []) {
 
 		if ($query instanceof QueryBuilder) {
 			$params = $query->getParameters();
@@ -503,15 +525,19 @@ class Database {
 	 * You can specify a callback if you care about the result. This function will always
 	 * be passed a \Doctrine\DBAL\Driver\Statement.
 	 *
-	 * @param string   $query    The query to execute
-	 * @param string   $type     The query type ('read' or 'write')
-	 * @param callable $callback A callback function to pass the results array to
-	 * @param array    $params   Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
+	 * @param QueryBuilder|string $query    The query to execute
+	 * @param string              $type     The query type ('read' or 'write')
+	 * @param callable            $callback A callback function to pass the results array to
+	 * @param array               $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
-	 * @return boolean Whether registering was successful
+	 * @return bool Whether registering was successful
 	 */
-	public function registerDelayedQuery($query, $type, $callback = null, array $params = []) {
-		if ($type != 'read' && $type != 'write') {
+	public function registerDelayedQuery($query, string $type, $callback = null, array $params = []): bool {
+		if (!$query instanceof QueryBuilder) {
+			$this->logDeprecatedMessage('The use of non ' . QueryBuilder::class . ' queries in ' . __METHOD__ . ' has been deprecated', '4.0');
+		}
+
+		if ($type !== 'read' && $type !== 'write') {
 			return false;
 		}
 
@@ -531,7 +557,7 @@ class Database {
 	 *
 	 * @return void
 	 */
-	public function executeDelayedQueries() {
+	public function executeDelayedQueries(): void {
 
 		foreach ($this->delayed_queries as $set) {
 			$query = $set[self::DELAYED_QUERY];
@@ -561,7 +587,7 @@ class Database {
 	 *
 	 * @return void
 	 */
-	public function enableQueryCache() {
+	public function enableQueryCache(): void {
 		$this->query_cache->enable();
 	}
 
@@ -573,7 +599,7 @@ class Database {
 	 *
 	 * @return void
 	 */
-	public function disableQueryCache() {
+	public function disableQueryCache(): void {
 		$this->query_cache->disable();
 	}
 
@@ -582,7 +608,7 @@ class Database {
 	 *
 	 * @return int
 	 */
-	public function getQueryCount() {
+	public function getQueryCount(): int {
 		return $this->query_count;
 	}
 
@@ -593,20 +619,22 @@ class Database {
 	 *
 	 * @return string Empty if version cannot be determined
 	 */
-	public function getServerVersion($type) {
+	public function getServerVersion(string $type): string {
 		$driver = $this->getConnection($type)->getWrappedConnection();
 		if ($driver instanceof ServerInfoAwareConnection) {
 			return $driver->getServerVersion();
 		}
 
-		return null;
+		return '';
 	}
 
 	/**
 	 * Handle magic property reads
 	 *
 	 * @param string $name Property name
+	 *
 	 * @return mixed
+	 * @throws \RuntimeException
 	 */
 	public function __get($name) {
 		if ($name === 'prefix') {
@@ -621,9 +649,11 @@ class Database {
 	 *
 	 * @param string $name  Property name
 	 * @param mixed  $value Value
+	 *
 	 * @return void
+	 * @throws \RuntimeException
 	 */
-	public function __set($name, $value) {
+	public function __set($name, $value): void {
 		throw new \RuntimeException("Cannot write property '$name'");
 	}
 }

@@ -30,6 +30,11 @@ class EntityTable {
 	use TimeUsing;
 
 	/**
+	 * @var string name of the entities database table
+	 */
+	const TABLE_NAME = 'entities';
+	
+	/**
 	 * @var Config
 	 */
 	protected $config;
@@ -38,11 +43,6 @@ class EntityTable {
 	 * @var Database
 	 */
 	protected $db;
-
-	/**
-	 * @var string
-	 */
-	protected $table;
 
 	/**
 	 * @var array
@@ -108,7 +108,6 @@ class EntityTable {
 	) {
 		$this->config = $config;
 		$this->db = $db;
-		$this->table = $this->db->prefix . 'entities';
 		$this->entity_cache = $entity_cache;
 		$this->metadata_cache = $metadata_cache;
 		$this->private_settings_cache = $private_settings_cache;
@@ -178,7 +177,7 @@ class EntityTable {
 		$where->guids = (int) $guid;
 		$where->viewer_guid = $user_guid;
 
-		$select = Select::fromTable('entities', 'e');
+		$select = Select::fromTable(self::TABLE_NAME, 'e');
 		$select->select('e.*');
 		$select->addClause($where);
 
@@ -197,24 +196,19 @@ class EntityTable {
 	 * @return int|false
 	 */
 	public function insertRow(\stdClass $row, array $attributes = []) {
-
-		$sql = "
-			INSERT INTO {$this->db->prefix}entities
-			(type, subtype, owner_guid, container_guid, access_id, time_created, time_updated, last_action)
-			VALUES
-			(:type, :subtype, :owner_guid, :container_guid, :access_id, :time_created, :time_updated, :last_action)
-		";
-
-		return $this->db->insertData($sql, [
-			'type' => $row->type,
-			'subtype' => $row->subtype,
-			'owner_guid' => $row->owner_guid,
-			'container_guid' => $row->container_guid,
-			'access_id' => $row->access_id,
-			'time_created' => $row->time_created,
-			'time_updated' => $row->time_updated,
-			'last_action' => $row->last_action,
+		$insert = Insert::intoTable(self::TABLE_NAME);
+		$insert->values([
+			'type' => $insert->param($row->type, ELGG_VALUE_STRING),
+			'subtype' => $insert->param($row->subtype, ELGG_VALUE_STRING),
+			'owner_guid' => $insert->param($row->owner_guid, ELGG_VALUE_GUID),
+			'container_guid' => $insert->param($row->container_guid, ELGG_VALUE_GUID),
+			'access_id' => $insert->param($row->access_id, ELGG_VALUE_ID),
+			'time_created' => $insert->param($row->time_created, ELGG_VALUE_TIMESTAMP),
+			'time_updated' => $insert->param($row->time_updated, ELGG_VALUE_TIMESTAMP),
+			'last_action' => $insert->param($row->last_action, ELGG_VALUE_TIMESTAMP),
 		]);
+
+		return $this->db->insertData($insert);
 	}
 
 	/**
@@ -225,27 +219,16 @@ class EntityTable {
 	 *
 	 * @return int|false
 	 */
-	public function updateRow($guid, \stdClass $row) {
-		$sql = "
-			UPDATE {$this->db->prefix}entities
-			SET owner_guid = :owner_guid,
-			    access_id = :access_id,
-				container_guid = :container_guid,
-				time_created = :time_created,
-				time_updated = :time_updated
-			WHERE guid = :guid
-		";
+	public function updateRow(int $guid, \stdClass $row) {
+		$update = Update::table(self::TABLE_NAME);
+		$update->set('owner_guid', $update->param($row->owner_guid, ELGG_VALUE_GUID))
+			->set('container_guid', $update->param($row->container_guid, ELGG_VALUE_GUID))
+			->set('access_id', $update->param($row->access_id, ELGG_VALUE_ID))
+			->set('time_created', $update->param($row->time_created, ELGG_VALUE_TIMESTAMP))
+			->set('time_updated', $update->param($row->time_updated, ELGG_VALUE_TIMESTAMP))
+			->where($update->compare('guid', '=', $guid, ELGG_VALUE_GUID));
 
-		$params = [
-			'owner_guid' => $row->owner_guid,
-			'access_id' => $row->access_id,
-			'container_guid' => $row->container_guid,
-			'time_created' => $row->time_created,
-			'time_updated' => $row->time_updated,
-			'guid' => $guid,
-		];
-
-		return $this->db->updateData($sql, false, $params);
+		return $this->db->updateData($update);
 	}
 
 	/**
@@ -507,24 +490,17 @@ class EntityTable {
 	 *
 	 * @return int
 	 */
-	public function updateLastAction(\ElggEntity $entity, $posted = null) {
+	public function updateLastAction(\ElggEntity $entity, int $posted = null) {
 
 		if ($posted === null) {
 			$posted = $this->getCurrentTime()->getTimestamp();
 		}
 
-		$query = "
-			UPDATE {$this->db->prefix}entities
-			SET last_action = :last_action
-			WHERE guid = :guid
-		";
+		$update = Update::table(self::TABLE_NAME);
+		$update->set('last_action', $update->param($posted, ELGG_VALUE_TIMESTAMP))
+			->where($update->compare('guid', '=', $entity->guid, ELGG_VALUE_GUID));
 
-		$params = [
-			'last_action' => (int) $posted,
-			'guid' => (int) $entity->guid,
-		];
-
-		$this->db->updateData($query, true, $params);
+		$this->db->updateData($update);
 
 		return (int) $posted;
 	}
@@ -581,10 +557,10 @@ class EntityTable {
 			return false;
 		}
 
-		$qb = Update::table('entities');
+		$qb = Update::table(self::TABLE_NAME);
 		$qb->set('enabled', $qb->param('no', ELGG_VALUE_STRING))
-			->where($qb->compare('owner_guid', '=', $entity->guid, ELGG_VALUE_INTEGER))
-			->orWhere($qb->compare('container_guid', '=', $entity->guid, ELGG_VALUE_INTEGER));
+			->where($qb->compare('owner_guid', '=', $entity->guid, ELGG_VALUE_GUID))
+			->orWhere($qb->compare('container_guid', '=', $entity->guid, ELGG_VALUE_GUID));
 
 		$this->db->updateData($qb, true);
 
@@ -624,8 +600,8 @@ class EntityTable {
 
 		$this->deleteEntityProperties($entity);
 
-		$qb = Delete::fromTable('entities');
-		$qb->where($qb->compare('guid', '=', $guid, ELGG_VALUE_INTEGER));
+		$qb = Delete::fromTable(self::TABLE_NAME);
+		$qb->where($qb->compare('guid', '=', $guid, ELGG_VALUE_GUID));
 
 		$this->db->deleteData($qb);
 

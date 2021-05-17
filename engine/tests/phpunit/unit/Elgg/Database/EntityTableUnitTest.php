@@ -63,21 +63,16 @@ class EntityTableUnitTest extends \Elgg\UnitTestCase {
 		
 		$last_action = $object->updateLastAction();
 		$this->assertEquals($last_action, $object->last_action);
-
-		$dbprefix = _elgg_services()->config->dbprefix;
-		$sql = "
-			UPDATE {$dbprefix}entities
-			SET last_action = :last_action
-			WHERE guid = :guid
-		";
-
+		
 		$new_last_action = strtotime('+2 days', $time);
+		
+		$update = Update::table(EntityTable::TABLE_NAME);
+		$update->set('last_action', $update->param($new_last_action, ELGG_VALUE_TIMESTAMP))
+			->where($update->compare('guid', '=', $object->guid, ELGG_VALUE_GUID));
+		
 		_elgg_services()->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				'last_action' => $new_last_action,
-				'guid' => $object->guid,
-			],
+			'sql' => $update->getSQL(),
+			'params' => $update->getParameters(),
 			'row_count' => 1,
 		]);
 

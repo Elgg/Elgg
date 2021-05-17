@@ -2,12 +2,25 @@
 
 namespace Elgg\Http;
 
+use Elgg\Database\Delete;
+use Elgg\Database\Insert;
+use Elgg\Database\Select;
+use Elgg\Database\Update;
+use Elgg\Traits\TimeUsing;
+
 /**
  * Database session handler
  *
  * @internal
  */
 class DatabaseSessionHandler implements \SessionHandlerInterface {
+
+	use TimeUsing;
+	
+	/**
+	 * @var string name of the users sessions database table
+	 */
+	const TABLE_NAME = 'users_sessions';
 
 	/**
 	 * @var \Elgg\Database $db
@@ -34,15 +47,11 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	 * {@inheritDoc}
 	 */
 	public function read($session_id) {
+		$select = Select::fromTable(self::TABLE_NAME);
+		$select->select('*')
+			->where($select->compare('session', '=', $session_id, ELGG_VALUE_STRING));
 		
-		$query = "SELECT *
-			FROM {$this->db->prefix}users_sessions
-			WHERE session = :session_id";
-		$params = [
-			'session_id' => $session_id,
-		];
-		
-		$result = $this->db->getDataRow($query, null, $params);
+		$result = $this->db->getDataRow($select);
 		if (!empty($result)) {
 			return (string) $result->data;
 		}
@@ -59,21 +68,24 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 			return true;
 		}
 		
-		$query = "INSERT INTO {$this->db->prefix}users_sessions
-			(session, ts, data) VALUES
-			(:session_id, :time, :data)
-			ON DUPLICATE KEY UPDATE ts = VALUES(ts), data = VALUES(data)";
-		$params = [
-			'session_id' => $session_id,
-			'time' => time(),
-			'data' => $session_data,
-		];
-
-		if ($this->db->insertData($query, $params) !== false) {
-			return true;
+		$update = Update::table(self::TABLE_NAME);
+		$update->set('data', $update->param($session_data, ELGG_VALUE_STRING))
+			->set('ts', $update->param(time(), ELGG_VALUE_TIMESTAMP))
+			->where($update->compare('session', '=', $session_id, ELGG_VALUE_STRING));
+		
+		if (!$this->db->updateData($update, true)) {
+			// update failed, try insert
+			$insert = Insert::intoTable(self::TABLE_NAME);
+			$insert->values([
+				'session' => $insert->param($session_id, ELGG_VALUE_STRING),
+				'data' => $insert->param($session_data, ELGG_VALUE_STRING),
+				'ts' => $insert->param($this->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP),
+			]);
+			
+			return $this->db->insertData($insert) !== false;
 		}
 		
-		return false;
+		return true;
 	}
 
 	/**
@@ -87,27 +99,19 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	 * {@inheritDoc}
 	 */
 	public function destroy($session_id) {
+		$delete = Delete::fromTable(self::TABLE_NAME);
+		$delete->where($delete->compare('session', '=', $session_id, ELGG_VALUE_STRING));
 		
-		$query = "DELETE FROM {$this->db->prefix}users_sessions
-			WHERE session = :session_id";
-		$params = [
-			'session_id' => $session_id,
-		];
-		
-		return (bool) $this->db->deleteData($query, $params);
+		return (bool) $this->db->deleteData($delete);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function gc($max_lifetime) {
+		$delete = Delete::fromTable(self::TABLE_NAME);
+		$delete->where($delete->compare('ts', '<', $max_lifetime, ELGG_VALUE_TIMESTAMP));
 		
-		$query = "DELETE FROM {$this->db->prefix}users_sessions
-			WHERE ts < :life";
-		$params = [
-			'life' => (time() - $max_lifetime),
-		];
-		
-		return (bool) $this->db->deleteData($query, $params);
+		return (bool) $this->db->deleteData($delete);
 	}
 }

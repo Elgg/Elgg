@@ -2,6 +2,12 @@
 
 namespace Elgg\Queue;
 
+use Elgg\Database\Delete;
+use Elgg\Database\Insert;
+use Elgg\Database\Select;
+use Elgg\Database\Update;
+use Elgg\Traits\TimeUsing;
+
 /**
  * FIFO queue that uses the database for persistence
  *
@@ -13,13 +19,26 @@ namespace Elgg\Queue;
  */
 class DatabaseQueue implements \Elgg\Queue\Queue {
 
-	/** @var string Name of the queue */
+	use TimeUsing;
+	
+	/**
+	 * @var string name of the queue database table
+	 */
+	const TABLE_NAME = 'queue';
+	
+	/**
+	 * @var string Name of the queue
+	 */
 	protected $name;
 
-	/** @var \Elgg\Database Database adapter */
+	/**
+	 * @var \Elgg\Database Database adapter
+	 */
 	protected $db;
 
-	/** @var string The identifier of the worker pulling from the queue */
+	/**
+	 * @var string The identifier of the worker pulling from the queue
+	 */
 	protected $workerId;
 
 	/**
@@ -28,7 +47,7 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 	 * @param string         $name Name of the queue. Must be less than 256 characters.
 	 * @param \Elgg\Database $db   Database adapter
 	 */
-	public function __construct($name, \Elgg\Database $db) {
+	public function __construct(string $name, \Elgg\Database $db) {
 		$this->db = $db;
 		$this->name = $name;
 		$this->workerId = md5(microtime() . getmypid());
@@ -38,95 +57,72 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 	 * {@inheritdoc}
 	 */
 	public function enqueue($item) {
-		$prefix = $this->db->prefix;
+		$insert = Insert::intoTable(self::TABLE_NAME);
+		$insert->values([
+			'name' => $insert->param($this->name, ELGG_VALUE_STRING),
+			'data' => $insert->param(serialize($item), ELGG_VALUE_STRING),
+			'timestamp' => $insert->param($this->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP),
+		]);
 		
-		$query = "INSERT INTO {$prefix}queue
-			(name, data, timestamp)
-			VALUES
-			(:name, :data, :timestamp)";
-		$params = [
-			'name' => $this->name,
-			'data' => serialize($item),
-			'timestamp' => time(),
-		];
-		return $this->db->insertData($query, $params) !== false;
+		return $this->db->insertData($insert) !== false;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function dequeue() {
-		$prefix = $this->db->prefix;
-		$name = $this->name;
-		$worker_id = $this->workerId;
+		// get a record for processing
+		$select = Select::fromTable(self::TABLE_NAME);
+		$select->select('*')
+			->where($select->compare('name', '=', $this->name, ELGG_VALUE_STRING))
+			->andWhere($select->expr()->isNull('worker'))
+			->orderBy('id', 'ASC')
+			->setMaxResults(1);
 		
-		$update = "UPDATE {$prefix}queue
-			SET worker = :worker
-			WHERE name = :name AND worker IS NULL
-			ORDER BY id ASC LIMIT 1";
-		$update_params = [
-			'worker' => $worker_id,
-			'name' => $name,
-		];
-		$num = $this->db->updateData($update, true, $update_params);
-		if ($num !== 1) {
+		$row = $this->db->getDataRow($select);
+		if (empty($row)) {
 			return;
 		}
 		
-		$select = "SELECT data
-			FROM {$prefix}queue
-			WHERE worker = :worker
-			AND name = :name";
-		$select_params = [
-			'worker' => $worker_id,
-			'name' => $name,
-		];
-		$obj = $this->db->getDataRow($select, null, $select_params);
-		if (empty($obj)) {
+		// lock a record for processing
+		$update = Update::table(self::TABLE_NAME);
+		$update->set('worker', $update->param($this->workerId, ELGG_VALUE_STRING))
+			->where($update->compare('name', '=', $this->name, ELGG_VALUE_STRING))
+			->andWhere($update->compare('id', '=', $row->id, ELGG_VALUE_ID))
+			->andWhere($update->expr()->isNull('worker'));
+		
+		if ($this->db->updateData($update, true) !== 1) {
 			return;
 		}
 		
-		$delete = "DELETE FROM {$prefix}queue
-			WHERE name = :name
-			AND worker = :worker";
-		$delete_params = [
-			'worker' => $worker_id,
-			'name' => $name,
-		];
-		$this->db->deleteData($delete, $delete_params);
+		// remove locked record from database
+		$delete = Delete::fromTable(self::TABLE_NAME);
+		$delete->where($delete->compare('id', '=', $row->id, ELGG_VALUE_ID));
 		
-		return unserialize($obj->data);
+		$this->db->deleteData($delete);
+		
+		return unserialize($row->data);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function clear() {
-		$prefix = $this->db->prefix;
+		$delete = Delete::fromTable(self::TABLE_NAME);
+		$delete->where($delete->compare('name', '=', $this->name, ELGG_VALUE_STRING));
 		
-		$sql = "DELETE FROM {$prefix}queue
-			WHERE name = :name";
-		$params = [
-			'name' => $this->name,
-		];
-
-		$this->db->deleteData($sql, $params);
+		$this->db->deleteData($delete);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function size() {
-		$prefix = $this->db->prefix;
+		$select = Select::fromTable(self::TABLE_NAME);
+		$select->select('COUNT(*) AS total')
+			->where($select->compare('name', '=', $this->name, ELGG_VALUE_STRING));
 		
-		$sql = "SELECT COUNT(id) AS total
-			FROM {$prefix}queue
-			WHERE name = :name";
-		$params = [
-			'name' => $this->name,
-		];
-		
-		$result = $this->db->getDataRow($sql, null, $params);
+		$result = $this->db->getDataRow($select);
 		return (int) $result->total;
 	}
 }

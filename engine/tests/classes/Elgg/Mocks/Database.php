@@ -2,10 +2,12 @@
 
 namespace Elgg\Mocks;
 
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\Expression\ExpressionBuilder;
 use Elgg\BaseTestCase;
 use Elgg\Database as DbDatabase;
 use Elgg\Exceptions\DatabaseException;
+use PHPUnit\Framework\MockObject\MockBuilder;
 
 class Database extends DbDatabase {
 
@@ -28,21 +30,21 @@ class Database extends DbDatabase {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setupConnections() {
+	public function setupConnections(): void {
 
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function connect($type = "readwrite") {
+	public function connect(string $type = 'readwrite'): void {
 
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getConnection($type) {
+	public function getConnection(string $type): Connection {
 		$connection = BaseTestCase::$_instance->getConnectionMock();
 
 		$connection->expects(BaseTestCase::$_instance->any())
@@ -140,7 +142,7 @@ class Database extends DbDatabase {
 	 * @param string $sql    Query
 	 * @param array  $params Query params
 	 *
-	 * @return MockObject (statement)
+	 * @return MockBuilder (statement)
 	 */
 	public function executeDatabaseQuery($sql, $params = []) {
 

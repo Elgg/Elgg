@@ -150,8 +150,6 @@ System hooks
       * ``identifier`` - route identifier of the current page
       * ``segments`` - route segments of the current page
 
-**add, river**
-
 **elgg.data, site**
    Filters cached configuration data to pass to the client. :ref:`More info <guides/javascript#config>`
 

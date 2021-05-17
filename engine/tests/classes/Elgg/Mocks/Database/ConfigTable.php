@@ -20,16 +20,25 @@ class ConfigTable extends \Elgg\Database\ConfigTable {
 		'min_password_length' => 6,
 	];
 
-	public function get($name) {
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get(string $name) {
 		return elgg_extract($name, $this->all, []);
 	}
 
-	public function set($name, $value) {
+	/**
+	 * {@inheritDoc}
+	 */
+	public function set(string $name, $value): bool {
 		$this->all[$name] = $value;
 		return true;
 	}
 
-	public function getAll() {
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getAll(): array {
 		return $this->all;
 	}
 }

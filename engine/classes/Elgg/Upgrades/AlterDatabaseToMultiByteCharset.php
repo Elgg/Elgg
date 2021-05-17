@@ -153,11 +153,11 @@ class AlterDatabaseToMultiByteCharset implements AsynchronousUpgrade {
 
 		try {
 			// check if we need to change a global variable
-			$row = elgg()->db->getDataRow("SHOW GLOBAL VARIABLES LIKE 'innodb_large_prefix'");
+			$row = elgg()->db->getConnection('read')->executeQuery("SHOW GLOBAL VARIABLES LIKE 'innodb_large_prefix'");
 			
 			if (empty($row) || $row->Value === 'OFF') {
 				// required to allow bigger index sizes required for utf8mb4
-				elgg()->db->updateData("SET GLOBAL innodb_large_prefix = 'ON'");
+				elgg()->db->getConnection('write')->executeStatement("SET GLOBAL innodb_large_prefix = 'ON'");
 			}
 		} catch (\Exception $e) {
 			// something went wrong, maybe database permissions, or version
@@ -171,7 +171,8 @@ class AlterDatabaseToMultiByteCharset implements AsynchronousUpgrade {
 		
 		try {
 			// alter table structure
-			elgg()->db->updateData("
+			$connection = elgg()->db->getConnection('write');
+			$connection->executeStatement("
 				ALTER DATABASE
     			`{$config['database']}`
     			CHARACTER SET = utf8mb4
@@ -183,12 +184,12 @@ class AlterDatabaseToMultiByteCharset implements AsynchronousUpgrade {
 					foreach ($this->non_mb4_columns[$table] as $column => $index) {
 						if ($index) {
 							if ($index['primary']) {
-								elgg()->db->updateData("
+								$connection->executeStatement("
 									ALTER TABLE {$config['prefix']}{$table}
 									DROP PRIMARY KEY
 								");
 							} else {
-								elgg()->db->updateData("
+								$connection->executeStatement("
 									ALTER TABLE {$config['prefix']}{$table}
 									DROP KEY {$index['name']}
 								");
@@ -197,12 +198,12 @@ class AlterDatabaseToMultiByteCharset implements AsynchronousUpgrade {
 					}
 				}
 
-				elgg()->db->updateData("
+				$connection->executeStatement("
 					ALTER TABLE {$config['prefix']}{$table}
 					ROW_FORMAT=DYNAMIC
 				");
 
-				elgg()->db->updateData("
+				$connection->executeStatement("
 					ALTER TABLE {$config['prefix']}{$table}
 					CONVERT TO CHARACTER SET utf8mb4
 					COLLATE utf8mb4_general_ci
@@ -212,7 +213,7 @@ class AlterDatabaseToMultiByteCharset implements AsynchronousUpgrade {
 					foreach ($this->non_mb4_columns[$table] as $column => $index) {
 						if (empty($index['columns'])) {
 							// Alter table only if the key is not composite
-							elgg()->db->updateData("
+							$connection->executeStatement("
 								ALTER TABLE {$config['prefix']}{$table}
 								MODIFY $column VARCHAR(255)
 								CHARACTER SET utf8
@@ -235,7 +236,7 @@ class AlterDatabaseToMultiByteCharset implements AsynchronousUpgrade {
 							$sql .= " KEY {$index['name']} ($key_columns)";
 						}
 
-						elgg()->db->updateData("
+						$connection->executeStatement("
 							ALTER TABLE {$config['prefix']}{$table}
 							$sql
 						");
