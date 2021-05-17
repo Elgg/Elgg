@@ -36,4 +36,19 @@ foreach ($stylesheets as $url) {
 		_require_queue.push(arguments);
 	};
 	_require_queue = [];
+
+	/**
+	 * Wrapper for native import() fixing URIs to use cache URLs.
+	 * 
+	 * @param {string} uri Relative URI like "./elgg.mjs" or full URL
+	 * @returns {Promise<any>}
+	 */
+	<?php // Do not convert this to a regular function declaration. It gets redefined later. ?>
+	elgg_import = function (uri) {
+		return new Promise(res => {
+			// handled in the view "elgg.js"
+			_elgg_imports.push({ uri, res });
+		});
+	}
+	_elgg_imports = [];
 </script>

@@ -67,6 +67,21 @@ if (!window._require_queue) {
 	delete window._require_queue;
 }
 
+elgg._complete = true;
+
+// Redefine considering elgg is loaded
+elgg_import = function (uri) {
+	const url = uri.replace(/^\.\//, elgg.get_simplecache_url(''));
+	return import(url);
+};
+
+// Process delayed imports, calling saved Promise resolvers
+while (_elgg_imports.length) {
+	const { uri, res } = _elgg_imports.shift();
+	const url = uri.replace(/^\.\//, elgg.get_simplecache_url(''));
+	import(url).then(value => res(value));
+}
+
 elgg.trigger_hook('init', 'system');
 
 require(['elgg/lightbox']);

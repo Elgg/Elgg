@@ -27,6 +27,7 @@ class CacheHandler {
 		'js' => "application/javascript",
 		'json' => "application/json",
 		'map' => "application/json",
+		'mjs' => "application/javascript",
 		'otf' => "application/font-otf",
 		'png' => "image/png",
 		'svg' => "image/svg+xml",
