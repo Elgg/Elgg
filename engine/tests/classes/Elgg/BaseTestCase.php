@@ -90,10 +90,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 			'boot_cache_ttl' => 0,
 			'lastcache' => time(),
 			'elgg_config_locks' => false,
-
-			'profile_files' => [],
-			'group' => [],
-
+			
 			'minusername' => 10,
 			'profile_custom_fields' => [],
 			'elgg_maintenance_mode' => false,
