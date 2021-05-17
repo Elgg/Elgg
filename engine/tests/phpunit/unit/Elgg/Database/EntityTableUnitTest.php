@@ -75,8 +75,8 @@ class EntityTableUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
-				':last_action' => $new_last_action,
-				':guid' => $object->guid,
+				'last_action' => $new_last_action,
+				'guid' => $object->guid,
 			],
 			'row_count' => 1,
 		]);

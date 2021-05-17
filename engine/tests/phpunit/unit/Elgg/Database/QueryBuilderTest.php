@@ -46,8 +46,8 @@ class QueryBuilderTest extends UnitTestCase {
 
 	public function testCanSetNamedParameter() {
 
-		$key = $this->qb->param('value', ELGG_VALUE_STRING, 'key');
-		$this->assertEquals('key', $key);
+		$key = $this->qb->param('value', ELGG_VALUE_STRING, ':key');
+		$this->assertEquals(':key', $key);
 		$this->assertEquals('value', $this->qb->getParameter('key'));
 	}
 
@@ -56,8 +56,8 @@ class QueryBuilderTest extends UnitTestCase {
 		$key2 = $this->qb->param([1, 2], ELGG_VALUE_INTEGER);
 
 		$this->assertNotEquals($key1, $key2);
-		$this->assertEquals(1, $this->qb->getParameter($key1));
-		$this->assertEquals([1, 2], $this->qb->getParameter($key2));
+		$this->assertEquals(1, $this->qb->getParameter(ltrim($key1,':')));
+		$this->assertEquals([1, 2], $this->qb->getParameter(ltrim($key2,':')));
 	}
 
 	public function testCanJoinEntitiesTableWithAlias() {

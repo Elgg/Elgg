@@ -26,7 +26,7 @@ class Logger extends \Monolog\Logger {
 
 	const CHANNEL = 'ELGG';
 
-	const OFF = false;
+	const OFF = 600; // use highest log level for OFF
 
 	/**
 	 * Severity levels
@@ -224,7 +224,7 @@ class Logger extends \Monolog\Logger {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function log($level, $message, array $context = []) {
+	public function log($level, $message, array $context = []): void {
 
 		$level = $this->normalizeLevel($level);
 
@@ -239,71 +239,71 @@ class Logger extends \Monolog\Logger {
 		}
 
 		if (!$this->isLoggable($level)) {
-			return false;
+			return;
 		}
 
 		// when capturing, still use consistent return value
 		if (!empty($this->disabled_stack)) {
-			return true;
+			return;
 		}
 
-		return parent::log($level, $message, $context);
+		parent::log($level, $message, $context);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function emergency($message, array $context = []) {
-		return $this->log(LogLevel::EMERGENCY, $message, $context);
+	public function emergency($message, array $context = []): void {
+		$this->log(LogLevel::EMERGENCY, $message, $context);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function alert($message, array $context = []) {
-		return $this->log(LogLevel::ALERT, $message, $context);
+	public function alert($message, array $context = []): void {
+		$this->log(LogLevel::ALERT, $message, $context);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function critical($message, array $context = []) {
-		return $this->log(LogLevel::CRITICAL, $message, $context);
+	public function critical($message, array $context = []): void {
+		$this->log(LogLevel::CRITICAL, $message, $context);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function error($message, array $context = []) {
-		return $this->log(LogLevel::ERROR, $message, $context);
+	public function error($message, array $context = []): void {
+		$this->log(LogLevel::ERROR, $message, $context);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function warning($message, array $context = []) {
-		return $this->log(LogLevel::WARNING, $message, $context);
+	public function warning($message, array $context = []): void {
+		$this->log(LogLevel::WARNING, $message, $context);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function notice($message, array $context = []) {
-		return $this->log(LogLevel::NOTICE, $message, $context);
+	public function notice($message, array $context = []): void {
+		$this->log(LogLevel::NOTICE, $message, $context);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function info($message, array $context = []) {
-		return $this->log(LogLevel::INFO, $message, $context);
+	public function info($message, array $context = []): void {
+		$this->log(LogLevel::INFO, $message, $context);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function debug($message, array $context = []) {
-		return $this->log(LogLevel::DEBUG, $message, $context);
+	public function debug($message, array $context = []): void {
+		$this->log(LogLevel::DEBUG, $message, $context);
 	}
 
 	/**
@@ -311,10 +311,10 @@ class Logger extends \Monolog\Logger {
 	 *
 	 * @param mixed $data The data to log
 	 *
-	 * @return bool
+	 * @return void
 	 */
 	public function dump($data) {
-		return $this->log(LogLevel::ERROR, $data);
+		$this->log(LogLevel::ERROR, $data);
 	}
 
 	/**

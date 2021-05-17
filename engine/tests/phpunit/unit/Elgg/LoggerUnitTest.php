@@ -21,18 +21,18 @@ class LoggerUnitTest extends \Elgg\UnitTestCase {
 	public function testLoggingOff() {
 		$logger = $this->getLoggerInstance();
 		$logger->setLevel(false);
-		$this->assertFalse($logger->log(LogLevel::NOTICE, "hello"));
+		$logger->log(LogLevel::NOTICE, "hello");
 	}
 
 	public function testLoggingLevelTooLow() {
 		$logger = $this->getLoggerInstance();
 		$logger->setLevel(LogLevel::WARNING);
-		$this->assertFalse($logger->log(LogLevel::NOTICE, "hello"));
+		$logger->log(LogLevel::NOTICE, "hello");
 	}
 
 	public function testLoggingLevelNotExist() {
 		$logger = $this->getLoggerInstance();
-		$this->assertFalse($logger->log(12, "hello"));
+		$logger->log(12, "hello");
 	}
 
 	public function testDisablePreventsProcessingAndCapturesLogCalls() {

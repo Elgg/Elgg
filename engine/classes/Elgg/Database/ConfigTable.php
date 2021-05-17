@@ -56,7 +56,7 @@ class ConfigTable {
 		";
 
 		$params = [
-			':name' => $name,
+			'name' => $name,
 		];
 		
 		$this->boot->clearCache();
@@ -96,8 +96,8 @@ class ConfigTable {
 		";
 		
 		$params = [
-			':name' => $name,
-			':value' => serialize($value),
+			'name' => $name,
+			'value' => serialize($value),
 		];
 				
 		$result = $this->db->insertData($sql, $params);
@@ -126,7 +126,7 @@ class ConfigTable {
 			WHERE name = :name
 		";
 		$params = [
-			':name' => $name,
+			'name' => $name,
 		];
 		
 		$result = $this->db->getDataRow($sql, null, $params);

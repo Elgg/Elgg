@@ -39,7 +39,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 			FROM {$this->db->prefix}users_sessions
 			WHERE session = :session_id";
 		$params = [
-			':session_id' => $session_id,
+			'session_id' => $session_id,
 		];
 		
 		$result = $this->db->getDataRow($query, null, $params);
@@ -64,9 +64,9 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 			(:session_id, :time, :data)
 			ON DUPLICATE KEY UPDATE ts = VALUES(ts), data = VALUES(data)";
 		$params = [
-			':session_id' => $session_id,
-			':time' => time(),
-			':data' => $session_data,
+			'session_id' => $session_id,
+			'time' => time(),
+			'data' => $session_data,
 		];
 
 		if ($this->db->insertData($query, $params) !== false) {
@@ -91,7 +91,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 		$query = "DELETE FROM {$this->db->prefix}users_sessions
 			WHERE session = :session_id";
 		$params = [
-			':session_id' => $session_id,
+			'session_id' => $session_id,
 		];
 		
 		return (bool) $this->db->deleteData($query, $params);
@@ -105,7 +105,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 		$query = "DELETE FROM {$this->db->prefix}users_sessions
 			WHERE ts < :life";
 		$params = [
-			':life' => (time() - $max_lifetime),
+			'life' => (time() - $max_lifetime),
 		];
 		
 		return (bool) $this->db->deleteData($query, $params);

@@ -184,25 +184,25 @@ class Database extends DbDatabase {
 			);
 		}
 
-		$statement = BaseTestCase::$_instance->getMockBuilder(\Doctrine\DBAL\PDOStatement::class)
+		$result = BaseTestCase::$_instance->getMockBuilder(\Doctrine\DBAL\Result::class)
 			->setMethods([
-				'fetch',
+				'fetchAssociative',
 				'rowCount',
 			])
 			->disableOriginalConstructor()
 			->getMock();
 
-		$statement->expects(BaseTestCase::$_instance->any())
-			->method('fetch')
+		$result->expects(BaseTestCase::$_instance->any())
+			->method('fetchAssociative')
 			->will(BaseTestCase::$_instance->returnCallback(function () use (&$results) {
 				return array_shift($results);
 			}));
 
-		$statement->expects(BaseTestCase::$_instance->any())
+		$result->expects(BaseTestCase::$_instance->any())
 			->method('rowCount')
 			->will(BaseTestCase::$_instance->returnValue($row_count));
 
-		return $statement;
+		return $result;
 	}
 
 	/**

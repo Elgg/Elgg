@@ -88,8 +88,8 @@ use Elgg\Traits\Loggable;
  * @property int           $notifications_max_runtime               The max runtime for the notification queue processing in seconds since the start of the cron interval
  * @property string[]      $pages
  * @property-read string   $path         							Path of composer install with trailing "/"
- * @property-read string   $pluginspath  							Alias of plugins_path
- * @property-read string   $plugins_path 							Path of project "mod/" directory where the plugins are stored
+ * @property string        $pluginspath  							Alias of plugins_path
+ * @property string        $plugins_path 							Path of project "mod/" directory where the plugins are stored
  * @property array         $profile_custom_fields
  * @property array         $profile_fields
  * @property string        $profiling_minimum_percentage

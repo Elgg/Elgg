@@ -136,7 +136,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	public function param($value, $type = null, $key = null) {
 		if (!$key) {
 			$parameters = $this->getParameters();
-			$key = ":qb" . (count($parameters) + 1);
+			$key = ':qb' . (count($parameters) + 1);
 		}
 
 		if (is_array($value)) {
@@ -147,9 +147,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 			}
 		}
 
-		$this->setParameter($key, $value, $type);
-
-		return $key;
+		return $this->createNamedParameter($value, $type, $key);
 	}
 
 	/**
@@ -160,11 +158,19 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	public function execute(bool $track_query = true) {
 		
 		if (!$track_query) {
-			return parent::execute();
+			if ($this instanceof Select) {
+				return parent::executeQuery();
+			} else {
+				return parent::executeStatement();
+			}
 		}
 		
 		return _elgg_services()->db->trackQuery($this, [], function() {
-			return parent::execute();
+			if ($this instanceof Select) {
+				return parent::executeQuery();
+			} else {
+				return parent::executeStatement();
+			}
 		});
 	}
 	

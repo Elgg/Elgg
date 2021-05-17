@@ -77,9 +77,9 @@ class AccessCollections extends DbAccessCollections {
 		";
 
 		$params = [
-			':name' => $row->name,
-			':subtype' => $row->subtype,
-			':owner_guid' => (int) $row->owner_guid,
+			'name' => $row->name,
+			'subtype' => $row->subtype,
+			'owner_guid' => (int) $row->owner_guid,
 		];
 		
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([

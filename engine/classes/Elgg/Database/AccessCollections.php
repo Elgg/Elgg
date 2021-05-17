@@ -182,7 +182,7 @@ class AccessCollections {
 				";
 
 				$collections = $this->db->getData($query, null, [
-					':user_guid' => $user_guid,
+					'user_guid' => $user_guid,
 				]);
 
 				if (!empty($collections)) {
@@ -460,9 +460,9 @@ class AccessCollections {
 		";
 
 		$params = [
-			':name' => $name,
-			':subtype' => $subtype,
-			':owner_guid' => $owner_guid,
+			'name' => $name,
+			'subtype' => $subtype,
+			'owner_guid' => $owner_guid,
 		];
 
 		$id = $this->db->insertData($query, $params);
@@ -503,8 +503,8 @@ class AccessCollections {
 		";
 
 		$params = [
-			':name' => $name,
-			':id' => (int) $collection_id,
+			'name' => $name,
+			'id' => (int) $collection_id,
 		];
 
 		if ($this->db->updateData($query, true, $params)) {
@@ -598,7 +598,7 @@ class AccessCollections {
 			WHERE access_collection_id = :access_collection_id
 		";
 		$this->db->deleteData($query, [
-			':access_collection_id' => $collection_id,
+			'access_collection_id' => $collection_id,
 		]);
 
 		$query = "
@@ -606,7 +606,7 @@ class AccessCollections {
 			WHERE id = :id
 		";
 		$result = $this->db->deleteData($query, [
-			':id' => $collection_id,
+			'id' => $collection_id,
 		]);
 
 		$this->access_cache->clear();
@@ -645,7 +645,7 @@ class AccessCollections {
 		";
 
 		$result = $this->db->getDataRow($query, $callback, [
-			':id' => $collection_id,
+			'id' => $collection_id,
 		]);
 
 		if (empty($result)) {
@@ -710,8 +710,8 @@ class AccessCollections {
 		";
 
 		$result = $this->db->insertData($query, [
-			':access_collection_id' => $collection->id,
-			':user_guid' => $user_guid,
+			'access_collection_id' => $collection->id,
+			'user_guid' => $user_guid,
 		]);
 
 		$this->access_cache->clear();
@@ -749,8 +749,8 @@ class AccessCollections {
 		$this->access_cache->clear();
 
 		return (bool) $this->db->deleteData($query, [
-			':access_collection_id' => $collection_id,
-			':user_guid' => $user_guid,
+			'access_collection_id' => $collection_id,
+			'user_guid' => $user_guid,
 		]);
 	}
 
@@ -775,7 +775,7 @@ class AccessCollections {
 				continue;
 			}
 			$wheres[] = "{$option} = :{$option}";
-			$params[":{$option}"] = $option_value;
+			$params["{$option}"] = $option_value;
 		}
 
 		$query = "SELECT * FROM {$this->table}";
@@ -824,7 +824,7 @@ class AccessCollections {
 		";
 
 		return $this->db->getData($query, $callback, [
-			':member_guid' => (int) $member_guid,
+			'member_guid' => (int) $member_guid,
 		]);
 	}
 
@@ -872,5 +872,4 @@ class AccessCollections {
 
 		return $collection->getDisplayName();
 	}
-
 }

@@ -391,14 +391,14 @@ class EntityTable extends DbEntityTable {
 		$this->query_specs[$row->guid][] = _elgg_services()->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
-				':type' => $row->type ? : 'object',
-				':subtype' => $row->subtype,
-				':owner_guid' => $row->owner_guid,
-				':container_guid' => $row->container_guid,
-				':access_id' => $row->access_id,
-				':time_created' => $row->time_created,
-				':time_updated' => $row->time_updated,
-				':last_action' => $row->last_action,
+				'type' => $row->type ? : 'object',
+				'subtype' => $row->subtype,
+				'owner_guid' => $row->owner_guid,
+				'container_guid' => $row->container_guid,
+				'access_id' => $row->access_id,
+				'time_created' => $row->time_created,
+				'time_updated' => $row->time_updated,
+				'last_action' => $row->last_action,
 			],
 			'insert_id' => $row->guid,
 		]);
@@ -428,12 +428,12 @@ class EntityTable extends DbEntityTable {
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
-				':owner_guid' => $row->owner_guid,
-				':access_id' => $row->access_id,
-				':container_guid' => $row->container_guid,
-				':time_created' => $row->time_created,
-				':time_updated' => $row->time_updated,
-				':guid' => $row->guid,
+				'owner_guid' => $row->owner_guid,
+				'access_id' => $row->access_id,
+				'container_guid' => $row->container_guid,
+				'time_created' => $row->time_created,
+				'time_updated' => $row->time_updated,
+				'guid' => $row->guid,
 			],
 			'results' => function () use ($row) {
 				if (isset($this->rows[$row->guid])) {
@@ -455,8 +455,8 @@ class EntityTable extends DbEntityTable {
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
-				':qb1' => 'no',
-				':qb2' => $row->guid,
+				'qb1' => 'no',
+				'qb2' => $row->guid,
 			],
 			'results' => function () use ($row) {
 				if (isset($this->rows[$row->guid])) {
@@ -481,8 +481,8 @@ class EntityTable extends DbEntityTable {
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
-				':qb1' => 'yes',
-				':qb2' => $row->guid,
+				'qb1' => 'yes',
+				'qb2' => $row->guid,
 			],
 			'results' => function () use ($row) {
 				if (isset($this->rows[$row->guid])) {
@@ -510,8 +510,8 @@ class EntityTable extends DbEntityTable {
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
-				':last_action' => $time,
-				':guid' => $row->guid,
+				'last_action' => $time,
+				'guid' => $row->guid,
 			],
 			'results' => function () use ($row, $time) {
 				if (isset($this->rows[$row->guid])) {

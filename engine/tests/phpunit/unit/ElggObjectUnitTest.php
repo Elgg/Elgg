@@ -109,8 +109,8 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		";
 
 		$params = [
-			':access_id' => (int) $object->access_id,
-			':object_guid' => (int) $object->guid,
+			'access_id' => (int) $object->access_id,
+			'object_guid' => (int) $object->guid,
 		];
 
 		_elgg_services()->db->addQuerySpec([
