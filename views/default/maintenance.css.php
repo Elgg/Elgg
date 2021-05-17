@@ -49,7 +49,7 @@ a {
 
 	background-color: #FFF;
 	border: 1px solid #DEDEDE;
-	padding: 10px;
+	padding: 30px 10px;
 
 	border-radius: 3px;
 	box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.25);

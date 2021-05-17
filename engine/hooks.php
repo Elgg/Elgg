@@ -10,11 +10,6 @@ return [
 			\Elgg\WalledGarden\RemovePublicAccessHandler::class => ['priority' => 9999],
 		],
 	],
-	'action' => [
-		'all' => [
-			'Elgg\Maintenance\Routing::preventAction' => ['priority' => 600],
-		],
-	],
 	'action:validate' => [
 		'all' => [
 			\Elgg\Entity\CropIcon::class => [],
@@ -252,11 +247,6 @@ return [
 			'Elgg\Users\Validation::setRegistrationForwardUrl' => [
 				'priority' => 999, // allow other to set forwar url first
 			],
-		],
-	],
-	'route' => [
-		'all' => [
-			'Elgg\Maintenance\Routing::redirectRoute' => ['priority' => 600],
 		],
 	],
 	'search:fields' => [

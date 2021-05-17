@@ -50,7 +50,7 @@ use Elgg\Traits\Loggable;
  * @property bool          $disable_rss 							Is RSS disabled
  * @property bool          $elgg_config_locks 						The application will lock some settings (default true)
  * @property bool          $elgg_load_sync_code
- * @property bool          $elgg_maintenance_mode
+ * @property bool          $elgg_maintenance_mode                   Flag if maintenance mode is enabled
  * @property string        $elgg_settings_file
  * @property bool          $elgg_config_set_secret
  * @property bool          $email_html_part                         Determines if email has a html part
@@ -88,8 +88,8 @@ use Elgg\Traits\Loggable;
  * @property int           $notifications_max_runtime               The max runtime for the notification queue processing in seconds since the start of the cron interval
  * @property string[]      $pages
  * @property-read string   $path         							Path of composer install with trailing "/"
- * @property string        $pluginspath  							Alias of plugins_path
- * @property string        $plugins_path 							Path of project "mod/" directory where the plugins are stored
+ * @property-read string   $pluginspath  							Alias of plugins_path
+ * @property-read string   $plugins_path 							Path of project "mod/" directory where the plugins are stored
  * @property array         $profile_custom_fields
  * @property array         $profile_fields
  * @property string        $profiling_minimum_percentage
@@ -187,6 +187,7 @@ class Config {
 		'comment_box_collapses' => true,
 		'comments_latest_first' => true,
 		'comments_per_page' => 25,
+		'elgg_maintenance_mode' => false,
 		'email_html_part' => true,
 		'email_html_part_images' => 'no',
 		'email_subject_limit' => 998,
