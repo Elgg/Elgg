@@ -4,6 +4,7 @@ namespace Elgg\Router;
 
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\PluginHooksService;
+use Elgg\Router\Middleware\MaintenanceGatekeeper;
 use Elgg\Router\Middleware\WalledGarden;
 use Elgg\Traits\Loggable;
 
@@ -135,6 +136,8 @@ class RouteRegistrationService {
 		if ($protected !== false) {
 			$middleware[] = WalledGarden::class;
 		}
+		
+		$middleware[] = MaintenanceGatekeeper::class;
 
 		$defaults['_controller'] = $controller;
 		$defaults['_file'] = $file;

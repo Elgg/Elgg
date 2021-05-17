@@ -466,8 +466,6 @@ Core
 * ``_elgg_admin_footer_menu()`` changed to ``Elgg\Menus\AdminFooter::registerHelpResources()``
 * ``_elgg_admin_get_admin_subscribers_admin_action()`` changed to ``Elgg\Notification\ChangeAdminNotification::addSiteAdminSubscribers()``
 * ``_elgg_admin_get_user_subscriber_admin_action()`` changed to ``Elgg\Notification\ChangeAdminNotification::addUserSubscriber()``
-* ``_elgg_admin_maintenance_action_check()`` changed to ``Elgg\Maintenance\Routing::preventAction()``
-* ``_elgg_admin_maintenance_handler()`` changed to ``Elgg\Maintenance\Routing::redirectRoute()``
 * ``_elgg_admin_notify_admins_pending_user_validation()`` changed to ``Elgg\Users\Validation::notifyAdminsAboutPendingUsers()``
 * ``_elgg_admin_page_menu()`` changed to ``Elgg\Menus\Page::registerAdminAdminister()`` and ``Elgg\Menus\Page::registerAdminConfigure()`` and ``Elgg\Menus\Page::registerAdminInformation()``
 * ``_elgg_admin_page_menu_plugin_settings()`` changed to ``Elgg\Menus\Page::registerAdminPluginSettings()``
