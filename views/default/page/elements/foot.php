@@ -16,7 +16,22 @@ foreach ($js as $url) {
 }
 
 $deps = _elgg_services()->amdConfig->getDependencies();
+
+// Load modules with elgg_import().
+$imports = [];
+$deps = array_filter($deps, function ($dep) use (&$imports) {
+	if (preg_match('~\\.mjs$~', $dep, $m)) {
+		$imports[] = $dep;
+		return false;
+	}
+
+	return true;
+});
+
 ?>
 <script>
 require(<?= json_encode($deps, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>);
+<?php foreach ($imports as $uri): ?>
+elgg_import(<?= json_encode($uri, JSON_UNESCAPED_SLASHES) ?>);
+<?php endforeach; ?>
 </script>

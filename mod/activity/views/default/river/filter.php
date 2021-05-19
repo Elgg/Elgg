@@ -10,7 +10,7 @@ if (empty($registered_entities)) {
 	return;
 }
 
-elgg_require_js('river/filter');
+elgg_require_js('./river/filter.mjs');
 
 // create selection array
 $options = [
