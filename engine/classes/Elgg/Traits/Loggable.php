@@ -68,4 +68,16 @@ trait Loggable {
 		$logged = $this->getLogger()->log($level, $message, $context);
 		return isset($logged) ? $logged : true;
 	}
+	
+	/**
+	 * Sends a message about deprecated use of a function, view, etc.
+	 *
+	 * @param string $message Message to log
+	 * @param string $version Human-readable *release* version: 1.7, 1.8, ...
+	 *
+	 * @return void
+	 */
+	public function logDeprecatedMessage(string $message, string $version): void {
+		$this->getLogger()->warning("Deprecated in {$version}: {$message}");
+	}
 }

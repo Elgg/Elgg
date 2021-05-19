@@ -2,8 +2,9 @@
 
 namespace Elgg\Integration;
 
+use Elgg\Database\AccessCollections;
+use Elgg\Database\Select;
 use Elgg\IntegrationTestCase;
-use ElggAccessCollection;
 
 /**
  * Access Collections tests
@@ -42,10 +43,13 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 
 		$this->assertTrue(is_int($acl_id));
 
-		$q = "SELECT * FROM {$this->dbprefix}access_collections WHERE id = $acl_id";
-		$acl = elgg()->db->getDataRow($q);
+		$select = Select::fromTable(AccessCollections::TABLE_NAME);
+		$select->select('*')
+			->where($select->compare('id', '=', $acl_id, ELGG_VALUE_ID));
+		
+		$acl = elgg()->db->getDataRow($select);
 
-		$this->assertEquals($acl->id, $acl_id);
+		$this->assertEquals((int) $acl->id, $acl_id);
 
 		if ($acl) {
 			$this->assertEquals($acl->name, $acl_name);
@@ -53,8 +57,7 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 			$result = delete_access_collection($acl_id);
 			$this->assertTrue($result);
 
-			$q = "SELECT * FROM {$this->dbprefix}access_collections WHERE id = $acl_id";
-			$data = elgg()->db->getData($q);
+			$data = elgg()->db->getData($select);
 			$this->assertEquals([], $data);
 		}
 	}
@@ -102,9 +105,11 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 			$this->assertTrue($result);
 
 			if ($result) {
-				$q = "SELECT * FROM {$this->dbprefix}access_collection_membership
-					WHERE access_collection_id = $acl_id";
-				$data = elgg()->db->getData($q);
+				$select = Select::fromTable(AccessCollections::MEMBERSHIP_TABLE_NAME);
+				$select->select('*')
+					->where($select->compare('access_collection_id', '=', $acl_id, ELGG_VALUE_ID));
+				
+				$data = elgg()->db->getData($select);
 
 				$this->assertEquals(count($members), count($data));
 				
@@ -336,7 +341,7 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 
 		$acl = get_access_collection($owned_collection_id);
 
-		$this->assertInstanceOf(ElggAccessCollection::class, $acl);
+		$this->assertInstanceOf(\ElggAccessCollection::class, $acl);
 		$this->assertEquals($owned_collection_id, $acl->id);
 		$this->assertEquals($this->user->guid, $acl->owner_guid);
 		$this->assertEquals('test', $acl->name);
@@ -349,7 +354,7 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 
 		$id = create_access_collection('test_collection', $this->user->guid);
 
-		$acl = new ElggAccessCollection((object) [
+		$acl = new \ElggAccessCollection((object) [
 			'id' => $id,
 			'owner_guid' => $this->user->guid,
 			'name' => 'test_collection',
@@ -383,7 +388,7 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 		$id = create_access_collection('test_collection', $this->user->guid);
 		$acl = get_access_collection($id);
 
-		$this->assertInstanceOf(ElggAccessCollection::class, $acl);
+		$this->assertInstanceOf(\ElggAccessCollection::class, $acl);
 
 		$this->assertTrue($acl->addMember($member1->guid));
 		$this->assertTrue($acl->addMember($member2->guid));

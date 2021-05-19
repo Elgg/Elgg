@@ -5,9 +5,9 @@ namespace Elgg\Mocks\Database;
 use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Delete;
 use Elgg\Database\EntityTable as DbEntityTable;
+use Elgg\Database\Insert;
 use Elgg\Database\Select;
-use ElggEntity;
-use stdClass;
+use Elgg\Database\Update;
 
 /**
  * This mock table is designed to simplify testing of DB-dependent services.
@@ -21,7 +21,7 @@ use stdClass;
 class EntityTable extends DbEntityTable {
 
 	/**
-	 * @var stdClass[]
+	 * @var \stdClass[]
 	 */
 	public $rows = [];
 
@@ -87,7 +87,7 @@ class EntityTable extends DbEntityTable {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function insertRow(stdClass $row, array $attributes = []) {
+	public function insertRow(\stdClass $row, array $attributes = []) {
 		$subtype = isset($row->subtype) ? $row->subtype : null;
 		$this->setup(null, $row->type, $subtype, array_merge($attributes, (array) $row));
 
@@ -97,7 +97,7 @@ class EntityTable extends DbEntityTable {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function updateRow($guid, stdClass $row) {
+	public function updateRow($guid, \stdClass $row) {
 		$attributes = array_merge((array) $this->rows[$guid], (array) $row);
 
 		// Rebuild query specs for the udpated row
@@ -114,7 +114,7 @@ class EntityTable extends DbEntityTable {
 	 * @param string $subtype    Subtype of the mock entity
 	 * @param array  $attributes Attributes of the mock entity
 	 *
-	 * @return ElggEntity
+	 * @return \ElggEntity
 	 */
 	public function setup($guid, $type, $subtype, array $attributes = []) {
 		while (!isset($guid)) {
@@ -220,11 +220,11 @@ class EntityTable extends DbEntityTable {
 	/**
 	 * Add query specs
 	 *
-	 * @param stdClass $row Entity table row
+	 * @param \stdClass $row Entity table row
 	 *
 	 * @return void
 	 */
-	public function addQuerySpecs(stdClass $row) {
+	public function addQuerySpecs(\stdClass $row) {
 
 		// Clear previous added specs, if any
 		$this->clearQuerySpecs($row->guid);
@@ -242,11 +242,11 @@ class EntityTable extends DbEntityTable {
 	/**
 	 * Add query specs for SELECT queries
 	 *
-	 * @param stdClass $row Data row
+	 * @param \stdClass $row Data row
 	 *
 	 * @return void
 	 */
-	public function addSelectQuerySpecs(stdClass $row) {
+	public function addSelectQuerySpecs(\stdClass $row) {
 
 		// Access SQL for this row might differ based on:
 		//  - logged in user
@@ -371,35 +371,26 @@ class EntityTable extends DbEntityTable {
 	/**
 	 * Query specs for INSERT operations
 	 *
-	 * @param stdClass $row Data row
+	 * @param \stdClass $row Data row
 	 *
 	 * @return void
 	 */
-	public function addInsertQuerySpecs(stdClass $row) {
-
-		$dbprefix = _elgg_services()->config->dbprefix;
-
-		$sql = "
-			INSERT INTO {$dbprefix}entities
-			(type, subtype, owner_guid, container_guid,
-				access_id, time_created, time_updated, last_action)
-			VALUES
-			(:type, :subtype, :owner_guid, :container_guid,
-				:access_id, :time_created, :time_updated, :last_action)
-		";
-
+	public function addInsertQuerySpecs(\stdClass $row) {
+		$insert = Insert::intoTable(self::TABLE_NAME);
+		$insert->values([
+			'type' => $insert->param($row->type, ELGG_VALUE_STRING),
+			'subtype' => $insert->param($row->subtype, ELGG_VALUE_STRING),
+			'owner_guid' => $insert->param($row->owner_guid, ELGG_VALUE_GUID),
+			'container_guid' => $insert->param($row->container_guid, ELGG_VALUE_GUID),
+			'access_id' => $insert->param($row->access_id, ELGG_VALUE_ID),
+			'time_created' => $insert->param($row->time_created, ELGG_VALUE_TIMESTAMP),
+			'time_updated' => $insert->param($row->time_updated, ELGG_VALUE_TIMESTAMP),
+			'last_action' => $insert->param($row->last_action, ELGG_VALUE_TIMESTAMP),
+		]);
+		
 		$this->query_specs[$row->guid][] = _elgg_services()->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				'type' => $row->type ? : 'object',
-				'subtype' => $row->subtype,
-				'owner_guid' => $row->owner_guid,
-				'container_guid' => $row->container_guid,
-				'access_id' => $row->access_id,
-				'time_created' => $row->time_created,
-				'time_updated' => $row->time_updated,
-				'last_action' => $row->last_action,
-			],
+			'sql' => $insert->getSQL(),
+			'params' => $insert->getParameters(),
 			'insert_id' => $row->guid,
 		]);
 	}
@@ -407,34 +398,22 @@ class EntityTable extends DbEntityTable {
 	/**
 	 * Query specs for UPDATE operations
 	 *
-	 * @param stdClass $row Data row
+	 * @param \stdClass $row Data row
 	 *
 	 * @return void
 	 */
-	public function addUpdateQuerySpecs(stdClass $row) {
-
-		$dbprefix = _elgg_services()->config->dbprefix;
-
-		$sql = "
-			UPDATE {$dbprefix}entities
-			SET owner_guid = :owner_guid,
-				access_id = :access_id,
-				container_guid = :container_guid,
-				time_created = :time_created,
-				time_updated = :time_updated
-			WHERE guid = :guid
-		";
-
+	public function addUpdateQuerySpecs(\stdClass $row) {
+		$update = Update::table(self::TABLE_NAME);
+		$update->set('owner_guid', $update->param($row->owner_guid, ELGG_VALUE_GUID))
+			->set('container_guid', $update->param($row->container_guid, ELGG_VALUE_GUID))
+			->set('access_id', $update->param($row->access_id, ELGG_VALUE_ID))
+			->set('time_created', $update->param($row->time_created, ELGG_VALUE_TIMESTAMP))
+			->set('time_updated', $update->param($row->time_updated, ELGG_VALUE_TIMESTAMP))
+			->where($update->compare('guid', '=', $row->guid, ELGG_VALUE_GUID));
+		
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				'owner_guid' => $row->owner_guid,
-				'access_id' => $row->access_id,
-				'container_guid' => $row->container_guid,
-				'time_created' => $row->time_created,
-				'time_updated' => $row->time_updated,
-				'guid' => $row->guid,
-			],
+			'sql' => $update->getSQL(),
+			'params' => $update->getParameters(),
 			'results' => function () use ($row) {
 				if (isset($this->rows[$row->guid])) {
 					$this->rows[$row->guid] = $row;
@@ -447,17 +426,13 @@ class EntityTable extends DbEntityTable {
 		]);
 
 		// Disable
-		$sql = "
-			UPDATE {$dbprefix}entities
-			SET enabled = :qb1
-			WHERE guid = :qb2
-		";
+		$qb = Update::table(self::TABLE_NAME);
+		$qb->set('enabled', $qb->param('no', ELGG_VALUE_STRING))
+			->where($qb->compare('guid', '=', $row->guid, ELGG_VALUE_GUID));
+		
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				'qb1' => 'no',
-				'qb2' => $row->guid,
-			],
+			'sql' => $qb->getSQL(),
+			'params' => $qb->getParameters(),
 			'results' => function () use ($row) {
 				if (isset($this->rows[$row->guid])) {
 					$row->enabled = 'no';
@@ -473,17 +448,13 @@ class EntityTable extends DbEntityTable {
 		]);
 
 		// Enable
-		$sql = "
-			UPDATE {$dbprefix}entities
-			SET enabled = :qb1
-			WHERE guid = :qb2
-		";
+		$qb = Update::table(self::TABLE_NAME);
+		$qb->set('enabled', $qb->param('yes', ELGG_VALUE_STRING))
+			->where($qb->compare('guid', '=', $row->guid, ELGG_VALUE_GUID));
+		
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				'qb1' => 'yes',
-				'qb2' => $row->guid,
-			],
+			'sql' => $qb->getSQL(),
+			'params' => $qb->getParameters(),
 			'results' => function () use ($row) {
 				if (isset($this->rows[$row->guid])) {
 					$row->enabled = 'yes';
@@ -500,19 +471,14 @@ class EntityTable extends DbEntityTable {
 
 		// Update last action
 		$time = $this->getCurrentTime()->getTimestamp();
-
-		$sql = "
-			UPDATE {$dbprefix}entities
-			SET last_action = :last_action
-			WHERE guid = :guid
-		";
-
+		
+		$update = Update::table(self::TABLE_NAME);
+		$update->set('last_action', $update->param($time, ELGG_VALUE_TIMESTAMP))
+			->where($update->compare('guid', '=', $row->guid, ELGG_VALUE_GUID));
+		
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				'last_action' => $time,
-				'guid' => $row->guid,
-			],
+			'sql' => $update->getSQL(),
+			'params' => $update->getParameters(),
 			'results' => function () use ($row, $time) {
 				if (isset($this->rows[$row->guid])) {
 					$row->last_action = $time;
@@ -530,13 +496,11 @@ class EntityTable extends DbEntityTable {
 	/**
 	 * Query specs for DELETE operations
 	 *
-	 * @param stdClass $row Data row
+	 * @param \stdClass $row Data row
 	 *
 	 * @return void
 	 */
 	public function addDeleteQuerySpecs(\stdClass $row) {
-
-		$dbprefix = _elgg_services()->config->dbprefix;
 
 		$qb = Delete::fromTable('entities');
 		$qb->where($qb->compare('guid', '=', $row->guid, ELGG_VALUE_INTEGER));
@@ -575,26 +539,14 @@ class EntityTable extends DbEntityTable {
 		}
 
 		// Private settings cleanup
-		$sql = "
-			DELETE FROM {$dbprefix}private_settings
-			WHERE entity_guid = $row->guid
-		";
-
+		$qb = Delete::fromTable('private_settings');
+		$qb->where($qb->compare('entity_guid', '=', $row->guid, ELGG_VALUE_INTEGER));
+		
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-			'sql' => $sql,
+			'sql' => $qb->getSQL(),
+			'params' => $qb->getParameters(),
 			'row_count' => 0,
 			'times' => 1,
 		]);
-
-		// River table clean up
-		foreach (['subject_guid', 'object_guid', 'target_guid'] as $column) {
-			$sql = "DELETE rv.* FROM {$dbprefix}river rv  WHERE (rv.$column IN ($row->guid)) AND 1=1";
-			$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-				'sql' => $sql,
-				'row_count' => 0,
-				'times' => 1,
-			]);
-		}
 	}
-
 }

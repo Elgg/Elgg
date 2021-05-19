@@ -56,7 +56,7 @@ return [
 			\Elgg\Friends\CreateAclHandler::class => [],
 		],
 	],
-	'created' => [
+	'create:after' => [
 		'river' => [
 			\Elgg\River\UpdateLastActionHandler::class => [],
 		],

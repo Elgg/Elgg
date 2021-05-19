@@ -59,7 +59,6 @@ use Elgg\Security\PasswordGeneratorService;
  * @property-read \Elgg\Database\DbConfig                         $dbConfig
  * @property-read \Elgg\Database\DelayedEmailQueueTable           $delayedEmailQueueTable
  * @property-read \Elgg\Email\DelayedEmailService                 $delayedEmailService
- * @property-read \Elgg\DeprecationService                        $deprecation
  * @property-read \Elgg\DI\PublicContainer                        $dic
  * @property-read \Di\ContainerBuilder                            $dic_builder
  * @property-read \Elgg\Di\DefinitionLoader                       $dic_loader
@@ -108,6 +107,7 @@ use Elgg\Security\PasswordGeneratorService;
  * @property-read \Elgg\Router\RequestContext                     $requestContext
  * @property-read \Elgg\Http\ResponseFactory                      $responseFactory
  * @property-read \Elgg\Database\RelationshipsTable               $relationshipsTable
+ * @property-read \Elgg\Database\RiverTable                       $riverTable
  * @property-read \Elgg\Router\RouteCollection                    $routeCollection
  * @property-read \Elgg\Router\RouteRegistrationService           $routes
  * @property-read \Elgg\Router                                    $router
@@ -331,8 +331,6 @@ class ServiceProvider extends DiContainer {
 		$this->setFactory('delayedEmailService', function (ServiceProvider $sp) {
 			return new \Elgg\Email\DelayedEmailService($sp->delayedEmailQueueTable, $sp->emails, $sp->views, $sp->translator, $sp->invoker);
 		});
-
-		$this->setClassName('deprecation', \Elgg\DeprecationService::class);
 
 		$this->setFactory('dic', function (ServiceProvider $sp) {
 			$definitions = $sp->dic_loader->getDefinitions();
@@ -581,7 +579,12 @@ class ServiceProvider extends DiContainer {
 			$cookie_name = $cookie_config['name'];
 			$cookie_token = $sp->request->cookies->get($cookie_name, '');
 			return new \Elgg\PersistentLoginService(
-				$sp->db, $sp->session, $sp->crypto, $cookie_config, $cookie_token);
+				$sp->db,
+				$sp->session,
+				$sp->crypto,
+				$cookie_config,
+				$cookie_token
+			);
 		});
 		
 		$this->setFactory('plugins', function(ServiceProvider $sp) {
@@ -657,6 +660,16 @@ class ServiceProvider extends DiContainer {
 		$this->setFactory('responseFactory', function(ServiceProvider $sp) {
 			$transport = Application::getResponseTransport();
 			return new \Elgg\Http\ResponseFactory($sp->request, $sp->hooks, $sp->ajax, $transport, $sp->events);
+		});
+
+		$this->setFactory('riverTable', function (ServiceProvider $sp) {
+			return new \Elgg\Database\RiverTable(
+				$sp->db,
+				$sp->annotationsTable,
+				$sp->entityTable,
+				$sp->events,
+				$sp->views
+			);
 		});
 
 		$this->setFactory('routeCollection', function(ServiceProvider $sp) {

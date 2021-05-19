@@ -2,6 +2,12 @@
 
 namespace Elgg;
 
+use Elgg\Database\Delete;
+use Elgg\Database\Insert;
+use Elgg\Database\Select;
+use Elgg\Database\Update;
+use PHPUnit\Framework\MockObject\MockBuilder;
+
 /**
  * @group UnitTests
  */
@@ -13,12 +19,12 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 	protected $session;
 
 	/**
-	 * @var \PHPUnit_Framework_MockObject_MockObject
+	 * @var MockBuilder
 	 */
 	protected $dbMock;
 
 	/**
-	 * @var \PHPUnit_Framework_MockObject_MockObject
+	 * @var MockBuilder
 	 */
 	protected $cryptoMock;
 
@@ -28,7 +34,7 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 	protected $svc;
 
 	/**
-	 * @var \PHPUnit_Framework_MockObject_MockObject
+	 * @var MockBuilder
 	 */
 	protected $user123;
 
@@ -246,7 +252,7 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 				->method('updateData')
 				->will($this->returnCallback([$this, 'mock_updateWrongUser']));
 		
-		$this->assertFalse($this->svc->updateTokenUsage($wrong_user));
+		$this->assertTrue($this->svc->updateTokenUsage($wrong_user));
 	}
 	
 	function testUpdateTokenUsageWithCorrectUser() {
@@ -318,9 +324,15 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 			'name' => 'elggperm',
 			'expire' => time() + (30 * 86400),
 		);
-		$time = $this->thirtyDaysAgo + (30 * 86400);
+		
 		$svc = new \Elgg\PersistentLoginService(
-				$this->dbMock, $this->session, $this->cryptoMock, $cookie_config, $cookie_token, $time);
+			$this->dbMock,
+			$this->session,
+			$this->cryptoMock,
+			$cookie_config,
+			$cookie_token
+		);
+		$svc->setCurrentTime();
 
 		$svc->_callable_get_user = array($this, 'mock_get_user');
 		$svc->_callable_generateToken = array($this, 'mock_generateToken');
@@ -329,70 +341,98 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		return $svc;
 	}
 
-	function mock_insertData($sql, $params) {
-		$pattern = '~INSERT INTO users_remember_me_cookies \(code, guid, timestamp\)\\s+VALUES \(:hash, :guid, :time\)~';
-		$this->assertMatchesRegularExpression($pattern, $sql);
+	function mock_insertData(Insert $sql) {
+		$insert = Insert::intoTable(PersistentLoginService::TABLE_NAME);
+		$insert->values([
+			'code' => $insert->param($this->mockHash, ELGG_VALUE_STRING),
+			'guid' => $insert->param(123, ELGG_VALUE_GUID),
+			'timestamp' => $insert->param($this->svc->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP),
+		]);
 		
-		$this->assertArrayHasKey('hash', $params);
-		$this->assertEquals($this->mockHash, $params['hash']);
-		$this->assertArrayHasKey('guid', $params);
-		$this->assertEquals(123, $params['guid']);
+		$this->assertEquals($insert->getSQL(), $sql->getSQL());
+		
+		$params = $sql->getParameters();
+		
+		$this->assertArrayHasKey('qb1', $params);
+		$this->assertEquals($this->mockHash, $params['qb1']);
+		$this->assertArrayHasKey('qb2', $params);
+		$this->assertEquals(123, $params['qb2']);
 	}
 
-	function mock_deleteData($sql, $params) {
-		$pattern = '~DELETE FROM users_remember_me_cookies\\s+WHERE code = :hash~';
-		$this->assertMatchesRegularExpression($pattern, $sql);
+	function mock_deleteData(Delete $sql) {
+		$delete = Delete::fromTable(PersistentLoginService::TABLE_NAME);
+		$delete->where($delete->compare('code', '=', $this->mockHash, ELGG_VALUE_STRING));
+		
+		$this->assertEquals($delete->getSQL(), $sql->getSQL());
 		$this->assertEquals([
-			'hash' => $this->mockHash,
-		], $params);
+			'qb1' => $this->mockHash,
+		], $sql->getParameters());
 	}
 
-	function mock_getDataRow($sql, $callback, $params) {
-		$pattern = '~SELECT guid\\s+FROM users_remember_me_cookies\\s+WHERE code = :hash~';
-		$this->assertMatchesRegularExpression($pattern, $sql);
+	function mock_getDataRow(Select $sql) {
+		$select = Select::fromTable(PersistentLoginService::TABLE_NAME);
+		$select->select('guid')
+			->where($select->compare('code', '=', $this->mockHash, ELGG_VALUE_STRING));
+		
+		$this->assertEquals($select->getSQL(), $sql->getSQL());
 		$this->assertEquals([
-			'hash' => $this->mockHash,
-		], $params);
+			'qb1' => $this->mockHash,
+		], $sql->getParameters());
 
 		return (object) array('guid' => 123);
 	}
 
-	function mock_deleteAll($sql, $params) {
-		$pattern = '~DELETE FROM users_remember_me_cookies\\s+WHERE guid = :guid~';
-		$this->assertMatchesRegularExpression($pattern, $sql);
+	function mock_deleteAll(Delete $sql) {
+		$delete = Delete::fromTable(PersistentLoginService::TABLE_NAME);
+		$delete->where($delete->compare('guid', '=', 123, ELGG_VALUE_GUID));
+		
+		$this->assertEquals($delete->getSQL(), $sql->getSQL());
 		$this->assertEquals([
-			'guid' => 123,
-		], $params);
+			'qb1' => 123,
+		], $sql->getParameters());
 	}
 
-	function mock_updateWrongUser($sql, $get_num_rows, $params) {
-		$pattern = '~UPDATE users_remember_me_cookies\\s+SET timestamp = :time\\s+WHERE guid = :guid\\s+AND code = :hash~';
-		$this->assertMatchesRegularExpression($pattern, $sql);
+	function mock_updateWrongUser(Update $sql) {
+		$update = Update::table(PersistentLoginService::TABLE_NAME);
+		$update->set('timestamp', $update->param($this->svc->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP))
+			->where($update->compare('guid', '=', 456, ELGG_VALUE_GUID))
+			->andWhere($update->compare('code', '=', $this->mockHash, ELGG_VALUE_STRING));
 		
-		$this->assertArrayHasKey('hash', $params);
-		$this->assertEquals($this->mockHash, $params['hash']);
+		$this->assertEquals($update->getSQL(), $sql->getSQL());
+		
+		$params = $sql->getParameters();
+		
+		$this->assertArrayHasKey('qb3', $params);
+		$this->assertEquals($this->mockHash, $params['qb3']);
 		
 		$this->assertNotContains($params, [
-			'guid' => 123,
+			'qb2' => 123,
 		]);
 	}
 	
-	function mock_updateCorrectUser($sql, $get_num_rows, $params) {
-		$pattern = '~UPDATE users_remember_me_cookies\\s+SET timestamp = :time\\s+WHERE guid = :guid\\s+AND code = :hash~';
-		$this->assertMatchesRegularExpression($pattern, $sql);
+	function mock_updateCorrectUser(Update $sql) {
+		$update = Update::table(PersistentLoginService::TABLE_NAME);
+		$update->set('timestamp', $update->param($this->svc->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP))
+			->where($update->compare('guid', '=', 456, ELGG_VALUE_GUID))
+			->andWhere($update->compare('code', '=', $this->mockHash, ELGG_VALUE_STRING));
 		
-		$this->assertArrayHasKey('hash', $params);
-		$this->assertEquals($this->mockHash, $params['hash']);
-		$this->assertArrayHasKey('guid', $params);
-		$this->assertEquals(123, $params['guid']);
+		$this->assertEquals($update->getSQL(), $sql->getSQL());
+		
+		$params = $sql->getParameters();
+		
+		$this->assertArrayHasKey('qb3', $params);
+		$this->assertEquals($this->mockHash, $params['qb3']);
+		$this->assertArrayHasKey('qb2', $params);
+		$this->assertEquals(123, $params['qb2']);
 		
 		return 1;
 	}
 	
-	function mock_deleteExpiredTokens($sql, $params) {
-		$pattern = '~DELETE FROM users_remember_me_cookies\\s+WHERE timestamp < :time~';
-		$this->assertMatchesRegularExpression($pattern, $sql);
-		$this->assertArrayHasKey('time', $params);
+	function mock_deleteExpiredTokens(Delete $sql) {
+		$delete = Delete::fromTable(PersistentLoginService::TABLE_NAME);
+		$delete->where($delete->compare('timestamp', '<', time(), ELGG_VALUE_TIMESTAMP));
+		
+		$this->assertArrayHasKey('qb1', $sql->getParameters());
 		
 		return 1;
 	}

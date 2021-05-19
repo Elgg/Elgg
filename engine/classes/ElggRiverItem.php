@@ -1,21 +1,19 @@
 <?php
 
-use Elgg\Exceptions\InvalidParameterException;
-
 /**
- * River item class.
+ * River item class
  *
  * @property-read int    $id            The unique identifier (read-only)
- * @property-read int    $subject_guid  The GUID of the actor
- * @property-read int    $object_guid   The GUID of the object
- * @property-read int    $target_guid   The GUID of the object's container
- * @property-read int    $annotation_id The ID of the annotation involved in the action
- * @property-read string $type          The type of one of the entities involved in the action
- * @property-read string $subtype       The subtype of one of the entities involved in the action
- * @property-read string $action_type   The name of the action
- * @property-read string $view          The view for displaying this river item
- * @property-read int    $access_id     The visibility of the river item
- * @property-read int    $posted        UNIX timestamp when the action occurred
+ * @property      int    $subject_guid  The GUID of the actor
+ * @property      int    $object_guid   The GUID of the object
+ * @property      int    $target_guid   The GUID of the object's container
+ * @property      int    $annotation_id The ID of the annotation involved in the action
+ * @property      string $type          The type of one of the entities involved in the action
+ * @property      string $subtype       The subtype of one of the entities involved in the action
+ * @property      string $action_type   The name of the action
+ * @property      string $view          The view for displaying this river item
+ * @property      int    $access_id     The visibility of the river item
+ * @property      int    $posted        UNIX timestamp when the action occurred
  */
 class ElggRiverItem {
 	
@@ -32,33 +30,20 @@ class ElggRiverItem {
 		'posted',
 	];
 	
-	public $id;
-	public $subject_guid;
-	public $object_guid;
-	public $target_guid;
-	public $annotation_id;
-	public $action_type;
-	public $access_id;
-	public $view;
-	public $posted;
-
 	/**
-	 * Construct a river item object given a database row.
+	 * Construct a river item object
 	 *
-	 * @param \stdClass $object Object obtained from database
-	 *
-	 * @throws InvalidParameterException
+	 * @param \stdClass $row (optional) object obtained from database
 	 */
-	public function __construct($object) {
-		if (!$object instanceof \stdClass) {
-			throw new InvalidParameterException("Invalid input to \ElggRiverItem constructor");
-		}
-
-		foreach ($object as $key => $value) {
-			if (in_array($key, static::INTEGER_ATTR_NAMES)) {
-				$this->$key = (int) $value;
-			} else {
-				$this->$key = $value;
+	public function __construct(\stdClass $row = null) {
+		if (!empty($row)) {
+			// build from database
+			foreach ($row as $key => $value) {
+				if (in_array($key, static::INTEGER_ATTR_NAMES)) {
+					$this->$key = (int) $value;
+				} else {
+					$this->$key = $value;
+				}
 			}
 		}
 	}
@@ -187,18 +172,7 @@ class ElggRiverItem {
 			return false;
 		}
 
-		$events = _elgg_services()->events;
-		if (!$events->triggerBefore('delete', 'river', $this)) {
-			return false;
-		}
-
-		$db = _elgg_services()->db;
-		$prefix = $db->prefix;
-		_elgg_services()->db->deleteData("DELETE FROM {$prefix}river WHERE id = ?", [$this->id]);
-
-		$events->triggerAfter('delete', 'river', $this);
-
-		return true;
+		return _elgg_services()->riverTable->delete($this);
 	}
 
 	/**
@@ -218,5 +192,18 @@ class ElggRiverItem {
 		$params = ['item' => $this];
 		return _elgg_services()->hooks->trigger('to:object', 'river_item', $params, $object);
 	}
-
+	
+	/**
+	 * Save the river item to the database
+	 *
+	 * @return bool
+	 */
+	public function save(): bool {
+		if ($this->id) {
+			// update (not supported)
+			return true;
+		}
+		
+		return (bool) _elgg_services()->riverTable->create($this);
+	}
 }

@@ -6,7 +6,15 @@ use Elgg\IntegrationTestCase;
 
 class HMACCacheTableIntegrationTest extends IntegrationTestCase {
 
+	/**
+	 * @var HMACCacheTable
+	 */
 	protected $service;
+	
+	/**
+	 * @var string
+	 */
+	protected $key;
 	
 	/**
 	 * {@inheritDoc}
@@ -19,17 +27,20 @@ class HMACCacheTableIntegrationTest extends IntegrationTestCase {
 	 * {@inheritDoc}
 	 */
 	public function down() {
-		
+		// cleanup left over keys
+		if (isset($this->key)) {
+			$this->service->deleteHMAC($this->key);
+		}
 	}
 	
 	public function testCanStoreHmac() {
-		$hmac = 'foo';
+		$this->key = $hmac = 'foo';
 		
 		$this->assertNotFalse($this->service->storeHMAC($hmac));
 	}
 	
 	public function testCanLoadHmac() {
-		$hmac = 'foo2';
+		$this->key = $hmac = 'foo2';
 		
 		$this->assertNotFalse($this->service->storeHMAC($hmac));
 		
@@ -37,7 +48,7 @@ class HMACCacheTableIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testCanDeleteHmac() {
-		$hmac = 'foo3';
+		$this->key = $hmac = 'foo3';
 		
 		$this->assertNotFalse($this->service->storeHMAC($hmac));
 		

@@ -25,97 +25,20 @@
  * @since  1.9
  */
 function elgg_create_river_item(array $options = []) {
-
-	$view = elgg_extract('view', $options, '');
-	// use default viewtype for when called from web services api
-	if (!empty($view) && !elgg_view_exists($view, 'default')) {
+	$item = new \ElggRiverItem();
+	$item->action_type = elgg_extract('action_type', $options);
+	$item->view = elgg_extract('view', $options);
+	$item->subject_guid = elgg_extract('subject_guid', $options, elgg_get_logged_in_user_guid());
+	$item->object_guid = elgg_extract('object_guid', $options);
+	$item->target_guid = elgg_extract('target_guid', $options);
+	$item->annotation_id = elgg_extract('annotation_id', $options);
+	$item->posted = elgg_extract('posted', $options);
+	
+	if (!$item->save()) {
 		return false;
 	}
-
-	$action_type = elgg_extract('action_type', $options);
-	if (empty($action_type)) {
-		return false;
-	}
-
-	$subject_guid = elgg_extract('subject_guid', $options, elgg_get_logged_in_user_guid());
-	if (!(get_entity($subject_guid) instanceof ElggEntity)) {
-		return false;
-	}
-
-	$object_guid = elgg_extract('object_guid', $options, 0);
-	if (!(get_entity($object_guid) instanceof ElggEntity)) {
-		return false;
-	}
-
-	$target_guid = elgg_extract('target_guid', $options, 0);
-	if ($target_guid) {
-		// target_guid is not a required parameter so check
-		// it only if it is included in the parameters
-		if (!(get_entity($target_guid) instanceof ElggEntity)) {
-			return false;
-		}
-	}
-
-	$posted = elgg_extract('posted', $options, time());
-
-	$annotation_id = elgg_extract('annotation_id', $options, 0);
-	if ($annotation_id) {
-		if (!elgg_get_annotation_from_id($annotation_id)) {
-			return false;
-		}
-	}
-
-	$return_item = elgg_extract('return_item', $options, false);
-
-	$values = [
-		'action_type' => $action_type,
-		'view' => $view,
-		'subject_guid' => $subject_guid,
-		'object_guid' => $object_guid,
-		'target_guid' => $target_guid,
-		'annotation_id' => $annotation_id,
-		'posted' => $posted,
-	];
-	$col_types = [
-		'action_type' => ELGG_VALUE_STRING,
-		'view' => ELGG_VALUE_STRING,
-		'subject_guid' => ELGG_VALUE_INTEGER,
-		'object_guid' => ELGG_VALUE_INTEGER,
-		'target_guid' => ELGG_VALUE_INTEGER,
-		'annotation_id' => ELGG_VALUE_INTEGER,
-		'posted' => ELGG_VALUE_INTEGER,
-	];
-
-	// return false to stop insert
-	$values = elgg_trigger_plugin_hook('creating', 'river', null, $values);
-	if ($values == false) {
-		// inserting did not fail - it was just prevented
-		return true;
-	}
-
-	$qb = \Elgg\Database\Insert::intoTable('river');
-	$query_params = [];
-	foreach ($values as $name => $value) {
-		$query_params[$name] = $qb->param($value, $col_types[$name]);
-	}
-	$qb->values($query_params);
-
-	$id = _elgg_services()->db->insertData($qb);
-	if (!$id) {
-		return false;
-	}
-
-	$item = elgg_call(ELGG_IGNORE_ACCESS, function () use ($id) {
-		return elgg_get_river_item_from_id($id);
-	});
-
-	if (!$item) {
-		return false;
-	}
-
-	elgg_trigger_event('created', 'river', $item);
-
-	return $return_item ? $item : $id;
+	
+	return (bool) elgg_extract('return_item', $options, false) ? $item : $item->id;
 }
 
 /**
@@ -182,14 +105,11 @@ function elgg_get_river(array $options = []) {
  * Get river item from its ID
  *
  * @param int $id ID
+ *
  * @return ElggRiverItem|false
  */
-function elgg_get_river_item_from_id($id) {
-	$items = elgg_get_river([
-		'id' => $id,
-	]);
-
-	return $items ? $items[0] : false;
+function elgg_get_river_item_from_id(int $id) {
+	return _elgg_services()->riverTable->get($id) ?? false;
 }
 
 /**

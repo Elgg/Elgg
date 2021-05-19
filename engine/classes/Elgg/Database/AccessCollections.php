@@ -2,16 +2,14 @@
 
 namespace Elgg\Database;
 
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Elgg\Config;
 use Elgg\Database;
+use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\Database\UserFetchFailureException;
 use Elgg\I18n\Translator;
 use Elgg\PluginHooksService;
 use Elgg\UserCapabilities;
-use ElggCache;
-use ElggEntity;
-use ElggSession;
-use ElggUser;
 use Elgg\Traits\Loggable;
 
 /**
@@ -26,6 +24,16 @@ class AccessCollections {
 	use Loggable;
 
 	/**
+	 * @var string name of the access collections database table
+	 */
+	const TABLE_NAME = 'access_collections';
+	
+	/**
+	 * @var string name of the access collection membership database table
+	 */
+	const MEMBERSHIP_TABLE_NAME = 'access_collection_membership';
+
+	/**
 	 * @var Config
 	 */
 	protected $config;
@@ -36,7 +44,7 @@ class AccessCollections {
 	protected $db;
 
 	/**
-	 * @vars ElggCache
+	 * @vars \ElggCache
 	 */
 	protected $access_cache;
 
@@ -46,7 +54,7 @@ class AccessCollections {
 	protected $hooks;
 
 	/**
-	 * @var ElggSession
+	 * @var \ElggSession
 	 */
 	protected $session;
 
@@ -66,16 +74,6 @@ class AccessCollections {
 	protected $translator;
 
 	/**
-	 * @var string
-	 */
-	protected $table;
-
-	/**
-	 * @var string
-	 */
-	protected $membership_table;
-
-	/**
 	 * @var bool
 	 */
 	protected $init_complete = false;
@@ -87,9 +85,9 @@ class AccessCollections {
 	 * @param Database           $db           Database
 	 * @param EntityTable        $entities     Entity table
 	 * @param UserCapabilities   $capabilities User capabilities
-	 * @param ElggCache          $cache        Access cache
+	 * @param \ElggCache         $cache        Access cache
 	 * @param PluginHooksService $hooks        Hooks
-	 * @param ElggSession        $session      Session
+	 * @param \ElggSession       $session      Session
 	 * @param Translator         $translator   Translator
 	 */
 	public function __construct(
@@ -97,9 +95,9 @@ class AccessCollections {
 		Database $db,
 		EntityTable $entities,
 		UserCapabilities $capabilities,
-		ElggCache $cache,
+		\ElggCache $cache,
 		PluginHooksService $hooks,
-		ElggSession $session,
+		\ElggSession $session,
 		Translator $translator) {
 		$this->config = $config;
 		$this->db = $db;
@@ -109,9 +107,6 @@ class AccessCollections {
 		$this->hooks = $hooks;
 		$this->session = $session;
 		$this->translator = $translator;
-
-		$this->table = "{$this->db->prefix}access_collections";
-		$this->membership_table = "{$this->db->prefix}access_collection_membership";
 	}
 
 	/**
@@ -171,20 +166,17 @@ class AccessCollections {
 				$access_array[] = ACCESS_LOGGED_IN;
 
 				// Get ACLs that user owns or is a member of
-				$query = "
-					SELECT ac.id
-					FROM {$this->table} ac
-					WHERE ac.owner_guid = :user_guid
-					OR EXISTS (SELECT 1
-							   FROM {$this->membership_table}
-							   WHERE access_collection_id = ac.id
-							   AND user_guid = :user_guid)
-				";
+				$select = Select::fromTable(self::TABLE_NAME);
 
-				$collections = $this->db->getData($query, null, [
-					'user_guid' => $user_guid,
-				]);
+				$membership_query = $select->subquery(self::MEMBERSHIP_TABLE_NAME);
+				$membership_query->select('access_collection_id')
+					->where($select->compare('user_guid', '=', $user_guid, ELGG_VALUE_GUID));
 
+				$select->select('id')
+					->where($select->compare('owner_guid', '=', $user_guid, ELGG_VALUE_GUID))
+					->orWhere($select->compare('id', 'in', $membership_query->getSQL()));
+
+				$collections = $this->db->getData($select);
 				if (!empty($collections)) {
 					foreach ($collections as $collection) {
 						$access_array[] = (int) $collection->id;
@@ -224,9 +216,9 @@ class AccessCollections {
 	 * entity to test access for. We need to be able to tell whether the entity exists
 	 * and whether the user has access to the entity.
 	 *
-	 * @param ElggEntity $entity The entity to check access for.
-	 * @param ElggUser   $user   Optionally user to check access for. Defaults to
-	 *                           logged in user (which is a useless default).
+	 * @param \ElggEntity $entity The entity to check access for.
+	 * @param \ElggUser   $user   Optionally user to check access for. Defaults to
+	 *                            logged in user (which is a useless default).
 	 *
 	 * @return bool
 	 */
@@ -347,26 +339,23 @@ class AccessCollections {
 	 * @since 3.2
 	 */
 	protected function getCollectionsForWriteAccess(int $owner_guid) {
-		
-		$callback = [$this, 'rowToElggAccessCollection'];
-
 		$subtypes =  $this->hooks->trigger('access:collections:write:subtypes', 'user', ['owner_guid' => $owner_guid], []);
 		
-		$qb = Select::fromTable($this->table);
+		$select = Select::fromTable(self::TABLE_NAME);
 		
 		$ors = [
-			$qb->compare('subtype', 'is null'),
+			$select->compare('subtype', 'is null'),
 		];
 		if (!empty($subtypes)) {
-			$ors[] = $qb->compare('subtype', 'in', $subtypes, ELGG_VALUE_STRING);
+			$ors[] = $select->compare('subtype', 'in', $subtypes, ELGG_VALUE_STRING);
 		}
 		
-		$qb->select('*');
-		$qb->where($qb->compare('owner_guid', '=', $owner_guid, ELGG_VALUE_GUID));
-		$qb->andWhere($qb->merge($ors, 'OR'));
-		$qb->orderBy('name', 'ASC');
+		$select->select('*')
+			->where($select->compare('owner_guid', '=', $owner_guid, ELGG_VALUE_GUID))
+			->andWhere($select->merge($ors, 'OR'))
+			->orderBy('name', 'ASC');
 		
-		$collections = $this->db->getData($qb, $callback);
+		$collections = $this->db->getData($select, [$this, 'rowToElggAccessCollection']);
 		if (empty($collections)) {
 			return [];
 		}
@@ -452,20 +441,14 @@ class AccessCollections {
 			$owner_guid = $this->session->getLoggedInUserGuid();
 		}
 
-		$query = "
-			INSERT INTO {$this->table}
-			SET name = :name,
-				subtype = :subtype,
-				owner_guid = :owner_guid
-		";
+		$insert = Insert::intoTable(self::TABLE_NAME);
+		$insert->values([
+			'name' => $insert->param($name, ELGG_VALUE_STRING),
+			'subtype' => $insert->param($subtype, ELGG_VALUE_STRING),
+			'owner_guid' => $insert->param($owner_guid, ELGG_VALUE_GUID),
+		]);
 
-		$params = [
-			'name' => $name,
-			'subtype' => $subtype,
-			'owner_guid' => $owner_guid,
-		];
-
-		$id = $this->db->insertData($query, $params);
+		$id = $this->db->insertData($insert);
 		if (!$id) {
 			return false;
 		}
@@ -492,29 +475,23 @@ class AccessCollections {
 	 *
 	 * @param int    $collection_id ID of the collection
 	 * @param string $name          The name of the collection
+	 *
 	 * @return bool
 	 */
-	public function rename($collection_id, $name) {
+	public function rename(int $collection_id, string $name): bool {
 
-		$query = "
-			UPDATE {$this->table}
-			SET name = :name
-			WHERE id = :id
-		";
+		$update = Update::table(self::TABLE_NAME);
+		$update->set('name', $update->param($name, ELGG_VALUE_STRING))
+			->where($update->compare('id', '=', $collection_id, ELGG_VALUE_ID));
 
-		$params = [
-			'name' => $name,
-			'id' => (int) $collection_id,
-		];
-
-		if ($this->db->updateData($query, true, $params)) {
+		if ($this->db->updateData($update, true)) {
 			$this->access_cache->clear();
+
 			return true;
 		}
 
 		return false;
 	}
-
 
 	/**
 	 * Updates the membership in an access collection.
@@ -581,9 +558,10 @@ class AccessCollections {
 	 * Deletes a collection and its membership information
 	 *
 	 * @param int $collection_id ID of the collection
+	 *
 	 * @return bool
 	 */
-	public function delete(int $collection_id) {
+	public function delete(int $collection_id): bool {
 		$params = [
 			'collection_id' => $collection_id,
 		];
@@ -593,21 +571,15 @@ class AccessCollections {
 		}
 
 		// Deleting membership doesn't affect result of deleting ACL.
-		$query = "
-			DELETE FROM {$this->membership_table}
-			WHERE access_collection_id = :access_collection_id
-		";
-		$this->db->deleteData($query, [
-			'access_collection_id' => $collection_id,
-		]);
+		$delete_membership = Delete::fromTable(self::MEMBERSHIP_TABLE_NAME);
+		$delete_membership->where($delete_membership->compare('access_collection_id', '=', $collection_id, ELGG_VALUE_ID));
+		
+		$this->db->deleteData($delete_membership);
 
-		$query = "
-			DELETE FROM {$this->table}
-			WHERE id = :id
-		";
-		$result = $this->db->deleteData($query, [
-			'id' => $collection_id,
-		]);
+		$delete = Delete::fromTable(self::TABLE_NAME);
+		$delete->where($delete->compare('id', '=', $collection_id, ELGG_VALUE_ID));
+
+		$result = $this->db->deleteData($delete);
 
 		$this->access_cache->clear();
 
@@ -618,9 +590,10 @@ class AccessCollections {
 	 * Transforms a database row to an instance of ElggAccessCollection
 	 *
 	 * @param \stdClass $row Database row
+	 *
 	 * @return \ElggAccessCollection
 	 */
-	public function rowToElggAccessCollection(\stdClass $row) {
+	public function rowToElggAccessCollection(\stdClass $row): \ElggAccessCollection {
 		return new \ElggAccessCollection($row);
 	}
 
@@ -639,15 +612,11 @@ class AccessCollections {
 
 		$callback = [$this, 'rowToElggAccessCollection'];
 
-		$query = "
-			SELECT * FROM {$this->table}
-			WHERE id = :id
-		";
+		$query = Select::fromTable(self::TABLE_NAME);
+		$query->select('*')
+			->where($query->compare('id', '=', $collection_id, ELGG_VALUE_ID));
 
-		$result = $this->db->getDataRow($query, $callback, [
-			'id' => $collection_id,
-		]);
-
+		$result = $this->db->getDataRow($query, $callback);
 		if (empty($result)) {
 			return false;
 		}
@@ -680,7 +649,7 @@ class AccessCollections {
 	 *
 	 * @return bool
 	 */
-	public function addUser(int $user_guid, int $collection_id) {
+	public function addUser(int $user_guid, int $collection_id): bool {
 
 		$collection = $this->get($collection_id);
 		if (!$collection instanceof \ElggAccessCollection) {
@@ -701,18 +670,24 @@ class AccessCollections {
 			return false;
 		}
 
-		// if someone tries to insert the same data twice, we do a no-op on duplicate key
-		$query = "
-			INSERT INTO {$this->membership_table}
-				SET access_collection_id = :access_collection_id,
-				    user_guid = :user_guid
-				ON DUPLICATE KEY UPDATE user_guid = user_guid
-		";
-
-		$result = $this->db->insertData($query, [
-			'access_collection_id' => $collection->id,
-			'user_guid' => $user_guid,
+		// if someone tries to insert the same data twice, we catch the exception and return true
+		$insert = Insert::intoTable(self::MEMBERSHIP_TABLE_NAME);
+		$insert->values([
+			'access_collection_id' => $insert->param($collection_id, ELGG_VALUE_ID),
+			'user_guid' => $insert->param($user_guid, ELGG_VALUE_GUID),
 		]);
+		
+		try {
+			$result = $this->db->insertData($insert);
+		} catch (DatabaseException $e) {
+			$prev = $e->getPrevious();
+			if ($prev instanceof UniqueConstraintViolationException) {
+				// duplicate key exception, catched for performance reasons
+				return true;
+			}
+			
+			throw $e;
+		}
 
 		$this->access_cache->clear();
 
@@ -729,7 +704,7 @@ class AccessCollections {
 	 *
 	 * @return bool
 	 */
-	public function removeUser(int $user_guid, int $collection_id) {
+	public function removeUser(int $user_guid, int $collection_id): bool {
 
 		$params = [
 			'collection_id' => $collection_id,
@@ -740,18 +715,13 @@ class AccessCollections {
 			return false;
 		}
 
-		$query = "
-			DELETE FROM {$this->membership_table}
-			WHERE access_collection_id = :access_collection_id
-				AND user_guid = :user_guid
-		";
-
+		$delete = Delete::fromTable(self::MEMBERSHIP_TABLE_NAME);
+		$delete->where($delete->compare('access_collection_id', '=', $collection_id, ELGG_VALUE_ID))
+			->andWhere($delete->compare('user_guid', '=', $user_guid, ELGG_VALUE_GUID));
+		
 		$this->access_cache->clear();
 
-		return (bool) $this->db->deleteData($query, [
-			'access_collection_id' => $collection_id,
-			'user_guid' => $user_guid,
-		]);
+		return (bool) $this->db->deleteData($delete);
 	}
 
 	/**
@@ -759,32 +729,33 @@ class AccessCollections {
 	 *
 	 * @param array $options Options to get access collections by
 	 *                       Supported are 'owner_guid', 'subtype'
+	 *
 	 * @return \ElggAccessCollection[]
 	 */
-	public function getEntityCollections(array $options = []) {
-
-		$callback = [$this, 'rowToElggAccessCollection'];
-
+	public function getEntityCollections(array $options = []): array {
 		$supported_options = ['owner_guid', 'subtype'];
 
-		$wheres = [];
-		$params = [];
+		$select = Select::fromTable(self::TABLE_NAME);
+		$select->select('*')
+			->orderBy('name', 'ASC');
+
 		foreach ($supported_options as $option) {
 			$option_value = elgg_extract($option, $options);
 			if (!isset($option_value)) {
 				continue;
 			}
-			$wheres[] = "{$option} = :{$option}";
-			$params["{$option}"] = $option_value;
+
+			switch ($option) {
+				case 'owner_guid':
+					$select->andWhere($select->compare($option, '=', $option_value, ELGG_VALUE_GUID));
+					break;
+				case 'subtype':
+					$select->andWhere($select->compare($option, '=', $option_value, ELGG_VALUE_STRING));
+					break;
+			}
 		}
 
-		$query = "SELECT * FROM {$this->table}";
-		if (!empty($wheres)) {
-			$query .= ' WHERE ' . implode(' AND ', $wheres);
-		}
-		$query .= ' ORDER BY name ASC';
-
-		return $this->db->getData($query, $callback, $params);
+		return $this->db->getData($select, [$this, 'rowToElggAccessCollection']);
 	}
 
 	/**
@@ -797,7 +768,8 @@ class AccessCollections {
 	 */
 	public function getMembers(int $collection_id, array $options = []) {
 		$options['wheres'][] = function(QueryBuilder $qb, $table_alias) use ($collection_id) {
-			$qb->join($table_alias, 'access_collection_membership', 'acm', $qb->compare('acm.user_guid', '=', "$table_alias.guid"));
+			$qb->join($table_alias, self::MEMBERSHIP_TABLE_NAME, 'acm', $qb->compare('acm.user_guid', '=', "{$table_alias}.guid"));
+
 			return $qb->compare('acm.access_collection_id', '=', $collection_id, ELGG_VALUE_INTEGER);
 		};
 
@@ -809,23 +781,17 @@ class AccessCollections {
 	 *
 	 * @param int $member_guid GUID of th member
 	 *
-	 * @return \ElggAccessCollection[]|false
+	 * @return \ElggAccessCollection[]
 	 */
-	public function getCollectionsByMember($member_guid) {
+	public function getCollectionsByMember(int $member_guid): array {
+		$select = Select::fromTable(self::TABLE_NAME, 'ac');
+		$select->join('ac', self::MEMBERSHIP_TABLE_NAME, 'acm', $select->compare('ac.id', '=', 'acm.access_collection_id'));
 
-		$callback = [$this, 'rowToElggAccessCollection'];
+		$select->select('ac.*')
+			->where($select->compare('acm.user_guid', '=', $member_guid, ELGG_VALUE_GUID))
+			->orderBy('name', 'ASC');
 
-		$query = "
-			SELECT ac.* FROM {$this->table} ac
-				JOIN {$this->membership_table} acm
-					ON ac.id = acm.access_collection_id
-				WHERE acm.user_guid = :member_guid
-				ORDER BY name ASC
-		";
-
-		return $this->db->getData($query, $callback, [
-			'member_guid' => (int) $member_guid,
-		]);
+		return $this->db->getData($select, [$this, 'rowToElggAccessCollection']);
 	}
 
 	/**

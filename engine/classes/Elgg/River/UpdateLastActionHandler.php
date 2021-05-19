@@ -12,7 +12,7 @@ class UpdateLastActionHandler {
 	/**
 	 * Updates the last action of the object of an river item
 	 *
-	 * @param \Elgg\Event $event 'created', 'river'
+	 * @param \Elgg\Event $event 'create:after', 'river'
 	 *
 	 * @return void
 	 */

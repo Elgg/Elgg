@@ -45,13 +45,14 @@ function elgg_trigger_deprecated_plugin_hook($hook, $type, $params = null, $retu
  *
  * @param string $msg         Message to log
  * @param string $dep_version Human-readable *release* version: 1.7, 1.8, ...
- * @param mixed  $ignored     No longer used argument
  *
- * @return bool
+ * @return true
  * @since 1.7.0
  */
-function elgg_deprecated_notice($msg, $dep_version, $ignored = null) {
-	return _elgg_services()->deprecation->sendNotice($msg, $dep_version);
+function elgg_deprecated_notice(string $msg, string $dep_version): bool {
+	_elgg_services()->logger->warning("Deprecated in {$dep_version}: {$msg}");
+	
+	return true;
 }
 
 /**

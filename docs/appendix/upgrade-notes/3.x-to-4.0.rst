@@ -401,6 +401,7 @@ Lib function parameters
 * ``elgg_annotation_exists()`` now requires a ``int`` for ``$entity_guid``, a ``string`` for ``$name`` and ``int`` for ``$owner_guid``
 * ``elgg_delete_admin_notice()`` now requires a ``string`` for ``$id``
 * ``elgg_delete_annotation_by_id()`` now requires a ``int`` for ``$id``
+* ``elgg_deprecated_notice()`` now requires a ``string`` for ``$msg`` and ``$dep_version``
 * ``elgg_error_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_get_access_collections()`` now requires an ``array`` for ``$options``
 * ``elgg_get_annotation_from_id()`` now requires an ``int`` for ``$id``
@@ -409,6 +410,7 @@ Lib function parameters
 * ``elgg_get_plugin_setting()`` now requires a ``string`` for ``$name`` and ``$plugin_id``
 * ``elgg_get_plugin_user_setting()`` now requires a ``string`` for ``$name`` and ``$plugin_id`` and ``int`` for ``$user_guid``
 * ``elgg_get_plugins()`` now requires a ``string`` for ``$status``
+* ``elgg_get_river_item_from_id()`` now requires a ``int`` for ``$id``
 * ``elgg_list_annotations()`` now requires an ``array`` for ``$options``
 * ``elgg_ok_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_plugin_exists()`` now requires a ``string`` for ``$plugin_id``
@@ -727,6 +729,7 @@ Miscellaneous API changes
 * External Files are no longer ordered by priority but will be returned in the same order as they are registered
 * The interface ``Friendable`` has been removed. Implemented functions in ``ElggUser`` have been moved to ``Elgg\Traits\Entity\Friends``
 * The config flag ``profile_using_custom`` is no longer available
+* The return value of ``elgg_create_river_item()`` will be ``false`` in the case the creation was prevented by the ``'create:before', 'river'`` event
 
 Deprecated APIs
 ---------------
@@ -811,10 +814,12 @@ Removed views / resources
 Removed hooks / events
 ----------------------
 
-* Hook ``output, ajax`` has been removed. Use the``ajax_response`` hook if you want to influence the results.
-* Hook ``reportedcontent:add`` has been removed. Use the``create, object`` event to prevent creation.
-* Hook ``reportedcontent:archive`` has been removed. Use the``permissions_check, object`` hook.
-* Hook ``reportedcontent:delete`` has been removed. Use the``delete, object`` event to prevent deletion.
+* Event ``created, river`` has been removed. Use the ``create:after, river`` event.
+* Hook ``creating, river`` has been removed. Use the ``create:before, river`` event if you want to block the creation of a river item.
+* Hook ``output, ajax`` has been removed. Use the ``ajax_response`` hook if you want to influence the results.
+* Hook ``reportedcontent:add`` has been removed. Use the ``create, object`` event to prevent creation.
+* Hook ``reportedcontent:archive`` has been removed. Use the ``permissions_check, object`` hook.
+* Hook ``reportedcontent:delete`` has been removed. Use the ``delete, object`` event to prevent deletion.
 
 Removed actions
 ---------------
