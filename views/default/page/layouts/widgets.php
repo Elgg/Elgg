@@ -25,6 +25,8 @@ if (!$owner) {
 	return;
 }
 
+elgg_require_js('elgg/widgets');
+
 // Underlying views and functions assume that the page owner is the owner of the widgets
 if ($owner->guid != $page_owner->guid) {
 	elgg_set_page_owner_guid($owner->guid);
@@ -106,20 +108,13 @@ $result .= elgg_format_element('div', [
 
 elgg_pop_context();
 
-$result .= elgg_view('graphics/ajax_loader', ['id' => 'elgg-widget-loader']);
-
 echo elgg_format_element('div', [
-	'class' => 'elgg-layout-widgets',
+	'class' => [
+		'elgg-layout-widgets',
+		"elgg-layout-widgets-{$context}",
+	],
 	'data-page-owner-guid' => $owner->guid,
 ], $result);
-
-?>
-<script>
-require(['elgg/widgets'], function (widgets) {
-	widgets.init();
-});
-</script>
-<?php
 
 // Restore original page owner
 if ($owner->guid != $page_owner->guid) {

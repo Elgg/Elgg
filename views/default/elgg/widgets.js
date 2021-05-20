@@ -3,34 +3,6 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function (
 	var widgets = {};
 
 	/**
-	 * Widgets initialization
-	 *
-	 * @return void
-	 */
-	widgets.init = function () {
-
-		// widget layout?
-		if ($(".elgg-widgets").length === 0) {
-			return;
-		}
-
-		$(".elgg-widgets").sortable({
-			items: 'div.elgg-module-widget.elgg-state-draggable',
-			connectWith: '.elgg-widgets',
-			handle: '.elgg-widget-handle',
-			forcePlaceholderSize: true,
-			placeholder: 'elgg-widget-placeholder',
-			opacity: 0.8,
-			revert: 500,
-			stop: widgets.move
-		});
-
-		$(document).on('click', 'a.elgg-widget-delete-button', widgets.remove);
-		$(document).on('submit', '.elgg-widget-edit > form ', widgets.saveSettings);
-		$(document).on('click', 'a.elgg-widget-collapse-button', widgets.collapseToggle);
-	};
-
-	/**
 	 * Persist the widget's new position
 	 *
 	 * @param {Object} event
@@ -56,10 +28,6 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function (
 				position: ui.item.index()
 			}
 		});
-
-		// @hack fixes jquery-ui/opera bug where draggable elements jump
-		ui.item.css('top', 0);
-		ui.item.css('left', 0);
 	};
 
 	/**
@@ -112,10 +80,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function (
 		var $widgetContent = $(this).parent().parent().children('.elgg-widget-content');
 
 		// stick the ajax loader in there
-		var $loader = $('#elgg-widget-loader').clone();
-		$loader.attr('id', '#elgg-widget-active-loader');
-		$loader.removeClass('hidden');
-		$widgetContent.html($loader);
+		$widgetContent.html('<div class="elgg-ajax-loader"></div>');
 
 		var ajax = new Ajax(false);
 		ajax.action('widgets/save', {
@@ -136,6 +101,18 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function (
 		});
 	};
 
-	return widgets;
-});
+	$('.elgg-widgets').sortable({
+		items: 'div.elgg-module-widget.elgg-state-draggable',
+		connectWith: '.elgg-widgets',
+		handle: '.elgg-widget-handle',
+		forcePlaceholderSize: true,
+		placeholder: 'elgg-widget-placeholder',
+		opacity: 0.8,
+		revert: 500,
+		stop: widgets.move
+	});
 
+	$(document).on('click', 'a.elgg-widget-delete-button', widgets.remove);
+	$(document).on('submit', '.elgg-widget-edit > form ', widgets.saveSettings);
+	$(document).on('click', 'a.elgg-widget-collapse-button', widgets.collapseToggle);
+});
