@@ -566,35 +566,39 @@ function elgg_set_email_transport(\Zend\Mail\Transport\TransportInterface $maile
 /**
  * Save personal notification settings - input comes from request
  *
+ * @param \Elgg\Hook $hook 'usersettings:save', 'user'
+ *
  * @return void
  * @internal
  */
-function _elgg_save_notification_user_settings() {
+function _elgg_save_notification_user_settings(\Elgg\Hook $hook) {
 
-	$user = elgg_get_logged_in_user_entity();
-	if (!$user) {
+	$user = $hook->getUserParam();
+	$request = $hook->getParam('request');
+
+	if (!$user instanceof ElggUser || !$request instanceof \Elgg\Request) {
 		return;
 	}
 
-	$method = get_input('method');
+	$method = $request->getParam('method');
 
 	$current_settings = $user->getNotificationSettings();
 
 	$result = false;
-	foreach ($method as $k => $v) {
+	foreach ($method as $key => $value) {
 		// check if setting has changed and skip if not
-		if ($current_settings[$k] == ($v == 'yes')) {
+		if ($current_settings[$key] === ($value === 'yes')) {
 			continue;
 		}
 
-		$result = $user->setNotificationSetting($k, ($v == 'yes'));
+		$result = $user->setNotificationSetting($key, ($value === 'yes'));
 		if (!$result) {
-			register_error(elgg_echo('notifications:usersettings:save:fail'));
+			$request->validation()->fail('notification_method', '', elgg_echo('notifications:usersettings:save:fail'));
 		}
 	}
 
 	if ($result) {
-		system_message(elgg_echo('notifications:usersettings:save:ok'));
+		$request->validation()->pass('notification_method', '', elgg_echo('notifications:usersettings:save:ok'));
 	}
 }
 

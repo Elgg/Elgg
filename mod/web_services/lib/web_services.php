@@ -239,7 +239,7 @@ function _elgg_ws_get_parameter_names($method) {
  *
  * A leading comma needs to be removed from the output.
  *
- * @see \ElggCoreWebServicesApiTest::testSerialiseParametersCasting
+ * @see \Elgg\WebServices\ElggCoreWebServicesApiTest::testSerialiseParametersCasting
  *
  * @param string $method     API method name
  * @param array  $parameters Array of parameters
@@ -278,7 +278,7 @@ function serialise_parameters($method, $parameters) {
 				// change word false to boolean false
 				if (strcasecmp(trim($parameters[$key]), "false") == 0) {
 					$serialised_parameters .= ',false';
-				} else if ($parameters[$key] == 0) {
+				} elseif (empty(trim($parameters[$key]))) {
 					$serialised_parameters .= ',false';
 				} else {
 					$serialised_parameters .= ',true';
