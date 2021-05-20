@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-16 12:25+0200\n"
+"POT-Creation-Date: 2021-05-18 16:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -9533,7 +9533,7 @@ msgid "``integer`` (or ``int``)"
 msgstr ""
 
 #: ../../guides/web-services.rst:111
-msgid "``boolean`` (or ``bool``)"
+msgid "``boolean`` (or ``bool``) ``'false'``, ``0`` and ``'0'`` will evaluate to ``false`` the rest will evaluate to ``true``"
 msgstr ""
 
 #: ../../guides/web-services.rst:112
