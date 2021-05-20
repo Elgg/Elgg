@@ -22,11 +22,6 @@ return [
 				'Elgg\Search\Site::preventSearchIndexing' => [],
 			],
 		],
-		'search:format' => [
-			'entity' => [
-				\Elgg\Search\FormatComentEntityHook::class => [],
-			],
-		],
 		'view_vars' => [
 			'output/tag' => [
 				'Elgg\Search\Views::setSearchHref' => [],

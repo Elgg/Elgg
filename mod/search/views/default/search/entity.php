@@ -14,15 +14,24 @@ $params = elgg_extract('params', $vars, []);
 
 $service = new \Elgg\Search\Search($params);
 
-$service->prepareEntity($entity);
+$vars['highlighter'] = $service->getHighlighter();
 
-$view = $service->getSearchView($entity);
+$type = $entity->getType();
+$subtype = $entity->getSubtype();
+$search_type = elgg_extract('search_type', $params);
 
-if ($view && $view != 'search/entity' && elgg_view_exists($view)) {
-	$vars['entity'] = $entity;
-	echo elgg_view($view, $vars);
+$views = [
+	"search/{$search_type}/{$type}/{$subtype}",
+	"search/{$search_type}/{$type}/default",
+	"search/{$type}/{$subtype}",
+	"search/{$type}/default",
+	'search/entity/default',
+];
 
-	return;
+foreach ($views as $view) {
+	if (elgg_view_exists($view)) {
+		echo elgg_view($view, $vars);
+		
+		return;
+	}
 }
-
-echo elgg_view('search/entity/default', $vars);
