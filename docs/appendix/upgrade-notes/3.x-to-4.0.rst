@@ -276,6 +276,11 @@ If you need to use features from the library you can require them in your own sc
 	define(['jquery-ui/widgets/sortable'], function() {
 		// use the sortable
 	});
+	
+Miscellaneous JS changes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* The AMD module ``elgg/widgets`` no longer returns an object and no longer requires you to call ``init`` on the module
 
 Plugin bootstrapping
 --------------------

@@ -12,6 +12,7 @@ $content = elgg_view_layout('widgets', [
 
 echo elgg_view_page(elgg_echo('dashboard'), [
 	'title' => false,
+	'sidebar' => false,
 	'content' => $content,
 	'header' => false,
 ]);
