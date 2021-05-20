@@ -77,11 +77,6 @@ return [
 				GroupToolContainerLogicCheck::class => [],
 			],
 		],
-		'filter_tabs' => [
-			'discussion' => [
-				'Elgg\Discussions\Menus\Filter::filterTabsForDiscussions' => [],
-			],
-		],
 		'get' => [
 			'subscriptions' => [
 				'Elgg\Discussions\Notifications::addGroupSubscribersToCommentOnDiscussionSubscriptions' => [],
@@ -106,6 +101,9 @@ return [
 			],
 		],
 		'register' => [
+			'menu:filter:filter' => [
+				'Elgg\Discussions\Menus\Filter::filterTabsForDiscussions' => [],
+			],
 			'menu:owner_block' => [
 				'Elgg\Discussions\Menus\OwnerBlock::registerGroupItem' => [],
 			],

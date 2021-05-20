@@ -179,6 +179,9 @@ return [
 		'menu:filter:admin/upgrades' => [
 			'Elgg\Menus\Filter::registerAdminUpgrades' => [],
 		],
+		'menu:filter:filter' => [
+			'Elgg\Menus\Filter::registerFilterTabs' => ['priority' => 1],
+		],
 		'menu:filter:settings/notifications' => [
 			'Elgg\Menus\Filter::registerNotificationSettings' => [],
 		],

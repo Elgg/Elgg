@@ -24,4 +24,6 @@ elgg_push_breadcrumb(elgg_echo('settings'), elgg_generate_url('settings:account'
 echo elgg_view_page(elgg_echo('usersettings:statistics'), [
 	'content' => elgg_view('core/settings/statistics'),
 	'show_owner_block_menu' => false,
+	'filter_id' => 'settings',
+	'filter_value' => 'statistics',
 ]);

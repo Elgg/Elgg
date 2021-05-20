@@ -26,4 +26,6 @@ echo elgg_view_page($title, [
 		'entity' => $user,
 	]),
 	'show_owner_block_menu' => false,
+	'filter_id' => 'settings',
+	'filter_value' => 'account',
 ]);

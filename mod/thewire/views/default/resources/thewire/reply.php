@@ -21,4 +21,6 @@ $content .= elgg_view_form('thewire/add', [
 
 echo elgg_view_page(elgg_echo('reply'), [
 	'content' => $content,
+	'filter_id' => 'thewire/edit',
+	'filter_value' => 'reply',
 ]);

@@ -18,4 +18,6 @@ echo elgg_view_page(strip_tags($title), [
 	'title' => $title,
 	'content' => elgg_echo('uservalidationbyemail:registerok'),
 	'sidebar' => false,
+	'filter_id' => 'uservalidationbyemail',
+	'filter_value' => 'emailsent',
 ], $shell);

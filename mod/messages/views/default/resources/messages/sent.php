@@ -32,4 +32,6 @@ echo elgg_view_page($title, [
 		'list' => $list,
 	]),
 	'show_owner_block_menu' => false,
+	'filter_id' => 'messages',
+	'filter_value' => 'sent',
 ]);

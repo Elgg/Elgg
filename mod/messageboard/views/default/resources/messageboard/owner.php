@@ -39,4 +39,5 @@ if ($history_user) {
 
 echo elgg_view_page($title, [
 	'content' => elgg_list_annotations($options),
+	'filter' => false,
 ]);

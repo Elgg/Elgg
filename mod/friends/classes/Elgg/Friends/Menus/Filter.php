@@ -2,6 +2,9 @@
 
 namespace Elgg\Friends\Menus;
 
+use Elgg\Menu\MenuItems;
+use Elgg\Router\Route;
+
 /**
  * Hook callbacks for menus
  *
@@ -14,30 +17,59 @@ class Filter {
 	/**
 	 * Add 'Friends' tab to common filter
 	 *
-	 * @param \Elgg\Hook $hook 'filter_tabs', 'all'
+	 * @param \Elgg\Hook $hook 'register', 'menu:filter:filter'
 	 *
-	 * @return void|\Elgg\Menu\MenuItems
+	 * @return MenuItems|null
 	 */
-	public static function registerFilterTabs(\Elgg\Hook $hook) {
-	
-		$user = $hook->getUserParam();
+	public static function registerFilterTabs(\Elgg\Hook $hook): ?MenuItems {
+		
+		$user = elgg_get_logged_in_user_entity();
 		if (!$user instanceof \ElggUser) {
-			return;
+			return null;
 		}
-	
-		$vars = $hook->getParam('vars');
-		$selected = $hook->getParam('selected');
-		$type = $hook->getType();
-	
-		$items = $hook->getValue();
-		$items[] = \ElggMenuItem::factory([
-			'name' => 'friend',
+		
+		/* @var $result MenuItems */
+		$result = $hook->getValue();
+		
+		$entity_type = $hook->getParam('entity_type', '');
+		$entity_subtype = $hook->getParam('entity_subtype', '');
+		if (empty($entity_type) || empty($entity_subtype)) {
+			$route = elgg_get_current_route();
+			if ($route instanceof Route) {
+				// assume route name as '<purpose>:<entity type>:<entity subtype>:<sub>'
+				// eg collection:object:blog:owner or view:group:group
+				// @see http://learn.elgg.org/en/stable/guides/routing.html#routes-names
+				$route_parts = explode(':', $route->getName());
+				$entity_type = elgg_extract(1, $route_parts, '');
+				$entity_subtype = elgg_extract(2, $route_parts, '');
+			}
+		}
+		
+		$friend_link = $hook->getParam('friend_link');
+		if (empty($friend_link)) {
+			if (elgg_route_exists("collection:{$entity_type}:{$entity_subtype}:friends")) {
+				$friend_link = elgg_generate_url("collection:{$entity_type}:{$entity_subtype}:friends", [
+					'username' => $user->username,
+				]);
+			} elseif (elgg_route_exists("collection:{$entity_type}:friends")) {
+				$friend_link = elgg_generate_url("collection:{$entity_type}:friends", [
+					'username' => $user->username,
+				]);
+			}
+		}
+		
+		if (empty($friend_link)) {
+			return null;
+		}
+		
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'friends',
 			'text' => elgg_echo('friends'),
-			'href' => (isset($vars['friend_link'])) ? $vars['friend_link'] : "$type/friends/{$user->username}",
-			'selected' => ($selected == 'friends'),
+			'href' => $friend_link,
 			'priority' => 400,
 		]);
-		return $items;
+		
+		return $result;
 	}
 	
 	/**

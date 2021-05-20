@@ -16,4 +16,5 @@ elgg_push_entity_breadcrumbs($post, false);
 echo elgg_view_page($title, [
 	'content' => elgg_view_entity($post),
 	'entity' => $post,
+	'filter_id' => 'thewire/view',
 ]);

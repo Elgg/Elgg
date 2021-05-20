@@ -45,4 +45,5 @@ $vars = pages_prepare_form_vars(null, $parent_guid);
 
 echo elgg_view_page(elgg_echo('add:object:page'), [
 	'content' => elgg_view_form('pages/edit', [], $vars),
+	'filter_id' => 'pages/edit',
 ]);

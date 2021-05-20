@@ -19,4 +19,5 @@ echo elgg_view_page(elgg_echo('account:validation:pending:title'), [
 		'value' => elgg_echo('account:validation:pending:content')
 	]),
 	'sidebar' => false,
+	'filter' => false,
 ], $shell);

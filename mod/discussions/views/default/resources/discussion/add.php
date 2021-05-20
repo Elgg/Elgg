@@ -19,4 +19,5 @@ $body_vars = discussion_prepare_form_vars();
 
 echo elgg_view_page(elgg_echo('add:object:discussion'), [
 	'content' => elgg_view_form('discussion/save', [], $body_vars),
+	'filter_id' => 'discussion/edit',
 ]);

@@ -136,4 +136,5 @@ if (empty($results)) {
 echo elgg_view_page(elgg_echo('search'), [
 	'title' => $title,
 	'content' => $form . $results,
+	'filter_id' => 'search',
 ]);

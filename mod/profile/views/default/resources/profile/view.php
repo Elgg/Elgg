@@ -30,4 +30,5 @@ echo elgg_view_page($user->getDisplayName(), [
 	]),
 	'class' => 'profile',
 	'sidebar' => false,
+	'filter' => false,
 ]);

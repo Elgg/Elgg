@@ -23,6 +23,6 @@ $content = elgg_view('pages/listing/friends', [
 ]);
 
 echo elgg_view_page($title, [
-	'filter_value' => 'friends',
+	'filter_value' => $owner->guid === elgg_get_logged_in_user_guid() ? 'friends' : 'none',
 	'content' => $content,
 ]);

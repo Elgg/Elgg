@@ -41,4 +41,5 @@ echo elgg_view_page(elgg_echo('friends:collections'), [
 		'entity' => $user,
 	]),
 	'show_owner_block_menu' => false,
+	'filter_id' => 'friends_collections',
 ]);

@@ -42,6 +42,8 @@ $body = elgg_view_layout('admin', [
 	// to the layout
 	'content' => elgg_format_element('div', ['class' => 'elgg-markdown'], $text),
 	'title' => $title,
+	'filter_id' => 'admin/plugin_text_file',
+	'filter_value' => "{$plugin_id}/{$filename}",
 ]);
 
 echo elgg_view_page($title, $body, 'admin');

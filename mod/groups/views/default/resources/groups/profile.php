@@ -26,4 +26,5 @@ echo elgg_view_page($group->getDisplayName(), [
 	'content' => elgg_view('groups/profile/layout', ['entity' => $group]),
 	'sidebar' => $sidebar,
 	'entity' => $group,
+	'filter' => false,
 ]);

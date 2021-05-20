@@ -19,4 +19,5 @@ $shell = elgg_get_config('walled_garden') ? 'walled_garden' : 'default';
 echo elgg_view_page(elgg_echo('user:password:lost'), [
 	'content' => elgg_view_form('user/requestnewpassword', $form_vars, $body_vars),
 	'sidebar' => false,
+	'filter' => false,
 ], $shell);

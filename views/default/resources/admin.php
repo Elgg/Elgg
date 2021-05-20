@@ -37,6 +37,7 @@ if (empty($content)) {
 $body = elgg_view_layout('admin', [
 	'title' => $title,
 	'content' => $content,
+	'filter_id' => 'admin',
 ]);
 
 // draw page

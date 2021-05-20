@@ -21,4 +21,5 @@ echo elgg_view_page(elgg_echo('collection:object:page'), [
 		'entity' => $group,
 	]),
 	'sidebar' => elgg_view('pages/sidebar', $vars),
+	'filter_id' => 'pages/group',
 ]);
