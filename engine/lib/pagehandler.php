@@ -40,6 +40,15 @@ function elgg_unregister_route($name) {
 }
 
 /**
+ * Get the route for the current request
+ *
+ * @return \Elgg\Router\Route|null
+ */
+function elgg_get_current_route(): ?\Elgg\Router\Route {
+	return _elgg_services()->request->getRoute();
+}
+
+/**
  * Generate a URL for named route
  *
  * @param string $name       Route name
