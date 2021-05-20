@@ -1,3 +1,23 @@
+<a name="3.3.18"></a>
+### 3.3.18  (2021-05-18)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+* Robert Cochran (1)
+
+#### Documentation
+
+* **install:** mention necessary SELinux changes ([912ca440](https://github.com/Elgg/Elgg/commit/912ca440bb78afa93e73de65ee7ca98e4c64692c))
+
+
+#### Bug Fixes
+
+* **account:** use consistent user throughout the account settings ([9e59117f](https://github.com/Elgg/Elgg/commit/9e59117f7315b9874c4df8de0507c343ee25d3e1))
+* **search:** make sure entity_subtype is a string during search options ([94f110c6](https://github.com/Elgg/Elgg/commit/94f110c6e75fec8e84d146d400a0c7787cff0581))
+* **webservices:** correctly evaluate truthy values ([86459670](https://github.com/Elgg/Elgg/commit/86459670aee19ed37bffc46c3eabf9eb39717e64))
+
+
 <a name="3.3.17"></a>
 ### 3.3.17  (2021-04-16)
 

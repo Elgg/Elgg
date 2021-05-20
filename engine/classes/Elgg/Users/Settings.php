@@ -317,9 +317,11 @@ class Settings {
 		}
 	
 		$user = $hook->getUserParam();
-		
-		/* @var $request \Elgg\Request */
 		$request = $hook->getParam('request');
+		
+		if (!$user instanceof \ElggUser || !$request instanceof Request) {
+			return;
+		}
 		
 		$default_access = $request->getParam('default_access');
 		if (!isset($default_access)) {
