@@ -33,7 +33,6 @@ class DefinitionLoader {
 		// add core services
 		$sources = [
 			Paths::elgg() . 'engine/services.php',
-			Paths::project() . 'elgg-services.php',
 		];
 
 		$plugins = $this->plugins->find('active');

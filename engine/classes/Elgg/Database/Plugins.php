@@ -572,8 +572,6 @@ class Plugins {
 			}
 		}
 
-		$this->registerRoot();
-
 		if ($this->timer) {
 			$this->timer->end([__METHOD__]);
 		}
@@ -603,58 +601,8 @@ class Plugins {
 			}
 		}
 
-		$this->bootRoot();
-
 		if ($this->timer) {
 			$this->timer->end([__METHOD__]);
-		}
-	}
-
-	/**
-	 * Register root level plugin views and translations
-	 * @return void
-	 */
-	protected function registerRoot() {
-		if (Paths::project() === Paths::elgg()) {
-			return;
-		}
-
-		// Elgg is installed as a composer dep, so try to treat the root directory
-		// as a custom plugin that is always loaded last and can't be disabled...
-		if (!$this->config->system_cache_loaded) {
-			// configure view locations for the custom plugin (not Elgg core)
-			$viewsFile = Paths::project() . 'views.php';
-			if (is_file($viewsFile)) {
-				$viewsSpec = Includer::includeFile($viewsFile);
-				if (is_array($viewsSpec)) {
-					$this->views->mergeViewsSpec($viewsSpec);
-				}
-			}
-
-			// find views for the custom plugin (not Elgg core)
-			$this->views->registerPluginViews(Paths::project());
-		}
-
-		if (!$this->config->i18n_loaded_from_cache) {
-			$this->translator->registerTranslations(Paths::project() . 'languages');
-		}
-	}
-	/**
-	 * Boot root level custom plugin for starter-project installation
-	 * @return void
-	 */
-	protected function bootRoot() {
-		if (Paths::project() === Paths::elgg()) {
-			return;
-		}
-
-		// This is root directory start.php
-		$root_start = Paths::project() . "start.php";
-		if (is_file($root_start)) {
-			$setup = Includer::requireFileOnce($root_start);
-			if ($setup instanceof \Closure) {
-				$setup();
-			}
 		}
 	}
 
