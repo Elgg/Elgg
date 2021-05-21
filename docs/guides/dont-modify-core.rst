@@ -6,7 +6,7 @@ Don't Modify Core
     In general, you shouldn't modify non-config files that come with third-party software like Elgg.
    
 The best way to customize the behavior of Elgg is to :doc:`install Elgg as a composer dependency</intro/install>`
-and use the root directory to store modifications specific to your application,
+and use a :doc:`plugin<plugins>` to store modifications specific to your application,
 and alter behavior through the rich Elgg plugin API.
 
 If you'd like to share customizations between sites or even publish your changes

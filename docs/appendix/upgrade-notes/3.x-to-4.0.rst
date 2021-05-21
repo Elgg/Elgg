@@ -5,6 +5,16 @@ From 3.x to 4.0
    :local:
    :depth: 1
 
+Composer project
+----------------
+
+The root of the composer project is no longer handled as a semi functional plugin. Languages from the ``languages`` directory are nog longer imported, the views from 
+the ``views`` directory are no longer registered, the PHP DI services from the ``elgg-services.php`` are no longer registered and the ``start.php`` file is no longer
+included.
+
+If you needed specific modification to your Elgg installation you need to make a :doc:`plugin</guides/plugins>` and ensure that the plugin is the latest in the plugin order to
+allow you to overrule everything you needed to change.
+
 PHP Requirements
 ----------------
 
