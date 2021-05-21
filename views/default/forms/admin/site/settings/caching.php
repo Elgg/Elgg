@@ -5,12 +5,10 @@
 
 // simple cache
 $is_simple_cache_on = (bool) elgg_get_config('simplecache_enabled');
-$simple_cache_disabled_class = $is_simple_cache_on ? '' : 'elgg-state-disabled';
 
 $params = [
 	'label' => elgg_echo('installation:simplecache:label'),
 	'name' => 'simplecache_enabled',
-	'checked' => $is_simple_cache_on,
 	'switch' => true,
 ];
 
@@ -20,9 +18,17 @@ if (elgg()->config->hasInitialValue('simplecache_enabled')) {
 	$params['label_class'] = 'elgg-state-disabled';
 	$params['disabled'] = true;
 	
+	// set checked state based on value in settings.php
+	$is_simple_cache_on = (bool) elgg()->config->getInitialValue('simplecache_enabled');
+	
 	$simple_cache_warning .= "<span class=\"elgg-text-help\">" . elgg_echo('admin:settings:in_settings_file') . "</span>";
 }
-$simple_cache_input = elgg_view("input/checkbox", $params);
+
+$params['checked'] = $is_simple_cache_on;
+
+$simple_cache_disabled_class = $is_simple_cache_on ? '' : 'elgg-state-disabled';
+
+$simple_cache_input = elgg_view('input/checkbox', $params);
 
 $cache_symlinked = _elgg_is_cache_symlinked();
 $params = [
