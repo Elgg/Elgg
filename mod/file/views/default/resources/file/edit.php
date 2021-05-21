@@ -26,4 +26,5 @@ $content = elgg_view_form('file/upload', [], $body_vars);
 
 echo elgg_view_page(elgg_echo('edit:object:file'), [
 	'content' => $content,
+	'filter_id' => 'file/edit',
 ]);

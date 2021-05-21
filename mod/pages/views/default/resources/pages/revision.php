@@ -32,4 +32,6 @@ echo elgg_view_page($title, [
 	'content' => elgg_view_entity($page, [
 		'revision' => $annotation,
 	]),
+	'filter_id' => 'pages/history',
+	'filter_value' => 'revision',
 ]);

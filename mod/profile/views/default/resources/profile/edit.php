@@ -26,4 +26,5 @@ elgg_push_context('profile_edit');
 echo elgg_view_page(elgg_echo('profile:edit'), [
 	'content' => elgg_view_form('profile/edit', [], ['entity' => $user]),
 	'show_owner_block_menu' => false,
+	'filter_id' => 'profile/edit',
 ]);

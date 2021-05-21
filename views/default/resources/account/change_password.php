@@ -26,4 +26,5 @@ $shell = elgg_get_config('walled_garden') ? 'walled_garden' : 'default';
 echo elgg_view_page(elgg_echo('changepassword'), [
 	'content' => $content,
 	'sidebar' => false,
+	'filter' => false,
 ], $shell);

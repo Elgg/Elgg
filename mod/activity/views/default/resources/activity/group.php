@@ -44,4 +44,5 @@ $content .= elgg_list_river($options);
 echo elgg_view_page(elgg_echo('collection:river:group'), [
 	'content' => $content,
 	'class' => 'elgg-river-layout',
+	'filter_id' => 'river/group',
 ]);

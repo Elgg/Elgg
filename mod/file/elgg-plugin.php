@@ -44,7 +44,7 @@ return [
 		],
 		'collection:object:file:group' => [
 			'path' => '/file/group/{guid}',
-			'resource' => 'file/owner',
+			'resource' => 'file/group',
 			'required_plugins' => [
 				'groups',
 			],

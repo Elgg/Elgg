@@ -14,4 +14,5 @@ echo elgg_view_page(null, [
 	'title' => $title,
 	'content' => elgg_echo('index:content'),
 	'sidebar' => $sidebar,
+	'filter_id' => 'index',
 ]);

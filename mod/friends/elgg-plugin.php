@@ -89,12 +89,10 @@ return [
 				'Elgg\Friends\Widgets::setWidgetUrl' => [],
 			],
 		],
-		'filter_tabs' => [
-			'all' => [
+		'register' => [
+			'menu:filter:filter' => [
 				'Elgg\Friends\Menus\Filter::registerFilterTabs' => ['priority' => 1],
 			],
-		],
-		'register' => [
 			'menu:filter:friends' => [
 				'Elgg\Friends\Menus\Filter::addFriendRequestTabs' => [],
 			],

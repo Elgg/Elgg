@@ -49,6 +49,7 @@ $layout = elgg_in_context('admin') && elgg_is_admin_logged_in() ? 'admin' : 'err
 $body = elgg_view_layout($layout, [
 	'title' => $title,
 	'content' => $content,
+	'filter' => false,
 ]);
 
 $shell = $layout;

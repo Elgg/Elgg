@@ -417,20 +417,6 @@ function elgg_view_layout($layout_name, $vars = []) {
 	}
 	$timer->begin([__FUNCTION__]);
 	
-	// Help plugins transition without breaking them
-	switch ($layout_name) {
-		case 'default' :
-			$filter_id = elgg_extract('filter_id', $vars, 'filter');
-			$filter_value = elgg_extract('filter_value', $vars);
-			if (isset($filter_value) && $filter_id === 'filter') {
-				$context = elgg_extract('context', $vars, elgg_get_context());
-				$vars['filter'] = elgg_get_filter_tabs($context, $filter_value, null, $vars);
-				$vars['filter_id'] = $filter_id;
-				$vars['filter_value'] = $filter_value;
-			}
-			break;
-	}
-
 	$vars['identifier'] = _elgg_services()->request->getFirstUrlSegment();
 	$vars['segments'] = _elgg_services()->request->getUrlSegments();
 	array_shift($vars['segments']);

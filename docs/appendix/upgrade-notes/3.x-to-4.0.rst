@@ -192,6 +192,16 @@ Setting them to ``true`` will give you the same effect. This allows for individu
 
 The automatic marking as 'selected' of parent menu items of the selected menu item will now always happen for every menu.
 
+Filter tabs
+~~~~~~~~~~~
+
+The preparation of tabs for the filter menu by using the ``elgg_get_filter_tabs()`` function and the ``'filter_tabs', '<context>'`` hook has been removed.
+You can now use the ``'register', 'menu:filter:filter'`` hook to add/remove items from the same place.
+
+The ``all``, ``mine`` and ``friends`` tabs will automaticly generate if routes are available for pages similar to the current route.
+For example if the current route is ``collection:object:blog:all`` the tabs will be generated for the route ``collection:object:blog:owner`` and
+``collection:object:blog:friends``.
+
 Title menu
 ~~~~~~~~~~
 
@@ -604,7 +614,6 @@ Plugins
 * ``discussion_prepare_comment_notification`` changed to ``Elgg\Discussions\Notifications::prepareCommentOnDiscussionNotification``
 * ``discussion_prepare_notification`` changed to ``Elgg\Discussions\Notifications::prepareDiscussionCreateNotification``
 * ``discussion_register_db_seeds`` changed to ``Elgg\Discussions\Database::registerSeeds``
-* ``discussion_setup_groups_filter_tabs`` changed to ``Elgg\Discussions\Menus\Filter::registerGroupsAll``
 * ``Elgg\DevelopersPlugins\*`` changed to ``Elgg\Developers\*``
 * ``Elgg\Discussions\Menus::registerSiteMenuItem`` changed to ``Elgg\Discussions\Menus\Site::register``
 * ``Elgg\Discussions\Menus::filterTabs`` changed to ``Elgg\Discussions\Menus\Filter::filterTabsForDiscussions``
@@ -782,6 +791,7 @@ Lib functions
 * ``elgg_get_available_languages()`` use ``elgg()->translator->getAvailableLanguages()``
 * ``elgg_get_all_plugin_user_settings()`` use ``$plugin->getAllUserSettings($user_guid)``
 * ``elgg_get_entities_from_plugin_user_settings()`` use ``elgg_get_entities()`` with private settings parameters and prefix your setting name with ``ELGG_PLUGIN_USER_SETTING_PREFIX``
+* ``elgg_get_filter_tabs()`` use menu hooks on ``'register', 'menu:filter:<filter_id>'``
 * ``elgg_get_loaded_css()`` use ``elgg_get_loaded_external_files('css', 'head')``
 * ``elgg_get_loaded_js()`` use ``elgg_get_loaded_external_files('js', $location)``
 * ``elgg_get_system_messages()`` use ``elgg()->system_messages->loadRegisters()``
@@ -830,6 +840,7 @@ Removed hooks / events
 
 * Event ``created, river`` has been removed. Use the ``create:after, river`` event.
 * Hook ``creating, river`` has been removed. Use the ``create:before, river`` event if you want to block the creation of a river item.
+* Hook ``filter_tabs, <context>`` has been removed. Use the ``register, menu:filter:<filter_id>`` hook
 * Hook ``output, ajax`` has been removed. Use the ``ajax_response`` hook if you want to influence the results.
 * Hook ``reportedcontent:add`` has been removed. Use the ``create, object`` event to prevent creation.
 * Hook ``reportedcontent:archive`` has been removed. Use the ``permissions_check, object`` hook.

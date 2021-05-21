@@ -41,4 +41,5 @@ echo elgg_view_page($page->getDisplayName(), [
 		'page' => $page,
 	]),
 	'entity' => $page,
+	'filter_id' => 'pages/view',
 ]);

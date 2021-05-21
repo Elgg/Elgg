@@ -22,4 +22,5 @@ echo elgg_view_page(elgg_echo('generic_comments:edit'), [
 		'entity' => $target,
 		'comment' => $comment,
 	]),
+	'filter_id' => 'comment/edit',
 ]);

@@ -121,14 +121,22 @@ System hooks
 **register, menu:filter:<filter_id>**
 	Allows plugins to modify layout filter tabs on layouts that specify ``<filter_id>`` parameter. Parameters and return values
 	are same as in ``register, menu:<menu_name>`` hook.
+	
+	If ``filter_id`` is ``filter`` (the default) then the ``all``, ``mine`` and ``friends`` tabs will be generated base on some provided information
+	or be tried for routes similar to the current route.
+	
+	- params['all_link'] will be used for the ``all`` tab
+	- params['mine_link'] will be used for the ``mine`` tab
+	- params['friends_link'] will be used for the ``friend`` tab
+	
+	If the above are not provided than a route will be tried based on ``params['entity_type']`` and ``params['entity_subtype']``.
+	If not provided ``entity_type`` and ``entity_subtype`` will be based on route detection of the current route. 
+	For example if the current route is ``collection:object:blog:all`` ``entity_type`` will be ``object`` and ``entity_subtype`` will be ``blog``.
+	- The ``all`` tab will be based on the route ``collection:<entity_type>:<entity_subtype>:all``
+	- The ``mine`` tab will be based on the route ``collection:<entity_type>:<entity_subtype>:owner``
+	- The ``friend`` tab will be based on the route ``collection:<entity_type>:<entity_subtype>:friends``
 
-**filter_tabs, <context>**
-	Filters the array of ``ElggMenuItem`` used to display the All/Mine/Friends tabs. The ``$params``
-	array includes:
-
-	 * ``selected``: the selected menu item name
-	 * ``user``: the logged in ``ElggUser`` or ``null``
-	 * ``vars``: The ``$vars`` argument passed to ``elgg_get_filter_tabs``
+	If the routes aren't registered the tabs will not appear.
 
 **creating, river**
 	The options for ``elgg_create_river_item`` are filtered through this hook. You may alter values

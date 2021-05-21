@@ -31,4 +31,5 @@ echo elgg_view_page($collection->getDisplayName(), [
 		'item' => $collection,
 	]),
 	'show_owner_block_menu' => false,
+	'filter_id' => 'friends_collections/view',
 ]);

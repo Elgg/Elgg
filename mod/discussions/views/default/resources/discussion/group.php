@@ -19,4 +19,5 @@ echo elgg_view_page(elgg_echo('collection:object:discussion'), [
 	'content' => elgg_view('discussion/listing/group', [
 		'entity' => $group,
 	]),
+	'filter_id' => 'discussion/group',
 ]);

@@ -30,4 +30,5 @@ if ($file->canDownload()) {
 echo elgg_view_page($file->getDisplayName(), [
 	'content' => $content,
 	'entity' => $file,
+	'filter_id' => 'file/view',
 ]);

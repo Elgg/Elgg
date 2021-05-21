@@ -10,4 +10,5 @@ $content = elgg_view('groups/edit');
 
 echo elgg_view_page(elgg_echo('groups:add'), [
 	'content' => $content,
+	'filter_id' => 'groups/edit',
 ]);

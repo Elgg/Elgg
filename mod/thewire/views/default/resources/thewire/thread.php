@@ -24,4 +24,5 @@ $content = elgg_list_entities([
 
 echo elgg_view_page(elgg_echo('thewire:thread'), [
 	'content' => $content,
+	'filter_id' => 'thewire/thread',
 ]);

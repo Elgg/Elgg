@@ -6,4 +6,5 @@ echo elgg_view_page(elgg_echo('tagcloud:site_cloud'), [
 		'limit' => 100,
 		'tag_name' => 'tags',
 	]),
+	'filter_id' => 'tagcloud',
 ]);

@@ -18,7 +18,7 @@ if (!$user || !$user->canEdit()) {
 
 elgg_set_page_owner_guid($user->guid);
 
-$plugin_id = elgg_extract("plugin_id", $vars);
+$plugin_id = elgg_extract('plugin_id', $vars);
 
 if (empty($plugin_id)) {
 	throw new PageNotFoundException(elgg_echo('ElggPlugin:MissingID'));
@@ -50,4 +50,6 @@ $content = elgg_view_form('plugins/usersettings/save', $form_vars, ['entity' => 
 echo elgg_view_page($title, [
 	'content' => $content,
 	'show_owner_block_menu' => false,
+	'filter_id' => 'settings',
+	'filter_value' => 'plugin_settings',
 ]);

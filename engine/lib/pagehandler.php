@@ -40,6 +40,40 @@ function elgg_unregister_route($name) {
 }
 
 /**
+ * Get a registered route by it's name
+ *
+ * @param string $name the route name
+ *
+ * @return \Elgg\Router\Route|null
+ * @since 4.0
+ */
+function elgg_get_route(string $name): ?\Elgg\Router\Route {
+	return _elgg_services()->routes->get($name);
+}
+
+/**
+ * Get the route for the current request
+ *
+ * @return \Elgg\Router\Route|null
+ * @since 4.0
+ */
+function elgg_get_current_route(): ?\Elgg\Router\Route {
+	return _elgg_services()->request->getRoute();
+}
+
+/**
+ * Check if a route is registered
+ *
+ * @param string $name route name
+ *
+ * @return bool
+ * @since 4.0
+ */
+function elgg_route_exists(string $name): bool {
+	return _elgg_services()->routes->get($name) instanceof \Elgg\Router\Route;
+}
+
+/**
  * Generate a URL for named route
  *
  * @param string $name       Route name
