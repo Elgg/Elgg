@@ -878,7 +878,7 @@ Moved exceptions
 * ``InvalidParameterException`` use ``Elgg\Exceptions\InvalidParameterException``
 * ``IOException`` use ``Elgg\Exceptions\FileSystem\IOException``
 * ``LoginException`` use ``Elgg\Exceptions\LoginException``
-* ``PluginException`` use ``Elgg\Exceptions\Http\PluginException``
+* ``PluginException`` use ``Elgg\Exceptions\PluginException``
 * ``RegistrationException`` use ``Elgg\Exceptions\Configuration\RegistrationException``
 * ``SecurityException`` use ``Elgg\Exceptions\SecurityException``
 * ``Elgg\Database\EntityTable\UserFetchFailureException`` use ``Elgg\Exceptions\Database\UserFetchFailureException``

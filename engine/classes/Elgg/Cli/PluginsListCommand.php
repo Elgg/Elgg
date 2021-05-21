@@ -2,7 +2,7 @@
 
 namespace Elgg\Cli;
 
-use Elgg\Exceptions\Http\PluginException;
+use Elgg\Exceptions\PluginException;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputOption;
 
