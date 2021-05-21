@@ -7,10 +7,9 @@ use Elgg\Config;
 use Elgg\Context;
 use Elgg\Database;
 use Elgg\EventsService;
-use Elgg\Exceptions\Http\PluginException;
 use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\PluginException;
 use Elgg\I18n\Translator;
-use Elgg\Includer;
 use Elgg\Project\Paths;
 use Elgg\SystemMessagesService;
 use Elgg\Traits\Cacheable;
@@ -332,7 +331,7 @@ class Plugins {
 					$plugin->enable();
 					try {
 						$plugin->deactivate();
-					} catch (\Elgg\Exceptions\PluginException $e) {
+					} catch (PluginException $e) {
 						// do nothing
 					}
 					$plugin->setPriority('new');
@@ -361,7 +360,7 @@ class Plugins {
 			if ($plugin->isActive()) {
 				try {
 					$plugin->deactivate();
-				} catch (\Elgg\Exceptions\PluginException $e) {
+				} catch (PluginException $e) {
 					// do nothing
 				}
 			}
@@ -762,8 +761,6 @@ class Plugins {
 					'plugin' => $plugin,
 				],
 			]);
-		} catch (\Elgg\Exceptions\PluginException $e) {
-			// do nothing
 		}
 	}
 

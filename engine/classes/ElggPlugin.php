@@ -3,8 +3,8 @@
 use Elgg\Includer;
 use Elgg\Database\Delete;
 use Elgg\Exceptions\DatabaseException;
-use Elgg\Exceptions\Http\PluginException;
 use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
+use Elgg\Exceptions\PluginException;
 use Elgg\Database\Plugins;
 
 /**
@@ -547,7 +547,7 @@ class ElggPlugin extends ElggObject {
 		try {
 			$this->assertValid();
 			return true;
-		} catch (\Elgg\Exceptions\PluginException $e) {
+		} catch (PluginException $e) {
 			return false;
 		}
 	}
@@ -562,13 +562,19 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function assertValid(): void {
 		if (!$this->getID()) {
-			throw new \Elgg\Exceptions\PluginException(elgg_echo('ElggPlugin:MissingID', [$this->guid]));
+			throw PluginException::factory([
+				'message' => elgg_echo('ElggPlugin:MissingID', [$this->guid]),
+				'plugin' => $this,
+			]);
 		}
 		
 		$this->getComposer()->assertPluginId();
 		
 		if (file_exists($this->getPath() . 'start.php')) {
-			throw new \Elgg\Exceptions\PluginException(elgg_echo('ElggPlugin:StartFound', [$this->getID()]));
+			throw PluginException::factory([
+				'message' => elgg_echo('ElggPlugin:StartFound', [$this->getID()]),
+				'plugin' => $this,
+			]);
 		}
 	}
 
@@ -600,7 +606,7 @@ class ElggPlugin extends ElggObject {
 		try {
 			$this->assertCanActivate();
 			return true;
-		} catch (\Elgg\Exceptions\PluginException $e) {
+		} catch (PluginException $e) {
 			return false;
 		}
 	}
@@ -719,7 +725,7 @@ class ElggPlugin extends ElggObject {
 		try {
 			$this->assertcanDeactivate();
 			return true;
-		} catch (\Elgg\Exceptions\PluginException $e) {
+		} catch (PluginException $e) {
 			return false;
 		}
 	}
@@ -762,7 +768,10 @@ class ElggPlugin extends ElggObject {
 		}, $dependents);
 		
 		$list = implode(', ', $list);
-		throw new \Elgg\Exceptions\PluginException(elgg_echo('ElggPlugin:Dependencies:ActiveDependent', [$this->getDisplayName(), $list]));
+		throw PluginException::factory([
+			'message' => elgg_echo('ElggPlugin:Dependencies:ActiveDependent', [$this->getDisplayName(), $list]),
+			'plugin' => $this,
+		]);
 	}
 
 	/**
@@ -803,22 +812,23 @@ class ElggPlugin extends ElggObject {
 
 	/**
 	 * Bootstrap object
+	 *
 	 * @return \Elgg\PluginBootstrapInterface
-	 * @throws PluginException
+	 *
+	 * @throws \Elgg\Exceptions\PluginException
 	 * @internal
 	 */
 	public function getBootstrap(): \Elgg\PluginBootstrapInterface {
 		$bootstrap = $this->getStaticConfig('bootstrap');
 		if ($bootstrap) {
 			if (!is_subclass_of($bootstrap, \Elgg\PluginBootstrapInterface::class)) {
-				throw PluginException::factory(
-					'InvalidBootstrap',
-					$this,
-					elgg_echo('LogicException:InterfaceNotImplemented', [
+				throw PluginException::factory([
+					'message' => elgg_echo('LogicException:InterfaceNotImplemented', [
 						$bootstrap,
 						\Elgg\PluginBootstrapInterface::class
-					])
-				);
+					]),
+					'plugin' => $this,
+				]);
 			}
 
 			return new $bootstrap($this, _elgg_services()->dic);
@@ -908,7 +918,7 @@ class ElggPlugin extends ElggObject {
 	 * @param string $filename The name of the file
 	 *
 	 * @return mixed The return value of the included file (or 1 if there is none)
-	 * @throws PluginException
+	 * @throws \Elgg\Exceptions\PluginException
 	 */
 	protected function includeFile(string $filename) {
 		$filepath = "{$this->getPath()}{$filename}";
@@ -919,7 +929,10 @@ class ElggPlugin extends ElggObject {
 				[$filename, $this->getID(), $this->guid, $this->getPath()]
 			);
 
-			throw PluginException::factory('CannotIncludeFile', $this, $msg);
+			throw PluginException::factory([
+				'message' => $msg,
+				'plugin' => $this,
+			]);
 		}
 
 		try {
@@ -930,7 +943,11 @@ class ElggPlugin extends ElggObject {
 				[$filename, $this->getID(), $this->guid, $this->getPath()]
 			);
 
-			throw PluginException::factory('IncludeFileThrew', $this, $msg, $e);
+			throw PluginException::factory([
+				'message' => $msg,
+				'previous' => $e,
+				'plugin' => $this,
+			]);
 		}
 
 		return $ret;
@@ -963,13 +980,19 @@ class ElggPlugin extends ElggObject {
 		ob_start();
 		$value = $this->includeFile(self::STATIC_CONFIG_FILENAME);
 		if (ob_get_clean() !== '') {
-			throw new \Elgg\Exceptions\PluginException(elgg_echo('ElggPlugin:activate:ConfigSentOutput'));
+			throw PluginException::factory([
+				'message' => elgg_echo('ElggPlugin:activate:ConfigSentOutput'),
+				'plugin' => $this,
+			]);
 		}
 
 		// make sure can serialize
 		$value = @unserialize(serialize($value));
 		if (!is_array($value)) {
-			throw new \Elgg\Exceptions\PluginException(elgg_echo('ElggPlugin:activate:BadConfigFormat'));
+			throw PluginException::factory([
+				'message' => elgg_echo('ElggPlugin:activate:BadConfigFormat'),
+				'plugin' => $this,
+			]);
 		}
 	}
 
@@ -977,7 +1000,7 @@ class ElggPlugin extends ElggObject {
 	 * Registers the plugin's views
 	 *
 	 * @return void
-	 * @throws PluginException
+	 * @throws \Elgg\Exceptions\PluginException
 	 */
 	protected function registerViews(): void {
 		if (_elgg_services()->config->system_cache_loaded) {
@@ -996,7 +1019,10 @@ class ElggPlugin extends ElggObject {
 		if (!$views->registerPluginViews($this->getPath())) {
 			$msg = elgg_echo('ElggPlugin:Exception:CannotRegisterViews', [$this->getID(), $this->guid, $this->getPath()]);
 
-			throw PluginException::factory('CannotRegisterViews', $this, $msg);
+			throw PluginException::factory([
+				'message' => $msg,
+				'plugin' => $this,
+			]);
 		}
 	}
 
@@ -1466,7 +1492,7 @@ class ElggPlugin extends ElggObject {
 			$this->assertDependencies();
 			
 			return true;
-		} catch (\Elgg\Exceptions\PluginException $e) {
+		} catch (PluginException $e) {
 			return false;
 		}
 	}
@@ -1480,14 +1506,10 @@ class ElggPlugin extends ElggObject {
 	 * @since 4.0
 	 */
 	public function assertDependencies(): void {
-		try {
-			$this->getComposer()->assertConflicts();
-			$this->getComposer()->assertActivePluginConflicts();
-			$this->getComposer()->assertRequiredPhpVersion();
-			$this->getComposer()->assertRequiredPhpExtensions();
-		} catch (\Elgg\Exceptions\PluginException $e) {
-			throw $e;
-		}
+		$this->getComposer()->assertConflicts();
+		$this->getComposer()->assertActivePluginConflicts();
+		$this->getComposer()->assertRequiredPhpVersion();
+		$this->getComposer()->assertRequiredPhpExtensions();
 	}
 	
 	/**
