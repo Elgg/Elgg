@@ -65,18 +65,6 @@ class Search {
 	}
 
 	/**
-	 * Populate search-related volatile data
-	 *
-	 * @param \ElggEntity $entity Found entity
-	 *
-	 * @return void
-	 */
-	public function prepareEntity(\ElggEntity $entity) {
-		$formatter = new Formatter($entity, $this);
-		$formatter->format();
-	}
-
-	/**
 	 * List search results for given search type
 	 *
 	 * @param string $search_type Search type
@@ -121,44 +109,6 @@ class Search {
 			'results' => $results,
 			'params' => $current_params,
 		]);
-	}
-
-	/**
-	 * Returns the name of the view to render an item in search results
-	 *
-	 * @param \Loggable $item Optional item to get the type/subtype of
-	 *
-	 * @return string
-	 */
-	public function getSearchView(\Loggable $item = null) {
-		
-		if ($item instanceof \Loggable) {
-			$type = $item->getType();
-			$subtype = $item->getSubtype();
-		} else {
-			$type = elgg_extract('type', $this->params);
-			$subtype = elgg_extract('subtype', $this->params);
-		}
-		
-		$search_type = elgg_extract('search_type', $this->params);
-
-		$views = [
-			"search/$search_type/$type/$subtype",
-			"search/$search_type/$type/default",
-			"search/$type/$subtype/entity", // BC
-			"search/$type/entity", // BC
-			"search/$type/$subtype",
-			"search/$type/default",
-			"search/$search_type/entity", // BC
-		];
-
-		foreach ($views as $view) {
-			if (elgg_view_exists($view)) {
-				return $view;
-			}
-		}
-
-		return '';
 	}
 
 	/**
