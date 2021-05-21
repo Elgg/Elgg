@@ -228,10 +228,14 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('cacheHandler', function(ServiceProvider $sp) {
-			$simplecache_enabled = $sp->config->simplecache_enabled;
-			if ($simplecache_enabled === null) {
-				$simplecache_enabled = $sp->configTable->get('simplecache_enabled');
+			if ($sp->config->hasInitialValue('simplecache_enabled')) {
+				// check for setting in settings.php
+				$simplecache_enabled = $sp->config->getInitialValue('simplecache_enabled');
+			} else {
+				// need to retrieve setting from db
+				$simplecache_enabled = $sp->configTable->get('simplecache_enabled') ?? $sp->config->simplecache_enabled;
 			}
+			
 			return new \Elgg\Application\CacheHandler($sp->config, $sp->request, $simplecache_enabled);
 		});
 

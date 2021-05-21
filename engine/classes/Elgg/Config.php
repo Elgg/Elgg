@@ -227,9 +227,22 @@ class Config {
 	 * @param array $values Initial config values from Env/settings file
 	 */
 	public function __construct(array $values = []) {
-		$values = array_merge($this->config_defaults, $values);
-		$this->values = $values;
-
+		$this->saveInitialValues($values);
+		
+		$this->values = array_merge($this->config_defaults, $values);
+		
+		// set cookie values for session and remember me
+		$this->getCookieConfig();
+	}
+	
+	/**
+	 * Stores the inital values
+	 *
+	 * @param array $values The initial values
+	 *
+	 * @return void
+	 */
+	protected function saveInitialValues(array $values): void {
 		// Don't keep copies of these in case config gets dumped
 		$sensitive_props = [
 			'__site_secret__',
@@ -240,13 +253,12 @@ class Config {
 			'dbpass',
 			'dbname',
 		];
+		
 		foreach ($sensitive_props as $name) {
 			unset($values[$name]);
 		}
-		$this->initial_values = $values;
 		
-		// set cookie values for session and remember me
-		$this->getCookieConfig();
+		$this->initial_values = $values;
 	}
 
 	/**
