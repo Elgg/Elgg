@@ -1,6 +1,7 @@
 <?php
 
 return [
+	'bootstrap' => Elgg\SystemLog\Bootstrap::class,
 	'plugin' => [
 		'name' => 'System Log',
 		'activate_on_install' => true,
