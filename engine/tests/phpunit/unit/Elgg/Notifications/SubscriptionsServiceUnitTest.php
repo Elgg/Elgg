@@ -13,9 +13,9 @@ use PHPUnit\Framework\MockObject\MockObject;
 class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	/**
-	 * @var int
+	 * @var \ElggObject
 	 */
-	protected $containerGuid;
+	protected $object;
 	
 	/**
 	 * @var SubscriptionsService
@@ -33,21 +33,14 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 	protected $event;
 
 	public function up() {
-		$this->containerGuid = 42;
-
-		// mock ElggObject that has a container guid
-		$object = $this->createMock('\ElggObject');
-
-		$object->expects($this->any())
-			->method('getContainerGUID')
-			->will($this->returnValue($this->containerGuid));
+		$this->object = $this->createObject();
 
 		// mock event that holds the mock object
 		$this->event = $this->createMock('\Elgg\Notifications\SubscriptionNotificationEvent');
 
 		$this->event->expects($this->any())
 			->method('getObject')
-			->will($this->returnValue($object));
+			->will($this->returnValue($this->object));
 		
 		$this->event->expects($this->any())
 			->method('getActorGUID')
@@ -118,7 +111,7 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$select = Select::fromTable('entity_relationships');
 		$select->select('guid_one AS guid')
 			->addSelect("GROUP_CONCAT(relationship SEPARATOR ',') AS methods")
-			->where($select->compare('guid_two', '=', $this->containerGuid, ELGG_VALUE_GUID))
+			->where($select->compare('guid_two', 'in', [$this->object->guid, $this->object->container_guid], ELGG_VALUE_GUID))
 			->andWhere($select->compare('relationship', 'in', ['notify:apples', 'notify:bananas'], ELGG_VALUE_STRING))
 			->groupBy('guid_one');
 		

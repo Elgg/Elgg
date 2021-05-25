@@ -81,27 +81,34 @@ class SubscriptionsService {
 			return [];
 		}
 
+		// get subscribers only for \ElggEntity if it isn't private
+		if ((!$object instanceof \ElggEntity) || ($object->access_id === ACCESS_PRIVATE)) {
+			return [];
+		}
+
 		$subscriptions = [];
 
-		// get subscribers only for \ElggEntity if it isn't private
-		if (($object instanceof \ElggEntity) && ($object->access_id !== ACCESS_PRIVATE)) {
-			$records = $this->getSubscriptionRecords($object->getContainerGUID(), $methods, $object->type, $object->subtype, $event->getAction(), $event->getActorGUID());
-			foreach ($records as $record) {
-				if (empty($record->guid)) {
-					// happens when no records are found
-					continue;
-				}
+		$guids = array_unique([
+			$object->guid,
+			$object->container_guid,
+		]);
+		
+		$records = $this->getSubscriptionRecords($guids, $methods, $object->type, $object->subtype, $event->getAction(), $event->getActorGUID());
+		foreach ($records as $record) {
+			if (empty($record->guid)) {
+				// happens when no records are found
+				continue;
+			}
+			
+			if (!isset($subscriptions[$record->guid])) {
+				$subscriptions[$record->guid] = [];
+			}
+			
+			$deliveryMethods = explode(',', $record->methods);
+			foreach ($deliveryMethods as $relationship) {
+				$relationship_array = explode(':', $relationship);
 				
-				if (!isset($subscriptions[$record->guid])) {
-					$subscriptions[$record->guid] = [];
-				}
-				
-				$deliveryMethods = explode(',', $record->methods);
-				foreach ($deliveryMethods as $relationship) {
-					$relationship_array = explode(':', $relationship);
-					
-					$subscriptions[$record->guid][] = end($relationship_array);
-				}
+				$subscriptions[$record->guid][] = end($relationship_array);
 			}
 		}
 
@@ -130,7 +137,7 @@ class SubscriptionsService {
 
 		$subscriptions = [];
 
-		$records = $this->getSubscriptionRecords($container_guid, $methods);
+		$records = $this->getSubscriptionRecords([$container_guid], $methods);
 		foreach ($records as $record) {
 			if (empty($record->guid)) {
 				// happens when no records are found
@@ -595,7 +602,7 @@ class SubscriptionsService {
 	 * Records are an object with two vars: guid and methods with the latter
 	 * being a comma-separated list of subscription relationship names.
 	 *
-	 * @param int    $container_guid The GUID of the subscription target
+	 * @param int[]  $container_guid The GUID of the subscription target
 	 * @param array  $methods        Notification methods
 	 * @param string $type           (optional) entity type
 	 * @param string $subtype        (optional) entity subtype
@@ -604,7 +611,7 @@ class SubscriptionsService {
 	 *
 	 * @return array
 	 */
-	protected function getSubscriptionRecords(int $container_guid, array $methods, string $type = null, string $subtype = null, string $action = null, int $actor_guid = 0): array {
+	protected function getSubscriptionRecords(array $container_guid, array $methods, string $type = null, string $subtype = null, string $action = null, int $actor_guid = 0): array {
 		// create IN clause
 		$rels = $this->getMethodRelationships($methods, $type, $subtype, $action);
 		if (!$rels) {
@@ -614,7 +621,7 @@ class SubscriptionsService {
 		$select = Select::fromTable('entity_relationships');
 		$select->select('guid_one AS guid')
 			->addSelect("GROUP_CONCAT(relationship SEPARATOR ',') AS methods")
-			->where($select->compare('guid_two', '=', $container_guid, ELGG_VALUE_GUID))
+			->where($select->compare('guid_two', 'in', $container_guid, ELGG_VALUE_GUID))
 			->andWhere($select->compare('relationship', 'in', $rels, ELGG_VALUE_STRING))
 			->groupBy('guid_one');
 		

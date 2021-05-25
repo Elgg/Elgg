@@ -459,4 +459,31 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		
 		$this->assertEquals($expected, $this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']));
 	}
+	
+	public function testGetNotificationEventSubscriptionsForEntityAndContainer() {
+		$event = $this->getSubscriptionNotificationEvent();
+		
+		$this->entities[] = $user1 = $this->createUser();
+		$this->entities[] = $user2 = $this->createUser();
+		
+		$actor = $event->getActor();
+		
+		/* @var $object \ElggObject */
+		$object = $event->getObject();
+		$container = $object->getContainerEntity();
+		
+		$this->assertTrue($object->addSubscription($user1->guid, 'apples'));
+		$this->assertTrue($container->addSubscription($user2->guid, 'apples'));
+		
+		$expected = [
+			$user1->guid => [
+				'apples',
+			],
+			$user2->guid => [
+				'apples',
+			],
+		];
+		
+		$this->assertEquals($expected, $this->service->getNotificationEventSubscriptions($event, ['apples']));
+	}
 }
