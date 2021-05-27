@@ -10,34 +10,6 @@ namespace Elgg\Discussions;
  * @internal
  */
 class Notifications {
-
-	/**
-	 * Prepare a notification message about a new discussion topic
-	 *
-	 * @param \Elgg\Hook $hook 'prepare', 'notification:create:object:discussion'
-	 *
-	 * @return \Elgg\Notifications\Notification
-	 */
-	public static function prepareDiscussionCreateNotification(\Elgg\Hook $hook) {
-		$entity = $hook->getParam('event')->getObject();
-		$owner = $hook->getParam('event')->getActor();
-		$language = $hook->getParam('language');
-	
-		$title = $entity->getDisplayName();
-	
-		$notification = $hook->getValue();
-		$notification->subject = elgg_echo('discussion:topic:notify:subject', [$title], $language);
-		$notification->body = elgg_echo('discussion:topic:notify:body', [
-			$owner->getDisplayName(),
-			$title,
-			$entity->description,
-			$entity->getURL()
-		], $language);
-		$notification->summary = elgg_echo('discussion:topic:notify:summary', [$title], $language);
-		$notification->url = $entity->getURL();
-		
-		return $notification;
-	}
 	
 	/**
 	 * Prepare a notification message about a new comment on a discussion

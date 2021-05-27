@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Discussions\GroupToolContainerLogicCheck;
+use Elgg\Discussions\Notifications\CreateDiscussionEventHandler;
 
 require_once(__DIR__ . '/lib/functions.php');
 
@@ -96,9 +97,6 @@ return [
 			'notification:create:object:comment' => [
 				'Elgg\Discussions\Notifications::prepareCommentOnDiscussionNotification' => [],
 			],
-			'notification:create:object:discussion' => [
-				'Elgg\Discussions\Notifications::prepareDiscussionCreateNotification' => [],
-			],
 		],
 		'register' => [
 			'menu:filter:filter' => [
@@ -126,7 +124,7 @@ return [
 	'notifications' => [
 		'object' => [
 			'discussion' => [
-				'create' => true,
+				'create' => CreateDiscussionEventHandler::class,
 			],
 		],
 	],

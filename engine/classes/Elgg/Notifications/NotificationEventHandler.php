@@ -96,7 +96,7 @@ class NotificationEventHandler {
 	 *
 	 * @return array
 	 */
-	public function getMethods(): array {
+	final public function getMethods(): array {
 		return $this->service->getMethods();
 	}
 	
@@ -119,7 +119,7 @@ class NotificationEventHandler {
 	 *
 	 * @return array
 	 */
-	protected function sendNotifications($subscriptions, array $params = []) {
+	final protected function sendNotifications($subscriptions, array $params = []) {
 		if (empty($this->getMethods())) {
 			return [];
 		}
@@ -148,7 +148,7 @@ class NotificationEventHandler {
 	 *
 	 * @return bool
 	 */
-	protected function sendNotification($guid, $method, array $params = []) {
+	final protected function sendNotification(int $guid, string $method, array $params = []): bool {
 		if (!_elgg_services()->hooks->hasHandler('send', "notification:{$method}")) {
 			// no way to deliver given the current method, so quitting early
 			return false;
@@ -165,8 +165,7 @@ class NotificationEventHandler {
 			$summary = elgg_extract('summary', $params, '');
 		} else {
 			$recipient = _elgg_services()->entityTable->get($guid, 'user');
-			/* @var \ElggUser $recipient */
-			if (!$recipient || $recipient->isBanned()) {
+			if (!$recipient instanceof \ElggUser || $recipient->isBanned()) {
 				return false;
 			}
 		
@@ -180,22 +179,71 @@ class NotificationEventHandler {
 				return false;
 			}
 
-			$subject = $this->getNotificationSubject($recipient);
-			$body = $this->getNotificationBody($recipient);
-			$summary = '';
+			$subject = $this->getNotificationSubject($recipient, $method);
+			$body = $this->getNotificationBody($recipient, $method);
+			$summary = $this->getNotificationSummary($recipient, $method);
+			
+			if (!isset($params['url'])) {
+				$params['url'] = $this->getNotificationURL($recipient, $method) ?: null;
+			}
 		}
-
-		$language = $recipient->getLanguage();
+		
+		$params['subject'] = $subject;
+		$params['body'] = $body;
+		$params['summary'] = $summary;
 		$params['event'] = $this->event;
 		$params['method'] = $method;
 		$params['sender'] = $actor;
 		$params['recipient'] = $recipient;
-		$params['language'] = $language;
+		$params['language'] = $recipient->getLanguage();
 		$params['object'] = $object;
 		$params['action'] = $this->event->getAction();
 		$params['add_salutation'] = elgg_extract('add_salutation', $params, true);
 
-		$notification = new Notification($actor, $recipient, $language, $subject, $body, $summary, $params);
+		$notification = $this->prepareNotification($params);
+		return $this->deliverNotification($notification, $method);
+	}
+	
+	/**
+	 * Deliver a notification
+	 *
+	 * @param Notification $notification Notification to deliver
+	 * @param string       $method       Method to use for delivery
+	 *
+	 * @return bool
+	 */
+	final protected function deliverNotification(Notification $notification, string $method): bool {
+		// return true to indicate the notification has been sent
+		$params = [
+			'notification' => $notification,
+			'event' => $this->event,
+		];
+
+		$result = _elgg_services()->hooks->trigger('send', "notification:{$method}", $params, false);
+		
+		if (_elgg_services()->logger->isLoggable(LogLevel::INFO)) {
+			$logger_data = print_r((array) $notification->toObject(), true);
+			if ($result) {
+				_elgg_services()->logger->info('Notification sent: ' . $logger_data);
+			} else {
+				_elgg_services()->logger->info('Notification was not sent: ' . $logger_data);
+			}
+		}
+		
+		return $result;
+	}
+	
+	/**
+	 * Prepares a notification for delivery
+	 *
+	 * @param array $params Parameters to initialize notification with
+	 *
+	 * @throws \RuntimeException
+	 *
+	 * @return Notification
+	 */
+	final protected function prepareNotification(array $params): Notification {
+		$notification = new Notification($params['sender'], $params['recipient'], $params['language'], $params['subject'], $params['body'], $params['summary'], $params);
 
 		$notification = _elgg_services()->hooks->trigger('prepare', 'notification', $params, $notification);
 		if (!$notification instanceof Notification) {
@@ -213,28 +261,12 @@ class NotificationEventHandler {
 			$notification->body = _elgg_view_under_viewtype('notifications/body', ['notification' => $notification], $viewtype);
 		}
 		
-		$notification = _elgg_services()->hooks->trigger('format', "notification:{$method}", [], $notification);
+		$notification = _elgg_services()->hooks->trigger('format', "notification:{$params['method']}", [], $notification);
 		if (!$notification instanceof Notification) {
-			throw new \RuntimeException("'format','notification:{$method}' hook must return an instance of " . Notification::class);
-		}
-
-		// return true to indicate the notification has been sent
-		$params = [
-			'notification' => $notification,
-			'event' => $this->event,
-		];
-
-		$result = _elgg_services()->hooks->trigger('send', "notification:{$method}", $params, false);
-		if (_elgg_services()->logger->isLoggable(LogLevel::INFO)) {
-			$logger_data = print_r((array) $notification->toObject(), true);
-			if ($result) {
-				_elgg_services()->logger->info("Notification sent: " . $logger_data);
-			} else {
-				_elgg_services()->logger->info("Notification was not sent: " . $logger_data);
-			}
+			throw new \RuntimeException("'format','notification:{$params['method']}' hook must return an instance of " . Notification::class);
 		}
 		
-		return $result;
+		return $notification;
 	}
 
 	/**
@@ -248,10 +280,11 @@ class NotificationEventHandler {
 	 *     'notification:subject:publish:object:blog' => '%s published a blog called %s'
 	 *
 	 * @param \ElggUser $recipient Notification recipient
+	 * @param string    $method    Method
 	 *
 	 * @return string Notification subject in the recipient's language
 	 */
-	protected function getNotificationSubject(\ElggUser $recipient) {
+	protected function getNotificationSubject(\ElggUser $recipient, string $method): string {
 		$actor = $this->event->getActor();
 		$object = $this->event->getObject();
 		
@@ -308,10 +341,11 @@ class NotificationEventHandler {
 	 * See http://php.net/manual/en/function.sprintf.php#example-5427
 	 *
 	 * @param \ElggUser $recipient Notification recipient
+	 * @param string    $method    Method
 	 *
 	 * @return string Notification body in the recipient's language
 	 */
-	protected function getNotificationBody(\ElggUser $recipient) {
+	protected function getNotificationBody(\ElggUser $recipient, string $method): string {
 		$actor = $this->event->getActor();
 		$object = $this->event->getObject();
 		/* @var \ElggObject $object */
@@ -344,5 +378,31 @@ class NotificationEventHandler {
 
 		// Fall back to default body
 		return _elgg_services()->translator->translate('notification:body', [$object->getURL()], $language);
+	}
+	
+	/**
+	 * Return the summary for a notification
+	 *
+	 * @param \ElggUser $recipient Notification recipient
+	 * @param string    $method    Method
+	 *
+	 * @return string
+	 */
+	protected function getNotificationSummary(\ElggUser $recipient, string $method): string {
+		return '';
+	}
+	
+	/**
+	 * Returns the url related to this notification
+	 *
+	 * @param \ElggUser $recipient Notification recipient
+	 * @param string    $method    Method
+	 *
+	 * @return string
+	 */
+	protected function getNotificationURL(\ElggUser $recipient, string $method): string {
+		$object = $this->event->getObject();
+		
+		return $object instanceof \ElggEntity ? $object->getURL() : '';
 	}
 }

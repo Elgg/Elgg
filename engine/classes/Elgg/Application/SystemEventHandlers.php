@@ -2,6 +2,11 @@
 
 namespace Elgg\Application;
 
+use Elgg\Notifications\CreateCommentEventHandler;
+use Elgg\Notifications\UnbanUserEventHandler;
+use Elgg\Notifications\MakeAdminUserEventHandler;
+use Elgg\Notifications\RemoveAdminUserEventHandler;
+
 /**
  * Contains the system event handlers
  *
@@ -24,9 +29,10 @@ class SystemEventHandlers {
 			elgg_register_notification_method('delayed_email');
 		}
 		
-		elgg_register_notification_event('object', 'comment', ['create']);
-		elgg_register_notification_event('user', 'user', ['make_admin', 'remove_admin']);
-		elgg_register_notification_event('user', 'user', ['unban']);
+		elgg_register_notification_event('object', 'comment', ['create'], CreateCommentEventHandler::class);
+		elgg_register_notification_event('user', 'user', ['make_admin'], MakeAdminUserEventHandler::class);
+		elgg_register_notification_event('user', 'user', ['remove_admin'], RemoveAdminUserEventHandler::class);
+		elgg_register_notification_event('user', 'user', ['unban'], UnbanUserEventHandler::class);
 		
 		// if mb functions are available, set internal encoding to UTF8
 		if (is_callable('mb_internal_encoding')) {

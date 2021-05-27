@@ -1338,10 +1338,12 @@ class ElggPlugin extends ElggObject {
 		foreach ($spec as $type => $subtypes) {
 			foreach ($subtypes as $subtype => $actions) {
 				foreach ($actions as $action => $callback) {
-					if ($callback === true) {
-						_elgg_services()->notifications->registerEvent($type, $subtype, [$action]);
-					} elseif ($callback === false) {
+					if ($callback === false) {
 						_elgg_services()->notifications->unregisterEvent($type, $subtype, [$action]);
+					} elseif ($callback === true) {
+						_elgg_services()->notifications->registerEvent($type, $subtype, [$action]);
+					} else {
+						_elgg_services()->notifications->registerEvent($type, $subtype, [$action], $callback);
 					}
 				}
 			}

@@ -500,15 +500,13 @@ Core
 * ``_elgg_admin_check_admin_validation()`` changed to ``Elgg\Users\Validation::checkAdminValidation()``
 * ``_elgg_admin_header_menu()`` changed to ``Elgg\Menus\AdminHeader::register()`` and ``Elgg\Menus\AdminHeader::registerMaintenance()``
 * ``_elgg_admin_footer_menu()`` changed to ``Elgg\Menus\AdminFooter::registerHelpResources()``
-* ``_elgg_admin_get_admin_subscribers_admin_action()`` changed to ``Elgg\Notification\ChangeAdminNotification::addSiteAdminSubscribers()``
-* ``_elgg_admin_get_user_subscriber_admin_action()`` changed to ``Elgg\Notification\ChangeAdminNotification::addUserSubscriber()``
 * ``_elgg_admin_notify_admins_pending_user_validation()`` changed to ``Elgg\Users\Validation::notifyAdminsAboutPendingUsers()``
 * ``_elgg_admin_page_menu()`` changed to ``Elgg\Menus\Page::registerAdminAdminister()`` and ``Elgg\Menus\Page::registerAdminConfigure()`` and ``Elgg\Menus\Page::registerAdminInformation()``
 * ``_elgg_admin_page_menu_plugin_settings()`` changed to ``Elgg\Menus\Page::registerAdminPluginSettings()``
-* ``_elgg_admin_prepare_admin_notification_make_admin()`` changed to ``Elgg\Notifications\ChangeAdminNotification::prepareMakeAdminNotificationToAdmin()``
-* ``_elgg_admin_prepare_admin_notification_remove_admin()`` changed to ``Elgg\Notifications\ChangeAdminNotification::prepareRemoveAdminNotificationToAdmin()``
-* ``_elgg_admin_prepare_user_notification_make_admin()`` changed to ``Elgg\Notifications\ChangeAdminNotification::prepareMakeAdminNotificationToUser()``
-* ``_elgg_admin_prepare_user_notification_remove_admin()`` changed to ``Elgg\Notifications\ChangeAdminNotification::prepareRemoveAdminNotificationToUser()``
+* ``_elgg_admin_prepare_admin_notification_make_admin()`` changed to ``Elgg\Notifications\MakeAdminUserEventHandler``
+* ``_elgg_admin_prepare_admin_notification_remove_admin()`` changed to ``Elgg\Notifications\RemoveAdminUserEventHandler``
+* ``_elgg_admin_prepare_user_notification_make_admin()`` changed to ``Elgg\Notifications\MakeAdminUserEventHandler``
+* ``_elgg_admin_prepare_user_notification_remove_admin()`` changed to ``Elgg\Notifications\RemoveAdminUserEventHandler``
 * ``_elgg_admin_save_notification_setting()`` changed to ``Elgg\Users\Settings::setAdminValidationNotification()``
 * ``_elgg_admin_set_registration_forward_url()`` changed to ``Elgg\Users\Validation::setRegistrationForwardUrl()``
 * ``_elgg_admin_user_unvalidated_bulk_menu()`` changed to ``Elgg\Menus\UserUnvalidatedBulk::registerActions()``
@@ -518,12 +516,11 @@ Core
 * ``_elgg_cache_init()`` actions combined in ``Elgg\Application\SystemEventHandlers::ready()``
 * ``_elgg_clear_caches()`` changed to ``Elgg\Cache\EventHandlers::clear()``
 * ``_elgg_comments_access_sync()`` changed to ``Elgg\Comments\SyncContainerAccessHandler::class``
-* ``_elgg_comments_add_content_owner_to_subscriptions()`` changed to ``Elgg\Comments\CreateNotification::addOwnerToSubscribers()``
 * ``_elgg_comments_container_permissions_override()`` changed to ``Elgg\Comments\ContainerPermissionsHandler::class``
 * ``_elgg_comments_notification_email_subject()`` changed to ``Elgg\Comments\EmailSubjectHandler::class``
 * ``_elgg_comments_permissions_override()`` changed to ``Elgg\Comments\EditPermissionsHandler::class``
-* ``_elgg_comments_prepare_content_owner_notification()`` changed to ``Elgg\Comments\CreateNotification::prepareContentOwnerNotification()``
-* ``_elgg_comments_prepare_notification()`` changed to ``Elgg\Comments\CreateNotification::prepareNotification()``
+* ``_elgg_comments_prepare_content_owner_notification()`` changed to ``Elgg\Notifications\CreateCommentEventHandler``
+* ``_elgg_comments_prepare_notification()`` changed to ``Elgg\Notifications\CreateCommentEventHandler``
 * ``_elgg_comments_social_menu_setup()`` changed to ``Elgg\Menus\Social::registerComments()``
 * ``_elgg_create_default_widgets()`` changed to ``Elgg\Widgets\CreateDefaultWidgetsHandler::class``
 * ``_elgg_create_notice_of_pending_upgrade()`` changed to ``Elgg\Upgrade\CreateAdminNoticeHandler::class``
@@ -571,8 +568,8 @@ Core
 * ``_elgg_upgrade_completed()`` changed to ``Elgg\Upgrade\UpgradeCompletedAdminNoticeHandler::class``
 * ``_elgg_upgrade_entity_menu()`` changed to ``Elgg\Menus\Entity::registerUpgrade()``
 * ``_elgg_user_ban_notification()`` changed to ``Elgg\Users\BanUserNotificationHandler::class``
-* ``_elgg_user_get_subscriber_unban_action()`` changed to ``Elgg\Notifications\UnbanUserNotification::getUnbanSubscribers()``
-* ``_elgg_user_prepare_unban_notification()`` changed to ``Elgg\Notifications\UnbanUserNotification::prepareUnbanNotification()``
+* ``_elgg_user_get_subscriber_unban_action()`` changed to ``Elgg\Notifications\UnbanUserEventHandler``
+* ``_elgg_user_prepare_unban_notification()`` changed to ``Elgg\Notifications\UnbanUserEventHandler``
 * ``_elgg_user_settings_menu_register()`` changed to ``Elgg\Menus\Page::registerUserSettings()`` and ``Elgg\Menus\Page::registerUserSettingsPlugins()``
 * ``_elgg_user_settings_menu_prepare()`` changed to ``Elgg\Menus\Page::cleanupUserSettingsPlugins()``
 * ``elgg_user_hover_menu()`` changed to ``Elgg\Menus\UserHover::registerAvatarEdit()`` and ``Elgg\Menus\UserHover::registerAdminActions()``
@@ -603,12 +600,12 @@ Plugins
 * ``_elgg_activity_owner_block_menu`` changed to ``Elgg\Activity\Menus\OwnerBlock::registerUserItem`` and ``Elgg\Activity\Menus\OwnerBlock::registerGroupItem``
 * ``blog_archive_menu_setup`` changed to ``Elgg\Blog\Menus\BlogArchive::register``
 * ``blog_owner_block_menu`` changed to ``Elgg\Blog\Menus\OwnerBlock::registerUserItem`` and ``Elgg\Blog\Menus\OwnerBlock::registerGroupItem``
-* ``blog_prepare_notification`` changed to ``Elgg\Blog\Notifications::preparePublishBlog``
+* ``blog_prepare_notification`` changed to ``Elgg\Blog\Notifications\PublishBlogEventHandler``
 * ``blog_register_db_seeds`` changed to ``Elgg\Blog\Database::registerSeeds``
 * ``bookmarks_footer_menu`` changed to ``Elgg\Bookmarks\Menus\Footer::register``
 * ``bookmarks_owner_block_menu`` changed to ``Elgg\Bookmarks\Menus\OwnerBlock::registerUserItem`` and ``Elgg\Bookmarks\Menus\OwnerBlock::registerGroupItem``
 * ``bookmarks_page_menu`` changed to ``Elgg\Bookmarks\Menus\Page::register``
-* ``bookmarks_prepare_notification`` changed to ``Elgg\Bookmarks\Notifications::prepareCreateBookmark``
+* ``bookmarks_prepare_notification`` changed to ``Elgg\Bookmarks\Notifications\CreateBookmarksEventHandler``
 * ``bookmarks_register_db_seeds`` changed to ``Elgg\Bookmarks\Database::registerSeeds``
 * ``ckeditor_longtext_id`` changed to ``Elgg\CKEditor\Views::setInputLongTextIDViewVar``
 * ``ckeditor_longtext_menu`` changed to ``Elgg\CKEditor\Menus\LongText::registerToggler``
@@ -622,7 +619,7 @@ Plugins
 * ``discussion_get_subscriptions`` changed to ``Elgg\Discussions\Notifications::addGroupSubscribersToCommentOnDiscussionSubscriptions``
 * ``discussion_owner_block_menu`` changed to ``Elgg\Discussions\Menus\OwnerBlock::registerGroupItem``
 * ``discussion_prepare_comment_notification`` changed to ``Elgg\Discussions\Notifications::prepareCommentOnDiscussionNotification``
-* ``discussion_prepare_notification`` changed to ``Elgg\Discussions\Notifications::prepareDiscussionCreateNotification``
+* ``discussion_prepare_notification`` changed to ``Elgg\Discussions\Notifications\CreateDiscussionEventHandler``
 * ``discussion_register_db_seeds`` changed to ``Elgg\Discussions\Database::registerSeeds``
 * ``Elgg\DevelopersPlugins\*`` changed to ``Elgg\Developers\*``
 * ``Elgg\Discussions\Menus::registerSiteMenuItem`` changed to ``Elgg\Discussions\Menus\Site::register``
@@ -633,7 +630,7 @@ Plugins
 * ``expages_menu_register_hook`` changed to ``Elgg\ExternalPages\Menus\ExPages::register``
 
 * ``file_handle_object_delete`` changed to ``Elgg\File\Icons::deleteIconOnElggFileDelete``
-* ``file_prepare_notification`` changed to ``Elgg\File\Notifications::prepareCreateFile``
+* ``file_prepare_notification`` changed to ``Elgg\File\Notifications\CreateFileEventHandler``
 * ``file_register_db_seeds`` changed to ``Elgg\File\Database::registerSeeds``
 * ``file_set_custom_icon_sizes`` changed to ``Elgg\File\Icons::setIconSizes``
 * ``file_set_icon_file`` changed to ``Elgg\File\Icons::setIconFile``
@@ -700,7 +697,7 @@ Plugins
 * ``pages_entity_menu_setup`` changed to ``Elgg\Pages\Menus\Entity::register``
 * ``pages_icon_url_override`` changed to ``Elgg\Pages\Icons::getIconUrl``
 * ``pages_owner_block_menu`` changed to ``Elgg\Pages\Menus\OwnerBlock::registerUserItem`` and ``Elgg\Pages\Menus\OwnerBlock::registerGroupItem``
-* ``pages_prepare_notification`` changed to ``Elgg\Pages\Notifications::preparePageCreateNotification``
+* ``pages_prepare_notification`` changed to ``Elgg\Pages\Notifications\CreatePageEventHandler``
 * ``pages_register_db_seeds`` changed to ``Elgg\Pages\Database::registerSeeds``
 * ``pages_set_revision_url`` changed to ``Elgg\Pages\Extender::setRevisionUrl``
 * ``pages_write_access_options_hook`` changed to ``Elgg\Pages\Views::removeAccessPublic``
@@ -736,9 +733,9 @@ Plugins
 * ``system_log_listener`` changed to ``Elgg\SystemLog\Logger::listen``
 * ``system_log_user_hover_menu`` changed to ``Elgg\SystemLog\Menus\UserHover::register``
 
-* ``thewire_add_original_poster`` changed to ``Elgg\TheWire\Notifications::addOriginalPoster``
+* ``thewire_add_original_poster`` changed to ``Elgg\TheWire\Notifications\CreateTheWireEventHandler``
 * ``thewire_owner_block_menu`` changed to ``Elgg\TheWire\Menus\OwnerBlock::register``
-* ``thewire_prepare_notification`` changed to ``Elgg\TheWire\Notifications::prepareCreateTheWireNotification``
+* ``thewire_prepare_notification`` changed to ``Elgg\TheWire\Notifications\CreateTheWireEventHandler``
 * ``thewire_setup_entity_menu_items`` changed to ``Elgg\TheWire\Menus\Entity::register``
 
 Miscellaneous API changes

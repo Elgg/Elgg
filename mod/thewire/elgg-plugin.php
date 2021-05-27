@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Router\Middleware\Gatekeeper;
+use Elgg\TheWire\Notifications\CreateTheWireEventHandler;
 
 require_once(__DIR__ . '/lib/functions.php');
 
@@ -75,19 +76,9 @@ return [
 		],
 	],
 	'hooks' => [
-		'get' => [
-			'subscriptions' => [
-				'Elgg\TheWire\Notifications::addOriginalPoster' => [],
-			],
-		],
 		'likes:is_likable' => [
 			'object:thewire' => [
 				'Elgg\Values::getTrue' => [],
-			],
-		],
-		'prepare' => [
-			'notification:create:object:thewire' => [
-				'Elgg\TheWire\Notifications::prepareCreateTheWireNotification' => [],
 			],
 		],
 		'register' => [
@@ -110,7 +101,7 @@ return [
 	'notifications' => [
 		'object' => [
 			'thewire' => [
-				'create' => true,
+				'create' => CreateTheWireEventHandler::class,
 			],
 		],
 	],

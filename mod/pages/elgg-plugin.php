@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Pages\GroupToolContainerLogicCheck;
+use Elgg\Pages\Notifications\CreatePageEventHandler;
 
 require_once(__DIR__ . '/lib/pages.php');
 
@@ -115,11 +116,6 @@ return [
 				'Elgg\Pages\Permissions::allowWriteAccess' => [],
 			],
 		],
-		'prepare' => [
-			'notification:create:object:page' => [
-				'Elgg\Pages\Notifications::preparePageCreateNotification' => [],
-			],
-		],
 		'register' => [
 			'menu:entity:object:page' => [
 				'Elgg\Pages\Menus\Entity::register' => [],
@@ -160,7 +156,7 @@ return [
 	'notifications' => [
 		'object' => [
 			'page' => [
-				'create' => true,
+				'create' => CreatePageEventHandler::class,
 			],
 		],
 	],

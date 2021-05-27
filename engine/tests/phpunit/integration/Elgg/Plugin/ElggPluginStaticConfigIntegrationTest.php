@@ -257,16 +257,16 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 		$events = $notifications->getEvents();
 		$this->assertArrayHasKey('object', $events);
 		$this->assertArrayHasKey('static_config_subtype', $events['object']);
-		$this->assertNotContains('create', $events['object']['static_config_subtype']);
-		$this->assertContains('update', $events['object']['static_config_subtype']);
+		$this->assertArrayNotHasKey('create', $events['object']['static_config_subtype']);
+		$this->assertArrayHasKey('update', $events['object']['static_config_subtype']);
 		
 		$this->callReflectorMethod('registerNotifications');
 		
 		$events = $notifications->getEvents();
 		$this->assertArrayHasKey('object', $events);
 		$this->assertArrayHasKey('static_config_subtype', $events['object']);
-		$this->assertContains('create', $events['object']['static_config_subtype']);
-		$this->assertNotContains('update', $events['object']['static_config_subtype']);
+		$this->assertArrayHasKey('create', $events['object']['static_config_subtype']);
+		$this->assertArrayNotHasKey('update', $events['object']['static_config_subtype']);
 	}
 	
 	public static function hookCallback(\Elgg\Hook $hook) {

@@ -48,6 +48,8 @@
  * Users subscribe to receive notifications based on container and delivery method.
  */
 
+use Elgg\Notifications\NotificationEventHandler;
+
 /**
  * Register a notification event
  *
@@ -63,11 +65,13 @@
  *                               An event is usually described by the first string passed
  *                               to elgg_trigger_event(). Examples include
  *                               'create', 'update', and 'publish'. The default is 'create'.
+ * @param string $handler        NotificationEventHandler classname
+ *
  * @return void
  * @since 1.9
  */
-function elgg_register_notification_event($object_type, $object_subtype, array $actions = []): void {
-	_elgg_services()->notifications->registerEvent($object_type, $object_subtype, $actions);
+function elgg_register_notification_event($object_type, $object_subtype, array $actions = [], string $handler = NotificationEventHandler::class): void {
+	_elgg_services()->notifications->registerEvent($object_type, $object_subtype, $actions, $handler);
 }
 
 /**

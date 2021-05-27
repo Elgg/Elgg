@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Bookmarks\GroupToolContainerLogicCheck;
+use Elgg\Bookmarks\Notifications\CreateBookmarksEventHandler;
 
 require_once(__DIR__ . '/lib/functions.php');
 
@@ -87,11 +88,6 @@ return [
 				'Elgg\Values::getTrue' => [],
 			],
 		],
-		'prepare' => [
-			'notification:create:object:bookmarks' => [
-				'Elgg\Bookmarks\Notifications::prepareCreateBookmark' => [],
-			],
-		],
 		'register' => [
 			'menu:footer' => [
 				'Elgg\Bookmarks\Menus\Footer::register' => [],
@@ -132,7 +128,7 @@ return [
 	'notifications' => [
 		'object' => [
 			'bookmarks' => [
-				'create' => true,
+				'create' => CreateBookmarksEventHandler::class,
 			],
 		],
 	],
