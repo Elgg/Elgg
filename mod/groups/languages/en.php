@@ -21,6 +21,7 @@ return array(
 	'groups:edit:profile' => "Profile",
 	'groups:edit:access' => "Access",
 	'groups:edit:tools' => "Tools",
+	'groups:edit:settings' => "Settings",
 	'groups:delete' => 'Delete group',
 	'groups:membershiprequests' => 'Manage join requests',
 	'groups:membershiprequests:pending' => 'Manage join requests (%s)',

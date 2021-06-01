@@ -84,7 +84,8 @@ or
 
 .. code-block:: php
 
-   elgg_set_plugin_user_setting($name, $value, $user_guid, $plugin_id);
+   $user = elgg_get_logged_in_user_entity();
+   $user->setPluginSetting($plugin_id, $name, $value);
    
 .. warning::
 

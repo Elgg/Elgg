@@ -52,7 +52,7 @@ class User {
 			$user->setValidationStatus(false);
 			
 			// set flag for tracking validation status
-			elgg_set_plugin_user_setting('email_validated', false, $user->guid, 'uservalidationbyemail');
+			$user->setPluginSetting('uservalidationbyemail', 'email_validated', false);
 			
 			// send out validation email
 			uservalidationbyemail_request_validation($user->guid);

@@ -4,6 +4,7 @@ use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Traits\Entity\Friends;
+use Elgg\Traits\Entity\PluginSettings;
 use Elgg\Traits\Entity\ProfileData;
 
 /**
@@ -26,6 +27,10 @@ use Elgg\Traits\Entity\ProfileData;
 class ElggUser extends \ElggEntity {
 
 	use Friends;
+	use PluginSettings {
+		setPluginSetting as protected psSetPluginSetting;
+		getPluginSetting as protected psGetPluginSetting;
+	}
 	use ProfileData;
 	
 	/**
@@ -459,5 +464,48 @@ class ElggUser extends \ElggEntity {
 		}
 		
 		return $result;
+	}
+	
+	/**
+	 * Save a plugin setting
+	 *
+	 * @param string $plugin_id plugin ID
+	 * @param string $name      setting name
+	 * @param mixed  $value     setting value (needs to be a scalar)
+	 *
+	 * @return bool
+	 * @see \Elgg\Traits\Entity\PluginSettings::setPluginSetting()
+	 */
+	public function setPluginSetting(string $plugin_id, string $name, $value): bool {
+		$value = _elgg_services()->hooks->triggerDeprecated('usersetting', 'plugin', [
+			'user' => $this,
+			'plugin' => _elgg_services()->plugins->get($plugin_id),
+			'plugin_id' => $plugin_id,
+			'name' => $name,
+			'value' => $value,
+		], $value, "Please user the plugin hook 'plugin_settings', '{$this->getType()}'", '4.0');
+		
+		return $this->psSetPluginSetting($plugin_id, $name, $value);
+	}
+	
+	/**
+	 * Get a plugin setting
+	 *
+	 * @param string $plugin_id plugin ID
+	 * @param string $name      setting name
+	 * @param mixed  $default   default setting value (will be cast to string)
+	 *
+	 * @return string
+	 * @see \Elgg\Traits\Entity\PluginSettings::getPluginSetting()
+	 */
+	public function getPluginSetting(string $plugin_id, string $name, $default = null): string {
+		$plugin = _elgg_services()->plugins->get($plugin_id);
+		if ($plugin instanceof \ElggPlugin) {
+			$static_defaults = (array) $plugin->getStaticConfig('user_settings', []);
+			
+			$default = elgg_extract($name, $static_defaults, $default);
+		}
+		
+		return $this->psGetPluginSetting($plugin_id, $name, $default);
 	}
 }

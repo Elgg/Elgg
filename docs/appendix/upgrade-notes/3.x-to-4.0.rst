@@ -760,11 +760,27 @@ Miscellaneous API changes
 * The interface ``Friendable`` has been removed. Implemented functions in ``ElggUser`` have been moved to ``Elgg\Traits\Entity\Friends``
 * The config flag ``profile_using_custom`` is no longer available
 * The return value of ``elgg_create_river_item()`` will be ``false`` in the case the creation was prevented by the ``'create:before', 'river'`` event
+* The constant ``ELGG_PLUGIN_USER_SETTING_PREFIX`` has been removed use the helper function ``\ElggUser::getNamespacedPluginSettingName()``
+* The constant ``ELGG_PLUGIN_INTERNAL_PREFIX`` has been removed to get the plugin priority private setting name use ``\ElggPlugin::PRIORITY_SETTING_NAME``
 
 Deprecated APIs
 ---------------
 
+Class functions
+~~~~~~~~~~~~~~~
+
+* ``ElggPlugin::getUserSetting()`` use ``ElggUser::getPluginSetting()``
+* ``ElggPlugin::setUserSetting()`` use ``ElggUser::setPluginSetting()``
+
+Lib functions
+~~~~~~~~~~~~~
+
 * ``forward()`` use ``Elgg\Exceptions\HttpException`` instances or ``elgg_redirect_response()``
+
+Plugin hooks
+~~~~~~~~~~~~
+
+* ``'usersettings', 'plugin'`` use the hook ``'plugin_setting', '<entity type>'``
 
 Removed functions
 -----------------
@@ -776,8 +792,11 @@ Class functions
 * ``ElggFile::setDescription()`` use ``$file->description = $new_description``
 * ``ElggGroup::addObjectToGroup()``
 * ``ElggGroup::removeObjectFromGroup()``
+* ``ElggPlugin::getAllUserSettings()``
 * ``ElggPlugin::getDependencyReport()``
 * ``ElggPlugin::getError()``
+* ``ElggPlugin::unsetAllUserSettings()``
+* ``ElggPlugin::unsetAllUserAndPluginSettings()`` use ``ElggPlugin::unsetAllEntityAndPluginSettings()``
 * ``ElggWidget::getContext()`` use ``$entity->context``
 * ``ElggWidget::setContext()`` use ``$entity->context = $context``
 * ``Elgg\Notifications\NotificationsService::getDeprecatedHandler()``
@@ -796,8 +815,8 @@ Lib functions
 * ``diagnostics_md5_dir()``
 * ``elgg_add_subscription()`` use ``\ElggEntity::addSubscription()``
 * ``elgg_get_available_languages()`` use ``elgg()->translator->getAvailableLanguages()``
-* ``elgg_get_all_plugin_user_settings()`` use ``$plugin->getAllUserSettings($user_guid)``
-* ``elgg_get_entities_from_plugin_user_settings()`` use ``elgg_get_entities()`` with private settings parameters and prefix your setting name with ``ELGG_PLUGIN_USER_SETTING_PREFIX``
+* ``elgg_get_all_plugin_user_settings()``
+* ``elgg_get_entities_from_plugin_user_settings()`` use ``elgg_get_entities()`` with private settings parameters and prefix your setting name with ``plugin:user_setting:``
 * ``elgg_get_filter_tabs()`` use menu hooks on ``'register', 'menu:filter:<filter_id>'``
 * ``elgg_get_loaded_css()`` use ``elgg_get_loaded_external_files('css', 'head')``
 * ``elgg_get_loaded_js()`` use ``elgg_get_loaded_external_files('js', $location)``
@@ -805,9 +824,10 @@ Lib functions
 * ``elgg_prepend_css_urls()``
 * ``elgg_remove_subscription()`` use ``\ElggEntity::removeSubscription()``
 * ``elgg_set_plugin_setting()`` use ``$plugin->setSetting($name, $value)``
+* ``elgg_set_plugin_user_setting()`` use ``ElggUser::setPluginSetting()``
 * ``elgg_set_system_messages()`` use ``elgg()->system_messages->saveRegisters()``
 * ``elgg_unset_plugin_setting()`` use ``$plugin->unsetSetting($name)``
-* ``elgg_unset_plugin_user_setting()`` use ``$plugin->unsetUserSetting($name, $user_guid)``
+* ``elgg_unset_plugin_user_setting()`` use ``ElggUser::removePluginSetting()``
 * ``get_language_completeness()``  use ``elgg()->translator->getLanguageCompleteness()``
 * ``get_installed_translations()``  use ``elgg()->translator->getInstalledTranslations()``
 * ``group_access_options()``

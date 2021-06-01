@@ -1036,15 +1036,6 @@ Other
 **is_member, group**
 	Return boolean for if the user ``$params['user']`` is a member of the group ``$params['group']``.
 
-**usersetting, plugin**
-	Filter user settings for plugins. ``$params`` contains:
-
-	- ``user`` - An ElggUser instance
-	- ``plugin`` - An ElggPlugin instance
-	- ``plugin_id`` - The plugin ID
-	- ``name`` - The name of the setting
-	- ``value`` - The value to set
-
 **setting, plugin**
 	Filter plugin settings. ``$params`` contains:
 
@@ -1052,6 +1043,17 @@ Other
 	- ``plugin_id`` - The plugin ID
 	- ``name`` - The name of the setting
 	- ``value`` - The value to set
+
+**plugin_setting, <entity type>**
+	Can be used to change the value of the setting being saved
+	
+	Params contains:
+	- ``entity`` - The ``ElggEntity`` where the plugin setting is being saved
+	- ``plugin_id`` - The ID of the plugin for which the setting is being saved
+	- ``name`` - The name of the setting being saved
+	- ``value`` - The original value of the setting being saved
+	
+	Return value should be a scalar in order to be able to save it to the database. An error will be logged if this is not the case.
 
 **relationship:url, <relationship_name>**
 	Filter the URL for the relationship object ``$params['relationship']``.

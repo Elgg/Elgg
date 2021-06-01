@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Groups\Tool;
+use Elgg\Traits\Entity\PluginSettings;
 
 /**
  * A group entity, used as a container for other entities.
@@ -14,6 +15,8 @@ class ElggGroup extends \ElggEntity {
 	const CONTENT_ACCESS_MODE_UNRESTRICTED = 'unrestricted';
 	const CONTENT_ACCESS_MODE_MEMBERS_ONLY = 'members_only';
 
+	use PluginSettings;
+	
 	/**
 	 * {@inheritdoc}
 	 */

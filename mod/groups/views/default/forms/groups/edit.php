@@ -35,6 +35,16 @@ $tabs[] = [
 	'content' => elgg_view('groups/edit/tools', $vars),
 ];
 
+// build the group settings options
+$settings = elgg_view('groups/edit/settings', $vars);
+if (!empty($settings)) {
+	$tabs[] = [
+		'name' => 'settings',
+		'text' => elgg_echo('groups:edit:settings'),
+		'content' => $settings,
+	];
+}
+
 // show tabs
 echo elgg_view('page/components/tabs', [
 	'id' => 'groups-edit',
