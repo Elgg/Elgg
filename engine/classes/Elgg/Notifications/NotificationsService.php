@@ -62,23 +62,29 @@ class NotificationsService {
 	 *                        An event is usually described by the first string passed
 	 *                        to elgg_trigger_event(). Examples include
 	 *                        'create', 'update', and 'publish'. The default is 'create'.
+	 * @param string $handler NotificationEventHandler classname
+	 *
 	 * @return void
 	 * @see elgg_register_notification_event()
 	 */
-	public function registerEvent($type, $subtype, array $actions = []) {
-
+	public function registerEvent($type, $subtype, array $actions = [], string $handler = NotificationEventHandler::class) {
+		if (!is_a($handler, NotificationEventHandler::class, true)) {
+			throw new \InvalidArgumentException('$handler needs to be a ' . NotificationEventHandler::class . ' classname');
+		}
+		
 		if (!isset($this->events[$type])) {
 			$this->events[$type] = [];
 		}
 		if (!isset($this->events[$type][$subtype])) {
 			$this->events[$type][$subtype] = [];
 		}
-
-		$action_list =& $this->events[$type][$subtype];
-		if (!empty($actions)) {
-			$action_list = array_unique(array_merge($action_list, $actions));
-		} elseif (!in_array('create', $action_list)) {
-			$action_list[] = 'create';
+		
+		if (empty($actions) && !array_key_exists('create', $this->events[$type][$subtype])) {
+			$actions[] = 'create';
+		}
+		
+		foreach ($actions as $action) {
+			$this->events[$type][$subtype][$action] = $handler;
 		}
 	}
 
@@ -94,24 +100,22 @@ class NotificationsService {
 	 */
 	public function unregisterEvent($type, $subtype, array $actions = []) {
 
-		if (!isset($this->events[$type]) || !isset($this->events[$type][$subtype])) {
-			return false;
-		}
-
 		if (empty($actions)) {
-			// unregister all actions
 			unset($this->events[$type][$subtype]);
-		} else {
-			// unregister specific action(s)
-			$remaining = array_diff($this->events[$type][$subtype], $actions);
-			if (empty($remaining)) {
-				// nothing remains
-				unset($this->events[$type][$subtype]);
-			} else {
-				$this->events[$type][$subtype] = array_values($remaining);
-			}
 		}
-
+		
+		foreach ($actions as $action) {
+			unset($this->events[$type][$subtype][$action]);
+		}
+		
+		if (empty($this->events[$type][$subtype])) {
+			unset($this->events[$type][$subtype]);
+		}
+		
+		if (empty($this->events[$type])) {
+			unset($this->events[$type]);
+		}
+		
 		return true;
 	}
 
@@ -190,11 +194,8 @@ class NotificationsService {
 			$object_type = $object->getType();
 			$object_subtype = $object->getSubtype();
 
-			$registered = false;
-			if (!empty($this->events[$object_type][$object_subtype]) && in_array($action, $this->events[$object_type][$object_subtype])) {
-				$registered = true;
-			}
-
+			$registered = isset($this->events[$object_type][$object_subtype][$action]);
+			
 			if ($registered) {
 				$params = [
 					'action' => $action,
@@ -217,8 +218,14 @@ class NotificationsService {
 	 * @return NotificationEventHandler
 	 */
 	protected function getNotificationHandler(NotificationEvent $event): NotificationEventHandler {
-		// @todo create new notification handler based on config
-		return new NotificationEventHandler($event, $this);
+		$object = $event->getObject();
+		$handler = NotificationEventHandler::class;
+		
+		if (isset($this->events[$object->getType()][$object->getSubtype()][$event->getAction()])) {
+			$handler = $this->events[$object->getType()][$object->getSubtype()][$event->getAction()];
+		}
+		
+		return new $handler($event, $this);
 	}
 
 	/**

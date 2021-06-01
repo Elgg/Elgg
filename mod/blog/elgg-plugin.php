@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Blog\GroupToolContainerLogicCheck;
+use Elgg\Blog\Notifications\PublishBlogEventHandler;
 
 require_once(__DIR__ . '/lib/functions.php');
 
@@ -109,11 +110,6 @@ return [
 				'Elgg\Values::getTrue' => [],
 			],
 		],
-		'prepare' => [
-			'notification:publish:object:blog' => [
-				'Elgg\Blog\Notifications::preparePublishBlog' => [],
-			],
-		],
 		'register' => [
 			'menu:blog_archive' => [
 				'Elgg\Blog\Menus\BlogArchive::register' => [],
@@ -146,7 +142,7 @@ return [
 	'notifications' => [
 		'object' => [
 			'blog' => [
-				'publish' => true,
+				'publish' => PublishBlogEventHandler::class,
 			],
 		],
 	],

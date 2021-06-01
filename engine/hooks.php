@@ -74,13 +74,6 @@ return [
 			\Elgg\Widgets\EntityUrlHandler::class => [],
 		],
 	],
-	'get' => [
-		'subscriptions' => [
-			'Elgg\Notifications\ChangeAdminNotification::addSiteAdminSubscribers' => [],
-			'Elgg\Notifications\ChangeAdminNotification::addUserSubscriber' => [],
-			'Elgg\Notifications\UnbanUserNotification::getUnbanSubscribers' => [],
-		],
-	],
 	'head' => [
 		'page' => [
 			\Elgg\Page\AddFaviconLinksHandler::class => [],
@@ -126,21 +119,6 @@ return [
 			'Elgg\Menus\Site::reorderItems' => [
 				'priority' => 999,
 			],
-		],
-		'notification:create:object:comment' => [
-			'Elgg\Comments\CreateNotification::prepareContentOwnerNotification' => [],
-			'Elgg\Comments\CreateNotification::prepareNotification' => [],
-		],
-		'notification:make_admin:user:user' => [
-			'Elgg\Notifications\ChangeAdminNotification::prepareMakeAdminNotificationToAdmin' => [],
-			'Elgg\Notifications\ChangeAdminNotification::prepareMakeAdminNotificationToUser' => [],
-		],
-		'notification:remove_admin:user:user' => [
-			'Elgg\Notifications\ChangeAdminNotification::prepareRemoveAdminNotificationToAdmin' => [],
-			'Elgg\Notifications\ChangeAdminNotification::prepareRemoveAdminNotificationToUser' => [],
-		],
-		'notification:unban:user:user' => [
-			'Elgg\Notifications\UnbanUserNotification::prepareUnbanNotification' => [],
 		],
 		'system:email' => [
 			\Elgg\Email\DefaultMessageIdHeaderHandler::class => ['priority' => 1],

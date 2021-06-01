@@ -221,6 +221,9 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 				'thewire' => [
 					'create' => false, // unregisters the event to be notified
 				],
+				'page' => [
+					'create' => MyPluginPageCreateEventHandler::class, // a custom event handler, needs to be an extension of a NotificationEventHandler
+				],
 			],
 		],
 	];

@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\File\GroupToolContainerLogicCheck;
+use Elgg\File\Notifications\CreateFileEventHandler;
 
 require_once(__DIR__ . '/lib/functions.php');
 
@@ -94,11 +95,6 @@ return [
 				'Elgg\Values::getTrue' => [],
 			],
 		],
-		'prepare' => [
-			'notification:create:object:file' => [
-				'Elgg\File\Notifications::prepareCreateFile' => [],
-			],
-		],
 		'register' => [
 			'menu:embed' => [
 				'Elgg\File\Menus\Embed::registerFile' => [],
@@ -150,7 +146,7 @@ return [
 	'notifications' => [
 		'object' => [
 			'file' => [
-				'create' => true,
+				'create' => CreateFileEventHandler::class,
 			],
 		],
 	],
