@@ -112,7 +112,7 @@ class ComparisonClause extends Clause {
 					$x = "CAST($x as BINARY)";
 				}
 				if (is_array($y) || $comparison === 'in') {
-					if (!empty($y)) {
+					if (!Values::isEmpty($y)) {
 						$param = isset($type) ? $qb->param($y, $type) : $y;
 						$match_expr = $qb->expr()->in($x, $param);
 					}
