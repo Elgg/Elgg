@@ -276,10 +276,17 @@ function login(\ElggUser $user, $persistent = false) {
 	// User's privilege has been elevated, so change the session id (prevents session fixation)
 	$session->migrate();
 
+	// check before updating last login to determine first login
+	$first_login = empty($user->last_login);
+	
 	$user->setLastLogin();
 	reset_login_failure_count($user->guid);
 
 	elgg_trigger_after_event('login', 'user', $user);
+	
+	if ($first_login) {
+		elgg_trigger_event('login:first', 'user', $user);
+	}
 
 	return true;
 }

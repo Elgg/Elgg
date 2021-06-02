@@ -215,6 +215,32 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 		_elgg_services()->events->unregisterHandler('before:login', 'user', $handler);
 	}
+	
+	public function testLoginEvents() {
+		$user = $this->user = $this->createUser();
+		
+		$login_before_event = $this->registerTestingEvent('login:before', 'user', function(\Elgg\Event $event) {});
+		$login_after_event = $this->registerTestingEvent('login:after', 'user', function(\Elgg\Event $event) {});
+		$first_login_event = $this->registerTestingEvent('login:first', 'user', function(\Elgg\Event $event) {});
+		
+		$this->assertTrue(login($user));
+		$login_before_event->assertNumberOfCalls(1);
+		$login_after_event->assertNumberOfCalls(1);
+		$first_login_event->assertNumberOfCalls(1);
+		
+		$login_before_event->assertObject($user);
+		$login_after_event->assertObject($user);
+		$first_login_event->assertObject($user);
+		
+		$this->assertTrue(logout($user));
+		$this->assertTrue(login($user));
+		
+		$login_before_event->assertNumberOfCalls(2);
+		$login_after_event->assertNumberOfCalls(2);
+		$first_login_event->assertNumberOfCalls(1);
+		
+		$this->assertTrue(logout($user));
+	}
 
 	public function testCanPersistLogin() {
 
