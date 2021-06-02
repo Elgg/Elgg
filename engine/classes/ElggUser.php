@@ -21,6 +21,7 @@ use Elgg\Traits\Entity\ProfileData;
  * @property      string $validated_method User validation method
  * @property-read string $password_hash    The hashed password of the user
  * @property-read int    $prev_last_action A UNIX timestamp of the previous last action
+ * @property-read int    $first_login      A UNIX timestamp of the first login
  * @property-read int    $last_login       A UNIX timestamp of the last login
  * @property-read int    $prev_last_login  A UNIX timestamp of the previous login
  */

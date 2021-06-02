@@ -286,6 +286,7 @@ function login(\ElggUser $user, $persistent = false) {
 	
 	if ($first_login) {
 		elgg_trigger_event('login:first', 'user', $user);
+		$user->first_login = time();
 	}
 
 	return true;
