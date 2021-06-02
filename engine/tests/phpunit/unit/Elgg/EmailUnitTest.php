@@ -48,7 +48,8 @@ class EmailUnitTest extends UnitTestCase {
 
 		// We never send email from users
 		$site = elgg_get_site_entity();
-		$this->assertEquals(new Address($site->getEmailAddress(), $site->getDisplayName()), $email->getFrom());
+		$from_display = elgg_echo('notification:method:email:from', [$from->getDisplayName(), $site->getDisplayName()]);
+		$this->assertEquals(new Address($site->getEmailAddress(), $from_display), $email->getFrom());
 		$this->assertEquals(Address::fromEntity($to), $email->getTo()[0]);
 		
 		$this->assertInstanceOf(\ElggUser::class, $email->getSender());
