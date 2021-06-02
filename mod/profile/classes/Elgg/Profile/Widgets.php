@@ -24,7 +24,8 @@ class Widgets {
 			'widget_context' => 'profile',
 			'widget_columns' => 2,
 	
-			'event' => 'create',
+			'event_name' => 'create',
+			'event_type' => 'user',
 			'entity_type' => 'user',
 			'entity_subtype' => ELGG_ENTITIES_ANY_VALUE,
 		];
