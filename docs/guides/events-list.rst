@@ -98,6 +98,9 @@ User events
 **login:after, user**
 	Triggered after the user logs in.
 
+**login:first, user**
+    Triggered after a successful login. Only if there is no previous login.
+
 **logout:before, user**
     Triggered during logout. Returning false should prevent the user from logging out.
 
