@@ -372,7 +372,8 @@ final class Email {
 			} else {
 				// get the site email address
 				$site = elgg_get_site_entity();
-				$from = new Address($site->getEmailAddress(), $site->getDisplayName());
+				$from_display = elgg_echo('notification:method:email:from', [$from->getDisplayName(), $site->getDisplayName()]);
+				$from = new Address($site->getEmailAddress(), $from_display);
 			}
 		} elseif (is_string($from)) {
 			$from = Address::fromString($from);

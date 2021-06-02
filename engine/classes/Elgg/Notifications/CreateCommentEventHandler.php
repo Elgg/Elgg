@@ -2,8 +2,6 @@
 
 namespace Elgg\Notifications;
 
-use Elgg\Notifications\NotificationEventHandler;
-
 /**
  * Notification Event Handler for 'object' 'comment' 'create' action
  *
@@ -24,11 +22,7 @@ class CreateCommentEventHandler extends NotificationEventHandler {
 	 * {@inheritDoc}
 	 */
 	protected function getNotificationSubject(\ElggUser $recipient, string $method): string {
-		if ($this->recipientIsCommentContainerOwner($recipient)) {
-			return elgg_echo('generic_comment:notification:owner:subject', [], $recipient->getLanguage());
-		} else {
-			return elgg_echo('generic_comment:notification:user:subject', [$this->event->getObject()->getDisplayName()], $recipient->getLanguage());
-		}
+		return elgg_echo('generic_comment:notification:subject', [$this->event->getObject()->getContainerEntity()->getDisplayName()], $recipient->getLanguage());
 	}
 	
 	/**
@@ -36,9 +30,9 @@ class CreateCommentEventHandler extends NotificationEventHandler {
 	 */
 	protected function getNotificationSummary(\ElggUser $recipient, string $method): string {
 		if ($this->recipientIsCommentContainerOwner($recipient)) {
-			return elgg_echo('generic_comment:notification:owner:summary', [], $recipient->getLanguage());
+			return elgg_echo('generic_comment:notification:owner:summary', [$this->event->getObject()->getContainerEntity()->getDisplayName()], $recipient->getLanguage());
 		} else {
-			return elgg_echo('generic_comment:notification:user:summary', [$this->event->getObject()->getDisplayName()], $recipient->getLanguage());
+			return elgg_echo('generic_comment:notification:user:summary', [$this->event->getObject()->getContainerEntity()->getDisplayName()], $recipient->getLanguage());
 		}
 	}
 	
@@ -51,9 +45,7 @@ class CreateCommentEventHandler extends NotificationEventHandler {
 		$key = $this->recipientIsCommentContainerOwner($recipient) ? 'generic_comment:notification:owner:body' : 'generic_comment:notification:user:body';
 		
 		return elgg_echo($key, [
-			$entity->getContainerEntity()->getDisplayName(),
-			$entity->getOwnerEntity()->getDisplayName(),
-			$entity->description,
+			elgg_get_excerpt($entity->description, 1000),
 			$entity->getURL(),
 		], $recipient->getLanguage());
 	}
