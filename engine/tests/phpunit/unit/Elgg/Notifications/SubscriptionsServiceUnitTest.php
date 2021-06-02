@@ -108,10 +108,11 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 			'bananas'
 		];
 
+		$guids = array_unique(array_filter([$this->object->container_guid, $this->object->guid]));
 		$select = Select::fromTable('entity_relationships');
 		$select->select('guid_one AS guid')
 			->addSelect("GROUP_CONCAT(relationship SEPARATOR ',') AS methods")
-			->where($select->compare('guid_two', 'in', [$this->object->guid, $this->object->container_guid], ELGG_VALUE_GUID))
+			->where($select->compare('guid_two', 'in', $guids, ELGG_VALUE_GUID))
 			->andWhere($select->compare('relationship', 'in', ['notify:apples', 'notify:bananas'], ELGG_VALUE_STRING))
 			->groupBy('guid_one');
 		

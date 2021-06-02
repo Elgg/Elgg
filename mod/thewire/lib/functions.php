@@ -22,24 +22,6 @@ function thewire_latest_guid() {
 }
 
 /**
- * Get the parent of a wire post
- *
- * @param int $post_guid The guid of the reply
- *
- * @return void|ElggObject
- */
-function thewire_get_parent($post_guid) {
-	$parents = elgg_get_entities([
-		'relationship' => 'parent',
-		'relationship_guid' => $post_guid,
-		'limit' => 1,
-	]);
-	if ($parents) {
-		return $parents[0];
-	}
-}
-
-/**
  * Create a new wire post.
  *
  * @param string $text        The post text

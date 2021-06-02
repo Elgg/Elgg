@@ -818,6 +818,7 @@ Lib functions
 * ``system_log_get_seconds_in_period()``
 * ``system_log_archive_log()``
 * ``system_log_browser_delete_log()``
+* ``thewire_get_parent()`` use ``\ElggWire::getParent()``
 * ``validate_email_address()`` use ``elgg()->accounts->assertValidEmail()``
 * ``validate_password()`` use ``elgg()->accounts->assertValidPassword()``
 * ``validate_username()`` use ``elgg()->accounts->assertValidUsername()``

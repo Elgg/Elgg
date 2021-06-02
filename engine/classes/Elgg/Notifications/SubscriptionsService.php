@@ -88,10 +88,10 @@ class SubscriptionsService {
 
 		$subscriptions = [];
 
-		$guids = array_unique([
-			$object->guid,
-			$object->container_guid,
-		]);
+		$guids = [$object->container_guid];
+		if ($object instanceof \ElggObject || $object instanceof \ElggGroup) {
+			$guids[] = $object->guid;
+		}
 		
 		$records = $this->getSubscriptionRecords($guids, $methods, $object->type, $object->subtype, $event->getAction(), $event->getActorGUID());
 		foreach ($records as $record) {
@@ -615,6 +615,11 @@ class SubscriptionsService {
 		// create IN clause
 		$rels = $this->getMethodRelationships($methods, $type, $subtype, $action);
 		if (!$rels) {
+			return [];
+		}
+		
+		$container_guid = array_unique(array_filter($container_guid));
+		if (empty($container_guid)) {
 			return [];
 		}
 

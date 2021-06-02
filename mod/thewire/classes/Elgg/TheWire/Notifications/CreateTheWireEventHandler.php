@@ -32,8 +32,7 @@ class CreateTheWireEventHandler extends NotificationEventHandler {
 			return $subscriptions;
 		}
 
-		/* @var $parent \ElggWire */
-		$parent = thewire_get_parent($entity->guid);
+		$parent = $entity->getParent();
 		if (empty($parent)) {
 			return $subscriptions;
 		}
@@ -89,7 +88,7 @@ class CreateTheWireEventHandler extends NotificationEventHandler {
 		
 		$body = '';
 		if ($entity->reply) {
-			$parent = thewire_get_parent($entity->guid);
+			$parent = $entity->getParent();
 			if ($parent) {
 				$parent_owner = $parent->getOwnerEntity();
 				$body = elgg_echo('thewire:notify:reply', [$owner->getDisplayName(), $parent_owner->getDisplayName()], $language);
