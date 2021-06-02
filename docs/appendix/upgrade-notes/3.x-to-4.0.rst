@@ -519,7 +519,6 @@ Core
 * ``_elgg_clear_caches()`` changed to ``Elgg\Cache\EventHandlers::clear()``
 * ``_elgg_comments_access_sync()`` changed to ``Elgg\Comments\SyncContainerAccessHandler::class``
 * ``_elgg_comments_container_permissions_override()`` changed to ``Elgg\Comments\ContainerPermissionsHandler::class``
-* ``_elgg_comments_notification_email_subject()`` changed to ``Elgg\Comments\EmailSubjectHandler::class``
 * ``_elgg_comments_permissions_override()`` changed to ``Elgg\Comments\EditPermissionsHandler::class``
 * ``_elgg_comments_prepare_content_owner_notification()`` changed to ``Elgg\Notifications\CreateCommentEventHandler``
 * ``_elgg_comments_prepare_notification()`` changed to ``Elgg\Notifications\CreateCommentEventHandler``

@@ -59,11 +59,6 @@ return [
 			\Elgg\Javascript\SetLightboxConfigHandler::class => [],
 		],
 	],
-	'email' => [
-		'system' => [
-			\Elgg\Comments\EmailSubjectHandler::class => [],
-		],
-	],
 	'entity:icon:file' => [
 		'user' => [
 			\Elgg\Icons\SetUserIconFileHandler::class => [],
