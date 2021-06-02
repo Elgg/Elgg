@@ -38,7 +38,7 @@ class PluginsUnitTest extends \Elgg\UnitTestCase {
 		]);
 		$this->assertInstanceOf('ElggPlugin', $plugin_high_priority);
 		
-		$priority_name = $plugins->namespacePrivateSetting('internal', 'priority');
+		$priority_name = \ElggPlugin::PRIORITY_SETTING_NAME;
 		// because of mocking issues don't use ->setPriority()
 		$plugin_high_priority->setPrivateSetting($priority_name, 100);
 		

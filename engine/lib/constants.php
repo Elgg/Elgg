@@ -121,16 +121,6 @@ define('ELGG_HTTP_NETWORK_AUTHENTICATION_REQUIRED', 511); // RFC6585
 define('ELGG_JSON_ENCODING', JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);
 
 /**
- * Prefix for plugin user setting names
- */
-define('ELGG_PLUGIN_USER_SETTING_PREFIX', 'plugin:user_setting:');
-
-/**
- * Internal settings prefix
- */
-define('ELGG_PLUGIN_INTERNAL_PREFIX', 'elgg:internal:');
-
-/**
  * Value types
  */
 define('ELGG_VALUE_INTEGER', 'integer');

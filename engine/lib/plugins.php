@@ -71,27 +71,6 @@ function elgg_get_plugins(string $status = 'active'): array {
 }
 
 /**
- * Set a user specific setting for a plugin.
- *
- * @param string $name      The name. Note: cannot be "title".
- * @param mixed  $value     The value.
- * @param int    $user_guid The user GUID or 0 for the currently logged in user.
- * @param string $plugin_id The plugin ID (Required)
- *
- * @return bool
- * @since 1.8.0
- * @see \ElggPlugin::setUserSetting()
- */
-function elgg_set_plugin_user_setting(string $name, $value, int $user_guid = 0, string $plugin_id = ''): bool {
-	$plugin = _elgg_services()->plugins->get($plugin_id);
-	if (!$plugin) {
-		return false;
-	}
-	
-	return $plugin->setUserSetting($name, $value, $user_guid);
-}
-
-/**
  * Get a user specific setting for a plugin.
  *
  * @param string $name      The name of the setting.
@@ -101,15 +80,15 @@ function elgg_set_plugin_user_setting(string $name, $value, int $user_guid = 0, 
  *
  * @return mixed
  * @since 1.8.0
- * @see \ElggPlugin::getUserSetting()
+ * @see \ElggUser::getPluginSetting()
  */
 function elgg_get_plugin_user_setting(string $name, int $user_guid = 0, string $plugin_id = '', $default = null) {
-	$plugin = _elgg_services()->plugins->get($plugin_id);
-	if (!$plugin) {
-		return false;
+	$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
+	if (!$user instanceof ElggUser) {
+		return $default;
 	}
 	
-	return $plugin->getUserSetting($name, $user_guid, $default);
+	return $user->getPluginSetting($plugin_id, $name, $default);
 }
 
 /**

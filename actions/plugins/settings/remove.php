@@ -19,7 +19,7 @@ if (!$plugin->canEdit()) {
 	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 
-if (!$plugin->unsetAllUserAndPluginSettings()) {
+if (!$plugin->unsetAllEntityAndPluginSettings()) {
 	return elgg_error_response(elgg_echo('plugins:settings:remove:fail', [$plugin->getDisplayName()]));
 }
 

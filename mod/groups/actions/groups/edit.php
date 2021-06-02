@@ -191,6 +191,22 @@ if (isset($content_default_access)) {
 	}
 }
 
+// save plugin settings
+$settings = (array) get_input('settings', []);
+foreach ($settings as $plugin_id => $plugin_settings) {
+	if (empty($plugin_settings) || !is_array($plugin_settings)) {
+		continue;
+	}
+	
+	foreach ($plugin_settings as $name => $value) {
+		if (elgg_is_empty($value)) {
+			$group->removePluginSetting($plugin_id, $name);
+		} else {
+			$group->setPluginSetting($plugin_id, $name, $value);
+		}
+	}
+}
+
 if (!$group->save()) {
 	return elgg_error_response(elgg_echo('groups:save_error'));
 }

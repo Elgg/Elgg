@@ -81,9 +81,9 @@ class TestableHook {
 	 */
 	public function handler(\Elgg\Hook $hook) {
 		$this->calls++;
-		$this->before_state = $hook;
+		$this->before_state = clone $hook; // using clone so the hook isn't used by reference
 
-		list($success, $return, $hook) = _elgg_services()->handlers->call($this->handler, $hook, [
+		list(, $return, $hook) = _elgg_services()->handlers->call($this->handler, $hook, [
 			$this->name,
 			$this->type,
 			$hook->getValue(),
@@ -154,5 +154,4 @@ class TestableHook {
 	public function assertValueAfter($value) {
 		$this->test_case->assertEquals($this->after_state->getValue(), $value);
 	}
-
 }

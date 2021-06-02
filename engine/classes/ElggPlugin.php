@@ -1,11 +1,12 @@
 <?php
 
-use Elgg\Includer;
 use Elgg\Database\Delete;
+use Elgg\Database\Plugins;
 use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
 use Elgg\Exceptions\PluginException;
-use Elgg\Database\Plugins;
+use Elgg\Includer;
+use Elgg\Traits\Loggable;
 
 /**
  * Plugin class containing helper functions for plugin activation/deactivation,
@@ -13,7 +14,10 @@ use Elgg\Database\Plugins;
  */
 class ElggPlugin extends ElggObject {
 
+	const PRIORITY_SETTING_NAME = 'elgg:internal:priority';
 	const STATIC_CONFIG_FILENAME = 'elgg-plugin.php';
+	
+	use Loggable;
 	
 	/**
 	 * The optional files that can be read and served through the markdown page handler
@@ -112,8 +116,7 @@ class ElggPlugin extends ElggObject {
 		$new = !$this->guid;
 		$priority = null;
 		if ($new) {
-			$name = _elgg_services()->plugins->namespacePrivateSetting('internal', 'priority');
-			$priority = elgg_extract($name, $this->temp_private_settings, 'new');
+			$priority = elgg_extract(self::PRIORITY_SETTING_NAME, $this->temp_private_settings, 'new');
 		} elseif ($this->getPriority() === null) {
 			$priority = 'last';
 		}
@@ -229,9 +232,7 @@ class ElggPlugin extends ElggObject {
 	 * @return int|null
 	 */
 	public function getPriority(): ?int {
-		$name = _elgg_services()->plugins->namespacePrivateSetting('internal', 'priority');
-
-		$priority = $this->getPrivateSetting($name);
+		$priority = $this->getPrivateSetting(self::PRIORITY_SETTING_NAME);
 		if (isset($priority)) {
 			return (int) $priority;
 		}
@@ -319,11 +320,7 @@ class ElggPlugin extends ElggObject {
 				$defaults = $this->getStaticConfig('settings', []);
 			}
 
-			if (!$this->guid) {
-				$settings = $this->temp_private_settings;
-			} else {
-				$settings = _elgg_services()->plugins->getAllSettings($this);
-			}
+			$settings = $this->getAllPrivateSettings();
 
 			return array_merge($defaults, $settings);
 		} catch (DatabaseException $ex) {
@@ -395,37 +392,19 @@ class ElggPlugin extends ElggObject {
 	 * @param int    $user_guid The user GUID
 	 * @param mixed  $default   The default value to return if none is set
 	 *
-	 * @return mixed The setting string value, the default value or false if there is no user
+	 * @return mixed The setting string value or the default value
+	 *
+	 * @deprecated 4.0 use \ElggUser::getPluginSetting()
 	 */
 	public function getUserSetting(string $name, int $user_guid = 0, $default = null) {
-		$values = $this->getAllUserSettings($user_guid);
-		if ($values === false) {
-			return false;
-		}
-
-		return elgg_extract($name, $values, $default);
-	}
-
-	/**
-	 * Returns an array of all user settings saved for this plugin for the user.
-	 *
-	 * @note Plugin settings are saved with a prefix. This removes that prefix.
-	 *
-	 * @param int $user_guid The user GUID. Defaults to logged in.
-	 *
-	 * @return array An array of key/value pairs
-	 */
-	public function getAllUserSettings(int $user_guid = 0): array {
+		$this->logDeprecatedMessage(__METHOD__ . ' is deprecated use \ElggUser::getPluginSetting()', '4.0');
+		
 		$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
 		if (!$user instanceof ElggUser) {
-			return [];
+			return $default;
 		}
-
-		$defaults = $this->getStaticConfig('user_settings', []);
-
-		$settings = _elgg_services()->plugins->getAllUserSettings($this, $user);
-
-		return array_merge($defaults, $settings);
+		
+		return $user->getPluginSetting($this->getID(), $name, $default);
 	}
 
 	/**
@@ -436,30 +415,18 @@ class ElggPlugin extends ElggObject {
 	 * @param int    $user_guid The user GUID
 	 *
 	 * @return bool
+	 *
+	 * @deprecated 4.0 use \ElggUser::setPluginSetting()
 	 */
 	public function setUserSetting(string $name, $value, int $user_guid = 0): bool {
+		$this->logDeprecatedMessage(__METHOD__ . ' is deprecated use \ElggUser::setPluginSetting()', '4.0');
+		
 		$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
 		if (!$user instanceof ElggUser) {
 			return false;
 		}
 
-		$value = _elgg_services()->hooks->trigger('usersetting', 'plugin', [
-			'user' => $user,
-			'plugin' => $this,
-			'plugin_id' => $this->getID(),
-			'name' => $name,
-			'value' => $value
-		], $value);
-
-		if (is_array($value)) {
-			elgg_log('Plugin user settings cannot store arrays.', 'ERROR');
-
-			return false;
-		}
-
-		$name = _elgg_services()->plugins->namespacePrivateSetting('user_setting', $name, $this->getID());
-
-		return $user->setPrivateSetting($name, $value);
+		return $user->setPluginSetting($this->getID(), $name, $value);
 	}
 
 	/**
@@ -469,59 +436,37 @@ class ElggPlugin extends ElggObject {
 	 * @param int    $user_guid The user GUID
 	 *
 	 * @return bool
+	 *
+	 * @deprecated 4.0 use \ElggUser::removePluginSetting()
 	 */
 	public function unsetUserSetting(string $name, int $user_guid = 0): bool {
+		$this->logDeprecatedMessage(__METHOD__ . ' is deprecated use \ElggUser::removePluginSetting()', '4.0');
+		
 		$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
 		if (!$user instanceof ElggUser) {
 			return false;
 		}
-
-		$name = _elgg_services()->plugins->namespacePrivateSetting('user_setting', $name, $this->getID());
-
-		return $user->removePrivateSetting($name);
-	}
-
-	/**
-	 * Removes all plugin settings for a given user
-	 *
-	 * @param int $user_guid The user GUID to remove user settings.
-	 *
-	 * @return bool
-	 */
-	public function unsetAllUserSettings(int $user_guid = 0): bool {
-		$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
-		if (!$user instanceof ElggUser) {
-			return false;
-		}
-
-		$settings = $this->getAllUserSettings($user_guid);
-
-		foreach ($settings as $name => $value) {
-			$name = _elgg_services()->plugins->namespacePrivateSetting('user_setting', $name, $this->getID());
-			$user->removePrivateSetting($name);
-		}
-
-		return true;
+		
+		return $user->removePluginSetting($this->getID(), $name);
 	}
 	
 	/**
-	 * Remove all user and plugin settings for this plugin
+	 * Remove all entity and plugin settings for this plugin
 	 *
 	 * @return bool
-	 * @since 3.3
+	 * @since 4.0
 	 */
-	public function unsetAllUserAndPluginSettings(): bool {
+	public function unsetAllEntityAndPluginSettings(): bool {
 		// remove all plugin settings
 		$result = $this->unsetAllSettings();
 		
-		// user plugin settings are stored with the user
-		$prefix = _elgg_services()->plugins->namespacePrivateSetting('user_setting', '', $this->getID());
-		
+		// entity plugin settings are stored with the entity
 		$delete = Delete::fromTable('private_settings');
-		$delete->andWhere($delete->compare('name', 'like', "{$prefix}%", ELGG_VALUE_STRING));
+		$delete->andWhere($delete->compare('name', 'like', "plugin:%_setting:{$this->getID()}:%", ELGG_VALUE_STRING));
 		
 		try {
 			elgg()->db->deleteData($delete);
+			_elgg_services()->dataCache->private_settings->clear();
 			
 			$result &= true;
 		} catch (DatabaseException $e) {

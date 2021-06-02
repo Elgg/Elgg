@@ -24,8 +24,8 @@ $plugin_name = $plugin->getDisplayName();
 
 $result = false;
 
-foreach ($params as $k => $v) {
-	$result = $plugin->setUserSetting($k, $v, $user->guid);
+foreach ($params as $name => $value) {
+	$result = $user->setPluginSetting($plugin->getID(), $name, $value);
 	if (!$result) {
 		return elgg_error_response(elgg_echo('plugins:usersettings:save:fail', [$plugin_name]));
 	}

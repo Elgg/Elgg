@@ -366,8 +366,7 @@ class Plugins {
 			}
 			
 			// remove the priority.
-			$name = $this->namespacePrivateSetting('internal', 'priority');
-			$plugin->removePrivateSetting($name);
+			$plugin->removePrivateSetting(\ElggPlugin::PRIORITY_SETTING_NAME);
 			
 			$plugin->disable();
 		}
@@ -476,12 +475,10 @@ class Plugins {
 	 * @return int
 	 */
 	public function getMaxPriority() {
-		$priority = $this->namespacePrivateSetting('internal', 'priority');
-
 		$qb = Select::fromTable('entities', 'e');
 		$qb->select('MAX(CAST(ps.value AS unsigned)) as max')
 			->join('e', 'private_settings', 'ps', 'e.guid = ps.entity_guid')
-			->where($qb->compare('ps.name', '=', $priority, ELGG_VALUE_STRING))
+			->where($qb->compare('ps.name', '=', \ElggPlugin::PRIORITY_SETTING_NAME, ELGG_VALUE_STRING))
 			->andWhere($qb->compare('e.type', '=', 'object', ELGG_VALUE_STRING))
 			->andWhere($qb->compare('e.subtype', '=', 'plugin', ELGG_VALUE_STRING));
 
@@ -805,7 +802,7 @@ class Plugins {
 				$volatile_data_name = 'select:value';
 				$options['select'] = ['ps.value'];
 				$options['private_setting_names'] = [
-					$this->namespacePrivateSetting('internal', 'priority'),
+					\ElggPlugin::PRIORITY_SETTING_NAME,
 				];
 				break;
 
@@ -883,7 +880,7 @@ class Plugins {
 	 * @return bool
 	 */
 	public function setPriorities(array $order) {
-		$name = $this->namespacePrivateSetting('internal', 'priority');
+		$name = \ElggPlugin::PRIORITY_SETTING_NAME;
 
 		$plugins = $this->find('any');
 		if (empty($plugins)) {
@@ -903,7 +900,6 @@ class Plugins {
 				// disabled plugins should not have a priority
 				if ($plugin->getPriority() !== null) {
 					// remove the priority
-					$name = $this->namespacePrivateSetting('internal', 'priority');
 					$plugin->removePrivateSetting($name);
 				}
 				continue;
@@ -948,116 +944,6 @@ class Plugins {
 	}
 
 	/**
-	 * Namespaces a string to be used as a private setting name for a plugin.
-	 *
-	 * For user_settings, two namespaces are added: a user setting namespace and the
-	 * plugin id.
-	 *
-	 * For internal (plugin priority), there is a single internal namespace added.
-	 *
-	 * @param string $type The type of setting: user_setting or internal.
-	 * @param string $name The name to namespace.
-	 * @param string $id   The plugin's ID to namespace with.  Required for user_setting.
-	 *
-	 * @return string
-	 * @throws InvalidArgumentException
-	 */
-	public function namespacePrivateSetting($type, $name, $id = null) {
-		switch ($type) {
-			case 'user_setting':
-				if (!$id) {
-					throw new InvalidArgumentException("You must pass the plugin id for user settings");
-				}
-				$name = ELGG_PLUGIN_USER_SETTING_PREFIX . "$id:$name";
-				break;
-
-			case 'internal':
-				$name = ELGG_PLUGIN_INTERNAL_PREFIX . $name;
-				break;
-		}
-
-		return $name;
-	}
-
-	/**
-	 * Get all settings (excluding user settings) for a plugin
-	 *
-	 * @param \ElggPlugin $plugin Plugin
-	 *
-	 * @return string[]
-	 */
-	public function getAllSettings(\ElggPlugin $plugin) {
-		if (!$plugin->guid) {
-			return [];
-		}
-
-		$values = $this->private_settings_cache->load($plugin->guid);
-		if (isset($values)) {
-			return $values;
-		}
-
-		$us_prefix = $this->namespacePrivateSetting('user_setting', '', $plugin->getID());
-
-		// Get private settings for user
-		$qb = Select::fromTable('private_settings');
-		$qb->select('name')
-			->addSelect('value')
-			->where($qb->compare('name', 'not like', "$us_prefix%", ELGG_VALUE_STRING))
-			->andWhere($qb->compare('entity_guid', '=', $plugin->guid, ELGG_VALUE_GUID));
-
-		$rows = $this->db->getData($qb);
-
-		$settings = [];
-
-		if (!empty($rows)) {
-			foreach ($rows as $row) {
-				$settings[$row->name] = $row->value;
-			}
-		}
-
-		$this->private_settings_cache->save($plugin->guid, $settings);
-
-		return $settings;
-	}
-
-	/**
-	 * Returns an array of all plugin user settings for a user
-	 *
-	 * @param \ElggPlugin $plugin Plugin
-	 * @param \ElggUser   $user   User
-	 *
-	 * @return array
-	 * @see  \ElggPlugin::getAllUserSettings()
-	 */
-	public function getAllUserSettings(\ElggPlugin $plugin, \ElggUser $user = null) {
-
-		// send an empty name so we just get the first part of the namespace
-		$prefix = $this->namespacePrivateSetting('user_setting', '', $plugin->getID());
-
-		$qb = Select::fromTable('private_settings');
-		$qb->select('name')
-			->addSelect('value')
-			->where($qb->compare('name', 'like', "{$prefix}%"));
-
-		if ($user) {
-			$qb->andWhere($qb->compare('entity_guid', '=', $user->guid, ELGG_VALUE_INTEGER));
-		}
-
-		$rows = $this->db->getData($qb);
-		if (empty($rows)) {
-			return [];
-		}
-
-		$settings = [];
-		foreach ($rows as $row) {
-			$name = substr($row->name, strlen($prefix));
-			$settings[$name] = $row->value;
-		}
-
-		return $settings;
-	}
-
-	/**
 	 * Set plugin priority and adjust the priorities of other plugins
 	 *
 	 * @param \ElggPlugin $plugin   Plugin
@@ -1069,7 +955,7 @@ class Plugins {
 
 		$old_priority = $plugin->getPriority() ? : 1;
 
-		$name = $this->namespacePrivateSetting('internal', 'priority');
+		$name = \ElggPlugin::PRIORITY_SETTING_NAME;
 
 		if (!$plugin->setPrivateSetting($name, $priority)) {
 			return false;

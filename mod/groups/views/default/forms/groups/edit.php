@@ -1,28 +1,61 @@
 <?php
 /**
  * Group edit form
+ *
+ * @uses $vars['entity'] The group being edited (empty during creation)
  */
 
 /* @var ElggGroup $entity */
-$entity = elgg_extract("entity", $vars, false);
+$entity = elgg_extract('entity', $vars, false);
 
 // context needed for input/access view
-elgg_push_context("group-edit");
+elgg_push_context('group-edit');
+
+// build group edit tabs
+$tabs = [];
 
 // build the group profile fields
-echo elgg_view("groups/edit/profile", $vars);
+$tabs[] = [
+	'name' => 'profile',
+	'text' => elgg_echo('groups:edit:profile'),
+	'content' => elgg_view('groups/edit/profile', $vars),
+];
 
 // build the group access options
-echo elgg_view("groups/edit/access", $vars);
+$tabs[] = [
+	'name' => 'access',
+	'text' => elgg_echo('groups:edit:access'),
+	'content' => elgg_view('groups/edit/access', $vars),
+];
 
 // build the group tools options
-echo elgg_view("groups/edit/tools", $vars);
+$tabs[] = [
+	'name' => 'tools',
+	'text' => elgg_echo('groups:edit:tools'),
+	'content' => elgg_view('groups/edit/tools', $vars),
+];
+
+// build the group settings options
+$settings = elgg_view('groups/edit/settings', $vars);
+if (!empty($settings)) {
+	$tabs[] = [
+		'name' => 'settings',
+		'text' => elgg_echo('groups:edit:settings'),
+		'content' => $settings,
+	];
+}
+
+// show tabs
+echo elgg_view('page/components/tabs', [
+	'id' => 'groups-edit',
+	'tabs' => $tabs,
+]);
 
 // display the save button and some additional form data
-if ($entity) {
-	echo elgg_view("input/hidden", [
-		"name" => "group_guid",
-		"value" => $entity->getGUID(),
+if ($entity instanceof \ElggGroup) {
+	echo elgg_view('input/hidden', [
+		'name' => 'group_guid',
+		'value' => $entity->guid,
 	]);
 }
 
