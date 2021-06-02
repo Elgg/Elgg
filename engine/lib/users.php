@@ -154,12 +154,13 @@ function generate_random_cleartext_password() {
  * @param bool   $allow_multiple_emails Allow the same email address to be
  *                                      registered multiple times?
  * @param string $subtype               Subtype of the user entity
+ * @param array  $params                Additional parameters
  *
  * @return int|false The new user's GUID; false on failure
  * @throws RegistrationException
  */
-function register_user($username, $password, $name, $email, $allow_multiple_emails = false, $subtype = null) {
-	return elgg()->accounts->register($username, $password, $name, $email, $allow_multiple_emails, $subtype);
+function register_user($username, $password, $name, $email, $allow_multiple_emails = false, $subtype = null, array $params = []) {
+	return elgg()->accounts->register($username, $password, $name, $email, $allow_multiple_emails, $subtype, $params);
 }
 
 /**

@@ -19,6 +19,7 @@ use Elgg\Traits\Entity\ProfileData;
  * @property-read string $admin            'yes' if the user is an administrator of the network, 'no' otherwise
  * @property      bool   $validated        User validation status
  * @property      string $validated_method User validation method
+ * @property      int    $validated_ts     A UNIX timestamp of the last moment a users validation status is set to true
  * @property-read string $password_hash    The hashed password of the user
  * @property-read int    $prev_last_action A UNIX timestamp of the previous last action
  * @property-read int    $first_login      A UNIX timestamp of the first login
@@ -40,6 +41,10 @@ class ElggUser extends \ElggEntity {
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 		$this->attributes['subtype'] = 'user';
+		
+		$this->attributes['access_id'] = ACCESS_PUBLIC;
+		$this->attributes['owner_guid'] = 0; // Users aren't owned by anyone, even if they are admin created.
+		$this->attributes['container_guid'] = 0; // Users aren't contained by anyone, even if they are admin created.
 		
 		// Before Elgg 3.0 this was handled by database logic
 		$this->setMetadata('banned', 'no');
@@ -305,12 +310,18 @@ class ElggUser extends \ElggEntity {
 	 * @param string $method    Optional method to say how a user was validated
 	 * @return void
 	 */
-	public function setValidationStatus($status, $method = '') {
+	public function setValidationStatus(bool $status, string $method = ''): void {
+		if ($status === $this->isValidated()) {
+			// no change needed
+			return;
+		}
 		
 		$this->validated = $status;
-		$this->validated_method = $method;
 		
-		if ((bool) $status) {
+		if ($status) {
+			$this->validated_method = $method;
+			$this->validated_ts = time();
+		
 			// make sure the user is enabled
 			if (!$this->isEnabled()) {
 				$this->enable();
@@ -319,6 +330,9 @@ class ElggUser extends \ElggEntity {
 			// let the system know the user is validated
 			_elgg_services()->events->triggerAfter('validate', 'user', $this);
 		} else {
+			// invalidating
+			unset($this->validated_ts);
+			unset($this->validated_method);
 			_elgg_services()->events->triggerAfter('invalidate', 'user', $this);
 		}
 	}
