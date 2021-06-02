@@ -24,7 +24,8 @@ class Widgets {
 			'widget_context' => 'dashboard',
 			'widget_columns' => 3,
 	
-			'event' => 'create',
+			'event_name' => 'login:first',
+			'event_type' => 'user',
 			'entity_type' => 'user',
 			'entity_subtype' => ELGG_ENTITIES_ANY_VALUE,
 		];

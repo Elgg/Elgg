@@ -203,7 +203,8 @@ To announce default widget support in your plugin, register for the ``get_list, 
             'widget_context' => 'my_plugin',
             'widget_columns' => 3,
 
-            'event' => 'create',
+            'event_name' => 'create',
+            'event_type' => 'user',
             'entity_type' => 'user',
             'entity_subtype' => ELGG_ENTITIES_ANY_VALUE,
         ];
@@ -216,7 +217,8 @@ In the plugin hook handler, push an array into the return value defining your de
 -  name - The name of the widgets page. This is displayed on the tab in the admin interface.
 -  widget\_context - The context the widgets page is called from. (If not explicitly set, this is your plugin's id.)
 -  widget\_columns - How many columns the widgets page will use.
--  event - The Elgg event to create new widgets for. This is usually ``create``.
+-  event\_name - The Elgg event name to create new widgets for. This is usually ``create``.
+-  event\_type - The Elgg event type to create new widgets for. 
 -  entity\_type - The entity type to create new widgets for.
 -  entity\_subtype - The entity subtype to create new widgets for. The can be ELGG\_ENTITIES\_ANY\_VALUE to create for all entity types.
 

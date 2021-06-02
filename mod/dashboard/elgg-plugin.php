@@ -14,7 +14,7 @@ return [
 		],
 	],
 	'events' => [
-		'create' => [
+		'login:first' => [
 			'user' => [
 				\Elgg\Widgets\CreateDefaultWidgetsHandler::class => [],
 			],

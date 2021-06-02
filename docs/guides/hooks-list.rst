@@ -1071,10 +1071,15 @@ Other
 .. code-block:: php
 
 	array(
-		'event' => $event,
+		'name' => elgg_echo('name'),
+		'widget_columns' => 3,
+		'widget_context' => $widget_context,
+		
+		'event_name' => $event_name,
+		'event_type' => $event_type,
+		
 		'entity_type' => $entity_type,
 		'entity_subtype' => $entity_subtype,
-		'widget_context' => $widget_context
 	)
 
 **public_pages, walled_garden**
