@@ -330,6 +330,7 @@ return array(
  * Notifications
  */
 	'notification:method:email' => 'Email',
+	'notification:method:email:from' => '%s (via %s)',
 	'notification:method:delayed_email' => 'Delayed email',
 	
 	'usersettings:notifications:title' => "Notification settings",
@@ -1629,18 +1630,17 @@ To go the the website, click here:
 	'generic_comment:on' => '%s on %s',
 	'generic_comments:latest:posted' => 'posted a',
 
-	'generic_comment:notification:owner:subject' => 'You have a new comment!',
-	'generic_comment:notification:owner:summary' => 'You have a new comment!',
-	'generic_comment:notification:owner:body' => "You have a new comment on your item \"%s\" from %s. It reads:
+	'generic_comment:notification:subject' => 'Re: %s',
+	'generic_comment:notification:owner:summary' => 'You have a new comment on: %s',
+	'generic_comment:notification:owner:body' => "You have a new comment. It reads:
 
 %s
 
 To reply or view the original item, click here:
 %s",
 	
-	'generic_comment:notification:user:subject' => 'A new comment on: %s',
 	'generic_comment:notification:user:summary' => 'A new comment on: %s',
-	'generic_comment:notification:user:body' => "A new comment was made on \"%s\" by %s. It reads:
+	'generic_comment:notification:user:body' => "A new comment was made. It reads:
 
 %s
 
