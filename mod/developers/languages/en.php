@@ -6,6 +6,8 @@
  */
 
 return array(
+	'admin:develop_tools' => 'Tools',
+	
 	// menu
 	'admin:develop_tools:sandbox' => 'Theme Sandbox',
 	'admin:develop_tools:inspect' => 'Inspect',
