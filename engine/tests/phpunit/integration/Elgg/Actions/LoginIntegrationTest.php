@@ -223,10 +223,15 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$login_after_event = $this->registerTestingEvent('login:after', 'user', function(\Elgg\Event $event) {});
 		$first_login_event = $this->registerTestingEvent('login:first', 'user', function(\Elgg\Event $event) {});
 		
+		$this->assertEmpty($user->first_login);
 		$this->assertTrue(login($user));
 		$login_before_event->assertNumberOfCalls(1);
 		$login_after_event->assertNumberOfCalls(1);
 		$first_login_event->assertNumberOfCalls(1);
+		$first_login = $user->first_login;
+		$this->assertNotEmpty($first_login);
+		$user->first_login = $first_login - 1; // make sure it is different from current time
+		$this->assertEquals($first_login - 1, $user->first_login);
 		
 		$login_before_event->assertObject($user);
 		$login_after_event->assertObject($user);
@@ -234,6 +239,8 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		
 		$this->assertTrue(logout($user));
 		$this->assertTrue(login($user));
+		
+		$this->assertEquals($first_login - 1, $user->first_login);
 		
 		$login_before_event->assertNumberOfCalls(2);
 		$login_after_event->assertNumberOfCalls(2);

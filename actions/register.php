@@ -36,7 +36,7 @@ try {
 		throw new RegistrationException(implode(PHP_EOL, $messages));
 	}
 
-	$guid = register_user($username, $password, $name, $email);
+	$guid = register_user($username, $password, $name, $email, false, null, ['validated' => false]);
 	if ($guid === false) {
 		throw new RegistrationException(elgg_echo('registerbad'));
 	}
@@ -59,6 +59,11 @@ try {
 
 		if (!elgg_trigger_plugin_hook('register', 'user', $params, true)) {
 			throw new RegistrationException(elgg_echo('registerbad'));
+		}
+		
+		if ($new_user->isValidated() === null) {
+			// no hook decided to set validation status, so it will become validated
+			$new_user->setValidationStatus(true, 'register_action');
 		}
 	} catch (\Exception $e) {
 		// Catch all exception to make sure there are no incomplete user entities left behind

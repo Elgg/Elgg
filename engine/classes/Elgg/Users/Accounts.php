@@ -172,10 +172,11 @@ class Accounts {
 	 * @param bool   $allow_multiple_emails Allow the same email address to be
 	 *                                      registered multiple times?
 	 * @param string $subtype               Subtype of the user entity
+	 * @param array  $params                Additional parameters
 	 *
 	 * @return int|false The new user's GUID; false on failure
 	 */
-	public function register($username, $password, $name, $email, $allow_multiple_emails = false, $subtype = null) {
+	public function register($username, $password, $name, $email, $allow_multiple_emails = false, $subtype = null, array $params = []) {
 
 		$this->assertValidAccountData($username, $password, $name, $email, $allow_multiple_emails);
 
@@ -198,9 +199,7 @@ class Accounts {
 		$user->username = $username;
 		$user->email = $email;
 		$user->name = $name;
-		$user->access_id = ACCESS_PUBLIC;
-		$user->owner_guid = 0; // Users aren't owned by anyone, even if they are admin created.
-		$user->container_guid = 0; // Users aren't contained by anyone, even if they are admin created.
+		
 		$user->language = $this->translator->getCurrentLanguage();
 
 		if (!$user->save()) {
@@ -212,8 +211,12 @@ class Accounts {
 
 		// Turn on email notifications by default
 		$user->setNotificationSetting('email', true);
+		
+		if (elgg_extract('validated', $params, true)) {
+			$user->setValidationStatus(true, 'on_create');
+		}
 
-		return $user->getGUID();
+		return $user->guid;
 	}
 
 	/**

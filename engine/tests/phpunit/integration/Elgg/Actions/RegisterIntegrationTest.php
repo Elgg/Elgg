@@ -322,8 +322,38 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		});
 		$this->assertInstanceOf(\ElggUser::class, $user);
 		$this->assertFalse($user->isValidated());
+		$this->assertEmpty($user->validated_method);
 		$this->assertFalse($user->isEnabled());
 		
 		$this->assertEmpty(elgg_get_logged_in_user_entity());
+	}
+	
+	public function testRegisterWithoutValidation() {
+		
+		_elgg_services()->config->require_admin_validation = false;
+	
+		$username = $this->getRandomUsername();
+		
+		$response = $this->executeAction('register', [
+			'username' => $username,
+			'password' => '1111111111111',
+			'password2' => '1111111111111',
+			'email' => $this->getRandomEmail(),
+			'name' => 'Test User',
+		]);
+		
+		$this->assertInstanceOf(OkResponse::class, $response);
+		
+		/* @var $user \ElggUser */
+		$user = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function () use ($username) {
+			return get_user_by_username($username);
+		});
+		$this->assertInstanceOf(\ElggUser::class, $user);
+		$this->assertTrue($user->isValidated());
+		$this->assertEquals('register_action', $user->validated_method);
+		$this->assertTrue($user->isEnabled());
+		
+		$this->assertNotEmpty(elgg_get_logged_in_user_entity());
+		logout($user);
 	}
 }
