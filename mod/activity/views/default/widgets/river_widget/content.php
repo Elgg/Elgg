@@ -3,6 +3,7 @@
  * Activity widget content view
  */
 
+/* @var $widget \ElggWidget */
 $widget = elgg_extract('entity', $vars);
 
 $num_display = (int) $widget->num_display ?: 8;
@@ -10,17 +11,25 @@ $num_display = (int) $widget->num_display ?: 8;
 $options = [
 	'limit' => $num_display,
 	'pagination' => false,
-	'no_results' => elgg_echo('river:none'),
 ];
 
-if (elgg_in_context('dashboard')) {
+if ($widget->context === 'dashboard') {
 	$content_type = $widget->content_type ?: 'friends';
-	if ($content_type == 'friends') {
-		$options['relationship_guid'] = $widget->getOwnerGUID();
-		$options['relationship'] = 'friend';
+	if ($content_type === 'friends') {
+		echo elgg_view('river/listing/friends', [
+			'entity' => $widget->getOwnerEntity(),
+			'options' => $options,
+		]);
+	} else {
+		echo elgg_view('river/listing/all', [
+			'options' => $options,
+		]);
 	}
-} else {
-	$options['subject_guid'] = $widget->getOwnerGUID();
+	
+	return;
 }
 
-echo elgg_list_river($options);
+echo elgg_view('river/listing/owner', [
+	'entity' => $widget->getOwnerEntity(),
+	'options' => $options,
+]);

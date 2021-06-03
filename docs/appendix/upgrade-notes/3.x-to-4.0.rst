@@ -173,6 +173,11 @@ Notification Event Handling
 
 The notification hooks no longer receive the ``origin`` parameter.
 
+Activity plugin
+---------------
+
+This plugin received a much needed rewrite. The different pages (all/owner/friends) now have their own resource and listing views. 
+
 Diagnostics Plugin
 ------------------
 
@@ -861,6 +866,7 @@ Removed views / resources
 * ``notifications/subscriptions/groups`` use ``forms/notifications/subscriptions/groups``
 * ``notifications/subscriptions/users`` use ``forms/notifications/subscriptions/users``
 * ``resources/comments/view`` use ``\Elgg\Controllers\CommentEntityRedirector``
+* ``resources/river`` use ``resources/activity/all`` or ``resources/activity/owner`` or ``resources/activity/friends``
 * ``reportedcontent/admin_css``
 * ``thewire/previous``
 

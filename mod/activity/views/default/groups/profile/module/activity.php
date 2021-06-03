@@ -3,8 +3,6 @@
  * Groups latest activity
  */
 
-use Elgg\Activity\GroupRiverFilter;
-
 $group = elgg_extract('entity', $vars);
 if (!$group instanceof \ElggGroup) {
 	return;
@@ -20,13 +18,12 @@ $all_link = elgg_view('output/url', [
 
 elgg_push_context('widgets');
 
-$content = elgg_list_river([
-	'limit' => 4,
-	'pagination' => false,
-	'wheres' => [
-		 new GroupRiverFilter($group),
+$content = elgg_view('river/listing/group', [
+	'entity' => $group,
+	'options' => [
+		'limit' => 4,
+		'pagination' => false,
 	],
-	'no_results' => elgg_echo('river:none'),
 ]);
 elgg_pop_context();
 
