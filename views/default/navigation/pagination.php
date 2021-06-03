@@ -121,16 +121,16 @@ if ((bool) elgg_extract('pagination_show_numbers', $vars, true)) {
 	if ($total_pages >= ($start_page + 5)) {
 		$pages[$total_pages] = [];
 	}
-	
+}
+
+// add next
+if ((bool) elgg_extract('pagination_show_next', $vars, true)) {
 	// add next
 	$next_offset = $offset + $limit;
 	if ($next_offset >= $count) {
 		$next_offset--;
 	}
-}
-
-// add next
-if ((bool) elgg_extract('pagination_show_next', $vars, true)) {
+	
 	$pages['next'] = [
 		'text' => elgg_extract('pagination_next_text', $vars, elgg_echo('next')),
 		'href' => $get_href($next_offset),
