@@ -1557,7 +1557,6 @@ function _elgg_view_under_viewtype($view, $vars, $viewtype) {
  * @internal
  */
 function _elgg_map_icon_glyph_class(array $classes) {
-
 	$common_icons = [
 		'delete-alt' => 'times-circle',
 		'delete' => 'times',
@@ -1565,6 +1564,7 @@ function _elgg_map_icon_glyph_class(array $classes) {
 		'info' => 'info-circle',
 		'mail' => 'envelope-regular',
 		'refresh' => 'redo',
+		'remove' => 'times',
 		'settings' => 'wrench',
 		'settings-alt' => 'cog',
 		'warning' => 'exclamation-triangle',
