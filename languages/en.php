@@ -390,8 +390,6 @@ return array(
 	'groups:searchtitle' => "Searching for groups: %s",
 	'advancedsearchtitle' => "%s with results matching %s",
 	'notfound' => "No results found.",
-	'next' => "Next",
-	'previous' => "Previous",
 
 	'viewtype:change' => "Change list type",
 	'viewtype:list' => "List view",
@@ -1130,7 +1128,11 @@ These changes will only affect new users on the site.',
 	'revert' => 'Revert',
 	'validate' => 'Validate',
 	'read_more' => 'Read more',
-
+	'next' => 'Next',
+	'previous' => 'Previous',
+	'older' => 'Older',
+	'newer' => 'Newer',
+	
 	'site' => 'Site',
 	'activity' => 'Activity',
 	'members' => 'Members',
