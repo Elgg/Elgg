@@ -3,10 +3,11 @@
  * Edit settings for river widget
  */
 
+/* @var $widget \ElggWidget */
 $widget = elgg_extract('entity', $vars);
 
 // dashboard widget has type parameter
-if (elgg_in_context('dashboard')) {
+if ($widget->context === 'dashboard') {
 	if (!isset($widget->content_type)) {
 		$widget->content_type = 'friends';
 	}
@@ -26,12 +27,4 @@ if (elgg_in_context('dashboard')) {
 echo elgg_view('object/widget/edit/num_display', [
 	'entity' => $widget,
 	'default' => 8,
-]);
-
-// pass the context so we have the correct output upon save.
-$context = elgg_in_context('dashboard') ? 'dashboard' : 'profile';
-
-echo elgg_view('input/hidden', [
-	'name' => 'context',
-	'value' => $context,
 ]);

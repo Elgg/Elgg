@@ -8,11 +8,11 @@ return [
 	'routes' => [
 		'collection:river:owner' => [
 			'path' => '/activity/owner/{username}',
-			'resource' => 'river',
+			'resource' => 'activity/owner',
 		],
 		'collection:river:friends' => [
-			'path' => '/activity/friends/{username?}',
-			'resource' => 'river',
+			'path' => '/activity/friends/{username}',
+			'resource' => 'activity/friends',
 			'required_plugins' => [
 				'friends',
 			],
@@ -26,11 +26,11 @@ return [
 		],
 		'collection:river:all' => [
 			'path' => '/activity/all',
-			'resource' => 'river',
+			'resource' => 'activity/all',
 		],
 		'default:river' => [
 			'path' => '/activity',
-			'resource' => 'river',
+			'resource' => 'activity/all',
 		],
 	],
 	'widgets' => [
