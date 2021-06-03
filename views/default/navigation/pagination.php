@@ -2,12 +2,19 @@
 /**
  * Elgg pagination
  *
- * @uses int    $vars['offset']       The offset in the list
- * @uses int    $vars['limit']        Number of items per page
- * @uses int    $vars['count']        Number of items in list
- * @uses string $vars['base_url']     Base URL to use in links
- * @uses string $vars['url_fragment'] URL fragment to add to links if not present in base_url (optional)
- * @uses string $vars['offset_key']   The string to use for offet in the URL
+ * @uses string   $vars['base_url']                 Base URL to use in links
+ * @uses int      $vars['count']                    Number of items in list
+ * @uses int      $vars['limit']                    Number of items per page
+ * @uses int      $vars['offset']                   The offset in the list
+ * @uses string   $vars['offset_key']               The string to use for offet in the URL
+ * @uses string[] $vars['pagination_class']         Additional class to add to the pagination
+ * @uses string   $vars['pagination_next_text']     Text to show on the next link (default: 'next')
+ * @uses string   $vars['pagination_previous_text'] Text to show on the previous link (default: 'previous')
+ * @uses bool     $vars['pagination_show_numbers']  Show the 'in between' page numbers (default: true)
+ * @uses bool     $vars['pagination_show_next']     Show the next link (default: true)
+ * @uses bool     $vars['pagination_show_previous'] Show the previous link (default: true)
+ * @uses string   $vars['position']                 Where is the pagination being shown ('before'|'after')
+ * @uses string   $vars['url_fragment']             URL fragment to add to links if not present in base_url (optional)
  */
 
 if (elgg_in_context('widget')) {
@@ -62,73 +69,83 @@ $pages = [];
 $start_page = max(min([$current_page - 2, $total_pages - 4]), 1);
 
 // add previous
-$prev_offset = $offset - $limit;
-if ($prev_offset < 1) {
-	// don't include offset=0
-	$prev_offset = null;
-}
-
-$pages['prev'] = [
-	'text' => elgg_echo('previous'),
-	'href' => $get_href($prev_offset),
-];
-
-if ($current_page == 1) {
-	$pages['prev']['disabled'] = true;
-}
-
-// add first page to be listed
-if (1 < $start_page) {
-	$pages[1] = [];
-}
-
-// added dotted spacer
-if (1 < ($start_page - 2)) {
-	$pages[] = ['text' => '...', 'disabled' => true];
-} elseif ($start_page == 3) {
-	$pages[2] = [];
-}
-
-$max = 1;
-for ($page = $start_page; $page <= $total_pages; $page++) {
-	if ($max > 5) {
-		break;
+if ((bool) elgg_extract('pagination_show_previous', $vars, true)) {
+	$prev_offset = $offset - $limit;
+	if ($prev_offset < 1) {
+		// don't include offset=0
+		$prev_offset = null;
 	}
-	$pages[$page] = [];
-	$max++;
+	
+	$pages['prev'] = [
+		'text' => elgg_extract('pagination_previous_text', $vars, elgg_echo('previous')),
+		'href' => $get_href($prev_offset),
+		'class' => 'elgg-pagination-previous',
+	];
+	
+	if ($current_page == 1) {
+		$pages['prev']['disabled'] = true;
+	}
 }
 
-// added dotted spacer
-if ($total_pages > ($start_page + 6)) {
-	$pages[] = ['text' => '...', 'disabled' => true];
-} elseif (($start_page + 5) == ($total_pages - 1)) {
-	$pages[$total_pages - 1] = [];
-}
-
-// add last page to be listed
-if ($total_pages >= ($start_page + 5)) {
-	$pages[$total_pages] = [];
+// show in between page numbers
+if ((bool) elgg_extract('pagination_show_numbers', $vars, true)) {
+	// add first page to be listed
+	if (1 < $start_page) {
+		$pages[1] = [];
+	}
+	
+	// added dotted spacer
+	if (1 < ($start_page - 2)) {
+		$pages[] = ['text' => '...', 'disabled' => true];
+	} elseif ($start_page == 3) {
+		$pages[2] = [];
+	}
+	
+	$max = 1;
+	for ($page = $start_page; $page <= $total_pages; $page++) {
+		if ($max > 5) {
+			break;
+		}
+		$pages[$page] = [];
+		$max++;
+	}
+	
+	// added dotted spacer
+	if ($total_pages > ($start_page + 6)) {
+		$pages[] = ['text' => '...', 'disabled' => true];
+	} elseif (($start_page + 5) == ($total_pages - 1)) {
+		$pages[$total_pages - 1] = [];
+	}
+	
+	// add last page to be listed
+	if ($total_pages >= ($start_page + 5)) {
+		$pages[$total_pages] = [];
+	}
+	
+	// add next
+	$next_offset = $offset + $limit;
+	if ($next_offset >= $count) {
+		$next_offset--;
+	}
 }
 
 // add next
-$next_offset = $offset + $limit;
-if ($next_offset >= $count) {
-	$next_offset--;
+if ((bool) elgg_extract('pagination_show_next', $vars, true)) {
+	$pages['next'] = [
+		'text' => elgg_extract('pagination_next_text', $vars, elgg_echo('next')),
+		'href' => $get_href($next_offset),
+		'class' => 'elgg-pagination-next',
+	];
+	
+	if ($current_page == $total_pages) {
+		$pages['next']['disabled'] = true;
+	}
 }
 
-$pages['next'] = [
-	'text' => elgg_echo('next'),
-	'href' => $get_href($next_offset),
-];
-
-if ($current_page == $total_pages) {
-	$pages['next']['disabled'] = true;
-}
-
-$list ="";
+$list = '';
 foreach ($pages as $page_num => $page) {
 	if ($page_num == $current_page) {
-		$list .= elgg_format_element('li', ['class' => 'elgg-state-selected'], "<span>$page_num</span>");
+		$list .= elgg_format_element('li', ['class' => 'elgg-state-selected'], "<span>{$page_num}</span>");
 	} else {
 		$href = elgg_extract('href', $page);
 		$text = elgg_extract('text', $page, $page_num);
@@ -149,13 +166,25 @@ foreach ($pages as $page_num => $page) {
 			$link = elgg_format_element('span', [], $page['text']);
 		}
 		
-		$element_options = [];
+		$element_options = [
+			'class' => elgg_extract_class($page),
+		];
 		if ($disabled) {
-			$element_options['class'] = 'elgg-state-disabled';
+			$element_options['class'][] = 'elgg-state-disabled';
 		}
 			
 		$list .= elgg_format_element('li', $element_options, $link);
 	}
 }
 
-echo elgg_format_element('ul', ['class' => 'elgg-pagination'], $list);
+if (empty($list)) {
+	return;
+}
+
+$pagination_class = elgg_extract_class($vars, ['elgg-pagination'], 'pagination_class');
+$position = elgg_extract('position', $vars);
+if (!empty($position)) {
+	$pagination_class[] = "elgg-pagination-{$position}";
+}
+
+echo elgg_format_element('ul', ['class' => $pagination_class], $list);
