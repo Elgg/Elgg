@@ -11,7 +11,7 @@ namespace Elgg\InviteFriends;
 class Users {
 
 	/**
-	 * Add friends if invite code was set
+	 * Track future friends if invite code was set
 	 *
 	 * @param \Elgg\Hook $hook 'register', 'user'
 	 *
@@ -23,24 +23,46 @@ class Users {
 			return;
 		}
 		
-		$friend_guid = $hook->getParam('friend_guid');
-		$invite_code = $hook->getParam('invitecode');
-		
-		if (!$friend_guid) {
+		$friend_user = get_user((int) $hook->getParam('friend_guid'));
+		if (!$friend_user instanceof \ElggUser) {
+			return;
+		}
+			
+		if (!elgg_validate_invite_code($friend_user->username, $hook->getParam('invitecode'))) {
 			return;
 		}
 		
-		$friend_user = get_user($friend_guid);
-		if (!($friend_user instanceof \ElggUser)) {
-			return;
-		}
-	
-		if (!elgg_validate_invite_code($friend_user->username, $invite_code)) {
+		// keep track of user being registered with an invite code for later (during validation)
+		$user->addRelationship($friend_user->guid, 'invited_friend');
+	}
+
+	/**
+	 * Add friends if invite code was set
+	 *
+	 * @param \Elgg\Event $event 'validate:after', 'user'
+	 *
+	 * @return void
+	 */
+	public static function addFriendsAfterValidation(\Elgg\Event $event) {
+		$user = $event->getObject();
+		if (!$user instanceof \ElggUser) {
 			return;
 		}
 		
-		// Make mutual friends
-		$user->addFriend($friend_guid, true);
-		$friend_user->addFriend($user->guid, true);
+		$future_friends = $user->getEntitiesFromRelationship([
+			'type' => 'user',
+			'relationship' => 'invited_friend',
+			'limit' => false,
+			'batch' => true,
+			'batch_inc_offset' => false,
+		]);
+		
+		foreach ($future_friends as $friend) {
+			// Make mutual friends
+			$user->addFriend($friend->guid, true);
+			$friend->addFriend($user->guid, true);
+		
+			$friend->removeRelationship($user->guid, 'invited_friend');
+		}
 	}
 }
