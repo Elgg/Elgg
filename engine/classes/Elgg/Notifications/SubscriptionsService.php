@@ -9,6 +9,7 @@ use Elgg\Database\Select;
 use Elgg\Database\Delete;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Entities;
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -172,8 +173,11 @@ class SubscriptionsService {
 	 * @param string $action      (optional) notification action (eg. 'create')
 	 *
 	 * @return bool
+	 * @throws InvalidArgumentException
 	 */
 	public function addSubscription(int $user_guid, string $method, int $target_guid, string $type = null, string $subtype = null, string $action = null) {
+		$this->assertValidTypeSubtypeActionForSubscription($type, $subtype, $action);
+		
 		$rel = [
 			self::RELATIONSHIP_PREFIX,
 		];
@@ -207,9 +211,12 @@ class SubscriptionsService {
 	 * @param string $action      (optional) notification action (eg. 'create')
 	 *
 	 * @return bool
+	 * @throws InvalidArgumentException
 	 * @since 4.0
 	 */
 	public function hasSubscription(int $user_guid, string $method, int $target_guid, string $type = null, string $subtype = null, string $action = null): bool {
+		$this->assertValidTypeSubtypeActionForSubscription($type, $subtype, $action);
+		
 		$rel = [
 			self::RELATIONSHIP_PREFIX,
 		];
@@ -275,8 +282,11 @@ class SubscriptionsService {
 	 * @param string $action      (optional) notification action (eg. 'create')
 	 *
 	 * @return bool
+	 * @throws InvalidArgumentException
 	 */
 	public function removeSubscription(int $user_guid, string $method, int $target_guid, string $type = null, string $subtype = null, string $action = null) {
+		$this->assertValidTypeSubtypeActionForSubscription($type, $subtype, $action);
+		
 		$rel = [
 			self::RELATIONSHIP_PREFIX,
 		];
@@ -374,8 +384,11 @@ class SubscriptionsService {
 	 * @param string $action      (optional) notification action (eg. 'create')
 	 *
 	 * @return \ElggRelationship[]
+	 * @throws InvalidArgumentException
 	 */
 	public function getEntitySubscriptions(int $target_guid = 0, int $user_guid = 0, array $methods = [], string $type = null, string $subtype = null, string $action = null): array {
+		$this->assertValidTypeSubtypeActionForSubscription($type, $subtype, $action);
+		
 		if (empty($target_guid) && empty($user_guid)) {
 			return [];
 		}
@@ -660,5 +673,29 @@ class SubscriptionsService {
 		}
 		
 		return $names;
+	}
+	
+	/**
+	 * Validate subscription input for type, subtype and action
+	 *
+	 * @param string $type    entity type
+	 * @param string $subtype entity subtype
+	 * @param string $action  notification action (eg. 'create')
+	 *
+	 * @return void
+	 * @throws InvalidArgumentException
+	 */
+	protected function assertValidTypeSubtypeActionForSubscription($type, $subtype, $action): void {
+		if (empty($type) && empty($subtype) && empty($action)) {
+			// all empty, this is valid
+			return;
+		}
+		
+		if (!empty($type) && !empty($subtype) && !empty($action)) {
+			// all set, also valid
+			return;
+		}
+		
+		throw new InvalidArgumentException('$type, $subtype and $action need to all be empty or all have a value');
 	}
 }
