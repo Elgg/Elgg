@@ -17,10 +17,8 @@
  */
 
 $items = elgg_extract('items', $vars);
-$pagination = (bool) elgg_extract('pagination', $vars, true);
-$position = elgg_extract('position', $vars, 'after');
-$no_results = elgg_extract('no_results', $vars, '');
 
+$no_results = elgg_extract('no_results', $vars, '');
 if ($no_results === true) {
 	$vars['no_results'] = elgg_echo('notfound');
 }
@@ -33,6 +31,13 @@ if (!$items && $no_results) {
 
 if (!is_array($items) || count($items) == 0) {
 	return;
+}
+
+$position = elgg_extract('position', $vars, 'after');
+$pagination = (bool) elgg_extract('pagination', $vars, true);
+if (elgg_in_context('widget')) {
+	// widgets do not show pagination
+	$pagination = false;
 }
 
 $pagination_before_options = (array) elgg_extract('pagination_before_options', $vars, []);
@@ -66,23 +71,44 @@ foreach ($items as $item) {
 	$index++;
 }
 
+$result = '';
 if ($pagination && ($position == 'before' || $position == 'both')) {
 	$pagination_options = array_merge($vars, $pagination_before_options);
 	$pagination_options['position'] = 'before';
 	
-	echo elgg_view('navigation/pagination', $pagination_options);
+	$result .= elgg_view('navigation/pagination', $pagination_options);
 }
 
 if (empty($list_items) && $no_results) {
 	// there are scenarios where item views do not output html. In those cases show the no results info
-	echo elgg_view('page/components/no_results', $vars);
+	$result .= elgg_view('page/components/no_results', $vars);
 } else {
-	echo elgg_format_element('ul', ['class' => $list_classes], $list_items);
+	$result .= elgg_format_element('ul', ['class' => $list_classes], $list_items);
 }
 
 if ($pagination && ($position == 'after' || $position == 'both')) {
 	$pagination_options = array_merge($vars, $pagination_after_options);
 	$pagination_options['position'] = 'after';
 	
-	echo elgg_view('navigation/pagination', $pagination_options);
+	$result .= elgg_view('navigation/pagination', $pagination_options);
 }
+
+$id = elgg_build_hmac([
+	$list_classes,
+	$list_item_view,
+	elgg_extract('item_view', $vars),
+	elgg_extract('type', $vars),
+	elgg_extract('subtype', $vars),
+	elgg_extract('offset_key', $vars),
+	elgg_extract('pagination_class', $vars),
+	elgg_extract('base_url', $vars),
+])->getToken();
+
+$container_classes = ['elgg-list-container'];
+$pagination_behaviour = elgg_extract('pagination_behaviour', $vars, elgg_get_config('pagination_behaviour'));
+if ($pagination && ($pagination_behaviour !== 'navigate')) {
+	$container_classes[] = "elgg-list-container-{$pagination_behaviour}";
+	elgg_require_js('page/components/list');
+}
+
+echo elgg_format_element('div', ['class' => $container_classes, 'id' => "list-container-{$id}"], $result);

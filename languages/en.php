@@ -52,6 +52,7 @@ return array(
 
 	'ajax:error' => 'Unexpected error while performing an AJAX call. Maybe the connection to the server is lost.',
 	'ajax:not_is_xhr' => 'You cannot access AJAX views directly',
+	'ajax:pagination:no_data' => 'No new page data found',
 
 	'ElggEntity:Error:SetSubtype' => 'Use %s instead of the magic setter for "subtype"',
 	'ElggEntity:Error:SetEnabled' => 'Use %s instead of the magic setter for "enabled"',
@@ -1461,6 +1462,10 @@ Once you have logged in, we highly recommend that you change your password.',
 	'config:content:comments_latest_first' => "The comments should be listed with the latest comment first",
 	'config:content:comments_latest_first:help' => "This controls the default behaviour of the listing of comments on a content detail page. If disabled this will also move the comment box to the end of the comments list",
 	'config:content:comments_per_page' => "The number of comments per page",
+	'config:content:pagination_behaviour' => "Default pagination behaviour of lists",
+	'config:content:pagination_behaviour:help' => "Controls how list data is updated when using pagination. Individual listings can override this default behaviour.",
+	'config:content:pagination_behaviour:navigate' => "Navigate to the next page",
+	'config:content:pagination_behaviour:ajax-replace' => "Replace the list data without reloading the full page",
 	'config:email' => "Email",
 	'config:email_html_part:label' => "Enable HTML mail",
 	'config:email_html_part:help' => "Outgoing mail will be wrapped in a HTML template",

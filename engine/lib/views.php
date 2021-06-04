@@ -299,6 +299,11 @@ function elgg_get_view_extensions($view) {
  */
 function elgg_view_page($title, $body, $page_shell = 'default', $vars = []) {
 	
+	if (elgg_is_xhr() && get_input('_elgg_ajax_list')) {
+		// requested by ajaxed pagination
+		return is_array($body) ? elgg_extract('content', $body) : $body;
+	}
+	
 	if (is_array($body)) {
 		$vars['entity'] = elgg_extract('entity', $body, elgg_extract('entity', $vars));
 
