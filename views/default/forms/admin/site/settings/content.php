@@ -41,6 +41,18 @@ $body .= elgg_view_field([
 ]);
 
 $body .= elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('config:content:pagination_behaviour'),
+	'#help' => elgg_echo('config:content:pagination_behaviour:help'),
+	'name' => 'pagination_behaviour',
+	'value' => elgg_get_config('pagination_behaviour'),
+	'options_values' => [
+		'navigate' => elgg_echo('config:content:pagination_behaviour:navigate'),
+		'ajax-replace' => elgg_echo('config:content:pagination_behaviour:ajax-replace'),
+	],
+]);
+
+$body .= elgg_view_field([
 	'#type' => 'checkbox',
 	'#label' => elgg_echo('config:content:comment_box_collapses'),
 	'#help' => elgg_echo('config:content:comment_box_collapses:help'),

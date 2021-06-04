@@ -30,11 +30,6 @@
 	clear: both;
 }
 
-.elgg-module > .elgg-body > .elgg-list, /* margin for group modules */
-.elgg-module .elgg-widget-content > .elgg-list { /* margin for profile and dashboard widgets */
-	margin-top: 0;
-}
-
 .elgg-no-results {
 	padding: 0.5rem 1rem;
 }

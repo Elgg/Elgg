@@ -17,11 +17,6 @@
  * @uses string   $vars['url_fragment']             URL fragment to add to links if not present in base_url (optional)
  */
 
-if (elgg_in_context('widget')) {
-	// widgets do not show pagination
-	return;
-}
-
 $count = (int) elgg_extract('count', $vars, 0);
 if (!$count) {
 	return;
