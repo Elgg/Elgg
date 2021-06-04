@@ -64,7 +64,7 @@ $pages = [];
 $start_page = max(min([$current_page - 2, $total_pages - 4]), 1);
 
 // add previous
-if ((bool) elgg_extract('pagination_show_previous', $vars, true)) {
+if ((bool) elgg_extract('pagination_show_previous', $vars, true) && ($current_page !== 1)) {
 	$prev_offset = $offset - $limit;
 	if ($prev_offset < 1) {
 		// don't include offset=0
@@ -76,10 +76,6 @@ if ((bool) elgg_extract('pagination_show_previous', $vars, true)) {
 		'href' => $get_href($prev_offset),
 		'class' => 'elgg-pagination-previous',
 	];
-	
-	if ($current_page == 1) {
-		$pages['prev']['disabled'] = true;
-	}
 }
 
 // show in between page numbers
@@ -119,7 +115,7 @@ if ((bool) elgg_extract('pagination_show_numbers', $vars, true)) {
 }
 
 // add next
-if ((bool) elgg_extract('pagination_show_next', $vars, true)) {
+if ((bool) elgg_extract('pagination_show_next', $vars, true) && ($current_page !== $total_pages)) {
 	// add next
 	$next_offset = $offset + $limit;
 	if ($next_offset >= $count) {
@@ -131,10 +127,6 @@ if ((bool) elgg_extract('pagination_show_next', $vars, true)) {
 		'href' => $get_href($next_offset),
 		'class' => 'elgg-pagination-next',
 	];
-	
-	if ($current_page == $total_pages) {
-		$pages['next']['disabled'] = true;
-	}
 }
 
 $list = '';

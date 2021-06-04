@@ -34,6 +34,7 @@ if (!is_array($items) || count($items) == 0) {
 }
 
 $position = elgg_extract('position', $vars, 'after');
+$pagination_behaviour = elgg_extract('pagination_behaviour', $vars, elgg_get_config('pagination_behaviour'));
 $pagination = (bool) elgg_extract('pagination', $vars, true);
 if (elgg_in_context('widget')) {
 	// widgets do not show pagination
@@ -44,6 +45,22 @@ $pagination_before_options = (array) elgg_extract('pagination_before_options', $
 unset($vars['pagination_before_options']);
 $pagination_after_options = (array) elgg_extract('pagination_after_options', $vars, []);
 unset($vars['pagination_after_options']);
+
+if (in_array($pagination_behaviour, ['ajax-append', 'ajax-append-auto'])) {
+	$vars['position'] = $position = 'both';
+
+	// set before options
+	$pagination_before_options['pagination_show_numbers'] = false;
+	$pagination_before_options['pagination_show_next'] = false;
+	$pagination_before_options['pagination_show_previous'] = true;
+	$pagination_before_options['pagination_previous_text'] = elgg_echo('ajax:pagination:load_more');
+	
+	// set after options
+	$pagination_after_options['pagination_show_numbers'] = false;
+	$pagination_after_options['pagination_show_next'] = true;
+	$pagination_after_options['pagination_show_previous'] = false;
+	$pagination_after_options['pagination_next_text'] = elgg_echo('ajax:pagination:load_more');
+}
 
 $list_classes = elgg_extract_class($vars, 'elgg-list', 'list_class');
 
@@ -105,10 +122,16 @@ $id = elgg_build_hmac([
 ])->getToken();
 
 $container_classes = ['elgg-list-container'];
-$pagination_behaviour = elgg_extract('pagination_behaviour', $vars, elgg_get_config('pagination_behaviour'));
 if ($pagination && ($pagination_behaviour !== 'navigate')) {
 	$container_classes[] = "elgg-list-container-{$pagination_behaviour}";
-	elgg_require_js('page/components/list');
+	if ($pagination_behaviour === 'ajax-append-auto') {
+		// make sure default logic for ajax append works
+		$container_classes[] = 'elgg-list-container-ajax-append';
+	}
+
+	if (elgg_view_exists("page/components/list/{$pagination_behaviour}.js")) {
+		elgg_require_js("page/components/list/{$pagination_behaviour}");
+	}
 }
 
 echo elgg_format_element('div', ['class' => $container_classes, 'id' => "list-container-{$id}"], $result);

@@ -1,19 +1,16 @@
 /**
- * Ajax lists
+ * Ajax lists - replace behaviour
  */
 define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
+	// register click event
+	$(document).on('click', '.elgg-list-container-ajax-replace .elgg-pagination a', function (event) {
+		event.preventDefault();
 
-	var ajax = new Ajax();
+		var $target = $(this).closest('.elgg-list-container');
+		var href = $(this).attr('href');
 
-	/**
-	 * Loads a new page
-	 *
-	 * @param $target jquery element
-	 * @param href    string to load via ajax
-	 *
-	 * @returns void
-	 */
-	function loadNewPage($target, href) {
+		var ajax = new Ajax();
+
 		ajax.path(href, {
 			data: {
 				_elgg_ajax_list: 1, // ask for quick return from elgg_view_page()
@@ -38,12 +35,5 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 				}
 			},
 		});
-	}
-
-	// register click event
-	$(document).on('click', '.elgg-list-container-ajax-replace .elgg-pagination a', function (event) {
-		event.preventDefault();
-
-		loadNewPage($(this).closest('.elgg-list-container'), $(this).attr('href'));
 	});
 });

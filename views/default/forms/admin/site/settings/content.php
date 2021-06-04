@@ -49,6 +49,8 @@ $body .= elgg_view_field([
 	'options_values' => [
 		'navigate' => elgg_echo('config:content:pagination_behaviour:navigate'),
 		'ajax-replace' => elgg_echo('config:content:pagination_behaviour:ajax-replace'),
+		'ajax-append' => elgg_echo('config:content:pagination_behaviour:ajax-append'),
+		'ajax-append-auto' => elgg_echo('config:content:pagination_behaviour:ajax-append-auto'),
 	],
 ]);
 
