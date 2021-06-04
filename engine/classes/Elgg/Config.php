@@ -553,10 +553,14 @@ class Config {
 
 		if (strlen($name) > 255) {
 			$this->getLogger()->error("The name length for configuration variables cannot be greater than 255");
-
 			return false;
 		}
 
+		if ($value === null) {
+			// don't save null values
+			return $this->remove($name);
+		}
+		
 		$result = $this->getConfigTable()->set($name, $value);
 
 		$this->__set($name, $value);

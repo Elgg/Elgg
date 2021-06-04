@@ -4,6 +4,7 @@ namespace Elgg\Database;
 
 use Elgg\BootService;
 use Elgg\Database;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Traits\Loggable;
 
 /**
@@ -75,16 +76,16 @@ class ConfigTable {
 	 *
 	 * @note Internal: The value is serialized so we maintain type information.
 	 *
-	 * @param string $name  The name of the configuration value
+	 * @param string $name  The name of the configuration value (cannot be greater than 255 characters)
 	 * @param mixed  $value Its value
 	 *
 	 * @return bool
+	 * @throws InvalidArgumentException
 	 */
 	public function set(string $name, $value): bool {
-		// cannot store anything longer than 255 characters in db, so catch before we set
-		if (strlen($name) > 255) {
-			$this->getLogger()->error("The name length for configuration variables cannot be greater than 255");
-			return false;
+		if ($value === null) {
+			// don't save null values to the DB
+			throw new InvalidArgumentException(__METHOD__ . ' $value needs to be set');
 		}
 		
 		if ($this->get($name) === null) {
