@@ -9,6 +9,7 @@
 return [
 	\Elgg\Upgrades\AlterDatabaseToMultiByteCharset::class,
 	\Elgg\Upgrades\ChangeUserNotificationSettingsNamespace::class,
+	\Elgg\Upgrades\ContentOwnerSubscriptions::class,
 	\Elgg\Upgrades\DeleteDiagnosticsPlugin::class,
 	\Elgg\Upgrades\DeleteNotificationsPlugin::class,
 	\Elgg\Upgrades\MigrateACLNotificationPreferences::class,

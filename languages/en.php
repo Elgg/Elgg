@@ -1985,4 +1985,7 @@ Global variables:
 	
 	'core:upgrade:2021041901:title' => "Remove the notifications plugin",
 	'core:upgrade:2021041901:description' => "Deletes the entity associated with the Notifications plugin removed in Elgg 4.0",
+	
+	'core:upgrade:2021060401:title' => "Add content owners to the subscribers",
+	'core:upgrade:2021060401:description' => "Content owners should be subscribed on their own content, this upgrade migrates all old content.",
 );
