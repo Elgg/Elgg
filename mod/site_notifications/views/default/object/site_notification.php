@@ -1,6 +1,8 @@
 <?php
 /**
  * Site notification view
+ *
+ * @uses $vars['entity'] the site notification
  */
 
 $entity = elgg_extract('entity', $vars);
@@ -8,7 +10,7 @@ if (!$entity instanceof SiteNotification) {
 	return;
 }
 
-$text = $entity->description;
+$text = $entity->getDisplayName();
 $actor = $entity->getActor();
 
 $icon = $actor ? elgg_view_entity_icon($actor, 'small') : '';

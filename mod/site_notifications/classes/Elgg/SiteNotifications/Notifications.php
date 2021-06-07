@@ -18,26 +18,13 @@ class Notifications {
 	 * @return void|true
 	 */
 	public static function createSiteNotifications(\Elgg\Hook $hook) {
-		/* @var Elgg\Notifications\Notification */
+		/* @var $notification \Elgg\Notifications\Notification */
 		$notification = $hook->getParam('notification');
-		if ($notification->summary) {
-			$message = $notification->summary;
-		} else {
-			$message = $notification->subject;
-		}
-	
-		$object = null;
+		/* @var $event \Elgg\Notifications\NotificationEvent */
 		$event = $hook->getParam('event');
-		if (isset($event)) {
-			$object = $event->getObject();
-		}
-	
-		$actor = $notification->getSender();
-		$recipient = $notification->getRecipient();
-		$url = $notification->url;
 		
-		$note = elgg_call(ELGG_IGNORE_ACCESS, function() use ($recipient, $message, $actor, $object, $url) {
-			return \SiteNotificationFactory::create($recipient, $message, $actor, $object, $url);
+		$note = elgg_call(ELGG_IGNORE_ACCESS, function() use ($notification, $event) {
+			return \SiteNotification::factory($notification, $event);
 		});
 		
 		if ($note instanceof \SiteNotification) {

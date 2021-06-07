@@ -173,6 +173,16 @@ Notification Event Handling
 
 The notification hooks no longer receive the ``origin`` parameter.
 
+Site notification
+~~~~~~~~~~~~~~~~~
+
+The site notifications plugin now shows the notification subject by default. If a site notification was created with the factory function ``SiteNotification::factory()``
+more of the original notification information is stored with the site notification:
+
+- Notification ``subject`` is stored in ``title``
+- Notification ``summary`` is stored in ``summary``
+- Notification ``body`` is stored in ``description``
+
 Activity plugin
 ---------------
 
@@ -768,6 +778,7 @@ Miscellaneous API changes
 * The return value of ``elgg_create_river_item()`` will be ``false`` in the case the creation was prevented by the ``'create:before', 'river'`` event
 * The constant ``ELGG_PLUGIN_USER_SETTING_PREFIX`` has been removed use the helper function ``\ElggUser::getNamespacedPluginSettingName()``
 * The constant ``ELGG_PLUGIN_INTERNAL_PREFIX`` has been removed to get the plugin priority private setting name use ``\ElggPlugin::PRIORITY_SETTING_NAME``
+* The class ``SiteNotificationFactory`` was removed use ``SiteNotification::factory()``
 
 Deprecated APIs
 ---------------
