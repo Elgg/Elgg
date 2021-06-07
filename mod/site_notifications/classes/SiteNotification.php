@@ -1,8 +1,12 @@
 <?php
 
+use Elgg\Notifications\Notification;
+use Elgg\Notifications\NotificationEvent;
+
 /**
  * Site notification class
  *
+ * @property string $summary            Original notification summary
  * @property string $url                Url to the target of the notification
  * @property bool   $read               Has this notification been read yet
  * @property int    $linked_entity_guid Entity linked to this notification
@@ -18,35 +22,22 @@ class SiteNotification extends ElggObject {
 		parent::initializeAttributes();
 		
 		$this->attributes['subtype'] = 'site_notification';
+		$this->attributes['access_id'] = ACCESS_PRIVATE;
 		
 		$this->read = false;
 	}
-
+	
 	/**
-	 * Get the actor involved in the notification
-	 *
-	 * @return ElggEntity|null
+	 * {@inheritDoc}
 	 */
-	public function getActor() {
-		$actor = $this->getEntitiesFromRelationship(['relationship' => self::HAS_ACTOR]);
-		if ($actor) {
-			$actor = $actor[0];
+	public function getDisplayName() {
+		if (!isset($this->title)) {
+			return $this->description; // pre Elgg 4.0 contains summary/subject in description;
 		}
-
-		return $actor;
+		
+		return parent::getDisplayName();
 	}
-
-	/**
-	 * Set the actor involved in the notification
-	 *
-	 * @param ElggEntity $entity Actor
-	 *
-	 * @return void
-	 */
-	public function setActor(\ElggEntity $entity) {
-		$this->addRelationship($entity->guid, self::HAS_ACTOR);
-	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -62,7 +53,32 @@ class SiteNotification extends ElggObject {
 		
 		return '';
 	}
-
+	
+	/**
+	 * Get the actor involved in the notification
+	 *
+	 * @return ElggEntity|null
+	 */
+	public function getActor() {
+		$actor = $this->getEntitiesFromRelationship(['relationship' => self::HAS_ACTOR]);
+		if ($actor) {
+			$actor = $actor[0];
+		}
+		
+		return $actor;
+	}
+	
+	/**
+	 * Set the actor involved in the notification
+	 *
+	 * @param ElggEntity $entity Actor
+	 *
+	 * @return void
+	 */
+	public function setActor(\ElggEntity $entity) {
+		$this->addRelationship($entity->guid, self::HAS_ACTOR);
+	}
+	
 	/**
 	 * Set the url for the notification
 	 *
@@ -75,7 +91,7 @@ class SiteNotification extends ElggObject {
 			$this->url = $url;
 		}
 	}
-
+	
 	/**
 	 * Set the read status
 	 *
@@ -86,7 +102,7 @@ class SiteNotification extends ElggObject {
 	public function setRead(bool $read) {
 		$this->read = $read;
 	}
-
+	
 	/**
 	 * Has the notification been read?
 	 *
@@ -114,5 +130,57 @@ class SiteNotification extends ElggObject {
 	 */
 	public function getLinkedEntity() {
 		return get_entity($this->linked_entity_guid);
+	}
+	
+	/**
+	 * Create a site notification from an Elgg notification
+	 *
+	 * @param Notification      $notification Notification from the notification system
+	 * @param NotificationEvent $event        Notification event from the notification system
+	 *
+	 * @return SiteNotification
+	 */
+	public static function factory(Notification $notification, NotificationEvent $event = null): SiteNotification {
+		$site_notification = new static();
+		$site_notification->owner_guid = $notification->getRecipientGUID();
+		$site_notification->container_guid = $notification->getRecipientGUID();
+		$site_notification->title = $notification->subject;
+		$site_notification->summary = $notification->summary;
+		$site_notification->description = $notification->body;
+		
+		if (isset($event)) {
+			$object = $event->getObject();
+			if ($object instanceof \ElggData) {
+				$entity = false;
+				switch ($object->getType()) {
+					case 'annotation':
+					case 'metadata':
+						$entity = $object->getEntity();
+						break;
+					case 'relationship':
+						// TODO Add support for linking a notification with a relationship
+						break;
+					default:
+						if ($object instanceof \ElggEntity) {
+							$entity = $object;
+						}
+						break;
+				}
+				
+				if ($entity instanceof \ElggEntity) {
+					$site_notification->setLinkedEntity($entity);
+				}
+			}
+		}
+		
+		if (!empty($notification->url) && $notification->url !== elgg_get_site_url()) {
+			$site_notification->setURL($notification->url);
+		}
+		
+		$site_notification->save();
+		
+		$site_notification->setActor($notification->getSender());
+		
+		return $site_notification;
 	}
 }
