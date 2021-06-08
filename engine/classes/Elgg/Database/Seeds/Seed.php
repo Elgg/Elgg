@@ -90,12 +90,13 @@ abstract class Seed implements Seedable {
 	 * Advance progressbar
 	 *
 	 * @param int $step Step
+	 *
 	 * @return void
 	 */
 	public function advance(int $step = 1) {
 		$this->seeded_counter += $step;
 		
-		return $this->progressAdvance($step);
+		$this->progressAdvance($step);
 	}
 
 	/**

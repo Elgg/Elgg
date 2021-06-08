@@ -74,9 +74,6 @@ class DelayedEmailService {
 	 */
 	public function enqueueNotification(Notification $notification): bool {
 		$recipient = $notification->getRecipient();
-		if (!$recipient instanceof \ElggEntity) {
-			return false;
-		}
 		
 		$delivery_interval = $recipient->getPrivateSetting('delayed_email_interval') ?? 'daily';
 		

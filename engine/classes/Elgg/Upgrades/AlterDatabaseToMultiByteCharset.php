@@ -153,9 +153,10 @@ class AlterDatabaseToMultiByteCharset implements AsynchronousUpgrade {
 
 		try {
 			// check if we need to change a global variable
-			$row = elgg()->db->getConnection('read')->executeQuery("SHOW GLOBAL VARIABLES LIKE 'innodb_large_prefix'");
+			$result = elgg()->db->getConnection('read')->executeQuery("SHOW GLOBAL VARIABLES LIKE 'innodb_large_prefix'");
+			$rows = $result->fetchAllAssociative();
 			
-			if (empty($row) || $row->Value === 'OFF') {
+			if (empty($rows) || $rows[0]['Value'] === 'OFF') {
 				// required to allow bigger index sizes required for utf8mb4
 				elgg()->db->getConnection('write')->executeStatement("SET GLOBAL innodb_large_prefix = 'ON'");
 			}

@@ -359,7 +359,7 @@ class ViewsService {
 
 		$rendered = $this->renderView($view, $vars, '', false);
 		if ($rendered) {
-			elgg_deprecated_notice("The $view view has been deprecated. $suggestion", $version, 3);
+			$this->logDeprecatedMessage("The '{$view}' view has been deprecated. {$suggestion}", $version);
 		}
 
 		return $rendered;
@@ -726,7 +726,7 @@ class ViewsService {
 
 		// but if they do, they have to be readable
 		$handle = opendir($view_dir);
-		if (!$handle) {
+		if ($handle === false) {
 			$this->getLogger()->notice("Unable to register views from the directory: {$view_dir}");
 
 			return false;

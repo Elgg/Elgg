@@ -57,10 +57,10 @@ class Seeder extends Seed {
 		};
 		
 		while ($this->getCount() < $this->limit) {
-			$owner = $this->getRandomUser();
+			$owner = $this->getRandomUser([], true);
 
 			$wire_guid = thewire_save_post($this->faker()->text($max_chars), $owner->guid, $this->getRandomAccessId($owner));
-			if (!$wire_guid) {
+			if ($wire_guid === false) {
 				continue;
 			}
 			
@@ -74,11 +74,11 @@ class Seeder extends Seed {
 				$owner->guid,
 			];
 			for ($i = 0; $i < $num_replies; $i++) {
-				$reply_owner = $this->getRandomUser($exclude);
+				$reply_owner = $this->getRandomUser($exclude, true);
 				$exclude[] = $reply_owner->guid;
 				
 				$reply_guid = thewire_save_post($this->faker()->text($max_chars), $reply_owner->guid, $this->getRandomAccessId($reply_owner), $post->guid);
-				if (!$reply_guid) {
+				if ($reply_guid === false) {
 					continue;
 				}
 				

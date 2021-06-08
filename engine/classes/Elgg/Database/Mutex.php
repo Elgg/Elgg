@@ -83,7 +83,7 @@ class Mutex {
 		$this->assertNamespace($namespace);
 
 		$result = $this->db->getConnection('read')->executeQuery("SHOW TABLES LIKE '{$this->db->prefix}{$namespace}_lock'");
-		return count($result->fetchAll()) > 0;
+		return $result->rowCount() > 0;
 	}
 
 	/**

@@ -3,8 +3,9 @@
 namespace Elgg\WebServices\Di;
 
 use Elgg\Traits\Di\ServiceFacade;
-use Monolog\Handler\AbstractHandler;
 use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\AbstractHandler;
+use Monolog\Handler\FormattableHandlerTrait;
 
 /**
  * Custom error logger during rest api calls. Stores errors in memory for later use in api result
@@ -13,6 +14,7 @@ use Monolog\Formatter\LineFormatter;
  */
 class RestApiErrorHandler extends AbstractHandler {
 
+	use FormattableHandlerTrait;
 	use ServiceFacade;
 
 	/**

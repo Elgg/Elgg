@@ -37,7 +37,7 @@ if (!$body || !$subject) {
 $result = messages_send($subject, $body, $user->guid, 0, $original_msg_guid);
 
 // Save 'send' the message
-if (!$result) {
+if ($result === false) {
 	return elgg_error_response(elgg_echo('messages:error'), 'messages/add');
 }
 

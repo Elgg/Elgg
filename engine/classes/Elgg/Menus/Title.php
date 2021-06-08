@@ -61,10 +61,6 @@ class Title {
 		$entity_menu = elgg()->menus->getUnpreparedMenu('entity', [
 			'entity' => $entity,
 		]);
-		if (!$entity_menu instanceof UnpreparedMenu) {
-			return;
-		}
-		
 		$add_toggle = false;
 		
 		/* @var $menu_item \ElggmenuItem */

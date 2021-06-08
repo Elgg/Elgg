@@ -64,7 +64,7 @@ class Validation {
 			return;
 		}
 		
-		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($user) {
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($user, $hook) {
 			
 			if ($user->isEnabled()) {
 				// disable the user until validation
@@ -118,7 +118,7 @@ class Validation {
 		
 		$url = elgg_normalize_url('admin/users/unvalidated');
 		
-		/* @var $admin ElggUser */
+		/* @var $admin \ElggUser */
 		foreach ($admins as $admin) {
 			$user_setting = $admin->getPrivateSetting('admin_validation_notification');
 			if (isset($user_setting) && !(bool) $user_setting) {

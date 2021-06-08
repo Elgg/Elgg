@@ -4,8 +4,8 @@ namespace Elgg;
 
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
+use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Elgg\Cache\QueryCache;
 use Elgg\Database\DbConfig;
@@ -159,7 +159,7 @@ class Database {
 
 			// https://github.com/Elgg/Elgg/issues/8121
 			$sub_query = "SELECT REPLACE(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY', '')";
-			$this->connections[$type]->exec("SET SESSION sql_mode=($sub_query);");
+			$this->connections[$type]->executeStatement("SET SESSION sql_mode=($sub_query);");
 		} catch (\Exception $e) {
 			// http://dev.mysql.com/doc/refman/5.1/en/error-messages-server.html
 			$this->log(LogLevel::ERROR, $e);
@@ -354,7 +354,7 @@ class Database {
 	 * @param bool                $single   Return only a single result?
 	 * @param array               $params   Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
 	 *
-	 * @return array An array of database result objects or callback function results. If the query
+	 * @return array|\stdClass An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
 	 * @throws \RuntimeException
 	 */
@@ -426,7 +426,7 @@ class Database {
 	 * @param Connection          $connection The DB connection
 	 * @param array               $params     Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
 	 *
-	 * @return Statement|int The result of the query
+	 * @return Result|int The result of the query
 	 * @throws DatabaseException
 	 */
 	protected function executeQuery($query, Connection $connection, array $params = []) {
@@ -452,7 +452,7 @@ class Database {
 		}
 				
 		try {
-			$value = $this->trackQuery($sql, $params, function() use ($query, $params, $connection, $sql) {
+			$result = $this->trackQuery($sql, $params, function() use ($query, $params, $connection, $sql) {
 				if ($query instanceof \Elgg\Database\QueryBuilder) {
 					return $query->execute(false);
 				} elseif ($query instanceof QueryBuilder) {
@@ -461,7 +461,7 @@ class Database {
 					return $connection->executeQuery($sql, $params);
 				} else {
 					// faster
-					return $connection->query($sql);
+					return $connection->executeQuery($sql);
 				}
 			});
 		} catch (\Exception $e) {
@@ -472,7 +472,7 @@ class Database {
 			throw $ex;
 		}
 
-		return $value;
+		return $result;
 	}
 	
 	/**
