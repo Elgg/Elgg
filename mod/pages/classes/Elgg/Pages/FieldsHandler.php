@@ -44,14 +44,14 @@ class FieldsHandler {
 		];
 		$return[] = [
 			'#type' => 'access',
-			'#label' => elgg_echo('pages:access_id'),
+			'#label' => elgg_echo('access:read'),
 			'name' => 'access_id',
 			'entity_type' => 'object',
 			'entity_subtype' => 'page',
 		];
 		$return[] = [
 			'#type' => 'access',
-			'#label' => elgg_echo('pages:write_access_id'),
+			'#label' => elgg_echo('access:write'),
 			'name' => 'write_access_id',
 			'entity_type' => 'object',
 			'entity_subtype' => 'page',

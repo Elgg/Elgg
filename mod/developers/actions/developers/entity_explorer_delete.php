@@ -12,7 +12,7 @@ return elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() {
 	}
 	
 	if (!$entity->canEdit()) {
-		return elgg_error_response(elgg_echo('action:unauthorized'));
+		return elgg_error_response(elgg_echo('actionunauthorized'));
 	}
 	
 	switch ($type) {

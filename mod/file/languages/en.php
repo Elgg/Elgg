@@ -24,14 +24,11 @@ return array(
 	'file:num_files' => "Number of files to display",
 	'file:replace' => 'Replace file content (leave blank to not change file)',
 	'file:list:title' => "%s's %s %s",
-	'file:title:friends' => "Friends'",
 
 	'file:file' => "File",
 
 	'file:list:list' => 'Switch to the list view',
 	'file:list:gallery' => 'Switch to the gallery view',
-
-	'file:types' => "Uploaded file types",
 
 	'file:type:' => 'Files',
 	'file:type:all' => "All files",

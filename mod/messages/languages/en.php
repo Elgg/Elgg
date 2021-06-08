@@ -37,11 +37,9 @@ return array(
 	*/
 
 	'messages:posted' => "Your message was successfully sent.",
-	'messages:success:delete:single' => 'Message was deleted',
 	'messages:success:delete' => 'Messages deleted',
 	'messages:success:read' => 'Messages marked as read',
 	'messages:error:messages_not_selected' => 'No messages selected',
-	'messages:error:delete:single' => 'Unable to delete the message',
 
 	/**
 	* Email messages
