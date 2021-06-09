@@ -108,13 +108,6 @@ class DenormalizeEntitySubtypes extends AbstractMigration {
 
 		$table->removeColumn('subtype_id');
 		
-		// need to restore index that was dropped when renaming the column
-		$table->addIndex(['subtype'], [
-			'name' => "subtype",
-			'unique' => false,
-			'limit' => 50,
-		]);
-		
 		$table->save();
 
 		$this->table('entity_subtypes')->drop()->save();
