@@ -262,9 +262,10 @@ class Service {
 		foreach ($names as $name) {
 			$items = $this->getUnpreparedMenu($name, $params)->getItems();
 
+			/* @var $item \ElggMenuItem */
 			foreach ($items as $item) {
 				$section = $item->getSection();
-				if ($section == 'default') {
+				if ($section === 'default') {
 					$item->setSection($name);
 				}
 				$item->setData('menu_name', $name);

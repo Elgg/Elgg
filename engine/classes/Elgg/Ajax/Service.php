@@ -93,6 +93,7 @@ class Service {
 	 * Attempt to JSON decode the given string
 	 *
 	 * @param mixed $string Output string
+	 *
 	 * @return mixed
 	 */
 	public function decodeJson($string) {
@@ -109,7 +110,8 @@ class Service {
 	 * @param mixed  $output     Output from a page/action handler
 	 * @param string $hook_type  The hook type. If given, the response will be filtered by hook
 	 * @param bool   $try_decode Try to convert a JSON string back to an abject
-	 * @return JsonResponse
+	 *
+	 * @return JsonResponse|false
 	 */
 	public function respondFromOutput($output, $hook_type = '', $try_decode = true) {
 		if ($try_decode) {
@@ -136,7 +138,8 @@ class Service {
 	 *
 	 * @param AjaxResponse $api_response API response
 	 * @param string       $hook_type    The hook type. If given, the response will be filtered by hook
-	 * @return JsonResponse
+	 *
+	 * @return JsonResponse|false
 	 */
 	public function respondFromApiResponse(AjaxResponse $api_response, $hook_type = '') {
 		$api_response = $this->filterApiResponse($api_response, $hook_type);
@@ -151,7 +154,8 @@ class Service {
 	 *
 	 * @param string $msg    The error message (not displayed to the user)
 	 * @param int    $status The HTTP status code
-	 * @return JsonResponse
+	 *
+	 * @return JsonResponse|false
 	 */
 	public function respondWithError($msg = '', $status = 400) {
 		$response = new JsonResponse(['error' => $msg], $status);
@@ -251,6 +255,7 @@ class Service {
 	 * Register a view to be available for ajax calls
 	 *
 	 * @param string $view The view name
+	 *
 	 * @return void
 	 */
 	public function registerView($view) {
@@ -261,6 +266,7 @@ class Service {
 	 * Unregister a view for ajax calls
 	 *
 	 * @param string $view The view name
+	 *
 	 * @return void
 	 */
 	public function unregisterView($view) {
@@ -269,10 +275,10 @@ class Service {
 
 	/**
 	 * Returns an array of views allowed for ajax calls
+	 *
 	 * @return string[]
 	 */
 	public function getViews() {
 		return array_keys($this->allowed_views);
 	}
-	
 }

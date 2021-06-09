@@ -2,7 +2,6 @@
 
 namespace Elgg\GarbageCollector;
 
-use function DI\object;
 use Elgg\Application\Database;
 use Elgg\I18n\Translator;
 use Elgg\Traits\Di\ServiceFacade;

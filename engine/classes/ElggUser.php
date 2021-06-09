@@ -1,6 +1,6 @@
 <?php
 
-use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Traits\Entity\Friends;
@@ -111,9 +111,9 @@ class ElggUser extends \ElggEntity {
 				}
 				break;
 			case 'admin':
-				throw new InvalidArgumentException(_elgg_services()->translator->translate('ElggUser:Error:SetAdmin', ['makeAdmin() / removeAdmin()']));
+				throw new ElggInvalidArgumentException(_elgg_services()->translator->translate('ElggUser:Error:SetAdmin', ['makeAdmin() / removeAdmin()']));
 			case 'banned':
-				throw new InvalidArgumentException(_elgg_services()->translator->translate('ElggUser:Error:SetBanned', ['ban() / unban()']));
+				throw new ElggInvalidArgumentException(_elgg_services()->translator->translate('ElggUser:Error:SetBanned', ['ban() / unban()']));
 		}
 		
 		parent::__set($name, $value);

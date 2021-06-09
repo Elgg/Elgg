@@ -7,7 +7,7 @@ use Elgg\Database\Update;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\Filesystem\IOException;
-use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
 use Elgg\Traits\Entity\Subscriptions;
 
 /**
@@ -261,9 +261,9 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 				case 'type':
 					return;
 				case 'subtype':
-					throw new InvalidArgumentException(elgg_echo('ElggEntity:Error:SetSubtype', ['setSubtype()']));
+					throw new ElggInvalidArgumentException(elgg_echo('ElggEntity:Error:SetSubtype', ['setSubtype()']));
 				case 'enabled':
-					throw new InvalidArgumentException(elgg_echo('ElggEntity:Error:SetEnabled', ['enable() / disable()']));
+					throw new ElggInvalidArgumentException(elgg_echo('ElggEntity:Error:SetEnabled', ['enable() / disable()']));
 				case 'access_id':
 				case 'owner_guid':
 				case 'container_guid':
@@ -1056,11 +1056,11 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @param string $subtype   The subtype of the entity we're looking to write
 	 *
 	 * @return bool
-	 * @throws InvalidArgumentException
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
 	public function canWriteToContainer($user_guid = 0, $type = '', $subtype = '') {
 		if (empty($type) || empty($subtype)) {
-			throw new InvalidArgumentException(__METHOD__ . ' requires $type and $subtype to be set');
+			throw new ElggInvalidArgumentException(__METHOD__ . ' requires $type and $subtype to be set');
 		}
 		
 		return _elgg_services()->userCapabilities->canWriteToContainer($this, $type, $subtype, $user_guid);

@@ -57,6 +57,7 @@ class Users {
 			'batch_inc_offset' => false,
 		]);
 		
+		/* @var $friend \ElggUser */
 		foreach ($future_friends as $friend) {
 			// Make mutual friends
 			$user->addFriend($friend->guid, true);

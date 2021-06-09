@@ -37,7 +37,7 @@ class ElggAnnotation extends \ElggExtender {
 	 *
 	 * @return bool
 	 */
-	public function save() : bool {
+	public function save(): bool {
 		if (!isset($this->access_id)) {
 			$this->access_id = ACCESS_PRIVATE;
 		}
@@ -56,7 +56,7 @@ class ElggAnnotation extends \ElggExtender {
 		}
 
 		if (_elgg_services()->annotationsTable->create($this, $entity)) {
-			return $this->id;
+			return true;
 		}
 
 		return false;

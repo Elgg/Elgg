@@ -82,7 +82,7 @@ foreach ($recommendedExtensions as $extension) {
 
 // db server information
 $db = elgg()->db->getConnection('read');
-$version = $db->query('select version()')->fetchColumn();
+$version = $db->executeQuery('select version()')->fetchOne();
 $server = $db->getDatabasePlatform()->getName();
 $subtext = '';
 $icon = $icon_ok;

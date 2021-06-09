@@ -2,6 +2,8 @@
 
 namespace Elgg\Notifications;
 
+use Elgg\Database\QueryBuilder;
+
 /**
  * Notification Event Handler for 'user' 'user' 'remove_admin' action
  *
@@ -78,9 +80,12 @@ class RemoveAdminUserEventHandler extends NotificationEventHandler {
 	public function getSubscriptions(): array {
 		$result = parent::getSubscriptions();
 		
+		/* @var $user \ElggUser */
+		$user = $this->event->getObject();
+		
 		if (_elgg_services()->config->security_notify_user_admin) {
 			// add the user to the subscribers
-			$result[$this->event->getObject()->guid] = ['email'];
+			$result[$user->guid] = ['email'];
 		}
 		
 		if (_elgg_services()->config->security_notify_admins) {

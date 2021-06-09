@@ -6,7 +6,7 @@ use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
 use Elgg\Exceptions\PluginException;
 use Elgg\Includer;
-use Elgg\Traits\Loggable;
+use Elgg\Traits\Loggable as ElggLoggable;
 
 /**
  * Plugin class containing helper functions for plugin activation/deactivation,
@@ -17,7 +17,7 @@ class ElggPlugin extends ElggObject {
 	const PRIORITY_SETTING_NAME = 'elgg:internal:priority';
 	const STATIC_CONFIG_FILENAME = 'elgg-plugin.php';
 	
-	use Loggable;
+	use ElggLoggable;
 	
 	/**
 	 * The optional files that can be read and served through the markdown page handler

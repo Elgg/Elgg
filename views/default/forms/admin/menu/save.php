@@ -15,6 +15,7 @@ $num_featured_items = elgg_extract('num_featured_items', $vars, count($menu_item
 $featured_menu_names = elgg_get_config('site_featured_menu_names');
 
 $dropdown_values = [];
+/* @var $item \ElggMenuItem */
 foreach ($menu_items as $item) {
 	$dropdown_values[$item->getName()] = $item->getText();
 }

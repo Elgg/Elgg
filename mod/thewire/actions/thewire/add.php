@@ -13,7 +13,7 @@ if (empty($body)) {
 }
 
 $guid = thewire_save_post($body, elgg_get_logged_in_user_guid(), ACCESS_PUBLIC, $parent_guid, 'site');
-if (!$guid) {
+if ($guid === false) {
 	return elgg_error_response(elgg_echo('thewire:notsaved'));
 }
 

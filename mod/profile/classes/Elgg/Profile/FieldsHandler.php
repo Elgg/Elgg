@@ -37,6 +37,7 @@ class FieldsHandler {
 			return [];
 		}
 		
+		$result = [];
 		$custom_fields = explode(',', $custom_fields);
 		$translations = [];
 		

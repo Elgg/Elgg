@@ -282,10 +282,13 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 			return array_shift($parts);
 		}
 
+		// PHP 8 can use named arguments in call_user_func_array(), this causes issues
+		// @see: https://www.php.net/manual/en/function.call-user-func-array.php#125953
+		$parts = array_values($parts);
 		if (strtoupper($boolean) === 'OR') {
-			return $this->expr()->orX()->addMultiple($parts);
+			return call_user_func_array([$this->expr(), 'or'], $parts);
 		} else {
-			return $this->expr()->andX()->addMultiple($parts);
+			return call_user_func_array([$this->expr(), 'and'], $parts);
 		}
 	}
 

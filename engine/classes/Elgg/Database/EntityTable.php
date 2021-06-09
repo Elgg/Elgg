@@ -217,7 +217,7 @@ class EntityTable {
 	 * @param int       $guid Entity guid
 	 * @param \stdClass $row  Updated data
 	 *
-	 * @return int|false
+	 * @return bool
 	 */
 	public function updateRow(int $guid, \stdClass $row) {
 		$update = Update::table(self::TABLE_NAME);

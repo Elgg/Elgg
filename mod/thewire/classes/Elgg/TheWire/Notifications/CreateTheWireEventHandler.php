@@ -83,7 +83,9 @@ class CreateTheWireEventHandler extends NotificationEventHandler {
 	 * {@inheritDoc}
 	 */
 	protected function getNotificationBody(\ElggUser $recipient, string $method): string {
+		/* @var $entity \ElggWire */
 		$entity = $this->event->getObject();
+		$owner = $entity->getOwnerEntity();
 		$language = $recipient->getLanguage();
 		
 		$body = '';

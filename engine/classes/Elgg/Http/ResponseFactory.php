@@ -213,7 +213,8 @@ class ResponseFactory {
 	 * Send a response
 	 *
 	 * @param SymfonyResponse $response Response object
-	 * @return Response|false
+	 *
+	 * @return SymfonyResponse|false
 	 */
 	public function send(SymfonyResponse $response) {
 

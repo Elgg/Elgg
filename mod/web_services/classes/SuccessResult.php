@@ -10,7 +10,7 @@ class SuccessResult extends GenericResult {
 	/**
 	 * A new success result
 	 *
-	 * @param string $result The result
+	 * @param mixed $result The result
 	 */
 	public function __construct($result) {
 		$this->setResult($result);
@@ -20,7 +20,7 @@ class SuccessResult extends GenericResult {
 	/**
 	 * Returns a new instance of this class
 	 *
-	 * @param string $result A result of some kind?
+	 * @param mixed $result A result of some kind?
 	 *
 	 * @return SuccessResult
 	 */
