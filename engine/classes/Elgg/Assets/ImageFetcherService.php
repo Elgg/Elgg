@@ -2,12 +2,13 @@
 
 namespace Elgg\Assets;
 
-use Elgg\Config;
-use GuzzleHttp\RequestOptions;
-use GuzzleHttp\Client;
 use Elgg\Cache\SystemCache;
-use GuzzleHttp\Exception\TransferException;
+use Elgg\Config;
+use Elgg\Exceptions\InvalidArgumentException;
+use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
+use GuzzleHttp\Exception\TransferException;
+use GuzzleHttp\RequestOptions;
 
 /**
  * Fetch external images server side
@@ -76,7 +77,7 @@ class ImageFetcherService {
 	 *
 	 * @param string $image_url the image url to get
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 *
 	 * @return false|array result contains
 	 * 	- data: the image data
@@ -85,7 +86,7 @@ class ImageFetcherService {
 	 */
 	public function getImage(string $image_url) {
 		if (empty($image_url)) {
-			throw new \InvalidArgumentException('a non-empty image url is required for image fetching');
+			throw new InvalidArgumentException('a non-empty image url is required for image fetching');
 		}
 		
 		$image_url = htmlspecialchars_decode($image_url);

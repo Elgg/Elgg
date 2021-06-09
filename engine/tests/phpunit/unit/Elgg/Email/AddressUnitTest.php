@@ -2,7 +2,7 @@
 
 namespace Elgg\Email;
 
-use Laminas\Mail\Exception\InvalidArgumentException;
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * @group EmailService

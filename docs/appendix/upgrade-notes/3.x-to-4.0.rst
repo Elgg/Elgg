@@ -779,6 +779,7 @@ Miscellaneous API changes
 * The constant ``ELGG_PLUGIN_USER_SETTING_PREFIX`` has been removed use the helper function ``\ElggUser::getNamespacedPluginSettingName()``
 * The constant ``ELGG_PLUGIN_INTERNAL_PREFIX`` has been removed to get the plugin priority private setting name use ``\ElggPlugin::PRIORITY_SETTING_NAME``
 * The class ``SiteNotificationFactory`` was removed use ``SiteNotification::factory()``
+* The class ``Elgg\Email\Address`` no longer throws ``Laminas\Mail\Exception\InvalidArgumentException`` but now throws ``Elgg\Exceptions\InvalidArgumentException``
 
 Deprecated APIs
 ---------------

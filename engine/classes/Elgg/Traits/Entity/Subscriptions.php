@@ -2,6 +2,8 @@
 
 namespace Elgg\Traits\Entity;
 
+use Elgg\Exceptions\InvalidArgumentException;
+
 /**
  * ElggEntity functions to manage subscriptions
  *
@@ -18,7 +20,7 @@ trait Subscriptions {
 	 * @param string          $subtype   entity subtype
 	 * @param string          $action    notification action (eg. 'create')
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 * @return bool
 	 */
 	public function addSubscription(int $user_guid = 0, $methods = [], string $type = null, string $subtype = null, string $action = null): bool {
@@ -57,7 +59,7 @@ trait Subscriptions {
 	 * @param string          $subtype   entity subtype
 	 * @param string          $action    notification action (eg. 'create')
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 * @return bool
 	 */
 	public function hasSubscription(int $user_guid = 0, $methods = [], string $type = null, string $subtype = null, string $action = null): bool {
@@ -81,7 +83,7 @@ trait Subscriptions {
 	 * @param int             $user_guid the user to subscribe (default: current user)
 	 * @param string|string[] $methods   notification method (default: current registered methods)
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 * @return bool
 	 */
 	public function hasSubscriptions(int $user_guid = 0, $methods = []): bool {
@@ -103,7 +105,7 @@ trait Subscriptions {
 	 * @param string          $subtype   entity subtype
 	 * @param string          $action    notification action (eg. 'create')
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 * @return bool
 	 */
 	public function removeSubscription(int $user_guid = 0, $methods = [], string $type = null, string $subtype = null, string $action = null): bool {
@@ -223,7 +225,7 @@ trait Subscriptions {
 	 *
 	 * @param string|string[] $methods the methods to normalize
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 * @return string[]
 	 */
 	protected function normalizeSubscriptionMethods($methods = []): array {
@@ -231,7 +233,7 @@ trait Subscriptions {
 			$dbt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
 			$caller = $dbt[1]['function'] ?? 'unknown';
 			
-			throw new \InvalidArgumentException(elgg_echo('Entity:Subscriptions:InvalidMethodsException', [$caller]));
+			throw new InvalidArgumentException(elgg_echo('Entity:Subscriptions:InvalidMethodsException', [$caller]));
 		}
 		
 		$methods = (array) $methods;
@@ -241,7 +243,7 @@ trait Subscriptions {
 				$dbt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
 				$caller = $dbt[1]['function'] ?? 'unknown';
 				
-				throw new \InvalidArgumentException(elgg_echo('Entity:Subscriptions:InvalidMethodsException', [$caller]));
+				throw new InvalidArgumentException(elgg_echo('Entity:Subscriptions:InvalidMethodsException', [$caller]));
 			}
 		}
 		

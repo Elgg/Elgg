@@ -15,13 +15,7 @@ use Laminas\Mime\Mime;
 class PlainTextPart extends Part {
 	
 	/**
-	 * Create a new PlainText Part
-	 *
-	 * @param mixed $content String or Stream containing the content
-	 *
-	 * @throws \Laminas\Mime\Exception\InvalidArgumentException
-	 *
-	 * @see Part::__construct()
+	 * {@inheritDoc}
 	 */
 	public function __construct($content = '') {
 		

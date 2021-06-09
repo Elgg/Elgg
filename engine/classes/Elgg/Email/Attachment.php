@@ -11,15 +11,7 @@ use Laminas\Mime\Mime;
 class Attachment extends Part {
 	
 	/**
-	 * create a new Mime Part.
-	 * The (unencoded) content of the Part as passed
-	 * as a string or stream
-	 *
-	 * @param mixed $content String or Stream containing the content
-	 *
-	 * @throws \Laminas\Mime\Exception\InvalidArgumentException
-	 *
-	 * @see Part::__construct()
+	 * {@inheritDoc}
 	 */
 	public function __construct($content = '') {
 		parent::__construct($content);
