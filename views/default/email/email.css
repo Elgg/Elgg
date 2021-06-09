@@ -118,6 +118,7 @@ table {
 	border-spacing: 0;
 	border-collapse: collapse;
 	margin: 0;
+	width: 100%;
 }
 td {
 	padding: 0;
@@ -140,6 +141,10 @@ p {
 }
 .edge-wrapper {
 	background: $(background-color-mild);
+}
+
+.edge-wrapper > tr > td {
+	padding: 0 1rem;
 }
 .header > tr > td,
 .content > tr > td {
