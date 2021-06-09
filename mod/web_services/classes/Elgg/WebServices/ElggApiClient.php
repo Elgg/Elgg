@@ -117,7 +117,7 @@ class ElggApiClient {
 			case 'POST':
 				break;
 			default:
-				throw new \APIException(elgg_echo('NotImplementedException:CallMethodNotImplemented', [$method]));
+				throw new \APIException(elgg_echo('APIException:CallMethodNotImplemented', [$method]));
 		}
 		
 		$this->method = $method;

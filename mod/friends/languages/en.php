@@ -65,7 +65,6 @@ To view the friendship request, click here:
 	'friends:action:friendrequest:decline:fail' => "An error occured while declining the friendship request, please try again",
 	'friends:action:friendrequest:decline:success' => "The friendship request has been declined",
 	
-	'friends:action:friendrequest:accept:fail' => "An error occured while accepting the friendship request, please try again",
 	'friends:action:friendrequest:accept:success' => "The friendship request has been accepted",
 	
 	// notification settings

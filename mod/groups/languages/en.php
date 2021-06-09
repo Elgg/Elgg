@@ -22,7 +22,6 @@ return array(
 	'groups:edit:access' => "Access",
 	'groups:edit:tools' => "Tools",
 	'groups:edit:settings' => "Settings",
-	'groups:delete' => 'Delete group',
 	'groups:membershiprequests' => 'Manage join requests',
 	'groups:membershiprequests:pending' => 'Manage join requests (%s)',
 	'groups:invitedmembers' => "Manage invitations",
@@ -80,7 +79,6 @@ return array(
 
 	'groups:nofriendsatall' => 'You have no friends to invite!',
 	'groups:group' => "Group",
-	'groups:search:tags' => "tag",
 	'groups:search:title' => "Search for groups with '%s'",
 	'groups:search:none' => "No matching groups were found",
 	'groups:search_in_group' => "Search in this group",
@@ -172,9 +170,6 @@ or click below to view the group's join requests:
 	/**
 	 * Action messages
 	 */
-	'groups:deleted' => 'Group and group contents deleted',
-	'groups:notdeleted' => 'Group could not be deleted',
-	'groups:deletewarning' => "Are you sure you want to delete this group? There is no undo!",
 
 	'groups:invitekilled' => 'The invite has been deleted.',
 	'groups:joinrequestkilled' => 'The join request has been deleted.',

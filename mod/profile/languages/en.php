@@ -12,7 +12,6 @@ return array(
 	'admin:configure_utilities:profile_fields' => 'Edit Profile Fields',
 	
 	'profile:edit' => 'Edit profile',
-	'profile:aboutme' => "About me",
 	'profile:description' => "About me",
 	'profile:briefdescription' => "Brief description",
 	'profile:location' => "Location",
@@ -38,7 +37,6 @@ return array(
 	'profile:field:week' => 'Week',
 	'profile:field:color' => 'Color',
 
-	'profile:edit:default' => 'Edit profile fields',
 	'profile:label' => "Profile label",
 	'profile:type' => "Profile type",
 	'profile:editdefault:delete:fail' => 'Removing profile field failed',

@@ -126,8 +126,6 @@ If you are ready to proceed, click the Next button.",
 	'install:complete:admin_notice' => 'Welcome to your Elgg site! For more options, see the %s.',
 	'install:complete:admin_notice:link_text' => 'settings pages',
 
-	'InstallationException:UnknownStep' => '%s is an unknown installation step.',
-	'InstallationException:MissingLibrary' => 'Could not load %s',
 	'InstallationException:CannotLoadSettings' => 'Elgg could not load the settings file. It does not exist or there is a file permissions issue.',
 
 	'install:success:database' => 'Database has been installed.',

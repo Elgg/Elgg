@@ -27,9 +27,7 @@ return array(
 	'annotation:delete:page:success' => 'The page revision was successfully deleted',
 	'annotation:delete:page:fail' => 'The page revision could not be deleted',
 
-	'pages:delete' => "Delete this page",
 	'pages:history' => "History",
-	'pages:view' => "View page",
 	'pages:revision' => "Revision",
 
 	'pages:navigation' => "Navigation",
@@ -63,8 +61,6 @@ View and comment on the page:
 	'pages:description' => 'Page text',
 	'pages:tags' => 'Tags',
 	'pages:parent_guid' => 'Parent page',
-	'pages:access_id' => 'Read access',
-	'pages:write_access_id' => 'Write access',
 
 	/**
 	 * Status and error messages
@@ -74,8 +70,6 @@ View and comment on the page:
 	'pages:notsaved' => 'Page could not be saved',
 	'pages:error:no_title' => 'You must specify a title for this page.',
 	'entity:delete:object:page:success' => 'The page was successfully deleted.',
-	'pages:revision:delete:success' => 'The page revision was successfully deleted.',
-	'pages:revision:delete:failure' => 'The page revision could not be deleted.',
 
 	/**
 	 * History
@@ -89,13 +83,6 @@ View and comment on the page:
 	'pages:num' => 'Number of pages to display',
 	'widgets:pages:name' => 'Pages',
 	'widgets:pages:description' => "This is a list of your pages.",
-
-	/**
-	 * Submenu items
-	 */
-	'pages:label:view' => "View page",
-	'pages:label:edit' => "Edit page",
-	'pages:label:history' => "Page history",
 
 	'pages:newchild' => "Create a sub-page",
 );

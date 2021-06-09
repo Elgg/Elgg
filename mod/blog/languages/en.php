@@ -21,7 +21,6 @@ return array(
 	'blog:archives' => 'Archives',
 
 	'groups:tool:blog' => 'Enable group blog',
-	'blog:write' => 'Write a blog post',
 
 	// Editing
 	'blog:excerpt' => 'Excerpt',
@@ -38,12 +37,9 @@ return array(
 	'blog:error:cannot_write_to_container' => 'Insufficient access to save blog to group.',
 	'blog:messages:warning:draft' => 'There is an unsaved draft of this post!',
 	'blog:edit_revision_notice' => '(Old version)',
-	'blog:message:deleted_post' => 'Blog post deleted.',
-	'blog:error:cannot_delete_post' => 'Cannot delete blog post.',
 	'blog:none' => 'No blog posts',
 	'blog:error:missing:title' => 'Please enter a blog title!',
 	'blog:error:missing:description' => 'Please enter the body of your blog!',
-	'blog:error:cannot_edit_post' => 'This post may not exist or you may not have permissions to edit it.',
 	'blog:error:post_not_found' => 'Cannot find specified blog post.',
 	'blog:error:revision_not_found' => 'Cannot find this revision.',
 

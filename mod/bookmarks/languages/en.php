@@ -75,5 +75,4 @@ View and comment on the bookmark:
 	 */
 
 	'bookmarks:save:failed' => "Your bookmark could not be saved. Make sure you've entered a title and address and then try again.",
-	'bookmarks:unknown_bookmark' => 'Cannot find specified bookmark',
 );

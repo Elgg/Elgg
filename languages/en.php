@@ -20,7 +20,6 @@ return array(
 
 	'login' => "Log in",
 	'loginok' => "You have been logged in.",
-	'loginerror' => "We couldn't log you in. Please check your credentials and try again.",
 	'login:empty' => "Username/email and password are required.",
 	'login:baduser' => "Unable to load your user account.",
 	'auth:nopams' => "Internal error. No user authentication method installed.",
@@ -45,9 +44,7 @@ return array(
 	'exception:title' => "Fatal Error.",
 	'exception:contact_admin' => 'An unrecoverable error has occurred and has been logged. Contact the site administrator with the following information:',
 
-	'actionundefined' => "The requested action (%s) was not defined in the system.",
 	'actionnotfound' => "The action file for %s was not found.",
-	'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	'actionunauthorized' => 'You are unauthorized to perform this action',
 
 	'ajax:error' => 'Unexpected error while performing an AJAX call. Maybe the connection to the server is lost.',
@@ -60,32 +57,17 @@ return array(
 	'ElggUser:Error:SetAdmin' => 'Use %s instead of the magic setter for "admin"',
 	'ElggUser:Error:SetBanned' => 'Use %s instead of the magic setter for "banned"',
 
-	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) is a misconfigured plugin. It has been disabled. Please search the Elgg wiki for possible causes (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) cannot start and has been deactivated.  Reason: %s',
 	'PluginException:InvalidID' => "%s is an invalid plugin ID.",
 	'PluginException:InvalidPath' => "%s is an invalid plugin path.",
-	'PluginException:InvalidManifest' => 'Invalid manifest file for plugin %s',
-	'PluginException:InvalidPlugin' => '%s is not a valid plugin.',
-	'PluginException:InvalidPlugin:Details' => '%s is not a valid plugin: %s',
-	'PluginException:NullInstantiated' => 'ElggPlugin cannot be null instantiated. You must pass a GUID, a plugin ID, or a full path.',
 	'ElggPlugin:MissingID' => 'Missing plugin ID (guid %s)',
 	'ElggPlugin:NoPluginComposer' => 'Missing composer.json for plugin ID %s (guid %s)',
 	'ElggPlugin:StartFound' => 'For plugin ID %s a start.php was found. This could indicate a unsupported plugin version.',
 	'ElggPlugin:IdMismatch' => 'This plugin\'s directory must be renamed to "%s" to match the projectname set in the plugin composer.json.',
-	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'The required file "%s" is missing.',
-	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Its manifest contains an invalid dependency type "%s".',
-	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Its manifest contains an invalid provides type "%s".',
-	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'There is an invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
-	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Conflicts with plugin: %s',
-	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Plugin file "elgg-plugin.php" file is present but unreadable.',
 	'ElggPlugin:Error' => 'Plugin error',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Threw exception including %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin %s (guid: %s) at %s.',
-	'PluginException:NoPluginName' => "The plugin name could not be found",
-	'PluginException:ParserError' => 'Error parsing manifest with API version %s in plugin %s.',
-	'PluginException:NoAvailableParser' => 'Cannot find a parser for manifest API version %s in plugin %s.',
-	'PluginException:ParserErrorMissingRequiredAttribute' => "Missing required '%s' attribute in manifest for plugin %s.",
 	'ElggPlugin:InvalidAndDeactivated' => '%s is an invalid plugin and has been deactivated.',
 	'ElggPlugin:activate:BadConfigFormat' => 'Plugin file "elgg-plugin.php" did not return a serializable array.',
 	'ElggPlugin:activate:ConfigSentOutput' => 'Plugin file "elgg-plugin.php" sent output.',
@@ -124,16 +106,11 @@ return array(
 	
 	'Entity:Subscriptions:InvalidMethodsException' => '%s requires $methods to be a string or an array of strings',
 
-	'pageownerunavailable' => 'Warning: The page owner %d is not accessible!',
 	'viewfailure' => 'There was an internal failure in the view %s',
-	'view:missing_param' => "The required parameter '%s' is missing in the view %s",
 	'changebookmark' => 'Please change your bookmark for this page',
-	'noaccess' => 'The content you were trying to view has been removed or you do not have permission to view it.',
 	'error:missing_data' => 'There was some data missing in your request',
 	'save:fail' => 'There was a failure saving your data',
 	'save:success' => 'Your data was saved',
-
-	'forward:error' => 'Sorry. An error occurred while redirecting to you to another site.',
 
 	'error:default:title' => 'Oops...',
 	'error:default:content' => 'Oops... something went wrong.',
@@ -203,15 +180,12 @@ return array(
 	'access:label:logged_out' => "Logged out users",
 	'access:label:friends' => "Friends",
 	'access' => "Who can see this",
-	'access:overridenotice' => "Note: Due to group policy, this content will be accessible only by group members.",
 	'access:limited:label' => "Limited",
 	'access:help' => "The access level",
 	'access:read' => "Read access",
 	'access:write' => "Write access",
 	'access:admin_only' => "Administrators only",
-	'access:missing_name' => "Missing access level name",
-	'access:comments:change' => "This discussion is currently visible to a limited audience. Be thoughtful about who you share it with.",
-
+	
 /**
  * Dashboard and widgets
  */
@@ -221,7 +195,6 @@ return array(
 
 	'widgets:add' => 'Add widgets',
 	'widgets:add:description' => "Click on any widget button below to add it to the page.",
-	'widgets:position:fixed' => '(Fixed position on page)',
 	'widget:unavailable' => 'You have already added this widget',
 	'widget:numbertodisplay' => 'Number of items to display',
 
@@ -318,7 +291,6 @@ return array(
 	'river:delete:success' => 'Activity item has been deleted',
 	'river:delete:fail' => 'Activity item could not be deleted',
 	'river:delete:lack_permission' => 'You lack permission to delete this activity item',
-	'river:can_delete:invaliduser' => 'Cannot check canDelete for user_guid [%s] as the user does not exist.',
 	'river:subject:invalid_subject' => 'Invalid user',
 	'activity:owner' => 'Activity',
 
@@ -396,14 +368,6 @@ return array(
 	'viewtype:change' => "Change list type",
 	'viewtype:list' => "List view",
 	'viewtype:gallery' => "Gallery",
-
-	'tag:search:startblurb' => "Items with tags matching '%s':",
-
-	'user:search:startblurb' => "Users matching '%s':",
-	'user:search:finishblurb' => "To view more, click here.",
-
-	'group:search:startblurb' => "Groups matching '%s':",
-	'group:search:finishblurb' => "To view more, click here.",
 	'search:go' => 'Go',
 	'userpicker:only_friends' => 'Only friends',
 
@@ -427,7 +391,6 @@ return array(
 	'registration:userexists' => 'That username already exists',
 	'registration:usernametooshort' => 'Your username must be a minimum of %u characters long.',
 	'registration:usernametoolong' => 'Your username is too long. It can have a maximum of %u characters.',
-	'registration:passwordtooshort' => 'The password must be a minimum of %u characters long.',
 	'registration:dupeemail' => 'This email address has already been registered.',
 	'registration:invalidchars' => 'Sorry, your username contains the character %s which is invalid. The following characters are invalid: %s',
 	'registration:emailnotvalid' => 'Sorry, the email address you entered is invalid on this system',
@@ -1179,7 +1142,6 @@ These changes will only affect new users on the site.',
 
 	'content' => "content",
 	'content:latest' => 'Latest activity',
-	'content:latest:blurb' => 'Alternatively, click here to view the latest content from across the site.',
 	
 	'list:out_of_bounds' => "You have reached a part of the list without any content, however there is content available.",
 	'list:out_of_bounds:link' => "Go back to the first page of this listing.",
@@ -1280,13 +1242,6 @@ Password: %s
 Once you have logged in, we highly recommend that you change your password.',
 
 /**
- * System messages
- */
-
-	'systemmessages:dismiss' => "click to dismiss",
-
-
-/**
  * Messages
  */
 	'messages:title:success' => 'Success',
@@ -1295,13 +1250,6 @@ Once you have logged in, we highly recommend that you change your password.',
 	'messages:title:help' => 'Help',
 	'messages:title:notice' => 'Notice',
 	'messages:title:info' => 'Info',
-
-/**
- * Import / export
- */
-
-	'importsuccess' => "Import of data was successful",
-	'importfail' => "OpenDD import of data failed.",
 
 /**
  * Time
@@ -1486,20 +1434,6 @@ Once you have logged in, we highly recommend that you change your password.',
 	'upgrade:terminated' => 'Upgrade has been terminated by an event handler',
 	'upgrade:locked' => "Cannot upgrade. Another upgrade is running. To clear the upgrade lock, visit the Admin section.",
 	'upgrade:unlock:success' => "Upgrade unlocked successfully.",
-	'upgrade:unable_to_upgrade' => 'Unable to upgrade.',
-	'upgrade:unable_to_upgrade_info' => 'This installation cannot be upgraded because legacy views
-were detected in the Elgg core views directory. These views have been deprecated and need to be
-removed for Elgg to function correctly. If you have not made changes to Elgg core, you can
-simply delete the views directory and replace it with the one from the latest
-package of Elgg downloaded from <a href="https://elgg.org">elgg.org</a>.<br /><br />
-
-If you need detailed instructions, please visit the <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
-Upgrading Elgg documentation</a>. If you require assistance, please post to the
-<a href="https://elgg.org/discussion/all">Community Support Forums</a>.',
-
-	'update:oauth_api:deactivated' => 'OAuth API (previously OAuth Lib) was deactivated during the upgrade.  Please activate it manually if required.',
-	'upgrade:site_secret_warning:moderate' => "You are encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Advanced",
-	'upgrade:site_secret_warning:weak' => "You are strongly encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Advanced",
 
 	'admin:pending_upgrades' => 'The site has pending upgrades that require your immediate attention.',
 	'admin:view_upgrades' => 'View pending upgrades.',
@@ -1507,8 +1441,6 @@ Upgrading Elgg documentation</a>. If you require assistance, please post to the
 	'collection:object:elgg_upgrade' => 'Site upgrades',
 	'admin:upgrades:none' => 'Your installation is up to date!',
 
-	'upgrade:item_count' => 'There are <b>%s</b> items that need to be upgraded.',
-	'upgrade:warning' => '<b>Warning:</b> On a large site this upgrade may take a significantly long time!',
 	'upgrade:success_count' => 'Upgraded:',
 	'upgrade:error_count' => 'Errors: %s',
 	'upgrade:finished' => 'Upgrade finished',
@@ -1633,7 +1565,6 @@ To go the the website, click here:
 	'entity:delete:object:comment:success' => "The comment was successfully deleted.",
 	'generic_comment:blank' => "Sorry, you need to actually put something in your comment before we can save it.",
 	'generic_comment:notfound' => "Sorry, we could not find the specified comment.",
-	'generic_comment:notfound_fallback' => "Sorry, we could not find the specified comment, but we've forwarded you to the page where it was left.",
 	'generic_comment:failure' => "An unexpected error occurred when saving the comment.",
 	'generic_comment:none' => 'No comments',
 	'generic_comment:title' => 'Comment by %s',
@@ -1663,8 +1594,7 @@ To reply or view the original item, click here:
 
 	'byline' => 'By %s',
 	'byline:ingroup' => 'in the group %s',
-	'entity:default:missingsupport:popup' => 'This entity cannot be displayed correctly. This may be because it requires support provided by a plugin that is no longer installed.',
-
+	
 	'entity:delete:item' => 'Item',
 	'entity:delete:item_not_found' => 'Item not found.',
 	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
@@ -1686,8 +1616,6 @@ To reply or view the original item, click here:
 	'entity:unmute' => "Unmute notifications",
 	'entity:unmute:success' => "You've successfully unmuted notifications of %s",
 	'entity:unmute:fail' => "An error occured while unmuting notifications of %s",
-	
-	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 
 /**
  * Annotations
@@ -1705,7 +1633,6 @@ To reply or view the original item, click here:
 	'actiongatekeeper:timeerror' => 'The page you were using has expired. Please refresh and try again.',
 	'actiongatekeeper:pluginprevents' => 'Sorry. Your form could not be submitted for an unknown reason.',
 	'actiongatekeeper:uploadexceeded' => 'The size of file(s) uploaded exceeded the limit set by your site administrator',
-	'actiongatekeeper:crosssitelogin' => "Sorry, logging in from a different domain is not permitted. Please try again.",
 
 /**
  * Word blacklists
@@ -1718,7 +1645,6 @@ To reply or view the original item, click here:
  */
 
 	'js:security:token_refresh_failed' => 'Failed to contact %s. You may experience problems saving content. Please refresh this page.',
-	'js:security:token_refreshed' => 'Connection to %s restored!',
 	'js:lightbox:current' => "image %s of %s",
 
 /**

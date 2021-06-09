@@ -12,10 +12,8 @@ return array(
 	 */
 
 	'messageboard:board' => "Message board",
-	'messageboard:messageboard' => "message board",
 	'messageboard:none' => "There is nothing on this message board yet",
 	'messageboard:num_display' => "Number of messages to display",
-	'messageboard:user' => "%s's message board",
 	'messageboard:owner' => '%s\'s message board',
 	'messageboard:owner_history' => '%s\'s posts on %s\'s message board',
 
@@ -32,7 +30,6 @@ return array(
 	'annotation:delete:messageboard:success' => "You successfully deleted the message",
 	
 	'messageboard:posted' => "You successfully posted on the message board.",
-	'messageboard:deleted' => "You successfully deleted the message.",
 
 	/**
 	 * Email messages
@@ -56,7 +53,6 @@ To view %s's profile, click here:
 	 */
 
 	'messageboard:blank' => "Sorry; you need to actually put something in the message area before we can save it.",
-	'messageboard:notdeleted' => "Sorry; we could not delete this message.",
 
 	'messageboard:failure' => "An unexpected error occurred when adding your message. Please try again.",
 
