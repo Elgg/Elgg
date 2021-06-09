@@ -422,11 +422,11 @@ class ElggUser extends \ElggEntity {
 	 * @param string $purpose For what purpose is the notification setting used (default: 'default')
 	 *
 	 * @return bool
-	 * @throws \InvalidArgumentException
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
 	public function setNotificationSetting(string $method, bool $enabled = true, string $purpose = 'default') {
 		if (empty($purpose)) {
-			throw new \InvalidArgumentException(__METHOD__ . ' requires $purpose to be set to a non-empty string');
+			throw new ElggInvalidArgumentException(__METHOD__ . ' requires $purpose to be set to a non-empty string');
 		}
 		
 		$this->{"notification:{$purpose}:{$method}"} = (int) $enabled;
@@ -445,11 +445,11 @@ class ElggUser extends \ElggEntity {
 	 * @param string $purpose For what purpose to get the notification settings (default: 'default')
 	 *
 	 * @return array
-	 * @throws \InvalidArgumentException
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
 	public function getNotificationSettings(string $purpose = 'default') {
 		if (empty($purpose)) {
-			throw new \InvalidArgumentException(__METHOD__ . ' requires $purpose to be set to a non-empty string');
+			throw new ElggInvalidArgumentException(__METHOD__ . ' requires $purpose to be set to a non-empty string');
 		}
 		
 		$settings = [];

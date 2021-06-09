@@ -2,8 +2,8 @@
 
 namespace Elgg\Email;
 
+use Elgg\Exceptions\InvalidArgumentException;
 use Laminas\Mail\Address as ZendAddress;
-use Laminas\Mail\Exception\InvalidArgumentException;
 use Laminas\Validator\EmailAddress as EmailAddressValidator;
 use Laminas\Validator\Hostname;
 
@@ -27,7 +27,11 @@ class Address extends ZendAddress {
 			$name = html_entity_decode($name, ENT_QUOTES | ENT_XHTML, 'UTF-8');
 		}
 		
-		parent::__construct($email, $name, $comment);
+		try {
+			parent::__construct($email, $name, $comment);
+		} catch (\Laminas\Mail\Exception\InvalidArgumentException $e) {
+			throw new InvalidArgumentException($e->getMessage(), $e->getCode(), $e);
+		}
 	}
 	
 	/**
@@ -36,7 +40,7 @@ class Address extends ZendAddress {
 	 * @param string $email the new email address
 	 *
 	 * @return void
-	 * @throws \Laminas\Mail\Exception\InvalidArgumentException
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 * @since 3.0
 	 */
 	public function setEmail($email) {
@@ -64,7 +68,7 @@ class Address extends ZendAddress {
 	 * @param string $name the new name
 	 *
 	 * @return void
-	 * @throws \Laminas\Mail\Exception\InvalidArgumentException
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 * @since 3.0
 	 */
 	public function setName($name) {
@@ -123,16 +127,16 @@ class Address extends ZendAddress {
 	 * @param string $ignored Ignored (required for Laminas\Mail\Address)
 	 *
 	 * @return \Elgg\Email\Address
-	 * @throws \Laminas\Mail\Exception\InvalidArgumentException
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 * @since 3.0
 	 */
-	public static function fromString($contact, $ignored = null) {
+	public static function fromString($contact, $ignored = null): Address {
 		$containsName = preg_match('/<(.*)>/', $contact, $matches) == 1;
 		if ($containsName) {
 			$name = trim(elgg_substr($contact, 0, elgg_strpos($contact, '<')));
-			return new self($matches[1], $name);
+			return new static($matches[1], $name);
 		} else {
-			return new self(trim($contact));
+			return new static(trim($contact));
 		}
 	}
 	
@@ -141,12 +145,12 @@ class Address extends ZendAddress {
 	 *
 	 * @param \ElggEntity $entity the entity to create the address for
 	 *
-	 * @return self
-	 *
+	 * @return \Elgg\Email\Address
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 * @since 4.0
 	 */
-	public static function fromEntity(\ElggEntity $entity): self {
-		$address = new Address($entity->email, $entity->getDisplayName());
+	public static function fromEntity(\ElggEntity $entity): Address {
+		$address = new static($entity->email, $entity->getDisplayName());
 		$address->setEntity($entity);
 		return $address;
 	}
@@ -160,11 +164,11 @@ class Address extends ZendAddress {
 	 * @param string $name  the name
 	 *
 	 * @return string
-	 * @throws \Laminas\Mail\Exception\InvalidArgumentException
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 * @since 3.0
 	 */
 	public static function getFormattedEmailAddress($email, $name = null) {
-		$mail = new self($email, $name);
+		$mail = new static($email, $name);
 		return $mail->toString();
 	}
 }

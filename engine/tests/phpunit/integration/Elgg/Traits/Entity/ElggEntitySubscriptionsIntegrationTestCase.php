@@ -2,6 +2,7 @@
 
 namespace Elgg\Traits\Entity;
 
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\IntegrationTestCase;
 
 abstract class ElggEntitySubscriptionsIntegrationTestCase extends IntegrationTestCase {
@@ -83,7 +84,7 @@ abstract class ElggEntitySubscriptionsIntegrationTestCase extends IntegrationTes
 	 * @dataProvider invalidMethodsProvider
 	 */
 	public function testAddSubscriptionWithInvalidMethod($methods) {
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->target->addSubscription($this->user->guid, $methods);
 	}
 	
@@ -91,7 +92,7 @@ abstract class ElggEntitySubscriptionsIntegrationTestCase extends IntegrationTes
 	 * @dataProvider invalidMethodsProvider
 	 */
 	public function testHasSubscriptionWithInvalidMethod($methods) {
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->target->hasSubscription($this->user->guid, $methods);
 	}
 	
@@ -99,7 +100,7 @@ abstract class ElggEntitySubscriptionsIntegrationTestCase extends IntegrationTes
 	 * @dataProvider invalidMethodsProvider
 	 */
 	public function testHasSubscriptionsWithInvalidMethod($methods) {
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->target->hasSubscriptions($this->user->guid, $methods);
 	}
 	
@@ -107,7 +108,7 @@ abstract class ElggEntitySubscriptionsIntegrationTestCase extends IntegrationTes
 	 * @dataProvider invalidMethodsProvider
 	 */
 	public function testRemoveSubscriptionWithInvalidMethod($methods) {
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->target->removeSubscription($this->user->guid, $methods);
 	}
 	

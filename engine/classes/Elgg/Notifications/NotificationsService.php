@@ -2,12 +2,9 @@
 
 namespace Elgg\Notifications;
 
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\PluginHooksService;
 use Elgg\Queue\Queue;
-use ElggData;
-use ElggEntity;
-use ElggSession;
-use ElggUser;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -26,7 +23,7 @@ class NotificationsService {
 	/** @var PluginHooksService */
 	protected $hooks;
 
-	/** @var ElggSession */
+	/** @var \ElggSession */
 	protected $session;
 	
 	/** @var array Registered notification events */
@@ -40,12 +37,12 @@ class NotificationsService {
 	 *
 	 * @param Queue              $queue   Queue
 	 * @param PluginHooksService $hooks   Plugin hook service
-	 * @param ElggSession        $session Session service
+	 * @param \ElggSession       $session Session service
 	 */
 	public function __construct(
 			Queue $queue,
 			PluginHooksService $hooks,
-			ElggSession $session
+			\ElggSession $session
 	) {
 
 		$this->queue = $queue;
@@ -65,11 +62,12 @@ class NotificationsService {
 	 * @param string $handler NotificationEventHandler classname
 	 *
 	 * @return void
+	 * @throws InvalidArgumentException
 	 * @see elgg_register_notification_event()
 	 */
 	public function registerEvent($type, $subtype, array $actions = [], string $handler = NotificationEventHandler::class) {
 		if (!is_a($handler, NotificationEventHandler::class, true)) {
-			throw new \InvalidArgumentException('$handler needs to be a ' . NotificationEventHandler::class . ' classname');
+			throw new InvalidArgumentException('$handler needs to be a ' . NotificationEventHandler::class . ' classname');
 		}
 		
 		if (!isset($this->events[$type])) {
@@ -182,15 +180,15 @@ class NotificationsService {
 	/**
 	 * Add a notification event to the queue
 	 *
-	 * @param string   $action Action name
-	 * @param string   $type   Type of the object of the action
-	 * @param ElggData $object The object of the action
+	 * @param string    $action Action name
+	 * @param string    $type   Type of the object of the action
+	 * @param \ElggData $object The object of the action
 	 *
 	 * @return void
 	 */
 	public function enqueueEvent($action, $type, $object) {
 		
-		if ($object instanceof ElggData) {
+		if ($object instanceof \ElggData) {
 			$object_type = $object->getType();
 			$object_subtype = $object->getSubtype();
 
@@ -289,9 +287,9 @@ class NotificationsService {
 	 * ]
 	 * </code>
 	 *
-	 * @param ElggEntity $sender     Sender of the notification
-	 * @param ElggUser[] $recipients An array of entities to notify
-	 * @param array      $params     Notification parameters
+	 * @param \ElggEntity $sender     Sender of the notification
+	 * @param \ElggUser[] $recipients An array of entities to notify
+	 * @param array       $params     Notification parameters
 	 *
 	 * @uses $params['subject']          string
 	 *                                   Default message subject
