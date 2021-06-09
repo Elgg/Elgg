@@ -41,6 +41,10 @@ class ReleaseCleaner {
 	public function cleanInstallation($dir) {
 		$dir = rtrim($dir, '/\\');
 
+		if (is_dir("$dir/install/languages")) {
+			$this->cleanLanguagesDir("$dir/install/languages");
+		}
+
 		if (is_dir("$dir/languages")) {
 			$this->cleanLanguagesDir("$dir/languages");
 		}
