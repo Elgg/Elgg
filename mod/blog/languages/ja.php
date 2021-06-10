@@ -10,7 +10,7 @@ return array(
 	'collection:object:blog' => 'ブログ',
 	'collection:object:blog:all' => 'サイトの全ブログ',
 	'collection:object:blog:owner' => '%s さんのブログ',
-	'collection:object:blog:group' => 'Group blogs',
+	'collection:object:blog:group' => 'グループブログ',
 	'collection:object:blog:friends' => '友達のブログ',
 	'add:object:blog' => 'ブログ記事を追加',
 	'edit:object:blog' => 'ブログ記事を編集',
@@ -54,16 +54,16 @@ return array(
 	'blog:notify:subject' => '新着ブログ: %s',
 	'blog:notify:body' =>
 '
-%s published a new blog post: %s
+%s さんが新しいブログ記事を投稿しました: %s
 
 %s
 
-View and comment on the blog post:
+このブログ記事の表示とコメントは:
 %s
 ',
 
 	// widget
-	'widgets:blog:name' => 'Blog posts',
+	'widgets:blog:name' => 'ブログ記事',
 	'widgets:blog:description' => 'あなたの最近のブログ記事を表示',
 	'blog:moreblogs' => '別のブログ記事',
 	'blog:numbertodisplay' => 'ブログ記事の表示件数',
