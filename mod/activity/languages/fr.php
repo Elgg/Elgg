@@ -13,11 +13,12 @@ return array(
 	'widgets:river_widget:all' => 'Toute l\'activité du site',
 
 	'widgets:group_activity:name' => 'Activité du groupe',
-	'widgets:group_activity:description' => 'Voir l\'activité de l\'un de vos groupes',
+	'widgets:group_activity:description' => 'Afficher l\'activité de l\'un de vos groupes',
 	'widgets:group_activity:edit:select' => 'Sélectionnez un groupe',
 	'widgets:group_activity:content:noactivity' => 'Aucune activité dans ce groupe',
-	'widgets:group_activity:content:noselect' => 'Configurez ce widget pour choisir un groupe',
+	'widgets:group_activity:content:noselect' => 'Configurez ce widget pour sélectionner un groupe',
 	
+	'collection:river' => "Activité",
 	'collection:river:group' => "Activité du groupe",
 	'groups:tool:activity' => 'Activer l\'activité du groupe',
 	

@@ -7,18 +7,6 @@
 
 return array(
 	'email:validate:subject' => "%s per favore conferma il tuo indirizzo email per %s!",
-	'email:validate:body' => "Hi %s,
-
-Before you can start using %s, you must confirm your email address.
-
-Please confirm your email address by clicking on the link below:
-
-%s
-
-If you can't click on the link, copy and paste it to your browser manually.
-
-%s
-%s",
 	'email:confirm:success' => "Il tuo indirizzo email è stato confermato!",
 	'email:confirm:fail' => "Il tuo indirizzo email non può essere verificato...",
 
@@ -36,7 +24,4 @@ If you can't click on the link, copy and paste it to your browser manually.
 
 	'uservalidationbyemail:messages:resent_validation' => 'Richiesta di convalidazione rispedita.',
 	'uservalidationbyemail:messages:resent_validations' => 'Richieste di convalidazione rispedite a tutti gli utenti selezionati.',
-	
-	'uservalidationbyemail:upgrade:2019090600:title' => 'Track user e-mail validation status',
-	'uservalidationbyemail:upgrade:2019090600:description' => 'The e-mail validation status is tracked in a new way. Make sure all pending users are updated to the new tracking in order to still require e-mail validation.',
 );

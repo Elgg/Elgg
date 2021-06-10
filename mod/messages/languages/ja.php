@@ -48,16 +48,16 @@ return array(
 	*/
 
 	'messages:email:subject' => '新しいメッセージが届きました！',
-	'messages:email:body' => "You have a new message from %s.
+	'messages:email:body' => "%s さんからのメッセージがあります。
 
-It reads:
+内容:
 
 %s
 
-To view your messages, click here:
+メッセージを見るには、ここをクリック:
 %s
 
-To send %s a message, click here:
+%s さんにメッセージを送るには、ここをクリック:
 %s",
 
 	/**
@@ -69,7 +69,14 @@ To send %s a message, click here:
 	'messages:user:nonexist' => "ユーザー一覧にその送信先がありません。",
 	'messages:user:blank' => "送信先を指定してください。",
 	'messages:user:self' => "自分宛にメールを送ることはできません。",
+	'messages:user:notfriend' => "友達以外のユーザにメッセージを送ることはできません。",
 
 	'messages:deleted_sender' => '削除されたユーザ',
+	
+	/**
+	* Settings
+	*/
+	'messages:settings:friends_only:label' => 'メッセージは友達宛のみに送ることができます。',
+	'messages:settings:friends_only:help' => 'ユーザは友達宛以外にメッセージを送ることができません。',
 
 );

@@ -73,4 +73,6 @@ Pentru a vedea cererea de prietenie, apasă aici:
 	
 	'friends:action:friendrequest:accept:fail' => "O eroare a apărut la acceptarea cererii de prietenie, te rugăm să încerci din nou",
 	'friends:action:friendrequest:accept:success' => "Cererea de prietenie a fost acceptată",
+	
+	// notification settings
 );

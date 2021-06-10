@@ -21,9 +21,6 @@ return array(
 	'edit:object:page' => "Editar esta p&aacute;gina",
 
 	'groups:tool:pages' => 'Habilitar p&aacute;ginas para grupos',
-	
-	'annotation:delete:page:success' => 'The page revision was successfully deleted',
-	'annotation:delete:page:fail' => 'The page revision could not be deleted',
 
 	'pages:delete' => "Borrar esta p&aacute;gina",
 	'pages:history' => "Historial",
@@ -35,12 +32,7 @@ return array(
 	'pages:notify:summary' => 'Nueva página llamada %s',
 	'pages:notify:subject' => "Una nueva página: %s",
 	'pages:notify:body' =>
-'%s added a new page: %s
-
-%s
-
-View and comment on the page:
-%s',
+'',
 
 	'pages:more' => 'M&aacute;s p&aacute;ginas',
 	'pages:none' => 'No se han creado p&aacute;ginas a&uacute;n',
@@ -48,10 +40,6 @@ View and comment on the page:
 	/**
 	* River
 	**/
-
-	'river:object:page:create' => '%s created a page %s',
-	'river:object:page:update' => '%s updated a page %s',
-	'river:object:page:comment' => '%s commented on a page titled %s',
 	
 	/**
 	 * Form fields
@@ -96,13 +84,4 @@ View and comment on the page:
 	'pages:label:history' => "Historial de la p&aacute;gina",
 
 	'pages:newchild' => "Crear una subp&aacute;gina",
-	
-	/**
-	 * Upgrades
-	 */
-	'pages:upgrade:2017110700:title' => "Migrate page_top to page entities",
-	'pages:upgrade:2017110700:description' => "Changes the subtype of all top pages to 'page' and sets metadata to ensure correct listing.",
-	
-	'pages:upgrade:2017110701:title' => "Migrate page_top river entries",
-	'pages:upgrade:2017110701:description' => "Changes the subtype of all river items for top pages to 'page'.",
 );

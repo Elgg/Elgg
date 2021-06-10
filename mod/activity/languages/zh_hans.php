@@ -17,7 +17,6 @@ return array(
 	'widgets:group_activity:edit:select' => '选择一个圈子',
 	'widgets:group_activity:content:noactivity' => '本圈子暂无动态',
 	'widgets:group_activity:content:noselect' => '编辑选定圈子组件',
-	
 	'collection:river:group' => "圈子动态",
 	'groups:tool:activity' => '开启圈子动态',
 	

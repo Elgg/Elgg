@@ -44,7 +44,4 @@ oder um das Profil von %2$s aufzurufen, folge diesem Link:
 Danke,
 %4$s
 ',
-	'likes:upgrade:2017120700:title' => "Zugriffslevel von Like-Annotations auf \"öffentlich\" setzen",
-	'likes:upgrade:2017120700:description' => "Dieses Update aktualisiert den Zugangslevel aller Like-Annotations auf \"öffentlich\".",
-	
 );

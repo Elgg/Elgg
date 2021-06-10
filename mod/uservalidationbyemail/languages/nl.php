@@ -36,7 +36,4 @@ Indien je niet op de link kunt klikken, kopieer en plak deze handmatig in je bro
 
 	'uservalidationbyemail:messages:resent_validation' => 'Validatie opnieuw verzonden',
 	'uservalidationbyemail:messages:resent_validations' => 'Validatie opnieuw verzonden aan alle geselecteerde gebruikers.',
-	
-	'uservalidationbyemail:upgrade:2019090600:title' => 'Bijhouden gebruikers e-mail validatie status',
-	'uservalidationbyemail:upgrade:2019090600:description' => 'De e-mail validatie status wordt op een nieuwe manier bijgehouden. Deze upgrade zorgt er voor dat de huidige gebruikers die nog e-mail validatie nodig hebben dit op de nieuwe manier bijhouden.',
 );

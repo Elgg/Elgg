@@ -16,17 +16,6 @@ return array(
 
 	'install:next' => 'Seuraava',
 	'install:refresh' => 'Edellinen',
-	'install:change_language' => 'Change language',
-
-	'install:welcome:instructions' => "Installing Elgg has 6 simple steps and reading this welcome is the first one!
-
-If you haven't already, read through the installation instructions included with Elgg (or click the instructions link at the bottom of the page).
-
-If you are ready to proceed, click the Next button.",
-	
-	'install:footer:instructions' => "Installation instructions",
-	'install:footer:troubleshooting' => "Installation troubleshooting",
-	'install:footer:community' => "Elgg community forums",
 	
 	'install:requirements:instructions:success' => "Palvelimesi läpäisi kaikki testit.",
 	'install:requirements:instructions:failure' => "Palvelimesi ei läpäissyt kaikkia testejä. Korjaa alla mainitut puutteet, ja päivitä sitten sivu. Sivun alalaidassa on linkkejä, joista voit saada apua ongelmien ratkomiseen.",
@@ -37,12 +26,6 @@ If you are ready to proceed, click the Next button.",
 	'install:require:settings' => 'Asetustiedosto',
 	'install:require:database' => 'Tietokanta',
 
-	'install:check:root' => 'Your web server does not have permission to create an .htaccess file in the root directory of Elgg. You have two choices:
-
-1. Change the permissions on the root directory
-
-2. Copy the file install/config/htaccess.dist to .htaccess',
-
 	'install:check:php:version' => 'Elgg vaatii vähintään PHP:n version %s. Palvelimesi käyttää versiota %s.',
 	'install:check:php:extension' => 'Elgg vaatii PHP:n laajennoksen: %s.',
 	'install:check:php:extension:recommend' => 'PHP: laajennosta %s suositellaan asennettavaksi.',
@@ -51,12 +34,6 @@ If you are ready to proceed, click the Next button.",
 	'install:check:php:arg_separator' => 'arg_separator.output-asetuksen arvo täytyy olla &, mutta palvelimesi käyttää arvoa %s',
 	'install:check:php:register_globals' => 'Register globals -asetus täytyy olla pois päältä.',
 	'install:check:php:session.auto_start' => "session.auto_start -asetus täytyy olla pois päältä. Muuta se palvelimesi asetustiedostoon tai lisää se Elggin .htaccess-tiedostoon.",
-
-	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
-
-1. Change the permissions on the elgg-config directory of your Elgg installation
-
-2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
 	'install:check:readsettings' => 'Elggin engine-hakemistossa on asetustiedosto, mutta web-palvelin ei voi lukea sitä. Voit joko poistaa tiedoston tai antaa web-palvelimelle oikeuden lukea se.',
 
 	'install:check:php:success' => "Palvelimesi PHP vastaa kaikkia Elggin tarpeita.",
@@ -70,7 +47,6 @@ If you are ready to proceed, click the Next button.",
 	'install:database:label:dbpassword' => 'Tietokannan salasana',
 	'install:database:label:dbname' => 'Tietokannan nimi',
 	'install:database:label:dbhost' => 'Tietokannan sijainti',
-	'install:database:label:dbport' => 'Database Port number',
 	'install:database:label:dbprefix' => 'Tietokantataulujen etuliite',
 	'install:database:label:timezone' => "Aikavyöhyke",
 
@@ -78,11 +54,8 @@ If you are ready to proceed, click the Next button.",
 	'install:database:help:dbpassword' => 'Ylle syöttämäsi käyttäjätilin salasana',
 	'install:database:help:dbname' => 'Elggiä varten luomasi tietokannan nimi',
 	'install:database:help:dbhost' => 'MySQL-palvelimen sijainti (yleensä localhost)',
-	'install:database:help:dbport' => 'Port number of the MySQL server (usually 3306)',
 	'install:database:help:dbprefix' => "Kaikille Elggin tietokantatauluille annettava etuliite (yleensä elgg_)",
 	'install:database:help:timezone' => "Aikavyöhyke, jossa sivustoa tullaan käyttämään.",
-
-	'install:settings:instructions' => 'We need some information about the site as we configure Elgg. If you haven\'t <a href="http://learn.elgg.org/en/stable/intro/install.html#create-a-data-folder" target="_blank">created a data directory</a> for Elgg, you need to do so now.',
 
 	'install:settings:label:sitename' => 'Sivuston nimi',
 	'install:settings:label:siteemail' => 'Sivuston sähköpostiosoite',
@@ -111,7 +84,6 @@ If you are ready to proceed, click the Next button.",
 	'install:admin:label:password2' => 'Salasana uudelleen',
 
 	'install:admin:help:displayname' => 'Nimi, jonka muut sivuston käyttäjät näkevät',
-	'install:admin:help:email' => '',
 	'install:admin:help:username' => 'Käyttäjätunnus, jota käytetään kirjautumiseen',
 	'install:admin:help:password1' => "Salasanan tulee olla vähintään %u merkkiä pitkä",
 	'install:admin:help:password2' => 'Kirjoita salasana uudelleen varmistaaksesi, että siihen ei tullut kirjoitusvirhettä',
@@ -123,8 +95,6 @@ If you are ready to proceed, click the Next button.",
 
 	'install:complete:instructions' => 'Elgg-sivustosi on nyt käyttövalmis. Napsauta alla olevaa painiketta siirtyäksesi sivustolle.',
 	'install:complete:gotosite' => 'Mene sivustolle',
-	'install:complete:admin_notice' => 'Welcome to your Elgg site! For more options, see the %s.',
-	'install:complete:admin_notice:link_text' => 'settings pages',
 
 	'InstallationException:UnknownStep' => '%s on tuntematon asennusvaihe.',
 	'InstallationException:MissingLibrary' => 'Kirjaston %s lataaminen epäonnistui',
@@ -136,7 +106,6 @@ If you are ready to proceed, click the Next button.",
 
 	'install:error:htaccess' => 'Ei voida luoda .htaccess-tiedostoa',
 	'install:error:settings' => 'Ei voida luoda asetustiedostoa',
-	'install:error:settings_mismatch' => 'The settings file value for "%s" does not match the given $params.',
 	'install:error:databasesettings' => 'Tietokantaan yhdistäminen ei onnistunut annetuilla tiedoilla.',
 	'install:error:database_prefix' => 'Tietokantataulujen etuliite sisältää virheellisiä merkkejä',
 	'install:error:oldmysql2' => 'MySQL-versio pitää olla vähintään 5.5.3. Palvelimesi käyttää versiota %s.',
@@ -160,8 +129,6 @@ If you are ready to proceed, click the Next button.",
 	'install:error:rewrite:nginx' => 'Vaikuttaa siltä, että palvelimellasi on käytössä Nginx web-palvelin.',
 	'install:error:rewrite:lighttpd' => 'Vaikuttaa siltä, että palvelimellasi on käytössä Lighttpd web-palvelin.',
 	'install:error:rewrite:iis' => 'Vaikuttaa siltä, että palvelimellasi on käytössä IIS web-palvelin.',
-	'install:error:rewrite:allowoverride' => "The rewrite test failed and the most likely cause is that AllowOverride is not set to All for Elgg's directory. This prevents Apache from processing the .htaccess file which contains the rewrite rules.
-\n\nA less likely cause is Apache is configured with an alias for your Elgg directory and you need to set the RewriteBase in your .htaccess. There are further instructions in the .htaccess file in your Elgg directory.",
 	'install:error:rewrite:htaccess:write_permission' => 'Web-palvelimella ei ole oikeutta luoda .htaccess-tiedostoa Elggin juurihakemistoon. Joko tiedosto install/config/htaccess.dist pitää kopioida manuaalisesti Elggin juureen ja nimetä muotoon .htaccess, tai web-palvelimelle pitää myöntää kirjoitusoikeus juurihakemistoon.',
 	'install:error:rewrite:htaccess:read_permission' => 'Elggin asennushakemistossa on .htaccess-tiedosto, mutta web-palvelimellasi ei ole siihen lukuoikeuksia.',
 	'install:error:rewrite:htaccess:non_elgg_htaccess' => 'Elggin asennushakemistossa on ylimääräinen Elggiin liittymätön .htaccess-tiedosto, joka pitää poistaa.',
@@ -170,7 +137,6 @@ If you are ready to proceed, click the Next button.",
 	'install:error:rewrite:altserver' => 'Polkujen uudelleenohjauksen testaaminen epäonnistui. Sinun pitää konfiguroida palvelimellesi Elggin vaatimat uudelleenohjaukseen liittyvät säännöt.',
 	'install:error:rewrite:unknown' => 'Polkujen uudelleenohjauksen testaaminen epäonnistui. Emme saaneet selvitettyä käyttämääsi web-palvelinta, joten emme pysty tarjoamaan ratkaisua ongelmaan. Voit yrittää etsiä apua sivun alalaidasta löytyvien linkkien kautta.',
 	'install:warning:rewrite:unknown' => 'Palvelimesi ei tue polkujen uudelleenohjaamisen automaattista testaamista, ja selaimesi ei tue sen testaamista JavaScriptin avulla. You can continue the installation, but you may experience problems with your site. Voit testata uudelleenohjausta tästä linkistä: <a href="%s" target="_blank">Testaa</a>.',
-	'install:error:wwwroot' => '%s is not a valid URL',
 
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => 'Tapahtui virhe. Jos olet sivuston ylläpitäjä, tarkista asetustiedosto. Muussa tapauksessa ota yhteys sivuston ylläpitoon, ja toimita oheiset tiedot:',

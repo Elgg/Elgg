@@ -72,10 +72,4 @@ Vezi și comentează la discuția:
 	'discussion:topic:closed:desc' => 'Această discuție este închisă și nu acceptă comentarii noi.',
 
 	'discussion:topic:description' => 'Mesajul subiectului',
-
-	// upgrades
-	'discussions:upgrade:2017112800:title' => "Migrează răspunsurile de discuție la comentarii",
-	'discussions:upgrade:2017112800:description' => "Răspunsurile de discuție aveau cândva propriul subtip, acest lucru a fost unificat în comentarii.",
-	'discussions:upgrade:2017112801:title' => "Migrează activitatea de flux asociată cu răspunsurile de discuție",
-	'discussions:upgrade:2017112801:description' => "Răspunsurile de discuție aveau cândva propriul subtip, acest lucru a fost unificat în comentarii.",
 );

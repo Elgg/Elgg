@@ -73,4 +73,6 @@ On het vriendschapsverzoek te bekijken, klik hier:
 	
 	'friends:action:friendrequest:accept:fail' => "Er is een fout opgetreden tijdens het accepteren van het vriendschapsverzoek, probeer het nogmaals",
 	'friends:action:friendrequest:accept:success' => "Het vriendschapsverzoek is geaccepteerd",
+	
+	// notification settings
 );

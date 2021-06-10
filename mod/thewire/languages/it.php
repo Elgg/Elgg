@@ -13,7 +13,6 @@ return array(
 	'thewire' => "Messaggi brevi",
 
 	'item:object:thewire' => "Messaggi",
-	'collection:object:thewire' => 'Wire posts',
 	'collection:object:thewire:all' => "Tutti gli Aggiornamenti di stato",
 	'collection:object:thewire:owner' => "Aggiornamenti di stato di %s",
 	'collection:object:thewire:friends' => "Aggiornamenti di stato dei tuoi amici",
@@ -25,10 +24,6 @@ return array(
 	'thewire:noposts' => "Ancora nessun messaggio",
 
 	'thewire:by' => 'Messaggi da %s',
-	'thewire:previous:help' => "Leggi i precedenti",
-	'thewire:hide:help' => "Nascondi i precedenti",
-
-	'thewire:form:body:placeholder' => "What's happening?",
 	
 	/**
 	 * The wire river

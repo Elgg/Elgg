@@ -29,20 +29,9 @@ return array(
 	'bookmarks:notify:summary' => 'Nyt bogmærke kaldt %s',
 	'bookmarks:notify:subject' => 'Nyt bogmærk: %s',
 	'bookmarks:notify:body' =>
-'%s added a new bookmark: %s
-
-Address: %s
-
-%s
-
-View and comment on the bookmark:
-%s
-',
+'',
 
 	'bookmarks:numbertodisplay' => 'Antal bogmærker, der skal vises',
-
-	'river:object:bookmarks:create' => '%s bookmarked %s',
-	'river:object:bookmarks:comment' => '%s commented on a bookmark %s',
 
 	'groups:tool:bookmarks' => 'Aktiver gruppe bogmærker',
 	
@@ -66,7 +55,6 @@ View and comment on the bookmark:
 	 */
 
 	'bookmarks:save:success' => "Bogmærket er gemt.",
-	'entity:delete:object:bookmarks:success' => "The bookmark was deleted.",
 
 	/**
 	 * Error messages

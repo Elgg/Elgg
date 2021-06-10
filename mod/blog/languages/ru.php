@@ -14,6 +14,8 @@ return array(
 	'collection:object:blog:friends' => 'Блоги друзей',
 	'add:object:blog' => 'Написать сообщение',
 	'edit:object:blog' => 'Изменить',
+	'notification:object:blog:publish' => "Отправить уведомление при публикации блога",
+	'notifications:mute:object:blog' => "о блоге '%s'",
 
 	'blog:revisions' => 'Редакции',
 	'blog:archives' => 'Архив',

@@ -74,5 +74,9 @@ und um %s eine Nachricht zu schicken, folge dem Link:
 	'messages:user:self' => "Du kannst keine Nachricht an Dich selbst senden.",
 
 	'messages:deleted_sender' => 'Ehemaliges Mitglied',
+	
+	/**
+	* Settings
+	*/
 
 );

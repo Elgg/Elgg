@@ -10,7 +10,6 @@ return array(
 	'collection:object:blog' => 'Блогови',
 	'collection:object:blog:all' => 'Сви блогови',
 	'collection:object:blog:owner' => '%s\'s блог',
-	'collection:object:blog:group' => 'Group blogs',
 	'collection:object:blog:friends' => 'Блогови пријатеља',
 	'add:object:blog' => 'Додај блог чланак',
 	'edit:object:blog' => 'Уреди блог чланак',
@@ -46,24 +45,14 @@ return array(
 	'blog:error:revision_not_found' => 'Не могу да нађем ову ревизију.',
 
 	// river
-	'river:object:blog:create' => '%s published a blog post %s',
-	'river:object:blog:comment' => '%s commented on the blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Нови блог чланак %s',
 	'blog:notify:subject' => 'Нови блог чланак: %s',
 	'blog:notify:body' =>
-'
-%s published a new blog post: %s
-
-%s
-
-View and comment on the blog post:
-%s
-',
+'',
 
 	// widget
-	'widgets:blog:name' => 'Blog posts',
 	'widgets:blog:description' => 'Прикажи твоје најновије блог чланке',
 	'blog:moreblogs' => 'Више блог чланака',
 	'blog:numbertodisplay' => 'Број блог чланака за приказ',

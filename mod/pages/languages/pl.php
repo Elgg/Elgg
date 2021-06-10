@@ -21,9 +21,6 @@ return array(
 	'edit:object:page' => "Edytuj tą stronę",
 
 	'groups:tool:pages' => 'Włącz strony grupy',
-	
-	'annotation:delete:page:success' => 'The page revision was successfully deleted',
-	'annotation:delete:page:fail' => 'The page revision could not be deleted',
 
 	'pages:delete' => "Usuń tą stronę",
 	'pages:history' => "Historia strony",
@@ -35,12 +32,7 @@ return array(
 	'pages:notify:summary' => 'Nowa strona o nazwie %s',
 	'pages:notify:subject' => "Nowa strona: %s",
 	'pages:notify:body' =>
-'%s added a new page: %s
-
-%s
-
-View and comment on the page:
-%s',
+'',
 
 	'pages:more' => 'Więcej stron',
 	'pages:none' => 'Nie utworzono jeszcze stron',
@@ -48,10 +40,6 @@ View and comment on the page:
 	/**
 	* River
 	**/
-
-	'river:object:page:create' => '%s created a page %s',
-	'river:object:page:update' => '%s updated a page %s',
-	'river:object:page:comment' => '%s commented on a page titled %s',
 	
 	/**
 	 * Form fields
@@ -96,13 +84,4 @@ View and comment on the page:
 	'pages:label:history' => "Historia strony",
 
 	'pages:newchild' => "Utwórz podstronę",
-	
-	/**
-	 * Upgrades
-	 */
-	'pages:upgrade:2017110700:title' => "Migrate page_top to page entities",
-	'pages:upgrade:2017110700:description' => "Changes the subtype of all top pages to 'page' and sets metadata to ensure correct listing.",
-	
-	'pages:upgrade:2017110701:title' => "Migrate page_top river entries",
-	'pages:upgrade:2017110701:description' => "Changes the subtype of all river items for top pages to 'page'.",
 );

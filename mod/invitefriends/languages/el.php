@@ -22,19 +22,4 @@ return array(
 	'invitefriends:already_members' => 'Οι ακόλουθοι είναι ήδη μέλη: %s',
 	'invitefriends:noemails' => 'Δεν πληκτρολογήσατε διευθύνσεις ηλεκτρονικού ταχυδρομείου.',
 	
-	'invitefriends:message:default' => 'Hi,
-
-I want to invite you to join my network here on %s.',
-
-	'invitefriends:email' => 'You have been invited to join %s by %s.
-
-They included the following message:
-
-%s
-
-To join, click the following link:
-%s
-
-You will automatically add them as a friend when you create your account.',
-	
 );

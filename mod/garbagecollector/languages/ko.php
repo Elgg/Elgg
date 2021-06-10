@@ -16,6 +16,4 @@ return array(
 	'garbagecollector:start' => "청소기 시작됨",
 	'garbagecollector:done' => "청소 끝",
 	'garbagecollector:optimize' => "최적화중 %s ",
-	
-	'garbagecollector:cli:database:optimize:description' => "Optimize database tables",
 );

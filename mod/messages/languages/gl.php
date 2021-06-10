@@ -48,17 +48,6 @@ return array(
 	*/
 
 	'messages:email:subject' => 'Ten unha nova mensaxe.',
-	'messages:email:body' => "You have a new message from %s.
-
-It reads:
-
-%s
-
-To view your messages, click here:
-%s
-
-To send %s a message, click here:
-%s",
 
 	/**
 	* Error messages
@@ -71,5 +60,9 @@ To send %s a message, click here:
 	'messages:user:self' => "Non pode enviarse unha mensaxe a vostede mesmo.",
 
 	'messages:deleted_sender' => 'Usuario eliminado.',
+	
+	/**
+	* Settings
+	*/
 
 );

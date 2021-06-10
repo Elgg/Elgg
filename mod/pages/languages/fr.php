@@ -11,7 +11,7 @@ return array(
 	 * Menu items and titles
 	 */
 
-	'item:object:page' => 'Pages',
+	'item:object:page' => 'Page',
 	'collection:object:page' => 'Pages',
 	'collection:object:page:all' => "Toutes les pages du site",
 	'collection:object:page:owner' => "Pages de %s",
@@ -19,11 +19,13 @@ return array(
 	'collection:object:page:group' => "Pages du groupe",
 	'add:object:page' => "Ajouter une page",
 	'edit:object:page' => "Modifier cette page",
+	'notification:object:page:create' => "Envoyer une notification quand une page est créée",
+	'notifications:mute:object:page' => "à propos de la page '%s'",
 
 	'groups:tool:pages' => 'Activer les pages du groupe',
 	
-	'annotation:delete:page:success' => 'La version de la page a bien été supprimée.',
-	'annotation:delete:page:fail' => 'La version de la page n\'a pas pu être supprimée.',
+	'annotation:delete:page:success' => 'La révision de la page a bien été supprimée.',
+	'annotation:delete:page:fail' => 'La révision de la page n\'a pas pu être supprimée.',
 
 	'pages:delete' => "Supprimer cette page",
 	'pages:history' => "Historique",
@@ -33,13 +35,13 @@ return array(
 	'pages:navigation' => "Navigation",
 
 	'pages:notify:summary' => 'Nouvelle page intitulée %s',
-	'pages:notify:subject' => "Une nouvelle page: %s",
+	'pages:notify:subject' => "Une nouvelle page : %s",
 	'pages:notify:body' =>
 '%s a créé une page : %s
 
 %s
 
-Voir et commenter la page:
+Voir et commenter la page :
 %s',
 
 	'pages:more' => 'Plus de pages',
@@ -72,8 +74,8 @@ Voir et commenter la page:
 	'pages:notsaved' => 'La page n\'a pas pu être enregistrée',
 	'pages:error:no_title' => 'Vous devez donner un titre à cette page.',
 	'entity:delete:object:page:success' => 'La page a bien été supprimée.',
-	'pages:revision:delete:success' => 'La version de la page a bien été supprimée.',
-	'pages:revision:delete:failure' => 'La version de la page n\'a pas pu être supprimée.',
+	'pages:revision:delete:success' => 'La révision de la page a bien été supprimée.',
+	'pages:revision:delete:failure' => 'La révision de la page n\'a pas pu être supprimée.',
 
 	/**
 	 * History
@@ -96,13 +98,4 @@ Voir et commenter la page:
 	'pages:label:history' => "Historique de la page",
 
 	'pages:newchild' => "Créer une sous-page",
-	
-	/**
-	 * Upgrades
-	 */
-	'pages:upgrade:2017110700:title' => "Migrer les entités page_top vers page",
-	'pages:upgrade:2017110700:description' => "Change le sous-type de toutes les pages racine vers 'page' et définit les métadonnées pour assurer un listing correct.",
-	
-	'pages:upgrade:2017110701:title' => "Migrer les entrées page_top de la rivière",
-	'pages:upgrade:2017110701:description' => "Modifie le sous-type de tous les éléments de la rivière pour les pages racine vers  'page'.",
 );

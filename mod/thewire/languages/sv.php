@@ -25,8 +25,6 @@ return array(
 	'thewire:noposts' => "Inga nyhetsinlägg än",
 
 	'thewire:by' => 'Nyhetsinlägg av %s',
-	'thewire:previous:help' => "Visa föregående inlägg",
-	'thewire:hide:help' => "Göm föregående inlägg",
 
 	'thewire:form:body:placeholder' => "Vad händer?",
 	

@@ -10,7 +10,6 @@ return array(
 	'collection:object:blog' => 'Blocs',
 	'collection:object:blog:all' => 'Tots els blocs',
 	'collection:object:blog:owner' => 'Bloc de %s',
-	'collection:object:blog:group' => 'Group blogs',
 	'collection:object:blog:friends' => 'Blocs d\'amics',
 	'add:object:blog' => 'Afegir una entrada al bloc',
 	'edit:object:blog' => 'Editar entrada del bloc',
@@ -46,24 +45,14 @@ return array(
 	'blog:error:revision_not_found' => 'No s\'ha pogut trobar la revisió.',
 
 	// river
-	'river:object:blog:create' => '%s published a blog post %s',
-	'river:object:blog:comment' => '%s commented on the blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Nou missatge de bloc anomenat %s',
 	'blog:notify:subject' => 'Nou post de bloc: %s',
 	'blog:notify:body' =>
-'
-%s published a new blog post: %s
-
-%s
-
-View and comment on the blog post:
-%s
-',
+'',
 
 	// widget
-	'widgets:blog:name' => 'Blog posts',
 	'widgets:blog:description' => 'Aquest giny mostra les darreres entrades al bloc.',
 	'blog:moreblogs' => 'Més entrades',
 	'blog:numbertodisplay' => 'Nombre d\'entrades del bloc a mostrar',

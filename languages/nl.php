@@ -62,9 +62,7 @@ return array(
 	'PluginException:InvalidPlugin:Details' => '%s is een ongeldige plugin: %s',
 	'PluginException:NullInstantiated' => 'ElggPlugin kan niet worden geïnitieerd met null. Je moet een GUID, een plugin-ID of een pad opgeven.',
 	'ElggPlugin:MissingID' => 'Plugin-ID ontbreekt (guid %s)',
-	'ElggPlugin:NoPluginPackagePackage' => 'Ontbrekend ElggPluginPackage voor plugin-ID %s (guid %s)',
 	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'Het bestand %s is vereist, maar kan niet gevonden worden.',
-	'ElggPluginPackage:InvalidPlugin:InvalidId' => 'De directorynaam van de plugin moet hernoemd worden naar "%s" om overeen te komen met de ID in het manifest.',
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Het manifest bevat een ongeldig afhankelijkheidtype "%s".',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Het manifest bevat een ongeldig aanbodtype "%s".',
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => '100%
@@ -72,15 +70,9 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Conflicts with plugin: %s',
 	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Plugin file "elgg-plugin.php" file is present but unreadable.',
 	'ElggPlugin:Error' => 'Plugin fout',
-	'ElggPlugin:Error:ID' => 'Fout in plugin "%s"',
-	'ElggPlugin:Error:Path' => 'Fout in plugin pad "%s"',
-	'ElggPlugin:Error:Unknown' => 'Ongedefinieerde plugin fout',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Kan %s niet laden voor plugin %s (guid: %s) in %s. Controleer de rechten!',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Threw exception including %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Kan de views-map niet openen van plugin %s (guid: %s) in %s. Controleer de rechten!',
-	'ElggPlugin:Exception:NoID' => 'Geen ID voor plugin-guid %s!',
-	'ElggPlugin:Exception:InvalidPackage' => 'Package kan niet worden geladen',
-	'ElggPlugin:Exception:InvalidManifest' => 'Plugin manifest ontbreekt of is ongeldig',
 	'PluginException:NoPluginName' => "De pluginnaam kon niet worden gevonden",
 	'PluginException:ParserError' => 'Fout tijdens het lezen van de manifest met API-versie %s in plugin %s',
 	'PluginException:NoAvailableParser' => 'Kan geen parser vinden voor manifest API-versie %s in plugin %s.',
@@ -88,23 +80,6 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'ElggPlugin:InvalidAndDeactivated' => '%s is een ongeldige plugin. Hij is daarom uitgeschakeld.',
 	'ElggPlugin:activate:BadConfigFormat' => 'Plugin file "elgg-plugin.php" did not return a serializable array.',
 	'ElggPlugin:activate:ConfigSentOutput' => 'Plugin file "elgg-plugin.php" sent output.',
-
-	'ElggPlugin:Dependencies:Requires' => 'Vereist',
-	'ElggPlugin:Dependencies:Suggests' => 'Adviseert',
-	'ElggPlugin:Dependencies:Conflicts' => 'Conflicteert',
-	'ElggPlugin:Dependencies:Conflicted' => 'Geconflicteerd',
-	'ElggPlugin:Dependencies:Provides' => 'Biedt',
-	'ElggPlugin:Dependencies:Priority' => 'Prioriteit',
-
-	'ElggPlugin:Dependencies:Elgg' => 'Elgg-versie',
-	'ElggPlugin:Dependencies:PhpVersion' => 'PHP-versie',
-	'ElggPlugin:Dependencies:PhpExtension' => 'PHP-module: %s',
-	'ElggPlugin:Dependencies:PhpIni' => 'Instelling van PHP-ini: %s',
-	'ElggPlugin:Dependencies:Plugin' => 'Plugin: %s',
-	'ElggPlugin:Dependencies:Priority:After' => 'Na %s',
-	'ElggPlugin:Dependencies:Priority:Before' => 'Voor %s',
-	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s is niet geïnstalleerd',
-	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Ontbreekt',
 
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Er zijn plugins die afhankelijk zijn van %s. Je moet eerst de volgende plugins uitschakelen voordat je deze kunt uitschakelen: %s',
 
@@ -121,7 +96,6 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'LoginException:ChangePasswordFailure' => 'Huidige wachtwoord incorrect.',
 	'LoginException:Unknown' => 'We konden je niet aanmelden vanwege een onbekende fout.',
 	'LoginException:AdminValidationPending' => "Je account moet nog worden gevalideerd door een beheerder van de site voordat je het kunt gebruiken. Je zult hier een notificatie van ontvangen zodra dit is gebeurd.",
-	'LoginException:DisabledUser' => "Your account has been disabled. You're not allowed to login.",
 
 	'UserFetchFailureException' => 'Kan voor user_guid [%s] niet de rechten nakijken omdat de gebruiker niet bestaat.',
 
@@ -135,8 +109,6 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	
 	'Security:InvalidPasswordCharacterRequirementsException' => "Het opgegeven wachtwoord voldoet niet aan de minimale eisen",
 	'Security:InvalidPasswordLengthException' => "Het opgegeven wachtwoord voldoet niet aan de minimale lengte van %s",
-
-	'deprecatedfunction' => 'Waarschuwing: Deze code gebruikt de niet meer gebruikte functies \'%s\' en is niet compatibel met deze versie van Elgg. ',
 
 	'pageownerunavailable' => 'Waarschuwing: De pagina-eigenaar %d is niet toegankelijk!',
 	'viewfailure' => 'Er is een interne fout in de view %s',
@@ -342,12 +314,7 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 /**
  * Notifications
  */
-	'notifications:usersettings' => "Notificatie-instellingen",
 	'notification:method:email' => 'E-mail',
-
-	'notifications:usersettings:save:ok' => "Je notificatie-instellingen zijn succesvol opgeslagen.",
-	'notifications:usersettings:save:fail' => "Er is een fout opgetreden tijdens het opslaan van je notificatie-instellingen.",
-
 	'notification:subject' => 'Notificatie over \'%s\'',
 	'notification:body' => 'Bekijk de nieuwe activiteit op %s',
 
@@ -361,8 +328,6 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'groups:searchtitle' => "Zoeken naar groepen: %s",
 	'advancedsearchtitle' => "%s gevonden met %s",
 	'notfound' => "Geen resultaten gevonden.",
-	'next' => "Volgende",
-	'previous' => "Vorige",
 
 	'viewtype:change' => "Wijzig de wijze van weergave",
 	'viewtype:list' => "Lijstweergave",
@@ -673,8 +638,6 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:security:information:php:session_gc:chance' => "Opschoningskans: %s%%",
 	'admin:security:information:php:session_gc:lifetime' => "Sessie levensduur %sseconden",
 	'admin:security:information:php:session_gc:error' => "Het is aanbevolen om de PHP instellingen  'session.gc_probability' en 'session.gc_divisor' in te stellen. Dit schoont verlopen sessies op in de database en zorgt er voor dat oude sessies niet opnieuw gebruikt kunnen worden.",
-	'admin:security:information:htaccess:hardening' => ".htaccess file access hardening",
-	'admin:security:information:htaccess:hardening:help' => "In the .htaccess file access to certain files can be blocked to increase security on your site. For more information look in your .htaccess file.",
 	
 	'admin:security:settings' => 'Instellingen',
 	'admin:security:settings:description' => 'Op deze pagina kun je enkele veiligheidskeuzes maken. Lees de instellingen zorgvuldig.',
@@ -840,7 +803,6 @@ Bekijk hier de volledige lijst van gebruikers:
 	'admin:plugins:opt:description' => "Configureer de tools die zijn geïnstalleerd op de site.",
 	'admin:plugins:label:id' => "ID",
 	'admin:plugins:label:name' => "Naam",
-	'admin:plugins:label:author' => "Auteur",
 	'admin:plugins:label:copyright' => "Copyright",
 	'admin:plugins:label:categories' => 'Categorieën',
 	'admin:plugins:label:licence' => "Licentie",
@@ -856,12 +818,6 @@ Bekijk hier de volledige lijst van gebruikers:
 	'admin:plugins:label:version' => 'Versie',
 	'admin:plugins:label:location' => 'Locatie',
 	'admin:plugins:label:priority' => 'Prioriteit',
-	'admin:plugins:label:contributors' => 'Bijdragers',
-	'admin:plugins:label:contributors:name' => 'Naam',
-	'admin:plugins:label:contributors:email' => 'E-mailadres',
-	'admin:plugins:label:contributors:website' => 'Website',
-	'admin:plugins:label:contributors:username' => 'Community-gebruikersnaam',
-	'admin:plugins:label:contributors:description' => 'Omschrijving',
 	'admin:plugins:label:dependencies' => 'Afhankelijkheden',
 	'admin:plugins:label:missing_dependency' => 'Ontbrekende afhankelijkheid [%s]',
 
@@ -875,7 +831,6 @@ Bekijk hier de volledige lijst van gebruikers:
 
 	'admin:plugins:set_priority:yes' => "%s herordend.",
 	'admin:plugins:set_priority:no' => "Herordenen mislukt voor %s.",
-	'admin:plugins:set_priority:no_with_msg' => "Herordenen mislukt voor %s. Fout: %s",
 	'admin:plugins:deactivate:yes' => "%s uitgeschakeld.",
 	'admin:plugins:deactivate:no' => "%s kon niet worden uitgeschakeld.",
 	'admin:plugins:deactivate:no_with_msg' => "%s kon niet worden uitgeschakeld. Fout: %s",
@@ -888,12 +843,6 @@ Bekijk hier de volledige lijst van gebruikers:
 	'admin:plugins:version' => 'Versie %s',
 	'admin:plugin_settings' => 'Plugin-instellingen',
 	'admin:plugins:warning:unmet_dependencies_active' => 'Deze plugin is geactiveerd maar heeft onvervulde afhankelijkheden. Je kunt problemen ervaren. Bekijk \'meer informatie\' hieronder voor details.',
-
-	'admin:plugins:dependencies:type' => 'Type',
-	'admin:plugins:dependencies:name' => 'Naam',
-	'admin:plugins:dependencies:expected_value' => 'Geteste waarde',
-	'admin:plugins:dependencies:local_value' => 'Echte waarde',
-	'admin:plugins:dependencies:comment' => 'Commentaar',
 
 	'admin:statistics:description' => "Dit is een overzicht van onder andere gebruikersstatistieken van de site. Als je meer gedetailleerde informatie nodig hebt, is er een professionele beheerfunctie beschikbaar.",
 	'admin:statistics:opt:description' => "Bekijk statistische gegevens over gebruikers en objecten op de site.",
@@ -1125,7 +1074,9 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'revert' => 'Herstel',
 	'validate' => 'Valideer',
 	'read_more' => 'Lees meer',
-
+	'next' => 'Volgende',
+	'previous' => 'Vorige',
+	
 	'site' => 'Website',
 	'activity' => 'Activiteit',
 	'members' => 'Leden',
@@ -1454,7 +1405,7 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'config:content:comment_box_collapses:help' => "Dit is enkel van toepassing indien de reactie lijst gesorteerd is op meest recente eerst",
 	'config:content:comments_latest_first' => "De reacties moeten worden getoond met de meest recente eerst",
 	'config:content:comments_latest_first:help' => "Dit bepaald de standaard sortering van de reacties bij de volledige weergave van content. Indien dit uitgeschakeld wordt, zal ook het reactie formulier onderaan de lijst worden getoond.",
-	
+
 	'upgrading' => 'Bijwerken',
 	'upgrade:core' => 'Je Elgg-installatie is bijgewerkt',
 	'upgrade:unlock' => 'Ontgrendel upgrade',
@@ -1472,8 +1423,6 @@ Indien de ondersteuning nodig hebt bezoek de <a href="https://elgg.org/discussio
 	'update:oauth_api:deactivated' => 'OAuth API (voorheen OAuth Lib) is uitgeschakeld tijdens de upgrade. Activeer deze zelf weer als het nodig is.',
 	'upgrade:site_secret_warning:moderate' => "We raden je ten zeerste aan om je 'sitegeheim' opnieuw te genereren! Zie ook: Configureren &gt; Instellingen &gt; Geavanceerd",
 	'upgrade:site_secret_warning:weak' => "We raden je ten zeerste aan om je 'sitegeheim' opnieuw te genereren! Zie ook: Configureren &gt; Instellingen &gt; Geavanceerd",
-
-	'deprecated:function' => '%s() is vervangen door %s()',
 
 	'admin:pending_upgrades' => 'Er zijn belangrijke upgrades waar je beter nu meteen aandacht aan kunt schenken!',
 	'admin:view_upgrades' => 'Bekijk de upgrades.',
@@ -1626,8 +1575,6 @@ Klik hier om naar de website te gaan:
 	'generic_comment:title' => 'Reactie door %s',
 	'generic_comment:on' => '%s op %s',
 	'generic_comments:latest:posted' => 'plaatste een',
-
-	'generic_comment:notification:owner:subject' => 'Je hebt een nieuwe reactie',
 	'generic_comment:notification:owner:summary' => 'Je hebt een nieuwe reactie',
 	'generic_comment:notification:owner:body' => "Je hebt een nieuwe reactie gekregen op je item \"%s\" van %s.
 
@@ -1639,7 +1586,6 @@ Om te reageren of het originele item te bekijken, klik hier:
 Om naar het profiel van %s te gaan, klik hier:
 %s",
 	
-	'generic_comment:notification:user:subject' => 'Een nieuwe reactie op: %s',
 	'generic_comment:notification:user:summary' => 'Een nieuwe reactie op: %s',
 	'generic_comment:notification:user:body' => "Je hebt een nieuwe reactie gekregen op je item \"%s\" van %s.
 
@@ -1664,7 +1610,7 @@ Om naar het profiel van %s te gaan, klik hier:
 	'entity:delete:permission_denied' => 'U beschikt niet over de juiste rechten om dit item te verwijderen.',
 	'entity:delete:success' => '%s is verwijderd.',
 	'entity:delete:fail' => '%s kon niet worden verwijderd.',
-
+	
 	'entity:can_delete:invaliduser' => 'Kan canDelete() voor user_guid [%s] niet nakijken omdat de gebruiker niet bestaat.',
 
 /**
@@ -1692,12 +1638,6 @@ Om naar het profiel van %s te gaan, klik hier:
 	'word:blacklist' => 'en, het, dan, maar, hij, zijn, haar, hem, een, niet, ook, ongeveer, nu, dus, wel, toch, is, anders, omgekeerd, maar dus, in plaats daarvan, intussen, derhalve, dit, lijkt, wat, wie, wiens, wie dan ook, wie dan ook',
 
 /**
- * Tag labels
- */
-
-	'tag_names:tags' => 'Tags',
-
-/**
  * Javascript
  */
 
@@ -1705,6 +1645,10 @@ Om naar het profiel van %s te gaan, klik hier:
 	'js:security:token_refreshed' => 'Verbinding met %s is hersteld!',
 	'js:lightbox:current' => "afbeelding %s van %s",
 
+/**
+ * Diagnostics
+ */
+	
 /**
  * Miscellaneous
  */
@@ -1928,22 +1872,4 @@ Om naar het profiel van %s te gaan, klik hier:
 
 	"core:upgrade:2017080900:title" => "Wijzig de database codering om multi-byte te ondersteunen",
 	"core:upgrade:2017080900:description" => "Wijzigt de database codering naar utf8mb4 om ondersteuning te bieden voor multi-byte karakters zoals emoji's",
-
-	"core:upgrade:2017080950:title" => "Update de standaard beveiligingsinstellingen",
-	"core:upgrade:2017080950:description" => "De geïnstalleerde Elgg versie bied een aantal extra beveiligingsinstellingen. Het wordt aangeraden om deze upgrade uit te voeren om de instellingen goed in te stellen. Je kunt de instellingen ten alle tijden wijzigen onder de Beveiligingsinstellingen",
-
-	"core:upgrade:2017121200:title" => "Maakt de vrienden access collections",
-	"core:upgrade:2017121200:description" => "Migreer het vrienden toegangsniveau naar een access collection",
-
-	"core:upgrade:2018041800:title" => "Activeer nieuwe plugins",
-	"core:upgrade:2018041800:description" => "Bepaalde core functionaliteiten zijn verhuisd naar eigen plugins. Deze upgrade zal deze nieuwe plugin inschakelen om compatibiliteit te bieden aan derde partij plugins welke misschien afhankelijk zijn van deze functionaliteiten.",
-
-	"core:upgrade:2018041801:title" => "Verwijder oude plugin entiteiten",
-	"core:upgrade:2018041801:description" => "Verwijder entiteiten welke geassocieerd zijn aan plugins welke zijn verwijderd in Elgg 3.0",
-	
-	"core:upgrade:2018061401:title" => "Migreer cron logboek",
-	"core:upgrade:2018061401:description" => "Migreer de cron logboek bijdrages in de database naar de nieuwe locatie.",
-	
-	"core:upgrade:2019071901:title" => "Update een standaard beveiligingsinstelling: e-mail wijziging bevestigen",
-	"core:upgrade:2019071901:description" => "De geïnstalleerde Elgg versie bied een aantal extra beveiligingsinstellingen. Het wordt aangeraden om deze upgrade uit te voeren om de instellingen goed in te stellen. Je kunt de instellingen ten alle tijden wijzigen onder de Beveiligingsinstellingen",
 );

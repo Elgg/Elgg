@@ -71,5 +71,9 @@ Om %s een bericht te sturen, klik hier:
 	'messages:user:self' => "Je kunt geen berichten aan jezelf sturen!",
 
 	'messages:deleted_sender' => 'Verwijderde gebruiker',
+	
+	/**
+	* Settings
+	*/
 
 );

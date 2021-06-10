@@ -17,16 +17,16 @@ return array(
 	'collection:object:thewire:all' => "Tous les messages du Fil",
 	'collection:object:thewire:owner' => "Le Fil de %s",
 	'collection:object:thewire:friends' => "Messages du Fil des contacts",
+	'notification:object:thewire:create' => "Envoyer une notification lorsqu'un message est publié sur le Fil",
+	'notifications:mute:object:thewire' => "à propos du message du Fil '%s'",
 
 	'thewire:replying' => "Répondre à %s (@%s), qui a écrit",
 	'thewire:thread' => "Conversation",
-	'thewire:charleft' => "caractères",
-	'thewire:tags' => "Messages du Fil avec le tag \"%s\"",
+	'thewire:charleft' => "caractères restant",
+	'thewire:tags' => "Messages du Fil avec '%s'",
 	'thewire:noposts' => "Il n'y a pas encore de message sur le Fil",
 
 	'thewire:by' => 'Message du Fil de %s',
-	'thewire:previous:help' => "Voir le message précédent",
-	'thewire:hide:help' => "Masquer le message précédent",
 
 	'thewire:form:body:placeholder' => "Que se passe-t-il ?",
 	
@@ -60,7 +60,7 @@ return array(
 	'thewire:notify:subject' => "Nouveau message sur le Fil de %s",
 	'thewire:notify:reply' => '%s a répondu à %s sur le Fil :',
 	'thewire:notify:post' => '%s a publié sur le Fil :',
-	'thewire:notify:footer' => "Voir et répondre:\n%s",
+	'thewire:notify:footer' => "Voir et répondre :\n%s",
 
 	/**
 	 * Settings

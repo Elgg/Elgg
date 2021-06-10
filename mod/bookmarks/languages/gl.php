@@ -29,20 +29,9 @@ return array(
 	'bookmarks:notify:summary' => 'Novo marcador: «%s».',
 	'bookmarks:notify:subject' => 'Novo marcador: %s',
 	'bookmarks:notify:body' =>
-'%s added a new bookmark: %s
-
-Address: %s
-
-%s
-
-View and comment on the bookmark:
-%s
-',
+'',
 
 	'bookmarks:numbertodisplay' => 'Número de marcadores para mostrar',
-
-	'river:object:bookmarks:create' => '%s bookmarked %s',
-	'river:object:bookmarks:comment' => '%s commented on a bookmark %s',
 
 	'groups:tool:bookmarks' => 'Activar os marcadores do grupo',
 	
@@ -66,7 +55,6 @@ View and comment on the bookmark:
 	 */
 
 	'bookmarks:save:success' => "Marcouse o elemento",
-	'entity:delete:object:bookmarks:success' => "The bookmark was deleted.",
 
 	/**
 	 * Error messages

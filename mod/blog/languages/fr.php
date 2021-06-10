@@ -14,6 +14,8 @@ return array(
 	'collection:object:blog:friends' => 'Articles de blog des contacts',
 	'add:object:blog' => 'Ajouter un article de blog',
 	'edit:object:blog' => 'Modifier l\'article de blog',
+	'notification:object:blog:publish' => "Envoyer une notification quand un article est créé",
+	'notifications:mute:object:blog' => "à propos de l'article '%s'",
 
 	'blog:revisions' => 'Révisions',
 	'blog:archives' => 'Archives',
@@ -24,7 +26,7 @@ return array(
 	// Editing
 	'blog:excerpt' => 'Extrait',
 	'blog:body' => 'Corps de l\'article',
-	'blog:save_status' => 'Dernier enregistrement:',
+	'blog:save_status' => 'Dernier enregistrement :',
 
 	'blog:revision' => 'Révision',
 	'blog:auto_saved_revision' => 'Révision automatiquement enregistrée',

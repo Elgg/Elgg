@@ -18,16 +18,18 @@ return array(
 	'collection:object:bookmarks:friends' => "Signets des contacts",
 	'add:object:bookmarks' => "Ajouter un signet",
 	'edit:object:bookmarks' => "Modifier le signet",
+	'notification:object:bookmarks:create' => "Envoyer une notification quand un signet est créé",
+	'notifications:mute:object:bookmarks' => "à propos du signet '%s'",
 
 	'bookmarks:this' => "Mettre cette page en signet",
 	'bookmarks:this:group' => "Mettre en signet dans %s",
-	'bookmarks:bookmarklet' => "Installer le \"bookmarklet\"",
-	'bookmarks:bookmarklet:group' => "Installer le \"bookmarklet\" du groupe",
-	'bookmarks:address' => "Adresse web (URL) de la ressource à ajouter à vos signets",
+	'bookmarks:bookmarklet' => "Installer le bookmarklet",
+	'bookmarks:bookmarklet:group' => "Installer le bookmarklet du groupe",
+	'bookmarks:address' => "Adresse web de la ressource à ajouter à vos signets",
 	'bookmarks:none' => 'Aucun signet',
 
 	'bookmarks:notify:summary' => 'Nouveau signet intitulé %s',
-	'bookmarks:notify:subject' => 'Nouveau signet: %s',
+	'bookmarks:notify:subject' => 'Nouveau signet : %s',
 	'bookmarks:notify:body' =>
 '%s a ajouté un nouveau signet : %s
 
@@ -53,7 +55,7 @@ Voir et commenter ce signet :
 	'widgets:bookmarks:description' => "Affiche vos derniers signets.",
 
 	'bookmarks:bookmarklet:description' =>
-			"Un \"bookmarklet\" est un type de bouton ou de lien spécial que vous enregistrez dans la barre de liens de votre navigateur. Il vous permet d'enregistrer rapidement tout type de ressource que vous trouvez sur internet dans vos signets. Pour le mettre en place, faites glisser le bouton ci-dessous dans la barre de liens de votre navigateur :",
+			"Un \"bookmarklet\" est un type de bouton ou de lien spécial que vous enregistrez dans la barre de liens de votre navigateur. Il vous permet d'enregistrer rapidement dans vos signets tout type de ressource que vous trouvez sur internet. Pour le mettre en place, faites glisser le bouton ci-dessous dans la barre de liens de votre navigateur :",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"Si vous utilisez Internet Explorer, faites un clic droit sur le bouton et ajoutez-le dans vos favoris, puis dans votre barre de liens.",

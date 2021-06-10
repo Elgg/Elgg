@@ -73,4 +73,6 @@ Um die Freundschaftsanfrage zu beantworten, folge dem Link:
 	
 	'friends:action:friendrequest:accept:fail' => "Bei der Annahme der Freundschaftsanfrage ist ein Fehler aufgetreten. Bitte versuche es erneut.",
 	'friends:action:friendrequest:accept:success' => "Die Freundschaftsanfrage wurde angenommen.",
+	
+	// notification settings
 );

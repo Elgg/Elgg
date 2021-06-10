@@ -13,10 +13,6 @@ return array(
 	'thewire' => "Telegraf",
 
 	'item:object:thewire' => "Telegrafní zprávy",
-	'collection:object:thewire' => 'Wire posts',
-	'collection:object:thewire:all' => "All wire posts",
-	'collection:object:thewire:owner' => "%s's wire posts",
-	'collection:object:thewire:friends' => "Friends' wire posts",
 
 	'thewire:replying' => "Odpovídám na %s (@%s), který/á napsal/a",
 	'thewire:thread' => "Vlákno",
@@ -25,15 +21,10 @@ return array(
 	'thewire:noposts' => "Zatím žádné telegrafní zprávy",
 
 	'thewire:by' => 'Telegrafní zpráva od %s',
-	'thewire:previous:help' => "Zobrazí předchozí zprávu",
-	'thewire:hide:help' => "Skryje předešlou zprávu",
-
-	'thewire:form:body:placeholder' => "What's happening?",
 	
 	/**
 	 * The wire river
 	 */
-	'river:object:thewire:create' => "%s posted to %s",
 	'thewire:wire' => 'telegraf',
 
 	/**

@@ -13,7 +13,6 @@ return array(
 	'thewire' => "The wire",
 
 	'item:object:thewire' => "Wire indlæg",
-	'collection:object:thewire' => 'Wire posts',
 	'collection:object:thewire:all' => "Alle wire indlæg",
 	'collection:object:thewire:owner' => "%s's wire indlæg",
 	'collection:object:thewire:friends' => "Dine venner på the wire",
@@ -25,15 +24,10 @@ return array(
 	'thewire:noposts' => "Ingen wire indlæg endnu",
 
 	'thewire:by' => 'Wire post by %s',
-	'thewire:previous:help' => "Se tidligere indlæg",
-	'thewire:hide:help' => "Gem tidligere indlæg",
-
-	'thewire:form:body:placeholder' => "What's happening?",
 	
 	/**
 	 * The wire river
 	 */
-	'river:object:thewire:create' => "%s posted to %s",
 	'thewire:wire' => 'wire',
 
 	/**

@@ -13,10 +13,12 @@ return array(
 	'thewire' => "つぶやき",
 
 	'item:object:thewire' => "つぶやき",
-	'collection:object:thewire' => 'Wire posts',
+	'collection:object:thewire' => 'つぶやきの記事',
 	'collection:object:thewire:all' => "みんなのつぶやき",
 	'collection:object:thewire:owner' => "%s さんのつぶやき",
 	'collection:object:thewire:friends' => "友達のつぶやき",
+	'notification:object:thewire:create' => "つぶやき記事が投稿されたときに通知を送る",
+	'notifications:mute:object:thewire' => "つぶやき記事 '%s' について",
 
 	'thewire:replying' => "返信: %s (@%s) さんへ 内容",
 	'thewire:thread' => "スレッド",
@@ -25,15 +27,13 @@ return array(
 	'thewire:noposts' => "つぶやきはありません",
 
 	'thewire:by' => '%s さんのつぶやき',
-	'thewire:previous:help' => "前の投稿を見る",
-	'thewire:hide:help' => "前の投稿隠す",
 
-	'thewire:form:body:placeholder' => "What's happening?",
+	'thewire:form:body:placeholder' => "調子はどうですか？",
 	
 	/**
 	 * The wire river
 	 */
-	'river:object:thewire:create' => "%s posted to %s",
+	'river:object:thewire:create' => "%s さんが %s に投稿しました",
 	'thewire:wire' => 'つぶやき',
 
 	/**

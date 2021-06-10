@@ -10,7 +10,6 @@ return array(
 	'collection:object:blog' => 'Blogs',
 	'collection:object:blog:all' => 'Alle blogge',
 	'collection:object:blog:owner' => '%s\'s blogge',
-	'collection:object:blog:group' => 'Group blogs',
 	'collection:object:blog:friends' => 'Friends\' blogs',
 	'add:object:blog' => 'Tilføj blogindlæg',
 	'edit:object:blog' => 'Rediger blogindlæg',
@@ -46,24 +45,14 @@ return array(
 	'blog:error:revision_not_found' => 'Kan ikke finde denne revision.',
 
 	// river
-	'river:object:blog:create' => '%s published a blog post %s',
-	'river:object:blog:comment' => '%s commented on the blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Nyt blog indlæg kaldt %s',
 	'blog:notify:subject' => 'Nyt blot indlæg: %s',
 	'blog:notify:body' =>
-'
-%s published a new blog post: %s
-
-%s
-
-View and comment on the blog post:
-%s
-',
+'',
 
 	// widget
-	'widgets:blog:name' => 'Blog posts',
 	'widgets:blog:description' => 'Vis dit seneste blogindlæg',
 	'blog:moreblogs' => 'Flere blogindlæg',
 	'blog:numbertodisplay' => 'Antal af blogindlæg, der skal vises',

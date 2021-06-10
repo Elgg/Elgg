@@ -13,7 +13,6 @@ return array(
 	'thewire' => "Жица",
 
 	'item:object:thewire' => "Објаве на жици",
-	'collection:object:thewire' => 'Wire posts',
 	'collection:object:thewire:all' => "Све објаве",
 	'collection:object:thewire:owner' => "%s објаве",
 	'collection:object:thewire:friends' => "Објаве пријатеља",
@@ -25,15 +24,10 @@ return array(
 	'thewire:noposts' => "Нема објава",
 
 	'thewire:by' => 'Објаве од %s',
-	'thewire:previous:help' => "Види раније објаве",
-	'thewire:hide:help' => "Сакриј раније објаве",
-
-	'thewire:form:body:placeholder' => "What's happening?",
 	
 	/**
 	 * The wire river
 	 */
-	'river:object:thewire:create' => "%s posted to %s",
 	'thewire:wire' => 'жица',
 
 	/**

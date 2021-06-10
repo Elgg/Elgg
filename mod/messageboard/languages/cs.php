@@ -22,14 +22,10 @@ return array(
 	/**
 	 * Message board widget river
 	 */
-	'river:user:messageboard' => "%s posted on %s's message board",
 
 	/**
 	 * Status messages
 	 */
-
-	'annotation:delete:messageboard:fail' => "Sorry, we could not delete this message",
-	'annotation:delete:messageboard:success' => "You successfully deleted the message",
 	
 	'messageboard:posted' => "Úspěšně jste přidal/a vzkaz do vzkazníku.",
 	'messageboard:deleted' => "Úspěšně jste smazal/a vzkaz.",
@@ -39,17 +35,6 @@ return array(
 	 */
 
 	'messageboard:email:subject' => 'Máte novou zprávu ve vzkazníku!',
-	'messageboard:email:body' => "You have a new message board comment from %s.
-
-It reads:
-
-%s
-
-To view your message board comments, click here:
-%s
-
-To view %s's profile, click here:
-%s",
 
 	/**
 	 * Error messages

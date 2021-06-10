@@ -4,16 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020
+# Jerôme Bakker, 2021
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-15 10:58+0100\n"
-"PO-Revision-Date: 2018-01-19 10:19+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020\n"
+"POT-Creation-Date: 2021-05-18 16:34+0200\n"
+"PO-Revision-Date: 2021-06-09 13:32+0000\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -48,12 +49,12 @@ msgid ""
 "topics. You can also see entries written by your friends (that you have "
 "access to)."
 msgstr ""
-"Le blog d'Elgg étend ce modèle en fournissant des contrôles d'accès pour "
+"Le blog de Elgg étend ce modèle en fournissant des contrôles d'accès pour "
 "chaque entrée et un système de tags transverse aux blogs. Vous pouvez "
 "contrôler précisément qui peut voir quel article de blog, et identifier des "
 "articles écrits par d'autres personnes sur des sujets similaires. Vous "
 "pouvez également voir les entrées écrites par vos contacts (auxquels vous "
-"avec accès)."
+"avez accès)."
 
 #: ../../plugins/blog.rst:10
 msgid "`Blogging on Wikipedia <http://en.wikipedia.org/wiki/Blog>`_"
@@ -120,8 +121,8 @@ msgstr "Connectez-vous en tant qu'administrateur"
 #: ../../plugins/diagnostics.rst:9
 msgid "Go to Administration -> Administer -> Utilities ->System Diagnostics"
 msgstr ""
-"Rendez-vous dans Administration -> Administrer -> Utilitaires ->Diagnostics "
-"Système"
+"Rendez-vous dans Administration -> Administrer -> Utilitaires -> Diagnostics"
+" Système"
 
 #: ../../plugins/diagnostics.rst:10
 msgid "Click 'Download'"
@@ -170,7 +171,7 @@ msgstr "paramètres de la base de données"
 
 #: ../../plugins/diagnostics.rst:23
 msgid "plugin hooks"
-msgstr "hooks des plugins"
+msgstr "hooks plugin"
 
 #: ../../plugins/diagnostics.rst:24
 msgid "actions"
@@ -377,14 +378,14 @@ msgstr ""
 
 #: ../../plugins/index.rst:2
 msgid "Bundled plugins"
-msgstr "Plugins joints"
+msgstr "Plugins fournis"
 
 #: ../../plugins/index.rst:4
 msgid ""
 "Elgg comes with a set of plugins. These provide the basic functionality for "
 "your social network."
 msgstr ""
-"Elgg est livré avec un jeu de plugins. Ils fournissent les fonctionnalités "
+"Elgg est fourni avec un jeu de plugins. Ils fournissent les fonctionnalités "
 "fondamentales pour votre réseau social."
 
 #: ../../plugins/index.rst:22
@@ -397,11 +398,11 @@ msgstr ""
 
 #: ../../plugins/index.rst:24
 msgid "activity"
-msgstr "activity (activité)"
+msgstr "activity"
 
 #: ../../plugins/index.rst:25
 msgid "bookmarks"
-msgstr "signets"
+msgstr "bookmarks"
 
 #: ../../plugins/index.rst:26
 msgid "ckeditor"
@@ -409,11 +410,11 @@ msgstr "ckeditor"
 
 #: ../../plugins/index.rst:27
 msgid "custom_index"
-msgstr "custom_index (index personnalisé)"
+msgstr "custom_index"
 
 #: ../../plugins/index.rst:28
 msgid "developers"
-msgstr "developers (développeurs)"
+msgstr "developers"
 
 #: ../../plugins/index.rst:29
 msgid "discussions"

@@ -13,6 +13,6 @@ return array(
 	'members:title:newest' => 'Новые',
 	'members:title:popular' => 'Популярные',
 	'members:title:online' => 'Онлайн',
-	'members:title:alpha' => 'All members',
+	'members:title:alpha' => 'Все участники',
 	'members:list:popular:none' => 'Пользователи не имеют друзей.',
 );

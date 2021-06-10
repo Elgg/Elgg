@@ -10,7 +10,6 @@ return array(
 	'collection:object:blog' => 'Blogit',
 	'collection:object:blog:all' => 'Kaikki blogit',
 	'collection:object:blog:owner' => 'Käyttäjän %s blogit',
-	'collection:object:blog:group' => 'Group blogs',
 	'collection:object:blog:friends' => 'Ystävien blogit',
 	'add:object:blog' => 'Luo uusi blogiviesti',
 	'edit:object:blog' => 'Muokkaa blogiviestiä',
@@ -46,24 +45,14 @@ return array(
 	'blog:error:revision_not_found' => 'Versiota ei löydy.',
 
 	// river
-	'river:object:blog:create' => '%s published a blog post %s',
-	'river:object:blog:comment' => '%s commented on the blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Uusi blogiviesti %s',
 	'blog:notify:subject' => 'Uusi blogiviesti: %s',
 	'blog:notify:body' =>
-'
-%s published a new blog post: %s
-
-%s
-
-View and comment on the blog post:
-%s
-',
+'',
 
 	// widget
-	'widgets:blog:name' => 'Blog posts',
 	'widgets:blog:description' => 'Näytä viimeisimmät blogiviestisi',
 	'blog:moreblogs' => 'Lisää blogiviestejä',
 	'blog:numbertodisplay' => 'Näytettävien kohteiden määrä',

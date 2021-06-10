@@ -111,7 +111,6 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:admin:label:password2' => 'Passwort',
 
 	'install:admin:help:displayname' => 'Der Name, der auf der Community-Seite für diesen Benutzeraccount angezeigt wird.',
-	'install:admin:help:email' => '',
 	'install:admin:help:username' => 'Benutzername des Account, der für die Anmeldung verwendet wird.',
 	'install:admin:help:password1' => "Das Passwort muss mindestens %u Zeichen lang sein.",
 	'install:admin:help:password2' => 'Gebe das Password zur Bestätigung erneut ein.',

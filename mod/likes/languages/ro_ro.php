@@ -43,7 +43,4 @@ sau vezi profilul utilizatorului %2$s de aici:
 
 Mulțumim,
 %4$s',
-	'likes:upgrade:2017120700:title' => "Adnotări Publice de Aprecieri",
-	'likes:upgrade:2017120700:description' => "Acest lucru actualizează ID-ul de acces al adnotărilor de aprecieri către public",
-	
 );

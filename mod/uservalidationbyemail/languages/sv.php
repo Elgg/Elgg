@@ -36,7 +36,4 @@ Om du inte kan trycka på länken, kopiera och klistra in den i webbläsaren man
 
 	'uservalidationbyemail:messages:resent_validation' => 'Valideringsbegäran återsänd.',
 	'uservalidationbyemail:messages:resent_validations' => 'Valideringsbegäran återsänd till all markerade användare.',
-	
-	'uservalidationbyemail:upgrade:2019090600:title' => 'Spåra användares valideringsstatus för mejl',
-	'uservalidationbyemail:upgrade:2019090600:description' => 'Valideringsstatus för mejlen spåras på ett nytt sätt. Se till att alla väntande användare är uppdaterade till den nya spårningen för att fortfarande kräva validering.',
 );

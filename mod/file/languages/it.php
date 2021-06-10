@@ -61,19 +61,10 @@ return array(
 
 	'file:notify:summary' => 'Nuovo file chiamato %s',
 	'file:notify:subject' => 'Nuovo file: %s',
-	'file:notify:body' => '%s uploaded a new file: %s
-
-%s
-
-View and comment on the file:
-%s',
 
 	/**
 	 * Status messages
 	 */
-
-	'file:saved' => "The file was successfully saved.",
-	'entity:delete:object:file:success' => "The file was successfully deleted.",
 
 	/**
 	 * Error messages

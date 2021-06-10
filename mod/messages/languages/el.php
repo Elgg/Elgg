@@ -48,17 +48,6 @@ return array(
 	*/
 
 	'messages:email:subject' => 'Έχετε ένα νέο μήνυμα!',
-	'messages:email:body' => "You have a new message from %s.
-
-It reads:
-
-%s
-
-To view your messages, click here:
-%s
-
-To send %s a message, click here:
-%s",
 
 	/**
 	* Error messages
@@ -71,5 +60,9 @@ To send %s a message, click here:
 	'messages:user:self' => "You cannot send a message to yourself.",
 
 	'messages:deleted_sender' => 'Διαγραμμένος χρήστης',
+	
+	/**
+	* Settings
+	*/
 
 );

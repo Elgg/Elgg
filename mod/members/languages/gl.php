@@ -13,6 +13,5 @@ return array(
 	'members:title:newest' => 'Últimos membros',
 	'members:title:popular' => 'Membros máis populares',
 	'members:title:online' => 'Membros conectados',
-	'members:title:alpha' => 'All members',
 	'members:list:popular:none' => 'Ningún dos membros ten contactos.',
 );

@@ -11,5 +11,4 @@ return array(
 
 	'search:comment_on' => 'Σχόλιο σε "%s"',
 	'search:unknown_entity' => 'Μη διαθέσιμος τύπος οντότητας',
-	'search:empty_query' => 'Please provide a valid search query',
 );

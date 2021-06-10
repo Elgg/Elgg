@@ -13,6 +13,5 @@ return array(
 	'members:title:newest' => 'Seneste medlemmer',
 	'members:title:popular' => 'Mest populære medlemmer',
 	'members:title:online' => 'Online medlemmer',
-	'members:title:alpha' => 'All members',
 	'members:list:popular:none' => 'Ingen medlemmer er uden venner',
 );

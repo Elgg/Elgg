@@ -11,5 +11,4 @@ return array(
 
 	'search:comment_on' => 'نظر در "%s"',
 	'search:unknown_entity' => 'نوع نهاد ناشناخته',
-	'search:empty_query' => 'Please provide a valid search query',
 );

@@ -11,5 +11,4 @@ return array(
 
 	'search:comment_on' => 'Kommentti kohteelle "%s"',
 	'search:unknown_entity' => 'Tuntematon kohdetyyppi',
-	'search:empty_query' => 'Please provide a valid search query',
 );

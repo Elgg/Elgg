@@ -11,8 +11,6 @@ return array(
 	 * Menu items and titles
 	 */
 	'expages' => "Pàgines externes",
-	'admin:configure_utilities:expages' => "Site Pages",
-	'expages:edit:viewpage' => "View page on site",
 	'expages:about' => "Sobre",
 	'expages:terms' => "Termes",
 	'expages:privacy' => "Privadesa",

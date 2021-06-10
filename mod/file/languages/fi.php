@@ -56,24 +56,12 @@ return array(
 
 	'groups:tool:file' => 'Ota käyttöön ryhmän tiedostot',
 
-	'river:object:file:create' => '%s uploaded the file %s',
-	'river:object:file:comment' => '%s commented on the file %s',
-
 	'file:notify:summary' => 'Uusi tiedosto: %s',
 	'file:notify:subject' => 'Uusi tiedosto %s',
-	'file:notify:body' => '%s uploaded a new file: %s
-
-%s
-
-View and comment on the file:
-%s',
 
 	/**
 	 * Status messages
 	 */
-
-	'file:saved' => "The file was successfully saved.",
-	'entity:delete:object:file:success' => "The file was successfully deleted.",
 
 	/**
 	 * Error messages

@@ -29,21 +29,13 @@ return array(
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s одобряет ваше сообщение "%s"',
 	'likes:notifications:body' =>
-'Hi %1$s,
+'%1$s нравится ваша публикация "%2$s" в %3$s
 
-%2$s likes your post "%3$s" on %4$s
+Оригинал вашей публикации:
 
-See your original post here:
+%4$s
 
-%5$s
+Просмотр профиля %1$s:
 
-or view %2$s\'s profile here:
-
-%6$s
-
-Thanks,
-%4$s',
-	'likes:upgrade:2017120700:title' => "Public Likes Annotations",
-	'likes:upgrade:2017120700:description' => "This updates the access id of likes annotations to public",
-	
+%5$s',
 );

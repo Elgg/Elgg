@@ -16,17 +16,6 @@ return array(
 
 	'install:next' => 'Další',
 	'install:refresh' => 'Obnovit',
-	'install:change_language' => 'Change language',
-
-	'install:welcome:instructions' => "Installing Elgg has 6 simple steps and reading this welcome is the first one!
-
-If you haven't already, read through the installation instructions included with Elgg (or click the instructions link at the bottom of the page).
-
-If you are ready to proceed, click the Next button.",
-	
-	'install:footer:instructions' => "Installation instructions",
-	'install:footer:troubleshooting' => "Installation troubleshooting",
-	'install:footer:community' => "Elgg community forums",
 	
 	'install:requirements:instructions:success' => "Váš server prošel kontrolou požadavků.",
 	'install:requirements:instructions:failure' => "Váš server neprošel kontrolou požadavků. Až opravíte následující problémy, obnovte tuto stránku. Pokud potřebujete další pomoc, navštivte odkazy na řešení problémů, které se nacházejí na konci této stránky.",
@@ -37,12 +26,6 @@ If you are ready to proceed, click the Next button.",
 	'install:require:settings' => 'Soubor s nastavením',
 	'install:require:database' => 'Databáze',
 
-	'install:check:root' => 'Your web server does not have permission to create an .htaccess file in the root directory of Elgg. You have two choices:
-
-1. Change the permissions on the root directory
-
-2. Copy the file install/config/htaccess.dist to .htaccess',
-
 	'install:check:php:version' => 'Elgg požaduje PHP %s nebo vyšší. Tento server používá verzi %s.',
 	'install:check:php:extension' => 'Elgg požaduje rozšíření PHP %s.',
 	'install:check:php:extension:recommend' => 'Je doporučováno nainstalované rozšíření PHP %s.',
@@ -51,12 +34,6 @@ If you are ready to proceed, click the Next button.",
 	'install:check:php:arg_separator' => 'Aby Elgg pracoval, musí být arg_separator.output nastaven na & a hodnota na vašem serveru je %s',
 	'install:check:php:register_globals' => 'Register globals musí být vypnuto.',
 	'install:check:php:session.auto_start' => "Aby projekt Elgg pracoval, musí být session.auto_start vypnuté. Buď změňte nastavení vašeho serveru nebo tuto direktivu přidejte do souboru .htaccess projektu Elgg.",
-
-	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
-
-1. Change the permissions on the elgg-config directory of your Elgg installation
-
-2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
 	'install:check:readsettings' => 'V instalačním adresáři je soubor s nastavením, ale webový server ho nemůže přečíst. Buď soubor smažte nebo mu změňte práva pro čtení.',
 
 	'install:check:php:success' => "PHP na vašem serveru vyhovuje všem požadavkům projektu Elgg.",
@@ -70,7 +47,6 @@ If you are ready to proceed, click the Next button.",
 	'install:database:label:dbpassword' => 'Heslo databáze',
 	'install:database:label:dbname' => 'Jméno databáze',
 	'install:database:label:dbhost' => 'Hostitel databáze',
-	'install:database:label:dbport' => 'Database Port number',
 	'install:database:label:dbprefix' => 'Předpona tabulek databáze',
 	'install:database:label:timezone' => "Časová zóna",
 
@@ -78,26 +54,19 @@ If you are ready to proceed, click the Next button.",
 	'install:database:help:dbpassword' => 'Heslo výše uvedeného uživatele',
 	'install:database:help:dbname' => 'Jméno databáze projektu Elgg',
 	'install:database:help:dbhost' => 'Jméno hostitele /hostname/ MySQL serveru (obvykle localhost)',
-	'install:database:help:dbport' => 'Port number of the MySQL server (usually 3306)',
 	'install:database:help:dbprefix' => "Předpona přidaná ke všem tabulkám projektu Elgg (obvykle elgg_)",
 	'install:database:help:timezone' => "Výchozí časová zóna ve které budou stránky provozovány",
 
-	'install:settings:instructions' => 'We need some information about the site as we configure Elgg. If you haven\'t <a href="http://learn.elgg.org/en/stable/intro/install.html#create-a-data-folder" target="_blank">created a data directory</a> for Elgg, you need to do so now.',
-
 	'install:settings:label:sitename' => 'Jméno stránek',
 	'install:settings:label:siteemail' => 'E-mailová adresa stránek',
-	'install:database:label:wwwroot' => 'Site URL',
 	'install:settings:label:path' => 'Adresář s instalací projektu Elgg',
-	'install:database:label:dataroot' => 'Data Directory',
 	'install:settings:label:language' => 'Jazyk stránek',
 	'install:settings:label:siteaccess' => 'Výchozí úroveň sdílení pro stránky',
 	'install:label:combo:dataroot' => 'Elgg vytvoří datový adresář',
 
 	'install:settings:help:sitename' => 'Jméno vašich nových stránek',
 	'install:settings:help:siteemail' => 'E-mailová adresa použitá projektem Elgg pro komunikaci s uživateli',
-	'install:database:help:wwwroot' => 'The address of the site (Elgg usually guesses this correctly)',
 	'install:settings:help:path' => 'Adresář s kódem projektu Elgg (obvykle je instalátorem odvozen správně)',
-	'install:database:help:dataroot' => 'The directory that you created for Elgg to save files (the permissions on this directory are checked when you click Next). It must be an absolute path.',
 	'install:settings:help:dataroot:apache' => 'Můžete adresář nechat vyrobit instalátorem nebo zadat adresář, který jste již vytvořil/a pro ukládání souborů uživatelů (po kliknutí na Další budou na tomto adresáři ověřena práva)',
 	'install:settings:help:language' => 'Výchozí jazyk stránek',
 	'install:settings:help:siteaccess' => 'Výchozí úroveň sdílení pro obsah vytvořený uživateli',
@@ -111,7 +80,6 @@ If you are ready to proceed, click the Next button.",
 	'install:admin:label:password2' => 'Heslo znovu',
 
 	'install:admin:help:displayname' => 'Jméno tohoto účtu, které je zobrazeno na stránkách',
-	'install:admin:help:email' => '',
 	'install:admin:help:username' => 'Uživatelské jméno používané při přihlašování',
 	'install:admin:help:password1' => "Heslo musí mít alespoň %u znaků",
 	'install:admin:help:password2' => 'Zadejte heslo znovu pro potvrzení ',
@@ -123,8 +91,6 @@ If you are ready to proceed, click the Next button.",
 
 	'install:complete:instructions' => 'Vaše stránky jsou nyní připraveny k použití. Klikem na následující tlačítko na ně přejdete.',
 	'install:complete:gotosite' => 'Přejít na stránky',
-	'install:complete:admin_notice' => 'Welcome to your Elgg site! For more options, see the %s.',
-	'install:complete:admin_notice:link_text' => 'settings pages',
 
 	'InstallationException:UnknownStep' => '%s je neznámý instalační krok.',
 	'InstallationException:MissingLibrary' => 'Nemohu načíst %s',
@@ -136,10 +102,8 @@ If you are ready to proceed, click the Next button.",
 
 	'install:error:htaccess' => 'Není možné vytvořit soubor .htaccess',
 	'install:error:settings' => 'Není možné vytvořit soubor s konfigurací',
-	'install:error:settings_mismatch' => 'The settings file value for "%s" does not match the given $params.',
 	'install:error:databasesettings' => 'S těmito údaji se není možné přihlásit to databáze.',
 	'install:error:database_prefix' => 'Předpona databáze obsahuje neplatný znak',
-	'install:error:oldmysql2' => 'MySQL must be version 5.5.3 or above. Your server is using %s.',
 	'install:error:nodatabase' => 'Není možné použít databázi %s. Pravděpodobně neexistuje.',
 	'install:error:cannotloadtables' => 'Nemohu načíst tabulky databáze',
 	'install:error:tables_exist' => 'V databázi již existují tabulky projektu Elgg. Můžete je buď smazat, nebo instalátor spustit znovu, aby se je pokusil použít. Pro druhou možnost v poli s adresou odstraňte z URL \'?step=database\' a stiskněte Enter.',
@@ -160,8 +124,6 @@ If you are ready to proceed, click the Next button.",
 	'install:error:rewrite:nginx' => 'Myslíme si, že na vašem serveru je spuštěn webový server Nginx.',
 	'install:error:rewrite:lighttpd' => 'Myslíme si, že na vašem serveru je spuštěn webový server Lighttpd.',
 	'install:error:rewrite:iis' => 'Myslíme si, že na vašem serveru je spuštěn webový server IIS.',
-	'install:error:rewrite:allowoverride' => "The rewrite test failed and the most likely cause is that AllowOverride is not set to All for Elgg's directory. This prevents Apache from processing the .htaccess file which contains the rewrite rules.
-\n\nA less likely cause is Apache is configured with an alias for your Elgg directory and you need to set the RewriteBase in your .htaccess. There are further instructions in the .htaccess file in your Elgg directory.",
 	'install:error:rewrite:htaccess:write_permission' => 'Webový server nemá práva vytvořit v adresáři projektu Elgg soubor .htaccess. Musíte ručně zkopírovat install/config/htaccess.dist do .htaccess, případně změnit práva na příslušném adresáři.',
 	'install:error:rewrite:htaccess:read_permission' => 'V adresáři projektu Elgg je soubor .htaccess, ale webový server nemá práva na jeho čtení.',
 	'install:error:rewrite:htaccess:non_elgg_htaccess' => 'V adresáři projektu Elgg je soubor .htaccess, který nebyl vytvořen instalátorem. Odstraňte ho prosím.',
@@ -170,7 +132,6 @@ If you are ready to proceed, click the Next button.",
 	'install:error:rewrite:altserver' => 'Nezdařil se test pravidel přepisu. Musíte nastavit váš webový server s pravidly přepisu projektu Elgg a zkusit to znovu.',
 	'install:error:rewrite:unknown' => 'Uf, nebyli jsme schopni zjistit jaký webový server používáte a test pravidel přepisu selhal. Nemůžeme nabídnou žádnou určitou radu. Zkuste prosím odkaz na řešení problémů.',
 	'install:warning:rewrite:unknown' => 'Váš server neposkytuje automatické testování pravidel přepisu a váš prohlížeč je nedokáže otestovat pomocí JavaScriptu. Můžete pokračovat v instalaci, ale na stránkách mohou nastat problémy. Pravidla je možné otestovat ručně kliknutím na tento odkaz: <a href="%s" target="_blank">test</a>. Pokud pravidla fungují, uvidíte slovo "success" /úspěch/.',
-	'install:error:wwwroot' => '%s is not a valid URL',
 
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => 'Došlo k neodstranitelné chybě, která byla zaznamenána. Pokud jste správce těchto stránek, zkontrolujte soubor s nastavením, jinak se obraťte na správce s následujícími údaji:',

@@ -6,13 +6,13 @@
  */
 
 return array(
-	// menu
 	'admin:develop_tools' => 'Ferramentas',
+	
+	// menu
 	'admin:develop_tools:sandbox' => 'Zona de probas de temas',
 	'admin:develop_tools:inspect' => 'Inspeccionar',
 	'admin:inspect' => 'Inspeccionar',
 	'admin:develop_tools:unit_tests' => 'Probas unitarias',
-	'admin:develop_tools:entity_explorer' => 'Entity Explorer',
 	'admin:developers' => 'Desenvolvedores',
 	'admin:developers:settings' => 'Configuración',
 
@@ -33,24 +33,12 @@ return array(
 	'developers:label:show_modules' => "Mostrar os módulos AMD cargados na consola.",
 	'developers:help:show_modules' => "Envía os módulos e calores cargados á súa consola de JavaScript.",
 	'developers:label:wrap_views' => "Encapsular as vistas.",
-	'developers:help:wrap_views' => "This wraps almost every view with HTML comments. Useful for finding the view creating particular HTML.
-									This can break non-HTML views in the default viewtype. See developers_wrap_views() for details.",
 	'developers:label:log_events' => "Rexistrar os acontecementos e os ganchos dos complementos.",
 	'developers:help:log_events' => "Engadir ao rexistro os acontecementos e mailos ganchos dos complementos. Aviso: cada páxina contén unha morea deles.",
 	'developers:label:show_gear' => "Usar %s fóra da zona de administración",
 	'developers:help:show_gear' => "Unha icona na parte inferior dereita da vista que fornece acceso de administrador a opcións e ligazóns de desenvolvedor.",
-	'developers:label:block_email' => "Block all outgoing e-mails",
-	'developers:help:block_email' => "You can block outgoing e-mail to regular users or to all users",
-	'developers:label:forward_email' => "Forward all outgoing e-mails to one address",
-	'developers:help:forward_email' => "All outgoing e-mails will be sent to the configured e-mail address",
-	'developers:label:enable_error_log' => "Enable error log",
-	'developers:help:enable_error_log' => "Maintain a separate log of errors and messages logged to the error_log() based on your trace level setting. The log is viewable via admin interface.",
 
 	'developers:label:submit' => "Gardar e baleirar as cachés",
-
-	'developers:block_email:forward' => 'Forward all e-mails',
-	'developers:block_email:users' => 'Only regular users',
-	'developers:block_email:all' => 'Admins and regular users',
 	
 	'developers:debug:off' => 'Desactivado',
 	'developers:debug:error' => 'Err',
@@ -59,17 +47,8 @@ return array(
 	'developers:debug:info' => 'Información',
 	
 	// entity explorer
-	'developers:entity_explorer:help' => 'View information about entities and perform some basic actions on them.',
-	'developers:entity_explorer:guid:label' => 'Enter the guid of the entity to inspect',
-	'developers:entity_explorer:info' => 'Entity Information',
-	'developers:entity_explorer:info:attributes' => 'Attributes',
 	'developers:entity_explorer:info:metadata' => 'Metadatos',
 	'developers:entity_explorer:info:relationships' => 'Relacións',
-	'developers:entity_explorer:info:private_settings' => 'Private Settings',
-	'developers:entity_explorer:info:owned_acls' => 'Owned Access Collections',
-	'developers:entity_explorer:info:acl_memberships' => 'Access Collections Memberships',
-	'developers:entity_explorer:delete_entity' => 'Remove this entity',
-	'developers:entity_explorer:inspect_entity' => 'Inspect this entity',
 	
 	// inspection
 	'developers:inspect:help' => 'Inspeccione a configuración da infraestrutura Elgg',
@@ -79,35 +58,19 @@ return array(
 	'developers:inspect:pluginhooks' => 'Enganches de complementos',
 	'developers:inspect:priority' => 'Prioridade',
 	'developers:inspect:simplecache' => 'Caché sinxela',
-	'developers:inspect:routes' => 'Routes',
 	'developers:inspect:views' => 'Vistas',
 	'developers:inspect:views:all_filtered' => "<b>Nota!</b> Toda a saída das vistas se filtra a través dos enganches de complementos:",
-	'developers:inspect:views:input_filtered' => "(input filtered by plugin hook: %s)",
 	'developers:inspect:views:filtered' => "(filtrado por enganche de complemento: %s)",
 	'developers:inspect:widgets' => 'Trebellos',
-	'developers:inspect:webservices' => 'Servizos web',
 	'developers:inspect:widgets:context' => 'Context',
 	'developers:inspect:functions' => 'Funcións',
-	'developers:inspect:file_location' => 'File path from Elgg root or controller',
-	'developers:inspect:route' => 'Route Name',
-	'developers:inspect:path' => 'Path Pattern',
-	'developers:inspect:resource' => 'Resource View',
-	'developers:inspect:handler' => 'Handler',
-	'developers:inspect:controller' => 'Controller',
 	'developers:inspect:file' => 'Ficheiros',
 	'developers:inspect:middleware' => 'Ficheiros',
-	'developers:inspect:handler_type' => 'Handled by',
-	'developers:inspect:services' => 'Services',
 	'developers:inspect:service:name' => 'Nome',
-	'developers:inspect:service:path' => 'Definition',
-	'developers:inspect:service:class' => 'Class',
 
 	// event logging
-	'developers:request_stats' => "Request Statistics (does not include the shutdown event)",
 	'developers:event_log_msg' => "%s: «%s, %s» en «%s».",
 	'developers:log_queries' => "Consultas de base de datos de %s (exclúese o evento de apagar)",
-	'developers:boot_cache_rebuilt' => "The boot cache was rebuilt for this request",
-	'developers:elapsed_time' => "Elapsed time (s)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Introdución',
@@ -129,7 +92,4 @@ return array(
 	'developers:settings:success' => 'Gardouse a configuración.',
 
 	'developers:amd' => 'AMD',
-
-	'admin:develop_tools:error_log' => 'Error Log',
-	'developers:logs:empty' => 'Error log is empty',
 );

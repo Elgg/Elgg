@@ -11,5 +11,4 @@ return array(
 
 	'search:comment_on' => '"%s" 에 대한 답글',
 	'search:unknown_entity' => '알수없는 분류유형',
-	'search:empty_query' => 'Please provide a valid search query',
 );

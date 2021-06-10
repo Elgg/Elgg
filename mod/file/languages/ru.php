@@ -15,6 +15,8 @@ return array(
 	'collection:object:file:group' => "Сгруппировать файлы",
 	'add:object:file' => "Загрузить файл",
 	'edit:object:file' => "Редактировать файл",
+	'notification:object:file:create' => "Отправить уведомление при создании файла",
+	'notifications:mute:object:file' => "о файле '%s'",
 
 	'file:more' => "Еще файлы",
 	'file:list' => "в виде списка",
@@ -61,19 +63,19 @@ return array(
 
 	'file:notify:summary' => 'Новый файл: %s',
 	'file:notify:subject' => 'Новый файл: %s',
-	'file:notify:body' => '%s uploaded a new file: %s
+	'file:notify:body' => '%s загрузил новый файл: %s
 
 %s
 
-View and comment on the file:
+Просмотр и комментирование файла:
 %s',
 
 	/**
 	 * Status messages
 	 */
 
-	'file:saved' => "The file was successfully saved.",
-	'entity:delete:object:file:success' => "The file was successfully deleted.",
+	'file:saved' => "Файл успешно сохранен.",
+	'entity:delete:object:file:success' => "Файл успешно удален.",
 
 	/**
 	 * Error messages

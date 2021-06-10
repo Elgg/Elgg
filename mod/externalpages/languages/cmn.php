@@ -11,8 +11,6 @@ return array(
 	 * Menu items and titles
 	 */
 	'expages' => "站臺頁面",
-	'admin:configure_utilities:expages' => "Site Pages",
-	'expages:edit:viewpage' => "View page on site",
 	'expages:about' => "關於",
 	'expages:terms' => "條款",
 	'expages:privacy' => "隱私",

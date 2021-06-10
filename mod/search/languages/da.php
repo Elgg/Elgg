@@ -11,5 +11,4 @@ return array(
 
 	'search:comment_on' => 'Kommentér "%s"',
 	'search:unknown_entity' => 'Ukendt Entitets type',
-	'search:empty_query' => 'Please provide a valid search query',
 );

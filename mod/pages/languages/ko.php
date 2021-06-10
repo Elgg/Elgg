@@ -21,9 +21,6 @@ return array(
 	'edit:object:page' => "이 페이지 수정",
 
 	'groups:tool:pages' => '모둠 페이지 활성화',
-	
-	'annotation:delete:page:success' => 'The page revision was successfully deleted',
-	'annotation:delete:page:fail' => 'The page revision could not be deleted',
 
 	'pages:delete' => " 이 페이지 삭제",
 	'pages:history' => "내역",
@@ -96,13 +93,4 @@ return array(
 	'pages:label:history' => "페이지 변경내역",
 
 	'pages:newchild' => "하위 페이지 만들기",
-	
-	/**
-	 * Upgrades
-	 */
-	'pages:upgrade:2017110700:title' => "Migrate page_top to page entities",
-	'pages:upgrade:2017110700:description' => "Changes the subtype of all top pages to 'page' and sets metadata to ensure correct listing.",
-	
-	'pages:upgrade:2017110701:title' => "Migrate page_top river entries",
-	'pages:upgrade:2017110701:description' => "Changes the subtype of all river items for top pages to 'page'.",
 );

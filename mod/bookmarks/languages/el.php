@@ -29,20 +29,9 @@ return array(
 	'bookmarks:notify:summary' => 'Νέος σύνδεσμος με τίτλος %s',
 	'bookmarks:notify:subject' => 'Νέος σύνδεσμος: %s',
 	'bookmarks:notify:body' =>
-'%s added a new bookmark: %s
-
-Address: %s
-
-%s
-
-View and comment on the bookmark:
-%s
-',
+'',
 
 	'bookmarks:numbertodisplay' => 'Αριθμός συνδέσμων για εμφάνιση',
-
-	'river:object:bookmarks:create' => '%s bookmarked %s',
-	'river:object:bookmarks:comment' => '%s commented on a bookmark %s',
 
 	'groups:tool:bookmarks' => 'Ενεργοποίηση συνδέσμων ομάδας',
 	
@@ -66,7 +55,6 @@ View and comment on the bookmark:
 	 */
 
 	'bookmarks:save:success' => "Ο σύνδεσμος αποθηκεύτηκε με επιτυχία.",
-	'entity:delete:object:bookmarks:success' => "The bookmark was deleted.",
 
 	/**
 	 * Error messages

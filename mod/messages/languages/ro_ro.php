@@ -71,5 +71,9 @@ Pentru a-i trimite un mesaj utilizatorului %s, apasă aici:
 	'messages:user:self' => "Nu-ți poți trimite un mesaj ție.",
 
 	'messages:deleted_sender' => 'Utilizator șters',
+	
+	/**
+	* Settings
+	*/
 
 );

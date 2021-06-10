@@ -8,8 +8,6 @@
 return array(
 	'profile' => 'Profil',
 	'profile:notfound' => 'Entschuldigung, wir konnten das gesuchte Profil nicht finden.',
-	'profile:upgrade:2017040700:title' => 'Aktualisieren des Datenbank-Schemas der Profilfelder',
-	'profile:upgrade:2017040700:description' => 'Dieses Upgrade konvertiert die Datenbankeinträge der Profilfelder von Metadata-Einträgen zu Annotations mit einem Präfix des Annotationnamens von "profile:". <strong>Anmerkung:</strong> Wenn Du derzeit "inaktive" Profilfelder hast, die Du auch konvertieren willst, erzeuge erst diese Felder erneut und lade dann diese Upgrade-Seite neu, damit diese Felder bei der Aktualisierung ebenfalls konvertiert werden.',
 	
 	'admin:configure_utilities:profile_fields' => 'Profilfelder bearbeiten',
 	
