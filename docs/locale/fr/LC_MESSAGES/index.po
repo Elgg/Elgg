@@ -4,17 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2017
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018
+# Jerôme Bakker, 2021
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-15 10:58+0100\n"
-"PO-Revision-Date: 2017-12-28 11:58+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018\n"
+"POT-Creation-Date: 2021-05-18 16:34+0200\n"
+"PO-Revision-Date: 2021-06-09 13:31+0000\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,9 +34,10 @@ msgid ""
 "information."
 msgstr ""
 "Elgg_ (:download:`pronunciation <_elgg_files/How_to_say_Elgg.mp3>`) est un "
-"framework de développement rapide pour construire des applications web "
-"sociales. C'est un excellent choix pour construire tout type d'application "
-"où des utilisateurs se connectent et partagent des informations."
+"framework open source de développement rapide pour construire des "
+"applications web sociales. C'est un excellent choix pour construire tout "
+"type d'application où des utilisateurs se connectent et partagent des "
+"informations."
 
 #: ../../index.rst:8
 msgid "Features"
@@ -56,7 +57,7 @@ msgid ""
 "installation and maintenance of Elgg core and plugins"
 msgstr ""
 "**Composer** est le gestionnaire de paquets qui simplifie grandement "
-"l'installation et la maintenance du coeur d'Elgg et des plugins"
+"l'installation et la maintenance du noyau de Elgg et des plugins"
 
 #: ../../index.rst:12
 msgid ""
@@ -64,8 +65,8 @@ msgid ""
 "modify most aspects of application's functionality and behavior"
 msgstr ""
 "**Un système flexible de hooks et d'événements** qui permet aux plugins "
-"d'étendre et de modifier la majorité des aspects du fonctionnement et du "
-"comportement des fonctionnalités des applications"
+"d'étendre et de modifier la majorité des aspects des fonctionnalités et du "
+"comportement de l'application"
 
 #: ../../index.rst:13
 msgid ""
@@ -81,16 +82,16 @@ msgid ""
 "**Cacheable system of static assets** that allows themes and plugins to "
 "serve images, stylesheets, fonts and scripts bypassing the engine"
 msgstr ""
-"**Un système d'assets statiques mis en cache** qui permet aux thèmes et aux "
-"plugins de servir des images, feuilles de style, polices et scripts sans "
-"charger le moteur"
+"**Un système de ressources statiques mises en cache** qui permet aux thèmes "
+"et aux plugins de servir des images, des feuilles de style, des polices et "
+"des scripts sans charger le moteur"
 
 #: ../../index.rst:15
 msgid ""
 "**User authentication** is powered by pluggable auth modules, which allow "
 "applications to implement custom authentication protocols"
 msgstr ""
-"**L'authentication des utilsateurs** s'appuie sur des modules "
+"**L'authentication des utilisateurs** s'appuie sur des modules "
 "d'authentification enfichables, ce qui permet aux applications d'implémenter"
 " des protocoles d'authentification personnalisés"
 
@@ -100,7 +101,7 @@ msgid ""
 "filters, HMAC signatures, latest cryptographic approaches to password "
 "hashing"
 msgstr ""
-"**La Sécurité** est assurée par une validation anti CSRF native, des filtres"
+"**La Sécurité** est assurée par une validation anti-CSRF native, des filtres"
 " XSS stricts, des signatures HMAC, et les dernières approches "
 "cryptographiques pour le hachage des mots de passe"
 
@@ -127,21 +128,20 @@ msgid ""
 "developers to easily interface with the database"
 msgstr ""
 "**Un modèle de données très bien conçu** avec une couche d'API consolidée "
-"qui permet aux développeurs de créer facilement les interfaces avec la base "
-"de données"
+"qui permet aux développeurs d'interfacer facilement avec la base de données"
 
 #: ../../index.rst:20
 msgid ""
 "**Access control system** that allows applications to build granular content"
 " access policies, as well as create private networks and intranets"
 msgstr ""
-"**Une système de contrôle d'accès** qui permet aux applications de "
-"construire des politiques d'accès aux contenus granulaires, comme de créer "
-"des réseaux privés et des intranets"
+"**Un système de contrôle d'accès** qui permet aux applications de construire"
+" des politiques d'accès aux contenus granulaires, comme de créer des réseaux"
+" privés et des intranets"
 
 #: ../../index.rst:21
 msgid "**Groups** - out of the box support for user groups"
-msgstr "**Groupes** - support d'emblée pour des groupes d'utilisateurs"
+msgstr "**Groupes** - support intégré pour des groupes d'utilisateurs"
 
 #: ../../index.rst:22
 msgid ""
@@ -168,7 +168,7 @@ msgid ""
 " applications and mobile clients"
 msgstr ""
 "**Des Services Web RPC** qui peuvent être utilisés pour des intégrations "
-"complexes avec des applications externes et des clietns mobiles"
+"complexes avec des applications externes et des clients mobiles"
 
 #: ../../index.rst:25
 msgid ""
@@ -184,8 +184,8 @@ msgid ""
 "**Elgg community** that can help with any arising issues and hosts a "
 "repository of **1000+ open source plugins**"
 msgstr ""
-"**La communauté Elgg** peut aider sur n'importe quelle problématique qui "
-"survienne, et héberge un répertoire de plus de **1000+ plugins open source**"
+"**La communauté Elgg** peut aider sur n'importe quelle problématique, et "
+"héberge un répertoire de **plus de 1000 plugins open source**"
 
 #: ../../index.rst:28
 msgid "Under the hood:"
@@ -252,7 +252,7 @@ msgstr ""
 
 #: ../../index.rst:50
 msgid "open networks (similar to Facebook)"
-msgstr "réseau sociaux ouverts (similaires à Facebook)"
+msgstr "réseaux sociaux ouverts (similaires à Facebook)"
 
 #: ../../index.rst:51
 msgid "topical (like the Elgg Community)"
@@ -280,4 +280,4 @@ msgstr "Ceci constitue la documentation officielle du projet Elgg_."
 
 #: ../../index.rst:62
 msgid "Continue Reading"
-msgstr "Poursuivre le lecture"
+msgstr "Poursuivre la lecture"

@@ -12,10 +12,12 @@ return array(
 	'edit:object:discussion' => 'Изменить тему',
 	'collection:object:discussion' => 'Темы обсуждения',
 	'collection:object:discussion:group' => 'Групповые обсуждения',
-	'collection:object:discussion:my_groups' => 'Discussions in my groups',
+	'collection:object:discussion:my_groups' => 'Обсуждения в моих группах',
+	'notification:object:discussion:create' => "Отправить уведомление при создании обсуждения",
+	'notifications:mute:object:discussion' => "об обсуждении '%s'",
 	
-	'discussion:settings:enable_global_discussions' => 'Enable global discussions',
-	'discussion:settings:enable_global_discussions:help' => 'Allow discussions to be created outside of groups',
+	'discussion:settings:enable_global_discussions' => 'Включить глобальные обсуждения',
+	'discussion:settings:enable_global_discussions:help' => 'Разрешить создавать обсуждения вне групп',
 
 	'discussion:latest' => 'Последние обсуждения',
 	'discussion:none' => 'Нет обсуждений',
@@ -29,7 +31,7 @@ return array(
 	'discussion:error:notsaved' => 'Не могу сохранить эту тему',
 	'discussion:error:missing' => 'Оба поля заголовок и сообщение являются обязательными',
 	'discussion:error:permissions' => 'У Вас нет разрешений выполнять это действие',
-	'discussion:error:no_groups' => "You're not a member of any groups.",
+	'discussion:error:no_groups' => "Вы не являетесь участником ни одной группы",
 
 	/**
 	 * River
@@ -72,10 +74,4 @@ return array(
 	'discussion:topic:closed:desc' => 'Обсуждение закрыто и не принимает новые комментарии.',
 
 	'discussion:topic:description' => 'Сообщение темы',
-
-	// upgrades
-	'discussions:upgrade:2017112800:title' => "Перенести реплики обсуждения в комментарии",
-	'discussions:upgrade:2017112800:description' => "Реплики обсуждения, использовали свой подтип, это было переведено к одному типу в комментарии.",
-	'discussions:upgrade:2017112801:title' => "Перенести поток активности связанной с обсуждаемыми репликами",
-	'discussions:upgrade:2017112801:description' => "Реплики обсуждения, использовали свой подтип, это было переведено к одному типу в комментарии.",
 );

@@ -7,18 +7,13 @@
 
 return array(
 	'email:validate:subject' => "%s пожалуйста, подтвердите свой email для %s!",
-	'email:validate:body' => "Hi %s,
+	'email:validate:body' => "Пере тем, как начать пользоваться %s, вы должны подтвердить свой электронный почтовый адрес.
 
-Before you can start using %s, you must confirm your email address.
-
-Please confirm your email address by clicking on the link below:
+Подтвердите ваш электронный почтовый адрес, нажав на ссылку внизу:
 
 %s
 
-If you can't click on the link, copy and paste it to your browser manually.
-
-%s
-%s",
+Если вы не можете нажать на ссылку, то вручную скопируйте ее и вставьте в ваш браузер.",
 	'email:confirm:success' => "Вы подтвердили свой email адрес!",
 	'email:confirm:fail' => "Ваш email адрес не может быть проверен...",
 
@@ -36,7 +31,4 @@ If you can't click on the link, copy and paste it to your browser manually.
 
 	'uservalidationbyemail:messages:resent_validation' => 'Запрос на подтверждение переслан.',
 	'uservalidationbyemail:messages:resent_validations' => 'Запрос отправлен всем отмеченным пользователям.',
-	
-	'uservalidationbyemail:upgrade:2019090600:title' => 'Track user e-mail validation status',
-	'uservalidationbyemail:upgrade:2019090600:description' => 'The e-mail validation status is tracked in a new way. Make sure all pending users are updated to the new tracking in order to still require e-mail validation.',
 );

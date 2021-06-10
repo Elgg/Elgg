@@ -11,25 +11,25 @@ return array(
 	 * Menu items and titles
 	 */
 
-	'messageboard:board' => "Доска",
-	'messageboard:messageboard' => "доска",
+	'messageboard:board' => "Стена сообщений",
+	'messageboard:messageboard' => "стена сообщений",
 	'messageboard:none' => "Пока никто не написал на стене.",
 	'messageboard:num_display' => "Число отображаемых записей",
 	'messageboard:user' => "стену пользователя %s",
-	'messageboard:owner' => '%s\'s message board',
-	'messageboard:owner_history' => '%s\'s posts on %s\'s message board',
+	'messageboard:owner' => 'Стена сообщений пользователя %s',
+	'messageboard:owner_history' => 'Публикации пользователя %s на стене сообщений пользователя %s',
 
 	/**
 	 * Message board widget river
 	 */
-	'river:user:messageboard' => "%s posted on %s's message board",
+	'river:user:messageboard' => "%s опубликовал на стене сообщений пользователя %s",
 
 	/**
 	 * Status messages
 	 */
 
-	'annotation:delete:messageboard:fail' => "Sorry, we could not delete this message",
-	'annotation:delete:messageboard:success' => "You successfully deleted the message",
+	'annotation:delete:messageboard:fail' => "Мы не можем удалить это сообщение",
+	'annotation:delete:messageboard:success' => "Сообщение успешно удалено",
 	
 	'messageboard:posted' => "Запись на стене размещена.",
 	'messageboard:deleted' => "Запись удалена.",
@@ -39,16 +39,16 @@ return array(
 	 */
 
 	'messageboard:email:subject' => 'У Вас есть новая запись на стене.',
-	'messageboard:email:body' => "You have a new message board comment from %s.
+	'messageboard:email:body' => "У вас новая публикация на стене сообщений от %s.
 
-It reads:
+Текст публикации:
 
 %s
 
-To view your message board comments, click here:
+Нажмите здесь, чтобы посмотреть публикации на стене сообщений:
 %s
 
-To view %s's profile, click here:
+Для просмотра профиля %s нажмите здесь:
 %s",
 
 	/**
@@ -60,6 +60,6 @@ To view %s's profile, click here:
 
 	'messageboard:failure' => "Простите, при размещении записи произошла ошибка. Попробуйте снова.",
 
-	'widgets:messageboard:name' => "Доска",
-	'widgets:messageboard:description' => "Это стена, которую можно добавить в Ваш профиль и на которой смогут писать Ваши друзья.",
+	'widgets:messageboard:name' => "Стена сообщений",
+	'widgets:messageboard:description' => "Это стена, которую можно добавить в Ваш профиль и на которой смогут писать пользователи.",
 );

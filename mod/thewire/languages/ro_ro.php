@@ -25,8 +25,6 @@ return array(
 	'thewire:noposts' => "Încă nu sunt postări de fir",
 
 	'thewire:by' => 'Postări de fir de către %s',
-	'thewire:previous:help' => "Vezi postarea anterioară",
-	'thewire:hide:help' => "Ascunde postarea anterioară",
 
 	'thewire:form:body:placeholder' => "Ce se întâmplă?",
 	

@@ -27,9 +27,6 @@ return array(
 	/**
 	 * Status messages
 	 */
-
-	'annotation:delete:messageboard:fail' => "Sorry, we could not delete this message",
-	'annotation:delete:messageboard:success' => "You successfully deleted the message",
 	
 	'messageboard:posted' => "Messaggio privato inviato.",
 	'messageboard:deleted' => "Messaggio rimosso.",
@@ -39,17 +36,6 @@ return array(
 	 */
 
 	'messageboard:email:subject' => 'Hai un nuovo messaggio privato!',
-	'messageboard:email:body' => "You have a new message board comment from %s.
-
-It reads:
-
-%s
-
-To view your message board comments, click here:
-%s
-
-To view %s's profile, click here:
-%s",
 
 	/**
 	 * Error messages

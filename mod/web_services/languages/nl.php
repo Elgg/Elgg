@@ -40,9 +40,7 @@ return array(
 	'SecurityException:InvalidPostHash' => "POST data hash is ongeldig - Verwachte %s, maar kreeg %s.",
 	'SecurityException:DupePacket' => "Packet signature is al eerder gezien",
 	'SecurityException:InvalidAPIKey' => "Ongeldige of ontbrekende API Key.",
-	'NotImplementedException:CallMethodNotImplemented' => "Methode '%s' is op dit moment niet ondersteunt.",
-	'CallException:InvalidCallMethod' => "%s moet worden aangeroepen middels '%s'",
-
+	
 	'system.api.list' => "Toont een lijst van alle beschikbare API calls in het systeem",
 	'auth.gettoken' => "Deze API call levert een user authenticatie token op waarmee men in de toekomst API calls kan authentiseren. Gebruik het dan als de auth_token parameter.",
 	
@@ -68,7 +66,7 @@ return array(
 	
 	'webservices:action:api_key:edit:success' => "Het API token is succesvol opgeslagen",
 	'webservices:action:api_key:regenerate:success' => "De API sleutels zijn vernieuwd",
-
+	
 	// plugin settings
 	'web_services:settings:authentication' => "Web API authenticatie instellingen",
 	'web_services:settings:authentication:description' => "Sommige API methodes vereisen dat verzoeken zichzelf authenticeren. Er moet dan een API key pair (public en secrect key) worden aangeleverd.

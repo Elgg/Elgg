@@ -11,5 +11,4 @@ return array(
 
 	'search:comment_on' => 'Comment on "%s"',
 	'search:unknown_entity' => 'Tipo de Entidad Desconocida',
-	'search:empty_query' => 'Please provide a valid search query',
 );

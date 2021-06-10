@@ -96,13 +96,4 @@ Schau Dir die neue Coop-Seite an und schreibe einen Kommentar:
 	'pages:label:history' => "Bearbeitungsverlauf der Coop-Seite",
 
 	'pages:newchild' => "Unter-Coop-Seite hinzufügen",
-	
-	/**
-	 * Upgrades
-	 */
-	'pages:upgrade:2017110700:title' => "Umwandeln von \"page_top\"- in \"page\"-Entitäten",
-	'pages:upgrade:2017110700:description' => "Ändert den Subtyp von Haupt-Coop-Seiten von \"page_top\" zu \"page\" und fügt einen Metadata-Eintrag hinzu, damit die Auflistung der Seiten weiterhin korrekt erfolgt.",
-	
-	'pages:upgrade:2017110701:title' => "Aktualisieren von River-Einträgen der \"page_top\"-Entitäten",
-	'pages:upgrade:2017110701:description' => "Aktualisiert den Subtyp bei allen River-Einträgen vom bisherigen \"page_top\" zu \"page\".",
 );

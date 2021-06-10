@@ -6,8 +6,9 @@
  */
 
 return array(
-	// menu
 	'admin:develop_tools' => 'Entwickler-Werkzeuge',
+	
+	// menu
 	'admin:develop_tools:sandbox' => 'Theme-Sandbox',
 	'admin:develop_tools:inspect' => 'Prüfen',
 	'admin:inspect' => 'Prüfen',
@@ -85,7 +86,6 @@ Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören
 	'developers:inspect:views:input_filtered' => "(Eingaben gefiltert durch Plugin-Hook: %s)",
 	'developers:inspect:views:filtered' => "(gefiltert durch Plugin-Hook: %s)",
 	'developers:inspect:widgets' => 'Widgets',
-	'developers:inspect:webservices' => 'Webservices',
 	'developers:inspect:widgets:context' => 'Kontext',
 	'developers:inspect:functions' => 'Funktionen',
 	'developers:inspect:file_location' => 'Dateipfad relativ zum Elgg-Root-Verzeichnis oder Controller',

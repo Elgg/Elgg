@@ -182,16 +182,6 @@ sau apasă mai jos pentru a vedea cererile de alăturare ale grupului:
 	'groups:joinrequestkilled' => 'Cererea de alăturare a fost ștearsă.',
 	'groups:error:addedtogroup' => "Nu am putut adăuga pe %s în acest grup",
 	'groups:add:alreadymember' => "%s este deja un membru al acestui grup",
-
-	/**
-	 * ecml
-	 */
-	'groups:ecml:groupprofile' => 'Profiluri de grup',
-
-	/**
-	 * Upgrades
-	 */
-	'groups:upgrade:2016101900:title' => 'Transferă imaginea de grup la o locație nouă',
-	'groups:upgrade:2016101900:description' => 'New entity icon API stores icons in a predictable location on the filestore
-relative to the entity\'s filestore directory. This upgrade will align the group plugin with the requirements of the new API.',
+	
+	// Notification settings
 );

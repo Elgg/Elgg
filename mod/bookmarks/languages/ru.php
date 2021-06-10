@@ -18,6 +18,8 @@ return array(
 	'collection:object:bookmarks:friends' => "Закладки друзей",
 	'add:object:bookmarks' => "Добавить в закладки",
 	'edit:object:bookmarks' => "Редактировать закладку",
+	'notification:object:bookmarks:create' => "Отправить уведомление при создании закладки",
+	'notifications:mute:object:bookmarks' => "о закладке '%s'",
 
 	'bookmarks:this' => "Добавить в закладки",
 	'bookmarks:this:group' => "Добавить в закладки в %s",

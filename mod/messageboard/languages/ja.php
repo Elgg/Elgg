@@ -22,14 +22,14 @@ return array(
 	/**
 	 * Message board widget river
 	 */
-	'river:user:messageboard' => "%s posted on %s's message board",
+	'river:user:messageboard' => "%sさんは、%sさんの伝言板に伝言を残しています",
 
 	/**
 	 * Status messages
 	 */
 
-	'annotation:delete:messageboard:fail' => "Sorry, we could not delete this message",
-	'annotation:delete:messageboard:success' => "You successfully deleted the message",
+	'annotation:delete:messageboard:fail' => "申し訳ありません。この伝言を削除できませんでした。",
+	'annotation:delete:messageboard:success' => "伝言を削除しました。",
 	
 	'messageboard:posted' => "伝言を書き込みをしました。",
 	'messageboard:deleted' => "伝言を削除しました。",
@@ -39,16 +39,16 @@ return array(
 	 */
 
 	'messageboard:email:subject' => '伝言板にコメントがされています！',
-	'messageboard:email:body' => "You have a new message board comment from %s.
+	'messageboard:email:body' => "%s さんから伝言板にコメントが残っています。
 
-It reads:
+内容:
 
 %s
 
-To view your message board comments, click here:
+伝言板のコメントを表示するには、ここをクリック:
 %s
 
-To view %s's profile, click here:
+%s さんのプロフィールを見るには、ここをクリック:
 %s",
 
 	/**

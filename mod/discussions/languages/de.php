@@ -72,10 +72,4 @@ Schau Dir die Diskussion an und antworte selbst darauf:
 	'discussion:topic:closed:desc' => 'Diese Diskussion ist geschlossen und es können keine neuen Antworten mehr hinzugefügt werden.',
 
 	'discussion:topic:description' => 'Textinhalt der Diskussion',
-
-	// upgrades
-	'discussions:upgrade:2017112800:title' => "Wandle den Subtyp von existierenden Diskussions-Antwort-Entitäten in Kommentar-Subtyp um",
-	'discussions:upgrade:2017112800:description' => "Diskussions-Antworten hatten bisher einen eigenen Entitäts-Subtyp. Aus Gründen der Vereinfachung wird dieser separate Subtyp nicht mehr verwendet und stattdessen für die Diskussions-Antworten der gleiche Subtyp wie für Kommentar-Entitäten verwendet.",
-	'discussions:upgrade:2017112801:title' => "Aktualisiere River-Einträge von Diskussions-Antworten",
-	'discussions:upgrade:2017112801:description' => "Diskussions-Antworten hatten bisher einen eigenen Entitäts-Subtyp. Aus Gründen der Vereinfachung wird dieser separate Subtyp nicht mehr verwendet und stattdessen für die Diskussions-Antworten der gleiche Subtyp wie für Kommentar-Entitäten verwendet. Als Folge dessen müssen auch die zugehörigen River-Einträge aktualisiert werden.",
 );

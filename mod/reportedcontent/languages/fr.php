@@ -7,7 +7,8 @@
 
 return array(
 
-	'item:object:reported_content' => 'Eléments signalés',
+	'item:object:reported_content' => 'Elément signalé',
+	'collection:object:reported_content' => 'Éléments signalés',
 	'admin:administer_utilities:reportedcontent' => 'Contenu signalé',
 	'reportedcontent' => 'Contenu signalé',
 	'reportedcontent:this' => 'Signaler ceci',

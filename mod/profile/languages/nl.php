@@ -8,8 +8,6 @@
 return array(
 	'profile' => 'Profiel',
 	'profile:notfound' => 'Sorry. Het opgegeven profiel kon niet gevonden worden.',
-	'profile:upgrade:2017040700:title' => 'Migreer profielvelden',
-	'profile:upgrade:2017040700:description' => 'Deze migratie zal de profielvelden converteren van metadata naar annotaties met iedere naam geprefixed met "profile:". <strong>Belangrijk:</strong> Indien je "inactieve" profiel velden hebt welke je wilt migreren, maak de profielvelden opnieuw aan en herlaad deze pagina om er zeker van te zijn dat de velden worden gemigreerd.',
 	
 	'admin:configure_utilities:profile_fields' => 'Bewerk profielvelden',
 	

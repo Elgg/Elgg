@@ -8,8 +8,6 @@
 return array(
 	'profile' => 'Profil',
 	'profile:notfound' => 'Tyvärr, vi kunde inte hitta den efterfrågade profilen.',
-	'profile:upgrade:2017040700:title' => 'Migrera schema för profilfält',
-	'profile:upgrade:2017040700:description' => 'Den här migrationen konverterar profilfält från metadata till anteckningar med prefixet "profile:" för varje namn. <strong>Notera:</strong> Om du har "inaktiva" profilfält som du vill migrera, återskapa de fälten och ladda om den här sidan för att vara säker på att de migreras.',
 	
 	'admin:configure_utilities:profile_fields' => 'Redigera Profiilfält',
 	

@@ -96,13 +96,4 @@ Vezi și comentează pe pagină:
 	'pages:label:history' => "Istoricul paginii",
 
 	'pages:newchild' => "Creează o sub-pagină",
-	
-	/**
-	 * Upgrades
-	 */
-	'pages:upgrade:2017110700:title' => "Migrează page_top la entitățile paginii",
-	'pages:upgrade:2017110700:description' => "Schimbă subtipul al tuturor paginilor de top în 'pagină' și setează datele meta pentru a asigura o listare corectă.",
-	
-	'pages:upgrade:2017110701:title' => "Migrează entitățile de flux page_top",
-	'pages:upgrade:2017110701:description' => "Schimbă subtipul tuturor elementelor de flux pentru paginile de top în 'pagină'.",
 );

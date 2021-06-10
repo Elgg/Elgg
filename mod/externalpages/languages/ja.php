@@ -11,7 +11,6 @@ return array(
 	 * Menu items and titles
 	 */
 	'expages' => "外部向け説明ページ",
-	'admin:configure_utilities:expages' => "Site Pages",
 	'expages:edit:viewpage' => "サイトのページを見る",
 	'expages:about' => "このサイトについて",
 	'expages:terms' => "利用条件",

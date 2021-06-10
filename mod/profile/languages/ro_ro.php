@@ -8,10 +8,6 @@
 return array(
 	'profile' => 'Profil',
 	'profile:notfound' => 'Scuze. Nu am putut găsi profilul cerut.',
-	'profile:upgrade:2017040700:title' => 'Migrează schema câmpurilor de profil',
-	'profile:upgrade:2017040700:description' => 'Această migrare transformă câmpurile de profil din date meta în adnotații cu fiecare nume
-prefixat cu "profil:". <strong>Notă:</strong> Dacă ai câmpuri de profil "inactive" pe care le dorești migrate, recreează aceste câmpuri
-și reîncarcă această pagină pentru a te asigura că vor fi migrate.',
 	
 	'admin:configure_utilities:profile_fields' => 'Editează Câmpurile de Profil',
 	

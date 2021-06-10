@@ -72,10 +72,4 @@ Bekijk en reageer hier op de discussie:
 	'discussion:topic:closed:desc' => 'Deze discussie is gesloten. Er kunnen geen reacties meer geplaatst worden.',
 
 	'discussion:topic:description' => 'Onderwerp van je discussie',
-
-	// upgrades
-	'discussions:upgrade:2017112800:title' => "Migreer discussie reacties naar reguliere reacties",
-	'discussions:upgrade:2017112800:description' => "Discussie reacties waren eerder een apart soort reacties, maar dit is nu samengevoegd in de reguliere reacties.",
-	'discussions:upgrade:2017112801:title' => "Migreer activiteitenstroom items mbt discussie reacties",
-	'discussions:upgrade:2017112801:description' => "Discussie reacties waren eerder een apart soort reacties, maar dit is nu samengevoegd in de reguliere reacties.",
 );

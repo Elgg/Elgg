@@ -11,8 +11,6 @@ return array(
  */
 
 	'item:site:site' => 'سایت',
-	'collection:site:site' => 'Sites',
-	'index:content' => '<p>Welcome to your Elgg site.</p><p><strong>Tip:</strong> Many sites use the <code>activity</code> plugin to place a site activity stream on this page.</p>',
 
 /**
  * Sessions
@@ -32,7 +30,6 @@ return array(
 	'session_changed_user' => "شما به عنوان یک کاربر دیگر وارد سیستم شده اید. باید صفحه را  <a href='javascript:location.reload(true)'>بارگزاری مجدد</a> کنید.",
 
 	'loggedinrequired' => "برای مشاهده صفحه درخواست شده باید وارد شوید.",
-	'loggedoutrequired' => "You must be logged out to view the requested page.",
 	'adminrequired' => "برای مشاهده این صفحه شما باید مدیر سیستم باشید.",
 	'membershiprequired' => "برای مشاهده این صفحه شما باید عضو این گروه باشید.",
 	'limited_access' => "شما مجوز دسترسی به این صفحه را ندارید.",
@@ -62,24 +59,15 @@ return array(
 	'PluginException:InvalidPlugin:Details' => '%s یک پلاگین معتبر نیست. %s',
 	'PluginException:NullInstantiated' => 'پلاگین Elgg نمی تواند مقدار تهی یا خالی باشد. شما باید یک GUID یا یک کد پلاگین و یا یک مسیر کامل را وارد کنید.',
 	'ElggPlugin:MissingID' => 'کد پلاگین پیدا نشد (guid %s)',
-	'ElggPlugin:NoPluginPackagePackage' => 'بسته پلاگین Elgg برای کد پلاگین %s ناشناخته است (guid %s)',
 	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'فایل  درخواست شده %s پیدا نشد.',
-	'ElggPluginPackage:InvalidPlugin:InvalidId' => 'پوشه پلاگین بای به %s تغییر نام پیدا کند تا با کد پلاگین که در فایل مانیفست مشخص شده مطابق شود.',
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'فایل مانیفست نوع داده وابسته نامعتبر دارد "%s"',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'فایل مانیفست نوع داده نامعتبر دارد "%s"',
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'یک %s وابستگی %s در پلاگین %s وجود دارد. پلاگین نمی تواند با تامین کننده هایش مغایرت داشته باشد.',
 	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'تداخل با پلاگین: %s',
 	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'فایل پلاگین "elgg-plugin.php" موجود هست ولی قابل خواندن نیست',
-	'ElggPlugin:Error' => 'Plugin error',
-	'ElggPlugin:Error:ID' => 'Error in plugin "%s"',
-	'ElggPlugin:Error:Path' => 'Error in plugin path "%s"',
-	'ElggPlugin:Error:Unknown' => 'Undefined plugin error',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'امکان استفاده از %s برای پلاگین %s (guid: %s ) در %s نیست.',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'خطای %s برای پلاگین  %s (guid: %s) در  %s رخ داد.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'امکان باز کردن پوشه نمایه های پلاگین %s (guid: %s) در %s نیست.',
-	'ElggPlugin:Exception:NoID' => 'هیچ کدی برای پلاگین با guid: %s نیست.',
-	'ElggPlugin:Exception:InvalidPackage' => 'Package cannot be loaded',
-	'ElggPlugin:Exception:InvalidManifest' => 'Plugin manifest is missing or invalid',
 	'PluginException:NoPluginName' => "نام پلاگین پیدا نشد",
 	'PluginException:ParserError' => 'خطا: با استفاده از واسط نسخه %s امکان پردازش فایل مانیفست پلاگین %s نیست.',
 	'PluginException:NoAvailableParser' => 'هیچ مفسری برای واسط نسخه %s برای فایل مانیفست پلاگین %sیافت نشد.',
@@ -87,23 +75,6 @@ return array(
 	'ElggPlugin:InvalidAndDeactivated' => '%sیک پلاگین نامعتبر یا غیرفعال است.',
 	'ElggPlugin:activate:BadConfigFormat' => 'فایل پلاگین "elgg-plugin.php" آرایه مورد نظر را برنگرداند',
 	'ElggPlugin:activate:ConfigSentOutput' => 'خروجی فایل "elgg-plugin.php"',
-
-	'ElggPlugin:Dependencies:Requires' => 'نیازمندی ها',
-	'ElggPlugin:Dependencies:Suggests' => 'پیشنهادات',
-	'ElggPlugin:Dependencies:Conflicts' => 'ناسازگاریها',
-	'ElggPlugin:Dependencies:Conflicted' => 'ناسازگار است',
-	'ElggPlugin:Dependencies:Provides' => 'فراهم میکند',
-	'ElggPlugin:Dependencies:Priority' => 'اولویت',
-
-	'ElggPlugin:Dependencies:Elgg' => 'نسخه Elgg',
-	'ElggPlugin:Dependencies:PhpVersion' => 'نسخه PHP',
-	'ElggPlugin:Dependencies:PhpExtension' => 'افزونه PHP : %s',
-	'ElggPlugin:Dependencies:PhpIni' => 'تنظیمان php ini  : %s',
-	'ElggPlugin:Dependencies:Plugin' => 'پلاگین: %s',
-	'ElggPlugin:Dependencies:Priority:After' => 'بعد از %s',
-	'ElggPlugin:Dependencies:Priority:Before' => 'قبل از %s',
-	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%sنصب نشده است',
-	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'موجود نیست',
 
 	'ElggPlugin:Dependencies:ActiveDependent' => 'پلاگین های دیگری در لیست %s به عنوان پیش نیاز ها آمده اند. شما باید ابتدا پلاگین های زیر را غیرفعال کنید:%s',
 
@@ -119,23 +90,9 @@ return array(
 	'LoginException:AccountLocked' => 'حساب کاربری شما به خاطر چندین بار ورود ناموفق قفل شده است.',
 	'LoginException:ChangePasswordFailure' => 'پسورد فعلی مطابقت ندارد',
 	'LoginException:Unknown' => 'به خاطر خطای ناشناخته ای امکان ورود شما به سیستم نیست',
-	'LoginException:AdminValidationPending' => "Your account needs to be validated by a site administrator before you can use it. You'll be notified when your account is validated.",
-	'LoginException:DisabledUser' => "Your account has been disabled. You're not allowed to login.",
 
 	'UserFetchFailureException' => 'امکان بررسی دسترسی کاربر [%s] نیست، چون این کاربر وجود ندارد.',
-
-	'PageNotFoundException' => 'The page you are trying to view does not exist or you do not have permissions to view it',
-	'EntityNotFoundException' => 'The content you were trying to access has been removed or you do not have permissions to access it.',
-	'EntityPermissionsException' => 'You do not have sufficient permissions for this action.',
-	'GatekeeperException' => 'You do not have permissions to view the page you are trying to access',
 	'BadRequestException' => 'درخواست اشتباه',
-	'ValidationException' => 'Submitted data did not meet the requirements, please check your input.',
-	'LogicException:InterfaceNotImplemented' => '%s must implement %s',
-	
-	'Security:InvalidPasswordCharacterRequirementsException' => "The provided password is doesn't meet the character requirements",
-	'Security:InvalidPasswordLengthException' => "The provided password doesn't meet the minimal length requirement of %s characters",
-
-	'deprecatedfunction' => 'هشدار: این این کد از تابع منسوخ %s استفاده میکند و با این نسخه از Elgg سازگاری ندارد.',
 
 	'pageownerunavailable' => 'هشدار: صاحب این صفحه %d در دسترس نیست.',
 	'viewfailure' => 'خطای داخلی در نمایه %sبه وجود آمد',
@@ -145,8 +102,6 @@ return array(
 	'error:missing_data' => 'در داده های درخواست شما موارد اجباری یافت نشد.',
 	'save:fail' => 'در ذخیره داده های شما مشکلی پیش آمد',
 	'save:success' => 'داده شما ذخیره شد',
-
-	'forward:error' => 'Sorry. An error occurred while redirecting to you to another site.',
 
 	'error:default:title' => 'متاسفم',
 	'error:default:content' => 'متاسفم.... مشکلی پیش آمده',
@@ -209,11 +164,6 @@ return array(
 /**
  * Access
  */
-
-	'access:label:private' => "Private",
-	'access:label:logged_in' => "Logged in users",
-	'access:label:public' => "Public",
-	'access:label:logged_out' => "Logged out users",
 	'access:label:friends' => "دوستان",
 	'access' => "دسترسی",
 	'access:overridenotice' => "نکته: به خاطر قوانین گروه، این محتوا فقط در دسترس اعضای گروه است.",
@@ -251,7 +201,6 @@ return array(
 	'widgets:add:failure' => "امکان افزودن ابزارک نبود.",
 	'widgets:move:failure' => "امکان ذخیره سازی مکان ابزارک جدید نبود.",
 	'widgets:remove:failure' => "امکان حذف این ابزارک نیست",
-	'widgets:not_configured' => "This widget is not yet configured",
 	
 /**
  * Groups
@@ -259,10 +208,7 @@ return array(
 
 	'group' => "گروه",
 	'item:group' => "گروهها",
-	'collection:group' => 'Groups',
 	'item:group:group' => "گروهها",
-	'collection:group:group' => 'Groups',
-	'groups:tool_gatekeeper' => "The requested functionality is currently not enabled in this group",
 
 /**
  * Users
@@ -275,7 +221,6 @@ return array(
 	'collection:user:user' => 'کاربران',
 
 	'friends' => "دوستان",
-	'collection:friends' => 'Friends\' %s',
 
 	'avatar' => 'شکلک',
 	'avatar:noaccess' => "شما امکان ویرایش شکلک این کاربر را ندارید",
@@ -294,16 +239,11 @@ return array(
 	'avatar:crop:fail' => 'برش شکلک با شکست مواجه شد',
 	'avatar:remove:success' => 'شکلک با موفقیت حذف شد',
 	'avatar:remove:fail' => 'خذف شکلک ما مشکل مواجه شد',
-	
-	'action:user:validate:already' => "%s was already validated",
-	'action:user:validate:success' => "%s has been validated",
-	'action:user:validate:error' => "An error occurred while validating %s",
 
 /**
  * Feeds
  */
 	'feed:rss' => 'خوراک RSS این صفحه',
-	'feed:rss:title' => 'RSS feed for this page',
 /**
  * Links
  */
@@ -315,7 +255,6 @@ return array(
  * River
  */
 	'river' => "رود",
-	'river:user:friend' => "%s is now a friend with %s",
 	'river:update:user:avatar' => '%s یک شکلک جدید دارد',
 	'river:noaccess' => 'شما مجوز ویرایش این مورد را ندارید',
 	'river:posted:generic' => '%s منتشر شد',
@@ -335,18 +274,11 @@ return array(
 /**
  * Relationships
  */
-	
-	'relationship:default' => "%s relates to %s",
 
 /**
  * Notifications
  */
-	'notifications:usersettings' => "تنظیمات اعلان ها",
 	'notification:method:email' => 'ایمیل',
-
-	'notifications:usersettings:save:ok' => "تنظیمات اعلان ها با موفقیت ذخیره شد",
-	'notifications:usersettings:save:fail' => "در ذخیره تنظیمات اعلان ها مشکلی به وجود آمده است",
-
 	'notification:subject' => 'اعلان های %s',
 	'notification:body' => 'مشاهده فعالیت جدید در %s',
 
@@ -360,8 +292,6 @@ return array(
 	'groups:searchtitle' => "جستجو گروهها: %s",
 	'advancedsearchtitle' => "%s نتیجه منطبق با %s",
 	'notfound' => "هیچ نتیجه ای یافت نشد",
-	'next' => "بعدی",
-	'previous' => "قبلی",
 
 	'viewtype:change' => "تغییر نوع لیست",
 	'viewtype:list' => "نمایش لیستی",
@@ -391,8 +321,6 @@ return array(
 	'registerbad' => "ثبت نام شما به دلیل یک خطای ناشناخته با شکست مواجه شد.",
 	'registerdisabled' => "ثبت نام توسط مدیر سیستم غیرفعال شده است.",
 	'register:fields' => 'همه فیلدها اجباری هستند',
-
-	'registration:noname' => 'Display name is required.',
 	'registration:notemail' => 'ظاهرا آدرس ایمیلی که شما معرفی کرده اید معتبر نیست.',
 	'registration:userexists' => 'نام کاربری موجود هست',
 	'registration:usernametooshort' => 'نام کاربری شما باید حداقل %u کاراکتر باشد.',
@@ -412,8 +340,6 @@ return array(
 	'user:name:label' => "نام قابل نمایش",
 	'user:name:success' => "نام با موفقیت تغییر پیدا کرد",
 	'user:name:fail' => "امکان تغییر نام نیست",
-	'user:username:success' => "Successfully changed username on the system.",
-	'user:username:fail' => "Could not change username on the system.",
 
 	'user:set:password' => "کلمه عبور حساب کاربری",
 	'user:current_password:label' => 'کلمه عبور فعلی',
@@ -433,10 +359,8 @@ return array(
 	'user:language:fail' => "تنظیمات زبان ذخیره نشد",
 
 	'user:username:notfound' => 'کاربر %s پیدا نشد',
-	'user:username:help' => 'Please be aware that changing a username will change all dynamic user related links',
 
 	'user:password:lost' => 'فراموشی کلمه عبور',
-	'user:password:hash_missing' => 'Regretfully, we must ask you to reset your password. We have improved the security of passwords on the site, but were unable to migrate all accounts in the process.',
 	'user:password:changereq:success' => 'ایمیل حاوی کلمه عبور جدید با موفقیت ارسال شد',
 	'user:password:changereq:fail' => 'امکان درخواست کلمه عبور جدید نیست',
 
@@ -444,20 +368,9 @@ return array(
 
 	'user:persistent' => 'مرا به یاد بیاور',
 
-	'walled_garden:home' => 'Home',
-
 /**
  * Password requirements
  */
-	'password:requirements:min_length' => "The password needs to be at least %s characters.",
-	'password:requirements:lower' => "The password needs to have at least %s lower case characters.",
-	'password:requirements:no_lower' => "The password shouldn't contain any lower case characters.",
-	'password:requirements:upper' => "The password needs to have at least %s upper case characters.",
-	'password:requirements:no_upper' => "The password shouldn't contain any upper case characters.",
-	'password:requirements:number' => "The password needs to have at least %s number characters.",
-	'password:requirements:no_number' => "The password shouldn't contain any number characters.",
-	'password:requirements:special' => "The password needs to have at least %s special characters.",
-	'password:requirements:no_special' => "The password shouldn't contain any special characters.",
 	
 /**
  * Administration
@@ -465,7 +378,6 @@ return array(
 	'menu:page:header:administer' => 'مدیریت',
 	'menu:page:header:configure' => 'تنظیم',
 	'menu:page:header:develop' => 'توسعه',
-	'menu:page:header:information' => 'Information',
 	'menu:page:header:default' => 'سایر',
 
 	'admin:view_site' => 'مشاهده سایت',
@@ -480,37 +392,16 @@ return array(
 	'admin:unknown_section' => 'قسمت مدیریت معتبر نیست.',
 
 	'admin' => "مدیران",
-	'admin:header:release' => "Elgg release: %s",
 	'admin:description' => "پنل مدیریت به شما اجازه کنترل همه جوانب سیستم را می دهد. از تنظیمات کاربران گرفته تا رفتار پلاگین ها. یکی از موارد زیر را جهت شروع انتخاب نمایید",
-
-	'admin:performance' => 'Performance',
-	'admin:performance:label:generic' => 'Generic',
-	'admin:performance:generic:description' => 'Below is a list of performance suggestions / values which could help in tuning your website',
-	'admin:performance:simplecache' => 'Simplecache',
-	'admin:performance:simplecache:settings:warning' => "It's recommended you configure the simplecache setting in the settings.php.
-Configuring simplecache in the settings.php file improves caching performance.
-It allows Elgg to skip connecting to the database when serving cached JavaScript and CSS files",
-	'admin:performance:systemcache' => 'Systemcache',
-	'admin:performance:apache:mod_cache' => 'Apache mod_cache',
-	'admin:performance:apache:mod_cache:warning' => 'The mod_cache module provides HTTP-aware caching schemes. This means that the files will be cached according
-to an instruction specifying how long a page can be considered "fresh".',
-	'admin:performance:php:open_basedir' => 'PHP open_basedir',
-	'admin:performance:php:open_basedir:not_configured' => 'No limitations have been set',
-	'admin:performance:php:open_basedir:warning' => 'A small amount of open_basedir limitations are in effect, this could impact performance.',
-	'admin:performance:php:open_basedir:error' => 'A large amount of open_basedir limitations are in effect, this will probably impact performance.',
-	'admin:performance:php:open_basedir:generic' => 'With open_basedir every file access will be checked against the list of limitations. Since Elgg has a lot of
-file access this will negatively impact performance. Also PHPs opcache can no longer cache file paths in memory and has to resolve this upon every access.',
 	
 	'admin:statistics' => 'آمار',
 	'admin:server' => 'سرور',
-	'admin:cron' => 'Cron',
 	'admin:cron:record' => 'آخرین cron job  ها',
 	'admin:cron:period' => 'دوره زمانی اجرای cron',
 	'admin:cron:friendly' => 'آخرین اجرای موفق',
 	'admin:cron:date' => 'تاریخ و زمان',
 	'admin:cron:msg' => 'پیام',
 	'admin:cron:started' => 'فعالیت زمانبندی شده "%s" در %s شروع شد',
-	'admin:cron:started:actual' => 'Cron interval "%s" started processing at %s',
 	'admin:cron:complete' => 'فعالیت زمانبندی شده "%s" در %s تمام شد',
 
 	'admin:appearance' => 'نحوه نمایش',
@@ -523,46 +414,20 @@ file access this will negatively impact performance. Also PHPs opcache can no lo
 	'admin:users:online' => 'آنلاین ها',
 	'admin:users:newest' => 'جدیدترین',
 	'admin:users:admins' => 'مدیران',
-	'admin:users:searchuser' => 'Search user to make them admin',
-	'admin:users:existingadmins' => 'List of existing admins',
 	'admin:users:add' => 'افزودن کاربر جدید',
 	'admin:users:description' => "این قسمت مدیریت به شما اجازه کنترل تنظیمات سایتتان را میدهد. یکی از موارد زیر را جهت شروع انتخاب نمایید",
 	'admin:users:adduser:label' => "برای افزودن کاربر جدید اینجا کلیک کنید..",
 	'admin:users:opt:linktext' => "تنظیمات کاربران",
 	'admin:users:opt:description' => "تنظیمات کاربران و اطلاعات حساب کاربری",
 	'admin:users:find' => 'جستجو',
-	'admin:users:unvalidated' => 'Unvalidated',
-	'admin:users:unvalidated:no_results' => 'No unvalidated users.',
-	'admin:users:unvalidated:registered' => 'Registered: %s',
-	'admin:users:unvalidated:change_email' => 'Change e-mail address',
-	'admin:users:unvalidated:change_email:user' => 'Change e-mail address for: %s',
 	
 	'admin:configure_utilities:maintenance' => 'حالت نگهداری سایت',
 	'admin:upgrades' => 'ارتقاء ها',
-	'admin:upgrades:finished' => 'Completed',
-	'admin:upgrades:db' => 'Database upgrades',
-	'admin:upgrades:db:name' => 'Upgrade name',
-	'admin:upgrades:db:start_time' => 'Start time',
-	'admin:upgrades:db:end_time' => 'End time',
-	'admin:upgrades:db:duration' => 'Duration',
-	'admin:upgrades:menu:pending' => 'Pending upgrades',
-	'admin:upgrades:menu:completed' => 'Completed upgrades',
-	'admin:upgrades:menu:db' => 'Database upgrades',
-	'admin:upgrades:menu:run_single' => 'Run this upgrade',
-	'admin:upgrades:run' => 'Run upgrades now',
-	'admin:upgrades:error:invalid_upgrade' => 'Entity %s does not exist or not a valid instance of ElggUpgrade',
-	'admin:upgrades:error:invalid_batch' => 'Batch runner for the upgrade %s (%s) could not be instantiated',
-	'admin:upgrades:completed' => 'Upgrade "%s" completed at %s',
-	'admin:upgrades:completed:errors' => 'Upgrade "%s" completed at %s but encountered %s errors',
-	'admin:upgrades:failed' => 'Upgrade "%s" failed',
-	'admin:action:upgrade:reset:success' => 'Upgrade "%s" was reset',
 
 	'admin:settings' => 'تنظیمات',
 	'admin:settings:basic' => 'تنظیمات اولیه',
-	'admin:settings:i18n' => 'Internationalization',
 	'admin:settings:advanced' => 'تنظیمات پیشرفته',
 	'admin:settings:users' => 'کاربران',
-	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "این قسمت مدیریت به شما اجازه کنترل تنظیمات عمومی سایتتان را میدهد. یکی از موارد زیر را جهت شروع انتخاب نمایید",
 	'admin:site:opt:linktext' => "تنظیمات سایت",
 	'admin:settings:in_settings_file' => 'این مورد در php.ini تنظیم شده است',
@@ -586,28 +451,13 @@ file access this will negatively impact performance. Also PHPs opcache can no lo
 	'admin:widget:content_stats:help' => 'محتوای تولید شده توسط کاربرانتان را ردگیری کنید',
 	'admin:widget:cron_status' => 'وضعیت cron',
 	'admin:widget:cron_status:help' => 'نمایش وضعیت آخرین اجرای cron job',
-	'admin:statistics:numentities' => 'Content Statistics',
-	'admin:statistics:numentities:type' => 'Content type',
-	'admin:statistics:numentities:number' => 'Number',
-	'admin:statistics:numentities:searchable' => 'Searchable entities',
-	'admin:statistics:numentities:other' => 'Other entities',
 
 	'admin:widget:admin_welcome' => 'خوش آمدید',
 	'admin:widget:admin_welcome:help' => "توضیح مختصری برای محیط مدیریت Elgg",
 	'admin:widget:admin_welcome:intro' =>
 'به Elgg خوش آمدید. هم اکنون شما به داشبورد مدیریت نگاه میکنید. این داشبورد برای بررسی رخدادهای سایت کاربرد دارد.',
-
-	'admin:widget:admin_welcome:registration' => "Registration for new users is currently disabled! You can enabled this on the %s page.",
 	'admin:widget:admin_welcome:admin_overview' =>
-"Navigation for the administration area is provided by the menu to the right. It is organized into
-three sections:
-	<dl>
-		<dt>Administer</dt><dd>Basic tasks like managing users, monitoring reported content and activating plugins.</dd>
-		<dt>Configure</dt><dd>Occasional tasks like setting the site name or configuring settings of a plugin.</dd>
-		<dt>Information</dt><dd>Information about your site like statistics.</dd>
-		<dt>Develop</dt><dd>For developers who are building plugins or designing themes. (Requires a developer plugin.)</dd>
-	</dl>
-",
+"",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br/>حتما از منابعی که در پایین صفحه لینک شده اند استفاده کنید و از Elgg متشکر باشید!',
@@ -617,12 +467,6 @@ three sections:
 
 	'admin:cache:flush' => 'خالی کردن کش',
 	'admin:cache:flushed' => "کش سایت خالی شد",
-	'admin:cache:invalidate' => 'Invalidate the caches',
-	'admin:cache:invalidated' => "The site's caches have been invalidated",
-	'admin:cache:clear' => 'Clear the caches',
-	'admin:cache:cleared' => "The site's caches have been cleared",
-	'admin:cache:purge' => 'Purge the caches',
-	'admin:cache:purged' => "The site's caches have been purged",
 
 	'admin:footer:faq' => 'سوالات متداول مدیریت',
 	'admin:footer:manual' => 'راهنمای مدیریت',
@@ -649,174 +493,13 @@ three sections:
 
 	'admin:plugins:markdown:unknown_plugin' => 'پلاگین ناشناخته',
 	'admin:plugins:markdown:unknown_file' => 'فایل ناشناخته',
-
-	'admin:notices:delete_all' => 'Dismiss all %s notices',
 	'admin:notices:could_not_delete' => 'امکان حذف اعلان نیست',
 	'item:object:admin_notice' => 'اعلان مدیر',
-	'collection:object:admin_notice' => 'Admin notices',
 
 	'admin:options' => 'گزینه های مدیر',
-
-	'admin:security' => 'Security',
-	'admin:security:information' => 'Information',
-	'admin:security:information:description' => 'On this page you can find a list of security recommendations.',
-	'admin:security:information:https' => 'Is the website protected by HTTPS',
-	'admin:security:information:https:warning' => "It's recommended to protect your website using HTTPS, this helps protect data
-(eg. passwords) from being sniffed over the internet connection.",
-	'admin:security:information:wwwroot' => 'Website main folder is writable',
-	'admin:security:information:wwwroot:error' => "It's recommended that you install Elgg in a folder which isn't writable by your webserver.
-Malicious visitors could place unwanted code in your website.",
-	'admin:security:information:validate_input' => 'Input validation',
-	'admin:security:information:validate_input:error' => "Some plugin has disabled the input validation on your website, this will allow users to
-submit potentially harmfull content (eg. cross-site-scripting, etc)",
-	'admin:security:information:password_length' => 'Minimal password length',
-	'admin:security:information:password_length:warning' => "It's recommended to have a minimal password length of at least 6 characters.",
-	'admin:security:information:username_length' => 'Minimal username length',
-	'admin:security:information:username_length:warning' => "It's recommended to have a minimal username length of at least 4 characters.",
-	'admin:security:information:php:session_gc' => "PHP session cleanup",
-	'admin:security:information:php:session_gc:chance' => "Cleanup chance: %s%%",
-	'admin:security:information:php:session_gc:lifetime' => "Session lifetime %s seconds",
-	'admin:security:information:php:session_gc:error' => "It's recommended to set 'session.gc_probability' and 'session.gc_divisor' in your PHP settings, this will cleanup
-expired sessions from your database and not allow users to reuse old sessions.",
-	'admin:security:information:htaccess:hardening' => ".htaccess file access hardening",
-	'admin:security:information:htaccess:hardening:help' => "In the .htaccess file access to certain files can be blocked to increase security on your site. For more information look in your .htaccess file.",
 	
 	'admin:security:settings' => 'تنظیمات',
-	'admin:security:settings:description' => 'On this page you can configure some security features. Please read the settings carefully.',
-	'admin:security:settings:label:hardening' => 'Hardening',
 	'admin:security:settings:label:account' => 'حساب کاربری',
-	'admin:security:settings:label:notifications' => 'Notifications',
-	'admin:security:settings:label:site_secret' => 'Site secret',
-	
-	'admin:security:settings:notify_admins' => 'Notify all site administrators when an admin is added or removed',
-	'admin:security:settings:notify_admins:help' => 'This will send out a notification to all site administrators that one of the admins added/removed a site administrator.',
-	
-	'admin:security:settings:notify_user_admin' => 'Notify the user when the admin role is added or removed',
-	'admin:security:settings:notify_user_admin:help' => 'This will send a notification to the user that the admin role was added to/removed from their account.',
-	
-	'admin:security:settings:notify_user_ban' => 'Notify the user when their account gets (un)banned',
-	'admin:security:settings:notify_user_ban:help' => 'This will send a notification to the user that their account was (un)banned.',
-	
-	'admin:security:settings:notify_user_password' => 'Notify the user when they change their password',
-	'admin:security:settings:notify_user_password:help' => 'This will send a notification to the user when they change their password.',
-	
-	'admin:security:settings:protect_upgrade' => 'Protect upgrade.php',
-	'admin:security:settings:protect_upgrade:help' => 'This will protect upgrade.php so you require a valid token or you\'ll have to be an administrator.',
-	'admin:security:settings:protect_upgrade:token' => 'In order to be able to use the upgrade.php when logged out or as a non admin, the following URL needs to be used:',
-	
-	'admin:security:settings:protect_cron' => 'Protect the /cron URLs',
-	'admin:security:settings:protect_cron:help' => 'This will protect the /cron URLs with a token, only if a valid token is provided will the cron execute.',
-	'admin:security:settings:protect_cron:token' => 'In order to be able to use the /cron URLs the following tokens needs to be used. Please note that each interval has its own token.',
-	'admin:security:settings:protect_cron:toggle' => 'Show/hide cron URLs',
-	
-	'admin:security:settings:disable_password_autocomplete' => 'Disable autocomplete on password fields',
-	'admin:security:settings:disable_password_autocomplete:help' => 'Data entered in these fields will be cached by the browser. An attacker who can access the victim\'s browser could steal this information. This is especially important if the application is commonly used in shared computers such as cyber cafes or airport terminals. If you disable this, password management tools can no longer autofill these fields. The support for the autocomplete attribute can be browser specific.',
-	
-	'admin:security:settings:email_require_password' => 'Require password to change email address',
-	'admin:security:settings:email_require_password:help' => 'When the user wishes to change their email address, require that they provide their current password.',
-	
-	'admin:security:settings:email_require_confirmation' => 'Require confirmation on email address change',
-	'admin:security:settings:email_require_confirmation:help' => 'The new e-mail address needs to be confirmed before the change is in effect. After a successfull change a notification is send to the old e-mail address.',
-
-	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
-	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
-Having icons session bound makes icon urls not shareable between sessions. The side effect is that caching of these urls will only help the active session.',
-	
-	'admin:security:settings:site_secret:intro' => 'Elgg uses a key to create security tokens for various purposes.',
-	'admin:security:settings:site_secret:regenerate' => "Regenerate site secret",
-	'admin:security:settings:site_secret:regenerate:help' => "Note: Regenerating your site secret may inconvenience some users by invalidating tokens used in \"remember me\" cookies, e-mail validation requests, invitation codes, etc.",
-	
-	'admin:security:settings:minusername' => "Minimal username length",
-	'admin:security:settings:minusername:help' => "Minimal number of characters required in a username",
-	
-	'admin:security:settings:min_password_length' => "Minimal password length",
-	'admin:security:settings:min_password_length:help' => "Minimal number of characters required in a password",
-	
-	'admin:security:settings:min_password_lower' => "Minimal number of lower case characters in a password",
-	'admin:security:settings:min_password_lower:help' => "Configure the minimal number of lower case (a-z) characters that should be present in a password. 0 for not present at all, empty for no requirements.",
-	
-	'admin:security:settings:min_password_upper' => "Minimal number of upper case characters in a password",
-	'admin:security:settings:min_password_upper:help' => "Configure the minimal number of upper case (A-Z) characters that should be present in a password. 0 for not present at all, empty for no requirements.",
-	
-	'admin:security:settings:min_password_number' => "Minimal number of number characters in a password",
-	'admin:security:settings:min_password_number:help' => "Configure the minimal number of number (0-9) characters that should be present in a password. 0 for not present at all, empty for no requirements.",
-	
-	'admin:security:settings:min_password_special' => "Minimal number of special characters in a password",
-	'admin:security:settings:min_password_special:help' => "Configure the minimal number of special (!@$%^&*()<>,.?/[]{}-=_+) characters that should be present in a password. 0 for not present at all, empty for no requirements.",
-	
-	'admin:site:secret:regenerated' => "Your site secret has been regenerated",
-	'admin:site:secret:prevented' => "The regeneration of the site secret was prevented",
-	
-	'admin:notification:make_admin:admin:subject' => 'A new site administrator was added to %s',
-	'admin:notification:make_admin:admin:body' => 'Hi %s,
-
-%s made %s a site administrator of %s.
-
-To view the profile of the new administrator, click here:
-%s
-
-To go to the site, click here:
-%s',
-	
-	'admin:notification:make_admin:user:subject' => 'You were added as a site administator of %s',
-	'admin:notification:make_admin:user:body' => 'Hi %s,
-
-%s made you a site administrator of %s.
-
-To go to the site, click here:
-%s',
-	'admin:notification:remove_admin:admin:subject' => 'A site administrator was removed from %s',
-	'admin:notification:remove_admin:admin:body' => 'Hi %s,
-
-%s removed %s as a site administrator of %s.
-
-To view the profile of the old administrator, click here:
-%s
-
-To go to the site, click here:
-%s',
-	
-	'admin:notification:remove_admin:user:subject' => 'You were removed as a site administator from %s',
-	'admin:notification:remove_admin:user:body' => 'Hi %s,
-
-%s removed you as site administrator of %s.
-
-To go to the site, click here:
-%s',
-	'user:notification:ban:subject' => 'Your account on %s was banned',
-	'user:notification:ban:body' => 'Hi %s,
-
-Your account on %s was banned.
-
-To go to the site, click here:
-%s',
-	
-	'user:notification:unban:subject' => 'Your account on %s is no longer banned',
-	'user:notification:unban:body' => 'Hi %s,
-
-Your account on %s is no longer banned. You can use the site again.
-
-To go to the site, click here:
-%s',
-	
-	'user:notification:password_change:subject' => 'Your password has been changed!',
-	'user:notification:password_change:body' => "Hi %s,
-
-Your password on '%s' has been changed! If you made this change than you're all set.
-
-If you didn't make this change, please reset your password here:
-%s
-
-Or contact a site administrator:
-%s",
-	
-	'admin:notification:unvalidated_users:subject' => "Users awaiting approval on %s",
-	'admin:notification:unvalidated_users:body' => "Hi %s,
-
-%d users of '%s' are awaiting approval by an administrator.
-
-See the full list of users here:
-%s",
 
 /**
  * Plugins
@@ -825,16 +508,11 @@ See the full list of users here:
 	'plugins:disabled' => 'به خاطر اینکه فایلی با نام "disabled" در پوشه ماژول ها هست امکان بارگزاری پلاگین ها نیست.',
 	'plugins:settings:save:ok' => "تنظیمات برای پلاگین %s با موفقیت ذخیره شد",
 	'plugins:settings:save:fail' => "برای ذخیره تنظیمات پلاگین %s مشکلی به وجود آمد",
-	'plugins:settings:remove:ok' => "All settings for the %s plugin have been removed",
-	'plugins:settings:remove:fail' => "An error occured while removing all settings for the plugin %s",
 	'plugins:usersettings:save:ok' => "تنظیمات کاربر برای پلاگین %s با موفقیت ذخیره شد",
 	'plugins:usersettings:save:fail' => "برای ذخیره تنظیمات کاربر برای پلاگین %s مشکلی به وجود آمده است.",
 	
 	'item:object:plugin' => 'پلاگین ها',
 	'collection:object:plugin' => 'پلاگین ها',
-	
-	'plugins:settings:remove:menu:text' => "Remove all settings",
-	'plugins:settings:remove:menu:confirm' => "Are you sure you wish to remove all settings, including user settings from this plugin?",
 
 	'admin:plugins' => "پلاگین ها",
 	'admin:plugins:activate_all' => 'فعالسازی همه',
@@ -846,7 +524,6 @@ See the full list of users here:
 	'admin:plugins:opt:description' => "تنظیم ابزار نصب شده روی سایت",
 	'admin:plugins:label:id' => "شناسه",
 	'admin:plugins:label:name' => "نام",
-	'admin:plugins:label:author' => "نویسنده",
 	'admin:plugins:label:copyright' => "حقوق مولف",
 	'admin:plugins:label:categories' => 'دسته بندی ها',
 	'admin:plugins:label:licence' => "مجوزها",
@@ -862,14 +539,7 @@ See the full list of users here:
 	'admin:plugins:label:version' => 'نسخه',
 	'admin:plugins:label:location' => 'مکانمکان',
 	'admin:plugins:label:priority' => 'اولویت',
-	'admin:plugins:label:contributors' => 'مولفان',
-	'admin:plugins:label:contributors:name' => 'نام',
-	'admin:plugins:label:contributors:email' => 'ایمیل',
-	'admin:plugins:label:contributors:website' => 'وبسایت',
-	'admin:plugins:label:contributors:username' => 'نام کاربری در جامعه',
-	'admin:plugins:label:contributors:description' => 'شرح',
 	'admin:plugins:label:dependencies' => 'پیش نیازها',
-	'admin:plugins:label:missing_dependency' => 'Missing dependency [%s].',
 
 	'admin:plugins:warning:unmet_dependencies' => 'این پلاگین پیش نیازهایی دار که در حال حاضر موجود نسیتند و نمی تواند فعال شود. پیش نیاز ها را در قسمت اطلاعات بیشتر چک کنید',
 	'admin:plugins:warning:invalid' => 'این پلاگین نامعتبر هست: %s',
@@ -881,7 +551,6 @@ See the full list of users here:
 
 	'admin:plugins:set_priority:yes' => "مرتب شد %s.",
 	'admin:plugins:set_priority:no' => "امکان مرتبسازی %s نیست",
-	'admin:plugins:set_priority:no_with_msg' => "امکان مرتب سازی %s نیست. خطا:%s",
 	'admin:plugins:deactivate:yes' => "%s غیرفعال شد",
 	'admin:plugins:deactivate:no' => "امکان غیرفعالسازی %s نیست",
 	'admin:plugins:deactivate:no_with_msg' => "امکان غیرفعالسازی %s نیست. علت: %s",
@@ -895,16 +564,9 @@ See the full list of users here:
 	'admin:plugin_settings' => 'تنظیمات پلاگین',
 	'admin:plugins:warning:unmet_dependencies_active' => 'این پلاگین فعال شده است ولی همه پیش نیازهای آن درسیستم موجود نیست. ممکن است در استفاده از آن با مشکل مواجه شوید. برای مشاهده جزئیات قسمت "اطلاعات بیشتر" را کلیک کنید.',
 
-	'admin:plugins:dependencies:type' => 'نوع',
-	'admin:plugins:dependencies:name' => 'نامنا',
-	'admin:plugins:dependencies:expected_value' => 'مقدار مورد نظر',
-	'admin:plugins:dependencies:local_value' => 'مقدار واقعی',
-	'admin:plugins:dependencies:comment' => 'دیدگاه',
-
 	'admin:statistics:description' => "این یک دید کلی از آمار سایت شماست. برای مشاهده آمار جزئی تر، ویژگی مدیریت حرفه ای نیز موجود است",
 	'admin:statistics:opt:description' => "نمایش اطلاعات آمار در مورد کاربران و قسمت های سایت شما",
 	'admin:statistics:opt:linktext' => "مشاهده آمار",
-	'admin:statistics:label:user' => "User statistics",
 	'admin:statistics:label:numentities' => "موجودیت های سایت",
 	'admin:statistics:label:numusers' => "تعداد کاربران",
 	'admin:statistics:label:numonline' => "تعداد کاربران آنلاین",
@@ -913,17 +575,11 @@ See the full list of users here:
 	'admin:statistics:label:version' => "نسخه Elgg",
 	'admin:statistics:label:version:release' => "نسخه",
 	'admin:statistics:label:version:version' => "نسخه",
-	'admin:statistics:label:version:code' => "Code Version",
-
-	'admin:server:label:elgg' => 'Elgg',
-	'admin:server:label:requirements' => 'Requirements',
 	'admin:server:label:php' => 'PHP',
-	'admin:server:label:phpinfo' => 'Show PHPInfo',
 	'admin:server:label:web_server' => 'وب سرور',
 	'admin:server:label:server' => 'سرور',
 	'admin:server:label:log_location' => 'محل ثبت لاگ',
 	'admin:server:label:php_version' => 'نسخه PHP',
-	'admin:server:label:php_version:required' => 'Elgg requires a minimal PHP version of 7.1',
 	'admin:server:label:php_ini' => 'آدرس فایل php.ini',
 	'admin:server:label:php_log' => 'لاگ php',
 	'admin:server:label:mem_avail' => 'حافظه موجود',
@@ -932,34 +588,8 @@ See the full list of users here:
 	'admin:server:label:post_max_size' => 'بیشترین اندازه درخواست POST',
 	'admin:server:label:upload_max_filesize' => 'حداکثر حجم قابل بارگزاری',
 	'admin:server:warning:post_max_too_small' => '(نکته: مقدار post_max_size باید بیشتر از این مقدار باشد تا از بارگزاری فایل پشتیبانی شود)',
-	'admin:server:label:memcache' => 'Memcache',
-	'admin:server:memcache:inactive' => '
-		Memcache is not setup on this server or it has not yet been configured in Elgg config.
-		For improved performance, it is recommended that you enable and configure memcache (or redis).
-',
-
-	'admin:server:label:redis' => 'Redis',
-	'admin:server:redis:inactive' => '
-		Redis is not setup on this server or it has not yet been configured in Elgg config.
-		For improved performance, it is recommended that you enable and configure redis (or memcache).
-',
-
-	'admin:server:label:opcache' => 'OPcache',
-	'admin:server:opcache:inactive' => '
-		OPcache is not available on this server or it has not yet been enabled.
-		For improved performance, it is recommended that you enable and configure OPcache.
-',
 	
 	'admin:server:requirements:php_extension' => "افزونه PHP : %s",
-	'admin:server:requirements:php_extension:required' => "This PHP extension is required for the correct operation of Elgg",
-	'admin:server:requirements:php_extension:recommended' => "This PHP extension is recommended for the optimal operation of Elgg",
-	'admin:server:requirements:rewrite' => ".htaccess rewrite rules",
-	'admin:server:requirements:rewrite:fail' => "Check your .htaccess for the correct rewrite rules",
-	
-	'admin:server:requirements:database:server' => "Database server",
-	'admin:server:requirements:database:server:required' => "Elgg requires MySQL v5.5.3 or higher for its database",
-	'admin:server:requirements:database:client' => "Database client",
-	'admin:server:requirements:database:client:required' => "Elgg requires pdo_mysql to connect to the database server",
 	
 	'admin:user:label:search' => "جستجوی کاربران:",
 	'admin:user:label:searchbutton' => "جستجو",
@@ -982,19 +612,12 @@ See the full list of users here:
 	'admin:user:removeadmin:yes' => "کاربر دیگر مدیر نیست",
 	'admin:user:removeadmin:no' => "امکان حذف دسترسی مدیر از این کاربر نیست",
 	'admin:user:self:removeadmin:no' => "شما نمی توانید مجوز مدیریت خودتان را حذف کنید",
-
-	'admin:configure_utilities:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'تنظیم موارد منوی اصلی',
-	'admin:menu_items:description' => 'Select the order of site menu items. Unconfigured items will be added to the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => 'آیا میخواهید این لینکها را از نوار ابزار حذف کنید؟',
 	'admin:menu_items:saved' => 'موارد منو ذخیره شد',
 	'admin:add_menu_item' => 'افزودن یک آیتم خصوصی سازی شده به منو',
 	'admin:add_menu_item:description' => 'نام نمایش و آدرس را پر کنید که منوی شخصی سازی شده به منوی شما اضافه شود',
-
-	'admin:configure_utilities:default_widgets' => 'Default Widgets',
 	'admin:default_widgets:unknown_type' => 'نوع ابزارک ناشناخته است',
-	'admin:default_widgets:instructions' => 'Add, remove, position, and configure default widgets for the selected widget page.
-These changes will only affect new users on the site.',
 
 	'admin:robots.txt:instructions' => "ویرایش فایل robots.txt این سایت",
 	'admin:robots.txt:plugins' => "پلاگین ها به فایل robots.txt اضافه می شوند",
@@ -1002,8 +625,6 @@ These changes will only affect new users on the site.',
 	'admin:robots.txt:physical' => "فایل robots.txt شما کار نخواهد کرد به این خاطر که از قبل یک فایل موجود هست.",
 
 	'admin:maintenance_mode:default_message' => 'سایت در دست تعمیر است',
-	'admin:maintenance_mode:instructions' => 'Maintenance mode should be used for upgrades and other large changes to the site.
-		When it is on, only admins can log in and browse the site.',
 	'admin:maintenance_mode:mode_label' => 'حالت نگهداری سایت',
 	'admin:maintenance_mode:message_label' => 'پیامی که در هنگام تعمیرات سایت به کاربران نشان داده می شود',
 	'admin:maintenance_mode:saved' => 'تنظیمات حالت دردست تعمیر ذخیره شد',
@@ -1065,20 +686,12 @@ These changes will only affect new users on the site.',
 	'icon:size:medium' => "متوسط",
 	'icon:size:large' => "بزرگ",
 	'icon:size:master' => "خیلی بزرگ",
-	
-	'entity:edit:icon:crop_messages:generic' => "The selected image doesn't meet the recommended image dimensions. This could result in low quality icons.",
-	'entity:edit:icon:crop_messages:width' => "It's recommended to use an image with a minimal width of at least %dpx.",
-	'entity:edit:icon:crop_messages:height' => "It's recommended to use an image with a minimal height of at least %dpx.",
-	'entity:edit:icon:file:label' => "Upload a new icon",
-	'entity:edit:icon:file:help' => "Leave blank to keep current icon.",
-	'entity:edit:icon:remove:label' => "Remove icon",
 
 /**
  * Generic action words
  */
 
 	'save' => "ذخیره",
-	'save_go' => "Save, and go to %s",
 	'reset' => 'بازنشانی',
 	'publish' => "انتشار",
 	'cancel' => "کنسل",
@@ -1129,9 +742,9 @@ These changes will only affect new users on the site.',
 	'create' => 'ایجاد',
 	'remove' => 'حذف',
 	'revert' => 'برگشت',
-	'validate' => 'Validate',
-	'read_more' => 'Read more',
-
+	'next' => 'بعدی',
+	'previous' => 'قبلی',
+	
 	'site' => 'سایت',
 	'activity' => 'فعالیت',
 	'members' => 'اعضا',
@@ -1160,7 +773,6 @@ These changes will only affect new users on the site.',
 
 	'active' => 'فعالسازی',
 	'total' => 'جمع کل',
-	'unvalidated' => 'Unvalidated',
 	
 	'ok' => 'تایید',
 	'any' => 'هرچیز',
@@ -1176,9 +788,6 @@ These changes will only affect new users on the site.',
 	'content' => "مختوا",
 	'content:latest' => 'آخرین فعالیت',
 	'content:latest:blurb' => 'یا، اینجا را کلیک کنید تا آخرین فعالیت ها در داخل سایت را مشاهده کنید',
-	
-	'list:out_of_bounds' => "You have reached a part of the list without any content, however there is content available.",
-	'list:out_of_bounds:link' => "Go back to the first page of this listing.",
 
 	'link:text' => 'مشاهده لینک',
 
@@ -1200,11 +809,7 @@ These changes will only affect new users on the site.',
 	'status:featured' => 'ویژه',
 	'status:open' => 'باز کردن',
 	'status:closed' => 'بسته',
-	'status:enabled' => 'Enabled',
-	'status:disabled' => 'Disabled',
-	'status:unavailable' => 'Unavailable',
 	'status:active' => 'فعالسازی',
-	'status:inactive' => 'Inactive',
 
 /**
  * Generic sorts
@@ -1236,12 +841,6 @@ These changes will only affect new users on the site.',
 	'on' => 'در',
 	'off' => 'خاموش',
 
-	'number_counter:separatorr' => ".",
-	'number_counter:view:thousand' => "%sK",
-	'number_counter:view:million' => "%sM",
-	'number_counter:view:billion' => "%sB",
-	'number_counter:view:trillion' => "%sT",
-
 /**
  * Entity actions
  */
@@ -1256,26 +855,12 @@ These changes will only affect new users on the site.',
 
 	'deleteconfirm' => "آیا مطمئنید که میخواهید این آیتم را حذف کنید؟",
 	'deleteconfirm:plural' => "آیا مطمئنید که میخواهید این آیتم ها را حذف کنید؟",
-	'fileexists' => "A file has already been uploaded. To replace it, select a new one below",
-	'input:file:upload_limit' => 'Maximum allowed file size is %s',
 
 /**
  * User add
  */
 
 	'useradd:subject' => 'حساب کاربری ساخته شد',
-	'useradd:body' => '%s,
-
-A user account has been created for you at %s. To log in, visit:
-
-%s
-
-And log in with these user credentials:
-
-Username: %s
-Password: %s
-
-Once you have logged in, we highly recommend that you change your password.',
 
 /**
  * System messages
@@ -1287,11 +872,8 @@ Once you have logged in, we highly recommend that you change your password.',
 /**
  * Messages
  */
-	'messages:title:success' => 'Success',
 	'messages:title:error' => 'خطا',
-	'messages:title:warning' => 'Warning',
 	'messages:title:help' => 'راهنما',
-	'messages:title:notice' => 'Notice',
 	'messages:title:info' => 'اطلاعات',
 
 /**
@@ -1304,10 +886,7 @@ Once you have logged in, we highly recommend that you change your password.',
 /**
  * Time
  */
-
-	'input:date_format' => 'Y-m-d',
-	'input:date_format:datepicker' => 'yy-mm-dd', // jQuery UI datepicker format
-	'input:time_format' => 'g:ia',
+	'input:date_format:datepicker' => '', // jQuery UI datepicker format
 
 	'friendlytime:justnow' => "هم اکنون",
 	'friendlytime:minutes' => "%s دقیقه پیش",
@@ -1317,7 +896,6 @@ Once you have logged in, we highly recommend that you change your password.',
 	'friendlytime:days' => " %s روز پیش",
 	'friendlytime:days:singular' => "دیروز",
 	'friendlytime:date_format' => 'j F Y @ g:ia',
-	'friendlytime:date_format:short' => 'j M Y',
 
 	'friendlytime:future:minutes' => "تا %s دقیقه",
 	'friendlytime:future:minutes:singular' => "تا یک دقیقه",
@@ -1384,7 +962,6 @@ Once you have logged in, we highly recommend that you change your password.',
 
 	'installation:sitename' => "نام سایت شما:",
 	'installation:sitedescription' => "توضیح مختصر از سایت (اختیاری):",
-	'installation:sitedescription:help' => "With bundled plugins this appears only in the description meta tag for search engine results.",
 	'installation:wwwroot' => "آدرس سایت:",
 	'installation:path' => "مسیر کامل نصب Elgg :",
 	'installation:dataroot' => "مسیر کامل پوشه داده ها:",
@@ -1402,18 +979,12 @@ Once you have logged in, we highly recommend that you change your password.',
 	// Walled Garden support
 	'installation:registration:description' => 'ثبت نام کاربران به صورت پیش فرض فعال است. در صورتی که نمیخواهید افراد در سایتتان ثبت نام کنند این گزینه را غیرفعال کنید.',
 	'installation:registration:label' => 'اجازه ثبت نام به کاربران جدید',
-	'installation:adminvalidation:description' => 'If enabled, newly registered users require manual validation by an administrator before they can use the site.',
-	'installation:adminvalidation:label' => 'New users require manual validation by an administrator',
-	'installation:adminvalidation:notification:description' => 'When enabled, site administrators will get a notification that there are pending user validations. An administrator can disable the notification on their personal settings page.',
-	'installation:adminvalidation:notification:label' => 'Notify administrators of pending user validations',
-	'installation:adminvalidation:notification:direct' => 'Direct',
 	'installation:walled_garden:description' => 'با فعال کردن این گزینه افرادی که عضو سایت شما نیستند امکان مشاهده سایت شما را نخواهند داشت و فقط صفحات عمومی را خواهند دید (مانند ثبت نام و ورود)',
 	'installation:walled_garden:label' => 'محدود کردن صفحات به کاربران وارد شده',
 
 	'installation:view' => "نمایه پیش فرص سایتتان را انتخاب کنید، در صورت عدم انتخاب نمایه پیش فرض نمایش داده خواهد شد (می توانید حالت پیش فرض را نگه دارید)",
 
 	'installation:siteemail' => "ایمیل سایت (برای ارسال ایمیل های سیستمی استفاده میشود)",
-	'installation:siteemail:help' => "Warning: Do no use an email address that you may have associated with other third-party services, such as ticketing systems, that perform inbound email parsing, as it may expose you and your users to unintentional leakage of private data and security tokens. Ideally, create a new dedicated email address that will serve only this website.",
 	'installation:default_limit' => "تعداد پیش فرض موارد قابل نمایش در صفحه",
 
 	'admin:site:access:warning' => "این تنظیمات حریم شخصی است که به کاربران هنگام ایجاد محتوای جدید پیشنهاد داده می شود. تغییر دادن آن مجوز دسترسی به محتوا را تغییر نخواهد داد.",
@@ -1445,50 +1016,22 @@ Once you have logged in, we highly recommend that you change your password.',
 	'admin:legend:content_access' => 'دسترس محتوا',
 	'admin:legend:site_access' => 'دسترسی سایت',
 	'admin:legend:debug' => 'رفع خطا و لاگ',
-	
-	'config:i18n:allowed_languages' => "Allowed languages",
-	'config:i18n:allowed_languages:help' => "Only allowed languages can be used by users. English and the site language are always allowed.",
-	'config:users:can_change_username' => "Allow users to change their username",
-	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
-	'config:remove_branding:label' => "Remove Elgg branding",
-	'config:remove_branding:help' => "Throughout the site there are various links and logo's that show this site is made using Elgg. If you remove the branding consider donating on https://elgg.org/about/supporters",
-	'config:disable_rss:label' => "Disable RSS feeds",
-	'config:disable_rss:help' => "Disable this to no longer promote the availability of RSS feeds",
-	'config:friendly_time_number_of_days:label' => "Number of days friendly time is presented",
-	'config:friendly_time_number_of_days:help' => "You can configure how many days the friendly time notation is used. After the set amount of days the friendly time will change into a regular date format. Setting this to 0 will disable the friendly time format.",
-	'config:content:comment_box_collapses' => "The comment box collapses after the first comment on content",
-	'config:content:comment_box_collapses:help' => "This only applies if the comments list is sorted latest first",
-	'config:content:comments_latest_first' => "The comments should be listed with the latest comment first",
-	'config:content:comments_latest_first:help' => "This controls the default behaviour of the listing of comments on a content detail page. If disabled this will also move the comment box to the end of the comments list",
-	
+
 	'upgrading' => 'ارتقاء..',
 	'upgrade:core' => 'نسخه Elgg شما ارتقاء یافت',
 	'upgrade:unlock' => 'ارتقاء را فعال ک',
 	'upgrade:unlock:confirm' => "بانک اطلاعاتی برای یک ارتقاء دیگر قفل شده است. اجرای چندین ارتقا به صورت همزمان خطرناک است. فقط در صورتی که ارتقاء دیگری در حال انجام نیست ادامه دهید. بازکردن قفل بانک اطلاعاتی؟؟",
-	'upgrade:terminated' => 'Upgrade has been terminated by an event handler',
 	'upgrade:locked' => "امکان ارتقاء نیست. یک ارتقاء دیگر درحال اجراست. برای حذف قفل ارتقاء از قسمت مدیریت اقدام کنید",
 	'upgrade:unlock:success' => "قفل ارتقاء با موفقیت برداشته شد",
 	'upgrade:unable_to_upgrade' => 'امکان ارتقاء نیست',
-	'upgrade:unable_to_upgrade_info' => 'This installation cannot be upgraded because legacy views
-were detected in the Elgg core views directory. These views have been deprecated and need to be
-removed for Elgg to function correctly. If you have not made changes to Elgg core, you can
-simply delete the views directory and replace it with the one from the latest
-package of Elgg downloaded from <a href="https://elgg.org">elgg.org</a>.<br /><br />
-
-If you need detailed instructions, please visit the <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
-Upgrading Elgg documentation</a>. If you require assistance, please post to the
-<a href="https://elgg.org/discussion/all">Community Support Forums</a>.',
 
 	'update:oauth_api:deactivated' => 'واسط OAuth (درگذشته با نام OAuth Lib شناخته میشد) در حین ارتقاء غیرفعال شد. لطفا در صورت نیاز آن را به صورت دستی فعال کنید.',
 	'upgrade:site_secret_warning:moderate' => "بهتر است که کلید امنیتی سایتتان را دوباره تولید کنید تا امنیت آن بالا رود. در قسمت تنظیمات پیشرفته این کار را انجام دهید",
 	'upgrade:site_secret_warning:weak' => "شدیدا پیشنهاد می شود که کلید امنیتی سایتتان را دوباره تولید کنید تا امنیت آن بالا رود. در قسمت تنظیمات پیشرفته این کار را انجام دهید",
 
-	'deprecated:function' => '%s() از رده خارج شده و جایگزین آن %s() می باشد.',
-
 	'admin:pending_upgrades' => 'این سایت نیاز به چندین مورد ارتقاء دارد و به توجه سریع شما نیاز دارد',
 	'admin:view_upgrades' => 'مشاهده ارتقاء های مورد نیاز',
 	'item:object:elgg_upgrade' => 'ارتقاءهای سایت',
-	'collection:object:elgg_upgrade' => 'Site upgrades',
 	'admin:upgrades:none' => 'نسخه شما بروز است',
 
 	'upgrade:item_count' => 'اینجا %s مورد هست که نیاز به ارتقاء دارد',
@@ -1497,8 +1040,6 @@ Upgrading Elgg documentation</a>. If you require assistance, please post to the
 	'upgrade:error_count' => 'خطاها:',
 	'upgrade:finished' => 'ارتقاء پایان یافت',
 	'upgrade:finished_with_errors' => 'ارتقاء پایان یافت و چندین خطا رخ داد. صفحه را رفرش کنید و سعی کنید که دوباره عملیات ارتقاء را انجام دهید. اگر خطا مجددا رخ داد لاگ سرور را برای خطاهای احتمالی بررسی کنید. شما میتوانید در  <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">گروه پشتیبانی فنی Elgg</a>  به دنبال راه حل  و راهنمایی برای  رفع خطایتان باشید.',
-	'upgrade:should_be_skipped' => 'No items to upgrade',
-	'upgrade:count_items' => '%d items to upgrade',
 	
 	// Strings specific for the database guid columns reply upgrade
 	'admin:upgrades:database_guid_columns' => 'چیدن ستون های GUID بانک اطلاعاتی',
@@ -1521,85 +1062,18 @@ Upgrading Elgg documentation</a>. If you require assistance, please post to the
 
 	'email:settings' => "تنظیمات ایمیل",
 	'email:address:label' => "آدرس ایمیل",
-	'email:address:help:confirm' => "Pending e-mail address change to '%s', please check the inbox for instructions.",
 	'email:address:password' => "کلمه عبور",
-	'email:address:password:help' => "In order to be able to change your email address you need to provide your current password.",
 
 	'email:save:success' => "آدرس ایمیل جدید ذخیره شد. درخواست تایید ارسال شد",
 	'email:save:fail' => "آدرس ایمیل جدید ذخیره نشد.",
-	'email:save:fail:password' => "The password doesn't match your current password, could not change your email address",
 
 	'friend:newfriend:subject' => "%s شما را به عنوان دوست انتخاب کرده است!",
-	'friend:newfriend:body' => "%s has made you a friend!
-
-To view their profile, click here:
-
-%s",
 
 	'email:changepassword:subject' => "کلمه عبور تغییر کرد!",
-	'email:changepassword:body' => "Hi %s,
-
-Your password has been changed.",
 
 	'email:resetpassword:subject' => "کلمه عبور بازنشانی شد",
-	'email:resetpassword:body' => "Hi %s,
-
-Your password has been reset to: %s",
 
 	'email:changereq:subject' => "درخواست تغییر کلمه عبور",
-	'email:changereq:body' => "Hi %s,
-
-Somebody (from the IP address %s) has requested a password change for this account.
-
-If you requested this, click on the link below. Otherwise ignore this email.
-
-%s",
-	
-	'account:email:request:success' => "Your new e-mail address will be saved after confirmation, please check the inbox of '%s' for more instructions.",
-	'email:request:email:subject' => "Please confirm your e-mail address",
-	'email:request:email:body' => "Hi %s,
-
-You requested to change your e-mail address on '%s'.
-If you didn't request this change, you can ignore this email.
-
-In order to confirm the e-mail address change, please click this link:
-%s
-
-Please note this link is only valid for 1 hour.",
-	
-	'account:email:request:error:no_new_email' => "No e-mail address change pending",
-	
-	'email:confirm:email:old:subject' => "You're e-mail address was changed",
-	'email:confirm:email:old:body' => "Hi %s,
-
-Your e-mail address on '%s' was changed.
-From now on you'll receive notifications on '%s'.
-
-If you didn't request this change, please contact a site administrator.
-%s",
-	
-	'email:confirm:email:new:subject' => "You're e-mail address was changed",
-	'email:confirm:email:new:body' => "Hi %s,
-
-Your e-mail address on '%s' was changed.
-From now on you'll receive notifications on this e-mail address.
-
-If you didn't request this change, please contact a site administrator.
-%s",
-
-	'account:email:admin:validation_notification' => "Notify me when there are users requiring validation by an administrator",
-	'account:email:admin:validation_notification:help' => "Because of the site settings, newly registered users require manual validation by an administrator. With this setting you can disable notifications about pending validation requests.",
-	
-	'account:validation:pending:title' => "Account validation pending",
-	'account:validation:pending:content' => "Your account has been registered successfully! However before you can use you account a site administrator needs to validate you account. You'll receive an e-mail when you account is validated.",
-	
-	'account:notification:validation:subject' => "Your account on %s has been validated!",
-	'account:notification:validation:body' => "Hi %s,
-
-Your account on '%s' has been validated. You can now use your account.
-
-To go the the website, click here:
-%s",
 
 /**
  * user default access
@@ -1618,8 +1092,6 @@ To go the the website, click here:
 	'item:object:comment' => 'نظر',
 	'collection:object:comment' => 'نظر',
 
-	'river:object:default:comment' => '%s commented on %s',
-
 	'generic_comments:add' => "دیدگاهی بگذارید",
 	'generic_comments:edit' => "ویرایش دیدگاه",
 	'generic_comments:post' => "ارسال دیدگاه",
@@ -1627,7 +1099,6 @@ To go the the website, click here:
 	'generic_comments:latest' => "آخرین دیدگاهها",
 	'generic_comment:posted' => "دیدگاه شما با موفقیت ارسال شد",
 	'generic_comment:updated' => "دیدگاه با موفقیت بروزرسانی شد.",
-	'entity:delete:object:comment:success' => "The comment was successfully deleted.",
 	'generic_comment:blank' => "متاسفانه شما باید در دیدگاهتان چیزی بنویسید تا امکان ذخیره شدن داشته باشد.",
 	'generic_comment:notfound' => "متاسفانه دیدگاه مشخص شده پیدا نشد.",
 	'generic_comment:notfound_fallback' => "متاسفانه دیدگاه مورد نظر شما پیدا نشد. اما شما به صفحه ای که دیدگاه از آنجا ثبت شده هدایت می شوید.",
@@ -1636,30 +1107,6 @@ To go the the website, click here:
 	'generic_comment:title' => 'دیدگاههای %s',
 	'generic_comment:on' => '%s در %s',
 	'generic_comments:latest:posted' => 'منتشر کرد',
-
-	'generic_comment:notification:owner:subject' => 'You have a new comment!',
-	'generic_comment:notification:owner:summary' => 'You have a new comment!',
-	'generic_comment:notification:owner:body' => "You have a new comment on your item \"%s\" from %s. It reads:
-
-%s
-
-To reply or view the original item, click here:
-%s
-
-To view %s's profile, click here:
-%s",
-	
-	'generic_comment:notification:user:subject' => 'A new comment on: %s',
-	'generic_comment:notification:user:summary' => 'A new comment on: %s',
-	'generic_comment:notification:user:body' => "A new comment was made on \"%s\" by %s. It reads:
-
-%s
-
-To reply or view the original item, click here:
-%s
-
-To view %s's profile, click here:
-%s",
 
 /**
  * Entities
@@ -1674,15 +1121,12 @@ To view %s's profile, click here:
 	'entity:delete:permission_denied' => 'شما مجوز پاک کردن این مورد را ندارید',
 	'entity:delete:success' => 'مورد %s حذف شد',
 	'entity:delete:fail' => 'امکان حذف %s نیست',
-
+	
 	'entity:can_delete:invaliduser' => 'امکان چک تابع canDelete برای کاربر user_guid [%s]  نیست. به خاطر اینکه کاربر موجود نیست.',
 
 /**
  * Annotations
  */
-	
-	'annotation:delete:fail' => "An error occured while removing the annotation",
-	'annotation:delete:success' => "The annotation was removed successfully",
 	
 /**
  * Action gatekeeper
@@ -1702,12 +1146,6 @@ To view %s's profile, click here:
 	'word:blacklist' => 'و،همان، پس از آن، اما، او، او، او را، او را، یکی، نه، نیز، در مورد، در حال حاضر، از این رو، با این حال، هنوز هم، به همین ترتیب، در غیر این صورت، بنابراین، برعکس، به جای، در نتیجه، علاوه بر این، با این حال، به جای آن، در عین حال، بر این اساس، این، به نظر می رسد، چه، که، که، هر کس، هر کس',
 
 /**
- * Tag labels
- */
-
-	'tag_names:tags' => 'برچسب ها',
-
-/**
  * Javascript
  */
 
@@ -1716,6 +1154,10 @@ To view %s's profile, click here:
 	'js:lightbox:current' => "تصویر %s از %s",
 
 /**
+ * Diagnostics
+ */
+	
+/**
  * Miscellaneous
  */
 	'elgg:powered' => "نیروگرفته توسط Elgg",
@@ -1723,62 +1165,6 @@ To view %s's profile, click here:
 /**
  * Cli commands
  */
-	'cli:login:error:unknown' => "Unable to login as %s",
-	'cli:login:success:log' => "Logged in as %s [guid: %s]",
-	'cli:response:output' => "Response:",
-	'cli:option:as' => "Execute the command on behalf of a user with the given username",
-	'cli:option:language' => "Execute the command in the given language (eg. en, nl or de)",
-	
-	'cli:cache:clear:description' => "Clear Elgg caches",
-	'cli:cache:invalidate:description' => "Invalidate Elgg caches",
-	'cli:cache:purge:description' => "Purge Elgg caches",
-	
-	'cli:cron:description' => "Execute cron handlers for all or specified interval",
-	'cli:cron:option:interval' => "Name of the interval (e.g. hourly)",
-	'cli:cron:option:force' => "Force cron commands to run even if they are not yet due",
-	'cli:cron:option:time' => "Time of the cron initialization",
-	
-	'cli:database:seed:description' => "Seeds the database with fake entities",
-	'cli:database:seed:option:limit' => "Number of entities to seed",
-	'cli:database:seed:option:image_folder' => "Path to a local folder containing images for seeding",
-	'cli:database:seed:log:error:faker' => "This is a developer tool currently intended for testing purposes only. Please refrain from using it.",
-	'cli:database:seed:log:error:logged_in' => "Database seeding should not be run with a logged in user",
-	
-	'cli:database:unseed:description' => "Removes seeded fake entities from the database",
-	
-	'cli:plugins:activate:description' => "Activate plugin(s)",
-	'cli:plugins:activate:option:force' => "Resolve conflicts by deactivating conflicting plugins and enabling required ones",
-	'cli:plugins:activate:argument:plugins' => "Plugin IDs to be activated",
-	'cli:plugins:activate:progress:start' => "Activating plugins",
-	
-	'cli:plugins:deactivate:description' => "Deactivate plugin(s)",
-	'cli:plugins:deactivate:option:force' => "Force deactivation of all dependent plugins",
-	'cli:plugins:deactivate:argument:plugins' => "Plugin IDs to be deactivated",
-	'cli:plugins:deactivate:progress:start' => "Deactivating plugins",
-	
-	'cli:plugins:list:description' => "List all plugins installed on the site",
-	'cli:plugins:list:option:status' => "Plugin status ( %s )",
-	'cli:plugins:list:option:refresh' => "Refresh plugin list with recently installed plugins",
-	'cli:plugins:list:error:status' => "%s is not a valid status. Allowed options are: %s",
-	
-	'cli:simpletest:description' => "Run simpletest test suite (deprecated)",
-	'cli:simpletest:option:config' => "Path to settings file that the Elgg Application should be bootstrapped with",
-	'cli:simpletest:option:plugins' => "A list of plugins to enable for testing or 'all' to enable all plugins",
-	'cli:simpletest:option:filter' => "Only run tests that match filter pattern",
-	'cli:simpletest:error:class' => "You must install your Elgg application using '%s'",
-	'cli:simpletest:error:file' => "%s is not a valid simpletest class",
-	'cli:simpletest:output:summary' => "Time: %.2f seconds, Memory: %.2fMb",
-	
-	'cli:upgrade:batch:description' => "Executes one or more upgrades",
-	'cli:upgrade:batch:argument:upgrades' => "One or more upgrades (class names) to be executed",
-	'cli:upgrade:batch:option:force' => "Run upgrade even if it has been completed before",
-	'cli:upgrade:batch:finished' => "Running upgrades finished",
-	'cli:upgrade:batch:notfound' => "No upgrade class found for %s",
-
-	'cli:upgrade:list:description' => "Lists all upgrades in the system",
-	'cli:upgrade:list:completed' => "Completed upgrades",
-	'cli:upgrade:list:pending' => "Pending upgrades",
-	'cli:upgrade:list:notfound' => "No upgrades found",
 	
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
@@ -1935,25 +1321,4 @@ To view %s's profile, click here:
 	"zu" => "Zulu",
 
 	"field:required" => 'الزامی',
-
-	"core:upgrade:2017080900:title" => "Alter database encoding for multi-byte support",
-	"core:upgrade:2017080900:description" => "Alters database and table encoding to utf8mb4, in order to support multi-byte characters such as emoji",
-
-	"core:upgrade:2017080950:title" => "Update default security parameters",
-	"core:upgrade:2017080950:description" => "Installed Elgg version introduces additional security parameters. It is recommended that your run this upgrade to configure the defaults. You can later update these parameters in your site settings.",
-
-	"core:upgrade:2017121200:title" => "Create friends access collections",
-	"core:upgrade:2017121200:description" => "Migrates the friends access collection to an actual access collection",
-
-	"core:upgrade:2018041800:title" => "Activate new plugins",
-	"core:upgrade:2018041800:description" => "Certain core features have been extracted into plugins. This upgrade activates these plugins to maintain compatibility with third-party plugins that maybe dependant on these features",
-
-	"core:upgrade:2018041801:title" => "Delete old plugin entities",
-	"core:upgrade:2018041801:description" => "Deletes entities associated with plugins removed in Elgg 3.0",
-	
-	"core:upgrade:2018061401:title" => "Migrate cron log entries",
-	"core:upgrade:2018061401:description" => "Migrate the cron log entries in the database to the new location.",
-	
-	"core:upgrade:2019071901:title" => "Update default security parameter: Email change confirmation",
-	"core:upgrade:2019071901:description" => "Installed Elgg version introduces additional security parameters. It is recommended that your run this upgrade to configure the default. You can later update this parameter in the site security settings.",
 );

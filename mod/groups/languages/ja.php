@@ -18,15 +18,19 @@ return array(
 	'groups:all' => "全グループ",
 	'groups:add' => "新規グループの作成",
 	'groups:edit' => "グループの編集",
+	'groups:edit:profile' => "プロフィール",
+	'groups:edit:access' => "アクセス",
+	'groups:edit:tools' => "ツール",
+	'groups:edit:settings' => "設定",
 	'groups:delete' => 'グループの削除',
 	'groups:membershiprequests' => '参加リクエストの管理',
 	'groups:membershiprequests:pending' => '参加リクエストの管理 (%s)',
-	'groups:invitedmembers' => "Manage invitations",
+	'groups:invitedmembers' => "招待を管理",
 	'groups:invitations' => 'グループへの招待',
 	'groups:invitations:pending' => 'グループへの招待 (%s)',
 	
-	'relationship:invited' => '%2$s was invited to join %1$s',
-	'relationship:membership_request' => '%s requested to join %s',
+	'relationship:invited' => '%2$s さんは、 %1$s に招待されました',
+	'relationship:membership_request' => '%s さんは %s に参加希望を申請しました。',
 
 	'groups:icon' => 'グループアイコン(変更なしなら空欄のまま)',
 	'groups:name' => 'グループ名',
@@ -36,7 +40,7 @@ return array(
 	'groups:website' => 'Website',
 	'groups:members' => 'グループメンバ',
 
-	'groups:members_count' => '%s members',
+	'groups:members_count' => '%s 人のメンバー',
 
 	'groups:members:title' => '%s のメンバ',
 	'groups:members:more' => "メンバ一覧",
@@ -69,10 +73,10 @@ return array(
 	'groups:leave' => '脱退',
 	'groups:invite' => '友達を招待',
 	'groups:invite:title' => 'このグループに友達を招待する',
-	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
-	'groups:invite:resend' => 'Resend the invitations to already invited users',
-	'groups:invite:member' => 'Already a member of this group',
-	'groups:invite:invited' => 'Already invited to this group',
+	'groups:invite:friends:help' => '名前やユーザ名で友達を検索してリストから友達を選んでください',
+	'groups:invite:resend' => 'すでに招待したユーザにも、もう一度招待状を送ります',
+	'groups:invite:member' => 'すでにこのグループのメンバーです',
+	'groups:invite:invited' => 'このグループにはすでに招待されました',
 
 	'groups:nofriendsatall' => '招待する友達がいません',
 	'groups:group' => "グループ",
@@ -92,7 +96,7 @@ return array(
 	'groups:open' => "オープングループ",
 	'groups:closed' => "クローズドグループ",
 	'groups:member' => "会員",
-	'groups:search' => "Search for groups",
+	'groups:search' => "グループを検索",
 
 	'groups:more' => '次のグループ',
 	'groups:none' => 'グループはまだ作られていません',
@@ -109,9 +113,9 @@ return array(
 	'groups:opengroup:membersonly' => "このグループのコンテントにはグループ参加者のみアクセスできます。",
 	'groups:opengroup:membersonly:join' => 'グループに参加するには、「参加」メニューリンクをクリックしてください。',
 	'groups:visibility' => 'このグループのコンテンツをみることができる人',
-	'groups:content_default_access' => 'Default group content access',
-	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
-	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
+	'groups:content_default_access' => 'グループのコンテンツへの既定のアクセス法',
+	'groups:content_default_access:help' => 'ここでこのグループの新しいコンテンツへの既定のアクセス法を設定できます。グループ・コンテンツ・モードは選択したオプションが効果を発現するのを防ぐことができます。',
+	'groups:content_default_access:not_configured' => '既定のアクセス法が設定されていません。ユーザーにまかせます。',
 
 	/**
 	 * Group tools
@@ -129,8 +133,6 @@ return array(
 	'groups:joinrequestnotmade' => 'グループ参加の申請に失敗しました。',
 	'groups:joinrequestmade' => 'グループ参加希望を申請しました。',
 	'groups:joinrequest:exists' => 'You already requested membership for this group',
-	'groups:button:joined' => 'Joined',
-	'groups:button:owned' => 'Owned',
 	'groups:joined' => 'グループに参加しました！',
 	'groups:left' => 'グループから脱退しました。',
 	'groups:userinvited' => 'ユーザを招待しました。',
@@ -139,34 +141,10 @@ return array(
 	'groups:invite:subject' => "%sさん、%s に招待されています。",
 	'groups:joinrequest:remove:check' => 'この招待リクエストを削除してよいですか？',
 	'groups:invite:remove:check' => 'この招待を破棄してもよろしいですか？',
-	'groups:invite:body' => "Hi %s,
-
-%s invited you to join the '%s' group.
-
-Click below to view your invitations:
-%s",
 
 	'groups:welcome:subject' => "ようこそ、「 %s 」グループへ！",
-	'groups:welcome:body' => "Hi %s!
-
-You are now a member of the '%s' group.
-
-Click below to begin posting!
-%s",
 
 	'groups:request:subject' => "%s さんは「 %s 」に参加希望を申請しました。",
-	'groups:request:body' => "Hi %s,
-
-%s has requested to join the '%s' group.
-
-Click below to view their profile:
-%s
-
-or click below to view the group's join requests:
-%s",
-
-	'river:group:create' => '%s created the group %s',
-	'river:group:join' => '%s joined the group %s',
 
 	'groups:allowhiddengroups' => 'プライベート（不可視）なグループを許可しますか？',
 	'groups:whocancreate' => 'グループを新規作成できる人',
@@ -174,24 +152,12 @@ or click below to view the group's join requests:
 	/**
 	 * Action messages
 	 */
-	'groups:deleted' => 'Group and group contents deleted',
-	'groups:notdeleted' => 'Group could not be deleted',
 	'groups:deletewarning' => "このグループを削除していいですか？削除したら元に戻す事はできません！",
 
 	'groups:invitekilled' => '招待状を削除しました。',
 	'groups:joinrequestkilled' => '参加希望申請を削除しました。',
 	'groups:error:addedtogroup' => "%s さんをグループに加えることができませんでした。",
 	'groups:add:alreadymember' => "%s さんは、すでにこのグループのメンバーです。",
-
-	/**
-	 * ecml
-	 */
-	'groups:ecml:groupprofile' => 'グループプロフィール',
-
-	/**
-	 * Upgrades
-	 */
-	'groups:upgrade:2016101900:title' => 'Transfer group icons to a new location',
-	'groups:upgrade:2016101900:description' => 'New entity icon API stores icons in a predictable location on the filestore
-relative to the entity\'s filestore directory. This upgrade will align the group plugin with the requirements of the new API.',
+	
+	// Notification settings
 );

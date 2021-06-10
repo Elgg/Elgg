@@ -6,24 +6,19 @@
  */
 
 return array(
-	'email:validate:subject' => "%s veuillez SVP confirmer votre adresse email pour %s !",
-	'email:validate:body' => "Bonjour %s,
+	'email:validate:subject' => "%s veuillez confirmer votre adresse email pour %s !",
+	'email:validate:body' => "Avant de pouvoir commencer à utiliser %s, vous devez confirmer votre adresse email.
 
-Avant que vous commenciez à utiliser  %s, vous devez confirmer votre adresse email.
-
-Veuillez confirmer votre adresse email en cliquant sur le lien ci-dessous :
+Veuillez confirmer votre adresse email en cliquant sur ce lien :
 
 %s
 
-Si vous ne pouvez pas cliquer sur le lien, copiez-le et collez -le manuellement dans votre navigateur.
-
-%s
-%s",
-	'email:confirm:success' => "Vous avez bien confirmé votre adresse email !",
+Si vous ne pouvez pas cliquer sur le lien, copiez et collez-le manuellement dans votre navigateur.",
+	'email:confirm:success' => "Votre adresse email a bien été confirmée !",
 	'email:confirm:fail' => "Votre adresse email n'a pas pu être vérifiée...",
 
 	'uservalidationbyemail:emailsent' => "Email envoyé à <em>%s</em>",
-	'uservalidationbyemail:registerok' => "Pour activer votre compte, veuillez confirmer votre adresse email en cliquant sur le lien qui vient de vous être envoyé sur votre adresse email d'inscription.
+	'uservalidationbyemail:registerok' => "Pour activer votre compte, veuillez confirmer votre adresse email en cliquant sur le lien qui vient de vous être envoyé par email.
 
 Si vous ne recevez rien, veuillez vérifier votre dossier Spam ou Courrier Indésirable.",
 	'uservalidationbyemail:login:fail' => "Votre compte n'a pas encore été confirmé, c'est pourquoi la tentative de connexion a échoué. Pour vous permettre de continuer, un nouvel email de confirmation vient d'être envoyé à votre adresse email.",
@@ -38,7 +33,4 @@ Si vous ne recevez rien, veuillez vérifier votre dossier Spam ou Courrier Indé
 
 	'uservalidationbyemail:messages:resent_validation' => 'La demande de confirmation a bien été renvoyée.',
 	'uservalidationbyemail:messages:resent_validations' => 'Les demandes de confirmation ont bien été renvoyées aux utilisateurs sélectionnés.',
-	
-	'uservalidationbyemail:upgrade:2019090600:title' => 'Suivre le statut de validation des emails',
-	'uservalidationbyemail:upgrade:2019090600:description' => 'Le statut de validation des emails est suivi d\'une nouvelle manière. Assurez-vous que les utilisateurs en attente de validation sont mis à jour vers le nouveau système afin qu\'ils aient effectivement besoin de valider leur email.',
 );

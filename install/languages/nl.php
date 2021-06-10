@@ -111,7 +111,6 @@ Als je klaar bent on verder te gaan, klik op de Volgende knop.",
 	'install:admin:label:password2' => 'Wachtwoord opnieuw',
 
 	'install:admin:help:displayname' => 'De naam die weergegeven wordt op deze site voor dit account',
-	'install:admin:help:email' => '',
 	'install:admin:help:username' => 'Account gebruikersnaam gebruikt om in te loggen',
 	'install:admin:help:password1' => "Het wachtwoord van het account moet minimaal %u karakters lang zijn.",
 	'install:admin:help:password2' => 'Typ het wachtwoord nogmaals in om te bevestigen',

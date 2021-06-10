@@ -17,7 +17,6 @@ return array(
 	'widgets:group_activity:edit:select' => 'Selectează un grup',
 	'widgets:group_activity:content:noactivity' => 'Nu există activitate în acest grup',
 	'widgets:group_activity:content:noselect' => 'Editează acest modul pentru a selecta un grup',
-	
 	'collection:river:group' => "Activitatea grupului",
 	'groups:tool:activity' => 'Activează activitatea grupului',
 	

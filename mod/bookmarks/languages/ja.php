@@ -18,6 +18,8 @@ return array(
 	'collection:object:bookmarks:friends' => "友達のブックマーク",
 	'add:object:bookmarks' => "新規ブックマーク登録",
 	'edit:object:bookmarks' => "ブックマークを編集",
+	'notification:object:bookmarks:create' => "ブックマークが作成されたときに通知を送る",
+	'notifications:mute:object:bookmarks' => "ブックマーク '%s' について",
 
 	'bookmarks:this' => "このページをブックマークする",
 	'bookmarks:this:group' => "%s のブックマーク",
@@ -29,20 +31,20 @@ return array(
 	'bookmarks:notify:summary' => '新着ブックマーク「%s」があります。',
 	'bookmarks:notify:subject' => '新着ブックマーク: %s',
 	'bookmarks:notify:body' =>
-'%s added a new bookmark: %s
+'%s さんが新しいブックマークを追加しました: %s
 
-Address: %s
+アドレス: %s
 
 %s
 
-View and comment on the bookmark:
+このブックマークの表示とコメントは:
 %s
 ',
 
 	'bookmarks:numbertodisplay' => '表示するブックマークの件数',
 
-	'river:object:bookmarks:create' => '%s bookmarked %s',
-	'river:object:bookmarks:comment' => '%s commented on a bookmark %s',
+	'river:object:bookmarks:create' => '%s さんが %s をブックマークしました',
+	'river:object:bookmarks:comment' => '%s さんがブックマーク %s にコメントしました',
 
 	'groups:tool:bookmarks' => 'グループブックマークの利用',
 	
@@ -53,7 +55,7 @@ View and comment on the bookmark:
 	'widgets:bookmarks:description' => "あなたが最近つけたブックマークを表示します。",
 
 	'bookmarks:bookmarklet:description' =>
-			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
+			"ブックマークレットとはブラウザのリンクバーに保存される特殊なボタンのことです。この機能を使うことによってWeb上で見つけたリソースを全部ブックマークに保存することができます。これを設定するには、下のボタンをブラウザのリンクバーにドラッグしてください:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"Internet Explorerをお使いの方はブックマークレットアイコンを右クリックしてから「お気に入りに保存」を選択していただき、その後、リンクバーに登録してください。",
@@ -66,7 +68,7 @@ View and comment on the bookmark:
 	 */
 
 	'bookmarks:save:success' => "ブックマークに登録しました。",
-	'entity:delete:object:bookmarks:success' => "The bookmark was deleted.",
+	'entity:delete:object:bookmarks:success' => "ブックマークを削除しました",
 
 	/**
 	 * Error messages

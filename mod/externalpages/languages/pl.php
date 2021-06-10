@@ -11,7 +11,6 @@ return array(
 	 * Menu items and titles
 	 */
 	'expages' => "Strony",
-	'admin:configure_utilities:expages' => "Site Pages",
 	'expages:edit:viewpage' => "Zobacz stronę na portalu",
 	'expages:about' => "O nas",
 	'expages:terms' => "Regulamin",

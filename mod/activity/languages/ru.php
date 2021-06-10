@@ -18,6 +18,7 @@ return array(
 	'widgets:group_activity:content:noactivity' => 'Эта группа на данный момент неактивна',
 	'widgets:group_activity:content:noselect' => 'Настройте виджет, чтобы выбрать группу',
 	
+	'collection:river' => "Лента активности",
 	'collection:river:group' => "Активность группы",
 	'groups:tool:activity' => 'Включить активность группы',
 	

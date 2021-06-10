@@ -11,8 +11,6 @@ return array(
 	 * Menu items and titles
 	 */
 	'expages' => "Site sayfaları",
-	'admin:configure_utilities:expages' => "Site Pages",
-	'expages:edit:viewpage' => "View page on site",
 	'expages:about' => "Hakkında",
 	'expages:terms' => "Kullanım Koşulları",
 	'expages:privacy' => "Gizlilik",

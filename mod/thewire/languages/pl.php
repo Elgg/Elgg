@@ -13,7 +13,6 @@ return array(
 	'thewire' => "The Wire",
 
 	'item:object:thewire' => "Wire posts",
-	'collection:object:thewire' => 'Wire posts',
 	'collection:object:thewire:all' => "All wire posts",
 	'collection:object:thewire:owner' => "%s's wire posts",
 	'collection:object:thewire:friends' => "Friends' wire posts",
@@ -25,15 +24,10 @@ return array(
 	'thewire:noposts' => "No wire posts yet",
 
 	'thewire:by' => 'Wire post by %s',
-	'thewire:previous:help' => "Zobacz poprzedni wpis",
-	'thewire:hide:help' => "Ukryj poprzedni wpis",
-
-	'thewire:form:body:placeholder' => "What's happening?",
 	
 	/**
 	 * The wire river
 	 */
-	'river:object:thewire:create' => "%s posted to %s",
 	'thewire:wire' => 'the wire',
 
 	/**

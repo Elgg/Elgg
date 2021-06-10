@@ -10,7 +10,7 @@ return array(
 	'collection:object:blog' => 'Ιστολόγια',
 	'collection:object:blog:all' => 'Όλα τα ιστολόγια',
 	'collection:object:blog:owner' => 'ιστολόγια του χρήστη %s',
-	'collection:object:blog:group' => 'Group blogs',
+	'collection:object:blog:group' => 'Ιστολόγια ομάδων',
 	'collection:object:blog:friends' => 'Ιστολόγια φίλων',
 	'add:object:blog' => 'Προσθέστε μία νέα ανάρτηση',
 	'edit:object:blog' => 'Επεξεργασία ανάρτησης',
@@ -46,24 +46,14 @@ return array(
 	'blog:error:revision_not_found' => 'Αδύνατη εύρεση της αναθέωρησης',
 
 	// river
-	'river:object:blog:create' => '%s published a blog post %s',
-	'river:object:blog:comment' => '%s commented on the blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Νέα ανάρτηση με τίτλο %s',
 	'blog:notify:subject' => 'Νέα ανάρτηση: %s',
 	'blog:notify:body' =>
-'
-%s published a new blog post: %s
-
-%s
-
-View and comment on the blog post:
-%s
-',
+'',
 
 	// widget
-	'widgets:blog:name' => 'Blog posts',
 	'widgets:blog:description' => 'Προβολή πρόσφατων αναρτήσεων σας',
 	'blog:moreblogs' => 'Περισσότερες αναρτήσεις',
 	'blog:numbertodisplay' => 'Αριθμός αναρτήσεων για εμφάνιση',

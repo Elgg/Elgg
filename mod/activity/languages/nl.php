@@ -17,7 +17,6 @@ return array(
 	'widgets:group_activity:edit:select' => 'Selecteer een groep',
 	'widgets:group_activity:content:noactivity' => 'Er is nog geen groepsactiviteit',
 	'widgets:group_activity:content:noselect' => 'Bewerk deze widget en selecteer een groep',
-	
 	'collection:river:group' => "Groepsactiviteit",
 	'groups:tool:activity' => 'Schakel groepsactiviteit in',
 	

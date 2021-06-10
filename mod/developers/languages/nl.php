@@ -6,8 +6,9 @@
  */
 
 return array(
-	// menu
 	'admin:develop_tools' => 'Tools',
+	
+	// menu
 	'admin:develop_tools:sandbox' => 'Theme Sandbox',
 	'admin:develop_tools:inspect' => 'Inspecteer',
 	'admin:inspect' => 'Inspecteer',
@@ -86,7 +87,6 @@ Dit kan potentieel non-HTML views niet laten functioneren. Bekijk de developers_
 	'developers:inspect:views:input_filtered' => "(input gefilterd op plugin hook: %s)",
 	'developers:inspect:views:filtered' => "(gefilterd op plugin hook: %s)",
 	'developers:inspect:widgets' => 'Widgets',
-	'developers:inspect:webservices' => 'Webservices',
 	'developers:inspect:widgets:context' => 'Context',
 	'developers:inspect:functions' => 'Functies',
 	'developers:inspect:file_location' => 'Bestandslocatie of controller',

@@ -11,8 +11,6 @@ return array(
 	 * Menu items and titles
 	 */
 	'expages' => "Ekstra sider",
-	'admin:configure_utilities:expages' => "Site Pages",
-	'expages:edit:viewpage' => "View page on site",
 	'expages:about' => "Om",
 	'expages:terms' => "Betingelser",
 	'expages:privacy' => "Beskyttelse af personlige oplysninger",

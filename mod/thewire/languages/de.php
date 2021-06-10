@@ -25,8 +25,6 @@ return array(
 	'thewire:noposts' => "Noch keine Nachrichten im Heißen Draht.",
 
 	'thewire:by' => 'Nachricht im Heißen Draht von %s',
-	'thewire:previous:help' => "Vorherige Nachricht ansehen",
-	'thewire:hide:help' => "Vorherige Nachricht verbergen",
 
 	'thewire:form:body:placeholder' => "Was gibt's Neues?",
 	

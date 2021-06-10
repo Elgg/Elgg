@@ -29,20 +29,12 @@ return array(
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s aime votre publication "%s"',
 	'likes:notifications:body' =>
-'Bonjour %1$s,
-
-%2$s aime votre publication "%3$s" sur %4$s
+'%1$s aime votre publication "%2$s" sur %3$s
 
 Pour afficher votre publication :
-%5$s
+%4$s
 
-ou voir le profil de %2$s :
+ou voir le profil de %1$s :
 
-%6$s
-
-Merci,
-%4$s',
-	'likes:upgrade:2017120700:title' => "Annotations de Likes publiques",
-	'likes:upgrade:2017120700:description' => "Ceci met à jour l'id de niveau d'accès des annotations des likes vers Public ",
-	
+%5$s',
 );

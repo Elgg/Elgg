@@ -7,18 +7,9 @@
 
 return array(
 	'item:object:blog' => 'Blogaichean',
-	'collection:object:blog' => 'Blogs',
-	'collection:object:blog:all' => 'All site blogs',
-	'collection:object:blog:owner' => '%s\'s blogs',
-	'collection:object:blog:group' => 'Group blogs',
-	'collection:object:blog:friends' => 'Friends\' blogs',
-	'add:object:blog' => 'Add blog post',
-	'edit:object:blog' => 'Edit blog post',
 
 	'blog:revisions' => 'Lèirmheasan',
 	'blog:archives' => 'Tasglannan',
-
-	'groups:tool:blog' => 'Enable group blog',
 	'blog:write' => 'Sgrìobh post bloga',
 
 	// Editing
@@ -46,24 +37,14 @@ return array(
 	'blog:error:revision_not_found' => 'Cha deach an lèirmheas seo a lorg.',
 
 	// river
-	'river:object:blog:create' => '%s published a blog post %s',
-	'river:object:blog:comment' => '%s commented on the blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Tha post bloga ùr ann air a bheil %s',
 	'blog:notify:subject' => 'Post bloga ùr: %s',
 	'blog:notify:body' =>
-'
-%s published a new blog post: %s
-
-%s
-
-View and comment on the blog post:
-%s
-',
+'',
 
 	// widget
-	'widgets:blog:name' => 'Blog posts',
 	'widgets:blog:description' => 'Seall na postaichean bloga as ùire agad',
 	'blog:moreblogs' => 'Barrachd postaichean bloga',
 	'blog:numbertodisplay' => 'An àireamh dhe phostaichean bloga ri an sealltainn',

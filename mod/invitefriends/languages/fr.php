@@ -9,9 +9,9 @@ return array(
 
 	'friends:invite' => 'Inviter des contacts',
 	
-	'invitefriends:registration_disabled' => 'L\'enregistrement des nouveaux utilisateurs a été désactivé sur ce site, vous ne pouvez pas inviter de nouveaux utilisateurs.',
+	'invitefriends:registration_disabled' => 'L\'inscription de nouveaux utilisateurs a été désactivée sur ce site ; vous ne pouvez pas inviter de nouveaux utilisateurs.',
 	
-	'invitefriends:introduction' => 'Pour inviter des contacts à vous rejoindre sur ce réseau, saisissez leurs adresses emails et un message qu\'ils recevront avec votre invitation.',
+	'invitefriends:introduction' => 'Pour inviter des contacts à vous rejoindre sur ce réseau, saisissez leur adresse email et un message qu\'ils recevront avec votre invitation.',
 	'invitefriends:emails' => 'Adresses email (une par ligne)',
 	'invitefriends:message' => 'Message',
 	'invitefriends:subject' => 'Invitation à rejoindre %s',
@@ -22,16 +22,17 @@ return array(
 	'invitefriends:already_members' => 'Les invités suivants sont déjà membres : %s',
 	'invitefriends:noemails' => 'Aucune adresse email n\'a été renseignée.',
 	
-	'invitefriends:message:default' => 'BonjourJe,
+	'invitefriends:message:default' => 'Bonjour,
 
 Je vous invite à rejoindre mon réseau sur %s.',
 
-	'invitefriends:email' => 'Vous avez été invité à rejoindre %s par %s :
+	'invitefriends:email' => 'Vous avez été invité à rejoindre  par %s :
+
 %s
 
-Pour vous inscrire, cliquez sur le lien suivant :
+Pour accepter l’invitation et créer votre compte, cliquez sur le lien suivant :
 %s
 
-Vous serez automatiquement ajouté(e) comme contact lorsque vous créez votre compte via ce lien.',
+Vous serez automatiquement ajouté(e) comme contact lorsque votre compte aura été créé.',
 	
 );

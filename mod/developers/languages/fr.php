@@ -6,18 +6,19 @@
  */
 
 return array(
-	// menu
 	'admin:develop_tools' => 'Outils',
+	
+	// menu
 	'admin:develop_tools:sandbox' => 'Bac à sable du thème',
 	'admin:develop_tools:inspect' => 'Inspecter',
 	'admin:inspect' => 'Inspecter',
 	'admin:develop_tools:unit_tests' => 'Tests unitaires',
 	'admin:develop_tools:entity_explorer' => 'Explorateur d\'entités',
-	'admin:developers' => 'Développement',
-	'admin:developers:settings' => 'Paramètres de développement',
+	'admin:developers' => 'Développeurs',
+	'admin:developers:settings' => 'Paramètres',
 
 	// settings
-	'elgg_dev_tools:settings:explanation' => 'Pour vos dévelopements et le déboguage, contrôlez les paramètres ci-dessous. Certains de ces paramètres sont aussi disponibles sur d\'autres pages d\'administration.',
+	'elgg_dev_tools:settings:explanation' => 'Contrôlez vos paramètres de développements et de débogage ci-dessous. Certains de ces paramètres sont aussi disponibles sur d\'autres pages d\'administration.',
 	'developers:label:simple_cache' => 'Utiliser le cache simple',
 	'developers:help:simple_cache' => 'Désactivez ce cache lors des développements, sinon les modifications des fichiers CSS et JavaScript seront ignorées.',
 	'developers:label:system_cache' => 'Utiliser le cache système',
@@ -25,18 +26,18 @@ return array(
 	'developers:label:debug_level' => "Niveau de journalisation",
 	'developers:help:debug_level' => "Contrôle la quantité d'informations journalisées. Voir elgg_log() pour plus d'informations.",
 	'developers:label:display_errors' => 'Afficher les erreurs PHP fatales',
-	'developers:help:display_errors' => "Par défaut, le fichier .htaccess d'Elgg désactive l'affichage des erreurs fatales.",
+	'developers:help:display_errors' => "Par défaut, le fichier .htaccess de Elgg désactive l'affichage des erreurs fatales.",
 	'developers:label:screen_log' => "Afficher à l'écran",
 	'developers:help:screen_log' => "Ceci affiche à l'écran les sorties de elgg_log() et de elgg_dump() ainsi que le nombre de requêtes sur la base de données",
 	'developers:label:show_strings' => "Afficher les chaînes de traduction brutes",
 	'developers:help:show_strings' => "Affiche les chaînes de traduction utilisées par elgg_echo().",
 	'developers:label:show_modules' => "Montrer les modules AMD chargés dans la console",
-	'developers:help:show_modules' => "Affiche les modules chargés et les valeurs dans votre console JavaScript.",
+	'developers:help:show_modules' => "Envoie les modules chargés et les valeurs dans votre console JavaScript.",
 	'developers:label:wrap_views' => "Envelopper les Vues",
 	'developers:help:wrap_views' => "Ceci enveloppe presque toutes les vues avec des commentaires HTML. Pratique pour identifier la vue responsable d'un élément de code HTML particulier.
 									Cela peut casser les vues non HTML de l'affichage principal (images, RSS, XML, JSON, etc.). Voir developers_wrap_views() pour plus de détails. ",
-	'developers:label:log_events' => "Journaliser les événements et les interceptions (hooks) des plugins.",
-	'developers:help:log_events' => "Écrit les événements et les interceptions (hooks) des plugins dans le journal. Attention : cela représente beaucoup d'informations par page.",
+	'developers:label:log_events' => "Journaliser les événements et les hooks des plugins.",
+	'developers:help:log_events' => "Écrit les événements et les hooks des plugins dans le journal. Attention : il y en a beaucoup pour chaque page.",
 	'developers:label:show_gear' => "Utiliser %s hors de la zone d'administration",
 	'developers:help:show_gear' => "Une icône en bas à droite de l'affichage qui offre aux administrateurs un accès aux paramètres et liens pour développeurs.",
 	'developers:label:block_email' => "Bloquer tous les emails sortants",
@@ -44,7 +45,7 @@ return array(
 	'developers:label:forward_email' => "Faire suivre tous les emails sortants vers une seule adresse email",
 	'developers:help:forward_email' => "Tous les emails sortants seront envoyés sur l'adresse email configurée",
 	'developers:label:enable_error_log' => "Activer le journal des erreurs",
-	'developers:help:enable_error_log' => "Maintenir un journal séparé des erreurs et des messages envoyés via error_log() sur la base de votre configuration de niveau de trace. Le journal peut être affiché via l'interface admin.",
+	'developers:help:enable_error_log' => "Maintenir un journal séparé des erreurs et des messages enregistrés via error_log() sur la base de votre configuration de niveau de journalisation. Le journal peut être affiché via l'interface admin.",
 
 	'developers:label:submit' => "Enregistrer et vider les caches",
 
@@ -59,7 +60,7 @@ return array(
 	'developers:debug:info' => 'Information',
 	
 	// entity explorer
-	'developers:entity_explorer:help' => 'Afficher des informations sur les entités et effectuer des actions basiques dessus.',
+	'developers:entity_explorer:help' => 'Affiche des informations sur les entités et effectue des actions basiques dessus.',
 	'developers:entity_explorer:guid:label' => 'Saisissez le GUID de l\'entité à inspecter',
 	'developers:entity_explorer:info' => 'Informations sur l\'entité',
 	'developers:entity_explorer:info:attributes' => 'Attributs',
@@ -81,17 +82,16 @@ return array(
 	'developers:inspect:simplecache' => 'Cache simple',
 	'developers:inspect:routes' => 'Routes',
 	'developers:inspect:views' => 'Vues',
-	'developers:inspect:views:all_filtered' => "<b>Note !</b> Toutes les entrées/sorties des vues sont filtrées par les hooks des plugins suivants :",
+	'developers:inspect:views:all_filtered' => "<b>Note !</b> Toutes les entrées/sorties des vues sont filtrées par ces hooks de plugin :",
 	'developers:inspect:views:input_filtered' => "(entrée filtrée par le hook de plugin : %s)",
 	'developers:inspect:views:filtered' => "(filtré par le hook de plugin : %s)",
 	'developers:inspect:widgets' => 'Widgets',
-	'developers:inspect:webservices' => 'Services web',
 	'developers:inspect:widgets:context' => 'Contexte',
 	'developers:inspect:functions' => 'Fonctions',
 	'developers:inspect:file_location' => 'Chemin depuis la racine Elgg ou le contrôleur',
 	'developers:inspect:route' => 'Nom de la route',
 	'developers:inspect:path' => 'Motif du chemin',
-	'developers:inspect:resource' => 'Vue de la ressources',
+	'developers:inspect:resource' => 'Vue de la ressource',
 	'developers:inspect:handler' => 'Gestionnaire (handler)',
 	'developers:inspect:controller' => 'Contrôleur',
 	'developers:inspect:file' => 'Fichier',
@@ -104,16 +104,17 @@ return array(
 
 	// event logging
 	'developers:request_stats' => "Statistiques des requêtes (n'inclue pas l'événement shutdown)",
-	'developers:event_log_msg' => "%s : \"%s, %s\" dans %s",
+	'developers:event_log_msg' => "%s : '%s, %s' dans %s",
 	'developers:log_queries' => "Requêtes sur la base de données : %s",
 	'developers:boot_cache_rebuilt' => "Le cache de démarrage a été reconstruit pour cette requête",
-	'developers:elapsed_time' => "Durée (s)",
+	'developers:elapsed_time' => "Durée écoulée (s)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Introduction',
 	'theme_sandbox:breakout' => 'Sortir de l\'iframe',
 	'theme_sandbox:buttons' => 'Boutons',
 	'theme_sandbox:components' => 'Composants',
+	'theme_sandbox:email' => 'Email',
 	'theme_sandbox:forms' => 'Formulaires',
 	'theme_sandbox:grid' => 'Grille',
 	'theme_sandbox:icons' => 'Icônes',
@@ -123,7 +124,10 @@ return array(
 	'theme_sandbox:navigation' => 'Navigation',
 	'theme_sandbox:typography' => 'Typographie',
 
-	'theme_sandbox:icons:blurb' => 'Utilisez <em>elgg_view_icon($name)</em> ou la classe elgg-icon-$name pour afficher une icône. ',
+	'theme_sandbox:icons:blurb' => 'Utilisez <em>elgg_view_icon($name)</em> pour afficher des icônes. ',
+	
+	'theme_sandbox:test_email:button' => "Envoyer un email de test",
+	'theme_sandbox:test_email:success' => "Email de test envoyé à : %s",
 
 	// status messages
 	'developers:settings:success' => 'Paramètres enregistrés et caches vidés',

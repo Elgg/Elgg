@@ -19,11 +19,13 @@ return array(
 	'collection:object:page:group' => "グループページ",
 	'add:object:page' => "ページを追加",
 	'edit:object:page' => "このページを編集",
+	'notification:object:page:create' => "ページが作成されたときに通知を送る",
+	'notifications:mute:object:page' => "ページ '%s' について",
 
 	'groups:tool:pages' => 'グループページを使用する',
 	
-	'annotation:delete:page:success' => 'The page revision was successfully deleted',
-	'annotation:delete:page:fail' => 'The page revision could not be deleted',
+	'annotation:delete:page:success' => 'ページ履歴の削除に成功しました',
+	'annotation:delete:page:fail' => 'ページ履歴を削除できませんでした',
 
 	'pages:delete' => "このページを削除",
 	'pages:history' => "履歴",
@@ -35,11 +37,11 @@ return array(
 	'pages:notify:summary' => '新規ページ「%s」が追加されました',
 	'pages:notify:subject' => "新規ページ: %s",
 	'pages:notify:body' =>
-'%s added a new page: %s
+'%s さんは新しいページを追加しました: %s
 
 %s
 
-View and comment on the page:
+このページの表示とコメントは:
 %s',
 
 	'pages:more' => 'More pages',
@@ -49,9 +51,9 @@ View and comment on the page:
 	* River
 	**/
 
-	'river:object:page:create' => '%s created a page %s',
-	'river:object:page:update' => '%s updated a page %s',
-	'river:object:page:comment' => '%s commented on a page titled %s',
+	'river:object:page:create' => '%s さんはページ「 %s 」を作成しました',
+	'river:object:page:update' => '%s さんはページ「 %s 」を更新しました',
+	'river:object:page:comment' => '%s さんはページ「 %s 」にコメントしました',
 	
 	/**
 	 * Form fields
@@ -96,13 +98,4 @@ View and comment on the page:
 	'pages:label:history' => "履歴",
 
 	'pages:newchild' => "子ページを作成",
-	
-	/**
-	 * Upgrades
-	 */
-	'pages:upgrade:2017110700:title' => "Migrate page_top to page entities",
-	'pages:upgrade:2017110700:description' => "Changes the subtype of all top pages to 'page' and sets metadata to ensure correct listing.",
-	
-	'pages:upgrade:2017110701:title' => "Migrate page_top river entries",
-	'pages:upgrade:2017110701:description' => "Changes the subtype of all river items for top pages to 'page'.",
 );

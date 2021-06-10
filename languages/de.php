@@ -62,24 +62,16 @@ return array(
 	'PluginException:InvalidPlugin:Details' => '%s ist kein zulässiges Plugin: %s.',
 	'PluginException:NullInstantiated' => 'Ein ElggPlugin-Objekt kann nicht mit NULL instanziiert werden. Es muss eine GUID, eine Plugin-ID oder ein vollständiger Dateipfad übergeben werden.',
 	'ElggPlugin:MissingID' => 'Fehlende Plugin-ID (GUID: %s).',
-	'ElggPlugin:NoPluginPackagePackage' => 'Das zugehörige Plugin-Paket für die Plugin-ID %s (GUID: %s) fehlt.',
 	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'Die benötigte Datei "%s" kann nicht gefunden werden.',
-	'ElggPluginPackage:InvalidPlugin:InvalidId' => 'Das Plugin-Verzeichnis dieses Plugins muss zu "%s" umbenannt werden, um mit der ID, die in der Manifest-Datei des Plugins angegeben ist, überein zu stimmen.',
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Die Manifest-Datei enthält den ungültigen Requires-Typ "%s".',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Die Manifest-Datei enthält den ungültigen Provides-Typ "%s".',
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Nicht auflösbare %s-Abhängigkeit "%s" im Plugin %s. Plugins können nicht mit etwas in Konflikt stehen oder etwas voraussetzen, das sie selbst bereitstellen!',
 	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Plugin-Konflikt mit Plugin: %s.',
 	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Die Plugin-Datei "elgg-plugin.php" ist vorhanden aber sie kann nicht gelesen werden.',
 	'ElggPlugin:Error' => 'Fehler in Plugin.',
-	'ElggPlugin:Error:ID' => 'Fehler in Plugin "%s".',
-	'ElggPlugin:Error:Path' => 'Fehler in Plugin-Dateipfad "%s".',
-	'ElggPlugin:Error:Unknown' => 'Unbekannter Fehler in Plugin.',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Einbindung von %s für Plugin %s (GUID: %s) an %s gescheitert.',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Einbindung von %s für Plugin %s (GUID: %s) an %s gescheitert.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Öffnen des Views-Verzeichnis für Plugin %s (GUID: %s) an %s gescheitert.',
-	'ElggPlugin:Exception:NoID' => 'Keine ID für Plugin-GUID %s!',
-	'ElggPlugin:Exception:InvalidPackage' => 'Das Laden des Pakets ist fehlgeschlagen.',
-	'ElggPlugin:Exception:InvalidManifest' => 'Plugin-Manifest fehlt oder ist fehlerhaft.',
 	'PluginException:NoPluginName' => "Der Name des Plugins kann nicht ermittelt werden.",
 	'PluginException:ParserError' => 'Das Parsen der Manifest-Datei mit API-Version %s des Plugins %s ist fehlgeschlagen.',
 	'PluginException:NoAvailableParser' => 'Es steht kein Parser für die Manifest-API-Version %s des Plugins %s zur Verfügung.',
@@ -87,23 +79,6 @@ return array(
 	'ElggPlugin:InvalidAndDeactivated' => '%s ist kein gültiges Plugin und wurde deshalb deaktiviert.',
 	'ElggPlugin:activate:BadConfigFormat' => 'Die Plugin-Datei "elgg-plugin.php" hat keine serialisierbares Array zurückgegeben.',
 	'ElggPlugin:activate:ConfigSentOutput' => 'Die Plugin-Datei "elgg-plugin.php" hat eine Ausgabe erzeugt.',
-
-	'ElggPlugin:Dependencies:Requires' => 'Benötigt',
-	'ElggPlugin:Dependencies:Suggests' => 'Schlägt vor',
-	'ElggPlugin:Dependencies:Conflicts' => 'Im Konflikt mit',
-	'ElggPlugin:Dependencies:Conflicted' => 'Im Konflikt mit',
-	'ElggPlugin:Dependencies:Provides' => 'Stellt bereit',
-	'ElggPlugin:Dependencies:Priority' => 'Priorität',
-
-	'ElggPlugin:Dependencies:Elgg' => 'Elgg-Version',
-	'ElggPlugin:Dependencies:PhpVersion' => 'PHP-Version',
-	'ElggPlugin:Dependencies:PhpExtension' => 'PHP-Erweiterung: %s',
-	'ElggPlugin:Dependencies:PhpIni' => 'PHP ini-Einstellung: %s',
-	'ElggPlugin:Dependencies:Plugin' => 'Plugin: %s',
-	'ElggPlugin:Dependencies:Priority:After' => 'Nach %s',
-	'ElggPlugin:Dependencies:Priority:Before' => 'Vor %s',
-	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s ist nicht installiert.',
-	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Fehlt',
 
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Es sind aktive Plugins vorhanden, die die Verfügbarkeit von %s voraussetzen. Bevor Du dieses Plugin deaktivieren kannst, mußt Du erst folgende Plugins deaktivieren: %s',
 
@@ -134,8 +109,6 @@ return array(
 	
 	'Security:InvalidPasswordCharacterRequirementsException' => "Das eingegebene Passwort genügt nicht den Anforderungen bezüglich der Anzahl der Zeichen.",
 	'Security:InvalidPasswordLengthException' => "Das eingegebene Passwort genügt nicht der Anforderung einer Mindestlänge von %s Zeichen.",
-
-	'deprecatedfunction' => 'Warnung: Dieser Code verwendet die veraltete Funktion \'%s\' und ist mit dieser Version von Elgg nicht kompatibel.',
 
 	'pageownerunavailable' => 'Warnung: Der Seiten-Eigentümer %d ist nicht erreichbar!',
 	'viewfailure' => 'In der View %s ist ein interner Fehler aufgetreten.',
@@ -341,12 +314,7 @@ return array(
 /**
  * Notifications
  */
-	'notifications:usersettings' => "Benachrichtigungs-Einstellungen",
 	'notification:method:email' => 'Email',
-
-	'notifications:usersettings:save:ok' => "Die Benachrichtigungs-Einstellungen wurden gespeichert.",
-	'notifications:usersettings:save:fail' => "Beim Speichern Deiner Benachrichtigungs-Einstellungen ist ein Problem aufgetreten.",
-
 	'notification:subject' => 'Benachrichtigung über %s',
 	'notification:body' => 'Schau Dir die neue Aktivität hier an: %s',
 
@@ -360,8 +328,6 @@ return array(
 	'groups:searchtitle' => "Suche nach Gruppen: %s",
 	'advancedsearchtitle' => "%s mit Treffern passend zu %s",
 	'notfound' => "Keine Treffer.",
-	'next' => "Weiter",
-	'previous' => "Zurück",
 
 	'viewtype:change' => "Ansicht wechseln",
 	'viewtype:list' => "Listen-Ansicht",
@@ -846,7 +812,6 @@ Siehe die vollständige Liste dieser Benutzer hier:
 	'admin:plugins:opt:description' => "Konfigurieren der installierten Tools der Community-Seite.",
 	'admin:plugins:label:id' => "ID",
 	'admin:plugins:label:name' => "Name",
-	'admin:plugins:label:author' => "Author",
 	'admin:plugins:label:copyright' => "Copyright",
 	'admin:plugins:label:categories' => 'Kategorien',
 	'admin:plugins:label:licence' => "Lizenz",
@@ -862,12 +827,6 @@ Siehe die vollständige Liste dieser Benutzer hier:
 	'admin:plugins:label:version' => 'Version',
 	'admin:plugins:label:location' => 'Pfad zum Plugin-Verzeichnis',
 	'admin:plugins:label:priority' => 'Priorität',
-	'admin:plugins:label:contributors' => 'Mitwirkende',
-	'admin:plugins:label:contributors:name' => 'Name',
-	'admin:plugins:label:contributors:email' => 'Email-Adresse',
-	'admin:plugins:label:contributors:website' => 'Webseite',
-	'admin:plugins:label:contributors:username' => 'Community-Benutzername',
-	'admin:plugins:label:contributors:description' => 'Beschreibung',
 	'admin:plugins:label:dependencies' => 'Abhängigkeiten',
 	'admin:plugins:label:missing_dependency' => 'Unerfüllte Abhängigkeit [%s].',
 
@@ -881,7 +840,6 @@ Siehe die vollständige Liste dieser Benutzer hier:
 
 	'admin:plugins:set_priority:yes' => "%s neu angeordnet.",
 	'admin:plugins:set_priority:no' => "%s kann nicht neu angeordnet werden.",
-	'admin:plugins:set_priority:no_with_msg' => "%s konnte nicht neu angeordnet werden. Fehlermeldung: %s",
 	'admin:plugins:deactivate:yes' => "%s deaktiviert.",
 	'admin:plugins:deactivate:no' => "%s kann nicht deaktiviert werden.",
 	'admin:plugins:deactivate:no_with_msg' => "%s konnte nicht deaktiviert werden. Fehlermeldung: %s",
@@ -894,12 +852,6 @@ Siehe die vollständige Liste dieser Benutzer hier:
 	'admin:plugins:version' => 'Version %s',
 	'admin:plugin_settings' => 'Plugin-Einstellungen',
 	'admin:plugins:warning:unmet_dependencies_active' => 'Dieses Plugin ist aktiviert aber es hat unerfüllte Abhängigkeiten. Dies kann zu Problemen führen. Siehe "mehr Info" unten für weitere Einzelheiten.',
-
-	'admin:plugins:dependencies:type' => 'Typ',
-	'admin:plugins:dependencies:name' => 'Name',
-	'admin:plugins:dependencies:expected_value' => 'Erwarteter Wert',
-	'admin:plugins:dependencies:local_value' => 'Tatsächlicher Wert',
-	'admin:plugins:dependencies:comment' => 'Kommentar',
 
 	'admin:statistics:description' => "Dies ist ein Überblick über die Seiten-Statistik Deiner Community. Falls Du detailiertere Statistiken benötigst, ist ein ausführlicheres, professionelles Administations-Tool verfügbar.",
 	'admin:statistics:opt:description' => "Überblick über Statistiken zu Benutzern und Objekten Deiner Community-Seite.",
@@ -1131,7 +1083,9 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'revert' => 'Zurücksetzen',
 	'validate' => 'Validieren',
 	'read_more' => 'Mehr lesen',
-
+	'next' => 'Weiter',
+	'previous' => 'Zurück',
+	
 	'site' => 'Webseite',
 	'activity' => 'Aktivitäten',
 	'members' => 'Mitglieder',
@@ -1460,7 +1414,7 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.',
 	'config:content:comment_box_collapses:help' => "Dies gilt nur für den Fall dass die Kommentare in der Reihenfolge mit dem neuesten zuerst angezeigt werden.",
 	'config:content:comments_latest_first' => "Kommentare in Reihenfolge mit neuesten zuerst anzeigen",
 	'config:content:comments_latest_first:help' => "Aktiviere diese Option, um festzulegen das die Kommentare zu einem Eintrag in der Reihenfolge von neuesten zuerst zu ältestem zuletzt angezeigt werden sollen. Wenn diese Option deaktiviert ist, ist die Reihenfolge umgekehrt von ältestem zu neuesten Kommentareintrag. Außerdem wird in diesem Fall die Kommentarbox am Ende der Liste angezeigt.",
-	
+
 	'upgrading' => 'Aktualisieren...',
 	'upgrade:core' => 'Deine Elgg-Installation wurde aktualisiert.',
 	'upgrade:unlock' => 'Upgrade entsperren',
@@ -1476,8 +1430,6 @@ Wenn Du genauere Installationsanweisungen benötigst, lese die  <a href="http://
 	'update:oauth_api:deactivated' => 'OAuth API (bisher OAuth Lib genannt) wurde während der Seitenaktualisierung deaktiviert. Bitte aktiviere die API manuell, falls sie benötigt wird.',
 	'upgrade:site_secret_warning:moderate' => "Es ist empfehlenswert, den Geheimschlüssel Deiner Community-Seite neu erzeugen zu lassen, um die Sicherheit für Deine Seite zu verbessern. Siehe Konfigurieren &gt; Einstellungen &gt; Erweiterte Einstellungen",
 	'upgrade:site_secret_warning:weak' => "Wir empfehlen nachdrücklich, den Geheimschlüssel Deiner Community-Seite neu erzeugen zu lassen, um die Sicherheit für Deine Seite zu verbessern. Siehe Konfigurieren &gt; Einstellungen &gt; Erweiterte Einstellungen",
-
-	'deprecated:function' => '%s() wurde durch %s() als veraltet markiert.',
 
 	'admin:pending_upgrades' => 'Es gibt ausstehende Aktualisierungen auf Deiner Community-Seite. Du solltest diese baldmöglichst durchführen.',
 	'admin:view_upgrades' => 'Ausstehende Aktualisierungen anzeigen.',
@@ -1632,8 +1584,6 @@ Folge dem Link, um zur Webseite zu gelangen:
 	'generic_comment:title' => 'Kommentar von %s',
 	'generic_comment:on' => '%s zu %s',
 	'generic_comments:latest:posted' => 'schrieb einen',
-
-	'generic_comment:notification:owner:subject' => 'Du hast einen neuen Kommentar erhalten!',
 	'generic_comment:notification:owner:summary' => 'Du hast einen neuen Kommentar erhalten!',
 	'generic_comment:notification:owner:body' => "Zu Deinem Beitrag \"%s\" wurde von %s ein neuer Kommentar geschrieben. Der Kommentar lautet:
 
@@ -1647,7 +1597,6 @@ Um das Profil von %s aufzurufen, folge diesem Link:
 
 %s",
 	
-	'generic_comment:notification:user:subject' => 'Neuer Kommentar zu: %s',
 	'generic_comment:notification:user:summary' => 'Neuer Kommentar zu: %s',
 	'generic_comment:notification:user:body' => "Zu dem Beitrag \"%s\" wurde von %s ein neuer Kommentar geschrieben. Der Kommentar lautet:
 
@@ -1674,7 +1623,7 @@ Um das Profil von %s aufzurufen, folge diesem Link:
 	'entity:delete:permission_denied' => 'Du hast keine ausreichende Berechtigung, um diesen Beitrag zu löschen.',
 	'entity:delete:success' => '%s wurde gelöscht.',
 	'entity:delete:fail' => 'Das Löschen von %s ist fehlgeschlagen.',
-
+	
 	'entity:can_delete:invaliduser' => 'Ein Aufruf der canDelete()-Funktion für den Benutzer mit der Benutzer-GUID [%s] ist nicht möglich, da dieser Benutzer nicht existiert.',
 
 /**
@@ -1702,12 +1651,6 @@ Um das Profil von %s aufzurufen, folge diesem Link:
 	'word:blacklist' => 'und, der, die, das, den, dem, des, ein, eine, eines, einen, einem, einer, dann, aber, sie, er, es, ihr, ihm, ihres, ihrer, ihrem, ihren, sein, seiner, seines, seinem, seinen, nicht, also, über, jetzt, deshalb, daher, darum, demzufolge, deswegen, folglich, somit, allerdings, immer, noch, ebenso, andernfalls, umgekehrt, eher, infolgedessen, darüberhinaus, darüber, hinaus, trotzdem, dennoch, anstatt, stattdessen, inzwischen, mittlerweile, unterdessen, dementsprechend, dies, dieser, dieses, diesem, diesen, was, wem, wessen, deren, dessen',
 
 /**
- * Tag labels
- */
-
-	'tag_names:tags' => 'Tags',
-
-/**
  * Javascript
  */
 
@@ -1715,6 +1658,10 @@ Um das Profil von %s aufzurufen, folge diesem Link:
 	'js:security:token_refreshed' => 'Verbindung mit %s wiederhergestellt!',
 	'js:lightbox:current' => "Bild %s von %s",
 
+/**
+ * Diagnostics
+ */
+	
 /**
  * Miscellaneous
  */
@@ -1938,22 +1885,4 @@ Um das Profil von %s aufzurufen, folge diesem Link:
 
 	"core:upgrade:2017080900:title" => "Umwandlung des Datenbank-Encodings für Multi-Byte-Support",
 	"core:upgrade:2017080900:description" => "Damit wird das Encoding der Datenbank und der Datenbanktabellen auf UTF8mb4 umgestellt, damit Multi-Byte-Characters wie beispielsweise Emojies gespeichert werden können.",
-
-	"core:upgrade:2017080950:title" => "Initialisierung neuer Sicherheitsoptionen mit Standardeinstellungen",
-	"core:upgrade:2017080950:description" => "In der neuen Elgg-Version wurden einige Sicherheitsoptionen hinzugefügt. Es wird empfohlen, dieses Update durchzuführen, damit diese Optionen mit den Standardwerten initialisiert werden. Du kannst Dir diese neuen Optionen anschließend in den Seiteneinstellungen ansehen und wenn nötig die Werte anpassen.",
-
-	"core:upgrade:2017121200:title" => "Umwandeln der Freundeslisten in Zugriffslevel-Collections von Freunden",
-	"core:upgrade:2017121200:description" => "Damit werden die bisherigen Freundeslisten in native Zugriffslevel-Collections (weiterhin Freundeslisten genannt) umgewandelt.",
-
-	"core:upgrade:2018041800:title" => "Neue Plugins aktivieren",
-	"core:upgrade:2018041800:description" => "Bestimmte Funktionalitäten von Elgg wurden in (mitgelieferte) Plugins verlagert. Dieses Update aktiviert diese Plugins, um die Kompatibilität von 3rd Party-Plugins zu gewährleisten, deren Funktionsfähigkeit möglicherweise von dieser Funktionalität abhängt.",
-
-	"core:upgrade:2018041801:title" => "Löschen von Plugin-Entitäten von entfernten Plugins",
-	"core:upgrade:2018041801:description" => "Damit werden die Entitäten gelöscht, die zu Plugins gehören, die mit Elgg 3.0 nicht mehr mitgeliefert werden.",
-	
-	"core:upgrade:2018061401:title" => "Umwandlung der Cronlog-Datenbankeinträge",
-	"core:upgrade:2018061401:description" => "Damit werden die Cronlog-Einträge innerhalb der Datenbank verschoben, um mit dem neuen Datenbank-Schema kompatibel zu sein.",
-	
-	"core:upgrade:2019071901:title" => "Standardwert für Sicherheitsoption aktualisieren: Bestätigung bei Änderung der Emailadresse",
-	"core:upgrade:2019071901:description" => "Bei der neu installierten Elgg-Version wurde eine neue Sicherheitsoption eingeführt. Es wird empfohlen, diese Aktualisierung auszuführen, damit der Standardwert in Deiner bestehenden Installation gesetzt wird. Du kannst anschließend jederzeit die entsprechende Option auf der Sicherheitseinstellungs-Seite anpassen.",
 );

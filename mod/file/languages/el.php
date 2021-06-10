@@ -9,12 +9,6 @@ return array(
 
 	'item:object:file' => 'Αρχεία',
 	'collection:object:file' => 'Αρχεία',
-	'collection:object:file:all' => "All site files",
-	'collection:object:file:owner' => "%s's files",
-	'collection:object:file:friends' => "Friends' files",
-	'collection:object:file:group' => "Group files",
-	'add:object:file' => "Upload a file",
-	'edit:object:file' => "Edit file",
 
 	'file:more' => "Περισσότερα αρχεία",
 	'file:list' => "Προβολή λίστας",
@@ -54,26 +48,12 @@ return array(
 	'widgets:filerepo:name' => "Εφαρμογή αρχείου",
 	'widgets:filerepo:description' => "Εμφάνιση των πιο πρόσφατων αρχείων σας",
 
-	'groups:tool:file' => 'Enable group files',
-
-	'river:object:file:create' => '%s uploaded the file %s',
-	'river:object:file:comment' => '%s commented on the file %s',
-
 	'file:notify:summary' => 'Νέο αρχείο με όνομα %s',
 	'file:notify:subject' => 'Νέο αρχείο: %s',
-	'file:notify:body' => '%s uploaded a new file: %s
-
-%s
-
-View and comment on the file:
-%s',
 
 	/**
 	 * Status messages
 	 */
-
-	'file:saved' => "The file was successfully saved.",
-	'entity:delete:object:file:success' => "The file was successfully deleted.",
 
 	/**
 	 * Error messages

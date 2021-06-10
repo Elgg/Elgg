@@ -182,16 +182,6 @@ of klik op de link om alle lidmaatschapsverzoeken te bekijken:
 	'groups:joinrequestkilled' => 'Lidmaatschapsverzoek verwijderd.',
 	'groups:error:addedtogroup' => "Kon %s niet toevoegen aan de groep",
 	'groups:add:alreadymember' => "%s is al lid van deze groep",
-
-	/**
-	 * ecml
-	 */
-	'groups:ecml:groupprofile' => 'Groepsprofielen',
-
-	/**
-	 * Upgrades
-	 */
-	'groups:upgrade:2016101900:title' => 'Verplaats de groepsiconen naar de nieuwe locatie',
-	'groups:upgrade:2016101900:description' => 'De nieuwe iconen API plaatst de bestanden op een voorspelbare locatie op de bestandslocatie relatief aan de entity\'s bestandlocatie.
-Deze upgrade verplaatst alle groepsiconen naar deze nieuwe locatie.',
+	
+	// Notification settings
 );

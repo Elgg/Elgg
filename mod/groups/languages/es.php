@@ -21,12 +21,8 @@ return array(
 	'groups:delete' => 'Borrar grupo',
 	'groups:membershiprequests' => 'Administrar solicitudes de uni&oacute;n a grupos',
 	'groups:membershiprequests:pending' => 'Administrar solicitudes de uni&oacute;n (%s)',
-	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Invitaciones de grupo',
 	'groups:invitations:pending' => 'Invitaciones de grupo (%s)',
-	
-	'relationship:invited' => '%2$s was invited to join %1$s',
-	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Icono de grupo (dejar en blanco para no hacer cambios)',
 	'groups:name' => 'Nombre del grupo',
@@ -35,8 +31,6 @@ return array(
 	'groups:interests' => 'Etiquetas',
 	'groups:website' => 'Sitio Web',
 	'groups:members' => 'Miembros del grupo',
-
-	'groups:members_count' => '%s members',
 
 	'groups:members:title' => 'Miembros de %s',
 	'groups:members:more' => "Ver todos los miembros",
@@ -69,10 +63,6 @@ return array(
 	'groups:leave' => 'Abandonar el grupo',
 	'groups:invite' => 'Invitar amigos',
 	'groups:invite:title' => 'Invitar amigos a este grupo',
-	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
-	'groups:invite:resend' => 'Resend the invitations to already invited users',
-	'groups:invite:member' => 'Already a member of this group',
-	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'No hay amigos para invitar',
 	'groups:group' => "Grupo",
@@ -92,7 +82,6 @@ return array(
 	'groups:open' => "grupo abierto",
 	'groups:closed' => "grupo cerrado",
 	'groups:member' => "miembros",
-	'groups:search' => "Search for groups",
 
 	'groups:more' => 'M&aacute;s grupos',
 	'groups:none' => 'No hay grupos',
@@ -109,9 +98,6 @@ return array(
 	'groups:opengroup:membersonly' => "El contenido de este grupo solo es accesible por sus miembros.",
 	'groups:opengroup:membersonly:join' => 'Para ser un miembro, de click sobre el link de "Unirse al grupo".',
 	'groups:visibility' => '&iquest;Quienes pueden ver este grupo?',
-	'groups:content_default_access' => 'Default group content access',
-	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
-	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools
@@ -129,8 +115,6 @@ return array(
 	'groups:joinrequestnotmade' => 'No se pudo enviar la solicitud de membres&iacute;a del grupo',
 	'groups:joinrequestmade' => 'Solicitar unirse al grupo',
 	'groups:joinrequest:exists' => 'Ya eres miembro de este grupo',
-	'groups:button:joined' => 'Joined',
-	'groups:button:owned' => 'Owned',
 	'groups:joined' => 'Te has unido al grupo',
 	'groups:left' => 'Has abandonado el grupo',
 	'groups:userinvited' => 'El usuario ha sido invitado.',
@@ -139,34 +123,10 @@ return array(
 	'groups:invite:subject' => "%s te ha invitado al grupo %s",
 	'groups:joinrequest:remove:check' => '&iquest;Seguro que deseas cancelar la solicitud de membres&iacute;a?',
 	'groups:invite:remove:check' => '&iquest;Seguro que deseas anular esta invitaci&oacute;n?',
-	'groups:invite:body' => "Hi %s,
-
-%s invited you to join the '%s' group.
-
-Click below to view your invitations:
-%s",
 
 	'groups:welcome:subject' => "Bienvenido al grupo %s",
-	'groups:welcome:body' => "Hi %s!
-
-You are now a member of the '%s' group.
-
-Click below to begin posting!
-%s",
 
 	'groups:request:subject' => "%s ha solicitado unirse a %s",
-	'groups:request:body' => "Hi %s,
-
-%s has requested to join the '%s' group.
-
-Click below to view their profile:
-%s
-
-or click below to view the group's join requests:
-%s",
-
-	'river:group:create' => '%s created the group %s',
-	'river:group:join' => '%s joined the group %s',
 
 	'groups:allowhiddengroups' => '&iquest;Desea habilitar los grupos provados?',
 	'groups:whocancreate' => '¿Quién puede editar este grupo?',
@@ -174,24 +134,12 @@ or click below to view the group's join requests:
 	/**
 	 * Action messages
 	 */
-	'groups:deleted' => 'Group and group contents deleted',
-	'groups:notdeleted' => 'Group could not be deleted',
 	'groups:deletewarning' => "&iquest;Seguro que deseas borrar este grupo? No se puede deshacer",
 
 	'groups:invitekilled' => 'El invitado ha sido eliminado.',
 	'groups:joinrequestkilled' => 'La solicitud ha sido borrada.',
 	'groups:error:addedtogroup' => "No ha sido posible añadir a %s al grupo.",
 	'groups:add:alreadymember' => "%s ya forma parte del grupo.",
-
-	/**
-	 * ecml
-	 */
-	'groups:ecml:groupprofile' => 'Perfiles de los grupos',
-
-	/**
-	 * Upgrades
-	 */
-	'groups:upgrade:2016101900:title' => 'Transfer group icons to a new location',
-	'groups:upgrade:2016101900:description' => 'New entity icon API stores icons in a predictable location on the filestore
-relative to the entity\'s filestore directory. This upgrade will align the group plugin with the requirements of the new API.',
+	
+	// Notification settings
 );

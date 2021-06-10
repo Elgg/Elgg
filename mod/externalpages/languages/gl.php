@@ -11,7 +11,6 @@ return array(
 	 * Menu items and titles
 	 */
 	'expages' => "Páxinas do siti",
-	'admin:configure_utilities:expages' => "Site Pages",
 	'expages:edit:viewpage' => "Ver a páxina no sitio",
 	'expages:about' => "Información",
 	'expages:terms' => "Condicións",

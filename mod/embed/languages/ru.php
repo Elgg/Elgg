@@ -8,5 +8,5 @@
 return array(
 	'embed:embed' => 'Медиа',
 	'embed:media' => 'Вставить',
-	'embed:no_support' => 'There is no embeddable content available',
+	'embed:no_support' => 'Содержание для вставки недоступно',
 );

@@ -29,20 +29,9 @@ return array(
 	'bookmarks:notify:summary' => '´Nou enllaç anomenat %s',
 	'bookmarks:notify:subject' => 'Nou enllaç: %s',
 	'bookmarks:notify:body' =>
-'%s added a new bookmark: %s
-
-Address: %s
-
-%s
-
-View and comment on the bookmark:
-%s
-',
+'',
 
 	'bookmarks:numbertodisplay' => 'Nombre d\'elements marcats com adreces d\'interès a mostrar',
-
-	'river:object:bookmarks:create' => '%s bookmarked %s',
-	'river:object:bookmarks:comment' => '%s commented on a bookmark %s',
 
 	'groups:tool:bookmarks' => 'Activa l\'agrupació d\'adreces d\'interés',
 	
@@ -66,7 +55,6 @@ View and comment on the bookmark:
 	 */
 
 	'bookmarks:save:success' => "S'ha afegit correctament.",
-	'entity:delete:object:bookmarks:success' => "The bookmark was deleted.",
 
 	/**
 	 * Error messages

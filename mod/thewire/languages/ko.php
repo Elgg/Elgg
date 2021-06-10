@@ -25,8 +25,6 @@ return array(
 	'thewire:noposts' => "쪽글이 없습니다",
 
 	'thewire:by' => '%s의 쪽글',
-	'thewire:previous:help' => "지난 글 보기",
-	'thewire:hide:help' => "지난글 감추기",
 
 	'thewire:form:body:placeholder' => "무슨 일이 있나요?",
 	

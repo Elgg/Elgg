@@ -36,7 +36,4 @@ Wenn Du nicht direkt auf den Link klicken kannst, kopiere ihn bitte von Hand in 
 
 	'uservalidationbyemail:messages:resent_validation' => 'Bestätigungs-Email gesendet.',
 	'uservalidationbyemail:messages:resent_validations' => 'Die Bestätigungs-Email wurde erneut an alle markierten Benutzeraccount gesendet.',
-	
-	'uservalidationbyemail:upgrade:2019090600:title' => 'Übersicht über den Status der Benutzeraccount-Aktivierung via Bestätigungs-Emails',
-	'uservalidationbyemail:upgrade:2019090600:description' => 'Der Status der Benutzeraccount-Aktivierung via Bestätigungs-Emails wird auf neue Weise verwaltet. Dieses Update stellt sicher, dass der Status von Accounts, bei denen die Aktivierung via Bestätigungs-Email noch aussteht, vollständig angezeigt werden können.',
 );

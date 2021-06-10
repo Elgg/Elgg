@@ -29,20 +29,9 @@ return array(
 	'bookmarks:notify:summary' => 'Nowa zakładka o nazwie %s',
 	'bookmarks:notify:subject' => 'Nowa zakładka: %s',
 	'bookmarks:notify:body' =>
-'%s added a new bookmark: %s
-
-Address: %s
-
-%s
-
-View and comment on the bookmark:
-%s
-',
+'',
 
 	'bookmarks:numbertodisplay' => 'Ilość zakładek do wyświetlenia',
-
-	'river:object:bookmarks:create' => '%s bookmarked %s',
-	'river:object:bookmarks:comment' => '%s commented on a bookmark %s',
 
 	'groups:tool:bookmarks' => 'Włącz zakładki grupy',
 	
@@ -66,7 +55,6 @@ View and comment on the bookmark:
 	 */
 
 	'bookmarks:save:success' => "Twoja zakładka została pomyślnie dodana.",
-	'entity:delete:object:bookmarks:success' => "The bookmark was deleted.",
 
 	/**
 	 * Error messages

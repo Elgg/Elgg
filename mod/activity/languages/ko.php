@@ -17,7 +17,6 @@ return array(
 	'widgets:group_activity:edit:select' => '모둠 선택',
 	'widgets:group_activity:content:noactivity' => '이 모둠에 활동이 없습니다',
 	'widgets:group_activity:content:noselect' => '모둠을 선택하기 위해 이 위젯을 수정하세요',
-	
 	'collection:river:group' => "모둠 활동",
 	'groups:tool:activity' => '모둠 활동 활성화',
 	

@@ -182,16 +182,6 @@ eller tryck nedan för att visa gruppen förfrågningar om att gå med:
 	'groups:joinrequestkilled' => 'Begäran om att gå med har tagits bort.',
 	'groups:error:addedtogroup' => "Kunde inte lägga till %s i gruppen",
 	'groups:add:alreadymember' => "%s är redan medlem i den här gruppen",
-
-	/**
-	 * ecml
-	 */
-	'groups:ecml:groupprofile' => 'Gruppens profiler',
-
-	/**
-	 * Upgrades
-	 */
-	'groups:upgrade:2016101900:title' => 'Överför gruppikoner till en ny plats',
-	'groups:upgrade:2016101900:description' => 'Ny enhetsikon API lagrar ikoner på en förutbestämd plats i fillagringen
-relativt till mappen för enhetens fillagring. Den här uppgraderingen kommer att anpassa grupp-tillägget med kraven för det nya API:et.',
+	
+	// Notification settings
 );

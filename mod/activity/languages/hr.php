@@ -17,7 +17,6 @@ return array(
 	'widgets:group_activity:edit:select' => 'Odaberi grupu',
 	'widgets:group_activity:content:noactivity' => 'Ova grupa nije aktivna. ',
 	'widgets:group_activity:content:noselect' => 'Uredi ovaj dodatak kako biste odabrali grupu',
-	
 	'collection:river:group' => "Grupna aktivnost",
 	'groups:tool:activity' => 'Omogući grupnu aktivnost',
 	

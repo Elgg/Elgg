@@ -44,7 +44,4 @@ return array(
 갑사합니다,
 %4$s
 ',
-	'likes:upgrade:2017120700:title' => "공개된 공감 주석",
-	'likes:upgrade:2017120700:description' => "이 주석의 액세스 ID가 공개로 업데이트됩니다.",
-	
 );

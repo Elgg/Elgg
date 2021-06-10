@@ -43,7 +43,4 @@ eller visa %2$ss profil här:
 
 Thanks,
 %4$s',
-	'likes:upgrade:2017120700:title' => "Publika Gilla-kommentarer",
-	'likes:upgrade:2017120700:description' => "Den här uppdaterar åtkomst-id för gilla-kommentarer till publikt",
-	
 );

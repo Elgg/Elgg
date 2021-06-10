@@ -7,18 +7,6 @@
 
 return array(
 	'email:validate:subject' => "【登録確認メール】%s様、%sで登録されたメールアドレスにお送りしています",
-	'email:validate:body' => "Hi %s,
-
-Before you can start using %s, you must confirm your email address.
-
-Please confirm your email address by clicking on the link below:
-
-%s
-
-If you can't click on the link, copy and paste it to your browser manually.
-
-%s
-%s",
 	'email:confirm:success' => "あなたの電子メールアドレスを確認しました。",
 	'email:confirm:fail' => "あなたの電子メールアドレスが正しいアドレスなのかどうかを確認できませんでした...",
 
@@ -36,7 +24,4 @@ If you can't click on the link, copy and paste it to your browser manually.
 
 	'uservalidationbyemail:messages:resent_validation' => '確認メールを送信しました。',
 	'uservalidationbyemail:messages:resent_validations' => 'チェックしたユーザ全員に確認メールを再送しました。',
-	
-	'uservalidationbyemail:upgrade:2019090600:title' => 'Track user e-mail validation status',
-	'uservalidationbyemail:upgrade:2019090600:description' => 'The e-mail validation status is tracked in a new way. Make sure all pending users are updated to the new tracking in order to still require e-mail validation.',
 );

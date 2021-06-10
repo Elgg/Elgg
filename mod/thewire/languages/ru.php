@@ -13,7 +13,6 @@ return array(
 	'thewire' => "Микроблог",
 
 	'item:object:thewire' => "Микроблог",
-	'collection:object:thewire' => 'Wire posts',
 	'collection:object:thewire:all' => "Все записи микроблога",
 	'collection:object:thewire:owner' => "Микроблог пользователя %s",
 	'collection:object:thewire:friends' => "Микроблоги друзей",
@@ -25,15 +24,10 @@ return array(
 	'thewire:noposts' => "В микроблоге нет постов",
 
 	'thewire:by' => 'Запись пользователя %s',
-	'thewire:previous:help' => "Посмотреть первый пост",
-	'thewire:hide:help' => "Скрыть первый пост",
-
-	'thewire:form:body:placeholder' => "What's happening?",
 	
 	/**
 	 * The wire river
 	 */
-	'river:object:thewire:create' => "%s posted to %s",
 	'thewire:wire' => 'микроблог',
 
 	/**

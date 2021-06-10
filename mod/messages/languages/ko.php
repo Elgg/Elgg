@@ -73,5 +73,9 @@ return array(
 	'messages:user:self' => "자신에게 쪽지를 보낼 수 없습니다.",
 
 	'messages:deleted_sender' => '삭제된 사용자',
+	
+	/**
+	* Settings
+	*/
 
 );

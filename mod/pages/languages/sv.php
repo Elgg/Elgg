@@ -96,13 +96,4 @@ Visa och kommentera sidan:
 	'pages:label:history' => "Sidhistorik",
 
 	'pages:newchild' => "Skapa en undersida",
-	
-	/**
-	 * Upgrades
-	 */
-	'pages:upgrade:2017110700:title' => "Migrera page_top till sidenheter",
-	'pages:upgrade:2017110700:description' => "Ändrar undertypen av alla topp-sidor till \"sida\" och ställer in metadata för att vara säker på korrekt listning.",
-	
-	'pages:upgrade:2017110701:title' => "Migrera page_top river enhet",
-	'pages:upgrade:2017110701:description' => "Ändrar undertypen för alla river objekt för topp-sidor till \"sida\".",
 );

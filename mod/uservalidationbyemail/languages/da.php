@@ -7,18 +7,6 @@
 
 return array(
 	'email:validate:subject' => "%s vær venlig at bekræfte din e-mail adresse for %s!",
-	'email:validate:body' => "Hi %s,
-
-Before you can start using %s, you must confirm your email address.
-
-Please confirm your email address by clicking on the link below:
-
-%s
-
-If you can't click on the link, copy and paste it to your browser manually.
-
-%s
-%s",
 	'email:confirm:success' => "Du har bekræftet din e-mail adresse!",
 	'email:confirm:fail' => "Din e-mail adresse kunne ikke bekræftes...",
 
@@ -36,7 +24,4 @@ If you can't click on the link, copy and paste it to your browser manually.
 
 	'uservalidationbyemail:messages:resent_validation' => 'Anmodning om validering gensendt.',
 	'uservalidationbyemail:messages:resent_validations' => 'Anmodning om validering gensendt til alle markerede brugere.',
-	
-	'uservalidationbyemail:upgrade:2019090600:title' => 'Track user e-mail validation status',
-	'uservalidationbyemail:upgrade:2019090600:description' => 'The e-mail validation status is tracked in a new way. Make sure all pending users are updated to the new tracking in order to still require e-mail validation.',
 );

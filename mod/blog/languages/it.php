@@ -10,7 +10,6 @@ return array(
 	'collection:object:blog' => 'Blog',
 	'collection:object:blog:all' => 'Tutti i blog',
 	'collection:object:blog:owner' => 'blog di %s',
-	'collection:object:blog:group' => 'Group blogs',
 	'collection:object:blog:friends' => 'Blog degli amici',
 	'add:object:blog' => 'Aggiungi un articolo',
 	'edit:object:blog' => 'Modifica un articolo',
@@ -53,17 +52,9 @@ return array(
 	'blog:notify:summary' => 'Nuovo articolo intitolato %s',
 	'blog:notify:subject' => 'Nuovo articolo: %s',
 	'blog:notify:body' =>
-'
-%s published a new blog post: %s
-
-%s
-
-View and comment on the blog post:
-%s
-',
+'',
 
 	// widget
-	'widgets:blog:name' => 'Blog posts',
 	'widgets:blog:description' => 'Visualizza gli ultimi articoli',
 	'blog:moreblogs' => 'Altri articoli',
 	'blog:numbertodisplay' => 'Numero di articoli da visualizzare',

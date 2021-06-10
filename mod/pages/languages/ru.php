@@ -11,47 +11,49 @@ return array(
 	 * Menu items and titles
 	 */
 
-	'item:object:page' => 'Документы',
-	'collection:object:page' => 'Документы',
-	'collection:object:page:all' => "Все документы сайта",
-	'collection:object:page:owner' => "Документы %s",
-	'collection:object:page:friends' => "Документы друзей",
-	'collection:object:page:group' => "Документы группы",
+	'item:object:page' => 'Страницы',
+	'collection:object:page' => 'Страницы',
+	'collection:object:page:all' => "Все страницы сайта",
+	'collection:object:page:owner' => "Страницы пользователя %s",
+	'collection:object:page:friends' => "Страницы друзей",
+	'collection:object:page:group' => "Страницы группы",
 	'add:object:page' => "Добавить документ",
-	'edit:object:page' => "Редактировать документы",
+	'edit:object:page' => "Изменить страницу",
+	'notification:object:page:create' => "Отправить уведомление при создании страницы",
+	'notifications:mute:object:page' => "о странице '%s'",
 
-	'groups:tool:pages' => 'Включить документы группы',
+	'groups:tool:pages' => 'Включить страницы группы',
 	
-	'annotation:delete:page:success' => 'The page revision was successfully deleted',
-	'annotation:delete:page:fail' => 'The page revision could not be deleted',
+	'annotation:delete:page:success' => 'Редакция страницы была удалена.',
+	'annotation:delete:page:fail' => 'Редакция страницы не может быть удалена.',
 
-	'pages:delete' => "Удалить документы",
+	'pages:delete' => "Удалить страницу",
 	'pages:history' => "Архив",
-	'pages:view' => "Просмотреть документ",
-	'pages:revision' => "Версия",
+	'pages:view' => "Просмотр страницы",
+	'pages:revision' => "Редакция",
 
 	'pages:navigation' => "Навигация",
 
-	'pages:notify:summary' => 'Новая документ с названием %s',
-	'pages:notify:subject' => "Новый документ: %s",
+	'pages:notify:summary' => 'Новая страница с названием %s',
+	'pages:notify:subject' => "Новая страница: %s",
 	'pages:notify:body' =>
-'%s added a new page: %s
+'%s добавил новую страницу: %s
 
 %s
 
-View and comment on the page:
+Просмотр и комментирование страницы:
 %s',
 
-	'pages:more' => 'Еще',
-	'pages:none' => 'Еще нет документов',
+	'pages:more' => 'Больше страниц',
+	'pages:none' => 'Страниц пока нет',
 
 	/**
 	* River
 	**/
 
-	'river:object:page:create' => '%s создал документ %s',
-	'river:object:page:update' => '%s обновил документ %s',
-	'river:object:page:comment' => '%s commented on a page titled %s',
+	'river:object:page:create' => '%s создал страницу %s',
+	'river:object:page:update' => '%s обновил страницу %s',
+	'river:object:page:comment' => '%s прокомментировал на странице %s',
 	
 	/**
 	 * Form fields
@@ -60,49 +62,40 @@ View and comment on the page:
 	'pages:title' => 'Заголовок документа',
 	'pages:description' => 'Содержимое документа',
 	'pages:tags' => 'Теги',
-	'pages:parent_guid' => 'Родительствий документ',
-	'pages:access_id' => 'Доступ',
+	'pages:parent_guid' => 'Родительская страница',
+	'pages:access_id' => 'Доступ на чтение',
 	'pages:write_access_id' => 'Доступ на запись',
 
 	/**
 	 * Status and error messages
 	 */
-	'pages:cantedit' => 'Вы не можете редактировать этот документ.',
-	'pages:saved' => 'Документ сохранен.',
-	'pages:notsaved' => 'Документ не может быть сохранен.',
-	'pages:error:no_title' => 'Вы должны указать название документа.',
-	'entity:delete:object:page:success' => 'Ваш документ успешно удален.',
-	'pages:revision:delete:success' => 'Версия документа была удалена.',
-	'pages:revision:delete:failure' => 'Версия документа не может быть удалена.',
+	'pages:cantedit' => 'Вы не можете изменить эту страницу',
+	'pages:saved' => 'Страница сохранена',
+	'pages:notsaved' => 'Страница не может быть сохранена',
+	'pages:error:no_title' => 'Вы должны указать название страницы.',
+	'entity:delete:object:page:success' => 'Страница успешно удалена.',
+	'pages:revision:delete:success' => 'Редакция страницы была удалена.',
+	'pages:revision:delete:failure' => 'Редакция страницы не может быть удалена.',
 
 	/**
 	 * History
 	 */
-	'pages:revision:subtitle' => 'Версия создана %s пользователем %s',
+	'pages:revision:subtitle' => 'Редакция создана %s пользователем %s',
 
 	/**
 	 * Widget
 	 **/
 
-	'pages:num' => 'Число отображаемых документов',
-	'widgets:pages:name' => 'Документы',
-	'widgets:pages:description' => "Это список Ваших документов.",
+	'pages:num' => 'Число отображаемых страниц',
+	'widgets:pages:name' => 'Страницы',
+	'widgets:pages:description' => "Это список Ваших страниц.",
 
 	/**
 	 * Submenu items
 	 */
-	'pages:label:view' => "Просмотр",
-	'pages:label:edit' => "Редактировать",
-	'pages:label:history' => "История",
+	'pages:label:view' => "Просмотр страницы",
+	'pages:label:edit' => "Изменить страницу",
+	'pages:label:history' => "История сохранений страницы",
 
-	'pages:newchild' => "Создать дочерний документ",
-	
-	/**
-	 * Upgrades
-	 */
-	'pages:upgrade:2017110700:title' => "Migrate page_top to page entities",
-	'pages:upgrade:2017110700:description' => "Changes the subtype of all top pages to 'page' and sets metadata to ensure correct listing.",
-	
-	'pages:upgrade:2017110701:title' => "Migrate page_top river entries",
-	'pages:upgrade:2017110701:description' => "Changes the subtype of all river items for top pages to 'page'.",
+	'pages:newchild' => "Создать под-страницу",
 );

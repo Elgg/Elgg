@@ -186,15 +186,6 @@ oder folge dem nächsten Link, um die ausstehenden Anfragen zum Gruppenbeitritt 
 	'groups:joinrequestkilled' => 'Der Antrag zum Gruppenbeitritt wurde gelöscht.',
 	'groups:error:addedtogroup' => "Das Hinzufügen von %s als Mitglied der Gruppe ist fehlgeschlagen.",
 	'groups:add:alreadymember' => "%s ist bereits ein Mitglied dieser Gruppe.",
-
-	/**
-	 * ecml
-	 */
-	'groups:ecml:groupprofile' => 'Gruppen-Profile',
-
-	/**
-	 * Upgrades
-	 */
-	'groups:upgrade:2016101900:title' => 'Verschieben der Gruppen-Icons innerhalb des Datenverzeichnisses',
-	'groups:upgrade:2016101900:description' => 'Die neue Entitäts-Icon-API von Elgg speichert Icons nicht mehr im Filestore-Verzeichnis der Benutzer-Entität des Gruppen-Gründers sondern innerhalb eines Filestore-Verzeichnisses der Gruppen-Entität. Dieses Upgrade verschiebt die Gruppen-Icons von existierenden Gruppen entsprechend dem neuen Schema.',
+	
+	// Notification settings
 );

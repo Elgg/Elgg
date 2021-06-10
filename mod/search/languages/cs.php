@@ -11,5 +11,4 @@ return array(
 
 	'search:comment_on' => 'Komentář k "%s"',
 	'search:unknown_entity' => 'Položka neznámého typu',
-	'search:empty_query' => 'Please provide a valid search query',
 );

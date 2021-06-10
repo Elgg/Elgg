@@ -13,7 +13,6 @@ return array(
 	'thewire' => "Chíos",
 
 	'item:object:thewire' => "Chíos",
-	'collection:object:thewire' => 'Wire posts',
 	'collection:object:thewire:all' => "Todos os chíos",
 	'collection:object:thewire:owner' => "Chíos de %s",
 	'collection:object:thewire:friends' => "Chíos dos contactos",
@@ -25,15 +24,10 @@ return array(
 	'thewire:noposts' => "Aínda non hai chíos.",
 
 	'thewire:by' => 'Chíos de %s',
-	'thewire:previous:help' => "Ver chíos anteriores",
-	'thewire:hide:help' => "Agochar o chío anterior",
-
-	'thewire:form:body:placeholder' => "What's happening?",
 	
 	/**
 	 * The wire river
 	 */
-	'river:object:thewire:create' => "%s posted to %s",
 	'thewire:wire' => 'Chíos',
 
 	/**

@@ -10,7 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
-	'expages' => "Pages externes",
+	'expages' => "Pages du site",
 	'admin:configure_utilities:expages' => "Pages du site",
 	'expages:edit:viewpage' => "Voir la page sur le site",
 	'expages:about' => "À propos",
@@ -23,6 +23,6 @@ return array(
 	/**
 	 * Status messages
 	 */
-	'expages:posted' => "La page externe a bien été mise à jour.",
+	'expages:posted' => "La page a bien été mise à jour.",
 	'expages:error' => "Impossible d'enregistrer cette page.",
 );

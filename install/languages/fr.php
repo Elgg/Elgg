@@ -111,7 +111,6 @@ Si vous êtes prêt à commencer, cliquez sur le bouton Suivant.",
 	'install:admin:label:password2' => 'Mot de passe (confirmer)',
 
 	'install:admin:help:displayname' => 'Le nom qui est affiché sur le site pour ce compte',
-	'install:admin:help:email' => '',
 	'install:admin:help:username' => 'Nom du compte utilisateur utilisé pour se connecter',
 	'install:admin:help:password1' => "Le mot de passe du compte doit avoir une longueur d'au moins %u caractères",
 	'install:admin:help:password2' => 'Répétez le mot de passe pour confirmer',

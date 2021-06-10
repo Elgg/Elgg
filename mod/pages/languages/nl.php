@@ -96,13 +96,4 @@ Om de pagina te bekijken en te reageren, klik hier:
 	'pages:label:history' => "Paginageschiedenis",
 
 	'pages:newchild' => "Maak een subpagina",
-	
-	/**
-	 * Upgrades
-	 */
-	'pages:upgrade:2017110700:title' => "Migreer page_top naar page entities",
-	'pages:upgrade:2017110700:description' => "Wijzig het subtype van alle hoofdpagina's naar 'page' en zet de correcte metadata voor de correcte lijstweergave.",
-	
-	'pages:upgrade:2017110701:title' => "Migreer page_top activiteiten op de activiteitenstroom",
-	'pages:upgrade:2017110701:description' => "Wijzig het subtype van alle activiteiten mbt hoofdpagina's naar 'page'",
 );

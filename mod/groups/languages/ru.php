@@ -21,12 +21,8 @@ return array(
 	'groups:delete' => 'Удалить группу',
 	'groups:membershiprequests' => 'Управление запросами приглашения',
 	'groups:membershiprequests:pending' => 'Управление запросами приглашений (%s)',
-	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Приглашения группы',
 	'groups:invitations:pending' => 'Приглашения группы (%s)',
-	
-	'relationship:invited' => '%2$s was invited to join %1$s',
-	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Иконка группы',
 	'groups:name' => 'Название группы',
@@ -35,8 +31,6 @@ return array(
 	'groups:interests' => 'Интересы',
 	'groups:website' => 'Сайт',
 	'groups:members' => 'Участники',
-
-	'groups:members_count' => '%s members',
 
 	'groups:members:title' => 'Участники %s',
 	'groups:members:more' => "Показать всех участников группы",
@@ -69,10 +63,6 @@ return array(
 	'groups:leave' => 'Покинуть группу',
 	'groups:invite' => 'Пригласить в группу',
 	'groups:invite:title' => 'Пригласить в группу',
-	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
-	'groups:invite:resend' => 'Resend the invitations to already invited users',
-	'groups:invite:member' => 'Already a member of this group',
-	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'Некого приглашать!',
 	'groups:group' => "Группа",
@@ -92,7 +82,6 @@ return array(
 	'groups:open' => "открытая группа",
 	'groups:closed' => "закрытая группа",
 	'groups:member' => "участников",
-	'groups:search' => "Search for groups",
 
 	'groups:more' => 'Еще группы',
 	'groups:none' => '---',
@@ -109,9 +98,6 @@ return array(
 	'groups:opengroup:membersonly' => "Содержание этой группы доступно только участникам.",
 	'groups:opengroup:membersonly:join' => 'Чтобы стать участником группы, нажмите "Вступить в группу"',
 	'groups:visibility' => 'Кто может просматривать группу?',
-	'groups:content_default_access' => 'Default group content access',
-	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
-	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools
@@ -129,8 +115,6 @@ return array(
 	'groups:joinrequestnotmade' => 'Простите, запрос не может быть осуществлен.',
 	'groups:joinrequestmade' => 'Запрос осуществлен.',
 	'groups:joinrequest:exists' => 'You already requested membership for this group',
-	'groups:button:joined' => 'Joined',
-	'groups:button:owned' => 'Owned',
 	'groups:joined' => 'Вы вступили в группу!',
 	'groups:left' => 'Вы покинули группу',
 	'groups:userinvited' => 'Пользователь приглашен.',
@@ -139,34 +123,10 @@ return array(
 	'groups:invite:subject' => "%s you have been invited to join %s!",
 	'groups:joinrequest:remove:check' => 'Удалить запрос приглашения?',
 	'groups:invite:remove:check' => 'Удалить приглашение?',
-	'groups:invite:body' => "Hi %s,
-
-%s invited you to join the '%s' group.
-
-Click below to view your invitations:
-%s",
 
 	'groups:welcome:subject' => "Добро пожаловать в группу %s!",
-	'groups:welcome:body' => "Hi %s!
-
-You are now a member of the '%s' group.
-
-Click below to begin posting!
-%s",
 
 	'groups:request:subject' => "%s попросил вступить в группу %s",
-	'groups:request:body' => "Hi %s,
-
-%s has requested to join the '%s' group.
-
-Click below to view their profile:
-%s
-
-or click below to view the group's join requests:
-%s",
-
-	'river:group:create' => '%s created the group %s',
-	'river:group:join' => '%s joined the group %s',
 
 	'groups:allowhiddengroups' => 'Хотите вступить в подпольную группу?',
 	'groups:whocancreate' => 'Кто может создавать новые группы?',
@@ -174,24 +134,12 @@ or click below to view the group's join requests:
 	/**
 	 * Action messages
 	 */
-	'groups:deleted' => 'Group and group contents deleted',
-	'groups:notdeleted' => 'Group could not be deleted',
 	'groups:deletewarning' => "Вы уверены, что хотите удалить эту группу? Возврата не будет!",
 
 	'groups:invitekilled' => 'Приглашение удалено.',
 	'groups:joinrequestkilled' => 'Запрос приглашения отклонен.',
 	'groups:error:addedtogroup' => "Не удалось добавить %s в группу",
 	'groups:add:alreadymember' => "%s уже состоит в этой группе",
-
-	/**
-	 * ecml
-	 */
-	'groups:ecml:groupprofile' => 'Профили группы',
-
-	/**
-	 * Upgrades
-	 */
-	'groups:upgrade:2016101900:title' => 'Transfer group icons to a new location',
-	'groups:upgrade:2016101900:description' => 'New entity icon API stores icons in a predictable location on the filestore
-relative to the entity\'s filestore directory. This upgrade will align the group plugin with the requirements of the new API.',
+	
+	// Notification settings
 );

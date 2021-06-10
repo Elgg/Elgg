@@ -29,15 +29,7 @@ return array(
 	'bookmarks:notify:summary' => 'Nuovo segnalibro chiamato %s',
 	'bookmarks:notify:subject' => 'Nuovo segnalibro: %s',
 	'bookmarks:notify:body' =>
-'%s added a new bookmark: %s
-
-Address: %s
-
-%s
-
-View and comment on the bookmark:
-%s
-',
+'',
 
 	'bookmarks:numbertodisplay' => 'Numero di segnalibri da visualizzare',
 
@@ -66,7 +58,6 @@ View and comment on the bookmark:
 	 */
 
 	'bookmarks:save:success' => "L'elemento è stato aggiunto ai segnalibri.",
-	'entity:delete:object:bookmarks:success' => "The bookmark was deleted.",
 
 	/**
 	 * Error messages

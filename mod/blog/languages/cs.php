@@ -7,18 +7,9 @@
 
 return array(
 	'item:object:blog' => 'Blogy',
-	'collection:object:blog' => 'Blogs',
-	'collection:object:blog:all' => 'All site blogs',
-	'collection:object:blog:owner' => '%s\'s blogs',
-	'collection:object:blog:group' => 'Group blogs',
-	'collection:object:blog:friends' => 'Friends\' blogs',
-	'add:object:blog' => 'Add blog post',
-	'edit:object:blog' => 'Edit blog post',
 
 	'blog:revisions' => 'Revize',
 	'blog:archives' => 'Archivy',
-
-	'groups:tool:blog' => 'Enable group blog',
 	'blog:write' => 'Napsat blog',
 
 	// Editing
@@ -46,24 +37,14 @@ return array(
 	'blog:error:revision_not_found' => 'Nemohu najít tuto revizi.',
 
 	// river
-	'river:object:blog:create' => '%s published a blog post %s',
-	'river:object:blog:comment' => '%s commented on the blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Nový blog s názvem %s',
 	'blog:notify:subject' => 'Nový blog: %s',
 	'blog:notify:body' =>
-'
-%s published a new blog post: %s
-
-%s
-
-View and comment on the blog post:
-%s
-',
+'',
 
 	// widget
-	'widgets:blog:name' => 'Blog posts',
 	'widgets:blog:description' => 'Zobrazuje vaše nejnovější blogy',
 	'blog:moreblogs' => 'Více blogů',
 	'blog:numbertodisplay' => 'Počet zobrazených blogů',

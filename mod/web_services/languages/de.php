@@ -40,9 +40,7 @@ return array(
 	'SecurityException:InvalidPostHash' => "POST-Daten-Hash ist ungültig - erwartet wurde %s aber %s erhalten.",
 	'SecurityException:DupePacket' => "Packet-Signatur ist schon von früher bekannt.",
 	'SecurityException:InvalidAPIKey' => "Ungültiger oder fehlender API-Schlüssel.",
-	'NotImplementedException:CallMethodNotImplemented' => "Der Methoden-Aufruf '%s' wird derzeit nicht unterstützt.",
-	'CallException:InvalidCallMethod' => "%s muß unter Verwendung von '%s' aufgerufen werden.",
-
+	
 	'system.api.list' => "Liste alle im System verfügbaren API-Aufrufe auf.",
 	'auth.gettoken' => "Dieser API-Aufruf ermöglicht es einem Benutzer ein Authentifizierungs-Token zu beziehen, das für die Authentifizierung nachfolgender API-Aufrufe verwendet werden kann. Übergebe es als Parameter auth_token.",
 	
@@ -68,7 +66,7 @@ return array(
 	
 	'webservices:action:api_key:edit:success' => "Der API-Token wurde gespeichert.",
 	'webservices:action:api_key:regenerate:success' => "Die API-Schüssel wurden neu erzeugt.",
-
+	
 	// plugin settings
 	'web_services:settings:authentication' => "Web API-Authentifizierungs-Einstellungen",
 	'web_services:settings:authentication:description' => "Für einige API-Methoden ist es notwendig, dass sich die externen Quellen authentifizieren. Dafür ist für diese externen Quellen ein Schlüsselpaar notwendig (öffentlicher und geheimer Schlüssel).

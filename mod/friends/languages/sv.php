@@ -20,7 +20,6 @@ Efter att ha aktiverat vänförfrågningar, när användare A vill bli vän med 
 	'friends:owned' => "%ss vänner",
 	'friend:add' => "Lägg till vän",
 	'friend:remove' => "Ta bort vän",
-	'friends:menu:request:status:pending' => "Friendship request pending",
 
 	'friends:add:successful' => "Du har lagt till %s som en vän.",
 	'friends:add:duplicate' => "Du är redan vän med %s",
@@ -73,4 +72,6 @@ För att visa vänförfrågan, tryck här:
 	
 	'friends:action:friendrequest:accept:fail' => "Ett fel uppstod vid godkännandet av vänförfrågan, vänligen försök igen ",
 	'friends:action:friendrequest:accept:success' => "Vänförfrågan har godkänts",
+	
+	// notification settings
 );

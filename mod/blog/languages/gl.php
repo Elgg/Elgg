@@ -10,7 +10,6 @@ return array(
 	'collection:object:blog' => 'Bitácoras',
 	'collection:object:blog:all' => 'Todas as bitácoras',
 	'collection:object:blog:owner' => 'Bitácoras de %s',
-	'collection:object:blog:group' => 'Group blogs',
 	'collection:object:blog:friends' => 'Bitácoras dos contactos',
 	'add:object:blog' => 'Engadir o artigo',
 	'edit:object:blog' => 'Editar o artigo',
@@ -46,24 +45,14 @@ return array(
 	'blog:error:revision_not_found' => 'Non é posíbel atopar esta revisión.',
 
 	// river
-	'river:object:blog:create' => '%s published a blog post %s',
-	'river:object:blog:comment' => '%s commented on the blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Novo artigo: «%s»',
 	'blog:notify:subject' => 'Novo artigo: «%s»',
 	'blog:notify:body' =>
-'
-%s published a new blog post: %s
-
-%s
-
-View and comment on the blog post:
-%s
-',
+'',
 
 	// widget
-	'widgets:blog:name' => 'Blog posts',
 	'widgets:blog:description' => 'Mostrar os seus últimos artigos',
 	'blog:moreblogs' => 'Máis artigos',
 	'blog:numbertodisplay' => 'Número de artigos para mostrar.',

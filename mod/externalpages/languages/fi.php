@@ -11,7 +11,6 @@ return array(
 	 * Menu items and titles
 	 */
 	'expages' => "Infosivut",
-	'admin:configure_utilities:expages' => "Site Pages",
 	'expages:edit:viewpage' => "Näytä sivu",
 	'expages:about' => "Tietoa",
 	'expages:terms' => "Käyttöehdot",

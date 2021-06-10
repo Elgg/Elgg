@@ -10,7 +10,6 @@ return array(
 	'collection:object:blog' => 'Blogi',
 	'collection:object:blog:all' => 'Wszystkie blogi',
 	'collection:object:blog:owner' => 'Blogi użytkownika %s',
-	'collection:object:blog:group' => 'Group blogs',
 	'collection:object:blog:friends' => 'Blogi znajomych',
 	'add:object:blog' => 'Dodaj wpis na blogu',
 	'edit:object:blog' => 'Edytuj wpis na blogu',
@@ -46,24 +45,14 @@ return array(
 	'blog:error:revision_not_found' => 'Nie znaleziono wskazanej wersji.',
 
 	// river
-	'river:object:blog:create' => '%s published a blog post %s',
-	'river:object:blog:comment' => '%s commented on the blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Nowy wpis na blogu o nazwie %s',
 	'blog:notify:subject' => 'Nowy wpis na blogu: %s',
 	'blog:notify:body' =>
-'
-%s published a new blog post: %s
-
-%s
-
-View and comment on the blog post:
-%s
-',
+'',
 
 	// widget
-	'widgets:blog:name' => 'Blog posts',
 	'widgets:blog:description' => 'Wyświetl moje najnowsze wpisy na blogu',
 	'blog:moreblogs' => 'Więcej wpisów na blogu',
 	'blog:numbertodisplay' => 'Ilość wyświetlanych wpisów',

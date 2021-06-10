@@ -71,5 +71,9 @@ För att skicka ett meddelande till %s, tryck här:
 	'messages:user:self' => "Du kan inte skicka ett meddelande till dig själv.",
 
 	'messages:deleted_sender' => 'Borttagen användare',
+	
+	/**
+	* Settings
+	*/
 
 );

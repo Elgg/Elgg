@@ -42,7 +42,4 @@ of bekijk %2$s\'s profiel hier:
 
 Bedankt,
 %4$s',
-	'likes:upgrade:2017120700:title' => "Publieke Likes annotaties",
-	'likes:upgrade:2017120700:description' => "Dit update het toegangsniveau van alle likes annotaties naar publiek",
-	
 );
