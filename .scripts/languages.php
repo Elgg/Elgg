@@ -31,7 +31,7 @@ run_commands([
 
 	"cd $elgg_path",
 	"git checkout -B $new_branch",
-	"tx pull -af --minimum-perc=60",
+	"tx pull -af --minimum-perc=60 --mode translator",
 ]);
 
 // Clean translations

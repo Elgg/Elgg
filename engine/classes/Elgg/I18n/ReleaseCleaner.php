@@ -41,6 +41,10 @@ class ReleaseCleaner {
 	public function cleanInstallation($dir) {
 		$dir = rtrim($dir, '/\\');
 
+		if (is_dir("$dir/install/languages")) {
+			$this->cleanLanguagesDir("$dir/install/languages");
+		}
+
 		if (is_dir("$dir/languages")) {
 			$this->cleanLanguagesDir("$dir/languages");
 		}
@@ -95,7 +99,30 @@ class ReleaseCleaner {
 				unlink($path);
 				$this->log[] = "Removed $path";
 			}
+			
+			if ($code !== 'en' && file_exists("{$dir}/{$code}.php")) {
+				$this->cleanupEmptyTranslations("{$dir}/{$code}.php");
+			}
 		}
+	}
+	
+	/**
+	 * Remove empty translations from a translation file
+	 *
+	 * @param string $translation_file path to the translation file
+	 *
+	 * @return void
+	 */
+	public function cleanupEmptyTranslations(string $translation_file): void {
+		$contents = file_get_contents($translation_file);
+		if (empty($contents)) {
+			return;
+		}
+		
+		$pattern = '/^\s*[\'"].*[\'"] => [\'"]{2},{0,1}[\r\n|\r|\n]/m';
+		$contents = preg_replace($pattern, '', $contents);
+		
+		file_put_contents($translation_file, $contents);
 	}
 	
 	/**
