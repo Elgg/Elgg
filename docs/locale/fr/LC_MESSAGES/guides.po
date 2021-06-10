@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-15 10:58+0100\n"
+"POT-Creation-Date: 2021-05-18 16:34+0200\n"
 "PO-Revision-Date: 2017-12-28 11:59+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -15589,8 +15589,10 @@ msgid "``integer`` (or ``int``)"
 msgstr "``integer`` (ou ``int``)"
 
 #: ../../guides/web-services.rst:111
-msgid "``boolean`` (or ``bool``)"
-msgstr "``boolean`` (ou ``bool``)"
+msgid ""
+"``boolean`` (or ``bool``) ``'false'``, ``0`` and ``'0'`` will evaluate to "
+"``false`` the rest will evaluate to ``true``"
+msgstr ""
 
 #: ../../guides/web-services.rst:112
 msgid "``string``"
