@@ -5,272 +5,55 @@ From 3.x to 4.0
    :local:
    :depth: 1
 
-Composer project
-----------------
-
-The root of the composer project is no longer handled as a semi functional plugin. Languages from the ``languages`` directory are nog longer imported, the views from 
-the ``views`` directory are no longer registered, the PHP DI services from the ``elgg-services.php`` are no longer registered and the ``start.php`` file is no longer
-included.
-
-If you needed specific modification to your Elgg installation you need to make a :doc:`plugin</guides/plugins>` and ensure that the plugin is the latest in the plugin order to
-allow you to overrule everything you needed to change.
+Composer
+--------
 
 PHP Requirements
-----------------
+~~~~~~~~~~~~~~~~
 
 To be compatible with PHP 8 we needed to increase the minimal PHP version to 7.4. PHP versions < 7.4 are already end-of-life.
 
-PHP-DI
-------
+Composer project
+~~~~~~~~~~~~~~~~
 
-This feature has been updated to use the latest version of PHP-DI. Most notable breaking change for Elgg is the need to change your plugin service definition
-to use ``\DI\create()`` instead of ``\DI\object()``. 
+The root of the composer project is no longer handled as a semi functional plugin. Languages from the ``languages`` directory are nog longer 
+imported, the views from the ``views`` directory are no longer registered, the PHP DI services from the ``elgg-services.php`` are no longer 
+registered and the ``start.php`` file is no longer included.
+
+If you needed specific modification to your Elgg installation you need to make a :doc:`plugin</guides/plugins>` and ensure that the plugin is 
+the latest in the plugin order to allow you to overrule everything you needed to change.
+
+Doctrine DBAL
+~~~~~~~~~~~~~
+
+Elgg replaced v2 with v3 of the ``doctrine/dbal`` dependency. On of the most notable changes is that if you work with QueryBuilders and use 
+the ``$qb->fetch()`` function you will no longer get an object, but an array. If you want your rows to be useable as classes, you can use 
+``elgg()->db->getData($qb)``. 
+Another important change is that if you provide your own query parameters, you should no longer prefix keys with a colon in the parameters 
+but still do so in the query.
+
+PHP-DI
+~~~~~~
+
+This feature has been updated to use the latest version of PHP-DI. Most notable breaking change for Elgg is the need to change your plugin 
+service definition to use ``\DI\create()`` instead of ``\DI\object()``. 
 
 Zend\Mail replaced by Laminas\Mail
-----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Because of the `deprecation`_ of the ``Zend\Mail`` library and it's replacement by the ``Laminas\Mail`` all references have been updated.
 
 .. _deprecation: https://www.zend.com/blog/evolution-zend-framework-laminas-project
 
-Hookable field configurations
------------------------------
-
-Some plugins had the option to configure entity fields in config. These features have been replaced by a central service that provides a mechanisme to request a hookable field config for a certain type/subtype.
-
-You can request these configuration using the following code:
-
-.. code-block:: php
-
-	$fields = elgg()->fields->get('<entity_type>', '<entity_subtype');
-	
-The results will be an array with field configurations usable in ``elgg_view_field($field)``
-
-The following related functionality has been replaced by this new way:
-
-* The config for ``pages`` is no longer available in ``elgg_get_config('pages')`` use ``elgg()->fields->get('object', 'page')``
-* The config for ``group`` is no longer available in ``elgg_get_config('group')`` use ``elgg()->fields->get('group', 'group')``
-* The config for ``profile_fields`` is no longer available in ``elgg_get_config('profile_fields')`` use ``elgg()->fields->get('user', 'user')``
-* Setting the config for ``pages``, ``group`` and ``user:profile`` via ``elgg_set_config`` is no longer possible. Use a hook callback for ``fields, <entity_type>:<entity_subtype>``.
-* The hook ``profile:fields, group`` has been replaced by the new hook ``fields, group:group``
-* The hook ``profile:fields, user`` has been replaced by the new hook ``fields, user:user``
-
-Doctrine DBAL
--------------
-
-Elgg replaced v2 with v3 of the ``doctrine/dbal`` dependency. On of the most notable changes is that if you work with QueryBuilders and use the ``$qb->fetch()``
-function you will no longer get an object, but an array. If you want your rows to be useable as classes, you can use ``elgg()->db->getData($qb)``. 
-Another important change is that if you provide your own query parameters, you should no longer prefix keys with a colon in the parameters but still do so in the query.
-
-Web services
-------------
-
-The Web Services plugin received a complete rewrite, this is mostly related to the internals of the plugin.
-
-Removed classes
-~~~~~~~~~~~~~~~
-
-* ``ElggHMACCache`` has been replaced by ``_elgg_services()->hmacCacheTable`` (for internal use only)
-* ``Elgg\Notifications\Event`` has been replaced by ``Elgg\Notifications\SubscriptionNotificationEvent``
-
-Removed functions
-~~~~~~~~~~~~~~~~~
-
-* ``create_api_user()`` has been replaced by ``_elgg_services()->apiUsersTable->createApiUser()``
-* ``create_user_token()`` has been replaced by ``_elgg_services()->usersApiSessions->createToken()``
-* ``get_api_user()`` has been replaced by ``_elgg_services()->apiUsersTable->getApiUser()``
-* ``get_standard_api_key_array()`` use ``\Elgg\WebServices\ElggApiClient::setApiKeys()``
-* ``get_user_tokens()`` has been replaced by ``_elgg_services()->usersApiSessions->getUserTokens()``
-* ``pam_auth_session()``
-* ``remove_api_user()`` has been replaced by ``_elgg_services()->apiUsersTable->removeApiUser()``
-* ``remove_expired_user_tokens()`` has been replaced by ``_elgg_services()->usersApiSessions->removeExpiresTokens()``
-* ``remove_user_token()`` has been replaced by ``_elgg_services()->usersApiSessions->removeToken()``
-* ``send_api_call()`` use ``\Elgg\WebServices\ElggApiClient``
-* ``send_api_get_call()`` use ``\Elgg\WebServices\ElggApiClient``
-* ``send_api_post_call()`` use ``\Elgg\WebServices\ElggApiClient``
-* ``service_handler()``
-* ``validate_user_token()`` has been replaced by ``_elgg_services()->usersApiSessions->validateToken()``
-* ``ws_page_handler()``
-* ``ws_rest_handler()`` has been replaced by ``\Elgg\WebServices\RestServiceController``
-
-Miscellaneous changes
-~~~~~~~~~~~~~~~~~~~~~
-
-* The config value for ``servicehandler`` has been removed
-* In certain edge cases the default value of an API parameter will not be applied
-
-Plugin Manifest
----------------
-
-The plugin manifest file is no longer used. Features of the manifest have been removed or moved to different locations.
-
-It is no longer possible to require a specific php ini setting.
-
-php version requirement -> composer require
-php extension requirement -> composer require
-plugin conflicts -> composer conflicts
-plugin requirement -> elgg-plugin
-plugin position requirement -> elgg-plugin
-
-plugin version -> elgg-plugin
-plugin activate on install -> elgg-plugin
-plugin name -> elgg-plugin
-plugin description -> composer.json
-plugin categories -> composer.json
-plugin license -> composer.json
-plugin repo link -> composer.json
-plugin issues link -> composer.json
-plugin homepage link -> composer.json
-plugin authors/contributors -> composer.json
-
-Notifications
--------------
-
-Pre Elgg 1.9 notification handling has been removed. Related functions and hooks no longer exist.
-
-Subscriptions
-~~~~~~~~~~~~~
-
-The relationship in the database which stores the subscription method for notifications has been changed from ``notifymethod`` to ``notify:method``.
-
-Multiple Recipients
-~~~~~~~~~~~~~~~~~~~
-
-An Elgg\Email now supports multiple recipients in To, Cc and Bcc. The related getter functions like ``getTo()`` will now always return an array.
-
-Settings
-~~~~~~~~
-
-A generic storage for notification preferences has been introduced in ``\ElggUser::setNotificationSetting()`` and ``\ElggUser::getNotificationSettings()``, 
-the notification settings now have a 'purpose'. 
-
-For example ``group_join`` can be used to manage the default subscription you get with a group when you join the group.
-
-The Notifications plugin has generic handling of displaying and saving the settings.
-To display the setting extend the view ``notifications/settings/records`` (plural) with a view which uses ``notifications/settings/record`` (singular).
-
-When requesting notification settings other than the default setting, if the user hasn't saved a setting yet it'll fall back to the default notification settings.
-
-Management of the notification preferences for adding a new users to a friend collection has been removed.
-
-Notification Salutation & Sign-off
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To be able to have a more generic salutation and sign-off for outgoing mail notifications we have removed these texts from various translation strings and moved them to
-generic translations. This will mean you have to update your translations to reflect the new text and also check your code for uses of notifications where you provide your own
-salutation or sign-off text. You can find out more about this new behaviour in :doc:`/guides/notifications`.
-
-Notifications plugin
-~~~~~~~~~~~~~~~~~~~~~
-
-The Notifications plugin has been removed. All the features of the plugin are now part of Elgg core. 
-Some pages (like the group notification settings) have been moved to the correct plugin.
-
-This means that event handlers, hook handlers, actions, views and languages keys have been (re)moved or renamed. 
-
-Notification Event Handling
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The notification hooks no longer receive the ``origin`` parameter.
-
-Site notification
-~~~~~~~~~~~~~~~~~
-
-The site notifications plugin now shows the notification subject by default. If a site notification was created with the factory function ``SiteNotification::factory()``
-more of the original notification information is stored with the site notification:
-
-- Notification ``subject`` is stored in ``title``
-- Notification ``summary`` is stored in ``summary``
-- Notification ``body`` is stored in ``description``
-
-Activity plugin
----------------
-
-This plugin received a much needed rewrite. The different pages (all/owner/friends) now have their own resource and listing views. 
-
-Diagnostics Plugin
-------------------
-
-This plugin has been removed, but the action to generate a report is still available. You can find it on the ``Information/Server`` admin page.
-
-Discussions Plugin
-------------------
-
-* This plugin no longer adds a tab to the filter menu on the groups pages
-* The ``discussions`` site menu item is now always present
-
-Search Plugin
--------------
-
-The output of search results no longer uses the helper class ``Elgg\Search\Formatter`` for the preparation of the result contents. This logic has been moved entirely into views.
-
-The related functions ``prepareEntity`` and ``getSearchView`` in the ``Elgg\Search\Service`` class have been removed. 
-
-The hook ``search:format, entity`` has been removed.
-
-Menus
------
-
-Instead of registering the ``_elgg_setup_vertical_menu`` and ``_elgg_menu_transform_to_dropdown`` for menus,
-this is replaced by using the menu vars ``prepare_vertical`` and ``prepare_dropdown``.
-Setting them to ``true`` will give you the same effect. This allows for individual control in views when this is required.
-
-The automatic marking as 'selected' of parent menu items of the selected menu item will now always happen for every menu.
-
-Filter tabs
-~~~~~~~~~~~
-
-The preparation of tabs for the filter menu by using the ``elgg_get_filter_tabs()`` function and the ``'filter_tabs', '<context>'`` hook has been removed.
-You can now use the ``'register', 'menu:filter:filter'`` hook to add/remove items from the same place.
-
-The ``all``, ``mine`` and ``friends`` tabs will automaticly generate if routes are available for pages similar to the current route.
-For example if the current route is ``collection:object:blog:all`` the tabs will be generated for the route ``collection:object:blog:owner`` and
-``collection:object:blog:friends``.
-
-Title menu
-~~~~~~~~~~
-
-The ``title`` menu will now be populated with the ``entity`` menu if the ``entity`` is provided to the layout. This is mostly usefull on the detail
-page of an entity (eg. ``blog/view``). Most of the entries for the ``entity`` menu will be added to a dropdown menu, except the ``edit`` menu item 
-(when available) this item will be presented next to the dropdown menu.
-
-.. code-block:: php
-
-	echo elgg_view_page('title', [
-		'content' => elgg_view_entity($entity),
-		'entity' => $entity, // <= will make sure the entity menu is available in the title menu
-	]);
-
-Registering tag metadatanames
------------------------------
-
-Because of various limitations of this implementation it has been removed from the system. The following related API functions have been removed:
-
-* ``elgg_get_registered_tag_metadata_names()``
-* ``elgg_register_tag_metadata_name()``
-* ``elgg_unregister_tag_metadata_name()``
-
-If you need specific fields to be searchable you need to register them with the related ``search:fields`` hooks.
-The related ``tagnames:xxx`` tag language keys are no longer registered in the system.
-
-The function ``ElggEntity::getTags()`` will now return only tag metadata with the name ``tags`` by default. If you want to check extra fields containing tags,
-you need to request this specifically.
-
-Split OkResponse, ErrorResponse and RedirectResponse
-----------------------------------------------------
-
-The classes ``Elgg\Http\ErrorResponse`` and ``Elgg\Http\RedirectResponse`` were extensions of ``Elgg\Http\OkReponse`` this 
-complicated validating responses (for example in hooks). The classes have been split apart to allow for easier and clearer checks.
-
-All classes now extend ``Elgg\Http\Response`` and implement ``Elgg\Http\ReponseBuilder``. The default HTTP error code when using ``elgg_error_response()`` has been changed to return a 400 status. 
-
-Default widgets
----------------
-
-The magic handling the creation of default widgets has been reduced. You now need to register the ``Elgg\Widgets\CreateDefaultWidgetsHandler`` callback to the event when you want default widgets to be created.
-The configuration ``default_widget_info`` is no longer present in the system. Use the ``get_list``, ``default_widgets`` hook to get the value.
-
-You also need to update the data in your ``get_list``, ``default_widgets`` hook handler to return ``event_name`` (previously ``event``) and ``event_type``.
+Removed composer dependencies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* ``bower-asset/jquery-treeview`` the related js and css are no longer available in the system
+* ``bower-asset/jquery.imgareaselect`` the related js and css are no longer available in the system
+* ``npm-asset/formdata-polyfill`` all modern browser have support, no longer a need for a polyfill
+* ``npm-asset/jquery-form`` use native FormData functionality
+* ``npm-asset/weakmap-polyfill`` all modern browser have support, no longer a need for a polyfill
+* ``simpletest/simpletest``
 
 Javascript
 ----------
@@ -284,14 +67,18 @@ The following Ajax helper functions have been removed in favor of their counterp
 * ``elgg.getJSON()``
 * ``elgg.post()``
 
-The ajax function ``elgg.api`` has been moved to the ``executeMethod`` function in the asynchronous module ``elgg/webservices`` in the webservices plugin. 
-Other ``elgg.ajax`` functions and attributes have been removed from the system. Also the legacy handling of ajax calls have been removed from the system.
+The ajax function ``elgg.api`` has been moved to the ``executeMethod`` function in the asynchronous module ``elgg/webservices`` in the 
+webservices plugin. 
+Other ``elgg.ajax`` functions and attributes have been removed from the system. Also the legacy handling of ajax calls have been removed 
+from the system.
 
 Classes
 ~~~~~~~
 
-The javascript logic for automatically booting some javascript for your plugin and registering hooks via the ``Elgg/Plugin`` class has been removed from the system.
-This functionality was never used by core and hardly seen in plugins. Use AMD loaded javascript or extend ``elgg.js`` for always loaded javascript.
+The javascript logic for automatically booting some javascript for your plugin and registering hooks via the ``Elgg/Plugin`` class has been 
+removed from the system.
+This functionality was never used by core and hardly seen in plugins. Use AMD loaded javascript or extend ``elgg.js`` for always loaded 
+javascript.
 
 The ``ElggPriorityList`` javascript class has been removed from the system.
 
@@ -312,7 +99,8 @@ jQuery UI
 ~~~~~~~~~
 
 The jQuery UI library has been updated to v1.12.x. The library is no longer loaded in full by default.
-If you need to use features from the library you can require them in your own script. For example to be able to use the sortable functionality do the following:
+If you need to use features from the library you can require them in your own script. For example to be able to use the sortable 
+functionality do the following:
 
 .. code-block:: js
 
@@ -328,31 +116,91 @@ Miscellaneous JS changes
 
 * The AMD module ``elgg/widgets`` no longer returns an object and no longer requires you to call ``init`` on the module
 
-Plugin bootstrapping
---------------------
+Notifications
+-------------
 
-The following files are no longer included during bootstrapping of a plugin:
+Pre Elgg 1.9 notification handling has been removed. Related functions and hooks no longer exist.
 
-* ``activate.php`` use ``PluginBootstrap->activate()``
-* ``deactivate.php`` use ``PluginBootstrap->deactivate()``
-* ``views.php`` use ``elgg-plugin.php``
-* ``start.php`` use ``elgg-plugin.php`` and/or ``PluginBootstrap``
+Subscriptions
+~~~~~~~~~~~~~
 
-Container permissions
----------------------
+The relationship in the database which stores the subscription method for notifications has been changed from ``notifymethod`` to 
+``notify:method``.
 
-The function parameters for ``ElggEntity::canWriteToContainer()`` now require a ``$type`` and ``$subtype`` to be passed. This is to give more
-information to the resulting hook in order to be able to determine if a user is allowed write access to the container.
+Multiple Recipients
+~~~~~~~~~~~~~~~~~~~
 
-Datamodel / Schema changes
---------------------------
+An Elgg\Email now supports multiple recipients in To, Cc and Bcc. The related getter functions like ``getTo()`` will now always return an array.
+
+Settings
+~~~~~~~~
+
+A generic storage for notification preferences has been introduced in ``\ElggUser::setNotificationSetting()`` and 
+``\ElggUser::getNotificationSettings()``, the notification settings now have a 'purpose'. 
+
+For example ``group_join`` can be used to manage the default subscription you get with a group when you join the group.
+
+The Notifications plugin has generic handling of displaying and saving the settings.
+To display the setting extend the view ``notifications/settings/records`` (plural) with a view which uses 
+``notifications/settings/record`` (singular).
+
+When requesting notification settings other than the default setting, if the user hasn't saved a setting yet it'll fall back to the 
+default notification settings.
+
+Management of the notification preferences for adding a new users to a friend collection has been removed.
+
+Notification Salutation & Sign-off
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To be able to have a more generic salutation and sign-off for outgoing mail notifications we have removed these texts from various translation 
+strings and moved them to generic translations. This will mean you have to update your translations to reflect the new text and also check 
+your code for uses of notifications where you provide your own salutation or sign-off text. You can find out more about this new behaviour 
+in :doc:`/guides/notifications`.
+
+Notifications plugin
+~~~~~~~~~~~~~~~~~~~~~
+
+The Notifications plugin has been removed. All the features of the plugin are now part of Elgg core. 
+Some pages (like the group notification settings) have been moved to the correct plugin.
+
+This means that event handlers, hook handlers, actions, views and languages keys have been (re)moved or renamed. 
+
+Notification Event Handling
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The notification hooks no longer receive the ``origin`` parameter.
+
+Site notification
+~~~~~~~~~~~~~~~~~
+
+The site notifications plugin now shows the notification subject by default. If a site notification was created with the factory function 
+``SiteNotification::factory()`` more of the original notification information is stored with the site notification:
+
+- Notification ``subject`` is stored in ``title``
+- Notification ``summary`` is stored in ``summary``
+- Notification ``body`` is stored in ``description``
+
+Split OkResponse, ErrorResponse and RedirectResponse
+----------------------------------------------------
+
+The classes ``Elgg\Http\ErrorResponse`` and ``Elgg\Http\RedirectResponse`` were extensions of ``Elgg\Http\OkReponse`` this 
+complicated validating responses (for example in hooks). The classes have been split apart to allow for easier and clearer checks.
+
+All classes now extend ``Elgg\Http\Response`` and implement ``Elgg\Http\ReponseBuilder``. The default HTTP error code when using 
+``elgg_error_response()`` has been changed to return a 400 status. 
+
+Datamodel
+---------
+
+Schema changes
+~~~~~~~~~~~~~~
 
 * The ``access_id``, ``owner_guid`` and  ``enabled`` columns in the ``metadata`` table have been removed
 * The ``enabled`` column in the ``river`` table has been removed
 * The ``relationship`` column in the ``entity_relationships`` table now has a max length of 255 (up from 50) 
 
 ElggEntity attributes
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 Setting the ``type``, ``subtype`` and ``enabled`` attributes of an ``ElggEntity`` is no longer possible using the magic setter.
 Changing the ``type`` is no longer possible, use the correct base class for your entity (eg. ``ElggObject``, ``ElggGroup`` or ``ElggUser``).
@@ -381,7 +229,7 @@ To change the ``enabled`` state of an entity use the correct functions
 	$object->disable(); // to disable
 
 ElggUser attributes
--------------------
+~~~~~~~~~~~~~~~~~~~
 
 Setting the ``admin`` and ``banned`` metadata of an ``ElggUser`` is no longer possible using the magic setter.
 
@@ -409,6 +257,195 @@ To change the ``banned`` state use the functions ``ban()`` and ``unban()``
 	$user->ban(); // to ban the user
 	$user->unban(); // to unban the user
 
+Plugin development
+------------------
+
+Plugin bootstrapping
+~~~~~~~~~~~~~~~~~~~~
+
+The following files are no longer included during bootstrapping of a plugin:
+
+* ``activate.php`` use ``PluginBootstrap->activate()``
+* ``deactivate.php`` use ``PluginBootstrap->deactivate()``
+* ``views.php`` use ``elgg-plugin.php``
+* ``start.php`` use ``elgg-plugin.php`` and/or ``PluginBootstrap``
+
+Plugin Manifest
+~~~~~~~~~~~~~~~
+
+The plugin manifest file is no longer used. Features of the manifest have been removed or moved to different locations.
+
+It is no longer possible to require a specific php ini setting.
+
+- php version requirement -> composer require
+- php extension requirement -> composer require
+- plugin conflicts -> composer conflicts
+- plugin requirement -> elgg-plugin
+- plugin position requirement -> elgg-plugin
+
+- plugin version -> elgg-plugin
+- plugin activate on install -> elgg-plugin
+- plugin name -> elgg-plugin
+- plugin description -> composer.json
+- plugin categories -> composer.json
+- plugin license -> composer.json
+- plugin repo link -> composer.json
+- plugin issues link -> composer.json
+- plugin homepage link -> composer.json
+- plugin authors/contributors -> composer.json
+
+Hookable field configurations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some plugins had the option to configure entity fields in config. These features have been replaced by a central service that provides a 
+mechanisme to request a hookable field config for a certain type/subtype.
+
+You can request these configuration using the following code:
+
+.. code-block:: php
+
+	$fields = elgg()->fields->get('<entity_type>', '<entity_subtype');
+	
+The results will be an array with field configurations usable in ``elgg_view_field($field)``
+
+The following related functionality has been replaced by this new way:
+
+* The config for ``pages`` is no longer available in ``elgg_get_config('pages')`` use ``elgg()->fields->get('object', 'page')``
+* The config for ``group`` is no longer available in ``elgg_get_config('group')`` use ``elgg()->fields->get('group', 'group')``
+* The config for ``profile_fields`` is no longer available in ``elgg_get_config('profile_fields')`` use ``elgg()->fields->get('user', 'user')``
+* Setting the config for ``pages``, ``group`` and ``user:profile`` via ``elgg_set_config`` is no longer possible. Use a hook callback for ``fields, <entity_type>:<entity_subtype>``.
+* The hook ``profile:fields, group`` has been replaced by the new hook ``fields, group:group``
+* The hook ``profile:fields, user`` has been replaced by the new hook ``fields, user:user``
+
+Menus
+~~~~~
+
+Instead of registering the ``_elgg_setup_vertical_menu`` and ``_elgg_menu_transform_to_dropdown`` for menus,
+this is replaced by using the menu vars ``prepare_vertical`` and ``prepare_dropdown``.
+Setting them to ``true`` will give you the same effect. This allows for individual control in views when this is required.
+
+The automatic marking as 'selected' of parent menu items of the selected menu item will now always happen for every menu.
+
+Filter tabs
+^^^^^^^^^^^
+
+The preparation of tabs for the filter menu by using the ``elgg_get_filter_tabs()`` function and the ``'filter_tabs', '<context>'`` hook has 
+been removed.
+You can now use the ``'register', 'menu:filter:filter'`` hook to add/remove items from the same place.
+
+The ``all``, ``mine`` and ``friends`` tabs will automaticly generate if routes are available for pages similar to the current route.
+For example if the current route is ``collection:object:blog:all`` the tabs will be generated for the route ``collection:object:blog:owner`` and
+``collection:object:blog:friends``.
+
+Title menu
+^^^^^^^^^^
+
+The ``title`` menu will now be populated with the ``entity`` menu if the ``entity`` is provided to the layout. This is mostly usefull on the 
+detail page of an entity (eg. ``blog/view``). Most of the entries for the ``entity`` menu will be added to a dropdown menu, except the 
+``edit`` menu item (when available) this item will be presented next to the dropdown menu.
+
+.. code-block:: php
+
+	echo elgg_view_page('title', [
+		'content' => elgg_view_entity($entity),
+		'entity' => $entity, // <= will make sure the entity menu is available in the title menu
+	]);
+
+Registering tag metadatanames
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Because of various limitations of this implementation it has been removed from the system. The following related API functions have been removed:
+
+* ``elgg_get_registered_tag_metadata_names()``
+* ``elgg_register_tag_metadata_name()``
+* ``elgg_unregister_tag_metadata_name()``
+
+If you need specific fields to be searchable you need to register them with the related ``search:fields`` hooks.
+The related ``tagnames:xxx`` tag language keys are no longer registered in the system.
+
+The function ``ElggEntity::getTags()`` will now return only tag metadata with the name ``tags`` by default. If you want to check extra fields 
+containing tags, you need to request this specifically.
+
+Default widgets
+~~~~~~~~~~~~~~~
+
+The magic handling the creation of default widgets has been reduced. You now need to register the ``Elgg\Widgets\CreateDefaultWidgetsHandler`` 
+callback to the event when you want default widgets to be created.
+The configuration ``default_widget_info`` is no longer present in the system. Use the ``get_list``, ``default_widgets`` hook to get the value.
+
+You also need to update the data in your ``get_list``, ``default_widgets`` hook handler to return ``event_name`` (previously ``event``) and ``event_type``.
+
+Container permissions
+~~~~~~~~~~~~~~~~~~~~~
+
+The function parameters for ``ElggEntity::canWriteToContainer()`` now require a ``$type`` and ``$subtype`` to be passed. This is to give more
+information to the resulting hook in order to be able to determine if a user is allowed write access to the container.
+
+Plugins
+-------
+
+Activity plugin
+~~~~~~~~~~~~~~~
+
+This plugin received a much needed rewrite. The different pages (all/owner/friends) now have their own resource and listing views. 
+
+Diagnostics Plugin
+~~~~~~~~~~~~~~~~~~
+
+This plugin has been removed, but the action to generate a report is still available. You can find it on the ``Information/Server`` admin page.
+
+Discussions Plugin
+~~~~~~~~~~~~~~~~~~
+
+* This plugin no longer adds a tab to the filter menu on the groups pages
+* The ``discussions`` site menu item is now always present
+
+Search Plugin
+~~~~~~~~~~~~~
+
+The output of search results no longer uses the helper class ``Elgg\Search\Formatter`` for the preparation of the result contents. This logic 
+has been moved entirely into views.
+
+The related functions ``prepareEntity`` and ``getSearchView`` in the ``Elgg\Search\Service`` class have been removed. 
+
+The hook ``search:format, entity`` has been removed.
+
+Web services Plugin
+~~~~~~~~~~~~~~~~~~~
+
+The Web Services plugin received a complete rewrite, this is mostly related to the internals of the plugin.
+
+Removed classes
+^^^^^^^^^^^^^^^
+
+* ``ElggHMACCache`` has been replaced by ``_elgg_services()->hmacCacheTable`` (for internal use only)
+* ``Elgg\Notifications\Event`` has been replaced by ``Elgg\Notifications\SubscriptionNotificationEvent``
+
+Removed functions
+^^^^^^^^^^^^^^^^^
+
+* ``create_api_user()`` has been replaced by ``_elgg_services()->apiUsersTable->createApiUser()``
+* ``create_user_token()`` has been replaced by ``_elgg_services()->usersApiSessions->createToken()``
+* ``get_api_user()`` has been replaced by ``_elgg_services()->apiUsersTable->getApiUser()``
+* ``get_standard_api_key_array()`` use ``\Elgg\WebServices\ElggApiClient::setApiKeys()``
+* ``get_user_tokens()`` has been replaced by ``_elgg_services()->usersApiSessions->getUserTokens()``
+* ``pam_auth_session()``
+* ``remove_api_user()`` has been replaced by ``_elgg_services()->apiUsersTable->removeApiUser()``
+* ``remove_expired_user_tokens()`` has been replaced by ``_elgg_services()->usersApiSessions->removeExpiresTokens()``
+* ``remove_user_token()`` has been replaced by ``_elgg_services()->usersApiSessions->removeToken()``
+* ``send_api_call()`` use ``\Elgg\WebServices\ElggApiClient``
+* ``send_api_get_call()`` use ``\Elgg\WebServices\ElggApiClient``
+* ``send_api_post_call()`` use ``\Elgg\WebServices\ElggApiClient``
+* ``service_handler()``
+* ``validate_user_token()`` has been replaced by ``_elgg_services()->usersApiSessions->validateToken()``
+* ``ws_page_handler()``
+* ``ws_rest_handler()`` has been replaced by ``\Elgg\WebServices\RestServiceController``
+
+Miscellaneous changes
+^^^^^^^^^^^^^^^^^^^^^
+
+* The config value for ``servicehandler`` has been removed
+* In certain edge cases the default value of an API parameter will not be applied
 
 Type hinted functions
 ---------------------
@@ -754,6 +791,76 @@ Plugins
 * ``thewire_prepare_notification`` changed to ``Elgg\TheWire\Notifications\CreateTheWireEventHandler``
 * ``thewire_setup_entity_menu_items`` changed to ``Elgg\TheWire\Menus\Entity::register``
 
+Reworked exceptions
+-------------------
+
+All exceptions in the Elgg system now extend the ``Elgg\Exceptions\Exception`` and are in the namespace ``Elgg\Exceptions``
+
+Moved exceptions
+~~~~~~~~~~~~~~~~
+
+* ``ClassException`` use ``Elgg\Exceptions\ClassException``
+* ``ConfigurationException`` use ``Elgg\Exceptions\ConfigurationException``
+* ``CronException`` use ``Elgg\Exceptions\CronException``
+* ``DatabaseException`` use ``Elgg\Exceptions\DatabaseException``
+* ``DataFormatException`` use ``Elgg\Exceptions\DataFormatException``
+* ``InstallationException`` use ``Elgg\Exceptions\Configuration\InstallationException``
+* ``InvalidParameterException`` use ``Elgg\Exceptions\InvalidParameterException``
+* ``IOException`` use ``Elgg\Exceptions\FileSystem\IOException``
+* ``LoginException`` use ``Elgg\Exceptions\LoginException``
+* ``PluginException`` use ``Elgg\Exceptions\PluginException``
+* ``RegistrationException`` use ``Elgg\Exceptions\Configuration\RegistrationException``
+* ``SecurityException`` use ``Elgg\Exceptions\SecurityException``
+* ``Elgg\Database\EntityTable\UserFetchFailureException`` use ``Elgg\Exceptions\Database\UserFetchFailureException``
+* ``Elgg\Di\FactoryUncallableException`` use ``Elgg\Exceptions\Di\FactoryUncallableException``
+* ``Elgg\Di\MissingValueException`` use ``Elgg\Exceptions\Di\MissingValueException``
+* ``Elgg\Http\Exception\AdminGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\AdminGatekeeperException``
+* ``Elgg\Http\Exception\AjaxGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\AjaxGatekeeperException``
+* ``Elgg\Http\Exception\GroupToolGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\GroupToolGatekeeperException``
+* ``Elgg\Http\Exception\LoggedInGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\LoggedInGatekeeperException``
+* ``Elgg\Http\Exception\LoggedOutGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\LoggedOutGatekeeperException``
+* ``Elgg\Http\Exception\UpgradeGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\UpgradeGatekeeperException``
+* ``Elgg\I18n\InvalidLocaleException`` use ``Elgg\Exceptions\I18n\InvalidLocaleException``
+* ``Elgg\BadRequestException`` use ``Elgg\Exceptions\Http\BadRequestException``
+* ``Elgg\CsrfException`` use ``Elgg\Exceptions\Http\CsrfException``
+* ``Elgg\EntityNotFoundException`` use ``Elgg\Exceptions\Http\EntityNotFoundException``
+* ``Elgg\EntityPermissionsException`` use ``Elgg\Exceptions\Http\EntityPermissionsException``
+* ``Elgg\GatekeeperException`` use ``Elgg\Exceptions\Http\GatekeeperException``
+* ``Elgg\GroupGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\GroupGatekeeperException``
+* ``Elgg\HttpException`` use ``Elgg\Exceptions\HttpException``
+* ``Elgg\PageNotFoundException`` use ``Elgg\Exceptions\Http\PageNotFoundException``
+* ``Elgg\ValidationException`` use ``Elgg\Exceptions\Http\ValidationException``
+* ``Elgg\WalledGardenException`` use ``Elgg\Exceptions\Http\Gatekeeper\WalledGardenException``
+
+Removed exceptions
+~~~~~~~~~~~~~~~~~~
+
+* ``CallException``
+* ``ClassNotFoundException``
+* ``IncompleteEntityException``
+* ``InvalidClassException``
+* ``NotificationException``
+* ``NotImplementedException`` from the Web Services plugin
+
+Reworked Traits
+---------------
+
+In order to better organize the Elgg namespace all Traits have been moved to the ``Elgg\Traits`` namespace
+
+* ``Elgg\Cacheable`` moved to ``Elgg\Traits\Cacheable``
+* ``Elgg\Cli\PluginsHelper`` moved to ``Elgg\Traits\Cli\PluginsHelper``
+* ``Elgg\Cli\Progressing`` moved to ``Elgg\Traits\Cli\Progressing``
+* ``Elgg\Database\Seeds\Seeding\GroupHelpers`` moved to ``Elgg\Traits\Seeding\GroupHelpers``
+* ``Elgg\Database\Seeds\Seeding\TimeHelpers`` moved to ``Elgg\Traits\Seeding\TimeHelpers``
+* ``Elgg\Database\Seeds\Seeding`` moved to ``Elgg\Traits\Seeding``
+* ``Elgg\Database\LegacyQueryOptionsAdapter`` moved to ``Elgg\Traits\Database\LegacyQueryOptionsAdapter``
+* ``Elgg\Debug\Profilable`` moved to ``Elgg\Traits\Debug\Profilable``
+* ``Elgg\Di\ServiceFacade`` moved to ``Elgg\Traits\Di\ServiceFacade``
+* ``Elgg\Entity\ProfileData`` moved to ``Elgg\Traits\Entity\ProfileData``
+* ``Elgg\Loggable`` moved to ``Elgg\Traits\Loggable``
+* ``Elgg\Notifications\EventSerialization`` moved to ``Elgg\Traits\Notifications\EventSerialization``
+* ``Elgg\TimeUsing`` moved to ``Elgg\Traits\TimeUsing``
+
 Miscellaneous API changes
 -------------------------
 
@@ -897,83 +1004,3 @@ Removed actions
 ---------------
 
 * The action ``reportedcontent/delete`` has been replaced with a generic entity delete action
-
-Reworked exceptions
--------------------
-
-All exceptions in the Elgg system now extend the ``Elgg\Exceptions\Exception`` and are in the namespace ``Elgg\Exceptions``
-
-Moved exceptions
-~~~~~~~~~~~~~~~~
-
-* ``ClassException`` use ``Elgg\Exceptions\ClassException``
-* ``ConfigurationException`` use ``Elgg\Exceptions\ConfigurationException``
-* ``CronException`` use ``Elgg\Exceptions\CronException``
-* ``DatabaseException`` use ``Elgg\Exceptions\DatabaseException``
-* ``DataFormatException`` use ``Elgg\Exceptions\DataFormatException``
-* ``InstallationException`` use ``Elgg\Exceptions\Configuration\InstallationException``
-* ``InvalidParameterException`` use ``Elgg\Exceptions\InvalidParameterException``
-* ``IOException`` use ``Elgg\Exceptions\FileSystem\IOException``
-* ``LoginException`` use ``Elgg\Exceptions\LoginException``
-* ``PluginException`` use ``Elgg\Exceptions\PluginException``
-* ``RegistrationException`` use ``Elgg\Exceptions\Configuration\RegistrationException``
-* ``SecurityException`` use ``Elgg\Exceptions\SecurityException``
-* ``Elgg\Database\EntityTable\UserFetchFailureException`` use ``Elgg\Exceptions\Database\UserFetchFailureException``
-* ``Elgg\Di\FactoryUncallableException`` use ``Elgg\Exceptions\Di\FactoryUncallableException``
-* ``Elgg\Di\MissingValueException`` use ``Elgg\Exceptions\Di\MissingValueException``
-* ``Elgg\Http\Exception\AdminGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\AdminGatekeeperException``
-* ``Elgg\Http\Exception\AjaxGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\AjaxGatekeeperException``
-* ``Elgg\Http\Exception\GroupToolGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\GroupToolGatekeeperException``
-* ``Elgg\Http\Exception\LoggedInGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\LoggedInGatekeeperException``
-* ``Elgg\Http\Exception\LoggedOutGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\LoggedOutGatekeeperException``
-* ``Elgg\Http\Exception\UpgradeGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\UpgradeGatekeeperException``
-* ``Elgg\I18n\InvalidLocaleException`` use ``Elgg\Exceptions\I18n\InvalidLocaleException``
-* ``Elgg\BadRequestException`` use ``Elgg\Exceptions\Http\BadRequestException``
-* ``Elgg\CsrfException`` use ``Elgg\Exceptions\Http\CsrfException``
-* ``Elgg\EntityNotFoundException`` use ``Elgg\Exceptions\Http\EntityNotFoundException``
-* ``Elgg\EntityPermissionsException`` use ``Elgg\Exceptions\Http\EntityPermissionsException``
-* ``Elgg\GatekeeperException`` use ``Elgg\Exceptions\Http\GatekeeperException``
-* ``Elgg\GroupGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\GroupGatekeeperException``
-* ``Elgg\HttpException`` use ``Elgg\Exceptions\HttpException``
-* ``Elgg\PageNotFoundException`` use ``Elgg\Exceptions\Http\PageNotFoundException``
-* ``Elgg\ValidationException`` use ``Elgg\Exceptions\Http\ValidationException``
-* ``Elgg\WalledGardenException`` use ``Elgg\Exceptions\Http\Gatekeeper\WalledGardenException``
-
-Removed exceptions
-~~~~~~~~~~~~~~~~~~
-
-* ``CallException``
-* ``ClassNotFoundException``
-* ``IncompleteEntityException``
-* ``InvalidClassException``
-* ``NotificationException``
-* ``NotImplementedException`` from the Web Services plugin
-
-Removed composer dependencies
------------------------------
-
-* ``bower-asset/jquery-treeview`` the related js and css are no longer available in the system
-* ``bower-asset/jquery.imgareaselect`` the related js and css are no longer available in the system
-* ``npm-asset/formdata-polyfill`` all modern browser have support, no longer a need for a polyfill
-* ``npm-asset/jquery-form`` use native FormData functionality
-* ``npm-asset/weakmap-polyfill`` all modern browser have support, no longer a need for a polyfill
-* ``simpletest/simpletest``
-
-Moved Traits
-------------
-
-In order to better organize the Elgg namespace all Traits have been moved to the ``Elgg\Traits`` namespace
-
-* ``Elgg\Cacheable`` moved to ``Elgg\Traits\Cacheable``
-* ``Elgg\Cli\PluginsHelper`` moved to ``Elgg\Traits\Cli\PluginsHelper``
-* ``Elgg\Cli\Progressing`` moved to ``Elgg\Traits\Cli\Progressing``
-* ``Elgg\Database\Seeds\Seeding\GroupHelpers`` moved to ``Elgg\Traits\Seeding\GroupHelpers``
-* ``Elgg\Database\Seeds\Seeding\TimeHelpers`` moved to ``Elgg\Traits\Seeding\TimeHelpers``
-* ``Elgg\Database\Seeds\Seeding`` moved to ``Elgg\Traits\Seeding``
-* ``Elgg\Database\LegacyQueryOptionsAdapter`` moved to ``Elgg\Traits\Database\LegacyQueryOptionsAdapter``
-* ``Elgg\Debug\Profilable`` moved to ``Elgg\Traits\Debug\Profilable``
-* ``Elgg\Di\ServiceFacade`` moved to ``Elgg\Traits\Di\ServiceFacade``
-* ``Elgg\Entity\ProfileData`` moved to ``Elgg\Traits\Entity\ProfileData``
-* ``Elgg\Loggable`` moved to ``Elgg\Traits\Loggable``
-* ``Elgg\Notifications\EventSerialization`` moved to ``Elgg\Traits\Notifications\EventSerialization``
-* ``Elgg\TimeUsing`` moved to ``Elgg\Traits\TimeUsing``
