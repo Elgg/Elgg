@@ -93,11 +93,10 @@ class ReleaseCleaner {
 					// rename file to lowercase
 					rename($path, "$dir/$code.php");
 					$this->log[] = "Renamed $path to $code.php";
-					continue;
+				} else {
+					unlink($path);
+					$this->log[] = "Removed $path";
 				}
-
-				unlink($path);
-				$this->log[] = "Removed $path";
 			}
 			
 			if ($code !== 'en' && file_exists("{$dir}/{$code}.php")) {
@@ -119,10 +118,16 @@ class ReleaseCleaner {
 			return;
 		}
 		
-		$pattern = '/^\s*[\'"].*[\'"] => [\'"]{2},{0,1}[\r\n|\r|\n]/m';
-		$contents = preg_replace($pattern, '', $contents);
+		$pattern = '/^\s*[\'"].*[\'"] => [\'"]{2},{0,1}\R/m';
+		$count = 0;
+		$contents = preg_replace($pattern, '', $contents, -1, $count);
 		
-		file_put_contents($translation_file, $contents);
+		if ($count > 0) {
+			// something was changed
+			file_put_contents($translation_file, $contents);
+			
+			$this->log[] = "Cleanen empty translations from {$translation_file}";
+		}
 	}
 	
 	/**
