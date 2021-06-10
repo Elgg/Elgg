@@ -1,3 +1,15 @@
+<a name="3.3.19"></a>
+### 3.3.19  (2021-06-10)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+
+#### Bug Fixes
+
+* **output:** use correct number seperators ([536e2b26](https://github.com/Elgg/Elgg/commit/536e2b265243a14482d3244b652a9b9188e7bc91))
+
+
 <a name="3.3.18"></a>
 ### 3.3.18  (2021-05-18)
 

@@ -212,23 +212,24 @@ class Values {
 			return $n;
 		}
 		
-		$separator = substr(elgg_echo('number_counter:separator'), 0, 1);
+		$decimal_separator = substr(elgg_echo('number_counter:decimal_separator'), 0, 1);
+		$thousands_separator = substr(elgg_echo('number_counter:thousands_separator'), 0, 1);
 		
 		if ($n < 1000000) {
 			// 1.5K, 999.5K
-			$n = (float) number_format($n / 1000, $precision, '.', $separator);
+			$n = (float) number_format($n / 1000, $precision, $decimal_separator, $thousands_separator);
 			return elgg_echo('number_counter:view:thousand', [$n]);
 		} else if ($n < 1000000000) {
 			// 1.5M, 999.5M
-			$n = (float) number_format($n / 1000000, $precision, '.', $separator);
+			$n = (float) number_format($n / 1000000, $precision, $decimal_separator, $thousands_separator);
 			return elgg_echo('number_counter:view:million', [$n]);
 		} else if ($n < 1000000000000) {
 			// 1.5B, 999.5B
-			$n = (float) number_format($n / 1000000000, $precision, '.', $separator);
+			$n = (float) number_format($n / 1000000000, $precision, $decimal_separator, $thousands_separator);
 			return elgg_echo('number_counter:view:billion', [$n]);
 		} else {
 			// 1.5T
-			$n = (float) number_format($n / 1000000000000, $precision, '.', $separator);
+			$n = (float) number_format($n / 1000000000000, $precision, $decimal_separator, $thousands_separator);
 			return elgg_echo('number_counter:view:trillion', [$n]);
 		}
 	}
