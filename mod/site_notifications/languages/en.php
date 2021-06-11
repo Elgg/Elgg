@@ -23,7 +23,7 @@ return array(
 	'site_notifications:empty' => 'No notifications',
 	'site_notifications:toggle_all' => 'Toggle all',
 	'site_notifications:mark_read' => 'Mark as read',
-	'site_notifications:mark_read:confirm' => 'Are you sure you wwish to mark all selected notifications as read?',
+	'site_notifications:mark_read:confirm' => 'Are you sure you wish to mark all selected notifications as read?',
 	'site_notifications:error:notifications_not_selected' => 'No notifications selected',
 	'site_notifications:success:delete' => 'Notifications deleted',
 	'site_notifications:success:mark_read' => 'Notifications marked as read',
