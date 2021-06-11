@@ -75,4 +75,5 @@ On het vriendschapsverzoek te bekijken, klik hier:
 	'friends:action:friendrequest:accept:success' => "Het vriendschapsverzoek is geaccepteerd",
 	
 	// notification settings
+	'friends:notification:settings:description' => 'Standaard notificatie instellingen voor mensen die je gaat volgen',
 );

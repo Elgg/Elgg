@@ -133,6 +133,8 @@ return array(
 	'groups:joinrequestnotmade' => 'グループ参加の申請に失敗しました。',
 	'groups:joinrequestmade' => 'グループ参加希望を申請しました。',
 	'groups:joinrequest:exists' => 'You already requested membership for this group',
+	'groups:button:joined' => '参加しています',
+	'groups:button:owned' => '所有しています',
 	'groups:joined' => 'グループに参加しました！',
 	'groups:left' => 'グループから脱退しました。',
 	'groups:userinvited' => 'ユーザを招待しました。',
@@ -141,10 +143,28 @@ return array(
 	'groups:invite:subject' => "%sさん、%s に招待されています。",
 	'groups:joinrequest:remove:check' => 'この招待リクエストを削除してよいですか？',
 	'groups:invite:remove:check' => 'この招待を破棄してもよろしいですか？',
+	'groups:invite:body' => "%s さんはあなたをグループ '%s'  に招待しています。
+
+クリックして招待状をみてみましょう:
+%s",
 
 	'groups:welcome:subject' => "ようこそ、「 %s 」グループへ！",
+	'groups:welcome:body' => "あなたは、グループ '%s' のメンバーになりました.
+
+クリックして投稿を始めましょう！
+%s",
 
 	'groups:request:subject' => "%s さんは「 %s 」に参加希望を申請しました。",
+	'groups:request:body' => "%s さんは、グループ「 %s 」への参加を希望しています。
+
+プロフィールは下をクリック:
+%s
+
+グループ参加リクエストは下をクリック:
+%s",
+
+	'river:group:create' => '%s さんはグループ「 %s 」を作成しました',
+	'river:group:join' => '%s さんは、グループ「 %s 」に参加しました',
 
 	'groups:allowhiddengroups' => 'プライベート（不可視）なグループを許可しますか？',
 	'groups:whocancreate' => 'グループを新規作成できる人',
@@ -152,6 +172,8 @@ return array(
 	/**
 	 * Action messages
 	 */
+	'groups:deleted' => 'グループとグループのコンテンツを削除しました',
+	'groups:notdeleted' => 'グループを削除できませんでした',
 	'groups:deletewarning' => "このグループを削除していいですか？削除したら元に戻す事はできません！",
 
 	'groups:invitekilled' => '招待状を削除しました。',
@@ -160,4 +182,8 @@ return array(
 	'groups:add:alreadymember' => "%s さんは、すでにこのグループのメンバーです。",
 	
 	// Notification settings
+	'groups:usersettings:notification:group_join:description' => "新しいグループに参加したときのそのグループの既定の通知の設定",
+	
+	'groups:usersettings:notifications:title' => 'グループの通知',
+	'groups:usersettings:notifications:description' => 'あなたの参加しているグループに新しいコンテンツが追加されたときの通知の受け取り方を、下から選択してください。（複数可）',
 );

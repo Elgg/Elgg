@@ -14,6 +14,8 @@ return array(
 	'collection:object:blog:friends' => 'Blogs van vrienden',
 	'add:object:blog' => 'Blog toevoegen',
 	'edit:object:blog' => 'Bewerk blog',
+	'notification:object:blog:publish' => "Stuur een notificatie wanneer een blog is gepubliceerd",
+	'notifications:mute:object:blog' => "over de blog '%s'",
 
 	'blog:revisions' => 'Revisies',
 	'blog:archives' => 'Archieven',

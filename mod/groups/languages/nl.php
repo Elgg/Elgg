@@ -18,6 +18,10 @@ return array(
 	'groups:all' => "Alle groepen op de site",
 	'groups:add' => "Maak een nieuwe groep",
 	'groups:edit' => "Bewerk groep",
+	'groups:edit:profile' => "Profiel",
+	'groups:edit:access' => "Toegang",
+	'groups:edit:tools' => "Tools",
+	'groups:edit:settings' => "Instellingen",
 	'groups:delete' => 'Verwijder groep',
 	'groups:membershiprequests' => 'Beheer van lidmaatschapsaanvragen',
 	'groups:membershiprequests:pending' => 'Beheer van lidmaatschapsaanvragen (%s)',
@@ -184,4 +188,8 @@ of klik op de link om alle lidmaatschapsverzoeken te bekijken:
 	'groups:add:alreadymember' => "%s is al lid van deze groep",
 	
 	// Notification settings
+	'groups:usersettings:notification:group_join:description' => "Standaard notificatie instellingen voor groepen waar je lid van wordt",
+	
+	'groups:usersettings:notifications:title' => 'Groepsnotificaties',
+	'groups:usersettings:notifications:description' => 'Om notificaties te ontvangen uit groepen waar je lid van bent kun je in onderstaande lijst aangeven of en hoe je op de hoogte moet worden gebracht',
 );

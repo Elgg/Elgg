@@ -69,11 +69,14 @@ Om %s een bericht te sturen, klik hier:
 	'messages:user:nonexist' => "We konden de geadresseerde niet in de gebruikerslijst vinden .",
 	'messages:user:blank' => "Je hebt niemand geselecteerd om dit naar te sturen.",
 	'messages:user:self' => "Je kunt geen berichten aan jezelf sturen!",
+	'messages:user:notfriend' => "Je kunt geen berichten aan mensen sturen die geen vriend van je zijn.",
 
 	'messages:deleted_sender' => 'Verwijderde gebruiker',
 	
 	/**
 	* Settings
 	*/
+	'messages:settings:friends_only:label' => 'Berichten alleen naar vrienden kunnen sturen',
+	'messages:settings:friends_only:help' => 'Gebruiker kan geen berichten naar een ontvanger sturen indien deze geen vriend is',
 
 );

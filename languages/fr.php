@@ -21,7 +21,7 @@ return array(
 	'login' => "Connexion",
 	'loginok' => "Connexion réussie.",
 	'loginerror' => "Nous n'avons pas pu vous identifier. Assurez-vous que les informations que vous avez entrées sont correctes et réessayez.",
-	'login:empty' => "Identifiant/email et mot de passe sont requis.",
+	'login:empty' => "Identifiant ou adresse email et mot de passe sont requis.",
 	'login:baduser' => "Impossible de charger votre compte d'utilisateur.",
 	'auth:nopams' => "Erreur interne. Aucune méthode d'authentification des utilisateurs n'est installée.",
 
@@ -34,7 +34,7 @@ return array(
 	'loggedinrequired' => "Vous devez vous connecter pour voir cette page.",
 	'loggedoutrequired' => "Vous devez vous déconnecter pour voir cette page.",
 	'adminrequired' => "Vous devez être administrateur pour voir cette page.",
-	'membershiprequired' => "Vous devez être membre de ce groupe pour voir cette page.",
+	'membershiprequired' => "Vous devez être membre du groupe pour voir cette page.",
 	'limited_access' => "Vous n'avez pas la permission de consulter cette page.",
 	'invalid_request_signature' => "L'URL de la page à laquelle vous essayez d'accéder est invalide ou a expiré",
 
@@ -60,8 +60,8 @@ return array(
 	'ElggUser:Error:SetAdmin' => 'Utiliser %s à la place du setter magique pour "admin"',
 	'ElggUser:Error:SetBanned' => 'Utiliser %s à la place du setter magique pour "banned"',
 
-	'PluginException:MisconfiguredPlugin' => "Le plugin %s (guid : %s) est mal configuré. Il a été désactivé. Veuillez rechercher dans la documentation les causes possibles (http://learn.elgg.org/).",
-	'PluginException:CannotStart' => '%s (guid : %s) ne peut pas démarrer et a été désactivé. Raison : %s',
+	'PluginException:MisconfiguredPlugin' => "Le plugin %s (guid : %s) est mal configuré. Il a été désactivé. Veuillez rechercher dans la documentation de Elgg les causes possibles (http://learn.elgg.org/).",
+	'PluginException:CannotStart' => '%s (guid : %s) ne peut pas démarrer et a été désactivé.  Cause : %s',
 	'PluginException:InvalidID' => "%s est un ID de plugin invalide.",
 	'PluginException:InvalidPath' => "%s est un chemin de plugin invalide.",
 	'PluginException:InvalidManifest' => 'Fichier manifest.xml invalide pour le plugin %s',
@@ -83,14 +83,14 @@ return array(
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Envoi d\'une exception comprenant %s pour le plugin %s (guid: %s) à %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Impossible d\'ouvrir le répertoire des vues du plugin %s (GUID : %s) sur %s. Vérifiez les autorisations !',
 	'PluginException:NoPluginName' => "Le nom du plugin n'a pas pu être trouvé",
-	'PluginException:ParserError' => 'Erreur d\e syntaxe  dans le fichier manifest.xml avec la version %s de l\'API dans le plugin %s.',
+	'PluginException:ParserError' => 'Erreur de syntaxe dans le fichier manifest.xml avec la version %s de l\'API dans le plugin %s.',
 	'PluginException:NoAvailableParser' => 'Impossible de trouver un analyseur syntaxique du fichier manifest.xml pour l\'API version %s dans le plugin %s.',
-	'PluginException:ParserErrorMissingRequiredAttribute' => "L'attribut requis \"%s\" est manquant dans le fichier manifest.xml pour le plugin %s.",
+	'PluginException:ParserErrorMissingRequiredAttribute' => "L'attribut requis '%s' est manquant dans le fichier manifest.xml pour le plugin %s.",
 	'ElggPlugin:InvalidAndDeactivated' => '%s est un plugin invalide et a été désactivé.',
 	'ElggPlugin:activate:BadConfigFormat' => 'Le fichier du plugin "elgg-plugin.php" n\'a pas renvoyé un tableau sérialisable.',
 	'ElggPlugin:activate:ConfigSentOutput' => 'Le fichier du plugin "elgg-plugin.php" a retourné une valeur de sortie.',
 
-	'ElggPlugin:Dependencies:ActiveDependent' => 'Il existe d\'autres plugins qui répertorient %s en tant que dépendance. Vous devez désactiver les plugins suivants avant de désactiver celui-ci : %s',
+	'ElggPlugin:Dependencies:ActiveDependent' => 'Il existe d\'autres plugins qui répertorient %s en tant que dépendance. Vous devez désactiver les plugins suivants avant de désactiver celui-ci : %s',
 	'ElggPlugin:Dependencies:MustBeActive' => 'Doit être actif',
 	'ElggPlugin:Dependencies:Position' => 'Position',
 
@@ -126,17 +126,17 @@ return array(
 
 	'pageownerunavailable' => 'Attention : Le propriétaire de la page %d n\'est pas accessible.',
 	'viewfailure' => 'Erreur interne dans la vue %s',
-	'view:missing_param' => "Le paramètre obligatoire \"%s\" est manquant dans la vue %s",
+	'view:missing_param' => "Le paramètre obligatoire '%s' est manquant dans la vue %s",
 	'changebookmark' => 'Veuillez mettre à jour votre signet pour cette page.',
 	'noaccess' => 'La contenu que vous essayiez d\'afficher a été supprimé, ou vous n\'avez pas l\'autorisation d\'y accéder.',
 	'error:missing_data' => 'Il manquait des données dans votre requête',
-	'save:fail' => 'Erreur lors de l \'enregistrement de vos données. ',
+	'save:fail' => 'Erreur lors de l\'enregistrement de vos données. ',
 	'save:success' => 'Vos données ont bien été enregistrées',
 
 	'forward:error' => 'Désolé, une erreur est survenue lors de la redirection vers un autre site.',
 
 	'error:default:title' => 'Oups...',
-	'error:default:content' => 'Oups... quelque chose est allé de travers.',
+	'error:default:content' => 'Oups... quelque chose n\'a pas fonctionné.',
 	'error:400:title' => 'Mauvaise requête',
 	'error:400:content' => 'Désolé, la requête est invalide ou incomplète.',
 	'error:403:title' => 'Interdit',
@@ -144,7 +144,7 @@ return array(
 	'error:404:title' => 'Page non trouvée',
 	'error:404:content' => 'Désolé. Nous n\'arrivons pas à trouver la page que vous demandez.',
 
-	'upload:error:ini_size' => 'Le fichier que vous avez essayé de charger est trop grand.',
+	'upload:error:ini_size' => 'Le fichier que vous avez essayé de télécharger est trop grand.',
 	'upload:error:form_size' => 'Le fichier que vous avez essayé de télécharger est trop grand.',
 	'upload:error:partial' => 'Le chargement du fichier n\'a pas abouti.',
 	'upload:error:no_file' => 'Aucun fichier n\'a été sélectionné.',
@@ -230,7 +230,7 @@ return array(
 
 	'widgets' => "Widgets",
 	'widget' => "Widget",
-	'item:object:widget' => "Widgets",
+	'item:object:widget' => "Widget",
 	'collection:object:widget' => 'Widgets',
 	'widgets:save:success' => "La configuration du widget a bien été enregistrée.",
 	'widgets:save:failure' => "Un problème est survenu lors de l'enregistrement de la configuration du widget. ",
@@ -245,7 +245,7 @@ return array(
  */
 
 	'group' => "Groupe",
-	'item:group' => "Groupes",
+	'item:group' => "Groupe",
 	'collection:group' => 'Groupes',
 	'item:group:group' => "Groupe",
 	'collection:group:group' => 'Groupes',
@@ -268,7 +268,7 @@ return array(
 	'collection:friends' => '%s des contacts',
 
 	'avatar' => 'Image du profil',
-	'avatar:noaccess' => "Vous n'êtes pas autorisé à modifier l\'image du profil de cet utilisateur",
+	'avatar:noaccess' => "Vous n'êtes pas autorisé à modifier l'image du profil de cet utilisateur",
 	'avatar:create' => 'Créer l\'image du profil',
 	'avatar:edit' => 'Modifier l\'image du profil',
 	'avatar:upload' => 'Envoyer une nouvelle image du profil',
@@ -292,7 +292,7 @@ return array(
 /**
  * Feeds
  */
-	'feed:rss' => 'Fil RSS pour cette page',
+	'feed:rss' => 'RSS',
 	'feed:rss:title' => 'Flux RSS pour cette page',
 /**
  * Links
@@ -315,18 +315,18 @@ return array(
 	'river:none' => 'Aucune activité',
 	'river:update' => 'Mise à jour pour %s',
 	'river:delete' => 'Retirer cet élément du flux d\'activité',
-	'river:delete:success' => 'L\'élément d\'activité a été supprimé',
+	'river:delete:success' => 'L\'élément d\'activité a bien été supprimé',
 	'river:delete:fail' => 'L\'élément d\'activité n\'a pas pu être supprimé',
 	'river:delete:lack_permission' => 'Vous n\'avez pas les permissions nécessaires pour supprimer cet élément d\'activité',
 	'river:can_delete:invaliduser' => 'Impossible de vérifier canDelete pour le user_guid [%s] car l\'utilisateur n\'existe pas.',
 	'river:subject:invalid_subject' => 'Utilisateur invalide',
-	'activity:owner' => 'Voir le flux d\'activité',
+	'activity:owner' => 'Flux d\'activité',
 
 /**
  * Relationships
  */
 	
-	'relationship:default' => "%s est en rapport avec %s",
+	'relationship:default' => "%s renvoie à %s",
 
 /**
  * Notifications
@@ -358,7 +358,7 @@ return array(
 	'usersettings:notifications:subscriptions:save:ok' => "Les abonnements de notification ont bien été enregistrés.",
 	'usersettings:notifications:subscriptions:save:fail' => "Il y a eu un problème lors de l'enregistrement des abonnements de notification.",
 
-	'notification:default:salutation' => 'Cher %s,',
+	'notification:default:salutation' => 'Bonjour %s,',
 	'notification:default:sign-off' => 'Cordialement,
 
 %s',
@@ -522,12 +522,14 @@ Configurer simplecache dans le fichier settings.php améliore les performances d
 Cela permet à Elgg d'éviter la connexion à la base de données lors de l'envoi de fichiers JavaScript et CSS mis en cache",
 	'admin:performance:systemcache' => 'Systemcache',
 	'admin:performance:apache:mod_cache' => 'Apache mod_cache',
-	'admin:performance:apache:mod_cache:warning' => 'Le module mod_cache fournit un schéma de cache compatible HTTP. Ceci signifie que les fichiers seront mis en cache en fonction d\'une instruction qui spécifie combien de temps une page peut être considérée comme "fraîche".',
+	'admin:performance:apache:mod_cache:warning' => 'Le module mod_cache fournit un schéma de cache compatible HTTP. Ceci signifie que les fichiers seront mis en cache en fonction
+d\'une instruction qui spécifie combien de temps une page peut être considérée comme "fraîche".',
 	'admin:performance:php:open_basedir' => 'PHP open_basedir',
 	'admin:performance:php:open_basedir:not_configured' => 'Aucune limite n\'a été définie',
-	'admin:performance:php:open_basedir:warning' => 'Un faible nombre de limitations de open_basedir sont effectives, ceci peut avoir un effet sur la performance.',
-	'admin:performance:php:open_basedir:error' => 'Un grand nombre de limitations de open_basedir sont effectives, ceci va probablement avoir un effet sur la performance.',
-	'admin:performance:php:open_basedir:generic' => 'Avec open_basedir chaque accès à un fichier sera vérifié auprès de la liste des limitations. Comme Elgg a un grand nombre d\'accès aux fichiers cela va avoir un effet négatif sur les performances. D\'autre part l\'opcache de PHP ne peut plus mettre en cache les chemins de fichiers en mémoire et doit résoudre cela lors de chaque accès.',
+	'admin:performance:php:open_basedir:warning' => 'Un faible nombre de limitations de open_basedir sont effectives, ceci pourrait affecter les performances.',
+	'admin:performance:php:open_basedir:error' => 'Un grand nombre de limitations de open_basedir sont effectives, ceci va probablement affecter les performances.',
+	'admin:performance:php:open_basedir:generic' => 'Avec open_basedir chaque accès à un fichier sera vérifié auprès de la liste des limitations. Comme Elgg a un grand nombre
+d\'accès aux fichiers cela va avoir un effet négatif sur les performances. D\'autre part l\'opcache de PHP ne peut plus mettre en cache les chemins de fichiers dans la mémoire et doit résoudre cela lors de chaque accès.',
 	
 	'admin:statistics' => 'Statistiques',
 	'admin:server' => 'Serveur',
@@ -538,7 +540,7 @@ Cela permet à Elgg d'éviter la connexion à la base de données lors de l'envo
 	'admin:cron:date' => 'Date et heure',
 	'admin:cron:msg' => 'Message',
 	'admin:cron:started' => 'Tâches Cron pour "%s" démarrées à %s',
-	'admin:cron:started:actual' => 'Démarrage du traitement de l\'intervale cron "%s" à %s',
+	'admin:cron:started:actual' => 'Démarrage du traitement de l’intervalle cron "%s" à %s',
 	'admin:cron:complete' => 'Tâches Cron pour "%s" terminées à %s',
 
 	'admin:appearance' => 'Apparence',
@@ -555,7 +557,7 @@ Cela permet à Elgg d'éviter la connexion à la base de données lors de l'envo
 	'admin:users:existingadmins' => 'Liste des administrateurs',
 	'admin:users:add' => 'Créer un utilisateur',
 	'admin:users:description' => "Ce panneau d'administration vous permet de contrôler les paramètres des utilisateurs de votre site. Choisissez une option ci-dessous pour commencer.",
-	'admin:users:adduser:label' => "Cliquez ici pour ajouter un nouvel utilisateur ...",
+	'admin:users:adduser:label' => "Cliquez ici pour ajouter un nouvel utilisateur...",
 	'admin:users:opt:linktext' => "Configurer les utilisateurs...",
 	'admin:users:opt:description' => "Configurer les utilisateurs et les informations des comptes.",
 	'admin:users:find' => 'Trouver',
@@ -565,7 +567,7 @@ Cela permet à Elgg d'éviter la connexion à la base de données lors de l'envo
 	'admin:users:unvalidated:change_email' => 'Modifier l\'adresse email',
 	'admin:users:unvalidated:change_email:user' => 'Modifier l\'adresse email pour : %s',
 	
-	'admin:configure_utilities:maintenance' => 'Mode maintenance',
+	'admin:configure_utilities:maintenance' => 'Mode de maintenance',
 	'admin:upgrades' => 'Mises à niveau',
 	'admin:upgrades:finished' => 'Terminé',
 	'admin:upgrades:db' => 'Mises à niveau de la base de données',
@@ -585,8 +587,8 @@ Cela permet à Elgg d'éviter la connexion à la base de données lors de l'envo
 	'admin:upgrades:failed' => 'La mise à niveau "%s" a échoué',
 	'admin:action:upgrade:reset:success' => 'La mise à niveau "%s" a été réinitialisée',
 
-	'admin:settings' => 'Configuration',
-	'admin:settings:basic' => 'Configuration de base',
+	'admin:settings' => 'Paramètres',
+	'admin:settings:basic' => 'Paramètres de base',
 	'admin:settings:i18n' => 'Internationalisation',
 	'admin:settings:advanced' => 'Configuration avancée',
 	'admin:settings:users' => 'Membres',
@@ -598,14 +600,14 @@ Cela permet à Elgg d'éviter la connexion à la base de données lors de l'envo
 	'site_secret:current_strength' => 'Complexité de la clé',
 	'site_secret:strength:weak' => "Faible",
 	'site_secret:strength_msg:weak' => "Nous vous conseillons fortement de régénérer la clé secrète du site.",
-	'site_secret:strength:moderate' => "Moyenne",
+	'site_secret:strength:moderate' => "Modérée",
 	'site_secret:strength_msg:moderate' => "Nous vous conseillons de régénérer la clé secrète du site pour une meilleure sécurité.",
 	'site_secret:strength:strong' => "Forte",
-	'site_secret:strength_msg:strong' => "La clé secrète de votre site est suffisamment forte. Nul besoin de la régénérer.",
+	'site_secret:strength_msg:strong' => "La clé secrète de votre site est suffisamment forte. Inutile de la régénérer.",
 
 	'admin:dashboard' => 'Tableau de bord',
 	'admin:widget:online_users' => 'Utilisateurs en ligne',
-	'admin:widget:online_users:help' => 'Affiche la liste des utilisateurs actuellement sur le site',
+	'admin:widget:online_users:help' => 'Liste les utilisateurs actuellement sur le site',
 	'admin:widget:new_users' => 'Nouveaux utilisateurs',
 	'admin:widget:new_users:help' => 'Liste des nouveaux utilisateurs',
 	'admin:widget:banned_users' => 'Utilisateurs bannis',
@@ -621,7 +623,7 @@ Cela permet à Elgg d'éviter la connexion à la base de données lors de l'envo
 	'admin:statistics:numentities:other' => 'Autre entités',
 
 	'admin:widget:admin_welcome' => 'Bienvenue',
-	'admin:widget:admin_welcome:help' => "Une courte présentation de la zone d'administration d'Elgg",
+	'admin:widget:admin_welcome:help' => "Une courte présentation de la zone d'administration de Elgg",
 	'admin:widget:admin_welcome:intro' =>
 'Bienvenue sur Elgg ! Vous êtes actuellement sur le tableau de bord de l\'administration. Il permet de suivre ce qui se passe sur le site.',
 
@@ -654,14 +656,14 @@ Cela permet à Elgg d'éviter la connexion à la base de données lors de l'envo
 	'admin:footer:faq' => 'FAQ Administration',
 	'admin:footer:manual' => 'Guide de l\'administration',
 	'admin:footer:community_forums' => 'Forums de la communauté Elgg',
-	'admin:footer:blog' => 'Blog d\'Elgg',
+	'admin:footer:blog' => 'Blog de Elgg',
 
 	'admin:plugins:category:all' => 'Tous les plugins',
 	'admin:plugins:category:active' => 'Plugins actifs',
 	'admin:plugins:category:inactive' => 'Plugins inactifs',
 	'admin:plugins:category:admin' => 'Admin',
-	'admin:plugins:category:bundled' => 'Empaquetés',
-	'admin:plugins:category:nonbundled' => 'Non-empaquetés',
+	'admin:plugins:category:bundled' => 'Groupés',
+	'admin:plugins:category:nonbundled' => 'Non-groupés',
 	'admin:plugins:category:content' => 'Contenu',
 	'admin:plugins:category:development' => 'Développement',
 	'admin:plugins:category:enhancement' => 'Améliorations',
@@ -868,8 +870,8 @@ Voyez la liste complète des utilisateurs ici :
 	'admin:plugins:label:missing_dependency' => 'Dépendance manquante [%s].',
 
 	'admin:plugins:warning:unmet_dependencies' => 'Ce plugin a des dépendances non satisfaites et ne peut pas être activé. Vérifiez les dépendances dans la partie "Plus d\'informations".',
-	'admin:plugins:warning:invalid' => '%s n\'est pas un plugin d\'Elgg valide. Vérifiez <a href="http://docs.elgg.org/Invalid_Plugin">la documentation d\'Elgg</a> les conseils de dépannage.',
-	'admin:plugins:warning:invalid:check_docs' => 'Vérifiez <a href="http://learn.elgg.org/fr/stable/appendix/faqs.html">la documentation d\'Elgg</a> pour des astuces de débogage. Vous pouvez également consulter <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">version anglophone</a>, qui peut être plus complète / récente.',
+	'admin:plugins:warning:invalid' => 'Ce plugin est invalide : %s',
+	'admin:plugins:warning:invalid:check_docs' => 'Vérifiez <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">la documentation de Elgg</a> pour des astuces de débogage.',
 	'admin:plugins:cannot_activate' => 'Activation impossible',
 	'admin:plugins:cannot_deactivate' => 'impossible de désactiver',
 	'admin:plugins:already:active' => 'Le (ou les) plugin sélectionné est déjà activé.',
@@ -899,7 +901,7 @@ Voyez la liste complète des utilisateurs ici :
 	'admin:statistics:label:numonline' => "Nombre d'utilisateurs en ligne",
 	'admin:statistics:label:onlineusers' => "Utilisateurs en ligne en ce moment",
 	'admin:statistics:label:admins'=>"Administrateurs",
-	'admin:statistics:label:version' => "Version d'Elgg",
+	'admin:statistics:label:version' => "Version de Elgg",
 	'admin:statistics:label:version:release' => "Version majeure (release)",
 	'admin:statistics:label:version:version' => "Version",
 	'admin:statistics:label:version:code' => "Version du code",
@@ -923,13 +925,13 @@ Voyez la liste complète des utilisateurs ici :
 	'admin:server:warning:post_max_too_small' => '(Remarque : la valeur de post_max_size doit être supérieure à cette valeur pour supporter des envois de cette taille)',
 	'admin:server:label:memcache' => 'Memcache',
 	'admin:server:memcache:inactive' => '
-		Memcache n\'est pas installé sur ce serveur ou n\'a pas encore été configuré dans la configuration d\'Elgg.
+		Memcache n\'est pas installé sur ce serveur ou n\'a pas encore été configuré dans la configuration de Elgg.
 		Pour des performances améliorées, il est recommandé que vous activiez et configuriez memcache (ou redis).
 ',
 
 	'admin:server:label:redis' => 'Redis',
 	'admin:server:redis:inactive' => '
-		Redis n\'est pas installé sur ce serveur ou n\'a pas encore été configuré dans la configuration d\'Elgg.
+		Redis n\'est pas installé sur ce serveur ou n\'a pas encore été configuré dans la configuration de Elgg.
 		Pour des performances améliorées, il est recommandé que vous activiez et configuriez redis (ou memcache).
 ',
 
@@ -1448,7 +1450,7 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'config:users:can_change_username' => "Permettre aux membres de modifier leur nom d'utilisateur",
 	'config:users:can_change_username:help' => "Si interdit, seuls les admins peuvent changer l'identifiant d'un membre",
 	'config:remove_branding:label' => "Retirer le logo Elgg",
-	'config:remove_branding:help' => "Il existe divers liens et logos à travers le site qui indiquent le ce site a été réalisé en utilisant Elgg. Si vous supprimez toute mention d'Elgg veuillez envisager une donation via https://elgg.org/about/supporters",
+	'config:remove_branding:help' => "Il existe divers liens et logos à travers le site qui indiquent que ce site a été réalisé en utilisant Elgg. Si vous supprimez toute mention de Elgg veuillez envisager une donation via https://elgg.org/about/supporters",
 	'config:disable_rss:label' => "Désactiver les flux RSS",
 	'config:disable_rss:help' => "Désactivez cette option pour ne plus proposer de flux RSS",
 	'config:friendly_time_number_of_days:label' => "Nombre de jours pendant lesquels la date relative est présentée",
@@ -1475,7 +1477,7 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'config:delayed_email:help' => "Offre aux utilisateurs des notifications par email différées qui regroupent les notifications reçues au cours d'une période (quotidienne, hebdomadaire)",
 
 	'upgrading' => 'Mise à niveau en cours...',
-	'upgrade:core' => 'Votre installation d\'Elgg a été mise à niveau.',
+	'upgrade:core' => 'Votre installation de Elgg a été mise à niveau.',
 	'upgrade:unlock' => 'Déverrouiller la mise à niveau',
 	'upgrade:unlock:confirm' => "La base de données est verrouillée par une autre mise à niveau. Exécuter des mises à jours simultanées est dangereux. Vous devriez continuer seulement si vous savez qu'il n'y a pas d'autre mise à jour en cours d'exécution. Déverrouiller ?",
 	'upgrade:terminated' => 'La mise à niveau a été interrompue par un gestionnaire d\'événement',
@@ -1484,8 +1486,8 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'upgrade:unable_to_upgrade' => 'Impossible de mettre à niveau.',
 	'upgrade:unable_to_upgrade_info' => 'Cette installation ne peut pas être mise à jour, car des vues anciennes
 ont été détectées dans le répertoire des vues du noyau de Elgg. Ces vues sont obsolètes et doivent être
-supprimés pour que Elgg fonctionne correctement. Si vous n\'avez pas modifié les fichiers du noyau d\'Elgg, vous pouvez
-simplement supprimer le répertoire des vues (views) et le remplacer par celui de la dernière
+supprimés pour que Elgg fonctionne correctement. Si vous n\'avez pas modifié les fichiers du noyau de Elgg, vous pouvez
+simplement supprimer le répertoire des vues "views/" et le remplacer par celui de la dernière
 version de Elgg téléchargée depuis <a href="https://elgg.org">elgg.org</a>.<br /><br />
 
 Si vous avez besoin d\'instructions détaillées, veuillez visiter la <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
@@ -1612,7 +1614,7 @@ Pour vous rendre sur le site :
  */
 
 	'comments:count' => "%s commentaire(s)",
-	'item:object:comment' => 'Commentaires',
+	'item:object:comment' => 'Commentaire',
 	'collection:object:comment' => 'Commentaires',
 	'notification:object:comment:create' => "Envoyer une notification quand un commentaire est créé",
 
@@ -1632,7 +1634,7 @@ Pour vous rendre sur le site :
 	'generic_comment:failure' => "Une erreur inattendue s'est produite pendant l'enregistrement du commentaire.",
 	'generic_comment:none' => 'Pas de commentaire',
 	'generic_comment:title' => 'Commentaire de %s',
-	'generic_comment:on' => '%s %s',
+	'generic_comment:on' => '%s sur %s',
 	'generic_comments:latest:posted' => 'a publié un',
 
 	'generic_comment:notification:subject' => 'Re: %s',
@@ -1660,7 +1662,7 @@ Pour y répondre ou voir la publication originale :
 	'byline:ingroup' => 'dans le groupe %s',
 	'entity:default:missingsupport:popup' => 'Cette entité ne peut pas être affichée correctement. Il se peut que ce soit à cause d\'un plugin qui n\'est plus installé ou activé.',
 
-	'entity:delete:item' => 'Objet',
+	'entity:delete:item' => 'Élément',
 	'entity:delete:item_not_found' => 'Objet non trouvé.',
 	'entity:delete:permission_denied' => 'Vous n\'avez pas les permissions nécessaires pour supprimer cet objet.',
 	'entity:delete:success' => 'L\'entité %s a été supprimée',
@@ -1720,7 +1722,7 @@ Pour y répondre ou voir la publication originale :
  * Diagnostics
  */
 	'diagnostics:report' => 'Rapport de diagnostic',
-	'diagnostics:description' => 'Le rapport de diagnostic suivant peut être utile pour diagnostiquer des problèmes avec Elgg. Les développeurs d\'Elgg peuvent vous demander de le joindre à un rapport de bogue.',
+	'diagnostics:description' => 'Le rapport de diagnostic suivant peut être utile pour diagnostiquer des problèmes avec Elgg. Les développeurs de Elgg peuvent vous demander de le joindre à un rapport de bogue.',
 	'diagnostics:header' => '========================================================================
 Rapport de diagnostic de Elgg
 Généré %s par %s
@@ -1760,11 +1762,11 @@ Variables globales :
 	'cli:option:as' => "Exécuter la commande au nom d'un utilisateur avec le nom d'utilisateur donné",
 	'cli:option:language' => "Exécuter la commande dans la langue donnée (par ex. fr, en, ou nl)",
 	
-	'cli:cache:clear:description' => "Vider les caches d'Elgg",
-	'cli:cache:invalidate:description' => "Invalider les caches d'Elgg",
-	'cli:cache:purge:description' => "Purger les caches d'Elgg",
+	'cli:cache:clear:description' => "Vider les caches de Elgg",
+	'cli:cache:invalidate:description' => "Invalider les caches de Elgg",
+	'cli:cache:purge:description' => "Purger les caches de Elgg",
 	
-	'cli:cron:description' => "Exécuter les gestionnaires de cron pour tout ou pour les intervalles spécifiés",
+	'cli:cron:description' => "Exécuter les gestionnaires de cron pour tout, ou pour l'intervalle spécifié",
 	'cli:cron:option:interval' => "Nom de l’intervalle (par ex. hourly)",
 	'cli:cron:option:force' => "Forcer les commandes cron à s'exécuter même si elles ne sont pas encore à échéance",
 	'cli:cron:option:time' => "Heure d'initialisation du cron",
@@ -1776,10 +1778,10 @@ Variables globales :
 	'cli:database:seed:option:type' => "Nombre d'entités à créer (ou supprimer) (%s)",
 	'cli:database:seed:option:create_since' => "Une chaîne d'heure PHP pour définir la limite basse de l'heure de création des entités ensemencées",
 	'cli:database:seed:option:create_until' => "Une chaîne d'heure PHP pour définir la limite haute de l'heure de création des entités ensemencées",
-	'cli:database:seed:log:error:faker' => "Ceci est un outil pour développeurs actuellement destiné à des fins de tests seulement. Veuillez éviter de les utiliser.",
+	'cli:database:seed:log:error:faker' => "Il s'agit d'un outil pour développeurs destiné exclusivement à des fins de tests. Veuillez éviter de l'utiliser.",
 	'cli:database:seed:log:error:logged_in' => "L'ensemencement de la base de donnée ne devrait pas être exécutée avec un utilisateur connecté",
 	
-	'cli:database:unseed:description' => "Supprime de la base de donnée les fausses entités issues de l'ensemencement",
+	'cli:database:unseed:description' => "Supprime de la base de donnée les entités factices issues de l'ensemencement",
 	
 	'cli:plugins:activate:description' => "Activer le(s) plugin(s)",
 	'cli:plugins:activate:option:force' => "Résoudre les conflits en désactivant les plugins en conflit et en activant ceux requis",
@@ -1799,7 +1801,7 @@ Variables globales :
 	'cli:simpletest:description' => "Exécuter la suite de test simpletest (obsolète)",
 	'cli:simpletest:option:config' => "Chemin vers le fichier de configuration avec lequel Elgg devrait être amorcé",
 	'cli:simpletest:option:plugins' => "Une liste de plugins à activer pour les tests, ou 'all' pour activer tous les plugins",
-	'cli:simpletest:option:filter' => "N'exécuter que les tests qui correspondent au motif",
+	'cli:simpletest:option:filter' => "N'exécuter que les tests qui correspondent au motif de filtre",
 	'cli:simpletest:error:class' => "Vous devez installer votre application Elgg en utilisant '%s'",
 	'cli:simpletest:error:file' => "%s n'est pas une classe simpletest valide",
 	'cli:simpletest:output:summary' => "Durée : %.2f secondes, Mémoire : %.2f Mo",
@@ -1969,7 +1971,7 @@ Variables globales :
 	"zh_hans" => "Chinois simplifié",
 	"zu" => "Zoulou",
 
-	"field:required" => 'Requis.',
+	"field:required" => 'Requis',
 
 	"core:upgrade:2017080900:title" => "Modifier l'encodage de la base de données pour le support multi-byte",
 	"core:upgrade:2017080900:description" => "Modifie l'encodage de la base de données et des tables pour utf8mb4, de manière à supporter les caractères multi-bytes tels que des emojis",

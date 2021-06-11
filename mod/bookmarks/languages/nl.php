@@ -18,6 +18,8 @@ return array(
 	'collection:object:bookmarks:friends' => "Favorieten van vrienden",
 	'add:object:bookmarks' => "Favoriet toevoegen",
 	'edit:object:bookmarks' => "Bewerk favoriet",
+	'notification:object:bookmarks:create' => "Stuur een notificatie wanneer een favoriet is gemaakt",
+	'notifications:mute:object:bookmarks' => "over de favoriet '%s'",
 
 	'bookmarks:this' => "Voeg favoriet toe",
 	'bookmarks:this:group' => "Favoriet in '%s'",

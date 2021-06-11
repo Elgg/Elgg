@@ -52,6 +52,13 @@ return array(
 
 	'ajax:error' => 'Onverwacht probleem opgetreden tijdens de uitvoer van een AJAX call. Mogelijk is de verbinding met de server verloren.',
 	'ajax:not_is_xhr' => 'Je kan AJAX views niet rechtstreeks aanroepen',
+	'ajax:pagination:no_data' => 'Geen nieuwe pagina gevonden',
+	'ajax:pagination:load_more' => 'Meer laden',
+
+	'ElggEntity:Error:SetSubtype' => 'Gebruik %s in plaats van de magic setter voor "subtype"',
+	'ElggEntity:Error:SetEnabled' => 'Gebruik %s in plaats van de magic setter voor "enabled"',
+	'ElggUser:Error:SetAdmin' => 'Gebruik %s in plaats van de magic setter voor "admin"',
+	'ElggUser:Error:SetBanned' => 'Gebruik %s in plaats van de magic setter voor "banned"',
 
 	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) is een verkeerd geconfigureerde plugin. Hij is uitgeschakeld. In de Elgg documentatie kun je mogelijke oorzaken vinden (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) kan niet starten. Reden: %s',
@@ -62,6 +69,9 @@ return array(
 	'PluginException:InvalidPlugin:Details' => '%s is een ongeldige plugin: %s',
 	'PluginException:NullInstantiated' => 'ElggPlugin kan niet worden geïnitieerd met null. Je moet een GUID, een plugin-ID of een pad opgeven.',
 	'ElggPlugin:MissingID' => 'Plugin-ID ontbreekt (guid %s)',
+	'ElggPlugin:NoPluginComposer' => 'Composer.json ontbreekt voor plugin ID %s (guid %s)',
+	'ElggPlugin:StartFound' => 'Voor plugin ID %s is een start.php gevonden. Dit is een indicatie voor een plugin die niet meer ondersteund wordt.',
+	'ElggPlugin:IdMismatch' => 'De plugin map moet worden hernoemd naar "%s" om te matchen met de projectnaam in de composer.json van de plugin.',
 	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'Het bestand %s is vereist, maar kan niet gevonden worden.',
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Het manifest bevat een ongeldig afhankelijkheidtype "%s".',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Het manifest bevat een ongeldig aanbodtype "%s".',
@@ -82,6 +92,8 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'ElggPlugin:activate:ConfigSentOutput' => 'Plugin file "elgg-plugin.php" sent output.',
 
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Er zijn plugins die afhankelijk zijn van %s. Je moet eerst de volgende plugins uitschakelen voordat je deze kunt uitschakelen: %s',
+	'ElggPlugin:Dependencies:MustBeActive' => 'Moet geactiveerd zijn',
+	'ElggPlugin:Dependencies:Position' => 'Positie',
 
 	'ElggMenuBuilder:Trees:NoParents' => 'Menu items gevonden zonder bovenliggende menu items om ze aan te linken',
 	'ElggMenuBuilder:Trees:OrphanedChild' => 'Menu item [%s] gevonden met een ontbrekend bovenliggend menu item [%s]',
@@ -96,6 +108,7 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'LoginException:ChangePasswordFailure' => 'Huidige wachtwoord incorrect.',
 	'LoginException:Unknown' => 'We konden je niet aanmelden vanwege een onbekende fout.',
 	'LoginException:AdminValidationPending' => "Je account moet nog worden gevalideerd door een beheerder van de site voordat je het kunt gebruiken. Je zult hier een notificatie van ontvangen zodra dit is gebeurd.",
+	'LoginException:DisabledUser' => "Je account is gedeactiveerd. Het is niet toegestaan om je aan te melden.",
 
 	'UserFetchFailureException' => 'Kan voor user_guid [%s] niet de rechten nakijken omdat de gebruiker niet bestaat.',
 
@@ -109,6 +122,8 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	
 	'Security:InvalidPasswordCharacterRequirementsException' => "Het opgegeven wachtwoord voldoet niet aan de minimale eisen",
 	'Security:InvalidPasswordLengthException' => "Het opgegeven wachtwoord voldoet niet aan de minimale lengte van %s",
+	
+	'Entity:Subscriptions:InvalidMethodsException' => '%s vereist dat $methods een string of een array van strings is',
 
 	'pageownerunavailable' => 'Waarschuwing: De pagina-eigenaar %d is niet toegankelijk!',
 	'viewfailure' => 'Er is een interne fout in de view %s',
@@ -246,6 +261,9 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'collection:user' => 'Gebruikers',
 	'item:user:user' => 'Gebruiker',
 	'collection:user:user' => 'Gebruikers',
+	'notification:user:user:make_admin' => "Stuur een notificatie wanneer een gebruiker beheerdersrechten krijgt",
+	'notification:user:user:remove_admin' => "Stuur een notificatie wanneer een gebruiker beheerdersrechten afgenomen wordtt",
+	'notification:user:user:unban' => "Stuur een notificatie wanneer een gebruiker wordt gedeblokkeerd",
 
 	'friends' => "Vrienden",
 	'collection:friends' => 'Vrienden %s',
@@ -315,8 +333,55 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
  * Notifications
  */
 	'notification:method:email' => 'E-mail',
+	'notification:method:email:from' => '%s (via %s)',
+	'notification:method:delayed_email' => 'Uitgestelde email',
+	
+	'usersettings:notifications:title' => "Notificatie instellingen",
+	'usersettings:notifications:users:title' => 'Gebruikersnotificaties',
+	'usersettings:notifications:users:description' => 'Om notificaties te ontvangen van vrienden die je volgt kun je in onderstaande lijst aangeven of en hoe je op de hoogte moet worden gebracht',
+	
+	'usersettings:notifications:menu:page' => "Notificatie instellingen",
+	'usersettings:notifications:menu:filter:settings' => "Instellingen",
+	
+	'usersettings:notifications:default:description' => 'Standaard notificatie instellingen voor gebeurtenissen uit het systeem',
+	'usersettings:notifications:content_create:description' => 'Standaard notificatie instellingen voor nieuwe door jou aangemaakte content. Dit betreft notificaties die te maken hebben met acties op jouw content zoals het achterlaten van een reactie.',
+	'usersettings:notifications:create_comment:description' => "Standaard notificatie instellingen indien je een reactie achterlaat op content om van het vervolg op de hoogte te blijven",
+
+	'usersettings:notifications:timed_muting' => "Tijdelijk notificaties uitschakelen",
+	'usersettings:notifications:timed_muting:help' => "Indien je voor een bepaalde periode geen notificaties wilt ontvangen (bijvoorbeeld een vakantie) dan kun je hier een start en einddatum opgeven om tijdelijk alle notificaties te blokkeren.",
+	'usersettings:notifications:timed_muting:start' => "Eerste dag",
+	'usersettings:notifications:timed_muting:end' => "Laatste dag",
+	'usersettings:notifications:timed_muting:warning' => "Op dit moment zijn je notificaties tijdelijk uitgeschakeld",
+	
+	'usersettings:notifications:save:ok' => "Notificatie instellingen succesvol opgeslagen",
+	'usersettings:notifications:save:fail' => "Er was een probleem tijdens het opslaan van de notificatie instellingen.",
+	
+	'usersettings:notifications:subscriptions:save:ok' => "Notificatie abonnementen succesvol opgeslagen.",
+	'usersettings:notifications:subscriptions:save:fail' => "Er was een probleem tijdens het opslaan van de notificatie abonnementen.",
+
+	'notification:default:salutation' => 'Beste %s,',
+	'notification:default:sign-off' => 'Met vriendelijke groet,
+
+%s',
 	'notification:subject' => 'Notificatie over \'%s\'',
 	'notification:body' => 'Bekijk de nieuwe activiteit op %s',
+	
+	'notifications:delayed_email:subject:daily' => "Dagelijkse notificaties",
+	'notifications:delayed_email:subject:weekly' => "Wekelijkse notificaties",
+	
+	'notifications:subscriptions:no_results' => 'Nog geen abonementen beschikbaar',
+
+	'notifications:mute:title' => "Notificaties uitzetten",
+	'notifications:mute:description' => "Indien je geen notificaties wilt ontvangen zoals diegene die je hebt ontvangen kun je één of meer van de volgende redenen instellen om notificaties in de toekomst te blokkeren:",
+	'notifications:mute:error:content' => "We kunnen geen notificatie instellingen bepalen",
+	'notifications:mute:entity' => "over '%s'",
+	'notifications:mute:container' => "van '%s'",
+	'notifications:mute:owner' => "door '%s'",
+	'notifications:mute:actor' => "uitgevoerd door '%s'",
+	'notifications:mute:group' => "geplaatst in de groep '%s'",
+	'notifications:mute:user' => "geplaatst door de gebruiker '%s'",
+	
+	'notifications:mute:save:success' => "Je notificatie instellingen zijn opgeslagen",
 
 /**
  * Search
@@ -638,6 +703,8 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:security:information:php:session_gc:chance' => "Opschoningskans: %s%%",
 	'admin:security:information:php:session_gc:lifetime' => "Sessie levensduur %sseconden",
 	'admin:security:information:php:session_gc:error' => "Het is aanbevolen om de PHP instellingen  'session.gc_probability' en 'session.gc_divisor' in te stellen. Dit schoont verlopen sessies op in de database en zorgt er voor dat oude sessies niet opnieuw gebruikt kunnen worden.",
+	'admin:security:information:htaccess:hardening' => ".htaccess file access hardening",
+	'admin:security:information:htaccess:hardening:help' => "In het .htaccess bestand kan toegang to bepaalde bestanden worden geblokkeerd om de veiligheid van je site te verhogen. Voor meer informatie kijk in het .htaccess bestand.",
 	
 	'admin:security:settings' => 'Instellingen',
 	'admin:security:settings:description' => 'Op deze pagina kun je enkele veiligheidskeuzes maken. Lees de instellingen zorgvuldig.',
@@ -803,6 +870,7 @@ Bekijk hier de volledige lijst van gebruikers:
 	'admin:plugins:opt:description' => "Configureer de tools die zijn geïnstalleerd op de site.",
 	'admin:plugins:label:id' => "ID",
 	'admin:plugins:label:name' => "Naam",
+	'admin:plugins:label:authors' => "Auteurs",
 	'admin:plugins:label:copyright' => "Copyright",
 	'admin:plugins:label:categories' => 'Categorieën',
 	'admin:plugins:label:licence' => "Licentie",
@@ -983,6 +1051,10 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'usersettings:statistics:label:email' => "E-mailadres",
 	'usersettings:statistics:label:membersince' => "Lid sinds",
 	'usersettings:statistics:label:lastlogin' => "Laatst aangemeld op",
+	
+	'usersettings:delayed_email' => "Uitgestelde email instellingen",
+	'usersettings:delayed_email:interval' => "Configureer de frequentie waarmee uitgestelde email notificaties worden afgeleverd",
+	'usersettings:delayed_email:interval:help' => "Alle uitgestelde emailnotificaties zullen worden bewaard en worden afgeleverd in een gecombineerde email op het opgegeven interval.",
 
 /**
  * Activity river
@@ -1076,11 +1148,14 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'read_more' => 'Lees meer',
 	'next' => 'Volgende',
 	'previous' => 'Vorige',
+	'older' => 'Ouder',
+	'newer' => 'Nieuwer',
 	
 	'site' => 'Website',
 	'activity' => 'Activiteit',
 	'members' => 'Leden',
 	'menu' => 'Menu',
+	'item' => 'Item',
 
 	'up' => 'Omhoog',
 	'down' => 'Omlaag',
@@ -1405,6 +1480,22 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'config:content:comment_box_collapses:help' => "Dit is enkel van toepassing indien de reactie lijst gesorteerd is op meest recente eerst",
 	'config:content:comments_latest_first' => "De reacties moeten worden getoond met de meest recente eerst",
 	'config:content:comments_latest_first:help' => "Dit bepaald de standaard sortering van de reacties bij de volledige weergave van content. Indien dit uitgeschakeld wordt, zal ook het reactie formulier onderaan de lijst worden getoond.",
+	'config:content:comments_per_page' => "Het aantal reacties per pagina",
+	'config:content:pagination_behaviour' => "Standaard paginering gedrag van lijsten",
+	'config:content:pagination_behaviour:help' => "Bepaalt hoe data in lijsten wordt bijgewerkt bij gebruik van paginering. Afzonderlijke lijsten kunnen van dit gedrag afwijken.",
+	'config:content:pagination_behaviour:navigate' => "Navigeer naar de volgende pagina",
+	'config:content:pagination_behaviour:ajax-replace' => "Vervang de lijst met de nieuwe pagina zonder verversing",
+	'config:content:pagination_behaviour:ajax-append' => "Plaats nieuwe data vóór of achter de lijst",
+	'config:content:pagination_behaviour:ajax-append-auto' => "Plaats nieuwe data vóór of achter de lijst (automatisch bij scrollen)",
+	'config:email' => "Email",
+	'config:email_html_part:label' => "Activeer HTML mail",
+	'config:email_html_part:help' => "Uitgaande mail een HTML template worden vorm gegeven",
+	'config:email_html_part_images:label' => "Vervang afbeeldingen in emails",
+	'config:email_html_part_images:help' => "Controleer of en hoe afbeeldingen in uitgaande email wordt verwerkt. Indien toegestaan zullen alle afbeeldingen in de mail worden ge-embed. Niet alle email clients ondersteune de verschillende opties. Test de gekozen optie.",
+	'config:email_html_part_images:base64' => "Base64 encoded",
+	'config:email_html_part_images:attach' => "Attachments",
+	'config:delayed_email:label' => "Activeer uitgestelde email notificaties",
+	'config:delayed_email:help' => "Dit geeft gebruikers de mogelijkheid om email notificaties uit te stellen en gebundeld te ontvangen op een opgegeven frequentie (dagelijks, wekelijks)",
 
 	'upgrading' => 'Bijwerken',
 	'upgrade:core' => 'Je Elgg-installatie is bijgewerkt',
@@ -1556,6 +1647,7 @@ Klik hier om naar de website te gaan:
 	'comments:count' => "%s reacties",
 	'item:object:comment' => 'Reacties',
 	'collection:object:comment' => 'Reacties',
+	'notification:object:comment:create' => "Stuur een notificatie wanneer een reactie is geplaatst",
 
 	'river:object:default:comment' => '%s reageerde op %s',
 
@@ -1575,6 +1667,8 @@ Klik hier om naar de website te gaan:
 	'generic_comment:title' => 'Reactie door %s',
 	'generic_comment:on' => '%s op %s',
 	'generic_comments:latest:posted' => 'plaatste een',
+
+	'generic_comment:notification:subject' => 'Re: %s',
 	'generic_comment:notification:owner:summary' => 'Je hebt een nieuwe reactie',
 	'generic_comment:notification:owner:body' => "Je hebt een nieuwe reactie gekregen op je item \"%s\" van %s.
 
@@ -1610,6 +1704,22 @@ Om naar het profiel van %s te gaan, klik hier:
 	'entity:delete:permission_denied' => 'U beschikt niet over de juiste rechten om dit item te verwijderen.',
 	'entity:delete:success' => '%s is verwijderd.',
 	'entity:delete:fail' => '%s kon niet worden verwijderd.',
+	
+	'entity:subscribe' => "Volgen",
+	'entity:subscribe:success' => "Je bent succesvol geabonneerd op %s",
+	'entity:subscribe:fail' => "Er is een fout opgetreden tijdens het abonneren op %s",
+	
+	'entity:unsubscribe' => "Ontvolgen",
+	'entity:unsubscribe:success' => "Je hebt je succesvol afgemeld van %s",
+	'entity:unsubscribe:fail' => "Er is een fout opgetreden tijdens het ontvolgen van %s",
+	
+	'entity:mute' => "Notificaties uitzetten",
+	'entity:mute:success' => "Notificaties voor %s succesvol geblokkeerd",
+	'entity:mute:fail' => "Een fout is opgetreden tijdens het blokkeren van notificaties van %s",
+	
+	'entity:unmute' => "Notificaties deblokkeren",
+	'entity:unmute:success' => "Notificaties voor %s succesvol gedeblokkeerd",
+	'entity:unmute:fail' => "Een fout is opgetreden tijdens het deblokkeren van notificaties van %s",
 	
 	'entity:can_delete:invaliduser' => 'Kan canDelete() voor user_guid [%s] niet nakijken omdat de gebruiker niet bestaat.',
 
@@ -1648,6 +1758,32 @@ Om naar het profiel van %s te gaan, klik hier:
 /**
  * Diagnostics
  */
+	'diagnostics:report' => 'Diagnostics Report',
+	'diagnostics:description' => 'Het Diagnostic Report kan gebruikt worden om problemen met de installatie van Elgg te analyseren. Elgg ontwikkelaars kunnen verzoeken om dit rapport.',
+	'diagnostics:header' => '========================================================================
+Elgg Diagnostic Report
+Generated %s by %s
+========================================================================
+
+',
+	'diagnostics:report:basic' => '
+Elgg Release %s, version %s
+
+------------------------------------------------------------------------',
+	'diagnostics:report:php' => '
+PHP info:
+%s
+------------------------------------------------------------------------',
+	'diagnostics:report:md5' => '
+Installed files and checksums:
+
+%s
+------------------------------------------------------------------------',
+	'diagnostics:report:globals' => '
+Global variables:
+
+%s
+------------------------------------------------------------------------',
 	
 /**
  * Miscellaneous
@@ -1673,8 +1809,12 @@ Om naar het profiel van %s te gaan, klik hier:
 	'cli:cron:option:time' => "Tijdstip van cron initialisatie",
 	
 	'cli:database:seed:description' => "Vul de database met nep entiteiten",
+	'cli:database:seed:argument:create' => "Altijd nieuwe entiteiten creëren tijdens het seeden",
 	'cli:database:seed:option:limit' => "Aantal entiteiten om aan te maken",
 	'cli:database:seed:option:image_folder' => "Pad naar map waarin afbeeldingen staan die gebruikt kunnen worden tijdens het seeden",
+	'cli:database:seed:option:type' => "Type entiteiten om te (un)seeden (%s)",
+	'cli:database:seed:option:create_since' => "Een PHP time string om de ondergrens van het creatie tijdstip van seeded entities in te stellen",
+	'cli:database:seed:option:create_until' => "Een PHP time string om de bovengrens van het creatie tijdstip van seeded entities in te stellen",
 	'cli:database:seed:log:error:faker' => "Dit is een functionaliteit voor ontwikkelaars ten behoeve van testen. Gelieve dit niet voor andere doeleinden te gebruiken.",
 	'cli:database:seed:log:error:logged_in' => "Het seeden van de database behoort niet uitgevoerd te worden met een aangemelde gebruiker",
 	
@@ -1872,4 +2012,22 @@ Om naar het profiel van %s te gaan, klik hier:
 
 	"core:upgrade:2017080900:title" => "Wijzig de database codering om multi-byte te ondersteunen",
 	"core:upgrade:2017080900:description" => "Wijzigt de database codering naar utf8mb4 om ondersteuning te bieden voor multi-byte karakters zoals emoji's",
+	
+	"core:upgrade:2020102301:title" => "Verwijder de diagnostics plugin",
+	"core:upgrade:2020102301:description" => "Verwijderd de entiteit behorende bij de Diagnostics plugin. Deze plugin is verwijderd in Elgg 4.0.",
+	
+	"core:upgrade:2021022401:title" => "Migreer notificatie abonnementen",
+	"core:upgrade:2021022401:description" => "Notificatie abonnementen worden anders opgeslagen in de database. Gebruik deze upgrade om alle abonnementen om te zetten naar de nieuwe manier.",
+	
+	"core:upgrade:2021040701:title" => "Migreer notificatie instellingen van gebruikers",
+	"core:upgrade:2021040701:description" => "Om het voor developers eenvoudiger te maken om notificatie instellingen op te slaan zal een migratie nodig zijn om bestaande instellingen om te zetten naar de nieuwe conventie.",
+	
+	'core:upgrade:2021040801:title' => "Migreer Access collection notificatie voorkeuren",
+	'core:upgrade:2021040801:description' => "Er is een nieuwe manier om notificatie voorkeuren op te slaan. Deze upgrade migreert de oude instellingen naar de nieuwe.",
+	
+	'core:upgrade:2021041901:title' => "Verwijder de notificaties plugin",
+	'core:upgrade:2021041901:description' => "Verwijderd de entiteit bijbehorend aan de Notificaties plugin. Deze plugin is verwijderd in Elgg 4.0.",
+	
+	'core:upgrade:2021060401:title' => "Voeg content eigenaren to als abonnees op hun eigen content",
+	'core:upgrade:2021060401:description' => "Content eigenaren behoren geabonneerd te zijn op hun eigen content. Deze  upgrade zorgt dat dat voor oude content ook het geval is.",
 );

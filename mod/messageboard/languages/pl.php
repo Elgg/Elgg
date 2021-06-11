@@ -26,6 +26,9 @@ return array(
 	/**
 	 * Status messages
 	 */
+
+	'annotation:delete:messageboard:fail' => "Przykro nam, nie można skasować tej wiadomości.",
+	'annotation:delete:messageboard:success' => "Twoja wiadomość została skasowana.",
 	
 	'messageboard:posted' => "Twoja wiadomość została dodana pomyślnie.",
 	'messageboard:deleted' => "Twoja wiadomość została skasowana.",

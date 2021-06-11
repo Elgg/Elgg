@@ -115,6 +115,7 @@ Dit kan potentieel non-HTML views niet laten functioneren. Bekijk de developers_
 	'theme_sandbox:breakout' => 'Verlaat het iframe',
 	'theme_sandbox:buttons' => 'Knoppen',
 	'theme_sandbox:components' => 'Componenten',
+	'theme_sandbox:email' => 'Email',
 	'theme_sandbox:forms' => 'Formulieren',
 	'theme_sandbox:grid' => 'Raster',
 	'theme_sandbox:icons' => 'Iconen',
@@ -125,6 +126,9 @@ Dit kan potentieel non-HTML views niet laten functioneren. Bekijk de developers_
 	'theme_sandbox:typography' => 'Typografie',
 
 	'theme_sandbox:icons:blurb' => 'Gebruik <em>elgg_view_icon($name)</em> of de klasse <em>elgg-icon-$name</em> om iconen weer te geven.',
+	
+	'theme_sandbox:test_email:button' => "Stuur test email",
+	'theme_sandbox:test_email:success' => "Test email verzonden naar: %s",
 
 	// status messages
 	'developers:settings:success' => 'Instellingen opgeslagen',
