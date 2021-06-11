@@ -8,6 +8,7 @@
 return array(
 
 	'item:object:reported_content' => 'Gemelde items',
+	'collection:object:reported_content' => 'Gemelde items',
 	'admin:administer_utilities:reportedcontent' => 'Gemelde inhoud',
 	'reportedcontent' => 'Gemelde inhoud',
 	'reportedcontent:this' => 'Meld dit',

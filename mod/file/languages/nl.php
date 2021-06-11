@@ -15,6 +15,8 @@ return array(
 	'collection:object:file:group' => "Groepsbestanden",
 	'add:object:file' => "Upload een bestand",
 	'edit:object:file' => "Bewerk bestand",
+	'notification:object:file:create' => "Stuur een notificatie wanneer een bestand is geupload",
+	'notifications:mute:object:file' => "over het bestand '%s'",
 
 	'file:more' => "Meer bestanden",
 	'file:list' => "lijstweergave",

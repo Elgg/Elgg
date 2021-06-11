@@ -13,6 +13,8 @@ return array(
 	'collection:object:discussion' => 'Discussies',
 	'collection:object:discussion:group' => 'Groepsdiscussies',
 	'collection:object:discussion:my_groups' => 'Discussies in mijn groepen',
+	'notification:object:discussion:create' => "Stuur een notificatie wanneer een discussie is gestart",
+	'notifications:mute:object:discussion' => "over de discussie '%s'",
 	
 	'discussion:settings:enable_global_discussions' => 'Schakel globale discussies in',
 	'discussion:settings:enable_global_discussions:help' => 'Discussies kunnen ook buiten groepen worden gestart',

@@ -24,6 +24,8 @@ return array(
 	'thewire:noposts' => "No wire posts yet",
 
 	'thewire:by' => 'Wire post by %s',
+
+	'thewire:form:body:placeholder' => "Co się dzieje?",
 	
 	/**
 	 * The wire river
