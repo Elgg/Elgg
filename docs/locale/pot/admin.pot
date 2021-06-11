@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-18 16:34+0200\n"
+"POT-Creation-Date: 2021-06-11 11:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1636,7 +1636,7 @@ msgid "Language packs can extend and include translations for language strings f
 msgstr ""
 
 #: ../../admin/plugins.rst:77
-msgid "Some of the language packs are already included in the core, and can be found in ``languages`` directory off Elgg's root directory. Individual plugins tend to include their translations under the ``languages`` directory within the plugin's root."
+msgid "Some of the language packs are already included in the core, and can be found in ``languages`` directory in Elgg's root directory. Individual plugins tend to include their translations under the ``languages`` directory within the plugin's root."
 msgstr ""
 
 #: ../../admin/plugins.rst:82
@@ -1651,7 +1651,7 @@ msgstr ""
 msgid "All plugins reside in the ``mod`` directory of your Elgg installation."
 msgstr ""
 
-#: ../../admin/plugins.rst:97
+#: ../../admin/plugins.rst:93
 msgid "To install a new plugin:"
 msgstr ""
 
@@ -1660,46 +1660,46 @@ msgid "extract (unzip) contents of the plugin distribution package"
 msgstr ""
 
 #: ../../admin/plugins.rst:92
-msgid "copy/FTP the extracted folder into the ``mod`` directory of your Elgg installation, making sure that ``manifest.xml`` is directly under the plugin directory (e.g. if you were to install a plugin called ``my_elgg_plugin``, plugin's manifest would need to be found at ``mod/my_elgg_plugin/manifest.xml``)"
+msgid "copy/FTP the extracted folder into the ``mod`` directory of your Elgg installation"
 msgstr ""
 
-#: ../../admin/plugins.rst:97
+#: ../../admin/plugins.rst:93
 msgid "activate the plugin from your admin panel"
 msgstr ""
 
-#: ../../admin/plugins.rst:103
+#: ../../admin/plugins.rst:99
 msgid "To activate a plugin:"
 msgstr ""
 
-#: ../../admin/plugins.rst:100
+#: ../../admin/plugins.rst:96
 msgid "Log in to your Elgg site with your administrator account"
 msgstr ""
 
-#: ../../admin/plugins.rst:101
+#: ../../admin/plugins.rst:97
 msgid "Go to Administration -> Configure -> Plugins"
 msgstr ""
 
-#: ../../admin/plugins.rst:102
+#: ../../admin/plugins.rst:98
 msgid "Find your plugin in the list of installed plugins and click on the 'enable' button."
 msgstr ""
 
-#: ../../admin/plugins.rst:108
+#: ../../admin/plugins.rst:104
 msgid "Plugin order"
 msgstr ""
 
-#: ../../admin/plugins.rst:110
+#: ../../admin/plugins.rst:106
 msgid "Plugins are loaded according to the order they are listed on the Plugins page. The initial ordering after an install is more or less random. As more plugins are added by an administrator, they are placed at the bottom of the list."
 msgstr ""
 
-#: ../../admin/plugins.rst:112
+#: ../../admin/plugins.rst:108
 msgid "Some general rules for ordering plugins:"
 msgstr ""
 
-#: ../../admin/plugins.rst:114
+#: ../../admin/plugins.rst:110
 msgid "A theme plugin should be last or at least near the bottom"
 msgstr ""
 
-#: ../../admin/plugins.rst:115
+#: ../../admin/plugins.rst:111
 msgid "A plugin that modifies the behavior of another plugin should be lower in the plugin list"
 msgstr ""
 

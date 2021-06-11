@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-18 16:34+0200\n"
+"POT-Creation-Date: 2021-06-11 11:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,7 +101,7 @@ msgid "3rd party libraries"
 msgstr ""
 
 #: ../../intro/development.rst:63
-msgid "The use of 3rd party libraries in Elgg is managed by using `Composer`_ dependencies. Examples of 3rd party libraries are jQuery, RequireJs or Zend mail."
+msgid "The use of 3rd party libraries in Elgg is managed by using `Composer`_ dependencies. Examples of 3rd party libraries are jQuery, RequireJs or Laminas mail."
 msgstr ""
 
 #: ../../intro/development.rst:66
@@ -149,15 +149,15 @@ msgstr ""
 msgid "Available commands"
 msgstr ""
 
-#: ../../intro/elgg-cli.rst:87
+#: ../../intro/elgg-cli.rst:94
 msgid "Adding custom commands"
 msgstr ""
 
-#: ../../intro/elgg-cli.rst:89
+#: ../../intro/elgg-cli.rst:96
 msgid "Plugins can add their commands to the CLI application, by adding command class name via a configuration in ``elgg-plugin.php`` or via the ``'commands','cli'`` hook. Command class must extend ``\\Elgg\\CLI\\Command``."
 msgstr ""
 
-#: ../../intro/elgg-cli.rst:106
+#: ../../intro/elgg-cli.rst:114
 msgid "Custom commands are based on `Symfony Console Commands`_. Please refer to their documentation for more details."
 msgstr ""
 
@@ -186,7 +186,7 @@ msgid "MySQL 5.5.3+ (5.0.0+ if upgrading an existing installation)"
 msgstr ""
 
 #: ../../intro/install.rst:14
-msgid "PHP 7.2+ with the following extensions:"
+msgid "PHP 7.4+ with the following extensions:"
 msgstr ""
 
 #: ../../intro/install.rst:16
@@ -202,7 +202,7 @@ msgid "JSON (for AJAX responses, etc.)"
 msgstr ""
 
 #: ../../intro/install.rst:19
-msgid "XML (for reading plugin manifest files, etc.)"
+msgid "XML (for xml resource and web services, etc.)"
 msgstr ""
 
 #: ../../intro/install.rst:20

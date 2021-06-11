@@ -89,8 +89,8 @@
         }
     },
     "require-dev": {
-    	"elgg/sniffs": "4.x-dev",
-    	"phpunit/phpunit": "~9.5"
+        "elgg/sniffs": "4.x-dev",
+        "phpunit/phpunit": "~9.5"
     },
     "repositories": [
         {

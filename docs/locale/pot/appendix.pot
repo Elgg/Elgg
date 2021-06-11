@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-18 16:34+0200\n"
+"POT-Creation-Date: 2021-06-11 11:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,6 +39,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/3.0-to-3.1.rst:6
 #: ../../appendix/upgrade-notes/3.1-to-3.2.rst:6
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:7
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:6
 msgid "Contents"
 msgstr ""
 
@@ -64,11 +65,11 @@ msgstr ""
 
 #: ../../appendix/faqs/general.rst:13
 #: ../../appendix/faqs/general.rst:13
-msgid "If you are installing a plugin called \"test\", there will be a test directory under mod. In that test directory there needs to be a manifest.xml file ``/mod/test/manifest.xml``."
+msgid "If you are installing a plugin called \"test\", there will be a test directory under mod. In that test directory there needs to be a ``composer.json`` file ``/mod/test/composer.json``."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:19
-#: ../../appendix/faqs/general.rst:19
+#: ../../appendix/faqs/general.rst:20
+#: ../../appendix/faqs/general.rst:20
 msgid "If this file does not exist, it could be caused by:"
 msgstr ""
 
@@ -92,752 +93,757 @@ msgstr ""
 msgid "unzipping a plugin into an extra directory (myplugin.zip unzips to ``myplugin/myplugin``)"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:21
-#: ../../appendix/faqs/general.rst:21
+#: ../../appendix/faqs/general.rst:20
+#: ../../appendix/faqs/general.rst:20
+msgid "incompatible plugin"
+msgstr ""
+
+#: ../../appendix/faqs/general.rst:22
+#: ../../appendix/faqs/general.rst:22
 msgid "If you are on a Unix-based host and the files exist in the correct directory, check the permissions. Elgg must have read access to the files and read + execute access on the directories."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:24
-#: ../../appendix/faqs/general.rst:24
+#: ../../appendix/faqs/general.rst:25
+#: ../../appendix/faqs/general.rst:25
 msgid "White Page (WSOD)"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:29
-#: ../../appendix/faqs/general.rst:29
+#: ../../appendix/faqs/general.rst:30
+#: ../../appendix/faqs/general.rst:30
 msgid "A blank, white page (often called a \"white screen of death\") means there is a PHP syntax error. There are a few possible causes of this:"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:27
-#: ../../appendix/faqs/general.rst:27
+#: ../../appendix/faqs/general.rst:28
+#: ../../appendix/faqs/general.rst:28
 msgid "corrupted file - try transfering the code again to your server"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:28
-#: ../../appendix/faqs/general.rst:28
+#: ../../appendix/faqs/general.rst:29
+#: ../../appendix/faqs/general.rst:29
 msgid "a call to a php module that was not loaded - this can happen after you install a plugin that requires a specific module."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:29
-#: ../../appendix/faqs/general.rst:29
+#: ../../appendix/faqs/general.rst:30
+#: ../../appendix/faqs/general.rst:30
 msgid "bad plugin - not all plugins have been written to the same quality so you should be careful which ones you install."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:31
-#: ../../appendix/faqs/general.rst:31
+#: ../../appendix/faqs/general.rst:32
+#: ../../appendix/faqs/general.rst:32
 msgid "To find where the error is occurring, change the .htaccess file to display errors to the browser. Set display_errors to 1 and load the same page again. You should see a PHP error in your browser. Change the setting back once you've resolved the problem."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:35
-#: ../../appendix/faqs/general.rst:35
+#: ../../appendix/faqs/general.rst:36
+#: ../../appendix/faqs/general.rst:36
 msgid "If you are using the Developer's Tools plugin, go to its settings page and make sure you have \"Display fatal PHP errors\" enabled."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:37
-#: ../../appendix/faqs/general.rst:37
+#: ../../appendix/faqs/general.rst:38
+#: ../../appendix/faqs/general.rst:38
 msgid "If the white screen is due to a bad plugin, remove the latest plugins that you have installed by deleting their directories and then reload the page."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:41
-#: ../../appendix/faqs/general.rst:41
+#: ../../appendix/faqs/general.rst:42
+#: ../../appendix/faqs/general.rst:42
 msgid "You can temporarily disable all plugins by creating an empty file at ``mod/disabled``. You can then disable the offending module via the administrator tools panel."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:43
-#: ../../appendix/faqs/general.rst:43
+#: ../../appendix/faqs/general.rst:44
+#: ../../appendix/faqs/general.rst:44
 msgid "If you are getting a WSOD when performing an action, like logging in or posting a blog, but there are no error messages, it's most likely caused by non-printable characters in plugin code. Check the plugin for white spaces/new lines characters after finishing php tag (``?>``) and remove them."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:46
-#: ../../appendix/faqs/general.rst:46
+#: ../../appendix/faqs/general.rst:47
+#: ../../appendix/faqs/general.rst:47
 msgid "Page not found"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:48
-#: ../../appendix/faqs/general.rst:48
+#: ../../appendix/faqs/general.rst:49
+#: ../../appendix/faqs/general.rst:49
 msgid "If you have recently installed your Elgg site, the most likely cause for a page not found error is that ``mod_rewrite`` is not setup correctly on your server. There is information in the :doc:`Install Troubleshooting </intro/install>` page on fixing this. The second most likely cause is that your site url in your database is incorrect."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:50
-#: ../../appendix/faqs/general.rst:50
+#: ../../appendix/faqs/general.rst:51
+#: ../../appendix/faqs/general.rst:51
 msgid "If you've been running your site for a while and suddenly start getting page not found errors, you need to ask yourself what has changed. Have you added any plugins? Did you change your server configuration?"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:52
-#: ../../appendix/faqs/general.rst:52
+#: ../../appendix/faqs/general.rst:53
+#: ../../appendix/faqs/general.rst:53
 msgid "To debug a page not found error:"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:54
-#: ../../appendix/faqs/general.rst:54
+#: ../../appendix/faqs/general.rst:55
+#: ../../appendix/faqs/general.rst:55
 msgid "Confirm that the link leading to the missing page is correct. If not, how is that link being generated?"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:55
-#: ../../appendix/faqs/general.rst:55
+#: ../../appendix/faqs/general.rst:56
+#: ../../appendix/faqs/general.rst:56
 msgid "Confirm that the ``.htaccess`` rewrite rules are being picked up."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:58
-#: ../../appendix/faqs/general.rst:58
+#: ../../appendix/faqs/general.rst:59
+#: ../../appendix/faqs/general.rst:59
 msgid "Login token mismatch"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:60
-#: ../../appendix/faqs/general.rst:60
+#: ../../appendix/faqs/general.rst:61
+#: ../../appendix/faqs/general.rst:61
 msgid "If you have to log in twice to your site and the error message after the first attempt says there was a token mismatch error, the URL in Elgg's settings does not match the URL used to access it. The most common cause for this is adding or removing the \"www\" when accessing the site. For example, www.elgg.org vs elgg.org. This causes a problem with session handling because of the way that web browsers save cookies."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:62
-#: ../../appendix/faqs/general.rst:62
+#: ../../appendix/faqs/general.rst:63
+#: ../../appendix/faqs/general.rst:63
 msgid "To fix this, you can add rewrite rules. To redirect from www.elgg.org to elgg.org in Apache, the rules might look like::"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:68
-#: ../../appendix/faqs/general.rst:68
+#: ../../appendix/faqs/general.rst:69
+#: ../../appendix/faqs/general.rst:69
 msgid "Redirecting from non-www to www could look like this::"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:73
-#: ../../appendix/faqs/general.rst:73
+#: ../../appendix/faqs/general.rst:74
+#: ../../appendix/faqs/general.rst:74
 msgid "If you don't know how to configure rewrite rules, ask your host for more information."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:76
-#: ../../appendix/faqs/general.rst:76
+#: ../../appendix/faqs/general.rst:77
+#: ../../appendix/faqs/general.rst:77
 msgid "Form is missing __token or __ts fields"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:78
-#: ../../appendix/faqs/general.rst:78
+#: ../../appendix/faqs/general.rst:79
+#: ../../appendix/faqs/general.rst:79
 msgid "All Elgg actions require a security token, and this error occurs when that token is missing. This is either a problem with your server configuration or with a 3rd party plugin."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:80
-#: ../../appendix/faqs/general.rst:80
+#: ../../appendix/faqs/general.rst:81
+#: ../../appendix/faqs/general.rst:81
 msgid "If you experience this on a new installation, make sure that your server is properly configured and your rewrite rules are correct. If you experience this on an upgrade, make sure you have updated your rewrite rules either in .htaccess (Apache) or in the server configuration."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:82
-#: ../../appendix/faqs/general.rst:82
+#: ../../appendix/faqs/general.rst:83
+#: ../../appendix/faqs/general.rst:83
 msgid "If you are experiencing this, disable all 3rd party plugins and try again. Very old plugins for Elgg don't use security tokens. If the problem goes away when plugins are disabled, it's due to a plugin that should be updated by its author."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:85
-#: ../../appendix/faqs/general.rst:85
+#: ../../appendix/faqs/general.rst:86
+#: ../../appendix/faqs/general.rst:86
 msgid "Maintenance mode"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:87
-#: ../../appendix/faqs/general.rst:87
+#: ../../appendix/faqs/general.rst:88
+#: ../../appendix/faqs/general.rst:88
 msgid "To take your site temporarily offline, go to Administration -> Utilities -> Maintenance Mode. Complete the form and hit save to disable your site for everyone except admin users."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:90
-#: ../../appendix/faqs/general.rst:90
+#: ../../appendix/faqs/general.rst:91
+#: ../../appendix/faqs/general.rst:91
 msgid "Missing email"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:92
-#: ../../appendix/faqs/general.rst:92
+#: ../../appendix/faqs/general.rst:93
+#: ../../appendix/faqs/general.rst:93
 msgid "If your users are reporting that validation emails are not showing up, have them check their spam folder. It is possible that the emails coming from your server are being marked as spam. This depends on many factors such as whether your hosting provider has a problem with spammers, how your PHP mail configuration is set up, what mail transport agent your server is using, or your host limiting the number of email that you can send in an hour."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:94
-#: ../../appendix/faqs/general.rst:94
+#: ../../appendix/faqs/general.rst:95
+#: ../../appendix/faqs/general.rst:95
 msgid "If no one gets email at all, it is quite likely your server is not configured properly for email. Your server needs a program to send email (called a Mail Transfer Agent - MTA) and PHP must be configured to use the MTA."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:96
-#: ../../appendix/faqs/general.rst:96
+#: ../../appendix/faqs/general.rst:97
+#: ../../appendix/faqs/general.rst:97
 msgid "To quickly check if PHP and an MTA are correctly configured, create a file on your server with the following content:"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:115
-#: ../../appendix/faqs/general.rst:115
+#: ../../appendix/faqs/general.rst:116
+#: ../../appendix/faqs/general.rst:116
 msgid "Be sure to replace \"your_email@your_host.com\" with your actual email address.  Take care to keep quotes around it!  When you access this page through your web browser, it will attempt to send a test email.  This test will let you know that PHP and your MTA are correctly configured.  If it fails--either you get an error or you never receive the email--you will need to do more investigating and possibly contact your service provider."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:117
-#: ../../appendix/faqs/general.rst:117
+#: ../../appendix/faqs/general.rst:118
+#: ../../appendix/faqs/general.rst:118
 msgid "Fully configuring an MTA and PHP's email functionality is beyond the scope of this FAQ and you should search the Internet for more resources on this. Some basic information on php parameters can be found on `PHP's site`__"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:123
-#: ../../appendix/faqs/general.rst:123
+#: ../../appendix/faqs/general.rst:124
+#: ../../appendix/faqs/general.rst:124
 msgid "Server logs"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:125
-#: ../../appendix/faqs/general.rst:125
+#: ../../appendix/faqs/general.rst:126
+#: ../../appendix/faqs/general.rst:126
 msgid "Most likely you are using Apache as your web server. Warnings and errors are written to a log by the web server and can be useful for debugging problems. You will commonly see two types of log files: access logs and error logs. Information from PHP and Elgg is written to the server error log."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:127
-#: ../../appendix/faqs/general.rst:127
+#: ../../appendix/faqs/general.rst:128
+#: ../../appendix/faqs/general.rst:128
 msgid "Linux -- The error log is probably in /var/log/httpd or /var/log/apache2."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:128
-#: ../../appendix/faqs/general.rst:128
+#: ../../appendix/faqs/general.rst:129
+#: ../../appendix/faqs/general.rst:129
 msgid "Windows - It is probably inside your Apache directory."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:129
-#: ../../appendix/faqs/general.rst:129
+#: ../../appendix/faqs/general.rst:130
+#: ../../appendix/faqs/general.rst:130
 msgid "Mac OS - The error log is probably in /var/log/apache2/error_log"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:131
-#: ../../appendix/faqs/general.rst:131
+#: ../../appendix/faqs/general.rst:132
+#: ../../appendix/faqs/general.rst:132
 msgid "If you are using shared hosting without ssh access, your hosting provider may provide a mechanism for obtaining access to your server logs. You will need to ask them about this."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:134
-#: ../../appendix/faqs/general.rst:134
+#: ../../appendix/faqs/general.rst:135
+#: ../../appendix/faqs/general.rst:135
 msgid "How does registration work?"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:136
-#: ../../appendix/faqs/general.rst:136
+#: ../../appendix/faqs/general.rst:137
+#: ../../appendix/faqs/general.rst:137
 msgid "With a default setup, this is how registration works:"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:138
-#: ../../appendix/faqs/general.rst:138
+#: ../../appendix/faqs/general.rst:139
+#: ../../appendix/faqs/general.rst:139
 msgid "User fills out registration form and submits it"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:139
-#: ../../appendix/faqs/general.rst:139
+#: ../../appendix/faqs/general.rst:140
+#: ../../appendix/faqs/general.rst:140
 msgid "User account is created and disabled until validated"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:140
-#: ../../appendix/faqs/general.rst:140
+#: ../../appendix/faqs/general.rst:141
+#: ../../appendix/faqs/general.rst:141
 msgid "Email is sent to user with a link to validate the account"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:141
-#: ../../appendix/faqs/general.rst:141
+#: ../../appendix/faqs/general.rst:142
+#: ../../appendix/faqs/general.rst:142
 msgid "When a user clicks on the link, the account is validated"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:142
-#: ../../appendix/faqs/general.rst:142
+#: ../../appendix/faqs/general.rst:143
+#: ../../appendix/faqs/general.rst:143
 msgid "The user can now log in"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:144
-#: ../../appendix/faqs/general.rst:144
+#: ../../appendix/faqs/general.rst:145
+#: ../../appendix/faqs/general.rst:145
 msgid "Failures during this process include the user entering an incorrect email address, the validation email being marked as spam, or a user never bothering to validate the account."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:147
-#: ../../appendix/faqs/general.rst:147
+#: ../../appendix/faqs/general.rst:148
+#: ../../appendix/faqs/general.rst:148
 msgid "User validation"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:149
-#: ../../appendix/faqs/general.rst:149
+#: ../../appendix/faqs/general.rst:150
+#: ../../appendix/faqs/general.rst:150
 msgid "By default, all users who self-register must validate their accounts through email. If a user has problems validating an account, you can validate users manually by going to Administration -> Users -> Unvalidated."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:152
-#: ../../appendix/faqs/general.rst:152
+#: ../../appendix/faqs/general.rst:153
+#: ../../appendix/faqs/general.rst:153
 msgid "You can remove this requirement by deactivating the User Validation by Email plugin."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:156
-#: ../../appendix/faqs/general.rst:156
+#: ../../appendix/faqs/general.rst:157
+#: ../../appendix/faqs/general.rst:157
 msgid "Removing validation has some consequences: There is no way to know that a user registered with a working email address, and it may leave you system open to spammers."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:159
-#: ../../appendix/faqs/general.rst:159
+#: ../../appendix/faqs/general.rst:160
+#: ../../appendix/faqs/general.rst:160
 msgid "Manually add user"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:161
-#: ../../appendix/faqs/general.rst:161
+#: ../../appendix/faqs/general.rst:162
+#: ../../appendix/faqs/general.rst:162
 msgid "To manually add a user, under the Administer controls go to Users. There you will see a link title \"Add new User\". After you fill out the information and submit the form, the new user will receive an email with username and password and a reminder to change the password."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:165
-#: ../../appendix/faqs/general.rst:165
+#: ../../appendix/faqs/general.rst:166
+#: ../../appendix/faqs/general.rst:166
 msgid "Elgg does not force the user to change the password."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:168
-#: ../../appendix/faqs/general.rst:168
+#: ../../appendix/faqs/general.rst:169
+#: ../../appendix/faqs/general.rst:169
 msgid "I'm making or just installed a new theme, but graphics or other elements aren't working"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:170
-#: ../../appendix/faqs/general.rst:170
+#: ../../appendix/faqs/general.rst:171
+#: ../../appendix/faqs/general.rst:171
 msgid "Make sure the theme is at the bottom of the plugin list."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:172
-#: ../../appendix/faqs/general.rst:172
+#: ../../appendix/faqs/general.rst:173
+#: ../../appendix/faqs/general.rst:173
 msgid "Clear your browser cache and reload the page. To lighten the load on the server, Elgg instructs the browser to rarely load the CSS file. A new theme will completely change the CSS file and a refresh should cause the browser to request the CSS file again."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:174
-#: ../../appendix/faqs/general.rst:174
+#: ../../appendix/faqs/general.rst:175
+#: ../../appendix/faqs/general.rst:175
 msgid "If you're building or modifying a theme, make sure you have disabled the simple and system caches. This can be done by enabling the Developer Tools plugin, then browsing to Administration -> Develop -> Settings. Once you're satisfied with the changes, enable the caches or performance will suffer."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:178
-#: ../../appendix/faqs/general.rst:178
+#: ../../appendix/faqs/general.rst:179
+#: ../../appendix/faqs/general.rst:179
 msgid "Changing profile fields"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:180
-#: ../../appendix/faqs/general.rst:180
+#: ../../appendix/faqs/general.rst:181
+#: ../../appendix/faqs/general.rst:181
 msgid "Within the Administration settings of Elgg is a page for replacing the default profile fields. Elgg by default gives the administrator two choices:"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:182
-#: ../../appendix/faqs/general.rst:182
+#: ../../appendix/faqs/general.rst:183
+#: ../../appendix/faqs/general.rst:183
 msgid "Use the default profile fields"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:183
-#: ../../appendix/faqs/general.rst:183
+#: ../../appendix/faqs/general.rst:184
+#: ../../appendix/faqs/general.rst:184
 msgid "Replace the default with a set of custom profile fields"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:185
-#: ../../appendix/faqs/general.rst:185
+#: ../../appendix/faqs/general.rst:186
+#: ../../appendix/faqs/general.rst:186
 msgid "You cannot add new profile fields to the default ones. Adding a new profile field through the replace profile fields option clears the default ones. Before letting in users, it is best to determine what profile fields you want, what field types they should be, and the order they should appear. You cannot change the field type or order or delete fields after they have been created without wiping the entire profile blank."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:187
-#: ../../appendix/faqs/general.rst:187
+#: ../../appendix/faqs/general.rst:188
+#: ../../appendix/faqs/general.rst:188
 msgid "More flexibility can be gained through plugins. There is at least two plugins on the community site that enable you to have more control over profile fields. The `Profile Manager`_ plugin has become quite popular in the Elgg community. It lets you add new profile fields whenever you want, change the order, group profile fields, and add them to registration."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:192
-#: ../../appendix/faqs/general.rst:192
+#: ../../appendix/faqs/general.rst:193
+#: ../../appendix/faqs/general.rst:193
 msgid "Changing registration"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:194
-#: ../../appendix/faqs/general.rst:194
+#: ../../appendix/faqs/general.rst:195
+#: ../../appendix/faqs/general.rst:195
 msgid "The registration process can be changed through a plugin. Everything about registration can be changed: the look and feel, different registration fields, additional validation of the fields, additional steps and so on. These types of changes require some basic knowledge of HTML, CSS, PHP."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:196
-#: ../../appendix/faqs/general.rst:196
+#: ../../appendix/faqs/general.rst:197
+#: ../../appendix/faqs/general.rst:197
 msgid "Another option is to use the `Profile Manager`_ plugin that lets you add fields to both user profiles and the registration form."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:199
+#: ../../appendix/faqs/general.rst:200
 #: ../../appendix/faqs/development.rst:36
 #: ../../appendix/faqs/development.rst:36
-#: ../../appendix/faqs/general.rst:199
+#: ../../appendix/faqs/general.rst:200
 msgid "Create the plugin skeleton"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:199
+#: ../../appendix/faqs/general.rst:200
 #: ../../appendix/faqs/development.rst:38
 #: ../../appendix/faqs/development.rst:38
-#: ../../appendix/faqs/general.rst:199
+#: ../../appendix/faqs/general.rst:200
 msgid ":doc:`/guides/plugins/plugin-skeleton`"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:202
-#: ../../appendix/faqs/general.rst:202
+#: ../../appendix/faqs/general.rst:203
+#: ../../appendix/faqs/general.rst:203
 msgid "Changing registration display"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:202
-#: ../../appendix/faqs/general.rst:202
+#: ../../appendix/faqs/general.rst:203
+#: ../../appendix/faqs/general.rst:203
 msgid "Override the ``account/forms/register`` view"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:205
-#: ../../appendix/faqs/general.rst:205
+#: ../../appendix/faqs/general.rst:206
+#: ../../appendix/faqs/general.rst:206
 msgid "Changing the registration action handler"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:205
-#: ../../appendix/faqs/general.rst:205
+#: ../../appendix/faqs/general.rst:206
+#: ../../appendix/faqs/general.rst:206
 msgid "You can write your own action to create the user's account"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:208
-#: ../../appendix/faqs/general.rst:208
+#: ../../appendix/faqs/general.rst:209
+#: ../../appendix/faqs/general.rst:209
 msgid "How do I change PHP settings using .htaccess?"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:210
-#: ../../appendix/faqs/general.rst:210
+#: ../../appendix/faqs/general.rst:211
+#: ../../appendix/faqs/general.rst:211
 msgid "You may want to change php settings in your ``.htaccess`` file. This is especially true if your hosting provider does not give you access to the server's ``php.ini`` file. The variables could be related to file upload size limits, security, session length, or any number of other php attributes. For examples of how to do this, see the `PHP documentation`_ on this."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:215
-#: ../../appendix/faqs/general.rst:215
+#: ../../appendix/faqs/general.rst:216
+#: ../../appendix/faqs/general.rst:216
 msgid "HTTPS login turned on accidently"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:217
-#: ../../appendix/faqs/general.rst:217
+#: ../../appendix/faqs/general.rst:218
+#: ../../appendix/faqs/general.rst:218
 msgid "If you have turned on HTTPS login but do not have SSL configured, you are now locked out of your Elgg install. To turn off this configuration parameter, you will need to edit your database. Use a tool like phpMyAdmin to view your database. Select the ``config`` table and delete the row that has the name ``https_login``."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:220
-#: ../../appendix/faqs/general.rst:220
+#: ../../appendix/faqs/general.rst:221
+#: ../../appendix/faqs/general.rst:221
 msgid "Using a test site"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:222
-#: ../../appendix/faqs/general.rst:222
+#: ../../appendix/faqs/general.rst:223
+#: ../../appendix/faqs/general.rst:223
 msgid "It is recommended to always try out new releases or new plugins on a test site before running them on a production site (a site with actual users). The easiest way to do this is to maintain a separate install of Elgg with dummy accounts. When testing changes it is important to use dummy accounts that are not admins to test what your users will see."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:224
-#: ../../appendix/faqs/general.rst:224
+#: ../../appendix/faqs/general.rst:225
+#: ../../appendix/faqs/general.rst:225
 msgid "A more realistic test is to mirror the content from your production site to your test site. Following the instructions for :doc:`duplicating a site </admin/duplicate-installation>`. Then make sure you prevent emails from being sent to your users. You could write a small plugin that redirects all email to your own account (be aware of plugins that include their own custom email sending code so you'll have to modify those plugins). After this is done you can view all of the content to make sure the upgrade or new plugin is functioning as desired and is not breaking anything. If this process sounds overwhelming, please stick with running a simple test site."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:227
-#: ../../appendix/faqs/general.rst:227
+#: ../../appendix/faqs/general.rst:228
+#: ../../appendix/faqs/general.rst:228
 msgid "500 - Internal Server Error"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:230
-#: ../../appendix/faqs/general.rst:230
+#: ../../appendix/faqs/general.rst:231
+#: ../../appendix/faqs/general.rst:231
 msgid "What is it?"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:232
-#: ../../appendix/faqs/general.rst:232
+#: ../../appendix/faqs/general.rst:233
+#: ../../appendix/faqs/general.rst:233
 msgid "A **500 - Internal Server Error** means the web server experienced a problem serving a request."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:236
-#: ../../appendix/faqs/general.rst:236
+#: ../../appendix/faqs/general.rst:237
+#: ../../appendix/faqs/general.rst:237
 msgid "`The Wikipedia page on HTTP status codes <https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#5xx_Server_Error>`_"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:239
-#: ../../appendix/faqs/general.rst:239
+#: ../../appendix/faqs/general.rst:240
+#: ../../appendix/faqs/general.rst:240
 msgid "Possible causes"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:242
-#: ../../appendix/faqs/general.rst:242
+#: ../../appendix/faqs/general.rst:243
+#: ../../appendix/faqs/general.rst:243
 msgid "Web server configuration"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:242
-#: ../../appendix/faqs/general.rst:242
+#: ../../appendix/faqs/general.rst:243
+#: ../../appendix/faqs/general.rst:243
 msgid "The most common cause for this is an incorrectly configured server. If you edited the ``.htaccess`` file and added something incorrect, Apache will send a 500 error."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:245
-#: ../../appendix/faqs/general.rst:245
+#: ../../appendix/faqs/general.rst:246
+#: ../../appendix/faqs/general.rst:246
 msgid "Permissions on files"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:245
-#: ../../appendix/faqs/general.rst:245
+#: ../../appendix/faqs/general.rst:246
+#: ../../appendix/faqs/general.rst:246
 msgid "It could also be a permissions problem on a file. Apache needs to be able to read Elgg's files. Using permissions 755 on directories and 644 on files will allow Apache to read the files."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:248
-#: ../../appendix/faqs/general.rst:248
+#: ../../appendix/faqs/general.rst:249
+#: ../../appendix/faqs/general.rst:249
 msgid "When I upload a photo or change my profile picture I get a white screen"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:250
-#: ../../appendix/faqs/general.rst:250
+#: ../../appendix/faqs/general.rst:251
+#: ../../appendix/faqs/general.rst:251
 msgid "Most likely you don't have the PHP GD library installed or configured properly. You may need assistance from the administrator of your server."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:253
-#: ../../appendix/faqs/general.rst:253
+#: ../../appendix/faqs/general.rst:254
+#: ../../appendix/faqs/general.rst:254
 msgid "CSS is missing"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:256
-#: ../../appendix/faqs/general.rst:256
+#: ../../appendix/faqs/general.rst:257
+#: ../../appendix/faqs/general.rst:257
 msgid "Wrong URL"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:258
-#: ../../appendix/faqs/general.rst:258
+#: ../../appendix/faqs/general.rst:259
+#: ../../appendix/faqs/general.rst:259
 msgid "Sometimes people install Elgg so that the base URL is ``localhost`` and then try to view the site using a hostname. In this case, the browser won't be able to load the CSS file. Try viewing the source of the web page and copying the link for the CSS file. Paste that into your browser. If you get a 404 error, it is likely this is your problem. You will need to change the base URL of your site."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:261
-#: ../../appendix/faqs/general.rst:261
+#: ../../appendix/faqs/general.rst:262
+#: ../../appendix/faqs/general.rst:262
 msgid "Syntax error"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:263
-#: ../../appendix/faqs/general.rst:263
+#: ../../appendix/faqs/general.rst:264
+#: ../../appendix/faqs/general.rst:264
 msgid "Elgg stores its CSS as PHP code to provide flexibility and power. If there is a syntax error, the CSS file served to the browser may be blank. Disabling non-bundled plugins is the recommended first step."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:266
-#: ../../appendix/faqs/general.rst:266
+#: ../../appendix/faqs/general.rst:267
+#: ../../appendix/faqs/general.rst:267
 msgid "Rewrite rules errors"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:268
-#: ../../appendix/faqs/general.rst:268
+#: ../../appendix/faqs/general.rst:269
+#: ../../appendix/faqs/general.rst:269
 msgid "A bad ``.htaccess`` file could also result in a 404 error when requesting the CSS file. This could happen when doing an upgrade and forgetting to also upgrade ``.htaccess``."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:271
-#: ../../appendix/faqs/general.rst:271
+#: ../../appendix/faqs/general.rst:272
+#: ../../appendix/faqs/general.rst:272
 msgid "Should I edit the database manually?"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:275
-#: ../../appendix/faqs/general.rst:275
+#: ../../appendix/faqs/general.rst:276
+#: ../../appendix/faqs/general.rst:276
 msgid "No, you should never manually edit the database!"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:278
-#: ../../appendix/faqs/general.rst:278
+#: ../../appendix/faqs/general.rst:279
+#: ../../appendix/faqs/general.rst:279
 msgid "Will editing the database manually break my site?"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:280
-#: ../../appendix/faqs/general.rst:280
+#: ../../appendix/faqs/general.rst:281
+#: ../../appendix/faqs/general.rst:281
 msgid "Yes."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:283
-#: ../../appendix/faqs/general.rst:283
+#: ../../appendix/faqs/general.rst:284
+#: ../../appendix/faqs/general.rst:284
 msgid "Can I add extra fields to tables in the database?"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:285
-#: ../../appendix/faqs/general.rst:285
+#: ../../appendix/faqs/general.rst:286
+#: ../../appendix/faqs/general.rst:286
 msgid "(AKA: I don't understand the Elgg :doc:`data model </design/database>` so I'm going to add columns. Will you help?)"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:287
-#: ../../appendix/faqs/general.rst:287
+#: ../../appendix/faqs/general.rst:288
+#: ../../appendix/faqs/general.rst:288
 msgid "No, this is a bad idea. Learn the :doc:`data model </design/database>` and you will see that unless it's a very specific and highly customized installation, you can do everything you need within Elgg's current data model."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:290
-#: ../../appendix/faqs/general.rst:290
+#: ../../appendix/faqs/general.rst:291
+#: ../../appendix/faqs/general.rst:291
 msgid "I want to remove users. Can't I just delete them from the elgg_entities table?"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:292
-#: ../../appendix/faqs/general.rst:292
+#: ../../appendix/faqs/general.rst:293
+#: ../../appendix/faqs/general.rst:293
 msgid "No, it will corrupt your database. Delete them through the site."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:295
-#: ../../appendix/faqs/general.rst:295
+#: ../../appendix/faqs/general.rst:296
+#: ../../appendix/faqs/general.rst:296
 msgid "I want to remove spam. Can't I just search and delete it from the elgg_entities table?"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:297
-#: ../../appendix/faqs/general.rst:297
+#: ../../appendix/faqs/general.rst:298
+#: ../../appendix/faqs/general.rst:298
 msgid "No, it will corrupt your database. Delete it through the site."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:300
-#: ../../appendix/faqs/general.rst:300
+#: ../../appendix/faqs/general.rst:301
+#: ../../appendix/faqs/general.rst:301
 msgid "Someone on the community site told me to edit the database manually. Should I?"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:302
-#: ../../appendix/faqs/general.rst:302
+#: ../../appendix/faqs/general.rst:303
+#: ../../appendix/faqs/general.rst:303
 msgid "Who was it? Is it someone experienced with Elgg, like one of the core developers or a well-known plugin author? Did he or she give you clear and specific instructions on what to edit? If you don't know who it is, or if you can't understand or aren't comfortable following the instructions, do not edit the database manually."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:305
-#: ../../appendix/faqs/general.rst:305
+#: ../../appendix/faqs/general.rst:306
+#: ../../appendix/faqs/general.rst:306
 msgid "I know PHP and MySQL and have a legitimate reason to edit the database. Is it okay to manually edit the database?"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:307
-#: ../../appendix/faqs/general.rst:307
+#: ../../appendix/faqs/general.rst:308
+#: ../../appendix/faqs/general.rst:308
 msgid "Make sure you understand Elgg's :doc:`data model </design/database>` and schema first. Make a backup, edit carefully, then test copiously."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:310
-#: ../../appendix/faqs/general.rst:310
+#: ../../appendix/faqs/general.rst:311
+#: ../../appendix/faqs/general.rst:311
 msgid "Internet Explorer (IE) login problem"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:313
-#: ../../appendix/faqs/general.rst:313
+#: ../../appendix/faqs/general.rst:314
+#: ../../appendix/faqs/general.rst:314
 msgid "Canonical URL"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:315
-#: ../../appendix/faqs/general.rst:315
+#: ../../appendix/faqs/general.rst:316
+#: ../../appendix/faqs/general.rst:316
 msgid "IE does not like working with sites that use both http://example.org and http://www.example.org. It stores multiple cookies and this causes problems. Best to only use one base URL. For details on how to do this see Login token mismatch error."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:318
-#: ../../appendix/faqs/general.rst:318
+#: ../../appendix/faqs/general.rst:319
+#: ../../appendix/faqs/general.rst:319
 msgid "Chrome Frame"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:320
-#: ../../appendix/faqs/general.rst:320
+#: ../../appendix/faqs/general.rst:321
+#: ../../appendix/faqs/general.rst:321
 msgid "Using the chrome frame within IE can break the login process."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:323
-#: ../../appendix/faqs/general.rst:323
+#: ../../appendix/faqs/general.rst:324
+#: ../../appendix/faqs/general.rst:324
 msgid "Emails don't support non-Latin characters"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:325
-#: ../../appendix/faqs/general.rst:325
+#: ../../appendix/faqs/general.rst:326
+#: ../../appendix/faqs/general.rst:326
 msgid "In order to support non-Latin characters, (such as Cyrillic or Chinese) Elgg requires `multibyte string support`_ to be compiled into PHP."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:327
-#: ../../appendix/faqs/general.rst:327
+#: ../../appendix/faqs/general.rst:328
+#: ../../appendix/faqs/general.rst:328
 msgid "On many installs (e.g. Debian & Ubuntu) this is turned on by default. If it is not, you need to turn it on (or recompile PHP to include it). To check whether your server supports multibyte strings, check `phpinfo`_."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:333
-#: ../../appendix/faqs/general.rst:333
+#: ../../appendix/faqs/general.rst:334
+#: ../../appendix/faqs/general.rst:334
 msgid "Session length"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:335
-#: ../../appendix/faqs/general.rst:335
+#: ../../appendix/faqs/general.rst:336
+#: ../../appendix/faqs/general.rst:336
 msgid "Session length is controlled by your php configuration. You will first need to locate your ``php.ini`` file. In that file will be several session variables. A complete list and what they do can be found in the `php manual`_."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:340
-#: ../../appendix/faqs/general.rst:340
+#: ../../appendix/faqs/general.rst:341
+#: ../../appendix/faqs/general.rst:341
 msgid "File is missing an owner"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:342
-#: ../../appendix/faqs/general.rst:342
+#: ../../appendix/faqs/general.rst:343
+#: ../../appendix/faqs/general.rst:343
 msgid "There are three causes for this error. You could have an entity in your database that has an ``owner_guid`` of ``0``. This should be extremely rare and may only occur if your database/server crashes during a write operation."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:344
-#: ../../appendix/faqs/general.rst:344
+#: ../../appendix/faqs/general.rst:345
+#: ../../appendix/faqs/general.rst:345
 msgid "The second cause would be an entity where the owner no longer exists. This could occur if a plugin is turned off that was involved in the creation of the entity and then the owner is deleted but the delete operation failed (because the plugin is turned off). If you can figure out entity is causing this, look in your ``entities`` table and change the ``owner_guid`` to your own and then you can delete the entity through Elgg."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:348
-#: ../../appendix/faqs/general.rst:348
+#: ../../appendix/faqs/general.rst:349
+#: ../../appendix/faqs/general.rst:349
 msgid "Reed the section \"Should I edit the database manually?\". Be very carefull when editing the database directly. It can break your site. **Always** make a backup before doing this."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:351
-#: ../../appendix/faqs/general.rst:351
+#: ../../appendix/faqs/general.rst:352
+#: ../../appendix/faqs/general.rst:352
 msgid "Fixes"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:353
-#: ../../appendix/faqs/general.rst:353
+#: ../../appendix/faqs/general.rst:354
+#: ../../appendix/faqs/general.rst:354
 msgid "`Database Validator`_ plugin will check your database for these causes and provide an option to fix them. Be sure to backup the database before you try the fix option."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:358
-#: ../../appendix/faqs/general.rst:358
+#: ../../appendix/faqs/general.rst:359
+#: ../../appendix/faqs/general.rst:359
 msgid "No images"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:360
-#: ../../appendix/faqs/general.rst:360
+#: ../../appendix/faqs/general.rst:361
+#: ../../appendix/faqs/general.rst:361
 msgid "If profile images, group images, or other files have stopped working on your site it is likely due to a misconfiguration, especially if you have migrated to a new server."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:362
-#: ../../appendix/faqs/general.rst:362
+#: ../../appendix/faqs/general.rst:363
+#: ../../appendix/faqs/general.rst:363
 msgid "These are the most common misconfigurations that cause images and other files to stop working."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:365
-#: ../../appendix/faqs/general.rst:365
+#: ../../appendix/faqs/general.rst:366
+#: ../../appendix/faqs/general.rst:366
 msgid "Wrong path for data directory"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:367
-#: ../../appendix/faqs/general.rst:367
+#: ../../appendix/faqs/general.rst:368
+#: ../../appendix/faqs/general.rst:368
 msgid "Make sure the data directory's path is correct in the Site Administration admin area. It should have a trailing slash."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:370
-#: ../../appendix/faqs/general.rst:370
+#: ../../appendix/faqs/general.rst:371
+#: ../../appendix/faqs/general.rst:371
 msgid "Wrong permissions on the data directory"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:372
-#: ../../appendix/faqs/general.rst:372
+#: ../../appendix/faqs/general.rst:373
+#: ../../appendix/faqs/general.rst:373
 msgid "Check the permissions for the data directory. The data directory should be readable and writeable by the web server user."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:375
-#: ../../appendix/faqs/general.rst:375
+#: ../../appendix/faqs/general.rst:376
+#: ../../appendix/faqs/general.rst:376
 msgid "Migrated installation with new data directory location"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:377
-#: ../../appendix/faqs/general.rst:377
+#: ../../appendix/faqs/general.rst:378
+#: ../../appendix/faqs/general.rst:378
 msgid "If you migrated an installation and need to change your data directory path, be sure to update the SQL for the filestore location as documented in the :doc:`/admin/duplicate-installation` instructions."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:380
-#: ../../appendix/faqs/general.rst:380
+#: ../../appendix/faqs/general.rst:381
+#: ../../appendix/faqs/general.rst:381
 msgid "Deprecation warnings"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:382
-#: ../../appendix/faqs/general.rst:382
+#: ../../appendix/faqs/general.rst:383
+#: ../../appendix/faqs/general.rst:383
 msgid "If you are seeing many deprecation warnings that say things like"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:388
-#: ../../appendix/faqs/general.rst:388
+#: ../../appendix/faqs/general.rst:389
+#: ../../appendix/faqs/general.rst:389
 msgid "then you are using a plugin that was written for an older version of Elgg. This means the plugin is using functions that are scheduled to be removed in a future version of Elgg. You can ask the plugin developer if the plugin will be updated or you can update the plugin yourself. If neither of those are likely to happen, you should not use that plugin."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:391
-#: ../../appendix/faqs/general.rst:391
+#: ../../appendix/faqs/general.rst:392
+#: ../../appendix/faqs/general.rst:392
 msgid "Javascript not working"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:393
-#: ../../appendix/faqs/general.rst:393
+#: ../../appendix/faqs/general.rst:394
+#: ../../appendix/faqs/general.rst:394
 msgid "If the user hover menu stops working or you cannot dismiss system messages, that means JavaScript is broken on your site. This usually due to a plugin having bad JavaScript code. You should find the plugin causing the problem and disable it. You can do this be disabling non-bundled plugins one at a time until the problem goes away. Another approach is disabling all non-bundled plugins and then enabling them one by one until the problem occurs again."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:395
-#: ../../appendix/faqs/general.rst:395
+#: ../../appendix/faqs/general.rst:396
+#: ../../appendix/faqs/general.rst:396
 msgid "Most web browsers will give you a hint as to what is breaking the JavaScript code. They often have a console for JavaScript errors or an advanced mode for displaying errors. Once you see the error message, you may have an easier time locating the problem."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:398
-#: ../../appendix/faqs/general.rst:398
+#: ../../appendix/faqs/general.rst:399
+#: ../../appendix/faqs/general.rst:399
 msgid "IP addresses in the logs are wrong"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:400
-#: ../../appendix/faqs/general.rst:400
+#: ../../appendix/faqs/general.rst:401
+#: ../../appendix/faqs/general.rst:401
 msgid "When your Elgg installation is behind a proxy server or loadbalancer the IP addresses logged in the System Log plugin can be wrong. It could show only the IP addresses for the proxy server."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:403
-#: ../../appendix/faqs/general.rst:403
+#: ../../appendix/faqs/general.rst:404
+#: ../../appendix/faqs/general.rst:404
 msgid "In order to solve this you can configure the IP addresses of the proxy server as a trusted IP address and with that allow the system access to the correct IP address of your users."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:406
-#: ../../appendix/faqs/general.rst:406
+#: ../../appendix/faqs/general.rst:407
+#: ../../appendix/faqs/general.rst:407
 msgid "In the ``settings.php`` file you can configure settings for ``$CONFIG->http_request_trusted_proxy_ips`` and ``$CONFIG->http_request_trusted_proxy_headers`` check the ``settings.php`` file for more information."
 msgstr ""
 
@@ -2085,6 +2091,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/1.8-to-1.9.rst:114
 #: ../../appendix/upgrade-notes/2.2-to-2.3.rst:102
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:120
 msgid "Notifications"
 msgstr ""
 
@@ -3298,6 +3305,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:294
 #: ../../appendix/upgrade-notes/3.0-to-3.1.rst:94
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:77
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:892
 msgid "Deprecated APIs"
 msgstr ""
 
@@ -5088,6 +5096,7 @@ msgid "``ElggDiscussionReply``: user ``ElggComment`` see :ref:`upgrade-discussio
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:352
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:196
 msgid "Schema changes"
 msgstr ""
 
@@ -5408,6 +5417,7 @@ msgid "``reportedcontent``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:573
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:1004
 msgid "Removed actions"
 msgstr ""
 
@@ -5776,6 +5786,7 @@ msgid "``ElggPlugin``: No longer accepts a GUID or path. Use ``ElggPlugin::fromI
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:690
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:865
 msgid "Miscellaneous API changes"
 msgstr ""
 
@@ -6128,6 +6139,7 @@ msgid "Likes no longer uses Elgg's toggle API, so only a single ``likes`` menu i
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:859
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:161
 msgid "Notifications plugin"
 msgstr ""
 
@@ -6626,6 +6638,7 @@ msgid "New 3.0 installations require MySQL 5.5.3 (or higher) and use the utf8mb4
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1147
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:445
 msgid "Miscellaneous changes"
 msgstr ""
 
@@ -7040,5 +7053,2500 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:111
 msgid "**entity:annotate, <entity_type>**"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:2
+msgid "From 3.x to 4.0"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:9
+msgid "Composer"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:12
+msgid "PHP Requirements"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:14
+msgid "To be compatible with PHP 8 we needed to increase the minimal PHP version to 7.4. PHP versions < 7.4 are already end-of-life."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:17
+msgid "Composer project"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:19
+msgid "The root of the composer project is no longer handled as a semi functional plugin. Languages from the ``languages`` directory are nog longer imported, the views from the ``views`` directory are no longer registered, the PHP DI services from the ``elgg-services.php`` are no longer registered and the ``start.php`` file is no longer included."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:23
+msgid "If you needed specific modification to your Elgg installation you need to make a :doc:`plugin</guides/plugins>` and ensure that the plugin is the latest in the plugin order to allow you to overrule everything you needed to change."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:27
+msgid "Doctrine DBAL"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:29
+msgid "Elgg replaced v2 with v3 of the ``doctrine/dbal`` dependency. On of the most notable changes is that if you work with QueryBuilders and use the ``$qb->fetch()`` function you will no longer get an object, but an array. If you want your rows to be useable as classes, you can use ``elgg()->db->getData($qb)``. Another important change is that if you provide your own query parameters, you should no longer prefix keys with a colon in the parameters but still do so in the query."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:36
+msgid "PHP-DI"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:38
+msgid "This feature has been updated to use the latest version of PHP-DI. Most notable breaking change for Elgg is the need to change your plugin service definition to use ``\\DI\\create()`` instead of ``\\DI\\object()``."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:42
+msgid "Zend\\Mail replaced by Laminas\\Mail"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:44
+msgid "Because of the `deprecation`_ of the ``Zend\\Mail`` library and it's replacement by the ``Laminas\\Mail`` all references have been updated."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:49
+msgid "Removed composer dependencies"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:51
+msgid "``bower-asset/jquery-treeview`` the related js and css are no longer available in the system"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:52
+msgid "``bower-asset/jquery.imgareaselect`` the related js and css are no longer available in the system"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:53
+msgid "``npm-asset/formdata-polyfill`` all modern browser have support, no longer a need for a polyfill"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:54
+msgid "``npm-asset/jquery-form`` use native FormData functionality"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:55
+msgid "``npm-asset/weakmap-polyfill`` all modern browser have support, no longer a need for a polyfill"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:56
+msgid "``simpletest/simpletest``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:59
+msgid "Javascript"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:62
+msgid "AJAX"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:64
+msgid "The following Ajax helper functions have been removed in favor of their counterparts in asynchronous module ``elgg/Ajax``. * ``elgg.action()`` * ``elgg.get()`` * ``elgg.getJSON()`` * ``elgg.post()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:70
+msgid "The ajax function ``elgg.api`` has been moved to the ``executeMethod`` function in the asynchronous module ``elgg/webservices`` in the webservices plugin. Other ``elgg.ajax`` functions and attributes have been removed from the system. Also the legacy handling of ajax calls have been removed from the system."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:76
+msgid "Classes"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:78
+msgid "The javascript logic for automatically booting some javascript for your plugin and registering hooks via the ``Elgg/Plugin`` class has been removed from the system. This functionality was never used by core and hardly seen in plugins. Use AMD loaded javascript or extend ``elgg.js`` for always loaded javascript."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:83
+msgid "The ``ElggPriorityList`` javascript class has been removed from the system."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:86
+msgid "System Hooks"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:88
+msgid "The AMD modules for ``elgg/init`` and ``elgg/ready`` have been removed. The ``init, system`` hook is still available but it only makes sense to rely on this hook from non-AMD loaded js libraries. The ``boot, system`` and ``ready, system`` triggers have been removed from the system. Replace with ``init, system`` for the same effect."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:93
+msgid "jQuery"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:95
+msgid "The jQuery library has been updated to the latest version (v3.5.x). This is a major update from the version used in Elgg 3.x. For information about what is changed between these release you should take a look at the jQuery website."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:99
+msgid "jQuery UI"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:101
+msgid "The jQuery UI library has been updated to v1.12.x. The library is no longer loaded in full by default. If you need to use features from the library you can require them in your own script. For example to be able to use the sortable functionality do the following:"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:115
+msgid "Miscellaneous JS changes"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:117
+msgid "The AMD module ``elgg/widgets`` no longer returns an object and no longer requires you to call ``init`` on the module"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:122
+msgid "Pre Elgg 1.9 notification handling has been removed. Related functions and hooks no longer exist."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:125
+msgid "Subscriptions"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:127
+msgid "The relationship in the database which stores the subscription method for notifications has been changed from ``notifymethod`` to ``notify:method``."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:131
+msgid "Multiple Recipients"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:133
+msgid "An Elgg\\Email now supports multiple recipients in To, Cc and Bcc. The related getter functions like ``getTo()`` will now always return an array."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:136
+msgid "Settings"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:138
+msgid "A generic storage for notification preferences has been introduced in ``\\ElggUser::setNotificationSetting()`` and ``\\ElggUser::getNotificationSettings()``, the notification settings now have a 'purpose'."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:141
+msgid "For example ``group_join`` can be used to manage the default subscription you get with a group when you join the group."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:143
+msgid "The Notifications plugin has generic handling of displaying and saving the settings. To display the setting extend the view ``notifications/settings/records`` (plural) with a view which uses ``notifications/settings/record`` (singular)."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:147
+msgid "When requesting notification settings other than the default setting, if the user hasn't saved a setting yet it'll fall back to the default notification settings."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:150
+msgid "Management of the notification preferences for adding a new users to a friend collection has been removed."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:153
+msgid "Notification Salutation & Sign-off"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:155
+msgid "To be able to have a more generic salutation and sign-off for outgoing mail notifications we have removed these texts from various translation strings and moved them to generic translations. This will mean you have to update your translations to reflect the new text and also check your code for uses of notifications where you provide your own salutation or sign-off text. You can find out more about this new behaviour in :doc:`/guides/notifications`."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:163
+msgid "The Notifications plugin has been removed. All the features of the plugin are now part of Elgg core. Some pages (like the group notification settings) have been moved to the correct plugin."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:166
+msgid "This means that event handlers, hook handlers, actions, views and languages keys have been (re)moved or renamed."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:169
+msgid "Notification Event Handling"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:171
+msgid "The notification hooks no longer receive the ``origin`` parameter."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:174
+msgid "Site notification"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:176
+msgid "The site notifications plugin now shows the notification subject by default. If a site notification was created with the factory function ``SiteNotification::factory()`` more of the original notification information is stored with the site notification:"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:179
+msgid "Notification ``subject`` is stored in ``title``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:180
+msgid "Notification ``summary`` is stored in ``summary``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:181
+msgid "Notification ``body`` is stored in ``description``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:184
+msgid "Split OkResponse, ErrorResponse and RedirectResponse"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:186
+msgid "The classes ``Elgg\\Http\\ErrorResponse`` and ``Elgg\\Http\\RedirectResponse`` were extensions of ``Elgg\\Http\\OkReponse`` this complicated validating responses (for example in hooks). The classes have been split apart to allow for easier and clearer checks."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:189
+msgid "All classes now extend ``Elgg\\Http\\Response`` and implement ``Elgg\\Http\\ReponseBuilder``. The default HTTP error code when using ``elgg_error_response()`` has been changed to return a 400 status."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:193
+msgid "Datamodel"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:198
+msgid "The ``access_id``, ``owner_guid`` and  ``enabled`` columns in the ``metadata`` table have been removed"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:199
+msgid "The ``enabled`` column in the ``river`` table has been removed"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:200
+msgid "The ``relationship`` column in the ``entity_relationships`` table now has a max length of 255 (up from 50)"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:203
+msgid "ElggEntity attributes"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:205
+msgid "Setting the ``type``, ``subtype`` and ``enabled`` attributes of an ``ElggEntity`` is no longer possible using the magic setter. Changing the ``type`` is no longer possible, use the correct base class for your entity (eg. ``ElggObject``, ``ElggGroup`` or ``ElggUser``)."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:208
+msgid "To change the ``subtype`` use the function ``setSubtype($subtype)``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:219
+msgid "To change the ``enabled`` state of an entity use the correct functions"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:232
+msgid "ElggUser attributes"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:234
+msgid "Setting the ``admin`` and ``banned`` metadata of an ``ElggUser`` is no longer possible using the magic setter."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:236
+msgid "To change the ``admin`` state use the functions ``makeAdmin()`` and ``removeAdmin()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:248
+msgid "To change the ``banned`` state use the functions ``ban()`` and ``unban()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:261
+msgid "Plugin development"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:264
+msgid "Plugin bootstrapping"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:266
+msgid "The following files are no longer included during bootstrapping of a plugin:"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:268
+msgid "``activate.php`` use ``PluginBootstrap->activate()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:269
+msgid "``deactivate.php`` use ``PluginBootstrap->deactivate()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:270
+msgid "``views.php`` use ``elgg-plugin.php``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:271
+msgid "``start.php`` use ``elgg-plugin.php`` and/or ``PluginBootstrap``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:274
+msgid "Plugin Manifest"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:276
+msgid "The plugin manifest file is no longer used. Features of the manifest have been removed or moved to different locations."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:278
+msgid "It is no longer possible to require a specific php ini setting."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:280
+msgid "php version requirement -> composer require"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:281
+msgid "php extension requirement -> composer require"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:282
+msgid "plugin conflicts -> composer conflicts"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:283
+msgid "plugin requirement -> elgg-plugin"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:284
+msgid "plugin position requirement -> elgg-plugin"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:286
+msgid "plugin version -> elgg-plugin"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:287
+msgid "plugin activate on install -> elgg-plugin"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:288
+msgid "plugin name -> elgg-plugin"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:289
+msgid "plugin description -> composer.json"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:290
+msgid "plugin categories -> composer.json"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:291
+msgid "plugin license -> composer.json"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:292
+msgid "plugin repo link -> composer.json"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:293
+msgid "plugin issues link -> composer.json"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:294
+msgid "plugin homepage link -> composer.json"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:295
+msgid "plugin authors/contributors -> composer.json"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:298
+msgid "Hookable field configurations"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:300
+msgid "Some plugins had the option to configure entity fields in config. These features have been replaced by a central service that provides a mechanisme to request a hookable field config for a certain type/subtype."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:303
+msgid "You can request these configuration using the following code:"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:309
+msgid "The results will be an array with field configurations usable in ``elgg_view_field($field)``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:311
+msgid "The following related functionality has been replaced by this new way:"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:313
+msgid "The config for ``pages`` is no longer available in ``elgg_get_config('pages')`` use ``elgg()->fields->get('object', 'page')``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:314
+msgid "The config for ``group`` is no longer available in ``elgg_get_config('group')`` use ``elgg()->fields->get('group', 'group')``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:315
+msgid "The config for ``profile_fields`` is no longer available in ``elgg_get_config('profile_fields')`` use ``elgg()->fields->get('user', 'user')``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:316
+msgid "Setting the config for ``pages``, ``group`` and ``user:profile`` via ``elgg_set_config`` is no longer possible. Use a hook callback for ``fields, <entity_type>:<entity_subtype>``."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:317
+msgid "The hook ``profile:fields, group`` has been replaced by the new hook ``fields, group:group``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:318
+msgid "The hook ``profile:fields, user`` has been replaced by the new hook ``fields, user:user``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:321
+msgid "Menus"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:323
+msgid "Instead of registering the ``_elgg_setup_vertical_menu`` and ``_elgg_menu_transform_to_dropdown`` for menus, this is replaced by using the menu vars ``prepare_vertical`` and ``prepare_dropdown``. Setting them to ``true`` will give you the same effect. This allows for individual control in views when this is required."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:327
+msgid "The automatic marking as 'selected' of parent menu items of the selected menu item will now always happen for every menu."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:330
+msgid "Filter tabs"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:332
+msgid "The preparation of tabs for the filter menu by using the ``elgg_get_filter_tabs()`` function and the ``'filter_tabs', '<context>'`` hook has been removed. You can now use the ``'register', 'menu:filter:filter'`` hook to add/remove items from the same place."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:336
+msgid "The ``all``, ``mine`` and ``friends`` tabs will automaticly generate if routes are available for pages similar to the current route. For example if the current route is ``collection:object:blog:all`` the tabs will be generated for the route ``collection:object:blog:owner`` and ``collection:object:blog:friends``."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:341
+msgid "Title menu"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:343
+msgid "The ``title`` menu will now be populated with the ``entity`` menu if the ``entity`` is provided to the layout. This is mostly usefull on the detail page of an entity (eg. ``blog/view``). Most of the entries for the ``entity`` menu will be added to a dropdown menu, except the ``edit`` menu item (when available) this item will be presented next to the dropdown menu."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:355
+msgid "Registering tag metadatanames"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:357
+msgid "Because of various limitations of this implementation it has been removed from the system. The following related API functions have been removed:"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:359
+msgid "``elgg_get_registered_tag_metadata_names()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:360
+msgid "``elgg_register_tag_metadata_name()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:361
+msgid "``elgg_unregister_tag_metadata_name()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:363
+msgid "If you need specific fields to be searchable you need to register them with the related ``search:fields`` hooks. The related ``tagnames:xxx`` tag language keys are no longer registered in the system."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:366
+msgid "The function ``ElggEntity::getTags()`` will now return only tag metadata with the name ``tags`` by default. If you want to check extra fields containing tags, you need to request this specifically."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:370
+msgid "Default widgets"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:372
+msgid "The magic handling the creation of default widgets has been reduced. You now need to register the ``Elgg\\Widgets\\CreateDefaultWidgetsHandler`` callback to the event when you want default widgets to be created. The configuration ``default_widget_info`` is no longer present in the system. Use the ``get_list``, ``default_widgets`` hook to get the value."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:376
+msgid "You also need to update the data in your ``get_list``, ``default_widgets`` hook handler to return ``event_name`` (previously ``event``) and ``event_type``."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:379
+msgid "Container permissions"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:381
+msgid "The function parameters for ``ElggEntity::canWriteToContainer()`` now require a ``$type`` and ``$subtype`` to be passed. This is to give more information to the resulting hook in order to be able to determine if a user is allowed write access to the container."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:385
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:649
+msgid "Plugins"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:388
+msgid "Activity plugin"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:390
+msgid "This plugin received a much needed rewrite. The different pages (all/owner/friends) now have their own resource and listing views."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:393
+msgid "Diagnostics Plugin"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:395
+msgid "This plugin has been removed, but the action to generate a report is still available. You can find it on the ``Information/Server`` admin page."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:398
+msgid "Discussions Plugin"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:400
+msgid "This plugin no longer adds a tab to the filter menu on the groups pages"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:401
+msgid "The ``discussions`` site menu item is now always present"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:404
+msgid "Search Plugin"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:406
+msgid "The output of search results no longer uses the helper class ``Elgg\\Search\\Formatter`` for the preparation of the result contents. This logic has been moved entirely into views."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:409
+msgid "The related functions ``prepareEntity`` and ``getSearchView`` in the ``Elgg\\Search\\Service`` class have been removed."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:411
+msgid "The hook ``search:format, entity`` has been removed."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:414
+msgid "Web services Plugin"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:416
+msgid "The Web Services plugin received a complete rewrite, this is mostly related to the internals of the plugin."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:419
+msgid "Removed classes"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:421
+msgid "``ElggHMACCache`` has been replaced by ``_elgg_services()->hmacCacheTable`` (for internal use only)"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:422
+msgid "``Elgg\\Notifications\\Event`` has been replaced by ``Elgg\\Notifications\\SubscriptionNotificationEvent``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:425
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:911
+msgid "Removed functions"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:427
+msgid "``create_api_user()`` has been replaced by ``_elgg_services()->apiUsersTable->createApiUser()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:428
+msgid "``create_user_token()`` has been replaced by ``_elgg_services()->usersApiSessions->createToken()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:429
+msgid "``get_api_user()`` has been replaced by ``_elgg_services()->apiUsersTable->getApiUser()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:430
+msgid "``get_standard_api_key_array()`` use ``\\Elgg\\WebServices\\ElggApiClient::setApiKeys()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:431
+msgid "``get_user_tokens()`` has been replaced by ``_elgg_services()->usersApiSessions->getUserTokens()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:432
+msgid "``pam_auth_session()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:433
+msgid "``remove_api_user()`` has been replaced by ``_elgg_services()->apiUsersTable->removeApiUser()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:434
+msgid "``remove_expired_user_tokens()`` has been replaced by ``_elgg_services()->usersApiSessions->removeExpiresTokens()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:435
+msgid "``remove_user_token()`` has been replaced by ``_elgg_services()->usersApiSessions->removeToken()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:436
+msgid "``send_api_call()`` use ``\\Elgg\\WebServices\\ElggApiClient``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:437
+msgid "``send_api_get_call()`` use ``\\Elgg\\WebServices\\ElggApiClient``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:438
+msgid "``send_api_post_call()`` use ``\\Elgg\\WebServices\\ElggApiClient``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:439
+msgid "``service_handler()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:440
+msgid "``validate_user_token()`` has been replaced by ``_elgg_services()->usersApiSessions->validateToken()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:441
+msgid "``ws_page_handler()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:442
+msgid "``ws_rest_handler()`` has been replaced by ``\\Elgg\\WebServices\\RestServiceController``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:447
+msgid "The config value for ``servicehandler`` has been removed"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:448
+msgid "In certain edge cases the default value of an API parameter will not be applied"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:451
+msgid "Type hinted functions"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:453
+msgid "The following functions now have their arguments type-hinted, this can cause ``TypeError`` errors. Also some class functions have their return value type hinted and you should update your function definition."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:457
+msgid "Class function parameters"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:459
+msgid "``ElggEntity::setLatLong()`` now requires a ``float`` for ``$lat`` and ``$long``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:460
+msgid "``ElggUser::setNotificationSetting()`` now requires a ``string`` for ``$method`` and a ``bool`` for ``$enabled``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:461
+msgid "``Elgg\\Database\\Seeds\\Seed::__construct()`` now requires an ``int`` for ``$limit``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:462
+msgid "``Elgg\\Http\\ErrorResponse::__construct()`` now requires an ``int`` for ``$status_code``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:463
+msgid "``Elgg\\Http\\OkResponse::__construct()`` now requires an ``int`` for ``$status_code``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:464
+msgid "``Elgg\\Http\\RedirectResponse::__construct()`` now requires an ``int`` for ``$status_code``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:465
+msgid "``Elgg\\I18n\\Translator::getInstalledTranslations()`` now requires a ``bool`` for ``$calculate_completeness``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:466
+msgid "``SiteNotification::setActor()`` now requires an ``ElggEntity`` for ``$entity``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:467
+msgid "``SiteNotification::setURL()`` now requires a ``string`` for ``$url``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:468
+msgid "``SiteNotification::setRead()`` now requires a ``bool`` for ``$read``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:471
+msgid "Class function return type"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:473
+msgid "``Elgg\\Upgrade\\Batch::getVersion()`` now requires an ``int`` return value"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:474
+msgid "``Elgg\\Upgrade\\Batch::shouldBeSkipped()`` now requires an ``bool`` return value"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:475
+msgid "``Elgg\\Upgrade\\Batch::needsIncrementOffset()`` now requires an ``bool`` return value"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:476
+msgid "``Elgg\\Upgrade\\Batch::countItems()`` now requires an ``int`` return value"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:477
+msgid "``Elgg\\Upgrade\\Batch::run()`` now requires an ``Elgg\\Upgrade\\Result`` return value"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:480
+msgid "Lib function parameters"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:482
+msgid "``add_user_to_access_collection()`` now requires an ``int`` for ``$user_guid`` and ``$collection_id``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:483
+msgid "``can_edit_access_collection()`` now requires an ``int`` for ``$collection_id`` and ``$user_guid``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:484
+msgid "``create_access_collection()`` now requires an ``string`` for ``$name`` and ``int`` for ``$owner_guid``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:485
+msgid "``delete_access_collection()`` now requires an ``int`` for ``$collection_id``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:486
+msgid "``elgg_action_exists()`` now requires a ``string`` for ``$action``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:487
+msgid "``elgg_add_admin_notice()`` now requires a ``string`` for ``$id`` and ``$message``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:488
+msgid "``elgg_admin_notice_exists()`` now requires a ``string`` for ``$id``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:489
+msgid "``elgg_annotation_exists()`` now requires a ``int`` for ``$entity_guid``, a ``string`` for ``$name`` and ``int`` for ``$owner_guid``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:490
+msgid "``elgg_delete_admin_notice()`` now requires a ``string`` for ``$id``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:491
+msgid "``elgg_delete_annotation_by_id()`` now requires a ``int`` for ``$id``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:492
+msgid "``elgg_deprecated_notice()`` now requires a ``string`` for ``$msg`` and ``$dep_version``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:493
+msgid "``elgg_error_response()`` now requires an ``int`` for ``$status_code``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:494
+msgid "``elgg_get_access_collections()`` now requires an ``array`` for ``$options``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:495
+msgid "``elgg_get_annotation_from_id()`` now requires an ``int`` for ``$id``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:496
+msgid "``elgg_get_subscriptions_for_container()`` now requires an ``int`` for ``$container_guid``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:497
+msgid "``elgg_get_plugin_from_id()`` now requires a ``string`` for ``$plugin_id``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:498
+msgid "``elgg_get_plugin_setting()`` now requires a ``string`` for ``$name`` and ``$plugin_id``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:499
+msgid "``elgg_get_plugin_user_setting()`` now requires a ``string`` for ``$name`` and ``$plugin_id`` and ``int`` for ``$user_guid``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:500
+msgid "``elgg_get_plugins()`` now requires a ``string`` for ``$status``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:501
+msgid "``elgg_get_river_item_from_id()`` now requires a ``int`` for ``$id``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:502
+msgid "``elgg_list_annotations()`` now requires an ``array`` for ``$options``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:503
+msgid "``elgg_ok_response()`` now requires an ``int`` for ``$status_code``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:504
+msgid "``elgg_plugin_exists()`` now requires a ``string`` for ``$plugin_id``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:505
+msgid "``elgg_redirect_response()`` now requires an ``int`` for ``$status_code``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:506
+msgid "``elgg_register_action()`` now requires a ``string`` for ``$action`` and ``$access``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:507
+msgid "``elgg_send_email()`` now requires an ``\\Elgg\\Email`` for ``$email``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:508
+msgid "``elgg_set_plugin_user_setting()`` now requires a ``string`` for ``$name`` and ``$plugin_id`` and ``int`` for ``$user_guid``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:509
+msgid "``elgg_unregister_action()`` now requires a ``string`` for ``$action``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:510
+msgid "``get_access_array()`` now requires an ``int`` for ``$user_guid``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:511
+msgid "``get_access_collection()`` now requires an ``int`` for ``$collection_id``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:512
+msgid "``get_entity_statistics()`` now requires an ``int`` for ``$owner_guid``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:513
+msgid "``get_members_of_access_collection()`` now requires an ``int`` for ``$collection_id`` and ``bool`` for ``$guids_only``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:514
+msgid "``get_readable_access_level()`` now requires an ``int`` for ``$entity_access_id``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:515
+msgid "``get_write_access_array()`` now requires an ``int`` for ``$user_guid`` and ``bool`` for ``$flush``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:516
+msgid "``has_access_to_entity()`` now requires an ``ElggEntity`` for ``$entity`` and ``ElggUser`` for ``$user``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:517
+msgid "``remove_user_from_access_collection()`` now requires an ``int`` for ``$user_guid`` and ``$collection_id``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:518
+msgid "``system_log_get_log()`` now requires an ``array`` for ``$options``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:519
+msgid "``messageboard_add()`` now requires an ``ElggUser``, ``ElggUser``, ``string`` and an ``int``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:520
+msgid "``elgg_register_external_file()`` now requires all arguments to be of the type ``string``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:521
+msgid "``elgg_unregister_external_file()`` now requires all arguments to be of the type ``string``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:522
+msgid "``elgg_load_external_file()`` now requires all arguments to be of the type ``string``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:523
+msgid "``elgg_get_loaded_external_files()`` now requires all arguments to be of the type ``string``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:526
+msgid "Change in function parameters"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:529
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:895
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:914
+msgid "Class functions"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:531
+msgid "``Elgg\\Http\\ResponseBuilder::setStatusCode()`` no longer has a default value"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:532
+msgid "``ElggEntity::canWriteToContainer()`` no longer has a default value for ``$type`` and ``$subtype`` but these are required"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:535
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:901
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:937
+msgid "Lib functions"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:537
+msgid "``elgg_get_page_owner_guid()`` no longer accepts ``$guid`` as a parameter"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:538
+msgid "``get_access_array()`` no longer accepts ``$flush`` as a parameter"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:539
+msgid "``elgg_register_external_file()`` no longer accepts ``$priority`` as a parameter"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:542
+msgid "Renamed hook/event handler callbacks"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:544
+msgid "Special attention is required if you unregister the callbacks in your plugins as you might need to update your code."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:547
+msgid "Core"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:549
+msgid "``access_friends_acl_get_name()`` changed to ``Elgg\\Friends\\AclNameHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:550
+msgid "``access_friends_acl_add_friend()`` changed to ``Elgg\\Friends\\AddToAclHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:551
+msgid "``access_friends_acl_create()`` changed to ``Elgg\\Friends\\CreateAclHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:552
+msgid "``access_friends_acl_remove_friend()`` changed to ``Elgg\\Friends\\RemoveFromAclHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:553
+msgid "``_elgg_add_admin_widgets()`` changed to ``Elgg\\Widgets\\CreateAdminWidgetsHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:554
+msgid "``_elgg_admin_check_admin_validation()`` changed to ``Elgg\\Users\\Validation::checkAdminValidation()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:555
+msgid "``_elgg_admin_header_menu()`` changed to ``Elgg\\Menus\\AdminHeader::register()`` and ``Elgg\\Menus\\AdminHeader::registerMaintenance()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:556
+msgid "``_elgg_admin_footer_menu()`` changed to ``Elgg\\Menus\\AdminFooter::registerHelpResources()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:557
+msgid "``_elgg_admin_notify_admins_pending_user_validation()`` changed to ``Elgg\\Users\\Validation::notifyAdminsAboutPendingUsers()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:558
+msgid "``_elgg_admin_page_menu()`` changed to ``Elgg\\Menus\\Page::registerAdminAdminister()`` and ``Elgg\\Menus\\Page::registerAdminConfigure()`` and ``Elgg\\Menus\\Page::registerAdminInformation()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:559
+msgid "``_elgg_admin_page_menu_plugin_settings()`` changed to ``Elgg\\Menus\\Page::registerAdminPluginSettings()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:560
+msgid "``_elgg_admin_prepare_admin_notification_make_admin()`` changed to ``Elgg\\Notifications\\MakeAdminUserEventHandler``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:561
+msgid "``_elgg_admin_prepare_admin_notification_remove_admin()`` changed to ``Elgg\\Notifications\\RemoveAdminUserEventHandler``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:562
+msgid "``_elgg_admin_prepare_user_notification_make_admin()`` changed to ``Elgg\\Notifications\\MakeAdminUserEventHandler``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:563
+msgid "``_elgg_admin_prepare_user_notification_remove_admin()`` changed to ``Elgg\\Notifications\\RemoveAdminUserEventHandler``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:564
+msgid "``_elgg_admin_save_notification_setting()`` changed to ``Elgg\\Users\\Settings::setAdminValidationNotification()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:565
+msgid "``_elgg_admin_set_registration_forward_url()`` changed to ``Elgg\\Users\\Validation::setRegistrationForwardUrl()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:566
+msgid "``_elgg_admin_user_unvalidated_bulk_menu()`` changed to ``Elgg\\Menus\\UserUnvalidatedBulk::registerActions()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:567
+msgid "``_elgg_admin_user_validation_login_attempt()`` changed to ``Elgg\\Users\\Validation::preventUserLogin()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:568
+msgid "``_elgg_admin_user_validation_notification()`` changed to ``Elgg\\Users\\Validation::notifyUserAfterValidation()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:569
+msgid "``_elgg_admin_upgrades_menu()`` changed to ``Elgg\\Menus\\Filter::registerAdminUpgrades()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:570
+msgid "``_elgg_cache_init()`` actions combined in ``Elgg\\Application\\SystemEventHandlers::ready()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:571
+msgid "``_elgg_clear_caches()`` changed to ``Elgg\\Cache\\EventHandlers::clear()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:572
+msgid "``_elgg_comments_access_sync()`` changed to ``Elgg\\Comments\\SyncContainerAccessHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:573
+msgid "``_elgg_comments_container_permissions_override()`` changed to ``Elgg\\Comments\\ContainerPermissionsHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:574
+msgid "``_elgg_comments_permissions_override()`` changed to ``Elgg\\Comments\\EditPermissionsHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:575
+msgid "``_elgg_comments_prepare_content_owner_notification()`` changed to ``Elgg\\Notifications\\CreateCommentEventHandler``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:576
+msgid "``_elgg_comments_prepare_notification()`` changed to ``Elgg\\Notifications\\CreateCommentEventHandler``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:577
+msgid "``_elgg_comments_social_menu_setup()`` changed to ``Elgg\\Menus\\Social::registerComments()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:578
+msgid "``_elgg_create_default_widgets()`` changed to ``Elgg\\Widgets\\CreateDefaultWidgetsHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:579
+msgid "``_elgg_create_notice_of_pending_upgrade()`` changed to ``Elgg\\Upgrade\\CreateAdminNoticeHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:580
+msgid "``_elgg_db_register_seeds()`` changed to ``Elgg\\Database\\RegisterSeedsHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:581
+msgid "``_elgg_disable_caches()`` changed to ``Elgg\\Cache\\EventHandlers::disable()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:582
+msgid "``_elgg_default_widgets_permissions_override()`` changed to ``Elgg\\Widgets\\DefaultWidgetsContainerPermissionsHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:583
+msgid "``_elgg_disable_password_autocomplete()`` changed to ``Elgg\\Input\\DisablePasswordAutocompleteHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:584
+msgid "``_elgg_enable_caches()`` changed to ``Elgg\\Cache\\EventHandlers::enable()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:585
+msgid "``_elgg_filestore_move_icons()`` changed to ``Elgg\\Icons\\MoveIconsOnOwnerChangeHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:586
+msgid "``_elgg_filestore_touch_icons()`` changed to ``Elgg\\Icons\\TouchIconsOnAccessChangeHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:587
+msgid "``_elgg_head_manifest()`` changed to ``Elgg\\Views\\AddManifestLinkHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:588
+msgid "``_elgg_annotations_default_menu_items()`` changed to ``Elgg\\Menus\\Annotation::registerDelete()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:589
+msgid "``_elgg_walled_garden_menu()`` changed to ``Elgg\\Menus\\WalledGarden::registerHome()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:590
+msgid "``_elgg_site_menu_init()`` changed to ``Elgg\\Menus\\Site::registerAdminConfiguredItems()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:591
+msgid "``_elgg_site_menu_setup()`` changed to ``Elgg\\Menus\\Site::reorderItems()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:592
+msgid "``_elgg_entity_menu_setup()`` changed to ``Elgg\\Menus\\Entity::registerEdit()`` and ``Elgg\\Menus\\Entity::registerDelete()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:593
+msgid "``_elgg_entity_navigation_menu_setup()`` changed to ``Elgg\\Menus\\EntityNavigation::registerPreviousNext()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:594
+msgid "``_elgg_enqueue_notification_event()`` changed to ``Elgg\\Notifications\\EnqueueEventHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:595
+msgid "``_elgg_groups_container_override()`` changed to ``Elgg\\Groups\\MemberPermissionsHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:596
+msgid "``_elgg_groups_comment_permissions_override()`` changed to ``Elgg\\Comments\\GroupMemberPermissionsHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:597
+msgid "``_elgg_htmlawed_filter_tags()`` changed to ``Elgg\\Input\\ValidateInputHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:598
+msgid "``_elgg_invalidate_caches()`` changed to ``Elgg\\Cache\\EventHandlers::invalidate()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:599
+msgid "``_elgg_widget_menu_setup()`` changed to ``Elgg\\Menus\\Widget::registerEdit()`` and ``Elgg\\Menus\\Widget::registerDelete()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:600
+msgid "``_elgg_login_menu_setup()`` changed to ``Elgg\\Menus\\Login::registerRegistration()`` and ``Elgg\\Menus\\Widget::registerResetPassword()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:601
+msgid "``_elgg_nav_public_pages()`` changed to ``Elgg\\WalledGarden\\ExtendPublicPagesHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:602
+msgid "``_elgg_notifications_cron()`` changed to ``Elgg\\Notifications\\ProcessQueueCronHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:603
+msgid "``_elgg_notifications_smtp_default_message_id_header()`` changed to ``Elgg\\Email\\DefaultMessageIdHeaderHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:604
+msgid "``_elgg_notifications_smtp_thread_headers()`` changed to ``Elgg\\Email\\ThreadHeadersHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:605
+msgid "``_elgg_rebuild_public_container()`` changed to ``Elgg\\Cache\\EventHandlers::rebuildPublicContainer()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:606
+msgid "``_elgg_river_update_object_last_action()`` changed to ``Elgg\\River\\UpdateLastActionHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:607
+msgid "``_elgg_rss_menu_setup()`` changed to ``Elgg\\Menus\\Footer::registerRSS()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:608
+msgid "``_elgg_plugin_entity_menu_setup()`` changed to ``Elgg\\Menus\\Entity::registerPlugin()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:609
+msgid "``_elgg_purge_caches()`` changed to ``Elgg\\Cache\\EventHandlers::purge()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:610
+msgid "``_elgg_river_menu_setup()`` changed to ``Elgg\\Menus\\River::registerDelete()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:611
+msgid "``_elgg_save_notification_user_settings()`` changed to ``Elgg\\Notifications\\SaveUserSettingsHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:612
+msgid "``_elgg_session_cleanup_persistent_login()`` changed to ``Elgg\\Users\\CleanupPersistentLoginHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:613
+msgid "``_elgg_set_lightbox_config()`` changed to ``Elgg\\Javascript\\SetLightboxConfigHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:614
+msgid "``_elgg_set_user_default_access()`` changed to ``Elgg\\Users\\Settings::setDefaultAccess()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:615
+msgid "``_elgg_set_user_email()`` changed to ``Elgg\\Users\\Settings::setEmail()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:616
+msgid "``_elgg_set_user_password()`` changed to ``Elgg\\Users\\Settings::setPassword()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:617
+msgid "``_elgg_set_user_language()`` changed to ``Elgg\\Users\\Settings::setLanguage()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:618
+msgid "``_elgg_set_user_name()`` changed to ``Elgg\\Users\\Settings::setName()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:619
+msgid "``_elgg_set_user_username()`` changed to ``Elgg\\Users\\Settings::setUsername()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:620
+msgid "``_elgg_send_email_notification()`` changed to ``Elgg\\Notifications\\SendEmailHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:621
+msgid "``_elgg_upgrade_completed()`` changed to ``Elgg\\Upgrade\\UpgradeCompletedAdminNoticeHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:622
+msgid "``_elgg_upgrade_entity_menu()`` changed to ``Elgg\\Menus\\Entity::registerUpgrade()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:623
+msgid "``_elgg_user_ban_notification()`` changed to ``Elgg\\Users\\BanUserNotificationHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:624
+msgid "``_elgg_user_get_subscriber_unban_action()`` changed to ``Elgg\\Notifications\\UnbanUserEventHandler``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:625
+msgid "``_elgg_user_prepare_unban_notification()`` changed to ``Elgg\\Notifications\\UnbanUserEventHandler``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:626
+msgid "``_elgg_user_settings_menu_register()`` changed to ``Elgg\\Menus\\Page::registerUserSettings()`` and ``Elgg\\Menus\\Page::registerUserSettingsPlugins()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:627
+msgid "``_elgg_user_settings_menu_prepare()`` changed to ``Elgg\\Menus\\Page::cleanupUserSettingsPlugins()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:628
+msgid "``elgg_user_hover_menu()`` changed to ``Elgg\\Menus\\UserHover::registerAvatarEdit()`` and ``Elgg\\Menus\\UserHover::registerAdminActions()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:629
+msgid "``_elgg_user_set_icon_file()`` changed to ``Elgg\\Icons\\SetUserIconFileHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:630
+msgid "``_elgg_user_title_menu()`` changed to ``Elgg\\Menus\\Title::registerAvatarEdit()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:631
+msgid "``_elgg_user_page_menu()`` changed to ``Elgg\\Menus\\Page::registerAvatarEdit()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:632
+msgid "``_elgg_user_topbar_menu()`` changed to ``Elgg\\Menus\\Topbar::registerUserLinks()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:633
+msgid "``_elgg_user_unvalidated_menu()`` changed to ``Elgg\\Menus\\UserUnvalidated::register()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:634
+msgid "``_elgg_views_amd()`` changed to ``Elgg\\Views\\AddAmdModuleNameHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:635
+msgid "``_elgg_views_file_help_upload_limit()`` changed to ``Elgg\\Input\\AddFileHelpTextHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:636
+msgid "``_elgg_views_init()`` combined into ``Elgg\\Application\\SystemEventHandlers::init()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:637
+msgid "``_elgg_views_minify()`` changed to ``Elgg\\Views\\MinifyHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:638
+msgid "``_elgg_views_prepare_favicon_links()`` changed to ``Elgg\\Page\\AddFaviconLinksHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:639
+msgid "``_elgg_views_preprocess_css()`` changed to ``Elgg\\Views\\PreProcessCssHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:640
+msgid "``_elgg_views_send_header_x_frame_options()`` changed to ``Elgg\\Page\\SetXFrameOptionsHeaderHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:641
+msgid "``_elgg_walled_garden_init()`` merged into ``Elgg\\Application\\SystemEventHandlers::initLate()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:642
+msgid "``_elgg_walled_garden_remove_public_access()`` changed to ``Elgg\\WalledGarden\\RemovePublicAccessHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:643
+msgid "``_elgg_widgets_widget_urls()`` changed to ``Elgg\\Widgets\\EntityUrlHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:644
+msgid "``elgg_prepare_breadcrumbs()`` changed to ``Elgg\\Page\\PrepareBreadcrumbsHandler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:645
+msgid "``Elgg\\Profiler::handleOutput`` changed to ``Elgg\\Debug\\Profiler::class``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:646
+msgid "``users_init`` combined into ``Elgg\\Application\\SystemEventHandlers::initLate()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:651
+msgid "``_developers_entity_menu`` changed to ``Elgg\\Developers\\Menus\\Entity::registerEntityExplorer``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:652
+msgid "``_developers_page_menu`` changed to ``Elgg\\Developers\\Menus\\Page::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:653
+msgid "``_elgg_activity_owner_block_menu`` changed to ``Elgg\\Activity\\Menus\\OwnerBlock::registerUserItem`` and ``Elgg\\Activity\\Menus\\OwnerBlock::registerGroupItem``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:654
+msgid "``blog_archive_menu_setup`` changed to ``Elgg\\Blog\\Menus\\BlogArchive::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:655
+msgid "``blog_owner_block_menu`` changed to ``Elgg\\Blog\\Menus\\OwnerBlock::registerUserItem`` and ``Elgg\\Blog\\Menus\\OwnerBlock::registerGroupItem``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:656
+msgid "``blog_prepare_notification`` changed to ``Elgg\\Blog\\Notifications\\PublishBlogEventHandler``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:657
+msgid "``blog_register_db_seeds`` changed to ``Elgg\\Blog\\Database::registerSeeds``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:658
+msgid "``bookmarks_footer_menu`` changed to ``Elgg\\Bookmarks\\Menus\\Footer::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:659
+msgid "``bookmarks_owner_block_menu`` changed to ``Elgg\\Bookmarks\\Menus\\OwnerBlock::registerUserItem`` and ``Elgg\\Bookmarks\\Menus\\OwnerBlock::registerGroupItem``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:660
+msgid "``bookmarks_page_menu`` changed to ``Elgg\\Bookmarks\\Menus\\Page::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:661
+msgid "``bookmarks_prepare_notification`` changed to ``Elgg\\Bookmarks\\Notifications\\CreateBookmarksEventHandler``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:662
+msgid "``bookmarks_register_db_seeds`` changed to ``Elgg\\Bookmarks\\Database::registerSeeds``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:663
+msgid "``ckeditor_longtext_id`` changed to ``Elgg\\CKEditor\\Views::setInputLongTextIDViewVar``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:664
+msgid "``ckeditor_longtext_menu`` changed to ``Elgg\\CKEditor\\Menus\\LongText::registerToggler``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:665
+msgid "``dashboard_default_widgets`` changed to ``Elgg\\Dashboard\\Widgets::extendDefaultWidgetsList``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:666
+msgid "``developers_log_events`` changed to ``Elgg\\Developers\\HandlerLogger::trackEvent`` and ``Elgg\\Developers\\HandlerLogger::trackHook``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:667
+msgid "``diagnostics_basic_hook`` changed to ``Elgg\\Diagnostics\\Reports::getBasic``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:668
+msgid "``diagnostics_globals_hook`` changed to ``Elgg\\Diagnostics\\Reports::getGlobals``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:669
+msgid "``diagnostics_phpinfo_hook`` changed to ``Elgg\\Diagnostics\\Reports::getPHPInfo``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:670
+msgid "``diagnostics_sigs_hook`` changed to ``Elgg\\Diagnostics\\Reports::getSigs``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:671
+msgid "``discussion_comment_permissions`` changed to ``Elgg\\Discussions\\Permissions::preventCommentOnClosedDiscussion``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:672
+msgid "``discussion_get_subscriptions`` changed to ``Elgg\\Discussions\\Notifications::addGroupSubscribersToCommentOnDiscussionSubscriptions``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:673
+msgid "``discussion_owner_block_menu`` changed to ``Elgg\\Discussions\\Menus\\OwnerBlock::registerGroupItem``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:674
+msgid "``discussion_prepare_comment_notification`` changed to ``Elgg\\Discussions\\Notifications::prepareCommentOnDiscussionNotification``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:675
+msgid "``discussion_prepare_notification`` changed to ``Elgg\\Discussions\\Notifications\\CreateDiscussionEventHandler``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:676
+msgid "``discussion_register_db_seeds`` changed to ``Elgg\\Discussions\\Database::registerSeeds``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:677
+msgid "``Elgg\\DevelopersPlugins\\*`` changed to ``Elgg\\Developers\\*``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:678
+msgid "``Elgg\\Discussions\\Menus::registerSiteMenuItem`` changed to ``Elgg\\Discussions\\Menus\\Site::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:679
+msgid "``Elgg\\Discussions\\Menus::filterTabs`` changed to ``Elgg\\Discussions\\Menus\\Filter::filterTabsForDiscussions``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:680
+msgid "``embed_longtext_menu`` changed to ``Elgg\\Embed\\Menus\\LongText::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:681
+msgid "``embed_select_tab`` changed to ``Elgg\\Embed\\Menus\\Embed::selectCorrectTab``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:682
+msgid "``embed_set_thumbnail_url`` changed to ``Elgg\\Embed\\Icons::setThumbnailUrl``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:683
+msgid "``expages_menu_register_hook`` changed to ``Elgg\\ExternalPages\\Menus\\ExPages::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:685
+msgid "``file_handle_object_delete`` changed to ``Elgg\\File\\Icons::deleteIconOnElggFileDelete``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:686
+msgid "``file_prepare_notification`` changed to ``Elgg\\File\\Notifications\\CreateFileEventHandler``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:687
+msgid "``file_register_db_seeds`` changed to ``Elgg\\File\\Database::registerSeeds``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:688
+msgid "``file_set_custom_icon_sizes`` changed to ``Elgg\\File\\Icons::setIconSizes``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:689
+msgid "``file_set_icon_file`` changed to ``Elgg\\File\\Icons::setIconFile``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:690
+msgid "``file_set_icon_url`` changed to ``Elgg\\File\\Icons::setIconUrl``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:691
+msgid "``file_owner_block_menu`` changed to ``Elgg\\File\\Menus\\OwnerBlock::registerUserItem`` and ``Elgg\\File\\Menus\\OwnerBlock::registerGroupItem``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:693
+msgid "``_elgg_friends_filter_tabs`` changed to ``Elgg\\Friends\\Menus\\Filter::registerFilterTabs``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:694
+msgid "``_elgg_friends_page_menu`` changed to ``Elgg\\Friends\\Menus\\Page::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:695
+msgid "``_elgg_friends_register_access_type`` changed to ``Elgg\\Friends\\Access::registerAccessCollectionType``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:696
+msgid "``_elgg_friends_setup_title_menu`` changed to ``Elgg\\Friends\\Menus\\Title::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:697
+msgid "``_elgg_friends_setup_user_hover_menu`` changed to ``Elgg\\Friends\\Menus\\UserHover::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:698
+msgid "``_elgg_friends_topbar_menu`` changed to ``Elgg\\Friends\\Menus\\Topbar::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:699
+msgid "``_elgg_friends_widget_urls`` changed to ``Elgg\\Friends\\Widgets::setWidgetUrl``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:700
+msgid "``_elgg_send_friend_notification`` changed to ``Elgg\\Friends\\Notifications::sendFriendNotification``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:701
+msgid "``Elgg\\Friends\\FilterMenu::addFriendRequestTabs`` changed to ``Elgg\\Friends\\Menus\\Filter::addFriendRequestTabs``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:702
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:703
+msgid "``Elgg\\Friends\\RelationshipMenu::addPendingFriendRequestItems`` changed to ``Elgg\\Friends\\Menus\\Relationship::addPendingFriendRequestItems``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:704
+msgid "``Elgg\\Friends\\Relationships::createFriendRelationship`` changed to ``Elgg\\Friends\\Relationships::removePendingFriendRequest``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:706
+msgid "``_groups_gatekeeper_allow_profile_page`` changed to ``Elgg\\Groups\\Access::allowProfilePage``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:707
+msgid "``_groups_page_menu`` changed to ``Elgg\\Groups\\Menus\\Page::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:708
+msgid "``_groups_page_menu_group_profile`` changed to ``Elgg\\Groups\\Menus\\Page::registerGroupProfile``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:709
+msgid "``_groups_relationship_invited_menu`` changed to ``Elgg\\Groups\\Menus\\Relationship::registerInvitedItems``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:710
+msgid "``_groups_relationship_member_menu`` changed to ``Elgg\\Groups\\Menus\\Relationship::registerRemoveUser``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:711
+msgid "``_groups_relationship_membership_request_menu`` changed to ``Elgg\\Groups\\Menus\\Relationship::registerMembershipRequestItems``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:712
+msgid "``_groups_title_menu`` changed to ``Elgg\\Groups\\Menus\\Title::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:713
+msgid "``_groups_topbar_menu_setup`` changed to ``Elgg\\Groups\\Menus\\Topbar::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:714
+msgid "``groups_access_default_override`` changed to ``Elgg\\Groups\\Access::overrideDefaultAccess``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:715
+msgid "``groups_create_event_listener`` changed to ``Elgg\\Groups\\Group::createAccessCollection``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:716
+msgid "``groups_default_page_owner_handler`` changed to ``Elgg\\Groups\\PageOwner::detectPageOwner``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:717
+msgid "``groups_entity_menu_setup`` changed to ``Elgg\\Groups\\Menus\\Entity::register`` and ``Elgg\\Groups\\Menus\\Entity::registerFeature``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:718
+msgid "``groups_fields_setup`` changed to ``Elgg\\Groups\\FieldsHandler``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:719
+msgid "``groups_members_menu_setup`` changed to ``Elgg\\Groups\\Menus\\GroupsMembers::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:720
+msgid "``groups_set_access_collection_name`` changed to ``Elgg\\Groups\\Access::getAccessCollectionName``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:721
+msgid "``groups_set_url`` changed to ``Elgg\\Groups\\Group::getEntityUrl``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:722
+msgid "``groups_setup_filter_tabs`` changed to ``Elgg\\Groups\\Menus\\Filter::registerGroupsAll``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:723
+msgid "``groups_update_event_listener`` changed to ``Elgg\\Groups\\Group::updateGroup``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:724
+msgid "``groups_user_join_event_listener`` changed to ``Elgg\\Groups\\Group::joinGroup``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:725
+msgid "``groups_user_leave_event_listener`` changed to ``Elgg\\Groups\\Group::leaveGroup``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:726
+msgid "``groups_write_acl_plugin_hook`` changed to ``Elgg\\Groups\\Access::getWriteAccess``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:728
+msgid "``invitefriends_add_friends`` changed to ``Elgg\\InviteFriends\\Users::addFriendsOnRegister``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:729
+msgid "``invitefriends_register_page_menu`` changed to ``Elgg\\InviteFriends\\Menus\\Page::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:731
+msgid "``likes_permissions_check`` changed to ``Elgg\\Likes\\Permissions::allowLikedEntityOwner``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:732
+msgid "``likes_permissions_check_annotate`` changed to ``Elgg\\Likes\\Permissions::allowLikeOnEntity``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:733
+msgid "``likes_social_menu_setup`` changed to ``Elgg\\Likes\\Menus\\Social::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:735
+msgid "``members_register_filter_menu`` changed to ``Elgg\\Members\\Menus\\Filter::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:737
+msgid "``messages_can_edit`` changed to ``Elgg\\Messages\\Permissions::canEdit``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:738
+msgid "``messages_can_edit_container`` changed to ``Elgg\\Messages\\Permissions::canEditContainer``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:739
+msgid "``messages_purge`` changed to ``Elgg\\Messages\\User::purgeMessages``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:740
+msgid "``messages_register_topbar`` changed to ``Elgg\\Messages\\Menus\\Topbar::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:741
+msgid "``messages_user_hover_menu`` changed to ``Elgg\\Messages\\Menus\\UserHover::register`` and ``Elgg\\Messages\\Menus\\Title::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:743
+msgid "``notifications_update_collection_notify`` changed to ``Elgg\\Notifications\\Relationships::updateUserNotificationsPreferencesOnACLChange``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:744
+msgid "``notifications_update_friend_notify`` changed to ``Elgg\\Friends\\Relationships::applyFriendNotificationsSettings``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:745
+msgid "``notifications_relationship_remove`` changed to ``Elgg\\Friends\\Relationships::deleteFriendNotificationSubscription`` and ``Elgg\\Groups\\Relationships::removeGroupNotificationSubscriptions``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:746
+msgid "``_notifications_page_menu`` changed to ``Elgg\\Notifications\\Menus\\Page::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:747
+msgid "``_notification_groups_title_menu`` changed to ``Elgg\\Notifications\\Menus\\Title::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:749
+msgid "``pages_container_permission_check`` changed to ``Elgg\\Pages\\Permissions::allowContainerWriteAccess``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:750
+msgid "``pages_entity_menu_setup`` changed to ``Elgg\\Pages\\Menus\\Entity::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:751
+msgid "``pages_icon_url_override`` changed to ``Elgg\\Pages\\Icons::getIconUrl``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:752
+msgid "``pages_owner_block_menu`` changed to ``Elgg\\Pages\\Menus\\OwnerBlock::registerUserItem`` and ``Elgg\\Pages\\Menus\\OwnerBlock::registerGroupItem``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:753
+msgid "``pages_prepare_notification`` changed to ``Elgg\\Pages\\Notifications\\CreatePageEventHandler``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:754
+msgid "``pages_register_db_seeds`` changed to ``Elgg\\Pages\\Database::registerSeeds``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:755
+msgid "``pages_set_revision_url`` changed to ``Elgg\\Pages\\Extender::setRevisionUrl``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:756
+msgid "``pages_write_access_options_hook`` changed to ``Elgg\\Pages\\Views::removeAccessPublic``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:757
+msgid "``pages_write_access_vars`` changed to ``Elgg\\Pages\\Views::preventAccessPublic``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:758
+msgid "``pages_write_permission_check`` changed to ``Elgg\\Pages\\Permissions::allowWriteAccess``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:759
+msgid "``Elgg\\Pages\\Menus::registerPageMenuItems`` changed to ``Elgg\\Pages\\Menus\\PagesNav::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:761
+msgid "``_profile_admin_page_menu`` changed to ``Elgg\\Profile\\Menus\\Page::registerAdminProfileFields``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:762
+msgid "``_profile_fields_setup`` changed to ``Elgg\\Profile\\FieldsHandler``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:763
+msgid "``_profile_title_menu`` changed to ``Elgg\\Profile\\Menus\\Title::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:764
+msgid "``_profile_topbar_menu`` changed to ``Elgg\\Profile\\Menus\\Topbar::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:765
+msgid "``_profile_user_hover_menu`` changed to ``Elgg\\Profile\\Menus\\UserHover::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:766
+msgid "``_profile_user_page_menu`` changed to ``Elgg\\Profile\\Menus\\Page::registerProfileEdit``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:767
+msgid "``profile_default_widgets_hook`` changed to ``Elgg\\Profile\\Widgets::getDefaultWidgetsList``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:769
+msgid "``reportedcontent_user_hover_menu`` changed to ``Elgg\\ReportedContent\\Menus\\UserHover::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:771
+msgid "``search_exclude_robots`` changed to ``Elgg\\Search\\Site::preventSearchIndexing``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:772
+msgid "``search_output_tag`` changed to ``Elgg\\Search\\Views::setSearchHref``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:774
+msgid "``site_notifications_register_entity_menu`` changed to ``Elgg\\SiteNotifications\\Menus\\Entity::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:775
+msgid "``site_notifications_send`` changed to ``Elgg\\SiteNotifications\\Notifications::createSiteNotifications``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:777
+msgid "``_uservalidationbyemail_user_unvalidated_bulk_menu`` changed to ``Elgg\\UserValidationByEmail\\Menus\\UserUnvalidatedBulk::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:778
+msgid "``_uservalidationbyemail_user_unvalidated_menu`` changed to ``Elgg\\UserValidationByEmail\\Menus\\UserUnvalidated::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:779
+msgid "``uservalidationbyemail_after_registration_url`` changed to ``Elgg\\UserValidationByEmail\\Response::redirectToEmailSent``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:780
+msgid "``uservalidationbyemail_check_manual_login`` changed to ``Elgg\\UserValidationByEmail\\User::preventLogin``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:781
+msgid "``uservalidationbyemail_disable_new_user`` changed to ``Elgg\\UserValidationByEmail\\User::disableUserOnRegistration``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:783
+msgid "``system_log_archive_cron`` changed to ``Elgg\\SystemLog\\Cron::rotateLogs``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:784
+msgid "``system_log_default_logger`` changed to ``Elgg\\SystemLog\\Logger::log``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:785
+msgid "``system_log_delete_cron`` changed to ``Elgg\\SystemLog\\Cron::deleteLogs``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:786
+msgid "``system_log_listener`` changed to ``Elgg\\SystemLog\\Logger::listen``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:787
+msgid "``system_log_user_hover_menu`` changed to ``Elgg\\SystemLog\\Menus\\UserHover::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:789
+msgid "``thewire_add_original_poster`` changed to ``Elgg\\TheWire\\Notifications\\CreateTheWireEventHandler``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:790
+msgid "``thewire_owner_block_menu`` changed to ``Elgg\\TheWire\\Menus\\OwnerBlock::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:791
+msgid "``thewire_prepare_notification`` changed to ``Elgg\\TheWire\\Notifications\\CreateTheWireEventHandler``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:792
+msgid "``thewire_setup_entity_menu_items`` changed to ``Elgg\\TheWire\\Menus\\Entity::register``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:795
+msgid "Reworked exceptions"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:797
+msgid "All exceptions in the Elgg system now extend the ``Elgg\\Exceptions\\Exception`` and are in the namespace ``Elgg\\Exceptions``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:800
+msgid "Moved exceptions"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:802
+msgid "``ClassException`` use ``Elgg\\Exceptions\\ClassException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:803
+msgid "``ConfigurationException`` use ``Elgg\\Exceptions\\ConfigurationException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:804
+msgid "``CronException`` use ``Elgg\\Exceptions\\CronException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:805
+msgid "``DatabaseException`` use ``Elgg\\Exceptions\\DatabaseException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:806
+msgid "``DataFormatException`` use ``Elgg\\Exceptions\\DataFormatException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:807
+msgid "``InstallationException`` use ``Elgg\\Exceptions\\Configuration\\InstallationException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:808
+msgid "``InvalidParameterException`` use ``Elgg\\Exceptions\\InvalidParameterException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:809
+msgid "``IOException`` use ``Elgg\\Exceptions\\FileSystem\\IOException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:810
+msgid "``LoginException`` use ``Elgg\\Exceptions\\LoginException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:811
+msgid "``PluginException`` use ``Elgg\\Exceptions\\PluginException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:812
+msgid "``RegistrationException`` use ``Elgg\\Exceptions\\Configuration\\RegistrationException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:813
+msgid "``SecurityException`` use ``Elgg\\Exceptions\\SecurityException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:814
+msgid "``Elgg\\Database\\EntityTable\\UserFetchFailureException`` use ``Elgg\\Exceptions\\Database\\UserFetchFailureException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:815
+msgid "``Elgg\\Di\\FactoryUncallableException`` use ``Elgg\\Exceptions\\Di\\FactoryUncallableException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:816
+msgid "``Elgg\\Di\\MissingValueException`` use ``Elgg\\Exceptions\\Di\\MissingValueException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:817
+msgid "``Elgg\\Http\\Exception\\AdminGatekeeperException`` use ``Elgg\\Exceptions\\Http\\Gatekeeper\\AdminGatekeeperException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:818
+msgid "``Elgg\\Http\\Exception\\AjaxGatekeeperException`` use ``Elgg\\Exceptions\\Http\\Gatekeeper\\AjaxGatekeeperException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:819
+msgid "``Elgg\\Http\\Exception\\GroupToolGatekeeperException`` use ``Elgg\\Exceptions\\Http\\Gatekeeper\\GroupToolGatekeeperException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:820
+msgid "``Elgg\\Http\\Exception\\LoggedInGatekeeperException`` use ``Elgg\\Exceptions\\Http\\Gatekeeper\\LoggedInGatekeeperException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:821
+msgid "``Elgg\\Http\\Exception\\LoggedOutGatekeeperException`` use ``Elgg\\Exceptions\\Http\\Gatekeeper\\LoggedOutGatekeeperException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:822
+msgid "``Elgg\\Http\\Exception\\UpgradeGatekeeperException`` use ``Elgg\\Exceptions\\Http\\Gatekeeper\\UpgradeGatekeeperException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:823
+msgid "``Elgg\\I18n\\InvalidLocaleException`` use ``Elgg\\Exceptions\\I18n\\InvalidLocaleException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:824
+msgid "``Elgg\\BadRequestException`` use ``Elgg\\Exceptions\\Http\\BadRequestException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:825
+msgid "``Elgg\\CsrfException`` use ``Elgg\\Exceptions\\Http\\CsrfException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:826
+msgid "``Elgg\\EntityNotFoundException`` use ``Elgg\\Exceptions\\Http\\EntityNotFoundException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:827
+msgid "``Elgg\\EntityPermissionsException`` use ``Elgg\\Exceptions\\Http\\EntityPermissionsException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:828
+msgid "``Elgg\\GatekeeperException`` use ``Elgg\\Exceptions\\Http\\GatekeeperException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:829
+msgid "``Elgg\\GroupGatekeeperException`` use ``Elgg\\Exceptions\\Http\\Gatekeeper\\GroupGatekeeperException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:830
+msgid "``Elgg\\HttpException`` use ``Elgg\\Exceptions\\HttpException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:831
+msgid "``Elgg\\PageNotFoundException`` use ``Elgg\\Exceptions\\Http\\PageNotFoundException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:832
+msgid "``Elgg\\ValidationException`` use ``Elgg\\Exceptions\\Http\\ValidationException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:833
+msgid "``Elgg\\WalledGardenException`` use ``Elgg\\Exceptions\\Http\\Gatekeeper\\WalledGardenException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:836
+msgid "Removed exceptions"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:838
+msgid "``CallException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:839
+msgid "``ClassNotFoundException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:840
+msgid "``IncompleteEntityException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:841
+msgid "``InvalidClassException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:842
+msgid "``NotificationException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:843
+msgid "``NotImplementedException`` from the Web Services plugin"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:846
+msgid "Reworked Traits"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:848
+msgid "In order to better organize the Elgg namespace all Traits have been moved to the ``Elgg\\Traits`` namespace"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:850
+msgid "``Elgg\\Cacheable`` moved to ``Elgg\\Traits\\Cacheable``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:851
+msgid "``Elgg\\Cli\\PluginsHelper`` moved to ``Elgg\\Traits\\Cli\\PluginsHelper``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:852
+msgid "``Elgg\\Cli\\Progressing`` moved to ``Elgg\\Traits\\Cli\\Progressing``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:853
+msgid "``Elgg\\Database\\Seeds\\Seeding\\GroupHelpers`` moved to ``Elgg\\Traits\\Seeding\\GroupHelpers``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:854
+msgid "``Elgg\\Database\\Seeds\\Seeding\\TimeHelpers`` moved to ``Elgg\\Traits\\Seeding\\TimeHelpers``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:855
+msgid "``Elgg\\Database\\Seeds\\Seeding`` moved to ``Elgg\\Traits\\Seeding``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:856
+msgid "``Elgg\\Database\\LegacyQueryOptionsAdapter`` moved to ``Elgg\\Traits\\Database\\LegacyQueryOptionsAdapter``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:857
+msgid "``Elgg\\Debug\\Profilable`` moved to ``Elgg\\Traits\\Debug\\Profilable``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:858
+msgid "``Elgg\\Di\\ServiceFacade`` moved to ``Elgg\\Traits\\Di\\ServiceFacade``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:859
+msgid "``Elgg\\Entity\\ProfileData`` moved to ``Elgg\\Traits\\Entity\\ProfileData``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:860
+msgid "``Elgg\\Loggable`` moved to ``Elgg\\Traits\\Loggable``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:861
+msgid "``Elgg\\Notifications\\EventSerialization`` moved to ``Elgg\\Traits\\Notifications\\EventSerialization``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:862
+msgid "``Elgg\\TimeUsing`` moved to ``Elgg\\Traits\\TimeUsing``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:867
+msgid "The defaults for ``ignore_empty_body`` and ``prevent_double_submit`` when using ``elgg_view_form`` have been changed to ``true``."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:868
+msgid "The plugin settings forms (``plugins/{$plugin_id}/settings``) no longer receive ``$vars['plugin']`` use ``$vars['entity']``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:869
+msgid "``Elgg\\Router\\Middleware\\WalledGarden::isPublicPage()`` can no longer be called statically"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:870
+msgid "``Elgg\\Cli\\PluginsHelper::getDependents()`` is no longer publically available"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:871
+msgid "``ElggPlugin::getLanguagesPath()`` is no longer publically available"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:872
+msgid "An ``\\ElggBatch`` no longer implements the interface ``Elgg\\BatchResult`` but still has the same features"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:873
+msgid "An ``\\ElggEntity`` no longer implements the interface ``Locatable`` but still has the same features"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:874
+msgid "An ``\\Elgg\\Event`` no longer implements the interfaces ``\\Elgg\\ObjectEvent`` and ``\\Elgg\\UserEvent`` but still has the same features"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:875
+msgid "The view ``output/icon`` no longer uses the ``convert`` view var"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:876
+msgid "``ElggData::save()`` now always returns a ``bool`` as documented. All extending classes have been updated (eg. ``ElggEntity``, ``ElggMetadata``, ``ElggRelationship``, etc.)"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:877
+msgid "``Elgg\\Email::getTo()`` now always returns an ``array``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:878
+msgid "``ElggPlugin::activate()`` and ``ElggPlugin::deactivate()`` now can throw an ``Elgg\\Exceptions\\PluginException`` with more details about the failure"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:879
+msgid "``\\ElggRelationship::RELATIONSHIP_LIMIT`` has been removed use \\Elgg\\Database\\RelationshipsTable::RELATIONSHIP_COLUMN_LENGTH``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:880
+msgid "The constants ``ORIGIN_SUBSCRIPTIONS`` and ``ORIGIN_INSTANT`` in ``\\Elgg\\Notifications\\Notification`` have been removed"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:881
+msgid "You can no longer use the ``delete, <entity_type>`` event to prevent deletion of an entity. Use the ``delete:before, <entity_type>`` event"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:882
+msgid "External Files are no longer ordered by priority but will be returned in the same order as they are registered"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:883
+msgid "The interface ``Friendable`` has been removed. Implemented functions in ``ElggUser`` have been moved to ``Elgg\\Traits\\Entity\\Friends``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:884
+msgid "The config flag ``profile_using_custom`` is no longer available"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:885
+msgid "The return value of ``elgg_create_river_item()`` will be ``false`` in the case the creation was prevented by the ``'create:before', 'river'`` event"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:886
+msgid "The constant ``ELGG_PLUGIN_USER_SETTING_PREFIX`` has been removed use the helper function ``\\ElggUser::getNamespacedPluginSettingName()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:887
+msgid "The constant ``ELGG_PLUGIN_INTERNAL_PREFIX`` has been removed to get the plugin priority private setting name use ``\\ElggPlugin::PRIORITY_SETTING_NAME``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:888
+msgid "The class ``SiteNotificationFactory`` was removed use ``SiteNotification::factory()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:889
+msgid "The class ``Elgg\\Email\\Address`` no longer throws ``Laminas\\Mail\\Exception\\InvalidArgumentException`` but now throws ``Elgg\\Exceptions\\InvalidArgumentException``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:897
+msgid "``ElggPlugin::getUserSetting()`` use ``ElggUser::getPluginSetting()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:898
+msgid "``ElggPlugin::setUserSetting()`` use ``ElggUser::setPluginSetting()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:903
+msgid "``forward()`` use ``Elgg\\Exceptions\\HttpException`` instances or ``elgg_redirect_response()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:906
+msgid "Plugin hooks"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:908
+msgid "``'usersettings', 'plugin'`` use the hook ``'plugin_setting', '<entity type>'``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:916
+msgid "``Elgg\\Config::getEntityTypes()`` use ``Elgg\\Config::ENTITY_TYPES`` constant"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:917
+msgid "``ElggFile::setDescription()`` use ``$file->description = $new_description``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:918
+msgid "``ElggGroup::addObjectToGroup()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:919
+msgid "``ElggGroup::removeObjectFromGroup()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:920
+msgid "``ElggPlugin::getAllUserSettings()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:921
+msgid "``ElggPlugin::getDependencyReport()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:922
+msgid "``ElggPlugin::getError()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:923
+msgid "``ElggPlugin::unsetAllUserSettings()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:924
+msgid "``ElggPlugin::unsetAllUserAndPluginSettings()`` use ``ElggPlugin::unsetAllEntityAndPluginSettings()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:925
+msgid "``ElggWidget::getContext()`` use ``$entity->context``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:926
+msgid "``ElggWidget::setContext()`` use ``$entity->context = $context``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:927
+msgid "``Elgg\\Notifications\\NotificationsService::getDeprecatedHandler()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:928
+msgid "``Elgg\\Notifications\\NotificationsService::getMethodsAsDeprecatedGlobal()`` use ``elgg_get_notification_methods()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:929
+msgid "``Elgg\\Notifications\\NotificationsService::registerDeprecatedHandler()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:930
+msgid "``Elgg\\Notifications\\NotificationsService::setDeprecatedNotificationSubject()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:931
+msgid "``Elgg\\Email::getRecipient()`` use ``Elgg\\Email::getTo()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:932
+msgid "``Elgg\\Email::setRecipient()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:933
+msgid "``Elgg\\Entity::getLocation()`` use ``$entity->location``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:934
+msgid "``Elgg\\Entity::setLocation()`` use ``$entity->location = $location``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:939
+msgid "``access_get_show_hidden_status()`` use ``elgg()->session->getDisabledEntityVisibility()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:940
+msgid "``diagnostics_md5_dir()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:941
+msgid "``elgg_add_subscription()`` use ``\\ElggEntity::addSubscription()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:942
+msgid "``elgg_get_available_languages()`` use ``elgg()->translator->getAvailableLanguages()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:943
+msgid "``elgg_get_all_plugin_user_settings()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:944
+msgid "``elgg_get_entities_from_plugin_user_settings()`` use ``elgg_get_entities()`` with private settings parameters and prefix your setting name with ``plugin:user_setting:``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:945
+msgid "``elgg_get_filter_tabs()`` use menu hooks on ``'register', 'menu:filter:<filter_id>'``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:946
+msgid "``elgg_get_loaded_css()`` use ``elgg_get_loaded_external_files('css', 'head')``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:947
+msgid "``elgg_get_loaded_js()`` use ``elgg_get_loaded_external_files('js', $location)``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:948
+msgid "``elgg_get_system_messages()`` use ``elgg()->system_messages->loadRegisters()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:949
+msgid "``elgg_prepend_css_urls()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:950
+msgid "``elgg_remove_subscription()`` use ``\\ElggEntity::removeSubscription()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:951
+msgid "``elgg_set_plugin_setting()`` use ``$plugin->setSetting($name, $value)``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:952
+msgid "``elgg_set_plugin_user_setting()`` use ``ElggUser::setPluginSetting()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:953
+msgid "``elgg_set_system_messages()`` use ``elgg()->system_messages->saveRegisters()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:954
+msgid "``elgg_unset_plugin_setting()`` use ``$plugin->unsetSetting($name)``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:955
+msgid "``elgg_unset_plugin_user_setting()`` use ``ElggUser::removePluginSetting()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:956
+msgid "``get_language_completeness()``  use ``elgg()->translator->getLanguageCompleteness()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:957
+msgid "``get_installed_translations()``  use ``elgg()->translator->getInstalledTranslations()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:958
+msgid "``group_access_options()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:959
+msgid "``pages_is_page()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:960
+msgid "``system_log_get_log()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:961
+msgid "``system_log_get_log_entry()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:962
+msgid "``system_log_get_object_from_log_entry()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:963
+msgid "``system_log_get_seconds_in_period()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:964
+msgid "``system_log_archive_log()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:965
+msgid "``system_log_browser_delete_log()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:966
+msgid "``thewire_get_parent()`` use ``\\ElggWire::getParent()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:967
+msgid "``validate_email_address()`` use ``elgg()->accounts->assertValidEmail()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:968
+msgid "``validate_password()`` use ``elgg()->accounts->assertValidPassword()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:969
+msgid "``validate_username()`` use ``elgg()->accounts->assertValidUsername()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:972
+msgid "Removed views / resources"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:974
+msgid "``admin/develop_tools/inspect/webservices``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:975
+msgid "``elgg/thewire.js``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:976
+msgid "``input/urlshortener``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:977
+msgid "``messages/js`` moved to ``forms/messages/process.js``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:978
+msgid "``navigation/menu/elements/item_deps`` the functionality has been merged into ``navigation/menu/elements/item``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:979
+msgid "``object/plugin/elements/contributors``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:980
+msgid "``notifications/groups``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:981
+msgid "``notifications/personal`` use ``notifications/settings`` or ``notifications/users``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:982
+msgid "``notifications/settings/personal`` moved to ``notifications/settings/records``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:983
+msgid "``notifications/settings/collections``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:984
+msgid "``notifications/settings/other`` extend ``notifications/settings/records``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:985
+msgid "``notifications/subscriptions/groups`` use ``forms/notifications/subscriptions/groups``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:986
+msgid "``notifications/subscriptions/users`` use ``forms/notifications/subscriptions/users``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:987
+msgid "``resources/comments/view`` use ``\\Elgg\\Controllers\\CommentEntityRedirector``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:988
+msgid "``resources/river`` use ``resources/activity/all`` or ``resources/activity/owner`` or ``resources/activity/friends``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:989
+msgid "``reportedcontent/admin_css``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:990
+msgid "``thewire/previous``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:993
+msgid "Removed hooks / events"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:995
+msgid "Event ``created, river`` has been removed. Use the ``create:after, river`` event."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:996
+msgid "Hook ``creating, river`` has been removed. Use the ``create:before, river`` event if you want to block the creation of a river item."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:997
+msgid "Hook ``filter_tabs, <context>`` has been removed. Use the ``register, menu:filter:<filter_id>`` hook"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:998
+msgid "Hook ``output, ajax`` has been removed. Use the ``ajax_response`` hook if you want to influence the results."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:999
+msgid "Hook ``reportedcontent:add`` has been removed. Use the ``create, object`` event to prevent creation."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:1000
+msgid "Hook ``reportedcontent:archive`` has been removed. Use the ``permissions_check, object`` hook."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:1001
+msgid "Hook ``reportedcontent:delete`` has been removed. Use the ``delete, object`` event to prevent deletion."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.x-to-4.0.rst:1006
+msgid "The action ``reportedcontent/delete`` has been replaced with a generic entity delete action"
 msgstr ""
 
