@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-18 16:34+0200\n"
+"POT-Creation-Date: 2021-06-11 11:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,90 +42,6 @@ msgstr ""
 
 #: ../../plugins/dashboard.rst:12
 msgid "The dashboard is bundled with both the full and core-only Elgg packages. This is a users portal to activity that is important to them both from within the site and from external sources. Using Elgg's powerful widget API, it is possible to build widgets that pull out relevant content from within an Elgg powered site as well as grab information from third party sources such as Twitter or Flickr (providing those widgets exist). A users dashboard is not the same as their profile, whereas the profile is for consumption by others, the dashboard is a space for users to use for their own needs."
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:2
-msgid "Diagnostics"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:4
-msgid "For the technically savvy user, system diagnostics enables you to quickly evaluate the server environment, Elgg code, and plugins of an Elgg install. Diagnostics is a core system plugin that comes turned on by default with Elgg. To download the diagnostics file, follow the steps below. The file is a dump of all sorts of useful information."
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:6
-msgid "To use:"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:8
-msgid "Log in as Administrator"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:9
-msgid "Go to Administration -> Administer -> Utilities ->System Diagnostics"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:10
-msgid "Click 'Download'"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:12
-msgid "System diagnostics dump file contents:"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:14
-msgid "List of all Elgg files along with a hash for each file"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:15
-msgid "List of all the plugins"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:16
-msgid "PHP superglobals"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:17
-msgid "PHP settings"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:18
-msgid "Apache settings"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:26
-msgid "Elgg CONFIG values"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:20
-msgid "language strings"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:21
-msgid "site settings"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:22
-msgid "database settings"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:23
-msgid "plugin hooks"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:24
-msgid "actions"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:25
-msgid "views"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:26
-msgid "page handlers"
-msgstr ""
-
-#: ../../plugins/diagnostics.rst:27
-msgid "much more"
 msgstr ""
 
 #: ../../plugins/file.rst:2
@@ -289,30 +205,22 @@ msgid "members"
 msgstr ""
 
 #: ../../plugins/index.rst:37
-msgid "notifications"
-msgstr ""
-
-#: ../../plugins/index.rst:38
 msgid "reportedcontent"
 msgstr ""
 
-#: ../../plugins/index.rst:39
+#: ../../plugins/index.rst:38
 msgid "search"
 msgstr ""
 
-#: ../../plugins/index.rst:40
-msgid "site_notifications"
-msgstr ""
-
-#: ../../plugins/index.rst:41
+#: ../../plugins/index.rst:39
 msgid "system_log"
 msgstr ""
 
-#: ../../plugins/index.rst:42
+#: ../../plugins/index.rst:40
 msgid "tagcloud"
 msgstr ""
 
-#: ../../plugins/index.rst:43
+#: ../../plugins/index.rst:41
 msgid "web_services"
 msgstr ""
 
@@ -393,7 +301,7 @@ msgid "User details"
 msgstr ""
 
 #: ../../plugins/profile.rst:17
-msgid "This provides information about a user, which is configurable from within the plugin's start.php file. You can change the available profile fields form the admin panel. Each profile field has its own access restriction, so users can choose exactly who can see each individual element. Some of the fields contain tags (for example *skills*) limiting access to a field will also limit who can find you by that tag."
+msgid "This provides information about a user, which is configurable with the ``fields, user:user`` hook. You can change the available profile fields from the admin panel. Each profile field has its own access restriction, so users can choose exactly who can see each individual element. Some of the fields contain tags (for example *skills*) limiting access to a field will also limit who can find you by that tag."
 msgstr ""
 
 #: ../../plugins/profile.rst:21
@@ -438,6 +346,34 @@ msgstr ""
 
 #: ../../plugins/profile.rst:44
 msgid "In each case, the user in question will be passed as ``$params['entity']``."
+msgstr ""
+
+#: ../../plugins/site_notifications.rst:2
+msgid "Site Notifications"
+msgstr ""
+
+#: ../../plugins/site_notifications.rst:4
+msgid "The Site notifications plugin offers a way for your users to keep up to date with what's happening on your community by sending a on-site notification."
+msgstr ""
+
+#: ../../plugins/site_notifications.rst:8
+msgid "Features"
+msgstr ""
+
+#: ../../plugins/site_notifications.rst:10
+msgid "Get a notification when content is posted on the community"
+msgstr ""
+
+#: ../../plugins/site_notifications.rst:11
+msgid "Unread notifications will automatically be marked as read when you view the content it relates to"
+msgstr ""
+
+#: ../../plugins/site_notifications.rst:12
+msgid "Notifications will automatically be removed if the content it relates to is removed"
+msgstr ""
+
+#: ../../plugins/site_notifications.rst:13
+msgid "Plugin settings are available to automatically cleanup unread/read notifications"
 msgstr ""
 
 #: ../../plugins/thewire.rst:2

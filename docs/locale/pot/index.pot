@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-18 16:34+0200\n"
+"POT-Creation-Date: 2021-06-11 11:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -117,7 +117,7 @@ msgid "RequireJS handles AMD"
 msgstr ""
 
 #: ../../index.rst:34
-msgid "Zend Mail handles outgoing email"
+msgid "Laminas Mail handles outgoing email"
 msgstr ""
 
 #: ../../index.rst:35
