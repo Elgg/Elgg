@@ -1636,12 +1636,6 @@ To reply or view the original item, click here:
 	'actiongatekeeper:uploadexceeded' => 'The size of file(s) uploaded exceeded the limit set by your site administrator',
 
 /**
- * Word blacklists
- */
-
-	'word:blacklist' => 'and, the, then, but, she, his, her, him, one, not, also, about, now, hence, however, still, likewise, otherwise, therefore, conversely, rather, consequently, furthermore, nevertheless, instead, meanwhile, accordingly, this, seems, what, whom, whose, whoever, whomever',
-
-/**
  * Javascript
  */
 
