@@ -295,7 +295,7 @@ class Page {
 			}
 			$plugin_name = $plugin->getDisplayName();
 			$plugins_with_settings[$plugin_name] = [
-				'name' => $plugin_id,
+				'name' => "plugin:settings:{$plugin_id}",
 				'href' => elgg_generate_url('admin:plugin_settings', [
 					'plugin_id' => $plugin_id,
 				]),
