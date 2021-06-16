@@ -26,13 +26,15 @@ class ElggLogFormatter extends LineFormatter {
 			$record['datetime'] = $dt;
 
 			$eol = PHP_EOL;
-			$message = "Exception at time {$timestamp}:{$eol}{$exception}{$eol}";
+			$message = "Exception at time {$timestamp}:{$eol}{$exception->getMessage()}{$eol}";
 			$record['message'] = preg_replace('~\R~u', $eol, $message);
 
 			if ($exception instanceof DatabaseException) {
 				$record['context']['sql'] = $exception->getQuery();
 				$record['context']['params'] = $exception->getParameters();
 			}
+			
+			unset($record['context']['exception']);
 		}
 
 		return parent::format($record);

@@ -39,9 +39,11 @@ if (elgg_view_exists('page/elements/owner_block/extend')) {
 	$body .= elgg_view('page/elements/owner_block/extend', $vars);
 }
 
-echo elgg_view_module('info', '', $body, [
-	'header' => $header,
-	'class' => ['elgg-owner-block', $extra_class],
-]);
+if (!empty($body)) {
+	echo elgg_view_module('info', '', $body, [
+		'header' => $header,
+		'class' => ['elgg-owner-block', $extra_class],
+	]);
+}
 
 elgg_pop_context();
