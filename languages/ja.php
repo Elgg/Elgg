@@ -562,7 +562,6 @@ return array(
 	'admin:plugins:deactivate:no' => "%s を停止できませんでした。",
 	'admin:plugins:deactivate:no_with_msg' => "%s を停止できませんでした。Error: %s",
 	'admin:plugins:activate:yes' => "%s を起動状態にしました。",
-	'admin:plugins:activate:no' => "% sを起動できませんでした。",
 	'admin:plugins:activate:no_with_msg' => "%s を起動できませんでした。Error: %s",
 	'admin:plugins:categories:all' => '全てのカテゴリ',
 	'admin:plugins:plugin_website' => 'プラグインのウェブサイト',
@@ -1048,7 +1047,6 @@ return array(
 	'upgrade:item_count' => 'アップグレードが必要なものが <b>%s</b> 個あります。',
 	'upgrade:warning' => '<b>警告:</b>大きなサイトならアップグレードするのに少々時間がかかるかもしれません。',
 	'upgrade:success_count' => 'アップグレード済み:',
-	'upgrade:error_count' => 'エラー:',
 	'upgrade:finished' => 'アプグレードを完了しました',
 	'upgrade:finished_with_errors' => '<p>アップグレードはエラーが出て終了してしまいました。 ページをリフレッシュして、もう一度アップグレードを実行してください。</p></p><br />再びエラーが起こったなら、原因を究明するためサーバのエラーログをチェックしてみてください。Elgg community の <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support group</a> にエラーを修正するための答えがあるかもしれません。</p>',
 	

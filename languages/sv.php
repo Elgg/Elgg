@@ -568,31 +568,10 @@ return array(
 	
 	'admin:security:settings:min_password_special' => "Minsta antal specialtecken i ett lösenord",
 	'user:notification:ban:subject' => 'Ditt konto på %s har blivit avstängt',
-	'user:notification:ban:body' => 'Hej %s,
-
-Ditt konto på %s har blivit avstängt.
-
-För att gå till webbplatsen, tryck här:
-%s',
 	
 	'user:notification:unban:subject' => 'Ditt konto på %s är inte avstängt längre',
-	'user:notification:unban:body' => 'Hej %s,
-
-Ditt konto på %s är inte längre avstängt. Du kan använda webbplatsen igen.
-
-För att gå till webbplatsen, tryck här:
-%s',
 	
 	'user:notification:password_change:subject' => 'Ditt lösenord har ändrats!',
-	'user:notification:password_change:body' => "Hej %s,
-
-Ditt lösenord på '%s' har ändrats! Om du gjorde den här ändringen är allt i sin ordning.
-
-Om du inte gjorde den här ändringen, vänligen återställ ditt lösenord här:
-%s
-
-Eller kontakta en sidadminstratör:
-%s",
 
 /**
  * Plugins
@@ -944,19 +923,6 @@ Eller kontakta en sidadminstratör:
  */
 
 	'useradd:subject' => 'Användarkonto skapat',
-	'useradd:body' => '%s,
-
-Ett användarkonto har skapats för dig på %s. För att logga in, besök:
-
-%s
-
-Och logga in med dessa användaruppgifter:
-
-Username: %s
-Password: %s
-
-När du har loggat in, rekommenderar vi starkt att du 
-ändrar ditt lösenord.',
 
 /**
  * System messages
@@ -1125,62 +1091,20 @@ För att visa deras profil, tryck här:
 %s",
 
 	'email:changepassword:subject' => "Lösenord ändrat!",
-	'email:changepassword:body' => "Hej %s,
-
-Ditt lösenord har ändrats.",
 
 	'email:resetpassword:subject' => "Återställning av lösenord!",
-	'email:resetpassword:body' => "Hej %s,
-
-Ditt lösenord har återställts till: %s",
 
 	'email:changereq:subject' => "Begär ändring av lösenord.",
-	'email:changereq:body' => "Hej %s,
-
-Någon (från IP-adressen %s) har begärt en ändring av lösenord för det här kontot.
-
-Om du begärde det här, tryck på länken nedan. Annars ignorera det här mejlet.
-
-%s",
 	
 	'account:email:request:success' => "Din nya e-postadress kommer att sparas efter bekräftelse, vänligen kontrollera inkorgen på '%s' för mer instruktioner.",
 	'email:request:email:subject' => "Vänligen bekräfta din e-postadress",
-	'email:request:email:body' => "Hej %s,
-
-Du begärde att få ändra din e-postadress på '%s'.
-Om du inte begärde den här ändringen, kan du ignorera det här mejlet.
-
-För att bekräfta ändringen av e-postadress, tryck på den här länken:
-%s
-
-Notera att den här länken bara är giltig i 1 timme.",
 	
 	'email:confirm:email:old:subject' => "Din e-postadress ändrades",
-	'email:confirm:email:old:body' => "Hej %s,
-
-Din e-postadress på '%s' ändrades.
-Hädanefter kommer du få aviseringar på '%s'.
-
-Om du inte begärde den här ändringen, vänligen kontakta en administratör för webbplatsen.
-%s",
 	
 	'email:confirm:email:new:subject' => "Din e-postadress ändrades",
-	'email:confirm:email:new:body' => "Hej %s,
-
-Din e-postadress på '%s' ändrades.
-Hädanefter kommer du få aviseringar till den här e-postadressen.
-
-Om du inte begärde den här ändringen, vänligen kontakta en administratör för den här webbplatsen.
-%s",
 	'account:validation:pending:content' => "Ditt konto har registrerats! Innan du kan använda ditt konto, måste en administratör för webbplatsen validera ditt konto. Du kommer att få ett mejl när ditt konto är validerat.",
 	
 	'account:notification:validation:subject' => "Ditt konto på %s har validerats!",
-	'account:notification:validation:body' => "Hej %s,
-
-Ditt konto på '%s' har validerats. Du kan nu använda ditt konto.
-
-För att gå till webbplatsen, tryck här:
-%s",
 
 /**
  * user default access
@@ -1217,27 +1141,8 @@ För att gå till webbplatsen, tryck här:
 	'generic_comment:title' => 'Kommentar av %s',
 	'generic_comment:on' => '%s på %s',
 	'generic_comments:latest:posted' => 'skickade en',
-	'generic_comment:notification:owner:summary' => 'Du har en ny kommentar!',
-	'generic_comment:notification:owner:body' => "Du har en ny kommentar på ditt inlägg \"%s\" från %s. Det står:
-
-%s
-
-För att svara eller visa originalinlägget, tryck här:
-%s
-
-För att visa %ss profil, tryck här:
-%s",
 	
 	'generic_comment:notification:user:summary' => 'En ny kommentar på: %s',
-	'generic_comment:notification:user:body' => "En ny kommentar gjordes på \"%s\" av %s. Det står:
-
-%s
-
-För att svara eller visa orginalinlägget, tryck här:
-%s
-
-För att visa %ss profil, tryck här:
-%s",
 
 /**
  * Entities

@@ -143,31 +143,10 @@ return array(
 	'groups:invite:subject' => "%s je bent uitgenodigd om lid te worden van %s!",
 	'groups:joinrequest:remove:check' => 'Weet je zeker dat je dit lidmaatschapsverzoek wilt verwijderen?',
 	'groups:invite:remove:check' => 'Weet je zeker dat je deze uitnodiging wilt verwijderen?',
-	'groups:invite:body' => "Beste %s,
-
-%s heeft je uitgenodigd om lid te worden van de groep '%s'.
-
-On al je uitnodigingen te bekijken, klik hier:
-%s",
 
 	'groups:welcome:subject' => "Welkom bij de groep '%s'!",
-	'groups:welcome:body' => "Beste %s,
-
-Je bent nu lid van de groep '%s'.
-
-Je kunt direct beginnen in de groep!
-%s",
 
 	'groups:request:subject' => "%s wil lid worden van %s",
-	'groups:request:body' => "Beste %s,
-
-%s wil graag lid worden van de groep '%s'.
-
-Om het profiel te bekijken, klik hier:
-%s
-
-of klik op de link om alle lidmaatschapsverzoeken te bekijken:
-%s",
 
 	'river:group:create' => '%s heeft de groep %s aangemaakt',
 	'river:group:join' => '%s is lid geworden van de groep %s',

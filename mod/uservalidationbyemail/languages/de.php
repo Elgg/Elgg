@@ -6,19 +6,6 @@
  */
 
 return array(
-	'email:validate:subject' => "%s, bitte bestätige Deine Email-Adresse!",
-	'email:validate:body' => "Hallo %s,
-
-bevor Du Dich auf der Community-Seite %s anmelden kannst, mußt Du Deine Email-Addresse bestätigen.
-
-Um Deine angegebene Email-Addresse zu bestätigen, folgende diesem Link:
-
-%s
-
-Wenn Du nicht direkt auf den Link klicken kannst, kopiere ihn bitte von Hand in die Adresszeile Deines Browsers.
-
-%s
-%s",
 	'email:confirm:success' => "Du hast Deine Email-Adresse bestätigt!",
 	'email:confirm:fail' => "Deine Email-Adresse konnte nicht bestätigt werden...",
 

@@ -54,8 +54,6 @@ return array(
 	'groups:featured' => 'Избранные группы',
 	'groups:makeunfeatured' => 'Убрать из избранного',
 	'groups:makefeatured' => 'Добавить в избранные',
-	'groups:featuredon' => 'Сделано.',
-	'groups:unfeatured' => 'Убрано.',
 	'groups:featured_error' => 'Ошибка.',
 	'groups:nofeatured' => 'Нет избранных групп',
 	'groups:joinrequest' => 'Попросить членство',

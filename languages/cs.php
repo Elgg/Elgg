@@ -1042,7 +1042,6 @@ return array(
 	'upgrade:item_count' => 'Je zde <b>%s</b> položek, které vyžadují aktualizaci.',
 	'upgrade:warning' => '<b>Varování:</b> na rozsáhlých stránkách může tato aktualizace trvat velice dlouho!',
 	'upgrade:success_count' => 'Aktualizováno:',
-	'upgrade:error_count' => 'Chyby:',
 	'upgrade:finished' => 'Aktualizace dokončena',
 	'upgrade:finished_with_errors' => '<p>Aktualizace dokončena s chybami. Obnovte stránku a zkuste aktualizaci spustit znovu.</p></p><br />Pokud se bude chyba opakovat, zkontrolujte chybový log serveru, ten může obsahovat důvod. Pomoc s opravou chyby můžete najít ve <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">skupině technické podpory</a> pro komunitu Elgg.</p>',
 	

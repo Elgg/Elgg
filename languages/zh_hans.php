@@ -462,7 +462,6 @@ return array(
 	'admin:configure_utilities:maintenance' => '维护模式',
 	'admin:upgrades' => '升级',
 	'admin:upgrades:run' => '运行升级。',
-	'admin:upgrades:error:invalid_upgrade' => '升级%s (%s) 不是elggupgrade实例',
 	'admin:upgrades:error:invalid_batch' => '无法实例化升级%s (%s) 的批处理程序',
 
 	'admin:settings' => '设置',
@@ -593,56 +592,14 @@ return array(
 	'admin:site:secret:prevented' => "站点秘密的再生被阻止。",
 	
 	'admin:notification:make_admin:admin:subject' => 'A new site administrator was added to %s',
-	'admin:notification:make_admin:admin:body' => '你好 %s,
-
-%s made %s a site administrator of %s.
-
-To view the profile of the new administrator, click here:
-%s
-
-To go to the site, click here:
-%s',
 	
 	'admin:notification:make_admin:user:subject' => 'You were added as a site administator of %s',
-	'admin:notification:make_admin:user:body' => 'Hi %s,
-
-%s made you a site administrator of %s.
-
-To go to the site, click here:
-%s',
 	'admin:notification:remove_admin:admin:subject' => 'A site administrator was removed from %s',
-	'admin:notification:remove_admin:admin:body' => 'Hi %s,
-
-%s removed %s a site administrator of %s.
-
-To view the profile of the old administrator, click here:
-%s
-
-To go to the site, click here:
-%s',
 	
 	'admin:notification:remove_admin:user:subject' => 'You were removed as a site administator from %s',
-	'admin:notification:remove_admin:user:body' => 'Hi %s,
-
-%s removed you as site administrator of %s.
-
-To go to the site, click here:
-%s',
 	'user:notification:ban:subject' => 'Your account on %s was banned',
-	'user:notification:ban:body' => 'Hi %s,
-
-Your account on %s was banned.
-
-To go to the site, click here:
-%s',
 	
 	'user:notification:unban:subject' => 'Your account on %s is no longer banned',
-	'user:notification:unban:body' => 'Hi %s,
-
-Your account on %s is no longer banned. You can use the site again.
-
-To go to the site, click here:
-%s',
 
 /**
  * Plugins
@@ -1023,20 +980,6 @@ To go to the site, click here:
  */
 
 	'useradd:subject' => '用户账户已创建',
-	'useradd:body' => '
-%s,
-
-已在 %s为您创建账户. 登录请访问:
-
-%s
-
-请使用以下信息登录:
-
-用户名: %s
-密码: %s
-
-登录成功后, 请您立即修改密码。
-',
 
 /**
  * System messages
@@ -1236,7 +1179,6 @@ To go to the site, click here:
 	'upgrade:item_count' => ' <b>%s</b>个项目需要升级',
 	'upgrade:warning' => '<b>警告:</b> 大型网站的升级可能需要相当长的时间!',
 	'upgrade:success_count' => '升级:',
-	'upgrade:error_count' => '错误:',
 	'upgrade:finished' => '升级完成',
 	'upgrade:finished_with_errors' => '<p>升级完成，但是仍有错误，刷新页面重新运行升级</p></p><br />如果错误重现，检查服务器错误log找到可能的原因，你也可以从<a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support group</a> 寻求帮助</p>',
 	
@@ -1278,24 +1220,10 @@ To go to the site, click here:
 请勿回复此邮件.",
 
 	'email:changepassword:subject' => "密码已更改!",
-	'email:changepassword:body' => "%s, 您好,
-
-您的密码已经成功修改",
 
 	'email:resetpassword:subject' => "密码重置!",
-	'email:resetpassword:body' => "你好， %s,
-
-你的密码已经重置到: %s",
 
 	'email:changereq:subject' => "请求修改密码",
-	'email:changereq:body' => "你好， %s,
-
-有人 (从IP地址 %s) 请求修改此账户的密码
-
-如果是您本人申请，请点击下面的连接，若不是，请忽略此邮件
-
-%s
-",
 
 /**
  * user default access
@@ -1331,7 +1259,6 @@ To go to the site, click here:
 	'generic_comment:title' => '%s评论',
 	'generic_comment:on' => '%s 评论 %s',
 	'generic_comments:latest:posted' => '发表了',
-	'generic_comment:notification:owner:summary' => '您有新评论!',
 	'generic_comment:notification:owner:body' => "您收到新评论关于\"%s\" ，来自 %s. %s写道:
 
 %s

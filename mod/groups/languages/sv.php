@@ -139,31 +139,10 @@ return array(
 	'groups:invite:subject' => "%s du har blivit inbjuden att gå med i %s!",
 	'groups:joinrequest:remove:check' => 'Är du säker på att du vill ta bort den här begäran om att gå med?',
 	'groups:invite:remove:check' => 'Är du säker på att du vill ta bort den här inbjudan?',
-	'groups:invite:body' => "Hej %s,
-
-%s bjöd in dig att gå med i gruppen '%s'.
-
-Tryck nedan för att visa dina inbjudningar:
-%s",
 
 	'groups:welcome:subject' => "Välkommen till gruppen %s!",
-	'groups:welcome:body' => "Hej %s!
-
-Du är nu medlem i gruppen '%s'.
-
-Tryck nedan för att börja skriva inlägg!
-%s",
 
 	'groups:request:subject' => "%s har begärt att gå med i %s",
-	'groups:request:body' => "Hej %s,
-
-%s har begärt att gå med i gruppen '%s'.
-
-Tryck nedan för att visa deras profil:
-%s
-
-eller tryck nedan för att visa gruppen förfrågningar om att gå med:
-%s",
 
 	'river:group:create' => '%s skapade gruppen %s',
 	'river:group:join' => '%s gick med i gruppen %s',

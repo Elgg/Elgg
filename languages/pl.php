@@ -306,11 +306,9 @@ return array(
 	'register:fields' => 'Wszystkie pola są wymagane',
 	'registration:notemail' => 'Podany adres e-mail wydaje się nieprawidłowy.',
 	'registration:userexists' => 'Ta nazwa użytkownika już istnieje',
-	'registration:usernametooshort' => 'Nazwa użytkownika musi mieć co najmniej 4 znaki.',
 	'registration:usernametoolong' => 'Nazwa użytkownika jest zbyt długa. Możesz użyć maksymalnie %u znaków.',
 	'registration:passwordtooshort' => 'Hasło musi mieć co najmniej 6 znaków.',
 	'registration:dupeemail' => 'Ten adres e-mail jest już w naszej bazie.',
-	'registration:invalidchars' => 'Twoja nazwa zawiera niedozwolone znaki.',
 	'registration:emailnotvalid' => 'Adres e-mail który podałeś jest niepoprawny dla systemu,',
 	'registration:passwordnotvalid' => 'Twoje hasło które podałeś jest niepoprawne dla systemu.',
 	'registration:usernamenotvalid' => 'Użytkownik którego nazwę podałeś jest niepoprawny dla systemu.',
@@ -581,7 +579,6 @@ return array(
 	'admin:user:unban:no' => "Użytkownik nie został od banowany.",
 	'admin:user:unban:yes' => "Użytkownik został pomyślnie od banowany.",
 	'admin:user:delete:no' => "Nie można skasować użytkownika.",
-	'admin:user:delete:yes' => "Użytkownik skasowany !",
 	'admin:user:self:delete:no' => "Nie możesz skasować samego siebie",
 
 	'admin:user:resetpassword:yes' => "Reset hasła, użytkownik powiadomiony.",
@@ -621,8 +618,6 @@ return array(
 	'usersettings:statistics' => "Twoje statystyki",
 	'usersettings:statistics:opt:description' => "Zobacz informacje statystyczne na temat użytkowników i obiektów na stronie.",
 	'usersettings:statistics:opt:linktext' => "Ustawienia konta",
-
-	'usersettings:user' => "Twoje ustawienia",
 	'usersettings:user:opt:description' => "To pozwala na kontrolę ustawień użytkownika.",
 	'usersettings:user:opt:linktext' => "Zmień swoje ustawienia",
 
@@ -1012,7 +1007,6 @@ return array(
 	'upgrade:item_count' => 'Jest <b>%s</b> elementów, które należy zaktualizować.',
 	'upgrade:warning' => '<b>Uwaga:</b> na dużych stronach, aktualizacja może zająć istotnie dużo czasu!',
 	'upgrade:success_count' => 'Zaktualizowano:',
-	'upgrade:error_count' => 'Błędów:',
 	'upgrade:finished' => 'Aktualizacja zakończona',
 	'upgrade:finished_with_errors' => '<p>Aktualizacja zakończyła się błędami. Odśwież stronę aby spróbować ponownie.</p></p><br />Jeśli błąd się powtarza, sprawdź możliwe przyczyny w dzienniku błędów. Możesz szukać pomocy w rozwiązaniu problemów na stronie <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">grupy wsparcia technicznego</a> w społeczności Elgg.</p>',
 	

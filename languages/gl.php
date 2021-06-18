@@ -1024,7 +1024,6 @@ return array(
 	'upgrade:item_count' => 'É necesario anovar <b>%s</b> elementos.',
 	'upgrade:warning' => '<b>Advertencia:</b> En sitios grandes, esta anovación pode levar bantante tempo.',
 	'upgrade:success_count' => 'Anovado:',
-	'upgrade:error_count' => 'Erros:',
 	'upgrade:finished' => 'Rematou a anovación',
 	'upgrade:finished_with_errors' => '<p>Rematou a anovación pero producíronse erros. Actualice a páxina e probe a anovar outra vez.</p></p><br />
 
