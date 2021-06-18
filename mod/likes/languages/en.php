@@ -25,8 +25,7 @@ return array(
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s likes your post "%s"',
-	'likes:notifications:body' =>
-'%1$s likes your post "%2$s" on %3$s
+	'likes:notifications:body' => '%1$s likes your post "%2$s" on %3$s
 
 See your original post here:
 
