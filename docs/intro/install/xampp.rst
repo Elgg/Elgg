@@ -11,7 +11,7 @@ installation on your local computer running Windows.
 -  Once the installation is completed, it will prompt you to start the
    XAMPP controller panel. Leave it for now.
 -  Open ``C:\xampp\apache\conf\httpd.conf`` file with notepad and uncomment
-   these lines::
+   these lines:
 
      #LoadModule rewrite_module modules/mod_rewrite.so
      #LoadModule filter_module modules/mod_filter.so
