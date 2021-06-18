@@ -5,8 +5,6 @@
 
 $plugin = elgg_extract('entity', $vars);
 
-$period = $plugin->period ?: 'monthly';
-
 echo elgg_view_field([
 	'#type' => 'select',
 	'#label' => elgg_echo('garbagecollector:period'),
@@ -16,5 +14,5 @@ echo elgg_view_field([
 		'monthly' => elgg_echo('garbagecollector:monthly'),
 		'yearly' => elgg_echo('garbagecollector:yearly'),
 	],
-	'value' => $period,
+	'value' => $plugin->period,
 ]);

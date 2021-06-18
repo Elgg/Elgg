@@ -47,7 +47,7 @@ $cli->setLogger($logger);
 
 $argv = $services->request->server->get('argv');
 
-if ($argv[1] === 'upgrade') {
+if (isset($argv[1]) && ($argv[1] === 'upgrade')) {
 	// To run an upgrade successfully, we must first migrate
 	// the application before booting it
 	$cli->add(\Elgg\Cli\UpgradeCommand::class);
