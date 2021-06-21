@@ -21,6 +21,8 @@ You should first be familiar with the :doc:`standard installation instructions <
 4. (Ignore this step for v5.3 or later) From the tray icon go Configuration/Apache
    and uncomment this line:
    
+   .. code-block:: ini
+   
      #LoadModule rewrite_module modules/mod_rewrite.so
 
 5. (Ignore this step for v5.3 or later) Change ``AllowOverride None`` to ``AllowOverride All``
@@ -28,6 +30,8 @@ You should first be familiar with the :doc:`standard installation instructions <
 
 6. (Ignore this step for v5.3 or later) From the tray icon fo Configuration/PHP
    and uncomment this line:
+   
+   .. code-block:: ini
    
      ;extension=php_curl.dll
 
