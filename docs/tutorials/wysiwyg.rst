@@ -18,7 +18,7 @@ Add the WYSIWYG library code
 
 Now you need to upload TinyMCE into a directory in your plugin.
 We strongly encourage you to use ``composer`` to manage third-party dependencies,
-since it is so much easier to upgrade and maintain that way::
+since it is so much easier to upgrade and maintain that way:
 
 .. code-block:: sh
 
@@ -35,8 +35,8 @@ Now that you have:
  
 It is time to tell Elgg how to apply TinyMCE to longtext fields.
 
-We're going to do that by extending the input/longtext view and including some javascript.
-Create a view tinymce/longtext and add the following code:
+We're going to do that by extending the ``input/longtext`` view and including some javascript.
+Create a view ``tinymce/longtext`` and add the following code:
 
 .. code-block:: php
 
@@ -67,13 +67,16 @@ Create a view tinymce/longtext and add the following code:
     });
     </script>
 
-Then, in your plugin's init function, extend the input/longtext view
+Then, in your plugin's ``elgg-plugin.php`` file extend the ``input/longtext`` view:
 
 .. code-block:: php
 
-    function tinymce_init() {
-        elgg_extend_view('input/longtext', 'tinymce/longtext');
-    }
+    return [
+    	'view_extensions' => [
+    		'input/longtext' => [
+    			'tinymce/longtext' => [],
+    		],
+    	],
+    ];
 
-That's it! Now every time someone uses input/longtext,
-TinyMCE will be loaded and applied to that textarea.
+That's it! Now every time someone uses ``input/longtext`` TinyMCE will be loaded and applied to that textarea.

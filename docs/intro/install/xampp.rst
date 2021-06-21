@@ -12,6 +12,8 @@ installation on your local computer running Windows.
    XAMPP controller panel. Leave it for now.
 -  Open ``C:\xampp\apache\conf\httpd.conf`` file with notepad and uncomment
    these lines:
+   
+   .. code-block:: ini
 
      #LoadModule rewrite_module modules/mod_rewrite.so
      #LoadModule filter_module modules/mod_filter.so
@@ -40,8 +42,10 @@ working, follow these steps:
 
 -  Download the DLL from http://eac.qme.nl/eAccelerator_v1_0_svn427_for_v5_3_5-VC6.zip
 -  Copy eAccelerator_ts.dll to ``C:\xampp\php\ext\php_eaccelerator.dll``
--  Uncomment this line in ``C:\xampp\php\php.ini``::
+-  Uncomment this line in ``C:\xampp\php\php.ini``:
    
+   .. code-block:: ini
+     
      ;zend_extension = "C:\xampp\php\ext\php_eaccelerator.dll"
    
 -  Restart apache
