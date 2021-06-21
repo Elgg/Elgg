@@ -772,75 +772,18 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:site:secret:prevented' => "Het genereren van een nieuw sitegeheim code werd geblokeerd",
 	
 	'admin:notification:make_admin:admin:subject' => 'Er is een nieuwe site beheerder toegevoegd aan %s',
-	'admin:notification:make_admin:admin:body' => 'Beste %s,
-
-%s heeft %s toegevoegd als een site beheerder van %s.
-
-Om het profiel van de nieuwe site beheerder te bekijken, klik hier:
-%s
-
-Om naar de website te gaan, klik hier
-%s',
 	
 	'admin:notification:make_admin:user:subject' => 'Je bent toegevoegd als site beheerder van %s',
-	'admin:notification:make_admin:user:body' => 'Beste %s,
-
-%s heeft je een site beheerder gemaakt van %s.
-
-Om naar de website te gaan, klik hier:
-%s',
 	'admin:notification:remove_admin:admin:subject' => 'Een site beheerder is verwijderd van %s',
-	'admin:notification:remove_admin:admin:body' => 'Beste %s,
-
-%s heeft %s verwijderd als site beheerder van %s.
-
-Om het profiel van de oud beheerder te bekijken, klik hier:
-%s
-
-Om naar de website te gaan, klik hier:
-%s',
 	
 	'admin:notification:remove_admin:user:subject' => 'Je bent verwijderd als site beheerder van %s',
-	'admin:notification:remove_admin:user:body' => 'Beste %s,
-
-%s heeft je verwijderd als site beheerder van %s.
-
-Om naar de website te gaan, klik hier:
-%s',
 	'user:notification:ban:subject' => 'Je account op %s is geblokkeerd',
-	'user:notification:ban:body' => 'Beste %s,
-
-Je account op %s is geblokkeerd.
-
-Om naar de website te gaan, klik hier:
-%s',
 	
 	'user:notification:unban:subject' => 'Je account op %s is niet meer geblokkeerd',
-	'user:notification:unban:body' => 'Beste %s,
-
-je account op %s is niet meer geblokkeerd, Je kunt weer gebruik maken van de website.
-
-Om naar de website te gaan, klik hier:
-%s',
 	
 	'user:notification:password_change:subject' => 'Je wachtwoord is gewijzigd!',
-	'user:notification:password_change:body' => "Beste %s,
-
-Je wachtwoord op '%s' is gewijzigd! Indien je dit zelf hebt aangevraagd ben je klaar.
-
-Heb je deze wijziging niet zelf aangevraagd, dan kun je je wachtwoord hier wijzigen:
-%s
-
-Of neem contact op met de beheerder van de site:
-%s",
 	
 	'admin:notification:unvalidated_users:subject' => "Gebruikers in afwachting van goedkeuring op %s",
-	'admin:notification:unvalidated_users:body' => "Beste %s,
-
-%d gebruikers van '%s' wachten op goedkeuring van een beheerder van de site.
-
-Bekijk hier de volledige lijst van gebruikers:
-%s",
 
 /**
  * Plugins
@@ -1034,8 +977,6 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'usersettings:statistics:login_history' => "Login History",
 	'usersettings:statistics:login_history:date' => "Date",
 	'usersettings:statistics:login_history:ip' => "IP Address",
-
-	'usersettings:user' => "Jouw instellingen",
 	'usersettings:user:opt:description' => "Hier kun je je gebruikersinstellingen configureren.",
 	'usersettings:user:opt:linktext' => "Wijzig je instellingen",
 
@@ -1284,18 +1225,6 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
  */
 
 	'useradd:subject' => 'Gebruikersaccount aangemaakt',
-	'useradd:body' => '%s,
-
-Er is een gebruikersaccount voor je aangemaakt op %s. Om je aan te melden bezoek:
-
-%s
-
-Om je aan te kunnen melden moet je gebruik maken van de volgende gegevens:
-
-Gebruikersnaam: %s
-Wachtwoord: %s
-
-Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 
 /**
  * System messages
@@ -1524,7 +1453,6 @@ Indien de ondersteuning nodig hebt bezoek de <a href="https://elgg.org/discussio
 	'upgrade:item_count' => 'Er zijn <b>%s</b> zaken die geüpgrade moeten worden.',
 	'upgrade:warning' => 'Let op: dit kan lang duren, als je een grote site hebt!',
 	'upgrade:success_count' => 'Geüpgraded:',
-	'upgrade:error_count' => 'Fouten:',
 	'upgrade:finished' => 'Upgrade is voltooid.',
 	'upgrade:finished_with_errors' => '<p>De upgrade is afgerond, maar er zijn fouten geconstateerd. Ververs de pagina en probeer de upgrade opnieuw uit te voeren.</p></p><br />Als de fouten zich opnieuw voordoen, kijk dan in je serverlog of daar een mogelijke oorzaak te vinden is. Je kunt bijstand krijgen bij het oplossen van de fout op de community van Elgg <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">in de groep \'technisch(e) support\'</a>',
 	'upgrade:should_be_skipped' => 'Geen items om te upgraden',
@@ -1567,55 +1495,19 @@ Klik hier om naar het profile te gaan:
 %s",
 
 	'email:changepassword:subject' => "Wachtwoord gewijzigd!",
-	'email:changepassword:body' => "Beste %s,
-
-je wachtwoord is gewijzigd.",
 
 	'email:resetpassword:subject' => "Wachtwoord reset!",
-	'email:resetpassword:body' => "Beste %s,
-
-Je wachtwoord is gereset naar: %s",
 
 	'email:changereq:subject' => "Aanvraag om het wachtwoord te wijzigen.",
-	'email:changereq:body' => "Beste %s,
-
-Iemand (van het IP adres %s) heeft een nieuw wachtwoord aangevraagd voor dit account.
-
-Indien je dit zelf hebt aangevraagd, klik op onderstaande link. Anders negeer deze e-mail.
-
-%s",
 	
 	'account:email:request:success' => "Het nieuwe e-mailadres zal worden opgeslagen nadat deze is gevalideerd. Controleer de e-mail inbox van '%s' voor validatie instructies.",
 	'email:request:email:subject' => "Bevestig je e-mailadres",
-	'email:request:email:body' => "Beste %s,
-
-Je hebt een verzoek ingediend om je e-mailadres te wijziging op '%s'.
-Indien je deze wijziging niet hebt aangevraagd kun je deze mail als niet verzonden beschouwen.
-
-Gebruik de volgende link om de wijziging te bevestigen:
-%s
-
-Deze link is slechts 1 uur geldig.",
 	
 	'account:email:request:error:no_new_email' => "Er is geen e-mailadres wijziging die nog moet worden goedgekeurd.",
 	
 	'email:confirm:email:old:subject' => "Het e-mailadres is gewijzigd",
-	'email:confirm:email:old:body' => "Beste %s,
-
-Je e-mailadres op '%s' is gewijzigd.
-Vanaf nu ontvang je de e-mail notificaties op '%s'.
-
-Indien je deze wijziging niet hebt aangevraagd, neem dan contact op met een beheerder van de site.
-%s",
 	
 	'email:confirm:email:new:subject' => "Het e-mailadres is gewijzigd",
-	'email:confirm:email:new:body' => "Beste %s,
-
-Je e-mailadres op '%s' is gewijzigd.
-Vanaf nu ontvang je de e-mail notificaties op dit e-mailadres.
-
-Indien je deze wijziging niet hebt aangevraagd, neem dan contact op met een beheerder van de site.
-%s",
 
 	'account:email:admin:validation_notification' => "Stuur mij een notificatie indien gebruikers zich aanmelden en handmatig gevalideerd moeten worden",
 	'account:email:admin:validation_notification:help' => "Vanwege de instellingen op de site moeten nieuwe gebruikers handmatig gevalideerd worden. Middels deze instelling kun je de notificaties uitschakelen.",
@@ -1624,12 +1516,6 @@ Indien je deze wijziging niet hebt aangevraagd, neem dan contact op met een behe
 	'account:validation:pending:content' => "Je account is succesvol geregistreerd! Voordat je je account kunt gebruiken moet deze echter eerst nog worden gevalideerd door een beheerder van de site. Zodra dit gedaan is ontvang je daarvan een e-mail.",
 	
 	'account:notification:validation:subject' => "Je account op %s is gevalideerd!",
-	'account:notification:validation:body' => "Beste %s,
-
-Je account op '%s' is gevalideerd. Je kunt nu je account gebruiken.
-
-Klik hier om naar de website te gaan:
-%s",
 
 /**
  * user default access
@@ -1669,27 +1555,8 @@ Klik hier om naar de website te gaan:
 	'generic_comments:latest:posted' => 'plaatste een',
 
 	'generic_comment:notification:subject' => 'Re: %s',
-	'generic_comment:notification:owner:summary' => 'Je hebt een nieuwe reactie',
-	'generic_comment:notification:owner:body' => "Je hebt een nieuwe reactie gekregen op je item \"%s\" van %s.
-
-%s
-
-Om te reageren of het originele item te bekijken, klik hier:
-%s
-
-Om naar het profiel van %s te gaan, klik hier:
-%s",
 	
 	'generic_comment:notification:user:summary' => 'Een nieuwe reactie op: %s',
-	'generic_comment:notification:user:body' => "Je hebt een nieuwe reactie gekregen op je item \"%s\" van %s.
-
-%s
-
-Om te reageren of het originele item te bekijken, klik hier:
-%s
-
-Om naar het profiel van %s te gaan, klik hier:
-%s",
 
 /**
  * Entities

@@ -6,7 +6,6 @@
  */
 
 return array(
-	'email:validate:subject' => "%s proszę potwierdź swój adres e-mail!",
 	'email:confirm:success' => "Potwierdzono adres e-mail!",
 	'email:confirm:fail' => "Adres e-mail nie mógł zostać zweryfikowany...",
 

@@ -7,18 +7,6 @@
 
 return array(
 	'email:validate:subject' => "%s vänligen bekräfta din e-postadress för %s!",
-	'email:validate:body' => "Hej %s,
-
-Innan du kan börja använda %s, måste du bektäfta din e-postadress.
-
-Vänligen bekräfta din e-postadress genom att trycka på länken nedan:
-
-%s
-
-Om du inte kan trycka på länken, kopiera och klistra in den i webbläsaren manuellt.
-
-%s
-%s",
 	'email:confirm:success' => "Du har bekräftat din e-postadress!",
 	'email:confirm:fail' => "Din e-postadress kunde inte verifieras...",
 

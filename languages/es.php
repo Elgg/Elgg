@@ -753,8 +753,6 @@ tres secciones:
 	'usersettings:statistics:login_history' => "Historial de inicio de sesión",
 	'usersettings:statistics:login_history:date' => "Fecha",
 	'usersettings:statistics:login_history:ip' => "Dirección IP",
-
-	'usersettings:user' => "Sus preferencias",
 	'usersettings:user:opt:description' => "Esto le permite establecer sus preferencias",
 	'usersettings:user:opt:linktext' => "Modificar sus preferencias",
 
@@ -1157,7 +1155,6 @@ tres secciones:
 	'upgrade:item_count' => 'Hay <b>%s</b> elementos que es necesario actualizar.',
 	'upgrade:warning' => '<b>Aviso:</b> ¡En un sitio grande esta actualización puede llevar un tiempo significativo!',
 	'upgrade:success_count' => 'Actualizado:',
-	'upgrade:error_count' => 'Errores:',
 	'upgrade:finished' => 'Se completó la actualización.',
 	'upgrade:finished_with_errors' => '<p>Ocurrieron errores durante la actualización. Actualice la página y pruebe a ejecutar la actualización de nuevo.</p></p><br />
 Si el error se repite, busque la causa en el registro de errores del servidor. Puede buscar ayuda para solucionar el problema en el <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">grupo de asistencia técnica</a> de la comunidad de Elgg.</p>',

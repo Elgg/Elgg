@@ -25,14 +25,5 @@ return array(
 	'invitefriends:message:default' => 'Bonjour,
 
 Je vous invite à rejoindre mon réseau sur %s.',
-
-	'invitefriends:email' => 'Vous avez été invité à rejoindre  par %s :
-
-%s
-
-Pour accepter l’invitation et créer votre compte, cliquez sur le lien suivant :
-%s
-
-Vous serez automatiquement ajouté(e) comme contact lorsque votre compte aura été créé.',
 	
 );

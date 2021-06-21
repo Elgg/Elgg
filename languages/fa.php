@@ -187,8 +187,6 @@ return array(
 	'widgets:position:fixed' => '(موقعیت ثابت در صفحه)',
 	'widget:unavailable' => 'شما این ابزارک را قبلا اضافه کرده اید',
 	'widget:numbertodisplay' => 'تعداد موارد قابل نمایش',
-
-	'widget:delete' => 'حذف thoughtful',
 	'widget:edit' => 'شخصی سازی این ابزارک',
 
 	'widgets' => "ابزار ها",
@@ -909,7 +907,6 @@ return array(
 	'date:month:03' => 'مارس %s',
 	'date:month:04' => 'آوریل %s',
 	'date:month:05' => 'می %s',
-	'date:month:06' => 'ژوئن',
 	'date:month:07' => 'جولای %s',
 	'date:month:08' => 'آگوست %s',
 	'date:month:09' => 'سپتامبر %s',
@@ -1037,7 +1034,6 @@ return array(
 	'upgrade:item_count' => 'اینجا %s مورد هست که نیاز به ارتقاء دارد',
 	'upgrade:warning' => 'هشدار: در سایتهای بزرگ این ارتقاء ممکن است زمان زیادی طول بکشد',
 	'upgrade:success_count' => 'ارتقاء یافت',
-	'upgrade:error_count' => 'خطاها:',
 	'upgrade:finished' => 'ارتقاء پایان یافت',
 	'upgrade:finished_with_errors' => 'ارتقاء پایان یافت و چندین خطا رخ داد. صفحه را رفرش کنید و سعی کنید که دوباره عملیات ارتقاء را انجام دهید. اگر خطا مجددا رخ داد لاگ سرور را برای خطاهای احتمالی بررسی کنید. شما میتوانید در  <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">گروه پشتیبانی فنی Elgg</a>  به دنبال راه حل  و راهنمایی برای  رفع خطایتان باشید.',
 	

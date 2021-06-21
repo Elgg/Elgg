@@ -708,81 +708,18 @@ Bei Session-gebundenen Icons können die zugehörigen URLs nicht von unterschied
 	'admin:site:secret:prevented' => "Die Neuerstellung des Geheimschlüssels Deiner Community-Seite wurde unterbunden.",
 	
 	'admin:notification:make_admin:admin:subject' => 'Neuer Admin auf %s',
-	'admin:notification:make_admin:admin:body' => 'Hallo %s,
-
-%s hat %s zu einem Administrator auf der Community-Seite %s gemacht.
-
-Um das Profil des neuen Administrators aufzurufen, folge diesem Link:
-
-%s
-
-Um die Community-Seite aufzurufen, folge diesem Link:
-
-%s',
 	
 	'admin:notification:make_admin:user:subject' => 'Du bist nun Admin auf %s',
-	'admin:notification:make_admin:user:body' => 'Hallo %s,
-
-%s hat Dich zu einem Administrator der Community-Seite %s gemacht.
-
-Um die Community-Seite aufzurufen, folge diesem Link:
-
-%s',
 	'admin:notification:remove_admin:admin:subject' => 'Zurückstufung eines Admins auf %s',
-	'admin:notification:remove_admin:admin:body' => 'Hallo %s,
-
-%s hat %s auf %s von einen Administrator zu einem normalen Benutzer zurückgestuft.
-
-Um das Profil des frühreren Administrators aufzurufen, folge diesem Link:
-
-%s
-
-Um die Community-Seite aufzurufen, folge diesem Link:
-
-%s',
 	
 	'admin:notification:remove_admin:user:subject' => 'Entlassung als Admin auf %s',
-	'admin:notification:remove_admin:user:body' => 'Hallo %s,
-
-%s hat Dich auf %s von einem Administrator zu einem normalen Benutzer zurückgestuft.
-
-Um die Community-Seite aufzurufen, folge diesem Link:
-
-%s',
 	'user:notification:ban:subject' => 'Dein Account auf %s wurde gesperrt',
-	'user:notification:ban:body' => 'Hallo %s,
-
-Dein Account auf %s wurde gesperrt.
-
-Um die Community-Seite aufzurufen, folge diesem Link:
-%s',
 	
 	'user:notification:unban:subject' => 'Dein Account auf %s ist nicht länger gesperrt',
-	'user:notification:unban:body' => 'Hallo %s,
-
-Dein Account auf %s ist nicht länger gesperrt. Du kannst Dich auf der Community-Seite wieder anmelden.
-
-Um die Community-Seite aufzurufen, folge diesem Link:
-%s',
 	
 	'user:notification:password_change:subject' => 'Dein Passwort wurde geändert!',
-	'user:notification:password_change:body' => "Hallo %s,
-
-Dein Passwort auf '%s' wurde geändert! Wenn Du die Änderung vorgenommenhast, mußt Du nichst weiter unternehmen.
-
-Solltest Du allerdings die Änderung nicht vorgenommen haben, setze Dein Passwort bitte mit einem Klick auf den folgenden Link zurück:
-%s
-
-Oder kontaktiere einen Administrator der Seite:
-%s",
 	
 	'admin:notification:unvalidated_users:subject' => "Validierung von Benutzeraccounts auf %s",
-	'admin:notification:unvalidated_users:body' => "Hallo %s,
-
-%d Benutzer von '%s' warten auf die Validierung/Aktivierung ihrer Accounts durch einen Administrator.
-
-Siehe die vollständige Liste dieser Benutzer hier:
-%s",
 
 /**
  * Plugins
@@ -1218,18 +1155,6 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
  */
 
 	'useradd:subject' => 'Benutzeraccount erstellt',
-	'useradd:body' => '%s,
-
-auf der Community-Seite %s wurde ein Benutzeraccount für Dich erstellt. Um Dich anzumelden, gehe zu:
-
-%s
-
-und melde Dich mit diesen Zugangsdaten an:
-
-Benutzername (Username): %s
-Passwort: %s
-
-Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.',
 
 /**
  * System messages
@@ -1440,7 +1365,6 @@ Wenn Du genauere Installationsanweisungen benötigst, lese die  <a href="http://
 	'upgrade:item_count' => 'Es gibt <b>%s</b> Elemente, die aktualisiert werden müssen.',
 	'upgrade:warning' => '<b>Warnung:</b> auf einer großen Community-Seite kann die Durchführung dieser Aktualisierung einige Zeit in Anspruch nehmen!',
 	'upgrade:success_count' => 'Aktualisiert:',
-	'upgrade:error_count' => 'Fehler:',
 	'upgrade:finished' => 'Die Aktualisierung ist abgeschlossen.',
 	'upgrade:finished_with_errors' => '<p>Die Aktualisierung wurde beendet. Allerdings sind dabei Fehler aufgetreten. Lade die Seite erneut und versuche, die Aktualisierung nochmals durchzuführen.</p></p><br />Wenn dabei wieder Fehler auftreten, schaue in der Logdatei Deines Servers nach, ob es dort Einträge gibt, die eventuell weitere Informationen zur Ursache der Fehler liefern. Du kannst auch in der <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support-Gruppe</a> auf der Elgg-Community-Seite um Hilfe bei Deinem Problem bitten.</p>',
 	'upgrade:should_be_skipped' => 'Keine zu aktualisierende Einträge',
@@ -1483,57 +1407,19 @@ Um ihr/sein Profil aufzurufen, folge diesem Link:
 %s",
 
 	'email:changepassword:subject' => "Änderung des Passworts!",
-	'email:changepassword:body' => "Hallo %s,
-
-Dein Passwort wurde geändert.",
 
 	'email:resetpassword:subject' => "Zurücksetzung des Passworts!",
-	'email:resetpassword:body' => "Hallo %s,
-
-Dein Passwort wurde zurückgesetzt. Dein neues Passwort ist: %s",
 
 	'email:changereq:subject' => "Verifizierung der Änderung Deines Passworts.",
-	'email:changereq:body' => "Hallo %s,
-
-es wurde eine Änderung des Passworts Deines Accounts angefordert (von der IP-Adresse %s).
-
-Falls Du die Änderung des Passworts angefordert hast, klicke bitte auf den folgenden Link, um dies zu bestätigen:
-
-%s
-
-Andernfalls ignoriere bitte diese Email.",
 	
 	'account:email:request:success' => "Deine neue Emailadresse muss zunächst bestätigt werden. Bitte überprüfe den Posteingang der Adresse '%s' für weitere Informationen.",
 	'email:request:email:subject' => "Bitte bestätige Deine Emailadresse",
-	'email:request:email:body' => "Hallo %s,
-
-Du hast eine Änderung Deiner Emailadresse auf '%s' angefordert.
-Wenn Du diese Änderung nicht angefordert hast, kannst Du diese Mail ignorieren.
-
-Um Deine Emailadressänderung zu bestätigen, klicke bitte auf diesen Link:
-%s
-
-Dieser Link ist eine Stunde gültig.",
 	
 	'account:email:request:error:no_new_email' => "Keine ausstehenden Emailadressänderungen.",
 	
 	'email:confirm:email:old:subject' => "Deine Emailadresse wurde geändert.",
-	'email:confirm:email:old:body' => "Hallo %s,
-
-Deine Emailadresse auf '%s' wurde geändert.
-Von nun an erhältst Du Benachrichtigungen an '%s'.
-
-Wenn Du das nicht angefordert hast, kontaktiere bitte einen Administrator.
-%s",
 	
 	'email:confirm:email:new:subject' => "Deine Emailadresse wurde geändert.",
-	'email:confirm:email:new:body' => "Hallo %s,
-
-Deine Emailadresse auf '%s' wurde geändert.
-Von nun an erhältst Du Benachrichtigungen an '%s'.
-
-Wenn Du das nicht angefordert hast, kontaktiere bitte einen Administrator.
-%s",
 
 	'account:email:admin:validation_notification' => "Benachrichtige mich, wenn es Benutzer gibt, die durch einen Administrator überprüft werden müssen",
 	'account:email:admin:validation_notification:help' => "Aufgrund der Seiteneinstellungen, müssen neu registrierte Benutzer von einem Administrator manuell validiert werden. Mit dieser Option kannst Du die Benachrichtigung über ausstehende Validierungen deaktivieren.",
@@ -1542,12 +1428,6 @@ Wenn Du das nicht angefordert hast, kontaktiere bitte einen Administrator.
 	'account:validation:pending:content' => "Dein Benutzeraccount wurde erstellt! Allerdings ist der Account noch nicht aktiviert. Die Validierung/Aktivierung wird durch einen Administrator der Community-Seite durchgeführt. Du wirst eine Benachrichtigung per Email erhalten, sobald Dein Account aktiviert worden ist.",
 	
 	'account:notification:validation:subject' => "Dein Account auf %s wurde validiert!",
-	'account:notification:validation:body' => "Hallo %s,
-
-Dein Benutzeraccount auf '%s' wurde validiert und aktiviert. Du kannst Deinen Account nun verwenden.
-
-Folge dem Link, um zur Webseite zu gelangen:
-%s",
 
 /**
  * user default access
@@ -1584,31 +1464,8 @@ Folge dem Link, um zur Webseite zu gelangen:
 	'generic_comment:title' => 'Kommentar von %s',
 	'generic_comment:on' => '%s zu %s',
 	'generic_comments:latest:posted' => 'schrieb einen',
-	'generic_comment:notification:owner:summary' => 'Du hast einen neuen Kommentar erhalten!',
-	'generic_comment:notification:owner:body' => "Zu Deinem Beitrag \"%s\" wurde von %s ein neuer Kommentar geschrieben. Der Kommentar lautet:
-
-%s
-
-Um zu antworten oder Deinen ursprünglichen Beitrag aufzurufen, folge diesem Link:
-
-%s
-
-Um das Profil von %s aufzurufen, folge diesem Link:
-
-%s",
 	
 	'generic_comment:notification:user:summary' => 'Neuer Kommentar zu: %s',
-	'generic_comment:notification:user:body' => "Zu dem Beitrag \"%s\" wurde von %s ein neuer Kommentar geschrieben. Der Kommentar lautet:
-
-%s
-
-Um zu antworten oder den ursprünglichen Beitrag aufzurufen, folge diesem Link:
-
-%s
-
-Um das Profil von %s aufzurufen, folge diesem Link:
-
-%s",
 
 /**
  * Entities

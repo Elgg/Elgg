@@ -1047,7 +1047,6 @@ return array(
 	'upgrade:item_count' => 'Ci sono <b>%s</b> elementi che devono essere aggiornati.',
 	'upgrade:warning' => '<b>Attenzione:</b> Su un sito di grandi dimensioni questo aggiornamento potrebbe richiedere molto tempo per essere completato!',
 	'upgrade:success_count' => 'Aggiornati:',
-	'upgrade:error_count' => 'Errori:',
 	'upgrade:finished' => 'Aggiornamento completato',
 	'upgrade:finished_with_errors' => '<p>L\'aggiornamento è terminato con degli errori. Aggiornare la pagina e provare a eseguire nuovamente l\'aggiornamento.</p><br>Se l\'errore si manifesta nuovamente, controllare il log file degli errori del server per trovare le possibili cause. Per eliminare l\'errore si può cercare aiuto nel <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support group</a> della comunità di Elgg.',
 	

@@ -2,6 +2,8 @@
 
 namespace Elgg\I18n;
 
+use Elgg\Includer;
+
 /**
  * Removes invalid language files from an installation
  *
@@ -100,7 +102,51 @@ class ReleaseCleaner {
 			}
 			
 			if ($code !== 'en' && file_exists("{$dir}/{$code}.php")) {
+				$this->cleanupMissingTranslationParameters($dir, $code);
 				$this->cleanupEmptyTranslations("{$dir}/{$code}.php");
+			}
+		}
+	}
+	
+	/**
+	 * Try to cleanup translations with a different argument count than English as this can cause failed translations
+	 *
+	 * @param string $directory     Language directory to use for the English translation
+	 * @param string $language_code Language core to try to cleanup
+	 *
+	 * @return void
+	 */
+	protected function cleanupMissingTranslationParameters(string $directory, string $language_code): void {
+		$english = Includer::includeFile("{$directory}/en.php");
+		$translation = Includer::includeFile("{$directory}/{$language_code}.php");
+		
+		foreach ($english as $key => $value) {
+			$english_matches = preg_match_all('/%[a-zA-Z]/m', $value);
+			if (!array_key_exists($key, $translation) ||  $english_matches === false) {
+				continue;
+			}
+			
+			$translation_matches = preg_match_all('/%[a-zA-Z]/m', $translation[$key]);
+			if ($translation_matches !== false && $english_matches === $translation_matches) {
+				continue;
+			}
+			
+			$file_contents = file_get_contents("{$directory}/{$language_code}.php");
+			
+			$pattern = '/^\s*[\'"]' . $key . '[\'"] => [\'"]' . preg_quote($translation[$key], '/') . '[\'"],{0,1}\R/m';
+			$count = 0;
+			$file_contents = preg_replace($pattern, '', $file_contents, -1, $count);
+			if ($count < 1) {
+				// try to add slashes for quotes
+				$pattern = '/^\s*[\'"]' . $key . '[\'"] => [\'"]' . preg_quote(addslashes($translation[$key]), '/') . '[\'"],{0,1}\R/m';
+				$count = 0;
+				$file_contents = preg_replace($pattern, '', $file_contents, -1, $count);
+			}
+			
+			if ($count > 0) {
+				file_put_contents("{$directory}/{$language_code}.php", $file_contents);
+			} else {
+				$this->log[] = "Unable to repair mismatch in translation argument count in {$directory}/{$language_code}.php for the key '{$key}'";
 			}
 		}
 	}
@@ -112,7 +158,7 @@ class ReleaseCleaner {
 	 *
 	 * @return void
 	 */
-	public function cleanupEmptyTranslations(string $translation_file): void {
+	protected function cleanupEmptyTranslations(string $translation_file): void {
 		$contents = file_get_contents($translation_file);
 		if (empty($contents)) {
 			return;

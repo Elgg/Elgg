@@ -14,7 +14,6 @@ return array(
 	'invitefriends:introduction' => 'Чтобы пригласить Ваших друзей на сайт, введите их электронные адреса (по одному на строчку):',
 	'invitefriends:emails' => 'Email адреса (по одному в строке)',
 	'invitefriends:message' => 'Напишите сообщение, которое Ваш друг получит с Вашим приглашением:',
-	'invitefriends:subject' => '%s отправил(а) Вам приглашение на %s',
 
 	'invitefriends:success' => 'Ваш друг приглашен.',
 	'invitefriends:invitations_sent' => 'Пришлашение отправлено: %s. Были следующие проблемы:',

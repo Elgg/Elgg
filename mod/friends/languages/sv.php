@@ -47,22 +47,10 @@ Efter att ha aktiverat vänförfrågningar, när användare A vill bli vän med 
 	'widgets:friends:description' => "Visas några av dina vänner.",
 	
 	'friends:notification:request:subject' => "%s vill bli din vän!",
-	'friends:notification:request:message' => "Hej %s,
-
-%s har skickat en förfrågan om att bli din vän på %s.
-
-För att visa vänförfrågan, tryck här:
-%s",
 	
 	'friends:notification:request:decline:subject' => "%s har tackat nej till din vänförfrågan",
-	'friends:notification:request:decline:message' => "Hej %s,
-
-%s har tackat nej till din vänförfrågan.",
 	
 	'friends:notification:request:accept:subject' => "%s har accepterat din vänförfrågan",
-	'friends:notification:request:accept:message' => "Hej %s,
-
-%s har accepterat din vänförfrågan.",
 	
 	'friends:action:friendrequest:revoke:fail' => "Ett fel uppstod när vänförfrågan återkallades, vänligen försök igen",
 	'friends:action:friendrequest:revoke:success' => "Vänförfrågan har återkallats",

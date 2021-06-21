@@ -47,7 +47,6 @@ Pogledaj i odgovori na temu rasprace:
 ',
 
 	'discussion:comment:notify:summary' => 'Novi komentar u temi: %s',
-	'discussion:comment:notify:subject' => 'Novi komentar u temu:',
 	'discussion:comment:notify:body' =>
 '%s komentirao je temu rasprave "%s":
 

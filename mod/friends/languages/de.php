@@ -48,22 +48,10 @@ Falls die Option zur Bestätigung von Freundschaftsanfragen von Benutzer A an Be
 	'widgets:friends:description' => "Auflistung einiger Deiner Freunde.",
 	
 	'friends:notification:request:subject' => "%s möchte mit Dir befreundet sein!",
-	'friends:notification:request:message' => "Hallo %s,
-
-%s möchte mit Dir auf %s befreundet sein.
-
-Um die Freundschaftsanfrage zu beantworten, folge dem Link:
-%s",
 	
 	'friends:notification:request:decline:subject' => "%s hat Deine Freundschaftsanfrage abgelehnt",
-	'friends:notification:request:decline:message' => "Hallo %s,
-
-%s hat deine Freundschaftsanfrage abgelehnt.",
 	
 	'friends:notification:request:accept:subject' => "%s hat Deine Freundschaftsanfrage angenommen",
-	'friends:notification:request:accept:message' => "Hallo %s,
-
-%s ist nun mit Dir befreundet.",
 	
 	'friends:action:friendrequest:revoke:fail' => "Während des Widerrufs der Freundschaftsanfrage ist ein Fehler aufgetreten. Bitte versuche es erneut.",
 	'friends:action:friendrequest:revoke:success' => "Die Freundschaftsanfragen wurde widerrufen.",
