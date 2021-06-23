@@ -11,13 +11,6 @@ $items = [
 		'href' => elgg_generate_action_url('admin/site/cache/invalidate'),
 		'link_class' => 'elgg-button elgg-button-action',
 	],
-	[
-		'name' => 'flush',
-		'text' => elgg_echo('admin:cache:flush'),
-		'icon' => 'trash-alt',
-		'href' => elgg_generate_action_url('admin/site/flush_cache'),
-		'link_class' => 'elgg-button elgg-button-action',
-	],
 ];
 
 if (!_elgg_services()->mutex->isLocked('upgrade')) {

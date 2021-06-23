@@ -70,4 +70,8 @@ View and comment on the discussion:
 	'discussion:topic:closed:desc' => 'This discussion is closed and is not accepting new comments.',
 
 	'discussion:topic:description' => 'Topic message',
+	'discussion:topic:toggle_status:open' => 'The discussion topic was successfully reopened',
+	'discussion:topic:toggle_status:open:confirm' => 'Are you sure you wish to reopen this topic?',
+	'discussion:topic:toggle_status:closed' => 'The discussion topic was successfully closed',
+	'discussion:topic:toggle_status:closed:confirm' => 'Are you sure you wish to close this topic?',
 );
