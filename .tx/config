@@ -1,5 +1,6 @@
 [main]
 host = https://www.transifex.com
+lang_map = pt_BR: pt_br, ro_RO: ro_ro, zh-Hans: zh_hans
 
 [elgg-core-3.engine]
 file_filter = languages/<lang>.php

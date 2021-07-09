@@ -1230,7 +1230,8 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'on' => 'Aan',
 	'off' => 'Uit',
 
-	'number_counter:separatorr' => ",",
+	'number_counter:decimal_separator' => ",",
+	'number_counter:thousands_separator' => ".",
 	'number_counter:view:thousand' => "%sK",
 	'number_counter:view:million' => "%sM",
 	'number_counter:view:billion' => "%sB",

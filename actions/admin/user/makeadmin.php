@@ -3,9 +3,12 @@
  * Grants admin privileges to a user.
  */
 
-$guid = (int) get_input('guid');
-$user = get_user($guid);
+$guid = (array) get_input('guid');
+if (empty($guid)) {
+	return elgg_error_response(elgg_echo('error:missing_data'));
+}
 
+$user = get_user($guid[0]);
 if (!$user || !$user->canEdit()) {
 	return elgg_error_response(elgg_echo('admin:user:makeadmin:no'));
 }
