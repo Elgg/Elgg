@@ -24,6 +24,8 @@ $params = [
 	'time' => $entity->getVolatileData('search_time') ?: $entity->time_created,
 	'access' => false,
 	'content' => elgg_view('search/elements/content', $vars),
+	'show_social_menu' => false,
+	'show_entity_menu' => false,
 	'icon' => elgg_view('search/elements/icon', $vars),
 ];
 $params = $params + $vars;
