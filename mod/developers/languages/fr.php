@@ -35,21 +35,21 @@ return array(
 	'developers:help:show_modules' => "Envoie les modules chargés et les valeurs dans votre console JavaScript.",
 	'developers:label:wrap_views' => "Envelopper les Vues",
 	'developers:help:wrap_views' => "Ceci enveloppe presque toutes les vues avec des commentaires HTML. Pratique pour identifier la vue responsable d'un élément de code HTML particulier.
-									Cela peut casser les vues non HTML de l'affichage principal (images, RSS, XML, JSON, etc.). Voir developers_wrap_views() pour plus de détails. ",
+									Cela peut casser les vues non HTML de l'affichage principal : images, RSS, XML, JSON, etc. Voir developers_wrap_views() pour plus d'informations.",
 	'developers:label:log_events' => "Journaliser les événements et les hooks des plugins.",
 	'developers:help:log_events' => "Écrit les événements et les hooks des plugins dans le journal. Attention : il y en a beaucoup pour chaque page.",
 	'developers:label:show_gear' => "Utiliser %s hors de la zone d'administration",
 	'developers:help:show_gear' => "Une icône en bas à droite de l'affichage qui offre aux administrateurs un accès aux paramètres et liens pour développeurs.",
-	'developers:label:block_email' => "Bloquer tous les emails sortants",
-	'developers:help:block_email' => "Vous pouvez bloquer les emails sortants vers les membres ou pour tous les utilisateurs",
-	'developers:label:forward_email' => "Faire suivre tous les emails sortants vers une seule adresse email",
-	'developers:help:forward_email' => "Tous les emails sortants seront envoyés sur l'adresse email configurée",
+	'developers:label:block_email' => "Bloquer tous les e-mails sortants",
+	'developers:help:block_email' => "Vous pouvez bloquer les e-mails sortants vers les simples membres, ou pour tous les utilisateurs",
+	'developers:label:forward_email' => "Faire suivre tous les e-mails sortants vers une seule adresse e-mail",
+	'developers:help:forward_email' => "Tous les e-mails sortants seront envoyés sur l'adresse e-mail configurée",
 	'developers:label:enable_error_log' => "Activer le journal des erreurs",
 	'developers:help:enable_error_log' => "Maintenir un journal séparé des erreurs et des messages enregistrés via error_log() sur la base de votre configuration de niveau de journalisation. Le journal peut être affiché via l'interface admin.",
 
 	'developers:label:submit' => "Enregistrer et vider les caches",
 
-	'developers:block_email:forward' => 'Faire suivre tous les emails',
+	'developers:block_email:forward' => 'Faire suivre tous les e-mails',
 	'developers:block_email:users' => 'Seulement les membres',
 	'developers:block_email:all' => 'Admins et membres',
 	
@@ -114,7 +114,7 @@ return array(
 	'theme_sandbox:breakout' => 'Sortir de l\'iframe',
 	'theme_sandbox:buttons' => 'Boutons',
 	'theme_sandbox:components' => 'Composants',
-	'theme_sandbox:email' => 'Email',
+	'theme_sandbox:email' => 'E-mail',
 	'theme_sandbox:forms' => 'Formulaires',
 	'theme_sandbox:grid' => 'Grille',
 	'theme_sandbox:icons' => 'Icônes',
@@ -126,8 +126,8 @@ return array(
 
 	'theme_sandbox:icons:blurb' => 'Utilisez <em>elgg_view_icon($name)</em> pour afficher des icônes. ',
 	
-	'theme_sandbox:test_email:button' => "Envoyer un email de test",
-	'theme_sandbox:test_email:success' => "Email de test envoyé à : %s",
+	'theme_sandbox:test_email:button' => "Envoyer un e-mail de test",
+	'theme_sandbox:test_email:success' => "E-mail de test envoyé à : %s",
 
 	// status messages
 	'developers:settings:success' => 'Paramètres enregistrés et caches vidés',

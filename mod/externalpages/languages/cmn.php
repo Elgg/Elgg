@@ -10,7 +10,6 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
-	'expages' => "站臺頁面",
 	'expages:about' => "關於",
 	'expages:terms' => "條款",
 	'expages:privacy' => "隱私",

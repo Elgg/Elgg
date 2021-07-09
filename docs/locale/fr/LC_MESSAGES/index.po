@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-18 16:34+0200\n"
+"POT-Creation-Date: 2021-06-11 11:12+0200\n"
 "PO-Revision-Date: 2021-06-09 13:31+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -159,7 +159,7 @@ msgid ""
 "party services"
 msgstr ""
 "**Un Service de Notifications** qui permet aux applications d'abonner des "
-"utilisateurs aux notifications sur le site ou par email, et d'implémenter "
+"utilisateurs aux notifications sur le site ou par e-mail, et d'implémenter "
 "l'intégration avec d'autres services tierce-partie"
 
 #: ../../index.rst:24
@@ -210,8 +210,8 @@ msgid "RequireJS handles AMD"
 msgstr "RequireJS gère les modules AMD"
 
 #: ../../index.rst:34
-msgid "Zend Mail handles outgoing email"
-msgstr "Zend Mail gère les emails sortants"
+msgid "Laminas Mail handles outgoing email"
+msgstr "Laminas Mail gère les e-mails sortants"
 
 #: ../../index.rst:35
 msgid "htmLawed XSS filters"

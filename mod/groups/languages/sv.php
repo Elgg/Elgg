@@ -18,7 +18,6 @@ return array(
 	'groups:all' => "Alla grupper",
 	'groups:add' => "Skapa en ny grupp",
 	'groups:edit' => "Redigera grupp",
-	'groups:delete' => 'Ta bort grupp',
 	'groups:membershiprequests' => 'Hantera begäranden att gå med',
 	'groups:membershiprequests:pending' => 'Hantera begäranden att gå med (%s)',
 	'groups:invitedmembers' => "Hantera inbjudningar",
@@ -76,7 +75,6 @@ return array(
 
 	'groups:nofriendsatall' => 'Du har inga vänner att bjuda in!',
 	'groups:group' => "Grupp",
-	'groups:search:tags' => "tagg",
 	'groups:search:title' => "Sök efter grupper med '%s'",
 	'groups:search:none' => "Inga matchande grupper hittades",
 	'groups:search_in_group' => "Sök i den här gruppen",
@@ -153,9 +151,6 @@ return array(
 	/**
 	 * Action messages
 	 */
-	'groups:deleted' => 'Grupp och gruppinnehåll har tagits bort',
-	'groups:notdeleted' => 'Grupp kunde inte tas bort',
-	'groups:deletewarning' => "Är du säker på att du vill ta bort den här gruppen? Det går inte ångra!",
 
 	'groups:invitekilled' => 'Inbjudan har tagits bort.',
 	'groups:joinrequestkilled' => 'Begäran om att gå med har tagits bort.',

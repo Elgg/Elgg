@@ -19,7 +19,6 @@ return array(
 	'blog:archives' => 'Αρχεία',
 
 	'groups:tool:blog' => 'Ενεργοποίηση ιστολογίου ομάδας',
-	'blog:write' => 'Γράψτε μία νέα ανάρτηση',
 
 	// Editing
 	'blog:excerpt' => 'Aπόσπασμα',
@@ -36,12 +35,9 @@ return array(
 	'blog:error:cannot_write_to_container' => 'Μη έγκυρη πρόσβαση για αποθήκευση της ανάρτησης στην ομάδα',
 	'blog:messages:warning:draft' => 'Υπάρχει μη αποθηκευμένο προσχέδιο αυτής της ανάρτησης!',
 	'blog:edit_revision_notice' => '(Παλιά έκδοση)',
-	'blog:message:deleted_post' => 'Η ανάρτηση διαγράφτηκε',
-	'blog:error:cannot_delete_post' => 'Αδύνατη η διαγραφή της ανάρτησης',
 	'blog:none' => 'Δεν υπάρχουν αναρτήσεις',
 	'blog:error:missing:title' => 'Παρακαλούμε εισάγετε τίτλο της ανάρτησης!',
 	'blog:error:missing:description' => 'Παρακαλούμε εισάγετε κείμενο της ανάρτησης!',
-	'blog:error:cannot_edit_post' => 'Η ανάρτηση που ζητήσατε δεν υπάρχει ή δεν έχετε δικαιώματα για επεξεργασία της',
 	'blog:error:post_not_found' => 'Δεν είναι δυνατή η εύρεση της ανάρτησης',
 	'blog:error:revision_not_found' => 'Αδύνατη εύρεση της αναθέωρησης',
 

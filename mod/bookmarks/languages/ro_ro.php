@@ -29,15 +29,7 @@ return array(
 	'bookmarks:notify:summary' => 'Marcaj nou numit %s',
 	'bookmarks:notify:subject' => 'Marcaj nou: %s',
 	'bookmarks:notify:body' =>
-'%s a adăugat un marcaj nou: %s 
-
-Adresă: %s
-
-%s
-
-Vezi și comentează marcajul:
-%s
-',
+'',
 
 	'bookmarks:numbertodisplay' => 'Numărul de marcaje pentru afișare',
 
@@ -73,5 +65,4 @@ Vezi și comentează marcajul:
 	 */
 
 	'bookmarks:save:failed' => "Marcajul tău nu a putut fi salvat. Asigură-te că ai introdus un titlu și o adresă apoi încearcă din nou.",
-	'bookmarks:unknown_bookmark' => 'Nu s-a putut găsi marcajul specificat',
 );

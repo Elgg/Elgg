@@ -18,7 +18,6 @@ return array(
 	'groups:all' => "Todos os grupos",
 	'groups:add' => "Crear un grupo",
 	'groups:edit' => "Editar o grupo",
-	'groups:delete' => 'Eliminar o grupo',
 	'groups:membershiprequests' => 'Xestionar as solicitudes de admisión',
 	'groups:membershiprequests:pending' => 'Xestionar as solicitudes de admisión (%s)',
 	'groups:invitations' => 'Invitacións ao grupo',
@@ -66,7 +65,6 @@ return array(
 
 	'groups:nofriendsatall' => 'Non ten contactos que invitar.',
 	'groups:group' => "Grupo",
-	'groups:search:tags' => "Etiqueta",
 	'groups:search:title' => "Buscar grupos coa etiqueta «%s»",
 	'groups:search:none' => "Non se atopou ningunha coincidencia.",
 	'groups:search_in_group' => "Buscar no grupo",
@@ -134,7 +132,6 @@ return array(
 	/**
 	 * Action messages
 	 */
-	'groups:deletewarning' => "Está seguro de que quere eliminar o grupo? Esta operación non pode desfacerse.",
 
 	'groups:invitekilled' => 'Eliminouse a invitación',
 	'groups:joinrequestkilled' => 'Eliminouse a solicitude de admisión',

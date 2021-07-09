@@ -96,8 +96,6 @@ return array(
 	'install:complete:instructions' => 'あなたのElggサイトは準備が整い、もう使用できます。あなたのサイトへは、下のボタンをクリックしてください。',
 	'install:complete:gotosite' => 'サイトへ行く',
 
-	'InstallationException:UnknownStep' => '%s は、不明なインストールの段階です。',
-	'InstallationException:MissingLibrary' => '%s を読み込むことができませんでした。',
 	'InstallationException:CannotLoadSettings' => 'Elgg は、設定ファイルを読み込みことができませんでした。 そのファイルが存在しないか、ファイルのパーミッションに問題があると思われます。',
 
 	'install:success:database' => 'データベースをインストールしました。',

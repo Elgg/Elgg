@@ -12,8 +12,6 @@ return array(
 	'relationship:friendrequest:sent' => "Du skickade en vänförfrågan till %s",
 	
 	// plugin settings
-	'friends:settings:request:description' => "Som standard kan alla användare bli vän med alla andra användare, det är som att följa aktiviteten för den andre användaren.
-Efter att ha aktiverat vänförfrågningar, när användare A vill bli vän med användare B, måste användare B godkänna förfrågan. Vid godkännande, kommer användare A blir vän med användare B och användare B kommer bli vän med användare A.",
 	'friends:settings:request:label' => "Aktivera vänförfrågningar",
 	'friends:settings:request:help' => "Användare måste godkänna en vänförfrågan och vänskap blir dubbelriktad",
 	
@@ -58,7 +56,6 @@ Efter att ha aktiverat vänförfrågningar, när användare A vill bli vän med 
 	'friends:action:friendrequest:decline:fail' => "Ett fel uppstod när vänförfrågan nekades, vänligen försök igen",
 	'friends:action:friendrequest:decline:success' => "Vänförfrågan har nekats",
 	
-	'friends:action:friendrequest:accept:fail' => "Ett fel uppstod vid godkännandet av vänförfrågan, vänligen försök igen ",
 	'friends:action:friendrequest:accept:success' => "Vänförfrågan har godkänts",
 	
 	// notification settings

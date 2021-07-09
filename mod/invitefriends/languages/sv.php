@@ -22,19 +22,4 @@ return array(
 	'invitefriends:already_members' => 'Följande är redan medlemmar: %s',
 	'invitefriends:noemails' => 'Ingen e-postadress angavs.',
 	
-	'invitefriends:message:default' => 'Hej,
-
-Jag vill bjuda in dig att gå med i mitt nätverk här på %s.',
-
-	'invitefriends:email' => 'Du har bjudits in att gå med i %s av %s.
-
-De inkluderade följande meddelande:
-
-%s
-
-För att gå med, tryck på följande länk:
-%s
-
-Du kommer automatiskt lägga till dem som en vän när du skapar ditt konto.',
-	
 );

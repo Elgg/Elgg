@@ -25,9 +25,7 @@ return array(
 	'annotation:delete:page:success' => 'Revizuirea paginii a fost ștearsă cu succes',
 	'annotation:delete:page:fail' => 'Revizuirea paginii nu a putut fi ștearsă',
 
-	'pages:delete' => "Șterge această pagină",
 	'pages:history' => "Istoric",
-	'pages:view' => "Vezi pagina",
 	'pages:revision' => "Revizuire",
 
 	'pages:navigation' => "Navigare",
@@ -35,12 +33,7 @@ return array(
 	'pages:notify:summary' => 'Pagină nouă numită %s',
 	'pages:notify:subject' => "O pagină nouă: %s",
 	'pages:notify:body' =>
-'%s a adăugat o pagină nouă: %s
-
-%s
-
-Vezi și comentează pe pagină:
-%s',
+'',
 
 	'pages:more' => 'Mai multe pagini',
 	'pages:none' => 'Încă nu s-au creat pagini',
@@ -61,8 +54,6 @@ Vezi și comentează pe pagină:
 	'pages:description' => 'Textul paginii',
 	'pages:tags' => 'Etichete',
 	'pages:parent_guid' => 'Pagina principală',
-	'pages:access_id' => 'Acces citire',
-	'pages:write_access_id' => 'Acces scriere',
 
 	/**
 	 * Status and error messages
@@ -72,8 +63,6 @@ Vezi și comentează pe pagină:
 	'pages:notsaved' => 'Pagina nu a putut fi salvată',
 	'pages:error:no_title' => 'Trebuie să specifici un titlu acestei pagini.',
 	'entity:delete:object:page:success' => 'Pagina a fost ștearsă cu succes.',
-	'pages:revision:delete:success' => 'Revizuirea paginii a fost ștearsă cu succes.',
-	'pages:revision:delete:failure' => 'Revizuirea paginii nu a putut fi ștearsă.',
 
 	/**
 	 * History
@@ -87,13 +76,6 @@ Vezi și comentează pe pagină:
 	'pages:num' => 'Numărul de pagini de afișat',
 	'widgets:pages:name' => 'Pagini',
 	'widgets:pages:description' => "Aceasta este o listă cu paginile tale.",
-
-	/**
-	 * Submenu items
-	 */
-	'pages:label:view' => "Vezi pagina",
-	'pages:label:edit' => "Editează pagina",
-	'pages:label:history' => "Istoricul paginii",
 
 	'pages:newchild' => "Creează o sub-pagină",
 );

@@ -10,7 +10,6 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
-	'expages' => "사이트 페이지",
 	'admin:configure_utilities:expages' => "사이트 페이지",
 	'expages:edit:viewpage' => "사이트의 페이지 보기",
 	'expages:about' => "정보",

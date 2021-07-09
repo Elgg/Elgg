@@ -22,25 +22,9 @@ return array(
 	'likes:userlikedthis' => '%s apreciere',
 	'likes:userslikedthis' => '%s aprecieri',
 	'likes:river:annotate' => 'aprecieri',
-	'likes:delete:confirm' => 'Sigur dorești să ștergi această apreciere?',
-
-	'river:likes' => 'aprecieri %s %s',
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s ți-a apreciat postarea "%s"',
 	'likes:notifications:body' =>
-'Salutare %1$s,
-
-%2$s ți-a apreciat postarea "%3$s" de pe %4$s
-
-Vezi postarea ta originală de aici:
-
-%5$s
-
-sau vezi profilul utilizatorului %2$s de aici:
-
-%6$s
-
-Mulțumim,
-%4$s',
+'',
 );

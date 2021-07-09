@@ -18,7 +18,6 @@ return array(
 	'blog:archives' => 'Arquivos',
 
 	'groups:tool:blog' => 'Activar a bitácora do grupo',
-	'blog:write' => 'Escribir un artigo',
 
 	// Editing
 	'blog:excerpt' => 'Fragmento',
@@ -35,12 +34,9 @@ return array(
 	'blog:error:cannot_write_to_container' => 'Non ten acceso dabondo para gardar a bitácora no grupo.',
 	'blog:messages:warning:draft' => 'Hai un borrador sen gardar deste artig!',
 	'blog:edit_revision_notice' => '(versión vella)',
-	'blog:message:deleted_post' => 'Eliminouse o artigo',
-	'blog:error:cannot_delete_post' => 'Non foi posíbel eliminar o artigo.',
 	'blog:none' => 'Non hai artigos.',
 	'blog:error:missing:title' => 'Escriba o nome da bitácora',
 	'blog:error:missing:description' => 'Escriba o corpo da bitácora.',
-	'blog:error:cannot_edit_post' => 'Pode que o artigo non exista ou que vostede non teña os permisos necesarios para acceder a el.',
 	'blog:error:post_not_found' => 'Non foi posíbel atopar o artigo indicado',
 	'blog:error:revision_not_found' => 'Non é posíbel atopar esta revisión.',
 

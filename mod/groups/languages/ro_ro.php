@@ -18,7 +18,6 @@ return array(
 	'groups:all' => "Toate grupurile",
 	'groups:add' => "Creează un grup nou",
 	'groups:edit' => "Editează grupul",
-	'groups:delete' => 'Șterge grupul',
 	'groups:membershiprequests' => 'Gestionează cererile de alăturare',
 	'groups:membershiprequests:pending' => 'Gestionează cererile de alăturare (%s)',
 	'groups:invitedmembers' => "Gestionează invitațiile",
@@ -76,7 +75,6 @@ return array(
 
 	'groups:nofriendsatall' => 'Nu ai prieteni de invitat!',
 	'groups:group' => "Grup",
-	'groups:search:tags' => "etichetă",
 	'groups:search:title' => "Caută grupuri după '%s'",
 	'groups:search:none' => "Nu s-au găsit grupuri potrivite",
 	'groups:search_in_group' => "Caută în acest grup",
@@ -153,9 +151,6 @@ return array(
 	/**
 	 * Action messages
 	 */
-	'groups:deleted' => 'Grupul și conținutul de grup au fost șterse',
-	'groups:notdeleted' => 'Grupul nu a putut fi șters',
-	'groups:deletewarning' => "Sigur dorești să ștergi acest grup? Nu există cale de întoarcere!",
 
 	'groups:invitekilled' => 'Invitația a fost ștearsă.',
 	'groups:joinrequestkilled' => 'Cererea de alăturare a fost ștearsă.',

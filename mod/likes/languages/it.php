@@ -22,9 +22,6 @@ return array(
 	'likes:userlikedthis' => 'a %s piace',
 	'likes:userslikedthis' => 'a %s piace',
 	'likes:river:annotate' => 'piace',
-	'likes:delete:confirm' => 'Sei sicuro di voler eliminare questo "mi piace"?',
-
-	'river:likes' => 'piace %s %s',
 
 	// notifications. yikes.
 	'likes:notifications:subject' => 'a %s piace il tuo post "%s"',

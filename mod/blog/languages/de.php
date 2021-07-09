@@ -14,12 +14,13 @@ return array(
 	'collection:object:blog:friends' => 'Blogs Deiner Freunde',
 	'add:object:blog' => 'Blog-Eintrag verfassen',
 	'edit:object:blog' => 'Blog-Eintrag editieren',
+	'notification:object:blog:publish' => "Sende eine Benachrichtigung bei Veröffentlichung eines Blog-Eintrags",
+	'notifications:mute:object:blog' => "über den Blog-Eintrag '%s'",
 
 	'blog:revisions' => 'Revisionen',
 	'blog:archives' => 'Ältere Blogs',
 
 	'groups:tool:blog' => 'Gruppen-Blogs aktivieren',
-	'blog:write' => 'Einen Blog-Eintrag verfassen',
 
 	// Editing
 	'blog:excerpt' => 'Auszug',
@@ -36,12 +37,9 @@ return array(
 	'blog:error:cannot_write_to_container' => 'Keine ausreichenden Zugriffsrechte zum Speichern des Blog-Eintrags im Gruppenblog vorhanden.',
 	'blog:messages:warning:draft' => 'Die Entwurfsversion dieses Eintrags wurde nocht nicht gespeichert!',
 	'blog:edit_revision_notice' => '(Alte Revision)',
-	'blog:message:deleted_post' => 'Dein Blog-Eintrag wurde gelöscht.',
-	'blog:error:cannot_delete_post' => 'Der Blog-Eintrag konnte nicht gelöscht werden.',
 	'blog:none' => 'Keine Blog-Einträge vorhanden.',
 	'blog:error:missing:title' => 'Bitte einen Titel für Deinen Blog-Eintrag angeben!',
 	'blog:error:missing:description' => 'Bitte gebe den Text Deines Blog-Eintrags ein!',
-	'blog:error:cannot_edit_post' => 'Dieser Blog-Eintrag scheint nicht vorhanden zu sein oder Du hast möglicherweise nicht die notwendigen Zugriffrechte, um ihn zu editieren.',
 	'blog:error:post_not_found' => 'Der ausgewählte Blog-Eintrag ist nicht auffindbar.',
 	'blog:error:revision_not_found' => 'Diese Revision ist nicht verfügbar.',
 

@@ -10,7 +10,6 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
-	'expages' => "Σελίδες ιστότοπου",
 	'expages:edit:viewpage' => "Προβολή σελίδας",
 	'expages:about' => "Περί",
 	'expages:terms' => "Όροι Χρήσης",

@@ -21,7 +21,6 @@ return array(
 	'blog:archives' => 'Archives',
 
 	'groups:tool:blog' => 'Activer le blog du groupe',
-	'blog:write' => 'Écrire un article de blog',
 
 	// Editing
 	'blog:excerpt' => 'Extrait',
@@ -38,12 +37,9 @@ return array(
 	'blog:error:cannot_write_to_container' => 'Droits d\'accès insuffisants pour enregistrer l\'article dans ce groupe.',
 	'blog:messages:warning:draft' => 'Il y a un brouillon non enregistré de cet article !',
 	'blog:edit_revision_notice' => '(Ancienne version)',
-	'blog:message:deleted_post' => 'Article de blog supprimé.',
-	'blog:error:cannot_delete_post' => 'Impossible de supprimer l\'article de blog.',
 	'blog:none' => 'Aucun article de blog',
 	'blog:error:missing:title' => 'Vous devez donner un titre à votre article !',
 	'blog:error:missing:description' => 'Le corps de votre article est vide !',
-	'blog:error:cannot_edit_post' => 'Cet article peut ne pas exister ou vous n\'avez pas les autorisations pour le modifier.',
 	'blog:error:post_not_found' => 'Impossible de trouver l\'article de blog spécifié.',
 	'blog:error:revision_not_found' => 'Impossible de trouver cette révision.',
 
@@ -60,7 +56,7 @@ return array(
 
 %s
 
-Voir et commenter cet article de blog :
+Voir et commenter l\'article de blog :
 %s
 ',
 

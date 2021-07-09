@@ -12,10 +12,8 @@ return array(
 	 */
 
 	'messageboard:board' => "Tablica ogłoszeń",
-	'messageboard:messageboard' => "tablica ogłoszeń",
 	'messageboard:none' => "Ta tablica ogłoszeń jest jeszcze pusta",
 	'messageboard:num_display' => "Liczba wiadomości do wyświetlenia",
-	'messageboard:user' => "Tablica ogłoszeń użytkownika %s",
 	'messageboard:owner' => 'tablica ogłoszeń użytkownika %s',
 	'messageboard:owner_history' => 'Wpisy %s na tablicy ogłoszeń użytkownika %s',
 
@@ -31,7 +29,6 @@ return array(
 	'annotation:delete:messageboard:success' => "Twoja wiadomość została skasowana.",
 	
 	'messageboard:posted' => "Twoja wiadomość została dodana pomyślnie.",
-	'messageboard:deleted' => "Twoja wiadomość została skasowana.",
 
 	/**
 	 * Email messages
@@ -44,7 +41,6 @@ return array(
 	 */
 
 	'messageboard:blank' => "Przykro nam, musisz coś wpisać przed zapisaniem.",
-	'messageboard:notdeleted' => "Przykro nam, nie można skasować tej wiadomości.",
 
 	'messageboard:failure' => "Wystąpił nieoczekiwany błąd podczas dodawania wiadomości. Proszę spróbować ponownie.",
 

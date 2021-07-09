@@ -12,10 +12,8 @@ return array(
 	 */
 
 	'messageboard:board' => "留言板",
-	'messageboard:messageboard' => "留言板",
 	'messageboard:none' => "這個留言板尚無任何東西",
 	'messageboard:num_display' => "要顯示的留言數量",
-	'messageboard:user' => "%s 的留言板",
 	'messageboard:owner' => '%s 的留言板',
 	'messageboard:owner_history' => '%s 貼文於 %s 的留言板',
 
@@ -28,7 +26,6 @@ return array(
 	 */
 	
 	'messageboard:posted' => "您已成功在留言板上貼文。",
-	'messageboard:deleted' => "您已成功刪除留言。",
 
 	/**
 	 * Email messages
@@ -41,7 +38,6 @@ return array(
 	 */
 
 	'messageboard:blank' => "抱歉，在我們可以儲存它之前，您需要在留言區中實際放些東西。",
-	'messageboard:notdeleted' => "抱歉，我們無法刪除這則留言。",
 
 	'messageboard:failure' => "加入您的留言時發生了非預期的錯誤。請再試一次。",
 

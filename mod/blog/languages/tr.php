@@ -18,7 +18,6 @@ return array(
 	'blog:archives' => 'Arşivler',
 
 	'groups:tool:blog' => 'Grup blogunu etkinleştir',
-	'blog:write' => 'Bir blog gönderisi yaz',
 
 	// Editing
 	'blog:excerpt' => 'Alıntı',
@@ -35,12 +34,9 @@ return array(
 	'blog:error:cannot_write_to_container' => 'Gruba blog kaydedebilmek için yetkisiz erişim.',
 	'blog:messages:warning:draft' => 'Bu gönderinin kaydedilmemiş bir taslağı var!',
 	'blog:edit_revision_notice' => '(Eski sürüm)',
-	'blog:message:deleted_post' => 'Blog gönderisi silindi.',
-	'blog:error:cannot_delete_post' => 'Blog gönderisi silinemedi.',
 	'blog:none' => 'Blog gönderisi yok',
 	'blog:error:missing:title' => 'Lütfen bir blog başlığı girin!',
 	'blog:error:missing:description' => 'Lütfen blogunuzun gövdesini girin!',
-	'blog:error:cannot_edit_post' => 'Bu gönderi mevcut olmayabilir veya düzenlemek için izniniz olmayabilir.',
 	'blog:error:post_not_found' => 'Belirtilen blog gönderisi bulunamadı.',
 	'blog:error:revision_not_found' => 'Bu düzeltme bulunamadı.',
 

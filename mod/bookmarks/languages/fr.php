@@ -75,5 +75,4 @@ Voir et commenter ce signet :
 	 */
 
 	'bookmarks:save:failed' => "Votre signet n'a pas pu être enregistré. Vérifiez que le titre et le lien sont corrects et réessayez.",
-	'bookmarks:unknown_bookmark' => 'Impossible de trouver le signet spécifié',
 );

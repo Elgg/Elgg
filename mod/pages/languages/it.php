@@ -22,9 +22,7 @@ return array(
 
 	'groups:tool:pages' => 'Abilita pagine del gruppo',
 
-	'pages:delete' => "Elimina questa pagina",
 	'pages:history' => "Cronologia",
-	'pages:view' => "Mostra pagina",
 	'pages:revision' => "Revisione",
 
 	'pages:navigation' => "Navigazione",
@@ -53,8 +51,6 @@ return array(
 	'pages:description' => 'Contenuto della pagina',
 	'pages:tags' => 'Tag',
 	'pages:parent_guid' => 'Pagina madre',
-	'pages:access_id' => 'Accesso in lettura',
-	'pages:write_access_id' => 'Accesso in scrittura',
 
 	/**
 	 * Status and error messages
@@ -64,8 +60,6 @@ return array(
 	'pages:notsaved' => 'La pagina non può essare salvata',
 	'pages:error:no_title' => 'Devi specificare un titolo per questa pagina.',
 	'entity:delete:object:page:success' => 'La pagina è stata eliminata con successo.',
-	'pages:revision:delete:success' => 'La revisione della pagina è stata eliminata.',
-	'pages:revision:delete:failure' => 'La revisione della pagina non può essere eliminata.',
 
 	/**
 	 * History
@@ -79,13 +73,6 @@ return array(
 	'pages:num' => 'Numero di pagine da visualizzare',
 	'widgets:pages:name' => 'Pagine',
 	'widgets:pages:description' => "Questo è un elenco delle tue pagine.",
-
-	/**
-	 * Submenu items
-	 */
-	'pages:label:view' => "Visualizza pagina",
-	'pages:label:edit' => "Modifica pagina",
-	'pages:label:history' => "Cronologia della pagina",
 
 	'pages:newchild' => "Crea una sotto-pagina",
 );

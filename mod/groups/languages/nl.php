@@ -22,7 +22,6 @@ return array(
 	'groups:edit:access' => "Toegang",
 	'groups:edit:tools' => "Tools",
 	'groups:edit:settings' => "Instellingen",
-	'groups:delete' => 'Verwijder groep',
 	'groups:membershiprequests' => 'Beheer van lidmaatschapsaanvragen',
 	'groups:membershiprequests:pending' => 'Beheer van lidmaatschapsaanvragen (%s)',
 	'groups:invitedmembers' => "Beheer uitnodigingen",
@@ -80,7 +79,6 @@ return array(
 
 	'groups:nofriendsatall' => 'Je hebt geen vrienden om uit te nodigen!',
 	'groups:group' => "Groep",
-	'groups:search:tags' => "tag",
 	'groups:search:title' => "Zoek naar groepen met het trefwoord '%s'",
 	'groups:search:none' => "Geen overeenkomende groepen gevonden",
 	'groups:search_in_group' => "Zoek in deze groep",
@@ -157,9 +155,6 @@ return array(
 	/**
 	 * Action messages
 	 */
-	'groups:deleted' => 'De groep en zijn content zijn verwijderd',
-	'groups:notdeleted' => 'De groep kon niet worden verwijderd',
-	'groups:deletewarning' => "Weet je zeker dat je deze groep wilt verwijderen? Dit kan niet ongedaan worden gemaakt!",
 
 	'groups:invitekilled' => 'De uitnodiging is verwijderd',
 	'groups:joinrequestkilled' => 'Lidmaatschapsverzoek verwijderd.',

@@ -17,27 +17,27 @@ return array(
 	'collection:object:bookmarks:owner' => "Закладки %s",
 	'collection:object:bookmarks:friends' => "Закладки друзей",
 	'add:object:bookmarks' => "Добавить в закладки",
-	'edit:object:bookmarks' => "Редактировать закладку",
+	'edit:object:bookmarks' => "Изменить закладку",
 	'notification:object:bookmarks:create' => "Отправить уведомление при создании закладки",
 	'notifications:mute:object:bookmarks' => "о закладке '%s'",
 
 	'bookmarks:this' => "Добавить в закладки",
 	'bookmarks:this:group' => "Добавить в закладки в %s",
-	'bookmarks:bookmarklet' => "Добавить закладки",
-	'bookmarks:bookmarklet:group' => "Добавить закладки группы",
+	'bookmarks:bookmarklet' => "Закладки",
+	'bookmarks:bookmarklet:group' => "Закладки группы",
 	'bookmarks:address' => "Адрес сайта",
-	'bookmarks:none' => '---',
+	'bookmarks:none' => 'Нет закладок',
 
 	'bookmarks:notify:summary' => 'Новая закладка %s',
 	'bookmarks:notify:subject' => 'Новая закладка: %s',
 	'bookmarks:notify:body' =>
-'%s добавил[а] новую закладку: %s
+'%s добавил закладку: %s
 
-Адрес: %s
+Ссылка: %s
 
 %s
 
-Просмотреть и комментировать по ссылке:
+Просмотреть и комментировать закладку:
 %s
 ',
 
@@ -55,7 +55,7 @@ return array(
 	'widgets:bookmarks:description' => "Показать ваши последние закладки.",
 
 	'bookmarks:bookmarklet:description' =>
-			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
+			"Закладки - это специальная кнопка для сохранения ссылок в вашем браузере. Это позволяет вам сохранить любую ссылку, чтобы потом переходить по ней на сайт. Перетащите кнопку на панель вашего браузера:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"Если Вы используете Internet Explorer, Вам нужно нажать правой кнопкой мыши на значок закладок, выбрать 'Добавить в избранное', а затем на адресную строку.",
@@ -74,6 +74,5 @@ return array(
 	 * Error messages
 	 */
 
-	'bookmarks:save:failed' => "Простите, Ваша закладка не может быть сохранена. Проверьте название, адрес и попробуйте снова.",
-	'bookmarks:unknown_bookmark' => 'Не могу найти указанную закладку',
+	'bookmarks:save:failed' => "Ваша закладка не может быть сохранена. Проверьте название, адрес и попробуйте снова.",
 );

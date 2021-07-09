@@ -19,7 +19,6 @@ return array(
 
 	'login' => "Acceder",
 	'loginok' => "Accedeu correctamente.",
-	'loginerror' => "Non foi posíbel autenticalo. Probe de novo e asegúrese de indicar os seus datos de acceso correctamente.",
 	'login:empty' => "Debe introducir o seu nome de usuario ou conta de correo electrónico e mailo seu contrasinal.",
 	'login:baduser' => "Non foi posíbel cargar a súa conta de usuario.",
 	'auth:nopams' => "Produciuse un erro interno. Non hai ningún método de autenticación de usuarios instalado.",
@@ -42,33 +41,18 @@ return array(
 	'exception:title' => "Erro moi grave.",
 	'exception:contact_admin' => 'Produciuse un erro do que non é posíbel recuperarse, e quedou rexistrado. Válgase da seguinte información para contactar co administrador do sitio:',
 
-	'actionundefined' => "A acción solicitada (%s) non está definida no sistema.",
 	'actionnotfound' => "Non se atopou o ficheiro para a acción «%s».",
-	'actionloggedout' => "Non pode realizar a acción sen antes identificarse.",
 	'actionunauthorized' => 'Non ten permisos para realizar a acción.',
 
 	'ajax:error' => 'Produciuse un erro inesperado durante a execución dunha chamada mediante AJAX. Pode que se perdese a conexión co servidor.',
 	'ajax:not_is_xhr' => 'Non pode acceder a vistas de AJAX directamente.',
 
-	'PluginException:MisconfiguredPlugin' => "O complemento %s (guid: %s) está mal configurado e desactivouse. Consulte o wiki de Elgg (http://learn.elgg.org/) para intentar determinar a causa do problema.",
 	'PluginException:CannotStart' => 'O complemento «%s» (GUID: %s) non pode iniciarse e foi desactivado. Motivo: %s',
 	'PluginException:InvalidID' => "«%s» non é un identificador de complemento válido.",
 	'PluginException:InvalidPath' => "«%s» non é unha ruta de complemento válida.",
-	'PluginException:InvalidManifest' => 'O ficheiro de manifesto do complemento «%s» non é válido.',
-	'PluginException:InvalidPlugin' => 'O complemento «%s» non é válido.',
-	'PluginException:InvalidPlugin:Details' => 'O complemento «%s» non é válido: %s',
-	'PluginException:NullInstantiated' => '«ElggPlugin» non pode iniciarse con valor nulo. Debe asignarlle como valor un identificador único (GUID), un identificador de complemento ou unha ruta completa.',
 	'ElggPlugin:MissingID' => 'O complemento carece de identificador (GUID: %s).',
-	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'Falta o ficheiro «%s».',
-	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'O manifesto contén un tipo de dependencia, «%s», que non é válido.',
-	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'O manifesto contén un tipo de subministración (provides), «%s», que non é válido.',
-	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Hai unha dependencia de tipo «%s», «%s», no complemento «%s», , que non é válida. Os complementos non poden nin estar en conflicto nin requerir unha dependencia que eles mesmos subministran.',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Non é posíbel incluír «%s» para o complemento «%s» (GUID: %s) en «%s».',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Non é posíbel abrir o cartafol de vistas para o complemento «%s» (GUID: %s) en «%s».',
-	'PluginException:NoPluginName' => "Non se atopou o nome do complemento.",
-	'PluginException:ParserError' => 'Produciuse un erro ao analizar o manifesto con versión %s da API no complemento «%s».',
-	'PluginException:NoAvailableParser' => 'Non é posíbel atopar un analizador para a versión %s da API de manifesto no complemento «%s».',
-	'PluginException:ParserErrorMissingRequiredAttribute' => "O atributo «%s» non está presente no manifesto do complemento «%s», e trátase dun atributo obrigatorio.",
 	'ElggPlugin:InvalidAndDeactivated' => 'O complemento «%s» non é válido e foi desactivado.',
 
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Hai outros complementos que teñen «%s» entre as súas dependencias. Antes de desactivar este complemento debe desactivar estes outros: %s',
@@ -89,11 +73,8 @@ return array(
 	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
 	'BadRequestException' => 'Solicitude non válida',
 
-	'pageownerunavailable' => 'Aviso: Non é posíbel acceder ao propietario da páxina, «%d».',
 	'viewfailure' => 'Produciuse un erro interno na vista «%s».',
-	'view:missing_param' => "Falta o parámetro obrigatorio «%s» na vista %s.",
 	'changebookmark' => 'Cambie o seu marcador para esta páxina.',
-	'noaccess' => 'O contido ao que intentaba acceder eliminouse, ou non ten permisos para velo.',
 	'error:missing_data' => 'Faltaban datos na súa solicitude.',
 	'save:fail' => 'Produciuse un erro ao intentar gardar os seus datos.',
 	'save:success' => 'Gardáronse os seus datos.',
@@ -152,15 +133,12 @@ return array(
  */
 	'access:label:friends' => "Contactos",
 	'access' => "Acceso",
-	'access:overridenotice' => "Nota: Debido ás políticas de grupos, só os membros do grupo poden acceder a este contido.",
 	'access:limited:label' => "Limitado",
 	'access:help' => "O nivel de acceso",
 	'access:read' => "Lectura",
 	'access:write' => "Escritura",
 	'access:admin_only' => "Só os administradores",
-	'access:missing_name' => "O nome do nivel de acceso non existe.",
-	'access:comments:change' => "Actualmente esta discusión só a poden ver certas persoas. Pense ben con quen decide compartila.",
-
+	
 /**
  * Dashboard and widgets
  */
@@ -170,7 +148,6 @@ return array(
 
 	'widgets:add' => 'Engadir trebellos',
 	'widgets:add:description' => "Prema o botón de calquera dos seguintes trebellos para engadilo á páxina.",
-	'widgets:position:fixed' => '(posición fixa na páxina)',
 	'widget:unavailable' => 'Xa engadiu ese trebello.',
 	'widget:numbertodisplay' => 'Número de elementos para mostrar',
 
@@ -282,14 +259,6 @@ return array(
 	'viewtype:change' => "Cambiar o tipo de lista",
 	'viewtype:list' => "Vista de lista",
 	'viewtype:gallery' => "Galería",
-
-	'tag:search:startblurb' => "Elementos con etiquetas que coinciden con «%s»:",
-
-	'user:search:startblurb' => "Usuarios que coinciden con «%s»:",
-	'user:search:finishblurb' => "Prema aquí para ver máis.",
-
-	'group:search:startblurb' => "Grupos que coinciden con «%s»:",
-	'group:search:finishblurb' => "Prema aquí para ver máis.",
 	'search:go' => 'Ir',
 	'userpicker:only_friends' => 'Só contactos',
 
@@ -311,7 +280,6 @@ return array(
 	'registration:userexists' => 'Ese nome de usuario xa existe.',
 	'registration:usernametooshort' => 'O seu nome de usuario debe ter polo menos %u caracteres.',
 	'registration:usernametoolong' => 'O seu nome de usuario é longo de máis. Non pode sobrepasar os %u caracteres.',
-	'registration:passwordtooshort' => 'O contrasinal debe ter un mínimo de %u caracteres.',
 	'registration:dupeemail' => 'Ese enderezo de correo electrónico xa está rexistrado.',
 	'registration:invalidchars' => 'O seu nome de usuario contén caracteres como «%s» que non están permitidos. Non pode usar ningún dos seguintes caracteres: %s',
 	'registration:emailnotvalid' => 'O seu enderezo de correo electrónico non está permitido.',
@@ -773,7 +741,6 @@ return array(
 
 	'content' => "Contido",
 	'content:latest' => 'Última actividade',
-	'content:latest:blurb' => 'Tamén pode premer aquí para ver os últimos contidos de todo o sitio.',
 
 	'link:text' => 'Ver a ligazón',
 
@@ -849,13 +816,6 @@ return array(
 	'useradd:subject' => 'Creouse a conta de usuario',
 
 /**
- * System messages
- */
-
-	'systemmessages:dismiss' => "Prema para descartar",
-
-
-/**
  * Messages
  */
 	'messages:title:error' => 'Err',
@@ -863,13 +823,6 @@ return array(
 	'messages:title:help' => 'Axuda',
 	'messages:title:notice' => 'Nota',
 	'messages:title:info' => 'Información',
-
-/**
- * Import / export
- */
-
-	'importsuccess' => "Importáronse os datos",
-	'importfail' => "Non foi posíbel importar os datos mediante OpenDD.",
 
 /**
  * Time
@@ -1010,19 +963,12 @@ return array(
 	'upgrade:unlock:confirm' => "A base de datos está bloqueada para outra anovación. Realizar varias anovacións ao mesmo tempo é perigoso. Non continúe salvo que estea certo de que non hai ningunha outra anovación en marcha. Quere desbloquear a anovació?",
 	'upgrade:locked' => "Non é posíbel anovar, hai outra anovación en marcha. Pode desbloquear esta anovación desde a sección de administración.",
 	'upgrade:unlock:success' => "Desbloqueouse a anovación.",
-	'upgrade:unable_to_upgrade' => 'Non é posíbel anovar.',
-
-	'update:oauth_api:deactivated' => 'A API de OAuth (outrora coñecida como «OAuth Lib») desactivouse durante a anovación. Actívea de novo manualmente.',
-	'upgrade:site_secret_warning:moderate' => "Recomendámoslle que volva xerar a chave do sitio para mellorar a seguranza do sistema. Pode facelo desde «Configurar → Configuración → Avanzada».",
-	'upgrade:site_secret_warning:weak' => "Recomendámoslle encarecidamente que volva xerar a chave do sitio para mellorar a seguranza do sistema. Pode facelo desde «Configurar → Configuración → Avanzada».",
 
 	'admin:pending_upgrades' => 'O sitio ten anovacións pendentes que requiren da súa atención inmediata.',
 	'admin:view_upgrades' => 'Ver as anovacións pendentes.',
 	'item:object:elgg_upgrade' => 'Anovacións do sitio.',
 	'admin:upgrades:none' => 'A instalación está actualizada.',
 
-	'upgrade:item_count' => 'É necesario anovar <b>%s</b> elementos.',
-	'upgrade:warning' => '<b>Advertencia:</b> En sitios grandes, esta anovación pode levar bantante tempo.',
 	'upgrade:success_count' => 'Anovado:',
 	'upgrade:finished' => 'Rematou a anovación',
 	'upgrade:finished_with_errors' => '<p>Rematou a anovación pero producíronse erros. Actualice a páxina e probe a anovar outra vez.</p></p><br />
@@ -1089,7 +1035,6 @@ Se o erro persiste, comprobe o rexistro de erros do servidor, a ver se pode inde
 	'entity:delete:object:comment:success' => "Eliminouse o comentario.",
 	'generic_comment:blank' => "Non pode enviar un comentario baleiro",
 	'generic_comment:notfound' => "Non se atopou o comentario indicado.",
-	'generic_comment:notfound_fallback' => "Non se atopou o comentario indicado, esta é a páxina onde se deixou o comentario.",
 	'generic_comment:failure' => "Non foi posíbel gardar o comentario, produciuse un erro inesperado",
 	'generic_comment:none' => 'Non hai comentarios',
 	'generic_comment:title' => 'Comentario de %s',
@@ -1102,15 +1047,12 @@ Se o erro persiste, comprobe o rexistro de erros do servidor, a ver se pode inde
 
 	'byline' => 'De %s',
 	'byline:ingroup' => 'in the group %s',
-	'entity:default:missingsupport:popup' => 'Non é posíbel mostrar correctamente esta entidade. Pode que o motivo sexa que necesita dun complemento que xa non está instalado.',
-
+	
 	'entity:delete:item' => 'Item',
 	'entity:delete:item_not_found' => 'Item not found.',
 	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
 	'entity:delete:success' => '%s has been deleted.',
 	'entity:delete:fail' => '%s could not be deleted.',
-	
-	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 
 /**
  * Annotations
@@ -1125,7 +1067,6 @@ Se o erro persiste, comprobe o rexistro de erros do servidor, a ver se pode inde
 	'actiongatekeeper:timeerror' => 'A páxina que estaba a usar caducou. Actualize a páxina e vólvao intentar.',
 	'actiongatekeeper:pluginprevents' => 'Algunha razón descoñecida impediu enviar o seu formulario.',
 	'actiongatekeeper:uploadexceeded' => 'O tamaño dos ficheiros enviados supera o límite definido polo administrador do sitio.',
-	'actiongatekeeper:crosssitelogin' => "Non se permite acceder desde un dominio distinto. Vólvao intentar.",
 
 /**
  * Word blacklists
@@ -1138,7 +1079,6 @@ Se o erro persiste, comprobe o rexistro de erros do servidor, a ver se pode inde
  */
 
 	'js:security:token_refresh_failed' => 'Non foi posíbel contactar con %s. Pode que teña problemas ao gardar contidos. Actualize a páxina.',
-	'js:security:token_refreshed' => 'Restableceuse a conexión con %s.',
 	'js:lightbox:current' => "Imaxe número %s de %s",
 
 /**

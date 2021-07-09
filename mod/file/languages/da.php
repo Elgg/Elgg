@@ -22,14 +22,11 @@ return array(
 	'file:num_files' => "Antal viste filer",
 	'file:replace' => 'Erstat fil indhold (lad være tom for ikke at ændre i fil)',
 	'file:list:title' => "%s's %s %s",
-	'file:title:friends' => "Venner'",
 
 	'file:file' => "Fil",
 
 	'file:list:list' => 'Switch to the list view',
 	'file:list:gallery' => 'Switch to the gallery view',
-
-	'file:types' => "Tilføjede filtyper",
 
 	'file:type:' => 'Filer',
 	'file:type:all' => "Alle filer",

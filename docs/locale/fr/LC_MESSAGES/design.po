@@ -5,15 +5,16 @@
 # 
 # Translators:
 # Jerôme Bakker, 2021
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-18 16:34+0200\n"
+"POT-Creation-Date: 2021-06-11 11:12+0200\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
-"Last-Translator: Jerôme Bakker, 2021\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,9 +48,9 @@ msgstr ""
 "Dans Elgg, une action est le code qui est exécuté pour faire des "
 "modifications dans la base de données quand un utilisateur effectue quelque "
 "chose. Par exemple, le fait de se connecter, de publier un commentaire, ou "
-"de créer un article de blog sont des actions. Le script d'action traite le "
-"processus d'entrée, effectue les modifications appropriées dans la base de "
-"données, et fournit un retour à l'utilisateur à propos de l'action."
+"de créer un article de blog sont des actions. Le script d'action traite les "
+"entrées, effectue les modifications appropriées dans la base de données, et "
+"fournit un retour à l'utilisateur à propos de l'action."
 
 #: ../../design/actions.rst:15
 msgid "Action Handler"
@@ -67,14 +68,14 @@ msgid ""
 "service instead of a single script file, Elgg automatically provides "
 "increased security and extensibility."
 msgstr ""
-"Les actions sont enregistrées durant le processus de démarrage (boot) en "
+"Les actions sont enregistrées durant le processus de démarrage \"boot\" en "
 "appelant ``elgg_register_action()``. Toutes les URLs d'action commencent par"
-" ``action/`` et sont servies par le contrôleur front end d'Elgg à travers le"
-" service action. Cette approche est différente d'application PHP "
-"traditionnelles qui envoient l'information à un fichier spécifique. Le "
+" ``action/`` et sont servies par le contrôleur front end de Elgg à travers "
+"le service action. Cette approche est différente de celle d'applications PHP"
+" traditionnelles qui envoient l'information à un fichier spécifique. Le "
 "service action réalise des :doc:`CSRF vérifications de sécurité "
 "</design/security>`, et appelle le fichier de script d'action enregistré, "
-"puis renvoient éventuellement l'utilisateur vers une nouvelle page. En "
+"puis renvoie éventuellement l'utilisateur vers une nouvelle page. En "
 "utilisant le service action au lieu d'un seul fichier de script, Elgg "
 "fournit automatiquement une sécurité et une extensibilité améliorées."
 
@@ -93,18 +94,16 @@ msgstr "AMD"
 
 #: ../../design/amd.rst:10
 msgid ""
-"There are two JavaScript system in Elgg: the deprecated 1.8 system, and the "
-"newer `AMD (Asynchronous Module Definition) "
-"<http://requirejs.org/docs/whyamd.html>`_ compatible system introduced in "
-"1.9."
+"If you want to use JavaScript in Elgg: we use a `AMD (Asynchronous Module "
+"Definition) <http://requirejs.org/docs/whyamd.html>`_ compatible system."
 msgstr ""
-"Il existe deux systèmes JavaScript dans Elgg : le système 1.8 devenu "
-"obsolète, et le nouveau système compatible `AMD (Asynchronous Module "
-"Definition) <http://requirejs.org/docs/whyamd.html>`_ introduit dans la 1.9."
+"Si vous souhaitez utiliser JavaScript dans Elgg : nous utilisons un système "
+"compatible `AMD (Asynchronous Module Definition) "
+"<http://requirejs.org/docs/whyamd.html>`_."
 
 #: ../../design/amd.rst:13
 msgid "This discusses the benefits of using AMD in Elgg."
-msgstr "Discussions au sujet des bénéfices de l'utilisation d'AMD dans Elgg."
+msgstr "Ceci discute des bénéfices de l'utilisation d'AMD dans Elgg."
 
 #: ../../design/amd.rst:16
 msgid "Why AMD?"
@@ -117,11 +116,11 @@ msgid ""
 "\"``elgg``\" JavaScript object and library, but have quickly realized the "
 "approach we were taking was not scalable."
 msgstr ""
-"Nous avons beaucoup travaillé pour rendre le JavaScript d'Elgg plus "
-"maintenable et plus utile. Nous avons fait quelques grands pas dans la 1.8 "
-"en introduisant l'objet et la bibliothèque JavaScript \"``elgg``\", mais "
-"avons rapidement réalisé que l'approche que nous prenions n'était pas "
-"susceptible de passer à l'échelle."
+"Nous avons beaucoup travaillé pour rendre le JavaScript de Elgg plus "
+"maintenable et plus utile. Nous avons fait quelques grands pas dans la "
+"version 1.8 en introduisant l'objet et la bibliothèque JavaScript "
+"\"``elgg``\", mais avons rapidement réalisé que l'approche que nous prenions"
+" n'était pas susceptible de passer à l'échelle."
 
 #: ../../design/amd.rst:22
 msgid ""
@@ -131,9 +130,9 @@ msgid ""
 "solution that makes JS development as productive and maintainable as "
 "possible going forward."
 msgstr ""
-"La taille du `JS sur le web est rapidement croissante "
+"La taille du `JS sur le web augmente "
 "<http://httparchive.org/trends.php?s=All&minlabel=Feb+11+2011&maxlabel=Feb+1+2013#bytesJS&reqJS>`_,"
-" et le JS dans Elgg s’accroît également. Nous voulons qu'Elgg soit capable "
+" et le JS dans Elgg s’accroît également. Nous voulons que Elgg soit capable "
 "d'offrir une solution qui rende le développement JS aussi productif et "
 "maintenable que possible pour aller plus loin."
 
@@ -204,14 +203,14 @@ msgid ""
 "concatenate multiple modules into a single file and ship them all at once in"
 " a production environment. [#]_"
 msgstr ""
-"Nous apprécions le cycle édition-mise à jour (\"edit-refresh\")du web. Nous "
-"voulions faire en sorte que toute personne qui développe avec Elgg puisse "
-"continuer à expérimenter ce plaisir. Des formats de modules synchrones comme"
-" Closure ou CommonJS n'étaient tout simplement pas une option pour nous. "
-"Mais même si AMD n'a pas besoin d'une étape de build, *il reste cependant "
-"très adapté pour le build*. A cause du wrapper ``define()``, il est possible"
-" de concaténer de multiples modules dans un seul fichier et de livrer "
-"l'ensemble en une seule fois dans un environnement de production. [#]_"
+"Nous apprécions le cycle édition-mise à jour du web. Nous voulions faire en "
+"sorte que toute personne qui développe avec Elgg puisse continuer à "
+"expérimenter ce plaisir. Des formats de modules synchrones comme Closure ou "
+"CommonJS n'étaient tout simplement pas une option pour nous. Mais même si "
+"AMD n'a pas besoin d'une étape de build, *il reste cependant très adapté "
+"pour le build*. Grâce au wrapper ``define()``, il est possible de concaténer"
+" de multiples modules dans un seul fichier et de livrer l'ensemble en une "
+"seule fois dans un environnement de production. [#]_"
 
 #: ../../design/amd.rst:54
 msgid ""
@@ -223,7 +222,7 @@ msgstr ""
 "AMD est un système de chargement de modules largement éprouvé et bien pensé "
 "pour le web d'aujourd'hui. Nous avons beaucoup de gratitude pour le travail "
 "qui a été mis dedans, et sommes excités de l'offrir comme la solution "
-"standard pour le développement JavaScript dans Elgg à partir de Elgg 1.9."
+"standard pour le développement JavaScript dans Elgg depuis Elgg 1.9."
 
 #: ../../design/amd.rst:58
 msgid ""
@@ -231,10 +230,10 @@ msgid ""
 "since reducing round-trips is critical for a good first-view experience, "
 "especially on mobile devices."
 msgstr ""
-"Ceci n'est pas encore supporté par le noyau Elgg, mais nous sommes en train "
-"de nous pencher dessus dans la mesure où la réduction des allers-retours est"
-" critique pour une bonne première expérience, particulièrement sur les "
-"appareils mobiles."
+"Ceci n'est pas encore supporté par le noyau de Elgg, mais nous sommes en "
+"train de nous pencher dessus dans la mesure où la réduction des allers-"
+"retours est critique pour une bonne première expérience, particulièrement "
+"sur les appareils mobiles."
 
 #: ../../design/database.rst:2
 msgid "Database"
@@ -243,7 +242,7 @@ msgstr "Base de données"
 #: ../../design/database.rst:4
 msgid "A thorough discussion of Elgg's data model design and motivation."
 msgstr ""
-"Une discussion solide sur le design du modèle de données Elgg et ses "
+"Une discussion solide sur le design du modèle de données de Elgg et ses "
 "motivations."
 
 #: ../../design/database.rst:8 ../../design/events.rst:6
@@ -270,8 +269,8 @@ msgstr ""
 "Il est recommandé que les plugins n'interagissent pas directement avec la "
 "base de données, afin de créer un système plus stable et une meilleure "
 "expérience utilisateur parce que les contenus créés par différents plugins "
-"peut être mélangés ensemble de manières cohérentes. Avec cette approche, les"
-" plugins sont plus rapides à développer, et sont en même temps plus "
+"peuvent être mélangés ensemble de manière cohérente. Avec cette approche, "
+"les plugins sont plus rapides à développer, et sont en même temps plus "
 "puissants."
 
 #: ../../design/database.rst:22
@@ -320,12 +319,12 @@ msgstr ""
 msgid ""
 "added by a third party. Such properties include ratings, likes, and votes."
 msgstr ""
-"ajoutées par une tierce-partie. De telles propriétés comprennent les "
-"notations, likes et votes."
+"ajoutées par une tierce-partie. De telles propriétés comprennent par exemple"
+" les notations, les likes ou les votes."
 
 #: ../../design/database.rst:38
 msgid "The main differences between metadata and annotations:"
-msgstr "La principale différence entre métadonnées et annotations :"
+msgstr "Les principales différences entre métadonnées et annotations :"
 
 #: ../../design/database.rst:40
 msgid "metadata does not have owners, while annotations do"
@@ -368,11 +367,11 @@ msgstr ""
 
 #: ../../design/database.rst:51
 msgid "Datamodel"
-msgstr "Modèle de données (datamodel)"
+msgstr "Modèle de données"
 
 #: ../../design/database.rst:58
 msgid "The Elgg data model diagram"
-msgstr "Le diagramme du modèle de données d'Elgg"
+msgstr "Le diagramme du modèle de données de Elgg"
 
 #: ../../design/database.rst:61
 msgid "Entities"
@@ -383,8 +382,8 @@ msgid ""
 "``ElggEntity`` is the base class for the Elgg data model and supports a "
 "common set of properties and methods."
 msgstr ""
-"``ElggEntity`` est la classe de base pour le modèle de données d'Elgg et "
-"supporte un jeu de propriétés et méthodes communes."
+"``ElggEntity`` est la classe de base pour le modèle de données de Elgg et "
+"supporte un jeu de propriétés et de méthodes communes."
 
 #: ../../design/database.rst:66
 msgid "A numeric Globally Unique IDentifier (See `GUIDs`_)."
@@ -406,7 +405,7 @@ msgstr "Un sous-type arbitraire (plus d'informations ci-dessous)."
 
 #: ../../design/database.rst:70
 msgid "An owner."
-msgstr "Un propriétaire (owner)."
+msgstr "Un propriétaire"
 
 #: ../../design/database.rst:71
 msgid "The site that the entity belongs to."
@@ -501,11 +500,11 @@ msgid ""
 msgstr ""
 "Chaque type a sa propre API étendue. Par ex. les utilisateurs peuvent être "
 "en contact avec d'autres utilisateurs, un groupe peut avoir des membres, "
-"tandis que les objets peuvent être \"likés\" et commentés."
+"tandis que les objets peuvent être aimés et commentés."
 
 #: ../../design/database.rst:93
 msgid "Subtypes"
-msgstr "Sous-types (subtypes)"
+msgstr "Sous-types \"subtypes\""
 
 #: ../../design/database.rst:95
 msgid ""
@@ -513,9 +512,9 @@ msgid ""
 "specialize the entity. Elgg makes it easy to query specific for entities of "
 "a given subtype(s), as well as assign them special behaviors and views."
 msgstr ""
-"Chaque entité doit définir un **sous-type** (subtype), que les plugins "
-"utilisent pour spécialiser encore l'entité. Elgg rend facile le fait de "
-"rechercher des entités spécifiques d'un ou de plusieurs sous-types donnés, "
+"Chaque entité doit définir un sous-type **subtype**, que les plugins "
+"utilisent pour spécialiser encore l'entité. Elgg facilite le fait de "
+"rechercher des entités spécifiques d'un sous-type donné (ou de plusieurs), "
 "ainsi que de leur assigner des comportements et vues spéciales."
 
 #: ../../design/database.rst:98
@@ -545,10 +544,10 @@ msgid ""
 " \\ElggBlog::class)``."
 msgstr ""
 "Les plugins peuvent utiliser des classes d'entités personnalisées qui "
-"étendent l classe de base du type. Pour cela, ils doivent enregistrer leur "
-"classe au démarrage (par ex. dans le gestionnaire ``'init','system'``), en "
-"utilisant ``elgg_set_entity_class()``. Par exemple, le plugin blog pourraity"
-" utiliser ``elgg_set_entity_class('object', 'blog', \\ElggBlog::class)``."
+"étendent la classe de base du type. Pour cela, ils doivent enregistrer leur "
+"classe au démarrage (par ex. dans le gestionnaire ``'init', 'system'``), en "
+"utilisant ``elgg_set_entity_class()``. Par exemple, le plugin blog pourrait "
+"utiliser ``elgg_set_entity_class('object', 'blog', \\ElggBlog::class)``."
 
 #: ../../design/database.rst:107
 msgid ""
@@ -594,7 +593,7 @@ msgstr ""
 msgid ""
 "Some Elgg API functions work with GUIDs instead of ``ElggEntity`` objects."
 msgstr ""
-"Certaines fonctions de l'API Elgg focntionnenet avec des GUIDs au lieu "
+"Certaines fonctions de l'API de Elgg fonctionnent avec des GUIDs au lieu "
 "d'objets ``ElggEntity``."
 
 #: ../../design/database.rst:125
@@ -613,7 +612,7 @@ msgstr ""
 #: ../../design/database.rst:130
 msgid "Beyond the standard ElggEntity properties, ElggObjects also support:"
 msgstr ""
-"Au-delà des propriétés standards de ElggEntity, ElggObjects supporte "
+"Au-delà des propriétés standards de ElggEntity, les ElggObjects supportent "
 "également :"
 
 #: ../../design/database.rst:132
@@ -641,15 +640,15 @@ msgid ""
 "they were created from within the admin panel)."
 msgstr ""
 "Le type d'entité ``ElggUser`` représente les utilisateurs au sien d'une "
-"installation Elgg. Il seront définis comme désactivés jusqu'à-ce que leur "
+"installation Elgg. Ils seront définis comme désactivés jusqu'à-ce que leur "
 "compte ait été activé (à moins qu'ils n'aient été créés à partir du panneau "
 "d'administration)."
 
 #: ../../design/database.rst:144
 msgid "Beyond the standard ElggEntity properties, ElggUsers also support:"
 msgstr ""
-"Au-delà des propriétés standards de ElggEntity, ElggUsers supporte également"
-" :"
+"Au-delà des propriétés standards de ElggEntity, les ElggUsers supportent "
+"également :"
 
 #: ../../design/database.rst:146
 msgid "``name`` The user's plain text name. e.g. \"Hugh Jackman\""
@@ -657,7 +656,7 @@ msgstr "``name`` Le nom de l'utilisateur en texte brut. Par ex. \"Hugh Jackman\"
 
 #: ../../design/database.rst:147
 msgid "``username`` Their login name. E.g. \"hjackman\""
-msgstr "``username`` Leur nom d'utilisateur. Par ex. \"hjackman\""
+msgstr "``username`` Leur identifiant. Par ex. \"hjackman\""
 
 #: ../../design/database.rst:148
 msgid "``password`` A hashed version of their password"
@@ -665,7 +664,7 @@ msgstr "``password`` Une version hachée de leur mot de passe"
 
 #: ../../design/database.rst:149
 msgid "``email`` Their email address"
-msgstr "``email`` Leur adresse email"
+msgstr "``email`` Leur adresse e-mail"
 
 #: ../../design/database.rst:150
 msgid "``language`` Their default language code."
@@ -709,8 +708,8 @@ msgstr ""
 #: ../../design/database.rst:162
 msgid "Beyond the standard ElggEntity properties, ElggSites also support:"
 msgstr ""
-"Au-delà des propriétés standards de ElggEntity, ElggSites supporte également"
-" :"
+"Au-delà des propriétés standards de ElggEntity, les ElggSites supportent "
+"également :"
 
 #: ../../design/database.rst:164
 msgid "``name`` The site name"
@@ -740,7 +739,7 @@ msgstr ""
 #: ../../design/database.rst:174
 msgid "Beyond the standard ElggEntity properties, ElggGroups also support:"
 msgstr ""
-"Au-delà des propriétés standards de ElggEntity, ElggGroups supporte "
+"Au-delà des propriétés standards de ElggEntity, les ElggGroups supportent "
 "également :"
 
 #: ../../design/database.rst:176
@@ -785,15 +784,16 @@ msgstr ""
 
 #: ../../design/database.rst:193
 msgid "Writing a group-aware plugin"
-msgstr "Écrire un plugin conscient des groupes"
+msgstr "Écrire un plugin compatibles avec les groupes"
 
 #: ../../design/database.rst:195
 msgid ""
 "Plugin owners need not worry too much about writing group-aware "
 "functionality, but there are a few key points:"
 msgstr ""
-"Les développeurs de plugins ne devraient pas trop s'inquiéter d'écrire une "
-"fonctionnalité consciente des groupes, mais il y a quelques points clefs :"
+"Les développeurs de plugins ne devraient pas trop s'inquiéter de l'écriture "
+"de fonctionnalités compatibles avec les groupes, mais il y a quelques points"
+" clefs :"
 
 #: ../../design/database.rst:199
 msgid "Adding content"
@@ -810,11 +810,11 @@ msgstr ""
 
 #: ../../design/database.rst:204
 msgid ""
-"Use ``ElggEntity->canWriteToContainer()`` to determine whether or not the "
-"current user has the right to add content to a group."
+"Use ``ElggEntity->canWriteToContainer(0, $type, $subtype)`` to determine "
+"whether or not the current user has the right to add content to a group."
 msgstr ""
-"Utilisez ``ElggEntity->canWriteToContainer()`` pour déterminer si "
-"l'utilisateur actuel a ou n'a pas le droit d'ajouter du contenu dans un "
+"Utilisez ``ElggEntity->canWriteToContainer(0, $type, $subtype)`` pour "
+"déterminer si l'utilisateur actuel a le droit d'ajouter du contenu à un "
 "groupe."
 
 #: ../../design/database.rst:207
@@ -827,7 +827,7 @@ msgid ""
 "current user's container):"
 msgstr ""
 "Soyez attentif au fait que vous allez devoir passer le GUID du conteneur ou "
-"le nom d'utilisateur à la page responsable de la publication et la valeur "
+"l'identifiant à la page responsable de la publication, et la valeur "
 "associée, de sorte que ceci puisse être ensuite conservé dans votre "
 "formulaire sous forme de champ de saisie caché, pour un passage plus aisé "
 "vers vos actions. Au sein d'une action \"create\", vous allez avoir besoin "
@@ -856,11 +856,11 @@ msgid ""
 "or edit that entity."
 msgstr ""
 "La propriété d'une entité détermine, d'une part, si vous pouvez ou non "
-"accéder à, ou modifier cette entité."
+"accéder à cette entité, ou la modifier."
 
 #: ../../design/database.rst:248
 msgid "Containers"
-msgstr "Conteneurs (containers)"
+msgstr "Conteneurs \"containers\""
 
 #: ../../design/database.rst:250
 msgid ""
@@ -891,10 +891,11 @@ msgid ""
 "model a parent-child relationship between entities (e.g. a \"folder\" object"
 " containing a file object)."
 msgstr ""
-"Note : Ceci n'est pas toujours vrai. Les entités Commentaires sont contenues"
-" par l'objet commenté, et dans certains plugins tierce-partie la conteneur "
-"peut être utilisé pour modéliser des relations parents-enfants entre entités"
-" (par ex. un objet \"dossier\" qui contient un objet fichier)."
+"Note : Ceci n'est pas toujours vrai. Les entités des commentaires sont "
+"contenues par l'objet commenté, et dans certains plugins tierce-partie le "
+"conteneur peut être utilisé pour modéliser des relations parents-enfants "
+"entre entités (par ex. un objet dossier \"folder qui contient un objet "
+"fichier)."
 
 #: ../../design/database.rst:264
 msgid "Annotations"
@@ -932,7 +933,7 @@ msgstr "Une valeur (qui peut être une chaîne de caractères ou un entier)"
 #: ../../design/database.rst:276
 msgid "An access permission distinct from the entity it's attached to"
 msgstr ""
-"Un niveau d'accès distinct de celui de l'entité à laquelle il est attaché"
+"Un niveau d'accès distinct de celui de l'entité à laquelle elle est attachée"
 
 #: ../../design/database.rst:277
 msgid "An owner"
@@ -968,7 +969,7 @@ msgstr ""
 
 #: ../../design/database.rst:305
 msgid "Reading annotations"
-msgstr "Lire les annotations"
+msgstr "Lire des annotations"
 
 #: ../../design/database.rst:307
 msgid ""
@@ -987,7 +988,7 @@ msgstr ""
 
 #: ../../design/database.rst:329
 msgid "Useful helper functions"
-msgstr "Fonctions d'aide utiles"
+msgstr "Fonctions d'assistance utiles"
 
 #: ../../design/database.rst:332
 msgid "Comments"
@@ -1015,7 +1016,7 @@ msgid ""
 "be able to save a date of birth."
 msgstr ""
 "Les métadonnées dans Elgg vous permettent de stocker les données "
-"supplémentaires d'une ``entité`` au-delà des champs pré-définis que cette "
+"supplémentaires d'une ``entité`` au-delà des champs prédéfinis que cette "
 "entité supporte. Par exemple, ``ElggObjects`` ne supporte que les champs "
 "d'entités basiques plus un titre et une description, mais vous pouvez "
 "souhaiter inclure également des tags ou un numéro ISBN. De manière "
@@ -1057,9 +1058,9 @@ msgid ""
 "manually specified as ``integer`` (see below)."
 msgstr ""
 "Comme pour les annotations, les valeurs sont stockées sous forme de chaîne "
-"de caractères à moins que la valeur donnée soit un entier PHP "
-"(``is_int($value)`` vaut true), ou à moins que le ``$value_type`` soit "
-"défini manuellement comme ``integer`` (voyez ci-dessous)."
+"de caractères, à moins que la valeur donnée soit un entier PHP "
+"(``is_int($value)`` vaut true), ou à moins que ``$value_type`` soit défini "
+"manuellement comme ``integer`` (voyez ci-dessous)."
 
 #: ../../design/database.rst:363
 msgid "As of Elgg 3.0, metadata no longer have ``access_id``."
@@ -1111,7 +1112,7 @@ msgstr ""
 "d'entité avec lequel vous travaillez. Vous n'avez pas besoin d'enregistrer "
 "une entité après avoir ajouté ou modifié des métadonnées. Vous devez "
 "enregistrer une entité si vous avez changé l'un des ses attributs natifs. A "
-"titre d'exemple, si vous avez changé l'id d'accès d'un ElggObject, vous "
+"titre d'exemple, si vous avez changé l'id de l'accès d'un ElggObject, vous "
 "devez l'enregistrer, faute de quoi la modification ne sera pas conservée "
 "dans la base de données."
 
@@ -1123,7 +1124,7 @@ msgstr ""
 
 #: ../../design/database.rst:405
 msgid "Reading metadata"
-msgstr "Lire les métadonnées"
+msgstr "Lire des métadonnées"
 
 #: ../../design/database.rst:407
 msgid "To retrieve metadata, treat it as a property of the entity:"
@@ -1177,7 +1178,7 @@ msgstr "Par ex., pour récupérer la date de naissance d'un utilisateur"
 
 #: ../../design/database.rst:450
 msgid "Or to get all metadata objects:"
-msgstr "Ou pour récupérer toutes les objets des métadonnées :"
+msgstr "Ou pour récupérer tous les objets de métadonnées :"
 
 #: ../../design/database.rst:462
 msgid "Common mistakes"
@@ -1185,7 +1186,7 @@ msgstr "Erreurs courantes"
 
 #: ../../design/database.rst:465
 msgid "\"Appending\" metadata"
-msgstr "\"Ajouter\" des métadonnées"
+msgstr "\"Ajouter\" des métadonnées à la suite"
 
 #: ../../design/database.rst:467
 msgid ""
@@ -1251,7 +1252,7 @@ msgstr ""
 
 #: ../../design/database.rst:511
 msgid "\"**{subject}** is a **{noun}** of **{target}**.\""
-msgstr "\"**{subject}** est un **{noun}** de **{target}**.\""
+msgstr "\"**{sujet}** est un **{nom}** de **{cible}**.\""
 
 #: ../../design/database.rst:514
 msgid "API name"
@@ -1309,7 +1310,7 @@ msgstr "\"**{sujet}** **{verbe}** **{cible}**.\""
 
 #: ../../design/database.rst:525
 msgid "E.g. User A \"likes\" blog post B"
-msgstr "Par ex. Utilisateur A \"aime\" l'article de blog B"
+msgstr "Par ex. Utilisateur A aime \"likes\" l'article de blog B"
 
 #: ../../design/database.rst:527
 msgid ""
@@ -1319,7 +1320,7 @@ msgid ""
 msgstr ""
 "**Chaque relation a une direction.** Imaginez un archer qui tire une flèche "
 "vers une cible ; la flèche se déplace dans une direction, en reliant le "
-"sujet (l'archer) à à la cible."
+"sujet (l'archer) à la cible."
 
 #: ../../design/database.rst:531
 msgid ""
@@ -1336,10 +1337,10 @@ msgid ""
 "that *the entities* in a relationship may be invisible due to access "
 "control!"
 msgstr ""
-"Les **Relations_ n'ont pas de contrôle d'accès.** Elles ne sont jamais "
-"cachées d'une vue et peuvent être modifiées par le code à n'importe quel "
-"niveau de privilège, avec l'avertissement que *les entités* d'une relation "
-"peuvent être invisible en raison du contrôle d'accès !"
+"Les relations **Relationships_ n'ont pas de contrôle d'accès.** Elles ne "
+"sont jamais cachées d'une vue et peuvent être modifiées par le code à "
+"n'importe quel niveau de privilège, avec l'avertissement que *les entités* "
+"d'une relation peuvent être invisible en raison du contrôle d'accès !"
 
 #: ../../design/database.rst:540
 msgid "Working with relationships"
@@ -1354,8 +1355,9 @@ msgid ""
 "E.g. to establish that \"**$user** is a **fan** of **$artist**\" (user is "
 "the subject, artist is the target):"
 msgstr ""
-"Par exemple pour établir que \"**$utilisateur** est un **fan** de "
-"**$artiste**\" (utilisateur est le sujet, artiste est la cible):"
+"Par exemple pour établir que l'utilisateur \"**$user** est un **fan** de "
+"l'artiste **$artist**\" (l'utilisateur est le sujet, l'artiste est la "
+"cible):"
 
 #: ../../design/database.rst:556
 msgid ""
@@ -1374,8 +1376,8 @@ msgstr "Vérifier une relation"
 #: ../../design/database.rst:564
 msgid "E.g. to verify that \"**$user** is a **fan** of **$artist**\":"
 msgstr ""
-"Par exemple pour vérifier que \"**$utilisateur** est un **fan** de "
-"**$artiste**\":"
+"Par exemple pour vérifier que l'utilisateur \"**$user** est un **fan** de "
+"l'artiste **$artist**\":"
 
 #: ../../design/database.rst:572
 msgid ""
@@ -1394,8 +1396,8 @@ msgid ""
 "E.g. to be able to assert that \"**$user** is no longer a **fan** of "
 "**$artist**\":"
 msgstr ""
-"Par exemple pour pouvoir affirmer que \"**$utilisateur** n'est désormais "
-"plus un **fan** de **$artiste**\":"
+"Par exemple pour pouvoir affirmer que l'utilisateur \"**$user** n'est "
+"désormais plus un **fan** de l'artiste **$artist**\":"
 
 #: ../../design/database.rst:591
 msgid ""
@@ -1405,7 +1407,7 @@ msgid ""
 msgstr ""
 "Ceci déclenche l'événement [delete, relationship], en lui passant l'objet "
 "``ElggRelationship`` associé. Si un gestionnaire retourne ``false``, la "
-"relation sera conservée, ``$was_removed`` vaudra ``false``."
+"relation sera conservée, et ``$was_removed`` vaudra ``false``."
 
 #: ../../design/database.rst:596
 msgid "Other useful functions:"
@@ -1418,7 +1420,8 @@ msgstr "``delete_relationship()`` : supprimer par ID"
 #: ../../design/database.rst:599
 msgid "``remove_entity_relationships()`` : delete those relating to an entity"
 msgstr ""
-"``remove_entity_relationships()`` : supprime ceux qui sont liés à une entité"
+"``remove_entity_relationships()`` : supprime celles qui sont liées à une "
+"entité"
 
 #: ../../design/database.rst:602
 msgid "Finding relationships and related entities"
@@ -1429,8 +1432,8 @@ msgid ""
 "Below are a few functions to fetch relationship objects and/or related "
 "entities. A few are listed below:"
 msgstr ""
-"Voici ci-dessous quelques fonctions pour récupérer des relations entre "
-"objets et/ou des entités reliées :"
+"Vous trouverez ci-dessous quelques fonctions permettant de récupérer des "
+"objets relationnels et/ou des entités associées :"
 
 #: ../../design/database.rst:606
 msgid ""
@@ -1491,19 +1494,19 @@ msgstr ""
 
 #: ../../design/database.rst:642
 msgid "Pre-defined access controls"
-msgstr "Niveaux d'accès pré-définis"
+msgstr "Niveaux d'accès prédéfinis"
 
 #: ../../design/database.rst:644
 msgid "``ACCESS_PRIVATE`` (value: 0) Private."
-msgstr "``ACCESS_PRIVATE`` (valeur : 0) Privé."
+msgstr "``ACCESS_PRIVATE`` (valeur : 0) Privé."
 
 #: ../../design/database.rst:645
 msgid "``ACCESS_LOGGED_IN`` (value: 1) Logged in users."
-msgstr "``ACCESS_LOGGED_IN`` (value: 1) Logged in users."
+msgstr "``ACCESS_LOGGED_IN`` (valeur : 1) Utilisateurs connectés."
 
 #: ../../design/database.rst:646
 msgid "``ACCESS_PUBLIC`` (value: 2) Public data."
-msgstr "``ACCESS_PUBLIC`` (value: 2) Public data."
+msgstr "``ACCESS_PUBLIC`` (valeur : 2) Données publiques."
 
 #: ../../design/database.rst:649
 msgid "User defined access controls"
@@ -1574,11 +1577,11 @@ msgid ""
 msgstr ""
 "Vous pouvez surcharger ce comportement en utilisant un :ref:`hook plugin "
 "<design/events#plugin-hooks>` appelé ``permissions_check``, qui passe "
-"l'entité en question à toute focntion qui a annoncé qu'elles veut être "
+"l'entité en question à toute fonction qui a annoncé qu'elle voulait être "
 "référencée. Retourner ``true`` va autoriser l'accès en écriture ; retourner "
-"``false`` va l'interdire. Voyez :ref:`les références des plugin hook pour "
-"les permissions\\_check <guides/hooks-list#permission-hooks>` pour plus de "
-"détails."
+"``false`` va l'interdire. Voyez :ref:`les références des hooks plugin pour "
+"les permissions\\_check <guides/hooks-list#permission-hooks>` pour plus "
+"d'information."
 
 #: ../../design/database.rst:681
 msgid "Schema"
@@ -1637,13 +1640,13 @@ msgid ""
 "This is a description of the main tables. Keep in mind that in a given Elgg "
 "installation, the tables will have a prefix (typically \"elgg\\_\")."
 msgstr ""
-"Voici la description des tables principales. Gardez à l'esprit que pour une "
-"installation d'Elgg données les tables vont avoir un préfixe (typiquement "
+"Voici la description des principales tables. Gardez à l'esprit que pour une "
+"installation de Elgg donnée, les tables vont avoir un préfixe (typiquement "
 "\"elgg\\_\")."
 
 #: ../../design/database.rst:704
 msgid "Table: entities"
-msgstr "Table : entities (entités)"
+msgstr "Table : entities - entités"
 
 #: ../../design/database.rst:706
 msgid ""
@@ -1657,14 +1660,14 @@ msgstr ""
 
 #: ../../design/database.rst:710
 msgid "It contains the following fields:"
-msgstr "Elles contient les champs suivants :"
+msgstr "Elle contient les champs suivants :"
 
 #: ../../design/database.rst:712
 msgid ""
 "**guid** An auto-incrementing counter producing a GUID that uniquely "
 "identifies this entity in the system"
 msgstr ""
-"**guid** Un compteur auto-incrémenté qui poduit un GUID qui identifie de "
+"**guid** Un compteur auto-incrémenté qui produit un GUID qui identifie de "
 "manière unique cette entité dans le système"
 
 #: ../../design/database.rst:713
@@ -1685,7 +1688,7 @@ msgid ""
 " a group"
 msgstr ""
 "**container\\_guid** Le GUID dans laquelle cette entité est contenue - soit "
-"un utilisateur (user) soit un groupe (group)"
+"un utilisateur \"user\" soit un groupe \"group\""
 
 #: ../../design/database.rst:717
 msgid "**access\\_id** Access controls on this entity"
@@ -1706,7 +1709,7 @@ msgid ""
 " been disabled (Elgg treats it as if it were deleted without actually "
 "removing it from the database)"
 msgstr ""
-"**enabled** Si oui ('yes') l'entité est accessible, si non ('no') l'entité a"
+"**enabled** Si 'yes' -oui- l'entité est accessible, si 'no' -non- l'entité a"
 " été désactivée (Elgg traite cela comme si elle avait été supprimée sans "
 "toutefois la supprimer réellement de la base de données)"
 
@@ -1741,8 +1744,8 @@ msgstr "**value** La valeur de la chaîne"
 #: ../../design/database.rst:733 ../../design/database.rst:746
 msgid "**value\\_type** The value class, either text or an integer"
 msgstr ""
-"**value\\_type** La classe de la valeur, soit texte (text) ou un entier "
-"(integer)"
+"**value\\_type** La classe de la valeur, soit texte \"text\" ou un entier "
+"\"integer\""
 
 #: ../../design/database.rst:734
 msgid "**time\\_created** Unix timestamp of when the metadata is created"
@@ -1754,7 +1757,7 @@ msgid ""
 "**enabled** If this is 'yes' an item is accessible, if 'no' the item has "
 "been disabled"
 msgstr ""
-"**enabled** Si oui ('yes') l'élément est accessible, si non ('no') l'élément"
+"**enabled** Si 'yes' -oui- l'élément est accessible, si 'no' -non- l'élément"
 " a été désactivé"
 
 #: ../../design/database.rst:738
@@ -1782,14 +1785,14 @@ msgstr ""
 
 #: ../../design/database.rst:753
 msgid "Table: relationships"
-msgstr "Table : relationships (relations)"
+msgstr "Table : relationships - relations"
 
 #: ../../design/database.rst:755
 msgid ""
 "This table defines `Relationships`_, these link one entity with another."
 msgstr ""
-"Cette table définit les `Relationships`_, qui relient une entité avec une "
-"autre."
+"Cette table définit les relations `Relationships`_, qui relient une entité "
+"avec une autre."
 
 #: ../../design/database.rst:757
 msgid "**guid\\_one** The GUID of the subject entity."
@@ -1839,7 +1842,7 @@ msgstr ""
 
 #: ../../design/events.rst:2
 msgid "Events and Plugin Hooks"
-msgstr "Événements et Hooks des plugins"
+msgstr "Événements et Hooks plugin"
 
 #: ../../design/events.rst:11
 msgid ""
@@ -1859,8 +1862,8 @@ msgstr ""
 "Les plugins influencent le système en créant des gestionnaires ou handlers "
 "(`appelables <http://php.net/manual/en/language.types.callable.php>`_ tels "
 "que des fonctions et des méthodes) et en les enregistrant pour gérer deux "
-"types d'événements : :ref:`design/events#events` et :ref:`design/events"
-"#plugin-hooks`."
+"types d'événements : les événements :ref:`design/events#events` et les hooks"
+" plugin :ref:`design/events#plugin-hooks`."
 
 #: ../../design/events.rst:18
 msgid ""
@@ -1869,11 +1872,11 @@ msgid ""
 " process. After execution, the \"trigger\" function returns a value based on"
 " the behavior of the handlers."
 msgstr ""
-"Quand un événement est déclenché, un jeu des gestionnaires (handlers) est "
-"exécuté par ordre de priorité. Les arguments sont passés à chaque "
-"gestionnaire qui peut influencer le processus. Après exécution, la fonction "
-"déclencheuse (\"trigger\") retourne une valeur qui dépend du comportement "
-"des gestionnaires."
+"Quand un événement est déclenché, un jeu des gestionnaires est exécuté par "
+"ordre de priorité. Les arguments sont passés à chaque gestionnaire qui peut "
+"ainsi influencer le processus. Après exécution, la fonction déclencheuse "
+"\"trigger\" retourne une valeur qui dépend du comportement des "
+"gestionnaires."
 
 #: ../../design/events.rst:25
 msgid ":doc:`/guides/events-list`"
@@ -1885,15 +1888,15 @@ msgstr ":doc:`/guides/hooks-list`"
 
 #: ../../design/events.rst:29
 msgid "Elgg Events vs. Plugin Hooks"
-msgstr "Evénements Elgg (Events) vs. Hooks des Plugins"
+msgstr "Événements Elgg Events vs. Hooks Plugin"
 
 #: ../../design/events.rst:31
 msgid ""
 "The main differences between :ref:`design/events#events` and "
 ":ref:`design/events#plugin-hooks` are:"
 msgstr ""
-"Les principales différences entre :ref:`design/events#events` et "
-":ref:`design/events#plugin-hooks` sont :"
+"Les principales différences entre les événements :ref:`design/events#events`"
+" et les hooks plugin :ref:`design/events#plugin-hooks` sont :"
 
 #: ../../design/events.rst:33
 msgid ""
@@ -1901,15 +1904,15 @@ msgid ""
 " handler that returns `false` can cancel the event, and no more handlers are"
 " called."
 msgstr ""
-"La majorité des événements Elgg peuvent être annulé ; à moins que "
+"La majorité des événements Elgg peuvent être annulés ; à moins que "
 "l'événement soit un événement \"after\", un gestionnaire qui retourne "
-"`false` peut annuler l'événement, et plus aucun autre gestionnaire n'est "
+"`false` peut annuler l'événement, et plus aucun autre gestionnaire ne sera "
 "appelé."
 
 #: ../../design/events.rst:36
 msgid "Plugin hooks cannot be cancelled; all handlers are always called."
 msgstr ""
-"Les hooks plugin ne peuvent pas être annulé ; tous les gestionnaires sont "
+"Les hooks plugin ne peuvent pas être annulés ; tous les gestionnaires sont "
 "toujours appelés."
 
 #: ../../design/events.rst:37
@@ -1917,12 +1920,12 @@ msgid ""
 "Plugin hooks pass an arbitrary value through the handlers, giving each a "
 "chance to alter along the way."
 msgstr ""
-"Les hooks lugin passent une valeur arbitraire à travers les gestionnaires, "
+"Les hooks plugin passent une valeur arbitraire à travers les gestionnaires, "
 "leur donnant à chacun une chance de la modifier en cours de route."
 
 #: ../../design/events.rst:43
 msgid "Elgg Events"
-msgstr "Evénements Elgg (Events)"
+msgstr "Événements Elgg Events"
 
 #: ../../design/events.rst:45
 msgid ""
@@ -1942,9 +1945,9 @@ msgid ""
 "an some action in the Elgg core."
 msgstr ""
 "Contrairement aux :ref:`design/events#plugin-hooks`, *la plupart des "
-"événements Elgg peuvent être annulé*, ce qui interrompt l'exécution des "
+"événements Elgg peuvent être annulés*, ce qui interrompt l'exécution des "
 "gestionnaires, et potentiellement annulent certaines actions dans le noyau "
-"d'Elgg."
+"de Elgg."
 
 #: ../../design/events.rst:53
 msgid ""
@@ -1958,7 +1961,7 @@ msgstr ""
 
 #: ../../design/events.rst:60
 msgid "Before and After Events"
-msgstr "Événements Avant (Before) et Après (After)"
+msgstr "Événements antérieurs \"Before\" et postérieurs \"After\""
 
 #: ../../design/events.rst:62
 msgid ""
@@ -1966,9 +1969,10 @@ msgid ""
 "around the state of the system while in flux. E.g. Is the user logged in "
 "during the [login, user] event?"
 msgstr ""
-"Certains événements sont séparés en \"before\" (avant) et \"after\" (après)."
-" Ceci évite la confusion autour de l'état fluctuant du système. Par ex. Est-"
-"ce que l'utilisateur est identifié au cours de l'événement [login, user]?"
+"Certains événements sont séparés en \"before\" -avant- et \"after\" -après-."
+" Ceci évite la confusion autour de l'état du système en cours de "
+"modification. Par ex. Est-ce que l'utilisateur est identifié au cours de "
+"l'événement [login, user] ?"
 
 #: ../../design/events.rst:66
 msgid ""
@@ -1976,10 +1980,10 @@ msgid ""
 "something happens. Like traditional events, handlers can cancel the event by"
 " returning ``false``."
 msgstr ""
-"Les événements Avant ont des noms qui se terminent par \":before\" et sont "
-"exécutés avant qu'il ne se passe quelque chose. Comme pour les événements "
-"traditionnels, les gestionnaires peuvent annuler l'événement en retournant "
-"``false``."
+"Les événements antérieurs \"Before\" ont des noms qui se terminent par "
+"\":before\" et sont exécutés avant qu'il ne se passe quelque chose. Comme "
+"pour les événements traditionnels, les gestionnaires peuvent annuler "
+"l'événement en retournant ``false``."
 
 #: ../../design/events.rst:70
 msgid ""
@@ -1987,10 +1991,10 @@ msgid ""
 " happens. Unlike traditional events, handlers *cannot* cancel these events; "
 "all handlers will always be called."
 msgstr ""
-"Les événements Après, avec des noms qui se terminent par \":after\", sont "
-"exécutés après qu'il se soit passé quelque chose. Au contraire des "
-"événements traditionnels, ces gestionnaires *ne peuvent pas* annuler ces "
-"événements ; tous les gestionnaires seront toujours appelés."
+"Les événements postérieurs \"After\", avec des noms qui se terminent par "
+"\":after\", sont exécutés après qu'il se soit passé quelque chose. Au "
+"contraire des événements traditionnels, ces gestionnaires *ne peuvent pas* "
+"annuler ces événements ; tous les gestionnaires seront toujours appelés."
 
 #: ../../design/events.rst:74
 msgid ""
@@ -2004,68 +2008,54 @@ msgstr ""
 
 #: ../../design/events.rst:79
 msgid "Elgg Event Handlers"
-msgstr "Gestionnaires d'événement Elgg (Event Handlers)"
+msgstr "Gestionnaires d'événement Elgg"
 
 #: ../../design/events.rst:81
-msgid ""
-"Elgg event handlers are callables with one of the following prototypes:"
-msgstr ""
-"Les gestionnaires d'événement Elgg sont appelables avec l'un des prototypes "
-"suivants :"
+msgid "Elgg event handlers are callables:"
+msgstr "Les gestionnaires d'événement Elgg sont appelables :"
 
-#: ../../design/events.rst:107
+#: ../../design/events.rst:96
 msgid ""
-"In ``event_handler1``, the ``Event`` object has various methods for getting "
+"In ``event_handler``, the ``Event`` object has various methods for getting "
 "the name, object type, and object of the event. See the ``Elgg\\Event`` "
-"interface for details."
+"class for details."
 msgstr ""
-"Dans ``event_handler1``, l'objet ``Event`` a diverses méthodes pour "
-"récupérer le nom, le type d'objet, et l'objet de l'événement. Voyez "
-"l'interface ``Elgg\\Event`` pour plus de détails."
+"Dans ``event_handler1``, l'objet ``Event`` dispose de diverses méthodes pour"
+" récupérer le nom, le type d'objet, et l'objet de l'événement. Voyez la "
+"classe ``Elgg\\Event`` pour plus d'informations."
 
-#: ../../design/events.rst:110
+#: ../../design/events.rst:99
 msgid ""
-"In both cases, if a handler returns ``false``, the event is cancelled, "
-"preventing execution of the other handlers. All other return values are "
-"ignored."
+"If a handler returns ``false``, the event is cancelled, preventing execution"
+" of the other handlers. All other return values are ignored."
 msgstr ""
-"Dans tous les cas, si un gestionnaire retourne ``false``, l'événement est "
-"annulé, ce qui empêche l'exécution des autres gestionnaires. Toutes les "
-"autres valeurs de retour sont ignorées."
+"Si un gestionnaire renvoie ``false``, l'événement est annulé, ce qui empêche"
+" l'exécution des autres gestionnaires. Toutes les autres valeurs de retour "
+"sont ignorées."
 
-#: ../../design/events.rst:113
-msgid ""
-"If the event type is \"object\" or \"user\", use type hint "
-"``\\Elgg\\ObjectEvent`` or ``\\Elgg\\UserEvent`` instead, which clarify the "
-"return type of the ``getObject()`` method."
-msgstr ""
-"Si le type d'événement est \"object\" ou \"user\", utilisez le type de "
-"données ``\\Elgg\\ObjectEvent`` ou ``\\Elgg\\UserEvent`` à la place, ce qui "
-"clarifie le type de retour de la méthode ``getObject()``."
-
-#: ../../design/events.rst:116
+#: ../../design/events.rst:103
 msgid "Register to handle an Elgg Event"
-msgstr "Enregistrez un gestionnaire d'événement (Elgg Event)"
+msgstr "Enregistrez un gestionnaire d'événement Elgg Event"
 
-#: ../../design/events.rst:118
+#: ../../design/events.rst:105
 msgid ""
 "Register your handler to an event using ``elgg_register_event_handler``:"
 msgstr ""
 "Enregistrez votre gestionnaire pour un événement en utilisant "
 "``elgg_register_event_handler`` :"
 
-#: ../../design/events.rst:126 ../../design/events.rst:205
-#: ../../design/events.rst:232 ../../design/events.rst:301
-#: ../../design/events.rst:333
+#: ../../design/events.rst:113 ../../design/events.rst:193
+#: ../../design/events.rst:220 ../../design/events.rst:277
+#: ../../design/events.rst:309
 msgid "Parameters:"
 msgstr "Paramètres :"
 
-#: ../../design/events.rst:128 ../../design/events.rst:207
-#: ../../design/events.rst:234
+#: ../../design/events.rst:115 ../../design/events.rst:195
+#: ../../design/events.rst:222
 msgid "**$event** The event name."
 msgstr "**$event** Le nom de l'événement."
 
-#: ../../design/events.rst:129
+#: ../../design/events.rst:116
 msgid ""
 "**$object_type** The object type (e.g. \"user\" or \"object\") or 'all' for "
 "all types on which the event is fired."
@@ -2073,30 +2063,30 @@ msgstr ""
 "**$object_type** Le type d'objet (par ex. \"user\" ou \"object\") ou 'all' "
 "pour tous les types pour lesquels l'événement est déclenché."
 
-#: ../../design/events.rst:131 ../../design/events.rst:305
+#: ../../design/events.rst:118 ../../design/events.rst:281
 msgid "**$handler** The callback of the handler function."
-msgstr "**$handler** Le callback ou la fonction gestionnaire."
+msgstr "**$handler** Le callback - la fonction de rappel du gestionnaire."
 
-#: ../../design/events.rst:132 ../../design/events.rst:306
+#: ../../design/events.rst:119 ../../design/events.rst:282
 msgid "**$priority** The priority - 0 is first and the default is 500."
 msgstr ""
 "**$priority** La priorité - 0 en premier et la valeur par défaut est 500."
 
-#: ../../design/events.rst:134
+#: ../../design/events.rst:121
 msgid ""
 "**Object** here does not refer to an ``ElggObject`` but rather a string "
 "describing any object in the framework: system, user, object, relationship, "
 "annotation, group."
 msgstr ""
-"**Objet** ne fait pas ici référence à un ``ElggObject`` mais plutôt à une "
+"**Object** ne fait pas ici référence à un ``ElggObject`` mais plutôt à une "
 "chaîne de caractères qui décrit n'importe quel objet dans le framework : le "
 "système, un utilisateur, un objet, une relation, une annotation, un groupe."
 
-#: ../../design/events.rst:137 ../../design/events.rst:311
+#: ../../design/events.rst:124 ../../design/events.rst:287
 msgid "Example:"
 msgstr "Exemple :"
 
-#: ../../design/events.rst:149
+#: ../../design/events.rst:136
 msgid ""
 "If you handle the \"update\" event on an object, avoid calling ``save()`` in"
 " your event handler. For one it's probably not necessary as the object is "
@@ -2110,11 +2100,11 @@ msgstr ""
 "mais aussi parce que ``save()`` appelle un autre événement \"update\" et ne "
 "rend plus disponible ``$object->getOriginalAttributes()``."
 
-#: ../../design/events.rst:154
+#: ../../design/events.rst:141
 msgid "Invokable classes as handlers"
 msgstr "Classes invocables comme gestionnaires"
 
-#: ../../design/events.rst:156
+#: ../../design/events.rst:143
 msgid ""
 "You may use a class with an ``__invoke()`` method as a handler. Just "
 "register the class name and it will be instantiated (with no arguments) for "
@@ -2125,17 +2115,17 @@ msgstr ""
 "instanciée (sans argument) pour toute la durée de vie de l'événement (ou du "
 "hook)."
 
-#: ../../design/events.rst:175
+#: ../../design/events.rst:163
 msgid "Trigger an Elgg Event"
-msgstr "Déclencher un événement (Elgg Event)"
+msgstr "Déclencher un événement Elgg Event"
 
-#: ../../design/events.rst:177
+#: ../../design/events.rst:165
 msgid "You can trigger a custom Elgg event using ``elgg_trigger_event``:"
 msgstr ""
 "Vous pouvez déclencher un événement personnalisé en utilisant "
 "``elgg_trigger_event`` :"
 
-#: ../../design/events.rst:189
+#: ../../design/events.rst:177
 msgid ""
 "For events with ambiguous states, like logging in a user, you should use "
 ":ref:`before-after` by calling ``elgg_trigger_before_event`` or "
@@ -2145,20 +2135,20 @@ msgstr ""
 "Pour les événements avec des états ambigus, tels que l'identification d'un "
 "utilisateur, vous devriez utiliser :ref:`before-after` en appelant "
 "``elgg_trigger_before_event`` ou ``elgg_trigger_after_event``. Ceci clarifie"
-" pour le gestionnaire d'événement l'état auquel attendre et quels événements"
-" peuvent être annulés."
+" pour le gestionnaire d'événement l'état auquel s'attendre et quels "
+"événements peuvent être annulés."
 
-#: ../../design/events.rst:208 ../../design/events.rst:235
+#: ../../design/events.rst:196 ../../design/events.rst:223
 msgid "**$object_type** The object type (e.g. \"user\" or \"object\")."
 msgstr "**$object_type** Le type d'objet (par ex. \"user\" ou \"object\")."
 
-#: ../../design/events.rst:209 ../../design/events.rst:236
+#: ../../design/events.rst:197 ../../design/events.rst:224
 msgid ""
 "**$object** The object (e.g. an instance of ``ElggUser`` or ``ElggGroup``)"
 msgstr ""
 "**$object** L'objet (par ex. une instance de ``ElggUser`` ou ``ElggGroup``)"
 
-#: ../../design/events.rst:211
+#: ../../design/events.rst:199
 msgid ""
 "The function will return ``false`` if any of the selected handlers returned "
 "``false`` and the event is stoppable, otherwise it will return ``true``."
@@ -2167,11 +2157,11 @@ msgstr ""
 "sélectionnés retourne ``false`` et si l'événement est interruptible, sinon "
 "elle retournera ``true``."
 
-#: ../../design/events.rst:217
+#: ../../design/events.rst:205
 msgid "Trigger an Elgg Event sequence"
 msgstr "Déclenche une séquence Elgg Event"
 
-#: ../../design/events.rst:219
+#: ../../design/events.rst:207
 msgid ""
 "Instead of triggering the ``:before`` and ``:after`` event manually, it's "
 "possible to trigger an event sequence. This will trigger the ``:before`` "
@@ -2182,37 +2172,37 @@ msgstr ""
 "l’événement ``:before``, puis l’événement réel et enfin l’événement "
 "``:after``."
 
-#: ../../design/events.rst:226
+#: ../../design/events.rst:214
 msgid ""
 "When called with for example ``'cache:clear', 'system'`` the following three"
 " events are triggered"
 msgstr ""
-"When called with for example ``'cache:clear', 'system'`` the following three"
-" events are triggered"
+"Lorsqu'ils sont appelés avec par exemple ``'cache:clear', 'system'``, les "
+"trois événements suivants sont déclenchés"
 
-#: ../../design/events.rst:228
+#: ../../design/events.rst:216
 msgid "``'cache:clear:before', 'system'``"
 msgstr "``'cache:clear:before', 'system'``"
 
-#: ../../design/events.rst:229
+#: ../../design/events.rst:217
 msgid "``'cache:clear', 'system'``"
 msgstr "``'cache:clear', 'system'``"
 
-#: ../../design/events.rst:230
+#: ../../design/events.rst:218
 msgid "``'cache:clear:after', 'system'``"
 msgstr "``'cache:clear:after', 'system'``"
 
-#: ../../design/events.rst:237
+#: ../../design/events.rst:225
 msgid "**$callable** Callable to run on successful event, before event:after"
 msgstr ""
-"**$callable** Appelable pour exécuter sur l’événement réussi, avant "
+"**$callable** Appelable à exécuter lors d'un événement réussi, avant "
 "event:after"
 
-#: ../../design/events.rst:242
+#: ../../design/events.rst:230
 msgid "Plugin Hooks"
-msgstr "Hooks des plugins"
+msgstr "Hooks plugin"
 
-#: ../../design/events.rst:244
+#: ../../design/events.rst:232
 msgid ""
 "Plugin Hooks provide a way for plugins to collaboratively determine or alter"
 " a value. For example, to decide whether a user has permission to edit an "
@@ -2223,56 +2213,56 @@ msgstr ""
 "utilisateur a la permission de modifier une entité ou d'ajouter des options "
 "de configurations supplémentaires à un plugin."
 
-#: ../../design/events.rst:248
+#: ../../design/events.rst:236
 msgid ""
 "A plugin hook has a value passed into the trigger function, and each handler"
 " has an opportunity to alter the value before it's passed to the next "
 "handler. After the last handler has completed, the final value is returned "
 "by the trigger."
 msgstr ""
-"Un hook plugin a une valeur passée à la fonction déclencheuse (\"trigger\"),"
-" et chaque gestionnaire a la possibilité de modifier cette valeur avant "
+"Un hook plugin a une valeur passée à la fonction \"trigger\" déclencheuse, "
+"et chaque gestionnaire a la possibilité de modifier cette valeur avant "
 "qu'elle soit passée au prochain gestionnaire. Après que le dernier "
-"gestionnaire a été exécuté, la valeur finale est retournée par le trigger."
+"gestionnaire a été exécuté, la valeur finale est retournée par le "
+"déclencheur."
 
-#: ../../design/events.rst:254
+#: ../../design/events.rst:242
 msgid "Plugin Hook Handlers"
 msgstr "Gestionnaires des Hooks plugin"
 
-#: ../../design/events.rst:256
-msgid "Hook handlers are callables with one of the following prototypes:"
+#: ../../design/events.rst:244
+msgid "Hook handlers are callables with the following prototype:"
 msgstr ""
-"Les gestionnaires de hooks sont appelables avec l'un des prototypes suivants"
-" :"
+"Les gestionnaires de hooks sont appelables avec le prototype suivant :"
 
-#: ../../design/events.rst:283
+#: ../../design/events.rst:259
 msgid ""
-"In ``plugin_hook_handler1``, the ``Hook`` object has various methods for "
+"In ``plugin_hook_handler``, the ``Hook`` object has various methods for "
 "getting the name, type, value, and parameters of the hook. See the "
 "``Elgg\\Hook`` interface for details."
 msgstr ""
-"Dans ``plugin_hook_handler1``, l'objet ``Hook`` a diverses méthodes pour "
-"récupérer le nom, le type, la valeur et les paramètres du hook. Voyez "
-"l'interface ``Elgg\\Hook`` pour plus de détails."
+"Dans ``plugin_hook_handler``, l'objet ``Hook`` dispose de diverses méthodes "
+"pour récupérer le nom, le type, la valeur et les paramètres du hook. Voyez "
+"l'interface ``Elgg\\Hook`` pour plus d'informations."
 
-#: ../../design/events.rst:286
+#: ../../design/events.rst:262
 msgid ""
-"In both cases, if the handler returns no value (or ``null`` explicitly), the"
-" plugin hook value is not altered. Otherwise the returned value becomes the "
-"new value of the plugin hook, and it will then be available as "
-"``$hook->getValue()`` (or ``$value``) in the next handler."
+"If the handler returns no value (or ``null`` explicitly), the plugin hook "
+"value is not altered. Otherwise the returned value becomes the new value of "
+"the plugin hook, and it will then be available as ``$hook->getValue()`` in "
+"the next handler."
 msgstr ""
-"Dans les deux cas, si le gestionnaire ne retourne aucune valeur (ou "
-"explicitement la valeur ``null``), la valeur du hook plugin n'est pas "
-"modifiée. Dans le cas contraire, la valeur retournée devient la nouvelle "
-"valeur du hook plugin, et il deviendra alors disponible via "
-"``$hook->getValue()`` (ou ``$value``) dans le prochain gestionnaire."
+"Si le gestionnaire ne retourne aucune valeur (ou explicitement la valeur "
+"``null``), la valeur du hook plugin n'est pas altérée. Dans le cas "
+"contraire, la valeur renvoyée devient la nouvelle valeur du hook plugin, qui"
+" deviendra alors disponible via ``$hook->getValue()`` dans le prochain "
+"gestionnaire."
 
-#: ../../design/events.rst:291
+#: ../../design/events.rst:267
 msgid "Register to handle a Plugin Hook"
 msgstr "Enregistrez un gestionnaire de Hook plugin"
 
-#: ../../design/events.rst:293
+#: ../../design/events.rst:269
 msgid ""
 "Register your handler to a plugin hook using "
 "``elgg_register_plugin_hook_handler``:"
@@ -2280,15 +2270,15 @@ msgstr ""
 "Enregistrez votre gestionnaire pour un hook plugin en utilisant "
 "``elgg_register_plugin_hook_handler`` :"
 
-#: ../../design/events.rst:303 ../../design/events.rst:335
+#: ../../design/events.rst:279 ../../design/events.rst:311
 msgid "**$hook** The name of the plugin hook."
 msgstr "**$hook** Le nom du hook plugin."
 
-#: ../../design/events.rst:304 ../../design/events.rst:336
+#: ../../design/events.rst:280 ../../design/events.rst:312
 msgid "**$type** The type of the hook or 'all' for all types."
 msgstr "**$type** Le type de hook, ou 'all' pour tous les types."
 
-#: ../../design/events.rst:308
+#: ../../design/events.rst:284
 msgid ""
 "**Type** can vary in meaning. It may mean an Elgg entity type or something "
 "specific to the plugin hook name."
@@ -2296,40 +2286,40 @@ msgstr ""
 "**Type** peut avoir des sens différents. Cela peut signifier un type "
 "d'entité Elgg ou quelque chose de spécifique au nom du hook plugin."
 
-#: ../../design/events.rst:322
+#: ../../design/events.rst:298
 msgid "Trigger a Plugin Hook"
 msgstr "Déclencher un Hook plugin"
 
-#: ../../design/events.rst:324
+#: ../../design/events.rst:300
 msgid ""
 "You can trigger a custom plugin hook using ``elgg_trigger_plugin_hook``:"
 msgstr ""
-"Vous pouvez déclencher un plugin hook personnalisé en utilisant "
+"Vous pouvez déclencher un hook plugin personnalisé en utilisant "
 "``elgg_trigger_plugin_hook`` :"
 
-#: ../../design/events.rst:337
+#: ../../design/events.rst:313
 msgid "**$params** Arbitrary data passed from the trigger to the handlers."
 msgstr ""
 "**$params** Des données arbitraires passées par le déclencheur aux "
 "gestionnaires."
 
-#: ../../design/events.rst:338
+#: ../../design/events.rst:314
 msgid "**$value** The initial value of the plugin hook."
 msgstr "**$value** La valeur initiale du hook plugin."
 
-#: ../../design/events.rst:340
+#: ../../design/events.rst:316
 msgid ""
 "The `$params` and `$value` arguments are reversed between the plugin hook "
 "handlers and trigger functions!"
 msgstr ""
 "Les arguments `$params` et `$value` sont inversés entre les gestionnaires de"
-" hook plugin et les focntions de déclenchement !"
+" hook plugin et les fonctions de déclenchement !"
 
-#: ../../design/events.rst:344
+#: ../../design/events.rst:320
 msgid "Unregister Event/Hook Handlers"
 msgstr "Dé-enregistrer des gestionnaires d'événement ou de hook"
 
-#: ../../design/events.rst:346
+#: ../../design/events.rst:322
 msgid ""
 "The functions ``elgg_unregister_event_handler`` and "
 "``elgg_unregister_plugin_hook_handler`` can be used to remove handlers "
@@ -2339,41 +2329,41 @@ msgid ""
 msgstr ""
 "Les fonctions ``elgg_unregister_event_handler`` et "
 "``elgg_unregister_plugin_hook_handler`` peuvent être utilisées pour retirer "
-"des gestionnaires déjà enregistrés par un autre plugin ou le noyau d'Elgg. "
-"Les paramètres sont dans le même ordre que pour les fonctions "
+"des gestionnaires déjà enregistrés par un autre plugin ou par le noyau de "
+"Elgg. Les paramètres sont dans le même ordre que pour les fonctions "
 "d'enregistrement, excepté qu'il n'y a pas de paramètre de priorité."
 
-#: ../../design/events.rst:356
+#: ../../design/events.rst:332
 msgid ""
 "Anonymous functions or invokable objects cannot be unregistered, but dynamic"
 " method callbacks can be unregistered by giving the static version of the "
 "callback:"
 msgstr ""
 "Les fonctions anonymes ou les objets invocables ne peuvent pas être "
-"enregistrés, mais des fonctions de rappel (callback) de méthode dynamique "
-"peuvent être dé-enregistrés en donnant la version statique de la fonction de"
-" rappel :"
+"enregistrés, mais des \"callbacks\", fonctions de rappel de méthode "
+"dynamiques peuvent être dé-enregistrés en donnant la version statique de la "
+"fonction de rappel :"
 
-#: ../../design/events.rst:370
+#: ../../design/events.rst:346
 msgid ""
 "Even though the event handler references a dynamic method call, the code "
 "above will successfully remove the handler."
 msgstr ""
 "Même si le gestionnaire d'événement référence un appel à une méthode "
-"dynamique, le code ci-dessus va bien supprimer le gesitonnaire."
+"dynamique, le code ci-dessus va bien supprimer le gestionnaire."
 
-#: ../../design/events.rst:374
+#: ../../design/events.rst:350
 msgid "Handler Calling Order"
 msgstr "Ordre d'appel des gestionnaires"
 
-#: ../../design/events.rst:376
+#: ../../design/events.rst:352
 msgid ""
 "Handlers are called first in order of priority, then registration order."
 msgstr ""
 "Les gestionnaires sont d'abord appelés par ordre de priorité, puis par ordre"
 " d'enregistrement."
 
-#: ../../design/events.rst:380
+#: ../../design/events.rst:356
 msgid ""
 "Before Elgg 2.0, registering with the ``all`` keywords caused handlers to be"
 " called later, even if they were registered with lower priorities."
@@ -2403,7 +2393,7 @@ msgstr "TODO : plus svp"
 
 #: ../../design/index.rst:2
 msgid "Design Docs"
-msgstr "Docs de conception"
+msgstr "Documentation du design de conception"
 
 #: ../../design/index.rst:4
 msgid ""
@@ -2423,7 +2413,7 @@ msgid ""
 "to its member objects to be saved to the system log. ``ElggEntity`` and "
 "``ElggExtender`` both inherit ``Loggable``."
 msgstr ""
-"Loggable iest une interface héritée par toute classe qui veut que les "
+"Loggable est une interface héritée par toute classe qui veut que les "
 "événements liés à ses objets membres soient enregistrés dans le journal "
 "système. ``ElggEntity`` et ``ElggExtender`` héritent tous deux de "
 "``Loggable``."
@@ -2453,7 +2443,7 @@ msgstr "``getClassName()`` Retourne le nom de la classe de l'objet"
 
 #: ../../design/loggable.rst:10
 msgid "``getType()`` Return the object type"
-msgstr "``getType()`` Retournr le type d'objet"
+msgstr "``getType()`` Retourne le type d'objet"
 
 #: ../../design/loggable.rst:11
 msgid "``getSubtype()`` Get the object subtype"
@@ -2469,7 +2459,7 @@ msgstr ""
 
 #: ../../design/loggable.rst:15
 msgid "Database details"
-msgstr "Détails de la base de données"
+msgstr "Informations de la base de données"
 
 #: ../../design/loggable.rst:17
 msgid ""
@@ -2492,8 +2482,8 @@ msgstr ""
 msgid ""
 "**object_class** - The class of the entity being acted upon (eg ElggObject)"
 msgstr ""
-"**object_class** - La classe de l'entitésur laquelle l'action est effectuée "
-"(par ex. ElggObject)"
+"**object_class** - La classe de l'entité sur laquelle l'action est effectuée"
+" (par ex. ElggObject)"
 
 #: ../../design/loggable.rst:22
 msgid "**object_type** - The type of the entity being acted upon (eg object)"
@@ -2546,13 +2536,13 @@ msgid ""
 "Elgg's approach to the various security issues common to all web "
 "applications."
 msgstr ""
-"L'approche d'Elgg pour les diverses questions de sécurité est commune à "
-"toutes les applications web."
+"L'approche de Elgg pour les diverses questions de sécurité communes à toutes"
+" les applications web."
 
 #: ../../design/security.rst:8
 msgid "To report a potential vulnerability in Elgg, email security@elgg.org."
 msgstr ""
-"Pour signaler une vulnérabilité potentielle dans Elgg, envoyez un email à "
+"Pour signaler une vulnérabilité potentielle dans Elgg, envoyez un e-mail à "
 "security@elgg.org."
 
 #: ../../design/security.rst:15
@@ -2573,7 +2563,7 @@ msgstr ""
 "La seule restriction qu'Elgg impose sur le mot de passe est qu'il doit "
 "comporter au moins 6 caractères par défaut, quoique ceci puisse être changé "
 "dans ``/elgg-config/settings.php``. Des critères additionnels peuvent être "
-"ajoutés en enregistrant un plugin hook pour "
+"ajoutés en enregistrant un hook plugin pour "
 "``registeruser:validate:password``."
 
 #: ../../design/security.rst:25
@@ -2601,14 +2591,14 @@ msgid ""
 "remove these legacy hashes, though it would force those users to reset their"
 " passwords."
 msgstr ""
-"Les installations Elgg créées avant la version peuvent avoir des chaînes de "
-"hachage de mot de passe \"historiques\" résiduelles créées en utilisant MD5 "
-"avec sel. Elles ont été migrées vers bcrypt lorsque les utilisateurs se "
-"connectent, et seront totalement retirées lorsque le système est mis à "
-"niveau vers Elgg 3.0. Dans le même temps, nous sommes heureux d'assister les"
-" propriétaires de sites à retirer manuellement ces chaînes de hachage "
-"historique, même si cela force ces utilisateurs à réinitialiser leur mot de "
-"passe."
+"Les installations Elgg créées avant la version 1.10 peuvent avoir des "
+"chaînes de hachage de mot de passe \"historiques\" résiduelles créées en "
+"utilisant MD5 avec sel. Elles sont migrées vers bcrypt lorsque les "
+"utilisateurs se connectent, et sont totalement retirées lorsque le système "
+"est mis à niveau vers Elgg 3.0. Dans le même temps, nous sommes heureux "
+"d'inciter les propriétaires de sites à retirer manuellement ces chaînes de "
+"hachage historique, même si cela force ces utilisateurs à réinitialiser leur"
+" mot de passe."
 
 #: ../../design/security.rst:35
 msgid "Password throttling"
@@ -2635,9 +2625,9 @@ msgid ""
 "that URL, a new random password is sent to the user through email."
 msgstr ""
 "Si un utilisateur oublie son mot de passe, la génération d'un nouveau mot de"
-" passe aléatoire peut être demandée. Après la demande, un email est envoyé "
+" passe aléatoire peut être demandée. Après la demande, un e-mail est envoyé "
 "avec une URL unique. Quand l'utilisateur visite cette URL, un nouveau mot de"
-" passe est envoyé par email à l'utilisateur."
+" passe est envoyé par e-mail à l'utilisateur."
 
 #: ../../design/security.rst:47
 msgid "Sessions"
@@ -2654,15 +2644,15 @@ msgstr ""
 "personnalisés. Les données de sessions sont stockées dans la base de "
 "données. Le cookie de session contient l'id de session qui lie l’utilisateur"
 " au navigateur. Les métadonnées de l'utilisateur sont conservées dans la "
-"session, notamment le GUID, le nom d'utilisateur et l'adresse email."
+"session, notamment le GUID, l'identfiant et l'adresse e-mail."
 
 #: ../../design/security.rst:52
 msgid ""
 "The session's lifetime is controlled through the server's PHP configuration "
 "and additionally through options in the ``/elgg-config/settings.php``."
 msgstr ""
-"La durée de vie de la session est contrôlée par la configuraiton PHP du "
-"serveur et additionnellement à travers les options dans le fichier ``/elgg-"
+"La durée de vie de la session est contrôlée par la configuration PHP du "
+"serveur, et additionnellement à travers les options dans le fichier ``/elgg-"
 "config/settings.php``."
 
 #: ../../design/security.rst:55
@@ -2675,7 +2665,7 @@ msgid ""
 " user logs in."
 msgstr ""
 "Elgg protège contre la fixation de session en régénérant l'id de session "
-"lorsqu'un utilisateur se déconnecte."
+"lorsqu'un utilisateur se connecte."
 
 #: ../../design/security.rst:60
 msgid "\"Remember me\" cookie"
@@ -2692,10 +2682,10 @@ msgid ""
 "cookies table, the corresponding user is automatically logged in."
 msgstr ""
 "Afin de permettre aux utilisateurs de rester identifiés pour une période "
-"plus longue que le navigateur ait été fermé ou pas, Elgg utilise un cookie "
+"plus longue, que le navigateur ait été fermé ou non, Elgg utilise un cookie "
 "(nommé par défaut ``elggperm``) qui contient ce qui peut être considéré "
 "comme un super identifiant de session. Cet identifiant est conservé dans la "
-"tabel des cookies. Quand une session est initiée, Elgg vérifie la présence "
+"table des cookies. Quand une session est initiée, Elgg vérifie la présence "
 "du cookie ``elggperm``. S'il existe et que le code de session dans le cookie"
 " correspond au code dans la table des cookies, l'utilisateur correspondant "
 "est automatiquement connecté."
@@ -2705,7 +2695,7 @@ msgid ""
 "When a user changes their password all existing permanent cookie codes are "
 "removed from the database."
 msgstr ""
-"Lorsqu'un utilisateur change son mot de passe tous les cookies permanents "
+"Lorsqu'un utilisateur change son mot de passe, tous les cookies permanents "
 "sont supprimés de la base de données."
 
 #: ../../design/security.rst:69
@@ -2735,10 +2725,10 @@ msgid ""
 "PAM handler using ``register_pam_handler()`` which handles the "
 "authentication of the user based on the new requirements."
 msgstr ""
-"Pour remplacer le système d'authentification par défaut des utilisateurs "
-"d'Elgg, un plugin pourrait remplacer l'action par défaut ``login`` par sa "
+"Pour remplacer le système d'authentification par défaut des utilisateurs de "
+"Elgg, un plugin pourrait remplacer l'action par défaut ``login`` par sa "
 "propre action. Une meilleure alternative est d'enregistrer un gestionnaire "
-"d'authentification (PAM) en utilisant ``register_pam_handler()`` qui gère "
+"d'authentification PAM en utilisant ``register_pam_handler()`` qui gère "
 "l'authentification des utilisateurs sur la base de nouvelles exigences."
 
 #: ../../design/security.rst:81
@@ -2832,7 +2822,7 @@ msgid ""
 ":doc:`/guides/actions` developer guide."
 msgstr ""
 "Il est possible de protéger les URLs avec une signature unique. Lisez-en "
-"plus dans le the :doc:`/guides/actions` Guide de dévelopement."
+"plus dans le Guide de développement :doc:`/guides/actions`."
 
 #: ../../design/security.rst:113
 msgid "SQL Injection"
@@ -2843,8 +2833,8 @@ msgid ""
 "Elgg's API sanitizes all input before issuing DB queries. Read more in the "
 ":doc:`/design/database` design doc."
 msgstr ""
-"L'API d'Elgg's assainit toutes les entrées avant d'effectuer des requêtes en"
-" base de données. Lisez-en plus dans la documentation de design "
+"L'API de Elgg's assainit toutes les entrées avant d'effectuer des requêtes "
+"dans la base de données. Lisez-en plus dans la documentation de design "
 ":doc:`/design/database`."
 
 #: ../../design/security.rst:118
@@ -2856,9 +2846,9 @@ msgid ""
 "Elgg uses an ACL system to control which users have access to various pieces"
 " of content. Read more in the :doc:`/design/database` design doc."
 msgstr ""
-"Elgg utilise un système d'ACL pour contrôler quels utilisateurs ont accès à "
-"divers éléments de contenu. Lisez-en plus dans la :doc:`/design/database` "
-"documentation de design."
+"Elgg utilise un système d'ACL pour contrôler quels utilisateurs ont accès "
+"aux divers éléments de contenu. Lisez-en plus dans la documentation du "
+"design de la base de données :doc:`/design/database`."
 
 #: ../../design/security.rst:125
 msgid "Hardening"
@@ -2869,6 +2859,6 @@ msgid ""
 "Site administrators can configure settings which will help with hardening "
 "the website. Read more in the Administrator guide :doc:`/admin/security`."
 msgstr ""
-"Les administrateurs du site peuvent configurer les paramètres qui vont aider"
+"Les administrateurs du site peuvent configurer des paramètres qui vont aider"
 " à sécuriser le site. Lisez-en plus dans le Guide d'administration "
 ":doc:`/admin/security`."

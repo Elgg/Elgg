@@ -10,7 +10,6 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
-	'expages' => "Pàgines externes",
 	'expages:about' => "Sobre",
 	'expages:terms' => "Termes",
 	'expages:privacy' => "Privadesa",

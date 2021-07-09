@@ -22,20 +22,17 @@ return array(
 	'likes:userlikedthis' => '%s like',
 	'likes:userslikedthis' => '%s likes',
 	'likes:river:annotate' => 'likes',
-	'likes:delete:confirm' => '「like」を取り下げてしてもよろしいですか？',
-
-	'river:likes' => 'likes %s %s',
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s さんは、あなたの投稿 「 %s 」 に"Like"を付けました',
 	'likes:notifications:body' =>
-'%1$s さんは%3$s、あなたの記事「 %2$s 」に "like" をつけました 
+'%1$s さんが %3$s 、あなたの記事 「 %2$s 」 に "like" をつけました 
 
-あなたの記事を見るには、ここ:
+あなたの記事を見るには:
 
 %4$s
 
-%1$s さんのプロフィールをみるには、ここ:
+%1$s さんのプロフィールを見るには:
 
 %5$s',
 );

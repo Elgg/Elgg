@@ -19,7 +19,6 @@ return array(
 	'blog:archives' => 'Arhive',
 
 	'groups:tool:blog' => 'Omogući skupni blog',
-	'blog:write' => 'Napiši objavu na blogu',
 
 	// Editing
 	'blog:excerpt' => 'Izvod',
@@ -36,12 +35,9 @@ return array(
 	'blog:error:cannot_write_to_container' => 'Nije dozvoljeno spremanje bloga u grupi. ',
 	'blog:messages:warning:draft' => 'Postoji nesačuvana inačica ove objave!',
 	'blog:edit_revision_notice' => '(Prethodna inačica)',
-	'blog:message:deleted_post' => 'Objava na blogu je izbrisana. ',
-	'blog:error:cannot_delete_post' => 'Nije moguće izbrisati ovu objavu na blogu. ',
 	'blog:none' => 'Ne postoji objava na blogu. ',
 	'blog:error:missing:title' => 'Molimo upišite naslov bloga!',
 	'blog:error:missing:description' => 'Molimo upišite sadržaj bloga!',
-	'blog:error:cannot_edit_post' => 'Ova objava ne postoji ili nemate odgovarajuće ovlasti njenog uredivanja. ',
 	'blog:error:post_not_found' => 'Nije moguće pronaći navedenu objavu na blogu. ',
 	'blog:error:revision_not_found' => 'Nije moguće pronaći ovu reviziju. ',
 
@@ -53,12 +49,7 @@ return array(
 	'blog:notify:summary' => 'Nova objava na blogu ima naslov  %s',
 	'blog:notify:subject' => 'Nova objava na blogu: %s',
 	'blog:notify:body' =>
-'%s pubicirao je novu objavu na blogu %s
-
-%s
-
-Pregledaj i komentiraj objavu na blogu:
-%s',
+'',
 
 	// widget
 	'widgets:blog:name' => 'Objava na blogu',

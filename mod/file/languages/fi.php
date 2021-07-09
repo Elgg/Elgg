@@ -22,14 +22,11 @@ return array(
 	'file:num_files' => "Näytettävien kohteiden määrä",
 	'file:replace' => 'Korvaa tiedoston sisältö (jätä tyhjäksi säilyttääksesi nykyisen tiedoston)',
 	'file:list:title' => "%s's %s %s",
-	'file:title:friends' => "Ystävät",
 
 	'file:file' => "Tiedosto",
 
 	'file:list:list' => 'Vaihta listanäkymään',
 	'file:list:gallery' => 'Vaihda gallerianäkymään',
-
-	'file:types' => "Lisätyt tiedostotyypit",
 
 	'file:type:' => 'Tiedostot',
 	'file:type:all' => "Kaikki tiedostot",

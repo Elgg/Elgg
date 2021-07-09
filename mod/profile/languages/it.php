@@ -12,7 +12,6 @@ return array(
 	'admin:configure_utilities:profile_fields' => 'Modifica i campi del profilo',
 	
 	'profile:edit' => 'Modifica il profilo',
-	'profile:aboutme' => "Chi sono",
 	'profile:description' => "Chi sono",
 	'profile:briefdescription' => "Breve descrizione",
 	'profile:location' => "Posizione",
@@ -34,7 +33,6 @@ return array(
 	'profile:field:location' => 'Posizione',
 	'profile:field:date' => 'Data',
 
-	'profile:edit:default' => 'Modifica i campi del profilo',
 	'profile:label' => "Etichetta del profilo",
 	'profile:type' => "Tipo di profilo",
 	'profile:editdefault:delete:fail' => 'La rimozione del campo del profilo non è stata possibile',

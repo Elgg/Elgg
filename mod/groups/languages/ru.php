@@ -18,13 +18,12 @@ return array(
 	'groups:all' => "Все группы на сайте",
 	'groups:add' => "Создать группу",
 	'groups:edit' => "Редактировать группу",
-	'groups:delete' => 'Удалить группу',
 	'groups:membershiprequests' => 'Управление запросами приглашения',
 	'groups:membershiprequests:pending' => 'Управление запросами приглашений (%s)',
 	'groups:invitations' => 'Приглашения группы',
 	'groups:invitations:pending' => 'Приглашения группы (%s)',
 
-	'groups:icon' => 'Иконка группы',
+	'groups:icon' => 'Иконка группы (оставьте пустым, чтобы не менять)',
 	'groups:name' => 'Название группы',
 	'groups:description' => 'Описание',
 	'groups:briefdescription' => 'Краткое описание',
@@ -54,6 +53,8 @@ return array(
 	'groups:featured' => 'Избранные группы',
 	'groups:makeunfeatured' => 'Убрать из избранного',
 	'groups:makefeatured' => 'Добавить в избранные',
+	'groups:featuredon' => '%s теперь рекомендуемая группа.',
+	'groups:unfeatured' => '%s удалена из рекомендуемых групп.',
 	'groups:featured_error' => 'Ошибка.',
 	'groups:nofeatured' => 'Нет избранных групп',
 	'groups:joinrequest' => 'Попросить членство',
@@ -64,7 +65,6 @@ return array(
 
 	'groups:nofriendsatall' => 'Некого приглашать!',
 	'groups:group' => "Группа",
-	'groups:search:tags' => "Интересы",
 	'groups:search:title' => "Искать группу по интересам: '%s'",
 	'groups:search:none' => "Ничего не найдено!",
 	'groups:search_in_group' => "Поиск в этой группе",
@@ -108,7 +108,7 @@ return array(
 	'groups:cantleave' => 'Простите, невозможно покинуть группу.',
 	'groups:removeuser' => 'Удалить из группы',
 	'groups:cantremove' => 'Извините, не могу удалить из группы',
-	'groups:removed' => '%s удален(а) из группы',
+	'groups:removed' => '%s удален из группы',
 	'groups:addedtogroup' => 'Пользователь добавлен в группу.',
 	'groups:joinrequestnotmade' => 'Простите, запрос не может быть осуществлен.',
 	'groups:joinrequestmade' => 'Запрос осуществлен.',
@@ -126,13 +126,12 @@ return array(
 
 	'groups:request:subject' => "%s попросил вступить в группу %s",
 
-	'groups:allowhiddengroups' => 'Хотите вступить в подпольную группу?',
+	'groups:allowhiddengroups' => 'Разрешить приватные (скрытые) группы?',
 	'groups:whocancreate' => 'Кто может создавать новые группы?',
 
 	/**
 	 * Action messages
 	 */
-	'groups:deletewarning' => "Вы уверены, что хотите удалить эту группу? Возврата не будет!",
 
 	'groups:invitekilled' => 'Приглашение удалено.',
 	'groups:joinrequestkilled' => 'Запрос приглашения отклонен.',

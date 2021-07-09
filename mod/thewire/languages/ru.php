@@ -10,50 +10,56 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
-	'thewire' => "Микроблог",
+	'thewire' => "Лента",
 
-	'item:object:thewire' => "Микроблог",
-	'collection:object:thewire:all' => "Все записи микроблога",
-	'collection:object:thewire:owner' => "Микроблог пользователя %s",
-	'collection:object:thewire:friends' => "Микроблоги друзей",
+	'item:object:thewire' => "Публикация в ленте",
+	'collection:object:thewire' => 'Публикации в ленте',
+	'collection:object:thewire:all' => "Все публикации в ленте",
+	'collection:object:thewire:owner' => "Публикации в ленте пользователя %s",
+	'collection:object:thewire:friends' => "Публикации в лентах друзей",
+	'notification:object:thewire:create' => "Отправить уведомление при создании публикации в ленте",
+	'notifications:mute:object:thewire' => "о публикации в ленте '%s'",
 
-	'thewire:replying' => "Ответить %s (@%s), который писал(а) в своем микроблоге",
-	'thewire:thread' => "Микроблог пользователя",
+	'thewire:replying' => "Ответить пользователю %s (@%s), который написал",
+	'thewire:thread' => "Ветка",
 	'thewire:charleft' => "символов осталось",
-	'thewire:tags' => "Сообщения микроблога с тегом '%s'",
-	'thewire:noposts' => "В микроблоге нет постов",
+	'thewire:tags' => "Публикации ленты с тегом '%s'",
+	'thewire:noposts' => "В ленте нет публикаций",
 
-	'thewire:by' => 'Запись пользователя %s',
+	'thewire:by' => 'Публикация пользователя %s',
+
+	'thewire:form:body:placeholder' => "Что происходит?",
 	
 	/**
 	 * The wire river
 	 */
-	'thewire:wire' => 'микроблог',
+	'river:object:thewire:create' => "%s опубликовано в %s",
+	'thewire:wire' => 'лента',
 
 	/**
 	 * Wire widget
 	 */
 	
-	'widgets:thewire:description' => 'Показать ваши последние записи',
-	'thewire:num' => 'Кол-во записей',
-	'thewire:moreposts' => 'Показать больше',
+	'widgets:thewire:description' => 'Показать ваши последние публикации в ленте',
+	'thewire:num' => 'Количество публикаций для отображения',
+	'thewire:moreposts' => 'Больше публикаций',
 
 	/**
 	 * Status messages
 	 */
-	'thewire:posted' => "Запись добавлена.",
-	'thewire:deleted' => "Запись удалена.",
-	'thewire:blank' => "Ну ты же ничего не ввел дружище.",
-	'thewire:notsaved' => "Не могу сохранить запись.",
-	'thewire:notdeleted' => "Не могу удалить запись.",
+	'thewire:posted' => "Опубликовано в ленте.",
+	'thewire:deleted' => "Публикация удалена.",
+	'thewire:blank' => "Введите текст перед публикацией.",
+	'thewire:notsaved' => "Не удается сохранить публикацию в ленте.",
+	'thewire:notdeleted' => "Не удается удалить публикацию.",
 
 	/**
 	 * Notifications
 	 */
-	'thewire:notify:summary' => 'Новая запись микроблога: %s',
-	'thewire:notify:subject' => "Новая запись от %s",
-	'thewire:notify:reply' => '%s ответил(а) %s в микроблоге:',
-	'thewire:notify:post' => '%s написал(а) в микроблоге:',
+	'thewire:notify:summary' => 'Новая публикация в ленте: %s',
+	'thewire:notify:subject' => "Новая публикация в ленте от %s",
+	'thewire:notify:reply' => '%s ответил %s в ленте:',
+	'thewire:notify:post' => '%s опубликовал в ленте:',
 	'thewire:notify:footer' => "Просмотреть и ответить:\n%s",
 
 	/**

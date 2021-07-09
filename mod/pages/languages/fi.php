@@ -22,9 +22,7 @@ return array(
 
 	'groups:tool:pages' => 'Ota käyttöön ryhmän wikit',
 
-	'pages:delete' => "Poista tämä sivu",
 	'pages:history' => "Historia",
-	'pages:view' => "Näytä sivu",
 	'pages:revision' => "Versio",
 
 	'pages:navigation' => "Navigaatio",
@@ -49,8 +47,6 @@ return array(
 	'pages:description' => 'Sivun sisältö',
 	'pages:tags' => 'Tagit',
 	'pages:parent_guid' => 'Yläsivu',
-	'pages:access_id' => 'Lukuoikeus',
-	'pages:write_access_id' => 'Kirjoitusoikeus',
 
 	/**
 	 * Status and error messages
@@ -60,8 +56,6 @@ return array(
 	'pages:notsaved' => 'Sivun tallentaminen epäonnistui',
 	'pages:error:no_title' => 'Syötä sivulle otsikko.',
 	'entity:delete:object:page:success' => 'Sivu poistettiin.',
-	'pages:revision:delete:success' => 'Versio poistettu.',
-	'pages:revision:delete:failure' => 'Version poistaminen epäonnistui.',
 
 	/**
 	 * History
@@ -75,13 +69,6 @@ return array(
 	'pages:num' => 'Näytettävien wikien määrä',
 	'widgets:pages:name' => 'Wikit',
 	'widgets:pages:description' => "Näyttää listan omistamistasi wikeistä.",
-
-	/**
-	 * Submenu items
-	 */
-	'pages:label:view' => "Näytä sivu",
-	'pages:label:edit' => "Muokkaa sivua",
-	'pages:label:history' => "Sivun historia",
 
 	'pages:newchild' => "Luo alasivu",
 );

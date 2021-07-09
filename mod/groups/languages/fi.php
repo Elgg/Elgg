@@ -18,7 +18,6 @@ return array(
 	'groups:all' => "Kaikki ryhmät",
 	'groups:add' => "Luo uusi ryhmä",
 	'groups:edit' => "Muokkaa ryhmää",
-	'groups:delete' => 'Poista ryhmä',
 	'groups:membershiprequests' => 'Hallinnoi liittymispyyntöjä',
 	'groups:membershiprequests:pending' => 'Hallinnoi liittymispyyntöjä (%s)',
 	'groups:invitations' => 'Ryhmäkutsut',
@@ -66,7 +65,6 @@ return array(
 
 	'groups:nofriendsatall' => 'Sinulla ei vielä ole ystäviä, joita kutsua!',
 	'groups:group' => "Ryhmä",
-	'groups:search:tags' => "tagi",
 	'groups:search:title' => "Ryhmät, joissa tagi '%s'",
 	'groups:search:none' => "Ryhmiä ei löytynyt",
 	'groups:search_in_group' => "Etsi tästä ryhmästä",
@@ -134,7 +132,6 @@ return array(
 	/**
 	 * Action messages
 	 */
-	'groups:deletewarning' => "Haluatko varmasti poistaa tämän ryhmän? Tätä toimintoa ei voi perua!",
 
 	'groups:invitekilled' => 'Kutsu poistettu.',
 	'groups:joinrequestkilled' => 'Pyyntö poistettu.',

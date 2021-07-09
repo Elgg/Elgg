@@ -97,8 +97,6 @@ return array(
 	'install:complete:instructions' => 'O novo sitio Elgg está listo. Prema o seguinte botón para acceder a el.',
 	'install:complete:gotosite' => 'Ir ao siti',
 
-	'InstallationException:UnknownStep' => 'Descoñécese o paso de instalación «%s».',
-	'InstallationException:MissingLibrary' => 'Non foi posíbel cargar «%s»',
 	'InstallationException:CannotLoadSettings' => 'Elgg non puido cargar o ficheiro de configuración. Ou ben o ficheiro non existe, ou ben hai un problema de permisos.',
 
 	'install:success:database' => 'Instalouse a base de datos',

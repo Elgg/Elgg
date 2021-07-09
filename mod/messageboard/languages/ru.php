@@ -12,10 +12,8 @@ return array(
 	 */
 
 	'messageboard:board' => "Стена сообщений",
-	'messageboard:messageboard' => "стена сообщений",
 	'messageboard:none' => "Пока никто не написал на стене.",
 	'messageboard:num_display' => "Число отображаемых записей",
-	'messageboard:user' => "стену пользователя %s",
 	'messageboard:owner' => 'Стена сообщений пользователя %s',
 	'messageboard:owner_history' => 'Публикации пользователя %s на стене сообщений пользователя %s',
 
@@ -32,7 +30,6 @@ return array(
 	'annotation:delete:messageboard:success' => "Сообщение успешно удалено",
 	
 	'messageboard:posted' => "Запись на стене размещена.",
-	'messageboard:deleted' => "Запись удалена.",
 
 	/**
 	 * Email messages
@@ -56,7 +53,6 @@ return array(
 	 */
 
 	'messageboard:blank' => "Простите, но Вы должны что-нибудь написать перед размещением записи.",
-	'messageboard:notdeleted' => "Простите, удаление невозможно.",
 
 	'messageboard:failure' => "Простите, при размещении записи произошла ошибка. Попробуйте снова.",
 

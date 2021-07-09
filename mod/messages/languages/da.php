@@ -37,11 +37,9 @@ return array(
 	*/
 
 	'messages:posted' => "Din besked blev sendt.",
-	'messages:success:delete:single' => 'Din besked blev slettet.',
 	'messages:success:delete' => 'Dine beskeder blev slettet.',
 	'messages:success:read' => 'Beskeder markeret som læst',
 	'messages:error:messages_not_selected' => 'Ingen beskeder valgt',
-	'messages:error:delete:single' => 'Kunne ikke slette beskeden',
 
 	/**
 	* Email messages

@@ -22,14 +22,11 @@ return array(
 	'file:num_files' => "표시할 파일의 수",
 	'file:replace' => '파일 내용 대체하기(파일을 바꾸지 않으려면 공백으로 두세요)',
 	'file:list:title' => "%s의 %s %s",
-	'file:title:friends' => "친구의",
 
 	'file:file' => "파일",
 
 	'file:list:list' => '목록보기로 변경',
 	'file:list:gallery' => '사진첩보기로 변경',
-
-	'file:types' => "올린 파일 형식",
 
 	'file:type:' => '파일',
 	'file:type:all' => "모든 파일",
@@ -61,12 +58,6 @@ return array(
 
 	'file:notify:summary' => '%s 라는 새 파일',
 	'file:notify:subject' => '새 파일: %s',
-	'file:notify:body' => '%s 가 새 파일을 올렸습니다: %s
-
-%s
-
-파일을 보고 댓글을 남깁니다:
-%s',
 
 	/**
 	 * Status messages

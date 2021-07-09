@@ -19,7 +19,6 @@ return array(
 	'blog:archives' => '归档',
 
 	'groups:tool:blog' => '启用圈子博客',
-	'blog:write' => '写博客',
 
 	// Editing
 	'blog:excerpt' => '摘要',
@@ -36,12 +35,9 @@ return array(
 	'blog:error:cannot_write_to_container' => '无权限保存圈子博客',
 	'blog:messages:warning:draft' => '有未保存的草稿',
 	'blog:edit_revision_notice' => '（旧版）',
-	'blog:message:deleted_post' => '博客已删除',
-	'blog:error:cannot_delete_post' => '无法删除博客',
 	'blog:none' => '无博客',
 	'blog:error:missing:title' => '请输入博客标题',
 	'blog:error:missing:description' => '请输入博客内容',
-	'blog:error:cannot_edit_post' => '您试图查看的博客不存在，或者您没有查看它的权限。',
 	'blog:error:post_not_found' => '无法找到指定的博客',
 	'blog:error:revision_not_found' => '无法找到此版本',
 
@@ -53,14 +49,7 @@ return array(
 	'blog:notify:summary' => '新博客是 %s',
 	'blog:notify:subject' => '新博客： %s',
 	'blog:notify:body' =>
-'
-%s 发布了一篇博客 %s
-
-%s
-
-查看和评论此博客
-%s
-',
+'',
 
 	// widget
 	'widgets:blog:name' => '博客',

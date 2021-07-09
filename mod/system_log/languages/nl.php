@@ -7,7 +7,6 @@
 
 return array(
 	'admin:administer_utilities:logbrowser' => 'Log browser',
-	'logbrowser' => 'Log browser',
 	'logbrowser:search' => 'Verfijn de resultaten',
 	'logbrowser:user' => 'Gebruikersnaam om op te zoeken',
 	'logbrowser:starttime' => 'Starttijd (bijvoorbeeld  "last monday", "1 hour ago")',

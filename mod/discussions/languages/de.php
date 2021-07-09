@@ -13,6 +13,8 @@ return array(
 	'collection:object:discussion' => 'Diskussionen',
 	'collection:object:discussion:group' => 'Gruppen-Diskussionen',
 	'collection:object:discussion:my_groups' => 'Diskussionen in meinen Gruppen',
+	'notification:object:discussion:create' => "Sende eine Benachrichtigung bei Start einer neuen Diskussion",
+	'notifications:mute:object:discussion' => "über die Diskussion '%s'",
 	
 	'discussion:settings:enable_global_discussions' => 'Diskussionen allgemein aktivieren',
 	'discussion:settings:enable_global_discussions:help' => 'Erlaube Diskussionen ausserhalb von Gruppen.',

@@ -25,9 +25,7 @@ return array(
 	'annotation:delete:page:success' => 'Sidans utgåva togs bort',
 	'annotation:delete:page:fail' => 'Sidans utgåva kunde inte tas bort',
 
-	'pages:delete' => "Ta bort den här sidan",
 	'pages:history' => "Historik",
-	'pages:view' => "Visa sida",
 	'pages:revision' => "Utgåva",
 
 	'pages:navigation' => "Navigation",
@@ -35,12 +33,7 @@ return array(
 	'pages:notify:summary' => 'Ny sida med namnet %s',
 	'pages:notify:subject' => "En ny sida: %s",
 	'pages:notify:body' =>
-'%s lade till en ny sida: %s
-
-%s
-
-Visa och kommentera sidan:
-%s',
+'',
 
 	'pages:more' => 'Fler sidor',
 	'pages:none' => 'Inga sidor skapade än',
@@ -61,8 +54,6 @@ Visa och kommentera sidan:
 	'pages:description' => 'Sidans text',
 	'pages:tags' => 'Taggar',
 	'pages:parent_guid' => 'Föräldrasida',
-	'pages:access_id' => 'Läsrättighet',
-	'pages:write_access_id' => 'Skrivrättighet',
 
 	/**
 	 * Status and error messages
@@ -72,8 +63,6 @@ Visa och kommentera sidan:
 	'pages:notsaved' => 'Sida kunde inte sparas',
 	'pages:error:no_title' => 'Du måste ange en titel för den här sidan.',
 	'entity:delete:object:page:success' => 'Sidan togs bort.',
-	'pages:revision:delete:success' => 'Sidans utgåva togs bort.',
-	'pages:revision:delete:failure' => 'Sidans utgåva kunde inte tas bort.',
 
 	/**
 	 * History
@@ -87,13 +76,6 @@ Visa och kommentera sidan:
 	'pages:num' => 'Anta sidor att visa',
 	'widgets:pages:name' => 'Sidor',
 	'widgets:pages:description' => "Det här är en lista med dina sidor.",
-
-	/**
-	 * Submenu items
-	 */
-	'pages:label:view' => "Visa sida",
-	'pages:label:edit' => "Redigera sida",
-	'pages:label:history' => "Sidhistorik",
 
 	'pages:newchild' => "Skapa en undersida",
 );

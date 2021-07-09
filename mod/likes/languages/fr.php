@@ -14,17 +14,14 @@ return array(
 	'likes:see' => 'Voir les membres qui aiment',
 	'likes:remove' => 'N\'aime plus',
 	'likes:notdeleted' => 'Il y a eu un problème lors de la suppression de l\'appréciation',
-	'likes:likes' => 'Vous aimez',
+	'likes:likes' => 'Vous appréciez maintenant cet élément',
 	'likes:failure' => 'Il y a eu un problème lors de l\'appréciation de cet élément',
-	'likes:alreadyliked' => 'Vous aimez déjà',
+	'likes:alreadyliked' => 'Vous appréciez déjà',
 	'likes:notfound' => 'L\'élément que vous essayez d\'apprécier ne peut être trouvé',
 	'likes:likethis' => 'Aime',
 	'likes:userlikedthis' => '%s aime',
 	'likes:userslikedthis' => '%s aiment',
 	'likes:river:annotate' => 'aime',
-	'likes:delete:confirm' => 'Confirmez-vous vouloir supprimer cette appréciation ?',
-
-	'river:likes' => 'aime %s %s',
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s aime votre publication "%s"',
@@ -34,7 +31,7 @@ return array(
 Pour afficher votre publication :
 %4$s
 
-ou voir le profil de %1$s :
+ou pour voir le profil de %1$s :
 
 %5$s',
 );

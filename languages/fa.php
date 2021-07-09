@@ -18,7 +18,6 @@ return array(
 
 	'login' => "ورود",
 	'loginok' => "شما وارد سیستم شده اید",
-	'loginerror' => "امکان ورود شما نیست. لطفا ورودی ها را کنترل کنید و دوباره سعی کنید.",
 	'login:empty' => "نام کاربری/ایمیل و کلمه عبور اجباری هستند",
 	'login:baduser' => "امکان بارگزاری اطلاعات کاربری شما نیست.",
 	'auth:nopams' => "خطای داخلی. هیچ متدی برای ورود کاربر نصب نشده است.",
@@ -42,36 +41,19 @@ return array(
 	'exception:title' => "خطای مهلک.",
 	'exception:contact_admin' => 'خطای غیرقابل برگشتی رخ داده است. با مدیر سیستم تماس بگیرید و این اطلاعات را در اختیار وی قرار دهید:',
 
-	'actionundefined' => "فعالیت مورد درخواست (%s) در این سیستم تعریف نشده است.",
 	'actionnotfound' => "فایل فعالیت برای %s پیدا نشد.",
-	'actionloggedout' => "متاسفانه برای انجام این عملیات باید وارد سیستم شده باشید.",
 	'actionunauthorized' => 'شما مجوز انجام این عملیات را ندارید.',
 
 	'ajax:error' => 'در حال ارسال درخواست آجاکسی خطای ناخواسته ای رخ داد. ممکن است که ارتباط با سرور قطع شده باشد.',
 	'ajax:not_is_xhr' => 'شما نمی توانید به نمایه های آجاکسی به صورت مستقیم دسترسی داشته باشید.',
 
-	'PluginException:MisconfiguredPlugin' => "%s (guid: %s)یک پلاگین تنظیم نشده است. و غیرفعال می باشد. لطفا در صفحه ویکی Elgg به دنبال علت باشید. (http://learn.elgg.org/)",
 	'PluginException:CannotStart' => '%s (guid: %s) امکان شروع شدن ندارد و غیرفعال شده است. به علت: %s',
 	'PluginException:InvalidID' => "%s یک کد پلاگین نامعتبر است.",
 	'PluginException:InvalidPath' => "%s یک مسیر پلاگین نامعتبر است.",
-	'PluginException:InvalidManifest' => 'فایل مانیفست برای پلاگین %s معتبر نیست.',
-	'PluginException:InvalidPlugin' => '%s یک پلاگین معتبر نیست.',
-	'PluginException:InvalidPlugin:Details' => '%s یک پلاگین معتبر نیست. %s',
-	'PluginException:NullInstantiated' => 'پلاگین Elgg نمی تواند مقدار تهی یا خالی باشد. شما باید یک GUID یا یک کد پلاگین و یا یک مسیر کامل را وارد کنید.',
 	'ElggPlugin:MissingID' => 'کد پلاگین پیدا نشد (guid %s)',
-	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'فایل  درخواست شده %s پیدا نشد.',
-	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'فایل مانیفست نوع داده وابسته نامعتبر دارد "%s"',
-	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'فایل مانیفست نوع داده نامعتبر دارد "%s"',
-	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'یک %s وابستگی %s در پلاگین %s وجود دارد. پلاگین نمی تواند با تامین کننده هایش مغایرت داشته باشد.',
-	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'تداخل با پلاگین: %s',
-	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'فایل پلاگین "elgg-plugin.php" موجود هست ولی قابل خواندن نیست',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'امکان استفاده از %s برای پلاگین %s (guid: %s ) در %s نیست.',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'خطای %s برای پلاگین  %s (guid: %s) در  %s رخ داد.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'امکان باز کردن پوشه نمایه های پلاگین %s (guid: %s) در %s نیست.',
-	'PluginException:NoPluginName' => "نام پلاگین پیدا نشد",
-	'PluginException:ParserError' => 'خطا: با استفاده از واسط نسخه %s امکان پردازش فایل مانیفست پلاگین %s نیست.',
-	'PluginException:NoAvailableParser' => 'هیچ مفسری برای واسط نسخه %s برای فایل مانیفست پلاگین %sیافت نشد.',
-	'PluginException:ParserErrorMissingRequiredAttribute' => "مقدار خصیصه الزامی %s در فایل مانیفست پلاگین %s یافت نشد",
 	'ElggPlugin:InvalidAndDeactivated' => '%sیک پلاگین نامعتبر یا غیرفعال است.',
 	'ElggPlugin:activate:BadConfigFormat' => 'فایل پلاگین "elgg-plugin.php" آرایه مورد نظر را برنگرداند',
 	'ElggPlugin:activate:ConfigSentOutput' => 'خروجی فایل "elgg-plugin.php"',
@@ -94,11 +76,8 @@ return array(
 	'UserFetchFailureException' => 'امکان بررسی دسترسی کاربر [%s] نیست، چون این کاربر وجود ندارد.',
 	'BadRequestException' => 'درخواست اشتباه',
 
-	'pageownerunavailable' => 'هشدار: صاحب این صفحه %d در دسترس نیست.',
 	'viewfailure' => 'خطای داخلی در نمایه %sبه وجود آمد',
-	'view:missing_param' => "پارامتر اجباری %s از نمایه %s موجود نیست",
 	'changebookmark' => 'لطفا گزیده تان برای این صفحه را تغییر دهید',
-	'noaccess' => 'محتوایی که شما قصد نمایش آن را دایرد حذف شده و یا شما اجازه نمایش آن را ندارید.',
 	'error:missing_data' => 'در داده های درخواست شما موارد اجباری یافت نشد.',
 	'save:fail' => 'در ذخیره داده های شما مشکلی پیش آمد',
 	'save:success' => 'داده شما ذخیره شد',
@@ -166,15 +145,12 @@ return array(
  */
 	'access:label:friends' => "دوستان",
 	'access' => "دسترسی",
-	'access:overridenotice' => "نکته: به خاطر قوانین گروه، این محتوا فقط در دسترس اعضای گروه است.",
 	'access:limited:label' => "محدود",
 	'access:help' => "سطح دسترسی",
 	'access:read' => "مجوز دسترسی برای خواندن",
 	'access:write' => "مجوز دسترسی برای نوشتن",
 	'access:admin_only' => "فقط مدیر",
-	'access:missing_name' => "نام سطح دسترس موجود نیست.",
-	'access:comments:change' => "این بحث فقط برای مخاطبین قابل نمایش است. دقت کنید که برای چه کسی به اشتراک می گذارید.",
-
+	
 /**
  * Dashboard and widgets
  */
@@ -184,7 +160,6 @@ return array(
 
 	'widgets:add' => 'افزود ابزارک',
 	'widgets:add:description' => "برای افزودن ابزارک روی دکمه آن کلیک کنید.",
-	'widgets:position:fixed' => '(موقعیت ثابت در صفحه)',
 	'widget:unavailable' => 'شما این ابزارک را قبلا اضافه کرده اید',
 	'widget:numbertodisplay' => 'تعداد موارد قابل نمایش',
 	'widget:edit' => 'شخصی سازی این ابزارک',
@@ -265,7 +240,6 @@ return array(
 	'river:delete:success' => 'مورد حذف شد',
 	'river:delete:fail' => 'امکان حذف این مورد نیست',
 	'river:delete:lack_permission' => 'شما مجوز حذف این فعالیت را ندارید',
-	'river:can_delete:invaliduser' => 'امکان بررسی قابلیت حذف برای کاربر [%s] وجود ندارد چون کاربر موجود نیست.',
 	'river:subject:invalid_subject' => 'کاربر نامعتبر',
 	'activity:owner' => 'مشاهده فعالیت',
 
@@ -294,14 +268,6 @@ return array(
 	'viewtype:change' => "تغییر نوع لیست",
 	'viewtype:list' => "نمایش لیستی",
 	'viewtype:gallery' => "گالری",
-
-	'tag:search:startblurb' => "آیتمهایی با برچسب شبیه: %s",
-
-	'user:search:startblurb' => "کاربرانی شبیه: %s",
-	'user:search:finishblurb' => "برای مشاهده بیشتر اینجا را کلیک کنید",
-
-	'group:search:startblurb' => "گروههای شبیه:%s",
-	'group:search:finishblurb' => "برای مشاهده بیشتر اینجا را کلیک کنید",
 	'search:go' => 'برو',
 	'userpicker:only_friends' => 'فقط دوستان',
 
@@ -323,7 +289,6 @@ return array(
 	'registration:userexists' => 'نام کاربری موجود هست',
 	'registration:usernametooshort' => 'نام کاربری شما باید حداقل %u کاراکتر باشد.',
 	'registration:usernametoolong' => 'نام کاربری شما خیلی طولانی هست. باید حداکثر %u کاراکتر باشد.',
-	'registration:passwordtooshort' => 'کلمه عبور باید حداقل %u کاراکتر باشد.',
 	'registration:dupeemail' => 'این آدرس ایمیل قبلا عضو شده است.',
 	'registration:invalidchars' => 'متاسفم، نام کاربری حاوی کاراکتر %s می باشد که نامعتبر هست. کاراکترهای معتبر به این صورت هستند: %s',
 	'registration:emailnotvalid' => 'متاسفانه آدرس ایمیل شما توسط سیستم معتبر شناخته نشد',
@@ -785,7 +750,6 @@ return array(
 
 	'content' => "مختوا",
 	'content:latest' => 'آخرین فعالیت',
-	'content:latest:blurb' => 'یا، اینجا را کلیک کنید تا آخرین فعالیت ها در داخل سایت را مشاهده کنید',
 
 	'link:text' => 'مشاهده لینک',
 
@@ -861,25 +825,11 @@ return array(
 	'useradd:subject' => 'حساب کاربری ساخته شد',
 
 /**
- * System messages
- */
-
-	'systemmessages:dismiss' => "برای پنهان کردن کلیک کنید",
-
-
-/**
  * Messages
  */
 	'messages:title:error' => 'خطا',
 	'messages:title:help' => 'راهنما',
 	'messages:title:info' => 'اطلاعات',
-
-/**
- * Import / export
- */
-
-	'importsuccess' => "ورود داده ها با موفقیت انجام شد",
-	'importfail' => "ورود داده ها از OpenDD با شکست مواجه شد",
 
 /**
  * Time
@@ -1020,19 +970,12 @@ return array(
 	'upgrade:unlock:confirm' => "بانک اطلاعاتی برای یک ارتقاء دیگر قفل شده است. اجرای چندین ارتقا به صورت همزمان خطرناک است. فقط در صورتی که ارتقاء دیگری در حال انجام نیست ادامه دهید. بازکردن قفل بانک اطلاعاتی؟؟",
 	'upgrade:locked' => "امکان ارتقاء نیست. یک ارتقاء دیگر درحال اجراست. برای حذف قفل ارتقاء از قسمت مدیریت اقدام کنید",
 	'upgrade:unlock:success' => "قفل ارتقاء با موفقیت برداشته شد",
-	'upgrade:unable_to_upgrade' => 'امکان ارتقاء نیست',
-
-	'update:oauth_api:deactivated' => 'واسط OAuth (درگذشته با نام OAuth Lib شناخته میشد) در حین ارتقاء غیرفعال شد. لطفا در صورت نیاز آن را به صورت دستی فعال کنید.',
-	'upgrade:site_secret_warning:moderate' => "بهتر است که کلید امنیتی سایتتان را دوباره تولید کنید تا امنیت آن بالا رود. در قسمت تنظیمات پیشرفته این کار را انجام دهید",
-	'upgrade:site_secret_warning:weak' => "شدیدا پیشنهاد می شود که کلید امنیتی سایتتان را دوباره تولید کنید تا امنیت آن بالا رود. در قسمت تنظیمات پیشرفته این کار را انجام دهید",
 
 	'admin:pending_upgrades' => 'این سایت نیاز به چندین مورد ارتقاء دارد و به توجه سریع شما نیاز دارد',
 	'admin:view_upgrades' => 'مشاهده ارتقاء های مورد نیاز',
 	'item:object:elgg_upgrade' => 'ارتقاءهای سایت',
 	'admin:upgrades:none' => 'نسخه شما بروز است',
 
-	'upgrade:item_count' => 'اینجا %s مورد هست که نیاز به ارتقاء دارد',
-	'upgrade:warning' => 'هشدار: در سایتهای بزرگ این ارتقاء ممکن است زمان زیادی طول بکشد',
 	'upgrade:success_count' => 'ارتقاء یافت',
 	'upgrade:finished' => 'ارتقاء پایان یافت',
 	'upgrade:finished_with_errors' => 'ارتقاء پایان یافت و چندین خطا رخ داد. صفحه را رفرش کنید و سعی کنید که دوباره عملیات ارتقاء را انجام دهید. اگر خطا مجددا رخ داد لاگ سرور را برای خطاهای احتمالی بررسی کنید. شما میتوانید در  <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">گروه پشتیبانی فنی Elgg</a>  به دنبال راه حل  و راهنمایی برای  رفع خطایتان باشید.',
@@ -1097,7 +1040,6 @@ return array(
 	'generic_comment:updated' => "دیدگاه با موفقیت بروزرسانی شد.",
 	'generic_comment:blank' => "متاسفانه شما باید در دیدگاهتان چیزی بنویسید تا امکان ذخیره شدن داشته باشد.",
 	'generic_comment:notfound' => "متاسفانه دیدگاه مشخص شده پیدا نشد.",
-	'generic_comment:notfound_fallback' => "متاسفانه دیدگاه مورد نظر شما پیدا نشد. اما شما به صفحه ای که دیدگاه از آنجا ثبت شده هدایت می شوید.",
 	'generic_comment:failure' => "در حین ذخیره دیدگاه خطای ناخواسته ای رخ داد.",
 	'generic_comment:none' => 'هیچ دیدگاهی نیست',
 	'generic_comment:title' => 'دیدگاههای %s',
@@ -1110,15 +1052,12 @@ return array(
 
 	'byline' => 'توسط %s',
 	'byline:ingroup' => 'در گروه%s',
-	'entity:default:missingsupport:popup' => 'این مورد به صورت صحیح قابل نمایش نمی باشد. این ممکن است به خاطر این باشد که نیاز به پشتیبانی از پلاگینی هست که دیگر در سیستم نصب نیست.',
-
+	
 	'entity:delete:item' => 'آیتم',
 	'entity:delete:item_not_found' => 'مورد یافت نشد',
 	'entity:delete:permission_denied' => 'شما مجوز پاک کردن این مورد را ندارید',
 	'entity:delete:success' => 'مورد %s حذف شد',
 	'entity:delete:fail' => 'امکان حذف %s نیست',
-	
-	'entity:can_delete:invaliduser' => 'امکان چک تابع canDelete برای کاربر user_guid [%s]  نیست. به خاطر اینکه کاربر موجود نیست.',
 
 /**
  * Annotations
@@ -1133,7 +1072,6 @@ return array(
 	'actiongatekeeper:timeerror' => 'صفحه ایک ه در حال استفاده آن بودید منقضی شده است. لطفا صفحه را رفرش  و سعی مجدد کنید.',
 	'actiongatekeeper:pluginprevents' => 'متاسفانه فرم شما امکان ارسال ندارد. به خاطر یک خطای ناشناخته',
 	'actiongatekeeper:uploadexceeded' => 'اندازه فایل(های) بارگزاری شده از حد مجاز که توسط مدیر سیستم تنظیم شده است، فراتر است.',
-	'actiongatekeeper:crosssitelogin' => "متاسفانه امکان ورود از دامین دیگر موجود نیست. لطفا مجدد سعی کنید.",
 
 /**
  * Word blacklists
@@ -1146,7 +1084,6 @@ return array(
  */
 
 	'js:security:token_refresh_failed' => 'امکان اتصال %s نیست. شما ممکن است در ذخیره محتوا به مشکل بخورد.لطفا صفحه را رفرش کنید.',
-	'js:security:token_refreshed' => 'ارتباط با %s بازیابی شد.',
 	'js:lightbox:current' => "تصویر %s از %s",
 
 /**

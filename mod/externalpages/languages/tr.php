@@ -10,7 +10,6 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
-	'expages' => "Site sayfaları",
 	'expages:about' => "Hakkında",
 	'expages:terms' => "Kullanım Koşulları",
 	'expages:privacy' => "Gizlilik",

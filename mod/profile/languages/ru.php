@@ -12,7 +12,6 @@ return array(
 	'admin:configure_utilities:profile_fields' => 'Изменить поля профиля',
 	
 	'profile:edit' => 'Изменить профиль',
-	'profile:aboutme' => "Обо мне",
 	'profile:description' => "Обо мне",
 	'profile:briefdescription' => "Краткое описание",
 	'profile:location' => "Местоположение",
@@ -34,7 +33,6 @@ return array(
 	'profile:field:location' => 'Местоположение',
 	'profile:field:date' => 'Дата',
 
-	'profile:edit:default' => 'Изменить поля профиля',
 	'profile:label' => "Метка профиля",
 	'profile:type' => "Тип профиля",
 );

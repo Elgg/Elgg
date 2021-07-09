@@ -20,16 +20,15 @@ return array(
 
 	'login' => "Connexion",
 	'loginok' => "Connexion réussie.",
-	'loginerror' => "Nous n'avons pas pu vous identifier. Assurez-vous que les informations que vous avez entrées sont correctes et réessayez.",
-	'login:empty' => "Identifiant ou adresse email et mot de passe sont requis.",
-	'login:baduser' => "Impossible de charger votre compte d'utilisateur.",
+	'login:empty' => "Identifiant ou adresse e-mail et mot de passe sont requis.",
+	'login:baduser' => "Impossible de charger votre compte utilisateur.",
 	'auth:nopams' => "Erreur interne. Aucune méthode d'authentification des utilisateurs n'est installée.",
 
 	'logout' => "Déconnexion",
 	'logoutok' => "Déconnexion réussie.",
 	'logouterror' => "Impossible de vous déconnecter. Veuillez réessayer.",
 	'session_expired' => "Suite à une inactivité prolongée, votre session de connexion a expiré. Veuillez <a href='javascript:location.reload(true)'>recharger</a> la page pour vous connecter.",
-	'session_changed_user' => "Vous êtes actuellement connecté(e) avec un autre compte utilisateur. Vous devriez <a href='javascript:location.reload(true)'>recharger</a> la page.",
+	'session_changed_user' => "Vous êtes actuellement identifié avec un autre compte utilisateur. Vous devriez <a href='javascript:location.reload(true)'>recharger</a> la page.",
 
 	'loggedinrequired' => "Vous devez vous connecter pour voir cette page.",
 	'loggedoutrequired' => "Vous devez vous déconnecter pour voir cette page.",
@@ -43,16 +42,14 @@ return array(
  */
 
 	'exception:title' => "Erreur Fatale.",
-	'exception:contact_admin' => 'Une erreur irrécupérable s\'est produite et a été enregistrée dans le journal. Veuillez SVP contacter l\'administrateur du site avec les informations suivantes :',
+	'exception:contact_admin' => 'Une erreur irrécupérable s\'est produite et a été enregistrée dans le journal. Veuillez contacter l\'administrateur du site avec les informations suivantes :',
 
-	'actionundefined' => "L'action demandée (%s) n'est pas définie dans le système.",
 	'actionnotfound' => "Le fichier d'action pour %s n'a pas été trouvé.",
-	'actionloggedout' => "Désolé, vous ne pouvez pas effectuer cette action sans vous connecter.",
 	'actionunauthorized' => 'Vous n\'avez pas l\'autorisation d\'effectuer cette action',
 
 	'ajax:error' => 'Une erreur est survenue lors d\'un appel AJAX. Peut-être que la connexion avec le serveur est perdue.',
 	'ajax:not_is_xhr' => 'Vous ne pouvez pas accéder directement aux vues AJAX',
-	'ajax:pagination:no_data' => 'Aucune nouvelle donnée de page trouvée',
+	'ajax:pagination:no_data' => 'Aucune donnée de nouvelle page trouvée',
 	'ajax:pagination:load_more' => 'Charger la suite',
 
 	'ElggEntity:Error:SetSubtype' => 'Utiliser %s à la place du setter magique pour "subtype"',
@@ -60,32 +57,17 @@ return array(
 	'ElggUser:Error:SetAdmin' => 'Utiliser %s à la place du setter magique pour "admin"',
 	'ElggUser:Error:SetBanned' => 'Utiliser %s à la place du setter magique pour "banned"',
 
-	'PluginException:MisconfiguredPlugin' => "Le plugin %s (guid : %s) est mal configuré. Il a été désactivé. Veuillez rechercher dans la documentation de Elgg les causes possibles (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid : %s) ne peut pas démarrer et a été désactivé.  Cause : %s',
 	'PluginException:InvalidID' => "%s est un ID de plugin invalide.",
 	'PluginException:InvalidPath' => "%s est un chemin de plugin invalide.",
-	'PluginException:InvalidManifest' => 'Fichier manifest.xml invalide pour le plugin %s',
-	'PluginException:InvalidPlugin' => '%s n\'est pas un plugin valide.',
-	'PluginException:InvalidPlugin:Details' => '%s n\'est pas un plugin valide: %s',
-	'PluginException:NullInstantiated' => 'ElggPlugin ne peut pas être instancié vide. Vous devez passer un GUID, un ID de plugin, ou un chemin complet.',
 	'ElggPlugin:MissingID' => 'ID du plugin manquant (guid %s)',
 	'ElggPlugin:NoPluginComposer' => 'Fichier composer.json manquant pour l\'ID de plugin %s (guid %s)',
 	'ElggPlugin:StartFound' => 'Pour l\'ID de plugin %s un fichier start.php a été trouvé. Ceci pourrait indiquer une version de plugin non supportée.',
-	'ElggPlugin:IdMismatch' => 'Le nom du répertoire de ce plugin doit être renommé en "%s" pour correspondre au nom du projet projectname défini dans le composer.json du plugin.',
-	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'Le fichier requis "%s" est manquant.',
-	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Le fichier manifest.xml contient un type de dépendance invalide : "%s".',
-	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Le fichier manifest.xml contient un type de fournisseur "%s" invalide.',
-	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Dépendance %s invalide "%s" dans le plugin %s. Les plugins ne peuvent pas être en conflit avec, ni avoir besoin de quelque chose qu\'ils fournissent eux-même !',
-	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Conflit avec le plugin : %s',
-	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Le fichier du plugin "elgg-plugin.php" est présent mais illisible.',
+	'ElggPlugin:IdMismatch' => 'Le nom du répertoire de ce plugin doit être renommé en "%s" pour correspondre au nom du projet "projectname" défini dans le composer.json du plugin.',
 	'ElggPlugin:Error' => 'Erreur de plugin',
-	'ElggPlugin:Exception:CannotIncludeFile' => 'Impossible d\'inclure %s pour le plugin %s (GUID : %s) sur %s. Vérifiez les autorisations !',
+	'ElggPlugin:Exception:CannotIncludeFile' => 'Impossible d\'inclure %s pour le plugin %s (GUID : %s) sur %s.',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Envoi d\'une exception comprenant %s pour le plugin %s (guid: %s) à %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Impossible d\'ouvrir le répertoire des vues du plugin %s (GUID : %s) sur %s. Vérifiez les autorisations !',
-	'PluginException:NoPluginName' => "Le nom du plugin n'a pas pu être trouvé",
-	'PluginException:ParserError' => 'Erreur de syntaxe dans le fichier manifest.xml avec la version %s de l\'API dans le plugin %s.',
-	'PluginException:NoAvailableParser' => 'Impossible de trouver un analyseur syntaxique du fichier manifest.xml pour l\'API version %s dans le plugin %s.',
-	'PluginException:ParserErrorMissingRequiredAttribute' => "L'attribut requis '%s' est manquant dans le fichier manifest.xml pour le plugin %s.",
 	'ElggPlugin:InvalidAndDeactivated' => '%s est un plugin invalide et a été désactivé.',
 	'ElggPlugin:activate:BadConfigFormat' => 'Le fichier du plugin "elgg-plugin.php" n\'a pas renvoyé un tableau sérialisable.',
 	'ElggPlugin:activate:ConfigSentOutput' => 'Le fichier du plugin "elgg-plugin.php" a retourné une valeur de sortie.',
@@ -101,8 +83,8 @@ return array(
 	'RegistrationException:EmptyPassword' => 'Les champs du mot de passe ne peuvent pas être vides',
 	'RegistrationException:PasswordMismatch' => 'Les mots de passe doivent correspondre',
 	'LoginException:BannedUser' => 'Votre compte a été désactivé sur ce site et vous ne pouvez plus vous y connecter',
-	'LoginException:UsernameFailure' => 'Nous n\'avons pas pu vous connecter. Vérifiez votre identifiant ou votre email et votre mot de passe.',
-	'LoginException:PasswordFailure' => 'Impossible de vous connecter. Vérifiez votre identifiant ou votre email et votre mot de passe.',
+	'LoginException:UsernameFailure' => 'Nous n\'avons pas pu vous identifier. Vérifiez votre identifiant ou votre e-mail et votre mot de passe.',
+	'LoginException:PasswordFailure' => 'Impossible de vous connecter. Vérifiez votre identifiant ou votre adresse e-mail et votre mot de passe.',
 	'LoginException:AccountLocked' => 'Votre compte a été verrouillé suite à un trop grand nombre d\'échecs de connexion.',
 	'LoginException:ChangePasswordFailure' => 'Échec de la vérification du mot de passe actuel.',
 	'LoginException:Unknown' => 'Nous ne pouvons pas vous connecter à cause d\'une erreur inconnue.',
@@ -124,16 +106,11 @@ return array(
 	
 	'Entity:Subscriptions:InvalidMethodsException' => '%s demande que $methods soit une chaîne de caractères ou un tableau de chaînes de caractères',
 
-	'pageownerunavailable' => 'Attention : Le propriétaire de la page %d n\'est pas accessible.',
 	'viewfailure' => 'Erreur interne dans la vue %s',
-	'view:missing_param' => "Le paramètre obligatoire '%s' est manquant dans la vue %s",
 	'changebookmark' => 'Veuillez mettre à jour votre signet pour cette page.',
-	'noaccess' => 'La contenu que vous essayiez d\'afficher a été supprimé, ou vous n\'avez pas l\'autorisation d\'y accéder.',
 	'error:missing_data' => 'Il manquait des données dans votre requête',
 	'save:fail' => 'Erreur lors de l\'enregistrement de vos données. ',
 	'save:success' => 'Vos données ont bien été enregistrées',
-
-	'forward:error' => 'Désolé, une erreur est survenue lors de la redirection vers un autre site.',
 
 	'error:default:title' => 'Oups...',
 	'error:default:content' => 'Oups... quelque chose n\'a pas fonctionné.',
@@ -148,8 +125,8 @@ return array(
 	'upload:error:form_size' => 'Le fichier que vous avez essayé de télécharger est trop grand.',
 	'upload:error:partial' => 'Le chargement du fichier n\'a pas abouti.',
 	'upload:error:no_file' => 'Aucun fichier n\'a été sélectionné.',
-	'upload:error:no_tmp_dir' => 'Impossible d\'enregistrer le fichier téléchargé (pas de répertoire temporaire).',
-	'upload:error:cant_write' => 'Impossible d\'enregistrer le fichier téléchargé (écriture impossible).',
+	'upload:error:no_tmp_dir' => 'Impossible d\'enregistrer le fichier téléchargé - pas de répertoire temporaire.',
+	'upload:error:cant_write' => 'Impossible d\'enregistrer le fichier téléchargé - écriture impossible.',
 	'upload:error:extension' => 'Impossible d\'enregistrer le fichier téléchargé (extension).',
 	'upload:error:unknown' => 'Le chargement du fichier a échoué.',
 
@@ -175,7 +152,7 @@ return array(
 	'table_columns:fromProperty:type' => 'Type',
 	'table_columns:fromProperty:username' => 'Identifiant',
 
-	'table_columns:fromMethod:getSubtype' => 'Sous-type (subtype)',
+	'table_columns:fromMethod:getSubtype' => 'Sous-type - subtype',
 	'table_columns:fromMethod:getDisplayName' => 'Nom/Titre',
 	'table_columns:fromMethod:getMimeType' => 'Type MIME',
 	'table_columns:fromMethod:getSimpleType' => 'Type',
@@ -185,9 +162,9 @@ return array(
  */
 
 	'name' => "Nom affiché",
-	'email' => "Adresse email",
+	'email' => "Adresse e-mail",
 	'username' => "Identifiant",
-	'loginusername' => "Identifiant ou email",
+	'loginusername' => "Identifiant ou adresse e-mail",
 	'password' => "Mot de passe",
 	'passwordagain' => "Mot de passe (confirmation)",
 	'admin_option' => "Définir comme administrateur ?",
@@ -203,15 +180,12 @@ return array(
 	'access:label:logged_out' => "Visiteurs non identifiés",
 	'access:label:friends' => "Contacts",
 	'access' => "Accès",
-	'access:overridenotice' => "Note : en accord avec la politique de confidentialité de ce groupe, ce contenu ne sera accessible qu'aux membres du groupe. ",
 	'access:limited:label' => "Limité",
 	'access:help' => "Le niveau d'accès",
 	'access:read' => "Accès en lecture",
 	'access:write' => "Accès en écriture",
 	'access:admin_only' => "Seulement les administrateurs",
-	'access:missing_name' => "Le nom du niveau d'accès est manquant",
-	'access:comments:change' => "Cette discussion n'est actuellement visible que par un public limité. Faites attention à qui vous la partagez.",
-
+	
 /**
  * Dashboard and widgets
  */
@@ -220,8 +194,9 @@ return array(
 	'dashboard:nowidgets' => "Votre tableau de bord vous permet de suivre l'activité et les contenus qui vous intéressent.",
 
 	'widgets:add' => 'Ajouter des widgets',
-	'widgets:add:description' => "Cliquez sur un widget ci-dessous pour l'ajouter à la page. Vous pouvez ensuite le déplacer et le configurer selon vos souhaits.<br />Note : certains widgets peuvent être ajoutés plusieurs fois.",
-	'widgets:position:fixed' => '(Position fixe sur la page)',
+	'widgets:add:description' => "Cliquez sur un widget ci-dessous pour l'ajouter à la page. 
+Vous pouvez ensuite le déplacer et le configurer selon vos souhaits. 
+Certains widgets peuvent être ajoutés plusieurs fois.",
 	'widget:unavailable' => 'Vous avez déjà ajouté ce widget',
 	'widget:numbertodisplay' => 'Nombre d\'éléments à afficher ',
 
@@ -262,7 +237,7 @@ return array(
 	'collection:user:user' => 'Membres',
 	'notification:user:user:make_admin' => "Envoyer une notification quand un utilisateur reçoit les droits d'administrateur",
 	'notification:user:user:remove_admin' => "Envoyer une notification quand les droits d'administrateur d'un utilisateur sont révoqués",
-	'notification:user:user:unban' => "Envoyer une notification quand un utilisateur est réintégré (unbanned)",
+	'notification:user:user:unban' => "Envoyer une notification quand un utilisateur est réintégré - n'est plus banni",
 
 	'friends' => "Contacts",
 	'collection:friends' => '%s des contacts',
@@ -318,7 +293,6 @@ return array(
 	'river:delete:success' => 'L\'élément d\'activité a bien été supprimé',
 	'river:delete:fail' => 'L\'élément d\'activité n\'a pas pu être supprimé',
 	'river:delete:lack_permission' => 'Vous n\'avez pas les permissions nécessaires pour supprimer cet élément d\'activité',
-	'river:can_delete:invaliduser' => 'Impossible de vérifier canDelete pour le user_guid [%s] car l\'utilisateur n\'existe pas.',
 	'river:subject:invalid_subject' => 'Utilisateur invalide',
 	'activity:owner' => 'Flux d\'activité',
 
@@ -331,7 +305,7 @@ return array(
 /**
  * Notifications
  */
-	'notification:method:email' => 'Email',
+	'notification:method:email' => 'E-mail',
 	'notification:method:email:from' => '%s (via %s)',
 	'notification:method:delayed_email' => 'E-mail différé',
 	
@@ -347,7 +321,7 @@ return array(
 	'usersettings:notifications:create_comment:description' => "Paramètre de notification par défaut quand vous ajoutez un commentaire, afin de pouvoir suivre la suite de la conversation",
 
 	'usersettings:notifications:timed_muting' => "Désactiver temporairement les notifications",
-	'usersettings:notifications:timed_muting:help' => "Si vous ne souhaitez pas recevoir de notifications pendant une certaine période (par exemple pendant des vacances), vous pouvez définir une date de début et de fin pour désactiver temporairement toutes les notifications",
+	'usersettings:notifications:timed_muting:help' => "Si vous ne souhaitez pas recevoir de notifications pendant une certaine période (par exemple pendant des vacances ou un déplacement), vous pouvez définir une date de début et de fin pour désactiver temporairement toutes les notifications",
 	'usersettings:notifications:timed_muting:start' => "Premier jour",
 	'usersettings:notifications:timed_muting:end' => "Dernier jour",
 	'usersettings:notifications:timed_muting:warning' => "Vos notifications sont temporairement désactivées",
@@ -390,20 +364,12 @@ return array(
 	'searchtitle' => "Rechercher : %s",
 	'users:searchtitle' => "Recherche de membres : %s",
 	'groups:searchtitle' => "Recherche de groupes : %s",
-	'advancedsearchtitle' => "%s résultat(s) pour %s",
+	'advancedsearchtitle' => "%s résultats pour %s",
 	'notfound' => "Aucun résultat trouvé.",
 
 	'viewtype:change' => "Changer le type de liste",
 	'viewtype:list' => "Liste",
 	'viewtype:gallery' => "Galerie",
-
-	'tag:search:startblurb' => "Éléments avec le(s) tag(s) '%s' :",
-
-	'user:search:startblurb' => "Membres correspondant à \"%s\" :",
-	'user:search:finishblurb' => "Pour en voir plus, cliquez ici.",
-
-	'group:search:startblurb' => "Groupes correspondant à \"%s\" :",
-	'group:search:finishblurb' => "Pour en voir plus, cliquez ici.",
 	'search:go' => 'Rechercher',
 	'userpicker:only_friends' => 'Seulement les contacts',
 
@@ -423,14 +389,13 @@ return array(
 	'register:fields' => 'Tous les champs sont requis',
 
 	'registration:noname' => 'Le nom affiché est requis.',
-	'registration:notemail' => 'L\'adresse email que vous avez indiquée ne semble pas valide.',
+	'registration:notemail' => 'L\'adresse e-mail que vous avez indiquée ne semble pas valide.',
 	'registration:userexists' => 'Cet identifiant est déjà pris',
 	'registration:usernametooshort' => 'L\'identifiant doit comporter au moins %u caractères.',
 	'registration:usernametoolong' => 'Votre identifiant est trop long. Il peut comporter au maximum %u caractères.',
-	'registration:passwordtooshort' => 'Le mot de passe doit comporter un minimum de %u caractères.',
-	'registration:dupeemail' => 'Cette adresse email est déjà utilisée.',
+	'registration:dupeemail' => 'Cette adresse e-mail est déjà utilisée.',
 	'registration:invalidchars' => 'Désolé, votre identifiant contient le caractère %s qui est invalide. Les caractères suivants sont invalides : %s',
-	'registration:emailnotvalid' => 'Désolé, l\'adresse email que vous avez entrée est invalide sur ce site.',
+	'registration:emailnotvalid' => 'Désolé, l\'adresse e-mail que vous avez entrée est invalide sur ce site.',
 	'registration:passwordnotvalid' => 'Désolé, le mot de passe que vous avez entré est invalide sur ce site.',
 	'registration:usernamenotvalid' => 'Désolé, l\'identfiant que vous avez indiqué est invalide sur ce site.',
 
@@ -438,17 +403,17 @@ return array(
 	'adduser:ok' => "Vous avez bien ajouté un nouvel utilisateur.",
 	'adduser:bad' => "Le nouvel utilisateur n'a pas pu être créé.",
 
-	'user:set:name' => "Nom",
+	'user:set:name' => "Paramètres du nom du compte",
 	'user:name:label' => "Nom",
 	'user:name:success' => "Votre nom a été changé avec succès.",
-	'user:name:fail' => "Impossible de changer votre nom. Assurez-vous que votre nom n'est pas trop long et essayez à nouveau.",
-	'user:username:success' => "Le nom d'utilisateur a bien été modifié.",
+	'user:name:fail' => "Impossible de changer le nom affiché.",
+	'user:username:success' => "L'identifiant a bien été modifié.",
 	'user:username:fail' => "Le nom d'utlisateur n'a pas pu être modifié.",
 
 	'user:set:password' => "Mot de passe",
 	'user:current_password:label' => 'Mot de passe actuel',
 	'user:password:label' => "Nouveau mot de passe",
-	'user:password2:label' => "Nouveau mot de passe (confirmation)",
+	'user:password2:label' => "Nouveau mot de passe - confirmation",
 	'user:password:success' => "Le mot de passe a bien été modifié",
 	'user:password:fail' => "Impossible de modifier votre mot de passe.",
 	'user:password:fail:notsame' => "Les deux mots de passe ne correspondent pas !",
@@ -463,11 +428,11 @@ return array(
 	'user:language:fail' => "Votre préférence de langue n'a pas pu être enregistré.",
 
 	'user:username:notfound' => 'Identifiant %s non trouvé.',
-	'user:username:help' => 'Soyez bien conscient que le changement de nom d\'utilisateur va modifier tous les liens dynamiques relatifs à ce compte utilisateur',
+	'user:username:help' => 'Soyez bien conscient que le changement de l\'identifiant va modifier tous les liens dynamiques relatifs à ce compte utilisateur',
 
 	'user:password:lost' => 'Mot de passe perdu',
-	'user:password:hash_missing' => 'Nous regrettons de devoir vous demander de réinitialiser votre mot de passe.  La sécurité des mots de passe a été améliorée sur le site, mais il n\'a pas été possible de conserver les mots de passe lors de cette opération.',
-	'user:password:changereq:success' => 'Vous avez demandé un nouveau mot de passe, un email de confirmation vous a été envoyé',
+	'user:password:hash_missing' => 'Nous regrettons de devoir vous demander de réinitialiser votre mot de passe.  La sécurité des mots de passe a été améliorée sur le site, mais il n\'est pas possible de conserver les mots de passe lors de cette opération.',
+	'user:password:changereq:success' => 'Vous avez demandé un nouveau mot de passe, un e-mail de confirmation vient de vous être envoyé',
 	'user:password:changereq:fail' => 'Impossible de demander un nouveau mot de passe.',
 
 	'user:password:text' => 'Pour générer un nouveau mot de passe, entrez votre identifiant ou votre e-mail ci-dessous, puis cliquez sur le bouton.',
@@ -516,26 +481,26 @@ return array(
 	'admin:performance' => 'Performance',
 	'admin:performance:label:generic' => 'Générique',
 	'admin:performance:generic:description' => 'Voici une liste de suggestions / valeurs qui pourraient aider aux réglages de performance de votre site',
-	'admin:performance:simplecache' => 'Cache simple (Simplecache)',
+	'admin:performance:simplecache' => 'Cache simple - Simplecache',
 	'admin:performance:simplecache:settings:warning' => "Il est recommandé de configurer le réglage de simplecache dans le fichier settings.php.
 Configurer simplecache dans le fichier settings.php améliore les performances du cache.
 Cela permet à Elgg d'éviter la connexion à la base de données lors de l'envoi de fichiers JavaScript et CSS mis en cache",
 	'admin:performance:systemcache' => 'Systemcache',
 	'admin:performance:apache:mod_cache' => 'Apache mod_cache',
-	'admin:performance:apache:mod_cache:warning' => 'Le module mod_cache fournit un schéma de cache compatible HTTP. Ceci signifie que les fichiers seront mis en cache en fonction
+	'admin:performance:apache:mod_cache:warning' => 'Le module mod_cache fournit des schémas de mise en cache compatibles HTTP. Ceci signifie que les fichiers seront mis en cache en fonction
 d\'une instruction qui spécifie combien de temps une page peut être considérée comme "fraîche".',
 	'admin:performance:php:open_basedir' => 'PHP open_basedir',
 	'admin:performance:php:open_basedir:not_configured' => 'Aucune limite n\'a été définie',
 	'admin:performance:php:open_basedir:warning' => 'Un faible nombre de limitations de open_basedir sont effectives, ceci pourrait affecter les performances.',
 	'admin:performance:php:open_basedir:error' => 'Un grand nombre de limitations de open_basedir sont effectives, ceci va probablement affecter les performances.',
 	'admin:performance:php:open_basedir:generic' => 'Avec open_basedir chaque accès à un fichier sera vérifié auprès de la liste des limitations. Comme Elgg a un grand nombre
-d\'accès aux fichiers cela va avoir un effet négatif sur les performances. D\'autre part l\'opcache de PHP ne peut plus mettre en cache les chemins de fichiers dans la mémoire et doit résoudre cela lors de chaque accès.',
+d\'accès aux fichiers cela va avoir un effet négatif sur les performances. D\'autre part l\'opcache de PHP ne peut plus mettre en cache les chemins de fichiers dans la mémoire et doit les résoudre lors de chaque accès.',
 	
 	'admin:statistics' => 'Statistiques',
 	'admin:server' => 'Serveur',
 	'admin:cron' => 'Cron',
 	'admin:cron:record' => 'Dernières tâches planifiées',
-	'admin:cron:period' => 'Intervalle de la table de planification (cron)',
+	'admin:cron:period' => 'Intervalle Cron',
 	'admin:cron:friendly' => 'Dernière exécution',
 	'admin:cron:date' => 'Date et heure',
 	'admin:cron:msg' => 'Message',
@@ -564,8 +529,8 @@ d\'accès aux fichiers cela va avoir un effet négatif sur les performances. D\'
 	'admin:users:unvalidated' => 'Non validés',
 	'admin:users:unvalidated:no_results' => 'Aucun utilisateur non validé.',
 	'admin:users:unvalidated:registered' => 'Enregistré : %s',
-	'admin:users:unvalidated:change_email' => 'Modifier l\'adresse email',
-	'admin:users:unvalidated:change_email:user' => 'Modifier l\'adresse email pour : %s',
+	'admin:users:unvalidated:change_email' => 'Modifier l\'adresse e-mail',
+	'admin:users:unvalidated:change_email:user' => 'Modifier l\'adresse e-mail pour : %s',
 	
 	'admin:configure_utilities:maintenance' => 'Mode de maintenance',
 	'admin:upgrades' => 'Mises à niveau',
@@ -581,7 +546,7 @@ d\'accès aux fichiers cela va avoir un effet négatif sur les performances. D\'
 	'admin:upgrades:menu:run_single' => 'Exécuter cette mise à niveau',
 	'admin:upgrades:run' => 'Lancer les mises à niveau maintenant',
 	'admin:upgrades:error:invalid_upgrade' => 'L\'entité %s n\'existe pas ou n\'est pas une instance valide de ElggUpgrade',
-	'admin:upgrades:error:invalid_batch' => 'L\'exécution du traitement par lot (batch) pour la mise à niveau %s (%s) n\'a pas pu être instancié',
+	'admin:upgrades:error:invalid_batch' => 'L\'exécution du batch - traitement par lot pour la mise à niveau %s (%s) n\'a pas pu être instancié',
 	'admin:upgrades:completed' => 'Mise à niveau "%s" terminée à %s',
 	'admin:upgrades:completed:errors' => 'Mise à niveau "%s" terminée à %s mais a rencontré %s erreurs',
 	'admin:upgrades:failed' => 'La mise à niveau "%s" a échoué',
@@ -616,10 +581,10 @@ d\'accès aux fichiers cela va avoir un effet négatif sur les performances. D\'
 	'admin:widget:content_stats:help' => 'Suivez le contenu créé par les membres',
 	'admin:widget:cron_status' => 'Statut du cron',
 	'admin:widget:cron_status:help' => 'Affiche le statut des dernières tâches cron terminées',
-	'admin:statistics:numentities' => 'Statistiques de contenu',
+	'admin:statistics:numentities' => 'Statistiques des contenus',
 	'admin:statistics:numentities:type' => 'Type de contenu',
 	'admin:statistics:numentities:number' => 'Nombre',
-	'admin:statistics:numentities:searchable' => 'Entités recherchables',
+	'admin:statistics:numentities:searchable' => 'Entités consultables',
 	'admin:statistics:numentities:other' => 'Autre entités',
 
 	'admin:widget:admin_welcome' => 'Bienvenue',
@@ -627,13 +592,13 @@ d\'accès aux fichiers cela va avoir un effet négatif sur les performances. D\'
 	'admin:widget:admin_welcome:intro' =>
 'Bienvenue sur Elgg ! Vous êtes actuellement sur le tableau de bord de l\'administration. Il permet de suivre ce qui se passe sur le site.',
 
-	'admin:widget:admin_welcome:registration' => "L'inscription de nouveaux utilisateurs est actuellement désactivée ! Vous pouvez activer cela sur la page %s.",
+	'admin:widget:admin_welcome:registration' => "L'inscription de nouveaux utilisateurs est actuellement désactivée ! Vous pouvez l'activer sur la page %s.",
 	'admin:widget:admin_welcome:admin_overview' =>
 "La navigation dans la zone d'administration se fait à l'aide du menu de droite. Il est organisé en trois parties :
 	<dl>
-		<dt>Administrer</dt><dd>Les tâches de tous les jours comme suivre le contenu signalé, vérifier qui est en ligne, et afficher des statistiques.</dd>
-		<dt>Configurer</dt><dd>Les tâches occasionnelles comme la définition du nom du site ou l'activation d'un plugin.</dd>
-		<dt>Information</dt><dd>Informations à propos de votre site, telles que des statistiques.</dd>
+		<dt>Administrer</dt><dd>Des tâches de base telles que suivre le contenu signalé et activer des plugins.</dd>
+		<dt>Configurer</dt><dd>Des tâches occasionnelles comme définir le nom du site ou les paramètres d'un plugin.</dd>
+		<dt>Information</dt><dd>Des informations à propos de votre site, telles que des statistiques.</dd>
 		<dt>Développer</dt><dd>Pour les développeurs qui créent des plugins ou conçoivent des thèmes. (Nécessite le plugin developer).</dd>
 	</dl>
 ",
@@ -662,8 +627,8 @@ d\'accès aux fichiers cela va avoir un effet négatif sur les performances. D\'
 	'admin:plugins:category:active' => 'Plugins actifs',
 	'admin:plugins:category:inactive' => 'Plugins inactifs',
 	'admin:plugins:category:admin' => 'Admin',
-	'admin:plugins:category:bundled' => 'Groupés',
-	'admin:plugins:category:nonbundled' => 'Non-groupés',
+	'admin:plugins:category:bundled' => 'Inclus',
+	'admin:plugins:category:nonbundled' => 'Tierce-partie',
 	'admin:plugins:category:content' => 'Contenu',
 	'admin:plugins:category:development' => 'Développement',
 	'admin:plugins:category:enhancement' => 'Améliorations',
@@ -679,23 +644,25 @@ d\'accès aux fichiers cela va avoir un effet négatif sur les performances. D\'
 	'admin:plugins:markdown:unknown_plugin' => 'Plugin inconnu.',
 	'admin:plugins:markdown:unknown_file' => 'Fichier inconnu.',
 
-	'admin:notices:delete_all' => 'Supprimez les %s notices d\'information',
+	'admin:notices:delete_all' => 'Supprimez les %s notes d\'information',
 	'admin:notices:could_not_delete' => 'Impossible de supprimer la note d\'information.',
 	'item:object:admin_notice' => 'Note d\'administration',
-	'collection:object:admin_notice' => 'Informations admin',
+	'collection:object:admin_notice' => 'Notes d\'administration',
 
-	'admin:options' => 'Options Admin',
+	'admin:options' => 'Options d\'administration',
 
 	'admin:security' => 'Sécurité',
-	'admin:security:information' => 'Information',
+	'admin:security:information' => 'Informations',
 	'admin:security:information:description' => 'Sur cette page vous pouvez trouver une liste de recommandations de sécurité.',
 	'admin:security:information:https' => 'Est-ce que le site est protégé par HTTPS',
-	'admin:security:information:https:warning' => "Il est recommandé de protéger votre site en utilisant HTTPS, ceci aide à éviter que les données (par ex. les mots de passe) ne soient épiée via la connexion internet.",
+	'admin:security:information:https:warning' => "Il est recommandé de protéger votre site en utilisant HTTPS, ceci aide à éviter que les données 
+(par ex. les mots de passe) ne soient épiées via la connexion internet.",
 	'admin:security:information:wwwroot' => 'Le répertoire principal du site est inscriptible',
 	'admin:security:information:wwwroot:error' => "Il est recommandé d'installer Elgg dans un répertoire qui n'est pas inscriptible par votre serveur web.
 Des visiteurs mal intentionnés pourraient placer du code non souhaité dans votre site.",
 	'admin:security:information:validate_input' => 'Validation des entrées',
-	'admin:security:information:validate_input:error' => "Quelques plugins ont désactivé la validation des saisies sur votre site, ce qui permet aux utilisateurs d'envoyer du contenu potentiellement dangereux (par ex. cross-site-scripting, etc.)",
+	'admin:security:information:validate_input:error' => "Certains plugins ont désactivé la validation des saisies sur votre site, ce qui permet aux utilisateurs 
+d'envoyer du contenu potentiellement dangereux (par ex. cross-site-scripting, etc.)",
 	'admin:security:information:password_length' => 'Longueur minimale du mot de passe',
 	'admin:security:information:password_length:warning' => "Il est recommandé d'avoir une longueur de mot de passe d'au moins 6 caractères.",
 	'admin:security:information:username_length' => 'Longueur minimale du nom d’utilisateur',
@@ -703,57 +670,58 @@ Des visiteurs mal intentionnés pourraient placer du code non souhaité dans vot
 	'admin:security:information:php:session_gc' => "Nettoyage des sessions PHP",
 	'admin:security:information:php:session_gc:chance' => "Probabilité de nettoyage : %s %%",
 	'admin:security:information:php:session_gc:lifetime' => "Durée de vie d'une session %s secondes",
-	'admin:security:information:php:session_gc:error' => "Il est recommandé de définir 'session.gc_probability' et 'session.gc_divisor' dans vos paramètres PHP, ceci va nettoyer les sessions expirées de votre base de données et empêcher les utilisateurs d'utiliser d'anciennes sessions.",
-	'admin:security:information:htaccess:hardening' => "Sécurisation de l’accès aux fichiers via .htaccess",
-	'admin:security:information:htaccess:hardening:help' => "Dans le fichier .htaccess il est possible de bloquer l'accès à certains fichiers pour augmenter la sécurité de votre site. Pöur plus d'informations regardez dans votre fichier .htaccess.",
+	'admin:security:information:php:session_gc:error' => "Il est recommandé de définir 'session.gc_probability' et 'session.gc_divisor' dans vos paramètres PHP, ceci va nettoyer 
+les sessions expirées de votre base de données et empêcher les utilisateurs de réutiliser d'anciennes sessions.",
+	'admin:security:information:htaccess:hardening' => "Sécurisation des accès aux fichiers via .htaccess",
+	'admin:security:information:htaccess:hardening:help' => "Dans le fichier .htaccess il est possible de bloquer l'accès à certains fichiers pour augmenter la sécurité de votre site. Pour plus d'informations regardez dans votre fichier .htaccess.",
 	
 	'admin:security:settings' => 'Paramètres',
 	'admin:security:settings:description' => 'Sur cette page vous pouvez configurer quelques fonctionnalités de sécurité. Veuillez lire attentivement les paramètres.',
 	'admin:security:settings:label:hardening' => 'Sécurisation',
 	'admin:security:settings:label:account' => 'Compte',
 	'admin:security:settings:label:notifications' => 'Notifications',
-	'admin:security:settings:label:site_secret' => 'Secret du site',
+	'admin:security:settings:label:site_secret' => 'Clef secrète du site',
 	
-	'admin:security:settings:notify_admins' => 'Notifier tous les administrateurs du site quand un admin est ajouté ou retiré',
-	'admin:security:settings:notify_admins:help' => 'Ceci enverra une notification à tous les administrateurs du site lorsque l\'un des admins ajoute/supprime un administrateur du site.',
+	'admin:security:settings:notify_admins' => 'Notifier tous les administrateurs du site quand un administrateur est ajouté ou retiré',
+	'admin:security:settings:notify_admins:help' => 'Ceci enverra une notification à tous les administrateurs du site lorsque l\'un des administrateurs ajoute ou supprime un administrateur du site.',
 	
-	'admin:security:settings:notify_user_admin' => 'Notifie l\'utilisateur lorsqu\'un admin est ajouté ou retiré',
-	'admin:security:settings:notify_user_admin:help' => 'Ceci enverra une notification à l\'utilisateur que le rôle d\'administrateur à été ajouté à/retiré de son compte.',
+	'admin:security:settings:notify_user_admin' => 'Notifie l\'utilisateur quand le rôle d\'administrateur est ajouté ou retiré',
+	'admin:security:settings:notify_user_admin:help' => 'Ceci enverra une notification à l\'utilisateur lui indiquant que le rôle d\'administrateur à été ajouté ou retiré de son compte.',
 	
-	'admin:security:settings:notify_user_ban' => 'Notifie l\'utilisateur lorsque son compte est banni/réintégré',
-	'admin:security:settings:notify_user_ban:help' => 'Ceci enverra une notification à l\'utilisateur indiquant que son compte a été banni/réintégré.',
+	'admin:security:settings:notify_user_ban' => 'Notifie l\'utilisateur lorsque son compte est banni (ou réintégré)',
+	'admin:security:settings:notify_user_ban:help' => 'Ceci enverra une notification à l\'utilisateur indiquant que son compte a été banni (ou réintégré).',
 	
-	'admin:security:settings:notify_user_password' => 'Notifie les utilisateurs lorsqu\'ils modifient leur mot de passe',
+	'admin:security:settings:notify_user_password' => 'Notifier les utilisateurs lorsqu\'ils modifient leur mot de passe',
 	'admin:security:settings:notify_user_password:help' => 'Ceci enverra une notification aux utilisateurs quand ils modifient leur mot de passe.',
 	
-	'admin:security:settings:protect_upgrade' => 'Protéger upgrade.php',
+	'admin:security:settings:protect_upgrade' => 'Protéger l\'accès à upgrade.php',
 	'admin:security:settings:protect_upgrade:help' => 'Ceci va protéger upgrade.php de sorte qu\'il soit nécessaire de disposer d\'un jeton valide ou d\'être un administrateur du site.',
-	'admin:security:settings:protect_upgrade:token' => 'Afin de pouvoir utiliser upgrade.php hors authentification ou en tant que simple membre, il est nécessaire d\'utiliser l\'URL suivante :',
+	'admin:security:settings:protect_upgrade:token' => 'Afin de pouvoir utiliser upgrade.php hors authentification, ou en tant que membre non adminstrateur, il est nécessaire d\'utiliser l\'URL suivante :',
 	
-	'admin:security:settings:protect_cron' => 'Protéger les URLs du cron /cron',
+	'admin:security:settings:protect_cron' => 'Protéger les URLs du cron /cron/*',
 	'admin:security:settings:protect_cron:help' => 'Ceci va protéger les URLs /cron avec un jeton, le cron ne s\'exécutera que si un jeton valide est fourni.',
-	'admin:security:settings:protect_cron:token' => 'Afin de pouvoir utiliser les URLs /cron les jetons suivants doivent être utilisés. Veuillez noter que chaque intervale dispose de son propre jeton.',
-	'admin:security:settings:protect_cron:toggle' => 'Afficher/cacher les URLs du cron',
+	'admin:security:settings:protect_cron:token' => 'Afin de pouvoir utiliser les URLs /cron les jetons suivants doivent être utilisés. Veuillez noter que chaque intervalle dispose de son propre jeton.',
+	'admin:security:settings:protect_cron:toggle' => 'Afficher ou cacher les URLs du cron',
 	
-	'admin:security:settings:disable_password_autocomplete' => 'Désactiver l\'autocomplétion sur les champs mot de passe',
+	'admin:security:settings:disable_password_autocomplete' => 'Désactiver l\'autocomplétion sur les champs de mot de passe',
 	'admin:security:settings:disable_password_autocomplete:help' => 'Les données saisies dans ces champs seront mises en cache par le navigateur. Un attaquant qui a accès au navigateur de la victime pourrait subtiliser ces informations. Ceci est particulièrement important si l\'application est utilisée habituellement depuis des ordinateurs partagés tels que des cybercafés ou des terminaux d\'aéroports. Si vous désactivez ceci, les outils de gestion des mots de passe ne pourront plus renseigner automatiquement ces champs. Le support pour l\'attribut autocomplete peut dépendre des navigateurs.',
 	
-	'admin:security:settings:email_require_password' => 'Demander le mot de passe pour changer l\'adresse email',
-	'admin:security:settings:email_require_password:help' => 'Quand un utilisateur souhaite changer son adresse email, cette option impose qu\'il fournisse son mot de passe actuel.',
+	'admin:security:settings:email_require_password' => 'Demander le mot de passe pour changer l\'adresse e-mail',
+	'admin:security:settings:email_require_password:help' => 'Quand les utilisateurs souhaitent changer leur adresse e-mail, cette option impose qu\'ils fournissent leur mot de passe actuel.',
 	
-	'admin:security:settings:email_require_confirmation' => 'Demander une confirmation lors de la modification de l\'adresse email.',
-	'admin:security:settings:email_require_confirmation:help' => 'La nouvelle adresse email doit être confirmée avant que la modification soit effective. Après une modification réussie une notification est envoyée à l\'ancienne adresse email.',
+	'admin:security:settings:email_require_confirmation' => 'Demander une confirmation lors de la modification de l\'adresse e-mail.',
+	'admin:security:settings:email_require_confirmation:help' => 'La nouvelle adresse e-mail doit être confirmée avant que la modification soit effective. Après une modification réussie une notification est envoyée à l\'ancienne adresse e-mail.',
 
 	'admin:security:settings:session_bound_entity_icons' => 'Icônes d\'entités liées aux sessions',
-	'admin:security:settings:session_bound_entity_icons:help' => 'Les icônes d’entité peuvent être liées par défaut à une session. Cela signifie que les URL générées contiennent également des informations sur la session en cours. 
-Le fait d’avoir des icônes liées à la session rend les URL des icônes non partageables entre les sessions. L’effet secondaire est que la mise en cache de ces URL ne bénéficiera qu\'à la session active.',
+	'admin:security:settings:session_bound_entity_icons:help' => 'Les icônes d’entité peuvent être liées par défaut à une session. Cela signifie que les URLs générées contiennent également des informations sur la session en cours. 
+Le fait d’avoir des icônes liées à la session rend les URLs des icônes non partageables entre les sessions. L’effet secondaire est que la mise en cache de ces URLs ne bénéficiera qu\'à la session active.',
 	
 	'admin:security:settings:site_secret:intro' => 'Elgg utilise une clef pour créer des jetons de sécurité pour diverses finalités.',
 	'admin:security:settings:site_secret:regenerate' => "Régénérer la clef secrète du site",
-	'admin:security:settings:site_secret:regenerate:help' => "Note : la régénération de la clef secrète du site peut gêner quelques utilisateurs en invalidant les jetons utilisés pour les cookies \"se souvenir de moi\", les emails de validation, les codes d'invitation, etc.",
+	'admin:security:settings:site_secret:regenerate:help' => "Note : la régénération de la clef secrète du site peut gêner quelques utilisateurs en invalidant les jetons utilisés pour les cookies \"se souvenir de moi\", les e-mails de validation, les codes d'invitation, etc.",
 	
 	'admin:security:settings:minusername' => "Longueur minimale du nom d’utilisateur",
-	'admin:security:settings:minusername:help' => "Nombre minimal de caractères requis pour un nom d'utilisateur",
+	'admin:security:settings:minusername:help' => "Nombre minimal de caractères requis pour un identifiant",
 	
 	'admin:security:settings:min_password_length' => "Longueur minimale du mot de passe",
 	'admin:security:settings:min_password_length:help' => "Nombre minimal de caractères requis pour un mot de passe",
@@ -770,8 +738,8 @@ Le fait d’avoir des icônes liées à la session rend les URL des icônes non 
 	'admin:security:settings:min_password_special' => "Nombre minimal de caractères spéciaux requis pour un mot de passe",
 	'admin:security:settings:min_password_special:help' => "Configurer le nombre minimal de caractères spéciaux (!@$%^&*()<>,.?/[]{}-=_+) qui devraient être présents dans un mot de passe. 0 pour aucun, vide pour aucune exigence.",
 	
-	'admin:site:secret:regenerated' => "Votre clef secrète du site a bien été régénérée",
-	'admin:site:secret:prevented' => "La régénération de la clef secrète du site a été bloquée",
+	'admin:site:secret:regenerated' => "La clef secrète du site a bien été régénérée",
+	'admin:site:secret:prevented' => "La régénération de la clef secrète du site a été empêchée",
 	
 	'admin:notification:make_admin:admin:subject' => 'Un nouvel administrateur du site a été ajouté pour %s',
 	'admin:notification:make_admin:admin:body' => '%s a rendu %s administrateur du site %s.
@@ -780,18 +748,18 @@ Pour voir le profil du nouvel administrateur :
 %s',
 	
 	'admin:notification:make_admin:user:subject' => 'Vous avez été ajouté comme administrateur du site %s',
-	'admin:notification:make_admin:user:body' => '%s vous a rendu administrateur du site %s.
+	'admin:notification:make_admin:user:body' => '%s vous a rendu administrateur de %s.
 
 Pour vous rendre sur le site :
 %s',
-	'admin:notification:remove_admin:admin:subject' => 'Un administrator du site a été retiré de %s',
+	'admin:notification:remove_admin:admin:subject' => 'Un administrateur du site a été retiré de %s',
 	'admin:notification:remove_admin:admin:body' => '%s a retiré %s des administrateurs de %s.
 
 Pour voir le profil de l\'ancien administrateur :
 %s',
 	
 	'admin:notification:remove_admin:user:subject' => 'Vous ne faites plus partie des administrateurs de %s',
-	'admin:notification:remove_admin:user:body' => '%s vous a retiré les droits d\'administrateur de %s.
+	'admin:notification:remove_admin:user:body' => '%s vous a retiré des administrateurs de %s.
 
 Pour vous rendre sur le site :
 %s',
@@ -808,7 +776,7 @@ Pour vous rendre sur le site :
 %s',
 	
 	'user:notification:password_change:subject' => 'Votre mot de passe a été modifié !',
-	'user:notification:password_change:body' => "Votre mot de passe '%s' a été modifié ! Si vous êtes à l'origine de cette modification alors tout va bien, veuillez ne pas tenir compte de ce message.
+	'user:notification:password_change:body' => "Votre mot de passe sur '%s' a été modifié ! Si vous êtes à l'origine de cette modification alors tout va bien, veuillez ne pas tenir compte de ce message.
 
 Si vous n'êtes pas à l'origine de cette modification, veuillez réinitialiser votre mot de passe ici :
 %s
@@ -819,7 +787,7 @@ Ou contactez un administrateur du site :
 	'admin:notification:unvalidated_users:subject' => "Utilisateurs en attente d'approbation sur %s",
 	'admin:notification:unvalidated_users:body' => "%d utilisateurs de '%s' attendent l'approbation par un administrateur.
 
-Voyez la liste complète des utilisateurs ici :
+Voir la liste complète des utilisateurs :
 %s",
 
 /**
@@ -834,7 +802,7 @@ Voyez la liste complète des utilisateurs ici :
 	'plugins:usersettings:save:ok' => "Les paramètres utilisateur du plugin %s ont bien été enregistrés.",
 	'plugins:usersettings:save:fail' => "Il y a eu un problème lors de l'enregistrement des paramètres utilisateur du plugin %s.",
 	
-	'item:object:plugin' => 'Plugins',
+	'item:object:plugin' => 'Plugin',
 	'collection:object:plugin' => 'Plugins',
 	
 	'plugins:settings:remove:menu:text' => "Supprimer tous les paramètres",
@@ -845,7 +813,7 @@ Voyez la liste complète des utilisateurs ici :
 	'admin:plugins:deactivate_all' => 'Tout désactiver',
 	'admin:plugins:activate' => 'Activer',
 	'admin:plugins:deactivate' => 'Désactiver',
-	'admin:plugins:description' => "Ce menu vous permet de contrôler et de configurer les outils installés sur votre site.",
+	'admin:plugins:description' => "Ce panneau d'administration vous permet de contrôler et de configurer les outils installés sur votre site.",
 	'admin:plugins:opt:linktext' => "Configurer les outils...",
 	'admin:plugins:opt:description' => "Configurer les outils installés sur le site.",
 	'admin:plugins:label:id' => "ID",
@@ -853,7 +821,7 @@ Voyez la liste complète des utilisateurs ici :
 	'admin:plugins:label:authors' => "Auteurs",
 	'admin:plugins:label:copyright' => "Copyright",
 	'admin:plugins:label:categories' => 'Catégories',
-	'admin:plugins:label:licence' => "License",
+	'admin:plugins:label:licence' => "Licence",
 	'admin:plugins:label:website' => "URL",
 	'admin:plugins:label:info' => "Informations",
 	'admin:plugins:label:files' => "Fichiers",
@@ -872,13 +840,13 @@ Voyez la liste complète des utilisateurs ici :
 	'admin:plugins:warning:unmet_dependencies' => 'Ce plugin a des dépendances non satisfaites et ne peut pas être activé. Vérifiez les dépendances dans la partie "Plus d\'informations".',
 	'admin:plugins:warning:invalid' => 'Ce plugin est invalide : %s',
 	'admin:plugins:warning:invalid:check_docs' => 'Vérifiez <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">la documentation de Elgg</a> pour des astuces de débogage.',
-	'admin:plugins:cannot_activate' => 'Activation impossible',
+	'admin:plugins:cannot_activate' => 'impossible d\'activer',
 	'admin:plugins:cannot_deactivate' => 'impossible de désactiver',
 	'admin:plugins:already:active' => 'Le (ou les) plugin sélectionné est déjà activé.',
 	'admin:plugins:already:inactive' => 'Le (ou les) plugin sélectionné est déjà désactivé.',
 
-	'admin:plugins:set_priority:yes' => "%s a été réordonné.",
-	'admin:plugins:set_priority:no' => "Impossible de réordonner %s.",
+	'admin:plugins:set_priority:yes' => "L'ordre de %s a été modifié.",
+	'admin:plugins:set_priority:no' => "Impossible de modifier l'ordre de %s.",
 	'admin:plugins:deactivate:yes' => "Désactiver %s.",
 	'admin:plugins:deactivate:no' => "Impossible de désactiver %s.",
 	'admin:plugins:deactivate:no_with_msg' => "Impossible de désactiver %s. Erreur : %s",
@@ -886,24 +854,24 @@ Voyez la liste complète des utilisateurs ici :
 	'admin:plugins:activate:no' => "Impossible d'activer %s.",
 	'admin:plugins:activate:no_with_msg' => "Impossible d'activer %s. Erreur : %s",
 	'admin:plugins:categories:all' => 'Toutes les catégories',
-	'admin:plugins:plugin_website' => 'Site du plugin',
+	'admin:plugins:plugin_website' => 'Site web du plugin',
 	'admin:plugins:author' => '%s',
 	'admin:plugins:version' => 'Version %s',
 	'admin:plugin_settings' => 'Paramètres du plugin',
-	'admin:plugins:warning:unmet_dependencies_active' => 'Ce plugin est actif, mais a des dépendances non satisfaites. Cela peut poser des problèmes. Voir "plus d\'informations" ci-dessous pour plus de détails.',
+	'admin:plugins:warning:unmet_dependencies_active' => 'Ce plugin est actif, mais a des dépendances non satisfaites. Ceci peut poser des problèmes. Lisez "plus d\'informations" ci-dessous pour plus de détails.',
 
-	'admin:statistics:description' => "Ceci est un aperçu des statistiques du site. Si vous avez besoin de statistiques plus détaillées, une version professionnelle d'administration est disponible.",
+	'admin:statistics:description' => "Ceci est un aperçu des statistiques du site. Si vous avez besoin de statistiques plus détaillées, une fonctionnalité d'administration professionnelle est disponible.",
 	'admin:statistics:opt:description' => "Afficher les statistiques sur les utilisateurs et les objets du site.",
 	'admin:statistics:opt:linktext' => "Voir les statistiques...",
 	'admin:statistics:label:user' => "Statistiques des utilisateurs",
 	'admin:statistics:label:numentities' => "Entités sur le site",
-	'admin:statistics:label:numusers' => "Nombre d'utilisateurs",
-	'admin:statistics:label:numonline' => "Nombre d'utilisateurs en ligne",
+	'admin:statistics:label:numusers' => "Nombre de comptes utilisateur",
+	'admin:statistics:label:numonline' => "Nombre de membres en ligne",
 	'admin:statistics:label:onlineusers' => "Utilisateurs en ligne en ce moment",
 	'admin:statistics:label:admins'=>"Administrateurs",
 	'admin:statistics:label:version' => "Version de Elgg",
-	'admin:statistics:label:version:release' => "Version majeure (release)",
-	'admin:statistics:label:version:version' => "Version",
+	'admin:statistics:label:version:release' => "Version Majeure",
+	'admin:statistics:label:version:version' => "Version de la base de données",
 	'admin:statistics:label:version:code' => "Version du code",
 
 	'admin:server:label:elgg' => 'Elgg',
@@ -915,7 +883,7 @@ Voyez la liste complète des utilisateurs ici :
 	'admin:server:label:log_location' => 'Emplacement du journal',
 	'admin:server:label:php_version' => 'Version de PHP',
 	'admin:server:label:php_version:required' => 'Elgg requiert au moins la version PHP 7.1',
-	'admin:server:label:php_ini' => 'Emplacement du fichier PHP .ini',
+	'admin:server:label:php_ini' => 'Emplacement du fichier .ini de PHP',
 	'admin:server:label:php_log' => 'Journal PHP',
 	'admin:server:label:mem_avail' => 'Mémoire disponible',
 	'admin:server:label:mem_used' => 'Mémoire utilisée',
@@ -925,7 +893,7 @@ Voyez la liste complète des utilisateurs ici :
 	'admin:server:warning:post_max_too_small' => '(Remarque : la valeur de post_max_size doit être supérieure à cette valeur pour supporter des envois de cette taille)',
 	'admin:server:label:memcache' => 'Memcache',
 	'admin:server:memcache:inactive' => '
-		Memcache n\'est pas installé sur ce serveur ou n\'a pas encore été configuré dans la configuration de Elgg.
+		Memcache n\'est pas en place sur ce serveur ou n\'a pas encore été configuré dans la configuration de Elgg.
 		Pour des performances améliorées, il est recommandé que vous activiez et configuriez memcache (ou redis).
 ',
 
@@ -937,7 +905,7 @@ Voyez la liste complète des utilisateurs ici :
 
 	'admin:server:label:opcache' => 'OPcache',
 	'admin:server:opcache:inactive' => '
-		OPcache n\'est pas installé sur ce serveur ou n\'a pas encore été activé.
+		OPcache n\'est pas disponible sur ce serveur ou n\'a pas encore été activé.
 		Pour des performances améliorées, il est recommandé que vous activiez et configuriez OPcache.
 ',
 	
@@ -953,14 +921,14 @@ Voyez la liste complète des utilisateurs ici :
 	'admin:server:requirements:database:client:required' => "Elgg a besoin de pdo_mysql pour se connecter au serveur de base de données",
 	
 	'admin:user:label:search' => "Trouver des utilisateurs :",
-	'admin:user:label:searchbutton' => "Chercher",
+	'admin:user:label:searchbutton' => "Rechercher",
 
-	'admin:user:ban:no' => "Cet utilisateur ne peut pas être banni",
+	'admin:user:ban:no' => "Impossible de bannir l'utilisateur",
 	'admin:user:ban:yes' => "Utilisateur banni.",
 	'admin:user:self:ban:no' => "Vous ne pouvez pas vous bannir vous-même",
-	'admin:user:unban:no' => "Cet utilisateur ne peut pas être réintégré",
+	'admin:user:unban:no' => "Impossible de réintégrer cet utilisateur",
 	'admin:user:unban:yes' => "Utilisateur réintégré.",
-	'admin:user:delete:no' => "Cet utilisateur ne peut pas être supprimé",
+	'admin:user:delete:no' => "Impossible de supprimer l'utilisateur",
 	'admin:user:delete:yes' => "L'utilisateur %s a été supprimé",
 	'admin:user:self:delete:no' => "Vous ne pouvez pas supprimer votre propre compte",
 
@@ -985,27 +953,27 @@ Voyez la liste complète des utilisateurs ici :
 	'admin:configure_utilities:default_widgets' => 'Widgets par défaut',
 	'admin:default_widgets:unknown_type' => 'Type de widget Inconnu',
 	'admin:default_widgets:instructions' => 'Ajoutez, supprimez, positionnez et configurez les widgets par défaut pour la page de widgets sélectionnée.
-Ces changements ne concerneront que les nouveaux utilisateurs du site. ',
+Ces changements ne concerneront que les nouveaux utilisateurs. ',
 
 	'admin:robots.txt:instructions' => "Éditez ci-dessous le fichier robots.txt du site",
 	'admin:robots.txt:plugins' => "Les plugins ajoutent les lignes suivantes au fichier robots.txt ",
 	'admin:robots.txt:subdir' => "L'outil robots.txt ne fonctionnera peut-être pas car Elgg est installé dans un sous-répertoire",
-	'admin:robots.txt:physical' => "La configuration de robots.txt ne fonctionnera pas car un fichier robots.txt est physiquement présent",
+	'admin:robots.txt:physical' => "L'outil de configuration de robots.txt ne fonctionnera pas car un fichier robots.txt est physiquement présent",
 
 	'admin:maintenance_mode:default_message' => 'Le site est temporairement fermé pour cause de maintenance',
 	'admin:maintenance_mode:instructions' => 'Le mode maintenance devrait être utilisé pour les mises à niveau et autres changements majeurs du site.
-Quand il est activé, seuls les administrateurs peuvent s\'identifier et naviguer sur le site. ',
-	'admin:maintenance_mode:mode_label' => 'Mode maintenance',
-	'admin:maintenance_mode:message_label' => 'Message affiché aux utilisateurs lorsque le mode maintenance est activé',
+		Quand il est activé, seuls les administrateurs peuvent s\'identifier et naviguer sur le site.',
+	'admin:maintenance_mode:mode_label' => 'Mode de maintenance',
+	'admin:maintenance_mode:message_label' => 'Message affiché aux utilisateurs lorsque le mode de maintenance est activé',
 	'admin:maintenance_mode:saved' => 'Les paramètres du mode maintenance ont bien été enregistrés.',
 	'admin:maintenance_mode:indicator_menu_item' => 'Le site est en maintenance. ',
-	'admin:login' => 'Connexion Admin',
+	'admin:login' => 'Connexion Administrateur',
 
 /**
  * User settings
  */
 
-	'usersettings:description' => "Le panneau de configuration de votre compte vous permet de contrôler tous vos paramètres personnels, de la gestion de votre compte aux fonctionnement des outils du site. Choisissez une option ci-dessous pour commencer.",
+	'usersettings:description' => "Le panneau de configuration utilisateur vous permet de contrôler tous vos paramètres personnels, de la gestion de votre compte aux fonctionnement des outils du site. Choisissez une option ci-dessous pour commencer.",
 
 	'usersettings:statistics' => "Vos statistiques",
 	'usersettings:statistics:opt:description' => "Visualiser les statistiques des utilisateurs et des objets sur le site.",
@@ -1020,21 +988,21 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 	'usersettings:user:opt:linktext' => "Modifier vos paramètres",
 
 	'usersettings:plugins' => "Outils",
-	'usersettings:plugins:opt:description' => "Configurer les paramètres de vos outils (s'il y en a).",
+	'usersettings:plugins:opt:description' => "Configurer les paramètres de vos outils actifs (s'il y en a).",
 	'usersettings:plugins:opt:linktext' => "Configurez vos outils",
 
 	'usersettings:plugins:description' => "Ce panneau vous permet de vérifier et de configurer les paramètres personnels des outils installés par l'administrateur.",
 	'usersettings:statistics:label:numentities' => "Vos contenus",
 
 	'usersettings:statistics:yourdetails' => "Vos informations",
-	'usersettings:statistics:label:name' => "Votre nom",
+	'usersettings:statistics:label:name' => "Votre nom complet",
 	'usersettings:statistics:label:email' => "E-mail",
 	'usersettings:statistics:label:membersince' => "Membre depuis",
 	'usersettings:statistics:label:lastlogin' => "Dernière connexion",
 	
-	'usersettings:delayed_email' => "Paramètres d'email différé",
-	'usersettings:delayed_email:interval' => "Configurez à quel intervalle les emails différés doivent être envoyés",
-	'usersettings:delayed_email:interval:help' => "Tous les emails de notification différés seront enregistrés et livrés dans un seul email combiné à l'intervalle configuré",
+	'usersettings:delayed_email' => "Paramètres des e-mails différés",
+	'usersettings:delayed_email:interval' => "Configurez à quel intervalle les e-mails différés doivent être envoyés",
+	'usersettings:delayed_email:interval:help' => "Tous les e-mails de notification différés seront enregistrés et livrés dans un seul e-mail combiné à l'intervalle configuré",
 
 /**
  * Activity river
@@ -1044,7 +1012,7 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 	'river:mine' => 'Mon activité',
 	'river:owner' => 'Activité de %s',
 	'river:friends' => 'Activités des contacts',
-	'river:select' => '%s',
+	'river:select' => 'Montrer %s',
 	'river:comments:more' => '+%u autres',
 	'river:comments:all' => 'Voir tous les %u commentaires',
 	'river:generic_comment' => 'a commenté %s %s',
@@ -1054,7 +1022,7 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
  */
 
 	'icon:size' => "Taille d'icône",
-	'icon:size:topbar' => "Topbar (minuscule)",
+	'icon:size:topbar' => "Minuscule",
 	'icon:size:tiny' => "Tout petit",
 	'icon:size:small' => "Petit",
 	'icon:size:medium' => "Moyen",
@@ -1064,9 +1032,9 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 	'entity:edit:icon:crop_messages:generic' => "L'image sélectionnée ne correspond pas aux dimensions recommandées. Les icônes résultantes pourraient être de mauvaise qualité.",
 	'entity:edit:icon:crop_messages:width' => "Il est recommandé d'utiliser une image avec une largeur minimale d'au moins %d px.",
 	'entity:edit:icon:crop_messages:height' => "Il est recommandé d'utiliser une image avec une hauteur minimale d'au moins %d px.",
-	'entity:edit:icon:file:label' => "Chargez une nouvelle icône",
+	'entity:edit:icon:file:label' => "Charger une nouvelle icône",
 	'entity:edit:icon:file:help' => "Laissez vide pour conserver l'icône actuelle.",
-	'entity:edit:icon:remove:label' => "Supprimez l'icône",
+	'entity:edit:icon:remove:label' => "Supprimer l'icône",
 
 /**
  * Generic action words
@@ -1091,7 +1059,7 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 	'disapprove' => "Désapprouver",
 	'revoke' => "Révoquer",
 	'load' => "Charger",
-	'upload' => "Charger",
+	'upload' => "Télécharger",
 	'download' => "Télécharger",
 	'ban' => "Bannir",
 	'unban' => "Réintégrer",
@@ -1099,7 +1067,7 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 	'enable' => "Activer",
 	'disable' => "Désactiver",
 	'request' => "Demander",
-	'complete' => "complet",
+	'complete' => "Compléter",
 	'open' => 'Ouvrir',
 	'close' => 'Fermer',
 	'hide' => 'Cacher',
@@ -1175,7 +1143,6 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 
 	'content' => "contenu",
 	'content:latest' => 'Dernière activité',
-	'content:latest:blurb' => 'Vous pouvez également cliquer ici pour voir les dernières publications sur le site.',
 	
 	'list:out_of_bounds' => "Vous avez atteint une partie de la liste sans aucun contenu, toutefois il y a du contenu disponible.",
 	'list:out_of_bounds:link' => "Revenir à la première page de cette liste.",
@@ -1203,7 +1170,7 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 	'status:enabled' => 'Activé',
 	'status:disabled' => 'Désactivé',
 	'status:unavailable' => 'Indisponible',
-	'status:active' => 'Activé',
+	'status:active' => 'Actif',
 	'status:inactive' => 'Inactif',
 
 /**
@@ -1240,7 +1207,7 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 	'number_counter:thousands_separator' => ",",
 	'number_counter:view:thousand' => "%sK",
 	'number_counter:view:million' => "%sM",
-	'number_counter:view:billion' => "%sB",
+	'number_counter:view:billion' => "%sMd",
 	'number_counter:view:trillion' => "%sT",
 
 /**
@@ -1269,20 +1236,13 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 
 %s
 
-Et connectez-vous avec les identifiants suivants :
+Et connectez-vous avec les informations suivantes :
 
 Identifiant : %s
 Mot de passe : %s
-Vous pouvez également utiliser votre adresse email à la place de votre identifiant.
+Vous pouvez également utiliser votre adresse e-mail à la place de votre identifiant.
 
 Après connexion, nous vous recommandons de changer votre mot de passe.',
-
-/**
- * System messages
- */
-
-	'systemmessages:dismiss' => "Cliquer pour fermer",
-
 
 /**
  * Messages
@@ -1292,14 +1252,7 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'messages:title:warning' => 'Avertissement',
 	'messages:title:help' => 'Aide',
 	'messages:title:notice' => 'Information',
-	'messages:title:info' => 'Information',
-
-/**
- * Import / export
- */
-
-	'importsuccess' => "L'import des données a réussi",
-	'importfail' => "L'import des données OpenDD a échoué.",
+	'messages:title:info' => 'Informations',
 
 /**
  * Time
@@ -1307,7 +1260,7 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 
 	'input:date_format' => 'Y-m-d',
 	'input:date_format:datepicker' => 'yy-mm-dd', // jQuery UI datepicker format
-	'input:time_format' => 'g:ia',
+	'input:time_format' => 'G:i',
 
 	'friendlytime:justnow' => "à l'instant",
 	'friendlytime:minutes' => "il y a %s minutes",
@@ -1345,8 +1298,8 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'date:month:short:04' => 'Avr %s',
 	'date:month:short:05' => 'Mai %s',
 	'date:month:short:06' => 'Jui %s',
-	'date:month:short:07' => 'Jui %s',
-	'date:month:short:08' => 'Aou %s',
+	'date:month:short:07' => 'Juil %s',
+	'date:month:short:08' => 'Aoû %s',
 	'date:month:short:09' => 'Sep %s',
 	'date:month:short:10' => 'Oct %s',
 	'date:month:short:11' => 'Nov %s',
@@ -1384,59 +1337,59 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 
 	'installation:sitename' => "Le nom de votre site :",
 	'installation:sitedescription' => "Brève description du site (facultatif) : ",
-	'installation:sitedescription:help' => "Avec les plugins empaquetés ceci n'apparaît que dans les métadonnées de description pour les résultats des moteurs de recherche.",
+	'installation:sitedescription:help' => "Avec les plugins inclus ceci n'apparaît que dans les métadonnées de description pour les résultats des moteurs de recherche.",
 	'installation:wwwroot' => "L'URL du site :",
 	'installation:path' => "Le chemin complet de votre installation de Elgg :",
 	'installation:dataroot' => "Le chemin complet du dossier de données :",
 	'installation:dataroot:warning' => "Vous devez créer ce répertoire manuellement. Il doit se situer dans un répertoire différent de celui de votre installation de Elgg.",
 	'installation:sitepermissions' => "Les niveaux d’accès par défaut : ",
 	'installation:language' => "La langue par défaut de votre site : ",
-	'installation:debug' => "Permet de contrôler la quantité d'information écrite dans les journaux du serveur. Attention car cela ralentit l'accès au site, et ne devrait être utilisé qu'en cas de problème.",
+	'installation:debug' => "Contrôle la quantité d'information écrite dans les journaux du serveur.",
 	'installation:debug:label' => "Niveau de journalisation :",
 	'installation:debug:none' => 'Désactivé (recommandé en production)',
 	'installation:debug:error' => 'Seulement les erreurs critiques',
 	'installation:debug:warning' => 'Erreurs et avertissements',
 	'installation:debug:notice' => 'Toutes les erreurs, avertissements et avis',
-	'installation:debug:info' => 'Enregistrer tout',
+	'installation:debug:info' => 'Tout',
 
 	// Walled Garden support
-	'installation:registration:description' => 'L\'enregistrement de nouveaux comptes utilisateurs est activé par défaut. Désactivez cette option si vous ne voulez pas que de nouvelles personnes soient en mesure de s\'inscrire d\'elles-mêmes.',
-	'installation:registration:label' => 'Permettre à de nouveaux utilisateurs de s\'enregistrer',
+	'installation:registration:description' => 'Si activé, les visiteurs peuvent créer leur propre compte utilisateur.',
+	'installation:registration:label' => 'Permettre à de nouveaux utilisateurs de s\'inscrire',
 	'installation:adminvalidation:description' => 'Si activé, les utilisateurs nouvellement inscrits doivent être validés par un administrateur avant de pouvoir utiliser le site.',
 	'installation:adminvalidation:label' => 'Les nouveaux utilisateurs doivent être validés manuellement par un administrateur',
-	'installation:adminvalidation:notification:description' => 'SI activé, les administrateurs du site recevront une notification qui indique qu\'il y a des utilisateurs en attente de validation. Chaque administrateur peut désactiver la notification sur sa page de paramètres personnels.',
-	'installation:adminvalidation:notification:label' => 'Notifier les administrateurs des utilisateurs en attente de validation',
+	'installation:adminvalidation:notification:description' => 'Si activé, les administrateurs du site recevront une notification qui indique qu\'il y a des utilisateurs en attente de validation. Chaque administrateur peut désactiver la notification sur sa page de paramètres personnels.',
+	'installation:adminvalidation:notification:label' => 'Notifier les administrateurs comptes utilisateur en attente de validation',
 	'installation:adminvalidation:notification:direct' => 'Direct',
-	'installation:walled_garden:description' => 'Activez cette option pour faire du site un réseau privé. Cela permet d\'éviter que les non-membres puissent visiter d\'autres pages que celles expressément spécifiées comme publiques (comme par exemple la page de connexion et d\'inscription).',
-	'installation:walled_garden:label' => 'Restreindre l\'accès au site aux membres connectés',
+	'installation:walled_garden:description' => 'Si activé, les visiteurs non identifiés ne peuvent voir que les pages indiquées comme publiques (comme la page de connexion et d\'inscription).',
+	'installation:walled_garden:label' => 'Restreindre l\'accès au site aux membres identifiés',
 
 	'installation:view' => "Entrez le nom de la vue qui sera utilisée par défaut pour l'affichage du site, ou laissez vide pour la vue par défaut (en cas de doute, laissez la valeur par défaut) :",
 
-	'installation:siteemail' => "L'adresse email du site (utilisée lors de l'envoi d'emails par le système)",
-	'installation:siteemail:help' => "Attention : N'utilisez pas une adresse email que vous pourriez avoir associé avec un autre service tiers, tels qu'un système de gestions de tickets, qui effectue des analyses des emails entrants, car cela peut vous exposer vous et vos utilisateurs à la fuite non intentionnelle de données privées et de jetons de sécurité. Dans l'idéal, créez une nouvelle adresse email dédiée qui ne va servir que pour ce site.",
+	'installation:siteemail' => "L'adresse e-mail du site (utilisée lors de l'envoi d'e-mails par le système) :",
+	'installation:siteemail:help' => "Attention : n'utilisez pas une adresse e-mail que vous pourriez avoir associé avec un autre service tiers, tels qu'un système de gestions de tickets, qui effectue des analyses des e-mails entrants, car cela peut vous exposer vous et vos utilisateurs à la fuite non intentionnelle de données privées et de jetons de sécurité. Dans l'idéal, créez une nouvelle adresse e-mail dédiée qui va servir exclusivement pour ce site.",
 	'installation:default_limit' => "Nombre d'éléments par page par défaut",
 
-	'admin:site:access:warning' => "Le niveau d'accès suggéré aux utilisateurs lorsqu'ils créent un nouveau contenu. Modifier ce réglage n'affectera que les publications créées dans le futur.",
-	'installation:allow_user_default_access:description' => "Activez ce réglage pour permettre aux utilisateurs de définir leur propre niveau d'accès par défaut, qui remplace celui défini par défaut pour le site.",
-	'installation:allow_user_default_access:label' => "Autoriser un niveau d’accès par défaut pour chaque utilisateur",
+	'admin:site:access:warning' => "Le niveau d'accès suggéré aux utilisateurs lorsqu'ils créent un nouveau contenu. Modifier ce réglage n'affecte pas l'accès au contenu.",
+	'installation:allow_user_default_access:description' => "Activez ce réglage pour permettre aux utilisateurs de définir leur propre niveau d'accès par défaut, qui remplace celui suggéré par le système.",
+	'installation:allow_user_default_access:label' => "Permettre aux utilisateurs de choisir un niveau d’accès par défaut",
 
 	'installation:simplecache:description' => "Le cache simple augmente les performances en mettant en cache du contenu statique comme des fichiers CSS et Javascript.",
 	'installation:simplecache:label' => "Utiliser le cache simple (recommandé)",
 
 	'installation:cache_symlink:description' => "Le lien symbolique vers le répertoire du cache simple permet au serveur de servir des vues statiques en passant outre le moteur, ce qui améliore considérablement les performances et réduit la charge du serveur",
 	'installation:cache_symlink:label' => "Utiliser un lien symbolique vers le répertoire du cache simple (recommandé)",
-	'installation:cache_symlink:warning' => "Le lien symbolique a été établi. Si, pour quelque raison que ce soit, vous souhaitez supprimer le lien, effacez le lien symbolique vers le répertoire de votre serveur.",
+	'installation:cache_symlink:warning' => "Le lien symbolique a été établi. Si, pour quelque raison que ce soit, vous souhaitez supprimer le lien, effacez le lien symbolique de votre serveur.",
 	'installation:cache_symlink:paths' => 'Un lien symbolique correctement configuré doit lier <i>%s</i> vers <i>%s</i>',
-	'installation:cache_symlink:error' => "EN raison de la configuration de votre serveur, le lien symbolique ne peut pas être créé automatiquement. Veuillez vous référer à la document pour créer le lien symbolique manuellement.",
+	'installation:cache_symlink:error' => "En raison de la configuration de votre serveur, le lien symbolique ne peut pas être créé automatiquement. Veuillez vous référer à la documentation pour créer le lien symbolique manuellement.",
 
 	'installation:minify:description' => "Le cache simple peut également améliorer les performances en compressant les fichiers JavaScript et CSS. (Le cache simple doit être activé.)",
 	'installation:minify_js:label' => "Compresser le JavaScript (recommandé)",
 	'installation:minify_css:label' => "Compresser les CSS (recommandé)",
 
-	'installation:htaccess:needs_upgrade' => "Vous devez mettre à jour votre fichier .htaccess afin que le chemin soit injecté dans le paramètre GET __elgg_uri (vous pouvez utiliser le fichier install/config/htaccess_dist comme modèle)",
-	'installation:htaccess:localhost:connectionfailed' => "Elgg ne peut pas se connecter à lui-même pour tester les règles de réécriture correctement. Veuillez vérifier que curl fonctionne, et qu'il n'y a pas de restriction au niveau des IP interdisant les connexions depuis localhost.",
+	'installation:htaccess:needs_upgrade' => "Vous devez mettre à jour votre fichier .htaccess (utilisez le fichier install/config/htaccess.dist comme modèle)",
+	'installation:htaccess:localhost:connectionfailed' => "Elgg ne peut pas se connecter à lui-même pour tester les règles de réécriture correctement. Veuillez vérifier que curl fonctionne, et qu'il n'y a pas de restriction des IP interdisant les connexions depuis localhost.",
 
-	'installation:systemcache:description' => "Le cache système diminue le temps de chargement du moteur Elgg en mettant en cache les données dans des fichiers.",
+	'installation:systemcache:description' => "Le cache système diminue le temps de chargement du moteur Elgg en mettant en cache des données dans des fichiers.",
 	'installation:systemcache:label' => "Utiliser le cache système (recommandé)",
 
 	'admin:legend:system' => 'Système',
@@ -1447,9 +1400,9 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'admin:legend:debug' => 'Débogage et journalisation',
 	
 	'config:i18n:allowed_languages' => "Langues autorisées",
-	'config:i18n:allowed_languages:help' => "Seules les langues autorisées peuvent être utilises par les utilisateurs. L'anglais et la langue du site sont toujours autorisés.",
-	'config:users:can_change_username' => "Permettre aux membres de modifier leur nom d'utilisateur",
-	'config:users:can_change_username:help' => "Si interdit, seuls les admins peuvent changer l'identifiant d'un membre",
+	'config:i18n:allowed_languages:help' => "Seules les langues autorisées peuvent être utilisées par les utilisateurs. L'anglais et la langue du site sont toujours autorisées.",
+	'config:users:can_change_username' => "Permettre aux membres de modifier leur identifiant",
+	'config:users:can_change_username:help' => "Si interdit, seuls les administrateurs peuvent changer l'identifiant d'un compte utilisateur",
 	'config:remove_branding:label' => "Retirer le logo Elgg",
 	'config:remove_branding:help' => "Il existe divers liens et logos à travers le site qui indiquent que ce site a été réalisé en utilisant Elgg. Si vous supprimez toute mention de Elgg veuillez envisager une donation via https://elgg.org/about/supporters",
 	'config:disable_rss:label' => "Désactiver les flux RSS",
@@ -1459,23 +1412,23 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'config:content:comment_box_collapses' => "La boîte de commentaires se replie après le premier commentaire sur le contenu",
 	'config:content:comment_box_collapses:help' => "Ceci ne s'applique que si la liste des commentaires est triée avec le plus récent en premier",
 	'config:content:comments_latest_first' => "Les commentaires devraient être listés avec le commentaire le plus récent en premier",
-	'config:content:comments_latest_first:help' => "Ceci contrôle le comportement par défaut de la liste des commentaires sur une page d'information d'un contenu. Si désactivé ceci va également déplacer la boîte de commentaires à la fin de la liste des commentaires",
+	'config:content:comments_latest_first:help' => "Ceci contrôle le comportement par défaut de la liste des commentaires sur une page détaillée d'un contenu. Si désactivé ceci va également déplacer la boîte de commentaires à la fin de la liste des commentaires",
 	'config:content:comments_per_page' => "Le nombre de commentaires par page",
 	'config:content:pagination_behaviour' => "Comportement de pagination par défaut des listes",
 	'config:content:pagination_behaviour:help' => "Contrôle la façon dont les données de la liste sont mises à jour lors de l'utilisation de la pagination. Les listes individuelles peuvent remplacer ce comportement par défaut.",
-	'config:content:pagination_behaviour:navigate' => "Aller à la page suivante",
+	'config:content:pagination_behaviour:navigate' => "Naviguer vers la page suivante",
 	'config:content:pagination_behaviour:ajax-replace' => "Remplacer les données de la liste sans recharger toute la page",
 	'config:content:pagination_behaviour:ajax-append' => "Ajouter les nouvelles données au début ou à la fin de la liste",
-	'config:content:pagination_behaviour:ajax-append-auto' => "Ajoute les nouvelles données au début ou à la fin de la liste (automatiquement en cas de scroll dans la vue)",
-	'config:email' => "Email",
-	'config:email_html_part:label' => "Activer les emails en HTML",
-	'config:email_html_part:help' => "Les emails sortants seront intégrés dans un template HTML",
-	'config:email_html_part_images:label' => "Remplacer les images des emails",
-	'config:email_html_part_images:help' => "Contrôle si et comment les images des emails sortants doivent être traitées. Si activé, toutes les images seront intégrées dans les emails. Tous les clients de messagerie ne prennent pas en charge les différentes options, assurez-vous de tester l'option choisie.",
+	'config:content:pagination_behaviour:ajax-append-auto' => "Ajoute les nouvelles données au début ou à la fin de la liste (automatiquement en cas de défilement dans la vue)",
+	'config:email' => "E-mail",
+	'config:email_html_part:label' => "Activer les e-mails en HTML",
+	'config:email_html_part:help' => "Les e-mails sortants seront intégrés dans un template HTML",
+	'config:email_html_part_images:label' => "Remplacer les images des e-mails",
+	'config:email_html_part_images:help' => "Contrôle si et comment les images des e-mails sortants doivent être traitées. Si activé, toutes les images seront intégrées dans les e-mails. Tous les clients de messagerie ne prennent pas en charge les différentes options, assurez-vous de tester l'option choisie.",
 	'config:email_html_part_images:base64' => "Encodage en Base64",
 	'config:email_html_part_images:attach' => "Pièces jointes",
-	'config:delayed_email:label' => "Activer les emails de notification différés",
-	'config:delayed_email:help' => "Offre aux utilisateurs des notifications par email différées qui regroupent les notifications reçues au cours d'une période (quotidienne, hebdomadaire)",
+	'config:delayed_email:label' => "Activer les e-mails de notification différés",
+	'config:delayed_email:help' => "Offre aux utilisateurs des notifications par e-mail différées qui regroupent les notifications reçues au cours d'une période (quotidienne, hebdomadaire)",
 
 	'upgrading' => 'Mise à niveau en cours...',
 	'upgrade:core' => 'Votre installation de Elgg a été mise à niveau.',
@@ -1483,21 +1436,7 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'upgrade:unlock:confirm' => "La base de données est verrouillée par une autre mise à niveau. Exécuter des mises à jours simultanées est dangereux. Vous devriez continuer seulement si vous savez qu'il n'y a pas d'autre mise à jour en cours d'exécution. Déverrouiller ?",
 	'upgrade:terminated' => 'La mise à niveau a été interrompue par un gestionnaire d\'événement',
 	'upgrade:locked' => "Impossible de mettre à niveau. Une autre mise à niveau est en cours. Pour supprimer le verrouillage de la mise à jour, visitez la partie administrateur.",
-	'upgrade:unlock:success' => "Mise à niveau débloquée.",
-	'upgrade:unable_to_upgrade' => 'Impossible de mettre à niveau.',
-	'upgrade:unable_to_upgrade_info' => 'Cette installation ne peut pas être mise à jour, car des vues anciennes
-ont été détectées dans le répertoire des vues du noyau de Elgg. Ces vues sont obsolètes et doivent être
-supprimés pour que Elgg fonctionne correctement. Si vous n\'avez pas modifié les fichiers du noyau de Elgg, vous pouvez
-simplement supprimer le répertoire des vues "views/" et le remplacer par celui de la dernière
-version de Elgg téléchargée depuis <a href="https://elgg.org">elgg.org</a>.<br /><br />
-
-Si vous avez besoin d\'instructions détaillées, veuillez visiter la <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
-documentation sur la Mise à niveau de Elgg</a>. Si vous avez besoin d\'assistance, veuillez écrire dans les 
-<a href="https://elgg.org/discussion/all">Forums d\'Aide de la Communauté Elgg</a>.',
-
-	'update:oauth_api:deactivated' => 'Le plugin OAuth API (précédemment OAuth Lib) a été désactivé lors de la mise à niveau. Veuillez l\'activer manuellement si nécessaire.',
-	'upgrade:site_secret_warning:moderate' => "Vous êtes encouragé à régénérer la clé du site afin d'améliorer la sécurité du système. Voir dans Configuration / Paramètres avancés",
-	'upgrade:site_secret_warning:weak' => "Vous êtes fortement encouragé à régénérer la clé du site afin d'améliorer la sécurité du système. Voir dans Configuration / Paramètres avancés",
+	'upgrade:unlock:success' => "La mise à niveau a bien été débloquée.",
 
 	'admin:pending_upgrades' => 'Le site a des mises à niveau en attente qui nécessitent votre attention immédiate.',
 	'admin:view_upgrades' => 'Afficher les mises à niveau en attente.',
@@ -1505,14 +1444,12 @@ documentation sur la Mise à niveau de Elgg</a>. Si vous avez besoin d\'assistan
 	'collection:object:elgg_upgrade' => 'Mises à niveau du site',
 	'admin:upgrades:none' => 'Votre installation est à jour !',
 
-	'upgrade:item_count' => '<b>%s</b> éléments ont besoin d\'être mis à niveau.',
-	'upgrade:warning' => '<b>Attention :</b> Sur un grand site cette mise à jour peut prendre un temps significativement long !',
-	'upgrade:success_count' => 'Mis à niveau :',
+	'upgrade:success_count' => 'Mise à niveau :',
 	'upgrade:error_count' => 'Erreurs : %s',
 	'upgrade:finished' => 'Mise à jour terminée',
 	'upgrade:finished_with_errors' => 'La mise à niveau s\'est terminée avec des erreurs. Rafraîchissez la page et tentez de relancer la mise à niveau.<p></p><br />Si l\'erreur se produit à nouveau, vérifiez les journaux d\'erreur du serveur web pour identifier une cause possible. Vous pouvez demander de l\'aide pour résoudre cette erreur dans le <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">groupe de support technique</a> de la communauté Elgg.</p>',
 	'upgrade:should_be_skipped' => 'Aucun élément à mettre à niveau',
-	'upgrade:count_items' => '%d élément(s) à mettre à niveau',
+	'upgrade:count_items' => '%d éléments à mettre à niveau',
 	
 	// Strings specific for the database guid columns reply upgrade
 	'admin:upgrades:database_guid_columns' => 'Aligner les colonnes GUID de la base de données',
@@ -1531,17 +1468,17 @@ documentation sur la Mise à niveau de Elgg</a>. Si vous avez besoin d\'assistan
 	'email:from' => 'De',
 	'email:to' => 'Pour',
 	'email:subject' => 'Sujet',
-	'email:body' => 'Corps de l\'article',
+	'email:body' => 'Corps du texte',
 
 	'email:settings' => "Paramètres e-mail",
 	'email:address:label' => "Adresse e-mail",
-	'email:address:help:confirm' => "Adresse email en attente modifiée pour '%s', veuillez vérifier votre boîte mail pour les instructions.",
+	'email:address:help:confirm' => "Modification d'adresse e-mail en attente pour '%s', veuillez vérifier votre boîte de réception pour les instructions.",
 	'email:address:password' => "Mot de passe",
-	'email:address:password:help' => "Pour pouvoir changer votre adresse email vous devez fournir votre mot de passe actuel.",
+	'email:address:password:help' => "Pour pouvoir changer votre adresse e-mail vous devez fournir votre mot de passe actuel.",
 
-	'email:save:success' => "Nouvelle adresse email enregistrée. Une vérification a été envoyée pour confirmer l'adresse.",
-	'email:save:fail' => "Votre nouvelle adresse email n'a pas pu être enregistrée.",
-	'email:save:fail:password' => "Le mot de passe ne correspond pas à votre mot de passe actuel, impossible de modifier votre adresse email",
+	'email:save:success' => "Nouvelle adresse e-mail enregistrée.",
+	'email:save:fail' => "Votre nouvelle adresse e-mail n'a pas pu être enregistrée.",
+	'email:save:fail:password' => "Le mot de passe ne correspond pas à votre mot de passe actuel, impossible de modifier votre adresse e-mail",
 
 	'friend:newfriend:subject' => "%s vous a ajouté comme contact !",
 	'friend:newfriend:body' => "%s vous a ajouté comme contact !
@@ -1559,32 +1496,32 @@ Pour voir son profil :
 	'email:changereq:subject' => "Demander un nouveau mot de passe.",
 	'email:changereq:body' => "Quelqu'un (depuis l'adresse IP %s) a demandé à changer le mot de passe de ce compte.
 
-Si vous êtes à l'origine de cette demande, cliquez sur le lien suivant. Sinon ignorez cet email.
+Si vous êtes à l'origine de cette demande, cliquez sur le lien suivant. Sinon ignorez cet e-mail.
 
 %s",
 	
-	'account:email:request:success' => "Votre nouvelle adresse email sera enregistrée après confirmation, veuillez vérifier la boîte de réception de '%s' pour plus d'instructions.",
-	'email:request:email:subject' => "Veuillez confirmer votre adresse email",
-	'email:request:email:body' => "Vous avez demandé la modification de votre adresse email sur '%s'.
-Si vous n'êtes pas à l'origine de cette demande, veuillez ignorer cet email.
+	'account:email:request:success' => "Votre nouvelle adresse e-mail sera enregistrée après confirmation, veuillez vérifier la boîte de réception de '%s' pour plus d'instructions.",
+	'email:request:email:subject' => "Veuillez confirmer votre adresse e-mail",
+	'email:request:email:body' => "Vous avez demandé la modification de votre adresse e-mail sur '%s'.
+Si vous n'êtes pas à l'origine de cette demande, veuillez ignorer cet e-mail.
 
-Afin de confirmer la modification de l'adresse email, veuillez cliquer sur ce lien :
+Afin de confirmer la modification de l'adresse e-mail, veuillez cliquer sur ce lien :
 %s
 
-Veuillez noter que ce lien est valable 1 heure.",
+Veuillez noter que ce lien est valable seulement pendant 1 heure.",
 	
-	'account:email:request:error:no_new_email' => "Aucun changement d'adresse email en attente",
+	'account:email:request:error:no_new_email' => "Aucun changement d'adresse e-mail en attente",
 	
-	'email:confirm:email:old:subject' => "Votre adresse email a été modifiée",
-	'email:confirm:email:old:body' => "Votre adresse email sur '%s' a été modifiée.
+	'email:confirm:email:old:subject' => "Votre adresse e-mail a été modifiée",
+	'email:confirm:email:old:body' => "Votre adresse e-mail sur '%s' a été modifiée.
 Désormais, vous recevrez les notifications sur '%s'.
 
 Si vous n'êtes pas à l'origine de cette modification, veuillez contacter un administrateur du site.
 %s",
 	
-	'email:confirm:email:new:subject' => "Votre adresse email a été modifiée",
-	'email:confirm:email:new:body' => "Votre adresse email sur '%s' a été modifiée.
-Désormais, vous recevrez les notifications sur cette adresse email.
+	'email:confirm:email:new:subject' => "Votre adresse e-mail a été modifiée",
+	'email:confirm:email:new:body' => "Votre adresse e-mail sur '%s' a été modifiée.
+Désormais, vous recevrez les notifications sur cette adresse e-mail.
 
 Si vous n'êtes pas à l'origine de cette modification, veuillez contacter un administrateur du site.
 %s",
@@ -1593,7 +1530,7 @@ Si vous n'êtes pas à l'origine de cette modification, veuillez contacter un ad
 	'account:email:admin:validation_notification:help' => "En raison des réglages du site, les utilisateurs nouvellement inscrits doivent être approuvés manuellement par un administrateur. Avec ce réglage, vous pouvez désactiver les notifications au sujet des demandes de validation en attente.",
 	
 	'account:validation:pending:title' => "Validation de compte en attente",
-	'account:validation:pending:content' => "Votre compte a bien été créé ! Toutefois, avant de pouvoir l'utiliser, un administrateur doit valider votre compte. Vous recevrez un email quand votre compte aura été validé.",
+	'account:validation:pending:content' => "Votre compte a bien été créé ! Toutefois, avant de pouvoir l'utiliser, un administrateur doit valider votre compte. Vous recevrez un e-mail quand votre compte aura été validé.",
 	
 	'account:notification:validation:subject' => "Votre compte sur %s a bien été validé !",
 	'account:notification:validation:body' => "Votre compte sur '%s' a été validé. Vous pouvez maintenant utiliser votre compte.
@@ -1614,7 +1551,7 @@ Pour vous rendre sur le site :
  * Comments
  */
 
-	'comments:count' => "%s commentaire(s)",
+	'comments:count' => "%s commentaires",
 	'item:object:comment' => 'Commentaire',
 	'collection:object:comment' => 'Commentaires',
 	'notification:object:comment:create' => "Envoyer une notification quand un commentaire est créé",
@@ -1631,7 +1568,6 @@ Pour vous rendre sur le site :
 	'entity:delete:object:comment:success' => "Le commentaire a bien été supprimé.",
 	'generic_comment:blank' => "Désolé, vous devez écrire quelque chose dans votre commentaire avant de pouvoir l'enregistrer.",
 	'generic_comment:notfound' => "Désolé, l'élément recherché n'a pas été trouvé.",
-	'generic_comment:notfound_fallback' => "Désolé, le commentaire demandé n'a pas été trouvé, mais vous avez été redirigé sur la page sur laquelle il avait été publié.",
 	'generic_comment:failure' => "Une erreur inattendue s'est produite pendant l'enregistrement du commentaire.",
 	'generic_comment:none' => 'Pas de commentaire',
 	'generic_comment:title' => 'Commentaire de %s',
@@ -1640,7 +1576,7 @@ Pour vous rendre sur le site :
 
 	'generic_comment:notification:subject' => 'Re: %s',
 	'generic_comment:notification:owner:summary' => 'Vous avez un nouveau commentaire sur : %s',
-	'generic_comment:notification:owner:body' => "Vous avez un nouveau commentaire sur votre publication :
+	'generic_comment:notification:owner:body' => "Vous avez un nouveau commentaire :
 
 %s
 
@@ -1661,8 +1597,7 @@ Pour y répondre ou voir la publication originale :
 
 	'byline' => 'Par %s',
 	'byline:ingroup' => 'dans le groupe %s',
-	'entity:default:missingsupport:popup' => 'Cette entité ne peut pas être affichée correctement. Il se peut que ce soit à cause d\'un plugin qui n\'est plus installé ou activé.',
-
+	
 	'entity:delete:item' => 'Élément',
 	'entity:delete:item_not_found' => 'Objet non trouvé.',
 	'entity:delete:permission_denied' => 'Vous n\'avez pas les permissions nécessaires pour supprimer cet objet.',
@@ -1684,8 +1619,6 @@ Pour y répondre ou voir la publication originale :
 	'entity:unmute' => "Réactiver les notifications",
 	'entity:unmute:success' => "Vous avez bien réactivé les notifications de %s",
 	'entity:unmute:fail' => "Une erreur est survenue lors de la réactivation des notifications de %s",
-	
-	'entity:can_delete:invaliduser' => 'Impossible de vérifier ->canDelete() pour l\'utilisateur de user_guid [%s] car l\'utilisateur n\'existe pas.',
 
 /**
  * Annotations
@@ -1698,25 +1631,23 @@ Pour y répondre ou voir la publication originale :
  * Action gatekeeper
  */
 
-	'actiongatekeeper:missingfields' => 'Votre session de connexion n\'est plus valide : session ou jetons de sécurité __token ou __ts manquants. Veuillez recharger la page pour continuer',
+	'actiongatekeeper:missingfields' => 'Il manque les champs __token ou __ts dans le formulaire',
 	'actiongatekeeper:tokeninvalid' => "La page que vous utilisiez a expiré. Veuillez réessayer.",
 	'actiongatekeeper:timeerror' => 'La page que vous utilisiez a expiré. Veuillez la recharger et réessayer.',
 	'actiongatekeeper:pluginprevents' => 'Désolé. Un plugin a empêché ce formulaire d\'être envoyé',
 	'actiongatekeeper:uploadexceeded' => 'La taille du ou des fichier(s) dépasse la limite définie par l\'administrateur du site',
-	'actiongatekeeper:crosssitelogin' => "Désolé, il n'est pas permis de se connecter depuis un autre nom de domaine. Veuillez réessayer.",
 
 /**
  * Word blacklists
  */
 
-	'word:blacklist' => 'alors, au, aucuns, aussi, autre, avant, avec, avoir, bon, ça, car, ce, cela, cette, ces, ceux, cependant, chaque, ci, comme, comment, dans, début, dedans, dehors, depuis, des, devrait, doit, donc, dos, du, elle, elles, en, encore, essai, est, et, étaient, état, été, étions, être, eu, fait, faites, fois, font, hors, ici, il, ils, je, juste, la, là, le, les, leur, lui, ma, maintenant, mais, malgré, même, mes, moins, mon, mot, ni, nommés, notre, nous, ou, où, par, parce, pas, pendant, peu, peut, plupart, plutôt, pour, pourquoi, quand, que, quel, quelle, quelles, quels, qui, sa, sans, ses, seulement, si, sien, son, sont, sous, soyez, sujet, sur, ta, tandis, tellement, tels, tes, ton, tous, tout, toutefois, très, trop, tu, un, une, voient, vont, votre, vous, vu',
+	'word:blacklist' => 'et, le, alors, mais, au, aucuns, aussi, autre, avant, avec, avoir, bon, ça, car, ce, cela, cette, ces, ceux, cependant, chaque, ci, comme, comment, dans, début, dedans, dehors, depuis, des, devrait, doit, donc, dos, du, elle, elles, en, encore, essai, est, et, étaient, état, été, étions, être, eu, fait, faites, fois, font, hors, ici, il, ils, je, juste, la, là, les, leur, lui, ma, maintenant, mais, malgré, même, mes, moins, mon, mot, ni, nommés, notre, nous, ou, où, par, parce, pas, pendant, peu, peut, plupart, plutôt, pour, pourquoi, quand, que, quel, quelle, quelles, quels, qui, sa, sans, ses, seulement, si, sien, son, sont, sous, soyez, sujet, sur, ta, tandis, tellement, tels, tes, ton, tous, tout, toutefois, très, trop, tu, un, une, voient, vont, votre, vous, vu',
 
 /**
  * Javascript
  */
 
 	'js:security:token_refresh_failed' => 'Impossible de contacter %s. Vous risquez de ne pas pouvoir enregistrer le contenu. Veuillez rafraîchir cette page.',
-	'js:security:token_refreshed' => 'La connexion à %s a été rétablie !',
 	'js:lightbox:current' => "image %s de %s",
 
 /**
@@ -1735,11 +1666,11 @@ Elgg %s, version %s
 
 ------------------------------------------------------------------------',
 	'diagnostics:report:php' => '
-PHP info:
+Informations PHP :
 %s
 ------------------------------------------------------------------------',
 	'diagnostics:report:md5' => '
-Fichiers installés et checksums:
+Fichiers installés et sommes de contrôle :
 
 %s
 ------------------------------------------------------------------------',
@@ -1760,7 +1691,7 @@ Variables globales :
 	'cli:login:error:unknown' => "Impossible de se connecter en tant que %s",
 	'cli:login:success:log' => "Connecté en tant que %s [guid : %s]",
 	'cli:response:output' => "Réponse :",
-	'cli:option:as' => "Exécuter la commande au nom d'un utilisateur avec le nom d'utilisateur donné",
+	'cli:option:as' => "Exécuter la commande au nom d'un utilisateur avec l'identifiant indiqué",
 	'cli:option:language' => "Exécuter la commande dans la langue donnée (par ex. fr, en, ou nl)",
 	
 	'cli:cache:clear:description' => "Vider les caches de Elgg",
@@ -1784,12 +1715,12 @@ Variables globales :
 	
 	'cli:database:unseed:description' => "Supprime de la base de donnée les entités factices issues de l'ensemencement",
 	
-	'cli:plugins:activate:description' => "Activer le(s) plugin(s)",
+	'cli:plugins:activate:description' => "Activer le (ou les) plugin",
 	'cli:plugins:activate:option:force' => "Résoudre les conflits en désactivant les plugins en conflit et en activant ceux requis",
 	'cli:plugins:activate:argument:plugins' => "IDs des plugins à activer",
 	'cli:plugins:activate:progress:start' => "Activation des plugins",
 	
-	'cli:plugins:deactivate:description' => "Désactiver le(s) plugin(s)",
+	'cli:plugins:deactivate:description' => "Désactiver le (ou les) plugin",
 	'cli:plugins:deactivate:option:force' => "Forcer la désactivation de tous les plugins dépendants",
 	'cli:plugins:deactivate:argument:plugins' => "IDs des plugins à désactiver",
 	'cli:plugins:deactivate:progress:start' => "Désactivation des plugins",
@@ -1884,7 +1815,7 @@ Variables globales :
 	"jw" => "Javanais",
 	"ka" => "Géorgien",
 	"kk" => "Kazakh",
-	"kl" => "Groënlandais (Kalaallisut)",
+	"kl" => "Groënlandais - Kalaallisut",
 	"km" => "Khmer",
 	"kn" => "Kannara",
 	"ko" => "Coréen",
@@ -1975,7 +1906,7 @@ Variables globales :
 	"field:required" => 'Requis',
 
 	"core:upgrade:2017080900:title" => "Modifier l'encodage de la base de données pour le support multi-byte",
-	"core:upgrade:2017080900:description" => "Modifie l'encodage de la base de données et des tables pour utf8mb4, de manière à supporter les caractères multi-bytes tels que des emojis",
+	"core:upgrade:2017080900:description" => "Modifie l'encodage de la base de données et des tables pour utf8mb4, afin de supporter les caractères multi-bytes tels que des emojis",
 	
 	"core:upgrade:2020102301:title" => "Supprimer le plugin diagnostics",
 	"core:upgrade:2020102301:description" => "Supprime l'entité associée avec le plugin Diagnostics retiré dans Elgg 4.0",
