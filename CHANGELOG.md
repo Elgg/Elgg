@@ -1,3 +1,16 @@
+<a name="3.3.20"></a>
+### 3.3.20  (2021-07-09)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+
+#### Bug Fixes
+
+* **admin:** allow admins to be added from the admin listing page ([8d94877f](https://github.com/Elgg/Elgg/commit/8d94877faa4f6d9c34bd738776d546785883176e))
+* **database:** use correct port number in Phinx migrations ([0ee77635](https://github.com/Elgg/Elgg/commit/0ee77635cbe9e71545194887bb432150b158da08))
+
+
 <a name="3.3.19"></a>
 ### 3.3.19  (2021-06-10)
 
