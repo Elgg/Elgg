@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-11 11:12+0200\n"
+"POT-Creation-Date: 2021-07-09 15:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3373,7 +3373,7 @@ msgid "**register, menu:<menu_name>:<type>:<subtype>**"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:94
-msgid "More granualar version of the menu hook triggered before the **register, menu:<menu_name>** hook."
+msgid "More granular version of the menu hook triggered before the **register, menu:<menu_name>** hook."
 msgstr ""
 
 #: ../../guides/hooks-list.rst:96
@@ -3402,7 +3402,7 @@ msgid "**prepare, menu:<menu_name>:<type>:<subtype>**"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:114
-msgid "More granualar version of the menu hook triggered before the **prepare, menu:<menu_name>** hook."
+msgid "More granular version of the menu hook triggered before the **prepare, menu:<menu_name>** hook."
 msgstr ""
 
 #: ../../guides/hooks-list.rst:139
@@ -6701,276 +6701,25 @@ msgstr ""
 msgid "Conflicts with certain Elgg versions or plugins."
 msgstr ""
 
-#: ../../guides/plugins/dependencies.rst:18
-msgid "The dependency system uses the four verbs above (``requires`` and ``conflicts``) as parent elements to indicate what type of dependency is described by its children. All dependencies have a similar format with similar options:"
+#: ../../guides/plugins/dependencies.rst:19
+msgid "PHP version or extension"
 msgstr ""
 
-#: ../../guides/plugins/dependencies.rst:30
-msgid "``type`` is always required"
+#: ../../guides/plugins/dependencies.rst:21
+#: ../../guides/plugins/dependencies.rst:59
+msgid "Add a section in your ``composer.json`` as described in de `Composer JSON reference <https://getcomposer.org/doc/04-schema.md#package-links>`_"
 msgstr ""
 
 #: ../../guides/plugins/dependencies.rst:33
-msgid "Verbs"
+msgid "Require an Elgg plugin"
 msgstr ""
 
 #: ../../guides/plugins/dependencies.rst:35
-msgid "With the exception of ``provides``, all verbs use the same six types with differing effects, and the type options are the same among the verbs. ``provides`` only supports ``plugin`` and ``php_extension``."
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:38
-msgid "Requires"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:40
-msgid "Using a ``requires`` dependency means that the plugin cannot be enabled unless the dependency is exactly met."
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:43
-msgid "Mandatory requires: elgg_release"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:45
-msgid "Every plugin must have at least one requires: the version of Elgg the plugin is developed for. This is specified by the Elgg API ``release`` (1.8). The default comparison ``>=``, but you can specify your own by passing the ``<comparison>`` element."
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:47
-msgid "Using elgg_release:"
+msgid "Add a section to the ``elgg-plugin.php``, also see :doc:`/guides/plugins`"
 msgstr ""
 
 #: ../../guides/plugins/dependencies.rst:57
 msgid "Conflicts"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:59
-msgid "``conflicts`` dependencies mean the plugin cannot be used under a specific system configuration."
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:61
-msgid "Conflict with any version of the profile plugin:"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:70
-msgid "Conflict with a specific release of Elgg:"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:81
-msgid "Types"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:83
-msgid "Every dependency verb has a mandatory ``<type>`` element that must be one of the following six values:"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:85
-msgid "**elgg_release** - The release version of Elgg (1.8)"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:86
-msgid "**plugin** - An Elgg plugin"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:87
-msgid "**priority** - A plugin load priority"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:88
-msgid "**php_extension** - A PHP extension"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:89
-msgid "**php_version** - A PHP version"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:93
-msgid "``provides`` only supports ``plugin`` and ``php_extension`` types."
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:95
-msgid "Every type is defined with a dependency verb as the parent element. Additional option elements are at the same level as the type element:"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:106
-msgid "elgg_release"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:108
-msgid "These concern the API and release versions of Elgg and requires the following option element:"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:110
-msgid "**version** - The API or release version"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:112
-#: ../../guides/plugins/dependencies.rst:159
-msgid "The following option element is supported, but not required:"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:114
-#: ../../guides/plugins/dependencies.rst:126
-#: ../../guides/plugins/dependencies.rst:161
-msgid "**comparison** - The comparison operator to use. Defaults to >= if not passed"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:117
-msgid "plugin"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:119
-msgid "Specifies an Elgg plugin by its ID (directory name). This requires the following option element:"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:121
-msgid "**name** - The ID of the plugin"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:123
-#: ../../guides/plugins/dependencies.rst:143
-msgid "The following option elements are supported, but not required:"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:125
-msgid "**version** - The version of the plugin"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:129
-msgid "priority"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:131
-msgid "This requires the plugin to be loaded before or after another plugin, if that plugin exists. ``requires`` should be used to require that a plugin exists. The following option elements are required:"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:133
-msgid "**plugin** - The plugin ID to base the load order on"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:134
-msgid "**priority** - The load order: 'before' or 'after'"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:137
-msgid "php_extension"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:139
-msgid "This checks PHP extensions. The follow option element is required:"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:141
-msgid "**name** - The name of the PHP extension"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:145
-msgid "**version** - The version of the extension"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:146
-msgid "**comparison** - The comparison operator to use. Defaults to =="
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:150
-msgid "The format of extension versions varies greatly among PHP extensions and is sometimes not even set. This is generally worthless to check."
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:153
-msgid "php_version"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:155
-msgid "This checks the PHP version. The following option elements are required:"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:157
-msgid "**version** - The PHP version"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:164
-msgid "Comparison Operators"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:166
-msgid "Dependencies that check versions support passing a custom operator via the ``<comparison>`` element."
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:168
-msgid "The follow are valid comparison operators:"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:170
-msgid "< or lt"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:171
-msgid "<= or le"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:172
-msgid "=, ==, or eq"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:173
-msgid "!=, <>, or ne"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:174
-msgid "> or gt"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:175
-msgid ">= or ge"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:177
-msgid "If ``<comparison>`` is not passed, the follow are used as defaults, depending upon the dependency type:"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:179
-msgid "requires->elgg_release: >="
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:180
-msgid "requires->plugin: >="
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:181
-msgid "requires->php_extension: ="
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:182
-msgid "all conflicts: ="
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:186
-msgid "You must escape < and > to ``&gt;`` and ``&lt;``. For comparisons that use these values, it is recommended you use the string equivalents instead!"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:189
-msgid "Quick Examples"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:192
-msgid "Requires Elgg 1.8.2 or higher"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:202
-msgid "Requires the Groups plugin is active"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:212
-msgid "Requires to be after the Profile plugin if Profile is active"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:223
-msgid "Conflicts with The Wire plugin"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:234
-msgid "Requires at least PHP version 5.3"
-msgstr ""
-
-#: ../../guides/plugins/dependencies.rst:244
-msgid "Suggest the TidyPics plugin is loaded"
 msgstr ""
 
 #: ../../guides/plugins/plugin-skeleton.rst:2

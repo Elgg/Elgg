@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-11 11:12+0200\n"
+"POT-Creation-Date: 2021-07-09 15:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -854,18 +854,18 @@ msgid "Set up the database and point the web server to your Elgg folder (all don
 msgstr ""
 
 #: ../../intro/install/easyphp.rst:21
-msgid "(Ignore this step for v5.3 or later) From the tray icon go Configuration/Apache and uncomment this line::"
+msgid "(Ignore this step for v5.3 or later) From the tray icon go Configuration/Apache and uncomment this line:"
 msgstr ""
 
-#: ../../intro/install/easyphp.rst:26
+#: ../../intro/install/easyphp.rst:28
 msgid "(Ignore this step for v5.3 or later) Change ``AllowOverride None`` to ``AllowOverride All`` in the relevant directory entry in Configuration/Apache"
 msgstr ""
 
-#: ../../intro/install/easyphp.rst:29
-msgid "(Ignore this step for v5.3 or later) From the tray icon fo Configuration/PHP and uncomment this line::"
+#: ../../intro/install/easyphp.rst:31
+msgid "(Ignore this step for v5.3 or later) From the tray icon fo Configuration/PHP and uncomment this line:"
 msgstr ""
 
-#: ../../intro/install/easyphp.rst:34
+#: ../../intro/install/easyphp.rst:38
 msgid "A reboot is best Elgg should run via http://127.0.0.1"
 msgstr ""
 
@@ -1002,18 +1002,18 @@ msgid "Installing Elgg on Ubuntu Linux"
 msgstr ""
 
 #: ../../intro/install/ubuntu.rst:6
-msgid "Install the dependencies::"
-msgstr ""
-
-#: ../../intro/install/ubuntu.rst:14
-msgid "Edit ``/etc/apache2/sites_available/default`` to enable .htaccess processing (set AllowOverride to All)"
-msgstr ""
-
-#: ../../intro/install/ubuntu.rst:15
-msgid "Restart Apache: ``sudo /etc/init.d/apache2 restart``"
+msgid "Install the dependencies:"
 msgstr ""
 
 #: ../../intro/install/ubuntu.rst:16
+msgid "Edit ``/etc/apache2/sites_available/default`` to enable .htaccess processing (set AllowOverride to All)"
+msgstr ""
+
+#: ../../intro/install/ubuntu.rst:17
+msgid "Restart Apache: ``sudo /etc/init.d/apache2 restart``"
+msgstr ""
+
+#: ../../intro/install/ubuntu.rst:18
 msgid "Follow the :doc:`standard installation instructions <../install>`"
 msgstr ""
 
@@ -1026,14 +1026,14 @@ msgid "Examples of \"virtual hosts\" are Rackspace, Amazon EC2, etc."
 msgstr ""
 
 #: ../../intro/install/virtual.rst:8
-msgid "For installation to proceed successfully, modify the .htaccess file in the root, and uncomment::"
+msgid "For installation to proceed successfully, modify the .htaccess file in the root, and uncomment:"
 msgstr ""
 
-#: ../../intro/install/virtual.rst:13
-msgid "To be::"
+#: ../../intro/install/virtual.rst:15
+msgid "To be:"
 msgstr ""
 
-#: ../../intro/install/virtual.rst:17
+#: ../../intro/install/virtual.rst:21
 msgid "Then follow the :doc:`standard installation instructions <../install>`."
 msgstr ""
 
@@ -1054,86 +1054,86 @@ msgid "Once the installation is completed, it will prompt you to start the XAMPP
 msgstr ""
 
 #: ../../intro/install/xampp.rst:13
-msgid "Open ``C:\\xampp\\apache\\conf\\httpd.conf`` file with notepad and uncomment these lines::"
-msgstr ""
-
-#: ../../intro/install/xampp.rst:19
-msgid "Edit the php.ini file and change ``arg_separator.output = &amp;amp;`` to ``arg_separator.output = &``"
+msgid "Open ``C:\\xampp\\apache\\conf\\httpd.conf`` file with notepad and uncomment these lines:"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:21
-msgid "Go to ``C:\\xampp`` and double click on the xampp_start application"
-msgstr ""
-
-#: ../../intro/install/xampp.rst:22
-msgid "Go to http://localhost/"
+msgid "Edit the php.ini file and change ``arg_separator.output = &amp;amp;`` to ``arg_separator.output = &``"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:23
-msgid "Change your server's password in the security option"
+msgid "Go to ``C:\\xampp`` and double click on the xampp_start application"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:24
-msgid "Go to http://localhost/phpmyadmin and login with the username and the password of your server"
+msgid "Go to http://localhost/"
+msgstr ""
+
+#: ../../intro/install/xampp.rst:25
+msgid "Change your server's password in the security option"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:26
-msgid "Create a database called \"elgg\" in your phpmyadmin panel"
-msgstr ""
-
-#: ../../intro/install/xampp.rst:27
-msgid "Now download Elgg. Unzip it and extract to ``C:\\xampp\\htdocs\\sites\\elgg``"
+msgid "Go to http://localhost/phpmyadmin and login with the username and the password of your server"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:28
-msgid "Create the Elgg data folder as ``C:\\xampp\\htdocs\\sites\\data``"
+msgid "Create a database called \"elgg\" in your phpmyadmin panel"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:29
-msgid "Go to http://localhost/sites/elgg"
+msgid "Now download Elgg. Unzip it and extract to ``C:\\xampp\\htdocs\\sites\\elgg``"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:30
+msgid "Create the Elgg data folder as ``C:\\xampp\\htdocs\\sites\\data``"
+msgstr ""
+
+#: ../../intro/install/xampp.rst:31
+msgid "Go to http://localhost/sites/elgg"
+msgstr ""
+
+#: ../../intro/install/xampp.rst:32
 msgid "You will be taken to the Elgg installation steps. Install it and enjoy."
 msgstr ""
 
-#: ../../intro/install/xampp.rst:33
+#: ../../intro/install/xampp.rst:35
 msgid "A note on XAMPP 1.7.4 and eAccelerator"
 msgstr ""
 
-#: ../../intro/install/xampp.rst:35
+#: ../../intro/install/xampp.rst:37
 msgid "Elgg is compatible with opcode caches and it is highly recommended that you enable a PHP opcode caching tool for a faster experience.  XAMPP comes with support for eAccelerator out of the box, but unfortunately, the 1.7.4 build of XAMPP leaves out the DLL that's required.  To get eAccelerator working, follow these steps:"
 msgstr ""
 
-#: ../../intro/install/xampp.rst:41
+#: ../../intro/install/xampp.rst:43
 msgid "Download the DLL from http://eac.qme.nl/eAccelerator_v1_0_svn427_for_v5_3_5-VC6.zip"
 msgstr ""
 
-#: ../../intro/install/xampp.rst:42
+#: ../../intro/install/xampp.rst:44
 msgid "Copy eAccelerator_ts.dll to ``C:\\xampp\\php\\ext\\php_eaccelerator.dll``"
 msgstr ""
 
-#: ../../intro/install/xampp.rst:43
-msgid "Uncomment this line in ``C:\\xampp\\php\\php.ini``::"
-msgstr ""
-
-#: ../../intro/install/xampp.rst:47
-msgid "Restart apache"
-msgstr ""
-
-#: ../../intro/install/xampp.rst:49
-msgid "To verify that it is on:"
+#: ../../intro/install/xampp.rst:45
+msgid "Uncomment this line in ``C:\\xampp\\php\\php.ini``:"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:51
-msgid "Go to localhost/xampp"
-msgstr ""
-
-#: ../../intro/install/xampp.rst:52
-msgid "Click on phpinfo() from the left sidebar"
+msgid "Restart apache"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:53
+msgid "To verify that it is on:"
+msgstr ""
+
+#: ../../intro/install/xampp.rst:55
+msgid "Go to localhost/xampp"
+msgstr ""
+
+#: ../../intro/install/xampp.rst:56
+msgid "Click on phpinfo() from the left sidebar"
+msgstr ""
+
+#: ../../intro/install/xampp.rst:57
 msgid "Ctrl+F for eaccelerator.  If you get no results, eAccelerator is not active"
 msgstr ""
 

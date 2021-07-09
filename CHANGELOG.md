@@ -1,3 +1,37 @@
+<a name="4.0.0-beta.2"></a>
+### 4.0.0-beta.2  (2021-07-09)
+
+#### Contributors
+
+* Jeroen Dalsem (13)
+* Jerôme Bakker (13)
+
+#### Features
+
+* **discussions:** added quick status toggle entity menu item ([1b78dc00](https://github.com/Elgg/Elgg/commit/1b78dc009b770db09625e2cdbd31c14987e36119))
+
+
+#### Bug Fixes
+
+* **activity:**
+  * always show tabs on activity index page ([3aa6605b](https://github.com/Elgg/Elgg/commit/3aa6605b44167706ba59566c51f5335e1326d6f7))
+  * added missing breadcrumbs ([db7e2ce3](https://github.com/Elgg/Elgg/commit/db7e2ce35610c52403a1744842de80a252670f4e))
+* **cache:** invalidate caches on plugin (de)activate ([8bca339c](https://github.com/Elgg/Elgg/commit/8bca339c81fcb27918725c1605b7413f0948ffe5))
+* **core:**
+  * prevent exceptions on session save ([90345bae](https://github.com/Elgg/Elgg/commit/90345bae86c193c01ea052050458591bb3ec9e46))
+  * do not draw exception content if there already is output ([91d4f03a](https://github.com/Elgg/Elgg/commit/91d4f03ad073b95d7bc2d98aea72811d13825e60))
+  * correctly handle exceptions in error log formatter ([6d6328f1](https://github.com/Elgg/Elgg/commit/6d6328f139702658a63a0307bc7bc6431c382cb7))
+* **icons:** update site menu icons ([7292b4c0](https://github.com/Elgg/Elgg/commit/7292b4c0d171d00167a43042c7ca1b96965c7ca2))
+* **js:** always process error messages in ajax calls ([cf070072](https://github.com/Elgg/Elgg/commit/cf0700728d148621b7fa2e00f777d6e957a40956))
+* **navigation:** prevent pluginsettings menu item name conflicts ([cbe3ef6d](https://github.com/Elgg/Elgg/commit/cbe3ef6deea6ca758e0b320a0e8d482137359db6))
+* **notifications:**
+  * dont pass recipient user to default message body ([91d45a26](https://github.com/Elgg/Elgg/commit/91d45a26c3269407e406d5694e8413ca4392267b))
+  * show correct notification labels ([9a285350](https://github.com/Elgg/Elgg/commit/9a2853507e816c398a8aba1b1cdfc97783c4b742))
+* **search:** do not show social and entity menu in search results ([33413407](https://github.com/Elgg/Elgg/commit/33413407b110086d3d1d5ad5b4140bd7d8df0dc9))
+* **settings:** english and site language not correctly disabled ([76a099e3](https://github.com/Elgg/Elgg/commit/76a099e3a608694d6041d2e607ad6d32cd530faf))
+* **views:** number formatter not always returning expected results ([f5d25392](https://github.com/Elgg/Elgg/commit/f5d253921bd4cea4e0360d3c15ef6c189d2b3798))
+
+
 <a name="4.0.0-beta.1"></a>
 ### 4.0.0-beta.1  (2021-06-11)
 
