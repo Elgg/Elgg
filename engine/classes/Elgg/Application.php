@@ -595,6 +595,7 @@ class Application {
 				"prod" => [
 					"adapter" => "mysql",
 					"host" => $conn['host'],
+					"port" => $conn['port'],
 					"name" => $conn['database'],
 					"user" => $conn['user'],
 					"pass" => $conn['password'],

@@ -895,7 +895,8 @@ return array(
 	'on' => 'På',
 	'off' => 'Av',
 
-	'number_counter:separatorr' => ".",
+	'number_counter:decimal_separator' => ".",
+	'number_counter:thousands_separator' => ",",
 	'number_counter:view:thousand' => "%sK",
 	'number_counter:view:million' => "%sM",
 	'number_counter:view:billion' => "%sB",
