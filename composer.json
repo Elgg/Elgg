@@ -60,7 +60,7 @@
     "config": {
         "process-timeout": 0,
         "platform": {
-            "php": "7.2"
+            "php": "7.2.5"
         },
         "fxp-asset": {
             "enabled": false
