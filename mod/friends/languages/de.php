@@ -12,8 +12,8 @@ return array(
 	'relationship:friendrequest:sent' => "Du hast eine Freundschaftsanfrage an %s gestellt.",
 	
 	// plugin settings
-	'friends:settings:request:description' => "Standardmäßig werden Freundschaftsanfragen, die ein Benutzer an einen anderen Benutzer stellt, ohne Nachfrage gewährt. Die Freundschaftsbeziehung zwischen den Benutzeraccounts geht allerdings nur in eine Richtung, d.h. es ist im Grunde eine einfache Möglichkeit, den Aktivitäten des anderen Benutzers zu folgen.
-Falls die Option zur Bestätigung von Freundschaftsanfragen von Benutzer A an Benutzer B aktiviert wird, wird die Freundschaftsbeziehung erst dann erstellt, wenn Benutzer B zugestimmt hat. Bei Zustimmung wird in diesem Fall die Freundschaftsbeziehung in beide Richtungen erstellt, d.h. Benutzer A wird Freund von Benutzer B und Benutzer B wird Freund von Benutzer A.",
+	'friends:settings:request:description' => "Standardmäßig kann jedes Mitglied jedes andere Mitglied zu seiner Freundesliste hinzufügen. Dadurch kann das Mitglied den Aktivitäten des anderen Mitglieds einfacher folgen auch wenn dies Freunschaftsbeziehung nicht automatisch beidseitig ist.
+Durch die Aktivierung der Option für Freundschaftsanfragen kann ein Mitglied erstmal nur anfragen, ob das andere Mitglied mit einer Freundschaftsbeziehung einverstanden ist. Wenn das andere Mitglied die Anfrage akzeptiert, wird die Freundschaftsbeziehung dann allerdings automatisch beidseitig erstellt, d.h. Mitglied A wird Freund von Mitglied B und Mitglied B wird Freund von Mitglied A.",
 	'friends:settings:request:label' => "Bestätigung für Freundschaftsanfragen aktivieren",
 	'friends:settings:request:help' => "Benutzer können die Freundschaftsanfragen annehmen oder ablehnen. Die Freundschaftsbeziehung wird bei Zustimmung in beide Richtungen erstellt.",
 	
@@ -48,10 +48,16 @@ Falls die Option zur Bestätigung von Freundschaftsanfragen von Benutzer A an Be
 	'widgets:friends:description' => "Auflistung einiger Deiner Freunde.",
 	
 	'friends:notification:request:subject' => "%s möchte mit Dir befreundet sein!",
+	'friends:notification:request:message' => "%s möchte auf %s mir Dir befreundet sein.
+
+Folge dem Link, um die Freundschaftsanfrage anzuzeigen:
+%s",
 	
 	'friends:notification:request:decline:subject' => "%s hat Deine Freundschaftsanfrage abgelehnt",
+	'friends:notification:request:decline:message' => "%s hat deine Freundschaftsanfrage abgelehnt.",
 	
 	'friends:notification:request:accept:subject' => "%s hat Deine Freundschaftsanfrage angenommen",
+	'friends:notification:request:accept:message' => "%s ist nun mit Dir befreundet.",
 	
 	'friends:action:friendrequest:revoke:fail' => "Während des Widerrufs der Freundschaftsanfrage ist ein Fehler aufgetreten. Bitte versuche es erneut.",
 	'friends:action:friendrequest:revoke:success' => "Die Freundschaftsanfragen wurde widerrufen.",
@@ -59,8 +65,8 @@ Falls die Option zur Bestätigung von Freundschaftsanfragen von Benutzer A an Be
 	'friends:action:friendrequest:decline:fail' => "Während der Ablehnung der Freundschaftsanfrage ist ein Fehler aufgetreten. Bitte versuche es erneut.",
 	'friends:action:friendrequest:decline:success' => "Die Freundschaftsanfrage wurde abgelehnt.",
 	
-	'friends:action:friendrequest:accept:fail' => "Bei der Annahme der Freundschaftsanfrage ist ein Fehler aufgetreten. Bitte versuche es erneut.",
 	'friends:action:friendrequest:accept:success' => "Die Freundschaftsanfrage wurde angenommen.",
 	
 	// notification settings
+	'friends:notification:settings:description' => 'Standardmäßige Benachrichtigungseinstellungen für Mitglieder, die Du zu Deiner Freundesliste hinzufügst.',
 );

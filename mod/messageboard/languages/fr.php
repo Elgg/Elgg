@@ -12,10 +12,8 @@ return array(
 	 */
 
 	'messageboard:board' => "Tableau de messages",
-	'messageboard:messageboard' => "tableau de messages",
 	'messageboard:none' => "Il n'y a encore rien dans ce tableau de messages",
 	'messageboard:num_display' => "Nombre de messages à afficher",
-	'messageboard:user' => "tableau de messages de %s",
 	'messageboard:owner' => 'tableau de messages de %s',
 	'messageboard:owner_history' => 'publications de %s sur le tableau de messages de %s',
 
@@ -32,7 +30,6 @@ return array(
 	'annotation:delete:messageboard:success' => "Ce message a bien été supprimé",
 	
 	'messageboard:posted' => "Votre message a bien été publié sur le tableau de messages.",
-	'messageboard:deleted' => "Vous avez bien supprimé le message.",
 
 	/**
 	 * Email messages
@@ -43,7 +40,7 @@ return array(
 
 %s
 
-Pour voir les messages sur votre tableau de messages :
+Pour voir les commentaires sur votre tableau de messages :
 %s
 
 Pour voir le profil de %s :
@@ -54,7 +51,6 @@ Pour voir le profil de %s :
 	 */
 
 	'messageboard:blank' => "Désolé, vous devez écrire quelque chose dans le corps du message avant de pouvoir l'enregistrer.",
-	'messageboard:notdeleted' => "Désolé, ce message n'a pas pu être supprimé.",
 
 	'messageboard:failure' => "Une erreur imprévue s'est produite lors de l'ajout de votre message. Veuillez réessayer.",
 

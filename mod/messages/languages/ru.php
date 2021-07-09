@@ -37,11 +37,9 @@ return array(
 	*/
 
 	'messages:posted' => "Ваше сообщение успешно отправлено.",
-	'messages:success:delete:single' => 'Сообщение удалено',
 	'messages:success:delete' => 'Сообщения удалены',
 	'messages:success:read' => 'Сообщение было отмечено как прочитаное',
 	'messages:error:messages_not_selected' => 'Сообщение не выбрано',
-	'messages:error:delete:single' => 'Не удается удалить сообщение',
 
 	/**
 	* Email messages

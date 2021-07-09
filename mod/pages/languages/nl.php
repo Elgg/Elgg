@@ -27,9 +27,7 @@ return array(
 	'annotation:delete:page:success' => 'De paginarevisie is succesvol verwijderd.',
 	'annotation:delete:page:fail' => 'De paginarevisie kon niet worden verwijderd.',
 
-	'pages:delete' => "Verwijder deze pagina",
 	'pages:history' => "Paginageschiedenis",
-	'pages:view' => "Bekijk pagina",
 	'pages:revision' => "Revisie",
 
 	'pages:navigation' => "Paginanavigatie",
@@ -37,12 +35,7 @@ return array(
 	'pages:notify:summary' => 'Nieuwe pagina met de titel %s',
 	'pages:notify:subject' => "Een nieuwe pagina: %s",
 	'pages:notify:body' =>
-'%s schreef een nieuwe pagina: %s
-
-%s
-
-Om de pagina te bekijken en te reageren, klik hier:
-%s',
+'',
 
 	'pages:more' => 'Meer pagina\'s',
 	'pages:none' => 'Nog geen pagina\'s aangemaakt',
@@ -63,8 +56,6 @@ Om de pagina te bekijken en te reageren, klik hier:
 	'pages:description' => 'Jouw tekst',
 	'pages:tags' => 'Tags',
 	'pages:parent_guid' => 'Hoofdpagina',
-	'pages:access_id' => 'Toegang',
-	'pages:write_access_id' => 'Schrijfrechten',
 
 	/**
 	 * Status and error messages
@@ -74,8 +65,6 @@ Om de pagina te bekijken en te reageren, klik hier:
 	'pages:notsaved' => 'Pagina kon niet worden opgeslagen',
 	'pages:error:no_title' => 'Je moet een titel opgeven voor deze pagina.',
 	'entity:delete:object:page:success' => 'Pagina succesvol verwijderd',
-	'pages:revision:delete:success' => 'De paginarevisie is succesvol verwijderd.',
-	'pages:revision:delete:failure' => 'De paginarevisie kon niet worden verwijderd.',
 
 	/**
 	 * History
@@ -89,13 +78,6 @@ Om de pagina te bekijken en te reageren, klik hier:
 	'pages:num' => 'Aantal pagina\'s om weer te geven',
 	'widgets:pages:name' => 'Pagina\'s',
 	'widgets:pages:description' => "Toon een lijst van je pagina's",
-
-	/**
-	 * Submenu items
-	 */
-	'pages:label:view' => "Bekijk pagina",
-	'pages:label:edit' => "Bewerk pagina",
-	'pages:label:history' => "Paginageschiedenis",
 
 	'pages:newchild' => "Maak een subpagina",
 );

@@ -20,7 +20,6 @@ return array(
 
 	'login' => "Anmelden",
 	'loginok' => "Du bist nun angemeldet.",
-	'loginerror' => "Die Anmeldung ist fehlgeschlagen. Bitte prüfe, ob Deine Eingaben für die Anmeldung richtig sind und versuche es noch einmal.",
 	'login:empty' => "Benutzername/Email-Adresse und Passwort müssen eingegeben werden.",
 	'login:baduser' => "Dein Benutzeraccount ist nicht verfügbar.",
 	'auth:nopams' => "Interner Fehler. Keine Methode zur Benutzerauthentifizierung installiert.",
@@ -45,37 +44,20 @@ return array(
 	'exception:title' => "Schwerwiegender Fehler.",
 	'exception:contact_admin' => 'Es ist ein nicht behebbarer Fehler aufgetreten. Der Fehler wurde protokolliert. Wenn Du der Seitenadministrator bist, prüfe bitte die Konfiguration in elgg-config/settings.php. Andernfalls leite bitte folgende Informationen an den Seitenadministrator weiter:',
 
-	'actionundefined' => "Die angeforderte Aktion (%s) ist im System nicht definiert.",
 	'actionnotfound' => "Die Datei für die Ausführung der Aktion %s wurde nicht gefunden.",
-	'actionloggedout' => "Entschuldigung, Du kannst diese Aktion nicht ausführen während Du nicht angemeldet bist.",
 	'actionunauthorized' => 'Du bist nicht authorisiert, diese Aktion auszuführen',
 
 	'ajax:error' => 'Bei der Durchführung des AJAX-Aufrufs ist ein Fehler aufgetreten. Vielleicht ist die Verbindung zum Server verloren gegangen.',
 	'ajax:not_is_xhr' => 'Ein direkter Aufruf von Ajax-Views ist nicht erlaubt.',
 
-	'PluginException:MisconfiguredPlugin' => "%s (GUID: %s) ist ein falsch konfiguriertes Plugin. Es wurde deaktiviert. Im Elgg-Wiki sind einige mögliche Ursachen für das Problem beschrieben (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (GUID: %s) kann nicht gestartet werden und wurde deaktiviert. Ursache: %s.',
 	'PluginException:InvalidID' => "%s ist eine ungültig Plugin-ID.",
 	'PluginException:InvalidPath' => "%s ist ungültiger Plugin-Dateipfad.",
-	'PluginException:InvalidManifest' => 'Ungültige Manifest-Datei für das Plugin %s.',
-	'PluginException:InvalidPlugin' => '%s ist kein zulässiges Plugin.',
-	'PluginException:InvalidPlugin:Details' => '%s ist kein zulässiges Plugin: %s.',
-	'PluginException:NullInstantiated' => 'Ein ElggPlugin-Objekt kann nicht mit NULL instanziiert werden. Es muss eine GUID, eine Plugin-ID oder ein vollständiger Dateipfad übergeben werden.',
 	'ElggPlugin:MissingID' => 'Fehlende Plugin-ID (GUID: %s).',
-	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'Die benötigte Datei "%s" kann nicht gefunden werden.',
-	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Die Manifest-Datei enthält den ungültigen Requires-Typ "%s".',
-	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Die Manifest-Datei enthält den ungültigen Provides-Typ "%s".',
-	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Nicht auflösbare %s-Abhängigkeit "%s" im Plugin %s. Plugins können nicht mit etwas in Konflikt stehen oder etwas voraussetzen, das sie selbst bereitstellen!',
-	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Plugin-Konflikt mit Plugin: %s.',
-	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Die Plugin-Datei "elgg-plugin.php" ist vorhanden aber sie kann nicht gelesen werden.',
 	'ElggPlugin:Error' => 'Fehler in Plugin.',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Einbindung von %s für Plugin %s (GUID: %s) an %s gescheitert.',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Einbindung von %s für Plugin %s (GUID: %s) an %s gescheitert.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Öffnen des Views-Verzeichnis für Plugin %s (GUID: %s) an %s gescheitert.',
-	'PluginException:NoPluginName' => "Der Name des Plugins kann nicht ermittelt werden.",
-	'PluginException:ParserError' => 'Das Parsen der Manifest-Datei mit API-Version %s des Plugins %s ist fehlgeschlagen.',
-	'PluginException:NoAvailableParser' => 'Es steht kein Parser für die Manifest-API-Version %s des Plugins %s zur Verfügung.',
-	'PluginException:ParserErrorMissingRequiredAttribute' => "Fehlendes Required-'%s'-Attribut in der Manifest-Datei des Plugins %s.",
 	'ElggPlugin:InvalidAndDeactivated' => '%s ist kein gültiges Plugin und wurde deshalb deaktiviert.',
 	'ElggPlugin:activate:BadConfigFormat' => 'Die Plugin-Datei "elgg-plugin.php" hat keine serialisierbares Array zurückgegeben.',
 	'ElggPlugin:activate:ConfigSentOutput' => 'Die Plugin-Datei "elgg-plugin.php" hat eine Ausgabe erzeugt.',
@@ -110,16 +92,11 @@ return array(
 	'Security:InvalidPasswordCharacterRequirementsException' => "Das eingegebene Passwort genügt nicht den Anforderungen bezüglich der Anzahl der Zeichen.",
 	'Security:InvalidPasswordLengthException' => "Das eingegebene Passwort genügt nicht der Anforderung einer Mindestlänge von %s Zeichen.",
 
-	'pageownerunavailable' => 'Warnung: Der Seiten-Eigentümer %d ist nicht erreichbar!',
 	'viewfailure' => 'In der View %s ist ein interner Fehler aufgetreten.',
-	'view:missing_param' => "Der notwendige Parameter '%s' fehlt in der View %s.",
 	'changebookmark' => 'Bitte ändere Dein Lesezeichen für diese Seite.',
-	'noaccess' => 'Der Seiteninhalt, den Du aufgerufen hast, wurde entweder gelöscht oder Du hast nicht die notwendige Berechtigung, um darauf zuzugreifen.',
 	'error:missing_data' => 'Bei Deiner Anfrage fehlten einige notwendige Daten.',
 	'save:fail' => 'Beim Speichern Deiner Daten ist ein Fehler aufgetreten.',
 	'save:success' => 'Deine Daten wurden gespeichert.',
-
-	'forward:error' => 'Entschuldigung. Bei der Weiterleitung zu einer anderen Seite ist ein Fehler aufgetreten.',
 
 	'error:default:title' => 'Hoppla...',
 	'error:default:content' => 'Hoppla...irgendetwas ist schiefgegangen.',
@@ -189,15 +166,12 @@ return array(
 	'access:label:logged_out' => "Nicht-angemeldete Benutzer",
 	'access:label:friends' => "Freunde",
 	'access' => "Zugangslevel",
-	'access:overridenotice' => "Anmerkung: aufgrund der Einstellungen dieser Gruppe wird dieser Inhalt nur für Gruppenmitglieder sichtbar sein.",
 	'access:limited:label' => "Beschränkt",
 	'access:help' => "Der Zugangslevel",
 	'access:read' => "Zugangslevel",
 	'access:write' => "Schreibberechtigung",
 	'access:admin_only' => "nur Administratoren",
-	'access:missing_name' => "Name des Zugangslevels ist nicht verfügbar.",
-	'access:comments:change' => "Dieser Diskussionsbeitrag ist derzeit aufgrund seines Zugangslevels nur für einen eingeschränkten Kreis von Mitgliedern sichtbar. Bitte denke daran, dass durch eine Änderung des Zugangslevels möglicherweise weitere Personen diesen Diskussionsbeitrag sehen können.",
-
+	
 /**
  * Dashboard and widgets
  */
@@ -207,7 +181,6 @@ return array(
 
 	'widgets:add' => 'Widgets hinzufügen',
 	'widgets:add:description' => "Klicke auf eines der unten aufgelisteten Widgets, um es zu Deiner Seite hinzuzufügen.",
-	'widgets:position:fixed' => '(Feste Position auf der Seite)',
 	'widget:unavailable' => 'Du hast dieses Widget bereits hinzugefügt.',
 	'widget:numbertodisplay' => 'Anzahl der anzuzeigenden Einträge.',
 
@@ -301,7 +274,6 @@ return array(
 	'river:delete:success' => 'Der Aktivitäts-Eintrag wurde gelöscht.',
 	'river:delete:fail' => 'Das Löschen des Aktivitäts-Eintrags ist fehlgeschlagen.',
 	'river:delete:lack_permission' => 'Du hast keine ausreichende Berechtigung, um diesen Aktivitäts-Eintrag zu löschen.',
-	'river:can_delete:invaliduser' => 'Ein Aufruf der canDelete()-Funktion für den Benutzer mit der Benutzer-GUID [%s] ist nicht möglich, da dieser Benutzer nicht existiert.',
 	'river:subject:invalid_subject' => 'Ungültiger Benutzer',
 	'activity:owner' => 'Aktivitäten anzeigen',
 
@@ -332,14 +304,6 @@ return array(
 	'viewtype:change' => "Ansicht wechseln",
 	'viewtype:list' => "Listen-Ansicht",
 	'viewtype:gallery' => "Gallerie-Ansicht",
-
-	'tag:search:startblurb' => "Einträge mit Tags passend zu '%s':",
-
-	'user:search:startblurb' => "Mitglieder passend zu '%s':",
-	'user:search:finishblurb' => "Für weitere Treffer hier klicken.",
-
-	'group:search:startblurb' => "Gruppen passend zu '%s':",
-	'group:search:finishblurb' => "Für weitere Treffer hier klicken.",
 	'search:go' => 'Los',
 	'userpicker:only_friends' => 'Nur Freunde',
 
@@ -363,7 +327,6 @@ return array(
 	'registration:userexists' => 'Dieser Benutzername ist schon vergeben.',
 	'registration:usernametooshort' => 'Dein Benutzername muss mindestens %u Zeichen lang sein.',
 	'registration:usernametoolong' => 'Dein Benutzername ist zu lang. Es sind maximal %u Zeichen zulässig.',
-	'registration:passwordtooshort' => 'Das Passwort muss mindestens %u Zeichen lang sein.',
 	'registration:dupeemail' => 'Diese Email-Adresse ist schon bei einer früheren Registrierung verwendet worden.',
 	'registration:invalidchars' => 'Entschuldigung, Dein Benutzername enthält das unzulässige Zeichen %s. Folgende Zeichen sind nicht zulässig: %s',
 	'registration:emailnotvalid' => 'Entschuldigung, die angegebene Email-Adresse ist auf dieser Seite nicht zulässig.',
@@ -453,17 +416,12 @@ return array(
 	'admin:performance:label:generic' => 'Allgemein',
 	'admin:performance:generic:description' => 'Im Folgendes ist eine Auflistung von Vorschlägen, um die Performance Deiner Webseite zu verbessern',
 	'admin:performance:simplecache' => 'Simplecache',
-	'admin:performance:simplecache:settings:warning' => "Es ist empfehlenswert, den Simplecache über die entsprechende Kofigurationsvariable in settings.php zu aktivieren.
-Die Verwendung von Simplecache verbessert die Cache-Performance.
-Bei der Konfiguration der Simplecache-Option in settings.php kann eine Datenbankanfrage bei der Bereitstellung von Javascript- und CSS-Dateien eingespart werden.",
 	'admin:performance:systemcache' => 'Systemcache',
 	'admin:performance:apache:mod_cache' => 'Apache-mod_cache',
-	'admin:performance:apache:mod_cache:warning' => 'Das mod_cache-Modul ermöglicht Cache-Handling über HTTP. Das bedeutet, die Dateien können entsprechend der im Seiten-Header hinterlegten Informationen, die festlegen, wie lange eine Seite als aktuell anzusehen ist, auf der Clientseite gecacht werden.',
 	'admin:performance:php:open_basedir' => 'PHP-open_basedir',
 	'admin:performance:php:open_basedir:not_configured' => 'Es wurden keine Beschränkungen definiert.',
 	'admin:performance:php:open_basedir:warning' => 'Ein kleiner Teil der open_basedir-Beschränkungen sind in Kraft. Dies könnte die Performance negativ beeinflussen.',
 	'admin:performance:php:open_basedir:error' => 'Ein grosser Teil der open_basedir-Beschränkungen sind in Kraft. Dies wird mit hoher Wahrscheinlichkeit die Performance negativ beeinflussen.',
-	'admin:performance:php:open_basedir:generic' => 'Wenn mit der PHP-Variable open_basedir Zugriffsbeschränkungen definiert sind, muss bei jedem Dateizugriff geprüft werden, ob dieser zulässig ist. Da Elgg eine grosse Menge an Dateizugriffen vornimmt, wird dies die Performance negativ beeinflussen. Darüber hinaus kann der PHP-Opcache Dateipfade nicht im Speicher cachen und muss diese bei jedem Dateizugriff erneut neu auflösen.',
 	
 	'admin:statistics' => 'Statistiken',
 	'admin:server' => 'Server',
@@ -563,15 +521,7 @@ Bei der Konfiguration der Simplecache-Option in settings.php kann eine Datenbank
 
 	'admin:widget:admin_welcome:registration' => "Die Erstellung neuer Benutzeraccounts ist derzeit deaktiviert! Du kannst die Neuregistrierung auf der Seite %s aktivieren.",
 	'admin:widget:admin_welcome:admin_overview' =>
-"Der Admin-Bereich ist in Unterseiten aufgeteilt, die über das Menu auf der rechten Seite aufgerufen werden können. Der Admin-Bereich ist
- in vier Abschnitte aufgeteilt:
-	<dl>
-		<dt>Administrieren</dt><dd>Alltägliche Aufgaben wie die Benutzerverwaltung, Kontrolle gemeldeter Inhalte oder das Aktivieren eines Plugins.</dd>
-		<dt>Konfigurieren</dt><dd>Gelegentlich notwendige Aufgaben wie die Konfiguration des Namens der Seite oder die Änderung von Plugineinstellungen.</dd>
-		<dt>Information</dt><dd>Informationen über Deine Seite wie beispielsweise Inhalts-Statistiken.</dd>
-		<dt>Entwickeln</dt><dd>Für Entwickler, die ein Plugin oder ein Theme testen wollen. (Ein Entwickler-Plugin muss aktiviert sein, damit dieser Abschnitt angezeigt wird.)</dd>
-	</dl>
-	",
+"",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Wirf auch einen Blick auf die zusätzlichen Resourcen, die Du über die Links in der Fußzeile des Admin-Bereichs aufrufen kannst. Und vielen Dank, dass Du Elgg verwendest!',
@@ -625,11 +575,8 @@ Bei der Konfiguration der Simplecache-Option in settings.php kann eine Datenbank
 	'admin:security:information' => 'Informationen',
 	'admin:security:information:description' => 'Im Folgenden sind einige Vorschläge zur Verbesserung der Sicherheit Deiner Webseite aufgelistet.',
 	'admin:security:information:https' => 'Verwendung von HTTPS geschützt',
-	'admin:security:information:https:warning' => "Es ist sehr zu empfehlen, HTTPS zu verwenden, um Deine Webseite zu schützen. Dies verringert das Risiko, das Daten (z.B. Passwörter) auf dem Weg von Server zum Client oder zurück ausgespäht werden können.",
 	'admin:security:information:wwwroot' => 'Hauptverzeichnis der Webseite schreibbar',
-	'admin:security:information:wwwroot:error' => "Es sollte nicht sein, dass das Installationsverzeichnis Deiner Elgg-Webseite nach Abschluss der Installation schreibbar ist. Ansonsten besteht die Gefahr, dass böswillige Besucher der Webseite dort unerwünschten Code ablegen können.",
 	'admin:security:information:validate_input' => 'Input validation',
-	'admin:security:information:validate_input:error' => "Irgend ein 3rd-Party-Plugin hat die Validierung von Eingabefeldern auf Deiner Webseite deaktiviert. Dadurch besteht die Gefahr, dass Besucher möglicherweise gefährliche Inhalte (z.B. Cross-Site-Skripte usw.) huchladen könnten.",
 	'admin:security:information:password_length' => 'Minimale Länge von Passwörtern',
 	'admin:security:information:password_length:warning' => "Es ist empfehlenswert, eine Mindestlänge von 6 Zeichen für Passwörter zu verlangen.",
 	'admin:security:information:username_length' => 'Minimale Länge von Benutzernamen',
@@ -637,7 +584,6 @@ Bei der Konfiguration der Simplecache-Option in settings.php kann eine Datenbank
 	'admin:security:information:php:session_gc' => "PHP-Session-Cleanup",
 	'admin:security:information:php:session_gc:chance' => "Cleanup-Wahrscheinlichkeit: %s%%",
 	'admin:security:information:php:session_gc:lifetime' => "Session-Lebensdauer %s Sekunden",
-	'admin:security:information:php:session_gc:error' => "Es ist empfehlenswert, für die PHP-Variablen 'session.gc_probability' und 'session.gc_divisor' in den PHP-Einstellungen auf Deinem Server (z.B. in php.ini) sinnvolle Werte zu setzen. Dadurch werden in regelmäßigen Abständen die abgelaufenen PHP-Sessions aus der Datenbank bereinigt und Benutzer können die alten Sessions nicht wieder verwenden.",
 	'admin:security:information:htaccess:hardening' => "Absicherungen in der .htaccess-Datei",
 	'admin:security:information:htaccess:hardening:help' => "Es ist möglich, mit Hilfe der .htaccess-Datei von Elgg den Zugriff auf bestimmte Dateien zu blockieren und dadurch die Sicherheit auf Deinem Server zu verbessern. Für weitergehende Informationen schau in die .htaccess-Datei und lies die erläuternden Kommentare dazu.",
 	
@@ -679,8 +625,6 @@ Bei der Konfiguration der Simplecache-Option in settings.php kann eine Datenbank
 	'admin:security:settings:email_require_confirmation:help' => 'Bevor die neue Emailadresse verwendet werden kann muss die Änderung bestätigt werden. Nach der Änderung der Emailadresse wird an die alte Mailadresse auch noch eine Benachrichtigung gesendet.',
 
 	'admin:security:settings:session_bound_entity_icons' => 'Session-gebundene Entitäts-Bilder',
-	'admin:security:settings:session_bound_entity_icons:help' => 'Entitäts-Icons können standardmäßig an die PHP-Session gebunden sein. In diesem Fall sind auch die URLs dieser Icons Session-spezifisch.
-Bei Session-gebundenen Icons können die zugehörigen URLs nicht von unterschiedlichen PHP-Sessions verwendet werden. Dies bedeutet auch, dass ein Caching dieser URLs nur innerhalb der jeweils zugehörigen Session funktioniert.',
 	
 	'admin:security:settings:site_secret:intro' => 'Elgg verwendet einen seitenspezifischen Geheimschlüssel, um darauf basierend Sicherheits-Token zu generieren, die für verschiedene Authentifizierungszwecke verwendet werden.',
 	'admin:security:settings:site_secret:regenerate' => "Geheimschlüssel neu erzeugen",
@@ -822,22 +766,10 @@ Bei Session-gebundenen Icons können die zugehörigen URLs nicht von unterschied
 	'admin:server:label:upload_max_filesize' => 'PHP-Einstellung von upload_max_filesize',
 	'admin:server:warning:post_max_too_small' => '(Bemerkung: Der Wert von post_max_size muss größer als dieser Wert sein, damit Uploads dieser Größe möglich sind)',
 	'admin:server:label:memcache' => 'Memcache',
-	'admin:server:memcache:inactive' => '
-		Memcache ist auf diesem Server nicht eingerichtet oder es wurde in der Konfigurationsdatei von Elgg noch nicht aktiviert.
-		Für eine bessere Performance ist es empfehlenswert, Memcache (oder Redis) auf dem Server zu installieren und einzurichten und auch die Elgg-Konfigurationdatei entsprechend anzupassen.
-',
 
 	'admin:server:label:redis' => 'Redis',
-	'admin:server:redis:inactive' => '
-		Redis ist auf diesem Server nicht eingerichtet oder es wurde in der Konfigurationsdatei von Elgg noch nicht aktiviert.
-		Für eine bessere Performance ist es empfehlenswert, Redis (oder Memcache) auf dem Server zu installieren und einzurichten und auch die Elgg-Konfigurationdatei entsprechend anzupassen.
-',
 
 	'admin:server:label:opcache' => 'OPcache',
-	'admin:server:opcache:inactive' => '
-		OPcache ist auf diesem Server nicht installiert oder nicht aktiviert.
-		Für eine bessere Performance ist es empfehlenswert, OPcache auf dem Server zu installieren und einzurichten.
-',
 	
 	'admin:server:requirements:php_extension' => "PHP-Erweiterung: %s",
 	'admin:server:requirements:php_extension:required' => "Diese PHP-Erweiterung ist notwendig, damit PHP fehlerfrei funktionieren kann.",
@@ -882,8 +814,6 @@ Bei Session-gebundenen Icons können die zugehörigen URLs nicht von unterschied
 
 	'admin:configure_utilities:default_widgets' => 'Standard-Widgets',
 	'admin:default_widgets:unknown_type' => 'Unbekannter Widget-Typ.',
-	'admin:default_widgets:instructions' => 'Hinzufügen, Entfernen, Positionieren und Konfigurieren der standardmäßig anzuzeigenden Widgets für die gewünschte Seite.
-Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community-Seite betreffen.',
 
 	'admin:robots.txt:instructions' => "Bearbeite im Folgenden die robots.txt-Datei dieser Seite:",
 	'admin:robots.txt:plugins' => "Plugins fügen das Folgende zur robots.txt-Datei hinzu:",
@@ -891,8 +821,6 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'admin:robots.txt:physical' => "Die Konfiguration des Inhalts der robots.txt-Datei ist nicht möglich, da auf dem Server bereits eine robots.txt-Datei vorhanden ist.",
 
 	'admin:maintenance_mode:default_message' => 'Diese Community-Seite ist aufgrund von Wartungsarbeiten derzeit nicht verfügbar.',
-	'admin:maintenance_mode:instructions' => 'Der Wartungs-Modus sollte während einer Aktualisierung der Community-Seite oder anderen größeren Änderungen an der Seite aktiviert werden.
-		Wenn er aktiviert ist, können sich nur Admins anmelden und auf der Community-Seite browsen.',
 	'admin:maintenance_mode:mode_label' => 'Wartungs-Modus',
 	'admin:maintenance_mode:message_label' => 'Die Nachricht, die Benutzern angezeigt wird, wenn der Wartungsmodus aktiviert ist.',
 	'admin:maintenance_mode:saved' => 'Die Einstellungen für den Wartungs-Modus wurden gespeichert.',
@@ -1066,7 +994,6 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 
 	'content' => "Beiträge",
 	'content:latest' => 'Letzte Aktivitäten',
-	'content:latest:blurb' => 'Oder hier klicken, um die neuesten Beiträge dieser Community-Seite zu sehen.',
 	
 	'list:out_of_bounds' => "Du hast eine Position in der Listenansicht erreicht, die größer ist als die Gesamtzahl der Listeneinträge. Es gibt Einträge in dieser Listenansicht, aber eben nicht ganz so viele.",
 	'list:out_of_bounds:link' => "Gehe zurück zur ersten Seite dieser Listenansicht.",
@@ -1126,9 +1053,6 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 
 	'on' => 'An',
 	'off' => 'Aus',
-
-	'number_counter:decimal_separator' => ",",
-	'number_counter:thousands_separator' => ".",
 	'number_counter:view:thousand' => "%sK",
 	'number_counter:view:million' => "%sM",
 	'number_counter:view:billion' => "%sB",
@@ -1158,13 +1082,6 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'useradd:subject' => 'Benutzeraccount erstellt',
 
 /**
- * System messages
- */
-
-	'systemmessages:dismiss' => "Hier klicken, um die Statusmeldung auszublenden.",
-
-
-/**
  * Messages
  */
 	'messages:title:success' => 'Erfolg',
@@ -1173,13 +1090,6 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'messages:title:help' => 'Hilfe',
 	'messages:title:notice' => 'Hinweis',
 	'messages:title:info' => 'Info',
-
-/**
- * Import / export
- */
-
-	'importsuccess' => "Das Importieren der Daten war erfolgreich.",
-	'importfail' => "Das Importieren der OpenDD-Daten ist fehlgeschlagen.",
 
 /**
  * Time
@@ -1348,14 +1258,6 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'upgrade:terminated' => 'Das Upgrade wurde durch einen Event-Handler abgebrochen.',
 	'upgrade:locked' => "Upgrade ist nicht möglich. Ein anderer Upgrade-Prozess wird momentan ausgeführt. Um die Upgrade-Sperre zu entfernen, öffne den Admin-Bereich Deiner Seite.",
 	'upgrade:unlock:success' => "Die Upgrade-Sperre wurde entfernt.",
-	'upgrade:unable_to_upgrade' => 'Die Aktualisierung ist fehlgeschlagen.',
-	'upgrade:unable_to_upgrade_info' => 'Diese Elgg-Installation kann nicht aktualisiert werden, da im views-Verzeichnis von Elgg veraltete Views-Dateien von einer älteren Elgg-Version gefunden wurden, die es in der neuen Elgg-Version nicht mehr gibt. Diese Views müssen entfernt werden, damit die neue Version von Elgg ohne Probleme funktionieren kann. Wenn Du bei Deiner bestehenden Elgg-Installation keine Modifizierungen an den Dateien im views-Verzeichnis vorgenommen hast, kannst Du einfachheitshalber das views-Verzeichnis komplett löschen und es mit dem views-Verzeichnis aus dem Elgg-Paket der Version auf die Du aktualisieren willst und das Du von <a href="https://elgg.org">elgg.org</a> herunterladen kannst, ersetzen.<br /><br />
-
-Wenn Du genauere Installationsanweisungen benötigst, lese die  <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">Dokumentation über die Aktualisierung von Elgg</a>. Falls Du Hilfe benötigst, stelle Deine Frage in den <a href="https://elgg.org/discussion/all">Community Support-Foren</a>.',
-
-	'update:oauth_api:deactivated' => 'OAuth API (bisher OAuth Lib genannt) wurde während der Seitenaktualisierung deaktiviert. Bitte aktiviere die API manuell, falls sie benötigt wird.',
-	'upgrade:site_secret_warning:moderate' => "Es ist empfehlenswert, den Geheimschlüssel Deiner Community-Seite neu erzeugen zu lassen, um die Sicherheit für Deine Seite zu verbessern. Siehe Konfigurieren &gt; Einstellungen &gt; Erweiterte Einstellungen",
-	'upgrade:site_secret_warning:weak' => "Wir empfehlen nachdrücklich, den Geheimschlüssel Deiner Community-Seite neu erzeugen zu lassen, um die Sicherheit für Deine Seite zu verbessern. Siehe Konfigurieren &gt; Einstellungen &gt; Erweiterte Einstellungen",
 
 	'admin:pending_upgrades' => 'Es gibt ausstehende Aktualisierungen auf Deiner Community-Seite. Du solltest diese baldmöglichst durchführen.',
 	'admin:view_upgrades' => 'Ausstehende Aktualisierungen anzeigen.',
@@ -1363,8 +1265,6 @@ Wenn Du genauere Installationsanweisungen benötigst, lese die  <a href="http://
 	'collection:object:elgg_upgrade' => 'Community-Seite-Aktualisierungen',
 	'admin:upgrades:none' => 'Deine Installation ist aktuell!',
 
-	'upgrade:item_count' => 'Es gibt <b>%s</b> Elemente, die aktualisiert werden müssen.',
-	'upgrade:warning' => '<b>Warnung:</b> auf einer großen Community-Seite kann die Durchführung dieser Aktualisierung einige Zeit in Anspruch nehmen!',
 	'upgrade:success_count' => 'Aktualisiert:',
 	'upgrade:finished' => 'Die Aktualisierung ist abgeschlossen.',
 	'upgrade:finished_with_errors' => '<p>Die Aktualisierung wurde beendet. Allerdings sind dabei Fehler aufgetreten. Lade die Seite erneut und versuche, die Aktualisierung nochmals durchzuführen.</p></p><br />Wenn dabei wieder Fehler auftreten, schaue in der Logdatei Deines Servers nach, ob es dort Einträge gibt, die eventuell weitere Informationen zur Ursache der Fehler liefern. Du kannst auch in der <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support-Gruppe</a> auf der Elgg-Community-Seite um Hilfe bei Deinem Problem bitten.</p>',
@@ -1401,11 +1301,6 @@ Wenn Du genauere Installationsanweisungen benötigst, lese die  <a href="http://
 	'email:save:fail:password' => "Das eingegebene Passwort ist nicht gleich Deinem derzeitigen Passwort. Daher kann Deine neue Email-Adresse nicht gespeichert werden.",
 
 	'friend:newfriend:subject' => "Du bist nun mit %s befreundet!",
-	'friend:newfriend:body' => "Du bist nun mit %s befreundet!
-
-Um ihr/sein Profil aufzurufen, folge diesem Link:
-
-%s",
 
 	'email:changepassword:subject' => "Änderung des Passworts!",
 
@@ -1459,7 +1354,6 @@ Um ihr/sein Profil aufzurufen, folge diesem Link:
 	'entity:delete:object:comment:success' => "Der Kommentar wurde gelöscht.",
 	'generic_comment:blank' => "Entschuldigung, aber Du mußt zuerst etwas schreiben bevor wir Deinen Kommentar abspeichern können.",
 	'generic_comment:notfound' => "Entschuldigung, der gewünschte Kommentar konnte nicht gefunden werden.",
-	'generic_comment:notfound_fallback' => "Entschuldigung, der gewünschte Kommentar konnte nicht gefunden werden aber Du wurdest zu der Seite weitergeleitet auf der er ursprünglich hinterlassen wurde.",
 	'generic_comment:failure' => "Beim Speichern Deines Kommentars ist ein Fehler aufgetreten.",
 	'generic_comment:none' => 'Keine Kommentare.',
 	'generic_comment:title' => 'Kommentar von %s',
@@ -1474,15 +1368,12 @@ Um ihr/sein Profil aufzurufen, folge diesem Link:
 
 	'byline' => 'Von %s',
 	'byline:ingroup' => 'in der Gruppe %s',
-	'entity:default:missingsupport:popup' => 'Diese Entität kann nicht richtig angezeigt werden. Dies kann daran liegen, dass dafür ein Plugin benötigt wird, das nicht mehr installiert ist.',
-
+	
 	'entity:delete:item' => 'Beitrag',
 	'entity:delete:item_not_found' => 'Dieser Beitrag konnte nicht gefunden werden.',
 	'entity:delete:permission_denied' => 'Du hast keine ausreichende Berechtigung, um diesen Beitrag zu löschen.',
 	'entity:delete:success' => '%s wurde gelöscht.',
 	'entity:delete:fail' => 'Das Löschen von %s ist fehlgeschlagen.',
-	
-	'entity:can_delete:invaliduser' => 'Ein Aufruf der canDelete()-Funktion für den Benutzer mit der Benutzer-GUID [%s] ist nicht möglich, da dieser Benutzer nicht existiert.',
 
 /**
  * Annotations
@@ -1500,7 +1391,6 @@ Um ihr/sein Profil aufzurufen, folge diesem Link:
 	'actiongatekeeper:timeerror' => 'Das Authentifizierungs-Token für die die Seite, die Du betrachtet hast, ist abgelaufen. Bitte lade die Seite neu und versuche es noch einmal.',
 	'actiongatekeeper:pluginprevents' => 'Entschuldigung, die Verarbeitung der von Dir eingegeben Daten ist fehlgeschlagen.',
 	'actiongatekeeper:uploadexceeded' => 'Die Dateigröße der hochgeladenen Datei(en) übersteigt das Limit, das vom Administrator dieser Seite eingestellt worden ist.',
-	'actiongatekeeper:crosssitelogin' => "Entschuldigung, die Anmeldung zu dieser Webseite von einer anderen Webadresse ist nicht erlaubt. Bitte versuche es noch einmal von der richtigen Webadresse aus.",
 
 /**
  * Word blacklists
@@ -1513,7 +1403,6 @@ Um ihr/sein Profil aufzurufen, folge diesem Link:
  */
 
 	'js:security:token_refresh_failed' => 'Verbindung mit %s fehlgeschlagen. Eventuell wird das Speichern neuer Inhalte fehlschlagen. Bitte lade die Seite neu.',
-	'js:security:token_refreshed' => 'Verbindung mit %s wiederhergestellt!',
 	'js:lightbox:current' => "Bild %s von %s",
 
 /**

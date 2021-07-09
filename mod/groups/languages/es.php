@@ -18,7 +18,6 @@ return array(
 	'groups:all' => "Todos los grupos",
 	'groups:add' => "Crear un nuevo grupo",
 	'groups:edit' => "Editar grupo",
-	'groups:delete' => 'Borrar grupo',
 	'groups:membershiprequests' => 'Administrar solicitudes de uni&oacute;n a grupos',
 	'groups:membershiprequests:pending' => 'Administrar solicitudes de uni&oacute;n (%s)',
 	'groups:invitations' => 'Invitaciones de grupo',
@@ -66,7 +65,6 @@ return array(
 
 	'groups:nofriendsatall' => 'No hay amigos para invitar',
 	'groups:group' => "Grupo",
-	'groups:search:tags' => "etiqueta",
 	'groups:search:title' => "Búsqueda de grupos etiquetados con  '%s'",
 	'groups:search:none' => "No se encontraron grupos que coincidan",
 	'groups:search_in_group' => "Buscar en este grupo",
@@ -134,7 +132,6 @@ return array(
 	/**
 	 * Action messages
 	 */
-	'groups:deletewarning' => "&iquest;Seguro que deseas borrar este grupo? No se puede deshacer",
 
 	'groups:invitekilled' => 'El invitado ha sido eliminado.',
 	'groups:joinrequestkilled' => 'La solicitud ha sido borrada.',

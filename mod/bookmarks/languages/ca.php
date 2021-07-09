@@ -61,5 +61,4 @@ return array(
 	 */
 
 	'bookmarks:save:failed' => "No es pot desar l'adreça interés. Siusplau, torna-ho a provar.",
-	'bookmarks:unknown_bookmark' => 'No es pot trobar l\'enllaç especificat.',
 );

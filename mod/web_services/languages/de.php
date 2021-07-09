@@ -6,7 +6,6 @@
  */
 
 return array(
-	'APIException:ApiResultUnknown' => "Der Typ der API-Rückgabe ist unbekannt. Das sollte nicht passieren.",
 	'APIException:MissingParameterInMethod' => "Fehlender Parameter %s in Methode %s.",
 	'APIException:ParameterNotArray' => "%s scheint kein Feld zu sein.",
 	'APIException:UnrecognisedTypeCast' => "Unbekannter Typ in Cast %s für Variable '%s' in Methode '%s'.",
@@ -14,7 +13,6 @@ return array(
 	'APIException:FunctionParseError' => "%s(%s) ergab einen Parsing-Fehler.",
 	'APIException:FunctionNoReturn' => "%s(%s) lieferte keinen Rückgabewert.",
 	'APIException:APIAuthenticationFailed' => "Beim Aufruf der Methode schlug die API-Authentifizierung fehl.",
-	'APIException:UserAuthenticationFailed' => "Beim Aufruf der Methode schlug die Benutzer-Authentifizierung fehl.",
 	'APIException:MethodCallNotImplemented' => "Der Methoden-Aufruf '%s' ist nicht implementiert.",
 	'APIException:FunctionDoesNotExist' => "Die Funktion für die Methode '%s' kann nicht aufgerufen werden.",
 	'APIException:AlgorithmNotSupported' => "Algorithmus '%s' wird nicht unterstützt oder wurde deaktiviert.",
@@ -26,17 +24,12 @@ return array(
 	'APIException:MissingTime' => "Fehlender X-Elgg-time Header.",
 	'APIException:MissingNonce' => "Fehlender X-Elgg-nonce Header.",
 	'APIException:TemporalDrift' => "Epoch-Fehler: X-Elgg-time liegt zu weit in der Vergangenheit oder Zukunft.",
-	'APIException:NoQueryString' => "Keine Daten im Query-String.",
 	'APIException:MissingPOSTHash' => "Fehlender X-Elgg-posthash Header.",
 	'APIException:MissingPOSTAlgo' => "Fehlender X-Elgg-posthash_algo Header.",
 	'APIException:MissingContentType' => "Content-Typ für POST-Daten fehlt.",
-	'SecurityException:APIAccessDenied' => "Entschuldigung, der API-Zugriff wurde durch den Administrator deaktiviert.",
-	'SecurityException:NoAuthMethods' => "Es konnte keine Authentifizierungs-Methode gefunden werden, um diesen API-Zugriff zu authentifizieren.",
 	'SecurityException:authenticationfailed' => "Der Benutzer konnte nicht authentifiziert werden.",
-	'InvalidParameterException:APIMethodOrFunctionNotSet' => "Die Methode oder Funktion wurde im Aufruf in expose_method() nicht gesetzt.",
 	'InvalidParameterException:APIParametersArrayStructure' => "Die Parameter-Feldstruktur im Aufruf von Expose-Methode '%s' ist falsch.",
 	'InvalidParameterException:UnrecognisedHttpMethod' => "Unbekannte Http-Methode %s für API-Methode '%s'.",
-	'SecurityException:AuthTokenExpired' => "Entweder fehlt das Authentifizierungs-Token oder es ist ungültig oder abgelaufen.",
 	'SecurityException:InvalidPostHash' => "POST-Daten-Hash ist ungültig - erwartet wurde %s aber %s erhalten.",
 	'SecurityException:DupePacket' => "Packet-Signatur ist schon von früher bekannt.",
 	'SecurityException:InvalidAPIKey' => "Ungültiger oder fehlender API-Schlüssel.",
@@ -69,9 +62,6 @@ return array(
 	
 	// plugin settings
 	'web_services:settings:authentication' => "Web API-Authentifizierungs-Einstellungen",
-	'web_services:settings:authentication:description' => "Für einige API-Methoden ist es notwendig, dass sich die externen Quellen authentifizieren. Dafür ist für diese externen Quellen ein Schlüsselpaar notwendig (öffentlicher und geheimer Schlüssel).
-
-Beachte bitte, dass mindestens eine API-Authentifizierungsmethode aktiviert sein muss, damit API-Anfragen authentifiziert werden können.",
 	'web_services:settings:authentication:allow_key' => "Einfache Authentifizierung mit öffentlichem Schlüssel erlauben",
 	'web_services:settings:authentication:allow_key:help' => "Der öffentliche Schlüssel kann als Parameter bei der Anfrage übergeben werden.",
 	'web_services:settings:authentication:allow_hmac' => "HMAC-Header API-Authentifizierung erlauben",

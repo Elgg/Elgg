@@ -10,7 +10,6 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
-	'expages' => "Externe Seiten",
 	'admin:configure_utilities:expages' => "Externe Seiten",
 	'expages:edit:viewpage' => "Diese externe Seite anzeigen",
 	'expages:about' => "Impressum",

@@ -7,9 +7,8 @@
 
 return array(
 	'admin:administer_utilities:logbrowser' => 'Visualiseur de journal',
-	'logbrowser' => 'Visualiseur de journal',
 	'logbrowser:search' => 'Affiner les résultats',
-	'logbrowser:user' => 'Nom d\'utilisateur à rechercher',
+	'logbrowser:user' => 'Identifiant à rechercher',
 	'logbrowser:starttime' => 'Heure de début (en anglais, par exemple "last monday", "1 hour ago")',
 	'logbrowser:endtime' => 'Heure de fin',
 

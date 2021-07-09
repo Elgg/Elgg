@@ -18,7 +18,6 @@ return array(
 	'blog:archives' => 'Архива',
 
 	'groups:tool:blog' => 'Укључи блог групе',
-	'blog:write' => 'Напиши блог чланак',
 
 	// Editing
 	'blog:excerpt' => 'Издвојено',
@@ -35,12 +34,9 @@ return array(
 	'blog:error:cannot_write_to_container' => 'Недовољне привилегије да би чланак био сачуван.',
 	'blog:messages:warning:draft' => 'Постоји несачуван нацрт овог чланка!',
 	'blog:edit_revision_notice' => '(Стара верзија)',
-	'blog:message:deleted_post' => 'Чланак је обрисан.',
-	'blog:error:cannot_delete_post' => 'Није успело брисање чланка.',
 	'blog:none' => 'Нема чланака.',
 	'blog:error:missing:title' => 'Унесите наслов чланка.',
 	'blog:error:missing:description' => 'Унесите текст вашег блога.',
-	'blog:error:cannot_edit_post' => 'Овај чланак мозда не постоји, а можда ви немате привилегије да га уређујете.',
 	'blog:error:post_not_found' => 'Не могу да нађем тражени чланак.',
 	'blog:error:revision_not_found' => 'Не могу да нађем ову ревизију.',
 

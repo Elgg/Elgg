@@ -22,9 +22,6 @@ return array(
 	'likes:userlikedthis' => 'líbí se %s&times;',
 	'likes:userslikedthis' => 'líbí se %s&times;',
 	'likes:river:annotate' => 'se líbí',
-	'likes:delete:confirm' => 'Jste si jistý/á, že chcete smazat toto "líbí se"?',
-
-	'river:likes' => 'se líbí %s %s',
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s přidal/a "líbí se" k vašemu příspěvku "%s"',

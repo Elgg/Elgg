@@ -10,7 +10,6 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
-	'expages' => "Ekstra sider",
 	'expages:about' => "Om",
 	'expages:terms' => "Betingelser",
 	'expages:privacy' => "Beskyttelse af personlige oplysninger",

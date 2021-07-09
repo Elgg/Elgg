@@ -24,14 +24,11 @@ return array(
 	'file:num_files' => "Nombre de fichiers à afficher",
 	'file:replace' => 'Remplacer le contenu du fichier (laisser vide pour ne pas changer le fichier)',
 	'file:list:title' => "de %s %s %s",
-	'file:title:friends' => "des contacts",
 
 	'file:file' => "Fichier",
 
 	'file:list:list' => 'Afficher sous forme de liste',
 	'file:list:gallery' => 'Afficher sous forme de galerie',
-
-	'file:types' => "Type de fichiers téléchargés",
 
 	'file:type:' => 'Fichiers',
 	'file:type:all' => "Tous les fichiers",
@@ -63,7 +60,7 @@ return array(
 
 	'file:notify:summary' => 'Nouveau fichier intitulé %s',
 	'file:notify:subject' => 'Nouveau fichier : %s',
-	'file:notify:body' => '%s a chargé un nouveau fichier : %s
+	'file:notify:body' => '%s a téléchargé un nouveau fichier : %s
 
 %s
 

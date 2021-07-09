@@ -18,7 +18,6 @@ return array(
 	'groups:all' => "Tutti i gruppi",
 	'groups:add' => "Crea un nuovo gruppo",
 	'groups:edit' => "Modifica gruppo",
-	'groups:delete' => 'Elimina gruppo',
 	'groups:membershiprequests' => 'Gestisci richieste di adesione',
 	'groups:membershiprequests:pending' => 'Gestisci richieste di adesione (%s)',
 	'groups:invitations' => 'Gruppi a cui sei invitato',
@@ -70,7 +69,6 @@ return array(
 
 	'groups:nofriendsatall' => 'Non hai amici da invitare!',
 	'groups:group' => "Gruppo",
-	'groups:search:tags' => "tag",
 	'groups:search:title' => "Cerca gruppi col tag '%s'",
 	'groups:search:none' => "Nessun gruppo corrispondente trovato",
 	'groups:search_in_group' => "Cerca in questo gruppo",
@@ -144,9 +142,6 @@ return array(
 	/**
 	 * Action messages
 	 */
-	'groups:deleted' => 'Gruppo e contenuti del gruppo eliminati',
-	'groups:notdeleted' => 'Non è stato possibile eliminare il gruppo',
-	'groups:deletewarning' => "Sicuri di voler eliminare questo gruppo? Questa azione non può essere annullata!",
 
 	'groups:invitekilled' => 'L\'invito è stato eliminato.',
 	'groups:joinrequestkilled' => 'La richiesta di iscrizione è stata cancellata.',

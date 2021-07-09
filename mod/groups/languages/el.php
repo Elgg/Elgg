@@ -18,7 +18,6 @@ return array(
 	'groups:all' => "Όλες οι ομάδες",
 	'groups:add' => "Δημιουργία ομάδας",
 	'groups:edit' => "Επεξεργασία ομάδας",
-	'groups:delete' => 'Διαγραφή ομάδας',
 	'groups:membershiprequests' => 'Διαχείριση αιτημάτων σύνδεσης',
 	'groups:membershiprequests:pending' => 'Διαχείριση αιτημάτων σύνδεσης (%s)',
 	'groups:invitations' => 'Προσκλήσεις ομάδας',
@@ -66,7 +65,6 @@ return array(
 
 	'groups:nofriendsatall' => 'Δεν έχετε φίλους για να προσκαλέσετε',
 	'groups:group' => "Ομάδα",
-	'groups:search:tags' => "ετικέτα",
 	'groups:search:title' => "Αναζήτηση για ομάδες με ετικέτα '%s'",
 	'groups:search:none' => "Δεν βρέθηκαν ομάδες",
 	'groups:search_in_group' => "Αναζήτηση σ' αυτή την ομάδα",
@@ -134,7 +132,6 @@ return array(
 	/**
 	 * Action messages
 	 */
-	'groups:deletewarning' => "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την ομάδα; Η ενέργεια αυτή δεν μπορεί να ανατραπεί!",
 
 	'groups:invitekilled' => 'Η πρόσκληση έχει διαγραφεί.',
 	'groups:joinrequestkilled' => 'Το αίτημα εγγραφής έχει διαγραφεί.',

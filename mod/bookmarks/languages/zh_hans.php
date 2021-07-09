@@ -29,15 +29,7 @@ return array(
 	'bookmarks:notify:summary' => '新的书签是 %s',
 	'bookmarks:notify:subject' => '新的书签：%s',
 	'bookmarks:notify:body' =>
-'%s 添加了一个：%s
-
-地址： %s
-
-%s
-
-查看本书签的评论:
-%s
-',
+'',
 
 	'bookmarks:numbertodisplay' => '显示的书签数量',
 
@@ -73,5 +65,4 @@ return array(
 	 */
 
 	'bookmarks:save:failed' => "书签无法被保存，确保你输入了标题与地址。",
-	'bookmarks:unknown_bookmark' => '没有找到特定的书签',
 );

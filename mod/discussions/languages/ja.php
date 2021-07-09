@@ -10,7 +10,14 @@ return array(
 	
 	'add:object:discussion' => '議題を追加',
 	'edit:object:discussion' => '議題の編集',
+	'collection:object:discussion' => '議題',
 	'collection:object:discussion:group' => 'グループ会議',
+	'collection:object:discussion:my_groups' => '私のグループの議題',
+	'notification:object:discussion:create' => "ディスカッションが作成されたときに通知を送る",
+	'notifications:mute:object:discussion' => "ディスカッション '%s' について",
+	
+	'discussion:settings:enable_global_discussions' => 'グローバルディスカッションを有効にする',
+	'discussion:settings:enable_global_discussions:help' => 'グループの外からディスカッションを作成できる様にする',
 
 	'discussion:latest' => '最新の話題',
 	'discussion:none' => '議論はありません',

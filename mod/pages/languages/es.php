@@ -22,9 +22,7 @@ return array(
 
 	'groups:tool:pages' => 'Habilitar p&aacute;ginas para grupos',
 
-	'pages:delete' => "Borrar esta p&aacute;gina",
 	'pages:history' => "Historial",
-	'pages:view' => "Ver p&aacute;gina",
 	'pages:revision' => "Revisi&oacute;n",
 
 	'pages:navigation' => "Navegaci&oacute;n",
@@ -49,8 +47,6 @@ return array(
 	'pages:description' => 'Contenido',
 	'pages:tags' => 'Etiquetas',
 	'pages:parent_guid' => 'Página antecesora',
-	'pages:access_id' => 'S&oacute;lo lectura',
-	'pages:write_access_id' => 'Acceso de escritura',
 
 	/**
 	 * Status and error messages
@@ -60,8 +56,6 @@ return array(
 	'pages:notsaved' => 'La p&aacute;gina no pudo ser guardada',
 	'pages:error:no_title' => 'Debes especificar un t&iacute;tulo para esta p&aacute;gina.',
 	'entity:delete:object:page:success' => 'La p&aacute;gina ha sido borrada.',
-	'pages:revision:delete:success' => 'La revisión de la página se eliminó correctamente.',
-	'pages:revision:delete:failure' => 'No fue posible eliminar la revisión de la página.',
 
 	/**
 	 * History
@@ -75,13 +69,6 @@ return array(
 	'pages:num' => 'N&uacute;mero de p&aacute;ginas a mostrar',
 	'widgets:pages:name' => 'P&aacute;ginas',
 	'widgets:pages:description' => "Esta es la lista de tus p&aacute;ginas.",
-
-	/**
-	 * Submenu items
-	 */
-	'pages:label:view' => "Ver p&aacute;gina",
-	'pages:label:edit' => "Editar p&aacute;gina",
-	'pages:label:history' => "Historial de la p&aacute;gina",
 
 	'pages:newchild' => "Crear una subp&aacute;gina",
 );

@@ -22,24 +22,9 @@ return array(
 	'likes:userlikedthis' => '%s vindt dit leuk',
 	'likes:userslikedthis' => '%s vinden dit leuk',
 	'likes:river:annotate' => 'vindt leuk',
-	'likes:delete:confirm' => 'Weet je zeker dat je deze \'like\' wilt verwijderen?',
-
-	'river:likes' => 'vindt %s leuk %s',
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s vindt je item "%s" leuk',
 	'likes:notifications:body' =>
-'Beste %1$s,
-
-%2$s vond je item "%3$s" op %4$s leuk.
-
-Om naar je item te gaan, klik hier:
-%5$s
-
-of bekijk %2$s\'s profiel hier:
-
-%6$s
-
-Bedankt,
-%4$s',
+'',
 );

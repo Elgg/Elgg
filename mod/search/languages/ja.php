@@ -11,4 +11,5 @@ return array(
 
 	'search:comment_on' => '「%s」へのコメント',
 	'search:unknown_entity' => '不明なエンティティ型です。',
+	'search:empty_query' => '検索クエリが正しくありません',
 );

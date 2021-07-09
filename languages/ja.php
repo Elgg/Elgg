@@ -19,7 +19,6 @@ return array(
 
 	'login' => "ログイン",
 	'loginok' => "ログインしました。",
-	'loginerror' => "ログインできませんでした。このサイトの登録したかどうかご確認の上、もう一度お試しください。",
 	'login:empty' => "ログイン名とパスワードが必要です。",
 	'login:baduser' => "あなたのログインアカウントを読み込むことができませんでした。",
 	'auth:nopams' => "内部エラー。ユーザ認証機能がインストールされていません。",
@@ -43,36 +42,19 @@ return array(
 	'exception:title' => "致命的なエラーです",
 	'exception:contact_admin' => '復帰不可能なエラーが発生しましたのでログに記録しました。サイト管理者にコンタクトをとって次の情報を報告してください。:',
 
-	'actionundefined' => "要求されたアクション(%s) はこのシステムで定義されていません。",
 	'actionnotfound' => "%s のアクションファイルが見つかりませんでした。",
-	'actionloggedout' => "ログアウトのままですと、アクションを実行できません。",
 	'actionunauthorized' => 'あなたの権限では、このアクションを実行することはできません。',
 
 	'ajax:error' => 'AJAXコールを実行中に予期せぬエラーが起こりました。おそらく、サーバへの接続が切断されたからかもしれません。',
 	'ajax:not_is_xhr' => 'AJAX views には直接アクセスはできません',
 
-	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) は、設定に間違いのあるプラグインですので、起動不可となっています。 原因に当たっては、Elgg wiki (http://learn.elgg.org/) を参考にしてください。 ",
 	'PluginException:CannotStart' => '%s (guid: %s) は起動できず停止状態のままです。理由: %s',
 	'PluginException:InvalidID' => "%s は、不正なプラグインIDです。",
 	'PluginException:InvalidPath' => "%s は、不正なプラグインのpathです",
-	'PluginException:InvalidManifest' => '%s プラグインのマニフェストファイルに間違いがあります。',
-	'PluginException:InvalidPlugin' => '%s は、不正なプラグインです。',
-	'PluginException:InvalidPlugin:Details' => '%s は、不正なプラグインです。: %s',
-	'PluginException:NullInstantiated' => 'ElggPlugin のインスタンスは null であってはいけません。GUID、plugin ID もしくはfull path を渡してください。',
 	'ElggPlugin:MissingID' => 'プラグインID (guid %s) が、ありません。',
-	'ElggPluginPackage:InvalidPlugin:MissingFile' => '必要なファイル "%s" が見つかりません。',
-	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'マニフェストに記述されている依存関係のタイプ "%s" が正しくありません。',
-	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'マニフェストに記述されているプロバイドのタイプ "%s" が正しくありません。',
-	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'プラグイン %3$s で依存関係のタイプ %2$s の 「%1$s」 が正しくありません。依存関係が循環しています。',
-	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Conflicts with plugin: %s',
-	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Plugin file "elgg-plugin.php" file is present but unreadable.',
 	'ElggPlugin:Exception:CannotIncludeFile' => '%s (プラグイン %s (guid: %s))が %s に含まれていません。パーミッションを調べてください！',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Threw exception including %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'プラグイン %s (guid: %s)のViewディレクトリを %s で開くことができません。パーミッションを調べてください！',
-	'PluginException:NoPluginName' => "プラグイン名を見つけることができませんでした。",
-	'PluginException:ParserError' => 'API(var. %s)でプラグイン %s のマニフェストを解析するときにエラーが発生しました)。',
-	'PluginException:NoAvailableParser' => 'マニフェストAPI(Ver. %s)のパーサをプラグイン%sの中で見つけることができません。',
-	'PluginException:ParserErrorMissingRequiredAttribute' => "マニフェストファイル内で'%s'属性が必要なのですがプラグイン%sの中ではありませんでした。",
 	'ElggPlugin:InvalidAndDeactivated' => '%s は不正なプラグインですので起動されませんでした。',
 	'ElggPlugin:activate:BadConfigFormat' => 'Plugin file "elgg-plugin.php" did not return a serializable array.',
 	'ElggPlugin:activate:ConfigSentOutput' => 'Plugin file "elgg-plugin.php" sent output.',
@@ -95,11 +77,8 @@ return array(
 	'UserFetchFailureException' => 'user_guid[%s] のユーザが存在しないため、パーミッションのチェックができません。',
 	'BadRequestException' => 'リクエストが変です',
 
-	'pageownerunavailable' => '警告： ページオーナー %d を許可できません。',
 	'viewfailure' => 'View %s において内部エラーが発生しました。',
-	'view:missing_param' => "View %2\$s で必要なパラメータ「 %1\$s 」がありません。",
 	'changebookmark' => 'このページに対するあなたのブックマークを変更してください。',
-	'noaccess' => 'あなたが閲覧しようとしているコンテントはすでに削除されてしまっているか、あるいはあなたに閲覧する権限がないかどちらかです。',
 	'error:missing_data' => 'あなたのリクエストにおいていくつかデータの欠損がありました。',
 	'save:fail' => 'データを保存するのに失敗しました',
 	'save:success' => 'データを保存しました',
@@ -167,15 +146,12 @@ return array(
  */
 	'access:label:friends' => "友達",
 	'access' => "公開範囲",
-	'access:overridenotice' => "注意: グループポリシーですでに設定されているので、このコンテントはグループメンバーからのみしかアクセスすることができません。",
 	'access:limited:label' => "限定公開",
 	'access:help' => "コンテンツの公開範囲を設定します。",
 	'access:read' => "読み込みアクセス",
 	'access:write' => "書き込みアクセス",
 	'access:admin_only' => "管理者のみ",
-	'access:missing_name' => "アクセスレベルの名前がありません",
-	'access:comments:change' => "この会議は現在限られた人しか見ることができないようになっています。あなたがこれをシェアする人に対しては十分に考慮してください。",
-
+	
 /**
  * Dashboard and widgets
  */
@@ -185,7 +161,6 @@ return array(
 
 	'widgets:add' => 'ウィジェットを追加',
 	'widgets:add:description' => "下のウィジェットボタンをクリックして、ページに追加してみてください。",
-	'widgets:position:fixed' => '（固定した位置）',
 	'widget:unavailable' => 'すでに、このウィジェットを追加済みです。',
 	'widget:numbertodisplay' => '表示するアイテムの数',
 
@@ -271,7 +246,6 @@ return array(
 	'river:delete:success' => 'Activity item has been deleted',
 	'river:delete:fail' => 'Activity item could not be deleted',
 	'river:delete:lack_permission' => 'You lack permission to delete this activity item',
-	'river:can_delete:invaliduser' => 'Cannot check canDelete for user_guid [%s] as the user does not exist.',
 	'river:subject:invalid_subject' => '正しいユーザではありません',
 	'activity:owner' => 'アクティビティ一覧',
 
@@ -300,14 +274,6 @@ return array(
 	'viewtype:change' => "表示の仕方の変更",
 	'viewtype:list' => "リスト",
 	'viewtype:gallery' => "ギャラリ",
-
-	'tag:search:startblurb' => "「%s」と一致したタグは:",
-
-	'user:search:startblurb' => "「%s」と一致したユーザ:",
-	'user:search:finishblurb' => "もっとみる",
-
-	'group:search:startblurb' => "「%s」と一致したグループは:",
-	'group:search:finishblurb' => "もっとみる",
 	'search:go' => 'Go',
 	'userpicker:only_friends' => '友達のみ',
 
@@ -329,7 +295,6 @@ return array(
 	'registration:userexists' => 'そのログイン名はすでに使われています。',
 	'registration:usernametooshort' => 'ログイン名は半角英字で %u 文字以上にしてください。',
 	'registration:usernametoolong' => 'あなたのログイン名は長過ぎます。 %u 文字以内でお願いします。',
-	'registration:passwordtooshort' => 'パスワードは半角英字で %u 文字以上にしてください。',
 	'registration:dupeemail' => 'そのEメールアドレスはすでに利用されています。',
 	'registration:invalidchars' => '申し訳ありません。入力されたログイン名には利用できない文字「 %s 」が含まれています。次のこれらの文字は使えません: %s',
 	'registration:emailnotvalid' => '申し訳ありません。入力されたEメールアドレスは、このシステムで使えません。',
@@ -795,7 +760,6 @@ return array(
 
 	'content' => "コンテント",
 	'content:latest' => '最新のアクティビティ',
-	'content:latest:blurb' => 'もしくは、ここをクリックしてサイト全体での新しい記事を見る',
 
 	'link:text' => 'リンク一覧',
 
@@ -871,13 +835,6 @@ return array(
 	'useradd:subject' => 'ユーザを作成しました。',
 
 /**
- * System messages
- */
-
-	'systemmessages:dismiss' => "クリックすると消えます。",
-
-
-/**
  * Messages
  */
 	'messages:title:error' => 'Error',
@@ -885,13 +842,6 @@ return array(
 	'messages:title:help' => 'ヘルプ',
 	'messages:title:notice' => 'Notice',
 	'messages:title:info' => 'Info',
-
-/**
- * Import / export
- */
-
-	'importsuccess' => "データのインポートに成功しました。",
-	'importfail' => "OpenDDデータのインポートに失敗しました。",
 
 /**
  * Time
@@ -1033,19 +983,12 @@ return array(
 	'upgrade:unlock:confirm' => "もうひとつアップグレードがありますのでデータベースをロックします。複数のアップグレードを同時に実行するのは危険です。他のアップグレードがないことをご確認の上作業を継続してください。ロックを解除しますか？",
 	'upgrade:locked' => "アップグレードできません。別のアップグレードが実行されています。アップグレードのロックを解除するには、管理セクションに行ってください。",
 	'upgrade:unlock:success' => "アップグレードのロックを解除しました。",
-	'upgrade:unable_to_upgrade' => 'アップグレードできませんでした',
-
-	'update:oauth_api:deactivated' => 'OAuth API(旧称 OAuth LIb)はアップグレード中に停止しました。必要なら、手動でプラグインを再起動させてください。',
-	'upgrade:site_secret_warning:moderate' => "システムの安全性を改善するために、サイトの秘密キーを再生成するようにしましょう。設定 &gt; セッティング &gt; 詳細設定で設定出来ます。",
-	'upgrade:site_secret_warning:weak' => "システムの安全性を改善するためにサイトの秘密キーを再生成してください。設定 &gt; セッティング &gt; 詳細設定",
 
 	'admin:pending_upgrades' => 'サイトはアップグレードの途中で中断されています。これ以降は直接あなたの操作が必要です。',
 	'admin:view_upgrades' => '中断されているアップグレードを見る。',
 	'item:object:elgg_upgrade' => 'サイトのアップグレード',
 	'admin:upgrades:none' => 'このインストールは最新の状態です！',
 
-	'upgrade:item_count' => 'アップグレードが必要なものが <b>%s</b> 個あります。',
-	'upgrade:warning' => '<b>警告:</b>大きなサイトならアップグレードするのに少々時間がかかるかもしれません。',
 	'upgrade:success_count' => 'アップグレード済み:',
 	'upgrade:finished' => 'アプグレードを完了しました',
 	'upgrade:finished_with_errors' => '<p>アップグレードはエラーが出て終了してしまいました。 ページをリフレッシュして、もう一度アップグレードを実行してください。</p></p><br />再びエラーが起こったなら、原因を究明するためサーバのエラーログをチェックしてみてください。Elgg community の <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support group</a> にエラーを修正するための答えがあるかもしれません。</p>',
@@ -1111,7 +1054,6 @@ return array(
 	'entity:delete:object:comment:success' => "コメントを削除しました。",
 	'generic_comment:blank' => "申し訳ありません。コメント内容が空欄のため保存できません。",
 	'generic_comment:notfound' => "申し訳ありません。お探しのコメントは見つかりませんでした。",
-	'generic_comment:notfound_fallback' => "申し訳ありません。お探しのコメントは見つかりませんでしたが、コメントされていたページへご案内しました。",
 	'generic_comment:failure' => "コメントを保存する際に予期せぬエラーが発生しました。",
 	'generic_comment:none' => 'コメントはありません',
 	'generic_comment:title' => '%s さんが付けたコメント',
@@ -1124,15 +1066,12 @@ return array(
 
 	'byline' => 'By %s',
 	'byline:ingroup' => '%sグループ内',
-	'entity:default:missingsupport:popup' => 'この情報を正確に表示できません。利用していたプラグインがうまく動作していないか、アンインストールされた可能性があります。',
-
+	
 	'entity:delete:item' => '項目',
 	'entity:delete:item_not_found' => '項目が見つかりませんでした。',
 	'entity:delete:permission_denied' => 'あなたには、この項目を削除する権限がありません。',
 	'entity:delete:success' => '%s は削除されました。',
 	'entity:delete:fail' => '%s は削除できませんでした。',
-	
-	'entity:can_delete:invaliduser' => 'ユーザが存在しませんので、user_guid[%s] に対して canDelete() をチェックできません。 ',
 
 /**
  * Annotations
@@ -1147,7 +1086,6 @@ return array(
 	'actiongatekeeper:timeerror' => 'ご覧のページは閲覧期限が切れています。再度ページを読み込んでください。',
 	'actiongatekeeper:pluginprevents' => '申し訳ありません。原因不明の理由であなたのフォームを送信することができませんでした。',
 	'actiongatekeeper:uploadexceeded' => 'アップロードファイルのサイズがこのサイトの管理者が設定した最大値を超えています。',
-	'actiongatekeeper:crosssitelogin' => "異なるドメインからのログインは禁止しています。もう一度試してみてください。",
 
 /**
  * Word blacklists
@@ -1160,7 +1098,6 @@ return array(
  */
 
 	'js:security:token_refresh_failed' => '%s への接続に失敗しました。コンテントを保存するときに問題が発生したようです。このページを再読込してください。',
-	'js:security:token_refreshed' => '%s への接続が復帰しました！',
 	'js:lightbox:current' => "画像 %s枚目(全%s枚)",
 
 /**

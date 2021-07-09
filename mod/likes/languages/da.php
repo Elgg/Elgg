@@ -22,9 +22,6 @@ return array(
 	'likes:userlikedthis' => '%s synes godt om',
 	'likes:userslikedthis' => '%s synes godt om',
 	'likes:river:annotate' => 'synes godt om',
-	'likes:delete:confirm' => 'Are you sure you want to delete this like?',
-
-	'river:likes' => 'synes godt om %s %s',
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s likes your post "%s"',

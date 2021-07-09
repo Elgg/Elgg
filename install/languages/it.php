@@ -92,8 +92,6 @@ return array(
 	'install:complete:instructions' => 'Il sito di Elgg è ora pronto per essere usato. Cliccare il pulsante qui sotto per essere reindirizzati al sito.',
 	'install:complete:gotosite' => 'Vai al sito',
 
-	'InstallationException:UnknownStep' => '%s è un passo di installazione sconosciuto.',
-	'InstallationException:MissingLibrary' => 'Impossibile caricare %s',
 	'InstallationException:CannotLoadSettings' => 'Elgg non riesce a caricare il file delle impostazioni. O non esiste o ci sono dei problemi con i permessi dei file.',
 
 	'install:success:database' => 'Il database è stato installato.',

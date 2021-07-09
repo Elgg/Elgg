@@ -22,9 +22,6 @@ return array(
 	'likes:userlikedthis' => '%s 稱讚',
 	'likes:userslikedthis' => '%s 稱讚',
 	'likes:river:annotate' => '稱讚',
-	'likes:delete:confirm' => '確定要刪除這個稱讚？',
-
-	'river:likes' => '稱讚 %s %s',
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s 稱讚您的貼文 "%s"',

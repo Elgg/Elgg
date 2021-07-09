@@ -19,7 +19,6 @@ return array(
 	'blog:archives' => 'Arhive',
 
 	'groups:tool:blog' => 'Activează blogul de grup',
-	'blog:write' => 'Scrie o postare de blog',
 
 	// Editing
 	'blog:excerpt' => 'Sumar',
@@ -36,12 +35,9 @@ return array(
 	'blog:error:cannot_write_to_container' => 'Acces insuficient pentru a salva blogul către grup.',
 	'blog:messages:warning:draft' => 'Există o schiță nesalvată a acestei postări!',
 	'blog:edit_revision_notice' => '(Versiune veche)',
-	'blog:message:deleted_post' => 'Postarea de blog a fost ștearsă.',
-	'blog:error:cannot_delete_post' => 'Nu am putut șterge postarea de blog.',
 	'blog:none' => 'Nu există postări de blog.',
 	'blog:error:missing:title' => 'Te rugăm să introduci un titlu de blog!',
 	'blog:error:missing:description' => 'Te rugăm să introduci conținutul blogului tău!',
-	'blog:error:cannot_edit_post' => 'Această postare s-ar putea să nu existe sau nu ai permisiunea de a o edita.',
 	'blog:error:post_not_found' => 'Nu am putit găsi postarea de blog specificată.',
 	'blog:error:revision_not_found' => 'Nu am putut găsi această revizuire.',
 
@@ -53,14 +49,7 @@ return array(
 	'blog:notify:summary' => 'Postare de blog nouă numită %s',
 	'blog:notify:subject' => 'Postare de blog nouă: %s',
 	'blog:notify:body' =>
-'
-%s a publicat o nouă postare de blog: %s
-
-%s
-
-Vezi și adaugă comentariu la postarea de blog:
-%s
-',
+'',
 
 	// widget
 	'widgets:blog:name' => 'Postări de blog',

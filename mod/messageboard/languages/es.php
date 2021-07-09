@@ -12,10 +12,8 @@ return array(
 	 */
 
 	'messageboard:board' => "Tabl&oacute;n de mensajes",
-	'messageboard:messageboard' => "tabl&oacute;n de mensajes",
 	'messageboard:none' => "No hay nada en este tabl&oacute;n de mensajes",
 	'messageboard:num_display' => "N&uacute;mero de mensajes a mostrar",
-	'messageboard:user' => "Tabl&oacute;n de mensajes de %s",
 	'messageboard:owner' => 'Tabl&oacute;n de mensajes de %s',
 	'messageboard:owner_history' => 'Posts de %s en el tabl&oacute;n de mensajes %s',
 
@@ -28,7 +26,6 @@ return array(
 	 */
 	
 	'messageboard:posted' => "Se ha publicado en tu tabl&oacute;n de mensajes exitosamente.",
-	'messageboard:deleted' => "Se ha borrado el mensaje.",
 
 	/**
 	 * Email messages
@@ -41,7 +38,6 @@ return array(
 	 */
 
 	'messageboard:blank' => "Es necesario poner algo en el campo del mensaje antes de guardar.",
-	'messageboard:notdeleted' => "No se pudo borrar este mensaje.",
 
 	'messageboard:failure' => "Ocurri&oacute; un error desconocido al guardar el mensaje. Intenta de nuevo.",
 

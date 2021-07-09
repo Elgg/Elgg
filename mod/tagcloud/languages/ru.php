@@ -8,7 +8,7 @@
 return array(
 	'widgets:tagcloud:name' => 'Облако тегов',
 	'widgets:tagcloud:description' => 'Облако тегов',
-	'widgets:tagcloud:numtags' => 'Количество тегов показывать',
+	'widgets:tagcloud:numtags' => 'Количество тегов для отображения',
 	'tagcloud:site_cloud' => 'Облако тегов сайта',
 	'tagcloud:allsitetags' => 'Все теги сайта',
 );

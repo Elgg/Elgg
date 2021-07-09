@@ -29,15 +29,7 @@ return array(
 	'bookmarks:notify:summary' => 'Nytt bokmärke med namnet %s',
 	'bookmarks:notify:subject' => 'Nytt bokmärke: %s',
 	'bookmarks:notify:body' =>
-'%s la till ett nytt bokmärke: %s
-
-Adress: %s
-
-%s
-
-Visa och kommentera bokmärket:
-%s
-',
+'',
 
 	'bookmarks:numbertodisplay' => 'Antalet bokmärken att visa',
 
@@ -73,5 +65,4 @@ Visa och kommentera bokmärket:
 	 */
 
 	'bookmarks:save:failed' => "Ditt bokmärke kunde inte sparas. Se till att du skrev in en titel och adress och försök sedan igen.",
-	'bookmarks:unknown_bookmark' => 'Kan inte hitta det specificerade bokmärket',
 );

@@ -16,14 +16,11 @@ return array(
 	'file:num_files' => "Počet zobrazených souborů",
 	'file:replace' => 'Nahradit obsah souboru (pokud nahrazovat nechcete, ponechte prázdné)',
 	'file:list:title' => "%s - %s %s",
-	'file:title:friends' => "Přátel",
 
 	'file:file' => "Soubor",
 
 	'file:list:list' => 'Přepnout na výpis',
 	'file:list:gallery' => 'Přepnout na galerii',
-
-	'file:types' => "Typy nahraných souborů",
 
 	'file:type:' => 'Soubory',
 	'file:type:all' => "Všechny soubory",

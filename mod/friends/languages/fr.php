@@ -65,7 +65,6 @@ Pour voir cette demande de contact, cliquez ici :
 	'friends:action:friendrequest:decline:fail' => "Une erreur s'est produite lors du rejet de la demande de contact, veuillez réessayer",
 	'friends:action:friendrequest:decline:success' => "La demande de contact a été déclinée",
 	
-	'friends:action:friendrequest:accept:fail' => "Une erreur s'est produite lors de l'acceptation de la demande de contact, veuillez réessayer",
 	'friends:action:friendrequest:accept:success' => "La demande de contact a été acceptée",
 	
 	// notification settings

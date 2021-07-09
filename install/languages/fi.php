@@ -96,8 +96,6 @@ return array(
 	'install:complete:instructions' => 'Elgg-sivustosi on nyt käyttövalmis. Napsauta alla olevaa painiketta siirtyäksesi sivustolle.',
 	'install:complete:gotosite' => 'Mene sivustolle',
 
-	'InstallationException:UnknownStep' => '%s on tuntematon asennusvaihe.',
-	'InstallationException:MissingLibrary' => 'Kirjaston %s lataaminen epäonnistui',
 	'InstallationException:CannotLoadSettings' => 'Elgg ei voinut ladata asetustiedostoa. Tiedosto joko puuttuu, tai sillä on väärät tiedosto-oikeudet.',
 
 	'install:success:database' => 'Tietokanta on asennettu.',

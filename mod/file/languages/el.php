@@ -16,14 +16,11 @@ return array(
 	'file:num_files' => "Αριθμός αρχείων για εμφάνιση",
 	'file:replace' => 'Αντικατάσταση αρχείου (αφήστε το κενό για να μην αλλάξει το αρχείο)',
 	'file:list:title' => "%s's %s %s",
-	'file:title:friends' => "Φίλων'",
 
 	'file:file' => "Αρχείο",
 
 	'file:list:list' => 'Εναλλαγή σε προβολή λίστας',
 	'file:list:gallery' => 'Εναλλαγή σε προβολή εικονιδίων',
-
-	'file:types' => "Μεταφορτωμένοι τύποι δεδομένων",
 
 	'file:type:' => 'Αρχεία',
 	'file:type:all' => "Όλα τα αρχεία",

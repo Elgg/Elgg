@@ -27,9 +27,7 @@ return array(
 	'annotation:delete:page:success' => 'La révision de la page a bien été supprimée.',
 	'annotation:delete:page:fail' => 'La révision de la page n\'a pas pu être supprimée.',
 
-	'pages:delete' => "Supprimer cette page",
 	'pages:history' => "Historique",
-	'pages:view' => "Voir la page",
 	'pages:revision' => "Révision",
 
 	'pages:navigation' => "Navigation",
@@ -63,8 +61,6 @@ Voir et commenter la page :
 	'pages:description' => 'Contenu de la page',
 	'pages:tags' => 'Tags',
 	'pages:parent_guid' => 'Page parente',
-	'pages:access_id' => 'Accès en lecture',
-	'pages:write_access_id' => 'Accès en écriture',
 
 	/**
 	 * Status and error messages
@@ -74,8 +70,6 @@ Voir et commenter la page :
 	'pages:notsaved' => 'La page n\'a pas pu être enregistrée',
 	'pages:error:no_title' => 'Vous devez donner un titre à cette page.',
 	'entity:delete:object:page:success' => 'La page a bien été supprimée.',
-	'pages:revision:delete:success' => 'La révision de la page a bien été supprimée.',
-	'pages:revision:delete:failure' => 'La révision de la page n\'a pas pu être supprimée.',
 
 	/**
 	 * History
@@ -89,13 +83,6 @@ Voir et commenter la page :
 	'pages:num' => 'Nombre de pages à afficher',
 	'widgets:pages:name' => 'Pages',
 	'widgets:pages:description' => "Voici la liste de vos pages.",
-
-	/**
-	 * Submenu items
-	 */
-	'pages:label:view' => "Voir la page",
-	'pages:label:edit' => "Modifier la page",
-	'pages:label:history' => "Historique de la page",
 
 	'pages:newchild' => "Créer une sous-page",
 );

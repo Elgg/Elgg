@@ -37,11 +37,9 @@ return array(
 	*/
 
 	'messages:posted' => "Viesti lähetetty.",
-	'messages:success:delete:single' => 'Viesti poistettu',
 	'messages:success:delete' => 'Viestit poistettu',
 	'messages:success:read' => 'Viestit merkitty luetuiksi',
 	'messages:error:messages_not_selected' => 'Ei viestejä valittuna',
-	'messages:error:delete:single' => 'Viestin poistaminen epäonnistui',
 
 	/**
 	* Email messages

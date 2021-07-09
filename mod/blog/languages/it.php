@@ -18,7 +18,6 @@ return array(
 	'blog:archives' => 'Archivi',
 
 	'groups:tool:blog' => 'Abilita blog di gruppo',
-	'blog:write' => 'Scrivi un articolo',
 
 	// Editing
 	'blog:excerpt' => 'Estratto',
@@ -35,12 +34,9 @@ return array(
 	'blog:error:cannot_write_to_container' => 'Privilegi insufficienti per salvare l\'articolo sul gruppo.',
 	'blog:messages:warning:draft' => 'C\'è una bozza non salvata di questo articolo!',
 	'blog:edit_revision_notice' => '(Vecchia versione)',
-	'blog:message:deleted_post' => 'Articolo eliminato.',
-	'blog:error:cannot_delete_post' => 'Impossibile eliminare l\'articolo.',
 	'blog:none' => 'Nessun articolo.',
 	'blog:error:missing:title' => 'Si prega di inserire un titolo per l\'articolo.',
 	'blog:error:missing:description' => 'Si prega di inserire i contenuti dell\'articolo.',
-	'blog:error:cannot_edit_post' => 'Questo articolo potrebbe non esistere oppure non hai il permesso di modificarlo.',
 	'blog:error:post_not_found' => 'Impossibile trovare l\'articolo specificato.',
 	'blog:error:revision_not_found' => 'Impossibile trovare questa revisione.',
 

@@ -22,9 +22,7 @@ return array(
 
 	'groups:tool:pages' => 'Ενεργοποίηση σελίδων ομάδας',
 
-	'pages:delete' => "Διαγραφή σελίδας",
 	'pages:history' => "Ιστορικό",
-	'pages:view' => "Προβολή σελίδας",
 	'pages:revision' => "Αναθεώρηση",
 
 	'pages:navigation' => "Πλοήγηση",
@@ -49,8 +47,6 @@ return array(
 	'pages:description' => 'Κείμενο σελίδας',
 	'pages:tags' => 'Ετικέτες',
 	'pages:parent_guid' => 'Γονική σελίδα',
-	'pages:access_id' => 'Δικαίωμα ανάγνωσης',
-	'pages:write_access_id' => 'Δικαίωμα εγγραφής',
 
 	/**
 	 * Status and error messages
@@ -60,8 +56,6 @@ return array(
 	'pages:notsaved' => 'Η σελίδα δεν μπορεί να αποθηκευτεί',
 	'pages:error:no_title' => 'Πρέπει να καθορίσετε έναν τίτλο για αυτή τη σελίδα.',
 	'entity:delete:object:page:success' => 'Η σελίδα διαγράφτηκε επιτυχώς.',
-	'pages:revision:delete:success' => 'Η αναθεώρηση της σελίδας διαγράφτηκε επιτυχώς',
-	'pages:revision:delete:failure' => 'Δεν ήταν δυνατή η αναθεώρηση της σελίδας',
 
 	/**
 	 * History
@@ -75,13 +69,6 @@ return array(
 	'pages:num' => 'Αριθμός σελίδων για εμφάνιση',
 	'widgets:pages:name' => 'Σελίδες',
 	'widgets:pages:description' => "Λίστα των σελίδων σας.",
-
-	/**
-	 * Submenu items
-	 */
-	'pages:label:view' => "Προβολή σελίδας",
-	'pages:label:edit' => "Επεξεργασία σελίδας",
-	'pages:label:history' => "Ιστορικό σελίδας",
 
 	'pages:newchild' => "Δημιουργία υποσελίδας",
 );

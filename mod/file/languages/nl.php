@@ -24,14 +24,11 @@ return array(
 	'file:num_files' => "Aantal bestanden om weer te geven",
 	'file:replace' => 'Vervang bestandsinhoud (laat dit leeg om het bestand <em>niet</em> te vervangen)',
 	'file:list:title' => "Van %s: %s en %s",
-	'file:title:friends' => "Vrienden",
 
 	'file:file' => "Bestand",
 
 	'file:list:list' => 'Toon in lijstweergave',
 	'file:list:gallery' => 'Toon in galerijweergave',
-
-	'file:types' => "Geplaatste bestandstypen",
 
 	'file:type:' => 'Bestanden',
 	'file:type:all' => "Alle bestanden",
@@ -63,12 +60,6 @@ return array(
 
 	'file:notify:summary' => 'Nieuw bestand met de titel %s',
 	'file:notify:subject' => 'Nieuw bestand: %s',
-	'file:notify:body' => '%s heeft een nieuw bestand geüpload: %s
-
-%s
-
-Om het bestand te bekijken en te reageren, klik hier:
-%s',
 
 	/**
 	 * Status messages

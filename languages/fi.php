@@ -19,7 +19,6 @@ return array(
 
 	'login' => "Kirjaudu",
 	'loginok' => "Olet kirjautunut sisään.",
-	'loginerror' => "Kirjautuminen epäonnistui. Tarkista kirjautumistietosi ja yritä uudelleen.",
 	'login:empty' => "Syötä käyttäjätunnus/sähköposti ja salasana.",
 	'login:baduser' => "Tiliisi kirjautuminen on estetty.",
 	'auth:nopams' => "Sisäinen virhe. Toimintoa käyttäjän sisäänkirjaamiseen ei ole asennettuna.",
@@ -43,36 +42,19 @@ return array(
 	'exception:title' => "Virhe.",
 	'exception:contact_admin' => 'Tapahtui virhe. Ota yhteys sivuston ylläpitäjään ja toimita seuraavat tiedot:',
 
-	'actionundefined' => "Haluttua toimintoa (%s) ei ole määritelty järjestelmässä.",
 	'actionnotfound' => "Tiedostoa, johon toiminto %s viittaa, ei löytynyt.",
-	'actionloggedout' => "Tämän toiminnon suorittaminen edellyttää, että olet kirjautuneena sisään.",
 	'actionunauthorized' => 'Sinulla ei ole oikeuksia tämän toiminnon suorittamiseen',
 
 	'ajax:error' => 'AJAX-kutsun yhteydessä tapahtui odottamaton virhe. Yhteys palvelimeen saattaa olla katkennut.',
 	'ajax:not_is_xhr' => 'AJAX-näkymiin ei ole mahdollista päästä käsiksi suoraan',
 
-	'PluginException:MisconfiguredPlugin' => "Liitännäisessä %s (guid %s) on havaittu virhe, joten se on poistettu käytöstä. Voit yrittää etsiä lisätietoja Elggin dokumentaatiosta (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) ei käynnisty. Syy: %s',
 	'PluginException:InvalidID' => "%s on virheellinen pluginin ID.",
 	'PluginException:InvalidPath' => "%s on virheellinen pluginipolku.",
-	'PluginException:InvalidManifest' => 'Pluginin %s infotiedosto (manifest) on virheellinen',
-	'PluginException:InvalidPlugin' => '%s on virheellinen plugini.',
-	'PluginException:InvalidPlugin:Details' => '%s ei ole kelvollinen plugini: %s',
-	'PluginException:NullInstantiated' => 'ElggPluginista ei voi luoda ilmentymää null-arvolla. Syötä GUID, plugin id tai polku.',
 	'ElggPlugin:MissingID' => 'Plugin-ID puuttuu (guid %s)',
-	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'Tiedosto %s puuttuu.',
-	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Manifestissa on virheellinen riippuvuustyyppi "%s".',
-	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Manifestissa on virheellinen "tarjoaa" tyyppi "%s".',
-	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Virheellinen %s riippuvuus "%s" pluginissa %s. Pluginit eivät voi vaatia toimintoa tai olla konfliktissa toiminnon kanssa, jonka ne itse tarjoavat!',
-	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Konfliktissa pluginin %s kanssa.',
-	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Tiedosto "elgg-plugin.php" löytyi, mutta sitä ei pystytä lukemaan,',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Ei voida lisätä toiminnallisuutta %s pluginille %s (guid: %s) sijainnissa %s. Tarkista tiedosto-oikeudet!',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Threw exception including %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Ei voida avata näkymähakemistoa pluginille %s (guid: %s) sijainnissa %s. Tarkista tiedosto-oikeudet!',
-	'PluginException:NoPluginName' => "Liitännäisen nimeä ei löytynyt",
-	'PluginException:ParserError' => 'Virhe yrittäessä käsitellä infotiedostoa API-versiolla %s pluginissa %s.',
-	'PluginException:NoAvailableParser' => 'Ei löydetty käsittelijää infotiedoston API-versiolle %s pluginissa %s.',
-	'PluginException:ParserErrorMissingRequiredAttribute' => "Pakollinen '%s' attribuutti puuttuu pluginin %s infotiedostosta.",
 	'ElggPlugin:InvalidAndDeactivated' => '%s on virheellinen liitännäinen, joten se poistettiin käytöstä.',
 	'ElggPlugin:activate:BadConfigFormat' => 'Tiedoston "elgg-plugin.php" sisältö on virheellinen.',
 	'ElggPlugin:activate:ConfigSentOutput' => 'Luettiin konfiguraatio tiedostosta "elgg-plugin.php".',
@@ -95,11 +77,8 @@ return array(
 	'UserFetchFailureException' => 'Oikeuksien tarkistaminen käyttäjälle GUID [%s] epäonnistui, koska käyttäjää ei ole olemassa.',
 	'BadRequestException' => 'Virheellinen pyyntö',
 
-	'pageownerunavailable' => 'Varoitus: Sivun omistajaa %d ei pystytä näyttämään!',
 	'viewfailure' => 'Näkymässä %s ilmeni sisäinen virhe.',
-	'view:missing_param' => "Parametri '%s' puuttuu näkymästä %s",
 	'changebookmark' => 'Kirjanmerkin polku on vanhentunut. Ole hyvä ja vaihda kirjanmerkkisi tälle sivulle',
-	'noaccess' => 'Kohde on poistettu tai sinulla ei ole oikeuksia sen tarkastelemiseen.',
 	'error:missing_data' => 'Pyynnössäsi oli puutteellisia tietoja',
 	'save:fail' => 'Tallentaminen epäonnistui',
 	'save:success' => 'Tiedot tallennettu',
@@ -167,15 +146,12 @@ return array(
  */
 	'access:label:friends' => "Ystävät",
 	'access' => "Pääsy",
-	'access:overridenotice' => "Huom: Vain ryhmän jäsenillä on pääsy tähän ryhmään lisättyihin sisältöihin.",
 	'access:limited:label' => "Rajoitettu",
 	'access:help' => "Pääsytaso",
 	'access:read' => "Lukuoikeus",
 	'access:write' => "Kirjoitusoikeus",
 	'access:admin_only' => "Vain ylläpitäjät",
-	'access:missing_name' => "Tuntematon lukuoikeus",
-	'access:comments:change' => "Tässä sisällössä on kommentteja. Ota huomioon, että vaihtaessasi sisällön pääsytasoa, myös kommenttien pääsytaso muuttuu.",
-
+	
 /**
  * Dashboard and widgets
  */
@@ -185,7 +161,6 @@ return array(
 
 	'widgets:add' => 'Vimpaimet',
 	'widgets:add:description' => "Klikkaa alla olevia vimpaimia lisätäksesi ne sivulle.",
-	'widgets:position:fixed' => '(Lukittu sijainti sivulla)',
 	'widget:unavailable' => 'Olet jo lisännyt tämän vimpaimen',
 	'widget:numbertodisplay' => 'Näytettävien kohteiden määrä',
 
@@ -270,7 +245,6 @@ return array(
 	'river:delete:success' => 'Kohde poistettu',
 	'river:delete:fail' => 'Kohteen poistaminen epäonnistui',
 	'river:delete:lack_permission' => 'Sinulla ei ole oikeuksia poistaa tätä kohdetta',
-	'river:can_delete:invaliduser' => 'Ei pystytty tarkistamaan oikeuksia poistamiseen, koska käyttäjää ID:llä [%s] ei löytynyt.',
 	'river:subject:invalid_subject' => 'Virheellinen käyttäjä',
 	'activity:owner' => 'Näytä toiminta',
 
@@ -299,14 +273,6 @@ return array(
 	'viewtype:change' => "Vaihda listatyyppi",
 	'viewtype:list' => "Listanäkymä",
 	'viewtype:gallery' => "Gallerianäkymä",
-
-	'tag:search:startblurb' => "Kohteet, joiden täsmäävät tagiin '%s':",
-
-	'user:search:startblurb' => "Käyttäjät, jotka täsmäävät hakuun '%s':",
-	'user:search:finishblurb' => "Näytä lisää hakutuloksia.",
-
-	'group:search:startblurb' => "Ryhmät, jotka täsmäävät hakuun '%s':",
-	'group:search:finishblurb' => "Näytä lisää hakutuloksia.",
 	'search:go' => 'Etsi',
 	'userpicker:only_friends' => 'Näytä vain ystävät',
 
@@ -328,7 +294,6 @@ return array(
 	'registration:userexists' => 'Syöttämäsi käyttäjätunnus on jo olemassa',
 	'registration:usernametooshort' => 'Käyttäjätunnuksen tulee olla vähintään %u merkin pituinen.',
 	'registration:usernametoolong' => 'Käyttäjätunnuksesi on liian pitkä. Siinä voi olla korkeintaan %u merkkiä.',
-	'registration:passwordtooshort' => 'Salasanan tulee olla vähintään %u merkin pituinen.',
 	'registration:dupeemail' => 'Tämä sähköpostiosoite on jo rekisteröity.',
 	'registration:invalidchars' => 'Käyttätunnuksessai on seuraavia kiellettyvä merkkejä: %s. Tunnuksessa ei voi olla mitään näistä merkeistä: %s',
 	'registration:emailnotvalid' => 'Syöttämäsi sähköpostiosoite ei ole kelvollinen',
@@ -795,7 +760,6 @@ return array(
 
 	'content' => "content",
 	'content:latest' => 'Viimeisin toiminta',
-	'content:latest:blurb' => 'Näet viimeisimmän toiminnan myös tästä.',
 
 	'link:text' => 'näytä linkki',
 
@@ -871,13 +835,6 @@ return array(
 	'useradd:subject' => 'Käyttäjätili luotu',
 
 /**
- * System messages
- */
-
-	'systemmessages:dismiss' => "click to dismiss",
-
-
-/**
  * Messages
  */
 	'messages:title:error' => 'Virheet',
@@ -885,13 +842,6 @@ return array(
 	'messages:title:help' => 'Ohje',
 	'messages:title:notice' => 'Huomautukset',
 	'messages:title:info' => 'Info',
-
-/**
- * Import / export
- */
-
-	'importsuccess' => "Import of data was successful",
-	'importfail' => "OpenDD import of data failed.",
 
 /**
  * Time
@@ -1033,19 +983,12 @@ return array(
 	'upgrade:unlock:confirm' => "Aiemmin käynnistetty päivitys on lukinnut tietokannan. Useiden päivitysten ajaminen samanaikaisesti on vaarallista, joten avaa lukitus vain jos tiedät, että käynnissä ei ole päivitystä. Avataanko lukitus?",
 	'upgrade:locked' => "Päivitystä ei voida aloittaa, koska käynnissä on jo toinen päivitys. Voit avata lukituksen hallintapaneelista.",
 	'upgrade:unlock:success' => "Avattiin päivityksen lukitus.",
-	'upgrade:unable_to_upgrade' => 'Päivityksen lukituksen avaaminen epäonnistui.',
-
-	'update:oauth_api:deactivated' => 'OAuth API (aiemmin "OAuth Lib") otettiin pois käytöstä päivityksen aikana. Ota se käyttöön manuaalisesti, mikäli sille on tarvetta.',
-	'upgrade:site_secret_warning:moderate' => "On suositeltavaa, että uusit sivuston salausavaimen parantaaksesi tietoturvaa. Lisätietoja löydät kohdasta: Asetukset > Lisäasetukset",
-	'upgrade:site_secret_warning:weak' => "Sivustollasi on käytössä liian heikko salausavain, mikä saattaa heikentää tietoturvaa. Uudista salausavain kohdasta: Asetukset > Lisäasetukset",
 
 	'admin:pending_upgrades' => 'Sivustolla on odottavia päivityksiä, jotka vaativat välitöntä huomiotasi.',
 	'admin:view_upgrades' => 'Siirry päivityksiin tästä.',
 	'item:object:elgg_upgrade' => 'Sivuston päivitykset',
 	'admin:upgrades:none' => 'Sivustosi on ajan tasalla!',
 
-	'upgrade:item_count' => 'Sivustolla on <b>%s</b> kohdetta, jotka vaativat päivityksen.',
-	'upgrade:warning' => '<b>Varoitus:</b> Tämä päivitys saattaa viedä huomattavasti aikaa.',
 	'upgrade:success_count' => 'Päivitetyt kohteet:',
 	'upgrade:finished' => 'Päivitys on valmis',
 	'upgrade:finished_with_errors' => '<p>Päivityksen aikana ilmeni virheitä. Päivitä sivu ja yritä ajaa päivitys uudelleen.<br /></p><p>Jos virheet toistuvat, yritä selvittää niiden syy palvelimen virhelokeista. Tarvittaessa voit pyytää apua Elggin yhteisön <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">teknisen tuen ryhmästä</a>.</p>',
@@ -1111,7 +1054,6 @@ return array(
 	'entity:delete:object:comment:success' => "Kommentti poistettu.",
 	'generic_comment:blank' => "Kommenttiin täytyy kirjoittaa jotain ennen kuin se voidaan tallentaa.",
 	'generic_comment:notfound' => "Etsimääsi kommenttia ei löytynyt.",
-	'generic_comment:notfound_fallback' => "Etsimääsi kommenttia ei löytynyt, mutta ohjasimme sinut sivulle, jonne kommentti oli jätetty.",
 	'generic_comment:failure' => "Kommentin tallentamisessa tapahtui odottamaton virhe.",
 	'generic_comment:none' => 'Ei kommentteja',
 	'generic_comment:title' => 'Kommentti käyttäjältä %s',
@@ -1124,15 +1066,12 @@ return array(
 
 	'byline' => 'Käyttäjältä %s',
 	'byline:ingroup' => 'ryhmässä %s',
-	'entity:default:missingsupport:popup' => 'Tätä kohdetta ei voida näyttää oikein. Tämä voi johtua puuttuvasta liitännäisestä.',
-
+	
 	'entity:delete:item' => 'Kohde',
 	'entity:delete:item_not_found' => 'Kohdetta ei löytynyt.',
 	'entity:delete:permission_denied' => 'Sinulla ei ole oikeuksia tämän kohteen poistamiseen.',
 	'entity:delete:success' => 'Poistettiin %s',
 	'entity:delete:fail' => 'Kohteen %s poistaminen epäonnistui',
-	
-	'entity:can_delete:invaliduser' => 'Käyttäjälle GUID [%s] ei voida tehdä canDelete()-tarkistusta, koska käyttäjää ei ole olemassa.',
 
 /**
  * Annotations
@@ -1147,7 +1086,6 @@ return array(
 	'actiongatekeeper:timeerror' => 'Käyttämäsi sivu on vanhentunut. Päivitä sivu ja yritä uudelleen.',
 	'actiongatekeeper:pluginprevents' => 'Tietojen lähettäminen epäonnistui tuntemattoman ongelma vuoksi.',
 	'actiongatekeeper:uploadexceeded' => 'Lähettämäsi datan koko ylittää sivuston ylläpitäjän määrittämän maksimirajan',
-	'actiongatekeeper:crosssitelogin' => "Eri domainista kirjautuminen ei ole sallittua. Yritä uudelleen.",
 
 /**
  * Word blacklists
@@ -1160,7 +1098,6 @@ return array(
  */
 
 	'js:security:token_refresh_failed' => 'Yhteyden saaminen osoitteeseen %s epäonnistui. Kohteiden tallentamisessa saattaa ilmetä ongelmia. Ole hyvä ja päivitä sivu.',
-	'js:security:token_refreshed' => 'Yhteys osoitteeseen %s palautettu!',
 	'js:lightbox:current' => "%s/%s",
 
 /**

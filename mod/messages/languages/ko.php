@@ -37,30 +37,15 @@ return array(
 	*/
 
 	'messages:posted' => "쪽지를 성공적으로 보냈습니다.",
-	'messages:success:delete:single' => '쪽지가 삭제되었습니다.',
 	'messages:success:delete' => '삭제된 쪽지',
 	'messages:success:read' => '읽은 것으로 표시된 쪽지',
 	'messages:error:messages_not_selected' => '선택된 쪽지 없슴',
-	'messages:error:delete:single' => '쪽지를 삭제할 수 없슴',
 
 	/**
 	* Email messages
 	*/
 
 	'messages:email:subject' => '새 쪽지가 있습니다.',
-	'messages:email:body' => "%s에게서 새 쪽지가 왔습니다. 내용은:
-
-
-	%s
-
-
-	쪽지를 보려면 누르세요:
-
-	%s
-
-	 %s 에게 쪽지를 보내려면 누르세요:
-
-	%s",
 
 	/**
 	* Error messages

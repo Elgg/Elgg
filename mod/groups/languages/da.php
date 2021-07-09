@@ -18,7 +18,6 @@ return array(
 	'groups:all' => "Alle grupper",
 	'groups:add' => "Opret en ny gruppe",
 	'groups:edit' => "Rediger gruppe",
-	'groups:delete' => 'Slet gruppe',
 	'groups:membershiprequests' => 'Administrer anmodning om deltagelse',
 	'groups:membershiprequests:pending' => 'Manage join requests (%s)',
 	'groups:invitations' => 'Gruppe invitationer',
@@ -66,7 +65,6 @@ return array(
 
 	'groups:nofriendsatall' => 'Du har ingen venner at invitere!',
 	'groups:group' => "Gruppe",
-	'groups:search:tags' => "tag",
 	'groups:search:title' => "Søg efter grupper tagget med '%s'",
 	'groups:search:none' => "Ingen match blev fundet",
 	'groups:search_in_group' => "Search in this group",
@@ -134,7 +132,6 @@ return array(
 	/**
 	 * Action messages
 	 */
-	'groups:deletewarning' => "Er du sikker på at du vil slette denne gruppe? Du kan ikke gøre det om!",
 
 	'groups:invitekilled' => 'Invitationen er blevet slettet.',
 	'groups:joinrequestkilled' => 'Anmodningen om tilslutning er blevet slettet.',

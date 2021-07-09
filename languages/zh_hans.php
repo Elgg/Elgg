@@ -20,7 +20,6 @@ return array(
 
 	'login' => "登录",
 	'loginok' => "请勿重复登录，如果您需要切换账号请先注销。",
-	'loginerror' => "未匹配到您的注册信息，请检查您的账号或者密码后重新登录！",
 	'login:empty' => "请输入登录信息！",
 	'login:baduser' => "此账号已经被禁止登录。",
 	'auth:nopams' => "网络故障，无法认证当前登录信息！",
@@ -44,37 +43,20 @@ return array(
 	'exception:title' => "严重错误！",
 	'exception:contact_admin' => '当前错误已经被记录，请稍后访问该站点。如果多次出现请通过以下信息联系管理员：',
 
-	'actionundefined' => "未知请求：(%s)",
 	'actionnotfound' => "请求文件 %s 不存在！",
-	'actionloggedout' => "抱歉，注销后无法执行此操作。",
 	'actionunauthorized' => '您没有权限执行此操作。',
 
 	'ajax:error' => '无法提交 AJAX 请求，可能是服务器连接中断请稍后再试！',
 	'ajax:not_is_xhr' => '不能直接访问AJAX视图',
 
-	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) 插件配置错误，已被禁用. 请查看Elgg官方文档 (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) 无法启用， 原因: %s',
 	'PluginException:InvalidID' => "插件ID无效： %s ",
 	'PluginException:InvalidPath' => "插件路径无效 ： %s ",
-	'PluginException:InvalidManifest' => '插件manifest 文件无效： %s',
-	'PluginException:InvalidPlugin' => '无效插件 ： %s ',
-	'PluginException:InvalidPlugin:Details' => '%s 是无效插件: %s',
-	'PluginException:NullInstantiated' => 'ElggPlugin实例不能为空.您必须通过一个GUID、一个插件ID或者一个完整的路径加载',
 	'ElggPlugin:MissingID' => '插件ID错误(guid %s)',
-	'ElggPluginPackage:InvalidPlugin:MissingFile' => '文件 "%s" 丢失！',
-	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'manifest 文件包含无效的依赖 "%s".',
-	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'manifest 中包含无效的类型 "%s".',
-	'ElggPluginPackage:InvalidPlugin:CircularDep' => '插件%s中发现无效的 %s 依赖 "%s" ，插件互相冲突.',
-	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => '插件冲突: %s',
-	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => '插件文件 "elgg-plugin.php" 不可读！',
 	'ElggPlugin:Error' => '插件错误',
 	'ElggPlugin:Exception:CannotIncludeFile' => '无法包含 %s 在插件 %s (guid: %s) 中 %s。',
 	'ElggPlugin:Exception:IncludeFileThrew' => '异常来自 %s 在插件 %s (guid: %s) 中 %s。',
 	'ElggPlugin:Exception:CannotRegisterViews' => '无法打开插件视图 %s (guid: %s) 在 %s.',
-	'PluginException:NoPluginName' => "插件名未找到！",
-	'PluginException:ParserError' => '解析 manifest 错误： API 版本 %s， 插件信息 %s.',
-	'PluginException:NoAvailableParser' => '无法解析 manifest ： API 版本 %s， 插件信息 %s.',
-	'PluginException:ParserErrorMissingRequiredAttribute' => "请求'%s'显示插件 %s 的属性丢失。",
 	'ElggPlugin:InvalidAndDeactivated' => '%s 插件无效已被禁用！',
 	'ElggPlugin:activate:BadConfigFormat' => '插件文件 "elgg-plugin.php" 未返回序列化数据。',
 	'ElggPlugin:activate:ConfigSentOutput' => '发送 "elgg-plugin.php" 到标准输出。',
@@ -102,16 +84,11 @@ return array(
 	'GatekeeperException' => '您没有权限查看要访问的页面。',
 	'BadRequestException' => '请求失败！',
 
-	'pageownerunavailable' => '警告: 该页面的所有者 %d 无法访问!',
 	'viewfailure' => '在视图中存在错误 %s',
-	'view:missing_param' => "参数 %s 丢失！视图位置： %s",
 	'changebookmark' => '请更改此页的书签！',
-	'noaccess' => '该内容已经被删除,或您查看权限!',
 	'error:missing_data' => '在您的请求中部分数据丢失。',
 	'save:fail' => '数据保存失败！',
 	'save:success' => '数据保存成功',
-
-	'forward:error' => '对不起的，重定向到另一个站点时出错。',
 
 	'error:default:title' => 'Oops...',
 	'error:default:content' => 'Oops... 页面错误！',
@@ -181,15 +158,12 @@ return array(
 	'access:label:logged_out' => "非登录用户",
 	'access:label:friends' => "好友",
 	'access' => "谁可以查看？",
-	'access:overridenotice' => "N提示: 由于研究组设置, 该内容仅研究组成员可访问.",
 	'access:limited:label' => "限制",
 	'access:help' => "访问级别",
 	'access:read' => "可读访问",
 	'access:write' => "可写访问",
 	'access:admin_only' => "仅管理员",
-	'access:missing_name' => "丢失访问级别名称",
-	'access:comments:change' => "该讨论限制用户访问，请您考虑要优先分享给谁。",
-
+	
 /**
  * Dashboard and widgets
  */
@@ -199,7 +173,6 @@ return array(
 
 	'widgets:add' => '添加组件',
 	'widgets:add:description' => "点击下列任意组件使其在本页显示。",
-	'widgets:position:fixed' => '（固定在该页面的位置）',
 	'widget:unavailable' => '您已经添加了该组件',
 	'widget:numbertodisplay' => '显示数量',
 
@@ -292,7 +265,6 @@ return array(
 	'river:delete:success' => '该动态已被删除',
 	'river:delete:fail' => '该动态无法删除',
 	'river:delete:lack_permission' => '你无法删除该动态，权限不够！',
-	'river:can_delete:invaliduser' => 'user_guid [%s] 用户不存在，无法检查其权限！',
 	'river:subject:invalid_subject' => '无效用户',
 	'activity:owner' => '查看动态',
 
@@ -321,14 +293,6 @@ return array(
 	'viewtype:change' => "更换显示方式",
 	'viewtype:list' => "列表显示",
 	'viewtype:gallery' => "预览显示",
-
-	'tag:search:startblurb' => "匹配标签条目 '%s':",
-
-	'user:search:startblurb' => "匹配用户 '%s':",
-	'user:search:finishblurb' => "点击这里查看更多.",
-
-	'group:search:startblurb' => "匹配小组 '%s':",
-	'group:search:finishblurb' => "点击这里查看更多.",
 	'search:go' => '开始',
 	'userpicker:only_friends' => '仅限研友',
 
@@ -352,7 +316,6 @@ return array(
 	'registration:userexists' => '用户名已经被注册',
 	'registration:usernametooshort' => '用户名不能少于%u字符.',
 	'registration:usernametoolong' => '用户名太长, 不能超过%u字符.',
-	'registration:passwordtooshort' => '密码不得少于%u字符T.',
 	'registration:dupeemail' => '该邮箱地址已被注册.',
 	'registration:invalidchars' => '对不起，你的用户名含有无效字符%s. 以下字符是无效的: %s',
 	'registration:emailnotvalid' => '对不起，你输入的邮箱地址在此系统无效',
@@ -502,14 +465,7 @@ return array(
 	'admin:widget:admin_welcome:intro' =>
 '欢迎使用Elgg! 现在你正在查看管理面板，它可以跟踪网站使用情况.',
 	'admin:widget:admin_welcome:admin_overview' =>
-"管理区域的导航在右边的菜单，它包含
-三个部分:
-    <dl>
-        <dt>管理员</dt><dd>每天的任务，比如监控报告的内容，检查谁在线，查看统计数据</dd>
-        <dt>配置</dt><dd>偶尔任务，比如设置网站名称，激活插件</dd>
-        <dt>开发</dt><dd>针对开发插件和主题的开发者(开发者插件必须激活)</dd>
-    </dl>
-    ",
+"",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />通过底部链接检查可用的资源，感谢使用Elgg!',
@@ -692,10 +648,6 @@ return array(
 	'admin:server:label:post_max_size' => '内容最大尺寸',
 	'admin:server:label:upload_max_filesize' => '上传最大尺寸',
 	'admin:server:warning:post_max_too_small' => '(注意: 内容最大尺寸必须大于此值才能支持上传)',
-	'admin:server:memcache:inactive' => '
-        这是该服务器上未安装或尚未配置Elgg配置。
-        为了提高性能，建议您启用和配置memcache。
-    ',
 	
 	'admin:server:requirements:php_extension' => "PHP 扩展: %s",
 	
@@ -730,7 +682,6 @@ return array(
 
 	'admin:configure_utilities:default_widgets' => '默认组件',
 	'admin:default_widgets:unknown_type' => '未知组件类型',
-	'admin:default_widgets:instructions' => '为选定的应用页添加, 去除, 定位, 配置默认应用，此改变仅对网站的新用户有效。',
 
 	'admin:robots.txt:instructions' => "编辑网站的以下robots.txt文件",
 	'admin:robots.txt:plugins' => "插件正在添加下面的内容到robots.txt文件",
@@ -738,7 +689,6 @@ return array(
 	'admin:robots.txt:physical' => "robots.txt工具不能工作，因为另一个robots.txt文件已经存在",
 
 	'admin:maintenance_mode:default_message' => '网站正在维护',
-	'admin:maintenance_mode:instructions' => '维护模式用于用户升级和大型修改，当维护状态开始时，仅管理员可以登入和浏览。',
 	'admin:maintenance_mode:mode_label' => '维护模式',
 	'admin:maintenance_mode:message_label' => '维护模式开启时显示给用户的信息',
 	'admin:maintenance_mode:saved' => '维护模式设置已经保存',
@@ -904,7 +854,6 @@ return array(
 
 	'content' => "内容",
 	'content:latest' => '最新动态',
-	'content:latest:blurb' => '另外, 点击此处查看所有最新内容。',
 
 	'link:text' => '查看链接',
 
@@ -982,13 +931,6 @@ return array(
 	'useradd:subject' => '用户账户已创建',
 
 /**
- * System messages
- */
-
-	'systemmessages:dismiss' => "点击取消",
-
-
-/**
  * Messages
  */
 	'messages:title:success' => '成功',
@@ -997,13 +939,6 @@ return array(
 	'messages:title:help' => '帮助',
 	'messages:title:notice' => '注意',
 	'messages:title:info' => '信息',
-
-/**
- * Import / export
- */
-
-	'importsuccess' => "成功导入数据",
-	'importfail' => "OpenDD导入数据失败。",
 
 /**
  * Time
@@ -1155,20 +1090,6 @@ return array(
 	'upgrade:unlock:confirm' => "数据库被另一个升级锁定，允许并行升级非常危险，只有你确认没有其他升级正在运行，才应该解锁",
 	'upgrade:locked' => "无法升级，另一个升级正在运行，访问管理平台清除升级锁定",
 	'upgrade:unlock:success' => "升级成功解锁",
-	'upgrade:unable_to_upgrade' => '无法升级',
-	'upgrade:unable_to_upgrade_info' => '安装无法升级，因为在Elgg核心views路径检测到旧的视图，
-        此视图已经过时，需要去除以便Elgg正常工作。
-        如果你不得不改变Elgg核心，你可以简单删除这个views路径
-        从最新下载的Elgg包里找来一个替代。
-        下载地址 <a href="http://elgg.org">elgg.org</a><br /><br />
-        
-        如果你需要详细的指导，请访问<a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
-        Upgrading Elgg documentation</a> 如果你寻求帮助，请发帖到
-        <a href="http://community.elgg.org/pg/groups/discussion/">Community Support Forums</a>',
-
-	'update:oauth_api:deactivated' => 'OAuth API (旧名 OAuth Lib) 在升级期间被禁用，如果需要，请手动激活',
-	'upgrade:site_secret_warning:moderate' => "鼓励你重新生成你的网站密钥去改进系统安全，参见 系统 &gt; 设置 &gt; 高级",
-	'upgrade:site_secret_warning:weak' => "强烈鼓励你重新生成网站密钥改进系统安全 参见 配置 &gt; 设置 &gt; 高级",
 
 	'admin:pending_upgrades' => '网站有待处理的升级，需要你的注意',
 	'admin:view_upgrades' => '查看待处理的升级',
@@ -1176,8 +1097,6 @@ return array(
 	'collection:object:elgg_upgrade' => 'Site upgrades',
 	'admin:upgrades:none' => '安装已经是最新',
 
-	'upgrade:item_count' => ' <b>%s</b>个项目需要升级',
-	'upgrade:warning' => '<b>警告:</b> 大型网站的升级可能需要相当长的时间!',
 	'upgrade:success_count' => '升级:',
 	'upgrade:finished' => '升级完成',
 	'upgrade:finished_with_errors' => '<p>升级完成，但是仍有错误，刷新页面重新运行升级</p></p><br />如果错误重现，检查服务器错误log找到可能的原因，你也可以从<a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support group</a> 寻求帮助</p>',
@@ -1211,13 +1130,6 @@ return array(
 	'email:save:fail:password' => "密码与您当前的密码不匹配，无法更改您的电子邮件地址。",
 
 	'friend:newfriend:subject' => "%s已经加你为好友!",
-	'friend:newfriend:body' => "%s已经加你为好友!
-
-请点此处查看他的简介:
-
-%s
-
-请勿回复此邮件.",
 
 	'email:changepassword:subject' => "密码已更改!",
 
@@ -1253,32 +1165,13 @@ return array(
 	'generic_comment:updated' => "评论已更新！",
 	'generic_comment:blank' => "请先输入评论内容！",
 	'generic_comment:notfound' => "未找到指定内容！",
-	'generic_comment:notfound_fallback' => "未找到指定内容, 已返回当前页！",
 	'generic_comment:failure' => "保存评论时产生意外错误！",
 	'generic_comment:none' => '尚无评论',
 	'generic_comment:title' => '%s评论',
 	'generic_comment:on' => '%s 评论 %s',
 	'generic_comments:latest:posted' => '发表了',
-	'generic_comment:notification:owner:body' => "您收到新评论关于\"%s\" ，来自 %s. %s写道:
-
-%s
-
-To reply or view the original item, click here:
-%s
-
-To view %s's profile, click here:
-%s",
 	
 	'generic_comment:notification:user:summary' => '新评论： %s',
-	'generic_comment:notification:user:body' => "A new comment was made on \"%s\" by %s. It reads:
-
-%s
-
-To reply or view the original item, click here:
-%s
-
-To view %s's profile, click here:
-%s",
 
 /**
  * Entities
@@ -1286,15 +1179,12 @@ To view %s's profile, click here:
 
 	'byline' => '作者 %s',
 	'byline:ingroup' => '在研究组 %s',
-	'entity:default:missingsupport:popup' => '此单元不能正确显示，可能需要安装插件获得支持。',
-
+	
 	'entity:delete:item' => '项目',
 	'entity:delete:item_not_found' => '项目为找到。',
 	'entity:delete:permission_denied' => '您还没有权限删除此项目。',
 	'entity:delete:success' => '%s 已删除。',
 	'entity:delete:fail' => '%s 删除失败。',
-	
-	'entity:can_delete:invaliduser' => '不能核实 canDelete() 为用户 user_guid [%s] ，因为用户不存在。',
 
 /**
  * Annotations
@@ -1309,7 +1199,6 @@ To view %s's profile, click here:
 	'actiongatekeeper:timeerror' => '你正在使用的页面已过期，请刷新重试。',
 	'actiongatekeeper:pluginprevents' => '由于未知原因，你的表单不能提交。',
 	'actiongatekeeper:uploadexceeded' => '上传文件尺寸超出最大限制',
-	'actiongatekeeper:crosssitelogin' => "不同的域名登录是不被允许的，请重试。",
 
 /**
  * Word blacklists
@@ -1322,7 +1211,6 @@ To view %s's profile, click here:
  */
 
 	'js:security:token_refresh_failed' => '联系 %s失败，你可能遇到了问题，请保存内容，刷新页面.',
-	'js:security:token_refreshed' => '连接%s已恢复！',
 	'js:lightbox:current' => "图片 %s 来自于 %s",
 
 /**
