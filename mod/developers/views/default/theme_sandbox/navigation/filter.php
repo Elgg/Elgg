@@ -16,7 +16,7 @@ foreach (['heart-regular', 'star-regular', 'bell-regular'] as $icon) {
 				'collision' => 'fit fit',
 			]),
 		],
-		'selected' => $icon == 'heart-o',
+		'selected' => $icon == 'heart-regular',
 	];
 }
 

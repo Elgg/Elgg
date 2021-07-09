@@ -23,7 +23,7 @@ class Site {
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'members',
-			'icon' => 'address-book-o',
+			'icon' => 'address-book-regular',
 			'text' => elgg_echo('members'),
 			'href' => elgg_generate_url('collection:user:user'),
 		]);

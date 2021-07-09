@@ -22,7 +22,7 @@ class Site {
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'blog',
-			'icon' => 'pencil-square-o',
+			'icon' => 'edit-regular',
 			'text' => elgg_echo('collection:object:blog'),
 			'href' => elgg_generate_url('default:object:blog'),
 		]);

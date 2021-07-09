@@ -590,7 +590,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		$event = new SubscriptionNotificationEvent($object, 'test_event');
 
 		$this->translator->addTranslation('en', [
-			"notification:{$event->getDescription()}:body" => '%s %s %s %s %s %s',
+			"notification:{$event->getDescription()}:body" => '%s %s %s %s %s',
 			"notification:{$event->getDescription()}:subject" => '%s %s',
 		]);
 
@@ -615,7 +615,6 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 				$display_name,
 			], $recipient->language), $hook->getParam('notification')->subject);
 			$this->assertStringContainsString($this->translator->translate("notification:{$event->getDescription()}:body", [
-				$recipient->name,
 				$event->getActor()->name,
 				$display_name,
 				$container_name,

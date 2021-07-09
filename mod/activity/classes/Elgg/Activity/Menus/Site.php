@@ -22,7 +22,7 @@ class Site {
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'activity',
-			'icon' => 'clock-o',
+			'icon' => 'clock-regular',
 			'text' => elgg_echo('activity'),
 			'href' => elgg_generate_url('default:river'),
 		]);
