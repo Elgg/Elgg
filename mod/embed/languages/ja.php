@@ -6,6 +6,6 @@
  */
 
 return array(
-	'embed:embed' => '埋め込み',
 	'embed:media' => '埋め込むコンテント',
+	'embed:no_support' => '利用できる埋め込み可能なコンテンツがありません',
 );

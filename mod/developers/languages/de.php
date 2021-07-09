@@ -114,6 +114,7 @@ Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören
 	'theme_sandbox:breakout' => 'Theme-Preview in ganzen Browserfenster anzeigen',
 	'theme_sandbox:buttons' => 'Knöpfe',
 	'theme_sandbox:components' => 'Komponenten',
+	'theme_sandbox:email' => 'Email',
 	'theme_sandbox:forms' => 'Forms',
 	'theme_sandbox:grid' => 'Grid',
 	'theme_sandbox:icons' => 'Icons',
@@ -124,6 +125,9 @@ Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören
 	'theme_sandbox:typography' => 'Typographie',
 
 	'theme_sandbox:icons:blurb' => 'Verwende <em>elgg_view_icon($name)</em> zur Ausgabe von Icons.',
+	
+	'theme_sandbox:test_email:button' => "Sende Test-Email",
+	'theme_sandbox:test_email:success' => "Test-Email wurde gesendet an: %s",
 
 	// status messages
 	'developers:settings:success' => 'Einstellungen gespeichert und Caches zurückgesetzt.',

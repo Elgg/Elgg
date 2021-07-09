@@ -122,7 +122,7 @@ class UpgradeService {
 				return $reject();
 			}
 
-			elgg_clear_caches();
+			elgg_invalidate_caches();
 
 			$this->mutex->unlock('upgrade');
 

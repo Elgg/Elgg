@@ -22,7 +22,6 @@ return array(
 	'groups:edit:access' => "アクセス",
 	'groups:edit:tools' => "ツール",
 	'groups:edit:settings' => "設定",
-	'groups:delete' => 'グループの削除',
 	'groups:membershiprequests' => '参加リクエストの管理',
 	'groups:membershiprequests:pending' => '参加リクエストの管理 (%s)',
 	'groups:invitedmembers' => "招待を管理",
@@ -80,7 +79,6 @@ return array(
 
 	'groups:nofriendsatall' => '招待する友達がいません',
 	'groups:group' => "グループ",
-	'groups:search:tags' => "タグ",
 	'groups:search:title' => "「 %s 」でタグ付けされたグループを検索する",
 	'groups:search:none' => "検索に引っかかったグループはありませんでした",
 	'groups:search_in_group' => "このグループ内を検索",
@@ -143,24 +141,24 @@ return array(
 	'groups:invite:subject' => "%sさん、%s に招待されています。",
 	'groups:joinrequest:remove:check' => 'この招待リクエストを削除してよいですか？',
 	'groups:invite:remove:check' => 'この招待を破棄してもよろしいですか？',
-	'groups:invite:body' => "%s さんはあなたをグループ '%s'  に招待しています。
+	'groups:invite:body' => "%s さんがあなたをグループ '%s' に招待しています。
 
-クリックして招待状をみてみましょう:
+クリックして招待状を確認して見ましょう:
 %s",
 
 	'groups:welcome:subject' => "ようこそ、「 %s 」グループへ！",
-	'groups:welcome:body' => "あなたは、グループ '%s' のメンバーになりました.
+	'groups:welcome:body' => "あなたはグループ '%s' のメンバーとなりました。
 
-クリックして投稿を始めましょう！
+ここをクリックして投稿を始めましょう！
 %s",
 
 	'groups:request:subject' => "%s さんは「 %s 」に参加希望を申請しました。",
-	'groups:request:body' => "%s さんは、グループ「 %s 」への参加を希望しています。
+	'groups:request:body' => "%s さんがグループ '%s' への参加を希望しています。
 
-プロフィールは下をクリック:
+プロフィールを見るには:
 %s
 
-グループ参加リクエストは下をクリック:
+グループ参加のリクエストを見るには:
 %s",
 
 	'river:group:create' => '%s さんはグループ「 %s 」を作成しました',
@@ -172,9 +170,6 @@ return array(
 	/**
 	 * Action messages
 	 */
-	'groups:deleted' => 'グループとグループのコンテンツを削除しました',
-	'groups:notdeleted' => 'グループを削除できませんでした',
-	'groups:deletewarning' => "このグループを削除していいですか？削除したら元に戻す事はできません！",
 
 	'groups:invitekilled' => '招待状を削除しました。',
 	'groups:joinrequestkilled' => '参加希望申請を削除しました。',

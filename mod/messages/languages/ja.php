@@ -37,27 +37,25 @@ return array(
 	*/
 
 	'messages:posted' => "メッセージを送信しました。",
-	'messages:success:delete:single' => 'メッセージを削除しました',
 	'messages:success:delete' => 'メッセージを削除しました',
 	'messages:success:read' => 'メッセージを「既読」にしました',
 	'messages:error:messages_not_selected' => '選択されてるメッセージはありません。',
-	'messages:error:delete:single' => 'メッセージを削除できませんでした。',
 
 	/**
 	* Email messages
 	*/
 
 	'messages:email:subject' => '新しいメッセージが届きました！',
-	'messages:email:body' => "%s さんからのメッセージがあります。
+	'messages:email:body' => " %s さんからのメッセージがあります。
 
 内容:
 
 %s
 
-メッセージを見るには、ここをクリック:
+めっせーじをみるには:
 %s
 
-%s さんにメッセージを送るには、ここをクリック:
+%s さんにメッセージを送るには:
 %s",
 
 	/**

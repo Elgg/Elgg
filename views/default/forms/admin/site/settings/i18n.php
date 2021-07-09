@@ -12,12 +12,17 @@ $result = elgg_view_field([
 ]);
 
 $language_options = elgg()->translator->getInstalledTranslations();
+
 // lock site language and English, these can't be disabled
-$language_options[elgg_get_config('language')] = [
-	'text' => $language_options[elgg_get_config('language')],
-	'value' => elgg_get_config('language'),
-	'disabled' => true,
-];
+$config_language = elgg_get_config('language');
+if ($config_language !== 'en') {
+	$language_options[$config_language] = [
+		'text' => $language_options[$config_language],
+		'value' => $config_language,
+		'disabled' => true,
+	];
+}
+
 $language_options['en'] = [
 	'text' => $language_options['en'],
 	'value' => 'en',

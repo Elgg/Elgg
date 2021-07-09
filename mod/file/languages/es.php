@@ -22,14 +22,11 @@ return array(
 	'file:num_files' => "N&uacute;mero de archivos a mostrar",
 	'file:replace' => 'Reemplazar los contenidos del archivo (deja en blanco para no cambiar el archivo)',
 	'file:list:title' => "%s's %s %s",
-	'file:title:friends' => "Amigos'",
 
 	'file:file' => "Archivo",
 
 	'file:list:list' => 'Cambiar a vista de lista',
 	'file:list:gallery' => 'Cambiar a vista de galer&iacute;a',
-
-	'file:types' => "Tipos de archivos subidos",
 
 	'file:type:' => 'Archivos',
 	'file:type:all' => "Todos los archivos",

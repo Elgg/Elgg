@@ -22,9 +22,6 @@ return array(
 	'likes:userlikedthis' => '%s tykkää',
 	'likes:userslikedthis' => '%s tykkää',
 	'likes:river:annotate' => 'tykkää',
-	'likes:delete:confirm' => 'Haluatko varmasti poistaa tämän tykkäyksen?',
-
-	'river:likes' => 'likes %s %s',
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s tykkää kohteestasi "%s"',

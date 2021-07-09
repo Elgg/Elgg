@@ -10,6 +10,9 @@ if (!$page_owner instanceof \ElggUser) {
 	throw new EntityNotFoundException(elgg_echo('river:subject:invalid_subject'));
 }
 
+elgg_push_breadcrumb($page_owner->getDisplayName(), $page_owner->getURL());
+elgg_push_breadcrumb(elgg_echo('river:friends'), elgg_generate_url('collection:river:friends', ['username' => $page_owner->username]));
+
 // get filter options
 $type = preg_replace('[\W]', '', get_input('type', 'all'));
 $subtype = preg_replace('[\W]', '', get_input('subtype', ''));

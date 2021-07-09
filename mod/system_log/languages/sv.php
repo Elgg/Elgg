@@ -7,7 +7,6 @@
 
 return array(
 	'admin:administer_utilities:logbrowser' => 'Logg-bläddrare',
-	'logbrowser' => 'Logg-bläddrare',
 	'logbrowser:search' => 'Förfina resultat',
 	'logbrowser:user' => 'Användarnamn att söka efter',
 	'logbrowser:starttime' => 'Starttid (som exempel "förra måndagen", "1 timme sen")',

@@ -18,7 +18,6 @@ return array(
 
 	'login' => "Přihlásit se",
 	'loginok' => "Byl/a jste přihlášen/a.",
-	'loginerror' => "Nemůžeme vás přihlásit. Zkontrolujete přihlašovací údaje a zkuste to znovu.",
 	'login:empty' => "Je vyžadováno uživatelské jméno/e-mail a heslo.",
 	'login:baduser' => "Váš profil není možné načíst.",
 	'auth:nopams' => "Vnitřní chyba. Není nainstalovaná ověřovací metoda uživatele.",
@@ -42,36 +41,19 @@ return array(
 	'exception:title' => "Fatální chyba.",
 	'exception:contact_admin' => 'Došlo k neodstranitelné chybě, která byla zaznamenána. Obraťte se na správce těchto stránek s následujícími údaji:',
 
-	'actionundefined' => "Požadovaná akce (%s) nebyla v systému definována.",
 	'actionnotfound' => "Soubor s akcí pro %s nebyl nalezen.",
-	'actionloggedout' => "Tuto akci bohužel nelze provést dokud nejste jste přihlášen/a.",
 	'actionunauthorized' => 'Nemáte oprávnění provést tuto akci.',
 
 	'ajax:error' => 'Neočekávaná chyba během volání AJAX požadavku. Pravděpodobně došlo ke ztrátě spojení se serverem.',
 	'ajax:not_is_xhr' => 'Nemůžete přistupovat přímo k AJAX pohledům',
 
-	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) je špatně nakonfigurovaný doplněk a byl zakázán. Prohledejte prosím wiki projektu Elgg pro nalezení možných příčin (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) se nespustil a byl deaktivován. Důvod: %s',
 	'PluginException:InvalidID' => "%s je neplatné ID doplňku.",
 	'PluginException:InvalidPath' => "%s je neplatná cesta doplňku.",
-	'PluginException:InvalidManifest' => 'Neplatný soubor manifestu pro doplněk %s',
-	'PluginException:InvalidPlugin' => '%s není platný doplněk.',
-	'PluginException:InvalidPlugin:Details' => '%s není platný doplněk: %s',
-	'PluginException:NullInstantiated' => 'Doplněk nemůže být odstraněn. Musíte dodat GUID, ID doplňku nebo kompletní cestu.',
 	'ElggPlugin:MissingID' => 'Postrádám ID doplňku (guid %s)',
-	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'Požadovaný soubor "%s" chybí.',
-	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Jeho manifest obsahuje neplatný typ závislosti "%s".',
-	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Jeho manifest obsahuje neplatný typ poskytování "%s".',
-	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Existuje vadná %s závislost "%s" v doplňku %s. Doplněk nemůže být v konfliktu s nebo požadovat něco co poskytuje!',
-	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Je v konfliktu s doplňkem: %s',
-	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Soubor doplňku "elgg-plugin.php" file je přítomen ale nedá se číst.',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Nemohu vložit %s pro doplněk %s (guid: %s) na %s.',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Vyhozena výjimka obsahující %s pro doplněk %s (guid: %s) na %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Nemohu otevřít složku pohledů pro doplněk %s (guid: %s) na %s.',
-	'PluginException:NoPluginName' => "Jméno doplňku nebylo nalezeno",
-	'PluginException:ParserError' => 'Při čtení manifestu s verzí API %s v doplňku %s nastala chyba.',
-	'PluginException:NoAvailableParser' => 'Nemohu najít čtečku pro manifest s verzí API %s v doplňku %s.',
-	'PluginException:ParserErrorMissingRequiredAttribute' => "Postrádám vyžadovanou vlastnost '%s' v manifestu pro doplněk %s.",
 	'ElggPlugin:InvalidAndDeactivated' => '%s je neplatný doplněk a byl deaktivován.',
 	'ElggPlugin:activate:BadConfigFormat' => 'Soubor doplňku "elgg-plugin.php" nevrátil seriazovatelné pole.',
 	'ElggPlugin:activate:ConfigSentOutput' => 'Soubor doplňku "elgg-plugin.php" poslal výstup.',
@@ -94,11 +76,8 @@ return array(
 	'UserFetchFailureException' => 'Nemohu zkontrolovat práva pro user_guid [%s] neboť tento uživatel neexistuje.',
 	'BadRequestException' => 'Špatný požadavek',
 
-	'pageownerunavailable' => 'Varování: Vlastník stránky %d není dostupný!',
 	'viewfailure' => 'V pohledu %s došlo k vnitřnímu selhání',
-	'view:missing_param' => "Požadovaný parametr '%s' chybí v pohledu %s",
 	'changebookmark' => 'Změňte prosím vaši záložku pro tuto stránku.',
-	'noaccess' => 'Obsah který se snažíte zobrazit byl odstraněn nebo nemáte povolení prohlížet si ho.',
 	'error:missing_data' => 'V požadavku chybí nějaká data.',
 	'save:fail' => 'Při ukládání vašich dat se vyskytla chyba',
 	'save:success' => 'Data byla uložena',
@@ -166,15 +145,12 @@ return array(
  */
 	'access:label:friends' => "Přátelé",
 	'access' => "Přístup",
-	'access:overridenotice' => "Poznámka: Díky pravidlům skupiny bude tento obsah přístupný pouze pro členy skupiny.",
 	'access:limited:label' => "Omezený",
 	'access:help' => "Úroveň přístupu",
 	'access:read' => "Ke čtení",
 	'access:write' => "Pro zápis",
 	'access:admin_only' => "Pouze pro správce",
-	'access:missing_name' => "Postrádám jméno úrovně přístupu",
-	'access:comments:change' => "Tato diskuse je momentálně viditelná omezenému publiku. Buďte pozorný s kým jí sdílíte.",
-
+	
 /**
  * Dashboard and widgets
  */
@@ -184,7 +160,6 @@ return array(
 
 	'widgets:add' => 'Přidat udělátka',
 	'widgets:add:description' => "Udělátka na stránku přidáte kliknutím na následující tlačítka.",
-	'widgets:position:fixed' => '(Pevná pozice na stránce)',
 	'widget:unavailable' => 'Toto udělátko již máte přidané',
 	'widget:numbertodisplay' => 'Počet zobrazených položek',
 
@@ -269,7 +244,6 @@ return array(
 	'river:delete:success' => 'Položka aktivity byla odstraněna',
 	'river:delete:fail' => 'Položka aktivity nemůže být odstraněna',
 	'river:delete:lack_permission' => 'Nemáte dostatečná práva pro odstranění této položky aktivity',
-	'river:can_delete:invaliduser' => 'Nemohu zkontrolovat canDelete pro user_guid [%s] neboť tento uživatel neexistuje.',
 	'river:subject:invalid_subject' => 'Neplatný uživatel',
 	'activity:owner' => 'Zobrazit aktivitu',
 
@@ -298,14 +272,6 @@ return array(
 	'viewtype:change' => "Změnit typ výpisu",
 	'viewtype:list' => "Výpis",
 	'viewtype:gallery' => "Galerie",
-
-	'tag:search:startblurb' => "Položky odpovídající '%s':",
-
-	'user:search:startblurb' => "Uživatelé odpovídající '%s':",
-	'user:search:finishblurb' => "Klikněte sem pro podrobnější výpis.",
-
-	'group:search:startblurb' => "Skupiny odpovídající '%s':",
-	'group:search:finishblurb' => "Klikněte sem pro podrobnější výpis.",
 	'search:go' => 'Start',
 	'userpicker:only_friends' => 'Pouze přátelé',
 
@@ -327,7 +293,6 @@ return array(
 	'registration:userexists' => 'Toto uživatelské jméno již existuje',
 	'registration:usernametooshort' => 'Uživatelské jméno musí mít alespoň %u znaků.',
 	'registration:usernametoolong' => 'Vaše uživatelské jméno je příliš dlouhé. Může mít maximálně %u znaků.',
-	'registration:passwordtooshort' => 'Heslo musí mít alespoň %u znaků.',
 	'registration:dupeemail' => 'Tento e-mail je již zaregistrován.',
 	'registration:invalidchars' => 'Vaše uživatelské jméno bohužel obsahuje znak %s který je neplatný. Následující znaky jsou neplatné: %s',
 	'registration:emailnotvalid' => 'E-mailová adresa kterou jste zadal/a je bohužel neplatná',
@@ -790,7 +755,6 @@ return array(
 
 	'content' => "obsah",
 	'content:latest' => 'Nejnovější aktivita',
-	'content:latest:blurb' => 'Veškerý nejnovější obsah těchto stránek případně zobrazíte kliknutím sem.',
 
 	'link:text' => 'zobrazit odkaz',
 
@@ -866,13 +830,6 @@ return array(
 	'useradd:subject' => 'Uživatelský účet byl vytvořen',
 
 /**
- * System messages
- */
-
-	'systemmessages:dismiss' => "kliknutím potvrdíte",
-
-
-/**
  * Messages
  */
 	'messages:title:error' => 'Chyba',
@@ -880,13 +837,6 @@ return array(
 	'messages:title:help' => 'Pomoc',
 	'messages:title:notice' => 'Upozornění',
 	'messages:title:info' => 'Všechno',
-
-/**
- * Import / export
- */
-
-	'importsuccess' => "Import dat byl úspěšný",
-	'importfail' => "Import OpenDD dat selhal.",
 
 /**
  * Time
@@ -1028,21 +978,13 @@ return array(
 	'upgrade:unlock:confirm' => "Databáze je zamčena jinou aktualizací. Spuštění několika aktualizací naráz je nebezpečné. Měl/a byste pokračovat pouze pokud víte, že neprobíhá jiná aktualizace. Odemknout?",
 	'upgrade:locked' => "Nemohu aktualizovat, probíhá jiná aktualizace. Pro odstranění zámku aktualizace navštivte sekci správce.",
 	'upgrade:unlock:success' => "Aktualizace odemčena úspěšně.",
-	'upgrade:unable_to_upgrade' => 'Nelze aktualizovat.',
-
-	'update:oauth_api:deactivated' => 'OAuth API (dříve OAuth Lib) byla během aktualizace deaktivována. Pokud ji požadujete, aktivujte ji prosím ručně.',
-	'upgrade:site_secret_warning:moderate' => "Doporučujeme vám zvýšit zabezpečení vašich stránek přegenerováním šifrovacího klíče. Viz. Nastavovat &gt; Nastavení &gt; Rozšířená nastavení",
-	'upgrade:site_secret_warning:weak' => "Důrazně vám doporučujeme zvýšit zabezpečení vašich stránek přegenerováním šifrovacího klíče. Viz. Nastavovat &gt; Nastavení &gt; Rozšířená nastavení",
 
 	'admin:pending_upgrades' => 'Stránky mají nevyřízené aktualizace, které požadují váš bezodkladný zásah.',
 	'admin:view_upgrades' => 'Zobrazit nevyřízené aktualizace',
 	'item:object:elgg_upgrade' => 'Aktualizace stránek',
 	'admin:upgrades:none' => 'Vaše instalace je aktuální!',
 
-	'upgrade:item_count' => 'Je zde <b>%s</b> položek, které vyžadují aktualizaci.',
-	'upgrade:warning' => '<b>Varování:</b> na rozsáhlých stránkách může tato aktualizace trvat velice dlouho!',
 	'upgrade:success_count' => 'Aktualizováno:',
-	'upgrade:error_count' => 'Chyby:',
 	'upgrade:finished' => 'Aktualizace dokončena',
 	'upgrade:finished_with_errors' => '<p>Aktualizace dokončena s chybami. Obnovte stránku a zkuste aktualizaci spustit znovu.</p></p><br />Pokud se bude chyba opakovat, zkontrolujte chybový log serveru, ten může obsahovat důvod. Pomoc s opravou chyby můžete najít ve <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">skupině technické podpory</a> pro komunitu Elgg.</p>',
 	
@@ -1106,7 +1048,6 @@ return array(
 	'generic_comment:updated' => "Váš komentář byl úspěšně aktualizován.",
 	'generic_comment:blank' => "Omlouváme se, ale aby bylo možné komentář uložit, musíte do něj nejdříve něco napsat.",
 	'generic_comment:notfound' => "Bohužel jsme nemohli najít požadovaný komentář.",
-	'generic_comment:notfound_fallback' => "Bohužel jsme nemohli najít požadovaný komentář, ale přesměrovali jsme vás na místo, kde byl zanechán.",
 	'generic_comment:failure' => "Při ukládání komentáře nastala nečekaná chyba.",
 	'generic_comment:none' => 'Žádné komentáře',
 	'generic_comment:title' => 'Komentováno uživatelem %s',
@@ -1119,15 +1060,12 @@ return array(
 
 	'byline' => 'Od %s',
 	'byline:ingroup' => 've skupině %s',
-	'entity:default:missingsupport:popup' => 'Tato položka nemůže být správně zobrazena. Možná požaduje podporu doplňku, který již není nainstalován.',
-
+	
 	'entity:delete:item' => 'Položka',
 	'entity:delete:item_not_found' => 'Položka nebyla nalezena.',
 	'entity:delete:permission_denied' => 'Nemáte oprávnění smazat tuto položku.',
 	'entity:delete:success' => '%s bylo odstraněno.',
 	'entity:delete:fail' => '%s nemůže být odstraněno.',
-	
-	'entity:can_delete:invaliduser' => 'Nemohu zkontrolovat canDelete() pro user_guid [%s] neboť tento uživatel neexistuje.',
 
 /**
  * Annotations
@@ -1142,7 +1080,6 @@ return array(
 	'actiongatekeeper:timeerror' => 'Platnost používané stránky vypršela. Obnovte ji prosím a zkuste to znovu.',
 	'actiongatekeeper:pluginprevents' => 'Váš formulář bohužel nemohl být z neznámého důvodu odeslán.',
 	'actiongatekeeper:uploadexceeded' => 'Velikost nahraných souboru(ů) překračuje limit nastavený správcem těchto stránek.',
-	'actiongatekeeper:crosssitelogin' => "Přihlašování z jiné domény bohužel není povoleno. Zkuste to znovu.",
 
 /**
  * Word blacklists
@@ -1155,7 +1092,6 @@ return array(
  */
 
 	'js:security:token_refresh_failed' => 'Chyba spojení s %s. Můžete očekávat problémy při ukládání obsahu. Obnovte prosím tuto stránku.',
-	'js:security:token_refreshed' => 'Spojení s %s obnoveno!',
 	'js:lightbox:current' => "obrázek %s uživatele %s",
 
 /**

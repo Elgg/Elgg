@@ -96,8 +96,6 @@ return array(
 	'install:complete:instructions' => 'Elgg 站臺現在已準備好要使用。按以下按鈕以進入站臺。',
 	'install:complete:gotosite' => '前往站臺',
 
-	'InstallationException:UnknownStep' => '%s 是不明的安裝步驟。',
-	'InstallationException:MissingLibrary' => 'Could not load %s',
 	'InstallationException:CannotLoadSettings' => 'Elgg could not load the settings file. It does not exist or there is a file permissions issue.',
 
 	'install:success:database' => '資料庫已安裝。',

@@ -29,15 +29,7 @@ return array(
 	'bookmarks:notify:summary' => '%s 라는 새 책갈피',
 	'bookmarks:notify:subject' => '새 책갈피: %s',
 	'bookmarks:notify:body' =>
-'%s 가 새 책갈피 %s 를 추가하였습니다.
-
-위치: %s
-
-%s
-
-책갈피를 보고 댓글을 남깁니다:
-%s
-',
+'',
 
 	'bookmarks:numbertodisplay' => '표시할 책갈피의 수',
 
@@ -73,5 +65,4 @@ return array(
 	 */
 
 	'bookmarks:save:failed' => "책갈피를 저장할 수 없습니다. 제목과 주소를 입력했는지 확인하고 다시 시도해보세요.",
-	'bookmarks:unknown_bookmark' => '해당하는 책갈피를 찾을 수 없습니다.',
 );

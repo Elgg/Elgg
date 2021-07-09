@@ -23,6 +23,7 @@ return [
 	],
 	'actions' => [
 		'discussion/save' => [],
+		'discussion/toggle_status' => [],
 	],
 	'routes' => [
 		'default:object:discussion' => [
@@ -99,6 +100,9 @@ return [
 			],
 		],
 		'register' => [
+			'menu:entity' => [
+				'Elgg\Discussions\Menus\Entity::registerStatusToggle' => [],
+			],
 			'menu:filter:filter' => [
 				'Elgg\Discussions\Menus\Filter::filterTabsForDiscussions' => [],
 			],

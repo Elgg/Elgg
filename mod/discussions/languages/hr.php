@@ -38,22 +38,11 @@ return array(
 	'discussion:topic:notify:summary' => 'Nova tema rasprave je %s',
 	'discussion:topic:notify:subject' => 'Nova tema rasprave: %s',
 	'discussion:topic:notify:body' =>
-'%s dodao je novu temu rasprave "%s":
-
-%s
-
-Pogledaj i odgovori na temu rasprace:
-%s
-',
+'',
 
 	'discussion:comment:notify:summary' => 'Novi komentar u temi: %s',
-	'discussion:comment:notify:subject' => 'Novi komentar u temu:',
 	'discussion:comment:notify:body' =>
-'%s komentirao je temu rasprave "%s":
-
-%s
-
-Pregledaj i komentiraj ovu raspravu:',
+'',
 
 	'groups:tool:forum' => 'Omogući grupnu raspravu',
 

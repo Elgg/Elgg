@@ -61,5 +61,4 @@ return array(
 	 */
 
 	'bookmarks:save:failed' => "Kirjanmerkkiä ei voitu tallentaa. Tarkista, että syötit sekä otsikon että osoitteen ja yritä uudelleen.",
-	'bookmarks:unknown_bookmark' => 'Kirjanmerkkiä ei löytynyt',
 );

@@ -18,7 +18,6 @@ return array(
 	'groups:all' => "Všechny skupiny",
 	'groups:add' => "Vytvořit novou skupinu",
 	'groups:edit' => "Upravit skupinu",
-	'groups:delete' => 'Smazat skupinu',
 	'groups:membershiprequests' => 'Spravovat žádosti o přidání',
 	'groups:membershiprequests:pending' => 'Spravovat žádosti o přidání (%s)',
 	'groups:invitations' => 'Pozvání do skupin',
@@ -66,7 +65,6 @@ return array(
 
 	'groups:nofriendsatall' => 'Nemáte žádné přátele, které byste mohl/a pozvat!',
 	'groups:group' => "Skupina",
-	'groups:search:tags' => "štítek",
 	'groups:search:title' => "Hledat skupiny se štítkem '%s'",
 	'groups:search:none' => "Hledání neodpovídá žádná skupina",
 	'groups:search_in_group' => "Hledat v této skupině",
@@ -134,7 +132,6 @@ return array(
 	/**
 	 * Action messages
 	 */
-	'groups:deletewarning' => "Jste si jistý/á, že chcete smazat tuto skupinu? Nejde to vrátit zpět!",
 
 	'groups:invitekilled' => 'Pozvání bylo smazáno.',
 	'groups:joinrequestkilled' => 'Žádost o přidání byla smazána.',

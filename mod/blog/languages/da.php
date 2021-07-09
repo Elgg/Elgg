@@ -18,7 +18,6 @@ return array(
 	'blog:archives' => 'Arkiver',
 
 	'groups:tool:blog' => 'Aktiver gruppe blog',
-	'blog:write' => 'Skriv et blogindlæg',
 
 	// Editing
 	'blog:excerpt' => 'Uddrag',
@@ -35,12 +34,9 @@ return array(
 	'blog:error:cannot_write_to_container' => 'Utilstrækkelig adgang til at gemme bloggen til gruppe.',
 	'blog:messages:warning:draft' => 'Der er en ikke gemt kladde til dette indlæg!',
 	'blog:edit_revision_notice' => '(Gammel version)',
-	'blog:message:deleted_post' => 'Blogindlæg slettet.',
-	'blog:error:cannot_delete_post' => 'Kan ikke slette blogindlæg.',
 	'blog:none' => 'Ingen blogindlæg',
 	'blog:error:missing:title' => 'Angiv en blog titel!',
 	'blog:error:missing:description' => 'Indtast venligst brødteksten til ​​din blog!',
-	'blog:error:cannot_edit_post' => 'Dette indlæg eksisterer måske ikke, eller du har måske ikke tilladelse til at redigere det.',
 	'blog:error:post_not_found' => 'Kan ikke finde det specifikke blog indlæg',
 	'blog:error:revision_not_found' => 'Kan ikke finde denne revision.',
 

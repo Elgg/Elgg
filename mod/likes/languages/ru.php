@@ -22,20 +22,9 @@ return array(
 	'likes:userlikedthis' => ': %s',
 	'likes:userslikedthis' => ': %s',
 	'likes:river:annotate' => 'Одобрений',
-	'likes:delete:confirm' => 'Вы уверены, что хотите удалить этот отзыв?',
-
-	'river:likes' => '%s одобрил(а) %s',
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s одобряет ваше сообщение "%s"',
 	'likes:notifications:body' =>
-'%1$s нравится ваша публикация "%2$s" в %3$s
-
-Оригинал вашей публикации:
-
-%4$s
-
-Просмотр профиля %1$s:
-
-%5$s',
+'',
 );

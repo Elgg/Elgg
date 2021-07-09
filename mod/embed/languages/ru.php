@@ -6,7 +6,6 @@
  */
 
 return array(
-	'embed:embed' => 'Медиа',
 	'embed:media' => 'Вставить',
 	'embed:no_support' => 'Содержание для вставки недоступно',
 );

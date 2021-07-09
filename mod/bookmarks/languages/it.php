@@ -64,5 +64,4 @@ return array(
 	 */
 
 	'bookmarks:save:failed' => "Il segnalibro non può essere salvato. Assicurasi di aver inserito un titolo e un indirizzo, quindi riprovare.",
-	'bookmarks:unknown_bookmark' => 'Impossibile trovare il segnalibro specificato.',
 );

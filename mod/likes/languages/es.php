@@ -22,9 +22,6 @@ return array(
 	'likes:userlikedthis' => '%s like',
 	'likes:userslikedthis' => '%s likes',
 	'likes:river:annotate' => 'likes',
-	'likes:delete:confirm' => '&iquest;Seguro que ya no te gusta esto?',
-
-	'river:likes' => 'likes %s %s',
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s Me gusta en tu post "%s"',

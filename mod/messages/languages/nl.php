@@ -37,28 +37,15 @@ return array(
 	*/
 
 	'messages:posted' => "Je bericht is succesvol verzonden.",
-	'messages:success:delete:single' => 'Bericht is verwijderd',
 	'messages:success:delete' => 'Berichten verwijderd',
 	'messages:success:read' => 'Bericht gemarkeerd als gelezen',
 	'messages:error:messages_not_selected' => 'Geen berichten geselecteerd',
-	'messages:error:delete:single' => 'Fout tijdens het verwijderen van het bericht',
 
 	/**
 	* Email messages
 	*/
 
 	'messages:email:subject' => 'Je hebt een nieuw bericht!',
-	'messages:email:body' => "Je hebt een nieuw bericht ontvangen van %s.
-
-Het bericht is:
-
-%s
-
-Om naar jou berichten te gaan, klik hier:
-%s
-
-Om %s een bericht te sturen, klik hier:
-%s",
 
 	/**
 	* Error messages

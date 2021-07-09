@@ -159,29 +159,38 @@ define(['jquery', 'elgg', 'elgg/spinner'], function ($, elgg, spinner) {
 				};
 			}
 
-			if (!options.error) {
-				options.error = function (jqXHR, textStatus, errorThrown) {
-					if (!jqXHR.getAllResponseHeaders()) {
-						// user aborts (like refresh or navigate) do not have headers
-						return;
-					}
-
-					try {
-						var data = $.parseJSON(jqXHR.responseText);
-						if ($.isPlainObject(data)) {
-							extract_metadata(data, jqXHR.status);
-						}
-					} catch (e) {
-						if (window.console) {
-							console.warn(e.message);
-						}
-					}
-
-					if (!error_displayed && options.showErrorMessages) {
-						elgg.register_error(elgg.echo('ajax:error'));
-					}
-				};
+			var custom_error = function() {};
+			if (options.error) {
+				custom_error = options.error;
 			}
+			
+			options.error = function (jqXHR, textStatus, errorThrown) {
+				if (!jqXHR.getAllResponseHeaders()) {
+					// trigger custom error
+					custom_error(jqXHR, textStatus, errorThrown);
+					
+					// user aborts (like refresh or navigate) do not have headers
+					return;
+				}
+
+				try {
+					var data = $.parseJSON(jqXHR.responseText);
+					if ($.isPlainObject(data)) {
+						extract_metadata(data, jqXHR.status);
+					}
+				} catch (e) {
+					if (window.console) {
+						console.warn(e.message);
+					}
+				}
+
+				if (!error_displayed && options.showErrorMessages) {
+					elgg.register_error(elgg.echo('ajax:error'));
+				}
+				
+				// trigger custom error
+				custom_error(jqXHR, textStatus, errorThrown);
+			};
 
 			options.dataFilter = function (data, type) {
 				if (type !== 'json') {

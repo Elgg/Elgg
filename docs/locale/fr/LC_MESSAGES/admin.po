@@ -5,15 +5,16 @@
 # 
 # Translators:
 # Jerôme Bakker, 2021
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-18 16:34+0200\n"
+"POT-Creation-Date: 2021-06-11 11:12+0200\n"
 "PO-Revision-Date: 2021-06-09 13:31+0000\n"
-"Last-Translator: Jerôme Bakker, 2021\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -86,19 +87,21 @@ msgstr "Quoi"
 
 #: ../../admin/backup-restore.rst:25
 msgid "Topics covered:"
-msgstr "Sujets traités :"
+msgstr "Sujets couverts :"
 
 #: ../../admin/backup-restore.rst:27
 msgid ""
 "Full backups of the Elgg directories and MySQL databases are performed daily"
 " (automated)"
 msgstr ""
-"Des backups complets des répertoires d'Elgg et des bases de données MySQL "
+"Des backups complets des répertoires de Elgg et des bases de données MySQL "
 "sont effectués tous les jours (automatisé)"
 
 #: ../../admin/backup-restore.rst:28
 msgid "The backups are sent to an off-site location via FTP (automated)"
-msgstr "Les backups sont envoyés sur un autre site via FTP (automatisé)"
+msgstr ""
+"Les backups sont envoyés sur autre emplacement hors-site via FTP "
+"(automatisé)"
 
 #: ../../admin/backup-restore.rst:29
 msgid ""
@@ -122,7 +125,7 @@ msgid ""
 " documentation wiki."
 msgstr ""
 "Ce processus a été composé à partir d'articles d'assistance précédemment "
-"publiés dans le wiki de documentation d'Elgg."
+"publiés dans le wiki de documentation de Elgg."
 
 #: ../../admin/backup-restore.rst:36
 msgid "Assumptions"
@@ -184,7 +187,7 @@ msgstr "Créer un backup utilisable - automatiquement"
 
 #: ../../admin/backup-restore.rst:55
 msgid "Customize the backup script"
-msgstr "Personnalisez le script de sauvegarde automatique (backup)"
+msgstr "Personnalisez le script de backup - sauvegarde automatique"
 
 #: ../../admin/backup-restore.rst:57
 msgid ""
@@ -237,13 +240,13 @@ msgid ""
 "does not delete the local backup file in the event that you don't want to "
 "use off-site storage for your backups."
 msgstr ""
-"Soyez conscient(e) que vous pouvez désactiver le FTP et modifier un peu le "
+"Ayez conscience que vous pouvez désactiver le FTP et modifier un peu le "
 "script de sorte qu'il ne supprime pas le fichier de backup local dans le cas"
 " où vous ne voulez pas utiliser de stockage distant pour vos backups."
 
 #: ../../admin/backup-restore.rst:97
 msgid "Configure the backup Cron job"
-msgstr "Configurez la tâche périodique (cron) de backup"
+msgstr "Configurez la tâche périodique cron de backup"
 
 #: ../../admin/backup-restore.rst:99
 msgid ""
@@ -253,22 +256,23 @@ msgid ""
 "script.pl``"
 msgstr ""
 "Connectez-vous à votre application CPanel et cliquez sur le lien \"Cron "
-"Jobs\". Dans le menu déroulant Paramètres communs (Common Settings), "
-"choisissez \"Une fois par jour\" (\"Once a day\") et tapez ce qui suit dans "
-"le champ de commande ``/usr/bin/perl /home/userx/sitebackups/elgg-ftp-"
-"backup-script.pl``"
+"Jobs\". Dans le menu déroulant Paramètres communs - \"Common Settings\", "
+"choisissez une fois par jour - \"Once a day\" - et tapez ce qui suit dans le"
+" champ de commande ``/usr/bin/perl /home/userx/sitebackups/elgg-ftp-backup-"
+"script.pl``"
 
 #: ../../admin/backup-restore.rst:101
 msgid ""
 "Click on the \"Add New Cron Job\" button. Daily full backups are now "
 "scheduled and will be transferred off-site."
 msgstr ""
-"Cliquez sur le bouton \"Add New Cron Job\". Des sauvegardes quotidiennes "
-"complètes sont désormais planifiées et seront transférées hors du site."
+"Cliquez sur le bouton d'ajout d'une nouvelle tâche cron \"Add New Cron "
+"Job\". Des sauvegardes quotidiennes complètes sont désormais planifiées et "
+"seront transférées hors du site."
 
 #: ../../admin/backup-restore.rst:104
 msgid "Configure the cleanup Cron job"
-msgstr "Configurez la tâche périodique (cron) de nettoyage"
+msgstr "Configurez la tâche périodique Cron de nettoyage"
 
 #: ../../admin/backup-restore.rst:106
 msgid ""
@@ -289,9 +293,9 @@ msgid ""
 msgstr ""
 "Connectez-vous à votre application CPanel pour votre site FTP, ou localement"
 " si vous n'utilisez pas FTP, et cliquez sur le lien \"Cron Jobs\". Dans le "
-"menu déroulant Paramètres communs (Common Settings) choisissez Une fois par "
-"jour (\"Once a day\") et saisissez ce qui suit dans le champ de commande "
-"``find /home/usery/sitebackups/full_* -mtime +4 -exec rm {} \\;``"
+"menu déroulant Paramètres communs - \"Common Settings\" choisissez une fois "
+"par jour - \"Once a day\" - et saisissez ce qui suit dans le champ de "
+"commande ``find /home/usery/sitebackups/full_* -mtime +4 -exec rm {} \\;``"
 
 #: ../../admin/backup-restore.rst:110
 msgid ""
@@ -302,8 +306,9 @@ msgid ""
 msgstr ""
 "Le paramètre ``-mtime X`` va définir le nombre de jours de rétention des "
 "sauvegardes. Tous les fichiers plus anciens que le nombre de jour ``x`` sera"
-" supprimé. Cliquez sur le bouton \"Add New Cron Job\". Vous avez maintenant "
-"configuré la durée de rétention de vos sauvegardes."
+" supprimé. Cliquez sur le bouton d'ajout d'une nouvelle tâche cron \"Add New"
+" Cron Job\". Vous avez maintenant configuré la durée de rétention de vos "
+"sauvegardes."
 
 #: ../../admin/backup-restore.rst:113
 msgid "Restoring from backup"
@@ -329,7 +334,7 @@ msgid ""
 msgstr ""
 "Lorsque le script a sauvegardé les fichiers, la structure originelle des "
 "répertoires est conservée dans le fichier zip. Nous devons faire un petit "
-"nettoyage. Effectuer ce qui suit :"
+"nettoyage. Effectuez ce qui suit :"
 
 #: ../../admin/backup-restore.rst:122
 msgid "Download the backup file that you wish to restore from"
@@ -351,7 +356,7 @@ msgstr ""
 
 #: ../../admin/backup-restore.rst:125
 msgid "a MySQL dump file with a ``.sql`` extension"
-msgstr "un dump MySQL avec une extension \".sql\""
+msgstr "un fichier de dump MySQL avec une extension \".sql\""
 
 #: ../../admin/backup-restore.rst:127
 msgid "another directory structure with the contents of:"
@@ -370,9 +375,8 @@ msgid ""
 "Repackage the contents of the ``/home/userx/public_html`` directory as a zip"
 " file so that the files are in the root of the zip file"
 msgstr ""
-"Re-compressez le contenu du répertoire ``/home/userx/public_html`` sous "
-"forme de fichier zip de sorte que les fichiers soient à la racine du fichier"
-" zip"
+"Compressez le contenu du répertoire ``/home/userx/public_html`` sous forme "
+"de fichier zip de sorte que les fichiers soient à la racine du fichier zip"
 
 #: ../../admin/backup-restore.rst:130
 msgid ""
@@ -389,9 +393,8 @@ msgid ""
 "Repackage the contents of the /home/userx/elggdata directory as a zip file "
 "so that the files are in the root of the zip file"
 msgstr ""
-"Re-compressez le contenu du répertoire /home/userx/elggdata directory sous "
-"forme de fichier zip de sorte que les fichiers soient à la racine du fichier"
-" zip"
+"Compressez le contenu du répertoire /home/userx/elggdata sous forme de "
+"fichier zip de sorte que les fichiers soient à la racine du fichier zip"
 
 #: ../../admin/backup-restore.rst:133
 msgid "You should now have the following files:"
@@ -399,7 +402,7 @@ msgstr "Vous devriez maintenant avoir les fichiers suivants :"
 
 #: ../../admin/backup-restore.rst:135
 msgid "the ``.sql`` file"
-msgstr "le fichier \".sql\""
+msgstr "le fichier ``.sql``"
 
 #: ../../admin/backup-restore.rst:136
 msgid ""
@@ -431,8 +434,8 @@ msgid ""
 "site to and open the File Manager."
 msgstr ""
 "Connectez-vous à l'application CPanel de l'hébergement sur lequel vous "
-"souhaitez restaurer le site et ouvrez le gestionnaire de fichiers (File "
-"Manager)."
+"souhaitez restaurer le site et ouvrez le gestionnaire de fichiers - \"File "
+"Manager\"."
 
 #: ../../admin/backup-restore.rst:148
 msgid "Navigate to ``/home/usery/public_html``"
@@ -495,19 +498,18 @@ msgid ""
 "However, having said that, it's not terribly difficult either."
 msgstr ""
 "A nouveau, l'hypothèse ici est que vous restaurez votre installation Elgg "
-"vers un autre fournisseur d'hébergement mutualisé. Chaque fournisseur "
-"d'hébergement mutualisé ajoute le nom du compte du détenteur comme préfixe "
-"aux bases de données associées avec ce compte. Par exemple, le nom "
-"d'utilisateur de notre premier hébergement est ``userx`` de sorte que "
-"l'hébergeur va ajouter le préfixe ``userx_`` pour nous donner un nom de base"
-" de données de ``userx_elgg``. Quand nous restaurons vers notre second "
-"fournisseur d'hébergement mutualisé nous le faisons avec un nom "
-"d'utilisateur de ``usery`` de sorte que le nom de notre base de données sera"
-" ``usery_elgg``. Les fournisseurs d'hébergement ne vous permettent pas de "
-"modifier ce comportement. De sorte que le processus ici n'est pas aussi "
-"simple que simplement restaurer la base de données depuis le backup vers le "
-"compte usery. Néanmoins, une fois ceci dit, ce n'est pas si difficile non "
-"plus."
+"vers un second fournisseur d'hébergement mutualisé. Chaque fournisseur "
+"d'hébergement mutualisé préfixe avec  le nom du compte du détenteur les "
+"bases de données associées à ce compte. Par exemple, l'identifiant de notre "
+"premier hébergement est ``userx`` de sorte que l'hébergeur va ajouter le "
+"préfixe ``userx_`` pour nous donner un nom de base de données de "
+"``userx_elgg``. Quand nous restaurons vers notre second fournisseur "
+"d'hébergement mutualisé nous le faisons avec un identfiant de ``usery`` de "
+"sorte que le nom de notre base de données sera ``usery_elgg``. Les "
+"fournisseurs d'hébergement ne vous permettent pas de modifier ce "
+"comportement. De sorte que le processus ici n'est pas aussi simple que "
+"simplement restaurer la base de données depuis le backup vers le compte "
+"usery. Néanmoins, une fois ceci dit, ce n'est pas si difficile non plus."
 
 #: ../../admin/backup-restore.rst:166
 msgid "Edit the MySQL backup"
@@ -539,7 +541,7 @@ msgid ""
 "Databases\" icon"
 msgstr ""
 "Connectez-vous à l'application CPanel du nouvel hôte et cliquez sur l'icône "
-"\"Bases de données MySQL (\"MySQL Databases\")"
+"\"Bases de données MySQL - \"MySQL Databases\""
 
 #: ../../admin/backup-restore.rst:183
 msgid ""
@@ -547,9 +549,9 @@ msgid ""
 "we are going to stick with ``elgg`` which will give us a database name of "
 "``usery_elgg``"
 msgstr ""
-"Renseignez le nom de la base de données et cliquez sur le bouton créer "
-"(\"create\"). Pour notre exemple, nous allons conserver ``elgg`` ce qui nous"
-" donne pour nom de base de données ``usery_elgg``"
+"Renseignez le nom de la base de données et cliquez sur le bouton créer - "
+"\"create\". Pour notre exemple, nous allons conserver ``elgg`` ce qui nous "
+"donne pour nom de base de données ``usery_elgg``"
 
 #: ../../admin/backup-restore.rst:185
 msgid ""
@@ -571,9 +573,9 @@ msgid ""
 "simple and use ``elgg`` once again. This will give us a username of "
 "``usery_elgg``"
 msgstr ""
-"Saisissez le nom d'utilisateur et le mot de passe. Pour notre exemple nous "
-"allons rester simples et conserver à nouveau ``elgg``. Ce qui va nous donner"
-" un nom d'utilisateur ``usery_elgg``"
+"Saisissez l'identifiant et le mot de passe. Pour notre exemple nous allons "
+"rester simples et utiliser à nouveau ``elgg``. Ce qui va nous donner un "
+"identifiant ``usery_elgg``"
 
 #: ../../admin/backup-restore.rst:189
 msgid "Associate the new user with the new database"
@@ -584,16 +586,16 @@ msgid ""
 "Go to the \"Add User To Database\" section of the \"MySQL Databases\" page. "
 "Add the ``usery_elgg`` user to the ``usery_elgg`` database"
 msgstr ""
-"Allez dans la section Ajouter un nouvel utilisateur à la base de données "
-"(\"Add User To Database\") de la page Bases de données MySQL (\"MySQL "
-"Databases\"). Ajoutez l'utilisateur ``usery_elgg`` à la base de données "
+"Allez dans la section Ajouter un nouvel utilisateur à la base de données - "
+"\"Add User To Database\" - de la page des Bases de données MySQL - \"MySQL "
+"Databases\". Ajoutez l'utilisateur ``usery_elgg`` à la base de données "
 "``usery_elgg``"
 
 #: ../../admin/backup-restore.rst:189
 msgid "Select \"All Privileges\" and click the \"Make Changes\" button"
 msgstr ""
-"Sélectionnez \"Tous les Privilèges\" (\"All Privileges\") et cliquez sur le "
-"bouton \"Effectuer les changements\" (\"Make Changes\")"
+"Sélectionnez \"Tous les Privilèges\" - \"All Privileges\" - et cliquez sur "
+"le bouton \"Effectuer les changements\" - \"Make Changes\""
 
 #: ../../admin/backup-restore.rst:192
 msgid "Restore the production database"
@@ -637,12 +639,11 @@ msgstr "Cliquez sur le bouton \"Go\" en bas à droite de la page"
 #: ../../admin/backup-restore.rst:202
 msgid "You should now see a message stating that the operation was successful"
 msgstr ""
-"Vous devriez maintenant voir un message indiquant que l'opération avec "
-"succès"
+"Vous devriez maintenant voir un message indiquant que l'opération a réussi"
 
 #: ../../admin/backup-restore.rst:205
 msgid "Bringing it all together"
-msgstr "Combiner l'ensemble"
+msgstr "Combiner le tout"
 
 #: ../../admin/backup-restore.rst:207
 msgid ""
@@ -650,9 +651,9 @@ msgid ""
 "name, database username, directory structure, etc. That's what we're going "
 "to address here."
 msgstr ""
-"L'installation elgg restaurée ne connait **rien** du nom de la nouvelle base"
-" de données, du nom d'utilisateur, de la structure des répertoires, etc. "
-"C'est ce dont nous allons traiter ici."
+"L'installation elgg restaurée ne connaît **rien** du nom de la nouvelle base"
+" de données, de l'identifiant, de la structure des répertoires, etc. C'est "
+"ce que nous allons aborder ici."
 
 #: ../../admin/backup-restore.rst:209
 msgid ""
@@ -668,8 +669,8 @@ msgid ""
 "Upload the ``settings.php`` file back to the new host - overwriting the "
 "existing file."
 msgstr ""
-"Chargez à nouveau le fichier ``settings.php`` vers le nouvel hôte - en "
-"remplaçant le fichier existant."
+"Téléchargez le fichier ``settings.php`` vers le nouvel hôte - en remplaçant "
+"le fichier existant."
 
 #: ../../admin/backup-restore.rst:233
 msgid ""
@@ -790,7 +791,7 @@ msgstr ""
 
 #: ../../admin/composer.rst:34
 msgid "Setup version controls"
-msgstr "Mettre en place le contrôle de version"
+msgstr "Mettre en place un contrôle de version"
 
 #: ../../admin/composer.rst:36
 msgid ""
@@ -850,14 +851,14 @@ msgid ""
 msgstr ""
 "`Cron`__ est un programme disponible sur les systèmes d'exploitation basés "
 "sur Unix qui permet aux utilisateurs d'exécuter des commandes et des scripts"
-" à des intervales particuliers ou à des heures spécifiques."
+" à des intervalles définis ou à des heures précises."
 
 #: ../../admin/cron.rst:14
 msgid ""
 "Elgg's cron handler allows administrators and plugin developers to setup "
 "jobs that need to be executed at set intervals."
 msgstr ""
-"Le gestionnaire de cron d'Elgg permet aux administrateurs et aux "
+"Le gestionnaire de cron de Elgg permet aux administrateurs et aux "
 "développeurs de plugins de mettre en place des tâches qui ont besoin d'être "
 "exécutées à des intervalles définis."
 
@@ -878,8 +879,9 @@ msgid ""
 "collecting garbage in the database (compacting the database by removing "
 "entries that are no longer required)"
 msgstr ""
-"le nettoyage des déchets dans la base de données (compactage de la base de "
-"données par la suppression des entrées qui ne sont plus requises)"
+"le nettoyage des déchets - garbage collector - dans la base de données "
+"(compactage de la base de données par la suppression des entrées qui ne sont"
+" plus requises)"
 
 #: ../../admin/cron.rst:23
 msgid ""
@@ -936,9 +938,9 @@ msgid ""
 "job, Elgg executes all hook handlers attached to that interval."
 msgstr ""
 "``crontab`` doit être configuré de telle manière qu'il active le "
-"gestionnaire de cron d'Elgg chaque minute, ou à un intervalle spécifique. "
-"Une fois que l'entrée du cron active le travail du cron, Elgg exécute chaque"
-" gestionnaire de hook attaché à cet intervalle."
+"gestionnaire de cron de Elgg chaque minute, ou à un intervalle spécifique. "
+"Une fois que l'entrée du cron active la tâche du cron, Elgg exécute chaque "
+"gestionnaire de hook attaché à cet intervalle."
 
 #: ../../admin/cron.rst:55
 msgid ""
@@ -1031,7 +1033,8 @@ msgstr "l'entrée de la base de donnée pour le chemin d'installation"
 
 #: ../../admin/duplicate-installation.rst:27
 msgid "database entry for the data path"
-msgstr "l'entrée de la base de donnée pour le chemin des données"
+msgstr ""
+"l'entrée de la base de donnée pour le chemin du répertoire des données"
 
 #: ../../admin/duplicate-installation.rst:30
 msgid "What Is Not Covered in This Tutorial"
@@ -1049,7 +1052,9 @@ msgstr ""
 
 #: ../../admin/duplicate-installation.rst:35
 msgid "How to backup and restore MySQL databases"
-msgstr "Comment sauvegarder (backup) et restaurer des bases de données MySQL"
+msgstr ""
+"Comment faire un backup - sauvegarder et restaurer des bases de données "
+"MySQL"
 
 #: ../../admin/duplicate-installation.rst:36
 msgid "How to configure Apache to work with Elgg"
@@ -1098,7 +1103,7 @@ msgid ""
 "information on this."
 msgstr ""
 "Les backups de la base de données peuvent être obtenus de diverses manières,"
-" y compris via phpMyAdmin, l'interface officielle de MySQL, et la ligne de "
+" y compris via phpMyAdmin, l'interface graphique de MySQL, et la ligne de "
 "commande. Contactez votre hébergeur pour des informations sur comment "
 "sauvegarder et restaurer des bases de données, ou utilisez un moteur de "
 "recherche pour trouver de l'information à ce sujet."
@@ -1108,8 +1113,8 @@ msgid ""
 "During this tutorial, we will make these assumptions about the production "
 "Elgg site:"
 msgstr ""
-"Au cours de ce tutoriel, nous allons faire les hypothèses suivante à propos "
-"du site Elgg en production :"
+"Au cours de ce tutoriel, nous allons faire les hypothèses suivantes à propos"
+" du site Elgg en production :"
 
 #: ../../admin/duplicate-installation.rst:54
 msgid "The URL is ``http://www.myelgg.org/``"
@@ -1172,7 +1177,7 @@ msgstr "Le nom de la base de données est ``test_elgg``"
 
 #: ../../admin/duplicate-installation.rst:75
 msgid "Copy Elgg Code to the Test Server"
-msgstr "Copiez le code d'Elgg vers le serveur de test"
+msgstr "Copiez le code de Elgg vers le serveur de test"
 
 #: ../../admin/duplicate-installation.rst:77
 msgid ""
@@ -1186,7 +1191,7 @@ msgstr ""
 
 #: ../../admin/duplicate-installation.rst:85
 msgid "Copy Data to the Test Server"
-msgstr "Copiez les données d'Elgg vers le serveur de test"
+msgstr "Copiez les données de Elgg vers le serveur de test"
 
 #: ../../admin/duplicate-installation.rst:87
 msgid ""
@@ -1201,7 +1206,7 @@ msgid ""
 "If you don't have shell access to your server and have to ftp the data, you "
 "may need to change ownership and permissions on the files."
 msgstr ""
-"Si vous n'avez pas d'accès console (shell) à votre serveur et devez "
+"Si vous n'avez pas d'accès console - shell - à votre serveur et devez "
 "transférer les données par FTP, vous pouvez avoir besoin de modifier le "
 "propriétaire et les permissions des fichiers."
 
@@ -1210,7 +1215,7 @@ msgid ""
 "You also need to delete cache directories from your disk. These correspond "
 "to ``cacheroot`` and ``assetroot`` directories in your config."
 msgstr ""
-"Vous devez aussi supprimer les dossier de cache du disque. Ceux-ci "
+"Vous devez aussi supprimer les dossiers de cache du disque. Ceux-ci "
 "correspondent aux dossiers ``cacheroot`` et ``assetroot`` dans votre "
 "configuration."
 
@@ -1246,7 +1251,7 @@ msgstr ""
 
 #: ../../admin/duplicate-installation.rst:158
 msgid "Copy Elgg Database"
-msgstr "Copier la base de données d'Elgg"
+msgstr "Copier la base de données de Elgg"
 
 #: ../../admin/duplicate-installation.rst:160
 msgid ""
@@ -1296,7 +1301,7 @@ msgstr ""
 
 #: ../../admin/duplicate-installation.rst:189
 msgid "Check .htaccess"
-msgstr "Vérifier le fichier .htaccess"
+msgstr "Vérifiez le fichier .htaccess"
 
 #: ../../admin/duplicate-installation.rst:191
 msgid ""
@@ -1318,7 +1323,7 @@ msgid ""
 "subdirectory of your document root, this step is unnecessary."
 msgstr ""
 "Pour cet exemple, vous devez modifier la config Apache pour activer un sous-"
-"domaine avec pour racine des documents (document root) "
+"domaine avec pour racine des documents - document root "
 "``/var/www/elgg_test/``. Si vous prévoyez d'installer dans un sous-"
 "répertoire de votre racine des documents, cette étape n'est pas nécessaire."
 
@@ -1327,8 +1332,8 @@ msgid ""
 "If you're using Nginx, you need to update server config to match new paths "
 "based on ``install/config/nginx.dist``."
 msgstr ""
-"Si vous utilisez Nginx, vous aurez besoin de mettre à jour la config du "
-"serveur pour correspondre aux nouveaux chemins basés sur "
+"Si vous utilisez Nginx, vous aurez besoin de mettre à jour la configuration "
+"du serveur pour correspondre aux nouveaux chemins basés sur "
 "``install/config/nginx.dist``."
 
 #: ../../admin/duplicate-installation.rst:202
@@ -1396,11 +1401,11 @@ msgid ""
 "putting for those helping. Also, very generic questions like \"How do I "
 "build a forum?\" are almost impossible to answer."
 msgstr ""
-"Nous avons tous été des débutants à un moment, mais nous pouvons apprendre. "
-"Le fait de ne pas montrer que vous faites des tentatives pour apprendre par "
-"vous-même ou faites vos propres recherches est décourageant pour ceux qui "
-"aident. De plus, il est quasiment impossible de répondre à des questions "
-"très génériques comme \"Comment je construis un forum ?\"."
+"Nous avons tous été des débutants à un moment, mais nous pouvons tous "
+"apprendre. Le fait de ne pas montrer que vous faites des tentatives pour "
+"apprendre par vous-même ou faites vos propres recherches est décourageant "
+"pour ceux qui aident. De plus, il est quasiment impossible de répondre à des"
+" questions très génériques comme \"Comment je construis un forum ?\"."
 
 #: ../../admin/getting-help.rst:23
 msgid "Search first"
@@ -1416,7 +1421,7 @@ msgid ""
 msgstr ""
 "Assurez-vous de faire des recherches dans la documentation (ce site), sur le"
 " `Site de la Communauté`_, et dans un moteur de recherche avant de poser une"
-" question. Les nouveaux utilisateurs d'Elgg se posent souvent les mêmes "
+" question. Les nouveaux utilisateurs de Elgg se posent souvent les mêmes "
 "questions, aussi merci de faire des recherches. Les membres sont moins "
 "enclins à répondre à une demande à laquelle il a déjà été répondu maintes "
 "fois ou à laquelle on peut facilement trouver une réponse via un moteur de "
@@ -1437,7 +1442,7 @@ msgstr ""
 
 #: ../../admin/getting-help.rst:33
 msgid "Include Elgg Version"
-msgstr "Indiquez la version d'Elgg"
+msgstr "Indiquez la version de Elgg"
 
 #: ../../admin/getting-help.rst:35
 msgid ""
@@ -1445,9 +1450,9 @@ msgid ""
 "Including the version of Elgg that you are using will help those helping "
 "you."
 msgstr ""
-"Les différentes versions d'Elgg ont différentes fonctionnalités (et "
-"différents bugs). Préciser la version d'Elgg que vous utilisez va aider les "
-"personnes qui aident."
+"Les différentes versions de Elgg ont différentes fonctionnalités (et "
+"différents bugs). Préciser la version de Elgg que vous utilisez va aider les"
+" personnes qui aident."
 
 #: ../../admin/getting-help.rst:38
 msgid "Have a reasonable profile"
@@ -1475,9 +1480,10 @@ msgid ""
 "group."
 msgstr ""
 "Assurez-vous de publier dans le bon forum. Si vous avez une question sur "
-"comment créer un plugin, n'écrivez pas dans le forum Elgg Feedback. Si vous "
-"avez besoin d'aide pour installer Elgg, écrivez dans le groupe Technical "
-"Support (support technique) et pas dans le groupe Theming (thèmes)."
+"comment créer un plugin, n'écrivez pas dans le forum \"Elgg Feedback\". Si "
+"vous avez besoin d'aide pour installer Elgg, écrivez dans le groupe de "
+"support technique \"Technical Support\" et pas dans le groupe des thèmes "
+"\"Theming\"."
 
 #: ../../admin/getting-help.rst:48
 msgid "Use a descriptive topic title"
@@ -1504,7 +1510,7 @@ msgstr ""
 
 #: ../../admin/getting-help.rst:57
 msgid "Be detailed"
-msgstr "Soyez détaillé"
+msgstr "Donnez des détails"
 
 #: ../../admin/getting-help.rst:59
 msgid ""
@@ -1528,10 +1534,10 @@ msgid ""
 "Likewise, there's no reason to ask anyone to send a private email to you. "
 "Post in the public."
 msgstr ""
-"C'est un forum public pour le bien du projet Elgg. Gardez les sujets "
+"C'est un forum public pour le bien du projet Elgg. Gardez les messages "
 "publics. Il n'y a aucune raison pour qui que ce soit de vous envoyer des "
-"messages privés ou des emails. De même, il n'y a aucune raison de demander à"
-" qui que ce soit de vous envoyer un email privé. Publiez en public."
+"messages privés ou des e-mails. De même, il n'y a aucune raison de demander "
+"à qui que ce soit de vous envoyer un e-mail privé. Publiez en public."
 
 #: ../../admin/getting-help.rst:67
 msgid "Guidelines"
@@ -1542,9 +1548,9 @@ msgid ""
 "In addition to the `site-wide Terms and Policies`_, following these "
 "guidelines keeps our community site useful and safe for everyone."
 msgstr ""
-"En plus des `mentions légales et de la charte du site`_, suivre des "
-"recommandations aident à garder notre site communautaire utile et sûr pour "
-"tout le monde."
+"En plus des `mentions légales et des conditions d'utilisation du site`_, "
+"suivre ces recommandations aide à garder notre site communautaire utile et "
+"sûr pour tout le monde."
 
 #: ../../admin/getting-help.rst:74
 msgid "Content"
@@ -1556,9 +1562,9 @@ msgid ""
 "has adult content and you have been asked to post a link, please mark it "
 "NSFW (Not Safe For Work) so people know."
 msgstr ""
-"Tous les contenus doivent être tous publics : \"PG\" (Parental Guidance - "
-"classification des contenus adultes) aux USA et au Royaume-Uni. Si votre "
-"site Elgg a du contenu adulte et qu'on vous a demandé de publier un lien, "
+"Tous les contenus doivent être tous publics : \"PG\" ou Parental Guidance - "
+"classification des contenus adultes aux USA et au Royaume-Uni. Si votre site"
+" Elgg a du contenu adulte et qu'on vous a demandé de publier un lien, "
 "veuillez le marquer \"NSFW\" (Not Safe For Work) de sorte que les personnes "
 "le sachent."
 
@@ -1610,11 +1616,11 @@ msgid ""
 " Services group. Posts asking for money or recommending a commercial plugin "
 "may be moderated."
 msgstr ""
-"Ne demandez pas d'argent sur le site de la communauté. De même , ne proposez"
-" pas de payer pour des réponses. Si vous recherchez des développements sur "
-"mesure, publiez dans le groupe \"Professional Services\" (Services "
-"Professionnels). Les publications qui demandent de l'argent ou recommandent "
-"un plugin commercial peuvent être modérées."
+"Ne demandez pas d'argent sur le site de la communauté. De même, ne proposez "
+"pas de payer pour des réponses. Si vous recherchez des développements sur "
+"mesure, publiez dans le groupe des services professionnels \"Professional "
+"Services\". Les publications qui demandent de l'argent ou recommandent un "
+"plugin commercial peuvent être modérées."
 
 #: ../../admin/getting-help.rst:96
 msgid "Links"
@@ -1744,13 +1750,13 @@ msgid ""
 "behavior, and prevents introducing any confusing bugs from third party "
 "plugin into your new Elgg network."
 msgstr ""
-"Quand vous démarrez avec Elgg, le mieux est de commencer par explorer les "
+"Quand vous commencez avec Elgg, le mieux est de commencer par explorer les "
 "fonctionnalités de base du noyau et des plugins livrés conjointement avant "
 "d'installer des plugins tierce-partie. Il est tentant d'installer chaque "
 "plugin intéressant du site communautaire, mais explorer les fonctionnalités "
-"du noyau vous permet de vous familiariser avec le comportement habituel "
-"d'Elgg, et évite d'introduire des bugs ou de la confusion dans votre nouveau"
-" réseau Elgg."
+"du noyau vous permet de vous familiariser avec le comportement habituel de "
+"Elgg, et évite d'introduire des bugs ou de la confusion dans votre nouveau "
+"réseau Elgg."
 
 #: ../../admin/getting_started.rst:12
 msgid ""
@@ -1760,12 +1766,12 @@ msgid ""
 "log in as an admin user, then use the topbar to browse to Administration, "
 "then to Plugins on the right sidebar."
 msgstr ""
-"Elgg s'installe avec un jeu de plugins de réseau activés : des blogs, des "
-"marque-pages partagés, des fichiers, des groupes, des \"likes\", des "
+"Elgg s'installe avec un jeu de plugins de réseau social activés : des blogs,"
+" des marque-pages partagés, des fichiers, des groupes, des \"likes\", des "
 "messages, des pages de type wiki, des profils utilisateurs, et du "
 "microblogging. Pour changer les plugins activés, connectez-vous avec un "
-"compte admin, puis utilisez le menu supérieur pour accéder à Administration,"
-" puis à Plugins dans la barre latérale droite."
+"compte administrateur, puis utilisez le menu supérieur pour accéder à "
+"Administration, puis à Plugins dans la barre latérale droite."
 
 #: ../../admin/getting_started.rst:14
 msgid "The user you create during installation is an admin user."
@@ -1775,7 +1781,7 @@ msgstr ""
 
 #: ../../admin/getting_started.rst:17
 msgid "Create test users"
-msgstr "Créez les utilisateurs de test"
+msgstr "Créez des utilisateurs de test"
 
 #: ../../admin/getting_started.rst:18
 msgid "Users can be created two ways in stock Elgg:"
@@ -1787,8 +1793,8 @@ msgid ""
 "Complete the signup process using a different email address and username. "
 "(Logout first or use a different browser!)"
 msgstr ""
-"Terminez le processus d'inscription en utlisant une autre adresse email et "
-"un autre nom d'utilisateur. (Déconnectez-vous d'abord ou utilisez un autre "
+"Terminez le processus d'inscription en utilisant une autre adresse e-mail et"
+" un autre identifiant. (Déconnectez-vous d'abord ou utilisez un autre "
 "navigateur !)"
 
 #: ../../admin/getting_started.rst:21
@@ -1805,8 +1811,8 @@ msgid ""
 "they can log in. Users that an admin creates are already validated."
 msgstr ""
 "Les utilisateurs qui s'inscrivent eux-même doivent valider leur compte avant"
-" de pouvoir se connecter. Les utilisateurs qu'un admin crée sont déjà "
-"validés."
+" de pouvoir se connecter. Les utilisateurs qu'un administrateur crée sont "
+"déjà validés."
 
 #: ../../admin/getting_started.rst:26
 msgid "Explore user functionality"
@@ -1823,7 +1829,7 @@ msgstr ""
 "Utilisez vos utilisateurs de test pour créer des articles de blog, ajouter "
 "des widgets à votre profil ou à votre tableau de bord, publier sur le Fil "
 "(\"The Wire\", microblogging) et créer des pages (création de pages de type "
-"wiki). Examinez les Paramètres (\"Settings\") dans la barre de menu "
+"wiki). Examinez les Paramètres - \"Settings\" - dans la barre de menu "
 "supérieure. C'est à cet endroit qu'un utilisateur définit ses préférences et"
 " configure ses outils (qui peuvent être vides parce qu'aucun des plugins par"
 " défaut n'ajoute de contrôle à cet endroit)."
@@ -1846,7 +1852,7 @@ msgstr ""
 
 #: ../../admin/getting_started.rst:34
 msgid "Extending Elgg"
-msgstr "Étendre les fonctionnalités d'Elgg"
+msgstr "Étendre les fonctionnalités de Elgg"
 
 #: ../../admin/getting_started.rst:35
 msgid ""
@@ -1858,14 +1864,14 @@ msgid ""
 "comments to make sure you only install well-written plugins by high quality "
 "developers."
 msgstr ""
-"Après avoir exploré ce qu'Elgg peut faire \"out of the box\", installez "
-"quelques thèmes et plugins. Vous pouvez trouver de nombreux plugins et "
-"thèmes sur le site de la communauté Elgg qui ont été développés par d'autres"
-" personnes. Ces plugins font tout, de la modification de chaînes de "
-"traductions à un re-design complet de l'interface d'Elgg, en passant par "
-"l'ajout d'un chat, etc. Puisque ces plugins ne sont pas officiels, assurez-"
-"vous de vérifier les commentaires pour vous assurez que vous installez des "
-"plugins bien écrits par des développeurs de haute qualité."
+"Après avoir exploré ce que Elgg peut faire d'emblée, installez quelques "
+"thèmes et plugins. Vous pouvez trouver de nombreux plugins et thèmes sur le "
+"site de la communauté Elgg qui ont été développés par d'autres personnes. "
+"Ces plugins font tout, de la modification de chaînes de traductions à un re-"
+"design complet de l'interface de Elgg, en passant par l'ajout d'un chat, "
+"etc. Puisque ces plugins ne sont pas officiels, assurez-vous de vérifier les"
+" commentaires pour vous assurer que vous installez des plugins bien écrits "
+"par des développeurs de qualité."
 
 #: ../../admin/index.rst:2
 msgid "Administrator Guides"
@@ -1887,7 +1893,8 @@ msgstr ""
 
 #: ../../admin/performance.rst:11
 msgid "Can Elgg scale to X million users?"
-msgstr "Est-ce Elgg peut passer à l'échelle de X millions d'utilisateurs ?"
+msgstr ""
+"Est-ce que Elgg peut passer à l'échelle de X millions d'utilisateurs ?"
 
 #: ../../admin/performance.rst:13
 msgid "People often ask whether Elgg can scale to large installations."
@@ -1902,10 +1909,10 @@ msgid ""
 " differently for Elgg than for Google, for example. Getting millions of "
 "users? That's like the Holy Grail of the entire tech industry."
 msgstr ""
-"Tout d'abord, nous pourrions vous arrêter pour demander: \"où et comment "
-"prévoyez-vous d'obtenir tous ces utilisateurs?\" Sérieusement, c'est un "
+"Tout d'abord, nous pourrions nous arrêter et demander: \"où et comment "
+"prévoyez-vous d'obtenir tous ces utilisateurs ?\" Sérieusement, c'est un "
 "problème très intéressant. Faire évoluer Elgg est avant tout une question "
-"d'ingénierie technique. C'est intéressant, et plus ou moins un problème "
+"d'ingénierie technique. C'est intéressant mais plus ou moins un problème "
 "résolu. L'informatique ne fonctionne pas différemment pour Elgg que pour "
 "Google, par exemple. Obtenir des millions d'utilisateurs? C'est comme le "
 "Saint Graal de toute l'industrie de la technologie."
@@ -1913,20 +1920,20 @@ msgstr ""
 #: ../../admin/performance.rst:22
 msgid "Second, as with most things in life, the answer is \"it depends\":"
 msgstr ""
-"Deuxièmement, comme avec la plupart des choses dans la vie, la réponse est "
-"«ça dépend»:"
+"Deuxièmement, comme pour la plupart des choses dans la vie, la réponse est «"
+" ça dépend » :"
 
 #: ../../admin/performance.rst:24
 msgid "How active are your users?"
-msgstr "Que font vos utilisateurs?"
+msgstr "Que font vos utilisateurs ?"
 
 #: ../../admin/performance.rst:25
 msgid "What hardware is Elgg running on?"
-msgstr "Sur quelle machine et avec quelle configuration fonctionne Elgg?"
+msgstr "Sur quelle machine et avec quelle configuration fonctionne Elgg ?"
 
 #: ../../admin/performance.rst:26
 msgid "Are your plugins behaving well?"
-msgstr "Est-ce que vos plugins se comportent bien?"
+msgstr "Est-ce que vos plugins se comportent bien ?"
 
 #: ../../admin/performance.rst:28
 msgid ""
@@ -1934,15 +1941,16 @@ msgid ""
 "although there are limits to the amount that any script can do."
 msgstr ""
 "`Améliorer l'efficacité du moteur Elgg`__ est un projet en cours, bien qu'il"
-" y ait des limites à la quantité que n'importe quel script peut faire."
+" y ait des limites à la quantité de choses que n'importe quel script peut "
+"faire."
 
 #: ../../admin/performance.rst:33
 msgid ""
 "If you are serious about scalability you will probably want to look at a "
 "number of things yourself."
 msgstr ""
-"Si vous êtes sérieux au sujet de l'évolutivité, vous aurez probablement "
-"envie de considérer un certain nombre de choses vous-même."
+"Si vous prenez au sérieux le sujet de la scalabilité, vous aurez "
+"probablement envie de considérer un certain nombre de choses vous-même."
 
 #: ../../admin/performance.rst:36
 msgid "Measure first"
@@ -1952,8 +1960,8 @@ msgstr "Mesurez d'abord"
 msgid ""
 "There is no point in throwing resources at a problem if you don't know:"
 msgstr ""
-"Il ne sert à rien de jeter des ressources sur un problème si vous ne "
-"connaissez pas:"
+"Il ne sert à rien de dépenser des ressources sur un problème si vous ne "
+"connaissez pas :"
 
 #: ../../admin/performance.rst:40
 msgid "what the problem is"
@@ -1972,9 +1980,9 @@ msgid ""
 "Invest in some kind of profiling to tell you where your bottleneck is, "
 "especially if you're considering throwing significant money at a problem."
 msgstr ""
-"Investissez dans une sorte de profilage afin de vous faire connaître où "
-"votre goulot d'étranglement se situe, surtout si vous envisagez d'injecter "
-"de l'argent important sur un problème."
+"Investissez dans un outil de profilage afin de pouvoir identifier où votre "
+"goulot d'étranglement se situe, surtout si vous envisagez de dépenser de "
+"l'argent sur ce problème."
 
 #: ../../admin/performance.rst:48
 msgid "Tune MySQL"
@@ -2025,19 +2033,19 @@ msgid ""
 "that you can skip all the work on subsequent requests. Below we discuss "
 "several generally-available caching solutions relevant to Elgg."
 msgstr ""
-"En règle générale, si un programme est lent, c'est parce qu'elle effectue à "
+"En règle générale, si un programme est lent, c'est parce qu'il effectue à "
 "plusieurs reprises un calcul ou une opération coûteuse. La mise en cache "
 "permet au système d'éviter de faire ce travail encore et encore à chaque "
-"demande grâce à la mise en cache des résultats précédents. En utilisant la "
+"requête grâce à la mise en cache des résultats précédents. En utilisant la "
 "mémoire pour stocker les résultats, il est alors facile de récupérer en "
-"mémoire le résultat de la demande et le passer aux demandes suivantes, "
-"économisant ainsi à chaque demande tout le travail de calcul. Ci-dessous, "
-"nous discutons de plusieurs solutions de mise en cache généralement "
-"disponibles et pertinentes pour Elgg."
+"mémoire le résultat de la requête et de le passer aux requêtes suivantes, "
+"économisant ainsi à chaque requête tout le travail de calcul. Nous discutons"
+" ci-dessous de plusieurs solutions de mise en cache généralement disponibles"
+" et pertinentes pour Elgg."
 
 #: ../../admin/performance.rst:69
 msgid "Simplecache"
-msgstr "Cache simple (Simplecache)"
+msgstr "Cache simple - Simplecache"
 
 #: ../../admin/performance.rst:71
 msgid ""
@@ -2064,10 +2072,10 @@ msgid ""
 "your plugin as the cached version will be used in preference to the one "
 "provided by your plugin."
 msgstr ""
-"Cela conduit à des artefacts pendant le développement/la programmation si "
-"par exemple vous modifiez un thème dans votre plugin puisque la version mise"
-" en cache sera utilisée de préférence à la nouvelle fournie par votre "
-"plugin."
+"Cela conduit à des artefacts pendant le développement/la programmation, si "
+"par exemple vous modifiez un thème dans votre plugin, puisque la version "
+"mise en cache sera utilisée au lieu de la nouvelle version fournie par votre"
+" plugin."
 
 #: ../../admin/performance.rst:80
 msgid ""
@@ -2075,7 +2083,7 @@ msgid ""
 "recommended that you do this on your development platform if you are writing"
 " Elgg plugins."
 msgstr ""
-"Simple cache peut être désactivée via le menu d'administration. Il est "
+"Le cache simple peut être désactivée via le menu d'administration. Il est "
 "recommandé de le faire sur votre plate-forme de développement si vous "
 "écrivez des plugins Elgg."
 
@@ -2103,7 +2111,7 @@ msgid ""
 "If your webserver supports following symlinks, this will serve files "
 "straight off disk without booting up PHP each time."
 msgstr ""
-"Si votre serveur web supporte les liens symboliques (\"symlinks\"), ceci va "
+"Si votre serveur web supporte les liens symboliques \"symlinks\", ceci va "
 "servir les fichiers directement depuis le disque sans démarrer PHP à chaque "
 "fois."
 
@@ -2136,7 +2144,7 @@ msgstr ""
 
 #: ../../admin/performance.rst:113
 msgid "System cache"
-msgstr "Cache système (System cache)"
+msgstr "Cache système - System cache"
 
 #: ../../admin/performance.rst:115
 msgid ""
@@ -2203,7 +2211,7 @@ msgid ""
 "Look at the `Stash <http://www.stashphp.com/index.html>`_ documentation for "
 "more info about the TTL."
 msgstr ""
-"Regardez les documentation de `Stash <http://www.stashphp.com/index.html>`_ "
+"Regardez la documentation de `Stash <http://www.stashphp.com/index.html>`_ "
 "pour plus d'informations sur le TTL."
 
 #: ../../admin/performance.rst:143
@@ -2223,7 +2231,7 @@ msgstr ""
 "d'une page donnée, une requête sélectionnée donnée ne sortira dans la base "
 "de données qu’une seule fois, même si elle est exécutée plusieurs fois. "
 "Toute écriture dans la base de données videra ce cache. Ce cache sera "
-"automatiquement effacé à la fin du chargemetn d’une page."
+"automatiquement effacé à la fin du chargement d’une page."
 
 #: ../../admin/performance.rst:150
 msgid ""
@@ -2246,9 +2254,9 @@ msgid ""
 "improves user-perceived performance."
 msgstr ""
 "Ces technologies indiquent aux navigateurs de vos utilisateurs de mettre en "
-"cache des ressources statiques (CSS, JS, images) localement. Avoir ceci "
-"activé réduit fortement la charge du serveur et améliore la performance "
-"perçue par les utilisateurs."
+"cache des actifs statiques (CSS, JS, images) localement. Avoir ceci activé "
+"réduit fortement la charge du serveur et améliore la performance perçue par "
+"les utilisateurs."
 
 #: ../../admin/performance.rst:160
 msgid ""
@@ -2256,18 +2264,19 @@ msgid ""
 "technologies are currently running on your site."
 msgstr ""
 "Utilisez le `plugin Firefox yslow`__ ou les Outils de Développement de "
-"Chrome DevTools Audits pour confirmer les technologies utilisées "
+"Chrome DevTools Audits pour confirmer quelles technologies sont utilisées "
 "actuellement sur votre serveur."
 
 #: ../../admin/performance.rst:166
 msgid "If the static assets aren't being cached:"
-msgstr "Si les ressources statiques ne sont pas mises en cache :"
+msgstr "Si les actifs statiques ne sont pas mis en cache :"
 
 #: ../../admin/performance.rst:164
 msgid ""
 "Verify that you have these extensions installed and enabled on your host"
 msgstr ""
-"Vérifiez que vous avez ces extensions et activées sur votre hébergement"
+"Vérifiez que vous avez ces extensions et qu'elles sont activées sur votre "
+"hébergement"
 
 #: ../../admin/performance.rst:165
 msgid ""
@@ -2275,14 +2284,14 @@ msgid ""
 "Elgg"
 msgstr ""
 "Mettez à jour votre fichier .htaccess, si vous faites une mise à niveau "
-"depuis une version précédente d'Elgg"
+"depuis une version précédente de Elgg"
 
 #: ../../admin/performance.rst:166
 msgid ""
 "Enable Simplecache_, which turns select views into browser-cacheable assets"
 msgstr ""
-"Activez Simplecache_, qui transforme les vues sélectionnées en ressources "
-"(assets) pouvant être mis en cache par le navigateur"
+"Activez Simplecache_, qui transforme les vues sélectionnées en actifs "
+"pouvant être mis en cache par le navigateur"
 
 #: ../../admin/performance.rst:171
 msgid "Memcached"
@@ -2301,7 +2310,7 @@ msgid ""
 "http://libmemcached.org/About.html and "
 "https://secure.php.net/manual/en/book.memcached.php"
 msgstr ""
-"http://libmemcached.org/About.html and "
+"http://libmemcached.org/About.html et "
 "https://secure.php.net/manual/en/book.memcached.php"
 
 #: ../../admin/performance.rst:179
@@ -2338,8 +2347,7 @@ msgid ""
 msgstr ""
 "De manière optionnelle, si vous avez plusieurs installations Elgg mais "
 "n'utilisez qu'un seul serveur Memcache, vous pouvez vouloir ajouter un "
-"préfixe d'espace de nom (namespace prefix). Afin de faire cela, décommentez "
-"la ligne suivante"
+"préfixe d'espace de nom. Afin de faire cela, dé-commentez la ligne suivante"
 
 #: ../../admin/performance.rst:206
 msgid "Squid"
@@ -2353,7 +2361,7 @@ msgstr ""
 
 #: ../../admin/performance.rst:214
 msgid "Bytecode caching"
-msgstr "Mise en cache du Bytecode"
+msgstr "Mise en cache du code exécutable - \"bytecode\""
 
 #: ../../admin/performance.rst:216
 msgid ""
@@ -2362,7 +2370,7 @@ msgid ""
 "your server doesn't have to compile the PHP code each time it is executed."
 msgstr ""
 "Il existe de nombreux caches de code disponibles sur le marché. Ceux-ci "
-"accélèrent votre site en mettant en cache le byte code compilé depuis votre "
+"accélèrent votre site en mettant en cache le code compilé depuis votre "
 "script, ce qui signifie que votre serveur n'a pas à compiler le code PHP à "
 "chaque fois qu'il est exécuté."
 
@@ -2380,11 +2388,11 @@ msgstr ""
 "Si votre serveur peut être configuré pour supporter les headers X-Sendfile "
 "ou X-Accel, vous pouvez configurer leur utilisation dans ``settings.php``. "
 "Ceci permet à votre serveur web de diffuser directement les fichiers au "
-"client au lieu d'utiliser la focntion PHP ``readfile()``."
+"client au lieu d'utiliser la fonction PHP ``readfile()``."
 
 #: ../../admin/performance.rst:229
 msgid "Composer Autoloader Optimization"
-msgstr "Optimisation de Composer Autoloader"
+msgstr "Optimisation de l'Autoloader de  Composer"
 
 #: ../../admin/performance.rst:231
 msgid ""
@@ -2405,8 +2413,8 @@ msgid ""
 "commandline, the other is in the ``composer.json`` of your project."
 msgstr ""
 "Vous pouvez optimiser l’autoloader de 2 façons différentes. La première est "
-"dans la ligne de commande, l’autre est dans le ``composer.json`` de votre "
-"projet."
+"via la ligne de commande, l’autre est d'utiliser le fichier "
+"``composer.json`` de votre projet."
 
 #: ../../admin/performance.rst:236
 msgid ""
@@ -2431,15 +2439,16 @@ msgid ""
 "Check out the `Autoloader Optimization`__ page for more information about "
 "how to optimize the Composer autoloader."
 msgstr ""
-"Consultez la page `Autoloader Optimization`__ pour plus d’informations sur "
-"l’optimisation du chargeur automatique Composer."
+"Consultez la page d'optimisaiton de l'auto-chargement `Autoloader "
+"Optimization`__ pour plus d’informations sur l’optimisation du chargeur "
+"automatique Composer."
 
 #: ../../admin/performance.rst:266
 msgid ""
 "As of Elgg 3.0 all the `downloads`__ of Elgg from the website have the "
 "optimized autoloader."
 msgstr ""
-"À partir d’Elgg 3.0 tous les `téléchargements` d’Elgg à partir du site "
+"À partir de Elgg 3.0 tous les `téléchargements` de Elgg à partir du site "
 "disposent du chargeur automatique optimisé."
 
 #: ../../admin/performance.rst:271
@@ -2452,10 +2461,10 @@ msgid ""
 "host. You will need to have your own host hardware and access over the "
 "configuration, as well as lots of bandwidth and memory available."
 msgstr ""
-"N'espérez pas de faire tourner un site pour des millions d'utilisateurs sur "
-"un hébergement mutualisé à bas prix. Vous aurez besoin de votre propre "
-"serveur d'hébergement et d'avoir la main sur la configuration, ainsi que de "
-"beaucoup de bande passante et de mémoire disponibles."
+"N'espérez pas faire tourner un site avec des millions d'utilisateurs sur un "
+"hébergement mutualisé à bas prix. Vous aurez besoin de votre propre serveur "
+"d'hébergement et d'avoir la main sur la configuration, ainsi que de beaucoup"
+" de bande passante et de mémoire disponibles."
 
 #: ../../admin/performance.rst:278
 msgid "Memory, CPU and bandwidth"
@@ -2476,9 +2485,10 @@ msgid ""
 "bottleneck before the server itself. Ensure that your host can support the "
 "load you are suggesting."
 msgstr ""
-"Sur un matériel puissant il est probable que la bande passante soit le "
-"goulet d'étranglement (bottleneck) avant le serveur lui-même. Assurez-vous "
-"que votre hébergement peut supporter le trafic que vous attendez."
+"Au sujet d'un matériel puissant il est probable que la bande passante soit "
+"le goulet d'étranglement - \"bottleneck\" - avant le serveur lui-même. "
+"Assurez-vous que votre hébergement peut supporter le trafic que vous "
+"attendez."
 
 #: ../../admin/performance.rst:287
 msgid "Configuration"
@@ -2506,7 +2516,7 @@ msgstr ""
 
 #: ../../admin/performance.rst:296
 msgid "Check for poorly-behaved plugins"
-msgstr "Vérifiez les plugins au mauvais comportement"
+msgstr "Vérifiez les plugins ayant un mauvais comportement"
 
 #: ../../admin/performance.rst:298
 msgid ""
@@ -2538,7 +2548,7 @@ msgid ""
 msgstr ""
 "Nous avons constaté qu'à un certain niveau, une bonne partie du temps passé "
 "sur le serveur est simplement le temps de construction du HTML de la page "
-"avec le système de vues d'Elgg."
+"avec le système de vues de Elgg."
 
 #: ../../admin/performance.rst:309
 msgid ""
@@ -2549,13 +2559,14 @@ msgid ""
 "themselves. Then have the user's computer do the work of generating the "
 "output by applying JSON data to those templates."
 msgstr ""
-"Il est très difficile de mettre en cache les sorties des modèles (templates)"
-" dans la mesure où elles prennent généralement des entrées arbitraires. Au "
-"lieu d'essayer mettre en cache la sortie de certaines pages ou vues, la "
-"suggestion est de basculer vers un système de modèles basé sur HTML de sorte"
-" que le navigateur de l'utilisateur puisse lui-même mettre en cache les "
-"modèles. Puis demandez à l'ordinateur de l'utilisateur de générer le "
-"résultat en appliquant des données JSON à ces modèles."
+"Il est très difficile de mettre en cache les sorties templates - des modèles"
+" de mise en page - dans la mesure où ils prennent généralement des entrées "
+"arbitraires. Au lieu d'essayer de mettre en cache la sortie de certaines "
+"pages ou vues, la suggestion est de basculer vers un système de modèles basé"
+" sur HTML de sorte que le navigateur de l'utilisateur puisse lui-même mettre"
+" en cache les modèles. Puis demandez à l'ordinateur de l'utilisateur de "
+"faire le travail de générer le résultat en appliquant des données JSON à ces"
+" modèles."
 
 #: ../../admin/performance.rst:314
 msgid ""
@@ -2565,10 +2576,10 @@ msgid ""
 " hidden content."
 msgstr ""
 "Ceci peut être très efficace, mais présente l'inconvénient de demander un "
-"coup de développement supplémentaire significatif. L'équipe d'Elgg envisage "
-"d'intégrer cette stratégie directemetn dans Elgg, dans la mesure où ceci est"
-" aussi efficace, tout particulièrement avec les pages avec du contenu répété"
-" ou caché."
+"travail de développement supplémentaire significatif. L'équipe de Elgg "
+"envisage d'intégrer cette stratégie directement dans Elgg, dans la mesure où"
+" c'est aussi efficace, tout particulièrement pour les pages avec du contenu "
+"répété ou masqué."
 
 #: ../../admin/plugins.rst:2
 msgid "Plugins"
@@ -2577,8 +2588,8 @@ msgstr "Plugins"
 #: ../../admin/plugins.rst:4
 msgid "Plugins can modify the behavior of and add new features to Elgg."
 msgstr ""
-"Les plugins peuvent modifier le comportement d'Elgg et ajouter de nouvelles "
-"fonctionnalités."
+"Les plugins peuvent modifier le comportement de Elgg et ajouter de nouvelles"
+" fonctionnalités."
 
 #: ../../admin/plugins.rst:11
 msgid "Where to get plugins"
@@ -2630,11 +2641,12 @@ msgid ""
 "not always) be higher quality plugins that provide significant capabilities."
 msgstr ""
 "Sur la page des plugins de la communauté, vous pouvez trier par date de mise"
-" en ligne (Filtre : Newest) ou par nombre de téléchargements (Filtre: Most "
-"downloads). Trier par nombre de téléchargement est une bonne idée si vous "
-"débutez avec Elgg et voulez voir quels plugins sont fréquemment utilisés par"
-" d'autres administrateurs. Ceux-ci sont souvent (mais pas toujours) des "
-"plugins de meilleure qualité qui offrent des possibilités significatives."
+" en ligne (Filtre par date \"Newest\") ou par nombre de téléchargements "
+"(Filtre par nombre de téléchargement \"Most downloads\"). Trier par nombre "
+"de téléchargement est une bonne idée si vous débutez avec Elgg et voulez "
+"voir quels plugins sont fréquemment utilisés par d'autres administrateurs. "
+"Ceux-ci sont souvent (mais pas toujours) des plugins de meilleure qualité "
+"qui offrent des possibilités significatives."
 
 #: ../../admin/plugins.rst:37
 msgid "Use the plugin tag search"
@@ -2685,8 +2697,8 @@ msgstr ""
 "Avant de télécharger et d'utiliser un plugin, c'est toujours une bonne idée "
 "de lire les commentaires que les autres ont laissé. Si vous voyez des "
 "personnes qui se plaignent que le plugin ne fonctionne pas ou qu'il rend "
-"leur site instable, vous devriez probablement éviter ce plugin. Néanmoins,c "
-"ertaines utilisateurs ignorent les instructions d'installation ou installent"
+"leur site instable, vous devriez probablement éviter ce plugin. Néanmoins, "
+"certains utilisateurs ignorent les instructions d'installation ou installent"
 " un plugin de manière incorrecte puis laissent un feedback négatif. De plus,"
 " certains auteurs de plugins choisissent de ne pas autoriser les "
 "commentaires."
@@ -2724,10 +2736,10 @@ msgid ""
 "generally include stylesheets, client-side scripts and views that alter the "
 "default presentation and behavior of Elgg."
 msgstr ""
-"Les thèmes sont des plugins qui modifient l'apparence et le comportement "
-"(look-and-feel) de votre site. Ils comprennent généralement des feuilles de "
-"styles, des scripts côté client et des vues qui modifient la présentation et"
-" le comportement par défaut d'Elgg."
+"Les thèmes sont des plugins qui modifient l'apparence et le comportement de "
+"votre site. Ils comprennent généralement des feuilles de styles, des scripts"
+" côté client et des vues qui modifient la présentation et le comportement "
+"par défaut de Elgg."
 
 #: ../../admin/plugins.rst:70
 msgid "Language Packs"
@@ -2736,8 +2748,8 @@ msgstr "Packs de langues"
 #: ../../admin/plugins.rst:72
 msgid "Language packs are plugins that provide support for other languages."
 msgstr ""
-"La packs de langue (ou de traduction) sont des plugins qui fournissent le "
-"support d'autres langues."
+"Les packs de langue sont des plugins qui fournissent le support d'autres "
+"langues."
 
 #: ../../admin/plugins.rst:74
 msgid ""
@@ -2751,14 +2763,14 @@ msgstr ""
 #: ../../admin/plugins.rst:77
 msgid ""
 "Some of the language packs are already included in the core, and can be "
-"found in ``languages`` directory off Elgg's root directory. Individual "
+"found in ``languages`` directory in Elgg's root directory. Individual "
 "plugins tend to include their translations under the ``languages`` directory"
 " within the plugin's root."
 msgstr ""
-"Quelques packs de langues sont déjà compris dans le noyau, et se trouvent "
-"dans le dossier ``languages`` du répertoire racine d'Elgg. Les plugins "
-"individuels ont leurs traductions dans le répertoire ``languages`` de la "
-"racine du plugin."
+"Quelques packs de langues sont déjà inclus dans le noyau, et se trouvent "
+"dans le dossier ``languages`` du répertoire racine de Elgg. Les plugins "
+"individuels incluent leurs traductions dans le répertoire ``languages`` de "
+"la racine du plugin."
 
 #: ../../admin/plugins.rst:82
 msgid ""
@@ -2766,7 +2778,7 @@ msgid ""
 "existing language strings or add support for new languages."
 msgstr ""
 "Cette structure facilite la création de nouveaux packs de langues qui "
-"remplacent les chaines de traduction existantes ou ajoutent le support de "
+"remplacent les chaînes de traduction existantes ou ajoutent le support de "
 "nouvelles langues."
 
 #: ../../admin/plugins.rst:86
@@ -2778,7 +2790,7 @@ msgid "All plugins reside in the ``mod`` directory of your Elgg installation."
 msgstr ""
 "Tous les plugins sont dans le dossier ``mod`` de votre installation Elgg."
 
-#: ../../admin/plugins.rst:97
+#: ../../admin/plugins.rst:93
 msgid "To install a new plugin:"
 msgstr "Pour installer un nouveau plugin :"
 
@@ -2789,34 +2801,28 @@ msgstr "décompresser (unzip) le contenu du package de distribution du plugin"
 #: ../../admin/plugins.rst:92
 msgid ""
 "copy/FTP the extracted folder into the ``mod`` directory of your Elgg "
-"installation, making sure that ``manifest.xml`` is directly under the plugin"
-" directory (e.g. if you were to install a plugin called ``my_elgg_plugin``, "
-"plugin's manifest would need to be found at "
-"``mod/my_elgg_plugin/manifest.xml``)"
+"installation"
 msgstr ""
-"copiez/transférez via FTP le dossier décompressé dans le dossier ``mod`` de "
-"votre installation Elgg, en vous assurant que ``manifest.xml`` est "
-"directement placé dans le dossier du plugin (par ex. si vous alliez "
-"installer un plugin appelé ``my_elgg_plugin``, le manifest du plugin aurait "
-"besoin de se trouver à ``mod/my_elgg_plugin/manifest.xml``)"
+"copier/FTP le dossier extrait dans le répertoire ``mod`` de votre "
+"installation Elgg"
 
-#: ../../admin/plugins.rst:97
+#: ../../admin/plugins.rst:93
 msgid "activate the plugin from your admin panel"
 msgstr "activez le plugin depuis votre panneau d'administration"
 
-#: ../../admin/plugins.rst:103
+#: ../../admin/plugins.rst:99
 msgid "To activate a plugin:"
 msgstr "Pour activer un plugin :"
 
-#: ../../admin/plugins.rst:100
+#: ../../admin/plugins.rst:96
 msgid "Log in to your Elgg site with your administrator account"
 msgstr "Connectez-vous à votre site Elgg avec votre compte administrateur"
 
-#: ../../admin/plugins.rst:101
+#: ../../admin/plugins.rst:97
 msgid "Go to Administration -> Configure -> Plugins"
 msgstr "Allez dans Administration -> Configurer -> Plugins"
 
-#: ../../admin/plugins.rst:102
+#: ../../admin/plugins.rst:98
 msgid ""
 "Find your plugin in the list of installed plugins and click on the 'enable' "
 "button."
@@ -2824,11 +2830,11 @@ msgstr ""
 "Trouvez votre plugin dans la liste des plugins installés et cliquez sur le "
 "bouton 'activer'."
 
-#: ../../admin/plugins.rst:108
+#: ../../admin/plugins.rst:104
 msgid "Plugin order"
 msgstr "Ordre des plugins"
 
-#: ../../admin/plugins.rst:110
+#: ../../admin/plugins.rst:106
 msgid ""
 "Plugins are loaded according to the order they are listed on the Plugins "
 "page. The initial ordering after an install is more or less random. As more "
@@ -2837,20 +2843,20 @@ msgid ""
 msgstr ""
 "Les plugins sont chargés selon l'ordre dans lequel ils sont listés sur la "
 "page Plugins. L'ordre initial après une installation est plus ou moins "
-"aléatoire. AU fur et à mesure que de nouveaux plugins sont ajoutés par un "
+"aléatoire. Au fur et à mesure que de nouveaux plugins sont ajoutés par un "
 "administrateur, ils sont placés en fin de liste."
 
-#: ../../admin/plugins.rst:112
+#: ../../admin/plugins.rst:108
 msgid "Some general rules for ordering plugins:"
 msgstr "Quelques règles générales pour l'ordre des plugins :"
 
-#: ../../admin/plugins.rst:114
+#: ../../admin/plugins.rst:110
 msgid "A theme plugin should be last or at least near the bottom"
 msgstr ""
 "Un plugin de thème devrait être placé en dernier ou au moins proche du bas "
 "de la liste"
 
-#: ../../admin/plugins.rst:115
+#: ../../admin/plugins.rst:111
 msgid ""
 "A plugin that modifies the behavior of another plugin should be lower in the"
 " plugin list"
@@ -2880,10 +2886,10 @@ msgid ""
 "unique token. This will prevent random users from being able to run this "
 "file. The token is not needed for logged in site administrators."
 msgstr ""
-"L'URL de http://your-elgg-site.com/upgrade.php peut être protégée par un "
-"jeton unique. Ceci évite que des utilisateurs aléatoires aient la "
-"possibilité d'exécuter ce fichier. Le jeton n'est pas nécessaire pour les "
-"administrateurs du site connectés."
+"L'URL de mise à niveau http://your-elgg-site.com/upgrade.php peut être "
+"protégée par un jeton unique. Ceci évite que des utilisateurs aléatoires "
+"aient la possibilité d'exécuter ce fichier. Le jeton n'est pas nécessaire "
+"pour les administrateurs du site connectés."
 
 #: ../../admin/security.rst:17
 msgid "Cron protection"
@@ -2898,8 +2904,8 @@ msgid ""
 msgstr ""
 "Les URLs du :doc:`cron </admin/cron>` peuvent être protégées par un jeton "
 "unique. Ceci évite que des utilisateurs aléatoires puissent exécuter le "
-"cron. Le jeton n'est pas nécessaire que le cron est lancé depuis la ligne de"
-" commande du serveur."
+"cron. Le jeton n'est pas nécessaire quand le cron est lancé depuis la ligne "
+"de commande du serveur."
 
 #: ../../admin/security.rst:23
 msgid "Disable password autocomplete"
@@ -2925,15 +2931,15 @@ msgstr ""
 
 #: ../../admin/security.rst:30
 msgid "Email address change requires password"
-msgstr "Le changement d'adresse email requiert le mot de passe"
+msgstr "Le changement d'adresse e-mail requiert le mot de passe"
 
 #: ../../admin/security.rst:32
 msgid ""
 "When a user wishes to change their email address associated with their "
 "account, they need to also supply their current password."
 msgstr ""
-"Quand un utilisateur souhaite changer l'adresse email associée à son compte,"
-" il doit également donner son mot de passe actuel."
+"Quand un utilisateur souhaite changer l'adresse e-mail associée à son "
+"compte, il doit également donner son mot de passe actuel."
 
 #: ../../admin/security.rst:35
 msgid "Email address change requires confirmation"
@@ -2964,9 +2970,9 @@ msgid ""
 msgstr ""
 "Les icônes d’entité peuvent être liées par défaut à une session. Cela "
 "signifie que les URL générées contiennent également des informations sur la "
-"session en cours. Le fait d’avoir des icônes liées à la session rend les URL"
-" des icônes non partageables entre les sessions. L’effet secondaire est que "
-"la mise en cache de ces URL ne bénéficiera qu'à la session active."
+"session en cours. Le fait d’avoir des icônes liées à la session rend les "
+"URLs des icônes non partageables entre les sessions. L’effet secondaire est "
+"que la mise en cache de ces URL ne bénéficiera qu'à la session active."
 
 #: ../../admin/security.rst:47
 msgid "Notification to site administrators"
@@ -2995,11 +3001,11 @@ msgid ""
 "send a notification to the user whos account this is affecting."
 msgstr ""
 "Quand le rôle d'administrateur du site est ajouté ou retiré à un compte, "
-"envoie une notification à l'utilisateur dont le compte est affecté."
+"envoie une notification à l'utilisateur dont le compte est concerné."
 
 #: ../../admin/security.rst:60
 msgid "(Un)ban"
-msgstr "Bannir/Réintégrer"
+msgstr "Bannir (ou réintégrer)"
 
 #: ../../admin/security.rst:62
 msgid ""
@@ -3007,19 +3013,19 @@ msgid ""
 "know about this action."
 msgstr ""
 "Quand le compte d'un utilisateur est banni ou réintégré, permet à "
-"l'utilisateur affecté d'être informé de cette action."
+"l'utilisateur concerné d'être informé de cette action."
 
 #: ../../admin/security.rst:65
 msgid "Minimal username length"
-msgstr "Longueur minimale du nom d’utilisateur"
+msgstr "Longueur minimale de l'identifiant"
 
 #: ../../admin/security.rst:67
 msgid ""
 "You can configure the minimal length the username should have upon "
 "registration of a user."
 msgstr ""
-"Vous pouvez configurer la longueur minimale que le nom d’utilisateur doit "
-"avoir lors de l’inscription d’un utilisateur."
+"Vous pouvez configurer la longueur minimale de l'identifiant lors de "
+"l’inscription d’un utilisateur."
 
 #: ../../admin/security.rst:70
 msgid "Minimal password requirements"
@@ -3061,8 +3067,8 @@ msgid ""
 "**specials**: minimal number of special (like !@#$%^&*(), etc.) characters "
 "in the password"
 msgstr ""
-"**specials** : nombre minimal de caractères spéciaux (comme !@##$%^*,* etc.)"
-" dans le mot de passe"
+"**specials** : nombre minimal de caractères spéciaux (comme !@#$%^&*(), "
+"etc.) dans le mot de passe"
 
 #: ../../admin/security.rst:81
 msgid ".htaccess file access hardening"
@@ -3091,9 +3097,9 @@ msgid ""
 "uses and there is no need for direct access to this folder. All required "
 "dependecies are loaded from within Elgg"
 msgstr ""
-"le dossier ``vendor``. Ce dossier contient uniquement des bibliothèques "
-"qu’Elgg utilise et il n’est pas nécessaire d’accéder directement à ce "
-"dossier. Toutes les dépendances requises sont chargées à partir de Elgg"
+"le dossier ``vendor``. Ce dossier contient uniquement des bibliothèques que "
+"Elgg utilise et il n’est pas nécessaire d’accéder directement à ce dossier. "
+"Toutes les dépendances requises sont chargées depuis Elgg"
 
 #: ../../admin/security.rst:89
 msgid ""
@@ -3101,7 +3107,7 @@ msgid ""
 " These files are loaded from within Elgg"
 msgstr ""
 "le dossier ``languages``. Ce dossier contient les principaux fichiers "
-"linguistiques d'Elgg. Ces fichiers sont chargés à partir de Elgg"
+"linguistiques de Elgg. Ces fichiers sont chargés à partir de Elgg"
 
 #: ../../admin/spam.rst:2
 msgid "Spam"
@@ -3118,8 +3124,9 @@ msgid ""
 "mitigate the problem."
 msgstr ""
 "Le spam est un problème très commun que les administrateurs doivent traiter "
-"et que nous visons à améliorer dans le noyau, mais il y a quelques mesures "
-"que les administrateurs de site peuvent prendre pour atténuer le problème."
+"et que nous visons à améliorer dans le noyau, mais il existe quelques "
+"mesures que les administrateurs de site peuvent prendre pour atténuer le "
+"problème."
 
 #: ../../admin/spam.rst:10
 msgid "Install an anti-spam plugin"
@@ -3127,7 +3134,7 @@ msgstr "Installez un plugin anti-spam"
 
 #: ../../admin/spam.rst:11
 msgid "There are several available on the community"
-msgstr "Il y en a plusieurs disponible dans la communauté"
+msgstr "Il y en a plusieurs disponibles dans la communauté"
 
 #: ../../admin/spam.rst:13
 msgid "http://community.elgg.org/plugins/search?f[c][]=spam&sb=Search"
@@ -3162,7 +3169,7 @@ msgstr ""
 
 #: ../../admin/spam.rst:27
 msgid "Contribute to anti-spam measures in core"
-msgstr "Contribuer aux mesures anti-span dans le noyau"
+msgstr "Contribuer aux mesures anti-spam dans le noyau"
 
 #: ../../admin/spam.rst:29
 msgid "https://github.com/Elgg/Elgg/issues?labels=spam&state=open"
@@ -3188,8 +3195,8 @@ msgid ""
 msgstr ""
 "Si vous avez écrit des plugins personnalisés, vous devriez également lire "
 "les guides de développement pour les :doc:`informations sur la mise à jour "
-"du code des plugins </appendix/upgrade-notes>` pour la dernière version "
-"d'Elgg."
+"du code des plugins </appendix/upgrade-notes>` pour la dernière version de "
+"Elgg."
 
 #: ../../admin/upgrading.rst:14
 msgid "Advice"
@@ -3204,7 +3211,7 @@ msgstr ""
 #: ../../admin/upgrading.rst:17
 msgid "Mind any version-specific comments below"
 msgstr ""
-"Faites attentions aux commentaires spécifiques pour certaines versions ci-"
+"Faites attention aux commentaires spécifiques pour certaines versions ci-"
 "dessous"
 
 #: ../../admin/upgrading.rst:18
@@ -3212,8 +3219,8 @@ msgid ""
 "Version below 2.0 are advised to only upgrade **one minor version at a "
 "time**"
 msgstr ""
-"Les versions inférieures à 2.0 sont invitées à n'effectuer qu'**une seule "
-"mise à niveau mineure à la fois**"
+"Il est conseillé pour les versions inférieures à 2.0 de n'appliquer qu'**une"
+" seule mise à niveau mineure à la fois**"
 
 #: ../../admin/upgrading.rst:19
 msgid ""
@@ -3222,7 +3229,7 @@ msgid ""
 msgstr ""
 "Vous pouvez mettre à niveau depuis n'importe quelle version mineure vers "
 "n'importe quelle version mineure supérieure au sein de la même version "
-"majeure (2.0 -> 2.1 oo 2.0 -> 2.3)"
+"majeure (2.0 -> 2.1 ou 2.0 -> 2.3)"
 
 #: ../../admin/upgrading.rst:20
 msgid ""
@@ -3286,7 +3293,7 @@ msgstr "modifiez les pré-requis de la plateforme vers PHP >= 7.0"
 #: ../../admin/upgrading.rst:37
 msgid "optionally, set autoloader optimization parameters"
 msgstr ""
-"facultativement, définiez les paramètres d'optimisation de l'autoloader"
+"facultativement, définissez les paramètres d'optimisation de l'autoloader"
 
 #: ../../admin/upgrading.rst:38
 msgid "optionally, disable fxp-asset plugin in favor of asset-packagist"
@@ -3304,7 +3311,7 @@ msgstr ""
 
 #: ../../admin/upgrading.rst:71
 msgid "2. Update ``.htaccess``"
-msgstr "2. Mettez à jour ``.htaccess``"
+msgstr "2. Mettez à jour le ``.htaccess``"
 
 #: ../../admin/upgrading.rst:73
 msgid "Find the line:"
@@ -3312,7 +3319,7 @@ msgstr "Trouvez la ligne :"
 
 #: ../../admin/upgrading.rst:79
 msgid "And replace it with:"
-msgstr "Et rempalcez-la par :"
+msgstr "Et remplacez-la par :"
 
 #: ../../admin/upgrading.rst:87
 msgid "3a. Composer Upgrade (recommended)"
@@ -3357,7 +3364,7 @@ msgid ""
 msgstr ""
 "Les mises à niveau manuelles sont une opération pénible pour les "
 "administrateurs de sites. Nous vous déconseillons de maintenir un site Elgg "
-"en utilisant des archives ZIP. Economisez-vous du temps en apprenant comment"
+"en utilisant des archives ZIP. Économisez-vous du temps en apprenant comment"
 " utiliser ``composer`` et les systèmes de contrôle de version, tels que "
 "``git``. Cette tâche sera également plus complexe si vous utilisez des "
 "plugins tierce-partie et/ou si vous avez modifié les fichiers du noyau !"
@@ -3382,8 +3389,8 @@ msgid ""
 msgstr ""
 "Si vous mettez à niveau vers une version majeure, vous devrez replacer tous "
 "les fichiers du noyau et supprimer tous les fichiers qui ont été retirés du "
-"noyau d'Elgg, car ils peuvent interférer avec le bon fonctionnement de votre"
-" site."
+"noyau de Elgg, car ils peuvent interférer avec le bon fonctionnement de "
+"votre site."
 
 #: ../../admin/upgrading.rst:122
 msgid ""
@@ -3391,13 +3398,13 @@ msgid ""
 "files."
 msgstr ""
 "Si vous mettez à jour vers une version mineure ou un patch, vous devez "
-"remplacer tous les fichiers du code."
+"remplacer tous les fichiers du noyau."
 
 #: ../../admin/upgrading.rst:124
 msgid "Merge any new changes to the rewrite rules"
 msgstr ""
-"Fusionnez tous les nouveaux changements des règles de réécriture (rewrite "
-"rules)"
+"Fusionnez tous les nouveaux changements des règles de réécriture \"rewrite "
+"rules\""
 
 #: ../../admin/upgrading.rst:124
 msgid "For Apache from ``install/config/htaccess.dist`` into ``.htaccess``"
@@ -3429,8 +3436,8 @@ msgid ""
 "not lost on overwriting. If this is not the case, take care to maintain your"
 " modifications."
 msgstr ""
-"Toute modification devrait avoir été faite au sein de plugins, de sorte "
-"qu'elles ne soient pas perdues lors de l'écrasement des fichiers. Si ce "
+"Toutes les modifications devraient avoir été faites au sein de plugins, de "
+"sorte qu'elles ne sont pas perdues lors de l'écrasement des fichiers. Si ce "
 "n'est pas le cas, prenez soin de maintenir vos modifications."
 
 #: ../../admin/upgrading.rst:136
@@ -3440,9 +3447,9 @@ msgid ""
 " remove it after you have completed all of the upgrade steps."
 msgstr ""
 "Si vous n'arrivez pas à accéder au script ``upgrade.php`` et recevez une "
-"erreur, ajoutez ``$CONFIG->security_protect_upgrade = false;`` à votre "
-"ficher ``settings.php`` et supprimez-le après avoir terminé toutes les "
-"étapes de l'installation."
+"erreur, ajoutez la ligne ``$CONFIG->security_protect_upgrade = false;`` à "
+"votre ficher ``settings.php``, puis supprimez-le après avoir terminé toutes "
+"les étapes de l'installation."
 
 #: ../../admin/upgrading.rst:141
 msgid ""
@@ -3467,7 +3474,7 @@ msgstr ""
 
 #: ../../admin/upgrading.rst:147
 msgid "Upgrade your current installation using Manual Upgrade method"
-msgstr "Mettez à niveau votre installation en utilisant la Méthode manuelle"
+msgstr "Mettez à niveau votre installation en utilisant la méthode manuelle"
 
 #: ../../admin/upgrading.rst:148
 msgid "Move your codebase to a temporary location"
@@ -3480,7 +3487,7 @@ msgid ""
 "your current installation"
 msgstr ""
 "Créez un nouveau projet composer en utilisant le projet Elgg de démarrage en"
-" suivant les  :doc:`instruction d'installation </intro/install>` dans le "
+" suivant les  :doc:`instructions d'installation </intro/install>` dans le "
 "répertoire racine de votre installation actuelle"
 
 #: ../../admin/upgrading.rst:150
@@ -3493,8 +3500,8 @@ msgstr ""
 #: ../../admin/upgrading.rst:151
 msgid "Run Elgg's installer using your browser or ``elgg-cli`` tool"
 msgstr ""
-"Exécutez l'installateur de Elgg en utilisant votre navigateur ou l'outil "
-"``elgg-cli``"
+"Exécutez l'installateur de Elgg en utilisant votre navigateur ou l'outil en "
+"ligne de commande ``elgg-cli``"
 
 #: ../../admin/upgrading.rst:152
 msgid ""
@@ -3572,8 +3579,8 @@ msgid ""
 "Plugins can influence how users are validated before they can use the "
 "website."
 msgstr ""
-"Les plugins peuvent influencer la manières dont les utilisateurs sont "
-"validés avant de pouvoir utiliser le site."
+"Les plugins peuvent influencer la manière dont les utilisateurs sont validés"
+" avant de pouvoir utiliser le site."
 
 #: ../../admin/uservalidation.rst:11
 msgid "Listing of unvalidated users"
@@ -3603,7 +3610,7 @@ msgid ""
 msgstr ""
 "Un exemple de ceci est le plugin :doc:`/plugins/uservalidationbyemail` qui "
 "ne permet pas aux utilisateurs de se connecter sur le site tant que leur "
-"adresse email n'est pas validée."
+"adresse e-mail n'est pas validée."
 
 #: ../../admin/uservalidation.rst:24
 msgid "Require admin validation"
@@ -3619,15 +3626,15 @@ msgstr ""
 "Dans les paramètres du site sous la section Utilisateurs, il existe un "
 "paramètre qui peut être activé pour exiger la validation par "
 "l’administrateur d’un nouveau compte utilisateur avant que celui-ci puisse "
-"utiliser son compte. Après l’enregistrement, l’utilisateur est informé que "
-"son compte est en attente de validation par un administrateur."
+"utiliser son compte. Après l’inscription, l’utilisateur est informé que son "
+"compte est en attente de validation par un administrateur."
 
 #: ../../admin/uservalidation.rst:29
 msgid ""
 "Site administrators can receive an e-mail notification that there are users "
 "awaiting validation."
 msgstr ""
-"Les administrateurs de site peuvent recevoir une notification par email "
+"Les administrateurs de site peuvent recevoir une notification par e-mail "
 "indiquant qu’il y a des utilisateurs en attente de validation."
 
 #: ../../admin/uservalidation.rst:31

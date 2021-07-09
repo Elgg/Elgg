@@ -7,7 +7,6 @@
 
 return array(
 	'admin:administer_utilities:logbrowser' => 'Elgglog-Browser',
-	'logbrowser' => 'Elgglog-Browser',
 	'logbrowser:search' => 'Angezeigte Logeinträge einschränken',
 	'logbrowser:user' => 'Logeinträge für den folgenden Benutzernamen anzeigen',
 	'logbrowser:starttime' => 'Logeinträge ab (Eingabe nur in Englisch möglich, z.B. "last monday", "1 hour ago")',

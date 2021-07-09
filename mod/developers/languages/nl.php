@@ -34,9 +34,6 @@ return array(
 	'developers:label:show_modules' => "Toon de geladen AMD modules in de console",
 	'developers:help:show_modules' => "Streamt geladen modules en waarden naar jouw JavaScript console.",
 	'developers:label:wrap_views' => "Omcirkel views",
-	'developers:help:wrap_views' => "Dit omwikkeld alle views met een HTML comment block. Dit kan je helpen indien je wilt weten welke view de HTML heeft gegenereerd.
-
-Dit kan potentieel non-HTML views niet laten functioneren. Bekijk de developers_wrap_views() functie for meer informatie.",
 	'developers:label:log_events' => "Log-events en plugin-hooks",
 	'developers:help:log_events' => "Schrijf events- en plugin-hook naar de log. Waarschuwing: dit zijn er veel per pagina.",
 	'developers:label:show_gear' => "Gebruik %s buiten de admin sectie",

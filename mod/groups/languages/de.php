@@ -18,7 +18,10 @@ return array(
 	'groups:all' => "Alle Gruppen",
 	'groups:add' => "Neue Gruppe",
 	'groups:edit' => "Gruppen-Einstellungen bearbeiten",
-	'groups:delete' => 'Gruppe löschen',
+	'groups:edit:profile' => "Profil",
+	'groups:edit:access' => "Zugang",
+	'groups:edit:tools' => "Tools",
+	'groups:edit:settings' => "Einstellungen",
 	'groups:membershiprequests' => 'Verwalte Beitritts-Anfragen',
 	'groups:membershiprequests:pending' => 'Verwalte Beitritts-Anfragen (%s)',
 	'groups:invitedmembers' => "Beitritts-Anfragen verwalten",
@@ -76,7 +79,6 @@ return array(
 
 	'groups:nofriendsatall' => 'Du hast leider noch keine Freunde, die Du einladen könntest!',
 	'groups:group' => "Gruppe",
-	'groups:search:tags' => "Tag",
 	'groups:search:title' => "Suche nach Gruppen mit dem Tag '%s'",
 	'groups:search:none' => "Es wurden keine passenden Gruppen gefunden.",
 	'groups:search_in_group' => "In dieser Gruppe suchen",
@@ -139,27 +141,21 @@ return array(
 	'groups:invite:subject' => "Hallo %s, Du wurdest eingeladen, der Gruppe %s beizutreten!",
 	'groups:joinrequest:remove:check' => 'Bist Du sicher, dass Du diese Anfrage zum Gruppenbeitritt löschen willst?',
 	'groups:invite:remove:check' => 'Bist Du sicher, dass Du diese Einladung zum Gruppenbeitritt löschen willst?',
-	'groups:invite:body' => "Hallo %s,
-
-%s hat Dich eingeladen, der Gruppe '%s' beizutreten.
+	'groups:invite:body' => "%s hat Dich eingeladen, der Gruppe '%s' beizutreten.
 
 Folge dem Link um Deine ausstehenden Einladungen zum Beitreten in Gruppen zu sehen:
 
 %s",
 
 	'groups:welcome:subject' => "Willkommen in der Gruppe %s!",
-	'groups:welcome:body' => "Hallo %s!
-
-Du bist nun ein Mitglied der Gruppe '%s'!
+	'groups:welcome:body' => "Du bist nun ein Mitglied der Gruppe '%s'.
 
 Folge dem Link um einen Beitrag in der Gruppe zu schreiben!
 
 %s",
 
 	'groups:request:subject' => "%s hat beantragt, der Gruppe %s beitreten zu dürfen",
-	'groups:request:body' => "Hallo %s,
-
-%s hat beantragt, der Gruppe %s beitreten zu dürfen.
+	'groups:request:body' => "%s hat beantragt, der Gruppe '%s' beitreten zu dürfen.
 
 Folge dem Link um ihr/sein Profil zu sehen:
 
@@ -178,9 +174,6 @@ oder folge dem nächsten Link, um die ausstehenden Anfragen zum Gruppenbeitritt 
 	/**
 	 * Action messages
 	 */
-	'groups:deleted' => 'Gruppe und Inhalte der Gruppe wurden gelöscht.',
-	'groups:notdeleted' => 'Das Löschen der Gruppe ist fehlgeschlagen.',
-	'groups:deletewarning' => "Bist Du sicher, dass Du diese Gruppe und ihre Inhalte löschen willst? Dies kann nicht rückgängig gemacht werden!",
 
 	'groups:invitekilled' => 'Die Einladung wurde gelöscht.',
 	'groups:joinrequestkilled' => 'Der Antrag zum Gruppenbeitritt wurde gelöscht.',
@@ -188,4 +181,8 @@ oder folge dem nächsten Link, um die ausstehenden Anfragen zum Gruppenbeitritt 
 	'groups:add:alreadymember' => "%s ist bereits ein Mitglied dieser Gruppe.",
 	
 	// Notification settings
+	'groups:usersettings:notification:group_join:description' => "Standardeinstellung für Gruppen-Benachrichtigungen beim Beitritt zu einer neuen Gruppe",
+	
+	'groups:usersettings:notifications:title' => 'Gruppen-Benachrichtigungen',
+	'groups:usersettings:notifications:description' => 'Um Benachrichtigungen zu erhalten, wenn zu einer Gruppe, in der Du Mitglied bist, neue Inhalte hinzugefügt werden, kannst Du individuell für jede Gruppe im Folgenden die Methode(n) festlegen, die verwendet werden soll(en).',
 );

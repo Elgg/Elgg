@@ -11,6 +11,10 @@ return [
 		'name' => 'Groups',
 		'activate_on_install' => true,
 	],
+	'settings' => [
+		'hidden_groups' => 'no',
+		'limited_groups' => 'no',
+	],
 	'entities' => [
 		[
 			'type' => 'group',

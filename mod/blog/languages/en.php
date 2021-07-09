@@ -50,15 +50,12 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'New blog post called %s',
 	'blog:notify:subject' => 'New blog post: %s',
-	'blog:notify:body' =>
-'
-%s published a new blog post: %s
+	'blog:notify:body' => '%s published a new blog post: %s
 
 %s
 
 View and comment on the blog post:
-%s
-',
+%s',
 
 	// widget
 	'widgets:blog:name' => 'Blog posts',

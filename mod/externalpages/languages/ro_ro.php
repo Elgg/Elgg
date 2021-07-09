@@ -10,7 +10,6 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
-	'expages' => "Pagini de site",
 	'admin:configure_utilities:expages' => "Pagini de Site",
 	'expages:edit:viewpage' => "Vezi pagina pe site",
 	'expages:about' => "Despre",

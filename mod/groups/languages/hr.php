@@ -88,32 +88,10 @@ return array(
 	'groups:useralreadyinvited' => 'Korisnik je već pozvan',
 	'groups:joinrequest:remove:check' => 'Jeste li sigurni da želite ukloniti ovaj zahtjev za uključivanjem?',
 	'groups:invite:remove:check' => 'Jeste li sigurni da želite ukloniti ovaj poziv?',
-	'groups:invite:body' => "Bok %s, 
-
-%ste poziva da se pridružiš grupi '%s'
-
-Za pregled pozivnike kliknite ovdje:
-%s",
 
 	'groups:welcome:subject' => "Dobrodošli u grupu %s!",
-	'groups:welcome:body' => "Bok %s!
-
-Od sada ste član grupe '%s'
-
-Za objavu poruka kliknite ovdje
-%s",
 
 	'groups:request:subject' => "%s je zatražio uključivanje u grupu %s",
-	'groups:request:body' => "Bok %s, 
-
-%s je zatražio uključivanje u grupu '%s'
-
-Za pregled profila kliknite ovdje:
-%s
-
-a za pregled zahtjeva za pridruživanje grupi kliknite ovjde:
-%s
-",
 
 	'river:group:create' => '%s izrađena je grupa %s',
 	'river:group:join' => '%s priključilo se grupi %s',

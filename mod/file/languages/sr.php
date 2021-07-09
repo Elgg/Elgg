@@ -22,14 +22,11 @@ return array(
 	'file:num_files' => "Број фајлова за приказ",
 	'file:replace' => 'Замени садржај фајла (остави празно да не промениш фајл)',
 	'file:list:title' => "%s %s %s",
-	'file:title:friends' => "Пријатељи",
 
 	'file:file' => "Фајл",
 
 	'file:list:list' => 'Пребаци на преглед листе',
 	'file:list:gallery' => 'Пребаци на преглед галерије',
-
-	'file:types' => "Типови додатих фајлова",
 
 	'file:type:' => 'Фајлови',
 	'file:type:all' => "Сви фајлови",

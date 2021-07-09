@@ -37,11 +37,9 @@ return array(
 	*/
 
 	'messages:posted' => "Il messaggio è stato inviato.",
-	'messages:success:delete:single' => 'Messaggio eliminato',
 	'messages:success:delete' => 'Messaggi eliminati',
 	'messages:success:read' => 'Messaggi contrassegnati come letti',
 	'messages:error:messages_not_selected' => 'Nessun messaggio selezionato',
-	'messages:error:delete:single' => 'Impossibile cancellare il messaggio',
 
 	/**
 	* Email messages

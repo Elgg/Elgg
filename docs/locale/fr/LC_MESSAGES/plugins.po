@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-18 16:34+0200\n"
+"POT-Creation-Date: 2021-06-11 11:12+0200\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -58,7 +58,7 @@ msgstr ""
 
 #: ../../plugins/blog.rst:10
 msgid "`Blogging on Wikipedia <http://en.wikipedia.org/wiki/Blog>`_"
-msgstr "`Blogging sur Wikipedia <http://fr.wikipedia.org/wiki/Blog>`_"
+msgstr "`Blog sur Wikipédia <http://fr.wikipedia.org/wiki/Blog>`_"
 
 #: ../../plugins/dashboard.rst:2
 msgid "Dashboard"
@@ -79,115 +79,17 @@ msgid ""
 " is not the same as their profile, whereas the profile is for consumption by"
 " others, the dashboard is a space for users to use for their own needs."
 msgstr ""
-"Le tableau de bord est livré à la fois avec la version complète et noyau "
-"seulement de Elgg. C'est le portail des utilisateurs vers des activités qui "
-"leur sont importantes à la fois à l'intérieur du site et depuis des sources "
-"externes. En utilisant la puissante API des widgets de Elgg, il est possible"
-" de construire des widgets qui retirent du contenu pertinent depuis "
-"l'intérieur d'un site Elgg, ainsi que de récupérer des informations depuis "
-"des sources tierce-partie telles que Twitter ou Flickr (dès lors que ces "
-"widgets existent). Le tableau de bord des utilisateurs n'est pas la même "
-"chose que leur profil : tandis que le profil est destiné à être consulté par"
-" les autres, le tableau de bord est un espace strictement personnel que les "
-"utilisateurs utilisent pour leurs propres besoins."
-
-#: ../../plugins/diagnostics.rst:2
-msgid "Diagnostics"
-msgstr "Diagnostics"
-
-#: ../../plugins/diagnostics.rst:4
-msgid ""
-"For the technically savvy user, system diagnostics enables you to quickly "
-"evaluate the server environment, Elgg code, and plugins of an Elgg install. "
-"Diagnostics is a core system plugin that comes turned on by default with "
-"Elgg. To download the diagnostics file, follow the steps below. The file is "
-"a dump of all sorts of useful information."
-msgstr ""
-"Pour l'utilisateur techniquement averti, les diagnostics système permettent "
-"d'évaluer rapidement l'environnement serveur, le code de Elgg, et les "
-"plugins d'une installation Elgg. Les diagnostics sont un plugin système du "
-"noyau qui est activé par défaut avec Elgg. Pour télécharger le fichier de "
-"diagnostics, suivez les étapes ci-dessous. Le fichier est un vidage de tous "
-"types d'informations utiles."
-
-#: ../../plugins/diagnostics.rst:6
-msgid "To use:"
-msgstr "Pour l'utiliser :"
-
-#: ../../plugins/diagnostics.rst:8
-msgid "Log in as Administrator"
-msgstr "Connectez-vous en tant qu'administrateur"
-
-#: ../../plugins/diagnostics.rst:9
-msgid "Go to Administration -> Administer -> Utilities ->System Diagnostics"
-msgstr ""
-"Rendez-vous dans Administration -> Administrer -> Utilitaires -> Diagnostics"
-" Système"
-
-#: ../../plugins/diagnostics.rst:10
-msgid "Click 'Download'"
-msgstr "Cliquez sur 'Télécharger'"
-
-#: ../../plugins/diagnostics.rst:12
-msgid "System diagnostics dump file contents:"
-msgstr "Contenu du fichier de vidage des diagnostics système :"
-
-#: ../../plugins/diagnostics.rst:14
-msgid "List of all Elgg files along with a hash for each file"
-msgstr ""
-"Liste de tous les fichiers de Elgg ainsi qu'un hash pour chaque fichier"
-
-#: ../../plugins/diagnostics.rst:15
-msgid "List of all the plugins"
-msgstr "Liste de tous les plugins"
-
-#: ../../plugins/diagnostics.rst:16
-msgid "PHP superglobals"
-msgstr "Superglobales PHP"
-
-#: ../../plugins/diagnostics.rst:17
-msgid "PHP settings"
-msgstr "Paramètres PHP"
-
-#: ../../plugins/diagnostics.rst:18
-msgid "Apache settings"
-msgstr "Paramètres Apache"
-
-#: ../../plugins/diagnostics.rst:26
-msgid "Elgg CONFIG values"
-msgstr "Valeurs CONFIG de Elgg"
-
-#: ../../plugins/diagnostics.rst:20
-msgid "language strings"
-msgstr "chaînes de traduction"
-
-#: ../../plugins/diagnostics.rst:21
-msgid "site settings"
-msgstr "paramètres du site"
-
-#: ../../plugins/diagnostics.rst:22
-msgid "database settings"
-msgstr "paramètres de la base de données"
-
-#: ../../plugins/diagnostics.rst:23
-msgid "plugin hooks"
-msgstr "hooks plugin"
-
-#: ../../plugins/diagnostics.rst:24
-msgid "actions"
-msgstr "actions"
-
-#: ../../plugins/diagnostics.rst:25
-msgid "views"
-msgstr "vues"
-
-#: ../../plugins/diagnostics.rst:26
-msgid "page handlers"
-msgstr "gestionnaires de pages"
-
-#: ../../plugins/diagnostics.rst:27
-msgid "much more"
-msgstr "beaucoup plus"
+"Le tableau de bord est distribué à la fois avec la version complète et avec "
+"la version noyau seulement de Elgg. C'est le portail des utilisateurs vers "
+"des activités qui leur sont importantes à la fois à l'intérieur du site et "
+"depuis des sources externes. En utilisant la puissante API des widgets de "
+"Elgg, il est possible de construire des widgets qui extraient du contenu "
+"pertinent depuis l'intérieur d'un site Elgg, ou qui récupèrent des "
+"informations depuis des sources tierce-partie telles que Twitter ou Flickr "
+"(dès lors que ces widgets existent). Le tableau de bord des utilisateurs "
+"n'est pas la même chose que leur profil : tandis que le profil est destiné à"
+" être consulté par les autres, le tableau de bord est un espace strictement "
+"personnel que les utilisateurs utilisent pour leurs propres besoins."
 
 #: ../../plugins/file.rst:2
 msgid "File repository"
@@ -378,7 +280,7 @@ msgstr ""
 
 #: ../../plugins/index.rst:2
 msgid "Bundled plugins"
-msgstr "Plugins fournis"
+msgstr "Plugins inclus"
 
 #: ../../plugins/index.rst:4
 msgid ""
@@ -393,7 +295,7 @@ msgid ""
 "The following plugins are also bundled with Elgg, but are not (yet) "
 "documented"
 msgstr ""
-"Les plugins suivants sont également livrés avec Elgg, mais ne sont pas "
+"Les plugins suivants sont également distribués avec Elgg, mais ne sont pas "
 "(encore) documentés"
 
 #: ../../plugins/index.rst:24
@@ -449,30 +351,22 @@ msgid "members"
 msgstr "members"
 
 #: ../../plugins/index.rst:37
-msgid "notifications"
-msgstr "notifications"
-
-#: ../../plugins/index.rst:38
 msgid "reportedcontent"
 msgstr "reportedcontent"
 
-#: ../../plugins/index.rst:39
+#: ../../plugins/index.rst:38
 msgid "search"
 msgstr "search"
 
-#: ../../plugins/index.rst:40
-msgid "site_notifications"
-msgstr "site_notifications"
-
-#: ../../plugins/index.rst:41
+#: ../../plugins/index.rst:39
 msgid "system_log"
 msgstr "system_log"
 
-#: ../../plugins/index.rst:42
+#: ../../plugins/index.rst:40
 msgid "tagcloud"
 msgstr "tagcloud"
 
-#: ../../plugins/index.rst:43
+#: ../../plugins/index.rst:41
 msgid "web_services"
 msgstr "web_services"
 
@@ -519,7 +413,7 @@ msgstr ""
 "avatar ou sur le lien vers leur profil. Puis, en utilisant l':doc:`éditeur "
 "WYSIWYG </tutorials/wysiwyg>` intégré, il est possible de mettre en forme le"
 " message. Chaque membre dispose de sa propre boîte de réception et d'envoi. "
-"Il est possible d'être notifié par email des nouveaux messages."
+"Il est possible d'être notifié par e-mail des nouveaux messages."
 
 #: ../../plugins/messages.rst:13
 msgid ""
@@ -619,13 +513,13 @@ msgid ""
 " and is unique within the plugins because the profile icon it defines is "
 "referenced as standard from all over the system."
 msgstr ""
-"Le plugin profile est livré à la fois avec la version complète et avec la "
-"version noyau seulement de Elgg. L'objectif est qu'il puisse être désactivé "
-"et remplacé par un autre plugin de profil si vous le souhaitez. Il fournit "
-"un certain nombre d'éléments de fonctionnalités que beaucoup considèrent "
-"comme fondamentales pour le concept d'un site de réseautage social, et est "
-"unique parmi les plugins parce que l'icône de profil qu'il définit est "
-"référencée comme un standard à travers l'ensemble du système."
+"Le plugin profile est distribué à la fois avec la version complète et avec "
+"la version noyau seulement de Elgg. L'objectif est qu'il puisse être "
+"désactivé et remplacé par un autre plugin de profil si vous le souhaitez. Il"
+" fournit un certain nombre d'éléments de fonctionnalités que beaucoup "
+"considèrent comme fondamentales pour le concept d'un site de réseautage "
+"social, et est unique parmi les plugins parce que l'icône de profil qu'il "
+"définit est référencée comme un standard à travers l'ensemble du système."
 
 #: ../../plugins/profile.rst:15
 msgid "User details"
@@ -633,18 +527,18 @@ msgstr "Informations sur l'utilisateur"
 
 #: ../../plugins/profile.rst:17
 msgid ""
-"This provides information about a user, which is configurable from within "
-"the plugin's start.php file. You can change the available profile fields "
-"form the admin panel. Each profile field has its own access restriction, so "
+"This provides information about a user, which is configurable with the "
+"``fields, user:user`` hook. You can change the available profile fields from"
+" the admin panel. Each profile field has its own access restriction, so "
 "users can choose exactly who can see each individual element. Some of the "
 "fields contain tags (for example *skills*) limiting access to a field will "
 "also limit who can find you by that tag."
 msgstr ""
 "Ceci fournit des informations à propos d'un utilisateur, qui est "
-"configurable à partir du fichier start.php du plugin. Vous pouvez changer "
-"les champs de profil disponibles depuis le panneau d'administration. Chaque "
+"configurable via le hook ``fields, user:user``. Vous pouvez changer les "
+"champs de profil disponibles depuis le panneau d'administration. Chaque "
 "champ de profil dispose de son propre niveau d'accès, de sorte que les "
-"membres puissent choisir exactement qui peut voir quel élément précis. "
+"membres peuvent choisir exactement qui peut voir quel élément précis. "
 "Certains des champs contiennent des tags (par exemple les compétences "
 "*skills*) : restreindre l'accès à ce champ va également limiter le nombre de"
 " personnes susceptibles de vous trouver via ce tag."
@@ -720,6 +614,51 @@ msgstr ""
 "Dans tous les cas, l'utilisateur en question sera passé en tant que "
 "``$params['entity']``."
 
+#: ../../plugins/site_notifications.rst:2
+msgid "Site Notifications"
+msgstr "Notifications du site"
+
+#: ../../plugins/site_notifications.rst:4
+msgid ""
+"The Site notifications plugin offers a way for your users to keep up to date"
+" with what's happening on your community by sending a on-site notification."
+msgstr ""
+"Le plugin Site notifications offre à vos utilisateurs un moyen de se tenir "
+"au courant de ce qui se passe dans votre communauté en envoyant une "
+"notification directement sur le site."
+
+#: ../../plugins/site_notifications.rst:8
+msgid "Features"
+msgstr "Fonctionnalités"
+
+#: ../../plugins/site_notifications.rst:10
+msgid "Get a notification when content is posted on the community"
+msgstr "Recevez une notification lorsque du contenu est publié"
+
+#: ../../plugins/site_notifications.rst:11
+msgid ""
+"Unread notifications will automatically be marked as read when you view the "
+"content it relates to"
+msgstr ""
+"Les notifications non lues seront automatiquement marquées comme lues quand "
+"vous afficherez le contenu auquel elles se rapportent"
+
+#: ../../plugins/site_notifications.rst:12
+msgid ""
+"Notifications will automatically be removed if the content it relates to is "
+"removed"
+msgstr ""
+"Les notifications seront automatiquement supprimées si le contenu auquel "
+"elles se rapportent est supprimé"
+
+#: ../../plugins/site_notifications.rst:13
+msgid ""
+"Plugin settings are available to automatically cleanup unread/read "
+"notifications"
+msgstr ""
+"Les paramètres du plugin permettent de nettoyer automatiquement les "
+"notifications lues / non lues"
+
 #: ../../plugins/thewire.rst:2
 msgid "The Wire"
 msgstr "Le Fil"
@@ -729,13 +668,13 @@ msgid ""
 "Elgg wire plugin \"The Wire\" is Twitter-style microblogging plugin that "
 "allows users to post notes to the wire."
 msgstr ""
-"Le plugin \"The Wire\" (Le Fil) de Elgg est un plugin de micro-blogging à la"
+"Le plugin \"The Wire\" - Le Fil de Elgg est un plugin de micro-blogging à la"
 " manière de Twitter, qui permet aux utilisateurs de publier des notes vers "
 "le Fil."
 
 #: ../../plugins/uservalidationbyemail.rst:2
 msgid "User validation by e-mail"
-msgstr "Validation des comptes utilisateur via l'email"
+msgstr "Validation des comptes utilisateur via l'e-mail"
 
 #: ../../plugins/uservalidationbyemail.rst:4
 msgid ""
@@ -747,9 +686,9 @@ msgid ""
 msgstr ""
 "Le plugin uservalidationbyemail ajoute une étape au processus d'inscription "
 "des utilisateurs. Après que l'utilisateur se soit enregistré sur le site, un"
-" email est envoyé à son adresse email afin de valider que cette adresse "
-"email appartient bien à l'utilisateur. L'utilisateur ne pourra se connecter "
-"qu'après avoir cliqué sur le lien de vérification contenu dans l'email."
+" e-mail est envoyé à son adresse e-mail afin de valider que cette adresse "
+"e-mail appartient bien à l'utilisateur. L'utilisateur ne pourra se connecter"
+" qu'après avoir cliqué sur le lien de vérification contenu dans l'e-mail."
 
 #: ../../plugins/uservalidationbyemail.rst:9
 msgid "The process for the user"
@@ -768,12 +707,12 @@ msgid ""
 "check their e-mail account for the validation e-mail"
 msgstr ""
 "Une fois le compte créé l'utilisateur arrive sur une page qui indique de "
-"vérifier la présence de l'email de validation sa boîte de messagerie"
+"vérifier la présence de l'e-mail de validation sa boîte de messagerie"
 
 #: ../../plugins/uservalidationbyemail.rst:13
 msgid "In the validation e-mail is a link to confirm their e-mail address"
 msgstr ""
-"Dans l'email de validation, un lien permet de confirmer son adresse email"
+"Dans l'e-mail de validation, un lien permet de confirmer son adresse e-mail"
 
 #: ../../plugins/uservalidationbyemail.rst:14
 msgid "After clicking on the link, the account is validated"
@@ -808,4 +747,4 @@ msgstr ""
 "non validés. Une liste des membres non validés se trouve dans Administration"
 " -> Utilisateurs -> Non validés. L'administrateur peut manuellement valider "
 "ou supprimer l'utilisateur. Il existe également une option pour renvoyer "
-"l'email de validation."
+"l'e-mail de validation."

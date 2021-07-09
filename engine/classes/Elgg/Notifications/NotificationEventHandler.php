@@ -367,7 +367,6 @@ class NotificationEventHandler {
 			}
 
 			return _elgg_services()->translator->translate($body_key, [
-				$recipient->getDisplayName(),
 				$actor->getDisplayName(),
 				$display_name,
 				$container_name,

@@ -28,7 +28,7 @@ return array(
 	'entity:delete:object:discussion:success' => 'Тема обсуждения удалена.',
 
 	'discussion:topic:notfound' => 'Тема обсуждения не найдена',
-	'discussion:error:notsaved' => 'Не могу сохранить эту тему',
+	'discussion:error:notsaved' => 'Не удается сохранить эту тему',
 	'discussion:error:missing' => 'Оба поля заголовок и сообщение являются обязательными',
 	'discussion:error:permissions' => 'У Вас нет разрешений выполнять это действие',
 	'discussion:error:no_groups' => "Вы не являетесь участником ни одной группы",
@@ -45,22 +45,22 @@ return array(
 	'discussion:topic:notify:summary' => 'Новая тема для обсуждения называется %s',
 	'discussion:topic:notify:subject' => 'Новая тема для обсуждения: %s',
 	'discussion:topic:notify:body' =>
-'%s добавил новую тему для обсуждения "%s":
+'%s добавил новую тему обсуждения "%s":
 
 %s
 
-Просмотреть и ответить на обсуждаемую тему:
+Просмотреть и ответить в теме обсуждения:
 %s
 ',
 
 	'discussion:comment:notify:summary' => 'Новый комментарий в теме: %s',
 	'discussion:comment:notify:subject' => 'Новый комментарий в теме: %s',
 	'discussion:comment:notify:body' =>
-'%s прокомментировал тему "%s":
+'%s прокомментировал в теме обсуждения "%s":
 
 %s
 
-Просмотреть обсуждение и прокомментировать:
+Просмотр и комментирование обсуждения:
 %s
 ',
 

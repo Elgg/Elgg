@@ -22,9 +22,7 @@ return array(
 
 	'groups:tool:pages' => 'Włącz strony grupy',
 
-	'pages:delete' => "Usuń tą stronę",
 	'pages:history' => "Historia strony",
-	'pages:view' => "Wyświetl stronę",
 	'pages:revision' => "Wersja",
 
 	'pages:navigation' => "Nawigacja strony",
@@ -49,8 +47,6 @@ return array(
 	'pages:description' => 'Treść strony',
 	'pages:tags' => 'Tagi',
 	'pages:parent_guid' => 'Strona nadrzędna',
-	'pages:access_id' => 'Uprawnienia odczytu',
-	'pages:write_access_id' => 'Uprawnienia zapisu',
 
 	/**
 	 * Status and error messages
@@ -60,8 +56,6 @@ return array(
 	'pages:notsaved' => 'Strona nie mogła zostać zapisana',
 	'pages:error:no_title' => 'Musisz podać tytuł dla tej strony.',
 	'entity:delete:object:page:success' => 'Twoja strona została pomyślnie usunięta.',
-	'pages:revision:delete:success' => 'Pomyślnie usunięto wersję strony.',
-	'pages:revision:delete:failure' => 'Usunięcie wersji strony nie powiodło się.',
 
 	/**
 	 * History
@@ -75,13 +69,6 @@ return array(
 	'pages:num' => 'Ilość stron do wyświetlenia',
 	'widgets:pages:name' => 'Strony',
 	'widgets:pages:description' => "Oto lista twoich stron",
-
-	/**
-	 * Submenu items
-	 */
-	'pages:label:view' => "Zobacz stronę",
-	'pages:label:edit' => "Edytuj stronę",
-	'pages:label:history' => "Historia strony",
 
 	'pages:newchild' => "Utwórz podstronę",
 );

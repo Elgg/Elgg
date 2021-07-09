@@ -22,14 +22,11 @@ return array(
 	'file:num_files' => "Número de ficheiros para mostrar",
 	'file:replace' => 'Substituír o contido do ficheiro (deixar baleiro para non cambiar o ficheiro)',
 	'file:list:title' => "%s: %s %s",
-	'file:title:friends' => "Dos contactos",
 
 	'file:file' => "Ficheir",
 
 	'file:list:list' => 'Cambiar á vista de lista',
 	'file:list:gallery' => 'Cambiar á vista de galería',
-
-	'file:types' => "Tipo de ficheiros enviados",
 
 	'file:type:' => 'Ficheiros',
 	'file:type:all' => "Todos os ficheiros",

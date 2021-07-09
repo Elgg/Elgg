@@ -22,9 +22,6 @@ return array(
 	'likes:userlikedthis' => 'αρέσει στο χρήστη %s',
 	'likes:userslikedthis' => '%s αγαπημένα',
 	'likes:river:annotate' => 'αγαπημένα',
-	'likes:delete:confirm' => 'Είστε σίγουροι ότι δεν σας αρέσει πλέον;',
-
-	'river:likes' => 'του αρέσει %s %s',
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s του αρέσει η ανάρτηση "%s"',

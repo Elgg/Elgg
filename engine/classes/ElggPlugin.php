@@ -606,7 +606,7 @@ class ElggPlugin extends ElggObject {
 		// Note: this will not run re-run the init hooks!
 		if ($return) {
 			try {
-				elgg_clear_caches();
+				elgg_invalidate_caches();
 
 				$this->register();
 				
@@ -638,7 +638,7 @@ class ElggPlugin extends ElggObject {
 		} else {
 			elgg_delete_admin_notice("cannot_start {$this->getID()}");
 
-			elgg_clear_caches();
+			elgg_invalidate_caches();
 			_elgg_services()->logger->notice("Plugin {$this->getID()} has been activated");
 		}
 
@@ -748,7 +748,7 @@ class ElggPlugin extends ElggObject {
 
 		$this->deactivateEntities();
 
-		elgg_clear_caches();
+		elgg_invalidate_caches();
 
 		_elgg_services()->logger->notice("Plugin {$this->getID()} has been deactivated");
 

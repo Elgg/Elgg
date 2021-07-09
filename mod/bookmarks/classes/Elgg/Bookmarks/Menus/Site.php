@@ -23,7 +23,7 @@ class Site {
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'bookmarks',
-			'icon' => 'bookmark-o',
+			'icon' => 'bookmark-regular',
 			'text' => elgg_echo('collection:object:bookmarks'),
 			'href' => elgg_generate_url('default:object:bookmarks'),
 		]);

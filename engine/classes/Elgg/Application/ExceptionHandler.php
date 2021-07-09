@@ -73,7 +73,10 @@ class ExceptionHandler {
 		}
 
 		$services = $app->_services;
-
+		if ($services->responseFactory->getSentResponse() !== false) {
+			return;
+		}
+		
 		try {
 			// allow custom scripts to trigger on exception
 			// value in settings.php should be a system path to a file to include

@@ -37,11 +37,9 @@ return array(
 	*/
 
 	'messages:posted' => "Twoja wiadomość została wysłana.",
-	'messages:success:delete:single' => 'Usunięto wiadomość',
 	'messages:success:delete' => 'Usunięto wiadomości',
 	'messages:success:read' => 'Oznaczono wiadomości jako przeczytane',
 	'messages:error:messages_not_selected' => 'Nie zaznaczono wiadomości',
-	'messages:error:delete:single' => 'Nie można usunąć tej wiadomości',
 
 	/**
 	* Email messages

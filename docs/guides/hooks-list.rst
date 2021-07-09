@@ -91,7 +91,7 @@ System hooks
 	Hook handlers can add/remove items to the collection using the collection API, as well as array access operations.
 
 **register, menu:<menu_name>:<type>:<subtype>**
-	More granualar version of the menu hook triggered before the **register, menu:<menu_name>** hook.
+	More granular version of the menu hook triggered before the **register, menu:<menu_name>** hook.
 	
 	Only applied if menu params contain
 	- params['entity'] with an ``\ElggEntity`` (``<type>`` is ``\ElggEntity::type`` and ``<subtype>`` is ``\ElggEntity::subtype``) or
@@ -111,7 +111,7 @@ System hooks
 	which in turn are collections of ``\ElggMenuItem`` objects.
 
 **prepare, menu:<menu_name>:<type>:<subtype>**
-	More granualar version of the menu hook triggered before the **prepare, menu:<menu_name>** hook.
+	More granular version of the menu hook triggered before the **prepare, menu:<menu_name>** hook.
 	
 	Only applied if menu params contain
 	- params['entity'] with an ``\ElggEntity`` (``<type>`` is ``\ElggEntity::type`` and ``<subtype>`` is ``\ElggEntity::subtype``) or

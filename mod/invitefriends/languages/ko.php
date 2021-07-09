@@ -22,18 +22,4 @@ return array(
 	'invitefriends:already_members' => '다음은 이미 회원입니다: %s',
 	'invitefriends:noemails' => '전자우편주소가 입력되지 않았습니다.',
 	
-	'invitefriends:message:default' => '안녕하세요,
-
-나의 %s 네트워크에  초대하고 싶습니다. ',
-
-	'invitefriends:email' => '%s에  %s에 의해 초대되었습니다. 다음의 초대문구를 확인하세요 :
-
-%s
-
-참가하려면 아래의 링크를 선택하세요:
-
-%s
-
-계정을 만들면 자동으로 친구로 등록됩니다.',
-	
 );

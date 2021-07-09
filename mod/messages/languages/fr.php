@@ -37,11 +37,9 @@ return array(
 	*/
 
 	'messages:posted' => "Votre message a bien été envoyé.",
-	'messages:success:delete:single' => 'Le message a été supprimé',
 	'messages:success:delete' => 'Les messages ont été supprimés',
 	'messages:success:read' => 'Les messages ont été marqués comme lus',
 	'messages:error:messages_not_selected' => 'Aucun message sélectionné',
-	'messages:error:delete:single' => 'Impossible de supprimer le message',
 
 	/**
 	* Email messages
@@ -55,7 +53,7 @@ return array(
 Pour consulter vos messages :
 %s
 
-Pour envoyer un message à %s :
+Pour écrire un message à %s :
 %s",
 
 	/**

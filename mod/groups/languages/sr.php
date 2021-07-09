@@ -18,7 +18,6 @@ return array(
 	'groups:all' => "Све групе",
 	'groups:add' => "Направи нову групу",
 	'groups:edit' => "Измени групу",
-	'groups:delete' => 'Обриши групу',
 	'groups:membershiprequests' => 'Управљај захтевима за придруживање',
 	'groups:membershiprequests:pending' => 'Управљај захтевима за придруживање (%s)',
 	'groups:invitations' => 'Позиви у групу',
@@ -66,7 +65,6 @@ return array(
 
 	'groups:nofriendsatall' => 'Немате пријатеље да позовете!',
 	'groups:group' => "Група",
-	'groups:search:tags' => "Ознака",
 	'groups:search:title' => "Потражи групе означене са  '%s'",
 	'groups:search:none' => "Нису пронађене одговарајуће групе",
 	'groups:search_in_group' => "Претражи у овој групи",
@@ -134,7 +132,6 @@ return array(
 	/**
 	 * Action messages
 	 */
-	'groups:deletewarning' => "Сигурни сте да желите да обришете ову групу? Не постоји поништење брисања!",
 
 	'groups:invitekilled' => 'Позив је обрисан.',
 	'groups:joinrequestkilled' => 'Захтева за члансто је обрисан.',

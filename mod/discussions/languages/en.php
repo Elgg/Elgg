@@ -44,25 +44,21 @@ return array(
 	 */
 	'discussion:topic:notify:summary' => 'New discussion topic called %s',
 	'discussion:topic:notify:subject' => 'New discussion topic: %s',
-	'discussion:topic:notify:body' =>
-'%s added a new discussion topic "%s":
+	'discussion:topic:notify:body' => '%s added a new discussion topic "%s":
 
 %s
 
 View and reply to the discussion topic:
-%s
-',
+%s',
 
 	'discussion:comment:notify:summary' => 'New comment in topic: %s',
 	'discussion:comment:notify:subject' => 'New comment in topic: %s',
-	'discussion:comment:notify:body' =>
-'%s commented on the discussion topic "%s":
+	'discussion:comment:notify:body' => '%s commented on the discussion topic "%s":
 
 %s
 
 View and comment on the discussion:
-%s
-',
+%s',
 
 	'groups:tool:forum' => 'Enable group discussions',
 
@@ -74,4 +70,8 @@ View and comment on the discussion:
 	'discussion:topic:closed:desc' => 'This discussion is closed and is not accepting new comments.',
 
 	'discussion:topic:description' => 'Topic message',
+	'discussion:topic:toggle_status:open' => 'The discussion topic was successfully reopened',
+	'discussion:topic:toggle_status:open:confirm' => 'Are you sure you wish to reopen this topic?',
+	'discussion:topic:toggle_status:closed' => 'The discussion topic was successfully closed',
+	'discussion:topic:toggle_status:closed:confirm' => 'Are you sure you wish to close this topic?',
 );

@@ -37,11 +37,9 @@ return array(
 	*/
 
 	'messages:posted' => "Zpráva byla úspěšně odeslána.",
-	'messages:success:delete:single' => 'Zpráva byla smazána',
 	'messages:success:delete' => 'Zprávy smazány',
 	'messages:success:read' => 'Zprávy byly označené jako přečtené',
 	'messages:error:messages_not_selected' => 'Nejsou vybrané žádné zprávy',
-	'messages:error:delete:single' => 'Není možné smazat zprávu',
 
 	/**
 	* Email messages

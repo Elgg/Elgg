@@ -20,7 +20,6 @@ return array(
 
 	'login' => "Iniciar sesi&oacute;n",
 	'loginok' => "Ha iniciado sesi&oacute;n",
-	'loginerror' => "Inicio de sesi&oacute;n incorrecto. Verifique sus credenciales e intente nuevamente",
 	'login:empty' => "El nombre de usuario y contrase&ntilde;a son requeridos",
 	'login:baduser' => "No se pudo cargar su cuenta de usuario",
 	'auth:nopams' => "Error interno. No se encuentra un m&eacute;todo de autenticaci&oacute;n instalado",
@@ -45,37 +44,20 @@ return array(
 	'exception:title' => "Error Fatal",
 	'exception:contact_admin' => 'Se ha encontrado un error fatal al iniciar sesi&oacute;n. Contacta al administrador con la siguiente informaci&oacute;n:',
 
-	'actionundefined' => "La acci&oacute;n (%s) solicitada no se encuentra definida en el sistema",
 	'actionnotfound' => "El log de acciones para %s no se ha encontrado",
-	'actionloggedout' => "Lo sentimos, no puede realizar esta acci&oacute;n sin identificarse",
 	'actionunauthorized' => 'Usted no posee los permisos necesarios para realizar esta acci&oacute;n',
 
 	'ajax:error' => 'Ha habido un error inesperado en la llamada AJAX. Puede que la conexión con el servidor se haya perdido.',
 	'ajax:not_is_xhr' => 'No puedes acceder a las vista AJAX directamente',
 
-	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) plugin mal configurado. Se ha desactivado. Por favor, consulta la wiki de Elgg para ver las posibles causas (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) no puede iniciarse. Motivo: %s',
 	'PluginException:InvalidID' => "%s no es un ID de plugin v&aacute;lido",
 	'PluginException:InvalidPath' => "%s es un path de plugin inv&aacute;lido",
-	'PluginException:InvalidManifest' => 'Archivo de manifesto inv&aacute;lido para el plugin %s',
-	'PluginException:InvalidPlugin' => '%s no es un plugin v&aacute;lido',
-	'PluginException:InvalidPlugin:Details' => '%s no es un plugin v&aacute;lido: %s',
-	'PluginException:NullInstantiated' => 'ElggPlugin cannot be null instantiated. You must pass a GUID, a plugin ID, or a full path.',
 	'ElggPlugin:MissingID' => 'No se encuentra el ID del plugin (guid %s)',
-	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'Archivo %s faltante en el package',
-	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Tipo de dependencia "%s" inv&aacute;lida',
-	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Tipo "%s" provisto inv&aacute;lido',
-	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Dependencia %s inv&aacute;lida "%s" en plugin %s. Los plugins no pueden entrar en conlicto con otros requeridos!',
-	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Conflicto con el plugin: %s',
-	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'El archivo  "elgg-plugin.php" del complemento está presente, pero ilegible.',
 	'ElggPlugin:Error' => 'Error del plugin',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'No puede incluirse %s para el plugin %s (guid: %s) en %s. Verifique los permisos!',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Se lanzó la excepción incluyendo %s para el complemento %s (guid: %s) en %s. ',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'No puede cargarse el directorio "views" para el plugin %s (guid: %s) en %s. Verifique los permisos!',
-	'PluginException:NoPluginName' => "No se pudo encontrar el nombre del plugin",
-	'PluginException:ParserError' => 'Error procesando el manifiesto con versi&oacute;n de API %s en plugin %s',
-	'PluginException:NoAvailableParser' => 'No se encuentra un procesador para el manifiesto de la versi&oacute;n de la API %s en plugin %s',
-	'PluginException:ParserErrorMissingRequiredAttribute' => "Atributo '%s' faltante en manifiesto del el plugin %s",
 	'ElggPlugin:InvalidAndDeactivated' => '%s no es un plugin v&aacute;lido y se ha deshabilitado',
 	'ElggPlugin:activate:BadConfigFormat' => 'El archivo "elgg-plugin.php" del complemento no devolvió una matriz serializable. ',
 	'ElggPlugin:activate:ConfigSentOutput' => 'El archivo "elgg-plugin.php" del complemento envió una salida.',
@@ -105,16 +87,11 @@ return array(
 	'ValidationException' => 'Los datos enviados no cumplen los requerimientos, por favor comprueba los datos.',
 	'LogicException:InterfaceNotImplemented' => '%s debe de ser implementado %s',
 
-	'pageownerunavailable' => 'Precauci&oacute;n: El administrador de p&aacute;gina %d no se encuentra accesible!',
 	'viewfailure' => 'Ocurri&oacute; un error interno en la vista %s',
-	'view:missing_param' => "Falta el parámetro obligatorio «%s» en la vista «%s».",
 	'changebookmark' => 'Por favor modifique su &iacute;ndice para esta vista',
-	'noaccess' => 'You need to login to view this content or the content has been removed or you do not have permission to view it.',
 	'error:missing_data' => 'Faltan datos en tu solicitud',
 	'save:fail' => 'Hubo un error guardando tus datos',
 	'save:success' => 'Tus datos fueron guardados',
-
-	'forward:error' => 'Lo sentimos. Un error ha ocurrido mientras te redirigíamos a otro sitio.',
 
 	'error:default:title' => 'Error...',
 	'error:default:content' => 'Oops... Algo salió mal',
@@ -184,15 +161,12 @@ return array(
 	'access:label:logged_out' => "Usuarios desconectados",
 	'access:label:friends' => "Amigos",
 	'access' => "Acceso",
-	'access:overridenotice' => "Aviso: Debido a la política del grupo, este contenido solo es accesible para los miembros del grupo",
 	'access:limited:label' => "Limitado",
 	'access:help' => "El nivel de acceso",
 	'access:read' => "S&oacute;lo lectura",
 	'access:write' => "Acceso de escritura",
 	'access:admin_only' => "Solo Administradores",
-	'access:missing_name' => "Falta el nombre del nivel de acceso",
-	'access:comments:change' => "Esta discusión está solo visible para un conjunto limitado de usuarios. Piénsate bien con quién la compartes.",
-
+	
 /**
  * Dashboard and widgets
  */
@@ -202,7 +176,6 @@ return array(
 
 	'widgets:add' => 'Agregar widget',
 	'widgets:add:description' => "Haga click en el bot&oacute;n de alg&uacute;n widget para agregarlo a la p&aacute;gina",
-	'widgets:position:fixed' => '(Posici&oacute;n fija en la p&aacute;gina)',
 	'widget:unavailable' => 'Ya agreg&oacute; este widget',
 	'widget:numbertodisplay' => 'Cantidad de elementos para mostrar',
 
@@ -295,7 +268,6 @@ return array(
 	'river:delete:success' => 'El item en el River ha sido borrado',
 	'river:delete:fail' => 'El item en el River no pudo ser borrado',
 	'river:delete:lack_permission' => 'No tienes permiso para eliminar este elemento de la actividad.',
-	'river:can_delete:invaliduser' => 'No se puede chequear canDelete para el usuario [%s] porque el usuario no existe.',
 	'river:subject:invalid_subject' => 'Usuario inválido',
 	'activity:owner' => 'Ver Actividad',
 
@@ -324,14 +296,6 @@ return array(
 	'viewtype:change' => "Modificar tipo de lista",
 	'viewtype:list' => "Vista de lista",
 	'viewtype:gallery' => "Galer&iacute;a",
-
-	'tag:search:startblurb' => "Items con tags que coincidan con '%s':",
-
-	'user:search:startblurb' => "Usuarios que coincidan con '%s':",
-	'user:search:finishblurb' => "Click aqu&iacute; para ver mas",
-
-	'group:search:startblurb' => "Grupos que coinciden con '%s':",
-	'group:search:finishblurb' => "Click aqu&iacute; para ver mas",
 	'search:go' => 'Ir',
 	'userpicker:only_friends' => 'S&oacute;lo amigos',
 
@@ -355,7 +319,6 @@ return array(
 	'registration:userexists' => 'El nombre de usuario ya existe',
 	'registration:usernametooshort' => 'El nombre de usuario debe tener un m&iacute;nimo de %u caracteres',
 	'registration:usernametoolong' => 'Tu nombre de usuario es demasiado largo. El m&aacute;ximo permitido es of %u caracteres.',
-	'registration:passwordtooshort' => 'La contrase&ntilde;a debe tener un m&iacute;nimo de %u caracteres',
 	'registration:dupeemail' => 'Ya se encuentra registrada la direcci&oacute;n de Email',
 	'registration:invalidchars' => 'Lo sentimos, su nombre de usuario posee los caracteres inv&aacute;lidos: %s. Estos son todos los caracteres que se encuentran invalidados: %s',
 	'registration:emailnotvalid' => 'Lo sentimos, la direcci&oacute;n de email que ha ingresado es inv&aacute;lida en el sistema',
@@ -525,15 +488,7 @@ return array(
 	'admin:widget:admin_welcome:intro' =>
 'Bienvenido! Se encuentra viendo el panel de control de la administraci&oacute;n. Es &uacute;til para visualizar las novedades en la red',
 	'admin:widget:admin_welcome:admin_overview' =>
-"El menú a la derecha proporciona la navegación para el área de administración. Se organiza en
-tres secciones:
-	<dl>
-		<dt>Administrar</dt><dd>Tareas básicas como administrar usuarios, monitorear contenido reportado y activar complementos.</dd>
-		<dt>Configurar</dt><dd>Tareas ocasionales como configurar el nombre del sitio o configurar los ajustes de un complemento.</dd>
-		<dt>Información</dt><dd>Información sobre su sitio como estadísticas</dd>
-		<dt>Desarrollar</dt><dd>Para desarrolladores que están construyendo complementos o diseñando temas. (Requiere un complemento de desarrollador.)</dd>
-	</dl>
-",
+"",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Aseg&uacute;rese de verificar los recursos disponibles en los enlaces del pi&eacute; de p&aacute;gina y gracias por utilizar Elgg!',
@@ -753,8 +708,6 @@ tres secciones:
 	'usersettings:statistics:login_history' => "Historial de inicio de sesión",
 	'usersettings:statistics:login_history:date' => "Fecha",
 	'usersettings:statistics:login_history:ip' => "Dirección IP",
-
-	'usersettings:user' => "Sus preferencias",
 	'usersettings:user:opt:description' => "Esto le permite establecer sus preferencias",
 	'usersettings:user:opt:linktext' => "Modificar sus preferencias",
 
@@ -899,7 +852,6 @@ tres secciones:
 
 	'content' => "contenido",
 	'content:latest' => '&uacute;ltima actividad',
-	'content:latest:blurb' => 'Alternativamente, click aqu&iacute; para ver el &uacute;ltimo contenido en toda la red',
 
 	'link:text' => 'ver link',
 
@@ -975,13 +927,6 @@ tres secciones:
 	'useradd:subject' => 'Cuenta de usuario creada',
 
 /**
- * System messages
- */
-
-	'systemmessages:dismiss' => "click para cerrar",
-
-
-/**
  * Messages
  */
 	'messages:title:success' => 'Éxito',
@@ -990,13 +935,6 @@ tres secciones:
 	'messages:title:help' => 'Ayuda',
 	'messages:title:notice' => 'Aviso',
 	'messages:title:info' => 'Información',
-
-/**
- * Import / export
- */
-
-	'importsuccess' => "Importaci&oacute;n exitosa",
-	'importfail' => "Error al importar datos de OpenDD",
 
 /**
  * Time
@@ -1143,21 +1081,13 @@ tres secciones:
 	'upgrade:unlock:confirm' => "The database is locked for another upgrade. Running concurrent upgrades is dangerous. You should only continue if you know there is not another upgrade running. Unlock?",
 	'upgrade:locked' => "Cannot upgrade. Another upgrade is running. To clear the upgrade lock, visit the Admin section.",
 	'upgrade:unlock:success' => "Desbloqueo de Actualización exitoso.",
-	'upgrade:unable_to_upgrade' => 'No se puede actualizar',
-
-	'update:oauth_api:deactivated' => 'La API OAuth (anteriormente OAuth Lib) se ha desactivado durante la actualizaci&oacute;n. Por favor act&iacute;vela manualmente si se requiere',
-	'upgrade:site_secret_warning:moderate' => "Te recomendamos que regeneres la clave de tu sitio para mejorar la seguridad del sistema. Ver Configuración &gt; Preferencias &gt; Avanzado",
-	'upgrade:site_secret_warning:weak' => "Te recomendamos fuertemente que regeneres la clave de tu sitio para mejorar la seguridad del sistema. Ver Configuración &gt; Preferencias &gt; Avanzado",
 
 	'admin:pending_upgrades' => 'Este sitio tiene actualizaciones pendientes que requieren tu atención inmediata',
 	'admin:view_upgrades' => 'Ver actualizaciones pendientes',
 	'item:object:elgg_upgrade' => 'Actualizaciones del sitio',
 	'admin:upgrades:none' => 'Tu instalación esta al día!',
 
-	'upgrade:item_count' => 'Hay <b>%s</b> elementos que es necesario actualizar.',
-	'upgrade:warning' => '<b>Aviso:</b> ¡En un sitio grande esta actualización puede llevar un tiempo significativo!',
 	'upgrade:success_count' => 'Actualizado:',
-	'upgrade:error_count' => 'Errores:',
 	'upgrade:finished' => 'Se completó la actualización.',
 	'upgrade:finished_with_errors' => '<p>Ocurrieron errores durante la actualización. Actualice la página y pruebe a ejecutar la actualización de nuevo.</p></p><br />
 Si el error se repite, busque la causa en el registro de errores del servidor. Puede buscar ayuda para solucionar el problema en el <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">grupo de asistencia técnica</a> de la comunidad de Elgg.</p>',
@@ -1223,7 +1153,6 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
 	'entity:delete:object:comment:success' => "Se ha quitado su comentario",
 	'generic_comment:blank' => "Lo sentimos, debe ingresar alg&uacute;n comentario antes de poder guardarlo",
 	'generic_comment:notfound' => "Lo sentimos. No hemos encontrado el comentario especificado.",
-	'generic_comment:notfound_fallback' => "Lo sentimos. No hemos encontrado el comentario especificado, pero te hemos redirigido a la página donde se comentó.",
 	'generic_comment:failure' => "Un error no especificado ocurrió al guardar el comentario.",
 	'generic_comment:none' => 'Sin comentarios',
 	'generic_comment:title' => 'Comentario de %s',
@@ -1236,15 +1165,12 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
 
 	'byline' => 'Por %s',
 	'byline:ingroup' => 'en el grupo %s',
-	'entity:default:missingsupport:popup' => 'Esta entidad no puede mostrarse correctamente. Esto puede deberse a que el soporte provisto por un plugin ya no se encuentra instalado',
-
+	
 	'entity:delete:item' => 'Elemento',
 	'entity:delete:item_not_found' => 'No se ha encontrado el elemento',
 	'entity:delete:permission_denied' => 'No tiene permisos para borrar este elemento',
 	'entity:delete:success' => '%s se ha borrado.',
 	'entity:delete:fail' => '%s no se ha podido borrar.',
-	
-	'entity:can_delete:invaliduser' => 'No se puede comprobar canDelete() para el user_guid [%s] porque el usuario no existe.',
 
 /**
  * Annotations
@@ -1259,7 +1185,6 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
 	'actiongatekeeper:timeerror' => 'La p&aacute;gina que se encontraba utilizando ha expirado. Por favor refresque la p&aacute;gina e intente nuevamente',
 	'actiongatekeeper:pluginprevents' => 'Lo sentimos. No se ha podido enviar el formulario por motivos desconocidos.',
 	'actiongatekeeper:uploadexceeded' => 'El tama&ntilde;o del(los) archivo(s) supera el m&iacute;mite establecido',
-	'actiongatekeeper:crosssitelogin' => "Sorry, logging in from a different domain is not permitted. Please try again.",
 
 /**
  * Word blacklists
@@ -1272,7 +1197,6 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
  */
 
 	'js:security:token_refresh_failed' => 'Failed to contact %s. You may experience problems saving content. Please refresh this page.',
-	'js:security:token_refreshed' => 'La conexi&oacute;n a %s ha sido restaurada!',
 	'js:lightbox:current' => "imagen %s de %s",
 
 /**

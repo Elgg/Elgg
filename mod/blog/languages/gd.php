@@ -10,7 +10,6 @@ return array(
 
 	'blog:revisions' => 'Lèirmheasan',
 	'blog:archives' => 'Tasglannan',
-	'blog:write' => 'Sgrìobh post bloga',
 
 	// Editing
 	'blog:excerpt' => 'Às-earrann',
@@ -27,12 +26,9 @@ return array(
 	'blog:error:cannot_write_to_container' => 'Chan fhoghainn d\' inntrigeadh gus blog a shàbhaladh dhan bhuidheann.',
 	'blog:messages:warning:draft' => 'Tha dreachd gun sàbhaladh air a\' phost seo!',
 	'blog:edit_revision_notice' => '(Seann-tionndadh)',
-	'blog:message:deleted_post' => 'Chaidh post a\' bhloga a sguabadh às.',
-	'blog:error:cannot_delete_post' => 'Chan urrainn dhuinn post a\' bhloga a sguabadh às.',
 	'blog:none' => 'Chan eil post bloga ann',
 	'blog:error:missing:title' => 'Cuir a-steach tiotal a\' bhloga!',
 	'blog:error:missing:description' => 'Cuir a-steach bodhaig a\' bhloga agad!',
-	'blog:error:cannot_edit_post' => 'Dh\'fhaoidte nach eil am post seo ann no nach fhaod thu a dheasachadh.',
 	'blog:error:post_not_found' => 'Cha deach post a\' bhloga seo a lorg.',
 	'blog:error:revision_not_found' => 'Cha deach an lèirmheas seo a lorg.',
 

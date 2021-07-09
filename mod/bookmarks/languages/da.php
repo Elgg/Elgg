@@ -61,5 +61,4 @@ return array(
 	 */
 
 	'bookmarks:save:failed' => "Bogmærket kunne ikke gemmes, prøv venligst igen.",
-	'bookmarks:unknown_bookmark' => 'Kan ikke finde det specifikke bogmærke',
 );

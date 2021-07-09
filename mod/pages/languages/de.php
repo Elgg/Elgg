@@ -19,15 +19,15 @@ return array(
 	'collection:object:page:group' => "Gruppen-Coop-Seiten",
 	'add:object:page' => "Coop-Seite hinzufügen",
 	'edit:object:page' => "Coop-Seite bearbeiten",
+	'notification:object:page:create' => "Sende eine Benachrichtigung bei Hinzufügen einer Coop-Seite",
+	'notifications:mute:object:page' => "über die Coop-Seite '%s'",
 
 	'groups:tool:pages' => 'Gruppen-Coop-Seiten aktivieren',
 	
 	'annotation:delete:page:success' => 'Die Revision der Coop-Seite wurde gelöscht.',
 	'annotation:delete:page:fail' => 'Das Löschen der Revision der Coop-Seite ist fehlgeschlagen.',
 
-	'pages:delete' => "Coop-Seite löschen",
 	'pages:history' => "Bearbeitungsverlauf",
-	'pages:view' => "Coop-Seite anzeigen",
 	'pages:revision' => "Revision",
 
 	'pages:navigation' => "Navigation",
@@ -61,8 +61,6 @@ Schau Dir die neue Coop-Seite an und schreibe einen Kommentar:
 	'pages:description' => 'Seitentext',
 	'pages:tags' => 'Tags',
 	'pages:parent_guid' => 'Übergeordnete Coop-Seite',
-	'pages:access_id' => 'Zugangslevel',
-	'pages:write_access_id' => 'Schreibberechtigung',
 
 	/**
 	 * Status and error messages
@@ -72,8 +70,6 @@ Schau Dir die neue Coop-Seite an und schreibe einen Kommentar:
 	'pages:notsaved' => 'Die Coop-Seite konnte nicht gespeichert werden.',
 	'pages:error:no_title' => 'Du mußt einen Titel für diese Coop-Seite eingeben.',
 	'entity:delete:object:page:success' => 'Die Coop-Seite wurde gelöscht.',
-	'pages:revision:delete:success' => 'Die Revision der Coop-Seite wurde gelöscht.',
-	'pages:revision:delete:failure' => 'Die Revision der Coop-Seite konnte nicht gelöscht werden.',
 
 	/**
 	 * History
@@ -87,13 +83,6 @@ Schau Dir die neue Coop-Seite an und schreibe einen Kommentar:
 	'pages:num' => 'Anzahl der anzuzeigenden Coop-Seiten',
 	'widgets:pages:name' => 'Coop-Seiten',
 	'widgets:pages:description' => "Dies ist eine Auflistung Deiner neuesten Coop-Seiten.",
-
-	/**
-	 * Submenu items
-	 */
-	'pages:label:view' => "Coop-Seite anzeigen",
-	'pages:label:edit' => "Coop-Seite bearbeiten",
-	'pages:label:history' => "Bearbeitungsverlauf der Coop-Seite",
 
 	'pages:newchild' => "Unter-Coop-Seite hinzufügen",
 );

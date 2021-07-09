@@ -22,25 +22,9 @@ return array(
 	'likes:userlikedthis' => '%s gilla-markering',
 	'likes:userslikedthis' => '%s gilla-markeringar',
 	'likes:river:annotate' => 'gilla-markeringar',
-	'likes:delete:confirm' => 'Är du säker att du vill ta bort den här gilla-markeringen?',
-
-	'river:likes' => 'gilla-markeringar %s %s',
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s gillar ditt inlägg "%s"',
 	'likes:notifications:body' =>
-'Hej %1$s,
-
-%2$s gillar ditt inlägg "%3$s" på %4$s
-
-Se originalinlägget här:
-
-%5$s
-
-eller visa %2$ss profil här:
-
-%6$s
-
-Thanks,
-%4$s',
+'',
 );

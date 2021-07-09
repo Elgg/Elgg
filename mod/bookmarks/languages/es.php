@@ -29,15 +29,7 @@ return array(
 	'bookmarks:notify:summary' => 'Nuevo marcador llamado %s',
 	'bookmarks:notify:subject' => 'Nuevo marcador: %s',
 	'bookmarks:notify:body' =>
-'%s añadió un nuevo marcador: %s
-
-Dirección: %s
-
-%s
-
-Ver y comentar en este marcador:
-%s
-',
+'',
 
 	'bookmarks:numbertodisplay' => 'N&uacute;mero de marcadores a mostrar',
 
@@ -73,5 +65,4 @@ Ver y comentar en este marcador:
 	 */
 
 	'bookmarks:save:failed' => "El marcador no pudo ser guardado. Aseg&uacute;rate de que el t&iacute;tulo y el enlace est&eacute;n correctamente escritos.",
-	'bookmarks:unknown_bookmark' => 'No se puede encontrar el marcador requerido',
 );

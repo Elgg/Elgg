@@ -61,5 +61,4 @@ return array(
 	 */
 
 	'bookmarks:save:failed' => "Non foi posíbel gardar o marcador. Asegúrese de que os campos do título e do enderezo non están baleiros, e inténteo de novo",
-	'bookmarks:unknown_bookmark' => 'Non é posíbel atopar o marcador indicado',
 );
