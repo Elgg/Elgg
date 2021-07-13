@@ -1,6 +1,6 @@
 <?php
 /**
- * Friend widget options
+ * Friends of widget options
  */
 
 /* @var $widget ElggWidget */
