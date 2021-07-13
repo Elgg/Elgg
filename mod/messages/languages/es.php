@@ -37,11 +37,9 @@ return array(
 	*/
 
 	'messages:posted' => "Tu mensaje ha sido enviado.",
-	'messages:success:delete:single' => 'El mensaje fue borrado',
 	'messages:success:delete' => 'Mensajes borrados',
 	'messages:success:read' => 'Mensaje(s) marcado(s) como leido(s)',
 	'messages:error:messages_not_selected' => 'No hay mensajes seleccionados',
-	'messages:error:delete:single' => 'No se puede borrar el mensaje',
 
 	/**
 	* Email messages

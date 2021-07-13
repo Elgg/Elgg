@@ -31,15 +31,7 @@ return array(
 	'bookmarks:notify:summary' => 'Nieuwe favoriet genaamd \'%s\'',
 	'bookmarks:notify:subject' => 'Nieuwe favoriet: %s',
 	'bookmarks:notify:body' =>
-'%s heeft een nieuwe favoriet toegevoegd: %s
-
-Adres: %s
-
-%s
-
-Bekijk en reageer op de favoriet:
-%s
-',
+'',
 
 	'bookmarks:numbertodisplay' => 'Aantal favorieten om weer te geven',
 
@@ -75,5 +67,4 @@ Bekijk en reageer op de favoriet:
 	 */
 
 	'bookmarks:save:failed' => "Je favoriet kon niet worden opgeslagen. Probeer het nogmaals.",
-	'bookmarks:unknown_bookmark' => 'Kan deze favoriet niet vinden',
 );

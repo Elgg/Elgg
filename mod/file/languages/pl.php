@@ -22,14 +22,11 @@ return array(
 	'file:num_files' => "Liczba plików do wyświetlenia",
 	'file:replace' => 'Zastąp zawartość pliku (pozostaw puste aby nie zmieniać pliku)',
 	'file:list:title' => "%s %s %s",
-	'file:title:friends' => "Znajomi",
 
 	'file:file' => "Plik",
 
 	'file:list:list' => 'Przełącz do widoku listy',
 	'file:list:gallery' => 'Przełącz do widoku galerii',
-
-	'file:types' => "Typy dodawanych plików",
 
 	'file:type:' => 'Pliki',
 	'file:type:all' => "Wszystkie pliki",

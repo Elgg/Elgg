@@ -12,10 +12,8 @@ return array(
 	 */
 
 	'messageboard:board' => "Opslagstavle",
-	'messageboard:messageboard' => "opslagstavle",
 	'messageboard:none' => "Der er intet på denne opslagstavle endnu",
 	'messageboard:num_display' => "Antal viste beskeder",
-	'messageboard:user' => "%s's opslagstavle",
 	'messageboard:owner' => '%s\'s opslagstavle',
 	'messageboard:owner_history' => '%s\'s beskeder på %s\'s opslagstavle',
 
@@ -28,7 +26,6 @@ return array(
 	 */
 	
 	'messageboard:posted' => "Du har skrevet på opslagstavlen.",
-	'messageboard:deleted' => "Du har slettet beskeden.",
 
 	/**
 	 * Email messages
@@ -41,7 +38,6 @@ return array(
 	 */
 
 	'messageboard:blank' => "Beklager, men du er nødt til at skrive noget i beskeden før vi kan gemme den.",
-	'messageboard:notdeleted' => "Beklager, beskeden kunne ikke slettes.",
 
 	'messageboard:failure' => "En uventet fejl skete under tilføjelsen af din besked. Prøv venligst igen.",
 

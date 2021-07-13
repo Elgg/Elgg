@@ -10,7 +10,6 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
-	'expages' => "Pages du site",
 	'admin:configure_utilities:expages' => "Pages du site",
 	'expages:edit:viewpage' => "Voir la page sur le site",
 	'expages:about' => "À propos",

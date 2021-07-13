@@ -37,11 +37,9 @@ return array(
 	*/
 
 	'messages:posted' => "Enviouse a mensaxe",
-	'messages:success:delete:single' => 'Eliminouse a mensaxe',
 	'messages:success:delete' => 'Eliminouse a mensaxe',
 	'messages:success:read' => 'Marcouse a mensaxe como lida.',
 	'messages:error:messages_not_selected' => 'Non hai ningunha mensaxe seleccionada.',
-	'messages:error:delete:single' => 'Non foi posíbel eliminar a mensaxe.',
 
 	/**
 	* Email messages

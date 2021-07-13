@@ -17,6 +17,8 @@ return array(
 	'widgets:group_activity:edit:select' => 'Wähle eine Gruppe',
 	'widgets:group_activity:content:noactivity' => 'In dieser Gruppe gibt es noch keine Aktivitäten.',
 	'widgets:group_activity:content:noselect' => 'Bearbeite dieses Widget, um eine Gruppe auszuwählen.',
+	
+	'collection:river' => "Aktivitäten",
 	'collection:river:group' => "Gruppen-Aktivitäten",
 	'groups:tool:activity' => 'Anzeige von "Letzte Aktivitäten der Gruppe" aktivieren',
 	

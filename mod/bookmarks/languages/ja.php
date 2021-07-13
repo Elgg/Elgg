@@ -75,5 +75,4 @@ return array(
 	 */
 
 	'bookmarks:save:failed' => "ブックマークに登録できませんでした。タイトル欄とアドレス欄に入力したことを確かめて、もう一度試してみてください。",
-	'bookmarks:unknown_bookmark' => 'お探しのブックマークを見つけることができません。',
 );

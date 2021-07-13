@@ -61,5 +61,4 @@ return array(
 	 */
 
 	'bookmarks:save:failed' => "Twoja zakładka nie mogła zostać zapisana. Upewnij się, że wprowadziłeś tytuł i adres, a następnie spróbuj ponownie.",
-	'bookmarks:unknown_bookmark' => 'Nie można znaleźć wskazanej zakładki.',
 );

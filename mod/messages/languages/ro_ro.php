@@ -37,28 +37,15 @@ return array(
 	*/
 
 	'messages:posted' => "Mesajul tău a fost trimis cu succes.",
-	'messages:success:delete:single' => 'Mesajul a fost șters',
 	'messages:success:delete' => 'Mesaj șters',
 	'messages:success:read' => 'Mesaje marcate ca și citite',
 	'messages:error:messages_not_selected' => 'Nici un mesaj selectat',
-	'messages:error:delete:single' => 'Nu s-a putut șterge mesajul',
 
 	/**
 	* Email messages
 	*/
 
 	'messages:email:subject' => 'Ai un mesaj nou!',
-	'messages:email:body' => "Ai un mesaj nou de la %s.
-
-Scrie:
-
-%s
-
-Pentru a vedea mesajul, apasă aici:
-%s
-
-Pentru a-i trimite un mesaj utilizatorului %s, apasă aici:
-%s",
 
 	/**
 	* Error messages

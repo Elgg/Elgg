@@ -18,6 +18,8 @@ return array(
 	'collection:object:bookmarks:friends' => "Lesezeichen Deiner Freunde",
 	'add:object:bookmarks' => "Lesezeichen hinzufügen",
 	'edit:object:bookmarks' => "Lesezeichen editieren",
+	'notification:object:bookmarks:create' => "Sende eine Benachrichtigung bei Hinzufügen eines Lesezeichens",
+	'notifications:mute:object:bookmarks' => "über das Lesezeichen '%s'",
 
 	'bookmarks:this' => "Lesezeichen für diese Seite hinzufügen",
 	'bookmarks:this:group' => "Lesezeichen in %s setzen",
@@ -73,5 +75,4 @@ Schau Dir das neue Lesezeichen an und schreibe einen Kommentar:
 	 */
 
 	'bookmarks:save:failed' => "Das Lesezeichen konnte nicht gespeichert werden. Bitte gebe einen Titel und eine Zieladresse an und versuche es noch einmal.",
-	'bookmarks:unknown_bookmark' => 'Das ausgewählte Lesezeichen ist nicht auffindbar.',
 );

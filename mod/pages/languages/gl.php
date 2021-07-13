@@ -22,9 +22,7 @@ return array(
 
 	'groups:tool:pages' => 'Activas as páxinas de grupos',
 
-	'pages:delete' => "Eliminar a páxina",
 	'pages:history' => "Historia",
-	'pages:view' => "Ver a páxina",
 	'pages:revision' => "Revisión",
 
 	'pages:navigation' => "Navegación",
@@ -49,8 +47,6 @@ return array(
 	'pages:description' => 'Text',
 	'pages:tags' => 'Etiquetas',
 	'pages:parent_guid' => 'Páxina superior',
-	'pages:access_id' => 'Lectura',
-	'pages:write_access_id' => 'Escritura',
 
 	/**
 	 * Status and error messages
@@ -60,8 +56,6 @@ return array(
 	'pages:notsaved' => 'Non foi posíbel gardar a páxina.',
 	'pages:error:no_title' => 'Debe poñerlle título á páxina.',
 	'entity:delete:object:page:success' => 'Eliminouse a páxina.',
-	'pages:revision:delete:success' => 'Eliminouse a revisión da páxina.',
-	'pages:revision:delete:failure' => 'Non foi posíbel eliminar a revisión da páxina',
 
 	/**
 	 * History
@@ -75,13 +69,6 @@ return array(
 	'pages:num' => 'Número de páxinas para mostrar',
 	'widgets:pages:name' => 'Páxinas',
 	'widgets:pages:description' => "Lista das súas páxinas",
-
-	/**
-	 * Submenu items
-	 */
-	'pages:label:view' => "Ver a páxina",
-	'pages:label:edit' => "Editar a páxina",
-	'pages:label:history' => "Historial da páxina",
 
 	'pages:newchild' => "Crear unha subpáxina",
 );

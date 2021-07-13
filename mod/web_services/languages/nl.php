@@ -6,7 +6,6 @@
  */
 
 return array(
-	'APIException:ApiResultUnknown' => "API resultaat is van een ongekend type, dit zou nooit moeten gebeuren.",
 	'APIException:MissingParameterInMethod' => "Ontbrekende parameter %s in de methode %s",
 	'APIException:ParameterNotArray' => "%s lijkt geen array te zijn.",
 	'APIException:UnrecognisedTypeCast' => "Onherkenbaar type in cast %s voor variabele '%s' in methode '%s'",
@@ -14,7 +13,6 @@ return array(
 	'APIException:FunctionParseError' => "%s(%s) heeft een parsing error.",
 	'APIException:FunctionNoReturn' => "%s(%s) leverde geen waarde op.",
 	'APIException:APIAuthenticationFailed' => "API Authenticatie mislukt voor methode aanroep ",
-	'APIException:UserAuthenticationFailed' => "User Authenticatie mislukt voor methode aanroep",
 	'APIException:MethodCallNotImplemented' => "Methode aanroep '%s' is niet geimplementeerd.",
 	'APIException:FunctionDoesNotExist' => "Functie voor methode '%s' is niet aanroepbaar",
 	'APIException:AlgorithmNotSupported' => "Algorithme '%s' wordt niet ondersteund of is uitgeschakeld.",
@@ -26,21 +24,16 @@ return array(
 	'APIException:MissingTime' => "Ontbrekende X-Elgg-time header",
 	'APIException:MissingNonce' => "Ontbrekende X-Elgg-nonce header",
 	'APIException:TemporalDrift' => "X-Elgg-time is te ver in het verleden of in de toekomst. Epoch mislukt.",
-	'APIException:NoQueryString' => "Geen query string data",
 	'APIException:MissingPOSTHash' => "Ontbrekende X-Elgg-posthash header",
 	'APIException:MissingPOSTAlgo' => "Ontbrekende X-Elgg-posthash_algo header",
 	'APIException:MissingContentType' => "Ontbrekend content type voor post data",
 	'APIException:InvalidCallMethod' => "%s moet worden aangeroepen middels '%s'",
 	'APIException:CallMethodNotImplemented' => "Aanroep methode '%s' is op dit moment niet ondersteund.",
-	'SecurityException:APIAccessDenied' => "Sorry, API toegang is uitgeschakeld door de beheerder.",
-	'SecurityException:NoAuthMethods' => "Geen authenticatie methodes gevonden om dit verzoek te autoriseren.",
 	'SecurityException:authenticationfailed' => "Gebruiker kon niet worden geauthentiseerd.",
 	'SecurityException:DuplicateEmailUser' => "Geen unieke gebruiker gevonden op basis van het emailadres. Kan geen token ophalen.",
 	'SecurityException:BannedUser' => "Deze gebruiker is geblokkeerd. Er kan geen token worden overhandigd.",
-	'InvalidParameterException:APIMethodOrFunctionNotSet' => "Methode of functie is niet opgegeven in expose_method()",
 	'InvalidParameterException:APIParametersArrayStructure' => "Parameters array structuur is onjuist voor expost method '%s'",
 	'InvalidParameterException:UnrecognisedHttpMethod' => "Onherkenbare http method %s voor api methode '%s'",
-	'SecurityException:AuthTokenExpired' => "Authenticatie token ontbreekt, is ongeldig of is verlopen.",
 	'SecurityException:InvalidPostHash' => "POST data hash is ongeldig - Verwachte %s, maar kreeg %s.",
 	'SecurityException:DupePacket' => "Packet signature is al eerder gezien",
 	'SecurityException:InvalidAPIKey' => "Ongeldige of ontbrekende API Key.",
@@ -82,9 +75,6 @@ return array(
 	
 	// plugin settings
 	'web_services:settings:authentication' => "Web API authenticatie instellingen",
-	'web_services:settings:authentication:description' => "Sommige API methodes vereisen dat verzoeken zichzelf authenticeren. Er moet dan een API key pair (public en secrect key) worden aangeleverd.
-
-Let er op dat er minstens één API authenticatie methode actief moet zijn om de API verzoeken te autoriseren.",
 	'web_services:settings:authentication:allow_key' => "Sta basic API public key authenticatie toe",
 	'web_services:settings:authentication:allow_key:help' => "De API public key wordt aangeleverd als een parameter in het verzoek",
 	'web_services:settings:authentication:allow_hmac' => "Sta HMAC header API authenticatie toe",

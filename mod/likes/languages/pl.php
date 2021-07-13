@@ -22,9 +22,6 @@ return array(
 	'likes:userlikedthis' => '%s polubienie',
 	'likes:userslikedthis' => '%s polubień',
 	'likes:river:annotate' => 'lubi',
-	'likes:delete:confirm' => 'Na pewno chcesz przestać to lubić?',
-
-	'river:likes' => 'lubi %s %s',
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s lubi twój wpis "%s"',

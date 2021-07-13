@@ -68,24 +68,23 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 			return true;
 		}
 		
-		$update = Update::table(self::TABLE_NAME);
-		$update->set('data', $update->param($session_data, ELGG_VALUE_STRING))
-			->set('ts', $update->param(time(), ELGG_VALUE_TIMESTAMP))
-			->where($update->compare('session', '=', $session_id, ELGG_VALUE_STRING));
-		
-		if (!$this->db->updateData($update, true)) {
-			// update failed, try insert
-			$insert = Insert::intoTable(self::TABLE_NAME);
-			$insert->values([
-				'session' => $insert->param($session_id, ELGG_VALUE_STRING),
-				'data' => $insert->param($session_data, ELGG_VALUE_STRING),
-				'ts' => $insert->param($this->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP),
-			]);
+		if ($this->read($session_id)) {
+			$update = Update::table(self::TABLE_NAME);
+			$update->set('data', $update->param($session_data, ELGG_VALUE_STRING))
+				->set('ts', $update->param(time(), ELGG_VALUE_TIMESTAMP))
+				->where($update->compare('session', '=', $session_id, ELGG_VALUE_STRING));
 			
-			return $this->db->insertData($insert) !== false;
+			return $this->db->updateData($update);
 		}
 		
-		return true;
+		$insert = Insert::intoTable(self::TABLE_NAME);
+		$insert->values([
+			'session' => $insert->param($session_id, ELGG_VALUE_STRING),
+			'data' => $insert->param($session_data, ELGG_VALUE_STRING),
+			'ts' => $insert->param($this->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP),
+		]);
+		
+		return $this->db->insertData($insert) !== false;
 	}
 
 	/**

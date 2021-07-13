@@ -12,8 +12,6 @@ return array(
 	'relationship:friendrequest:sent' => "Ai cerut prietenia cu %s",
 	
 	// plugin settings
-	'friends:settings:request:description' => "Implicit orice utilizator poate fi prieten/ă cu orice alt utilizator, e ca și urmărirea activității altor utilizatori.
-După activarea cererilor de prietenie, atunci când utilizatorul A dorește să fie prieten/ă cu utilizatorul B, utilizatorul B trebuie să aprobe cererea. După aprobare, utilizatorul A va fi prieten/ă cu utilizatorul B și utilizatorul B va fi prieten/ă cu utilizatorul A.",
 	'friends:settings:request:label' => "Activează cererile de prietenie",
 	'friends:settings:request:help' => "Utilizatorii trebuie să aprobe cererea de prietenie iar prieteniile vor deveni bidirecționale",
 	
@@ -48,22 +46,10 @@ După activarea cererilor de prietenie, atunci când utilizatorul A dorește să
 	'widgets:friends:description' => "Afișează-ți câțiva prieteni.",
 	
 	'friends:notification:request:subject' => "%s dorește să-ți fie prieten/ă!",
-	'friends:notification:request:message' => "Salutare %s,
-
-%s a cerut să-ți fie prieten/ă pe %s.
-
-Pentru a vedea cererea de prietenie, apasă aici:
-%s",
 	
 	'friends:notification:request:decline:subject' => "%s a respins cererea ta de prietenie",
-	'friends:notification:request:decline:message' => "Salutare %s,
-
-%s a respins cererea ta de prietenie.",
 	
 	'friends:notification:request:accept:subject' => "%s a acceptat cererea ta de prietenie",
-	'friends:notification:request:accept:message' => "Salutare %s,
-
-%s a acceptat cererea ta de prietenie.",
 	
 	'friends:action:friendrequest:revoke:fail' => "O eroare a apărut la revocarea cererii de prietenie, te rugăm să încerci din nou",
 	'friends:action:friendrequest:revoke:success' => "Cererea de prietenie a fost revocată",
@@ -71,7 +57,6 @@ Pentru a vedea cererea de prietenie, apasă aici:
 	'friends:action:friendrequest:decline:fail' => "O eroare a apărut la respingerea cererii de prietenie, te rugăm să încerci din nou",
 	'friends:action:friendrequest:decline:success' => "Cererea de prietenie a fost respinsă",
 	
-	'friends:action:friendrequest:accept:fail' => "O eroare a apărut la acceptarea cererii de prietenie, te rugăm să încerci din nou",
 	'friends:action:friendrequest:accept:success' => "Cererea de prietenie a fost acceptată",
 	
 	// notification settings

@@ -37,11 +37,9 @@ return array(
 	*/
 
 	'messages:posted' => "Το μήνυμα στάλθηκε με επιτυχία.",
-	'messages:success:delete:single' => 'Το μήνυμα διαγράφτηκε',
 	'messages:success:delete' => 'Τα μηνύματα διαγράφτηκαν',
 	'messages:success:read' => 'Τα μηνύματα χαρακτηρίστηκαν ως μη αναγνωσμένα',
 	'messages:error:messages_not_selected' => 'Δεν επιλέχθηκαν μηνύματα',
-	'messages:error:delete:single' => 'Αδύνατη η διαγραφή του μηνύματος',
 
 	/**
 	* Email messages

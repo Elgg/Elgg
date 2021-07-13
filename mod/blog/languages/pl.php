@@ -18,7 +18,6 @@ return array(
 	'blog:archives' => 'Archiwalne',
 
 	'groups:tool:blog' => 'Włącz blog grupy',
-	'blog:write' => 'Dodaj nowy wpis',
 
 	// Editing
 	'blog:excerpt' => 'Fragment',
@@ -35,12 +34,9 @@ return array(
 	'blog:error:cannot_write_to_container' => 'Masz niedostateczne uprawnienia, aby dodawać wpisy na blogu w tej grupie.',
 	'blog:messages:warning:draft' => 'Szkic wpisu nie został zapisany!',
 	'blog:edit_revision_notice' => '(Stara wersja)',
-	'blog:message:deleted_post' => 'Wpis na blogu został usunięty.',
-	'blog:error:cannot_delete_post' => 'Nie można usunąć wpisu na blogu.',
 	'blog:none' => 'Brak wpisów na blogu',
 	'blog:error:missing:title' => 'Proszę podać tytuł wpisu!',
 	'blog:error:missing:description' => 'Proszę podać treść wpisu!',
-	'blog:error:cannot_edit_post' => 'Ten wpis nie istnieje lub nie masz odpowiednich uprawnień do jego edycji.',
 	'blog:error:post_not_found' => 'Nie można znaleźć wskazanego wpisu na blogu.',
 	'blog:error:revision_not_found' => 'Nie znaleziono wskazanej wersji.',
 

@@ -60,13 +60,17 @@ Login token mismatch
 
 If you have to log in twice to your site and the error message after the first attempt says there was a token mismatch error, the URL in Elgg's settings does not match the URL used to access it. The most common cause for this is adding or removing the "www" when accessing the site. For example, www.elgg.org vs elgg.org. This causes a problem with session handling because of the way that web browsers save cookies.
 
-To fix this, you can add rewrite rules. To redirect from www.elgg.org to elgg.org in Apache, the rules might look like::
+To fix this, you can add rewrite rules. To redirect from www.elgg.org to elgg.org in Apache, the rules might look like:
+
+.. code-block:: apache
 
 	RewriteCond %{HTTP_HOST} .
 	RewriteCond %{HTTP_HOST} !^elgg\.org
 	RewriteRule (.*) http://elgg.org/$1 [R=301,L]
 
-Redirecting from non-www to www could look like this::
+Redirecting from non-www to www could look like this:
+
+.. code-block:: apache
 
 	RewriteCond %{HTTP_HOST} ^elgg\.org
 	RewriteRule ^(.*)$ http://www.elgg.org/$1 [R=301,L]

@@ -18,7 +18,6 @@ return array(
 	'groups:all' => "Wszystkie grupy",
 	'groups:add' => "Utwórz nową grupę",
 	'groups:edit' => "Edytuj grupę",
-	'groups:delete' => 'Usuń grupę',
 	'groups:membershiprequests' => 'Zarządzaj prośbami o dołączenie',
 	'groups:membershiprequests:pending' => 'Zarządzaj prośbami o dołączenie (%s)',
 	'groups:invitations' => 'Zaproszenia do grupy',
@@ -66,7 +65,6 @@ return array(
 
 	'groups:nofriendsatall' => 'Nie masz znajomych, których mógłbyś zaprosić!',
 	'groups:group' => "Grupa",
-	'groups:search:tags' => "tag",
 	'groups:search:title' => "Szukaj grup oznaczonych tagiem '%s'",
 	'groups:search:none' => "Nie znaleziono pasujących grup",
 	'groups:search_in_group' => "Szukaj w tej grupie",
@@ -134,7 +132,6 @@ return array(
 	/**
 	 * Action messages
 	 */
-	'groups:deletewarning' => "Czy na pewno chcesz usunąć tą grupę? Tej operacji nie można cofnąć!",
 
 	'groups:invitekilled' => 'Usunięto zaproszenie.',
 	'groups:joinrequestkilled' => 'Usunięto prośbę o członkostwo.',

@@ -22,14 +22,11 @@ return array(
 	'file:num_files' => "Numărul de fișiere pentru afișare",
 	'file:replace' => 'Înlocuiește conținutul fișierului (lasă gol pentru a nu schimba fișierul)',
 	'file:list:title' => "%s %s %s",
-	'file:title:friends' => "Ale prietenilor",
 
 	'file:file' => "Fișier",
 
 	'file:list:list' => 'Comută la vizualizarea în listă',
 	'file:list:gallery' => 'Comută la vizualizarea în galerie',
-
-	'file:types' => "Tipurile de fișiere pentru încărcare",
 
 	'file:type:' => 'Fișiere',
 	'file:type:all' => "Toate fișierele",
@@ -61,12 +58,6 @@ return array(
 
 	'file:notify:summary' => 'Fișier nou numit %s',
 	'file:notify:subject' => 'Fișier nou: %s',
-	'file:notify:body' => '%s a încărcat un nou fișier: %s
-
-%s
-
-Vezi și comentează la fișier:
-%s',
 
 	/**
 	 * Status messages

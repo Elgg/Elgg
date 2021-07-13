@@ -12,8 +12,6 @@ return array(
 	'relationship:friendrequest:sent' => "Du skickade en vänförfrågan till %s",
 	
 	// plugin settings
-	'friends:settings:request:description' => "Som standard kan alla användare bli vän med alla andra användare, det är som att följa aktiviteten för den andre användaren.
-Efter att ha aktiverat vänförfrågningar, när användare A vill bli vän med användare B, måste användare B godkänna förfrågan. Vid godkännande, kommer användare A blir vän med användare B och användare B kommer bli vän med användare A.",
 	'friends:settings:request:label' => "Aktivera vänförfrågningar",
 	'friends:settings:request:help' => "Användare måste godkänna en vänförfrågan och vänskap blir dubbelriktad",
 	
@@ -47,22 +45,10 @@ Efter att ha aktiverat vänförfrågningar, när användare A vill bli vän med 
 	'widgets:friends:description' => "Visas några av dina vänner.",
 	
 	'friends:notification:request:subject' => "%s vill bli din vän!",
-	'friends:notification:request:message' => "Hej %s,
-
-%s har skickat en förfrågan om att bli din vän på %s.
-
-För att visa vänförfrågan, tryck här:
-%s",
 	
 	'friends:notification:request:decline:subject' => "%s har tackat nej till din vänförfrågan",
-	'friends:notification:request:decline:message' => "Hej %s,
-
-%s har tackat nej till din vänförfrågan.",
 	
 	'friends:notification:request:accept:subject' => "%s har accepterat din vänförfrågan",
-	'friends:notification:request:accept:message' => "Hej %s,
-
-%s har accepterat din vänförfrågan.",
 	
 	'friends:action:friendrequest:revoke:fail' => "Ett fel uppstod när vänförfrågan återkallades, vänligen försök igen",
 	'friends:action:friendrequest:revoke:success' => "Vänförfrågan har återkallats",
@@ -70,7 +56,6 @@ För att visa vänförfrågan, tryck här:
 	'friends:action:friendrequest:decline:fail' => "Ett fel uppstod när vänförfrågan nekades, vänligen försök igen",
 	'friends:action:friendrequest:decline:success' => "Vänförfrågan har nekats",
 	
-	'friends:action:friendrequest:accept:fail' => "Ett fel uppstod vid godkännandet av vänförfrågan, vänligen försök igen ",
 	'friends:action:friendrequest:accept:success' => "Vänförfrågan har godkänts",
 	
 	// notification settings

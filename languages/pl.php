@@ -19,7 +19,6 @@ return array(
 
 	'login' => "Zaloguj",
 	'loginok' => "Zostałeś zalogowany.",
-	'loginerror' => "Nie można się zalogować. Upewnij się, że wprowadzone dane są prawidłowe i spróbuj ponownie ",
 	'login:empty' => "Wymagana jest nazwa użytkownika lub adres e-mail.",
 	'login:baduser' => "Nie można było wczytać konta użytkownika.",
 	'auth:nopams' => "Błąd wewnętrzny. Brak zainstalowanej metody uwierzytelniania użytkowników.",
@@ -41,33 +40,18 @@ return array(
 	'exception:title' => "Błąd krytyczny.",
 	'exception:contact_admin' => 'Wystąpił nieodwracalny błąd. Skontaktuj się z administratorem, podając następującą informację:',
 
-	'actionundefined' => "Żądana akcja (%s) nie została zdefiniowana w systemie.",
 	'actionnotfound' => "Nie odnaleziono pliku akcji %s.",
-	'actionloggedout' => "Przepraszamy, nie możesz wykonać tej akcji będąc wylogowany.",
 	'actionunauthorized' => 'Nie masz uprawnień do wykonania tej akcji.',
 
 	'ajax:error' => 'Unexpected error while performing an AJAX call. Maybe the connection to the server is lost.',
 	'ajax:not_is_xhr' => 'You cannot access AJAX views directly',
 
-	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) to źle skonfigurowany plugin i został wyłączony. Proszę sprawdzić możliwe przyczyny na wiki (http://docs.elgg.org/wiki/).",
 	'PluginException:CannotStart' => '%s (guid: %s) nie mógł wystartować i został wyłączony. Przyczyna: %s',
 	'PluginException:InvalidID' => "%s jest niepoprawnym identyfikatorem rozszerzenia.",
 	'PluginException:InvalidPath' => "%s jest niepoprawną ścieżką rozszerzenia.",
-	'PluginException:InvalidManifest' => 'Niepoprawny plik manifestu w rozszerzeniu %s',
-	'PluginException:InvalidPlugin' => '%s nie jest poprawnym rozszerzeniem.',
-	'PluginException:InvalidPlugin:Details' => '%s nie jest poprawnym rozszerzeniem: %s',
-	'PluginException:NullInstantiated' => 'Nie można było utworzyć instancji ElggPlugin. Musisz przekazać GUID, identyfikator rozszerzenia lub pełną ścieżkę.',
 	'ElggPlugin:MissingID' => 'Brak identyfikatora rozszerzenia (guid %s)',
-	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'Nie znaleziono wymaganego pliku "%s".',
-	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Ten manifest zawiera niepoprawny rodzaj zależności "%s".',
-	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Ten manifest zawiera niepoprawny typ zależności "provides" "%s".',
-	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Wykryto niepoprawną %s zależność "%s" w rozszerzeniu %s. Rozszerzenie nie może konfliktować ze sobą lub wymagać zależności, którą sam zapewnia.',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Nie można wczytać %s dla rozszerzenia %s (guid: %s) w %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Nie można otworzyć katalogu widoków rozszerzenia %s (guid: %s) w %s.',
-	'PluginException:NoPluginName' => "Nie można znaleźć nazwy rozszerzenia.",
-	'PluginException:ParserError' => 'Błąd w trakcie parsowania manifestu dla wersji API %s w rozszerzeniu %s.',
-	'PluginException:NoAvailableParser' => 'Nie znaleziono parsera dla wersji API manifestu %s w rozszerzeniu %s.',
-	'PluginException:ParserErrorMissingRequiredAttribute' => "Brak wymaganego atrybutu '%s' w manifeście rozszerzenia %s.",
 	'ElggPlugin:InvalidAndDeactivated' => '%s jest niepoprawnym rozszerzeniem i został wyłączony.',
 
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Inne rozszerzenia korzystają z %s jako zależności. Aby go wyłączyć, musisz najpierw wyłączyć następujące rozszerzenia: %s',
@@ -88,11 +72,8 @@ return array(
 	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
 	'BadRequestException' => 'Bad request',
 
-	'pageownerunavailable' => 'Uwaga: Właściciel strony %d jest niedostępny!',
 	'viewfailure' => 'Wystąpił wewnętrzny błąd w widoku %s',
-	'view:missing_param' => "Nie znaleziono wymaganego parametru '%s' w widoku %s",
 	'changebookmark' => 'Proszę zaktualizować swoją zakładkę dla tej strony',
-	'noaccess' => 'Treść, którą usiłujesz wyświetlić, została usunięta lub nie masz uprawnień do jej przeglądania.',
 	'error:missing_data' => 'Zabrakło pewnych danych w twoim zapytaniu',
 	'save:fail' => 'Zapis danych nie powiódł się',
 	'save:success' => 'Twoje dane zostały zapisane',
@@ -149,15 +130,12 @@ return array(
  */
 	'access:label:friends' => "Znajomi",
 	'access' => "Dostęp",
-	'access:overridenotice' => "Uwaga: Ze względu na politykę grup, ten element będzie dostępny wyłącznie dla członków grupy.",
 	'access:limited:label' => "Ograniczony",
 	'access:help' => "Poziom dostępu",
 	'access:read' => "Uprawnienia odczytu",
 	'access:write' => "Uprawnienia zapisu",
 	'access:admin_only' => "Tylko administratorzy",
-	'access:missing_name' => "Missing access level name",
-	'access:comments:change' => "This discussion is currently visible to a limited audience. Be thoughtful about who you share it with.",
-
+	
 /**
  * Dashboard and widgets
  */
@@ -167,7 +145,6 @@ return array(
 
 	'widgets:add' => 'Dodaj gadżety',
 	'widgets:add:description' => "Kliknij na dowolnym przycisku poniżej, aby dodać gadżet do tej strony.",
-	'widgets:position:fixed' => '(Stała pozycja na stronie)',
 	'widget:unavailable' => 'Już dodałeś ten gadżet.',
 	'widget:numbertodisplay' => 'Ilość elementów do wyświetlenia',
 
@@ -279,14 +256,6 @@ return array(
 	'viewtype:change' => "Wybierz typ wyświetlania wyników",
 	'viewtype:list' => "Wyświetl listę",
 	'viewtype:gallery' => "Galeria",
-
-	'tag:search:startblurb' => "Pozycje pasujące do tagów '%s':",
-
-	'user:search:startblurb' => "Użytkownicy '%s':",
-	'user:search:finishblurb' => "Zobacz więcej, kliknij tutaj.",
-
-	'group:search:startblurb' => "Grupy pasujące do '%s':",
-	'group:search:finishblurb' => "Zobacz więcej, kliknij tutaj.",
 	'search:go' => 'Idź',
 	'userpicker:only_friends' => 'Tylko znajomi',
 
@@ -306,11 +275,8 @@ return array(
 	'register:fields' => 'Wszystkie pola są wymagane',
 	'registration:notemail' => 'Podany adres e-mail wydaje się nieprawidłowy.',
 	'registration:userexists' => 'Ta nazwa użytkownika już istnieje',
-	'registration:usernametooshort' => 'Nazwa użytkownika musi mieć co najmniej 4 znaki.',
 	'registration:usernametoolong' => 'Nazwa użytkownika jest zbyt długa. Możesz użyć maksymalnie %u znaków.',
-	'registration:passwordtooshort' => 'Hasło musi mieć co najmniej 6 znaków.',
 	'registration:dupeemail' => 'Ten adres e-mail jest już w naszej bazie.',
-	'registration:invalidchars' => 'Twoja nazwa zawiera niedozwolone znaki.',
 	'registration:emailnotvalid' => 'Adres e-mail który podałeś jest niepoprawny dla systemu,',
 	'registration:passwordnotvalid' => 'Twoje hasło które podałeś jest niepoprawne dla systemu.',
 	'registration:usernamenotvalid' => 'Użytkownik którego nazwę podałeś jest niepoprawny dla systemu.',
@@ -581,7 +547,6 @@ return array(
 	'admin:user:unban:no' => "Użytkownik nie został od banowany.",
 	'admin:user:unban:yes' => "Użytkownik został pomyślnie od banowany.",
 	'admin:user:delete:no' => "Nie można skasować użytkownika.",
-	'admin:user:delete:yes' => "Użytkownik skasowany !",
 	'admin:user:self:delete:no' => "Nie możesz skasować samego siebie",
 
 	'admin:user:resetpassword:yes' => "Reset hasła, użytkownik powiadomiony.",
@@ -621,8 +586,6 @@ return array(
 	'usersettings:statistics' => "Twoje statystyki",
 	'usersettings:statistics:opt:description' => "Zobacz informacje statystyczne na temat użytkowników i obiektów na stronie.",
 	'usersettings:statistics:opt:linktext' => "Ustawienia konta",
-
-	'usersettings:user' => "Twoje ustawienia",
 	'usersettings:user:opt:description' => "To pozwala na kontrolę ustawień użytkownika.",
 	'usersettings:user:opt:linktext' => "Zmień swoje ustawienia",
 
@@ -766,7 +729,6 @@ return array(
 
 	'content' => "treść",
 	'content:latest' => 'Ostatnia aktywność',
-	'content:latest:blurb' => 'Alternatywnie, kliknij tutaj aby wyświetlić ostatnią treść z całej witryny.',
 
 	'link:text' => 'pokaż link',
 
@@ -842,13 +804,6 @@ return array(
 	'useradd:subject' => 'Utworzono konto użytkownika',
 
 /**
- * System messages
- */
-
-	'systemmessages:dismiss' => "kliknij aby odrzucić",
-
-
-/**
  * Messages
  */
 	'messages:title:error' => 'Błąd',
@@ -856,13 +811,6 @@ return array(
 	'messages:title:help' => 'Pomoc',
 	'messages:title:notice' => 'Uwaga',
 	'messages:title:info' => 'Informacje',
-
-/**
- * Import / export
- */
-
-	'importsuccess' => "Dane zostały pomyślnie zaimportowane",
-	'importfail' => "OpenDD import danych nieudany.",
 
 /**
  * Time
@@ -998,21 +946,13 @@ return array(
 	'upgrade:unlock:confirm' => "Baza danych jest zablokowana z powodu przebiegającej aktualizacji. Wykonywanie aktualizacji równolegle jest niebezpieczne. Powinieneś kontynuować tylko jeśli jesteś pewien, że nie jest uruchomiona żadna aktualizacja. Odblokować?",
 	'upgrade:locked' => "Nie można wykonać aktualizacji. Inna aktualizacja wciąż przebiega. Aby wyłączyć blokadę aktualizacji, zobacz sekcję Administracja.",
 	'upgrade:unlock:success' => "Blokada aktualizacji zdjęta pomyślnie.",
-	'upgrade:unable_to_upgrade' => 'Aktualizacja nie powiodła się.',
-
-	'update:oauth_api:deactivated' => 'OAuth API (dawniej: OAuth Lib) został wyłączony w trakcie aktualizacji. W razie potrzeby, proszę aktywować ręcznie.',
-	'upgrade:site_secret_warning:moderate' => "Zalecamy ponowne utworzenie sekretnego klucza strony dla poprawy bezpieczeństwa strony. Zobacz Konfiguracja &gt; Ustawienia &gt; Zaawansowane",
-	'upgrade:site_secret_warning:weak' => "Zdecydowanie zalecamy ponowne utworzenie sekretnego klucza strony dla poprawy bezpieczeństwa strony. Zobacz Konfiguracja &gt; Ustawienia &gt; Zaawansowane",
 
 	'admin:pending_upgrades' => 'Ta strona ma oczekujące aktualizacje, które wymagają Twojej interwencji.',
 	'admin:view_upgrades' => 'Przeglądaj oczekujące aktualizacje.',
 	'item:object:elgg_upgrade' => 'Aktualizacje strony',
 	'admin:upgrades:none' => 'Twoja instalacja Elgg jest aktualna!',
 
-	'upgrade:item_count' => 'Jest <b>%s</b> elementów, które należy zaktualizować.',
-	'upgrade:warning' => '<b>Uwaga:</b> na dużych stronach, aktualizacja może zająć istotnie dużo czasu!',
 	'upgrade:success_count' => 'Zaktualizowano:',
-	'upgrade:error_count' => 'Błędów:',
 	'upgrade:finished' => 'Aktualizacja zakończona',
 	'upgrade:finished_with_errors' => '<p>Aktualizacja zakończyła się błędami. Odśwież stronę aby spróbować ponownie.</p></p><br />Jeśli błąd się powtarza, sprawdź możliwe przyczyny w dzienniku błędów. Możesz szukać pomocy w rozwiązaniu problemów na stronie <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">grupy wsparcia technicznego</a> w społeczności Elgg.</p>',
 	
@@ -1076,7 +1016,6 @@ return array(
 	'entity:delete:object:comment:success' => "Twój komentarz został skasowany.",
 	'generic_comment:blank' => "Przepraszamy: musisz coś wpisać przed zapisaniem.",
 	'generic_comment:notfound' => "Przepraszamy: nie można znaleźć określonej pozycji.",
-	'generic_comment:notfound_fallback' => "Sorry, we could not find the specified comment, but we've forwarded you to the page where it was left.",
 	'generic_comment:failure' => "Wystąpił nieoczekiwany błąd podczas dodawania komentarza.",
 	'generic_comment:none' => 'Brak komentarzy',
 	'generic_comment:title' => 'Komentarz użytkownika %s',
@@ -1089,11 +1028,8 @@ return array(
 
 	'byline' => 'Przez %s',
 	'byline:ingroup' => 'in the group %s',
-	'entity:default:missingsupport:popup' => 'Przedmiot ten nie może zostać wyświetlony poprawnie. Może to być spowodowane brakiem uprzednio zainstalowanego rozszerzenia.',
 	'entity:delete:success' => 'Element %s został skasowany',
 	'entity:delete:fail' => 'Element %s nie został skasowany',
-	
-	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 
 /**
  * Annotations
@@ -1108,7 +1044,6 @@ return array(
 	'actiongatekeeper:timeerror' => 'Formularz wygasł, prosimy odświeżyć i spróbować ponownie.',
 	'actiongatekeeper:pluginprevents' => 'Rozszerzenie zablokowało wysłanie formularza.',
 	'actiongatekeeper:uploadexceeded' => 'Rozmiar wgranego pliku (lub plików) przekroczył limit ustawiony przez administratora',
-	'actiongatekeeper:crosssitelogin' => "Przykro nam, ale logowanie z innej domeny jest niedozwolone. Spróbuj ponownie.",
 
 /**
  * Word blacklists
@@ -1121,7 +1056,6 @@ return array(
  */
 
 	'js:security:token_refresh_failed' => 'Nie można połączyć się z %s. Możesz mieć problem z zapisaniem zmian. Proszę odświeżyć stronę.',
-	'js:security:token_refreshed' => 'Połączenie z %s nawiązane na nowo!',
 	'js:lightbox:current' => "obraz %s z %s",
 
 /**

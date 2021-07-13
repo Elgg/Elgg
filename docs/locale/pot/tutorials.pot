@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-11 11:12+0200\n"
+"POT-Creation-Date: 2021-07-09 15:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -422,11 +422,7 @@ msgid "Add the WYSIWYG library code"
 msgstr ""
 
 #: ../../tutorials/wysiwyg.rst:19
-msgid "Now you need to upload TinyMCE into a directory in your plugin. We strongly encourage you to use ``composer`` to manage third-party dependencies, since it is so much easier to upgrade and maintain that way::"
-msgstr ""
-
-#: ../../tutorials/wysiwyg.rst:25
-msgid "composer require npm-asset/tinymce"
+msgid "Now you need to upload TinyMCE into a directory in your plugin. We strongly encourage you to use ``composer`` to manage third-party dependencies, since it is so much easier to upgrade and maintain that way:"
 msgstr ""
 
 #: ../../tutorials/wysiwyg.rst:28
@@ -454,14 +450,14 @@ msgid "It is time to tell Elgg how to apply TinyMCE to longtext fields."
 msgstr ""
 
 #: ../../tutorials/wysiwyg.rst:38
-msgid "We're going to do that by extending the input/longtext view and including some javascript. Create a view tinymce/longtext and add the following code:"
+msgid "We're going to do that by extending the ``input/longtext`` view and including some javascript. Create a view ``tinymce/longtext`` and add the following code:"
 msgstr ""
 
 #: ../../tutorials/wysiwyg.rst:70
-msgid "Then, in your plugin's init function, extend the input/longtext view"
+msgid "Then, in your plugin's ``elgg-plugin.php`` file extend the ``input/longtext`` view:"
 msgstr ""
 
-#: ../../tutorials/wysiwyg.rst:78
-msgid "That's it! Now every time someone uses input/longtext, TinyMCE will be loaded and applied to that textarea."
+#: ../../tutorials/wysiwyg.rst:82
+msgid "That's it! Now every time someone uses ``input/longtext`` TinyMCE will be loaded and applied to that textarea."
 msgstr ""
 

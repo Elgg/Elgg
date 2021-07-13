@@ -3,8 +3,10 @@
 Installing Elgg on Ubuntu Linux
 ===============================
 
--  Install the dependencies::
+-  Install the dependencies:
 
+   .. code-block:: sh
+   
      sudo apt-get install apache2
      sudo apt-get install mysql-server
      sudo apt-get install php5 libapache2-mod-php5 php5-mysqlnd

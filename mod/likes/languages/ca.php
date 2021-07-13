@@ -22,9 +22,6 @@ return array(
 	'likes:userlikedthis' => 'Li agrada a %s',
 	'likes:userslikedthis' => 'Els "m\'agrada" de %s',
 	'likes:river:annotate' => 'li agrada',
-	'likes:delete:confirm' => 'Estàs segur de voler esborrar aquest "m\'agrada"?',
-
-	'river:likes' => 'li agrada %s %s',
 
 	// notifications. yikes.
 	'likes:notifications:subject' => 'a %s li agrada el teu missatge "%s"',

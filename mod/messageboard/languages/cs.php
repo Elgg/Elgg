@@ -12,10 +12,8 @@ return array(
 	 */
 
 	'messageboard:board' => "Vzkazy",
-	'messageboard:messageboard' => "vzkazy",
 	'messageboard:none' => "Zatím zde nejsou žádné vzkazy",
 	'messageboard:num_display' => "Počet zobrazených vzkazů",
-	'messageboard:user' => "Vzkazník uživatele %s",
 	'messageboard:owner' => 'Vzkazník uživatele %s',
 	'messageboard:owner_history' => '%s přidal/a vzkaz do vzkazníku uživatele %s',
 
@@ -28,7 +26,6 @@ return array(
 	 */
 	
 	'messageboard:posted' => "Úspěšně jste přidal/a vzkaz do vzkazníku.",
-	'messageboard:deleted' => "Úspěšně jste smazal/a vzkaz.",
 
 	/**
 	 * Email messages
@@ -41,7 +38,6 @@ return array(
 	 */
 
 	'messageboard:blank' => "Omlouváme se, ale před odesláním musíte zadat nějaký vzkaz.",
-	'messageboard:notdeleted' => "Bohužel nemůžeme smazat tento vzkaz.",
 
 	'messageboard:failure' => "Při ukládání vzkazu nastala nečekaná chyba. Zkuste to prosím znovu.",
 

@@ -22,9 +22,7 @@ return array(
 
 	'groups:tool:pages' => 'Омогући странице групе',
 
-	'pages:delete' => "Обриши ову  страну",
 	'pages:history' => "Историја",
-	'pages:view' => "Види страну",
 	'pages:revision' => "Ревизија",
 
 	'pages:navigation' => "Навигација",
@@ -49,8 +47,6 @@ return array(
 	'pages:description' => 'Текст стране',
 	'pages:tags' => 'Ознаке',
 	'pages:parent_guid' => 'Над страна',
-	'pages:access_id' => 'Право читања',
-	'pages:write_access_id' => 'Право писања',
 
 	/**
 	 * Status and error messages
@@ -60,8 +56,6 @@ return array(
 	'pages:notsaved' => 'Није било могуће сачувати ову страну',
 	'pages:error:no_title' => 'Морате да унесете наслов за ову стране.',
 	'entity:delete:object:page:success' => 'Ова страна је успешно обрисана',
-	'pages:revision:delete:success' => 'Ревизија стране је успешно обрисана',
-	'pages:revision:delete:failure' => 'Ревизија стране није обрисана',
 
 	/**
 	 * History
@@ -75,13 +69,6 @@ return array(
 	'pages:num' => 'Број страна за приказ',
 	'widgets:pages:name' => 'Странe',
 	'widgets:pages:description' => "Ово је листа ваших страна",
-
-	/**
-	 * Submenu items
-	 */
-	'pages:label:view' => "Види страну",
-	'pages:label:edit' => "Уреди страну",
-	'pages:label:history' => "Историја стране",
 
 	'pages:newchild' => "Направи под-страну",
 );

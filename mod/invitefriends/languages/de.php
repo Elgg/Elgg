@@ -24,7 +24,7 @@ return array(
 	
 	'invitefriends:message:default' => 'Hallo,
 
-Ich möchte Dich einladen, meiner Community-Seite %s beizutreten.',
+Ich möchte Dich einladen, der Community-Seite %s beizutreten.',
 
 	'invitefriends:email' => 'Du bist eingeladen, der Community-Seite %s beizutreten.
 

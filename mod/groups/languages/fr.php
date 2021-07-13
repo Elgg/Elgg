@@ -22,7 +22,6 @@ return array(
 	'groups:edit:access' => "Accès",
 	'groups:edit:tools' => "Outils",
 	'groups:edit:settings' => "Configuration",
-	'groups:delete' => 'Supprimer le groupe',
 	'groups:membershiprequests' => 'Gérer les demandes d\'adhésion',
 	'groups:membershiprequests:pending' => 'Gérer les demandes d\'adhésion (%s)',
 	'groups:invitedmembers' => "Gérer les invitations",
@@ -73,14 +72,13 @@ return array(
 	'groups:leave' => 'Quitter le groupe',
 	'groups:invite' => 'Inviter des contacts',
 	'groups:invite:title' => 'Invitez des contacts à rejoindre ce groupe',
-	'groups:invite:friends:help' => 'Rechercher un contact par nom ou nom d\'utilisateur et sélectionner le contact dans la liste',
+	'groups:invite:friends:help' => 'Rechercher un contact par nom ou par identifiant et sélectionner le contact dans la liste',
 	'groups:invite:resend' => 'Renvoyer les invitations aux membres déjà invités',
 	'groups:invite:member' => 'Déjà membre du groupe',
 	'groups:invite:invited' => 'Déjà invité dans ce groupe',
 
 	'groups:nofriendsatall' => 'Vous n\'avez pas de contact à inviter !',
 	'groups:group' => "Groupe",
-	'groups:search:tags' => "tag",
 	'groups:search:title' => "Rechercher des groupes avec le tag '%s'",
 	'groups:search:none' => "Aucun groupe correspondant n'a été trouvé",
 	'groups:search_in_group' => "Chercher dans ce groupe",
@@ -140,10 +138,10 @@ return array(
 	'groups:userinvited' => 'L\'utilisateur a été invité.',
 	'groups:usernotinvited' => 'L\'utilisateur n\'a pas pu être invité',
 	'groups:useralreadyinvited' => 'L\'utilisateur a déjà été invité',
-	'groups:invite:subject' => "%s vous avez été invité(e) à rejoindre %s !",
+	'groups:invite:subject' => "%s vous êtes invité à rejoindre %s !",
 	'groups:joinrequest:remove:check' => 'Confirmez-vous vouloir supprimer cette demande d\'adhésion ?',
 	'groups:invite:remove:check' => 'Confirmez-vous vouloir supprimer cette invitation ?',
-	'groups:invite:body' => "%s vous a invité(e) à rejoindre le groupe '%s'.
+	'groups:invite:body' => "%s vous invite à rejoindre le groupe '%s'.
 
 Cliquez sur le lien ci-dessous pour voir vos invitations :
 %s",
@@ -157,10 +155,10 @@ Cliquez le lien ci-dessous pour commencer à participer !
 	'groups:request:subject' => "%s a demandé à rejoindre %s",
 	'groups:request:body' => "%s a demandé à rejoindre le groupe '%s'.
 
-Cliquez le lien ci-dessous pour voir son profil :
+Pour voir son profil :
 %s
 
-ou cliquez sur le lien ci-dessous pour voir les demandes d'adhésion au groupe :
+ou pour voir les demandes d'adhésion au groupe :
 %s",
 
 	'river:group:create' => '%s a créé le groupe %s',
@@ -172,9 +170,6 @@ ou cliquez sur le lien ci-dessous pour voir les demandes d'adhésion au groupe :
 	/**
 	 * Action messages
 	 */
-	'groups:deleted' => 'Groupe et contenus du groupe supprimés',
-	'groups:notdeleted' => 'Le groupe n\'a pas pu être supprimé',
-	'groups:deletewarning' => "Confirmez-vous vouloir supprimer ce groupe ? Cette action est irréversible !",
 
 	'groups:invitekilled' => 'L\'invitation a été supprimée',
 	'groups:joinrequestkilled' => 'La demande d\'adhésion a été supprimée.',

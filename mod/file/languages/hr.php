@@ -20,7 +20,6 @@ return array(
 
 	'file:num_files' => "Broj datoteka koje će se prikazati",
 	'file:replace' => 'Zamijeni datoteku (ako ne želite mijenjati datoteku ostavite ovo polje praznim)',
-	'file:title:friends' => "Prijatelja",
 
 	'file:file' => "Datoteka",
 

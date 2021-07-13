@@ -29,15 +29,7 @@ return array(
 	'bookmarks:notify:summary' => 'Panggil bookmark baru %s',
 	'bookmarks:notify:subject' => 'Bookmark baru: %s',
 	'bookmarks:notify:body' =>
-'%s Menambahkan bookmark baru: %s
-
-Alamat: %s
-
-%s
-
-Lihat dan komentari boomark
-%s
-',
+'',
 
 	'bookmarks:numbertodisplay' => 'Jumlah bookmark untuk ditampilkan',
 
@@ -73,5 +65,4 @@ Lihat dan komentari boomark
 	 */
 
 	'bookmarks:save:failed' => "Bookmark Anda tidak dapat disimpan. Pastikan Anda memasukkan judul dan alamat lalu coba lagi.",
-	'bookmarks:unknown_bookmark' => 'Tidak dapat menemukan bookmark yang ditentukan',
 );

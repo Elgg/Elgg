@@ -96,8 +96,6 @@ return array(
 	'install:complete:instructions' => 'Seu site Elgg esta agora pronto para ser usado. Clique no botao abaixo para entrar no seu site.',
 	'install:complete:gotosite' => 'Ir para o  site',
 
-	'InstallationException:UnknownStep' => '%s é uma etapa desconhecida na instalação.',
-	'InstallationException:MissingLibrary' => 'Nao foi possivel acessar %s',
 	'InstallationException:CannotLoadSettings' => 'Elgg nao pode carregar os arquivos de configuracao. Ele nao existe ou existe uma questao de permissao de acesso ao arquivo.',
 
 	'install:success:database' => 'Base de dados foi instalada.',

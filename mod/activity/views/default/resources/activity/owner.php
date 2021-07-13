@@ -10,10 +10,6 @@ if (!$page_owner instanceof \ElggUser) {
 	throw new EntityNotFoundException(elgg_echo('river:subject:invalid_subject'));
 }
 
-// get filter options
-$type = preg_replace('[\W]', '', get_input('type', 'all'));
-$subtype = preg_replace('[\W]', '', get_input('subtype', ''));
-
 // build page content
 if ($page_owner->guid === elgg_get_logged_in_user_guid()) {
 	$title = elgg_echo('river:mine');
@@ -22,6 +18,14 @@ if ($page_owner->guid === elgg_get_logged_in_user_guid()) {
 	$title = elgg_echo('river:owner', [$page_owner->getDisplayName()]);
 	$page_filter = 'subject';
 }
+
+elgg_push_breadcrumb($page_owner->getDisplayName(), $page_owner->getURL());
+elgg_push_breadcrumb($title, elgg_generate_url('collection:river:owner', ['username' => $page_owner->username]));
+
+// get filter options
+$type = preg_replace('[\W]', '', get_input('type', 'all'));
+$subtype = preg_replace('[\W]', '', get_input('subtype', ''));
+
 
 $content = elgg_view('river/listing/owner', [
 	'entity' => $page_owner,

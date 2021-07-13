@@ -22,9 +22,7 @@ return array(
 
 	'groups:tool:pages' => 'Aktiver gruppe sider',
 
-	'pages:delete' => "Slet denne side",
 	'pages:history' => "Sidehistorik",
-	'pages:view' => "Se side",
 	'pages:revision' => "Revision",
 
 	'pages:navigation' => "Navigation",
@@ -49,8 +47,6 @@ return array(
 	'pages:description' => 'Side indhold',
 	'pages:tags' => 'Tags',
 	'pages:parent_guid' => 'Parent page',
-	'pages:access_id' => 'Læseadgang',
-	'pages:write_access_id' => 'Skriveadgang',
 
 	/**
 	 * Status and error messages
@@ -60,8 +56,6 @@ return array(
 	'pages:notsaved' => 'Siden kunne ikke gemmes',
 	'pages:error:no_title' => 'Din side skal have en titel.',
 	'entity:delete:object:page:success' => 'Din side er blevet slettet',
-	'pages:revision:delete:success' => 'Denne side revision blev hermed slettet.',
-	'pages:revision:delete:failure' => 'Denne side revision kunne ikke slettes.',
 
 	/**
 	 * History
@@ -75,13 +69,6 @@ return array(
 	'pages:num' => 'Antal sider, der skal vises',
 	'widgets:pages:name' => 'Sider',
 	'widgets:pages:description' => "Dette er en liste med dine sider.",
-
-	/**
-	 * Submenu items
-	 */
-	'pages:label:view' => "Se side",
-	'pages:label:edit' => "Rediger side",
-	'pages:label:history' => "Sidehistorik",
 
 	'pages:newchild' => "Opret en underside",
 );

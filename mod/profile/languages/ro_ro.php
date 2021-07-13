@@ -12,7 +12,6 @@ return array(
 	'admin:configure_utilities:profile_fields' => 'Editează Câmpurile de Profil',
 	
 	'profile:edit' => 'Editează profilul',
-	'profile:aboutme' => "Despre mine",
 	'profile:description' => "Despre mine",
 	'profile:briefdescription' => "Descriere scurtă",
 	'profile:location' => "Locație",
@@ -38,7 +37,6 @@ return array(
 	'profile:field:week' => 'Săptămână',
 	'profile:field:color' => 'Culoare',
 
-	'profile:edit:default' => 'Editează câmpurile de profil',
 	'profile:label' => "Eticheta profilului",
 	'profile:type' => "Tipul profilului",
 	'profile:editdefault:delete:fail' => 'Îndepărtarea câmpului de profil a eșuat',
@@ -46,12 +44,6 @@ return array(
 	'profile:defaultprofile:reset' => 'Câmpurile de profil au fost resetate la starea inițială de sistem',
 	'profile:resetdefault' => 'Resetează câmpurile de profil la starea inițială de sistem',
 	'profile:resetdefault:confirm' => 'Sigur dorești să ștergi câmpurile tale personalizate de profil?',
-	'profile:explainchangefields' => "You can replace the existing profile fields with your own.
-Click the 'Add' button and give the new profile field a label, for example, 'Favorite team', then select the field type (eg. text, url, tags).
-To re-order the fields drag on the handle next to the field label.
-To edit a field label - click on the edit icon.
-
-At any time you can revert back to the default profile set up, but you will lose any information already entered into custom fields on profile pages.",
 	'profile:editdefault:success' => 'Câmp nou de profil adăugat',
 	'profile:editdefault:fail' => 'Profilul inițial nu a putut fi salvat',
 	'profile:noaccess' => "Nu ai permisiunea de a edita acest profil.",

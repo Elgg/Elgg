@@ -43,24 +43,12 @@ return array(
 	'discussion:topic:notify:summary' => 'Subiect nou de discuție numit %s',
 	'discussion:topic:notify:subject' => 'Subiect nou de discuție: %s',
 	'discussion:topic:notify:body' =>
-'%s a adăugat un subiect nou de discuție "%s":
-
-%s
-
-Vezi și răspunde la subiectul de discuție:
-%s
-',
+'',
 
 	'discussion:comment:notify:summary' => 'Comentariu nou la subiect: %s',
 	'discussion:comment:notify:subject' => 'Comentariu nou la subiect: %s',
 	'discussion:comment:notify:body' =>
-'%s a comentat la subiectul de discuție "%s":
-
-%s
-
-Vezi și comentează la discuția:
-%s
-',
+'',
 
 	'groups:tool:forum' => 'Activează discuțiile de grup',
 

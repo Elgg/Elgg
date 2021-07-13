@@ -92,8 +92,6 @@ return array(
 	'install:complete:instructions' => 'Vaše stránky jsou nyní připraveny k použití. Klikem na následující tlačítko na ně přejdete.',
 	'install:complete:gotosite' => 'Přejít na stránky',
 
-	'InstallationException:UnknownStep' => '%s je neznámý instalační krok.',
-	'InstallationException:MissingLibrary' => 'Nemohu načíst %s',
 	'InstallationException:CannotLoadSettings' => 'Elgg nemůže načíst soubor s nastavením. Buď neexistuje, nebo je problém s přístupovými právy.',
 
 	'install:success:database' => 'Databáze byla nainstalována.',

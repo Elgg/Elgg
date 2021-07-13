@@ -22,9 +22,6 @@ return array(
 	'likes:userlikedthis' => 'A %s gústalles',
 	'likes:userslikedthis' => 'A %s gústalles',
 	'likes:river:annotate' => 'gústames',
-	'likes:delete:confirm' => 'Está seguro de que quere eliminar este «gústame»?',
-
-	'river:likes' => 'gusta de %s %s',
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s gusta do teu artigo «%s»',
