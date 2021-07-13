@@ -47,6 +47,9 @@ After enabling friendship requests when user A wants to be friends with user B, 
 	'widgets:friends:name' => "Friends",
 	'widgets:friends:description' => "Displays some of your friends.",
 	
+	'widgets:friends_of:name' => "Friends of",
+	'widgets:friends_of:description' => "Show who made you a friend",
+	
 	'friends:notification:request:subject' => "%s wants to be your friend!",
 	'friends:notification:request:message' => "%s has requested to be your friend on %s.
 
