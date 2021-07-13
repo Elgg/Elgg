@@ -58,6 +58,7 @@ class ElggPAM {
 		foreach (self::$_handlers[$this->policy] as $v) {
 			$handler = $v->handler;
 			if (!is_callable($handler)) {
+				elgg()->logger->warning("PAM handler '" . _elgg_services()->handlers->describeCallable($handler) . "' for policy '{$this->policy}' isn't callable");
 				continue;
 			}
 			/* @var callable $handler */
