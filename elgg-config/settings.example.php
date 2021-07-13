@@ -419,6 +419,17 @@ $CONFIG->allow_phpinfo = false;
 //);
 
 /**
+ * Configure notification queue delay
+ *
+ * This setting can be used to delay the processing of queued notifications. This can help when users create content and
+ * quickly remove the content. A notification could be send out to subscribers about content which will be removed quickly
+ *
+ * The setting needs to be the number of seconds to delay the notification queue processing (eg. 3 minutes => 180 seconds)
+ * Default: 0 (no delay)
+ */
+//$CONFIG->notifications_queue_delay = 180;
+
+/**
  * Proxy configuration
  *
  * These settings can be used whenever there is the need to (optionally) configure a proxy

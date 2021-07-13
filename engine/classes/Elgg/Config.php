@@ -86,6 +86,7 @@ use Elgg\Traits\Loggable;
  * @property int           $min_password_special                    The minimal number of special characters in a password
  * @property int           $minusername                             The minimal length of a username
  * @property int           $notifications_max_runtime               The max runtime for the notification queue processing in seconds since the start of the cron interval
+ * @property int           $notifications_queue_delay               Number of seconds to delay the processing of the notifications queue
  * @property string[]      $pages
  * @property string        $pagination_behaviour                    Behaviour of pagination in lists
  * @property-read string   $path         							Path of composer install with trailing "/"
@@ -205,6 +206,7 @@ class Config {
 		'min_password_length' => 6,
 		'minusername' => 4,
 		'notifications_max_runtime' => 45,
+		'notifications_queue_delay' => 0,
 		'pagination_behaviour' => 'ajax-replace',
 		'security_email_require_confirmation' => true,
 		'security_email_require_password' => true,

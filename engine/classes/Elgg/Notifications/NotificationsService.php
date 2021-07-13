@@ -15,8 +15,6 @@ use Elgg\Queue\Queue;
  */
 class NotificationsService {
 
-	const QUEUE_NAME = 'notifications';
-
 	/** @var Queue */
 	protected $queue;
 

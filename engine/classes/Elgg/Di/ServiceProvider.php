@@ -93,6 +93,7 @@ use Elgg\Security\PasswordGeneratorService;
  * @property-read \Elgg\Filesystem\MimeTypeService                $mimetype
  * @property-read \Elgg\Database\Mutex                            $mutex
  * @property-read \Elgg\Notifications\NotificationsService        $notifications
+ * @property-read \Elgg\Notifications\NotificationsQueue          $notificationsQueue
  * @property-read \Elgg\Page\PageOwnerService                     $pageOwner
  * @property-read \Elgg\PasswordService                           $passwords
  * @property-read \Elgg\Security\PasswordGeneratorService         $passwordGenerator
@@ -550,11 +551,12 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('notifications', function(ServiceProvider $sp) {
-			// @todo move queue in service provider
-			$queue_name = \Elgg\Notifications\NotificationsService::QUEUE_NAME;
-			$queue = new \Elgg\Queue\DatabaseQueue($queue_name, $sp->db);
-			
-			return new \Elgg\Notifications\NotificationsService($queue, $sp->hooks, $sp->session);
+			return new \Elgg\Notifications\NotificationsService($sp->notificationsQueue, $sp->hooks, $sp->session);
+		});
+		
+		$this->setFactory('notificationsQueue', function(ServiceProvider $sp) {
+			$queue_name = \Elgg\Notifications\NotificationsQueue::QUEUE_NAME;
+			return new \Elgg\Notifications\NotificationsQueue($queue_name, $sp->db, $sp->config);
 		});
 
 		$this->setFactory('pageOwner', function(ServiceProvider $sp) {
