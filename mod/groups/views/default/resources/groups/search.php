@@ -20,4 +20,5 @@ echo elgg_view_page($title, [
 	'content' => $content,
 	'sidebar' => $sidebar,
 	'filter_id' => 'groups/search',
+	'filter_value' => 'search',
 ]);
