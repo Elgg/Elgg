@@ -4,6 +4,7 @@
  * Translates an epoch time into a human-readable time.
  *
  * @uses string $vars['time']           Unix-style epoch timestamp
+ * @uses string $vars['title']          (optional) title on the time element, will default to date/time formatted timestamp
  * @uses int    $vars['number_of_days'] (optional) number of days before friendly time switches to a date format
  */
 
@@ -28,7 +29,7 @@ if (strtotime("-{$friendly_time_number_of_days}days") < $timestamp) {
 }
 
 $attributes = [
-	'title' => $date->formatLocale(elgg_echo('friendlytime:date_format')),
+	'title' => elgg_extract('title', $vars, $date->formatLocale(elgg_echo('friendlytime:date_format'))),
 	'datetime' => $date->format('c'),
 ];
 
