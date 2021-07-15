@@ -28,4 +28,5 @@ $content = elgg_list_entities([
 echo elgg_view_page($title, [
 	'content' => $content,
 	'filter_id' => 'groups/owner',
+	'filter_value' => 'owner',
 ]);
