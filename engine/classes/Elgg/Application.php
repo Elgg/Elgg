@@ -394,7 +394,7 @@ class Application {
 		}
 
 		$response->headers->set('Pragma', 'public');
-		$response->headers->set('Cache-Control', 'no-cache, must-revalidate');
+		$response->headers->set('Cache-Control', 'no-store, must-revalidate');
 		$response->headers->set('Expires', 'Fri, 05 Feb 1982 00:00:00 -0500');
 
 		self::getResponseTransport()->send($response);
