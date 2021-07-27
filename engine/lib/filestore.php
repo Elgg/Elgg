@@ -193,6 +193,11 @@ function elgg_get_embed_url(\ElggEntity $entity, $size) {
  */
 function _elgg_filestore_serve_icon_handler() {
 	$response = _elgg_services()->iconService->handleServeIconRequest();
+	
+	if (!$response->headers->hasCacheControlDirective('no-cache')) {
+		$response->headers->addCacheControlDirective('no-cache', 'Set-Cookie');
+	}
+	
 	$response->send();
 	exit;
 }
