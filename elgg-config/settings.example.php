@@ -480,6 +480,11 @@ $CONFIG->proxy = [
 //$CONFIG->language_to_locale_mapping = [];
 
 /**
+ * Control if you want site language to be detected by browser language.
+ */
+//$CONFIG->language_detect_from_browser = true;
+
+/**
  * When your webserver is behind a loadbalancer or reverse proxy server some client information (IP, protocol, etc) is
  * stored in different headers. For Elgg to be able to access these headers you need to configure the IP addresses of
  * the loadbalancer/reverse proxy.

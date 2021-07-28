@@ -73,6 +73,7 @@ use Elgg\Traits\Loggable;
  * @property bool          $installer_running
  * @property string        $language                   				Site language code
  * @property string[]      $language_to_locale_mapping 				A language to locale mapping (eg. 'en' => ['en_US'] or 'nl' => ['nl_NL'])
+ * @property bool          $language_detect_from_browser            Control if language can be detected from browser
  * @property int           $lastcache								The timestamp the cache was last invalidated
  * @property string        $localcacheroot            				Path of local cache storage with trailing "/"
  * @property bool          $memcache
@@ -202,6 +203,7 @@ class Config {
 			'large' => ['w' => 200, 'h' => 200, 'square' => true, 'upscale' => true],
 			'master' => ['w' => 10240, 'h' => 10240, 'square' => false, 'upscale' => false, 'crop' => false],
 		],
+		'language_detect_from_browser' => true,
 		'lastcache' => 0,
 		'min_password_length' => 6,
 		'minusername' => 4,

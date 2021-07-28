@@ -8,7 +8,7 @@ define(['jquery', 'elgg', 'elgg/spinner', 'elgg/Ajax', 'jquery-ui/widgets/sortab
 	};
 
 	function initPluginReordering() {
-		$('#elgg-plugin-list > ul').sortable({
+		$('#elgg-plugin-list > .elgg-list-container > ul').sortable({
 			items:                'li:has(> .elgg-state-draggable)',
 			handle:               '.elgg-body',
 			forcePlaceholderSize: true,
