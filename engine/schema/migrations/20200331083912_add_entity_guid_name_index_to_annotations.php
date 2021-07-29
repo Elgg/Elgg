@@ -14,7 +14,7 @@ class AddEntityGuidNameIndexToAnnotations extends AbstractMigration {
 		}
 		
 		$table = $this->table('annotations');
-		if ($table->hasIndex(['entity_guid_name'])) {
+		if ($table->hasIndexByName('entity_guid_name')) {
 			return;
 		}
 		
