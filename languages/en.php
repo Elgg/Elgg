@@ -353,6 +353,8 @@ return array(
 	'notifications:mute:user' => "written by the user '%s'",
 	
 	'notifications:mute:save:success' => "Your notification settings have been saved",
+	
+	'notifications:mute:email:footer' => "Mute these emails",
 
 /**
  * Search
