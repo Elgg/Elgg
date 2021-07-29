@@ -51,11 +51,11 @@ class DenormalizeMetastrings extends AbstractMigration {
 				$prefix = $this->getAdapter()->getOption('table_prefix');
 
 				// remove indexes
-				if ($table->hasIndex('name_id')) {
+				if ($table->hasIndexByName('name_id')) {
 					$table->removeIndexByName('name_id')->save();
 				}
 
-				if ($table->hasIndex('value_id')) {
+				if ($table->hasIndexByName('value_id')) {
 					$table->removeIndexByName('value_id')->save();
 				}
 				
@@ -74,7 +74,7 @@ class DenormalizeMetastrings extends AbstractMigration {
 			}
 			
 			// add new indexes
-			if (!$table->hasIndex('name')) {
+			if (!$table->hasIndexByName('name')) {
 				$table->addIndex(['name'], [
 					'name' => "name",
 					'unique' => false,
@@ -82,7 +82,7 @@ class DenormalizeMetastrings extends AbstractMigration {
 				]);
 			}
 			
-			if (!$table->hasIndex('value')) {
+			if (!$table->hasIndexByName('value')) {
 				$table->addIndex(['value'], [
 					'name' => "value",
 					'unique' => false,
@@ -153,13 +153,13 @@ class DenormalizeMetastrings extends AbstractMigration {
 				]);
 			}
 
-			if (!$table->hasIndex('name_id')) {
+			if (!$table->hasIndexByName('name_id')) {
 				$table->addIndex(['name_id'], [
 					'name' => 'name_id',
 				]);
 			}
 
-			if (!$table->hasIndex(['value_id'])) {
+			if (!$table->hasIndexByName('value_id')) {
 				$table->addIndex(['value_id'], [
 					'name' => 'value_id',
 				]);
@@ -188,11 +188,11 @@ class DenormalizeMetastrings extends AbstractMigration {
 					n_table.value_id = msv.id
 			");
 
-			if ($table->hasIndex('name')) {
+			if ($table->hasIndexByName('name')) {
 				$table->removeIndexByName('name')->save();
 			}
 
-			if ($table->hasIndex('value')) {
+			if ($table->hasIndexByName('value')) {
 				$table->removeIndexByName('value')->save();
 			}
 

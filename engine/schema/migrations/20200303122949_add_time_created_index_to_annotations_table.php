@@ -13,7 +13,7 @@ class AddTimeCreatedIndexToAnnotationsTable extends AbstractMigration {
 		}
 		
 		$table = $this->table('annotations');
-		if ($table->hasIndex(['time_created'])) {
+		if ($table->hasIndexByName('time_created')) {
 			return;
 		}
 		

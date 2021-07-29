@@ -28,7 +28,7 @@ class EntitiesAddTypeSubtypeContainerAndOwnerIndexes extends AbstractMigration
     public function change() {
     	$table = $this->table('entities');
 		
-		if (!$table->hasIndex('type_subtype_owner')) {
+		if (!$table->hasIndexByName('type_subtype_owner')) {
 			$table->addIndex(['type', 'subtype', 'owner_guid'], [
 				'name' => "type_subtype_owner",
 				'unique' => false,
@@ -36,7 +36,7 @@ class EntitiesAddTypeSubtypeContainerAndOwnerIndexes extends AbstractMigration
 			]);
 		}
 
-		if (!$table->hasIndex('type_subtype_container')) {
+		if (!$table->hasIndexByName('type_subtype_container')) {
 			$table->addIndex(['type', 'subtype', 'container_guid'], [
 				'name' => "type_subtype_container",
 				'unique' => false,

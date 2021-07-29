@@ -16,7 +16,7 @@ class RemoveLegacyPasswordHashes extends AbstractMigration
 		// remove legacy 2.x password and salt columns
 		$table = $this->table('users_entity');
 
-		if ($table->hasIndex('password')) {
+		if ($table->hasIndexByName('password')) {
 			$table->removeIndexByName('password')->save();
 		}
 
@@ -56,7 +56,7 @@ class RemoveLegacyPasswordHashes extends AbstractMigration
 			]);
 		}
 
-		if (!$table->hasIndex('password')) {
+		if (!$table->hasIndexByName('password')) {
 			$table->addIndex(['password'], [
 				'name' => 'password',
 				'unique' => false,
