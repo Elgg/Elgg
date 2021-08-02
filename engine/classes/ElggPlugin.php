@@ -1457,6 +1457,45 @@ class ElggPlugin extends ElggObject {
 		$this->getComposer()->assertActivePluginConflicts();
 		$this->getComposer()->assertRequiredPhpVersion();
 		$this->getComposer()->assertRequiredPhpExtensions();
+		$this->assertPluginDependencies();
+	}
+	
+	/**
+	 * Assert required plugins or plugin position
+	 *
+	 * @return void
+	 * @throws \Elgg\Exceptions\PluginException
+	 *
+	 * @since 4.0
+	 */
+	protected function assertPluginDependencies(): void {
+		foreach ($this->getDependencies() as $plugin_id => $plugin_dep) {
+			$must_be_active = elgg_extract('must_be_active', $plugin_dep, true);
+			$position = elgg_extract('position', $plugin_dep);
+
+			$dependent_plugin = elgg_get_plugin_from_id($plugin_id);
+			
+			if ($must_be_active && (!$dependent_plugin instanceof \ElggPlugin || !$dependent_plugin->isActive())) {
+				throw PluginException::factory([
+					'message' => elgg_echo('PluginException:PluginMustBeActive', [$plugin_id]),
+					'plugin' => $this,
+				]);
+			}
+			
+			if ($dependent_plugin instanceof \ElggPlugin && $position && $dependent_plugin->isActive()) {
+				if ($position == 'after' && ($this->getPriority() < $dependent_plugin->getPriority())) {
+					throw PluginException::factory([
+						'message' => elgg_echo('PluginException:PluginMustBeAfter', [$plugin_id]),
+						'plugin' => $this,
+					]);
+				} elseif ($position == 'before' && ($plugin->getPriority() > $dependent_plugin->getPriority())) {
+					throw PluginException::factory([
+						'message' => elgg_echo('PluginException:PluginMustBeBefore', [$plugin_id]),
+						'plugin' => $this,
+					]);
+				}
+			}
+		}
 	}
 	
 	/**
