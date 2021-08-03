@@ -135,7 +135,9 @@ class DelayedEmailService {
 				$notifications[] = $notfication;
 			}
 			
-			$processRecipient();
+			if (isset($last_recipient_guid)) {
+				$processRecipient();
+			}
 			
 			return $count;
 		}));
