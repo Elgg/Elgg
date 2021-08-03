@@ -26,6 +26,8 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 					// replace previous list with new content
 					$target.replaceWith($new_html);
 					
+					$target_list.trigger('change');
+					
 					// scroll to top of new content
 					$('html, body').animate({
 						scrollTop: $(id_selector).offset().top
