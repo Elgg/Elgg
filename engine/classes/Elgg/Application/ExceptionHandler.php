@@ -47,7 +47,7 @@ class ExceptionHandler {
 
 		$request = Request::createFromGlobals();
 		$headers = [
-			'Cache-Control' => 'no-cache, must-revalidate',
+			'Cache-Control' => 'no-store, must-revalidate',
 			'Expires' => 'Fri, 05 Feb 1982 00:00:00 -0500',
 		];
 
