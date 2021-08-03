@@ -3,6 +3,7 @@
 namespace Elgg\Upgrades;
 
 use Elgg\Database\QueryBuilder;
+use Elgg\Notifications\SubscriptionsService;
 use Elgg\Upgrade\Result;
 use Elgg\Upgrade\SystemUpgrade;
 
@@ -24,7 +25,7 @@ class ContentOwnerSubscriptions implements SystemUpgrade {
 	 * {@inheritDoc}
 	 */
 	public function needsIncrementOffset(): bool {
-		return true;
+		return false;
 	}
 
 	/**
@@ -51,6 +52,7 @@ class ContentOwnerSubscriptions implements SystemUpgrade {
 	 */
 	public function run(Result $result, $offset): Result {
 		
+		/* @var $entities \ElggBatch */
 		$entities = elgg_get_entities($this->getOptions([
 			'offset' => $offset,
 		]));
@@ -62,19 +64,19 @@ class ContentOwnerSubscriptions implements SystemUpgrade {
 		foreach ($entities as $entity) {
 			$owner = $entity->getOwnerEntity();
 			if (!$owner instanceof \ElggUser) {
-				// how did this happen
+				// how did this happen?
 				$result->addSuccesses();
 				continue;
 			}
 			
 			if ($entity->hasMutedNotifications($owner->guid)) {
-				// user already blocked notifications
+				// user already blocked notifications, shouldn't happen
 				$result->addSuccesses();
 				continue;
 			}
 			
 			if ($entity->hasSubscriptions($owner->guid)) {
-				// already subscribed
+				// already subscribed, shouldn't happen
 				$result->addSuccesses();
 				continue;
 			}
@@ -123,6 +125,17 @@ class ContentOwnerSubscriptions implements SystemUpgrade {
 						->andWhere($qb->compare('type', '=', 'user', ELGG_VALUE_STRING));
 					
 					return $qb->compare("{$main_alias}.owner_guid", 'in', $owner_guids->getSQL());
+				},
+				function (QueryBuilder $qb, $main_alias) {
+					$notification_relationship = $qb->subquery('entity_relationships', 'er');
+					$notification_relationship->select('er.guid_one')
+						->andWhere($qb->compare('er.guid_two', '=', "{$main_alias}.guid"))
+						->andWhere($qb->merge([
+							$qb->compare('relationship', 'LIKE', SubscriptionsService::RELATIONSHIP_PREFIX . ':%', ELGG_VALUE_STRING),
+							$qb->compare('relationship', '=', SubscriptionsService::MUTE_NOTIFICATIONS_RELATIONSHIP, ELGG_VALUE_STRING),
+						], 'OR'));
+					
+					return $qb->compare("{$main_alias}.owner_guid", 'NOT IN', $notification_relationship->getSQL());
 				},
 			],
 		];
