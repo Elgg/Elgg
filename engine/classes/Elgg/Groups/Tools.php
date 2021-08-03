@@ -70,7 +70,7 @@ class Tools {
 	 * @return Tool|null
 	 */
 	public function get($name) {
-		return $this->tools->get($name);
+		return $this->all()->get($name);
 	}
 
 	/**
