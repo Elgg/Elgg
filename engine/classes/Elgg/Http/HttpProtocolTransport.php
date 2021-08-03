@@ -16,6 +16,10 @@ class HttpProtocolTransport implements ResponseTransport {
 	 * {@inheritdoc}
 	 */
 	public function send(Response $response) {
+		if (!$response->headers->hasCacheControlDirective('no-cache')) {
+			$response->headers->addCacheControlDirective('no-cache', 'Set-Cookie');
+		}
+		
 		$response->send();
 		return true;
 	}
