@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "afda5e75493e2402b0ab2c4b727e04a8",
+    "content-hash": "4eaefe7ae78bb83ca235bd35a41078c1",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
             "version": "5.12.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/FortAwesome/Font-Awesome.git",
+                "url": "git@github.com:FortAwesome/Font-Awesome.git",
                 "reference": "d8db3d032d22e7a5e21f3b40905b7867be19bb02"
             },
             "dist": {
@@ -56,7 +56,7 @@
             "version": "1.6.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jackmoore/colorbox.git",
+                "url": "git@github.com:jackmoore/colorbox.git",
                 "reference": "bac78120c6ca9e63370cc317ab6f400129cd6608"
             },
             "dist": {

@@ -1,3 +1,15 @@
+<a name="3.3.21"></a>
+### 3.3.21  (2021-08-03)
+
+#### Contributors
+
+* Jeroen Dalsem (1)
+
+#### Bug Fixes
+
+* **http:** always disable cache if cookie is being set ([30c17f06](https://github.com/Elgg/Elgg/commit/30c17f0644265086c7a61671487262fcfdf3cff3))
+
+
 <a name="3.3.20"></a>
 ### 3.3.20  (2021-07-09)
 
