@@ -14,11 +14,11 @@ use Elgg\Helpers\Upgrade\UnknownSizeTestBatch;
 class BatchUpgraderUnitTest extends UnitTestCase {
 
 	public function up() {
-		_elgg_services()->setValue('logger', new Logger('testing'));
+		_elgg_services()->logger->disable();
 	}
 
 	public function down() {
-
+		_elgg_services()->logger->enable();
 	}
 
 	public function testCanRunIncrementedUpgrade() {
@@ -32,7 +32,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->save();
 
 		$upgrader = _elgg_services()->upgrades;
-		$result = $upgrader->executeUpgrade($upgrade);
+		$result = $upgrader->executeUpgrade($upgrade, 30); // added max_duration to prevent deadloops
 
 		$expected = [
 			'errors' => [0, 25, 50, 75],
@@ -61,7 +61,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->has_errors = false;
 
 		$upgrader = _elgg_services()->upgrades;
-		$result = $upgrader->executeUpgrade($upgrade);
+		$result = $upgrader->executeUpgrade($upgrade, 30); // added max_duration to prevent deadloops
 
 		$expected = [
 			'errors' => [50, 75],
@@ -86,7 +86,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->save();
 
 		$upgrader = _elgg_services()->upgrades;
-		$result = $upgrader->executeUpgrade($upgrade);
+		$result = $upgrader->executeUpgrade($upgrade, 30); // added max_duration to prevent deadloops
 
 		$expected = [
 			'errors' => [0, 10, 20, 30],
@@ -111,7 +111,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->save();
 
 		$upgrader = _elgg_services()->upgrades;
-		$result = $upgrader->executeUpgrade($upgrade);
+		$result = $upgrader->executeUpgrade($upgrade, 30); // added max_duration to prevent deadloops
 
 		$expected = [
 			'errors' => [],
