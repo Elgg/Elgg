@@ -45,6 +45,12 @@ $notification_events = elgg_get_notification_events();
 foreach ($notification_events as $type => $subtypes) {
 	foreach ($subtypes as $subtype => $actions) {
 		foreach ($actions as $action => $handler) {
+			// handler is the classname of the notification event handler
+			// the classname is a subclass of \Elgg\Notifications\NotificationEventHandler
+			if (!$handler::isConfigurableByUser()) {
+				continue;
+			}
+			
 			echo elgg_view_field([
 				'#type' => 'checkboxes',
 				'#label' => elgg_echo("notification:{$type}:{$subtype}:{$action}"),
