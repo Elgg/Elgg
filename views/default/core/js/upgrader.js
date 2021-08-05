@@ -174,7 +174,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup', 'jquery-ui/
 				updateCounter();
 	
 				var done;
-				if (total == UNKNOWN_COUNT) {
+				if (total == UNKNOWN_COUNT || result.isComplete) {
 					done = result.isComplete;
 				} else {
 					done = numProcessed >= total;
