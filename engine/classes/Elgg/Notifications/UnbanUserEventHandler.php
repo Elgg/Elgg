@@ -59,4 +59,11 @@ class UnbanUserEventHandler extends NotificationEventHandler {
 		
 		return $result;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function isConfigurableByUser(): bool {
+		return false;
+	}
 }

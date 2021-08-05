@@ -72,7 +72,7 @@ about a particular event. Sending notifications immediately when a user triggers
 such an event might remarkably slow down page loading speed. This is why sending
 of such notifications shoud be left for Elgg's notification queue.
 
-New notification events can be registered with the `elgg_register_notification_event()`__
+New notification events can be registered with the ``elgg_register_notification_event()``
 function or in the :doc:`elgg-plugin </guides/plugins>` configuration. Notifications about registered events will be sent automatically to all
 subscribed users.
 
@@ -95,10 +95,8 @@ This is the workflow of the notifications system:
      - Plugins can take over or prevent sending of each individual notification with the ``[send, notification:<method>]`` hook
  #. The ``[send:after, notifications]`` hook is triggered for the event after all notifications have been sent
 
-__ http://reference.elgg.org/notification_8php.html#af7a43dcb0cf13ba55567d9d7874a3b20
-
-Example
--------
+Notification event registration example
+---------------------------------------
 
 Tell Elgg to send notifications when a new object of subtype "photo" is created:
 
@@ -111,6 +109,18 @@ Tell Elgg to send notifications when a new object of subtype "photo" is created:
 		elgg_register_notification_event('object', 'photo', array('create'));
 	}
 
+Or in the ``elgg-plugin.php``:
+
+.. code-block:: php
+
+	'notifications' => [
+		'object' => [
+			'photo' => [
+				'create' => true,
+			],
+		],
+	],
+
 .. note::
 
 	In order to send the event-based notifications you must have the one-minute
@@ -119,8 +129,85 @@ Tell Elgg to send notifications when a new object of subtype "photo" is created:
 Contents of the notification message can be defined with the
 ``'prepare', 'notification:[action]:[type]:[subtype]'`` hook.
 
-Example
--------
+
+Custom notification event registration example
+----------------------------------------------
+
+Tell Elgg to send notifications when a new object of the subtype "album" is created:
+
+.. code-block:: php
+
+	// in the elgg-plugin.php
+	'notifications' => [
+		'object' => [
+			'photo' => [
+				'create' => PhotoAlbumCreateNotificationHandler::class, // this needs to be an extension of the \Elgg\Notifications\NotificationEventHandler class
+			],
+		],
+	],
+	
+	//PhotoAlbumCreateNotificationHandler.php
+	
+	class PhotoAlbumCreateNotificationHandler extends \Elgg\Notifications\NotificationEventHandler {
+		
+		/**
+		 * Overrule this function if you wish to modify the subscribers of this notification
+		 *
+		 * This will influence which subscribers are available in the 'get', 'subscribers' hook
+		 */
+		public function getSubscriptions(): array {
+		}
+		
+		/**
+		 * Overrule this function if you wish to modify the subject of the notification
+		 * 
+		 * A magic language key is checked for a default notification:
+		 * 'notification:<action>:<type>:<subtype>:subject'
+		 */
+		protected function getNotificationSubject(\ElggUser $recipient, string $method): string {
+		}
+		
+		/**
+		 * Overrule this function if you wish to modify the body of the notification
+		 *
+		 * A magic language key is checked for a default notification:
+		 * 'notification:<action>:<type>:<subtype>:body'
+		 */
+		protected function getNotificationBody(\ElggUser $recipient, string $method): string {
+		}
+		
+		/**
+		 * Overrule this function if you wish to modify the summary of the notification
+		 *
+		 * default: ''
+		 */
+		protected function getNotificationSummary(\ElggUser $recipient, string $method): string {
+		}
+		
+		/**
+		 * Overrule this function if you wish to modify the target url of the notification
+		 * 
+		 * default: $event->object->getURL()
+		 */
+		protected function getNotificationURL(\ElggUser $recipient, string $method): string {
+		}
+		
+		/**
+		 * Overrule this function if you don't wish to allow the notification event to be configurable on the user notification settings page
+		 * 
+		 * default: true
+		 */
+		public static function isConfigurableByUser(): bool {
+		}
+	}
+
+.. note::
+
+	Make sure the notification will be in the correct language by passing
+	the reciepient's language into the ``elgg_echo()`` function.
+
+Custom notification content example
+-----------------------------------
 
 Tell Elgg to use the function ``photos_prepare_notification()`` to format
 the contents of the notification when a new objects of subtype 'photo' is created:
