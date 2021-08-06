@@ -490,14 +490,13 @@ Configuring simplecache in the settings.php file improves caching performance.
 It allows Elgg to skip connecting to the database when serving cached JavaScript and CSS files",
 	'admin:performance:systemcache' => 'Systemcache',
 	'admin:performance:apache:mod_cache' => 'Apache mod_cache',
-	'admin:performance:apache:mod_cache:warning' => 'The mod_cache module provides HTTP-aware caching schemes. This means that the files will be cached according
-to an instruction specifying how long a page can be considered "fresh".',
+	'admin:performance:apache:mod_cache:warning' => 'The mod_cache module provides HTTP-aware caching schemes. This means that the files will be cached according to an instruction specifying how long a page can be considered "fresh".',
 	'admin:performance:php:open_basedir' => 'PHP open_basedir',
 	'admin:performance:php:open_basedir:not_configured' => 'No limitations have been set',
 	'admin:performance:php:open_basedir:warning' => 'A small amount of open_basedir limitations are in effect, this could impact performance.',
 	'admin:performance:php:open_basedir:error' => 'A large amount of open_basedir limitations are in effect, this will probably impact performance.',
-	'admin:performance:php:open_basedir:generic' => 'With open_basedir every file access will be checked against the list of limitations. Since Elgg has a lot of
-file access this will negatively impact performance. Also PHPs opcache can no longer cache file paths in memory and has to resolve this upon every access.',
+	'admin:performance:php:open_basedir:generic' => 'With open_basedir every file access will be checked against the list of limitations.
+Since Elgg has a lot of file access this will negatively impact performance. Also PHPs opcache can no longer cache file paths in memory and has to resolve this upon every access.',
 	
 	'admin:statistics' => 'Statistics',
 	'admin:server' => 'Server',
@@ -602,8 +601,7 @@ three sections:
 		<dt>Configure</dt><dd>Occasional tasks like setting the site name or configuring settings of a plugin.</dd>
 		<dt>Information</dt><dd>Information about your site like statistics.</dd>
 		<dt>Develop</dt><dd>For developers who are building plugins or designing themes. (Requires a developer plugin.)</dd>
-	</dl>
-",
+	</dl>",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Be sure to check out the resources available through the footer links and thank you for using Elgg!',
@@ -657,14 +655,11 @@ three sections:
 	'admin:security:information' => 'Information',
 	'admin:security:information:description' => 'On this page you can find a list of security recommendations.',
 	'admin:security:information:https' => 'Is the website protected by HTTPS',
-	'admin:security:information:https:warning' => "It's recommended to protect your website using HTTPS, this helps protect data
-(eg. passwords) from being sniffed over the internet connection.",
+	'admin:security:information:https:warning' => "It's recommended to protect your website using HTTPS, this helps protect data (eg. passwords) from being sniffed over the internet connection.",
 	'admin:security:information:wwwroot' => 'Website main folder is writable',
-	'admin:security:information:wwwroot:error' => "It's recommended that you install Elgg in a folder which isn't writable by your webserver.
-Malicious visitors could place unwanted code in your website.",
+	'admin:security:information:wwwroot:error' => "It's recommended that you install Elgg in a folder which isn't writable by your webserver. Malicious visitors could place unwanted code in your website.",
 	'admin:security:information:validate_input' => 'Input validation',
-	'admin:security:information:validate_input:error' => "Some plugin has disabled the input validation on your website, this will allow users to
-submit potentially harmfull content (eg. cross-site-scripting, etc)",
+	'admin:security:information:validate_input:error' => "Some plugin has disabled the input validation on your website, this will allow users to submit potentially harmfull content (eg. cross-site-scripting, etc)",
 	'admin:security:information:password_length' => 'Minimal password length',
 	'admin:security:information:password_length:warning' => "It's recommended to have a minimal password length of at least 6 characters.",
 	'admin:security:information:username_length' => 'Minimal username length',
@@ -672,8 +667,8 @@ submit potentially harmfull content (eg. cross-site-scripting, etc)",
 	'admin:security:information:php:session_gc' => "PHP session cleanup",
 	'admin:security:information:php:session_gc:chance' => "Cleanup chance: %s%%",
 	'admin:security:information:php:session_gc:lifetime' => "Session lifetime %s seconds",
-	'admin:security:information:php:session_gc:error' => "It's recommended to set 'session.gc_probability' and 'session.gc_divisor' in your PHP settings, this will cleanup
-expired sessions from your database and not allow users to reuse old sessions.",
+	'admin:security:information:php:session_gc:error' => "It's recommended to set 'session.gc_probability' and 'session.gc_divisor' in your PHP settings,
+this will cleanup expired sessions from your database and not allow users to reuse old sessions.",
 	'admin:security:information:htaccess:hardening' => ".htaccess file access hardening",
 	'admin:security:information:htaccess:hardening:help' => "In the .htaccess file access to certain files can be blocked to increase security on your site. For more information look in your .htaccess file.",
 	
@@ -894,22 +889,16 @@ See the full list of users here:
 	'admin:server:label:upload_max_filesize' => 'Upload maximum size',
 	'admin:server:warning:post_max_too_small' => '(Note: post_max_size must be larger than this value to support uploads of this size)',
 	'admin:server:label:memcache' => 'Memcache',
-	'admin:server:memcache:inactive' => '
-		Memcache is not setup on this server or it has not yet been configured in Elgg config.
-		For improved performance, it is recommended that you enable and configure memcache (or redis).
-',
+	'admin:server:memcache:inactive' => 'Memcache is not setup on this server or it has not yet been configured in Elgg config.
+For improved performance, it is recommended that you enable and configure memcache (or redis).',
 
 	'admin:server:label:redis' => 'Redis',
-	'admin:server:redis:inactive' => '
-		Redis is not setup on this server or it has not yet been configured in Elgg config.
-		For improved performance, it is recommended that you enable and configure redis (or memcache).
-',
+	'admin:server:redis:inactive' => 'Redis is not setup on this server or it has not yet been configured in Elgg config.
+For improved performance, it is recommended that you enable and configure redis (or memcache).',
 
 	'admin:server:label:opcache' => 'OPcache',
-	'admin:server:opcache:inactive' => '
-		OPcache is not available on this server or it has not yet been enabled.
-		For improved performance, it is recommended that you enable and configure OPcache.
-',
+	'admin:server:opcache:inactive' => 'OPcache is not available on this server or it has not yet been enabled.
+For improved performance, it is recommended that you enable and configure OPcache.',
 	
 	'admin:server:requirements:php_extension' => "PHP extension: %s",
 	'admin:server:requirements:php_extension:required' => "This PHP extension is required for the correct operation of Elgg",
@@ -954,8 +943,7 @@ See the full list of users here:
 
 	'admin:configure_utilities:default_widgets' => 'Default Widgets',
 	'admin:default_widgets:unknown_type' => 'Unknown widget type',
-	'admin:default_widgets:instructions' => 'Add, remove, position, and configure default widgets for the selected widget page.
-These changes will only affect new users on the site.',
+	'admin:default_widgets:instructions' => 'Add, remove, position, and configure default widgets for the selected widget page. These changes will only affect new users on the site.',
 
 	'admin:robots.txt:instructions' => "Edit this site's robots.txt file below",
 	'admin:robots.txt:plugins' => "Plugins are adding the following to the robots.txt file",
@@ -963,8 +951,7 @@ These changes will only affect new users on the site.',
 	'admin:robots.txt:physical' => "The robots.txt tool will not work because a physical robots.txt is present",
 
 	'admin:maintenance_mode:default_message' => 'This site is down for maintenance',
-	'admin:maintenance_mode:instructions' => 'Maintenance mode should be used for upgrades and other large changes to the site.
-		When it is on, only admins can log in and browse the site.',
+	'admin:maintenance_mode:instructions' => 'Maintenance mode should be used for upgrades and other large changes to the site. When it is on, only admins can log in and browse the site.',
 	'admin:maintenance_mode:mode_label' => 'Maintenance mode',
 	'admin:maintenance_mode:message_label' => 'Message displayed to users when maintenance mode is on',
 	'admin:maintenance_mode:saved' => 'The maintenance mode settings were saved.',
