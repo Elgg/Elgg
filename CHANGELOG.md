@@ -1,3 +1,43 @@
+<a name="4.0.0-beta.3"></a>
+### 4.0.0-beta.3  (2021-08-06)
+
+#### Contributors
+
+* Jeroen Dalsem (20)
+* Jerôme Bakker (17)
+
+#### Features
+
+* **friends:** added friends_of widget ([05fea8a0](https://github.com/Elgg/Elgg/commit/05fea8a074f7363c02bc7996ee56a98176028974))
+* **i18n:** added a config flag to disable browser language detection ([00b612dc](https://github.com/Elgg/Elgg/commit/00b612dc3cf4059a2107cd5a86a7dd4cde566ddf))
+* **notifications:**
+  * notification events are configurable ([55c7c909](https://github.com/Elgg/Elgg/commit/55c7c909a7cae564eff95debfe9910bda3087f5a))
+  * subscribers to owner will receive notifications ([2b0f2bb2](https://github.com/Elgg/Elgg/commit/2b0f2bb2b2d559e063124b880d3d0481664c6bc8))
+  * setting to delay notification queue processing ([7942f7e0](https://github.com/Elgg/Elgg/commit/7942f7e0ec78c42a59b6299b567da745d2387536))
+* **pagination:** js loaded listdata triggers a change event ([aa478518](https://github.com/Elgg/Elgg/commit/aa478518cb30bb73259c72aa305bdeeb238f373e))
+* **views:** allow custom title to be passed to output/friendlytime ([4c88d2d3](https://github.com/Elgg/Elgg/commit/4c88d2d38a6fc3895e87f1ba68d40b6b0389ed8d))
+
+
+#### Bug Fixes
+
+* **admin:** drag/drop plugin ordering has been fixed ([7b5fe7df](https://github.com/Elgg/Elgg/commit/7b5fe7dff528b9e1b75376fad051101bd22c3b37))
+* **email:** added mute link to html email footer ([85268538](https://github.com/Elgg/Elgg/commit/85268538c34ddd7278f0003f7d90cae458313f75))
+* **groups:** make sure retrieving group tool option always uses hook ([1e9ae2b6](https://github.com/Elgg/Elgg/commit/1e9ae2b64ec04f52653dc686457a0d7767791dee))
+* **install:**
+  * make sure user is logged in during installer ([b6248ec7](https://github.com/Elgg/Elgg/commit/b6248ec7c268ab20097873419e58b07839d77cee))
+  * allow some vendor files to be included ([3f857850](https://github.com/Elgg/Elgg/commit/3f85785086748b230d10f909c82cdcdfc727c869))
+* **likes:** correctly toggle count badge ([fa2be687](https://github.com/Elgg/Elgg/commit/fa2be68759d67a3649b642b5d46a4257e6435421))
+* **metadata:** elgg_get_tags uses correct default for tag_names ([4e8d5326](https://github.com/Elgg/Elgg/commit/4e8d53264ebd8a6d402c24a9e82e7026cc23bc0c))
+* **phinx:** correctly check for indexes by name during upgrades ([22ccaea9](https://github.com/Elgg/Elgg/commit/22ccaea9408d689b4196dd2b741b0a179b7310dd))
+* **plugins:** position and required state of plugins are now asserted ([948927a3](https://github.com/Elgg/Elgg/commit/948927a31e65979991c3d0c332f2587650602003))
+* **site_notifications:** moved buttonbank to top of the list ([c158e810](https://github.com/Elgg/Elgg/commit/c158e810024122653a50c574e1165a0e03254f86))
+* **tags:** always have tags css available ([3f9b5a63](https://github.com/Elgg/Elgg/commit/3f9b5a63fd69ab429a3ceed92c7fdc937a273d5b))
+* **upgrades:** improved completion reporting ([863e2627](https://github.com/Elgg/Elgg/commit/863e262767b539d385858549ef7bcaababe38ca3))
+* **views:** prevent incidental incorrect id generation ([c2d77bd1](https://github.com/Elgg/Elgg/commit/c2d77bd191cd1fca72236742f8be58af6e015cbf))
+* **webservices:** register correct PAM handlers for API authentication ([51ebcabb](https://github.com/Elgg/Elgg/commit/51ebcabb8c1386c5cdcc6b25c49cd7e4c930e1c6))
+* **widgets:** only update title on non empty href string ([7b147a61](https://github.com/Elgg/Elgg/commit/7b147a61ad6a1c10e0a8d6207a85e1143ee8ec20))
+
+
 <a name="4.0.0-beta.2"></a>
 ### 4.0.0-beta.2  (2021-07-09)
 
