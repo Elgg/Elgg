@@ -3,6 +3,7 @@
 namespace Elgg\Upgrades;
 
 use Elgg\Database\QueryBuilder;
+use Elgg\Notifications\SubscriptionsService;
 use Elgg\Upgrade\Result;
 use Elgg\Upgrade\SystemUpgrade;
 
@@ -56,9 +57,6 @@ class ContentOwnerSubscriptions implements SystemUpgrade {
 			'offset' => $offset,
 		]));
 		
-		// get registered notification methods
-		$methods = elgg_get_notification_methods();
-		
 		$process_entity = function (\ElggEntity $entity) use (&$result) {
 			// using setMetadata because we don't want te rely on the magic setters,
 			// as they can store data in a different table (eg. widgets, plugins)
@@ -76,8 +74,10 @@ class ContentOwnerSubscriptions implements SystemUpgrade {
 				continue;
 			}
 			
-			if ($entity->hasMutedNotifications($owner->guid)) {
-				// user already blocked notifications
+			// get user preferences
+			$content_preferences = $owner->getNotificationSettings('content_create');
+			$enabled_methods = array_keys(array_filter($content_preferences));
+			if (empty($enabled_methods)) {
 				$process_entity($entity);
 				continue;
 			}
@@ -88,23 +88,8 @@ class ContentOwnerSubscriptions implements SystemUpgrade {
 				continue;
 			}
 			
-			// get user preferences
-			$content_preferences = $owner->getNotificationSettings('content_create');
-			$enabled_methods = array_keys(array_filter($content_preferences));
-			if (empty($enabled_methods)) {
-				$process_entity($entity);
-				continue;
-			}
-			
-			// loop through all notification types
-			foreach ($enabled_methods as $method) {
-				// only enable supported methods
-				if (!in_array($method, $methods)) {
-					continue;
-				}
-				
-				$entity->addSubscription($owner->guid, $method);
-			}
+			// add subscption
+			$entity->addSubscription($owner->guid, $enabled_methods);
 			
 			$process_entity($entity);
 		}
@@ -118,6 +103,7 @@ class ContentOwnerSubscriptions implements SystemUpgrade {
 	 * @param array $options additional options
 	 *
 	 * @return array
+	 * @see elgg_get_entities()
 	 */
 	protected function getOptions(array $options = []): array {
 		$upgrade = $this->getUpgradeEntity();
@@ -127,6 +113,7 @@ class ContentOwnerSubscriptions implements SystemUpgrade {
 			'limit' => 100,
 			'batch' => true,
 			'batch_inc_offset' => $this->needsIncrementOffset(),
+			'batch_size' => 50,
 			'wheres' => [
 				function (QueryBuilder $qb, $main_alias) {
 					$owner_guids = $qb->subquery('entities');
@@ -154,6 +141,14 @@ class ContentOwnerSubscriptions implements SystemUpgrade {
 						$qb->compare("{$main_alias}.type", '=', 'group', ELGG_VALUE_STRING),
 						$object,
 					], 'OR');
+				},
+				function (QueryBuilder $qb, $main_alias) {
+					$notification_relationship = $qb->subquery('entity_relationships', 'er');
+					$notification_relationship->select('er.guid_one')
+						->andWhere($qb->compare('er.guid_two', '=', "{$main_alias}.guid"))
+						->andWhere($qb->compare('relationship', '=', SubscriptionsService::MUTE_NOTIFICATIONS_RELATIONSHIP, ELGG_VALUE_STRING));
+					
+					return $qb->compare("{$main_alias}.owner_guid", 'NOT IN', $notification_relationship->getSQL());
 				},
 			],
 		];
