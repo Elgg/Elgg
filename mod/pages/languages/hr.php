@@ -29,8 +29,6 @@ return array(
 
 	'pages:notify:summary' => 'Nova stranica pod nazivom %s',
 	'pages:notify:subject' => "Nova stranica: %s",
-	'pages:notify:body' =>
-'',
 
 	'pages:more' => 'Više stranica',
 	'pages:none' => 'Još nije izrađene niti jedna stranica',

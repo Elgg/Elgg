@@ -50,15 +50,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Новая запись блога %s',
 	'blog:notify:subject' => 'Новая запись блога: %s',
-	'blog:notify:body' =>
-'
-%s опубликовал в блоге: %s
-
-%s
-
-Просмотреть и прокомментировать запись в блоге:
-%s
-',
 
 	// widget
 	'widgets:blog:name' => 'Записи блога',

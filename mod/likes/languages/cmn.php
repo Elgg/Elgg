@@ -25,6 +25,4 @@ return array(
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s 稱讚您的貼文 "%s"',
-	'likes:notifications:body' =>
-'',
 );

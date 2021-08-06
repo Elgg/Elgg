@@ -46,8 +46,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Νέα ανάρτηση με τίτλο %s',
 	'blog:notify:subject' => 'Νέα ανάρτηση: %s',
-	'blog:notify:body' =>
-'',
 
 	// widget
 	'widgets:blog:description' => 'Προβολή πρόσφατων αναρτήσεων σας',

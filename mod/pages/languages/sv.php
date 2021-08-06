@@ -32,8 +32,6 @@ return array(
 
 	'pages:notify:summary' => 'Ny sida med namnet %s',
 	'pages:notify:subject' => "En ny sida: %s",
-	'pages:notify:body' =>
-'',
 
 	'pages:more' => 'Fler sidor',
 	'pages:none' => 'Inga sidor skapade än',

@@ -25,6 +25,4 @@ return array(
 
 	// notifications. yikes.
 	'likes:notifications:subject' => 'a %s piace il tuo post "%s"',
-	'likes:notifications:body' =>
-'',
 );

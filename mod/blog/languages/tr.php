@@ -45,8 +45,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => '%s adında yeni bir blog gönderisi',
 	'blog:notify:subject' => 'Yeni blog gönderisi: %s',
-	'blog:notify:body' =>
-'',
 
 	// widget
 	'widgets:blog:description' => 'Son blog gönderilerinizi göster',

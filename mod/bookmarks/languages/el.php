@@ -28,8 +28,6 @@ return array(
 
 	'bookmarks:notify:summary' => 'Νέος σύνδεσμος με τίτλος %s',
 	'bookmarks:notify:subject' => 'Νέος σύνδεσμος: %s',
-	'bookmarks:notify:body' =>
-'',
 
 	'bookmarks:numbertodisplay' => 'Αριθμός συνδέσμων για εμφάνιση',
 
@@ -41,14 +39,9 @@ return array(
 	'widgets:bookmarks:name' => 'Σύνδεσμοι',
 	'widgets:bookmarks:description' => "Προβολή των πιο πρόσφατων συνδέσμων σας.",
 
-	'bookmarks:bookmarklet:description' =>
-			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
-
-	'bookmarks:bookmarklet:descriptionie' =>
-			"Εάν χρησιμοποιείτε τον Internet Explorer, θα πρέπει να κάντε δεξί κλικ στο εικονίδιο του σελιδοδείκτη, επιλέξτε «προσθήκη στα αγαπημένα».",
-
-	'bookmarks:bookmarklet:description:conclusion' =>
-			"Μπορείτε να αποθηκεύσετε οποιαδήποτε σελίδα που επισκέπτεστε πατώντας ανά πάσα στιγμή.",
+	'bookmarks:bookmarklet:description' => "A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
+	'bookmarks:bookmarklet:descriptionie' => "Εάν χρησιμοποιείτε τον Internet Explorer, θα πρέπει να κάντε δεξί κλικ στο εικονίδιο του σελιδοδείκτη, επιλέξτε «προσθήκη στα αγαπημένα».",
+	'bookmarks:bookmarklet:description:conclusion' => "Μπορείτε να αποθηκεύσετε οποιαδήποτε σελίδα που επισκέπτεστε πατώντας ανά πάσα στιγμή.",
 
 	/**
 	 * Status messages

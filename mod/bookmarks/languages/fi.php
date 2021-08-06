@@ -28,8 +28,6 @@ return array(
 
 	'bookmarks:notify:summary' => 'Uusi kirjanmerkki: %s',
 	'bookmarks:notify:subject' => 'Uusi kirjanmerkki: %s',
-	'bookmarks:notify:body' =>
-'',
 
 	'bookmarks:numbertodisplay' => 'Näytettävien kohteiden määrä',
 
@@ -41,14 +39,9 @@ return array(
 	'widgets:bookmarks:name' => 'Kirjanmerkit',
 	'widgets:bookmarks:description' => "Näytä viimeisimmät kirjanmerkkisi.",
 
-	'bookmarks:bookmarklet:description' =>
-			"Sovelluskirjanmerkki on painike, jonka avulla voit helposti tallentaa nettisivuja kirjanmerkkeihisi. Tallenna painike selaimeesi raahaamalla se selaimen kirjanmerkkeihin.",
-
-	'bookmarks:bookmarklet:descriptionie' =>
-			"Jos käytät Internet Explorer -selainta, klikkaa painiketta hiiren oikealla painikkeella, valitse \"Lisää Suosikit-kansioon...\" ja lisää painike suosikkeihisi.",
-
-	'bookmarks:bookmarklet:description:conclusion' =>
-			"Tämän jälkeen voit nappulaa painamalla tallentaa kirjanmerkkeihisi minkä tahansa sivun.",
+	'bookmarks:bookmarklet:description' => "Sovelluskirjanmerkki on painike, jonka avulla voit helposti tallentaa nettisivuja kirjanmerkkeihisi. Tallenna painike selaimeesi raahaamalla se selaimen kirjanmerkkeihin.",
+	'bookmarks:bookmarklet:descriptionie' => "Jos käytät Internet Explorer -selainta, klikkaa painiketta hiiren oikealla painikkeella, valitse \"Lisää Suosikit-kansioon...\" ja lisää painike suosikkeihisi.",
+	'bookmarks:bookmarklet:description:conclusion' => "Tämän jälkeen voit nappulaa painamalla tallentaa kirjanmerkkeihisi minkä tahansa sivun.",
 
 	/**
 	 * Status messages

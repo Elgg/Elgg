@@ -30,16 +30,6 @@ return array(
 
 	'bookmarks:notify:summary' => '新着ブックマーク「%s」があります。',
 	'bookmarks:notify:subject' => '新着ブックマーク: %s',
-	'bookmarks:notify:body' =>
-'%s さんが新しいブックマークを追加しました: %s
-
-アドレス: %s
-
-%s
-
-このブックマークの表示とコメントは:
-%s
-',
 
 	'bookmarks:numbertodisplay' => '表示するブックマークの件数',
 
@@ -54,14 +44,9 @@ return array(
 	'widgets:bookmarks:name' => 'ブックマーク',
 	'widgets:bookmarks:description' => "あなたが最近つけたブックマークを表示します。",
 
-	'bookmarks:bookmarklet:description' =>
-			"ブックマークレットとはブラウザのリンクバーに保存される特殊なボタンのことです。この機能を使うことによってWeb上で見つけたリソースを全部ブックマークに保存することができます。これを設定するには、下のボタンをブラウザのリンクバーにドラッグしてください:",
-
-	'bookmarks:bookmarklet:descriptionie' =>
-			"Internet Explorerをお使いの方はブックマークレットアイコンを右クリックしてから「お気に入りに保存」を選択していただき、その後、リンクバーに登録してください。",
-
-	'bookmarks:bookmarklet:description:conclusion' =>
-			"ブラウザのボタンをクリックすると訪れたページをブックマークすることができあます。",
+	'bookmarks:bookmarklet:description' => "ブックマークレットとはブラウザのリンクバーに保存される特殊なボタンのことです。この機能を使うことによってWeb上で見つけたリソースを全部ブックマークに保存することができます。これを設定するには、下のボタンをブラウザのリンクバーにドラッグしてください:",
+	'bookmarks:bookmarklet:descriptionie' => "Internet Explorerをお使いの方はブックマークレットアイコンを右クリックしてから「お気に入りに保存」を選択していただき、その後、リンクバーに登録してください。",
+	'bookmarks:bookmarklet:description:conclusion' => "ブラウザのボタンをクリックすると訪れたページをブックマークすることができあます。",
 
 	/**
 	 * Status messages

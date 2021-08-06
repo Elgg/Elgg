@@ -25,6 +25,4 @@ return array(
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s přidal/a "líbí se" k vašemu příspěvku "%s"',
-	'likes:notifications:body' =>
-'',
 );

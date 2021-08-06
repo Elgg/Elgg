@@ -45,8 +45,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Novo artigo: «%s»',
 	'blog:notify:subject' => 'Novo artigo: «%s»',
-	'blog:notify:body' =>
-'',
 
 	// widget
 	'widgets:blog:description' => 'Mostrar os seus últimos artigos',

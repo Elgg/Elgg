@@ -30,16 +30,14 @@ return array(
 
 	'bookmarks:notify:summary' => 'Ein neues Lesezeichen %s wurde erstellt',
 	'bookmarks:notify:subject' => 'Neues Lesezeichen: %s',
-	'bookmarks:notify:body' =>
-'%s hat ein neues Lesezeichen erstellt: %s
+	'bookmarks:notify:body' => '%s hat ein neues Lesezeichen erstellt: %s
 
 Adresse: %s
 
 %s
 
 Schau Dir das neue Lesezeichen an und schreibe einen Kommentar:
-%s
-',
+%s',
 
 	'bookmarks:numbertodisplay' => 'Anzahl der anzuzeigenden Lesezeichen-Einträge.',
 
@@ -54,14 +52,9 @@ Schau Dir das neue Lesezeichen an und schreibe einen Kommentar:
 	'widgets:bookmarks:name' => 'Lesezeichen',
 	'widgets:bookmarks:description' => "Dieses Widget zeigt Deine neuesten Lesezeichen an.",
 
-	'bookmarks:bookmarklet:description' =>
-			"Ein Lesezeichen-Bookmarklet ist eine spezielle Schaltfläche, die Du zur Lesezeichen-Leiste in Deinem Browser hinzufügen kannst. Das Bookmarklet ermöglicht es Dir, für eine Internetseite, die Du zu einem späteren Zeitpunkt noch einmal besuchen willst, ein Lesezeichen zu erstellen. Um das Bookmarklet einzurichten, ziehe die angezeigte Schaltfläche einfach in die Lesezeichen-Leiste Deines Browsers:",
-
-	'bookmarks:bookmarklet:descriptionie' =>
-			"Wenn Du den Internet Explorer verwendest, klicke mit der rechten Maustaste auf das Bookmarklet-Icon, wähle 'Zu Favoriten hinzufügen' und dann die Lesezeichen-Leiste.",
-
-	'bookmarks:bookmarklet:description:conclusion' =>
-			"Du kannst dann ein Lesezeichen für eine Seite erstellen, indem Du auf die Bookmarklet-Schaltfläche in der Lesezeichen-Leiste des Browsers klickst.",
+	'bookmarks:bookmarklet:description' => "Ein Lesezeichen-Bookmarklet ist eine spezielle Schaltfläche, die Du zur Lesezeichen-Leiste in Deinem Browser hinzufügen kannst. Das Bookmarklet ermöglicht es Dir, für eine Internetseite, die Du zu einem späteren Zeitpunkt noch einmal besuchen willst, ein Lesezeichen zu erstellen. Um das Bookmarklet einzurichten, ziehe die angezeigte Schaltfläche einfach in die Lesezeichen-Leiste Deines Browsers:",
+	'bookmarks:bookmarklet:descriptionie' => "Wenn Du den Internet Explorer verwendest, klicke mit der rechten Maustaste auf das Bookmarklet-Icon, wähle 'Zu Favoriten hinzufügen' und dann die Lesezeichen-Leiste.",
+	'bookmarks:bookmarklet:description:conclusion' => "Du kannst dann ein Lesezeichen für eine Seite erstellen, indem Du auf die Bookmarklet-Schaltfläche in der Lesezeichen-Leiste des Browsers klickst.",
 
 	/**
 	 * Status messages

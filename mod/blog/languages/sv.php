@@ -48,8 +48,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Nytt blogginlägg kallat %s',
 	'blog:notify:subject' => 'Nytt blogginlägg: %s',
-	'blog:notify:body' =>
-'',
 
 	// widget
 	'widgets:blog:name' => 'Blogginlägg',

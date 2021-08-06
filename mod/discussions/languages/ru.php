@@ -44,25 +44,9 @@ return array(
 	 */
 	'discussion:topic:notify:summary' => 'Новая тема для обсуждения называется %s',
 	'discussion:topic:notify:subject' => 'Новая тема для обсуждения: %s',
-	'discussion:topic:notify:body' =>
-'%s добавил новую тему обсуждения "%s":
-
-%s
-
-Просмотреть и ответить в теме обсуждения:
-%s
-',
 
 	'discussion:comment:notify:summary' => 'Новый комментарий в теме: %s',
 	'discussion:comment:notify:subject' => 'Новый комментарий в теме: %s',
-	'discussion:comment:notify:body' =>
-'%s прокомментировал в теме обсуждения "%s":
-
-%s
-
-Просмотр и комментирование обсуждения:
-%s
-',
 
 	'groups:tool:forum' => 'Включить групповые обсуждения',
 

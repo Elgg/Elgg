@@ -421,10 +421,7 @@ return array(
 
 	'admin:widget:admin_welcome' => 'Vítejte',
 	'admin:widget:admin_welcome:help' => "Krátké uvedení do administrace projektu Elgg",
-	'admin:widget:admin_welcome:intro' =>
-'Vítejte v projektu Elgg! Právě se díváte na správcovskou nástěnku. Hodí se na sledování dějů na stránkách.',
-	'admin:widget:admin_welcome:admin_overview' =>
-"",
+	'admin:widget:admin_welcome:intro' => 'Vítejte v projektu Elgg! Právě se díváte na správcovskou nástěnku. Hodí se na sledování dějů na stránkách.',
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Nezapomeňte zkontrolovat zdroje dostupné přes odkazy v patičce. Děkujeme že používáte Elgg!',
@@ -1080,12 +1077,6 @@ return array(
 	'actiongatekeeper:timeerror' => 'Platnost používané stránky vypršela. Obnovte ji prosím a zkuste to znovu.',
 	'actiongatekeeper:pluginprevents' => 'Váš formulář bohužel nemohl být z neznámého důvodu odeslán.',
 	'actiongatekeeper:uploadexceeded' => 'Velikost nahraných souboru(ů) překračuje limit nastavený správcem těchto stránek.',
-
-/**
- * Word blacklists
- */
-
-	'word:blacklist' => 'a, pak, ale, ona, jeho, jí, její, jemu, ne, o, teď, proto, nicméně, ještě, rovněž, jinak, tudíž, naopak, spíš, následkem, navíc, přesto, místo toho, zatím, tedy, toto, zdá se, co, koho, komu, jehož, kdokoli, komukoliv',
 
 /**
  * Javascript

@@ -25,6 +25,4 @@ return array(
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s του αρέσει η ανάρτηση "%s"',
-	'likes:notifications:body' =>
-'',
 );

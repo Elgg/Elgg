@@ -30,16 +30,14 @@ return array(
 
 	'bookmarks:notify:summary' => 'Nouveau signet intitulé %s',
 	'bookmarks:notify:subject' => 'Nouveau signet : %s',
-	'bookmarks:notify:body' =>
-'%s a ajouté un nouveau signet : %s
+	'bookmarks:notify:body' => '%s a jouté un nouveau signet : %s
 
 Adresse : %s
 
 %s
 
-Voir et commenter ce signet :
-%s
-',
+Afficher et commenter le signet :
+%s',
 
 	'bookmarks:numbertodisplay' => 'Nombre de signets à afficher',
 
@@ -54,14 +52,9 @@ Voir et commenter ce signet :
 	'widgets:bookmarks:name' => 'Signets',
 	'widgets:bookmarks:description' => "Affiche vos derniers signets.",
 
-	'bookmarks:bookmarklet:description' =>
-			"Un \"bookmarklet\" est un type de bouton ou de lien spécial que vous enregistrez dans la barre de liens de votre navigateur. Il vous permet d'enregistrer rapidement dans vos signets tout type de ressource que vous trouvez sur internet. Pour le mettre en place, faites glisser le bouton ci-dessous dans la barre de liens de votre navigateur :",
-
-	'bookmarks:bookmarklet:descriptionie' =>
-			"Si vous utilisez Internet Explorer, faites un clic droit sur le bouton et ajoutez-le dans vos favoris, puis dans votre barre de liens.",
-
-	'bookmarks:bookmarklet:description:conclusion' =>
-			"Vous pouvez mettre en signet n'importe quelle page à tout moment en cliquant sur le bouton de votre navigateur.",
+	'bookmarks:bookmarklet:description' => "Un \"bookmarklet\" est un type de bouton ou de lien spécial que vous enregistrez dans la barre de liens de votre navigateur. Il vous permet d'enregistrer rapidement dans vos signets tout type de ressource que vous trouvez sur internet. Pour le mettre en place, faites glisser le bouton ci-dessous dans la barre de liens de votre navigateur :",
+	'bookmarks:bookmarklet:descriptionie' => "Si vous utilisez Internet Explorer, faites un clic droit sur le bouton et ajoutez-le dans vos favoris, puis dans votre barre de liens.",
+	'bookmarks:bookmarklet:description:conclusion' => "Vous pouvez mettre en signet n'importe quelle page à tout moment en cliquant sur le bouton de votre navigateur.",
 
 	/**
 	 * Status messages

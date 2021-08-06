@@ -44,25 +44,21 @@ return array(
 	 */
 	'discussion:topic:notify:summary' => 'Neue Diskussion namens %s',
 	'discussion:topic:notify:subject' => 'Neue Diskussion: %s',
-	'discussion:topic:notify:body' =>
-'%s hat die neue Diskussion "%s" gestartet:
+	'discussion:topic:notify:body' => '%s hat die neue Diskussion "%s" gestartet:
 
 %s
 
 Schau Dir die neue Diskussion an und antworte darauf:
-%s
-',
+%s',
 
 	'discussion:comment:notify:summary' => 'Neue Antwort in Diskussion %s',
 	'discussion:comment:notify:subject' => 'Neue Antwort in Diskussion: %s',
-	'discussion:comment:notify:body' =>
-'%s hat in der Diskussion "%s" geantwortet:
+	'discussion:comment:notify:body' => '%s hat in der Diskussion "%s" geantwortet:
 
 %s
 
 Schau Dir die Diskussion an und antworte selbst darauf:
-%s
-',
+%s',
 
 	'groups:tool:forum' => 'Gruppen-Diskussionen aktivieren',
 
@@ -74,4 +70,8 @@ Schau Dir die Diskussion an und antworte selbst darauf:
 	'discussion:topic:closed:desc' => 'Diese Diskussion ist geschlossen und es können keine neuen Antworten mehr hinzugefügt werden.',
 
 	'discussion:topic:description' => 'Textinhalt der Diskussion',
+	'discussion:topic:toggle_status:open' => 'Die Diskussion wurde wiedereröffnet.',
+	'discussion:topic:toggle_status:open:confirm' => 'Bist Du sicher, daß Du diese Diskussion wiedereröffnen willst?',
+	'discussion:topic:toggle_status:closed' => 'Die Diskussion wurde geschlossen.',
+	'discussion:topic:toggle_status:closed:confirm' => 'Bist Du sicher, daß Du diese Diskussion schließen willst?',
 );

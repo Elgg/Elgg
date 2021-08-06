@@ -48,8 +48,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Nova objava na blogu ima naslov  %s',
 	'blog:notify:subject' => 'Nova objava na blogu: %s',
-	'blog:notify:body' =>
-'',
 
 	// widget
 	'widgets:blog:name' => 'Objava na blogu',

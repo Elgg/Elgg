@@ -29,8 +29,6 @@ return array(
 
 	'pages:notify:summary' => 'Nuova pagina intitolata %s',
 	'pages:notify:subject' => "Una nuova pagina: %s",
-	'pages:notify:body' =>
-'',
 
 	'pages:more' => 'Più pagine',
 	'pages:none' => 'Ancora nessuna pagina creata',

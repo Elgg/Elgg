@@ -28,8 +28,6 @@ return array(
 
 	'bookmarks:notify:summary' => 'Nuevo marcador llamado %s',
 	'bookmarks:notify:subject' => 'Nuevo marcador: %s',
-	'bookmarks:notify:body' =>
-'',
 
 	'bookmarks:numbertodisplay' => 'N&uacute;mero de marcadores a mostrar',
 
@@ -44,14 +42,9 @@ return array(
 	'widgets:bookmarks:name' => 'Marcadores',
 	'widgets:bookmarks:description' => "Mostrar tus últimos marcadores",
 
-	'bookmarks:bookmarklet:description' =>
-			"Un bookmarklet es un tipo especial de botón que guardas en la barra de enlaces de tu navegador. Esto le permite guardar cualquier recurso que encuentre en la web a sus marcadores. Para configurarlo, arrastre el botón de abajo a la barra de vínculos de su navegador:",
-
-	'bookmarks:bookmarklet:descriptionie' =>
-			"Si usas Internet Explorer, necesitas hacer click con el bot&oacute;n derecho del rat&oacute;n al enlace, select 'add to favorites', y entonces a la barra de marcadores.",
-
-	'bookmarks:bookmarklet:description:conclusion' =>
-			"A continuación, puedes guardar cualquier página que visite haciendo clic en él en cualquier momento.",
+	'bookmarks:bookmarklet:description' => "Un bookmarklet es un tipo especial de botón que guardas en la barra de enlaces de tu navegador. Esto le permite guardar cualquier recurso que encuentre en la web a sus marcadores. Para configurarlo, arrastre el botón de abajo a la barra de vínculos de su navegador:",
+	'bookmarks:bookmarklet:descriptionie' => "Si usas Internet Explorer, necesitas hacer click con el bot&oacute;n derecho del rat&oacute;n al enlace, select 'add to favorites', y entonces a la barra de marcadores.",
+	'bookmarks:bookmarklet:description:conclusion' => "A continuación, puedes guardar cualquier página que visite haciendo clic en él en cualquier momento.",
 
 	/**
 	 * Status messages
