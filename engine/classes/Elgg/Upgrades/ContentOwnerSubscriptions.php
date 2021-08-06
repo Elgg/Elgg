@@ -60,7 +60,9 @@ class ContentOwnerSubscriptions implements SystemUpgrade {
 		$methods = elgg_get_notification_methods();
 		
 		$process_entity = function (\ElggEntity $entity) use (&$result) {
-			$entity->__content_owner_subscription_upgrade_migrated = time();
+			// using setMetadata because we don't want te rely on the magic setters,
+			// as they can store data in a different table (eg. widgets, plugins)
+			$entity->setMetadata('__content_owner_subscription_upgrade_migrated', time());
 			
 			$result->addSuccesses();
 		};
