@@ -410,10 +410,7 @@ return array(
 
 	'admin:widget:admin_welcome' => 'Benvida',
 	'admin:widget:admin_welcome:help' => "Unha breve introdución á zona de administración de Elgg",
-	'admin:widget:admin_welcome:intro' =>
-'Reciba a nosa benvida a Elgg. O que ten diante agora mesmo é o taboleiro de administración. Resulta útil para facer un seguimento do que está a acontecer no sitio.',
-	'admin:widget:admin_welcome:admin_overview' =>
-"",
+	'admin:widget:admin_welcome:intro' => 'Reciba a nosa benvida a Elgg. O que ten diante agora mesmo é o taboleiro de administración. Resulta útil para facer un seguimento do que está a acontecer no sitio.',
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Asegúrese de botarlle unha ollada aos recursos dispoñíbeis na parte inferior da páxina, e grazas por usar Elgg!',
@@ -1067,12 +1064,6 @@ Se o erro persiste, comprobe o rexistro de erros do servidor, a ver se pode inde
 	'actiongatekeeper:timeerror' => 'A páxina que estaba a usar caducou. Actualize a páxina e vólvao intentar.',
 	'actiongatekeeper:pluginprevents' => 'Algunha razón descoñecida impediu enviar o seu formulario.',
 	'actiongatekeeper:uploadexceeded' => 'O tamaño dos ficheiros enviados supera o límite definido polo administrador do sitio.',
-
-/**
- * Word blacklists
- */
-
-	'word:blacklist' => 'e, o, a, os, as, entón, pero, mais, ela, el, un, non, tamén, sobre, agora, porén, aínda, igualmente, senón, máis, isto, iso, aquilo, parece, que, quen, cuxa, cuxo, cuxas, cuxos',
 
 /**
  * Javascript

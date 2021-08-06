@@ -28,8 +28,6 @@ return array(
 
 	'bookmarks:notify:summary' => 'Panggil bookmark baru %s',
 	'bookmarks:notify:subject' => 'Bookmark baru: %s',
-	'bookmarks:notify:body' =>
-'',
 
 	'bookmarks:numbertodisplay' => 'Jumlah bookmark untuk ditampilkan',
 
@@ -44,14 +42,9 @@ return array(
 	'widgets:bookmarks:name' => 'Bookmarks',
 	'widgets:bookmarks:description' => "Tampilkan bookmark terbaru Anda.",
 
-	'bookmarks:bookmarklet:description' =>
-			"Bookmarklet adalah jenis tombol khusus yang Anda simpan ke bilah tautan browser Anda. Ini memungkinkan Anda untuk menyimpan sumber daya apa pun yang Anda temukan di web ke bookmark Anda. Untuk menyiapkannya, seret tombol di bawah ke bilah tautan browser Anda:",
-
-	'bookmarks:bookmarklet:descriptionie' =>
-			"Jika Anda menggunakan Internet Explorer, Anda harus mengklik kanan pada ikon bookmarklet, pilih 'tambahkan ke favorit', dan kemudian bilah Link.",
-
-	'bookmarks:bookmarklet:description:conclusion' =>
-			"Anda kemudian dapat mem-bookmark halaman apa pun yang Anda kunjungi dengan mengklik tombol di browser Anda setiap saat.",
+	'bookmarks:bookmarklet:description' => "Bookmarklet adalah jenis tombol khusus yang Anda simpan ke bilah tautan browser Anda. Ini memungkinkan Anda untuk menyimpan sumber daya apa pun yang Anda temukan di web ke bookmark Anda. Untuk menyiapkannya, seret tombol di bawah ke bilah tautan browser Anda:",
+	'bookmarks:bookmarklet:descriptionie' => "Jika Anda menggunakan Internet Explorer, Anda harus mengklik kanan pada ikon bookmarklet, pilih 'tambahkan ke favorit', dan kemudian bilah Link.",
+	'bookmarks:bookmarklet:description:conclusion' => "Anda kemudian dapat mem-bookmark halaman apa pun yang Anda kunjungi dengan mengklik tombol di browser Anda setiap saat.",
 
 	/**
 	 * Status messages

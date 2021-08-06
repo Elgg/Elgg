@@ -29,8 +29,6 @@ return array(
 
 	'pages:notify:summary' => 'Nowa strona o nazwie %s',
 	'pages:notify:subject' => "Nowa strona: %s",
-	'pages:notify:body' =>
-'',
 
 	'pages:more' => 'Więcej stron',
 	'pages:none' => 'Nie utworzono jeszcze stron',

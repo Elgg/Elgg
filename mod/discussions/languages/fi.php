@@ -34,13 +34,9 @@ return array(
 	 */
 	'discussion:topic:notify:summary' => 'Uusi keskustelu: %s',
 	'discussion:topic:notify:subject' => 'Uusi keskustelu: %s',
-	'discussion:topic:notify:body' =>
-'',
 
 	'discussion:comment:notify:summary' => 'Uusi vastaus keskustelussa: %s',
 	'discussion:comment:notify:subject' => 'Uusi vastaus keskustelussa: %s',
-	'discussion:comment:notify:body' =>
-'',
 
 	'groups:tool:forum' => 'Ota käyttöön ryhmän keskustelut',
 

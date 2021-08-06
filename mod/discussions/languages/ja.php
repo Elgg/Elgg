@@ -41,13 +41,9 @@ return array(
 	 */
 	'discussion:topic:notify:summary' => '新しい議題「%s」が投稿されました',
 	'discussion:topic:notify:subject' => '新着議題: %s',
-	'discussion:topic:notify:body' =>
-'',
 
 	'discussion:comment:notify:summary' => '新着返答:  議題 %s',
 	'discussion:comment:notify:subject' => '新着返答:  議題 %s',
-	'discussion:comment:notify:body' =>
-'',
 
 	'groups:tool:forum' => 'グループ会議の利用',
 

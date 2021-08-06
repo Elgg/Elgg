@@ -8,6 +8,7 @@
 return array(
 
 	'item:object:reported_content' => 'Gemeldete Beiträge',
+	'collection:object:reported_content' => 'Gemeldete Beiträge',
 	'admin:administer_utilities:reportedcontent' => 'Gemeldete Beiträge',
 	'reportedcontent' => 'Gemeldete Beiträge',
 	'reportedcontent:this' => 'Beitrag melden',

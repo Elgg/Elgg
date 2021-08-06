@@ -25,6 +25,4 @@ return array(
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s tykkää kohteestasi "%s"',
-	'likes:notifications:body' =>
-'',
 );

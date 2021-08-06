@@ -25,8 +25,7 @@ return array(
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s さんは、あなたの投稿 「 %s 」 に"Like"を付けました',
-	'likes:notifications:body' =>
-'%1$s さんが %3$s 、あなたの記事 「 %2$s 」 に "like" をつけました 
+	'likes:notifications:body' => '%1$s さんが %3$s 、あなたの記事 「 %2$s 」 に "like" をつけました 
 
 あなたの記事を見るには:
 

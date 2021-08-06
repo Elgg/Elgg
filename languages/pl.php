@@ -403,10 +403,7 @@ return array(
 
 	'admin:widget:admin_welcome' => 'Witaj',
 	'admin:widget:admin_welcome:help' => "Krótkie wprowadzenie to panelu administracyjnego Elgg",
-	'admin:widget:admin_welcome:intro' =>
-'Witaj w Elgg! Właśnie patrzysz na tablicę administracyjną. Jest ona przydatna, gdy chcesz śledzić co się dzieje na stronie.',
-	'admin:widget:admin_welcome:admin_overview' =>
-"",
+	'admin:widget:admin_welcome:intro' => 'Witaj w Elgg! Właśnie patrzysz na tablicę administracyjną. Jest ona przydatna, gdy chcesz śledzić co się dzieje na stronie.',
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Upewnij się, że sprawdziłeś zasoby dostępne poprzez linki dostępne w stopce. Dziękujemy za wybór Elgg!',
@@ -1044,12 +1041,6 @@ return array(
 	'actiongatekeeper:timeerror' => 'Formularz wygasł, prosimy odświeżyć i spróbować ponownie.',
 	'actiongatekeeper:pluginprevents' => 'Rozszerzenie zablokowało wysłanie formularza.',
 	'actiongatekeeper:uploadexceeded' => 'Rozmiar wgranego pliku (lub plików) przekroczył limit ustawiony przez administratora',
-
-/**
- * Word blacklists
- */
-
-	'word:blacklist' => 'and, the, then, but, she, his, her, him, one, not, also, about, now, hence, however, still, likewise, otherwise, therefore, conversely, rather, consequently, furthermore, nevertheless, instead, meanwhile, accordingly, this, seems, what, whom, whose, whoever, whomever',
 
 /**
  * Javascript

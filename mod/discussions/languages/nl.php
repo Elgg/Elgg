@@ -44,13 +44,21 @@ return array(
 	 */
 	'discussion:topic:notify:summary' => 'Nieuwe discussie met de titel \'%s\'',
 	'discussion:topic:notify:subject' => 'Nieuwe discussie: %s',
-	'discussion:topic:notify:body' =>
-'',
+	'discussion:topic:notify:body' => '%s heeft een nieuwe discussie toegevoegd "%s":
+
+%s
+
+Bekijk en reageer hier op de discussie:
+%s',
 
 	'discussion:comment:notify:summary' => 'Nieuwe reactie in discussie \'%s\'',
 	'discussion:comment:notify:subject' => 'Nieuwe reactie in discussie \'%s\'',
-	'discussion:comment:notify:body' =>
-'',
+	'discussion:comment:notify:body' => '%s reageerde op de discussie "%s":
+
+%s
+
+Bekijk en reageer hier op de discussie:
+%s',
 
 	'groups:tool:forum' => 'Activeer groepsdiscussies',
 
@@ -62,4 +70,8 @@ return array(
 	'discussion:topic:closed:desc' => 'Deze discussie is gesloten. Er kunnen geen reacties meer geplaatst worden.',
 
 	'discussion:topic:description' => 'Onderwerp van je discussie',
+	'discussion:topic:toggle_status:open' => 'De discussie is opnieuw geopend',
+	'discussion:topic:toggle_status:open:confirm' => 'Weet je zeker dat je deze discussie wilt heropenen?',
+	'discussion:topic:toggle_status:closed' => 'De discussie is gesloten',
+	'discussion:topic:toggle_status:closed:confirm' => 'Weet je zeker dat je deze discussie wilt sluiten?',
 );

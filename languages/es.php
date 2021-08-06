@@ -485,10 +485,7 @@ return array(
 
 	'admin:widget:admin_welcome' => 'Bienvenido',
 	'admin:widget:admin_welcome:help' => "Esta es el &aacute;rea de administraci&oacute;n",
-	'admin:widget:admin_welcome:intro' =>
-'Bienvenido! Se encuentra viendo el panel de control de la administraci&oacute;n. Es &uacute;til para visualizar las novedades en la red',
-	'admin:widget:admin_welcome:admin_overview' =>
-"",
+	'admin:widget:admin_welcome:intro' => 'Bienvenido! Se encuentra viendo el panel de control de la administraci&oacute;n. Es &uacute;til para visualizar las novedades en la red',
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Aseg&uacute;rese de verificar los recursos disponibles en los enlaces del pi&eacute; de p&aacute;gina y gracias por utilizar Elgg!',
@@ -1185,12 +1182,6 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
 	'actiongatekeeper:timeerror' => 'La p&aacute;gina que se encontraba utilizando ha expirado. Por favor refresque la p&aacute;gina e intente nuevamente',
 	'actiongatekeeper:pluginprevents' => 'Lo sentimos. No se ha podido enviar el formulario por motivos desconocidos.',
 	'actiongatekeeper:uploadexceeded' => 'El tama&ntilde;o del(los) archivo(s) supera el m&iacute;mite establecido',
-
-/**
- * Word blacklists
- */
-
-	'word:blacklist' => 'and, the, then, but, she, his, her, him, one, not, also, about, now, hence, however, still, likewise, otherwise, therefore, conversely, rather, consequently, furthermore, nevertheless, instead, meanwhile, accordingly, this, seems, what, whom, whose, whoever, whomever',
 
 /**
  * Javascript

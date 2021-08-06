@@ -49,11 +49,21 @@ return array(
 
 	'ajax:error' => 'Bei der Durchführung des AJAX-Aufrufs ist ein Fehler aufgetreten. Vielleicht ist die Verbindung zum Server verloren gegangen.',
 	'ajax:not_is_xhr' => 'Ein direkter Aufruf von Ajax-Views ist nicht erlaubt.',
+	'ajax:pagination:no_data' => 'Keine neuen Daten für die Seite gefunden.',
+	'ajax:pagination:load_more' => 'Mehr laden',
+
+	'ElggEntity:Error:SetSubtype' => 'Verwende %s anstatt des Magischen Setters für "subtype"',
+	'ElggEntity:Error:SetEnabled' => 'Verwende %s anstatt des Magischen Setters für "enabled"',
+	'ElggUser:Error:SetAdmin' => 'Verwende %s anstatt des Magischen Setters für "admin"',
+	'ElggUser:Error:SetBanned' => 'Verwende %s anstatt des Magischen Setters für "banned"',
 
 	'PluginException:CannotStart' => '%s (GUID: %s) kann nicht gestartet werden und wurde deaktiviert. Ursache: %s.',
 	'PluginException:InvalidID' => "%s ist eine ungültig Plugin-ID.",
 	'PluginException:InvalidPath' => "%s ist ungültiger Plugin-Dateipfad.",
 	'ElggPlugin:MissingID' => 'Fehlende Plugin-ID (GUID: %s).',
+	'ElggPlugin:NoPluginComposer' => 'Fehlende composer.json für Plugin-ID %s (GUID: %s).',
+	'ElggPlugin:StartFound' => 'Für Plugin-ID %s wurde eine start.php gefunden. Dies deutet darauf hin, dass dies eine nicht unterstützte Plugin-Version ist.',
+	'ElggPlugin:IdMismatch' => 'Das Plugin-Verzeichnis dieses Plugins muss zu "%s" umbenannt werden, damit der Name mit dem Projektname in composer.json des Plugins übereinstimmt.',
 	'ElggPlugin:Error' => 'Fehler in Plugin.',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Einbindung von %s für Plugin %s (GUID: %s) an %s gescheitert.',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Einbindung von %s für Plugin %s (GUID: %s) an %s gescheitert.',
@@ -63,6 +73,8 @@ return array(
 	'ElggPlugin:activate:ConfigSentOutput' => 'Die Plugin-Datei "elgg-plugin.php" hat eine Ausgabe erzeugt.',
 
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Es sind aktive Plugins vorhanden, die die Verfügbarkeit von %s voraussetzen. Bevor Du dieses Plugin deaktivieren kannst, mußt Du erst folgende Plugins deaktivieren: %s',
+	'ElggPlugin:Dependencies:MustBeActive' => 'Muss aktiv sein',
+	'ElggPlugin:Dependencies:Position' => 'Position',
 
 	'ElggMenuBuilder:Trees:NoParents' => 'Menueinträge gefunden, bei denen der übergeordnete und auf sie verweisende Menueintrag nicht vorhanden ist.',
 	'ElggMenuBuilder:Trees:OrphanedChild' => 'Menueintrag [%s] gefunden, bei dem der übergeordnete Menueintrag [%s] fehlt.',
@@ -91,6 +103,8 @@ return array(
 	
 	'Security:InvalidPasswordCharacterRequirementsException' => "Das eingegebene Passwort genügt nicht den Anforderungen bezüglich der Anzahl der Zeichen.",
 	'Security:InvalidPasswordLengthException' => "Das eingegebene Passwort genügt nicht der Anforderung einer Mindestlänge von %s Zeichen.",
+	
+	'Entity:Subscriptions:InvalidMethodsException' => '%s erfordert, dass $methods ein String oder ein String-Array ist.',
 
 	'viewfailure' => 'In der View %s ist ein interner Fehler aufgetreten.',
 	'changebookmark' => 'Bitte ändere Dein Lesezeichen für diese Seite.',
@@ -219,6 +233,9 @@ return array(
 	'collection:user' => 'Mitglieder',
 	'item:user:user' => 'Benutzer',
 	'collection:user:user' => 'Mitglieder',
+	'notification:user:user:make_admin' => "Benachrichtigung senden, wenn ein Benutzer Admin-Rechte erhält",
+	'notification:user:user:remove_admin' => "Benachrichtigung senden, wenn ein Benutzer Admin-Rechte entzogen bekommt",
+	'notification:user:user:unban' => "Benachrichtigung senden, wenn der Account eines Benutzers entsperrt wird",
 
 	'friends' => "Freunde",
 	'collection:friends' => '%s von Freunden',
@@ -287,8 +304,55 @@ return array(
  * Notifications
  */
 	'notification:method:email' => 'Email',
+	'notification:method:email:from' => '%s (via %s)',
+	'notification:method:delayed_email' => 'Sammel-Email',
+	
+	'usersettings:notifications:title' => "Benachrichtigungseinstellungen",
+	'usersettings:notifications:users:title' => 'Mitglieds-spezifische Benachrichtigungseinstellungen',
+	'usersettings:notifications:users:description' => 'Um von Deinen Freunden Benachrichtigungen zu erhalten, wenn sie neue Inhalte erzeugen, kannst Du individuell für jeden von ihnen im Folgenden die Methode(n) festlegen, die verwendet werden soll(en).',
+	
+	'usersettings:notifications:menu:page' => "Benachrichtigungseinstellungen",
+	'usersettings:notifications:menu:filter:settings' => "Einstellungen",
+	
+	'usersettings:notifications:default:description' => 'Standard bei Eintritt von benachrichtigungswürdigen Ereignissen auf der Seite',
+	'usersettings:notifications:content_create:description' => 'Standard bei Rückmeldungen (beispielsweise Kommentaren) zu Deinen Beiträgen',
+	'usersettings:notifications:create_comment:description' => "Standard bei zukünftigen Rückmeldungen zu Beiträgen von anderen, nachdem Du selbst zu diesen Beiträgen einen Kommentar hinterlassen hast",
+
+	'usersettings:notifications:timed_muting' => "Benachrichtigungen temporär deaktivieren",
+	'usersettings:notifications:timed_muting:help' => "Wenn Du für eine gewisse Zeit (beispielsweise während eines Urlaubs) keine Benachrichtigungen erhalten willst, kannst Du ein Anfangs- und Enddatum festlegen zwischen denen alle Benachrichtigungen deaktiviert werden sollen.",
+	'usersettings:notifications:timed_muting:start' => "Anfangsdatum",
+	'usersettings:notifications:timed_muting:end' => "Enddatum",
+	'usersettings:notifications:timed_muting:warning' => "Derzeit sind alle Benachrichtigungen für Dich deaktiviert.",
+	
+	'usersettings:notifications:save:ok' => "Die Benachrichtigungseinstellungen wurden gespeichert.",
+	'usersettings:notifications:save:fail' => "Beim Speichern der Benachrichtigungseinstellungen ist ein Fehler aufgetreten.",
+	
+	'usersettings:notifications:subscriptions:save:ok' => "Benachrichtigungs-Abonnements gespeichert.",
+	'usersettings:notifications:subscriptions:save:fail' => "Beim Speichern der Benachrichtigungs-Abonnements ist ein Fehler aufgetreten.",
+
+	'notification:default:salutation' => 'Hallo %s,',
+	'notification:default:sign-off' => 'Grüße
+
+%s',
 	'notification:subject' => 'Benachrichtigung über %s',
 	'notification:body' => 'Schau Dir die neue Aktivität hier an: %s',
+	
+	'notifications:delayed_email:subject:daily' => "Tägliche Sammel-Emails",
+	'notifications:delayed_email:subject:weekly' => "Wöchentliche Sammel-Emails",
+	
+	'notifications:subscriptions:no_results' => 'Es sind keine Benachrichtigungs-Abonnements vorhanden.',
+
+	'notifications:mute:title' => "Benachrichtigungen blockieren",
+	'notifications:mute:description' => "Wenn Du bestimmte Benachrichtigungen, die Du bisher bekommst, nicht länger erhalten willst, kannst Du basierend auf einer oder mehrerer der folgenden Kriterien die unerwünschten Benachrichtigungen blockieren:",
+	'notifications:mute:error:content' => "Es wurden keine Einstellungen zum Blockieren von Benachrichtigungen gefunden.",
+	'notifications:mute:entity' => "über '%s'",
+	'notifications:mute:container' => "von '%s'",
+	'notifications:mute:owner' => "von '%s'",
+	'notifications:mute:actor' => "gestartet von '%s'",
+	'notifications:mute:group' => "geschrieben in der Gruppe '%s'",
+	'notifications:mute:user' => "geschrieben vom Mitglied '%s'",
+	
+	'notifications:mute:save:success' => "Deine Einstellungen zum Blockieren von Benachrichtigungen wurden gespeichert.",
 
 /**
  * Search
@@ -416,12 +480,17 @@ return array(
 	'admin:performance:label:generic' => 'Allgemein',
 	'admin:performance:generic:description' => 'Im Folgendes ist eine Auflistung von Vorschlägen, um die Performance Deiner Webseite zu verbessern',
 	'admin:performance:simplecache' => 'Simplecache',
+	'admin:performance:simplecache:settings:warning' => "Es ist empfehlenswert, den Simplecache über die entsprechende Konfigurationsvariable in settings.php zu aktivieren.
+Die Verwendung von Simplecache verbessert die Cache-Performance.
+Bei der Konfiguration der Simplecache-Option in settings.php kann eine Datenbankanfrage bei der Bereitstellung von Javascript- und CSS-Dateien eingespart werden.",
 	'admin:performance:systemcache' => 'Systemcache',
 	'admin:performance:apache:mod_cache' => 'Apache-mod_cache',
+	'admin:performance:apache:mod_cache:warning' => 'Das mod_cache-Modul ermöglicht Cache-Handling über HTTP. Das bedeutet, die Dateien können entsprechend der im Seiten-Header hinterlegten Informationen, die festlegen, wie lange eine Seite als aktuell anzusehen ist, auf der Clientseite gecacht werden.',
 	'admin:performance:php:open_basedir' => 'PHP-open_basedir',
 	'admin:performance:php:open_basedir:not_configured' => 'Es wurden keine Beschränkungen definiert.',
 	'admin:performance:php:open_basedir:warning' => 'Ein kleiner Teil der open_basedir-Beschränkungen sind in Kraft. Dies könnte die Performance negativ beeinflussen.',
 	'admin:performance:php:open_basedir:error' => 'Ein grosser Teil der open_basedir-Beschränkungen sind in Kraft. Dies wird mit hoher Wahrscheinlichkeit die Performance negativ beeinflussen.',
+	'admin:performance:php:open_basedir:generic' => 'Wenn mit der PHP-Variable open_basedir Zugriffsbeschränkungen definiert sind, muss bei jedem Dateizugriff geprüft werden, ob dieser zulässig ist. Da Elgg eine grosse Menge an Dateizugriffen vornimmt, wird dies die Performance negativ beeinflussen. Darüber hinaus kann der PHP-Opcache Dateipfade nicht im Speicher cachen und muss diese bei jedem Dateizugriff erneut neu auflösen.',
 	
 	'admin:statistics' => 'Statistiken',
 	'admin:server' => 'Server',
@@ -516,12 +585,17 @@ return array(
 
 	'admin:widget:admin_welcome' => 'Willkommen',
 	'admin:widget:admin_welcome:help' => "Eine kurze Einführung in den Admin-Bereich von Elgg.",
-	'admin:widget:admin_welcome:intro' =>
-'Willkommen auf Deiner Elgg-Seite! Du siehst gerade das Administrator-Dashboard. Es ist hilfreich, um auf Deiner Seite den Überblick zu behalten.',
+	'admin:widget:admin_welcome:intro' => 'Willkommen auf Deiner Elgg-Seite! Du siehst gerade das Administrator-Dashboard. Es ist hilfreich, um auf Deiner Seite den Überblick zu behalten.',
 
 	'admin:widget:admin_welcome:registration' => "Die Erstellung neuer Benutzeraccounts ist derzeit deaktiviert! Du kannst die Neuregistrierung auf der Seite %s aktivieren.",
-	'admin:widget:admin_welcome:admin_overview' =>
-"",
+	'admin:widget:admin_welcome:admin_overview' => "Der Admin-Bereich ist in Unterseiten aufgeteilt, die über das Menu auf der rechten Seite aufgerufen werden können. Der Admin-Bereich ist in vier Abschnitte aufgeteilt:
+	<dl>
+		<dt>Administrieren</dt><dd>Alltägliche Aufgaben wie die Benutzerverwaltung, Kontrolle gemeldeter Inhalte oder das Aktivieren eines Plugins.</dd>
+		<dt>Konfigurieren</dt><dd>Gelegentlich notwendige Aufgaben wie die Konfiguration des Namens der Seite oder die Änderung von Plugineinstellungen.</dd>
+		<dt>Information</dt><dd>Informationen über Deine Seite wie beispielsweise Inhalts-Statistiken.</dd>
+		<dt>Entwickeln</dt><dd>Für Entwickler, die ein Plugin oder ein Theme testen wollen. (Ein Entwickler-Plugin muss aktiviert sein, damit dieser Abschnitt angezeigt wird.)</dd>
+	</dl>
+",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Wirf auch einen Blick auf die zusätzlichen Resourcen, die Du über die Links in der Fußzeile des Admin-Bereichs aufrufen kannst. Und vielen Dank, dass Du Elgg verwendest!',
@@ -575,8 +649,11 @@ return array(
 	'admin:security:information' => 'Informationen',
 	'admin:security:information:description' => 'Im Folgenden sind einige Vorschläge zur Verbesserung der Sicherheit Deiner Webseite aufgelistet.',
 	'admin:security:information:https' => 'Verwendung von HTTPS geschützt',
+	'admin:security:information:https:warning' => "Es ist sehr zu empfehlen, HTTPS zu verwenden, um Deine Webseite zu schützen. Dies verringert das Risiko, das Daten (z.B. Passwörter) auf dem Weg von Server zum Client oder zurück ausgespäht werden können.",
 	'admin:security:information:wwwroot' => 'Hauptverzeichnis der Webseite schreibbar',
-	'admin:security:information:validate_input' => 'Input validation',
+	'admin:security:information:wwwroot:error' => "Es sollte nicht sein, dass das Installationsverzeichnis Deiner Elgg-Webseite nach Abschluss der Installation schreibbar ist. Ansonsten besteht die Gefahr, dass böswillige Besucher der Webseite dort unerwünschten Code ablegen können.",
+	'admin:security:information:validate_input' => 'Validierung von Eingabefeldern',
+	'admin:security:information:validate_input:error' => "Ein 3rd-Party-Plugin hat die Validierung von Eingabefeldern auf Deiner Webseite deaktiviert. Dadurch besteht die Gefahr, dass Besucher möglicherweise gefährliche Inhalte (z.B. Cross-Site-Skripte usw.) hochladen könnten.",
 	'admin:security:information:password_length' => 'Minimale Länge von Passwörtern',
 	'admin:security:information:password_length:warning' => "Es ist empfehlenswert, eine Mindestlänge von 6 Zeichen für Passwörter zu verlangen.",
 	'admin:security:information:username_length' => 'Minimale Länge von Benutzernamen',
@@ -584,6 +661,7 @@ return array(
 	'admin:security:information:php:session_gc' => "PHP-Session-Cleanup",
 	'admin:security:information:php:session_gc:chance' => "Cleanup-Wahrscheinlichkeit: %s%%",
 	'admin:security:information:php:session_gc:lifetime' => "Session-Lebensdauer %s Sekunden",
+	'admin:security:information:php:session_gc:error' => "Es ist empfehlenswert, für die PHP-Variablen 'session.gc_probability' und 'session.gc_divisor' in den PHP-Einstellungen auf Deinem Server (z.B. in php.ini) sinnvolle Werte zu setzen. Dadurch werden in regelmäßigen Abständen die abgelaufenen PHP-Sessions aus der Datenbank bereinigt und Benutzer können die alten Sessions nicht wieder verwenden.",
 	'admin:security:information:htaccess:hardening' => "Absicherungen in der .htaccess-Datei",
 	'admin:security:information:htaccess:hardening:help' => "Es ist möglich, mit Hilfe der .htaccess-Datei von Elgg den Zugriff auf bestimmte Dateien zu blockieren und dadurch die Sicherheit auf Deinem Server zu verbessern. Für weitergehende Informationen schau in die .htaccess-Datei und lies die erläuternden Kommentare dazu.",
 	
@@ -625,6 +703,7 @@ return array(
 	'admin:security:settings:email_require_confirmation:help' => 'Bevor die neue Emailadresse verwendet werden kann muss die Änderung bestätigt werden. Nach der Änderung der Emailadresse wird an die alte Mailadresse auch noch eine Benachrichtigung gesendet.',
 
 	'admin:security:settings:session_bound_entity_icons' => 'Session-gebundene Entitäts-Bilder',
+	'admin:security:settings:session_bound_entity_icons:help' => 'Entitäts-Icons können standardmäßig an die PHP-Session gebunden sein. In diesem Fall sind auch die URLs dieser Icons Session-spezifisch. Bei Session-gebundenen Icons können die zugehörigen URLs nicht von unterschiedlichen PHP-Sessions verwendet werden. Dies bedeutet auch, dass ein Caching dieser URLs nur innerhalb der jeweils zugehörigen Session funktioniert.',
 	
 	'admin:security:settings:site_secret:intro' => 'Elgg verwendet einen seitenspezifischen Geheimschlüssel, um darauf basierend Sicherheits-Token zu generieren, die für verschiedene Authentifizierungszwecke verwendet werden.',
 	'admin:security:settings:site_secret:regenerate' => "Geheimschlüssel neu erzeugen",
@@ -652,18 +731,53 @@ return array(
 	'admin:site:secret:prevented' => "Die Neuerstellung des Geheimschlüssels Deiner Community-Seite wurde unterbunden.",
 	
 	'admin:notification:make_admin:admin:subject' => 'Neuer Admin auf %s',
+	'admin:notification:make_admin:admin:body' => '%s hat %s zu einem Administrator auf der Community-Seite %s gemacht.
+
+Um das Profil des neuen Administrators aufzurufen, folge diesem Link:
+%s',
 	
 	'admin:notification:make_admin:user:subject' => 'Du bist nun Admin auf %s',
+	'admin:notification:make_admin:user:body' => '%s hat Dich zu einem Administrator der Community-Seite %s gemacht.
+
+Um die Community-Seite aufzurufen, folge diesem Link:
+%s',
 	'admin:notification:remove_admin:admin:subject' => 'Zurückstufung eines Admins auf %s',
+	'admin:notification:remove_admin:admin:body' => '%s hat %s auf %s von einen Administrator zu einem normalen Benutzer zurückgestuft.
+
+Um das Profil des frühreren Administrators aufzurufen, folge diesem Link:
+%s',
 	
 	'admin:notification:remove_admin:user:subject' => 'Entlassung als Admin auf %s',
+	'admin:notification:remove_admin:user:body' => '%s hat Dich auf %s von einem Administrator zu einem normalen Benutzer zurückgestuft.
+
+Um die Community-Seite aufzurufen, folge diesem Link:
+%s',
 	'user:notification:ban:subject' => 'Dein Account auf %s wurde gesperrt',
+	'user:notification:ban:body' => 'Dein Account auf %s wurde gesperrt.
+
+Um die Community-Seite aufzurufen, folge diesem Link:
+%s',
 	
 	'user:notification:unban:subject' => 'Dein Account auf %s ist nicht länger gesperrt',
+	'user:notification:unban:body' => 'Dein Account auf %s ist nicht länger gesperrt. Du kannst Dich auf der Community-Seite wieder anmelden.
+
+Um die Community-Seite aufzurufen, folge diesem Link:
+%s',
 	
 	'user:notification:password_change:subject' => 'Dein Passwort wurde geändert!',
+	'user:notification:password_change:body' => "Dein Passwort auf '%s' wurde geändert! Wenn Du die Änderung vorgenommen hast, mußt Du nichts weiter unternehmen.
+
+Solltest Du allerdings die Änderung nicht vorgenommen haben, setze Dein Passwort bitte mit einem Klick auf den folgenden Link zurück:
+%s
+
+Oder kontaktiere einen Administrator der Seite:
+%s",
 	
 	'admin:notification:unvalidated_users:subject' => "Validierung von Benutzeraccounts auf %s",
+	'admin:notification:unvalidated_users:body' => "%d Benutzer warten auf die Validierung/Aktivierung ihrer Accounts auf der Community-Seite '%s' durch einen Administrator.
+
+Siehe die vollständige Liste dieser Benutzer hier:
+%s",
 
 /**
  * Plugins
@@ -693,6 +807,7 @@ return array(
 	'admin:plugins:opt:description' => "Konfigurieren der installierten Tools der Community-Seite.",
 	'admin:plugins:label:id' => "ID",
 	'admin:plugins:label:name' => "Name",
+	'admin:plugins:label:authors' => "Verfasser",
 	'admin:plugins:label:copyright' => "Copyright",
 	'admin:plugins:label:categories' => 'Kategorien',
 	'admin:plugins:label:licence' => "Lizenz",
@@ -766,10 +881,22 @@ return array(
 	'admin:server:label:upload_max_filesize' => 'PHP-Einstellung von upload_max_filesize',
 	'admin:server:warning:post_max_too_small' => '(Bemerkung: Der Wert von post_max_size muss größer als dieser Wert sein, damit Uploads dieser Größe möglich sind)',
 	'admin:server:label:memcache' => 'Memcache',
+	'admin:server:memcache:inactive' => '
+		Memcache ist auf diesem Server nicht eingerichtet oder es wurde in der Konfigurationsdatei von Elgg noch nicht aktiviert.
+		Für eine bessere Performance ist es empfehlenswert, Memcache (oder Redis) auf dem Server zu installieren und einzurichten und auch die Elgg-Konfigurationdatei entsprechend anzupassen.
+',
 
 	'admin:server:label:redis' => 'Redis',
+	'admin:server:redis:inactive' => '
+		Redis ist auf diesem Server nicht eingerichtet oder es wurde in der Konfigurationsdatei von Elgg noch nicht aktiviert.
+		Für eine bessere Performance ist es empfehlenswert, Redis (oder Memcache) auf dem Server zu installieren und einzurichten und auch die Elgg-Konfigurationdatei entsprechend anzupassen.
+',
 
 	'admin:server:label:opcache' => 'OPcache',
+	'admin:server:opcache:inactive' => '
+		OPcache ist auf diesem Server nicht installiert oder nicht aktiviert.
+		Für eine bessere Performance ist es empfehlenswert, OPcache auf dem Server zu installieren und einzurichten.
+',
 	
 	'admin:server:requirements:php_extension' => "PHP-Erweiterung: %s",
 	'admin:server:requirements:php_extension:required' => "Diese PHP-Erweiterung ist notwendig, damit PHP fehlerfrei funktionieren kann.",
@@ -814,6 +941,8 @@ return array(
 
 	'admin:configure_utilities:default_widgets' => 'Standard-Widgets',
 	'admin:default_widgets:unknown_type' => 'Unbekannter Widget-Typ.',
+	'admin:default_widgets:instructions' => 'Hinzufügen, Entfernen, Positionieren und Konfigurieren der standardmäßig anzuzeigenden Widgets für die gewünschte Seite.
+Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community-Seite betreffen.',
 
 	'admin:robots.txt:instructions' => "Bearbeite im Folgenden die robots.txt-Datei dieser Seite:",
 	'admin:robots.txt:plugins' => "Plugins fügen das Folgende zur robots.txt-Datei hinzu:",
@@ -821,6 +950,8 @@ return array(
 	'admin:robots.txt:physical' => "Die Konfiguration des Inhalts der robots.txt-Datei ist nicht möglich, da auf dem Server bereits eine robots.txt-Datei vorhanden ist.",
 
 	'admin:maintenance_mode:default_message' => 'Diese Community-Seite ist aufgrund von Wartungsarbeiten derzeit nicht verfügbar.',
+	'admin:maintenance_mode:instructions' => 'Der Wartungs-Modus sollte während einer Aktualisierung der Community-Seite oder anderen größeren Änderungen an der Seite aktiviert werden.
+		Wenn er aktiviert ist, können sich nur Admins anmelden und auf der Community-Seite browsen.',
 	'admin:maintenance_mode:mode_label' => 'Wartungs-Modus',
 	'admin:maintenance_mode:message_label' => 'Die Nachricht, die Benutzern angezeigt wird, wenn der Wartungsmodus aktiviert ist.',
 	'admin:maintenance_mode:saved' => 'Die Einstellungen für den Wartungs-Modus wurden gespeichert.',
@@ -857,6 +988,10 @@ return array(
 	'usersettings:statistics:label:email' => "Email-Adresse",
 	'usersettings:statistics:label:membersince' => "Mitglied seit",
 	'usersettings:statistics:label:lastlogin' => "Zuletzt angemeldet",
+	
+	'usersettings:delayed_email' => "Sammel-Emails-Einstellungen",
+	'usersettings:delayed_email:interval' => "Konfiguriere das Zeitinterval zu dem die Sammer-Emails versendet werden sollen",
+	'usersettings:delayed_email:interval:help' => "Alle während des Intervals auflaufenden Sammel-Emails werden zu einer einzigen kombinierten Email zusammengefaßt und jeweils zu dem konfigurierten Zeitinterval versendet.",
 
 /**
  * Activity river
@@ -950,11 +1085,14 @@ return array(
 	'read_more' => 'Mehr lesen',
 	'next' => 'Weiter',
 	'previous' => 'Zurück',
+	'older' => 'Älter',
+	'newer' => 'Neuer',
 	
 	'site' => 'Webseite',
 	'activity' => 'Aktivitäten',
 	'members' => 'Mitglieder',
 	'menu' => 'Menü',
+	'item' => 'Eintrag',
 
 	'up' => 'Höher',
 	'down' => 'Tiefer',
@@ -1053,6 +1191,9 @@ return array(
 
 	'on' => 'An',
 	'off' => 'Aus',
+
+	'number_counter:decimal_separator' => ".",
+	'number_counter:thousands_separator' => ",",
 	'number_counter:view:thousand' => "%sK",
 	'number_counter:view:million' => "%sM",
 	'number_counter:view:billion' => "%sB",
@@ -1080,6 +1221,16 @@ return array(
  */
 
 	'useradd:subject' => 'Benutzeraccount erstellt',
+	'useradd:body' => 'Auf der Community-Seite %s wurde ein Benutzeraccount für Dich erstellt. Um Dich anzumelden, gehe zu:
+
+%s
+
+und melde Dich mit diesen Zugangsdaten an:
+
+Benutzername (Username): %s
+Passwort: %s
+
+Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.',
 
 /**
  * Messages
@@ -1250,6 +1401,22 @@ return array(
 	'config:content:comment_box_collapses:help' => "Dies gilt nur für den Fall dass die Kommentare in der Reihenfolge mit dem neuesten zuerst angezeigt werden.",
 	'config:content:comments_latest_first' => "Kommentare in Reihenfolge mit neuesten zuerst anzeigen",
 	'config:content:comments_latest_first:help' => "Aktiviere diese Option, um festzulegen das die Kommentare zu einem Eintrag in der Reihenfolge von neuesten zuerst zu ältestem zuletzt angezeigt werden sollen. Wenn diese Option deaktiviert ist, ist die Reihenfolge umgekehrt von ältestem zu neuesten Kommentareintrag. Außerdem wird in diesem Fall die Kommentarbox am Ende der Liste angezeigt.",
+	'config:content:comments_per_page' => "Anzahl der Kommentare pro Seite",
+	'config:content:pagination_behaviour' => "Standardverhalten bei Seitenumbrüchen in Listendarstellungen",
+	'config:content:pagination_behaviour:help' => "Diese Option legt fest, wie Daten aktualisiert werden, wenn ein Seitenumbruch in Listen vorliegt. Das hier festgelegte Standardverhalten kann für jede Liste auch individuell anders definiert werden.",
+	'config:content:pagination_behaviour:navigate' => "Zur nächsten Seite wechseln",
+	'config:content:pagination_behaviour:ajax-replace' => "Die Daten der Liste aktualisieren ohne die ganze Seite neu zu laden",
+	'config:content:pagination_behaviour:ajax-append' => "Neu geladene Daten der Liste am Anfang oder Ende der Liste anhängen",
+	'config:content:pagination_behaviour:ajax-append-auto' => "Neu geladene Daten der Liste am Anfang oder Ende der Liste anhängen (automatisch sobald zu diesem Teil der Liste gescrollt wird)",
+	'config:email' => "Emails",
+	'config:email_html_part:label' => "HTML-Emails aktivieren",
+	'config:email_html_part:help' => "Versendete Emails werden in ein HTML-Template eingebettet",
+	'config:email_html_part_images:label' => "Bilder in Emails einbetten",
+	'config:email_html_part_images:help' => "Lege fest, ob und wenn ja wie Bilder in versendeten Emails auf eine bestimmte Weise eingebettet werden sollen. Falls diese Option aktiviert wird, werden alle Bilder auf die gewählte Art in den Emails eingebettet. Allerdings unterstützen nicht alle Email-Programme alle angebotenen Optionenen. Überlege daher gut, ob die gewählte Option für Dich (und die Mitglieder Deiner Seite!) Sinn macht.",
+	'config:email_html_part_images:base64' => "Base64-kodiert einbetten",
+	'config:email_html_part_images:attach' => "Anhängen als Email-Attachments",
+	'config:delayed_email:label' => "Sammel-Emails aktivieren",
+	'config:delayed_email:help' => "Diese Option ermöglicht das Zusammenfassen von Email-Benachrichtigungen zu einer kombinierten Email, die nur im Abstand von festgelegten Zeitintervallen (täglich, wöchentlich) versendet werden.",
 
 	'upgrading' => 'Aktualisieren...',
 	'upgrade:core' => 'Deine Elgg-Installation wurde aktualisiert.',
@@ -1266,6 +1433,7 @@ return array(
 	'admin:upgrades:none' => 'Deine Installation ist aktuell!',
 
 	'upgrade:success_count' => 'Aktualisiert:',
+	'upgrade:error_count' => 'Fehler: %s',
 	'upgrade:finished' => 'Die Aktualisierung ist abgeschlossen.',
 	'upgrade:finished_with_errors' => '<p>Die Aktualisierung wurde beendet. Allerdings sind dabei Fehler aufgetreten. Lade die Seite erneut und versuche, die Aktualisierung nochmals durchzuführen.</p></p><br />Wenn dabei wieder Fehler auftreten, schaue in der Logdatei Deines Servers nach, ob es dort Einträge gibt, die eventuell weitere Informationen zur Ursache der Fehler liefern. Du kannst auch in der <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support-Gruppe</a> auf der Elgg-Community-Seite um Hilfe bei Deinem Problem bitten.</p>',
 	'upgrade:should_be_skipped' => 'Keine zu aktualisierende Einträge',
@@ -1301,21 +1469,52 @@ return array(
 	'email:save:fail:password' => "Das eingegebene Passwort ist nicht gleich Deinem derzeitigen Passwort. Daher kann Deine neue Email-Adresse nicht gespeichert werden.",
 
 	'friend:newfriend:subject' => "Du bist nun mit %s befreundet!",
+	'friend:newfriend:body' => "%s ist nun mit Dir befreundet!
+
+Um ihr/sein Profil aufzurufen, folge diesem Link:
+
+%s",
 
 	'email:changepassword:subject' => "Änderung des Passworts!",
+	'email:changepassword:body' => "Dein Passwort wurde geändert.",
 
 	'email:resetpassword:subject' => "Zurücksetzung des Passworts!",
+	'email:resetpassword:body' => "Dein Passwort wurde zurückgesetzt. Dein neues Passwort ist: %s",
 
 	'email:changereq:subject' => "Verifizierung der Änderung Deines Passworts.",
+	'email:changereq:body' => "Es wurde eine Änderung des Passworts Deines Accounts angefordert (von der IP-Adresse %s).
+
+Falls Du die Änderung des Passworts angefordert hast, klicke bitte auf den folgenden Link, um dies zu bestätigen:
+
+%s
+
+Andernfalls ignoriere bitte diese Email.",
 	
 	'account:email:request:success' => "Deine neue Emailadresse muss zunächst bestätigt werden. Bitte überprüfe den Posteingang der Adresse '%s' für weitere Informationen.",
 	'email:request:email:subject' => "Bitte bestätige Deine Emailadresse",
+	'email:request:email:body' => "Du hast eine Änderung Deiner Emailadresse auf '%s' angefordert.
+Wenn Du diese Änderung nicht angefordert hast, kannst Du diese Mail ignorieren.
+
+Um Deine Emailadressänderung zu bestätigen, klicke bitte auf diesen Link:
+%s
+
+Dieser Link ist 1 Stunde gültig.",
 	
 	'account:email:request:error:no_new_email' => "Keine ausstehenden Emailadressänderungen.",
 	
 	'email:confirm:email:old:subject' => "Deine Emailadresse wurde geändert.",
+	'email:confirm:email:old:body' => "Deine Emailadresse auf '%s' wurde geändert.
+Von nun an erhältst Du Benachrichtigungen an '%s'.
+
+Wenn Du das nicht angefordert hast, kontaktiere bitte einen Administrator.
+%s",
 	
 	'email:confirm:email:new:subject' => "Deine Emailadresse wurde geändert.",
+	'email:confirm:email:new:body' => "Deine Emailadresse auf '%s' wurde geändert.
+Von nun an erhältst Du Benachrichtigungen an diese Emailadresse.
+
+Wenn Du das nicht angefordert hast, kontaktiere bitte einen Administrator.
+%s",
 
 	'account:email:admin:validation_notification' => "Benachrichtige mich, wenn es Benutzer gibt, die durch einen Administrator überprüft werden müssen",
 	'account:email:admin:validation_notification:help' => "Aufgrund der Seiteneinstellungen, müssen neu registrierte Benutzer von einem Administrator manuell validiert werden. Mit dieser Option kannst Du die Benachrichtigung über ausstehende Validierungen deaktivieren.",
@@ -1324,6 +1523,10 @@ return array(
 	'account:validation:pending:content' => "Dein Benutzeraccount wurde erstellt! Allerdings ist der Account noch nicht aktiviert. Die Validierung/Aktivierung wird durch einen Administrator der Community-Seite durchgeführt. Du wirst eine Benachrichtigung per Email erhalten, sobald Dein Account aktiviert worden ist.",
 	
 	'account:notification:validation:subject' => "Dein Account auf %s wurde validiert!",
+	'account:notification:validation:body' => "Dein Benutzeraccount auf '%s' wurde validiert und aktiviert. Du kannst Deinen Account nun verwenden.
+
+Folge dem Link, um zur Community-Seite zu gelangen:
+%s",
 
 /**
  * user default access
@@ -1341,6 +1544,7 @@ return array(
 	'comments:count' => "%s Kommentare",
 	'item:object:comment' => 'Kommentar',
 	'collection:object:comment' => 'Kommentare',
+	'notification:object:comment:create' => "Sende eine Benachrichtigung, wenn ein neuer Kommentar geschrieben wurde",
 
 	'river:object:default:comment' => '%s kommentierte %s',
 
@@ -1359,8 +1563,23 @@ return array(
 	'generic_comment:title' => 'Kommentar von %s',
 	'generic_comment:on' => '%s zu %s',
 	'generic_comments:latest:posted' => 'schrieb einen',
+
+	'generic_comment:notification:subject' => 'Re: %s',
+	'generic_comment:notification:owner:summary' => 'Neuer Kommentar zu: %s',
+	'generic_comment:notification:owner:body' => "Zu einem Deiner Beiträge wurde ein neuer Kommentar geschrieben. Er lautet:
+
+%s
+
+Um zu antworten oder Deinen ursprünglichen Beitrag aufzurufen, folge diesem Link:
+%s",
 	
 	'generic_comment:notification:user:summary' => 'Neuer Kommentar zu: %s',
+	'generic_comment:notification:user:body' => "Es wurde ein neuer Kommentar geschrieben. Er lautet:
+
+%s
+
+Um zu antworten oder den ursprünglichen Beitrag aufzurufen, folge diesem Link:
+%s",
 
 /**
  * Entities
@@ -1374,6 +1593,22 @@ return array(
 	'entity:delete:permission_denied' => 'Du hast keine ausreichende Berechtigung, um diesen Beitrag zu löschen.',
 	'entity:delete:success' => '%s wurde gelöscht.',
 	'entity:delete:fail' => 'Das Löschen von %s ist fehlgeschlagen.',
+	
+	'entity:subscribe' => "Abonnieren",
+	'entity:subscribe:success' => "Du folgst nun %s.",
+	'entity:subscribe:fail' => "Bei der Erstellung des Abonnement von %s ist ein Fehler aufgetreten.",
+	
+	'entity:unsubscribe' => "Abonnement aufheben",
+	'entity:unsubscribe:success' => "Du folgst %s nicht mehr.",
+	'entity:unsubscribe:fail' => "Bei der Aufhebung des Abonnement von %s ist ein Fehler aufgetreten.",
+	
+	'entity:mute' => "Benachrichtigungen blockieren",
+	'entity:mute:success' => "Du hast zukünftige Benachrichtigungen zugehörig zu %s blockiert.",
+	'entity:mute:fail' => "Bei der Blockierung von Benachrichtigungen zugehörig zu %s ist ein Fehler aufgetreten.",
+	
+	'entity:unmute' => "Benachrichtigungen freigeben",
+	'entity:unmute:success' => "Du hast zukünftige Benachrichtigungen zugehörig zu %s wieder freigegeben.",
+	'entity:unmute:fail' => "Bei der Freigabe von Benachrichtigungen zugehörig zu %s ist ein Fehler aufgetreten.",
 
 /**
  * Annotations
@@ -1393,12 +1628,6 @@ return array(
 	'actiongatekeeper:uploadexceeded' => 'Die Dateigröße der hochgeladenen Datei(en) übersteigt das Limit, das vom Administrator dieser Seite eingestellt worden ist.',
 
 /**
- * Word blacklists
- */
-
-	'word:blacklist' => 'und, der, die, das, den, dem, des, ein, eine, eines, einen, einem, einer, dann, aber, sie, er, es, ihr, ihm, ihres, ihrer, ihrem, ihren, sein, seiner, seines, seinem, seinen, nicht, also, über, jetzt, deshalb, daher, darum, demzufolge, deswegen, folglich, somit, allerdings, immer, noch, ebenso, andernfalls, umgekehrt, eher, infolgedessen, darüberhinaus, darüber, hinaus, trotzdem, dennoch, anstatt, stattdessen, inzwischen, mittlerweile, unterdessen, dementsprechend, dies, dieser, dieses, diesem, diesen, was, wem, wessen, deren, dessen',
-
-/**
  * Javascript
  */
 
@@ -1408,6 +1637,32 @@ return array(
 /**
  * Diagnostics
  */
+	'diagnostics:report' => 'Report',
+	'diagnostics:description' => 'Der Report, der im folgenden erstellt werden kann, kann bei der Fehlersuche hilfreich sein. In manchen Fällen bitten die Entwickler von Elgg, dass er zu einem Bugreport beigefügt wird.',
+	'diagnostics:header' => '========================================================================
+Elgg-Diagnose-Report
+Generiert %s von %s
+========================================================================
+
+',
+	'diagnostics:report:basic' => '
+Elgg-Release %s, Version %s
+
+------------------------------------------------------------------------',
+	'diagnostics:report:php' => '
+PHP-Info:
+%s
+------------------------------------------------------------------------',
+	'diagnostics:report:md5' => '
+Installierte Dateien und Prüfsummen:
+
+%s
+------------------------------------------------------------------------',
+	'diagnostics:report:globals' => '
+Globale Variablen:
+
+%s
+------------------------------------------------------------------------',
 	
 /**
  * Miscellaneous
@@ -1433,8 +1688,12 @@ return array(
 	'cli:cron:option:time' => "Zeitpunkt der Initialisierung der Cronjobs",
 	
 	'cli:database:seed:description' => "Testeinträge in Datenbank erzeugen.",
+	'cli:database:seed:argument:create' => "Bei der Erstellung von Testeinträgen jeweils neue Entitäten erzeugen",
 	'cli:database:seed:option:limit' => "Anzahl der zu erzeugenden Testeinträge",
 	'cli:database:seed:option:image_folder' => "Dateipfad zum lokalen Verzeichnis mit Bilddateien zur Verwendung bei der Erzeugung der Testeinträge",
+	'cli:database:seed:option:type' => "Typ der Entititäten für die Testeinträge (%s)",
+	'cli:database:seed:option:create_since' => "Ein PHP-Zeitstring, der die untere Grenze der Erstellungszeit für Testeinträge festlegt",
+	'cli:database:seed:option:create_until' => "Ein PHP-Zeitstring, der die obere Grenze der Erstellungszeit für Testeinträge festlegt",
 	'cli:database:seed:log:error:faker' => "Dies ist ein Entwicklungswerkzeug, das derzeit ausschließlich zu Testzwecken gedacht ist. Bitte keinesfalls auf einer Produktivseite verwenden!",
 	'cli:database:seed:log:error:logged_in' => "Das Erzeugen von Testeinträgen in der Datenbank sollte nicht durchgeführt werden, solange ein Benutzer eingeloggt ist.",
 	
@@ -1632,4 +1891,22 @@ return array(
 
 	"core:upgrade:2017080900:title" => "Umwandlung des Datenbank-Encodings für Multi-Byte-Support",
 	"core:upgrade:2017080900:description" => "Damit wird das Encoding der Datenbank und der Datenbanktabellen auf UTF8mb4 umgestellt, damit Multi-Byte-Characters wie beispielsweise Emojies gespeichert werden können.",
+	
+	"core:upgrade:2020102301:title" => "Diagnostics-Plugin entfernen",
+	"core:upgrade:2020102301:description" => "Damit wird die Plugin-Entität des Diagnostics-Plugins gelöscht, da dieses Plugin nicht mehr Teil von Elgg 4.0 ist.",
+	
+	"core:upgrade:2021022401:title" => "Umwandlung von Benachrichtigungs-Abonnements",
+	"core:upgrade:2021022401:description" => "Die Benachrichtigungs-Abonnements werden nun in anderer Form in der Datenbank gespeichert. Diese Aktualisierung wandelt alle existierenden Abonnement-Einträge in der Datenbank in die neue Form um.",
+	
+	"core:upgrade:2021040701:title" => "Umwandlung von Benutzer-Benachrichtigungseinstellungen",
+	"core:upgrade:2021040701:description" => "Damit die Benachrichtigungseinstellungen der Benutzer in einer für Entwickler leichter handhabbaren/erweiterbaren Form vorhanden sind, werden mit dieser Aktualisierung die vorhandenen Benutzer-spezifischen Benachrichtigungseinstellungen in die neue Namenskonvention von Elgg 4.0 umgewandelt.",
+	
+	'core:upgrade:2021040801:title' => "Umwandlung von Benachrichtigungseinstellungen von Zugriffslevel-Collections",
+	'core:upgrade:2021040801:description' => "Mit Elgg 4.0 wurde eine neue Form der Speicherung von Benachrichtigungseinstellungen eingeführt. Diese Aktualisierung wandelt vorhandene Einstellungen der alten Form in die neue Form um.",
+	
+	'core:upgrade:2021041901:title' => "Notifications-Plugin entfernen",
+	'core:upgrade:2021041901:description' => "Damit wird die Plugin-Entität des Notifications-Plugins gelöscht, da dieses Plugin nicht mehr Teil von Elgg 4.0 ist.",
+	
+	'core:upgrade:2021060401:title' => "Füge die Ersteller von Inhalten zu den Abonnenten hinzu",
+	'core:upgrade:2021060401:description' => "Die Ersteller von Inhalten sollten Benachrichtigungen erhalten, wenn es Rückmeldungen anderer Benutzer zu ihren Inhalten gibt. Diese Aktualisierung fügt die Ersteller als Abonnenten ihrer Inhalte hinzu.",
 );

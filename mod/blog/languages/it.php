@@ -47,8 +47,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Nuovo articolo intitolato %s',
 	'blog:notify:subject' => 'Nuovo articolo: %s',
-	'blog:notify:body' =>
-'',
 
 	// widget
 	'widgets:blog:description' => 'Visualizza gli ultimi articoli',

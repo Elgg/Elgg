@@ -42,13 +42,9 @@ return array(
 	 */
 	'discussion:topic:notify:summary' => 'Nytt diskussionsämne med namnet %s',
 	'discussion:topic:notify:subject' => 'Nytt diskussionsämne: %s',
-	'discussion:topic:notify:body' =>
-'',
 
 	'discussion:comment:notify:summary' => 'Ny kommentar i ämnet: %s',
 	'discussion:comment:notify:subject' => 'Ny kommentar i ämnet: %s',
-	'discussion:comment:notify:body' =>
-'',
 
 	'groups:tool:forum' => 'Aktivera gruppdiskussioner',
 

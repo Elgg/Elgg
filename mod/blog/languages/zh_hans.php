@@ -48,8 +48,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => '新博客是 %s',
 	'blog:notify:subject' => '新博客： %s',
-	'blog:notify:body' =>
-'',
 
 	// widget
 	'widgets:blog:name' => '博客',

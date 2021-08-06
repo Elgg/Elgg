@@ -29,8 +29,6 @@ return array(
 
 	'pages:notify:summary' => 'Nueva página llamada %s',
 	'pages:notify:subject' => "Una nueva página: %s",
-	'pages:notify:body' =>
-'',
 
 	'pages:more' => 'M&aacute;s p&aacute;ginas',
 	'pages:none' => 'No se han creado p&aacute;ginas a&uacute;n',

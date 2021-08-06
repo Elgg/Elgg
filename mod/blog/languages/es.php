@@ -48,8 +48,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Nueva entrada en el blog llamado: %s',
 	'blog:notify:subject' => 'Nuevo blog: %s',
-	'blog:notify:body' =>
-'',
 
 	// widget
 	'widgets:blog:name' => 'Entradas del blog',

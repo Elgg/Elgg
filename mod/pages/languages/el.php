@@ -29,8 +29,6 @@ return array(
 
 	'pages:notify:summary' => 'Νέα σελίδα με τίτλο %s',
 	'pages:notify:subject' => "Νέα σελίδα: %s",
-	'pages:notify:body' =>
-'',
 
 	'pages:more' => 'Περισσότερες σελίδες',
 	'pages:none' => 'Δεν υπάρχουν ακόμα σελίδες',
