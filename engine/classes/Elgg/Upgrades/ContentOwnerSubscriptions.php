@@ -123,7 +123,6 @@ class ContentOwnerSubscriptions implements SystemUpgrade {
 		$upgrade = $this->getUpgradeEntity();
 		
 		$defaults = [
-			'types' => ['object', 'group'],
 			'created_before' => $upgrade->time_created,
 			'limit' => 100,
 			'batch' => true,
@@ -142,6 +141,19 @@ class ContentOwnerSubscriptions implements SystemUpgrade {
 						->where($qb->compare('md.name', '=', '__content_owner_subscription_upgrade_migrated', ELGG_VALUE_STRING));
 					
 					return $qb->compare("{$main_alias}.guid", 'NOT IN', $metadata->getSQL());
+				},
+				function (QueryBuilder $qb, $main_alias) {
+					// exclude some subtypes of objects
+					$object = $qb->merge([
+						$qb->compare("{$main_alias}.type", '=', 'object', ELGG_VALUE_STRING),
+						$qb->compare("{$main_alias}.subtype", 'NOT IN', ['widget', 'site_notification', 'messages'], ELGG_VALUE_STRING),
+					], 'AND');
+					
+					// migrate objects and groups
+					return $qb->merge([
+						$qb->compare("{$main_alias}.type", '=', 'group', ELGG_VALUE_STRING),
+						$object,
+					], 'OR');
 				},
 			],
 		];
