@@ -48,8 +48,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => '새 블로그 글이 %s 를 언급하였습니다. ',
 	'blog:notify:subject' => '새 블로그글: %s',
-	'blog:notify:body' =>
-'',
 
 	// widget
 	'widgets:blog:name' => '블로그 글',

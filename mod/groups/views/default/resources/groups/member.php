@@ -39,4 +39,5 @@ $content = elgg_list_entities([
 echo elgg_view_page($title, [
 	'content' => $content,
 	'filter_id' => 'groups/member',
+	'filter_value' => 'member',
 ]);

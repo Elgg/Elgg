@@ -28,11 +28,11 @@ class RestServiceController {
 			
 			// simple API key check
 			if (elgg_get_plugin_setting('auth_allow_key', 'web_services')) {
-				register_pam_handler('api_auth_key', 'sufficient', 'api');
+				register_pam_handler('elgg_ws_pam_auth_api_key', 'sufficient', 'api');
 			}
 			// hmac
 			if (elgg_get_plugin_setting('auth_allow_hmac', 'web_services')) {
-				register_pam_handler('api_auth_hmac', 'sufficient', 'api');
+				register_pam_handler('elgg_ws_pam_auth_api_hmac', 'sufficient', 'api');
 			}
 		}
 		

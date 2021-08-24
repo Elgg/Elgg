@@ -12,10 +12,10 @@ class UpdateMetadataColumns extends AbstractMigration {
 		if ($this->hasTable('metadata')) {
 			$table = $this->table('metadata');
 
-			if ($table->hasIndex('owner_guid')) {
+			if ($table->hasIndexByName('owner_guid')) {
 				$table->removeIndexByName('owner_guid')->save();
 			}
-			if ($table->hasIndex('access_id')) {
+			if ($table->hasIndexByName('access_id')) {
 				$table->removeIndexByName('access_id')->save();
 			}
 

@@ -17,6 +17,7 @@ $tabs = [];
 // build the group profile fields
 $tabs[] = [
 	'name' => 'profile',
+	'priority' => 100,
 	'text' => elgg_echo('groups:edit:profile'),
 	'content' => elgg_view('groups/edit/profile', $vars),
 ];
@@ -24,6 +25,7 @@ $tabs[] = [
 // build the group access options
 $tabs[] = [
 	'name' => 'access',
+	'priority' => 200,
 	'text' => elgg_echo('groups:edit:access'),
 	'content' => elgg_view('groups/edit/access', $vars),
 ];
@@ -31,6 +33,7 @@ $tabs[] = [
 // build the group tools options
 $tabs[] = [
 	'name' => 'tools',
+	'priority' => 300,
 	'text' => elgg_echo('groups:edit:tools'),
 	'content' => elgg_view('groups/edit/tools', $vars),
 ];
@@ -40,6 +43,7 @@ $settings = elgg_view('groups/edit/settings', $vars);
 if (!empty($settings)) {
 	$tabs[] = [
 		'name' => 'settings',
+		'priority' => 400,
 		'text' => elgg_echo('groups:edit:settings'),
 		'content' => $settings,
 	];

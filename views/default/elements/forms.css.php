@@ -203,3 +203,4 @@ select:not([multiple]) {
 echo elgg_view('elements/components/autocomplete.css', $vars);
 echo elgg_view('elements/components/userpicker.css', $vars);
 echo elgg_view('elements/components/datepicker.css', $vars);
+echo elgg_view('input/tags.css', $vars);

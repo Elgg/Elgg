@@ -45,8 +45,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Nou missatge de bloc anomenat %s',
 	'blog:notify:subject' => 'Nou post de bloc: %s',
-	'blog:notify:body' =>
-'',
 
 	// widget
 	'widgets:blog:description' => 'Aquest giny mostra les darreres entrades al bloc.',

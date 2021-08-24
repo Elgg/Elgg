@@ -36,13 +36,9 @@ return array(
 	 */
 	'discussion:topic:notify:summary' => 'Nuovo argomento intitolato %s',
 	'discussion:topic:notify:subject' => 'Nuovo argomento: %s',
-	'discussion:topic:notify:body' =>
-'',
 
 	'discussion:comment:notify:summary' => 'Nuova risposta alla discussione: %s',
 	'discussion:comment:notify:subject' => 'Nuova risposta alla discussione: %s',
-	'discussion:comment:notify:body' =>
-'',
 
 	'groups:tool:forum' => 'Abilita discussioni di gruppo',
 

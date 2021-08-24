@@ -273,11 +273,7 @@ class NotificationEventHandler {
 	 * Get subject for the notification
 	 *
 	 * Plugins can define a subtype specific subject simply by providing a
-	 * translation for the string "notification:subject:<action>:<type>:<subtype".
-	 *
-	 * For example in mod/blog/languages/en.php:
-	 *
-	 *     'notification:subject:publish:object:blog' => '%s published a blog called %s'
+	 * translation for the string "notification:<action>:<type>:<subtype>:subject".
 	 *
 	 * @param \ElggUser $recipient Notification recipient
 	 * @param string    $method    Method
@@ -312,22 +308,7 @@ class NotificationEventHandler {
 	 * Get body for the notification
 	 *
 	 * Plugin can define a subtype specific body simply by providing a
-	 * translation for the string "notification:body:<action>:<type>:<subtype".
-	 *
-	 * For example in mod/blog/languages/en.php:
-	 *
-	 *    'notification:body:publish:object:blog' => '
-	 *         Hi %s!
-	 *
-	 *         %s has created a new post called "%s" in the group %s.
-	 *
-	 *         It says:
-	 *
-	 *         "%s"
-	 *
-	 *         You can comment the post here:
-	 *         %s
-	 *     ',
+	 * translation for the string "notification:<action>:<type>:<subtype>:body".
 	 *
 	 * The arguments passed into the translation are:
 	 *     1. Recipient's name
@@ -403,5 +384,14 @@ class NotificationEventHandler {
 		$object = $this->event->getObject();
 		
 		return $object instanceof \ElggEntity ? $object->getURL() : '';
+	}
+	
+	/**
+	 * Is this event configurable by the user on the notification settings page
+	 *
+	 * @return bool
+	 */
+	public static function isConfigurableByUser(): bool {
+		return true;
 	}
 }

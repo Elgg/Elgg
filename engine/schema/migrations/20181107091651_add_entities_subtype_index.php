@@ -27,7 +27,7 @@ class AddEntitiesSubtypeIndex extends AbstractMigration
      */
     public function change() {
 		$table = $this->table('entities');
-		if ($table->hasIndex('subtype')) {
+		if ($table->hasIndexByName('subtype')) {
 			return;
 		}
 		

@@ -87,11 +87,11 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function (
 			data: $(this).serialize(),
 			success: function (result) {
 				$widgetContent.html(result.content);
-				if (typeof (result.title) != "undefined") {
+				if (result.title !== '') {
 					var $widgetTitle = $widgetContent.parent().parent().find('.elgg-widget-title');
 					
 					var newWidgetTitle = result.title;
-					if (typeof (result.href) != "undefined") {
+					if (result.href !== '') {
 						newWidgetTitle = "<a href='" + result.href + "' class='elgg-anchor'><span class='elgg-anchor-label'>" + newWidgetTitle + "</span></a>";
 					}
 					

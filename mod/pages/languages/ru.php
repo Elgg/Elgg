@@ -34,8 +34,7 @@ return array(
 
 	'pages:notify:summary' => 'Новая страница с названием %s',
 	'pages:notify:subject' => "Новая страница: %s",
-	'pages:notify:body' =>
-'%s добавил новую страницу: %s
+	'pages:notify:body' => '%s добавил новую страницу: %s
 
 %s
 

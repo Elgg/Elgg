@@ -1625,6 +1625,7 @@ class ElggInstaller {
 		$session = ElggSession::fromFiles($app->_services->config);
 		$session->setName('Elgg_install');
 		$app->_services->setValue('session', $session);
+		_elgg_services()->dic->set('session', $session);
 	}
 
 	/**
@@ -1638,5 +1639,6 @@ class ElggInstaller {
 		$session = ElggSession::fromDatabase($app->_services->config, $app->_services->db);
 		$session->start();
 		$app->_services->setValue('session', $session);
+		_elgg_services()->dic->set('session', $session);
 	}
 }

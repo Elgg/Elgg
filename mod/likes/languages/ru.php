@@ -25,6 +25,4 @@ return array(
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s одобряет ваше сообщение "%s"',
-	'likes:notifications:body' =>
-'',
 );

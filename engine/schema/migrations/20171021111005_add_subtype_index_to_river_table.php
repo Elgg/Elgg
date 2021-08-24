@@ -10,7 +10,7 @@ class AddSubtypeIndexToRiverTable extends AbstractMigration {
 
 		$table = $this->table('river');
 
-		if (!$table->hasIndex('subtype')) {
+		if (!$table->hasIndexByName('subtype')) {
 			$table->addIndex(['subtype'], [
 				'name' => "subtype",
 				'unique' => false,

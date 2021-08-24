@@ -22,6 +22,7 @@ class ElggPluginDependenciesIntegrationTest extends IntegrationTestCase {
 			'test_plugin',
 			'parent_plugin',
 			'conflicting_plugin',
+			'dependent_plugin',
 		];
 
 		foreach ($ids as $id) {
@@ -38,6 +39,7 @@ class ElggPluginDependenciesIntegrationTest extends IntegrationTestCase {
 			'test_plugin',
 			'parent_plugin',
 			'conflicting_plugin',
+			'dependent_plugin',
 		];
 
 		foreach ($ids as $id) {
@@ -74,5 +76,26 @@ class ElggPluginDependenciesIntegrationTest extends IntegrationTestCase {
 		
 		$this->expectException(PluginException::class);
 		$plugin->assertDependencies();
+	}
+	
+	public function testCantActivateIfRequiredPluginIsNotActive() {
+		$plugin = elgg_get_plugin_from_id('dependent_plugin');
+		$this->expectException(PluginException::class);
+		$plugin->assertDependencies();
+	}
+	
+	public function testCantActivateIfRequiredPluginIsNotInCorrectPosition() {
+		$dependent = elgg_get_plugin_from_id('dependent_plugin');
+		$parent = elgg_get_plugin_from_id('parent_plugin');
+		
+		$parent->setPriority('first'); // 2 (after next priority change)
+		$dependent->setPriority('first'); // 1
+		
+		$this->assertGreaterThan($dependent->getPriority(), $parent->getPriority());
+				
+		$this->assertTrue($parent->activate());
+		
+		$this->expectException(PluginException::class);
+		$dependent->assertDependencies();
 	}
 }

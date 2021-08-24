@@ -589,12 +589,10 @@ d\'accès aux fichiers cela va avoir un effet négatif sur les performances. D\'
 
 	'admin:widget:admin_welcome' => 'Bienvenue',
 	'admin:widget:admin_welcome:help' => "Une courte présentation de la zone d'administration de Elgg",
-	'admin:widget:admin_welcome:intro' =>
-'Bienvenue sur Elgg ! Vous êtes actuellement sur le tableau de bord de l\'administration. Il permet de suivre ce qui se passe sur le site.',
+	'admin:widget:admin_welcome:intro' => 'Bienvenue sur Elgg ! Vous êtes actuellement sur le tableau de bord de l\'administration. Il permet de suivre ce qui se passe sur le site.',
 
 	'admin:widget:admin_welcome:registration' => "L'inscription de nouveaux utilisateurs est actuellement désactivée ! Vous pouvez l'activer sur la page %s.",
-	'admin:widget:admin_welcome:admin_overview' =>
-"La navigation dans la zone d'administration se fait à l'aide du menu de droite. Il est organisé en trois parties :
+	'admin:widget:admin_welcome:admin_overview' => "La navigation dans la zone d'administration se fait à l'aide du menu de droite. Il est organisé en trois parties :
 	<dl>
 		<dt>Administrer</dt><dd>Des tâches de base telles que suivre le contenu signalé et activer des plugins.</dd>
 		<dt>Configurer</dt><dd>Des tâches occasionnelles comme définir le nom du site ou les paramètres d'un plugin.</dd>
@@ -1636,12 +1634,6 @@ Pour y répondre ou voir la publication originale :
 	'actiongatekeeper:timeerror' => 'La page que vous utilisiez a expiré. Veuillez la recharger et réessayer.',
 	'actiongatekeeper:pluginprevents' => 'Désolé. Un plugin a empêché ce formulaire d\'être envoyé',
 	'actiongatekeeper:uploadexceeded' => 'La taille du ou des fichier(s) dépasse la limite définie par l\'administrateur du site',
-
-/**
- * Word blacklists
- */
-
-	'word:blacklist' => 'et, le, alors, mais, au, aucuns, aussi, autre, avant, avec, avoir, bon, ça, car, ce, cela, cette, ces, ceux, cependant, chaque, ci, comme, comment, dans, début, dedans, dehors, depuis, des, devrait, doit, donc, dos, du, elle, elles, en, encore, essai, est, et, étaient, état, été, étions, être, eu, fait, faites, fois, font, hors, ici, il, ils, je, juste, la, là, les, leur, lui, ma, maintenant, mais, malgré, même, mes, moins, mon, mot, ni, nommés, notre, nous, ou, où, par, parce, pas, pendant, peu, peut, plupart, plutôt, pour, pourquoi, quand, que, quel, quelle, quelles, quels, qui, sa, sans, ses, seulement, si, sien, son, sont, sous, soyez, sujet, sur, ta, tandis, tellement, tels, tes, ton, tous, tout, toutefois, très, trop, tu, un, une, voient, vont, votre, vous, vu',
 
 /**
  * Javascript

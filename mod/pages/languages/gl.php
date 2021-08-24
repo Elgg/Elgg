@@ -29,8 +29,6 @@ return array(
 
 	'pages:notify:summary' => 'Nova páxina: «%s»',
 	'pages:notify:subject' => "Nova páxina: «%s»",
-	'pages:notify:body' =>
-'',
 
 	'pages:more' => 'Máis páxinas',
 	'pages:none' => 'Aínda non hai ningunha páxina creada.',

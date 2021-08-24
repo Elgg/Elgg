@@ -6,7 +6,7 @@
 $widget = elgg_extract('entity', $vars);
 
 $owner = $widget->getOwnerEntity();
-if (!($owner instanceof \ElggUser)) {
+if (!$owner instanceof \ElggUser) {
 	return;
 }
 

@@ -37,8 +37,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Tha post bloga ùr ann air a bheil %s',
 	'blog:notify:subject' => 'Post bloga ùr: %s',
-	'blog:notify:body' =>
-'',
 
 	// widget
 	'widgets:blog:description' => 'Seall na postaichean bloga as ùire agad',

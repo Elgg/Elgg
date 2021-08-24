@@ -45,8 +45,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Нови блог чланак %s',
 	'blog:notify:subject' => 'Нови блог чланак: %s',
-	'blog:notify:body' =>
-'',
 
 	// widget
 	'widgets:blog:description' => 'Прикажи твоје најновије блог чланке',

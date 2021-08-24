@@ -88,7 +88,7 @@ class MetadataTable {
 		$singulars = ['tag_name'];
 		$options = LegacyQueryOptionsAdapter::normalizePluralOptions($options, $singulars);
 
-		$tag_names = elgg_extract('tag_names', $options, ['tags']);
+		$tag_names = elgg_extract('tag_names', $options, ['tags'], false);
 
 		$threshold = elgg_extract('threshold', $options, 1, false);
 

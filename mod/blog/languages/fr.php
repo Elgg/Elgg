@@ -50,15 +50,12 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Nouvel article de blog intitulé %s',
 	'blog:notify:subject' => 'Nouvel article de blog: %s',
-	'blog:notify:body' =>
-'
-%s a publié un nouvel article de blog : %s
+	'blog:notify:body' => '%s a publié un nouvel article de blog : %s
 
 %s
 
-Voir et commenter l\'article de blog :
-%s
-',
+Afficher et commenter l\'article :
+%s',
 
 	// widget
 	'widgets:blog:name' => 'Articles de blog',

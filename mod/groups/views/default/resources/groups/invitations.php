@@ -17,4 +17,5 @@ $content = elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
 echo elgg_view_page(elgg_echo('groups:invitations'), [
 	'content' => $content,
 	'filter_id' => 'groups/invitations',
+	'filter_value' => 'invitations',
 ]);

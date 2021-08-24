@@ -25,8 +25,7 @@ return array(
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s aime votre publication "%s"',
-	'likes:notifications:body' =>
-'%1$s aime votre publication "%2$s" sur %3$s
+	'likes:notifications:body' => '%1$s aime votre publication "%2$s" sur %3$s
 
 Pour afficher votre publication :
 %4$s

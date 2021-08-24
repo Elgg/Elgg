@@ -234,7 +234,7 @@ return array(
 	'item:user:user' => 'Gebruiker',
 	'collection:user:user' => 'Gebruikers',
 	'notification:user:user:make_admin' => "Stuur een notificatie wanneer een gebruiker beheerdersrechten krijgt",
-	'notification:user:user:remove_admin' => "Stuur een notificatie wanneer een gebruiker beheerdersrechten afgenomen wordtt",
+	'notification:user:user:remove_admin' => "Stuur een notificatie wanneer een gebruiker beheerdersrechten afgenomen wordt",
 	'notification:user:user:unban' => "Stuur een notificatie wanneer een gebruiker wordt gedeblokkeerd",
 
 	'friends' => "Vrienden",
@@ -331,13 +331,16 @@ return array(
 	'usersettings:notifications:subscriptions:save:fail' => "Er was een probleem tijdens het opslaan van de notificatie abonnementen.",
 
 	'notification:default:salutation' => 'Beste %s,',
+	'notification:default:sign-off' => 'Met vriendelijke groet,
+
+%s',
 	'notification:subject' => 'Notificatie over \'%s\'',
 	'notification:body' => 'Bekijk de nieuwe activiteit op %s',
 	
 	'notifications:delayed_email:subject:daily' => "Dagelijkse notificaties",
 	'notifications:delayed_email:subject:weekly' => "Wekelijkse notificaties",
 	
-	'notifications:subscriptions:no_results' => 'Nog geen abonementen beschikbaar',
+	'notifications:subscriptions:no_results' => 'Nog geen abonnementen beschikbaar',
 
 	'notifications:mute:title' => "Notificaties uitzetten",
 	'notifications:mute:description' => "Indien je geen notificaties wilt ontvangen zoals diegene die je hebt ontvangen kun je één of meer van de volgende redenen instellen om notificaties in de toekomst te blokkeren:",
@@ -478,12 +481,17 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:performance:label:generic' => 'Algemeen',
 	'admin:performance:generic:description' => 'Hieronder staat een lijst met performance suggesties en waardes welke je kunnen helpen bij het tunen van de site',
 	'admin:performance:simplecache' => 'Simplecache',
+	'admin:performance:simplecache:settings:warning' => "Het is aangeraden om de simplecache instelling op te nemen in de settings.php.
+Het configureren in de settings.php file bevorderd caching performance.
+Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het moment dat er JavaScript en CSS files uit de cache geserveerd kunnen worden.",
 	'admin:performance:systemcache' => 'Systemcache',
 	'admin:performance:apache:mod_cache' => 'Apache mod_cache',
+	'admin:performance:apache:mod_cache:warning' => 'De mod_cache-module biedt HTTP-bewuste cacheschema\'s. Dit betekent dat de bestanden in de cache worden opgeslagen op basis van een instructie die aangeeft hoe lang een pagina als "vers" kan worden beschouwd.',
 	'admin:performance:php:open_basedir' => 'PHP open_basedir',
 	'admin:performance:php:open_basedir:not_configured' => 'Er zijn geen limitaties ingesteld',
 	'admin:performance:php:open_basedir:warning' => 'Een klein aantal open_basedir limitaties zijn in effect. Dit zou mogelijk impact kunnen hebben op de performance.',
 	'admin:performance:php:open_basedir:error' => 'Een groot aantal open_basedir limitaties zijn in effect. Dit heeft zeer waarschijnlijk impact op de performance.',
+	'admin:performance:php:open_basedir:generic' => 'Met open_basedir limitaties zal er, elke keer als er een bestand benaderd wordt, moeten worden gecontroleerd tegen de lijst van limitaties. Aangezien Elgg een grote hoeveelheid files benaderd zal dit dus een negatieve impact hebben. Ook de opcache van PHP kan door deze limitaties geen gebruik maken van al zijn caching mogelijkheden.',
 	
 	'admin:statistics' => 'Statistieken',
 	'admin:server' => 'Server',
@@ -578,12 +586,17 @@ De volgende karakters zijn niet toegestaan: %s',
 
 	'admin:widget:admin_welcome' => 'Welkom',
 	'admin:widget:admin_welcome:help' => "Een korte introductie op het beheerdeel van Elgg",
-	'admin:widget:admin_welcome:intro' =>
-'Welkom in Elgg! Op dit moment kijk je naar het beheerdersdashboard. Dit is makkelijk om te zien wat er op je site gebeurt.',
+	'admin:widget:admin_welcome:intro' => 'Welkom in Elgg! Op dit moment kijk je naar het beheerdersdashboard. Dit is makkelijk om te zien wat er op je site gebeurt.',
 
 	'admin:widget:admin_welcome:registration' => "Registratie voor nieuwe gebruikers is op dit moment uitgeschakeld. Je kunt dit activeren op de %s pagina.",
-	'admin:widget:admin_welcome:admin_overview' =>
-"",
+	'admin:widget:admin_welcome:admin_overview' => "Navigatie door het beheer gedeelte is mogelijk door het menu aan de rechterkant. Dit is georganiseerd in drie secties:
+	<dl>
+		<dt>Beheer</dt><dd>Basis taken zoals het beheren van gebruikers, bekijken van gerapporteerde content en het activeren van plugins</dd>
+		<dt>Configureer</dt><dd>Incidentele taken zoals het wijzigen van de site naam, of het configureren van plugin instellingen</dd>
+		<dt>Informatie</dt><dd>Informatie over je website zoals content statistieken</dd>
+		<dt>Ontwikkel</dt><dd>Voor ontwikkelaars welke bezig zijn met het ontwikkelen van een plugin of een theme. (Vereist de developer plugin)</dd>
+</dl>
+",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br>Controleer de links onderaan de pagina voor meer informatie en bedankt voor het gebruik van Elgg!',
@@ -637,8 +650,11 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:security:information' => 'Informatie',
 	'admin:security:information:description' => 'Op deze pagina staat een lijst met beveiligingsaanbevelingen.',
 	'admin:security:information:https' => 'Is de site beveiligd met HTTPS',
+	'admin:security:information:https:warning' => "Het wordt aanbevolen om de site middels HTTPS te beschermen. Dit helpt bij het beschermen van je verbinding zodat data (zoals wachtwoorden) niet uit te lezen is.",
 	'admin:security:information:wwwroot' => 'Website installatie map is schrijfbaar',
+	'admin:security:information:wwwroot:error' => "Het is aanbevolen dat Elgg is geïnstalleerd in een map die niet schrijfbaar is door de webserver. Kwaadwillenden zouden eventueel ongewenste code op je site kunnen installeren.",
 	'admin:security:information:validate_input' => 'Invoer validatie',
+	'admin:security:information:validate_input:error' => "Een plugin heeft de invoer validatie uitgeschakeld op de site. Dit geeft gebruikers de mogelijkheid om mogelijk schadelijk content op je site te plaatsen.",
 	'admin:security:information:password_length' => 'Minimale wachtwoord lengte',
 	'admin:security:information:password_length:warning' => "Het is aanbevolen om een minimale wachtwoord lengte te hebben van tenminste 6 tekens.",
 	'admin:security:information:username_length' => 'Minimale gebruikersnaam lengte',
@@ -646,6 +662,7 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:security:information:php:session_gc' => "PHP sessie opschoning",
 	'admin:security:information:php:session_gc:chance' => "Opschoningskans: %s%%",
 	'admin:security:information:php:session_gc:lifetime' => "Sessie levensduur %sseconden",
+	'admin:security:information:php:session_gc:error' => "Het is aanbevolen om de PHP instellingen  'session.gc_probability' en 'session.gc_divisor' in te stellen. Dit schoont verlopen sessies op in de database en zorgt er voor dat oude sessies niet opnieuw gebruikt kunnen worden.",
 	'admin:security:information:htaccess:hardening' => ".htaccess file access hardening",
 	'admin:security:information:htaccess:hardening:help' => "In het .htaccess bestand kan toegang to bepaalde bestanden worden geblokkeerd om de veiligheid van je site te verhogen. Voor meer informatie kijk in het .htaccess bestand.",
 	
@@ -687,6 +704,7 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:security:settings:email_require_confirmation:help' => 'Het nieuwe e-mailadres moet worden bevestigd voordat de wijziging wordt doorgevoerd. Na een succesvolle wijziging zal er een mededeling verstuurd worden naar het oude e-mailadres.',
 
 	'admin:security:settings:session_bound_entity_icons' => 'Sessie gebonden entity iconen',
+	'admin:security:settings:session_bound_entity_icons:help' => 'Entity iconen zijn standaard sessie gebonden. Dit houdt in dat de URLs naar de iconen informatie bevatten over de huidige sessie. Indien iconen sessiegebonden zijn, zijn ze niet deelbaar tussen sessies en dus meer afgeschermd. Het bijeffect is dat de iconen alleen voor de huidige sessie cachebaar zijn.',
 	
 	'admin:security:settings:site_secret:intro' => 'Elgg gebruikt een sleutel om tokens te genereren voor verschillende doeleinden.',
 	'admin:security:settings:site_secret:regenerate' => "Regenereer site secret",
@@ -714,18 +732,53 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:site:secret:prevented' => "Het genereren van een nieuw sitegeheim code werd geblokeerd",
 	
 	'admin:notification:make_admin:admin:subject' => 'Er is een nieuwe site beheerder toegevoegd aan %s',
+	'admin:notification:make_admin:admin:body' => '%s heeft %s toegevoegd als een site beheerder van %s.
+
+Om het profiel van de nieuwe site beheerder te bekijken, klik hier:
+%s',
 	
 	'admin:notification:make_admin:user:subject' => 'Je bent toegevoegd als site beheerder van %s',
+	'admin:notification:make_admin:user:body' => '%s heeft je een site beheerder gemaakt van %s.
+
+Om naar de website te gaan, klik hier:
+%s',
 	'admin:notification:remove_admin:admin:subject' => 'Een site beheerder is verwijderd van %s',
+	'admin:notification:remove_admin:admin:body' => '%s heeft %s verwijderd als site beheerder van %s.
+
+Om het profiel van de oud beheerder te bekijken, klik hier:
+%s',
 	
 	'admin:notification:remove_admin:user:subject' => 'Je bent verwijderd als site beheerder van %s',
+	'admin:notification:remove_admin:user:body' => '%s heeft je verwijderd als site beheerder van %s.
+
+Om naar de website te gaan, klik hier:
+%s',
 	'user:notification:ban:subject' => 'Je account op %s is geblokkeerd',
+	'user:notification:ban:body' => 'Je account op %s is geblokkeerd.
+
+Om naar de website te gaan, klik hier:
+%s',
 	
 	'user:notification:unban:subject' => 'Je account op %s is niet meer geblokkeerd',
+	'user:notification:unban:body' => 'Je account op %s is niet meer geblokkeerd. Je kunt weer gebruik maken van de website.
+
+Om naar de website te gaan, klik hier:
+%s',
 	
 	'user:notification:password_change:subject' => 'Je wachtwoord is gewijzigd!',
+	'user:notification:password_change:body' => "Je wachtwoord op '%s' is gewijzigd! Indien je dit zelf hebt aangevraagd ben je klaar.
+
+Heb je deze wijziging niet zelf aangevraagd, dan kun je je wachtwoord hier wijzigen:
+%s
+
+Of neem contact op met de beheerder van de site:
+%s",
 	
 	'admin:notification:unvalidated_users:subject' => "Gebruikers in afwachting van goedkeuring op %s",
+	'admin:notification:unvalidated_users:body' => "%d gebruikers van '%s' wachten op goedkeuring van een beheerder van de site.
+
+Bekijk hier de volledige lijst van gebruikers:
+%s",
 
 /**
  * Plugins
@@ -877,6 +930,7 @@ De volgende karakters zijn niet toegestaan: %s',
 
 	'admin:configure_utilities:default_widgets' => 'Standaard widgets',
 	'admin:default_widgets:unknown_type' => 'Onbekend widgettype',
+	'admin:default_widgets:instructions' => 'Plaats, verwijder, positioneer en configureer de standaard widgets voor de geselecteerde pagina. Deze wijzigingen hebben alleen effect op nieuwe gebruikers van de website.',
 
 	'admin:robots.txt:instructions' => "Je kunt hieronder de robots.txt van de site bewerken.",
 	'admin:robots.txt:plugins' => "Plugins zullen het volgende toevoegen aan de robots.txt:",
@@ -884,6 +938,7 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:robots.txt:physical' => "De robots.txt tool zal niet werken omdat er een fysiek robots.txt bestand aanwezig is.",
 
 	'admin:maintenance_mode:default_message' => 'De site is offline in verband met onderhoud.',
+	'admin:maintenance_mode:instructions' => 'Je kunt de onderhoudsmodus het beste alléén gebruiken als er sprake is van een upgrade, of als je grote veranderingen aan de site wilt aanbrengen. Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en de site bekijken!',
 	'admin:maintenance_mode:mode_label' => 'Onderhoudsmodus',
 	'admin:maintenance_mode:message_label' => 'Bericht dat gebruikers zien als de site in onderhoudsmodus is',
 	'admin:maintenance_mode:saved' => 'De instellingen voor onderhoudsmodus zijn opgeslagen',
@@ -1121,6 +1176,8 @@ De volgende karakters zijn niet toegestaan: %s',
 
 	'on' => 'Aan',
 	'off' => 'Uit',
+
+	'number_counter:decimal_separator' => ",",
 	'number_counter:thousands_separator' => ".",
 	'number_counter:view:thousand' => "%sK",
 	'number_counter:view:million' => "%sM",
@@ -1149,6 +1206,16 @@ De volgende karakters zijn niet toegestaan: %s',
  */
 
 	'useradd:subject' => 'Gebruikersaccount aangemaakt',
+	'useradd:body' => 'Er is een gebruikersaccount voor je aangemaakt op %s. Om je aan te melden bezoek:
+
+%s
+
+Om je aan te kunnen melden moet je gebruik maken van de volgende gegevens:
+
+Gebruikersnaam: %s
+Wachtwoord: %s
+
+Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 
 /**
  * Messages
@@ -1386,21 +1453,48 @@ De volgende karakters zijn niet toegestaan: %s',
 	'email:save:fail:password' => "Het opgegeven wachtwoord komt niet overeen met je huidige wachtwoord, je e-mail adres kon niet worden aangepast.",
 
 	'friend:newfriend:subject' => "%s heeft jou toegevoegd als vriend!",
+	'friend:newfriend:body' => "%s heeft je toegevoegd als vriend!
+
+Klik hier om naar het profile te gaan:
+
+%s",
 
 	'email:changepassword:subject' => "Wachtwoord gewijzigd!",
 
 	'email:resetpassword:subject' => "Wachtwoord reset!",
 
 	'email:changereq:subject' => "Aanvraag om het wachtwoord te wijzigen.",
+	'email:changereq:body' => "Iemand (van het IP adres %s) heeft een nieuw wachtwoord aangevraagd voor dit account.
+
+Indien je dit zelf hebt aangevraagd, klik op onderstaande link. Anders negeer deze e-mail.
+
+%s",
 	
 	'account:email:request:success' => "Het nieuwe e-mailadres zal worden opgeslagen nadat deze is gevalideerd. Controleer de e-mail inbox van '%s' voor validatie instructies.",
 	'email:request:email:subject' => "Bevestig je e-mailadres",
+	'email:request:email:body' => "Je hebt een verzoek ingediend om je e-mailadres te wijziging op '%s'.
+Indien je deze wijziging niet hebt aangevraagd kun je deze mail als niet verzonden beschouwen.
+
+Gebruik de volgende link om de wijziging te bevestigen:
+%s
+
+Deze link is slechts 1 uur geldig.",
 	
 	'account:email:request:error:no_new_email' => "Er is geen e-mailadres wijziging die nog moet worden goedgekeurd.",
 	
 	'email:confirm:email:old:subject' => "Het e-mailadres is gewijzigd",
+	'email:confirm:email:old:body' => "Je e-mailadres op '%s' is gewijzigd.
+Vanaf nu ontvang je de e-mail notificaties op '%s'.
+
+Indien je deze wijziging niet hebt aangevraagd, neem dan contact op met een beheerder van de site.
+%s",
 	
 	'email:confirm:email:new:subject' => "Het e-mailadres is gewijzigd",
+	'email:confirm:email:new:body' => "Je e-mailadres op '%s' is gewijzigd.
+Vanaf nu ontvang je de e-mail notificaties op dit e-mailadres.
+
+Indien je deze wijziging niet hebt aangevraagd, neem dan contact op met een beheerder van de site.
+%s",
 
 	'account:email:admin:validation_notification' => "Stuur mij een notificatie indien gebruikers zich aanmelden en handmatig gevalideerd moeten worden",
 	'account:email:admin:validation_notification:help' => "Vanwege de instellingen op de site moeten nieuwe gebruikers handmatig gevalideerd worden. Middels deze instelling kun je de notificaties uitschakelen.",
@@ -1409,6 +1503,10 @@ De volgende karakters zijn niet toegestaan: %s',
 	'account:validation:pending:content' => "Je account is succesvol geregistreerd! Voordat je je account kunt gebruiken moet deze echter eerst nog worden gevalideerd door een beheerder van de site. Zodra dit gedaan is ontvang je daarvan een e-mail.",
 	
 	'account:notification:validation:subject' => "Je account op %s is gevalideerd!",
+	'account:notification:validation:body' => "Je account op '%s' is gevalideerd. Je kunt nu je account gebruiken.
+
+Klik hier om naar de website te gaan:
+%s",
 
 /**
  * user default access
@@ -1447,8 +1545,20 @@ De volgende karakters zijn niet toegestaan: %s',
 	'generic_comments:latest:posted' => 'plaatste een',
 
 	'generic_comment:notification:subject' => 'Re: %s',
+	'generic_comment:notification:owner:body' => "Je hebt een nieuwe reactie gekregen op je content.
+
+%s
+
+Om te reageren of het originele item te bekijken, klik hier:
+%s",
 	
 	'generic_comment:notification:user:summary' => 'Een nieuwe reactie op: %s',
+	'generic_comment:notification:user:body' => "Er is een nieuwe reactie geplaatst.
+
+%s
+
+Om te reageren of het originele item te bekijken, klik hier:
+%s",
 
 /**
  * Entities
@@ -1497,12 +1607,6 @@ De volgende karakters zijn niet toegestaan: %s',
 	'actiongatekeeper:uploadexceeded' => 'De totale grootte van de ge-uploade bestanden is meer dan is toegestaan door de site beheerder',
 
 /**
- * Word blacklists
- */
-
-	'word:blacklist' => 'en, het, dan, maar, hij, zijn, haar, hem, een, niet, ook, ongeveer, nu, dus, wel, toch, is, anders, omgekeerd, maar dus, in plaats daarvan, intussen, derhalve, dit, lijkt, wat, wie, wiens, wie dan ook, wie dan ook',
-
-/**
  * Javascript
  */
 
@@ -1514,6 +1618,30 @@ De volgende karakters zijn niet toegestaan: %s',
  */
 	'diagnostics:report' => 'Diagnostics Report',
 	'diagnostics:description' => 'Het Diagnostic Report kan gebruikt worden om problemen met de installatie van Elgg te analyseren. Elgg ontwikkelaars kunnen verzoeken om dit rapport.',
+	'diagnostics:header' => '========================================================================
+Elgg Diagnostic Report
+Generated %s by %s
+========================================================================
+
+',
+	'diagnostics:report:basic' => '
+Elgg Release %s, version %s
+
+------------------------------------------------------------------------',
+	'diagnostics:report:php' => '
+PHP info:
+%s
+------------------------------------------------------------------------',
+	'diagnostics:report:md5' => '
+Installed files and checksums:
+
+%s
+------------------------------------------------------------------------',
+	'diagnostics:report:globals' => '
+Global variables:
+
+%s
+------------------------------------------------------------------------',
 	
 /**
  * Miscellaneous

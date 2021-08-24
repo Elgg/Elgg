@@ -45,8 +45,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Nyt blog indlæg kaldt %s',
 	'blog:notify:subject' => 'Nyt blot indlæg: %s',
-	'blog:notify:body' =>
-'',
 
 	// widget
 	'widgets:blog:description' => 'Vis dit seneste blogindlæg',

@@ -83,13 +83,16 @@ class SubscriptionsService {
 		}
 
 		// get subscribers only for \ElggEntity if it isn't private
-		if ((!$object instanceof \ElggEntity) || ($object->access_id === ACCESS_PRIVATE)) {
+		if (!$object instanceof \ElggEntity || $object->access_id === ACCESS_PRIVATE) {
 			return [];
 		}
 
 		$subscriptions = [];
 
-		$guids = [$object->container_guid];
+		$guids = [
+			$object->owner_guid,
+			$object->container_guid,
+		];
 		if ($object instanceof \ElggObject || $object instanceof \ElggGroup) {
 			$guids[] = $object->guid;
 		}

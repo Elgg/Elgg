@@ -2,8 +2,6 @@
 
 elgg_require_js('forms/site_notifications/process');
 
-echo elgg_format_element('div', ['class' => 'site-notifications-container'], elgg_extract('list', $vars));
-
 // footer
 $fields = [
 	[
@@ -30,11 +28,12 @@ if ((bool) elgg_extract('mark_read', $vars, true)) {
 	];
 }
 
-$footer = elgg_view_field([
+echo elgg_view_field([
 	'#type' => 'fieldset',
+	'#class' => 'mvs',
 	'fields' => $fields,
 	'align' => 'horizontal',
 	'class' => 'elgg-level',
 ]);
 
-elgg_set_form_footer($footer);
+echo elgg_format_element('div', ['class' => 'site-notifications-container'], elgg_extract('list', $vars));

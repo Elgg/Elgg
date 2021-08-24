@@ -110,6 +110,12 @@ if ($pagination && ($position == 'after' || $position == 'both')) {
 	$result .= elgg_view('navigation/pagination', $pagination_options);
 }
 
+$base_url = elgg_extract('base_url', $vars);
+if (!empty($base_url)) {
+	// strip offset and limit from base url as they always change when navigating and therefore should not be part of base url
+	$base_url = elgg_http_add_url_query_elements($base_url, ['offset' => null, 'limit' => null]);
+}
+
 $id = elgg_build_hmac([
 	$list_classes,
 	$list_item_view,
@@ -118,7 +124,7 @@ $id = elgg_build_hmac([
 	elgg_extract('subtype', $vars),
 	elgg_extract('offset_key', $vars),
 	elgg_extract('pagination_class', $vars),
-	elgg_extract('base_url', $vars),
+	$base_url,
 ])->getToken();
 
 $container_classes = ['elgg-list-container'];

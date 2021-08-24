@@ -45,8 +45,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Nowy wpis na blogu o nazwie %s',
 	'blog:notify:subject' => 'Nowy wpis na blogu: %s',
-	'blog:notify:body' =>
-'',
 
 	// widget
 	'widgets:blog:description' => 'Wyświetl moje najnowsze wpisy na blogu',

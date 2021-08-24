@@ -50,8 +50,12 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Nieuwe blog met de titel \'%s\'',
 	'blog:notify:subject' => 'Nieuwe blog: %s',
-	'blog:notify:body' =>
-'',
+	'blog:notify:body' => '%s publiceerde een nieuwe blog: %s
+
+%s
+
+Bekijk en reageer hier op de blog:
+%s',
 
 	// widget
 	'widgets:blog:name' => 'Blogs',
