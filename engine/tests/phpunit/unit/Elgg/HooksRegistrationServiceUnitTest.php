@@ -158,5 +158,25 @@ class HooksRegistrationServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->mock->restore();
 		$this->assertEquals($handlers1, $this->mock->getAllHandlers());
 	}
+	
+	public function testStaticCallbacksWithPrecedingSlash() {
+		$this->assertTrue($this->mock->registerHandler('foo', 'bar', '\MyCustomClass::static_callback'));
+		$this->assertTrue($this->mock->registerHandler('foo', 'bar', 'MyCustomClass2::static_callback'));
+		
+		$expected = [
+			'foo' => [
+				'bar' => [
+					500 => ['\MyCustomClass::static_callback', 'MyCustomClass2::static_callback'],
+				],
+			],
+		];
+
+		$this->assertSame($expected, $this->mock->getAllHandlers());
+		
+		$this->assertTrue($this->mock->unregisterHandler('foo', 'bar', 'MyCustomClass::static_callback'));
+		$this->assertTrue($this->mock->unregisterHandler('foo', 'bar', '\MyCustomClass2::static_callback'));
+		
+		$this->assertSame([], $this->mock->getAllHandlers());
+	}
 
 }

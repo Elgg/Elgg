@@ -44,25 +44,21 @@ return array(
 	 */
 	'discussion:topic:notify:summary' => 'Nouveau sujet de discussion intitulé %s',
 	'discussion:topic:notify:subject' => 'Nouveau sujet de discussion : %s',
-	'discussion:topic:notify:body' =>
-'%s a ajouté un nouveau sujet de discussion "%s" :
+	'discussion:topic:notify:body' => '%s a ajouté un nouveau sujet de discussion "%s":
 
 %s
 
 Voir le sujet de discussion et y répondre :
-%s
-',
+%s',
 
 	'discussion:comment:notify:summary' => 'Nouvelle réponse dans la discussion : %s',
 	'discussion:comment:notify:subject' => 'Nouvelle réponse dans la discussion : %s',
-	'discussion:comment:notify:body' =>
-'%s a répondu au sujet de discussion "%s" :
+	'discussion:comment:notify:body' => '%s a répondu dans le sujet de discussion "%s" :
 
 %s
 
 Voir la discussion et y répondre :
-%s
-',
+%s',
 
 	'groups:tool:forum' => 'Activer les discussions du groupe',
 
@@ -74,4 +70,8 @@ Voir la discussion et y répondre :
 	'discussion:topic:closed:desc' => 'Cette discussion a été fermée et n\'accepte plus de nouveaux commentaires.',
 
 	'discussion:topic:description' => 'Message du sujet de discussion',
+	'discussion:topic:toggle_status:open' => 'Le sujet de discussion a bien été rouvert.',
+	'discussion:topic:toggle_status:open:confirm' => 'Confirmez-vous vouloir rouvrir cette discussion ?',
+	'discussion:topic:toggle_status:closed' => 'Le sujet de discussion a bien été fermé.',
+	'discussion:topic:toggle_status:closed:confirm' => 'Confirmez-vous vouloir fermer cette discussion ?',
 );

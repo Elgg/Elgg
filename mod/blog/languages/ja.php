@@ -50,15 +50,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => '新着ブログ「%s」',
 	'blog:notify:subject' => '新着ブログ: %s',
-	'blog:notify:body' =>
-'
-%s さんが新しいブログ記事を公開しました: %s
-
-%s
-
-このブログの表示とコメントは:
-%s
-',
 
 	// widget
 	'widgets:blog:name' => 'ブログ記事',

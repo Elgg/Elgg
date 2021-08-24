@@ -45,8 +45,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Uusi blogiviesti %s',
 	'blog:notify:subject' => 'Uusi blogiviesti: %s',
-	'blog:notify:body' =>
-'',
 
 	// widget
 	'widgets:blog:description' => 'Näytä viimeisimmät blogiviestisi',

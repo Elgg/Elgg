@@ -25,6 +25,4 @@ return array(
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s 가 당신의 글 "%s" 를 공감합니다',
-	'likes:notifications:body' =>
-'',
 );

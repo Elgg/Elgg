@@ -25,6 +25,4 @@ return array(
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s ți-a apreciat postarea "%s"',
-	'likes:notifications:body' =>
-'',
 );

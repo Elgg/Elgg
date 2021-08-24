@@ -28,8 +28,6 @@ return array(
 
 	'bookmarks:notify:summary' => 'Marcaj nou numit %s',
 	'bookmarks:notify:subject' => 'Marcaj nou: %s',
-	'bookmarks:notify:body' =>
-'',
 
 	'bookmarks:numbertodisplay' => 'Numărul de marcaje pentru afișare',
 
@@ -44,14 +42,9 @@ return array(
 	'widgets:bookmarks:name' => 'Marcaje',
 	'widgets:bookmarks:description' => "Afișează-ți ultimele marcaje.",
 
-	'bookmarks:bookmarklet:description' =>
-			"Un marcator este un buton special pe care î-l salvezi în bara de legături a navigatorului tău. Acest lucru îți permite să salvezi orice resursă găsită pe internet la marcajele tale. Pentru a-l seta, trage butonul de mai jos în bara de legături a navigatorului tău:",
-
-	'bookmarks:bookmarklet:descriptionie' =>
-			"Dacă folosești Internet Explorer, va trebui să dai clic dreapta pe pictograma de marcator, selectează apoi 'adaugă la favorite', și apoi bara de Legături.",
-
-	'bookmarks:bookmarklet:description:conclusion' =>
-			"Poți apoi să marchezi oricând orice pagină pe care o vizitezi apăsând pe butonul din navigatorul tău.",
+	'bookmarks:bookmarklet:description' => "Un marcator este un buton special pe care î-l salvezi în bara de legături a navigatorului tău. Acest lucru îți permite să salvezi orice resursă găsită pe internet la marcajele tale. Pentru a-l seta, trage butonul de mai jos în bara de legături a navigatorului tău:",
+	'bookmarks:bookmarklet:descriptionie' => "Dacă folosești Internet Explorer, va trebui să dai clic dreapta pe pictograma de marcator, selectează apoi 'adaugă la favorite', și apoi bara de Legături.",
+	'bookmarks:bookmarklet:description:conclusion' => "Poți apoi să marchezi oricând orice pagină pe care o vizitezi apăsând pe butonul din navigatorul tău.",
 
 	/**
 	 * Status messages

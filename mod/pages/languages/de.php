@@ -34,8 +34,7 @@ return array(
 
 	'pages:notify:summary' => 'Eine neue Coop-Seite namens %s wurde erstellt.',
 	'pages:notify:subject' => "Neue Coop-Seite: %s",
-	'pages:notify:body' =>
-'%s hat eine neue Coop-Seite erstellt: %s
+	'pages:notify:body' => '%s hat eine neue Coop-Seite erstellt: %s
 
 %s
 

@@ -144,6 +144,10 @@ RewriteCond %{REQUEST_URI} ^/mod/(.*)/vendor/ [OR]
 RewriteCond %{REQUEST_URI} ^/mod/(.*)/classes/ [OR]
 # The following condition is needed in order to easily enable (some of the) previous conditions
 RewriteCond 1 2
+# The following files are whitelisted for the installer
+RewriteCond %{REQUEST_URI} !/vendor/npm-asset/jquery/dist/jquery.min.js
+RewriteCond %{REQUEST_URI} !/vendor/elgg/elgg/views/default/graphics/elgg_logo.png
+RewriteCond %{REQUEST_URI} !/vendor/elgg/elgg/views/default/graphics/favicon.ico
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^(.*)$ - [F,L]
 

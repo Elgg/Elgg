@@ -29,8 +29,6 @@ return array(
 
 	'pages:notify:summary' => 'Uusi wikisivu: %s',
 	'pages:notify:subject' => "Uusi wikisivu: %s",
-	'pages:notify:body' =>
-'',
 
 	'pages:more' => 'Lisää wikisivuja',
 	'pages:none' => 'Wikejä ei vielä ole luotu',

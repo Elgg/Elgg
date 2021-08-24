@@ -6,8 +6,11 @@ use DI\Container;
 use Elgg\Application\Database;
 use Elgg\Config;
 use Elgg\EventsService;
+use Elgg\Filesystem\MimeTypeService;
+use Elgg\Forms\FieldsService;
 use Elgg\Gatekeeper;
 use Elgg\Groups\Tools;
+use Elgg\I18n\LocaleService;
 use Elgg\I18n\Translator;
 use Elgg\Logger;
 use Elgg\Menu\Service;
@@ -18,8 +21,6 @@ use Elgg\Users\Accounts;
 use Elgg\Views\HtmlFormatter;
 use Elgg\Views\TableColumn\ColumnFactory;
 use ElggSession;
-use Elgg\I18n\LocaleService;
-use Elgg\Filesystem\MimeTypeService;
 
 /**
  * Public service container
@@ -29,6 +30,7 @@ use Elgg\Filesystem\MimeTypeService;
  * @property-read Csrf                  $csrf            CSRF protection
  * @property-read Database              $db              Public database
  * @property-read EventsService         $events          Event service
+ * @property-read FieldsService         $fields          Fields service
  * @property-read Gatekeeper            $gatekeeper      Gatekeeper
  * @property-read Tools                 $group_tools     Group Tools
  * @property-read HtmlFormatter         $html_formatter  HTML formatter

@@ -37,13 +37,9 @@ return array(
 	 */
 	'discussion:topic:notify:summary' => '새 토론 주제 요청됨 %s',
 	'discussion:topic:notify:subject' => '새 토론 주제: %s',
-	'discussion:topic:notify:body' =>
-'',
 
 	'discussion:comment:notify:summary' => '주제의 새 댓글: %s',
 	'discussion:comment:notify:subject' => '주제의 새 댓글: %s',
-	'discussion:comment:notify:body' =>
-'',
 
 	'groups:tool:forum' => '모둠 토론 허용',
 

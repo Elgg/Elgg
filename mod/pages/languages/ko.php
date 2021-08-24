@@ -29,8 +29,6 @@ return array(
 
 	'pages:notify:summary' => '%s라는 새페이지',
 	'pages:notify:subject' => "새 페이지:%s",
-	'pages:notify:body' =>
-'',
 
 	'pages:more' => '페이지 더보기',
 	'pages:none' => '아직 페이지를 만들지 않았습니다.',

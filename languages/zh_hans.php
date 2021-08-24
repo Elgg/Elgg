@@ -462,10 +462,7 @@ return array(
 
 	'admin:widget:admin_welcome' => '欢迎',
 	'admin:widget:admin_welcome:help' => "管理区域的简短介绍",
-	'admin:widget:admin_welcome:intro' =>
-'欢迎使用Elgg! 现在你正在查看管理面板，它可以跟踪网站使用情况.',
-	'admin:widget:admin_welcome:admin_overview' =>
-"",
+	'admin:widget:admin_welcome:intro' => '欢迎使用Elgg! 现在你正在查看管理面板，它可以跟踪网站使用情况.',
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />通过底部链接检查可用的资源，感谢使用Elgg!',
@@ -1199,12 +1196,6 @@ return array(
 	'actiongatekeeper:timeerror' => '你正在使用的页面已过期，请刷新重试。',
 	'actiongatekeeper:pluginprevents' => '由于未知原因，你的表单不能提交。',
 	'actiongatekeeper:uploadexceeded' => '上传文件尺寸超出最大限制',
-
-/**
- * Word blacklists
- */
-
-	'word:blacklist' => 'and, the, then, but, she, his, her, him, one, not, also, about, now, hence, however, still, likewise, otherwise, therefore, conversely, rather, consequently, furthermore, nevertheless, instead, meanwhile, accordingly, this, seems, what, whom, whose, whoever, whomever',
 
 /**
  * Javascript

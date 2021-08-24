@@ -18,9 +18,8 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 		var li_modifier = num_likes > 0 ? 'removeClass' : 'addClass';
 
 		$('.elgg-menu-item-likes-count > a[data-likes-guid=' + guid + ']').each(function () {
-			$(this)
-				.replaceWith(new_value)
-				.parent()[li_modifier]('hidden');
+			$(this).parent()[li_modifier]('hidden');
+			$(this).replaceWith(new_value);
 		});
 	}
 

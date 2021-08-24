@@ -34,8 +34,12 @@ return array(
 
 	'pages:notify:summary' => 'Nieuwe pagina met de titel %s',
 	'pages:notify:subject' => "Een nieuwe pagina: %s",
-	'pages:notify:body' =>
-'',
+	'pages:notify:body' => '%s schreef een nieuwe pagina: %s
+
+%s
+
+Om de pagina te bekijken en te reageren, klik hier:
+%s',
 
 	'pages:more' => 'Meer pagina\'s',
 	'pages:none' => 'Nog geen pagina\'s aangemaakt',

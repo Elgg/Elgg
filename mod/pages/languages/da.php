@@ -29,8 +29,6 @@ return array(
 
 	'pages:notify:summary' => 'Ny side kaldt %s',
 	'pages:notify:subject' => "En ny side: %s",
-	'pages:notify:body' =>
-'',
 
 	'pages:more' => 'Flere sider',
 	'pages:none' => 'Der er ikke oprettet sider endnu',

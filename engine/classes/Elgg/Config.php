@@ -73,6 +73,7 @@ use Elgg\Traits\Loggable;
  * @property bool          $installer_running
  * @property string        $language                   				Site language code
  * @property string[]      $language_to_locale_mapping 				A language to locale mapping (eg. 'en' => ['en_US'] or 'nl' => ['nl_NL'])
+ * @property bool          $language_detect_from_browser            Control if language can be detected from browser
  * @property int           $lastcache								The timestamp the cache was last invalidated
  * @property string        $localcacheroot            				Path of local cache storage with trailing "/"
  * @property bool          $memcache
@@ -86,6 +87,7 @@ use Elgg\Traits\Loggable;
  * @property int           $min_password_special                    The minimal number of special characters in a password
  * @property int           $minusername                             The minimal length of a username
  * @property int           $notifications_max_runtime               The max runtime for the notification queue processing in seconds since the start of the cron interval
+ * @property int           $notifications_queue_delay               Number of seconds to delay the processing of the notifications queue
  * @property string[]      $pages
  * @property string        $pagination_behaviour                    Behaviour of pagination in lists
  * @property-read string   $path         							Path of composer install with trailing "/"
@@ -201,10 +203,12 @@ class Config {
 			'large' => ['w' => 200, 'h' => 200, 'square' => true, 'upscale' => true],
 			'master' => ['w' => 10240, 'h' => 10240, 'square' => false, 'upscale' => false, 'crop' => false],
 		],
+		'language_detect_from_browser' => true,
 		'lastcache' => 0,
 		'min_password_length' => 6,
 		'minusername' => 4,
 		'notifications_max_runtime' => 45,
+		'notifications_queue_delay' => 0,
 		'pagination_behaviour' => 'ajax-replace',
 		'security_email_require_confirmation' => true,
 		'security_email_require_password' => true,

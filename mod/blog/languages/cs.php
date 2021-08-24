@@ -37,8 +37,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Nový blog s názvem %s',
 	'blog:notify:subject' => 'Nový blog: %s',
-	'blog:notify:body' =>
-'',
 
 	// widget
 	'widgets:blog:description' => 'Zobrazuje vaše nejnovější blogy',

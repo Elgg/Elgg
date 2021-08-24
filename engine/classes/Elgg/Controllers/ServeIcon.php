@@ -82,6 +82,10 @@ class ServeIcon {
 			->setExpires($this->getCurrentTime('+1 day'))
 			->setMaxAge(86400);
 		
+		if (!$response->headers->hasCacheControlDirective('no-cache')) {
+			$response->headers->addCacheControlDirective('no-cache', 'Set-Cookie');
+		}
+		
 		$response->send();
 		
 		return elgg_ok_response();

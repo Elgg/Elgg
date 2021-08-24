@@ -77,6 +77,9 @@ return [
 		'friends' => [
 			'context' => ['profile', 'dashboard'],
 		],
+		'friends_of' => [
+			'context' => ['profile', 'dashboard'],
+		],
 	],
 	'hooks' => [
 		'access:collections:write:subtypes' => [

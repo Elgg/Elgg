@@ -4,6 +4,8 @@ namespace Elgg\Upgrade;
 
 /**
  * Result of a single BatchUpgrade run
+ *
+ * @internal
  */
 final class Result {
 
@@ -19,9 +21,10 @@ final class Result {
 	 * Add new error message to the batch
 	 *
 	 * @param string|string[] $message Error messages
+	 *
 	 * @return void
 	 */
-	public function addError($message) {
+	public function addError($message): void {
 		if (is_array($message)) {
 			$this->errors = $this->errors + $message;
 		} else {
@@ -34,7 +37,7 @@ final class Result {
 	 *
 	 * @return array $errors Array of error messages
 	 */
-	public function getErrors() {
+	public function getErrors(): array {
 		return $this->errors;
 	}
 
@@ -44,9 +47,10 @@ final class Result {
 	 * This must be called every time an item fails to get upgraded.
 	 *
 	 * @param int $num Number of items (defaults to 1)
+	 *
 	 * @return void
 	 */
-	public function addFailures($num = 1) {
+	public function addFailures(int $num = 1): void {
 		$this->failure_count += $num;
 	}
 
@@ -55,7 +59,7 @@ final class Result {
 	 *
 	 * @return int $failure_count Amount of failures
 	 */
-	public function getFailureCount() {
+	public function getFailureCount(): int {
 		return $this->failure_count;
 	}
 
@@ -63,9 +67,10 @@ final class Result {
 	 * Set an item (or items) as successfully upgraded
 	 *
 	 * @param int $num Amount if items (defaults to one)
+	 *
 	 * @return void
 	 */
-	public function addSuccesses($num = 1) {
+	public function addSuccesses(int $num = 1): void {
 		$this->success_count += $num;
 	}
 
@@ -74,7 +79,7 @@ final class Result {
 	 *
 	 * @return int $failure_count Amount of failures
 	 */
-	public function getSuccessCount() {
+	public function getSuccessCount(): int {
 		return $this->success_count;
 	}
 
@@ -83,7 +88,7 @@ final class Result {
 	 *
 	 * @return void
 	 */
-	public function markComplete() {
+	public function markComplete(): void {
 		$this->is_complete = true;
 	}
 
@@ -91,17 +96,17 @@ final class Result {
 	 * Has the upgrade been marked complete?
 	 *
 	 * @return bool
-	 * @internal
 	 */
-	public function wasMarkedComplete() {
+	public function wasMarkedComplete(): bool {
 		return $this->is_complete === true;
 	}
 
 	/**
 	 * Export to reports array
+	 *
 	 * @return array
 	 */
-	public function toArray() {
+	public function toArray(): array {
 		return [
 			'errors' => $this->getErrors(),
 			'numErrors' => $this->getFailureCount(),

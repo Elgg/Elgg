@@ -38,6 +38,8 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 					} else {
 						$target_list.append(list_items);
 					}
+					
+					$target_list.trigger('change');
 				} else {
 					elgg.register_error(elgg.echo('ajax:pagination:no_data'));
 				}

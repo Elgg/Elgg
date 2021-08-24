@@ -48,8 +48,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Postare de blog nouă numită %s',
 	'blog:notify:subject' => 'Postare de blog nouă: %s',
-	'blog:notify:body' =>
-'',
 
 	// widget
 	'widgets:blog:name' => 'Postări de blog',

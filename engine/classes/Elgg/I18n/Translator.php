@@ -263,12 +263,14 @@ class Translator {
 			return $user->language;
 		}
 
-		// detect from user agent if not logged in
-		$browserlangs = _elgg_services()->request->getLanguages();
-		if (!empty($browserlangs)) {
-			$browserlang = explode('_', $browserlangs[0]);
-			
-			return $browserlang[0];
+		// detect from browser if not logged in
+		if ($this->config->language_detect_from_browser) {
+			$browserlangs = _elgg_services()->request->getLanguages();
+			if (!empty($browserlangs)) {
+				$browserlang = explode('_', $browserlangs[0]);
+				
+				return $browserlang[0];
+			}
 		}
 		
 		// get site setting

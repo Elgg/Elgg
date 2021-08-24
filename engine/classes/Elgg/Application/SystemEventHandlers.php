@@ -56,7 +56,6 @@ class SystemEventHandlers {
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/email', 100);
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/language', 100);
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/default_access', 100);
-		elgg_extend_view('notifications/settings/records', 'notifications/settings/create_comment');
 		
 		elgg_register_simplecache_view('admin.css');
 		elgg_register_simplecache_view('resources/manifest.json');

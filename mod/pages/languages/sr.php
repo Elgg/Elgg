@@ -29,8 +29,6 @@ return array(
 
 	'pages:notify:summary' => 'Нова страна названа %s',
 	'pages:notify:subject' => "Нова страна: %s",
-	'pages:notify:body' =>
-'',
 
 	'pages:more' => 'Више страна',
 	'pages:none' => 'Још увек нема креираних страна',

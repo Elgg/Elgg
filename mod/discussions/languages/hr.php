@@ -37,12 +37,8 @@ return array(
 	 */
 	'discussion:topic:notify:summary' => 'Nova tema rasprave je %s',
 	'discussion:topic:notify:subject' => 'Nova tema rasprave: %s',
-	'discussion:topic:notify:body' =>
-'',
 
 	'discussion:comment:notify:summary' => 'Novi komentar u temi: %s',
-	'discussion:comment:notify:body' =>
-'',
 
 	'groups:tool:forum' => 'Omogući grupnu raspravu',
 

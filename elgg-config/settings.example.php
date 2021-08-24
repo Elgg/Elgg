@@ -419,6 +419,17 @@ $CONFIG->allow_phpinfo = false;
 //);
 
 /**
+ * Configure notification queue delay
+ *
+ * This setting can be used to delay the processing of queued notifications. This can help when users create content and
+ * quickly remove the content. A notification could be send out to subscribers about content which will be removed quickly
+ *
+ * The setting needs to be the number of seconds to delay the notification queue processing (eg. 3 minutes => 180 seconds)
+ * Default: 0 (no delay)
+ */
+//$CONFIG->notifications_queue_delay = 180;
+
+/**
  * Proxy configuration
  *
  * These settings can be used whenever there is the need to (optionally) configure a proxy
@@ -467,6 +478,11 @@ $CONFIG->proxy = [
  * @see https://secure.php.net/manual/en/function.setlocale.php
  */
 //$CONFIG->language_to_locale_mapping = [];
+
+/**
+ * Control if you want site language to be detected by browser language.
+ */
+//$CONFIG->language_detect_from_browser = true;
 
 /**
  * When your webserver is behind a loadbalancer or reverse proxy server some client information (IP, protocol, etc) is
