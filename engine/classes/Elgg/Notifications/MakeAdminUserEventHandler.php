@@ -36,7 +36,7 @@ class MakeAdminUserEventHandler extends NotificationEventHandler {
 	 */
 	protected function getNotificationBody(\ElggUser $recipient, string $method): string {
 		
-		$actor = elgg_extract('sender', $this->params);
+		$actor = $this->event->getActor();
 		if (!$actor instanceof \ElggUser) {
 			return parent::getNotificationBody($recipient, $method);
 		}
