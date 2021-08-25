@@ -8,6 +8,7 @@
 return array(
 
 	'item:object:reported_content' => 'Elemente raportate',
+	'collection:object:reported_content' => 'Elemente raportate',
 	'admin:administer_utilities:reportedcontent' => 'Conținut raportat',
 	'reportedcontent' => 'Conținut raportat',
 	'reportedcontent:this' => 'Raportează asta',

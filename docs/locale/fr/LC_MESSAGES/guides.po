@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-09 15:46+0200\n"
+"POT-Creation-Date: 2021-08-06 15:11+0200\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -3136,7 +3136,7 @@ msgstr ""
 "les mêmes raisons : les auteurs de plugin publient également de nouvelles "
 "versions, et vous voudrez pouvoir utiliser ces mises à jour."
 
-#: ../../guides/email.rst:2 ../../guides/notifications.rst:197
+#: ../../guides/email.rst:2 ../../guides/notifications.rst:284
 msgid "Email"
 msgstr "E-mail"
 
@@ -7575,8 +7575,8 @@ msgstr ""
 "recadrage."
 
 #: ../../guides/hooks-list.rst:887 ../../guides/i18n.rst:51
-#: ../../guides/notifications.rst:24 ../../guides/notifications.rst:222
-#: ../../guides/notifications.rst:246 ../../guides/notifications.rst:294
+#: ../../guides/notifications.rst:24 ../../guides/notifications.rst:309
+#: ../../guides/notifications.rst:333 ../../guides/notifications.rst:381
 msgid "Example:"
 msgstr "Exemple :"
 
@@ -9678,14 +9678,10 @@ msgstr ""
 #: ../../guides/notifications.rst:75
 msgid ""
 "New notification events can be registered with the "
-"`elgg_register_notification_event()`__ function or in the :doc:`elgg-plugin "
+"``elgg_register_notification_event()`` function or in the :doc:`elgg-plugin "
 "</guides/plugins>` configuration. Notifications about registered events will"
 " be sent automatically to all subscribed users."
 msgstr ""
-"De nouveaux événements de notification peuvent être enregistrés avec la "
-"fonction `elgg_register_notification_event()`__ ou dans la configuration "
-":doc:`elgg-plugin </guides/plugins>`. Des notifications sur les événements "
-"enregistrés seront envoyées automatiquement à tous les utilisateurs abonnés."
 
 #: ../../guides/notifications.rst:79
 msgid "This is the workflow of the notifications system:"
@@ -9804,11 +9800,11 @@ msgstr ""
 "Le hook ``[send:after, notifications]`` est déclenché pour l’événement après"
 " que toutes les notifications ont été envoyées"
 
-#: ../../guides/notifications.rst:101 ../../guides/notifications.rst:123
-msgid "Example"
-msgstr "Exemple"
+#: ../../guides/notifications.rst:99
+msgid "Notification event registration example"
+msgstr ""
 
-#: ../../guides/notifications.rst:103
+#: ../../guides/notifications.rst:101
 msgid ""
 "Tell Elgg to send notifications when a new object of subtype \"photo\" is "
 "created:"
@@ -9816,7 +9812,11 @@ msgstr ""
 "Indiquez à Elgg d’envoyer des notifications lorsqu’un nouvel objet de sous-"
 "type ``photo`` est créé :"
 
-#: ../../guides/notifications.rst:116
+#: ../../guides/notifications.rst:112
+msgid "Or in the ``elgg-plugin.php``:"
+msgstr ""
+
+#: ../../guides/notifications.rst:126
 msgid ""
 "In order to send the event-based notifications you must have the one-minute "
 ":doc:`CRON </admin/cron>` interval configured."
@@ -9824,7 +9824,7 @@ msgstr ""
 "Pour envoyer les notifications lors des événements, vous devez configurer "
 "l’intervalle :doc:`CRON </admin/cron>` d’une minute."
 
-#: ../../guides/notifications.rst:119
+#: ../../guides/notifications.rst:129
 msgid ""
 "Contents of the notification message can be defined with the ``'prepare', "
 "'notification:[action]:[type]:[subtype]'`` hook."
@@ -9832,7 +9832,29 @@ msgstr ""
 "Le contenu du message de notification peut être défini avec le hook "
 "``'prepare', 'notification:[action]:[type]:[subtype]'``."
 
-#: ../../guides/notifications.rst:125
+#: ../../guides/notifications.rst:134
+msgid "Custom notification event registration example"
+msgstr ""
+
+#: ../../guides/notifications.rst:136
+msgid ""
+"Tell Elgg to send notifications when a new object of the subtype \"album\" "
+"is created:"
+msgstr ""
+
+#: ../../guides/notifications.rst:206 ../../guides/notifications.rst:263
+msgid ""
+"Make sure the notification will be in the correct language by passing the "
+"reciepient's language into the ``elgg_echo()`` function."
+msgstr ""
+"Assurez-vous que la notification sera dans la bonne langue en indiquant la "
+"langue du destinataire à la fonction ``elgg_echo()``."
+
+#: ../../guides/notifications.rst:210
+msgid "Custom notification content example"
+msgstr ""
+
+#: ../../guides/notifications.rst:212
 msgid ""
 "Tell Elgg to use the function ``photos_prepare_notification()`` to format "
 "the contents of the notification when a new objects of subtype 'photo' is "
@@ -9842,19 +9864,11 @@ msgstr ""
 "formater le contenu de la notification quand un nouvel objet de sous-type "
 "'photo' est créé :"
 
-#: ../../guides/notifications.rst:176
-msgid ""
-"Make sure the notification will be in the correct language by passing the "
-"reciepient's language into the ``elgg_echo()`` function."
-msgstr ""
-"Assurez-vous que la notification sera dans la bonne langue en indiquant la "
-"langue du destinataire à la fonction ``elgg_echo()``."
-
-#: ../../guides/notifications.rst:180
+#: ../../guides/notifications.rst:267
 msgid "Notification salutation and sign-off"
 msgstr "Salutation et signature de la notification"
 
-#: ../../guides/notifications.rst:182
+#: ../../guides/notifications.rst:269
 msgid ""
 "Elgg will by default prepend a salutation to all outgoing notification body "
 "text. Also a sign-off will be appended. This means you will not need to add "
@@ -9876,7 +9890,7 @@ msgstr ""
 "notifications``. Vous pouvez modifier les textes de salutation et de "
 "signature dans les traductions."
 
-#: ../../guides/notifications.rst:188
+#: ../../guides/notifications.rst:275
 msgid ""
 "You can also customize the salutation by overruling the view "
 "``notifications/elements/salutation`` the sign-off can be customized by "
@@ -9886,11 +9900,11 @@ msgstr ""
 "``notifications/elements/salutation``. La signature peut être personnalisée "
 "en remplaçant la vue ``notifications/elements/sign-off``."
 
-#: ../../guides/notifications.rst:192
+#: ../../guides/notifications.rst:279
 msgid "Notification methods"
 msgstr "Méthodes de notification"
 
-#: ../../guides/notifications.rst:194
+#: ../../guides/notifications.rst:281
 msgid ""
 "By default Elgg has three notification methods: email, delayed_email and the"
 " bundled site_notifications plugin."
@@ -9898,15 +9912,15 @@ msgstr ""
 "Par défaut, Elgg propose trois méthodes de notification : email, "
 "delayed_email et le plugin site_notifications fourni avec Elgg."
 
-#: ../../guides/notifications.rst:199
+#: ../../guides/notifications.rst:286
 msgid "Will send an email notification to to the recipient."
 msgstr "Enverra une notification par e-mail au destinataire."
 
-#: ../../guides/notifications.rst:202
+#: ../../guides/notifications.rst:289
 msgid "Delayed email"
 msgstr "E-mail différé"
 
-#: ../../guides/notifications.rst:204
+#: ../../guides/notifications.rst:291
 msgid ""
 "Will save the notifications and deliver them in one bundled email at the "
 "interval the recipient has configured (daily or weekly)."
@@ -9914,7 +9928,7 @@ msgstr ""
 "Enregistre les notifications pour les envoyer dans un e-mail groupé à "
 "l'intervalle configuré par le destinataire (quotidien ou hebdomadaire)."
 
-#: ../../guides/notifications.rst:206
+#: ../../guides/notifications.rst:293
 msgid ""
 "The availability of this delivery method can be configured by the site "
 "administrator in the Site settings section."
@@ -9922,7 +9936,7 @@ msgstr ""
 "La disponibilité de cette méthode d'envoi peut être configurée par "
 "l'administrateur du site dans la section Paramètres du site."
 
-#: ../../guides/notifications.rst:208
+#: ../../guides/notifications.rst:295
 msgid ""
 "The layout of the bundled email can be customized by overruling the view "
 "``email/delayed_email/plain_text`` for the plain text part of the email and "
@@ -9932,19 +9946,19 @@ msgstr ""
 "vue ``email/delayed_email/plain_text`` pour la partie en texte brut de "
 "l'e-mail et ``email/delayed_email/html`` pour la partie HTML de l'e-mail."
 
-#: ../../guides/notifications.rst:212
+#: ../../guides/notifications.rst:299
 msgid "Site notification"
 msgstr "Notification sur le site"
 
-#: ../../guides/notifications.rst:214
+#: ../../guides/notifications.rst:301
 msgid "Will show the notification on the site."
 msgstr "Affichera la notification sur le site."
 
-#: ../../guides/notifications.rst:217
+#: ../../guides/notifications.rst:304
 msgid "Registering a new notification method"
 msgstr "Enregistrement d’une nouvelle méthode de notification"
 
-#: ../../guides/notifications.rst:219
+#: ../../guides/notifications.rst:306
 msgid ""
 "You can register a new notification method with the "
 "``elgg_register_notification_method()`` function."
@@ -9952,11 +9966,11 @@ msgstr ""
 "Vous pouvez enregistrer une nouvelle méthode de notification avec la "
 "fonction ``elgg_register_notification_method()``. "
 
-#: ../../guides/notifications.rst:224
+#: ../../guides/notifications.rst:311
 msgid "Register a handler that will send the notifications via SMS."
 msgstr "Enregistrez un gestionnaire qui enverra les notifications par SMS."
 
-#: ../../guides/notifications.rst:235
+#: ../../guides/notifications.rst:322
 msgid ""
 "After registering the new method, it will appear on the notification "
 "settings page at ``www.example.com/notifications/personal/[username]``."
@@ -9965,11 +9979,11 @@ msgstr ""
 "des paramètres de notification à l’adresse "
 "``www.exemple.com/notifications/personal/[username]``."
 
-#: ../../guides/notifications.rst:239
+#: ../../guides/notifications.rst:326
 msgid "Sending the notifications using your own method"
 msgstr "Envoyer des notifications à l’aide de votre propre méthode"
 
-#: ../../guides/notifications.rst:241
+#: ../../guides/notifications.rst:328
 msgid ""
 "Besides registering the notification method, you also need to register a "
 "handler that takes care of actually sending the SMS notifications. This "
@@ -9979,11 +9993,11 @@ msgstr ""
 "enregistrer un gestionnaire qui s’occupe de l’envoi des notifications SMS. "
 "Cela se fait avec le hook ``'send', 'notification:[method]'``."
 
-#: ../../guides/notifications.rst:283
+#: ../../guides/notifications.rst:370
 msgid "Subscriptions"
 msgstr "Abonnements"
 
-#: ../../guides/notifications.rst:285
+#: ../../guides/notifications.rst:372
 msgid ""
 "In most cases Elgg core takes care of handling the subscriptions, so "
 "notification plugins don't usually have to alter them."
@@ -9992,20 +10006,20 @@ msgstr ""
 "de sorte que les plugins de notification n’ont généralement pas besoin de "
 "les modifier."
 
-#: ../../guides/notifications.rst:289
+#: ../../guides/notifications.rst:376
 msgid "Subscriptions can however be:"
 msgstr "Les abonnements peuvent toutefois être :"
 
-#: ../../guides/notifications.rst:288
+#: ../../guides/notifications.rst:375
 msgid "Added using the ``\\ElggEntity::addSubscription()`` function"
 msgstr "Ajoutées à l’aide de la fonction ``\\ElggEntity::addSubscription()``"
 
-#: ../../guides/notifications.rst:289
+#: ../../guides/notifications.rst:376
 msgid "Removed using the ``\\ElggEntity::removeSubscription()`` function"
 msgstr ""
 "Supprimées à l’aide de la fonction ``\\ElggEntity::removeSubscription()``"
 
-#: ../../guides/notifications.rst:291
+#: ../../guides/notifications.rst:378
 msgid ""
 "It's possible to modify the recipients of a notification dynamically with "
 "the ``'get', 'subscriptions'`` hook."
@@ -10013,11 +10027,11 @@ msgstr ""
 "Il est possible de modifier dynamiquement les destinataires d’une "
 "notification avec le hook ``'get', 'subscriptions'``."
 
-#: ../../guides/notifications.rst:328
+#: ../../guides/notifications.rst:415
 msgid "Muted notifications"
 msgstr "Notifications en sourdine"
 
-#: ../../guides/notifications.rst:330
+#: ../../guides/notifications.rst:417
 msgid ""
 "Notifications can be muted in order to no longer receive notifications, for "
 "example no longer receive notifications about new comments on a discussion."
@@ -10026,7 +10040,7 @@ msgstr ""
 "notifications, par exemple pour ne plus recevoir de notifications concernant"
 " de nouveaux commentaires sur une discussion."
 
-#: ../../guides/notifications.rst:332
+#: ../../guides/notifications.rst:419
 msgid ""
 "In order to mute notifications call "
 "``\\ElggEntity::muteNotifications($user_guid)`` the ``$user_guid`` is "
@@ -10040,7 +10054,7 @@ msgstr ""
 "de tous les abonnements sur l'entité et un indicateur spécial sera défini "
 "pour savoir que les notifications sont désactivées."
 
-#: ../../guides/notifications.rst:335
+#: ../../guides/notifications.rst:422
 msgid ""
 "The muting rules are applied after the subscribers of a notification event "
 "are requested and are applied for the following entities of the notification"
@@ -10062,7 +10076,7 @@ msgstr ""
 " - l'entité propriétaire de l'objet de l'événement ``\\ "
 "Elgg\\Notifications\\NotificationEvent::getObject()::getOwnerEntity()``"
 
-#: ../../guides/notifications.rst:341
+#: ../../guides/notifications.rst:428
 msgid ""
 "To unmute the notifications call "
 "``\\ElggEntity::unmuteNotifications($user_guid)`` the ``$user_guid`` is "
@@ -10072,7 +10086,7 @@ msgstr ""
 "``\\ElggEntity::unmuteNotifications($user_guid)`` le ``$user_guid`` est par "
 "défaut l'utilisateur actuellement connecté."
 
-#: ../../guides/notifications.rst:343
+#: ../../guides/notifications.rst:430
 msgid ""
 "To check if a user has the notifications muted call "
 "``\\ElggEntity::hasMutedNotifications($user_guid)`` the ``$user_guid`` is "
@@ -10082,11 +10096,11 @@ msgstr ""
 "``\\ElggEntity::hasMutedNotifications($user_guid)`` le ``$user_guid`` est "
 "par défaut l'utilisateur actuellement connecté."
 
-#: ../../guides/notifications.rst:346
+#: ../../guides/notifications.rst:433
 msgid "Helper page"
 msgstr "Page d'aide"
 
-#: ../../guides/notifications.rst:348
+#: ../../guides/notifications.rst:435
 msgid ""
 "A helper page has been added which can be linked (for example in an email "
 "footer) to manage muting based on a notification."
@@ -10095,7 +10109,7 @@ msgstr ""
 "de page d'e-mail) pour gérer la désactivation d'une notification "
 "particulière."
 
-#: ../../guides/notifications.rst:350
+#: ../../guides/notifications.rst:437
 msgid ""
 "The page is required to be signed and use the route ``notifications:mute`` "
 "which needs: - ``entity_guid`` the entity the notification is about - "
@@ -10106,11 +10120,11 @@ msgstr ""
 "laquelle porte la notification - ``recipient_guid`` le destinataire de la "
 "notification"
 
-#: ../../guides/notifications.rst:355
+#: ../../guides/notifications.rst:442
 msgid "Temporarily disable notifications"
 msgstr "Désactiver temporairement les notifications"
 
-#: ../../guides/notifications.rst:357
+#: ../../guides/notifications.rst:444
 msgid ""
 "Users can temporarily disable all notifications by going to the Notification"
 " settings and set a start and end date for the period they don't wish to "
@@ -10121,11 +10135,11 @@ msgstr ""
 "début et de fin pour la période pour laquelle ils ne souhaitent pas recevoir"
 " de notifications."
 
-#: ../../guides/notifications.rst:360
+#: ../../guides/notifications.rst:447
 msgid "Notification settings"
 msgstr "Paramètres de notification"
 
-#: ../../guides/notifications.rst:362
+#: ../../guides/notifications.rst:449
 msgid ""
 "You can store and retreive notification settings of users with "
 "``\\ElggUser::setNotificationSetting()`` and "
@@ -10135,7 +10149,7 @@ msgstr ""
 "utilisateurs avec ``\\ElggUser::setNotificationSetting()`` et "
 "``\\ElggUser::getNotificationSettings()``."
 
-#: ../../guides/notifications.rst:381
+#: ../../guides/notifications.rst:468
 msgid ""
 "When a user has no setting yet for a non default purpose the system will "
 "fallback to the 'default' notification setting."
@@ -10143,11 +10157,11 @@ msgstr ""
 "Lorsqu'un utilisateur n'a pas encore de paramètre distinct de celui par "
 "défaut, le système revient au paramètre de notification 'default'."
 
-#: ../../guides/notifications.rst:384
+#: ../../guides/notifications.rst:471
 msgid "Notification management"
 msgstr "Gestion des notifications"
 
-#: ../../guides/notifications.rst:386
+#: ../../guides/notifications.rst:473
 msgid ""
 "A generic menu hook handler is provided to manage notification subscription "
 "and muting. If you wish to make it easy for users to subscribe to your "
