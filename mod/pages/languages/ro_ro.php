@@ -19,6 +19,8 @@ return array(
 	'collection:object:page:group' => "Paginile grupului",
 	'add:object:page' => "Adaugă o pagină",
 	'edit:object:page' => "Editează această pagină",
+	'notification:object:page:create' => "Trimite o notificare atunci când o pagină este creată",
+	'notifications:mute:object:page' => "despre pagina '%s'",
 
 	'groups:tool:pages' => 'Activează paginile de grup',
 	
@@ -32,6 +34,12 @@ return array(
 
 	'pages:notify:summary' => 'Pagină nouă numită %s',
 	'pages:notify:subject' => "O pagină nouă: %s",
+	'pages:notify:body' => '%s a adăugat o pagină nouă: %s
+
+%s
+
+Vezi și comentează pe pagină:
+%s',
 
 	'pages:more' => 'Mai multe pagini',
 	'pages:none' => 'Încă nu s-au creat pagini',

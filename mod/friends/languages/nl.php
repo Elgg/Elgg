@@ -47,6 +47,9 @@ Na het inschakelen van de vriendschapsverzoeken moet indien gebruiker A vriend w
 	'widgets:friends:name' => "Vrienden",
 	'widgets:friends:description' => "Toon een aantal van je vrienden",
 	
+	'widgets:friends_of:name' => "Vrienden van",
+	'widgets:friends_of:description' => "Toon wie jou volgen",
+	
 	'friends:notification:request:subject' => "%s wil je vriend worden!",
 	'friends:notification:request:message' => "%s heeft een vriendschapsverzoek ingediend op %s.
 
