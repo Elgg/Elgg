@@ -10,7 +10,11 @@ if (elgg_is_logged_in()) {
 	return;
 }
 
-$content = elgg_view('river/listing/all');
+$content = elgg_view('river/listing/all', [
+	'options' => [
+		'responses' => false,
+	],
+]);
 
 $login_box = elgg_view('core/account/login_box');
 

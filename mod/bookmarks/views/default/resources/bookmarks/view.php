@@ -22,4 +22,5 @@ echo elgg_view_page($entity->getDisplayName(), [
 	'sidebar' => elgg_view('object/bookmarks/elements/sidebar', [
 		'entity' => $entity,
 	]),
+	'filter_id' => 'bookmarks/view',
 ]);
