@@ -113,4 +113,22 @@ class SystemLogApiTest extends IntegrationTestCase {
 
 		$object->delete();
 	}
+	
+	public function testCanDisableEnableSystemLogLogging() {
+		
+		$service = SystemLog::instance();
+		
+		$this->assertTrue($service->isLoggingEnabled());
+		
+		$service->disableLogging();
+		$this->assertFalse($service->isLoggingEnabled());
+		
+		$service->enableLogging();
+		$this->assertTrue($service->isLoggingEnabled());
+	}
+	
+	public function testDisabledSystemLogLoggingDoesntInsertRow() {
+		// @todo find a way to test this, because of the delayed queries which can be tricky to test
+		$this->markTestIncomplete();
+	}
 }
