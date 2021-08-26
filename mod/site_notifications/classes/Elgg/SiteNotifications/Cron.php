@@ -91,6 +91,8 @@ class Cron {
 		
 		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($days) {
 			$count = 0;
+			$max_runtime = 1800; // 30 minutes
+			$start_time = microtime(true);
 			
 			/* @var $batch \ElggBatch */
 			$batch = elgg_get_entities([
@@ -111,7 +113,13 @@ class Cron {
 					$batch->reportFailure();
 					continue;
 				}
+				
 				$count++;
+				
+				if (microtime(true) - $start_time > $max_runtime) {
+					// max runtime expired
+					break;
+				}
 			}
 			
 			return $count;
@@ -141,6 +149,8 @@ class Cron {
 		
 		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($days) {
 			$count = 0;
+			$max_runtime = 1800; // 30 minutes
+			$start_time = microtime(true);
 			
 			/* @var $batch \ElggBatch */
 			$batch = elgg_get_entities([
@@ -163,6 +173,11 @@ class Cron {
 				}
 				
 				$count++;
+				
+				if (microtime(true) - $start_time > $max_runtime) {
+					// max runtime expired
+					break;
+				}
 			}
 			
 			return $count;
