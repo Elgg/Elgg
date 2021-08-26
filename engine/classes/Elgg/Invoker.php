@@ -61,10 +61,31 @@ class Invoker {
 		} else if ($flags & ELGG_HIDE_DISABLED_ENTITIES) {
 			$this->session->setDisabledEntityVisibility(false);
 		}
+		
+		$system_log_enabled = null;
+		$system_log_service = null;
+		if ((($flags & ELGG_ENABLE_SYSTEM_LOG) || ($flags & ELGG_DISABLE_SYSTEM_LOG)) && elgg_is_active_plugin('system_log')) {
+			$system_log_service = \Elgg\SystemLog\SystemLog::instance();
+			$system_log_enabled = $system_log_service->isLoggingEnabled();
+			
+			if ($flags & ELGG_ENABLE_SYSTEM_LOG) {
+				$system_log_service->enableLogging();
+			} elseif ($flags & ELGG_DISABLE_SYSTEM_LOG) {
+				$system_log_service->disableLogging();
+			}
+		}
 
-		$restore = function () use ($ia, $ha) {
+		$restore = function () use ($ia, $ha, $system_log_service, $system_log_enabled) {
 			$this->session->setIgnoreAccess($ia);
 			$this->session->setDisabledEntityVisibility($ha);
+			
+			if (isset($system_log_service)) {
+				if ($system_log_enabled) {
+					$system_log_service->enableLogging();
+				} else {
+					$system_log_service->disableLogging();
+				}
+			}
 		};
 
 		try {
