@@ -26,9 +26,6 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 
 				$new_html = $(result).find(id_selector).addBack(id_selector);
 				if ($new_html.length) {
-					// update history
-					window.history.pushState('', '', href);
-					
 					var list_items = $new_html.find('> .elgg-list').html();
 					var $target_list = $target.find('> .elgg-list');
 
