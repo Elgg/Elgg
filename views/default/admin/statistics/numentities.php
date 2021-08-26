@@ -7,7 +7,12 @@ $other = [];
 
 foreach ($entity_stats as $type => $subtypes) {
 	foreach ($subtypes as $subtype => $value) {
-		$name = elgg_echo("collection:{$type}:{$subtype}");
+		$name = "{$type} - {$subtype}";
+		if (elgg_language_key_exists("collection:{$type}:{$subtype}")) {
+			$name = elgg_echo("collection:{$type}:{$subtype}");
+		} elseif (elgg_language_key_exists("item:{$type}:{$subtype}")) {
+			$name = elgg_echo("item:{$type}:{$subtype}");
+		}
 
 		if (is_registered_entity_type($type, $subtype)) {
 			$searchable[$name] = $value;
