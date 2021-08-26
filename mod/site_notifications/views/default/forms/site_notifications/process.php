@@ -16,6 +16,7 @@ $fields = [
 		'name' => 'delete',
 		'class' => 'elgg-button-delete',
 		'data-confirm' => elgg_echo('site_notifications:delete:confirm'),
+		'disabled' => true,
 	],
 ];
 if ((bool) elgg_extract('mark_read', $vars, true)) {
@@ -25,6 +26,7 @@ if ((bool) elgg_extract('mark_read', $vars, true)) {
 		'name' => 'mark_read',
 		'data-confirm' => elgg_echo('site_notifications:mark_read:confirm'),
 		'formaction' => elgg_generate_action_url('site_notifications/mark_read', [], false),
+		'disabled' => true,
 	];
 }
 
