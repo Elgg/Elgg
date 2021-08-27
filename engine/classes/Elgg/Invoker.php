@@ -65,13 +65,17 @@ class Invoker {
 		$system_log_enabled = null;
 		$system_log_service = null;
 		if ((($flags & ELGG_ENABLE_SYSTEM_LOG) || ($flags & ELGG_DISABLE_SYSTEM_LOG)) && elgg_is_active_plugin('system_log')) {
-			$system_log_service = \Elgg\SystemLog\SystemLog::instance();
-			$system_log_enabled = $system_log_service->isLoggingEnabled();
-			
-			if ($flags & ELGG_ENABLE_SYSTEM_LOG) {
-				$system_log_service->enableLogging();
-			} elseif ($flags & ELGG_DISABLE_SYSTEM_LOG) {
-				$system_log_service->disableLogging();
+			try {
+				$system_log_service = \Elgg\SystemLog\SystemLog::instance();
+				$system_log_enabled = $system_log_service->isLoggingEnabled();
+				
+				if ($flags & ELGG_ENABLE_SYSTEM_LOG) {
+					$system_log_service->enableLogging();
+				} elseif ($flags & ELGG_DISABLE_SYSTEM_LOG) {
+					$system_log_service->disableLogging();
+				}
+			} catch (\DI\NotFoundException $e) {
+				// somehow the service isn't correctly registered
 			}
 		}
 
