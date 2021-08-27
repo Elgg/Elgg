@@ -101,7 +101,9 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 		$delete = Delete::fromTable(self::TABLE_NAME);
 		$delete->where($delete->compare('session', '=', $session_id, ELGG_VALUE_STRING));
 		
-		return (bool) $this->db->deleteData($delete);
+		$this->db->deleteData($delete);
+		
+		return true;
 	}
 
 	/**
