@@ -15,6 +15,7 @@
  * @uses bool     $vars['pagination_show_previous'] Show the previous link (default: true)
  * @uses string   $vars['position']                 Where is the pagination being shown ('before'|'after')
  * @uses string   $vars['url_fragment']             URL fragment to add to links if not present in base_url (optional)
+ * @uses bool     $vars['use_referer']              Use HTTP REFERER for base url in case of XHR requests (default: true)
  */
 
 $count = (int) elgg_extract('count', $vars, 0);
@@ -30,11 +31,12 @@ if (!$limit = (int) elgg_extract('limit', $vars, elgg_get_config('default_limit'
 
 $offset_key = elgg_extract('offset_key', $vars, 'offset');
 $url_fragment = elgg_extract('url_fragment', $vars, '');
+$use_referer = (bool) elgg_extract('use_referer', $vars, get_input('use_referer', true));
 
 // some views pass an empty string for base_url
 if (isset($vars['base_url']) && $vars['base_url']) {
 	$base_url = elgg_extract('base_url', $vars);
-} elseif (elgg_is_xhr() && !empty($_SERVER['HTTP_REFERER'])) {
+} elseif ($use_referer && elgg_is_xhr() && !empty($_SERVER['HTTP_REFERER'])) {
 	$base_url = $_SERVER['HTTP_REFERER'];
 } else {
 	$base_url = current_page_url();

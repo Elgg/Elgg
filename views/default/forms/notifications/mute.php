@@ -72,7 +72,7 @@ if (!in_array($owner->guid, $mute_guids) && ($owner instanceof \ElggGroup || $ow
 }
 
 $actor = elgg_extract('actor', $vars);
-if (!in_array($actor->guid, $mute_guids) && ($actor instanceof \ElggGroup || $actor instanceof \ElggUser)) {
+if (($actor instanceof \ElggGroup || $actor instanceof \ElggUser) && !in_array($actor->guid, $mute_guids)) {
 	$mute_guids[] = $actor->guid;
 	
 	$checkboxes .= elgg_view_field([

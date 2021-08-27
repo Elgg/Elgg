@@ -3,7 +3,7 @@
  * Process a set of site notifications to mark as read
  */
 
-$notification_guids = get_input('notification_id', []);
+$notification_guids = (array) get_input('notification_id', []);
 
 if (!$notification_guids) {
 	return elgg_error_response(elgg_echo('site_notifications:error:notifications_not_selected'));
@@ -16,7 +16,6 @@ $batch = elgg_get_entities([
 	'guids' => $notification_guids,
 	'limit' => false,
 	'batch' => true,
-	'batch_inc_offset' => false,
 ]);
 /* @var $entity \SiteNotification */
 foreach ($batch as $entity) {

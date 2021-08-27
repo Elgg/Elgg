@@ -15,6 +15,8 @@ return array(
 	'collection:object:file:group' => "Fișiere de grup",
 	'add:object:file' => "Încarcă un fișier",
 	'edit:object:file' => "Editează fișierul",
+	'notification:object:file:create' => "Trimite o notificare atunci când un fișier este creat",
+	'notifications:mute:object:file' => "despre fișierul '%s'",
 
 	'file:more' => "Mai multe fișiere",
 	'file:list' => "vizualizare în listă",
@@ -58,6 +60,12 @@ return array(
 
 	'file:notify:summary' => 'Fișier nou numit %s',
 	'file:notify:subject' => 'Fișier nou: %s',
+	'file:notify:body' => '%s a încărcat un fișier nou: %s
+
+%s
+
+Vezi și comentează fișierul:
+%s',
 
 	/**
 	 * Status messages

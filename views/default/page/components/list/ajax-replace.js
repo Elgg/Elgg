@@ -6,8 +6,10 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 	$(document).on('click', '.elgg-list-container-ajax-replace .elgg-pagination a', function (event) {
 		event.preventDefault();
 
-		var $target = $(this).closest('.elgg-list-container');
-		var href = $(this).attr('href');
+		var $link = $(this);
+		
+		var href = $link.attr('href');
+		var $target = $link.closest('.elgg-list-container');
 
 		var ajax = new Ajax();
 
@@ -26,6 +28,7 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 					// replace previous list with new content
 					$target.replaceWith($new_html);
 					
+					var $target_list = $target.find('> .elgg-list');
 					$target_list.trigger('change');
 					
 					// scroll to top of new content

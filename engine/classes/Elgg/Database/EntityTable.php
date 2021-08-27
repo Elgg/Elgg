@@ -619,35 +619,31 @@ class EntityTable {
 	 */
 	protected function deleteRelatedEntities(\ElggEntity $entity) {
 		// Temporarily overriding access controls
-		$entity_disable_override = $this->session->getDisabledEntityVisibility();
-		$this->session->setDisabledEntityVisibility(true);
-		$ia = $this->session->setIgnoreAccess(true);
-
-		$options = [
-			'wheres' => function (QueryBuilder $qb, $main_alias) use ($entity) {
-				$ors = $qb->merge([
-					$qb->compare("{$main_alias}.owner_guid", '=', $entity->guid, ELGG_VALUE_GUID),
-					$qb->compare("{$main_alias}.container_guid", '=', $entity->guid, ELGG_VALUE_GUID),
-				], 'OR');
-
-				return $qb->merge([
-					$ors,
-					$qb->compare("{$main_alias}.guid", 'neq', $entity->guid, ELGG_VALUE_GUID),
-				]);
-			},
-			'limit' => false,
-		];
-
-		$batch = new \ElggBatch('elgg_get_entities', $options);
-		$batch->setIncrementOffset(false);
-
-		/* @var $e \ElggEntity */
-		foreach ($batch as $e) {
-			$this->delete($e, true);
-		}
-
-		$this->session->setDisabledEntityVisibility($entity_disable_override);
-		$this->session->setIgnoreAccess($ia);
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($entity) {
+			/* @var $batch \ElggBatch */
+			$batch = elgg_get_entities([
+				'wheres' => function (QueryBuilder $qb, $main_alias) use ($entity) {
+					$ors = $qb->merge([
+						$qb->compare("{$main_alias}.owner_guid", '=', $entity->guid, ELGG_VALUE_GUID),
+						$qb->compare("{$main_alias}.container_guid", '=', $entity->guid, ELGG_VALUE_GUID),
+					], 'OR');
+					
+					return $qb->merge([
+						$ors,
+						$qb->compare("{$main_alias}.guid", 'neq', $entity->guid, ELGG_VALUE_GUID),
+					]);
+				},
+				'limit' => false,
+				'batch' => true,
+				'batch_inc_offset' => false,
+			]);
+			/* @var $e \ElggEntity */
+			foreach ($batch as $e) {
+				if (!$this->delete($e, true)) {
+					$batch->reportFailure();
+				}
+			}
+		});
 	}
 
 	/**
@@ -658,7 +654,8 @@ class EntityTable {
 	 * @return void
 	 */
 	protected function deleteEntityProperties(\ElggEntity $entity) {
-		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($entity) {
+		// Temporarily overriding access controls and disable system_log to save performance
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($entity) {
 			$entity->removeAllRelatedRiverItems();
 			$entity->removeAllPrivateSettings();
 			$entity->deleteOwnedAccessCollections();

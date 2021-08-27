@@ -14,6 +14,8 @@ return array(
 	'collection:object:blog:friends' => 'Blogurile prietenilor',
 	'add:object:blog' => 'Adaugă postare de blog',
 	'edit:object:blog' => 'Editează postarea de blog',
+	'notification:object:blog:publish' => "Trimite o notificare atunci când un blog este publicat",
+	'notifications:mute:object:blog' => "despre blogul '%s'",
 
 	'blog:revisions' => 'Revizuiri',
 	'blog:archives' => 'Arhive',
@@ -48,6 +50,12 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Postare de blog nouă numită %s',
 	'blog:notify:subject' => 'Postare de blog nouă: %s',
+	'blog:notify:body' => '%s a publicat o nouă postare de blog: %s
+
+%s
+
+Vezi și comentează la postarea de blog:
+%s',
 
 	// widget
 	'widgets:blog:name' => 'Postări de blog',
