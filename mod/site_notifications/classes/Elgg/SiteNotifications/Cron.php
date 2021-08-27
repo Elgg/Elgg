@@ -47,6 +47,7 @@ class Cron {
 				],
 				'batch' => true,
 				'batch_inc_offset' => false,
+				'batch_size' => 100,
 			]);
 			
 			/* @var $entity \ElggEntity */
@@ -105,6 +106,7 @@ class Cron {
 				'created_before' => "-{$days} days",
 				'batch' => true,
 				'batch_inc_offset' => false,
+				'batch_size' => 100,
 			]);
 			
 			/* @var $entity \ElggEntity */
@@ -163,6 +165,7 @@ class Cron {
 				'created_before' => "-{$days} days",
 				'batch' => true,
 				'batch_inc_offset' => false,
+				'batch_size' => 100,
 			]);
 			
 			/* @var $entity \ElggEntity */
