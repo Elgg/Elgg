@@ -58,7 +58,7 @@ class Cron {
 				
 				$count++;
 				
-				if (microtime(true) - $start_time > $max_runtime) {
+				if ((microtime(true) - $start_time) > $max_runtime) {
 					// max runtime expired
 					break;
 				}
@@ -116,7 +116,7 @@ class Cron {
 				
 				$count++;
 				
-				if (microtime(true) - $start_time > $max_runtime) {
+				if ((microtime(true) - $start_time) > $max_runtime) {
 					// max runtime expired
 					break;
 				}
@@ -174,7 +174,7 @@ class Cron {
 				
 				$count++;
 				
-				if (microtime(true) - $start_time > $max_runtime) {
+				if ((microtime(true) - $start_time) > $max_runtime) {
 					// max runtime expired
 					break;
 				}
