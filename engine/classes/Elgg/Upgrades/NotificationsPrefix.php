@@ -6,6 +6,7 @@ use Elgg\Upgrade\AsynchronousUpgrade;
 use Elgg\Upgrade\Result;
 use Elgg\Database\Select;
 use Elgg\Database\Update;
+use Elgg\Database\Delete;
 
 /**
  * Migrate the notification subscription relationship to a new naming convention
@@ -63,11 +64,27 @@ class NotificationsPrefix implements AsynchronousUpgrade {
 		
 		// migrate from 'notifymethod' to 'notify:method'
 		foreach ($methods as $method) {
-			$update = Update::table('entity_relationships');
-			$update->set('relationship', $update->param("notify:{$method}", ELGG_VALUE_STRING))
-				->where($update->compare('relationship', '=', "notify{$method}", ELGG_VALUE_STRING));
+			$update = Update::table('entity_relationships', 'r1');
+			
+			// prevent duplicate key contraints during update
+			$sub = $update->subquery('entity_relationships', 'r2');
+			$sub->select('1')
+				->andWhere($update->compare('r1.guid_one', '=', 'r2.guid_one'))
+				->andWhere($update->compare('r1.guid_two', '=', 'r2.guid_two'))
+				->andWhere($update->compare('r2.relationship', '=', "notify:{$method}", ELGG_VALUE_STRING));
+			
+			$update->set('r1.relationship', $update->param("notify:{$method}", ELGG_VALUE_STRING))
+				->where($update->compare('r1.relationship', '=', "notify{$method}", ELGG_VALUE_STRING))
+				->andWere($update->compare(null, 'not exists', $sub->getSQL()));
 			
 			$num_rows = _elgg_services()->db->updateData($update, true);
+			$result->addSuccesses($num_rows);
+			
+			// cleanup all not migrated (duplicate key) rows
+			$delete = Delete::fromTable('entity_relationships');
+			$delete->where($delete->compare('relationship', '=', "notify{$method}", ELGG_VALUE_STRING));
+			
+			$num_rows = _elgg_services()->db->deleteData($delete);
 			$result->addSuccesses($num_rows);
 		}
 		
