@@ -1720,6 +1720,14 @@ Global variables:
 	'cli:simpletest:error:file' => "%s is not a valid simpletest class",
 	'cli:simpletest:output:summary' => "Time: %.2f seconds, Memory: %.2fMb",
 	
+	'cli:upgrade:description' => "Run system upgrades",
+	'cli:upgrade:option:force' => "Force the upgrades to run even if currently an upgrade is already running.",
+	'cli:upgrade:argument:async' => "Execute pending asynchronous upgrades",
+	'cli:upgrade:system:upgraded' => "System upgrades have been executed",
+	'cli:upgrade:system:failed' => "System upgrades have failed",
+	'cli:upgrade:async:upgraded' => "Asynchronous upgrades have been executed",
+	'cli:upgrade:aysnc:failed' => "Asynchronous upgrades have failed",
+	
 	'cli:upgrade:batch:description' => "Executes one or more upgrades",
 	'cli:upgrade:batch:argument:upgrades' => "One or more upgrades (class names) to be executed",
 	'cli:upgrade:batch:option:force' => "Run upgrade even if it has been completed before",
