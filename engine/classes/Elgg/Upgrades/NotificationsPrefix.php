@@ -75,7 +75,7 @@ class NotificationsPrefix implements AsynchronousUpgrade {
 			
 			$update->set('r1.relationship', $update->param("notify:{$method}", ELGG_VALUE_STRING))
 				->where($update->compare('r1.relationship', '=', "notify{$method}", ELGG_VALUE_STRING))
-				->andWere($update->compare(null, 'not exists', $sub->getSQL()));
+				->andWhere($update->compare(null, 'not exists', $sub->getSQL()));
 			
 			$num_rows = _elgg_services()->db->updateData($update, true);
 			$result->addSuccesses($num_rows);
