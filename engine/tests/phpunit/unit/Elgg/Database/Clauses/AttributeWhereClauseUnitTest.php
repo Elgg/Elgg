@@ -42,7 +42,7 @@ class AttributeWhereClauseUnitTest extends UnitTestCase {
 	public function testBuildQueryFromSingleAttributeName() {
 
 		$parts = [];
-		$parts[] = $this->qb->expr()->eq('alias.attribute', ':qb1');
+		$parts[] = $this->qb->expr()->in('alias.attribute', ':qb1');
 		$this->qb->param('value', ELGG_VALUE_STRING);
 
 		$expected = $this->qb->merge($parts);
@@ -61,8 +61,8 @@ class AttributeWhereClauseUnitTest extends UnitTestCase {
 	public function testBuildQueryFromMultipleAttributeNames() {
 
 		$parts = [];
-		$parts[] = $this->qb->expr()->eq('alias.attribute1', ':qb1');
-		$parts[] = $this->qb->expr()->eq('alias.attribute2', ':qb2');
+		$parts[] = $this->qb->expr()->in('alias.attribute1', ':qb1');
+		$parts[] = $this->qb->expr()->in('alias.attribute2', ':qb2');
 		$this->qb->param('value', ELGG_VALUE_STRING);
 		$this->qb->param('value', ELGG_VALUE_STRING);
 

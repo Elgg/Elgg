@@ -237,6 +237,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 					'prepare',
 					'query',
 					'executeQuery',
+					'executeStatement',
 					'executeUpdate',
 					'getDatabasePlatform',
 					'lastInsertId',

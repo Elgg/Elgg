@@ -357,6 +357,8 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($this->mockHash, $params['qb1']);
 		$this->assertArrayHasKey('qb2', $params);
 		$this->assertEquals(123, $params['qb2']);
+		
+		return 1;
 	}
 
 	function mock_deleteData(Delete $sql) {
@@ -367,6 +369,8 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals([
 			'qb1' => $this->mockHash,
 		], $sql->getParameters());
+		
+		return 1;
 	}
 
 	function mock_getDataRow(Select $sql) {
@@ -390,6 +394,8 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals([
 			'qb1' => 123,
 		], $sql->getParameters());
+		
+		return 2;
 	}
 
 	function mock_updateWrongUser(Update $sql) {
