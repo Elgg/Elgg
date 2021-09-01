@@ -64,34 +64,14 @@ class ComparisonClause extends Clause {
 		$type = $this->type;
 		$case_sensitive = $this->case_sensitive;
 
-		switch ($type) {
-			case ELGG_VALUE_TIMESTAMP :
-				$y = Values::normalizeTimestamp($y);
-				$type = ELGG_VALUE_INTEGER;
-				break;
-
-			case ELGG_VALUE_GUID :
-				$y = Values::normalizeGuids($y);
-				$type = ELGG_VALUE_INTEGER;
-				break;
-
-			case ELGG_VALUE_ID :
-				$y = Values::normalizeIds($y);
-				$type = ELGG_VALUE_INTEGER;
-				break;
-		}
-
-		if (is_array($y) && count($y) === 1) {
-			$y = array_shift($y);
-		}
-
 		$compare_with = function ($func, $boolean = 'OR') use ($x, $y, $type, $case_sensitive, $qb) {
 			if (!isset($y)) {
 				return;
 			}
 
+			$y = is_array($y) ? $y : [$y];
 			$parts = [];
-			foreach ((array) $y as $val) {
+			foreach ($y as $val) {
 				$val = $qb->param($val, $type);
 				if ($case_sensitive && $type == ELGG_VALUE_STRING) {
 					$val = "BINARY $val";

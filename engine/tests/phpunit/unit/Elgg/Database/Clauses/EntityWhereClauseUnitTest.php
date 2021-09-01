@@ -221,7 +221,7 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		]);
 		$type_where[] = $this->qb->merge([
 			$this->qb->expr()->eq('alias.type', ':qb3'),
-			$this->qb->expr()->eq('alias.subtype', ':qb4'),
+			$this->qb->expr()->in('alias.subtype', ':qb4'),
 		]);
 		$this->qb->param('object', ELGG_VALUE_STRING);
 		$this->qb->param(['blog', 'file'], ELGG_VALUE_STRING);

@@ -3,12 +3,14 @@
 namespace Elgg\Database;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Query\Expression\CompositeExpression;
 use Doctrine\DBAL\Query\QueryBuilder as DbalQueryBuilder;
 use Elgg\Database\Clauses\Clause;
 use Elgg\Database\Clauses\ComparisonClause;
 use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\Clauses\WhereClause;
+use Elgg\Values;
 
 /**
  * Database abstraction query builder
@@ -139,11 +141,42 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 			$key = ':qb' . (count($parameters) + 1);
 		}
 
+		switch ($type) {
+			case ELGG_VALUE_GUID:
+				$value = Values::normalizeGuids($value);
+				$type = ParameterType::INTEGER;
+				
+				break;
+			case ELGG_VALUE_ID:
+				$value = Values::normalizeIds($value);
+				$type = ParameterType::INTEGER;
+				
+				break;
+			case ELGG_VALUE_INTEGER:
+				$type = ParameterType::INTEGER;
+				
+				break;
+			case ELGG_VALUE_STRING:
+				$type = ParameterType::STRING;
+				
+				break;
+			case ELGG_VALUE_TIMESTAMP:
+				$value = Values::normalizeTimestamp($value);
+				$type = ParameterType::INTEGER;
+				
+				break;
+		}
+		
+		// convert array value or type based on array
 		if (is_array($value)) {
-			if ($type === ELGG_VALUE_INTEGER) {
-				$type = Connection::PARAM_INT_ARRAY;
-			} else if ($type === ELGG_VALUE_STRING) {
-				$type = Connection::PARAM_STR_ARRAY;
+			if (count($value) === 1) {
+				$value = array_shift($value);
+			} else {
+				if ($type === ParameterType::INTEGER) {
+					$type = Connection::PARAM_INT_ARRAY;
+				} elseif ($type === ParameterType::STRING) {
+					$type = Connection::PARAM_STR_ARRAY;
+				}
 			}
 		}
 
