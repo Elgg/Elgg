@@ -44,7 +44,7 @@ if (!elgg_is_empty($entity->getDisplayName())) {
 }
 
 $container = $entity->getContainerEntity();
-if (!in_array($container->guid, $mute_guids) && ($container instanceof \ElggGroup || $container instanceof \ElggUser)) {
+if (($container instanceof \ElggGroup || $container instanceof \ElggUser) && !in_array($container->guid, $mute_guids)) {
 	$mute_guids[] = $container->guid;
 	
 	$checkboxes .= elgg_view_field([
@@ -58,7 +58,7 @@ if (!in_array($container->guid, $mute_guids) && ($container instanceof \ElggGrou
 }
 
 $owner = $entity->getOwnerEntity();
-if (!in_array($owner->guid, $mute_guids) && ($owner instanceof \ElggGroup || $owner instanceof \ElggUser)) {
+if (($owner instanceof \ElggGroup || $owner instanceof \ElggUser) && !in_array($owner->guid, $mute_guids)) {
 	$mute_guids[] = $owner->guid;
 	
 	$checkboxes .= elgg_view_field([
