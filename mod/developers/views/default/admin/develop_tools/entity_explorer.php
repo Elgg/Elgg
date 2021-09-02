@@ -6,6 +6,7 @@ echo elgg_view_form('developers/entity_explorer', [
 	'action' => 'admin/develop_tools/entity_explorer',
 	'method' => 'GET',
 	'disable_security' => true,
+	'class' => 'mbm',
 ]);
 
 $guid = get_input('guid');
@@ -37,6 +38,12 @@ echo elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
 	// ACL membership
 	$result .= elgg_view('admin/develop_tools/entity_explorer/acl_memberships', ['entity' => $entity]);
 	
+	$url = $entity->getURL();
+	if (!empty($url)) {
+		$result .= elgg_view_url($url, elgg_echo('developers:entity_explorer:view_entity'), [
+			'class' => 'elgg-button elgg-button-action',
+		]);
+	}
 	$result .= elgg_view('output/url', [
 		'text' => elgg_echo('developers:entity_explorer:delete_entity'),
 		'href' => elgg_generate_action_url('developers/entity_explorer_delete', [
