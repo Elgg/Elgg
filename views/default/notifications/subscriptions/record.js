@@ -1,7 +1,10 @@
 define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 	$(document).on('click', '.elgg-subscription-details-toggle', function() {
 		var ajax = new Ajax();
+		
 		$subscription_container = $(this).closest('.elgg-subscription-container');
+		$subscription_container.find('.elgg-subscription-details-toggle').toggleClass('hidden');
+		
 		$details_container = $subscription_container.next();
 		if ($details_container.is(':visible')) {
 			$details_container.hide();
