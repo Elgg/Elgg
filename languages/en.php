@@ -343,7 +343,9 @@ return array(
 	'notifications:delayed_email:subject:daily' => "Daily notifications",
 	'notifications:delayed_email:subject:weekly' => "Weekly notifications",
 	
+	'notifications:subscriptions:record:settings' => 'Show detailed selection',
 	'notifications:subscriptions:no_results' => 'There are no subscription records yet',
+	'notifications:subscriptions:details:reset' => 'Undo selection',
 
 	'notifications:mute:title' => "Mute notifications",
 	'notifications:mute:description' => "If you no longer wish to receive notifications like the one you received configure one or more of the following reasons to block all notifications:",
