@@ -169,9 +169,16 @@ select:not([multiple]) {
 	font-size: 100%;
 }
 
-.elgg-input-checkboxes label {
-	font-weight: normal;
-	font-size: 100%;
+.elgg-input-checkboxes {
+	label {
+		font-weight: normal;
+		font-size: 100%;
+		line-height: inherit;
+	}
+	
+	&.elgg-horizontal label > .elgg-input-checkbox {
+		vertical-align: baseline;
+	}
 }
 
 .elgg-form-login, .elgg-form-account {
