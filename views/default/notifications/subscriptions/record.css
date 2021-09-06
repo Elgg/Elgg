@@ -36,6 +36,10 @@
 			background: $(background-color-mild);
 		}
 		
+		> .elgg-field-label {
+			font-weight: normal;
+		}
+		
 		> .elgg-field-input {
 			max-width: 100%;
 			font-size: .9rem;
