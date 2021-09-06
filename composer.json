@@ -24,6 +24,7 @@
         "hackzilla/password-generator": "~1.6.0",
         "imagine/imagine": "~1.2.4",
         "laminas/laminas-mail": "~2.4",
+        "laminas/laminas-mime": "2.9.0",
         "laminas/laminas-servicemanager": "^3.3.1",
         "league/flysystem": "~1.0",
         "league/flysystem-memory": "^1.0",
@@ -71,7 +72,8 @@
             "engine/classes/"
         ],
         "psr-4": {
-            "Elgg\\": "engine/classes/Elgg/"
+            "Elgg\\": "engine/classes/Elgg/",
+            "Laminas\\Mime\\": "engine/classes/Laminas/Mime/"
         }
     },
     "autoload-dev": {
