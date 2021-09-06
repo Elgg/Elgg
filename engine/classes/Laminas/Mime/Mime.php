@@ -1,9 +1,11 @@
 <?php
-
+// phpcs:ignoreFile
 /**
  * @see       https://github.com/laminas/laminas-mime for the canonical source repository
  * @copyright https://github.com/laminas/laminas-mime/blob/master/COPYRIGHT.md
  * @license   https://github.com/laminas/laminas-mime/blob/master/LICENSE.md New BSD License
+ *
+ * Elgg 2021-09-06: fixed issue with encoding '(' and ')' in e-mail address headers
  */
 
 namespace Laminas\Mime;
@@ -207,7 +209,7 @@ class Mime
         $str = self::_encodeQuotedPrintable($str);
 
         // Mail-Header required chars have to be encoded also:
-        $str = str_replace(['?', ',', ' ', '_'], ['=3F', '=2C', '=20', '=5F'], $str);
+        $str = str_replace(['?', ',', ' ', '_', '(', ')'], ['=3F', '=2C', '=20', '=5F', '=28', '=29'], $str);
 
         // initialize first line, we need it anyways
         $lines = [0 => ''];
