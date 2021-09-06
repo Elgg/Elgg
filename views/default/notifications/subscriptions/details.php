@@ -72,7 +72,7 @@ echo elgg_view_field([
 		[
 			'#type' => 'button',
 			'#class' => 'float-alt',
-			'text' => elgg_echo('reset'),
+			'text' => elgg_echo('notifications:subscriptions:details:reset'),
 			'class' => ['elgg-button-delete', 'elgg-subscriptions-details-reset'],
 		],
 	],
