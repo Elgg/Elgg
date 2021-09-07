@@ -205,7 +205,7 @@ class RouteRegistrationService {
 				}
 			}
 			
-			$url = $this->generator->generate($name, $parameters, UrlGenerator::ABSOLUTE_URL);
+			$url = $this->generator->generate($name, $parameters, UrlGenerator::RELATIVE_PATH);
 
 			// make sure the url is always normalized so it is also usable in CLI
 			return elgg_normalize_url($url);
