@@ -5,6 +5,7 @@
 
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Database\Clauses\OrderByClause;
+use Elgg\Database\Select;
 
 /**
  * Return the class name registered as a constructor for an entity of a given type and subtype
@@ -683,28 +684,33 @@ function elgg_search(array $options = []) {
  *
  * @return array
  */
-function get_entity_statistics(int $owner_guid = 0) {
+function get_entity_statistics(int $owner_guid = 0): array {
 
-	$grouped_entities = elgg_get_entities([
-		'selects' => ['COUNT(*) as total'],
-		'owner_guids' => ($owner_guid) ? : ELGG_ENTITIES_ANY_VALUE,
-		'group_by' => ['e.type', 'e.subtype'],
-		'limit' => false,
-		'callback' => false,
-		'order_by' => new OrderByClause('total', 'DESC'),
-	]);
-		
+	$select = Select::fromTable('entities');
+	$select->select('type')
+		->addSelect('subtype')
+		->addSelect('count(*) AS total')
+		->where($select->compare('enabled', '=', 'yes', ELGG_VALUE_STRING))
+		->groupBy('type')
+		->addGroupBy('subtype')
+		->orderBy('total', 'desc');
+	
+	if (!empty($owner_guid)) {
+		$select->andWhere($select->compare('owner_guid', '=', $owner_guid, ELGG_VALUE_GUID));
+	}
+	
 	$entity_stats = [];
 	
-	foreach ($grouped_entities as $row) {
+	$rows = _elgg_services()->db->getData($select);
+	foreach ($rows as $row) {
 		$type = $row->type;
 		if (!isset($entity_stats[$type]) || !is_array($entity_stats[$type])) {
 			$entity_stats[$type] = [];
 		}
-				
+		
 		$entity_stats[$type][$row->subtype] = $row->total;
 	}
-
+	
 	return $entity_stats;
 }
 

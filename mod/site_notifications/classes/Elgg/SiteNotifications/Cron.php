@@ -47,6 +47,7 @@ class Cron {
 				],
 				'batch' => true,
 				'batch_inc_offset' => false,
+				'batch_size' => 100,
 			]);
 			
 			/* @var $entity \ElggEntity */
@@ -58,7 +59,7 @@ class Cron {
 				
 				$count++;
 				
-				if (microtime(true) - $start_time > $max_runtime) {
+				if ((microtime(true) - $start_time) > $max_runtime) {
 					// max runtime expired
 					break;
 				}
@@ -105,6 +106,7 @@ class Cron {
 				'created_before' => "-{$days} days",
 				'batch' => true,
 				'batch_inc_offset' => false,
+				'batch_size' => 100,
 			]);
 			
 			/* @var $entity \ElggEntity */
@@ -116,7 +118,7 @@ class Cron {
 				
 				$count++;
 				
-				if (microtime(true) - $start_time > $max_runtime) {
+				if ((microtime(true) - $start_time) > $max_runtime) {
 					// max runtime expired
 					break;
 				}
@@ -163,6 +165,7 @@ class Cron {
 				'created_before' => "-{$days} days",
 				'batch' => true,
 				'batch_inc_offset' => false,
+				'batch_size' => 100,
 			]);
 			
 			/* @var $entity \ElggEntity */
@@ -174,7 +177,7 @@ class Cron {
 				
 				$count++;
 				
-				if (microtime(true) - $start_time > $max_runtime) {
+				if ((microtime(true) - $start_time) > $max_runtime) {
 					// max runtime expired
 					break;
 				}

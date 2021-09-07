@@ -46,4 +46,4 @@ elgg_call(ELGG_IGNORE_ACCESS, function() use ($muted_settings, $recipient_guid) 
 	}
 });
 
-return elgg_ok_response('', elgg_echo('notifications:mute:save:success'));
+return elgg_ok_response('', elgg_echo('notifications:mute:save:success'), elgg_get_site_url());

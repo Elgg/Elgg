@@ -2,8 +2,8 @@
 
 namespace Elgg;
 
-use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
 use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Query\QueryBuilder;
@@ -227,22 +227,22 @@ class Database {
 	 * @param QueryBuilder|string $query  The query to execute.
 	 * @param array               $params Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
 	 *
-	 * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is
-	 *                   defined, 0 if not, and false on failure.
+	 * @return int The database id of the inserted row if a AUTO_INCREMENT field is defined, 0 if not
 	 */
-	public function insertData($query, array $params = []) {
+	public function insertData($query, array $params = []): int {
 		if (!$query instanceof QueryBuilder) {
 			$this->logDeprecatedMessage('The use of non ' . QueryBuilder::class . ' queries in ' . __METHOD__ . ' has been deprecated', '4.0');
 		}
 
+		$sql = $query;
+		$connection = $this->getConnection('write');
 		if ($query instanceof QueryBuilder) {
 			$params = $query->getParameters();
-			$query = $query->getSQL();
+			$sql = $query->getSQL();
+			$connection = $query->getConnection();
 		}
 
-		$this->getLogger()->info("DB insert query {$query} (params: " . print_r($params, true) . ")");
-
-		$connection = $this->getConnection('write');
+		$this->getLogger()->info("DB insert query {$sql} (params: " . print_r($params, true) . ")");
 
 		$this->query_cache->clear();
 
@@ -266,21 +266,22 @@ class Database {
 			$this->logDeprecatedMessage('The use of non ' . QueryBuilder::class . ' queries in ' . __METHOD__ . ' has been deprecated', '4.0');
 		}
 
+		$sql = $query;
 		if ($query instanceof QueryBuilder) {
 			$params = $query->getParameters();
-			$query = $query->getSQL();
+			$sql = $query->getSQL();
 		}
 
-		$this->getLogger()->info("DB update query {$query} (params: " . print_r($params, true) . ")");
+		$this->getLogger()->info("DB update query {$sql} (params: " . print_r($params, true) . ")");
 
 		$this->query_cache->clear();
 
-		$stmt = $this->executeQuery($query, $this->getConnection('write'), $params);
-		if ($get_num_rows) {
-			return $stmt->rowCount();
+		$result = $this->executeQuery($query, $this->getConnection('write'), $params);
+		if (!$get_num_rows) {
+			return true;
 		}
 
-		return true;
+		return ($result instanceof Result) ? $result->rowCount() : $result;
 	}
 
 	/**
@@ -293,24 +294,23 @@ class Database {
 	 *
 	 * @return int The number of affected rows
 	 */
-	public function deleteData($query, array $params = []) {
+	public function deleteData($query, array $params = []): int {
 		if (!$query instanceof QueryBuilder) {
 			$this->logDeprecatedMessage('The use of non ' . QueryBuilder::class . ' queries in ' . __METHOD__ . ' has been deprecated', '4.0');
 		}
 
+		$sql = $query;
 		if ($query instanceof QueryBuilder) {
 			$params = $query->getParameters();
-			$query = $query->getSQL();
+			$sql = $query->getSQL();
 		}
 
-		$this->getLogger()->info("DB delete query {$query} (params: " . print_r($params, true) . ")");
-
-		$connection = $this->getConnection('write');
+		$this->getLogger()->info("DB delete query {$sql} (params: " . print_r($params, true) . ")");
 
 		$this->query_cache->clear();
 
-		$stmt = $this->executeQuery("$query", $connection, $params);
-		return (int) $stmt->rowCount();
+		$result = $this->executeQuery($query, $this->getConnection('write'), $params);
+		return ($result instanceof Result) ? $result->rowCount() : $result;
 	}
 
 	/**

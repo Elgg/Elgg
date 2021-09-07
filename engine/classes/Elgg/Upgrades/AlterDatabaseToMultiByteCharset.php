@@ -122,7 +122,7 @@ class AlterDatabaseToMultiByteCharset implements AsynchronousUpgrade {
 	public function shouldBeSkipped(): bool {
 
 		$config = _elgg_services()->dbConfig->getConnectionConfig();
-		$rows = elgg()->db->getData("SHOW TABLE STATUS FROM `{$config['database']}`");
+		$rows = elgg()->db->getConnection('read')->executeQuery("SHOW TABLE STATUS FROM `{$config['database']}`");
 
 		$prefixed_table_names = array_map(function ($t) use ($config) {
 			return "{$config['prefix']}{$t}";

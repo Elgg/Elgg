@@ -1,7 +1,10 @@
 define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 	$(document).on('click', '.elgg-subscription-details-toggle', function() {
 		var ajax = new Ajax();
+		
 		$subscription_container = $(this).closest('.elgg-subscription-container');
+		$subscription_container.find('.elgg-subscription-details-toggle').toggleClass('hidden');
+		
 		$details_container = $subscription_container.next();
 		if ($details_container.is(':visible')) {
 			$details_container.hide();
@@ -33,7 +36,7 @@ define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 		$details.hide();
 		
 		$record.find('.elgg-subscription-methods input').prop('disabled', false);
-		$record.find('.elgg-subscription-details-toggle').removeClass('elgg-state-active');
+		$record.find('.elgg-subscription-details-toggle').removeClass('elgg-state-active').toggleClass('hidden');
 	});
 	
 	// prevent email and delayed email from being enabled at the same time

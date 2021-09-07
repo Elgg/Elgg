@@ -79,7 +79,7 @@ class Notification {
 	 *
 	 * @return \ElggEntity
 	 */
-	public function getSender() {
+	public function getSender(): \ElggEntity {
 		return $this->from;
 	}
 
@@ -88,7 +88,7 @@ class Notification {
 	 *
 	 * @return int
 	 */
-	public function getSenderGUID() {
+	public function getSenderGUID(): int {
 		return $this->from->guid;
 	}
 
@@ -97,7 +97,7 @@ class Notification {
 	 *
 	 * @return \ElggEntity
 	 */
-	public function getRecipient() {
+	public function getRecipient(): \ElggEntity {
 		return $this->to;
 	}
 
@@ -106,17 +106,19 @@ class Notification {
 	 *
 	 * @return int
 	 */
-	public function getRecipientGUID() {
+	public function getRecipientGUID(): int {
 		return $this->to->guid;
 	}
 
 	/**
 	 * Export notification
+	 *
 	 * @return \stdClass
 	 */
-	public function toObject() {
+	public function toObject(): \stdClass {
 		$obj = new \stdClass();
 		$vars = get_object_vars($this);
+		
 		$vars = array_merge($this->params, $vars);
 		unset($vars['params']);
 		unset($vars['sender']);
@@ -124,6 +126,8 @@ class Notification {
 		unset($vars['subscriptions']);
 		unset($vars['action']);
 		unset($vars['object']);
+		unset($vars['handler']);
+		
 		foreach ($vars as $key => $value) {
 			if (is_object($value) && is_callable([$value, 'toObject'])) {
 				$obj->$key = $value->toObject();
@@ -131,6 +135,22 @@ class Notification {
 				$obj->$key = $value;
 			}
 		}
+		
 		return $obj;
+	}
+	
+	/**
+	 * Called when the object is serialized
+	 *
+	 * @return array
+	 * @see serialize()
+	 */
+	public function __serialize(): array {
+		$vars = get_object_vars($this);
+		
+		// unset the NotificationEventHandler as it can't be serialized and isn't needed during processing of the notification
+		unset($vars['params']['handler']);
+		
+		return $vars;
 	}
 }

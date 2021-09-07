@@ -65,7 +65,7 @@ class MigrateACLNotificationPreferences implements AsynchronousUpgrade {
 			],
 		]);
 		
-		$remove_md = function (\ElggMetadata $md) use ($result) {
+		$remove_md = function (\ElggMetadata $md) use (&$result) {
 			if ($md->delete()) {
 				$result->addSuccesses();
 			} else {
