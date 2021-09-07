@@ -36,7 +36,7 @@ define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 		$details.hide();
 		
 		$record.find('.elgg-subscription-methods input').prop('disabled', false);
-		$record.find('.elgg-subscription-details-toggle').removeClass('elgg-state-active');
+		$record.find('.elgg-subscription-details-toggle').removeClass('elgg-state-active').toggleClass('hidden');
 	});
 	
 	// prevent email and delayed email from being enabled at the same time

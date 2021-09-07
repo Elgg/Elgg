@@ -47,7 +47,7 @@ $options['body'] = $formatter->formatBlock($options['body']);
 // generate HTML mail body
 $options['body'] = elgg_view('email/elements/body', $options);
 
-$cssmin = new \CSSmin();
+$cssmin = new \CSSmin(false);
 $css = $cssmin->run(_elgg_services()->cssCompiler->compile(elgg_view('email/email.css', $options)));
 
 $options['css'] = $css;

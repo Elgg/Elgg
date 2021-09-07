@@ -126,6 +126,7 @@ class Notification {
 		unset($vars['subscriptions']);
 		unset($vars['action']);
 		unset($vars['object']);
+		unset($vars['handler']);
 		
 		foreach ($vars as $key => $value) {
 			if (is_object($value) && is_callable([$value, 'toObject'])) {
