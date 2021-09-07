@@ -23,7 +23,7 @@ class Notifications {
 		/* @var $event \Elgg\Notifications\NotificationEvent */
 		$event = $hook->getParam('event');
 		
-		$note = elgg_call(ELGG_IGNORE_ACCESS, function() use ($notification, $event) {
+		$note = elgg_call(ELGG_IGNORE_ACCESS | ELGG_DISABLE_SYSTEM_LOG, function() use ($notification, $event) {
 			return \SiteNotification::factory($notification, $event);
 		});
 		
