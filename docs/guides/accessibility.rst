@@ -10,13 +10,13 @@ This page aims to list and document accessibility rules and best practices, to h
 Resources + references
 ----------------------
 
-- `Official WCAG Accessibility Guidelines Overview <http://www.w3.org/WAI/WCAG20/glance/>`_
-- `Official WCAG Accessibility Guidelines <http://www.w3.org/TR/WCAG/>`_
-- `Resources for planning and implementing for accessibility <http://www.w3.org/WAI/managing>`_
-- `Practical tips from the W3C for improving accessibility <http://www.w3.org/WAI/impl/improving>`_
-- `Preliminary review of websites for accessibility <http://www.w3.org/WAI/eval/preliminary.html>`_
-- `Tools for checking the accessibility of websites <http://www.w3.org/WAI/ER/tools/>`_
-- `List of practical techniques for implementing accessibility <http://www.w3.org/TR/WCAG20-TECHS/Overview.html#contents>`_ (It would be great if someone could go through this and filter out all the ones that are relevant to Elgg)
+- `Official WCAG Accessibility Guidelines Overview <https://www.w3.org/WAI/standards-guidelines/wcag/glance/>`_
+- `Official WCAG Accessibility Guidelines <https://www.w3.org/TR/WCAG/>`_
+- `Resources for planning and implementing for accessibility <https://www.w3.org/WAI/planning/>`_
+- `Practical tips from the W3C for improving accessibility <https://www.w3.org/WAI/planning/interim-repairs/>`_
+- `Preliminary review of websites for accessibility <https://www.w3.org/WAI/test-evaluate/preliminary/>`_
+- `Tools for checking the accessibility of websites <https://www.w3.org/WAI/ER/tools/>`_
+- `List of practical techniques for implementing accessibility <https://www.w3.org/TR/WCAG20-TECHS/Overview.html#contents>`_ (It would be great if someone could go through this and filter out all the ones that are relevant to Elgg)
 
 Tips for implementing accessibility
 -----------------------------------

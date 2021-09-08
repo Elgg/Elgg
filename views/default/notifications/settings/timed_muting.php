@@ -47,5 +47,6 @@ if (!empty($start) && !empty($end) && $start < time() && $end > time()) {
 echo elgg_view_field([
 	'#type' => 'fieldset',
 	'#label' => elgg_echo('usersettings:notifications:timed_muting'),
+	'#class' => 'ptl',
 	'fields' => $fields,
 ]);
