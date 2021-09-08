@@ -73,7 +73,7 @@ if (empty($sorted)) {
 	return;
 }
 
-$body = '';
+$body = elgg_echo('notifications:delayed_email:body:intro') . PHP_EOL . PHP_EOL;
 
 foreach ($sorted as $category => $sorted_notifications) {
 	uksort($sorted_notifications, 'strnatcasecmp');
