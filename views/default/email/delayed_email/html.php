@@ -64,7 +64,13 @@ unset($sorted['other']);
 ksort($sorted);
 
 if (!empty($unknowns)) {
+	// add the rest to the end of the list
 	$sorted['other'] = $unknowns;
+}
+
+if (empty($sorted)) {
+	// can happen if all notification objects have been removed
+	return;
 }
 
 $body = '';
