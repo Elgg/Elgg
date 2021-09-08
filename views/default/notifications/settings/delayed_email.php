@@ -14,6 +14,7 @@ echo elgg_view_field([
 	'#type' => 'select',
 	'#label' => elgg_echo('usersettings:delayed_email:interval'),
 	'#help' => elgg_echo('usersettings:delayed_email:interval:help'),
+	'#class' => 'ptl',
 	'name' => 'delayed_email_interval',
 	'options_values' => [
 		'daily' => elgg_echo('interval:daily'),
