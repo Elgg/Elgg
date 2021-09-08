@@ -51,9 +51,10 @@ $list = elgg_list_entities([
 	'offset_key' => 'subscriptions_users',
 	'item_view' => 'notifications/subscriptions/record',
 	'user' => $user,
-	'limit' => max(20, elgg_get_config('default_limit')),
+	'limit' => 10,
 	'list_class' => 'elgg-subscriptions',
 	'item_class' => 'elgg-subscription-record',
+	'pagination_behaviour' => 'ajax-replace',
 ]);
 
 if (empty($list)) {
