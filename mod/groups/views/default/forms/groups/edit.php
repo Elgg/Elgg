@@ -56,17 +56,44 @@ echo elgg_view('page/components/tabs', [
 ]);
 
 // display the save button and some additional form data
+$footer = '';
+$submit_classes = ['elgg-groups-edit-footer-submit'];
 if ($entity instanceof \ElggGroup) {
 	echo elgg_view('input/hidden', [
 		'name' => 'group_guid',
 		'value' => $entity->guid,
 	]);
+} else {
+	elgg_require_js('forms/groups/create_navigation');
+	
+	$footer .= elgg_view_field([
+		'#type' => 'fieldset',
+		'#class' => 'elgg-groups-edit-footer-navigate',
+		'fields' => [
+			[
+				'#type' => 'button',
+				'id' => 'elgg-groups-edit-footer-navigate-next',
+				'icon_alt' => 'chevron-right',
+				'value' => elgg_echo('next'),
+				'class' => 'elgg-button-action',
+			],
+		],
+		'align' => 'horizontal',
+	]);
+	$submit_classes[] = 'hidden';
 }
 
 // build form footer
-$footer = elgg_view_field([
-	'#type' => 'submit',
-	'value' => elgg_echo('save'),
+$footer .= elgg_view_field([
+	'#type' => 'fieldset',
+	'#class' => $submit_classes,
+	'fields' => [
+		[
+			'#type' => 'submit',
+			'value' => elgg_echo('save'),
+		],
+	],
+	'align' => 'horizontal',
 ]);
 
 elgg_set_form_footer($footer);
