@@ -66,12 +66,13 @@ class SubscriptionsService {
 	 *     <user guid> => array('email', 'sms', 'ajax'),
 	 * );
 	 *
-	 * @param NotificationEvent $event   Notification event
-	 * @param array             $methods Notification methods
+	 * @param NotificationEvent $event                     Notification event
+	 * @param array             $methods                   Notification methods
+	 * @param array             $exclude_guids_for_records GUIDs to exclude from fetching subscription records
 	 *
 	 * @return array
 	 */
-	public function getNotificationEventSubscriptions(NotificationEvent $event, array $methods) {
+	public function getNotificationEventSubscriptions(NotificationEvent $event, array $methods, array $exclude_guids_for_records = []) {
 
 		if (empty($methods)) {
 			return [];
@@ -87,8 +88,6 @@ class SubscriptionsService {
 			return [];
 		}
 
-		$subscriptions = [];
-
 		$guids = [
 			$object->owner_guid,
 			$object->container_guid,
@@ -97,6 +96,12 @@ class SubscriptionsService {
 			$guids[] = $object->guid;
 		}
 		
+		$guids = array_diff($guids, $exclude_guids_for_records);
+		if (empty($guids)) {
+			return [];
+		}
+		
+		$subscriptions = [];
 		$records = $this->getSubscriptionRecords($guids, $methods, $object->type, $object->subtype, $event->getAction(), $event->getActorGUID());
 		foreach ($records as $record) {
 			if (empty($record->guid)) {

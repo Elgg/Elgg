@@ -439,6 +439,59 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertEmpty($this->service->filterSubscriptions($subscriptions, $event));
 	}
 	
+	public function testGetNotificationEventSubscriptionsWithExcludedOwnerGUID() {
+		$this->entities[] = $user = $this->createUser();
+		
+		$event = $this->getSubscriptionNotificationEvent();
+		
+		/* @var $object \ElggObject */
+		$object = $event->getObject();
+		$owner = $object->getOwnerEntity();
+		$this->assertTrue($owner->addSubscription($user->guid, 'apples'));
+		
+		$subscriptions = $this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']);
+		$this->assertNotEmpty($subscriptions);
+		
+		// exclude owner
+		$subscriptions = $this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas'], [$owner->guid]);
+		$this->assertEmpty($subscriptions);
+	}
+	
+	public function testGetNotificationEventSubscriptionsWithExcludedContainerGUID() {
+		$this->entities[] = $user = $this->createUser();
+		
+		$event = $this->getSubscriptionNotificationEvent();
+		
+		/* @var $object \ElggObject */
+		$object = $event->getObject();
+		$container = $object->getContainerEntity();
+		$this->assertTrue($container->addSubscription($user->guid, 'apples'));
+		
+		$subscriptions = $this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']);
+		$this->assertNotEmpty($subscriptions);
+		
+		// exclude container
+		$subscriptions = $this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas'], [$container->guid]);
+		$this->assertEmpty($subscriptions);
+	}
+	
+	public function testGetNotificationEventSubscriptionsWithExcludedEntityGUID() {
+		$this->entities[] = $user = $this->createUser();
+		
+		$event = $this->getSubscriptionNotificationEvent();
+		
+		/* @var $object \ElggObject */
+		$object = $event->getObject();
+		$this->assertTrue($object->addSubscription($user->guid, 'apples'));
+		
+		$subscriptions = $this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas']);
+		$this->assertNotEmpty($subscriptions);
+		
+		// exclude entity
+		$subscriptions = $this->service->getNotificationEventSubscriptions($event, ['apples', 'bananas'], [$object->guid]);
+		$this->assertEmpty($subscriptions);
+	}
+	
 	public function testGetNotificationEventSubscriptionsWhereEventActorIsNotPresentInResult() {
 		$event = $this->getSubscriptionNotificationEvent();
 		

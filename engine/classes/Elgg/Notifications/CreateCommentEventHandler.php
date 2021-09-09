@@ -49,4 +49,20 @@ class CreateCommentEventHandler extends NotificationEventHandler {
 			$entity->getURL(),
 		], $recipient->getLanguage());
 	}
+	
+	/**
+	 * Is this event configurable by the user on the notification settings page
+	 *
+	 * @return bool
+	 */
+	public static function isConfigurableByUser(): bool {
+		return false;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function excludeOwnerSubscribers(): bool {
+		return true;
+	}
 }
