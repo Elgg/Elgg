@@ -88,7 +88,64 @@ class NotificationEventHandler {
 	 * @return array
 	 */
 	public function getSubscriptions(): array {
-		return _elgg_services()->subscriptions->getNotificationEventSubscriptions($this->event, $this->getMethods());
+		return _elgg_services()->subscriptions->getNotificationEventSubscriptions($this->event, $this->getMethods(), $this->getNotificationSubsciptionExclusionGUIDs());
+	}
+	
+	/**
+	 * Get an array of GUIDs to not get the subscription records for
+	 *
+	 * @return int[]
+	 */
+	final protected function getNotificationSubsciptionExclusionGUIDs(): array {
+		$object = $this->event->getObject();
+		if (!$object instanceof \ElggEntity) {
+			return [];
+		}
+		
+		$exclude = [];
+		if ($this->excludeOwnerSubscribers()) {
+			$exclude[] = $object->owner_guid;
+		}
+		
+		if ($this->excludeContainerSubscribers()) {
+			$exclude[] = $object->container_guid;
+		}
+		
+		if ($this->excludeEntitySubscribers()) {
+			$exclude[] = $object->guid;
+		}
+		
+		return $exclude;
+	}
+	
+	/**
+	 * Exclude the NotificationEvent object owner_guid when fetching the subscription records for this notification
+	 *
+	 * @return bool
+	 * @see NotificationEventHandler::getSubscriptions();
+	 */
+	protected function excludeOwnerSubscribers(): bool {
+		return false;
+	}
+	
+	/**
+	 * Exclude the NotificationEvent object container_guid when fetching the subscription records for this notification
+	 *
+	 * @return bool
+	 * @see NotificationEventHandler::getSubscriptions();
+	 */
+	protected function excludeContainerSubscribers(): bool {
+		return false;
+	}
+	
+	/**
+	 * Exclude the NotificationEvent object guid when fetching the subscription records for this notification
+	 *
+	 * @return bool
+	 * @see NotificationEventHandler::getSubscriptions();
+	 */
+	protected function excludeEntitySubscribers(): bool {
+		return false;
 	}
 	
 	/**
