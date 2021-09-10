@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	
 	'groups' => "Групе",
 	'groups:owned' => "Групе чији сам власник",
 	'groups:owned:user' => 'Групе чији је %s власник',

@@ -59,9 +59,9 @@ msgstr ":doc:`/admin/getting-help`"
 #: ../../appendix/faqs/general.rst:9 ../../appendix/faqs/general.rst:9
 msgid "\"Plugin cannot start and has been deactivated\" or \"This plugin is invalid\""
 msgstr ""
-"\"Le plugin ne peut pas démarrer et a été désactivé\" ('Plugin cannot start "
-"and has been deactivated') ou \"Ce plugin est invalide\" ('This plugin is "
-"invalid')"
+"\"Le plugin ne peut pas démarrer et a été désactivé\" - \"Plugin cannot "
+"start and has been deactivated\" ou \"Ce plugin est invalide\" - \"This "
+"plugin is invalid\""
 
 #: ../../appendix/faqs/general.rst:10 ../../appendix/faqs/general.rst:10
 msgid ""
@@ -69,8 +69,8 @@ msgid ""
 "is invalid. This is usually caused by an incorrectly installed plugin."
 msgstr ""
 "Cette erreur est habituellement accompagnée par plus de détails qui "
-"expliquent pourquoi le plugin est invalide. Ceci est généralement causé par "
-"un plugin mal installé."
+"expliquent pourquoi le plugin est invalide. Elle est généralement causée par"
+" un plugin mal installé."
 
 #: ../../appendix/faqs/general.rst:13 ../../appendix/faqs/general.rst:13
 msgid ""
@@ -116,13 +116,13 @@ msgid ""
 "directory, check the permissions. Elgg must have read access to the files "
 "and read + execute access on the directories."
 msgstr ""
-"Si vous utilisez un hôte de type Unix et que els fichiers existent dans le "
+"Si vous utilisez un hôte de type Unix et que les fichiers existent dans le "
 "bon répertoire, vérifiez les permissions. Elgg doit avoir accès en lecture +"
-" eexécution sur els répertoires."
+" exécution sur les répertoires."
 
 #: ../../appendix/faqs/general.rst:25 ../../appendix/faqs/general.rst:25
 msgid "White Page (WSOD)"
-msgstr "Page Blanche (WSOD = White Screen Of Death, l'Ecran Blanc De la Mort)"
+msgstr "Page Blanche (WSOD)"
 
 #: ../../appendix/faqs/general.rst:30 ../../appendix/faqs/general.rst:30
 msgid ""
@@ -131,7 +131,7 @@ msgid ""
 msgstr ""
 "Une page vide, blanche (souvent appelé \"écran blanc de la mort\" - \"white "
 "screen of death\" ou WSOD) signifie qu'il y a une erreur de syntaxe PHP. Il "
-"y a un certain nombre de causes possibles à cela :"
+"existe un certain nombre de causes possibles à cela :"
 
 #: ../../appendix/faqs/general.rst:28 ../../appendix/faqs/general.rst:28
 msgid "corrupted file - try transfering the code again to your server"
@@ -173,16 +173,16 @@ msgid ""
 "If you are using the Developer's Tools plugin, go to its settings page and "
 "make sure you have \"Display fatal PHP errors\" enabled."
 msgstr ""
-"Si vous utilisez le plugin Developer's Tools, allez dans sa pag de "
+"Si vous utilisez le plugin Developer's Tools, allez dans sa page de "
 "configuration et assurez-vous que l'option \"Afficher les erreurs PHP "
-"fatales\" (\"Display fatal PHP errors\") est bien activé."
+"fatales\" - \"Display fatal PHP errors\" - est bien activée."
 
 #: ../../appendix/faqs/general.rst:38 ../../appendix/faqs/general.rst:38
 msgid ""
 "If the white screen is due to a bad plugin, remove the latest plugins that "
 "you have installed by deleting their directories and then reload the page."
 msgstr ""
-"Si l'écran blanc est dû à un mauvais plugin, retirer les derniers plugins "
+"Si l'écran blanc est dû à un mauvais plugin, retirez les derniers plugins "
 "que vous avez installé en supprimant leurs répertoires puis rechargez la "
 "page."
 
@@ -193,7 +193,7 @@ msgid ""
 "administrator tools panel."
 msgstr ""
 "Vous pouvez désactiver temporairement tous les plugins en créant un fichier "
-"vide dans mod ``mod/disabled``. Vous pouvez ensuite désactiver le plugin "
+"vide dans ``mod/disabled``. Vous pouvez ensuite désactiver le plugin "
 "responsable via les outils du panneau d'administration."
 
 #: ../../appendix/faqs/general.rst:44 ../../appendix/faqs/general.rst:44
@@ -206,8 +206,8 @@ msgid ""
 msgstr ""
 "Si vous avez un WSOD quand vous effectuez une action, comme vous identifier "
 "ou publier un article de blog, mais qu'il n'y a pas de message d'erreur, le "
-"plus probable ets que ce soit causé par des caractères non-imprimables dans "
-"le code du plugin. Vérifiez le plugin et supprimez les espaces vides et "
+"plus probable est que ce soit causé par des caractères non-imprimables dans "
+"le code du plugin. Vérifiez le plugin et supprimez les espaces vides et les "
 "nouvelles lignes situés après le tag de fin php (``?>``)."
 
 #: ../../appendix/faqs/general.rst:47 ../../appendix/faqs/general.rst:47
@@ -313,8 +313,8 @@ msgid ""
 " with a 3rd party plugin."
 msgstr ""
 "Toutes les actions Elgg requièrent un jeton de sécurité, et cette erreur se "
-"produit quand ce jeton est manquant. C'est soit un problème avec la "
-"configuration de votre serveur ou avec un plugin tierce-partie."
+"produit quand ce jeton est manquant. C'est un problème soit avec la "
+"configuration de votre serveur, soit avec un plugin tierce-partie."
 
 #: ../../appendix/faqs/general.rst:85 ../../appendix/faqs/general.rst:85
 msgid ""
@@ -352,9 +352,9 @@ msgid ""
 "everyone except admin users."
 msgstr ""
 "Pour mettre temporairement votre site hors-ligne, allez dans Administration "
-"-> Utilitaires (Utilities) -> Mode de Maintenance (Maintenance Mode). "
-"Complétez le formulaire et cliquez sur Enregistrer pour désactiver votre "
-"site pour tout le monde à l'exception des utilisateurs admin."
+"-> Utilitaires -> Mode de Maintenance. Complétez le formulaire et cliquez "
+"sur Enregistrer pour désactiver votre site pour tout le monde à l'exception "
+"des administrateurs."
 
 #: ../../appendix/faqs/general.rst:95 ../../appendix/faqs/general.rst:95
 msgid "Missing email"
@@ -373,10 +373,10 @@ msgstr ""
 "pas, demandez-leur de vérifier leur dossier de spam. Il est possible que les"
 " e-mails provenant de votre serveur sont marqués comme spam. Cela dépend de "
 "nombreux facteurs : si votre fournisseur d’hébergement a un problème avec "
-"les spammeurs, la façon dont votre configuration de messagerie PHP est "
-"configurée, quel agent de transport de messagerie votre serveur utilise, ou "
-"si votre hébergement limite le nombre d'e-mails que vous pouvez envoyer en "
-"une heure."
+"les spammeurs, la manière dont est faite votre configuration e-mail de PHP, "
+"quel agent de transport de messagerie votre serveur utilise, ou encore si "
+"votre hébergement limite le nombre d'e-mails que vous pouvez envoyer en une "
+"heure."
 
 #: ../../appendix/faqs/general.rst:99 ../../appendix/faqs/general.rst:99
 msgid ""
@@ -427,7 +427,7 @@ msgstr ""
 "La configuration complète des fonctionnalités de messagerie d’un MTA et de "
 "PHP dépasse le cadre de cette FAQ, et vous devez rechercher plus de "
 "ressources sur Internet à ce sujet. Quelques informations de base sur les "
-"paramètres php peuvent être trouvées sur le `PHP's site`__"
+"paramètres php peuvent être trouvées sur le `site de PHP`__"
 
 #: ../../appendix/faqs/general.rst:128 ../../appendix/faqs/general.rst:128
 msgid "Server logs"
@@ -441,12 +441,12 @@ msgid ""
 "error logs. Information from PHP and Elgg is written to the server error "
 "log."
 msgstr ""
-"Très probablement vous utilisez Apache comme serveur Web. Les avertissements"
-" et les erreurs sont écrits dans un journal par le serveur Web et peuvent "
-"être utiles pour les problèmes de débogage. Vous verrez généralement deux "
-"types de fichiers journaux : les journaux d’accès et les journaux d’erreurs."
-" Les informations de PHP et Elgg sont isncrites dans le journal des erreurs "
-"du serveur."
+"Il est probable que vous utilisiez Apache comme serveur Web. Les "
+"avertissements et les erreurs sont écrits dans un journal par le serveur Web"
+" et peuvent être utiles pour les problèmes de débogage. Vous verrez "
+"généralement deux types de fichiers journaux : les journaux d’accès et les "
+"journaux d’erreurs. Les informations de PHP et de Elgg sont inscrites dans "
+"le journal des erreurs du serveur."
 
 #: ../../appendix/faqs/general.rst:132 ../../appendix/faqs/general.rst:132
 msgid ""
@@ -473,7 +473,7 @@ msgid ""
 msgstr ""
 "Si vous utilisez un hébergement partagé sans accès ssh, votre fournisseur "
 "d’hébergement peut fournir un mécanisme pour obtenir l’accès à vos journaux "
-"de serveur. Vous devrez leur poser des questions à ce sujet."
+"de serveur. Vous devrez leur poser vos questions à ce sujet."
 
 #: ../../appendix/faqs/general.rst:139 ../../appendix/faqs/general.rst:139
 msgid "How does registration work?"
@@ -510,8 +510,8 @@ msgid ""
 "address, the validation email being marked as spam, or a user never "
 "bothering to validate the account."
 msgstr ""
-"Les échecs durant ce processus comprennent l’utilisateur entrant une adresse"
-" e-mail incorrecte, l’e-mail de validation marqué comme spam, ou un "
+"Les échecs durant ce processus comprennent l’utilisateur qui entre une "
+"adresse e-mail incorrecte, l’e-mail de validation marqué comme spam, ou un "
 "utilisateur qui ne prend jamais la peine de valider le compte."
 
 #: ../../appendix/faqs/general.rst:152 ../../appendix/faqs/general.rst:152
@@ -527,7 +527,7 @@ msgstr ""
 "Par défaut, tous les utilisateurs qui s’inscrivent doivent valider leur "
 "compte par e-mail. Si un utilisateur a des difficultés pour valider son "
 "compte, vous pouvez valider manuellement les utilisateurs en allant dans "
-"Administration -> Utilisateurs -> Non validé."
+"Administration -> Utilisateurs -> Non validés."
 
 #: ../../appendix/faqs/general.rst:157 ../../appendix/faqs/general.rst:157
 msgid ""
@@ -544,8 +544,8 @@ msgid ""
 "open to spammers."
 msgstr ""
 "La suppression de la validation a certaines conséquences : il n’y a aucun "
-"moyen de savoir qu’un utilisateur inscrit à une adresse e-mail "
-"fonctionnelle, et cela peut ouvrir le système aux spammeurs."
+"moyen de savoir si un utilisateur inscrit dispose d'une adresse e-mail "
+"fonctionnelle, et cela peut laisser votre système ouvert aux spammeurs."
 
 #: ../../appendix/faqs/general.rst:164 ../../appendix/faqs/general.rst:164
 msgid "Manually add user"
@@ -10403,7 +10403,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/3.0-to-3.1.rst:42
 msgid "Hook and event callbacks"
-msgstr "Fonctions de rappel de hook et d’événement"
+msgstr "Fonctions de rappel - callbacks - de hook et d’événement"
 
 #: ../../appendix/upgrade-notes/3.0-to-3.1.rst:44
 msgid ""
@@ -10608,8 +10608,8 @@ msgid ""
 "The `enabled` state of river items has been deprecated. You should no longer"
 " use this property when working with river items."
 msgstr ""
-"L’état `enabled` (activé) des éléments de la rivière a été déprécié. Vous ne"
-" devez plus utiliser cette propriété lorsque vous travaillez avec des "
+"L’état activé - `enabled` - des éléments de la rivière a été déprécié. Vous "
+"ne devez plus utiliser cette propriété lorsque vous travaillez avec des "
 "éléments de la rivière."
 
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:2
@@ -10658,7 +10658,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:45
 msgid "The new way to do it is:"
-msgstr "La nouvelle façon de le faire est :"
+msgstr "La nouvelle manière de le faire est :"
 
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:57
 msgid "Deprecated layout names"
@@ -10731,11 +10731,11 @@ msgstr "``elgg_enable_query_cache()``"
 
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:81
 msgid "``elgg_format_attributes()`` use ``elgg_format_element()``"
-msgstr "``elgg_format_attributes()`` utiliser ``elgg_format_element()``"
+msgstr "``elgg_format_attributes()`` utilisez ``elgg_format_element()``"
 
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:82
 msgid "``elgg_flush_caches()`` use ``elgg_clear_caches()``"
-msgstr "``elgg_flush_caches()`` utiliser ``elgg_clear_caches()``"
+msgstr "``elgg_flush_caches()`` utilisez ``elgg_clear_caches()``"
 
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:83
 msgid "``elgg_get_menu_item()``"
@@ -10831,7 +10831,7 @@ msgstr "Commandes CLI obsolètes"
 
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:106
 msgid "``elgg-cli flush`` use ``elgg-cli cache:clear``"
-msgstr "``elgg-cli flush`` utiliser ``elgg-cli cache:clear``"
+msgstr "``elgg-cli flush`` utilisez ``elgg-cli cache:clear``"
 
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:109
 msgid "Deprecated Hooks"
@@ -12465,7 +12465,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:542
 msgid "Renamed hook/event handler callbacks"
 msgstr ""
-"Fonctions de callbacks du gestionnaire de hook / d'événement renommées"
+"Renommage des fonctions de callback du gestionnaire de hook/d'événement"
 
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:544
 msgid ""

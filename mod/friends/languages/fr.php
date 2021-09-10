@@ -47,6 +47,9 @@ Après avoir activé les demandes de contact, quand l’utilisateur A veut être
 	'widgets:friends:name' => "Contacts",
 	'widgets:friends:description' => "Affiche une partie de vos contacts.",
 	
+	'widgets:friends_of:name' => "Contacts de",
+	'widgets:friends_of:description' => "Montrer qui vous a ajouté comme contact",
+	
 	'friends:notification:request:subject' => "%s souhaite faire partie de vos contacts !",
 	'friends:notification:request:message' => "%s a demandé à être en contact avec vous sur %s.
 

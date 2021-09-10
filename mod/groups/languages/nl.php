@@ -10,6 +10,8 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	'add:group:group' => "Maak een nieuwe groep",
+	
 	'groups' => "Groepen",
 	'groups:owned' => "Groepen beheren",
 	'groups:owned:user' => 'Groepen waar %s beheerder van is',

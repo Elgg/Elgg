@@ -11,4 +11,5 @@ return array(
 
 	'search:comment_on' => 'Комментарии к "%s"',
 	'search:unknown_entity' => 'Неизвестный тип ресурса',
+	'search:empty_query' => 'Укажите корректный поисковый запрос',
 );

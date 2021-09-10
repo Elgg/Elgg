@@ -343,7 +343,9 @@ return array(
 	'notifications:delayed_email:subject:daily' => "Dagelijkse notificaties",
 	'notifications:delayed_email:subject:weekly' => "Wekelijkse notificaties",
 	
+	'notifications:subscriptions:record:settings' => 'Toon detail selectie',
 	'notifications:subscriptions:no_results' => 'Nog geen abonnementen beschikbaar',
+	'notifications:subscriptions:details:reset' => 'Selectie ongedaan maken',
 
 	'notifications:mute:title' => "Notificaties uitzetten",
 	'notifications:mute:description' => "Indien je geen notificaties wilt ontvangen zoals diegene die je hebt ontvangen kun je één of meer van de volgende redenen instellen om notificaties in de toekomst te blokkeren:",
@@ -1710,6 +1712,14 @@ Global variables:
 	'cli:simpletest:error:class' => "De Elgg applicatie moet geïnstalleerd worden met '%s'",
 	'cli:simpletest:error:file' => "%sis geen geldige simpletest class",
 	'cli:simpletest:output:summary' => "Duur: %.2fseconden, Geheugen: %.2fMb",
+	
+	'cli:upgrade:description' => "Start systeem upgrades",
+	'cli:upgrade:option:force' => "Forceer upgrades om uit te voeren, ook al loopt er een andere upgrade.",
+	'cli:upgrade:argument:async' => "Start nog uit te voeren asynchrone upgrades",
+	'cli:upgrade:system:upgraded' => "Systeem upgrades zijn uitgevoerd",
+	'cli:upgrade:system:failed' => "Systeem upgrades zijn mislukt",
+	'cli:upgrade:async:upgraded' => "Asynchrone upgrades zijn uitgevoerd",
+	'cli:upgrade:aysnc:failed' => "Asynchrone upgrades zijn mislukt",
 	
 	'cli:upgrade:batch:description' => "Voer één of meerdere upgrades uit",
 	'cli:upgrade:batch:argument:upgrades' => "Een of meerdere upgrades (class namen) om uit te voeren",

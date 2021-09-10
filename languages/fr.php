@@ -60,6 +60,9 @@ return array(
 	'PluginException:CannotStart' => '%s (guid : %s) ne peut pas démarrer et a été désactivé.  Cause : %s',
 	'PluginException:InvalidID' => "%s est un ID de plugin invalide.",
 	'PluginException:InvalidPath' => "%s est un chemin de plugin invalide.",
+	'PluginException:PluginMustBeActive' => "Nécessite que le plugin '%s' soit activé.",
+	'PluginException:PluginMustBeAfter' => "Nécessite d'être positionné après le plugin '%s'.",
+	'PluginException:PluginMustBeBefore' => "Nécessite d'être positionné avant le plugin '%s'.",
 	'ElggPlugin:MissingID' => 'ID du plugin manquant (guid %s)',
 	'ElggPlugin:NoPluginComposer' => 'Fichier composer.json manquant pour l\'ID de plugin %s (guid %s)',
 	'ElggPlugin:StartFound' => 'Pour l\'ID de plugin %s un fichier start.php a été trouvé. Ceci pourrait indiquer une version de plugin non supportée.',
@@ -342,7 +345,9 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'notifications:delayed_email:subject:daily' => "Notification quotidiennes",
 	'notifications:delayed_email:subject:weekly' => "Notification mensuelles",
 	
+	'notifications:subscriptions:record:settings' => 'Afficher la sélection détaillée',
 	'notifications:subscriptions:no_results' => 'Il n\'y a aucun enregistrement d\'abonnement pour le moment',
+	'notifications:subscriptions:details:reset' => 'Annuler la sélection',
 
 	'notifications:mute:title' => "Interrompre les notifications",
 	'notifications:mute:description' => "Si vous ne souhaitez plus recevoir de notification comme celle que vous avez reçue, configurez une ou plusieurs des motifs suivants pour bloquer toutes les notifications :",
@@ -355,6 +360,8 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'notifications:mute:user' => "écrit par l'utilisateur '%s'",
 	
 	'notifications:mute:save:success' => "Vos paramètres de notification ont bien été enregistrés.",
+	
+	'notifications:mute:email:footer' => "Ignorer ces e-mails",
 
 /**
  * Search
@@ -487,10 +494,13 @@ Configurer simplecache dans le fichier settings.php améliore les performances d
 Cela permet à Elgg d'éviter la connexion à la base de données lors de l'envoi de fichiers JavaScript et CSS mis en cache",
 	'admin:performance:systemcache' => 'Systemcache',
 	'admin:performance:apache:mod_cache' => 'Apache mod_cache',
+	'admin:performance:apache:mod_cache:warning' => 'Le module mod_cache fournit des schémas de mise en cache compatibles HTTP. Ceci signifie que les fichiers seront mis en cache en fonction d\'une instruction qui spécifie combien de temps une page peut être considérée comme "fraîche".',
 	'admin:performance:php:open_basedir' => 'PHP open_basedir',
 	'admin:performance:php:open_basedir:not_configured' => 'Aucune limite n\'a été définie',
 	'admin:performance:php:open_basedir:warning' => 'Un faible nombre de limitations de open_basedir sont effectives, ceci pourrait affecter les performances.',
 	'admin:performance:php:open_basedir:error' => 'Un grand nombre de limitations de open_basedir sont effectives, ceci va probablement affecter les performances.',
+	'admin:performance:php:open_basedir:generic' => 'Avec open_basedir chaque accès à un fichier sera vérifié auprès de la liste des limitations. 
+Comme Elgg a un grand nombre d\'accès aux fichiers cela va avoir un effet négatif sur les performances. D\'autre part l\'opcache de PHP ne peut plus mettre en cache les chemins de fichiers dans la mémoire et doit les résoudre lors de chaque accès.',
 	
 	'admin:statistics' => 'Statistiques',
 	'admin:server' => 'Serveur',
@@ -588,6 +598,13 @@ Cela permet à Elgg d'éviter la connexion à la base de données lors de l'envo
 	'admin:widget:admin_welcome:intro' => 'Bienvenue sur Elgg ! Vous êtes actuellement sur le tableau de bord de l\'administration. Il permet de suivre ce qui se passe sur le site.',
 
 	'admin:widget:admin_welcome:registration' => "L'inscription de nouveaux utilisateurs est actuellement désactivée ! Vous pouvez l'activer sur la page %s.",
+	'admin:widget:admin_welcome:admin_overview' => "La navigation dans la zone d'administration se fait à l'aide du menu de droite. Il est organisé en trois parties :
+	<dl>
+		<dt>Administrer</dt><dd>Des tâches de base telles que suivre le contenu signalé et activer des plugins.</dd>
+		<dt>Configurer</dt><dd>Des tâches occasionnelles comme définir le nom du site ou configurer les paramètres d'un plugin.</dd>
+		<dt>Information</dt><dd>Des informations à propos de votre site, telles que des statistiques.</dd>
+		<dt>Développer</dt><dd>Pour les développeurs qui créent des plugins ou conçoivent des thèmes. (Nécessite le plugin developer).</dd>
+	</dl>",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Pensez à consulter les ressources disponibles via les liens de bas de page, et merci d\'utiliser Elgg !',
@@ -641,8 +658,11 @@ Cela permet à Elgg d'éviter la connexion à la base de données lors de l'envo
 	'admin:security:information' => 'Informations',
 	'admin:security:information:description' => 'Sur cette page vous pouvez trouver une liste de recommandations de sécurité.',
 	'admin:security:information:https' => 'Est-ce que le site est protégé par HTTPS',
+	'admin:security:information:https:warning' => "Il est recommandé de protéger votre site en utilisant HTTPS, ceci aide à éviter que les données (par ex. les mots de passe) ne soient épiées via la connexion internet.",
 	'admin:security:information:wwwroot' => 'Le répertoire principal du site est inscriptible',
+	'admin:security:information:wwwroot:error' => "Il est recommandé d'installer Elgg dans un répertoire qui n'est pas inscriptible par votre serveur web. Des visiteurs mal intentionnés pourraient placer du code indésirable sur votre site.",
 	'admin:security:information:validate_input' => 'Validation des entrées',
+	'admin:security:information:validate_input:error' => "Un des plugins a désactivé la validation des saisies sur votre site, ce qui permet aux utilisateurs d'envoyer du contenu potentiellement dangereux (par ex. cross-site-scripting, etc.)",
 	'admin:security:information:password_length' => 'Longueur minimale du mot de passe',
 	'admin:security:information:password_length:warning' => "Il est recommandé d'avoir une longueur de mot de passe d'au moins 6 caractères.",
 	'admin:security:information:username_length' => 'Longueur minimale du nom d’utilisateur',
@@ -650,6 +670,8 @@ Cela permet à Elgg d'éviter la connexion à la base de données lors de l'envo
 	'admin:security:information:php:session_gc' => "Nettoyage des sessions PHP",
 	'admin:security:information:php:session_gc:chance' => "Probabilité de nettoyage : %s %%",
 	'admin:security:information:php:session_gc:lifetime' => "Durée de vie d'une session %s secondes",
+	'admin:security:information:php:session_gc:error' => "Il est recommandé de définir 'session.gc_probability' et 'session.gc_divisor' dans vos paramètres PHP, 
+ceci va nettoyer les sessions expirées de votre base de données et empêcher les utilisateurs de réutiliser d'anciennes sessions.",
 	'admin:security:information:htaccess:hardening' => "Sécurisation des accès aux fichiers via .htaccess",
 	'admin:security:information:htaccess:hardening:help' => "Dans le fichier .htaccess il est possible de bloquer l'accès à certains fichiers pour augmenter la sécurité de votre site. Pour plus d'informations regardez dans votre fichier .htaccess.",
 	
@@ -870,10 +892,16 @@ Voir la liste complète des utilisateurs :
 	'admin:server:label:upload_max_filesize' => 'Taille maximale d\'envoi',
 	'admin:server:warning:post_max_too_small' => '(Remarque : la valeur de post_max_size doit être supérieure à cette valeur pour supporter des envois de cette taille)',
 	'admin:server:label:memcache' => 'Memcache',
+	'admin:server:memcache:inactive' => 'Memcache n\'est pas en place sur ce serveur ou n\'a pas encore été configuré dans la configuration de Elgg.
+Pour des performances améliorées, il est recommandé que vous activiez et configuriez memcache (ou redis).',
 
 	'admin:server:label:redis' => 'Redis',
+	'admin:server:redis:inactive' => 'Redis n\'est pas installé sur ce serveur ou n\'a pas encore été configuré dans la configuration de Elgg.
+Pour des performances améliorées, il est recommandé que vous activiez et configuriez redis (ou memcache).',
 
 	'admin:server:label:opcache' => 'OPcache',
+	'admin:server:opcache:inactive' => 'OPcache n\'est pas disponible sur ce serveur ou n\'a pas encore été activé.
+Pour des performances améliorées, il est recommandé que vous activiez et configuriez OPcache.',
 	
 	'admin:server:requirements:php_extension' => "Extension PHP : %s",
 	'admin:server:requirements:php_extension:required' => "Cette extension PHP est requise pour un fonctionnement correct de Elgg",
@@ -918,6 +946,7 @@ Voir la liste complète des utilisateurs :
 
 	'admin:configure_utilities:default_widgets' => 'Widgets par défaut',
 	'admin:default_widgets:unknown_type' => 'Type de widget Inconnu',
+	'admin:default_widgets:instructions' => 'Ajoutez, supprimez, positionnez et configurez les widgets par défaut pour la page de widgets sélectionnée. Ces changements ne concerneront que les nouveaux utilisateurs du site.',
 
 	'admin:robots.txt:instructions' => "Éditez ci-dessous le fichier robots.txt du site",
 	'admin:robots.txt:plugins' => "Les plugins ajoutent les lignes suivantes au fichier robots.txt ",
@@ -925,6 +954,7 @@ Voir la liste complète des utilisateurs :
 	'admin:robots.txt:physical' => "L'outil de configuration de robots.txt ne fonctionnera pas car un fichier robots.txt est physiquement présent",
 
 	'admin:maintenance_mode:default_message' => 'Le site est temporairement fermé pour cause de maintenance',
+	'admin:maintenance_mode:instructions' => 'Le mode Maintenance devrait être utilisé pour les mises à niveau et autres changements majeurs du site. Quand il est activé, seuls les administrateurs peuvent s\'identifier et naviguer sur le site.',
 	'admin:maintenance_mode:mode_label' => 'Mode de maintenance',
 	'admin:maintenance_mode:message_label' => 'Message affiché aux utilisateurs lorsque le mode de maintenance est activé',
 	'admin:maintenance_mode:saved' => 'Les paramètres du mode maintenance ont bien été enregistrés.',
@@ -1693,6 +1723,14 @@ Variables globales :
 	'cli:simpletest:error:class' => "Vous devez installer votre application Elgg en utilisant '%s'",
 	'cli:simpletest:error:file' => "%s n'est pas une classe simpletest valide",
 	'cli:simpletest:output:summary' => "Durée : %.2f secondes, Mémoire : %.2f Mo",
+	
+	'cli:upgrade:description' => "Exécuter les mises à niveau du système",
+	'cli:upgrade:option:force' => "Forcer les mises à niveau à s'exécuter même si une mise à niveau est déjà en cours d'exécution.",
+	'cli:upgrade:argument:async' => "Exécuter les mises à niveau asynchrones en attente",
+	'cli:upgrade:system:upgraded' => "Les mises à niveau du système ont été exécutées",
+	'cli:upgrade:system:failed' => "Les mises à niveau du système ont échoué",
+	'cli:upgrade:async:upgraded' => "Des mises à niveau asynchrones ont été exécutées",
+	'cli:upgrade:aysnc:failed' => "Des mises à niveau asynchrones ont échoué",
 	
 	'cli:upgrade:batch:description' => "Exécuter une ou plusieurs mises à niveau",
 	'cli:upgrade:batch:argument:upgrades' => "Une ou plusieurs mises à niveaux (noms de classes) à exécuter",
