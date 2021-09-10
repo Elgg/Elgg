@@ -72,6 +72,7 @@ Dit kan potentieel non-HTML views niet laten functioneren. Bekijk de developers_
 	'developers:entity_explorer:info:acl_memberships' => 'Access Collections lidmaatschappen',
 	'developers:entity_explorer:delete_entity' => 'Verwijder deze entiteit',
 	'developers:entity_explorer:inspect_entity' => 'Inspecteer deze entiteit',
+	'developers:entity_explorer:view_entity' => 'Bekijk deze entiteit op de site',
 	
 	// inspection
 	'developers:inspect:help' => 'Inspecteer de configuratie van het Elgg framework.',

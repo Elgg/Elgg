@@ -6,6 +6,7 @@
  *
  * @uses $vars['items']                     Array of ElggEntity, ElggAnnotation or ElggRiverItem objects
  * @uses $vars['pagination']                Show pagination? (default: true)
+ * @uses $vars['pagination_behaviour']      Which pagination behaviour to use (default: site preference)
  * @uses $vars['pagination_after_options']  Specific options for the pagination view to be used when the pagination is shown after the item list
  * @uses $vars['pagination_before_options'] Specific options for the pagination view to be used when the pagination is shown before the item list
  * @uses $vars['position']                  Position of the pagination: before, after, or both

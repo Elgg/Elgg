@@ -342,6 +342,7 @@ return array(
 	
 	'notifications:delayed_email:subject:daily' => "Daily notifications",
 	'notifications:delayed_email:subject:weekly' => "Weekly notifications",
+	'notifications:delayed_email:body:intro' => "Below is a list of your delayed notifications.",
 	
 	'notifications:subscriptions:record:settings' => 'Show detailed selection',
 	'notifications:subscriptions:no_results' => 'There are no subscription records yet',

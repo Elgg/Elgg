@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-06 15:11+0200\n"
+"POT-Creation-Date: 2021-09-10 14:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -7516,7 +7516,7 @@ msgid "Title menu"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:343
-msgid "The ``title`` menu will now be populated with the ``entity`` menu if the ``entity`` is provided to the layout. This is mostly usefull on the detail page of an entity (eg. ``blog/view``). Most of the entries for the ``entity`` menu will be added to a dropdown menu, except the ``edit`` menu item (when available) this item will be presented next to the dropdown menu."
+msgid "The ``title`` menu will now be populated with the ``entity`` menu if the ``entity`` is provided to the layout. This is mostly useful on the detail page of an entity (eg. ``blog/view``). Most of the entries for the ``entity`` menu will be added to a dropdown menu, except the ``edit`` menu item (when available) this item will be presented next to the dropdown menu."
 msgstr ""
 
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:355

@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	
 	'groups' => "Grupuri",
 	'groups:owned' => "Grupuri personale",
 	'groups:owned:user' => 'Grupuri de %s',

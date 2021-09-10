@@ -10,6 +10,8 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	'add:group:group' => "Créer un nouveau groupe",
+	
 	'groups' => "Groupes",
 	'groups:owned' => "Groupes dont je suis responsable",
 	'groups:owned:user' => 'Groupes dont %s est responsable',
