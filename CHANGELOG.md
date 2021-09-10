@@ -1,3 +1,51 @@
+<a name="4.0.0-rc.1"></a>
+### 4.0.0-rc.1  (2021-09-10)
+
+#### Contributors
+
+* Jerôme Bakker (59)
+* Jeroen Dalsem (3)
+
+#### Features
+
+* **cli:** upgrade command supports force option ([8fb44c7f](https://github.com/Elgg/Elgg/commit/8fb44c7feb66f206ee45dc729e89262cfb8d10a9))
+* **delayed_email:** add intro text to notification ([c3750286](https://github.com/Elgg/Elgg/commit/c375028632542ff46bd20b0572b4650c86be569c))
+* **developers:** added link to entity on the entity explorer page ([cd1f3753](https://github.com/Elgg/Elgg/commit/cd1f375376409339d0d6b92860333a179030fac3))
+* **groups:** groups edit form tabs navigation help ([bd2f94d9](https://github.com/Elgg/Elgg/commit/bd2f94d9cfdfe4ad1f7fa94496b034b363108a66))
+* **notifications:** added option to exclude subscribers ([e43ae547](https://github.com/Elgg/Elgg/commit/e43ae54767b50878df609f52dab8ac0734570e19))
+* **system_log:** allow elgg_call to disable system logging ([7f85fd18](https://github.com/Elgg/Elgg/commit/7f85fd186689256cd4483d16d7f19a8ffb3dd83d))
+
+
+#### Performance
+
+* **db:** disable system_log during cleanup of entity properties ([4576dff6](https://github.com/Elgg/Elgg/commit/4576dff6ac1d5a27eeb988c039974d659f06bdd8))
+
+
+#### Bug Fixes
+
+* **activity:** don't show responses on index page when logged out ([eaa5c28b](https://github.com/Elgg/Elgg/commit/eaa5c28b4cdb0c08f21b84e8d2a029dd933939c8))
+* **bookmarks:**
+  * don't show filter menu when viewing a bookmark ([1a5c9478](https://github.com/Elgg/Elgg/commit/1a5c9478104940c8e81d2f7331471df91de4a79e))
+  * unable to save bookmark on PHP 8 ([81392414](https://github.com/Elgg/Elgg/commit/813924144b68ea3c9e31dd426a8e5ff0f6051e91))
+* **db:** use QueryBuilder in query execution ([2f2050cb](https://github.com/Elgg/Elgg/commit/2f2050cb6f08b0cdb80dc97b4290a39c868aede6))
+* **delayed_email:** prevent empty notification ([ee6bc376](https://github.com/Elgg/Elgg/commit/ee6bc3768b5f0e6ed30d693bea7f2aa34f15ec3c))
+* **developers:** theme sandbox is now only available for admins ([19bcb892](https://github.com/Elgg/Elgg/commit/19bcb892d64d6708924ac226b61a7422283943e0))
+* **mail:** correctly encode ( and ) in e-mail headers ([0560c379](https://github.com/Elgg/Elgg/commit/0560c3794bfd6ea946324c9a0fe8a9e05a97714a))
+* **notifications:**
+  * serialization exception during delayed enqueue ([72b65143](https://github.com/Elgg/Elgg/commit/72b651436e4a6523f622a6b90c8abb77f16890ab))
+  * use correct actor for admin notification ([6b8d37a0](https://github.com/Elgg/Elgg/commit/6b8d37a0b652c8a2e312fb000ea72cadbf30ffe5))
+* **pagination:**
+  * don't updated browser history on ajax appended lists ([823283bd](https://github.com/Elgg/Elgg/commit/823283bd439cb56ead9d91f78e1b0c74a19efd9b))
+  * allow control over base url during Ajax requests ([edad75a7](https://github.com/Elgg/Elgg/commit/edad75a789159bc287bb8ebadea33152a7d96163))
+  * use correct jquery selector during ajax replace ([e750622b](https://github.com/Elgg/Elgg/commit/e750622b52c27f0245571fc2ea7899a810379447))
+* **river:** show river responses again on all pages ([9e90d95b](https://github.com/Elgg/Elgg/commit/9e90d95b28bbf1e63b76a925d07e17f6dd5d460e))
+* **session:** prevent PHP warning when regenerating session ([dfe73773](https://github.com/Elgg/Elgg/commit/dfe73773537297c36d42fcabbe98e23de95f7cef))
+* **site_notifications:**
+  * limit cleanup to 30 minutes ([7229e7e1](https://github.com/Elgg/Elgg/commit/7229e7e1d4df90f79c4e5b4cb9282a83fe584665))
+  * prevent deadloop when marking as read ([c4467a2c](https://github.com/Elgg/Elgg/commit/c4467a2c6016488022f481b2fdc48aaafc294062))
+* **statistics:** show readable entity type/subtype ([99a68a47](https://github.com/Elgg/Elgg/commit/99a68a47ee4dd84566b22c963a4d7b83c1579ec8))
+
+
 <a name="4.0.0-beta.3"></a>
 ### 4.0.0-beta.3  (2021-08-06)
 
