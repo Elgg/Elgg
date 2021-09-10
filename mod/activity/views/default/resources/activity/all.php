@@ -11,9 +11,6 @@ $subtype = preg_replace('[\W]', '', get_input('subtype', ''));
 $content = elgg_view('river/listing/all', [
 	'entity_type' => $type,
 	'entity_subtype' => $subtype,
-	'options' => [
-		'responses' => $type === 'all' ? false : null,
-	],
 	'show_filter' => true,
 ]);
 
