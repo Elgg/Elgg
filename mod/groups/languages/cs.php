@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	
 	'groups' => "Skupiny",
 	'groups:owned' => "Skupiny, které vlastním",
 	'groups:owned:user' => 'Skupiny, které vlastní %s',

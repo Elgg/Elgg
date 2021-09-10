@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	
 	'groups' => "Grupos",
 	'groups:owned' => "Grupos que administra",
 	'groups:owned:user' => 'Grupos que administra %s',

@@ -7,25 +7,26 @@
 
 return array(
 
-	'item:object:reported_content' => 'На что жалуются',
-	'admin:administer_utilities:reportedcontent' => 'Пожаловаться',
-	'reportedcontent' => 'Пожаловаться',
+	'item:object:reported_content' => 'Жалоба',
+	'collection:object:reported_content' => 'Жалобы',
+	'admin:administer_utilities:reportedcontent' => 'Жалобы',
+	'reportedcontent' => 'Жалобы',
 	'reportedcontent:this' => 'Пожаловаться',
-	'reportedcontent:this:tooltip' => 'Сообщить об этой странице для администратора',
+	'reportedcontent:this:tooltip' => 'Сообщить об этой странице администратору',
 	'reportedcontent:none' => 'Жалоб нет',
 	'reportedcontent:report' => 'Пожаловаться администратору',
 	'reportedcontent:archive' => 'Архивировать',
 	'reportedcontent:archived' => 'Жалоба заархивирована',
 	'reportedcontent:description' => 'На что жалуетесь?',
 	'reportedcontent:address' => 'Адрес',
-	'reportedcontent:success' => 'Спасибо, Вы помогли сделать сайт лучше! Ваша жалоба отправлена администратору.',
+	'reportedcontent:success' => 'Ваша жалоба отправлена администратору',
 	'reportedcontent:report' => 'Пожаловаться администратору',
 	'reportedcontent:numbertodisplay' => 'Количество жалоб для отображения',
 	'reportedcontent:user' => 'Пожаловаться на пользователя',
 
-	'reportedcontent:failed' => 'Простите, пожаловаться не получилось. Пожалуйтесь на эту ошибку.',
-	'reportedcontent:notarchived' => 'Простите, невозможно заархивировать жалобу.',
+	'reportedcontent:failed' => 'Произошла ошибка при отправке жалобы на этот контент',
+	'reportedcontent:notarchived' => 'Не удалось заархивировать жалобу',
 	
-	'widgets:reportedcontent:name' => 'Пожаловаться',
-	'widgets:reportedcontent:description' => 'Пожаловаться на элемент',
+	'widgets:reportedcontent:name' => 'Жалобы',
+	'widgets:reportedcontent:description' => 'Отображает жалобы на контент',
 );

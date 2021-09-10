@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	
 	'groups' => "Ομάδες",
 	'groups:owned' => "Ομάδες που μου ανήκουν",
 	'groups:owned:user' => 'Ομάδες που ανήκουν στο χρήστη %s',

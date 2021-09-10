@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	
 	'groups' => "Ryhmät",
 	'groups:owned' => "Ryhmät, jotka omistan",
 	'groups:owned:user' => 'Käyttäjän %s omistamat ryhmät',

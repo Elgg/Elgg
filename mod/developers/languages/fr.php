@@ -71,6 +71,7 @@ return array(
 	'developers:entity_explorer:info:acl_memberships' => 'Appartenance aux collections d\'accès',
 	'developers:entity_explorer:delete_entity' => 'Supprimer cette entité',
 	'developers:entity_explorer:inspect_entity' => 'Inspecter cette entité',
+	'developers:entity_explorer:view_entity' => 'Voir cette entité sur le site',
 	
 	// inspection
 	'developers:inspect:help' => 'Inspecter la configuration système du framework Elgg',

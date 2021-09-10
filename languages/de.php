@@ -339,7 +339,6 @@ return array(
 	
 	'notifications:delayed_email:subject:daily' => "Tägliche Sammel-Emails",
 	'notifications:delayed_email:subject:weekly' => "Wöchentliche Sammel-Emails",
-	
 	'notifications:subscriptions:no_results' => 'Es sind keine Benachrichtigungs-Abonnements vorhanden.',
 
 	'notifications:mute:title' => "Benachrichtigungen blockieren",
