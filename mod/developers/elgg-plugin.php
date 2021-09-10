@@ -26,10 +26,16 @@ return [
 			'defaults' => [
 				'page' => 'intro',
 			],
+			'middleware' => [
+				\Elgg\Router\Middleware\AdminGatekeeper::class,
+			],
 		],
 		'default:developers:ajax_demo' => [
 			'path' => '/developers_ajax_demo',
 			'resource' => 'developers/ajax_demo',
+			'middleware' => [
+				\Elgg\Router\Middleware\AdminGatekeeper::class,
+			],
 		],
 		'default:developers:email' => [
 			'path' => '/developers_email',
