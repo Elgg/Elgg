@@ -1,15 +1,13 @@
 <?php
 
-namespace Elgg\Integration;
+namespace Elgg;
 
 use Elgg\IntegrationTestCase;
 
 /**
  * Elgg Test \ElggWidget
- *
- * @group IntegrationTests
  */
-class ElggCoreWidgetServiceTest extends IntegrationTestCase {
+class WidgetsServiceIntegrationTest extends IntegrationTestCase {
 
 
 	public function up() {
