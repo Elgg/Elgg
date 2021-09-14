@@ -230,9 +230,23 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 
 	public function testLanguageChangeSucceeds() {
 
-		$user = $this->createUser();
+		$user = $this->createUser([], ['language' => 'en']);
 
-		$new_language = 'es';
+		// Go through the allowed languages and find the first non-English language to change the user to
+		// this is done in case the database has a limited number of allowed languages
+		$new_language = false;
+		$allowed_languages = _elgg_services()->translator->getAllowedLanguages();
+		foreach ($allowed_languages as $language) {
+			if ($language === 'en') {
+				continue;
+			}
+			$new_language = $language;
+			break;
+		}
+		
+		if (empty($new_language)) {
+			$this->markTestSkipped();
+		}
 
 		_elgg_services()->session->setLoggedInUser($user);
 

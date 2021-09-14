@@ -22,7 +22,9 @@ class FieldsServiceIntegrationTest extends IntegrationTestCase {
 	}
 
 	public function testFieldsConfig() {
-		add_translation(get_current_language(), ['fields:foo:bar:field_1' => 'Label 1']);
+		// adding to English as checks for language keys defaults to English
+		// this prevents this test from failing when the default language isn't English
+		add_translation('en', ['fields:foo:bar:field_1' => 'Label 1']);
 		
 		_elgg_services()->hooks->registerHandler('fields', 'foo:bar', function() {
 			return [
