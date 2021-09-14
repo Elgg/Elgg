@@ -34,7 +34,7 @@ class WidgetsServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * Tests register, exists and unregisrer
+	 * Tests register, exists, unregister and getAllTypes
 	 */
 	public function testCanRegisterType() {
 		$service = new \Elgg\WidgetsService(array($this, 'elgg_set_config'));
@@ -81,8 +81,37 @@ class WidgetsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($service->validateType('widget_type_mul'));
 		$this->assertTrue($service->validateType('widget_type_con_mul'));
 		$this->assertFalse($service->validateType('not_registered_widget'));
+		
+		$this->assertEquals(['widget_type','widget_type_con','widget_type_mul','widget_type_con_mul'], array_keys($service->getAllTypes()));
 
 		return $service;
+	}
+	
+	/**
+	 * Tests getNameById function
+	 */
+	public function testGetNameById() {
+		$service = new \Elgg\WidgetsService(array($this, 'elgg_set_config'));
+
+		$this->assertTrue($service->registerType(\Elgg\WidgetDefinition::factory([
+			'id' => 'widget_type_1',
+			'name' => 'Widget name 1',
+			'description' => 'Widget description 1',
+			'context' => 'context_1',
+		])));
+		
+		$this->assertTrue($service->registerType(\Elgg\WidgetDefinition::factory([
+			'id' => 'widget_type_2',
+			'name' => 'Widget name 2',
+			'description' => 'Widget description 2',
+			'context' => 'context_2',
+		])));
+		
+		$this->assertFalse($service->getNameById('unknown_type'));
+		$this->assertFalse($service->getNameById('widget_type_1')); // context is required
+		$this->assertEquals('Widget name 1', $service->getNameById('widget_type_1', 'context_1'));
+		$this->assertEquals('Widget name 2', $service->getNameById('widget_type_2', 'context_2'));
+		$this->assertFalse($service->getNameById('widget_type_2', 'context_1')); // incorrect context
 	}
 
 	/**
@@ -252,6 +281,4 @@ class WidgetsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($service->validateType('widget_type_mul'));
 		$this->assertFalse($service->validateType('not_registered_widget'));
 	}
-
-	//TODO get, view, create, canEditLayout, defaultWidgetsInit, createDefault, defaultWidgetsPermissionsOverride
 }
