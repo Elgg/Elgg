@@ -300,7 +300,9 @@ trait Seeding {
 			$profile_fields = elgg_extract('profile_fields', $options, []);
 			$group = $this->populateMetadata($group, $profile_fields, $properties);
 
-			$group->save();
+			if (!$group->save()) {
+				return false;
+			}
 
 			if ($group->access_id === ACCESS_PRIVATE) {
 				$acl = $group->getOwnedAccessCollection('group_acl');
@@ -428,7 +430,9 @@ trait Seeding {
 			$object = $this->populateMetadata($object, $profile_fields, $properties);
 
 			if (elgg_extract('save', $options, true)) {
-				$object->save();
+				if (!$object->save()) {
+					return false;
+				}
 			}
 
 			$type_str = elgg_echo("item:object:{$object->getSubtype()}");
