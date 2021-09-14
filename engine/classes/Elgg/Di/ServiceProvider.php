@@ -711,7 +711,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('seeder', function(ServiceProvider $sp) {
-			return new \Elgg\Database\Seeder($sp->hooks, $sp->cli_progress);
+			return new \Elgg\Database\Seeder($sp->hooks, $sp->cli_progress, $sp->invoker);
 		});
 
 		$this->setFactory('serveFileHandler', function(ServiceProvider $sp) {
