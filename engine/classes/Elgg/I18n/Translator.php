@@ -612,6 +612,7 @@ class Translator {
 		$allowed_languages = $this->config->allowed_languages;
 		if (!empty($allowed_languages)) {
 			$allowed_languages = explode(',', $allowed_languages);
+			$allowed_languages = array_filter(array_unique($allowed_languages));
 		} else {
 			$allowed_languages = $this->getAvailableLanguages();
 		}
