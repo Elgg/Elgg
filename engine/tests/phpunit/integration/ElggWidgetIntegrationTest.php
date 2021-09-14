@@ -1,17 +1,11 @@
 <?php
 
-namespace Elgg\Integration;
-
-use ElggWidget;
-use ElggUser;
 use Elgg\IntegrationTestCase;
 
 /**
  * Elgg Test \ElggWidget
- *
- * @group IntegrationTests
  */
-class ElggCoreWidgetTest extends IntegrationTestCase {
+class ElggWidgetIntegrationTest extends IntegrationTestCase {
 	/**
 	 * @var ElggWidget
 	 */
