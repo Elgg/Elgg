@@ -114,6 +114,7 @@ class ContentOwnerSubscriptions implements AsynchronousUpgrade {
 			'batch' => true,
 			'batch_inc_offset' => $this->needsIncrementOffset(),
 			'batch_size' => 50,
+			'preload_owners' => true,
 			'wheres' => [
 				function (QueryBuilder $qb, $main_alias) {
 					$owner_guids = $qb->subquery('entities');
