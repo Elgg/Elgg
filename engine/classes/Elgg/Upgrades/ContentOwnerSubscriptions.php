@@ -4,15 +4,15 @@ namespace Elgg\Upgrades;
 
 use Elgg\Database\QueryBuilder;
 use Elgg\Notifications\SubscriptionsService;
+use Elgg\Upgrade\AsynchronousUpgrade;
 use Elgg\Upgrade\Result;
-use Elgg\Upgrade\SystemUpgrade;
 
 /**
  * Subscribe all content owners to their own content
  *
  * @since 4.0
  */
-class ContentOwnerSubscriptions implements SystemUpgrade {
+class ContentOwnerSubscriptions implements AsynchronousUpgrade {
 
 	/**
 	 * {@inheritDoc}
@@ -114,6 +114,7 @@ class ContentOwnerSubscriptions implements SystemUpgrade {
 			'batch' => true,
 			'batch_inc_offset' => $this->needsIncrementOffset(),
 			'batch_size' => 50,
+			'preload_owners' => true,
 			'wheres' => [
 				function (QueryBuilder $qb, $main_alias) {
 					$owner_guids = $qb->subquery('entities');
