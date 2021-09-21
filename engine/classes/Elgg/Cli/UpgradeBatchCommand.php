@@ -43,7 +43,7 @@ class UpgradeBatchCommand extends Command {
 				continue;
 			}
 			
-			_elgg_services()->upgrades->executeUpgrade($upgrade);
+			_elgg_services()->upgrades->executeUpgrade($upgrade, false);
 		}
 		
 		if (!$this->option('quiet')) {
