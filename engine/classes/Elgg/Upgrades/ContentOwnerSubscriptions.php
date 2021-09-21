@@ -4,15 +4,15 @@ namespace Elgg\Upgrades;
 
 use Elgg\Database\QueryBuilder;
 use Elgg\Notifications\SubscriptionsService;
+use Elgg\Upgrade\AsynchronousUpgrade;
 use Elgg\Upgrade\Result;
-use Elgg\Upgrade\SystemUpgrade;
 
 /**
  * Subscribe all content owners to their own content
  *
  * @since 4.0
  */
-class ContentOwnerSubscriptions implements SystemUpgrade {
+class ContentOwnerSubscriptions implements AsynchronousUpgrade {
 
 	/**
 	 * {@inheritDoc}
