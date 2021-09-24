@@ -342,6 +342,7 @@ return array(
 	
 	'notifications:delayed_email:subject:daily' => "Dagelijkse notificaties",
 	'notifications:delayed_email:subject:weekly' => "Wekelijkse notificaties",
+	'notifications:delayed_email:body:intro' => "Hieronder vindt je een lijst van je uitgestelde notificaties.",
 	
 	'notifications:subscriptions:record:settings' => 'Toon detail selectie',
 	'notifications:subscriptions:no_results' => 'Nog geen abonnementen beschikbaar',
@@ -1906,6 +1907,6 @@ Global variables:
 	'core:upgrade:2021041901:title' => "Verwijder de notificaties plugin",
 	'core:upgrade:2021041901:description' => "Verwijderd de entiteit bijbehorend aan de Notificaties plugin. Deze plugin is verwijderd in Elgg 4.0.",
 	
-	'core:upgrade:2021060401:title' => "Voeg content eigenaren to als abonnees op hun eigen content",
+	'core:upgrade:2021060401:title' => "Voeg content eigenaren toe als abonnees op hun eigen content",
 	'core:upgrade:2021060401:description' => "Content eigenaren behoren geabonneerd te zijn op hun eigen content. Deze  upgrade zorgt dat dat voor oude content ook het geval is.",
 );

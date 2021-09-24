@@ -344,6 +344,7 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	
 	'notifications:delayed_email:subject:daily' => "Notification quotidiennes",
 	'notifications:delayed_email:subject:weekly' => "Notification mensuelles",
+	'notifications:delayed_email:body:intro' => "Voici ci-dessous la liste de vos notifications en attente.",
 	
 	'notifications:subscriptions:record:settings' => 'Afficher la sélection détaillée',
 	'notifications:subscriptions:no_results' => 'Il n\'y a aucun enregistrement d\'abonnement pour le moment',
