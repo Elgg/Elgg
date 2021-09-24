@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-06 15:11+0200\n"
+"POT-Creation-Date: 2021-09-10 14:37+0200\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -228,37 +228,38 @@ msgstr "Ressources + références"
 
 #: ../../guides/accessibility.rst:13
 msgid ""
-"`Official WCAG Accessibility Guidelines Overview "
-"<http://www.w3.org/WAI/WCAG20/glance/>`_"
+"`Official WCAG Accessibility Guidelines Overview <https://www.w3.org/WAI"
+"/standards-guidelines/wcag/glance/>`_"
 msgstr ""
 "`Aperçu des guides d'accessibilité officiels WCAG <https://www.w3.org/WAI"
 "/standards-guidelines/wcag/glance/fr>`_"
 
 #: ../../guides/accessibility.rst:14
-msgid "`Official WCAG Accessibility Guidelines <http://www.w3.org/TR/WCAG/>`_"
+msgid ""
+"`Official WCAG Accessibility Guidelines <https://www.w3.org/TR/WCAG/>`_"
 msgstr ""
 "`Guides d'accessibilité officiels WCAG <https://www.w3.org/TR/WCAG/>`_"
 
 #: ../../guides/accessibility.rst:15
 msgid ""
 "`Resources for planning and implementing for accessibility "
-"<http://www.w3.org/WAI/managing>`_"
+"<https://www.w3.org/WAI/planning/>`_"
 msgstr ""
-"`Ressources pour préparer et implémenter l'accessibilité "
+"`Ressources pour planifier et implémenter l'accessibilité "
 "<https://www.w3.org/WAI/planning/fr>`_"
 
 #: ../../guides/accessibility.rst:16
 msgid ""
 "`Practical tips from the W3C for improving accessibility "
-"<http://www.w3.org/WAI/impl/improving>`_"
+"<https://www.w3.org/WAI/planning/interim-repairs/>`_"
 msgstr ""
 "`Astuces pratiques du W3C pour améliorer l'accessibilité "
 "<https://www.w3.org/WAI/planning/interim-repairs/>`_"
 
 #: ../../guides/accessibility.rst:17
 msgid ""
-"`Preliminary review of websites for accessibility "
-"<http://www.w3.org/WAI/eval/preliminary.html>`_"
+"`Preliminary review of websites for accessibility <https://www.w3.org/WAI"
+"/test-evaluate/preliminary/>`_"
 msgstr ""
 "`Tests et vérifications préliminaires pour évaluer l'accessibilité d'un site"
 " <https://www.w3.org/WAI/test-evaluate/preliminary/>`_"
@@ -266,7 +267,7 @@ msgstr ""
 #: ../../guides/accessibility.rst:18
 msgid ""
 "`Tools for checking the accessibility of websites "
-"<http://www.w3.org/WAI/ER/tools/>`_"
+"<https://www.w3.org/WAI/ER/tools/>`_"
 msgstr ""
 "`Outils pour vérifier l'accessibilité des sites web "
 "<https://www.w3.org/WAI/ER/tools/>`_"
@@ -274,7 +275,7 @@ msgstr ""
 #: ../../guides/accessibility.rst:19
 msgid ""
 "`List of practical techniques for implementing accessibility "
-"<http://www.w3.org/TR/WCAG20-TECHS/Overview.html#contents>`_ (It would be "
+"<https://www.w3.org/TR/WCAG20-TECHS/Overview.html#contents>`_ (It would be "
 "great if someone could go through this and filter out all the ones that are "
 "relevant to Elgg)"
 msgstr ""
@@ -884,7 +885,7 @@ msgstr ""
 #: ../../guides/actions.rst:390
 msgid ""
 "``entity_type`` - the entity type for which the icon will be uploaded. "
-"Plugins could find this usefull, maybe to validate icon sizes"
+"Plugins could find this useful, maybe to validate icon sizes"
 msgstr ""
 "``entity_type`` - le type d’entité pour lequel l’icône sera téléchargée. Des"
 " plugins pourraient trouver cela utile, peut-être pour valider les "
@@ -893,7 +894,7 @@ msgstr ""
 #: ../../guides/actions.rst:391
 msgid ""
 "``entity_subtype`` - the entity subtype for which the icon will be uploaded."
-" Plugins could find this usefull, maybe to validate icon sizes"
+" Plugins could find this useful, maybe to validate icon sizes"
 msgstr ""
 "``entity_subtype`` - le sous-type d’entité pour lequel l’icône sera "
 "téléchargée. Des plugins pourraient trouver cela utile, peut-être pour "
@@ -14590,27 +14591,27 @@ msgstr "Activation ou désactivation d’un plugin"
 
 #: ../../guides/views/simplecache.rst:28
 msgid "Reordering your plugins"
-msgstr "Réorganiser vos plugins"
+msgstr "Réordonner vos plugins"
 
 #: ../../guides/views/simplecache.rst:31
 msgid "Using the Simplecache in your plugins"
-msgstr "Utilisation du Simplecache dans vos plugins"
+msgstr "Utiliser le Simplecache dans vos plugins"
 
 #: ../../guides/views/simplecache.rst:33
 msgid "**Registering views with the Simplecache**"
-msgstr "**Enregistrement des vues avec Simplecache**"
+msgstr "**Enregistrer des vues avec Simplecache**"
 
 #: ../../guides/views/simplecache.rst:35
 msgid ""
 "You can register a view with the Simplecache with the following function at "
 "init-time:"
 msgstr ""
-"Vous pouvez enregistrer une vue avec le Simplecache avec la fonction "
-"suivante lors de la phase d'initialisation :"
+"Vous pouvez enregistrer une vue dans Simplecache avec la fonction suivante "
+"lors de la phase d'initialisation :"
 
 #: ../../guides/views/simplecache.rst:41
 msgid "**Accessing the cached view**"
-msgstr "**Accès à la vue mise en cache**"
+msgstr "**Accéder à la vue mise en cache**"
 
 #: ../../guides/views/simplecache.rst:43
 msgid ""
@@ -14622,12 +14623,11 @@ msgstr ""
 "Si vous avez enregistré un fichier JavaScript ou CSS avec Simplecache et que"
 " vous l'avez mis dans le dossier des vues sous la forme ``votre_vue.js`` ou "
 "``votre_vue.css``, vous pouvez très facilement obtenir l’URL de cette vue "
-"mise en cache en appelant ``elgg_get_simplecache_url($votre_vue)``. Par "
-"exemple :"
+"mise en cache en appelant ``elgg_get_simplecache_url($vue)``. Par exemple :"
 
 #: ../../guides/walled-garden.rst:2
 msgid "Walled Garden"
-msgstr "Walled Garden (Réseau privé)"
+msgstr "Réseau privé - \"Walled Garden\""
 
 #: ../../guides/walled-garden.rst:4
 msgid ""
@@ -14635,14 +14635,14 @@ msgid ""
 "restricted to logged in users. This is useful for sites that don't allow "
 "public registration."
 msgstr ""
-"Elgg prend en charge un mode ``Walled Garden`` (jardin clos). Dans ce mode, "
-"presque toutes les pages ne sont accessible qu'aux seuls utilisateurs "
-"connectés. Ceci est utile pour les sites qui n’autorisent pas l’inscription "
-"publique."
+"Elgg prend en charge un mode ``Walled Garden`` - jardin clos, ou réseau "
+"privé. Dans ce mode, presque toutes les pages ne sont accessible qu'aux "
+"seuls utilisateurs connectés. Ceci est utile pour les sites qui n’autorisent"
+" pas l’inscription publique."
 
 #: ../../guides/walled-garden.rst:7
 msgid "Activating Walled Garden mode"
-msgstr "Activer le mode Walled Garden"
+msgstr "Activer le mode réseau privé - Walled Garden"
 
 #: ../../guides/walled-garden.rst:9
 msgid ""
@@ -14660,9 +14660,9 @@ msgid ""
 "to logged-in users.\" Enable this option, then click \"Save\" to switch your"
 " site into Walled Garden mode."
 msgstr ""
-"Dans la page Paramètres avancés, recherchez l’option étiquetée \"Restreindre"
-" les pages aux utilisateurs connectés\". Activez cette option, puis cliquez "
-"sur \"Enregistrer\" pour passer votre site en mode Walled Garden."
+"Dans la page Paramètres avancés, recherchez l’option libellée \"Restreindre "
+"les pages aux utilisateurs connectés\". Activez cette option, puis cliquez "
+"sur \"Enregistrer\" pour basculer votre site en mode Walled Garden."
 
 #: ../../guides/walled-garden.rst:16
 msgid "Exposing pages through Walled Gardens"
@@ -14709,8 +14709,8 @@ msgid ""
 "``my_plugin/public_page``."
 msgstr ""
 "Le code suivant montre comment exposer "
-"http://exemple.org/mon_plugin/public_page à travers la walled garden. Cela "
-"suppose que le plugin a enregistré une :doc:`route ` pour "
+"http://exemple.org/mon_plugin/public_page à travers le walled garden. Cela "
+"suppose que le plugin a enregistré une :doc:`route </guides/routing>` pour "
 "``mon_plugin/public_page``."
 
 #: ../../guides/web-services.rst:2
@@ -14751,7 +14751,7 @@ msgstr "exposer des méthodes"
 
 #: ../../guides/web-services.rst:16
 msgid "setup API authentication"
-msgstr "mettre en place l'API d'authentification"
+msgstr "mettre en place l'authentification de l'API"
 
 #: ../../guides/web-services.rst:17
 msgid "setup user authentication"
