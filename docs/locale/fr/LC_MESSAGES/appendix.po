@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-06 15:11+0200\n"
+"POT-Creation-Date: 2021-09-10 14:37+0200\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -224,10 +224,10 @@ msgid ""
 msgstr ""
 "Si vous avez récemment installé votre site Elgg, la cause la plus probable "
 "d’une erreur de page non trouvée est que ``mod_rewrite`` n’est pas configuré"
-" correctement sur votre serveur. Il y a des informations dans la page de "
-"dépannage :doc:`Install Troubleshooting </intro/install>` sur la manière de "
-"résoudre cela. La deuxième cause la plus probable est que l’URL de votre "
-"site dans votre base de données est incorrecte."
+" correctement sur votre serveur. Il y a des informations dans la page "
+":doc:`Installation - Dépannage </intro/install>` sur la manière de résoudre "
+"cela. La deuxième cause la plus probable est que l’URL de votre site dans "
+"votre base de données est incorrecte."
 
 #: ../../appendix/faqs/general.rst:51 ../../appendix/faqs/general.rst:51
 msgid ""
@@ -1967,7 +1967,7 @@ msgstr "À quoi s’attendre lors de la mise à niveau de Elgg."
 
 #: ../../appendix/releases.rst:6
 msgid "We adhere to `semantic versioning`_."
-msgstr "Nous adhérons au 'semantic versioning'_."
+msgstr "Nous adhérons au 'versionnage sémantique'_."
 
 #: ../../appendix/releases.rst:10
 msgid "Follow the blog to `stay up to date on the latest releases`__."
@@ -2156,9 +2156,9 @@ msgid ""
 "part of `semantic versioning`_."
 msgstr ""
 "Certaines parties du système ont besoin de clarifications supplémentaires si"
-" nous parlons d’être rétro-compatibles. Tout ce qui est considéré comme une "
+" nous voulons être rétro-compatibles. Tout ce qui est considéré comme une "
 "API publique doit respecter les règles de rétro-compatibilité qui font "
-"partie du `semantic versioning`_."
+"partie du `versionnage sémantique`_."
 
 #: ../../appendix/releases.rst:88
 msgid "Classes and functions"
@@ -2456,7 +2456,7 @@ msgstr ""
 
 #: ../../appendix/roadmap.rst:72
 msgid "When is version X.Y.Z going to be released?"
-msgstr "Quand la version X.Y.Z sortira-t-elle ?"
+msgstr "Quand est-ce que la version X.Y.Z sera publiée ?"
 
 #: ../../appendix/roadmap.rst:73
 msgid ""
@@ -2701,7 +2701,7 @@ msgstr "De 1.10 à 1.11"
 
 #: ../../appendix/upgrade-notes/1.10-to-1.11.rst:9
 msgid "Comment highlighting"
-msgstr "Mise en surbrillance des commentaires"
+msgstr "Surlignage des commentaires"
 
 #: ../../appendix/upgrade-notes/1.10-to-1.11.rst:11
 msgid ""
@@ -2745,7 +2745,7 @@ msgstr "Mettre à niveau le cœur"
 msgid ""
 "Delete the following core directories (same level as _graphics and engine):"
 msgstr ""
-"Supprimez les répertoire du noyau suivants (même niveau que _graphics et "
+"Supprimez les répertoires du noyau suivants (même niveau que _graphics et "
 "engine) :"
 
 #: ../../appendix/upgrade-notes/1.7-to-1.8.rst:19
@@ -2766,7 +2766,7 @@ msgstr "dashboard"
 
 #: ../../appendix/upgrade-notes/1.7-to-1.8.rst:23
 msgid "entities"
-msgstr "entities"
+msgstr "entités"
 
 #: ../../appendix/upgrade-notes/1.7-to-1.8.rst:24
 msgid "friends"
@@ -2798,7 +2798,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/1.7-to-1.8.rst:36
 msgid "Updating plugins"
-msgstr "Mettre à niveau les plugins"
+msgstr "Mettre à jour les plugins"
 
 #: ../../appendix/upgrade-notes/1.7-to-1.8.rst:39
 msgid "Use standardized routing with page handlers"
@@ -2831,7 +2831,7 @@ msgstr "Modification : /page_handler/edit/:guid"
 
 #: ../../appendix/upgrade-notes/1.7-to-1.8.rst:46
 msgid "Group list: /page_handler/group/:guid/all"
-msgstr "Liste du groupe : /page_handler/group/:guid/all"
+msgstr "Liste des groupes : /page_handler/group/:guid/all"
 
 #: ../../appendix/upgrade-notes/1.7-to-1.8.rst:50
 msgid "Include page handler scripts from the page handler"
@@ -2876,8 +2876,8 @@ msgstr "Les gestionnaires de pages ne devraient pas contenir de HTML."
 msgid ""
 "Update the URLs throughout the plugin. (Don't forget to remove ``/pg/``!)"
 msgstr ""
-"Mettez à jour les URL dans tout le plugin. (N’oubliez pas d’enlever ``/pg/``"
-" !)"
+"Mettez à jour les URLs dans tout le plugin. (N’oubliez pas d’enlever "
+"``/pg/`` !)"
 
 #: ../../appendix/upgrade-notes/1.7-to-1.8.rst:62
 msgid "Use standardized page handlers and scripts"
@@ -3202,8 +3202,8 @@ msgid ""
 "Each section will include information whether the change is backwards "
 "compatible with Elgg 1.8."
 msgstr ""
-"Chaque section comprendra des informations sur la compatibilité arrière avec"
-" Elgg 1.8."
+"Chaque section comprendra des informations sur la rétro-compatibilité avec "
+"Elgg 1.8."
 
 #: ../../appendix/upgrade-notes/1.8-to-1.9.rst:15
 msgid "The manifest file"
@@ -3229,9 +3229,9 @@ msgid ""
 "If you make changes that break BC, you must update the plugin version and "
 "the required Elgg release."
 msgstr ""
-"Si vous effectuez des modifications qui cassent la compatibilité arrière (BC"
-" pour Backward Compatibility), vous devez mettre à jour les versions du "
-"plugin et de Elgg requises."
+"Si vous effectuez des modifications qui cassent la rétro-compatibilité "
+"arrière - ou \"BC\" pour \"Backward Compatibility\", vous devez mettre à "
+"jour la version du plugin et la distribution de Elgg requise."
 
 #: ../../appendix/upgrade-notes/1.8-to-1.9.rst:23
 msgid "Example of (shortened) old version:"
@@ -3251,8 +3251,8 @@ msgid ""
 "have been deprecated. They should be replaced with the ``elgg_get_config()``"
 " function."
 msgstr ""
-"La variable mondiale ``$CONFIG`` et le paramètre ``$vars ['config']`` ont "
-"été dépréciés. Ils devraient être remplacés par la fonction "
+"La variable globale ``$CONFIG`` et le paramètre ``$vars['config']`` ont été "
+"dépréciés. Ils devraient être remplacés par la fonction "
 "``elgg_get_config()``."
 
 #: ../../appendix/upgrade-notes/1.8-to-1.9.rst:61
@@ -3698,7 +3698,7 @@ msgid ""
 "(``view.css``, ``view.js``)."
 msgstr ""
 "Le principal avantage que cela apporte est d’être en mesure de co-localiser "
-"les actifs connexes. Ainsi, un modèle (``view.php``) peut avoir ses "
+"les actifs connexes. Ainsi un modèle (``view.php``) peut avoir ses "
 "dépendances CSS/JS juste à côté (``view.css``, ``view.js``)."
 
 #: ../../appendix/upgrade-notes/1.x-to-2.0.rst:121
@@ -3891,8 +3891,8 @@ msgstr "page_elements/contentwrapper"
 msgid ""
 "page/elements/shortcut_icon (Use the 'head', 'page' plugin hook instead)"
 msgstr ""
-"page/elements/shortcut_icon (Utilisez le hook plugin 'head', 'page' plugin "
-"hook à la place)"
+"page/elements/shortcut_icon (Utilisez le hook plugin 'head', 'page' à la "
+"place)"
 
 #: ../../appendix/upgrade-notes/1.x-to-2.0.rst:207
 msgid "page/elements/wrapper"
@@ -3955,7 +3955,7 @@ msgid ""
 "\"options\" to input/radio and input/checkboxes which aren't key-value pairs"
 " will no longer be acceptable."
 msgstr ""
-"Les ``options`` pour input/radio et input/checkboxes qui ne sont pas des "
+"Les \"options\" pour input/radio et input/checkboxes qui ne sont pas des "
 "paires de clef-valeur ne seront plus acceptées."
 
 #: ../../appendix/upgrade-notes/1.x-to-2.0.rst:226
@@ -4393,10 +4393,10 @@ msgid ""
 "register a handler to permit the annotation, or more simply register for the"
 " hook ``[\"likes:is_likable\", \"<type>:<subtype>\"]`` and return true. E.g."
 msgstr ""
-"Les objets ne peuvent plus être aimés (\"likés\") par défaut. Pour qu'ils "
+"Les objets ne peuvent plus être aimés - \"likés\" - par défaut. Pour qu'ils "
 "puissent être aimés, vous pouvez enregistrer un gestionnaire pour permettre "
 "l’annotation, ou plus simplement vous inscrire au hook "
-"``[\"likes:is_likable\",<type>\" :<subtype>\"]`` et renvoyer true. Par ex."
+"``[\"likes:is_likable\", \"<type>:<subtype>\"]`` et renvoyer true. Par ex."
 
 #: ../../appendix/upgrade-notes/1.x-to-2.0.rst:420
 msgid ""
@@ -6525,8 +6525,8 @@ msgid ""
 "``elgg_register_library``: require your library files so they are available "
 "globally to other plugins"
 msgstr ""
-"``elgg_register_library`` : exigez (require) vos bibliothèques afin qu’ils "
-"soient disponibles globalement pour d’autres plugins"
+"``elgg_register_library`` : exigez - require - vos bibliothèques afin "
+"qu’elles soient disponibles globalement pour d’autres plugins"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:130
 msgid "``elgg_load_library``"
@@ -6795,7 +6795,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:193
 msgid "``ElggData::get``: Usually can be replaced by property read"
 msgstr ""
-"``ElggData::get`` : Peut habituellement être remplacé par la lecture de "
+"``ElggData::get`` : Peut habituellement être remplacé par la lecture de la "
 "propriété"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:194
@@ -6896,7 +6896,7 @@ msgid ""
 " accessed directly"
 msgstr ""
 "``ElggSite::checkWalledGarden`` : Logique déplacée vers le routeur et qui ne"
-" devrait pas être consultée directement"
+" devrait pas être accédée directement"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:216
 msgid "``ElggUser::countObjects``: Use ``elgg_get_entities()``"
@@ -6911,7 +6911,7 @@ msgid ""
 "``Elgg\\Application\\Database::getTablePrefix``: Read the ``prefix`` "
 "property"
 msgstr ""
-"``Elgg\\Application\\Database::getTablePrefix`` : Lit la propriété "
+"``Elgg\\Application\\Database::getTablePrefix`` : Lisez la propriété "
 "``prefix``"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:219
@@ -7355,7 +7355,8 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:314
 msgid "``elgg_list_entities_from_access_id``: Use ``elgg_list_entities()``"
-msgstr "``elgg_list_entities_from_access_id``: Use ``elgg_list_entities()``"
+msgstr ""
+"``elgg_list_entities_from_access_id`` : Utilisez ``elgg_list_entities()``"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:315
 msgid "``elgg_list_registered_entities``: Use ``elgg_list_entities()``"
@@ -8503,7 +8504,7 @@ msgstr "``ElggUser::getGroups``"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:658
 msgid "``ElggUser::getFriends`` (as part of ``Friendable``)"
-msgstr "``ElggUser::getFriends`` (dans le cadre de ``Friendable``)"
+msgstr "``ElggUser::getFriends`` (en tant que ``Friendable``)"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:659
 msgid "``ElggUser::getFriendsOf`` (as part of ``Friendable``)"
@@ -10181,7 +10182,7 @@ msgstr ""
 "Les nouvelles installations 3.0 nécessitent MySQL 5.5.3 (ou plus) et "
 "utilisent le jeu de caractères utf8mb4 et les colonnes de contenu LONGTEXT "
 "(ce qui permet notamment le stockage d'un contenu plus long et des "
-"caractères étendus comme emoji)."
+"caractères étendus comme les emoji)."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1147
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:445
@@ -10195,7 +10196,7 @@ msgid ""
 msgstr ""
 "Les paramètres \"Permettre aux visiteurs de s'inscrire\" et \"Restreindre "
 "les pages aux utilisateurs connectés\" apparaissent désormais sur la page "
-"admin des paramètres basiques (\"Basicv Settings\")."
+"admin des paramètres de base - \"Basic Settings\"."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1154
 msgid "The ``twitter_api`` plugin no longer comes bundled with Elgg."
@@ -10284,7 +10285,7 @@ msgid ""
 "plugin initialization logic."
 msgstr ""
 "Pour que les tests d'intégration s'exécutent correctement, il est recommandé"
-" que les plugins ne placent aucune logique de focntionnement dans la racine "
+" que les plugins ne placent aucune logique de fonctionnement dans la racine "
 "de ``start.php``, et renvoient plutôt une Closure à la place. Ceci permet à "
 "la suite de test de construire une nouvelle instance Application sans perdre"
 " la logique d'initialisation du plugin."
@@ -10302,7 +10303,7 @@ msgstr ""
 "Les plugins avec simpletests vont continuer à fonctionner comme "
 "précédemment. Cependant, les méthodes de signature dans la classe abstraite "
 "``ElggCoreUnitTest`` ont changé et vous allez avoir besoin de mettre à jour "
-"vos tests en conséquence. A savoir, il est déconseillé d'utiliser les "
+"vos tests en conséquence. En particulier, il est déconseillé d'utiliser des "
 "méthodes ``__construct`` et ``__destruct``. ``setUp`` et ``tearDown`` ont "
 "été marquées comme privées et sont utilisées pour amorcer des tests "
 "cohérents et pour déclarer des conditions pre et post ; votre cas de test "
@@ -10326,8 +10327,8 @@ msgid ""
 "are secure, we now require PHP 7.1 for new installations."
 msgstr ""
 "PHP 7.0 a atteint sa fin de vie en janvier 2019. Pour assurer la sécurité "
-"des sites Elgg, nous demandons maintenant au moins PHP 7.1 pour les "
-"nouvelles installations."
+"des sites Elgg, nous exigeons maintenant au moins PHP 7.1 pour les nouvelles"
+" installations."
 
 #: ../../appendix/upgrade-notes/3.0-to-3.1.rst:13
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:14
@@ -10336,7 +10337,7 @@ msgid ""
 "correct PHP version installed."
 msgstr ""
 "Si vous faites une mise à niveau depuis une installation de Elgg précédente,"
-" assurez-vous que vous avez la bonne version PHP installée."
+" assurez-vous que vous avez la bonne version de PHP installée."
 
 #: ../../appendix/upgrade-notes/3.0-to-3.1.rst:17
 msgid "Plugin screenshots"
@@ -10352,7 +10353,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/3.0-to-3.1.rst:22
 msgid "Loading external files"
-msgstr "Chargement de fichiers externes"
+msgstr "Chargement des fichiers externes"
 
 #: ../../appendix/upgrade-notes/3.0-to-3.1.rst:24
 msgid ""
@@ -10410,7 +10411,7 @@ msgid ""
 "The legacy style hook and event callback arguments are deprecated. You "
 "should switch to the new style as soon as possible."
 msgstr ""
-"Les arguments des hooks et des fonctions de rappel d'origine sont "
+"Les arguments des hooks et des fonctions de rappel historiques sont "
 "déconseillés. Vous devez passer au nouveau style d'arguments dès que "
 "possible."
 
@@ -10577,7 +10578,7 @@ msgstr "De 3.1 à 3.2"
 
 #: ../../appendix/upgrade-notes/3.1-to-3.2.rst:9
 msgid "User write access"
-msgstr "Accès en écriture de l'utilisateur"
+msgstr "Accès en écriture d'un utilisateur"
 
 #: ../../appendix/upgrade-notes/3.1-to-3.2.rst:11
 msgid ""
@@ -10590,14 +10591,14 @@ msgid ""
 " <guides/hooks-list#access-hooks>` for more details."
 msgstr ""
 "Pour résoudre un problème où des collections d’accès appartenant à "
-"l’utilisateur comme `Friends` ou `Friend Collections` s’affichent toujours "
-"dans la liste déroulante d’accès lors de la création de contenu, même si les"
-" plugins connexes sont désactivés, nous avons dû modifier une logique "
-"interne. Si vous souhaitez avoir un sous-type de collection d’accès "
-"disponible dans l’accès à l’écriture, vous devez maintenant enregistrer le "
-"sous-type avec un hook plugin. Voir :ref:`la référence des hooks plugin pour"
-" 'access:collections:write:subtypes' <guides/hooks-list#access-hooks>` pour "
-"plus d'informations."
+"l’utilisateur comme ses contacts `Friends` ou ses listes de contacts `Friend"
+" Collections` s’affichent toujours dans la liste déroulante d’accès lors de "
+"la création de contenu, même si les plugins connexes sont désactivés, nous "
+"avons dû modifier une logique interne. Si vous souhaitez avoir un sous-type "
+"de collection d’accès disponible dans le sélecteur d’accès en écriture, vous"
+" devez maintenant enregistrer le sous-type avec un hook plugin. Voir "
+":ref:`la référence des hooks plugin pour 'access:collections:write:subtypes'"
+" <guides/hooks-list#access-hooks>` pour plus d'informations."
 
 #: ../../appendix/upgrade-notes/3.1-to-3.2.rst:18
 msgid "River items enabled state"
@@ -10650,11 +10651,11 @@ msgid ""
 "function will use this array to wrap it in the 'default' layout. It also "
 "adds the page title to the layout."
 msgstr ""
-"Nous avons simplifié ce genre de modèle. Vous pouvez maintenant passer un "
-"tableau d’options de disposition au deuxième paramètre de `elgg_view_page`. "
-"La fonction `elgg_view_page` utilisera ce tableau pour l’envelopper dans la "
-"disposition 'default'. Elle ajoute également le titre de la page à la mise "
-"en page."
+"Nous avons rendu ce genre de modèle plus simple. Vous pouvez maintenant "
+"passer un tableau d’options de disposition au deuxième paramètre de "
+"`elgg_view_page`. La fonction `elgg_view_page` utilisera ce tableau pour "
+"l’envelopper dans la disposition 'default'. Elle ajoute également le titre "
+"de la page à la mise en page."
 
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:45
 msgid "The new way to do it is:"
@@ -10688,7 +10689,7 @@ msgid ""
 msgstr ""
 "Lorsque vous modifiez l’utilisation du nom de disposition 'content', vous "
 "devez tenir compte du fait que le 'content' génère un menu de filtre. Ce "
-"menu est légèrement différent du menu 'filter' habituel généré dans la "
+"menu est légèrement différent du menu 'filter' habituel, généré dans la "
 "disposition 'default'. Il utilise d'autres noms de hook. Si vous avez déjà "
 "désactivé le filtre dans votre disposition, vous pouvez modifier la "
 "disposition sans aucun problème."
@@ -11635,17 +11636,17 @@ msgstr "Menu du titre"
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:343
 msgid ""
 "The ``title`` menu will now be populated with the ``entity`` menu if the "
-"``entity`` is provided to the layout. This is mostly usefull on the detail "
+"``entity`` is provided to the layout. This is mostly useful on the detail "
 "page of an entity (eg. ``blog/view``). Most of the entries for the "
 "``entity`` menu will be added to a dropdown menu, except the ``edit`` menu "
 "item (when available) this item will be presented next to the dropdown menu."
 msgstr ""
-"Le menu ``title`` sera désormais rempli avec le menu ``entity`` si "
-"l'``entity`` est fournie à la mise en page. C'est surtout utile sur la page "
-"d'inforamtions d'une entité (par exemple ``blog/view``). La plupart des "
-"entrées du menu ``entity`` seront ajoutées à un menu déroulant, à "
-"l'exception de l'élément de menu ``edit`` (si disponible) cet élément sera "
-"présenté à côté du menu déroulant."
+"Le menu ``title`` sera désormais rempli avec le menu ``entity`` si l'entité "
+"``entity`` est fournie à la mise en page. C'est surtout utile sur la page "
+"d'informations d'une entité (par exemple ``blog/view``). La plupart des "
+"entrées du menu ``entity`` seront ajoutées à un menu déroulant - à "
+"l'exception de l'élément de menu ``edit`` (si disponible) : cet élément sera"
+" présenté à côté du menu déroulant."
 
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:355
 msgid "Registering tag metadatanames"

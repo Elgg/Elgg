@@ -498,7 +498,7 @@ class ServiceProvider extends DiContainer {
 		});
 		
 		$this->setFactory('localFileCache', function(ServiceProvider $sp) {
-			$flags = ELGG_CACHE_PERSISTENT | ELGG_CACHE_LOCALFILESYSTEM | ELGG_CACHE_RUNTIME;
+			$flags = ELGG_CACHE_LOCALFILESYSTEM | ELGG_CACHE_RUNTIME;
 			return new CompositeCache('elgg_local_system_cache', $sp->config, $flags);
 		});
 
@@ -711,7 +711,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('seeder', function(ServiceProvider $sp) {
-			return new \Elgg\Database\Seeder($sp->hooks, $sp->cli_progress);
+			return new \Elgg\Database\Seeder($sp->hooks, $sp->cli_progress, $sp->invoker);
 		});
 
 		$this->setFactory('serveFileHandler', function(ServiceProvider $sp) {
