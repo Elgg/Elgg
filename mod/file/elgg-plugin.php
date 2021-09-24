@@ -9,9 +9,6 @@ return [
 	'plugin' => [
 		'name' => 'File',
 		'activate_on_install' => true,
-		'dependencies' => [
-			'friends' => [],
-		],
 	],
 	'entities' => [
 		[

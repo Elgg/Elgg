@@ -81,8 +81,9 @@ class DelayedEmailService {
 			return $this->queue_table->queueEmail($recipient->guid, $delivery_interval, $notification);
 		} catch (DatabaseException $e) {
 			$this->getLogger()->error($e);
-			return false;
 		}
+		
+		return false;
 	}
 	
 	/**

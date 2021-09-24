@@ -4,6 +4,7 @@ namespace Elgg\Email;
 
 use Elgg\IntegrationTestCase;
 use Elgg\Notifications\Notification;
+use Elgg\Notifications\NotificationEventHandler;
 use Elgg\Notifications\SubscriptionNotificationEvent;
 use Laminas\Mail\Message;
 
@@ -62,6 +63,8 @@ class DelayedEmailServiceIntegrationTest extends IntegrationTestCase {
 			'recipient' => $recipient,
 			'sender' => $sender,
 		];
+		
+		$params['handler'] = new NotificationEventHandler($params['event'], _elgg_services()->notifications, $params);
 		
 		return new Notification($sender, $recipient, 'en', 'Test subject', 'Test body', 'Test summary', $params);
 	}

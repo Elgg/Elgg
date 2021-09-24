@@ -27,6 +27,9 @@
 
 	.elgg-subscription-container-details {
 		display: none;
+		
+		border-left: 1px solid $(background-color-mild);
+		border-top: 1px solid $(background-color-mild);
 	}
 
 	.elgg-subscription-details {
@@ -34,6 +37,10 @@
 		
 		&:hover {
 			background: $(background-color-mild);
+		}
+		
+		> .elgg-field-label {
+			font-weight: normal;
 		}
 		
 		> .elgg-field-input {
@@ -70,10 +77,8 @@
 		> .elgg-field-label {
 			width: 600px;
 			max-width: 60%;
-			padding-right: 2rem;
-			
-			border-left: 1px solid $(background-color-mild);
 			padding-left: 2rem;
+			padding-right: 2rem;
 		}
 	}
 }
@@ -81,7 +86,6 @@
 @media $(media-mobile-only) {
 	.elgg-subscriptions {
 		.elgg-subscription-container-details {
-			border-left: 1px solid $(background-color-mild);
 			padding-left: 1rem;
 		}
 	}

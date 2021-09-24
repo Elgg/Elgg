@@ -30,6 +30,15 @@ return array(
 
 	'bookmarks:notify:summary' => 'Новая закладка %s',
 	'bookmarks:notify:subject' => 'Новая закладка: %s',
+	'bookmarks:notify:body' => '%s добавил закладку: %s
+
+Ссылка: %s
+
+%s
+
+Просмотреть и комментировать закладку:
+%s
+',
 
 	'bookmarks:numbertodisplay' => 'Число отображаемых закладок',
 

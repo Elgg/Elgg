@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	
 	'groups' => "グループ",
 	'groups:owned' => "私が作ったグループ",
 	'groups:owned:user' => '%s さんが作ったグループ',

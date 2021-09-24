@@ -24,6 +24,7 @@ return array(
 	'site_notifications:toggle_all' => 'Inverser la sélection',
 	'site_notifications:mark_read' => 'Marquer comme lu',
 	'site_notifications:mark_read:confirm' => 'Confirmez-vous vouloir marquer toutes les notifications sélectionnées comme lues ?',
+	'site_notifications:delete:confirm' => 'Confirmez-vous vouloir supprimer toutes les notifications sélectionnées sélectionnées ?',
 	'site_notifications:error:notifications_not_selected' => 'Pas de notification sélectionnée',
 	'site_notifications:success:delete' => 'Notifications supprimées',
 	'site_notifications:success:mark_read' => 'Notifications marquées comme lues',

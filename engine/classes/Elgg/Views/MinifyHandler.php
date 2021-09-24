@@ -34,7 +34,7 @@ class MinifyHandler {
 					break;
 				}
 
-				$cssmin = new \CSSmin();
+				$cssmin = new \CSSmin(false);
 				return $cssmin->run($hook->getValue());
 		}
 	}

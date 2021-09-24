@@ -26,6 +26,11 @@ class SystemLog {
 	 * @var Database
 	 */
 	protected $db;
+	
+	/**
+	 * @var bool
+	 */
+	protected $logging_enabled = true;
 
 	/**
 	 * Constructor
@@ -91,7 +96,7 @@ class SystemLog {
 	 *
 	 * @return SystemLogEntry
 	 */
-	public function rowToSystemLogEntry(\stdClass $row) {
+	public function rowToSystemLogEntry(\stdClass $row): SystemLogEntry {
 		return new SystemLogEntry($row);
 	}
 
@@ -102,7 +107,7 @@ class SystemLog {
 	 *
 	 * @return \stdClass
 	 */
-	protected function prepareObjectForInsert(\Loggable $object) {
+	protected function prepareObjectForInsert(\Loggable $object): \stdClass {
 		$insert = new \stdClass();
 
 		$insert->object_id = (int) $object->getSystemLogID();
@@ -141,15 +146,19 @@ class SystemLog {
 	 *
 	 * @return void
 	 */
-	public function insert($object, $event) {
+	public function insert($object, $event): void {
 
+		if (!$this->isLoggingEnabled()) {
+			return;
+		}
+		
 		if (!$object instanceof \Loggable) {
 			return;
 		}
 
 		$object = $this->prepareObjectForInsert($object);
 
-		$logged = $this->cache->load("$object->object_id/$event");
+		$logged = $this->cache->load("{$object->object_id}/{$event}");
 
 		if ($logged == $object) {
 			return;
@@ -184,7 +193,7 @@ class SystemLog {
 	 *
 	 * @return bool
 	 */
-	public function archive(\DateTime $created_before) {
+	public function archive(\DateTime $created_before): bool {
 
 		$dbprefix = $this->db->prefix;
 
@@ -238,7 +247,7 @@ class SystemLog {
 	 *
 	 * @return bool
 	 */
-	public function deleteArchive(\DateTime $archived_before) {
+	public function deleteArchive(\DateTime $archived_before): bool {
 
 		$dbprefix = $this->db->prefix;
 
@@ -271,9 +280,37 @@ class SystemLog {
 
 	/**
 	 * Returns registered service name
+	 *
 	 * @return string
 	 */
 	public static function name() {
 		return 'system_log';
+	}
+	
+	/**
+	 * Enable the logging of system events
+	 *
+	 * @return void
+	 */
+	public function enableLogging(): void {
+		$this->logging_enabled = true;
+	}
+	
+	/**
+	 * Disable the logging of system events
+	 *
+	 * @return void
+	 */
+	public function disableLogging(): void {
+		$this->logging_enabled = false;
+	}
+	
+	/**
+	 * Is logging currently enabled
+	 *
+	 * @return bool
+	 */
+	public function isLoggingEnabled(): bool {
+		return $this->logging_enabled;
 	}
 }

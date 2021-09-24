@@ -60,6 +60,9 @@ return array(
 	'PluginException:CannotStart' => '%s (guid: %s) kan niet starten. Reden: %s',
 	'PluginException:InvalidID' => "%s is een ongeldige plugin-ID.",
 	'PluginException:InvalidPath' => "%s is een ongeldig plugin-pad.",
+	'PluginException:PluginMustBeActive' => "Vereist dat plugin '%s' actief is.",
+	'PluginException:PluginMustBeAfter' => "Vereist ná plugin '%s' te zijn gepositioneerd.",
+	'PluginException:PluginMustBeBefore' => "Vereist vóór plugin '%s' te zijn gepositioneerd.",
 	'ElggPlugin:MissingID' => 'Plugin-ID ontbreekt (guid %s)',
 	'ElggPlugin:NoPluginComposer' => 'Composer.json ontbreekt voor plugin ID %s (guid %s)',
 	'ElggPlugin:StartFound' => 'Voor plugin ID %s is een start.php gevonden. Dit is een indicatie voor een plugin die niet meer ondersteund wordt.',
@@ -339,8 +342,11 @@ return array(
 	
 	'notifications:delayed_email:subject:daily' => "Dagelijkse notificaties",
 	'notifications:delayed_email:subject:weekly' => "Wekelijkse notificaties",
+	'notifications:delayed_email:body:intro' => "Hieronder vindt je een lijst van je uitgestelde notificaties.",
 	
+	'notifications:subscriptions:record:settings' => 'Toon detail selectie',
 	'notifications:subscriptions:no_results' => 'Nog geen abonnementen beschikbaar',
+	'notifications:subscriptions:details:reset' => 'Selectie ongedaan maken',
 
 	'notifications:mute:title' => "Notificaties uitzetten",
 	'notifications:mute:description' => "Indien je geen notificaties wilt ontvangen zoals diegene die je hebt ontvangen kun je één of meer van de volgende redenen instellen om notificaties in de toekomst te blokkeren:",
@@ -353,6 +359,8 @@ return array(
 	'notifications:mute:user' => "geplaatst door de gebruiker '%s'",
 	
 	'notifications:mute:save:success' => "Je notificatie instellingen zijn opgeslagen",
+	
+	'notifications:mute:email:footer' => "Blokkeer deze emails",
 
 /**
  * Search
@@ -595,8 +603,7 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 		<dt>Configureer</dt><dd>Incidentele taken zoals het wijzigen van de site naam, of het configureren van plugin instellingen</dd>
 		<dt>Informatie</dt><dd>Informatie over je website zoals content statistieken</dd>
 		<dt>Ontwikkel</dt><dd>Voor ontwikkelaars welke bezig zijn met het ontwikkelen van een plugin of een theme. (Vereist de developer plugin)</dd>
-</dl>
-",
+</dl>",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br>Controleer de links onderaan de pagina voor meer informatie en bedankt voor het gebruik van Elgg!',
@@ -882,10 +889,16 @@ Bekijk hier de volledige lijst van gebruikers:
 	'admin:server:label:upload_max_filesize' => 'Maximale grootte van uploadbestanden',
 	'admin:server:warning:post_max_too_small' => '(PS: post_max_size moet groter zijn dan deze waarde om uploads van deze grootte te ondersteunen)',
 	'admin:server:label:memcache' => 'Memcache',
+	'admin:server:memcache:inactive' => 'Memcache is niet beschikbaar op deze server, of is nog niet geconfigureerd in de Elgg configuratie.
+Voor verbeterde performance wordt het aangeraden om Memcache (of Redis) in te schakelen en te configureren.',
 
 	'admin:server:label:redis' => 'Redis',
+	'admin:server:redis:inactive' => 'Redis is niet beschikbaar op deze server, of is nog niet geconfigureerd in de Elgg configuratie.
+Voor verbeterde performance wordt het aangeraden om Redis (of Memcache) in te schakelen en te configureren.',
 
 	'admin:server:label:opcache' => 'OPcache',
+	'admin:server:opcache:inactive' => 'OPcache is niet beschikbaar op deze server, of is nog niet geactiveerd.
+Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en te configureren.',
 	
 	'admin:server:requirements:php_extension' => "PHP extensie: %s",
 	'admin:server:requirements:php_extension:required' => "Deze PHP extensie is vereist voor een correcte werking van Elgg",
@@ -1701,6 +1714,14 @@ Global variables:
 	'cli:simpletest:error:file' => "%sis geen geldige simpletest class",
 	'cli:simpletest:output:summary' => "Duur: %.2fseconden, Geheugen: %.2fMb",
 	
+	'cli:upgrade:description' => "Start systeem upgrades",
+	'cli:upgrade:option:force' => "Forceer upgrades om uit te voeren, ook al loopt er een andere upgrade.",
+	'cli:upgrade:argument:async' => "Start nog uit te voeren asynchrone upgrades",
+	'cli:upgrade:system:upgraded' => "Systeem upgrades zijn uitgevoerd",
+	'cli:upgrade:system:failed' => "Systeem upgrades zijn mislukt",
+	'cli:upgrade:async:upgraded' => "Asynchrone upgrades zijn uitgevoerd",
+	'cli:upgrade:aysnc:failed' => "Asynchrone upgrades zijn mislukt",
+	
 	'cli:upgrade:batch:description' => "Voer één of meerdere upgrades uit",
 	'cli:upgrade:batch:argument:upgrades' => "Een of meerdere upgrades (class namen) om uit te voeren",
 	'cli:upgrade:batch:option:force' => "Upgrade uitvoeren ook al is deze gemarkeerd als afgerond",
@@ -1886,6 +1907,6 @@ Global variables:
 	'core:upgrade:2021041901:title' => "Verwijder de notificaties plugin",
 	'core:upgrade:2021041901:description' => "Verwijderd de entiteit bijbehorend aan de Notificaties plugin. Deze plugin is verwijderd in Elgg 4.0.",
 	
-	'core:upgrade:2021060401:title' => "Voeg content eigenaren to als abonnees op hun eigen content",
+	'core:upgrade:2021060401:title' => "Voeg content eigenaren toe als abonnees op hun eigen content",
 	'core:upgrade:2021060401:description' => "Content eigenaren behoren geabonneerd te zijn op hun eigen content. Deze  upgrade zorgt dat dat voor oude content ook het geval is.",
 );

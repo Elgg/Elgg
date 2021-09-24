@@ -46,6 +46,7 @@
 	max-height: 95%;
 	max-height: -webkit-calc(100vh - 60px);
 	max-height: calc(100vh - 60px);
+	box-sizing: border-box !important;
 }
 
 #cboxLoadedContent > *:not(.cboxPhoto) {

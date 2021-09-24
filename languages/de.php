@@ -339,7 +339,6 @@ return array(
 	
 	'notifications:delayed_email:subject:daily' => "Tägliche Sammel-Emails",
 	'notifications:delayed_email:subject:weekly' => "Wöchentliche Sammel-Emails",
-	
 	'notifications:subscriptions:no_results' => 'Es sind keine Benachrichtigungs-Abonnements vorhanden.',
 
 	'notifications:mute:title' => "Benachrichtigungen blockieren",
@@ -485,12 +484,10 @@ Die Verwendung von Simplecache verbessert die Cache-Performance.
 Bei der Konfiguration der Simplecache-Option in settings.php kann eine Datenbankanfrage bei der Bereitstellung von Javascript- und CSS-Dateien eingespart werden.",
 	'admin:performance:systemcache' => 'Systemcache',
 	'admin:performance:apache:mod_cache' => 'Apache-mod_cache',
-	'admin:performance:apache:mod_cache:warning' => 'Das mod_cache-Modul ermöglicht Cache-Handling über HTTP. Das bedeutet, die Dateien können entsprechend der im Seiten-Header hinterlegten Informationen, die festlegen, wie lange eine Seite als aktuell anzusehen ist, auf der Clientseite gecacht werden.',
 	'admin:performance:php:open_basedir' => 'PHP-open_basedir',
 	'admin:performance:php:open_basedir:not_configured' => 'Es wurden keine Beschränkungen definiert.',
 	'admin:performance:php:open_basedir:warning' => 'Ein kleiner Teil der open_basedir-Beschränkungen sind in Kraft. Dies könnte die Performance negativ beeinflussen.',
 	'admin:performance:php:open_basedir:error' => 'Ein grosser Teil der open_basedir-Beschränkungen sind in Kraft. Dies wird mit hoher Wahrscheinlichkeit die Performance negativ beeinflussen.',
-	'admin:performance:php:open_basedir:generic' => 'Wenn mit der PHP-Variable open_basedir Zugriffsbeschränkungen definiert sind, muss bei jedem Dateizugriff geprüft werden, ob dieser zulässig ist. Da Elgg eine grosse Menge an Dateizugriffen vornimmt, wird dies die Performance negativ beeinflussen. Darüber hinaus kann der PHP-Opcache Dateipfade nicht im Speicher cachen und muss diese bei jedem Dateizugriff erneut neu auflösen.',
 	
 	'admin:statistics' => 'Statistiken',
 	'admin:server' => 'Server',
@@ -588,14 +585,6 @@ Bei der Konfiguration der Simplecache-Option in settings.php kann eine Datenbank
 	'admin:widget:admin_welcome:intro' => 'Willkommen auf Deiner Elgg-Seite! Du siehst gerade das Administrator-Dashboard. Es ist hilfreich, um auf Deiner Seite den Überblick zu behalten.',
 
 	'admin:widget:admin_welcome:registration' => "Die Erstellung neuer Benutzeraccounts ist derzeit deaktiviert! Du kannst die Neuregistrierung auf der Seite %s aktivieren.",
-	'admin:widget:admin_welcome:admin_overview' => "Der Admin-Bereich ist in Unterseiten aufgeteilt, die über das Menu auf der rechten Seite aufgerufen werden können. Der Admin-Bereich ist in vier Abschnitte aufgeteilt:
-	<dl>
-		<dt>Administrieren</dt><dd>Alltägliche Aufgaben wie die Benutzerverwaltung, Kontrolle gemeldeter Inhalte oder das Aktivieren eines Plugins.</dd>
-		<dt>Konfigurieren</dt><dd>Gelegentlich notwendige Aufgaben wie die Konfiguration des Namens der Seite oder die Änderung von Plugineinstellungen.</dd>
-		<dt>Information</dt><dd>Informationen über Deine Seite wie beispielsweise Inhalts-Statistiken.</dd>
-		<dt>Entwickeln</dt><dd>Für Entwickler, die ein Plugin oder ein Theme testen wollen. (Ein Entwickler-Plugin muss aktiviert sein, damit dieser Abschnitt angezeigt wird.)</dd>
-	</dl>
-",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Wirf auch einen Blick auf die zusätzlichen Resourcen, die Du über die Links in der Fußzeile des Admin-Bereichs aufrufen kannst. Und vielen Dank, dass Du Elgg verwendest!',
@@ -649,11 +638,8 @@ Bei der Konfiguration der Simplecache-Option in settings.php kann eine Datenbank
 	'admin:security:information' => 'Informationen',
 	'admin:security:information:description' => 'Im Folgenden sind einige Vorschläge zur Verbesserung der Sicherheit Deiner Webseite aufgelistet.',
 	'admin:security:information:https' => 'Verwendung von HTTPS geschützt',
-	'admin:security:information:https:warning' => "Es ist sehr zu empfehlen, HTTPS zu verwenden, um Deine Webseite zu schützen. Dies verringert das Risiko, das Daten (z.B. Passwörter) auf dem Weg von Server zum Client oder zurück ausgespäht werden können.",
 	'admin:security:information:wwwroot' => 'Hauptverzeichnis der Webseite schreibbar',
-	'admin:security:information:wwwroot:error' => "Es sollte nicht sein, dass das Installationsverzeichnis Deiner Elgg-Webseite nach Abschluss der Installation schreibbar ist. Ansonsten besteht die Gefahr, dass böswillige Besucher der Webseite dort unerwünschten Code ablegen können.",
 	'admin:security:information:validate_input' => 'Validierung von Eingabefeldern',
-	'admin:security:information:validate_input:error' => "Ein 3rd-Party-Plugin hat die Validierung von Eingabefeldern auf Deiner Webseite deaktiviert. Dadurch besteht die Gefahr, dass Besucher möglicherweise gefährliche Inhalte (z.B. Cross-Site-Skripte usw.) hochladen könnten.",
 	'admin:security:information:password_length' => 'Minimale Länge von Passwörtern',
 	'admin:security:information:password_length:warning' => "Es ist empfehlenswert, eine Mindestlänge von 6 Zeichen für Passwörter zu verlangen.",
 	'admin:security:information:username_length' => 'Minimale Länge von Benutzernamen',
@@ -661,7 +647,6 @@ Bei der Konfiguration der Simplecache-Option in settings.php kann eine Datenbank
 	'admin:security:information:php:session_gc' => "PHP-Session-Cleanup",
 	'admin:security:information:php:session_gc:chance' => "Cleanup-Wahrscheinlichkeit: %s%%",
 	'admin:security:information:php:session_gc:lifetime' => "Session-Lebensdauer %s Sekunden",
-	'admin:security:information:php:session_gc:error' => "Es ist empfehlenswert, für die PHP-Variablen 'session.gc_probability' und 'session.gc_divisor' in den PHP-Einstellungen auf Deinem Server (z.B. in php.ini) sinnvolle Werte zu setzen. Dadurch werden in regelmäßigen Abständen die abgelaufenen PHP-Sessions aus der Datenbank bereinigt und Benutzer können die alten Sessions nicht wieder verwenden.",
 	'admin:security:information:htaccess:hardening' => "Absicherungen in der .htaccess-Datei",
 	'admin:security:information:htaccess:hardening:help' => "Es ist möglich, mit Hilfe der .htaccess-Datei von Elgg den Zugriff auf bestimmte Dateien zu blockieren und dadurch die Sicherheit auf Deinem Server zu verbessern. Für weitergehende Informationen schau in die .htaccess-Datei und lies die erläuternden Kommentare dazu.",
 	
@@ -881,22 +866,10 @@ Siehe die vollständige Liste dieser Benutzer hier:
 	'admin:server:label:upload_max_filesize' => 'PHP-Einstellung von upload_max_filesize',
 	'admin:server:warning:post_max_too_small' => '(Bemerkung: Der Wert von post_max_size muss größer als dieser Wert sein, damit Uploads dieser Größe möglich sind)',
 	'admin:server:label:memcache' => 'Memcache',
-	'admin:server:memcache:inactive' => '
-		Memcache ist auf diesem Server nicht eingerichtet oder es wurde in der Konfigurationsdatei von Elgg noch nicht aktiviert.
-		Für eine bessere Performance ist es empfehlenswert, Memcache (oder Redis) auf dem Server zu installieren und einzurichten und auch die Elgg-Konfigurationdatei entsprechend anzupassen.
-',
 
 	'admin:server:label:redis' => 'Redis',
-	'admin:server:redis:inactive' => '
-		Redis ist auf diesem Server nicht eingerichtet oder es wurde in der Konfigurationsdatei von Elgg noch nicht aktiviert.
-		Für eine bessere Performance ist es empfehlenswert, Redis (oder Memcache) auf dem Server zu installieren und einzurichten und auch die Elgg-Konfigurationdatei entsprechend anzupassen.
-',
 
 	'admin:server:label:opcache' => 'OPcache',
-	'admin:server:opcache:inactive' => '
-		OPcache ist auf diesem Server nicht installiert oder nicht aktiviert.
-		Für eine bessere Performance ist es empfehlenswert, OPcache auf dem Server zu installieren und einzurichten.
-',
 	
 	'admin:server:requirements:php_extension' => "PHP-Erweiterung: %s",
 	'admin:server:requirements:php_extension:required' => "Diese PHP-Erweiterung ist notwendig, damit PHP fehlerfrei funktionieren kann.",
@@ -941,8 +914,6 @@ Siehe die vollständige Liste dieser Benutzer hier:
 
 	'admin:configure_utilities:default_widgets' => 'Standard-Widgets',
 	'admin:default_widgets:unknown_type' => 'Unbekannter Widget-Typ.',
-	'admin:default_widgets:instructions' => 'Hinzufügen, Entfernen, Positionieren und Konfigurieren der standardmäßig anzuzeigenden Widgets für die gewünschte Seite.
-Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community-Seite betreffen.',
 
 	'admin:robots.txt:instructions' => "Bearbeite im Folgenden die robots.txt-Datei dieser Seite:",
 	'admin:robots.txt:plugins' => "Plugins fügen das Folgende zur robots.txt-Datei hinzu:",
@@ -950,8 +921,6 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'admin:robots.txt:physical' => "Die Konfiguration des Inhalts der robots.txt-Datei ist nicht möglich, da auf dem Server bereits eine robots.txt-Datei vorhanden ist.",
 
 	'admin:maintenance_mode:default_message' => 'Diese Community-Seite ist aufgrund von Wartungsarbeiten derzeit nicht verfügbar.',
-	'admin:maintenance_mode:instructions' => 'Der Wartungs-Modus sollte während einer Aktualisierung der Community-Seite oder anderen größeren Änderungen an der Seite aktiviert werden.
-		Wenn er aktiviert ist, können sich nur Admins anmelden und auf der Community-Seite browsen.',
 	'admin:maintenance_mode:mode_label' => 'Wartungs-Modus',
 	'admin:maintenance_mode:message_label' => 'Die Nachricht, die Benutzern angezeigt wird, wenn der Wartungsmodus aktiviert ist.',
 	'admin:maintenance_mode:saved' => 'Die Einstellungen für den Wartungs-Modus wurden gespeichert.',

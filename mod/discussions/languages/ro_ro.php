@@ -13,6 +13,8 @@ return array(
 	'collection:object:discussion' => 'Subiecte de dicuție',
 	'collection:object:discussion:group' => 'Discuții de grup',
 	'collection:object:discussion:my_groups' => 'Discuțiile din grupurile mele',
+	'notification:object:discussion:create' => "Trimite o notificare atunci când o discuție este creată",
+	'notifications:mute:object:discussion' => "despre discuția '%s'",
 	
 	'discussion:settings:enable_global_discussions' => 'Activează discuțiile globale',
 	'discussion:settings:enable_global_discussions:help' => 'Permite ca discuțiile să fie create în afara grupurilor',
@@ -42,9 +44,21 @@ return array(
 	 */
 	'discussion:topic:notify:summary' => 'Subiect nou de discuție numit %s',
 	'discussion:topic:notify:subject' => 'Subiect nou de discuție: %s',
+	'discussion:topic:notify:body' => '%s a adăugat un nou subiect de discuție "%s":
+
+%s
+
+Vezi și răspunde subiectului de discuție:
+%s',
 
 	'discussion:comment:notify:summary' => 'Comentariu nou la subiect: %s',
 	'discussion:comment:notify:subject' => 'Comentariu nou la subiect: %s',
+	'discussion:comment:notify:body' => '%s a comentatla subiectul de discuție "%s":
+
+%s
+
+Vezi și comentează la discuție:
+%s',
 
 	'groups:tool:forum' => 'Activează discuțiile de grup',
 
@@ -56,4 +70,8 @@ return array(
 	'discussion:topic:closed:desc' => 'Această discuție este închisă și nu acceptă comentarii noi.',
 
 	'discussion:topic:description' => 'Mesajul subiectului',
+	'discussion:topic:toggle_status:open' => 'Subiectul de discuție a fost redeschis cu succes',
+	'discussion:topic:toggle_status:open:confirm' => 'Sigur dorești să redeschizi acest subiect?',
+	'discussion:topic:toggle_status:closed' => 'Subiectul de discuție a fost închis cu succes',
+	'discussion:topic:toggle_status:closed:confirm' => 'Sigur dorești să închizi acest subiect?',
 );

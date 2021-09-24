@@ -342,8 +342,11 @@ return array(
 	
 	'notifications:delayed_email:subject:daily' => "Daily notifications",
 	'notifications:delayed_email:subject:weekly' => "Weekly notifications",
+	'notifications:delayed_email:body:intro' => "Below is a list of your delayed notifications.",
 	
+	'notifications:subscriptions:record:settings' => 'Show detailed selection',
 	'notifications:subscriptions:no_results' => 'There are no subscription records yet',
+	'notifications:subscriptions:details:reset' => 'Undo selection',
 
 	'notifications:mute:title' => "Mute notifications",
 	'notifications:mute:description' => "If you no longer wish to receive notifications like the one you received configure one or more of the following reasons to block all notifications:",
@@ -1719,6 +1722,14 @@ Global variables:
 	'cli:simpletest:error:class' => "You must install your Elgg application using '%s'",
 	'cli:simpletest:error:file' => "%s is not a valid simpletest class",
 	'cli:simpletest:output:summary' => "Time: %.2f seconds, Memory: %.2fMb",
+	
+	'cli:upgrade:description' => "Run system upgrades",
+	'cli:upgrade:option:force' => "Force the upgrades to run even if currently an upgrade is already running.",
+	'cli:upgrade:argument:async' => "Execute pending asynchronous upgrades",
+	'cli:upgrade:system:upgraded' => "System upgrades have been executed",
+	'cli:upgrade:system:failed' => "System upgrades have failed",
+	'cli:upgrade:async:upgraded' => "Asynchronous upgrades have been executed",
+	'cli:upgrade:aysnc:failed' => "Asynchronous upgrades have failed",
 	
 	'cli:upgrade:batch:description' => "Executes one or more upgrades",
 	'cli:upgrade:batch:argument:upgrades' => "One or more upgrades (class names) to be executed",

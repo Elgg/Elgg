@@ -2,8 +2,6 @@
 
 namespace Elgg;
 
-use ElggEntity;
-use ElggUser;
 use Elgg\Email\Address;
 use Elgg\Email\Attachment;
 use Elgg\Exceptions\InvalidParameterException;
@@ -365,9 +363,12 @@ final class Email {
 			// get the site email address
 			$site = elgg_get_site_entity();
 			$from = new Address($site->getEmailAddress(), $site->getDisplayName());
-		} else if ($from instanceof ElggEntity) {
+		} elseif ($from instanceof \ElggSite) {
+			// use site email address
+			$from = new Address($from->getEmailAddress(), $from->getDisplayName());
+		} elseif ($from instanceof \ElggEntity) {
 			// If there's an email address, use it - but only if it's not from a user.
-			if (!$from instanceof ElggUser && $from->email) {
+			if (!$from instanceof \ElggUser && $from->email) {
 				$from = Address::fromEntity($from);
 			} else {
 				// get the site email address
@@ -411,7 +412,7 @@ final class Email {
 				continue;
 			}
 			
-			if ($recipient instanceof ElggEntity) {
+			if ($recipient instanceof \ElggEntity) {
 				$recipient = Address::fromEntity($recipient);
 			} elseif (is_string($recipient)) {
 				$recipient = Address::fromString($recipient);

@@ -81,9 +81,19 @@ if ($has_detailed_subscriptions) {
 $container .= elgg_view('output/url', [
 	'href' => false,
 	'text' => elgg_echo('settings'),
-	'icon' => 'cog',
+	'title' => elgg_echo('notifications:subscriptions:record:settings'),
+	'icon' => 'chevron-down',
 	'class' => $icon_class,
-	'data-view' => "notifications/subscriptions/details?user_guid={$user->guid}&entity_guid={$entity->guid}",
+	'data-view' => elgg_http_add_url_query_elements('notifications/subscriptions/details', [
+		'user_guid' => $user->guid,
+		'entity_guid' => $entity->guid,
+	]),
+]);
+$container .= elgg_view('output/url', [
+	'href' => false,
+	'text' => elgg_echo('settings'),
+	'icon' => 'chevron-up',
+	'class' => array_merge($icon_class, ['hidden']),
 ]);
 
 echo elgg_format_element('div', ['class' => 'elgg-subscription-container'], $container);

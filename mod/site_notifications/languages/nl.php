@@ -24,6 +24,7 @@ return array(
 	'site_notifications:toggle_all' => 'Selecteer alles',
 	'site_notifications:mark_read' => 'Markeer als gelezen',
 	'site_notifications:mark_read:confirm' => 'Weet je het zeker dat je alle geselecteerde notificaties als gelezen wilt markeren?',
+	'site_notifications:delete:confirm' => 'Weet je het zeker dat je alle geselecteerde notificaties wilt verwijderen?',
 	'site_notifications:error:notifications_not_selected' => 'Geen notificaties geselecteerd',
 	'site_notifications:success:delete' => 'Notificaties verwijderd',
 	'site_notifications:success:mark_read' => 'Notificaties gemarkeerd als gelezen',

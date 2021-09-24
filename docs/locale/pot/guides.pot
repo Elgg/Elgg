@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-06 15:11+0200\n"
+"POT-Creation-Date: 2021-09-24 14:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -162,31 +162,31 @@ msgid "Resources + references"
 msgstr ""
 
 #: ../../guides/accessibility.rst:13
-msgid "`Official WCAG Accessibility Guidelines Overview <http://www.w3.org/WAI/WCAG20/glance/>`_"
+msgid "`Official WCAG Accessibility Guidelines Overview <https://www.w3.org/WAI/standards-guidelines/wcag/glance/>`_"
 msgstr ""
 
 #: ../../guides/accessibility.rst:14
-msgid "`Official WCAG Accessibility Guidelines <http://www.w3.org/TR/WCAG/>`_"
+msgid "`Official WCAG Accessibility Guidelines <https://www.w3.org/TR/WCAG/>`_"
 msgstr ""
 
 #: ../../guides/accessibility.rst:15
-msgid "`Resources for planning and implementing for accessibility <http://www.w3.org/WAI/managing>`_"
+msgid "`Resources for planning and implementing for accessibility <https://www.w3.org/WAI/planning/>`_"
 msgstr ""
 
 #: ../../guides/accessibility.rst:16
-msgid "`Practical tips from the W3C for improving accessibility <http://www.w3.org/WAI/impl/improving>`_"
+msgid "`Practical tips from the W3C for improving accessibility <https://www.w3.org/WAI/planning/interim-repairs/>`_"
 msgstr ""
 
 #: ../../guides/accessibility.rst:17
-msgid "`Preliminary review of websites for accessibility <http://www.w3.org/WAI/eval/preliminary.html>`_"
+msgid "`Preliminary review of websites for accessibility <https://www.w3.org/WAI/test-evaluate/preliminary/>`_"
 msgstr ""
 
 #: ../../guides/accessibility.rst:18
-msgid "`Tools for checking the accessibility of websites <http://www.w3.org/WAI/ER/tools/>`_"
+msgid "`Tools for checking the accessibility of websites <https://www.w3.org/WAI/ER/tools/>`_"
 msgstr ""
 
 #: ../../guides/accessibility.rst:19
-msgid "`List of practical techniques for implementing accessibility <http://www.w3.org/TR/WCAG20-TECHS/Overview.html#contents>`_ (It would be great if someone could go through this and filter out all the ones that are relevant to Elgg)"
+msgid "`List of practical techniques for implementing accessibility <https://www.w3.org/TR/WCAG20-TECHS/Overview.html#contents>`_ (It would be great if someone could go through this and filter out all the ones that are relevant to Elgg)"
 msgstr ""
 
 #: ../../guides/accessibility.rst:22
@@ -584,11 +584,11 @@ msgid "``entity`` - the entity to add/remove the icon for. If provided based on 
 msgstr ""
 
 #: ../../guides/actions.rst:390
-msgid "``entity_type`` - the entity type for which the icon will be uploaded. Plugins could find this usefull, maybe to validate icon sizes"
+msgid "``entity_type`` - the entity type for which the icon will be uploaded. Plugins could find this useful, maybe to validate icon sizes"
 msgstr ""
 
 #: ../../guides/actions.rst:391
-msgid "``entity_subtype`` - the entity subtype for which the icon will be uploaded. Plugins could find this usefull, maybe to validate icon sizes"
+msgid "``entity_subtype`` - the entity subtype for which the icon will be uploaded. Plugins could find this useful, maybe to validate icon sizes"
 msgstr ""
 
 #: ../../guides/actions.rst:392

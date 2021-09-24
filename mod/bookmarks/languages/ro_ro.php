@@ -18,6 +18,8 @@ return array(
 	'collection:object:bookmarks:friends' => "Marcajele prietenilor",
 	'add:object:bookmarks' => "Adaugă un marcaj",
 	'edit:object:bookmarks' => "Editează marcajul",
+	'notification:object:bookmarks:create' => "Trimite o notificare atunci când un marcaj este creat",
+	'notifications:mute:object:bookmarks' => "despre marcajul '%s'",
 
 	'bookmarks:this' => "Marchează această pagină",
 	'bookmarks:this:group' => "Marcaj în %s",
@@ -28,6 +30,14 @@ return array(
 
 	'bookmarks:notify:summary' => 'Marcaj nou numit %s',
 	'bookmarks:notify:subject' => 'Marcaj nou: %s',
+	'bookmarks:notify:body' => '%s a adăugat un marcaj nou: %s
+
+Adresă: %s
+
+%s
+
+Vezi și comentează la acest marcaj:
+%s',
 
 	'bookmarks:numbertodisplay' => 'Numărul de marcaje pentru afișare',
 

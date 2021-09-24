@@ -64,10 +64,16 @@ unset($sorted['other']);
 ksort($sorted);
 
 if (!empty($unknowns)) {
+	// add the rest to the end of the list
 	$sorted['other'] = $unknowns;
 }
 
-$output = '';
+if (empty($sorted)) {
+	// can happen if all notification objects have been removed
+	return;
+}
+
+$output = elgg_echo('notifications:delayed_email:body:intro') . PHP_EOL . PHP_EOL;
 
 foreach ($sorted as $category => $sorted_notifications) {
 	uksort($sorted_notifications, 'strnatcasecmp');

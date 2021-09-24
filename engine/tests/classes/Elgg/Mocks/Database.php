@@ -54,6 +54,10 @@ class Database extends DbDatabase {
 		$connection->expects(BaseTestCase::$_instance->any())
 			->method('executeQuery')
 			->will(BaseTestCase::$_instance->returnCallback([$this, 'executeDatabaseQuery']));
+		
+		$connection->expects(BaseTestCase::$_instance->any())
+			->method('executeStatement')
+			->will(BaseTestCase::$_instance->returnCallback([$this, 'executeDatabaseStatement']));
 
 		$connection->expects(BaseTestCase::$_instance->any())
 			->method('lastInsertId')
@@ -205,6 +209,11 @@ class Database extends DbDatabase {
 			->will(BaseTestCase::$_instance->returnValue($row_count));
 
 		return $result;
+	}
+	
+	public function executeDatabaseStatement($sql, $params = []) {
+		$result = $this->executeDatabaseQuery($sql, $params);
+		return $result->rowCount();
 	}
 
 	/**

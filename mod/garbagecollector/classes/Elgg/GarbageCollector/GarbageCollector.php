@@ -2,6 +2,7 @@
 
 namespace Elgg\GarbageCollector;
 
+use Doctrine\DBAL\Result;
 use Elgg\Application\Database;
 use Elgg\I18n\Translator;
 use Elgg\Traits\Di\ServiceFacade;
@@ -41,6 +42,7 @@ class GarbageCollector {
 
 	/**
 	 * Returns registered service name
+	 *
 	 * @return string
 	 */
 	public static function name() {
@@ -52,7 +54,8 @@ class GarbageCollector {
 	 *
 	 * @return \stdClass[]
 	 */
-	public function optimize() {
+	public function optimize(): array {
+		$dbprefix = $this->db->prefix;
 		$output = [];
 
 		$output[] = (object) [
@@ -62,6 +65,11 @@ class GarbageCollector {
 		];
 
 		foreach ($this->tables() as $table) {
+			if (stripos($table, "{$dbprefix}system_log_") === 0) {
+				// rotated system_log tables don't need to be optimized
+				continue;
+			}
+
 			$result = $this->optimizeTable($table) !== false;
 			$output[] = (object) [
 				'operation' => $this->translator->translate('garbagecollector:optimize', [$table]),
@@ -84,21 +92,23 @@ class GarbageCollector {
 	 *
 	 * @return array
 	 */
-	public function tables() {
+	protected function tables(): array {
 
 		if (!isset($this->tables)) {
 			$table_prefix = $this->db->prefix;
-			$result = $this->db->getData("SHOW TABLES LIKE '$table_prefix%'");
+			$result = $this->db->getConnection('read')->executeQuery("SHOW TABLES LIKE '{$table_prefix}%'");
 
 			$tables = [];
 
-			if (is_array($result) && !empty($result)) {
-				foreach ($result as $row) {
-					$row = (array) $row;
-					if (is_array($row) && !empty($row)) {
-						foreach ($row as $element) {
-							$tables[] = $element;
-						}
+			if ($result instanceof Result) {
+				$rows = $result->fetchAllAssociative();
+				foreach ($rows as $row) {
+					if (empty($row)) {
+						continue;
+					}
+
+					foreach ($row as $element) {
+						$tables[] = $element;
 					}
 				}
 			}
@@ -114,9 +124,10 @@ class GarbageCollector {
 	 *
 	 * @param string $table Table
 	 *
-	 * @return bool|int
+	 * @return int
 	 */
-	public function optimizeTable(string $table) {
-		return $this->db->updateData("OPTIMIZE TABLE $table");
+	protected function optimizeTable(string $table): int {
+		$result = $this->db->getConnection('write')->executeQuery("OPTIMIZE TABLE {$table}");
+		return $result->rowCount();
 	}
 }

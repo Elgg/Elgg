@@ -682,13 +682,13 @@ class EntitiesRepositoryTest extends UnitTestCase {
 		
 		$select->addClause(new AccessWhereClause());
 
-		$alias1 = $select->joinPrivateSettingsTable('e', 'guid', 'foo1');
+		$alias1 = $select->joinPrivateSettingsTable('e', 'guid', ['foo1']);
 		$private_setting = new PrivateSettingWhereClause();
 		$private_setting->names = ['foo1'];
 		$private_setting->values = ['bar1'];
 		$wheres[] = $private_setting->prepare($select, $alias1);
 
-		$alias2 = $select->joinPrivateSettingsTable('e', 'guid', 'foo2');
+		$alias2 = $select->joinPrivateSettingsTable('e', 'guid', ['foo2']);
 		$private_setting = new PrivateSettingWhereClause();
 		$private_setting->names = ['foo2'];
 		$private_setting->values = ['bar2'];

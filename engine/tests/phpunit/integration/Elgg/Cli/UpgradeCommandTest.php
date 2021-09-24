@@ -17,7 +17,9 @@ class UpgradeCommandTest extends IntegrationTestCase {
 	}
 
 	public function down() {
-
+		if (_elgg_services()->mutex->isLocked('upgrade')) {
+			_elgg_services()->mutex->unlock('upgrade');
+		}
 	}
 
 	public function testExecute() {
@@ -28,8 +30,38 @@ class UpgradeCommandTest extends IntegrationTestCase {
 		$commandTester = new CommandTester($command);
 		$commandTester->execute(['command' => $command->getName()]);
 
-		$this->assertMatchesRegularExpression('/System has been upgraded/im', $commandTester->getDisplay());
-		$this->assertMatchesRegularExpression('/Plugins have been upgraded/im', $commandTester->getDisplay());
+		$this->assertStringContainsStringIgnoringCase(elgg_echo('cli:upgrade:system:upgraded'), $commandTester->getDisplay());
+		$this->assertEmpty($commandTester->getStatusCode());
+	}
+	
+	public function testExecuteFailsWhenLocked() {
+		_elgg_services()->mutex->lock('upgrade');
+		
+		$application = new Application();
+		$application->add(new UpgradeCommand());
+		
+		$command = $application->find('upgrade');
+		$commandTester = new CommandTester($command);
+		$commandTester->execute(['command' => $command->getName()]);
+		
+		$this->assertNotEmpty($commandTester->getStatusCode());
+	}
+	
+	public function testExecuteForceWhenLocked() {
+		_elgg_services()->mutex->lock('upgrade');
+		
+		$application = new Application();
+		$application->add(new UpgradeCommand());
+		
+		$command = $application->find('upgrade');
+		$commandTester = new CommandTester($command);
+		$commandTester->execute([
+			'command' => $command->getName(),
+			'--force' => true,
+		]);
+		
+		$this->assertStringContainsStringIgnoringCase(elgg_echo('cli:upgrade:system:upgraded'), $commandTester->getDisplay());
+		$this->assertEmpty($commandTester->getStatusCode());
 	}
 
 	public function testExecuteAsyncUpgrades() {
@@ -44,8 +76,8 @@ class UpgradeCommandTest extends IntegrationTestCase {
 			'--quiet' => true,
 		]);
 
-		$this->assertMatchesRegularExpression('/System has been upgraded/im', $commandTester->getDisplay());
-		$this->assertMatchesRegularExpression('/Plugins have been upgraded/im', $commandTester->getDisplay());
+		$this->assertStringContainsStringIgnoringCase(elgg_echo('cli:upgrade:system:upgraded'), $commandTester->getDisplay());
+		$this->assertStringContainsStringIgnoringCase(elgg_echo('cli:upgrade:async:upgraded'), $commandTester->getDisplay());
+		$this->assertEmpty($commandTester->getStatusCode());
 	}
-
 }

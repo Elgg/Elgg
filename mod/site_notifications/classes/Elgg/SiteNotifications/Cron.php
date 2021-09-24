@@ -25,7 +25,7 @@ class Cron {
 		$result = $hook->getValue();
 		$result .= elgg_echo('site_notifications:cron:linked_cleanup:start') . PHP_EOL;
 		
-		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() {
+		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() {
 			$count = 0;
 			$max_runtime = 120; // 2 minutes
 			$start_time = microtime(true);
@@ -47,6 +47,7 @@ class Cron {
 				],
 				'batch' => true,
 				'batch_inc_offset' => false,
+				'batch_size' => 100,
 			]);
 			
 			/* @var $entity \ElggEntity */
@@ -58,7 +59,7 @@ class Cron {
 				
 				$count++;
 				
-				if (microtime(true) - $start_time > $max_runtime) {
+				if ((microtime(true) - $start_time) > $max_runtime) {
 					// max runtime expired
 					break;
 				}
@@ -89,8 +90,10 @@ class Cron {
 		$result = $hook->getValue();
 		$result .= elgg_echo('site_notifications:cron:unread_cleanup:start', [$days]) . PHP_EOL;
 		
-		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($days) {
+		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($days) {
 			$count = 0;
+			$max_runtime = 1800; // 30 minutes
+			$start_time = microtime(true);
 			
 			/* @var $batch \ElggBatch */
 			$batch = elgg_get_entities([
@@ -103,6 +106,7 @@ class Cron {
 				'created_before' => "-{$days} days",
 				'batch' => true,
 				'batch_inc_offset' => false,
+				'batch_size' => 100,
 			]);
 			
 			/* @var $entity \ElggEntity */
@@ -111,7 +115,13 @@ class Cron {
 					$batch->reportFailure();
 					continue;
 				}
+				
 				$count++;
+				
+				if ((microtime(true) - $start_time) > $max_runtime) {
+					// max runtime expired
+					break;
+				}
 			}
 			
 			return $count;
@@ -139,8 +149,10 @@ class Cron {
 		$result = $hook->getValue();
 		$result .= elgg_echo('site_notifications:cron:read_cleanup:start', [$days]) . PHP_EOL;
 		
-		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($days) {
+		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($days) {
 			$count = 0;
+			$max_runtime = 1800; // 30 minutes
+			$start_time = microtime(true);
 			
 			/* @var $batch \ElggBatch */
 			$batch = elgg_get_entities([
@@ -153,6 +165,7 @@ class Cron {
 				'created_before' => "-{$days} days",
 				'batch' => true,
 				'batch_inc_offset' => false,
+				'batch_size' => 100,
 			]);
 			
 			/* @var $entity \ElggEntity */
@@ -163,6 +176,11 @@ class Cron {
 				}
 				
 				$count++;
+				
+				if ((microtime(true) - $start_time) > $max_runtime) {
+					// max runtime expired
+					break;
+				}
 			}
 			
 			return $count;

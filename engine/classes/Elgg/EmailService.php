@@ -412,7 +412,7 @@ class EmailService {
 		// generate HTML mail body
 		$options['body'] = $this->views->renderView('email/elements/body', $options);
 		
-		$cssmin = new \CSSmin();
+		$cssmin = new \CSSmin(false);
 		$css = $cssmin->run($this->css_compiler->compile($this->views->renderView('email/email.css', $options)));
 		
 		$options['css'] = $css;

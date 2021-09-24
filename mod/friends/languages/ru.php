@@ -47,6 +47,9 @@ return array(
 	'widgets:friends:name' => "Друзья",
 	'widgets:friends:description' => "Отображает некоторых ваших друзей",
 	
+	'widgets:friends_of:name' => "В друзьях",
+	'widgets:friends_of:description' => "Отображает у кого вы в друзьях",
+	
 	'friends:notification:request:subject' => "%s хочет быть вашим другом!",
 	'friends:notification:request:message' => "%s запросил дружбу с вами на %s.
 

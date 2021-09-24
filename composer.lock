@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "49dc70aebedb8edd451afbcefac65732",
+    "content-hash": "abe9fa8a74b8fa46796a2dd70c768460",
     "packages": [
         {
             "name": "cakephp/core",
@@ -1083,16 +1083,16 @@
         },
         {
             "name": "elgg/login_as",
-            "version": "3.0",
+            "version": "3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elgg/login_as.git",
-                "reference": "15ea14f8237473c3597b12af12d7646901b6dcf9"
+                "reference": "4e6dc466b02bdb211b9f726343a30928bd9c440b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elgg/login_as/zipball/15ea14f8237473c3597b12af12d7646901b6dcf9",
-                "reference": "15ea14f8237473c3597b12af12d7646901b6dcf9",
+                "url": "https://api.github.com/repos/Elgg/login_as/zipball/4e6dc466b02bdb211b9f726343a30928bd9c440b",
+                "reference": "4e6dc466b02bdb211b9f726343a30928bd9c440b",
                 "shasum": ""
             },
             "require": {
@@ -1112,7 +1112,7 @@
                 "elgg",
                 "plugin"
             ],
-            "time": "2021-06-10T11:45:24+00:00"
+            "time": "2021-08-25T07:34:52+00:00"
         },
         {
             "name": "eloquent/composer-config-reader",
@@ -1899,29 +1899,28 @@
         },
         {
             "name": "laminas/laminas-mime",
-            "version": "2.8.0",
+            "version": "2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-mime.git",
-                "reference": "9a59704f33106427a384d0ae421f96043174093a"
+                "reference": "02cc861f704d468726866457dcf8338d1fe74e76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-mime/zipball/9a59704f33106427a384d0ae421f96043174093a",
-                "reference": "9a59704f33106427a384d0ae421f96043174093a",
+                "url": "https://api.github.com/repos/laminas/laminas-mime/zipball/02cc861f704d468726866457dcf8338d1fe74e76",
+                "reference": "02cc861f704d468726866457dcf8338d1fe74e76",
                 "shasum": ""
             },
             "require": {
                 "laminas/laminas-stdlib": "^2.7 || ^3.0",
-                "laminas/laminas-zendframework-bridge": "^1.0",
-                "php": "^7.3 || ~8.0.0"
+                "php": "^7.3 || ~8.0.0 || ~8.1.0"
             },
-            "replace": {
-                "zendframework/zend-mime": "^2.7.2"
+            "conflict": {
+                "zendframework/zend-mime": "*"
             },
             "require-dev": {
-                "laminas/laminas-coding-standard": "~1.0.0",
-                "laminas/laminas-mail": "^2.6",
+                "laminas/laminas-coding-standard": "~2.2.1",
+                "laminas/laminas-mail": "^2.12",
                 "phpunit/phpunit": "^9.3"
             },
             "suggest": {
@@ -1943,21 +1942,13 @@
                 "laminas",
                 "mime"
             ],
-            "support": {
-                "chat": "https://laminas.dev/chat",
-                "docs": "https://docs.laminas.dev/laminas-mime/",
-                "forum": "https://discourse.laminas.dev",
-                "issues": "https://github.com/laminas/laminas-mime/issues",
-                "rss": "https://github.com/laminas/laminas-mime/releases.atom",
-                "source": "https://github.com/laminas/laminas-mime"
-            },
             "funding": [
                 {
                     "url": "https://funding.communitybridge.org/projects/laminas-project",
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-02-16T17:40:06+00:00"
+            "time": "2021-09-03T02:18:35+00:00"
         },
         {
             "name": "laminas/laminas-servicemanager",
