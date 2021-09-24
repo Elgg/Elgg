@@ -1,3 +1,18 @@
+<a name="4.0.0"></a>
+## 4.0.0  (2021-09-24)
+
+#### Contributors
+
+* Jerôme Bakker (11)
+* Jeroen Dalsem (4)
+
+#### Bug Fixes
+
+* **cli:** allow batch upgrades to run indefinitely ([5b6b4419](https://github.com/Elgg/Elgg/commit/5b6b441909d0d6371b6c2d7ff81f82b7e2eaaeee))
+* **i18n:** allowed languages returns filtered language keys ([ff574222](https://github.com/Elgg/Elgg/commit/ff57422266e5b25de59f485c643e213104c48260))
+* **upgrade:** content owner subscription is now an async upgrade ([d8abe11c](https://github.com/Elgg/Elgg/commit/d8abe11c4e8033f9ece8a5b8c97d6808c9073c18))
+
+
 <a name="4.0.0-rc.1"></a>
 ### 4.0.0-rc.1  (2021-09-10)
 
