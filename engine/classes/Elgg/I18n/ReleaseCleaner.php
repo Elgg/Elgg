@@ -2,7 +2,9 @@
 
 namespace Elgg\I18n;
 
+use Elgg\Database\Plugins;
 use Elgg\Includer;
+use Elgg\Project\Paths;
 
 /**
  * Removes invalid language files from an installation
@@ -27,7 +29,7 @@ class ReleaseCleaner {
 	 * @param string[] $codes Valid language codes
 	 */
 	public function __construct(array $codes = []) {
-		if (!$codes) {
+		if (empty($codes)) {
 			$codes = elgg()->locale->getLanguageCodes();
 		}
 		$this->codes = $codes;
@@ -40,28 +42,32 @@ class ReleaseCleaner {
 	 *
 	 * @return void
 	 */
-	public function cleanInstallation($dir) {
-		$dir = rtrim($dir, '/\\');
-
-		if (is_dir("$dir/install/languages")) {
-			$this->cleanLanguagesDir("$dir/install/languages");
+	public function cleanInstallation(string $dir): void {
+		$dir = Paths::sanitize($dir, false);
+		
+		if (is_dir("{$dir}/install/languages")) {
+			$this->cleanLanguagesDir("{$dir}/install/languages");
 		}
 
-		if (is_dir("$dir/languages")) {
-			$this->cleanLanguagesDir("$dir/languages");
+		if (is_dir("{$dir}/languages")) {
+			$this->cleanLanguagesDir("{$dir}/languages");
 		}
 
-		$dir = "$dir/mod";
+		$mods = new \DirectoryIterator("{$dir}/mod");
 
-		foreach (scandir($dir) as $entry) {
-			if ($entry[0] === '.') {
+		foreach ($mods as $mod) {
+			if ($mod->isDot() || !$mod->isDir()) {
 				continue;
 			}
 
-			$path = "$dir/$entry";
-
-			if (is_dir("$path/languages")) {
-				$this->cleanLanguagesDir("$path/languages");
+			if (!in_array($mod->getFilename(), Plugins::BUNDLED_PLUGINS)) {
+				// not a core plugin
+				continue;
+			}
+			
+			if (is_dir("{$mod->getPathname()}/languages")) {
+				// only process plugins which have translations
+				$this->cleanLanguagesDir("{$mod->getPathname()}/languages");
 			}
 		}
 	}
@@ -73,31 +79,30 @@ class ReleaseCleaner {
 	 *
 	 * @return void
 	 */
-	public function cleanLanguagesDir($dir) {
-		$dir = rtrim($dir, '/\\');
+	public function cleanLanguagesDir(string $dir): void {
+		$dir = Paths::sanitize($dir, false);
 
-		foreach (scandir($dir) as $entry) {
-			if ($entry[0] === '.') {
+		$files = new \DirectoryIterator($dir);
+		foreach ($files as $file) {
+			if ($file->isDot() || !$file->isFile()) {
 				continue;
 			}
 
-			if (pathinfo($entry, PATHINFO_EXTENSION) !== 'php') {
+			if ($file->getExtension() !== 'php') {
 				continue;
 			}
 
-			$path = "$dir/$entry";
-
-			$code = basename($entry, '.php');
+			$code = $file->getBasename('.php');
 			if (!in_array($code, $this->codes)) {
 				$code = $this->normalizeLanguageCode($code);
 
 				if (in_array($code, $this->codes)) {
 					// rename file to lowercase
-					rename($path, "$dir/$code.php");
-					$this->log[] = "Renamed $path to $code.php";
+					rename($file->getPathname(), "{$dir}/{$code}.php");
+					$this->log[] = "Renamed {$file->getPathname()} to {$code}.php";
 				} else {
-					unlink($path);
-					$this->log[] = "Removed $path";
+					unlink($file->getPathname());
+					$this->log[] = "Removed {$file->getPathname()}";
 				}
 			}
 			
@@ -172,7 +177,7 @@ class ReleaseCleaner {
 			// something was changed
 			file_put_contents($translation_file, $contents);
 			
-			$this->log[] = "Cleanen empty translations from {$translation_file}";
+			$this->log[] = "Cleaned empty translations from {$translation_file}";
 		}
 	}
 	
@@ -182,12 +187,11 @@ class ReleaseCleaner {
 	 * @param string $code Language code
 	 *
 	 * @return string
-	 *
-	 * @internal
 	 */
-	protected function normalizeLanguageCode(string $code) {
+	protected function normalizeLanguageCode(string $code): string {
 		$code = strtolower($code);
 		$code = preg_replace('~[^a-z0-9]~', '_', $code);
+		
 		return $code;
 	}
 }
