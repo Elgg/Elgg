@@ -81,15 +81,11 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 				}
 			}).done(function (output, statusText, jqXHR) {
 				$tab.data('loaded', true);
-				$target.removeClass('elgg-ajax-loader');
-				if (jqXHR.AjaxData.status === -1) {
-					$target.html(elgg.echo('ajax:error'));
-					return;
-				} else {
-					$target.html(output);
-				}
-
+				$target.removeClass('elgg-ajax-loader').html(output);
+				
 				changeTab($tab, true);
+			}).fail(function() {
+				$target.removeClass('elgg-ajax-loader').html(elgg.echo('ajax:error'));
 			});
 		}
 	};
