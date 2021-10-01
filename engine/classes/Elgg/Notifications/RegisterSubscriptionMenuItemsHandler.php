@@ -32,6 +32,10 @@ class RegisterSubscriptionMenuItemsHandler {
 			return;
 		}
 		
+		if (!elgg_is_logged_in()) {
+			return;
+		}
+		
 		$link_classes = [];
 		if ($hook->getParam('name') === 'title') {
 			$link_classes = [
