@@ -30,7 +30,19 @@ $get_language_key = function(\ElggEntity $entity, string $default_postfix) {
 $checkboxes = '';
 $mute_guids = [];
 
-if (!elgg_is_empty($entity->getDisplayName())) {
+if ($entity instanceof \ElggComment) {
+	$commented_entity = $entity->getContainerEntity();
+	$mute_guids[] = $commented_entity->guid;
+	
+	$checkboxes .= elgg_view_field([
+		'#type' => 'checkbox',
+		'#label' => elgg_echo($get_language_key($commented_entity, 'entity'), [$commented_entity->getDisplayName()]),
+		'name' => "mute[{$commented_entity->guid}]",
+		'value' => 1,
+		'switch' => true,
+		'checked' => $commented_entity->hasMutedNotifications($recipient->guid),
+	]);
+} elseif (!elgg_is_empty($entity->getDisplayName())) {
 	$mute_guids[] = $entity->guid;
 	
 	$checkboxes .= elgg_view_field([
@@ -43,7 +55,7 @@ if (!elgg_is_empty($entity->getDisplayName())) {
 	]);
 }
 
-$container = $entity->getContainerEntity();
+$container = ($entity instanceof ElggComment) ? $entity->getContainerEntity()->getContainerEntity() : $entity->getContainerEntity();
 if (($container instanceof \ElggGroup || $container instanceof \ElggUser) && !in_array($container->guid, $mute_guids)) {
 	$mute_guids[] = $container->guid;
 	
