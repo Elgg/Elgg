@@ -45,19 +45,30 @@ class RegisterSubscriptionMenuItemsHandler {
 		}
 		
 		$has_subscriptions = $entity->hasSubscriptions();
-		
+
 		// subscribe
-		$result[] = \ElggMenuItem::factory([
+		$subscribe_options = [
 			'name' => 'entity_subscribe',
 			'icon' => 'bell',
 			'text' => elgg_echo('entity:subscribe'),
-			'href' => elgg_generate_action_url('entity/subscribe', [
-				'guid' => $entity->guid,
-			]),
+			'href' => false,
 			'item_class' => $has_subscriptions ? 'hidden' : '',
 			'link_class' => $link_classes,
-			'data-toggle' => 'entity_mute',
-		]);
+		];
+		
+		// check if it makes sense to enable the subscribe button
+		$has_preferences = !empty(array_keys(array_filter(elgg_get_logged_in_user_entity()->getNotificationSettings())));
+		if ($has_preferences) {
+			$subscribe_options['href'] = elgg_generate_action_url('entity/subscribe', [
+				'guid' => $entity->guid,
+			]);
+			$subscribe_options['data-toggle'] = 'entity_mute';
+		} else {
+			$subscribe_options['link_class'][] = 'elgg-state-disabled';
+			$subscribe_options['title']= elgg_echo('entity:subscribe:disabled');
+		}
+		
+		$result[] = \ElggMenuItem::factory($subscribe_options);
 		
 		// mute
 		$result[] = \ElggMenuItem::factory([
