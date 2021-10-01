@@ -1596,6 +1596,7 @@ To reply or view the original item, click here:
 	'entity:delete:fail' => '%s could not be deleted.',
 	
 	'entity:subscribe' => "Subscribe",
+	'entity:subscribe:disabled' => "Your default notification settings prevent you from subscribing to this content",
 	'entity:subscribe:success' => "You've successfully subscribed to %s",
 	'entity:subscribe:fail' => "An error occured while subscribing to %s",
 	

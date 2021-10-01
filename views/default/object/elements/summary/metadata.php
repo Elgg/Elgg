@@ -14,8 +14,12 @@ if (!isset($metadata)) {
 	
 	$entity = elgg_extract('entity', $vars);
 	$show_entity_menu_default = true;
-	if ($entity instanceof \ElggEntity && stripos(current_page_url(), $entity->getURL()) !== false) {
-		$show_entity_menu_default = false;
+	if ($entity instanceof \ElggEntity) {
+		$entity_url = $entity->getURL();
+		if (!empty($entity_url) && stripos(current_page_url(), $entity_url) !== false) {
+			// probably on a full view of an entity
+			$show_entity_menu_default = false;
+		}
 	}
 	
 	$show_entity_menu = elgg_extract('show_entity_menu', $vars, $show_entity_menu_default);

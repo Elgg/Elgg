@@ -17,6 +17,7 @@ use Elgg\Security\UrlSigner;
 use Elgg\Views\TableColumn\ColumnFactory;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Elgg\Helpers\Application\FooNonHttpExceptionController;
 
 /**
  * @group UnitTests
@@ -501,5 +502,48 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(ELGG_HTTP_FOUND, $response->getStatusCode());
 		$this->assertEquals($output, $response->getContent());
 		$this->assertEquals(elgg_normalize_site_url('/phpunit'), $response->getTargetUrl());
+	}
+	
+	function testHandlesRequestToRegisteredActionRouteWithHttpExceptionInXhr() {
+
+		$request = $this->prepareHttpRequest('action/foo', 'POST', [], 1, true);
+
+		$app = $this->createMockApplication([
+			'request' => $request,
+		]);
+
+		$app->_services->routes->register('action:foo', [
+			'path' => '/action/foo',
+			'controller' => FooController::class,
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
+		]);
+		
+		ob_start();
+		$response = $app->index();
+		$output = ob_get_clean();
+
+		$this->assertInstanceOf(\Symfony\Component\HttpFoundation\Response::class, $response);
+		$this->assertEquals(ELGG_HTTP_UNAUTHORIZED, $response->getStatusCode());
+	}
+	
+	function testHandlesRequestToRegisteredActionRouteWithNonHttpExceptionInXhr() {
+
+		$request = $this->prepareHttpRequest('action/foo', 'POST', ['echo' => 'Hello'], 1, true);
+
+		$app = $this->createMockApplication([
+			'request' => $request,
+		]);
+
+		$app->_services->routes->register('action:foo', [
+			'path' => '/action/foo',
+			'controller' => FooNonHttpExceptionController::class,
+		]);
+		
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage('Hello');
+		
+		$app->index();
 	}
 }
