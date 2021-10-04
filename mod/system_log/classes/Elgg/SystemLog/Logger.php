@@ -30,14 +30,24 @@ class Logger {
 	 *
 	 * @param \Elgg\Event $event 'all', 'all'
 	 *
-	 * @return true
+	 * @return void
 	 */
 	public static function listen(\Elgg\Event $event) {
-		if (($event->getType() != 'systemlog') && ($event->getName() != 'log')) {
-			elgg_trigger_event('log', 'systemlog', ['object' => $event->getObject(), 'event' => $event->getName()]);
+		$type = $event->getType();
+		$name = $event->getName();
+		
+		if ($type === 'systemlog' && $name === 'log') {
+			return;
 		}
-	
-		return true;
+		
+		// ignore before and after events if there are no event handlers registered
+		if (strpos($name, ':after') > 0 || strpos($name, ':before') > 0) {
+			if (!elgg()->events->hasHandler($name, $type) && !elgg()->events->hasHandler($name, 'all')) {
+				return;
+			}
+		}
+		
+		elgg_trigger_event('log', 'systemlog', ['object' => $event->getObject(), 'event' => $event->getName()]);
 	}
 	
 	/**
