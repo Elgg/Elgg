@@ -98,7 +98,7 @@ Elgg makes it easy to query specific for entities of a given subtype(s), as well
 Subtypes are most commonly given to instances of ``ElggEntity`` to denote the kind of content created.
 E.g. the blog plugin creates objects with subtype ``"blog"``.
 
-By default, users, groups and sites have the the subtypes of ``user``, ``group`` and ``site`` respectively.
+By default, users, groups and sites have the subtypes of ``user``, ``group`` and ``site`` respectively.
 
 Plugins can use custom entity classes that extend the base type class. To do so, they need to register their class at
 runtime (e.g. in the ``'init','system'`` handler), using ``elgg_set_entity_class()``.
