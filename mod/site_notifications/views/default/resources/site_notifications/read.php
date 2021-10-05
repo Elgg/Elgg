@@ -13,6 +13,7 @@ $list = elgg_list_entities([
 	'metadata_name_value_pairs' => [
 		'read' => true,
 	],
+	'pagination_behaviour' => 'ajax-replace',
 ]);
 
 if (empty($list)) {
