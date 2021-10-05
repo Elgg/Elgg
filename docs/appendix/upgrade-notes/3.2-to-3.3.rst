@@ -59,7 +59,7 @@ Deprecated layout names
 For an easy transition from Elgg 2.x to 3.x we kept some old layout names ('one_sidebar', 'one_column', 'two_sidebar' and 'content') intact
 when used in the `elgg_view_layout` function. As of Elgg 3.3 these layout names are deprecated and you should update your code to use the new 'default' layout.
 
-When changing the use of the 'content' layout name you should take into consideration that the the 'content' generates a filter menu. 
+When changing the use of the 'content' layout name you should take into consideration that the 'content' generates a filter menu. 
 This menu is slightly different from the regular 'filter' menu generated in the 'default' layout. It uses different hook names. 
 If you already disabled the filter in your layout you can change the layout without any issues.
 
