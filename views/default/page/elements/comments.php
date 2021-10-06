@@ -64,7 +64,9 @@ $comments_list = elgg_list_entities($options);
 
 $content = $comments_list;
 if ($show_add_form && $entity->canComment()) {
-	$form_vars = [];
+	$form_vars = [
+		'prevent_double_submit' => false,
+	];
 	if ($latest_first && $comments_list && elgg_get_config('comment_box_collapses')) {
 		$form_vars['class'] = 'hidden';
 		
