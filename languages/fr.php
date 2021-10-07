@@ -1598,6 +1598,7 @@ Pour y répondre ou voir la publication originale :
 	'entity:delete:fail' => 'L\'entité %s n\'a pas pu être supprimée',
 	
 	'entity:subscribe' => "S'abonner",
+	'entity:subscribe:disabled' => "Vos paramètres de notification par défaut vous empêchent de vous abonner à ce contenu",
 	'entity:subscribe:success' => "Vous vous êtes bien abonné à %s",
 	'entity:subscribe:fail' => "Une erreur est survenue lors de l'abonnement à %s",
 	
