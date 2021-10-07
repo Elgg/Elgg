@@ -241,7 +241,7 @@ return array(
 	'notification:user:user:unban' => "Stuur een notificatie wanneer een gebruiker wordt gedeblokkeerd",
 
 	'friends' => "Vrienden",
-	'collection:friends' => 'Vrienden %s',
+	'collection:friends' => '%s van vrienden',
 
 	'avatar' => 'Avatar',
 	'avatar:noaccess' => "Je hebt geen rechten om de avatar van deze gebruiker te bewerken.",

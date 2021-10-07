@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-10 14:37+0200\n"
+"POT-Creation-Date: 2021-09-24 14:21+0200\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -610,7 +610,7 @@ msgstr ""
 
 #: ../../appendix/faqs/general.rst:183 ../../appendix/faqs/general.rst:183
 msgid "Changing profile fields"
-msgstr "Modifier les champs du profil"
+msgstr "Modification des champs du profil"
 
 #: ../../appendix/faqs/general.rst:185 ../../appendix/faqs/general.rst:185
 msgid ""
@@ -1860,7 +1860,7 @@ msgstr ""
 #: ../../appendix/faqs/development.rst:159
 #: ../../appendix/faqs/development.rst:159
 msgid "Copy a plugin"
-msgstr "Copier un plugin"
+msgstr "Copie d'un plugin"
 
 #: ../../appendix/faqs/development.rst:161
 #: ../../appendix/faqs/development.rst:161
@@ -1919,7 +1919,7 @@ msgid ""
 "If you are trying to clone the ``groups`` plugin, you will have the "
 "additional difficulty that the group plugin does not set a subtype."
 msgstr ""
-"Si vous essayez de cloner le plugin ``groupes``, vous aurez la difficulté "
+"Si vous essayez de cloner le plugin ``groups``, vous aurez la difficulté "
 "supplémentaire que le plugin de groupe ne définit pas de sous-type."
 
 #: ../../appendix/history.rst:2
@@ -2121,8 +2121,8 @@ msgid ""
 msgstr ""
 "Une pré-version ``-alpha-X`` signifie qu’il y a encore des modifications de "
 "rupture prévues, mais l’ensemble des fonctionnalités de la version est gelé."
-" Aucune nouvelle fonctionnalité ou modification de rupture ne peuvent être "
-"proposées pour cette version."
+" Aucune nouvelle fonctionnalité ou modification de rupture ne peut être "
+"proposée pour cette version."
 
 #: ../../appendix/releases.rst:74
 msgid ""
@@ -2624,16 +2624,16 @@ msgid "November 2016"
 msgstr "Novembre 2016"
 
 #: ../../appendix/support.rst:61
-msgid "2.3 LTS"
-msgstr "2.3 LTS"
+msgid "2.3"
+msgstr "2.3"
 
 #: ../../appendix/support.rst:61
 msgid "April 2020"
 msgstr "Avril 2020"
 
-#: ../../appendix/support.rst:61
-msgid "**Until 4.0**"
-msgstr "**Jusqu'à la 4.0**"
+#: ../../appendix/support.rst:61 ../../appendix/support.rst:71
+msgid "September 2021"
+msgstr "Septembre 2021"
 
 #: ../../appendix/support.rst:63
 msgid "3.0"
@@ -2655,23 +2655,31 @@ msgstr "Octobre 2019"
 msgid "3.2"
 msgstr "3.2"
 
-#: ../../appendix/support.rst:67
+#: ../../appendix/support.rst:67 ../../appendix/support.rst:69
 msgid "January 2020"
 msgstr "Janvier 2020"
 
 #: ../../appendix/support.rst:69
-msgid "3.3"
-msgstr "3.3"
+msgid "3.3 LTS"
+msgstr "3.3 LTS"
 
 #: ../../appendix/support.rst:69
-msgid "January 2019"
-msgstr "Janvier 2019"
+msgid "September 2022"
+msgstr "Septembre 2022"
+
+#: ../../appendix/support.rst:69
+msgid "**Until 5.0**"
+msgstr "**Jusqu'à la 5.0**"
 
 #: ../../appendix/support.rst:71
 msgid "4.0"
 msgstr "4.0"
 
-#: ../../appendix/support.rst:71
+#: ../../appendix/support.rst:73
+msgid "5.0"
+msgstr "5.0"
+
+#: ../../appendix/support.rst:73
 msgid "TBD"
 msgstr "A FAIRE"
 
@@ -4429,8 +4437,8 @@ msgid ""
 "This means you can not rely on that metadata to exist."
 msgstr ""
 "Les messages ne recevront plus les métadonnées 'msg' pour les messages "
-"nouvellement créés. Cela signifie que vous ne pouvez plus compter sur ces "
-"métadonnées."
+"nouvellement créés. Cela signifie que vous ne pouvez plus compter sur "
+"l'existence de ces métadonnées."
 
 #: ../../appendix/upgrade-notes/1.x-to-2.0.rst:431
 msgid "Plugin Blog"
@@ -4889,7 +4897,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/1.x-to-2.0.rst:563
 msgid "Removed Plugin Hooks"
-msgstr "Hooks des plugins supprimés"
+msgstr "Hooks plugin supprimés"
 
 #: ../../appendix/upgrade-notes/1.x-to-2.0.rst:565
 msgid ""
@@ -5133,7 +5141,7 @@ msgid ""
 " component AMD modules"
 msgstr ""
 "Bibliothèque JavaScript ``elgg.ui.river`` : Supprimez les appels à "
-"``elgg_load_js('elgg.ui.river')`` du code du plugin. Mettez à jour "
+"``elgg_load_js('elgg.ui.river')`` dans le code du plugin. Mettez à jour "
 "``core/river/filter`` et ``forms/comment/save``, s’ils sont remplacés, pour "
 "exiger des modules de composants AMD"
 
@@ -6955,7 +6963,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:228
 msgid "``discussion_reply_menu_setup``: See :ref:`upgrade-discussion-replies`"
 msgstr ""
-"``discussion_reply_menu_setup`` : Voir :ref:`upgrade-discussion-replies`"
+"``discussion_reply_menu_setup`` : Voyez :ref:`upgrade-discussion-replies`"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:229
 msgid ""
@@ -8941,7 +8949,7 @@ msgid ""
 "plugins to define named routes, subsequently using route names to generate "
 "URLs using ``elgg_generate_url()``."
 msgstr ""
-"Nous avons ajouté une nouvelle API de routage à l’aide de "
+"Nous avons ajouté une nouvelle API de routage utilisant "
 "``elgg_register_route()``, qui permet aux plugins de définir des routes "
 "nommées, en utilisant par la suite des noms de routes pour générer des URLs "
 "à l’aide de ``elgg_generate_url()``."
@@ -9953,7 +9961,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1063
 msgid "Autocomplete (user and friends pickers)"
 msgstr ""
-"Autocomplétion / saisie automatique (sélecteurs d’utilisateurs et de "
+"Auto-complétion / saisie automatique (sélecteurs d’utilisateurs et de "
 "contacts)"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1065
@@ -9971,14 +9979,14 @@ msgid ""
 "Update overriden ``input/userpicker`` to support new ``only_friends`` "
 "parameter"
 msgstr ""
-"Mettez à jour le paramètre ``input/userpicker`` pour prendre en charge le "
+"Mettre à jour le paramètre ``input/userpicker`` pour prendre en charge le "
 "nouveau paramètre ``only_friends``"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1070
 msgid "Remove friends picker CSS from their stylesheets"
 msgstr ""
-"Supprimez le CSS du sélecteur de contacts (friends picker) de leurs feuilles"
-" de style"
+"Supprimer le CSS du sélecteur de contacts - \"friends picker\" - de leurs "
+"feuilles de style"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1073
 msgid "Friends collections"
@@ -10027,7 +10035,7 @@ msgid ""
 "reinstated. Notable changes between the internals of this function are;"
 msgstr ""
 "La fonction ``elgg_delete_river()``, qui avait été dépréciée dans la version"
-" 2.3, a été rétablie. Des changements notables internes de cette fonction "
+" 2.3, a été rétablie. Des changements notables internes à cette fonction "
 "sont ;"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1091
@@ -10038,7 +10046,7 @@ msgid ""
 msgstr ""
 "Elle accepte toutes les ``$options`` de ``elgg_get_river()``, mais exige "
 "qu’au moins l’un des paramètres suivants soit défini : id(s), "
-"annotation_id(s), subject_guid(s), object_guid(s), target_guid ou view(s)"
+"annotation_id(s), subject_guid(s), object_guid(s), target_guid(s) ou view(s)"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1092
 msgid ""
@@ -10073,7 +10081,7 @@ msgstr ""
 "Dans la mesure où les réponses aux discussion étaient quasiment une copie "
 "des commentaires, toutes les réponses aux discussions ont été migrées vers "
 "les commentaires. Toutes les actions, hooks, événements et clefs de "
-"traduction associées ont été supprimés."
+"traduction associés ont été supprimés."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1106
 msgid ""
@@ -10081,7 +10089,7 @@ msgid ""
 "longer under the Discussion section."
 msgstr ""
 "Les commentaires des discussions apparaîtront désormais dans la section "
-"Commentaires de la recherche, et plus sous la section Discussion."
+"Commentaires de la recherche, et plus dans la section Discussion."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1109
 msgid "Translations cleanup"
@@ -10093,7 +10101,7 @@ msgid ""
 "have been removed. If there was a generic translation available for the "
 "custom translation key, these have also been updated."
 msgstr ""
-"Tous les plugins ont été scannés pour les clefs de traduction inutilisées. "
+"Tous les plugins ont été scannés pour des clefs de traduction inutilisées. "
 "Les clefs inutilisées ont été supprimées. S’il existait une traduction "
 "générique disponible pour la clef de traduction personnalisée, celles-ci ont"
 " également été mises à jour."
@@ -10125,7 +10133,7 @@ msgid ""
 " be done via the ``xdebug`` extension or ``tail -f /path/to/error.log`` on "
 "your server."
 msgstr ""
-"L’affichage des messages d’erreur de ``elgg_log()`` et de PHP n’est "
+"L’affichage des messages d’erreur de ``elgg_log()`` et de PHP n’est plus "
 "désormais possible que via le paramètre \"Afficher à l'écran\" du plugin des"
 " développeurs. Consultez le fichier ``settings.example.php`` pour plus "
 "d’informations sur l’utilisation de ``$CONFIG->debug`` dans votre fichier "
@@ -10135,7 +10143,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1126
 msgid "Composer asset plugin no longer required"
-msgstr "Le plugin d’actifs de composer n’est plus requis"
+msgstr "Le plugin des actifs de composer n’est plus requis"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1128
 msgid ""
@@ -10144,8 +10152,8 @@ msgid ""
 "dependencies."
 msgstr ""
 "Les actifs sont maintenant chargés à partir de https://asset-packagist.org. "
-"Le plugin de composer FXP n’est plus nécessaire lors de l’installation de "
-"Elgg ou de la mise à jour des dépendances de composer."
+"Le plugin FXP composer n’est plus nécessaire lors de l’installation de Elgg "
+"ni lors de la mise à jour des dépendances de composer."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1131
 msgid "Cron logs"
