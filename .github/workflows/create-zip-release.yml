@@ -24,9 +24,11 @@ jobs:
             path: ${{ steps.branch.outputs.ZIP_FOLDER }}
 
       - name: Composer Install
+        # We need a double composer install in order to trigger the postinstall script (make symlinks to mods)
         run: |
           cd ${{ steps.branch.outputs.ZIP_FOLDER }}
           composer require --no-update elgg/elgg:${{ steps.branch.outputs.RELEASE }}
+          composer install --no-dev --prefer-dist
           composer install --no-dev --prefer-dist
           
       - name: Make Zip ${{ steps.branch.outputs.ZIP_FILE }}
