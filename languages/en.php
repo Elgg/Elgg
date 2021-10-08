@@ -1392,6 +1392,11 @@ Once you have logged in, we highly recommend that you change your password.',
 	
 	'config:i18n:allowed_languages' => "Allowed languages",
 	'config:i18n:allowed_languages:help' => "Only allowed languages can be used by users. English and the site language are always allowed.",
+	'config:i18n:who_can_change_language' => "Who can change the language",
+	'config:i18n:who_can_change_language:everyone' => "Everyone",
+	'config:i18n:who_can_change_language:admin_only' => "Administrators only",
+	'config:i18n:who_can_change_language:nobody' => "Nobody",
+	
 	'config:users:can_change_username' => "Allow users to change their username",
 	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Remove Elgg branding",

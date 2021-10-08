@@ -39,4 +39,16 @@ $result .= elgg_view_field([
 	'align' => 'horizontal',
 ]);
 
+$result .= elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('config:i18n:who_can_change_language'),
+	'name' => 'who_can_change_language',
+	'value' => elgg_get_config('who_can_change_language'),
+	'options_values' => [
+		'everyone' => elgg_echo('config:i18n:who_can_change_language:everyone'),
+		'admin_only' => elgg_echo('config:i18n:who_can_change_language:admin_only'),
+		'nobody' => elgg_echo('config:i18n:who_can_change_language:nobody'),
+	],
+]);
+
 echo elgg_view_module('info', elgg_echo('admin:settings:i18n'), $result);
