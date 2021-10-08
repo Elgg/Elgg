@@ -31,7 +31,6 @@ jobs:
           
       - name: Make Zip ${{ steps.branch.outputs.ZIP_FILE }}
         run: |
-          cd ..
           zip -r ${{ steps.branch.outputs.ZIP_FILE }} ${{ steps.branch.outputs.ZIP_FOLDER }} -x '*/.git/*'
 
       - name: Upload Asset
