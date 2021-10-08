@@ -36,7 +36,7 @@ jobs:
       - name: Upload Asset
         uses: ncipollo/release-action@v1
         with:
-            artifacts: ../${{ steps.branch.outputs.ZIP_FILE }}
+            artifacts: ${{ steps.branch.outputs.ZIP_FILE }}
             token: ${{ secrets.GITHUB_TOKEN }}
             artifactErrorsFailBuild: true
             allowUpdates: true
