@@ -106,6 +106,11 @@ abstract class IntegrationTestCase extends BaseTestCase {
 
 		$app->bootCore();
 		
+		// set custom config values again (as they might be overriden by DB config values
+		foreach ($custom_config_values as $key => $value) {
+			$app->_services->config->$key = $value;
+		}
+		
 		// set correct base classes for testing purposes
 		$app->_services->entityTable->setEntityClass('object', 'plugin', \Elgg\Mocks\ElggPlugin::class);
 
