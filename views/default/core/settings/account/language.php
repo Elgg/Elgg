@@ -10,6 +10,13 @@ if (!$user instanceof ElggUser) {
 	return;
 }
 
+$who_can_change_language = elgg_get_config('who_can_change_language');
+if ($who_can_change_language === 'nobody') {
+	return;
+} elseif ($who_can_change_language === 'admin_only' && !elgg_is_admin_logged_in()) {
+	return;
+}
+
 $options = elgg()->translator->getInstalledTranslations(true);
 $options = array_intersect_key($options, array_flip(elgg()->translator->getAllowedLanguages()));
 
