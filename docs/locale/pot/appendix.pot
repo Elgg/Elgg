@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-24 14:21+0200\n"
+"POT-Creation-Date: 2021-10-08 14:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6946,7 +6946,7 @@ msgid "For an easy transition from Elgg 2.x to 3.x we kept some old layout names
 msgstr ""
 
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:62
-msgid "When changing the use of the 'content' layout name you should take into consideration that the the 'content' generates a filter menu. This menu is slightly different from the regular 'filter' menu generated in the 'default' layout. It uses different hook names. If you already disabled the filter in your layout you can change the layout without any issues."
+msgid "When changing the use of the 'content' layout name you should take into consideration that the 'content' generates a filter menu. This menu is slightly different from the regular 'filter' menu generated in the 'default' layout. It uses different hook names. If you already disabled the filter in your layout you can change the layout without any issues."
 msgstr ""
 
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:67

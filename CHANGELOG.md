@@ -1,3 +1,26 @@
+<a name="4.0.1"></a>
+### 4.0.1  (2021-10-08)
+
+#### Contributors
+
+* Jerôme Bakker (11)
+* Jeroen Dalsem (7)
+
+#### Bug Fixes
+
+* **blog:** use route name as page title ([ead3647b](https://github.com/Elgg/Elgg/commit/ead3647bc5a54828cfd2c126ea247ee6c083143b))
+* **comments:** no longer disable save button after form submission ([03651f26](https://github.com/Elgg/Elgg/commit/03651f2698525963fc80c47c34511d4074b3b909))
+* **core:** do not respond with redirect on failure of ajax requests ([4222ac92](https://github.com/Elgg/Elgg/commit/4222ac9255885e32d3da0860c675af5356a626a9))
+* **notifications:**
+  * mute page of a comment shows relevant entities ([e297bda2](https://github.com/Elgg/Elgg/commit/e297bda26702b28a543a86a38d0c51ae720a87af))
+  * disable subscribe button if you can't subscribe ([ea612bb4](https://github.com/Elgg/Elgg/commit/ea612bb4cd7343e2751dbe1b7ce7323320980bdd))
+  * (un)subscribe buttons only for logged in users ([824291fb](https://github.com/Elgg/Elgg/commit/824291fbff0971bbd1998abf4dd3c128329485e0))
+* **site_notifications:** prevent input limit reached in bulk actions ([e83df87c](https://github.com/Elgg/Elgg/commit/e83df87cd7fdb21ae369680e6273785b90ee412b))
+* **systemlog:** only log before and after events if there are handlers ([5fb8189a](https://github.com/Elgg/Elgg/commit/5fb8189a42b9dc585191411ee27e851ca5a9a2c7))
+* **thewire:** output of the new wire notification in HTML e-mail ([c161429b](https://github.com/Elgg/Elgg/commit/c161429b53c541f858baacd3a5fbefb51d0e9467))
+* **views:** correct default behaviour for showing entity menu on PHP 8 ([8f9f3827](https://github.com/Elgg/Elgg/commit/8f9f3827ac81a51e4514616a011b4fdbcd6e822d))
+
+
 <a name="4.0.0"></a>
 ## 4.0.0  (2021-09-24)
 
