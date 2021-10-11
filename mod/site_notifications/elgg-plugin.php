@@ -8,6 +8,8 @@ return [
 	'settings' => [
 		'unread_cleanup_days' => 365,
 		'read_cleanup_days' => 30,
+		'unread_cleanup_interval' => 'daily',
+		'read_cleanup_interval' => 'daily',
 	],
 	'entities' => [
 		[
@@ -42,7 +44,7 @@ return [
 	],
 	'hooks' => [
 		'cron' => [
-			'daily' => [
+			'all' => [
 				'Elgg\SiteNotifications\Cron::cleanupUnreadSiteNotifications' => [],
 				'Elgg\SiteNotifications\Cron::cleanupReadSiteNotifications' => [],
 			],
