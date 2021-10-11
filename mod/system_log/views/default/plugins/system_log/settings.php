@@ -22,14 +22,10 @@ echo elgg_view_field([
 ]);
 
 echo elgg_view_field([
-	'#type' => 'select',
-	'#label' => elgg_echo('logrotate:delete'),
-	'name' => 'params[delete]',
-	'options_values' => [
-		'weekly' => elgg_echo('logrotate:week'),
-		'monthly' => elgg_echo('logrotate:month'),
-		'yearly' => elgg_echo('logrotate:year'),
-		'never' => elgg_echo('never'),
-	],
-	'value' => $plugin->delete,
+	'#type' => 'number',
+	'#label' => elgg_echo('logrotate:retention'),
+	'#help' => elgg_echo('logrotate:retention:help'),
+	'name' => 'params[retention]',
+	'value' => $plugin->retention,
+	'min' => 0,
 ]);

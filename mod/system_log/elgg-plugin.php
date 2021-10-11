@@ -8,7 +8,6 @@ return [
 	],
 	'settings' => [
 		'period' => 'never',
-		'delete' => 'never',
 	],
 	'view_extensions' => [
 		'core/settings/statistics' => [
@@ -41,6 +40,8 @@ return [
 		'cron' => [
 			'all' => [
 				'Elgg\SystemLog\Cron::rotateLogs' => [],
+			],
+			'daily' => [
 				'Elgg\SystemLog\Cron::deleteLogs' => [],
 			],
 		],

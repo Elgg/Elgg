@@ -36,28 +36,23 @@ class Cron {
 	/**
 	 * Trigger the log deletion
 	 *
-	 * @param \Elgg\Hook $hook 'cron', 'all'
+	 * @param \Elgg\Hook $hook 'cron', 'daily'
 	 *
 	 * @return void|string
 	 */
 	public static function deleteLogs(\Elgg\Hook $hook) {
+		$retention = (int) elgg_get_plugin_setting('retention', 'system_log');
+		if ($retention < 1) {
+			return;
+		}
+		
 		$resulttext = elgg_echo('logrotate:logdeleted');
-	
-		$period = elgg_get_plugin_setting('delete', 'system_log');
-		if ($period == 'never') {
-			return;
-		}
-	
-		if ($period !== $hook->getType()) {
-			return;
-		}
-	
-		$offset = self::getSecondsInPeriod($period);
-	
+		
+		$offset = $retention * (24 * 60 * 60);
 		if (!self::deleteLog($offset)) {
 			$resulttext = elgg_echo('logrotate:lognotdeleted');
 		}
-	
+		
 		return $hook->getValue() . $resulttext;
 	}
 	
