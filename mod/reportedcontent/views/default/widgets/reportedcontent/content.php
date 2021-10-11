@@ -3,26 +3,20 @@
  * List the latest reports
  */
 
+/* @var $widget \ElggWidget */
 $widget = elgg_extract('entity', $vars);
 
-$num_display = (int) $widget->num_display ?: 4;
+elgg_require_js('elgg/reportedcontent');
 
-$list = elgg_list_entities([
+echo elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'reported_content',
-	'limit' => $num_display,
+	'limit' => (int) $widget->num_display ?: 4,
 	'pagination' => false,
 	'order_by_metadata' => [
 		'name' => 'state',
 		'direction' => 'ASC',
 		'as' => 'text',
 	],
+	'no_results' => elgg_echo('reportedcontent:none'),
 ]);
-if (!$list) {
-	$list = '<p class="mtm">' . elgg_echo('reportedcontent:none') . '</p>';
-}
-
-echo $list;
-
-// elgg_require_js() fails when widget is newly added
-?><script>require(['elgg/reportedcontent']);</script>

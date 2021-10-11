@@ -25,6 +25,7 @@ return [
 			'resource' => 'messages/inbox',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
 		'collection:object:messages:sent' => [
@@ -32,6 +33,7 @@ return [
 			'resource' => 'messages/sent',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
 		'add:object:messages' => [
