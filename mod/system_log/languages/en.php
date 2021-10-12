@@ -24,8 +24,8 @@ return array(
 
 	'logrotate:period' => 'How often should the system log be archived?',
 
-	'logrotate:logrotated' => "Log rotated\n",
-	'logrotate:lognotrotated' => "Error rotating log\n",
+	'logrotate:logrotated' => "Log rotated",
+	'logrotate:lognotrotated' => "Error rotating log",
 
 	'logrotate:delete' => 'Delete archived logs older than a',
 
@@ -33,7 +33,7 @@ return array(
 	'logrotate:month' => 'month',
 	'logrotate:year' => 'year',
 
-	'logrotate:logdeleted' => "Log deleted\n",
-	'logrotate:lognotdeleted' => "No logs deleted\n",
+	'logrotate:logdeleted' => "Log deleted",
+	'logrotate:lognotdeleted' => "No logs deleted",
 	
 );
