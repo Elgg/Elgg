@@ -5,8 +5,8 @@
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
-}
-
-.elgg-level > *:first-child {
-	margin-right: auto;
+	
+	> *:first-child {
+		margin-right: auto;
+	}
 }

@@ -39,7 +39,7 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 		return true;
 	};
 	
-	var clickLink = function (event) {
+	function clickLink(event) {
 
 		var $link = $(this);
 		if ($link.hasClass('elgg-non-link')) {

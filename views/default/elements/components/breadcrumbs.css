@@ -5,24 +5,23 @@
 	padding: 0.5rem;
 	color: $(text-color-soft);
 	font-size: 0.9rem;
+	
+	> li {
+		display: inline-block;
+		
+		&:after {
+			content: "\203A";
+			padding: 0 0.25rem;
+			font-weight: normal;
+		}
+		
+		> a {
+			display: inline-block;
+			color: $(text-color-soft);
+			
+			&:hover {
+				color: $(text-color-mild);
+			}
+		}
+	}
 }
-
-.elgg-breadcrumbs > li {
-	display: inline-block;
-}
-
-.elgg-breadcrumbs > li:after {
-	content: "\203A";
-	padding: 0 0.25rem;
-	font-weight: normal;
-}
-
-.elgg-breadcrumbs > li > a {
-	display: inline-block;
-	color: $(text-color-soft);
-}
-
-.elgg-breadcrumbs > li > a:hover {
-	color: $(text-color-mild);
-}
-

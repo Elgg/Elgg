@@ -1,23 +1,23 @@
 .elgg-nav-logo {
 	left: 0;
 	flex-grow: 1;
-}
-
-.elgg-nav-logo h1 {
-	font-size: 1.3rem;
-	line-height: 3rem;
-	font-weight: 700;
-}
-
-.elgg-nav-logo a {
-	padding: 0.5rem 1rem;
-	display: inline-block;
-}
-
-.elgg-nav-logo img {
-	max-height: 2rem;
-	vertical-align: middle;
-	line-height: 2rem;
+	
+	h1 {
+		font-size: 1.3rem;
+		line-height: 3rem;
+		font-weight: 700;
+	}
+	
+	a {
+		padding: 0.5rem 1rem;
+		display: inline-block;
+	}
+	
+	img {
+		max-height: 2rem;
+		vertical-align: middle;
+		line-height: 2rem;
+	}
 }
 
 #login-dropdown {
@@ -25,16 +25,16 @@
 	position: static;
 	top: auto;
 	right: auto;
-}
-
-#login-dropdown a {
-	padding: 0.5rem 1rem;
-	line-height: 3rem;
-	display: inline-block;
-}
-
-#login-dropdown a:hover {
-	background-color: rgba(255, 255, 255, 0.1);
+	
+	a {
+		padding: 0.5rem 1rem;
+		line-height: 3rem;
+		display: inline-block;
+		
+		&:hover {
+			background-color: rgba(255, 255, 255, 0.1);
+		}
+	}
 }
 
 #login-dropdown-box {
@@ -43,16 +43,16 @@
 	width: auto;
 	max-width: 300px;
 	position: relative;
-}
-
-#login-dropdown-box:before {
-	content: "\25b2";
-	color: #ffffff;
-	position: absolute;
-	font-size: 1rem;
-	top: -1rem;
-	right: 0;
-	margin-right: 1.5rem;
+	
+	&:before {
+		content: "\25b2";
+		color: #ffffff;
+		position: absolute;
+		font-size: 1rem;
+		top: -1rem;
+		right: 0;
+		margin-right: 1.5rem;
+	}
 }
 
 @media only $(media-desktop-up) {

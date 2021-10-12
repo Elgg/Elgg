@@ -17,7 +17,6 @@ $core_js_views = [
 	'security.js',
 	'languages.js',
 	'session.js',
-	'pageowner.js',
 	'configuration.js',
 	
 	//ui

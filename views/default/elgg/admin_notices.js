@@ -12,10 +12,6 @@ define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 		// slideUp allows dismissals without notices shifting around unpredictably
 		$li.slideUp(100);
 
-		function restore() {
-			$li.show();
-		}
-
 		ajax.action(this.href, {
 			showSuccessMessages: false
 		}).done(function() {
@@ -24,6 +20,8 @@ define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 			if (!$('.elgg-item-object-admin_notice:visible').length) {
 				$('.elgg-admin-notices').remove();
 			}
-		}).fail(restore);
+		}).fail(function() {
+			$li.show();
+		});
 	});
 });

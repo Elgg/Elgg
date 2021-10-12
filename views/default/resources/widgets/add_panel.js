@@ -9,7 +9,7 @@ define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 	 * @param {Object} event
 	 * @return void
 	 */
-	var add = function (event) {
+	function addWidget(event) {
 		event.preventDefault();
 		
 		var $item = $(this).closest('li');
@@ -35,5 +35,5 @@ define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 		});
 	};
 	
-	$(document).on('click', '.elgg-widgets-add-panel .elgg-widgets-add-actions .elgg-button-submit', add);
+	$(document).on('click', '.elgg-widgets-add-panel .elgg-widgets-add-actions .elgg-button-submit', addWidget);
 });

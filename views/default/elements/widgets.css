@@ -32,16 +32,16 @@
 .elgg-widgets-add-panel ul {
 	border-top: 1px solid $(border-color-soft);
 	margin-top: 0.5rem;
-}
-
-.elgg-widgets-add-panel ul > li {
-	padding: 0.5rem;
-	transition: background 0.2s linear;
-	border-bottom: 1px solid $(border-color-soft);
-}
-
-.elgg-widgets-add-panel ul > li:hover {
-	background: $(background-color-mild);
+	
+	> li {
+		padding: 0.5rem;
+		transition: background 0.2s linear;
+		border-bottom: 1px solid $(border-color-soft);
+		
+		&:hover {
+			background: $(background-color-mild);
+		}
+	}
 }
 
 .elgg-widgets-add-actions {
@@ -58,35 +58,37 @@
 	border: 1px solid $(border-color-soft);
 	margin: 0 0 1rem 0;
 	position: relative;
-}
-
-.elgg-module-widget.elgg-state-draggable:hover {
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.elgg-module-widget > .elgg-head {
-	background-color: $(background-color-mild);
-	padding: 0.5rem 1rem;
-	height: auto;
-	overflow: hidden;
-}
-
-.elgg-module-widget.elgg-state-draggable .elgg-widget-handle {
-	cursor: move;
-	flex-grow: 1;
-}
-
-.elgg-module-widget > .elgg-body {
-	background-color: #ffffff;
-	width: 100%;
-}
-
-.elgg-module-widget .elgg-menu-widget-container {
-	display: none;
-}
-
-.elgg-module-widget:hover .elgg-menu-widget-container {
-	display: inline-block;
+	
+	&.elgg-state-draggable {
+		&:hover {
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+		}
+		
+		.elgg-widget-handle {
+			cursor: move;
+			flex-grow: 1;
+		}
+	}
+		
+	> .elgg-head {
+		background-color: $(background-color-mild);
+		padding: 0.5rem 1rem;
+		height: auto;
+		overflow: hidden;
+	}
+	
+	> .elgg-body {
+		background-color: #ffffff;
+		width: 100%;
+	}
+	
+	.elgg-menu-widget-container {
+		display: none;
+	}
+	
+	&:hover .elgg-menu-widget-container {
+		display: inline-block;
+	}
 }
 
 .elgg-widget-edit {
@@ -105,4 +107,3 @@
 	border: 1px dashed #a1a1a3;
 	margin-bottom: 1rem;
 }
-

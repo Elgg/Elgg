@@ -6,26 +6,28 @@
 .elgg-module {
 	display: block;
 	margin-bottom: 1rem;
-}
-
-.elgg-module > .elgg-head {
-	display: flex;
-}
-
-.elgg-module > .elgg-head > .elgg-module-menu {
-	margin-left: auto;
+	
+	> .elgg-head {
+		display: flex;
+		
+		> .elgg-module-menu {
+			margin-left: auto;
+		}
+	}
 }
 
 /* ***************************************
 	ASIDE
 *************************************** */
-.elgg-module-aside > .elgg-head {
-	padding: 0.5rem 1rem;
-	border-bottom: 1px solid $(border-color-soft);
-}
-
-.elgg-module-aside > .elgg-body {
-	padding: 0.5rem;
+.elgg-module-aside {
+	> .elgg-head {
+		padding: 0.5rem 1rem;
+		border-bottom: 1px solid $(border-color-soft);
+	}
+	
+	> .elgg-body {
+		padding: 0.5rem;
+	}
 }
 
 /* ***************************************
@@ -91,18 +93,18 @@
 *************************************** */
 .elgg-module-featured {
 	border: 1px solid $(border-color-highlight);
-}
-
-.elgg-module-featured > .elgg-head {
-	background-color: $(background-color-highlight);
-	color: #ffffff;
-	padding: 0.5rem 1rem;
-	height: auto;
-	overflow: hidden;
-}
-
-.elgg-module-featured > .elgg-body {
-	padding: 1rem;
+	
+	> .elgg-head {
+		background-color: $(background-color-highlight);
+		color: #ffffff;
+		padding: 0.5rem 1rem;
+		height: auto;
+		overflow: hidden;
+	}
+	
+	> .elgg-body {
+		padding: 1rem;
+	}
 }
 
 /* ***************************************

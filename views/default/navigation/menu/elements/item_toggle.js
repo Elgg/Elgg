@@ -3,8 +3,7 @@
  */
 define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 	
-	// This function toggles a menu item that has a related toggleable menu item
-	var toggle_menu_item = function() {
+	$(document).on('click', '.elgg-menu a[data-toggle]', function() {
 		var $item_clicked = $(this).closest('li');
 		var $menu = $item_clicked.closest('.elgg-menu');
 		var other_menuitem_name = $(this).data().toggle.replace('_', '-');
@@ -41,7 +40,5 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 		
 		// Don't want to actually click the link
 		return false;
-	};
-	
-	$(document).on('click', '.elgg-menu a[data-toggle]', toggle_menu_item);
+	});
 });

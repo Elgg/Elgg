@@ -44,6 +44,8 @@ if (!empty($children)) {
 	}
 
 	$child_menu_view = elgg_view('navigation/menu/elements/section', $child_menu_vars);
+} elseif ($item->getData('show_with_empty_children') === false) {
+	return;
 }
 
 $deps = $item->getDeps();

@@ -8,14 +8,14 @@
 	color: $(text-color-soft);
 	font-size: 0.9rem;
 	min-height: 4rem;
-}
-
-.elgg-page-footer a {
-	color: $(text-color-soft);
-}
-
-.elgg-page-footer a:hover {
-	color: $(text-color-highlight);
+	
+	a {
+		color: $(text-color-soft);
+		
+		&:hover {
+			color: $(text-color-highlight);
+		}
+	}
 }
 
 /* ***************************************
@@ -30,10 +30,10 @@
 .elgg-menu-footer {
 	flex-direction: column;
 	margin-bottom: 1rem;
-}
-
-.elgg-menu-footer > li > a {
-	padding: 0.5rem 1rem;
+	
+	> li > a {
+		padding: 0.5rem 1rem;
+	}
 }
 
 @media $(media-desktop-up) {

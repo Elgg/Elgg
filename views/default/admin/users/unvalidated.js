@@ -1,11 +1,10 @@
 define(['jquery', 'elgg/spinner'], function($, spinner) {
 	
-	var get_checkboxes = function () {
+	function get_checkboxes() {
 		return $('#admin-users-unvalidated-bulk .elgg-input-checkbox[name="user_guids[]"]');
 	};
 	
-	var bulk_select_toggle = function() {
-		
+	function bulk_select_toggle() {
 		var $checkboxes = get_checkboxes();
 		
 		if ($(this).is(':checked')) {
@@ -15,8 +14,7 @@ define(['jquery', 'elgg/spinner'], function($, spinner) {
 		}
 	};
 	
-	var bulk_submit = function() {
-		
+	function bulk_submit() {
 		var $checkboxes = get_checkboxes().filter(':checked');
 		if (!$checkboxes.length) {
 			return false;
@@ -32,6 +30,5 @@ define(['jquery', 'elgg/spinner'], function($, spinner) {
 	};
 	
 	$(document).on('change', '#admin-users-unvalidated-bulk-select', bulk_select_toggle);
-	$(document).on('click', '#admin-users-unvalidated-bulk-delete', bulk_submit);
-	$(document).on('click', '#admin-users-unvalidated-bulk-validate', bulk_submit);
+	$(document).on('click', '#admin-users-unvalidated-bulk-delete, #admin-users-unvalidated-bulk-validate', bulk_submit);
 });
