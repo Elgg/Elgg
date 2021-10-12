@@ -42,6 +42,7 @@ class AdminControlPanel {
 				'icon' => 'cogs',
 				'href' => 'upgrade.php',
 				'link_class' => 'elgg-button elgg-button-action',
+				'confirm' => true,
 			]);
 		} else {
 			$return[] = \ElggMenuItem::factory([
