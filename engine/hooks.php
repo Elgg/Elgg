@@ -123,6 +123,9 @@ return [
 		],
 	],
 	'register' => [
+		'menu:admin_control_panel' => [
+			'Elgg\Menus\AdminControlPanel::register' => [],
+		],
 		'menu:admin_header' => [
 			'Elgg\Menus\AdminHeader::register' => [],
 			'Elgg\Menus\AdminHeader::registerMaintenance' => [],
