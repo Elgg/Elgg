@@ -5,12 +5,12 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-}
-
-.elgg-gallery > li {
-	padding: 0.25em;
-}
-
-.elgg-gallery.elgg-gallery-users > li {
-	padding: 0.25rem;
+	
+	&.elgg-gallery-users > li {
+		padding: 0.25rem;
+	}
+	
+	> li {
+		padding: 0.25em;
+	}
 }

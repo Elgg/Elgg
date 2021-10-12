@@ -4,27 +4,27 @@
 .elgg-image-block {
 	display: flex;
 	align-items: flex-start;
-}
-
-.elgg-image-block:after {
-	display: none;
-}
-
-.elgg-image-block .elgg-image {
-	margin-right: 1rem;
-}
-
-.elgg-image-block .elgg-image-alt {
-	margin-left: 1rem;
-	order: 1;
-}
-
-.elgg-image-block > .elgg-body {
-	flex: 1;
-}
-
-.elgg-image-block.elgg-chip {
-	align-items: center;
+	
+	&:after {
+		display: none;
+	}
+	
+	&.elgg-chip {
+		align-items: center;
+	}
+	
+	.elgg-image {
+		margin-right: 1rem;
+	}
+	
+	.elgg-image-alt {
+		margin-left: 1rem;
+		order: 1;
+	}
+	
+	> .elgg-body {
+		flex: 1;
+	}
 }
 
 /* ***************************************
@@ -37,4 +37,3 @@
 	max-width: 100%;
 	height: auto;
 }
-
