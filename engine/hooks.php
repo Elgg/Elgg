@@ -107,9 +107,6 @@ return [
 		'breadcrumbs' => [
 			\Elgg\Page\PrepareBreadcrumbsHandler::class => [],
 		],
-		'menu:page' => [
-			'Elgg\Menus\Page::cleanupUserSettingsPlugins' => [],
-		],
 		'menu:site' => [
 			'Elgg\Menus\Site::reorderItems' => [
 				'priority' => 999,

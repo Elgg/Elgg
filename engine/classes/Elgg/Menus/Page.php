@@ -107,6 +107,7 @@ class Page {
 			'href' => false,
 			'priority' => 50,
 			'section' => 'administer',
+			'show_with_empty_children' => false,
 		]);
 		
 		return $return;
@@ -397,6 +398,7 @@ class Page {
 			'text' => elgg_echo('usersettings:plugins:opt:linktext'),
 			'href' => false,
 			'section' => 'configure',
+			'show_with_empty_children' => false,
 		]);
 		
 		$active_plugins = elgg_get_plugins();
@@ -422,37 +424,6 @@ class Page {
 				'section' => 'configure',
 			]);
 		}
-		
-		return $return;
-	}
-	
-	/**
-	 * Remove the plugins menu item on the user settings page if no children
-	 *
-	 * Items can be removed by plugins, which would leave an empty menu item
-	 *
-	 * @param \Elgg\Hook $hook 'prepare', 'menu:page'
-	 *
-	 * @return void|PreparedMenu
-	 */
-	public static function cleanupUserSettingsPlugins(\Elgg\Hook $hook) {
-		/* @var $return PreparedMenu */
-		$return = $hook->getValue();
-		if (!$return->count() || !elgg_in_context('settings')) {
-			return;
-		}
-		
-		$configure = $return->getSection('configure');
-		if (!$configure->count()) {
-			return;
-		}
-		
-		$plugins = $configure->get('1_plugins');
-		if (!$plugins instanceof \ElggMenuItem || $plugins->getChildren()) {
-			return;
-		}
-		
-		$configure->remove('1_plugins');
 		
 		return $return;
 	}
