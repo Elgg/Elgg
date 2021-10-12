@@ -1568,6 +1568,7 @@ To go the the website, click here:
 	'generic_comment:none' => 'No comments',
 	'generic_comment:title' => 'Comment by %s',
 	'generic_comment:on' => '%s on %s',
+	'generic_comment:by_owner' => 'Comment by owner',
 	'generic_comments:latest:posted' => 'posted a',
 
 	'generic_comment:notification:subject' => 'Re: %s',

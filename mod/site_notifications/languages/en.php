@@ -17,8 +17,12 @@ return array(
 	
 	'site_notifications:settings:unread_cleanup_days' => 'Cleanup unread notifications after x days',
 	'site_notifications:settings:unread_cleanup_days:help' => 'Unread notifications will be cleaned up after the given number of days. Leave empty to not cleanup notifications.',
+	'site_notifications:settings:unread_cleanup_interval' => 'Cleanup unread notifications interval',
+	'site_notifications:settings:unread_cleanup_interval:help' => 'How often should the unread notifications be cleaned up. On higher activity sites you might want to increase the interval in order to keep up with the number of new site notifications.',
 	'site_notifications:settings:read_cleanup_days' => 'Cleanup read notifications after x days',
 	'site_notifications:settings:read_cleanup_days:help' => 'Read notifications will be cleaned up after the given number of days. Leave empty to not cleanup notifications.',
+	'site_notifications:settings:read_cleanup_interval' => 'Cleanup read notifications interval',
+	'site_notifications:settings:read_cleanup_interval:help' => 'How often should the read notifications be cleaned up. On higher activity sites you might want to increase the interval in order to keep up with the number of new site notifications',
 	
 	'site_notifications:empty' => 'No notifications',
 	'site_notifications:toggle_all' => 'Toggle all',
