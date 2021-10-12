@@ -34,26 +34,24 @@ class WidgetViewsRenderingTest extends ViewRenderingTestCase {
 			'admin_welcome',
 			'banned_users',
 			'content_stats',
-			'control_panel',
 			'cron_status',
 			'new_users',
 			'online_users',
 		];
 
 		foreach ($widget_types as $widget_type) {
-			$views[] = "widgets/$widget_type/content";
-			$views[] = "widgets/$widget_type/edit";
+			$views[] = "widgets/{$widget_type}/content";
+			$views[] = "widgets/{$widget_type}/edit";
 		}
 
 		return $views;
 	}
 
 	public function getDefaultViewVars() {
-		$widget = $this->createObject([
-			'subtype' => 'widget',
-		]);
 		return [
-			'entity' => $widget,
+			'entity' => $this->createObject([
+				'subtype' => 'widget',
+			]),
 		];
 	}
 }
