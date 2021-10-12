@@ -32,4 +32,31 @@ class ElggCommentUnitTest extends \Elgg\UnitTestCase {
 		
 		$session->removeLoggedInUser();
 	}
+	
+	public function testIsCreatedByContentOwner() {
+		$user_1 = $this->createUser();
+		$user_2 = $this->createUser();
+		
+		$content = $this->createObject([
+			'owner_guid' => $user_1->guid,
+		]);
+		
+		/* @var $owner_comment \ElggComment */
+		$owner_comment = $this->createObject([
+			'subtype' => 'comment',
+			'container_guid' => $content->guid,
+			'owner_guid' => $user_1->guid,
+		]);
+		
+		$this->assertTrue($owner_comment->isCreatedByContentOwner());
+		
+		/* @var $other_comment \ElggComment */
+		$other_comment = $this->createObject([
+			'subtype' => 'comment',
+			'container_guid' => $content->guid,
+			'owner_guid' => $user_2->guid,
+		]);
+		
+		$this->assertFalse($other_comment->isCreatedByContentOwner());
+	}
 }
