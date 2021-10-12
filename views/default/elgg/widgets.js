@@ -1,7 +1,5 @@
 define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function ($, elgg, Ajax) {
 
-	var widgets = {};
-
 	/**
 	 * Persist the widget's new position
 	 *
@@ -10,8 +8,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function (
 	 *
 	 * @return void
 	 */
-	widgets.move = function (event, ui) {
-
+	function moveWidget(event, ui) {
 		// elgg-widget-<guid>
 		var guidString = ui.item.attr('id');
 		guidString = guidString.substr(guidString.indexOf('elgg-widget-') + "elgg-widget-".length);
@@ -38,7 +35,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function (
 	 * @param {Object} event
 	 * @return void
 	 */
-	widgets.remove = function (event) {
+	function removeWidget(event) {
 		event.preventDefault();
 		
 		if (confirm(elgg.echo('deleteconfirm')) === false) {
@@ -58,7 +55,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function (
 	 * @param {Object} event
 	 * @return void
 	 */
-	widgets.collapseToggle = function (event) {
+	function toggleWidget(event) {
 		event.preventDefault();
 		
 		$(this).toggleClass('elgg-widget-collapsed');
@@ -73,7 +70,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function (
 	 * @param {Object} event
 	 * @return void
 	 */
-	widgets.saveSettings = function (event) {
+	function saveWidgetSettings(event) {
 		event.preventDefault();
 		
 		$(this).parent().slideToggle('medium');
@@ -109,10 +106,10 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function (
 		placeholder: 'elgg-widget-placeholder',
 		opacity: 0.8,
 		revert: 500,
-		stop: widgets.move
+		stop: moveWidget
 	});
 
-	$(document).on('click', 'a.elgg-widget-delete-button', widgets.remove);
-	$(document).on('submit', '.elgg-widget-edit > form ', widgets.saveSettings);
-	$(document).on('click', 'a.elgg-widget-collapse-button', widgets.collapseToggle);
+	$(document).on('click', 'a.elgg-widget-delete-button', removeWidget);
+	$(document).on('submit', '.elgg-widget-edit > form ', saveWidgetSettings);
+	$(document).on('click', 'a.elgg-widget-collapse-button', toggleWidget);
 });

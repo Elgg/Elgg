@@ -4,17 +4,6 @@
  * @since 1.8
  */
 define(['jquery'], function($) {
-	
-	function init () {
-		// disable checkboxes (readonly does not work for them)
-		$(document).on('click', 'input:checkbox.elgg-state-disabled, label.elgg-state-disabled > input:checkbox', function() {
-			return false;
-		});
-
-		// disable simple cache compress settings if simple cache is off
-		$('[name=require_admin_validation]').click(adminValidationToggle);
-		$('[name=simplecache_enabled]').click(simplecacheToggle);
-	}
 
 	/**
 	 * Toggles the display of the compression settings for simplecache
@@ -42,5 +31,12 @@ define(['jquery'], function($) {
 		}
 	}
 
-	init();
+	// disable checkboxes (readonly does not work for them)
+	$(document).on('click', 'input:checkbox.elgg-state-disabled, label.elgg-state-disabled > input:checkbox', function() {
+		return false;
+	});
+
+	// disable simple cache compress settings if simple cache is off
+	$('[name=require_admin_validation]').click(adminValidationToggle);
+	$('[name=simplecache_enabled]').click(simplecacheToggle);
 });

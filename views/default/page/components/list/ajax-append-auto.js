@@ -9,7 +9,7 @@ define(['jquery', 'page/components/list/ajax-append'], function ($) {
 	// be triggered. The function will be called after it stops being called for
 	// N milliseconds. If `immediate` is passed, trigger the function on the
 	// leading edge, instead of the trailing.
-	var debounce = function (func, wait, immediate) {
+	function debounce(func, wait, immediate) {
 		return function() {
 			var context = this, args = arguments;
 			var later = function() {
@@ -23,7 +23,7 @@ define(['jquery', 'page/components/list/ajax-append'], function ($) {
 		};
 	};
 	
-	var checkScroll = function() {
+	function checkScroll() {
 		var $elem = $('.elgg-list-container-ajax-append-auto .elgg-pagination-next > a:visible');
 		if (!$elem.length) {
 			return;
