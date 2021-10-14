@@ -217,7 +217,7 @@ function elgg_validate_invite_code($username, $code) {
  * @return string
  */
 function elgg_get_registration_url(array $query = [], $fragment = '') {
-	$url = elgg_normalize_url(elgg_generate_url('account:register'));
+	$url = elgg_generate_url('account:register');
 	$url = elgg_http_add_url_query_elements($url, $query) . $fragment;
 	return elgg_trigger_plugin_hook('registration_url', 'site', $query, $url);
 }
@@ -232,7 +232,7 @@ function elgg_get_registration_url(array $query = [], $fragment = '') {
  * @return string
  */
 function elgg_get_login_url(array $query = [], $fragment = '') {
-	$url = elgg_normalize_url(elgg_generate_url('account:login'));
+	$url = elgg_generate_url('account:login');
 	$url = elgg_http_add_url_query_elements($url, $query) . $fragment;
 	return elgg_trigger_plugin_hook('login_url', 'site', $query, $url);
 }
