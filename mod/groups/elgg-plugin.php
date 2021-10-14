@@ -137,6 +137,7 @@ return [
 			'middleware' => [
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
+			'detect_page_owner' => true,
 		],
 	],
 	'widgets' => [
