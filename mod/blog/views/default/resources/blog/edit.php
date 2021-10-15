@@ -27,8 +27,9 @@ if ($revision) {
 
 $body_vars = blog_prepare_form_vars($blog, $revision);
 
-$form_vars = $vars;
-$form_vars['prevent_double_submit'] = false; // action is using the submit buttons to determine type of submission, disabled buttons are not submitted
+$form_vars = [
+	'prevent_double_submit' => false, // action is using the submit buttons to determine type of submission, disabled buttons are not submitted
+];
 
 $content = elgg_view_form('blog/save', $form_vars, $body_vars);
 
