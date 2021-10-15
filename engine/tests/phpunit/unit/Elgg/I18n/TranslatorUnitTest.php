@@ -272,4 +272,17 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('Dummy FR', $app->_services->translator->translate("{$this->key}a", [], 'fr'));
 		$this->assertEquals('Dummy FR', $app->_services->translator->translate("{$this->key}a", [], 'de'));
 	}
+	
+	public function testTranslationArgumentIssues() {
+		$this->translator->addTranslation('en', [
+			'translation:arguments:test' => 'Hello %s, just testing %s',
+		]);
+		
+		// suppressing vsprintf error, because that's what we're testing
+		$this->assertEquals('translation:arguments:test', @$this->translator->translate('translation:arguments:test', ['Foo'], 'en'));
+		
+		$this->assertEquals('Hello Foo, just testing Bar', @$this->translator->translate('translation:arguments:test', ['Foo', 'Bar'], 'en'));
+		
+		$this->assertEquals('Hello Foo, just testing Bar', @$this->translator->translate('translation:arguments:test', ['Foo', 'Bar', 'Something'], 'en'));
+	}
 }
