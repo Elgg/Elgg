@@ -66,7 +66,7 @@ foreach ($notification_events as $type => $subtypes) {
 	}
 }
 
-ksort($details, SORT_NATURAL);
+ksort($details, SORT_NATURAL | SORT_FLAG_CASE);
 echo implode('', $details);
 
 echo elgg_view_field([
