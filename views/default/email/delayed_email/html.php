@@ -28,7 +28,7 @@ foreach ($notifications as $index => $notification) {
 	
 	$object = $event->getObject();
 	if (empty($object)) {
-		return;
+		continue;
 	}
 	
 	$entity = false;

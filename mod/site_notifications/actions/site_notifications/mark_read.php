@@ -5,7 +5,7 @@
 
 $notification_guids = (array) get_input('notification_id', []);
 
-if (!$notification_guids) {
+if (empty($notification_guids)) {
 	return elgg_error_response(elgg_echo('site_notifications:error:notifications_not_selected'));
 }
 

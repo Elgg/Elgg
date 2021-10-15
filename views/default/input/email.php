@@ -11,7 +11,6 @@ $vars['class'] = elgg_extract_class($vars, 'elgg-input-email');
 $defaults = [
 	'disabled' => false,
 	'autocapitalize' => 'off',
-	'autocorrect' => 'off',
 	'type' => 'email',
 ];
 

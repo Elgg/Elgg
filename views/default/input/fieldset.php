@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Renders a set of fields wrapped in a <fieldset> tag
  *
@@ -44,6 +43,8 @@ if ($legend) {
 foreach ($fields as $field) {
 	$fieldset .= elgg_view_field($field);
 }
+
+unset($vars['name']); // name isn't allowed on a DIV, but is commonly supplied to input views
 
 $fieldset = elgg_format_element('div', $vars, $fieldset);
 echo elgg_format_element('fieldset', [], $fieldset);
