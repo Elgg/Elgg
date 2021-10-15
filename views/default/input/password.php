@@ -15,7 +15,8 @@ $vars['class'] = elgg_extract_class($vars, 'elgg-input-password');
 $defaults = [
 	'disabled' => false,
 	'autocapitalize' => 'off',
-	'autocorrect' => 'off',
+	'autocomplete' => 'off',
+	'spellcheck' => 'false',
 	'type' => 'password',
 ];
 
