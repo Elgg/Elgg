@@ -100,16 +100,14 @@ class GarbageCollector {
 
 			$tables = [];
 
-			if ($result instanceof Result) {
-				$rows = $result->fetchAllAssociative();
-				foreach ($rows as $row) {
-					if (empty($row)) {
-						continue;
-					}
+			$rows = $result->fetchAllAssociative();
+			foreach ($rows as $row) {
+				if (empty($row)) {
+					continue;
+				}
 
-					foreach ($row as $element) {
-						$tables[] = $element;
-					}
+				foreach ($row as $element) {
+					$tables[] = $element;
 				}
 			}
 
