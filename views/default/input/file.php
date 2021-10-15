@@ -11,6 +11,8 @@ if (!empty($vars['value'])) {
 	echo elgg_format_element('div', [
 		'class' => 'elgg-state elgg-state-warning',
 	], elgg_echo('fileexists'));
+	
+	unset($vars['value']); // the value attribute isn't supported for file inputs
 }
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-file');
