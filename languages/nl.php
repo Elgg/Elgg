@@ -1389,6 +1389,7 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	
 	'config:i18n:allowed_languages' => "Toegestane talen",
 	'config:i18n:allowed_languages:help' => "Enkel toegestane talen kunnen gebruikt worden door de gebruikers. Engels en de taal van de site zijn altijd toegestaan.",
+	
 	'config:users:can_change_username' => "Sta gebruikers toe om hun gebruikersnaam te wijzigen",
 	'config:users:can_change_username:help' => "Indien het niet is toegestaan kan alleen een beheerder de gebruikersnaam van een gebruiker wijzigen",
 	'config:remove_branding:label' => "Verwijder Elgg uitingen",
