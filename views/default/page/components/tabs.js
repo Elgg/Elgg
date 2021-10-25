@@ -96,7 +96,7 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 	// Open selected tabs
 	// This will load any selected tabs that link to ajax views
 	$('.elgg-tabs-component').each(function() {
-		var $tabs = $(this).find('.elgg-components-tab');
+		var $tabs = $(this).find('.elgg-components-tab:not(.elgg-menu-item-has-dropdown)');
 		if (!$tabs.length) {
 			return;
 		}
