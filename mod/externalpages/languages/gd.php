@@ -23,5 +23,5 @@ return array(
 	 * Status messages
 	 */
 	'expages:posted' => "Chaidh an duilleag agad ùrachadh gu soirbheachail.",
-	'expages:error' => "Cha ghabh an duilleag seo a shàbhaladh.",
+	'expages:error' => "Cha b' urrainn dhuinn an duilleag seo a shàbhaladh.",
 );

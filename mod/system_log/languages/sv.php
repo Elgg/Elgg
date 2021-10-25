@@ -23,17 +23,16 @@ return array(
 	'logbrowser:action' => 'Handling',
 
 	'logrotate:period' => 'Hur ofta ska systemets logg arkiveras?',
-
+	
 	'logrotate:logrotated' => "Logg roterad\n",
 	'logrotate:lognotrotated' => "Fel vid rotering av logg\n",
 
-	'logrotate:delete' => 'Radera arkiverade loggar äldre än en',
+	'logrotate:logdeleted' => "Logg raderad\n",
+	'logrotate:lognotdeleted' => "Ingen logg raderad\n",
 
+	// not used any more since Elgg 4.1, can be cleaned in Elgg 5.0
+	'logrotate:delete' => 'Radera arkiverade loggar äldre än en',
 	'logrotate:week' => 'vecka',
 	'logrotate:month' => 'månad',
 	'logrotate:year' => 'år',
-
-	'logrotate:logdeleted' => "Logg raderad\n",
-	'logrotate:lognotdeleted' => "Ingen logg raderad\n",
-	
 );
