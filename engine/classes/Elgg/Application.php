@@ -721,6 +721,7 @@ class Application {
 			'constants.php',
 			'context.php',
 			'deprecated-4.0.php',
+			'deprecated-4.1.php',
 			'deprecation.php',
 			'entities.php',
 			'filestore.php',

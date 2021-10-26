@@ -77,9 +77,9 @@ class InstallCommand extends BaseCommand {
 
 		\Elgg\Application::start();
 
-		$version = elgg_get_version(true);
+		$release = elgg_get_release();
 
-		$this->notice("Elgg $version install successful");
+		$this->notice("Elgg {$release} install successful");
 		$this->notice("wwwroot: " . elgg_get_site_url());
 		$this->notice("dataroot: " . elgg_get_data_path());
 		$this->notice("cacheroot: " . elgg_get_cache_path());

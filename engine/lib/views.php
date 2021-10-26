@@ -1464,8 +1464,7 @@ function elgg_views_boot() {
 function _elgg_get_js_site_data() {
 	return [
 		'elgg.data' => (object) elgg_trigger_plugin_hook('elgg.data', 'site', null, []),
-		'elgg.version' => elgg_get_version(),
-		'elgg.release' => elgg_get_version(true),
+		'elgg.release' => elgg_get_release(),
 		'elgg.config.wwwroot' => elgg_get_site_url(),
 
 		// refresh token 3 times during its lifetime (in microseconds 1000 * 1/3)
