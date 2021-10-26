@@ -32,13 +32,11 @@ class LongText {
 			return;
 		}
 	
-		$url = 'embed';
+		$route_params = [];
 	
 		$page_owner = elgg_get_page_owner_entity();
 		if ($page_owner instanceof \ElggGroup && $page_owner->isMember()) {
-			$url = elgg_http_add_url_query_elements($url, [
-				'container_guid' => $page_owner->guid,
-			]);
+			$route_params['container_guid'] = $page_owner->guid;
 		}
 	
 		$items = $hook->getValue();
@@ -46,7 +44,7 @@ class LongText {
 			'name' => 'embed',
 			'href' => false,
 			'data-colorbox-opts' => json_encode([
-				'href' => elgg_normalize_url($url),
+				'href' => elgg_generate_url('default:embed', $route_params),
 			]),
 			'text' => elgg_echo('embed:media'),
 			'rel' => "embed-lightbox-{$id}",

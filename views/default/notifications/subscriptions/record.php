@@ -23,10 +23,7 @@ if (empty($methods)) {
 elgg_require_js('notifications/subscriptions/record');
 elgg_require_css('notifications/subscriptions/record');
 
-$icon = elgg_view('output/img', [
-	'src' => $entity->getIconURL('tiny'),
-	'alt' => $entity->getDisplayName(),
-]);
+$icon = elgg_view_entity_icon($entity, 'tiny');
 
 $preferred_methods = [];
 $has_detailed_subscriptions = false;

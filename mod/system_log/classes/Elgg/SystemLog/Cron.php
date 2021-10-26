@@ -18,7 +18,7 @@ class Cron {
 	 * @return void|string
 	 */
 	public static function rotateLogs(\Elgg\Hook $hook) {
-		$resulttext = elgg_echo('logrotate:logrotated');
+		$resulttext = elgg_echo('logrotate:logrotated') . PHP_EOL;
 	
 		$period = elgg_get_plugin_setting('period', 'system_log');
 		if ($period !== $hook->getType()) {
@@ -27,7 +27,7 @@ class Cron {
 		$offset = self::getSecondsInPeriod($period);
 	
 		if (!self::archiveLog($offset)) {
-			$resulttext = elgg_echo('logrotate:lognotrotated');
+			$resulttext = elgg_echo('logrotate:lognotrotated') . PHP_EOL;
 		}
 	
 		return $hook->getValue() . $resulttext;
@@ -46,11 +46,11 @@ class Cron {
 			return;
 		}
 		
-		$resulttext = elgg_echo('logrotate:logdeleted');
+		$resulttext = elgg_echo('logrotate:logdeleted') . PHP_EOL;
 		
 		$offset = $retention * (24 * 60 * 60);
 		if (!self::deleteLog($offset)) {
-			$resulttext = elgg_echo('logrotate:lognotdeleted');
+			$resulttext = elgg_echo('logrotate:lognotdeleted') . PHP_EOL;
 		}
 		
 		return $hook->getValue() . $resulttext;

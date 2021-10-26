@@ -21,6 +21,8 @@ class UrlHandler {
 			return;
 		}
 
-		return elgg_normalize_url("friends/collections/view/{$collection->id}");
+		return elgg_generate_url('view:access_collection:friends', [
+			'collection_id' => $collection->id,
+		]);
 	}
 }

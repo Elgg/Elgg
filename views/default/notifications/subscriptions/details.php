@@ -42,6 +42,7 @@ foreach ($entity->getSubscriptions($user->guid) as $subscription) {
 }
 
 $notification_events = elgg_get_notification_events();
+$details = [];
 foreach ($notification_events as $type => $subtypes) {
 	foreach ($subtypes as $subtype => $actions) {
 		foreach ($actions as $action => $handler) {
@@ -51,9 +52,10 @@ foreach ($notification_events as $type => $subtypes) {
 				continue;
 			}
 			
-			echo elgg_view_field([
+			$label = elgg_echo("notification:{$type}:{$subtype}:{$action}");
+			$details[$label] = elgg_view_field([
 				'#type' => 'checkboxes',
-				'#label' => elgg_echo("notification:{$type}:{$subtype}:{$action}"),
+				'#label' => $label,
 				'#class' => 'elgg-subscription-details',
 				'name' => "subscriptions[{$entity->guid}][notify:{$type}:{$subtype}:{$action}]",
 				'options' => $method_options,
@@ -63,6 +65,9 @@ foreach ($notification_events as $type => $subtypes) {
 		}
 	}
 }
+
+ksort($details, SORT_NATURAL | SORT_FLAG_CASE);
+echo implode('', $details);
 
 echo elgg_view_field([
 	'#type' => 'fieldset',

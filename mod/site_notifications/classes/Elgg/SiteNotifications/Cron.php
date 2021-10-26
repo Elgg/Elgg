@@ -2,6 +2,7 @@
 
 namespace Elgg\SiteNotifications;
 
+use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\QueryBuilder;
 
 /**
@@ -117,6 +118,9 @@ class Cron {
 				'batch' => true,
 				'batch_inc_offset' => false,
 				'batch_size' => 100,
+				'order_by' => [
+					new OrderByClause('e.time_created', 'ASC'), // oldest first
+				],
 			]);
 			
 			/* @var $entity \ElggEntity */
@@ -178,6 +182,9 @@ class Cron {
 				'batch' => true,
 				'batch_inc_offset' => false,
 				'batch_size' => 100,
+				'order_by' => [
+					new OrderByClause('e.time_created', 'ASC'), // oldest first
+				],
 			]);
 			
 			/* @var $entity \ElggEntity */

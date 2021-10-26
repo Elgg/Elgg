@@ -3,14 +3,12 @@
  * Button area for showing the add widgets panel
  */
 
-$href_options = [
+$href = elgg_generate_url('widgets:add_panel', [
 	'context' => elgg_get_context(),
 	'context_stack' => elgg_get_context_stack(),
 	'show_access' => elgg_extract('show_access', $vars, true),
 	'owner_guid' => elgg_extract('owner_guid', $vars, elgg_get_page_owner_guid()),
-];
-
-$href = elgg_normalize_url(elgg_http_add_url_query_elements('widgets/add_panel', $href_options));
+]);
 
 echo elgg_view_menu('title:widgets', [
 	'items' => [

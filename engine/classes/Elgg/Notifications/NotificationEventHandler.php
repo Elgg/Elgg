@@ -440,7 +440,7 @@ class NotificationEventHandler {
 	protected function getNotificationURL(\ElggUser $recipient, string $method): string {
 		$object = $this->event->getObject();
 		
-		return $object instanceof \ElggEntity ? $object->getURL() : '';
+		return $object instanceof \ElggData ? $object->getURL() : '';
 	}
 	
 	/**

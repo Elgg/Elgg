@@ -25,12 +25,12 @@ return array(
 	'logrotate:period' => 'How often should the system log be archived?',
 	'logrotate:retention' => 'Delete archived logs older x days',
 	'logrotate:retention:help' => 'The number of days you wish to keep the archived logs in the database. Leave empty in order not to cleanup the archived logs.',
-	
-	'logrotate:logrotated' => "Log rotated\n",
-	'logrotate:lognotrotated' => "Error rotating log\n",
 
-	'logrotate:logdeleted' => "Log deleted\n",
-	'logrotate:lognotdeleted' => "No logs deleted\n",
+	'logrotate:logrotated' => "Log rotated",
+	'logrotate:lognotrotated' => "Error rotating log",
+
+	'logrotate:logdeleted' => "Log deleted",
+	'logrotate:lognotdeleted' => "No logs deleted",
 
 	// not used any more since Elgg 4.1, can be cleaned in Elgg 5.0
 	'logrotate:delete' => 'Delete archived logs older than a',
