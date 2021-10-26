@@ -15,12 +15,7 @@ class Reports {
 	 * @return string
 	 */
 	public static function getBasic(\Elgg\Hook $hook) {
-	
-		// Get version information
-		$version = elgg_get_version();
-		$release = elgg_get_version(true);
-	
-		return $hook->getValue() . elgg_echo('diagnostics:report:basic', [$release, $version]);
+		return $hook->getValue() . elgg_echo('diagnostics:report:basic', [elgg_get_release(), elgg_get_version()]);
 	}
 	
 	/**

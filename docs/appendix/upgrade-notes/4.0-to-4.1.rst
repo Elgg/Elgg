@@ -1,0 +1,11 @@
+From 4.0 to 4.1
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+Deprecated APIs
+---------------
+
+ * ``elgg_get_version()`` use ``elgg_get_release()``

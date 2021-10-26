@@ -1443,7 +1443,6 @@ class ElggInstaller {
 
 		$sets = [
 			'installed' => time(),
-			'version' => elgg_get_version(),
 			'simplecache_enabled' => 1,
 			'system_cache_enabled' => 1,
 			'simplecache_minify_js' => true,

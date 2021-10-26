@@ -239,12 +239,6 @@ class MetadataCache {
 			return null;
 		}
 
-		$version = (int) _elgg_services()->config->version;
-		if (!empty($version) && ($version < 2016110900)) {
-			// can't use this during upgrade from 2.x to 3.0
-			return null;
-		}
-
 		$cached_values = [];
 
 		foreach ($guids as $i => $guid) {

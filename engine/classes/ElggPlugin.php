@@ -1519,7 +1519,7 @@ class ElggPlugin extends ElggObject {
 		
 		// bundled plugins use elgg version
 		if (in_array($this->getID(), Plugins::BUNDLED_PLUGINS)) {
-			return elgg_get_version(true);
+			return elgg_get_release();
 		}
 		
 		return '0.1';

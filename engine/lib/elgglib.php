@@ -549,28 +549,6 @@ function elgg_dump($value) {
 }
 
 /**
- * Get the current Elgg version information
- *
- * @param bool $human_readable Whether to return a human readable version (default: false)
- *
- * @return string|false Depending on success
- * @since 1.9
- */
-function elgg_get_version($human_readable = false) {
-	static $version, $release;
-	
-	if (!isset($version) || !isset($release)) {
-		$path = \Elgg\Application::elggDir()->getPath('version.php');
-		if (!is_file($path)) {
-			return false;
-		}
-		include $path;
-	}
-	
-	return $human_readable ? $release : $version;
-}
-
-/**
  * Builds a URL from the a parts array like one returned by {@link parse_url()}.
  *
  * @note If only partial information is passed, a partial URL will be returned.
