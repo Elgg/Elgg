@@ -16,7 +16,7 @@ $default_widgets = (int) get_input('default_widgets', 0);
 $context = get_input('context');
 
 $widget = get_entity($guid);
-if (!($widget instanceof \ElggWidget) || !$widget->saveSettings($params)) {
+if (!$widget instanceof \ElggWidget || !$widget->saveSettings($params)) {
 	return elgg_error_response(elgg_echo('widgets:save:failure'));
 }
 

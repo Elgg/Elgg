@@ -71,8 +71,8 @@ class SystemEventHandlers {
 		foreach ($widgets as $widget) {
 			elgg_register_widget_type(
 				$widget,
-				elgg_echo("admin:widget:$widget"),
-				elgg_echo("admin:widget:$widget:help"),
+				elgg_echo("admin:widget:{$widget}"),
+				elgg_echo("admin:widget:{$widget}:help"),
 				['admin']
 			);
 		}
