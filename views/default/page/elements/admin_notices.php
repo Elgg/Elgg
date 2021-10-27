@@ -22,8 +22,7 @@ if ($count > 5) {
 	$button = elgg_view('output/url', [
 		'class' => 'elgg-admin-notices-dismiss-all',
 		'text' => elgg_echo('admin:notices:delete_all', [$count]),
-		'href' => 'action/admin/delete_admin_notices',
-		'is_action' => true,
+		'href' => elgg_generate_action_url('admin/delete_admin_notices'),
 		'confirm' => true,
 		'icon' => 'times',
 	]);
