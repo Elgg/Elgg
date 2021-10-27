@@ -28,7 +28,10 @@ class Redirect {
 			throw new EntityPermissionsException();
 		}
 		
-		$entity->read = true;
+		if ($entity->owner_guid === elgg_get_logged_in_user_guid()) {
+			// only mark as read when the actual owner clicks the link, not an admin
+			$entity->read = true;
+		}
 		
 		return elgg_redirect_response($entity->getURL());
 	}

@@ -13,9 +13,13 @@ return array(
 	'widgets:river_widget:all' => 'Gnìomhachd an làraich air fad',
 
 	'widgets:group_activity:name' => 'Gnìomhachd a\' bhuidhinn',
+	'widgets:group_activity:description' => 'Seall na tha a\' dol anns na buidhnean agad',
 	'widgets:group_activity:edit:select' => 'Tagh buidheann',
+	'widgets:group_activity:content:noactivity' => 'Chan eil dad a\' dol anns a\' bhuidheann seo',
+	'widgets:group_activity:content:noselect' => 'Deasaich an widget seo gus buidheann a thaghadh',
 	
 	'collection:river' => "Gnìomhachd",
 	'collection:river:group' => "Gnìomhachd a' bhuidhinn",
+	'groups:tool:activity' => 'Cuir an comas inbhir gnìomhachd a\' bhuidhinn',
 	
 );

@@ -23,17 +23,18 @@ return array(
 	'logbrowser:action' => 'Action',
 
 	'logrotate:period' => 'A quelle fréquence les journaux système devraient-ils être archivés ?',
-
+	'logrotate:retention' => 'Supprimer les journaux archivés plus anciens que x jours',
+	'logrotate:retention:help' => 'Le nombre de jours pendant lesquels vous souhaitez conserver les journaux archivés dans la base de données. Laissez vide afin de ne pas nettoyer les journaux archivés.',
+	
 	'logrotate:logrotated' => "Rotation du journal effectuée\n",
 	'logrotate:lognotrotated' => "Erreur lors de la rotation du journal\n",
 
-	'logrotate:delete' => 'Supprimer les journaux archivés plus anciens que ',
+	'logrotate:logdeleted' => "Journal supprimé\n",
+	'logrotate:lognotdeleted' => "Aucun journal supprimé\n",
 
+	// not used any more since Elgg 4.1, can be cleaned in Elgg 5.0
+	'logrotate:delete' => 'Supprimer les journaux archivés plus anciens que ',
 	'logrotate:week' => 'semaine',
 	'logrotate:month' => 'mois',
 	'logrotate:year' => 'année',
-
-	'logrotate:logdeleted' => "Journal supprimé\n",
-	'logrotate:lognotdeleted' => "Aucun journal supprimé\n",
-	
 );

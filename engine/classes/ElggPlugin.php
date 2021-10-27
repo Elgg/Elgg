@@ -1488,7 +1488,7 @@ class ElggPlugin extends ElggObject {
 						'message' => elgg_echo('PluginException:PluginMustBeAfter', [$plugin_id]),
 						'plugin' => $this,
 					]);
-				} elseif ($position == 'before' && ($plugin->getPriority() > $dependent_plugin->getPriority())) {
+				} elseif ($position == 'before' && ($this->getPriority() > $dependent_plugin->getPriority())) {
 					throw PluginException::factory([
 						'message' => elgg_echo('PluginException:PluginMustBeBefore', [$plugin_id]),
 						'plugin' => $this,

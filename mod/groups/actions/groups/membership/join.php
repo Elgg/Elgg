@@ -53,7 +53,9 @@ if (!add_entity_relationship($user->guid, 'membership_request', $group->guid)) {
 
 $owner = $group->getOwnerEntity();
 
-$url = elgg_normalize_url("groups/requests/{$group->guid}");
+$url = elgg_generate_url('requests:group:group', [
+	'guid' => $group->guid,
+]);
 
 $subject = elgg_echo('groups:request:subject', [
 	$user->getDisplayName(),
@@ -74,6 +76,6 @@ $params = [
 ];
 
 // Notify group owner
-notify_user($owner->guid, $user->getGUID(), $subject, $body, $params);
+notify_user($owner->guid, $user->guid, $subject, $body, $params);
 
 return elgg_ok_response('', elgg_echo('groups:joinrequestmade'));

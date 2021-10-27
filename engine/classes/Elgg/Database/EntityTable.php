@@ -359,7 +359,7 @@ class EntityTable {
 		}
 
 		$row = $this->getRow($guid);
-		if (!$row) {
+		if (empty($row)) {
 			return false;
 		}
 
@@ -374,6 +374,7 @@ class EntityTable {
 		$entity = $row;
 
 		if ($entity instanceof \stdClass) {
+			// Need to check for \stdClass because the unit test mocker returns \ElggEntity classes
 			$entity = $this->rowToElggStar($entity);
 		}
 

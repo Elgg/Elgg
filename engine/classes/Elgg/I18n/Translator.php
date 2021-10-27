@@ -143,7 +143,20 @@ class Translator {
 				// only pass through if we have arguments to allow backward compatibility
 				// with manual sprintf() calls.
 				if (!empty($args)) {
-					$string = vsprintf($string, $args);
+					try {
+						$string = vsprintf($string, $args);
+						
+						if ($string === false) {
+							$string = $message_key;
+							
+							$this->getLogger()->warning("Translation error for key '{$message_key}': Too few arguments provided (" . var_export($args, true) . ')');
+						}
+					} catch (\ValueError $e) {
+						// PHP 8 throws errors
+						$string = $message_key;
+						
+						$this->getLogger()->warning("Translation error for key '{$message_key}': " . $e->getMessage());
+					}
 				}
 
 				break;

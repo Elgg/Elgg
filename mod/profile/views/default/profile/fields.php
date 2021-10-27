@@ -36,13 +36,11 @@ foreach ($fields as $field) {
 	if ($valtype === 'url' && is_string($value) && !preg_match('~^https?\://~i', $value)) {
 		$value = "http://$value";
 	}
-
-	$class = elgg_extract($shortname, $microformats, '');
-
+	
 	$output .= elgg_view('object/elements/field', [
 		'label' => elgg_extract('#label', $field),
 		'value' => elgg_format_element('span', [
-			'class' => $class,
+			'class' => elgg_extract($shortname, $microformats),
 		], elgg_view("output/{$valtype}", [
 			'value' => $value,
 		])),

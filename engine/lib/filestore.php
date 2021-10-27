@@ -163,10 +163,10 @@ function elgg_get_inline_url(\ElggFile $file, $use_cookie = false, $expires = ''
  * @since 2.2
  */
 function elgg_get_embed_url(\ElggEntity $entity, $size) {
-	return elgg_normalize_url(elgg_generate_url('serve-icon', [
+	return elgg_generate_url('serve-icon', [
 		'guid' => $entity->guid,
 		'size' => $size,
-	]));
+	]);
 }
 
 /**
