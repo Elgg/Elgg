@@ -1,6 +1,6 @@
 <?php
 
-namespace Elgg;
+namespace Elgg\HooksRegistrationService;
 
 use Elgg\Helpers\MethodMatcherTestObject;
 

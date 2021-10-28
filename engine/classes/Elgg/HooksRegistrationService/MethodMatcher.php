@@ -1,6 +1,6 @@
 <?php
 
-namespace Elgg;
+namespace Elgg\HooksRegistrationService;
 
 /**
  * Identify a static/dynamic method callable, even if contains an object to which you don't have a reference.
