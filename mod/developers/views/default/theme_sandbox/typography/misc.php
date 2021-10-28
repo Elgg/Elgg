@@ -1,7 +1,6 @@
 <ul>
 	<li>I am <a href="?abc123">the a tag</a> example</li>
 	<li>I am <abbr title="test">the abbr tag</abbr> example</li>
-	<li>I am <acronym>the acronym tag</acronym> example</li>
 	<li>I am <b>the b tag</b> example</li>
 	<li>I am <code>the code tag</code> example</li>
 	<li>I am <del>the del tag</del> example</li>

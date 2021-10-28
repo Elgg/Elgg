@@ -1,3 +1,60 @@
+<a name="4.0.2"></a>
+### 4.0.2  (2021-10-25)
+
+#### Contributors
+
+* Jerôme Bakker (21)
+* Jeroen Dalsem (6)
+
+#### Features
+
+* **site_notifications:** notification byline shows container entity ([9f43720d](https://github.com/Elgg/Elgg/commit/9f43720d949913c87c3b96cbdd1c6124850a3cb0))
+
+
+#### Bug Fixes
+
+* **blog:** don't supply full $vars to the blog/save form ([2e23f9dd](https://github.com/Elgg/Elgg/commit/2e23f9dd5fe293f736b29f0a9973b42c77f505eb))
+* **core:** use route generation instead of fixed url ([565ae3a7](https://github.com/Elgg/Elgg/commit/565ae3a73647abc117d5b1bdf8ba1c19a896c185))
+* **i18n:** catch too few arguments provided in elgg_echo() ([28609f02](https://github.com/Elgg/Elgg/commit/28609f0206d91b108c285cdd30248d8cd334b525))
+* **js:** do not click on parent menu item of tabs with children ([9b5d3073](https://github.com/Elgg/Elgg/commit/9b5d3073bb68e19f460f3b721d773372fcdc2135))
+* **messages:** use list out of bounds helper ([487c174a](https://github.com/Elgg/Elgg/commit/487c174ae6637aba140c5b7ded680659bb89d9eb))
+* **notifications:**
+  * continue when no object is found in html output ([86eb13cd](https://github.com/Elgg/Elgg/commit/86eb13cd33e041f090a2de4f784275a2ba92e3a9))
+  * set notification url for all ElggData objects ([b2ebf498](https://github.com/Elgg/Elgg/commit/b2ebf498665c121db184efd47c7927b01cde4645))
+  * settings show correct entity icons ([27dfac30](https://github.com/Elgg/Elgg/commit/27dfac3084b82d710e0eba4953d922dbb329e4ec))
+* **routes:** correctly detect page owner in certain routes ([e003a4e9](https://github.com/Elgg/Elgg/commit/e003a4e92a385605b76939507a689ff312d18e30))
+* **site_notifications:**
+  * only mark as read when the owner clicks url ([16eb05e9](https://github.com/Elgg/Elgg/commit/16eb05e96a3c0c5b2ac4dd3603e35f6a7efbe947))
+  * cleanup oldest notifications first ([897cc5f5](https://github.com/Elgg/Elgg/commit/897cc5f5d88e0b8f6af61ea7db11d15983870c35))
+  * use list out of bounds helper ([b39c55bc](https://github.com/Elgg/Elgg/commit/b39c55bc7017415d179e586846a2ee90f17993e7))
+* **views:**
+  * unset value for tag url ([1cf8d2b2](https://github.com/Elgg/Elgg/commit/1cf8d2b2139b8155e72b63c2f8e734709fd8e5b4))
+  * replace unsupported attribute ([f0473ca1](https://github.com/Elgg/Elgg/commit/f0473ca14e077a2c6ab1fd7073a548e8e316b4ca))
+
+
+<a name="4.0.1"></a>
+### 4.0.1  (2021-10-08)
+
+#### Contributors
+
+* Jerôme Bakker (11)
+* Jeroen Dalsem (7)
+
+#### Bug Fixes
+
+* **blog:** use route name as page title ([ead3647b](https://github.com/Elgg/Elgg/commit/ead3647bc5a54828cfd2c126ea247ee6c083143b))
+* **comments:** no longer disable save button after form submission ([03651f26](https://github.com/Elgg/Elgg/commit/03651f2698525963fc80c47c34511d4074b3b909))
+* **core:** do not respond with redirect on failure of ajax requests ([4222ac92](https://github.com/Elgg/Elgg/commit/4222ac9255885e32d3da0860c675af5356a626a9))
+* **notifications:**
+  * mute page of a comment shows relevant entities ([e297bda2](https://github.com/Elgg/Elgg/commit/e297bda26702b28a543a86a38d0c51ae720a87af))
+  * disable subscribe button if you can't subscribe ([ea612bb4](https://github.com/Elgg/Elgg/commit/ea612bb4cd7343e2751dbe1b7ce7323320980bdd))
+  * (un)subscribe buttons only for logged in users ([824291fb](https://github.com/Elgg/Elgg/commit/824291fbff0971bbd1998abf4dd3c128329485e0))
+* **site_notifications:** prevent input limit reached in bulk actions ([e83df87c](https://github.com/Elgg/Elgg/commit/e83df87cd7fdb21ae369680e6273785b90ee412b))
+* **systemlog:** only log before and after events if there are handlers ([5fb8189a](https://github.com/Elgg/Elgg/commit/5fb8189a42b9dc585191411ee27e851ca5a9a2c7))
+* **thewire:** output of the new wire notification in HTML e-mail ([c161429b](https://github.com/Elgg/Elgg/commit/c161429b53c541f858baacd3a5fbefb51d0e9467))
+* **views:** correct default behaviour for showing entity menu on PHP 8 ([8f9f3827](https://github.com/Elgg/Elgg/commit/8f9f3827ac81a51e4514616a011b4fdbcd6e822d))
+
+
 <a name="4.0.0"></a>
 ## 4.0.0  (2021-09-24)
 

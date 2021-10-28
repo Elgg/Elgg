@@ -4,6 +4,31 @@
 .ui-autocomplete {
 	position: absolute;
 	cursor: default;
+	background-color: #ffffff;
+	border: 1px solid $(border-color-soft);
+	overflow: hidden;
+	border-radius: 3px;
+	
+	.ui-menu-item {
+		padding: 0 4px;
+		border-radius: 3px;
+		
+		&:hover {
+			background-color: $(background-color-soft);
+		}
+	}
+	
+	a {
+		&:hover {
+			text-decoration: none;
+			color: #0078ac;
+		}
+		
+		&.ui-state-hover {
+			background-color: $(background-color-soft);
+			display: block;
+		}
+	}
 }
 
 .elgg-autocomplete-item .elgg-body {
@@ -12,32 +37,6 @@
 
 .elgg-autocomplete-item-remove {
 	cursor: pointer;
-}
-
-.ui-autocomplete {
-	background-color: #ffffff;
-	border: 1px solid $(border-color-soft);
-	overflow: hidden;
-	border-radius: 3px;
-}
-
-.ui-autocomplete .ui-menu-item {
-	padding: 0 4px;
-	border-radius: 3px;
-}
-
-.ui-autocomplete .ui-menu-item:hover {
-	background-color: $(background-color-soft);
-}
-
-.ui-autocomplete a:hover {
-	text-decoration: none;
-	color: #0078ac;
-}
-
-.ui-autocomplete a.ui-state-hover {
-	background-color: $(background-color-soft);
-	display: block;
 }
 
 .ui-helper-hidden-accessible {

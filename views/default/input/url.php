@@ -12,7 +12,6 @@ $defaults = [
 	'value' => '',
 	'disabled' => false,
 	'autocapitalize' => 'off',
-	'autocorrect' => 'off',
 	'type' => 'url'
 ];
 

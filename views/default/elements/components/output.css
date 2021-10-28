@@ -18,39 +18,41 @@ p iframe {
 	margin: 0.5rem auto;
 }
 
-.elgg-output dt {
-	font-weight: bold
-}
+.elgg-output {
+	dt {
+		font-weight: bold;
+	}
 
-.elgg-output dd {
-	margin: 0 0 1rem 1rem
+	dd {
+		margin: 0 0 1rem 1rem;
+	}
+	
+	ul,
+	ol {
+		margin: 0 1.5rem 1.5rem 0;
+		padding-left: 1.5rem;
+	}
+	
+	 ul {
+		list-style-type: disc;
+	}
+	
+	ol {
+		list-style-type: decimal;
+		list-style-position: inside;
+		padding-left: .4rem;
+	}
+	
+	table {
+		border: 1px solid $(border-color-soft);
+		
+		td {
+			padding: 0.25rem 0.5rem;
+		}
+	}
+	
+	img {
+		max-width: 100%;
+		height: auto;
+	}
 }
-
-.elgg-output ul, .elgg-output ol {
-	margin: 0 1.5rem 1.5rem 0;
-	padding-left: 1.5rem;
-}
-
-.elgg-output ul {
-	list-style-type: disc;
-}
-
-.elgg-output ol {
-	list-style-type: decimal;
-	list-style-position: inside;
-	padding-left: .4rem;
-}
-
-.elgg-output table {
-	border: 1px solid $(border-color-soft);
-}
-
-.elgg-output table td {
-	padding: 0.25rem 0.5rem;
-}
-
-.elgg-output img {
-	max-width: 100%;
-	height: auto;
-}
-

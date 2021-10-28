@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-24 14:21+0200\n"
+"POT-Creation-Date: 2021-10-25 15:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2681,7 +2681,7 @@ msgid "The following will be automaticly generated:"
 msgstr ""
 
 #: ../../guides/group-tools.rst:29
-msgid "``title``: based on the the language key ``collection:<entity_type>:<entity_subtype>:group``"
+msgid "``title``: based on the language key ``collection:<entity_type>:<entity_subtype>:group``"
 msgstr ""
 
 #: ../../guides/group-tools.rst:30
@@ -6931,7 +6931,7 @@ msgid "``object_guid`` => INT The GUID of the entity being acted upon"
 msgstr ""
 
 #: ../../guides/river.rst:33
-msgid "``target_guid`` => INT The GUID of the the object entity's container (optional)"
+msgid "``target_guid`` => INT The GUID of the object entity's container (optional)"
 msgstr ""
 
 #: ../../guides/river.rst:34
@@ -8705,7 +8705,7 @@ msgid "``page/elements/footer`` is the content that goes inside this part of the
 msgstr ""
 
 #: ../../guides/views/foot-vs-footer.rst:14
-msgid "It's content is visible to end users and usually where you would put a sitemap or other secondary global navigation, copyright info, powered by elgg, etc."
+msgid "Its content is visible to end users and usually where you would put a sitemap or other secondary global navigation, copyright info, powered by elgg, etc."
 msgstr ""
 
 #: ../../guides/views/foot-vs-footer.rst:16

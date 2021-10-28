@@ -6,6 +6,6 @@
  */
 
 return array(
-	'embed:embed' => 'Leabaich',
 	'embed:media' => 'Leabaich susbaint',
+	'embed:no_support' => 'Chan eil susbaint leabaichte sam bith ri fhaighinn',
 );

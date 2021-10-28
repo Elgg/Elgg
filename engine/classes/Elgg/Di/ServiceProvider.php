@@ -260,9 +260,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('cli', function(ServiceProvider $sp) {
-			$version = elgg_get_version(true);
-
-			$console = new \Elgg\Cli\Application('Elgg', $version);
+			$console = new \Elgg\Cli\Application('Elgg', elgg_get_release());
 			$console->setup($sp->cli_input, $sp->cli_output);
 
 			return new \Elgg\Cli(

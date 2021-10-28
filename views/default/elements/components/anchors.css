@@ -2,25 +2,27 @@
 	ANCHORS & BADGES
 *************************************** */
 
-.elgg-anchor * {
-	display: inline;
-}
-
-.elgg-anchor .elgg-icon {
-	color: inherit;
-	font-size: inherit;
-}
-
-.elgg-anchor img {
-	vertical-align: middle;
-}
-
-.elgg-anchor * + .elgg-anchor-label {
-	margin-left: 0.5rem;
-}
-
-.elgg-anchor .elgg-anchor-label + * {
-	margin-left: 0.5rem;
+.elgg-anchor {
+	* {
+		display: inline;
+		
+		+ .elgg-anchor-label {
+			margin-left: 0.5rem;
+		}
+	}
+	
+	.elgg-icon {
+		color: inherit;
+		font-size: inherit;
+	}
+	
+	img {
+		vertical-align: middle;
+	}
+	
+	.elgg-anchor-label + * {
+		margin-left: 0.5rem;
+	}
 }
 
 .elgg-badge {

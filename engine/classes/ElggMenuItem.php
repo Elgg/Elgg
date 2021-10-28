@@ -34,6 +34,9 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 		// string Identifier of this item's parent
 		'parent_name' => '',
 
+		// boolean Indicator to control if menu item should show if it has no children
+		'show_with_empty_children' => true,
+
 		// \ElggMenuItem The parent object or null
 		'parent' => null,
 

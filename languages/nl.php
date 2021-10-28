@@ -241,7 +241,7 @@ return array(
 	'notification:user:user:unban' => "Stuur een notificatie wanneer een gebruiker wordt gedeblokkeerd",
 
 	'friends' => "Vrienden",
-	'collection:friends' => 'Vrienden %s',
+	'collection:friends' => '%s van vrienden',
 
 	'avatar' => 'Avatar',
 	'avatar:noaccess' => "Je hebt geen rechten om de avatar van deze gebruiker te bewerken.",
@@ -971,6 +971,8 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'usersettings:statistics:login_history' => "Login History",
 	'usersettings:statistics:login_history:date' => "Date",
 	'usersettings:statistics:login_history:ip' => "IP Address",
+
+	'usersettings:user' => "Instellingen van %s",
 	'usersettings:user:opt:description' => "Hier kun je je gebruikersinstellingen configureren.",
 	'usersettings:user:opt:linktext' => "Wijzig je instellingen",
 
@@ -1360,7 +1362,7 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'installation:allow_user_default_access:label' => "Gebruikers standaardtoegang toestaan",
 
 	'installation:simplecache:description' => "De simple cache verhoogt de performance door statische content te cachen, waaronder sommige CSS- en Javascriptbestanden. Normaal gezien wil je dit aan hebben staan.",
-	'installation:simplecache:label' => "Gebruik simple cache",
+	'installation:simplecache:label' => "Gebruik simple cache (aangeraden)",
 
 	'installation:cache_symlink:description' => "De symbolic link naar de simple cache map staat de webserver toe om statische content te serveren zonder de engine te starten. Dat kan de performance van de server sterk verbeteren",
 	'installation:cache_symlink:label' => "Gebruik een symbolic link naar de simple cache directory (aanbevolen)",
@@ -1387,6 +1389,7 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	
 	'config:i18n:allowed_languages' => "Toegestane talen",
 	'config:i18n:allowed_languages:help' => "Enkel toegestane talen kunnen gebruikt worden door de gebruikers. Engels en de taal van de site zijn altijd toegestaan.",
+	
 	'config:users:can_change_username' => "Sta gebruikers toe om hun gebruikersnaam te wijzigen",
 	'config:users:can_change_username:help' => "Indien het niet is toegestaan kan alleen een beheerder de gebruikersnaam van een gebruiker wijzigen",
 	'config:remove_branding:label' => "Verwijder Elgg uitingen",
@@ -1431,6 +1434,7 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'admin:upgrades:none' => 'De installatie is up-to-date!',
 
 	'upgrade:success_count' => 'Geüpgraded:',
+	'upgrade:error_count' => 'Fouten: %s',
 	'upgrade:finished' => 'Upgrade is voltooid.',
 	'upgrade:finished_with_errors' => '<p>De upgrade is afgerond, maar er zijn fouten geconstateerd. Ververs de pagina en probeer de upgrade opnieuw uit te voeren.</p></p><br />Als de fouten zich opnieuw voordoen, kijk dan in je serverlog of daar een mogelijke oorzaak te vinden is. Je kunt bijstand krijgen bij het oplossen van de fout op de community van Elgg <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">in de groep \'technisch(e) support\'</a>',
 	'upgrade:should_be_skipped' => 'Geen items om te upgraden',
@@ -1473,8 +1477,10 @@ Klik hier om naar het profile te gaan:
 %s",
 
 	'email:changepassword:subject' => "Wachtwoord gewijzigd!",
+	'email:changepassword:body' => "Je wachtwoord is gewijzigd.",
 
 	'email:resetpassword:subject' => "Wachtwoord reset!",
+	'email:resetpassword:body' => "Je wachtwoord is gereset naar: %s",
 
 	'email:changereq:subject' => "Aanvraag om het wachtwoord te wijzigen.",
 	'email:changereq:body' => "Iemand (van het IP adres %s) heeft een nieuw wachtwoord aangevraagd voor dit account.
@@ -1558,6 +1564,7 @@ Klik hier om naar de website te gaan:
 	'generic_comments:latest:posted' => 'plaatste een',
 
 	'generic_comment:notification:subject' => 'Re: %s',
+	'generic_comment:notification:owner:summary' => 'Je hebt een nieuwe reactie op: %s',
 	'generic_comment:notification:owner:body' => "Je hebt een nieuwe reactie gekregen op je content.
 
 %s
@@ -1587,6 +1594,7 @@ Om te reageren of het originele item te bekijken, klik hier:
 	'entity:delete:fail' => '%s kon niet worden verwijderd.',
 	
 	'entity:subscribe' => "Volgen",
+	'entity:subscribe:disabled' => "Je standaard notificatie instellingen voorkomen dat je je kunt abonneren op deze content",
 	'entity:subscribe:success' => "Je bent succesvol geabonneerd op %s",
 	'entity:subscribe:fail' => "Er is een fout opgetreden tijdens het abonneren op %s",
 	

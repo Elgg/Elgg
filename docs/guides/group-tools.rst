@@ -26,7 +26,7 @@ If you simply wish to list some content in the group you can use the ``groups/pr
 
 The following will be automaticly generated:
 
- * ``title``: based on the the language key ``collection:<entity_type>:<entity_subtype>:group``
+ * ``title``: based on the language key ``collection:<entity_type>:<entity_subtype>:group``
  * ``content``: ``elgg_list_entities()`` based on given type/subtype
  * ``all_link``: based on the route name ``collection:<entity_type>:<entity_subtype>:group``
  * ``add_link``: based on the route name ``add:<entity_type>:<entity_subtype>:group`` and with a permissions check to the given type/subtype

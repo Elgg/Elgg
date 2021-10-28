@@ -219,6 +219,13 @@ class Settings {
 			return;
 		}
 		
+		$who_can_change_language = elgg_get_config('who_can_change_language');
+		if ($who_can_change_language === 'nobody') {
+			return;
+		} elseif ($who_can_change_language === 'admin_only' && !elgg_is_admin_logged_in()) {
+			return;
+		}
+		
 		if (!in_array($language, elgg()->translator->getAllowedLanguages())) {
 			return;
 		}

@@ -52,6 +52,8 @@ $allowed_languages[] = 'en'; // always add English (as it's the ultimate fallbac
 $allowed_languages[] = elgg_get_config('language'); // add default site language
 elgg_save_config('allowed_languages', implode(',', array_unique($allowed_languages)));
 
+elgg_save_config('who_can_change_language', get_input('who_can_change_language'));
+
 $default_limit = (int) get_input('default_limit');
 if ($default_limit < 1) {
 	return elgg_error_response(elgg_echo('admin:configuration:default_limit'));

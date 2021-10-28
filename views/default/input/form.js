@@ -1,8 +1,9 @@
 define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 
 	$(document).on('submit', '.elgg-js-ajax-form', function (e) {
+		e.preventDefault();
+		
 		var $form = $(this);
-
 		var ajax = new Ajax();
 
 		ajax.action($form.prop('action'), {
@@ -27,12 +28,9 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 				$('input[name=password]', $form).val('').focus();
 			}
 		});
-
-		e.preventDefault();
 	});
 	
 	$(document).on('submit', '.elgg-form-prevent-double-submit', function (e) {
 		$(this).find('button[type="submit"]').prop('disabled', true);
 	});
 });
-

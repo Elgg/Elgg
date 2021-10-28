@@ -1,0 +1,47 @@
+name: Create ZIP Release
+
+on:
+  release:
+    types: [created, edited]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Set ZIP filename
+        id: branch
+        run: |
+            echo ::set-output name=RELEASE::${GITHUB_REF#refs/tags/}
+            echo ::set-output name=ZIP_FOLDER::elgg-${GITHUB_REF#refs/tags/}
+            echo ::set-output name=ZIP_FILE::elgg-${GITHUB_REF#refs/tags/}.zip
+       
+      - name: Checkout Starter Project
+        uses: actions/checkout@v2
+        with:
+            repository: Elgg/starter-project
+            ref: master
+            path: ${{ steps.branch.outputs.ZIP_FOLDER }}
+
+      - name: Composer Install
+        # We need a double composer install in order to trigger the postinstall script (make symlinks to mods)
+        run: |
+          cd ${{ steps.branch.outputs.ZIP_FOLDER }}
+          composer require --no-update elgg/elgg:${{ steps.branch.outputs.RELEASE }}
+          composer install --no-dev --prefer-dist
+          composer install --no-dev --prefer-dist
+          
+      - name: Make Zip ${{ steps.branch.outputs.ZIP_FILE }}
+        run: |
+          zip -r ${{ steps.branch.outputs.ZIP_FILE }} ${{ steps.branch.outputs.ZIP_FOLDER }} -x '*/.git/*'
+
+      - name: Upload Asset
+        uses: ncipollo/release-action@v1
+        with:
+            artifacts: ${{ steps.branch.outputs.ZIP_FILE }}
+            token: ${{ secrets.GITHUB_TOKEN }}
+            artifactErrorsFailBuild: true
+            allowUpdates: true
+            omitBodyDuringUpdate: true
+            omitNameDuringUpdate: true
+            omitPrereleaseDuringUpdate: true

@@ -60,7 +60,7 @@ class Footer {
 			'name' => 'powered',
 			'text' => elgg_echo('elgg:powered'),
 			'href' => 'https://elgg.org',
-			'title' => 'Elgg ' . elgg_get_version(true),
+			'title' => 'Elgg ' . elgg_get_release(),
 			'section' => 'meta',
 			'priority' => 600,
 		]);

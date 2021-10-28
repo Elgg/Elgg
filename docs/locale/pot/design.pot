@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-24 14:21+0200\n"
+"POT-Creation-Date: 2021-10-25 15:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -303,7 +303,7 @@ msgid "Subtypes are most commonly given to instances of ``ElggEntity`` to denote
 msgstr ""
 
 #: ../../design/database.rst:101
-msgid "By default, users, groups and sites have the the subtypes of ``user``, ``group`` and ``site`` respectively."
+msgid "By default, users, groups and sites have the subtypes of ``user``, ``group`` and ``site`` respectively."
 msgstr ""
 
 #: ../../design/database.rst:103

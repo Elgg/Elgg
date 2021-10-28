@@ -23,17 +23,16 @@ return array(
 	'logbrowser:action' => 'Aktion',
 
 	'logrotate:period' => 'Wie oft sollen die Einträge im Elgglog archiviert werden?',
-
+	
 	'logrotate:logrotated' => "Elgglog archiviert\n",
 	'logrotate:lognotrotated' => "Fehler beim Archivieren des Elgglog\n",
 
-	'logrotate:delete' => 'Löschen von archivierten Elgglogs älter als',
+	'logrotate:logdeleted' => "Alte Elgglogs gelöscht\n",
+	'logrotate:lognotdeleted' => "Keine Elgglogs gelöscht\n",
 
+	// not used any more since Elgg 4.1, can be cleaned in Elgg 5.0
+	'logrotate:delete' => 'Löschen von archivierten Elgglogs älter als',
 	'logrotate:week' => 'eine Woche',
 	'logrotate:month' => 'einen Monat',
 	'logrotate:year' => 'ein Jahr',
-
-	'logrotate:logdeleted' => "Alte Elgglogs gelöscht\n",
-	'logrotate:lognotdeleted' => "Keine Elgglogs gelöscht\n",
-	
 );

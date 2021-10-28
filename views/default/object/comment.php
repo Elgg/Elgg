@@ -41,8 +41,20 @@ if ($full_view) {
 		'access' => false,
 		'title' => false,
 		'content' => $body,
+		'imprint' => elgg_extract('imprint', $vars, []),
+		'class' => elgg_extract_class($vars),
 	];
 	$params = $params + $vars;
+	
+	if ($comment->isCreatedByContentOwner()) {
+		$params['class'][] = 'elgg-comment-by-owner';
+		
+		$params['imprint'][] = [
+			'icon_name' => 'user-edit',
+			'content' => elgg_echo('generic_comment:by_owner'),
+		];
+	}
+	
 	echo elgg_view('object/elements/summary', $params);
 } else {
 	// brief view

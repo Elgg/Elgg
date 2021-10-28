@@ -57,8 +57,10 @@ On het vriendschapsverzoek te bekijken, klik hier:
 %s",
 	
 	'friends:notification:request:decline:subject' => "%s heeft je vriendschapsverzoek afgewezen",
+	'friends:notification:request:decline:message' => "%s heeft je vriendschapsverzoek afgewezen.",
 	
 	'friends:notification:request:accept:subject' => "%s heeft je vriendschapsverzoek geaccepteerd",
+	'friends:notification:request:accept:message' => "%s heeft je vriendschapsverzoek geaccepteerd.",
 	
 	'friends:action:friendrequest:revoke:fail' => "Er is een fout opgetreden tijdens het intrekken van het vriendschapsverzoek, probeer het nogmaals",
 	'friends:action:friendrequest:revoke:success' => "Het vriendschapsverzoek is ingetrokken",

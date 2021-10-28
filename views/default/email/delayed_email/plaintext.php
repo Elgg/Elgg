@@ -58,19 +58,22 @@ foreach ($notifications as $index => $notification) {
 	$sorted[$category][$object->getTimeCreated() . '_' . $index] = $notification;
 }
 
+if (empty($sorted)) {
+	// can happen if all notification objects have been removed
+	return;
+}
+
 $unknowns = elgg_extract('other', $sorted, []);
 unset($sorted['other']);
 
-ksort($sorted);
+// sort based on the actual elgg_echo of the category not the language key
+uksort($sorted, function($a, $b) {
+	return strnatcasecmp(elgg_echo($a), elgg_echo($b));
+});
 
 if (!empty($unknowns)) {
 	// add the rest to the end of the list
 	$sorted['other'] = $unknowns;
-}
-
-if (empty($sorted)) {
-	// can happen if all notification objects have been removed
-	return;
 }
 
 $output = elgg_echo('notifications:delayed_email:body:intro') . PHP_EOL . PHP_EOL;

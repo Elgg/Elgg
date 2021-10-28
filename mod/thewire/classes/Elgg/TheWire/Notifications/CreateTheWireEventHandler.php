@@ -98,9 +98,13 @@ class CreateTheWireEventHandler extends NotificationEventHandler {
 		} else {
 			$body = elgg_echo('thewire:notify:post', [$owner->getDisplayName()], $language);
 		}
-		$body .= '\n\n' . $entity->description . '\n\n';
+		
+		$body .= PHP_EOL . PHP_EOL;
+		$body .= $entity->description;
+		$body .= PHP_EOL . PHP_EOL;
+		
 		$body .= elgg_echo('thewire:notify:footer', [$entity->getURL()], $language);
-	
+		
 		return $body;
 	}
 }

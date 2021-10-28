@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-10 14:37+0200\n"
+"POT-Creation-Date: 2021-10-08 14:12+0200\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -610,7 +610,7 @@ msgstr ""
 
 #: ../../appendix/faqs/general.rst:183 ../../appendix/faqs/general.rst:183
 msgid "Changing profile fields"
-msgstr "Modifier les champs du profil"
+msgstr "Modification des champs du profil"
 
 #: ../../appendix/faqs/general.rst:185 ../../appendix/faqs/general.rst:185
 msgid ""
@@ -1860,7 +1860,7 @@ msgstr ""
 #: ../../appendix/faqs/development.rst:159
 #: ../../appendix/faqs/development.rst:159
 msgid "Copy a plugin"
-msgstr "Copier un plugin"
+msgstr "Copie d'un plugin"
 
 #: ../../appendix/faqs/development.rst:161
 #: ../../appendix/faqs/development.rst:161
@@ -1919,7 +1919,7 @@ msgid ""
 "If you are trying to clone the ``groups`` plugin, you will have the "
 "additional difficulty that the group plugin does not set a subtype."
 msgstr ""
-"Si vous essayez de cloner le plugin ``groupes``, vous aurez la difficulté "
+"Si vous essayez de cloner le plugin ``groups``, vous aurez la difficulté "
 "supplémentaire que le plugin de groupe ne définit pas de sous-type."
 
 #: ../../appendix/history.rst:2
@@ -2121,8 +2121,8 @@ msgid ""
 msgstr ""
 "Une pré-version ``-alpha-X`` signifie qu’il y a encore des modifications de "
 "rupture prévues, mais l’ensemble des fonctionnalités de la version est gelé."
-" Aucune nouvelle fonctionnalité ou modification de rupture ne peuvent être "
-"proposées pour cette version."
+" Aucune nouvelle fonctionnalité ou modification de rupture ne peut être "
+"proposée pour cette version."
 
 #: ../../appendix/releases.rst:74
 msgid ""
@@ -2624,16 +2624,16 @@ msgid "November 2016"
 msgstr "Novembre 2016"
 
 #: ../../appendix/support.rst:61
-msgid "2.3 LTS"
-msgstr "2.3 LTS"
+msgid "2.3"
+msgstr "2.3"
 
 #: ../../appendix/support.rst:61
 msgid "April 2020"
 msgstr "Avril 2020"
 
-#: ../../appendix/support.rst:61
-msgid "**Until 4.0**"
-msgstr "**Jusqu'à la 4.0**"
+#: ../../appendix/support.rst:61 ../../appendix/support.rst:71
+msgid "September 2021"
+msgstr "Septembre 2021"
 
 #: ../../appendix/support.rst:63
 msgid "3.0"
@@ -2655,23 +2655,31 @@ msgstr "Octobre 2019"
 msgid "3.2"
 msgstr "3.2"
 
-#: ../../appendix/support.rst:67
+#: ../../appendix/support.rst:67 ../../appendix/support.rst:69
 msgid "January 2020"
 msgstr "Janvier 2020"
 
 #: ../../appendix/support.rst:69
-msgid "3.3"
-msgstr "3.3"
+msgid "3.3 LTS"
+msgstr "3.3 LTS"
 
 #: ../../appendix/support.rst:69
-msgid "January 2019"
-msgstr "Janvier 2019"
+msgid "September 2022"
+msgstr "Septembre 2022"
+
+#: ../../appendix/support.rst:69
+msgid "**Until 5.0**"
+msgstr "**Jusqu'à la 5.0**"
 
 #: ../../appendix/support.rst:71
 msgid "4.0"
 msgstr "4.0"
 
-#: ../../appendix/support.rst:71
+#: ../../appendix/support.rst:73
+msgid "5.0"
+msgstr "5.0"
+
+#: ../../appendix/support.rst:73
 msgid "TBD"
 msgstr "A FAIRE"
 
@@ -4429,8 +4437,8 @@ msgid ""
 "This means you can not rely on that metadata to exist."
 msgstr ""
 "Les messages ne recevront plus les métadonnées 'msg' pour les messages "
-"nouvellement créés. Cela signifie que vous ne pouvez plus compter sur ces "
-"métadonnées."
+"nouvellement créés. Cela signifie que vous ne pouvez plus compter sur "
+"l'existence de ces métadonnées."
 
 #: ../../appendix/upgrade-notes/1.x-to-2.0.rst:431
 msgid "Plugin Blog"
@@ -4889,7 +4897,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/1.x-to-2.0.rst:563
 msgid "Removed Plugin Hooks"
-msgstr "Hooks des plugins supprimés"
+msgstr "Hooks plugin supprimés"
 
 #: ../../appendix/upgrade-notes/1.x-to-2.0.rst:565
 msgid ""
@@ -5133,7 +5141,7 @@ msgid ""
 " component AMD modules"
 msgstr ""
 "Bibliothèque JavaScript ``elgg.ui.river`` : Supprimez les appels à "
-"``elgg_load_js('elgg.ui.river')`` du code du plugin. Mettez à jour "
+"``elgg_load_js('elgg.ui.river')`` dans le code du plugin. Mettez à jour "
 "``core/river/filter`` et ``forms/comment/save``, s’ils sont remplacés, pour "
 "exiger des modules de composants AMD"
 
@@ -6955,7 +6963,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:228
 msgid "``discussion_reply_menu_setup``: See :ref:`upgrade-discussion-replies`"
 msgstr ""
-"``discussion_reply_menu_setup`` : Voir :ref:`upgrade-discussion-replies`"
+"``discussion_reply_menu_setup`` : Voyez :ref:`upgrade-discussion-replies`"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:229
 msgid ""
@@ -8941,7 +8949,7 @@ msgid ""
 "plugins to define named routes, subsequently using route names to generate "
 "URLs using ``elgg_generate_url()``."
 msgstr ""
-"Nous avons ajouté une nouvelle API de routage à l’aide de "
+"Nous avons ajouté une nouvelle API de routage utilisant "
 "``elgg_register_route()``, qui permet aux plugins de définir des routes "
 "nommées, en utilisant par la suite des noms de routes pour générer des URLs "
 "à l’aide de ``elgg_generate_url()``."
@@ -9230,8 +9238,8 @@ msgid ""
 "Update hook registrations for ``output:after, layout`` to ``view, "
 "page/layout/<layout_name>``"
 msgstr ""
-"Mettez à jour les enregistrements de hooks pour ``output:after, layout`` en "
-"``view, page/layout/<layout_name>``"
+"Mettez à jour les enregistrements pour le hooks ``output:after, layout`` "
+"vers ``view, page/layout/<layout_name>``"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:854
 msgid "Likes plugin"
@@ -9306,8 +9314,8 @@ msgid ""
 "All pages have a metadata value for ``parent_guid``, for top pages this "
 "contains ``0``."
 msgstr ""
-"Toutes les pages ont une valeur de métadonnées pour ``parent_guid``, pour "
-"les pages de premier niveau sa valeur est ``0``."
+"Toutes les pages ont une valeur de métadonnée pour ``parent_guid``, pour les"
+" pages de premier niveau celle-ci est ``0``."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:878
 msgid "Profile plugin"
@@ -9335,7 +9343,7 @@ msgstr "Le plugin Data Views n’est plus distribué avec le noyau."
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:888
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1152
 msgid "Twitter API plugin"
-msgstr "Plugin Twitter API"
+msgstr "Plugin de l'API Twitter"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:890
 msgid ""
@@ -9351,7 +9359,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:903
 msgid "Legacy URLs plugin"
-msgstr "Plugin des URLs d'origine"
+msgstr "Plugin de support des URLs d'origine"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:905
 msgid ""
@@ -9360,8 +9368,8 @@ msgid ""
 "<https://packagist.org/packages/elgg/legacy_urls>`_, in order to install it "
 "add the following to you ``composer.json`` ``require`` section:"
 msgstr ""
-"Le plugin ``legacy_urls`` a été retiré du noyau Elgg. Le plugin est toujours"
-" disponible sous la forme du package Composer `'elgg/legacy_urls "
+"Le plugin ``legacy_urls`` a été retiré du noyau de Elgg. Le plugin est "
+"toujours disponible sous la forme du package Composer `elgg/legacy_urls "
 "<https://packagist.org/packages/elgg/legacy_urls>`_. Pour l’installer, "
 "ajoutez ce qui suit à la section ``require`` de votre ``composer.json`` :"
 
@@ -9376,8 +9384,8 @@ msgid ""
 " Elgg core."
 msgstr ""
 "La vue qui liste les utilisateurs non validés a été déplacée du plugin vers "
-"le noyau Elgg. Certaines actions génériques (par exemple valider et "
-"supprimer) ont également été déplacées vers le noyau Elgg."
+"le noyau de Elgg. Certaines actions génériques (par exemple valider et "
+"supprimer) ont également été déplacées vers le noyau de Elgg."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:924
 msgid "Email delivery"
@@ -9439,8 +9447,9 @@ msgid ""
 "Topbar, navbar and header have been combined into a single responsive topbar"
 " component"
 msgstr ""
-"La barre supérieure, la barre de navigation et l’entête ont été combinés en "
-"un seul composant de barre supérieure réactive (responsive)"
+"La barre supérieure -topbar-, la barre de navigation -navbar- et l’entête "
+"-header- ont été combinés en un seul composant de barre supérieure "
+"responsive - topbar"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:945
 msgid "Default inner width is now 1280px (80rem * 16px/1rem)"
@@ -9462,7 +9471,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:948
 msgid "Menus, layout elements and other components now use flexbox"
 msgstr ""
-"Les menus, éléments de mise en page (layouts) et autres composants utilisent"
+"Les menus, éléments de mise en page -layouts- et autres composants utilisent"
 " maintenant flexbox"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:949
@@ -9484,16 +9493,16 @@ msgid ""
 " 2.5rem"
 msgstr ""
 "Les éléments de formulaire (entrées de texte, boutons et sélecteurs) ont "
-"maintenant une hauteur égale de 2.5rem"
+"maintenant tous une hauteur identique de 2.5rem"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:952
 msgid ""
 "Layout header is now positioned outside of the layout columns, which have "
 "been wrapped into ``elgg-layout-columns``"
 msgstr ""
-"L’entête de la disposition (layout) est maintenant positionné à l’extérieur "
-"des colonnes de la disposition, qui ont été enveloppées dans ``elgg-layout-"
-"columns``"
+"L’entête -header- de la disposition -layout- est maintenant positionné à "
+"l’extérieur des colonnes de la disposition, qui ont été enveloppées dans "
+"``elgg-layout-columns``"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:953
 msgid ""
@@ -9501,9 +9510,9 @@ msgid ""
 "instead of `9999999 <https://hackernoon.com/my-approach-to-using-z-index-"
 "eca67feb079c>`."
 msgstr ""
-"les propriétés z-index ont été examinés et empilés avec une itération simple"
-" au lieu de `9999999 <https://hackernoon.com/my-approach-to-using-z-index-"
-"eca67feb079c>`."
+"les propriétés z-index ont été examinées et empilées avec une itération "
+"simple au lieu de `9999999 <https://hackernoon.com/my-approach-to-using-z"
+"-index-eca67feb079c>`."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:954
 msgid ""
@@ -9527,7 +9536,7 @@ msgid ""
 "``color``: these values will be inherited from parent items"
 msgstr ""
 "``.elgg-icon`` n’a plus de ``font-size``, ``line-height`` ou ``color`` "
-"global : ces valeurs seront héritées des éléments parent"
+"global : ces valeurs seront héritées des éléments parents"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:957
 msgid "Support for ``.elgg-icon-hover`` has been dropped"
@@ -9542,7 +9551,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:960
 msgid "Read more about :doc:`Theming Principles </guides/themes>`"
 msgstr ""
-"Pour en savoir plus au sujet :doc:`Principesl pour les thèmes "
+"Pour en savoir plus au sujet des :doc:`Principes de création de thèmes "
 "</guides/themes>`"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:962
@@ -9595,8 +9604,8 @@ msgid ""
 "prevent double notifications"
 msgstr ""
 "L’action de création d’un commentaire (``action/comment/save``) a été "
-"modifiée. Si votre plugin a remplacé cette action, vous devriez jeter un "
-"oeil dessus afin d’éviter les doubles notifications"
+"modifiée. Si votre plugin a remplacé cette action, vous devriez jeter un œil"
+" dessus afin d’éviter les doubles notifications"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:975
 msgid "Object listing views"
@@ -9608,7 +9617,7 @@ msgid ""
 "listing-full-body`` wrapper"
 msgstr ""
 "``object/elements/full/body`` enveloppe maintenant l'ensemble du corps du "
-"listing dans un emballage (wrapper) ``.elgg-listing-full-body``"
+"listing dans un emballage -wrapper- ``.elgg-listing-full-body``"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:978
 msgid ""
@@ -9626,7 +9635,7 @@ msgid ""
 " need to update their uses of ``object/<subtype>`` and "
 "``resources/<handler>/view`` views."
 msgstr ""
-"Dans les plugins du noyau, les vues de ressources n'affichent plus "
+"Dans les plugins du noyau, les vues des ressources n'affichent plus "
 "comments/replies - au lieu de cela, elles transmettent un indicateur "
 "``show_responses`` à la vue de l’entité, ce qui génère les réponses et les "
 "transmet à la vue de la liste complète. Les plugins tiers devront mettre à "
@@ -9646,7 +9655,7 @@ msgid ""
 "to the full listing view"
 msgstr ""
 "``object/file`` passe désormais la vue image (specialcontent) sous la forme "
-"d'une pièce jointe ``attachment`` à la vue listing"
+"d'une pièce jointe ``attachment`` à la vue listing complète"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:984
 msgid "Menu changes"
@@ -9667,7 +9676,7 @@ msgid ""
 "performing complex operations with arrays."
 msgstr ""
 "Notez que les hooks ``register`` et ``prepare`` utilisent maintenant l’API "
-"des collections. Dans al majorité des cas, tous les hooks devraient "
+"des collections. Dans la majorité des cas, tous les hooks devraient "
 "continuer à fonctionner, tant qu’ils n’effectuent pas d’opérations complexes"
 " avec des tableaux."
 
@@ -9691,7 +9700,7 @@ msgid ""
 " flexbox or floats."
 msgstr ""
 "Tous les menus sont maintenant enveloppés par ``nav.elgg-menu-container`` "
-"pour s’assurer que plusieurs sections de menu ont un élément parent unique, "
+"pour s’assurer que plusieurs sections de menu ont un unique élément parent, "
 "et peuvent être stylisés à l’aide de flexbox ou de floats."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:994
@@ -9702,7 +9711,7 @@ msgid ""
 msgstr ""
 "Tous les éléments de menu sont maintenant identifiés avec l’attribut ``data-"
 "menu-item``, les sections avec ``data-menu-section``, et les conteneurs avec"
-" les attributs ``data-menu-name``."
+" des attributs ``data-menu-name``."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:996
 msgid "``topbar`` menu:"
@@ -9907,9 +9916,9 @@ msgid ""
 "directly and use the entity icon API. Upgrade script is available via admin "
 "interface."
 msgstr ""
-"Les fichiers d’icônes de groupes ont été déplacés de "
-"``groups/<guid><size>.jpg`` par rapport au répertoire du propriétaire du "
-"groupe dans le répertoire de fichiers, à un emplacement indiqué par le "
+"Les fichiers d’icônes des groupes ont été déplacés de "
+"``groups/<guid><size>.jpg`` relativement au répertoire du propriétaire du "
+"groupe dans le répertoire de fichiers, vers un emplacement indiqué par le "
 "service d’icône d’entité. Les plugins doivent cesser d’accéder directement "
 "aux fichiers du répertoire de fichiers et utiliser l’API de l’icône de "
 "l’entité. Le script de mise à niveau est disponible via l’interface "
@@ -9925,13 +9934,13 @@ msgid ""
 " configured sizes will be generated when requesting that size based of the "
 "`master` icon."
 msgstr ""
-"La génération d’icônes d’entité a été modifiée. Toutes les dimensions "
+"La génération d’icônes des entités a été modifiée. Toutes les dimensions "
 "configurées ne seront plus générées lors de l’appel de l’une des fonctions "
 "de l’icône de l’entité (``ElggEntity::saveIconFromUploadedFile``, "
 "``ElggEntity:::saveIconFromLocalFile`` ou "
 "``ElggEntity::saveIconFromElggFile``), mais seulement la taille `master`. "
 "Les autres dimensions configurées seront générées à partir de l’icône "
-"``master`` lors de la demande de cette dimension."
+"`master` lorsque cette dimension est demandée."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1058
 msgid "Icon glyphs"
@@ -9953,7 +9962,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1063
 msgid "Autocomplete (user and friends pickers)"
 msgstr ""
-"Autocomplétion / saisie automatique (sélecteurs d’utilisateurs et de "
+"Auto-complétion / saisie automatique (sélecteurs d’utilisateurs et de "
 "contacts)"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1065
@@ -9971,14 +9980,14 @@ msgid ""
 "Update overriden ``input/userpicker`` to support new ``only_friends`` "
 "parameter"
 msgstr ""
-"Mettez à jour le paramètre ``input/userpicker`` pour prendre en charge le "
+"Mettre à jour le paramètre ``input/userpicker`` pour prendre en charge le "
 "nouveau paramètre ``only_friends``"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1070
 msgid "Remove friends picker CSS from their stylesheets"
 msgstr ""
-"Supprimez le CSS du sélecteur de contacts (friends picker) de leurs feuilles"
-" de style"
+"Supprimer le CSS du sélecteur de contacts - \"friends picker\" - de leurs "
+"feuilles de style"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1073
 msgid "Friends collections"
@@ -10027,7 +10036,7 @@ msgid ""
 "reinstated. Notable changes between the internals of this function are;"
 msgstr ""
 "La fonction ``elgg_delete_river()``, qui avait été dépréciée dans la version"
-" 2.3, a été rétablie. Des changements notables internes de cette fonction "
+" 2.3, a été rétablie. Des changements notables internes à cette fonction "
 "sont ;"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1091
@@ -10038,7 +10047,7 @@ msgid ""
 msgstr ""
 "Elle accepte toutes les ``$options`` de ``elgg_get_river()``, mais exige "
 "qu’au moins l’un des paramètres suivants soit défini : id(s), "
-"annotation_id(s), subject_guid(s), object_guid(s), target_guid ou view(s)"
+"annotation_id(s), subject_guid(s), object_guid(s), target_guid(s) ou view(s)"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1092
 msgid ""
@@ -10073,7 +10082,7 @@ msgstr ""
 "Dans la mesure où les réponses aux discussion étaient quasiment une copie "
 "des commentaires, toutes les réponses aux discussions ont été migrées vers "
 "les commentaires. Toutes les actions, hooks, événements et clefs de "
-"traduction associées ont été supprimés."
+"traduction associés ont été supprimés."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1106
 msgid ""
@@ -10081,7 +10090,7 @@ msgid ""
 "longer under the Discussion section."
 msgstr ""
 "Les commentaires des discussions apparaîtront désormais dans la section "
-"Commentaires de la recherche, et plus sous la section Discussion."
+"Commentaires de la recherche, et plus dans la section Discussion."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1109
 msgid "Translations cleanup"
@@ -10093,7 +10102,7 @@ msgid ""
 "have been removed. If there was a generic translation available for the "
 "custom translation key, these have also been updated."
 msgstr ""
-"Tous les plugins ont été scannés pour les clefs de traduction inutilisées. "
+"Tous les plugins ont été scannés pour des clefs de traduction inutilisées. "
 "Les clefs inutilisées ont été supprimées. S’il existait une traduction "
 "générique disponible pour la clef de traduction personnalisée, celles-ci ont"
 " également été mises à jour."
@@ -10125,7 +10134,7 @@ msgid ""
 " be done via the ``xdebug`` extension or ``tail -f /path/to/error.log`` on "
 "your server."
 msgstr ""
-"L’affichage des messages d’erreur de ``elgg_log()`` et de PHP n’est "
+"L’affichage des messages d’erreur de ``elgg_log()`` et de PHP n’est plus "
 "désormais possible que via le paramètre \"Afficher à l'écran\" du plugin des"
 " développeurs. Consultez le fichier ``settings.example.php`` pour plus "
 "d’informations sur l’utilisation de ``$CONFIG->debug`` dans votre fichier "
@@ -10135,7 +10144,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1126
 msgid "Composer asset plugin no longer required"
-msgstr "Le plugin d’actifs de composer n’est plus requis"
+msgstr "Le plugin des actifs de composer n’est plus requis"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1128
 msgid ""
@@ -10144,8 +10153,8 @@ msgid ""
 "dependencies."
 msgstr ""
 "Les actifs sont maintenant chargés à partir de https://asset-packagist.org. "
-"Le plugin de composer FXP n’est plus nécessaire lors de l’installation de "
-"Elgg ou de la mise à jour des dépendances de composer."
+"Le plugin FXP composer n’est plus nécessaire lors de l’installation de Elgg "
+"ni lors de la mise à jour des dépendances de composer."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1131
 msgid "Cron logs"
@@ -10682,17 +10691,17 @@ msgstr ""
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:62
 msgid ""
 "When changing the use of the 'content' layout name you should take into "
-"consideration that the the 'content' generates a filter menu. This menu is "
+"consideration that the 'content' generates a filter menu. This menu is "
 "slightly different from the regular 'filter' menu generated in the 'default'"
 " layout. It uses different hook names. If you already disabled the filter in"
 " your layout you can change the layout without any issues."
 msgstr ""
 "Lorsque vous modifiez l’utilisation du nom de disposition 'content', vous "
-"devez tenir compte du fait que le 'content' génère un menu de filtre. Ce "
-"menu est légèrement différent du menu 'filter' habituel, généré dans la "
-"disposition 'default'. Il utilise d'autres noms de hook. Si vous avez déjà "
-"désactivé le filtre dans votre disposition, vous pouvez modifier la "
-"disposition sans aucun problème."
+"devriez tenir compte du fait que la mise en page 'content' génère un menu de"
+" filtre. Ce menu est légèrement différent du menu 'filter' habituel, généré "
+"dans la disposition 'default'. Il utilise d'autres noms de hook. Si vous "
+"avez déjà désactivé le filtre dans votre disposition, vous pouvez modifier "
+"la disposition sans aucun problème."
 
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:67
 msgid "Plugin Manifest changes"

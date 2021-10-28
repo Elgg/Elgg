@@ -31,4 +31,21 @@ class ElggComment extends \ElggObject {
 	public function canComment($user_guid = 0, $default = false) {
 		return false;
 	}
+	
+	/**
+	 * Is this comment created by the same owner as the content of the item being commented on
+	 *
+	 * @return bool
+	 * @since 4.1
+	 */
+	public function isCreatedByContentOwner(): bool {
+		return elgg_call(ELGG_IGNORE_ACCESS, function() {
+			$container = $this->getContainerEntity();
+			if (!$container instanceof ElggEntity) {
+				return false;
+			}
+			
+			return $container->owner_guid === $this->owner_guid;
+		});
+	}
 }

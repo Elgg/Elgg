@@ -2,6 +2,7 @@
 
 namespace Elgg\SiteNotifications;
 
+use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\QueryBuilder;
 
 /**
@@ -11,6 +12,14 @@ use Elgg\Database\QueryBuilder;
  * @internal
  */
 class Cron {
+	
+	protected const CLEANUP_MAX_DURATION = [
+		'fifteenmin' => 300, // 5 minutes
+		'halfhour' => 600, // 10 minutes
+		'hourly' => 900, // 15 minutes
+		'daily' => 1800, // 30 minutes
+		'weekly' => 3600, // 1 hour
+	];
 	
 	/**
 	 * Cleanup site notification for which the linked entity has been removed
@@ -83,16 +92,18 @@ class Cron {
 		set_time_limit(0);
 		
 		$days = (int) elgg_get_plugin_setting('unread_cleanup_days', 'site_notifications');
-		if ($days < 1) {
+		$interval = elgg_get_plugin_setting('unread_cleanup_interval', 'site_notifications');
+		if ($days < 1 || $interval !== $hook->getType()) {
 			return;
 		}
+		
+		$max_runtime = static::CLEANUP_MAX_DURATION[$hook->getType()];
 		
 		$result = $hook->getValue();
 		$result .= elgg_echo('site_notifications:cron:unread_cleanup:start', [$days]) . PHP_EOL;
 		
-		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($days) {
+		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($days, $max_runtime) {
 			$count = 0;
-			$max_runtime = 1800; // 30 minutes
 			$start_time = microtime(true);
 			
 			/* @var $batch \ElggBatch */
@@ -107,6 +118,9 @@ class Cron {
 				'batch' => true,
 				'batch_inc_offset' => false,
 				'batch_size' => 100,
+				'order_by' => [
+					new OrderByClause('e.time_created', 'ASC'), // oldest first
+				],
 			]);
 			
 			/* @var $entity \ElggEntity */
@@ -142,16 +156,18 @@ class Cron {
 		set_time_limit(0);
 		
 		$days = (int) elgg_get_plugin_setting('read_cleanup_days', 'site_notifications');
-		if ($days < 1) {
+		$interval = elgg_get_plugin_setting('read_cleanup_interval', 'site_notifications');
+		if ($days < 1 || $interval !== $hook->getType()) {
 			return;
 		}
+		
+		$max_runtime = static::CLEANUP_MAX_DURATION[$hook->getType()];
 		
 		$result = $hook->getValue();
 		$result .= elgg_echo('site_notifications:cron:read_cleanup:start', [$days]) . PHP_EOL;
 		
-		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($days) {
+		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($days, $max_runtime) {
 			$count = 0;
-			$max_runtime = 1800; // 30 minutes
 			$start_time = microtime(true);
 			
 			/* @var $batch \ElggBatch */
@@ -166,6 +182,9 @@ class Cron {
 				'batch' => true,
 				'batch_inc_offset' => false,
 				'batch_size' => 100,
+				'order_by' => [
+					new OrderByClause('e.time_created', 'ASC'), // oldest first
+				],
 			]);
 			
 			/* @var $entity \ElggEntity */

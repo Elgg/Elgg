@@ -18,11 +18,14 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 	public function up() {
 		parent::up();
 
-		self::createApplication(['isolate' => true]);
-
-		_elgg_services()->config->min_password_length = 3;
-		_elgg_services()->config->minusername = 4;
-		_elgg_services()->config->allow_registration = true;
+		$this->createApplication([
+			'isolate' => true,
+			'custom_config_values' => [
+				'min_password_length' => 3,
+				'minusername' => 4,
+				'allow_registration' => true,
+			],
+		]);
 
 		_elgg_services()->hooks->backup();
 		

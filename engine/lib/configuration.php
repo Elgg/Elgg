@@ -94,6 +94,37 @@ function elgg_get_engine_path() {
 }
 
 /**
+ * Get the current Elgg release
+ *
+ * @return string
+ * @throws Exception if something wrong with the composer.json
+ * @since 4.1
+ */
+function elgg_get_release(): string {
+	static $release;
+	
+	if (!isset($release)) {
+		$composerJson = file_get_contents(\Elgg\Project\Paths::elgg() . 'composer.json');
+		if ($composerJson === false) {
+			throw new Exception("Unable to read composer.json file!");
+		}
+		
+		$composer = json_decode($composerJson);
+		if ($composer === null) {
+			throw new Exception("JSON parse error while reading composer.json!");
+		}
+		
+		// Human-friendly version name
+		if (!isset($composer->version)) {
+			throw new Exception("Version field must be set in composer.json!");
+		}
+		$release = $composer->version;
+	}
+	
+	return $release;
+}
+
+/**
  * Get an Elgg configuration value
  *
  * @param string $name    Name of the configuration value

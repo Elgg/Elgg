@@ -6,10 +6,21 @@
  */
 
 return array(
-	'item:object:blog' => 'Blogaichean',
+	'item:object:blog' => 'Blog',
+	'collection:object:blog' => 'Blogaichean',
+	'collection:object:blog:all' => 'Blogaichean gu lèir',
+	'collection:object:blog:owner' => 'Blogaichean le %s',
+	'collection:object:blog:group' => 'Blogaichean a’ bhuidhinn',
+	'collection:object:blog:friends' => 'Blogaichean mo chàirdean',
+	'add:object:blog' => 'Sgrìobh brath-bloga',
+	'edit:object:blog' => 'Deasaich am brath-bloga',
+	'notification:object:blog:publish' => "Leig fios nuair a thèid blog fhoillseachadh",
+	'notifications:mute:object:blog' => "mu dheidhinn a' bhloga ‘%s’",
 
 	'blog:revisions' => 'Lèirmheasan',
 	'blog:archives' => 'Tasglannan',
+
+	'groups:tool:blog' => 'Cuir an comas blog a’ bhuidhinn',
 
 	// Editing
 	'blog:excerpt' => 'Às-earrann',
@@ -20,26 +31,35 @@ return array(
 	'blog:auto_saved_revision' => 'Lèirmheas air a shàbhaladh gu fèin-obrachail',
 
 	// messages
-	'blog:message:saved' => 'Chaidh post a\' bhloga a shàbhaladh.',
-	'blog:error:cannot_save' => 'Chan urrainn dhuinn post a\' bhloga a shàbhaladh.',
-	'blog:error:cannot_auto_save' => 'Chan urrainn dhuinn post a\' bhloga a shàbhaladh gu fèin-obrachail.',
-	'blog:error:cannot_write_to_container' => 'Chan fhoghainn d\' inntrigeadh gus blog a shàbhaladh dhan bhuidheann.',
-	'blog:messages:warning:draft' => 'Tha dreachd gun sàbhaladh air a\' phost seo!',
+	'blog:message:saved' => 'Chaidh am brath-bloga a shàbhaladh.',
+	'blog:error:cannot_save' => 'Chan urrainn dhuinn am brath-bloga a shàbhaladh.',
+	'blog:error:cannot_auto_save' => 'Chan urrainn dhuinn am brath-bloga a shàbhaladh gu fèin-obrachail.',
+	'blog:error:cannot_write_to_container' => 'Chan eilear còirichean gu leòr gus am blog a shàbhaladh dhan bhuidheann',
+	'blog:messages:warning:draft' => 'Tha dreach dhen phost seo ann nach deach a shàbhaladh!',
 	'blog:edit_revision_notice' => '(Seann-tionndadh)',
-	'blog:none' => 'Chan eil post bloga ann',
-	'blog:error:missing:title' => 'Cuir a-steach tiotal a\' bhloga!',
-	'blog:error:missing:description' => 'Cuir a-steach bodhaig a\' bhloga agad!',
-	'blog:error:post_not_found' => 'Cha deach post a\' bhloga seo a lorg.',
+	'blog:none' => 'Chan eil brath-bloga sam bith ann',
+	'blog:error:missing:title' => 'Cuir a-steach tiotal a\' bhratha-bhloga!',
+	'blog:error:missing:description' => 'Cuir a-steach bodhaig a\' bhratha-bhloga agad!',
+	'blog:error:post_not_found' => 'Cha deach am brath-bloga seo a lorg.',
 	'blog:error:revision_not_found' => 'Cha deach an lèirmheas seo a lorg.',
 
 	// river
+	'river:object:blog:create' => 'Dh’fhoillsich %s brath-bloga ùr %s',
+	'river:object:blog:comment' => 'Dh’fhàg %s beachd air a’ bhrath-bhloga %s',
 
 	// notifications
-	'blog:notify:summary' => 'Tha post bloga ùr ann air a bheil %s',
-	'blog:notify:subject' => 'Post bloga ùr: %s',
+	'blog:notify:summary' => 'Tha brath-bloga ùr ann air a bheil %s',
+	'blog:notify:subject' => 'Brath-bloga ùr: %s',
+	'blog:notify:body' => 'Dh’fhoillsich %sbrath-bloga ùr: %s
+
+%s
+
+Seall agus fàg beachd air a\' bhrath-bhloga:
+%s',
 
 	// widget
-	'widgets:blog:description' => 'Seall na postaichean bloga as ùire agad',
-	'blog:moreblogs' => 'Barrachd postaichean bloga',
-	'blog:numbertodisplay' => 'An àireamh dhe phostaichean bloga ri an sealltainn',
+	'widgets:blog:name' => 'Brathan-bloga',
+	'widgets:blog:description' => 'Seall na brathan-bloga as ùire agad',
+	'blog:moreblogs' => 'Barrachd brathan-bloga',
+	'blog:numbertodisplay' => 'An àireamh de bhrathan-bloga a chithear',
 );

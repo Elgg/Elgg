@@ -39,7 +39,7 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 		return true;
 	};
 	
-	var clickLink = function (event) {
+	function clickLink(event) {
 
 		var $link = $(this);
 		if ($link.hasClass('elgg-non-link')) {
@@ -81,15 +81,11 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 				}
 			}).done(function (output, statusText, jqXHR) {
 				$tab.data('loaded', true);
-				$target.removeClass('elgg-ajax-loader');
-				if (jqXHR.AjaxData.status === -1) {
-					$target.html(elgg.echo('ajax:error'));
-					return;
-				} else {
-					$target.html(output);
-				}
-
+				$target.removeClass('elgg-ajax-loader').html(output);
+				
 				changeTab($tab, true);
+			}).fail(function() {
+				$target.removeClass('elgg-ajax-loader').html(elgg.echo('ajax:error'));
 			});
 		}
 	};
@@ -100,7 +96,7 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 	// Open selected tabs
 	// This will load any selected tabs that link to ajax views
 	$('.elgg-tabs-component').each(function() {
-		var $tabs = $(this).find('.elgg-components-tab');
+		var $tabs = $(this).find('.elgg-components-tab:not(.elgg-menu-item-has-dropdown)');
 		if (!$tabs.length) {
 			return;
 		}

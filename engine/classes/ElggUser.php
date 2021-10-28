@@ -120,19 +120,6 @@ class ElggUser extends \ElggEntity {
 	}
 	
 	/**
-	 * {@inheritdoc}
-	 */
-	public function getURL() {
-		
-		$result = parent::getURL();
-		if ($result !== '') {
-			return $result;
-		}
-		
-		return elgg_normalize_url("user/view/{$this->guid}");
-	}
-
-	/**
 	 * Ban this user.
 	 *
 	 * @param string $reason Optional reason

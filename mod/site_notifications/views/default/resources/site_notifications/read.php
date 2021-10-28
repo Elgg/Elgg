@@ -5,7 +5,7 @@
 
 $page_owner = elgg_get_page_owner_entity();
 
-$list = elgg_list_entities([
+$options = [
 	'type' => 'object',
 	'subtype' => 'site_notification',
 	'owner_guid' => $page_owner->guid,
@@ -13,12 +13,17 @@ $list = elgg_list_entities([
 	'metadata_name_value_pairs' => [
 		'read' => true,
 	],
-]);
+	'pagination' => true,
+	'pagination_behaviour' => 'ajax-replace',
+];
 
+$list = elgg_list_entities($options);
 if (empty($list)) {
-	$content = elgg_view('page/components/no_results', [
-		'no_results' => elgg_echo('site_notifications:empty'),
-	]);
+	$options['no_results'] = elgg_echo('site_notifications:empty');
+	$options['count'] = elgg_count_entities($options);
+	
+	$content = elgg_view('page/components/no_results', $options);
+	$content .= elgg_view('page/components/list/out_of_bounds', $options);
 } else {
 	$content = elgg_view_form('site_notifications/process', [], [
 		'list' => $list,

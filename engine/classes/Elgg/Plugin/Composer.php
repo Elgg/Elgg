@@ -141,8 +141,8 @@ class Composer {
 		}
 		
 		if (isset($conflicts['elgg'])) {
-			if ($this->checkConstraints(elgg_get_version(true), $conflicts['elgg'])) {
-				throw new ConflictException('Elgg version: ' . elgg_get_version(true) . ' conflicts with constraint '. $conflicts['elgg']);
+			if ($this->checkConstraints(elgg_get_release(), $conflicts['elgg'])) {
+				throw new ConflictException('Elgg version: ' . elgg_get_release() . ' conflicts with constraint '. $conflicts['elgg']);
 			}
 			unset($conflicts['elgg']);
 		}

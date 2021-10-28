@@ -177,6 +177,7 @@ return [
 		'middleware' => [
 			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
+		'detect_page_owner' => true,
 	],
 	'settings:notifications:users' => [
 		'path' => '/settings/notifications/users/{username}',
@@ -184,6 +185,7 @@ return [
 		'middleware' => [
 			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
+		'detect_page_owner' => true,
 	],
 	'settings:statistics' => [
 		'path' => '/settings/statistics/{username?}',

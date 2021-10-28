@@ -1392,6 +1392,11 @@ Once you have logged in, we highly recommend that you change your password.',
 	
 	'config:i18n:allowed_languages' => "Allowed languages",
 	'config:i18n:allowed_languages:help' => "Only allowed languages can be used by users. English and the site language are always allowed.",
+	'config:i18n:who_can_change_language' => "Who can change the language",
+	'config:i18n:who_can_change_language:everyone' => "Everyone",
+	'config:i18n:who_can_change_language:admin_only' => "Administrators only",
+	'config:i18n:who_can_change_language:nobody' => "Nobody",
+	
 	'config:users:can_change_username' => "Allow users to change their username",
 	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Remove Elgg branding",
@@ -1563,6 +1568,7 @@ To go the the website, click here:
 	'generic_comment:none' => 'No comments',
 	'generic_comment:title' => 'Comment by %s',
 	'generic_comment:on' => '%s on %s',
+	'generic_comment:by_owner' => 'Comment by owner',
 	'generic_comments:latest:posted' => 'posted a',
 
 	'generic_comment:notification:subject' => 'Re: %s',
@@ -1596,6 +1602,7 @@ To reply or view the original item, click here:
 	'entity:delete:fail' => '%s could not be deleted.',
 	
 	'entity:subscribe' => "Subscribe",
+	'entity:subscribe:disabled' => "Your default notification settings prevent you from subscribing to this content",
 	'entity:subscribe:success' => "You've successfully subscribed to %s",
 	'entity:subscribe:fail' => "An error occured while subscribing to %s",
 	

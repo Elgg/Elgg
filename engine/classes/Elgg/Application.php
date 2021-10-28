@@ -435,7 +435,7 @@ class Application {
 
 			$forward_url = $this->_services->hooks->trigger('forward', $ex->getCode(), $hook_params, $forward_url);
 
-			if ($forward_url) {
+			if ($forward_url && !$request->isXmlHttpRequest()) {
 				if ($ex->getMessage()) {
 					$this->_services->systemMessages->addErrorMessage($ex->getMessage());
 				}
@@ -721,6 +721,7 @@ class Application {
 			'constants.php',
 			'context.php',
 			'deprecated-4.0.php',
+			'deprecated-4.1.php',
 			'deprecation.php',
 			'entities.php',
 			'filestore.php',

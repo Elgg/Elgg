@@ -30,7 +30,7 @@ All available parameters:
 * ``action_type`` => STR An arbitrary string to define the action (e.g. 'create', 'update', 'vote', 'review', etc)
 * ``subject_guid`` => INT The GUID of the entity doing the action (default: the logged in user guid)
 * ``object_guid`` => INT The GUID of the entity being acted upon
-* ``target_guid`` => INT The GUID of the the object entity's container (optional)
+* ``target_guid`` => INT The GUID of the object entity's container (optional)
 * ``access_id`` => INT The access ID of the river item (default: same as the object)
 * ``posted`` => INT The UNIX epoch timestamp of the river item (default: now)
 * ``annotation_id`` => INT The annotation ID associated with this river entry (optional)

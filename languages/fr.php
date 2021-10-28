@@ -1394,6 +1394,11 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	
 	'config:i18n:allowed_languages' => "Langues autorisées",
 	'config:i18n:allowed_languages:help' => "Seules les langues autorisées peuvent être utilisées par les utilisateurs. L'anglais et la langue du site sont toujours autorisées.",
+	'config:i18n:who_can_change_language' => "Qui peut modifier la langue",
+	'config:i18n:who_can_change_language:everyone' => "Tout le monde",
+	'config:i18n:who_can_change_language:admin_only' => "Seulement les administrateurs",
+	'config:i18n:who_can_change_language:nobody' => "Personne",
+	
 	'config:users:can_change_username' => "Permettre aux membres de modifier leur identifiant",
 	'config:users:can_change_username:help' => "Si interdit, seuls les administrateurs peuvent changer l'identifiant d'un compte utilisateur",
 	'config:remove_branding:label' => "Retirer le logo Elgg",
@@ -1565,6 +1570,7 @@ Pour vous rendre sur le site :
 	'generic_comment:none' => 'Pas de commentaire',
 	'generic_comment:title' => 'Commentaire de %s',
 	'generic_comment:on' => '%s sur %s',
+	'generic_comment:by_owner' => 'Commentaire du propriétaire',
 	'generic_comments:latest:posted' => 'a publié un',
 
 	'generic_comment:notification:subject' => 'Re: %s',
@@ -1598,6 +1604,7 @@ Pour y répondre ou voir la publication originale :
 	'entity:delete:fail' => 'L\'entité %s n\'a pas pu être supprimée',
 	
 	'entity:subscribe' => "S'abonner",
+	'entity:subscribe:disabled' => "Vos paramètres de notification par défaut vous empêchent de vous abonner à ce contenu",
 	'entity:subscribe:success' => "Vous vous êtes bien abonné à %s",
 	'entity:subscribe:fail' => "Une erreur est survenue lors de l'abonnement à %s",
 	

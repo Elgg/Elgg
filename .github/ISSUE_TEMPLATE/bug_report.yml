@@ -1,0 +1,56 @@
+name: "Bug Report"
+description: "Found a bug in Elgg? Please report it so we can fix it."
+title: "[Bug]: "
+labels: "bug"
+body:
+  - type: input
+    attributes: 
+      label: "Elgg version"
+      description: "Which version of Elgg is affected"
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: "Source of your Elgg installation"
+      description: "How did you install Elgg"
+      multiple: true
+      options:
+        - Elgg.org website
+        - Composer install
+        - GIT clone
+        - Other
+        - Unknown
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Describe the bug"
+      description: "A clear and concise description of what the bug is"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Steps to reproduce"
+      description: "Steps to reproduce the bug"
+      value: |
+        1.
+        2.
+        3.
+        ...
+  - type: textarea
+    attributes:
+      label: "Expected behaviour"
+      description: "A clear and concise description of what you expected to happen"
+  - type: textarea
+    attributes:
+      label: "Additional notes"
+      description: "Is there something more you think we should know"
+  - type: input
+    attributes: 
+      label: "PHP version"
+      description: "Which version of PHP are you using"
+  - type: textarea
+    attributes:
+      label: "PHP error log"
+      description: "Do you have any relevant errors from the PHP error log, please add them below"
+      render: text

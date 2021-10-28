@@ -6,8 +6,8 @@
 	top: 2rem;
 	right: 1rem;
 	max-width: 30rem;
-}
-
-.elgg-system-messages .elgg-message {
-	cursor: pointer;
+	
+	&.elgg-message {
+		cursor: pointer;
+	}
 }

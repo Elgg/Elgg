@@ -126,9 +126,9 @@ use Elgg\Traits\Loggable;
  * @property bool          $testing_mode  							Is the current application running (PHPUnit) tests
  * @property string        $time_format  							Preferred PHP time format
  * @property string        $url          							Alias of "wwwroot"
- * @property int           $version
  * @property string        $view         							Default viewtype (usually not set)
  * @property bool          $walled_garden							Is current site in walled garden mode?
+ * @property string        $who_can_change_language					Who can change the language of a user
  * @property string        $wwwroot      							Site URL
  * @property string        $x_sendfile_type
  * @property string        $x_accel_mapping
@@ -218,6 +218,7 @@ class Config {
 		'simplecache_enabled' => false,
 		'system_cache_enabled' => false,
 		'testing_mode' => false,
+		'who_can_change_language' => 'everyone',
 	];
 	
 	/**

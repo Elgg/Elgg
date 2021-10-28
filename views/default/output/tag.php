@@ -9,7 +9,7 @@
  */
 
 $value = elgg_extract('value', $vars);
-if (empty($value) && $value !== 0 && $value !== '0') {
+if (elgg_is_empty($value)) {
 	return;
 }
 
@@ -17,6 +17,8 @@ $href = elgg_extract('href', $vars);
 $vars['rel'] = 'tag';
 
 if ($href) {
+	unset($vars['value']);
+	
 	$vars['text'] = $value;
 	$vars['encode_text'] = true;
 	
