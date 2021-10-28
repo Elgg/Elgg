@@ -661,8 +661,10 @@ class Translator {
 	 * Returns a unique array with locations of translation files
 	 *
 	 * @return array
+	 *
+	 * @internal
 	 */
-	protected function getLanguagePaths() {
+	public function getLanguagePaths() {
 		return array_keys($this->language_paths);
 	}
 

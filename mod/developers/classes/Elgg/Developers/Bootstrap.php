@@ -3,6 +3,7 @@
 namespace Elgg\Developers;
 
 use Elgg\DefaultPluginBootstrap;
+use Elgg\I18n\NullTranslator;
 
 /**
  * Bootstraps the plugin
@@ -81,10 +82,26 @@ class Bootstrap extends DefaultPluginBootstrap {
 			}
 		}
 	
-		if (!empty($settings['show_strings'])) {
-			// Beginning and end to make sure both early-rendered and late-loaded translations get included
-			$events->registerHandler('init', 'system', 'developers_decorate_all_translations', 1);
-			$events->registerHandler('init', 'system', 'developers_decorate_all_translations', 1000);
+		// setting a custom translator
+		$show_strings = (int) elgg_extract('show_strings', $settings, 0);
+		if (in_array($show_strings, [1,2])) {
+			$old_translator = elgg()->translator;
+			
+			if ($show_strings === 1) {
+				$translator = new AppendTranslator(_elgg_services()->config, _elgg_services()->localeService);
+			} elseif ($show_strings === 2) {
+				$translator = new NullTranslator(_elgg_services()->config, _elgg_services()->localeService);
+			}
+			foreach ($old_translator->getLanguagePaths() as $path) {
+				$translator->registerLanguagePath($path);
+			}
+			
+			foreach ($old_translator->getLoadedTranslations() as $country_code => $language_array) {
+				$translator->addTranslation($country_code, $language_array);
+			}
+			
+			_elgg_services()->setValue('translator', $translator);
+			elgg()->set('translator', $translator);
 		}
 	
 		if (!empty($settings['show_modules'])) {

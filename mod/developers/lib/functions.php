@@ -4,41 +4,6 @@
  */
 
 /**
- * Adds debug info to all translatable strings
- *
- * @return void
- */
-function developers_decorate_all_translations() {
-	$language = get_current_language();
-	_developers_decorate_translations($language);
-	_developers_decorate_translations('en');
-}
-
-/**
- * Appends " ($key)" to all strings for the given language.
- *
- * This function checks if the suffix has already been added so it is idempotent
- *
- * @param string $language Language code like "en"
- *
- * @return void
- *
- * @internal
- */
-function _developers_decorate_translations($language) {
-	$translations = _elgg_services()->translator->getLoadedTranslations();
-
-	foreach ($translations[$language] as $key => &$value) {
-		$needle = " ($key)";
-		
-		// if $value doesn't already end with " ($key)", append it
-		if (substr($value, -strlen($needle)) !== $needle) {
-			$value .= $needle;
-		}
-	}
-}
-
-/**
  * Post-process a view to add wrapper comments to it
  *
  * 1. Only process views served with the 'default' viewtype.
