@@ -20,7 +20,10 @@ class BlogArchive {
 	public static function register(\Elgg\Hook $hook) {
 		$page_owner = $hook->getParam('entity', elgg_get_page_owner_entity());
 		$page = $hook->getParam('page', 'all');
-		if (!in_array($page, ['all', 'owner', 'friends', 'group'])) {
+		
+		// can't use default param logic as the key exists, but the value is mostly NULL
+		$show_blog_archive = $hook->getParam('show_blog_archive') ?? in_array($page, ['all', 'owner', 'friends', 'group']);
+		if (!$show_blog_archive) {
 			// only generate archive menu for supported pages
 			return;
 		}
@@ -41,15 +44,21 @@ class BlogArchive {
 			$options['container_guid'] = $page_owner->guid;
 		}
 		
+		$options = array_merge($options, (array) $hook->getParam('blog_archive_options', []));
+		
 		$dates = elgg_get_entity_dates($options);
 		if (!$dates) {
 			return;
 		}
 	
-		$dates = array_reverse($dates);
-		
-		$generate_url = function($lower = null, $upper = null) use ($page_owner, $page) {
-			if ($page_owner instanceof \ElggUser) {
+		$blog_archive_url = $hook->getParam('blog_archive_url');
+		$generate_url = function($lower = null, $upper = null) use ($page_owner, $page, $blog_archive_url) {
+			if (!empty($blog_archive_url)) {
+				$url_segment = elgg_http_add_url_query_elements($blog_archive_url, [
+					'lower' => $lower,
+					'upper' => $upper,
+				]);
+			} else if ($page_owner instanceof \ElggUser) {
 				if ($page === 'friends') {
 					$url_segment = elgg_generate_url('collection:object:blog:friends', [
 						'username' => $page_owner->username,
@@ -83,6 +92,8 @@ class BlogArchive {
 		$return = $hook->getValue();
 		
 		$years = [];
+		$dates = array_reverse($dates);
+		
 		foreach ($dates as $date) {
 			$timestamplow = mktime(0, 0, 0, (int) substr($date, 4, 2), 1, (int) substr($date, 0, 4));
 			$timestamphigh = mktime(0, 0, 0, ((int) substr($date, 4, 2)) + 1, 1, (int) substr($date, 0, 4));

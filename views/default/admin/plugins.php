@@ -44,19 +44,17 @@ echo elgg_view('admin/plugins/categories', [
 
 elgg_register_menu_item('title', [
 	'name' => 'activate-all',
-	'href' => 'action/admin/plugins/activate_all',
+	'href' => elgg_generate_action_url('admin/plugins/activate_all'),
 	'text' => elgg_echo('admin:plugins:activate_all'),
 	'link_class' => 'elgg-button elgg-button-submit elgg-plugins-toggle',
 	'data-desired-state' => 'active',
-	'is_action' => true,
 ]);
 elgg_register_menu_item('title', [
 	'name' => 'dactivate-all',
-	'href' => 'action/admin/plugins/deactivate_all',
+	'href' => elgg_generate_action_url('admin/plugins/deactivate_all'),
 	'text' => elgg_echo('admin:plugins:deactivate_all'),
 	'link_class' => 'elgg-button elgg-button-submit elgg-plugins-toggle',
 	'data-desired-state' => 'inactive',
-	'is_action' => true,
 ]);
 
 

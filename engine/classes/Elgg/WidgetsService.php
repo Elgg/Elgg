@@ -53,7 +53,7 @@ class WidgetsService {
 			'owner_guid' => $owner_guid,
 			'private_setting_name' => 'context',
 			'private_setting_value' => $context,
-			'limit' => 0,
+			'limit' => false,
 			'preload_private_settings' => true,
 		]);
 		
@@ -133,7 +133,7 @@ class WidgetsService {
 		$widget->handler = $handler;
 		$widget->context = $context;
 
-		return $widget->getGUID();
+		return $widget->guid;
 	}
 
 	/**
@@ -293,7 +293,7 @@ class WidgetsService {
 		$widgets = [];
 		/* @var $widget_definition \Elgg\WidgetDefinition */
 		foreach ($available_widgets as $widget_definition) {
-			if (!($widget_definition instanceof WidgetDefinition)) {
+			if (!$widget_definition instanceof WidgetDefinition) {
 				continue;
 			}
 

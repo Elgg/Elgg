@@ -8,7 +8,7 @@ $position = (int) get_input('position');
 $widget_guid = (int) get_input('widget_guid');
 
 $widget = get_entity($widget_guid);
-if (!($widget instanceof \ElggWidget)) {
+if (!$widget instanceof \ElggWidget) {
 	return elgg_error_response(elgg_echo('widgets:move:failure'));
 }
 

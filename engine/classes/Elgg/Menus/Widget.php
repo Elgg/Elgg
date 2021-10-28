@@ -37,7 +37,7 @@ class Widget {
 			'text' => elgg_view_icon('settings-alt'),
 			'title' => elgg_echo('widget:edit'),
 			'href' => "#widget-edit-{$widget->guid}",
-			'link_class' => "elgg-widget-edit-button",
+			'link_class' => 'elgg-widget-edit-button',
 			'rel' => 'toggle',
 			'priority' => 800,
 		]);
