@@ -377,7 +377,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 */
 	public function setMetadata($name, $value, $value_type = '', $multiple = false) {
 
-		if ($value === null) {
+		if ($value === null || $value === '') {
 			return $this->deleteMetadata($name);
 		}
 		
@@ -599,7 +599,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 */
 	public function setPrivateSetting($name, $value) {
 		
-		if ($value === null) {
+		if ($value === null || $value === '') {
 			return $this->removePrivateSetting($name);
 		}
 		
