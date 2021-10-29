@@ -9,9 +9,7 @@ use Elgg\Traits\Loggable;
 use Elgg\Traits\TimeUsing;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
- * Use the elgg_* versions instead.
+ * Entity icon service
  *
  * @internal
  * @since 2.2

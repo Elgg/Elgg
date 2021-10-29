@@ -3,8 +3,6 @@
 namespace Elgg\Http;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
  * Provides unified access to the $_GET and $_POST inputs.
  *
  * @since 1.10.0

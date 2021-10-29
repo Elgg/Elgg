@@ -15,12 +15,10 @@ use Elgg\PluginHooksService;
 use Elgg\Traits\Database\LegacyQueryOptionsAdapter;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
- * Use elgg_search() instead.
+ * Search service
  *
  * @internal
- * @since  3.0
+ * @since 3.0
  */
 class SearchService {
 

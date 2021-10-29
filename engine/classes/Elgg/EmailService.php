@@ -19,9 +19,7 @@ use Laminas\Mime\Mime;
 use RuntimeException;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
- * Use the elgg_* versions instead.
+ * Email service
  *
  * @internal
  * @since 3.0

@@ -3,12 +3,9 @@
 namespace Elgg\I18n;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
  * Can "translate" language keys into various human-readable, localized strings.
  *
  * @since 1.11
- *
  * @internal
  */
 interface TranslatorInterface {

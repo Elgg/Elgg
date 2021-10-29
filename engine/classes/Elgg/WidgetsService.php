@@ -5,12 +5,9 @@ namespace Elgg;
 use Elgg\Exceptions\Database\UserFetchFailureException;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
- * Use the elgg_* versions instead.
+ * Widgets service
  *
  * @internal
- *
  * @since 1.9.0
  */
 class WidgetsService {

@@ -3,12 +3,9 @@
 namespace Elgg\Amd;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
  * This filter adds AMD names to anonymous AMD modules defined in views.
  *
  * @since 1.9
- *
  * @internal
  */
 class ViewFilter {

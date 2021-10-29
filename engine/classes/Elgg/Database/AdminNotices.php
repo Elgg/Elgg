@@ -3,12 +3,9 @@
 namespace Elgg\Database;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
  * Controls all admin notices in the system.
  *
  * @internal
- *
  * @since 1.10.0
  */
 class AdminNotices {

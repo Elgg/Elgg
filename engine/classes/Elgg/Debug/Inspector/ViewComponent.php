@@ -3,10 +3,9 @@
 namespace Elgg\Debug\Inspector;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * View inspector
  *
  * @internal
- *
  * @since 1.11
  */
 class ViewComponent {

@@ -7,10 +7,9 @@ use Elgg\Project\Paths;
 use Elgg\Menu\MenuItems;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Debug inspector
  *
  * @internal
- *
  * @since 1.11
  */
 class Inspector {

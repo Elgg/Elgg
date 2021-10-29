@@ -12,7 +12,7 @@ use Elgg\Database\Entities;
 use Elgg\Exceptions\InvalidArgumentException;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Subscription service
  *
  * @internal
  * @since 1.9.0

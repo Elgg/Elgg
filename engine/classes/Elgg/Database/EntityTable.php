@@ -18,10 +18,9 @@ use Elgg\Traits\Loggable;
 use Elgg\Traits\TimeUsing;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Entity table database service
  *
  * @internal
- *
  * @since 1.10.0
  */
 class EntityTable {

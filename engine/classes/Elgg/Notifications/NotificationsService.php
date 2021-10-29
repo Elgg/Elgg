@@ -7,10 +7,9 @@ use Elgg\PluginHooksService;
 use Elgg\Queue\Queue;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Notifications service
  *
  * @internal
- *
  * @since 1.9.0
  */
 class NotificationsService {

@@ -6,10 +6,10 @@ use Elgg\Config;
 use Elgg\ViewsService;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Simple cache service
  *
  * @internal
- * @since  1.10.0
+ * @since 1.10.0
  */
 class SimpleCache {
 

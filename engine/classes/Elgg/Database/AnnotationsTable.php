@@ -11,8 +11,6 @@ use Elgg\Traits\TimeUsing;
 /**
  * Interfaces with the database to perform CRUD operations on annotations
  *
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
  * @internal
  */
 class AnnotationsTable {

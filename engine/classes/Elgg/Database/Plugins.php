@@ -21,10 +21,8 @@ use Psr\Log\LogLevel;
 /**
  * Persistent, installation-wide key-value storage.
  *
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
  * @internal
- * @since  1.10.0
+ * @since 1.10.0
  */
 class Plugins {
 

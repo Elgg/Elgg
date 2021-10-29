@@ -18,8 +18,6 @@ use ElggEntity;
  * Annotation repository contains methods for fetching annotations from database or performing
  * calculations on entity properties.
  *
- * API IN FLUX Do not access the methods directly, use elgg_get_annotations() instead
- *
  * @internal
  */
 class Annotations extends Repository {

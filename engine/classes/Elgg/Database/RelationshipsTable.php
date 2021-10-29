@@ -13,10 +13,9 @@ use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Traits\TimeUsing;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Relationships table database service
  *
  * @internal
- *
  * @since 1.10.0
  */
 class RelationshipsTable {

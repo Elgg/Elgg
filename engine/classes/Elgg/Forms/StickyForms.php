@@ -3,10 +3,9 @@
 namespace Elgg\Forms;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Stick forms service
  *
  * @since 1.10.0
- *
  * @internal
  */
 class StickyForms {
