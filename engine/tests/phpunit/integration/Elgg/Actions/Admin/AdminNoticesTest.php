@@ -39,20 +39,6 @@ class AdminNoticesTest extends ActionResponseTestCase {
 		$this->assertFalse(elgg_admin_notice_exists('zen'));
 	}
 
-	public function testDeletesSingleAdminNoticeWithEmptyID() {
-
-		$notice = elgg_add_admin_notice('will_be_removed', 'foo');
-		$this->assertInstanceOf(\ElggObject::class, $notice);
-		$this->assertEquals('will_be_removed', $notice->admin_notice_id);
-
-		$notice->admin_notice_id = '';
-		
-		$this->assertTrue(elgg_admin_notice_exists(''));
-
-		$this->assertTrue(elgg_delete_admin_notice(''));
-		$this->assertFalse(elgg_admin_notice_exists(''));
-	}
-
 	public function testDeletesBatchAdminNotices() {
 
 		elgg_add_admin_notice('zen1', 'Maybe the forces of the universe be with you');
