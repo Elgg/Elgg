@@ -54,7 +54,7 @@ class Group {
 			$metadata = elgg_get_metadata([
 				'guid' => $group->guid,
 				'metadata_owner_guids' => $previous_owner_guid,
-				'limit' => 0,
+				'limit' => false,
 			]);
 	
 			if ($metadata) {

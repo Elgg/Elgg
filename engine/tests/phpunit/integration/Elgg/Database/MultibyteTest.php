@@ -91,7 +91,7 @@ class MultibyteTest extends IntegrationTestCase {
 				],
 			],
 			'order_by' => new OrderByClause('e.guid', 'DESC'),
-			'limit' => 0,
+			'limit' => false,
 		]);
 
 		$this->assertCount(1, $entities);

@@ -191,7 +191,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
 		$metadata_array = elgg_get_metadata([
 			'guid' => $this->guid,
-			'limit' => 0
+			'limit' => false,
 		]);
 
 		$this->attributes['guid'] = null;
@@ -503,7 +503,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
 		$options = [
 			'guid' => $this->guid,
-			'limit' => 0
+			'limit' => false,
 		];
 		if ($name) {
 			$options['metadata_name'] = $name;
@@ -708,7 +708,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		if ($this->guid) {
 			$options = [
 				'guid' => $this->guid,
-				'limit' => 0
+				'limit' => false,
 			];
 			if ($name) {
 				$options['annotation_name'] = $name;
@@ -737,17 +737,13 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	public function deleteOwnedAnnotations($name = null) {
 		// access is turned off for this because they might
 		// no longer have access to an entity they created annotations on
-
-		$flags = ELGG_IGNORE_ACCESS;
-		$callback = function() use ($name) {
+		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($name) {
 			return elgg_delete_annotations([
 				'annotation_owner_guid' => $this->guid,
-				'limit' => 0,
+				'limit' => false,
 				'annotation_name' => $name,
 			]);
-		};
-
-		return elgg_call($flags, $callback);
+		});
 	}
 
 	/**
@@ -760,7 +756,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	public function disableAnnotations($name = '') {
 		$options = [
 			'guid' => $this->guid,
-			'limit' => 0
+			'limit' => false,
 		];
 		if ($name) {
 			$options['annotation_name'] = $name;
@@ -779,7 +775,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	public function enableAnnotations($name = '') {
 		$options = [
 			'guid' => $this->guid,
-			'limit' => 0
+			'limit' => false,
 		];
 		if ($name) {
 			$options['annotation_name'] = $name;

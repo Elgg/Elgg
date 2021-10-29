@@ -63,7 +63,7 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 
 		$options = [
 			'guid' => $e->getGUID(),
-			'limit' => 0
+			'limit' => false,
 		];
 
 		$annotations = elgg_get_annotations($options);
@@ -91,7 +91,7 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 
 		$options = [
 			'guid' => $e->getGUID(),
-			'limit' => 0
+			'limit' => false,
 		];
 
 		$this->assertTrue(elgg_disable_annotations($options));
@@ -118,7 +118,7 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 
 		$options = [
 			'guid' => $e->getGUID(),
-			'limit' => 0
+			'limit' => false,
 		];
 
 		$this->assertTrue(elgg_disable_annotations($options));
@@ -153,7 +153,7 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 
 		$options = [
 			'guid' => $guid,
-			'limit' => 0
+			'limit' => false,
 		];
 		$this->assertTrue(elgg_disable_annotations($options));
 		$this->assertTrue(elgg_annotation_exists($guid, 'test_annotation'));

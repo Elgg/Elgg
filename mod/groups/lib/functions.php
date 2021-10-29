@@ -94,7 +94,7 @@ function groups_get_invited_groups($user_guid, $return_guids = false, $options =
 			'relationship' => 'invited',
 			'relationship_guid' => (int) $user_guid,
 			'inverse_relationship' => true,
-			'limit' => 0,
+			'limit' => false,
 		];
 	
 		$options = array_merge($defaults, $options);

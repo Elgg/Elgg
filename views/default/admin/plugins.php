@@ -21,7 +21,7 @@ $installed_plugins = elgg_get_plugins('any');
 elgg_push_context('admin');
 
 $plugins_list = elgg_view_entity_list($installed_plugins, [
-	'limit' => 0,
+	'limit' => false,
 	'full_view' => true,
 	'pagination' => false,
 	'display_reordering' => true,
