@@ -417,7 +417,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest
 				'where' => [
 					new WhereClause("CAST(n_table.value AS DECIMAL(10, 2)) > 0"),
 				],
-				'limit' => 0,
+				'limit' => false,
 			]);
 
 			$this->assertIsArray($annotations);

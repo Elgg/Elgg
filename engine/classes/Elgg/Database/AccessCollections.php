@@ -528,7 +528,7 @@ class AccessCollections {
 
 		$current_members_batch = $this->getMembers($collection_id, [
 			'batch' => true,
-			'limit' => 0,
+			'limit' => false,
 			'callback' => false,
 		]);
 

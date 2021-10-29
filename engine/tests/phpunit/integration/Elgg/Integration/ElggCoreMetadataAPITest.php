@@ -231,7 +231,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 
 		$options = [
 			'guid' => $e->getGUID(),
-			'limit' => 0,
+			'limit' => false,
 			'wheres' => [
 				"n_table.name LIKE 'test_metadata%'",
 			],

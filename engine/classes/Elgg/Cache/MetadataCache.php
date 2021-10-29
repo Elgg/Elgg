@@ -287,7 +287,7 @@ class MetadataCache {
 
 		$guids = _elgg_services()->metadataTable->getAll([
 			'guids' => $guids,
-			'limit' => 0,
+			'limit' => false,
 			'callback' => function($e) {
 				return (int) $e->entity_guid;
 			},
