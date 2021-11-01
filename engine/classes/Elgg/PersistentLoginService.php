@@ -180,13 +180,7 @@ class PersistentLoginService {
 		$select->select('guid')
 			->where($select->compare('code', '=', $hash, ELGG_VALUE_STRING));
 
-		try {
-			$user_row = $this->db->getDataRow($select);
-		} catch (DatabaseException $e) {
-			$this->handleDbException($e);
-			return null;
-		}
-		
+		$user_row = $this->db->getDataRow($select);
 		if (empty($user_row)) {
 			return null;
 		}
@@ -212,20 +206,14 @@ class PersistentLoginService {
 		$update->set('timestamp', $update->param($this->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP))
 			->where($update->compare('guid', '=', $user->guid, ELGG_VALUE_GUID))
 			->andWhere($update->compare('code', '=', $this->hashToken($this->cookie_token), ELGG_VALUE_STRING));
+
+		// not interested in number of updated rows, as an update in the same second won't update the row
+		$this->db->updateData($update);
 		
-		try {
-			// not interested in number of updated rows, as an update in the same second won't update the row
-			$this->db->updateData($update);
-			
-			// also update the cookie lifetime client-side
-			$this->setCookie($this->cookie_token);
-			
-			return true;
-		} catch (DatabaseException $e) {
-			$this->handleDbException($e);
-		}
+		// also update the cookie lifetime client-side
+		$this->setCookie($this->cookie_token);
 		
-		return false;
+		return true;
 	}
 	
 	/**
@@ -249,13 +237,7 @@ class PersistentLoginService {
 		$delete = Delete::fromTable(self::TABLE_NAME);
 		$delete->where($delete->compare('timestamp', '<', $time->getTimestamp(), ELGG_VALUE_TIMESTAMP));
 		
-		try {
-			return (bool) $this->db->deleteData($delete);
-		} catch (DatabaseException $e) {
-			$this->handleDbException($e);
-		}
-		
-		return false;
+		return (bool) $this->db->deleteData($delete);
 	}
 
 	/**
@@ -278,11 +260,7 @@ class PersistentLoginService {
 			'timestamp' => $insert->param($this->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP),
 		]);
 		
-		try {
-			$this->db->insertData($insert);
-		} catch (DatabaseException $e) {
-			$this->handleDbException($e);
-		}
+		$this->db->insertData($insert);
 	}
 
 	/**
@@ -295,29 +273,8 @@ class PersistentLoginService {
 	protected function removeHash(string $hash): void {
 		$delete = Delete::fromTable(self::TABLE_NAME);
 		$delete->where($delete->compare('code', '=', $hash, ELGG_VALUE_STRING));
-		
-		try {
-			$this->db->deleteData($delete);
-		} catch (DatabaseException $e) {
-			$this->handleDbException($e);
-		}
-	}
 
-	/**
-	 * Swallow a schema not upgraded exception, otherwise rethrow it
-	 *
-	 * @param DatabaseException $exception The exception to handle
-	 *
-	 * @return void
-	 * @throws DatabaseException
-	 */
-	protected function handleDbException(DatabaseException $exception): void {
-		if (false !== strpos($exception->getMessage(), self::TABLE_NAME . "' doesn't exist")) {
-			// schema has not been updated so we swallow this exception
-			return;
-		}
-		
-		throw $exception;
+		$this->db->deleteData($delete);
 	}
 
 	/**
@@ -330,12 +287,8 @@ class PersistentLoginService {
 	public function removeAllHashes(\ElggUser $user): void {
 		$delete = Delete::fromTable(self::TABLE_NAME);
 		$delete->where($delete->compare('guid', '=', $user->guid, ELGG_VALUE_GUID));
-		
-		try {
-			$this->db->deleteData($delete);
-		} catch (DatabaseException $e) {
-			$this->handleDbException($e);
-		}
+
+		$this->db->deleteData($delete);
 	}
 
 	/**
