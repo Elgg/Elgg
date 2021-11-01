@@ -151,10 +151,10 @@ class PageOwnerService {
 		});
 		
 		if (is_int($guid)) {
+			elgg_deprecated_notice('The automatic legacy page owner detection based on request parameters has been deprecated. Use route definitions if possible.', '4.1');
 			return $guid;
 		}
 		
-		// @todo feels hacky
 		$guid = $this->invoker->call(ELGG_IGNORE_ACCESS, function() {
 			$segments = $this->request->getUrlSegments();
 			if (!isset($segments[1]) || !isset($segments[2])) {
@@ -187,6 +187,7 @@ class PageOwnerService {
 		});
 	
 		if (is_int($guid)) {
+			elgg_deprecated_notice('The automatic legacy page owner detection based on url segments has been deprecated. Use route definitions.', '4.1');
 			return $guid;
 		}
 	}

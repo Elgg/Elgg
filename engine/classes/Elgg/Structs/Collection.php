@@ -18,8 +18,6 @@ use Iterator;
  *
  * Extensions may provide one or more of these features.
  *
- * TODO(ewinslow): If PHP had generics support, we'd add that here.
- *
  * DO NOT EXTEND OR IMPLEMENT this interface outside of this package.
  * Doing so would cause additions to the API to be breaking changes, which is
  * not what we want. You have a couple of options for how to proceed:

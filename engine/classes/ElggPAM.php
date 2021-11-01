@@ -8,7 +8,6 @@ class ElggPAM {
 	/**
 	 * @var array
 	 * @internal
-	 * @todo move state into a PAM service
 	 */
 	public static $_handlers = [];
 
@@ -66,8 +65,6 @@ class ElggPAM {
 			$importance = $v->importance;
 
 			try {
-				// Execute the handler
-				// @todo don't assume $handler is a global function
 				$result = call_user_func($handler, $credentials);
 				if ($result) {
 					$authenticated = true;

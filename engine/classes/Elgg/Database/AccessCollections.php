@@ -241,12 +241,10 @@ class AccessCollections {
 		}
 
 		// See #7159. Must not allow ignore access to affect query
-		$ia = _elgg_services()->session->setIgnoreAccess(false);
-
-		$row = $this->entities->getRow($entity->guid, $user_guid);
-
-		_elgg_services()->session->setIgnoreAccess($ia);
-
+		$row = elgg_call(ELGG_ENFORCE_ACCESS, function() use ($entity, $user_guid) {
+			return $this->entities->getRow($entity->guid, $user_guid);
+		});
+		
 		return !empty($row);
 	}
 
