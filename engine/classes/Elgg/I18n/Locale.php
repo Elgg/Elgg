@@ -43,7 +43,6 @@ final class Locale {
 	 * @throws InvalidLocaleException
 	 */
 	public static function parse($locale) {
-		// TODO(evan): Better sanitizing of locales using \Locale perhaps
 		if (!preg_match('~^[a-z0-9_]{2,20}$~', $locale)) {
 			throw new InvalidLocaleException("Unrecognized locale: $locale");
 		}

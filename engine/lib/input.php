@@ -154,7 +154,6 @@ function elgg_is_sticky_form($form_name) {
  *
  * @return mixed
  *
- * @todo should this filter the default value?
  * @since 1.8.0
  */
 function elgg_get_sticky_value($form_name, $variable = '', $default = null, $filter_result = true) {

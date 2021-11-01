@@ -70,8 +70,7 @@ class StickyForms {
 	 * @return boolean
 	 */
 	public function isStickyForm($form_name) {
-		$session = _elgg_services()->session;
-		$data = $session->get('sticky_forms', []);
+		$data = _elgg_services()->session->get('sticky_forms', []);
 		return isset($data[$form_name]);
 	}
 	
@@ -84,12 +83,9 @@ class StickyForms {
 	 * @param boolean $filter_result Filter for bad input if true
 	 *
 	 * @return mixed
-	 *
-	 * @todo should this filter the default value?
 	 */
 	public function getStickyValue($form_name, $variable = '', $default = null, $filter_result = true) {
-		$session = _elgg_services()->session;
-		$data = $session->get('sticky_forms', []);
+		$data = _elgg_services()->session->get('sticky_forms', []);
 		if (isset($data[$form_name][$variable])) {
 			$value = $data[$form_name][$variable];
 			if ($filter_result) {
@@ -98,6 +94,7 @@ class StickyForms {
 			}
 			return $value;
 		}
+		
 		return $default;
 	}
 	
@@ -110,8 +107,7 @@ class StickyForms {
 	 * @return array
 	 */
 	public function getStickyValues($form_name, $filter_result = true) {
-		$session = _elgg_services()->session;
-		$data = $session->get('sticky_forms', []);
+		$data = _elgg_services()->session->get('sticky_forms', []);
 		if (!isset($data[$form_name])) {
 			return [];
 		}
@@ -123,6 +119,7 @@ class StickyForms {
 				$values[$key] = filter_tags($value);
 			}
 		}
+		
 		return $values;
 	}
 	

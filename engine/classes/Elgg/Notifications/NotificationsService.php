@@ -238,8 +238,6 @@ class NotificationsService {
 
 		$count = 0;
 
-		// @todo grab mutex
-
 		$ia = $this->session->setIgnoreAccess(true);
 
 		while (time() < $stopTime) {
@@ -263,8 +261,6 @@ class NotificationsService {
 			
 			$count++;
 		}
-
-		// release mutex
 
 		$this->session->setIgnoreAccess($ia);
 

@@ -39,7 +39,6 @@ function register_pam_handler($handler, $importance = "sufficient", $policy = "u
 		\ElggPAM::$_handlers[$policy] = [];
 	}
 
-	// @todo remove requirement that $handle be a global function
 	if (is_string($handler) && is_callable($handler, true)) {
 		\ElggPAM::$_handlers[$policy][$handler] = new \stdClass;
 

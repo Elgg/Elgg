@@ -154,7 +154,6 @@ class PageOwnerService {
 			return $guid;
 		}
 		
-		// @todo feels hacky
 		$guid = $this->invoker->call(ELGG_IGNORE_ACCESS, function() {
 			$segments = $this->request->getUrlSegments();
 			if (!isset($segments[1]) || !isset($segments[2])) {

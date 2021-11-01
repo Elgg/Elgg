@@ -193,7 +193,6 @@ function elgg_ok_response($content = '', $message = '', $forward_url = null, int
  * @param int    $status_code HTTP status code
  *                            Status code of the HTTP response
  *
- * @todo change default status_code after AJAX rework
  * @return \Elgg\Http\ErrorResponse
  */
 function elgg_error_response($error = '', $forward_url = REFERRER, int $status_code = ELGG_HTTP_BAD_REQUEST) {

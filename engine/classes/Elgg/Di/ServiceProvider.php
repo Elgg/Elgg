@@ -625,20 +625,14 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('queryCache', function(ServiceProvider $sp) {
-			// @todo maybe make this a configurable value
-			$cache_size = 50;
-			
 			$config_disabled = $sp->config->db_disable_query_cache === true;
 						
-			$cache = new \Elgg\Cache\QueryCache($cache_size, $config_disabled);
-			
-			return $cache;
+			return new \Elgg\Cache\QueryCache($sp->config->db_query_cache_limit, $config_disabled);
 		});
 
 		$this->setFactory('redirects', function(ServiceProvider $sp) {
-			$url = current_page_url();
 			$is_xhr = $sp->request->isXmlHttpRequest();
-			return new \Elgg\RedirectService($sp->session, $is_xhr, $sp->config->wwwroot, $url);
+			return new \Elgg\RedirectService($sp->session, $is_xhr, $sp->config->wwwroot, current_page_url());
 		});
 
 		$this->setFactory('relationshipsTable', function(ServiceProvider $sp) {

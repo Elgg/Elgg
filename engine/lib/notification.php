@@ -165,7 +165,6 @@ function elgg_get_notification_events(): array {
  *
  * @return array User GUIDs (keys) and their subscription types (values).
  * @since 1.9
- * @todo deprecate once new subscriptions system has been added
  */
 function elgg_get_subscriptions_for_container(int $container_guid): array {
 	$methods = _elgg_services()->notifications->getMethods();

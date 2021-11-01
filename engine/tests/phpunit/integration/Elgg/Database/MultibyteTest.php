@@ -64,12 +64,6 @@ class MultibyteTest extends IntegrationTestCase {
 
 	public function testDatabaseCollactionAllowsSearchForMultibyteCharactersByExactMatch() {
 
-		// @todo : does this work on all mysql versions?
-		//$mysql_version = elgg()->db
-		//->getConnection(DbConfig::READ_WRITE)
-		//->getWrappedConnection()
-		//->getAttribute(\PDO::ATTR_SERVER_VERSION);
-
 		$grinning_face = $this->createObject([
 			'title' => "😀 Grinning Face",
 		]);
