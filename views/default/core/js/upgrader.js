@@ -1,10 +1,7 @@
 /**
  * Javascript that takes care of running batch upgrades
  *
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
  * @internal
- *
  * @since 3.0.0
  */
 define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup', 'jquery-ui/widgets/progressbar'], function($, elgg, Ajax, spinner, popup) {

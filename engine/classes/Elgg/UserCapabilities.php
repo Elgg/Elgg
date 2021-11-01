@@ -12,9 +12,7 @@ use ElggRiverItem;
 use ElggSession;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
- * Use the elgg_* versions instead.
+ * User capabilities service
  *
  * @internal
  * @since 2.2

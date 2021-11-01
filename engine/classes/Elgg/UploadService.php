@@ -6,9 +6,7 @@ use Elgg\Http\Request as HttpRequest;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
- * Use the elgg_* versions instead.
+ * File upload handling service
  *
  * @internal
  * @since 2.3

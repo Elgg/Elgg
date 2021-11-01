@@ -13,10 +13,9 @@ use Elgg\UserCapabilities;
 use Elgg\Traits\Loggable;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Access collections database service
  *
  * @internal
- *
  * @since 1.10.0
  */
 class AccessCollections {

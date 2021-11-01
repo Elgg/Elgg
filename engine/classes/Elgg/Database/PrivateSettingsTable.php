@@ -10,13 +10,10 @@ use Elgg\Values;
 /**
  * Private settings for entities
  *
- * Private settings provide metadata like storage of settings for plugins
- * and users.
- *
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Private settings provide metadata like storage of settings for plugins and users.
  *
  * @internal
- * @since  2.0.0
+ * @since 2.0.0
  */
 class PrivateSettingsTable {
 

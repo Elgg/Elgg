@@ -3,10 +3,10 @@
 namespace Elgg\Assets;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * External files service
  *
  * @internal
- * @since  1.10.0
+ * @since 1.10.0
  */
 class ExternalFiles {
 

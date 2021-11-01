@@ -13,8 +13,6 @@ use Elgg\Traits\TimeUsing;
 /**
  * This class interfaces with the database to perform CRUD operations on metadata
  *
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
  * @internal
  */
 class MetadataTable {

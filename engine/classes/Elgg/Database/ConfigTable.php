@@ -10,8 +10,6 @@ use Elgg\Traits\Loggable;
 /**
  * Manipulates values in the dbprefix_config table. Do not use to read/write $CONFIG.
  *
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
  * @internal
  * @since 1.10.0
  */

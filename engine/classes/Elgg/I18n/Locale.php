@@ -5,8 +5,6 @@ namespace Elgg\I18n;
 use Elgg\Exceptions\I18n\InvalidLocaleException;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
  * Language class to ensure only valid languages are used.
  *
  * @since 1.11

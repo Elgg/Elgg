@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * HTTP response service
  *
  * @since 2.3
  * @internal
