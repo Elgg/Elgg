@@ -183,21 +183,17 @@ trait Seeding {
 			}
 		};
 
-		$ia = _elgg_services()->session->setIgnoreAccess(true);
-
-		$user = false;
-		while (!$user instanceof \ElggUser) {
-			try {
-				$user = $create();
-			} catch (\Exception $ex) {
-				// try again
+		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($create) {
+			$user = false;
+			while (!$user instanceof \ElggUser) {
+				try {
+					$user = $create();
+				} catch (\Exception $ex) {
+					// try again
+				}
 			}
-		}
-
-		_elgg_services()->session->setIgnoreAccess($ia);
-
-		return $user;
-
+			return $user;
+		});
 	}
 
 	/**
@@ -328,16 +324,13 @@ trait Seeding {
 			return $group;
 		};
 
-		$ia = _elgg_services()->session->setIgnoreAccess(true);
-
-		$group = false;
-		while (!$group instanceof \ElggGroup) {
-			$group = $create();
-		}
-
-		_elgg_services()->session->setIgnoreAccess($ia);
-
-		return $group;
+		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($create) {
+			$group = false;
+			while (!$group instanceof \ElggGroup) {
+				$group = $create();
+			}
+			return $group;
+		});
 	}
 
 	/**
@@ -442,17 +435,14 @@ trait Seeding {
 			return $object;
 		};
 
-		$ia = _elgg_services()->session->setIgnoreAccess(true);
-
-		$object = false;
-		while (!$object instanceof \ElggObject) {
-			$object = $create();
-		}
-
-		_elgg_services()->session->setIgnoreAccess($ia);
-
-		return $object;
-
+		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($create) {
+			$object = false;
+			while (!$object instanceof \ElggObject) {
+				$object = $create();
+			}
+	
+			return $object;
+		});
 	}
 
 	/**
@@ -770,37 +760,34 @@ trait Seeding {
 	 */
 	public function createComments(\ElggEntity $entity, $limit = null) {
 
-		$ia = _elgg_services()->session->setIgnoreAccess(true);
-
-		$tries = 0;
-		$success = 0;
-
-		if ($limit === null) {
-			$limit = $this->faker()->numberBetween(1, 20);
-		}
-
-		$since = $this->create_since;
-		$this->setCreateSince($entity->time_created);
-		
-		while ($tries < $limit) {
-			$comment = new \ElggComment();
-			$comment->owner_guid = $this->getRandomUser()->guid ? : $entity->owner_guid;
-			$comment->container_guid = $entity->guid;
-			$comment->description = $this->faker()->paragraph;
-			$comment->time_created = $this->getRandomCreationTimestamp();
-
-			$tries++;
-			if ($comment->save()) {
-				$success++;
+		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity, $limit) {
+			$tries = 0;
+			$success = 0;
+	
+			if ($limit === null) {
+				$limit = $this->faker()->numberBetween(1, 20);
 			}
-		}
-
-		$this->create_since = $since;
-		
-		_elgg_services()->session->setIgnoreAccess($ia);
-
-		return $success;
-
+	
+			$since = $this->create_since;
+			$this->setCreateSince($entity->time_created);
+			
+			while ($tries < $limit) {
+				$comment = new \ElggComment();
+				$comment->owner_guid = $this->getRandomUser()->guid ? : $entity->owner_guid;
+				$comment->container_guid = $entity->guid;
+				$comment->description = $this->faker()->paragraph;
+				$comment->time_created = $this->getRandomCreationTimestamp();
+	
+				$tries++;
+				if ($comment->save()) {
+					$success++;
+				}
+			}
+	
+			$this->create_since = $since;
+	
+			return $success;
+		});
 	}
 
 	/**
@@ -813,23 +800,21 @@ trait Seeding {
 	 */
 	public function createLikes(\ElggEntity $entity, $limit = null) {
 
-		$ia = _elgg_services()->session->setIgnoreAccess(true);
+		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity, $limit) {
+			$success = 0;
 
-		$success = 0;
-
-		if ($limit === null) {
-			$limit = $this->faker()->numberBetween(1, 20);
-		}
-
-		while ($success < $limit) {
-			if ($entity->annotate('likes', true, $entity->access_id, $this->getRandomUser()->guid)) {
-				$success++;
+			if ($limit === null) {
+				$limit = $this->faker()->numberBetween(1, 20);
 			}
-		}
-
-		_elgg_services()->session->setIgnoreAccess($ia);
-
-		return $success;
+	
+			while ($success < $limit) {
+				if ($entity->annotate('likes', true, $entity->access_id, $this->getRandomUser()->guid)) {
+					$success++;
+				}
+			}
+			
+			return $success;
+		});
 	}
 
 	/**

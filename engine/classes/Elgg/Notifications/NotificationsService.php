@@ -234,37 +234,35 @@ class NotificationsService {
 	 */
 	public function processQueue($stopTime, $matrix = false) {
 
-		$delivery_matrix = [];
-
-		$count = 0;
-
-		$ia = $this->session->setIgnoreAccess(true);
-
-		while (time() < $stopTime) {
-			// dequeue notification event
-			$event = $this->queue->dequeue();
-			/* @var $event NotificationEvent */
-
-			if (!$event) {
-				// queue is empty
-				break;
+		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($stopTime, $matrix) {
+			$delivery_matrix = [];
+	
+			$count = 0;
+	
+			while (time() < $stopTime) {
+				// dequeue notification event
+				$event = $this->queue->dequeue();
+				/* @var $event NotificationEvent */
+	
+				if (!$event) {
+					// queue is empty
+					break;
+				}
+	
+				if (!$event instanceof NotificationEvent || !$event->getObject() || !$event->getActor()) {
+					// event object or actor have been deleted since the event was enqueued
+					continue;
+				}
+	
+				$handler = $this->getNotificationHandler($event);
+	
+				$delivery_matrix[$event->getDescription()] = $handler->send();
+				
+				$count++;
 			}
-
-			if (!$event instanceof NotificationEvent || !$event->getObject() || !$event->getActor()) {
-				// event object or actor have been deleted since the event was enqueued
-				continue;
-			}
-
-			$handler = $this->getNotificationHandler($event);
-
-			$delivery_matrix[$event->getDescription()] = $handler->send();
-			
-			$count++;
-		}
-
-		$this->session->setIgnoreAccess($ia);
-
-		return $matrix ? $delivery_matrix : $count;
+	
+			return $matrix ? $delivery_matrix : $count;
+		});
 	}
 
 	/**
