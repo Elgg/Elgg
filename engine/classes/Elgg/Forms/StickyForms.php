@@ -11,6 +11,20 @@ namespace Elgg\Forms;
 class StickyForms {
 	
 	/**
+	 * @var \ElggSession
+	 */
+	protected $session;
+	
+	/**
+	 * Constructor
+	 *
+	 * @param \ElggSession $session Session for storage
+	 */
+	public function __construct(\ElggSession $session) {
+		$this->session = $session;
+	}
+	
+	/**
 	 * Save form submission data (all GET and POST vars) into a session cache
 	 *
 	 * Call this from an action when you want all your submitted variables
@@ -20,7 +34,7 @@ class StickyForms {
 	 *
 	 * @return void
 	 */
-	public function makeStickyForm($form_name) {
+	public function makeStickyForm(string $form_name): void {
 		$this->clearStickyForm($form_name);
 
 		$banned_keys = [];
@@ -29,8 +43,7 @@ class StickyForms {
 			$banned_keys = ['password', 'password2'];
 		}
 
-		$session = _elgg_services()->session;
-		$data = $session->get('sticky_forms', []);
+		$data = $this->session->get('sticky_forms', []);
 		$req = _elgg_services()->request;
 	
 		// will go through XSS filtering in elgg_get_sticky_value()
@@ -40,7 +53,7 @@ class StickyForms {
 		}
 		$data[$form_name] = $vars;
 	
-		$session->set('sticky_forms', $data);
+		$this->session->set('sticky_forms', $data);
 	}
 	
 	/**
@@ -54,11 +67,11 @@ class StickyForms {
 	 *
 	 * @return void
 	 */
-	public function clearStickyForm($form_name) {
-		$session = _elgg_services()->session;
-		$data = $session->get('sticky_forms', []);
+	public function clearStickyForm(string $form_name): void {
+		$data = $this->session->get('sticky_forms', []);
 		unset($data[$form_name]);
-		$session->set('sticky_forms', $data);
+		
+		$this->session->set('sticky_forms', $data);
 	}
 	
 	/**
@@ -66,10 +79,10 @@ class StickyForms {
 	 *
 	 * @param string $form_name Form namespace
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
-	public function isStickyForm($form_name) {
-		$data = _elgg_services()->session->get('sticky_forms', []);
+	public function isStickyForm(string $form_name): bool {
+		$data = $this->session->get('sticky_forms', []);
 		return isset($data[$form_name]);
 	}
 	
@@ -83,14 +96,15 @@ class StickyForms {
 	 *
 	 * @return mixed
 	 */
-	public function getStickyValue($form_name, $variable = '', $default = null, $filter_result = true) {
-		$data = _elgg_services()->session->get('sticky_forms', []);
+	public function getStickyValue(string $form_name, string $variable = '', $default = null, bool $filter_result = true) {
+		$data = $this->session->get('sticky_forms', []);
 		if (isset($data[$form_name][$variable])) {
 			$value = $data[$form_name][$variable];
 			if ($filter_result) {
 				// XSS filter result
 				$value = filter_tags($value);
 			}
+			
 			return $value;
 		}
 		
@@ -105,8 +119,8 @@ class StickyForms {
 	 *
 	 * @return array
 	 */
-	public function getStickyValues($form_name, $filter_result = true) {
-		$data = _elgg_services()->session->get('sticky_forms', []);
+	public function getStickyValues(string $form_name, bool $filter_result = true): array {
+		$data = $this->session->get('sticky_forms', []);
 		if (!isset($data[$form_name])) {
 			return [];
 		}
@@ -130,10 +144,10 @@ class StickyForms {
 	 *
 	 * @return void
 	 */
-	public function clearStickyValue($form_name, $variable) {
-		$session = _elgg_services()->session;
-		$data = $session->get('sticky_forms', []);
+	public function clearStickyValue(string $form_name, string $variable): void {
+		$data = $this->session->get('sticky_forms', []);
 		unset($data[$form_name][$variable]);
-		$session->set('sticky_forms', $data);
+		
+		$this->session->set('sticky_forms', $data);
 	}
 }

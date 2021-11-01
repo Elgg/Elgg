@@ -724,7 +724,9 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\Cache\SimpleCache($sp->config, $sp->views);
 		});
 
-		$this->setClassName('stickyForms', \Elgg\Forms\StickyForms::class);
+		$this->setFactory('stickyForms', function(ServiceProvider $sp) {
+			return new \Elgg\Forms\StickyForms($sp->session);
+		});
 
 		$this->setFactory('systemCache', function (ServiceProvider $sp) {
 			$cache = new \Elgg\Cache\SystemCache($sp->fileCache, $sp->config);
