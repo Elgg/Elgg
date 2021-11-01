@@ -107,13 +107,14 @@ function is_email_address($address) {
  * Call this from an action when you want all your submitted variables
  * available if the submission fails validation and is sent back to the form
  *
- * @param string $form_name Name of the sticky form
+ * @param string   $form_name           Name of the sticky form
+ * @param string[] $ignored_field_names Field names which shouldn't be made sticky in this form
  *
  * @return void
  * @since 1.8.0
  */
-function elgg_make_sticky_form($form_name): void {
-	_elgg_services()->stickyForms->makeStickyForm((string) $form_name);
+function elgg_make_sticky_form($form_name, array $ignored_field_names = []): void {
+	_elgg_services()->stickyForms->makeStickyForm((string) $form_name, $ignored_field_names);
 }
 
 /**

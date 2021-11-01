@@ -30,25 +30,26 @@ class StickyForms {
 	 * Call this from an action when you want all your submitted variables
 	 * available if the submission fails validation and is sent back to the form
 	 *
-	 * @param string $form_name Name of the sticky form
+	 * @param string   $form_name           Name of the sticky form
+	 * @param string[] $ignored_field_names Field names which shouldn't be made sticky in this form
 	 *
 	 * @return void
 	 */
-	public function makeStickyForm(string $form_name): void {
+	public function makeStickyForm(string $form_name, array $ignored_field_names = []): void {
 		$this->clearStickyForm($form_name);
 
-		$banned_keys = [];
-		// TODO make $banned_keys an argument
-		if (in_array($form_name, ['register', 'useradd', 'usersettings'])) {
-			$banned_keys = ['password', 'password2'];
-		}
-
+		$default_ignored_field_names = [
+			'__elgg_ts', // never store CSRF tokens
+			'__elgg_token', // never store CSRF tokens
+		];
+		$ignored_field_names = array_merge($default_ignored_field_names, $ignored_field_names);
+		
 		$data = $this->session->get('sticky_forms', []);
 		$req = _elgg_services()->request;
 	
 		// will go through XSS filtering in elgg_get_sticky_value()
 		$vars = array_merge($req->query->all(), $req->request->all());
-		foreach ($banned_keys as $key) {
+		foreach ($ignored_field_names as $key) {
 			unset($vars[$key]);
 		}
 		$data[$form_name] = $vars;
