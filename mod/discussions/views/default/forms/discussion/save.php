@@ -54,9 +54,10 @@ $fields = [
 		'#label' => elgg_echo('access'),
 	],
 	[
-		'#type' => 'hidden',
-		'name' => 'container_guid',
+		'#type' => 'container_guid',
 		'value' => $container_guid,
+		'entity_type' => 'object',
+		'entity_subtype' => 'discussion',
 	],
 	[
 		'#type' => 'hidden',

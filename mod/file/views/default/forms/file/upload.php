@@ -63,9 +63,10 @@ $fields = [
 		'entity_subtype' => 'file',
 	],
 	[
-		'#type' => 'hidden',
-		'name' => 'container_guid',
+		'#type' => 'container_guid',
 		'value' => $container_guid,
+		'entity_type' => 'object',
+		'entity_subtype' => 'file',
 	],
 	[
 		'#type' => 'hidden',

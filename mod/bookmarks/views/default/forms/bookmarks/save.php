@@ -46,9 +46,10 @@ $fields = [
 		'entity_subtype' => 'bookmarks',
 	],
 	[
-		'#type' => 'hidden',
-		'name' => 'container_guid',
+		'#type' => 'container_guid',
 		'value' => elgg_extract('container_guid', $vars),
+		'entity_type' => 'object',
+		'entity_subtype' => 'bookmarks',
 	],
 	[
 		'#type' => 'hidden',

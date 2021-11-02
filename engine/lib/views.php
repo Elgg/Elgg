@@ -93,18 +93,6 @@ function elgg_register_viewtype_fallback($viewtype) {
 }
 
 /**
- * Checks if a viewtype falls back to default.
- *
- * @param string $viewtype Viewtype
- *
- * @return boolean
- * @since 1.7.2
- */
-function elgg_does_viewtype_fallback($viewtype) {
-	return _elgg_services()->views->doesViewtypeFallback($viewtype);
-}
-
-/**
  * Register a view to be available for ajax calls
  *
  * @warning Only views that begin with 'js/' and 'css/' have their content

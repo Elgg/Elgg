@@ -333,8 +333,6 @@ class ViewsService {
 	 * @param string $viewtype Viewtype
 	 *
 	 * @return bool
-	 *
-	 * @see elgg_does_viewtype_fallback()
 	 */
 	public function doesViewtypeFallback($viewtype) {
 		return in_array($viewtype, $this->fallbacks);
