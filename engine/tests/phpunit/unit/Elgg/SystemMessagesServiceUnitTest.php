@@ -22,10 +22,6 @@ class SystemMessagesServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->svc = new SystemMessagesService($this->session);
 	}
 
-	public function down() {
-
-	}
-
 	function testCanStoreAndDumpMessages() {
 		$this->svc->addSuccessMessage('s1');
 		$this->svc->addSuccessMessage(['s2', 's3']);

@@ -10,14 +10,6 @@ use Elgg\Values;
  */
 class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanGetEntityAfterDbQuery() {
 
 		$this->assertNull(_elgg_services()->entityCache->load(0));
@@ -274,7 +266,4 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertNull(_elgg_services()->entityCache->load($user->guid));
 	}
-	
-	
-
 }

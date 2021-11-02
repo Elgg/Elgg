@@ -22,10 +22,6 @@ class ComparisonClauseUnitTest extends UnitTestCase {
 		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
-	public function down() {
-
-	}
-
 	/**
 	 * @dataProvider operators
 	 */
@@ -510,5 +506,4 @@ class ComparisonClauseUnitTest extends UnitTestCase {
 		$this->expectException(InvalidParameterException::class);
 		$qb->where($qb->compare('x', 'INVALID'));
 	}
-
 }

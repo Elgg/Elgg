@@ -21,10 +21,6 @@ class PrivateSettingWhereClauseUnitTest extends UnitTestCase {
 		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
-	public function down() {
-
-	}
-
 	public function testBuildEmptyQuery() {
 
 		$expected = null;
@@ -130,4 +126,3 @@ class PrivateSettingWhereClauseUnitTest extends UnitTestCase {
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 	}
 }
-

@@ -7,14 +7,6 @@ namespace Elgg\Database;
  */
 class MutexUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testMutexLocksIfNotAlreadyLocked() {
 		$this->markTestIncomplete();
 	}
@@ -26,5 +18,4 @@ class MutexUnitTest extends \Elgg\UnitTestCase {
 	public function testUnlockingFailsIfWrongNamespace() {
 		$this->markTestIncomplete();
 	}
-
 }

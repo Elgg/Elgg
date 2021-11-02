@@ -7,14 +7,6 @@ namespace Elgg\Database;
  */
 class ConfigUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testGetTablePrefix() {
 		$obj = new \stdClass();
 		$obj->dbprefix = "foo";
@@ -181,5 +173,4 @@ class ConfigUnitTest extends \Elgg\UnitTestCase {
 		$connConf = $conf->getConnectionConfig(\Elgg\Database\DbConfig::READ);
 		$this->assertEquals($ans[$connConf['host']], $connConf);
 	}
-
 }

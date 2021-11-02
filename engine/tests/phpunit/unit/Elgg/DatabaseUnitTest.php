@@ -12,14 +12,6 @@ use Elgg\Helpers\Database\DatabaseTestObj;
  */
 class DatabaseUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testFingerprintingOfCallbacks() {
 		$db = $this->getDbMock();
 		

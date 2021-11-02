@@ -20,14 +20,6 @@ use Elgg\UnitTestCase;
  */
 class RelationshipsRepositoryTest extends UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanExecuteCount() {
 		$select = Select::fromTable('entity_relationships', 'er');
 		$select->select('COUNT(DISTINCT er.id) AS total');

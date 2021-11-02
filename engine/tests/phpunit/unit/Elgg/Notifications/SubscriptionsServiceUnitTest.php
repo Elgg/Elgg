@@ -51,10 +51,6 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 		
 		$this->service = $this->setupService();
 	}
-
-	public function down() {
-
-	}
 	
 	/**
 	 * Create a SubscriptionService

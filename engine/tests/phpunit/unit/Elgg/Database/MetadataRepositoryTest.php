@@ -20,14 +20,6 @@ use Elgg\UnitTestCase;
  */
 class MetadataRepositoryTest extends UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanExecuteCount() {
 		$select = Select::fromTable('metadata', 'n_table');
 		$select->select('COUNT(DISTINCT n_table.id) AS total');
@@ -947,5 +939,4 @@ class MetadataRepositoryTest extends UnitTestCase {
 
 		return $rows;
 	}
-
 }

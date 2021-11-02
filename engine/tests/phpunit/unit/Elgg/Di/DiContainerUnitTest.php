@@ -14,14 +14,6 @@ class DiContainerUnitTest extends \Elgg\UnitTestCase {
 
 	const TEST_CLASS = '\Elgg\Helpers\Di\DiContainerTestObject';
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function getFoo(\Elgg\Di\DiContainer $di) {
 		return new DiContainerTestObject($di);
 	}

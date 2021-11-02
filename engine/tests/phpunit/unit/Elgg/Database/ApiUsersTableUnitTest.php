@@ -25,13 +25,6 @@ class ApiUsersTableUnitTest extends UnitTestCase {
 		$this->api_user = $this->service->createApiUser();
 		$this->assertNotFalse($this->api_user);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		
-	}
 	
 	public function testCreateApiUser() {
 		$api_user = $this->service->createApiUser();

@@ -22,10 +22,6 @@ class WhereClauseUnitTest extends UnitTestCase {
 		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
-	public function down() {
-
-	}
-
 	public function testBuildWhereClauseFromString() {
 
 		$expected = "alias.guid = 25";
@@ -99,6 +95,5 @@ class WhereClauseUnitTest extends UnitTestCase {
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
-
 	}
 }

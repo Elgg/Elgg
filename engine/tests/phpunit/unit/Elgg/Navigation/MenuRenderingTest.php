@@ -21,10 +21,6 @@ class MenuRenderingTest extends IntegratedUnitTestCase {
 		elgg_trigger_event('init', 'system');
 	}
 
-	public function down() {
-
-	}
-
 	public function entityMenuNamesProvider() {
 		return [
 			['entity'],
@@ -153,7 +149,4 @@ class MenuRenderingTest extends IntegratedUnitTestCase {
 
 		elgg_unregister_plugin_hook_handler('register', 'menu:river', $handler);
 	}
-
-
-
 }

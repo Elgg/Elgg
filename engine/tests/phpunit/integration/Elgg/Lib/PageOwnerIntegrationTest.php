@@ -7,14 +7,6 @@ use Elgg\IntegrationTestCase;
 use Elgg\Router\Route;
 
 class PageOwnerIntegrationTest extends IntegrationTestCase {
-	
-	public function up() {
-		
-	}
-	
-	public function down() {
-		
-	}
 
 	/**
 	 * @dataProvider setterProvider

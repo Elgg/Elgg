@@ -20,14 +20,6 @@ use Elgg\UnitTestCase;
  */
 class EntitiesRepositoryTest extends UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanExecuteCount() {
 		$select = Select::fromTable('entities', 'e');
 		$select->select('COUNT(DISTINCT e.guid) AS total');
@@ -910,5 +902,4 @@ class EntitiesRepositoryTest extends UnitTestCase {
 
 		return $rows;
 	}
-
 }

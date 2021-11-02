@@ -7,14 +7,6 @@ namespace Elgg;
  */
 class WidgetsServiceUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function elgg_set_config($key, $val) {
 		//do nothing, that's only for BC
 	}

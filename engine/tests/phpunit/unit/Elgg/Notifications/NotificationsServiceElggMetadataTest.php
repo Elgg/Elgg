@@ -30,5 +30,4 @@ class NotificationsServiceElggMetadataTest extends NotificationsServiceUnitTestC
 		elgg()->session->setIgnoreAccess($this->ignore_access);
 		parent::down();
 	}
-
 }

@@ -17,10 +17,6 @@ class CacheClearCommandTest extends IntegrationTestCase {
 		]);
 	}
 
-	public function down() {
-
-	}
-
 	public function testExecuteWithoutOptions() {
 		$application = new Application();
 		$application->add(new CacheClearCommand());

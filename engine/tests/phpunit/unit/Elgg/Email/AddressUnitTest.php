@@ -19,10 +19,6 @@ class AddressUnitTest extends \Elgg\UnitTestCase {
 
 		$this->address = new Address('example@elgg.org', 'Example');
 	}
-
-	public function down() {
-
-	}
 	
 	public function testEmail() {
 		

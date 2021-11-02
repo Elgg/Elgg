@@ -18,10 +18,6 @@ class HooksRegistrationServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->mock = $this->getMockForAbstractClass('\Elgg\HooksRegistrationService');
 	}
 
-	public function down() {
-
-	}
-
 	public function testCanRegisterHandlers() {
 		$f = function () {
 
@@ -178,5 +174,4 @@ class HooksRegistrationServiceUnitTest extends \Elgg\UnitTestCase {
 		
 		$this->assertSame([], $this->mock->getAllHandlers());
 	}
-
 }

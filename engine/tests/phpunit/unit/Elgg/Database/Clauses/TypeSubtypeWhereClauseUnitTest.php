@@ -21,10 +21,6 @@ class TypeSubtypeWhereClauseUnitTest extends UnitTestCase {
 		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
-	public function down() {
-
-	}
-
 	public function testBuildQueryFromSingleType() {
 
 		$parts = [];

@@ -7,14 +7,6 @@
  */
 class ElggMenuItemUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testFactoryNoNameOrText() {
 		_elgg_services()->logger->disable();
 		$this->assertNull(\ElggMenuItem::factory(array('name' => 'test')));
@@ -262,5 +254,4 @@ class ElggMenuItemUnitTest extends \Elgg\UnitTestCase {
 		
 		$this->assertTrue($should_be_selected->getSelected());
 	}
-
 }

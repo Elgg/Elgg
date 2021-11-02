@@ -7,14 +7,6 @@ namespace Elgg\Database;
  */
 class PluginsUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testAfterPluginLoadActiveCheckIsFree() {
 		$this->markTestIncomplete();
 	}

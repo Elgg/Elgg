@@ -17,14 +17,6 @@ abstract class DirectoryUnitTest extends \Elgg\UnitTestCase {
 	 */
 	abstract public function emptyDirectoryProvider();
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	/**
 	 * @dataProvider emptyDirectoryProvider
 	 */
@@ -143,5 +135,4 @@ abstract class DirectoryUnitTest extends \Elgg\UnitTestCase {
 			$this->assertEquals('bang', $dir->getFile('bang.php')->getContents());
 		}
 	}
-
 }

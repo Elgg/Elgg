@@ -25,14 +25,6 @@ use Elgg\Helpers\Application\FooNonHttpExceptionController;
  */
 class ApplicationUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	/**
 	 * @return Application
 	 */

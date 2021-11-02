@@ -10,14 +10,6 @@ use Elgg\Exceptions\DatabaseException;
  */
 class DatabaseUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testThrowsWithUnknownInsertSpec() {
 		$this->expectException(DatabaseException::class);
 		elgg()->db->insertData('INSERT INTO B');

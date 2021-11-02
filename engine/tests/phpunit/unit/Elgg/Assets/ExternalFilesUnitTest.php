@@ -7,14 +7,6 @@ namespace Elgg\Assets;
  */
 class ExternalFilesUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testPreservesInputConfigData() {
 		$externalFiles = new \Elgg\Assets\ExternalFiles();
 		$externalFiles->register('foo', 'bar1', '#', 'custom_location');
@@ -82,5 +74,4 @@ class ExternalFilesUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals(array(), $externalFiles->getLoadedFiles('nonexistent', 'custom_location'));
 	}
-
 }

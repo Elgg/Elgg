@@ -34,10 +34,6 @@ class QueryOptionsTest extends UnitTestCase {
 		$this->options = new QueryOptions([], \ArrayObject::ARRAY_AS_PROPS);
 	}
 
-	public function down() {
-
-	}
-
 	public function testCanNormalizeEmptyArray() {
 		$options = $this->options->normalizeOptions([]);
 
@@ -1640,5 +1636,4 @@ class QueryOptionsTest extends UnitTestCase {
 		$this->assertEquals([new SelectClause('x AS y')], $options->selects);
 		$this->assertEquals([$join], $options->joins);
 	}
-
 }

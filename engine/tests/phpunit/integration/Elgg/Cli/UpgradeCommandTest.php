@@ -12,10 +12,6 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class UpgradeCommandTest extends IntegrationTestCase {
 
-	public function up() {
-
-	}
-
 	public function down() {
 		if (_elgg_services()->mutex->isLocked('upgrade')) {
 			_elgg_services()->mutex->unlock('upgrade');

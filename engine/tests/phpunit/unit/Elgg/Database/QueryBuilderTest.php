@@ -18,10 +18,6 @@ class QueryBuilderTest extends UnitTestCase {
 		$this->qb = Select::fromTable('foo', 'f');
 	}
 
-	public function down() {
-
-	}
-
 	public function testCanCreateSubquery() {
 		$subquery = $this->qb->subquery('bar', 'b');
 

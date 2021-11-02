@@ -14,10 +14,6 @@ class WidgetsServiceIntegrationTest extends IntegrationTestCase {
 	 */
 	var $users = [];
 
-	public function up() {
-		
-	}
-
 	public function down() {
 		elgg_call(ELGG_IGNORE_ACCESS, function() {
 			foreach ($this->users as $user) {

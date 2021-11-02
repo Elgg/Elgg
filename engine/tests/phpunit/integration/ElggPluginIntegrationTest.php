@@ -11,10 +11,6 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 	 */
 	private $plugins = [];
 
-	public function up() {
-
-	}
-
 	public function down() {
 		$plugin = elgg_get_plugin_from_id('test_plugin');
 		if ($plugin) {

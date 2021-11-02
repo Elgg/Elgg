@@ -14,13 +14,6 @@ class HMACCacheTableUnitTest extends UnitTestCase {
 	public function up() {
 		$this->service = _elgg_services()->hmacCacheTable;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		
-	}
 	
 	public function testCanStoreHmac() {
 		$hmac = 'foo';

@@ -110,7 +110,4 @@ class ElggWidgetIntegrationTest extends IntegrationTestCase {
 		
 		$this->assertFalse(elgg_is_widget_type('test_handler'));
 	}
-	
-	
-
 }

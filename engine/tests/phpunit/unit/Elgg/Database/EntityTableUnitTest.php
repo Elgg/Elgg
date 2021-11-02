@@ -13,14 +13,6 @@ use Elgg\Exceptions\Database\UserFetchFailureException;
  */
 class EntityTableUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanGetUserForPermissionsCheckWhileLoggedOut() {
 		$this->assertNull(_elgg_services()->entityTable->getUserForPermissionsCheck());
 		

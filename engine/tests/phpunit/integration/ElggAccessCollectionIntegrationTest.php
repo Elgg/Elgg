@@ -1,19 +1,10 @@
 <?php
-
 /**
  * @group Access
  * @group UnitTests
  * @group ElggData
  */
 class ElggAccessCollectionIntegrationTest extends \Elgg\IntegrationTestCase {
-
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
 
 	public function createCollection() {
 		$owner = $this->createUser();

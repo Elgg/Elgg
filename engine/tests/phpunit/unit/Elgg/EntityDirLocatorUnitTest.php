@@ -20,14 +20,6 @@ class EntityDirLocatorUnitTest extends \Elgg\UnitTestCase {
 		17234
 	];
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testConstructorGUIDs() {
 		// good guids
 		foreach ($this->guids as $guid) {
@@ -81,5 +73,4 @@ class EntityDirLocatorUnitTest extends \Elgg\UnitTestCase {
 		$root = "/tmp/elgg/";
 		$this->assertSame($root . '1/431/', $root . $path);
 	}
-
 }

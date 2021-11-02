@@ -7,18 +7,6 @@ use Elgg\UnitTestCase;
 class PathsUnitTest extends UnitTestCase {
 
 	/**
-	 * {@inheritDoc}
-	 */
-	public function up() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-	}
-	
-	/**
 	 * @dataProvider sanitizePathProvider
 	 */
 	public function testSanitize($prefix) {

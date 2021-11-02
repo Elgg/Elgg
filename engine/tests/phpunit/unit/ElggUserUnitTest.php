@@ -9,14 +9,6 @@ use Elgg\Exceptions\InvalidArgumentException;
  */
 class ElggUserUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanConstructWithoutArguments() {
 		$this->assertNotNull(new \ElggUser());
 	}

@@ -10,14 +10,6 @@ use Elgg\IntegrationTestCase;
  */
 class QueryBuilderIntegrationTest extends IntegrationTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanUseSubqueryInComparisonClause() {
 
 		$object = $this->createObject();

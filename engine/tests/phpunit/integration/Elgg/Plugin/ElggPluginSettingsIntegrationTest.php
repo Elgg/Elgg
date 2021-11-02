@@ -5,18 +5,6 @@ namespace Elgg\Plugin;
 use Elgg\IntegrationTestCase;
 
 class ElggPluginSettingsIntegrationTest extends IntegrationTestCase {
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function up() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-	}
 	
 	public function testCanSetSetting() {
 		_elgg_services()->logger->disable();

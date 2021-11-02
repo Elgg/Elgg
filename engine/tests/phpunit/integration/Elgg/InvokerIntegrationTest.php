@@ -11,13 +11,6 @@ class InvokerIntegrationTest extends IntegrationTestCase {
 		self::createApplication(['isolate' => true]);
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	public function up() {
-		
-	}
-	
 	public function testSystemLogIntegrationForceDisable() {
 		$plugin = elgg_get_plugin_from_id('system_log');
 		

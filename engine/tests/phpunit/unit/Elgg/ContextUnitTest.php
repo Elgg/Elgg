@@ -19,10 +19,6 @@ class ContextUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->setValue('context', $this->context);
 	}
 
-	public function down() {
-
-	}
-
 	public function testPeekAndPopReturnNullByDefault() {
 		$this->assertNull($this->context->peek());
 		$this->assertNull($this->context->pop());
@@ -149,5 +145,4 @@ class ContextUnitTest extends \Elgg\UnitTestCase {
 		$this->context->push("HELLO");
 		$this->assertEquals("HELLO", $this->context->peek());
 	}
-
 }

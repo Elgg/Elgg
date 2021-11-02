@@ -5,14 +5,6 @@
  */
 class ElggCallUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	/**
 	 * @dataProvider flagsDataProvider
 	 */

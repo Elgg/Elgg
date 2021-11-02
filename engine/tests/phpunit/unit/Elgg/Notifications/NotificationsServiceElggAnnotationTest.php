@@ -13,8 +13,4 @@ class NotificationsServiceElggAnnotationTest extends NotificationsServiceUnitTes
 		$this->test_object_class = \ElggAnnotation::class;
 		parent::up();
 	}
-
-	public function down() {
-
-	}
 }

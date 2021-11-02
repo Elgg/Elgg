@@ -7,14 +7,6 @@ namespace Elgg\Structs\Collection;
  */
 class InMemoryUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCountIsAccurate() {
 		$zeroItems = InMemory::fromArray([]);
 		$this->assertEquals(0, count($zeroItems));
@@ -79,5 +71,4 @@ class InMemoryUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(5, count($mapped));
 		$this->assertNotSame($mapped, $collection);
 	}
-
 }

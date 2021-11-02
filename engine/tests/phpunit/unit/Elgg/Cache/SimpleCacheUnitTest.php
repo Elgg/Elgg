@@ -9,14 +9,6 @@ namespace Elgg\Cache;
  */
 class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testGetUrlHandlesSingleArgument() {
 		$view = 'view.js';
 		elgg_register_simplecache_view($view);
@@ -87,5 +79,4 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 		// cleanup symlink
 		$this->assertTrue(unlink(elgg_get_root_path() . 'cache'));
 	}
-	
 }

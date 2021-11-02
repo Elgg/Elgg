@@ -21,14 +21,6 @@ class ElggCoreHelpersTest extends IntegrationTestCase {
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::down()
-	 */
-	public function down() {
-
-	}
-
-	/**
 	 * Test elgg_normalize_url()
 	 */
 	public function testElggNormalizeURL() {

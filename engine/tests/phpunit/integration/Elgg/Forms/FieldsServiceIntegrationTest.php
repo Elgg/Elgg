@@ -6,7 +6,6 @@ use Elgg\IntegrationTestCase;
 
 class FieldsServiceIntegrationTest extends IntegrationTestCase {
 
-	
 	/**
 	 * {@inheritDoc}
 	 */

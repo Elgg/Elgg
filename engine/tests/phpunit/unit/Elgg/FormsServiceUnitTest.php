@@ -15,10 +15,6 @@ class FormsServiceUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->views->autoregisterViews('', "$views_dir/default", 'default');
 	}
 
-	public function down() {
-
-	}
-
 	public function testCanRenderForm() {
 
 		$expected = elgg_view('forms/foo/bar.html');

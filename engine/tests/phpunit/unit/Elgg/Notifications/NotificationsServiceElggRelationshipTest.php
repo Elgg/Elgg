@@ -13,9 +13,4 @@ class NotificationsServiceElggRelationshipTest extends NotificationsServiceUnitT
 		$this->test_object_class = \ElggRelationship::class;
 		parent::up();
 	}
-
-	public function down() {
-
-	}
-
 }

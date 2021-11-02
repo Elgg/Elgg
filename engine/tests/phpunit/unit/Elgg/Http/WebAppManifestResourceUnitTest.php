@@ -7,14 +7,6 @@ namespace Elgg\Http;
  */
 class WebAppManifestResourceUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testPagesExposeARelManifestLink() {
 		$this->markTestIncomplete();
 		// 1. Load any HTML page (e.g. the homepage)
@@ -24,5 +16,4 @@ class WebAppManifestResourceUnitTest extends \Elgg\UnitTestCase {
 		// 3. Fetch the resource at the given href
 		//    - Assert that the resource is a valid web app manifest
 	}
-
 }

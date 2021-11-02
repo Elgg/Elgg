@@ -10,14 +10,6 @@ use Elgg\IntegrationTestCase;
  */
 class SeedingTest extends IntegrationTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanGetRandomUser() {
 		$user = $this->getRandomUser();
 

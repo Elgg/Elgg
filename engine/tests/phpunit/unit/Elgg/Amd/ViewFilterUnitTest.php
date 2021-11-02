@@ -7,14 +7,6 @@ namespace Elgg\Amd;
  */
 class ViewFilterUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testHandlesShortViewNames() {
 		$viewFilter = new \Elgg\Amd\ViewFilter();
 
@@ -64,5 +56,4 @@ class ViewFilterUnitTest extends \Elgg\UnitTestCase {
 		$filteredContent = $viewFilter->filter('js/foobar/my/mod.jst', $originalContent);
 		$this->assertEquals($originalContent, $filteredContent);
 	}
-
 }

@@ -7,10 +7,6 @@ namespace Elgg\Http;
  */
 class RequestUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
 	public function down() {
 		unset(_elgg_services()->config->http_request_trusted_proxy_ips);
 		unset(_elgg_services()->config->http_request_trusted_proxy_headers);

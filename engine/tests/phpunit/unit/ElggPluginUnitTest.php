@@ -14,10 +14,6 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->boot->clearCache();
 	}
 
-	public function down() {
-
-	}
-
 	public function testConstructorThrowsWithEmptyId() {
 		$this->expectException(InvalidArgumentException::class);
 		$this->expectExceptionMessage('Plugin ID must be set');

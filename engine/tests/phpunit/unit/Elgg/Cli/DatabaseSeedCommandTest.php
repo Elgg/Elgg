@@ -72,5 +72,4 @@ class DatabaseSeedCommandTest extends UnitTestCase {
 
 		$hook->unregister();
 	}
-
 }
