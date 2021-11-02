@@ -124,7 +124,7 @@ class ElggAccessCollection extends ElggData {
 	}
 
 	/**
-	 * Check if user can this collection
+	 * Check if user can edit this collection
 	 *
 	 * @param int $user_guid GUID of the user
 	 * @return bool
@@ -154,7 +154,7 @@ class ElggAccessCollection extends ElggData {
 	}
 
 	/**
-	 * Adds a new member to access collection
+	 * Adds a user to access collection
 	 *
 	 * @param int $member_guid GUID of the user
 	 * @return bool
