@@ -79,10 +79,6 @@ class BootService {
 
 		$installed = isset($config->installed);
 
-		if ($this->timer) {
-			$this->timer->begin([__CLASS__ . '::getBootData']);
-		}
-
 		// early config is done, now get the core boot data
 		$data = $this->getBootData($config, $db, $installed);
 
@@ -148,6 +144,8 @@ class BootService {
 	 * @return BootData
 	 */
 	private function getBootData(Config $config, Database $db, $installed) {
+		$this->beginTimer([__METHOD__]);
+		
 		$config->_boot_cache_hit = false;
 
 		$data = null;
@@ -165,6 +163,8 @@ class BootService {
 			$config->_boot_cache_hit = true;
 		}
 
+		$this->endTimer([__METHOD__]);
+		
 		return $data;
 	}
 }
