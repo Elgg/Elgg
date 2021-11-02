@@ -17,10 +17,6 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 		elgg_register_plugin_hook_handler('validate', 'input', \Elgg\Input\ValidateInputHandler::class);
 	}
 
-	public function down() {
-
-	}
-
 	/**
 	 * @dataProvider htmlBlockProvider
 	 */

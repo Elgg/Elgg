@@ -11,14 +11,6 @@ use Elgg\IntegrationTestCase;
  */
 class ElggCoreConfigTest extends IntegrationTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testSetConfigWithTooLongName() {
 		_elgg_services()->logger->disable();
 

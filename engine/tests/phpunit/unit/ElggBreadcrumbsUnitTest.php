@@ -10,10 +10,6 @@ class ElggBreadcrumbsUnitTest extends \Elgg\IntegratedUnitTestCase {
 		elgg_set_config('breadcrumbs', []);
 	}
 
-	public function down() {
-
-	}
-
 	public function testCrumbsCanBePushed() {
 		elgg_push_breadcrumb('title 1');
 
@@ -81,5 +77,4 @@ class ElggBreadcrumbsUnitTest extends \Elgg\IntegratedUnitTestCase {
 		$html = elgg_view('navigation/breadcrumbs');
 		$this->assertFalse(strpos($html, 'Bar'));
 	}
-
 }

@@ -17,10 +17,6 @@ class UpgradeBatchCommandTest extends IntegrationTestCase {
 		]);
 	}
 
-	public function down() {
-
-	}
-
 	public function testExecuteWithoutOptions() {
 		$application = new Application();
 		$application->add(new UpgradeBatchCommand());

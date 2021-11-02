@@ -23,10 +23,6 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->events = new EventsService(new HandlersService());
 	}
 
-	public function down() {
-
-	}
-
 	public function testTriggerCallsRegisteredHandlersAndReturnsTrue() {
 		$this->events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
 		$this->events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));

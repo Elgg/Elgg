@@ -8,23 +8,7 @@ use Elgg\UnitTestCase;
  * @group UnitTests
  */
 class DateTimeUnitTest extends UnitTestCase {
-	
-	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::up()
-	 */
-	public function up() {
-		
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::down()
-	 */
-	public function down() {
-		
-	}
-	
+
 	/**
 	 * @dataProvider formatLocaleProvider
 	 */

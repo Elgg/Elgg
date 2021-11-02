@@ -34,10 +34,6 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->setValue('session', \ElggSession::getMock());
 	}
 
-	public function down() {
-
-	}
-
 	public function testCanExtendViews() {
 		$this->views->extendView('foo', 'bar');
 
@@ -268,5 +264,4 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 			['view.jpg', 'css/view.jpg'],
 		];
 	}
-
 }

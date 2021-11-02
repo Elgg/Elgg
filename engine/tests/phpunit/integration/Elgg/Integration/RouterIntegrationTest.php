@@ -5,14 +5,6 @@ namespace Elgg\Integration;
 use Elgg\IntegrationTestCase;
 
 class RouterIntegrationTest extends IntegrationTestCase {
-
-	public function up() {
-		
-	}
-	
-	public function down() {
-		
-	}
 	
 	/**
 	 * @dataProvider urlProvider

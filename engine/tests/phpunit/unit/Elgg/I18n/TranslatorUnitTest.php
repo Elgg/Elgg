@@ -30,10 +30,6 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->setValue('translator', $this->translator);
 	}
 
-	public function down() {
-
-	}
-
 	public function testSetLanguageFromGetParameter() {
 		_elgg_services()->request->setParam('hl', 'es');
 

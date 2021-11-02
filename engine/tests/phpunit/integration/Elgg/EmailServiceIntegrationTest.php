@@ -24,9 +24,6 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 		]);
 	}
 
-	public function down() {
-	}
-
 	function testElggSendEmailPassesAllFieldsAsMessageToMailer() {
 		$body = str_repeat("<p>You &amp; me &lt; she.</p>\n", 10);
 		$body_expected = wordwrap(str_repeat("You & me < she.\n", 10));

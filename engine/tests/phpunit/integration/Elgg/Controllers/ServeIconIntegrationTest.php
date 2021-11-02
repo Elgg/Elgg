@@ -7,20 +7,6 @@ use Elgg\Http\Request;
 use Elgg\IntegrationTestCase;
 
 class ServeIconIntegrationTest extends IntegrationTestCase {
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function up() {
-		
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		
-	}
 	
 	protected function createService(Request $request) {
 		$request->_integration_testing = true;
@@ -98,4 +84,3 @@ class ServeIconIntegrationTest extends IntegrationTestCase {
 		$entity->delete();
 	}
 }
-

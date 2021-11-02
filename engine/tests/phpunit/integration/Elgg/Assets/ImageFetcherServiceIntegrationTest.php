@@ -4,14 +4,6 @@ namespace Elgg\Assets;
 
 class ImageFetcherServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testGetImage() {
 		$fetcher = _elgg_services()->imageFetcher;
 		
@@ -33,5 +25,4 @@ class ImageFetcherServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 		// verify cache contains image
 		$this->assertEquals($image, elgg_load_system_cache('image_fetcher_' . md5($image_url)));
 	}
-
 }

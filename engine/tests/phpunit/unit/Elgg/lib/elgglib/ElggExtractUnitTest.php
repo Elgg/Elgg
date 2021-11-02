@@ -8,14 +8,6 @@ namespace Elgg\lib\elgglib;
  */
 class ElggExtractUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	function testCanExtract() {
 		$this->assertSame('b', elgg_extract('a', ['a' => 'b']));
 	}

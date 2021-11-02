@@ -10,14 +10,6 @@ use Psr\Log\LogLevel;
  */
 class LoggerUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testLoggingOff() {
 		$logger = $this->getLoggerInstance();
 		$logger->setLevel(false);
@@ -94,5 +86,4 @@ class LoggerUnitTest extends \Elgg\UnitTestCase {
 
 		return $logger;
 	}
-
 }

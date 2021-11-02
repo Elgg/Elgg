@@ -17,13 +17,6 @@ class AccessCollectionsIntegrationTest extends IntegrationTestCase {
 	public function up() {
 		$this->service = _elgg_services()->accessCollections;
 	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		
-	}
 
 	public function testAccessPublicNotInWriteAccessArrayWhenInWalledGarden() {
 		$user = $this->createUser();

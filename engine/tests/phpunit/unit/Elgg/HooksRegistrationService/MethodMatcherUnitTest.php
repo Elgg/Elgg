@@ -9,14 +9,6 @@ use Elgg\Helpers\MethodMatcherTestObject;
  */
 class MethodMatcherUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testMatchesStrings() {
 		$matcher = new MethodMatcher('stdClass', 'bar');
 

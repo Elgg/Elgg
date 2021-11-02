@@ -25,10 +25,6 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		}
 	}
 
-	public function down() {
-
-	}
-
 	public function testDefaultAttributes() {
 		$this->assertEquals(null, $this->obj->guid);
 		$this->assertEquals('object', $this->obj->type);

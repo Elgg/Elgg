@@ -5,15 +5,7 @@
  * @group ElggData
  */
 class ElggCommentUnitTest extends \Elgg\UnitTestCase {
-	
-	public function up() {
-		
-	}
-	
-	public function down() {
-		
-	}
-	
+
 	public function testCantComment() {
 		
 		$comment = $this->createObject([

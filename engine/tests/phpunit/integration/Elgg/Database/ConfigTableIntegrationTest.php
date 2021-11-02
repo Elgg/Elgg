@@ -18,13 +18,6 @@ class ConfigTableIntegrationTest extends IntegrationTestCase {
 	public function up() {
 		$this->service = _elgg_services()->configTable;
 	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		
-	}
 
 	/**
 	 * @dataProvider setValueProvider

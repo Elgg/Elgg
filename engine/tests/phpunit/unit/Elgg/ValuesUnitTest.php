@@ -10,14 +10,6 @@ use Elgg\I18n\DateTime as ElggDateTime;
  */
 class ValuesUnitTest extends UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	/**
 	 * @dataProvider timeProvider
 	 */

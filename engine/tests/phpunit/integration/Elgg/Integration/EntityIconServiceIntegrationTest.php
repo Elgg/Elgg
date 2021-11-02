@@ -5,15 +5,7 @@ namespace Elgg\Integration;
 use Elgg\IntegrationTestCase;
 
 class EntityIconServiceIntegrationTest extends IntegrationTestCase {
-	
-	public function up() {
-		
-	}
-	
-	public function down() {
-		
-	}
-	
+
 	/**
 	 * @dataProvider detectCroppingCoordinatesDataProvider
 	 */

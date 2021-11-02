@@ -21,13 +21,6 @@ class MimeTypeServiceUnitTest extends UnitTestCase {
 	public function up() {
 		$this->service = _elgg_services()->mimetype;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		
-	}
 	
 	/**
 	 * @dataProvider validFilenameProvider

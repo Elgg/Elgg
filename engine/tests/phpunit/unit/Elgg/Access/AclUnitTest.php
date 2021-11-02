@@ -7,14 +7,6 @@ namespace Elgg\Access;
  */
 class AclUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	/**
 	 * Ignoring access permissions globally shouldn't affect the results
 	 * when fetching the ACLs that user belongs to.
@@ -90,5 +82,4 @@ class AclUnitTest extends \Elgg\UnitTestCase {
 		 */
 		$this->markTestIncomplete();
 	}
-
 }

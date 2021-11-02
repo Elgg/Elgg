@@ -13,15 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class RouteMatchingUnitTest extends \Elgg\UnitTestCase {
 
-
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testMostSpecificRouteWins() {
 
 		$specific_calls = 0;

@@ -8,13 +8,6 @@ class ElggCommentIntegrationTest extends IntegrationTestCase {
 	 * @var \ElggEntity[]
 	 */
 	protected $entities = [];
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public function up() {
-		
-	}
 
 	/**
 	 * {@inheritDoc}

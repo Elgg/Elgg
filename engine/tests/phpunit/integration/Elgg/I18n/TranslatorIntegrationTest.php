@@ -18,11 +18,7 @@ class TranslatorIntegrationTest extends IntegrationTestCase {
 	public function up() {
 		$this->translator = elgg()->translator;
 	}
-
-	public function down() {
-
-	}
-
+	
 	public function testTranslationsGetSavedInCache() {
 		$cache = elgg_get_system_cache();
 		$cache->delete('en.lang');

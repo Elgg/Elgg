@@ -37,10 +37,6 @@ class AttachmentUnitTest extends UnitTestCase {
 			'type' => 'text/plain',
 		];
 	}
-
-	public function down() {
-
-	}
 	
 	public function testFactoryFromArray() {
 		

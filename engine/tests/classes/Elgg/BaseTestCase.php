@@ -189,13 +189,15 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	 * Called after setUp() method and can be used by test cases to setup their test logic
 	 * @return mixed
 	 */
-	abstract function up();
+	public function up() {
+	}
 
 	/**
 	 * Called before tearDown() method and can be used by test cases to clear their test logic
 	 * @return mixed
 	 */
-	abstract function down();
+	public function down() {
+	}
 
 	/**
 	 * @source https://gist.github.com/gnutix/7746893

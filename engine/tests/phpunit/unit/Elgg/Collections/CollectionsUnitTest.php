@@ -12,14 +12,6 @@ use Elgg\Helpers\Collections\TestItem;
  */
 class CollectionsUnitTest extends UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanConstructEmptyCollection() {
 		$collection = new Collection();
 

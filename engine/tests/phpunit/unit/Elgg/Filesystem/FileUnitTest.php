@@ -7,14 +7,6 @@ namespace Elgg\Filesystem;
  */
 class FileUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanCheckForItsOwnExistence() {
 		$directory = Directory\InMemory::fromArray([
 					'/foo/bar/bar.php' => 'bar',
@@ -26,5 +18,4 @@ class FileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($realfile->exists());
 		$this->assertFalse($nonfile->exists());
 	}
-
 }

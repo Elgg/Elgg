@@ -15,14 +15,6 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class CommandTest extends UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function executeCommand(\Closure $handler) {
 		$command = new TestingCommand();
 		$command->setHandler($handler);

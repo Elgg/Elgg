@@ -19,13 +19,6 @@ class StickyFormsUnitTest extends \Elgg\UnitTestCase {
 		$this->service = _elgg_services()->stickyForms;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-
-	}
-
 	public function testIsStickyReturnsTrueForFormsMarkedAsSticky() {
 		$this->assertFalse($this->service->isStickyForm('foo'));
 		

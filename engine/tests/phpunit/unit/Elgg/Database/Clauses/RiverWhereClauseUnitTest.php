@@ -22,10 +22,6 @@ class RiverWhereClauseUnitTest extends UnitTestCase {
 		$this->qb = Select::fromTable('river', 'alias');
 	}
 
-	public function down() {
-
-	}
-
 	public function testBuildEmptyQuery() {
 
 		$expected = null;
@@ -155,6 +151,5 @@ class RiverWhereClauseUnitTest extends UnitTestCase {
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
-
 	}
 }

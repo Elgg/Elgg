@@ -7,14 +7,6 @@
  */
 class ElggCoreUrlHelpersUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	/**
 	 * Test if elgg_http_add_url_query_elements() preserves original url when no params are passed
 	 *

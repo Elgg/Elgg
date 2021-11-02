@@ -12,14 +12,6 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class CronCommandTest extends UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testExecuteWithoutOptions() {
 		$application = new Application();
 		$application->add(new CronCommand());

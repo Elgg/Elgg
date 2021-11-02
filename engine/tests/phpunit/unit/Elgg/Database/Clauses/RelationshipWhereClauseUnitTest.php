@@ -21,10 +21,6 @@ class RelationshipWhereClauseUnitTest extends UnitTestCase {
 		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
-	public function down() {
-
-	}
-
 	public function testBuildEmptyQuery() {
 
 		$expected = null;
@@ -134,6 +130,5 @@ class RelationshipWhereClauseUnitTest extends UnitTestCase {
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
-
 	}
 }

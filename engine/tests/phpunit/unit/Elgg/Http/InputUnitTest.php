@@ -7,14 +7,6 @@ namespace Elgg\Http;
  */
 class InputUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testGetInputDefaultsToProvidedDefaultValue() {
 		$this->markTestIncomplete();
 	}
@@ -38,5 +30,4 @@ class InputUnitTest extends \Elgg\UnitTestCase {
 	public function testFilterTagsGlobal() {
 		$this->markTestIncomplete();
 	}
-
 }

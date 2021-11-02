@@ -19,10 +19,6 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		_elgg_services()->metadataTable->setCurrentTime();
 	}
 
-	public function down() {
-
-	}
-
 	public function testExtenderConstructor() {
 
 		$owner = $this->createUser();

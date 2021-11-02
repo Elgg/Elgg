@@ -14,13 +14,6 @@ class ElggBatchTest extends IntegrationTestCase {
 	 * @var \ElggEntity[] entities created during the test
 	 */
 	protected $createdEntities = [];
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public function up() {
-
-	}
 
 	/**
 	 * {@inheritDoc}

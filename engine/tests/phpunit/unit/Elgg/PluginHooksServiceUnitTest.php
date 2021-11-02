@@ -20,10 +20,6 @@ class PluginHooksServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->hooks = new PluginHooksService(_elgg_services()->events);
 	}
 
-	public function down() {
-
-	}
-
 	public function testTriggerCallsRegisteredHandlers() {
 		$this->hooks->registerHandler('foo', 'bar', [
 			PluginHooksServiceUnitTest::class,

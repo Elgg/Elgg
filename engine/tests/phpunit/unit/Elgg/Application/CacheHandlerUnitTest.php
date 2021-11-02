@@ -17,10 +17,6 @@ class CacheHandlerUnitTest extends \Elgg\UnitTestCase {
 		$this->handler = new CacheHandler(_elgg_services()->config, $request, true);
 	}
 
-	public function down() {
-
-	}
-
 	protected function _testParseFail($input) {
 		$this->assertEquals(array(), $this->handler->parsePath($input));
 	}

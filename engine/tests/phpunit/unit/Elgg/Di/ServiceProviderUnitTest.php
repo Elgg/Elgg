@@ -14,14 +14,6 @@ use phpDocumentor\Reflection\DocBlock\Tag;
  */
 class ServiceProviderUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanExtractSiteSecretFromConfig() {
 		$config = new Config([
 			SiteSecret::CONFIG_KEY => md5('bar'),
@@ -131,5 +123,4 @@ class ServiceProviderUnitTest extends \Elgg\UnitTestCase {
 
 		return $sets;
 	}
-
 }

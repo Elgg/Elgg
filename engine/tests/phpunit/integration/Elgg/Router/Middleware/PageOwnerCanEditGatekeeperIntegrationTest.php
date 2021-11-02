@@ -26,14 +26,6 @@ class PageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase {
 	 * @var \ElggObject test object, owned by test user
 	 */
 	protected $object;
-	
-	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::up()
-	 */
-	public function up() {
-		
-	}
 
 	/**
 	 * {@inheritDoc}

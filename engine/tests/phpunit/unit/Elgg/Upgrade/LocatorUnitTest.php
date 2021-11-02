@@ -29,10 +29,6 @@ class LocatorUnitTest extends \Elgg\UnitTestCase {
 			->will($this->returnValue('test_plugin'));
 	}
 
-	public function down() {
-
-	}
-
 	public function testRunner() {
 		// Can be implemented once Plugins::find() is mocked
 		$this->markTestIncomplete();

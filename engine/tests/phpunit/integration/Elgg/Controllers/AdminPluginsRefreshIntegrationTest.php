@@ -12,13 +12,6 @@ class AdminPluginsRefreshIntegrationTest extends IntegrationTestCase {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function up() {
-		
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	public function down() {
 		elgg_unregister_route('admin_plugins_refresh');
 		

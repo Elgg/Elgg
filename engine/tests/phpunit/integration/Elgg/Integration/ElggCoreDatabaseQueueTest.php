@@ -12,14 +12,6 @@ use Elgg\Queue\DatabaseQueue;
  */
 class ElggCoreDatabaseQueueTest extends IntegrationTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testEnqueueAndDequeue() {
 		$queue = new DatabaseQueue('unit:test', _elgg_services()->db);
 		$first = array(1, 2, 3);

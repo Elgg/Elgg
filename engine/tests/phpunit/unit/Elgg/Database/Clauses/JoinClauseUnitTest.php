@@ -21,10 +21,6 @@ class JoinClauseUnitTest extends UnitTestCase {
 		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
-	public function down() {
-
-	}
-
 	public function testBuildJoinClauseWithoutCondition() {
 
 		$this->qb->join('alias', 'joined_table', 'joined_alias', true);

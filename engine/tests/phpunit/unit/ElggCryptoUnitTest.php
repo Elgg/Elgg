@@ -21,10 +21,6 @@ class ElggCryptoUnitTest extends \Elgg\UnitTestCase {
 			->will($this->returnCallback(array($this, 'mock_getRandomBytes')));
 	}
 
-	public function down() {
-
-	}
-
 	protected function getCrypto() {
 		return new \ElggCrypto(_elgg_services()->siteSecret);
 	}
@@ -105,5 +101,4 @@ class ElggCryptoUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertNotEquals($t1, $t2);
 	}
-
 }

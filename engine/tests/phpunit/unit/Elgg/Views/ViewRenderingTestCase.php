@@ -15,14 +15,9 @@ abstract class ViewRenderingTestCase extends IntegratedUnitTestCase {
 
 	public function up() {
 		_elgg_services()->logger->disable();
-
-
 	}
 
 	public function down() {
-		//_elgg_services()->session->removeLoggedInUser();
-		//elgg_set_page_owner_guid(null);
-
 		_elgg_services()->logger->enable();
 	}
 
@@ -122,5 +117,4 @@ abstract class ViewRenderingTestCase extends IntegratedUnitTestCase {
 				return elgg_view($view, $vars, $viewtype);
 		}
 	}
-
 }

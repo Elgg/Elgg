@@ -21,10 +21,6 @@ class SelectClauseUnitTest extends UnitTestCase {
 		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
-	public function down() {
-
-	}
-
 	public function testBuildSelectClauseFromString() {
 
 		$this->qb->select('alias.guid AS g');

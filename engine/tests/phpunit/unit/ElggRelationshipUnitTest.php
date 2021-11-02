@@ -10,12 +10,6 @@ class ElggRelationshipUnitTest extends \Elgg\UnitTestCase {
 	 * @var \ElggEntity[] Entities created during the tests
 	 */
 	protected $created_entities = [];
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public function up() {
-	}
 
 	/**
 	 * {@inheritDoc}

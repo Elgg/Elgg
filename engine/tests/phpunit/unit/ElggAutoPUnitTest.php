@@ -14,10 +14,6 @@ class ElggAutoPUnitTest extends \Elgg\UnitTestCase {
 		$this->_autop = new \ElggAutoP();
 	}
 
-	public function down() {
-
-	}
-
 	public function testDomRoundtrip() {
 		$d = dir($this->normalizeTestFilePath('autop/'));
 		$in = file_get_contents($d->path . "/domdoc_in.html");
@@ -75,5 +71,4 @@ class ElggAutoPUnitTest extends \Elgg\UnitTestCase {
 		$r = preg_replace('/[\n\r]+/', '', $string);
 		return $r;
 	}
-
 }

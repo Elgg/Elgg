@@ -8,14 +8,6 @@ namespace Elgg\lib\elgglib;
  */
 class ElggCacheUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanSymlinkCache() {
 
 		$root_path = elgg_get_root_path();

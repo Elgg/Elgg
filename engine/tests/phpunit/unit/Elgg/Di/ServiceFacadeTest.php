@@ -10,14 +10,6 @@ use Elgg\Helpers\Di\ServiceFacadeTestService;
  */
 class ServiceFacadeTest extends UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanAccessService() {
 
 		elgg()->set('foo', new ServiceFacadeTestService());

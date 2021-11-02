@@ -16,14 +16,6 @@ class ElggUserIntegrationTest extends IntegrationTestCase {
 	
 	/**
 	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::up()
-	 */
-	public function up() {
-		
-	}
-	
-	/**
-	 * {@inheritDoc}
 	 * @see \Elgg\BaseTestCase::down()
 	 */
 	public function down() {

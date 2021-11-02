@@ -22,10 +22,6 @@ class SignedUrlUnitTest extends \Elgg\UnitTestCase {
 
 		_elgg_services()->setValue('session', \ElggSession::getMock());
 	}
-
-	public function down() {
-
-	}
 	
 	public function testCanSignUrl() {
 		$signed_url = $this->service->sign($this->url);
