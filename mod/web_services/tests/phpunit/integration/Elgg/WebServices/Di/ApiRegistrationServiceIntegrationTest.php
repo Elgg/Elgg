@@ -16,12 +16,6 @@ class ApiRegistrationServiceIntegrationTest extends IntegrationTestCase {
 		$this->service = ApiRegistrationService::instance();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-	}
-	
 	public function testRegisterApiMethod() {
 		// service function
 		$this->service->registerApiMethod('foo', 'callback');

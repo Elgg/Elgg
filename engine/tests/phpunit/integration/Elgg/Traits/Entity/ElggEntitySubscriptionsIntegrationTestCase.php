@@ -29,16 +29,6 @@ abstract class ElggEntitySubscriptionsIntegrationTestCase extends IntegrationTes
 		
 		$this->target = $this->getEntity();
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		elgg_call(ELGG_IGNORE_ACCESS, function() {
-			$this->target->delete();
-			$this->user->delete();
-		});
-	}
 	
 	protected function setupApplication(): void {
 		$this->createApplication([
@@ -206,8 +196,6 @@ abstract class ElggEntitySubscriptionsIntegrationTestCase extends IntegrationTes
 		foreach ($subscriptions as $subscription) {
 			$this->assertInstanceOf(\ElggRelationship::class, $subscription);
 		}
-		
-		$user2->delete();
 	}
 	
 	public function testGetSubscriptionsWithTypeSubtypeAction() {
@@ -229,8 +217,6 @@ abstract class ElggEntitySubscriptionsIntegrationTestCase extends IntegrationTes
 		foreach ($subscriptions as $subscription) {
 			$this->assertInstanceOf(\ElggRelationship::class, $subscription);
 		}
-		
-		$user2->delete();
 	}
 	
 	public function testGetSubscribers() {

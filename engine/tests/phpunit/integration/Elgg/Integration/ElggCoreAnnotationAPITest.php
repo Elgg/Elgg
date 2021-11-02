@@ -21,15 +21,10 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 	public function up() {
 		_elgg_services()->session->setLoggedInUser($this->getAdmin());
 
-		$this->object = new \ElggObject();
-		$this->object->setSubtype($this->getRandomSubtype());
+		$this->object = $this->createObject();
 	}
 
 	public function down() {
-		if ($this->object instanceof \ElggEntity) {
-			$this->object->delete();
-		}
-
 		_elgg_services()->session->removeLoggedInUser();
 	}
 
@@ -170,7 +165,7 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 		$object = $this->createObject();
 		$this->assertNotEmpty($object->annotate('annotation', $value));
 
-		$options = [
+		$result = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $object->subtype,
 			'annotation_name_value_pairs' => [
@@ -182,13 +177,9 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 				]
 			],
 			'count' => true,
-		];
-
-		$result = elgg_get_entities($options);
+		]);
 
 		$this->assertEquals(1, $result);
-
-		$object->delete();
 	}
 
 	public function booleanPairsProvider() {
@@ -223,5 +214,4 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 			'annotation_names' => ['foo', 'bar'],
 		]));
 	}
-
 }

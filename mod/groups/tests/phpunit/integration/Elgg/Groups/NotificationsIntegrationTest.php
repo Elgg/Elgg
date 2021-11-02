@@ -33,9 +33,6 @@ class NotificationsIntegrationTest extends IntegrationTestCase {
 		]);
 		
 		$this->assertTrue($group->hasSubscription($user->guid, 'test'));
-		
-		$group->delete();
-		$user->delete();
 	}
 	
 	public function testGroupSubscriptionRemovedWhenMemberRelationshipRemoved() {
@@ -51,8 +48,5 @@ class NotificationsIntegrationTest extends IntegrationTestCase {
 		$group->leave($user);
 		$this->assertFalse($group->isMember($user));
 		$this->assertFalse($group->hasSubscription($user->guid, 'test'));
-		
-		$group->delete();
-		$user->delete();
 	}
 }

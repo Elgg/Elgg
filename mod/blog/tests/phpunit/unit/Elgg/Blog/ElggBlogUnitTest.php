@@ -11,14 +11,6 @@ class ElggBlogUnitTest extends \Elgg\UnitTestCase {
 	
 	use PluginTesting;
 	
-	public function up() {
-		
-	}
-	
-	public function down() {
-		
-	}
-	
 	/**
 	 * @dataProvider blogCommentStatusProvider
 	 */

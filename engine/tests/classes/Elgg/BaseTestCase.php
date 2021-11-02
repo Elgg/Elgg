@@ -183,6 +183,13 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 		// Tests should run without a logged in user
 		$this->assertFalse((bool) _elgg_services()->session->isLoggedIn(), __METHOD__ . ': there should be no logged in user');
+		
+		// cleanup admin user
+		$admin = $this->_testing_admin;
+		unset($this->_testing_admin);
+		if ($admin instanceof \ElggUser) {
+			$admin->delete();
+		}
 	}
 
 	/**

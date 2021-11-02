@@ -91,8 +91,6 @@ class ElggCoreMetadataCacheTest extends IntegrationTestCase {
 
 		$object->getMetadata('test_metadata');
 		$this->assertEquals([1, 2], $this->cache->getSingle($object->guid, 'test_metadata'));
-
-		$object->delete();
 	}
 
 	public function testWritesInvalidate() {
@@ -134,9 +132,6 @@ class ElggCoreMetadataCacheTest extends IntegrationTestCase {
 		$metadata->value = 'bar';
 		$metadata->save();
 		$this->assertFalse($this->cache->isLoaded($guid1));
-
-		$object1->delete();
-		$object2->delete();
 	}
 
 	public function testPopulateFromEntities() {
@@ -160,9 +155,6 @@ class ElggCoreMetadataCacheTest extends IntegrationTestCase {
 		], $this->cache->getSingle($guid1, 'test_metadata'));
 		$this->assertEquals("test_metadata-2", $this->cache->getSingle($guid1, "test_metadata-2"));
 		$this->assertEquals('test_metadata', $this->cache->getSingle($guid2, 'test_metadata'));
-
-		$object1->delete();
-		$object2->delete();
 	}
 
 	public function testFilterHeavyEntities() {
@@ -179,9 +171,6 @@ class ElggCoreMetadataCacheTest extends IntegrationTestCase {
 		$expected = array($guid1);
 		$actual = $this->cache->filterMetadataHeavyEntities($guids, 6000);
 		$this->assertEquals($expected, $actual);
-
-		$object1->delete();
-		$object2->delete();
 	}
 
 	public function testMetadataCanBeLoadedWithCacheDisabled() {

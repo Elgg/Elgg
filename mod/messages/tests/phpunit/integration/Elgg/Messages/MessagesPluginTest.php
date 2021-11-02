@@ -17,10 +17,6 @@ class MessagesPluginTest extends IntegrationTestCase {
 		elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'Elgg\Messages\Permissions::canEditContainer');
 	}
 
-	public function down() {
-
-	}
-
 	public function testCanSendMessage() {
 
 		$sender = $this->createUser();
@@ -92,6 +88,5 @@ class MessagesPluginTest extends IntegrationTestCase {
 
 		$this->assertEquals($expected_subject, $notification->getSubject());
 		$this->assertStringContainsString($expected_body, $plain_text_part->getRawContent());
-
 	}
 }

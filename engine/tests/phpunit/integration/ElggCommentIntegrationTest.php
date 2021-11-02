@@ -8,16 +8,6 @@ class ElggCommentIntegrationTest extends IntegrationTestCase {
 	 * @var \ElggEntity[]
 	 */
 	protected $entities = [];
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		// cleanup created entities
-		foreach ($this->entities as $entity) {
-			$entity->delete();
-		}
-	}
 	
 	public function testCommentOwnerCanEditContentOwnerCant() {
 		$this->entities[] = $owner = $this->createUser();

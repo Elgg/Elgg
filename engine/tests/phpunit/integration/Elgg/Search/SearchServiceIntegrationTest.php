@@ -63,8 +63,6 @@ class SearchServiceIntegrationTest extends IntegrationTestCase {
 		]);
 
 		$this->assertEquals($count, $results);
-
-		$entity->delete();
 	}
 
 	public function searchDataProvider() {

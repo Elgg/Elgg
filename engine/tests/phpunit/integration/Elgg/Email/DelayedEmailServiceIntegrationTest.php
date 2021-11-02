@@ -38,8 +38,6 @@ class DelayedEmailServiceIntegrationTest extends IntegrationTestCase {
 		foreach ($this->entities as $entity) {
 			// cleanup queue table
 			_elgg_services()->delayedEmailQueueTable->deleteRecipientRows($entity->guid, 'daily', time() + 10);
-			
-			$entity->delete();
 		}
 	}
 	

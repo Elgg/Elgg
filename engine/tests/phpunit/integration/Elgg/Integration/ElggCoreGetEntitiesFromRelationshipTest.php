@@ -319,9 +319,6 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		]);
 		$this->assertIsArray($es);
 		$this->assertCount(0, $es);
-		
-		$object1->delete();
-		$object2->delete();
 	}
 	
 	/**
@@ -362,9 +359,6 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		]);
 		$this->assertIsArray($es);
 		$this->assertCount(0, $es);
-		
-		$object1->delete();
-		$object2->delete();
 	}
 	
 	/**
@@ -407,8 +401,5 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		]);
 		$this->assertIsArray($es);
 		$this->assertCount(0, $es);
-		
-		$object1->delete();
-		$object2->delete();
 	}
 }

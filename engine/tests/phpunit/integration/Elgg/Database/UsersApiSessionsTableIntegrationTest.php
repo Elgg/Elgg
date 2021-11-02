@@ -24,15 +24,6 @@ class UsersApiSessionsTableIntegrationTest extends IntegrationTestCase {
 		$this->service = _elgg_services()->usersApiSessionsTable;
 		$this->user = $this->createUser();
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		if ($this->user instanceof \ElggUser) {
-			$this->user->delete();
-		}
-	}
 	
 	public function testCreateToken() {
 		$this->assertNotFalse($this->service->createToken($this->user->guid));

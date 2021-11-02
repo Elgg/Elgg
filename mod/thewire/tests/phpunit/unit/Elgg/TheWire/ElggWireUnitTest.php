@@ -11,14 +11,6 @@ class ElggWireUnitTest extends \Elgg\UnitTestCase {
 	
 	use PluginTesting;
 	
-	public function up() {
-		
-	}
-	
-	public function down() {
-		
-	}
-	
 	public function testCantComment() {
 		$this->startPlugin();
 		

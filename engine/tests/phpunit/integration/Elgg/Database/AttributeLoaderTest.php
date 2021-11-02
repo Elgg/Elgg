@@ -24,10 +24,6 @@ class AttributeLoaderTest extends IntegrationTestCase {
 	 * {@inheritDoc}
 	 */
 	public function down() {
-		if ($this->object instanceof \ElggObject) {
-			$this->object->delete();
-		}
-		
 		_elgg_services()->session->setIgnoreAccess(false);
 	}
 

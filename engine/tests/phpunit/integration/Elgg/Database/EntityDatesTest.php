@@ -24,8 +24,6 @@ class EntityDatesTest extends IntegrationTestCase {
 	 */
 	public function down() {
 		_elgg_services()->session->setIgnoreAccess(false);
-		
-		$this->unseed();
 	}
 
 	/**
@@ -67,33 +65,6 @@ class EntityDatesTest extends IntegrationTestCase {
 				'container_guid' => $owner->guid,
 			]);
 		}
-	}
-	
-	/**
-	 * Cleanup all testing entities
-	 *
-	 * @return void
-	 */
-	protected function unseed() {
-		
-		_elgg_services()->session->setIgnoreAccess(true);
-		
-		$batch = elgg_get_entities([
-			'type' => 'object',
-			'subtypes' => [
-				'entity_dates_a',
-				'entity_dates_b',
-			],
-			'limit' => false,
-			'batch' => true,
-			'batch_inc_offset' => false,
-		]);
-		
-		foreach ($batch as $object) {
-			$object->delete();
-		}
-		
-		_elgg_services()->session->setIgnoreAccess(false);
 	}
 	
 	public function testGetEntityDates() {

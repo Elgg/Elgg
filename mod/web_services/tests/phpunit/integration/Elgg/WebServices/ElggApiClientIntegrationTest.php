@@ -6,18 +6,6 @@ use Elgg\IntegrationTestCase;
 
 class ElggApiClientIntegrationTest extends IntegrationTestCase {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function up() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-	}
-	
 	public function testConstructor() {
 		$client = new ElggApiClient('http://localhost');
 		

@@ -22,7 +22,9 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 
 	public function up() {
 		_elgg_services()->session->setLoggedInUser($this->getAdmin());
-		$this->object = new ElggObject();
+		
+		// can not use createObject(). The tests rely on an unsaved entity
+		$this->object = new \ElggObject();
 		$this->object->setSubtype($this->getRandomSubtype());
 	}
 
@@ -248,21 +250,17 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 		$e->delete();
 	}
 
-
 	// Make sure metadata with multiple values is correctly deleted when re-written
 	// by another user
 	// https://github.com/elgg/elgg/issues/2776
 	public function test_elgg_metadata_multiple_values() {
-		$user1 = $this->createOne('user');
+		$user1 = $this->createUser();
+		$user2 = $this->createUser();
 
-		$user2 = $this->createOne('user');
-
-		$entity = new ElggObject();
-		$entity->setSubtype($this->getRandomSubtype());
-		$entity->owner_guid = $user1->guid;
-		$entity->container_guid = $user1->guid;
-		$entity->access_id = ACCESS_PUBLIC;
-		$entity->save();
+		$entity = $this->createObject([
+			'owner_guid' => $user1->guid,
+			'container_guid' => $user1->guid,
+		]);
 
 		// need to fake different logins.
 		// good times without mocking.
@@ -316,10 +314,6 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 		});
 		
 		_elgg_services()->session->setLoggedInUser($original_user);
-
-		$entity->delete();
-		$user1->delete();
-		$user2->delete();
 	}
 
 	public function testDefaultOrderedById() {

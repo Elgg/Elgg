@@ -36,10 +36,6 @@ class ElggEntityMetadataTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function down() {
-		if ($this->entity) {
-			$this->entity->delete();
-		}
-		
 		unset($this->unsaved_entity);
 		unset($this->entities);
 	}

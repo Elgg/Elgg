@@ -29,9 +29,6 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 		$entity->deleteAnnotations('does not exist');
 
 		$this->assertEquals(1, $entity->countAnnotations('test'));
-
-		// clean up
-		$entity->delete();
 	}
 
 	/**
@@ -69,11 +66,6 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 			$group->join($user);
 			$this->assertTrue($group->canWriteToContainer($user->guid, $object->getType(), $object->getSubtype()));
 		});
-		
-		$user->delete();
-		$owner->delete();
-		$object->delete();
-		$group->delete();
 	}
 
 	/**
@@ -207,11 +199,6 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 		
 		$entity = $entities[0];
 		$this->assertNull($entity->_nonexistent_test_column, "Additional select columns are leaking to attributes for '$type'");
-		
-		// cleanup
-		if ($seed_entity) {
-			$seed_entity->delete();
-		}
 	}
 	
 	public function extraColumnsDontAppearInAttributesProvider() {
@@ -254,9 +241,6 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 		foreach ($annotations as $annotation) {
 			$this->assertEquals('no', $annotation->enabled);
 		}
-
-		// delete group and annotations
-		$group->delete();
 	}
 
 	/**
@@ -285,8 +269,6 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 
 		$object = get_entity($guid);
 		$this->assertEquals(ACCESS_PRIVATE, $object->access_id);
-
-		$object->delete();
 	}
 
 	public static function handleUpdateForIssue6225test(\Elgg\Event $event) {
@@ -310,8 +292,6 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 		$stats = get_entity_statistics();
 
 		$this->assertEquals(1, $stats['object'][$subtype]);
-
-		$object->delete();
 	}
 
 	/**
@@ -321,7 +301,7 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 	 */
 	function testOwnedGetEntityStatistics() {
 
-		$user = $this->createOne('user');
+		$user = $this->createUser();
 
 		$subtype = 'issue7845' . rand(0, 100);
 
@@ -333,8 +313,5 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 		$stats = get_entity_statistics($user->guid);
 
 		$this->assertEquals(1, $stats['object'][$subtype]);
-
-		$user->delete();
 	}
-
 }

@@ -21,9 +21,6 @@ class WriteAccessTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function down() {
-		if ($this->user) {
-			$this->user->delete();
-		}
 		_elgg_services()->session->removeLoggedInUser();
 	}
 

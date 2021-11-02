@@ -53,7 +53,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest
 
 	public function testCanGetEntitiesByAnnotationCreationTime() {
 
-		$user1 = $this->createOne('user');
+		$user1 = $this->createUser();
 
 		$prefix = _elgg_services()->config->dbprefix;
 
@@ -95,8 +95,8 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest
 
 	public function testElggApiGettersEntitiesFromAnnotation() {
 
-		$user1 = $this->createOne('user');
-		$user2 = $this->createOne('user');
+		$user1 = $this->createUser();
+		$user2 = $this->createUser();
 
 		// create some test annotations
 		$annotation_name = 'test_annotation_name_' . rand();
@@ -139,8 +139,8 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest
 	 */
 	public function testElggApiGettersEntitiesFromAnnotationOrderByMaxtime() {
 
-		$user1 = $this->createOne('user');
-		$user2 = $this->createOne('user');
+		$user1 = $this->createUser();
+		$user2 = $this->createUser();
 
 		// create some test annotations
 		$annotation_name = 'test_annotation_name_' . rand();

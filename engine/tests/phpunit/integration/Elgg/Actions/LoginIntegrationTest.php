@@ -29,19 +29,6 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		self::createApplication(['isolate'=> true]);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\ActionResponseTestCase::down()
-	 */
-	public function down() {
-		
-		if ($this->user instanceof \ElggUser) {
-			$this->user->delete();
-		}
-		
-		parent::down();
-	}
-
 	public function testLoginWithUsernameAndPassword() {
 
 		$user = $this->user = $this->createUser([], [

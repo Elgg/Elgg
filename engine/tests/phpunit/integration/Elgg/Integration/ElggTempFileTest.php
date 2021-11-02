@@ -107,7 +107,6 @@ class ElggTempFileTest extends IntegrationTestCase {
 		$this->assertEquals('', $temp_file->getInlineURL());
 		
 		_elgg_services()->session->removeLoggedInUser();
-		$user->delete();
 	}
 	
 	public function testSaveThrowsException() {

@@ -14,10 +14,6 @@ class SearchPluginTest extends UnitTestCase {
 		$this->startPlugin();
 	}
 
-	public function down() {
-
-	}
-
 	public function testParameterInitialization() {
 		set_input('fields', [
 			'metadata' => [

@@ -48,19 +48,6 @@ class CommentEntityRedirectorIntegrationTest extends IntegrationTestCase {
 	 * {@inheritDoc}
 	 */
 	public function down() {
-		
-		if ($this->comment instanceof \ElggComment) {
-			$this->comment->delete();
-		}
-		
-		if ($this->entity instanceof \ElggObject) {
-			$this->entity->delete();
-		}
-		
-		if ($this->owner instanceof \ElggUser) {
-			$this->owner->delete();
-		}
-		
 		elgg()->session->removeLoggedInUser();
 	}
 	
