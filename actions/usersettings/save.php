@@ -26,7 +26,7 @@ if (!$user->canEdit()) {
 	throw new EntityPermissionsException();
 }
 
-elgg_make_sticky_form('usersettings');
+elgg_make_sticky_form('usersettings', ['password', 'password2']);
 
 $hooks_params = [
 	'user' => $user,

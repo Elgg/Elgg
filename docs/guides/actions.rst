@@ -478,7 +478,7 @@ The registration action sets creates the sticky form and clears it once the acti
 .. code-block:: php
 
    // actions/register.php
-   elgg_make_sticky_form('register');
+   elgg_make_sticky_form('register', ['password', 'password2']);
 
    ...
 
@@ -488,6 +488,11 @@ The registration action sets creates the sticky form and clears it once the acti
       elgg_clear_sticky_form('register');
       ....
    }
+
+.. tip::
+
+	The function ``elgg_make_sticky_form()`` supports an optional second argument ``$ignored_field_names``. This needs to be an ``array`` of the 
+	field names you don't wish to be made sticky. This is usefull for fields which contain sensitive data, like passwords.
 
 Example: Bookmarks
 ------------------

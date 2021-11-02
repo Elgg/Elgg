@@ -107,13 +107,14 @@ function is_email_address($address) {
  * Call this from an action when you want all your submitted variables
  * available if the submission fails validation and is sent back to the form
  *
- * @param string $form_name Name of the sticky form
+ * @param string   $form_name           Name of the sticky form
+ * @param string[] $ignored_field_names Field names which shouldn't be made sticky in this form
  *
  * @return void
  * @since 1.8.0
  */
-function elgg_make_sticky_form($form_name) {
-	_elgg_services()->stickyForms->makeStickyForm($form_name);
+function elgg_make_sticky_form($form_name, array $ignored_field_names = []): void {
+	_elgg_services()->stickyForms->makeStickyForm((string) $form_name, $ignored_field_names);
 }
 
 /**
@@ -128,8 +129,8 @@ function elgg_make_sticky_form($form_name) {
  * @return void
  * @since 1.8.0
  */
-function elgg_clear_sticky_form($form_name) {
-	_elgg_services()->stickyForms->clearStickyForm($form_name);
+function elgg_clear_sticky_form($form_name): void {
+	_elgg_services()->stickyForms->clearStickyForm((string) $form_name);
 }
 
 /**
@@ -140,8 +141,8 @@ function elgg_clear_sticky_form($form_name) {
  * @return boolean
  * @since 1.8.0
  */
-function elgg_is_sticky_form($form_name) {
-	return _elgg_services()->stickyForms->isStickyForm($form_name);
+function elgg_is_sticky_form($form_name): bool {
+	return _elgg_services()->stickyForms->isStickyForm((string) $form_name);
 }
 
 /**
@@ -157,7 +158,7 @@ function elgg_is_sticky_form($form_name) {
  * @since 1.8.0
  */
 function elgg_get_sticky_value($form_name, $variable = '', $default = null, $filter_result = true) {
-	return _elgg_services()->stickyForms->getStickyValue($form_name, $variable, $default, $filter_result);
+	return _elgg_services()->stickyForms->getStickyValue((string) $form_name, (string) $variable, $default, (bool) $filter_result);
 }
 
 /**
@@ -169,8 +170,8 @@ function elgg_get_sticky_value($form_name, $variable = '', $default = null, $fil
  * @return array
  * @since 1.8.0
  */
-function elgg_get_sticky_values($form_name, $filter_result = true) {
-	return _elgg_services()->stickyForms->getStickyValues($form_name, $filter_result);
+function elgg_get_sticky_values($form_name, $filter_result = true): array {
+	return _elgg_services()->stickyForms->getStickyValues((string) $form_name, (bool) $filter_result);
 }
 
 /**
@@ -182,8 +183,8 @@ function elgg_get_sticky_values($form_name, $filter_result = true) {
  * @return void
  * @since 1.8.0
  */
-function elgg_clear_sticky_value($form_name, $variable) {
-	_elgg_services()->stickyForms->clearStickyValue($form_name, $variable);
+function elgg_clear_sticky_value($form_name, $variable): void {
+	_elgg_services()->stickyForms->clearStickyValue((string) $form_name, (string) $variable);
 }
 
 /**
