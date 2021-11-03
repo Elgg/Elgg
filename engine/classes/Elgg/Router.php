@@ -93,9 +93,7 @@ class Router {
 	 * @return boolean Whether the request was routed successfully.
 	 */
 	public function route(HttpRequest $request) {
-		if ($this->timer) {
-			$this->timer->begin(['build page']);
-		}
+		$this->beginTimer(['build page']);
 
 		$request->validate();
 

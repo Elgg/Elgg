@@ -494,16 +494,11 @@ class Database {
 
 		$this->query_count++;
 
-		$timer_key = false;
-		if ($this->timer) {
-			$timer_key = preg_replace('~\\s+~', ' ', trim($sql . '|' . serialize($params)));
-			$this->timer->begin(['SQL', $timer_key]);
-		}
+		$timer_key = preg_replace('~\\s+~', ' ', trim($sql . '|' . serialize($params)));
+		$this->beginTimer(['SQL', $timer_key]);
 		
 		$stop_timer = function() use ($timer_key) {
-			if ($timer_key) {
-				$this->timer->end(['SQL', $timer_key]);
-			}
+			$this->endTimer(['SQL', $timer_key]);
 		};
 		
 		try {

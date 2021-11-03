@@ -553,9 +553,7 @@ class Plugins {
 			return;
 		}
 
-		if ($this->timer) {
-			$this->timer->begin([__METHOD__]);
-		}
+		$this->beginTimer([__METHOD__]);
 
 		/* @var $plugin \ElggPlugin */
 		foreach ($plugins as $plugin) {
@@ -566,9 +564,7 @@ class Plugins {
 			}
 		}
 
-		if ($this->timer) {
-			$this->timer->end([__METHOD__]);
-		}
+		$this->endTimer([__METHOD__]);
 	}
 
 	/**
@@ -583,9 +579,7 @@ class Plugins {
 			return;
 		}
 
-		if ($this->timer) {
-			$this->timer->begin([__METHOD__]);
-		}
+		$this->beginTimer([__METHOD__]);
 
 		foreach ($plugins as $plugin) {
 			try {
@@ -595,9 +589,7 @@ class Plugins {
 			}
 		}
 
-		if ($this->timer) {
-			$this->timer->end([__METHOD__]);
-		}
+		$this->endTimer([__METHOD__]);
 	}
 
 	/**
@@ -612,9 +604,7 @@ class Plugins {
 			return;
 		}
 
-		if ($this->timer) {
-			$this->timer->begin([__METHOD__]);
-		}
+		$this->beginTimer([__METHOD__]);
 
 		foreach ($plugins as $plugin) {
 			try {
@@ -624,9 +614,7 @@ class Plugins {
 			}
 		}
 
-		if ($this->timer) {
-			$this->timer->end([__METHOD__]);
-		}
+		$this->endTimer([__METHOD__]);
 	}
 
 	/**
@@ -641,9 +629,7 @@ class Plugins {
 			return;
 		}
 
-		if ($this->timer) {
-			$this->timer->begin([__METHOD__]);
-		}
+		$this->beginTimer([__METHOD__]);
 
 		foreach ($plugins as $plugin) {
 			try {
@@ -653,9 +639,7 @@ class Plugins {
 			}
 		}
 
-		if ($this->timer) {
-			$this->timer->end([__METHOD__]);
-		}
+		$this->endTimer([__METHOD__]);
 	}
 
 	/**
@@ -670,9 +654,7 @@ class Plugins {
 			return;
 		}
 
-		if ($this->timer) {
-			$this->timer->begin([__METHOD__]);
-		}
+		$this->beginTimer([__METHOD__]);
 
 		foreach ($plugins as $plugin) {
 			try {
@@ -682,9 +664,7 @@ class Plugins {
 			}
 		}
 
-		if ($this->timer) {
-			$this->timer->end([__METHOD__]);
-		}
+		$this->endTimer([__METHOD__]);
 	}
 
 	/**
@@ -699,9 +679,7 @@ class Plugins {
 			return;
 		}
 
-		if ($this->timer) {
-			$this->timer->begin([__METHOD__]);
-		}
+		$this->beginTimer([__METHOD__]);
 
 		foreach ($plugins as $plugin) {
 			try {
@@ -711,9 +689,7 @@ class Plugins {
 			}
 		}
 
-		if ($this->timer) {
-			$this->timer->end([__METHOD__]);
-		}
+		$this->endTimer([__METHOD__]);
 	}
 
 	/**

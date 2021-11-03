@@ -85,15 +85,15 @@ class EventsService extends HooksRegistrationService {
 
 		foreach ($handlers as $handler) {
 			$handler_description = false;
-			if ($this->timer && $type === 'system' && $name !== 'shutdown') {
-				$handler_description = $this->handlers->describeCallable($handler) . "()";
-				$this->timer->begin(["[$name,$type]", $handler_description]);
+			if ($this->hasTimer() && $type === 'system' && $name !== 'shutdown') {
+				$handler_description = $this->handlers->describeCallable($handler) . '()';
+				$this->beginTimer(["[{$name},{$type}]", $handler_description]);
 			}
 
 			list($success, $return, $event) = $this->handlers->call($handler, $event, [$name, $type, $object]);
 
 			if ($handler_description) {
-				$this->timer->end(["[$name,$type]", $handler_description]);
+				$this->endTimer(["[{$name},{$type}]", $handler_description]);
 			}
 
 			if (!$success) {
