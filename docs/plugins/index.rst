@@ -8,6 +8,7 @@ Elgg comes with a set of plugins. These provide the basic functionality for your
    
    blog
    dashboard
+   discussions
    file
    friends
    groups
@@ -26,7 +27,6 @@ The following plugins are also bundled with Elgg, but are not (yet) documented
 - ckeditor
 - custom_index
 - developers
-- discussions
 - embed
 - externalpages
 - friends_collections
