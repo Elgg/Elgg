@@ -354,7 +354,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$uploaded_file = $tmp->getFilenameOnFilestore();
 
-		$upload = new \Symfony\Component\HttpFoundation\File\UploadedFile($uploaded_file, 'tmp.gif', 'image/gif', filesize($uploaded_file), UPLOAD_ERR_OK, true);
+		$upload = new \Symfony\Component\HttpFoundation\File\UploadedFile($uploaded_file, 'tmp.gif', 'image/gif', UPLOAD_ERR_OK, true);
 		$this->request->files->set('icon', $upload);
 
 		$service->saveIconFromUploadedFile($this->entity, 'icon');
