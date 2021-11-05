@@ -44,9 +44,7 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 	}
 
 	public function testElggDeleteAnnotations() {
-		$e = new \ElggObject();
-		$e->setSubtype($this->getRandomSubtype());
-		$e->save();
+		$e = $this->createObject();
 
 		for ($i = 0; $i < 30; $i++) {
 			$e->annotate('test_annotation', rand(0, 10000));
@@ -67,14 +65,10 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 
 		// nothing to delete so null returned
 		$this->assertNull(elgg_delete_annotations($options));
-
-		$this->assertTrue($e->delete());
 	}
 
 	public function testElggDisableAnnotations() {
-		$e = new \ElggObject();
-		$e->setSubtype($this->getRandomSubtype());
-		$e->save();
+		$e = $this->createObject();
 
 		for ($i = 0; $i < 30; $i++) {
 			$e->annotate('test_annotation', rand(0, 10000));
@@ -94,14 +88,10 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 			return elgg_get_annotations($options);
 		});
 		$this->assertEquals(30, count($annotations));
-
-		$this->assertTrue($e->delete());
 	}
 
 	public function testElggEnableAnnotations() {
-		$e = new \ElggObject();
-		$e->setSubtype($this->getRandomSubtype());
-		$e->save();
+		$e = $this->createObject();
 
 		for ($i = 0; $i < 30; $i++) {
 			$e->annotate('test_annotation', rand(0, 10000));
@@ -123,14 +113,10 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 
 		$annotations = elgg_get_annotations($options);
 		$this->assertEquals(30, count($annotations));
-
-		$this->assertTrue($e->delete());
 	}
 
 	public function testElggAnnotationExists() {
-		$e = new \ElggObject();
-		$e->setSubtype($this->getRandomSubtype());
-		$e->save();
+		$e = $this->createObject();
 		$guid = $e->getGUID();
 
 		$this->assertFalse(elgg_annotation_exists($guid, 'test_annotation'));

@@ -18,7 +18,7 @@ trait TestSeeding {
 	private $_seeds = [];
 
 	public function clearSeeds() {
-		elgg_call(ELGG_IGNORE_ACCESS, function() {
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() {
 			foreach ($this->_seeds as $seed) {
 				if (!elgg_entity_exists($seed->guid)) {
 					// entity probably deleted during tests
