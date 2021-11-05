@@ -15,7 +15,7 @@
         "elgg/login_as": "~3.1.0",
         "ckeditor/ckeditor": "~4.16.0",
         "composer/semver": "~3.2.0",
-        "css-crush/css-crush": "^2.4.0",
+        "css-crush/css-crush": "~3.0.0",
         "doctrine/dbal": "~3.1.0",
         "eloquent/composer-config-reader": "~3.0.0",
         "fortawesome/font-awesome": "~5.14",

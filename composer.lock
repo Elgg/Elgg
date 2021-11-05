@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "30c95f76fe795c811d85cfec4be6ceea",
+    "content-hash": "0bf62e9582fa58df2becadb8936a8151",
     "packages": [
         {
             "name": "cakephp/core",
@@ -626,23 +626,23 @@
         },
         {
             "name": "css-crush/css-crush",
-            "version": "v2.4.0",
+            "version": "v3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/peteboere/css-crush.git",
-                "reference": "f632d04940d90054efbfe7a6675dc3aa8cac183f"
+                "reference": "b37cd5f5a462baebac08bb033482dcc3876ef73c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/peteboere/css-crush/zipball/f632d04940d90054efbfe7a6675dc3aa8cac183f",
-                "reference": "f632d04940d90054efbfe7a6675dc3aa8cac183f",
+                "url": "https://api.github.com/repos/peteboere/css-crush/zipball/b37cd5f5a462baebac08bb033482dcc3876ef73c",
+                "reference": "b37cd5f5a462baebac08bb033482dcc3876ef73c",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.6.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.1.*",
+                "phpunit/phpunit": "5.*",
                 "psr/log": "1.0.*@dev",
                 "twig/twig": "1.*"
             },
@@ -650,11 +650,6 @@
                 "bin/csscrush"
             ],
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.3-dev"
-                }
-            },
             "autoload": {
                 "psr-0": {
                     "CssCrush": "lib/"
@@ -685,9 +680,9 @@
             ],
             "support": {
                 "issues": "https://github.com/peteboere/css-crush/issues",
-                "source": "https://github.com/peteboere/css-crush/tree/v2.4.0"
+                "source": "https://github.com/peteboere/css-crush/tree/v3.0.1"
             },
-            "time": "2015-07-30T08:37:14+00:00"
+            "time": "2020-01-16T12:05:00+00:00"
         },
         {
             "name": "doctrine/cache",
