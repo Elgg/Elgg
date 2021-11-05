@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-25 15:07+0200\n"
+"POT-Creation-Date: 2021-11-05 10:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,6 +42,26 @@ msgstr ""
 
 #: ../../plugins/dashboard.rst:12
 msgid "The dashboard is bundled with both the full and core-only Elgg packages. This is a users portal to activity that is important to them both from within the site and from external sources. Using Elgg's powerful widget API, it is possible to build widgets that pull out relevant content from within an Elgg powered site as well as grab information from third party sources such as Twitter or Flickr (providing those widgets exist). A users dashboard is not the same as their profile, whereas the profile is for consumption by others, the dashboard is a space for users to use for their own needs."
+msgstr ""
+
+#: ../../plugins/discussions.rst:2
+msgid "Discussions"
+msgstr ""
+
+#: ../../plugins/discussions.rst:4
+msgid "Add a forum like place to start a discussion. This feature is mainly meant to used in groups. The group owners can enable/disable this feature for their group."
+msgstr ""
+
+#: ../../plugins/discussions.rst:7
+msgid "There is a plugin setting to enable global discussions (so outside of a group). This setting is disabled by default but can be enabled by a site administrator."
+msgstr ""
+
+#: ../../plugins/discussions.rst:11
+msgid "Notifications"
+msgstr ""
+
+#: ../../plugins/discussions.rst:13
+msgid "In order to encourage discussion in a group all group members will receive notifications about comments on a discussion topic. This will follow the notification preferences of the group member based on the global group preference or the specific group preference for new discussions."
 msgstr ""
 
 #: ../../plugins/file.rst:2
@@ -148,32 +168,28 @@ msgstr ""
 msgid "Elgg comes with a set of plugins. These provide the basic functionality for your social network."
 msgstr ""
 
-#: ../../plugins/index.rst:22
+#: ../../plugins/index.rst:23
 msgid "The following plugins are also bundled with Elgg, but are not (yet) documented"
 msgstr ""
 
-#: ../../plugins/index.rst:24
+#: ../../plugins/index.rst:25
 msgid "activity"
 msgstr ""
 
-#: ../../plugins/index.rst:25
+#: ../../plugins/index.rst:26
 msgid "bookmarks"
 msgstr ""
 
-#: ../../plugins/index.rst:26
+#: ../../plugins/index.rst:27
 msgid "ckeditor"
 msgstr ""
 
-#: ../../plugins/index.rst:27
+#: ../../plugins/index.rst:28
 msgid "custom_index"
 msgstr ""
 
-#: ../../plugins/index.rst:28
-msgid "developers"
-msgstr ""
-
 #: ../../plugins/index.rst:29
-msgid "discussions"
+msgid "developers"
 msgstr ""
 
 #: ../../plugins/index.rst:30
