@@ -72,7 +72,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$tmp_file = $tmp->getFilenameOnFilestore();
 
-		$upload = new UploadedFile($tmp_file, 'tmp.gif', 'image/gif', filesize($tmp_file), UPLOAD_ERR_OK, true);
+		$upload = new UploadedFile($tmp_file, 'tmp.gif', 'image/gif', UPLOAD_ERR_OK, true);
 
 		_elgg_services()->request->files->set('upload', $upload);
 
@@ -107,9 +107,9 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 		$tmp_png = $tmp->getFilenameOnFilestore();
 
 		$upload = [
-			'gif' => new UploadedFile($tmp_gif, 'tmp.gif', 'image/gif', filesize($tmp_gif), UPLOAD_ERR_OK, true),
-			'png' => new UploadedFile($tmp_png, 'tmp.png', 'image/png', filesize($tmp_png), UPLOAD_ERR_OK, true),
-			'jpg' => new UploadedFile('', '', '', 0, UPLOAD_ERR_NO_FILE, true),
+			'gif' => new UploadedFile($tmp_gif, 'tmp.gif', 'image/gif', UPLOAD_ERR_OK, true),
+			'png' => new UploadedFile($tmp_png, 'tmp.png', 'image/png', UPLOAD_ERR_OK, true),
+			'jpg' => new UploadedFile('', '', '', UPLOAD_ERR_NO_FILE, true),
 		];
 
 		_elgg_services()->request->files->set('upload', $upload);
@@ -145,7 +145,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 		$filesize = $tmp->getSize();
 
 		$upload = [
-			'gif' => new UploadedFile($tmp_file, 'tmp.gif', 'image/gif', filesize($tmp_file), UPLOAD_ERR_OK, true),
+			'gif' => new UploadedFile($tmp_file, 'tmp.gif', 'image/gif', UPLOAD_ERR_OK, true),
 		];
 
 		_elgg_services()->request->files->set('upload', $upload);
@@ -178,7 +178,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 		$tmp_file = $tmp->getFilenameOnFilestore();
 
 		$upload = [
-			'gif' => new UploadedFile($tmp_file, 'tmp.gif', 'image/gif', filesize($tmp_file), UPLOAD_ERR_OK, true),
+			'gif' => new UploadedFile($tmp_file, 'tmp.gif', 'image/gif', UPLOAD_ERR_OK, true),
 		];
 
 		_elgg_services()->request->files->set('upload', $upload);

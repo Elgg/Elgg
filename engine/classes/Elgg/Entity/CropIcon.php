@@ -130,7 +130,6 @@ class CropIcon {
 			$file_data['tmp_name'],
 			$file_data['name'],
 			$file_data['type'],
-			$file_data['size'],
 			$file_data['error'],
 			true
 		);
