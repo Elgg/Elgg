@@ -18,12 +18,9 @@ abstract class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		$this->translator->reloadAllTranslations();
 	}
 
-	public function down() {
-
-	}
-
 	/**
 	 * Provides registered languages
+	 *
 	 * @return array
 	 */
 	public function languageProvider() {
