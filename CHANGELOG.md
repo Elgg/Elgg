@@ -1,3 +1,18 @@
+<a name="4.0.3"></a>
+### 4.0.3  (2021-11-05)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+* Jeroen Dalsem (2)
+
+#### Bug Fixes
+
+* **core:** access collection members should always be users ([6de21dbe](https://github.com/Elgg/Elgg/commit/6de21dbedb528f4ccf6bbd61bfcb7c84e03c6283))
+* **discussion:** comment actor on group discussion no longer notified ([41ac24aa](https://github.com/Elgg/Elgg/commit/41ac24aaaabd4e3d45322e586fd41d452984d11f))
+* **views:** correctly support passing tagify options to input/tags ([7e121f96](https://github.com/Elgg/Elgg/commit/7e121f96153e30538da52dd3be22c1063ca02c34))
+
+
 <a name="4.0.2"></a>
 ### 4.0.2  (2021-10-25)
 
