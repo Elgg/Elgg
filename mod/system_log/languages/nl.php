@@ -23,12 +23,6 @@ return array(
 	'logbrowser:action' => 'Actie',
 
 	'logrotate:period' => 'Hoe vaak wil je dat het systeem logboek wordt gearchiveerd?',
-	
-	'logrotate:logrotated' => "Log rotated\n",
-	'logrotate:lognotrotated' => "Error rotating log\n",
-
-	'logrotate:logdeleted' => "Log verwijderd\n",
-	'logrotate:lognotdeleted' => "Geen logs verwijderd\n",
 
 	// not used any more since Elgg 4.1, can be cleaned in Elgg 5.0
 	'logrotate:delete' => 'Verwijder log archiven ouder dan één',
