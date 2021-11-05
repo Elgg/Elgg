@@ -118,17 +118,13 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		$this->assertEquals($this->entity->getContainerGUID(), elgg_get_logged_in_user_guid());
 
 		// create and save to group
-		$group = new \ElggGroup();
-		$this->assertTrue($group->save());
+		$group = $this->createGroup();
 		$guid = $group->guid;
 		$this->assertIsInt($this->entity->setContainerGUID($guid));
 
 		// check container
 		$this->assertEquals($guid, $this->entity->getContainerGUID());
 		$this->assertEquals($group, $this->entity->getContainerEntity());
-
-		// clean up
-		$group->delete();
 	}
 
 	public function testElggObjectToObject() {
@@ -159,18 +155,13 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 	 * @see https://github.com/elgg/elgg/issues/1196
 	 */
 	public function testElggEntityRecursiveDisableWhenLoggedOut() {
-		$e1 = new \ElggObject();
-		$e1->setSubtype($this->getRandomSubtype());
-		$e1->access_id = ACCESS_PUBLIC;
-		$e1->save();
+		$e1 = $this->createObject();
 		$guid1 = $e1->guid;
 
-		$e2 = new \ElggObject();
-		$e2->setSubtype($this->getRandomSubtype());
-		$e2->container_guid = $guid1;
-		$e2->access_id = ACCESS_PUBLIC;
-		$e2->owner_guid = 0;
-		$e2->save();
+		$e2 = $this->createObject([
+			'container_guid' => $guid1,
+		]);
+
 		$guid2 = $e2->guid;
 
 		// fake being logged out
@@ -194,11 +185,6 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $guid2";
 		$r = elgg()->db->getDataRow($q);
 		$this->assertEquals('no', $r->enabled);
-
-		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($e1, $e2) {
-			$e1->delete();
-			$e2->delete();
-		});
 	}
 
 	public function testElggRecursiveDelete() {
@@ -246,9 +232,7 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 
 		// object that owns itself
 		// can't check container_guid because of infinite loops in can_edit_entity()
-		$obj = new \ElggObject();
-		$obj->setSubtype($this->getRandomSubtype());
-		$obj->save();
+		$obj = $this->createObject();
 		$obj->owner_guid = $obj->guid;
 		$obj->save();
 

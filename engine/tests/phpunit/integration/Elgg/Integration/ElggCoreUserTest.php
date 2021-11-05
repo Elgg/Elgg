@@ -37,17 +37,10 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 
 	public function testElggUserLoad() {
 		// new object
-		$object = new \ElggObject();
-		$object->setSubtype($this->getRandomSubtype());
-		$this->assertEquals(0, $object->getGUID());
-		$this->assertTrue($object->save());
-		$this->assertGreaterThan(0, $object->guid);
-
+		$object = $this->createObject();
+		
 		// fail on wrong type
 		$this->assertFalse(get_user($object->guid));
-
-		// clean up
-		$object->delete();
 	}
 
 	public function testElggUserSave() {
