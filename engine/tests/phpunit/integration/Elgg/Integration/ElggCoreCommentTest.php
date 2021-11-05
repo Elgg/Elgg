@@ -39,10 +39,6 @@ class ElggCoreCommentTest extends IntegrationTestCase {
 		]);
 	}
 
-	public function down() {
-		elgg()->session->removeLoggedInUser();
-	}
-
 	public function testCommentAccessSync() {
 
 		$this->assertTrue(_elgg_services()->events->hasHandler('update:after', 'all', \Elgg\Comments\SyncContainerAccessHandler::class));

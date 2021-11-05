@@ -264,8 +264,6 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		// unregistered object type
 		$this->notifications->enqueueEvent('create', $object->getType(), new ElggObject());
 		$this->assertNull($this->queue->dequeue());
-
-		$this->session->removeLoggedInUser();
 	}
 
 	public function testStoppingEnqueueEvent() {
@@ -287,8 +285,6 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 
 		$this->notifications->enqueueEvent('create', $object->getType(), $object);
 		$this->assertNull($this->queue->dequeue());
-
-		$this->session->removeLoggedInUser();
 	}
 
 	public function testProcessQueueNoEvents() {
@@ -1055,5 +1051,4 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 			0
 		], $from->guid, $subject, $body, [], 'test_method2'));
 	}
-
 }

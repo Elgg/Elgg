@@ -44,15 +44,10 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function down() {
-		
-		_elgg_services()->session->setLoggedInUser($this->getAdmin());
-
 		elgg_unregister_plugin_hook_handler('permissions_check:delete', 'river', [
 			$this,
 			'allowDelete'
 		]);
-		
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function allowDelete(\Elgg\Hook $hook) {

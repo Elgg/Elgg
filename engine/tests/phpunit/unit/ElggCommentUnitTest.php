@@ -21,8 +21,6 @@ class ElggCommentUnitTest extends \Elgg\UnitTestCase {
 		$session->setLoggedInUser($user);
 		
 		$this->assertFalse($comment->canComment());
-		
-		$session->removeLoggedInUser();
 	}
 	
 	public function testIsCreatedByContentOwner() {

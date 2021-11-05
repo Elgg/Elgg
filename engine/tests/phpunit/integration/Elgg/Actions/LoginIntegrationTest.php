@@ -51,8 +51,6 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$this->assertEquals(elgg_echo('loginok', [], $user->language), array_shift($messages['success']));
 
 		$this->assertEquals($user, _elgg_services()->session->getLoggedInUser());
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testLoginWithEmailAndPassword() {
@@ -72,8 +70,6 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(OkResponse::class, $response);
 
 		$this->assertEquals($user, _elgg_services()->session->getLoggedInUser());
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testLoginFailsWithEmptyPassword() {
@@ -328,6 +324,5 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		_elgg_services()->session->removeLoggedInUser();
 
 		elgg_unregister_plugin_hook_handler('login:forward', 'user', $forward_handler);
-
 	}
 }

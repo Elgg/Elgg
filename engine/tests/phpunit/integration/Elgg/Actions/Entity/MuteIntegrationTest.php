@@ -31,13 +31,6 @@ class MuteIntegrationTest extends ActionResponseTestCase {
 		_elgg_services()->session->setLoggedInUser($this->user);
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		_elgg_services()->session->removeLoggedInUser();
-	}
-	
 	public function testFailsWithMissingEntityGUID() {
 		$response = $this->executeAction('entity/mute');
 		

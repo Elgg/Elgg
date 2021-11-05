@@ -143,7 +143,5 @@ class ElggUserUnitTest extends \Elgg\UnitTestCase {
 		$session->setLoggedInUser($user2);
 		
 		$this->assertFalse($user->canComment());
-		
-		$session->removeLoggedInUser();
 	}
 }

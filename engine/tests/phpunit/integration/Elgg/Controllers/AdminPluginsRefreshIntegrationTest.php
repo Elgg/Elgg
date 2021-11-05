@@ -14,8 +14,6 @@ class AdminPluginsRefreshIntegrationTest extends IntegrationTestCase {
 	 */
 	public function down() {
 		elgg_unregister_route('admin_plugins_refresh');
-		
-		elgg()->session->removeLoggedInUser();
 	}
 	
 	protected function createService(Request $request) {

@@ -97,8 +97,6 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->logger->disable();
 		$this->assertEquals('Dummy NL', $this->translator->translate("{$this->key}a"));
 		_elgg_services()->logger->enable();
-		
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testIssuesNoticeOnMissingKey() {
@@ -159,21 +157,15 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 
 		$language = 'ab';
 
-		$user = elgg_call(ELGG_IGNORE_ACCESS, function() use ($language) {
-			return $this->createUser([], [
-				'language' => $language,
-			]);
-		});
+		$user = $this->createUser([], [
+			'language' => $language,
+		]);
 		
 		$this->assertEquals('en', $this->translator->getCurrentLanguage());
 
 		_elgg_services()->session->setLoggedInUser($user);
 
 		$this->assertEquals($language, $this->translator->getCurrentLanguage());
-
-		_elgg_services()->session->removeLoggedInUser();
-
-		$user->delete();
 	}
 
 	public function testCanDetectCurrentLanguageFromConfig() {

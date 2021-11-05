@@ -35,7 +35,6 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 	}
 
 	public function down() {
-		_elgg_services()->session->removeLoggedInUser();
 		_elgg_services()->hooks->restore();
 	}
 	

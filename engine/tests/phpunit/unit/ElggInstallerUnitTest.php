@@ -610,8 +610,6 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(elgg_normalize_url('install.php?step=complete'), $response->getForwardURL());
 
 		$this->assertInstanceOf(ElggUser::class, elgg_get_logged_in_user_entity());
-
-		$this->getApp()->_services->session->removeLoggedInUser();
 	}
 
 	public function testBatchInstall() {

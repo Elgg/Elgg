@@ -64,8 +64,6 @@ class ElggPageIntegrationTest extends \Elgg\IntegrationTestCase {
 		if (isset($this->page)) {
 			$this->page->delete();
 		}
-		
-		elgg_get_session()->removeLoggedInUser();
 	}
 
 	public function testCreateObjectToClass() {

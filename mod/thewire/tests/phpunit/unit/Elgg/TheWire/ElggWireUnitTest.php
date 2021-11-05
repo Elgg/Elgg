@@ -22,12 +22,8 @@ class ElggWireUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($wire->canComment());
 		
 		$user = $this->createUser();
-		$session = _elgg_services()->session;
-		
-		$session->setLoggedInUser($user);
+		_elgg_services()->session->setLoggedInUser($user);
 		
 		$this->assertFalse($wire->canComment());
-		
-		$session->removeLoggedInUser();
 	}
 }

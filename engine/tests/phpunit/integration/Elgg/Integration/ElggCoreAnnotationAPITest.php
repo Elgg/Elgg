@@ -24,10 +24,6 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 		$this->object = $this->createObject();
 	}
 
-	public function down() {
-		_elgg_services()->session->removeLoggedInUser();
-	}
-
 	public function testElggGetAnnotationsCount() {
 		$this->object->title = 'Annotation Unit Test';
 		$this->object->save();

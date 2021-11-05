@@ -116,7 +116,5 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 		_elgg_services()->session->setLoggedInUser($user);
 
 		$this->assertEquals(elgg_get_logged_in_user_entity(), $user);
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 }

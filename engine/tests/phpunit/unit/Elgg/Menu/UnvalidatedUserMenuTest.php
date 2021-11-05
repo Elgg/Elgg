@@ -53,8 +53,6 @@ class UnvalidatedUserMenuTest extends UnitTestCase {
 		$items = $menu->getItems();
 
 		$this->assertEmpty($items->all());
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testUnvalidatedUserMenuViewedByAdmin() {
@@ -76,8 +74,5 @@ class UnvalidatedUserMenuTest extends UnitTestCase {
 
 		$this->assertTrue($items->has('validate'));
 		$this->assertTrue($items->has('delete'));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
-
 }

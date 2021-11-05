@@ -106,8 +106,6 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($object->delete());
 
 		$this->assertNull(_elgg_services()->entityCache->load($object->guid));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testRemovesDisabledEntityFromCache() {
@@ -125,8 +123,6 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($object->disable());
 
 		$this->assertNull(_elgg_services()->entityCache->load($object->guid));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testBypassesCacheWithIgnoredAccess() {

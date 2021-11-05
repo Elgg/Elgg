@@ -43,13 +43,6 @@ class CommentEntityRedirectorIntegrationTest extends IntegrationTestCase {
 			'access_id' => ACCESS_PUBLIC,
 		]);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		elgg()->session->removeLoggedInUser();
-	}
 	
 	protected function createService(Request $request) {
 		$request->_integration_testing = true;

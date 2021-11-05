@@ -65,7 +65,5 @@ class ElggGroupUnitTest extends \Elgg\UnitTestCase {
 		$session->setLoggedInUser($user);
 		
 		$this->assertFalse($group->canComment());
-		
-		$session->removeLoggedInUser();
 	}
 }

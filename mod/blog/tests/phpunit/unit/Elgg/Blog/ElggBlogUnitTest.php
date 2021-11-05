@@ -33,8 +33,6 @@ class ElggBlogUnitTest extends \Elgg\UnitTestCase {
 		$session->setLoggedInUser($user);
 		
 		$this->assertEquals($expected, $blog->canComment());
-		
-		$session->removeLoggedInUser();
 	}
 	
 	public function blogCommentStatusProvider() {

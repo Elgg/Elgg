@@ -31,10 +31,6 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 		elgg()->session->setLoggedInUser($this->user);
 	}
 
-	public function down() {
-		elgg()->session->removeLoggedInUser();
-	}
-
 	public function testCreateGetDeleteACL() {
 
 		$acl_name = 'test access collection';

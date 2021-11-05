@@ -39,8 +39,6 @@ class SendActionTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('messages:user:blank'), $response->getContent());
 		$this->assertEquals('messages/add', $response->getForwardURL());
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testSendFailsToSelf() {
@@ -60,8 +58,6 @@ class SendActionTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('messages:user:self'), $response->getContent());
 		$this->assertEquals('messages/add', $response->getForwardURL());
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testSendFailsToInvalidUser() {
@@ -81,8 +77,6 @@ class SendActionTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('messages:user:nonexist'), $response->getContent());
 		$this->assertEquals('messages/add', $response->getForwardURL());
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testSendFailsWithoutMessageSubject() {
@@ -105,8 +99,6 @@ class SendActionTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('messages:blank'), $response->getContent());
 		$this->assertEquals('messages/add', $response->getForwardURL());
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testSendFailsWithoutMessageBody() {
@@ -129,8 +121,6 @@ class SendActionTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('messages:blank'), $response->getContent());
 		$this->assertEquals('messages/add', $response->getForwardURL());
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testSendSuccess() {
@@ -200,7 +190,5 @@ class SendActionTest extends ActionResponseTestCase {
 
 		$this->assertEquals($expected_subject, $notification->getSubject());
 		$this->assertStringContainsString(preg_replace('/\\n/m', ' ', $expected_body), preg_replace('/\\n/m', ' ', $plain_text_part->getRawContent()));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 }

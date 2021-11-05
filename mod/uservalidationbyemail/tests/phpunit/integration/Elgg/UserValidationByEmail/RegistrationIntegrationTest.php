@@ -76,8 +76,6 @@ class RegistrationIntegrationTest extends ActionResponseTestCase {
 		
 		$plugin_tracking = elgg_get_plugin_user_setting('email_validated', $user->guid, 'uservalidationbyemail');
 		$this->assertNotEmpty($plugin_tracking);
-		
-		elgg_get_session()->removeLoggedInUser();
 	}
 	
 	public function testRegistrationWithAdminValidation() {
