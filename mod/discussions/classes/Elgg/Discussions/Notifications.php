@@ -87,7 +87,10 @@ class Notifications {
 		}
 		
 		$subscriptions = $hook->getValue();
-		$group_subscriptions = elgg_get_subscriptions_for_container($container->guid);
+		
+		// get subscribers on the group (using the discussion create preference for detailed subscriptions)
+		$methods = elgg_get_notification_methods();
+		$group_subscriptions = _elgg_services()->subscriptions->getSubscriptionsForContainer($container->guid, $methods, 'object', 'discussion', 'create', $event->getActorGUID());
 		
 		return ($subscriptions + $group_subscriptions);
 	}

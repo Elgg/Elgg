@@ -652,8 +652,9 @@ class AccessCollections {
 		if (!$collection instanceof \ElggAccessCollection) {
 			return false;
 		}
-
-		if (!$this->entities->exists($user_guid)) {
+		
+		$user = $this->entities->get($user_guid);
+		if (!$user instanceof \ElggUser) {
 			return false;
 		}
 

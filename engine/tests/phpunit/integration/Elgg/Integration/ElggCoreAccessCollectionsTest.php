@@ -14,11 +14,6 @@ use Elgg\IntegrationTestCase;
  * @group Cache
  */
 class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
-
-	/**
-	 * @var string
-	 */
-	protected $dbprefix;
 	
 	/**
 	 * @var \ElggUser
@@ -26,7 +21,6 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 	protected $user;
 
 	public function up() {
-		$this->dbprefix = elgg_get_config('dbprefix');
 		$this->user = $this->createUser();
 		elgg()->session->setLoggedInUser($this->user);
 	}
@@ -68,6 +62,19 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 			$this->assertTrue($result);
 		}
 
+		delete_access_collection($acl_id);
+	}
+
+	public function testAddNonUserToACL() {
+		$acl_id = create_access_collection('test acl');
+
+		$object = $this->createObject();
+		
+		// it should not be possible to add a non user to the ACL
+		$result = add_user_to_access_collection($object->guid, $acl_id);
+		$this->assertFalse($result);
+
+		$object->delete();
 		delete_access_collection($acl_id);
 	}
 

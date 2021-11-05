@@ -4,9 +4,10 @@
  * Displays a tag input field
  *
  * @uses $vars['disabled']
- * @uses $vars['class']    Additional CSS class
- * @uses $vars['value']    Array of tags or a string
- * @uses $vars['entity']   Optional. Entity whose tags are being displayed (metadata ->tags)
+ * @uses $vars['class']          Additional CSS class
+ * @uses $vars['value']          Array of tags or a string
+ * @uses $vars['entity']         Optional. Entity whose tags are being displayed (metadata ->tags)
+ * @uses $vars['tagify_options'] Optional. Array of options to pass to the tagify init
  */
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-tags');
@@ -15,7 +16,7 @@ $defaults = [
 	'value' => '',
 	'disabled' => false,
 	'autocapitalize' => 'off',
-	'type' => 'text'
+	'type' => 'text',
 ];
 
 if (isset($vars['entity'])) {
@@ -24,6 +25,12 @@ if (isset($vars['entity'])) {
 }
 
 $vars = array_merge($defaults, $vars);
+
+// set tagify options
+if (!isset($vars['data-tagify-opts']) && isset($vars['tagify_options'])) {
+	$vars['data-tagify-opts'] = json_encode($vars['tagify_options']);
+}
+unset($vars['tagify_options']);
 
 if (is_array($vars['value'])) {
 	$tags = [];
