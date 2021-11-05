@@ -157,6 +157,8 @@ abstract class IntegrationTestCase extends BaseTestCase {
 	 */
 	final protected function tearDown(): void {
 		$this->down();
+		
+		$this->clearSeeds();
 
 		parent::tearDown();
 	}

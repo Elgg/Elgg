@@ -37,39 +37,13 @@ class ElggRelationshipTest extends IntegrationTestCase {
 		$this->user = $this->createUser();
 		elgg()->session->setLoggedInUser($this->user);
 		
-		$this->entity1 = new ElggObject();
-		$this->entity1->setSubtype('elgg_relationship_test');
-		$this->entity1->access_id = ACCESS_PUBLIC;
-		$this->entity1->save();
-
-		$this->entity2 = new ElggObject();
-		$this->entity2->setSubtype('elgg_relationship_test');
-		$this->entity2->access_id = ACCESS_PUBLIC;
-		$this->entity2->save();
-
-		$this->entity3 = new ElggObject();
-		$this->entity3->setSubtype('elgg_relationship_test');
-		$this->entity3->access_id = ACCESS_PUBLIC;
-		$this->entity3->save();
+		$this->entity1 = $this->createObject(['subtype' => 'elgg_relationship_test']);
+		$this->entity2 = $this->createObject(['subtype' => 'elgg_relationship_test']);
+		$this->entity3 = $this->createObject(['subtype' => 'elgg_relationship_test']);
 	}
 
 	public function down() {
-		if ($this->entity1) {
-			$this->entity1->delete();
-		}
 
-		if ($this->entity2) {
-			$this->entity2->delete();
-		}
-
-		if ($this->entity3) {
-			$this->entity3->delete();
-		}
-		
-		if ($this->user) {
-			$this->user->delete();
-		}
-		
 		elgg()->session->removeLoggedInUser();
 
 		_elgg_services()->events->restore();

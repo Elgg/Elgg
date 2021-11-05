@@ -15,16 +15,6 @@ class ElggUserIntegrationTest extends IntegrationTestCase {
 	protected $user;
 	
 	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::down()
-	 */
-	public function down() {
-		if ($this->user instanceof \ElggUser) {
-			$this->user->delete();
-		}
-	}
-	
-	/**
 	 * @dataProvider correctAdminBannedValues
 	 */
 	public function testSetCorrectBannedValue($value, $boolean_value) {

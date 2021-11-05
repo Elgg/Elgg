@@ -15,12 +15,6 @@ class WidgetsServiceIntegrationTest extends IntegrationTestCase {
 	var $users = [];
 
 	public function down() {
-		elgg_call(ELGG_IGNORE_ACCESS, function() {
-			foreach ($this->users as $user) {
-				$user->delete();
-			}
-		});
-		
 		elgg()->session->removeLoggedInUser();
 	}
 	

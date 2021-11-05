@@ -29,9 +29,7 @@ class ElggPageIntegrationTest extends \Elgg\IntegrationTestCase {
 	 */
 	public function up() {
 		$this->user = $this->createUser();
-		
-		$session = elgg_get_session();
-		$session->setLoggedInUser($this->user);
+		elgg_get_session()->setLoggedInUser($this->user);
 		
 		// create a top page
 		$top_page = new ElggPage();
@@ -67,14 +65,7 @@ class ElggPageIntegrationTest extends \Elgg\IntegrationTestCase {
 			$this->page->delete();
 		}
 		
-		$session = elgg_get_session();
-		$session->setLoggedInUser($this->getAdmin());
-		
-		if (isset($this->user)) {
-			$this->user->delete();
-		}
-		
-		$session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 	}
 
 	public function testCreateObjectToClass() {

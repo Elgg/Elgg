@@ -73,7 +73,7 @@ trait Testing {
 	}
 
 	/**
-	 * Returns an admin user
+	 * Returns an admin user. This user will persist within a test case.
 	 * @return ElggUser
 	 * @throws RuntimeException
 	 */
@@ -92,15 +92,16 @@ trait Testing {
 			}
 
 			if (!$admin) {
-				$admin = $this->createUser([
-					'admin' => 'yes',
-				]);
+				// not using createUser() as the user need to persist between tests
+				$admin = new \ElggUser();
+				$admin->makeAdmin();
+				$admin->save();
 			}
 
 			$this->_testing_admin = $admin;
 		}
 
-		if (!$admin instanceof ElggUser || !$admin->isAdmin()) {
+		if (!$admin instanceof \ElggUser || !$admin->isAdmin()) {
 			throw new RuntimeException("Unable to load an administrator user entity to perform tests.");
 		}
 

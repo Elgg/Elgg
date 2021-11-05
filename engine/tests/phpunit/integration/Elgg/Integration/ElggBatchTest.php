@@ -19,12 +19,6 @@ class ElggBatchTest extends IntegrationTestCase {
 	 * {@inheritDoc}
 	 */
 	public function down() {
-		elgg_call(ELGG_IGNORE_ACCESS, function() {
-			foreach ($this->createdEntities as $entity) {
-				$entity->delete();
-			}
-		});
-		
 		elgg_get_session()->removeLoggedInUser();
 	}
 

@@ -25,12 +25,10 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 
 	public function up() {
 		_elgg_services()->session->setLoggedInUser($this->getAdmin());
-		$this->object = $this->createOne('object');
+		$this->object = $this->createObject();
 	}
 
 	public function down() {
-		$this->object->delete();
-
 		$guid = $this->object->guid;
 		elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
 			elgg_delete_annotations([

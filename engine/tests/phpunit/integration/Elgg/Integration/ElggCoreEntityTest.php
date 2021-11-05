@@ -27,9 +27,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->owner = $this->createUser();
 		elgg()->session->setLoggedInUser($this->owner);
 		
-		// use \ElggObject since \ElggEntity is an abstract class
-		$this->entity = new ElggObject();
-		$this->entity->setSubtype('elgg_entity_test_subtype');
+		$this->entity = $this->createObject(['subtype' => 'elgg_entity_test_subtype']);
 
 		// Add temporary metadata, annotation and private settings
 		// to extend the scope of tests and catch issues with save operations
@@ -41,14 +39,6 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function down() {
-		if ($this->entity) {
-			$this->entity->delete();
-		}
-		
-		if ($this->owner) {
-			$this->owner->delete();
-		}
-		
 		elgg()->session->removeLoggedInUser();
 	}
 
@@ -319,7 +309,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 
 		$this->assertTrue($this->entity->save());
 
-		$user = $this->createOne('user');
+		$user = $this->createUser();
 
 		$old_user = elgg()->session->getLoggedInUser();
 		elgg()->session->setLoggedInUser($user);
@@ -357,7 +347,6 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		});
 		
 		elgg()->session->setLoggedInUser($old_user);
-		$user->delete();
 	}
 
 	/**
@@ -628,9 +617,6 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 			$this->assertInstanceOf(\ElggEntity::class, $from_db_entity);
 			$this->assertEmpty($from_db_entity->getVolatileData('alt_types'));
 		}
-				
-		// cleanup
-		$entity->delete();
 	}
 	
 	public function entitiesFromCacheProvider() {
@@ -656,9 +642,6 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		
 		// entity should not be returned from db or cache
 		$this->assertFalse(_elgg_services()->entityTable->get($guid, $check_type, $check_subtype));
-				
-		// cleanup
-		$entity->delete();
 	}
 	
 	public function entitiesNotTypesMatch() {

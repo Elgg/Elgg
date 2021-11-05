@@ -29,12 +29,6 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function down() {
-		if ($this->group) {
-			$this->group->delete();
-		}
-		if ($this->user) {
-			$this->user->delete();
-		}
 		_elgg_services()->session->removeLoggedInUser();
 	}
 
@@ -137,6 +131,5 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 		
 		$original_page_owner_guid = ($original_page_owner instanceof \ElggEntity) ? $original_page_owner->guid : 0;
 		elgg_set_page_owner_guid($original_page_owner_guid);
-
 	}
 }

@@ -24,10 +24,6 @@ class ElggCoreFilestoreTest extends IntegrationTestCase {
 	}
 
 	public function down() {
-		if ($this->owner) {
-			$this->owner->delete();
-		}
-		
 		elgg()->session->removeLoggedInUser();
 	}
 

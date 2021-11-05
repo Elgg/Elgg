@@ -18,15 +18,7 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 	public function up() {
 		_elgg_services()->boot->clearCache();
 		
-		$this->entity = $this->createOne('object', [
-			'access_id' => ACCESS_PUBLIC,
-		]);
-	}
-
-	public function down() {
-		elgg_call(ELGG_IGNORE_ACCESS, function() {
-			$this->entity->delete();
-		});
+		$this->entity = $this->createObject();
 	}
 
 	public function testCanLoadEntityFromTestingApplicationDatabase() {
@@ -119,13 +111,12 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 
 	public function testCanReplaceSessionUser() {
 
-		$user = $this->createOne('user');
+		$user = $this->createUser();
 
 		_elgg_services()->session->setLoggedInUser($user);
 
 		$this->assertEquals(elgg_get_logged_in_user_entity(), $user);
 
 		_elgg_services()->session->removeLoggedInUser();
-
 	}
 }

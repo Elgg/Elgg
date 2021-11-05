@@ -13,14 +13,6 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class OptimizeCommandTest extends IntegrationTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testExecute() {
 		$application = new Application();
 		$application->add(new OptimizeCommand());

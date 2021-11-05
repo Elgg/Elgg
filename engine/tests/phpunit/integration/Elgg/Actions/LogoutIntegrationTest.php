@@ -21,10 +21,6 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 		self::createApplication(['isolate' => true]);
 	}
 
-	public function down() {
-		parent::down();
-	}
-
 	public function testLogoutFailsWithoutActiveSession() {
 		$this->expectException(GatekeeperException::class);
 		$this->executeAction('logout');

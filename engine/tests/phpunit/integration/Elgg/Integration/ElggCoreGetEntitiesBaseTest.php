@@ -28,10 +28,6 @@ abstract class ElggCoreGetEntitiesBaseTest extends IntegrationTestCase {
 	 * @see \Elgg\BaseTestCase::down()
 	 */
 	public function down() {
-		if ($this->user) {
-			$this->user->delete();
-		}
-		
 		elgg()->session->removeLoggedInUser();
 	}
 }

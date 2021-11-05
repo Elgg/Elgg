@@ -66,8 +66,6 @@ class ServeIconIntegrationTest extends IntegrationTestCase {
 		$this->expectException(EntityNotFoundException::class);
 		$this->expectExceptionMessage('Icon does not exist');
 		$this->executeRequest($request);
-		
-		$entity->delete();
 	}
 	
 	public function testServeIcon() {
@@ -80,7 +78,5 @@ class ServeIconIntegrationTest extends IntegrationTestCase {
 		$response = $this->executeRequest($request);
 		
 		$this->assertTrue($response->isOk());
-		
-		$entity->delete();
 	}
 }

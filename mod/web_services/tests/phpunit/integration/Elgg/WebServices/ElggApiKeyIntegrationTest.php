@@ -8,23 +8,7 @@ use Elgg\IntegrationTestCase;
  * @group WebServices
  */
 class ElggApiKeyIntegrationTest extends IntegrationTestCase {
-	
-	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::up()
-	 */
-	public function up() {
-		
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::down()
-	 */
-	public function down() {
-		
-	}
-	
+
 	public function testGetKeyFunctions() {
 		
 		/* @var $entity \ElggApiKey */

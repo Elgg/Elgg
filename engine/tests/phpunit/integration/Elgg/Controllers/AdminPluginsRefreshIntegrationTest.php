@@ -65,8 +65,6 @@ class AdminPluginsRefreshIntegrationTest extends IntegrationTestCase {
 		
 		$this->expectException(AdminGatekeeperException::class);
 		$this->executeRequest($request);
-		
-		$user->delete();
 	}
 	
 	public function testNonAjaxRequest() {

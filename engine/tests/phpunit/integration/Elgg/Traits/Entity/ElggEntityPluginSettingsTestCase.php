@@ -24,15 +24,6 @@ abstract class ElggEntityPluginSettingsTestCase extends IntegrationTestCase {
 	}
 	
 	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		elgg_call(ELGG_IGNORE_ACCESS, function() {
-			$this->entity->delete();
-		});
-	}
-	
-	/**
 	 * Get the testing entity
 	 *
 	 * @return \ElggEntity

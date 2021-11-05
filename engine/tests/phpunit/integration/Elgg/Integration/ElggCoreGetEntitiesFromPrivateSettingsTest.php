@@ -132,8 +132,6 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBase
 		]);
 
 		$this->assertEquals(1, $result);
-
-		$object->delete();
 	}
 
 	public function booleanPairsProvider() {
@@ -168,8 +166,6 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBase
 		$this->assertNull(_elgg_services()->dataCache->private_settings->load($entity->guid));
 
 		$this->assertEmpty($entity->getAllPrivateSettings());
-
-		$entity->delete();
 	}
 
 	public function testCanSetAndRemovePrivateSettingOnEntity() {
@@ -203,7 +199,5 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBase
 		$settings = $entity->getAllPrivateSettings();
 		$this->assertEquals(1, count($settings));
 		$this->assertEquals('value1', $settings['setting1']);
-
-		$entity->delete();
 	}
 }

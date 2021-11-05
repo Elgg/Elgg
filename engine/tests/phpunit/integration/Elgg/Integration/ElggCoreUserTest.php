@@ -263,8 +263,6 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		
 		// cleanup
 		$session->removeLoggedInUser();
-		$profile_user->delete();
-		$reading_user->delete();
 	}
 	
 	/**
@@ -292,8 +290,6 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		
 		// cleanup
 		$session->removeLoggedInUser();
-		$profile_user->delete();
-		$reading_user->delete();
 	}
 	
 	public function profileDataProvider() {
@@ -320,8 +316,6 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$user->setProfileData('foo', $value);
 		
 		$this->assertEmpty($user->getProfileData('foo'));
-		
-		$user->delete();
 	}
 	
 	public function emptyProfileDataProvider() {

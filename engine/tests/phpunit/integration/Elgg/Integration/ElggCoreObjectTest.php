@@ -43,11 +43,7 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		if ($this->entity) {
 			$this->entity->delete();
 		}
-		
-		if ($this->user) {
-			$this->user->delete();
-		}
-		
+
 		elgg()->session->removeLoggedInUser();
 	}
 
@@ -215,17 +211,17 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		foreach ($types as $type) {
 			$parent = $this->createOne($type);
 			
-			$child = $this->createOne('object', [
+			$child = $this->createObject([
 				'owner_guid' => $parent->guid,
 				'container_guid' => 1,
 			]);
 
-			$child2 = $this->createOne('object', [
+			$child2 = $this->createObject([
 				'owner_guid' => $parent->guid,
 				'container_guid' => $parent->guid,
 			]);
 
-			$grandchild = $this->createOne('object', [
+			$grandchild = $this->createObject([
 				'container_guid' => $child->guid,
 				'owner_guid' => 1,
 			]);
@@ -313,10 +309,6 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		]);
 
 		$this->assertEquals($expected, $actual);
-
-		foreach ($objects as $object) {
-			$object->delete();
-		}
 	}
 
 	protected function get_entity_row($guid) {
