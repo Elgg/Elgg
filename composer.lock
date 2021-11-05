@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0bf62e9582fa58df2becadb8936a8151",
+    "content-hash": "cfd8519f9516d629570202e227181dcb",
     "packages": [
         {
             "name": "cakephp/core",
@@ -1922,41 +1922,40 @@
         },
         {
             "name": "laminas/laminas-mail",
-            "version": "2.14.3",
+            "version": "2.15.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-mail.git",
-                "reference": "a496ab1c708b91809de211522057a6d6781bd0aa"
+                "reference": "70c3476913c74e9befd782ab665ad1b9ebac556e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-mail/zipball/a496ab1c708b91809de211522057a6d6781bd0aa",
-                "reference": "a496ab1c708b91809de211522057a6d6781bd0aa",
+                "url": "https://api.github.com/repos/laminas/laminas-mail/zipball/70c3476913c74e9befd782ab665ad1b9ebac556e",
+                "reference": "70c3476913c74e9befd782ab665ad1b9ebac556e",
                 "shasum": ""
             },
             "require": {
                 "ext-iconv": "*",
-                "laminas/laminas-loader": "^2.5",
-                "laminas/laminas-mime": "^2.5",
-                "laminas/laminas-stdlib": "^2.7 || ^3.0",
-                "laminas/laminas-validator": "^2.10.2",
-                "laminas/laminas-zendframework-bridge": "^1.0",
-                "php": "^7.3 || ~8.0.0",
+                "laminas/laminas-loader": "^2.8",
+                "laminas/laminas-mime": "^2.9.1",
+                "laminas/laminas-stdlib": "^3.6",
+                "laminas/laminas-validator": "^2.15",
+                "php": "^7.3 || ~8.0.0 || ~8.1.0",
                 "symfony/polyfill-mbstring": "^1.12.0",
-                "true/punycode": "^2.1"
+                "true/punycode": "^2.1",
+                "webmozart/assert": "^1.10"
             },
-            "replace": {
-                "zendframework/zend-mail": "^2.10.0"
+            "conflict": {
+                "zendframework/zend-mail": "*"
             },
             "require-dev": {
                 "laminas/laminas-coding-standard": "~1.0.0",
-                "laminas/laminas-config": "^3.4",
-                "laminas/laminas-crypt": "^2.6 || ^3.0",
-                "laminas/laminas-db": "^2.12",
-                "laminas/laminas-servicemanager": "^3.2.1",
-                "phpunit/phpunit": "^9.3",
+                "laminas/laminas-crypt": "^2.6 || ^3.4",
+                "laminas/laminas-db": "^2.13.3",
+                "laminas/laminas-servicemanager": "^3.7",
+                "phpunit/phpunit": "^9.5.5",
                 "psalm/plugin-phpunit": "^0.15.1",
-                "symfony/process": "^5.3",
+                "symfony/process": "^5.3.7",
                 "vimeo/psalm": "^4.7"
             },
             "suggest": {
@@ -1999,20 +1998,20 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-09-23T07:17:22+00:00"
+            "time": "2021-09-23T07:33:57+00:00"
         },
         {
             "name": "laminas/laminas-mime",
-            "version": "2.9.0",
+            "version": "2.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-mime.git",
-                "reference": "02cc861f704d468726866457dcf8338d1fe74e76"
+                "reference": "72d21a1b4bb7086d4a4d7058c0abca180b209184"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-mime/zipball/02cc861f704d468726866457dcf8338d1fe74e76",
-                "reference": "02cc861f704d468726866457dcf8338d1fe74e76",
+                "url": "https://api.github.com/repos/laminas/laminas-mime/zipball/72d21a1b4bb7086d4a4d7058c0abca180b209184",
+                "reference": "72d21a1b4bb7086d4a4d7058c0abca180b209184",
                 "shasum": ""
             },
             "require": {
@@ -2060,7 +2059,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-09-03T02:18:35+00:00"
+            "time": "2021-09-20T21:19:24+00:00"
         },
         {
             "name": "laminas/laminas-servicemanager",
@@ -2296,68 +2295,6 @@
                 }
             ],
             "time": "2021-09-08T23:16:56+00:00"
-        },
-        {
-            "name": "laminas/laminas-zendframework-bridge",
-            "version": "1.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laminas/laminas-zendframework-bridge.git",
-                "reference": "bf180a382393e7db5c1e8d0f2ec0c4af9c724baf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-zendframework-bridge/zipball/bf180a382393e7db5c1e8d0f2ec0c4af9c724baf",
-                "reference": "bf180a382393e7db5c1e8d0f2ec0c4af9c724baf",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.3 || ~8.0.0 || ~8.1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.3",
-                "psalm/plugin-phpunit": "^0.15.1",
-                "squizlabs/php_codesniffer": "^3.5",
-                "vimeo/psalm": "^4.6"
-            },
-            "type": "library",
-            "extra": {
-                "laminas": {
-                    "module": "Laminas\\ZendFrameworkBridge"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/autoload.php"
-                ],
-                "psr-4": {
-                    "Laminas\\ZendFrameworkBridge\\": "src//"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Alias legacy ZF class names to Laminas Project equivalents.",
-            "keywords": [
-                "ZendFramework",
-                "autoloading",
-                "laminas",
-                "zf"
-            ],
-            "support": {
-                "forum": "https://discourse.laminas.dev/",
-                "issues": "https://github.com/laminas/laminas-zendframework-bridge/issues",
-                "rss": "https://github.com/laminas/laminas-zendframework-bridge/releases.atom",
-                "source": "https://github.com/laminas/laminas-zendframework-bridge"
-            },
-            "funding": [
-                {
-                    "url": "https://funding.communitybridge.org/projects/laminas-project",
-                    "type": "community_bridge"
-                }
-            ],
-            "time": "2021-09-03T17:53:30+00:00"
         },
         {
             "name": "league/flysystem",
