@@ -1219,6 +1219,7 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'deleteconfirm:plural' => "Confirmez-vous vouloir supprimer ces éléments ?",
 	'fileexists' => "Un fichier a déjà été chargé. Pour le remplacer, sélectionnez un nouveau fichier ci-dessous",
 	'input:file:upload_limit' => 'La taille maximale de fichier autorisée est %s',
+	'input:container_guid:info' => 'Ce contenu sera publié dans %s',
 
 /**
  * User add

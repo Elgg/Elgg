@@ -10,5 +10,5 @@ return array(
 	'widgets:tagcloud:description' => 'Neul nan tagaichean',
 	'widgets:tagcloud:numtags' => 'Àireamh de tagaichean a chithear',
 	'tagcloud:site_cloud' => 'Neul taga na làraich',
-	'tagcloud:allsitetags' => 'Tagaichean làraich gu lèir',
+	'tagcloud:allsitetags' => 'Tagaichean gu lèir',
 );

@@ -24,6 +24,7 @@ return array(
 	'site_notifications:toggle_all' => 'Comută toate',
 	'site_notifications:mark_read' => 'Marchează ca citită',
 	'site_notifications:mark_read:confirm' => 'Sigur dorești să marchezi toate notificările selectate ca și citite?',
+	'site_notifications:delete:confirm' => 'Sigur dorești să ștergi toate notificările selectate?',
 	'site_notifications:error:notifications_not_selected' => 'Nici o notificare selectată',
 	'site_notifications:success:delete' => 'Notificări șterse',
 	'site_notifications:success:mark_read' => 'Notificările au fost marcate ca și citite',

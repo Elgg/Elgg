@@ -4,7 +4,7 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Jerôme Bakker, 2021
+# Crìstean MacMhìcheil, 2021
 # 
 #, fuzzy
 msgid ""
@@ -13,23 +13,23 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-25 15:07+0200\n"
 "PO-Revision-Date: 2021-06-09 13:31+0000\n"
-"Last-Translator: Jerôme Bakker, 2021\n"
-"Language-Team: Swedish (https://www.transifex.com/elgg/teams/11337/sv/)\n"
+"Last-Translator: Crìstean MacMhìcheil, 2021\n"
+"Language-Team: Gaelic, Scottish (https://www.transifex.com/elgg/teams/11337/gd/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sv\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: gd\n"
+"Plural-Forms: nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : (n > 2 && n < 20) ? 2 : 3;\n"
 
 #: ../../about/contributing.rst:4
 msgid "Contributor Guide"
-msgstr "Guide för Medverkande"
+msgstr "Stiùireadh do Chom-pàirtichean"
 
 #: ../../about/contributing.rst:6 ../../about/history.rst:6
 #: ../../about/index.rst:6 ../../about/releases.rst:6
 #: ../../about/roadmap.rst:6
 msgid "This page has moved."
-msgstr "Den här sidan har flyttats."
+msgstr "Tha an duilleag seo air gluasad."
 
 #: ../../about/contributing.rst:8
 msgid ":doc:`/contribute/index`"
@@ -37,7 +37,7 @@ msgstr ":doc:`/contribute/index`"
 
 #: ../../about/history.rst:4
 msgid "History"
-msgstr "Historik"
+msgstr "Eachdraidh"
 
 #: ../../about/history.rst:8
 msgid ":doc:`/appendix/history`"
@@ -45,7 +45,7 @@ msgstr ":doc:`/appendix/history`"
 
 #: ../../about/index.rst:4
 msgid "About"
-msgstr "Om"
+msgstr "Mu dheidhinn"
 
 #: ../../about/index.rst:8
 msgid ":doc:`/appendix/index`"
@@ -53,7 +53,7 @@ msgstr ":doc:`/appendix/index`"
 
 #: ../../about/releases.rst:4
 msgid "Release Policy"
-msgstr "Release Policy"
+msgstr "Poiliseadh sgaoilidh"
 
 #: ../../about/releases.rst:8
 msgid ":doc:`/appendix/releases`"
@@ -61,7 +61,7 @@ msgstr ":doc:`/appendix/releases`"
 
 #: ../../about/roadmap.rst:4
 msgid "Roadmap"
-msgstr "Vägkarta"
+msgstr "Foir-shealladh a' phlana"
 
 #: ../../about/roadmap.rst:8
 msgid ":doc:`/appendix/roadmap`"
