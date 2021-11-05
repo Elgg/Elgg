@@ -19,10 +19,6 @@ class StaticConfigTest extends UnitTestCase {
 		$this->plugin = $this->startPlugin();
 	}
 
-	public function down() {
-
-	}
-
 	public function testEntityRegistration() {
 
 		$entities = $this->plugin->getStaticConfig('entities');

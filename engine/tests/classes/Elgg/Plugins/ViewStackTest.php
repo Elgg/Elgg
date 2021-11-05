@@ -13,10 +13,6 @@ class ViewStackTest extends \Elgg\UnitTestCase {
 		_elgg_services()->views->registerPluginViews($this->getPath());
 	}
 
-	public function down() {
-
-	}
-
 	public function viewsProvider() {
 		self::createApplication();
 
@@ -56,10 +52,10 @@ class ViewStackTest extends \Elgg\UnitTestCase {
 
 		// check file for syntax errors
 		if (substr($path, -4) === '.php') {
-			exec("php -l $path", $output, $return_var);
-			if ($return_var === 0) {
-				// no syntax errors
-			} else {
+			$output = [];
+			$return_var = null;
+			exec("php -l {$path}", $output, $return_var);
+			if ($return_var !== 0) {
 				// syntax errors detected
 				$this->fail("Syntax error detected in {$view}: " . implode(PHP_EOL, $output));
 			}

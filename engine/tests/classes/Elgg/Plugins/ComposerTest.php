@@ -26,10 +26,6 @@ class ComposerTest extends UnitTestCase {
 		
 		$this->composer = new \Elgg\Plugin\Composer($plugin);
 	}
-
-	public function down() {
-
-	}
 	
 	public function testAssertPluginId() {
 		$this->composer->assertPluginId();
