@@ -88,10 +88,6 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$this->svc = $this->getSvcWithCookie("");
 	}
 
-	public function down() {
-
-	}
-
 	function testLoginSavesHashAndPutsTokenInCookieAndSession() {
 		$this->dbMock->expects($this->once())
 				->method('insertData')

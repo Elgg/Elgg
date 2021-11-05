@@ -8,14 +8,6 @@ namespace Elgg\Views;
  */
 class ElggIconMappingTest extends ViewRenderingTestCase {
 
-	public function up() {
-		parent::up();
-	}
-
-	public function down() {
-		parent::down();
-	}
-
 	public function getViewNames() {
 		return [
 			'output/icon',

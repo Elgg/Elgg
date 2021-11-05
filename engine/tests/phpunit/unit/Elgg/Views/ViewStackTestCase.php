@@ -7,14 +7,6 @@ namespace Elgg\Views;
  */
 class ViewStackTestCase extends \Elgg\IntegratedUnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function viewsProvider() {
 
 		self::createApplication();

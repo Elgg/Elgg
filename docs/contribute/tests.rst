@@ -30,7 +30,16 @@ Since we have a ``phpunit.xml`` configuration at the root of Elgg, testing shoul
 	git clone http://github.com/Elgg/Elgg
 	cd Elgg
 	phpunit
+	
+If you write a unit test you can extend the ``\Elgg\UnitTestCase`` class or if you write a integration test you can extend the ``\Elgg\IntegrationTestCase`` class.
+These classes have some helper functions when writing tests. The following functions are often used:
 
+ * ``up()`` - used to prepare every test that is executed in the test case
+ * ``down()`` - executed after every test that is executed in the test case. Mostly used to cleanup / restore.
+ * ``createUser()`` - creates an ``ElggUser`` entity to be used in your test
+ * ``createGroup()`` - creates an ``ElggGroup`` entity to be used in your test
+ * ``createObject()`` - creates an ``ElggObject`` entity to be used in your test
+ 
 Plugin tests
 ------------
 

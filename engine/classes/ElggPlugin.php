@@ -82,14 +82,14 @@ class ElggPlugin extends ElggObject {
 		}
 
 		$plugin = elgg_get_plugin_from_id($plugin_id);
-
 		if (!$plugin) {
-			$ia = _elgg_services()->session->setIgnoreAccess(true);
-			$plugin = new ElggPlugin();
-			$plugin->title = $plugin_id;
-			$plugin->save();
-
-			_elgg_services()->session->setIgnoreAccess($ia);
+			$plugin = elgg_call(ELGG_IGNORE_ACCESS, function() use ($plugin_id) {
+				$plugin = new ElggPlugin();
+				$plugin->title = $plugin_id;
+				$plugin->save();
+				
+				return $plugin;
+			});
 		}
 
 		if (!$path) {

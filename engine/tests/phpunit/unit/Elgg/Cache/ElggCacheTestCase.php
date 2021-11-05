@@ -22,10 +22,6 @@ abstract class ElggCacheTestCase extends UnitTestCase {
 		$this->cache->clear();
 	}
 
-	public function down() {
-
-	}
-
 	/**
 	 * @return CompositeCache
 	 * @throws ConfigurationException

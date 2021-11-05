@@ -52,8 +52,6 @@ class TopbarMenuTest extends UnitTestCase {
 		$this->assertTrue($items->has('usersettings'));
 		$this->assertTrue($items->has('logout'));
 		$this->assertFalse($items->has('administration'));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testTopbarMenuViewedByAdmin() {
@@ -71,8 +69,5 @@ class TopbarMenuTest extends UnitTestCase {
 		$this->assertTrue($items->has('usersettings'));
 		$this->assertTrue($items->has('logout'));
 		$this->assertTrue($items->has('administration'));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
-
 }

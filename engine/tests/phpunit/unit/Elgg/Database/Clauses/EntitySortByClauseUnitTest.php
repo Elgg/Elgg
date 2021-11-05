@@ -21,10 +21,6 @@ class EntitySortByClauseUnitTest extends UnitTestCase {
 		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
-	public function down() {
-
-	}
-
 	public function testBuildAttributeSortByClause() {
 
 		$this->qb->orderBy('alias.guid', 'asc');

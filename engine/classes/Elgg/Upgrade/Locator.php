@@ -10,9 +10,7 @@ use Elgg\Project\Paths;
 /**
  * Locates and registers both core and plugin upgrades
  *
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
- * @since  3.0.0
+ * @since 3.0.0
  * @internal
  */
 class Locator {

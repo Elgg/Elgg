@@ -15,13 +15,6 @@ class ConfigIntegrationTest extends IntegrationTestCase {
 	public function up() {
 		$this->service = _elgg_services()->config;
 	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		
-	}
 
 	/**
 	 * @dataProvider setValueProvider

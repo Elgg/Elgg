@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-08 14:12+0200\n"
+"POT-Creation-Date: 2021-10-25 15:07+0200\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -6046,7 +6046,7 @@ msgid ""
 "``forms/usersettings/save``"
 msgstr ""
 "``forms/account/settings`` : l’extension de usersettings peut désormais "
-"étendre l’affichage ``forms/usersettings/save``"
+"étendre la vue ``forms/usersettings/save``"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:24
 msgid "``forms/admin/site/advanced/system``"
@@ -6195,8 +6195,8 @@ msgstr "``pages/input/parent``"
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:54
 msgid "``river/item``: use elgg_view_river_item() to render river items"
 msgstr ""
-"``river/item`` : utilisez elgg_view_river_item() pour faire le rendu des "
-"éléments de la rivière"
+"``river/item`` : utilisez elgg_view_river_item() pour afficher des éléments "
+"de la rivière"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:55
 msgid "``river/user/default/profileupdate``"
@@ -6332,8 +6332,8 @@ msgid ""
 "``navigation/menu/page``: now uses ``navigation/menu/default`` and a prepare"
 " hook"
 msgstr ""
-"``navigation/menu/page`` : utilisez désormais ``navigation/menu/default`` et"
-" un hook de préparation"
+"``navigation/menu/page`` : utilise désormais ``navigation/menu/default`` et "
+"un hook de préparation - prepare"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:88
 msgid "``navigation/menu/site``: now uses default view"
@@ -6348,8 +6348,8 @@ msgid ""
 "``forms/admin/site/advanced/security``: the site secret information has been"
 " moved to ``forms/admin/security/settings``"
 msgstr ""
-"``forms/admin/site/advanced/security`` : les informations secrètes du site "
-"ont été déplacées vers ``forms/admin/security/settings``"
+"``forms/admin/site/advanced/security`` : l'information du secret du site a "
+"été déplacé vers ``forms/admin/security/settings``"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:91
 msgid "``river/object/file/create``: check :doc:`/guides/river`"
@@ -6436,7 +6436,7 @@ msgstr "``search/header``"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:107
 msgid "``search/layout`` in both ``default`` and ``rss`` viewtypes"
-msgstr "``search/layout`` dans les types de vues ``default`` et ``rss``"
+msgstr "``search/layout`` dans les deux types de vues ``default`` et ``rss``"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:108
 msgid "``search/no_results``"

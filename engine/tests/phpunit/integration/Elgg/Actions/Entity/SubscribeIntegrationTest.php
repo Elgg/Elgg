@@ -33,21 +33,6 @@ class SubscribeIntegrationTest extends ActionResponseTestCase {
 		_elgg_services()->session->setLoggedInUser($this->user);
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		if ($this->user instanceof \ElggUser) {
-			$this->user->delete();
-		}
-		
-		if ($this->entity instanceof \ElggEntity) {
-			$this->entity->delete();
-		}
-		
-		_elgg_services()->session->removeLoggedInUser();
-	}
-	
 	public function testFailsWithMissingEntityGUID() {
 		$response = $this->executeAction('entity/subscribe');
 		

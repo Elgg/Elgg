@@ -9,14 +9,6 @@ use Elgg\Exceptions\InvalidArgumentException;
  */
 class ElggUserUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanConstructWithoutArguments() {
 		$this->assertNotNull(new \ElggUser());
 	}
@@ -151,7 +143,5 @@ class ElggUserUnitTest extends \Elgg\UnitTestCase {
 		$session->setLoggedInUser($user2);
 		
 		$this->assertFalse($user->canComment());
-		
-		$session->removeLoggedInUser();
 	}
 }

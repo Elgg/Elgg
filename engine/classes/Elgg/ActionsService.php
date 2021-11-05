@@ -11,9 +11,7 @@ use Elgg\Router\RouteRegistrationService;
 use Elgg\Traits\Loggable;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
- * Use the elgg_* versions instead.
+ * Actions service
  *
  * @internal
  * @since 1.9.0

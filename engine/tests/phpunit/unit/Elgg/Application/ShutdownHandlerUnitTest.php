@@ -15,14 +15,6 @@ use Elgg\UnitTestCase;
  */
 class ShutdownHandlerUnitTest extends UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	/**
 	 * @return Application
 	 */

@@ -12,13 +12,6 @@ use ElggPlugin;
  */
 class ElggCorePluginsAPITest extends \Elgg\IntegrationTestCase {
 
-	public function up() {
-	}
-
-	public function down() {
-
-	}
-
 	// \ElggPlugin
 	public function testElggPluginIsValid() {
 		$test_plugin = ElggPlugin::fromId('profile');

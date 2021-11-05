@@ -33,23 +33,14 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 			$this->user->delete();
 		}
 		unset($this->user);
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testElggUserLoad() {
 		// new object
-		$object = new \ElggObject();
-		$object->setSubtype($this->getRandomSubtype());
-		$this->assertEquals(0, $object->getGUID());
-		$this->assertTrue($object->save());
-		$this->assertGreaterThan(0, $object->guid);
-
+		$object = $this->createObject();
+		
 		// fail on wrong type
 		$this->assertFalse(get_user($object->guid));
-
-		// clean up
-		$object->delete();
 	}
 
 	public function testElggUserSave() {
@@ -260,11 +251,6 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$session->setLoggedInUser($reading_user);
 		
 		$this->assertEmpty($profile_user->getProfileData($name));
-		
-		// cleanup
-		$session->removeLoggedInUser();
-		$profile_user->delete();
-		$reading_user->delete();
 	}
 	
 	/**
@@ -289,11 +275,6 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$session->setLoggedInUser($reading_user);
 		
 		$this->assertEquals($value, $profile_user->getProfileData($name));
-		
-		// cleanup
-		$session->removeLoggedInUser();
-		$profile_user->delete();
-		$reading_user->delete();
 	}
 	
 	public function profileDataProvider() {
@@ -320,8 +301,6 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$user->setProfileData('foo', $value);
 		
 		$this->assertEmpty($user->getProfileData('foo'));
-		
-		$user->delete();
 	}
 	
 	public function emptyProfileDataProvider() {

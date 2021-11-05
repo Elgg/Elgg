@@ -20,10 +20,6 @@ class ElggGroupsIntegrationTest extends \Elgg\IntegrationTestCase {
 		$this->group = $this->createGroup();
 	}
 
-	public function down() {
-		$this->group->delete();
-	}
-
 	public function testCanLoadGroup() {
 		$this->markTestSkipped('Last action doesn\'t match due to delayed query execution');
 
@@ -43,7 +39,5 @@ class ElggGroupsIntegrationTest extends \Elgg\IntegrationTestCase {
 		$this->assertTrue((bool) $this->group->isMember($user));
 		$this->assertTrue((bool) $this->group->leave($user));
 		$this->assertFalse((bool) $this->group->isMember($user));
-
-		$user->delete();
 	}
 }

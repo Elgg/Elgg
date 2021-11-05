@@ -7,14 +7,6 @@ use Elgg\IntegrationTestCase;
 use Elgg\Router\Route;
 
 class PageOwnerIntegrationTest extends IntegrationTestCase {
-	
-	public function up() {
-		
-	}
-	
-	public function down() {
-		
-	}
 
 	/**
 	 * @dataProvider setterProvider
@@ -84,8 +76,6 @@ class PageOwnerIntegrationTest extends IntegrationTestCase {
 		} else {
 			$this->assertEquals($user->guid, $guid);
 		}
-		
-		$user->delete();
 	}
 
 	public function routeProvider() {
@@ -112,8 +102,6 @@ class PageOwnerIntegrationTest extends IntegrationTestCase {
 		
 		$guid = _elgg_services()->pageOwner->getPageOwnerGuid();
 		$this->assertEquals($user->guid, $guid);
-		
-		$user->delete();
 	}
 	
 	public function testPageOwnerDetectedFromInputOwnerGUID() {
@@ -125,8 +113,6 @@ class PageOwnerIntegrationTest extends IntegrationTestCase {
 		
 		$guid = _elgg_services()->pageOwner->getPageOwnerGuid();
 		$this->assertEquals($user->guid, $guid);
-		
-		$user->delete();
 	}
 	
 	/**
@@ -142,8 +128,6 @@ class PageOwnerIntegrationTest extends IntegrationTestCase {
 				
 		$guid = _elgg_services()->pageOwner->getPageOwnerGuid();
 		$this->assertEquals($user->{$test_match_on}, $guid);
-		
-		$user->delete();
 	}
 	
 	public function segmentsProvider() {

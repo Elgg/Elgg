@@ -54,9 +54,10 @@ if ($entity instanceof ElggPage) {
 }
 
 echo elgg_view_field([
-	'#type' => 'hidden',
-	'name' => 'container_guid',
+	'#type' => 'container_guid',
 	'value' => elgg_extract('container_guid', $vars),
+	'entity_type' => 'object',
+	'entity_subtype' => 'page',
 ]);
 
 $footer = elgg_view_field([

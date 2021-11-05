@@ -29,9 +29,6 @@ class PersistentLoginServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function down() {
-		
-		$this->user->delete();
-		
 		unset($this->cookie);
 	}
 	
@@ -125,8 +122,6 @@ class PersistentLoginServiceIntegrationTest extends IntegrationTestCase {
 		
 		$remaining_hash = $this->hashToken($remaining_token);
 		$this->assertEquals($different_user, $service->getUserFromHash($remaining_hash));
-		
-		$different_user->delete();
 	}
 	
 	public function testRemoveExpiredTokens() {

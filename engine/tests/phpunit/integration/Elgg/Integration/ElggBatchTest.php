@@ -14,26 +14,6 @@ class ElggBatchTest extends IntegrationTestCase {
 	 * @var \ElggEntity[] entities created during the test
 	 */
 	protected $createdEntities = [];
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public function up() {
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		elgg_call(ELGG_IGNORE_ACCESS, function() {
-			foreach ($this->createdEntities as $entity) {
-				$entity->delete();
-			}
-		});
-		
-		elgg_get_session()->removeLoggedInUser();
-	}
 
 	// see https://github.com/elgg/elgg/issues/4288
 	public function testElggBatchIncOffset() {

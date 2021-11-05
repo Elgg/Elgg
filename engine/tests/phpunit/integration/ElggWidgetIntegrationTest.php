@@ -28,11 +28,6 @@ class ElggWidgetIntegrationTest extends IntegrationTestCase {
 		_elgg_services()->session->removeLoggedInUser();
 	}
 
-	public function down() {
-		$this->widget->delete();
-		$this->user->delete();
-	}
-
 	public function testSettingAllowedMetadata() {
 		$this->widget->title = 'test_title';
 		$this->assertEquals('test_title', $this->widget->title);
@@ -110,7 +105,4 @@ class ElggWidgetIntegrationTest extends IntegrationTestCase {
 		
 		$this->assertFalse(elgg_is_widget_type('test_handler'));
 	}
-	
-	
-
 }

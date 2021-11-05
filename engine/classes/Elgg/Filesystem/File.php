@@ -77,8 +77,6 @@ class File {
 	/**
 	 * Do a PHP include of the file and return the result.
 	 *
-	 * TODO(ewinslow): This may only work for local filesystems?
-	 *
 	 * @return mixed
 	 */
 	public function includeFile() {

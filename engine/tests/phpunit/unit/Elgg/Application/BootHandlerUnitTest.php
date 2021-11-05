@@ -14,14 +14,6 @@ use Elgg\Helpers\CustomUser;
  */
 class BootHandlerUnitTest extends UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	/**
 	 * @return Application
 	 */
@@ -162,8 +154,5 @@ class BootHandlerUnitTest extends UnitTestCase {
 		$app->bootCore();
 
 		$this->assertInstanceOf(CustomUser::class, $app->_services->session->getLoggedInUser());
-
-		$app->_services->session->removeLoggedInUser();
 	}
-
 }

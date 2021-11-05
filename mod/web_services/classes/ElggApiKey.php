@@ -40,7 +40,9 @@ class ElggApiKey extends ElggObject {
 			return $result;
 		}
 		
-		_elgg_services()->apiUsersTable->removeApiUser($public_key);
+		if (isset($public_key)) {
+			_elgg_services()->apiUsersTable->removeApiUser($public_key);
+		}
 		
 		return $result;
 	}

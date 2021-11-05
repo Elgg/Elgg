@@ -17,8 +17,6 @@ use ElggEntity;
  * Entities repository contains methods for fetching entities from database or performing
  * calculations on entity properties.
  *
- * API IN FLUX Do not access the methods directly, use elgg_get_entities() instead
- *
  * @todo   Resolve table alias collissions when querying for both annotationa and metadata name value pairs
  *         Currently, n_table is expected across core and plugins, we need to refactor that code
  *         and remove n_table joins here

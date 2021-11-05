@@ -10,14 +10,6 @@ use Elgg\UnitTestCase;
  */
 class MenuServiceTest extends UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanUnpreparedMenu() {
 
 		$params_hook = $this->registerTestingHook('parameters', 'menu:test', function (Hook $hook) {

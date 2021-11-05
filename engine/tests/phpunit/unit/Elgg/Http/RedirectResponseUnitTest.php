@@ -12,10 +12,6 @@ class RedirectResponseUnitTest extends ResponseUnitTest {
 		$this->class = RedirectResponse::class;
 	}
 
-	public function down() {
-
-	}
-
 	public function testCanConstructWihtoutArguments() {
 		$test_class = $this->class;
 		$response = new $test_class();

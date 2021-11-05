@@ -3,7 +3,7 @@
 namespace Elgg;
 
 /**
- * PRIVATE CLASS. API IN FLUX. DO NOT USE DIRECTLY.
+ * Password service
  *
  * @internal
  * @since 1.10.0
@@ -121,11 +121,9 @@ final class PasswordService {
 
 		$user->setPassword($password);
 
-		$ia = _elgg_services()->session->setIgnoreAccess(true);
-		$result = $user->save();
-		_elgg_services()->session->setIgnoreAccess($ia);
-
-		return $result;
+		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
+			return $user->save();
+		});
 	}
 
 	/**

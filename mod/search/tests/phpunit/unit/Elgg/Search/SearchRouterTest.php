@@ -21,16 +21,11 @@ class SearchRouterTest extends UnitTestCase {
 		_elgg_services()->views->registerPluginViews($this->getPath());
 	}
 
-	public function down() {
-
-	}
-
 	public function testPageHandler() {
-		$params = [
+		$request = BaseTestCase::prepareHttpRequest('search', 'GET', [
 			'q' => 'lorem ipsum',
-		];
-
-		$request = BaseTestCase::prepareHttpRequest("search", 'GET', $params);
+		]);
+		
 		_elgg_services()->setValue('request', $request);
 
 		_elgg_services()->router->route($request);

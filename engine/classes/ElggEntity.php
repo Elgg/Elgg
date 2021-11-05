@@ -191,7 +191,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
 		$metadata_array = elgg_get_metadata([
 			'guid' => $this->guid,
-			'limit' => 0
+			'limit' => false,
 		]);
 
 		$this->attributes['guid'] = null;
@@ -377,7 +377,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 */
 	public function setMetadata($name, $value, $value_type = '', $multiple = false) {
 
-		if ($value === null) {
+		if ($value === null || $value === '') {
 			return $this->deleteMetadata($name);
 		}
 		
@@ -503,7 +503,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
 		$options = [
 			'guid' => $this->guid,
-			'limit' => 0
+			'limit' => false,
 		];
 		if ($name) {
 			$options['metadata_name'] = $name;
@@ -599,7 +599,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 */
 	public function setPrivateSetting($name, $value) {
 		
-		if ($value === null) {
+		if ($value === null || $value === '') {
 			return $this->removePrivateSetting($name);
 		}
 		
@@ -708,7 +708,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		if ($this->guid) {
 			$options = [
 				'guid' => $this->guid,
-				'limit' => 0
+				'limit' => false,
 			];
 			if ($name) {
 				$options['annotation_name'] = $name;
@@ -737,17 +737,13 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	public function deleteOwnedAnnotations($name = null) {
 		// access is turned off for this because they might
 		// no longer have access to an entity they created annotations on
-
-		$flags = ELGG_IGNORE_ACCESS;
-		$callback = function() use ($name) {
+		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($name) {
 			return elgg_delete_annotations([
 				'annotation_owner_guid' => $this->guid,
-				'limit' => 0,
+				'limit' => false,
 				'annotation_name' => $name,
 			]);
-		};
-
-		return elgg_call($flags, $callback);
+		});
 	}
 
 	/**
@@ -760,7 +756,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	public function disableAnnotations($name = '') {
 		$options = [
 			'guid' => $this->guid,
-			'limit' => 0
+			'limit' => false,
 		];
 		if ($name) {
 			$options['annotation_name'] = $name;
@@ -779,7 +775,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	public function enableAnnotations($name = '') {
 		$options = [
 			'guid' => $this->guid,
-			'limit' => 0
+			'limit' => false,
 		];
 		if ($name) {
 			$options['annotation_name'] = $name;
@@ -1105,6 +1101,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return int The access ID
 	 */
 	public function getAccessID() {
+		elgg_deprecated_notice(__METHOD__ . ' is deprecated. Use the attribute "access_id" directly.', '4.1');
 		return $this->access_id;
 	}
 
@@ -1594,23 +1591,6 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		$this->cache();
 
 		return true;
-	}
-
-	/**
-	 * Load new data from database into existing entity. Overwrites data but
-	 * does not change values not included in the latest data.
-	 *
-	 * @internal This is used when the same entity is selected twice during a
-	 * request in case different select clauses were used to load different data
-	 * into volatile data.
-	 *
-	 * @param stdClass $row DB row with new entity data
-	 *
-	 * @return bool
-	 * @internal
-	 */
-	public function refresh(stdClass $row) {
-		return $this->load($row);
 	}
 
 	/**

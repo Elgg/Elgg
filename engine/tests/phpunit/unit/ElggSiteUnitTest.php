@@ -6,14 +6,6 @@
  */
 class ElggSiteUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanConstructWithoutArguments() {
 		$this->assertNotNull(new \ElggSite());
 	}
@@ -119,7 +111,5 @@ class ElggSiteUnitTest extends \Elgg\UnitTestCase {
 		$session->setLoggedInUser($user);
 		
 		$this->assertFalse($site->canComment());
-		
-		$session->removeLoggedInUser();
 	}
 }

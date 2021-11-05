@@ -20,8 +20,6 @@ use LogicException;
  * Metadata repository contains methods for fetching metadata from database or performing
  * calculations on entity properties.
  *
- * API IN FLUX Do not access the methods directly, use elgg_get_metadata() instead
- *
  * @internal
  */
 class Metadata extends Repository {

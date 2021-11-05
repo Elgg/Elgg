@@ -7,21 +7,7 @@ use Elgg\Exceptions\InvalidParameterException;
 use Elgg\IntegrationTestCase;
 
 class ApiMethodIntegrationTest extends IntegrationTestCase {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public function up() {
-		
-	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		
-	}
-	
 	/**
 	 * Test callback function for api calls
 	 */

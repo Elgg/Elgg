@@ -22,3 +22,17 @@ function elgg_get_version($human_readable = false) {
 	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Do not rely on the version number. Instead use elgg_get_release() to get a release tag.', '4.1');
 	return '2017041200';
 }
+
+/**
+ * Checks if a viewtype falls back to default.
+ *
+ * @param string $viewtype Viewtype
+ *
+ * @return boolean
+ * @since 1.7.2
+ * @deprecated 4.1
+ */
+function elgg_does_viewtype_fallback($viewtype) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated.', '4.1');
+	return _elgg_services()->views->doesViewtypeFallback($viewtype);
+}

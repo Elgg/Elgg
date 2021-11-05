@@ -7,8 +7,6 @@ use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Traits\Loggable;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
  * Provides database mutex that can be used to prevent race conditions
  * between two processes that affect the same data.
  *

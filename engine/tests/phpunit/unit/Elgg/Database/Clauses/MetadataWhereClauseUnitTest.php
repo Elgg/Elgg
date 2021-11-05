@@ -21,10 +21,6 @@ class MetadataWhereClauseUnitTest extends UnitTestCase {
 		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
-	public function down() {
-
-	}
-
 	public function testBuildEmptyQuery() {
 
 		$expected = null;
@@ -158,4 +154,3 @@ class MetadataWhereClauseUnitTest extends UnitTestCase {
 
 	}
 }
-

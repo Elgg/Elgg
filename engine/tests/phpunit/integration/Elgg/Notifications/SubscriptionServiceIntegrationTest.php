@@ -41,10 +41,6 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	 * {@inheritDoc}
 	 */
 	public function down() {
-		foreach ($this->entities as $entity) {
-			$entity->delete();
-		}
-		
 		if ($this->testing_hook instanceof TestableHook) {
 			$this->testing_hook->unregister();
 		}

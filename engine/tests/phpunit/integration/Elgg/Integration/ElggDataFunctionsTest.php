@@ -30,10 +30,6 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 		$this->user = $users[0];
 	}
 
-	public function down() {
-
-	}
-
 	public function testCanGetData() {
 		$row1 = elgg()->db->getData("
 			SELECT *

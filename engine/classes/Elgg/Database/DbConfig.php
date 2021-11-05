@@ -5,7 +5,7 @@ namespace Elgg\Database;
 use Elgg\Config;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Database configuration service
  *
  * @internal
  * @since 1.9.0

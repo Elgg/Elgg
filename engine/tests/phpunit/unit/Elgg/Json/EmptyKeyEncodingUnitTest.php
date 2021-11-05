@@ -7,14 +7,6 @@ namespace Elgg\Json;
  */
 class EmptyKeyEncodingUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	function testRoundTrip() {
 		$json = <<<EOL
 {
@@ -55,5 +47,4 @@ EOL;
 
 		$this->assertEquals('{"":"foo"}', $json);
 	}
-
 }

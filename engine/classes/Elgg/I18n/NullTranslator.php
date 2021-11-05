@@ -3,8 +3,6 @@
 namespace Elgg\I18n;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
  * A translator that does nothing except return the key that was requested.
  *
  * This translator is useful during development if you want to be able to

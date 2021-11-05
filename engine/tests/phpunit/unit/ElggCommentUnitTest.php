@@ -5,15 +5,7 @@
  * @group ElggData
  */
 class ElggCommentUnitTest extends \Elgg\UnitTestCase {
-	
-	public function up() {
-		
-	}
-	
-	public function down() {
-		
-	}
-	
+
 	public function testCantComment() {
 		
 		$comment = $this->createObject([
@@ -29,8 +21,6 @@ class ElggCommentUnitTest extends \Elgg\UnitTestCase {
 		$session->setLoggedInUser($user);
 		
 		$this->assertFalse($comment->canComment());
-		
-		$session->removeLoggedInUser();
 	}
 	
 	public function testIsCreatedByContentOwner() {

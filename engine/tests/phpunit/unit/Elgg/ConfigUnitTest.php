@@ -10,14 +10,6 @@ use Elgg\Project\Paths;
  */
 class ConfigUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanReadConfigDefaults() {
 		$config = new Config();
 		$this->assertTrue($config->comment_box_collapses);

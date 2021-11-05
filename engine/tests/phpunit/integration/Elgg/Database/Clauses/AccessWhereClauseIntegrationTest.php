@@ -10,16 +10,12 @@ use Elgg\IntegrationTestCase;
 class AccessWhereClauseIntegrationTest extends IntegrationTestCase {
 
 	public function up() {
-		$this->user = $this->createOne('user');
+		$this->user = $this->createUser();
 		_elgg_services()->session->setLoggedInUser($this->user);
 		_elgg_services()->hooks->backup();
 	}
 
 	public function down() {
-		_elgg_services()->session->removeLoggedInUser();
-		if ($this->user) {
-			$this->user->delete();
-		}
 		_elgg_services()->hooks->restore();
 	}
 
@@ -66,11 +62,6 @@ class AccessWhereClauseIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue(has_access_to_entity($object, $viewer));
 		$this->assertTrue(has_access_to_entity($object, $owner));
 		$session->removeLoggedInUser();
-
-		elgg_call(ELGG_IGNORE_ACCESS, function() use ($owner, $object) {
-			$owner->delete();
-			$object->delete();
-		});
 
 		$session->setLoggedInUser($viewer);
 	}

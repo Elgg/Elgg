@@ -11,14 +11,6 @@ class ElggBlogUnitTest extends \Elgg\UnitTestCase {
 	
 	use PluginTesting;
 	
-	public function up() {
-		
-	}
-	
-	public function down() {
-		
-	}
-	
 	/**
 	 * @dataProvider blogCommentStatusProvider
 	 */
@@ -41,8 +33,6 @@ class ElggBlogUnitTest extends \Elgg\UnitTestCase {
 		$session->setLoggedInUser($user);
 		
 		$this->assertEquals($expected, $blog->canComment());
-		
-		$session->removeLoggedInUser();
 	}
 	
 	public function blogCommentStatusProvider() {

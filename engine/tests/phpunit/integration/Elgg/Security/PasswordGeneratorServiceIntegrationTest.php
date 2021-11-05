@@ -10,20 +10,6 @@ use Elgg\Exceptions\Security\InvalidPasswordCharacterRequirementsException;
 class PasswordGeneratorServiceIntegrationTest extends IntegrationTestCase {
 
 	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::up()
-	 */
-	public function up() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::down()
-	 */
-	public function down() {
-	}
-	
-	/**
 	 * @dataProvider invalidPasswordProvider
 	 */
 	public function testInvalidPasswords($min_length, $lower, $upper, $number, $special, $password) {

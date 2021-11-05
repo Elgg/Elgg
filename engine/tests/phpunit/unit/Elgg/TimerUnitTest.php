@@ -16,10 +16,6 @@ class TimerUnitTest extends \Elgg\UnitTestCase {
 		$this->timer = new Timer();
 	}
 
-	public function down() {
-
-	}
-
 	public function testCapturesTimes() {
 		$this->timer->begin([]);
 		$this->timer->begin(['1']);
@@ -58,5 +54,4 @@ class TimerUnitTest extends \Elgg\UnitTestCase {
 		$this->timer->end(['1', 'a']);
 		$this->assertTrue($this->timer->hasEnded(['1', 'a']));
 	}
-
 }

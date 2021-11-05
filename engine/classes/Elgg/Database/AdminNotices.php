@@ -3,12 +3,9 @@
 namespace Elgg\Database;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
  * Controls all admin notices in the system.
  *
  * @internal
- *
  * @since 1.10.0
  */
 class AdminNotices {
@@ -37,22 +34,16 @@ class AdminNotices {
 			return false;
 		}
 
-		// need to handle when no one is logged in
-		$old_ia = _elgg_services()->session->setIgnoreAccess(true);
-
 		$admin_notice = new \ElggAdminNotice();
 		$admin_notice->admin_notice_id = $id;
 		$admin_notice->description = $message;
 
-		$result = $admin_notice->save();
-
-		_elgg_services()->session->setIgnoreAccess($old_ia);
-
-		if (!$result) {
-			return false;
-		}
-
-		return $admin_notice;
+		$result = elgg_call(ELGG_IGNORE_ACCESS, function() use($admin_notice) {
+			// need to handle when no one is logged in
+			return $admin_notice->save();
+		});
+		
+		return $result ? $admin_notice : false;
 	}
 	
 	/**
@@ -63,26 +54,24 @@ class AdminNotices {
 	 * @return bool
 	 */
 	public function delete(string $id = '') {
-		$result = true;
-		
-		$notices = $this->find([
-			'metadata_name' => 'admin_notice_id',
-			'metadata_value' => $id,
-			'limit' => false,
-			'batch' => true,
-			'batch_inc_offset' => false,
-		]);
-
-		$ia = _elgg_services()->session->setIgnoreAccess(true);
-
-		// in case a bad plugin adds many, let it remove them all at once.
-		foreach ($notices as $notice) {
-			$result = ($result && $notice->delete());
-		}
-
-		_elgg_services()->session->setIgnoreAccess($ia);
-
-		return $result;
+		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($id) {
+			$result = true;
+			
+			$notices = $this->find([
+				'metadata_name' => 'admin_notice_id',
+				'metadata_value' => $id,
+				'limit' => false,
+				'batch' => true,
+				'batch_inc_offset' => false,
+			]);
+			
+			// in case a bad plugin adds many, let it remove them all at once.
+			foreach ($notices as $notice) {
+				$result = ($result && $notice->delete());
+			}
+			
+			return $result;
+		});
 	}
 	
 	/**
@@ -110,14 +99,12 @@ class AdminNotices {
 	 * @since 1.8.0
 	 */
 	public function exists(string $id) {
-		$old_ia = _elgg_services()->session->setIgnoreAccess(true);
-		$notice = elgg_count_entities([
-			'type' => 'object',
-			'subtype' => 'admin_notice',
-			'metadata_name_value_pair' => ['name' => 'admin_notice_id', 'value' => $id],
-		]);
-		_elgg_services()->session->setIgnoreAccess($old_ia);
-	
-		return ($notice) ? true : false;
+		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($id) {
+			return (bool) elgg_count_entities([
+				'type' => 'object',
+				'subtype' => 'admin_notice',
+				'metadata_name_value_pair' => ['name' => 'admin_notice_id', 'value' => $id],
+			]);
+		});
 	}
 }

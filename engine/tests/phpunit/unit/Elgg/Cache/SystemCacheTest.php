@@ -104,6 +104,4 @@ class SystemCacheTest extends UnitTestCase {
 		
 		elgg_reset_system_cache();
 	}
-
-
 }

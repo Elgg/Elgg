@@ -8,10 +8,9 @@ use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Traits\TimeUsing;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Users helper service
  *
  * @internal
- *
  * @since 1.10.0
  */
 class UsersTable {

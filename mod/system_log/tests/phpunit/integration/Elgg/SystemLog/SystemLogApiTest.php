@@ -20,10 +20,6 @@ class SystemLogApiTest extends IntegrationTestCase {
 		$log->setCurrentTime();
 	}
 
-	public function down() {
-
-	}
-
 	public function testLogsObjectEvent() {
 
 		$object = $this->createObject();
@@ -69,8 +65,6 @@ class SystemLogApiTest extends IntegrationTestCase {
 		$loaded_object = $loaded_entry->getObject();
 
 		$this->assertEquals($object->guid, $loaded_object->guid);
-
-		$object->delete();
 	}
 
 	public function testCanDeleteArchivedLog() {
@@ -110,8 +104,6 @@ class SystemLogApiTest extends IntegrationTestCase {
 		$entries = SystemLog::instance()->getAll();
 
 		$this->assertEmpty($entries);
-
-		$object->delete();
 	}
 	
 	public function testCanDisableEnableSystemLogLogging() {

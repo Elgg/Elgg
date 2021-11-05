@@ -4,17 +4,15 @@ namespace Elgg\Cache;
 
 use Elgg\Config;
 use Elgg\Traits\Cacheable;
-use Elgg\Traits\Debug\Profilable;
 
 /**
  * System Cache
  *
  * @internal
- * @since  1.10.0
+ * @since 1.10.0
  */
 class SystemCache {
 
-	use Profilable;
 	use Cacheable;
 
 	/**

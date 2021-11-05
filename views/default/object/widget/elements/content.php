@@ -10,6 +10,4 @@ if (!$widget instanceof ElggWidget) {
 	return;
 }
 
-$handler = $widget->handler;
-
-echo elgg_view("widgets/$handler/content", $vars);
+echo elgg_view("widgets/{$widget->handler}/content", $vars);

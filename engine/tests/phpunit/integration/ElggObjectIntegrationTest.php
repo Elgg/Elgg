@@ -41,8 +41,6 @@ class ElggObjectIntegrationTest extends IntegrationTestCase {
 		$object = $this->createObject();
 				
 		$this->assertTrue($object->canComment());
-		
-		$session->removeLoggedInUser();
 	}
 	
 	public function testCanCommentOnGroupContent() {
@@ -72,7 +70,5 @@ class ElggObjectIntegrationTest extends IntegrationTestCase {
 		
 		// now comment is allowed
 		$this->assertTrue($object->canComment());
-		
-		$session->removeLoggedInUser();
 	}
 }

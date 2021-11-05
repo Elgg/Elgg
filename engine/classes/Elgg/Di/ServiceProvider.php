@@ -220,12 +220,9 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('boot', function (ServiceProvider $sp) {
 			$flags = ELGG_CACHE_PERSISTENT | ELGG_CACHE_FILESYSTEM | ELGG_CACHE_RUNTIME;
-			$cache = new CompositeCache("elgg_boot", $sp->config, $flags);
-			$boot = new \Elgg\BootService($cache);
-			if ($sp->config->enable_profiling) {
-				$boot->setTimer($sp->timer);
-			}
-			return $boot;
+			$cache = new CompositeCache('elgg_boot', $sp->config, $flags);
+			
+			return new \Elgg\BootService($cache);
 		});
 
 		$this->setFactory('cacheHandler', function(ServiceProvider $sp) {
@@ -303,13 +300,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('db', function (ServiceProvider $sp) {
-			$db = new \Elgg\Database($sp->dbConfig, $sp->queryCache);
-
-			if ($sp->config->profiling_sql) {
-				$db->setTimer($sp->timer);
-			}
-
-			return $db;
+			return new \Elgg\Database($sp->dbConfig, $sp->queryCache);
 		});
 
 		$this->setFactory('dbConfig', function(ServiceProvider $sp) {
@@ -388,12 +379,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('events', function(ServiceProvider $sp) {
-			$events = new \Elgg\EventsService($sp->handlers);
-			if ($sp->config->enable_profiling) {
-				$events->setTimer($sp->timer);
-			}
-
-			return $events;
+			return new \Elgg\EventsService($sp->handlers);
 		});
 
 		$this->setClassName('externalFiles', \Elgg\Assets\ExternalFiles::class);
@@ -593,7 +579,8 @@ class ServiceProvider extends DiContainer {
 		
 		$this->setFactory('plugins', function(ServiceProvider $sp) {
 			$cache = new CompositeCache('plugins', $sp->config, ELGG_CACHE_RUNTIME);
-			$plugins = new \Elgg\Database\Plugins(
+			
+			return new \Elgg\Database\Plugins(
 				$cache,
 				$sp->db,
 				$sp->session,
@@ -605,10 +592,6 @@ class ServiceProvider extends DiContainer {
 				$sp->systemMessages,
 				$sp->request->getContextStack()
 			);
-			if ($sp->config->enable_profiling) {
-				$plugins->setTimer($sp->timer);
-			}
-			return $plugins;
 		});
 
 		$this->setFactory('privateSettingsCache', function(ServiceProvider $sp) {
@@ -625,20 +608,14 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('queryCache', function(ServiceProvider $sp) {
-			// @todo maybe make this a configurable value
-			$cache_size = 50;
-			
 			$config_disabled = $sp->config->db_disable_query_cache === true;
 						
-			$cache = new \Elgg\Cache\QueryCache($cache_size, $config_disabled);
-			
-			return $cache;
+			return new \Elgg\Cache\QueryCache($sp->config->db_query_cache_limit, $config_disabled);
 		});
 
 		$this->setFactory('redirects', function(ServiceProvider $sp) {
-			$url = current_page_url();
 			$is_xhr = $sp->request->isXmlHttpRequest();
-			return new \Elgg\RedirectService($sp->session, $is_xhr, $sp->config->wwwroot, $url);
+			return new \Elgg\RedirectService($sp->session, $is_xhr, $sp->config->wwwroot, current_page_url());
 		});
 
 		$this->setFactory('relationshipsTable', function(ServiceProvider $sp) {
@@ -689,7 +666,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('router', function (ServiceProvider $sp) {
-			$router = new \Elgg\Router(
+			return new \Elgg\Router(
 				$sp->hooks,
 				$sp->routeCollection,
 				$sp->urlMatcher,
@@ -697,11 +674,6 @@ class ServiceProvider extends DiContainer {
 				$sp->responseFactory,
 				$sp->plugins
 			);
-			if ($sp->config->enable_profiling) {
-				$router->setTimer($sp->timer);
-			}
-
-			return $router;
 		});
 
 		$this->setFactory('search', function(ServiceProvider $sp) {
@@ -730,22 +702,16 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\Cache\SimpleCache($sp->config, $sp->views);
 		});
 
-		$this->setClassName('stickyForms', \Elgg\Forms\StickyForms::class);
+		$this->setFactory('stickyForms', function(ServiceProvider $sp) {
+			return new \Elgg\Forms\StickyForms($sp->session);
+		});
 
 		$this->setFactory('systemCache', function (ServiceProvider $sp) {
-			$cache = new \Elgg\Cache\SystemCache($sp->fileCache, $sp->config);
-			if ($sp->config->enable_profiling) {
-				$cache->setTimer($sp->timer);
-			}
-			return $cache;
+			return new \Elgg\Cache\SystemCache($sp->fileCache, $sp->config);
 		});
 
 		$this->setFactory('serverCache', function (ServiceProvider $sp) {
-			$cache = new \Elgg\Cache\SystemCache($sp->localFileCache, $sp->config);
-			if ($sp->config->enable_profiling) {
-				$cache->setTimer($sp->timer);
-			}
-			return $cache;
+			return new \Elgg\Cache\SystemCache($sp->localFileCache, $sp->config);
 		});
 		
 		$this->setFactory('subscriptions', function (ServiceProvider $sp) {
@@ -829,6 +795,31 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setClassName('widgets', \Elgg\WidgetsService::class);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public function __get($name) {
+		$service = parent::__get($name);
+		
+		// get the traits implemented directly by the service
+		$traits = class_uses($service, true);
+		
+		// check for certain global cases
+		if (in_array(\Elgg\Traits\Debug\Profilable::class, $traits)) {
+			// profiling is supported
+			if ($service instanceof \Elgg\Database) {
+				// the database uses a different config flag to enable profiling
+				if ($this->config->profiling_sql) {
+					$service->setTimer($this->timer);
+				}
+			} elseif ($this->config->enable_profiling) {
+				$service->setTimer($this->timer);
+			}
+		}
+		
+		return $service;
 	}
 
 	/**

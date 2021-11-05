@@ -30,10 +30,6 @@ class EntityPreloaderUnitTest extends \Elgg\UnitTestCase {
 		$this->mock = $this->createMock(PreloaderMock20140623::class);
 	}
 
-	public function down() {
-
-	}
-
 	public function testAcceptsOnlyArraysOfObjects() {
 		$inputs = [
 			'foo',

@@ -21,10 +21,6 @@ class GroupByClauseUnitTest extends UnitTestCase {
 		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
-	public function down() {
-
-	}
-
 	public function testBuildGroupByClauseFromString() {
 
 		$this->qb->groupBy('alias.guid');

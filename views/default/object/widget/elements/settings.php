@@ -10,21 +10,18 @@ if (!$widget instanceof ElggWidget) {
 	return;
 }
 
-$additional_class = preg_replace('/[^a-z0-9-]/i', '-', "elgg-form-widgets-save-{$widget->handler}");
-
 $form = elgg_view_form('widgets/save', [
 	'class' => [
-		$additional_class,
+		preg_replace('/[^a-z0-9-]/i', '-', "elgg-form-widgets-save-{$widget->handler}"),
 	],
 	'prevent_double_submit' => false,
 ], $vars);
 
-if (!$form) {
+if (empty($form)) {
 	return;
 }
 
-?>
-
-<div class="elgg-widget-edit" id="widget-edit-<?php echo $widget->guid; ?>">
-	<?php echo $form; ?>
-</div>
+echo elgg_format_element('div', [
+	'class' => 'elgg-widget-edit',
+	'id' => "widget-edit-{$widget->guid}",
+], $form);

@@ -11,7 +11,7 @@ return array(
 	'collection:object:blog:all' => 'Blogaichean gu lèir',
 	'collection:object:blog:owner' => 'Blogaichean le %s',
 	'collection:object:blog:group' => 'Blogaichean a’ bhuidhinn',
-	'collection:object:blog:friends' => 'Blogaichean mo chàirdean',
+	'collection:object:blog:friends' => 'Blogaichean le mo chàirdean',
 	'add:object:blog' => 'Sgrìobh brath-bloga',
 	'edit:object:blog' => 'Deasaich am brath-bloga',
 	'notification:object:blog:publish' => "Leig fios nuair a thèid blog fhoillseachadh",
@@ -48,7 +48,7 @@ return array(
 	'river:object:blog:comment' => 'Dh’fhàg %s beachd air a’ bhrath-bhloga %s',
 
 	// notifications
-	'blog:notify:summary' => 'Tha brath-bloga ùr ann air a bheil %s',
+	'blog:notify:summary' => 'Brath-bloga ùr air a bheil an t-ainm \'%s\'',
 	'blog:notify:subject' => 'Brath-bloga ùr: %s',
 	'blog:notify:body' => 'Dh’fhoillsich %sbrath-bloga ùr: %s
 

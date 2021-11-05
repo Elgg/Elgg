@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-08 14:12+0200\n"
+"POT-Creation-Date: 2021-10-25 15:07+0200\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -9782,9 +9782,9 @@ msgid ""
 "Plugins are allowed to format notification subject/message/summary for "
 "individual delivery methods with ``[format, notification:<method>]`` hook"
 msgstr ""
-"Les plugins peuvent à mettre en forme le sujet, le message et le résumé de "
-"la notification pour chaque méthodes d'envoi individuelle avec le hook "
-"``[format, notification:<method>]``"
+"Les plugins ont la possibilité de mettre en forme le sujet, le contenu du "
+"message, et le résumé de la notification pour chaque méthode d'envoi "
+"individuelle avec le hook ``[format, notification:<method>]``"
 
 #: ../../guides/notifications.rst:94
 msgid ""
@@ -9858,7 +9858,7 @@ msgid ""
 "Make sure the notification will be in the correct language by passing the "
 "reciepient's language into the ``elgg_echo()`` function."
 msgstr ""
-"Assurez-vous que la notification sera dans la bonne langue en indiquant la "
+"Assurez-vous que la notification sera dans la bonne langue en passant la "
 "langue du destinataire à la fonction ``elgg_echo()``."
 
 #: ../../guides/notifications.rst:210
@@ -9871,8 +9871,8 @@ msgid ""
 "the contents of the notification when a new objects of subtype 'photo' is "
 "created:"
 msgstr ""
-"Dites à Elgg d’utiliser la fonction ``photos_prepare_notification()`` pour "
-"formater le contenu de la notification quand un nouvel objet de sous-type "
+"Indique à Elgg d’utiliser la fonction ``photos_prepare_notification()`` pour"
+" formater le contenu de la notification quand un nouvel objet de sous-type "
 "'photo' est créé :"
 
 #: ../../guides/notifications.rst:267
@@ -9988,11 +9988,11 @@ msgid ""
 msgstr ""
 "Après avoir enregistré la nouvelle méthode, celle-ci apparaîtra sur la page "
 "des paramètres de notification à l’adresse "
-"``www.exemple.com/notifications/personal/[username]``."
+"``www.example.com/notifications/personal/[username]``."
 
 #: ../../guides/notifications.rst:326
 msgid "Sending the notifications using your own method"
-msgstr "Envoyer des notifications à l’aide de votre propre méthode"
+msgstr "Envoyer des notifications avec votre propre méthode"
 
 #: ../../guides/notifications.rst:328
 msgid ""
@@ -10013,9 +10013,9 @@ msgid ""
 "In most cases Elgg core takes care of handling the subscriptions, so "
 "notification plugins don't usually have to alter them."
 msgstr ""
-"Dans la plupart des cas, Elgg core s’occupe de la gestion des abonnements, "
-"de sorte que les plugins de notification n’ont généralement pas besoin de "
-"les modifier."
+"Dans la plupart des cas, le noyau de Elgg s’occupe de la gestion des "
+"abonnements, de sorte que les plugins de notification n’ont généralement pas"
+" besoin de les modifier."
 
 #: ../../guides/notifications.rst:376
 msgid "Subscriptions can however be:"
@@ -10023,12 +10023,12 @@ msgstr "Les abonnements peuvent toutefois être :"
 
 #: ../../guides/notifications.rst:375
 msgid "Added using the ``\\ElggEntity::addSubscription()`` function"
-msgstr "Ajoutées à l’aide de la fonction ``\\ElggEntity::addSubscription()``"
+msgstr "Ajoutés à l’aide de la fonction ``\\ElggEntity::addSubscription()``"
 
 #: ../../guides/notifications.rst:376
 msgid "Removed using the ``\\ElggEntity::removeSubscription()`` function"
 msgstr ""
-"Supprimées à l’aide de la fonction ``\\ElggEntity::removeSubscription()``"
+"Supprimés à l’aide de la fonction ``\\ElggEntity::removeSubscription()``"
 
 #: ../../guides/notifications.rst:378
 msgid ""

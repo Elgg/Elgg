@@ -9,14 +9,6 @@ use Elgg\IntegrationTestCase;
  */
 class ElggEntityClassResolutionTest extends IntegrationTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	/**
 	 * @dataProvider entityClasses
 	 */

@@ -10,15 +10,7 @@ use Elgg\Plugins\PluginTesting;
 class ElggMessageUnitTest extends \Elgg\UnitTestCase {
 	
 	use PluginTesting;
-	
-	public function up() {
-		
-	}
-	
-	public function down() {
-		
-	}
-	
+
 	public function testCantComment() {
 		$this->startPlugin();
 		
@@ -30,12 +22,8 @@ class ElggMessageUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($message->canComment());
 		
 		$user = $this->createUser();
-		$session = _elgg_services()->session;
-		
-		$session->setLoggedInUser($user);
+		_elgg_services()->session->setLoggedInUser($user);
 		
 		$this->assertFalse($message->canComment());
-		
-		$session->removeLoggedInUser();
 	}
 }

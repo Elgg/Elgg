@@ -9,14 +9,6 @@ use Elgg\Exceptions\InvalidArgumentException;
  */
 class LRUCacheUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testOldestItemsGetDroppedWhenUnused() {
 		$pool = new LRUCache(4);
 
@@ -100,5 +92,4 @@ class LRUCacheUnitTest extends \Elgg\UnitTestCase {
 			['foo', null, 'bar'],
 		];
 	}
-
 }

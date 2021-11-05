@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\HooksRegistrationService\MethodMatcher;
 use Elgg\Traits\Loggable;
 use Psr\Log\LogLevel;
 

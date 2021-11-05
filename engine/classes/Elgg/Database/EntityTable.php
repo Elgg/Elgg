@@ -18,10 +18,9 @@ use Elgg\Traits\Loggable;
 use Elgg\Traits\TimeUsing;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Entity table database service
  *
  * @internal
- *
  * @since 1.10.0
  */
 class EntityTable {
@@ -315,15 +314,12 @@ class EntityTable {
 	 * @return void
 	 */
 	public function invalidateCache($guid) {
-		$ia = $this->session->setIgnoreAccess(true);
-		$ha = $this->session->getDisabledEntityVisibility();
-		$this->session->setDisabledEntityVisibility(true);
-		$entity = $this->get($guid);
-		if ($entity) {
-			$entity->invalidateCache();
-		}
-		$this->session->setDisabledEntityVisibility($ha);
-		$this->session->setIgnoreAccess($ia);
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
+			$entity = $this->get($guid);
+			if ($entity instanceof \ElggEntity) {
+				$entity->invalidateCache();
+			}
+		});
 	}
 
 	/**
@@ -397,14 +393,10 @@ class EntityTable {
 	 */
 	public function exists($guid) {
 
-		// need to ignore access and show hidden entities to check existence
-		$ia = $this->session->setIgnoreAccess(true);
-		$show_hidden = $this->session->setDisabledEntityVisibility(true);
-
-		$result = $this->getRow($guid);
-
-		$this->session->setIgnoreAccess($ia);
-		$this->session->setDisabledEntityVisibility($show_hidden);
+		$result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
+			// need to ignore access and show hidden entities to check existence
+			return $this->getRow($guid);
+		});
 
 		return !empty($result);
 	}
@@ -419,19 +411,10 @@ class EntityTable {
 	 */
 	public function enable($guid, $recursive = true) {
 
-		// Override access only visible entities
-		$old_access_status = $this->session->getDisabledEntityVisibility();
-		$this->session->setDisabledEntityVisibility(true);
-
-		$result = false;
-		$entity = get_entity($guid);
-		if ($entity) {
-			$result = $entity->enable($recursive);
-		}
-
-		$this->session->setDisabledEntityVisibility($old_access_status);
-
-		return $result;
+		return elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid, $recursive) {
+			$entity = $this->get($guid);
+			return $entity instanceof \ElggEntity ? $entity->enable($recursive) : false;
+		});
 	}
 
 	/**
@@ -519,17 +502,15 @@ class EntityTable {
 			return $this->session->getLoggedInUser();
 		}
 
-		// need to ignore access and show hidden entities for potential hidden/disabled users
-		$ia = $this->session->setIgnoreAccess(true);
-		$show_hidden = $this->session->setDisabledEntityVisibility(true);
-
-		$user = $this->get($guid, 'user');
-		if ($user) {
-			$this->metadata_cache->populateFromEntities([$user->guid]);
-		}
-
-		$this->session->setIgnoreAccess($ia);
-		$this->session->setDisabledEntityVisibility($show_hidden);
+		$user = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
+			// need to ignore access and show hidden entities for potential hidden/disabled users
+			$user = $this->get($guid, 'user');
+			if ($user) {
+				$this->metadata_cache->populateFromEntities([$user->guid]);
+			}
+			
+			return $user;
+		});
 
 		if (!$user) {
 			// requested to check access for a specific user_guid, but there is no user entity, so the caller

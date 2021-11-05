@@ -28,16 +28,6 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 		$this->group = $this->createGroup();
 	}
 
-	public function down() {
-		if ($this->group) {
-			$this->group->delete();
-		}
-		if ($this->user) {
-			$this->user->delete();
-		}
-		_elgg_services()->session->removeLoggedInUser();
-	}
-
 	public function testCreateDeleteGroupACL() {
 		$acl = $this->group->getOwnedAccessCollection('group_acl');
 
@@ -51,19 +41,17 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 		// removing group and acl
 		$this->assertTrue($this->group->delete());
 
-		$acl = get_access_collection($acl_id);
-		$this->assertFalse($acl);
+		$this->assertFalse(get_access_collection($acl_id));
 	}
 
 	public function testJoinLeaveGroupACL() {
 		
-		$group = new \ElggGroup();
-		$group->name = 'Test group';
-		$group->access_id = ACCESS_PUBLIC;
-		$group->save();
+		$group = $this->createGroup([
+			'name' => 'Test group',
+			'owner_guid' => $this->createUser()->guid,
+		]);
 
-		$result = $group->join($this->user);
-		$this->assertTrue($result);
+		$this->assertTrue($group->join($this->user));
 
 		// disable security since we run as admin
 		elgg_call(ELGG_ENFORCE_ACCESS, function() use ($group) {
@@ -79,8 +67,6 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 				$this->assertFalse($can_edit);
 			}
 		});
-		
-		$group->delete();
 
 		$this->markTestIncomplete("Verify what was the intention with editing access collections");
 	}
@@ -137,6 +123,5 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 		
 		$original_page_owner_guid = ($original_page_owner instanceof \ElggEntity) ? $original_page_owner->guid : 0;
 		elgg_set_page_owner_guid($original_page_owner_guid);
-
 	}
 }

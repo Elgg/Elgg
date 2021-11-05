@@ -1,6 +1,6 @@
 <?php
 
-namespace Elgg;
+namespace Elgg\HooksRegistrationService;
 
 use Elgg\Helpers\MethodMatcherTestObject;
 
@@ -8,14 +8,6 @@ use Elgg\Helpers\MethodMatcherTestObject;
  * @group UnitTests
  */
 class MethodMatcherUnitTest extends \Elgg\UnitTestCase {
-
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
 
 	public function testMatchesStrings() {
 		$matcher = new MethodMatcher('stdClass', 'bar');

@@ -18,10 +18,6 @@ class ElggUpgradeUnitTest extends \Elgg\UnitTestCase {
 
 	}
 
-	public function down() {
-
-	}
-
 	public function mock_egefps_with_entities() {
 		return array(new \stdClass());
 	}

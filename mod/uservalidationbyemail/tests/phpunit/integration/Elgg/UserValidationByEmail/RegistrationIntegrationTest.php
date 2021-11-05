@@ -22,11 +22,7 @@ class RegistrationIntegrationTest extends ActionResponseTestCase {
 		
 		elgg_register_plugin_hook_handler('register', 'user', 'Elgg\UserValidationByEmail\User::disableUserOnRegistration');
 	}
-	
-	public function down() {
-		parent::down();
-	}
-	
+
 	public function testRegistrationWithoutAdminValidation() {
 		
 		elgg()->config->require_admin_validation = false;
@@ -80,8 +76,6 @@ class RegistrationIntegrationTest extends ActionResponseTestCase {
 		
 		$plugin_tracking = elgg_get_plugin_user_setting('email_validated', $user->guid, 'uservalidationbyemail');
 		$this->assertNotEmpty($plugin_tracking);
-		
-		elgg_get_session()->removeLoggedInUser();
 	}
 	
 	public function testRegistrationWithAdminValidation() {

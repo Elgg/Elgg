@@ -6,14 +6,6 @@ use Elgg\IntegratedUnitTestCase;
 
 class TranslationLoadingUnitTestCase extends IntegratedUnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	/**
 	 * Provides registered languages
 	 * @return array
@@ -89,5 +81,4 @@ class TranslationLoadingUnitTestCase extends IntegratedUnitTestCase {
 			$this->assertTrue($completeness > 0);
 		}
 	}
-
 }

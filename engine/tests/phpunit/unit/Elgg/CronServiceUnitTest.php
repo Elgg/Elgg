@@ -29,13 +29,6 @@ class CronServiceUnitTest extends UnitTestCase {
 		$this->service = _elgg_services()->cron;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-
-	}
-
 	public function testCanRunCron() {
 
 		$dt = new \DateTime('2017-1-1 0:00:00');

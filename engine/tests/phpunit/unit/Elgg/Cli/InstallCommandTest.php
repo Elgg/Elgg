@@ -11,14 +11,6 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class InstallCommandTest extends UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testExecute() {
 
 		$this->markTestSkipped('Can\'t test the installer yet');
@@ -35,5 +27,4 @@ class InstallCommandTest extends UnitTestCase {
 
 		dump($commandTester->getDisplay());
 	}
-
 }

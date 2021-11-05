@@ -5,20 +5,6 @@ namespace Elgg\Security;
 use Elgg\UnitTestCase;
 
 class PasswordGeneratorServiceUnitTest extends UnitTestCase {
-
-	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::up()
-	 */
-	public function up() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::down()
-	 */
-	public function down() {
-	}
 	
 	public function testGeneratePasswordWithSufficientLength() {
 		$password = _elgg_services()->passwordGenerator->generatePassword(12);

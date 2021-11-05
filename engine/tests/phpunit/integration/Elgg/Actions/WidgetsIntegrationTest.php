@@ -35,14 +35,6 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 	}
 
 	public function down() {
-		if (isset($this->widget)) {
-			$this->widget->delete();
-		}
-		if (isset($this->user)) {
-			$this->user->delete();
-		}
-		
-		_elgg_services()->session->removeLoggedInUser();
 		_elgg_services()->hooks->restore();
 	}
 	
@@ -139,11 +131,6 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('widgets:remove:failure'), $response->getContent());
-		
-		elgg_call(ELGG_IGNORE_ACCESS, function() use ($widget, $other_user) {
-			$widget->delete();
-			$other_user->delete();
-		});
 	}
 
 	public function testWidgetDeleteSuccess() {

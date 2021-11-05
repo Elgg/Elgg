@@ -182,20 +182,32 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 		$this->assertFalse((bool) _elgg_services()->session->getDisabledEntityVisibility(), __METHOD__ . ': hidden entities not reset');
 
 		// Tests should run without a logged in user
+		if (_elgg_services()->session->isLoggedIn()) {
+			_elgg_services()->session->removeLoggedInUser();
+		}
 		$this->assertFalse((bool) _elgg_services()->session->isLoggedIn(), __METHOD__ . ': there should be no logged in user');
+		
+		// cleanup admin user
+		$admin = $this->_testing_admin;
+		unset($this->_testing_admin);
+		if ($admin instanceof \ElggUser) {
+			$admin->delete();
+		}
 	}
 
 	/**
 	 * Called after setUp() method and can be used by test cases to setup their test logic
 	 * @return mixed
 	 */
-	abstract function up();
+	public function up() {
+	}
 
 	/**
 	 * Called before tearDown() method and can be used by test cases to clear their test logic
 	 * @return mixed
 	 */
-	abstract function down();
+	public function down() {
+	}
 
 	/**
 	 * @source https://gist.github.com/gnutix/7746893

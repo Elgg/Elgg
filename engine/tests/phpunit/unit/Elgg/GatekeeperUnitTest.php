@@ -38,10 +38,6 @@ class GatekeeperUnitTest extends UnitTestCase {
 		$this->invoker = _elgg_services()->invoker;
 	}
 
-	public function down() {
-		$this->session->removeLoggedInUser();
-	}
-	
 	/**
 	 * {@inheritDoc}
 	 */

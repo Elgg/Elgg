@@ -10,12 +10,10 @@ use Elgg\Project\Paths;
 use Elgg\Traits\Loggable;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
- * Use the elgg_* versions instead.
+ * Views service
  *
  * @internal
- * @since  1.9.0
+ * @since 1.9.0
  */
 class ViewsService {
 
@@ -335,8 +333,6 @@ class ViewsService {
 	 * @param string $viewtype Viewtype
 	 *
 	 * @return bool
-	 *
-	 * @see elgg_does_viewtype_fallback()
 	 */
 	public function doesViewtypeFallback($viewtype) {
 		return in_array($viewtype, $this->fallbacks);

@@ -13,10 +13,9 @@ use Elgg\UserCapabilities;
 use Elgg\Traits\Loggable;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Access collections database service
  *
  * @internal
- *
  * @since 1.10.0
  */
 class AccessCollections {
@@ -242,12 +241,10 @@ class AccessCollections {
 		}
 
 		// See #7159. Must not allow ignore access to affect query
-		$ia = _elgg_services()->session->setIgnoreAccess(false);
-
-		$row = $this->entities->getRow($entity->guid, $user_guid);
-
-		_elgg_services()->session->setIgnoreAccess($ia);
-
+		$row = elgg_call(ELGG_ENFORCE_ACCESS, function() use ($entity, $user_guid) {
+			return $this->entities->getRow($entity->guid, $user_guid);
+		});
+		
 		return !empty($row);
 	}
 
@@ -528,7 +525,7 @@ class AccessCollections {
 
 		$current_members_batch = $this->getMembers($collection_id, [
 			'batch' => true,
-			'limit' => 0,
+			'limit' => false,
 			'callback' => false,
 		]);
 
@@ -655,8 +652,9 @@ class AccessCollections {
 		if (!$collection instanceof \ElggAccessCollection) {
 			return false;
 		}
-
-		if (!$this->entities->exists($user_guid)) {
+		
+		$user = $this->entities->get($user_guid);
+		if (!$user instanceof \ElggUser) {
 			return false;
 		}
 

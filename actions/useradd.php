@@ -5,7 +5,7 @@
 
 use Elgg\Exceptions\Configuration\RegistrationException;
 
-elgg_make_sticky_form('useradd');
+elgg_make_sticky_form('useradd', ['password', 'password2']);
 
 // Get variables
 $username = get_input('username');

@@ -37,9 +37,6 @@ class NotificationsIntegrationTest extends IntegrationTestCase {
 		$user->removeFriend($friend->guid);
 		$this->assertFalse($user->isFriendsWith($friend->guid));
 		$this->assertFalse($friend->hasSubscription($user->guid, 'test'));
-		
-		$user->delete();
-		$friend->delete();
 	}
 	
 	public function testFriendSubscriptionRemovedWhenFriendRelationshipDeleted() {
@@ -55,9 +52,5 @@ class NotificationsIntegrationTest extends IntegrationTestCase {
 		$user->removeFriend($friend->guid);
 		$this->assertFalse($user->isFriendsWith($friend->guid));
 		$this->assertFalse($friend->hasSubscription($user->guid, 'test'));
-		
-		$user->delete();
-		$friend->delete();
 	}
 }
-

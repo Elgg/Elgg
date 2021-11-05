@@ -24,26 +24,19 @@ class ElggCoreCommentTest extends IntegrationTestCase {
 
 	public function up() {
 
-		$this->commenter = $this->createOne('user');
+		$this->commenter = $this->createUser();
 		elgg()->session->setLoggedInUser($this->commenter);
 		
-		$this->container_owner = $this->createOne('user');
-		$this->container = $this->createOne('object', [
+		$this->container_owner = $this->createUser();
+		$this->container = $this->createObject([
 			'owner_guid' => $this->container_owner->guid,
 		]);
 
-		$this->comment = $this->createOne('object', [
+		$this->comment = $this->createObject([
 			'subtype' => 'comment',
 			'container_guid' => $this->container->guid,
 			'owner_guid' => $this->commenter->guid,
 		]);
-	}
-
-	public function down() {
-		$this->commenter->delete();
-		$this->container_owner->delete();
-		
-		elgg()->session->removeLoggedInUser();
 	}
 
 	public function testCommentAccessSync() {

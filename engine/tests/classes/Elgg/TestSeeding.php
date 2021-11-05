@@ -6,7 +6,11 @@ use Elgg\Traits\Seeding;
 
 trait TestSeeding {
 
-	use Seeding;
+	use Seeding {
+		createObject as createSeededObject;
+		createGroup as createSeededGroup;
+		createUser as createSeededUser;
+	}
 
 	/**
 	 * @var \ElggEntity
@@ -14,16 +18,16 @@ trait TestSeeding {
 	private $_seeds = [];
 
 	public function clearSeeds() {
-
-		_elgg_services()->hooks->backup();
-		_elgg_services()->events->backup();
-
-		foreach ($this->_seeds as $seed) {
-			$seed->delete();
-		}
-
-		_elgg_services()->hooks->restore();
-		_elgg_services()->events->restore();
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() {
+			foreach ($this->_seeds as $seed) {
+				if (!elgg_entity_exists($seed->guid)) {
+					// entity probably deleted during tests
+					continue;
+				}
+				
+				$seed->delete();
+			}
+		});
 	}
 
 	/**
@@ -51,12 +55,8 @@ trait TestSeeding {
 	 */
 	public function createMany($types = 'object', $limit = 2, array $attributes = [], array $metadata = []) {
 
-		_elgg_services()->hooks->backup();
-		_elgg_services()->events->backup();
-
 		$types = (array) $types;
-
-		$seeds = [];
+		$entities = [];
 
 		foreach ($types as $type) {
 			$seeded = 0;
@@ -65,28 +65,74 @@ trait TestSeeding {
 				if (!isset($attributes['subtype'])) {
 					$attributes['subtype'] = $this->getRandomSubtype();
 				}
+				
 				switch ($type) {
 					case 'object' :
-						$seeds[] = $this->createObject($attributes, $metadata);
+						$entities[] = $this->createObject($attributes, $metadata);
 						break;
 
 					case 'user' :
-						$seeds[] = $this->createUser($attributes, $metadata);
+						$entities[] = $this->createUser($attributes, $metadata);
 						break;
 
 					case 'group' :
-						$seeds[] = $this->createGroup($attributes, $metadata);
+						$entities[] = $this->createGroup($attributes, $metadata);
 						break;
 				}
-
 			}
 		}
 
-		$this->_seeds = array_merge($this->_seeds, $seeds);
+		return $entities;
+	}
+	
+	/**
+	 * Takes over seeding from the Seeding trait to keep track of the seeded entity
+	 *
+	 * @param array $attributes User entity attributes
+	 * @param array $metadata   User entity metadata
+	 * @param array $options    Seeding options
+	 *
+	 * @return \ElggUser
+	 */
+	final public function createUser(array $attributes = [], array $metadata = [], array $options = []) {
+		$entity = $this->createSeededUser($attributes, $metadata, $options);
+		
+		$this->_seeds[] = $entity;
+		
+		return $entity;
+	}
+	
+	/**
+	 * Takes over seeding from the Seeding trait to keep track of the seeded entity
+	 *
+	 * @param array $attributes Group entity attributes
+	 * @param array $metadata   Group entity metadata
+	 * @param array $options    Additional options
+	 *
+	 * @return \ElggGroup
+	 */
+	final public function createGroup(array $attributes = [], array $metadata = [], array $options = []) {
+		$entity = $this->createSeededGroup($attributes, $metadata, $options);
 
-		_elgg_services()->hooks->restore();
-		_elgg_services()->events->restore();
-
-		return $seeds;
+		$this->_seeds[] = $entity;
+		
+		return $entity;
+	}
+	
+	/**
+	 * Takes over seeding from the Seeding trait to keep track of the seeded entity
+	 *
+	 * @param array $attributes Object entity attributes
+	 * @param array $metadata   Object entity metadata
+	 * @param array $options    Additional options
+	 *
+	 * @return \ElggObject
+	 */
+	final public function createObject(array $attributes = [], array $metadata = [], array $options = []) {
+		$entity = $this->createSeededObject($attributes, $metadata, $options);
+		
+		$this->_seeds[] = $entity;
+		
+		return $entity;
 	}
 }

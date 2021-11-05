@@ -28,38 +28,6 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 	protected $object;
 	
 	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::up()
-	 */
-	public function up() {
-		
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::down()
-	 */
-	public function down() {
-		
-		if ($this->object instanceof \ElggObject) {
-			$this->object->delete();
-		}
-		
-		if ($this->group instanceof \ElggGroup) {
-			$this->group->delete();
-		}
-		
-		if ($this->user instanceof \ElggUser) {
-			$this->user->delete();
-		}
-		
-		if ($this->loggedin_user instanceof \ElggUser) {
-			elgg_get_session()->removeLoggedInUser();
-			$this->loggedin_user->delete();
-		}
-	}
-	
-	/**
 	 * @dataProvider routeUserDataProvider
 	 */
 	public function testLoggedOutCantAccessUserPage(string $route_name, array $route_params) {

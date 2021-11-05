@@ -12,10 +12,6 @@ class OkResponseUnitTest extends ResponseUnitTest {
 		$this->class = OkResponse::class;
 	}
 
-	public function down() {
-
-	}
-
 	public function testCanConstructWihtoutArguments() {
 		$test_class = $this->class;
 		$response = new $test_class();

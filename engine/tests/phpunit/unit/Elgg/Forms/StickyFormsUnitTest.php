@@ -7,30 +7,30 @@ namespace Elgg\Forms;
  */
 class StickyFormsUnitTest extends \Elgg\UnitTestCase {
 
+	/**
+	 * @var StickyForms
+	 */
+	protected $service;
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public function up() {
-
-	}
-
-	public function down() {
-
+		$this->service = _elgg_services()->stickyForms;
 	}
 
 	public function testIsStickyReturnsTrueForFormsMarkedAsSticky() {
-		$this->markTestIncomplete();
+		$this->assertFalse($this->service->isStickyForm('foo'));
+		
+		$this->service->makeStickyForm('foo');
+		$this->assertTrue($this->service->isStickyForm('foo'));
 	}
 
 	public function testIsStickyReturnsFalseForClearedStickyForms() {
-		$this->markTestIncomplete();
+		$this->service->makeStickyForm('foo');
+		$this->assertTrue($this->service->isStickyForm('foo'));
+		
+		$this->service->clearStickyForm('foo');
+		$this->assertFalse($this->service->isStickyForm('foo'));
 	}
-
-	/**
-	 * It's important to test that this information is actually stored in the
-	 * session because that is a meaningful implementation detail that guarantees
-	 * the "sticky" aspect. If it just stored inputs it in an array cache,
-	 * the information would be lost at the end of the request (i.e. not sticky).
-	 */
-	public function testMakeStickyFormStoresInputsInTheSession() {
-		$this->markTestIncomplete();
-	}
-
 }

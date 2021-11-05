@@ -13,13 +13,6 @@ class NotificationsServiceUnitTest extends UnitTestCase {
 		$this->createApplication();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		
-	}
-	
 	public function testRegisterNotificationMethod() {
 		$service = _elgg_services()->notifications;
 		

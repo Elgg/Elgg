@@ -14,11 +14,6 @@ use Elgg\IntegrationTestCase;
  * @group Cache
  */
 class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
-
-	/**
-	 * @var string
-	 */
-	protected $dbprefix;
 	
 	/**
 	 * @var \ElggUser
@@ -26,14 +21,8 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 	protected $user;
 
 	public function up() {
-		$this->dbprefix = elgg_get_config('dbprefix');
 		$this->user = $this->createUser();
 		elgg()->session->setLoggedInUser($this->user);
-	}
-
-	public function down() {
-		$this->user->delete();
-		elgg()->session->removeLoggedInUser();
 	}
 
 	public function testCreateGetDeleteACL() {
@@ -76,9 +65,22 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 		delete_access_collection($acl_id);
 	}
 
+	public function testAddNonUserToACL() {
+		$acl_id = create_access_collection('test acl');
+
+		$object = $this->createObject();
+		
+		// it should not be possible to add a non user to the ACL
+		$result = add_user_to_access_collection($object->guid, $acl_id);
+		$this->assertFalse($result);
+
+		$object->delete();
+		delete_access_collection($acl_id);
+	}
+
 	public function testUpdateACL() {
 		// another fake user to test with
-		$user = $this->createOne('user');
+		$user = $this->createUser();
 
 		$acl_id = create_access_collection('test acl');
 
@@ -120,7 +122,6 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 		}
 
 		delete_access_collection($acl_id);
-		$user->delete();
 	}
 
 	public function testCanEditACL() {
@@ -184,7 +185,14 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 	public function testAccessCaching() {
 		$access_cache = _elgg_services()->accessCache;
 		
-		$user = $this->createOne('user');
+		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
+		
+		// need to have no hooks and no events for this test
+		$user = $this->createUser();
+		
+		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 
 		$hash = $user->guid . 'get_access_array';
 		
@@ -214,13 +222,11 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 		$flushed_access = _elgg_services()->accessCollections->getAccessArray($user->guid, true);
 		$this->assertNotEquals($manipulated_access, $flushed_access);
 		$this->assertEquals($expected, $flushed_access);
-		
-		$user->delete();
 	}
 
 	public function testAddMemberToACLRemoveMember() {
 		// create a new user to check against
-		$user = $this->createOne('user');
+		$user = $this->createUser();
 
 		$acl_id = create_access_collection('test acl');
 
@@ -382,8 +388,8 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 
 	public function testCanUpdateAccessCollectionMembership() {
 
-		$member1 = $this->createOne('user');
-		$member2 = $this->createOne('user');
+		$member1 = $this->createUser();
+		$member2 = $this->createUser();
 
 		$id = create_access_collection('test_collection', $this->user->guid);
 		$acl = get_access_collection($id);
@@ -407,14 +413,11 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 		$this->assertEquals([$member1->guid], $members);
 
 		$this->assertTrue($acl->hasMember($member1->guid));
-
-		$member1->delete();
-		$member2->delete();
 	}
 
 	public function testCanEditAccessCollection() {
 
-		$member = $this->createOne('user');
+		$member = $this->createUser();
 
 		elgg_call(ELGG_ENFORCE_ACCESS, function() use ($member) {
 			$collection_id = create_access_collection('test', $this->user->guid);
@@ -425,8 +428,6 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 			$this->assertTrue($acl->canEdit($this->user->guid));
 			$this->assertFalse($acl->canEdit($member->guid));
 		});
-		
-		$member->delete();
 	}
 
 }

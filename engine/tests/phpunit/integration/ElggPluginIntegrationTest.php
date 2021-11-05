@@ -11,10 +11,6 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 	 */
 	private $plugins = [];
 
-	public function up() {
-
-	}
-
 	public function down() {
 		$plugin = elgg_get_plugin_from_id('test_plugin');
 		if ($plugin) {
@@ -100,8 +96,6 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 		$this->assertEquals($site->guid, $plugin->container_guid);
 		$this->assertEquals(ACCESS_PUBLIC, $plugin->access_id);
 		$this->assertEquals('bar', $plugin->foo);
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testCanSetAndGetProperties() {

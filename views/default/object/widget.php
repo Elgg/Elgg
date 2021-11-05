@@ -8,19 +8,17 @@
  */
 
 $widget = elgg_extract('entity', $vars);
-if (!($widget instanceof \ElggWidget)) {
+if (!$widget instanceof \ElggWidget) {
 	return;
 }
 
-$handler = $widget->handler;
-
-$widget_instance = preg_replace('/[^a-z0-9-]/i', '-', "elgg-widget-instance-$handler");
-
+$widget_instance = preg_replace('/[^a-z0-9-]/i', '-', "elgg-widget-instance-{$widget->handler}");
 $widget_class = elgg_extract_class($vars, $widget_instance);
-$widget_class[] = $widget->canEdit() ? 'elgg-state-draggable' : 'elgg-state-fixed';
 
 $body = '';
 if ($widget->canEdit()) {
+	$widget_class[] = 'elgg-state-draggable';
+	
 	$settings = elgg_view('object/widget/elements/settings', [
 		'widget' => $widget,
 		'show_access' => elgg_extract('show_access', $vars, true),
@@ -31,12 +29,14 @@ if ($widget->canEdit()) {
 		// store for determining the edit menu item
 		$vars['show_edit'] = false;
 	}
+} else {
+	$widget_class[] = 'elgg-state-fixed';
 }
 
 $body .= elgg_view('object/widget/body', $vars);
 
 echo elgg_view_module('widget', '', $body, [
 	'class' => $widget_class,
-	'id' => "elgg-widget-$widget->guid",
+	'id' => "elgg-widget-{$widget->guid}",
 	'header' => elgg_view('object/widget/header', $vars),
 ]);

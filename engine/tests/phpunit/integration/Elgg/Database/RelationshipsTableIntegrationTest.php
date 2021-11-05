@@ -66,9 +66,6 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship', $object1->guid));
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship2', $object1->guid));
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship3', $object1->guid));
-		
-		$object1->delete();
-		$object2->delete();
 	}
 	
 	/**
@@ -99,9 +96,6 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship', $object1->guid));
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship2', $object1->guid));
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship3', $object1->guid));
-		
-		$object1->delete();
-		$object2->delete();
 	}
 	
 	/**
@@ -132,9 +126,6 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		$this->assertFalse($this->service->check($object2->guid, 'testRelationship', $object1->guid));
 		$this->assertFalse($this->service->check($object2->guid, 'testRelationship2', $object1->guid));
 		$this->assertFalse($this->service->check($object2->guid, 'testRelationship3', $object1->guid));
-		
-		$object1->delete();
-		$object2->delete();
 	}
 	
 	/**
@@ -165,9 +156,6 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		$this->assertFalse($this->service->check($object2->guid, 'testRelationship', $object1->guid));
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship2', $object1->guid));
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship3', $object1->guid));
-		
-		$object1->delete();
-		$object2->delete();
 	}
 	
 	/**
@@ -211,10 +199,6 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship', $object1->guid));
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship2', $object1->guid));
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship3', $object1->guid));
-		
-		$object1->delete();
-		$object2->delete();
-		$group1->delete();
 	}
 	
 	/**
@@ -258,10 +242,6 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship', $object1->guid));
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship2', $object1->guid));
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship3', $object1->guid));
-		
-		$object1->delete();
-		$object2->delete();
-		$group1->delete();
 	}
 	
 	/**
@@ -305,10 +285,6 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship', $object1->guid));
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship2', $object1->guid));
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship3', $object1->guid));
-		
-		$object1->delete();
-		$object2->delete();
-		$group1->delete();
 	}
 	
 	public function testgetAllRelationshipsByGUID() {
@@ -326,9 +302,6 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		$relationships = $this->service->getAll($object1->guid);
 		$this->assertIsArray($relationships);
 		$this->assertCount(3, $relationships);
-		
-		$object1->delete();
-		$object2->delete();
 	}
 	
 	public function testgetAllRelationshipsByGUIDAndInverse() {
@@ -346,8 +319,5 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		$relationships = $this->service->getAll($object1->guid, true);
 		$this->assertIsArray($relationships);
 		$this->assertCount(4, $relationships);
-		
-		$object1->delete();
-		$object2->delete();
 	}
 }

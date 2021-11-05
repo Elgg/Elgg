@@ -269,10 +269,7 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(\ElggUser::class, $user);
 
 		$this->assertEquals($user->guid, elgg_get_logged_in_user_guid());
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
-
 
 	public function testRegistrationSucceedsButExceptionThrownFromHook() {
 
@@ -357,6 +354,5 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		$this->assertTrue($user->isEnabled());
 		
 		$this->assertNotEmpty(elgg_get_logged_in_user_entity());
-		logout($user);
 	}
 }

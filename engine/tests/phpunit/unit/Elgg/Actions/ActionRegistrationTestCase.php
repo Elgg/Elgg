@@ -24,10 +24,6 @@ class ActionRegistrationTestCase extends IntegratedUnitTestCase {
 		_elgg_services()->session->setLoggedInUser($this->getAdmin());
 	}
 
-	public function down() {
-		_elgg_services()->session->removeLoggedInUser();
-	}
-
 	public function actionsProvider() {
 		self::createApplication();
 
@@ -81,6 +77,4 @@ class ActionRegistrationTestCase extends IntegratedUnitTestCase {
 
 		$this->assertInstanceOf(Response::class, $response);
 	}
-
-
 }

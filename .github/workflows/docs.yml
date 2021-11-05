@@ -23,8 +23,8 @@ jobs:
           docs-folder: 'docs/'
           build-command: 'sphinx-build -b latex -nW . _build/latex'
       
-      - name: Build custom (Spanish) language documentation
+      - name: Build custom (French) language documentation
         uses: ammaraskar/sphinx-action@master
         with:
           docs-folder: 'docs/'
-          build-command: 'sphinx-build -b html -D language=es -n . _build/html_es'
+          build-command: 'sphinx-build -b html -D language=fr -n . _build/html_fr'

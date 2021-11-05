@@ -9,18 +9,9 @@ use Elgg\Filesystem\DirectoryUnitTest;
  */
 class FlyTest extends DirectoryUnitTest {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function emptyDirectoryProvider() {
 		return [
 			[Fly::createInMemory()],
 		];
 	}
-
 }

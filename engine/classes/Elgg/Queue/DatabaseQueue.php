@@ -11,10 +11,7 @@ use Elgg\Traits\TimeUsing;
 /**
  * FIFO queue that uses the database for persistence
  *
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
  * @internal
- *
  * @since 1.9.0
  */
 class DatabaseQueue implements \Elgg\Queue\Queue {

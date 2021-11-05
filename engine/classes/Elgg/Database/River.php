@@ -13,8 +13,6 @@ use Elgg\Traits\Database\LegacyQueryOptionsAdapter;
 /**
  * River repository contains methods for fetching/counting river items
  *
- * API IN FLUX Do not access the methods directly, use elgg_get_river() instead
- *
  * @internal
  */
 class River extends Repository {

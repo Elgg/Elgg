@@ -34,8 +34,6 @@ class DelayedEmailQueueTableIntegrationTest extends IntegrationTestCase {
 		foreach ($this->entities as $entity) {
 			$this->table->deleteRecipientRows($entity->guid, 'daily', $dt->getTimestamp());
 			$this->table->deleteRecipientRows($entity->guid, 'weekly', $dt->getTimestamp());
-			
-			$entity->delete();
 		}
 	}
 	

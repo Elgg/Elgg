@@ -10,20 +10,10 @@ use Elgg\IntegrationTestCase;
  */
 class SeedingTest extends IntegrationTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanGetRandomUser() {
 		$user = $this->getRandomUser();
 
 		$this->assertInstanceOf(\ElggUser::class, $user);
-
-		$user->delete();
 	}
 	public function testSeededUserDefaults() {
 
@@ -39,8 +29,6 @@ class SeedingTest extends IntegrationTestCase {
 		$this->assertEquals('user', $user->getSubtype());
 		$this->assertFalse($user->isAdmin());
 		$this->assertFalse($user->isBanned());
-
-		$user->delete();
 	}
 
 	public function testCanCreateUserWithSubtype() {
@@ -50,8 +38,6 @@ class SeedingTest extends IntegrationTestCase {
 
 		$this->assertInstanceOf(\ElggUser::class, $user);
 		$this->assertEquals('test_subtype', $user->getSubtype());
-
-		$user->delete();
 	}
 
 	public function testCanCreateAdminUser() {
@@ -66,8 +52,6 @@ class SeedingTest extends IntegrationTestCase {
 		$user->invalidateCache();
 
 		$this->assertTrue(get_entity($user->guid)->isAdmin());
-
-		$user->delete();
 	}
 
 	public function testCanCreateBannedUser() {
@@ -82,8 +66,6 @@ class SeedingTest extends IntegrationTestCase {
 		$user->invalidateCache();
 
 		$this->assertTrue(get_entity($user->guid)->isBanned());
-
-		$user->delete();
 	}
 
 	public function testCanSetUserLanguage() {
@@ -108,12 +90,11 @@ class SeedingTest extends IntegrationTestCase {
 		$user->invalidateCache();
 
 		$this->assertEquals('af', get_entity($user->guid)->getLanguage());
-
 	}
 
 	public function testCanCreateGroup() {
 
-		$group = $this->createOne('group');
+		$group = $this->createGroup();
 
 		$this->assertNotEmpty($group->name);
 		$this->assertNotEmpty($group->description);
@@ -124,8 +105,6 @@ class SeedingTest extends IntegrationTestCase {
 
 		$this->assertEquals(\ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED, $group->getContentAccessMode());
 		$this->assertTrue($group->isPublicMembership());
-
-		$group->delete();
 	}
 
 	public function testCanCreateObject() {
@@ -138,7 +117,5 @@ class SeedingTest extends IntegrationTestCase {
 		$this->assertTrue($object->container_guid > 0);
 		$this->assertEquals(ACCESS_PUBLIC, $object->access_id);
 		$this->assertNotEmpty($object->getSubtype());
-
-		$object->delete();
 	}
 }

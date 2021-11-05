@@ -83,8 +83,6 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($user->guid, $object->getContainerGUID());
 		$this->assertEquals($user, $object->getContainerEntity());
 		$this->assertEquals(ACCESS_LOGGED_IN, $object->access_id);
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testCanUpdateObject() {
@@ -119,14 +117,10 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 			'row_count' => 1,
 		]);
 
-
-
 		$this->assertTrue($object->save());
 
 		$object = get_entity($object->guid);
 		$this->assertEquals(ACCESS_PUBLIC, $object->access_id);
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testCanCloneObject() {
@@ -192,8 +186,6 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 
 		$object = $this->createObject();
 		$this->assertTrue($object->canComment());
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testCanAddRelationship() {

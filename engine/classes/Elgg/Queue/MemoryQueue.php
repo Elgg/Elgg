@@ -5,10 +5,7 @@ namespace Elgg\Queue;
 /**
  * FIFO queue that is memory based (not persistent)
  *
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
  * @internal
- *
  * @since 1.9.0
  */
 class MemoryQueue implements \Elgg\Queue\Queue {

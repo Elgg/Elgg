@@ -701,11 +701,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		// cache should not be loaded
 		$this->assertNull($cache->load($guids[0]));
 		$this->assertNull($cache->load($guids[1]));
-		
-		// cleanup
-		foreach ($entities as $e) {
-			$e->delete();
-		}
 	}
 	
 	public function testElggGetEntitiesWithPrivateSettingsPreloader() {
@@ -728,10 +723,5 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		// cache should be loaded
 		$this->assertSame(['foo' => 'bar'], $cache->load($guids[0]));
 		$this->assertSame(['foo' => 'bar'], $cache->load($guids[1]));
-		
-		// cleanup
-		foreach ($entities as $e) {
-			$e->delete();
-		}
 	}
 }

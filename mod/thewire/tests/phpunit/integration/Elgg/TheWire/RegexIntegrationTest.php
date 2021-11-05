@@ -12,9 +12,6 @@ class RegexIntegrationTest extends IntegrationTestCase {
 		}
 	}
 
-	public function down() {
-	}
-
 	/**
 	 * Get the link for a user's wire page
 	 *

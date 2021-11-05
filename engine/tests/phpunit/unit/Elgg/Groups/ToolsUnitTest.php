@@ -14,10 +14,6 @@ class ToolsUnitTest extends UnitTestCase {
 		elgg()->group_tools->all()->fill([]);
 	}
 
-	public function down() {
-
-	}
-
 	public function testCanRegisterTools() {
 
 		elgg()->group_tools->register('my-tool', [

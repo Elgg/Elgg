@@ -13,9 +13,4 @@ class NotificationsServiceElggObjectTest extends NotificationsServiceUnitTestCas
 		$this->test_object_class = \ElggObject::class;
 		parent::up();
 	}
-
-	public function down() {
-
-	}
-
 }

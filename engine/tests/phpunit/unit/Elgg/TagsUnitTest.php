@@ -7,14 +7,6 @@ namespace Elgg;
  */
 class TagsUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	/**
 	 * When providing a string to the string_to_tag_array function it should explode it based on a comma and return an array
 	 */
@@ -38,5 +30,4 @@ class TagsUnitTest extends \Elgg\UnitTestCase {
 		$result = string_to_tag_array(1);
 		$this->assertEquals(1, $result);
 	}
-
 }

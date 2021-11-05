@@ -12,7 +12,7 @@ use Elgg\Database\Entities;
 use Elgg\Exceptions\InvalidArgumentException;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Subscription service
  *
  * @internal
  * @since 1.9.0
@@ -133,12 +133,16 @@ class SubscriptionsService {
 	 *     <user guid> => array('email', 'sms', 'ajax'),
 	 * );
 	 *
-	 * @param int   $container_guid GUID of the entity acting as a container
-	 * @param array $methods        Notification methods
+	 * @param int    $container_guid GUID of the entity acting as a container
+	 * @param array  $methods        Notification methods
+	 * @param string $type           (optional) entity type
+	 * @param string $subtype        (optional) entity subtype
+	 * @param string $action         (optional) notification action (eg. 'create')
+	 * @param int    $actor_guid     (optional) Notification event actor to exclude from the database subscriptions
 	 *
 	 * @return array User GUIDs (keys) and their subscription types (values).
 	 */
-	public function getSubscriptionsForContainer(int $container_guid, array $methods) {
+	public function getSubscriptionsForContainer(int $container_guid, array $methods, string $type = null, string $subtype = null, string $action = null, int $actor_guid = 0) {
 
 		if (empty($methods)) {
 			return [];
@@ -146,7 +150,7 @@ class SubscriptionsService {
 
 		$subscriptions = [];
 
-		$records = $this->getSubscriptionRecords([$container_guid], $methods);
+		$records = $this->getSubscriptionRecords([$container_guid], $methods, $type, $subtype, $action, $actor_guid);
 		foreach ($records as $record) {
 			if (empty($record->guid)) {
 				// happens when no records are found

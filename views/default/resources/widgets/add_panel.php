@@ -60,19 +60,17 @@ foreach ($widget_types as $handler => $widget_type) {
 	if (!$widget_type->multiple) {
 		$action .= elgg_format_element('span', ['class' => 'elgg-quiet'], elgg_echo('widget:unavailable'));
 	}
-	$add_link = elgg_http_add_url_query_elements('action/widgets/add', [
-		'handler' => $handler,
-		'page_owner_guid' => $owner_guid,
-		'context' => $context,
-		'show_access' => elgg_extract('show_access', $vars),
-		'default_widgets' => elgg_in_context('default_widgets'),
-	]);
-
+	
 	$action .= elgg_view('output/url', [
 		'class' => 'elgg-button elgg-button-submit elgg-size-small',
 		'text' => elgg_echo('add'),
-		'href' => $add_link,
-		'is_action' => true,
+		'href' => elgg_generate_action_url('widgets/add', [
+			'handler' => $handler,
+			'page_owner_guid' => $owner_guid,
+			'context' => $context,
+			'show_access' => elgg_extract('show_access', $vars),
+			'default_widgets' => elgg_in_context('default_widgets'),
+		]),
 	]);
 	$action .= '</div>';
 

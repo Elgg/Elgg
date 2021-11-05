@@ -30,15 +30,6 @@ class RouteRegistrationServiceIntegrationTest extends IntegrationTestCase {
 		$this->route_service = _elgg_services()->routes;
 		$this->account_service = elgg()->accounts;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		if ($this->user instanceof \ElggUser) {
-			$this->user->delete;
-		}
-	}
 	
 	/**
 	 * @dataProvider validUsernames

@@ -44,11 +44,7 @@ class CreateDefaultWidgetsHandlerIntegrationTest extends IntegrationTestCase {
 	 * @see \Elgg\BaseTestCase::down()
 	 */
 	public function down() {
-		_elgg_services()->session->removeLoggedInUser();
-		
 		elgg_call(ELGG_IGNORE_ACCESS, function() {
-			$this->user->delete();
-			
 			foreach ($this->default_widgets as $widget) {
 				$widget->delete();
 			}

@@ -20,14 +20,6 @@ use Elgg\UnitTestCase;
  */
 class AnnotationRepositoryTest extends UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testCanExecuteCount() {
 		$select = Select::fromTable('annotations', 'n_table');
 		$select->select('COUNT(DISTINCT n_table.id) AS total');
@@ -1037,5 +1029,4 @@ class AnnotationRepositoryTest extends UnitTestCase {
 
 		return $rows;
 	}
-
 }

@@ -12,10 +12,6 @@ class ErrorResponseUnitTest extends ResponseUnitTest {
 		$this->class = ErrorResponse::class;
 	}
 
-	public function down() {
-
-	}
-
 	public function testCanConstructWihtoutArguments() {
 		$test_class = $this->class;
 		$response = new $test_class();

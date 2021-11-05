@@ -44,6 +44,7 @@ use Elgg\Traits\Loggable;
  * @property string        $dbpass
  * @property string        $dbprefix
  * @property bool          $db_disable_query_cache
+ * @property int           $db_query_cache_limit                    Limit for the query cache
  * @property string        $debug
  * @property int           $default_access							Default access
  * @property int           $default_limit							The default "limit" used in listings and queries
@@ -190,6 +191,7 @@ class Config {
 		'comment_box_collapses' => true,
 		'comments_latest_first' => true,
 		'comments_per_page' => 25,
+		'db_query_cache_limit' => 50,
 		'elgg_maintenance_mode' => false,
 		'email_html_part' => true,
 		'email_html_part_images' => 'no',

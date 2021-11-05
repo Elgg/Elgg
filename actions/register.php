@@ -8,7 +8,7 @@ use Elgg\Exceptions\LoginException;
 
 /* @var $request \Elgg\Request */
 
-elgg_make_sticky_form('register');
+elgg_make_sticky_form('register', ['password', 'password2']);
 
 if (!elgg_get_config('allow_registration')) {
 	return elgg_error_response(elgg_echo('registerdisabled'));

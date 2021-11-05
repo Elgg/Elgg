@@ -14,13 +14,6 @@ class ApiUsersTableIntegrationTest extends IntegrationTestCase {
 	public function up() {
 		$this->service = _elgg_services()->apiUsersTable;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		
-	}
 	
 	public function testCreateApiUser() {
 		$api_user = $this->service->createApiUser();

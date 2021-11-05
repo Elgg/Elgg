@@ -23,10 +23,6 @@ class ElggCoreGroupToolTest extends IntegrationTestCase {
 	public function up() {
 		$this->group = $this->createGroup();
 	}
-
-	public function down() {
-		$this->group->delete();
-	}
 	
 	public function testToolRegistration() {
 		elgg()->group_tools->register('test_option');

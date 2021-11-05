@@ -66,8 +66,6 @@ class PageMenuTest extends UnitTestCase {
 		$items = $menu->getItems();
 
 		$this->assertEmpty($items->all());
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testSettingsPageMenuViewedBySelf() {
@@ -84,8 +82,6 @@ class PageMenuTest extends UnitTestCase {
 		$items = $menu->getItems();
 
 		$this->assertTrue($items->has('edit_avatar'));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testSettingsPageMenuViewedByAdmin() {
@@ -105,8 +101,5 @@ class PageMenuTest extends UnitTestCase {
 		$items = $menu->getItems();
 
 		$this->assertTrue($items->has('edit_avatar'));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
-
 }

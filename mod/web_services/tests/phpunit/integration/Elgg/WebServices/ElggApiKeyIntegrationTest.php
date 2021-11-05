@@ -8,23 +8,7 @@ use Elgg\IntegrationTestCase;
  * @group WebServices
  */
 class ElggApiKeyIntegrationTest extends IntegrationTestCase {
-	
-	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::up()
-	 */
-	public function up() {
-		
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::down()
-	 */
-	public function down() {
-		
-	}
-	
+
 	public function testGetKeyFunctions() {
 		
 		/* @var $entity \ElggApiKey */
@@ -86,8 +70,6 @@ class ElggApiKeyIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($entity->delete());
 		
 		$this->assertFalse(_elgg_services()->apiUsersTable->getApiUser($keys->api_key));
-		
-		$session->removeLoggedInUser();
 	}
 	
 	public function testEnableDisableKeys() {

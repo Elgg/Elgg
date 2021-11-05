@@ -9,14 +9,6 @@
  */
 class ElggSessionUnitTest extends \Elgg\UnitTestCase {
 
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
 	public function testStart() {
 		$session = \ElggSession::getMock();
 		$this->assertTrue($session->start());
@@ -60,5 +52,4 @@ class ElggSessionUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertNull($session->getLoggedInUser());
 	}
-
 }
