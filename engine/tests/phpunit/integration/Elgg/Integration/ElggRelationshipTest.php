@@ -43,9 +43,6 @@ class ElggRelationshipTest extends IntegrationTestCase {
 	}
 
 	public function down() {
-
-		elgg()->session->removeLoggedInUser();
-
 		_elgg_services()->events->restore();
 	}
 

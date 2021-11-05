@@ -70,8 +70,6 @@ class ElggApiKeyIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($entity->delete());
 		
 		$this->assertFalse(_elgg_services()->apiUsersTable->getApiUser($keys->api_key));
-		
-		$session->removeLoggedInUser();
 	}
 	
 	public function testEnableDisableKeys() {

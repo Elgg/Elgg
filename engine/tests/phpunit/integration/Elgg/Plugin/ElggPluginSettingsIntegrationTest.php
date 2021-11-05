@@ -78,8 +78,6 @@ class ElggPluginSettingsIntegrationTest extends IntegrationTestCase {
 		
 		$user->removePluginSetting('test_plugin', 'foo1');
 		$this->assertEmpty($user->getPluginSetting('test_plugin', 'foo1'));
-		
-		_elgg_services()->session->removeLoggedInUser();
 	}
 	
 	public function testUnsetAllEntityAndPluginSettings() {
@@ -120,8 +118,6 @@ class ElggPluginSettingsIntegrationTest extends IntegrationTestCase {
 		
 		// verify other private settings still exists
 		$this->assertNotEmpty($plugin->getPriority());
-		
-		_elgg_services()->session->removeLoggedInUser();
 	}
 	
 	public function testUnsetAllEntityAndPluginSettingsHookCallback() {

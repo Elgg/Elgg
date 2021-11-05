@@ -28,10 +28,6 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 		$this->group = $this->createGroup();
 	}
 
-	public function down() {
-		_elgg_services()->session->removeLoggedInUser();
-	}
-
 	public function testCreateDeleteGroupACL() {
 		$acl = $this->group->getOwnedAccessCollection('group_acl');
 

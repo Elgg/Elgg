@@ -37,8 +37,6 @@ class ElggEntityPreloaderIntegrationTest extends \Elgg\IntegrationTestCase {
 
 	public function down() {
 		_elgg_services()->setValue('entityPreloader', $this->realPreloader);
-		
-		elgg()->session->removeLoggedInUser();
 	}
 
 	public function testCanPreloadEntityOwners() {

@@ -38,10 +38,6 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->entity->save();
 	}
 
-	public function down() {
-		elgg()->session->removeLoggedInUser();
-	}
-
 	public function testSubtypePropertyReads() {
 		$this->assertTrue($this->entity->save());
 		$guid = $this->entity->guid;

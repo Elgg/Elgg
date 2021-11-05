@@ -22,7 +22,6 @@ class AttributeWhereClauseUnitTest extends UnitTestCase {
 	}
 
 	public function down() {
-		_elgg_services()->session->removeLoggedInUser();
 		_elgg_services()->hooks->restore();
 	}
 

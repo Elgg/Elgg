@@ -26,16 +26,6 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 	 * @var \ElggObject test object, owned by test user
 	 */
 	protected $object;
-
-	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::down()
-	 */
-	public function down() {
-		if ($this->loggedin_user instanceof \ElggUser) {
-			elgg_get_session()->removeLoggedInUser();
-		}
-	}
 	
 	/**
 	 * @dataProvider routeUserDataProvider

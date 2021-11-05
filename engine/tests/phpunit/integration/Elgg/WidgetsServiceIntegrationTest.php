@@ -10,19 +10,9 @@ use Elgg\IntegrationTestCase;
 class WidgetsServiceIntegrationTest extends IntegrationTestCase {
 
 	/**
-	 * @var \ElggUser[]
-	 */
-	var $users = [];
-
-	public function down() {
-		elgg()->session->removeLoggedInUser();
-	}
-	
-	/**
 	 * Tests if widget type is invalid if a required plugin is not active
 	 */
 	public function testCanGetWidgetWithInActiveRequiredPlugin() {
-		
 		$this->assertTrue(elgg_register_widget_type([
 			'id' => 'test_required_widget',
 			'name' => 'Widget name1',
@@ -63,9 +53,9 @@ class WidgetsServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testCanEditLayoutDefaultBehaviour() {
-		$this->users[] = $owner = $this->createUser();
-		$this->users[] = $editor = $this->createUser();
-		$this->users[] = $admin = $this->createUser();
+		$owner = $this->createUser();
+		$editor = $this->createUser();
+		$admin = $this->createUser();
 		$admin->makeAdmin();
 		
 		// make sure there is no logged in user

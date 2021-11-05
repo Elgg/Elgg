@@ -32,7 +32,6 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 	}
 
 	public function down() {
-		_elgg_services()->session->removeLoggedInUser();
 		_elgg_services()->hooks->restore();
 	}
 
@@ -308,5 +307,4 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 
 		return $this->qb->compare($alias('access_id'), '=', [ACCESS_PUBLIC], ELGG_VALUE_INTEGER);
 	}
-
 }

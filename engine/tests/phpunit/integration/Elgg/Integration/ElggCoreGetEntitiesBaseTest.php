@@ -22,12 +22,4 @@ abstract class ElggCoreGetEntitiesBaseTest extends IntegrationTestCase {
 		$this->user = $this->createUser();
 		elgg()->session->setLoggedInUser($this->user);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::down()
-	 */
-	public function down() {
-		elgg()->session->removeLoggedInUser();
-	}
 }

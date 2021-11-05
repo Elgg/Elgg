@@ -29,14 +29,11 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 	}
 
 	public function down() {
-		$guid = $this->object->guid;
-		elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
+		elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() {
 			elgg_delete_annotations([
-				'guid' => $guid,
+				'guid' => $this->object->guid,
 			]);
 		});
-		
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function createAnnotations($max = 1) {

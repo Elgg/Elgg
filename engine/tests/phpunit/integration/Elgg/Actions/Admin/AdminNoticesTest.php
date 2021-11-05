@@ -16,10 +16,6 @@ class AdminNoticesTest extends ActionResponseTestCase {
 		_elgg_services()->session->setLoggedInUser($this->getAdmin());
 	}
 
-	public function down() {
-		_elgg_services()->session->removeLoggedInUser();
-	}
-
 	public function testDeletesSingleAdminNotice() {
 
 		elgg_delete_admin_notice('zen');
@@ -64,5 +60,4 @@ class AdminNoticesTest extends ActionResponseTestCase {
 
 		$this->assertEquals(0, $count_zens());
 	}
-
 }

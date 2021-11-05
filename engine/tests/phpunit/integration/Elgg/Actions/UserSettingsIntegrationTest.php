@@ -59,8 +59,6 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(OkResponse::class, $response);
 
 		$this->assertErrorMessageEmitted(elgg_echo('LoginException:ChangePasswordFailure'));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testPasswordChangeFailsWithInvalidNewPassword() {
@@ -81,8 +79,6 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(OkResponse::class, $response);
 
 		$this->assertErrorMessageEmitted(elgg_echo('Security:InvalidPasswordLengthException', [elgg()->config->min_password_length]));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testPasswordChangeFailsWithMismatchingNewPassword() {
@@ -103,8 +99,6 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(OkResponse::class, $response);
 
 		$this->assertErrorMessageEmitted(elgg_echo('RegistrationException:PasswordMismatch'));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testPasswordChangeSucceeds() {
@@ -131,8 +125,6 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		$this->assertSystemMessageEmitted(elgg_echo('user:password:success'));
 
 		$this->assertNotEquals($user->password_hash, $old_hash);
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testDisplayNameChangeFails() {
@@ -152,8 +144,6 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		$this->assertErrorMessageEmitted(elgg_echo('user:name:fail'));
 
 		$this->assertEquals($user->name, $name);
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testDisplayNameChangeSucceeds() {
@@ -173,8 +163,6 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		$this->assertSystemMessageEmitted(elgg_echo('user:name:success'));
 
 		$this->assertEquals($new_name, $user->name);
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testUsernameChangeFails() {
@@ -199,8 +187,6 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		$this->assertErrorMessageEmitted(elgg_echo('registration:userexists'));
 
 		$this->assertEquals($user->username, $username);
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testUsernameChangeSucceeds() {
@@ -224,8 +210,6 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		$this->assertSystemMessageEmitted(elgg_echo('user:username:success'));
 
 		$this->assertEquals($new_username, $user->username);
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testLanguageChangeSucceeds() {
@@ -260,8 +244,6 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		$this->assertSystemMessageEmitted(elgg_echo('user:language:success'));
 
 		$this->assertEquals($new_language, $user->getLanguage());
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testEmailChangeFailsWithExistingEmail() {
@@ -283,8 +265,6 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		$this->assertErrorMessageEmitted(elgg_echo('registration:dupeemail'));
 
 		$this->assertEquals($email, $user->email);
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testEmailChangeFailsWithWrongPassword() {
@@ -308,8 +288,6 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		$this->assertErrorMessageEmitted(elgg_echo('email:save:fail:password'));
 
 		$this->assertEquals($email, $user->email);
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testEmailChangeSucceeds() {
@@ -337,8 +315,6 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		$this->assertEquals($new_email, $user->email);
 
 		$this->assertSystemMessageEmitted(elgg_echo('email:save:success'));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testDefaultAccessChangeSucceeds() {
@@ -360,7 +336,5 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		$this->assertSystemMessageEmitted(elgg_echo('user:default_access:success'));
 
 		$this->assertEquals(ACCESS_PRIVATE, get_default_access($user));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 }

@@ -154,7 +154,5 @@ class BootHandlerUnitTest extends UnitTestCase {
 		$app->bootCore();
 
 		$this->assertInstanceOf(CustomUser::class, $app->_services->session->getLoggedInUser());
-
-		$app->_services->session->removeLoggedInUser();
 	}
 }

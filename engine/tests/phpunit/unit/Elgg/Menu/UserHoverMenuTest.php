@@ -61,8 +61,6 @@ class UserHoverMenuTest extends UnitTestCase {
 		$this->assertFalse($items->has('makeadmin'));
 		$this->assertFalse($items->has('removeadmin'));
 		$this->assertFalse($items->has('settings:edit'));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testUserHoverMenuViewedBySelf() {
@@ -84,8 +82,6 @@ class UserHoverMenuTest extends UnitTestCase {
 		$this->assertFalse($items->has('makeadmin'));
 		$this->assertFalse($items->has('removeadmin'));
 		$this->assertFalse($items->has('settings:edit'));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testUserHoverMenuViewedByAdmin() {
@@ -109,8 +105,6 @@ class UserHoverMenuTest extends UnitTestCase {
 		$this->assertTrue($items->has('makeadmin'));
 		$this->assertTrue($items->has('removeadmin'));
 		$this->assertTrue($items->has('settings:edit'));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testBannedUserHoverMenuViewedByAdmin() {
@@ -136,8 +130,6 @@ class UserHoverMenuTest extends UnitTestCase {
 		$this->assertTrue($items->has('makeadmin'));
 		$this->assertTrue($items->has('removeadmin'));
 		$this->assertTrue($items->has('settings:edit'));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testAdminUserHoverMenuViewedByAdmin() {
@@ -163,8 +155,6 @@ class UserHoverMenuTest extends UnitTestCase {
 		$this->assertTrue($items->has('makeadmin'));
 		$this->assertTrue($items->has('removeadmin'));
 		$this->assertTrue($items->has('settings:edit'));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testAdminUserViewedBySelf() {
@@ -188,8 +178,5 @@ class UserHoverMenuTest extends UnitTestCase {
 		$this->assertFalse($items->has('makeadmin'));
 		$this->assertFalse($items->has('removeadmin'));
 		$this->assertFalse($items->has('settings:edit'));
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
-
 }

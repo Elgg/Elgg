@@ -20,10 +20,6 @@ class WriteAccessTest extends \Elgg\IntegrationTestCase {
 		_elgg_services()->session->setLoggedInUser($this->user);
 	}
 
-	public function down() {
-		_elgg_services()->session->removeLoggedInUser();
-	}
-
 	public function testFriendsInWriteAccessArray() {
 		$write_access = get_write_access_array($this->user->guid);
 		

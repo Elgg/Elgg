@@ -21,7 +21,6 @@ class WalledGardenIntegrationTest extends IntegrationTestCase {
 	 */
 	public function down() {
 		_elgg_services()->hooks->restore();
-		_elgg_services()->session->removeLoggedInUser();
 	}
 	
 	protected function createService(Request $request) {

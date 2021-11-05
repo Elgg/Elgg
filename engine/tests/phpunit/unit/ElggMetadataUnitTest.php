@@ -124,8 +124,6 @@ class ElggMetadataUnitTest extends UnitTestCase {
 
 		$this->assertTrue($metadata->save());
 		$this->assertEquals($id, $metadata->id);
-		
-		_elgg_services()->session->removeLoggedInUser();
 	}
 	
 	public function testCanUpdateMetadata() {
@@ -141,8 +139,6 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		
 		$object->title = 'foo2';
 		$this->assertEquals('foo2', $object->title);
-		
-		_elgg_services()->session->removeLoggedInUser();
 	}
 	
 	public function testCantSaveMetadataForNonExisingEntity() {
@@ -188,8 +184,6 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		]);
 
 		$this->assertTrue($metadata->delete());
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testCanExport() {

@@ -28,16 +28,6 @@ class UserPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase 
 	protected $object;
 
 	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::down()
-	 */
-	public function down() {
-		if ($this->loggedin_user instanceof \ElggUser) {
-			elgg_get_session()->removeLoggedInUser();
-		}
-	}
-	
-	/**
 	 * @dataProvider routeUserDataProvider
 	 */
 	public function testLoggedOutCantAccessUserPage(string $route_name, array $route_params) {

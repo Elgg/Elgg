@@ -32,8 +32,6 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 		if ($this->object instanceof \ElggEntity) {
 			$this->object->delete();
 		}
-
-		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testElggGetEntitiesFromMetadata() {

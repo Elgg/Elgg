@@ -26,10 +26,6 @@ class ElggCoreGroupTest extends IntegrationTestCase {
 		$this->user = $this->createUser();
 	}
 
-	public function down() {
-		elgg()->session->removeLoggedInUser();
-	}
-
 	public function testContentAccessMode() {
 		$unrestricted = ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
 		$membersonly = ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY;

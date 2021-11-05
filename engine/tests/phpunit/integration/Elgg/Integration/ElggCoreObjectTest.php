@@ -39,12 +39,9 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function down() {
-		
 		if ($this->entity) {
 			$this->entity->delete();
 		}
-
-		elgg()->session->removeLoggedInUser();
 	}
 
 	public function testElggObjectConstructor() {

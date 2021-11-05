@@ -105,8 +105,6 @@ class ElggTempFileTest extends IntegrationTestCase {
 		$this->assertFalse($temp_file->transfer($user->guid));
 		$this->assertEquals('', $temp_file->getDownloadURL());
 		$this->assertEquals('', $temp_file->getInlineURL());
-		
-		_elgg_services()->session->removeLoggedInUser();
 	}
 	
 	public function testSaveThrowsException() {
