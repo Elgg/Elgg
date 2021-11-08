@@ -16,7 +16,7 @@
  * or the original language string.
  */
 function elgg_echo($message_key, array $args = [], $language = "") {
-	return elgg()->echo($message_key, $args, $language);
+	return elgg()->translator->translate($message_key, $args, $language);
 }
 
 /**

@@ -82,30 +82,30 @@ class Csrf {
 					if ($returnval) {
 						return;
 					} else {
-						throw new CsrfException($request->elgg()->echo('actiongatekeeper:pluginprevents'));
+						throw new CsrfException($request->elgg()->translator->translate('actiongatekeeper:pluginprevents'));
 					}
 				} else {
 					// this is necessary because of #5133
 					if ($request->isXhr()) {
-						throw new CsrfException($request->elgg()->echo(
+						throw new CsrfException($request->elgg()->translator->translate(
 							'js:security:token_refresh_failed',
 							[$this->config->wwwroot]
 						));
 					} else {
-						throw new CsrfException($request->elgg()->echo('actiongatekeeper:timeerror'));
+						throw new CsrfException($request->elgg()->translator->translate('actiongatekeeper:timeerror'));
 					}
 				}
 			} else {
 				// this is necessary because of #5133
 				if ($request->isXhr()) {
-					throw new CsrfException($request->elgg()->echo('js:security:token_refresh_failed', [$this->config->wwwroot]));
+					throw new CsrfException($request->elgg()->translator->translate('js:security:token_refresh_failed', [$this->config->wwwroot]));
 				} else {
-					throw new CsrfException($request->elgg()->echo('actiongatekeeper:tokeninvalid'));
+					throw new CsrfException($request->elgg()->translator->translate('actiongatekeeper:tokeninvalid'));
 				}
 			}
 		} else {
-			$error_msg = $request->elgg()->echo('actiongatekeeper:missingfields');
-			throw new CsrfException($request->elgg()->echo($error_msg));
+			$error_msg = $request->elgg()->translator->translate('actiongatekeeper:missingfields');
+			throw new CsrfException($request->elgg()->translator->translate($error_msg));
 		}
 	}
 

@@ -43,10 +43,8 @@ use ElggSession;
  * @property-read SystemMessagesService $system_messages System messages
  * @property-read ColumnFactory         $table_columns   Table columns
  * @property-read Translator            $translator      Translator
- *
- * @method string echo (string $message_key, array $args = [], string $language = null) Outputs a translated string
  */
-class PublicContainer extends Container {
+class PublicContainer extends Internal {
 
 	/**
 	 * {@inheritdoc}
@@ -66,6 +64,8 @@ class PublicContainer extends Container {
 		if (!empty($proxies[$name])) {
 			$svc = $proxies[$name][0];
 			$method = $proxies[$name][1];
+			
+			elgg_deprecated_notice('Using the proxy elgg()->echo() has been deprecated. Use elgg_echo or elgg()->translator->translate()', '4.1');
 
 			return call_user_func_array([$this->$svc, $method], $arguments);
 		}
