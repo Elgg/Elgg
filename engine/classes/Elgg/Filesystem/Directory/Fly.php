@@ -6,9 +6,10 @@ use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Filesystem\Directory;
 use Elgg\Filesystem\File;
 use Elgg\Structs\Collection;
-use League\Flysystem\Adapter\Local as LocalAdapter;
+use League\Flysystem\Local\LocalFilesystemAdapter as LocalAdapter;
 use League\Flysystem\Filesystem;
-use League\Flysystem\Memory\MemoryAdapter;
+use League\Flysystem\FilesystemException;
+use League\Flysystem\InMemory\InMemoryFilesystemAdapter;
 
 /**
  * A wrapper around Flysystem that implements Elgg's filesystem API.
@@ -62,15 +63,14 @@ final class Fly implements Directory {
 	 */
 	private function isDirectory($path) {
 		$path = $this->getInternalPath($path);
-		return $this->fs->has($path) && $this->fs->get($path)->isDir();
+		return !empty($this->fs->listContents($path)->toArray());
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function isFile($path) {
-		$path = $this->getInternalPath($path);
-		return $this->fs->has($path) && $this->fs->get($path)->isFile();
+		return $this->fs->fileExists($this->getInternalPath($path));
 	}
 
 	/**
@@ -115,7 +115,7 @@ final class Fly implements Directory {
 	 * @return Collection<File|Directory>
 	 */
 	protected function getEntries($path = '', $recursive = true, $types = ['file', 'dir']) {
-		$contents = $this->fs->listContents($this->getInternalPath($path), $recursive);
+		$contents = $this->fs->listContents($this->getInternalPath($path), $recursive)->toArray();
 		if (empty($contents)) {
 			$contents = [];
 		}
@@ -164,7 +164,7 @@ final class Fly implements Directory {
 	 * {@inheritDoc}
 	 */
 	public function putContents($path, $content) {
-		$this->fs->put($this->getInternalPath($path), $content);
+		$this->fs->write($this->getInternalPath($path), $content);
 	}
 
 	/**
@@ -185,7 +185,7 @@ final class Fly implements Directory {
 	 * @return Directory
 	 */
 	public static function createInMemory() {
-		$fs = new Filesystem(new MemoryAdapter());
+		$fs = new Filesystem(new InMemoryFilesystemAdapter());
 		return new self($fs);
 	}
 
