@@ -278,7 +278,7 @@ class ElggGroup extends \ElggEntity {
 	 * @return Tool|null
 	 */
 	protected function getTool($name) {
-		return elgg()->group_tools->group($this)->get($name);
+		return _elgg_services()->group_tools->group($this)->get($name);
 	}
 
 	/**

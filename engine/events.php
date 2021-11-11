@@ -20,7 +20,6 @@ return [
 	'cache:clear:after' => [
 		'system' => [
 			'\Elgg\Cache\EventHandlers::enable' => [],
-			'\Elgg\Cache\EventHandlers::rebuildPublicContainer' => [],
 		],
 	],
 	'cache:clear:before' => [

@@ -14,7 +14,7 @@
  * @since 1.7.0
  */
 function elgg_get_ignore_access(): bool {
-	return elgg()->session->getIgnoreAccess();
+	return _elgg_services()->session->getIgnoreAccess();
 }
 
 /**
@@ -57,7 +57,7 @@ function get_default_access(ElggUser $user = null, array $input_params = []): in
 
 	// user default access if enabled
 	if (_elgg_services()->config->allow_user_default_access) {
-		$user = $user ? $user : elgg()->session->getLoggedInUser();
+		$user = $user ? $user : _elgg_services()->session->getLoggedInUser();
 		if ($user) {
 			$user_access = $user->getPrivateSetting('elgg_default_access');
 			if ($user_access !== null) {

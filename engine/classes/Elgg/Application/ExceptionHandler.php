@@ -62,7 +62,7 @@ class ExceptionHandler {
 
 		$app = Application::$_instance;
 
-		if (!$app || !$app->_services) {
+		if (!$app || !$app->internal_services) {
 			$msg = "Exception loading Elgg core. Check log at time {$exception->timestamp}";
 			$response = Response::create($msg, 500, $headers);
 			$response->prepare($request);
@@ -72,7 +72,7 @@ class ExceptionHandler {
 			return;
 		}
 
-		$services = $app->_services;
+		$services = $app->internal_services;
 		if ($services->responseFactory->getSentResponse() !== false) {
 			return;
 		}

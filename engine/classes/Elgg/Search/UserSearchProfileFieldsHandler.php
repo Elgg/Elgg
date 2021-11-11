@@ -29,7 +29,7 @@ class UserSearchProfileFieldsHandler {
 
 		$value = array_merge($defaults, $value);
 
-		$profile_fields = elgg()->fields->get('user', 'user');
+		$profile_fields = _elgg_services()->fields->get('user', 'user');
 		foreach ($profile_fields as $field) {
 			$value['annotations'][] = "profile:{$field['name']}";
 		}

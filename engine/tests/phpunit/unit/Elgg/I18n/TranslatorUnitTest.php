@@ -27,7 +27,7 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		$this->translator->addTranslation('en', [$this->key => 'Dummy']);
 		$this->translator->addTranslation('es', [$this->key => 'Estúpido']);
 
-		_elgg_services()->setValue('translator', $this->translator);
+		_elgg_services()->set('translator', $this->translator);
 	}
 
 	public function testSetLanguageFromGetParameter() {
@@ -209,11 +209,11 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 
 		$plugin = \ElggPlugin::fromId('languages_plugin', $this->normalizeTestFilePath('mod/'));
 
-		$app->_services->config->boot_cache_ttl = 0;
+		$app->internal_services->config->boot_cache_ttl = 0;
 
 		$plugin->activate();
 
-		$this->assertEquals('Loaded', $app->_services->translator->translate('tests:languages:loaded'));
+		$this->assertEquals('Loaded', $app->internal_services->translator->translate('tests:languages:loaded'));
 	}
 
 	public function testCanLoadPluginTranslationsWithCacheDisabled() {
@@ -226,19 +226,19 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 
 		$plugin = \ElggPlugin::fromId('languages_plugin', $this->normalizeTestFilePath('mod/'));
 
-		$app->_services->config->boot_cache_ttl = 0;
+		$app->internal_services->config->boot_cache_ttl = 0;
 
 		$plugin->activate();
 
-		$this->assertEquals('Loaded', $app->_services->translator->translate('tests:languages:loaded'));
+		$this->assertEquals('Loaded', $app->internal_services->translator->translate('tests:languages:loaded'));
 	}
 	
 	public function testCanGetAllowedLanguages() {
 		$app = $this->createApplication();
-		$app->_services->config->language = 'fr';
-		$app->_services->config->allowed_languages = 'nl';
+		$app->internal_services->config->language = 'fr';
+		$app->internal_services->config->allowed_languages = 'nl';
 		
-		$allowed = $app->_services->translator->getAllowedLanguages();
+		$allowed = $app->internal_services->translator->getAllowedLanguages();
 		$this->assertTrue(in_array('en', $allowed));
 		$this->assertTrue(in_array('nl', $allowed));
 		$this->assertTrue(in_array('fr', $allowed));
@@ -247,18 +247,18 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 	
 	public function testCanNotTranslateUnallowedLanguages() {
 		$app = $this->createApplication();
-		$app->_services->config->language = 'fr';
-		$app->_services->config->allowed_languages = 'nl';
+		$app->internal_services->config->language = 'fr';
+		$app->internal_services->config->allowed_languages = 'nl';
 		
-		$app->_services->translator->addTranslation('en', ["{$this->key}a" => 'Dummy EN']);
-		$app->_services->translator->addTranslation('nl', ["{$this->key}a" => 'Dummy NL']);
-		$app->_services->translator->addTranslation('fr', ["{$this->key}a" => 'Dummy FR']);
-		$app->_services->translator->addTranslation('de', ["{$this->key}a" => 'Dummy DE']); // not allowed
+		$app->internal_services->translator->addTranslation('en', ["{$this->key}a" => 'Dummy EN']);
+		$app->internal_services->translator->addTranslation('nl', ["{$this->key}a" => 'Dummy NL']);
+		$app->internal_services->translator->addTranslation('fr', ["{$this->key}a" => 'Dummy FR']);
+		$app->internal_services->translator->addTranslation('de', ["{$this->key}a" => 'Dummy DE']); // not allowed
 		
-		$this->assertEquals('Dummy EN', $app->_services->translator->translate("{$this->key}a", [], 'en'));
-		$this->assertEquals('Dummy NL', $app->_services->translator->translate("{$this->key}a", [], 'nl'));
-		$this->assertEquals('Dummy FR', $app->_services->translator->translate("{$this->key}a", [], 'fr'));
-		$this->assertEquals('Dummy FR', $app->_services->translator->translate("{$this->key}a", [], 'de'));
+		$this->assertEquals('Dummy EN', $app->internal_services->translator->translate("{$this->key}a", [], 'en'));
+		$this->assertEquals('Dummy NL', $app->internal_services->translator->translate("{$this->key}a", [], 'nl'));
+		$this->assertEquals('Dummy FR', $app->internal_services->translator->translate("{$this->key}a", [], 'fr'));
+		$this->assertEquals('Dummy FR', $app->internal_services->translator->translate("{$this->key}a", [], 'de'));
 	}
 	
 	public function testTranslationArgumentIssues() {

@@ -16,7 +16,7 @@
  * or the original language string.
  */
 function elgg_echo($message_key, array $args = [], $language = "") {
-	return elgg()->translator->translate($message_key, $args, $language);
+	return _elgg_services()->translator->translate($message_key, $args, $language);
 }
 
 /**
@@ -33,7 +33,7 @@ function elgg_echo($message_key, array $args = [], $language = "") {
  * @return bool Depending on success
  */
 function add_translation($country_code, $language_array) {
-	return elgg()->translator->addTranslation($country_code, $language_array);
+	return _elgg_services()->translator->addTranslation($country_code, $language_array);
 }
 
 /**
@@ -42,7 +42,7 @@ function add_translation($country_code, $language_array) {
  * @return string The language code for the site/user or "en" if not set
  */
 function get_current_language() {
-	return elgg()->translator->getCurrentLanguage();
+	return _elgg_services()->translator->getCurrentLanguage();
 }
 
 /**
@@ -59,5 +59,5 @@ function get_current_language() {
  * @since 1.11
  */
 function elgg_language_key_exists($key, $language = 'en') {
-	return elgg()->translator->languageKeyExists($key, $language);
+	return _elgg_services()->translator->languageKeyExists($key, $language);
 }

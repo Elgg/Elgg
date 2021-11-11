@@ -38,7 +38,7 @@ class DatabaseUnseedCommand extends Command {
 
 		set_time_limit(0);
 
-		_elgg_services()->setValue('mailer', new \Laminas\Mail\Transport\InMemory());
+		_elgg_services()->set('mailer', new \Laminas\Mail\Transport\InMemory());
 
 		$options = [
 			'type' => $this->option('type'),

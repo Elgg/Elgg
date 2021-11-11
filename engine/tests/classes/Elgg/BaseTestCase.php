@@ -6,7 +6,7 @@
 namespace Elgg;
 
 use Elgg\Database\Seeds\Seedable;
-use Elgg\Di\ServiceProvider;
+use Elgg\Di\InternalContainer;
 use Elgg\Plugins\PluginTesting;
 use Elgg\Project\Paths;
 use PHPUnit\Framework\TestCase;
@@ -155,19 +155,19 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 		$dt = new \DateTime();
 
-		$app->_services->entityTable->setCurrentTime($dt);
-		$app->_services->metadataTable->setCurrentTime($dt);
-		$app->_services->relationshipsTable->setCurrentTime($dt);
-		$app->_services->annotationsTable->setCurrentTime($dt);
-		$app->_services->usersTable->setCurrentTime($dt);
+		$app->internal_services->entityTable->setCurrentTime($dt);
+		$app->internal_services->metadataTable->setCurrentTime($dt);
+		$app->internal_services->relationshipsTable->setCurrentTime($dt);
+		$app->internal_services->annotationsTable->setCurrentTime($dt);
+		$app->internal_services->usersTable->setCurrentTime($dt);
 
-		$app->_services->session->removeLoggedInUser();
-		$app->_services->session->setIgnoreAccess(false);
-		$app->_services->session->setDisabledEntityVisibility(false);
+		$app->internal_services->session->removeLoggedInUser();
+		$app->internal_services->session->setIgnoreAccess(false);
+		$app->internal_services->session->setDisabledEntityVisibility(false);
 
 		// Make sure the application has been bootstrapped correctly
-		$this->assertInstanceOf(ServiceProvider::class, $app->_services, __METHOD__ . ': ServiceProvider not bootstrapped');
-		$this->assertInstanceOf(Config::class, $app->_services->config, __METHOD__ . ': Config not bootstrapped');
+		$this->assertInstanceOf(InternalContainer::class, $app->internal_services, __METHOD__ . ': InternalContainer not bootstrapped');
+		$this->assertInstanceOf(Config::class, $app->internal_services->config, __METHOD__ . ': Config not bootstrapped');
 	}
 
 	/**

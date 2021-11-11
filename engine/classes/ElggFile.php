@@ -105,7 +105,7 @@ class ElggFile extends ElggObject {
 		}
 		
 		try {
-			return elgg()->mimetype->getMimeType($this->getFilenameOnFilestore());
+			return _elgg_services()->mimetype->getMimeType($this->getFilenameOnFilestore());
 		} catch (ElggInvalidArgumentException $e) {
 			// the file has no file on the filesystem
 			// can happen in tests etc.
@@ -135,7 +135,7 @@ class ElggFile extends ElggObject {
 			return $this->simpletype;
 		}
 		
-		return elgg()->mimetype->getSimpleType($this->getMimeType() ?: '');
+		return _elgg_services()->mimetype->getSimpleType($this->getMimeType() ?: '');
 	}
 
 	/**
@@ -409,9 +409,9 @@ class ElggFile extends ElggObject {
 			
 			try {
 				// try to detect mimetype
-				$mime_type = elgg()->mimetype->getMimeType($this->getFilenameOnFilestore());
+				$mime_type = _elgg_services()->mimetype->getMimeType($this->getFilenameOnFilestore());
 				$this->setMimeType($mime_type);
-				$this->simpletype = elgg()->mimetype->getSimpleType($mime_type);
+				$this->simpletype = _elgg_services()->mimetype->getSimpleType($mime_type);
 			} catch (ElggInvalidArgumentException $e) {
 				// this can fail if the upload hooks returns true, but the file is not present on the filestore
 				// this happens in a unittest

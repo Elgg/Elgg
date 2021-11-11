@@ -62,7 +62,7 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 		]);
 		
 		// keep this inline with the route declaration in elgg-plugin.php
-		$app->_services->routes->register('default:services:rest', [
+		$app->internal_services->routes->register('default:services:rest', [
 			'path' => '/services/api/rest/{view}/{segments?}',
 			'controller' => RestServiceController::class,
 			'defaults' => [
@@ -81,7 +81,7 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 		]);
 		
 		// in some cases there was a failure with missing view
-		$app->_services->views->registerPluginViews($this->plugin->getPath());
+		$app->internal_services->views->registerPluginViews($this->plugin->getPath());
 		
 		// reset all PAM handlers
 		\ElggPAM::$_handlers = [];

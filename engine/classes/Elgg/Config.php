@@ -53,7 +53,6 @@ use Elgg\Traits\Loggable;
  * @property bool          $elgg_load_sync_code
  * @property bool          $elgg_maintenance_mode                   Flag if maintenance mode is enabled
  * @property string        $elgg_settings_file
- * @property bool          $elgg_config_set_secret
  * @property bool          $email_html_part                         Determines if email has a html part
  * @property string        $email_html_part_images                  How to deal with images in html part of email
  * @property int           $email_subject_limit                     The length limit for email subjects, defaults to 998 as described in http://www.faqs.org/rfcs/rfc2822.html

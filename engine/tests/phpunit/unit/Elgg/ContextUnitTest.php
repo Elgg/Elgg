@@ -16,7 +16,7 @@ class ContextUnitTest extends \Elgg\UnitTestCase {
 		$this->context->pop();
 
 		// resetting global state
-		_elgg_services()->setValue('context', $this->context);
+		_elgg_services()->set('context', $this->context);
 	}
 
 	public function testPeekAndPopReturnNullByDefault() {

@@ -105,6 +105,6 @@ abstract class Command extends BaseCommand {
 			return;
 		}
 		
-		elgg()->translator->setCurrentLanguage($language);
+		_elgg_services()->translator->setCurrentLanguage($language);
 	}
 }

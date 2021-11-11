@@ -406,13 +406,24 @@ class Inspector {
 	 * @return array
 	 */
 	public function getServices() {
+		$sources = [
+			\Elgg\Project\Paths::elgg() . 'engine/public_services.php',
+		];
+
+		$plugins = _elgg_services()->plugins->find('active');
+		foreach ($plugins as $plugin) {
+			$plugin->autoload(); // make sure all classes are loaded
+			$sources[] = $plugin->getPath() . \ElggPlugin::PUBLIC_SERVICES_FILENAME;
+		}
+
 		$tree = [];
+		foreach ($sources as $source) {
+			if (is_file($source) && is_readable($source)) {
+				$services = Includer::includeFile($source);
 
-		foreach (_elgg_services()->dic_loader->getDefinitions() as $definition) {
-			$services = Includer::includeFile($definition);
-
-			foreach ($services as $name => $service) {
-				$tree[$name] = [get_class(elgg()->$name), Paths::sanitize($definition, false)];
+				foreach ($services as $name => $service) {
+					$tree[$name] = [get_class(elgg()->$name), Paths::sanitize($source, false)];
+				}
 			}
 		}
 

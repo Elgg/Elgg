@@ -4,7 +4,7 @@ namespace Elgg\Application;
 
 use Elgg\Application;
 use Elgg\Event;
-use Elgg\Mocks\Di\MockServiceProvider;
+use Elgg\Mocks\Di\InternalContainer;
 use Elgg\UnitTestCase;
 use Elgg\Helpers\CustomUser;
 
@@ -19,7 +19,7 @@ class BootHandlerUnitTest extends UnitTestCase {
 	 */
 	function createMockApplication(array $params = []) {
 		$config = self::getTestingConfig();
-		$sp = new MockServiceProvider($config);
+		$sp = InternalContainer::factory(['config' => $config]);
 
 		// persistentLogin service needs this set to instantiate without calling DB
 		$sp->config->getCookieConfig();
@@ -31,7 +31,7 @@ class BootHandlerUnitTest extends UnitTestCase {
 		$sp->config->site->name = 'Testing Site';
 
 		$app = Application::factory(array_merge([
-			'service_provider' => $sp,
+			'internal_services' => $sp,
 			'handle_exceptions' => false,
 			'handle_shutdown' => false,
 			'set_start_time' => false,
@@ -48,7 +48,7 @@ class BootHandlerUnitTest extends UnitTestCase {
 
 		$app->bootCore();
 
-		$this->assertTrue($app->_services->config->boot_complete);
+		$this->assertTrue($app->internal_services->config->boot_complete);
 	}
 
 	public function testCanDoFullBootWithoutDb() {
@@ -59,15 +59,15 @@ class BootHandlerUnitTest extends UnitTestCase {
 
 		$app = $this->createMockApplication();
 
-		$app->_services->setValue('db', null);
+		$app->internal_services->set('db', null);
 
 		$app->bootCore();
 
-		$this->assertTrue($app->_services->config->boot_complete);
+		$this->assertTrue($app->internal_services->config->boot_complete);
 
-		$this->assertFalse($app->_services->config->_service_boot_complete);
-		$this->assertFalse($app->_services->config->_plugins_boot_complete);
-		$this->assertFalse($app->_services->config->_application_boot_complete);
+		$this->assertFalse($app->internal_services->config->_service_boot_complete);
+		$this->assertFalse($app->internal_services->config->_plugins_boot_complete);
+		$this->assertFalse($app->internal_services->config->_application_boot_complete);
 	}
 
 	public function testCanBootServices() {
@@ -77,7 +77,7 @@ class BootHandlerUnitTest extends UnitTestCase {
 		$boot = new BootHandler($app);
 		$boot->bootServices();
 
-		$this->assertTrue($app->_services->config->_service_boot_complete);
+		$this->assertTrue($app->internal_services->config->_service_boot_complete);
 	}
 
 	public function testCanBootPlugins() {
@@ -88,7 +88,7 @@ class BootHandlerUnitTest extends UnitTestCase {
 		$boot->bootServices();
 		$boot->bootPlugins();
 
-		$this->assertTrue($app->_services->config->_plugins_boot_complete);
+		$this->assertTrue($app->internal_services->config->_plugins_boot_complete);
 	}
 
 	public function testCanBootApplication() {
@@ -99,7 +99,7 @@ class BootHandlerUnitTest extends UnitTestCase {
 		$boot->bootPlugins();
 		$boot->bootApplication();
 
-		$this->assertTrue($app->_services->config->_application_boot_complete);
+		$this->assertTrue($app->internal_services->config->_application_boot_complete);
 	}
 
 	public function testBootEventCalls() {
@@ -120,7 +120,7 @@ class BootHandlerUnitTest extends UnitTestCase {
 
 		$app = $this->createMockApplication();
 
-		$app->_services->events->registerHandler('all', 'system', function(Event $event) use (&$calls) {
+		$app->internal_services->events->registerHandler('all', 'system', function(Event $event) use (&$calls) {
 			$type = $event->getName();
 
 			$calls->$type += 1;
@@ -128,7 +128,7 @@ class BootHandlerUnitTest extends UnitTestCase {
 
 		$app->bootCore();
 
-		$this->assertTrue($app->_services->config->boot_complete);
+		$this->assertTrue($app->internal_services->config->boot_complete);
 
 		foreach ($calls as $count) {
 			$this->assertEquals(1, $count);
@@ -139,7 +139,7 @@ class BootHandlerUnitTest extends UnitTestCase {
 
 		$app = $this->createMockApplication();
 
-		$app->_services->events->registerHandler('plugins_load', 'system', function(Event $event) {
+		$app->internal_services->events->registerHandler('plugins_load', 'system', function(Event $event) {
 			elgg_set_entity_class('user', 'custom_user', CustomUser::class);
 		});
 
@@ -147,12 +147,12 @@ class BootHandlerUnitTest extends UnitTestCase {
 			'subtype' => 'custom_user',
 		]);
 
-		$app->_services->session->set('guid', $user->guid);
+		$app->internal_services->session->set('guid', $user->guid);
 
 		$user->invalidateCache();
 
 		$app->bootCore();
 
-		$this->assertInstanceOf(CustomUser::class, $app->_services->session->getLoggedInUser());
+		$this->assertInstanceOf(CustomUser::class, $app->internal_services->session->getLoggedInUser());
 	}
 }

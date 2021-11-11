@@ -7,7 +7,8 @@ use Elgg\Application\ErrorHandler;
 use Elgg\Application\ExceptionHandler;
 use Elgg\Application\ShutdownHandler;
 use Elgg\Database\DbConfig;
-use Elgg\Di\ServiceProvider;
+use Elgg\Di\InternalContainer;
+use Elgg\Di\PublicContainer;
 use Elgg\Exceptions\ConfigurationException;
 use Elgg\Exceptions\Configuration\InstallationException;
 use Elgg\Exceptions\HttpException;
@@ -52,11 +53,18 @@ class Application {
 	const DEFAULT_LIMIT = 10;
 
 	/**
-	 * @var ServiceProvider
+	 * @var InternalContainer
 	 *
 	 * @internal DO NOT USE
 	 */
-	public $_services;
+	public $internal_services;
+
+	/**
+	 * @var PublicContainer
+	 *
+	 * @internal DO NOT USE
+	 */
+	public $public_services;
 
 	/**
 	 * Reference to the loaded Application
@@ -96,10 +104,11 @@ class Application {
 	 *
 	 * Upon construction, no actions are taken to load or boot Elgg.
 	 *
-	 * @param ServiceProvider $services Elgg services provider
+	 * @param InternalContainer $internal_services Elgg internal services
 	 */
-	public function __construct(ServiceProvider $services) {
-		$this->_services = $services;
+	public function __construct(InternalContainer $internal_services) {
+		$this->internal_services = $internal_services;
+		$this->public_services = PublicContainer::factory();
 	}
 
 	/**
@@ -179,7 +188,7 @@ class Application {
 	 * @return \Elgg\Database\DbConfig
 	 */
 	public function getDbConfig() {
-		return $this->_services->dbConfig;
+		return $this->internal_services->dbConfig;
 	}
 
 	/**
@@ -192,7 +201,7 @@ class Application {
 	 * @return \Elgg\Application\Database
 	 */
 	public function getDb() {
-		return $this->_services->publicDb;
+		return $this->internal_services->publicDb;
 	}
 
 	/**
@@ -204,7 +213,7 @@ class Application {
 	 */
 	public static function setGlobalConfig(Application $application) {
 		global $CONFIG;
-		$CONFIG = $application->_services->config;
+		$CONFIG = $application->internal_services->config;
 	}
 
 	/**
@@ -227,7 +236,7 @@ class Application {
 			'handle_exceptions' => true,
 			'handle_shutdown' => true,
 			'request' => null,
-			'service_provider' => null,
+			'internal_services' => null,
 			'set_start_time' => true,
 			'settings_path' => null,
 		];
@@ -251,23 +260,23 @@ class Application {
 
 		self::loadCore();
 
-		if (!$spec['service_provider']) {
+		if (!$spec['internal_services']) {
 			if (!$spec['config']) {
 				$spec['config'] = Config::factory($spec['settings_path']);
 			}
-			$spec['service_provider'] = new ServiceProvider($spec['config']);
+			$spec['internal_services'] = InternalContainer::factory(['config' => $spec['config']]);
 		}
 
 		if ($spec['request']) {
 			if ($spec['request'] instanceof HttpRequest) {
-				$spec['request']->initializeTrustedProxyConfiguration($spec['service_provider']->config);
-				$spec['service_provider']->setValue('request', $spec['request']);
+				$spec['request']->initializeTrustedProxyConfiguration($spec['internal_services']->config);
+				$spec['internal_services']->set('request', $spec['request']);
 			} else {
 				throw new InvalidArgumentException("Given request is not a " . HttpRequest::class);
 			}
 		}
 
-		$app = new self($spec['service_provider']);
+		$app = new self($spec['internal_services']);
 
 		if ($spec['handle_shutdown']) {
 			register_shutdown_function(new ShutdownHandler($app));
@@ -293,7 +302,7 @@ class Application {
 
 		if (self::$_instance) {
 			$app = self::$_instance;
-			$app->_services->setValue('request', $request);
+			$app->internal_services->set('request', $request);
 		} else {
 			try {
 				$app = self::factory([
@@ -322,9 +331,9 @@ class Application {
 	 */
 	public static function respond(ResponseBuilder $builder) {
 		if (self::$_instance) {
-			self::$_instance->_services->responseFactory->respond($builder);
+			self::$_instance->internal_services->responseFactory->respond($builder);
 
-			return self::$_instance->_services->responseFactory->getSentResponse();
+			return self::$_instance->internal_services->responseFactory->getSentResponse();
 		}
 
 		try {
@@ -367,8 +376,8 @@ class Application {
 	 * @throws PageNotFoundException
 	 */
 	public function run() {
-		$config = $this->_services->config;
-		$request = $this->_services->request;
+		$config = $this->internal_services->config;
+		$request = $this->internal_services->request;
 
 		try {
 			if ($request->isCliServer()) {
@@ -384,7 +393,7 @@ class Application {
 
 			if (0 === strpos($request->getElggPath(), '/cache/')) {
 				$config->_disable_session_save = true;
-				$response = $this->_services->cacheHandler->handleRequest($request, $this)->prepare($request);
+				$response = $this->internal_services->cacheHandler->handleRequest($request, $this)->prepare($request);
 				self::getResponseTransport()->send($response);
 
 				return $response;
@@ -401,7 +410,7 @@ class Application {
 
 			if (0 === strpos($request->getElggPath(), '/serve-file/')) {
 				$config->_disable_session_save = true;
-				$response = $this->_services->serveFileHandler->getResponse($request);
+				$response = $this->internal_services->serveFileHandler->getResponse($request);
 				self::getResponseTransport()->send($response);
 
 				return $response;
@@ -414,9 +423,9 @@ class Application {
 			$this->bootCore();
 
 			// re-fetch new request from services in case it was replaced by route:rewrite
-			$request = $this->_services->request;
+			$request = $this->internal_services->request;
 
-			if (!$this->_services->router->route($request)) {
+			if (!$this->internal_services->router->route($request)) {
 				throw new PageNotFoundException();
 			}
 		} catch (HttpException $ex) {
@@ -433,11 +442,11 @@ class Application {
 				'exception' => $ex,
 			];
 
-			$forward_url = $this->_services->hooks->trigger('forward', $ex->getCode(), $hook_params, $forward_url);
+			$forward_url = $this->internal_services->hooks->trigger('forward', $ex->getCode(), $hook_params, $forward_url);
 
 			if ($forward_url && !$request->isXmlHttpRequest()) {
 				if ($ex->getMessage()) {
-					$this->_services->systemMessages->addErrorMessage($ex->getMessage());
+					$this->internal_services->systemMessages->addErrorMessage($ex->getMessage());
 				}
 				$response = new RedirectResponse($forward_url);
 			} else {
@@ -449,7 +458,7 @@ class Application {
 			self::respond($response);
 		}
 
-		return $this->_services->responseFactory->getSentResponse();
+		return $this->internal_services->responseFactory->getSentResponse();
 	}
 
 	/**
@@ -509,8 +518,8 @@ class Application {
 			self::migrate();
 			self::start();
 
-			$request = self::$_instance->_services->request;
-			$signer = self::$_instance->_services->urlSigner;
+			$request = self::$_instance->internal_services->request;
+			$signer = self::$_instance->internal_services->urlSigner;
 
 			$url = $request->getCurrentURL();
 			$query = $request->getParams();
@@ -527,7 +536,7 @@ class Application {
 			$url = elgg_http_add_url_query_elements($base_url, $query);
 
 			if (isset($mac)) {
-				$url = self::$_instance->_services->urlSigner->sign($url);
+				$url = self::$_instance->internal_services->urlSigner->sign($url);
 			}
 
 			$response = new RedirectResponse($url, ELGG_HTTP_PERMANENTLY_REDIRECT);
@@ -614,13 +623,13 @@ class Application {
 	 * @internal
 	 */
 	public function allowPathRewrite() {
-		$request = $this->_services->request;
-		$new = $this->_services->router->allowRewrite($request);
+		$request = $this->internal_services->request;
+		$new = $this->internal_services->router->allowRewrite($request);
 		if ($new === $request) {
 			return;
 		}
 
-		$this->_services->setValue('request', $new);
+		$this->internal_services->set('request', $new);
 	}
 
 	/**
@@ -644,7 +653,7 @@ class Application {
 	 */
 	public static function getRequest() {
 		if (self::$_instance) {
-			return self::$_instance->_services->request;
+			return self::$_instance->internal_services->request;
 		}
 
 		return HttpRequest::createFromGlobals();

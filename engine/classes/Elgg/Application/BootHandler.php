@@ -32,7 +32,7 @@ class BootHandler {
 	 * @return void
 	 */
 	public function __invoke() {
-		$config = $this->app->_services->config;
+		$config = $this->app->internal_services->config;
 
 		if ($config->boot_complete) {
 			return;
@@ -49,7 +49,7 @@ class BootHandler {
 	 * @return void
 	 */
 	public function bootServices() {
-		$config = $this->app->_services->config;
+		$config = $this->app->internal_services->config;
 
 		if ($config->_service_boot_complete) {
 			return;
@@ -58,11 +58,11 @@ class BootHandler {
 		// in case not loaded already
 		$this->app->loadCore();
 
-		if (!$this->app->_services->db) {
+		if (!$this->app->internal_services->db) {
 			// no database boot!
 			elgg_views_boot();
-			$this->app->_services->session->start();
-			$this->app->_services->translator->bootTranslations();
+			$this->app->internal_services->session->start();
+			$this->app->internal_services->translator->bootTranslations();
 
 			\Elgg\Application\SystemEventHandlers::init();
 
@@ -80,8 +80,11 @@ class BootHandler {
 		_elgg_register_events();
 
 		// Connect to database, load language files, load configuration, init session
-		$this->app->_services->boot->boot($this->app->_services);
-
+		$this->app->internal_services->boot->boot($this->app->internal_services);
+		
+		// we don't store langs in boot data because it varies by user
+		$this->app->internal_services->translator->bootTranslations();
+		
 		$config->_service_boot_complete = true;
 		$config->lock('_service_boot_complete');
 	}
@@ -92,24 +95,24 @@ class BootHandler {
 	 * @return void
 	 */
 	public function bootPlugins() {
-		$config = $this->app->_services->config;
+		$config = $this->app->internal_services->config;
 
-		if ($config->_plugins_boot_complete || !$this->app->_services->db) {
+		if ($config->_plugins_boot_complete || !$this->app->internal_services->db) {
 			return;
 		}
 
-		$events = $this->app->_services->events;
+		$events = $this->app->internal_services->events;
 
 		$events->registerHandler('plugins_load:before', 'system', 'elgg_views_boot');
 		$events->registerHandler('plugins_load:after', 'system', function() {
-			_elgg_session_boot($this->app->_services);
+			_elgg_session_boot($this->app->internal_services);
 		});
 
 		$events->registerHandler('plugins_boot', 'system', '_elgg_register_routes');
 		$events->registerHandler('plugins_boot', 'system', '_elgg_register_actions');
 
 		// Setup all boot sequence handlers for active plugins
-		$this->app->_services->plugins->build();
+		$this->app->internal_services->plugins->build();
 
 		// Register plugin classes, entities etc
 		// Call PluginBootstrap::load()
@@ -130,15 +133,15 @@ class BootHandler {
 	 * @return void
 	 */
 	public function bootApplication() {
-		$config = $this->app->_services->config;
+		$config = $this->app->internal_services->config;
 
-		if ($config->_application_boot_complete || !$this->app->_services->db) {
+		if ($config->_application_boot_complete || !$this->app->internal_services->db) {
 			return;
 		}
 
-		$events = $this->app->_services->events;
+		$events = $this->app->internal_services->events;
 
-		$this->app->_services->views->clampViewtypeToPopulatedViews();
+		$this->app->internal_services->views->clampViewtypeToPopulatedViews();
 		$this->app->allowPathRewrite();
 
 		// Complete the boot process for both engine and plugins
@@ -149,7 +152,7 @@ class BootHandler {
 
 		// Tell the access functions the system has booted, plugins are loaded,
 		// and the user is logged in so it can start caching
-		$this->app->_services->accessCollections->markInitComplete();
+		$this->app->internal_services->accessCollections->markInitComplete();
 		
 		// System loaded and ready
 		$events->triggerSequence('ready', 'system');

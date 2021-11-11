@@ -248,7 +248,7 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 			'register' => '1',
 			'username' => 'foo',
 		]);
-		$request = new \Elgg\Request(_elgg_services()->dic, $http_request);
+		$request = new \Elgg\Request(elgg(), $http_request);
 		
 		$api = $this->getApiMethod();
 		$api->params = [
@@ -284,7 +284,7 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 		$http_request = $this->prepareHttpRequest('foo', 'GET', [
 			'username' => 'foo',
 		]);
-		$request = new \Elgg\Request(_elgg_services()->dic, $http_request);
+		$request = new \Elgg\Request(elgg(), $http_request);
 		
 		$api = $this->getApiMethod();
 		$api->params = [
@@ -308,7 +308,7 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 		$http_request = $this->prepareHttpRequest('foo', 'GET', [
 			'username' => 'foo',
 		]);
-		$request = new \Elgg\Request(_elgg_services()->dic, $http_request);
+		$request = new \Elgg\Request(elgg(), $http_request);
 		
 		$api = $this->getApiMethod();
 		$api->supply_associative = true;
@@ -328,7 +328,7 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 			'password' => 'bar',
 			'username' => 'foo',
 		]);
-		$request = new \Elgg\Request(_elgg_services()->dic, $http_request);
+		$request = new \Elgg\Request(elgg(), $http_request);
 		
 		$api = new ApiMethod('foo', function(string $username, string $password) {
 			$this->assertEquals('foo', $username);
@@ -355,7 +355,7 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 			'password' => 'bar',
 			'username' => 'foo',
 		]);
-		$request = new \Elgg\Request(_elgg_services()->dic, $http_request);
+		$request = new \Elgg\Request(elgg(), $http_request);
 		
 		$api = new ApiMethod('foo', function(array $params) {
 			$expected = [
@@ -386,7 +386,7 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 			'password' => 'bar',
 			'username' => 'foo',
 		]);
-		$request = new \Elgg\Request(_elgg_services()->dic, $http_request);
+		$request = new \Elgg\Request(elgg(), $http_request);
 		
 		$api = new ApiMethod('foo', 'not_callable');
 		
@@ -399,7 +399,7 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 			'password' => 'bar',
 			'username' => 'foo',
 		]);
-		$request = new \Elgg\Request(_elgg_services()->dic, $http_request);
+		$request = new \Elgg\Request(elgg(), $http_request);
 		
 		$api = new ApiMethod('foo', function(string $username, string $password) {
 			$this->assertEquals('foo', $username);

@@ -39,7 +39,7 @@ trait Loggable {
 		if ($this->logger) {
 			return $this->logger;
 		} else if (Application::$_instance) {
-			return Application::$_instance->_services->logger;
+			return Application::$_instance->internal_services->logger;
 		}
 
 		// Application hasn't been bootstrapped
