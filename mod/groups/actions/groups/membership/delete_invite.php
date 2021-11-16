@@ -13,8 +13,12 @@ $group = elgg_call(ELGG_IGNORE_ACCESS, function() use ($group_guid) {
 	return get_entity($group_guid);
 });
 
-if (!$user && !($group instanceof \ElggGroup)) {
-	return elgg_error_response();
+if (!$user && !$group instanceof \ElggGroup) {
+	return elgg_error_response(elgg_echo('error:missing_data'));
+}
+
+if (!$user->canEdit() && !$group->canEdit()) {
+	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 
 // If join request made

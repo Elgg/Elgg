@@ -9,8 +9,12 @@ $group_guid = (int) get_input('group_guid');
 $user = get_user($user_guid);
 $group = get_entity($group_guid);
 
-if (!$user || !($group instanceof \ElggGroup)) {
+if (!$user || !$group instanceof \ElggGroup) {
 	return elgg_error_response(elgg_echo('groups:cantleave'));
+}
+
+if (!$user->canEdit() && !$group->canEdit()) {
+	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 
 if ($group->getOwnerGUID() === $user->guid) {
