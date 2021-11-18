@@ -5,16 +5,16 @@
 # 
 # Translators:
 # Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2020
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-10 09:40+0200\n"
+"POT-Creation-Date: 2021-08-03 11:15+0200\n"
 "PO-Revision-Date: 2017-12-28 11:59+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -389,18 +389,25 @@ msgid ""
 "will need to make sure that the appropriate contexts and permissions are "
 "configured:"
 msgstr ""
+"Si vous utilisez RHEL, CentOS ou toute autre distribution avec SELinux "
+"activé, vous devrez vous assurer que les contextes et les autorisations "
+"appropriés sont configurés :"
 
 #: ../../intro/install.rst:46
 msgid ""
 "Give your project root, your data directory, and all of their children the "
 "``httpd_sys_rw_content_t`` context"
 msgstr ""
+"Donnez à la racine de votre projet, à votre répertoire de données et à tous "
+"leurs enfants le contexte ``httpd_sys_rw_content_t``"
 
 #: ../../intro/install.rst:47
 msgid ""
 "Enable the ``httpd_can_network_connect`` and "
 "``httpd_can_network_connect_db`` booleans"
 msgstr ""
+"Activez les booléens ``httpd_can_network_connect`` et "
+"``httpd_can_network_connect_db``"
 
 #: ../../intro/install.rst:53
 msgid "Browser support policy"
@@ -1047,6 +1054,8 @@ msgid ""
 "After this error, every interaction with the web interface results in a "
 "error 500 (Internal Server Error)"
 msgstr ""
+"Après cette erreur, toute interaction avec l'interface web produit une "
+"erreur 500 (Erreur interne du serveur - Internal Server Error)"
 
 #: ../../intro/install.rst:331
 msgid ""
