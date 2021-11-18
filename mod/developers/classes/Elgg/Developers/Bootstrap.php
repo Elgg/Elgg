@@ -100,7 +100,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 				$translator->addTranslation($country_code, $language_array);
 			}
 			
-			_elgg_services()->setValue('translator', $translator);
+			_elgg_services()->set('translator', $translator);
 			elgg()->set('translator', $translator);
 		}
 	

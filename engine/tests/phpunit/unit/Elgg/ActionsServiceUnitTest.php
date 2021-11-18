@@ -60,7 +60,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 			'request' => $request,
 		]);
 
-		$svc = $app->_services;
+		$svc = $app->internal_services;
 
 		$svc->session->start();
 

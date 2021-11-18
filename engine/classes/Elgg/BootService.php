@@ -2,8 +2,7 @@
 
 namespace Elgg;
 
-use Elgg\Database\SiteSecret;
-use Elgg\Di\ServiceProvider;
+use Elgg\Di\InternalContainer;
 use Elgg\Traits\Cacheable;
 use Elgg\Traits\Debug\Profilable;
 use Psr\Log\LogLevel;
@@ -43,12 +42,12 @@ class BootService {
 	/**
 	 * Boots the engine
 	 *
-	 * @param ServiceProvider $services Services
+	 * @param InternalContainer $services Internal services
 	 *
 	 * @return void
 	 * @throws \RuntimeException
 	 */
-	public function boot(ServiceProvider $services) {
+	public function boot(InternalContainer $services) {
 		$db = $services->db;
 		$config = $services->config;
 
@@ -67,15 +66,9 @@ class BootService {
 
 		// copy all table values into config
 		$config->mergeValues($services->configTable->getAll());
-
-		if (!$config->elgg_config_set_secret) {
-			$site_secret = SiteSecret::fromConfig($config);
-			if ($site_secret) {
-				$services->setValue('siteSecret', $site_secret);
-			} else {
-				throw new \RuntimeException('The site secret is not set.');
-			}
-		}
+		
+		// prevent some data showing up in $config
+		unset($config->{\Elgg\Database\SiteSecret::CONFIG_KEY});
 
 		$installed = isset($config->installed);
 
@@ -117,9 +110,6 @@ class BootService {
 				$config->system_cache_loaded = true;
 			}
 		}
-
-		// we don't store langs in boot data because it varies by user
-		$services->translator->bootTranslations();
 	}
 
 	/**

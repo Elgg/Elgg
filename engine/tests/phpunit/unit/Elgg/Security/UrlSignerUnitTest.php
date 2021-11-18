@@ -20,7 +20,7 @@ class SignedUrlUnitTest extends \Elgg\UnitTestCase {
 		$this->service = new UrlSigner();
 		$this->url = '/foo?a=b&c[]=1&c[]=2&c[]=0,5&_d=@username&e=%20';
 
-		_elgg_services()->setValue('session', \ElggSession::getMock());
+		_elgg_services()->set('session', \ElggSession::getMock());
 	}
 	
 	public function testCanSignUrl() {

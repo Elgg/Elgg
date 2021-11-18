@@ -487,7 +487,7 @@ trait Seeding {
 		}
 
 		if ($allow_create) {
-			$profile_fields_config = elgg()->fields->get('user', 'user');
+			$profile_fields_config = _elgg_services()->fields->get('user', 'user');
 			$profile_fields = [];
 			foreach ($profile_fields_config as $field) {
 				$profile_fields[$field['name']] = $field['#type'];
@@ -529,7 +529,7 @@ trait Seeding {
 		}
 
 		if ($allow_create) {
-			$profile_fields_config = elgg()->fields->get('group', 'group');
+			$profile_fields_config = _elgg_services()->fields->get('group', 'group');
 			$profile_fields = [];
 			foreach ($profile_fields_config as $field) {
 				$profile_fields[$field['name']] = $field['#type'];
@@ -542,7 +542,7 @@ trait Seeding {
 				'membership' => $this->getRandomGroupMembership(),
 			], [
 				'profile_fields' => $profile_fields,
-				'group_tool_options' => elgg()->group_tools->all(),
+				'group_tool_options' => _elgg_services()->group_tools->all(),
 			]);
 		}
 		
@@ -587,7 +587,7 @@ trait Seeding {
 
 		$validate = function($username) {
 			try {
-				elgg()->accounts->assertValidUsername($username, true);
+				_elgg_services()->accounts->assertValidUsername($username, true);
 				return true;
 			} catch (RegistrationException $e) {
 				return false;
@@ -618,7 +618,7 @@ trait Seeding {
 
 		$validate = function($email) {
 			try {
-				elgg()->accounts->assertValidEmail($email, true);
+				_elgg_services()->accounts->assertValidEmail($email, true);
 				return true;
 			} catch (RegistrationException $e) {
 				return false;

@@ -72,12 +72,12 @@ class DateTime extends PHPDateTime {
 		}
 		
 		// switch locale
-		$current_locale = elgg()->locale->setLocaleFromLanguageKey(LC_TIME, $language);
+		$current_locale = _elgg_services()->localeService->setLocaleFromLanguageKey(LC_TIME, $language);
 		
 		$result = strftime($correct_format, $this->getTimestamp());
 		
 		// restore locale
-		elgg()->locale->setLocale(LC_TIME, $current_locale);
+		_elgg_services()->localeService->setLocale(LC_TIME, $current_locale);
 		
 		if ($result === false) {
 			elgg_log("Unable to generate locale representation for format: '{$correct_format}', using non-locale version", 'INFO');

@@ -235,7 +235,7 @@ Testing interactions between services
 
 Ideally your tests would construct your own isolated object graphs for direct manipulation, but this isn't always possible.
 
-If your test relies on Elgg's Service Provider (``_elgg_services()`` returns a ``Elgg\Di\ServiceProvider``), realize that it maintains a singleton instance for most services it hands out, and many services keep their own local references to these services as well.
+If your test relies on Elgg's Internal Services (``_elgg_services()`` returns a ``Elgg\Di\InternalContainer``), realize that it maintains a singleton instance for most services it hands out, and many services keep their own local references to these services as well.
 
 Due to these local references, replacing services on the SP within a test often will not have the desired effect. Instead, you may need to use functionality baked into the services themselves:
 

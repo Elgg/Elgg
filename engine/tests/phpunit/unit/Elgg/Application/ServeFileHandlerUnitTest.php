@@ -22,7 +22,7 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
 		$session = \ElggSession::getMock();
-		_elgg_services()->setValue('session', $session);
+		_elgg_services()->set('session', $session);
 		_elgg_services()->session->start();
 
 		$this->handler = _elgg_services()->serveFileHandler;

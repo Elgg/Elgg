@@ -17,7 +17,7 @@ class ServeIconIntegrationTest extends IntegrationTestCase {
 		]);
 		
 		// keep this inline with the route declaration in /engine/routes.php
-		$app->_services->routes->register('serve-icon', [
+		$app->internal_services->routes->register('serve-icon', [
 			'path' => '/serve-icon/{guid}/{size}',
 			'controller' => \Elgg\Controllers\ServeIcon::class,
 			'walled' => false,

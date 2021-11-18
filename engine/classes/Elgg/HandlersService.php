@@ -2,7 +2,6 @@
 
 namespace Elgg;
 
-use Elgg\Di\DiContainer;
 use Elgg\HooksRegistrationService\Event as HrsEvent;
 use Elgg\HooksRegistrationService\Hook as HrsHook;
 use Elgg\Traits\Loggable;
@@ -18,6 +17,8 @@ use Elgg\Traits\Loggable;
 class HandlersService {
 	
 	use Loggable;
+	
+	protected const CLASS_NAME_PATTERN_53 = '/^(\\\\?[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*)+$/i';
 	
 	/**
 	 * Call the handler with the hook/event object
@@ -91,7 +92,7 @@ class HandlersService {
 		}
 
 		if (is_string($callable)
-			&& preg_match(DiContainer::CLASS_NAME_PATTERN_53, $callable)
+			&& preg_match(self::CLASS_NAME_PATTERN_53, $callable)
 			&& class_exists($callable)) {
 			$callable = new $callable;
 		}

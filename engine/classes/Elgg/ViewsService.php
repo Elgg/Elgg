@@ -89,7 +89,7 @@ class ViewsService {
 	 * @param PluginHooksService $hooks   The hooks service
 	 * @param \Elgg\Http\Request $request Http Request
 	 */
-	public function __construct(PluginHooksService $hooks, HttpRequest $request = null) {
+	public function __construct(PluginHooksService $hooks, HttpRequest $request) {
 		$this->hooks = $hooks;
 		$this->request = $request;
 	}

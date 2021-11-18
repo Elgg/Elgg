@@ -28,7 +28,7 @@ class GroupSearchProfileFieldsHandler {
 
 		$value = array_merge($defaults, $value);
 
-		$profile_fields = elgg()->fields->get('group', 'group');
+		$profile_fields = _elgg_services()->fields->get('group', 'group');
 		foreach ($profile_fields as $field) {
 			$value['metadata'][] = $field['name'];
 		}

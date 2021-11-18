@@ -2,7 +2,7 @@
 
 namespace Elgg;
 
-use Elgg\Mocks\Di\MockServiceProvider;
+use Elgg\Mocks\Di\InternalContainer;
 use Psr\Log\LogLevel;
 
 /**
@@ -25,8 +25,8 @@ abstract class IntegratedUnitTestCase extends UnitTestCase {
 			Application::setInstance($app);
 
 			// Invalidate caches
-			$app->_services->dataCache->clear();
-			$app->_services->sessionCache->clear();
+			$app->internal_services->dataCache->clear();
+			$app->internal_services->sessionCache->clear();
 
 			return $app;
 		}
@@ -34,7 +34,7 @@ abstract class IntegratedUnitTestCase extends UnitTestCase {
 		Application::setInstance(null);
 
 		$config = self::getTestingConfig();
-		$sp = new MockServiceProvider($config);
+		$sp = InternalContainer::factory(['config' => $config]);
 
 		// persistentLogin service needs this set to instantiate without calling DB
 		$sp->config->getCookieConfig();
@@ -42,7 +42,7 @@ abstract class IntegratedUnitTestCase extends UnitTestCase {
 		$sp->config->system_cache_enabled = true;
 
 		$app = Application::factory(array_merge([
-			'service_provider' => $sp,
+			'internal_services' => $sp,
 			'handle_exceptions' => false,
 			'handle_shutdown' => false,
 			'set_start_time' => false,
@@ -51,9 +51,9 @@ abstract class IntegratedUnitTestCase extends UnitTestCase {
 		Application::setInstance($app);
 
 		if (in_array('--verbose', $_SERVER['argv'])) {
-			$app->_services->logger->setLevel(LogLevel::DEBUG);
+			$app->internal_services->logger->setLevel(LogLevel::DEBUG);
 		} else {
-			$app->_services->logger->setLevel(LogLevel::ERROR);
+			$app->internal_services->logger->setLevel(LogLevel::ERROR);
 		}
 
 		_elgg_services()->config->site = new \ElggSite((object) [
@@ -62,8 +62,8 @@ abstract class IntegratedUnitTestCase extends UnitTestCase {
 
 		$app->bootCore();
 
-		$app->_services->events->unregisterHandler('all', 'all', 'Elgg\SystemLog\Logger::listen');
-		$app->_services->events->unregisterHandler('log', 'systemlog', 'Elgg\SystemLog\Logger::log');
+		$app->internal_services->events->unregisterHandler('all', 'all', 'Elgg\SystemLog\Logger::listen');
+		$app->internal_services->events->unregisterHandler('log', 'systemlog', 'Elgg\SystemLog\Logger::log');
 
 		self::$_testing_app = $app;
 

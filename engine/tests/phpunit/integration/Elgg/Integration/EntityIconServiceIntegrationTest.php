@@ -12,7 +12,7 @@ class EntityIconServiceIntegrationTest extends IntegrationTestCase {
 	public function testDetectCroppingCoordinates($params, $expected_value) {
 		$request = $this->prepareHttpRequest('', 'POST', $params);
 		
-		_elgg_services()->setValue('request', $request);
+		_elgg_services()->set('request', $request);
 		
 		$reflector = new \ReflectionClass(_elgg_services()->iconService);
 		$method = $reflector->getMethod('detectCroppingCoordinates');

@@ -27,7 +27,7 @@ class Groups extends Seed {
 
 		$exclude = [];
 
-		$profile_fields_config = elgg()->fields->get('group', 'group');
+		$profile_fields_config = _elgg_services()->fields->get('group', 'group');
 		$profile_fields = [];
 		foreach ($profile_fields_config as $field) {
 			$profile_fields[$field['name']] = $field['#type'];
@@ -42,7 +42,7 @@ class Groups extends Seed {
 					'membership' => $this->getRandomGroupMembership(),
 				], [
 					'profile_fields' => $profile_fields,
-					'group_tool_options' => elgg()->group_tools->all(),
+					'group_tool_options' => _elgg_services()->group_tools->all(),
 				]);
 			} else {
 				$group = $this->getRandomGroup($exclude);

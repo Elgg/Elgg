@@ -23,7 +23,7 @@ class AdminPluginsRefreshIntegrationTest extends IntegrationTestCase {
 		]);
 		
 		// keep this inline with the route declaration in /engine/routes.php
-		$app->_services->routes->register('admin_plugins_refresh', [
+		$app->internal_services->routes->register('admin_plugins_refresh', [
 			'path' => '/admin_plugins_refresh',
 			'controller' => \Elgg\Controllers\AdminPluginsRefresh::class,
 			'middleware' => [

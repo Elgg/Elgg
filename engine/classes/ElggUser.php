@@ -94,14 +94,14 @@ class ElggUser extends \ElggEntity {
 				return;
 			case 'email':
 				try {
-					elgg()->accounts->assertValidEmail($value);
+					_elgg_services()->accounts->assertValidEmail($value);
 				} catch (RegistrationException $ex) {
 					throw new InvalidParameterException($ex->getMessage(), $ex->getCode(), $ex);
 				}
 				break;
 			case 'username':
 				try {
-					elgg()->accounts->assertValidUsername($value);
+					_elgg_services()->accounts->assertValidUsername($value);
 				} catch (RegistrationException $ex) {
 					throw new InvalidParameterException($ex->getMessage(), $ex->getCode(), $ex);
 				}

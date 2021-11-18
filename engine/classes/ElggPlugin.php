@@ -16,6 +16,7 @@ class ElggPlugin extends ElggObject {
 
 	const PRIORITY_SETTING_NAME = 'elgg:internal:priority';
 	const STATIC_CONFIG_FILENAME = 'elgg-plugin.php';
+	const PUBLIC_SERVICES_FILENAME = 'elgg-services.php';
 	
 	use ElggLoggable;
 	
@@ -465,7 +466,7 @@ class ElggPlugin extends ElggObject {
 		$delete->andWhere($delete->compare('name', 'like', "plugin:%_setting:{$this->getID()}:%", ELGG_VALUE_STRING));
 		
 		try {
-			elgg()->db->deleteData($delete);
+			_elgg_services()->db->deleteData($delete);
 			_elgg_services()->dataCache->private_settings->clear();
 			
 			$result &= true;
@@ -479,7 +480,7 @@ class ElggPlugin extends ElggObject {
 		$params = [
 			'entity' => $this,
 		];
-		return (bool) elgg()->hooks->trigger('remove:settings', 'plugin', $params, $result);
+		return (bool) _elgg_services()->hooks->trigger('remove:settings', 'plugin', $params, $result);
 	}
 	
 	/**
@@ -609,14 +610,6 @@ class ElggPlugin extends ElggObject {
 				elgg_invalidate_caches();
 
 				$this->register();
-				
-				$services = $this->getPath() . 'elgg-services.php';
-				if (is_file($services) && is_readable($services)) {
-					// reset dic so new services can be detected
-					_elgg_services()->reset('dic_loader');
-					_elgg_services()->reset('dic_builder');
-					_elgg_services()->reset('dic');
-				}
 				
 				// directly load languages to have them available during runtime
 				$this->loadLanguages();
@@ -776,10 +769,10 @@ class ElggPlugin extends ElggObject {
 				]);
 			}
 
-			return new $bootstrap($this, _elgg_services()->dic);
+			return new $bootstrap($this, elgg());
 		}
 
-		return new \Elgg\DefaultPluginBootstrap($this, _elgg_services()->dic);
+		return new \Elgg\DefaultPluginBootstrap($this, elgg());
 	}
 
 	/**
@@ -819,6 +812,7 @@ class ElggPlugin extends ElggObject {
 	public function register(): void {
 		$this->autoload();
 
+		$this->registerPublicServices();
 		$this->activateEntities();
 		$this->registerLanguages();
 		$this->registerViews();
@@ -938,6 +932,23 @@ class ElggPlugin extends ElggObject {
 				'message' => elgg_echo('ElggPlugin:activate:BadConfigFormat'),
 				'plugin' => $this,
 			]);
+		}
+	}
+
+	/**
+	 * Registers the plugin public services
+	 *
+	 * @return void
+	 */
+	protected function registerPublicServices(): void {
+		$services_path = $this->getPath() . self::PUBLIC_SERVICES_FILENAME;
+		if (!is_file($services_path)) {
+			return;
+		}
+
+		$services = Includer::includeFile($services_path);
+		foreach ($services as $name => $definition) {
+			elgg()->set($name, $definition);
 		}
 	}
 

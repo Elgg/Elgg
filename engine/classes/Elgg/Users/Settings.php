@@ -50,7 +50,7 @@ class Settings {
 			$current_password = $request->getParam('current_password', null, false);
 	
 			try {
-				elgg()->accounts->assertCurrentPassword($user, $current_password);
+				_elgg_services()->accounts->assertCurrentPassword($user, $current_password);
 			} catch (RegistrationException $e) {
 				$request->validation()->fail('password', '', elgg_echo('LoginException:ChangePasswordFailure'));
 	
@@ -59,7 +59,7 @@ class Settings {
 		}
 	
 		try {
-			elgg()->accounts->assertValidPassword([$password, $password2]);
+			_elgg_services()->accounts->assertValidPassword([$password, $password2]);
 		} catch (RegistrationException $e) {
 			$request->validation()->fail('password', '', $e->getMessage());
 	
@@ -166,7 +166,7 @@ class Settings {
 	
 		// check if username is valid and does not exist
 		try {
-			elgg()->accounts->assertValidUsername($username, true);
+			_elgg_services()->accounts->assertValidUsername($username, true);
 		} catch (RegistrationException $ex) {
 			$request->validation()->fail('username', $username, $ex->getMessage());
 	
@@ -226,7 +226,7 @@ class Settings {
 			return;
 		}
 		
-		if (!in_array($language, elgg()->translator->getAllowedLanguages())) {
+		if (!in_array($language, _elgg_services()->translator->getAllowedLanguages())) {
 			return;
 		}
 	
@@ -269,17 +269,17 @@ class Settings {
 		}
 	
 		try {
-			elgg()->accounts->assertValidEmail($email, true);
+			_elgg_services()->accounts->assertValidEmail($email, true);
 		} catch (RegistrationException $ex) {
 			$request->validation()->fail('email', $email, $ex->getMessage());
 	
 			return false;
 		}
 	
-		if (elgg()->config->security_email_require_password && $user->guid === $actor->guid) {
+		if (_elgg_services()->config->security_email_require_password && $user->guid === $actor->guid) {
 			try {
 				// validate password
-				elgg()->accounts->assertCurrentPassword($user, $request->getParam('email_password'));
+				_elgg_services()->accounts->assertCurrentPassword($user, $request->getParam('email_password'));
 			} catch (RegistrationException $e) {
 				$request->validation()->fail('email', $email, elgg_echo('email:save:fail:password'));
 				return false;
@@ -293,10 +293,10 @@ class Settings {
 			return;
 		}
 		
-		if (elgg()->config->security_email_require_confirmation) {
+		if (_elgg_services()->config->security_email_require_confirmation) {
 			// validate the new email address
 			try {
-				elgg()->accounts->requestNewEmailValidation($user, $email);
+				_elgg_services()->accounts->requestNewEmailValidation($user, $email);
 				
 				$request->validation()->pass('email', $email, elgg_echo('account:email:request:success', [$email]));
 				return true;
@@ -319,7 +319,7 @@ class Settings {
 	 */
 	public static function setDefaultAccess(\Elgg\Hook $hook) {
 	
-		if (!elgg()->config->allow_user_default_access) {
+		if (!_elgg_services()->config->allow_user_default_access) {
 			return;
 		}
 	

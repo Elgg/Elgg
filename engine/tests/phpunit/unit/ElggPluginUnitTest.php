@@ -155,8 +155,8 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 
 		$plugin = ElggPlugin::fromId('bootstrap_plugin', $this->normalizeTestFilePath('mod/'));
 
-		$app->_services->config->boot_cache_ttl = 0;
-		$app->_services->plugins->addTestingPlugin($plugin);
+		$app->internal_services->config->boot_cache_ttl = 0;
+		$app->internal_services->plugins->addTestingPlugin($plugin);
 
 		$app->bootCore();
 
@@ -191,7 +191,7 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 		$locator->method('locate')
 			->willReturn([]);
 
-		$app->_services->setValue('upgradeLocator', $locator);
+		$app->internal_services->set('upgradeLocator', $locator);
 
 		$app->bootCore();
 

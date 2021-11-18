@@ -58,7 +58,7 @@ class Title {
 			return;
 		}
 		
-		$entity_menu = elgg()->menus->getUnpreparedMenu('entity', [
+		$entity_menu = _elgg_services()->menus->getUnpreparedMenu('entity', [
 			'entity' => $entity,
 		]);
 		$add_toggle = false;

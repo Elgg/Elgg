@@ -26,7 +26,7 @@ class SearchRouterTest extends UnitTestCase {
 			'q' => 'lorem ipsum',
 		]);
 		
-		_elgg_services()->setValue('request', $request);
+		_elgg_services()->set('request', $request);
 
 		_elgg_services()->router->route($request);
 

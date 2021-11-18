@@ -61,7 +61,7 @@ class WalledGarden {
 		$url = elgg_http_build_url($parts);
 		$url = rtrim($url, '/') . '/';
 
-		$site_url = elgg()->config->wwwroot;
+		$site_url = _elgg_services()->config->wwwroot;
 
 		if ($url == $site_url) {
 			// always allow index page
@@ -81,7 +81,7 @@ class WalledGarden {
 			'url' => $url,
 		];
 
-		$public_routes = elgg()->hooks->trigger('public_pages', 'walled_garden', $params, $defaults);
+		$public_routes = _elgg_services()->hooks->trigger('public_pages', 'walled_garden', $params, $defaults);
 
 		$site_url = preg_quote($site_url);
 		foreach ($public_routes as $public_route) {

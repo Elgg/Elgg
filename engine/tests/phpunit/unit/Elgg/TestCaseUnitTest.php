@@ -15,7 +15,7 @@ class TestCaseUnitTest extends TestCase {
 	 * stay BC with older test cases
 	 */
 	public function testIsBoostrapped() {
-		$this->assertInstanceOf(Di\ServiceProvider::class, _elgg_services());
+		$this->assertInstanceOf(Di\InternalContainer::class, _elgg_services());
 	}
 
 }

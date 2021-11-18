@@ -61,7 +61,7 @@ class RegistrationIntegrationTest extends ActionResponseTestCase {
 		$link = elgg_http_get_signed_url($link);
 		
 		$request = $this->prepareHttpRequest($link);
-		_elgg_services()->setValue('request', $request);
+		_elgg_services()->set('request', $request);
 		
 		$response = _elgg_services()->router->getResponse($request);
 		
@@ -116,7 +116,7 @@ class RegistrationIntegrationTest extends ActionResponseTestCase {
 		$link = elgg_http_get_signed_url($link);
 		
 		$request = $this->prepareHttpRequest($link);
-		_elgg_services()->setValue('request', $request);
+		_elgg_services()->set('request', $request);
 		
 		$response = _elgg_services()->router->getResponse($request);
 		

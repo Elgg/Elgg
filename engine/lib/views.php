@@ -1456,7 +1456,7 @@ function _elgg_get_js_site_data() {
 		'elgg.config.wwwroot' => elgg_get_site_url(),
 
 		// refresh token 3 times during its lifetime (in microseconds 1000 * 1/3)
-		'elgg.security.interval' => (int) elgg()->csrf->getActionTokenTimeout() * 333,
+		'elgg.security.interval' => (int) _elgg_services()->csrf->getActionTokenTimeout() * 333,
 		'elgg.config.language' => _elgg_services()->config->language ?: 'en',
 	];
 }
@@ -1483,8 +1483,8 @@ function _elgg_get_js_page_data() {
 		],
 		'security' => [
 			'token' => [
-				'__elgg_ts' => $ts = elgg()->csrf->getCurrentTime()->getTimestamp(),
-				'__elgg_token' => elgg()->csrf->generateActionToken($ts),
+				'__elgg_ts' => $ts = _elgg_services()->csrf->getCurrentTime()->getTimestamp(),
+				'__elgg_token' => _elgg_services()->csrf->generateActionToken($ts),
 			],
 		],
 		'session' => [

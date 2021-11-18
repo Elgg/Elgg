@@ -29,7 +29,7 @@ class Users extends Seed {
 
 		$this->advance($this->getCount());
 
-		$profile_fields_config = elgg()->fields->get('user', 'user');
+		$profile_fields_config = _elgg_services()->fields->get('user', 'user');
 		$profile_fields = [];
 		foreach ($profile_fields_config as $field) {
 			$profile_fields[$field['name']] = $field['#type'];
@@ -100,7 +100,7 @@ class Users extends Seed {
 						$update->set('posted', $update->param($this->getRandomCreationTimestamp(), ELGG_VALUE_TIMESTAMP))
 							->where($update->compare('id', '=', $item->id, ELGG_VALUE_ID));
 						
-						elgg()->db->updateData($update);
+						_elgg_services()->db->updateData($update);
 					}
 					
 					$this->create_since = $since;

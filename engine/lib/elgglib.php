@@ -4,13 +4,13 @@
  */
 
 /**
- * Get a reference to the global Application object
+ * Get a reference to the public service provider
  *
  * @return \Elgg\Di\PublicContainer
  * @since 2.0.0
  */
 function elgg() {
-	return _elgg_services()->dic;
+	return \Elgg\Application::$_instance->public_services;
 }
 
 /**
@@ -184,7 +184,7 @@ function elgg_get_loaded_external_files(string $type, string $location): array {
  * @return bool
  */
 function system_message($message) {
-	elgg()->system_messages->addSuccessMessage($message);
+	_elgg_services()->systemMessages->addSuccessMessage($message);
 	return true;
 }
 
@@ -196,7 +196,7 @@ function system_message($message) {
  * @return bool
  */
 function register_error($error) {
-	elgg()->system_messages->addErrorMessage($error);
+	_elgg_services()->systemMessages->addErrorMessage($error);
 	return true;
 }
 
@@ -320,7 +320,7 @@ function elgg_clear_event_handlers($event, $object_type) {
  * @example documentation/examples/events/trigger.php
  */
 function elgg_trigger_event($event, $object_type, $object = null) {
-	return elgg()->events->trigger($event, $object_type, $object);
+	return _elgg_services()->events->trigger($event, $object_type, $object);
 }
 
 /**
@@ -341,7 +341,7 @@ function elgg_trigger_event($event, $object_type, $object = null) {
  * @see elgg_trigger_after_event()
  */
 function elgg_trigger_before_event($event, $object_type, $object = null) {
-	return elgg()->events->triggerBefore($event, $object_type, $object);
+	return _elgg_services()->events->triggerBefore($event, $object_type, $object);
 }
 
 /**
@@ -360,7 +360,7 @@ function elgg_trigger_before_event($event, $object_type, $object = null) {
  * @see elgg_trigger_before_event()
  */
 function elgg_trigger_after_event($event, $object_type, $object = null) {
-	return elgg()->events->triggerAfter($event, $object_type, $object);
+	return _elgg_services()->events->triggerAfter($event, $object_type, $object);
 }
 
 /**
@@ -424,7 +424,7 @@ function elgg_trigger_after_event($event, $object_type, $object = null) {
  * @since 1.8.0
  */
 function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 500) {
-	return elgg()->hooks->registerHandler($hook, $type, $callback, $priority);
+	return _elgg_services()->hooks->registerHandler($hook, $type, $callback, $priority);
 }
 
 /**
@@ -439,7 +439,7 @@ function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 
  * @since 1.8.0
  */
 function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
-	elgg()->hooks->unregisterHandler($hook, $entity_type, $callback);
+	_elgg_services()->hooks->unregisterHandler($hook, $entity_type, $callback);
 }
 
 /**
@@ -452,7 +452,7 @@ function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
  * @since 2.0
  */
 function elgg_clear_plugin_hook_handlers($hook, $type) {
-	elgg()->hooks->clearHandlers($hook, $type);
+	_elgg_services()->hooks->clearHandlers($hook, $type);
 }
 
 /**
@@ -510,7 +510,7 @@ function elgg_clear_plugin_hook_handlers($hook, $type) {
  * @since 1.8.0
  */
 function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) {
-	return elgg()->hooks->trigger($hook, $type, $params, $returnvalue);
+	return _elgg_services()->hooks->trigger($hook, $type, $params, $returnvalue);
 }
 
 /**
@@ -611,8 +611,8 @@ function elgg_add_action_tokens_to_url($url, $html_encode = false) {
 	}
 
 	// append action tokens to the existing query
-	$query['__elgg_ts'] = elgg()->csrf->getCurrentTime()->getTimestamp();
-	$query['__elgg_token'] = elgg()->csrf->generateActionToken($query['__elgg_ts']);
+	$query['__elgg_ts'] = _elgg_services()->csrf->getCurrentTime()->getTimestamp();
+	$query['__elgg_token'] = _elgg_services()->csrf->generateActionToken($query['__elgg_ts']);
 	$components['query'] = http_build_query($query);
 
 	// rebuild the full url
@@ -903,13 +903,13 @@ function elgg_get_ini_setting_in_bytes($setting) {
 /**
  * Get the global service provider
  *
- * @return \Elgg\Di\ServiceProvider
+ * @return \Elgg\Di\InternalContainer
  * @internal
  */
 function _elgg_services() {
 	// This yields a more shallow stack depth in recursive APIs like views. This aids in debugging and
 	// reduces false positives in xdebug's infinite recursion protection.
-	return \Elgg\Application::$_instance->_services;
+	return \Elgg\Application::$_instance->internal_services;
 }
 
 /**

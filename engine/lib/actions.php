@@ -65,7 +65,7 @@ function elgg_build_hmac($data): \Elgg\Security\Hmac {
  */
 function init_site_secret() {
 	$secret = SiteSecret::regenerate(_elgg_services()->crypto, _elgg_services()->configTable);
-	_elgg_services()->setValue('siteSecret', $secret);
+	_elgg_services()->set('siteSecret', $secret);
 	return $secret->get();
 }
 

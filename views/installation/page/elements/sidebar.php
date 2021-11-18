@@ -29,7 +29,7 @@ foreach ($steps as $index => $step) {
 echo '</ol>';
 
 $options_values = [];
-foreach (elgg()->translator->getInstalledTranslations() as $key => $value) {
+foreach (_elgg_services()->translator->getInstalledTranslations() as $key => $value) {
 	$options_values[elgg_http_add_url_query_elements(current_page_url(), ['hl' => $key])] = $value;
 }
 

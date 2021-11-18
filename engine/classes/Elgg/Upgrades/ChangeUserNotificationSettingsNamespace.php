@@ -46,7 +46,7 @@ class ChangeUserNotificationSettingsNamespace implements SystemUpgrade {
 			->where($select->compare('md.name', 'like', 'notification:method:%', ELGG_VALUE_STRING))
 			->andWhere($select->compare("{$entities_table}.type", '=', 'user', ELGG_VALUE_STRING));
 		
-		$result = elgg()->db->getDataRow($select);
+		$result = _elgg_services()->db->getDataRow($select);
 		
 		return (int) $result->total;
 	}
@@ -65,7 +65,7 @@ class ChangeUserNotificationSettingsNamespace implements SystemUpgrade {
 		
 		$update->andWhere($update->compare('entity_guid', 'in', $users->getSQL()));
 		
-		$num_rows = elgg()->db->updateData($update, true);
+		$num_rows = _elgg_services()->db->updateData($update, true);
 		
 		$result->addSuccesses($num_rows);
 		
