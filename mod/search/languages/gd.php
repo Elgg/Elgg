@@ -6,7 +6,7 @@
  */
 
 return array(
-	'search:results' => 'Toraidhean-luirg airson: %s',
+	'search:results' => 'Toraidhean luirg airson: "%s"',
 	'search:more' => '+%s a bharrachd %s',
 
 	'search:comment_on' => 'Fàg beachd air "%s"',

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-25 15:07+0200\n"
+"POT-Creation-Date: 2021-11-05 10:27+0100\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -8916,8 +8916,8 @@ msgid ""
 "``no_widgets`` parameter (as String or as a Closure)."
 msgstr ""
 "L’utilisation de la disposition widget a été modifiée. Le contenu n’est plus"
-" dessiné dans le cadre de la mise en page. Vous devez envelopper votre "
-"contenu dans une autre mise en page et utiliser la disposition widget comme "
+" rendu dans le cadre de la mise en page. Vous devez envelopper votre contenu"
+" dans une autre mise en page et utiliser la disposition widget comme "
 "contenu. Si vous souhaitez que du contenu spécial s’affiche s’il n’y a pas "
 "de widgets dans la mise en page, vous pouvez maintenant passer un paramètre "
 "spécial ``no_widgets`` (sous forme de chaîne ou de Closure)."
@@ -9002,7 +9002,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:781
 msgid "Labelling"
-msgstr "Étiquetage"
+msgstr "Nommage"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:783
 msgid ""
@@ -9027,7 +9027,8 @@ msgstr "Filtrage des valeurs de la requête"
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:803
 msgid "``set_input()`` and ``get_input()`` no longer trim values."
 msgstr ""
-"``set_input()`` et ``get_input()`` n'émondent (trim) plus les valeurs."
+"``set_input()`` et ``get_input()`` ne suppriment plus les espaces - trim - "
+"des valeurs."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:806
 msgid "Action responses"
@@ -9070,7 +9071,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:820
 msgid "New approach to page layouts"
-msgstr "Nouvelle approche des mises en page (layouts)"
+msgstr "Nouvelle approche des mises en page - layouts"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:822
 msgid ""
@@ -9097,9 +9098,9 @@ msgid ""
 "it easier for themes to target specific layout elements without having to "
 "override layouts at large."
 msgstr ""
-"Les mises en page ont été décomposées en éléments plus petits, ce qui "
-"devrait faciliter le ciblage d’éléments de mise en page spécifiques par les "
-"thèmes sans avoir à remplacer les dispositions en général."
+"Les mises en page ont été découpées en éléments plus petits, ce qui devrait "
+"faciliter le ciblage d’éléments de mise en page spécifiques par les thèmes "
+"sans avoir à remplacer les dispositions en général."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:827
 msgid "As a result of these changes:"
@@ -9145,12 +9146,12 @@ msgid ""
 msgstr ""
 "les paramètres de mise en page sont disponibles pour les hooks de menu de "
 "titre et de filtre, ce qui permet aux ressources de fournir des informations"
-" de contexte supplémentaires, par exemple, un ``$entity`` en cas de "
+" de contexte supplémentaires, par exemple ``$entity`` dans cas d'une "
 "ressource pour le profil"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:834
 msgid "Plugins and themes should:"
-msgstr "Plugins et thèmes devraient :"
+msgstr "Les plugins et thèmes devraient :"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:836
 msgid "Update calls to ``elgg_view_layout()`` to use ``default`` layout"
@@ -9173,7 +9174,7 @@ msgid ""
 "using hooks"
 msgstr ""
 "Mettez à jour leur utilisation du paramètre ``filter`` dans les vues de "
-"disposition (layouts), soit en fournissant un ensemble par défaut d’onglets "
+"disposition - layouts, soit en fournissant un ensemble par défaut d’onglets "
 "de filtre, soit en définissant un paramètre ``filter_id`` et en utilisant "
 "des hooks"
 
@@ -9222,7 +9223,7 @@ msgid ""
 "Update their use of ``navigation/breadcrumbs`` to pass "
 "``$vars['breadcrumbs']`` to ``elgg_get_breadcrumbs()``"
 msgstr ""
-"Mettez à jour leur utilisation de la ``navigation/breadcrumb`` pour passer "
+"Mettez à jour leur utilisation de ``navigation/breadcrumb`` pour passer "
 "``$vars ['breadcrumb']`` à ``elgg_get_breadcrumbs()``"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:850
@@ -9230,7 +9231,7 @@ msgid ""
 "Update hook registrations for ``output:before, layout`` to ``view_vars, "
 "page/layout/<layout_name>``"
 msgstr ""
-"Mettez à jour les enregistrements de hook pour ``output:before, layout`` en "
+"Mettez à jour les enregistrements du hook ``output:before, layout`` vers "
 "``view_vars, page/layout/<layout_name>``"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:851
@@ -9238,8 +9239,8 @@ msgid ""
 "Update hook registrations for ``output:after, layout`` to ``view, "
 "page/layout/<layout_name>``"
 msgstr ""
-"Mettez à jour les enregistrements pour le hooks ``output:after, layout`` "
-"vers ``view, page/layout/<layout_name>``"
+"Mettez à jour les enregistrements du hook ``output:after, layout`` vers "
+"``view, page/layout/<layout_name>``"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:854
 msgid "Likes plugin"

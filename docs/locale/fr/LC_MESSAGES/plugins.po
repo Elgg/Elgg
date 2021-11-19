@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-25 15:07+0200\n"
+"POT-Creation-Date: 2021-11-05 10:27+0100\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -90,6 +90,47 @@ msgstr ""
 "n'est pas la même chose que leur profil : tandis que le profil est destiné à"
 " être consulté par les autres, le tableau de bord est un espace strictement "
 "personnel que les utilisateurs utilisent pour leurs propres besoins."
+
+#: ../../plugins/discussions.rst:2
+msgid "Discussions"
+msgstr "Discussions"
+
+#: ../../plugins/discussions.rst:4
+msgid ""
+"Add a forum like place to start a discussion. This feature is mainly meant "
+"to used in groups. The group owners can enable/disable this feature for "
+"their group."
+msgstr ""
+"Ajoutez un forum pour démarrer une discussion. Cette fonctionnalité est "
+"principalement destinée à être utilisée dans les groupes. Les propriétaires "
+"de groupe peuvent activer/désactiver cette fonctionnalité pour leur groupe."
+
+#: ../../plugins/discussions.rst:7
+msgid ""
+"There is a plugin setting to enable global discussions (so outside of a "
+"group). This setting is disabled by default but can be enabled by a site "
+"administrator."
+msgstr ""
+"Il existe un paramètre de plugin pour permettre des discussions globales "
+"(donc hors d'un groupe). Ce paramètre est désactivé par défaut mais peut "
+"être activé par un administrateur de site."
+
+#: ../../plugins/discussions.rst:11
+msgid "Notifications"
+msgstr "Notifications"
+
+#: ../../plugins/discussions.rst:13
+msgid ""
+"In order to encourage discussion in a group all group members will receive "
+"notifications about comments on a discussion topic. This will follow the "
+"notification preferences of the group member based on the global group "
+"preference or the specific group preference for new discussions."
+msgstr ""
+"Afin de favoriser les échanges dans un groupe, tous les membres du groupe "
+"recevront des notifications concernant les commentaires sur un sujet de "
+"discussion. Cela suivra les préférences de notification définis par chaque "
+"membre du groupe, en fonction de ses préférences globales pour les groupes, "
+"ou de ses préférences spécifiques pour les nouvelles discussions."
 
 #: ../../plugins/file.rst:2
 msgid "File repository"
@@ -290,7 +331,7 @@ msgstr ""
 "Elgg est fourni avec un jeu de plugins. Ils fournissent les fonctionnalités "
 "fondamentales pour votre réseau social."
 
-#: ../../plugins/index.rst:22
+#: ../../plugins/index.rst:23
 msgid ""
 "The following plugins are also bundled with Elgg, but are not (yet) "
 "documented"
@@ -298,29 +339,25 @@ msgstr ""
 "Les plugins suivants sont également distribués avec Elgg, mais ne sont pas "
 "(encore) documentés"
 
-#: ../../plugins/index.rst:24
+#: ../../plugins/index.rst:25
 msgid "activity"
 msgstr "activity"
 
-#: ../../plugins/index.rst:25
+#: ../../plugins/index.rst:26
 msgid "bookmarks"
 msgstr "bookmarks"
 
-#: ../../plugins/index.rst:26
+#: ../../plugins/index.rst:27
 msgid "ckeditor"
 msgstr "ckeditor"
 
-#: ../../plugins/index.rst:27
+#: ../../plugins/index.rst:28
 msgid "custom_index"
 msgstr "custom_index"
 
-#: ../../plugins/index.rst:28
+#: ../../plugins/index.rst:29
 msgid "developers"
 msgstr "developers"
-
-#: ../../plugins/index.rst:29
-msgid "discussions"
-msgstr "discussions"
 
 #: ../../plugins/index.rst:30
 msgid "embed"

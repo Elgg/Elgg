@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-25 15:07+0200\n"
+"POT-Creation-Date: 2021-11-05 10:27+0100\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -1967,7 +1967,7 @@ msgstr ""
 "Elgg est compatible avec des modules d'authentification enfichables (PAM = "
 "Pluggable Authentication Modules), qui vous permettent d'écrire vos propres "
 "gestionnaires d'authentification. A chaque fois qu'une requête a besoin "
-"d'être authentifiée le système va appeler ``elgg_authenticate()`` qui va "
+"d'être authentifiée, le système va appeler ``elgg_authenticate()`` qui va "
 "vérifier tous les gestionnaires de PAM enregistrés jusqu'à-ce que l'un "
 "d'entre eux renvoie un succès."
 
@@ -2070,13 +2070,13 @@ msgstr ""
 "Le gestionnaire d’authentification doit renvoyer un ``booléen``, indiquant "
 "si la demande peut être authentifiée ou non. Une mise en garde est que dans "
 "le cas d’une connexion utilisateur classique où les informations "
-"d’identification sont disponibles (nom d’utilisateur et mot de passe), "
-"l’utilisateur sera connecté. Dans le cas de l’exemple XML-RPC, le "
-"gestionnaire d’authentification devra effectuer cette étape lui-même puisque"
-" le reste du système n’aura aucune idée des formats possibles des "
-"informations d’authentification passées ni de leur contenu. La connexion "
-"d'un utilisateur est assez simple et se fait par ``login()``, qui s’attend à"
-" recevoir un objet ``ElggUser``."
+"d’identification sont disponibles sous la forme d'un nom d’utilisateur et "
+"d'un mot de passe, l’utilisateur sera connecté. Dans le cas de l’exemple "
+"XML-RPC, le gestionnaire d’authentification devra effectuer cette étape lui-"
+"même puisque le reste du système n’aura aucune idée des formats possibles "
+"des informations d’authentification passées ni de leur contenu. La connexion"
+" d'un utilisateur est assez simple et se fait par ``login()``, qui s’attend "
+"à recevoir un objet ``ElggUser``."
 
 #: ../../guides/context.rst:2
 msgid "Context"
@@ -3318,7 +3318,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:2
 msgid "List of events in core"
-msgstr "Liste des événements dans le cœur"
+msgstr "Liste des événements dans le noyau"
 
 #: ../../guides/events-list.rst:4
 msgid "For more information on how events work visit :doc:`/design/events`."
@@ -3484,7 +3484,7 @@ msgid ""
 "Triggered when executing an ``ElggUpgrade``. The ``$object`` of the event is"
 " the ``ElggUpgrade``."
 msgstr ""
-"Déclenché lors de l’exécution d’un ``ElggUpgrade``. Le ``$object`` de "
+"Déclenché lors de l’exécution d’un ``ElggUpgrade``. L'objet ``$object`` de "
 "l’événement est le ``ElggUpgrade``."
 
 #: ../../guides/events-list.rst:63
@@ -3529,8 +3529,8 @@ msgid ""
 "simplecache, and memcache. One might use it to reset others such as APC, "
 "OPCache, or WinCache."
 msgstr ""
-"Effacer les caches internes et externes, par défaut, y compris system_cache,"
-" simplecache et memcache. Il est possible de l’utiliser pour réinitialiser "
+"Efface les caches internes et externes, par défaut, y compris system_cache, "
+"simplecache et memcache. Il est possible de l’utiliser pour réinitialiser "
 "d’autres caches comme APC, OPCache ou WinCache."
 
 #: ../../guides/events-list.rst:79
@@ -3557,9 +3557,9 @@ msgid ""
 "from being sent by returning `false`."
 msgstr ""
 "Déclenché avant l’envoi d’une réponse HTTP. Les gestionnaires recevront une "
-"instance de ``\\Symfony\\Component\\HttpFoundation\\Response`` qui doit être"
-" envoyée au demandeur. Les gestionnaires peuvent mettre fin à l’événement et"
-" empêcher l’envoi de la réponse en renvoyant `false`."
+"instance de la réponse `\\Symfony\\Component\\HttpFoundation\\Response` qui "
+"doit être envoyée au demandeur. Les gestionnaires peuvent mettre fin à "
+"l’événement et empêcher l’envoi de la réponse en renvoyant `false`."
 
 #: ../../guides/events-list.rst:87
 msgid "**send:after, http_response**"
@@ -3572,8 +3572,8 @@ msgid ""
 "requester."
 msgstr ""
 "Déclenché après l’envoi d’une réponse HTTP. Les gestionnaires recevront une "
-"instance de la réponse ``\\Symfony\\Component\\HttpFoundation\\Response`` "
-"qui a été envoyée au demandeur."
+"instance de la réponse `\\Symfony\\Component\\HttpFoundation\\Response` qui "
+"a été envoyée au demandeur."
 
 #: ../../guides/events-list.rst:90
 msgid "**reload:after, translations**"
@@ -3791,7 +3791,7 @@ msgid ""
 "Triggered for user, group, object, and site entities after creation. Return "
 "false to delete entity."
 msgstr ""
-"Déclenché pour les entités user, group, object et site après la création. "
+"Déclenché pour les entités user, group, object et site après leur création. "
 "Renvoyez false pour supprimer l’entité."
 
 #: ../../guides/events-list.rst:165
@@ -3900,7 +3900,7 @@ msgid ""
 "metadata that was just created."
 msgstr ""
 "Appelé après qu'une métadonnée a été créée. Retournez false pour supprimer "
-"la matadonnée qui vient d'être créée."
+"la métadonnée qui vient d'être créée."
 
 #: ../../guides/events-list.rst:201
 msgid "**update, metadata**"
@@ -3941,7 +3941,7 @@ msgstr "**disable, metadata**"
 #: ../../guides/events-list.rst:210
 msgid "Called when disabling metadata. Return false to prevent disabling."
 msgstr ""
-"Appelé lors de la désactivation de la métadonnée. Retournez false pour "
+"Appelé lors de la désactivation d'une métadonnée. Retournez false pour "
 "éviter la désactivation."
 
 #: ../../guides/events-list.rst:213
@@ -3969,7 +3969,7 @@ msgid ""
 "Called after the annotation has been created. Return false to delete the "
 "annotation."
 msgstr ""
-"Appelé après que l'annotation ait été créée. Retournez false pour supprimer "
+"Appelé après que l'annotation a été créée. Retournez false pour supprimer "
 "l'annotation."
 
 #: ../../guides/events-list.rst:224
@@ -4144,7 +4144,7 @@ msgstr ""
 
 #: ../../guides/file-system.rst:32
 msgid "File Objects"
-msgstr "Objets Fichiers (File)"
+msgstr "Objets Fichier - File"
 
 #: ../../guides/file-system.rst:35
 msgid "Writing Files"
@@ -5805,8 +5805,8 @@ msgid ""
 "``\\Elgg\\Exceptions\\Configuration\\RegistrationException`` with an error "
 "message to be shown to the user."
 msgstr ""
-"Renvoie un booléen pour si la chaîne dans ``$params['password']`` est valide"
-" pour un mot de passe. Le gestionnaire de hook peut lancer "
+"Renvoie un booléen indiquant si la chaîne dans ``$params['password']`` est "
+"un mot de passe valide. Le gestionnaire de hook peut lancer "
 "``\\Elgg\\Exceptions\\Configuration\\RegistrationException`` avec un message"
 " d'erreur à afficher à l'utilisateur."
 
@@ -5864,7 +5864,7 @@ msgstr "**login:forward, user**"
 #: ../../guides/hooks-list.rst:242
 msgid "Filters the URL to which the user will be forwarded after login."
 msgstr ""
-"Filtre l’URL vers laquelle l’utilisateur sera dirigé après la connexion."
+"Filtre l’URL vers laquelle l’utilisateur sera redirigé après la connexion."
 
 #: ../../guides/hooks-list.rst:245
 msgid "**find_active_users, system**"
@@ -5872,7 +5872,7 @@ msgstr "**find_active_users, system**"
 
 #: ../../guides/hooks-list.rst:245
 msgid "Return the number of active users."
-msgstr "Renvoyez le nombre d’utilisateurs actifs."
+msgstr "Renvoie le nombre d’utilisateurs actifs."
 
 #: ../../guides/hooks-list.rst:248
 msgid "**status, user**"
@@ -5880,7 +5880,7 @@ msgstr "**status, user**"
 
 #: ../../guides/hooks-list.rst:248
 msgid "Triggered by The Wire when adding a post."
-msgstr "Déclenché par The Wire (le Fil) lors de l’ajout d’une publication."
+msgstr "Déclenché par le Fil - The Wire - lors de l’ajout d’une publication."
 
 #: ../../guides/hooks-list.rst:253
 msgid "**username:character_blacklist, user**"
@@ -5893,14 +5893,14 @@ msgid ""
 "disallowed characters. The default string can be found from "
 "``$params['blacklist']``."
 msgstr ""
-"Filtre la chaîne et supprimer les caractères interdits pour valider le nom "
+"Filtre la chaîne et supprime les caractères interdits pour valider le nom "
 "d’utilisateur lors de l’inscription. La valeur de retour doit être une "
 "chaîne composée des caractères refusés. La chaîne par défaut se trouve dans "
 "``$params['blacklist']``."
 
 #: ../../guides/hooks-list.rst:256
 msgid "Object hooks"
-msgstr "Hooks des objets"
+msgstr "Hooks d'objet"
 
 #: ../../guides/hooks-list.rst:260
 msgid "**comments, <entity_type>**"
@@ -5911,7 +5911,7 @@ msgid ""
 "Triggered in ``elgg_view_comments()``. If returning content, this overrides "
 "the ``page/elements/comments`` view."
 msgstr ""
-"Déclenché dans ``elgg_view_comments()``. Si vous renvoyez du contenu, cela "
+"Déclenché dans ``elgg_view_comments()``. S'il renvoie du contenu, celui-ci "
 "remplace la vue ``page/elements/comments``."
 
 #: ../../guides/hooks-list.rst:263
@@ -5955,8 +5955,8 @@ msgid ""
 "Can be used to filter the display name (readable access level) of the access"
 " collection."
 msgstr ""
-"Peut être utilisé pour filtrer le nom d'affichage (niveau d’accès lisible) "
-"de la collection d’accès."
+"Peut être utilisé pour filtrer le nom affiché (niveau d’accès lisible) de la"
+" collection d’accès."
 
 #: ../../guides/hooks-list.rst:291
 msgid "**access:collections:read, user**"
@@ -5966,8 +5966,8 @@ msgstr "**access:collections:read, user**"
 msgid ""
 "Filters an array of access IDs that the user ``$params['user_id']`` can see."
 msgstr ""
-"Filtre un tableau d’ID d’accès que l’utilisateur ``$params['user_id']`` peut"
-" voir."
+"Filtre le tableau des IDs d’accès que l’utilisateur ``$params['user_id']`` "
+"peut voir."
 
 #: ../../guides/hooks-list.rst:291 ../../guides/hooks-list.rst:301
 msgid ""
@@ -5989,7 +5989,7 @@ msgid ""
 "\"container_guid\" (int) are provided. An empty entity value generally means"
 " the form is to create a new object."
 msgstr ""
-"Filtre un tableau d’ID d’accès sur lequel l’utilisateur "
+"Filtre le tableau des IDs d’accès sur lequel l’utilisateur "
 "``$params['user_id']`` peut écrire. Dans get_write_access_array(), ce hook "
 "filtre la valeur de retour, de sorte qu’il peut être utilisé pour modifier "
 "les options disponibles dans la vue input/access. Pour les plugins du noyau,"
@@ -6059,8 +6059,8 @@ msgid ""
 "``$params['collection_id']``. Return false to prevent removal."
 msgstr ""
 "Déclenché avant de supprimer l’utilisateur ``$params[’user_id']`` de la "
-"collection ``$params['collection_id']``. Renvoyez false pour éviter le "
-"retrait."
+"collection ``$params['collection_id']``. Renvoyez false pour éviter la "
+"suppression."
 
 #: ../../guides/hooks-list.rst:338
 msgid "**get_sql, access**"
@@ -6070,7 +6070,7 @@ msgstr "**get_sql, access**"
 msgid ""
 "Filters SQL clauses restricting/allowing access to entities and annotations."
 msgstr ""
-"Filtre les clauses SQL limitant/permettant l’accès aux entités et aux "
+"Filtre les clauses SQL limitant/autorisant l’accès aux entités et aux "
 "annotations."
 
 #: ../../guides/hooks-list.rst:324
@@ -6143,7 +6143,7 @@ msgstr ""
 
 #: ../../guides/hooks-list.rst:337
 msgid "``query_builder`` - an instance of the ``QueryBuilder``"
-msgstr "``query_builder`` - une instance du ``QueryBuilder``"
+msgstr "``query_builder`` - une instance de ``QueryBuilder``"
 
 #: ../../guides/hooks-list.rst:341
 msgid "Action hooks"
@@ -7197,7 +7197,8 @@ msgid ""
 " See `CSS variables <_guides/theming#css-vars>`."
 msgstr ""
 "Permet aux plugins de modifier les variables CSS transmises à CssCrush "
-"pendant la compilation. Voir `Variables CSS <_guides/theming#css-vars>`."
+"pendant la compilation. Voyez les `variables CSS <_guides/theming#css-"
+"vars>`."
 
 #: ../../guides/hooks-list.rst:746
 msgid "Files"
@@ -7231,7 +7232,8 @@ msgstr "Permet aux plugins de filtrer l’URL en ligne du fichier image."
 #: ../../guides/hooks-list.rst:758
 msgid "By default, the inline URL is generated by the file service."
 msgstr ""
-"Par défaut, l’URL en ligne (inline) est générée par le service de fichiers."
+"Par défaut, l’URL en ligne - inline - est générée par le service de "
+"fichiers."
 
 #: ../../guides/hooks-list.rst:766
 msgid "**mime_type, file**"
@@ -7243,9 +7245,9 @@ msgid ""
 "filename ``$params['original_filename']`` and with the default detected "
 "mimetype of ``$params['default']``."
 msgstr ""
-"Retournez le mimetype pour le nom de fichier ``$params['filename']`` avec le"
-" nom de fichier original ``$params['original_filename']`` et avec le "
-"mimetype détecté par défaut depuis ``$params['default']``."
+"Renvoie le type MIME pour le nom de fichier ``$params['filename']`` avec le "
+"nom de fichier original ``$params['original_filename']`` et avec le type "
+"MIME détecté par défaut de ``$params['default']``."
 
 #: ../../guides/hooks-list.rst:772
 msgid "**simple_type, file**"
@@ -7345,7 +7347,7 @@ msgid ""
 msgstr ""
 "Déclenché par ``elgg_search()``. Filtre les champs de recherche avant que "
 "les clauses de recherche ne soient préparées. La valeur ``$return`` contient"
-" un tableau avec les noms de chaque type de propriété d’entité, qui doit "
+" un tableau avec les noms de chaque type de propriété d’entité, qui devrait "
 "être comparé à la requête de recherche. Le tableau ``$params`` contient un "
 "tableau de paramètres de recherche transmis et filtrés par "
 "``elgg_search()``."
@@ -7356,7 +7358,7 @@ msgstr "**search:fields, <entity_type>:<entity_subtype>**"
 
 #: ../../guides/hooks-list.rst:815 ../../guides/hooks-list.rst:818
 msgid "See **search:fields, <entity_type>**"
-msgstr "Voir **search:fields, <entity_type>**"
+msgstr "Voyez **search:fields, <entity_type>**"
 
 #: ../../guides/hooks-list.rst:818
 msgid "**search:fields, <search_type>**"
@@ -7380,7 +7382,7 @@ msgstr "**search:options, <entity_type>:<entity_subtype>**"
 
 #: ../../guides/hooks-list.rst:824 ../../guides/hooks-list.rst:827
 msgid "See **search:options, <entity_type>**"
-msgstr "Voir **search:options, <entity_type>**"
+msgstr "Voyez **search:options, <entity_type>**"
 
 #: ../../guides/hooks-list.rst:827
 msgid "**search:options, <search_type>**"
@@ -7399,7 +7401,7 @@ msgid ""
 msgstr ""
 "Implémenté dans le plugin **search**. Filtre un tableau de types de "
 "recherche personnalisés. Cela permet aux plugins d’ajouter des types de "
-"recherche personnalisés (par ex. une recherche de mots-clefs ou par "
+"recherche personnalisés (par ex. une recherche par mots-clefs ou par "
 "localisation géographique). L’ajout d’un type de recherche personnalisé "
 "permettra d’étendre l’interface utilisateur du plugin de recherche avec des "
 "liens et des listes appropriés."
@@ -7418,7 +7420,8 @@ msgstr ""
 "Implémenté dans le plugin **search**. Filtre les paires de types/sous-types "
 "d’entités avant l’exécution de la recherche d’entité. Permet aux plugins de "
 "supprimer certains types/sous-types d’entités des résultats de recherche, de"
-" regrouper plusieurs sous-types ou de réorganiser des sections de recherche."
+" regrouper plusieurs sous-types, ou de réorganiser des sections de "
+"recherche."
 
 #: ../../guides/hooks-list.rst:842
 msgid "**search:format, entity**"
@@ -7486,9 +7489,9 @@ msgstr ""
 "Dans get_default_access(), ce hook filtre la valeur de retour, de sorte "
 "qu’il peut être utilisé pour modifier la valeur par défaut dans la vue "
 "input/access. Pour les plugins du noyau, la valeur \"input_params\" contient"
-" les clefs \"entity\" (ElggEntity|false), \"entity_type`` (chaîne), "
-"``entity_subtype`` (chaîne), ``container_guid`` (int) qui sont fournies. Une"
-" valeur d’entité vide signifie généralement que le formulaire consiste à "
+" les clefs \"entity\" (ElggEntity|false), \"entity_type\" (chaîne), "
+"\"entity_subtype\" (chaîne), \"container_guid\" (int), qui sont définies. "
+"Une valeur d’entité vide signifie généralement que le formulaire consiste à "
 "créer un nouvel objet."
 
 #: ../../guides/hooks-list.rst:866
@@ -7552,7 +7555,7 @@ msgstr "``h`` - Hauteur de l’image en pixels"
 
 #: ../../guides/hooks-list.rst:880
 msgid "``square`` - Should the aspect ratio be a square (true/false)"
-msgstr "``square`` - Le ratio devrait-il être carré (vrai/faux)"
+msgstr "``square`` - Le ratio devrait-il être carré (true/false)"
 
 #: ../../guides/hooks-list.rst:881
 msgid ""
@@ -7560,7 +7563,7 @@ msgid ""
 "given width and height (true/false)"
 msgstr ""
 "``upscale`` - L'image doit-elle être agrandie si elle est plus petite que la"
-" largeur et la hauteur indiquées (vrai/faux)"
+" largeur et la hauteur indiquées (true/false)"
 
 #: ../../guides/hooks-list.rst:882
 msgid ""
@@ -7568,7 +7571,7 @@ msgid ""
 "true)"
 msgstr ""
 "``crop`` - Est-ce que le recadrage est autorisé sur cette taille d’image "
-"(vrai/faux, par défaut : vrai)"
+"(true/false, par défaut : true)"
 
 #: ../../guides/hooks-list.rst:884
 msgid ""
@@ -7596,11 +7599,11 @@ msgid ""
 "size ``$params['size']`` for the entity ``$params['entity']``. Following "
 "parameters are available through the ``$params`` array:"
 msgstr ""
-"Déclenché lorsque l’URL de l’icône de l’entité est demandée, voir "
-":ref:`entity icons <guides/database#entity-icons>`. La fonction de rappel "
-"doit renvoyer l’URL de l’icône de taille ``$params['size']`` pour l’entité "
-"``$params['entity']``. Les paramètres suivants sont disponibles via le "
-"tableau ``$params`` :"
+"Déclenché lorsque l’URL de l’icône de l’entité est demandée, voir les "
+":ref:`icônes des entités <guides/database#entity-icons>`. La fonction de "
+"rappel doit renvoyer l’URL de l’icône de dimension ``$params['size']`` pour "
+"l’entité ``$params['entity']``. Les paramètres suivants sont disponibles via"
+" le tableau ``$params`` :"
 
 #: ../../guides/hooks-list.rst:911
 msgid "entity"
@@ -7619,8 +7622,8 @@ msgid ""
 "The type of :ref:`view <guides/views#listing-entities>` e.g. ``'default'`` "
 "or ``'json'``."
 msgstr ""
-"Le type de :ref:`vue <guides/views#listing-entities>` par exemple "
-"``default`` ou ``json``."
+"Le type de :ref:`vue <guides/views#listing-entities>`, par exemple "
+"``'default'`` ou ``'json'``."
 
 #: ../../guides/hooks-list.rst:916
 msgid "size"
@@ -7631,8 +7634,8 @@ msgid ""
 "Size requested, see :ref:`entity icons <guides/database#entity-icons>` for "
 "possible values."
 msgstr ""
-"Taille demandée, voir :ref:`icônes des entités <guides/database#entity-"
-"icons>` pour les valeurs possibles."
+"Dimension demandée, voir les :ref:`icônes des entités <guides/database"
+"#entity-icons>` pour les valeurs possibles."
 
 #: ../../guides/hooks-list.rst:918
 msgid ""
@@ -7651,7 +7654,7 @@ msgid ""
 "Allows filtering URLs for custom icon types, see ``entity:icon:url, "
 "<entity_type>``"
 msgstr ""
-"Permet de filtrer les URLs pour les types d’icônes personnalisées, voir "
+"Permet de filtrer les URLs pour les types d’icônes personnalisés, voir "
 "``entity:icon:url, <entity_type>``"
 
 #: ../../guides/hooks-list.rst:964
@@ -7665,10 +7668,10 @@ msgid ""
 " on filestore. The handler must return an instance of ``ElggIcon`` or an "
 "exception will be thrown."
 msgstr ""
-"Déclenché par ``ElggEntity::getIcon()`` et permet aux plugins de fournir un "
-"objet alternatif ``ElggIcon`` qui pointe vers un emplacement personnalisé de"
-" l’icône dans le répertoire de données. Le gestionnaire doit renvoyer une "
-"instance de ``ElggIcon`` ou une exception sera lancée."
+"Déclenché par ``ElggEntity::getIcon()``, et permet aux plugins de fournir un"
+" objet alternatif ``ElggIcon`` qui pointe vers un emplacement personnalisé "
+"de l’icône dans le répertoire de fichiers. Le gestionnaire doit renvoyer une"
+" instance de ``ElggIcon`` ou une exception sera lancée."
 
 #: ../../guides/hooks-list.rst:967
 msgid "**entity:<icon_type>:file, <entity_type>**"
@@ -7679,8 +7682,8 @@ msgid ""
 "Allows filtering icon file object for custom icon types, see "
 "``entity:icon:file, <entity_type>``"
 msgstr ""
-"Permet de filtrer l’objet de fichier d’icône pour les types d’icônes "
-"personnalisés, voir ``entity:icon:file, <entity_type>``"
+"Permet de filtrer l’objet du fichier d’icône pour les types d’icônes "
+"personnalisés ; voyez ``entity:icon:file, <entity_type>``"
 
 #: ../../guides/hooks-list.rst:979
 msgid "**entity:<icon_type>:prepare, <entity_type>**"
@@ -7696,12 +7699,12 @@ msgid ""
 "``$return`` value passed to the hook is an instance of ``ElggFile`` that "
 "points to a temporary copy of the uploaded/linked file."
 msgstr ""
-"Déclenché par les méthodes ``ElggEntity::saveIcon*()`` et peut être utilisé "
-"pour préparer une image à partir d’un fichier téléchargé/lié. Ce hook peut "
-"être utilisé pour faire pivoter l’image avant qu’elle ne soit "
-"redimensionnée/rognée, ou il peut être utilisé pour extraire une image cadre"
-" (frame) si le fichier téléchargé est une vidéo. Le gestionnaire doit "
-"renvoyer une instance de ElggFile avec un ``simpletype`` qui se résout en "
+"Déclenché par les méthodes ``ElggEntity::saveIcon*()``, et peut être utilisé"
+" pour préparer une image à partir d’un fichier téléchargé/lié. Ce hook peut "
+"être utilisé pour faire pivoter l’image avant qu’elle soit "
+"redimensionnée/rognée, ou il peut être utilisé pour extraire une image fixe "
+"- frame - si le fichier téléchargé est une vidéo. Le gestionnaire doit "
+"renvoyer une instance de ElggFile avec un `simpletype` qui se résout en "
 "`image`. La valeur ``$return`` transmise au hook est une instance de "
 "``ElggFile`` qui pointe vers une copie temporaire du fichier téléchargé/lié."
 
@@ -7781,10 +7784,10 @@ msgid ""
 "handler can return ``false`` to prevent icons from being deleted. The "
 "``$params`` array contains:"
 msgstr ""
-"Déclenché par la méthode ``ElggEntity::deleteIcon()`` et peut être utilisé "
-"pour les opérations de nettoyage. Ce hook est déclenché avant que les icônes"
-" ne soient supprimées. Le gestionnaire peut renvoyer ``false`` pour empêcher"
-" la suppression d’icônes. Le tableau ``$params`` contient :"
+"Déclenché par la méthode ``ElggEntity::deleteIcon()``, et qui peut être "
+"utilisé pour des opérations de nettoyage. Ce hook est déclenché avant que "
+"les icônes ne soient supprimées. Le gestionnaire peut renvoyer ``false`` "
+"pour empêcher la suppression d’icônes. Le tableau ``$params`` contient :"
 
 #: ../../guides/hooks-list.rst:1009
 msgid "**entity:url, <entity_type>**"
@@ -7841,7 +7844,7 @@ msgstr "**extender:url, <annotation|metadata>**"
 msgid ""
 "Return the URL for the annotation or metadatum ``$params['extender']``."
 msgstr ""
-"Retournez l’URL de l’annotation ou de la métadonnée ``$params['extender']``."
+"Retourne l’URL de l’annotation ou de la métadonnée ``$params['extender']``."
 
 #: ../../guides/hooks-list.rst:1034
 msgid "**file:icon:url, override**"
@@ -7937,8 +7940,8 @@ msgid ""
 "return true to prevent the default code from running."
 msgstr ""
 "Déclenché lors de l’enregistrement des paramètres d’un widget "
-"``$params['params']`` pour le widget ``$params['widget']``. Si vous gérez "
-"l’enregistrement des paramètres, le gestionnaire doit renvoyer true pour "
+"``$params['params']`` pour le widget ``$params['widget']``. Si cela "
+"enregistre les paramètres, le gestionnaire devrait renvoyer true pour "
 "empêcher l’exécution du code par défaut."
 
 #: ../../guides/hooks-list.rst:1067
@@ -7952,9 +7955,9 @@ msgid ""
 "existing widgets like ``context`` or ``multiple``."
 msgstr ""
 "Déclenché lorsqu’une liste de widgets disponibles est nécessaire. Les "
-"plugins peuvent ajouter ou supprimer conditionnellement des widgets de cette"
-" liste ou modifier des attributs de widgets existants comme ``context`` ou "
-"``multiple``."
+"plugins peuvent ajouter ou supprimer des widgets de cette liste de manière "
+"conditionnelle, ou modifier des attributs de widgets existants comme "
+"``context`` ou ``multiple``."
 
 #: ../../guides/hooks-list.rst:1071
 msgid "**get_list, default_widgets**"
@@ -7981,12 +7984,12 @@ msgid ""
 "as the default value to the hook, and plugins must take care to not "
 "accidentally override these values."
 msgstr ""
-"Filtre une liste d’URL (chemins) qui peuvent être vues par les utilisateurs "
-"déconnectés dans un mode walled garden. Les gestionnaires doivent renvoyer "
+"Filtre une liste d’URLs (chemins) qui peuvent être vues par les utilisateurs"
+" déconnectés dans un mode walled garden. Les gestionnaires doivent renvoyer "
 "un tableau de chaînes regex qui permettront l’accès si l'URL correspond. "
 "Veuillez noter que les itinéraires publics du système sont passés comme "
-"valeur par défaut pour le hok, et que les plugins doivent prendre soin de ne"
-" pas remplacer accidentellement ces valeurs."
+"valeur par défaut pour le hook, et que les plugins doivent prendre soin de "
+"ne pas remplacer accidentellement ces valeurs."
 
 #: ../../guides/hooks-list.rst:1095
 msgid "``url`` - URL of the page being tested for public accessibility"
@@ -8021,7 +8024,7 @@ msgstr ""
 
 #: ../../guides/hooks-list.rst:1104
 msgid "is allowed during maintenance mode."
-msgstr "est autorisé avec le mode maintenance."
+msgstr "sont autorisés pendant le mode de maintenance."
 
 #: ../../guides/hooks-list.rst:1107
 msgid "**robots.txt, site**"
@@ -8029,7 +8032,7 @@ msgstr "**robots.txt, site**"
 
 #: ../../guides/hooks-list.rst:1107
 msgid "Filter the robots.txt values for ``$params['site']``."
-msgstr "Filtrez les valeurs robots.txt pour ``$params['site']``."
+msgstr "Filtre les valeurs de robots.txt pour ``$params['site']``."
 
 #: ../../guides/hooks-list.rst:1110
 msgid "**config, amd**"
@@ -8068,8 +8071,8 @@ msgid ""
 "Filters buttons (``ElggMenuItem`` instances) to be registered in the title "
 "menu of the group profile page"
 msgstr ""
-"Les boutons de filtres (instances ``ElggMenuItem``) à enregistrer dans le "
-"menu titre de la page de profil de groupe"
+"Les boutons de filtres (instances de ``ElggMenuItem``) à enregistrer dans le"
+" menu titre de la page de profil du groupe"
 
 #: ../../guides/hooks-list.rst:1137
 msgid "**tool_options, group**"
@@ -8086,9 +8089,9 @@ msgid ""
 "``\\Elgg\\Collections\\Collection<\\Elgg\\Groups\\Tool>``, a collection of "
 "group tools."
 msgstr ""
-"Le ``$return`` est "
+"Le retour ``$return`` est "
 "``\\Elgg\\Collections\\Collection<\\Elgg\\Groups\\Tool>``, une collection "
-"d'outils du groupe."
+"d'outils de groupe."
 
 #: ../../guides/hooks-list.rst:1137
 msgid "``entity`` - ``\\ElggGroup``"
@@ -8104,7 +8107,7 @@ msgstr "**allowed_styles, htmlawed**"
 
 #: ../../guides/hooks-list.rst:1143
 msgid "Filter the HTMLawed allowed style array."
-msgstr "Filtre le tableau de style HTMLawed autorisé."
+msgstr "Filtre le tableau HTMLawed des styles autorisés."
 
 #: ../../guides/hooks-list.rst:1146
 msgid "**config, htmlawed**"
@@ -8112,7 +8115,7 @@ msgstr "**config, htmlawed**"
 
 #: ../../guides/hooks-list.rst:1146
 msgid "Filter the HTMLawed ``$config`` array."
-msgstr "Filtrez le tableau HTMLawed ``$config``."
+msgstr "Filtre le tableau HTMLawed ``$config``."
 
 #: ../../guides/hooks-list.rst:1149
 msgid "**spec, htmlawed**"
@@ -8159,8 +8162,8 @@ msgid ""
 "To handle the page ``/members/$page_segment``, register for this hook and "
 "return the HTML of the list."
 msgstr ""
-"Pour gérer la page ``/members/$page_segment``, enregistrez une fonction de "
-"rappel pour ce hook et renvoyez le HTML de la liste."
+"Pour gérer la page ``/members/$page_segment``, enregistrez pour ce hook et "
+"renvoyez le HTML de la liste."
 
 #: ../../guides/hooks-list.rst:1168
 msgid "**members:config, tabs**"
@@ -8188,7 +8191,7 @@ msgid ""
 "authentication handlers, then return ``true`` to prevent the default "
 "handlers from being registered."
 msgstr ""
-"Déclenché par le gestionnaire de web services rest. Les plugins peuvent "
+"Déclenché par le gestionnaire de webservices rest. Les plugins peuvent "
 "configurer leurs propres gestionnaires d’authentification, puis renvoyer "
 "``true`` pour empêcher les gestionnaires par défaut d’être enregistrés."
 
@@ -8216,7 +8219,7 @@ msgid ""
 "contributors' guide </about/contributing>`."
 msgstr ""
 "Si vous souhaitez contribuer à des traductions pour Elgg, consultez :doc:`le"
-" guide des contributeurs guide </about/contributing>`."
+" guide des contributeurs </about/contributing>`."
 
 #: ../../guides/i18n.rst:8
 msgid ""
@@ -8267,11 +8270,11 @@ msgid ""
 "example: ``yourplugin:success``, ``yourplugin:title``, etc. This helps avoid"
 " conflicts with other language keys."
 msgstr ""
-"A moins que vous ne remplaciez les chaînes linguistiques du noyau ou d’un "
+"A moins que vous ne remplaciez les chaînes de traduction du noyau ou d’un "
 "autre plugin, c'est une bonne pratique pour les clefs de traduction de "
-"commencer par le nom de votre plugin. Par exemple : ``votreplugin:success``,"
-" ``votreplugin:title``, etc. Cela permet d’éviter les conflits avec d’autres"
-" clefs de traduction."
+"commencer par le nom de votre plugin. Par exemple : ``yourplugin:success``, "
+"``yourplugin:title``, etc. Cela aide à éviter les conflits avec d’autres "
+"clefs de traduction."
 
 #: ../../guides/i18n.rst:45
 msgid "Server-side API"
@@ -8375,9 +8378,9 @@ msgid ""
 "documentation for `defining modules "
 "<http://requirejs.org/docs/api.html#define>`_ may also be of use."
 msgstr ""
-"Ici, nous allons décrire la création et l’exécution des modules AMD. La "
+"Ici, nous allons décrire la création et l’exécution de modules AMD. La "
 "documentation RequireJS pour `définir des modules "
-"<http://requiljs.org/docs/api.html#define>`_ peut également être utile."
+"<https://requirejs.org/docs/api.html#define>`_ peut également être utile."
 
 #: ../../guides/javascript.rst:18
 msgid "Executing a module in the current page"
@@ -8386,7 +8389,7 @@ msgstr "Exécuter un module dans la page en cours"
 #: ../../guides/javascript.rst:20
 msgid "Telling Elgg to load an existing module in the current page is easy:"
 msgstr ""
-"Il est facile de dire à Elgg de charger un module existant dans la page en "
+"Il est aisé d'indiquer à Elgg de charger un module existant dans la page en "
 "cours :"
 
 #: ../../guides/javascript.rst:27
@@ -8417,8 +8420,8 @@ msgid ""
 "``myplugin/say_hello``."
 msgstr ""
 "Le nom du module est déterminé par le nom de vue, qui est ici "
-"``monplugin/say_hello.js``. Nous retirons l’extension ``.js``, pour "
-"conserver ``monplugin/say_hello``."
+"``myplugin/say_hello.js``. Nous retirons l’extension ``.js``, pour conserver"
+" ``myplugin/say_hello``."
 
 #: ../../guides/javascript.rst:48
 msgid "The definition function **must** have one argument named ``require``."
@@ -8494,8 +8497,8 @@ msgid ""
 "``.js.php``)."
 msgstr ""
 "Vous pouvez utiliser un module PHP pour transmettre des valeurs à partir du "
-"serveur. Pour créer le module ``monplugin/settings``, créez le fichier de la"
-" vue ``views/default/monplugin/settings.js.php`` (notez la double extension "
+"serveur. Pour créer le module ``myplugin/settings``, créez le fichier de la "
+"vue ``views/default/myplugin/settings.js.php`` (notez la double extension "
 "``.js.php``)."
 
 #: ../../guides/javascript.rst:150
@@ -8610,15 +8613,15 @@ msgstr ""
 #: ../../guides/javascript.rst:228
 msgid "Return the value of the module instead of adding to a global variable."
 msgstr ""
-"Renvoyez la valeur du module au lieu de l’ajouter à une variable globale."
+"Renvoie la valeur du module au lieu de l’ajouter à une variable globale."
 
 #: ../../guides/javascript.rst:229
 msgid ""
 "Static (.js,.css,etc.) files are automatically minified and cached by Elgg's"
 " simplecache system."
 msgstr ""
-"Les fichiers statiques (.js, .css,etc.) sont automatiquement minifiés et mis"
-" en cache par le système simplecache de Elgg."
+"Les fichiers statiques (.js, .css, etc.) sont automatiquement minifiés et "
+"mis en cache par le système simplecache de Elgg."
 
 #: ../../guides/javascript.rst:230
 msgid ""
@@ -8651,7 +8654,7 @@ msgstr "``elgg.system_message()``"
 
 #: ../../guides/javascript.rst:250
 msgid "Display a status message to the user."
-msgstr "Affichez un message d’état à l’utilisateur."
+msgstr "Affiche un message d’état à l’utilisateur."
 
 #: ../../guides/javascript.rst:257
 msgid "``elgg.register_error()``"
@@ -8667,7 +8670,7 @@ msgstr "``elgg.normalize_url()``"
 
 #: ../../guides/javascript.rst:268
 msgid "Normalize a URL relative to the elgg root:"
-msgstr "Normalise une URL par rapport à la racine elgg :"
+msgstr "Normalise une URL par rapport à la racine de elgg :"
 
 #: ../../guides/javascript.rst:275
 msgid "``elgg.forward()``"
@@ -8719,7 +8722,7 @@ msgstr "``elgg.security.refreshToken()``"
 
 #: ../../guides/javascript.rst:321
 msgid "Force a refresh of all XSRF tokens on the page."
-msgstr "Forcer le rafraîchissement de tous les jetons XSRF sur la page."
+msgstr "Force le rafraîchissement de tous les jetons XSRF sur la page."
 
 #: ../../guides/javascript.rst:323
 msgid "This is automatically called every 5 minutes by default."
@@ -8744,7 +8747,7 @@ msgstr "``elgg.get_logged_in_user_entity()``"
 
 #: ../../guides/javascript.rst:350
 msgid "Returns the logged in user as an JS ElggUser object."
-msgstr "Renvoie l’utilisateur connecté sous le forme d'un objet JS ElggUser."
+msgstr "Renvoie l’utilisateur connecté sous la forme d'un objet JS ElggUser."
 
 #: ../../guides/javascript.rst:353
 msgid "``elgg.get_logged_in_user_guid()``"
@@ -8760,7 +8763,7 @@ msgstr "``elgg.is_logged_in()``"
 
 #: ../../guides/javascript.rst:360
 msgid "True if the user is logged in."
-msgstr "True si l’utilisateur est connecté."
+msgstr "Vrai si l’utilisateur est connecté."
 
 #: ../../guides/javascript.rst:363
 msgid "``elgg.is_admin_logged_in()``"
@@ -8768,7 +8771,7 @@ msgstr "``elgg.is_admin_logged_in()``"
 
 #: ../../guides/javascript.rst:365
 msgid "True if the user is logged in and is an admin."
-msgstr "True si l’utilisateur est connecté et est administrateur."
+msgstr "Vrai si l’utilisateur est connecté et est administrateur."
 
 #: ../../guides/javascript.rst:368
 msgid "``elgg.config.get_language()``"
@@ -8912,8 +8915,8 @@ msgid ""
 "this lightbox."
 msgstr ""
 "Elgg est distribué avec la bibliothèque jQuery Colorbox. Veuillez consulter "
-"http://www.jacklmoore.com/colorbox pour plus d’informations sur les options "
-"de cette lightbox."
+"https://www.jacklmoore.com/colorbox/ pour plus d’informations sur les "
+"options de cette lightbox."
 
 #: ../../guides/javascript.rst:518
 msgid "Use the following classes to bind your anchor elements to a lightbox:"
@@ -8939,7 +8942,7 @@ msgid ""
 "``elgg-lightbox-inline`` - displays an inline HTML element in a lightbox"
 msgstr ""
 "``elgg-lightbox-inline`` - affiche un élément HTML en ligne dans une boîte "
-"surgissante lightbox"
+"surgissante - lightbox"
 
 #: ../../guides/javascript.rst:523
 msgid "``elgg-lightbox-iframe`` - loads a resource in an ``iframe``"
@@ -9006,8 +9009,9 @@ msgid ""
 "attached to all instances of ``.elgg-input-longtext``."
 msgstr ""
 "Ce module peut être utilisé pour ajouter un éditeur WYSIWYG à un textarea "
-"(nécessite l’activation du plugin ``ckeditor``). Notez que le WYSIWYG sera "
-"automatiquement attaché à toutes les instances de ``.elgg-input-longtext``."
+"(nécessite que le plugin ``ckeditor`` soit activé). Notez que le WYSIWYG "
+"sera automatiquement attaché à toutes les instances de ``.elgg-input-"
+"longtext``."
 
 #: ../../guides/javascript.rst:619
 msgid "Inline tabs component"
@@ -9097,7 +9101,7 @@ msgid ""
 "callbacks can simply react or alter data."
 msgstr ""
 "La valeur ``value`` passera par chaque hook. Selon le hook, les fonctions de"
-" rappel peuvent simplement réagir ou modifier les données."
+" rappel peuvent simplement réagir, ou modifier les données."
 
 #: ../../guides/javascript.rst:674
 msgid "Triggering custom hooks"
@@ -9121,9 +9125,8 @@ msgid ""
 "after Elgg's JS is loaded and all plugin boot modules have been initialized."
 msgstr ""
 "Les plugins devraient enregistrer leurs fonctions d'initialisation via ce "
-"hook. Il est déclenché après le chargement que les JS de Elgg sont chargés "
-"et une fois que tous les modules de démarrage (boot) des plugins sont "
-"initialisés."
+"hook. Il est déclenché après que les JS de Elgg sont chargés, et une fois "
+"que tous les modules de démarrage - boot - des plugins sont initialisés."
 
 #: ../../guides/javascript.rst:691
 msgid "**getOptions, ui.popup**"
@@ -9134,8 +9137,9 @@ msgid ""
 "This hook is fired for pop up displays (``\"rel\"=\"popup\"``) and allows "
 "for customized placement options."
 msgstr ""
-"Ce hook est déclenché pour les affichages surgissants "
-"(``\"rel\"=\"popup\"``) et permet des options de placement personnalisées."
+"Ce hook est déclenché pour les affichages surgissants - popups "
+"(``\"rel\"=\"popup\"``) et permet des options de positionnement "
+"personnalisées."
 
 #: ../../guides/javascript.rst:694
 msgid "**getOptions, ui.lightbox**"
@@ -9157,8 +9161,8 @@ msgid ""
 "boot module. The defaults can be seen in the module "
 "``elgg/ckeditor/config``."
 msgstr ""
-"Cela filtre l’objet de configuration CKEditor. Enregsitrez un gestionnaire "
-"pour ce hook dans un module de démarrage du plugin. Les valeurs par défaut "
+"Cela filtre l’objet de configuration CKEditor. Enregistrez un gestionnaire "
+"pour ce hook dans le module de démarrage du plugin. Les valeurs par défaut "
 "sont visibles dans le module ``elgg/ckeditor/config``."
 
 #: ../../guides/javascript.rst:700
@@ -9170,9 +9174,9 @@ msgid ""
 "This hook can be used to decorate ``CKEDITOR`` global. You can use this hook"
 " to register new CKEditor plugins and add event bindings."
 msgstr ""
-"Ce crochet peut être utilisé pour modifier globalement ``CKEDITOR``. Vous "
+"Ce hook peut être utilisé pour modifier globalement ``CKEDITOR``. Vous "
 "pouvez utiliser ce hook pour enregistrer de nouveaux plugins CKEditor et "
-"ajouter des liaisons d’événements (event bindings)."
+"ajouter des liaisons d’événements - event bindings."
 
 #: ../../guides/javascript.rst:704
 msgid "**ajax_request_data, \\***"
@@ -9185,8 +9189,8 @@ msgid ""
 "instanceof ``FormData`` to piggyback the values using correct API."
 msgstr ""
 "Ceci filtre les demandes de données envoyées par le module ``elgg/Ajax``. "
-"Voir :doc:`ajax`` pour plus de détails. Le hook doit vérifier si les données"
-" sont un objet simple ou une instance de ``FormData`` pour récupérer les "
+"Voir :doc:`ajax` pour plus de détails. Le hook doit vérifier si les données "
+"sont un objet simple ou une instance de ``FormData`` pour récupérer les "
 "valeurs à l’aide de la bonne API."
 
 #: ../../guides/javascript.rst:707
@@ -9342,8 +9346,8 @@ msgstr ""
 msgid ""
 "``administer`` for daily tasks, usermanagement and other actionable tasks"
 msgstr ""
-"``Administrer`` pour les tâches quotidiennes, la gestion des utilisateurs et"
-" d’autres tâches concrètes"
+"``administer`` pour les tâches quotidiennes, la gestion des utilisateurs et "
+"d’autres tâches concrètes"
 
 #: ../../guides/menus.rst:48
 msgid ""
@@ -9382,7 +9386,7 @@ msgid ""
 "``'parameters', 'menu:<menu name>'`` to add or modify parameters use for the"
 " menu building (eg. sorting)"
 msgstr ""
-"``'parameters', 'menu:'``  pour ajouter ou modifier les paramètres utilisés "
+"``'parameters', 'menu:'`` pour ajouter ou modifier les paramètres utilisés "
 "pour construire le menu (par exemple l'ordre de tri)"
 
 #: ../../guides/menus.rst:60
@@ -9417,10 +9421,10 @@ msgid ""
 "interact with the properties of the menu item."
 msgstr ""
 "Le troisième paramètre passé au gestionnaire de menu contient tous les "
-"éléments de menu qui ont été enregistrés jusqu’à présent par le noyau Elgg "
-"et d’autres plugins activés. Dans le gestionnaire, nous pouvons faire une "
-"boucle à travers les éléments de menu et utiliser les méthodes de classe "
-"pour interagir avec les propriétés de l’élément de menu."
+"éléments de menu qui ont été enregistrés jusqu’à présent par le noyau de "
+"Elgg et d’autres plugins activés. Dans le gestionnaire, nous pouvons faire "
+"une boucle à travers les éléments de menu et utiliser les méthodes de classe"
+" pour interagir avec les propriétés de l’élément de menu."
 
 #: ../../guides/menus.rst:71
 msgid ""
@@ -9442,7 +9446,7 @@ msgid ""
 "**Example 1:** Change the URL for menu item called \"albums\" in the "
 "``owner_block`` menu:"
 msgstr ""
-"**Exemple 1 :** Modifier l’URL de l’élément de menu appelé ``albums`` dans "
+"**Exemple 1 :** Modifier l’URL de l’élément de menu appelé \"albums\" dans "
 "le menu ``owner_block`` :"
 
 #: ../../guides/menus.rst:117
@@ -9456,7 +9460,7 @@ msgstr "Supprimer l’icône du pouce"
 
 #: ../../guides/menus.rst:117
 msgid "Change the \"Edit\" text into a custom icon"
-msgstr "Modifier le texte ``Modifier`` en une icône personnalisée"
+msgstr "Modifier le texte \"Modifier\" en une icône personnalisée"
 
 #: ../../guides/menus.rst:155
 msgid "Creating a new menu"
@@ -9481,8 +9485,8 @@ msgid ""
 "**Example:** Display a menu called \"my_menu\" that displays it's menu items"
 " in alphapetical order:"
 msgstr ""
-"**Exemple:** Affichez un menu appelé « mon_menu » qui affiche ses éléments "
-"de menu dans l’ordre alphabétique :"
+"**Exemple:** Afficher un menu appelé « my_menu » qui affiche ses éléments de"
+" menu dans l’ordre alphabétique :"
 
 #: ../../guides/menus.rst:171
 msgid "You can now add new items to the menu like this:"
@@ -9495,7 +9499,7 @@ msgid ""
 "``'register', 'menu:my_menu'`` and ``'prepare', 'menu:my_menu'``."
 msgstr ""
 "En outre, il est maintenant possible de modifier le menu en utilisant les "
-"hooks ``'register', 'menu:mon_menu'`` et ``'prepare', 'menu:mon_menu'``."
+"hooks ``'register', 'menu:my_menu'`` et ``'prepare', 'menu:my_menu'``."
 
 #: ../../guides/menus.rst:186
 msgid "Child Dropdown Menus"
@@ -9507,7 +9511,7 @@ msgid ""
 "parent item."
 msgstr ""
 "Les sous-menus peuvent être configurés à l’aide de l’option ``child_menu`` "
-"sur l’élément parent."
+"de l’élément parent."
 
 #: ../../guides/menus.rst:190
 msgid ""
@@ -9517,8 +9521,8 @@ msgid ""
 "``ul`` element."
 msgstr ""
 "Le tableau d’options ``child_menu`` accepte le paramètre ``display``, qui "
-"peut être utilisé pour définir le menu enfant à ouvrir sous forme de "
-"``dropdown`` (liste déroulante) ou être affiché via ``toggle`` (bascule). "
+"peut être utilisé pour définir que le menu enfant s'ouvre sous forme de "
+"liste déroulante ``dropdown``, ou être affiché via une bascule ``toggle``. "
 "Toutes les autres paires de clefs/valeurs seront transmises en tant "
 "qu’attributs à l’élément ``ul``."
 
@@ -10536,7 +10540,7 @@ msgstr "``notifications`` - un tableau d'événements de notification"
 
 #: ../../guides/plugins.rst:232
 msgid "Bootstrap class"
-msgstr "Classe d'initialisation Bootstrap"
+msgstr "Classe d'initialisation - Bootstrap"
 
 #: ../../guides/plugins.rst:234
 msgid ""
@@ -10555,7 +10559,7 @@ msgid ""
 "The bootstrap interface defines several function to be implemented which are"
 " called during different events in the system booting process."
 msgstr ""
-"L’interface d'initialisation bootstrap définit plusieurs fonctions à "
+"L’interface d'initialisation - bootstrap - définit plusieurs fonctions à "
 "implémenter qui sont appelées lors de différents événements dans le "
 "processus de démarrage du système."
 
@@ -10600,8 +10604,8 @@ msgid ""
 "See `PHP-DI documentation <http://php-di.org>`_ for a comprehensive list of "
 "definition and invokation possibilities."
 msgstr ""
-"Voyez la `documentation PHP-DI <http://php-di.org>`_ pour une liste complète"
-" des possibilités de définition et d’invocation."
+"Voyez la `documentation PHP-DI <https://php-di.org/>`_ pour une liste "
+"complète des possibilités de définition et d’invocation."
 
 #: ../../guides/plugins.rst:266
 msgid "composer.json"
@@ -10727,7 +10731,7 @@ msgstr "Connexe"
 
 #: ../../guides/plugins/bootstrap.rst:2
 msgid "Plugin bootstrap"
-msgstr "Initialisation (bootstrap) d'un plugin"
+msgstr "Initialisation - bootstrap - d'un plugin"
 
 #: ../../guides/plugins/bootstrap.rst:4
 msgid ""
@@ -11636,7 +11640,7 @@ msgstr ""
 
 #: ../../guides/routing.rst:55
 msgid "Routes names"
-msgstr "Nom des routes"
+msgstr "Noms des routes"
 
 #: ../../guides/routing.rst:57
 msgid "Route names can then be used to generate a URL:"
@@ -11649,9 +11653,9 @@ msgid ""
 "can override the route by registering different parameters to the same route"
 " name."
 msgstr ""
-"Les noms d’itinéraires sont uniques pour l'ensemble des plugins et le noyau,"
-" de sorte qu’un autre plugin peut surcharger une route en enregistrant "
-"d'autres paramètres sur le même nom de route."
+"Les noms d’itinéraires sont uniques pour l'ensemble des plugins et pour le "
+"noyau, de sorte qu’un autre plugin peut surcharger une route en enregistrant"
+" d'autres paramètres sur le même nom de route."
 
 #: ../../guides/routing.rst:70
 msgid ""
@@ -11729,7 +11733,7 @@ msgstr ""
 
 #: ../../guides/routing.rst:90
 msgid "``collection:object:blog:all``: list all blogs"
-msgstr "``collection:object:blog:all``: liste tous les articles de blog"
+msgstr "``collection:object:blog:all`` : liste tous les articles de blog"
 
 #: ../../guides/routing.rst:91
 msgid ""
@@ -12032,13 +12036,13 @@ msgid ""
 "you can use a controller - any callable that receives an instance of "
 "``\\Elgg\\Request``:"
 msgstr ""
-"Dans certains cas, l’utilisation des vues \"resource\" n’est pas appropriée."
-" Dans ces cas, vous pouvez utiliser un contrôleur - toute fonction appelable"
-" qui reçoit une instance de ``\\Elgg\\Request`` :"
+"Dans certains cas, l’utilisation des vues de ressources n’est pas "
+"appropriée. Dans ces cas, vous pouvez utiliser un contrôleur - toute "
+"fonction appelable qui reçoit une instance de ``\\Elgg\\Request`` :"
 
 #: ../../guides/routing.rst:314
 msgid "The ``route:rewrite`` Plugin Hook"
-msgstr "Le hook de plugin ``route:rewrite``"
+msgstr "Le hook plugin ``route:rewrite``"
 
 #: ../../guides/routing.rst:316
 msgid ""
@@ -12048,7 +12052,7 @@ msgid ""
 msgstr ""
 "Pour la réécriture de l’URL, le hook ``route:rewrite`` (avec des arguments "
 "similaires à ``route``) est déclenché très tôt, et permet de modifier le "
-"chemin d’accès de l’URL de requête (par rapport au site Elgg)."
+"chemin d’accès de l’URL de requête (relative au site Elgg)."
 
 #: ../../guides/routing.rst:319
 msgid "Here we rewrite requests for ``news/*`` to ``blog/*``:"
@@ -12074,7 +12078,7 @@ msgstr ""
 
 #: ../../guides/routing.rst:342
 msgid "A user requests ``http://example.com/news/owner/jane``."
-msgstr "Un utilisateur demande ``http://exemple.com/news/owner/jane``."
+msgstr "Un utilisateur demande ``http://example.com/news/owner/jane``."
 
 #: ../../guides/routing.rst:343
 msgid "Plugins are initialized."
@@ -12085,8 +12089,8 @@ msgid ""
 "Elgg parses the URL to identifier ``news`` and segments ``['owner', "
 "'jane']``."
 msgstr ""
-"Elgg analyse l’URL pour identificateur ``news`` et les ségments ``['owner', "
-"'jane']``."
+"Elgg analyse l’URL pour l'identificateur ``news`` et les segments "
+"``['owner', 'jane']``."
 
 #: ../../guides/routing.rst:345
 msgid "Elgg triggers the plugin hook ``route:rewrite, news`` (see above)."
@@ -12101,8 +12105,8 @@ msgid ""
 "username."
 msgstr ""
 "Elgg trouve une route enregistrée qui correspond au chemin d’accès final de "
-"la route, et génère une vue de ressource qui lui est associée. Il appelle "
-"``elgg_view_resource('blog/owner', $vars)`` où ``$vars`` contient le nom "
+"la route, et affiche la vue de ressource qui lui est associée, en appellant "
+"``elgg_view_resource('blog/owner', $vars)``, où ``$vars`` contient le nom "
 "d’utilisateur."
 
 #: ../../guides/routing.rst:348
@@ -12156,7 +12160,7 @@ msgstr ""
 
 #: ../../guides/search.rst:16
 msgid "``query``         Search query"
-msgstr "``query``         Requête de recherche"
+msgstr "``query``         Requête - Termes de la recherche"
 
 #: ../../guides/search.rst:17
 msgid ""
@@ -12180,7 +12184,7 @@ msgstr "``type``          Type d’entité à rechercher"
 
 #: ../../guides/search.rst:20
 msgid "``subtype``       Optional entity subtype to search"
-msgstr "``subtype``       Sous-type d’entité à rechercher (facultatif)"
+msgstr "``subtype``       Sous-type d’entité à rechercher - facultatif"
 
 #: ../../guides/search.rst:21
 msgid ""
@@ -12191,7 +12195,7 @@ msgstr ""
 
 #: ../../guides/search.rst:23
 msgid "``partial_match`` Allow partial matches"
-msgstr "``partial_match`` Autoriser les correspondances partielles"
+msgstr "``partial_match`` Autorise les correspondances partielles"
 
 #: ../../guides/search.rst:23
 msgid ""
@@ -12233,7 +12237,7 @@ msgstr ""
 
 #: ../../guides/search.rst:73
 msgid "Searchable types"
-msgstr "Entités recherchables"
+msgstr "Entités pouvant être recherchées"
 
 #: ../../guides/search.rst:75
 msgid ""
@@ -12318,7 +12322,7 @@ msgstr ""
 
 #: ../../guides/settings.rst:2
 msgid "Plugin settings"
-msgstr "Paramètres du plugin"
+msgstr "Paramètres de plugin"
 
 #: ../../guides/settings.rst:8
 msgid ""
@@ -12336,7 +12340,7 @@ msgid ""
 "your plugin’s directory in the ``mod`` hierarchy"
 msgstr ""
 "Créez un fichier dans le dossier des vues par défaut de votre plugin appelé "
-"``plugins/votre_plugin/settings.php``, où ``votre_plugin`` est le nom du "
+"``plugins/your_plugin/settings.php``, où ``your_plugin`` est le nom du "
 "répertoire de votre plugin dans la hiérarchie ``mod``"
 
 #: ../../guides/settings.rst:12
@@ -12345,7 +12349,7 @@ msgid ""
 ":doc:`internationalised <i18n>` text labels"
 msgstr ""
 "Remplissez ce fichier avec les éléments de formulaire que vous souhaitez "
-"afficher avec les :doc:`traductions des <i18n>` étiquettes de texte</i18n>"
+"afficher avec les :doc:`traductions des <i18n>` étiquettes de texte"
 
 #: ../../guides/settings.rst:13
 msgid ""
@@ -12358,9 +12362,9 @@ msgstr ""
 "Définissez l’attribut de nom dans vos composants de formulaire sur "
 "``params[`varname`]`` où ``varname`` est le nom de la variable. Celles-ci "
 "seront enregistrées en tant que paramètres privés attachés à une entité "
-"plugin. Ainsi, si votre variable est appelée ``params[monparametre]`` votre "
+"plugin. Ainsi, si votre variable est appelée ``params[myparameter]`` votre "
 "plugin (qui est également passé à cette vue comme ``$vars['entity']``) sera "
-"appelé ``$vars’entity']->monparametre``"
+"appelé ``$vars['entity']->myparameter``"
 
 #: ../../guides/settings.rst:17
 msgid "An example ``settings.php`` would look like:"
@@ -12408,12 +12412,12 @@ msgid ""
 msgstr ""
 "Votre plugin peut également avoir besoin de stocker des paramètres pour "
 "chaque utilisateur, et vous voudrez voir les options de votre plugin "
-"apparaître dans la page de paramètres de l’utilisateur. Ceci est également "
+"apparaître dans la page des paramètres de l’utilisateur. Ceci est également "
 "facile à faire et suit le même modèle que la configuration globale du plugin"
 " expliquée plus tôt. La seule différence est qu’au lieu d’utiliser un "
 "fichier ``settings``, vous utiliserez ``usersettings``. Ainsi, le chemin "
 "d’accès à la vue de modification des paramètres utilisateur de votre plugin "
-"serait ``plugins/<your_plugin>/usersettings.php``./usersettings.php``."
+"serait ``plugins/<your_plugin>/usersettings.php``."
 
 #: ../../guides/settings.rst:57
 msgid ""
@@ -12586,8 +12590,9 @@ msgstr ""
 "beaucoup plus difficile pour les plugins de collaborer sur l’apparence. Ce "
 "qui est `is-primary` dans un thème pourrait être quelque chose d’autre dans "
 "un autre. L'absence de framework permet aux plugins de modifier l’apparence "
-"à l’aide de css pur, sans avoir à remplacer les vues et ajouter des "
-"sélecteurs spécifiques à un framework donné aux éléments de balisage HTML."
+"à l’aide de css pur, sans avoir à remplacer des vues ni devoir ajouter aux "
+"éléments de balisage HTML des sélecteurs spécifiques à un framework "
+"particulier."
 
 #: ../../guides/themes.rst:48
 msgid "**8-point grid system**"
@@ -12604,17 +12609,17 @@ msgid ""
 "should be ``5px`` or ``6px``."
 msgstr ""
 "Elgg utilise un `système de grille à 8 points <https://builttoadapt.io"
-"/intro-to-the-8-point-grid-system-d2573cde8632>`, aussi le dimensionnement "
-"des éléments, leurs marges internes et externes, etc se font par incréments "
-"et fractions de ``8px``. Étant donné que notre taille de police par défaut "
-"est ``16px``, nous utilisons des fractions de `rem`, de sorte que ``0.5rem ="
-" 8px``. Le système de grille à 8 points permet aux développeurs de "
-"collaborer beaucoup plus facilement sur des éléments de style : cela évite "
-"de se demander la marge interne doit être de ``5px`` ou ``6px``."
+"/intro-to-the-8-point-grid-system-d2573cde8632>`, aussi les dimensions des "
+"éléments, leurs marges internes et externes, etc se font par incréments et "
+"fractions de ``8px``. Étant donné que notre taille de police par défaut est "
+"``16px``, nous utilisons des fractions de `rem`, de sorte que ``0.5rem = "
+"8px``. Le système de grille à 8 points permet aux développeurs de collaborer"
+" beaucoup plus facilement sur des éléments de style : cela évite de se "
+"demander si la marge interne doit être de ``5px`` ou de ``6px``."
 
 #: ../../guides/themes.rst:69
 msgid "**Mobile first**"
-msgstr "**Mobile d'abord**"
+msgstr "**Mobile first - Conçu d'abord pour les mobiles**"
 
 #: ../../guides/themes.rst:68
 msgid ""
@@ -12638,7 +12643,7 @@ msgstr ""
 "Flexbox offre une simplicité dans l’empilement des éléments dans les "
 "grilles. Flexbox est utilisé pour tout, des menus aux éléments de mise en "
 "page. Nous évitons les ``float`` et les ``clearfix`` car ils ont du mal à "
-"collaborer et ouvrent beaucoup de place pour les erreurs et les distorsions."
+"collaborer et laissent beaucoup de place aux erreurs et aux distorsions."
 
 #: ../../guides/themes.rst:132
 msgid "**Symmetrical**"
@@ -12660,12 +12665,12 @@ msgid ""
 "``highlight``. When transition to inactive or disabled state, we go one "
 "level down."
 msgstr ""
-"Nous maintenons 4 ensembles de couleurs pour le texte, l’arrière-plan et la "
-"bordure : ``soft`` (doux), ``mild`` (modéré), ``strong`` (fort) et "
-"``highlight`` (en exergue). Lors de la transition vers l’état hover ou "
-"active, nous passons d’un niveau vers le haut, par exemple de ``soft`` à "
-"``mild``, ou utilisons ``highlight``. Lorsque nous passons à un état inactif"
-" ou désactivé, nous descendons d’un niveau."
+"Nous maintenons 4 ensembles de couleurs pour le texte, les arrière-plans et "
+"les bordures : ``soft`` - doux, ``mild`` - modéré, ``strong`` - fort et "
+"``highlight`` - en exergue. Lors de la transition vers l’état hover ou "
+"active, nous montons d’un niveau, par exemple de ``soft`` à ``mild``, ou "
+"utilisons ``highlight``. Lorsque nous passons à un état inactif ou "
+"désactivé, nous descendons d’un niveau."
 
 #: ../../guides/themes.rst:155
 msgid "**Increase the click area**"
