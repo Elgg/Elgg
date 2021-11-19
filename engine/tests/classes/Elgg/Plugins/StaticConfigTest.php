@@ -368,4 +368,20 @@ class StaticConfigTest extends UnitTestCase {
 			$this->assertTrue(is_a($command, \Elgg\Cli\BaseCommand::class, true));
 		}
 	}
+	
+	public function testUpgradesRegistration() {
+		
+		$upgrades = $this->plugin->getStaticConfig('upgrades');
+		if (empty($upgrades)) {
+			$this->markTestSkipped();
+		}
+		
+		$this->assertIsArray($upgrades);
+		
+		foreach ($upgrades as $upgrade) {
+			$this->assertIsString($upgrade);
+			$this->assertTrue(class_exists($upgrade), "Upgrade class {$upgrade} does not exist");
+			$this->assertTrue(is_subclass_of($upgrade, \Elgg\Upgrade\Batch::class), "Upgrade class {$upgrade} is not a correct extension of a \Elgg\Upgrade\Batch base class");
+		}
+	}
 }
