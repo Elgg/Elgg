@@ -29,7 +29,10 @@ return array(
 	'developers:help:display_errors' => "Standardmäßig unterdrückt die .htaccess-Datei von Elgg die Anzeige von Fatal Errors.",
 	'developers:label:screen_log' => "Protokolleinträge auf dem Bildschirm ausgeben",
 	'developers:help:screen_log' => "Anzeige der Ausgabe von elgg_log() und elgg_dump() und Anzeige der Anzahl der durchgeführten Datenbankabfragen.",
-	'developers:label:show_strings' => "Sprach-Strings im Rohformat anzeigen",
+	'developers:show_strings:default' => "Übersetzungen normal anzeigen",
+	'developers:show_strings:key_append' => "Native Sprach-Strings anhängen",
+	'developers:show_strings:key_only' => "Nur native Sprach-Strings anzeigen",
+	'developers:label:show_strings' => "Native Sprach-Strings anzeigen",
 	'developers:help:show_strings' => "Diese Einstellung legt fest, ob die von elgg_echo() verwendeten Sprach-Strings angezeigt werden.",
 	'developers:label:show_modules' => "Geladene AMD-Module in der JavaScript-Konsole anzeigen",
 	'developers:help:show_modules' => "Zeigt Informationen zu den auf der aktuellen Seite geladenen AMD-Modulen in der JavaScript-Konsole des Browsers an.",
@@ -71,6 +74,7 @@ Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören
 	'developers:entity_explorer:info:acl_memberships' => 'Mitglied der Zugriffslevel-Collections',
 	'developers:entity_explorer:delete_entity' => 'Entität löschen',
 	'developers:entity_explorer:inspect_entity' => 'Prüfe diese Entität',
+	'developers:entity_explorer:view_entity' => 'Diese Entität auf der Seite anzeigen',
 	
 	// inspection
 	'developers:inspect:help' => 'Konfiguration des Elgg-Frameworks prüfen.',

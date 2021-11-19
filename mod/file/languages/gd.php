@@ -19,11 +19,16 @@ return array(
 	'notifications:mute:object:file' => "mu dheidhinn an fhaidhle '%s'",
 
 	'file:more' => "Barrachd fhaidhlichean",
+	'file:list' => "sealladh-liosta",
 
 	'file:num_files' => "An àireamh de dh'fhaidhlichean a chithear",
+	'file:replace' => 'Ionadaich susbaint an fhaidhle (fàg bàn gus am faidhle fhàgail mar a tha e)',
 	'file:list:title' => "%s%s aig %s",
 
 	'file:file' => "Faidhle",
+
+	'file:list:list' => 'Seall ann an liosta',
+	'file:list:gallery' => 'Seall ann an gailearaidh',
 
 	'file:type:' => 'Faidhlichean',
 	'file:type:all' => "Faidhlichean gu lèir",
@@ -47,6 +52,8 @@ return array(
 
 	'widgets:filerepo:name' => "Widget nam faidhlichean",
 	'widgets:filerepo:description' => "Seall na faidhlichean as ùire agad",
+
+	'groups:tool:file' => 'Cuir an comas faidhlichean ann am buidhnean',
 
 	'river:object:file:create' => 'Luchdaich suas %s am faidhle \'%s\'',
 	'river:object:file:comment' => 'Dh\'fhàg %s beachd air an fhaidhle \'%s\'',
