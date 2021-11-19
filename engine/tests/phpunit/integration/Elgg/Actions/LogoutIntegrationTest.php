@@ -41,7 +41,7 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(OkResponse::class, $response);
 
-		$messages = _elgg_services()->systemMessages->dumpRegister();
+		$messages = _elgg_services()->system_messages->dumpRegister();
 		$this->assertNotEmpty($messages['success']);
 		$this->assertEquals(elgg_echo('logoutok', [], $user->language), array_shift($messages['success']));
 
@@ -62,7 +62,7 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(OkResponse::class, $response);
 
-		$messages = _elgg_services()->systemMessages->dumpRegister();
+		$messages = _elgg_services()->system_messages->dumpRegister();
 		$this->assertNotEmpty($messages['success']);
 		$this->assertEquals(elgg_echo('logoutok', [], $user->language), array_shift($messages['success']));
 

@@ -66,7 +66,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Assets\ImageFetcherService                $imageFetcher
  * @property-read \Elgg\ImageService                              $imageService
  * @property-read \Elgg\Invoker                                   $invoker
- * @property-read \Elgg\I18n\LocaleService                        $localeService
+ * @property-read \Elgg\I18n\LocaleService                        $locale
  * @property-read \ElggCache                                      $localFileCache
  * @property-read \Elgg\Logger                                    $logger
  * @property-read Mailer                                          $mailer
@@ -106,7 +106,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Forms\StickyForms                         $stickyForms
  * @property-read \Elgg\Notifications\SubscriptionsService        $subscriptions
  * @property-read \Elgg\Cache\SystemCache                         $systemCache
- * @property-read \Elgg\SystemMessagesService                     $systemMessages
+ * @property-read \Elgg\SystemMessagesService                     $system_messages
  * @property-read \Elgg\Views\TableColumn\ColumnFactory           $table_columns
  * @property-read \ElggTempDiskFilestore                          $temp_filestore
  * @property-read \Elgg\Timer                                     $timer

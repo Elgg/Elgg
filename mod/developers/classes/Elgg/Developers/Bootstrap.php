@@ -88,9 +88,9 @@ class Bootstrap extends DefaultPluginBootstrap {
 			$old_translator = elgg()->translator;
 			
 			if ($show_strings === 1) {
-				$translator = new AppendTranslator(_elgg_services()->config, _elgg_services()->localeService);
+				$translator = new AppendTranslator(_elgg_services()->config, _elgg_services()->locale);
 			} elseif ($show_strings === 2) {
-				$translator = new NullTranslator(_elgg_services()->config, _elgg_services()->localeService);
+				$translator = new NullTranslator(_elgg_services()->config, _elgg_services()->locale);
 			}
 			foreach ($old_translator->getLanguagePaths() as $path) {
 				$translator->registerLanguagePath($path);

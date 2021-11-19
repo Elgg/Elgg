@@ -312,7 +312,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = []) {
 	$page_shell = elgg_trigger_plugin_hook('shell', 'page', $params, $page_shell);
 
 
-	$system_messages = _elgg_services()->systemMessages;
+	$system_messages = _elgg_services()->system_messages;
 
 	$messages = null;
 	if ($system_messages->count()) {

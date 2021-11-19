@@ -18,10 +18,7 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 	public $translator;
 
 	public function up() {
-		$config = elgg()->config;
-		$localeService = elgg()->locale;
-		
-		$this->translator = new Translator($config, $localeService);
+		$this->translator = new Translator(_elgg_services()->config, _elgg_services()->locale);
 		$this->translator->loadTranslations('en');
 
 		$this->translator->addTranslation('en', [$this->key => 'Dummy']);

@@ -105,7 +105,7 @@ class InternalContainer extends \Elgg\Di\InternalContainer{
 				$c->views,
 				$c->privateSettingsCache,
 				$c->config,
-				$c->systemMessages,
+				$c->system_messages,
 				$c->request->getContextStack()
 			);
 		});
@@ -115,7 +115,7 @@ class InternalContainer extends \Elgg\Di\InternalContainer{
 		});
 		
 		$container->set('translator', function(ContainerInterface $c) {
-			return new \Elgg\Mocks\I18n\Translator($c->config, $c->localeService);
+			return new \Elgg\Mocks\I18n\Translator($c->config, $c->locale);
 		});
 
 		$container->set('usersTable', function(ContainerInterface $c) {

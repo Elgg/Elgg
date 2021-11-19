@@ -435,7 +435,7 @@ class Application {
 
 			if ($forward_url && !$request->isXmlHttpRequest()) {
 				if ($ex->getMessage()) {
-					$this->internal_services->systemMessages->addErrorMessage($ex->getMessage());
+					$this->internal_services->system_messages->addErrorMessage($ex->getMessage());
 				}
 				$response = new RedirectResponse($forward_url);
 			} else {

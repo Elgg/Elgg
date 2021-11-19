@@ -131,7 +131,7 @@ return [
 	'invoker' => DI\factory(function (ContainerInterface $c) {
 		return new \Elgg\Invoker($c->session, elgg());
     }),
-	'localeService' => DI\autowire(\Elgg\I18n\LocaleService::class),
+	'locale' => DI\autowire(\Elgg\I18n\LocaleService::class),
 	'localFileCache' => DI\factory(function (ContainerInterface $c) {
 		$flags = ELGG_CACHE_LOCALFILESYSTEM | ELGG_CACHE_RUNTIME;
 		return new \Elgg\Cache\CompositeCache('elgg_local_system_cache', $c->config, $flags);
@@ -195,7 +195,7 @@ return [
 			$c->views,
 			$c->privateSettingsCache,
 			$c->config,
-			$c->systemMessages,
+			$c->system_messages,
 			$c->request->getContextStack()
 		);
     }),
@@ -251,7 +251,7 @@ return [
 	'systemCache' => DI\autowire(\Elgg\Cache\SystemCache::class)->constructorParameter('cache', DI\get('fileCache')),
 	'serverCache' => DI\autowire(\Elgg\Cache\SystemCache::class)->constructorParameter('cache', DI\get('localFileCache')),
 	'subscriptions' => DI\autowire(\Elgg\Notifications\SubscriptionsService::class),
-	'systemMessages' => DI\autowire(\Elgg\SystemMessagesService::class),
+	'system_messages' => DI\autowire(\Elgg\SystemMessagesService::class),
 	'table_columns' => DI\autowire(\Elgg\Views\TableColumn\ColumnFactory::class),
 	'temp_filestore' => DI\autowire(\ElggTempDiskFilestore::class),
 	'timer' => DI\autowire(\Elgg\Timer::class),
@@ -338,7 +338,7 @@ return [
 	\Elgg\HandlersService::class => DI\get('handlers'),
 	\Elgg\Http\Request::class => DI\get('request'),
 	\Elgg\Http\ResponseFactory::class => DI\get('responseFactory'),
-	\Elgg\I18n\LocaleService::class => DI\get('localeService'),
+	\Elgg\I18n\LocaleService::class => DI\get('locale'),
 	\Elgg\I18n\Translator::class => DI\get('translator'),
 	\Elgg\ImageService::class => DI\get('imageService'),
 	\Elgg\Invoker::class => DI\get('invoker'),
@@ -363,7 +363,7 @@ return [
 	\Elgg\Security\HmacFactory::class => DI\get('hmac'),
 	\Elgg\Security\PasswordGeneratorService::class => DI\get('passwordGenerator'),
 	\Elgg\Security\UrlSigner::class => DI\get('urlSigner'),
-	\Elgg\SystemMessagesService::class => DI\get('systemMessages'),
+	\Elgg\SystemMessagesService::class => DI\get('system_messages'),
 	\Elgg\Timer::class => DI\get('timer'),
 	\Elgg\UpgradeService::class => DI\get('upgrades'),
 	\Elgg\Upgrade\Locator::class => DI\get('upgradeLocator'),

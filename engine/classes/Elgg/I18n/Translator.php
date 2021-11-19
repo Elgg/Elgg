@@ -25,7 +25,7 @@ class Translator {
 	/**
 	 * @var LocaleService
 	 */
-	private $localeService;
+	private $locale;
 
 	/**
 	 * @var array
@@ -71,12 +71,12 @@ class Translator {
 	/**
 	 * Constructor
 	 *
-	 * @param Config        $config       Elgg config
-	 * @param LocaleService $localService locale service
+	 * @param Config        $config Elgg config
+	 * @param LocaleService $locale locale service
 	 */
-	public function __construct(Config $config, LocaleService $localService) {
+	public function __construct(Config $config, LocaleService $locale) {
 		$this->config = $config;
-		$this->localeService = $localService;
+		$this->locale = $locale;
 		
 		$this->defaultPath = dirname(dirname(dirname(dirname(__DIR__)))) . "/languages/";
 		
@@ -579,7 +579,7 @@ class Translator {
 	public function getAvailableLanguages() {
 		$languages = [];
 		
-		$allowed_languages = $this->localeService->getLanguageCodes();
+		$allowed_languages = $this->locale->getLanguageCodes();
 		
 		foreach ($this->getLanguagePaths() as $path) {
 			try {

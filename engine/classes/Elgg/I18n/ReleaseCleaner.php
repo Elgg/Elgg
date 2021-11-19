@@ -30,7 +30,7 @@ class ReleaseCleaner {
 	 */
 	public function __construct(array $codes = []) {
 		if (empty($codes)) {
-			$codes = _elgg_services()->localeService->getLanguageCodes();
+			$codes = _elgg_services()->locale->getLanguageCodes();
 		}
 		$this->codes = $codes;
 	}
