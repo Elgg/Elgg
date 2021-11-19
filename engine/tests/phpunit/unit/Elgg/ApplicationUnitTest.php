@@ -92,7 +92,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 	function testCanGetDb() {
 		$app = $this->createMockApplication();
 		$this->assertInstanceOf(Database::class, $app->getDb());
-		$this->assertEquals(_elgg_services()->db->prefix, $app->getDbConfig()->getTablePrefix());
+		$this->assertEquals(_elgg_services()->db->prefix, $app->internal_services->dbConfig->getTablePrefix());
 	}
 
 	function testCanLoadCore() {

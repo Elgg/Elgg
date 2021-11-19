@@ -181,17 +181,6 @@ class Application {
 	}
 
 	/**
-	 * Get the DB credentials.
-	 *
-	 * We no longer leave DB credentials in the config in case it gets accidentally dumped.
-	 *
-	 * @return \Elgg\Database\DbConfig
-	 */
-	public function getDbConfig() {
-		return $this->internal_services->dbConfig;
-	}
-
-	/**
 	 * Get a Database wrapper for performing queries without booting Elgg
 	 *
 	 * If settings has not been loaded, it will be loaded to configure the DB connection.
