@@ -1,3 +1,15 @@
+<a name="3.3.22"></a>
+### 3.3.22  (2021-11-19)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+
+#### Bug Fixes
+
+* **groups:** prevent misuse of group membership actions ([d9fcad76](https://github.com/Elgg/Elgg/commit/d9fcad76ee380ea17edd61d13d0f87828ea3f744))
+
+
 <a name="3.3.21"></a>
 ### 3.3.21  (2021-08-03)
 
