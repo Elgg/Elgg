@@ -376,6 +376,18 @@ fixes #12684 ([13070985](https://github.com/Elgg/Elgg/commit/13070985e840a78fc8b
 * **views:** removed elgg_prepend_css_urls is no longer available ([53cb8819](https://github.com/Elgg/Elgg/commit/53cb881983b1aae39b9966e9d74de807a808f0b9))
 
 
+<a name="3.3.22"></a>
+### 3.3.22  (2021-11-19)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+
+#### Bug Fixes
+
+* **groups:** prevent misuse of group membership actions ([d9fcad76](https://github.com/Elgg/Elgg/commit/d9fcad76ee380ea17edd61d13d0f87828ea3f744))
+
+
 <a name="3.3.21"></a>
 ### 3.3.21  (2021-08-03)
 
