@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	'add:group:group' => "Gruppe hinzufügen",
 	
 	'groups' => "Gruppen",
 	'groups:owned' => "Von mir gegründete Gruppen",

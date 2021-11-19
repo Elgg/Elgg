@@ -6,72 +6,72 @@
  */
 
 return array(
-	'item:object:discussion' => "Cuspair còmhraidh",
+	'item:object:discussion' => "Deasbad",
 	
-	'add:object:discussion' => 'Toisich cuspair còmhraidh ùr',
-	'edit:object:discussion' => 'Deasaich a’ chuspair còmhraidh',
-	'collection:object:discussion' => 'Cuspairean còmhraidh',
-	'collection:object:discussion:group' => 'Còmhraidhean a’ bhuidhinn',
-	'collection:object:discussion:my_groups' => 'Còmhraidhean anns na buidhnean agam',
-	'notification:object:discussion:create' => "Leig fios nuair a thèid còmhradh a chruthachadh",
-	'notifications:mute:object:discussion' => "mu dheidhinn a' chòmhradh ‘%s’",
+	'add:object:discussion' => 'Toisich deasbad ùr',
+	'edit:object:discussion' => 'Deasaich an deasbad',
+	'collection:object:discussion' => 'Deasbadan',
+	'collection:object:discussion:group' => 'Deasbadan buidhne',
+	'collection:object:discussion:my_groups' => 'Deasbadan sna buidhnean agam',
+	'notification:object:discussion:create' => "Cuir brath nuair a thèid deasbad ùr a thòiseachadh",
+	'notifications:mute:object:discussion' => "mu dheidhinn an deasbaid \"%s\"",
 	
-	'discussion:settings:enable_global_discussions' => 'Cuir an comas còmhraidhean uile-choitcheann',
-	'discussion:settings:enable_global_discussions:help' => 'Ceadaich còmhraidhean taobh a-muigh buidhnean',
+	'discussion:settings:enable_global_discussions' => 'Cuir an comas deasbadan uile-choitcheann',
+	'discussion:settings:enable_global_discussions:help' => 'Ceadaich deasbadan taobh a-muigh buidhnean',
 
-	'discussion:latest' => 'Na còmhraidhean as ùire',
-	'discussion:none' => 'Chan eil còmhradh ann',
+	'discussion:latest' => 'Na deasbadan as ùire',
+	'discussion:none' => 'Gun deasbad',
 	'discussion:updated' => "An fhreagairt as ùire le %s %s",
 
-	'discussion:topic:created' => 'Chaidh an cuspair còmhraidh a chruthachadh.',
-	'discussion:topic:updated' => 'Chaidh an cuspair còmhraidh ùrachadh.',
-	'entity:delete:object:discussion:success' => 'Chaidh an cuspair còmhraidh a sguabadh às.',
+	'discussion:topic:created' => 'Chaidh an deasbad a chruthachadh.',
+	'discussion:topic:updated' => 'Chaidh an deasbad ùrachadh.',
+	'entity:delete:object:discussion:success' => 'Chaidh an deasbad a sguabadh às.',
 
-	'discussion:topic:notfound' => 'Cha deach an cuspair còmhraidh a lorg',
-	'discussion:error:notsaved' => 'Cha b\' urrainn dhuinn an cuspair seo a shàbhaladh',
-	'discussion:error:missing' => 'Feumaidh tu an dà chuid tiotal is teachdaireachd a chur a-steach',
+	'discussion:topic:notfound' => 'Cha do ghabh an deasbad a lorg',
+	'discussion:error:notsaved' => 'Cha do ghabh an deasbad seo a shàbhaladh',
+	'discussion:error:missing' => 'Tha an tiotal agus an teachdaireachd nan raointean riatanach',
 	'discussion:error:permissions' => 'Chan eil cead agad an gnìomh seo a dhèanamh',
 	'discussion:error:no_groups' => "Chan eil thu nad bhall ann am buidheann sam bith.",
 
 	/**
 	 * River
 	 */
-	'river:object:discussion:create' => 'Chaidh cuspair còmhraidh ùr a chur ann le %s %s',
-	'river:object:discussion:comment' => 'Dh\'fhàg %s beachd air a\' chuspair còmhraidh %s',
+	'river:object:discussion:create' => 'Thòisich %s deasbad ùr: "%s"',
+	'river:object:discussion:comment' => 'Dh\'fhàg %s beachd air an deasbad "%s"',
 	
 	/**
 	 * Notifications
 	 */
-	'discussion:topic:notify:summary' => 'Cuspair còmhraidh ùr air a bheil %s',
-	'discussion:topic:notify:subject' => 'Cuspair còmhraidh ùr: %s',
-	'discussion:topic:notify:body' => 'Tha %s air cuspair còmhraidh ùr, "%s", a thòiseachadh:
+	'discussion:topic:notify:summary' => 'Deasbad ùr air a bheil "%s"',
+	'discussion:topic:notify:subject' => 'Deasbad ùr: "%s"',
+	'discussion:topic:notify:body' => 'Tha %s air deasbad ùr, "%s", a thòiseachadh:
 
 %s
 
 Seall agus cuir freagairt ris:
 %s',
 
-	'discussion:comment:notify:summary' => 'Beachd ùr air a\' chuspair: %s',
-	'discussion:comment:notify:subject' => 'Beachd ùr air a\' chuspair :%s',
-	'discussion:comment:notify:body' => 'Tha %s air freagairt a chur ris a\' chuspair còmhraidh "%s":
+	'discussion:comment:notify:summary' => 'Beachd ùr air an deasbad: "%s"',
+	'discussion:comment:notify:subject' => 'Beachd ùr air an deasbad: "%s"',
+	'discussion:comment:notify:body' => 'Tha %s air beachd fhàgail air an deasbad "%s":
 
 %s
 
 Seall agus fàg beachd air
 %s',
 
-	'groups:tool:forum' => 'Cuir an comas còmhraidhean ann am buidhnean',
+	'groups:tool:forum' => 'Cuir an comas deasbadan ann am buidhnean',
 
 	/**
 	 * Discussion status
 	 */
-	'discussion:topic:status' => 'Staid a\' chuspair',
-	'discussion:topic:closed:title' => 'Tha an còmhradh seo dùinte.',
-	'discussion:topic:closed:desc' => 'Tha an còmhradh seo dùinte agus cha ghabh e ri freagairt ùr.',
+	'discussion:topic:status' => 'Staid an deasbaid',
+	'discussion:topic:closed:title' => 'Tha an deasbad seo dùinte.',
+	'discussion:topic:closed:desc' => 'Tha an deasbad seo dùinte agus cha ghabh e ri freagairt ùr.',
 
-	'discussion:topic:description' => 'Teachdaireachd a\' chuspair',
-	'discussion:topic:toggle_status:open' => 'Chaidh an cuspair còmhraidh fhosgladh a-rithist gu soirbheachail',
-	'discussion:topic:toggle_status:open:confirm' => 'A bheil thu cinnteach gu bheil thu airson a’ chuspair seo fhosgladh a-rithist?',
-	'discussion:topic:toggle_status:closed' => 'Chaidh an cuspair còmhraidh seo a dhùnadh gu soirbheachail',
-	'discussion:topic:toggle_status:closed:confirm' => 'A bheil thu cinnteach gu bheil thu airson a’ chuspair seo a dhùnadh?',
+	'discussion:topic:description' => 'Teachdaireachd an deasbaid',
+	'discussion:topic:toggle_status:open' => 'Chaidh an deasbad fhosgladh a-rithist gu soirbheachail',
+	'discussion:topic:toggle_status:open:confirm' => 'A bheil thu cinnteach gu bheil thu airson an deasbad seo fhosgladh a-rithist?',
+	'discussion:topic:toggle_status:closed' => 'Chaidh an deasbad seo a dhùnadh gu soirbheachail',
+	'discussion:topic:toggle_status:closed:confirm' => 'A bheil thu cinnteach gu bheil thu airson an deasbad seo a dhùnadh?',
 );
