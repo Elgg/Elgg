@@ -60,13 +60,19 @@ class CacheHandler {
 	/**
 	 * Constructor
 	 *
-	 * @param Config  $config              Elgg configuration
-	 * @param Request $request             HTTP request
-	 * @param bool    $simplecache_enabled Is the simplecache enabled?
+	 * @param Config  $config  Elgg configuration
+	 * @param Request $request HTTP request
 	 */
-	public function __construct(Config $config, Request $request, $simplecache_enabled) {
+	public function __construct(Config $config, Request $request) {
 		$this->config = $config;
 		$this->request = $request;
+		
+		$simplecache_enabled = $config->simplecache_enabled;
+		if ($config->hasInitialValue('simplecache_enabled')) {
+			// setting in settings.php wins
+			$simplecache_enabled = $config->getInitialValue('simplecache_enabled');
+		}
+				
 		$this->simplecache_enabled = $simplecache_enabled;
 	}
 

@@ -22,9 +22,9 @@ class HMACCacheTable {
 	protected $database;
 	
 	/**
-	 * @var int
+	 * @var int HMAC lifetime is 25 hours (this should be related to the time drift allowed in header validation)
 	 */
-	protected $ttl = -1;
+	protected $ttl = 90000;
 	
 	/**
 	 * @var string Table being managed, DON'T CHANGE
