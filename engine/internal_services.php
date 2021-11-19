@@ -3,16 +3,7 @@
 use Psr\Container\ContainerInterface;
 
 return [
-	'autoloadManager' => DI\factory(function (ContainerInterface $c) {
-		$manager = new \Elgg\AutoloadManager($c->classLoader);
-
-		if (!$c->config->AutoloaderManager_skip_storage) {
-			$manager->setCache($c->localFileCache);
-			$manager->loadCache();
-		}
-
-		return $manager;
-    }),
+	'autoloadManager' => DI\autowire(\Elgg\AutoloadManager::class)->constructorParameter('cache', DI\get('localFileCache')),
 	'accessCache' => DI\factory(function (ContainerInterface $c) {
 		return $c->sessionCache->access;
     }),
@@ -35,17 +26,7 @@ return [
 		
 		return new \Elgg\BootService($cache);
     }),
-	'cacheHandler' => DI\factory(function (ContainerInterface $c) {
-		if ($c->config->hasInitialValue('simplecache_enabled')) {
-			// check for setting in settings.php
-			$simplecache_enabled = $c->config->getInitialValue('simplecache_enabled');
-		} else {
-			// need to retrieve setting from db
-			$simplecache_enabled = $c->configTable->get('simplecache_enabled') ?? $c->config->simplecache_enabled;
-		}
-		
-		return new \Elgg\Application\CacheHandler($c->config, $c->request, $simplecache_enabled);
-    }),
+	'cacheHandler' => DI\autowire(\Elgg\Application\CacheHandler::class),
 	'cssCompiler' => DI\autowire(\Elgg\Assets\CssCompiler::class),
 	'csrf' => DI\autowire(\Elgg\Security\Csrf::class),
 	'classLoader' => DI\factory(function (ContainerInterface $c) {
@@ -90,10 +71,9 @@ return [
 	'externalFiles' => DI\autowire(\Elgg\Assets\ExternalFiles::class),
 	'fields' => DI\autowire(\Elgg\Forms\FieldsService::class),
 	'forms' => DI\autowire(\Elgg\FormsService::class),
-	
 	'fileCache' => DI\factory(function (ContainerInterface $c) {
 		$flags = ELGG_CACHE_PERSISTENT | ELGG_CACHE_FILESYSTEM | ELGG_CACHE_RUNTIME;
-			return new \Elgg\Cache\CompositeCache('elgg_system_cache', $c->config, $flags);
+		return new \Elgg\Cache\CompositeCache('elgg_system_cache', $c->config, $flags);
     }),
 	'filestore' => DI\factory(function (ContainerInterface $c) {
 		return new \ElggDiskFilestore($c->config->dataroot);
@@ -102,13 +82,7 @@ return [
 	'group_tools' => DI\autowire(\Elgg\Groups\Tools::class),
 	'handlers' => DI\autowire(\Elgg\HandlersService::class),
 	'hmac' => DI\autowire(\Elgg\Security\HmacFactory::class),
-	'hmacCacheTable' => DI\factory(function (ContainerInterface $c) {
-		$hmac = new \Elgg\Database\HMACCacheTable($c->db);
-		// HMAC lifetime is 25 hours (this should be related to the time drift allowed in header validation)
-		$hmac->setTTL(90000);
-		
-		return $hmac;
-    }),
+	'hmacCacheTable' => DI\autowire(\Elgg\Database\HMACCacheTable::class),
 	'html_formatter' => DI\autowire(\Elgg\Views\HtmlFormatter::class),
 	'hooks' => DI\autowire(\Elgg\PluginHooksService::class),
 	'iconService' => DI\autowire(\Elgg\EntityIconService::class),
@@ -209,10 +183,7 @@ return [
 		$config_disabled = $c->config->db_disable_query_cache === true;
 		return new \Elgg\Cache\QueryCache($c->config->db_query_cache_limit, $config_disabled);
     }),
-	'redirects' => DI\factory(function (ContainerInterface $c) {
-		$is_xhr = $c->request->isXmlHttpRequest();
-		return new \Elgg\RedirectService($c->session, $is_xhr, $c->config->wwwroot, current_page_url());
-    }),
+	'redirects' => DI\autowire(\Elgg\RedirectService::class),
 	'relationshipsTable' => DI\autowire(\Elgg\Database\RelationshipsTable::class),
 	'request' => DI\factory(function (ContainerInterface $c) {
 		global $CONFIG;
