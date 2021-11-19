@@ -170,6 +170,7 @@ return [
 		'middleware' => [
 			\Elgg\Router\Middleware\Gatekeeper::class,
 		],
+		'detect_page_owner' => true,
 	],
 	'settings:notifications' => [
 		'path' => '/settings/notifications/{username}',
@@ -193,13 +194,15 @@ return [
 		'middleware' => [
 			\Elgg\Router\Middleware\Gatekeeper::class,
 		],
+		'detect_page_owner' => true,
 	],
 	'settings:tools' => [
-		'path' => '/settings/plugins/{username?}/{plugin_id}',
+		'path' => '/settings/plugins/{username}/{plugin_id}',
 		'resource' => 'settings/tools',
 		'middleware' => [
-			\Elgg\Router\Middleware\Gatekeeper::class,
+			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
+		'detect_page_owner' => true,
 	],
 	'widgets:add_panel' => [
 		'path' => '/widgets/add_panel',
@@ -227,7 +230,7 @@ return [
 		'path' => '/avatar/edit/{username}',
 		'resource' => 'avatar/edit',
 		'middleware' => [
-			\Elgg\Router\Middleware\Gatekeeper::class,
+			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
 	],
 	'notifications:mute' => [
