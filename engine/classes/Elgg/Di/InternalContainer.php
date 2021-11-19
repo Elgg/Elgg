@@ -241,7 +241,7 @@ class InternalContainer extends DiContainer {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function factory(array $options = []): self {
+	public static function factory(array $options = []) {
 		$container = parent::factory($options);
 		
 		if (isset($options['config'])) {
