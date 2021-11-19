@@ -151,7 +151,9 @@ class PageOwnerService {
 		});
 		
 		if (is_int($guid)) {
-			elgg_deprecated_notice('The automatic legacy page owner detection based on request parameters has been deprecated. Use route definitions if possible.', '4.1');
+			if (!$this->request->isAction()) {
+				elgg_deprecated_notice('The automatic legacy page owner detection based on request parameters has been deprecated. Use route definitions if possible.', '4.1');
+			}
 			return $guid;
 		}
 		

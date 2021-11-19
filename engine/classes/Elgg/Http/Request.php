@@ -338,6 +338,17 @@ class Request extends SymfonyRequest {
 	}
 
 	/**
+	 * Is the request an action
+	 *
+	 * @return bool
+	 *
+	 * @since 4.1
+	 */
+	public function isAction(): bool {
+		return $this->getFirstUrlSegment() === 'action';
+	}
+
+	/**
 	 * Is PHP running the CLI server front controller
 	 *
 	 * @return bool

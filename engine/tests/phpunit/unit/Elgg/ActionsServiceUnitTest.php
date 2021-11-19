@@ -712,7 +712,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(RedirectResponse::class, $response);
 		$this->assertEquals(ELGG_HTTP_FOUND, $response->getStatusCode());
 		$this->assertEquals(elgg_normalize_url('index'), $response->getTargetURL());
-		$this->assertContains('success', _elgg_services()->systemMessages->dumpRegister()['success']);
+		$this->assertContains('success', _elgg_services()->system_messages->dumpRegister()['success']);
 	}
 
 	public function testCanRespondToNonAjaxRequestFromErrorResponseBuilder() {
@@ -734,7 +734,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(RedirectResponse::class, $response);
 		$this->assertEquals(ELGG_HTTP_FOUND, $response->getStatusCode());
 		$this->assertEquals(elgg_normalize_url('index'), $response->getTargetURL());
-		$this->assertContains('error', _elgg_services()->systemMessages->dumpRegister()['error']);
+		$this->assertContains('error', _elgg_services()->system_messages->dumpRegister()['error']);
 	}
 
 	public function testCanRespondToNonAjaxRequestFromRedirectResponseBuilder() {

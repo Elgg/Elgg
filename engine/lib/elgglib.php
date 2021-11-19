@@ -184,7 +184,7 @@ function elgg_get_loaded_external_files(string $type, string $location): array {
  * @return bool
  */
 function system_message($message) {
-	_elgg_services()->systemMessages->addSuccessMessage($message);
+	_elgg_services()->system_messages->addSuccessMessage($message);
 	return true;
 }
 
@@ -196,7 +196,7 @@ function system_message($message) {
  * @return bool
  */
 function register_error($error) {
-	_elgg_services()->systemMessages->addErrorMessage($error);
+	_elgg_services()->system_messages->addErrorMessage($error);
 	return true;
 }
 

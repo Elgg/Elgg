@@ -86,7 +86,6 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		$services = InternalContainer::factory(['config' => $config]);
 
 		$services->set('session', \ElggSession::getMock());
-		$services->systemMessages;
 
 		$app = Application::factory([
 			'config' => $config,

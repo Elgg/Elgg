@@ -84,7 +84,7 @@ class PluginsUnitTest extends \Elgg\UnitTestCase {
 			$sp->views,
 			$sp->privateSettingsCache,
 			$sp->config,
-			$sp->systemMessages,
+			$sp->system_messages,
 			$sp->request->getContextStack()
 		);
 		

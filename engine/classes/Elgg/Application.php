@@ -181,17 +181,6 @@ class Application {
 	}
 
 	/**
-	 * Get the DB credentials.
-	 *
-	 * We no longer leave DB credentials in the config in case it gets accidentally dumped.
-	 *
-	 * @return \Elgg\Database\DbConfig
-	 */
-	public function getDbConfig() {
-		return $this->internal_services->dbConfig;
-	}
-
-	/**
 	 * Get a Database wrapper for performing queries without booting Elgg
 	 *
 	 * If settings has not been loaded, it will be loaded to configure the DB connection.
@@ -446,7 +435,7 @@ class Application {
 
 			if ($forward_url && !$request->isXmlHttpRequest()) {
 				if ($ex->getMessage()) {
-					$this->internal_services->systemMessages->addErrorMessage($ex->getMessage());
+					$this->internal_services->system_messages->addErrorMessage($ex->getMessage());
 				}
 				$response = new RedirectResponse($forward_url);
 			} else {

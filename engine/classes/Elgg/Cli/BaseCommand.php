@@ -177,7 +177,7 @@ abstract class BaseCommand extends \Symfony\Component\Console\Command\Command {
 	 * @return void
 	 */
 	final protected function dumpRegisters() {
-		$registers = _elgg_services()->systemMessages->loadRegisters();
+		$registers = _elgg_services()->system_messages->loadRegisters();
 
 		foreach ($registers as $prop => $values) {
 			if (!empty($values)) {
