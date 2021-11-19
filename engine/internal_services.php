@@ -77,20 +77,7 @@ return [
 	'crypto' => DI\autowire(\ElggCrypto::class),
 	'dataCache' => DI\autowire(\Elgg\Cache\DataCache::class),
 	'db' => DI\autowire(\Elgg\Database::class),
-	'dbConfig' => DI\factory(function (ContainerInterface $c) {
-		$config = $c->config;
-		$db_config = \Elgg\Database\DbConfig::fromElggConfig($config);
-
-		// get this stuff out of config!
-		unset($config->db);
-		unset($config->dbname);
-		unset($config->dbhost);
-		unset($config->dbport);
-		unset($config->dbuser);
-		unset($config->dbpass);
-
-		return $db_config;
-    }),
+	// the 'dbConfig' service is available but is set as part of the construction of the application
 	'delayedEmailQueueTable' => DI\autowire(\Elgg\Database\DelayedEmailQueueTable::class),
 	'delayedEmailService' => DI\autowire(\Elgg\Email\DelayedEmailService::class),
 	'emails' => DI\autowire(\Elgg\EmailService::class)->constructorParameter('mailer', DI\get('mailer')),
