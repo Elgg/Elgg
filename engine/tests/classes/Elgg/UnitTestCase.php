@@ -2,7 +2,7 @@
 
 namespace Elgg;
 
-use Elgg\Mocks\Di\MockServiceProvider;
+use Elgg\Mocks\Di\InternalContainer;
 use Psr\Log\LogLevel;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,43 +22,46 @@ abstract class UnitTestCase extends BaseTestCase {
 		Application::setInstance(null);
 
 		$config = self::getTestingConfig();
-		$sp = new MockServiceProvider($config);
 
 		// persistentLogin service needs this set to instantiate without calling DB
-		$sp->config->getCookieConfig();
-		$sp->config->boot_complete = false;
-		$sp->config->system_cache_enabled = elgg_extract('system_cache_enabled', $params, true);
-		$sp->config->plugins_path = elgg_extract('plugins_path', $params);
-		$sp->config->site = new \ElggSite((object) [
+		$config->getCookieConfig();
+		$config->boot_complete = false;
+		$config->system_cache_enabled = elgg_extract('system_cache_enabled', $params, true);
+		$config->plugins_path = elgg_extract('plugins_path', $params);
+		$config->site = new \ElggSite((object) [
 			'guid' => 1,
 		]);
 
+		$sp = InternalContainer::factory(['config' => $config]);
+
 		$app = Application::factory(array_merge([
-			'service_provider' => $sp,
+			'internal_services' => $sp,
 			'handle_exceptions' => false,
 			'handle_shutdown' => false,
 			'set_start_time' => false,
 		], $params));
 
+		$app->setGlobalConfig($app);
+
 		Application::setInstance($app);
 
 		$cli_output = new NullOutput();
 		$cli_output->setVerbosity(OutputInterface::VERBOSITY_VERBOSE);
-		$app->_services->setValue('cli_output', $cli_output);
+		$app->internal_services->set('cli_output', $cli_output);
 
 		if (in_array('--verbose', $_SERVER['argv'])) {
-			$app->_services->logger->setLevel(LogLevel::DEBUG);
+			$app->internal_services->logger->setLevel(LogLevel::DEBUG);
 		} else {
-			$app->_services->logger->setLevel(LogLevel::ERROR);
+			$app->internal_services->logger->setLevel(LogLevel::ERROR);
 		}
 
 		// Invalidate caches
-		$app->_services->dataCache->clear();
-		$app->_services->sessionCache->clear();
+		$app->internal_services->dataCache->clear();
+		$app->internal_services->sessionCache->clear();
 
 		// turn off system log
-		$app->_services->events->unregisterHandler('all', 'all', 'Elgg\SystemLog\Logger::listen');
-		$app->_services->events->unregisterHandler('log', 'systemlog', 'Elgg\SystemLog\Logger::log');
+		$app->internal_services->events->unregisterHandler('all', 'all', 'Elgg\SystemLog\Logger::listen');
+		$app->internal_services->events->unregisterHandler('log', 'systemlog', 'Elgg\SystemLog\Logger::log');
 
 		return $app;
 	}
@@ -92,8 +95,8 @@ abstract class UnitTestCase extends BaseTestCase {
 		$this->down();
 
 		$app = Application::getInstance();
-		if ($app && $app->_services instanceof MockServiceProvider) {
-			$app->_services->db->clearQuerySpecs();
+		if ($app && $app->internal_services instanceof InternalContainer) {
+			$app->internal_services->db->clearQuerySpecs();
 		}
 
 		parent::tearDown();

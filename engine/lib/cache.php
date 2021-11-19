@@ -183,7 +183,7 @@ function elgg_invalidate_caches(): void {
 	// this event sequence could take while, make sure there is no timeout
 	set_time_limit(0);
 	
-	elgg()->config->save('lastcache', time());
+	_elgg_services()->config->save('lastcache', time());
 	
 	_elgg_services()->events->triggerSequence('cache:invalidate', 'system');
 }

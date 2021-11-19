@@ -93,7 +93,7 @@ trait PluginTesting {
 
 			$svc->addTestingPlugin($plugin);
 		}
-		
+
 		if ($activate_dependencies) {
 			$dependencies = $plugin->getDependencies();
 			foreach ($dependencies as $required_plugin_id => $plugin_config) {
@@ -102,7 +102,7 @@ trait PluginTesting {
 				}
 			}
 		}
-		
+
 		if ($activate_route_requirements) {
 			foreach($plugin->getStaticConfig('routes', []) as $route_config) {
 				foreach (elgg_extract('required_plugins', $route_config, []) as $required_plugin) {
@@ -113,9 +113,6 @@ trait PluginTesting {
 
 		$plugin->register();
 		$plugin->boot();
-		
-		\Elgg\Cache\EventHandlers::rebuildPublicContainer();
-
 		$plugin->init();
 
 		$this->started_plugins[] = $plugin_id;

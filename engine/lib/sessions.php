@@ -4,7 +4,7 @@
  * Functions to manage logins
  */
 
-use Elgg\Di\ServiceProvider;
+use Elgg\Di\InternalContainer;
 use Elgg\Exceptions\LoginException;
 use Elgg\SystemMessagesService;
 
@@ -15,7 +15,7 @@ use Elgg\SystemMessagesService;
  * @since 1.9
  */
 function elgg_get_session() {
-	return elgg()->session;
+	return _elgg_services()->session;
 }
 
 /**
@@ -24,7 +24,7 @@ function elgg_get_session() {
  * @return \ElggUser|null
  */
 function elgg_get_logged_in_user_entity() {
-	return elgg()->session->getLoggedInUser();
+	return _elgg_services()->session->getLoggedInUser();
 }
 
 /**
@@ -34,7 +34,7 @@ function elgg_get_logged_in_user_entity() {
  * @return int
  */
 function elgg_get_logged_in_user_guid() {
-	return elgg()->session->getLoggedInUserGuid();
+	return _elgg_services()->session->getLoggedInUserGuid();
 }
 
 /**
@@ -43,7 +43,7 @@ function elgg_get_logged_in_user_guid() {
  * @return bool
  */
 function elgg_is_logged_in() {
-	return elgg()->session->isLoggedIn();
+	return _elgg_services()->session->isLoggedIn();
 }
 
 /**
@@ -52,7 +52,7 @@ function elgg_is_logged_in() {
  * @return bool
  */
 function elgg_is_admin_logged_in() {
-	return elgg()->session->isAdminLoggedIn();
+	return _elgg_services()->session->isAdminLoggedIn();
 }
 
 /**
@@ -262,11 +262,11 @@ function login(\ElggUser $user, $persistent = false) {
 
 	// #5933: set logged in user early so code in login event will be able to
 	// use elgg_get_logged_in_user_entity().
-	$session = elgg()->session;
+	$session = _elgg_services()->session;
 	$session->setLoggedInUser($user);
 
 	// re-register at least the core language file for users with language other than site default
-	elgg()->translator->registerTranslations(\Elgg\Project\Paths::elgg() . 'languages/');
+	_elgg_services()->translator->registerTranslations(\Elgg\Project\Paths::elgg() . 'languages/');
 
 	// if remember me checked, set cookie with token and store hash(token) for user
 	if ($persistent) {
@@ -298,7 +298,7 @@ function login(\ElggUser $user, $persistent = false) {
  * @return bool
  */
 function logout() {
-	$session = elgg()->session;
+	$session = _elgg_services()->session;
 	$user = $session->getLoggedInUser();
 	if (!$user) {
 		return false;
@@ -358,13 +358,13 @@ function _elgg_get_login_forward_url(\Elgg\Request $request, \ElggUser $user) {
 /**
  * Initializes the session and checks for the remember me cookie
  *
- * @param ServiceProvider $services Services
+ * @param InternalContainer $services Services
  *
  * @return bool
  *
  * @internal
  */
-function _elgg_session_boot(ServiceProvider $services) {
+function _elgg_session_boot(InternalContainer $services) {
 	$services->timer->begin([__FUNCTION__]);
 
 	$session = $services->session;

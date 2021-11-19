@@ -48,6 +48,7 @@ class UpgradeCommand extends BaseCommand {
 
 		$boot = new BootHandler($app);
 		$boot->bootServices();
+		$boot->bootPlugins();
 
 		// check if upgrade is locked
 		$is_locked = _elgg_services()->mutex->isLocked('upgrade');

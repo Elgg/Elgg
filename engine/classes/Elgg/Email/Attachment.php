@@ -70,7 +70,7 @@ class Attachment extends Part {
 			}
 			
 			if (!isset($options['type'])) {
-				$options['type'] = elgg()->mimetype->getMimeType($filepath);
+				$options['type'] = _elgg_services()->mimetype->getMimeType($filepath);
 			}
 		}
 		

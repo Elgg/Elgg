@@ -44,7 +44,7 @@ class ErrorHandler {
 				$this->log(LogLevel::ERROR, "PHP ERROR: $error");
 
 				if (Application::isCoreLoaded()) {
-					Application::$_instance->_services->systemMessages->addErrorMessage("ERROR: $error");
+					Application::$_instance->internal_services->system_messages->addErrorMessage("ERROR: $error");
 				}
 
 				// Since this is a fatal error, we want to stop any further execution but do so gracefully.

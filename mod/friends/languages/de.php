@@ -47,6 +47,9 @@ Durch die Aktivierung der Option für Freundschaftsanfragen kann ein Mitglied er
 	'widgets:friends:name' => "Freunde",
 	'widgets:friends:description' => "Auflistung einiger Deiner Freunde.",
 	
+	'widgets:friends_of:name' => "Freund von",
+	'widgets:friends_of:description' => "Auflistung der Mitglieder, die Dich als Freund haben.",
+	
 	'friends:notification:request:subject' => "%s möchte mit Dir befreundet sein!",
 	'friends:notification:request:message' => "%s möchte auf %s mir Dir befreundet sein.
 

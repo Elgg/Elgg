@@ -160,7 +160,7 @@ function generate_random_cleartext_password() {
  * @throws RegistrationException
  */
 function register_user($username, $password, $name, $email, $allow_multiple_emails = false, $subtype = null, array $params = []) {
-	return elgg()->accounts->register($username, $password, $name, $email, $allow_multiple_emails, $subtype, $params);
+	return _elgg_services()->accounts->register($username, $password, $name, $email, $allow_multiple_emails, $subtype, $params);
 }
 
 /**
@@ -177,7 +177,7 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
  * @return \Elgg\Validation\ValidationResults
  */
 function elgg_validate_registration_data($username, $password, $name, $email, $allow_multiple_emails = false) {
-	return elgg()->accounts->validateAccountData($username, $password, $name, $email, $allow_multiple_emails);
+	return _elgg_services()->accounts->validateAccountData($username, $password, $name, $email, $allow_multiple_emails);
 }
 
 /**

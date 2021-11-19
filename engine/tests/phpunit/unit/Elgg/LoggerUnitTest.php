@@ -81,8 +81,7 @@ class LoggerUnitTest extends \Elgg\UnitTestCase {
 		$logger =  new \Elgg\Logger('elgg');
 		$logger->setHooks($mock);
 
-		$sp = _elgg_services();
-		$sp->setValue('logger', $logger);
+		_elgg_services()->set('logger', $logger);
 
 		return $logger;
 	}

@@ -86,15 +86,4 @@ class EventHandlers {
 			opcache_reset();
 		}
 	}
-	
-	/**
-	 * Rebuild public service container
-	 *
-	 * @return void
-	 */
-	public static function rebuildPublicContainer() {
-		$services = _elgg_services();
-		$services->reset('dic_builder');
-		$services->reset('dic');
-	}
 }

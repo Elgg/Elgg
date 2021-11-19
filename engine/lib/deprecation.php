@@ -18,7 +18,7 @@
  * @see elgg_trigger_event()
  */
 function elgg_trigger_deprecated_event($event, $object_type, $object = null, $message = null, $version = null) {
-	return elgg()->events->triggerDeprecated($event, $object_type, $object, $message, $version);
+	return _elgg_services()->events->triggerDeprecated($event, $object_type, $object, $message, $version);
 }
 
 /**
@@ -37,7 +37,7 @@ function elgg_trigger_deprecated_event($event, $object_type, $object = null, $me
  * @since 3.0
  */
 function elgg_trigger_deprecated_plugin_hook($hook, $type, $params = null, $returnvalue = null, $message = null, $version = null) {
-	return elgg()->hooks->triggerDeprecated($hook, $type, $params, $returnvalue, $message, $version);
+	return _elgg_services()->hooks->triggerDeprecated($hook, $type, $params, $returnvalue, $message, $version);
 }
 
 /**

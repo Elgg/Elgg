@@ -5,39 +5,23 @@ The :doc:`services guide </guides/services>` has general information about using
 
 To add a new service object to Elgg:
 
-#. Annotate your class as ``@internal``.
-#. Open the class ``Elgg\Di\ServiceProvider``.
+#. Annotate your class as ``@internal`` if it is an internal service.
+#. Open the class ``Elgg\Di\InternalContainer`` and/or ``Elgg\Di\PublicContainer``.
 #. Add a ``@property-read`` annotation for your service at the top. This allows IDEs and static code
-   analyzers to understand the type of the property.
-#. To the constructor, add code to tell the service provider what to return. See the class
-   ``Elgg\Di\DiContainer`` for more information on how Elgg's DI container works.
-
-At this point your service will be available from the service provider object, but will not yet be accessible to plugins.
+   analyzers to understand the type of the property when using ``_elgg_services()`` or ``elgg()``.
+#. Register your service in ``engine\internal_services.php`` or ``engine\public_services.php`` using autowiring or with a factory.
 
 Inject your dependencies
 ------------------------
 
-Design your class constructor to *ask for* the necessary dependencies rather than creating them or using
-``_elgg_services()``. The service provider's ``setFactory()`` method provides access to the service provider
-instance in your factory method.
+Elgg uses PHP-DI for registering and resolving services. 
+Dependencies can be autowired (based on the typehinted constructor argument services can be injected) or a service can be constructed in a factory. 
 
-Here's an example of a ``foo`` service factory, injecting the ``config`` and ``db`` services into the constructor:
+.. note::
 
-.. code-block:: php
-
-    // in Elgg\Di\ServiceProvider::__construct()
-
-    $this->setFactory('foo', function (ServiceProvider $c) {
-        return new Elgg\FooService($c->config, $c->db);
-    });
-
-The full list of internal services can be seen in the ``@property-read`` declarations at the top
-of ``Elgg\Di\ServiceProvider``.
-
-.. warning::
-
-    Avoid performing work in your service constructor, particularly if it requires database queries.
-    Currently PHPUnit tests cannot perform them.
+    For more information about PHP-DI visit their `website`.
+    
+.. _website: https://php-di.org/
 
 
 Making a service part of the public API
@@ -55,7 +39,6 @@ If your service is meant for use by plugin developers:
 #. Open the class ``Elgg\Application``.
 #. Add ``@property-read`` declaration to document your service, but use your **interface** as the type,
    *not* your service class name.
-#. Add your service key to the array in the ``$public_services`` property, e.g. ``'foo' => true,``
 
 Now your service will be available via property access on the ``Elgg\Application`` instance:
 

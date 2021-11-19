@@ -61,7 +61,7 @@ class DatabaseSeedCommand extends Command {
 			return 2;
 		}
 
-		_elgg_services()->setValue('mailer', new \Laminas\Mail\Transport\InMemory());
+		_elgg_services()->set('mailer', new \Laminas\Mail\Transport\InMemory());
 
 		$options = [
 			'limit' => (int) $this->option('limit') ? : 20,

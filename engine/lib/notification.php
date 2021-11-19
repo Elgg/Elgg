@@ -247,5 +247,5 @@ function elgg_send_email(\Elgg\Email $email): bool {
  * @return void
  */
 function elgg_set_email_transport(\Laminas\Mail\Transport\TransportInterface $mailer): void {
-	_elgg_services()->setValue('mailer', $mailer);
+	_elgg_services()->set('mailer', $mailer);
 }

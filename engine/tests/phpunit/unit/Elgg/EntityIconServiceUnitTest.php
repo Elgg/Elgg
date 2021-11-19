@@ -95,7 +95,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		
 		// Needed to test elgg_get_inline_url()
 		$session = \ElggSession::getMock();
-		_elgg_services()->setValue('session', $session);
+		_elgg_services()->set('session', $session);
 		_elgg_services()->session->start();
 	}
 
@@ -354,7 +354,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$uploaded_file = $tmp->getFilenameOnFilestore();
 
-		$upload = new \Symfony\Component\HttpFoundation\File\UploadedFile($uploaded_file, 'tmp.gif', 'image/gif', filesize($uploaded_file), UPLOAD_ERR_OK, true);
+		$upload = new \Symfony\Component\HttpFoundation\File\UploadedFile($uploaded_file, 'tmp.gif', 'image/gif', UPLOAD_ERR_OK, true);
 		$this->request->files->set('icon', $upload);
 
 		$service->saveIconFromUploadedFile($this->entity, 'icon');
@@ -696,7 +696,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($this->hooks->hasHandler('entity:icon:saved', 'object'));
 
 		$service = $this->createService();
-		_elgg_services()->setValue('iconService', $service);
+		_elgg_services()->set('iconService', $service);
 
 		$service->saveIconFromElggFile($this->entity, $file);
 

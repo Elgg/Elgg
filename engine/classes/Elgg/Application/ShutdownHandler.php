@@ -47,7 +47,7 @@ class ShutdownHandler {
 	 * @return void
 	 */
 	public function shutdownDatabase() {
-		$services = $this->app->_services;
+		$services = $this->app->internal_services;
 
 		if ($services->db) {
 			$services->db->executeDelayedQueries();
@@ -73,7 +73,7 @@ class ShutdownHandler {
 	 * @return void
 	 */
 	public function shutdownApplication() {
-		$services = $this->app->_services;
+		$services = $this->app->internal_services;
 
 		if (!$services->events->triggerBefore('shutdown', 'system')) {
 			return;
@@ -96,6 +96,6 @@ class ShutdownHandler {
 	 * @return void
 	 */
 	public function persistCaches() {
-		$this->app->_services->autoloadManager->saveCache();
+		$this->app->internal_services->autoloadManager->saveCache();
 	}
 }

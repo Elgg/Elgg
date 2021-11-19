@@ -144,9 +144,6 @@ class SiteSecret {
 			return false;
 		}
 
-		// Don't leave this sitting around in config, in case it gets dumped
-		unset($config->{self::CONFIG_KEY});
-
 		return new self($key);
 	}
 }

@@ -5,7 +5,7 @@ namespace Elgg;
 trait MessageTesting {
 
 	public function assertSystemMessageEmitted($expected) {
-		$registers = _elgg_services()->systemMessages->loadRegisters();
+		$registers = _elgg_services()->system_messages->loadRegisters();
 
 		$this->assertContains($expected, $registers->success,
 			"System message '$expected' not emitted: " . print_r($registers, true)
@@ -13,7 +13,7 @@ trait MessageTesting {
 	}
 
 	public function assertErrorMessageEmitted($expected) {
-		$registers = _elgg_services()->systemMessages->loadRegisters();
+		$registers = _elgg_services()->system_messages->loadRegisters();
 
 		$this->assertContains($expected, $registers->error,
 			"Error message '$expected' not emitted: " . print_r($registers, true)

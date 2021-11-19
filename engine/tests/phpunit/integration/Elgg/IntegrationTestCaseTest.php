@@ -37,14 +37,14 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 	 */
 	public function testCanResetTestingApplicationAfterMultipleInstantiations() {
 		$app1 = self::createApplication(['isolate' => true]);
-		$dbConfig = $app1->getDbConfig();
+		$dbConfig = $app1->internal_services->dbConfig;
 
 		$app2 = self::createApplication(['isolate' => true]);
 
 		$this->assertNotSame($app1, $app2);
 		$this->assertSame(Application::$_instance, $app2);
 
-		$this->assertEquals($dbConfig, $app2->getDbConfig());
+		$this->assertEquals($dbConfig, $app2->internal_services->dbConfig);
 	}
 
 	public function testCanResetTestingApplicationAfterPluginStackChanges() {

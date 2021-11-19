@@ -38,12 +38,10 @@ if (!$installed) {
 
 $app = \Elgg\Application::getInstance();
 
-$services = $app->_services;
-
-$logger = $services->logger;
+$services = $app->internal_services;
 
 $cli = $services->cli;
-$cli->setLogger($logger);
+$cli->setLogger($services->logger);
 
 $argv = $services->request->server->get('argv');
 

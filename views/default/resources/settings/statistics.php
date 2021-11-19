@@ -5,17 +5,15 @@
 
 use Elgg\Exceptions\Http\EntityPermissionsException;
 
-$username = elgg_extract('username', $vars);
-if (!$username) {
-	$username = elgg_get_logged_in_user_entity()->username;
+$user = elgg_get_page_owner_entity();
+if (!$user instanceof \ElggUser) {
+	$user = elgg_get_logged_in_user_entity();
+	elgg_set_page_owner_guid($user->guid);
 }
 
-$user = get_user_by_username($username);
-if (!$user || !$user->canEdit()) {
+if (!$user->canEdit()) {
 	throw new EntityPermissionsException();
 }
-
-elgg_set_page_owner_guid($user->guid);
 
 elgg_push_breadcrumb(elgg_echo('settings'), elgg_generate_url('settings:account', [
 	'username' => $user->username,

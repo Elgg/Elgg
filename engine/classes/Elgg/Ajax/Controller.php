@@ -89,7 +89,7 @@ class Controller {
 						$file = _elgg_services()->views->findViewFile($view, elgg_get_viewtype());
 						$content_type = 'text/html';
 						try {
-							$content_type = elgg()->mimetype->getMimeType($file, $content_type);
+							$content_type = _elgg_services()->mimetype->getMimeType($file, $content_type);
 						} catch (InvalidArgumentException $e) {
 							// nothing for now
 						}

@@ -12,7 +12,7 @@ use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Elgg\Http\RedirectResponse;
 use Elgg\Menu\Service;
-use Elgg\Mocks\Di\MockServiceProvider;
+use Elgg\Mocks\Di\InternalContainer;
 use Elgg\Security\UrlSigner;
 use Elgg\Views\TableColumn\ColumnFactory;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -30,7 +30,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 	 */
 	function createMockApplication(array $params = []) {
 		$config = self::getTestingConfig();
-		$sp = new MockServiceProvider($config);
+		$sp = InternalContainer::factory(['config' => $config]);
 
 		// persistentLogin service needs this set to instantiate without calling DB
 		$sp->config->getCookieConfig();
@@ -42,7 +42,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 		$sp->config->site->name = 'Testing Site';
 
 		$app = Application::factory(array_merge([
-			'service_provider' => $sp,
+			'internal_services' => $sp,
 			'handle_exceptions' => false,
 			'handle_shutdown' => false,
 			'set_start_time' => false,
@@ -55,23 +55,6 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 
 	function testElggReturnsContainer() {
 		$this->assertInstanceOf(Container::class, elgg());
-	}
-
-	/**
-	 * @dataProvider publicServiceProvider
-	 */
-	function testCanAccessDiServices($svc, $class) {
-		$this->assertNotNull(elgg()->$svc);
-		$this->assertInstanceOf($class, elgg()->$svc);
-		$this->assertEquals(elgg()->$svc, elgg()->get($svc));
-	}
-
-	function publicServiceProvider() {
-		return [
-			['db', Database::class],
-			['menus', Service::class],
-			['table_columns', ColumnFactory::class],
-		];
 	}
 
 	function testPublicServiceReferencesCoreService() {
@@ -109,7 +92,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 	function testCanGetDb() {
 		$app = $this->createMockApplication();
 		$this->assertInstanceOf(Database::class, $app->getDb());
-		$this->assertEquals(_elgg_services()->db->prefix, $app->getDbConfig()->getTablePrefix());
+		$this->assertEquals(_elgg_services()->db->prefix, $app->internal_services->dbConfig->getTablePrefix());
 	}
 
 	function testCanLoadCore() {
@@ -122,7 +105,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 	function testCanBootCore() {
 		$app = $this->createMockApplication();
 		$app->bootCore();
-		$this->assertTrue($app->_services->config->boot_complete);
+		$this->assertTrue($app->internal_services->config->boot_complete);
 	}
 
 	function testBootLoadsCore() {
@@ -134,7 +117,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 	function testCanStart() {
 		$app = $this->createMockApplication();
 		$app->start();
-		$this->assertTrue($app->_services->config->boot_complete);
+		$this->assertTrue($app->internal_services->config->boot_complete);
 	}
 
 	function testCanBuildRequestForNewApplication() {
@@ -171,10 +154,10 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 
 		$instance = Application::getInstance();
 		$this->assertSame($app, $instance);
-		$this->assertSame($request, $instance->_services->request);
+		$this->assertSame($request, $instance->internal_services->request);
 
 		$this->assertInstanceOf(Response::class, $response);
-		$this->assertSame($response, $instance->_services->responseFactory->getSentResponse());
+		$this->assertSame($response, $instance->internal_services->responseFactory->getSentResponse());
 		$this->assertEquals($output, $response->getContent());
 	}
 
@@ -205,7 +188,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals($output, $response->getContent());
-		$this->assertSame($response, $app->_services->responseFactory->getSentResponse());
+		$this->assertSame($response, $app->internal_services->responseFactory->getSentResponse());
 	}
 
 	function testCanSendErrorResponse() {
@@ -221,7 +204,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_FORBIDDEN, $response->getStatusCode());
 		$this->assertEquals($output, $response->getContent());
-		$this->assertSame($response, $app->_services->responseFactory->getSentResponse());
+		$this->assertSame($response, $app->internal_services->responseFactory->getSentResponse());
 	}
 
 	function testCanSendRedirectResponse() {
@@ -237,7 +220,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(\Symfony\Component\HttpFoundation\RedirectResponse::class, $response);
 		$this->assertEquals(elgg_normalize_site_url('somewhere'), $response->getTargetURL());
 		$this->assertEquals($output, $response->getContent());
-		$this->assertSame($response, $app->_services->responseFactory->getSentResponse());
+		$this->assertSame($response, $app->internal_services->responseFactory->getSentResponse());
 	}
 
 	function testCanLoadIndex() {
@@ -258,7 +241,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 			'request' => $request,
 		]);
 
-		$app->_services->config->security_protect_upgrade = false;
+		$app->internal_services->config->security_protect_upgrade = false;
 
 		ob_start();
 		$response = $app->upgrade();
@@ -280,7 +263,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 			'request' => $request,
 		]);
 
-		$app->_services->config->security_protect_upgrade = true;
+		$app->internal_services->config->security_protect_upgrade = true;
 
 		ob_start();
 		$response = $app->upgrade();
@@ -326,7 +309,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 		$url = substr($url, strlen(elgg_get_site_url()));
 
 		$request = $this->prepareHttpRequest($url);
-		$app->_services->setValue('request', $request);
+		$app->internal_services->set('request', $request);
 
 		ob_start();
 		$response = $app->index();
@@ -376,7 +359,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 			'request' => $request,
 		]);
 
-		$app->_services->routes->register('foo', [
+		$app->internal_services->routes->register('foo', [
 			'path' => 'foo',
 			'controller' => FooController::class,
 		]);
@@ -401,7 +384,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 			'request' => $request,
 		]);
 
-		$app->_services->routes->register('foo', [
+		$app->internal_services->routes->register('foo', [
 			'path' => 'foo',
 			'controller' => FooExceptionController::class,
 		]);
@@ -428,7 +411,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 			'request' => $request,
 		]);
 
-		$app->_services->routes->register('foo', [
+		$app->internal_services->routes->register('foo', [
 			'path' => 'foo',
 			'controller' => FooRedirectController::class,
 		]);
@@ -453,7 +436,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 			'request' => $request,
 		]);
 
-		$app->_services->routes->register('foo', [
+		$app->internal_services->routes->register('foo', [
 			'path' => 'foo',
 			'controller' => FooController::class,
 			'middleware' => [
@@ -481,7 +464,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 			'request' => $request,
 		]);
 
-		$app->_services->routes->register('action:foo', [
+		$app->internal_services->routes->register('action:foo', [
 			'path' => '/action/foo',
 			'controller' => FooController::class,
 		]);
@@ -504,7 +487,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 			'request' => $request,
 		]);
 
-		$app->_services->routes->register('action:foo', [
+		$app->internal_services->routes->register('action:foo', [
 			'path' => '/action/foo',
 			'controller' => FooController::class,
 			'middleware' => [
@@ -528,7 +511,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 			'request' => $request,
 		]);
 
-		$app->_services->routes->register('action:foo', [
+		$app->internal_services->routes->register('action:foo', [
 			'path' => '/action/foo',
 			'controller' => FooNonHttpExceptionController::class,
 		]);

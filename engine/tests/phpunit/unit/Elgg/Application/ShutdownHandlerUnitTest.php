@@ -6,7 +6,7 @@ use Elgg\Application;
 use Elgg\AutoloadManager;
 use Elgg\Database\Insert;
 use Elgg\Event;
-use Elgg\Mocks\Di\MockServiceProvider;
+use Elgg\Mocks\Di\InternalContainer;
 use Elgg\UnitTestCase;
 
 /**
@@ -20,7 +20,7 @@ class ShutdownHandlerUnitTest extends UnitTestCase {
 	 */
 	function createMockApplication(array $params = []) {
 		$config = self::getTestingConfig();
-		$sp = new MockServiceProvider($config);
+		$sp = InternalContainer::factory(['config' => $config]);
 
 		// persistentLogin service needs this set to instantiate without calling DB
 		$sp->config->getCookieConfig();
@@ -32,7 +32,7 @@ class ShutdownHandlerUnitTest extends UnitTestCase {
 		$sp->config->site->name = 'Testing Site';
 
 		$app = Application::factory(array_merge([
-			'service_provider' => $sp,
+			'internal_services' => $sp,
 			'handle_exceptions' => false,
 			'handle_shutdown' => false,
 			'set_start_time' => false,
@@ -52,7 +52,7 @@ class ShutdownHandlerUnitTest extends UnitTestCase {
 			'value' => $qb->param(serialize('bar'), ELGG_VALUE_STRING),
 		]);
 
-		$db = $app->_services->db;
+		$db = $app->internal_services->db;
 		/* @var $db \Elgg\Mocks\Database */
 
 		$db->addQuerySpec([
@@ -79,7 +79,7 @@ class ShutdownHandlerUnitTest extends UnitTestCase {
 		$calls->{'shutdown'} = 0;
 		$calls->{'shutdown:after'} = 0;
 
-		$app->_services->events->registerHandler('all', 'system', function(Event $event) use (&$calls) {
+		$app->internal_services->events->registerHandler('all', 'system', function(Event $event) use (&$calls) {
 			$type = $event->getName();
 			$calls->$type += 1;
 		});
@@ -96,21 +96,21 @@ class ShutdownHandlerUnitTest extends UnitTestCase {
 
 		$app = $this->createMockApplication();
 
-		$app->_services->autoloadManager->deleteCache();
-		$app->_services->autoloadManager->loadCache();
+		$app->internal_services->autoloadManager->deleteCache();
+		$app->internal_services->autoloadManager->loadCache();
 
-		$cache = $app->_services->autoloadManager->getCache()->load(AutoloadManager::FILENAME);
+		$cache = $app->internal_services->autoloadManager->getCache()->load(AutoloadManager::FILENAME);
 		$this->assertNull($cache);
 
 		$app->bootCore();
 
 		$dir = $this->normalizeTestFilePath('class_scanner');
-		$app->_services->autoloadManager->addClasses($dir);
+		$app->internal_services->autoloadManager->addClasses($dir);
 
 		$shutdown = new ShutdownHandler($app);
 		$shutdown->persistCaches();
 
-		$cache = $app->_services->autoloadManager->getCache()->load(AutoloadManager::FILENAME);
+		$cache = $app->internal_services->autoloadManager->getCache()->load(AutoloadManager::FILENAME);
 		
 		$this->assertContains($dir, $cache['scannedDirs']);
 	}

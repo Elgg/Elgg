@@ -52,15 +52,15 @@ class CommentEntityRedirectorIntegrationTest extends IntegrationTestCase {
 			'request' => $request,
 		]);
 		
-		$app->_services->session->setLoggedInUser($this->owner);
+		$app->internal_services->session->setLoggedInUser($this->owner);
 		
 		// keep this inline with the route declaration in /engine/routes.php
-		$app->_services->routes->register('view:object:comment', [
+		$app->internal_services->routes->register('view:object:comment', [
 			'path' => '/comment/view/{guid}/{container_guid?}',
 			'controller' => \Elgg\Controllers\CommentEntityRedirector::class,
 		]);
 		
-		$app->_services->routes->register("view:object:{$this->entity->subtype}", [
+		$app->internal_services->routes->register("view:object:{$this->entity->subtype}", [
 			'path' => '/object/view/{guid}',
 			'handler' => function (Request $request) {
 				return elgg_ok_response('Entity found');

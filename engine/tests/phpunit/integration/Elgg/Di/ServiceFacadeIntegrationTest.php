@@ -2,13 +2,10 @@
 
 namespace Elgg\Di;
 
-use Elgg\UnitTestCase;
 use Elgg\Helpers\Di\ServiceFacadeTestService;
+use Elgg\IntegrationTestCase;
 
-/**
- * @group DI
- */
-class ServiceFacadeTest extends UnitTestCase {
+class ServiceFacadeIntegrationTest extends IntegrationTestCase {
 
 	public function testCanAccessService() {
 

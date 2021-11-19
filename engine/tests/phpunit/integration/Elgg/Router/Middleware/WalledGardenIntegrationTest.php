@@ -28,8 +28,7 @@ class WalledGardenIntegrationTest extends IntegrationTestCase {
 			'request' => $request,
 		]);
 		
-		$svc = $app->_services;
-		$svc->logger->disable();
+		$app->internal_services->logger->disable();
 	}
 	
 	protected function route(Request $request) {

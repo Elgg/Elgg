@@ -46,7 +46,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(OkResponse::class, $response);
 
-		$messages = _elgg_services()->systemMessages->dumpRegister();
+		$messages = _elgg_services()->system_messages->dumpRegister();
 		$this->assertNotEmpty($messages['success']);
 		$this->assertEquals(elgg_echo('loginok', [], $user->language), array_shift($messages['success']));
 
@@ -249,7 +249,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		
 		$this->assertInstanceOf(OkResponse::class, $action_response);
 		
-		$messages = _elgg_services()->systemMessages->dumpRegister();
+		$messages = _elgg_services()->system_messages->dumpRegister();
 		$this->assertNotEmpty($messages['success']);
 		$this->assertEquals(elgg_echo('loginok', [], $user->language), array_shift($messages['success']));
 		

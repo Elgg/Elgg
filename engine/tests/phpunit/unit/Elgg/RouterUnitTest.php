@@ -81,7 +81,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'request' => $request,
 		]);
 
-		$svc = $app->_services;
+		$svc = $app->internal_services;
 
 		$svc->hooks->backup();
 		$svc->logger->disable();
