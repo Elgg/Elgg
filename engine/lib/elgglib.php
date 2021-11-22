@@ -1105,6 +1105,10 @@ function _elgg_ajax_page_handler($segments) {
 			// ignore 'view/'
 			$view = implode('/', array_slice($segments, 1));
 		} else {
+			if ($segments[1] === 'admin') {
+				// protect admin forms similar to all admin pages that are protected automatically in the admin_page_handler
+				elgg_admin_gatekeeper();
+			}
 			// form views start with "forms", not "form"
 			$view = 'forms/' . implode('/', array_slice($segments, 1));
 		}
