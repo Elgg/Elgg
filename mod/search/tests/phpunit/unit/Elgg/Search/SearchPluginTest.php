@@ -59,7 +59,7 @@ class SearchPluginTest extends UnitTestCase {
 
 		$pairs = $search->getTypeSubtypePairs();
 
-		$this->assertEquals(get_registered_entity_types(), $pairs);
+		$this->assertEquals(elgg_entity_types_with_capability('searchable'), $pairs);
 	}
 
 	public function testReturnsSearchType() {

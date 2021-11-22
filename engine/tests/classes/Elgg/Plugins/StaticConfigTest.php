@@ -34,6 +34,14 @@ class StaticConfigTest extends UnitTestCase {
 			if (isset($entity['class'])) {
 				$this->assertTrue(class_exists($entity['class']));
 			}
+			
+			if (isset($entity['capabilities'])) {
+				$this->assertIsArray($entity['capabilities']);
+				foreach ($entity['capabilities'] as $capability => $value) {
+					$this->assertIsString($capability);
+					$this->assertIsBool($value);
+				}
+			}
 		}
 	}
 

@@ -15,7 +15,9 @@ return [
 			'type' => 'object',
 			'subtype' => 'blog',
 			'class' => 'ElggBlog',
-			'searchable' => true,
+			'capabilities' => [
+				'searchable' => true,
+			],
 		],
 	],
 	'actions' => [

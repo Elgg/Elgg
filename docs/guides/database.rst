@@ -297,7 +297,9 @@ In your plugins ``elgg-plugin.php`` file add the ``entities`` section.
 				'type' => 'group',
 				'subtype' => 'committee',
 				'class' => 'Committee',
-				'searchable' => true, 
+				'capabilities' => [
+					'searchable' => true,
+				], 
 			],
 		],
     ];

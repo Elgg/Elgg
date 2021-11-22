@@ -4,6 +4,19 @@ From 4.0 to 4.1
 .. contents:: Contents
    :local:
    :depth: 1
+   
+Entity Capabilities
+-------------------
+
+A new way of registering entity capabilities has been introduced. The following related functions have been deprecated:
+
+ * ``elgg_register_entity_type()`` use ``elgg_entity_enable_capability($type, $subtype, 'searchable')``
+ * ``elgg_unregister_entity_type()`` use ``elgg_entity_disable_capability($type, $subtype, 'searchable')``
+ * ``get_registered_entity_types()`` use ``elgg_entity_types_with_capability('searchable')``
+ * ``is_registered_entity_type()`` use ``elgg_entity_has_capability($type, $subtype, 'searchable')``
+ 
+The config variable ``registered_entities`` is no longer available.
+
 
 Deprecated APIs
 ---------------

@@ -47,6 +47,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Email\DelayedEmailService                 $delayedEmailService
  * @property-read \Elgg\EmailService                              $emails
  * @property-read \Elgg\Cache\EntityCache                         $entityCache
+ * @property-read \Elgg\EntityCapabilitiesService                 $entity_capabilities
  * @property-read \Elgg\EntityPreloader                           $entityPreloader
  * @property-read \Elgg\Database\EntityTable                      $entityTable
  * @property-read \Elgg\EventsService                             $events

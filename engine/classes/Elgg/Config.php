@@ -101,7 +101,6 @@ use Elgg\Traits\Loggable;
  * @property bool          $redis
  * @property array         $redis_options
  * @property array         $redis_servers
- * @property string[]      $registered_entities						A list of registered entities and subtypes. Used in search.
  * @property bool          $remove_branding 						Is Elgg branding disabled
  * @property bool          $require_admin_validation
  * @property bool          $security_disable_password_autocomplete

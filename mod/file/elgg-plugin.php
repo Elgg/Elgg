@@ -14,7 +14,9 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'file',
-			'searchable' => true,
+			'capabilities' => [
+				'searchable' => true,
+			],
 		],
 	],
 	'actions' => [

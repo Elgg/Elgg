@@ -65,6 +65,7 @@ return [
 	'entityCache' => DI\factory(function (ContainerInterface $c) {
 		return new \Elgg\Cache\EntityCache($c->session, $c->sessionCache->entities);
     }),
+	'entity_capabilities' => DI\autowire(\Elgg\EntityCapabilitiesService::class),
 	'entityPreloader' => DI\autowire(\Elgg\EntityPreloader::class),
 	'entityTable' => DI\autowire(\Elgg\Database\EntityTable::class),
 	'events' => DI\autowire(\Elgg\EventsService::class),

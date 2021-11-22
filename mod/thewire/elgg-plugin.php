@@ -15,7 +15,9 @@ return [
 			'type' => 'object',
 			'subtype' => 'thewire',
 			'class' => 'ElggWire',
-			'searchable' => true,
+			'capabilities' => [
+				'searchable' => true,
+			],
 		],
 	],
 	'settings' => [

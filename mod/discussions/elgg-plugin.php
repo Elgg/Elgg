@@ -15,7 +15,9 @@ return [
 			'type' => 'object',
 			'subtype' => 'discussion',
 			'class' => 'ElggDiscussion',
-			'searchable' => true,
+			'capabilities' => [
+				'searchable' => true,
+			],
 		],
 	],
 	'settings' => [
