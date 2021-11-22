@@ -8,7 +8,7 @@ $widget = elgg_extract('entity', $vars);
 
 $entity_stats = get_entity_statistics();
 
-$registered_entity_types = get_registered_entity_types();
+$registered_entity_types = elgg_entity_types_with_capability('searchable');
 if (empty($registered_entity_types)) {
 	echo elgg_view('output/longtext', [
 		'value' => elgg_echo('notfound'),

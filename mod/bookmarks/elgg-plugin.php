@@ -15,7 +15,9 @@ return [
 			'type' => 'object',
 			'subtype' => 'bookmarks',
 			'class' => 'ElggBookmark',
-			'searchable' => true,
+			'capabilities' => [
+				'searchable' => true,
+			],
 		],
 	],
 	'actions' => [

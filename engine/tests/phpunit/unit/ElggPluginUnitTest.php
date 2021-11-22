@@ -73,7 +73,9 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 					'type' => 'object',
 					'subtype' => 'test_plugin',
 					'class' => 'TestPluginObject',
-					'searchable' => true,
+					'capabilities' => [
+						'searchable' => true,
+					],
 				],
 			],
 			'actions' => [

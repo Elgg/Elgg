@@ -21,8 +21,8 @@ class SystemEventHandlers {
 	 */
 	public static function init() {
 	
-		elgg_register_entity_type('object', 'comment');
-		elgg_register_entity_type('user', 'user');
+		elgg_entity_enable_capability('object', 'comment', 'searchable');
+		elgg_entity_enable_capability('user', 'user', 'searchable');
 		
 		elgg_register_notification_method('email');
 		if ((bool) elgg_get_config('enable_delayed_email')) {

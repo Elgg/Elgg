@@ -14,8 +14,10 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'page',
-			'searchable' => true,
 			'class' => '\ElggPage',
+			'capabilities' => [
+				'searchable' => true,
+			],
 		],
 	],
 	'actions' => [

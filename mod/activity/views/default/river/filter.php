@@ -7,7 +7,7 @@
  * @uses $vars['entity_subtype'] the current entity subtype selector
  */
 
-$registered_entities = elgg_extract('registered_entity_types', $vars, get_registered_entity_types());
+$registered_entities = elgg_extract('registered_entity_types', $vars, elgg_entity_types_with_capability('searchable'));
 if (empty($registered_entities)) {
 	return;
 }

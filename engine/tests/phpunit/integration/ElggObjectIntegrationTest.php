@@ -71,4 +71,12 @@ class ElggObjectIntegrationTest extends IntegrationTestCase {
 		// now comment is allowed
 		$this->assertTrue($object->canComment());
 	}
+	
+	public function testEntityHasCapability() {
+		$object = $this->createObject();
+		$this->assertFalse($object->hasCapability('foo'));
+		
+		elgg_entity_enable_capability($object->getType(), $object->getSubtype(), 'foo');
+		$this->assertTrue($object->hasCapability('foo'));
+	}
 }

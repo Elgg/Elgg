@@ -65,7 +65,7 @@ class Entity {
 			return;
 		}
 		
-		$report_this = (bool) $hook->getParam('report_this', is_registered_entity_type($entity->type, $entity->subtype));
+		$report_this = (bool) $hook->getParam('report_this', $entity->hasCapability('searchable'));
 		if (!$report_this) {
 			return;
 		}

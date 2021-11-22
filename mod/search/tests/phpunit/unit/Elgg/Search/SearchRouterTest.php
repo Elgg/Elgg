@@ -17,7 +17,7 @@ class SearchRouterTest extends UnitTestCase {
 	public function up() {
 		$this->startPlugin();
 
-		elgg_register_entity_type('object', 'custom');
+		elgg_entity_enable_capability('object', 'custom', 'searchable');
 		_elgg_services()->views->registerPluginViews($this->getPath());
 	}
 

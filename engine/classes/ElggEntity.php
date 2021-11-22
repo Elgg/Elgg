@@ -2081,4 +2081,16 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			_elgg_services()->dataCache->get($namespace)->delete($this->guid);
 		}
 	}
+	
+	/**
+	 * Checks a specific capability is enabled for the entity type/subtype
+	 *
+	 * @param string $capability capability to check
+	 *
+	 * @return bool
+	 * @since 4.1
+	 */
+	public function hasCapability(string $capability): bool {
+		return _elgg_services()->entity_capabilities->hasCapability($this->getType(), $this->getSubtype(), $capability);
+	}
 }

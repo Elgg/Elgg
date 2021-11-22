@@ -72,14 +72,14 @@ You can customize search fields for each entity type/subtype, using ``search:fie
 Searchable types
 ----------------
 
-To register an entity type for search, use ``elgg_register_entity_type()``, or do so when defining an entity type in ``elgg-plugin.php``.
+To register an entity type for search, use ``elgg_entity_enable_capability($type, $subtype, 'searchable')``, or do so when defining an entity type in ``elgg-plugin.php``.
 To combine search results or filter how search results are presented in the search plugin, use ``'search:config', 'type_subtype_pairs'`` hook.
 
 .. code-block:: php
 
     // Let's add places and place reviews as public facing entities
-    elgg_register_entity_type('object', 'place');
-    elgg_register_entity_type('object', 'place_review');
+    elgg_entity_enable_capability('object', 'place', 'searchable');
+    elgg_entity_enable_capability('object', 'place_review', 'searchable');
 
     // Now let's include place reviews in the search results for places
     elgg_register_plugin_hook_handler('search:options', 'object:place', 'my_plugin_place_search_options');

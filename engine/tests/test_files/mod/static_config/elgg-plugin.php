@@ -18,7 +18,9 @@ return [
 			'type' => 'object',
 			'subtype' => 'static_config_subtype',
 			'class' => \StaticConfigObject::class,
-			'searchable' => true,
+			'capabilities' => [
+				'searchable' => true,
+			],
 		],
 	],
 	'events' => [

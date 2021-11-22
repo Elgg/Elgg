@@ -991,8 +991,20 @@ class ElggPlugin extends ElggObject {
 		$spec = (array) $this->getStaticConfig('entities', []);
 		
 		foreach ($spec as $entity) {
-			if (isset($entity['type'], $entity['subtype'], $entity['searchable']) && $entity['searchable']) {
-				elgg_register_entity_type($entity['type'], $entity['subtype']);
+			if (!isset($entity['type']) || !isset($entity['subtype'])) {
+				continue;
+			}
+			
+			$searchable = elgg_extract('searchable', $entity);
+			if ($searchable) {
+				elgg_deprecated_notice("Registering the [{$entity['type']}-{$entity['subtype']}] entity as searchable should be done in the capabilities section of your elgg-plugin.php.", '4.1');
+				
+				elgg_entity_enable_capability($entity['type'], $entity['subtype'], 'searchable');
+			}
+			
+			$capabilities = elgg_extract('capabilities', $entity, []);
+			foreach ($capabilities as $capability => $value) {
+				_elgg_services()->entity_capabilities->setCapability($entity['type'], $entity['subtype'], $capability, $value);
 			}
 		}
 	}

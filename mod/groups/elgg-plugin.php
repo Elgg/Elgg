@@ -19,7 +19,9 @@ return [
 		[
 			'type' => 'group',
 			'subtype' => 'group',
-			'searchable' => true,
+			'capabilities' => [
+				'searchable' => true,
+			],
 		],
 	],
 	'actions' => [

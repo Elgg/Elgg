@@ -14,7 +14,7 @@ foreach ($entity_stats as $type => $subtypes) {
 			$name = elgg_echo("item:{$type}:{$subtype}");
 		}
 
-		if (is_registered_entity_type($type, $subtype)) {
+		if (elgg_entity_has_capability($type, $subtype, 'searchable')) {
 			$searchable[$name] = $value;
 		} else {
 			$other[$name] = $value;
