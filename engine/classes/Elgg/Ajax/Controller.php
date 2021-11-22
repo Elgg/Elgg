@@ -39,6 +39,10 @@ class Controller {
 				$view = implode('/', array_slice($segments, 1));
 				break;
 			case 'form':
+				if (elgg_extract(1, $segments) === 'admin') {
+					// protect admin views similar to all admin pages that are protected automatically in the admin_page_handler
+					elgg_admin_gatekeeper();
+				}
 				// form views start with "forms", not "form"
 				$view = 'forms/' . implode('/', array_slice($segments, 1));
 				break;
