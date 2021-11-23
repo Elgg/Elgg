@@ -41,6 +41,9 @@ class PageOwnerCanEditGatekeeper {
 			return;
 		}
 		
+		// force detection of page owner for legacy routes
+		$route->setDefault('_detect_page_owner', true);
+		
 		$page_owner = $route->resolvePageOwner();
 		if (!$page_owner instanceof \ElggEntity) {
 			return;
