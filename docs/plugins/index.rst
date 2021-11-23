@@ -12,6 +12,7 @@ Elgg comes with a set of plugins. These provide the basic functionality for your
    file
    friends
    groups
+   likes
    messageboard
    messages
    pages
@@ -32,7 +33,6 @@ The following plugins are also bundled with Elgg, but are not (yet) documented
 - friends_collections
 - garbagecollector
 - invitefriends
-- likes
 - members
 - reportedcontent
 - search

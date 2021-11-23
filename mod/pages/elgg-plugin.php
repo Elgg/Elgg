@@ -17,6 +17,7 @@ return [
 			'class' => '\ElggPage',
 			'capabilities' => [
 				'searchable' => true,
+				'likable' => true,
 			],
 		],
 	],
@@ -106,11 +107,6 @@ return [
 		'fields' => [
 			'object:page' => [
 				\Elgg\Pages\FieldsHandler::class => [],
-			],
-		],
-		'likes:is_likable' => [
-			'object:page' => [
-				'Elgg\Values::getTrue' => [],
 			],
 		],
 		'permissions_check' => [

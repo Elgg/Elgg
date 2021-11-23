@@ -21,4 +21,12 @@ The config variable ``registered_entities`` is no longer available.
 Deprecated APIs
 ---------------
 
+Lib functions
+~~~~~~~~~~~~~
+
  * ``elgg_get_version()`` use ``elgg_get_release()``
+
+Plugin hooks
+~~~~~~~~~~~~
+
+* ``'likes:is_likable', '<type>:<subtype>'`` use  ``$entity->hasCapability('likable')``

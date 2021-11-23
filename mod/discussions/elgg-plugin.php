@@ -17,6 +17,7 @@ return [
 			'class' => 'ElggDiscussion',
 			'capabilities' => [
 				'searchable' => true,
+				'likable' => true,
 			],
 		],
 	],
@@ -84,11 +85,6 @@ return [
 		'get' => [
 			'subscriptions' => [
 				'Elgg\Discussions\Notifications::addGroupSubscribersToCommentOnDiscussionSubscriptions' => [],
-			],
-		],
-		'likes:is_likable' => [
-			'object:discussion' => [
-				'Elgg\Values::getTrue' => [],
 			],
 		],
 		'permissions_check:comment' => [

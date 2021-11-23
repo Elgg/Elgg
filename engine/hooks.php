@@ -78,11 +78,6 @@ return [
 			\Elgg\Page\AddTitleHandler::class => ['priority' => 10],
 		],
 	],
-	'likes:is_likable' => [
-		'object:comment' => [
-			'Elgg\Values::getTrue' => [],
-		],
-	],
 	'output' => [
 		'page' => [
 			\Elgg\Debug\Profiler::class => ['priority' => 999],

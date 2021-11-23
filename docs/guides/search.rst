@@ -73,6 +73,11 @@ Searchable types
 ----------------
 
 To register an entity type for search, use ``elgg_entity_enable_capability($type, $subtype, 'searchable')``, or do so when defining an entity type in ``elgg-plugin.php``.
+
+.. note::
+
+   The search plugin uses the entity capability `searchable`. This capability defines if an entity is searchable.
+
 To combine search results or filter how search results are presented in the search plugin, use ``'search:config', 'type_subtype_pairs'`` hook.
 
 .. code-block:: php
