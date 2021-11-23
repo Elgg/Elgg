@@ -16,6 +16,7 @@ return [
 			'subtype' => 'file',
 			'capabilities' => [
 				'searchable' => true,
+				'likable' => true,
 			],
 		],
 	],
@@ -87,11 +88,6 @@ return [
 		'entity:icon:url' => [
 			'object' => [
 				'Elgg\File\Icons::setIconUrl' => [],
-			],
-		],
-		'likes:is_likable' => [
-			'object:file' => [
-				'Elgg\Values::getTrue' => [],
 			],
 		],
 		'register' => [

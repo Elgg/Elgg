@@ -17,6 +17,7 @@ return [
 			'class' => 'ElggWire',
 			'capabilities' => [
 				'searchable' => true,
+				'likable' => true,
 			],
 		],
 	],
@@ -78,11 +79,6 @@ return [
 		],
 	],
 	'hooks' => [
-		'likes:is_likable' => [
-			'object:thewire' => [
-				'Elgg\Values::getTrue' => [],
-			],
-		],
 		'register' => [
 			'menu:entity' => [
 				'Elgg\TheWire\Menus\Entity::register' => [],
