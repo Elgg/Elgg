@@ -10,7 +10,7 @@ $user = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
 	return get_user($guid);
 });
 
-if (!$user instanceof ElggUser) {
+if (!$user instanceof ElggUser || !$user->canEdit()) {
 	return;
 }
 
