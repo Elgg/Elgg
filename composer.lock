@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b066695e37513adae4d0756d0dbdeebb",
+    "content-hash": "b09befc4ef966b652b731a387a7b06b8",
     "packages": [
         {
             "name": "cakephp/core",
@@ -2799,6 +2799,18 @@
             "type": "npm-asset",
             "license": [
                 "MIT"
+            ]
+        },
+        {
+            "name": "npm-asset/jquery-ui-touch-punch",
+            "version": "0.2.3",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/jquery-ui-touch-punch/-/jquery-ui-touch-punch-0.2.3.tgz"
+            },
+            "type": "npm-asset",
+            "license": [
+                "Dual licensed under the MIT or GPL Version 2 licenses."
             ]
         },
         {
@@ -7892,5 +7904,5 @@
     "platform-overrides": {
         "php": "7.4"
     },
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }
