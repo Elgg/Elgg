@@ -3,7 +3,7 @@ Internationalization
 
 Make your UI translatable into many different languages.
 
-If you’d like to contribute translations to Elgg, see :doc:`the contributors' guide </about/contributing>`.
+If you’d like to contribute translations to Elgg, see :doc:`the contributors' guide </contribute/i18n>`.
 
 The default language is ``en`` for English. Elgg uses a fallback system for languages:
 
