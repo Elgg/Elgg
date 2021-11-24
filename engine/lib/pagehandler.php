@@ -52,6 +52,34 @@ function elgg_get_route(string $name): ?\Elgg\Router\Route {
 }
 
 /**
+ * Find a registered route based on an url/path
+ *
+ * @param string $url the full url or an url path to find a route for
+ *
+ * @return \Elgg\Router\Route|null
+ * @since 4.1
+ */
+function elgg_get_route_for_url(string $url): ?\Elgg\Router\Route {
+	$url = elgg_normalize_url($url);
+	
+	$path = parse_url($url, PHP_URL_PATH);
+	try {
+		$route_info = _elgg_services()->urlMatcher->match($path);
+		if (!isset($route_info['_route'])) {
+			return null;
+		}
+		
+		$route = _elgg_services()->routes->get($route_info['_route']);
+		$route->setMatchedParameters($route_info);
+		
+		return $route;
+	} catch (\Symfony\Component\Routing\Exception\ExceptionInterface $e) {
+		// route matcher exception
+		return null;
+	}
+}
+
+/**
  * Get the route for the current request
  *
  * @return \Elgg\Router\Route|null
