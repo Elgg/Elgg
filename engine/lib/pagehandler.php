@@ -62,6 +62,17 @@ function elgg_get_current_route(): ?\Elgg\Router\Route {
 }
 
 /**
+ * Get the route name for the current request
+ *
+ * @return string Will be an empty string if no current route is found
+ * @since 4.1
+ */
+function elgg_get_current_route_name(): string {
+	$route = _elgg_services()->request->getRoute();
+	return isset($route) ? $route->getName() : '';
+}
+
+/**
  * Check if a route is registered
  *
  * @param string $name route name
