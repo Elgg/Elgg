@@ -3,7 +3,6 @@
 namespace Elgg\Friends\Menus;
 
 use Elgg\Menu\MenuItems;
-use Elgg\Router\Route;
 
 /**
  * Hook callbacks for menus
@@ -34,12 +33,12 @@ class Filter {
 		$entity_type = $hook->getParam('entity_type', '');
 		$entity_subtype = $hook->getParam('entity_subtype', '');
 		if (empty($entity_type) || empty($entity_subtype)) {
-			$route = elgg_get_current_route();
-			if ($route instanceof Route) {
+			$route_name = elgg_get_current_route_name();
+			if (!empty($route_name)) {
 				// assume route name as '<purpose>:<entity type>:<entity subtype>:<sub>'
 				// eg collection:object:blog:owner or view:group:group
 				// @see http://learn.elgg.org/en/stable/guides/routing.html#routes-names
-				$route_parts = explode(':', $route->getName());
+				$route_parts = explode(':', $route_name);
 				$entity_type = elgg_extract(1, $route_parts, '');
 				$entity_subtype = elgg_extract(2, $route_parts, '');
 			}
