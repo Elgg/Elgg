@@ -6,7 +6,7 @@
 $logged_in_user = elgg_get_logged_in_user_entity();
 
 $user_guids = get_input('user_guid');
-if (!is_array($user_guids)) {
+if (!empty($user_guids) && !is_array($user_guids)) {
 	$user_guids = [$user_guids];
 }
 
