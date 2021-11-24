@@ -1438,6 +1438,11 @@ function elgg_views_boot() {
 		'deps' => ['jquery-ui/widgets/autocomplete'],
 	]);
 
+	elgg_register_simplecache_view('elgg/touch_punch.js');
+	elgg_define_js('jquery-ui/widgets/sortable', [
+		'deps' => ['elgg/touch_punch'],
+	]);
+
 	elgg_register_ajax_view('languages.js');
 }
 
