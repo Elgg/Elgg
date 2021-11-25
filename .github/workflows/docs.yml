@@ -13,18 +13,41 @@ jobs:
         # Flags used here, not in `make html`:
         #  -n   Run in nit-picky mode. Currently, this generates warnings for all missing references.
         #  -W   Turn warnings into errors. This means that the build stops at the first warning and sphinx-build exits with exit status 1.
+        #  --keep-going keep going processing when getting warnings to the end of build
         with:
           docs-folder: 'docs/'
-          build-command: 'sphinx-build -b html -nW . _build/html'
+          build-command: 'sphinx-build -b html -nW --keep-going . _build/html'
       
       - name: Build Latex documentation
         uses: ammaraskar/sphinx-action@master
         with:
           docs-folder: 'docs/'
-          build-command: 'sphinx-build -b latex -nW . _build/latex'
+          build-command: 'sphinx-build -b latex -nW --keep-going . _build/latex'
       
       - name: Build custom (French) language documentation
+        id: fr
+        continue-on-error: true
         uses: ammaraskar/sphinx-action@master
         with:
           docs-folder: 'docs/'
-          build-command: 'sphinx-build -b html -D language=fr -n . _build/html_fr'
+          build-command: 'sphinx-build -b html -D language=fr -nW --keep-going . _build/html_fr'
+      
+      - name: Build custom (German) language documentation
+        id: de
+        continue-on-error: true
+        uses: ammaraskar/sphinx-action@master
+        with:
+          docs-folder: 'docs/'
+          build-command: 'sphinx-build -b html -D language=de -nW --keep-going . _build/html_de'
+      
+      - name: Build custom (Spanish) language documentation
+        id: es
+        continue-on-error: true
+        uses: ammaraskar/sphinx-action@master
+        with:
+          docs-folder: 'docs/'
+          build-command: 'sphinx-build -b html -D language=es -nW --keep-going . _build/html_es'
+      
+      - name: Validate international translations
+        if: steps.fr.outcome != 'success' || steps.de.outcome != 'success' || steps.es.outcome != 'success'
+        run: exit 1
