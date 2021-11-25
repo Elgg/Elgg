@@ -7,15 +7,16 @@
 # Jerôme Bakker, 2021
 # Emmanuel Simond <emmanuel.simond@gmail.com>, 2021
 # Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
+# Jeroen Dalsem, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-05 10:27+0100\n"
+"POT-Creation-Date: 2021-11-19 11:45+0100\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
+"Last-Translator: Jeroen Dalsem, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -534,8 +535,8 @@ msgid ""
 "You can then use the :doc:`database` api to load entities and perform "
 "actions on them accordingly."
 msgstr ""
-"Vous pouvez ensuite utiliser l'api de la :doc:`base de données` pour charger"
-" des entités et effectuer des actions dessus."
+"Vous pouvez ensuite utiliser l'api de la :doc:`database` pour charger des "
+"entités et effectuer des actions dessus."
 
 #: ../../guides/actions.rst:110
 msgid ""
@@ -1981,9 +1982,9 @@ msgid ""
 msgstr ""
 "L’approche privilégiée est de créer un plugin Elgg séparé qui aura une tâche"
 " simple : traiter une demande d’authentification. Il s’agit de configurer un"
-" gestionnaire d’authentification dans la classe :doc:`Bootstrap `, et de "
-"l’enregistrer auprès du module PAM pour traité chaque fois que le système "
-"doit authentifier une requête."
+" gestionnaire d’authentification dans la classe :doc:`Bootstrap <plugins>`, "
+"et de l’enregistrer auprès du module PAM pour traité chaque fois que le "
+"système doit authentifier une requête."
 
 #: ../../guides/authentication.rst:75
 msgid ""
@@ -2919,7 +2920,7 @@ msgid ""
 msgstr ""
 "Une ligne de journal système est stockée chaque fois qu’un événement "
 "concernant un objet dont la classe implémente l’interface "
-":doc:`design/loggable` est déclenché. ``ElggEntity`` et ``ElggExtender`` "
+":doc:`/design/loggable` est déclenché. ``ElggEntity`` et ``ElggExtender`` "
 "implémentent :doc:`/design/loggable`, de sorte qu’une ligne de journal "
 "système est créée chaque fois qu’un événement est effectué sur tous les "
 "objets, utilisateurs, groupes, sites, métadonnées et annotations."
@@ -3001,11 +3002,11 @@ msgid ""
 "store modifications specific to your application, and alter behavior through"
 " the rich Elgg plugin API."
 msgstr ""
-"Le meilleur moyen de personnaliser le comportement de Elgg est "
-"d':doc:`installer Elgg en tant que dépendance composer</intro/install>` et "
-"d’utiliser un :doc:`plugin` pour conserver les modifications spécifiques de "
-"votre application, et modifier le comportement à travers la riche API plugin"
-" de Elgg."
+"Le meilleur moyen de personnaliser le comportement de Elgg est d' "
+":doc:`installer Elgg en tant que dépendance composer</intro/install>` et "
+"d’utiliser un :doc:`plugin<plugins>` pour conserver les modifications "
+"spécifiques de votre application, et modifier le comportement à travers la "
+"riche API plugin de Elgg."
 
 #: ../../guides/dont-modify-core.rst:12
 msgid ""
@@ -3015,7 +3016,7 @@ msgid ""
 msgstr ""
 "Si vous souhaitez partager des personnalisations entre les sites ou même "
 "publier vos modifications en tant que package réutilisable pour la "
-"communauté, créez un :doc: `plugin<plugins>` qui utilise la même API de "
+"communauté, créez un :doc:`plugin<plugins>` qui utilise la même API de "
 "plugin et la même structure de fichiers."
 
 #: ../../guides/dont-modify-core.rst:17
@@ -5567,7 +5568,7 @@ msgid ""
 " used when simplecache is disabled."
 msgstr ""
 "Filtre la sortie de la vue pour une URL ``/cache`` quand simplecache est "
-"désactivé. Notez que cela sera déclenché pour chaque requête à ``/cache'' --"
+"désactivé. Notez que cela sera déclenché pour chaque requête à ``/cache`` --"
 " aucun entête Expires n'est utilisé quand simplecache est désactivé."
 
 #: ../../guides/hooks-list.rst:159
@@ -9239,7 +9240,7 @@ msgstr ""
 "dépendances à partir des référentiels de packages **NPM** ou **Yarn** à "
 "l’aide de l’outil de ligne de commande Composer. La configuration de base "
 "installe les actifs à partir de `Asset Packagist <https://asset-"
-"packagist.org>``_ (un référentiel géré par la communauté Yii)."
+"packagist.org>`_ (un référentiel géré par la communauté Yii)."
 
 #: ../../guides/javascript.rst:720
 msgid ""
@@ -10323,7 +10324,7 @@ msgid ""
 " page owner is set to 0, which is the same as the logged out user."
 msgstr ""
 "Il passe ensuite à tous les gestionnaires de propriétaire de page définis à "
-"l’aide du :ref:`hook plugin <design/events #plugin-hooks>`. Si aucun "
+"l’aide du :ref:`hook plugin <design/events#plugin-hooks>`. Si aucun "
 "propriétaire de page ne peut être déterminé, le propriétaire de la page est "
 "défini sur 0, ce qui correspond à l’utilisateur déconnecté."
 
@@ -11556,7 +11557,7 @@ msgid ""
 "systems."
 msgstr ""
 "Elgg dispose de deux mécanismes pour répondre aux requêtes HTTP qui ne "
-"passent pas déjà par les systèmes des :doc:`design/actions` et du "
+"passent pas déjà par les systèmes des :doc:`/design/actions` et du "
 ":doc:`/guides/views/simplecache`."
 
 #: ../../guides/routing.rst:8
@@ -12279,7 +12280,7 @@ msgid ""
 msgstr ""
 "Le noyau fournit un point de terminaison JSON pour la recherche "
 "d’utilisateurs et de groupes. Ces points de terminaison sont utilisés par "
-"les vues ``input/autocomplete`` et ``input/userpicker\"."
+"les vues ``input/autocomplete`` et ``input/userpicker``."
 
 #: ../../guides/search.rst:189
 msgid ""
@@ -13809,7 +13810,7 @@ msgstr ""
 "Les vues dans les répertoires des plugins remplacent toujours les vues du "
 "répertoire du noyau ; toutefois, quand les plugins remplacent les vues "
 "d’autres plugins, :ref:`les vues des derniers plugins remplacent celles des "
-"précédents <admin/plugins #plugin-order>`."
+"précédents <admin/plugins#plugin-order>`."
 
 #: ../../guides/views.rst:274
 msgid ""
