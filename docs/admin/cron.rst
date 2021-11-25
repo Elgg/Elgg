@@ -66,8 +66,4 @@ Optionally you can activate handlers for a specific interval:
 
    0 * * * * path/to/phpbin path/to/elgg/elgg-cli cron -i hourly -q
 
-
-More information about cron can be found at:
-
-.. _Cron: http://en.wikipedia.org/wiki/Cron
-.. _cPanel Docs: https://docs.cpanel.net/display/ALD/Cron+Jobs
+.. _Cron: https://en.wikipedia.org/wiki/Cron

@@ -6,15 +6,16 @@
 # Translators:
 # Jerôme Bakker, 2021
 # Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
+# Jeroen Dalsem, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-05 10:27+0100\n"
+"POT-Creation-Date: 2021-11-19 11:45+0100\n"
 "PO-Revision-Date: 2021-06-09 13:31+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
+"Last-Translator: Jeroen Dalsem, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -849,7 +850,7 @@ msgid ""
 "`Cron`_ is a program available on Unix-based operating systems that enables "
 "users to run commands and scripts at set intervals or at specific times."
 msgstr ""
-"`Cron`__ est un programme disponible sur les systèmes d'exploitation basés "
+"`Cron`_ est un programme disponible sur les systèmes d'exploitation basés "
 "sur Unix qui permet aux utilisateurs d'exécuter des commandes et des scripts"
 " à des intervalles définis ou à des heures précises."
 
@@ -1392,7 +1393,7 @@ msgstr "Trouver de l'aide"
 
 #: ../../admin/getting-help.rst:16
 msgid "Don't be a `Help Vampire`_"
-msgstr "Ne soyez pas un `Vampire de l'Aide`_"
+msgstr "Ne soyez pas un `Help Vampire`_"
 
 #: ../../admin/getting-help.rst:18
 msgid ""
@@ -2448,7 +2449,7 @@ msgid ""
 "As of Elgg 3.0 all the `downloads`__ of Elgg from the website have the "
 "optimized autoloader."
 msgstr ""
-"À partir de Elgg 3.0 tous les `téléchargements` de Elgg à partir du site "
+"À partir de Elgg 3.0 tous les `téléchargements`__ de Elgg à partir du site "
 "disposent du chargeur automatique optimisé."
 
 #: ../../admin/performance.rst:271

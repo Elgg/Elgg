@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-19 11:45+0100\n"
+"POT-Creation-Date: 2021-11-25 13:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -633,10 +633,6 @@ msgstr ""
 
 #: ../../admin/cron.rst:63
 msgid "Optionally you can activate handlers for a specific interval:"
-msgstr ""
-
-#: ../../admin/cron.rst:70
-msgid "More information about cron can be found at:"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:2
@@ -2159,4 +2155,3 @@ msgstr ""
 #: ../../admin/uservalidation.rst:31
 msgid "After validation the user is notified that they can use their account."
 msgstr ""
-
