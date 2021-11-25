@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-19 11:45+0100\n"
+"POT-Creation-Date: 2021-11-25 13:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -9559,4 +9559,3 @@ msgstr ""
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:1006
 msgid "The action ``reportedcontent/delete`` has been replaced with a generic entity delete action"
 msgstr ""
-

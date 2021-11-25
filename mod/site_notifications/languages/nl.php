@@ -6,7 +6,7 @@
  */
 
 return array(
-	'site_notifications' => 'Sitenotificaties',
+	'site_notifications' => 'Site Notificaties',
 	'notification:method:site' => 'Site',
 	'site_notifications:topbar' => 'Notificaties',
 	'item:object:site_notification' => 'Site notificatie',

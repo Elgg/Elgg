@@ -6,15 +6,16 @@
 # Translators:
 # Jerôme Bakker, 2021
 # Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
+# Jeroen Dalsem, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-05 10:27+0100\n"
+"POT-Creation-Date: 2021-11-19 11:45+0100\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
+"Last-Translator: Jeroen Dalsem, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -685,9 +686,9 @@ msgid ""
 "Another option is to use the `Profile Manager`_ plugin that lets you add "
 "fields to both user profiles and the registration form."
 msgstr ""
-"Une autre option est d'utiliser le plugin Profile Manager`_ qui vous permet "
-"d'ajouter des champs à la fois aux profils des utilisateurs et au formulaire"
-" d'inscription."
+"Une autre option est d'utiliser le plugin `Profile Manager`_ qui vous permet"
+" d'ajouter des champs à la fois aux profils des utilisateurs et au "
+"formulaire d'inscription."
 
 #: ../../appendix/faqs/general.rst:204 ../../appendix/faqs/development.rst:36
 #: ../../appendix/faqs/development.rst:36 ../../appendix/faqs/general.rst:204
@@ -957,7 +958,7 @@ msgid ""
 "(AKA: I don't understand the Elgg :doc:`data model </design/database>` so "
 "I'm going to add columns. Will you help?)"
 msgstr ""
-"(AKA : Je ne comprends pas le modèle de données de ELgg :doc:`data model "
+"(AKA : Je ne comprends pas le modèle de données de Elgg :doc:`data model "
 "</design/database>` donc je vais ajouter des colonnes. Est-ce que vous allez"
 " m'aider ?)"
 
@@ -1034,9 +1035,9 @@ msgid ""
 "Make sure you understand Elgg's :doc:`data model </design/database>` and "
 "schema first. Make a backup, edit carefully, then test copiously."
 msgstr ""
-"Assurez-vous d'abord de bien comprendre le :doc:`modèle de données 1` de "
-"Elgg et le schéma. Faites un backup, modifiez avec soin, puis testez "
-"généreusement."
+"Assurez-vous d'abord de bien comprendre le :doc:`modèle de données "
+"</design/database>` de Elgg et le schéma. Faites un backup, modifiez avec "
+"soin, puis testez généreusement."
 
 #: ../../appendix/faqs/general.rst:315 ../../appendix/faqs/general.rst:315
 msgid "Internet Explorer (IE) login problem"
@@ -1395,7 +1396,7 @@ msgid ""
 msgstr ""
 "Le filtrage est effectué par l’intermédiaire de la fonction "
 "``filter_tags()``. Cette fonction prend une chaîne et renvoie une chaîne "
-"filtrée. Elle déclenche un :ref:hook plugin <design/events#plugin-hooks>` "
+"filtrée. Elle déclenche un :ref:`hook plugin <design/events#plugin-hooks>` "
 "*validate*, *input*. Par défaut Elgg est fourni avec le code de filtrage "
 "htmLawed sous la forme d'un plugin. Les développeurs peuvent intégrer tout "
 "autre code de filtrage supplémentaire ou en remplacement sous forme de "
@@ -1967,7 +1968,7 @@ msgstr "À quoi s’attendre lors de la mise à niveau de Elgg."
 
 #: ../../appendix/releases.rst:6
 msgid "We adhere to `semantic versioning`_."
-msgstr "Nous adhérons au 'versionnage sémantique'_."
+msgstr "Nous adhérons au `versionnage sémantique`_."
 
 #: ../../appendix/releases.rst:10
 msgid "Follow the blog to `stay up to date on the latest releases`__."
@@ -2302,16 +2303,16 @@ msgid ""
 "releases of Elgg. This is the closest thing to a traditional roadmap that we"
 " have."
 msgstr ""
-"Nos `jalons Github` - \"milestones\" - représentent une orientation générale"
-" pour les futures versions de Elgg. C’est la chose la plus proche d’une "
-"feuille de route traditionnelle que nous avons."
+"Nos `jalons Github`_ - \"milestones\" - représentent une orientation "
+"générale pour les futures versions de Elgg. C’est la chose la plus proche "
+"d’une feuille de route traditionnelle que nous avons."
 
 #: ../../appendix/roadmap.rst:12
 msgid ""
 "`Github pull requests`_ will give you a good idea of what’s currently being "
 "developed, but nothing is sure until the PR is actually checked in."
 msgstr ""
-"Les `pull requests sur Github'_ vous donneront une bonne idée de ce qui est "
+"Les `pull requests sur Github`_ vous donneront une bonne idée de ce qui est "
 "en cours de développement, mais rien n’est sûr tant que la PR n'est pas "
 "effectivement enregistrée."
 
@@ -2512,7 +2513,7 @@ msgstr ":doc:`releases`"
 
 #: ../../appendix/support.rst:23
 msgid ":doc:`/contribute/issues`"
-msgstr "doc:`/contribute/issues`"
+msgstr ":doc:`/contribute/issues`"
 
 #: ../../appendix/support.rst:26
 msgid "Bugs"
@@ -5463,7 +5464,7 @@ msgid ""
 ":doc:`elgg/ckeditor module </guides/javascript>` can now be used to add "
 "WYSIWYG to a textarea programmatically with ``elgg/ckeditor#bind``."
 msgstr ""
-"le `module :doc:elgg/ckeditor </guides/javascript>` peut maintenant être "
+"le module :doc:`elgg/ckeditor </guides/javascript>` peut maintenant être "
 "utilisé pour ajouter un éditeur WYSIWYG à un textarea de manière "
 "programmatique avec ``elgg/ckeditor#bind``."
 
@@ -6353,7 +6354,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:91
 msgid "``river/object/file/create``: check :doc:`/guides/river`"
-msgstr "``river/object/file/create`` : regardez :doc:``/guides/river``"
+msgstr "``river/object/file/create`` : regardez :doc:`/guides/river`"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:92
 msgid "``river/object/page/create``: check :doc:`/guides/river`"
@@ -7545,7 +7546,7 @@ msgid ""
 " subtype string ``entity_subtypes`` table has been dropped."
 msgstr ""
 "La colonne ``subtype`` dans la table ``entities`` ne contient plus d’ID de "
-"sous-type, mais une chaîne avec le sous-type. La table ``entity_subtypes'' a"
+"sous-type, mais une chaîne avec le sous-type. La table ``entity_subtypes`` a"
 " été supprimée."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:368

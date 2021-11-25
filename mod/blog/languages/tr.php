@@ -10,9 +10,11 @@ return array(
 	'collection:object:blog' => 'Bloglar',
 	'collection:object:blog:all' => 'Tüm site blogları',
 	'collection:object:blog:owner' => '%s kullanıcısının blogları',
+	'collection:object:blog:group' => 'Grup blogları',
 	'collection:object:blog:friends' => 'Arkadaşların blogları',
 	'add:object:blog' => 'Blog gönderisi ekle',
 	'edit:object:blog' => 'Blog gönderisini düzenle',
+	'notification:object:blog:publish' => "Bir blog yayınlandığında bir bildirim gönderin",
 
 	'blog:revisions' => 'Düzeltmeler',
 	'blog:archives' => 'Arşivler',
@@ -47,6 +49,7 @@ return array(
 	'blog:notify:subject' => 'Yeni blog gönderisi: %s',
 
 	// widget
+	'widgets:blog:name' => 'Blog gönderileri',
 	'widgets:blog:description' => 'Son blog gönderilerinizi göster',
 	'blog:moreblogs' => 'Daha fazla blog gönderisi',
 	'blog:numbertodisplay' => 'Gösterilecek blog gönderisi sayısı',

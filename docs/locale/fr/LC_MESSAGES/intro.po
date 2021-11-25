@@ -6,15 +6,16 @@
 # Translators:
 # Jerôme Bakker, 2021
 # Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
+# Jeroen Dalsem, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-05 10:27+0100\n"
+"POT-Creation-Date: 2021-11-19 11:45+0100\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
+"Last-Translator: Jeroen Dalsem, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -824,7 +825,7 @@ msgid ""
 "contact your system administrator or technical support and forward this page"
 " to them."
 msgstr ""
-"Cette erreur suggère que les règles de ``mod_rewrite``ne sont pas traitées "
+"Cette erreur suggère que les règles de ``mod_rewrite`` ne sont pas traitées "
 "correctement. Ceci peut arriver pour différentes raisons. Si vous n'êtes pas"
 " à l'aise pour mettre en œuvre les solutions indiquées ci-dessous, nous vous"
 " recommandons vivement de contacter votre administrateur système ou le "
