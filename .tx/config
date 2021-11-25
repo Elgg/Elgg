@@ -188,12 +188,6 @@ source_file = docs/locale/pot/index.pot
 source_lang = en
 type = PO
 
-[elgg-core-4.docs-about]
-file_filter = docs/locale/<lang>/LC_MESSAGES/about.po
-source_file = docs/locale/pot/about.pot
-source_lang = en
-type = PO
-
 [elgg-core-4.docs-admin]
 file_filter = docs/locale/<lang>/LC_MESSAGES/admin.po
 source_file = docs/locale/pot/admin.pot
