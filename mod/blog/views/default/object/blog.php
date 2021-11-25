@@ -10,14 +10,19 @@ if (!$entity instanceof \ElggBlog) {
 	return;
 }
 
+if (!isset($vars['imprint'])) {
+	$vars['imprint'] = [];
+}
+
 if ($entity->status && $entity->status !== 'published') {
-	$vars['imprint'] = [
-		[
-			'icon_name' => 'warning',
-			'content' => elgg_echo("status:{$entity->status}"),
-			'class' => 'elgg-listing-blog-status',
-		],
+	$vars['imprint'][] = [
+		'icon_name' => 'warning',
+		'content' => elgg_echo("status:{$entity->status}"),
+		'class' => 'elgg-listing-blog-status',
 	];
+	
+	// Show the access the blog will have when published
+	$vars['access'] = $entity->future_access;
 }
 
 if (elgg_extract('full_view', $vars)) {
