@@ -55,7 +55,7 @@ function elgg_register_entity_type($type, $subtype = null) {
 	}
 
 	if (!empty($subtype)) {
-		_elgg_services()->entity_capabilities->enableCapability($type, $subtype, 'searchable');
+		_elgg_services()->entity_capabilities->setCapability($type, $subtype, 'searchable', true);
 	}
 
 	return true;
@@ -79,7 +79,7 @@ function elgg_unregister_entity_type($type, $subtype = null) {
 	}
 	
 	if (!empty($subtype)) {
-		_elgg_services()->entity_capabilities->disableCapability($type, $subtype, 'searchable');
+		_elgg_services()->entity_capabilities->setCapability($type, $subtype, 'searchable', false);
 	}
 	
 	return true;
