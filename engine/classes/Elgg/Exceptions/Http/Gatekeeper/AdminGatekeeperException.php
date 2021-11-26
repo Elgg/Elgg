@@ -19,6 +19,10 @@ class AdminGatekeeperException extends GatekeeperException {
 			$message = elgg_echo('adminrequired');
 		}
 		
+		if (!$code) {
+			$code = ELGG_HTTP_FORBIDDEN;
+		}
+		
 		parent::__construct($message, $code, $previous);
 	}
 }
