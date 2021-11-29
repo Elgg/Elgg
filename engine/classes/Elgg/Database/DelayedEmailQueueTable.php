@@ -142,6 +142,20 @@ class DelayedEmailQueueTable {
 	}
 	
 	/**
+	 * Deletes all the queue items from the database for the given recipient
+	 *
+	 * @param int $recipient_guid the recipient
+	 *
+	 * @return int number of deleted rows
+	 */
+	public function deleteAllRecipientRows(int $recipient_guid): int {
+		$delete = Delete::fromTable(self::TABLE_NAME);
+		$delete->where($delete->compare('recipient_guid', '=', $recipient_guid, ELGG_VALUE_GUID));
+		
+		return $this->db->deleteData($delete);
+	}
+	
+	/**
 	 * Update the queued notifications for the recipient to a new delivery interval
 	 *
 	 * @param int    $recipient_guid    the recipient

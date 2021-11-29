@@ -16,11 +16,6 @@ class DelayedEmailServiceIntegrationTest extends IntegrationTestCase {
 	protected $service;
 	
 	/**
-	 * @var \ElggEntity[]
-	 */
-	protected $entities = [];
-	
-	/**
 	 * {@inheritDoc}
 	 */
 	public function up() {
@@ -30,16 +25,6 @@ class DelayedEmailServiceIntegrationTest extends IntegrationTestCase {
 		
 		$this->service = _elgg_services()->delayedEmailService;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		foreach ($this->entities as $entity) {
-			// cleanup queue table
-			_elgg_services()->delayedEmailQueueTable->deleteRecipientRows($entity->guid, 'daily', time() + 10);
-		}
-	}
 	
 	/**
 	 * Create test notification
@@ -47,9 +32,9 @@ class DelayedEmailServiceIntegrationTest extends IntegrationTestCase {
 	 * @return Notification
 	 */
 	protected function getTestNotification(): Notification {
-		$this->entities[] = $recipient = $this->createUser();
-		$this->entities[] = $sender = $this->createUser();
-		$this->entities[] = $object = $this->createObject([
+		$recipient = $this->createUser();
+		$sender = $this->createUser();
+		$object = $this->createObject([
 			'owner_guid' => $sender->guid,
 		]);
 		

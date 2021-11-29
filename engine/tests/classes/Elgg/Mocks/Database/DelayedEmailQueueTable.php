@@ -159,6 +159,30 @@ class DelayedEmailQueueTable extends DbDelayedEmailQueueTable{
 	}
 	
 	/**
+	 * Delete all the queue items from the database for the given recipient and interval
+	 *
+	 * @param int $recipient_guid the recipient
+	 *
+	 * @return int number of deleted rows
+	 */
+	public function deleteAllRecipientRows(int $recipient_guid): int {
+		$result = 0;
+		
+		foreach ($this->rows as $id => $row) {
+			if ($row->recipient_guid !== $recipient_guid) {
+				continue;
+			}
+						
+			$this->clearQuerySpecs($row);
+			unset($this->rows[$id]);
+			
+			$result++;
+		}
+		
+		return $result;
+	}
+	
+	/**
 	 * Update the queued notifications for the recipient to a new delivery interval
 	 *
 	 * @param int    $recipient_guid    the recipient
