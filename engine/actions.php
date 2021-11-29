@@ -12,6 +12,7 @@ return [
 	'admin/security/regenerate_site_secret' => ['access' => 'admin'],
 	'admin/site/cache/invalidate' => ['access' => 'admin'],
 	'admin/site/flush_cache' => ['access' => 'admin'],
+	'admin/site/icons' => ['access' => 'admin'],
 	'admin/site/set_maintenance_mode' => ['access' => 'admin'],
 	'admin/site/set_robots' => ['access' => 'admin'],
 	'admin/site/unlock_upgrade' => ['access' => 'admin'],
