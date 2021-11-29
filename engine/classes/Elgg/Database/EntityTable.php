@@ -649,6 +649,7 @@ class EntityTable {
 			$entity->deleteOwnedAnnotations();
 			$entity->deleteAnnotations();
 			$entity->deleteMetadata();
+			_elgg_services()->delayedEmailQueueTable->deleteAllRecipientRows($entity->guid);
 		});
 		
 		$dir = new \Elgg\EntityDirLocator($entity->guid);

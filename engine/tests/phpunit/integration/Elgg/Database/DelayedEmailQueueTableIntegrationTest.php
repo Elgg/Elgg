@@ -12,12 +12,7 @@ class DelayedEmailQueueTableIntegrationTest extends IntegrationTestCase {
 	 * @var DelayedEmailQueueTable
 	 */
 	protected $table;
-	
-	/**
-	 * @var \ElggEntity[]
-	 */
-	protected $entities;
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -30,11 +25,6 @@ class DelayedEmailQueueTableIntegrationTest extends IntegrationTestCase {
 	 */
 	public function down() {
 		$dt = $this->table->getCurrentTime('+10 seconds');
-		
-		foreach ($this->entities as $entity) {
-			$this->table->deleteRecipientRows($entity->guid, 'daily', $dt->getTimestamp());
-			$this->table->deleteRecipientRows($entity->guid, 'weekly', $dt->getTimestamp());
-		}
 	}
 	
 	/**
@@ -43,8 +33,8 @@ class DelayedEmailQueueTableIntegrationTest extends IntegrationTestCase {
 	 * @return Notification
 	 */
 	protected function getTestNotification(): Notification {
-		$this->entities[] = $recipient = $this->createUser();
-		$this->entities[] = $sender = $this->createUser();
+		$recipient = $this->createUser();
+		$sender = $this->createUser();
 		
 		return new Notification($sender, $recipient, 'en', 'Test subject', 'Test body');
 	}
@@ -118,10 +108,6 @@ class DelayedEmailQueueTableIntegrationTest extends IntegrationTestCase {
 		// insert
 		for ($i = 0; $i < 5; $i++) {
 			$this->assertTrue($this->table->queueEmail($recipient->guid, 'daily', $notification));
-		}
-		
-		// different interval
-		for ($i = 0; $i < 5; $i++) {
 			$this->assertTrue($this->table->queueEmail($recipient->guid, 'weekly', $notification));
 		}
 		
@@ -134,6 +120,47 @@ class DelayedEmailQueueTableIntegrationTest extends IntegrationTestCase {
 		// verify
 		$this->assertEmpty($this->table->getRecipientRows($recipient->guid, 'daily', $dt->getTimestamp()));
 		$this->assertEmpty($this->table->getRecipientRows($recipient->guid, 'weekly', $dt->getTimestamp()));
+	}
+	
+	public function testDeleteAllRecipientRows() {
+		$notification = $this->getTestNotification();
+		$recipient = $notification->getRecipient();
+		
+		// insert
+		for ($i = 0; $i < 5; $i++) {
+			$this->assertTrue($this->table->queueEmail($recipient->guid, 'daily', $notification));
+			$this->assertTrue($this->table->queueEmail($recipient->guid, 'weekly', $notification));
+		}
+		
+		$dt = $this->table->getCurrentTime('+10 seconds');
+		
+		// delete
+		$this->assertEquals(10, $this->table->deleteAllRecipientRows($recipient->guid));
+		
+		// verify
+		$this->assertEmpty($this->table->getRecipientRows($recipient->guid, 'daily', $dt->getTimestamp()));
+		$this->assertEmpty($this->table->getRecipientRows($recipient->guid, 'weekly', $dt->getTimestamp()));
+	}
+	
+	public function testRecipientRowsDeletedOnRecipientDelete() {
+		$recipient = $this->createUser();
+		$recipient_guid = $recipient->guid;
+		
+		// insert
+		for ($i = 0; $i < 5; $i++) {
+			$this->assertTrue($this->table->queueEmail($recipient->guid, 'daily', []));
+			$this->assertTrue($this->table->queueEmail($recipient->guid, 'weekly', []));
+		}
+				
+		// delete
+		$this->assertTrue(elgg_call(ELGG_IGNORE_ACCESS, function() use ($recipient) {
+			return $recipient->delete();
+		}));
+		
+		// verify
+		$dt = $this->table->getCurrentTime('+10 seconds');
+		$this->assertEmpty($this->table->getRecipientRows($recipient_guid, 'daily', $dt->getTimestamp()));
+		$this->assertEmpty($this->table->getRecipientRows($recipient_guid, 'weekly', $dt->getTimestamp()));
 	}
 	
 	public function testUpdateRecipientInterval() {

@@ -59,6 +59,11 @@ return [
 			\Elgg\Javascript\SetLightboxConfigHandler::class => [],
 		],
 	],
+	'entity:favicon:sizes' => [
+		'site' => [
+			\Elgg\Icons\GetSiteFaviconSizesHandler::class => [],
+		],
+	],
 	'entity:icon:file' => [
 		'user' => [
 			\Elgg\Icons\SetUserIconFileHandler::class => [],

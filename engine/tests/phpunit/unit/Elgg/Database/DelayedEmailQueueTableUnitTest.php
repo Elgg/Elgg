@@ -31,13 +31,6 @@ class DelayedEmailQueueTableUnitTest extends UnitTestCase {
 	 */
 	public function down() {
 		$dt = $this->table->getCurrentTime('+10 seconds');
-		
-		foreach ($this->entities as $entity) {
-			$this->table->deleteRecipientRows($entity->guid, 'daily', $dt->getTimestamp());
-			$this->table->deleteRecipientRows($entity->guid, 'weekly', $dt->getTimestamp());
-		
-			$entity->delete();
-		}
 	}
 	
 	/**
@@ -46,8 +39,8 @@ class DelayedEmailQueueTableUnitTest extends UnitTestCase {
 	 * @return Notification
 	 */
 	protected function getTestNotification(): Notification {
-		$this->entities[] = $recipient = $this->createUser();
-		$this->entities[] = $sender = $this->createUser();
+		$recipient = $this->createUser();
+		$sender = $this->createUser();
 		
 		return new Notification($sender, $recipient, 'en', 'Test subject', 'Test body');
 	}
@@ -133,6 +126,30 @@ class DelayedEmailQueueTableUnitTest extends UnitTestCase {
 		// delete
 		$this->assertEquals(5, $this->table->deleteRecipientRows($recipient->guid, 'daily', $dt->getTimestamp()));
 		$this->assertEquals(5, $this->table->deleteRecipientRows($recipient->guid, 'weekly', $dt->getTimestamp()));
+		
+		// verify
+		$this->assertEmpty($this->table->getRecipientRows($recipient->guid, 'daily', $dt->getTimestamp()));
+		$this->assertEmpty($this->table->getRecipientRows($recipient->guid, 'weekly', $dt->getTimestamp()));
+	}
+	
+	public function testDeleteAllRecipientRows() {
+		$notification = $this->getTestNotification();
+		$recipient = $notification->getRecipient();
+		
+		// insert
+		for ($i = 0; $i < 5; $i++) {
+			$this->assertTrue($this->table->queueEmail($recipient->guid, 'daily', $notification));
+		}
+		
+		// different interval
+		for ($i = 0; $i < 5; $i++) {
+			$this->assertTrue($this->table->queueEmail($recipient->guid, 'weekly', $notification));
+		}
+		
+		$dt = $this->table->getCurrentTime('+10 seconds');
+		
+		// delete
+		$this->assertEquals(10, $this->table->deleteAllRecipientRows($recipient->guid));
 		
 		// verify
 		$this->assertEmpty($this->table->getRecipientRows($recipient->guid, 'daily', $dt->getTimestamp()));

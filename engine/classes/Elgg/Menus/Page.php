@@ -137,6 +137,14 @@ class Page {
 		]);
 		
 		$return[] = \ElggMenuItem::factory([
+			'name' => 'settings:icons',
+			'text' => elgg_echo('admin:site_icons'),
+			'href' => 'admin/site_icons',
+			'priority' => 20,
+			'section' => 'configure',
+		]);
+		
+		$return[] = \ElggMenuItem::factory([
 			'name' => 'security',
 			'text' => elgg_echo('admin:security'),
 			'href' => 'admin/security',
