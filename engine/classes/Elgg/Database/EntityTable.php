@@ -508,6 +508,36 @@ class EntityTable {
 	}
 
 	/**
+	 * Enables entity
+	 *
+	 * @param \ElggEntity $entity Entity to enable
+	 *
+	 * @return bool
+	 */
+	public function enable(\ElggEntity $entity): bool {
+		$qb = Update::table(self::TABLE_NAME);
+		$qb->set('enabled', $qb->param('yes', ELGG_VALUE_STRING))
+			->where($qb->compare('guid', '=', $entity->guid, ELGG_VALUE_GUID));
+
+		return $this->db->updateData($qb);
+	}
+
+	/**
+	 * Disables entity
+	 *
+	 * @param \ElggEntity $entity Entity to disable
+	 *
+	 * @return bool
+	 */
+	public function disable(\ElggEntity $entity): bool {
+		$qb = Update::table(self::TABLE_NAME);
+		$qb->set('enabled', $qb->param('no', ELGG_VALUE_STRING))
+			->where($qb->compare('guid', '=', $entity->guid, ELGG_VALUE_GUID));
+		
+		return $this->db->updateData($qb);
+	}
+
+	/**
 	 * Delete entity and all of its properties
 	 *
 	 * @param \ElggEntity $entity    Entity

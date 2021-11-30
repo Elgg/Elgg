@@ -1,9 +1,7 @@
 <?php
 
 use Elgg\EntityIcon;
-use Elgg\Database\EntityTable;
 use Elgg\Database\QueryBuilder;
-use Elgg\Database\Update;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\Filesystem\IOException;
@@ -1670,11 +1668,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
 		$this->disableAnnotations();
 
-		$qb = Update::table(EntityTable::TABLE_NAME);
-		$qb->set('enabled', $qb->param('no', ELGG_VALUE_STRING))
-			->where($qb->compare('guid', '=', $guid, ELGG_VALUE_GUID));
-		
-		$disabled = $this->getDatabase()->updateData($qb);
+		$disabled = _elgg_services()->entityTable->disable($this);
 
 		if ($unban_after) {
 			$this->unban();
@@ -1687,7 +1681,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			_elgg_services()->events->triggerAfter('disable', $this->type, $this);
 		}
 
-		return (bool) $disabled;
+		return $disabled;
 	}
 
 	/**
@@ -1698,8 +1692,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return bool
 	 */
 	public function enable($recursive = true) {
-		$guid = (int) $this->guid;
-		if (!$guid) {
+		if (empty($this->guid)) {
 			return false;
 		}
 
@@ -1711,12 +1704,8 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			return false;
 		}
 
-		$result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid, $recursive) {
-			$qb = Update::table(EntityTable::TABLE_NAME);
-			$qb->set('enabled', $qb->param('yes', ELGG_VALUE_STRING))
-				->where($qb->compare('guid', '=', $guid, ELGG_VALUE_GUID));
-
-			$result = $this->getDatabase()->updateData($qb);
+		$result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($recursive) {
+			$result = _elgg_services()->entityTable->enable($this);
 				
 			$this->deleteMetadata('disable_reason');
 			$this->enableAnnotations();
@@ -1724,7 +1713,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			if ($recursive) {
 				$disabled_with_it = elgg_get_entities([
 					'relationship' => 'disabled_with',
-					'relationship_guid' => $guid,
+					'relationship_guid' => $this->guid,
 					'inverse_relationship' => true,
 					'limit' => false,
 					'batch' => true,
@@ -1733,7 +1722,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
 				foreach ($disabled_with_it as $e) {
 					$e->enable($recursive);
-					remove_entity_relationship($e->guid, 'disabled_with', $guid);
+					remove_entity_relationship($e->guid, 'disabled_with', $this->guid);
 				}
 			}
 
