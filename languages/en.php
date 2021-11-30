@@ -766,6 +766,11 @@ To view the profile of the old administrator, click here:
 
 To go to the site, click here:
 %s',
+	'user:notification:validate:subject' => 'Your account on %s is ready for use',
+	'user:notification:validate:body' => 'Your account on %s has been validated. You can now start using it.
+
+To go to the site, click here:
+%s',
 	'user:notification:ban:subject' => 'Your account on %s was banned',
 	'user:notification:ban:body' => 'Your account on %s was banned.
 
