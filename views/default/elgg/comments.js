@@ -98,8 +98,9 @@ define(['jquery', 'elgg'], function ($, elgg) {
 		}
 		dc.toggleEdit();
 		
-		// trick the popup menu to close itself
-		$(document).trigger('scroll');
+		require(['elgg/popup'], function(popup) {
+			popup.close();
+		});
 		
 		return false;
 	});

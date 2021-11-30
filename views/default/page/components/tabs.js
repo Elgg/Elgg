@@ -28,9 +28,9 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 		$target.siblings().addClass('hidden').removeClass('elgg-state-active');
 		$target.removeClass('hidden').addClass('elgg-state-active');
 
-		// trigger scroll to close potential open menus
-		// see elgg/popup.js open function
-		$(document).trigger('scroll');
+		require(['elgg/popup'], function(popup) {
+			popup.close();
+		});
 		
 		if (trigger_open) {
 			$link_item.trigger('open');
