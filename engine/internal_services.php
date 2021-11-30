@@ -151,7 +151,7 @@ return [
 		$cookie_name = $cookie_config['name'];
 		$cookie_token = $c->request->cookies->get($cookie_name, '');
 		return new \Elgg\PersistentLoginService(
-			$c->db,
+			$c->users_remember_me_cookies_table,
 			$c->session,
 			$c->crypto,
 			$cookie_config,
@@ -239,6 +239,7 @@ return [
 	'urlSigner' => DI\autowire(\Elgg\Security\UrlSigner::class),
 	'userCapabilities' => DI\autowire(\Elgg\UserCapabilities::class),
 	'usersApiSessionsTable' => DI\autowire(\Elgg\Database\UsersApiSessionsTable::class),
+	'users_remember_me_cookies_table' => DI\autowire(\Elgg\Database\UsersRememberMeCookiesTable::class),
 	'usersTable' => DI\autowire(\Elgg\Database\UsersTable::class),
 	'upgradeLocator' => DI\autowire(\Elgg\Upgrade\Locator::class),
 	'views' => DI\autowire(\Elgg\ViewsService::class),
@@ -295,6 +296,7 @@ return [
 	\Elgg\Database\Seeder::class => DI\get('seeder'),
 	\Elgg\Database\SiteSecret::class => DI\get('siteSecret'),
 	\Elgg\Database\UsersApiSessionsTable::class => DI\get('usersApiSessionsTable'),
+	\Elgg\Database\UsersRememberMeCookiesTable::class => DI\get('users_remember_me_cookies_table'),
 	\Elgg\Database\UsersTable::class => DI\get('usersTable'),
 	\Elgg\EntityPreloader::class => DI\get('entityPreloader'),
 	\Elgg\EmailService::class => DI\get('emails'),

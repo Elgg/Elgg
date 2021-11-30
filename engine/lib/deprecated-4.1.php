@@ -130,3 +130,17 @@ function is_registered_entity_type($type, $subtype = null) {
 	
 	return _elgg_services()->entity_capabilities->hasCapability($type, $subtype, 'searchable');
 }
+
+/**
+ * Get user by persistent login password
+ *
+ * @param string $hash Hash of the persistent login password
+ *
+ * @return \ElggUser
+ * @deprecated 4.1
+ */
+function get_user_by_code($hash) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_get_user_by_persistent_token().', '4.1');
+	
+	return _elgg_services()->persistentLogin->getUserFromHash($hash);
+}

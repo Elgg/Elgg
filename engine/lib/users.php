@@ -43,17 +43,6 @@ function get_user_by_username($username) {
 }
 
 /**
- * Get user by persistent login password
- *
- * @param string $hash Hash of the persistent login password
- *
- * @return \ElggUser
- */
-function get_user_by_code($hash) {
-	return _elgg_services()->persistentLogin->getUserFromHash($hash);
-}
-
-/**
  * Get an array of users from an email address
  *
  * @param string $email Email address.
@@ -235,4 +224,18 @@ function elgg_get_login_url(array $query = [], $fragment = '') {
 	$url = elgg_generate_url('account:login');
 	$url = elgg_http_add_url_query_elements($url, $query) . $fragment;
 	return elgg_trigger_plugin_hook('login_url', 'site', $query, $url);
+}
+
+/**
+ * Get a user based on a persistent login token
+ *
+ * Please note the token should be the raw token, not hashed in any way.
+ *
+ * @param string $token the persistent token
+ *
+ * @return \ElggUser|null
+ * @since 4.1
+ */
+function elgg_get_user_by_persistent_token(string $token): ?\ElggUser {
+	return _elgg_services()->persistentLogin->getUserFromToken($token);
 }
