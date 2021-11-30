@@ -80,6 +80,13 @@ foreach ($recommendedExtensions as $extension) {
 	echo $view_module($icon, $title, $value, $subtext);
 }
 
+// php ini
+if (empty(ini_get('session.gc_probability')) || empty(ini_get('session.gc_divisor'))) {
+	$title = elgg_echo('admin:server:requirements:gc');
+	$subtext = elgg_echo('admin:server:requirements:gc:info');
+	echo $view_module($icon_warning, $title, elgg_echo('status:disabled'), $subtext);
+}
+
 // db server information
 $db = elgg()->db->getConnection('read');
 $version = $db->executeQuery('select version()')->fetchOne();
