@@ -921,6 +921,9 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'admin:server:requirements:database:server:required' => "Elgg requires MySQL v5.5.3 or higher for its database",
 	'admin:server:requirements:database:client' => "Database client",
 	'admin:server:requirements:database:client:required' => "Elgg requires pdo_mysql to connect to the database server",
+
+	'admin:server:requirements:gc' => "Session Garbage Collection",
+	'admin:server:requirements:gc:info' => "If garbage collection is not configured the session table will not be cleaned up. Configure session.gc_divisor and session.gc_probability in your php.ini.",
 	
 	'admin:user:label:search' => "Find users:",
 	'admin:user:label:searchbutton' => "Search",
