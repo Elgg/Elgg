@@ -402,22 +402,6 @@ class EntityTable {
 	}
 
 	/**
-	 * Enable an entity.
-	 *
-	 * @param int  $guid      GUID of entity to enable
-	 * @param bool $recursive Recursively enable all entities disabled with the entity?
-	 *
-	 * @return bool
-	 */
-	public function enable($guid, $recursive = true) {
-
-		return elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid, $recursive) {
-			$entity = $this->get($guid);
-			return $entity instanceof \ElggEntity ? $entity->enable($recursive) : false;
-		});
-	}
-
-	/**
 	 * Returns an array of entities with optional filtering.
 	 *
 	 * Entities are the basic unit of storage in Elgg.  This function
@@ -521,34 +505,6 @@ class EntityTable {
 		}
 
 		return $user;
-	}
-
-	/**
-	 * Disables all entities owned and contained by a user (or another entity)
-	 *
-	 * @param \ElggEntity $entity Owner/container entity
-	 *
-	 * @return bool
-	 */
-	public function disableEntities(\ElggEntity $entity) {
-		if (!$entity->canEdit()) {
-			return false;
-		}
-
-		if (!$this->events->trigger('disable', $entity->type, $entity)) {
-			return false;
-		}
-
-		$qb = Update::table(self::TABLE_NAME);
-		$qb->set('enabled', $qb->param('no', ELGG_VALUE_STRING))
-			->where($qb->compare('owner_guid', '=', $entity->guid, ELGG_VALUE_GUID))
-			->orWhere($qb->compare('container_guid', '=', $entity->guid, ELGG_VALUE_GUID));
-
-		$this->db->updateData($qb, true);
-
-		$entity->invalidateCache();
-
-		return true;
 	}
 
 	/**
