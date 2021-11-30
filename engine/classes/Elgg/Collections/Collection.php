@@ -58,6 +58,7 @@ class Collection implements CollectionInterface,
 	 * @param mixed $item Item
 	 *
 	 * @return void
+	 * @throws \Elgg\Exceptions\InvalidParameterException
 	 */
 	protected function assertValidItem($item) {
 		$class = $this->item_class ? : CollectionItemInterface::class;
@@ -237,6 +238,11 @@ class Collection implements CollectionInterface,
 	 * {@inheritdoc}
 	 */
 	public function offsetUnset($offset) {
+		if (isset($this->items[$offset]) && isset($this->position)) {
+			// handle unset during iteration
+			$this->position--;
+		}
+		
 		unset($this->items[$offset]);
 	}
 

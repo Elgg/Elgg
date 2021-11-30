@@ -29,7 +29,6 @@ class CollectionsUnitTest extends UnitTestCase {
 			'a' => $a,
 			'b' => $b,
 		], $collection->all());
-
 	}
 
 	public function testCanConstructCollectionFromAssocArray() {
@@ -43,7 +42,6 @@ class CollectionsUnitTest extends UnitTestCase {
 			'a' => $a,
 			'b' => $b,
 		], $collection->all());
-
 	}
 
 	public function testCanConstructCollectionFromCollection() {
@@ -57,7 +55,6 @@ class CollectionsUnitTest extends UnitTestCase {
 			'a' => $a,
 			'b' => $b,
 		], $collection->all());
-
 	}
 
 	public function testCanConstructCollectionWithInvalidItems() {
@@ -241,7 +238,6 @@ class CollectionsUnitTest extends UnitTestCase {
 			'a' => 100,
 			'b' => 200
 		], $filtered);
-
 	}
 
 	public function testCanAccessCollectionAsArray() {
@@ -272,13 +268,47 @@ class CollectionsUnitTest extends UnitTestCase {
 			['b', $b],
 		];
 
-		$this->assertEquals(2, count($collection));
+		$this->assertCount(2, $collection);
 
 		$i = 0;
 		foreach ($collection as $id => $item) {
 			$this->assertEquals($steps[$i], [$id, $item]);
 			$i++;
 		}
+		$this->assertEquals(2, $i);
+	}
+	
+	public function testHandleUnsetDuringIteration() {
+		$items = [
+			new TestItem('a', 10),
+			new TestItem('b', 20),
+			new TestItem('c', 30),
+			new TestItem('d', 40),
+			new TestItem('e', 50),
+			new TestItem('f', 60),
+			new TestItem('g', 70),
+			new TestItem('h', 80),
+			new TestItem('i', 90),
+			new TestItem('j', 100),
+		];
+		$collection = new Collection($items);
+		
+		$result = [];
+		/* @var $value TestItem */
+		foreach ($collection as $key => $value) {
+			if ($key === 'e') {
+				unset($collection[$key]);
+				unset($collection['non-existing-key']); // this shouldn't change the internal pointer
+				continue;
+			}
+			$result[] = $value;
+		}
+		
+		$expected = $items;
+		unset($expected[4]);
+		$expected = array_values($expected);
+		
+		$this->assertEquals($expected, $result);
 	}
 
 	public function testConstructorThrowsWithInvalidClass() {
@@ -322,5 +352,55 @@ class CollectionsUnitTest extends UnitTestCase {
 		
 		$this->expectException(\OutOfBoundsException::class);
 		$collection->seek(10);
+	}
+	
+	public function testArrayAccessInterface() {
+		$items = [
+			new TestItem('a', 10),
+			new TestItem('b', 20),
+			new TestItem('c', 30),
+			new TestItem('d', 40),
+			new TestItem('e', 50),
+			new TestItem('f', 60),
+			new TestItem('g', 70),
+			new TestItem('h', 80),
+			new TestItem('i', 90),
+			new TestItem('j', 100),
+		];
+		$collection = new Collection($items);
+		
+		$this->assertCount(10, $collection);
+		
+		// test offsetExists()
+		$this->assertTrue(isset($collection['a']));
+		$this->assertFalse(isset($collection[0]));
+		$this->assertFalse(empty($collection['b']));
+		$this->assertTrue(empty($collection[1]));
+		
+		$this->assertFalse(isset($collection['x']));
+		$this->assertTrue(empty($collection['y']));
+		
+		// test offsetGet()
+		$this->assertInstanceOf(TestItem::class, $collection['a']);
+		$this->assertEmpty($collection[1]);
+		$this->assertEmpty($collection['x']);
+		
+		// test offsetSet()
+		$collection[] = new TestItem('k', 110);
+		$this->assertInstanceOf(TestItem::class, $collection['k']);
+		$this->assertEmpty($collection[10]);
+		
+		$collection['y'] = new TestItem('l', 120);
+		$this->assertInstanceOf(TestItem::class, $collection['l']);
+		$this->assertEmpty($collection['y']);
+		
+		// test offsetUnset()
+		unset($collection['j']);
+		$this->assertFalse(isset($collection['j']));
+		$this->assertEmpty($collection->get('j'));
+		
+		// test offsetSet() throws exception (needs to be last because exceptions end test execution)
+		$this->expectException(\Elgg\Exceptions\InvalidParameterException::class);
+		$collection[] = new \stdClass();
 	}
 }
