@@ -10,26 +10,26 @@ class AccessCollections extends DbAccessCollections {
 	/**
 	 * @var \stdClass[]
 	 */
-	public $rows = [];
+	protected $rows = [];
 	
 	/**
 	 * @var int
 	 */
-	private $iterator = 100;
+	protected static $iterator = 100;
 	
 	/**
 	 *
 	 * @var array
 	 */
-	private $query_specs;
+	protected $query_specs;
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	public function create($name, $owner_guid = 0, $subtype = null) {
 
-		$this->iterator++;
-		$id = $this->iterator;
+		static::$iterator++;
+		$id = static::$iterator;
 		
 		$row = (object) [
 			'id' => $id,
@@ -52,7 +52,7 @@ class AccessCollections extends DbAccessCollections {
 	 *
 	 * @return void
 	 */
-	public function clearQuerySpecs(int $id): void {
+	protected function clearQuerySpecs(int $id): void {
 		if (!empty($this->query_specs[$id])) {
 			foreach ($this->query_specs[$id] as $spec) {
 				$this->db->removeQuerySpec($spec);
@@ -67,7 +67,7 @@ class AccessCollections extends DbAccessCollections {
 	 *
 	 * @return void
 	 */
-	public function addQuerySpecs(\stdClass $row): void {
+	protected function addQuerySpecs(\stdClass $row): void {
 
 		$this->clearQuerySpecs($row->id);
 

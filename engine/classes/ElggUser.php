@@ -460,7 +460,7 @@ class ElggUser extends \ElggEntity {
 		$result = parent::delete($recursive);
 		if ($result) {
 			// cleanup remember me cookie records
-			_elgg_services()->persistentLogin->removeAllHashes($this);
+			_elgg_services()->users_remember_me_cookies_table->deleteAllHashes($this);
 		}
 		
 		return $result;

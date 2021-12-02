@@ -22,18 +22,18 @@ class RelationshipsTable extends DbRelationshipsTable {
 	/**
 	 * @var stdClass[]
 	 */
-	public $rows = [];
+	protected $rows = [];
 
 	/**
 	 * @var int
 	 */
-	static $iterator = 100;
+	protected static $iterator = 100;
 
 	/**
 	 *
 	 * @var array
 	 */
-	private $query_specs;
+	protected $query_specs = [];
 
 	/**
 	 * {@inheritdoc}
@@ -51,8 +51,8 @@ class RelationshipsTable extends DbRelationshipsTable {
 			return false;
 		}
 
-		static::$iterator++;
-		$id = static::$iterator;
+		self::$iterator++;
+		$id = self::$iterator;
 
 		$row = (object) [
 			'id' => $id,
@@ -75,7 +75,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 	 * @param int $id Relationship ID
 	 * @return void
 	 */
-	public function clearQuerySpecs($id) {
+	protected function clearQuerySpecs($id) {
 		if (!empty($this->query_specs[$id])) {
 			foreach ($this->query_specs[$id] as $spec) {
 				$this->db->removeQuerySpec($spec);
@@ -89,7 +89,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 	 * @param stdClass $row Data row
 	 * @return void
 	 */
-	public function addQuerySpecs(stdClass $row) {
+	protected function addQuerySpecs(stdClass $row) {
 
 		$this->clearQuerySpecs($row->id);
 
@@ -161,5 +161,4 @@ class RelationshipsTable extends DbRelationshipsTable {
 			},
 		]);
 	}
-
 }

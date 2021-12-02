@@ -25,6 +25,7 @@ Lib functions
 ~~~~~~~~~~~~~
 
  * ``elgg_get_version()`` use ``elgg_get_release()``
+ * ``get_user_by_code()`` use ``elgg_get_user_by_persistent_token()`` where you only need to provide the token, not the hashed token
 
 Plugin hooks
 ~~~~~~~~~~~~

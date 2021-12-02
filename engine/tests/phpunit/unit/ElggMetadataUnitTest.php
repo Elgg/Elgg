@@ -102,28 +102,8 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		$metadata->value = 'bar';
 		$metadata->time_created = _elgg_services()->metadataTable->getCurrentTime()->getTimestamp();
 
-		$id = \Elgg\Mocks\Database\MetadataTable::$iterator + 1;
-
-		// Insert
-		$dbprefix = _elgg_services()->config->dbprefix;
-		$sql = "INSERT INTO {$dbprefix}metadata
-				(entity_guid, name, value, value_type, time_created)
-				VALUES (:entity_guid, :name, :value, :value_type, :time_created)";
-
-		_elgg_services()->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				'entity_guid' => $metadata->entity_guid,
-				'name' => 'foo',
-				'value' => 'bar',
-				'value_type' => 'text',
-				'time_created' => $metadata->time_created,
-			],
-			'insert_id' => $id,
-		]);
-
 		$this->assertTrue($metadata->save());
-		$this->assertEquals($id, $metadata->id);
+		$this->assertGreaterThan(0, $metadata->id);
 	}
 	
 	public function testCanUpdateMetadata() {
@@ -173,16 +153,6 @@ class ElggMetadataUnitTest extends UnitTestCase {
 
 		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
 		
-		$dbprefix = _elgg_services()->config->dbprefix;
-		_elgg_services()->db->addQuerySpec([
-			'sql' => "DELETE FROM {$dbprefix}metadata WHERE id = :id",
-			'params' => [
-				'id' => $metadata->id,
-			],
-			'row_count' => 1,
-			'times' => 1,
-		]);
-
 		$this->assertTrue($metadata->delete());
 	}
 

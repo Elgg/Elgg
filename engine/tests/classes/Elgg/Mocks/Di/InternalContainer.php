@@ -7,19 +7,20 @@ use Psr\Container\ContainerInterface;
 /**
  * Mocking service
  *
- * @property-read \Elgg\Mocks\Database\AccessCollections      $accessCollections       ACL table mock
- * @property-read \Elgg\Mocks\Database\AnnotationsTable       $annotationsTable        Annotation mocks
- * @property-read \Elgg\Mocks\Database                        $db                      Database
- * @property-read \Elgg\Mocks\Database\DelayedEmailQueueTable $delayedEmailQueueTable  Delayed Email Queue Table mock
- * @property-read \Elgg\Mocks\Database\EntityTable            $entityTable             Entity mocks
- * @property-read \Elgg\Mocks\Database\HMACCacheTable         $hmacCacheTable          HMAC Cache table
- * @property-read \Elgg\Mocks\Database\MetadataTable          $metadataTable           Metadata mocks
- * @property-read \Elgg\Mocks\Database\Mutex                  $mutex                   Mutex
- * @property-read \Elgg\Notifications\NotificationsService    $notifications           Notification service (with memory queue)
- * @property-read \Elgg\Mocks\Database\PrivateSettingsTable   $privateSettings         Private settings table mock
- * @property-read \Elgg\Mocks\Database\RelationshipsTable     $relationshipsTable      Annotation mocks
- * @property-read \Elgg\Mocks\I18n\Translator                 $translator              Translator
- * @property-read \Elgg\Mocks\Database\UsersTable             $usersTable              Users table
+ * @property-read \Elgg\Mocks\Database\AccessCollections           $accessCollections               ACL table mock
+ * @property-read \Elgg\Mocks\Database\AnnotationsTable            $annotationsTable                Annotation mocks
+ * @property-read \Elgg\Mocks\Database                             $db                              Database
+ * @property-read \Elgg\Mocks\Database\DelayedEmailQueueTable      $delayedEmailQueueTable          Delayed Email Queue Table mock
+ * @property-read \Elgg\Mocks\Database\EntityTable                 $entityTable                     Entity mocks
+ * @property-read \Elgg\Mocks\Database\HMACCacheTable              $hmacCacheTable                  HMAC Cache table
+ * @property-read \Elgg\Mocks\Database\MetadataTable               $metadataTable                   Metadata mocks
+ * @property-read \Elgg\Mocks\Database\Mutex                       $mutex                           Mutex
+ * @property-read \Elgg\Notifications\NotificationsService         $notifications                   Notification service (with memory queue)
+ * @property-read \Elgg\Mocks\Database\PrivateSettingsTable        $privateSettings                 Private settings table mock
+ * @property-read \Elgg\Mocks\Database\RelationshipsTable          $relationshipsTable              Annotation mocks
+ * @property-read \Elgg\Mocks\I18n\Translator                      $translator                      Translator
+ * @property-read \Elgg\Mocks\Database\UsersTable                  $usersTable                      Users table
+ * @property-read \Elgg\Mocks\Database\UsersRememberMeCookiesTable $users_remember_me_cookies_table Users remember me cookies table
  */
 class InternalContainer extends \Elgg\Di\InternalContainer{
 
@@ -42,6 +43,7 @@ class InternalContainer extends \Elgg\Di\InternalContainer{
 		$container->set('accessCollections', \DI\autowire(\Elgg\Mocks\Database\AccessCollections::class)->constructorParameter('cache', \DI\get('accessCache')));
 		$container->set('privateSettings', \DI\autowire(\Elgg\Mocks\Database\PrivateSettingsTable::class));
 		$container->set('configTable', \DI\autowire(\Elgg\Mocks\Database\ConfigTable::class));
+		$container->set('users_remember_me_cookies_table', \DI\autowire(\Elgg\Mocks\Database\UsersRememberMeCookiesTable::class));
 
 		$container->set('mailer', function (ContainerInterface $c) {
 			return new \Laminas\Mail\Transport\InMemory();

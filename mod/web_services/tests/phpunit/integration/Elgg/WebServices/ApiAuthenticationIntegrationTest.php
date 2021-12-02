@@ -28,9 +28,19 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 	protected $pam_handlers;
 	
 	/**
+	 * @var bool
+	 */
+	protected $gc_enabled;
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	public function up() {
+		// there is some wierd issue in the Memcache tests with the HMACTable destruct function.
+		// disabling the circular reference collector solves this
+		$this->gc_enabled = gc_enabled();
+		gc_disable();
+		
 		$this->plugin = elgg_get_plugin_from_id('web_services');
 		$this->plugin_settings = $this->plugin->getAllSettings();
 		$this->pam_handlers = \ElggPAM::$_handlers;
@@ -46,6 +56,10 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 		}
 		
 		\ElggPAM::$_handlers = $this->pam_handlers;
+		
+		if ($this->gc_enabled) {
+			gc_enable();
+		}
 	}
 	
 	/**
