@@ -125,6 +125,7 @@ If you are ready to proceed, click the Next button.",
 	'install:complete:gotosite' => 'Go to site',
 	'install:complete:admin_notice' => 'Welcome to your Elgg site! For more options, see the %s.',
 	'install:complete:admin_notice:link_text' => 'settings pages',
+	'install:complete:admin_notice:custom_index' => 'We enabled the Front Page Demo plugin so you can manage your homepage. Configure it here: %s.',
 
 	'InstallationException:CannotLoadSettings' => 'Elgg could not load the settings file. It does not exist or there is a file permissions issue.',
 
