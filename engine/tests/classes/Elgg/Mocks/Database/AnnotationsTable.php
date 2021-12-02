@@ -15,18 +15,18 @@ class AnnotationsTable extends DbAnnotations {
 	/**
 	 * @var \stdClass[]
 	 */
-	public $rows = [];
+	protected $rows = [];
 
 	/**
 	 * DB query query_specs
 	 * @var array
 	 */
-	public $query_specs = [];
+	protected $query_specs = [];
 
 	/**
 	 * @var int
 	 */
-	static $iterator = 100;
+	protected static $iterator = 100;
 
 	/**
 	 * {@inheritdoc}
@@ -66,8 +66,8 @@ class AnnotationsTable extends DbAnnotations {
 	 * {@inheritdoc}
 	 */
 	public function create(ElggAnnotation $annotation, \ElggEntity $entity) {
-		static::$iterator++;
-		$id = static::$iterator;
+		self::$iterator++;
+		$id = self::$iterator;
 
 		$row = (object) [
 			'type' => 'annotation',
@@ -149,7 +149,7 @@ class AnnotationsTable extends DbAnnotations {
 	 * @param \stdClass $row Data row
 	 * @return void
 	 */
-	public function clearQuerySpecs(\stdClass $row) {
+	protected function clearQuerySpecs(\stdClass $row) {
 		if (!isset($this->query_specs[$row->id])) {
 			return;
 		}
@@ -165,7 +165,7 @@ class AnnotationsTable extends DbAnnotations {
 	 *
 	 * @return void
 	 */
-	public function addQuerySpecs(\stdClass $row) {
+	protected function addQuerySpecs(\stdClass $row) {
 
 		$this->clearQuerySpecs($row);
 
@@ -242,15 +242,5 @@ class AnnotationsTable extends DbAnnotations {
 				return [];
 			}
 		]);
-	}
-
-	/**
-	 * Iterate ID
-	 * @return int
-	 */
-	public function iterate() {
-		static::$iterator++;
-
-		return static::$iterator;
 	}
 }

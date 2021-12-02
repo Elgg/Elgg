@@ -41,8 +41,8 @@ class DelayedEmailQueueTable extends DbDelayedEmailQueueTable{
 	 * @return bool
 	 */
 	public function queueEmail(int $recipient_guid, string $delivery_interval, $item): bool {
-		static::$iterator++;
-		$id = static::$iterator;
+		self::$iterator++;
+		$id = self::$iterator;
 		
 		// lock the time to prevent testing issues
 		$this->setCurrentTime();

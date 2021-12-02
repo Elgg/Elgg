@@ -23,17 +23,17 @@ class EntityTable extends DbEntityTable {
 	/**
 	 * @var \stdClass[]
 	 */
-	public $rows = [];
+	protected $rows = [];
 
 	/**
 	 * @var int
 	 */
-	static $iterator = 100;
+	protected static $iterator = 100;
 
 	/**
 	 * @var array
 	 */
-	private $query_specs = [];
+	protected $query_specs = [];
 
 	/**
 	 * {@inheritdoc}
@@ -121,9 +121,9 @@ class EntityTable extends DbEntityTable {
 			if ($type === 'site') {
 				$guid = 1;
 			} else {
-				static::$iterator++;
-				if (!isset($this->row[static::$iterator])) {
-					$guid = static::$iterator;
+				self::$iterator++;
+				if (!isset($this->row[self::$iterator])) {
+					$guid = self::$iterator;
 				}
 			}
 		}
@@ -156,7 +156,7 @@ class EntityTable extends DbEntityTable {
 		$this->addQuerySpecs($primary_attributes);
 
 		$entity = $this->rowToElggStar($primary_attributes);
-		if (!($entity instanceof \ElggEntity)) {
+		if (!$entity instanceof \ElggEntity) {
 			_elgg_services()->logger->error("Failed creating a mock entity with attributes " . var_export($primary_attributes, true));
 		}
 
@@ -193,23 +193,13 @@ class EntityTable extends DbEntityTable {
 	}
 
 	/**
-	 * Iterate ID
-	 * @return int
-	 */
-	public function iterate() {
-		static::$iterator++;
-
-		return static::$iterator;
-	}
-
-	/**
 	 * Clear query specs
 	 *
 	 * @param int $guid GUID
 	 *
 	 * @return void
 	 */
-	public function clearQuerySpecs($guid) {
+	protected function clearQuerySpecs($guid) {
 		if (!empty($this->query_specs[$guid])) {
 			foreach ($this->query_specs[$guid] as $spec) {
 				$this->db->removeQuerySpec($spec);
@@ -224,7 +214,7 @@ class EntityTable extends DbEntityTable {
 	 *
 	 * @return void
 	 */
-	public function addQuerySpecs(\stdClass $row) {
+	protected function addQuerySpecs(\stdClass $row) {
 
 		// Clear previous added specs, if any
 		$this->clearQuerySpecs($row->guid);
@@ -246,7 +236,7 @@ class EntityTable extends DbEntityTable {
 	 *
 	 * @return void
 	 */
-	public function addSelectQuerySpecs(\stdClass $row) {
+	protected function addSelectQuerySpecs(\stdClass $row) {
 
 		// Access SQL for this row might differ based on:
 		//  - logged in user
@@ -333,7 +323,7 @@ class EntityTable extends DbEntityTable {
 	 *
 	 * @return bool
 	 */
-	public function validateRowAccess($row) {
+	protected function validateRowAccess($row) {
 
 		if (elgg_get_ignore_access()) {
 			return true;
@@ -375,7 +365,7 @@ class EntityTable extends DbEntityTable {
 	 *
 	 * @return void
 	 */
-	public function addInsertQuerySpecs(\stdClass $row) {
+	protected function addInsertQuerySpecs(\stdClass $row) {
 		$insert = Insert::intoTable(self::TABLE_NAME);
 		$insert->values([
 			'type' => $insert->param($row->type, ELGG_VALUE_STRING),
@@ -402,7 +392,7 @@ class EntityTable extends DbEntityTable {
 	 *
 	 * @return void
 	 */
-	public function addUpdateQuerySpecs(\stdClass $row) {
+	protected function addUpdateQuerySpecs(\stdClass $row) {
 		$update = Update::table(self::TABLE_NAME);
 		$update->set('owner_guid', $update->param($row->owner_guid, ELGG_VALUE_GUID))
 			->set('container_guid', $update->param($row->container_guid, ELGG_VALUE_GUID))
@@ -500,7 +490,7 @@ class EntityTable extends DbEntityTable {
 	 *
 	 * @return void
 	 */
-	public function addDeleteQuerySpecs(\stdClass $row) {
+	protected function addDeleteQuerySpecs(\stdClass $row) {
 
 		$qb = Delete::fromTable('entities');
 		$qb->where($qb->compare('guid', '=', $row->guid, ELGG_VALUE_INTEGER));
