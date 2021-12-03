@@ -401,7 +401,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		$db->addQuerySpec([
 			'sql' => 'SHOW TABLES',
 			'results' => [
-				(object) ["{$db->prefix}config"],
+				["{$db->prefix}config"],
 			],
 		]);
 
@@ -468,7 +468,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		$db->addQuerySpec([
 			'sql' => 'SHOW TABLES',
 			'results' => [
-				(object) ["{$db->prefix}config"],
+				["{$db->prefix}config"],
 			],
 		]);
 
@@ -501,7 +501,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		$db->addQuerySpec([
 			'sql' => 'SHOW TABLES',
 			'results' => [
-				(object) ["{$db->prefix}config"],
+				["{$db->prefix}config"],
 			],
 		]);
 
@@ -581,7 +581,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		$db->addQuerySpec([
 			'sql' => 'SHOW TABLES',
 			'results' => [
-				(object) ["{$db->prefix}config"],
+				["{$db->prefix}config"],
 			],
 		]);
 
@@ -622,7 +622,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		$db->addQuerySpec([
 			'sql' => 'SHOW TABLES',
 			'results' => [
-				(object) ["{$db->prefix}config"],
+				["{$db->prefix}config"],
 			],
 		]);
 
