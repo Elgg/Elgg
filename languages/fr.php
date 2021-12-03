@@ -564,6 +564,9 @@ Comme Elgg a un grand nombre d\'accès aux fichiers cela va avoir un effet néga
 	'admin:settings:i18n' => 'Internationalisation',
 	'admin:settings:advanced' => 'Configuration avancée',
 	'admin:settings:users' => 'Membres',
+	'admin:site_icons' => "Icônes du site",
+	'admin:site_icons:site_icon' => "Icône du site",
+	'admin:site_icons:info' => "Téléchargez une icône associée à votre site. Cette icône sera utilisée comme favicon et lors de l'affichage du site, par exemple en tant qu'expéditeur dans les notifications du site.",
 	'admin:site_settings' => "Paramètres du site",
 	'admin:site:description' => "Ce menu vous permet de définir les paramètres globaux de votre site. Choisissez une option ci-dessous pour commencer.",
 	'admin:site:opt:linktext' => "Configurer le site...",
@@ -764,6 +767,11 @@ Pour voir le profil de l\'ancien administrateur :
 
 Pour vous rendre sur le site :
 %s',
+	'user:notification:validate:subject' => 'Votre compte sur %s est prêt à être utilisé',
+	'user:notification:validate:body' => 'Votre compte sur %s a été validé. Vous pouvez maintenant commencer à l\'utiliser.
+
+Pour vous rendre sur le site :
+%s',
 	'user:notification:ban:subject' => 'Votre compte sur %s a été banni',
 	'user:notification:ban:body' => 'Votre compte sur %s a été banni.
 
@@ -914,6 +922,9 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'admin:server:requirements:database:server:required' => "Elgg requiert MySQL v5.5.3 ou plus pour sa base de données",
 	'admin:server:requirements:database:client' => "Client de la base de données",
 	'admin:server:requirements:database:client:required' => "Elgg a besoin de pdo_mysql pour se connecter au serveur de base de données",
+
+	'admin:server:requirements:gc' => "Ramasse-miettes des déchets de session - garbage collection",
+	'admin:server:requirements:gc:info' => "Si le ramasse-miettes n'est pas configuré, la table de session ne sera pas nettoyée. Configurez session.gc_divisor et session.gc_probability dans votre php.ini.",
 	
 	'admin:user:label:search' => "Trouver des utilisateurs :",
 	'admin:user:label:searchbutton' => "Rechercher",

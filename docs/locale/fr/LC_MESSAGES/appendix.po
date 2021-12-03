@@ -5,17 +5,17 @@
 # 
 # Translators:
 # Jerôme Bakker, 2021
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
 # Jeroen Dalsem, 2021
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-19 11:45+0100\n"
+"POT-Creation-Date: 2021-11-25 13:55+0100\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
-"Last-Translator: Jeroen Dalsem, 2021\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -4277,12 +4277,12 @@ msgstr "Icônes migrés vers Font Awesome"
 #: ../../appendix/upgrade-notes/1.x-to-2.0.rst:369
 msgid ""
 "Elgg's sprites and most of the CSS classes beginning with ``elgg-icon-`` "
-"`have been removed <https://github.com/Elgg/Elgg/pull/8578/files#diff-"
-"b3912b37ca7bd6c53a2968ccb6c22a94L22>`_."
+"`have been removed "
+"<https://github.com/Elgg/Elgg/pull/8578/files#diff-b3912b37ca7bd6c53a2968ccb6c22a94L22>`_."
 msgstr ""
 "Les sprites de Elgg et la plupart des classes CSS commençant par ``elgg-"
-"icon-`` `ont été supprimées <https://github.com/Elgg/Elgg/pull/8578/files"
-"#diff-b3912b37ca7bd6c53a2968ccb6c22a94L22>`_."
+"icon-`` `ont été supprimées "
+"<https://github.com/Elgg/Elgg/pull/8578/files#diff-b3912b37ca7bd6c53a2968ccb6c22a94L22>`_."
 
 #: ../../appendix/upgrade-notes/1.x-to-2.0.rst:372
 msgid ""
@@ -4905,8 +4905,8 @@ msgid ""
 "``[display, view]``: See the :ref:`new plugin hook<guides/views#altering-"
 "view-output>`."
 msgstr ""
-"``[display, view]``: Voyez le :ref:`nouvel hook plugin<guides/views"
-"#altering-view-output>`."
+"``[display, view]``: Voyez le :ref:`nouvel hook "
+"plugin<guides/views#altering-view-output>`."
 
 #: ../../appendix/upgrade-notes/1.x-to-2.0.rst:568
 msgid "Removed Actions"
@@ -5285,8 +5285,8 @@ msgstr "``ElggEntity`` implémente désormais l’interface ``\\Elgg\\EntityIcon
 msgid ""
 "``elgg_get_icon_sizes()`` - return entity type/subtype specific icon sizes"
 msgstr ""
-"``elgg_get_icon_sizes()`` - renvoie les tailles d’icônes spécifiques au type"
-"/sous-type d’entité spécifié"
+"``elgg_get_icon_sizes()`` - renvoie les tailles d’icônes spécifiques au "
+"type/sous-type d’entité spécifié"
 
 #: ../../appendix/upgrade-notes/2.1-to-2.2.rst:47
 msgid ""
@@ -7931,8 +7931,8 @@ msgid ""
 "Consequently, all API around adding/updating entity subtypes and classes "
 "have been removed."
 msgstr ""
-"Par conséquent, toutes les API relatives à l’ajout/mise à jour des sous-"
-"types et des classes d’entités ont été supprimées."
+"Par conséquent, toutes les API relatives à l’ajout et la mise à jour des "
+"sous-types et des classes d’entités ont été supprimées."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:497
 msgid ""
@@ -7989,7 +7989,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:518
 msgid "Dependency Injection Container"
-msgstr "Conteneur d’injection de dépendance (DI = Dependency Injection)"
+msgstr "Conteneur d’injection de dépendance - DI = Dependency Injection"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:520
 msgid ""
@@ -8022,9 +8022,8 @@ msgid ""
 msgstr ""
 "Nous avons ajouté un service de recherche dans le noyau, par conséquent, le "
 "plugin ``search`` fournit désormais uniquement une interface utilisateur "
-"pour afficher les formulaires et afficher les résultats de recherche. Bon "
-"nombre des vues dans le plugin de recherche ont été affectées par ce "
-"changement."
+"pour afficher les formulaires et afficher les résultats de recherche. "
+"Beaucoup des vues du plugin search ont été affectées par ce changement."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:531
 msgid ""
@@ -8037,9 +8036,9 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:533
 msgid ""
-"See :doc:`Search Service </guides/search>` and :ref:`Search hooks <guides"
-"/hooks-list#search>` documentation for detailed information about new search"
-" capabilities."
+"See :doc:`Search Service </guides/search>` and :ref:`Search hooks "
+"<guides/hooks-list#search>` documentation for detailed information about new"
+" search capabilities."
 msgstr ""
 "Voyez la documentation du :doc:`Service de recherche </guides/search>` et "
 "des :ref:`Hooks de recherche <guides/hooks-list#search>` pour des "
@@ -8087,8 +8086,8 @@ msgid ""
 " that have counters)."
 msgstr ""
 "``output/url`` prend désormais en charge un paramètre ``badge``, qui peut "
-"être utilisé lorsqu’un compteur, un badge ou un autre est requis comme "
-"suffixe (principalement dans les éléments de menu qui ont des compteurs)."
+"être utilisé lorsqu’un compteur, un badge ou autre est requis comme suffixe "
+"(principalement dans les éléments de menu qui ont des compteurs)."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:542
 msgid ""
@@ -8247,7 +8246,7 @@ msgid ""
 "``ElggData`` (and hence most Elgg domain objects) no longer implements "
 "``Exportable``"
 msgstr ""
-"``ElggData`` (et donc la plupart des objets de domaine Elgg) n’implémente "
+"``ElggData`` (et donc la plupart des objets du domaine Elgg) n’implémente "
 "plus ``Exportable``"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:590
@@ -8379,8 +8378,8 @@ msgid ""
 "``elgg.ui.toggleMenuItems``: Use ``data-toggle`` attribute when registering "
 "toggleable menu items"
 msgstr ""
-"``elgg.ui.toggleMenuItems`` : Utilisez l’attribut ``data-toggle`` lors de "
-"l’enregistrement d’éléments de menu basculables"
+"``elgg.ui.toggleMenuItems`` : Utilisez l’attribut ``data-toggle`` lorsque "
+"vous enregistrez des éléments de menu basculables"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:624
 msgid ""
@@ -8463,8 +8462,8 @@ msgstr ""
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:640
 msgid "Hook **members:list, <page>**: Use your own pagehandler or route hook"
 msgstr ""
-"Hook **members:list, <page>** : Utilisez votre propre gestionnaire de page "
-"ou hook de route"
+"Hook **members:list, <page>** : Utilisez le hook de route ou votre propre "
+"gestionnaire de page"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:641
 msgid "Hook **members:config, <page>**: Use **register, menu:filter:members**"
@@ -9464,11 +9463,11 @@ msgstr "L'unité de mesure préférée est maintenant `rem` et non `px`"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:947
 msgid ""
-"The theme uses `8-point grid system <https://builttoadapt.io/intro-to-the-8"
-"-point-grid-system-d2573cde8632>`"
+"The theme uses `8-point grid system <https://builttoadapt.io/intro-to-"
+"the-8-point-grid-system-d2573cde8632>`"
 msgstr ""
-"Le thème utilise un `système de grille à 8 points <https://builttoadapt.io"
-"/intro-to-the-8-point-grid-system-d2573cde8632>`"
+"Le thème utilise un `système de grille à 8 points "
+"<https://builttoadapt.io/intro-to-the-8-point-grid-system-d2573cde8632>`"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:948
 msgid "Menus, layout elements and other components now use flexbox"
@@ -9513,8 +9512,8 @@ msgid ""
 "eca67feb079c>`."
 msgstr ""
 "les propriétés z-index ont été examinées et empilées avec une itération "
-"simple au lieu de `9999999 <https://hackernoon.com/my-approach-to-using-z"
-"-index-eca67feb079c>`."
+"simple au lieu de `9999999 <https://hackernoon.com/my-approach-to-using-z-"
+"index-eca67feb079c>`."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:954
 msgid ""
