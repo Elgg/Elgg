@@ -1,3 +1,15 @@
+<a name="3.3.23"></a>
+### 3.3.23  (2021-12-03)
+
+#### Contributors
+
+* Jerôme Bakker (1)
+
+#### Bug Fixes
+
+* **ajax:** forms in the admin namespace are protected ([572d210e](https://github.com/Elgg/Elgg/commit/572d210e2392f1fdf47ff2f38665372a6535c126))
+
+
 <a name="3.3.22"></a>
 ### 3.3.22  (2021-11-19)
 
