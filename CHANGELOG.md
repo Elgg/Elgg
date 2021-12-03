@@ -1,3 +1,17 @@
+<a name="4.0.5"></a>
+### 4.0.5  (2021-12-03)
+
+#### Contributors
+
+* Jerôme Bakker (6)
+
+#### Bug Fixes
+
+* **blog:** show future access level for draft blogs ([68d86899](https://github.com/Elgg/Elgg/commit/68d868996f5b98899def15fcf04e6c10a3fa58ec))
+* **install:** correctly determine database installation completion ([96a4a469](https://github.com/Elgg/Elgg/commit/96a4a4695e381acd7f5cc5ed79caaf592a0abae5))
+* **upgrade:** correctly interpret database results before migration ([b8dcc903](https://github.com/Elgg/Elgg/commit/b8dcc903fc80669636bcfe5ea30d96bf8bb16395))
+
+
 <a name="4.0.4"></a>
 ### 4.0.4  (2021-11-19)
 
