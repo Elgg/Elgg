@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-19 09:49+0100\n"
+"POT-Creation-Date: 2021-12-03 09:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10023,4 +10023,3 @@ msgstr ""
 #: ../../guides/widgets.rst:203
 msgid "When an object triggers an event that matches the event, entity\\_type, and entity\\_subtype parameters passed, Elgg core will look for default widgets that match the widget\\_context and will copy them to that object's owner\\_guid and container\\_guid. All widget settings will also be copied."
 msgstr ""
-
