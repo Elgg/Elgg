@@ -1,3 +1,17 @@
+<a name="4.0.5"></a>
+### 4.0.5  (2021-12-03)
+
+#### Contributors
+
+* Jerôme Bakker (6)
+
+#### Bug Fixes
+
+* **blog:** show future access level for draft blogs ([68d86899](https://github.com/Elgg/Elgg/commit/68d868996f5b98899def15fcf04e6c10a3fa58ec))
+* **install:** correctly determine database installation completion ([96a4a469](https://github.com/Elgg/Elgg/commit/96a4a4695e381acd7f5cc5ed79caaf592a0abae5))
+* **upgrade:** correctly interpret database results before migration ([b8dcc903](https://github.com/Elgg/Elgg/commit/b8dcc903fc80669636bcfe5ea30d96bf8bb16395))
+
+
 <a name="4.0.4"></a>
 ### 4.0.4  (2021-11-19)
 
@@ -381,6 +395,18 @@ fixes #12684 ([13070985](https://github.com/Elgg/Elgg/commit/13070985e840a78fc8b
 * **upgrades:** removed obsolete upgrades ([1f0c968c](https://github.com/Elgg/Elgg/commit/1f0c968cb69f5aa63b06831ff35f90a6c227f346))
 * **users:** replaced validation methods with service functions ([821ccd95](https://github.com/Elgg/Elgg/commit/821ccd95e10c8e45b96f11de8dad88d1f6bbc23f))
 * **views:** removed elgg_prepend_css_urls is no longer available ([53cb8819](https://github.com/Elgg/Elgg/commit/53cb881983b1aae39b9966e9d74de807a808f0b9))
+
+
+<a name="3.3.23"></a>
+### 3.3.23  (2021-12-03)
+
+#### Contributors
+
+* Jerôme Bakker (1)
+
+#### Bug Fixes
+
+* **ajax:** forms in the admin namespace are protected ([572d210e](https://github.com/Elgg/Elgg/commit/572d210e2392f1fdf47ff2f38665372a6535c126))
 
 
 <a name="3.3.22"></a>

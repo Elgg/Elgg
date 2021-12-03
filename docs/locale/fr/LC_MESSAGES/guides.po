@@ -6,17 +6,17 @@
 # Translators:
 # Jerôme Bakker, 2021
 # Emmanuel Simond <emmanuel.simond@gmail.com>, 2021
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
 # Jeroen Dalsem, 2021
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-19 11:45+0100\n"
+"POT-Creation-Date: 2021-11-25 13:55+0100\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
-"Last-Translator: Jeroen Dalsem, 2021\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -4449,7 +4449,7 @@ msgstr ""
 #: ../../guides/group-tools.rst:82
 msgid "Read more about gatekeepers here: :ref:`authentication-gatekeepers`"
 msgstr ""
-"Lisez-en plus sur les gardiens (gatekeepers) ici : :ref:`authentication-"
+"Lisez-en plus sur les gardiens - gatekeepers - ici : :ref:`authentication-"
 "gatekeepers`"
 
 #: ../../guides/group-tools.rst:84
@@ -4457,8 +4457,9 @@ msgid ""
 "If you need the configured group tool options for a specific group you can "
 "use the ``elgg()->group_tools->group($group)`` function."
 msgstr ""
-"Si vous avez besoin des options des outils du groupe configurés vous pouvez "
-"utiliser la focntion use the ``elgg()->group_tools->group($group)``."
+"Si vous avez besoin des options d'un outil de groupe configurées pour un "
+"groupe spécifique, vous pouvez utiliser la fonction "
+"``elgg()->group_tools->group($group)``."
 
 #: ../../guides/guidelines.rst:2
 msgid "Plugin coding guidelines"
@@ -4470,9 +4471,9 @@ msgid ""
 "plugins. Core plugins are being updated to this format and all plugin "
 "authors should follow these guidelines in their own plugins."
 msgstr ""
-"En plus des Standards de Développement Elgg (Elgg Coding Standards), voici "
-"les recommandations pour créer des plugins. Les plugins du noyau sont mis à "
-"jour vers ce format et tous les auteurs de plugins devraient suivre ces "
+"En plus des Standards de Développement Elgg - Elgg Coding Standards -, voici"
+" des recommandations pour créer des plugins. Les plugins du noyau sont mis à"
+" jour vers ce format et tous les auteurs de plugins devraient suivre ces "
 "recommandations pour leurs propres plugins."
 
 #: ../../guides/guidelines.rst:10
@@ -4489,12 +4490,12 @@ msgstr ":doc:`dont-modify-core`"
 
 #: ../../guides/guidelines.rst:21
 msgid "Use standardized routing with page handlers"
-msgstr "Utilisez le routage standard avec vos gestionnaires de pages"
+msgstr "Utilisez le routage standardisé avec vos gestionnaires de pages"
 
 #: ../../guides/guidelines.rst:23 ../../guides/guidelines.rst:51
 #: ../../guides/guidelines.rst:63
 msgid "Example: Bookmarks plugin"
-msgstr "Exemple : plugin Bookmarks (Signets)"
+msgstr "Exemple : plugin des signets - Bookmarks"
 
 #: ../../guides/guidelines.rst:40
 msgid "Page handlers should accept the following standard URLs:"
@@ -4543,7 +4544,7 @@ msgstr "page_handler/view/<guid>/<title>"
 
 #: ../../guides/guidelines.rst:36 ../../guides/guidelines.rst:73
 msgid "Add"
-msgstr "Ajouter"
+msgstr "Ajout"
 
 #: ../../guides/guidelines.rst:36
 msgid "page_handler/add/<container_guid>"
@@ -4551,7 +4552,7 @@ msgstr "page_handler/add/<container_guid>"
 
 #: ../../guides/guidelines.rst:38 ../../guides/guidelines.rst:75
 msgid "Edit"
-msgstr "Modifier"
+msgstr "Modification"
 
 #: ../../guides/guidelines.rst:38
 msgid "page_handler/edit/<guid>"
@@ -4573,7 +4574,7 @@ msgid ""
 msgstr ""
 "Incluez les scripts du gestionnaire de page à partir du gestionnaire de "
 "page. Presque tous les gestionnaires de page doivent avoir un script de "
-"gestionnaire de page. (Par exemple : ``bookmarks/all`` => "
+"gestionnaire de page. (Exemple : ``bookmarks/all`` => "
 "``mod/bookmarks/views/default/resources/bookmarks/all.php``)"
 
 #: ../../guides/guidelines.rst:43
@@ -4597,8 +4598,8 @@ msgid ""
 "The group URL should use views like ``resources/groups/*.php`` to render "
 "pages."
 msgstr ""
-"L’URL de groupe doit utiliser des vues telles que ``resources/groups/*.php``"
-" pour afficher des pages."
+"L’URL d'un groupe doit utiliser des vues telles que "
+"``resources/groups/*.php`` pour afficher des pages."
 
 #: ../../guides/guidelines.rst:46
 msgid "Page handlers should not contain HTML."
@@ -4613,7 +4614,7 @@ msgid ""
 "Store page functionality in "
 "``mod/<plugin>/views/default/resources/<page_handler>/<page_name>.php``"
 msgstr ""
-"Stockez les fonctionnalités des pages dans "
+"Enregistrez les fonctionnalités des pages dans "
 "``mod/<plugin>/views/default/resources/<page_handler>/<page_name>.php``"
 
 #: ../../guides/guidelines.rst:53
@@ -4677,17 +4678,17 @@ msgid ""
 "the view if the entity is missing or wrong."
 msgstr ""
 "Vérifiez l’objet dans ``$vars['entity']`` . Utilisez ``elgg_instance_of()`` "
-"pour vous assurer qu’il s’agit du type d'entité que vous souhaitez. Renvoyez"
-" ``true`` pour court-circuiter la vue si l’entité est manquante ou erronée."
+"pour vous assurer qu’il s’agit du type d'entité que vous voulez. Renvoyez "
+"``true`` pour court-circuiter la vue si l’entité est manquante ou erronée."
 
 #: ../../guides/guidelines.rst:66
 msgid ""
 "Use the new list body and list metadata views to help format. You should use"
 " almost no markup in these views."
 msgstr ""
-"Utilisez les vues du nouveau corps de liste et des métadonnées de liste pour"
-" aider au formatage. Vous devriez n'utiliser quasiment aucun balisage dans "
-"ces vues."
+"Utilisez les nouvelles vues de liste du corps et de liste des métadonnées "
+"pour aider au formatage. Vous devriez n'utiliser quasiment aucun balisage "
+"dans ces vues."
 
 #: ../../guides/guidelines.rst:67
 msgid "Update action structure - Example: Bookmarks plugin."
@@ -4712,7 +4713,7 @@ msgstr "action/plugin/save"
 
 #: ../../guides/guidelines.rst:77
 msgid "Delete"
-msgstr "Supprimer"
+msgstr "Suppression"
 
 #: ../../guides/guidelines.rst:77
 msgid "action/plugin/delete"
@@ -4776,12 +4777,12 @@ msgid ""
 "page handler's responsibility to create the action links for a user to join "
 "or ignore the invitation request."
 msgstr ""
-"Comme les actions sont sensibles au temps, elles ne conviennent pas aux "
+"Parce que les actions sont sensibles au temps, elles ne conviennent pas aux "
 "liens dans les e-mails ou autres notifications retardées. Un exemple de cela"
-" serait des invitations à rejoindre un groupe. La façon propre de créer un "
-"lien d’invitation est de créer un gestionnaire de page pour les invitations "
-"et les e-mails qui serait lié à  l’utilisateur. Il incombe alors au "
-"gestionnaire de page de créer les liens d’action pour qu’un utilisateur "
+" serait des invitations à rejoindre un groupe. Une manière propre de créer "
+"un lien d’invitation est de créer un gestionnaire de page pour les "
+"invitations et les e-mails qui serait lié à  l’utilisateur. Il incombe alors"
+" au gestionnaire de page de créer les liens d’action pour qu’un utilisateur "
 "accepte ou ignore la demande d’invitation."
 
 #: ../../guides/guidelines.rst:95
@@ -4823,14 +4824,14 @@ msgstr ""
 #: ../../guides/guidelines.rst:107
 msgid "Update the widget views (see the blog or file widgets)"
 msgstr ""
-"Mettez à jour les vues du widget (voir les widgets du blog ou des fichiers)"
+"Mettez à jour les vues du widget (voir les widgets des plugins blog ou file)"
 
 #: ../../guides/guidelines.rst:108
 msgid ""
 "Update the group profile “widget” using blog or file plugins as example"
 msgstr ""
-"Mettez à jour le “widget” du profil du groupe en prenant exemple sur les "
-"plugins blog ou file"
+"Mettez à jour le “widget” de la page de profil d'un groupe en prenant "
+"exemple sur les plugins blog ou file"
 
 #: ../../guides/guidelines.rst:112
 msgid "Update the forms"
@@ -4855,7 +4856,7 @@ msgid ""
 "Add a function that prepares the form (see ``mod/file/lib/file.php`` for "
 "example)"
 msgstr ""
-"Ajoutez une fonction qui prépare le formulaire (voir "
+"Ajoutez une fonction qui prépare le formulaire (voyez "
 "``mod/file/lib/file.php`` pour un exemple)"
 
 #: ../../guides/guidelines.rst:113
@@ -4863,8 +4864,8 @@ msgid ""
 "Integrate sticky forms (see the file plugin’s upload action and form prepare"
 " function)"
 msgstr ""
-"Intégrez des formulaires persistants (voir l’action de téléchargement du "
-"plugin de fichier et la fonction de préparation de formulaire)"
+"Intégrez des formulaires persistants (voyez l’action de téléchargement du "
+"plugin file et la fonction de préparation du formulaire)"
 
 #: ../../guides/guidelines.rst:114
 msgid "Clean up CSS/HTML"
@@ -4881,8 +4882,8 @@ msgstr ""
 #: ../../guides/guidelines.rst:116
 msgid "Use hyphens rather than underscores in classes/ids"
 msgstr ""
-"Utilisez les traits- d'union plutôt que les traits de soulignement "
-"(\"underscore\") dans les classes/ids"
+"Utilisez les traits- d'union plutôt que les traits de soulignement - "
+"underscores - dans les classes/ids"
 
 #: ../../guides/guidelines.rst:117
 msgid ""
@@ -4904,7 +4905,7 @@ msgstr ""
 
 #: ../../guides/helpers.rst:9
 msgid "Input and output"
-msgstr "Entrée et sortie"
+msgstr "Entrées et sorties"
 
 #: ../../guides/helpers.rst:11
 msgid ""
@@ -4913,7 +4914,7 @@ msgid ""
 msgstr ""
 "``get_input($name)`` Récupère des informations depuis un champ de formulaire"
 " (ou toute variable passée en utilisant GET ou POST). Se charge également "
-"d'assainir l'entrée, en retirant le javascript, etc."
+"d'assainir l'entrée, en retirant le Javascript, etc."
 
 #: ../../guides/helpers.rst:12
 msgid ""
@@ -4930,13 +4931,13 @@ msgstr "Méthode des entités"
 #: ../../guides/helpers.rst:17
 msgid "``$entity->getURL()`` Returns the URL of any entity in the system"
 msgstr ""
-"``$entity->getURL()`` Retourne l'URL de n'importe quelle entité dans le "
+"``$entity->getURL()`` Renvoie l'URL de n'importe quelle entité dans le "
 "système"
 
 #: ../../guides/helpers.rst:18
 msgid "``$entity->getGUID()`` Returns the GUID of any entity in the system"
 msgstr ""
-"``$entity->getGUID()`` Retourne le GUID de n'importe quelle entité dans le "
+"``$entity->getGUID()`` Renvoie le GUID de n'importe quelle entité dans le "
 "système"
 
 #: ../../guides/helpers.rst:19
@@ -5710,7 +5711,7 @@ msgstr "**generate, password**"
 #: ../../guides/hooks-list.rst:189
 msgid "Allows plugins to generate new random cleartext passwords."
 msgstr ""
-"Permet aux plugins de générer de nouveaux mots de passe texte aléatoires."
+"Permet aux plugins de générer de nouveaux mots de passe textuels aléatoires."
 
 #: ../../guides/hooks-list.rst:192
 msgid "User hooks"
@@ -6201,8 +6202,8 @@ msgid ""
 "Triggered when a POST exceeds the max size allowed by the server. Return an "
 "error message to display."
 msgstr ""
-"Déclenché lorsqu’un POST dépasse la taille maximale autorisée par le "
-"serveur. Renvoyez un message d’erreur à afficher."
+"Déclenché lorsqu’une requête POST dépasse la taille maximale autorisée par "
+"le serveur. Renvoyez un message d’erreur à afficher."
 
 #: ../../guides/hooks-list.rst:362
 msgid "**forward, <reason>**"
@@ -6214,9 +6215,10 @@ msgid ""
 "called. In certain cases, the ``params`` array will contain an instance of "
 "``\\Elgg\\Exceptions\\HttpException`` that triggered the error."
 msgstr ""
-"Filtre l’URL pour rediriger un utilisateur lorsque ``forward($url, $reason``"
-" est appelé. Dans certains cas, le tableau ``params`` va contenir une "
-"instance de ``\\Elgg\\Exceptions\\HttpException`` qui a déclenché l’erreur."
+"Filtre l’URL pour rediriger un utilisateur lorsque ``forward($url, "
+"$reason)`` est appelé. Dans certains cas, le tableau ``params`` va contenir "
+"une instance de ``\\Elgg\\Exceptions\\HttpException`` qui a déclenché "
+"l’erreur."
 
 #: ../../guides/hooks-list.rst:368
 msgid "**response, action:<action>**"
@@ -6251,7 +6253,7 @@ msgid ""
 msgstr ""
 "Quand le module AMD ``elgg/Ajax`` est utilisé, ce hook donne accès à l’objet"
 " de réponse (``\\Elgg\\Services\\AjaxResponse``) afin qu’il puisse être "
-"modifié/étendu. Le type de hook dépend de l’appel de méthode :"
+"modifié/étendu. Le type de hook dépend de l’appel de la méthode :"
 
 #: ../../guides/hooks-list.rst:381
 msgid "elgg/Ajax method"
@@ -6312,7 +6314,7 @@ msgid ""
 msgstr ""
 "Déclenché par ``ElggEntity:canWriteToContainer()`` avant de déclencher les "
 "hooks ``permissions_check`` et ``container_permissions_check``. "
-"Contrairement aux hooks d’autorisations, la vérification logique peut être "
+"Contrairement aux hooks d’autorisation, la vérification logique peut être "
 "utilisée pour empêcher que certains types d’entités ne soient contenus par "
 "d’autres types d’entités, par exemple les réponses de discussion ne doivent "
 "être contenues que par les discussions. Ce hook peut également être utilisé "
@@ -6342,7 +6344,7 @@ msgstr "``container`` - Une entité qui sera utilisée comme conteneur"
 #: ../../guides/hooks-list.rst:407 ../../guides/hooks-list.rst:421
 msgid "``user`` - User who will own the entity to be written to container"
 msgstr ""
-"``user`` - L'utilisateur qui sera propriétaire de l’entité à écrire sur le "
+"``user`` - L'utilisateur qui sera propriétaire de l’entité à écrire dans le "
 "conteneur"
 
 #: ../../guides/hooks-list.rst:408 ../../guides/hooks-list.rst:422
@@ -6363,9 +6365,9 @@ msgid ""
 "``$params['container']`` as a container for an entity of ``<entity_type>`` "
 "and subtype ``$params['subtype']``."
 msgstr ""
-"Renvoyez un booléen pour indiquer si l’utilisateur ``$params['user']`` peut "
+"Renvoie un booléen pour indiquer si l’utilisateur ``$params['user']`` peut "
 "utiliser l’entité ``$params['container']`` comme conteneur pour une entité "
-"de ``<entity_type>`` et un sous-type ``$params['subtype']``."
+"``<entity_type>`` et le sous-type ``$params['subtype']``."
 
 #: ../../guides/hooks-list.rst:414
 msgid ""
@@ -6374,9 +6376,9 @@ msgid ""
 "hook is called *twice*, and in the first call ``$params['container']`` will "
 "be the *owner*, not the entity's real container."
 msgstr ""
-"Dans les rares cas où une entité est créée avec ni le ``container_guid`` ni "
-"le ``owner_guid`` correspondant à l’utilisateur connecté, ce hook est appelé"
-" *deux fois*, et dans le premier appel ``$params['container']`` aura pour "
+"Dans les rares cas où une entité est créée sans le ``container_guid`` ni le "
+"``owner_guid`` correspondant à l’utilisateur connecté, ce hook est appelé "
+"*deux fois*, et dans le premier appel ``$params['container']`` aura pour "
 "valeur le *propriétaire*, et non le véritable conteneur de l’entité."
 
 #: ../../guides/hooks-list.rst:425
@@ -6388,7 +6390,7 @@ msgid ""
 "Return boolean for if the user ``$params['user']`` can edit the entity "
 "``$params['entity']``."
 msgstr ""
-"Renvoyez un booléen pour indiquer si l’utilisateur ``$params['user']`` peut "
+"Renvoie un booléen pour indiquer si l’utilisateur ``$params['user']`` peut "
 "modifier l’entité ``$params['entity']``."
 
 #: ../../guides/hooks-list.rst:428
@@ -6400,7 +6402,7 @@ msgid ""
 "Return boolean for if the user ``$params['user']`` can delete the entity "
 "``$params['entity']``. Defaults to ``$entity->canEdit()``."
 msgstr ""
-"Renvoyez un booléen pour indiquer si l’utilisateur ``$params['user']`` peut "
+"Renvoie un booléen pour indiquer si l’utilisateur ``$params['user']`` peut "
 "supprimer l’entité ``$params['entity']``. Vaut par défaut "
 "``$entity->canEdit()``."
 
@@ -6427,7 +6429,7 @@ msgid ""
 "Return boolean for if the user ``$params['user']`` can download the file in "
 "``$params['entity']``."
 msgstr ""
-"Renvoyez un booléen pour indiquer si l’utilisateur ``$params['user']`` peut "
+"Renvoie un booléen pour indiquer si l’utilisateur ``$params['user']`` peut "
 "télécharger le fichier dans ``$params['entity']``."
 
 #: ../../guides/hooks-list.rst:439
@@ -6448,8 +6450,8 @@ msgid ""
 "context passed as ``$params['context']`` and with a page owner of "
 "``$params['page_owner']``."
 msgstr ""
-"Renoyez un booléen pour indiquer si ``$params['user']`` peut modifier les "
-"widgets dans le contexte passé par ``$params['context']`` et avec un "
+"Renvoie un booléen pour indiquer si ``$params['user']`` peut modifier les "
+"widgets dans le contexte passé par ``$params['context']`` et avec le "
 "propriétaire de page ``$params['page_owner']``."
 
 #: ../../guides/hooks-list.rst:447
@@ -6461,7 +6463,7 @@ msgid ""
 "Return boolean for if the user ``$params['user']`` can comment on the entity"
 " ``$params['entity']``."
 msgstr ""
-"Renvoyer un booléen pour indiquer si l’utilisateur ``$params['user']`` peut "
+"Renvoie un booléen pour indiquer si l’utilisateur ``$params['user']`` peut "
 "commenter l’entité ``$params['entity']``."
 
 #: ../../guides/hooks-list.rst:453
@@ -6474,9 +6476,10 @@ msgid ""
 "``<annotation_name>`` on the entity ``$params['entity']``. If logged in, the"
 " default is true."
 msgstr ""
-"Renvoyez un boolén pour indiquer si l’utilisateur ``$params['user']`` peut "
+"Renvoie un booléen pour indiquer si l’utilisateur ``$params['user']`` peut "
 "créer une annotation ``<annotation_name>`` sur l’entité "
-"``$params['entity']``. Si connecté, la valeur par défaut est true."
+"``$params['entity']``. Si l'utilisateur est connecté, la valeur par défaut "
+"est true."
 
 #: ../../guides/hooks-list.rst:453
 msgid ""
@@ -6496,9 +6499,10 @@ msgid ""
 "``$params['annotation_name']`` on the entity ``$params['entity']``. if "
 "logged in, the default is true."
 msgstr ""
-"Renvoyez un boolén pour indiquer si l’utilisateur ``$params['user']`` peut "
+"Renvoie un booléen pour indiquer si l’utilisateur ``$params['user']`` peut "
 "créer une annotation ``$params['annotation_name']`` sur l’entité "
-"``$params['entity']``. Si connecté, la valeur par défaut est true."
+"``$params['entity']``. Si l'utilisateur est connecté, la valeur par défaut "
+"est true."
 
 #: ../../guides/hooks-list.rst:461
 msgid "**permissions_check:annotation**"
@@ -6523,8 +6527,8 @@ msgid ""
 "Return the failure message if authentication failed. An array of previous "
 "PAM failure methods is passed as ``$params``."
 msgstr ""
-"Renvoyez le message d’échec en cas d’échec de l’authentification. Un tableau"
-" des méthodes d’échec PAM précédentes est passé dans ``$params``."
+"Renvoie le message d’échec en cas d’échec de l’authentification. Un tableau "
+"des méthodes d’échec PAM précédentes est passé dans ``$params``."
 
 #: ../../guides/hooks-list.rst:468
 msgid "**api_key, use**"
@@ -6553,14 +6557,8 @@ msgid ""
 "access and including disabled entities, so you have to be careful to not "
 "bypass the access system."
 msgstr ""
-"Filtre le résultat de ``elgg_entity_gatekeeper()`` pour empêcher ou "
-"permettre l’accès à une entité à laquelle l’utilisateur aurait ou n’aurait "
-"pas accès. Un gestionnaire peut renvoyer ``false`` ou une instance de "
-"``\\Elgg\\Exceptions\\HttpException`` pour bloquer l’accès à une entité. Un "
-"gestionnaire peut retourner ``true`` pour remplacer le résultat du gardien "
-"(gatekeeper). **Important** l’entité reçue par ce hook est récupérée sans "
-"vérifier les accès, y compris les entités désactivées, de sorte que vous "
-"devez faire attention à ne pas contourner le système d’accès."
+"Filtre le résultat de ``elgg_entity_gatekeeper()`` pour empêcher ou permettre l’accès à une entité à laquelle l’utilisateur aurait ou n’aurait pas accès. Un gestionnaire peut renvoyer ``false`` ou une instance de ``\\Elgg\\Exceptions\\HttpException`` pour bloquer l’accès à une entité. Un gestionnaire peut retourner ``true`` pour remplacer le résultat du gardien - gatekeeper. \n"
+"**Important** l’entité reçue par ce hook est récupérée sans vérifier les accès, y compris les entités désactivées, de sorte que vous devez faire attention à ne pas contourner le système d’accès."
 
 #: ../../guides/hooks-list.rst:479
 msgid "``entity`` - Entity that is being accessed"
@@ -6628,11 +6626,12 @@ msgid ""
 "``notify_user()``"
 msgstr ""
 "Filtre les abonnés de l’événement de notification. S’applique aux "
-"notifications **subscriptions** et **instant**. Lors d'un événement "
-"d’abonnement, par défaut, la liste des abonnés se compose des utilisateurs "
-"abonnés à l’entité conteneur de l’objet de l'événement. En cas d’événement "
-"de notification instantanée, la liste des abonnés se compose des "
-"utilisateurs passés en tant que destinataires à ``notify_user()``"
+"notifications d'abonnement **subscriptions** et instantanées **instant**. "
+"Lors d'un événement d’abonnement, par défaut, la liste des abonnés se "
+"compose des utilisateurs abonnés à l’entité conteneur de l’objet de "
+"l'événement. En cas d’événement de notification instantanée, la liste des "
+"abonnés se compose des utilisateurs précédemment passés en tant que "
+"destinataires à ``notify_user()``"
 
 #: ../../guides/hooks-list.rst:504
 msgid ""
@@ -6644,14 +6643,14 @@ msgid ""
 "validating an event or action type (e.g. including an owner of the original "
 "wire thread) might end up sending notifications to wrong users."
 msgstr ""
-"**IMPORTANT** Validez toujours les types d’événements, d’objets et/ou "
-"d’action de notification avant d’ajouter de nouveaux destinataires pour vous"
-" assurer que vous n’envoyez pas accidentellement de notifications à des "
-"destinataires non souhaités. Considérez une situation où un plugin de "
-"mentions envoie une notification instantanée à un utilisateur mentionné - "
-"tout hook agissant sur un sujet ou un objet sans valider un événement ou un "
-"type d’action (par exemple, y compris un propriétaire du fil d’origine) peut"
-" finir par envoyer des notifications aux mauvais utilisateurs."
+"**IMPORTANT** Validez toujours les types d’événement, d’objet et/ou d’action"
+" avant d’ajouter de nouveaux destinataires, afin de vous assurer que vous "
+"n’envoyiez pas accidentellement de notification à des destinataires non "
+"souhaités. Considérez une situation : un plugin de mentions envoie une "
+"notification instantanée à un utilisateur mentionné - tout hook agissant sur"
+" un sujet ou un objet sans valider l'événement ou le type d’action (par "
+"exemple, incluant le propriétaire du fil d’origine) pourrait finir par "
+"envoyer des notifications aux mauvais utilisateurs."
 
 #: ../../guides/hooks-list.rst:509 ../../guides/hooks-list.rst:529
 #: ../../guides/hooks-list.rst:540 ../../guides/hooks-list.rst:557
@@ -6691,7 +6690,8 @@ msgid ""
 msgstr ""
 "Déclenché avant le traitement de la file d’attente des événements de "
 "notification. Peut être utilisé pour mettre fin à l’événement de "
-"notification. S’applique aux notifications **subscriptions** et **instant**."
+"notification. S’applique aux notifications d'abonnement **subscriptions** et"
+" instantanées **instant**."
 
 #: ../../guides/hooks-list.rst:530 ../../guides/hooks-list.rst:593
 msgid ""
@@ -6717,10 +6717,10 @@ msgid ""
 msgstr ""
 "Un hook de haut niveau qui peut être utilisé pour modifier une instance de "
 "``\\Elgg\\Notifications\\Notification`` avant qu'elle soit envoyée à "
-"l’utilisateur. S’applique aux notifications **subscriptions** et "
-"**instant**. Ce hook est déclenché avant un ``'prepare', "
+"l’utilisateur. S’applique aux notifications d'abonnement **subscriptions** "
+"et instantanées **instant**. Ce hook est déclenché avant un ``'prepare', "
 "'notification':<action>:<entity_type>:<entity_subtype>'`` plus granulaire et"
-" après ``'send:before', 'notifications``. Le gestionnaire de hook doit "
+" après ``'send:before', 'notifications``. Le gestionnaire de hook devrait "
 "renvoyer un objet de notification modifié."
 
 #: ../../guides/hooks-list.rst:538
@@ -6777,11 +6777,12 @@ msgid ""
 msgstr ""
 "Un hook granulaire pouvant être utilisé pour filtrer une notification "
 "``\\Elgg\\Notifications\\Notification`` avant qu'elle soit envoyée à "
-"l’utilisateur. S’applique aux notifications **subscriptions** et "
-"**instant**. En cas de notifications instantanées qui n’ont pas reçu "
-"d’objet, le hook sera appelé par ``'prepare', 'notification:<action>'``. En "
-"cas de notifications instantanées qui n’ont pas reçu de nom d’action, celui-"
-"ci aura pour valeur par défaut ``notify_user``."
+"l’utilisateur. S’applique aux notifications d'abonnement **subscriptions** "
+"et instantanées **instant**. En cas de notifications instantanées qui n’ont "
+"pas reçu d’objet, le hook sera appelé par``'prepare', "
+"'notification:<action>``. En cas de notifications instantanées qui n’ont pas"
+" reçu de nom d’action, celles-ci auront pour valeur par défaut "
+"``notify_user``."
 
 #: ../../guides/hooks-list.rst:555
 msgid "``$params`` include:"
@@ -6801,9 +6802,10 @@ msgid ""
 msgstr ""
 "Ce hook peut être utilisé pour formater une notification avant qu’elle soit "
 "transmise au hook ``'send', 'notification:<method>'`` S’applique aux "
-"notifications **subscriptions** et **instant**. Le gestionnaire de hook doit"
-" renvoyer une instance de ``\\Elgg\\Notifications\\Notification``. Le hook "
-"ne reçoit pas de ``$params``. Voici quelques cas d’utilisation :"
+"notifications d'abonnement **subscriptions** et instantanées **instant**. Le"
+" gestionnaire de hook doit renvoyer une instance de "
+"``\\Elgg\\Notifications\\Notification``. Le hook ne reçoit pas de tableau "
+"``$params``. Voici quelques cas d’utilisation :"
 
 #: ../../guides/hooks-list.rst:573
 msgid ""
@@ -6832,9 +6834,9 @@ msgid ""
 "notifications. The handler must return ``true`` or ``false`` indicating the "
 "success of the delivery."
 msgstr ""
-"Délivre une notification. S’applique aux notifications **subscriptions** et "
-"**instant**. Le gestionnaire doit retourner ``true`` ou ``false`` pour "
-"indiquer le résultat de la remise."
+"Délivre une notification. S’applique aux notifications d'abonnement "
+"**subscriptions** et instantanées **instant**. Le gestionnaire doit "
+"retourner ``true`` ou ``false`` pour indiquer le résultat de la remise."
 
 #: ../../guides/hooks-list.rst:584
 msgid ""
@@ -6856,7 +6858,7 @@ msgid ""
 msgstr ""
 "Déclenché après que toutes les notifications dans la file d’attente pour "
 "l’événement notifications ont été traitées. S’applique aux notifications "
-"**subscriptions** et **instant**."
+"d'abonnement **subscriptions** et instantanées **instant**."
 
 #: ../../guides/hooks-list.rst:594
 msgid ""
@@ -7089,7 +7091,8 @@ msgstr "**shell, page**"
 #: ../../guides/hooks-list.rst:681
 msgid "In ``elgg_view_page()``, filters the page shell name"
 msgstr ""
-"Dans ``elgg_view_page()``, filtre le nom de la coquille (page shell) de page"
+"Dans ``elgg_view_page()``, filtre le nom de la coquille - page shell - de la"
+" page"
 
 #: ../../guides/hooks-list.rst:689
 msgid "**head, page**"
@@ -7105,11 +7108,12 @@ msgid ""
 "tag attributes, e.g."
 msgstr ""
 "Dans ``elgg_view_page()``, filtre la valeur de retour de ``$vars['head']``, "
-"qui contient un tableau avec ``title``, ``metas`` et ``links`` où ``metas`` "
-"est un tableau d’éléments à formater sous la forme de balises head "
-"``<meta>``, et ``links`` est un tableau d’éléments à formater sous la forme "
-"de ``<link>``. Chaque élément meta et link contient un ensemble de paires de"
-" clés/valeurs qui sont formatées en attributs de balise html, par ex."
+"qui contient un tableau avec les clefs ``title``, ``metas`` et ``links``, où"
+" ``metas`` est un tableau d’éléments à formater sous la forme de balises "
+"d'entête ``<meta>``, et ``links`` est un tableau d’éléments à formater sous "
+"la forme de baslises d'entête ``<link>``. Chaque élément meta et link "
+"contient un ensemble de paires de clés/valeurs qui sont formatées en "
+"attributs de balise html, par ex."
 
 #: ../../guides/hooks-list.rst:719
 msgid "**ajax_response, view:<view>**"
