@@ -193,6 +193,7 @@ class Database extends DbDatabase {
 		$result = BaseTestCase::$_instance->getMockBuilder(\Doctrine\DBAL\Result::class)
 			->setMethods([
 				'fetchAssociative',
+				'fetchAllAssociative',
 				'rowCount',
 			])
 			->disableOriginalConstructor()
@@ -202,6 +203,12 @@ class Database extends DbDatabase {
 			->method('fetchAssociative')
 			->will(BaseTestCase::$_instance->returnCallback(function () use (&$results) {
 				return array_shift($results);
+			}));
+		
+		$result->expects(BaseTestCase::$_instance->any())
+			->method('fetchAllAssociative')
+			->will(BaseTestCase::$_instance->returnCallback(function () use ($results) {
+				return $results;
 			}));
 
 		$result->expects(BaseTestCase::$_instance->any())

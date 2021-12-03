@@ -746,8 +746,7 @@ class ElggInstaller {
 			if (empty($result)) {
 				return;
 			}
-			foreach ($result as $table) {
-				$table = (array) $table;
+			foreach ($result->fetchAllAssociative() as $table) {
 				if (in_array("{$db->prefix}config", $table)) {
 					$this->has_completed['database'] = true;
 				}
