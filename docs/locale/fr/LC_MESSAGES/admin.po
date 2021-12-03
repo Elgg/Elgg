@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-19 11:45+0100\n"
+"POT-Creation-Date: 2021-11-25 13:55+0100\n"
 "PO-Revision-Date: 2021-06-09 13:31+0000\n"
 "Last-Translator: Jeroen Dalsem, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -963,10 +963,6 @@ msgid "Optionally you can activate handlers for a specific interval:"
 msgstr ""
 "Facultativement, vous pouvez activer les gestionnaire pour un intervalle "
 "spécifique :"
-
-#: ../../admin/cron.rst:70
-msgid "More information about cron can be found at:"
-msgstr "Vous pouvez trouver plus d'informations sur cron sur :"
 
 #: ../../admin/duplicate-installation.rst:2
 msgid "Duplicate Installation"
