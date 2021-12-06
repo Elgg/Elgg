@@ -35,7 +35,7 @@ class Topbar {
 				'alt' => $user->getDisplayName(),
 			]),
 			'text' => elgg_echo('account'),
-			'href' => $user->getURL(),
+			'href' => false,
 			'link_class' => 'elgg-avatar-small',
 			'icon_alt' => 'angle-down',
 			'priority' => 800,
