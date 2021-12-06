@@ -128,7 +128,8 @@ class AlterDatabaseToMultiByteCharset implements AsynchronousUpgrade {
 			return "{$config['prefix']}{$t}";
 		}, $this->utf8mb4_tables);
 
-		foreach ($rows as $row) {
+		foreach ($rows->fetchAllAssociative() as $row) {
+			$row = (object) $row;
 			if (in_array($row->Name, $prefixed_table_names) && $row->Collation !== 'utf8mb4_general_ci') {
 				return false;
 			}
