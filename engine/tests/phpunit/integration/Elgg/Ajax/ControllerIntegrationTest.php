@@ -31,6 +31,10 @@ class ControllerIntegrationTest extends IntegrationTestCase {
 			'request' => $request,
 		]);
 		
+		// make sure the tests run in a non walled garden environment
+		elgg_set_config('walled_garden', false);
+		$this->assertFalse(elgg_get_config('walled_garden'));
+		
 		$this->registerViews();
 	}
 	
