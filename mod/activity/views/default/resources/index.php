@@ -10,12 +10,14 @@ if (elgg_is_logged_in()) {
 	return;
 }
 
-$content = elgg_view('river/listing/all');
-
-$login_box = elgg_view('core/account/login_box');
+if (elgg_get_config('allow_registration')) {
+	$sidebar = elgg_view_module('aside', elgg_echo('register'), elgg_view_form('register'));
+} else {
+	$sidebar = elgg_view('core/account/login_box');
+}
 
 echo elgg_view_page(null, [
 	'title' => elgg_echo('content:latest'),
-	'content' => $content,
-	'sidebar' => $login_box ? : false,
+	'content' => elgg_view('river/listing/all'),
+	'sidebar' => $sidebar,
 ]);

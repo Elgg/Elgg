@@ -6,79 +6,77 @@
  * page-rendering helper functions like elgg_view_page.
  */
 
-$list_params = [
-	'type' => 'object',
-	'limit' => 4,
-	'pagination' => false,
-	'no_results' => true,
-];
+$plugin = elgg_get_plugin_from_id('custom_index');
+$is_module_enabled = function(string $module) use ($plugin) {
+	return (bool) $plugin->{"module_{$module}_enabled"};
+};
 
-?>
+$get_list_params = function(array $extras = []) {
+	return array_merge([
+		'type' => 'object',
+		'limit' => 4,
+		'pagination' => false,
+		'no_results' => true,
+	], $extras);
+};
 
-<div class="custom-index elgg-main elgg-grid clearfix">
-	<div class="elgg-col elgg-col-1of2 custom-index-col1">
-		<div class="elgg-inner">
-<?php
-// left column
+$modules = [];
 
-// Top box for login or welcome message
-if (elgg_is_logged_in()) {
-	$content = elgg_format_element('h2', [], elgg_echo('welcome') . ' ' . elgg_get_logged_in_user_entity()->getDisplayName());
-	
-	echo elgg_view_module('featured', '', $content);
-} else {
-	echo elgg_view_module('featured', elgg_echo('login'), elgg_view_form('login'));
+if ($is_module_enabled('about')) {
+	$about = $plugin->about;
+	if (!empty($about)) {
+		$modules[] = elgg_view_module('featured', '', $about);
+	}
 }
 
-// a view for plugins to extend
-echo elgg_view('index/lefthandside');
-
-// files
-if (elgg_is_active_plugin('file')) {
-	$file_params = $list_params;
-	$file_params['subtype'] = 'file';
-	echo elgg_view_module('featured',  elgg_echo('collection:object:file'), elgg_list_entities($file_params));
+if (!elgg_is_logged_in() && $is_module_enabled('register') && elgg_get_config('allow_registration')) {
+	$modules[] = elgg_view_module('featured', elgg_echo('register'), elgg_view_form('register'));
 }
 
-// groups
-if (elgg_is_active_plugin('groups')) {
-	$group_params = $list_params;
-	$group_params['type'] = 'group';
-	echo elgg_view_module('featured',  elgg_echo('collection:group'), elgg_list_entities($group_params));
-}
-?>
-		</div>
-	</div>
-	<div class="elgg-col elgg-col-1of2 custom-index-col2">
-		<div class="elgg-inner">
-<?php
-// right column
-
-// a view for plugins to extend
-echo elgg_view("index/righthandside");
-
-$newest_members = elgg_list_entities([
-	'type' => 'user',
-	'limit' => 10,
-	'pagination' => false,
-	'no_results' => true,
-]);
-echo elgg_view_module('featured',  elgg_echo('collection:user'), $newest_members);
-
-// groups
-if (elgg_is_active_plugin('blog')) {
-	$blog_params = $list_params;
-	$blog_params['subtype'] = 'blog';
-	echo elgg_view_module('featured',  elgg_echo('collection:object:blog'), elgg_list_entities($blog_params));
+if (!elgg_is_logged_in() && $is_module_enabled('login')) {
+	$modules[] = elgg_view_module('featured', elgg_echo('login'), elgg_view_form('login'));
 }
 
 // files
-if (elgg_is_active_plugin('bookmarks')) {
-	$bookmarks_params = $list_params;
-	$bookmarks_params['subtype'] = 'bookmarks';
-	echo elgg_view_module('featured',  elgg_echo('collection:object:bookmarks'), elgg_list_entities($bookmarks_params));
+if (elgg_is_active_plugin('file') && $is_module_enabled('file')) {
+	$modules[] = elgg_view_module('featured', elgg_echo('collection:object:file'), elgg_list_entities($get_list_params(['subtype' => 'file'])));
 }
-?>
-		</div>
-	</div>
-</div>
+
+// groups
+if (elgg_is_active_plugin('groups') && $is_module_enabled('groups')) {
+	$modules[] = elgg_view_module('featured', elgg_echo('collection:group'), elgg_list_entities($get_list_params(['type' => 'group'])));
+}
+
+if ($is_module_enabled('users')) {
+	$modules[] = elgg_view_module('featured', elgg_echo('collection:user'), elgg_list_entities($get_list_params(['type' => 'user'])));
+}
+
+// groups
+if (elgg_is_active_plugin('blog') && $is_module_enabled('blog')) {
+	$modules[] = elgg_view_module('featured', elgg_echo('collection:object:blog'), elgg_list_entities($get_list_params(['subtype' => 'blog'])));
+}
+
+// files
+if (elgg_is_active_plugin('bookmarks') && $is_module_enabled('bookmarks')) {
+	$modules[] = elgg_view_module('featured', elgg_echo('collection:object:bookmarks'), elgg_list_entities($get_list_params(['subtype' => 'bookmarks'])));
+}
+
+$left = '';
+$right = '';
+
+// spread modules evenly
+foreach ($modules as $index => $module) {
+	if ($index % 2 == 0) {
+		$left .= $module;
+	} else {
+		$right .= $module;
+	}
+}
+
+$left .= elgg_view('index/lefthandside');
+$right .= elgg_view('index/righthandside');
+
+$left = elgg_format_element('div', ['class' => ['elgg-col', 'elgg-col-1of2', 'custom-index-col1']], elgg_format_element('div', ['class' => 'elgg-inner'], $left));
+$right = elgg_format_element('div', ['class' => ['elgg-col', 'elgg-col-2of2', 'custom-index-col2']], elgg_format_element('div', ['class' => 'elgg-inner'], $right));
+
+echo elgg_format_element('div', ['class' => ['custom-index', 'elgg-main', 'elgg-grid', 'clearfix']], $left . $right);

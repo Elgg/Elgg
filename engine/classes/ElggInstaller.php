@@ -642,12 +642,12 @@ class ElggInstaller {
 	protected function runComplete() {
 
 		// nudge to check out settings
-		$link = elgg_format_element([
-			'#tag_name' => 'a',
-			'#text' => elgg_echo('install:complete:admin_notice:link_text'),
-			'href' => elgg_normalize_url('admin/site_settings'),
-		]);
-		$notice = elgg_echo('install:complete:admin_notice', [$link]);
+		$link = elgg_view_url(elgg_normalize_url('admin/site_settings'), elgg_echo('install:complete:admin_notice:link_text'));
+		$notice = elgg_format_element('p', [], elgg_echo('install:complete:admin_notice', [$link]));
+
+		$custom_index_link = elgg_view_url(elgg_normalize_url('admin/plugin_settings/custom_index'), elgg_echo('admin:plugin_settings'));
+		$notice .= elgg_format_element('p', [], elgg_echo('install:complete:admin_notice:custom_index', [$custom_index_link]));
+
 		elgg_add_admin_notice('fresh_install', $notice);
 
 		$result = $this->render('complete');
