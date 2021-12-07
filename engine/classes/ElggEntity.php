@@ -1078,7 +1078,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @param int  $user_guid User guid (default is logged in user)
 	 * @param bool $default   Default permission
 	 *
-	 * @return bool|null
+	 * @return bool
 	 */
 	public function canComment($user_guid = 0, $default = null) {
 		return _elgg_services()->userCapabilities->canComment($this, $user_guid, $default);

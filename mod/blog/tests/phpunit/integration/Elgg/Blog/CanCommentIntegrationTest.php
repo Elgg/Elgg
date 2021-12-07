@@ -7,7 +7,7 @@ use Elgg\Plugins\PluginTesting;
 /**
  * @group Plugins
  */
-class ElggBlogUnitTest extends \Elgg\UnitTestCase {
+class CanCommentIntegrationTest extends \Elgg\IntegrationTestCase {
 	
 	use PluginTesting;
 	
@@ -15,8 +15,6 @@ class ElggBlogUnitTest extends \Elgg\UnitTestCase {
 	 * @dataProvider blogCommentStatusProvider
 	 */
 	public function testCanComment($enable_comments, $status, $expected) {
-		$this->startPlugin();
-		
 		$blog = $this->createObject([
 			'subtype' => 'blog',
 		], [
