@@ -187,7 +187,7 @@ class ActionsService {
 			$action = substr($name, 7);
 
 			$access = 'public';
-			$middleware = $route->getDefault('_middleware');
+			$middleware = (array) $route->getDefault('_middleware');
 			if (in_array(MiddlewareGateKeeper::class, $middleware)) {
 				$access = 'logged_in';
 			} else if (in_array(AdminGatekeeper::class, $middleware)) {

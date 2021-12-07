@@ -100,7 +100,7 @@ class CacheHandler {
 			return $this->send403("Asset must have a valid file extension");
 		}
 
-		$response = Response::create();
+		$response = new Response();
 		if (in_array($content_type, self::$utf8_content_types)) {
 			$response->headers->set('Content-Type', "$content_type;charset=utf-8", true);
 		} else {
@@ -129,7 +129,9 @@ class CacheHandler {
 			$etag = '"' . md5($content) . '"';
 			$this->setRevalidateHeaders($etag, $response);
 			if ($this->is304($etag)) {
-				return Response::create()->setNotModified();
+				$response = new Response();
+				$response->setNotModified();
+				return $response;
 			}
 
 			return $response->setContent($content);
@@ -137,14 +139,16 @@ class CacheHandler {
 
 		$etag = "\"$ts\"";
 		if ($this->is304($etag)) {
-			return Response::create()->setNotModified();
+			$response = new Response();
+			$response->setNotModified();
+			return $response;
 		}
 
 		// trust the client but check for an existing cache file
 		$filename = $config->assetroot . "$ts/$viewtype/$view";
 		if (file_exists($filename)) {
 			$this->sendCacheHeaders($etag, $response);
-			return BinaryFileResponse::create($filename, 200, $response->headers->all());
+			return new BinaryFileResponse($filename, 200, $response->headers->all());
 		}
 
 		// the hard way
@@ -382,6 +386,6 @@ class CacheHandler {
 	 * @return Response
 	 */
 	protected function send403($msg = 'Cache error: bad request') {
-		return Response::create($msg, 403);
+		return new Response($msg, ELGG_HTTP_FORBIDDEN);
 	}
 }

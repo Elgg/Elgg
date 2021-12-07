@@ -49,7 +49,7 @@ class RefreshCsrfToken {
 			'user_guid' => _elgg_services()->session->getLoggedInUserGuid(),
 		];
 
-		$response = Response::create();
+		$response = new Response();
 		$response->headers->set('Content-Type', "application/json;charset=utf-8", true);
 		$response->headers->set('X-Content-Type-Options', 'nosniff', true);
 		

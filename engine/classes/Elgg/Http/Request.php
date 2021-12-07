@@ -66,7 +66,7 @@ class Request extends SymfonyRequest {
 		
 		$allowed_headers = $config->http_request_trusted_proxy_headers;
 		if (empty($allowed_headers)) {
-			$allowed_headers = self::HEADER_X_FORWARDED_ALL;
+			$allowed_headers = self::HEADER_X_FORWARDED_FOR | self::HEADER_X_FORWARDED_HOST | self::HEADER_X_FORWARDED_PORT | self::HEADER_X_FORWARDED_PROTO;
 		}
 		
 		$this->setTrustedProxies($trusted_proxies, $allowed_headers);
