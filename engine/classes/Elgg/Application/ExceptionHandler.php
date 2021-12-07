@@ -52,7 +52,7 @@ class ExceptionHandler {
 		];
 
 		if ($exception instanceof InstallationException) {
-			$response = RedirectResponse::create('/install.php', 307, $headers);
+			$response = new RedirectResponse('/install.php', ELGG_HTTP_TEMPORARY_REDIRECT, $headers);
 			$response->prepare($request);
 
 			$response->send();
@@ -64,7 +64,7 @@ class ExceptionHandler {
 
 		if (!$app || !$app->internal_services) {
 			$msg = "Exception loading Elgg core. Check log at time {$exception->timestamp}";
-			$response = Response::create($msg, 500, $headers);
+			$response = new Response($msg, ELGG_HTTP_INTERNAL_SERVER_ERROR, $headers);
 			$response->prepare($request);
 
 			$response->send();
@@ -93,7 +93,7 @@ class ExceptionHandler {
 				// if content is returned from the custom handler we will output
 				// that instead of our default failsafe view
 				if (!empty($exception_output)) {
-					$response = Response::create($exception_output, 500, $headers);
+					$response = new Response($exception_output, ELGG_HTTP_INTERNAL_SERVER_ERROR, $headers);
 					$response->prepare($request);
 
 					$response->send();
@@ -109,10 +109,10 @@ class ExceptionHandler {
 
 			if ($services->request->isXmlHttpRequest()) {
 				$services->views->setViewtype('json');
-				$response = new JsonResponse(null, 500, $headers);
+				$response = new JsonResponse(null, ELGG_HTTP_INTERNAL_SERVER_ERROR, $headers);
 			} else {
 				$services->views->setViewtype('failsafe');
-				$response = new Response('', 500, $headers);
+				$response = new Response('', ELGG_HTTP_INTERNAL_SERVER_ERROR, $headers);
 			}
 
 			$body = elgg_view("messages/exceptions/exception", [
@@ -132,7 +132,7 @@ class ExceptionHandler {
 
 			$msg = "Fatal error in exception handler. Check log for Exception at time $timestamp";
 
-			$response = new Response($msg, 500, $headers);
+			$response = new Response($msg, ELGG_HTTP_INTERNAL_SERVER_ERROR, $headers);
 			$response->prepare($request);
 			$response->send();
 		}
