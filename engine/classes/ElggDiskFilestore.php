@@ -249,8 +249,15 @@ class ElggDiskFilestore extends \ElggFilestore {
 		if (!$file->getFilename()) {
 			return false;
 		}
+		
+		try {
+			$real_filename = $this->getFilenameOnFilestore($file);
+		} catch (InvalidParameterException $e) {
+			// something wrong with the filename
+			return false;
+		}
 
-		return file_exists($this->getFilenameOnFilestore($file));
+		return file_exists($real_filename);
 	}
 
 	/**

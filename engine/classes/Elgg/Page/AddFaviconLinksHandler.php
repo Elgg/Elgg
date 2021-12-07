@@ -19,8 +19,7 @@ class AddFaviconLinksHandler {
 	public function __invoke(\Elgg\Hook $hook) {
 		$head_params = $hook->getValue();
 		
-		$site = elgg_get_site_entity(); // need to check site guid. During installer site guid is not yet available
-		if (!empty($site->guid) && $site->hasIcon('master', 'favicon')) {
+		if (elgg_get_site_entity()->hasIcon('master', 'favicon')) {
 			$config = $this->getSiteIcons();
 		} else {
 			$config = $this->getDefaultIcons();

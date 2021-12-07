@@ -491,4 +491,11 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 			['../bar/../foobar.txt', 'bar/foobar.txt', Paths::sanitize("{$dataroot}/1/1/bar/foobar.txt", false)],
 		];
 	}
+	
+	public function testFileExistsWithoutOwnerGuid() {
+		$file = new ElggFile();
+		$file->setFilename('foobar.txt');
+		
+		$this->assertFalse($file->exists());
+	}
 }
