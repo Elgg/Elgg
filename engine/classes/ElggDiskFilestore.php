@@ -2,6 +2,7 @@
 
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\Filesystem\IOException;
+use Elgg\Project\Paths;
 
 /**
  * A filestore that uses disk as storage.
@@ -27,12 +28,12 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 *
 	 * @param string $directory_root Root directory, must end in "/"
 	 */
-	public function __construct($directory_root = "") {
-		if ($directory_root) {
-			$this->dir_root = $directory_root;
-		} else {
-			$this->dir_root = _elgg_services()->config->dataroot;
+	public function __construct($directory_root = '') {
+		if (!$directory_root) {
+			$directory_root = _elgg_services()->config->dataroot;
 		}
+		
+		$this->dir_root = Paths::sanitize($directory_root);
 	}
 
 	/**
@@ -52,7 +53,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 		$fullname = $this->getFilenameOnFilestore($file);
 
 		// Split into path and name
-		$ls = strrpos($fullname, "/");
+		$ls = strrpos($fullname, '/');
 		if ($ls === false) {
 			$ls = 0;
 		}
@@ -68,24 +69,23 @@ class ElggDiskFilestore extends \ElggFilestore {
 			try {
 				$this->makeDirectoryRoot($path);
 			} catch (Exception $e) {
-				_elgg_services()->logger->warning("Couldn't create directory: $path");
+				_elgg_services()->logger->warning("Couldn't create directory: {$path}");
 				return false;
 			}
 		}
 
 		switch ($mode) {
-			case "read" :
-				$mode = "rb";
+			case 'read' :
+				$mode = 'rb';
 				break;
-			case "write" :
-				$mode = "w+b";
+			case 'write' :
+				$mode = 'w+b';
 				break;
-			case "append" :
-				$mode = "a+b";
+			case 'append' :
+				$mode = 'a+b';
 				break;
 			default:
-				$msg = "Unrecognized file mode '" . $mode . "'";
-				throw new InvalidParameterException($msg);
+				throw new InvalidParameterException("Unrecognized file mode '{$mode}'");
 		}
 
 		return fopen($fullname, $mode);
@@ -136,6 +136,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 *
 	 * @param \ElggFile $file            File to delete
 	 * @param bool      $follow_symlinks If true, will also delete the target file if the current file is a symlink
+	 *
 	 * @return bool
 	 */
 	public function delete(\ElggFile $file, $follow_symlinks = true) {
@@ -146,9 +147,9 @@ class ElggDiskFilestore extends \ElggFilestore {
 				file_exists($target) && unlink($target);
 			}
 			return unlink($filename);
-		} else {
-			return true;
 		}
+
+		return true;
 	}
 
 	/**
@@ -213,8 +214,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 		}
 
 		if (!$owner_guid) {
-			$msg = "File " . $file->getFilename() . " (file guid:" . $file->guid . ") is missing an owner!";
-			throw new InvalidParameterException($msg);
+			throw new InvalidParameterException("File {$file->getFilename()} (file guid: {$file->guid}) is missing an owner!");
 		}
 
 		$filename = $file->getFilename();
@@ -224,7 +224,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 
 		$dir = new \Elgg\EntityDirLocator($owner_guid);
 
-		return $this->dir_root . $dir . $file->getFilename();
+		return Paths::sanitize($this->dir_root . $dir . $file->getFilename(), false);
 	}
 
 	/**
@@ -249,7 +249,15 @@ class ElggDiskFilestore extends \ElggFilestore {
 		if (!$file->getFilename()) {
 			return false;
 		}
-		return file_exists($this->getFilenameOnFilestore($file));
+		
+		try {
+			$real_filename = $this->getFilenameOnFilestore($file);
+		} catch (InvalidParameterException $e) {
+			// something wrong with the filename
+			return false;
+		}
+
+		return file_exists($real_filename);
 	}
 
 	/**
@@ -263,7 +271,8 @@ class ElggDiskFilestore extends \ElggFilestore {
 	public function getSize($prefix, $container_guid) {
 		if ($container_guid) {
 			$dir = new \Elgg\EntityDirLocator($container_guid);
-			return get_dir_size($this->dir_root . $dir . $prefix);
+			
+			return get_dir_size(Paths::sanitize($this->dir_root . $dir . $prefix));
 		}
 		
 		return false;
@@ -280,7 +289,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 	protected function makeDirectoryRoot($dirroot) {
 		if (!file_exists($dirroot)) {
 			if (!@mkdir($dirroot, 0755, true)) {
-				throw new IOException("Could not make " . $dirroot);
+				throw new IOException("Could not make {$dirroot}");
 			}
 		}
 
@@ -294,7 +303,9 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 * @return array
 	 */
 	public function getParameters() {
-		return ["dir_root" => $this->dir_root];
+		return [
+			'dir_root' => $this->dir_root,
+		];
 	}
 
 	/**
@@ -306,7 +317,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 */
 	public function setParameters(array $parameters) {
 		if (isset($parameters['dir_root'])) {
-			$this->dir_root = $parameters['dir_root'];
+			$this->dir_root = Paths::sanitize($parameters['dir_root']);
 			return true;
 		}
 
