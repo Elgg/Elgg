@@ -3,6 +3,7 @@
 use Elgg\Exceptions\Filesystem\IOException;
 use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
 use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Project\Paths;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -46,25 +47,59 @@ class ElggFile extends ElggObject {
 
 		$this->attributes['subtype'] = 'file';
 	}
-
+	
 	/**
-	 * Set the filename of this file.
-	 *
-	 * @param string $name The filename.
-	 *
-	 * @return void
+	 * {@inheritDoc}
 	 */
-	public function setFilename($name) {
-		$this->filename = $name;
+	public function __set($name, $value) {
+		switch ($name) {
+			case 'filename':
+				// ensure sanitization
+				$this->setFilename($value);
+				return;
+		}
+		
+		parent::__set($name, $value);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public function __get($name) {
+		switch ($name) {
+			case 'filename':
+				// ensure sanitization
+				return $this->getFilename();
+		}
+		
+		return parent::__get($name);
 	}
 
 	/**
-	 * Return the filename.
+	 * Set the filename of this file. This filename will be sanitized to prevent path traversal
+	 *
+	 * @param string $filename The filename
+	 *
+	 * @return void
+	 */
+	public function setFilename($filename) {
+		$filename = ltrim(Paths::sanitize($filename, false), '/');
+		
+		parent::__set('filename', $filename);
+	}
+
+	/**
+	 * Return the filename. This filename will be sanitized to prevent path traversal
 	 *
 	 * @return string
 	 */
 	public function getFilename() {
-		return $this->filename;
+		$filename = parent::__get('filename');
+		if (empty($filename)) {
+			return '';
+		}
+		
+		return ltrim(Paths::sanitize($filename, false), '/');
 	}
 
 	/**

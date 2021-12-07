@@ -2,6 +2,7 @@
 
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\Filesystem\IOException;
+use Elgg\Project\Paths;
 
 /**
  * @group UnitTests
@@ -445,5 +446,49 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->hooks->restore();
 
 		$file->delete();
+	}
+	
+	/**
+	 * @dataProvider pathTraversalProvider
+	 */
+	public function testPathTraversal($filename, $expected_filename, $expected_path) {
+		$file = new ElggFile();
+		$file->owner_guid = elgg_get_site_entity()->guid;
+		
+		$file->setFilename($filename);
+		$this->assertEquals($expected_filename, $file->getFilename());
+		$this->assertEquals($expected_filename, $file->filename);
+		$this->assertEquals($expected_path, $file->getFilenameOnFilestore());
+		
+		// test magic setter
+		$file->filename = $filename;
+		$this->assertEquals($expected_filename, $file->getFilename());
+		$this->assertEquals($expected_filename, $file->filename);
+		$this->assertEquals($expected_path, $file->getFilenameOnFilestore());
+	}
+	
+	public function pathTraversalProvider() {
+		$dataroot = elgg_get_data_path();
+		
+		return [
+			['foobar.txt', 'foobar.txt', Paths::sanitize("{$dataroot}/1/1/foobar.txt", false)],
+			['../foobar.txt', 'foobar.txt', Paths::sanitize("{$dataroot}/1/1/foobar.txt", false)],
+			['./foobar.txt', 'foobar.txt', Paths::sanitize("{$dataroot}/1/1/foobar.txt", false)],
+			['./../foobar.txt', 'foobar.txt', Paths::sanitize("{$dataroot}/1/1/foobar.txt", false)],
+			['.././foobar.txt', 'foobar.txt', Paths::sanitize("{$dataroot}/1/1/foobar.txt", false)],
+			['././foobar.txt', 'foobar.txt', Paths::sanitize("{$dataroot}/1/1/foobar.txt", false)],
+			['../../foobar.txt', 'foobar.txt', Paths::sanitize("{$dataroot}/1/1/foobar.txt", false)],
+			// with sub-folder
+			['bar/foobar.txt', 'bar/foobar.txt', Paths::sanitize("{$dataroot}/1/1/bar/foobar.txt", false)],
+			['../bar/foobar.txt', 'bar/foobar.txt', Paths::sanitize("{$dataroot}/1/1/bar/foobar.txt", false)],
+			['bar/../foobar.txt', 'bar/foobar.txt', Paths::sanitize("{$dataroot}/1/1/bar/foobar.txt", false)],
+			['bar/./foobar.txt', 'bar/foobar.txt', Paths::sanitize("{$dataroot}/1/1/bar/foobar.txt", false)],
+			['./bar/foobar.txt', 'bar/foobar.txt', Paths::sanitize("{$dataroot}/1/1/bar/foobar.txt", false)],
+			['bar/./foobar.txt', 'bar/foobar.txt', Paths::sanitize("{$dataroot}/1/1/bar/foobar.txt", false)],
+			['./bar/../foobar.txt', 'bar/foobar.txt', Paths::sanitize("{$dataroot}/1/1/bar/foobar.txt", false)],
+			['../bar/./foobar.txt', 'bar/foobar.txt', Paths::sanitize("{$dataroot}/1/1/bar/foobar.txt", false)],
+			['./bar/./foobar.txt', 'bar/foobar.txt', Paths::sanitize("{$dataroot}/1/1/bar/foobar.txt", false)],
+			['../bar/../foobar.txt', 'bar/foobar.txt', Paths::sanitize("{$dataroot}/1/1/bar/foobar.txt", false)],
+		];
 	}
 }

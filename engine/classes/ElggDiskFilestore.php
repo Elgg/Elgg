@@ -2,6 +2,7 @@
 
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\Filesystem\IOException;
+use Elgg\Project\Paths;
 
 /**
  * A filestore that uses disk as storage.
@@ -32,7 +33,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 			$directory_root = _elgg_services()->config->dataroot;
 		}
 		
-		$this->dir_root = $directory_root;
+		$this->dir_root = Paths::sanitize($directory_root);
 	}
 
 	/**
@@ -223,7 +224,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 
 		$dir = new \Elgg\EntityDirLocator($owner_guid);
 
-		return $this->dir_root . $dir . $file->getFilename();
+		return Paths::sanitize($this->dir_root . $dir . $file->getFilename(), false);
 	}
 
 	/**
@@ -264,7 +265,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 		if ($container_guid) {
 			$dir = new \Elgg\EntityDirLocator($container_guid);
 			
-			return get_dir_size($this->dir_root . $dir . $prefix);
+			return get_dir_size(Paths::sanitize($this->dir_root . $dir . $prefix));
 		}
 		
 		return false;
@@ -309,7 +310,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 */
 	public function setParameters(array $parameters) {
 		if (isset($parameters['dir_root'])) {
-			$this->dir_root = $parameters['dir_root'];
+			$this->dir_root = Paths::sanitize($parameters['dir_root']);
 			return true;
 		}
 
