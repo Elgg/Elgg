@@ -38,7 +38,10 @@ use Elgg\Exceptions\PluginException;
  * data directory. See ticket #3453 for discussion on this.
  */
 class ElggInstaller {
-
+	
+	public const MYSQL_MINIMAL_VERSION = '5.7';
+	public const PHP_MINIMAL_VERSION = '7.4.0';
+	
 	private $steps = [
 		'welcome',
 		'requirements',
@@ -981,11 +984,10 @@ class ElggInstaller {
 	protected function checkPHP(&$report) {
 		$phpReport = [];
 
-		$min_php_version = '7.4.0';
-		if (version_compare(PHP_VERSION, $min_php_version, '<')) {
+		if (version_compare(PHP_VERSION, self::PHP_MINIMAL_VERSION, '<')) {
 			$phpReport[] = [
 				'severity' => 'error',
-				'message' => elgg_echo('install:check:php:version', [$min_php_version, PHP_VERSION])
+				'message' => elgg_echo('install:check:php:version', [self::PHP_MINIMAL_VERSION, PHP_VERSION])
 			];
 		}
 
@@ -1258,9 +1260,8 @@ class ElggInstaller {
 
 		// check MySQL version
 		$version = $db->getServerVersion(DbConfig::READ_WRITE);
-		$required_version = '5.7';
-		if (version_compare($version, $required_version, '<')) {
-			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:mysql_version', [$required_version, $version]));
+		if (version_compare($version, self::MYSQL_MINIMAL_VERSION, '<')) {
+			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:mysql_version', [self::MYSQL_MINIMAL_VERSION, $version]));
 
 			return false;
 		}

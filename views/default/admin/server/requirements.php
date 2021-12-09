@@ -31,9 +31,9 @@ $title = elgg_echo('admin:server:label:php_version');
 $value = PHP_VERSION;
 $subtext = '';
 
-if (version_compare(PHP_VERSION, '7.4.0', '<')) {
+if (version_compare(PHP_VERSION, \ElggInstaller::PHP_MINIMAL_VERSION, '<')) {
 	$icon = $icon_error;
-	$subtext = elgg_echo('admin:server:label:php_version:required_version', ['7.4']);
+	$subtext = elgg_echo('admin:server:label:php_version:required_version', [\ElggInstaller::PHP_MINIMAL_VERSION]);
 }
 
 echo $view_module($icon, $title, $value, $subtext);
@@ -94,9 +94,8 @@ $server = $db->getDatabasePlatform()->getName();
 $subtext = '';
 $icon = $icon_ok;
 
-$mysql_required_version = '5.7';
-if ($server !== 'mysql' || version_compare($version, $mysql_required_version, '<')) {
-	$subtext = elgg_echo('admin:server:requirements:database:server:required_version', [$mysql_required_version]);
+if ($server !== 'mysql' || version_compare($version, \ElggInstaller::MYSQL_MINIMAL_VERSION, '<')) {
+	$subtext = elgg_echo('admin:server:requirements:database:server:required_version', [\ElggInstaller::MYSQL_MINIMAL_VERSION]);
 	$icon = $icon_error;
 }
 
