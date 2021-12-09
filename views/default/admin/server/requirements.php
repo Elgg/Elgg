@@ -31,9 +31,9 @@ $title = elgg_echo('admin:server:label:php_version');
 $value = PHP_VERSION;
 $subtext = '';
 
-if (version_compare(PHP_VERSION, '7.1.0', '<')) {
+if (version_compare(PHP_VERSION, '7.4.0', '<')) {
 	$icon = $icon_error;
-	$subtext = elgg_echo('admin:server:label:php_version:required');
+	$subtext = elgg_echo('admin:server:label:php_version:required_version', ['7.4']);
 }
 
 echo $view_module($icon, $title, $value, $subtext);
