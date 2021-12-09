@@ -376,7 +376,13 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	public function setMetadata($name, $value, $value_type = '', $multiple = false) {
 
 		if ($value === null || $value === '') {
-			return $this->deleteMetadata($name);
+			$result = $this->deleteMetadata($name);
+			if (is_null($result)) {
+				// null result means no metadata found to be deleted
+				return true;
+			}
+			
+			return $result;
 		}
 		
 		// normalize value to an array that we will loop over
@@ -598,7 +604,10 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	public function setPrivateSetting($name, $value) {
 		
 		if ($value === null || $value === '') {
-			return $this->removePrivateSetting($name);
+			$this->removePrivateSetting($name);
+			
+			// do not check result of removePrivateSetting as it returns false if private setting does not exist
+			return true;
 		}
 		
 		if (is_bool($value)) {
@@ -1069,7 +1078,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @param int  $user_guid User guid (default is logged in user)
 	 * @param bool $default   Default permission
 	 *
-	 * @return bool|null
+	 * @return bool
 	 */
 	public function canComment($user_guid = 0, $default = null) {
 		return _elgg_services()->userCapabilities->canComment($this, $user_guid, $default);

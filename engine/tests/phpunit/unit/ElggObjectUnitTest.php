@@ -180,11 +180,16 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanCommentWhenLoggedIn() {
-
+		
 		$user = $this->createUser();
 		_elgg_services()->session->setLoggedInUser($user);
 
 		$object = $this->createObject();
+		$this->assertFalse($object->canComment());
+		
+		// canComment relies on container permissions hook
+		_elgg_services()->hooks->registerHandler('container_permissions_check', 'object', \Elgg\Comments\ContainerPermissionsHandler::class);
+		
 		$this->assertTrue($object->canComment());
 	}
 

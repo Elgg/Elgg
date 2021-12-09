@@ -8,47 +8,37 @@ use Elgg\IntegrationTestCase;
  */
 class ElggObjectIntegrationTest extends IntegrationTestCase {
 	
-	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::up()
-	 */
-	public function up() {
-		_elgg_services()->hooks->backup();
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::down()
-	 */
-	public function down() {
-		_elgg_services()->hooks->restore();
-	}
-	
 	public function testCantCommentLoggedOut() {
-		
+		$user = $this->createUser();
 		$object = $this->createObject();
+		$object2 = $this->createObject();
 		
 		$this->assertFalse($object->canComment());
+		$this->assertTrue($object->canComment($user->guid));
+		$this->assertFalse($object->canComment(-1));
+		$this->assertFalse($object->canComment($object2->guid));
 	}
 	
 	public function testCanCommentLoggedIn() {
 		
 		$user = $this->createUser();
+		$other_user = $this->createUser();
 		
 		$session = elgg_get_session();
 		$session->setLoggedInUser($user);
 		
 		$object = $this->createObject();
+		$object2 = $this->createObject();
 				
 		$this->assertTrue($object->canComment());
+		$this->assertTrue($object->canComment($other_user->guid));
+		$this->assertFalse($object->canComment(-1));
+		$this->assertFalse($object->canComment($object2->guid));
 	}
 	
 	public function testCanCommentOnGroupContent() {
 		$user = $this->createUser();
 		$user2 = $this->createUser();
-		
-		// make sure hook is registered
-		_elgg_services()->hooks->registerHandler('permissions_check:comment', 'object', \Elgg\Comments\GroupMemberPermissionsHandler::class, 999);
 		
 		$session = elgg_get_session();
 		$session->setLoggedInUser($user);

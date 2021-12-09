@@ -22,7 +22,7 @@ class ContainerPermissionsHandler {
 	public function __invoke(\Elgg\Hook $hook) {
 		
 		// is someone trying to comment, if so override permissions check
-		if ($hook->getParam('subtype') === 'comment') {
+		if ($hook->getParam('subtype') === 'comment' && $hook->getUserParam() instanceof \ElggUser) {
 			return true;
 		}
 	}

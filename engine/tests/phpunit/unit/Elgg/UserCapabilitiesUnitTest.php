@@ -335,11 +335,11 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 
 		$owner = $this->createUser();
 		$group = $this->createGroup([
-			'owner_guid', $owner->guid,
+			'owner_guid' => $owner->guid,
 		]);
 
 		$object = $this->createObject([
-			'owner_guid', $owner->guid,
+			'owner_guid' => $owner->guid,
 		]);
 
 		$entity = $this->getMockBuilder(ElggEntity::class)
@@ -353,16 +353,27 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 				['owner_guid', $owner->guid]
 			]));
 
+		$this->assertFalse($owner->canComment());
+		$this->assertFalse($object->canComment());
+		$this->assertFalse($group->canComment());
+		$this->assertFalse($entity->canComment());
+
 		$this->assertFalse($owner->canComment($owner->guid));
 		$this->assertTrue($object->canComment($owner->guid));
 		$this->assertFalse($group->canComment($owner->guid));
-		$this->assertNull($entity->canComment($owner->guid));
+		$this->assertTrue($entity->canComment($owner->guid));
 
 		$this->assertFalse($owner->canComment($viewer->guid));
-		$this->assertTrue($object->canComment($viewer->guid));
+		$this->assertFalse($object->canComment($viewer->guid));
+		$this->assertFalse($entity->canComment($viewer->guid));
 		$this->assertFalse($group->canComment($viewer->guid));
-		$this->assertNull($entity->canComment($viewer->guid));
-
+		
+		// make sure hook is registered
+		_elgg_services()->hooks->registerHandler('container_permissions_check', 'object', \Elgg\Comments\ContainerPermissionsHandler::class);
+		$this->assertTrue($object->canComment($viewer->guid));
+		$this->assertTrue($entity->canComment($viewer->guid));
+		_elgg_services()->hooks->unregisterHandler('container_permissions_check', 'object', \Elgg\Comments\ContainerPermissionsHandler::class);
+		
 		// can pass default value
 		$this->assertTrue($object->canComment($viewer->guid, true));
 		$this->assertFalse($object->canComment($viewer->guid, false));
@@ -397,7 +408,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 			$this->assertEquals($entity, $hook->getEntityParam());
 			$this->assertEquals($owner, $hook->getUserParam());
 			$this->assertEquals('object', $hook->getType());
-			$this->assertNull($hook->getValue()); // called from ElggObject, no default value
+			$this->assertIsBool($hook->getValue()); // called from ElggObject, no default value
 			return false;
 		});
 
