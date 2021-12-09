@@ -1258,8 +1258,9 @@ class ElggInstaller {
 
 		// check MySQL version
 		$version = $db->getServerVersion(DbConfig::READ_WRITE);
-		if (version_compare($version, '5.5.3', '<')) {
-			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:oldmysql2', [$version]));
+		$required_version = '5.7';
+		if (version_compare($version, $required_version, '<')) {
+			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:mysql_version', [$required_version, $version]));
 
 			return false;
 		}

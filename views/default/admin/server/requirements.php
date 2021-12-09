@@ -94,8 +94,9 @@ $server = $db->getDatabasePlatform()->getName();
 $subtext = '';
 $icon = $icon_ok;
 
-if ($server !== 'mysql' || version_compare($version, '5.5.3', '<')) {
-	$subtext = elgg_echo('admin:server:requirements:database:server:required');
+$mysql_required_version = '5.7';
+if ($server !== 'mysql' || version_compare($version, $mysql_required_version, '<')) {
+	$subtext = elgg_echo('admin:server:requirements:database:server:required_version', [$mysql_required_version]);
 	$icon = $icon_error;
 }
 

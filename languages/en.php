@@ -919,6 +919,7 @@ For improved performance, it is recommended that you enable and configure OPcach
 	
 	'admin:server:requirements:database:server' => "Database server",
 	'admin:server:requirements:database:server:required' => "Elgg requires MySQL v5.5.3 or higher for its database",
+	'admin:server:requirements:database:server:required_version' => "Elgg requires MySQL v%s or higher for its database",
 	'admin:server:requirements:database:client' => "Database client",
 	'admin:server:requirements:database:client:required' => "Elgg requires pdo_mysql to connect to the database server",
 

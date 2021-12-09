@@ -10,7 +10,7 @@ Get your own instance of Elgg running in no time.
 Requirements
 ============
 
-- MySQL 5.5.3+ (5.0.0+ if upgrading an existing installation)
+- MySQL 5.7+
 - PHP 7.4+ with the following extensions:
 
    -  GD (for graphics processing)
