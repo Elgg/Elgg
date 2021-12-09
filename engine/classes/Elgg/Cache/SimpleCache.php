@@ -3,6 +3,7 @@
 namespace Elgg\Cache;
 
 use Elgg\Config;
+use Elgg\Project\Paths;
 use Elgg\ViewsService;
 
 /**
@@ -70,7 +71,7 @@ class SimpleCache {
 
 		// handle `getUrl('js', 'blog/save_draft')`
 		if (!empty($subview)) {
-			$view = "$view/$subview";
+			$view = "{$view}/{$subview}";
 		}
 
 		$view = ViewsService::canonicalizeViewName($view);
@@ -87,14 +88,14 @@ class SimpleCache {
 	 * @return string The simplecache root url for the current viewtype
 	 */
 	public function getRoot() {
-		$viewtype = elgg_get_viewtype();
+		$viewtype = $this->views->getViewtype();
 		if ($this->isEnabled()) {
 			$lastcache = (int) $this->config->lastcache;
 		} else {
 			$lastcache = 0;
 		}
 
-		return elgg_normalize_url("/cache/$lastcache/$viewtype/");
+		return elgg_normalize_url("/cache/{$lastcache}/{$viewtype}/");
 	}
 
 	/**
@@ -109,28 +110,25 @@ class SimpleCache {
 	/**
 	 * Enables the simple cache.
 	 *
-	 * @see elgg_register_simplecache_view()
 	 * @return void
+	 * @see elgg_register_simplecache_view()
 	 */
 	public function enable() {
 		$this->config->save('simplecache_enabled', 1);
-		$this->invalidate();
 	}
 
 	/**
 	 * Disables the simple cache.
 	 *
-	 * @warning Simplecache is also purged when disabled.
-	 *
-	 * @see     elgg_register_simplecache_view()
 	 * @return void
+	 * @see elgg_register_simplecache_view()
 	 */
 	public function disable() {
-		if ($this->config->simplecache_enabled) {
-			$this->config->save('simplecache_enabled', 0);
-
-			$this->invalidate();
+		if (!$this->isEnabled()) {
+			return;
 		}
+		
+		$this->config->save('simplecache_enabled', 0);
 	}
 
 	/**
@@ -138,19 +136,8 @@ class SimpleCache {
 	 *
 	 * @return string
 	 */
-	private function getPath() {
+	protected function getPath() {
 		return (string) $this->config->assetroot;
-	}
-
-	/**
-	 * Deletes all cached views in the simplecache
-	 *
-	 * @return true
-	 */
-	public function invalidate() {
-		// Simplecache doesn't have invalidation as an action.
-		// This is handled by generating new urls
-		return true;
 	}
 	
 	/**
@@ -191,5 +178,82 @@ class SimpleCache {
 			
 			elgg_delete_directory($file_info->getPathname());
 		}
+	}
+	
+	/**
+	 * Check if a asset exists in the cache
+	 *
+	 * @param int    $cache_time time the asset was cached
+	 * @param string $viewtype   view type
+	 * @param string $view       cached view name
+	 *
+	 * @return bool
+	 * @since 4.1
+	 */
+	public function cachedAssetExists(int $cache_time, string $viewtype, string $view): bool {
+		$filename = $this->getCacheFilename($viewtype, $view, $cache_time);
+		
+		return file_exists($filename);
+	}
+	
+	/**
+	 * Get the cache location of an existing cached asset
+	 *
+	 * @param int    $cache_time time the asset was cached
+	 * @param string $viewtype   view type
+	 * @param string $view       cached view name
+	 *
+	 * @return string|null null if asset doesn't exist
+	 * @since 4.1
+	 */
+	public function getCachedAssetLocation(int $cache_time, string $viewtype, string $view): ?string {
+		if (!$this->cachedAssetExists($cache_time, $viewtype, $view)) {
+			return null;
+		}
+		
+		return $this->getCacheFilename($viewtype, $view, $cache_time);
+	}
+	
+	/**
+	 * Store an asset for caching
+	 *
+	 * @param string $viewtype view type
+	 * @param string $view     view to cache
+	 * @param string $contents view contents
+	 *
+	 * @return int
+	 */
+	public function cacheAsset(string $viewtype, string $view, string $contents): int {
+		$filename = $this->getCacheFilename($viewtype, $view);
+		$dir = dirname($filename);
+		
+		if (!is_dir($dir)) {
+			// PHP and the server accessing the cache symlink may be a different user. And here
+			// it's safe to make everything readable anyway.
+			mkdir($dir, 0775, true);
+		}
+		
+		$result = file_put_contents($filename, $contents);
+		chmod($filename, 0664);
+		
+		return $result;
+	}
+	
+	/**
+	 * Get the cache file location
+	 *
+	 * @param string $viewtype   view type
+	 * @param string $view       cached view
+	 * @param int    $cache_time (optional) cache time (default \Elgg\Config->lastcache;
+	 *
+	 * @return string
+	 */
+	protected function getCacheFilename(string $viewtype, string $view, int $cache_time = null): string {
+		if (!isset($cache_time)) {
+			$cache_time = $this->config->lastcache;
+		}
+		
+		$filename = $this->getPath() . "{$cache_time}/{$viewtype}/{$view}";
+		return Paths::sanitize($filename, false);
 	}
 }
