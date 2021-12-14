@@ -100,13 +100,13 @@ jobs:
         run: composer install
       
       - name: Install Elgg
-        run: php ./elgg-cli install --config ./install/cli/testing_app.php --verbose
+        run: php ./elgg-cli install --config ./install/cli/testing_app.php --verbose --no-ansi
       
       - name: Enable Elgg plugins
         run: php -f ./.scripts/ci/enable_plugins.php
       
       - name: Seed Elgg database
-        run: php ./elgg-cli database:seed --limit=5 --image_folder=./.scripts/seeder/images/ -vv
+        run: php ./elgg-cli database:seed --limit=5 --image_folder=./.scripts/seeder/images/ -vv --no-ansi
       
       - name: Start Elgg webserver
         run: |
@@ -125,4 +125,4 @@ jobs:
       
       - name: Unseed Elgg database
         if: ${{ always() }}
-        run: php ./elgg-cli database:unseed -vv
+        run: php ./elgg-cli database:unseed -vv --no-ansi
