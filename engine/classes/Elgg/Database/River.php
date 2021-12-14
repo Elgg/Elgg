@@ -8,7 +8,6 @@ use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Database\Clauses\RiverWhereClause;
 use Elgg\Exceptions\InvalidArgumentException;
-use Elgg\Traits\Database\LegacyQueryOptionsAdapter;
 
 /**
  * River repository contains methods for fetching/counting river items
@@ -33,7 +32,7 @@ class River extends Repository {
 			'view',
 		];
 
-		$options = LegacyQueryOptionsAdapter::normalizePluralOptions($options, $singulars);
+		$options = QueryOptions::normalizePluralOptions($options, $singulars);
 
 		$defaults = [
 			'ids' => null,

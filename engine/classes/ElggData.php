@@ -8,7 +8,6 @@ use Elgg\Traits\TimeUsing;
  * \ElggExtender, \ElggEntity, and \ElggRelationship
  */
 abstract class ElggData implements CollectionItemInterface,
-								   Serializable,
 								   Loggable,
 								   Iterator,
 								   ArrayAccess {
@@ -124,6 +123,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @return void
 	 */
+	#[\ReturnTypeWillChange]
 	public function rewind() {
 		$this->valid = (false !== reset($this->attributes));
 	}
@@ -135,6 +135,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @return mixed
 	 */
+	#[\ReturnTypeWillChange]
 	public function current() {
 		return current($this->attributes);
 	}
@@ -146,6 +147,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @return string
 	 */
+	#[\ReturnTypeWillChange]
 	public function key() {
 		return key($this->attributes);
 	}
@@ -157,6 +159,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @return void
 	 */
+	#[\ReturnTypeWillChange]
 	public function next() {
 		$this->valid = (false !== next($this->attributes));
 	}
@@ -168,6 +171,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @return bool
 	 */
+	#[\ReturnTypeWillChange]
 	public function valid() {
 		return $this->valid;
 	}
@@ -186,6 +190,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @return void
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetSet($key, $value) {
 		if (array_key_exists($key, $this->attributes)) {
 			$this->attributes[$key] = $value;
@@ -201,6 +206,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @return mixed
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetGet($key) {
 		if (array_key_exists($key, $this->attributes)) {
 			return $this->$key;
@@ -218,6 +224,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @return void
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetUnset($key) {
 		if (array_key_exists($key, $this->attributes)) {
 			// Full unsetting is dangerous for our objects
@@ -234,6 +241,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @return bool
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetExists($offset) {
 		return array_key_exists($offset, $this->attributes);
 	}
@@ -253,16 +261,26 @@ abstract class ElggData implements CollectionItemInterface,
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Called during serialization
+	 *
+	 * @return array
+	 * @see serialize()
+	 * @since 4.1
 	 */
-	public function serialize() {
-		return serialize($this->attributes);
+	public function __serialize(): array {
+		return $this->attributes;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Called during unserialization
+	 *
+	 * @param array $data serialized data
+	 *
+	 * @return void
+	 * @see unserialize()
+	 * @since 4.1
 	 */
-	public function unserialize($serialized) {
-		$this->attributes = unserialize($serialized);
+	public function __unserialize(array $data): void {
+		$this->attributes = $data;
 	}
 }

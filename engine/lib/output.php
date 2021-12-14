@@ -389,11 +389,16 @@ function elgg_html_decode($string) {
  * Prepares query string for output to prevent CSRF attacks.
  *
  * @param string $string string to prepare
+ *
  * @return string
  *
  * @internal
  */
 function _elgg_get_display_query($string) {
+	if (empty($string)) {
+		return $string;
+	}
+	
 	//encode <,>,&, quotes and characters above 127
 	if (function_exists('mb_convert_encoding')) {
 		$display_query = mb_convert_encoding($string, 'HTML-ENTITIES', 'UTF-8');
@@ -401,6 +406,7 @@ function _elgg_get_display_query($string) {
 		// if no mbstring extension, we just strip characters
 		$display_query = preg_replace("/[^\x01-\x7F]/", "", $string);
 	}
+	
 	return htmlspecialchars($display_query, ENT_QUOTES, 'UTF-8', false);
 }
 
