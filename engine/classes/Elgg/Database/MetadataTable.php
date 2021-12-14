@@ -7,7 +7,6 @@ use Elgg\Database;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\EventsService as Events;
-use Elgg\Traits\Database\LegacyQueryOptionsAdapter;
 use Elgg\Traits\TimeUsing;
 
 /**
@@ -84,7 +83,7 @@ class MetadataTable {
 		$options = array_merge($defaults, $options);
 
 		$singulars = ['tag_name'];
-		$options = LegacyQueryOptionsAdapter::normalizePluralOptions($options, $singulars);
+		$options = QueryOptions::normalizePluralOptions($options, $singulars);
 
 		$tag_names = elgg_extract('tag_names', $options, ['tags'], false);
 
@@ -347,7 +346,7 @@ class MetadataTable {
 	public function getAll(array $options = []) {
 
 		$options['metastring_type'] = 'metadata';
-		$options = LegacyQueryOptionsAdapter::normalizeMetastringOptions($options);
+		$options = QueryOptions::normalizeMetastringOptions($options);
 
 		return Metadata::find($options);
 	}

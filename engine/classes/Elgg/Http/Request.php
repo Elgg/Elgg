@@ -297,7 +297,7 @@ class Request extends SymfonyRequest {
 	 * {@inheritdoc}
 	 */
 	public function isXmlHttpRequest() {
-		return (strtolower($this->headers->get('X-Requested-With')) === 'xmlhttprequest'
+		return (strtolower($this->headers->get('X-Requested-With') ?: '') === 'xmlhttprequest'
 			|| $this->query->get('X-Requested-With') === 'XMLHttpRequest'
 			|| $this->request->get('X-Requested-With') === 'XMLHttpRequest');
 	}

@@ -53,13 +53,15 @@ class UsersTable {
 	 * @return \ElggUser|false Depending on success
 	 */
 	public function getByUsername($username) {
+		if (empty($username)) {
+			return false;
+		}
 
 		// Fixes #6052. Username is frequently sniffed from the path info, which,
 		// unlike $_GET, is not URL decoded. If the username was not URL encoded,
 		// this is harmless.
 		$username = rawurldecode($username);
-
-		if (!$username) {
+		if (empty($username)) {
 			return false;
 		}
 

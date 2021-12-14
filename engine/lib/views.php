@@ -1154,7 +1154,8 @@ function _elgg_split_vars(array $vars = [], array $prefixes = null) {
 	}
 
 	$return = [];
-
+	$default_section = ''; // something weird with PHP 8.1 compatibility
+	
 	foreach ($vars as $key => $value) {
 		foreach ($prefixes as $prefix) {
 			if (substr($key, 0, 1) === $prefix) {
@@ -1162,7 +1163,7 @@ function _elgg_split_vars(array $vars = [], array $prefixes = null) {
 				$return[$prefix][$key] = $value;
 				break;
 			} else {
-				$return[''][$key] = $value;
+				$return[$default_section][$key] = $value;
 			}
 		}
 	}

@@ -144,6 +144,7 @@ class LRUCache implements \ArrayAccess {
 	 * @param mixed      $value The value to set.
 	 * @return void
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetSet($key, $value) {
 		$this->set($key, $value);
 	}
@@ -156,6 +157,7 @@ class LRUCache implements \ArrayAccess {
 	 * @param int|string $key The key to retrieve.
 	 * @return mixed
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetGet($key) {
 		return $this->get($key);
 	}
@@ -168,6 +170,7 @@ class LRUCache implements \ArrayAccess {
 	 * @param int|string $key The key to unset.
 	 * @return void
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetUnset($key) {
 		$this->remove($key);
 	}
@@ -180,6 +183,7 @@ class LRUCache implements \ArrayAccess {
 	 * @param int|string $key A key to check for.
 	 * @return boolean
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetExists($key) {
 		return $this->containsKey($key);
 	}
