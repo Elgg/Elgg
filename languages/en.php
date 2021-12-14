@@ -346,6 +346,7 @@ return array(
 	
 	'notifications:subscriptions:record:settings' => 'Show detailed selection',
 	'notifications:subscriptions:no_results' => 'There are no subscription records yet',
+	'notifications:subscriptions:details:no_results' => 'There are no detailed subscriptions to configure.',
 	'notifications:subscriptions:details:reset' => 'Undo selection',
 
 	'notifications:mute:title' => "Mute notifications",

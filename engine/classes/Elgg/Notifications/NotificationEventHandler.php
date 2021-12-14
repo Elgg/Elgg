@@ -451,4 +451,51 @@ class NotificationEventHandler {
 	public static function isConfigurableByUser(): bool {
 		return true;
 	}
+	
+	/**
+	 * Can this event be configured for a specific entity
+	 *
+	 * For example this can be based on a group tools option which is enabled or not
+	 *
+	 * @param \ElggEntity $entity the entity to check for
+	 *
+	 * @return bool
+	 * @since 4.1
+	 */
+	final public static function isConfigurableForEntity(\ElggEntity $entity): bool {
+		
+		if ($entity instanceof \ElggUser) {
+			return static::isConfigurableForUser($entity);
+		} elseif ($entity instanceof \ElggGroup) {
+			return static::isConfigurableForGroup($entity);
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Can this event be configured for a specific user
+	 *
+	 * @param \ElggUser $user the user to check for
+	 *
+	 * @return bool
+	 * @since 4.1
+	 */
+	protected static function isConfigurableForUser(\ElggUser $user): bool {
+		return true;
+	}
+	
+	/**
+	 * Can this event be configured for a specific group
+	 *
+	 * For example this can be based on a group tools option which is enabled or not
+	 *
+	 * @param \ElggGroup $group the group to check for
+	 *
+	 * @return bool
+	 * @since 4.1
+	 */
+	protected static function isConfigurableForGroup(\ElggGroup $group): bool {
+		return true;
+	}
 }

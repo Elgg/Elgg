@@ -107,4 +107,11 @@ class CreateTheWireEventHandler extends NotificationEventHandler {
 		
 		return $body;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected static function isConfigurableForGroup(\ElggGroup $group): bool {
+		return false;
+	}
 }
