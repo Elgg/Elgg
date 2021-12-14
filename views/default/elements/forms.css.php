@@ -30,6 +30,18 @@ label, .elgg-field-label {
 	display: block;
 }
 
+@media $(media-phone-up) {
+	.elgg-field-horizontal {
+		> * {
+			display: inline-block;
+			
+			&:not(:first-child) {
+				padding-left: 1rem;
+			}
+		}
+	}
+}
+
 label.elgg-state-disabled, .elgg-field-label.elgg-state-disabled {
 	opacity: 0.6;
 }
@@ -192,18 +204,21 @@ select:not([multiple]) {
 	margin-bottom: 1rem;
 }
 
-.elgg-fieldset-horizontal .elgg-field {
-	display: inline-block;
-	margin: 0 1rem 0 0;
-	vertical-align: top;
-}
 
-.elgg-fieldset-horizontal.elgg-justify-right .elgg-field {
-	margin: 0 0 0 1rem;
-}
-
-.elgg-fieldset-horizontal.elgg-justify-center .elgg-field {
-	margin: 0 5px;
+@media $(media-phone-up) {
+	.elgg-fieldset-horizontal .elgg-field {
+		display: inline-block;
+		margin: 0 1rem 0 0;
+		vertical-align: top;
+	}
+	
+	.elgg-fieldset-horizontal.elgg-justify-right .elgg-field {
+		margin: 0 0 0 1rem;
+	}
+	
+	.elgg-fieldset-horizontal.elgg-justify-center .elgg-field {
+		margin: 0 5px;
+	}
 }
 
 <?php
