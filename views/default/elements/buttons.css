@@ -63,6 +63,9 @@ button:focus {
 }
 
 .elgg-button-action-done {
+	background: $(button-action-background-color-hover);
+	color: $(button-action-font-color-hover);
+		
 	&:hover,
 	&:focus {
 		background: $(button-action-background-color-hover);
