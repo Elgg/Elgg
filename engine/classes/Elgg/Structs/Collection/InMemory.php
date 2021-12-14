@@ -33,6 +33,7 @@ final class InMemory implements Collection {
 	/**
 	 * {@inheritDoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function count() {
 		return count($this->items);
 	}
@@ -40,6 +41,7 @@ final class InMemory implements Collection {
 	/**
 	 * {@inheritDoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function current() {
 		return current($this->items);
 	}
@@ -62,6 +64,7 @@ final class InMemory implements Collection {
 	/**
 	 * {@inheritDoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function key() {
 		return key($this->items);
 	}
@@ -80,6 +83,7 @@ final class InMemory implements Collection {
 	/**
 	 * {@inheritDoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function next() {
 		return next($this->items);
 	}
@@ -87,6 +91,7 @@ final class InMemory implements Collection {
 	/**
 	 * {@inheritDoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function rewind() {
 		reset($this->items);
 	}
@@ -94,6 +99,7 @@ final class InMemory implements Collection {
 	/**
 	 * {@inheritDoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function valid() {
 		return key($this->items) !== null;
 	}

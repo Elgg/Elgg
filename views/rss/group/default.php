@@ -10,7 +10,7 @@ if (!$entity instanceof ElggEntity) {
 
 $permalink = htmlspecialchars($entity->getURL(), ENT_NOQUOTES, 'UTF-8');
 $pubdate = date('r', $entity->getTimeCreated());
-$title = htmlspecialchars($entity->getDisplayName(), ENT_NOQUOTES, 'UTF-8');
+$title = htmlspecialchars($entity->getDisplayName() ?? '', ENT_NOQUOTES, 'UTF-8');
 
 if ($entity->description) {
 	$description = elgg_autop($entity->description);

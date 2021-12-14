@@ -2,21 +2,17 @@
 
 namespace Elgg\Notifications;
 
-use ElggData;
-use ElggEntity;
-use Serializable;
-
 /**
  * Notification event interface
  *
  * @internal
  */
-interface NotificationEvent extends Serializable {
+interface NotificationEvent {
 
 	/**
 	 * Get the actor of the event
 	 *
-	 * @return ElggEntity|false
+	 * @return \ElggEntity|false
 	 */
 	public function getActor();
 
@@ -30,7 +26,7 @@ interface NotificationEvent extends Serializable {
 	/**
 	 * Get the object of the event
 	 *
-	 * @return ElggData|false
+	 * @return \ElggData|false
 	 */
 	public function getObject();
 

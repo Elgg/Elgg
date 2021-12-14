@@ -85,6 +85,10 @@ class ElggAutoP {
 	 * @return string|false output or false if parse error occurred
 	 */
 	public function process($html) {
+		if (!isset($html)) {
+			return '';
+		}
+		
 		// normalize whitespace
 		$html = str_replace(["\r\n", "\r"], "\n", $html);
 

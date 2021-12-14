@@ -3,7 +3,7 @@
 * Ssend a message action
 */
 
-$subject = strip_tags(get_input('subject'));
+$subject = strip_tags(get_input('subject', ''));
 $body = get_input('body');
 $recipients = (array) get_input('recipients');
 $original_msg_guid = (int) get_input('original_guid');

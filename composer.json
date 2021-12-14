@@ -15,14 +15,14 @@
         "elgg/login_as": "~3.1.0",
         "ckeditor/ckeditor": "~4.16.0",
         "composer/semver": "~3.2.0",
-        "css-crush/css-crush": "~3.0.0",
+        "css-crush/css-crush": "3.0.1",
         "doctrine/dbal": "~3.1.0",
         "eloquent/composer-config-reader": "~3.0.0",
         "fortawesome/font-awesome": "~5.14",
         "fzaninotto/faker": "^1.9",
         "guzzlehttp/guzzle": "~7.4.0",
         "hackzilla/password-generator": "~1.6.0",
-        "imagine/imagine": "~1.2.4",
+        "imagine/imagine": "1.2.4",
         "laminas/laminas-mail": "~2.4",
         "laminas/laminas-mime": "2.9.1",
         "laminas/laminas-servicemanager": "^3.3.1",
@@ -53,7 +53,7 @@
         "symfony/http-foundation": "~5.3",
         "symfony/routing": "~5.3",
         "symfony/var-dumper": "~5.3",
-        "tedivm/stash": "~0.16.0",
+        "tedivm/stash": "0.16.0",
         "vanilla/htmlawed": "~2.2.0"
     },
     "config": {
@@ -73,8 +73,11 @@
             "engine/classes/"
         ],
         "psr-4": {
+            "CssCrush\\": "engine/vendor_classes/CssCrush/",
             "Elgg\\": "engine/classes/Elgg/",
-            "Laminas\\Mime\\": "engine/classes/Laminas/Mime/"
+            "Imagine\\Image\\Metadata\\": "engine/vendor_classes/Imagine/Image/Metadata",
+            "Laminas\\Mime\\": "engine/vendor_classes/Laminas/Mime/",
+            "Stash\\": "engine/vendor_classes/Stash/"
         }
     },
     "autoload-dev": {
