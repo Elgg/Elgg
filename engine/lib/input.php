@@ -63,7 +63,7 @@ function elgg_get_request_data($filter_result = true) {
  */
 function elgg_get_title_input($variable = 'title', $default = '') {
 	$raw_input = get_input($variable, $default, false);
-	return htmlspecialchars($raw_input, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+	return htmlspecialchars($raw_input ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
 /**

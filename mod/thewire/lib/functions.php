@@ -43,6 +43,8 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 	if ($limit > 0) {
 		$text = elgg_substr($text, 0, $limit);
 	}
+	
+	$text = $text ?? '';
 
 	// no html tags allowed so we escape
 	$post->description = htmlspecialchars($text, ENT_NOQUOTES | ENT_SUBSTITUTE, 'UTF-8');
