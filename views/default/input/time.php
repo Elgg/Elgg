@@ -68,7 +68,7 @@ if ($timestamp) {
 $hour_options = [];
 $hour_options_ts = range($min, $max, $step);
 
-$dt = new DateTime(null, new DateTimeZone('UTC'));
+$dt = new DateTime('now', new DateTimeZone('UTC'));
 
 foreach ($hour_options_ts as $ts) {
 	$dt->setTimestamp($ts);

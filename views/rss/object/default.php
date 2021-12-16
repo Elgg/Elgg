@@ -10,7 +10,7 @@ if (!$entity instanceof ElggEntity) {
 
 $title = $entity->getDisplayName();
 if (empty($title)) {
-	$title = strip_tags($entity->description);
+	$title = strip_tags($entity->description ?? '');
 	$title = elgg_get_excerpt($title, 32);
 }
 

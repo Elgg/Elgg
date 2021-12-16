@@ -35,7 +35,7 @@ final class Context {
 	 */
 	public function __construct(HttpRequest $request) {
 		// don't do this for *_handler.php, etc.
-		if (basename($request->server->get('SCRIPT_FILENAME')) === 'index.php') {
+		if (basename($request->server->get('SCRIPT_FILENAME') ?? '') === 'index.php') {
 			$context = $request->getFirstUrlSegment();
 			if (!$context) {
 				$context = 'main';

@@ -38,7 +38,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.4', '8.0']
+        php-versions: ['7.4', '8.0', '8.1']
         experimental: [false]
         extra-title: ['']
         memcache: [0]
@@ -63,12 +63,6 @@ jobs:
             memcache: 0
             mysql-versions: 8.0
             redis: 0
-          - php-versions: '8.1'
-            experimental: true
-            extra-title: ' - Experimental'
-            memcache: 0
-            mysql-versions: 5.7
-            redis: 0
     env:
       ELGG_MEMCACHE: ${{ matrix.memcache }}
       ELGG_REDIS: ${{ matrix.redis }}
@@ -79,7 +73,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           coverage: none
-          extensions: gd,pdo,xml,json,memcached,redis-4.3.0,mysqli,pdo_mysql,libxml,mbstring
+          extensions: gd,pdo,xml,json,memcached,redis-4.3.0,mysqli,pdo_mysql,libxml,mbstring,intl
           ini-values: max_execution_time=180
         
       - name: Code checkout
@@ -109,6 +103,8 @@ jobs:
         run: php ./elgg-cli database:seed --limit=5 --image_folder=./.scripts/seeder/images/ -vv --no-ansi
       
       - name: Start Elgg webserver
+        # there is some weird issue with the PHP cli-server in PHP 8.1, so skipping this
+        if: ${{ matrix.php-versions != '8.1' }}
         run: |
           php -S localhost:8888 -c ./.scripts/ci/local_php_server.ini index.php &
           # give Web server some time to bind to sockets, etc

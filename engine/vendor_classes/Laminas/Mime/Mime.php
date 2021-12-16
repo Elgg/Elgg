@@ -1,5 +1,4 @@
 <?php
-// phpcs:ignoreFile
 /**
  * @see       https://github.com/laminas/laminas-mime for the canonical source repository
  * @copyright https://github.com/laminas/laminas-mime/blob/master/COPYRIGHT.md

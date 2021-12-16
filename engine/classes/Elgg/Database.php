@@ -465,7 +465,7 @@ class Database {
 				}
 			});
 		} catch (\Exception $e) {
-			$ex = new DatabaseException($e->getMessage(), null, $e);
+			$ex = new DatabaseException($e->getMessage(), 0, $e);
 			$ex->setParameters($params);
 			$ex->setQuery($sql);
 

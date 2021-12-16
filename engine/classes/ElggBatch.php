@@ -354,6 +354,7 @@ class ElggBatch implements \Countable, \Iterator {
 	/**
 	 * {@inheritdoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function rewind() {
 		$this->resultIndex = 0;
 		$this->retrievedResults = 0;
@@ -370,6 +371,7 @@ class ElggBatch implements \Countable, \Iterator {
 	/**
 	 * {@inheritdoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function current() {
 		return current($this->results);
 	}
@@ -377,6 +379,7 @@ class ElggBatch implements \Countable, \Iterator {
 	/**
 	 * {@inheritdoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function key() {
 		return $this->processedResults;
 	}
@@ -384,6 +387,7 @@ class ElggBatch implements \Countable, \Iterator {
 	/**
 	 * {@inheritdoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function next() {
 		// if we'll be at the end.
 		if (($this->processedResults + 1) >= $this->limit && $this->limit > 0) {
@@ -413,6 +417,7 @@ class ElggBatch implements \Countable, \Iterator {
 	/**
 	 * {@inheritdoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function valid() {
 		if (!is_array($this->results)) {
 			return false;
@@ -430,6 +435,7 @@ class ElggBatch implements \Countable, \Iterator {
 	 * @see Countable::count()
 	 * @return int
 	 */
+	#[\ReturnTypeWillChange]
 	public function count() {
 		if (!is_callable($this->getter)) {
 			$inspector = new \Elgg\Debug\Inspector();

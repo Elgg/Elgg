@@ -9,35 +9,34 @@ use Elgg\UnitTestCase;
  */
 class DateTimeUnitTest extends UnitTestCase {
 
+	protected $timezone;
+	
+	public function up() {
+		$this->timezone = date_default_timezone_get();
+		date_default_timezone_set('Europe/Amsterdam');
+	}
+	
+	public function down() {
+		date_default_timezone_set($this->timezone);
+	}
+	
 	/**
 	 * @dataProvider formatLocaleProvider
 	 */
-	public function testFormatLocale($time, $date_format, $strftime_format, $language) {
-		
+	public function testFormatLocale($time, $date_format, $language, $expected) {
 		$date = new DateTime($time);
-		
-		// make expected output
-		$current_locale = setlocale(LC_TIME, 0);
-		setlocale(LC_TIME, $language);
-		
-		$expected = strftime($strftime_format, $date->getTimestamp());
-		
-		setlocale(LC_TIME, $current_locale);
 		
 		$this->assertEquals($expected, $date->formatLocale($date_format, $language));
 	}
 	
 	public function formatLocaleProvider() {
 		return [
-			['midnight', 'l d, F Y H:i:s', '%A %d, %B %Y %H:%M:%S', 'en'],
-			['+2 days', 'l d, F Y H:i:s', '%A %d, %B %Y %H:%M:%S', 'nl'],
-			['tomorrow', 'l', '%A', 'nl'],
-			['January 9, 2018 12:00', 'l d, F Y H:i:s', '%A %d, %B %Y %H:%M:%S', 'en'],
-			['January 9, 2018 12:00', 'l d, F Y H:i:s', '%A %d, %B %Y %H:%M:%S', 'nl'],
-			['January 9, 2018 12:00', 'F', '%B', 'nl'],
-			[1515496794, 'l d, F Y H:i:s', '%A %d, %B %Y %H:%M:%S', 'en'],
-			[1515496794, 'l d, F Y H:i:s', '%A %d, %B %Y %H:%M:%S', 'nl'],
-			[1515496794, 'l, F', '%A, %B', 'nl'],
+			['January 9, 2018 12:00', 'l d, F Y H:i:s', 'en', 'Tuesday 09, January 2018 12:00:00'],
+			['January 9, 2018 12:00', 'l d, F Y H:i:s', 'nl', 'dinsdag 09, januari 2018 12:00:00'],
+			['January 9, 2018 12:00', 'F', 'nl', 'januari'],
+			['@1515496794', 'l d, F Y H:i:s', 'en', 'Tuesday 09, January 2018 12:19:54'],
+			['@1515496794', 'l d, F Y H:i:s', 'nl', 'dinsdag 09, januari 2018 12:19:54'],
+			['@1515496794', 'l, F', 'nl', 'dinsdag, januari'],
 		];
 	}
 }

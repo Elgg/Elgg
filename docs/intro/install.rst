@@ -18,6 +18,7 @@ Requirements
    -  JSON (for AJAX responses, etc.)
    -  XML (for xml resource and web services, etc.)
    -  `Multibyte String support`_ (for i18n)
+   - (optional) intl (for i18n)
    -  Proper configuration and ability to send email through an MTA
 
 - Web server with support for URL rewriting

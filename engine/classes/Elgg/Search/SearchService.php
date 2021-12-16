@@ -169,8 +169,9 @@ class SearchService {
 	 */
 	public function normalizeQuery(array $options = []) {
 
-		$query = elgg_extract('query', $options);
-		$query = filter_var($query, FILTER_SANITIZE_STRING);
+		$query = elgg_extract('query', $options, '');
+		$query = strip_tags($query);
+		$query = htmlspecialchars($query, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401, 'UTF-8');
 		$query = trim($query);
 
 		$words = preg_split('/\s+/', $query);
