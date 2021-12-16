@@ -314,7 +314,7 @@ class Inspector {
 			foreach ($attributes as $item) {
 				/* @var \ElggMenuItem $item */
 				$name = $item->getName();
-				$text = htmlspecialchars($item->getText(), ENT_QUOTES, 'UTF-8', false);
+				$text = htmlspecialchars($item->getText() ?? '', ENT_QUOTES, 'UTF-8', false);
 				$href = $item->getHref();
 				if ($href === false) {
 					$href = 'not a link';

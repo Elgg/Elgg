@@ -10,7 +10,7 @@ if (!$entity instanceof ElggUser) {
 
 $permalink = htmlspecialchars($entity->getURL(), ENT_NOQUOTES, 'UTF-8');
 $pubdate = date('r', $entity->getTimeCreated());
-$title = htmlspecialchars($entity->getDisplayName(), ENT_NOQUOTES, 'UTF-8');
+$title = htmlspecialchars($entity->getDisplayName() ?? '', ENT_NOQUOTES, 'UTF-8');
 
 $description = $entity->getProfileData('description');
 if (!empty($description)) {

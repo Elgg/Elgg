@@ -9,7 +9,7 @@ if (!$revision instanceof ElggAnnotation) {
 }
 
 $poster = $revision->getOwnerEntity();
-$poster_name = htmlspecialchars($poster->getDisplayName(), ENT_NOQUOTES, 'UTF-8');
+$poster_name = htmlspecialchars($poster->getDisplayName() ?? '', ENT_NOQUOTES, 'UTF-8');
 $pubdate = date('r', $revision->getTimeCreated());
 $permalink = $revision->getURL();
 
