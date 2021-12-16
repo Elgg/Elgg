@@ -94,7 +94,7 @@ $server = $db->getDatabasePlatform()->getName();
 $subtext = '';
 $icon = $icon_ok;
 
-if ($server !== 'mysql' || version_compare($version, \ElggInstaller::MYSQL_MINIMAL_VERSION, '<')) {
+if ($server !== 'mysql' || version_compare($version ?: '0', \ElggInstaller::MYSQL_MINIMAL_VERSION, '<')) {
 	$subtext = elgg_echo('admin:server:requirements:database:server:required_version', [\ElggInstaller::MYSQL_MINIMAL_VERSION]);
 	$icon = $icon_error;
 }
