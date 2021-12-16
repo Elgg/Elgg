@@ -86,12 +86,12 @@ class DateTime extends PHPDateTime {
 	 * Try to format to a locale using strftime()
 	 *
 	 * @param string $format   output format, supports date() formatting
-	 * @param string $language the output language, defaults to current language
+	 * @param string $language the output language
 	 *
 	 * @return string|false
 	 * @since 4.1
 	 */
-	protected function formatStrftime(string $format, string $language = null) {
+	protected function formatStrftime(string $format, string $language) {
 		// convert date() format to strftime() format
 		$correct_format = $this->dateFormatToStrftime($format);
 		if ($correct_format === false) {
@@ -153,12 +153,12 @@ class DateTime extends PHPDateTime {
 	 * Try to format to a locale using the 'intl' PHP module
 	 *
 	 * @param string $format   output format, supports date() formatting
-	 * @param string $language the output language, defaults to current language
+	 * @param string $language the output language
 	 *
 	 * @return string|false
 	 * @since 4.1
 	 */
-	protected function formatIntl(string $format, string $language = null) {
+	protected function formatIntl(string $format, string $language) {
 		$correct_format = $this->dateFormatToICU($format);
 		if ($correct_format === false) {
 			return false;
@@ -167,7 +167,7 @@ class DateTime extends PHPDateTime {
 		$locale_for_language = _elgg_services()->locale->getLocaleForLanguage($language);
 		
 		$locale = new \IntlDateFormatter(elgg_extract(0, $locale_for_language, $language), \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
-		$locale->setPattern($this->dateFormatToICU($format));
+		$locale->setPattern($correct_format);
 		
 		return $locale->format($this);
 	}
