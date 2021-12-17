@@ -96,6 +96,7 @@ final class PasswordService {
 			'object' => $user,
 			'ip_address' => $ip_address,
 			'link' => $link,
+			'apply_muting' => false,
 		];
 		
 		return notify_user($user->guid, elgg_get_site_entity()->guid, $subject, $message, $params, 'email');
@@ -183,6 +184,7 @@ final class PasswordService {
 			'action' => $ns,
 			'object' => $user,
 			'password' => $password,
+			'apply_muting' => false,
 		];
 
 		notify_user($user->guid, elgg_get_site_entity()->guid, $subject, $message, $params, 'email');

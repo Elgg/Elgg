@@ -32,6 +32,7 @@ notify_user($user->guid,
 		'object' => $user,
 		'action' => 'resetpassword',
 		'password' => $password,
+		'apply_muting' => false,
 	],
 	'email');
 

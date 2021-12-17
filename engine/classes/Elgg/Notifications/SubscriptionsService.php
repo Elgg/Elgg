@@ -498,19 +498,23 @@ class SubscriptionsService {
 	 *
 	 * @param array             $subscriptions List of subscribers to filter
 	 * @param NotificationEvent $event         Notification event from which to get information
+	 * @param bool              $filter_muted  Should the muting rules be applied to the subscriptions (default: true)
 	 *
 	 * @return array
 	 */
-	public function filterSubscriptions(array $subscriptions, NotificationEvent $event): array {
-		// make methods unique and remove emptys
+	public function filterSubscriptions(array $subscriptions, NotificationEvent $event, bool $filter_muted = true): array {
+		// sanitize
+		// make methods unique and remove empties
 		$subscriptions = array_map(function($user_methods) {
 			return array_values(array_filter(array_unique($user_methods)));
 		}, $subscriptions);
+		$subscriptions = $this->filterDelayedEmailSubscribers($subscriptions);
 		
 		// apply filters
-		$subscriptions = $this->filterMutedNotifications($subscriptions, $event);
-		$subscriptions = $this->filterDelayedEmailSubscribers($subscriptions);
-		$subscriptions = $this->filterTimedMutedSubscribers($subscriptions);
+		if ($filter_muted) {
+			$subscriptions = $this->filterMutedNotifications($subscriptions, $event);
+			$subscriptions = $this->filterTimedMutedSubscribers($subscriptions);
+		}
 		
 		return $subscriptions;
 	}

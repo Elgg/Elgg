@@ -36,6 +36,7 @@ return elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($user_guid) {
 	$params = [
 		'action' => 'validate',
 		'object' => $user,
+		'apply_muting' => false,
 	];
 	
 	notify_user($user->guid, $site->guid, $subject, $body, $params, 'mail');
