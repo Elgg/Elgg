@@ -63,6 +63,11 @@ return [
 				'Elgg\SiteNotifications\Menus\Topbar::register' => [],
 			],
 		],
+		'seeds' => [
+			'database' => [
+				'Elgg\SiteNotifications\Seeder::register' => [],
+			],
+		],
 		'send' => [
 			'notification:site' => [
 				'Elgg\SiteNotifications\Notifications::createSiteNotifications' => [],
