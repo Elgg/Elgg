@@ -290,5 +290,8 @@ return [
 		'input/password' => [
 			\Elgg\Input\DisablePasswordAutocompleteHandler::class => [],
 		],
+		'page/components/list' => [
+			'Elgg\Comments\Preloader::preload' => [],
+		],
 	],
 ];

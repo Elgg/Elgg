@@ -948,13 +948,8 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		if (is_int($num)) {
 			return $num;
 		}
-
-		return elgg_count_entities([
-			'type' => 'object',
-			'subtype' => 'comment',
-			'container_guid' => $this->getGUID(),
-			'distinct' => false,
-		]);
+		
+		return \Elgg\Comments\DataService::instance()->getCommentsCount($this);
 	}
 
 	/**
