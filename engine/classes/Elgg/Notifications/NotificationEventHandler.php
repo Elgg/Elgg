@@ -18,9 +18,6 @@ class NotificationEventHandler {
 	protected $service;
 
 	/** @var array */
-	protected $subscriptions = [];
-
-	/** @var array */
 	protected $params = [];
 
 	/**
@@ -79,7 +76,17 @@ class NotificationEventHandler {
 		];
 		$subscriptions = _elgg_services()->hooks->trigger('get', 'subscriptions', $params, $subscriptions);
 		
-		return _elgg_services()->subscriptions->filterSubscriptions($subscriptions, $this->event);
+		return _elgg_services()->subscriptions->filterSubscriptions($subscriptions, $this->event, $this->filterMutedSubscriptions());
+	}
+	
+	/**
+	 * Should muted subscribers be filtered
+	 *
+	 * @return bool
+	 * @since 4.1
+	 */
+	protected function filterMutedSubscriptions(): bool {
+		return (bool) elgg_extract('apply_muting', $this->params, true);
 	}
 	
 	/**

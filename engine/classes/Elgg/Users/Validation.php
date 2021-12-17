@@ -41,6 +41,7 @@ class Validation {
 		$params = [
 			'action' => 'account:validated',
 			'object' => $user,
+			'apply_muting' => false,
 		];
 		
 		notify_user($user->guid, $site->guid, $subject, $body, $params, ['email']);
