@@ -193,15 +193,6 @@ class ElggSite extends \ElggEntity {
 	
 	/**
 	 * {@inheritDoc}
-	 * @see ElggEntity::canComment()
-	 * @since 3.0
-	 */
-	public function canComment($user_guid = 0, $default = null) {
-		return false;
-	}
-	
-	/**
-	 * {@inheritDoc}
 	 */
 	public function updateLastAction($posted = null) {
 		// setting last action on ElggSite makes no sense... just returning current value to be compliant

@@ -10,6 +10,20 @@ use Elgg\IntegrationTestCase;
 class ElggEntityClassResolutionTest extends IntegrationTestCase {
 
 	/**
+	 * @inheritdoc
+	 */
+	public function up() {
+		_elgg_services()->hooks->backup();
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function down() {
+		_elgg_services()->hooks->restore();
+	}
+	
+	/**
 	 * @dataProvider entityClasses
 	 */
 	public function testCoreEntityClassRegistrations($type, $subtype, $class) {

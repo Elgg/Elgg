@@ -16,6 +16,7 @@ return [
 			'subtype' => 'blog',
 			'class' => 'ElggBlog',
 			'capabilities' => [
+				'commentable' => true,
 				'searchable' => true,
 				'likable' => true,
 			],

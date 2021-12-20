@@ -15,6 +15,7 @@ return [
 			'type' => 'object',
 			'subtype' => 'file',
 			'capabilities' => [
+				'commentable' => true,
 				'searchable' => true,
 				'likable' => true,
 			],

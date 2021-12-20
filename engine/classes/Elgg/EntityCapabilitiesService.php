@@ -27,8 +27,27 @@ class EntityCapabilitiesService {
 	 *
 	 * @return bool
 	 */
-	public function hasCapability(string $type, string $subtype, string $capability, bool $default = false): bool {
-		return elgg_extract($capability, elgg_extract($subtype, elgg_extract($type, $this->entities, []), []), $default);
+	public function hasCapability(string $type, string $subtype, string $capability, bool $default = null): bool {
+		$warn_about_commentable = false;
+		
+		if (!isset($default)) {
+			$default = false;
+			if ($capability === 'commentable') {
+				$default = true;
+				$warn_about_commentable = true;
+			}
+		}
+		
+		$result = elgg_extract($capability, elgg_extract($subtype, elgg_extract($type, $this->entities, []), []));
+		if (isset($result)) {
+			return $result;
+		}
+		
+		if ($warn_about_commentable) {
+			elgg_deprecated_notice("You need to explicitely define if a [{$type}, {$subtype}] is commentable. The default behaviour for commentable will change in Elgg 5.0 to be false by default.", '4.1');
+		}
+		
+		return $default;
 	}
 	
 	/**

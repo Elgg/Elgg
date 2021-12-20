@@ -13,6 +13,7 @@ return [
 			'subtype' => 'messages',
 			'class' => 'ElggMessage',
 			'capabilities' => [
+				'commentable' => false,
 				'searchable' => true,
 			],
 		],

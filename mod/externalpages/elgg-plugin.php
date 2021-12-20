@@ -8,14 +8,23 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'about',
+			'capabilities' => [
+				'commentable' => false,
+			],
 		],
 		[
 			'type' => 'object',
 			'subtype' => 'terms',
+			'capabilities' => [
+				'commentable' => false,
+			],
 		],
 		[
 			'type' => 'object',
 			'subtype' => 'privacy',
+			'capabilities' => [
+				'commentable' => false,
+			],
 		],
 	],
 	'routes' => [

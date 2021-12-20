@@ -16,6 +16,7 @@ return [
 			'subtype' => 'discussion',
 			'class' => 'ElggDiscussion',
 			'capabilities' => [
+				'commentable' => true,
 				'searchable' => true,
 				'likable' => true,
 			],

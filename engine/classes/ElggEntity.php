@@ -942,6 +942,10 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @since 1.8.0
 	 */
 	public function countComments() {
+		if (!$this->hasCapability('commentable')) {
+			return 0;
+		}
+		
 		$params = ['entity' => $this];
 		$num = _elgg_services()->hooks->trigger('comments:count', $this->getType(), $params);
 

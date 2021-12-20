@@ -11,7 +11,7 @@ use Elgg\Exceptions\InvalidArgumentException;
  * @group UnitTests
  * @group UserCapabilities
  */
-class UserCapabilitiesUnitTest extends UnitTestCase {
+class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 
 	/**
 	 * @var PluginHooksService
@@ -330,7 +330,8 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 	}
 
 	public function testDefaultCanCommentPermissions() {
-
+		_elgg_services()->hooks->registerHandler('container_logic_check', 'all', \Elgg\Comments\ContainerLogicHandler::class);
+		
 		$viewer = $this->createUser();
 
 		$owner = $this->createUser();
@@ -343,7 +344,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 
 		$entity = $this->getMockBuilder(ElggEntity::class)
-			->setMethods(['__get', 'getDisplayName', 'setDisplayName']) // keep origin canComment method
+			->setMethods(['__get', 'getDisplayName', 'setDisplayName', 'getSubtype', 'getType']) // keep origin canComment method
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -352,6 +353,12 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 			->will($this->returnValueMap([
 				['owner_guid', $owner->guid]
 			]));
+		$entity->expects($this->any())
+			->method('getSubtype')
+			->will($this->returnValue('foo'));
+		$entity->expects($this->any())
+			->method('getType')
+			->will($this->returnValue('object'));
 
 		$this->assertFalse($owner->canComment());
 		$this->assertFalse($object->canComment());
