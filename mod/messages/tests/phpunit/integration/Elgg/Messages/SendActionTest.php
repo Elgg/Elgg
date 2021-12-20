@@ -14,7 +14,8 @@ use Laminas\Mail\Message;
 class SendActionTest extends ActionResponseTestCase {
 
 	public function up() {
-		self::createApplication(['isolate'=> true]);
+		parent::up();
+		
 		$this->startPlugin();
 		
 		elgg_register_plugin_hook_handler('permissions_check', 'object', 'Elgg\Messages\Permissions::canEdit');

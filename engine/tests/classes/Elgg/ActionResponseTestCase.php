@@ -7,7 +7,9 @@ use Elgg\Http\ResponseBuilder;
 abstract class ActionResponseTestCase extends IntegrationTestCase {
 
 	public function up() {
-
+		$this->createApplication([
+			'isolate' => true,
+		]);
 	}
 
 	public function down() {
@@ -25,7 +27,7 @@ abstract class ActionResponseTestCase extends IntegrationTestCase {
 	 * @return ResponseBuilder
 	 */
 	public function executeAction($name, array $params = [], $ajax = false, $add_csrf_tokens = true) {
-		$request = BaseTestCase::prepareHttpRequest("action/{$name}", 'POST', $params, $ajax, $add_csrf_tokens);
+		$request = $this->prepareHttpRequest("action/{$name}", 'POST', $params, $ajax, $add_csrf_tokens);
 		_elgg_services()->set('request', $request);
 
 		return _elgg_services()->router->getResponse($request);

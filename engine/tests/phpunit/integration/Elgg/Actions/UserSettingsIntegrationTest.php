@@ -16,8 +16,6 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 	public function up() {
 		parent::up();
 
-		self::createApplication();
-
 		_elgg_services()->config->min_password_length = 3;
 		_elgg_services()->config->minusername = 4;
 		_elgg_services()->config->allow_registration = true;

@@ -22,6 +22,8 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 	protected $user;
 	
 	public function up() {
+		parent::up();
+		
 		$this->user = $this->createUser();
 		
 		_elgg_services()->session->setLoggedInUser($this->user);

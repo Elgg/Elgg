@@ -6,12 +6,10 @@
 // Get input data
 $guid = (int) get_input('guid');
 
-elgg_entity_gatekeeper($guid, 'object', 'thewire');
-
 // Make sure we actually have permission to edit
 $thewire = get_entity($guid);
-if (!$thewire->canDelete()) {
-	return elgg_error_response();
+if (!$thewire instanceof \ElggWire || !$thewire->canDelete()) {
+	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 
 // unset reply metadata on children
