@@ -194,4 +194,33 @@ class Preloader {
 		}
 		return $entities;
 	}
+	
+	/**
+	 * Hook handler for listings to determine if preloading is needed
+	 *
+	 * @param \Elgg\Hook $hook 'view_vars', 'page/components/list'
+	 *
+	 * @return void
+	 */
+	public static function preload(\Elgg\Hook $hook) {
+		$vars = $hook->getValue();
+		
+		$items = (array) elgg_extract('items', $vars, []);
+		if (!elgg_is_logged_in() || count($items) < 3) {
+			return;
+		}
+		
+		$preload = elgg_extract('preload_likes', $vars);
+		if (!isset($preload)) {
+			$list_class = elgg_extract('list_class', $vars);
+			$preload = !elgg_in_context('widgets') && in_array($list_class, ['elgg-list-river', 'elgg-list-entity', 'comments-list']);
+		}
+		
+		if (!$preload) {
+			return;
+		}
+		
+		$preloader = new self(\Elgg\Likes\DataService::instance());
+		$preloader->preloadForList($items);
+	}
 }

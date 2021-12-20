@@ -18,9 +18,6 @@ return [
 		'elgg.css' => [
 			'elgg/likes.css' => [],
 		],
-		'page/components/list' => [
-			'likes/before_lists' => ['priority' => 1],
-		],
 	],
 	'hooks' => [
 		'ajax_response' => [
@@ -46,6 +43,11 @@ return [
 		'register' => [
 			'menu:social' => [
 				'Elgg\Likes\Menus\Social::register' => [],
+			],
+		],
+		'view_vars' => [
+			'page/components/list' => [
+				'Elgg\Likes\Preloader::preload' => [],
 			],
 		],
 	],
