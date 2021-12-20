@@ -2,11 +2,12 @@
 /**
  * List comments with optional add form
  *
- * @uses $vars['entity']        ElggEntity
- * @uses $vars['show_add_form'] Display add form or not
- * @uses $vars['id']            Optional id for the div
- * @uses $vars['class']         Optional additional class for the div
- * @uses $vars['limit']         Optional limit value (default is 25)
+ * @uses $vars['entity']          ElggEntity
+ * @uses $vars['show_add_form']   Display add form or not (default true)
+ * @uses $vars['show_login_form'] Should the login form show for logged out users (defaults to show_add_form)
+ * @uses $vars['id']              Optional id for the div
+ * @uses $vars['class']           Optional additional class for the div
+ * @uses $vars['limit']           Optional limit value (default is 25)
  */
 
 use Elgg\Database\QueryBuilder;
@@ -63,6 +64,11 @@ if ($show_guid && $limit) {
 $comments_list = elgg_list_entities($options);
 
 $content = $comments_list;
+$form = '';
+
+$show_login_form = $comments_list ? $show_add_form : false;
+$show_login_form = elgg_extract('show_login_form', $vars, $show_login_form);
+
 if ($show_add_form && $entity->canComment()) {
 	$form_vars = [
 		'prevent_double_submit' => false,
@@ -86,11 +92,36 @@ if ($show_add_form && $entity->canComment()) {
 	}
 
 	$form = elgg_view_form('comment/save', $form_vars, $vars);
-	if ($latest_first) {
-		$content = $form . $content;
-	} else {
-		$content .= $form;
-	}
+} elseif (!elgg_is_logged_in() && $show_login_form) {
+	$login_form_contents = elgg_view_form('login', [], ['returntoreferer' => true]);
+	
+	$login_form = elgg_view('output/longtext', [
+		'value' => elgg_echo('generic_comment:login_required'),
+	]);
+	
+	$login_form .= elgg_view_module('dropdown', '', $login_form_contents, ['id' => 'comments-login']);
+
+	$menu = elgg_view('output/url', [
+		'href' => elgg_get_login_url([], '#comments-login'),
+		'rel' => 'popup',
+		'text' => elgg_echo('login'),
+		'class' => ['elgg-button', 'elgg-button-action'],
+		'data-position' => json_encode([
+			'my' => 'right top',
+			'at' => 'right bottom',
+		]),
+	]);
+	
+	$form = elgg_view_message('notice', $login_form, [
+		'menu' => $menu,
+		'class' => 'mtl',
+	]);
+}
+
+if ($latest_first) {
+	$content = $form . $content;
+} else {
+	$content .= $form;
 }
 
 if (empty($content)) {
