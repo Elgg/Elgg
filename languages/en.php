@@ -1574,6 +1574,7 @@ To go the the website, click here:
 	'generic_comments:post' => "Post comment",
 	'generic_comments:text' => "Comment",
 	'generic_comments:latest' => "Latest comments",
+	'generic_comment:login_required' => "Your need to be logged in to be able to comment.",
 	'generic_comment:posted' => "Your comment was successfully posted.",
 	'generic_comment:updated' => "The comment was successfully updated.",
 	'entity:delete:object:comment:success' => "The comment was successfully deleted.",

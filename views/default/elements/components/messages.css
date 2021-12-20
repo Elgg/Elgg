@@ -36,15 +36,24 @@
 		border-color: inherit;
 	
 		> .elgg-head {
+			display: flex;
+			align-items: center;
+			
 			background-color: rgba(255,255,255,0.7);
-			font-weight: bold;
+			
 			padding: 0.5rem 1rem;
 			border-bottom-width: 1px;
 			border-bottom-style: solid;
 			border-bottom-color: inherit;
 			
-			.elgg-message-icon {
+			> .elgg-message-icon,
+			> .elgg-message-title {
 				padding-right: 1rem;
+				font-weight: bold;
+			}
+
+			> .elgg-message-menu {
+				margin-left: auto;
 			}
 		}
 		

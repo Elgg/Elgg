@@ -46,6 +46,12 @@
 .elgg-module-comments {
 	margin-top: 1rem;
 }
+
+#comments-login {
+	width: auto;
+	max-width: 300px;
+	position: relative;
+}
 	
 #comments {
 	.elgg-form-comment-save {
