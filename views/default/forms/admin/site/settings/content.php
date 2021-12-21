@@ -83,4 +83,13 @@ $body .= elgg_view_field([
 	'step' => 1,
 ]);
 
+$body .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('config:content:comments_group_only'),
+	'name' => 'comments_group_only',
+	'checked' => (bool) elgg_get_config('comments_group_only'),
+	'switch' => true,
+	'value' => 1,
+]);
+
 echo elgg_view_module('info', elgg_echo('admin:legend:content'), $body);

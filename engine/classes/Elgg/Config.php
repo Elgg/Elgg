@@ -187,6 +187,7 @@ class Config {
 	protected $config_defaults = [
 		'batch_run_time_in_secs' => 4,
 		'comment_box_collapses' => true,
+		'comments_group_only' => true,
 		'comments_latest_first' => true,
 		'comments_per_page' => 25,
 		'db_query_cache_limit' => 50,

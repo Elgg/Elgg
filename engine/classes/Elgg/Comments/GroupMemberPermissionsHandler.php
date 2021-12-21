@@ -23,6 +23,10 @@ class GroupMemberPermissionsHandler {
 			return;
 		}
 		
+		if (!elgg_get_config('comments_group_only')) {
+			return;
+		}
+		
 		$entity = $hook->getEntityParam();
 		$user = $hook->getUserParam();
 		
