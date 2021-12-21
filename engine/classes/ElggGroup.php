@@ -183,20 +183,6 @@ class ElggGroup extends \ElggEntity {
 		unset($object->read_access);
 		return $object;
 	}
-
-	/**
-	 * Can a user comment on this group?
-	 *
-	 * @see \ElggEntity::canComment()
-	 *
-	 * @param int  $user_guid User guid (default is logged in user)
-	 * @param bool $default   Default permission
-	 * @return bool
-	 * @since 1.8.0
-	 */
-	public function canComment($user_guid = 0, $default = null) {
-		return false;
-	}
 	
 	/**
 	 * Checks if a tool option is enabled

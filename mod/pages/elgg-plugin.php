@@ -16,6 +16,7 @@ return [
 			'subtype' => 'page',
 			'class' => '\ElggPage',
 			'capabilities' => [
+				'commentable' => true,
 				'searchable' => true,
 				'likable' => true,
 			],

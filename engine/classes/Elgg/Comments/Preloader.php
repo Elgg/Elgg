@@ -45,6 +45,10 @@ class Preloader {
 	 * @return void
 	 */
 	protected function preloadCountsFromQuery(array $guids): void {
+		if (empty($guids)) {
+			return;
+		}
+		
 		$count_rows = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'comment',
@@ -75,7 +79,9 @@ class Preloader {
 
 		foreach ($items as $item) {
 			if ($item instanceof \ElggEntity) {
-				$guids[$item->guid] = true;
+				if ($item->hasCapability('commentable')) {
+					$guids[$item->guid] = true;
+				}
 			} elseif ($item instanceof \ElggRiverItem) {
 				$guids[$item->object_guid] = true;
 			}

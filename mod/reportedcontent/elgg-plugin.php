@@ -10,6 +10,9 @@ return [
 			'type' => 'object',
 			'subtype' => 'reported_content',
 			'class' => 'ElggReportedContent',
+			'capabilities' => [
+				'commentable' => false,
+			],
 		],
 	],
 	'actions' => [

@@ -375,20 +375,6 @@ class ElggUser extends \ElggEntity {
 	}
 
 	/**
-	 * Can a user comment on this user?
-	 *
-	 * @see \ElggEntity::canComment()
-	 *
-	 * @param int  $user_guid User guid (default is logged in user)
-	 * @param bool $default   Default permission
-	 * @return bool
-	 * @since 1.8.0
-	 */
-	public function canComment($user_guid = 0, $default = null) {
-		return false;
-	}
-
-	/**
 	 * Set the necessary metadata to store a hash of the user's password.
 	 *
 	 * @param string $password The password to be hashed

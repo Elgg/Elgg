@@ -23,6 +23,11 @@ return [
 			\Elgg\Views\AddAmdModuleNameHandler::class => [],
 		],
 	],
+	'container_logic_check' => [
+		'all' => [
+			\Elgg\Comments\ContainerLogicHandler::class => [],
+		],
+	],
 	'container_permissions_check' => [
 		'all' => [
 			\Elgg\Groups\MemberPermissionsHandler::class => [],

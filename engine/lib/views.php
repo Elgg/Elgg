@@ -940,6 +940,10 @@ function elgg_view_comments($entity, $add_comment = true, array $vars = []) {
 	if (!$entity instanceof \ElggEntity) {
 		return false;
 	}
+	
+	if (!$entity->hasCapability('commentable')) {
+		return false;
+	}
 
 	$vars['entity'] = $entity;
 	$vars['show_add_form'] = $add_comment;

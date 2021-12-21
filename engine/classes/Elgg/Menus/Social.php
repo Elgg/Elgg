@@ -25,6 +25,10 @@ class Social {
 			return;
 		}
 		
+		if (!$entity->hasCapability('commentable')) {
+			return;
+		}
+		
 		/* @var $return MenuItems */
 		$return = $hook->getValue();
 		

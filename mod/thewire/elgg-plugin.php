@@ -16,6 +16,7 @@ return [
 			'subtype' => 'thewire',
 			'class' => 'ElggWire',
 			'capabilities' => [
+				'commentable' => false,
 				'searchable' => true,
 				'likable' => true,
 			],

@@ -16,6 +16,7 @@ return [
 			'subtype' => 'bookmarks',
 			'class' => 'ElggBookmark',
 			'capabilities' => [
+				'commentable' => true,
 				'searchable' => true,
 				'likable' => true,
 			],

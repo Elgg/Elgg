@@ -27,6 +27,10 @@ if (!empty($item->annotation_id) || !$object instanceof ElggEntity || $object in
 	return;
 }
 
+if (!$object->hasCapability('commentable')) {
+	return;
+}
+
 $comment_count = $object->countComments();
 
 if ($comment_count) {

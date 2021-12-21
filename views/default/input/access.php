@@ -23,9 +23,6 @@ if (isset($vars['options_values'])) {
 	}
 }
 
-$entity_allows_comments = elgg_extract('entity_allows_comments', $vars, true);
-unset($vars['entity_allows_comments']);
-
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-access');
 
 // this will be passed to plugin hooks ['access:collections:write', 'user'] and ['default', 'access']
@@ -51,11 +48,6 @@ if ($entity) {
 	$params['entity_type'] = $entity->type;
 	$params['entity_subtype'] = $entity->getSubtype();
 	$params['container_guid'] = $entity->container_guid;
-
-	if ($entity_allows_comments && ($entity->access_id != ACCESS_PUBLIC)) {
-		$vars['data-comment-count'] = (int) $entity->countComments();
-		$vars['data-original-value'] = $entity->access_id;
-	}
 }
 
 $container = elgg_get_page_owner_entity();
