@@ -22,6 +22,8 @@ class UnsubscribeIntegrationTest extends ActionResponseTestCase {
 	 * {@inheritDoc}
 	 */
 	public function up() {
+		parent::up();
+		
 		_elgg_services()->notifications->registerMethod('apples');
 		_elgg_services()->notifications->registerMethod('bananas');
 		

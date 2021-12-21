@@ -13,6 +13,8 @@ use Elgg\Http\OkResponse;
 class AdminNoticesTest extends ActionResponseTestCase {
 
 	public function up() {
+		parent::up();
+		
 		_elgg_services()->session->setLoggedInUser($this->getAdmin());
 	}
 
