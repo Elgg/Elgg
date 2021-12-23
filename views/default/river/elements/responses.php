@@ -41,6 +41,7 @@ if ($comment_count) {
 		'limit' => 3,
 		'order_by' => [new OrderByClause('time_created', 'DESC')],
 		'distinct' => false,
+		'metadata_name_value_pairs' => ['level' => 1],
 	]);
 
 	// why is this reversing it? because we're asking for the 3 latest
@@ -52,6 +53,7 @@ if ($comment_count) {
 		'list_class' => 'elgg-river-comments',
 		'show_excerpt' => true,
 		'register_rss_link' => false,
+		'show_responses' => false,
 	]);
 	
 	if ($comment_count > count($comments)) {

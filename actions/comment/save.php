@@ -39,26 +39,36 @@ if ($comment_guid) {
 		return elgg_error_response(elgg_echo('actionunauthorized'));
 	}
 
-	$user = elgg_get_logged_in_user_entity();
-
 	$comment = new ElggComment();
 	$comment->description = $comment_text;
-	$comment->owner_guid = $user->getGUID();
-	$comment->container_guid = $entity->getGUID();
-	$comment->access_id = $entity->access_id;
 	
+	if ($entity instanceof \ElggComment) {
+		$comment->level = $entity->getLevel() + 1;
+		$comment->parent_guid = $entity->guid;
+		$comment->thread_guid = $entity->getThreadGUID();
+		
+		// make sure comment is contained in the content
+		$entity = $entity->getContainerEntity();
+	}
+
+	$comment->container_guid = $entity->guid;
+	$comment->access_id = $entity->access_id;
+		
 	if (!$comment->save()) {
 		return elgg_error_response(elgg_echo('generic_comment:failure'));
 	}
 
-	// Add to river
-	elgg_create_river_item([
-		'view' => 'river/object/comment/create',
-		'action_type' => 'comment',
-		'object_guid' => $comment->guid,
-		'target_guid' => $entity_guid,
-	]);
-
+	// only river for top level comments
+	if ($comment->getLevel() === 1) {
+		// Add to river
+		elgg_create_river_item([
+			'view' => 'river/object/comment/create',
+			'action_type' => 'comment',
+			'object_guid' => $comment->guid,
+			'target_guid' => $entity->guid,
+		]);
+	}
+	
 	$success_message = elgg_echo('generic_comment:posted');
 }
 

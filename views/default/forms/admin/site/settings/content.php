@@ -55,6 +55,20 @@ $body .= elgg_view_field([
 ]);
 
 $body .= elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('config:content:comments_max_depth'),
+	'#help' => elgg_echo('config:content:comments_max_depth:help'),
+	'name' => 'comments_max_depth',
+	'value' => elgg_get_config('comments_max_depth'),
+	'options_values' => [
+		0 => elgg_echo('config:content:comments_max_depth:none'),
+		2 => 2,
+		3 => 3,
+		4 => 4,
+	],
+]);
+
+$body .= elgg_view_field([
 	'#type' => 'checkbox',
 	'#label' => elgg_echo('config:content:comment_box_collapses'),
 	'#help' => elgg_echo('config:content:comment_box_collapses:help'),

@@ -28,9 +28,10 @@ class SystemEventHandlers {
 		// likable
 		elgg_entity_enable_capability('object', 'comment', 'likable');
 		
+		elgg_entity_enable_capability('object', 'comment', 'commentable');
+		
 		// commentable disabled for backwards compatibility. Can be removed in Elgg 5.0 if default behaviour for commentable has been changed
 		elgg_entity_disable_capability('object', 'admin_notice', 'commentable');
-		elgg_entity_disable_capability('object', 'comment', 'commentable');
 		elgg_entity_disable_capability('object', 'elgg_upgrade', 'commentable');
 		elgg_entity_disable_capability('object', 'plugin', 'commentable');
 		elgg_entity_disable_capability('object', 'widget', 'commentable');

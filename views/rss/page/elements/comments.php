@@ -24,4 +24,5 @@ echo elgg_list_entities([
 	'full_view' => true,
 	'limit' => $limit,
 	'distinct' => false,
+	'metadata_name_value_pairs' => ['level' => 1],
 ]);

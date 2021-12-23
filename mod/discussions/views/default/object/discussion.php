@@ -65,6 +65,7 @@ if ($full_view) {
 			'container_guid' => $entity->guid,
 			'limit' => 1,
 			'distinct' => false,
+			'metadata_name_value_pairs' => ['level' => 1],
 		]);
 		
 		/* @var ElggComment $last_comment */

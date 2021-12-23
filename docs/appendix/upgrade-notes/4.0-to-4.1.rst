@@ -17,6 +17,13 @@ A new way of registering entity capabilities has been introduced. The following 
  
 The config variable ``registered_entities`` is no longer available.
 
+The current implemented capabilities are 'commentable', 'likable' and 'searchable'.
+
+Threaded Comments
+-----------------
+
+Support for threaded comments has been added. This feature needs to be enable in the site settings. 
+To make this work changes have been made to comments related JavaScript and CSS. If you use specific styling or have custom features related to this feature you might need to give it some extra attention.
 
 Deprecated APIs
 ---------------

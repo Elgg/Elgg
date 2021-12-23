@@ -17,6 +17,7 @@ $options = [
 	'wheres' => [],
 	'preload_owners' => true,
 	'distinct' => false,
+	'metadata_name_value_pairs' => ['level' => 1],
 ];
 
 $owner_guid = elgg_extract('owner_guid', $vars);
