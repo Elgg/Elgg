@@ -5,17 +5,17 @@
 # 
 # Translators:
 # Jerôme Bakker, 2021
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
 # Jeroen Dalsem, 2021
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-25 13:55+0100\n"
+"POT-Creation-Date: 2021-12-03 13:26+0100\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
-"Last-Translator: Jeroen Dalsem, 2021\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -403,7 +403,7 @@ msgid ""
 "``httpd_sys_rw_content_t`` context"
 msgstr ""
 "Donnez le contexte ``httpd_sys_rw_content_t`` à la racine de votre projet, à"
-" votre répertoire de données, et à tous leurs enfants"
+" votre répertoire des données, et à tous leurs enfants"
 
 #: ../../intro/install.rst:47
 msgid ""
@@ -572,8 +572,8 @@ msgid ""
 msgstr ""
 "Les répertoires doivent pouvoir être lus et écrits. Les permissions "
 "suggérées dépendent de votre serveur et de la configuration des "
-"utilisateurs. Si le répertoire de données a pour propriétaire l'utilisateur "
-"du serveur web, les droits d'accès recommandés sont ``750``."
+"utilisateurs. Si le répertoire des données a pour propriétaire l'utilisateur"
+" du serveur web, les droits d'accès recommandés sont ``750``."
 
 #: ../../intro/install.rst:134
 msgid ""
@@ -581,8 +581,8 @@ msgid ""
 "not recommended. If you are unsure how to correctly set permissions, contact"
 " your host for more information."
 msgstr ""
-"Définir les droits de votre répertoire de données à ``777`` va fonctionner, "
-"mais c'est dangereux et ce n'est pas recommandé. Si vous hésitez sur la "
+"Définir les droits de votre répertoire des données à ``777`` va fonctionner,"
+" mais c'est dangereux et ce n'est pas recommandé. Si vous hésitez sur la "
 "bonne configuration à choisir pour les permissions, contactez votre "
 "hébergeur pour plus d'informations."
 
@@ -704,8 +704,8 @@ msgid ""
 "On Nginx server copy ``install/config/nginx.dist`` to ``/etc/nginx/sites-"
 "enabled`` and adjust it's contents"
 msgstr ""
-"Sur un serveur Nginx copiez ``install/config/nginx.dist`` vers ``/etc/nginx"
-"/sites-enabled`` et ajustez son contenu"
+"Sur un serveur Nginx copiez ``install/config/nginx.dist`` vers "
+"``/etc/nginx/sites-enabled`` et ajustez son contenu"
 
 #: ../../intro/install.rst:189
 msgid "Other Configurations"
@@ -1132,7 +1132,7 @@ msgstr ""
 #: ../../intro/install.rst:359
 msgid "I am having trouble setting my data path"
 msgstr ""
-"J'ai des difficultés pour définir le chemin vers le répertoire de données"
+"J'ai des difficultés pour définir le chemin vers le répertoire des données"
 
 #: ../../intro/install.rst:361
 msgid ""
@@ -1238,7 +1238,7 @@ msgstr "supprimez votre base de données Elgg"
 
 #: ../../intro/install.rst:404
 msgid "delete your data directory"
-msgstr "supprimez votre répertoire de données"
+msgstr "supprimez votre répertoire des données"
 
 #: ../../intro/install.rst:405
 msgid "delete the Elgg source files"
@@ -1342,8 +1342,8 @@ msgid ""
 "Put in the data directory path. Should be something like ``/var/..../app-"
 "root/data/elgg-data/``."
 msgstr ""
-"Indiquez le chemin du répertoire de données. Cela devrait être quelque chose"
-" comme ``/var/..../app-root/data/elgg-data/``."
+"Indiquez le chemin du répertoire des données. Cela devrait être quelque "
+"chose comme ``/var/..../app-root/data/elgg-data/``."
 
 #: ../../intro/install/cloud9.rst:54
 msgid "Click \"Next\""
@@ -1793,7 +1793,7 @@ msgstr ""
 #: ../../intro/install/xampp.rst:30
 msgid "Create the Elgg data folder as ``C:\\xampp\\htdocs\\sites\\data``"
 msgstr ""
-"Créez le répertoire de données de Elgg sous "
+"Créez le répertoire des données de Elgg tel que "
 "``C:\\xampp\\htdocs\\sites\\data``"
 
 #: ../../intro/install/xampp.rst:31

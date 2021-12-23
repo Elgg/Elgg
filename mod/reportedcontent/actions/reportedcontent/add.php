@@ -13,7 +13,7 @@ if (!$title || !$address) {
 $report = new \ElggReportedContent();
 $report->owner_guid = elgg_get_logged_in_user_guid();
 $report->title = $title;
-$report->address = $address;
+$report->address = elgg_normalize_site_url($address);
 $report->description = $description;
 
 if (!$report->save()) {
