@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1206f5b353373923075bd42b353c3bb7",
+    "content-hash": "142cbb56d15181236c8b06ef7045a5cd",
     "packages": [
         {
             "name": "cakephp/core",
@@ -3863,7 +3863,7 @@
                 "drupal/drupal": ">=7,<7.80|>=8,<8.9.16|>=9,<9.1.12|>=9.2,<9.2.4",
                 "dweeves/magmi": "<=0.7.24",
                 "ecodev/newsletter": "<=4",
-                "elgg/elgg": "<3.3.22",
+                "elgg/elgg": "<3.3.23|>=4,<4.0.5",
                 "endroid/qr-code-bundle": "<3.4.2",
                 "enshrined/svg-sanitize": "<0.13.1",
                 "erusev/parsedown": "<1.7.2",
@@ -4005,11 +4005,12 @@
                 "phpoffice/phpexcel": "<1.8.2",
                 "phpoffice/phpspreadsheet": "<1.16",
                 "phpseclib/phpseclib": "<2.0.31|>=3,<3.0.7",
+                "phpservermon/phpservermon": "<=3.5.2",
                 "phpunit/phpunit": ">=4.8.19,<4.8.28|>=5.0.10,<5.6.3",
                 "phpwhois/phpwhois": "<=4.2.5",
                 "phpxmlrpc/extras": "<0.6.1",
-                "pimcore/pimcore": "<10.1.3",
-                "pocketmine/pocketmine-mp": "<3.15.4",
+                "pimcore/pimcore": "<10.2.6",
+                "pocketmine/pocketmine-mp": "<4.0.3",
                 "pressbooks/pressbooks": "<5.18",
                 "prestashop/autoupgrade": ">=4,<4.10.1",
                 "prestashop/contactform": ">1.0.1,<4.3",
@@ -4026,7 +4027,7 @@
                 "pusher/pusher-php-server": "<2.2.1",
                 "pwweb/laravel-core": "<=0.3.6-beta",
                 "rainlab/debugbar-plugin": "<3.1",
-                "remdex/livehelperchat": "<=2",
+                "remdex/livehelperchat": "<=3.90",
                 "rmccue/requests": ">=1.6,<1.8",
                 "robrichards/xmlseclibs": "<3.0.4",
                 "sabberworm/php-css-parser": ">=1,<1.0.1|>=2,<2.0.1|>=3,<3.0.1|>=4,<4.0.1|>=5,<5.0.9|>=5.1,<5.1.3|>=5.2,<5.2.1|>=6,<6.0.2|>=7,<7.0.4|>=8,<8.0.1|>=8.1,<8.1.1|>=8.2,<8.2.1|>=8.3,<8.3.1",
@@ -4038,8 +4039,8 @@
                 "shopware/platform": "<=6.4.6",
                 "shopware/production": "<=6.3.5.2",
                 "shopware/shopware": "<5.7.6",
-                "showdoc/showdoc": "<2.9.13",
-                "silverstripe/admin": "<4.8.1",
+                "showdoc/showdoc": "<=2.9.13",
+                "silverstripe/admin": ">=1,<1.8.1",
                 "silverstripe/assets": ">=1,<1.4.7|>=1.5,<1.5.2",
                 "silverstripe/cms": "<4.3.6|>=4.4,<4.4.4",
                 "silverstripe/comments": ">=1.3,<1.9.99|>=2,<2.9.99|>=3,<3.1.1",
@@ -4058,12 +4059,12 @@
                 "simplito/elliptic-php": "<1.0.6",
                 "slim/slim": "<2.6",
                 "smarty/smarty": "<3.1.39",
-                "snipe/snipe-it": "<=5.3.3",
+                "snipe/snipe-it": "<5.3.5",
                 "socalnick/scn-social-auth": "<1.15.2",
                 "socialiteproviders/steam": "<1.1",
                 "spoonity/tcpdf": "<6.2.22",
                 "squizlabs/php_codesniffer": ">=1,<2.8.1|>=3,<3.0.1",
-                "ssddanbrown/bookstack": "<21.11.2",
+                "ssddanbrown/bookstack": "<21.11.3",
                 "stormpath/sdk": ">=0,<9.9.99",
                 "studio-42/elfinder": "<2.1.59",
                 "subrion/cms": "<=4.2.1",
@@ -4142,6 +4143,7 @@
                 "wikimedia/parsoid": "<0.12.2",
                 "willdurand/js-translation-bundle": "<2.1.1",
                 "wp-cli/wp-cli": "<2.5",
+                "yetiforce/yetiforce-crm": "<=6.3",
                 "yidashi/yii2cmf": "<=2",
                 "yii2mod/yii2-cms": "<1.9.2",
                 "yiisoft/yii": ">=1.1.14,<1.1.15",
@@ -6058,9 +6060,6 @@
             },
             "require": {
                 "php": "^7.1 || ^8.0"
-            },
-            "replace": {
-                "myclabs/deep-copy": "self.version"
             },
             "require-dev": {
                 "doctrine/collections": "^1.0",
@@ -8005,5 +8004,5 @@
     "platform-overrides": {
         "php": "7.4"
     },
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.2.0"
 }

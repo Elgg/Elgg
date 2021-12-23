@@ -1,3 +1,10 @@
+<a name="4.0.6"></a>
+### 4.0.6  (2021-12-23)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+
 <a name="4.0.5"></a>
 ### 4.0.5  (2021-12-03)
 
@@ -395,6 +402,18 @@ fixes #12684 ([13070985](https://github.com/Elgg/Elgg/commit/13070985e840a78fc8b
 * **upgrades:** removed obsolete upgrades ([1f0c968c](https://github.com/Elgg/Elgg/commit/1f0c968cb69f5aa63b06831ff35f90a6c227f346))
 * **users:** replaced validation methods with service functions ([821ccd95](https://github.com/Elgg/Elgg/commit/821ccd95e10c8e45b96f11de8dad88d1f6bbc23f))
 * **views:** removed elgg_prepend_css_urls is no longer available ([53cb8819](https://github.com/Elgg/Elgg/commit/53cb881983b1aae39b9966e9d74de807a808f0b9))
+
+
+<a name="3.3.24"></a>
+### 3.3.24  (2021-12-23)
+
+#### Contributors
+
+* Jerôme Bakker (1)
+
+#### Bug Fixes
+
+* **reported_content:** sanitize report URLs ([c30b17bf](https://github.com/Elgg/Elgg/commit/c30b17bf75256ed3fcc84e2083147cc3951423d0))
 
 
 <a name="3.3.23"></a>
