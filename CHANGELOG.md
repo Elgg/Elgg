@@ -1,3 +1,15 @@
+<a name="3.3.24"></a>
+### 3.3.24  (2021-12-23)
+
+#### Contributors
+
+* Jerôme Bakker (1)
+
+#### Bug Fixes
+
+* **reported_content:** sanitize report URLs ([c30b17bf](https://github.com/Elgg/Elgg/commit/c30b17bf75256ed3fcc84e2083147cc3951423d0))
+
+
 <a name="3.3.23"></a>
 ### 3.3.23  (2021-12-03)
 
