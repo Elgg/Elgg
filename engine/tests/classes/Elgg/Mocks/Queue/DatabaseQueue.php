@@ -1,20 +1,16 @@
 <?php
-namespace Elgg\Notifications;
+
+namespace Elgg\Mocks\Queue;
 
 /**
  * Database queue mock for testing event object serialization
  */
-class DatabaseQueueMock implements \Elgg\Queue\Queue {
-
-	/* @var array */
-	protected $queue = array();
+class DatabaseQueue implements \Elgg\Queue\Queue {
 
 	/**
-	 * Create a queue
+	 * @var array
 	 */
-	public function __construct() {
-		$this->queue = array();
-	}
+	protected $queue = [];
 
 	/**
 	 * {@inheritdoc}
@@ -37,7 +33,7 @@ class DatabaseQueueMock implements \Elgg\Queue\Queue {
 	 * {@inheritdoc}
 	 */
 	public function clear() {
-		$this->queue = array();
+		$this->queue = [];
 	}
 
 	/**
@@ -47,4 +43,3 @@ class DatabaseQueueMock implements \Elgg\Queue\Queue {
 		return count($this->queue);
 	}
 }
-

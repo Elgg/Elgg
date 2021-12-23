@@ -2,9 +2,9 @@
 
 namespace Elgg\I18n;
 
-use Elgg\IntegratedUnitTestCase;
+use Elgg\UnitTestCase;
 
-class TranslationLoadingUnitTestCase extends IntegratedUnitTestCase {
+class TranslationLoadingUnitTest extends UnitTestCase {
 
 	/**
 	 * Provides registered languages
@@ -76,9 +76,9 @@ class TranslationLoadingUnitTestCase extends IntegratedUnitTestCase {
 		}
 
 		if (empty($translations[$language])) {
-			$this->assertTrue($completeness == 0);
+			$this->assertEmpty($completeness);
 		} else {
-			$this->assertTrue($completeness > 0);
+			$this->assertGreaterThan(0, $completeness);
 		}
 	}
 }

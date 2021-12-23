@@ -2,7 +2,7 @@
 
 namespace Elgg\Navigation;
 
-use Elgg\IntegratedUnitTestCase;
+use Elgg\IntegrationTestCase;
 
 /**
  * The purpose of these tests is to catch validation problems
@@ -10,15 +10,13 @@ use Elgg\IntegratedUnitTestCase;
  *
  * @group Navigation
  */
-class MenuRenderingTest extends IntegratedUnitTestCase {
+class MenuRenderingIntegrationTest extends IntegrationTestCase {
 
 	public function up() {
 		$this->user = $this->createUser();
 		elgg_set_page_owner_guid($this->user->guid);
 		$this->object = $this->createObject();
 		$this->group = $this->createGroup();
-
-		elgg_trigger_event('init', 'system');
 	}
 
 	public function entityMenuNamesProvider() {
