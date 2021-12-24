@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-23 13:47+0100\n"
+"POT-Creation-Date: 2021-12-24 13:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,95 +113,95 @@ msgstr ""
 msgid "The ``/mod/my_blog/elgg-plugin.php`` file is used to declare various functionalities of the plugin. It can, for example, be used to configure entities, actions, widgets and routes."
 msgstr ""
 
-#: ../../tutorials/blog.rst:211
+#: ../../tutorials/blog.rst:213
 msgid "Registering the save action will make it available as ``/action/my_blog/save``. By default, all actions are available only to logged in users. If you want to make an action available to only admins or open it up to unauthenticated users, you can pass ``['access' => 'admin']`` or ``['access' => 'public']`` when registering the action."
 msgstr ""
 
-#: ../../tutorials/blog.rst:219
+#: ../../tutorials/blog.rst:221
 msgid "Create a page for viewing a blog post"
 msgstr ""
 
-#: ../../tutorials/blog.rst:221
+#: ../../tutorials/blog.rst:223
 msgid "To be able to view a my_blog post on its own page, you need to make a view page. Create the file ``/mod/my_blog/views/default/resources/my_blog/view.php``:"
 msgstr ""
 
-#: ../../tutorials/blog.rst:239
+#: ../../tutorials/blog.rst:241
 msgid "This page has much in common with the ``add.php`` page. The biggest differences are that some information is extracted from the my_blog entity, and instead of viewing a form, the function ``elgg_view_entity`` is called. This function gives the information of the entity to something called the object view."
 msgstr ""
 
-#: ../../tutorials/blog.rst:245
+#: ../../tutorials/blog.rst:247
 msgid "Create the object view"
 msgstr ""
 
-#: ../../tutorials/blog.rst:247
+#: ../../tutorials/blog.rst:249
 msgid "When ``elgg_view_entity`` is called or when my_blogs are viewed in a list for example, the object view will generate the appropriate content. Create the file ``/mod/my_blog/views/default/object/my_blog.php``:"
 msgstr ""
 
-#: ../../tutorials/blog.rst:258
+#: ../../tutorials/blog.rst:260
 msgid "As you can see in the previous section, each my\\_blog post is passed to the object view as ``$vars['entity']``. (``$vars`` is an array used in the views system to pass variables to a view.)"
 msgstr ""
 
-#: ../../tutorials/blog.rst:262
+#: ../../tutorials/blog.rst:264
 msgid "The last line takes the tags on the my\\_blog post and automatically displays them as a series of clickable links. Search is handled automatically."
 msgstr ""
 
-#: ../../tutorials/blog.rst:266
+#: ../../tutorials/blog.rst:268
 msgid "(If you're wondering about the \"``default``\" in ``/views/default/``, you can create alternative views. RSS, OpenDD, FOAF, mobile and others are all valid view types.)"
 msgstr ""
 
-#: ../../tutorials/blog.rst:271
+#: ../../tutorials/blog.rst:273
 msgid "Trying it out"
 msgstr ""
 
-#: ../../tutorials/blog.rst:273
+#: ../../tutorials/blog.rst:275
 msgid "Go to your Elgg site's administration page, list the plugins and activate the ``my_blog`` plugin."
 msgstr ""
 
-#: ../../tutorials/blog.rst:276
+#: ../../tutorials/blog.rst:278
 msgid "The page to create a new my\\_blog post should now be accessible at ``https://elgg.example.com/my_blog/add``, and after successfully saving the post, you should see it viewed on its own page."
 msgstr ""
 
-#: ../../tutorials/blog.rst:281
+#: ../../tutorials/blog.rst:283
 msgid "Displaying a list of blog posts"
 msgstr ""
 
-#: ../../tutorials/blog.rst:283
+#: ../../tutorials/blog.rst:285
 msgid "Let's also create a page that lists my\\_blog entries that have been created."
 msgstr ""
 
-#: ../../tutorials/blog.rst:285
+#: ../../tutorials/blog.rst:287
 msgid "Create ``/mod/my_blog/views/default/resources/my_blog/all.php``:"
 msgstr ""
 
-#: ../../tutorials/blog.rst:303
+#: ../../tutorials/blog.rst:305
 msgid "The ``elgg_list_entities`` function grabs the latest my_blog posts and passes them to the object view file. Note that this function returns only the posts that the user can see, so access restrictions are handled transparently. The function (and its cousins) also transparently handles pagination and even creates an RSS feed for your my\\_blogs if you have defined that view."
 msgstr ""
 
-#: ../../tutorials/blog.rst:311
+#: ../../tutorials/blog.rst:313
 msgid "The list function can also limit the my_blog posts to those of a specified user. For example, the function ``elgg_get_logged_in_user_guid`` grabs the Global Unique IDentifier (GUID) of the logged in user, and by giving that to ``elgg_list_entities``, the list only displays the posts of the current user:"
 msgstr ""
 
-#: ../../tutorials/blog.rst:324
+#: ../../tutorials/blog.rst:326
 msgid "Next, you will need to register your route to return the new page when the URL is set to ``/my_blog/all``. Configure the ``routes`` section in ``elgg-plugin.php`` to contain the following:"
 msgstr ""
 
-#: ../../tutorials/blog.rst:337
+#: ../../tutorials/blog.rst:339
 msgid "Now, if the URL contains ``/my_blog/all``, the user will see an \"All Site My_Blogs\" page."
 msgstr ""
 
-#: ../../tutorials/blog.rst:339
+#: ../../tutorials/blog.rst:341
 msgid "You might also want to update the object view to handle different kinds of viewing, because otherwise the list of all my_blogs will also show the full content of all my_blogs. Change ``/mod/my_blog/views/default/object/my_blog.php`` to look like this:"
 msgstr ""
 
-#: ../../tutorials/blog.rst:365
+#: ../../tutorials/blog.rst:367
 msgid "Now, if ``full_view`` is ``true`` (as it was pre-emptively set to be in :ref:`this section <tutorials/blog#view>`), the object view will show the post's content and tags (the title is shown by ``view.php``). Otherwise the object view will render just the title and tags of the post."
 msgstr ""
 
-#: ../../tutorials/blog.rst:372
+#: ../../tutorials/blog.rst:374
 msgid "The end"
 msgstr ""
 
-#: ../../tutorials/blog.rst:374
+#: ../../tutorials/blog.rst:376
 msgid "There's much more that could be done, but hopefully this gives you a good idea of how to get started."
 msgstr ""
 

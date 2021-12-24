@@ -346,6 +346,7 @@ return array(
 	
 	'notifications:subscriptions:record:settings' => 'Toon detail selectie',
 	'notifications:subscriptions:no_results' => 'Nog geen abonnementen beschikbaar',
+	'notifications:subscriptions:details:no_results' => 'Er zijn geen gedetailleerde abonnementen om te configureren',
 	'notifications:subscriptions:details:reset' => 'Selectie ongedaan maken',
 
 	'notifications:mute:title' => "Notificaties uitzetten",
@@ -562,6 +563,9 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:settings:i18n' => 'Internationalisatie',
 	'admin:settings:advanced' => 'Geavanceerde instellingen',
 	'admin:settings:users' => 'Gebruikers',
+	'admin:site_icons' => "Site iconen",
+	'admin:site_icons:site_icon' => "Site Icoon",
+	'admin:site_icons:info' => "Upload een icoon gerelateerd aan je website. Dit icoon zal worden gebruikt als favicon en als de site wordt weergegeven, bijvoorbeeld als afzender van site notificaties.",
 	'admin:site_settings' => "Instellingen",
 	'admin:site:description' => "Via dit beheerpaneel kun je de algemene instellingen van de site beheren. Kies een optie om te beginnen.",
 	'admin:site:opt:linktext' => "Configureer site",
@@ -760,6 +764,11 @@ Om het profiel van de oud beheerder te bekijken, klik hier:
 
 Om naar de website te gaan, klik hier:
 %s',
+	'user:notification:validate:subject' => 'Je account op %s is klaar voor gebruik',
+	'user:notification:validate:body' => 'Je account op %s is gevalideerd. Je kunt er vanaf nu gebruik van maken.
+
+Om naar de website te gaan, klik hier:
+%s',
 	'user:notification:ban:subject' => 'Je account op %s is geblokkeerd',
 	'user:notification:ban:body' => 'Je account op %s is geblokkeerd.
 
@@ -880,6 +889,7 @@ Bekijk hier de volledige lijst van gebruikers:
 	'admin:server:label:log_location' => 'Locatie van log',
 	'admin:server:label:php_version' => 'PHP-versie',
 	'admin:server:label:php_version:required' => 'Elgg vereist een minimale PHP versie van 7.1',
+	'admin:server:label:php_version:required_version' => 'Elgg vereist minimaal PHP versie %s',
 	'admin:server:label:php_ini' => 'Locatie van PHP-.inibestand',
 	'admin:server:label:php_log' => 'PHP-log',
 	'admin:server:label:mem_avail' => 'Geheugen beschikbaar',
@@ -908,8 +918,12 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	
 	'admin:server:requirements:database:server' => "Database server",
 	'admin:server:requirements:database:server:required' => "Elgg vereist MySQL v5.5.3 of hoger voor de database",
+	'admin:server:requirements:database:server:required_version' => "Elgg vereist MySQL versie %s of hoger voor zijn database",
 	'admin:server:requirements:database:client' => "Database client",
 	'admin:server:requirements:database:client:required' => "Elgg vereist pdo_mysql om verbinding met de database server te maken",
+
+	'admin:server:requirements:gc' => "Verouderde sessies opschonen",
+	'admin:server:requirements:gc:info' => "Indien het opschonen van sessies niet is geconfigureerd kan de database tabel voor de sessie vol raken. Configureer session.gc_divisor en session.gc_probability in je php.ini.",
 	
 	'admin:user:label:search' => "Gebruikers zoeken:",
 	'admin:user:label:searchbutton' => "Zoek",
@@ -1215,6 +1229,7 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'deleteconfirm:plural' => "Weet je zeker dat je deze items wilt verwijderen?",
 	'fileexists' => "Er is reeds een bestand geüpload. Om het te vervangen selecteer hieronder een nieuw bestand",
 	'input:file:upload_limit' => 'De maximale bestandsgrootte is %s',
+	'input:container_guid:info' => 'Deze content zal worden geplaatst in %s',
 
 /**
  * User add
@@ -1389,6 +1404,10 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	
 	'config:i18n:allowed_languages' => "Toegestane talen",
 	'config:i18n:allowed_languages:help' => "Enkel toegestane talen kunnen gebruikt worden door de gebruikers. Engels en de taal van de site zijn altijd toegestaan.",
+	'config:i18n:who_can_change_language' => "Wie kan de taal aanpassen",
+	'config:i18n:who_can_change_language:everyone' => "Iedereen",
+	'config:i18n:who_can_change_language:admin_only' => "Alleen site beheerders",
+	'config:i18n:who_can_change_language:nobody' => "Niemand",
 	
 	'config:users:can_change_username' => "Sta gebruikers toe om hun gebruikersnaam te wijzigen",
 	'config:users:can_change_username:help' => "Indien het niet is toegestaan kan alleen een beheerder de gebruikersnaam van een gebruiker wijzigen",
@@ -1400,6 +1419,7 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'config:friendly_time_number_of_days:help' => "Je kunt het aantal dagen configureren dat de relatieve tijdsweergave gebruikt wordt. Na het opgegeven aantal dagen zal de relatieve tijdsweergave wijzigen in een normaal datum formaat. Indien dit wordt ingesteld op 0 zal de relatieve tijdsweergave niet gebruikt worden.",
 	'config:content:comment_box_collapses' => "Het reactieformulier klapt in na de eerste reactie op content",
 	'config:content:comment_box_collapses:help' => "Dit is enkel van toepassing indien de reactie lijst gesorteerd is op meest recente eerst",
+	'config:content:comments_group_only' => "Alleen groepsleden kunnen reageren op content in de groep",
 	'config:content:comments_latest_first' => "De reacties moeten worden getoond met de meest recente eerst",
 	'config:content:comments_latest_first:help' => "Dit bepaald de standaard sortering van de reacties bij de volledige weergave van content. Indien dit uitgeschakeld wordt, zal ook het reactie formulier onderaan de lijst worden getoond.",
 	'config:content:comments_per_page' => "Het aantal reacties per pagina",
@@ -1552,6 +1572,7 @@ Klik hier om naar de website te gaan:
 	'generic_comments:post' => "Plaats reactie",
 	'generic_comments:text' => "Reactie",
 	'generic_comments:latest' => "Laatste reacties",
+	'generic_comment:login_required' => "Je moet zijn aangemeld om een reactie achter te laten.",
 	'generic_comment:posted' => "Je reactie is succesvol geplaatst.",
 	'generic_comment:updated' => "De reactie is gewijzigd",
 	'entity:delete:object:comment:success' => "De reactie is succesvol verwijderd",
@@ -1561,6 +1582,7 @@ Klik hier om naar de website te gaan:
 	'generic_comment:none' => 'Geen reacties',
 	'generic_comment:title' => 'Reactie door %s',
 	'generic_comment:on' => '%s op %s',
+	'generic_comment:by_owner' => 'Reactie door de eigenaar',
 	'generic_comments:latest:posted' => 'plaatste een',
 
 	'generic_comment:notification:subject' => 'Re: %s',

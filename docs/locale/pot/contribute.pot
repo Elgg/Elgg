@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-23 13:47+0100\n"
+"POT-Creation-Date: 2021-12-24 13:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -422,7 +422,7 @@ msgid "Ideally your tests would construct your own isolated object graphs for di
 msgstr ""
 
 #: ../../contribute/code.rst:238
-msgid "If your test relies on Elgg's Service Provider (``_elgg_services()`` returns a ``Elgg\\Di\\ServiceProvider``), realize that it maintains a singleton instance for most services it hands out, and many services keep their own local references to these services as well."
+msgid "If your test relies on Elgg's Internal Services (``_elgg_services()`` returns a ``Elgg\\Di\\InternalContainer``), realize that it maintains a singleton instance for most services it hands out, and many services keep their own local references to these services as well."
 msgstr ""
 
 #: ../../contribute/code.rst:240
@@ -2085,102 +2085,86 @@ msgid "To add a new service object to Elgg:"
 msgstr ""
 
 #: ../../contribute/services.rst:8
-msgid "Annotate your class as ``@internal``."
+msgid "Annotate your class as ``@internal`` if it is an internal service."
 msgstr ""
 
 #: ../../contribute/services.rst:9
-msgid "Open the class ``Elgg\\Di\\ServiceProvider``."
+msgid "Open the class ``Elgg\\Di\\InternalContainer`` and/or ``Elgg\\Di\\PublicContainer``."
 msgstr ""
 
 #: ../../contribute/services.rst:10
-msgid "Add a ``@property-read`` annotation for your service at the top. This allows IDEs and static code analyzers to understand the type of the property."
+msgid "Add a ``@property-read`` annotation for your service at the top. This allows IDEs and static code analyzers to understand the type of the property when using ``_elgg_services()`` or ``elgg()``."
 msgstr ""
 
 #: ../../contribute/services.rst:12
-msgid "To the constructor, add code to tell the service provider what to return. See the class ``Elgg\\Di\\DiContainer`` for more information on how Elgg's DI container works."
+msgid "Register your service in ``engine\\internal_services.php`` or ``engine\\public_services.php`` using autowiring or with a factory."
 msgstr ""
 
 #: ../../contribute/services.rst:15
-msgid "At this point your service will be available from the service provider object, but will not yet be accessible to plugins."
-msgstr ""
-
-#: ../../contribute/services.rst:18
 msgid "Inject your dependencies"
 msgstr ""
 
-#: ../../contribute/services.rst:20
-msgid "Design your class constructor to *ask for* the necessary dependencies rather than creating them or using ``_elgg_services()``. The service provider's ``setFactory()`` method provides access to the service provider instance in your factory method."
+#: ../../contribute/services.rst:17
+msgid "Elgg uses PHP-DI for registering and resolving services. Dependencies can be autowired (based on the typehinted constructor argument services can be injected) or a service can be constructed in a factory."
 msgstr ""
 
-#: ../../contribute/services.rst:24
-msgid "Here's an example of a ``foo`` service factory, injecting the ``config`` and ``db`` services into the constructor:"
+#: ../../contribute/services.rst:22
+msgid "For more information about PHP-DI visit their `website`."
 msgstr ""
 
-#: ../../contribute/services.rst:34
-msgid "The full list of internal services can be seen in the ``@property-read`` declarations at the top of ``Elgg\\Di\\ServiceProvider``."
-msgstr ""
-
-#: ../../contribute/services.rst:39
-msgid "Avoid performing work in your service constructor, particularly if it requires database queries. Currently PHPUnit tests cannot perform them."
-msgstr ""
-
-#: ../../contribute/services.rst:44
+#: ../../contribute/services.rst:28
 msgid "Making a service part of the public API"
 msgstr ""
 
-#: ../../contribute/services.rst:46
+#: ../../contribute/services.rst:30
 msgid "If your service is meant for use by plugin developers:"
 msgstr ""
 
-#: ../../contribute/services.rst:48
+#: ../../contribute/services.rst:32
 msgid "Make an interface ``Elgg\\Services\\<Name>`` that contains only those methods needed in the public API."
 msgstr ""
 
-#: ../../contribute/services.rst:49
+#: ../../contribute/services.rst:33
 msgid "Have your service class implement that interface."
 msgstr ""
 
-#: ../../contribute/services.rst:50
+#: ../../contribute/services.rst:34
 msgid "For methods that are in the interface, move the documentation to the interface. You can simply use ``{@inheritdoc}`` in the PHPDocs of the concrete class methods."
 msgstr ""
 
-#: ../../contribute/services.rst:52
+#: ../../contribute/services.rst:36
 msgid "Document your service in ``docs/guides/services.rst`` (this file)."
 msgstr ""
 
-#: ../../contribute/services.rst:53
+#: ../../contribute/services.rst:37
 msgid "Open the PHPUnit test ``Elgg\\ApplicationTest`` and add your service key to the ``$names`` array in ``testServices()``."
 msgstr ""
 
-#: ../../contribute/services.rst:55
+#: ../../contribute/services.rst:39
 msgid "Open the class ``Elgg\\Application``."
 msgstr ""
 
-#: ../../contribute/services.rst:56
+#: ../../contribute/services.rst:40
 msgid "Add ``@property-read`` declaration to document your service, but use your **interface** as the type, *not* your service class name."
 msgstr ""
 
-#: ../../contribute/services.rst:58
-msgid "Add your service key to the array in the ``$public_services`` property, e.g. ``'foo' => true,``"
-msgstr ""
-
-#: ../../contribute/services.rst:60
+#: ../../contribute/services.rst:43
 msgid "Now your service will be available via property access on the ``Elgg\\Application`` instance:"
 msgstr ""
 
-#: ../../contribute/services.rst:69
+#: ../../contribute/services.rst:52
 msgid "For examples, see the ``config`` service, including the interface ``Elgg\\Services\\Config`` and the concrete implementation ``Elgg\\Config``."
 msgstr ""
 
-#: ../../contribute/services.rst:73
+#: ../../contribute/services.rst:56
 msgid "Service Life Cycle and Factories"
 msgstr ""
 
-#: ../../contribute/services.rst:75
+#: ../../contribute/services.rst:58
 msgid "By default, services registered on the service provider are \"shared\", meaning the service provider will store the created instance for the rest of the request, and serve that same instance to all who request the property."
 msgstr ""
 
-#: ../../contribute/services.rst:79
+#: ../../contribute/services.rst:62
 msgid "If you need developers to be able to construct objects that are pre-wired to Elgg services, you may need to add a public factory method to ``Elgg\\Application``. Here's an example that returns a new instance using internal Elgg services:"
 msgstr ""
 
@@ -2220,126 +2204,150 @@ msgstr ""
 msgid "Since we have a ``phpunit.xml`` configuration at the root of Elgg, testing should be as easy as:"
 msgstr ""
 
-#: ../../contribute/tests.rst:35
-msgid "Plugin tests"
+#: ../../contribute/tests.rst:34
+msgid "If you write a unit test you can extend the ``\\Elgg\\UnitTestCase`` class or if you write a integration test you can extend the ``\\Elgg\\IntegrationTestCase`` class. These classes have some helper functions when writing tests. The following functions are often used:"
 msgstr ""
 
 #: ../../contribute/tests.rst:37
+msgid "``up()`` - used to prepare every test that is executed in the test case"
+msgstr ""
+
+#: ../../contribute/tests.rst:38
+msgid "``down()`` - executed after every test that is executed in the test case. Mostly used to cleanup / restore."
+msgstr ""
+
+#: ../../contribute/tests.rst:39
+msgid "``createUser()`` - creates an ``ElggUser`` entity to be used in your test"
+msgstr ""
+
+#: ../../contribute/tests.rst:40
+msgid "``createGroup()`` - creates an ``ElggGroup`` entity to be used in your test"
+msgstr ""
+
+#: ../../contribute/tests.rst:41
+msgid "``createObject()`` - creates an ``ElggObject`` entity to be used in your test"
+msgstr ""
+
+#: ../../contribute/tests.rst:44
+msgid "Plugin tests"
+msgstr ""
+
+#: ../../contribute/tests.rst:46
 msgid "Ideally plugins are configured in such a way that they can be unit-tested much like Elgg core. Plugin developers are free to implement their own methods for unit testing, but we encourage everyone to make it as easy as Elgg core:"
 msgstr ""
 
-#: ../../contribute/tests.rst:47
+#: ../../contribute/tests.rst:56
 msgid "End-to-end tests"
 msgstr ""
 
-#: ../../contribute/tests.rst:49
+#: ../../contribute/tests.rst:58
 msgid "Since Elgg plugins have so much power to override, filter, and modify Elgg's and other plugins' behavior, it's important to be able to run end-to-end tests on a staging server with your final configuration before deploying to production."
 msgstr ""
 
-#: ../../contribute/tests.rst:54
+#: ../../contribute/tests.rst:63
 msgid "ToDo: Make it easy to run all Elgg integration and acceptance tests from the admin area given the current plugin configuration. (without worrying about database corruption!)"
 msgstr ""
 
-#: ../../contribute/tests.rst:58
+#: ../../contribute/tests.rst:67
 msgid "Motivation"
 msgstr ""
 
-#: ../../contribute/tests.rst:63
+#: ../../contribute/tests.rst:72
 msgid "Briefly, the wins we expect from testing are:"
 msgstr ""
 
-#: ../../contribute/tests.rst:61
+#: ../../contribute/tests.rst:70
 msgid "Increased confidence in the system."
 msgstr ""
 
-#: ../../contribute/tests.rst:62
+#: ../../contribute/tests.rst:71
 msgid "More freedom to refactor."
 msgstr ""
 
-#: ../../contribute/tests.rst:63
+#: ../../contribute/tests.rst:72
 msgid "Built-in, up-to-date documentation."
 msgstr ""
 
-#: ../../contribute/tests.rst:65
+#: ../../contribute/tests.rst:74
 msgid "We love community contributions, but in order to maintain stability we cannot accept outside contributions without first verifying their correctness. By promoting automated testing, the core developers can avoid the hassle of manual verification before accepting patches. It also means that external developers don't have to spend time earning trust with the core team. If a patch comes in and has tests to verify it, then we can be confident it works without worrying about the reputation of the contributor."
 msgstr ""
 
-#: ../../contribute/tests.rst:70
+#: ../../contribute/tests.rst:79
 msgid "Note that these benefits can also extend to the plugins repository. Site owners are encouraged to \"test plugins thoroughly\" before deploying them on a production site. As of March 2013, this translates to manually verifying all the features that the plugin promises to offer. But Elgg provides a huge number of features, and it's not reasonable to test for *all* of them on *every browser* you want to support on *every device* you want to support. But what if plugin developers could write tests for their plugins and site owners could just run the tests for all installed plugins to verify the functionality is maintained? Then they wouldn't be limited to just picking plugins from \"trusted\" developers or \"stable\" releases. They could see that, indeed, nothing broke when they upgraded that critical plugin from 1.3 to 2.5, and push the upgrade to production with confidence."
 msgstr ""
 
-#: ../../contribute/tests.rst:78
+#: ../../contribute/tests.rst:87
 msgid "The reason this isn't happening today is because Elgg itself is not easily testable at this level yet. We want to change that."
 msgstr ""
 
-#: ../../contribute/tests.rst:81
+#: ../../contribute/tests.rst:90
 msgid "Strategy"
 msgstr ""
 
-#: ../../contribute/tests.rst:83
+#: ../../contribute/tests.rst:92
 msgid "We have several guiding principles that we think will be helpful in bringing our vision into reality."
 msgstr ""
 
-#: ../../contribute/tests.rst:88
+#: ../../contribute/tests.rst:97
 msgid "In short, we are advocating:"
 msgstr ""
 
-#: ../../contribute/tests.rst:86
+#: ../../contribute/tests.rst:95
 msgid "Continuous integration -- if GitHub checks aren't happy, we're not happy"
 msgstr ""
 
-#: ../../contribute/tests.rst:87
+#: ../../contribute/tests.rst:96
 msgid "Dependency injection -- For creating highly testable, modular code"
 msgstr ""
 
-#: ../../contribute/tests.rst:88
+#: ../../contribute/tests.rst:97
 msgid "BDD -- Tests should verify features and provide documentation, not rehash the Class API"
 msgstr ""
 
-#: ../../contribute/tests.rst:91
+#: ../../contribute/tests.rst:100
 msgid "Continuous Integration"
 msgstr ""
 
-#: ../../contribute/tests.rst:93
+#: ../../contribute/tests.rst:102
 msgid "We run all of our tests on GitHub Actions so that we can get real time feedback on the correctness of incoming pull requests and development as it progresses. **If the GitHub checks aren't passing, we don't commit to the repo.** This empowers us to merge pull requests in at a rapid pace, so long as they pass the tests. It also allows us to reject pull requests without detailed investigation if they do not pass the tests. We can get past the \"does it work or not\" question and talk about the things that humans need to talk about: API design, usefulness to the project, whether it belongs in core or a plugin, etc. We want as many features as possible provided by Elgg core to be verified automatically by tests running on GitHub Actions."
 msgstr ""
 
-#: ../../contribute/tests.rst:100
+#: ../../contribute/tests.rst:109
 msgid "Dependency Injection"
 msgstr ""
 
-#: ../../contribute/tests.rst:102
+#: ../../contribute/tests.rst:111
 msgid "In order to maximize testability, **all dependencies need to be explicit**. Global functions, Singletons, and service locators are death for testability because it's impossible to tell what dependencies are hiding under the covers, and it's even harder to mock out those dependencies. Mocking is critical because you want your unit tests to test only one class at a time. Test failures in a TestCase should not result due to brokenness in a dependency; test failures should only indicate brokenness in the class under test. This makes everything much easier to debug. As of March 2013, most of Elgg still assumes and uses global state, and that has made Elgg and Elgg plugins historically very difficult to test. Fortunately we are moving in the opposite direction now, and a lot of work in Elgg 1.9 has gone into refactoring core components to be more dependency injectable. We are already reaping the benefits from that effort."
 msgstr ""
 
-#: ../../contribute/tests.rst:111
+#: ../../contribute/tests.rst:120
 msgid "Behavior-Driven Development"
 msgstr ""
 
-#: ../../contribute/tests.rst:113
+#: ../../contribute/tests.rst:122
 msgid "For us this means **we name tests for features rather than methods**. When you test for features, you are encouraged to write fewer, smaller, logical tests. When a test fails, we can know exactly what feature is compromised. Furthermore, when naming your tests for features, the list of tests provides documentation on what features the system supports. Documentation is something that is typically very troublesome to keep up to date, but when documentation and verification are one and the same, it becomes very easy to keep the documentation up to date."
 msgstr ""
 
-#: ../../contribute/tests.rst:120
+#: ../../contribute/tests.rst:129
 msgid "Consider these two test methods:"
 msgstr ""
 
-#: ../../contribute/tests.rst:119
+#: ../../contribute/tests.rst:128
 msgid "``testRegister()``"
 msgstr ""
 
-#: ../../contribute/tests.rst:120
+#: ../../contribute/tests.rst:129
 msgid "``testCanRegisterFilesAsActionHandlers()``"
 msgstr ""
 
-#: ../../contribute/tests.rst:122
+#: ../../contribute/tests.rst:131
 msgid "From just looking at the names, ``testRegister`` tells you that the class under test probably has a method named register. If this test passes, it presumably verifies that it is behaving correctly, but doesn't tell you what correct behavior entails, or what the original author of the test was intending to verify. If that method has multiple correct uses that you need to test for, this terse naming convention also encourages you to write a very long test which tests for all conditions and features of said method. Test failure could be caused by any one of those uses being compromised, and it will take more time to figure out where the true problem lies."
 msgstr ""
 
-#: ../../contribute/tests.rst:128
+#: ../../contribute/tests.rst:137
 msgid "On the other hand, ``testCanRegisterFilesAsActionHandlers`` tells you that there are these things called \"actions\" that need to be \"handled\" and that files can be registered as valid handlers for actions. This introduces newcomers to project terminology and communicates clearly the intent of the test to those already familiar with the terminology."
 msgstr ""
 
-#: ../../contribute/tests.rst:132
+#: ../../contribute/tests.rst:141
 msgid "For a good example of what we're looking for, check out ``/tests/phpunit/Elgg/ViewServiceTest.php``"
 msgstr ""

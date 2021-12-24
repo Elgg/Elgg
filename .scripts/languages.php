@@ -61,7 +61,7 @@ run_commands([
 	
 	// commit everything to GitHub
 	'git add .',
-	"git commit -am \'chore(i18n): update translations\'",
+	"git commit -am \"chore(i18n): update translations\"",
 ]);
 
 echo "Please submit '{$new_branch}' as a pull request:" . PHP_EOL . PHP_EOL;
