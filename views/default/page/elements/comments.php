@@ -47,7 +47,7 @@ $options = [
 	'preload_owners' => true,
 ];
 
-$module_title = false;
+$module_title = '';
 
 if (!$entity instanceof \ElggComment) {
 	$module_title = elgg_echo('comments');
