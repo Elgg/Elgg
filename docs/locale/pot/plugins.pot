@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-23 13:47+0100\n"
+"POT-Creation-Date: 2021-12-24 13:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,6 +105,7 @@ msgid "It is possible for other plugins to add to the players available for diff
 msgstr ""
 
 #: ../../plugins/file.rst:32
+#: ../../plugins/site_notifications.rst:16
 msgid "Note for developers"
 msgstr ""
 
@@ -168,52 +169,48 @@ msgstr ""
 msgid "Elgg comes with a set of plugins. These provide the basic functionality for your social network."
 msgstr ""
 
-#: ../../plugins/index.rst:23
+#: ../../plugins/index.rst:24
 msgid "The following plugins are also bundled with Elgg, but are not (yet) documented"
 msgstr ""
 
-#: ../../plugins/index.rst:25
+#: ../../plugins/index.rst:26
 msgid "activity"
 msgstr ""
 
-#: ../../plugins/index.rst:26
+#: ../../plugins/index.rst:27
 msgid "bookmarks"
 msgstr ""
 
-#: ../../plugins/index.rst:27
+#: ../../plugins/index.rst:28
 msgid "ckeditor"
 msgstr ""
 
-#: ../../plugins/index.rst:28
+#: ../../plugins/index.rst:29
 msgid "custom_index"
 msgstr ""
 
-#: ../../plugins/index.rst:29
+#: ../../plugins/index.rst:30
 msgid "developers"
 msgstr ""
 
-#: ../../plugins/index.rst:30
+#: ../../plugins/index.rst:31
 msgid "embed"
 msgstr ""
 
-#: ../../plugins/index.rst:31
+#: ../../plugins/index.rst:32
 msgid "externalpages"
 msgstr ""
 
-#: ../../plugins/index.rst:32
+#: ../../plugins/index.rst:33
 msgid "friends_collections"
 msgstr ""
 
-#: ../../plugins/index.rst:33
+#: ../../plugins/index.rst:34
 msgid "garbagecollector"
 msgstr ""
 
-#: ../../plugins/index.rst:34
-msgid "invitefriends"
-msgstr ""
-
 #: ../../plugins/index.rst:35
-msgid "likes"
+msgid "invitefriends"
 msgstr ""
 
 #: ../../plugins/index.rst:36
@@ -238,6 +235,18 @@ msgstr ""
 
 #: ../../plugins/index.rst:41
 msgid "web_services"
+msgstr ""
+
+#: ../../plugins/likes.rst:2
+msgid "Likes"
+msgstr ""
+
+#: ../../plugins/likes.rst:4
+msgid "Allow users to like content on your site. If content supports being likable a 'thumbs up' will appear as a social interaction with this content. Liking content will also notify the content owner about the new like. A counter will show next to the like action reporting about the amount of likes the content has. Clicking on the counter will show a list of users who recently liked the content."
+msgstr ""
+
+#: ../../plugins/likes.rst:10
+msgid "The likes plugin uses the entity capability `likable`. This capability defines if an entity is likable."
 msgstr ""
 
 #: ../../plugins/messageboard.rst:2
@@ -390,6 +399,10 @@ msgstr ""
 
 #: ../../plugins/site_notifications.rst:13
 msgid "Plugin settings are available to automatically cleanup unread/read notifications"
+msgstr ""
+
+#: ../../plugins/site_notifications.rst:18
+msgid "The cron based cleanup of (un)read site notifications removes the entities directly from the database. It isn't using ``$entity->delete()`` to help with performance. This means that no events are triggered for the entities which are removed during the cleanup."
 msgstr ""
 
 #: ../../plugins/thewire.rst:2

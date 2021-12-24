@@ -23,6 +23,14 @@ return array(
 	'logbrowser:action' => 'Actie',
 
 	'logrotate:period' => 'Hoe vaak wil je dat het systeem logboek wordt gearchiveerd?',
+	'logrotate:retention' => 'Verwijder gearchiveerde logboeken na x dagen',
+	'logrotate:retention:help' => 'Het aantal dagen dat de gearchiveerde logboeken in de database behouden moeten blijven. Laat dit leeg om de gearchiveerde logboeken niet op te schonen.',
+
+	'logrotate:logrotated' => "Logboek gearchiveerd",
+	'logrotate:lognotrotated' => "Fout tijdens het archiveren van het logboek",
+
+	'logrotate:logdeleted' => "Logboek verwijderd",
+	'logrotate:lognotdeleted' => "Er zijn geen logboeken verwijderd",
 
 	// not used any more since Elgg 4.1, can be cleaned in Elgg 5.0
 	'logrotate:delete' => 'Verwijder log archiven ouder dan één',

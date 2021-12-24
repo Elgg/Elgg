@@ -17,8 +17,12 @@ return array(
 	
 	'site_notifications:settings:unread_cleanup_days' => 'Ruim ongelezen notificaties op na x dagen',
 	'site_notifications:settings:unread_cleanup_days:help' => 'Ongelezen notificaties zullen worden opgeruimd na het opgegeven aantal dagen. Laat leeg om de notificaties nooit op te schonen.',
+	'site_notifications:settings:unread_cleanup_interval' => 'Interval voor het opschonen van ongelezen notificaties',
+	'site_notifications:settings:unread_cleanup_interval:help' => 'Hoe vaak moeten de ongelezen notificaties worden opgeschoond. Bij websites met een hoge activiteit kan het verhogen van de interval ervoor zorgen dat het opschonen de toestroom van de nieuwe site notificaties kan bijhouden.',
 	'site_notifications:settings:read_cleanup_days' => 'Ruim gelezen notificaties op na x dagen',
 	'site_notifications:settings:read_cleanup_days:help' => 'Gelezen notificaties zullen worden opgeruimd na het opgegeven aantal dagen. Laat leeg om de notificaties nooit op te schonen.',
+	'site_notifications:settings:read_cleanup_interval' => 'Interval voor het opschonen van gelezen notificaties',
+	'site_notifications:settings:read_cleanup_interval:help' => 'Hoe vaak moeten de gelezen notificaties worden opgeschoond. Bij websites met een hoge activiteit kan het verhogen van de interval ervoor zorgen dat het opschonen de toestroom van de nieuwe site notificaties kan bijhouden.',
 	
 	'site_notifications:empty' => 'Geen notificaties',
 	'site_notifications:toggle_all' => 'Selecteer alles',
