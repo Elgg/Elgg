@@ -193,6 +193,9 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 		if ($admin instanceof \ElggUser) {
 			$admin->delete();
 		}
+		
+		// close the database connections to prevent 'too many connections'
+		_elgg_services()->db->closeConnections();
 	}
 
 	/**

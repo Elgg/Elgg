@@ -3,17 +3,13 @@
 namespace Elgg\Notifications;
 
 use Elgg\EventsService;
+use Elgg\IntegrationTestCase;
 use Elgg\Logger;
-use Elgg\IntegratedUnitTestCase;
+use Elgg\Mocks\Queue\DatabaseQueue;
 use Elgg\PluginHooksService;
-use Elgg\Queue\MemoryQueue;
 use Elgg\Values;
-use ElggEntity;
-use ElggObject;
-use ElggSession;
-use Exception;
 
-abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
+abstract class NotificationsServiceUnitTestCase extends IntegrationTestCase {
 
 	/**
 	 * @var PluginHooksService
@@ -26,7 +22,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 	protected $events;
 
 	/**
-	 * @var MemoryQueue
+	 * @var DatabaseQueue
 	 */
 	protected $queue;
 
@@ -36,7 +32,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 	protected $subscriptions;
 
 	/**
-	 * @var ElggSession
+	 * @var \ElggSession
 	 */
 	protected $session;
 
@@ -66,8 +62,12 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 	protected $time;
 
 	public function up() {
+		$this->createApplication([
+			'isolate' => true,
+		]);
+
 		if (!isset($this->test_object_class)) {
-			throw new Exception(get_class($this) . ' must set \$object_test_class before calling ' . __METHOD__);
+			throw new \Exception(get_class($this) . ' must set \$object_test_class before calling ' . __METHOD__);
 		}
 
 		$this->hooks = _elgg_services()->hooks;
@@ -76,7 +76,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		$this->events = _elgg_services()->events;
 		$this->events->backup();
 
-		$this->queue = new DatabaseQueueMock();
+		$this->queue = new DatabaseQueue();
 
 		$this->entities = _elgg_services()->entityTable;
 		$this->time = $this->entities->getCurrentTime()->getTimestamp();
@@ -111,7 +111,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		$this->setupServices();
 
 		switch ($this->test_object_class) {
-			case ElggObject::class :
+			case \ElggObject::class :
 				return $this->createObject([
 					'owner_guid' => $this->actor->guid,
 					'container_guid' => $this->actor->guid,
@@ -161,7 +161,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 				return check_entity_relationship($object->guid, 'test_relationship', $user->guid);
 		}
 
-		throw new Exception("Test object not found for $this->test_object_class class");
+		throw new \Exception("Test object not found for $this->test_object_class class");
 	}
 
 	public function testRegisterEvent() {
@@ -262,7 +262,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		$this->assertNull($this->queue->dequeue());
 
 		// unregistered object type
-		$this->notifications->enqueueEvent('create', $object->getType(), new ElggObject());
+		$this->notifications->enqueueEvent('create', $object->getType(), new \ElggObject());
 		$this->assertNull($this->queue->dequeue());
 	}
 
@@ -594,7 +594,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 			$call_count++;
 
 			$object = $event->getObject();
-			if ($object instanceof ElggEntity) {
+			if ($object instanceof \ElggEntity) {
 				$display_name = $object->getDisplayName();
 				$container_name = '';
 				$container = $object->getContainerEntity();
