@@ -28,7 +28,9 @@ use Elgg\Traits\Loggable;
  * @property string        $cacheroot            					Path of cache storage with trailing "/"
  * @property bool          $can_change_username						Is user allowed to change the username
  * @property bool          $comment_box_collapses					Determines if the comment box collapses after the first comment
+ * @property bool          $comments_group_only					    Are comments on group content only allowed for group members
  * @property bool          $comments_latest_first					Determines if the default order of comments is latest first
+ * @property int           $comments_max_depth						Maximum level of threaded comments (0 means disabled)
  * @property int           $comments_per_page						Number of comments per page
  * @property array         $css_compiler_options 					Options passed to CssCrush during CSS compilation
  * @property string        $dataroot             					Path of data storage with trailing "/"
@@ -189,6 +191,7 @@ class Config {
 		'comment_box_collapses' => true,
 		'comments_group_only' => true,
 		'comments_latest_first' => true,
+		'comments_max_depth' => 0,
 		'comments_per_page' => 25,
 		'db_query_cache_limit' => 50,
 		'elgg_maintenance_mode' => false,

@@ -1,11 +1,12 @@
 <?php
-
-/**
- * @group UnitTests
- * @group ElggData
- */
 class ElggCommentUnitTest extends \Elgg\UnitTestCase {
 
+	public function testCommentInitialize() {
+		$comment = new \ElggComment();
+		
+		$this->assertEquals(1, $comment->level);
+	}
+	
 	public function testCantComment() {
 		
 		$comment = $this->createObject([
@@ -48,5 +49,41 @@ class ElggCommentUnitTest extends \Elgg\UnitTestCase {
 		]);
 		
 		$this->assertFalse($other_comment->isCreatedByContentOwner());
+	}
+	
+	public function testGetLevel() {
+		$comment = new \ElggComment();
+		
+		$this->assertEquals(1, $comment->getLevel());
+		
+		$comment->level = 3;
+		$this->assertEquals(3, $comment->getLevel());
+		
+		unset($comment->level);
+		$this->assertEquals(1, $comment->getLevel());
+	}
+	
+	public function testThreadEntity() {
+		$comment = $this->createObject([
+			'subtype' => 'comment',
+		]);
+		
+		$comment2 = $this->createObject([
+			'subtype' => 'comment',
+		]);
+		
+		// no thread points to self
+		$this->assertEquals($comment->guid, $comment->getThreadGUID());
+		
+		$comment->thread_guid = $comment2->guid;
+		
+		$this->assertEquals($comment2->guid, $comment->getThreadGUID());
+		
+		$thread_entity = $comment->getThreadEntity();
+		$this->assertInstanceOf(ElggComment::class, $thread_entity);
+		$this->assertEquals($comment2->guid, $thread_entity->guid);
+		
+		$comment->thread_guid = -1;
+		$this->assertNull($comment->getThreadEntity());
 	}
 }

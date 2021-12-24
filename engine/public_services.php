@@ -18,10 +18,12 @@ return [
 	'session' => function() {return _elgg_services()->session; },
 	'system_messages' => function() {return _elgg_services()->system_messages; },
 	'table_columns' => function() {return _elgg_services()->table_columns; },
+	'thread_preloader' => \DI\autowire(\Elgg\Comments\ThreadPreloaderService::class),
 	'translator' => function() {return _elgg_services()->translator; },
 
 	// map classes to alias to allow autowiring
 	\Elgg\Users\Accounts::class => DI\get('accounts'),
+	\Elgg\Comments\ThreadPreloaderService::class => DI\get('thread_preloader'),
 	\Elgg\Config::class => DI\get('config'),
 	\Elgg\Security\Csrf::class => DI\get('csrf'),
 	\Elgg\Application\Database::class => DI\get('db'),

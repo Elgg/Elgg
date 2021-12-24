@@ -33,6 +33,15 @@ if ($full_view) {
 		$body = elgg_view('output/longtext', [
 			'value' => $comment->description,
 		]);
+	
+		if (elgg_extract('show_add_form', $vars, true) && $comment->canComment()) {
+			$body .= elgg_view('output/url', [
+				'text' => elgg_echo('generic_comments:add'),
+				'href' => "#elgg-form-comment-save-{$comment->guid}",
+				'rel' => 'toggle',
+				'class' => 'elgg-subtext',
+			]);
+		}
 	}
 
 	$params = [
@@ -40,11 +49,16 @@ if ($full_view) {
 		'time_href' => $comment->getURL(),
 		'access' => false,
 		'title' => false,
+		'show_summary' => true,
 		'content' => $body,
 		'imprint' => elgg_extract('imprint', $vars, []),
 		'class' => elgg_extract_class($vars),
 	];
 	$params = $params + $vars;
+	
+	if (!empty(elgg()->thread_preloader->getChildren($comment->guid))) {
+		$params['class'][] = 'with-children';
+	}
 	
 	if ($comment->isCreatedByContentOwner()) {
 		$params['class'][] = 'elgg-comment-by-owner';
@@ -55,7 +69,7 @@ if ($full_view) {
 		];
 	}
 	
-	echo elgg_view('object/elements/summary', $params);
+	echo elgg_view('object/elements/full', $params);
 } else {
 	// brief view
 	$commenter_icon = elgg_view_entity_icon($commenter, 'small');

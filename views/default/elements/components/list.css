@@ -48,6 +48,10 @@
 	margin-bottom: 2rem;
 }
 
+.elgg-listing-full-responses {
+	padding-top: 1rem;
+}
+
 .elgg-listing-imprint {
 	display: flex;
 	flex-wrap: wrap;
