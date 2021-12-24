@@ -3,231 +3,329 @@
 namespace Elgg;
 
 use Elgg\Database\Update;
+use Elgg\Database\UsersRememberMeCookiesTable;
 
-class PersistentLoginServiceIntegrationTest extends IntegrationTestCase {
+class PersistentLoginServiceIntegrationTest extends \Elgg\IntegrationTestCase {
+
+	/**
+	 * @var \ElggCookie
+	 */
+	protected $cookie;
 	
 	/**
 	 * @var PersistentLoginService
 	 */
 	protected $service;
 	
-	/**
-	 * @var \ElggUser
-	 */
-	protected $user;
-	
-	/**
-	 * @var \ElggCookie
-	 */
-	protected $cookie;
-	
 	public function up() {
 		$this->service = _elgg_services()->persistentLogin;
-		$this->service->_callable_elgg_set_cookie = [$this, 'setCookie'];
-		
-		$this->user = $this->createUser();
 	}
 	
-	public function down() {
-		unset($this->cookie);
-	}
-	
-	
-	public function testMakePersistentLogin() {
-		$user = $this->user;
-		$service = $this->service;
-		
-		$this->assertEmpty($this->cookie);
+	public function testMakeLoginPersistent() {
+		$user = $this->createUser();
+		$service = $this->mockService();
 		
 		$service->makeLoginPersistent($user);
-		
 		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
+		$this->assertIsString($this->cookie->value);
 		
-		$token = $this->cookie->value;
-		$this->assertNotEmpty($token);
-		
-		$hash = $this->hashToken($token);
-		$persistent_user = $service->getUserFromHash($hash);
-		
-		$this->assertEquals($user, $persistent_user);
+		$this->assertEquals($this->cookie->value, _elgg_services()->session->get('code'));
 	}
 	
 	public function testRemovePersistentLogin() {
-		$user = $this->user;
-		$service = $this->service;
+		$user = $this->createUser();
+		$service = $this->mockService();
 		
-		$this->assertEmpty($this->cookie);
-		
-		$token = $this->makePersistentLoginToken($user);
-		
-		$new_service = $this->getServiceBasedOnCookie($token);
-		
-		$new_service->removePersistentLogin();
-		
+		$service->makeLoginPersistent($user);
 		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
-		$this->assertEmpty($this->cookie->value);
+		$this->assertIsString($this->cookie->value);
+		
+		$service = $this->mockServiceWithToken($this->cookie->value);
+		$this->cookie = null;
+		
+		$service->removePersistentLogin();
+		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
 		$this->assertLessThan(time(), $this->cookie->expire);
 		
-		$hash = $this->hashToken($token);
-		$this->assertNull($service->getUserFromHash($hash));
+		$this->assertEmpty(_elgg_services()->session->get('code'));
 	}
 	
 	public function testHandlePasswordChange() {
-		$user = $this->user;
-		$service = $this->service;
+		$user = $this->createUser();
+		$service = $this->mockService();
 		
-		$this->assertEmpty($this->cookie);
+		$service->makeLoginPersistent($user);
+		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
+		$this->assertIsString($this->cookie->value);
 		
-		$token = $this->makePersistentLoginToken($user);
+		$cookie_token = $this->cookie->value;
+		
+		$service = $this->mockServiceWithToken($cookie_token);
+		$this->cookie = null;
 		
 		$service->handlePasswordChange($user);
-		
-		$hash = $this->hashToken($token);
-		$this->assertNull($service->getUserFromHash($hash));
-	}
-	
-	public function testUpdateTokenUsage() {
-		$user = $this->user;
-		
 		$this->assertEmpty($this->cookie);
 		
-		$token = $this->makePersistentLoginToken($user);
-		
-		$new_service = $this->getServiceBasedOnCookie($token);
-		
-		$this->assertTrue($new_service->updateTokenUsage($user));
+		$this->assertEmpty($service->getUserFromToken($cookie_token));
 	}
 	
-	public function testRemoveAllHashes() {
+	public function testHandlePasswordChangeWithSameModifier() {
+		$user = $this->createUser();
+		$service = $this->mockService();
 		
-		$user = $this->user;
-		$service = $this->service;
+		$service->makeLoginPersistent($user);
+		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
+		$this->assertIsString($this->cookie->value);
 		
-		// generate mulitple tokens to test
-		$tokens = [];
-		for ($i = 0; $i <= 5; $i++) {
-			$tokens[] = $this->makePersistentLoginToken($user);
-		}
+		$cookie_token = $this->cookie->value;
 		
-		$different_user = $this->createUser();
+		$service = $this->mockServiceWithToken($cookie_token);
+		$this->cookie = null;
 		
-		$remaining_token = $this->makePersistentLoginToken($different_user);
+		$service->handlePasswordChange($user, $user);
+		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
+		$this->assertIsString($this->cookie->value);
+		$this->assertNotEquals($cookie_token, $this->cookie->value);
 		
-		$service->removeAllHashes($user);
+		$found = $service->getUserFromToken($this->cookie->value);
+		$this->assertInstanceOf(\ElggUser::class, $found);
+		$this->assertEquals($user->guid, $found->guid);
+	}
+	
+	public function testHandlePasswordChangeWithDifferentModifier() {
+		$user = $this->createUser();
+		$other_user = $this->createUser();
+		$service = $this->mockService();
 		
-		foreach ($tokens as $token) {
-			$hash = $this->hashToken($token);
-			$this->assertNull($service->getUserFromHash($hash));
-		}
+		$service->makeLoginPersistent($user);
+		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
+		$this->assertIsString($this->cookie->value);
 		
-		$remaining_hash = $this->hashToken($remaining_token);
-		$this->assertEquals($different_user, $service->getUserFromHash($remaining_hash));
+		$cookie_token = $this->cookie->value;
+		
+		$service = $this->mockServiceWithToken($cookie_token);
+		$this->cookie = null;
+		
+		$service->handlePasswordChange($user, $other_user);
+		$this->assertEmpty($this->cookie);
+		
+		$this->assertEmpty($service->getUserFromToken($cookie_token));
+	}
+	
+	public function testBootSessionWithoutToken() {
+		$service = $this->mockService();
+		
+		$this->assertNull($service->bootSession());
+	}
+	
+	public function testBootSessionWithValidToken() {
+		$user = $this->createUser();
+		$service = $this->mockService();
+		
+		$service->makeLoginPersistent($user);
+		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
+		$this->assertIsString($this->cookie->value);
+		
+		$cookie_token = $this->cookie->value;
+		
+		$service = $this->mockServiceWithToken($cookie_token);
+		$this->cookie = null;
+		
+		$found = $service->bootSession();
+		$this->assertInstanceOf(\ElggUser::class, $found);
+		$this->assertEquals($user->guid, $found->guid);
+	}
+	
+	public function testBootSessionWithInvalidToken() {
+		$user = $this->createUser();
+		$service = $this->mockService();
+		
+		$service->makeLoginPersistent($user);
+		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
+		$this->assertIsString($this->cookie->value);
+		
+		$cookie_token = $this->cookie->value;
+		
+		$service = $this->mockServiceWithToken($cookie_token . 'invalid');
+		$this->cookie = null;
+		
+		$this->assertNull($service->bootSession());
+	}
+	
+	public function testGetUserFromEmptyToken() {
+		$user = $this->createUser();
+		$service = $this->mockService();
+		
+		$service->makeLoginPersistent($user);
+		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
+		$this->assertIsString($this->cookie->value);
+		
+		$this->assertNull($service->getUserFromToken(''));
+	}
+	
+	public function testGetUserFromToken() {
+		$user = $this->createUser();
+		$service = $this->mockService();
+		
+		$service->makeLoginPersistent($user);
+		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
+		$this->assertIsString($this->cookie->value);
+		
+		$cookie_token = $this->cookie->value;
+		
+		$found = $service->getUserFromToken($cookie_token);
+		$this->assertInstanceOf(\ElggUser::class, $found);
+		$this->assertEquals($user->guid, $found->guid);
+	}
+	
+	public function testGetUserFromInvalidToken() {
+		$user = $this->createUser();
+		$service = $this->mockService();
+		
+		$service->makeLoginPersistent($user);
+		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
+		$this->assertIsString($this->cookie->value);
+		
+		$cookie_token = $this->cookie->value;
+		
+		$this->assertNull($service->getUserFromToken($cookie_token . 'invalid'));
+	}
+	
+	public function testGetUserFromEmptyHash() {
+		$user = $this->createUser();
+		$service = $this->mockService();
+		
+		$service->makeLoginPersistent($user);
+		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
+		$this->assertIsString($this->cookie->value);
+		
+		$this->assertNull($service->getUserFromHash(''));
+	}
+	
+	public function testGetUserFromHash() {
+		$user = $this->createUser();
+		$service = $this->mockService();
+		
+		$service->makeLoginPersistent($user);
+		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
+		$this->assertIsString($this->cookie->value);
+		
+		$cookie_token = $this->cookie->value;
+		
+		$found = $service->getUserFromHash(md5($cookie_token));
+		$this->assertInstanceOf(\ElggUser::class, $found);
+		$this->assertEquals($user->guid, $found->guid);
+	}
+	
+	public function testGetUserFromInvalidHash() {
+		$user = $this->createUser();
+		$service = $this->mockService();
+		
+		$service->makeLoginPersistent($user);
+		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
+		$this->assertIsString($this->cookie->value);
+		
+		$cookie_token = $this->cookie->value;
+		
+		$this->assertNull($service->getUserFromHash($cookie_token));
+	}
+	
+	public function testUpdateTokenUsageWithoutServiceToken() {
+		$user = $this->createUser();
+		$service = $this->mockService();
+		
+		$service->makeLoginPersistent($user);
+		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
+		$this->assertIsString($this->cookie->value);
+		
+		$this->assertNull($service->updateTokenUsage($user));
+	}
+	
+	public function testUpdateTokenUsageWithServiceToken() {
+		$user = $this->createUser();
+		$service = $this->mockService();
+		
+		$service->makeLoginPersistent($user);
+		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
+		$this->assertIsString($this->cookie->value);
+		
+		$cookie_token = $this->cookie->value;
+		
+		$service = $this->mockServiceWithToken($cookie_token);
+		$this->cookie = null;
+		
+		$this->assertTrue($service->updateTokenUsage($user));
+		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
+		$this->assertIsString($this->cookie->value);
+		
+		$this->assertEquals($cookie_token, $this->cookie->value);
+	}
+	
+	public function testRemoveExiredTokensWithInvalidTime() {
+		$service = $this->mockService();
+		
+		$this->assertFalse($service->removeExpiredTokens('+10 years'));
 	}
 	
 	public function testRemoveExpiredTokens() {
+		$user = $this->createUser();
+		$service = $this->mockService();
 		
-		$user = $this->user;
-		$service = $this->service;
+		$service->makeLoginPersistent($user);
+		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
+		$this->assertIsString($this->cookie->value);
 		
-		// generate mulitple tokens to test
-		$tokens = [];
-		$hashes = [];
-		for ($i = 0; $i <= 5; $i++) {
-			$token = $this->makePersistentLoginToken($user);
-			$tokens[] = $token;
-			$hashes[] = $this->hashToken($token);
-		}
+		$expired_cookie_token = $this->cookie->value;
+		unset($this->cookie);
 		
-		// manually setting timestamp to a lower value in order for cleanup to work correctly
-		// as there is no way to manipulate the timestamp during insertion
-		// and cleanup prevents using a future timestamp as offset
-		$qb = Update::table('users_remember_me_cookies');
-		$qb->set('timestamp', 12345)
-			->where($qb->compare('code', 'IN', '"' . implode('", "', $hashes) . '"'));
-		_elgg_services()->db->updateData($qb);
-			
-		$service->removeExpiredTokens(time());
+		// update the timestamp of the tokens to expire
+		$update = Update::table(UsersRememberMeCookiesTable::TABLE_NAME);
+		$update->set('timestamp', $update->param(1, ELGG_VALUE_TIMESTAMP))
+			->where($update->compare('guid', '=', $user->guid, ELGG_VALUE_STRING));
 		
-		foreach ($tokens as $token) {
-			$hash = $this->hashToken($token);
-			$this->assertNull($service->getUserFromHash($hash));
-		}
+		$this->assertTrue(_elgg_services()->db->updateData($update));
 		
-		// again with different time offset
-		// generate mulitple tokens to test
-		$tokens = [];
-		for ($i = 0; $i <= 5; $i++) {
-			$tokens[] = $this->makePersistentLoginToken($user);
-		}
+		// add another token
+		$service->makeLoginPersistent($user);
+		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
+		$this->assertIsString($this->cookie->value);
 		
-		$service->removeExpiredTokens(time());
+		$valid_cookie_token = $this->cookie->value;
 		
-		foreach ($tokens as $token) {
-			$hash = $this->hashToken($token);
-			$this->assertNotNull($service->getUserFromHash($hash));
-		}
-	}
-	
-	public function setCookie(\ElggCookie $cookie) {
-		$this->cookie = $cookie;
+		$this->assertTrue($service->removeExpiredTokens(time()));
+		
+		$this->assertNull($service->getUserFromToken($expired_cookie_token));
+		
+		$found = $service->getUserFromToken($valid_cookie_token);
+		$this->assertInstanceOf(\ElggUser::class, $found);
+		$this->assertEquals($user->guid, $found->guid);
 	}
 	
 	/**
-	 * Create a service with a set cookie token in order to perform certain actions
-	 *
-	 * @param string $cookie_token a permanent cookie token (usualy comes from an actual cookie)
-	 *
-	 * @return \Elgg\PersistentLoginService
+	 * Helper functions
 	 */
-	protected function getServiceBasedOnCookie($cookie_token) {
-		
-		// create a service with correct cookie so we can remove it correctly
-		$global_cookies_config = _elgg_services()->config->getCookieConfig();
-		$cookie_config = $global_cookies_config['remember_me'];
-		
-		$service = new PersistentLoginService(
-			_elgg_services()->db,
-			_elgg_services()->session,
-			_elgg_services()->crypto,
-			$cookie_config,
-			$cookie_token
-		);
-		
-		$service->_callable_elgg_set_cookie = [$this, 'setCookie'];
+	
+	protected function mockService(): PersistentLoginService {
+		$service = clone $this->service;
+		$service->_callable_elgg_set_cookie = [$this, 'mockSetCookie'];
 		
 		return $service;
 	}
 	
-	/**
-	 * Helper function to create a cookie token for testing
-	 *
-	 * @param \ElggUser $user user to create token for
-	 *
-	 * @return string
-	 */
-	protected function makePersistentLoginToken(\ElggUser $user) {
-		$service = $this->service;
+	protected function mockServiceWithToken(string $token): PersistentLoginService {
+		$service = new PersistentLoginService(
+			_elgg_services()->users_remember_me_cookies_table,
+			_elgg_services()->session,
+			_elgg_services()->crypto,
+			_elgg_services()->config->getCookieConfig()['remember_me'],
+			$token);
 		
-		$service->makeLoginPersistent($user);
+		$service->_callable_elgg_set_cookie = [$this, 'mockSetCookie'];
 		
-		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
-		
-		$token = $this->cookie->value;
-		$this->assertNotEmpty($token);
-		
-		return $token;
+		return $service;
 	}
 	
-	/**
-	 * Hash a cookie token in order to be able to perform DB tasks
-	 *
-	 * @see \Elgg\PersistentLoginService::hashToken()
-	 *
-	 * @param string $token a cookie token to transform
-	 *
-	 * @return string
-	 */
-	protected function hashToken($token) {
-		return md5($token);
+	public function mockSetCookie(\ElggCookie $cookie): void {
+		$this->cookie = $cookie;
 	}
 }

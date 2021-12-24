@@ -183,7 +183,9 @@ It can, for example, be used to configure entities, actions, widgets and routes.
 			[
 				'type' => 'object',
 				'subtype' => 'my_blog',
-				'searchable' => true,
+				'capabilities' => [
+					'searchable' => true,
+				],
 			],
 		],
 		'actions' => [

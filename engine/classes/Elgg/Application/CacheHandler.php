@@ -3,6 +3,7 @@
 namespace Elgg\Application;
 
 use Elgg\Application;
+use Elgg\Cache\SimpleCache;
 use Elgg\Config;
 use Elgg\Http\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -16,58 +17,64 @@ use Symfony\Component\HttpFoundation\Response;
 class CacheHandler {
 	
 	public static $extensions = [
-		'bmp' => "image/bmp",
-		'css' => "text/css",
-		'eot' => "application/vnd.ms-fontobject",
-		'gif' => "image/gif",
-		'html' => "text/html",
-		'ico' => "image/x-icon",
-		'jpeg' => "image/jpeg",
-		'jpg' => "image/jpeg",
-		'js' => "application/javascript",
-		'json' => "application/json",
-		'map' => "application/json",
-		'otf' => "application/font-otf",
-		'png' => "image/png",
-		'svg' => "image/svg+xml",
-		'swf' => "application/x-shockwave-flash",
-		'tiff' => "image/tiff",
-		'ttf' => "application/font-ttf",
-		'webp' => "image/webp",
-		'woff' => "application/font-woff",
-		'woff2' => "application/font-woff2",
-		'xml' => "text/xml",
+		'bmp' => 'image/bmp',
+		'css' => 'text/css',
+		'eot' => 'application/vnd.ms-fontobject',
+		'gif' => 'image/gif',
+		'html' => 'text/html',
+		'ico' => 'image/x-icon',
+		'jpeg' => 'image/jpeg',
+		'jpg' => 'image/jpeg',
+		'js' => 'application/javascript',
+		'json' => 'application/json',
+		'map' => 'application/json',
+		'otf' => 'application/font-otf',
+		'png' => 'image/png',
+		'svg' => 'image/svg+xml',
+		'swf' => 'application/x-shockwave-flash',
+		'tiff' => 'image/tiff',
+		'ttf' => 'application/font-ttf',
+		'webp' => 'image/webp',
+		'woff' => 'application/font-woff',
+		'woff2' => 'application/font-woff2',
+		'xml' => 'text/xml',
 	];
 
 	public static $utf8_content_types = [
-		"text/css",
-		"text/html",
-		"application/javascript",
-		"application/json",
-		"image/svg+xml",
-		"text/xml",
+		'text/css',
+		'text/html',
+		'application/javascript',
+		'application/json',
+		'image/svg+xml',
+		'text/xml',
 	];
 
-	/** @var Config */
-	private $config;
+	/**
+	 * @var Config
+	 */
+	protected $config;
 
-	/** @var Request */
-	private $request;
+	/**
+	 * @var Request
+	 */
+	protected $request;
 	
-	/** @var bool */
-	protected $simplecache_enabled;
+	/**
+	 * @var SimpleCache
+	 */
+	protected $simplecache;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Config  $config              Elgg configuration
-	 * @param Request $request             HTTP request
-	 * @param bool    $simplecache_enabled Is the simplecache enabled?
+	 * @param Config      $config      Elgg configuration
+	 * @param Request     $request     HTTP request
+	 * @param SimpleCache $simplecache Simplecache
 	 */
-	public function __construct(Config $config, Request $request, $simplecache_enabled) {
+	public function __construct(Config $config, Request $request, SimpleCache $simplecache) {
 		$this->config = $config;
 		$this->request = $request;
-		$this->simplecache_enabled = $simplecache_enabled;
+		$this->simplecache = $simplecache;
 	}
 
 	/**
@@ -75,11 +82,10 @@ class CacheHandler {
 	 *
 	 * @param Request     $request Elgg request
 	 * @param Application $app     Elgg application
+	 *
 	 * @return Response (unprepared)
 	 */
 	public function handleRequest(Request $request, Application $app) {
-		$config = $this->config;
-
 		$parsed = $this->parsePath($request->getElggPath());
 		if (!$parsed) {
 			return $this->send403();
@@ -91,19 +97,19 @@ class CacheHandler {
 
 		$content_type = $this->getContentType($view);
 		if (empty($content_type)) {
-			return $this->send403("Asset must have a valid file extension");
+			return $this->send403('Asset must have a valid file extension');
 		}
 
-		$response = Response::create();
+		$response = new Response();
 		if (in_array($content_type, self::$utf8_content_types)) {
-			$response->headers->set('Content-Type', "$content_type;charset=utf-8", true);
+			$response->headers->set('Content-Type', "{$content_type};charset=utf-8", true);
 		} else {
 			$response->headers->set('Content-Type', $content_type, true);
 		}
 		
 		$response->headers->set('X-Content-Type-Options', 'nosniff', true);
 
-		if (!$this->simplecache_enabled) {
+		if (!$this->simplecache->isEnabled()) {
 			$app->bootCore();
 			if (!headers_sent()) {
 				header_remove('Cache-Control');
@@ -123,22 +129,29 @@ class CacheHandler {
 			$etag = '"' . md5($content) . '"';
 			$this->setRevalidateHeaders($etag, $response);
 			if ($this->is304($etag)) {
-				return Response::create()->setNotModified();
+				$response = new Response();
+				$response->setNotModified();
+				
+				return $response;
 			}
 
 			return $response->setContent($content);
 		}
 
-		$etag = "\"$ts\"";
+		$etag = "\"{$ts}\"";
 		if ($this->is304($etag)) {
-			return Response::create()->setNotModified();
+			$response = new Response();
+			$response->setNotModified();
+			
+			return $response;
 		}
 
 		// trust the client but check for an existing cache file
-		$filename = $config->assetroot . "$ts/$viewtype/$view";
-		if (file_exists($filename)) {
+		$filename = $this->simplecache->getCachedAssetLocation($ts, $viewtype, $view);
+		if (!empty($filename)) {
 			$this->sendCacheHeaders($etag, $response);
-			return BinaryFileResponse::create($filename, 200, $response->headers->all());
+
+			return new BinaryFileResponse($filename, 200, $response->headers->all());
 		}
 
 		// the hard way
@@ -149,27 +162,16 @@ class CacheHandler {
 
 		elgg_set_viewtype($viewtype);
 		if (!$this->isCacheableView($view)) {
-			return $this->send403("Requested view is not an asset");
+			return $this->send403('Requested view is not an asset');
 		}
 
-		$lastcache = (int) $config->lastcache;
-
-		$filename = $config->assetroot . "$lastcache/$viewtype/$view";
-
-		if ($lastcache == $ts) {
+		if ((int) $this->config->lastcache === $ts) {
 			$this->sendCacheHeaders($etag, $response);
 
 			$content = $this->getProcessedView($view, $viewtype);
 
-			$dir_name = dirname($filename);
-			if (!is_dir($dir_name)) {
-				// PHP and the server accessing the cache symlink may be a different user. And here
-				// it's safe to make everything readable anyway.
-				mkdir($dir_name, 0775, true);
-			}
-
-			file_put_contents($filename, $content);
-			chmod($filename, 0664);
+			// store in simplecache for use later
+			$this->simplecache->cacheAsset($viewtype, $view, $content);
 		} else {
 			// if wrong timestamp, don't send HTTP cache
 			$content = $this->getProcessedView($view, $viewtype);
@@ -182,6 +184,7 @@ class CacheHandler {
 	 * Parse a request
 	 *
 	 * @param string $path Request URL path
+	 *
 	 * @return array Cache parameters (empty array if failure)
 	 */
 	public function parsePath($path) {
@@ -189,6 +192,7 @@ class CacheHandler {
 		if (false !== strpos($path, '..')) {
 			return [];
 		}
+
 		// only alphanumeric characters plus /, ., -, and _
 		if (preg_match('#[^a-zA-Z0-9/\.\-_]#', $path)) {
 			return [];
@@ -197,6 +201,7 @@ class CacheHandler {
 		// testing showed regex to be marginally faster than array / string functions over 100000 reps
 		// it won't make a difference in real life and regex is easier to read.
 		// <ts>/<viewtype>/<name/of/view.and.dots>.<type>
+		$matches = [];
 		if (!preg_match('#^/cache/([0-9]+)/([^/]+)/(.+)$#', $path, $matches)) {
 			return [];
 		}
@@ -216,9 +221,11 @@ class CacheHandler {
 	 * @return bool
 	 */
 	protected function isCacheableView($view) {
-		if (preg_match('~^languages/(.*)\.js$~', $view, $m)) {
-			return in_array($m[1],  _elgg_services()->locale->getLanguageCodes());
+		$matches = [];
+		if (preg_match('~^languages/(.*)\.js$~', $view, $matches)) {
+			return in_array($matches[1],  _elgg_services()->locale->getLanguageCodes());
 		}
+
 		return _elgg_services()->views->isCacheableView($view);
 	}
 
@@ -253,6 +260,7 @@ class CacheHandler {
 	 * Send a 304 and exit() if the ETag matches the request
 	 *
 	 * @param string $etag ETag value
+	 *
 	 * @return bool
 	 */
 	protected function is304($etag) {
@@ -281,11 +289,7 @@ class CacheHandler {
 	public function getContentType($view) {
 		$extension = $this->getViewFileType($view);
 		
-		if (isset(self::$extensions[$extension])) {
-			return self::$extensions[$extension];
-		} else {
-			return null;
-		}
+		return self::$extensions[$extension] ?? null;
 	}
 	
 	/**
@@ -297,18 +301,18 @@ class CacheHandler {
 	 *  - Otherwise, returns "unknown"
 	 *
 	 * @param string $view The view name
+	 *
 	 * @return string
 	 */
 	public function getViewFileType($view) {
 		$extension = (new \SplFileInfo($view))->getExtension();
-		$hasValidExtension = isset(self::$extensions[$extension]);
-
-		if ($hasValidExtension) {
+		if (isset(self::$extensions[$extension])) {
 			return $extension;
 		}
 		
-		if (preg_match('~(?:^|/)(css|js)(?:$|/)~', $view, $m)) {
-			return $m[1];
+		$matches = [];
+		if (preg_match('~(?:^|/)(css|js)(?:$|/)~', $view, $matches)) {
+			return $matches[1];
 		}
 		
 		return 'unknown';
@@ -319,6 +323,7 @@ class CacheHandler {
 	 *
 	 * @param string $view     The view name
 	 * @param string $viewtype The viewtype
+	 *
 	 * @return string|false
 	 * @see CacheHandler::renderView()
 	 */
@@ -328,18 +333,14 @@ class CacheHandler {
 			return false;
 		}
 
-		if ($this->simplecache_enabled) {
-			$hook_name = 'simplecache:generate';
-		} else {
-			$hook_name = 'cache:generate';
-		}
+		$hook_name = $this->simplecache->isEnabled() ? 'simplecache:generate' : 'cache:generate';
 		$hook_type = $this->getViewFileType($view);
 		$hook_params = [
 			'view' => $view,
 			'viewtype' => $viewtype,
 			'view_content' => $content,
 		];
-		return \_elgg_services()->hooks->trigger($hook_name, $hook_type, $hook_params, $content);
+		return _elgg_services()->hooks->trigger($hook_name, $hook_type, $hook_params, $content);
 	}
 
 	/**
@@ -347,13 +348,15 @@ class CacheHandler {
 	 *
 	 * @param string $view     The view name
 	 * @param string $viewtype The viewtype
+	 *
 	 * @return string|false
 	 */
 	protected function renderView($view, $viewtype) {
 		elgg_set_viewtype($viewtype);
 
+		$matches = [];
 		if ($viewtype === 'default' && preg_match("#^languages/(.*?)\\.js$#", $view, $matches)) {
-			$view = "languages.js";
+			$view = 'languages.js';
 			$vars = ['language' => $matches[1]];
 		} else {
 			$vars = [];
@@ -373,9 +376,10 @@ class CacheHandler {
 	 * Send an error message to requestor
 	 *
 	 * @param string $msg Optional message text
+	 *
 	 * @return Response
 	 */
 	protected function send403($msg = 'Cache error: bad request') {
-		return Response::create($msg, 403);
+		return new Response($msg, ELGG_HTTP_FORBIDDEN);
 	}
 }

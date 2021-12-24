@@ -609,6 +609,46 @@ $ipsum = elgg_view('developers/ipsum');
 				],
 				[
 					'#type' => 'fieldset',
+					'#label' => 'Date and time fieldset - horizontal labels',
+					'align' => 'horizontal',
+					'fields' => [
+						[
+							'#type' => 'date',
+							'#class' => 'elgg-field-horizontal',
+							'value' => time(),
+							'timestamp' => true,
+							'#label' => 'Date',
+						],
+						[
+							'#type' => 'select',
+							'#class' => 'elgg-field-horizontal',
+							'#label' => 'Time',
+							'options' => $hour_options,
+						],
+					],
+				],
+				[
+					'#type' => 'fieldset',
+					'#label' => 'Date and time fieldset - horizontal labels - stretched first field',
+					'align' => 'horizontal',
+					'fields' => [
+						[
+							'#type' => 'date',
+							'#class' => ['elgg-field-horizontal', 'elgg-field-stretch'],
+							'value' => time(),
+							'timestamp' => true,
+							'#label' => 'Date',
+						],
+						[
+							'#type' => 'select',
+							'#class' => 'elgg-field-horizontal',
+							'#label' => 'Time',
+							'options' => $hour_options,
+						],
+					],
+				],
+				[
+					'#type' => 'fieldset',
 					'#label' => 'Nested fieldset',
 					'#help' => 'Fieldset with horizontal alignment of fields',
 					'align' => 'horizontal',

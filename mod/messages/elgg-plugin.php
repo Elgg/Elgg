@@ -12,7 +12,10 @@ return [
 			'type' => 'object',
 			'subtype' => 'messages',
 			'class' => 'ElggMessage',
-			'searchable' => false,
+			'capabilities' => [
+				'commentable' => false,
+				'searchable' => true,
+			],
 		],
 	],
 	'actions' => [

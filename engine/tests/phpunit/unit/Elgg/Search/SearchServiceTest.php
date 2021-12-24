@@ -47,7 +47,7 @@ class SearchServiceTest extends UnitTestCase {
 
 		$options = _elgg_services()->search->normalizeOptions($options);
 
-		$this->assertEquals("&#39;&#39;;!--&#34;=&{()}", $options['query']);
+		$this->assertEquals("&#039;&#039;;!--&quot;=&amp;{()}", $options['query']);
 
 		$this->markTestIncomplete();
 	}

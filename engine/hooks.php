@@ -23,6 +23,11 @@ return [
 			\Elgg\Views\AddAmdModuleNameHandler::class => [],
 		],
 	],
+	'container_logic_check' => [
+		'all' => [
+			\Elgg\Comments\ContainerLogicHandler::class => [],
+		],
+	],
 	'container_permissions_check' => [
 		'all' => [
 			\Elgg\Groups\MemberPermissionsHandler::class => [],
@@ -59,6 +64,11 @@ return [
 			\Elgg\Javascript\SetLightboxConfigHandler::class => [],
 		],
 	],
+	'entity:favicon:sizes' => [
+		'site' => [
+			\Elgg\Icons\GetSiteFaviconSizesHandler::class => [],
+		],
+	],
 	'entity:icon:file' => [
 		'user' => [
 			\Elgg\Icons\SetUserIconFileHandler::class => [],
@@ -76,11 +86,6 @@ return [
 			\Elgg\Page\AddMetasHandler::class => ['priority' => 20],
 			\Elgg\Page\AddRssLinkHandler::class => ['priority' => 30],
 			\Elgg\Page\AddTitleHandler::class => ['priority' => 10],
-		],
-	],
-	'likes:is_likable' => [
-		'object:comment' => [
-			'Elgg\Values::getTrue' => [],
 		],
 	],
 	'output' => [
@@ -289,6 +294,9 @@ return [
 		],
 		'input/password' => [
 			\Elgg\Input\DisablePasswordAutocompleteHandler::class => [],
+		],
+		'page/components/list' => [
+			'Elgg\Comments\Preloader::preload' => [],
 		],
 	],
 ];

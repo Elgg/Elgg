@@ -61,7 +61,7 @@ abstract class DiContainer extends Container {
 	 *
 	 * @return self
 	 */
-	public static function factory(array $options = []): self {
+	public static function factory(array $options = []) {
 		$dic_builder = new ContainerBuilder(static::class);
 		$dic_builder->useAnnotations(false);
 		

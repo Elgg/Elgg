@@ -375,20 +375,6 @@ class ElggUser extends \ElggEntity {
 	}
 
 	/**
-	 * Can a user comment on this user?
-	 *
-	 * @see \ElggEntity::canComment()
-	 *
-	 * @param int  $user_guid User guid (default is logged in user)
-	 * @param bool $default   Default permission
-	 * @return bool
-	 * @since 1.8.0
-	 */
-	public function canComment($user_guid = 0, $default = null) {
-		return false;
-	}
-
-	/**
 	 * Set the necessary metadata to store a hash of the user's password.
 	 *
 	 * @param string $password The password to be hashed
@@ -460,7 +446,7 @@ class ElggUser extends \ElggEntity {
 		$result = parent::delete($recursive);
 		if ($result) {
 			// cleanup remember me cookie records
-			_elgg_services()->persistentLogin->removeAllHashes($this);
+			_elgg_services()->users_remember_me_cookies_table->deleteAllHashes($this);
 		}
 		
 		return $result;

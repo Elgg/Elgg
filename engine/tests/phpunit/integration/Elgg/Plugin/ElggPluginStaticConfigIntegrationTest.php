@@ -80,11 +80,11 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testEntitiesRegistration() {
-		$this->assertFalse(is_registered_entity_type('object', \StaticConfigObject::SUBTYPE));
+		$this->assertFalse(elgg_entity_has_capability('object', \StaticConfigObject::SUBTYPE, 'searchable'));
 		
 		$this->callReflectorMethod('registerEntities');
 		
-		$this->assertTrue(is_registered_entity_type('object', \StaticConfigObject::SUBTYPE));
+		$this->assertTrue(elgg_entity_has_capability('object', \StaticConfigObject::SUBTYPE, 'searchable'));
 	}
 	
 	public function testDeActivateEntities() {

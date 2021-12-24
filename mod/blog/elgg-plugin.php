@@ -15,7 +15,11 @@ return [
 			'type' => 'object',
 			'subtype' => 'blog',
 			'class' => 'ElggBlog',
-			'searchable' => true,
+			'capabilities' => [
+				'commentable' => true,
+				'searchable' => true,
+				'likable' => true,
+			],
 		],
 	],
 	'actions' => [
@@ -103,11 +107,6 @@ return [
 		'container_logic_check' => [
 			'object' => [
 				GroupToolContainerLogicCheck::class => [],
-			],
-		],
-		'likes:is_likable' => [
-			'object:blog' => [
-				'Elgg\Values::getTrue' => [],
 			],
 		],
 		'register' => [

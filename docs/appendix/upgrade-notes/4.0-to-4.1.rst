@@ -4,8 +4,37 @@ From 4.0 to 4.1
 .. contents:: Contents
    :local:
    :depth: 1
+   
+Entity Capabilities
+-------------------
+
+A new way of registering entity capabilities has been introduced. The following related functions have been deprecated:
+
+ * ``elgg_register_entity_type()`` use ``elgg_entity_enable_capability($type, $subtype, 'searchable')``
+ * ``elgg_unregister_entity_type()`` use ``elgg_entity_disable_capability($type, $subtype, 'searchable')``
+ * ``get_registered_entity_types()`` use ``elgg_entity_types_with_capability('searchable')``
+ * ``is_registered_entity_type()`` use ``elgg_entity_has_capability($type, $subtype, 'searchable')``
+ 
+The config variable ``registered_entities`` is no longer available.
+
+The current implemented capabilities are 'commentable', 'likable' and 'searchable'.
+
+Threaded Comments
+-----------------
+
+Support for threaded comments has been added. This feature needs to be enable in the site settings. 
+To make this work changes have been made to comments related JavaScript and CSS. If you use specific styling or have custom features related to this feature you might need to give it some extra attention.
 
 Deprecated APIs
 ---------------
 
+Lib functions
+~~~~~~~~~~~~~
+
  * ``elgg_get_version()`` use ``elgg_get_release()``
+ * ``get_user_by_code()`` use ``elgg_get_user_by_persistent_token()`` where you only need to provide the token, not the hashed token
+
+Plugin hooks
+~~~~~~~~~~~~
+
+* ``'likes:is_likable', '<type>:<subtype>'`` use  ``$entity->hasCapability('likable')``

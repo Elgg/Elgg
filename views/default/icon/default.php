@@ -25,7 +25,7 @@ $vars['size'] = $size;
 
 $class = elgg_extract('img_class', $vars, '');
 
-$title = htmlspecialchars($entity->getDisplayName(), ENT_QUOTES, 'UTF-8', false);
+$title = htmlspecialchars($entity->getDisplayName() ?? '', ENT_QUOTES, 'UTF-8', false);
 
 $url = false;
 if (elgg_extract('use_link', $vars, true)) {

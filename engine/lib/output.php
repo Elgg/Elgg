@@ -150,6 +150,10 @@ function elgg_format_element($tag_name, array $attributes = [], $text = '', arra
  * @return string The absolute URL
  */
 function elgg_normalize_url($url) {
+	if (!isset($url)) {
+		$url = '';
+	}
+	
 	$url = str_replace(' ', '%20', $url);
 
 	if (_elgg_sane_validate_url($url)) {
@@ -161,10 +165,11 @@ function elgg_normalize_url($url) {
 		return preg_replace("/^https?{$protocol_less_site_url}\/?/i", elgg_get_site_url(), $url);
 	}
 
-	if (preg_match("#^([a-z]+)\\:#", $url, $m)) {
+	$matches = [];
+	if (preg_match("#^([a-z]+)\\:#", $url, $matches)) {
 		// we don't let http/https: URLs fail filter_var(), but anything else starting with a protocol
 		// is OK
-		if ($m[1] !== 'http' && $m[1] !== 'https') {
+		if ($matches[1] !== 'http' && $matches[1] !== 'https') {
 			return $url;
 		}
 	}
@@ -231,7 +236,7 @@ function elgg_get_friendly_title($title) {
 	}
 
 	// titles are often stored HTML encoded
-	$title = html_entity_decode($title, ENT_QUOTES, 'UTF-8');
+	$title = html_entity_decode($title ?? '', ENT_QUOTES, 'UTF-8');
 	
 	$title = \Elgg\Translit::urlize($title);
 
@@ -389,11 +394,16 @@ function elgg_html_decode($string) {
  * Prepares query string for output to prevent CSRF attacks.
  *
  * @param string $string string to prepare
+ *
  * @return string
  *
  * @internal
  */
 function _elgg_get_display_query($string) {
+	if (empty($string)) {
+		return $string;
+	}
+	
 	//encode <,>,&, quotes and characters above 127
 	if (function_exists('mb_convert_encoding')) {
 		$display_query = mb_convert_encoding($string, 'HTML-ENTITIES', 'UTF-8');
@@ -401,6 +411,7 @@ function _elgg_get_display_query($string) {
 		// if no mbstring extension, we just strip characters
 		$display_query = preg_replace("/[^\x01-\x7F]/", "", $string);
 	}
+	
 	return htmlspecialchars($display_query, ENT_QUOTES, 'UTF-8', false);
 }
 

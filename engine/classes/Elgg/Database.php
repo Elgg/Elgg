@@ -87,12 +87,28 @@ class Database {
 	 * @return void
 	 */
 	public function resetConnections(DbConfig $config) {
-		$this->connections = [];
+		$this->closeConnections();
+		
 		$this->config = $config;
 		$this->table_prefix = $config->getTablePrefix();
 		$this->query_cache->enable();
 		$this->query_cache->clear();
+	}
+	
+	/**
+	 * Close all database connections
+	 *
+	 * Note: this is only meant to be used in the PHPUnit test suites
+	 *
+	 * @return void
+	 * @since 4.1
+	 */
+	public function closeConnections(): void {
+		foreach ($this->connections as $connection) {
+			$connection->close();
+		}
 		
+		$this->connections = [];
 	}
 
 	/**
@@ -465,7 +481,7 @@ class Database {
 				}
 			});
 		} catch (\Exception $e) {
-			$ex = new DatabaseException($e->getMessage(), null, $e);
+			$ex = new DatabaseException($e->getMessage(), 0, $e);
 			$ex->setParameters($params);
 			$ex->setQuery($sql);
 

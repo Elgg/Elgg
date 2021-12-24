@@ -13,11 +13,6 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	protected $service;
 	
 	/**
-	 * @var \ElggEntity[]
-	 */
-	protected $entities;
-	
-	/**
 	 * @var TestableHook
 	 */
 	protected $testing_hook;
@@ -33,7 +28,6 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		_elgg_services()->notifications->registerMethod('bananas');
 		
 		$this->service = _elgg_services()->subscriptions;
-		$this->entities = [];
 		$this->testing_hook = null;
 	}
 
@@ -47,10 +41,10 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	protected function getSubscriptionNotificationEvent(): SubscriptionNotificationEvent {
-		$this->entities[] = $actor = $this->createUser();
-		$this->entities[] = $owner = $this->createUser();
-		$this->entities[] = $container = $this->createGroup();
-		$this->entities[] = $object = $this->createObject([
+		$actor = $this->createUser();
+		$owner = $this->createUser();
+		$container = $this->createGroup();
+		$object = $this->createObject([
 			'owner_guid' => $owner->guid,
 			'container_guid' => $container->guid,
 		]);
@@ -59,8 +53,8 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testAddRemoveSubscription() {
-		$this->entities[] = $user = $this->createUser();
-		$this->entities[] = $target = $this->createGroup();
+		$user = $this->createUser();
+		$target = $this->createGroup();
 		
 		// add subscription
 		$this->assertTrue($this->service->addSubscription($user->guid, 'apples', $target->guid));
@@ -80,16 +74,19 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testAddRemoveDetailedSubscription() {
-		$this->entities[] = $user = $this->createUser();
-		$this->entities[] = $target = $this->createGroup();
-		$this->entities[] = $object = $this->createObject([
+		$user = $this->createUser();
+		$owner_user = $this->createUser();
+		$target = $this->createGroup();
+		$object = $this->createObject([
 			'subtype' => 'foo',
 			'access_id' => ACCESS_PUBLIC,
+			'owner_guid' => $owner_user->guid,
 			'container_guid' => $target->guid,
 		]);
-		$this->entities[] = $object2 = $this->createObject([
+		$object2 = $this->createObject([
 			'subtype' => 'bar',
 			'access_id' => ACCESS_PUBLIC,
+			'owner_guid' => $owner_user->guid,
 			'container_guid' => $target->guid,
 		]);
 		
@@ -119,8 +116,8 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testMuteUnmuteNotifications() {
-		$this->entities[] = $user = $this->createUser();
-		$this->entities[] = $target = $this->createGroup();
+		$user = $this->createUser();
+		$target = $this->createGroup();
 		
 		// add subscription
 		$this->assertTrue($this->service->addSubscription($user->guid, 'apples', $target->guid));
@@ -156,7 +153,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$method = $reflector->getMethod('filterMutedNotifications');
 		$method->setAccessible(true);
 		
-		$this->entities[] = $user = $this->createUser();
+		$user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
 		
@@ -176,7 +173,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$method = $reflector->getMethod('filterMutedNotifications');
 		$method->setAccessible(true);
 		
-		$this->entities[] = $user = $this->createUser();
+		$user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
 		
@@ -196,7 +193,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$method = $reflector->getMethod('filterMutedNotifications');
 		$method->setAccessible(true);
 		
-		$this->entities[] = $user = $this->createUser();
+		$user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
 		
@@ -217,7 +214,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$method->setAccessible(true);
 		
 		$user = $this->createUser();
-		$this->entities[] = $user = $this->createUser();
+		$user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
 		
@@ -295,8 +292,8 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testFilterTimedMutedSubscribersExpired() {
-		$this->entities[] = $user1 = $this->createUser();
-		$this->entities[] = $user2 = $this->createUser();
+		$user1 = $this->createUser();
+		$user2 = $this->createUser();
 		$event = $this->getSubscriptionNotificationEvent();
 		
 		$user1->setPrivateSetting('timed_muting_start', time() - 20);
@@ -311,8 +308,8 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testFilterTimedMutedSubscribersActive() {
-		$this->entities[] = $user1 = $this->createUser();
-		$this->entities[] = $user2 = $this->createUser();
+		$user1 = $this->createUser();
+		$user2 = $this->createUser();
 		$event = $this->getSubscriptionNotificationEvent();
 		
 		$user1->setPrivateSetting('timed_muting_start', time() - 20);
@@ -331,8 +328,8 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testFilterTimedMutedSubscribersScheduled() {
-		$this->entities[] = $user1 = $this->createUser();
-		$this->entities[] = $user2 = $this->createUser();
+		$user1 = $this->createUser();
+		$user2 = $this->createUser();
 		$event = $this->getSubscriptionNotificationEvent();
 		
 		$user1->setPrivateSetting('timed_muting_start', time() + 20);
@@ -347,7 +344,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testGetNotificationEventSubscriptionsWithMutedActorBySubscription() {
-		$this->entities[] = $user = $this->createUser();
+		$user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
 		
@@ -368,7 +365,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testGetNotificationEventSubscriptionsWithMutedOwnerBySubscription() {
-		$this->entities[] = $user = $this->createUser();
+		$user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
 		
@@ -389,7 +386,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testGetNotificationEventSubscriptionsWithMutedContainerBySubscription() {
-		$this->entities[] = $user = $this->createUser();
+		$user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
 		
@@ -416,7 +413,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testGetNotificationEventSubscriptionsWithMutedEntityBySubscription() {
-		$this->entities[] = $user = $this->createUser();
+		$user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
 		
@@ -436,7 +433,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testGetNotificationEventSubscriptionsWithExcludedOwnerGUID() {
-		$this->entities[] = $user = $this->createUser();
+		$user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
 		
@@ -454,7 +451,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testGetNotificationEventSubscriptionsWithExcludedContainerGUID() {
-		$this->entities[] = $user = $this->createUser();
+		$user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
 		
@@ -472,7 +469,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testGetNotificationEventSubscriptionsWithExcludedEntityGUID() {
-		$this->entities[] = $user = $this->createUser();
+		$user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
 		
@@ -491,7 +488,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	public function testGetNotificationEventSubscriptionsWhereEventActorIsNotPresentInResult() {
 		$event = $this->getSubscriptionNotificationEvent();
 		
-		$this->entities[] = $user = $this->createUser();
+		$user = $this->createUser();
 		$actor = $event->getActor();
 		
 		/* @var $object \ElggObject */
@@ -512,10 +509,8 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	public function testGetNotificationEventSubscriptionsForEntityAndContainer() {
 		$event = $this->getSubscriptionNotificationEvent();
 		
-		$this->entities[] = $user1 = $this->createUser();
-		$this->entities[] = $user2 = $this->createUser();
-		
-		$actor = $event->getActor();
+		$user1 = $this->createUser();
+		$user2 = $this->createUser();
 		
 		/* @var $object \ElggObject */
 		$object = $event->getObject();
@@ -537,12 +532,12 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testGetNotificationEventSubscriptionsForUserEventObject() {
-		$this->entities[] = $actor = $this->createUser();
-		$this->entities[] = $object = $this->createUser();
+		$actor = $this->createUser();
+		$object = $this->createUser();
 		
 		$event = new SubscriptionNotificationEvent($object, 'create', $actor);
 		
-		$this->entities[] = $user1 = $this->createUser();
+		$user1 = $this->createUser();
 				
 		$this->assertTrue($object->addSubscription($user1->guid, 'apples'));
 

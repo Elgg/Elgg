@@ -28,14 +28,15 @@ class MinifyHandler {
 					break;
 				}
 				
-				return \JSMin::minify($hook->getValue());
+				$minifier = new \MatthiasMullie\Minify\JS($hook->getValue());
+				return $minifier->minify();
 			case 'css':
 				if (!_elgg_services()->config->simplecache_minify_css) {
 					break;
 				}
 
-				$cssmin = new \CSSmin(false);
-				return $cssmin->run($hook->getValue());
+				$minifier = new \MatthiasMullie\Minify\CSS($hook->getValue());
+				return $minifier->minify();
 		}
 	}
 }

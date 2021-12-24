@@ -16,6 +16,9 @@ return [
 			'type' => 'object',
 			'subtype' => 'site_notification',
 			'class' => 'SiteNotification',
+			'capabilities' => [
+				'commentable' => false,
+			],
 		],
 	],
 	'actions' => [
@@ -61,6 +64,11 @@ return [
 			],
 			'menu:topbar' => [
 				'Elgg\SiteNotifications\Menus\Topbar::register' => [],
+			],
+		],
+		'seeds' => [
+			'database' => [
+				'Elgg\SiteNotifications\Seeder::register' => [],
 			],
 		],
 		'send' => [

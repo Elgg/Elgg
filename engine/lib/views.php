@@ -940,6 +940,10 @@ function elgg_view_comments($entity, $add_comment = true, array $vars = []) {
 	if (!$entity instanceof \ElggEntity) {
 		return false;
 	}
+	
+	if (!$entity->hasCapability('commentable')) {
+		return false;
+	}
 
 	$vars['entity'] = $entity;
 	$vars['show_add_form'] = $add_comment;
@@ -1154,7 +1158,8 @@ function _elgg_split_vars(array $vars = [], array $prefixes = null) {
 	}
 
 	$return = [];
-
+	$default_section = ''; // something weird with PHP 8.1 compatibility
+	
 	foreach ($vars as $key => $value) {
 		foreach ($prefixes as $prefix) {
 			if (substr($key, 0, 1) === $prefix) {
@@ -1162,7 +1167,7 @@ function _elgg_split_vars(array $vars = [], array $prefixes = null) {
 				$return[$prefix][$key] = $value;
 				break;
 			} else {
-				$return[''][$key] = $value;
+				$return[$default_section][$key] = $value;
 			}
 		}
 	}
@@ -1436,6 +1441,11 @@ function elgg_views_boot() {
 
 	elgg_define_js('jquery.ui.autocomplete.html', [
 		'deps' => ['jquery-ui/widgets/autocomplete'],
+	]);
+
+	elgg_register_simplecache_view('elgg/touch_punch.js');
+	elgg_define_js('jquery-ui/widgets/sortable', [
+		'deps' => ['elgg/touch_punch'],
 	]);
 
 	elgg_register_ajax_view('languages.js');

@@ -49,7 +49,6 @@ class Permissions {
 	
 		$type = $entity->type;
 		$subtype = $entity->getSubtype();
-	
-		return (bool) elgg_trigger_plugin_hook('likes:is_likable', "$type:$subtype", [], false);
+		return (bool) elgg_trigger_deprecated_plugin_hook('likes:is_likable', "{$type}:{$subtype}", [], $entity->hasCapability('likable'), "Use the capabilities system to register your entity ('{$type}:{$subtype}') as likable.", '4.1');
 	}
 }

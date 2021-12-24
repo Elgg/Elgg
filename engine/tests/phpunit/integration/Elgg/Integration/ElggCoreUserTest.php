@@ -205,29 +205,6 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 
 		$this->user->delete();
 	}
-
-	public function testCanDisableUserEntities() {
-
-		$user = $this->createUser();
-		$this->createObject([
-			'owner_guid' => $user->guid,
-		]);
-		$this->createObject([
-			'container_guid' => $user->guid,
-		]);
-
-		_elgg_services()->entityTable->disableEntities($user);
-
-		$objects = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($user) {
-			return elgg_get_entities([
-				'owner_guid' => $user->guid,
-			]);
-		});
-		
-		foreach ($objects as $object) {
-			$this->assertFalse($object->isEnabled());
-		}
-	}
 	
 	/**
 	 * @dataProvider profileDataProvider

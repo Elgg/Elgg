@@ -1,9 +1,7 @@
 <?php
 
 use Elgg\EntityIcon;
-use Elgg\Database\EntityTable;
 use Elgg\Database\QueryBuilder;
-use Elgg\Database\Update;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\Filesystem\IOException;
@@ -378,7 +376,13 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	public function setMetadata($name, $value, $value_type = '', $multiple = false) {
 
 		if ($value === null || $value === '') {
-			return $this->deleteMetadata($name);
+			$result = $this->deleteMetadata($name);
+			if (is_null($result)) {
+				// null result means no metadata found to be deleted
+				return true;
+			}
+			
+			return $result;
 		}
 		
 		// normalize value to an array that we will loop over
@@ -600,7 +604,10 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	public function setPrivateSetting($name, $value) {
 		
 		if ($value === null || $value === '') {
-			return $this->removePrivateSetting($name);
+			$this->removePrivateSetting($name);
+			
+			// do not check result of removePrivateSetting as it returns false if private setting does not exist
+			return true;
 		}
 		
 		if (is_bool($value)) {
@@ -935,19 +942,18 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @since 1.8.0
 	 */
 	public function countComments() {
+		if (!$this->hasCapability('commentable')) {
+			return 0;
+		}
+		
 		$params = ['entity' => $this];
 		$num = _elgg_services()->hooks->trigger('comments:count', $this->getType(), $params);
 
 		if (is_int($num)) {
 			return $num;
 		}
-
-		return elgg_count_entities([
-			'type' => 'object',
-			'subtype' => 'comment',
-			'container_guid' => $this->getGUID(),
-			'distinct' => false,
-		]);
+		
+		return \Elgg\Comments\DataService::instance()->getCommentsCount($this);
 	}
 
 	/**
@@ -1071,7 +1077,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @param int  $user_guid User guid (default is logged in user)
 	 * @param bool $default   Default permission
 	 *
-	 * @return bool|null
+	 * @return bool
 	 */
 	public function canComment($user_guid = 0, $default = null) {
 		return _elgg_services()->userCapabilities->canComment($this, $user_guid, $default);
@@ -1670,11 +1676,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
 		$this->disableAnnotations();
 
-		$qb = Update::table(EntityTable::TABLE_NAME);
-		$qb->set('enabled', $qb->param('no', ELGG_VALUE_STRING))
-			->where($qb->compare('guid', '=', $guid, ELGG_VALUE_GUID));
-		
-		$disabled = $this->getDatabase()->updateData($qb);
+		$disabled = _elgg_services()->entityTable->disable($this);
 
 		if ($unban_after) {
 			$this->unban();
@@ -1687,7 +1689,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			_elgg_services()->events->triggerAfter('disable', $this->type, $this);
 		}
 
-		return (bool) $disabled;
+		return $disabled;
 	}
 
 	/**
@@ -1698,8 +1700,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return bool
 	 */
 	public function enable($recursive = true) {
-		$guid = (int) $this->guid;
-		if (!$guid) {
+		if (empty($this->guid)) {
 			return false;
 		}
 
@@ -1711,12 +1712,8 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			return false;
 		}
 
-		$result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid, $recursive) {
-			$qb = Update::table(EntityTable::TABLE_NAME);
-			$qb->set('enabled', $qb->param('yes', ELGG_VALUE_STRING))
-				->where($qb->compare('guid', '=', $guid, ELGG_VALUE_GUID));
-
-			$result = $this->getDatabase()->updateData($qb);
+		$result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($recursive) {
+			$result = _elgg_services()->entityTable->enable($this);
 				
 			$this->deleteMetadata('disable_reason');
 			$this->enableAnnotations();
@@ -1724,7 +1721,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			if ($recursive) {
 				$disabled_with_it = elgg_get_entities([
 					'relationship' => 'disabled_with',
-					'relationship_guid' => $guid,
+					'relationship_guid' => $this->guid,
 					'inverse_relationship' => true,
 					'limit' => false,
 					'batch' => true,
@@ -1733,7 +1730,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
 				foreach ($disabled_with_it as $e) {
 					$e->enable($recursive);
-					remove_entity_relationship($e->guid, 'disabled_with', $guid);
+					remove_entity_relationship($e->guid, 'disabled_with', $this->guid);
 				}
 			}
 
@@ -2080,5 +2077,17 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		foreach ($namespaces as $namespace) {
 			_elgg_services()->dataCache->get($namespace)->delete($this->guid);
 		}
+	}
+	
+	/**
+	 * Checks a specific capability is enabled for the entity type/subtype
+	 *
+	 * @param string $capability capability to check
+	 *
+	 * @return bool
+	 * @since 4.1
+	 */
+	public function hasCapability(string $capability): bool {
+		return _elgg_services()->entity_capabilities->hasCapability($this->getType(), $this->getSubtype(), $capability);
 	}
 }

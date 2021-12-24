@@ -15,7 +15,11 @@ return [
 			'type' => 'object',
 			'subtype' => 'thewire',
 			'class' => 'ElggWire',
-			'searchable' => true,
+			'capabilities' => [
+				'commentable' => false,
+				'searchable' => true,
+				'likable' => true,
+			],
 		],
 	],
 	'settings' => [
@@ -76,11 +80,6 @@ return [
 		],
 	],
 	'hooks' => [
-		'likes:is_likable' => [
-			'object:thewire' => [
-				'Elgg\Values::getTrue' => [],
-			],
-		],
 		'register' => [
 			'menu:entity' => [
 				'Elgg\TheWire\Menus\Entity::register' => [],

@@ -346,6 +346,7 @@ return array(
 	
 	'notifications:subscriptions:record:settings' => 'Show detailed selection',
 	'notifications:subscriptions:no_results' => 'There are no subscription records yet',
+	'notifications:subscriptions:details:no_results' => 'There are no detailed subscriptions to configure.',
 	'notifications:subscriptions:details:reset' => 'Undo selection',
 
 	'notifications:mute:title' => "Mute notifications",
@@ -562,6 +563,9 @@ Since Elgg has a lot of file access this will negatively impact performance. Als
 	'admin:settings:i18n' => 'Internationalization',
 	'admin:settings:advanced' => 'Advanced Settings',
 	'admin:settings:users' => 'Users',
+	'admin:site_icons' => "Site Icons",
+	'admin:site_icons:site_icon' => "Site Icon",
+	'admin:site_icons:info' => "Upload an icon related to your site. This icon will be used as a favicon and when showing the site for example as the sender in site notifications.",
 	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "This admin panel allows you to control global settings for your site. Choose an option below to get started.",
 	'admin:site:opt:linktext' => "Configure site...",
@@ -763,6 +767,11 @@ To view the profile of the old administrator, click here:
 
 To go to the site, click here:
 %s',
+	'user:notification:validate:subject' => 'Your account on %s is ready for use',
+	'user:notification:validate:body' => 'Your account on %s has been validated. You can now start using it.
+
+To go to the site, click here:
+%s',
 	'user:notification:ban:subject' => 'Your account on %s was banned',
 	'user:notification:ban:body' => 'Your account on %s was banned.
 
@@ -883,6 +892,7 @@ See the full list of users here:
 	'admin:server:label:log_location' => 'Log Location',
 	'admin:server:label:php_version' => 'PHP version',
 	'admin:server:label:php_version:required' => 'Elgg requires a minimal PHP version of 7.1',
+	'admin:server:label:php_version:required_version' => 'Elgg requires a minimal PHP version of %s',
 	'admin:server:label:php_ini' => 'PHP ini file location',
 	'admin:server:label:php_log' => 'PHP Log',
 	'admin:server:label:mem_avail' => 'Memory available',
@@ -911,8 +921,12 @@ For improved performance, it is recommended that you enable and configure OPcach
 	
 	'admin:server:requirements:database:server' => "Database server",
 	'admin:server:requirements:database:server:required' => "Elgg requires MySQL v5.5.3 or higher for its database",
+	'admin:server:requirements:database:server:required_version' => "Elgg requires MySQL v%s or higher for its database",
 	'admin:server:requirements:database:client' => "Database client",
 	'admin:server:requirements:database:client:required' => "Elgg requires pdo_mysql to connect to the database server",
+
+	'admin:server:requirements:gc' => "Session Garbage Collection",
+	'admin:server:requirements:gc:info' => "If garbage collection is not configured the session table will not be cleaned up. Configure session.gc_divisor and session.gc_probability in your php.ini.",
 	
 	'admin:user:label:search' => "Find users:",
 	'admin:user:label:searchbutton' => "Search",
@@ -1408,8 +1422,12 @@ Once you have logged in, we highly recommend that you change your password.',
 	'config:friendly_time_number_of_days:help' => "You can configure how many days the friendly time notation is used. After the set amount of days the friendly time will change into a regular date format. Setting this to 0 will disable the friendly time format.",
 	'config:content:comment_box_collapses' => "The comment box collapses after the first comment on content",
 	'config:content:comment_box_collapses:help' => "This only applies if the comments list is sorted latest first",
+	'config:content:comments_group_only' => "Only group members can comment on group content",
 	'config:content:comments_latest_first' => "The comments should be listed with the latest comment first",
 	'config:content:comments_latest_first:help' => "This controls the default behaviour of the listing of comments on a content detail page. If disabled this will also move the comment box to the end of the comments list",
+	'config:content:comments_max_depth' => "Maximum levels of threaded comments",
+	'config:content:comments_max_depth:help' => "When enabled comments can be made on other comments until the configured maximum depth.",
+	'config:content:comments_max_depth:none' => "No threaded comments allowed",
 	'config:content:comments_per_page' => "The number of comments per page",
 	'config:content:pagination_behaviour' => "Default pagination behaviour of lists",
 	'config:content:pagination_behaviour:help' => "Controls how list data is updated when using pagination. Individual listings can override this default behaviour.",
@@ -1560,6 +1578,7 @@ To go the the website, click here:
 	'generic_comments:post' => "Post comment",
 	'generic_comments:text' => "Comment",
 	'generic_comments:latest' => "Latest comments",
+	'generic_comment:login_required' => "Your need to be logged in to be able to comment.",
 	'generic_comment:posted' => "Your comment was successfully posted.",
 	'generic_comment:updated' => "The comment was successfully updated.",
 	'entity:delete:object:comment:success' => "The comment was successfully deleted.",

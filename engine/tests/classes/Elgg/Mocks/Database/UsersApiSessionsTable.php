@@ -160,7 +160,7 @@ class UsersApiSessionsTable extends dbUsersApiSessionsTable {
 		$this->query_specs[$row->id][] = $this->database->addQuerySpec([
 			'sql' => $select->getSQL(),
 			'params' => $select->getParameters(),
-			'result' => function() use ($row) {
+			'results' => function() use ($row) {
 				$result = [];
 				
 				foreach ($this->rows as $db_row) {
@@ -182,7 +182,7 @@ class UsersApiSessionsTable extends dbUsersApiSessionsTable {
 		$this->query_specs[$row->id][] = $this->database->addQuerySpec([
 			'sql' => $select->getSQL(),
 			'params' => $select->getParameters(),
-			'result' => function() use ($row) {
+			'results' => function() use ($row) {
 				foreach ($this->rows as $db_row) {
 					if ($row->token !== $db_row->token) {
 						continue;
@@ -205,7 +205,7 @@ class UsersApiSessionsTable extends dbUsersApiSessionsTable {
 		$this->query_specs[$row->id][] = $this->database->addQuerySpec([
 			'sql' => $delete->getSQL(),
 			'params' => $delete->getParameters(),
-			'result' => function() use ($row) {
+			'results' => function() use ($row) {
 				if (isset($this->rows[$row->id])) {
 					$this->clearQuerySpecs($row);
 					unset($this->rows[$row->id]);

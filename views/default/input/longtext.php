@@ -20,7 +20,6 @@
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-longtext');
 
 $defaults = [
-	'value' => '',
 	'rows' => '10',
 	'cols' => '50',
 	'id' => "elgg-input-" . base_convert(mt_rand(), 10, 36),
@@ -40,7 +39,7 @@ unset($vars['visual']);
 
 $vars['data-editor-opts'] = json_encode($editor_opts);
 
-$value = htmlspecialchars($vars['value'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+$value = htmlspecialchars(elgg_extract('value', $vars, ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 unset($vars['value']);
 
 echo elgg_view_menu('longtext', [

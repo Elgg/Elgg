@@ -63,6 +63,9 @@ button:focus {
 }
 
 .elgg-button-action-done {
+	background: $(button-action-background-color-hover);
+	color: $(button-action-font-color-hover);
+		
 	&:hover,
 	&:focus {
 		background: $(button-action-background-color-hover);
@@ -123,6 +126,7 @@ button:focus {
 
 /* Use .elgg-size-small or .elgg-size-large for additional sizes */
 .elgg-module-menu .elgg-button,
+.elgg-message-menu .elgg-button,
 .elgg-button.elgg-size-small {
 	padding: 0.25rem 0.5rem;
 	line-height: 1.5rem;

@@ -36,8 +36,6 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 			->onlyMethods([
 				'getApp',
 				'checkRewriteRules',
-				'createSessionFromFile',
-				'createSessionFromDatabase',
 			])
 			->getMock();
 
@@ -46,16 +44,6 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->mock->method('checkRewriteRules')
 			->will($this->returnCallback([$this, 'checkRewriteRules']));
-
-		$this->mock->method('createSessionFromFile')
-			->will($this->returnCallback(function () {
-				$this->getApp()->internal_services->set('session', ElggSession::getMock());
-			}));
-
-		$this->mock->method('createSessionFromDatabase')
-			->will($this->returnCallback(function () {
-				$this->getApp()->internal_services->set('session', ElggSession::getMock());
-			}));
 	}
 
 	public function down() {
@@ -400,7 +388,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		$db->addQuerySpec([
 			'sql' => 'SHOW TABLES',
 			'results' => [
-				(object) ["{$db->prefix}config"],
+				["{$db->prefix}config"],
 			],
 		]);
 
@@ -467,7 +455,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		$db->addQuerySpec([
 			'sql' => 'SHOW TABLES',
 			'results' => [
-				(object) ["{$db->prefix}config"],
+				["{$db->prefix}config"],
 			],
 		]);
 
@@ -500,7 +488,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		$db->addQuerySpec([
 			'sql' => 'SHOW TABLES',
 			'results' => [
-				(object) ["{$db->prefix}config"],
+				["{$db->prefix}config"],
 			],
 		]);
 
@@ -580,7 +568,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		$db->addQuerySpec([
 			'sql' => 'SHOW TABLES',
 			'results' => [
-				(object) ["{$db->prefix}config"],
+				["{$db->prefix}config"],
 			],
 		]);
 
@@ -619,7 +607,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		$db->addQuerySpec([
 			'sql' => 'SHOW TABLES',
 			'results' => [
-				(object) ["{$db->prefix}config"],
+				["{$db->prefix}config"],
 			],
 		]);
 

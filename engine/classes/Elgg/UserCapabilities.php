@@ -301,24 +301,32 @@ class UserCapabilities {
 	 * @param int        $user_guid User guid (default is logged in user)
 	 * @param bool       $default   Default permission
 	 *
-	 * @return bool|null
+	 * @return bool
 	 */
 	public function canComment(ElggEntity $entity, $user_guid = 0, $default = null) {
-		if ($this->canBypassPermissionsCheck($user_guid)) {
-			return true;
-		}
-
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {
 			return false;
 		}
-
+		
+		$container_result = $this->canWriteToContainer($entity, 'object', 'comment', $user_guid);
+		if ($this->canBypassPermissionsCheck($user_guid)) {
+			// doing this again here to prevent bypassed users to be influenced by permissions_check:comment hook
+			return $container_result;
+		}
+		
+		if (is_null($default) || $default === $container_result) {
+			$default = $container_result;
+		} else {
+			elgg_deprecated_notice('Passing "$default" to $entity->canComment() has been deprecated.', '4.1');
+		}
+		
 		// By default, we don't take a position of whether commenting is allowed
 		// because it is handled by the subclasses of \ElggEntity
 		$params = [
 			'entity' => $entity,
-			'user' => $user
+			'user' => $user,
 		];
 		return $this->hooks->trigger('permissions_check:comment', $entity->getType(), $params, $default);
 	}

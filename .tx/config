@@ -38,6 +38,12 @@ source_file = mod/ckeditor/languages/en.php
 source_lang = en
 type = PHP_ARRAY
 
+[elgg-core-4.custom_index]
+file_filter = mod/custom_index/languages/<lang>.php
+source_file = mod/custom_index/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
 [elgg-core-4.developers]
 file_filter = mod/developers/languages/<lang>.php
 source_file = mod/developers/languages/en.php
@@ -185,12 +191,6 @@ type = PHP_ARRAY
 [elgg-core-4.docs-index]
 file_filter = docs/locale/<lang>/LC_MESSAGES/index.po
 source_file = docs/locale/pot/index.pot
-source_lang = en
-type = PO
-
-[elgg-core-4.docs-about]
-file_filter = docs/locale/<lang>/LC_MESSAGES/about.po
-source_file = docs/locale/pot/about.pot
 source_lang = en
 type = PO
 

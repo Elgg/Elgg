@@ -5,7 +5,6 @@ namespace Elgg\Database;
 use Elgg\Database;
 use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\EventsService;
-use Elgg\Traits\Database\LegacyQueryOptionsAdapter;
 use Elgg\Traits\TimeUsing;
 
 /**
@@ -274,7 +273,7 @@ class AnnotationsTable {
 	 */
 	public function find(array $options = []) {
 		$options['metastring_type'] = 'annotations';
-		$options = LegacyQueryOptionsAdapter::normalizeMetastringOptions($options);
+		$options = QueryOptions::normalizeMetastringOptions($options);
 
 		return Annotations::find($options);
 	}

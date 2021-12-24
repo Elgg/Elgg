@@ -294,7 +294,7 @@ class HtmlFormatter {
 			]);
 		}
 
-		if (!empty($options['encode_text'])) {
+		if (!empty($options['encode_text']) && is_string($text)) {
 			$double_encode = empty($options['double_encode']) ? false : true;
 			$text = htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', $double_encode);
 		}
@@ -325,6 +325,10 @@ class HtmlFormatter {
 	 * @return string String run through strip_tags() and any plugin hooks.
 	 */
 	public function stripTags($string, $allowable_tags = null) {
+		if (!isset($string)) {
+			return '';
+		}
+
 		$params = [
 			'original_string' => $string,
 			'allowable_tags' => $allowable_tags,
@@ -364,6 +368,10 @@ class HtmlFormatter {
 	 * @license Released under dual-license GPL2/MIT by explicit permission of Pádraic Brady
 	 */
 	public function decode($string) {
+		if (!isset($string)) {
+			return '';
+		}
+		
 		$string = str_replace(
 			['&gt;', '&lt;', '&amp;', '&quot;', '&#039;'],
 			['&amp;gt;', '&amp;lt;', '&amp;amp;', '&amp;quot;', '&amp;#039;'],

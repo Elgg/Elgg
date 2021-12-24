@@ -211,6 +211,7 @@ abstract class ElggCache implements \ArrayAccess {
 	 *
 	 * @return void
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetSet($key, $value) {
 		$this->save($key, $value);
 	}
@@ -224,6 +225,7 @@ abstract class ElggCache implements \ArrayAccess {
 	 *
 	 * @return mixed
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetGet($key) {
 		return $this->load($key);
 	}
@@ -237,6 +239,7 @@ abstract class ElggCache implements \ArrayAccess {
 	 *
 	 * @return void
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetUnset($key) {
 		if (isset($this->$key)) {
 			unset($this->$key);
@@ -252,6 +255,7 @@ abstract class ElggCache implements \ArrayAccess {
 	 *
 	 * @return bool
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetExists($key) {
 		return isset($this->$key);
 	}

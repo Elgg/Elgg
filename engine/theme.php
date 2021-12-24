@@ -87,6 +87,7 @@ return [
 	// breakpoints
 	'tablet' => '50rem',
 	'desktop' => '80rem',
+	'media-phone-up' => 'screen and (min-width: 30rem)',
 	'media-tablet-up' => 'screen and (min-width: 50rem)',
 	'media-desktop-up' => 'screen and (min-width: 80rem)',
 	'media-mobile-only' => 'screen and (max-width: 50rem)',

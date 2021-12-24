@@ -715,142 +715,56 @@ function get_entity_statistics(int $owner_guid = 0): array {
 }
 
 /**
- * Registers an entity type and subtype as a public-facing entity that should be shown in search
+ * Checks if a capability is enabled for a specified type/subtype
  *
- * @warning Entities that aren't registered here will not show up in search.
+ * @param string $type       type of the entity
+ * @param string $subtype    subtype of the entity
+ * @param string $capability name of the capability to check
+ * @param bool   $default    default value to return if it is not explicitly set
  *
- * @tip Add a language string item:type:subtype and collection:type:subtype to make sure the items are display properly.
- *
- * @param string $type    The type of entity (object, site, user, group)
- * @param string $subtype The subtype to register (may be blank)
- *
- * @return bool Depending on success
- * @see get_registered_entity_types()
+ * @return bool
+ * @since 4.1
  */
-function elgg_register_entity_type($type, $subtype = null) {
-	$type = strtolower($type);
-	if (!in_array($type, \Elgg\Config::ENTITY_TYPES)) {
-		return false;
-	}
-
-	$entities = _elgg_services()->config->registered_entities;
-	if (empty($entities)) {
-		$entities = [];
-	}
-
-	if (!isset($entities[$type])) {
-		$entities[$type] = [];
-	}
-
-	if ($subtype) {
-		if (in_array($subtype, $entities[$type])) {
-			// subtype already registered
-			return true;
-		}
-		
-		$entities[$type][] = $subtype;
-	}
-
-	_elgg_services()->config->registered_entities = $entities;
-
-	return true;
+function elgg_entity_has_capability(string $type, string $subtype, string $capability, bool $default = false): bool {
+	return _elgg_services()->entity_capabilities->hasCapability($type, $subtype, $capability, $default);
 }
 
 /**
- * Unregisters an entity type and subtype as a public-facing type.
+ * Enables the capability for a specified type/subtype
  *
- * @warning With a blank subtype, it unregisters that entity type including
- * all subtypes. This must be called after all subtypes have been registered.
+ * @param string $type       type of the entity
+ * @param string $subtype    subtype of the entity
+ * @param string $capability name of the capability to set
  *
- * @param string $type    The type of entity (object, site, user, group)
- * @param string $subtype The subtype to register (may be blank)
- *
- * @return bool Depending on success
- * @see elgg_register_entity_type()
+ * @return void
+ * @since 4.1
  */
-function elgg_unregister_entity_type($type, $subtype = null) {
-	$type = strtolower($type);
-	if (!in_array($type, \Elgg\Config::ENTITY_TYPES)) {
-		return false;
-	}
-
-	$entities = _elgg_services()->config->registered_entities;
-	if (empty($entities)) {
-		return false;
-	}
-
-	if (!isset($entities[$type])) {
-		return false;
-	}
-
-	if ($subtype) {
-		if (in_array($subtype, $entities[$type])) {
-			$key = array_search($subtype, $entities[$type]);
-			unset($entities[$type][$key]);
-		} else {
-			return false;
-		}
-	} else {
-		unset($entities[$type]);
-	}
-
-	_elgg_services()->config->registered_entities = $entities;
-	return true;
+function elgg_entity_enable_capability(string $type, string $subtype, string $capability): void {
+	_elgg_services()->entity_capabilities->setCapability($type, $subtype, $capability, true);
 }
 
 /**
- * Returns registered entity types and subtypes
+ * Disables the capability for a specified type/subtype
  *
- * @param string $type The type of entity (object, site, user, group) or blank for all
+ * @param string $type       type of the entity
+ * @param string $subtype    subtype of the entity
+ * @param string $capability name of the capability to set
  *
- * @return array|false Depending on whether entities have been registered
- * @see elgg_register_entity_type()
+ * @return void
+ * @since 4.1
  */
-function get_registered_entity_types($type = null) {
-	$registered_entities = _elgg_services()->config->registered_entities;
-	if (empty($registered_entities)) {
-		return false;
-	}
-
-	if ($type) {
-		$type = strtolower($type);
-	}
-
-	if (!empty($type) && !isset($registered_entities[$type])) {
-		return false;
-	}
-
-	if (empty($type)) {
-		return $registered_entities;
-	}
-
-	return $registered_entities[$type];
+function elgg_entity_disable_capability(string $type, string $subtype, string $capability): void {
+	_elgg_services()->entity_capabilities->setCapability($type, $subtype, $capability, false);
 }
 
 /**
- * Returns if the entity type and subtype have been registered with {@link elgg_register_entity_type()}.
+ * Returns an array of type/subtypes with the requested capability enabled
  *
- * @param string $type    The type of entity (object, site, user, group)
- * @param string $subtype The subtype (may be blank)
+ * @param string $capability name of the capability to set
  *
- * @return bool Depending on whether or not the type has been registered
+ * @return array
+ * @since 4.1
  */
-function is_registered_entity_type($type, $subtype = null) {
-	$registered_entities = _elgg_services()->config->registered_entities;
-	if (empty($registered_entities)) {
-		return false;
-	}
-
-	$type = strtolower($type);
-
-	// @todo registering a subtype implicitly registers the type.
-	// see #2684
-	if (!isset($registered_entities[$type])) {
-		return false;
-	}
-
-	if ($subtype && !in_array($subtype, $registered_entities[$type])) {
-		return false;
-	}
-	return true;
+function elgg_entity_types_with_capability(string $capability): array {
+	return _elgg_services()->entity_capabilities->getTypesWithCapability($capability);
 }

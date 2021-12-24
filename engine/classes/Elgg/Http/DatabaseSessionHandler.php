@@ -39,6 +39,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	/**
 	 * {@inheritDoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function open($save_path, $name) {
 		return true;
 	}
@@ -46,6 +47,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	/**
 	 * {@inheritDoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function read($session_id) {
 		$select = Select::fromTable(self::TABLE_NAME);
 		$select->select('*')
@@ -62,6 +64,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	/**
 	 * {@inheritDoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function write($session_id, $session_data) {
 		
 		if (elgg_get_config('_disable_session_save')) {
@@ -90,6 +93,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	/**
 	 * {@inheritDoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function close() {
 		return true;
 	}
@@ -97,6 +101,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	/**
 	 * {@inheritDoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function destroy($session_id) {
 		$delete = Delete::fromTable(self::TABLE_NAME);
 		$delete->where($delete->compare('session', '=', $session_id, ELGG_VALUE_STRING));
@@ -109,6 +114,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	/**
 	 * {@inheritDoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function gc($max_lifetime) {
 		$delete = Delete::fromTable(self::TABLE_NAME);
 		$delete->where($delete->compare('ts', '<', $max_lifetime, ELGG_VALUE_TIMESTAMP));

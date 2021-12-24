@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-19 11:45+0100\n"
+"POT-Creation-Date: 2021-12-24 13:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,6 +40,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/3.1-to-3.2.rst:6
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:7
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:6
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:6
 msgid "Contents"
 msgstr ""
 
@@ -3316,6 +3317,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/3.0-to-3.1.rst:94
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:77
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:892
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:22
 msgid "Deprecated APIs"
 msgstr ""
 
@@ -3801,7 +3803,7 @@ msgid "Inline tabs components"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.2-to-2.3.rst:124
-msgid "Inline tabs component can now be rendered with ``page/components/tabs`` view. The components allows to switch between pre-poluated and ajax-loaded. See ``page/components/tabs`` in core views and ``theme_sandbox/components/tabs`` in developers plugin for usage instructions and examples."
+msgid "Inline tabs component can now be rendered with ``page/components/tabs`` view. The components allows to switch between pre-populated and ajax-loaded. See ``page/components/tabs`` in core views and ``theme_sandbox/components/tabs`` in developers plugin for usage instructions and examples."
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.2-to-2.3.rst:128
@@ -7992,6 +7994,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:535
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:901
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:937
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:25
 msgid "Lib functions"
 msgstr ""
 
@@ -9245,6 +9248,7 @@ msgid "``forward()`` use ``Elgg\\Exceptions\\HttpException`` instances or ``elgg
 msgstr ""
 
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:906
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:31
 msgid "Plugin hooks"
 msgstr ""
 
@@ -9560,3 +9564,46 @@ msgstr ""
 msgid "The action ``reportedcontent/delete`` has been replaced with a generic entity delete action"
 msgstr ""
 
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:2
+msgid "From 4.0 to 4.1"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:9
+msgid "Entity Capabilities"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:11
+msgid "A new way of registering entity capabilities has been introduced. The following related functions have been deprecated:"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:13
+msgid "``elgg_register_entity_type()`` use ``elgg_entity_enable_capability($type, $subtype, 'searchable')``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:14
+msgid "``elgg_unregister_entity_type()`` use ``elgg_entity_disable_capability($type, $subtype, 'searchable')``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:15
+msgid "``get_registered_entity_types()`` use ``elgg_entity_types_with_capability('searchable')``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:16
+msgid "``is_registered_entity_type()`` use ``elgg_entity_has_capability($type, $subtype, 'searchable')``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:18
+msgid "The config variable ``registered_entities`` is no longer available."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:27
+msgid "``elgg_get_version()`` use ``elgg_get_release()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:28
+msgid "``get_user_by_code()`` use ``elgg_get_user_by_persistent_token()`` where you only need to provide the token, not the hashed token"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:33
+msgid "``'likes:is_likable', '<type>:<subtype>'`` use  ``$entity->hasCapability('likable')``"
+msgstr ""

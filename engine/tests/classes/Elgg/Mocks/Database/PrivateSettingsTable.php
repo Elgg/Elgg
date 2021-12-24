@@ -19,18 +19,18 @@ class PrivateSettingsTable extends DbPrivateSettingsTable {
 	/**
 	 * @var stdClass[]
 	 */
-	public $rows = [];
+	protected $rows = [];
 
 	/**
 	 * DB query query_specs
 	 * @var array
 	 */
-	public $query_specs = [];
+	protected $query_specs = [];
 
 	/**
 	 * @var int
 	 */
-	static $iterator = 100;
+	protected static $iterator = 100;
 
 	/**
 	 * {@inheritdoc}
@@ -40,8 +40,8 @@ class PrivateSettingsTable extends DbPrivateSettingsTable {
 			return false;
 		}
 
-		static::$iterator++;
-		$id = static::$iterator;
+		self::$iterator++;
+		$id = self::$iterator;
 
 		$row = (object) [
 			'id' => $id,
@@ -94,7 +94,7 @@ class PrivateSettingsTable extends DbPrivateSettingsTable {
 	 *
 	 * @return void
 	 */
-	public function clearQuerySpecs(stdClass $row) {
+	protected function clearQuerySpecs(stdClass $row) {
 		if (!isset($this->query_specs[$row->id])) {
 			return;
 		}
@@ -110,7 +110,7 @@ class PrivateSettingsTable extends DbPrivateSettingsTable {
 	 *
 	 * @return void
 	 */
-	public function addQuerySpecs(stdClass $row) {
+	protected function addQuerySpecs(stdClass $row) {
 
 		$this->clearQuerySpecs($row);
 
@@ -174,15 +174,4 @@ class PrivateSettingsTable extends DbPrivateSettingsTable {
 			}
 		]);
 	}
-
-	/**
-	 * Iterate ID
-	 * @return int
-	 */
-	public function iterate() {
-		static::$iterator++;
-
-		return static::$iterator;
-	}
-
 }

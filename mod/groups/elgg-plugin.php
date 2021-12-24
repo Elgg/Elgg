@@ -19,7 +19,11 @@ return [
 		[
 			'type' => 'group',
 			'subtype' => 'group',
-			'searchable' => true,
+			'capabilities' => [
+				'commentable' => false,
+				'searchable' => true,
+				'likable' => true,
+			],
 		],
 	],
 	'actions' => [
@@ -209,11 +213,6 @@ return [
 		'gatekeeper' => [
 			'group:group' => [
 				'Elgg\Groups\Access::allowProfilePage' => [],
-			],
-		],
-		'likes:is_likable' => [
-			'group:' => [
-				'Elgg\Values::getTrue' => [],
 			],
 		],
 		'register' => [

@@ -51,6 +51,7 @@ function uservalidationbyemail_request_validation($user_guid) {
 		'action' => 'uservalidationbyemail',
 		'object' => $user,
 		'link' => $link,
+		'apply_muting' => false,
 	];
 	
 	// Send validation email

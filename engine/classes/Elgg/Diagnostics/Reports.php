@@ -2,6 +2,8 @@
 
 namespace Elgg\Diagnostics;
 
+use Elgg\Project\Paths;
+
 /**
  * Plugin hook handlers for Developers plugin
  */
@@ -26,22 +28,31 @@ class Reports {
 	 * @return string
 	 */
 	protected static function md5dir($dir) {
-		$extensions_allowed = ['.php', '.js', '.css'];
-	
+		$dir = Paths::sanitize($dir);
+		$extensions_allowed = ['php', 'js', 'css'];
+		
+		if (!is_dir($dir)) {
+			return '';
+		}
+		
 		$buffer = '';
 	
-		if (in_array(strrchr(trim($dir, "/"), '.'), $extensions_allowed)) {
-			$dir = rtrim($dir, "/");
-			$buffer .= md5_file($dir). "  " . $dir . "\n";
-		} else if (is_dir($dir)) {
-			$handle = opendir($dir);
-			while ($file = readdir($handle)) {
-				if (($file != '.') && ($file != '..')) {
-					$buffer .= self::md5dir($dir . $file. "/");
-				}
+		$dh = new \DirectoryIterator($dir);
+		foreach ($dh as $fileinfo) {
+			if ($fileinfo->isDot()) {
+				continue;
 			}
-	
-			closedir($handle);
+			
+			if ($fileinfo->isDir()) {
+				$buffer .= self::md5dir($fileinfo->getPathname());
+			}
+			
+			if (!in_array($fileinfo->getExtension(), $extensions_allowed)) {
+				continue;
+			}
+			
+			$filename = Paths::sanitize($fileinfo->getPathname(), false);
+			$buffer .= md5_file($filename) . " {$filename}" . PHP_EOL;
 		}
 	
 		return $buffer;

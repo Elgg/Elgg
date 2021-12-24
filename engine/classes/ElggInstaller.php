@@ -38,7 +38,10 @@ use Elgg\Exceptions\PluginException;
  * data directory. See ticket #3453 for discussion on this.
  */
 class ElggInstaller {
-
+	
+	public const MYSQL_MINIMAL_VERSION = '5.7';
+	public const PHP_MINIMAL_VERSION = '7.4.0';
+	
 	private $steps = [
 		'welcome',
 		'requirements',
@@ -74,11 +77,7 @@ class ElggInstaller {
 
 		$this->is_action = $app->internal_services->request->getMethod() === 'POST';
 
-		$step = get_input('step', 'welcome');
-
-		if (!in_array($step, $this->getSteps())) {
-			$step = 'welcome';
-		}
+		$step = $this->getCurrentStep();
 
 		$this->determineInstallStatus();
 
@@ -146,7 +145,20 @@ class ElggInstaller {
 			$app->internal_services->dataCache->disable();
 			$app->internal_services->autoloadManager->getCache()->disable();
 
-			$app->internal_services->set('session', \ElggSession::getMock());
+			$current_step = $this->getCurrentStep();
+			$index_admin = array_search('admin', $this->getSteps());
+			$index_complete = array_search('complete', $this->getSteps());
+			$index_step = array_search($current_step, $this->getSteps());
+			
+			// For the admin creation action and the complete step we use the Elgg core session handling.
+			// Otherwise, use default php session handling
+			$use_elgg_session = ($index_step == $index_admin) || ($index_step == $index_complete);
+			if (!$use_elgg_session) {
+				$session = \ElggSession::fromFiles($app->internal_services->config);
+				$session->setName('Elgg_install');
+				$app->internal_services->set('session', $session);
+			}
+
 			$app->internal_services->views->setViewtype('installation');
 			$app->internal_services->views->registerViewtypeFallback('installation');
 			$app->internal_services->views->registerPluginViews(Paths::elgg());
@@ -633,12 +645,12 @@ class ElggInstaller {
 	protected function runComplete() {
 
 		// nudge to check out settings
-		$link = elgg_format_element([
-			'#tag_name' => 'a',
-			'#text' => elgg_echo('install:complete:admin_notice:link_text'),
-			'href' => elgg_normalize_url('admin/site_settings'),
-		]);
-		$notice = elgg_echo('install:complete:admin_notice', [$link]);
+		$link = elgg_view_url(elgg_normalize_url('admin/site_settings'), elgg_echo('install:complete:admin_notice:link_text'));
+		$notice = elgg_format_element('p', [], elgg_echo('install:complete:admin_notice', [$link]));
+
+		$custom_index_link = elgg_view_url(elgg_normalize_url('admin/plugin_settings/custom_index'), elgg_echo('admin:plugin_settings'));
+		$notice .= elgg_format_element('p', [], elgg_echo('install:complete:admin_notice:custom_index', [$custom_index_link]));
+
 		elgg_add_admin_notice('fresh_install', $notice);
 
 		$result = $this->render('complete');
@@ -659,6 +671,21 @@ class ElggInstaller {
 	 */
 	protected function getSteps() {
 		return $this->steps;
+	}
+
+	/**
+	 * Returns current step
+	 *
+	 * @return string
+	 */
+	protected function getCurrentStep() {
+		$step = get_input('step', 'welcome');
+		
+		if (!in_array($step, $this->getSteps())) {
+			$step = 'welcome';
+		}
+		
+		return $step;
 	}
 
 	/**
@@ -743,8 +770,7 @@ class ElggInstaller {
 			if (empty($result)) {
 				return;
 			}
-			foreach ($result as $table) {
-				$table = (array) $table;
+			foreach ($result->fetchAllAssociative() as $table) {
 				if (in_array("{$db->prefix}config", $table)) {
 					$this->has_completed['database'] = true;
 				}
@@ -846,16 +872,7 @@ class ElggInstaller {
 		$app = $this->getApp();
 
 		$index_db = array_search('database', $this->getSteps());
-		$index_admin = array_search('admin', $this->getSteps());
-		$index_complete = array_search('complete', $this->getSteps());
 		$index_step = array_search($step, $this->getSteps());
-
-		// To log in the user, we need to use the Elgg core session handling.
-		// Otherwise, use default php session handling
-		$use_elgg_session = ($index_step == $index_admin && $this->is_action) || ($index_step == $index_complete);
-		if (!$use_elgg_session) {
-			$this->createSessionFromFile();
-		}
 
 		if ($index_step > $index_db) {
 			// once the database has been created, load rest of engine
@@ -967,11 +984,10 @@ class ElggInstaller {
 	protected function checkPHP(&$report) {
 		$phpReport = [];
 
-		$min_php_version = '7.1.0';
-		if (version_compare(PHP_VERSION, $min_php_version, '<')) {
+		if (version_compare(PHP_VERSION, self::PHP_MINIMAL_VERSION, '<')) {
 			$phpReport[] = [
 				'severity' => 'error',
-				'message' => elgg_echo('install:check:php:version', [$min_php_version, PHP_VERSION])
+				'message' => elgg_echo('install:check:php:version', [self::PHP_MINIMAL_VERSION, PHP_VERSION])
 			];
 		}
 
@@ -1244,8 +1260,8 @@ class ElggInstaller {
 
 		// check MySQL version
 		$version = $db->getServerVersion(DbConfig::READ_WRITE);
-		if (version_compare($version, '5.5.3', '<')) {
-			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:oldmysql2', [$version]));
+		if (version_compare($version, self::MYSQL_MINIMAL_VERSION, '<')) {
+			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:mysql_version', [self::MYSQL_MINIMAL_VERSION, $version]));
 
 			return false;
 		}
@@ -1459,11 +1475,10 @@ class ElggInstaller {
 		}
 
 		try {
-			// Plugins hold reference to non-existing DB
-			$app->internal_services->reset('plugins');
-
 			_elgg_generate_plugin_entities();
 
+			$app->internal_services->reset('plugins');
+			
 			$plugins = $app->internal_services->plugins->find('any');
 
 			foreach ($plugins as $plugin) {
@@ -1581,13 +1596,9 @@ class ElggInstaller {
 			return false;
 		}
 
-		$app = $this->getApp();
-
 		$ia = $app->internal_services->session->setIgnoreAccess(true);
 		if (!$user->makeAdmin()) {
 			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:adminaccess'));
-		} else {
-			$app->internal_services->configTable->set('admin_registered', 1);
 		}
 		$app->internal_services->session->setIgnoreAccess($ia);
 
@@ -1599,7 +1610,6 @@ class ElggInstaller {
 			return true;
 		}
 
-		$this->createSessionFromDatabase();
 		try {
 			login($user);
 		} catch (LoginException $ex) {
@@ -1609,32 +1619,5 @@ class ElggInstaller {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Setup session
-	 *
-	 * @return void
-	 */
-	protected function createSessionFromFile() {
-		$app = $this->getApp();
-		$session = ElggSession::fromFiles($app->internal_services->config);
-		$session->setName('Elgg_install');
-		$app->internal_services->set('session', $session);
-		$app->public_services->set('session', $session);
-	}
-
-	/**
-	 * Setup session
-	 *
-	 * @return void
-	 * @throws InstallationException
-	 */
-	protected function createSessionFromDatabase() {
-		$app = $this->getApp();
-		$session = ElggSession::fromDatabase($app->internal_services->config, $app->internal_services->db);
-		$session->start();
-		$app->internal_services->set('session', $session);
-		$app->public_services->set('session', $session);
 	}
 }

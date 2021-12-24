@@ -3,6 +3,7 @@
 namespace Elgg\SiteNotifications;
 
 use Elgg\Database\Clauses\OrderByClause;
+use Elgg\Database\Delete;
 use Elgg\Database\QueryBuilder;
 
 /**
@@ -121,21 +122,29 @@ class Cron {
 				'order_by' => [
 					new OrderByClause('e.time_created', 'ASC'), // oldest first
 				],
+				'callback' => function($row) {
+					return (int) $row->guid;
+				},
 			]);
 			
-			/* @var $entity \ElggEntity */
-			foreach ($batch as $entity) {
-				if (!$entity->delete()) {
-					$batch->reportFailure();
+			$guids = [];
+			foreach ($batch as $guid) {
+				$guids[] = $guid;
+				if (count($guids) < 100) {
 					continue;
 				}
 				
-				$count++;
+				$count += self::removeSiteNotifications($guids);
+				$guids = [];
 				
 				if ((microtime(true) - $start_time) > $max_runtime) {
 					// max runtime expired
 					break;
 				}
+			}
+			
+			if (!empty($guids)) {
+				$count += self::removeSiteNotifications($guids);
 			}
 			
 			return $count;
@@ -185,16 +194,20 @@ class Cron {
 				'order_by' => [
 					new OrderByClause('e.time_created', 'ASC'), // oldest first
 				],
+				'callback' => function($row) {
+					return (int) $row->guid;
+				},
 			]);
 			
-			/* @var $entity \ElggEntity */
-			foreach ($batch as $entity) {
-				if (!$entity->delete()) {
-					$batch->reportFailure();
+			$guids = [];
+			foreach ($batch as $guid) {
+				$guids[] = $guid;
+				if (count($guids) < 100) {
 					continue;
 				}
 				
-				$count++;
+				$count += self::removeSiteNotifications($guids);
+				$guids = [];
 				
 				if ((microtime(true) - $start_time) > $max_runtime) {
 					// max runtime expired
@@ -202,10 +215,110 @@ class Cron {
 				}
 			}
 			
+			if (!empty($guids)) {
+				$count += self::removeSiteNotifications($guids);
+			}
+			
 			return $count;
 		});
 		
 		$result .= elgg_echo('site_notifications:cron:read_cleanup:end', [$count]) . PHP_EOL;
 		return $result;
+	}
+	
+	/**
+	 * Remove the site notification without the use of the Elgg event system by using direct DB queries
+	 *
+	 * @param array $guids the site notification guids to remove
+	 *
+	 * @return int
+	 */
+	protected static function removeSiteNotifications(array $guids): int {
+		// cleanup filestore
+		foreach ($guids as $guid) {
+			$dir = new \Elgg\EntityDirLocator($guid);
+			$file_path = elgg_get_data_path() . $dir->getPath();
+			elgg_delete_directory($file_path);
+		}
+		
+		// access collection membership
+		$acl_membership = Delete::fromTable('access_collection_membership');
+		$acl_membership->where($acl_membership->compare('user_guid', 'in', $guids, ELGG_VALUE_GUID));
+		
+		elgg()->db->deleteData($acl_membership);
+		
+		// access collections
+		$acl = Delete::fromTable('access_collections');
+		$acl->where($acl->compare('owner_guid', 'in', $guids, ELGG_VALUE_GUID));
+		
+		elgg()->db->deleteData($acl);
+		
+		// annotations
+		$annotations = Delete::fromTable('annotations');
+		$annotations->where($annotations->merge([
+			$annotations->compare('entity_guid', 'in', $guids, ELGG_VALUE_GUID),
+			$annotations->compare('owner_guid', 'in', $guids, ELGG_VALUE_GUID),
+		], 'OR'));
+		
+		elgg()->db->deleteData($annotations);
+		
+		// delayed email queue
+		$delayed = Delete::fromTable('delayed_email_queue');
+		$delayed->where($delayed->compare('recipient_guid', 'in', $guids, ELGG_VALUE_GUID));
+		
+		elgg()->db->deleteData($delayed);
+		
+		// entity relationships
+		$rels = Delete::fromTable('entity_relationships');
+		$rels->where($rels->merge([
+			$rels->compare('guid_one', 'in', $guids, ELGG_VALUE_GUID),
+			$rels->compare('guid_two', 'in', $guids, ELGG_VALUE_GUID),
+		], 'OR'));
+		
+		elgg()->db->deleteData($rels);
+		
+		// metadata
+		$md = Delete::fromTable('metadata');
+		$md->where($md->compare('entity_guid', 'in', $guids, ELGG_VALUE_GUID));
+		
+		elgg()->db->deleteData($md);
+		
+		// private settings
+		$ps = Delete::fromTable('private_settings');
+		$ps->where($ps->compare('entity_guid', 'in', $guids, ELGG_VALUE_GUID));
+		
+		elgg()->db->deleteData($ps);
+		
+		// river
+		$river = Delete::fromTable('river');
+		$river->where($river->merge([
+			$river->compare('subject_guid', 'in', $guids, ELGG_VALUE_GUID),
+			$river->compare('object_guid', 'in', $guids, ELGG_VALUE_GUID),
+			$river->compare('target_guid', 'in', $guids, ELGG_VALUE_GUID),
+		], 'OR'));
+		
+		elgg()->db->deleteData($river);
+		
+		// users api sessions
+		$users_api = Delete::fromTable('users_apisessions');
+		$users_api->where($users_api->compare('user_guid', 'in', $guids, ELGG_VALUE_GUID));
+		
+		elgg()->db->deleteData($users_api);
+		
+		// users remember me cookies
+		$cookies = Delete::fromTable('users_remember_me_cookies');
+		$cookies->where($cookies->compare('guid', 'in', $guids, ELGG_VALUE_GUID));
+		
+		elgg()->db->deleteData($cookies);
+		
+		// entities
+		$entities = Delete::fromTable('entities');
+		$entities->where($entities->merge([
+			$entities->compare('guid', 'in', $guids, ELGG_VALUE_GUID),
+			$entities->compare('owner_guid', 'in', $guids, ELGG_VALUE_GUID),
+			$entities->compare('container_guid', 'in', $guids, ELGG_VALUE_GUID),
+		], 'OR'));
+		
+		return elgg()->db->deleteData($entities);
 	}
 }

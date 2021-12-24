@@ -41,8 +41,8 @@ class DelayedEmailQueueTable extends DbDelayedEmailQueueTable{
 	 * @return bool
 	 */
 	public function queueEmail(int $recipient_guid, string $delivery_interval, $item): bool {
-		static::$iterator++;
-		$id = static::$iterator;
+		self::$iterator++;
+		$id = self::$iterator;
 		
 		// lock the time to prevent testing issues
 		$this->setCurrentTime();
@@ -149,6 +149,30 @@ class DelayedEmailQueueTable extends DbDelayedEmailQueueTable{
 				continue;
 			}
 			
+			$this->clearQuerySpecs($row);
+			unset($this->rows[$id]);
+			
+			$result++;
+		}
+		
+		return $result;
+	}
+	
+	/**
+	 * Delete all the queue items from the database for the given recipient and interval
+	 *
+	 * @param int $recipient_guid the recipient
+	 *
+	 * @return int number of deleted rows
+	 */
+	public function deleteAllRecipientRows(int $recipient_guid): int {
+		$result = 0;
+		
+		foreach ($this->rows as $id => $row) {
+			if ($row->recipient_guid !== $recipient_guid) {
+				continue;
+			}
+						
 			$this->clearQuerySpecs($row);
 			unset($this->rows[$id]);
 			

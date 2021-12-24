@@ -13,8 +13,11 @@
 $params = get_input('params');
 $flush_cache = get_input('flush_cache');
 $plugin_id = get_input('plugin_id');
-$plugin = elgg_get_plugin_from_id($plugin_id);
+if (empty($plugin_id)) {
+	return elgg_error_response(elgg_echo('error:missing_data'));
+}
 
+$plugin = elgg_get_plugin_from_id($plugin_id);
 if (!$plugin) {
 	return elgg_error_response(elgg_echo('plugins:settings:save:fail', [$plugin_id]));
 }

@@ -319,7 +319,7 @@ class Accounts {
 			'registeruser:validate:password',
 			'all',
 			['password' => $password],
-			true
+			!empty($password)
 		);
 
 		if (!$result) {

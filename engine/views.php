@@ -13,6 +13,7 @@ return [
 		"jquery.min.map" => "vendor/npm-asset/jquery/dist/jquery.min.map",
 
 		"jquery.colorbox.js" => "vendor/npm-asset/jquery-colorbox/jquery.colorbox-min.js",
+		"jquery.ui.touch-punch.js" => "vendor/npm-asset/jquery-ui-touch-punch/jquery.ui.touch-punch.js",
 		"require.js" => "vendor/npm-asset/requirejs/require.js",
 		"text.js" => "vendor/npm-asset/requirejs-text/text.js",
 		"sprintf.js" => "vendor/npm-asset/sprintf-js/src/sprintf.js",

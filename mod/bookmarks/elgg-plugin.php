@@ -15,7 +15,11 @@ return [
 			'type' => 'object',
 			'subtype' => 'bookmarks',
 			'class' => 'ElggBookmark',
-			'searchable' => true,
+			'capabilities' => [
+				'commentable' => true,
+				'searchable' => true,
+				'likable' => true,
+			],
 		],
 	],
 	'actions' => [
@@ -81,11 +85,6 @@ return [
 		'container_logic_check' => [
 			'object' => [
 				GroupToolContainerLogicCheck::class => [],
-			],
-		],
-		'likes:is_likable' => [
-			'object:bookmarks' => [
-				'Elgg\Values::getTrue' => [],
 			],
 		],
 		'register' => [

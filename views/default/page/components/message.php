@@ -5,12 +5,14 @@
  * @uses $vars['type']      The type of message (error, success, warning, help, notice, info)
  * @uses $vars['title']     Optional title text, will default to the type
  * @uses $vars['icon_name'] Optional iconname to override default icon
+ * @uses $vars['menu']      Optional menu to show in the title bar
  * @uses $vars['body']      Content of the body
  * @uses $vars['class']     Optional additional class for message
  */
 
 $type = elgg_extract('type', $vars, false);
 $title = elgg_extract('title', $vars);
+$menu = elgg_extract('menu', $vars);
 $body = elgg_extract('body', $vars, '');
 
 if (empty($title) && empty($body)) {
@@ -48,6 +50,10 @@ if (!empty($title) && !empty($icon_name)) {
 
 if (!empty($title)) {
 	$header .= elgg_format_element('span', ['class' => 'elgg-message-title'], $title);
+}
+
+if (!empty($menu)) {
+	$header .= elgg_format_element('span', ['class' => 'elgg-message-menu'], $menu);
 }
 
 if (!empty($header)) {

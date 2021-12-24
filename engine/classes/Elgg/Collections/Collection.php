@@ -58,6 +58,7 @@ class Collection implements CollectionInterface,
 	 * @param mixed $item Item
 	 *
 	 * @return void
+	 * @throws \Elgg\Exceptions\InvalidParameterException
 	 */
 	protected function assertValidItem($item) {
 		$class = $this->item_class ? : CollectionItemInterface::class;
@@ -77,6 +78,7 @@ class Collection implements CollectionInterface,
 	/**
 	 * {@inheritdoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function count() {
 		return count($this->items);
 	}
@@ -212,6 +214,7 @@ class Collection implements CollectionInterface,
 	/**
 	 * {@inheritdoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetExists($offset) {
 		return $this->has($offset);
 	}
@@ -219,6 +222,7 @@ class Collection implements CollectionInterface,
 	/**
 	 * {@inheritdoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetGet($offset) {
 		return $this->get($offset);
 	}
@@ -226,6 +230,7 @@ class Collection implements CollectionInterface,
 	/**
 	 * {@inheritdoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetSet($offset, $value) {
 		$this->assertValidItem($value);
 
@@ -236,7 +241,13 @@ class Collection implements CollectionInterface,
 	/**
 	 * {@inheritdoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetUnset($offset) {
+		if (isset($this->items[$offset]) && isset($this->position)) {
+			// handle unset during iteration
+			$this->position--;
+		}
+		
 		unset($this->items[$offset]);
 	}
 
@@ -247,6 +258,7 @@ class Collection implements CollectionInterface,
 	/**
 	 * {@inheritdoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function current() {
 		$keys = array_keys($this->items);
 		
@@ -256,6 +268,7 @@ class Collection implements CollectionInterface,
 	/**
 	 * {@inheritdoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function next() {
 		$this->position++;
 	}
@@ -263,6 +276,7 @@ class Collection implements CollectionInterface,
 	/**
 	 * {@inheritdoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function key() {
 		$keys = array_keys($this->items);
 		
@@ -272,6 +286,7 @@ class Collection implements CollectionInterface,
 	/**
 	 * {@inheritdoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function valid() {
 		$keys = array_keys($this->items);
 		
@@ -281,6 +296,7 @@ class Collection implements CollectionInterface,
 	/**
 	 * {@inheritdoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function rewind() {
 		$this->position = 0;
 	}
@@ -288,6 +304,7 @@ class Collection implements CollectionInterface,
 	/**
 	 * {@inheritdoc}
 	 */
+	#[\ReturnTypeWillChange]
 	public function seek($position) {
 		$keys = array_keys($this->items);
 

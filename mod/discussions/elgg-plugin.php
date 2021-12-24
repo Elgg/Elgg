@@ -15,7 +15,11 @@ return [
 			'type' => 'object',
 			'subtype' => 'discussion',
 			'class' => 'ElggDiscussion',
-			'searchable' => true,
+			'capabilities' => [
+				'commentable' => true,
+				'searchable' => true,
+				'likable' => true,
+			],
 		],
 	],
 	'settings' => [
@@ -82,11 +86,6 @@ return [
 		'get' => [
 			'subscriptions' => [
 				'Elgg\Discussions\Notifications::addGroupSubscribersToCommentOnDiscussionSubscriptions' => [],
-			],
-		],
-		'likes:is_likable' => [
-			'object:discussion' => [
-				'Elgg\Values::getTrue' => [],
 			],
 		],
 		'permissions_check:comment' => [

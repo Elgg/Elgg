@@ -52,6 +52,7 @@ class EmailChangeController {
 		$notification_params = [
 			'object' => $user,
 			'action' => 'email_change',
+			'apply_muting' => false,
 		];
 		
 		$notification = Email::factory([

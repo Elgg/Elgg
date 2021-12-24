@@ -14,8 +14,12 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'page',
-			'searchable' => true,
 			'class' => '\ElggPage',
+			'capabilities' => [
+				'commentable' => true,
+				'searchable' => true,
+				'likable' => true,
+			],
 		],
 	],
 	'actions' => [
@@ -104,11 +108,6 @@ return [
 		'fields' => [
 			'object:page' => [
 				\Elgg\Pages\FieldsHandler::class => [],
-			],
-		],
-		'likes:is_likable' => [
-			'object:page' => [
-				'Elgg\Values::getTrue' => [],
 			],
 		],
 		'permissions_check' => [

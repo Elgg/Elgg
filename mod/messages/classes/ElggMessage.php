@@ -21,18 +21,6 @@ class ElggMessage extends ElggObject {
 	}
 	
 	/**
-	 * {@inheritDoc}
-	 * @see ElggObject::canComment()
-	 */
-	public function canComment($user_guid = 0, $default = null) {
-		if (!isset($default)) {
-			$default = false;
-		}
-		
-		return parent::canComment($user_guid, $default);
-	}
-	
-	/**
 	 * Get the recipient of the message
 	 *
 	 * @return ElggUser|false

@@ -22,6 +22,7 @@ $params = [
 			'type' => 'text/markdown',
 		],
 	],
+	'apply_muting' => false,
 ];
 
 notify_user($user->guid, $site->guid, $subject, $plain_message, $params, ['email']);

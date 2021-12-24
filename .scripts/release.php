@@ -75,5 +75,5 @@ run_commands(array(
 
 	// commit everything to GitHub
 	'git add .',
-	'git commit -am \'chore(release): v$version\'',
+	"git commit -am \"chore(release): v{$version}\"",
 ));

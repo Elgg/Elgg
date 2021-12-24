@@ -70,7 +70,13 @@ define(['jquery', 'elgg'], function ($, elgg) {
 								$container.html($(result).filter('.elgg-comments').html());
 							}
 							
-							$container.find('#elgg-object-' + comment_guid).addClass('elgg-state-highlight');
+							var $comment = $container.find('#elgg-object-' + comment_guid);
+							$comment.addClass('elgg-state-highlight');
+							
+							$([document.documentElement, document.body]).animate({
+								scrollTop: $comment.offset().top
+							}, 500);
+		
 							fix_pagination($container);
 						}
 					});
@@ -98,8 +104,9 @@ define(['jquery', 'elgg'], function ($, elgg) {
 		}
 		dc.toggleEdit();
 		
-		// trick the popup menu to close itself
-		$(document).trigger('scroll');
+		require(['elgg/popup'], function(popup) {
+			popup.close();
+		});
 		
 		return false;
 	});
@@ -116,7 +123,7 @@ define(['jquery', 'elgg'], function ($, elgg) {
 		 * @returns {jQuery} note: may be empty
 		 */
 		getForm: function () {
-			return this.$item.find('.elgg-form-comment-save');
+			return this.$item.find('#edit-comment-' + this.guid);
 		},
 
 		hideForm: function () {

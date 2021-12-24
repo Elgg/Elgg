@@ -18,9 +18,6 @@ class NotificationEventHandler {
 	protected $service;
 
 	/** @var array */
-	protected $subscriptions = [];
-
-	/** @var array */
 	protected $params = [];
 
 	/**
@@ -79,7 +76,17 @@ class NotificationEventHandler {
 		];
 		$subscriptions = _elgg_services()->hooks->trigger('get', 'subscriptions', $params, $subscriptions);
 		
-		return _elgg_services()->subscriptions->filterSubscriptions($subscriptions, $this->event);
+		return _elgg_services()->subscriptions->filterSubscriptions($subscriptions, $this->event, $this->filterMutedSubscriptions());
+	}
+	
+	/**
+	 * Should muted subscribers be filtered
+	 *
+	 * @return bool
+	 * @since 4.1
+	 */
+	protected function filterMutedSubscriptions(): bool {
+		return (bool) elgg_extract('apply_muting', $this->params, true);
 	}
 	
 	/**
@@ -449,6 +456,53 @@ class NotificationEventHandler {
 	 * @return bool
 	 */
 	public static function isConfigurableByUser(): bool {
+		return true;
+	}
+	
+	/**
+	 * Can this event be configured for a specific entity
+	 *
+	 * For example this can be based on a group tools option which is enabled or not
+	 *
+	 * @param \ElggEntity $entity the entity to check for
+	 *
+	 * @return bool
+	 * @since 4.1
+	 */
+	final public static function isConfigurableForEntity(\ElggEntity $entity): bool {
+		
+		if ($entity instanceof \ElggUser) {
+			return static::isConfigurableForUser($entity);
+		} elseif ($entity instanceof \ElggGroup) {
+			return static::isConfigurableForGroup($entity);
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Can this event be configured for a specific user
+	 *
+	 * @param \ElggUser $user the user to check for
+	 *
+	 * @return bool
+	 * @since 4.1
+	 */
+	protected static function isConfigurableForUser(\ElggUser $user): bool {
+		return true;
+	}
+	
+	/**
+	 * Can this event be configured for a specific group
+	 *
+	 * For example this can be based on a group tools option which is enabled or not
+	 *
+	 * @param \ElggGroup $group the group to check for
+	 *
+	 * @return bool
+	 * @since 4.1
+	 */
+	protected static function isConfigurableForGroup(\ElggGroup $group): bool {
 		return true;
 	}
 }

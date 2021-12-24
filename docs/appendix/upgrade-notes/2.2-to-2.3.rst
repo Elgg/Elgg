@@ -121,7 +121,7 @@ See the view ``admin/users/newest`` for a usage example.
 Inline tabs components
 ----------------------
 
-Inline tabs component can now be rendered with ``page/components/tabs`` view. The components allows to switch between pre-poluated and ajax-loaded.
+Inline tabs component can now be rendered with ``page/components/tabs`` view. The components allows to switch between pre-populated and ajax-loaded.
 See ``page/components/tabs`` in core views and ``theme_sandbox/components/tabs`` in developers plugin for usage instructions and examples.
 
 API to alter registration and login URL

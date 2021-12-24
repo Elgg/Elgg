@@ -8,6 +8,10 @@ $contents = get_input('expagescontent', '', false);
 $subtype = get_input('content_type');
 $guid = (int) get_input('guid');
 
+if (empty($contents) || empty($subtype)) {
+	return elgg_error_response(elgg_echo('error:missing_data'));
+}
+
 if ($guid) {
 	// update
 	$expages = get_entity($guid);

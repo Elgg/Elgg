@@ -9,7 +9,7 @@ use Elgg\Request;
 
 /**
  * Redirect a comment url to the full view of the entity
- * being commented on with the correct offset to show the comment
+ * being commented on with the correct offset to show the (top) comment
  *
  * @since 4.0
  */
@@ -39,6 +39,11 @@ class CommentEntityRedirector {
 			return elgg_redirect_response($fallback->getURL());
 		}
 		
+		$top_comment = $comment->getThreadEntity();
+		if (!$top_comment instanceof \ElggComment) {
+			throw new EntityNotFoundException(elgg_echo('generic_comment:notfound'));
+		}
+		
 		$container = $comment->getContainerEntity();
 		if (!$container instanceof \ElggEntity) {
 			throw new EntityNotFoundException(elgg_echo('generic_comment:notfound'));
@@ -46,21 +51,23 @@ class CommentEntityRedirector {
 		
 		$operator = elgg_comments_are_latest_first($container) ? '>' : '<';
 		
-		// this won't work with threaded comments, but core doesn't support that yet
 		$count = elgg_count_entities([
 			'type' => 'object',
 			'subtype' => 'comment',
 			'container_guid' => $container->guid,
+			'metadata_name_value_pairs' => ['level' => 1],
 			'wheres' => [
-				function(QueryBuilder $qb, $main_alias) use ($comment, $operator) {
-					return $qb->compare("{$main_alias}.guid", $operator, $comment->guid, ELGG_VALUE_GUID);
+				function(QueryBuilder $qb, $main_alias) use ($top_comment, $operator) {
+					return $qb->compare("{$main_alias}.guid", $operator, $top_comment->guid, ELGG_VALUE_GUID);
 				},
 			],
 		]);
+		
 		$limit = (int) get_input('limit');
 		if ($limit < 1) {
 			$limit = elgg_comments_per_page($container);
 		}
+		
 		$offset = floor($count / $limit) * $limit;
 		if ($offset < 1) {
 			$offset = null;

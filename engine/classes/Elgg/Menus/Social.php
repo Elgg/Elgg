@@ -21,7 +21,11 @@ class Social {
 	 */
 	public static function registerComments(\Elgg\Hook $hook) {
 		$entity = $hook->getEntityParam();
-		if (!$entity instanceof \ElggEntity) {
+		if (!$entity instanceof \ElggEntity || $entity instanceof \ElggComment) {
+			return;
+		}
+		
+		if (!$entity->hasCapability('commentable')) {
 			return;
 		}
 		

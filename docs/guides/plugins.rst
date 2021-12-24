@@ -64,8 +64,12 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 				'subtype' => 'my_object_subtype',
 				'class' => MyObjectClass::class,
 
-				// Register this subtype for search
-				'searchable' => true,
+				'capabilities' => [
+					// Register this subtype for search
+					'searchable' => true,
+					
+					'likable' => true,
+				],
 			],
 		],
 
@@ -133,11 +137,6 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 					'blog_owner_block_menu' => [
 						'priority' => 700,
 					],
-				],
-			],
-			'likes:is_likable' => [
-				'object:blog' => [
-					'Elgg\Values::getTrue' => [],
 				],
 			],
 			'usersettings:save' => [

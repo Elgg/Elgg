@@ -38,7 +38,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.4', '8.0']
+        php-versions: ['7.4', '8.0', '8.1']
         experimental: [false]
         extra-title: ['']
         memcache: [0]
@@ -73,11 +73,8 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           coverage: none
-          extensions: gd,pdo,xml,json,memcached,redis-4.3.0,mysqli,pdo_mysql,libxml,mbstring
+          extensions: gd,pdo,xml,json,memcached,redis-4.3.0,mysqli,pdo_mysql,libxml,mbstring,intl
           ini-values: max_execution_time=180
-      
-      - name: Install Composer v1
-        run: composer self-update --1
         
       - name: Code checkout
         uses: actions/checkout@v2
@@ -97,15 +94,17 @@ jobs:
         run: composer install
       
       - name: Install Elgg
-        run: php ./elgg-cli install --config ./install/cli/testing_app.php --verbose
+        run: php ./elgg-cli install --config ./install/cli/testing_app.php --verbose --no-ansi
       
       - name: Enable Elgg plugins
         run: php -f ./.scripts/ci/enable_plugins.php
       
       - name: Seed Elgg database
-        run: php ./elgg-cli database:seed --limit=5 --image_folder=./.scripts/seeder/images/ -vv
+        run: php ./elgg-cli database:seed --limit=5 --image_folder=./.scripts/seeder/images/ -vv --no-ansi
       
       - name: Start Elgg webserver
+        # there is some weird issue with the PHP cli-server in PHP 8.1, so skipping this
+        if: ${{ matrix.php-versions != '8.1' }}
         run: |
           php -S localhost:8888 -c ./.scripts/ci/local_php_server.ini index.php &
           # give Web server some time to bind to sockets, etc
@@ -122,4 +121,4 @@ jobs:
       
       - name: Unseed Elgg database
         if: ${{ always() }}
-        run: php ./elgg-cli database:unseed -vv
+        run: php ./elgg-cli database:unseed -vv --no-ansi

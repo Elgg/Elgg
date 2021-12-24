@@ -21,8 +21,22 @@ class SystemEventHandlers {
 	 */
 	public static function init() {
 	
-		elgg_register_entity_type('object', 'comment');
-		elgg_register_entity_type('user', 'user');
+		// searchable
+		elgg_entity_enable_capability('object', 'comment', 'searchable');
+		elgg_entity_enable_capability('user', 'user', 'searchable');
+		
+		// likable
+		elgg_entity_enable_capability('object', 'comment', 'likable');
+		
+		elgg_entity_enable_capability('object', 'comment', 'commentable');
+		
+		// commentable disabled for backwards compatibility. Can be removed in Elgg 5.0 if default behaviour for commentable has been changed
+		elgg_entity_disable_capability('object', 'admin_notice', 'commentable');
+		elgg_entity_disable_capability('object', 'elgg_upgrade', 'commentable');
+		elgg_entity_disable_capability('object', 'plugin', 'commentable');
+		elgg_entity_disable_capability('object', 'widget', 'commentable');
+		elgg_entity_disable_capability('site', 'site', 'commentable');
+		elgg_entity_disable_capability('user', 'user', 'commentable');
 		
 		elgg_register_notification_method('email');
 		if ((bool) elgg_get_config('enable_delayed_email')) {

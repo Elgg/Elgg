@@ -6,15 +6,16 @@
 # Translators:
 # Jerôme Bakker, 2021
 # Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
+# Jeroen Dalsem, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-05 10:27+0100\n"
+"POT-Creation-Date: 2021-12-23 13:47+0100\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
+"Last-Translator: Jeroen Dalsem, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2197,7 +2198,7 @@ msgid ""
 "the following command: `pip install -U sphinxcontrib-phpdomain`"
 msgstr ""
 "Vous devrez peut-être installer 'sphinxcontrib-phpdomain'. Vous pouvez le "
-"faire avec la commande suivante : `pip install -U sphinxcontrib-phpdomain'"
+"faire avec la commande suivante : `pip install -U sphinxcontrib-phpdomain`"
 
 #: ../../contribute/docs.rst:35
 msgid "Follow the existing document organization"
@@ -2472,8 +2473,8 @@ msgstr ""
 
 #: ../../contribute/docs.rst:153
 msgid ""
-"For more information, see http://www.sphinx-doc.org/en/stable/intl.html"
-"#translating-with-sphinx-intl"
+"For more information, see http://www.sphinx-"
+"doc.org/en/stable/intl.html#translating-with-sphinx-intl"
 msgstr ""
 "Pour plus d'information, voyez https://www.sphinx-"
 "doc.org/fr/master/usage/advanced/intl.html#translating-with-sphinx-intl"

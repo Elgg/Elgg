@@ -1,4 +1,7 @@
 <?php
+
+use Elgg\Project\Paths;
+
 /**
  * A filestore that uses disk as storage.
  *
@@ -40,13 +43,12 @@ class ElggTempDiskFilestore extends \ElggDiskFilestore {
 	 * @return string The full path of where the file is stored
 	 */
 	public function getFilenameOnFilestore(\ElggFile $file) {
-		
 		$filename = $file->getFilename();
 		if (!$filename) {
 			return '';
 		}
 
-		return $this->dir_root . $this->unique_sub_dir . $file->getFilename();
+		return Paths::sanitize($this->dir_root . $this->unique_sub_dir . $file->getFilename(), false);
 	}
 	
 	/**

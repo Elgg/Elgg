@@ -652,4 +652,48 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 			['object', 'foo', null, 'false'],
 		];
 	}
+	
+	/**
+	 * @dataProvider emptyValues
+	 */
+	public function testSetMetadataEmpty($empty_value) {
+		$object = $this->createObject();
+		
+		$object->setMetadata('foo', 'bar');
+		$this->assertEquals('bar', $object->getMetadata('foo'));
+		$this->assertEquals('bar', $object->foo);
+		
+		// remove metadata by setting to empty value
+		$this->assertTrue($object->setMetadata('foo', $empty_value));
+		$this->assertNull($object->foo);
+		$this->assertNull($object->getMetadata('foo'));
+		
+		// removing unexisting data should also return true
+		$this->assertTrue($object->setMetadata('foo', $empty_value));
+	}
+	
+	/**
+	 * @dataProvider emptyValues
+	 */
+	public function testSetPrivateSettingEmpty($empty_value) {
+		$object = $this->createObject();
+		
+		$object->setPrivateSetting('foo', 'bar');
+		$this->assertEquals('bar', $object->getPrivateSetting('foo'));
+		
+		// remove private setting by setting to empty value
+		$this->assertTrue($object->setPrivateSetting('foo', $empty_value));
+		$this->assertNull($object->getPrivateSetting('foo'));
+		
+		// removing unexisting data should also return true
+		$this->assertTrue($object->setPrivateSetting('foo', $empty_value));
+	}
+	
+	public function emptyValues() {
+		return [
+			[''],
+			[null],
+		];
+	}
+	
 }

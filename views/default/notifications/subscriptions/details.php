@@ -45,10 +45,15 @@ $notification_events = elgg_get_notification_events();
 $details = [];
 foreach ($notification_events as $type => $subtypes) {
 	foreach ($subtypes as $subtype => $actions) {
+		/* @var $handler \Elgg\Notifications\NotificationEventHandler */
 		foreach ($actions as $action => $handler) {
-			// handler is the classname of the notification event handler
-			// the classname is a subclass of \Elgg\Notifications\NotificationEventHandler
+			// can users configure this handler
 			if (!$handler::isConfigurableByUser()) {
+				continue;
+			}
+			
+			// can this handler be configured for the current container
+			if (!$handler::isConfigurableForEntity($entity)) {
 				continue;
 			}
 			
@@ -64,6 +69,13 @@ foreach ($notification_events as $type => $subtypes) {
 			]);
 		}
 	}
+}
+
+if (empty($details)) {
+	echo elgg_view('page/components/no_results', [
+		'no_results' => elgg_echo('notifications:subscriptions:details:no_results'),
+	]);
+	return;
 }
 
 ksort($details, SORT_NATURAL | SORT_FLAG_CASE);

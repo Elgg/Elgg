@@ -10,7 +10,7 @@ if (!$item instanceof ElggRiverItem) {
 	return;
 }
 
-$name = $item->getSubjectEntity()->getDisplayName();
+$name = $item->getSubjectEntity()->getDisplayName() ?? '';
 $name = htmlspecialchars($name, ENT_NOQUOTES, 'UTF-8');
 $title = elgg_echo('river:update', [$name]);
 

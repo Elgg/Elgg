@@ -5,6 +5,7 @@
 # 
 # Translators:
 # Jerôme Bakker, 2021
+# Jeroen Dalsem, 2021
 # Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
 # 
 #, fuzzy
@@ -12,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-05 10:27+0100\n"
+"POT-Creation-Date: 2021-12-23 13:47+0100\n"
 "PO-Revision-Date: 2021-06-09 13:31+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -141,7 +142,7 @@ msgstr "Le répertoire du programme Elgg est ``/home/userx/public_html``"
 
 #: ../../admin/backup-restore.rst:41
 msgid "The Elgg data directory is ``/home/userx/elggdata``"
-msgstr "Le répertoire de données Elgg est ``/home/userx/elggdata``"
+msgstr "Le répertoire des données de Elgg est ``/home/userx/elggdata``"
 
 #: ../../admin/backup-restore.rst:42
 msgid ""
@@ -691,11 +692,11 @@ msgstr "Modifiez le chemin d'installation"
 #: ../../admin/backup-restore.rst:241
 #: ../../admin/duplicate-installation.rst:182
 msgid "Change the data directory"
-msgstr "Modifiez le répertoire de données"
+msgstr "Modifiez le répertoire des données"
 
 #: ../../admin/backup-restore.rst:247
 msgid "Change the filestore data directory"
-msgstr "Modifiez le répertoire de données de stockage des fichiers"
+msgstr "Modifiez le répertoire des données de stockage des fichiers"
 
 #: ../../admin/backup-restore.rst:254
 msgid "Finalizing the new installation"
@@ -849,7 +850,7 @@ msgid ""
 "`Cron`_ is a program available on Unix-based operating systems that enables "
 "users to run commands and scripts at set intervals or at specific times."
 msgstr ""
-"`Cron`__ est un programme disponible sur les systèmes d'exploitation basés "
+"`Cron`_ est un programme disponible sur les systèmes d'exploitation basés "
 "sur Unix qui permet aux utilisateurs d'exécuter des commandes et des scripts"
 " à des intervalles définis ou à des heures précises."
 
@@ -963,10 +964,6 @@ msgstr ""
 "Facultativement, vous pouvez activer les gestionnaire pour un intervalle "
 "spécifique :"
 
-#: ../../admin/cron.rst:70
-msgid "More information about cron can be found at:"
-msgstr "Vous pouvez trouver plus d'informations sur cron sur :"
-
 #: ../../admin/duplicate-installation.rst:2
 msgid "Duplicate Installation"
 msgstr "Dupliquer une installation"
@@ -994,7 +991,7 @@ msgstr "Base de données"
 
 #: ../../admin/duplicate-installation.rst:18
 msgid "Data from the data directory"
-msgstr "Données du répertoire de données"
+msgstr "Données du répertoire des données"
 
 #: ../../admin/duplicate-installation.rst:19
 msgid "Code"
@@ -1126,7 +1123,7 @@ msgstr "Le chemin d'installation est ``/var/www/elgg/``"
 
 #: ../../admin/duplicate-installation.rst:56
 msgid "The data directory is ``/var/data/elgg/``"
-msgstr "Le chemin du répertoire de données est ``/var/data/elgg/``"
+msgstr "Le chemin du répertoire des données est ``/var/data/elgg/``"
 
 #: ../../admin/duplicate-installation.rst:57
 #: ../../admin/duplicate-installation.rst:68
@@ -1169,7 +1166,7 @@ msgstr "Le chemin d'installation est ``/var/www/elgg_test/``"
 
 #: ../../admin/duplicate-installation.rst:67
 msgid "The data directory is ``/var/data/elgg_test/``"
-msgstr "Le répertoire de données est ``/var/data/elgg_test/``"
+msgstr "Le répertoire des données est ``/var/data/elgg_test/``"
 
 #: ../../admin/duplicate-installation.rst:69
 msgid "The database name is ``test_elgg``"
@@ -1392,7 +1389,7 @@ msgstr "Trouver de l'aide"
 
 #: ../../admin/getting-help.rst:16
 msgid "Don't be a `Help Vampire`_"
-msgstr "Ne soyez pas un `Vampire de l'Aide`_"
+msgstr "Ne soyez pas un `Help Vampire`_"
 
 #: ../../admin/getting-help.rst:18
 msgid ""
@@ -2053,7 +2050,7 @@ msgid ""
 "of time. This removes the need for a view to be regenerated on every page "
 "load."
 msgstr ""
-"Par défaut, les vues sont mises en cache dans le répertoire de données de "
+"Par défaut, les vues sont mises en cache dans le répertoire des données de "
 "Elgg pour une période de temps donnée. Cela supprime la nécessité de "
 "régénérer chaque vue à chaque chargement de la page."
 
@@ -2138,9 +2135,9 @@ msgid ""
 "command accordingly."
 msgstr ""
 "Dans cet exemple on prend l'hypothèse que le répertoire "
-"``/views_simplecache/`` du répertoire de données appartient au compte wwwrun"
-" qui fait partie du groupe www. Si ce n'est pas le cas sur votre serveur, "
-"vous devez modifier la commande chown en conséquence."
+"``/views_simplecache/`` du répertoire des données appartient au compte "
+"wwwrun qui fait partie du groupe www. Si ce n'est pas le cas sur votre "
+"serveur, vous devez modifier la commande chown en conséquence."
 
 #: ../../admin/performance.rst:113
 msgid "System cache"
@@ -2448,7 +2445,7 @@ msgid ""
 "As of Elgg 3.0 all the `downloads`__ of Elgg from the website have the "
 "optimized autoloader."
 msgstr ""
-"À partir de Elgg 3.0 tous les `téléchargements` de Elgg à partir du site "
+"À partir de Elgg 3.0 tous les `téléchargements`__ de Elgg à partir du site "
 "disposent du chargeur automatique optimisé."
 
 #: ../../admin/performance.rst:271
@@ -3205,8 +3202,8 @@ msgstr "Conseil"
 #: ../../admin/upgrading.rst:16
 msgid "**Back up your database, data directory and code**"
 msgstr ""
-"**Sauvegardez votre base de données, votre répertoire de données et le code "
-"source**"
+"**Sauvegardez votre base de données, votre répertoire des données et le code"
+" source**"
 
 #: ../../admin/upgrading.rst:17
 msgid "Mind any version-specific comments below"
@@ -3336,7 +3333,7 @@ msgstr ""
 #: ../../admin/upgrading.rst:91 ../../admin/upgrading.rst:116
 msgid "**Back up your database, data directory, and code**"
 msgstr ""
-"**Sauvegardez votre base de données, votre répertoire de données, et le "
+"**Sauvegardez votre base de données, votre répertoire des données, et le "
 "code**"
 
 #: ../../admin/upgrading.rst:106

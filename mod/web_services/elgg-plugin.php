@@ -25,6 +25,9 @@ return [
 			'type' => 'object',
 			'subtype' => 'api_key',
 			'class' => 'ElggApiKey',
+			'capabilities' => [
+				'commentable' => false,
+			],
 		],
 	],
 	'actions' => [

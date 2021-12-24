@@ -192,18 +192,49 @@ select:not([multiple]) {
 	margin-bottom: 1rem;
 }
 
-.elgg-fieldset-horizontal .elgg-field {
-	display: inline-block;
-	margin: 0 1rem 0 0;
-	vertical-align: top;
-}
-
-.elgg-fieldset-horizontal.elgg-justify-right .elgg-field {
-	margin: 0 0 0 1rem;
-}
-
-.elgg-fieldset-horizontal.elgg-justify-center .elgg-field {
-	margin: 0 5px;
+@media $(media-phone-up) {
+	.elgg-fieldset-horizontal {
+		display: flex;
+		
+		.elgg-field {
+			margin: 0 1rem 0 0;
+			vertical-align: top;
+			
+			display: flex;
+			flex-direction: column;
+			
+			&.elgg-field-stretch {
+				flex-basis: 100%;
+				
+				> .elgg-field-input {
+					width: 100%;
+				}
+			}
+			
+			&.elgg-field-horizontal {
+				flex-direction: row;
+				align-items: baseline;
+				
+				> *:not(:first-child) {
+					padding-left: 1rem;
+				}
+			}
+			
+			> .elgg-field-label {
+				align-items: center;
+				display: flex;
+				flex-shrink: 0;
+			}
+		}
+		
+		&.elgg-justify-right .elgg-field {
+			margin: 0 0 0 1rem;
+		}
+		
+		&.elgg-justify-center .elgg-field {
+			margin: 0 5px;
+		}
+	}
 }
 
 <?php

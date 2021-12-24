@@ -47,6 +47,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Email\DelayedEmailService                 $delayedEmailService
  * @property-read \Elgg\EmailService                              $emails
  * @property-read \Elgg\Cache\EntityCache                         $entityCache
+ * @property-read \Elgg\EntityCapabilitiesService                 $entity_capabilities
  * @property-read \Elgg\EntityPreloader                           $entityPreloader
  * @property-read \Elgg\Database\EntityTable                      $entityTable
  * @property-read \Elgg\EventsService                             $events
@@ -119,6 +120,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\UploadService                             $uploads
  * @property-read \Elgg\UserCapabilities                          $userCapabilities
  * @property-read \Elgg\Database\UsersApiSessionsTable            $usersApiSessionsTable
+ * @property-read \Elgg\Database\UsersRememberMeCookiesTable      $users_remember_me_cookies_table
  * @property-read \Elgg\Database\UsersTable                       $usersTable
  * @property-read \Elgg\ViewsService                              $views
  * @property-read \Elgg\Cache\ViewCacher                          $viewCacher
@@ -241,7 +243,7 @@ class InternalContainer extends DiContainer {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function factory(array $options = []): self {
+	public static function factory(array $options = []) {
 		$container = parent::factory($options);
 		
 		if (isset($options['config'])) {

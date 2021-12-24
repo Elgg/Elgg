@@ -84,6 +84,7 @@ class Settings {
 			$params = [
 				'object' => $user,
 				'action' => 'password_change',
+				'apply_muting' => false,
 			];
 			
 			notify_user($user->guid, $site->guid, $subject, $body, $params, ['email']);

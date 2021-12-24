@@ -18,14 +18,6 @@ class ElggWire extends ElggObject {
 
 		$this->attributes['subtype'] = 'thewire';
 	}
-
-	/**
-	 * {@inheritDoc}
-	 * @see ElggObject::canComment()
-	 */
-	public function canComment($user_guid = 0, $default = null) {
-		return false;
-	}
 	
 	/**
 	 * {@inheritDoc}

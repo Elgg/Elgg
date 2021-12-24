@@ -22,18 +22,18 @@ class MetadataTable extends DbMetadataTabe {
 	/**
 	 * @var \stdClass[]
 	 */
-	public $rows = [];
+	protected $rows = [];
 
 	/**
 	 * DB query query_specs
 	 * @var array
 	 */
-	public $query_specs = [];
+	protected $query_specs = [];
 
 	/**
 	 * @var int
 	 */
-	static $iterator = 100;
+	protected static $iterator = 100;
 
 	public function __construct(MetadataCache $metadata_cache, Database $db, Events $events, EntityTable $entityTable) {
 		$this->setCurrentTime();
@@ -77,8 +77,8 @@ class MetadataTable extends DbMetadataTabe {
 			}
 		}
 		
-		static::$iterator++;
-		$id = static::$iterator;
+		self::$iterator++;
+		$id = self::$iterator;
 
 		$row = (object) [
 			'type' => 'metadata',
@@ -160,7 +160,7 @@ class MetadataTable extends DbMetadataTabe {
 	 * @param \stdClass $row Data row
 	 * @return void
 	 */
-	public function clearQuerySpecs(\stdClass $row) {
+	protected function clearQuerySpecs(\stdClass $row) {
 		if (!isset($this->query_specs[$row->id])) {
 			return;
 		}
@@ -176,7 +176,7 @@ class MetadataTable extends DbMetadataTabe {
 	 *
 	 * @return void
 	 */
-	public function addQuerySpecs(\stdClass $row) {
+	protected function addQuerySpecs(\stdClass $row) {
 
 		$this->clearQuerySpecs($row);
 
@@ -263,14 +263,4 @@ class MetadataTable extends DbMetadataTabe {
 			}
 		]);
 	}
-
-	/**
-	 * Iterate ID
-	 * @return int
-	 */
-	public function iterate() {
-		static::$iterator++;
-		return static::$iterator;
-	}
-
 }

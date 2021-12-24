@@ -14,18 +14,12 @@ class Database extends DbDatabase {
 	/**
 	 * @var \stdClass[]
 	 */
-	private $query_specs = [];
+	protected $query_specs = [];
 
 	/**
 	 * @var int
 	 */
-	public $last_insert_id = null;
-
-	/**
-	 *
-	 * @var BaseTestCase
-	 */
-	private $test;
+	protected $last_insert_id = null;
 
 	/**
 	 * {@inheritdoc}
@@ -191,8 +185,9 @@ class Database extends DbDatabase {
 		}
 
 		$result = BaseTestCase::$_instance->getMockBuilder(\Doctrine\DBAL\Result::class)
-			->setMethods([
+			->onlyMethods([
 				'fetchAssociative',
+				'fetchAllAssociative',
 				'rowCount',
 			])
 			->disableOriginalConstructor()
@@ -202,6 +197,12 @@ class Database extends DbDatabase {
 			->method('fetchAssociative')
 			->will(BaseTestCase::$_instance->returnCallback(function () use (&$results) {
 				return array_shift($results);
+			}));
+		
+		$result->expects(BaseTestCase::$_instance->any())
+			->method('fetchAllAssociative')
+			->will(BaseTestCase::$_instance->returnCallback(function () use ($results) {
+				return $results;
 			}));
 
 		$result->expects(BaseTestCase::$_instance->any())
@@ -223,7 +224,7 @@ class Database extends DbDatabase {
 	 *
 	 * @return string
 	 */
-	private function normalizeSql($query) {
+	protected function normalizeSql($query) {
 		$query = trim($query);
 		$query = str_replace('  ', ' ', $query);
 		$query = strtolower($query);

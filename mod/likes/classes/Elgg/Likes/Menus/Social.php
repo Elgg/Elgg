@@ -20,15 +20,15 @@ class Social {
 	 */
 	public static function register(\Elgg\Hook $hook) {
 		$entity = $hook->getEntityParam();
-		if (!$entity) {
+		if (!$entity instanceof \ElggEntity) {
 			return;
 		}
 		
 		$type = $entity->type;
 		$subtype = $entity->getSubtype();
 	
-		$supports_likes = (bool) elgg_trigger_plugin_hook('likes:is_likable', "$type:$subtype", [], false);
-		if (!$supports_likes) {
+		$likable = (bool) elgg_trigger_deprecated_plugin_hook('likes:is_likable', "{$type}:{$subtype}", [], $entity->hasCapability('likable'), "Use the capabilities system to register your entity ('{$type}:{$subtype}') as likable.", '4.1');
+		if (!$likable) {
 			return;
 		}
 		

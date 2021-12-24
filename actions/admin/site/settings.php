@@ -61,7 +61,14 @@ if ($default_limit < 1) {
 
 elgg_save_config('default_limit', $default_limit);
 
+$comments_max_depth = (int) get_input('comments_max_depth');
+if (!in_array($comments_max_depth, [0,2,3,4])) {
+	$comments_max_depth = 0;
+}
+
+elgg_save_config('comments_max_depth', $comments_max_depth);
 elgg_save_config('comment_box_collapses', (bool) get_input('comment_box_collapses'));
+elgg_save_config('comments_group_only', (bool) get_input('comments_group_only'));
 elgg_save_config('comments_latest_first', (bool) get_input('comments_latest_first'));
 elgg_save_config('comments_per_page', (int) get_input('comments_per_page'));
 elgg_save_config('pagination_behaviour', get_input('pagination_behaviour', 'ajax-replace'));

@@ -1,15 +1,13 @@
 <?php
 namespace Elgg;
 
-use ElggSession;
-
 /**
  * Handles common tasks when redirecting a request
  */
 class RedirectService {
 
 	/**
-	 * @var ElggSession
+	 * @var \ElggSession
 	 */
 	protected $session;
 
@@ -31,16 +29,15 @@ class RedirectService {
 	/**
 	 * Constructor
 	 *
-	 * @param ElggSession $session     Elgg session
-	 * @param bool        $is_xhr      Is the request from Ajax?
-	 * @param string      $site_url    Site URL
-	 * @param string      $current_url Current URL
+	 * @param \ElggSession       $session Elgg session
+	 * @param \Elgg\Http\Request $request Request
+	 * @param \Elgg\Config       $config  Configuration
 	 */
-	public function __construct(ElggSession $session, $is_xhr, $site_url, $current_url) {
+	public function __construct(\ElggSession $session, \Elgg\Http\Request $request, \Elgg\Config $config) {
 		$this->session = $session;
-		$this->is_xhr = $is_xhr;
-		$this->site_url = $site_url;
-		$this->current_url = $current_url;
+		$this->is_xhr = $request->isXmlHttpRequest();
+		$this->site_url = $config->wwwroot;
+		$this->current_url = $request->getCurrentURL();
 	}
 
 	/**

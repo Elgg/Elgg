@@ -31,9 +31,9 @@ $title = elgg_echo('admin:server:label:php_version');
 $value = PHP_VERSION;
 $subtext = '';
 
-if (version_compare(PHP_VERSION, '7.1.0', '<')) {
+if (version_compare(PHP_VERSION, \ElggInstaller::PHP_MINIMAL_VERSION, '<')) {
 	$icon = $icon_error;
-	$subtext = elgg_echo('admin:server:label:php_version:required');
+	$subtext = elgg_echo('admin:server:label:php_version:required_version', [\ElggInstaller::PHP_MINIMAL_VERSION]);
 }
 
 echo $view_module($icon, $title, $value, $subtext);
@@ -80,6 +80,13 @@ foreach ($recommendedExtensions as $extension) {
 	echo $view_module($icon, $title, $value, $subtext);
 }
 
+// php ini
+if (empty(ini_get('session.gc_probability')) || empty(ini_get('session.gc_divisor'))) {
+	$title = elgg_echo('admin:server:requirements:gc');
+	$subtext = elgg_echo('admin:server:requirements:gc:info');
+	echo $view_module($icon_warning, $title, elgg_echo('status:disabled'), $subtext);
+}
+
 // db server information
 $db = elgg()->db->getConnection('read');
 $version = $db->executeQuery('select version()')->fetchOne();
@@ -87,8 +94,8 @@ $server = $db->getDatabasePlatform()->getName();
 $subtext = '';
 $icon = $icon_ok;
 
-if ($server !== 'mysql' || version_compare($version, '5.5.3', '<')) {
-	$subtext = elgg_echo('admin:server:requirements:database:server:required');
+if ($server !== 'mysql' || version_compare($version ?: '0', \ElggInstaller::MYSQL_MINIMAL_VERSION, '<')) {
+	$subtext = elgg_echo('admin:server:requirements:database:server:required_version', [\ElggInstaller::MYSQL_MINIMAL_VERSION]);
 	$icon = $icon_error;
 }
 
