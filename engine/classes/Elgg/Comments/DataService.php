@@ -53,7 +53,7 @@ class DataService {
 	 *
 	 * @param array $guids array of guids
 	 *
-	 * @return []
+	 * @return array
 	 */
 	public function filterGuids(array $guids): array {
 		foreach ($guids as $key => $guid) {
