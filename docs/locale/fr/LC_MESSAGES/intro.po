@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-23 13:47+0100\n"
+"POT-Creation-Date: 2021-12-24 13:21+0100\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -51,19 +51,18 @@ msgstr "Base de données et Persistance"
 
 #: ../../intro/development.rst:12
 msgid ""
-"Elgg uses MySQL 5.5 or higher for data persistence, and maps database values"
+"Elgg uses MySQL 5.7 or higher for data persistence, and maps database values"
 " into Entities (a representation of an atomic unit of information) and "
 "Extenders (additional information and descriptions about Entities). Elgg "
 "supports additional information such as relationships between Entities, "
 "activity streams, and various types of settings."
 msgstr ""
-"Elgg utilise MySQL 5.5 ou supérieur pour la persistance des données, et les "
-"données de la base sont transcrites ou mappées dans des Entités (une "
-"représentation d'une unité d'information atomique) et des Extenseurs ou "
-"\"Extenders\" (des informations additionnelles et des descriptions à propos "
-"des Entités). Elgg supporte des informations additionnelles telles que des "
-"relations entre des Entités, des flux d'activités, et divers types de "
-"réglages."
+"Elgg utilise MySQL 5.7 ou supérieur pour la persistance des données et mappe"
+" les valeurs de la base de données en entités (une représentation d'une "
+"unité atomique d'informations) et en extensions (informations et "
+"descriptions supplémentaires sur les entités). Elgg prend en charge des "
+"informations supplémentaires telles que les relations entre les entités, les"
+" flux d'activité et divers types de paramètres."
 
 #: ../../intro/development.rst:18
 msgid "Plugins"
@@ -299,9 +298,8 @@ msgid "Requirements"
 msgstr "Pré-requis"
 
 #: ../../intro/install.rst:13
-msgid "MySQL 5.5.3+ (5.0.0+ if upgrading an existing installation)"
-msgstr ""
-"MySQL 5.5.3+ (5.0.0+ si vous mettez à niveau une installation existante)"
+msgid "MySQL 5.7+"
+msgstr "MySQL 5.7+"
 
 #: ../../intro/install.rst:14
 msgid "PHP 7.4+ with the following extensions:"
@@ -328,50 +326,54 @@ msgid "`Multibyte String support`_ (for i18n)"
 msgstr "`Multibyte String support`_ (pour l’internationalisation i18n)"
 
 #: ../../intro/install.rst:21
+msgid "(optional) intl (for i18n)"
+msgstr "(optionnel) intl (pour i18n)"
+
+#: ../../intro/install.rst:22
 msgid "Proper configuration and ability to send email through an MTA"
 msgstr ""
 "La configuration appropriée et la capacité d'envoyer des e-mails via un "
 "agent de transport mail \"MTA - Mail Transport Agent\""
 
-#: ../../intro/install.rst:23
+#: ../../intro/install.rst:24
 msgid "Web server with support for URL rewriting"
 msgstr "Un serveur web avec le support de la réécriture d'URL \"URL rewriting\""
 
-#: ../../intro/install.rst:25
+#: ../../intro/install.rst:26
 msgid "Official support is provided for the following configurations:"
 msgstr "Le support officiel est fourni pour les configurations suivantes :"
 
-#: ../../intro/install.rst:29
+#: ../../intro/install.rst:30
 msgid "Apache server"
 msgstr "Serveur Apache"
 
-#: ../../intro/install.rst:28
+#: ../../intro/install.rst:29
 msgid "Apache with the `rewrite module`_ enabled"
 msgstr "Apache avec le module `module rewrite`_ activé"
 
-#: ../../intro/install.rst:29
+#: ../../intro/install.rst:30
 msgid "PHP running as an Apache module"
 msgstr "PHP exécuté en tant que module Apache"
 
-#: ../../intro/install.rst:32
+#: ../../intro/install.rst:33
 msgid "Nginx server"
 msgstr "Serveur Nginx"
 
-#: ../../intro/install.rst:32
+#: ../../intro/install.rst:33
 msgid "Nginx with PHP-FPM using FastCGI"
 msgstr "Nginx avec PHP-FPM utilisant FastCGI"
 
-#: ../../intro/install.rst:34
+#: ../../intro/install.rst:35
 msgid "By \"official support\", we mean that:"
 msgstr "Par \"support officiel\", nous entendons que :"
 
-#: ../../intro/install.rst:36
+#: ../../intro/install.rst:37
 msgid "Most development and testing is performed with these configurations"
 msgstr ""
 "La plupart des développements et des tests sont effectués avec ces "
 "configurations"
 
-#: ../../intro/install.rst:37
+#: ../../intro/install.rst:38
 msgid ""
 "Much of the installation documentation is written assuming Apache or Nginx "
 "is used"
@@ -379,7 +381,7 @@ msgstr ""
 "Une bonne part de la documentation a été écrite en partant du principe "
 "qu'Apache ou Nginx est utilisé"
 
-#: ../../intro/install.rst:38
+#: ../../intro/install.rst:39
 msgid ""
 "Priority on bug reports is given to Apache and Nginx users if the bug is web"
 " server specific (but those are rare)."
@@ -387,7 +389,7 @@ msgstr ""
 "La priorité sur les rapports de bug est donnée aux utilisateurs d'Apache et "
 "Nginx si le bug est propre au serveur web (mais ces cas sont rares)."
 
-#: ../../intro/install.rst:43
+#: ../../intro/install.rst:44
 msgid ""
 "If using RHEL, CentOS, or any other distribution with SELinux enabled, you "
 "will need to make sure that the appropriate contexts and permissions are "
@@ -397,7 +399,7 @@ msgstr ""
 "vous devrez vous assurer que les contextes et permissions appropriés sont "
 "configurés :"
 
-#: ../../intro/install.rst:46
+#: ../../intro/install.rst:47
 msgid ""
 "Give your project root, your data directory, and all of their children the "
 "``httpd_sys_rw_content_t`` context"
@@ -405,7 +407,7 @@ msgstr ""
 "Donnez le contexte ``httpd_sys_rw_content_t`` à la racine de votre projet, à"
 " votre répertoire des données, et à tous leurs enfants"
 
-#: ../../intro/install.rst:47
+#: ../../intro/install.rst:48
 msgid ""
 "Enable the ``httpd_can_network_connect`` and "
 "``httpd_can_network_connect_db`` booleans"
@@ -413,11 +415,11 @@ msgstr ""
 "Activez les booléens ``httpd_can_network_connect`` et "
 "``httpd_can_network_connect_db``"
 
-#: ../../intro/install.rst:53
+#: ../../intro/install.rst:54
 msgid "Browser support policy"
 msgstr "Politique de support des navigateurs"
 
-#: ../../intro/install.rst:55
+#: ../../intro/install.rst:56
 msgid ""
 "Feature branches support the latest 2 versions of all major browsers as were"
 " available at the time of the first stable release on that branch."
@@ -426,7 +428,7 @@ msgstr ""
 "les principaux navigateurs disponibles au moment de la première publication "
 "d'une version stable pour cette branche."
 
-#: ../../intro/install.rst:58
+#: ../../intro/install.rst:59
 msgid ""
 "Bugfix release will not alter browser support, even if a new version of the "
 "browser has since been released."
@@ -435,7 +437,7 @@ msgstr ""
 "navigateurs, même si une nouvelle version du navigateur a été publiée "
 "depuis."
 
-#: ../../intro/install.rst:61
+#: ../../intro/install.rst:62
 msgid ""
 "Major browsers here means all of the following, plus their mobile "
 "counterparts:"
@@ -443,27 +445,27 @@ msgstr ""
 "Les principaux navigateurs signifie ici les navigateurs suivants, ainsi que "
 "leurs homologues mobiles :"
 
-#: ../../intro/install.rst:63
+#: ../../intro/install.rst:64
 msgid "Android Browser"
 msgstr "Navigateur Android"
 
-#: ../../intro/install.rst:64
+#: ../../intro/install.rst:65
 msgid "Chrome"
 msgstr "Chrome"
 
-#: ../../intro/install.rst:65
+#: ../../intro/install.rst:66
 msgid "Firefox"
 msgstr "Firefox"
 
-#: ../../intro/install.rst:66
+#: ../../intro/install.rst:67
 msgid "IE"
 msgstr "IE"
 
-#: ../../intro/install.rst:67
+#: ../../intro/install.rst:68
 msgid "Safari"
 msgstr "Safari"
 
-#: ../../intro/install.rst:69
+#: ../../intro/install.rst:70
 msgid ""
 "\"Support\" may mean that we take advantage of newer, unimplemented "
 "technologies but provide a JavaScript polyfill for the browsers that need "
@@ -473,7 +475,7 @@ msgstr ""
 "nouvelles et non implémentées, mais fournissons un polyfill JavaScript pour "
 "les navigateurs qui en ont besoin."
 
-#: ../../intro/install.rst:72
+#: ../../intro/install.rst:73
 msgid ""
 "You may find that Elgg happens to work on unsupported browsers, but "
 "compatibility may break at any time, even during a bugfix release."
@@ -482,43 +484,43 @@ msgstr ""
 "la compatibilité peut être perdue à tout moment, y compris lors de la "
 "publication d'une correction de bug."
 
-#: ../../intro/install.rst:76
+#: ../../intro/install.rst:77
 msgid "Overview"
 msgstr "Vue d'ensemble"
 
-#: ../../intro/install.rst:79
+#: ../../intro/install.rst:80
 msgid "Upload Elgg"
 msgstr "Téléchargez Elgg"
 
-#: ../../intro/install.rst:81
+#: ../../intro/install.rst:82
 msgid "With Composer (recommended if comfortable with CLI):"
 msgstr ""
 "Avec Composer (recommandé si vous êtes à l'aise avec la ligne de commande) :"
 " "
 
-#: ../../intro/install.rst:93
+#: ../../intro/install.rst:94
 msgid "From pre-packaged zip (recommended if not comfortable with CLI):"
 msgstr ""
 "A partir du fichier ZIP (recommandé si vous n'êtes pas à l'aise avec la "
 "ligne de commande) :"
 
-#: ../../intro/install.rst:95
+#: ../../intro/install.rst:96
 msgid "Download the `latest version of Elgg`_"
 msgstr "Télécharger la `dernière version de Elgg`_"
 
-#: ../../intro/install.rst:96
+#: ../../intro/install.rst:97
 msgid "Upload the ZIP file with an FTP client to your server"
 msgstr "Téléchargez le fichier ZIP avec un client FTP sur votre serveur"
 
-#: ../../intro/install.rst:97
+#: ../../intro/install.rst:98
 msgid "Unzip the files in your domain's document root."
 msgstr "Dézippez les fichiers dans la racine web de votre domaine."
 
-#: ../../intro/install.rst:102
+#: ../../intro/install.rst:103
 msgid "Create a data folder"
 msgstr "Créez un répertoire pour les données"
 
-#: ../../intro/install.rst:104
+#: ../../intro/install.rst:105
 msgid ""
 "Elgg needs a special folder to store uploaded files including profile icons "
 "and photos. You will need to create this directory."
@@ -527,7 +529,7 @@ msgstr ""
 " y compris les images du profil et les photos. Vous devez créer ce "
 "répertoire."
 
-#: ../../intro/install.rst:109
+#: ../../intro/install.rst:110
 msgid ""
 "For security reasons, this folder **MUST** be stored outside of your "
 "document root. If you created it under ``/www/`` or ``/public_html/``, "
@@ -538,7 +540,7 @@ msgstr ""
 "dossier ``/www/`` ou ``/public_html/``, ce n'est pas la bonne manière de "
 "faire."
 
-#: ../../intro/install.rst:113
+#: ../../intro/install.rst:114
 msgid ""
 "Once this folder has been created, you'll need to make sure the web server "
 "Elgg is running on has permission to write to and create directories in it. "
@@ -553,7 +555,7 @@ msgstr ""
 " une variante d'UNIX, vous aurez besoin de `définir les droits d'accès du "
 "répertoire`_."
 
-#: ../../intro/install.rst:121
+#: ../../intro/install.rst:122
 msgid ""
 "If you are using a graphical FTP client to upload files, you can usually set"
 " permissions by right clicking on the folder and selecting 'properties' or "
@@ -563,7 +565,7 @@ msgstr ""
 "pouvez habituellement définir les droits en faisant un clic droit sur le "
 "dossier et en sélectionnant \"propriétés\" ou \"Informations\"."
 
-#: ../../intro/install.rst:127
+#: ../../intro/install.rst:128
 msgid ""
 "Directories must be executable to be read and written to. The suggested "
 "permissions depend upon the exact server and user configuration. If the data"
@@ -575,7 +577,7 @@ msgstr ""
 "utilisateurs. Si le répertoire des données a pour propriétaire l'utilisateur"
 " du serveur web, les droits d'accès recommandés sont ``750``."
 
-#: ../../intro/install.rst:134
+#: ../../intro/install.rst:135
 msgid ""
 "Setting your data directory to ``777`` will work, but it is insecure and is "
 "not recommended. If you are unsure how to correctly set permissions, contact"
@@ -586,11 +588,11 @@ msgstr ""
 "bonne configuration à choisir pour les permissions, contactez votre "
 "hébergeur pour plus d'informations."
 
-#: ../../intro/install.rst:139
+#: ../../intro/install.rst:140
 msgid "Create a MySQL database"
 msgstr "Créer une base de données MySQL"
 
-#: ../../intro/install.rst:141
+#: ../../intro/install.rst:142
 msgid ""
 "Using your database administration tool of choice (if you're unsure about "
 "this, ask your system administrator), create a new MySQL database for Elgg. "
@@ -601,7 +603,7 @@ msgstr ""
 "une nouvelle base de données MySQL pour Elgg. Vous pouvez créer une base de "
 "données MySQL avec n'importe lequel des outils suivants :"
 
-#: ../../intro/install.rst:146
+#: ../../intro/install.rst:147
 msgid ""
 "Make sure you add a user to the database with all privileges and record the "
 "database name, username and password. You will need this information when "
@@ -611,11 +613,11 @@ msgstr ""
 "privilèges et notez le nom de la base de données, l'identifiant et le mot de"
 " passe. Vous aurez besoin de ces informations pour installer Elgg."
 
-#: ../../intro/install.rst:151
+#: ../../intro/install.rst:152
 msgid "Set up Cron"
 msgstr "Mettre en place le Cron"
 
-#: ../../intro/install.rst:153
+#: ../../intro/install.rst:154
 msgid ""
 "Elgg uses timed requests to your site to perform background tasks like "
 "sending notifications or performing database cleanup jobs. You need to "
@@ -627,11 +629,11 @@ msgstr ""
 " la base de données. Vous devez configurer le :doc:`cron</admin/cron>` pour "
 "pouvoir utiliser ce type de fonctionnalités."
 
-#: ../../intro/install.rst:158
+#: ../../intro/install.rst:159
 msgid "Visit your Elgg site"
 msgstr "Visitez votre site Elgg"
 
-#: ../../intro/install.rst:160
+#: ../../intro/install.rst:161
 msgid ""
 "Once you've performed these steps, visit your Elgg site in your web browser."
 " Elgg will take you through the rest of the installation process from there."
@@ -643,15 +645,15 @@ msgstr ""
 "d'installation. Le premier compte que vous créerez à la fin de "
 "l'installation sera le compte administrateur."
 
-#: ../../intro/install.rst:167
+#: ../../intro/install.rst:168
 msgid "A note on settings.php and .htaccess"
 msgstr "Une note sur settings.php et .htaccess"
 
-#: ../../intro/install.rst:169
+#: ../../intro/install.rst:170
 msgid "The Elgg installer will try to create two files for you:"
 msgstr "L'installeur de Elgg va essayer de créer deux fichiers pour vous :"
 
-#: ../../intro/install.rst:171
+#: ../../intro/install.rst:172
 msgid ""
 "``elgg-config/settings.php``, which contains local environment configuration"
 " for your installation"
@@ -659,11 +661,11 @@ msgstr ""
 "``elgg-config/settings.php``, qui contient la configuration de votre "
 "environnement local pour votre installation"
 
-#: ../../intro/install.rst:172
+#: ../../intro/install.rst:173
 msgid "``.htaccess``, which allows Elgg to generate dynamic URLs"
 msgstr "``.htaccess``, qui permet à Elgg de générer des URLs dynamiques"
 
-#: ../../intro/install.rst:174
+#: ../../intro/install.rst:175
 msgid ""
 "If these files can't be automatically generated, for example because the web"
 " server doesn't have write permissions in the directories, Elgg will tell "
@@ -683,7 +685,7 @@ msgstr ""
 "rétablir les droits d'origine. Si, pour quelque raison que ce soit, ceci ne "
 "fonctionne pas, vous devrez :"
 
-#: ../../intro/install.rst:183
+#: ../../intro/install.rst:184
 msgid ""
 "In ``elgg-config/``, copy ``settings.example.php`` to ``settings.php``, open"
 " it up in a text editor and fill in your database details"
@@ -692,14 +694,14 @@ msgstr ""
 "``settings.php``, puis ouvrez-le dans un éditeur de texte et renseignez les "
 "informations de la base de données"
 
-#: ../../intro/install.rst:185
+#: ../../intro/install.rst:186
 msgid ""
 "On Apache server, copy ``install/config/htaccess.dist`` to ``.htaccess``"
 msgstr ""
 "Sur un serveur Apache, copiez ``install/config/htaccess.dist`` vers "
 "``.htaccess``"
 
-#: ../../intro/install.rst:186
+#: ../../intro/install.rst:187
 msgid ""
 "On Nginx server copy ``install/config/nginx.dist`` to ``/etc/nginx/sites-"
 "enabled`` and adjust it's contents"
@@ -707,79 +709,79 @@ msgstr ""
 "Sur un serveur Nginx copiez ``install/config/nginx.dist`` vers "
 "``/etc/nginx/sites-enabled`` et ajustez son contenu"
 
-#: ../../intro/install.rst:189
+#: ../../intro/install.rst:190
 msgid "Other Configurations"
 msgstr "Autres configurations"
 
-#: ../../intro/install.rst:191
+#: ../../intro/install.rst:192
 msgid ":doc:`Cloud9 <./install/cloud9>`"
 msgstr ":doc:`Cloud9 <./install/cloud9>`"
 
-#: ../../intro/install.rst:192
+#: ../../intro/install.rst:193
 msgid ":doc:`Homestead <./install/homestead>`"
 msgstr ":doc:`Homestead <./install/homestead>`"
 
-#: ../../intro/install.rst:193
+#: ../../intro/install.rst:194
 msgid ":doc:`EasyPHP <./install/easyphp>`"
 msgstr ":doc:`EasyPHP <./install/easyphp>`"
 
-#: ../../intro/install.rst:194
+#: ../../intro/install.rst:195
 msgid ":doc:`IIS <./install/iis>`"
 msgstr ":doc:`IIS <./install/iis>`"
 
-#: ../../intro/install.rst:195
+#: ../../intro/install.rst:196
 msgid ":doc:`MAMP <./install/mamp>`"
 msgstr ":doc:`MAMP <./install/mamp>`"
 
-#: ../../intro/install.rst:196
+#: ../../intro/install.rst:197
 msgid ":doc:`MariaDB <./install/mariadb>`"
 msgstr ":doc:`MariaDB <./install/mariadb>`"
 
-#: ../../intro/install.rst:197
+#: ../../intro/install.rst:198
 msgid ":doc:`Nginx <./install/nginx>`"
 msgstr ":doc:`Nginx <./install/nginx>`"
 
-#: ../../intro/install.rst:198
+#: ../../intro/install.rst:199
 msgid ":doc:`Ubuntu <./install/ubuntu>`"
 msgstr ":doc:`Ubuntu <./install/ubuntu>`"
 
-#: ../../intro/install.rst:199
+#: ../../intro/install.rst:200
 msgid ":doc:`Virtual hosts <./install/virtual>`"
 msgstr ":doc:`Hôtes virtuels <./install/virtual>`"
 
-#: ../../intro/install.rst:200
+#: ../../intro/install.rst:201
 msgid ":doc:`XAMPP <./install/xampp>`"
 msgstr ":doc:`XAMPP <./install/xampp>`"
 
-#: ../../intro/install.rst:203
+#: ../../intro/install.rst:204
 msgid "Troubleshooting"
 msgstr "Dépannage"
 
-#: ../../intro/install.rst:206
+#: ../../intro/install.rst:207
 msgid "Help! I'm having trouble installing Elgg"
 msgstr "Au secours ! J'ai des soucis pour installer Elgg"
 
-#: ../../intro/install.rst:208
+#: ../../intro/install.rst:209
 msgid "First:"
 msgstr "D'abord :"
 
-#: ../../intro/install.rst:210
+#: ../../intro/install.rst:211
 msgid "Recheck that your server meets the technical requirements for Elgg."
 msgstr "Re-vérifiez que votre serveur répond bien aux pré-requis pour Elgg."
 
-#: ../../intro/install.rst:211
+#: ../../intro/install.rst:212
 msgid "Follow the environment-specific instructions if need be"
 msgstr "Suivez si besoin les instructions spécifiques à un environnement"
 
-#: ../../intro/install.rst:212
+#: ../../intro/install.rst:213
 msgid "Have you verified that ``mod_rewrite`` is being loaded?"
 msgstr "Avez-vous vérifié que ``mod_rewrite`` est bien chargé ?"
 
-#: ../../intro/install.rst:213
+#: ../../intro/install.rst:214
 msgid "Is the mysql apache being loaded?"
 msgstr "Est-ce que le module mysql de apache est bien chargé ?"
 
-#: ../../intro/install.rst:215
+#: ../../intro/install.rst:216
 msgid ""
 "Keep notes on steps that you take to fix the install. Sometimes changing "
 "some setting or file to try to fix a problem may cause some other problem "
@@ -792,7 +794,7 @@ msgstr ""
 "plus tard. Si vous devez recommencer depuis le début, supprimez simplement "
 "tous les fichiers, videz votre base de données, et commencez à nouveau."
 
-#: ../../intro/install.rst:221
+#: ../../intro/install.rst:222
 msgid ""
 "I can't save my settings on installation (I get a 404 error when saving "
 "settings)"
@@ -800,7 +802,7 @@ msgstr ""
 "Je ne peux pas enregistrer mon fichier de configuration sur une installation"
 " (j'ai une erreur 404 lors de l'enregistrement des paramètres)"
 
-#: ../../intro/install.rst:223
+#: ../../intro/install.rst:224
 msgid ""
 "Elgg relies on the ``mod_rewrite`` Apache extension in order to simulate "
 "certain URLs. For example, whenever you perform an action in Elgg, or when "
@@ -817,7 +819,7 @@ msgstr ""
 "``.htaccess``, qui est le moyen standard d'Apache pour définir des éléments "
 "de configuration supplémentaires pour un site."
 
-#: ../../intro/install.rst:230
+#: ../../intro/install.rst:231
 msgid ""
 "This error suggests that the ``mod_rewrite`` rules aren't being picked up "
 "correctly. This may be for several reasons. If you're not comfortable "
@@ -831,7 +833,7 @@ msgstr ""
 " recommandons vivement de contacter votre administrateur système ou le "
 "support technique et de leur faire suivre cette page."
 
-#: ../../intro/install.rst:236
+#: ../../intro/install.rst:237
 msgid ""
 "The ``.htaccess``, if not generated automatically (that happens when you "
 "have problem with ``mod_rewrite``), you can create it by renaming "
@@ -848,11 +850,11 @@ msgstr ""
 "le contenu du ``.htaccess`` est identique à celui de "
 "``install/config/htaccess.dist``."
 
-#: ../../intro/install.rst:243
+#: ../../intro/install.rst:244
 msgid "**``mod_rewrite`` isn't installed.**"
 msgstr "**``mod_rewrite`` n'est pas installé.**"
 
-#: ../../intro/install.rst:245
+#: ../../intro/install.rst:246
 msgid ""
 "Check your ``httpd.conf`` to make sure that this module is being loaded by "
 "Apache. You may have to restart Apache to get it to pick up any changes in "
@@ -864,11 +866,11 @@ msgstr ""
 "compte de tout changement de configuration. Vous pouvez également utiliser "
 "`PHP info`_ pour contrôler que le module est bien chargé."
 
-#: ../../intro/install.rst:250
+#: ../../intro/install.rst:251
 msgid "**The rules in ``.htaccess`` aren't being obeyed.**"
 msgstr "**Les règles définies dans ``.htaccess`` ne sont pas respectées.**"
 
-#: ../../intro/install.rst:254
+#: ../../intro/install.rst:255
 msgid ""
 "In your virtual host configuration settings (which may be contained within "
 "``httpd.conf``), change the AllowOverride setting so that it reads:"
@@ -877,11 +879,11 @@ msgstr ""
 "intégrée dans ``httpd.conf``), modifiez le paramètre AllowOverride pour "
 "qu'il ressemble à :"
 
-#: ../../intro/install.rst:258
+#: ../../intro/install.rst:259
 msgid "``AllowOverride all``"
 msgstr "``AllowOverride all``"
 
-#: ../../intro/install.rst:260
+#: ../../intro/install.rst:261
 msgid ""
 "This will tell Apache to pick up the ``mod_rewrite`` rules from "
 "``.htaccess``."
@@ -889,7 +891,7 @@ msgstr ""
 "Ceci va indiquer à Apache de prendre en compte les règles de ``mod_rewrite``"
 " depuis ``.htaccess``."
 
-#: ../../intro/install.rst:263
+#: ../../intro/install.rst:264
 msgid ""
 "**Elgg is not installed in the root of your web directory (ex: "
 "http://example.org/elgg/ instead of http://example.org/)**"
@@ -898,28 +900,28 @@ msgstr ""
 "not installed in the root of your web directory\" (par ex.: "
 "http://example.org/elgg/ au lieu de http://example.org/)**"
 
-#: ../../intro/install.rst:267
+#: ../../intro/install.rst:268
 msgid "The install script redirects me to \"action\" when it should be \"actions\""
 msgstr ""
 "Le script d'installation me redirige vers \"action\" alors que cela devrait "
 "être vers \"actions\""
 
-#: ../../intro/install.rst:269
+#: ../../intro/install.rst:270
 msgid "This is a problem with your ``mod_rewrite`` setup."
 msgstr "Il s'agit d'un problème avec votre configuration de ``mod_rewrite``."
 
-#: ../../intro/install.rst:273
+#: ../../intro/install.rst:274
 msgid "DO NOT, REPEAT, DO NOT change any directory names!"
 msgstr ""
 "NE CHANGEZ PAS, RÉPÉTEZ AVEC NOUS, NE CHANGEZ AUCUN nom de répertoire !"
 
-#: ../../intro/install.rst:276
+#: ../../intro/install.rst:277
 msgid "I installed in a subdirectory and my install action isn't working!"
 msgstr ""
 "J'ai installé Elgg dans un sous-répertoire et mon action d'installation ne "
 "fonctionne pas !"
 
-#: ../../intro/install.rst:278
+#: ../../intro/install.rst:279
 msgid ""
 "If you installed Elgg so that it is reached with an address like "
 "http://example.org/mysite/ rather than http://example.org/, there is a small"
@@ -934,11 +936,11 @@ msgstr ""
 " dans Apache. Vous pouvez avoir besoin d'indiquer à mod\\_rewrite où se "
 "situe votre installation Elgg."
 
-#: ../../intro/install.rst:284
+#: ../../intro/install.rst:285
 msgid "Open up .htaccess in a text editor"
 msgstr "Ouvrez .htaccess dans un éditeur de texte"
 
-#: ../../intro/install.rst:286
+#: ../../intro/install.rst:287
 msgid ""
 "Where prompted, add a line like ``RewriteBase "
 "/path/to/your/elgg/installation/`` (Don't forget the trailing slash)"
@@ -946,18 +948,18 @@ msgstr ""
 "Lorsqu'on vous y invite, ajoutez une ligne comme ``RewriteBase "
 "/chemin/vers/votre/installation/elgg/`` (N'oubliez pas le slash final)"
 
-#: ../../intro/install.rst:289
+#: ../../intro/install.rst:290
 msgid "Save the file and refresh your browser."
 msgstr "Enregistrez le fichier et rafraîchissez votre navigateur."
 
-#: ../../intro/install.rst:291
+#: ../../intro/install.rst:292
 msgid ""
 "Please note that the path you are using is the **web** path, minus the host."
 msgstr ""
 "Veuillez noter que le chemin que vous utilisez est le chemin **web**, moins "
 "l'hôte."
 
-#: ../../intro/install.rst:294
+#: ../../intro/install.rst:295
 msgid ""
 "For example, if you reach your elgg install at http://example.org/elgg/, you"
 " would set the base like this:"
@@ -965,11 +967,11 @@ msgstr ""
 "Par exemple, si votre installation Elgg s'affiche sur "
 "http://example.org/elgg/, vous devriez définir la base comme ceci :"
 
-#: ../../intro/install.rst:297
+#: ../../intro/install.rst:298
 msgid "``RewriteBase /elgg/``"
 msgstr "``RewriteBase /elgg/``"
 
-#: ../../intro/install.rst:299
+#: ../../intro/install.rst:300
 msgid ""
 "Please note that installing in a subdirectory does not require using "
 "RewriteBase. There are only some rare circumstances when it is needed due to"
@@ -979,13 +981,13 @@ msgstr ""
 "d'utiliser RewriteBase. Il y a seulement quelques rares circonstances dans "
 "lesquelles c'est imposé par la configuration du serveur."
 
-#: ../../intro/install.rst:304
+#: ../../intro/install.rst:305
 msgid "I did everything! mod\\_rewrite is working fine, but still the 404 error"
 msgstr ""
 "J'ai tout fait ! mod\\_rewrite fonctionne correctement, mais j'ai toujours "
 "l'erreur 404"
 
-#: ../../intro/install.rst:306
+#: ../../intro/install.rst:307
 msgid ""
 "Maybe there is a problem with the file .htaccess. Sometimes the elgg install"
 " routine is unable to create one and unable to tell you that. If you are on "
@@ -996,7 +998,7 @@ msgstr ""
 "signaler. Si vous en êtes à ce stade et avez essayé tout ce qui est indiqué "
 "ci-dessus :"
 
-#: ../../intro/install.rst:310
+#: ../../intro/install.rst:311
 msgid ""
 "check if it is really the elgg-created .htaccess (not only a dummy provided "
 "from the server provider)"
@@ -1004,7 +1006,7 @@ msgstr ""
 "vérifiez qu'il s'agit bien du .htaccess créé par Elgg (et pas d'un fichier "
 "d'exemple fourni par le fournisseur du serveur)"
 
-#: ../../intro/install.rst:313
+#: ../../intro/install.rst:314
 msgid ""
 "if it is not the elgg provided htaccess file, use the htaccess\\_dist "
 "(rename it to .htaccess)"
@@ -1012,7 +1014,7 @@ msgstr ""
 "s'il ne s'agit pas du fichier htaccess fourni par Elgg, utilisez  "
 "htaccess\\_dist (renommez-le en .htaccess)"
 
-#: ../../intro/install.rst:317
+#: ../../intro/install.rst:318
 msgid ""
 "I get an error message that the rewrite test failed after the requirements "
 "check page"
@@ -1020,7 +1022,7 @@ msgstr ""
 "J'ai un message d'erreur indiquant que le test de réécriture a échoué après "
 "la page de vérification des pré-requis"
 
-#: ../../intro/install.rst:319
+#: ../../intro/install.rst:320
 msgid ""
 "I get the following messages after the requirements check step (step 2) of "
 "the install:"
@@ -1028,11 +1030,11 @@ msgstr ""
 "J'ai les messages suivants après l'étape de vérification des pré-requis "
 "(étape 2) de l'installation :"
 
-#: ../../intro/install.rst:321
+#: ../../intro/install.rst:322
 msgid "We think your server is running the Apache web server."
 msgstr "Nous pensons que votre serveur utilise un serveur web Apache."
 
-#: ../../intro/install.rst:323
+#: ../../intro/install.rst:324
 msgid ""
 "The rewrite test failed and the most likely cause is that AllowOverride is "
 "not set to All for Elgg's directory. This prevents Apache from processing "
@@ -1043,7 +1045,7 @@ msgstr ""
 "empêche Apache de traiter le fichier .htaccess qui contient les règles de "
 "réécriture. "
 
-#: ../../intro/install.rst:326
+#: ../../intro/install.rst:327
 msgid ""
 "A less likely cause is Apache is configured with an alias for your Elgg "
 "directory and you need to set the RewriteBase in your .htaccess. There are "
@@ -1054,7 +1056,7 @@ msgstr ""
 ".htaccess. Vous trouverez des instructions complémentaires dans le fichier "
 ".htaccess de votre répertoire Elgg."
 
-#: ../../intro/install.rst:329
+#: ../../intro/install.rst:330
 msgid ""
 "After this error, every interaction with the web interface results in a "
 "error 500 (Internal Server Error)"
@@ -1062,7 +1064,7 @@ msgstr ""
 "Après cette erreur, chaque interaction avec l'interface web va produire une "
 "erreur 500 (Internal Server Error)"
 
-#: ../../intro/install.rst:331
+#: ../../intro/install.rst:332
 msgid ""
 "This is likely caused by not loading the \"filter module by un-commenting "
 "the"
@@ -1070,21 +1072,21 @@ msgstr ""
 "Ceci est probablement causé par le non-chargement du module de filtre en dé-"
 "commentant la ligne"
 
-#: ../../intro/install.rst:333
+#: ../../intro/install.rst:334
 msgid "#LoadModule filter_module modules/mod_filter.so"
 msgstr "#LoadModule filter_module modules/mod_filter.so"
 
-#: ../../intro/install.rst:335
+#: ../../intro/install.rst:336
 msgid "line in the \"httpd.conf\" file."
 msgstr "ligne dans le fichier \"httpd.conf\"."
 
-#: ../../intro/install.rst:337
+#: ../../intro/install.rst:338
 msgid "the Apache \"error.log\" file will contain an entry similar to:"
 msgstr ""
 "le fichier de journal Apache \"error.log\" va contenir une entrée similaire "
 "à :"
 
-#: ../../intro/install.rst:339
+#: ../../intro/install.rst:340
 msgid ""
 "... .htaccess: Invalid command 'AddOutputFilterByType', perhaps misspelled "
 "or defined by a module not included in the server configuration"
@@ -1094,22 +1096,22 @@ msgstr ""
 "Commande 'AddOutputFilterByType' invalide, peut-être mal écrite ou définie "
 "par un module qui n'est pas inclus dans la configuration du serveur"
 
-#: ../../intro/install.rst:342
+#: ../../intro/install.rst:343
 msgid "There is a white page after I submit my database settings"
 msgstr ""
 "Il y a une page blanche après que j'ai soumis ma configuration de base de "
 "données"
 
-#: ../../intro/install.rst:344
+#: ../../intro/install.rst:345
 msgid "Check that the Apache mysql module is installed and is being loaded."
 msgstr ""
 "Vérifiez que le module d'Apache mysql est installé et est bien chargé."
 
-#: ../../intro/install.rst:347
+#: ../../intro/install.rst:348
 msgid "I'm getting a 404 error with a really long url"
 msgstr "J'obtiens une erreur 404 avec une URL très longue"
 
-#: ../../intro/install.rst:349
+#: ../../intro/install.rst:350
 msgid ""
 "If you see a 404 error during the install or on the creation of the first "
 "user with a url like: "
@@ -1129,12 +1131,12 @@ msgstr ""
 "Utilisez phpMyAdmin pour modifier cette valeur avec la bonne URL de racine "
 "du site."
 
-#: ../../intro/install.rst:359
+#: ../../intro/install.rst:360
 msgid "I am having trouble setting my data path"
 msgstr ""
 "J'ai des difficultés pour définir le chemin vers le répertoire des données"
 
-#: ../../intro/install.rst:361
+#: ../../intro/install.rst:362
 msgid ""
 "This is highly server specific so it is difficult to give specific advice. "
 "If you have created a directory for uploading data, make sure your http "
@@ -1149,7 +1151,7 @@ msgstr ""
 "droits d'accès ``777``. Il est largement préférable de donner au serveur web"
 " la propriété du répertoire et de limiter les droits d'accès."
 
-#: ../../intro/install.rst:369
+#: ../../intro/install.rst:370
 msgid ""
 "Setting directory permissions to ``777`` allows the **ENTIRE** internet to "
 "place files in your directory structure an possibly infect you webserver "
@@ -1160,7 +1162,7 @@ msgstr ""
 "ainsi d'infecter votre serveur avec des malwares et autres virus. Définir "
 "les permissions à ``750`` devrait être plus que suffisant."
 
-#: ../../intro/install.rst:373
+#: ../../intro/install.rst:374
 msgid ""
 "The top cause of this issue is PHP configured to prevent access to most "
 "directories using `open\\_basedir`_. You may want to check with your hosting"
@@ -1171,7 +1173,7 @@ msgstr ""
 "`open\\_basedir`_. Vous pouvez souhaiter vérifier ce point avec votre "
 "fournisseur d'hébergement."
 
-#: ../../intro/install.rst:377
+#: ../../intro/install.rst:378
 msgid ""
 "Make sure the path is correct and ends with a /. You can check the path in "
 "your database in the config table."
@@ -1179,7 +1181,7 @@ msgstr ""
 "Assurez-vous que le chemin est correct et se termine par un /. Vous pouvez "
 "vérifier le chemin dans la table de configuration de votre base de données."
 
-#: ../../intro/install.rst:380
+#: ../../intro/install.rst:381
 msgid ""
 "If you only have ftp access to your server and created a directory but do "
 "not know the path of it, you might be able to figure it out from the www "
@@ -1192,14 +1194,14 @@ msgstr ""
 "votre base de données. A ce stade il est recommandé de demander de l'aide à "
 "l'équipe support de votre fournisseur d'hébergement."
 
-#: ../../intro/install.rst:388
+#: ../../intro/install.rst:389
 msgid ""
 "I can't validate my admin account because I don't have an email server!"
 msgstr ""
 "Je ne peux pas valider mon compte admin car je n'ai pas de serveur d'e-mail "
 "!"
 
-#: ../../intro/install.rst:390
+#: ../../intro/install.rst:391
 msgid ""
 "While it's true that normal accounts (aside from those created from the "
 "admin panel) require their email address to be authenticated before they can"
@@ -1210,7 +1212,7 @@ msgstr ""
 "e-mail soit authentifiée avant de pouvoir se connecter, ceci n'est pas "
 "nécessaire pour le compte administrateur."
 
-#: ../../intro/install.rst:394
+#: ../../intro/install.rst:395
 msgid ""
 "Once you have registered your first account you will be able to log in using"
 " the credentials you have provided!"
@@ -1218,13 +1220,13 @@ msgstr ""
 "Une fois que vous avez créé votre premier compte utilisateur vous pouvez "
 "vous connecter en utilisant les accès que vous avez fourni !"
 
-#: ../../intro/install.rst:398
+#: ../../intro/install.rst:399
 msgid "I have tried all of these suggestions and I still cannot install Elgg"
 msgstr ""
 "J'ai essayé toutes ces suggestions et je n'arrive toujours pas à installer "
 "Elgg"
 
-#: ../../intro/install.rst:400
+#: ../../intro/install.rst:401
 msgid ""
 "It is possible that during the process of debugging your install you have "
 "broken something else. Try doing a clean install:"
@@ -1232,23 +1234,23 @@ msgstr ""
 "Il est possible que quelque chose d'autre ait été cassé lors du débogage de "
 "l'installation. Essayez de faire une nouvelle installation propre :"
 
-#: ../../intro/install.rst:403
+#: ../../intro/install.rst:404
 msgid "drop your elgg database"
 msgstr "supprimez votre base de données Elgg"
 
-#: ../../intro/install.rst:404
+#: ../../intro/install.rst:405
 msgid "delete your data directory"
 msgstr "supprimez votre répertoire des données"
 
-#: ../../intro/install.rst:405
+#: ../../intro/install.rst:406
 msgid "delete the Elgg source files"
 msgstr "supprimez les fichiers source de Elgg"
 
-#: ../../intro/install.rst:406
+#: ../../intro/install.rst:407
 msgid "start over"
 msgstr "recommencez l'installation"
 
-#: ../../intro/install.rst:408
+#: ../../intro/install.rst:409
 msgid ""
 "If that fails, seek the help of the `Elgg community`_. Be sure to mention "
 "what version of Elgg you are installing, details of your server platform, "
