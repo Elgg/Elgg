@@ -15,20 +15,22 @@ class ThreadPreloaderIntegrationTest extends IntegrationTestCase {
 		elgg_entity_enable_capability($entity->getType(), $entity->getSubtype(), 'commentable');
 		elgg_set_config('comments_max_depth', 2);
 		
+		$time = time();
+		
 		// level 1
-		$top1 = $this->createObject(['subtype' => 'comment', 'container_guid' => $entity->guid, 'level' => 1]);
-		$top2 = $this->createObject(['subtype' => 'comment', 'container_guid' => $entity->guid, 'level' => 1]);
-		$top3 = $this->createObject(['subtype' => 'comment', 'container_guid' => $entity->guid, 'level' => 1]);
+		$top1 = $this->createObject(['subtype' => 'comment', 'container_guid' => $entity->guid, 'level' => 1, 'time_created' => $time - 10]);
+		$top2 = $this->createObject(['subtype' => 'comment', 'container_guid' => $entity->guid, 'level' => 1, 'time_created' => $time - 9]);
+		$top3 = $this->createObject(['subtype' => 'comment', 'container_guid' => $entity->guid, 'level' => 1, 'time_created' => $time - 8]);
 		
 		// level 2
-		$sub1_1 = $this->createObject(['subtype' => 'comment', 'container_guid' => $entity->guid, 'level' => 2, 'parent_guid' => $top1->guid, 'thread_guid' => $top1->guid]);
-		$sub1_2 = $this->createObject(['subtype' => 'comment', 'container_guid' => $entity->guid, 'level' => 2, 'parent_guid' => $top1->guid, 'thread_guid' => $top1->guid]);
+		$sub1_1 = $this->createObject(['subtype' => 'comment', 'container_guid' => $entity->guid, 'level' => 2, 'parent_guid' => $top1->guid, 'thread_guid' => $top1->guid, 'time_created' => $time - 7]);
+		$sub1_2 = $this->createObject(['subtype' => 'comment', 'container_guid' => $entity->guid, 'level' => 2, 'parent_guid' => $top1->guid, 'thread_guid' => $top1->guid, 'time_created' => $time - 6]);
 
-		$sub2_1 = $this->createObject(['subtype' => 'comment', 'container_guid' => $entity->guid, 'level' => 2, 'parent_guid' => $top2->guid, 'thread_guid' => $top2->guid]);
+		$sub2_1 = $this->createObject(['subtype' => 'comment', 'container_guid' => $entity->guid, 'level' => 2, 'parent_guid' => $top2->guid, 'thread_guid' => $top2->guid, 'time_created' => $time - 5]);
 		
 		// level 3 (preloader should not consider max depth)
-		$sub1_2_1 = $this->createObject(['subtype' => 'comment', 'container_guid' => $entity->guid, 'level' => 3, 'parent_guid' => $sub1_2->guid, 'thread_guid' => $top1->guid]);
-		$sub1_2_2 = $this->createObject(['subtype' => 'comment', 'container_guid' => $entity->guid, 'level' => 3, 'parent_guid' => $sub1_2->guid, 'thread_guid' => $top1->guid]);
+		$sub1_2_1 = $this->createObject(['subtype' => 'comment', 'container_guid' => $entity->guid, 'level' => 3, 'parent_guid' => $sub1_2->guid, 'thread_guid' => $top1->guid, 'time_created' => $time - 4]);
+		$sub1_2_2 = $this->createObject(['subtype' => 'comment', 'container_guid' => $entity->guid, 'level' => 3, 'parent_guid' => $sub1_2->guid, 'thread_guid' => $top1->guid, 'time_created' => $time - 3]);
 		
 		// full view of entity should show responses (which should preload threaded comments)
 		elgg_view('page/elements/comments', ['entity' => $entity, 'limit' => 10]);
