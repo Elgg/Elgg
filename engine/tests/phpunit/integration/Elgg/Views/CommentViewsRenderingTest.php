@@ -17,8 +17,13 @@ class CommentViewsRenderingTest extends ViewRenderingTestCase {
 	}
 
 	public function getDefaultViewVars() {
+		// make sure we have a commentable container
+		$container = $this->createObject();
+		elgg_entity_enable_capability($container->getType(), $container->getSubtype(), 'commentable');
+		
 		$comment = $this->createObject([
 			'subtype' => 'comment',
+			'container_guid' => $container->guid,
 		]);
 		return [
 			'entity' => $comment,

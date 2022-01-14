@@ -6,10 +6,6 @@ use Elgg\IntegrationTestCase;
 
 class ControllerIntegrationTest extends IntegrationTestCase {
 
-	public function up() {
-		$this->registerViews();
-	}
-	
 	protected function prepareService(\Elgg\Http\Request $request) {
 		$this->createApplication([
 			'isolate' => true,
@@ -57,6 +53,11 @@ class ControllerIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testCantLoadNonRegisteredAjaxView() {
+		$this->createApplication([
+			'isolate' => true,
+		]);
+		$this->registerViews();
+		
 		$this->assertTrue(elgg_view_exists('ajax_test/not_registered'));
 		$request = $this->prepareHttpRequest('ajax/view/ajax_test/not_registered', 'GET', [], 1);
 		
@@ -112,6 +113,11 @@ class ControllerIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testCantLoadNonRegisteredAjaxForm() {
+		$this->createApplication([
+			'isolate' => true,
+		]);
+		$this->registerViews();
+		
 		$this->assertTrue(elgg_view_exists('ajax_test/not_registered'));
 		$request = $this->prepareHttpRequest('ajax/form/ajax_test/not_registered', 'GET', [], 1);
 		

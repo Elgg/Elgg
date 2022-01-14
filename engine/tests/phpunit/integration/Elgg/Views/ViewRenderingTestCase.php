@@ -3,13 +3,13 @@
 namespace Elgg\Views;
 
 use Elgg\Exceptions\HttpException;
-use Elgg\IntegratedUnitTestCase;
+use Elgg\IntegrationTestCase;
 use Elgg\Plugins\PluginTesting;
 
 /**
  * Abstract class for testing view output
  */
-abstract class ViewRenderingTestCase extends IntegratedUnitTestCase {
+abstract class ViewRenderingTestCase extends IntegrationTestCase {
 
 	use PluginTesting;
 
@@ -23,6 +23,7 @@ abstract class ViewRenderingTestCase extends IntegratedUnitTestCase {
 
 	/**
 	 * Returns an array of view names to test with given default view vars
+	 *
 	 * @return array
 	 */
 	abstract public function getViewNames();
@@ -35,7 +36,8 @@ abstract class ViewRenderingTestCase extends IntegratedUnitTestCase {
 
 	/**
 	 * An array of views to test
-	 * @return array;
+	 *
+	 * @return array
 	 */
 	public function viewListProvider() {
 		self::createApplication();
@@ -109,7 +111,7 @@ abstract class ViewRenderingTestCase extends IntegratedUnitTestCase {
 
 			case 'resource' :
 				$prev_viewtype = elgg_set_viewtype($viewtype);
-				$output = elgg_view_resource($subview, $component_vars, $vars);
+				$output = elgg_view_resource($subview, $vars);
 				elgg_set_viewtype($prev_viewtype);
 				return $output;
 
