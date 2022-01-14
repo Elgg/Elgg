@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         # Keep number of suites inline with scrutinizer waiting for the same amount of coverage runs
-        testsuite: ['unit', 'integration-a-to-d', 'integration-e-to-p', 'integration-q-to-all', 'plugins-unit', 'plugins-integration']
+        testsuite: ['unit', 'integration-a-to-d', 'integration-e-to-s', 'integration-t-to-all', 'plugins-unit', 'plugins-integration']
 
     steps:
       - name: Check if run on the Elgg repo
