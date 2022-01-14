@@ -8,7 +8,6 @@
       <directory suffix=".php">./mod/*/actions</directory>
       <directory suffix=".php">./mod/*/lib</directory>
       <directory suffix=".php">./mod/*/classes</directory>
-      <directory suffix="start.php">./mod/*</directory>
     </include>
     <exclude>
       <directory suffix=".php">./elgg-config</directory>
@@ -19,8 +18,8 @@
       <directory suffix=".php">*/bower_components/*</directory>
       <directory suffix=".php">*/node_modules/*</directory>
       <directory suffix=".php">*/docs/*</directory>
-      <directory suffix=".php">*/engine/schema/*</directory>
-      <directory suffix=".php">*/engine/lib/upgrades/*</directory>
+      <directory suffix=".php">./engine/schema/*</directory>
+      <directory suffix=".php">./engine/vendor_classes/*</directory>
       <directory suffix=".php">./languages</directory>
       <directory suffix=".php">./views</directory>
       <directory suffix=".php">./mod/*/languages</directory>
@@ -72,6 +71,49 @@
     </testsuite>
     <testsuite name="plugins-integration">
       <directory>./mod/*/tests/phpunit/integration/</directory>
+    </testsuite>
+    <!-- The following suites are used to segment code coverage jobs -->
+    <testsuite name="integration-a-to-d">
+      <directory>./engine/tests/phpunit/integration/Elgg/Actions/</directory>
+      <directory>./engine/tests/phpunit/integration/Elgg/Ajax/</directory>
+      <directory>./engine/tests/phpunit/integration/Elgg/Assets/</directory>
+      <directory>./engine/tests/phpunit/integration/Elgg/Cli/</directory>
+      <directory>./engine/tests/phpunit/integration/Elgg/Comments/</directory>
+      <directory>./engine/tests/phpunit/integration/Elgg/Controllers/</directory>
+      <directory>./engine/tests/phpunit/integration/Elgg/Database/</directory>
+      <directory>./engine/tests/phpunit/integration/Elgg/Di/</directory>
+    </testsuite>
+    <testsuite name="integration-e-to-p">
+      <directory>./engine/tests/phpunit/integration/Elgg/Email/</directory>
+      <directory>./engine/tests/phpunit/integration/Elgg/Forms/</directory>
+      <directory>./engine/tests/phpunit/integration/Elgg/Http/</directory>
+      <directory>./engine/tests/phpunit/integration/Elgg/I18n/</directory>
+      <directory>./engine/tests/phpunit/integration/Elgg/Integration/</directory>
+      <directory>./engine/tests/phpunit/integration/Elgg/Lib/</directory>
+      <directory>./engine/tests/phpunit/integration/Elgg/Navigation/</directory>
+      <directory>./engine/tests/phpunit/integration/Elgg/Notifications/</directory>
+      <directory>./engine/tests/phpunit/integration/Elgg/Plugin/</directory>
+    </testsuite>
+    <testsuite name="integration-q-to-all">
+      <directory>./engine/tests/phpunit/integration/</directory>
+      
+      <exclude>engine/tests/phpunit/integration/Elgg/Actions/</exclude>
+      <exclude>engine/tests/phpunit/integration/Elgg/Ajax/</exclude>
+      <exclude>engine/tests/phpunit/integration/Elgg/Assets/</exclude>
+      <exclude>engine/tests/phpunit/integration/Elgg/Cli/</exclude>
+      <exclude>engine/tests/phpunit/integration/Elgg/Comments/</exclude>
+      <exclude>engine/tests/phpunit/integration/Elgg/Controllers/</exclude>
+      <exclude>engine/tests/phpunit/integration/Elgg/Database/</exclude>
+      <exclude>engine/tests/phpunit/integration/Elgg/Di/</exclude>
+      <exclude>engine/tests/phpunit/integration/Elgg/Email/</exclude>
+      <exclude>engine/tests/phpunit/integration/Elgg/Forms/</exclude>
+      <exclude>engine/tests/phpunit/integration/Elgg/Http/</exclude>
+      <exclude>engine/tests/phpunit/integration/Elgg/I18n/</exclude>
+      <exclude>engine/tests/phpunit/integration/Elgg/Integration/</exclude>
+      <exclude>engine/tests/phpunit/integration/Elgg/Lib/</exclude>
+      <exclude>engine/tests/phpunit/integration/Elgg/Navigation/</exclude>
+      <exclude>engine/tests/phpunit/integration/Elgg/Notifications/</exclude>
+      <exclude>engine/tests/phpunit/integration/Elgg/Plugin/</exclude>
     </testsuite>
   </testsuites>
 </phpunit>
