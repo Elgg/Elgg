@@ -8,7 +8,6 @@
       <directory suffix=".php">./mod/*/actions</directory>
       <directory suffix=".php">./mod/*/lib</directory>
       <directory suffix=".php">./mod/*/classes</directory>
-      <directory suffix="start.php">./mod/*</directory>
     </include>
     <exclude>
       <directory suffix=".php">./elgg-config</directory>
@@ -19,8 +18,8 @@
       <directory suffix=".php">*/bower_components/*</directory>
       <directory suffix=".php">*/node_modules/*</directory>
       <directory suffix=".php">*/docs/*</directory>
-      <directory suffix=".php">*/engine/schema/*</directory>
-      <directory suffix=".php">*/engine/lib/upgrades/*</directory>
+      <directory suffix=".php">./engine/schema/*</directory>
+      <directory suffix=".php">./engine/vendor_classes/*</directory>
       <directory suffix=".php">./languages</directory>
       <directory suffix=".php">./views</directory>
       <directory suffix=".php">./mod/*/languages</directory>
