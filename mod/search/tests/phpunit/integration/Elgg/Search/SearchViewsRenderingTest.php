@@ -1,6 +1,8 @@
 <?php
 
-namespace Elgg\Views;
+namespace Elgg\Search;
+
+use Elgg\Views\ViewRenderingTestCase;
 
 /**
  * @group ViewRendering
@@ -11,9 +13,9 @@ namespace Elgg\Views;
 class SearchViewsRenderingTest extends ViewRenderingTestCase {
 
 	public function up() {
-		$this->startPlugin();
-
 		parent::up();
+		
+		$this->startPlugin();
 	}
 
 	public function getViewNames() {

@@ -4,7 +4,8 @@ namespace Elgg\Views;
 
 /**
  * @group Glyphs
- * @group Views
+ * @group ViewRendering
+ * @group ViewsService
  */
 class ElggIconMappingTest extends ViewRenderingTestCase {
 

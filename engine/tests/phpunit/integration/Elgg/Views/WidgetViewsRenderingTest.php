@@ -9,15 +9,6 @@ namespace Elgg\Views;
  */
 class WidgetViewsRenderingTest extends ViewRenderingTestCase {
 
-	public function up() {
-		parent::up();
-
-		$dbprefix = elgg_get_config('dbprefix');
-		_elgg_services()->db->addQuerySpec([
-			'sql' => "SHOW TABLES LIKE '{$dbprefix}upgrade_lock'"
-		]);
-	}
-
 	public function getViewNames() {
 		$views = [
 			'forms/widgets/save',
@@ -51,6 +42,7 @@ class WidgetViewsRenderingTest extends ViewRenderingTestCase {
 		return [
 			'entity' => $this->createObject([
 				'subtype' => 'widget',
+				'tags' => 'tag',
 			]),
 		];
 	}
