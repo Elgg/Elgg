@@ -1,3 +1,27 @@
+<a name="4.1.0"></a>
+## 4.1.0  (2022-01-14)
+
+#### Contributors
+
+* Jeroen Dalsem (7)
+* Jerôme Bakker (5)
+* Nikolai Shcherbin (1)
+
+#### Features
+
+* **css:** added helper class to wrap horizontal fieldset content ([c0853ae7](https://github.com/Elgg/Elgg/commit/c0853ae73f92a62719aaedce90928efe7cb10642))
+
+
+#### Bug Fixes
+
+* **groups:** only select groups to check group invites ([17bedb9b](https://github.com/Elgg/Elgg/commit/17bedb9b23c43d6bd15f0cfbaeaa77e0aae6ef57))
+
+
+#### Removed
+
+* **tests:** IntegratedUnitTestCase ([65f007e6](https://github.com/Elgg/Elgg/commit/65f007e6cd510b656b6e23a3ab4c3f62033a14ec))
+
+
 <a name="4.1.0-beta.1"></a>
 ### 4.1.0-beta.1  (2021-12-24)
 

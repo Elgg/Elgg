@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @group UnitTests
- * @group Breadcrumbs
- */
-class ElggBreadcrumbsUnitTest extends \Elgg\IntegratedUnitTestCase {
+class ElggBreadcrumbsUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
 		elgg_set_config('breadcrumbs', []);

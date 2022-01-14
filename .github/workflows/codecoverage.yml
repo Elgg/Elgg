@@ -8,9 +8,15 @@ env:
   
 jobs:
   scrutinizer:
-    name: Scrutinizer
+    name: Scrutinizer - ${{ matrix.testsuite }}
     runs-on: ubuntu-latest
-        
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        # Keep number of suites inline with scrutinizer waiting for the same amount of coverage runs
+        testsuite: ['unit', 'integration-a-to-d', 'integration-e-to-s', 'integration-t-to-all', 'plugins-unit', 'plugins-integration']
+
     steps:
       - name: Check if run on the Elgg repo
         if: github.repository != 'Elgg/Elgg'
@@ -49,9 +55,10 @@ jobs:
           mysql -u root -proot -e 'SET GLOBAL max_connections = 1000;'
           mysql -u root -proot -e 'create database elgg;'
           php ./elgg-cli install --config ./install/cli/testing_app.php --verbose
+          php -f ./.scripts/ci/enable_plugins.php
       
       - name: Test and publish code coverage
         run: |
           wget https://scrutinizer-ci.com/ocular.phar
-          ./vendor/bin/phpunit --coverage-clover=coverage.clover
+          ./vendor/bin/phpunit --testsuite ${{ matrix.testsuite }} --coverage-clover=coverage.clover
           php ocular.phar code-coverage:upload --format=php-clover coverage.clover

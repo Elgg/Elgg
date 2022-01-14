@@ -227,6 +227,14 @@ select:not([multiple]) {
 			}
 		}
 		
+		&.elgg-fieldset-wrap {
+			flex-wrap: wrap;
+			
+			.elgg-field {
+				margin-bottom: 0.5rem;
+			}
+		}
+		
 		&.elgg-justify-right .elgg-field {
 			margin: 0 0 0 1rem;
 		}
