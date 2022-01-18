@@ -26,7 +26,7 @@ trait Seeding {
 	use TimeHelpers;
 	
 	/**
-	 * This can't be a const beacuse of PHP limitation
+	 * This can't be a const because of PHP trait limitation
 	 *
 	 * @var int
 	 */
@@ -487,7 +487,7 @@ trait Seeding {
 	 *
 	 * @return \ElggSite
 	 */
-	public function createSite(array $attributes = [], array $metadata = []) {
+	public function createSite(array $attributes = [], array $metadata = []): \ElggSite {
 		// We don't want to create more than one site
 		return elgg_get_site_entity();
 	}
