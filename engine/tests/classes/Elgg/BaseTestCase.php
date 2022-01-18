@@ -8,6 +8,7 @@ use Elgg\Plugins\PluginTesting;
 use Elgg\Project\Paths;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
+use Phpfastcache\CacheManager;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
@@ -66,14 +67,19 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 			'memcache' => (bool) getenv('ELGG_MEMCACHE'),
 			'memcache_servers' => [
-				[getenv('ELGG_MEMCACHE_SERVER1_HOST'), getenv('ELGG_MEMCACHE_SERVER1_PORT')],
-				[getenv('ELGG_MEMCACHE_SERVER2_HOST'), getenv('ELGG_MEMCACHE_SERVER2_PORT')],
+				[
+					'host' => getenv('ELGG_MEMCACHE_SERVER1_HOST'),
+					'port' => (int) getenv('ELGG_MEMCACHE_SERVER1_PORT'),
+				],
 			],
 			'memcache_namespace_prefix' => getenv('ELGG_MEMCACHE_NAMESPACE_PREFIX') ? : 'elgg_mc_prefix_',
 
 			'redis' => (bool) getenv('ELGG_REDIS'),
 			'redis_servers' => [
-				[getenv('ELGG_REDIS_SERVER1_HOST'), getenv('ELGG_REDIS_SERVER1_PORT')],
+				[
+					'host' => getenv('ELGG_REDIS_SERVER1_HOST'),
+					'port' => (int) getenv('ELGG_REDIS_SERVER1_PORT'),
+				],
 			],
 
 			// These are fixed, because tests rely on specific location of the dataroot for source files
@@ -195,6 +201,8 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 		if (_elgg_services()->session->isStarted()) {
 			_elgg_services()->system_messages->dumpRegister();
 		}
+		
+		CacheManager::clearInstances();
 		
 		// close the database connections to prevent 'too many connections'
 		_elgg_services()->db->closeConnections();

@@ -21,7 +21,7 @@ if (function_exists('opcache_get_status') && opcache_get_status(false)) {
 
 // memcache
 $memcache_servers = elgg_get_config('memcache_servers');
-if (elgg_get_config('memcache') && !empty($memcache_servers) && \Stash\Driver\Memcache::isAvailable()) {
+if (elgg_get_config('memcache') && !empty($memcache_servers) && \Elgg\Cache\CompositeCache::isMemcacheAvailable()) {
 	$tabs[] = [
 		'text' => elgg_echo('admin:server:label:memcache'),
 		'content' => elgg_view('admin/server/memcache'),
@@ -30,7 +30,7 @@ if (elgg_get_config('memcache') && !empty($memcache_servers) && \Stash\Driver\Me
 
 // redis
 $redis_servers = elgg_get_config('redis_servers');
-if (elgg_get_config('redis') && !empty($redis_servers) && \Stash\Driver\Redis::isAvailable()) {
+if (elgg_get_config('redis') && !empty($redis_servers) && \Elgg\Cache\CompositeCache::isRedisAvailable()) {
 	$tabs[] = [
 		'text' => elgg_echo('admin:server:label:redis'),
 		'content' => elgg_view('admin/server/redis'),

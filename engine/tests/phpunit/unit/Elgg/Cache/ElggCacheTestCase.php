@@ -16,7 +16,11 @@ abstract class ElggCacheTestCase extends UnitTestCase {
 		try {
 			$this->cache = $this->createCache();
 		} catch (ConfigurationException $ex) {
-			$this->markTestSkipped("Can not test " . __FUNCTION__ . " with the current configuration");
+			if ($this->allowSkip()) {
+				$this->markTestSkipped();
+			} else {
+				$this->fail('Unable to create cache for current configuration');
+			}
 		}
 
 		$this->cache->clear();
@@ -38,6 +42,15 @@ abstract class ElggCacheTestCase extends UnitTestCase {
 
 	public function makeKey() {
 		return "key_" . rand();
+	}
+	
+	/**
+	 * Is this test allowed to be skipped?
+	 *
+	 * @return bool
+	 */
+	public function allowSkip(): bool {
+		return true;
 	}
 
 	/**

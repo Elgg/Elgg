@@ -2050,7 +2050,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		// don't store volatile data
 		$this->volatile = [];
 
-		_elgg_services()->dataCache->entities->save($this->guid, $this);
+		_elgg_services()->sessionCache->entities->save($this->guid, $this);
 
 		$this->volatile = $tmp;
 	}
@@ -2069,7 +2069,6 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		_elgg_services()->entityCache->delete($this->guid);
 
 		$namespaces = [
-			'entities',
 			'metadata',
 			'private_settings',
 		];

@@ -6,7 +6,6 @@ namespace Elgg\Cache;
  * Persistent data cache
  * Used for caching entities, metadata and private settings
  *
- * @property-read CompositeCache $entities
  * @property-read CompositeCache $metadata
  * @property-read CompositeCache $private_settings
  */

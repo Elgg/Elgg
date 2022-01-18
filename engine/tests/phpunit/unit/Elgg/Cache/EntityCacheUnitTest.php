@@ -156,7 +156,7 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 
 	}
 
-	public function testVInvalidatesCacheOnSessionChange() {
+	public function testInvalidatesCacheOnSessionChange() {
 
 		$user = $this->createUser();
 
@@ -173,6 +173,7 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 
 		_elgg_services()->session->removeLoggedInUser();
 
+		$this->assertNull(_elgg_services()->entityCache->load($user->guid));
 		$this->assertNull(_elgg_services()->entityCache->load($object->guid));
 
 		$this->assertFalse(get_entity($object->guid));
