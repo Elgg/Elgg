@@ -7,6 +7,7 @@ use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Seeds\Providers\LocalImage;
 use Elgg\Exceptions\Configuration\RegistrationException;
+use Elgg\Exceptions\Seeding\MaxAttemptsException;
 use Elgg\Groups\Tool;
 use Elgg\Traits\Seeding\GroupHelpers;
 use Elgg\Traits\Seeding\TimeHelpers;
@@ -23,6 +24,13 @@ trait Seeding {
 
 	use GroupHelpers;
 	use TimeHelpers;
+	
+	/**
+	 * This can't be a const beacuse of PHP limitation
+	 *
+	 * @var int
+	 */
+	protected $MAX_ATTEMPTS = 10;
 	
 	/**
 	 * @var \Faker\Generator
@@ -92,8 +100,9 @@ trait Seeding {
 	 * @param array $options    Seeding options
 	 *
 	 * @return \ElggUser
+	 * @throws MaxAttemptsException
 	 */
-	public function createUser(array $attributes = [], array $metadata = [], array $options = []) {
+	public function createUser(array $attributes = [], array $metadata = [], array $options = []): \ElggUser {
 
 		$create = function () use ($attributes, $metadata, $options) {
 			$metadata['__faker'] = true;
@@ -185,13 +194,21 @@ trait Seeding {
 
 		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($create) {
 			$user = false;
-			while (!$user instanceof \ElggUser) {
+			$attempts = 0;
+			while (!$user instanceof \ElggUser && $attempts < $this->MAX_ATTEMPTS) {
+				$attempts++;
+				
 				try {
 					$user = $create();
 				} catch (\Exception $ex) {
 					// try again
 				}
 			}
+			
+			if (!$user instanceof \ElggUser) {
+				throw new MaxAttemptsException("Unable to create a user after {$attempts} seeding attempts");
+			}
+			
 			return $user;
 		});
 	}
@@ -204,8 +221,9 @@ trait Seeding {
 	 * @param array $options    Additional options
 	 *
 	 * @return \ElggGroup
+	 * @throws MaxAttemptsException
 	 */
-	public function createGroup(array $attributes = [], array $metadata = [], array $options = []) {
+	public function createGroup(array $attributes = [], array $metadata = [], array $options = []): \ElggGroup {
 
 		$create = function () use ($attributes, $metadata, $options) {
 
@@ -326,9 +344,17 @@ trait Seeding {
 
 		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($create) {
 			$group = false;
-			while (!$group instanceof \ElggGroup) {
+			$attempts = 0;
+			while (!$group instanceof \ElggGroup && $attempts < $this->MAX_ATTEMPTS) {
+				$attempts++;
+				
 				$group = $create();
 			}
+			
+			if (!$group instanceof \ElggGroup) {
+				throw new MaxAttemptsException("Unable to create a group after {$attempts} seeding attempts");
+			}
+			
 			return $group;
 		});
 	}
@@ -341,8 +367,9 @@ trait Seeding {
 	 * @param array $options    Additional options
 	 *
 	 * @return \ElggObject
+	 * @throws MaxAttemptsException
 	 */
-	public function createObject(array $attributes = [], array $metadata = [], array $options = []) {
+	public function createObject(array $attributes = [], array $metadata = [], array $options = []): \ElggObject {
 
 		$create = function () use ($attributes, $metadata, $options) {
 
@@ -437,10 +464,17 @@ trait Seeding {
 
 		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($create) {
 			$object = false;
-			while (!$object instanceof \ElggObject) {
+			$attempts = 0;
+			while (!$object instanceof \ElggObject && $attempts < $this->MAX_ATTEMPTS) {
+				$attempts++;
+				
 				$object = $create();
 			}
-	
+			
+			if (!$object instanceof \ElggObject) {
+				throw new MaxAttemptsException("Unable to create an object after {$attempts} seeding attempts");
+			}
+			
 			return $object;
 		});
 	}
@@ -642,7 +676,7 @@ trait Seeding {
 	 *
 	 * @return \ElggEntity
 	 */
-	public function populateMetadata(\ElggEntity $entity, array $fields = [], array $metadata = []) {
+	public function populateMetadata(\ElggEntity $entity, array $fields = [], array $metadata = []): \ElggEntity {
 
 		foreach ($fields as $name => $type) {
 			if (isset($metadata[$name])) {
@@ -723,7 +757,7 @@ trait Seeding {
 	 *
 	 * @return bool
 	 */
-	public function createIcon(\ElggEntity $entity) {
+	public function createIcon(\ElggEntity $entity): bool {
 
 		$icon_location = $this->faker()->image();
 		if (empty($icon_location)) {
@@ -758,7 +792,7 @@ trait Seeding {
 	 *
 	 * @return int Number of generated comments
 	 */
-	public function createComments(\ElggEntity $entity, $limit = null) {
+	public function createComments(\ElggEntity $entity, $limit = null): int {
 
 		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity, $limit) {
 			$tries = 0;
@@ -798,7 +832,7 @@ trait Seeding {
 	 *
 	 * @return int
 	 */
-	public function createLikes(\ElggEntity $entity, $limit = null) {
+	public function createLikes(\ElggEntity $entity, $limit = null): int {
 
 		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity, $limit) {
 			$success = 0;
@@ -826,7 +860,7 @@ trait Seeding {
 	 *
 	 * @return void
 	 */
-	public function log($msg, $level = LogLevel::NOTICE) {
+	public function log($msg, $level = LogLevel::NOTICE): void {
 		elgg_log($msg, $level);
 	}
 }

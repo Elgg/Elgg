@@ -1,7 +1,4 @@
 <?php
-/**
- *
- */
 
 namespace Elgg;
 
@@ -192,6 +189,11 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 		unset($this->_testing_admin);
 		if ($admin instanceof \ElggUser) {
 			$admin->delete();
+		}
+		
+		// clear all message registers
+		if (_elgg_services()->session->isStarted()) {
+			_elgg_services()->system_messages->dumpRegister();
 		}
 		
 		// close the database connections to prevent 'too many connections'

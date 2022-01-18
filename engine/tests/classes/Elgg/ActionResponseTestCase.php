@@ -12,10 +12,6 @@ abstract class ActionResponseTestCase extends IntegrationTestCase {
 		]);
 	}
 
-	public function down() {
-
-	}
-
 	/**
 	 * Execute an action
 	 *
