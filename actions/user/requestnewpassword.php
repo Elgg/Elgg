@@ -4,6 +4,9 @@
  */
 
 $username = get_input('username');
+if (empty($username)) {
+	return elgg_error_response(elgg_echo('error:missing_data'));
+}
 
 // allow email addresses
 if (elgg_strpos($username, '@') !== false && ($users = get_user_by_email($username))) {
