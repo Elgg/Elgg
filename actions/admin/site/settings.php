@@ -18,7 +18,7 @@ if (!($site instanceof ElggSite)) {
 }
 
 $site->description = get_input('sitedescription');
-$site->name = strip_tags(get_input('sitename'));
+$site->name = strip_tags(get_input('sitename', ''));
 $site->email = get_input('siteemail');
 
 if (!$site->save()) {
