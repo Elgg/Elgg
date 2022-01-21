@@ -46,6 +46,7 @@
         "pelago/emogrifier": "^6.0.0",
         "peppeocchi/php-cron-scheduler": "~4.0",
         "php-di/php-di": "~6.3.0",
+        "phpfastcache/phpfastcache": "8.1.0",
         "react/promise": "^2.5",
         "roave/security-advisories": "dev-master",
         "robmorgan/phinx": "~0.12.7",
@@ -53,7 +54,6 @@
         "symfony/http-foundation": "~5.3",
         "symfony/routing": "~5.3",
         "symfony/var-dumper": "~5.3",
-        "tedivm/stash": "0.16.0",
         "vanilla/htmlawed": "~2.2.0"
     },
     "config": {
@@ -81,7 +81,7 @@
             "Elgg\\": "engine/classes/Elgg/",
             "Imagine\\Image\\Metadata\\": "engine/vendor_classes/Imagine/Image/Metadata",
             "Laminas\\Mime\\": "engine/vendor_classes/Laminas/Mime/",
-            "Stash\\": "engine/vendor_classes/Stash/"
+            "Phpfastcache\\": "engine/vendor_classes/Phpfastcache/"
         }
     },
     "autoload-dev": {

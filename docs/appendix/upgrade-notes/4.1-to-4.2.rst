@@ -1,0 +1,14 @@
+From 4.1 to 4.2
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+   
+Stash replaced with Phpfastcache
+--------------------------------
+
+The internal caching library Stash has been replaced with `Phpfastcache <https://www.phpfastcache.com/>`_. 
+Phpfastcache is better maintained, provides more cachedrivers and adds more features to the cache implementation. 
+This change should cause no issues on any existing installation. 
+If you have Memcache or Redis configured in your `elgg-config/settings.php` you might need to update your configuration.

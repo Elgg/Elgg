@@ -6,8 +6,8 @@ namespace Elgg\Cache;
  * Runtime cache
  * Used to cache entities accessed by the user, access collection membership
  *
- * @property-read CompositeCache $entities
  * @property-read CompositeCache $access
+ * @property-read CompositeCache $entities
  */
 class SessionCache extends CacheCollection {
 

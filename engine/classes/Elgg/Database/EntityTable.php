@@ -291,8 +291,7 @@ class EntityTable {
 			return $entity;
 		}
 
-		$cache = _elgg_services()->dataCache->entities;
-		$entity = $cache->load($guid);
+		$entity = _elgg_services()->sessionCache->entities->load($guid);
 		if (!$entity instanceof \ElggEntity) {
 			return false;
 		}
