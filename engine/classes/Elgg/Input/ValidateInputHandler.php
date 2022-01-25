@@ -26,6 +26,9 @@ class ValidateInputHandler {
 	 */
 	public function __invoke(\Elgg\Hook $hook) {
 		$var = $hook->getValue();
+		if ((!is_string($var) && !is_array($var)) || empty($var)) {
+			return $var;
+		}
 	
 		$config = [
 			// seems to handle about everything we need.
@@ -60,6 +63,10 @@ class ValidateInputHandler {
 			return \Htmlawed::filter($var, $config, $spec);
 		} else {
 			$callback = function (&$v, $k, $config_spec) {
+				if (!is_string($v) || empty($v)) {
+					return;
+				}
+				
 				list ($config, $spec) = $config_spec;
 				$v = \Htmlawed::filter($v, $config, $spec);
 			};
