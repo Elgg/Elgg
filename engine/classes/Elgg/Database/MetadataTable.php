@@ -263,7 +263,7 @@ class MetadataTable {
 		$qb->values([
 			'name' => $qb->param($metadata->name, ELGG_VALUE_STRING),
 			'entity_guid' => $qb->param($metadata->entity_guid, ELGG_VALUE_INTEGER),
-			'value' => $qb->param($metadata->value, $metadata->value_type === 'integer' ? ELGG_VALUE_INTEGER : ELGG_VALUE_STRING),
+			'value' => $qb->param($metadata->value, $metadata->value_type === 'text' ? ELGG_VALUE_STRING : ELGG_VALUE_INTEGER),
 			'value_type' => $qb->param($metadata->value_type, ELGG_VALUE_STRING),
 			'time_created' => $qb->param($time_created, ELGG_VALUE_INTEGER),
 		]);
@@ -358,7 +358,7 @@ class MetadataTable {
 	 *
 	 * @param array $guids Array of guids to fetch metadata rows for
 	 *
-	 * @return \stdClass[]
+	 * @return \ElggMetadata[]
 	 *
 	 * @internal
 	 */
@@ -371,7 +371,9 @@ class MetadataTable {
 			->addOrderBy('time_created', 'asc')
 			->addOrderBy('id', 'asc');
 		
-		return $this->db->getData($qb);
+		return $this->db->getData($qb, function ($row) {
+			return new \ElggMetadata($row);
+		});
 	}
 
 	/**

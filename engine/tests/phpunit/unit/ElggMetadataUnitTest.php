@@ -47,6 +47,12 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		$metadata->setValue(25);
 		$this->assertEquals('integer', $metadata->value_type);
 
+		$metadata->setValue(true);
+		$this->assertEquals('bool', $metadata->value_type);
+
+		$metadata->setValue(false);
+		$this->assertEquals('bool', $metadata->value_type);
+
 		$metadata->setValue('foo');
 		$this->assertEquals('text', $metadata->value_type);
 

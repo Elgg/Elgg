@@ -12,3 +12,13 @@ The internal caching library Stash has been replaced with `Phpfastcache <https:/
 Phpfastcache is better maintained, provides more cachedrivers and adds more features to the cache implementation. 
 This change should cause no issues on any existing installation. 
 If you have Memcache or Redis configured in your `elgg-config/settings.php` you might need to update your configuration.
+
+Metadata and Annotation boolean values
+--------------------------------------
+
+The database model has been changed to keep boolean values intact between saving and retrieving. 
+Before this change if you saved a boolean value it would be returned as an integer. Now it will remain a boolean. 
+
+.. warning::
+
+	If you saved boolean values previously they will still be integers in the database (until saved again).

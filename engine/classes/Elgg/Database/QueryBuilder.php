@@ -156,6 +156,11 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 				$type = ParameterType::INTEGER;
 				
 				break;
+			case ELGG_VALUE_BOOL:
+				$type = ParameterType::INTEGER;
+				$value = (int) $value;
+				
+				break;
 			case ELGG_VALUE_STRING:
 				$type = ParameterType::STRING;
 				
