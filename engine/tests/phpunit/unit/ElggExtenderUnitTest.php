@@ -35,6 +35,11 @@ class ElggExtenderUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('integer', $obj->value_type);
 	}
 
+	public function testBooleansAreTypedAsBool() {
+		$this->assertSame('bool', \ElggExtender::detectValueType(true));
+		$this->assertSame('bool', \ElggExtender::detectValueType(false));
+	}
+
 	public function testIntsAreTypedAsInteger() {
 		$this->assertSame('integer', \ElggExtender::detectValueType(-1));
 		$this->assertSame('integer', \ElggExtender::detectValueType(0));
@@ -53,5 +58,8 @@ class ElggExtenderUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertSame('integer', \ElggExtender::detectValueType('hello', 'integer'));
 		$this->assertSame('text', \ElggExtender::detectValueType('hello', 'invalid'));
+
+		$this->assertSame('integer', \ElggExtender::detectValueType(true, 'integer'));
+		$this->assertSame('bool', \ElggExtender::detectValueType(true, 'invalid'));
 	}
 }

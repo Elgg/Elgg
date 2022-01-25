@@ -256,9 +256,7 @@ class MetadataCache {
 		$data = _elgg_services()->metadataTable->getRowsForGuids($guids);
 		
 		$values = [];
-		
-		foreach ($data as $i => $row) {
-			$row->value = ($row->value_type === 'text') ? $row->value : (int) $row->value;
+		foreach ($data as $row) {
 			$values[$row->entity_guid][] = $row;
 		}
 

@@ -64,9 +64,6 @@ abstract class ElggExtender extends \ElggData {
 		}
 		$this->attributes[$name] = $value;
 		if ($name == 'value') {
-			if (is_bool($value)) {
-				$value = (int) $value;
-			}
 			$this->attributes['value_type'] = self::detectValueType($value);
 		}
 	}
@@ -94,6 +91,8 @@ abstract class ElggExtender extends \ElggData {
 		if (array_key_exists($name, $this->attributes)) {
 			if ($name == 'value') {
 				switch ($this->attributes['value_type']) {
+					case 'bool' :
+						return (bool) $this->attributes['value'];
 					case 'integer' :
 						return (int) $this->attributes['value'];
 					case 'text' :
@@ -229,11 +228,17 @@ abstract class ElggExtender extends \ElggData {
 	 * @return string
 	 * @internal
 	 */
-	public static function detectValueType($value, $value_type = "") {
-		if ($value_type === 'integer' || $value_type === 'text') {
+	public static function detectValueType($value, string $value_type = ''): string {
+		if (in_array($value_type, ['integer', 'text', 'bool'])) {
 			return $value_type;
 		}
 
-		return is_int($value) ? 'integer' : 'text';
+		if (is_int($value)) {
+			return 'integer';
+		} elseif (is_bool($value)) {
+			return 'bool';
+		}
+		
+		return 'text';
 	}
 }

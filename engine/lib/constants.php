@@ -128,6 +128,7 @@ define('ELGG_VALUE_STRING', 'string');
 define('ELGG_VALUE_GUID', 'guid');
 define('ELGG_VALUE_ID', 'id');
 define('ELGG_VALUE_TIMESTAMP', 'timestamp');
+define('ELGG_VALUE_BOOL', 'bool');
 
 /**
  * Cache init values

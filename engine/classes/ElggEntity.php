@@ -435,8 +435,12 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			$metadata = new ElggMetadata();
 			$metadata->entity_guid = $this->guid;
 			$metadata->name = $name;
-			$metadata->value_type = $value_type;
 			$metadata->value = $value_tmp;
+			
+			if (!empty($value_type)) {
+				$metadata->value_type = $value_type;
+			}
+			
 			$md_id = _elgg_services()->metadataTable->create($metadata, $multiple);
 			if ($md_id === false) {
 				return false;
@@ -841,10 +845,13 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		$annotation = new ElggAnnotation();
 		$annotation->entity_guid = $this->guid;
 		$annotation->name = $name;
-		$annotation->value_type = $value_type;
 		$annotation->value = $value;
 		$annotation->owner_guid = $owner_guid;
 		$annotation->access_id = $access_id;
+		
+		if (!empty($value_type)) {
+			$annotation->value_type = $value_type;
+		}
 		
 		if ($annotation->save()) {
 			return $annotation->id;
