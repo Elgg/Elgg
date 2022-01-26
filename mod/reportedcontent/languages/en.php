@@ -32,4 +32,18 @@ return array(
 	
 	'widgets:reportedcontent:name' => 'Reported content',
 	'widgets:reportedcontent:description' => 'Display reported content',
+	
+	'reportedcontent:usersettings:notifications:reportedcontent:description' => 'Receive a notification when content is reported',
+	
+	'reportedcontent:notifications:create:admin:subject' => 'New content reported: %s',
+	'reportedcontent:notifications:create:admin:summary' => 'New content reported: %s',
+	'reportedcontent:notifications:create:admin:body' => '%s reported the following:
+
+%s
+
+Check out the related page:
+%s
+
+To view all reports visit:
+%s',
 );
