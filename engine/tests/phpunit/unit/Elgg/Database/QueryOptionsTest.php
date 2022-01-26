@@ -143,6 +143,13 @@ class QueryOptionsTest extends UnitTestCase {
 		], $options['type_subtype_pairs']);
 	}
 
+	public function testNormalizesTypeSubtypeOptionsWithoutType() {
+		$this->expectException(\Elgg\Exceptions\InvalidArgumentException::class);
+		$this->options->normalizeOptions([
+			'subtype' => 'blog',
+		]);
+	}
+
 	public function testNormalizesTypeSubtypeOptionsFromPairSingularAndPairPlural() {
 		$options = $this->options->normalizeOptions([
 			'type_subtype_pair' => ['group' => 'community'],
