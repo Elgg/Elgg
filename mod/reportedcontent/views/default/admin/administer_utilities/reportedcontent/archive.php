@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg Reported content admin page (new reports)
+ * Elgg Reported content admin page (archived reports)
  */
 
 echo elgg_view('navigation/tabs', [
@@ -22,7 +22,7 @@ echo elgg_list_entities([
 	'metadata_name_value_pairs' => [
 		[
 			'name' => 'state',
-			'value' => 'active',
+			'value' => 'archived',
 		],
 	],
 	'no_results' => elgg_echo('reportedcontent:none'),

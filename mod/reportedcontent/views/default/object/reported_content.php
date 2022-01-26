@@ -11,12 +11,6 @@ if (!$entity instanceof \ElggReportedContent) {
 $params = $vars;
 $params['content'] = $entity->description;
 $params['access'] = false;
-$params['class'] = elgg_extract_class($vars, ['pam']);
-
-if ($entity->state !== 'archived') {
-	$params['class'][] = 'elgg-message';
-	$params['class'][] = 'elgg-message-error';
-}
 
 $params['title'] = elgg_view('output/url', [
 	'text' => $entity->getDisplayName(),
