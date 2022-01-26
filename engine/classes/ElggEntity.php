@@ -29,16 +29,17 @@ use Elgg\Traits\Entity\Subscriptions;
  *
  * @tip Plugin authors will want to extend the \ElggObject class, not this class.
  *
- * @property-read  string $type           object, user, group, or site (read-only after save)
- * @property-read  string $subtype        Further clarifies the nature of the entity
- * @property-read  int    $guid           The unique identifier for this entity (read only)
- * @property       int    $owner_guid     The GUID of the owner of this entity (usually the creator)
- * @property       int    $container_guid The GUID of the entity containing this entity
- * @property       int    $access_id      Specifies the visibility level of this entity
- * @property       int    $time_created   A UNIX timestamp of when the entity was created
- * @property-read  int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
- * @property-read  int    $last_action    A UNIX timestamp of when the entity was last acted upon
- * @property-read  string $enabled        Is this entity enabled ('yes' or 'no')
+ * @property-read  string $type              object, user, group, or site (read-only after save)
+ * @property-read  string $subtype           Further clarifies the nature of the entity
+ * @property-read  string $type_subtype_pair Combination of type and subtype (use only internally)
+ * @property-read  int    $guid              The unique identifier for this entity (read only)
+ * @property       int    $owner_guid        The GUID of the owner of this entity (usually the creator)
+ * @property       int    $container_guid    The GUID of the entity containing this entity
+ * @property       int    $access_id         Specifies the visibility level of this entity
+ * @property       int    $time_created      A UNIX timestamp of when the entity was created
+ * @property-read  int    $time_updated      A UNIX timestamp of when the entity was last updated (automatically updated on save)
+ * @property-read  int    $last_action       A UNIX timestamp of when the entity was last acted upon
+ * @property-read  string $enabled           Is this entity enabled ('yes' or 'no')
  *
  * Metadata (the above are attributes)
  * @property       string $location       A location of the entity
@@ -51,6 +52,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		'guid',
 		'type',
 		'subtype',
+		'type_subtype_pair',
 		'owner_guid',
 		'container_guid',
 		'access_id',
@@ -160,6 +162,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		$this->attributes['guid'] = null;
 		$this->attributes['type'] = $this->getType();
 		$this->attributes['subtype'] = null;
+		$this->attributes['type_subtype_pair'] = null;
 
 		$this->attributes['owner_guid'] = _elgg_services()->session->getLoggedInUserGuid();
 		$this->attributes['container_guid'] = _elgg_services()->session->getLoggedInUserGuid();
@@ -257,6 +260,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 				case 'last_action':
 				case 'time_updated':
 				case 'type':
+				case 'type_subtype_pair':
 					return;
 				case 'subtype':
 					throw new ElggInvalidArgumentException(elgg_echo('ElggEntity:Error:SetSubtype', ['setSubtype()']));
@@ -1448,9 +1452,11 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		}
 
 		// Create primary table row
+		$type_subtype_pair = "{$type}.{$subtype}";
 		$guid = _elgg_services()->entityTable->insertRow((object) [
 			'type' => $type,
 			'subtype' => $subtype,
+			'type_subtype_pair' => $type_subtype_pair,
 			'owner_guid' => $owner_guid,
 			'container_guid' => $container_guid,
 			'access_id' => $access_id,
@@ -1464,6 +1470,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		}
 
 		$this->attributes['subtype'] = $subtype;
+		$this->attributes['type_subtype_pair'] = $type_subtype_pair;
 		$this->attributes['guid'] = (int) $guid;
 		$this->attributes['time_created'] = (int) $time_created;
 		$this->attributes['time_updated'] = (int) $now;

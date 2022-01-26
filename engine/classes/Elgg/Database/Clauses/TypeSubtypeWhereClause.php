@@ -20,6 +20,11 @@ class TypeSubtypeWhereClause extends WhereClause {
 	public $subtype_column = 'subtype';
 
 	/**
+	 * @var string
+	 */
+	public $type_subtype_pair_column = 'type_subtype_pair';
+
+	/**
 	 * @var array
 	 */
 	public $type_subtype_pairs = [];
@@ -38,10 +43,9 @@ class TypeSubtypeWhereClause extends WhereClause {
 		if (!empty($this->type_subtype_pairs)) {
 			foreach ($this->type_subtype_pairs as $type => $subtypes) {
 				if (is_array($subtypes) && !empty($subtypes)) {
-					$types_where[] = $qb->merge([
-						$qb->compare($alias($this->type_column), '=', $type, ELGG_VALUE_STRING),
-						$qb->compare($alias($this->subtype_column), '=', $subtypes, ELGG_VALUE_STRING),
-					]);
+					$types_where[] = $qb->compare($alias($this->type_subtype_pair_column), '=', array_map(function($subtype) use ($type) {
+						return "{$type}.{$subtype}";
+					}, $subtypes), ELGG_VALUE_STRING);
 				} else {
 					$types_where[] = $qb->compare($alias($this->type_column), '=', $type, ELGG_VALUE_STRING);
 				}

@@ -44,6 +44,7 @@ class EntityTable extends DbEntityTable {
 				'guid' => 1,
 				'type' => 'site',
 				'subtype' => 'site',
+				'type_subtype_pair' => 'site.site',
 				'owner_guid' => 0,
 				'container_guid' => 0,
 				'access_id' => ACCESS_PUBLIC,
@@ -138,6 +139,7 @@ class EntityTable extends DbEntityTable {
 			'guid' => $guid,
 			'type' => $type,
 			'subtype' => $subtype,
+			'type_subtype_pair' => "{$type}.{$subtype}",
 			'owner_guid' => 0,
 			'container_guid' => 0,
 			'access_id' => ACCESS_PUBLIC,
@@ -370,6 +372,7 @@ class EntityTable extends DbEntityTable {
 		$insert->values([
 			'type' => $insert->param($row->type, ELGG_VALUE_STRING),
 			'subtype' => $insert->param($row->subtype, ELGG_VALUE_STRING),
+			'type_subtype_pair' => $insert->param($row->type_subtype_pair, ELGG_VALUE_STRING),
 			'owner_guid' => $insert->param($row->owner_guid, ELGG_VALUE_GUID),
 			'container_guid' => $insert->param($row->container_guid, ELGG_VALUE_GUID),
 			'access_id' => $insert->param($row->access_id, ELGG_VALUE_ID),

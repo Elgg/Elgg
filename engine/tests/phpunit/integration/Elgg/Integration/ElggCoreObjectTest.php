@@ -49,6 +49,7 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		$attributes['guid'] = null;
 		$attributes['type'] = 'object';
 		$attributes['subtype'] = $this->subtype;
+		$attributes['type_subtype_pair'] = null;
 		$attributes['owner_guid'] = elgg_get_logged_in_user_guid();
 		$attributes['container_guid'] = elgg_get_logged_in_user_guid();
 		$attributes['access_id'] = ACCESS_PRIVATE;

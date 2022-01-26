@@ -35,6 +35,7 @@ class ElggSite extends \ElggEntity {
 		$this->attributes['guid'] = null;
 		$this->attributes['type'] = 'site';
 		$this->attributes['subtype'] = 'site';
+		$this->attributes['type_subtype_pair'] = 'site.site';
 
 		$this->attributes['owner_guid'] = 0;
 		$this->attributes['container_guid'] = 0;

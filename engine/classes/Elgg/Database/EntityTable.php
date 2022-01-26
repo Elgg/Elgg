@@ -199,6 +199,7 @@ class EntityTable {
 		$insert->values([
 			'type' => $insert->param($row->type, ELGG_VALUE_STRING),
 			'subtype' => $insert->param($row->subtype, ELGG_VALUE_STRING),
+			'type_subtype_pair' => $insert->param($row->type_subtype_pair, ELGG_VALUE_STRING),
 			'owner_guid' => $insert->param($row->owner_guid, ELGG_VALUE_GUID),
 			'container_guid' => $insert->param($row->container_guid, ELGG_VALUE_GUID),
 			'access_id' => $insert->param($row->access_id, ELGG_VALUE_ID),

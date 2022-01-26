@@ -211,22 +211,14 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 
 		$type_parts = [];
 		$type_where = [];
-		$type_where[] = $this->qb->merge([
-			$this->qb->expr()->eq('alias.type', ':qb1'),
-			$this->qb->expr()->in('alias.subtype', ':qb2'),
-		]);
-		$type_where[] = $this->qb->merge([
-			$this->qb->expr()->eq('alias.type', ':qb3'),
-			$this->qb->expr()->in('alias.subtype', ':qb4'),
-		]);
-		$this->qb->param('object', ELGG_VALUE_STRING);
-		$this->qb->param(['blog', 'file'], ELGG_VALUE_STRING);
-		$this->qb->param('group', ELGG_VALUE_STRING);
-		$this->qb->param('community', ELGG_VALUE_STRING);
+		$type_where[] = $this->qb->expr()->in('alias.type_subtype_pair', ':qb1');
+		$type_where[] = $this->qb->expr()->in('alias.type_subtype_pair', ':qb2');
+		$this->qb->param(['object.blog', 'object.file'], ELGG_VALUE_STRING);
+		$this->qb->param(['group.community'], ELGG_VALUE_STRING);
 		$type_parts[] = $this->qb->merge($type_where, 'OR');
 		$parts[] = $this->qb->merge($type_parts);
 
-		$parts[] = $this->qb->expr()->eq('alias.guid', ':qb5');
+		$parts[] = $this->qb->expr()->eq('alias.guid', ':qb3');
 		$this->qb->param(1, ELGG_VALUE_INTEGER);
 
 		$expected = $this->qb->merge($parts);
