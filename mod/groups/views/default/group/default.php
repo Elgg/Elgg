@@ -23,6 +23,18 @@ $imprint = [
 	],
 ];
 
+if ($entity->owner_guid === elgg_get_logged_in_user_guid()) {
+	$imprint[] = [
+		'icon_name' => 'user-cog',
+		'content' => elgg_echo('groups:button:owned'),
+	];
+} elseif ($entity->isMember()) {
+	$imprint[] = [
+		'icon_name' => 'user-check',
+		'content' => elgg_echo('groups:button:joined'),
+	];
+}
+
 if (!$entity->isPublicMembership()) {
 	$imprint[] = [
 		'icon_name' => 'lock',
