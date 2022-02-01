@@ -6,9 +6,9 @@
  */
 
 return array(
-
 	'item:object:reported_content' => 'Nahlášené položky',
 	'admin:administer_utilities:reportedcontent' => 'Nahlášený obsah',
+	
 	'reportedcontent' => 'Nahlášený obsah',
 	'reportedcontent:this' => 'Nahlásit',
 	'reportedcontent:this:tooltip' => 'Nahlásit tuto stránky správci',
@@ -22,6 +22,7 @@ return array(
 	'reportedcontent:report' => 'Nahlásit správci',
 	'reportedcontent:numbertodisplay' => 'Počet zobrazených hlášení',
 	'reportedcontent:user' => 'Nahlásit uživatele',
+	'reportedcontent:archived' => 'Hlášení bylo archivováno',
 
 	'reportedcontent:failed' => 'Pokus o nahlášení tohoto obsahu bohužel selhal.',
 	'reportedcontent:notarchived' => 'Nemůžeme archivovat toto hlášení',

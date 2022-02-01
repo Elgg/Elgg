@@ -6,10 +6,10 @@
  */
 
 return array(
-
 	'item:object:reported_content' => 'Gemelde items',
 	'collection:object:reported_content' => 'Gemelde items',
 	'admin:administer_utilities:reportedcontent' => 'Gemelde inhoud',
+	
 	'reportedcontent' => 'Gemelde inhoud',
 	'reportedcontent:this' => 'Meld dit',
 	'reportedcontent:this:tooltip' => 'Meld dit aan de beheerder',
@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:report' => 'Meld aan beheerder',
 	'reportedcontent:numbertodisplay' => 'Aantal meldingen om weer te geven',
 	'reportedcontent:user' => 'Meld deze gebruiker bij de sitebeheerder',
+	'reportedcontent:archived' => 'De melding is gearchiveerd',
 
 	'reportedcontent:failed' => 'Sorry, de poging om deze inhoud te melden is mislukt.',
 	'reportedcontent:notarchived' => 'Het was niet mogelijk om deze melding te archiveren',

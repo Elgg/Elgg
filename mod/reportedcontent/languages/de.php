@@ -6,10 +6,10 @@
  */
 
 return array(
-
 	'item:object:reported_content' => 'Gemeldete Beiträge',
 	'collection:object:reported_content' => 'Gemeldete Beiträge',
 	'admin:administer_utilities:reportedcontent' => 'Gemeldete Beiträge',
+	
 	'reportedcontent' => 'Gemeldete Beiträge',
 	'reportedcontent:this' => 'Beitrag melden',
 	'reportedcontent:this:tooltip' => 'Melde diese Seiten/diesen Beitrag einem Administrator.',
@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:report' => 'Einem Admin melden',
 	'reportedcontent:numbertodisplay' => 'Anzahl der anzuzeigenden Meldungen',
 	'reportedcontent:user' => 'Benutzer melden',
+	'reportedcontent:archived' => 'Die Meldung wurde archiviert.',
 
 	'reportedcontent:failed' => 'Entschuldigung, leider ist der Versuch, diesen Beitrag zu melden, gescheitert.',
 	'reportedcontent:notarchived' => 'Die Meldung konnte nicht archiviert werden.',

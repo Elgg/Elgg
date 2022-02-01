@@ -6,9 +6,9 @@
  */
 
 return array(
-
 	'item:object:reported_content' => '報告的項目',
 	'admin:administer_utilities:reportedcontent' => '報告的內容',
+	
 	'reportedcontent' => '報告的內容',
 	'reportedcontent:this' => '報告這頁',
 	'reportedcontent:this:tooltip' => '報告這個頁面給管理者',
@@ -22,6 +22,7 @@ return array(
 	'reportedcontent:report' => '報告給管理者',
 	'reportedcontent:numbertodisplay' => '要顯示的報告數量',
 	'reportedcontent:user' => '報告的使用者',
+	'reportedcontent:archived' => '報告已封存',
 
 	'reportedcontent:failed' => '抱歉，嘗試報告這個內容時失敗。',
 	'reportedcontent:notarchived' => '我們無法封存該報告',
