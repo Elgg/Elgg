@@ -6,9 +6,9 @@
  */
 
 return array(
-
 	'item:object:reported_content' => '신고된 항목',
 	'admin:administer_utilities:reportedcontent' => '신고된 내용',
+	
 	'reportedcontent' => '신고된 내용',
 	'reportedcontent:this' => '이것을 신고합니다',
 	'reportedcontent:this:tooltip' => '관리자에게 이 페이지를 신고합니다',
@@ -22,6 +22,7 @@ return array(
 	'reportedcontent:report' => '관리자에게 신고',
 	'reportedcontent:numbertodisplay' => '표시할 신고의 개수',
 	'reportedcontent:user' => '사용자 신고',
+	'reportedcontent:archived' => '신고가 저장되었습니다',
 
 	'reportedcontent:failed' => '죄송합니다. 이 내용을 신고하는데 실패하였습니다.',
 	'reportedcontent:notarchived' => '이 신고를 저장할 수 없었습니다',

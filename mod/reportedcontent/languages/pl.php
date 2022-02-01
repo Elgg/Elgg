@@ -6,9 +6,9 @@
  */
 
 return array(
-
 	'item:object:reported_content' => 'Zgłoszone elementy',
 	'admin:administer_utilities:reportedcontent' => 'Zgłoszona treść',
+	
 	'reportedcontent' => 'Zgłoszona treść',
 	'reportedcontent:this' => 'Zgłoś to',
 	'reportedcontent:this:tooltip' => 'Zgłoś tą stronę administratorowi',
@@ -22,6 +22,7 @@ return array(
 	'reportedcontent:report' => 'Zgłoś administratorowi',
 	'reportedcontent:numbertodisplay' => 'Ilość wyświetlanych zgłoszeń',
 	'reportedcontent:user' => 'Zgłoś użytkownika',
+	'reportedcontent:archived' => 'Zgłoszenie zostało zarchiwizowane',
 
 	'reportedcontent:failed' => 'Przykro nam, próba zgłoszenia tej treści zakończyła się niepowodzeniem.',
 	'reportedcontent:notarchived' => 'Nie powiodła się archiwizacja tego zgłoszenia',
