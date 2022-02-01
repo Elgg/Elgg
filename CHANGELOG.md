@@ -1,3 +1,15 @@
+<a name="4.1.1"></a>
+### 4.1.1  (2022-02-01)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+
+#### Bug Fixes
+
+* **cache:** improved cache path parsing ([fb18efb1](https://github.com/Elgg/Elgg/commit/fb18efb190273d4e595c4c0f94cf5378a12183c7))
+
+
 <a name="4.1.0"></a>
 ## 4.1.0  (2022-01-14)
 
