@@ -6,10 +6,10 @@
  */
 
 return array(
-
 	'item:object:reported_content' => 'Жалоба',
 	'collection:object:reported_content' => 'Жалобы',
 	'admin:administer_utilities:reportedcontent' => 'Жалобы',
+	
 	'reportedcontent' => 'Жалобы',
 	'reportedcontent:this' => 'Пожаловаться',
 	'reportedcontent:this:tooltip' => 'Сообщить об этой странице администратору',
@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:report' => 'Пожаловаться администратору',
 	'reportedcontent:numbertodisplay' => 'Количество жалоб для отображения',
 	'reportedcontent:user' => 'Пожаловаться на пользователя',
+	'reportedcontent:archived' => 'Жалоба заархивирована',
 
 	'reportedcontent:failed' => 'Произошла ошибка при отправке жалобы на этот контент',
 	'reportedcontent:notarchived' => 'Не удалось заархивировать жалобу',

@@ -6,9 +6,9 @@
  */
 
 return array(
-
 	'item:object:reported_content' => 'Ilmiannetut kohteet',
 	'admin:administer_utilities:reportedcontent' => 'Asiaton sisältö',
+	
 	'reportedcontent' => 'Asiaton sisältö',
 	'reportedcontent:this' => 'Ilmoita asiattomasta sisällöstä',
 	'reportedcontent:this:tooltip' => 'Ilmoita sivun ylläpitäjälle asiattomasta sisällöstä',
@@ -22,6 +22,7 @@ return array(
 	'reportedcontent:report' => 'Ilmoita ylläpitäjälle',
 	'reportedcontent:numbertodisplay' => 'Näytettävien kohteiden määrä',
 	'reportedcontent:user' => 'Ilmianna käyttäjä',
+	'reportedcontent:archived' => 'Ilmoitus arkistoitiin',
 
 	'reportedcontent:failed' => 'Ilmoituksen tekeminen epäonnistui.',
 	'reportedcontent:notarchived' => 'Ilmoituksen arkistoiminen epäonnistui',

@@ -6,9 +6,9 @@
  */
 
 return array(
-
 	'item:object:reported_content' => 'Τα στοιχεία που αναφέρθηκαν',
 	'admin:administer_utilities:reportedcontent' => 'Περιεχόμενο που έχει αναφερθεί',
+	
 	'reportedcontent' => 'Περιεχόμενο που έχει αναφερθεί',
 	'reportedcontent:this' => 'Αναφέρατε αυτό',
 	'reportedcontent:this:tooltip' => 'Αναφέρατε αυτή τη σελίδα στο διαχειριστή',
@@ -22,6 +22,7 @@ return array(
 	'reportedcontent:report' => 'Αναφέρατε αυτό',
 	'reportedcontent:numbertodisplay' => 'Αριθμός αναφορών για εμφάνιση',
 	'reportedcontent:user' => 'Αναφορά χρήστη',
+	'reportedcontent:archived' => 'Η αναφορά μπήκε στο αρχείο',
 
 	'reportedcontent:failed' => 'Λυπούμαστε, η προσπάθεια αναφοράς αυτού του περιεχομένου απέτυχε',
 	'reportedcontent:notarchived' => 'Δεν ήταν δυνατή η αρχειοθέτηση αυτής της αναφοράς',

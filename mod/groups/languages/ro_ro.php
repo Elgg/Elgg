@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	'add:group:group' => "Creează un grup nou",
 	
 	'groups' => "Grupuri",
 	'groups:owned' => "Grupuri personale",
@@ -181,5 +182,5 @@ sau apasă mai jos pentru a vedea cererile de alăturare ale grupului:
 	'groups:usersettings:notification:group_join:description' => "Setările de notificare implicite de grup atunci când se alătură pe un grup nou",
 	
 	'groups:usersettings:notifications:title' => 'Notificări de Grup',
-	'groups:usersettings:notifications:description' => 'Pentru a primii notificări atunci când se adaugă conținut nou pe un grup al cărui membru ești, găsește-l mai jos și selectează metodele de notificare pe care dorești să le folosești.',
+	'groups:usersettings:notifications:description' => 'Pentru a primii notificări atunci când se adaugă conținut nou pe un grup al cărui membru ești, găsește-l mai jos și selectează metoda(ele) de notificare pe care dorești să o(le) folosești.',
 );
