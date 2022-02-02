@@ -6,10 +6,10 @@
  */
 
 return array(
-
 	'item:object:reported_content' => 'Elemente raportate',
 	'collection:object:reported_content' => 'Elemente raportate',
 	'admin:administer_utilities:reportedcontent' => 'Conținut raportat',
+	
 	'reportedcontent' => 'Conținut raportat',
 	'reportedcontent:this' => 'Raportează asta',
 	'reportedcontent:this:tooltip' => 'Raportează această pagină unui administrator',
@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:report' => 'Raportează unui admin',
 	'reportedcontent:numbertodisplay' => 'Numărul de rapoarte de afișat',
 	'reportedcontent:user' => 'Raportează utilizatorul',
+	'reportedcontent:archived' => 'Raportul a fost arhivat',
 
 	'reportedcontent:failed' => 'Scuze, încercarea de a raporta acest conținut a eșuat.',
 	'reportedcontent:notarchived' => 'Nu am putut arhiva acel raport',

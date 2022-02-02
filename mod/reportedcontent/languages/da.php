@@ -6,9 +6,9 @@
  */
 
 return array(
-
 	'item:object:reported_content' => 'Rapporterede poster',
 	'admin:administer_utilities:reportedcontent' => 'Rapporteret indhold',
+	
 	'reportedcontent' => 'Rapporteret indhold',
 	'reportedcontent:this' => 'Rapporter dette',
 	'reportedcontent:this:tooltip' => 'Rapporter denne side til en administrator',
@@ -22,6 +22,7 @@ return array(
 	'reportedcontent:report' => 'Rapporter til administrationen',
 	'reportedcontent:numbertodisplay' => 'Antal rapporter, der skal vises',
 	'reportedcontent:user' => 'Rapporter bruger',
+	'reportedcontent:archived' => 'Rapporten er blevet arkiveret',
 
 	'reportedcontent:failed' => 'Beklager, forsøget på at rapportere dette indhold fejlede.',
 	'reportedcontent:notarchived' => 'Vi kunne ikke arkivere denne rapport',

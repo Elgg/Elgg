@@ -6,9 +6,9 @@
  */
 
 return array(
-
 	'item:object:reported_content' => 'Elements denunciats',
 	'admin:administer_utilities:reportedcontent' => 'Contingut denunciat',
+	
 	'reportedcontent' => 'Contingut denunciat',
 	'reportedcontent:this' => 'Denunciar',
 	'reportedcontent:this:tooltip' => 'Denunciar aquesta p&agrave;gina a l&acute;administrador',
@@ -22,6 +22,7 @@ return array(
 	'reportedcontent:report' => 'Denunciar aix&ograve;',
 	'reportedcontent:numbertodisplay' => 'Quantitat de denúncies a mostrar',
 	'reportedcontent:user' => 'Denunciar usuària',
+	'reportedcontent:archived' => 'La denúncia ha quedat desada',
 
 	'reportedcontent:failed' => 'Ens sap greu, hi ha hagut una errada a l&acute;hora d&acute;intentar denunciar el contingut.',
 	'reportedcontent:notarchived' => 'No s&acute;ha pogut arxivar la denúncia',
