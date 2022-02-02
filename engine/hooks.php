@@ -144,6 +144,7 @@ return [
 		'menu:entity' => [
 			'Elgg\Menus\Entity::registerDelete' => [],
 			'Elgg\Menus\Entity::registerEdit' => [],
+			'Elgg\Menus\UserHover::registerLoginAs' => [],
 		],
 		'menu:entity:object:elgg_upgrade' => [
 			'Elgg\Menus\Entity::registerUpgrade' => [],
@@ -198,6 +199,7 @@ return [
 		],
 		'menu:topbar' => [
 			'Elgg\Menus\Topbar::registerUserLinks' => [],
+			'Elgg\Menus\Topbar::registerLogoutAs' => [],
 			'Elgg\Menus\Topbar::registerMaintenance' => [],
 		],
 		'menu:user:unvalidated' => [
@@ -209,6 +211,7 @@ return [
 		'menu:user_hover' => [
 			'Elgg\Menus\UserHover::registerAvatarEdit' => [],
 			'Elgg\Menus\UserHover::registerAdminActions' => [],
+			'Elgg\Menus\UserHover::registerLoginAs' => [],
 		],
 		'menu:walled_garden' => [
 			'Elgg\Menus\WalledGarden::registerHome' => [],

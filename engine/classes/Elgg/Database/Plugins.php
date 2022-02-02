@@ -48,7 +48,6 @@ class Plugins {
 		'groups',
 		'invitefriends',
 		'likes',
-		'login_as',
 		'members',
 		'messageboard',
 		'messages',

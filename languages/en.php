@@ -264,6 +264,13 @@ return array(
 	'action:user:validate:already' => "%s was already validated",
 	'action:user:validate:success' => "%s has been validated",
 	'action:user:validate:error' => "An error occurred while validating %s",
+	
+	'action:user:login_as' => "Login as",
+	'action:user:logout_as' => "Return to %s",
+	
+	'action:user:login_as:success' => "You are now logged in as %s",
+	'action:user:login_as:unknown' => "Unknown user. Could not login.",
+	'action:user:login_as:error' => "Could not login as %s",
 
 /**
  * Feeds
