@@ -305,7 +305,11 @@ elgg.normalize_url = function(url) {
 	} else if ((new RegExp("^[^\/]*\\.php(\\?.*)?$", "i")).test(url)) {
 		// watch those double escapes in JS.
 		// 'install.php', 'install.php?step=step'
-		return elgg.config.wwwroot + url.ltrim('/');
+		if (url.indexOf('/') === 0) {
+			url = url.substring(1);
+		}
+		
+		return elgg.config.wwwroot + url;
 	} else if ((new RegExp("^[^/\\?\\#]*\\.", "i")).test(url)) {
 		// 'example.com', 'example.com/subpage'
 		return 'http://' + url;
@@ -313,7 +317,11 @@ elgg.normalize_url = function(url) {
 		// 'page/handler', 'mod/plugin/file.php'
 		// trim off any leading / because the site URL is stored
 		// with a trailing /
-		return elgg.config.wwwroot + url.ltrim('/');
+		if (url.indexOf('/') === 0) {
+			url = url.substring(1);
+		}
+		
+		return elgg.config.wwwroot + url;
 	}
 };
 
