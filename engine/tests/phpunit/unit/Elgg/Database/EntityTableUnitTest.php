@@ -70,4 +70,20 @@ class EntityTableUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($last_action, $new_last_action);
 		$this->assertEquals($last_action, $object->last_action);
 	}
+	
+	public function testGetRowWithoutGUID() {
+		$this->assertFalse(_elgg_services()->entityTable->getRow(null));
+	}
+	
+	public function testGetRowWithNonExistingGUID() {
+		$this->assertFalse(_elgg_services()->entityTable->getRow(-1));
+	}
+	
+	public function testGetRowWithExistingGUID() {
+		$object = $this->createObject();
+		
+		$result = _elgg_services()->entityTable->getRow($object->guid);
+		$this->assertNotFalse($result);
+		$this->assertNotEmpty($result); // should be a \stdClass with data
+	}
 }

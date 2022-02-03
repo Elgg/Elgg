@@ -180,7 +180,7 @@ class EntityTable {
 		$select->select('e.*');
 		$select->addClause($where);
 
-		return $this->db->getDataRow($select);
+		return $this->db->getDataRow($select) ?: false;
 	}
 
 	/**
