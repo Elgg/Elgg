@@ -724,4 +724,20 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		$this->assertSame(['foo' => 'bar'], $cache->load($guids[0]));
 		$this->assertSame(['foo' => 'bar'], $cache->load($guids[1]));
 	}
+	
+	public function testGetEntityAsRowWithoutGUID() {
+		$this->assertFalse(get_entity_as_row(null));
+	}
+	
+	public function testGetEntityAsRowWithNonExistingGUID() {
+		$this->assertFalse(get_entity_as_row(-1));
+	}
+	
+	public function testGetEntityAsRowWithExistingGUID() {
+		$object = $this->createObject();
+		
+		$result = get_entity_as_row($object->guid);
+		$this->assertNotFalse($result);
+		$this->assertNotEmpty($result); // should be a \stdClass with data
+	}
 }
