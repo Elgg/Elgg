@@ -7,7 +7,9 @@
 
 $module = elgg_extract('module', $vars, 'aside');
 
-$title = elgg_extract('title', $vars, elgg_echo('login'));
+$title_text = elgg_get_session()->has('last_forward_from') ? elgg_echo('login:continue') : elgg_echo('login');
+
+$title = elgg_extract('title', $vars, $title_text);
 
 $body = elgg_view_form('login', ['ajax' => true]);
 

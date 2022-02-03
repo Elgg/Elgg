@@ -20,6 +20,7 @@ return array(
 
 	'login' => "Log in",
 	'loginok' => "You have been logged in.",
+	'login:continue' => "Log in to continue",
 	'login:empty' => "Username/email and password are required.",
 	'login:baduser' => "Unable to load your user account.",
 	'auth:nopams' => "Internal error. No user authentication method installed.",
