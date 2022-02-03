@@ -12,7 +12,6 @@ $core_js_views = [
 	'ElggUser.js',
 	
 	//libraries
-	'prototypes.js',
 	'hooks.js',
 	'security.js',
 	'languages.js',
