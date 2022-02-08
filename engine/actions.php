@@ -24,6 +24,8 @@ return [
 	'admin/user/bulk/validate' => ['access' => 'admin'],
 	'admin/user/change_email' => ['access' => 'admin'],
 	'admin/user/delete' => ['access' => 'admin'],
+	'admin/user/login_as' => ['access' => 'admin'],
+	'admin/user/logout_as' => [],
 	'admin/user/makeadmin' => ['access' => 'admin'],
 	'admin/user/resetpassword' => ['access' => 'admin'],
 	'admin/user/removeadmin' => ['access' => 'admin'],

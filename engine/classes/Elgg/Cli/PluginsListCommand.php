@@ -18,7 +18,8 @@ class PluginsListCommand extends Command {
 		$this->setName('plugins:list')
 			->setDescription(elgg_echo('cli:plugins:list:description'))
 			->addOption('status', 's', InputOption::VALUE_OPTIONAL,
-				elgg_echo('cli:plugins:list:option:status', ['all | active | inactive'])
+				elgg_echo('cli:plugins:list:option:status', ['all | active | inactive']),
+				'all'
 			)
 			->addOption('refresh', 'r', InputOption::VALUE_NONE,
 				elgg_echo('cli:plugins:list:option:refresh')
@@ -30,7 +31,7 @@ class PluginsListCommand extends Command {
 	 */
 	protected function command() {
 
-		$status = $this->option('status') ? : 'all';
+		$status = $this->option('status');
 		if (!in_array($status, ['all', 'active', 'inactive'])) {
 			$this->error(elgg_echo('cli:plugins:list:error:status', [$status, 'all | active | inactive']));
 			return 1;

@@ -104,4 +104,46 @@ class Topbar {
 		
 		return $return;
 	}
+	
+	/**
+	 * Register a action to logout out as the temporarily logged in user
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:topbar'
+	 *
+	 * @return void|MenuItems
+	 */
+	public static function registerLogoutAs(\Elgg\Hook $hook) {
+		$original_user_guid = elgg_get_session()->get('login_as_original_user_guid');
+		
+		// quick return if not logged in as someone else.
+		if (!$original_user_guid) {
+			return;
+		}
+		
+		$original_user = get_user($original_user_guid);
+		if (!$original_user instanceof \ElggUser) {
+			return;
+		}
+		
+		$icon = elgg_view('output/img', [
+			'src' => $original_user->getIconURL(['size' => 'tiny']),
+			'alt' => 'original user photo',
+		]);
+		$icon = elgg_format_element('span', ['class' => ['elgg-avatar', 'elgg-avatar-tiny', 'elgg-anchor-icon']], $icon);
+		
+		$menu = $hook->getValue();
+		
+		$menu[] = \ElggMenuItem::factory([
+			'name' => 'logout_as',
+			'icon' => $icon,
+			'text' => elgg_echo('action:user:logout_as', [$original_user->getDisplayName()]),
+			'href' => elgg_generate_action_url('admin/user/logout_as'),
+			'link_class' => 'login-as-topbar',
+			'priority' => -100, // make sure it is the first
+			'section' => 'alt',
+			'parent_name' => 'account',
+		]);
+		
+		return $menu;
+	}
 }

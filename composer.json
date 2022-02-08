@@ -12,7 +12,6 @@
         "ext-gd": "*",
         "ext-json": "*",
         "ext-xml": "*",
-        "elgg/login_as": "~3.1.0",
         "ckeditor/ckeditor": "~4.16.0",
         "composer/semver": "~3.2.0",
         "css-crush/css-crush": "3.0.1",
