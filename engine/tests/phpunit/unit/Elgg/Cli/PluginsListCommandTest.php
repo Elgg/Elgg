@@ -41,7 +41,7 @@ class PluginsListCommandTest extends UnitTestCase {
 
 	public function statusProvider() {
 		return [
-			[null, 0],
+			[null, 1], // should default to all
 			['all', 0],
 			['active', 0],
 			['inactive', 0],
