@@ -84,6 +84,8 @@ class UpgradeCommand extends BaseCommand {
 			}
 		);
 
+		_elgg_generate_plugin_entities();
+		
 		if ($return !== 0 || !$async) {
 			return $return;
 		}
