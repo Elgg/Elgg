@@ -20,9 +20,7 @@ $original_user_guid = $original_user->guid;
 // store the original persistent login state to restore on logout_as.
 $persistent = false;
 if (isset($_COOKIE['elggperm'])) {
-	$code = $_COOKIE['elggperm'];
-	$code = md5($code);
-	if (($original_perm_user = get_user_by_code($code)) && $original_user->guid == $original_perm_user->guid) {
+	if (($original_perm_user = elgg_get_user_by_persistent_token($_COOKIE['elggperm'])) && $original_user->guid == $original_perm_user->guid) {
 		$persistent = true;
 	}
 }
