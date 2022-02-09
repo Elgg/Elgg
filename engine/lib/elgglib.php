@@ -766,8 +766,8 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = ['offset', 'l
 	// if arr1 is an empty array, this function will return 0 no matter what.
 	// since we only care if they're different and not how different,
 	// add the results together to get a non-zero (ie, different) result
-	$diff_count = count(array_diff_assoc($url1_params, $url2_params));
-	$diff_count += count(array_diff_assoc($url2_params, $url1_params));
+	$diff_count = count(_elgg_array_diff_assoc_recursive($url1_params, $url2_params));
+	$diff_count += count(_elgg_array_diff_assoc_recursive($url2_params, $url1_params));
 	if ($diff_count > 0) {
 		return false;
 	}
@@ -1087,4 +1087,46 @@ function _elgg_register_events() {
 			}
 		}
 	}
+}
+
+/**
+ * Computes the difference of arrays with additional index check
+ *
+ * @return array
+ *
+ * @since 4.1
+ * @internal
+ * @see array_diff_assoc()
+ * @see https://github.com/Elgg/Elgg/issues/13016
+ */
+function _elgg_array_diff_assoc_recursive() {
+	$args = func_get_args();
+	$diff = [];
+	
+	foreach (array_shift($args) as $key => $val) {
+		for ($i = 0, $j = 0, $tmp = [$val], $count = count($args); $i < $count; $i++) {
+			if (is_array($val)) {
+				if (!isset($args[$i][$key]) || !is_array($args[$i][$key]) || empty($args[$i][$key])) {
+					$j++;
+				} else {
+					$tmp[] = $args[$i][$key];
+				}
+			} elseif (!array_key_exists($key, $args[$i]) || $args[$i][$key] !== $val) {
+				$j++;
+			}
+		}
+		
+		if (is_array($val)) {
+			$tmp = call_user_func_array ( __FUNCTION__, $tmp);
+			if (!empty($tmp)) {
+				$diff[$key] = $tmp;
+			} elseif ($j == $count) {
+				$diff[$key] = $val;
+			}
+		} elseif ($j == $count && $count) {
+			$diff[$key] = $val;
+		}
+	}
+	
+	return $diff;
 }
