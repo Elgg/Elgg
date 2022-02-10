@@ -3,8 +3,6 @@
 namespace Elgg\Integration;
 
 use Elgg\IntegrationTestCase;
-use ElggComment;
-use ElggObject;
 
 /**
  * Elgg Test \ElggComment
@@ -13,12 +11,12 @@ use ElggObject;
  */
 class ElggCoreCommentTest extends IntegrationTestCase {
 	/**
-	 * @var ElggComment
+	 * @var \ElggComment
 	 */
 	protected $comment;
 
 	/**
-	 * @var ElggObject
+	 * @var \ElggObject
 	 */
 	protected $container;
 
@@ -49,13 +47,16 @@ class ElggCoreCommentTest extends IntegrationTestCase {
 		$this->assertEquals($this->container->access_id, $this->comment->access_id);
 
 		// now change the access of the container
-		$this->container->access_id = ACCESS_LOGGED_IN;
-		$this->container->save();
-
-		$updated_container = get_entity($this->container->guid);
-		$updated_comment = get_entity($this->comment->guid);
-
-		$this->assertEquals($updated_container->access_id, $updated_comment->access_id);
+		$this->container->access_id = 123456;
+		
+		elgg_call(ELGG_IGNORE_ACCESS, function() {
+			$this->assertTrue($this->container->save());
+			
+			$updated_container = get_entity($this->container->guid);
+			$updated_comment = get_entity($this->comment->guid);
+	
+			$this->assertEquals(123456, $updated_container->access_id);
+			$this->assertEquals(123456, $updated_comment->access_id);
+		});
 	}
-
 }
