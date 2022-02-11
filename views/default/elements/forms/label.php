@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Form input label view
  *
@@ -7,6 +6,7 @@
  * @uses $vars['required_indicator'] Override required indicator with a custom view, or set to a false value to not render it
  * @uses $vars['id'] ID attribute of the input element
  */
+
 $label = elgg_extract('label', $vars, '');
 $id = elgg_extract('id', $vars);
 $required = elgg_extract('required', $vars);
@@ -33,4 +33,4 @@ if ($required) {
 echo elgg_format_element('label', [
 	'for' => $id,
 	'class' => 'elgg-field-label'
-		], $label);
+], $label);
