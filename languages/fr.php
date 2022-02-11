@@ -20,6 +20,7 @@ return array(
 
 	'login' => "Connexion",
 	'loginok' => "Connexion réussie.",
+	'login:continue' => "Identifiez-vous pour continuer",
 	'login:empty' => "Identifiant ou adresse e-mail et mot de passe sont requis.",
 	'login:baduser' => "Impossible de charger votre compte utilisateur.",
 	'auth:nopams' => "Erreur interne. Aucune méthode d'authentification des utilisateurs n'est installée.",
@@ -266,6 +267,13 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'action:user:validate:already' => "%s a déjà été validé",
 	'action:user:validate:success' => "%s a été validé",
 	'action:user:validate:error' => "Une erreur est survenue lors de la validation de %s",
+	
+	'action:user:login_as' => "Se connecter en tant que",
+	'action:user:logout_as' => "Revenir à %s",
+	
+	'action:user:login_as:success' => "Vous êtes maintenant connecté en tant que %s",
+	'action:user:login_as:unknown' => "Utilisateur inconnu. Impossible de se connecter.",
+	'action:user:login_as:error' => "Impossible de se connecter en tant que %s",
 
 /**
  * Feeds
