@@ -1276,6 +1276,9 @@ Once you have logged in, we highly recommend that you change your password.',
 	'input:date_format:datepicker' => 'yy-mm-dd', // jQuery UI datepicker format
 	'input:time_format' => 'g:ia',
 
+	'friendlytime:updated' => "%s - Edited",
+	'friendlytime:updated:title' => "Created at: %s \nUpdated at: %s",
+	
 	'friendlytime:justnow' => "just now",
 	'friendlytime:minutes' => "%s minutes ago",
 	'friendlytime:minutes:singular' => "a minute ago",
