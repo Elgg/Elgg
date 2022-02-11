@@ -909,14 +909,18 @@ function elgg_view_title($title, array $vars = []) {
  *
  * @see elgg_get_friendly_time()
  *
- * @param int $time A UNIX epoch timestamp
+ * @param int|string|\DateTime|\Elgg\I18n\DateTime $time         A UNIX epoch timestamp, a date string or a DateTime object
+ * @param int|string|\DateTime|\Elgg\I18n\DateTime $time_updated A UNIX epoch timestamp, a date string or a DateTime object
  *
  * @return string The friendly time HTML
  * @since 1.7.2
  */
-function elgg_view_friendly_time($time) {
+function elgg_view_friendly_time($time, $time_updated = null) {
 	$view = 'output/friendlytime';
-	$vars = ['time' => $time];
+	$vars = [
+		'time' => $time,
+		'time_updated' => $time_updated,
+	];
 	$viewtype = elgg_view_exists($view) ? '' : 'default';
 
 	return _elgg_view_under_viewtype($view, $vars, $viewtype);
