@@ -2,7 +2,6 @@
 
 namespace Elgg\SiteNotifications;
 
-use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Delete;
 use Elgg\Database\QueryBuilder;
 
@@ -119,9 +118,7 @@ class Cron {
 				'batch' => true,
 				'batch_inc_offset' => false,
 				'batch_size' => 100,
-				'order_by' => [
-					new OrderByClause('e.time_created', 'ASC'), // oldest first
-				],
+				'order_by' => false, // no ordering because of performance on large databases, this will remove oldest notifications first
 				'callback' => function($row) {
 					return (int) $row->guid;
 				},
@@ -191,9 +188,7 @@ class Cron {
 				'batch' => true,
 				'batch_inc_offset' => false,
 				'batch_size' => 100,
-				'order_by' => [
-					new OrderByClause('e.time_created', 'ASC'), // oldest first
-				],
+				'order_by' => false, // no ordering because of performance on large databases, this will remove oldest notifications first
 				'callback' => function($row) {
 					return (int) $row->guid;
 				},
