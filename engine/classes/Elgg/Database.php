@@ -469,10 +469,12 @@ class Database {
 				
 		try {
 			$result = $this->trackQuery($sql, $params, function() use ($query, $params, $connection, $sql) {
-				if ($query instanceof \Elgg\Database\QueryBuilder) {
-					return $query->execute(false);
-				} elseif ($query instanceof QueryBuilder) {
-					return $query->execute();
+				if ($query instanceof QueryBuilder) {
+					if ($query->getType() === QueryBuilder::SELECT) {
+						return $query->executeQuery();
+					} else {
+						return $query->executeStatement();
+					}
 				} elseif (!empty($params)) {
 					return $connection->executeQuery($sql, $params);
 				} else {

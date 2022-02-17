@@ -80,10 +80,18 @@ class CompositeCache extends ElggCache {
 		if ($this->disabled) {
 			return false;
 		}
+		
+		$ttl = $ttl ?: $this->ttl;
 
 		$item = $this->pool->getItem($this->sanitizeItemKey($key));
-		$item->set($data)->expiresAfter($ttl ? : $this->ttl);
-				
+		$item->set($data);
+		
+		if (is_int($ttl)) {
+			$item->expiresAfter($ttl);
+		} elseif ($ttl instanceof DateTime) {
+			$item->expiresAt($ttl);
+		}
+			
 		return $this->pool->save($item);
 	}
 
