@@ -392,14 +392,14 @@ class ElggBatch implements \Countable, \Iterator {
 		// if we'll be at the end.
 		if (($this->processedResults + 1) >= $this->limit && $this->limit > 0) {
 			$this->results = [];
-			return false;
+			return;
 		}
 
 		// if we'll need new results.
 		if (($this->resultIndex + 1) >= $this->chunkSize) {
 			if (!$this->getNextResultsChunk()) {
 				$this->results = [];
-				return false;
+				return;
 			}
 
 			$result = current($this->results);
