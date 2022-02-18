@@ -604,9 +604,15 @@ Since Elgg has a lot of file access this will negatively impact performance. Als
 	'admin:statistics:numentities:searchable' => 'Searchable entities',
 	'admin:statistics:numentities:other' => 'Other entities',
 
-	'admin:statistics:database' => 'Database',
+	'admin:statistics:database' => 'Database Information',
 	'admin:statistics:database:table' => 'Table',
 	'admin:statistics:database:row_count' => 'Row count',
+
+	'admin:statistics:queue' => 'Queue information',
+	'admin:statistics:queue:name' => 'Name',
+	'admin:statistics:queue:row_count' => 'Row count',
+	'admin:statistics:queue:oldest' => 'Oldest record',
+	'admin:statistics:queue:newest' => 'Newest record',
 
 	'admin:widget:admin_welcome' => 'Welcome',
 	'admin:widget:admin_welcome:help' => "A short introduction to Elgg's admin area",
