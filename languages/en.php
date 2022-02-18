@@ -604,6 +604,10 @@ Since Elgg has a lot of file access this will negatively impact performance. Als
 	'admin:statistics:numentities:searchable' => 'Searchable entities',
 	'admin:statistics:numentities:other' => 'Other entities',
 
+	'admin:statistics:database' => 'Database',
+	'admin:statistics:database:table' => 'Table',
+	'admin:statistics:database:row_count' => 'Row count',
+
 	'admin:widget:admin_welcome' => 'Welcome',
 	'admin:widget:admin_welcome:help' => "A short introduction to Elgg's admin area",
 	'admin:widget:admin_welcome:intro' => 'Welcome to Elgg! Right now you are looking at the administration dashboard. It\'s useful for tracking what\'s happening on the site.',
