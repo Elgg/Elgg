@@ -43,6 +43,7 @@ class WidgetViewsRenderingTest extends ViewRenderingTestCase {
 			'entity' => $this->createObject([
 				'subtype' => 'widget',
 				'tags' => 'tag',
+				'handler' => 'foo',
 			]),
 		];
 	}

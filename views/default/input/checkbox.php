@@ -40,8 +40,7 @@ if (isset($vars['name']) && $default !== false) {
 }
 
 $label = elgg_extract('label', $vars, false);
-$label_class = (array) elgg_extract('label_class', $vars, []);
-$label_class[] = 'elgg-input-single-checkbox';
+$label_class = elgg_extract_class($vars, ['elgg-input-single-checkbox'], 'label_class');
 unset($vars['label']);
 unset($vars['label_class']);
 

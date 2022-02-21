@@ -14,4 +14,4 @@ if ($no_results instanceof Closure) {
 	return;
 }
 
-echo "<p class='elgg-no-results'>$no_results</p>";
+echo elgg_format_element('p', ['class' => ['elgg-no-results']], $no_results);

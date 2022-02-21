@@ -1,6 +1,6 @@
 {
     "name": "elgg/elgg",
-    "version": "4.1.1",
+    "version": "4.1.2",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0-only",
     "minimum-stability": "dev",
@@ -51,6 +51,7 @@
         "robmorgan/phinx": "~0.12.7",
         "symfony/console": "~5.3",
         "symfony/http-foundation": "~5.3",
+        "symfony/mime": "~5.3",
         "symfony/routing": "~5.3",
         "symfony/var-dumper": "~5.3",
         "vanilla/htmlawed": "~2.2.0"

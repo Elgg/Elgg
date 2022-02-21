@@ -1,3 +1,18 @@
+<a name="4.1.2"></a>
+### 4.1.2  (2022-02-11)
+
+#### Contributors
+
+* Jerôme Bakker (8)
+* Jeroen Dalsem (1)
+
+#### Bug Fixes
+
+* **composer:** install symfony/mime ([bd2832c5](https://github.com/Elgg/Elgg/commit/bd2832c53365d973e6d688e4936de4663022c936))
+* **core:** correctly compare urls with array query params ([f94d3290](https://github.com/Elgg/Elgg/commit/f94d32904bbaf0bc60f0840da1bcb578c6b11125))
+* **database:** return documented return type ([75d08731](https://github.com/Elgg/Elgg/commit/75d087311699a516bdaf2f2b0c47b69b664f1f15))
+
+
 <a name="4.1.1"></a>
 ### 4.1.1  (2022-02-01)
 
