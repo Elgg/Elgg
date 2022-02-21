@@ -131,4 +131,9 @@ return [
 			],
 		],
 	],
+	'view_extensions' => [
+		'groups/edit/settings' => [
+			'discussion/groups/settings' => [],
+		],
+	],
 ];
