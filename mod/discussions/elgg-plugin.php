@@ -83,6 +83,11 @@ return [
 				GroupToolContainerLogicCheck::class => [],
 			],
 		],
+		'entity:url' => [
+			'object' => [
+				'Elgg\Discussions\Widgets::widgetURL' => [],
+			],
+		],
 		'get' => [
 			'subscriptions' => [
 				'Elgg\Discussions\Notifications::addGroupSubscribersToCommentOnDiscussionSubscriptions' => [],
@@ -134,6 +139,11 @@ return [
 	'view_extensions' => [
 		'groups/edit/settings' => [
 			'discussion/groups/settings' => [],
+		],
+	],
+	'widgets' => [
+		'discussions' => [
+			'context' => ['profile', 'dashboard'],
 		],
 	],
 ];
