@@ -77,14 +77,6 @@ class Page {
 			'parent_name' => 'users',
 		]);
 		$return[] = \ElggMenuItem::factory([
-			'name' => 'users:add',
-			'text' => elgg_echo('admin:users:add'),
-			'href' => 'admin/users/add',
-			'priority' => 40,
-			'section' => 'administer',
-			'parent_name' => 'users',
-		]);
-		$return[] = \ElggMenuItem::factory([
 			'name' => 'users:unvalidated',
 			'text' => elgg_echo('admin:users:unvalidated'),
 			'href' => 'admin/users/unvalidated',
