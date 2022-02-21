@@ -87,6 +87,11 @@ return [
 				GroupToolContainerLogicCheck::class => [],
 			],
 		],
+		'entity:url' => [
+			'object' => [
+				'Elgg\Bookmarks\Widgets::widgetURL' => [],
+			],
+		],
 		'register' => [
 			'menu:footer' => [
 				'Elgg\Bookmarks\Menus\Footer::register' => [],
