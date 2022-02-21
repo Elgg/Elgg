@@ -24,21 +24,16 @@ class Widgets {
 			return;
 		}
 		
-		if ($widget->handler !== 'friends') {
-			return;
-		}
-		
 		$owner = $widget->getOwnerEntity();
 		if (!$owner instanceof \ElggUser) {
 			return;
 		}
 		
-		$url = elgg_generate_url('collection:friends:owner', [
-			'username' => $owner->username,
-		]);
-		if (empty($url)) {
-			return;
+		switch ($widget->handler) {
+			case 'friends':
+				return elgg_generate_url('collection:friends:owner', ['username' => $owner->username]);
+			case 'friends_of':
+				return elgg_generate_url('collection:friends_of:owner', ['username' => $owner->username]);
 		}
-		return $url;
 	}
 }
