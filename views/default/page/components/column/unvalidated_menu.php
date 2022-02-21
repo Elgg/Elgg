@@ -1,6 +1,6 @@
 <?php
 /**
- * Render a user icon and name
+ * Render an unvalidated menu element
  *
  * @uses $vars['item']      The item being rendered
  * @uses $vars['item_vars'] Vars received from the page/components/table view
@@ -8,11 +8,12 @@
  */
 
 $item = elgg_extract('item', $vars);
-if (!$item instanceof ElggUser) {
+if (!$item instanceof \ElggUser) {
 	return;
 }
 
-$vars['item_view'] = elgg_extract('item_view', $vars, 'user/default/column');
-$vars['full_view'] = false;
-
-echo elgg_view_entity($item, $vars);
+echo elgg_view_menu('user:unvalidated', [
+	'entity' => $item,
+	'prepare_dropdown' => true,
+	'class' => 'elgg-menu-entity', // for the dropdown elipsis styling
+]);

@@ -95,6 +95,9 @@ trait TestSeeding {
 	 * @return \ElggUser
 	 */
 	final public function createUser(array $attributes = [], array $metadata = [], array $options = []) {
+		$metadata = array_merge([
+			'validated' => true, //by default all users in the tests are validated
+		], $metadata);
 		$entity = $this->createSeededUser($attributes, $metadata, $options);
 		
 		$this->_seeds[] = $entity;

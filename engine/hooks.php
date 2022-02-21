@@ -144,6 +144,7 @@ return [
 		'menu:entity' => [
 			'Elgg\Menus\Entity::registerDelete' => [],
 			'Elgg\Menus\Entity::registerEdit' => [],
+			'Elgg\Menus\Entity::registerUserHoverAdminSection' => [],
 			'Elgg\Menus\UserHover::registerLoginAs' => [],
 		],
 		'menu:entity:object:elgg_upgrade' => [
@@ -157,6 +158,9 @@ return [
 		],
 		'menu:filter:admin/upgrades' => [
 			'Elgg\Menus\Filter::registerAdminUpgrades' => [],
+		],
+		'menu:filter:admin/users' => [
+			'Elgg\Menus\Filter::registerAdminUsers' => [],
 		],
 		'menu:filter:filter' => [
 			'Elgg\Menus\Filter::registerFilterTabs' => ['priority' => 1],
@@ -204,9 +208,6 @@ return [
 		],
 		'menu:user:unvalidated' => [
 			'Elgg\Menus\UserUnvalidated::register' => [],
-		],
-		'menu:user:unvalidated:bulk' => [
-			'Elgg\Menus\UserUnvalidatedBulk::registerActions' => [],
 		],
 		'menu:user_hover' => [
 			'Elgg\Menus\UserHover::registerAvatarEdit' => [],

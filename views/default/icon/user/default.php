@@ -38,6 +38,9 @@ $wrapper_class = elgg_extract_class($vars, $wrapper_class);
 if ($user->isBanned()) {
 	$wrapper_class[] = 'elgg-state-banned';
 	$name .= ' (' . elgg_echo('banned') . ')';
+} elseif ($user->isValidated() === false) {
+	$wrapper_class[] = 'elgg-state-banned';
+	$name .= ' (' . elgg_echo('unvalidated') . ')';
 }
 
 $icon = elgg_view('output/img', [

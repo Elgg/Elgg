@@ -24,7 +24,7 @@ class UserHover {
 		}
 		
 		$user = $hook->getEntityParam();
-		if (!($user instanceof \ElggUser) || !$user->canEdit()) {
+		if (!$user instanceof \ElggUser || !$user->isEnabled() || !$user->canEdit()) {
 			return;
 		}
 		

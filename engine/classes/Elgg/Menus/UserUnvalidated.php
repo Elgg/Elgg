@@ -34,6 +34,7 @@ class UserUnvalidated {
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'change_email',
+			'icon' => 'edit',
 			'text' => elgg_echo('admin:users:unvalidated:change_email'),
 			'href' => elgg_http_add_url_query_elements('ajax/form/admin/user/change_email', [
 				'user_guid' => $entity->guid,
@@ -44,6 +45,7 @@ class UserUnvalidated {
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'validate',
+			'icon' => 'check',
 			'text' => elgg_echo('validate'),
 			'href' => elgg_generate_action_url('admin/user/validate', [
 				'user_guid' => $entity->guid,
@@ -55,7 +57,7 @@ class UserUnvalidated {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'delete',
 			'icon' => 'delete',
-			'text' => false,
+			'text' => elgg_echo('delete'),
 			'title' => elgg_echo('delete'),
 			'href' => elgg_generate_action_url('admin/user/delete', [
 				'guid' => $entity->guid,

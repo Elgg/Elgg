@@ -1,10 +1,10 @@
 <?php
 /**
- * Show a listing of all site administrators
+ * Show a listing of all users on the community
  */
 
 echo elgg_view('admin/users/header', [
-	'filter' => 'admin',
+	'filter' => 'all',
 ]);
 
 $buttons = [
@@ -34,10 +34,5 @@ echo elgg_view_form('admin/users/bulk_actions', [
 	'prevent_double_submit' => false,
 ], [
 	'buttons' => $buttons,
-	'filter' => 'admins',
-	'options' => [
-		'metadata_name_value_pairs' => [
-			'admin' => 'yes',
-		],
-	],
+	'filter' => 'all',
 ]);

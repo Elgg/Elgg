@@ -38,6 +38,7 @@ class UserUnvalidated {
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'uservalidationbyemail:resend',
+			'icon' => 'envelope',
 			'text' => elgg_echo('uservalidationbyemail:admin:resend_validation'),
 			'href' => elgg_generate_action_url('uservalidationbyemail/resend_validation', [
 				'user_guids[]' => $entity->guid,

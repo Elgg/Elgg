@@ -48,41 +48,9 @@ class Page {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'users',
 			'text' => elgg_echo('admin:users'),
-			'href' => false,
+			'href' => 'admin/users',
 			'priority' => 40,
 			'section' => 'administer',
-		]);
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'users:online',
-			'text' => elgg_echo('admin:users:online'),
-			'href' => 'admin/users/online',
-			'priority' => 10,
-			'section' => 'administer',
-			'parent_name' => 'users',
-		]);
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'users:admins',
-			'text' => elgg_echo('admin:users:admins'),
-			'href' => 'admin/users/admins',
-			'priority' => 20,
-			'section' => 'administer',
-			'parent_name' => 'users',
-		]);
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'users:newest',
-			'text' => elgg_echo('admin:users:newest'),
-			'href' => 'admin/users/newest',
-			'priority' => 30,
-			'section' => 'administer',
-			'parent_name' => 'users',
-		]);
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'users:unvalidated',
-			'text' => elgg_echo('admin:users:unvalidated'),
-			'href' => 'admin/users/unvalidated',
-			'priority' => 50,
-			'section' => 'administer',
-			'parent_name' => 'users',
 		]);
 		
 		$return[] = \ElggMenuItem::factory([
