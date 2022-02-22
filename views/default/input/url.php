@@ -6,6 +6,8 @@
  * @uses $vars['class'] Additional CSS class
  */
 
+elgg_require_js('input/url');
+
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-url');
 
 $defaults = [
