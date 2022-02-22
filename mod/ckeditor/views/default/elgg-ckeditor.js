@@ -80,7 +80,7 @@ define(function (require) {
 					}
 				}
 			});
-			elggCKEditor.registerHandlers = elgg.nullFunction;
+			elggCKEditor.registerHandlers = function() {};
 		},
 
 		/**

@@ -1,7 +1,6 @@
 /**
  * Hold security-related data here
  */
-elgg.provide('elgg.security.token');
 
 elgg.security.tokenRefreshTimer = null;
 
@@ -111,7 +110,7 @@ elgg.security.refreshToken = function () {
 elgg.security.addToken = function (data) {
 
 	// 'http://example.com?data=sofar'
-	if (elgg.isString(data)) {
+	if (typeof data === 'string') {
 		// is this a full URL, relative URL, or just the query string?
 		var parts = elgg.parse_url(data),
 			args = {},
@@ -140,13 +139,13 @@ elgg.security.addToken = function (data) {
 	}
 
 	// no input!  acts like a getter
-	if (elgg.isUndefined(data)) {
+	if (data === undefined) {
 		return elgg.security.token;
 	}
 
 	// {...}
-	if (elgg.isPlainObject(data)) {
-		return elgg.extend(data, elgg.security.token);
+	if ($.isPlainObject(data)) {
+		return $.extend(data, elgg.security.token);
 	}
 
 	if (data instanceof FormData) {

@@ -16,7 +16,7 @@ define(['jquery', 'elgg', 'elgg/spinner'], function ($, elgg, spinner) {
 	 */
 	function Ajax(use_spinner) {
 
-		use_spinner = elgg.isNullOrUndefined(use_spinner) ? true : !!use_spinner;
+		use_spinner = (use_spinner == null) ? true : !!use_spinner;
 
 		var that = this;
 		var spinner_starts = 0;

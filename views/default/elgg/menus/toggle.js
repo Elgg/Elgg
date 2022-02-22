@@ -47,7 +47,7 @@ define(['jquery', 'elgg'], function ($, elgg) {
 				e.stopImmediatePropagation();
 			});
 
-			toggle.init = elgg.nullFunction;
+			toggle.init = function() {};
 		}
 	};
 

@@ -1,5 +1,3 @@
-elgg.provide('elgg.config');
-
 /**
  * Returns the current site URL
  *
