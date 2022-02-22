@@ -52,6 +52,11 @@ return [
 		],
 	],
 	'hooks' => [
+		'entity:url' => [
+			'object' => [
+				'Elgg\Activity\Widgets::widgetURL' => [],
+			],
+		],
 		'register' => [
 			'menu:site' => [
 				'Elgg\Activity\Menus\Site::register' => [],

@@ -86,6 +86,10 @@ class Notifications {
 			return;
 		}
 		
+		if (!(bool) $container->getPluginSetting('discussions', 'add_group_subscribers_to_discussion_comments', true)) {
+			return;
+		}
+		
 		$subscriptions = $hook->getValue();
 		
 		// get subscribers on the group (using the discussion create preference for detailed subscriptions)

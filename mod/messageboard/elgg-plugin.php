@@ -20,6 +20,13 @@ return [
 			'resource' => 'messageboard/owner',
 		],
 	],
+	'hooks' => [
+		'entity:url' => [
+			'object' => [
+				'Elgg\MessageBoard\Widgets::widgetURL' => [],
+			],
+		],
+	],
 	'widgets' => [
 		'messageboard' => [
 			'context' => ['profile'],
