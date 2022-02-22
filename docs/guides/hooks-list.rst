@@ -5,7 +5,7 @@ For more information on how hooks work visit :doc:`/design/events`.
 
 .. contents:: Contents
     :local:
-   :depth: 1
+    :depth: 1
 
 System hooks
 ============
