@@ -42,7 +42,7 @@ if ($owner instanceof \ElggUser) {
 		$url = elgg_generate_url('collection:object:discussion:owner', ['username' => $owner->username]);
 	}
 } elseif ($owner instanceof \ElggGroup) {
-	$options['container_guid'] = $owner->owner_guid;
+	$options['container_guid'] = $owner->guid;
 	$url = elgg_generate_url('collection:object:discussion:group', ['guid' => $owner->guid]);
 }
 
