@@ -145,7 +145,7 @@ class ElggPlugin extends ElggObject {
 	 * @since 3.0
 	 */
 	public function getDisplayName() {
-		$name = elgg_extract('name', $this->getStaticConfig('plugin', []));
+		$name = elgg_extract('name', $this->getStaticConfig('plugin', []), '');
 		if (!empty($name)) {
 			return $name;
 		}

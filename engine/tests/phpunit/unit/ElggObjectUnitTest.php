@@ -237,4 +237,12 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($object->guid, $object->getSystemLogID());
 		$this->assertEquals($object, $object->getObjectFromID($object->guid));
 	}
+	
+	public function testGetDisplaynameReturnsString() {
+		$object = new ElggObject();
+		$this->assertEquals('', $object->getDisplayName());
+		
+		$object->title = 'foo';
+		$this->assertEquals('foo', $object->getDisplayName());
+	}
 }

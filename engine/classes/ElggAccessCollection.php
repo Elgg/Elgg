@@ -87,7 +87,7 @@ class ElggAccessCollection extends ElggData {
 			$params = [
 				'access_collection' => $this,
 			];
-			return _elgg_services()->hooks->trigger('access_collection:name', $this->getType(), $params, $name);
+			return (string) _elgg_services()->hooks->trigger('access_collection:name', $this->getType(), $params, $name);
 		};
 
 		$user = _elgg_services()->session->getLoggedInUser();
