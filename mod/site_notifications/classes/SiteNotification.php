@@ -32,7 +32,7 @@ class SiteNotification extends ElggObject {
 	 */
 	public function getDisplayName() {
 		if (!isset($this->title)) {
-			return $this->description; // pre Elgg 4.0 contains summary/subject in description;
+			return (string) $this->description; // pre Elgg 4.0 contains summary/subject in description;
 		}
 		
 		return parent::getDisplayName();
