@@ -80,7 +80,9 @@
         "psr-4": {
             "CssCrush\\": "engine/vendor_classes/CssCrush/",
             "Elgg\\": "engine/classes/Elgg/",
-            "Imagine\\": "engine/vendor_classes/Imagine/",
+            "Imagine\\Gd\\": "engine/vendor_classes/Imagine/Gd/",
+            "Imagine\\Image\\Metadata\\": "engine/vendor_classes/Imagine/Image/Metadata/",
+            "Imagine\\Imagick\\": "engine/vendor_classes/Imagine/Imagick/",
             "Laminas\\Mime\\": "engine/vendor_classes/Laminas/Mime/",
             "Stash\\": "engine/vendor_classes/Stash/"
         }
