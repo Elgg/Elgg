@@ -940,7 +940,7 @@ return array(
 	'input:date_format' => 'Y-m-d',
 	'input:date_format:datepicker' => 'yy-mm-dd', // jQuery UI datepicker format
 	'input:time_format' => 'g:ia',
-
+	
 	'friendlytime:justnow' => "ahora",
 	'friendlytime:minutes' => "hace %s minutos",
 	'friendlytime:minutes:singular' => "hace un minuto",

@@ -844,7 +844,7 @@ return array(
  * Time
  */
 	'input:date_format:datepicker' => '', // jQuery UI datepicker format
-
+	
 	'friendlytime:justnow' => "juuri nyt",
 	'friendlytime:minutes' => "%s minuuttia sitten",
 	'friendlytime:minutes:singular' => "hetki sitten",

@@ -61,7 +61,7 @@ Schau Dir die Diskussion an und antworte selbst darauf:
 %s',
 
 	'groups:tool:forum' => 'Gruppen-Diskussionen aktivieren',
-
+	
 	/**
 	 * Discussion status
 	 */
@@ -74,4 +74,6 @@ Schau Dir die Diskussion an und antworte selbst darauf:
 	'discussion:topic:toggle_status:open:confirm' => 'Bist Du sicher, daß Du diese Diskussion wiedereröffnen willst?',
 	'discussion:topic:toggle_status:closed' => 'Die Diskussion wurde geschlossen.',
 	'discussion:topic:toggle_status:closed:confirm' => 'Bist Du sicher, daß Du diese Diskussion schließen willst?',
+	
+	// widgets
 );

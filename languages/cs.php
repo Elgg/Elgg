@@ -839,7 +839,7 @@ return array(
  * Time
  */
 	'input:date_format:datepicker' => '', // jQuery UI datepicker format
-
+	
 	'friendlytime:justnow' => "právě teď",
 	'friendlytime:minutes' => "před %s minutami",
 	'friendlytime:minutes:singular' => "před minutou",

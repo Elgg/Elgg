@@ -825,7 +825,7 @@ return array(
  * Time
  */
 	'input:date_format:datepicker' => '', // jQuery UI datepicker format
-
+	
 	'friendlytime:justnow' => "hai un intre",
 	'friendlytime:minutes' => "hai %s minutos",
 	'friendlytime:minutes:singular' => "hai un minuto",

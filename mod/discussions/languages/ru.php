@@ -61,7 +61,7 @@ return array(
 %s',
 
 	'groups:tool:forum' => 'Включить дискуссии в группах',
-
+	
 	/**
 	 * Discussion status
 	 */
@@ -74,4 +74,6 @@ return array(
 	'discussion:topic:toggle_status:open:confirm' => 'Уверены, что хотите снова открыть дискуссию?',
 	'discussion:topic:toggle_status:closed' => 'Дискуссия закрыта',
 	'discussion:topic:toggle_status:closed:confirm' => 'Уверены, что хотите закрыть эту дискуссию?',
+	
+	// widgets
 );
