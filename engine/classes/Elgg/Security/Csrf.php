@@ -105,7 +105,7 @@ class Csrf {
 			}
 		} else {
 			$error_msg = $request->elgg()->translator->translate('actiongatekeeper:missingfields');
-			throw new CsrfException($request->elgg()->translator->translate($error_msg));
+			throw new CsrfException($error_msg);
 		}
 	}
 

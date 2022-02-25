@@ -62,7 +62,7 @@ foreach ($profile_fields as $field) {
 }
 
 // display name is handled separately
-$name = strip_tags(get_input('name'));
+$name = strip_tags(get_input('name', ''));
 if ($name) {
 	if (elgg_strlen($name) > 50) {
 		return elgg_error_response(elgg_echo('user:name:fail'));

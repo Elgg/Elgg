@@ -70,7 +70,7 @@ class Highlighter {
 	 */
 	public function highlight($text, $min_match_context = 30, $max_length = 300) {
 
-		$text = strip_tags($text);
+		$text = strip_tags((string) $text);
 
 		$haystack_length = elgg_strlen($text);
 		$haystack_lc = elgg_strtolower($text);
