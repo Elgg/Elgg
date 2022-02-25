@@ -1218,7 +1218,7 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.',
 	'input:date_format' => 'Y-m-d',
 	'input:date_format:datepicker' => 'yy-mm-dd', // jQuery UI datepicker format
 	'input:time_format' => 'g:ia',
-
+	
 	'friendlytime:justnow' => "soeben",
 	'friendlytime:minutes' => "vor %s Minuten",
 	'friendlytime:minutes:singular' => "vor einer Minute",

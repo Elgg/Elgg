@@ -944,7 +944,7 @@ return array(
 	'input:date_format' => 'Y-m-d',
 	'input:date_format:datepicker' => 'yy-mm-dd', // jQuery UI datepicker format
 	'input:time_format' => 'g:ia',
-
+	
 	'friendlytime:justnow' => "刚刚",
 	'friendlytime:minutes' => "%s 分钟前",
 	'friendlytime:minutes:singular' => "1分钟前",

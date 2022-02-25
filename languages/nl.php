@@ -672,7 +672,7 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:security:information:username_length:warning' => "Het is aanbevolen om een minimale gebruikersnaam lengte te hebben van tenminste 4 tekens.",
 	'admin:security:information:php:session_gc' => "PHP sessie opschoning",
 	'admin:security:information:php:session_gc:chance' => "Opschoningskans: %s%%",
-	'admin:security:information:php:session_gc:lifetime' => "Sessie levensduur %sseconden",
+	'admin:security:information:php:session_gc:lifetime' => "Sessie levensduur %s seconden",
 	'admin:security:information:php:session_gc:error' => "Het is aanbevolen om de PHP instellingen  'session.gc_probability' en 'session.gc_divisor' in te stellen. Dit schoont verlopen sessies op in de database en zorgt er voor dat oude sessies niet opnieuw gebruikt kunnen worden.",
 	'admin:security:information:htaccess:hardening' => ".htaccess file access hardening",
 	'admin:security:information:htaccess:hardening:help' => "In het .htaccess bestand kan toegang to bepaalde bestanden worden geblokkeerd om de veiligheid van je site te verhogen. Voor meer informatie kijk in het .htaccess bestand.",
@@ -1264,7 +1264,7 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'input:date_format' => 'Y-m-d',
 	'input:date_format:datepicker' => 'yy-mm-dd', // jQuery UI datepicker format
 	'input:time_format' => 'G:i',
-
+	
 	'friendlytime:justnow' => "zojuist",
 	'friendlytime:minutes' => "%s minuten geleden",
 	'friendlytime:minutes:singular' => "een minuut geleden",

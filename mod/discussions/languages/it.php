@@ -41,7 +41,7 @@ return array(
 	'discussion:comment:notify:subject' => 'Nuova risposta alla discussione: %s',
 
 	'groups:tool:forum' => 'Abilita discussioni di gruppo',
-
+	
 	/**
 	 * Discussion status
 	 */
@@ -50,4 +50,6 @@ return array(
 	'discussion:topic:closed:desc' => 'Questa discussione è chiusa e non accetta nuovi commenti',
 
 	'discussion:topic:description' => 'Contenuti dell\'argomento',
+	
+	// widgets
 );

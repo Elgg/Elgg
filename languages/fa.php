@@ -832,7 +832,7 @@ return array(
  * Time
  */
 	'input:date_format:datepicker' => '', // jQuery UI datepicker format
-
+	
 	'friendlytime:justnow' => "هم اکنون",
 	'friendlytime:minutes' => "%s دقیقه پیش",
 	'friendlytime:minutes:singular' => "یک دقیقه پیش",
