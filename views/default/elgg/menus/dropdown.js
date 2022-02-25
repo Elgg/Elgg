@@ -62,7 +62,7 @@ define(['jquery', 'elgg', 'elgg/popup'], function ($, elgg, popup) {
 				e.stopImmediatePropagation();
 			});
 
-			dropdown.init = elgg.nullFunction;
+			dropdown.init = function() {};
 		}
 	};
 

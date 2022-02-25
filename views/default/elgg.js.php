@@ -6,6 +6,8 @@
 $core_js_views = [
 	// these must come first
 	'elgglib.js',
+	'deprecated.js',
+	'system_messages.js',
 	
 	// class definitions
 	'ElggEntity.js',

@@ -19,13 +19,14 @@ module.exports = function(config) {
 			
 			// these libs get loaded directly
 			'views/default/core/js/elgglib.js',
+			'views/default/core/js/deprecated.js',
+			'views/default/core/js/system_messages.js',
 			'views/default/core/js/hooks.js',
 
 			'views/default/core/js/configuration.js',
 			'views/default/core/js/ElggEntity.js',
 			'views/default/core/js/ElggUser.js',
 			'views/default/core/js/languages.js',
-			'views/default/core/js/pageowner.js',
 			'views/default/core/js/security.js',
 			'views/default/core/js/session.js',
 			'views/default/core/js/ui.js',

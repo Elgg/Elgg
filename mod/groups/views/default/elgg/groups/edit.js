@@ -15,7 +15,7 @@ define(['jquery', 'elgg'], function($, elgg) {
 	var toggleContentAccessMode = function(event) {
 		var accessModeField = $('#groups-content-access-mode');
 
-		if ($(this).val() == elgg.ACCESS_PRIVATE) {
+		if ($(this).val() == 0) {
 			// Group is hidden, so force members_only mode and disable the field
 			accessModeField.val('members_only').prop('disabled', true);
 		} else {

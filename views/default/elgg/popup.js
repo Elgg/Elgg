@@ -28,7 +28,7 @@ define('elgg/popup', ['elgg', 'jquery', 'jquery-ui/position', 'jquery-ui/unique-
 				popup.close();
 			});
 			// Bind events only once
-			popup.init = elgg.nullFunction;
+			popup.init = function() {};
 		},
 		/**
 		 * Shortcut to bind a click event on a set of $triggers.

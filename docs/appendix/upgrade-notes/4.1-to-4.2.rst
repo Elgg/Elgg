@@ -22,3 +22,9 @@ Before this change if you saved a boolean value it would be returned as an integ
 .. warning::
 
 	If you saved boolean values previously they will still be integers in the database (until saved again).
+
+Javascript functions
+--------------------
+
+The Elgg javascript libraries have gotten a massive overhaul. A lot of functions have been deprecated. 
+You can find all deprecated functions and globals in `views/default/core/js/deprecated.js`.

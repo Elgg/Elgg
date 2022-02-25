@@ -2,7 +2,6 @@
 /**
  * Provides language-related functionality
  */
-elgg.provide('elgg.config.translations');
 
 // default language - required by unit tests
 elgg.config.language = 'en';
@@ -12,9 +11,11 @@ elgg.config.language = 'en';
  * given language into the current translations map.
  */
 elgg.add_translation = function(lang, translations) {
-	elgg.provide('elgg.config.translations.' + lang);
-
-	elgg.extend(elgg.config.translations[lang], translations);
+	if (typeof elgg.config.translations[lang] === 'undefined') {
+		elgg.config.translations[lang] = {};
+	}
+		
+	$.extend(elgg.config.translations[lang], translations);
 };
 
 /**
@@ -42,7 +43,7 @@ elgg.get_language = function() {
  */
 elgg.echo = function(key, argv, language) {
 	//elgg.echo('str', 'en')
-	if (elgg.isString(argv)) {
+	if (typeof argv === 'string') {
 		language = argv;
 		argv = [];
 	}
@@ -56,10 +57,9 @@ elgg.echo = function(key, argv, language) {
 	argv = argv || [];
 
 	map = translations[language] || translations[dlang];
-	if (map && elgg.isString(map[key])) {
+	if (map && (typeof map[key] === 'string')) {
 		return vsprintf(map[key], argv);
 	}
 
 	return key;
 };
-
