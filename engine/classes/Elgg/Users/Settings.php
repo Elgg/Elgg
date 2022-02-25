@@ -337,7 +337,7 @@ class Settings {
 		}
 	
 		if (!$user->setPrivateSetting('elgg_default_access', $default_access)) {
-			$request->validation()->fail('default_access', $default_access, elgg_echo(elgg_echo('user:default_access:failure')));
+			$request->validation()->fail('default_access', $default_access, elgg_echo('user:default_access:failure'));
 			return;
 		}
 		
