@@ -813,7 +813,7 @@ return array(
  * Time
  */
 	'input:date_format:datepicker' => '', // jQuery UI datepicker format
-
+	
 	'friendlytime:justnow' => "przed chwilą",
 	'friendlytime:minutes' => "%s minut temu",
 	'friendlytime:minutes:singular' => "minutę temu",

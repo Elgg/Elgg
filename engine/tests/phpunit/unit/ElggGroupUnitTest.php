@@ -66,4 +66,12 @@ class ElggGroupUnitTest extends \Elgg\UnitTestCase {
 		
 		$this->assertFalse($group->canComment());
 	}
+	
+	public function testGetDisplaynameReturnsString() {
+		$group = new ElggGroup();
+		$this->assertEquals('', $group->getDisplayName());
+		
+		$group->name = 'foo';
+		$this->assertEquals('foo', $group->getDisplayName());
+	}
 }

@@ -144,4 +144,12 @@ class ElggUserUnitTest extends \Elgg\UnitTestCase {
 		
 		$this->assertFalse($user->canComment());
 	}
+	
+	public function testGetDisplaynameReturnsString() {
+		$user = new ElggUser();
+		$this->assertEquals('', $user->getDisplayName());
+		
+		$user->name = 'foo';
+		$this->assertEquals('foo', $user->getDisplayName());
+	}
 }

@@ -606,6 +606,16 @@ Comme Elgg a un grand nombre d\'accès aux fichiers cela va avoir un effet néga
 	'admin:statistics:numentities:searchable' => 'Entités consultables',
 	'admin:statistics:numentities:other' => 'Autre entités',
 
+	'admin:statistics:database' => 'Informations de la base de données',
+	'admin:statistics:database:table' => 'Table',
+	'admin:statistics:database:row_count' => 'Nombre de lignes',
+
+	'admin:statistics:queue' => 'Informations de la file d\'attente',
+	'admin:statistics:queue:name' => 'Nom',
+	'admin:statistics:queue:row_count' => 'Nombre de lignes',
+	'admin:statistics:queue:oldest' => 'Enregistrement le plus ancien',
+	'admin:statistics:queue:newest' => 'Enregistrement le plus récent',
+
 	'admin:widget:admin_welcome' => 'Bienvenue',
 	'admin:widget:admin_welcome:help' => "Une courte présentation de la zone d'administration de Elgg",
 	'admin:widget:admin_welcome:intro' => 'Bienvenue sur Elgg ! Vous êtes actuellement sur le tableau de bord de l\'administration. Il permet de suivre ce qui se passe sur le site.',
@@ -1278,6 +1288,9 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'input:date_format:datepicker' => 'yy-mm-dd', // jQuery UI datepicker format
 	'input:time_format' => 'G:i',
 
+	'friendlytime:updated' => "%s - Édité",
+	'friendlytime:updated:title' => "Créé : %s \nMis à jour : %s",
+	
 	'friendlytime:justnow' => "à l'instant",
 	'friendlytime:minutes' => "il y a %s minutes",
 	'friendlytime:minutes:singular' => "il y a une minute",

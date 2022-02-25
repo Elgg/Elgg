@@ -61,7 +61,11 @@ class ErrorHandler {
 				break;
 
 			default:
-				$this->log(LogLevel::NOTICE, "PHP NOTICE: $error");
+				// check if the error wasn't suppressed by the error control operator (@)
+				if (error_reporting()) {
+					$this->log(LogLevel::NOTICE, "PHP NOTICE: $error");
+				}
+				
 				break;
 		}
 

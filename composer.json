@@ -1,6 +1,6 @@
 {
     "name": "elgg/elgg",
-    "version": "4.1.2",
+    "version": "4.1.3",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0-only",
     "minimum-stability": "dev",
@@ -79,7 +79,9 @@
         "psr-4": {
             "CssCrush\\": "engine/vendor_classes/CssCrush/",
             "Elgg\\": "engine/classes/Elgg/",
-            "Imagine\\Image\\Metadata\\": "engine/vendor_classes/Imagine/Image/Metadata",
+            "Imagine\\Gd\\": "engine/vendor_classes/Imagine/Gd/",
+            "Imagine\\Image\\Metadata\\": "engine/vendor_classes/Imagine/Image/Metadata/",
+            "Imagine\\Imagick\\": "engine/vendor_classes/Imagine/Imagick/",
             "Laminas\\Mime\\": "engine/vendor_classes/Laminas/Mime/",
             "Phpfastcache\\": "engine/vendor_classes/Phpfastcache/"
         }

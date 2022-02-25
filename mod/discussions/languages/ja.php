@@ -46,7 +46,7 @@ return array(
 	'discussion:comment:notify:subject' => '新着返答:  議題 %s',
 
 	'groups:tool:forum' => 'グループ会議の利用',
-
+	
 	/**
 	 * Discussion status
 	 */
@@ -55,4 +55,6 @@ return array(
 	'discussion:topic:closed:desc' => 'この議題は終了しました。新しいコメントは受け付けていません。',
 
 	'discussion:topic:description' => '議題メッセージ',
+	
+	// widgets
 );

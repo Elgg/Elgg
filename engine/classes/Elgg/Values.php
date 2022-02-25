@@ -79,11 +79,13 @@ class Values {
 				$dt = $time;
 			} elseif ($time instanceof PHPDateTime) {
 				$dt = new ElggDateTime($time->format(PHPDateTime::RFC3339_EXTENDED));
-			} else if (is_numeric($time)) {
+			} elseif (is_numeric($time)) {
 				$dt = new ElggDateTime();
 				$dt->setTimestamp((int) $time);
-			} else {
+			} elseif (is_string($time)) {
 				$dt = new ElggDateTime($time);
+			} else {
+				$dt = new ElggDateTime();
 			}
 		} catch (Exception $e) {
 			throw new DataFormatException($e->getMessage());
