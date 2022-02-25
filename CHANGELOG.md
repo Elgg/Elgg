@@ -1,3 +1,24 @@
+<a name="4.1.3"></a>
+### 4.1.3  (2022-02-25)
+
+#### Contributors
+
+* Jerôme Bakker (11)
+* Jeroen Dalsem (1)
+
+#### Performance
+
+* **site_notifications:** cleanup speed-up on large databases ([baf9f0b0](https://github.com/Elgg/Elgg/commit/baf9f0b0b2f73b64b4c17f6b3acb06e9e5c569d4))
+
+
+#### Bug Fixes
+
+* **account:** user settings form is no longer ajax based ([22b41305](https://github.com/Elgg/Elgg/commit/22b41305a77d257e730440c7058942546796c495))
+* **forms:** styling of horizontal aligned fields not always correct ([8ca0872f](https://github.com/Elgg/Elgg/commit/8ca0872fcf9c179ad3463330e9cf8ade959ad577))
+* **route:** detect page owner with ignored access ([d7f5d35b](https://github.com/Elgg/Elgg/commit/d7f5d35b73c866e16e512ad4a98f2eba1cfeaaef))
+* **session:** correctly apply session garbage collection ([d14350c8](https://github.com/Elgg/Elgg/commit/d14350c81fa9b963d0d9ad92af8f24057a8b353a))
+
+
 <a name="4.1.2"></a>
 ### 4.1.2  (2022-02-11)
 
