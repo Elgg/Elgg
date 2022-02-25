@@ -57,12 +57,14 @@ class Route extends \Symfony\Component\Routing\Route {
 		$route_parts = explode(':', $route_name);
 
 		$from_guid = function ($guid) {
-			$entity = get_entity($guid);
-			if ($entity instanceof \ElggUser || $entity instanceof \ElggGroup) {
+			return elgg_call(ELGG_IGNORE_ACCESS, function() use ($guid) {
+				$entity = get_entity($guid);
+				if ($entity instanceof \ElggObject) {
+					return $entity->getContainerEntity();
+				}
+				
 				return $entity;
-			} else if ($entity instanceof \ElggObject) {
-				return $entity->getContainerEntity();
-			}
+			});
 		};
 
 		switch ($route_parts[0]) {

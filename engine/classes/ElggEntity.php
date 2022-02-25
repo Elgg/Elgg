@@ -316,7 +316,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return string The title or name of this entity.
 	 */
 	public function getDisplayName() {
-		return $this->name;
+		return (string) $this->name;
 	}
 
 	/**

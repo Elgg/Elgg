@@ -42,7 +42,7 @@ return array(
 	'discussion:comment:notify:subject' => '주제의 새 댓글: %s',
 
 	'groups:tool:forum' => '모둠 토론 허용',
-
+	
 	/**
 	 * Discussion status
 	 */
@@ -51,4 +51,6 @@ return array(
 	'discussion:topic:closed:desc' => '이 토론은 종료되었으며, 새 댓글을 받지 않습니다.',
 
 	'discussion:topic:description' => '주제 쪽지',
+	
+	// widgets
 );

@@ -61,7 +61,7 @@ Bekijk en reageer hier op de discussie:
 %s',
 
 	'groups:tool:forum' => 'Activeer groepsdiscussies',
-
+	
 	/**
 	 * Discussion status
 	 */
@@ -74,4 +74,6 @@ Bekijk en reageer hier op de discussie:
 	'discussion:topic:toggle_status:open:confirm' => 'Weet je zeker dat je deze discussie wilt heropenen?',
 	'discussion:topic:toggle_status:closed' => 'De discussie is gesloten',
 	'discussion:topic:toggle_status:closed:confirm' => 'Weet je zeker dat je deze discussie wilt sluiten?',
+	
+	// widgets
 );

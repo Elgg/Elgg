@@ -74,7 +74,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 		if ($this->read($session_id)) {
 			$update = Update::table(self::TABLE_NAME);
 			$update->set('data', $update->param($session_data, ELGG_VALUE_STRING))
-				->set('ts', $update->param(time(), ELGG_VALUE_TIMESTAMP))
+				->set('ts', $update->param($this->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP))
 				->where($update->compare('session', '=', $session_id, ELGG_VALUE_STRING));
 			
 			return $this->db->updateData($update);
@@ -117,7 +117,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	#[\ReturnTypeWillChange]
 	public function gc($max_lifetime) {
 		$delete = Delete::fromTable(self::TABLE_NAME);
-		$delete->where($delete->compare('ts', '<', $max_lifetime, ELGG_VALUE_TIMESTAMP));
+		$delete->where($delete->compare('ts', '<', $this->getCurrentTime("-{$max_lifetime} seconds")->getTimestamp(), ELGG_VALUE_TIMESTAMP));
 		
 		return (bool) $this->db->deleteData($delete);
 	}

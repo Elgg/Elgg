@@ -74,6 +74,8 @@ class Paths {
 	 * @return string
 	 */
 	public static function sanitize($path, $append_slash = true) {
+		$path = (string) $path;
+		
 		// Convert to correct UNIX paths
 		$path = str_replace('\\', '/', $path);
 		// replace ./ to / to prevent directory traversal

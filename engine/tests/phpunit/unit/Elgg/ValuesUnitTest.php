@@ -19,7 +19,6 @@ class ValuesUnitTest extends UnitTestCase {
 
 		$this->assertInstanceOf(ElggDateTime::class, $dt);
 		$this->assertEquals($dt->getTimestamp(), Values::normalizeTimestamp($time));
-
 	}
 
 	public function timeProvider() {
@@ -28,6 +27,9 @@ class ValuesUnitTest extends UnitTestCase {
 			[1515496794],
 			[new PHPDateTime('+2 days')],
 			[new ElggDateTime('-2 days')],
+			[null],
+			[''],
+			[0],
 		];
 	}
 	

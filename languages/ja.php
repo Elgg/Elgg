@@ -844,7 +844,7 @@ return array(
  * Time
  */
 	'input:date_format:datepicker' => '', // jQuery UI datepicker format
-
+	
 	'friendlytime:justnow' => "Now!",
 	'friendlytime:minutes' => "%s 分前",
 	'friendlytime:minutes:singular' => "1 分前",

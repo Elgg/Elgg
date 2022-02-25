@@ -62,6 +62,8 @@ Voir la discussion et y répondre :
 
 	'groups:tool:forum' => 'Activer les discussions du groupe',
 
+	'discussions:groups:edit:add_group_subscribers_to_discussion_comments' => 'Ajouter les membres du groupe aux notifications des commentaires de discussion',
+	
 	/**
 	 * Discussion status
 	 */
@@ -74,4 +76,8 @@ Voir la discussion et y répondre :
 	'discussion:topic:toggle_status:open:confirm' => 'Confirmez-vous vouloir rouvrir cette discussion ?',
 	'discussion:topic:toggle_status:closed' => 'Le sujet de discussion a bien été fermé.',
 	'discussion:topic:toggle_status:closed:confirm' => 'Confirmez-vous vouloir fermer cette discussion ?',
+	
+	// widgets
+	'widgets:discussions:name' => 'Discussions',
+	'widgets:discussions:description' => 'Affiche les discussions récentes',
 );

@@ -18,8 +18,8 @@ if (!elgg_get_config('allow_registration')) {
 $username = $request->getParam('username');
 $password = $request->getParam('password', null, false);
 $password2 = $request->getParam('password2', null, false);
-$email = $request->getParam('email');
-$name = $request->getParam('name');
+$email = $request->getParam('email', '');
+$name = $request->getParam('name', '');
 
 $username = trim($username);
 $name = trim(strip_tags($name));

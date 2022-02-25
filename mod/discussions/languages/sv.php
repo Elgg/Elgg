@@ -47,7 +47,7 @@ return array(
 	'discussion:comment:notify:subject' => 'Ny kommentar i ämnet: %s',
 
 	'groups:tool:forum' => 'Aktivera gruppdiskussioner',
-
+	
 	/**
 	 * Discussion status
 	 */
@@ -56,4 +56,6 @@ return array(
 	'discussion:topic:closed:desc' => 'Den här diskussionen är stängd och accepterar inte nya kommentarer.',
 
 	'discussion:topic:description' => 'Ämnesmeddelande',
+	
+	// widgets
 );

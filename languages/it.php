@@ -844,7 +844,7 @@ return array(
  * Time
  */
 	'input:date_format:datepicker' => '', // jQuery UI datepicker format
-
+	
 	'friendlytime:justnow' => "proprio ora",
 	'friendlytime:minutes' => "%s minuti fa",
 	'friendlytime:minutes:singular' => "un minuto fa",
