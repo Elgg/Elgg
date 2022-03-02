@@ -205,11 +205,13 @@ return [
 		'detect_page_owner' => true,
 	],
 	'widgets:add_panel' => [
+		// @todo this route could also be a ajax view or have some parameters (context/container) in the route definition
 		'path' => '/widgets/add_panel',
 		'resource' => 'widgets/add_panel',
 		'middleware' => [
 			\Elgg\Router\Middleware\Gatekeeper::class,
 		],
+		'legacy_page_owner_detection' => false, // prevents notices about legacy logic, page owner is explicitely set in the resource
 	],
 	'view:object:comment' => [
 		'path' => '/comment/view/{guid}/{container_guid?}',

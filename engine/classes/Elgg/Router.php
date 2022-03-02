@@ -171,6 +171,7 @@ class Router {
 			unset($parameters['_required_plugins']);
 			
 			unset($parameters['_detect_page_owner']);
+			unset($parameters['_legacy_page_owner_detection']);
 			
 			foreach ($required_plugins as $plugin_id) {
 				if (!$this->plugins->isActive($plugin_id)) {

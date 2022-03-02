@@ -134,7 +134,13 @@ class PageOwnerService {
 	 * @return int|void
 	 */
 	private function detectLegacyPageOwner() {
-	
+		$route = $this->request->getRoute();
+		if ($route instanceof Route) {
+			if ($route->getDefault('_legacy_page_owner_detection') === false) {
+				return;
+			}
+		}
+		
 		$guid = $this->invoker->call(ELGG_IGNORE_ACCESS, function() {
 		
 			$username = $this->request->getParam('username');

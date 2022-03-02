@@ -9,6 +9,7 @@ return [
 		'default:search' => [
 			'path' => '/search/{route_query?}',
 			'resource' => 'search/index',
+			'legacy_page_owner_detection' => false, // prevents notices about legacy logic when using filters for guid/username/container
 		],
 	],
 	'view_extensions' => [
