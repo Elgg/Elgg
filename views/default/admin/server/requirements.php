@@ -6,6 +6,7 @@
  * @see ElggInstaller::checkPHP()
  */
 
+use Elgg\Database\DbConfig;
 use Elgg\Http\Request;
 
 $icon_ok = elgg_view_icon('check');
@@ -88,21 +89,22 @@ if (empty(ini_get('session.gc_probability')) || empty(ini_get('session.gc_diviso
 }
 
 // db server information
-$db = elgg()->db->getConnection('read');
-$version = $db->executeQuery('select version()')->fetchOne();
-$server = $db->getDatabasePlatform()->getName();
+$db = _elgg_services()->db;
+$version = $db->getServerVersion();
+$min_version = $db->isMariaDB() ? \ElggInstaller::MARIADB_MINIMAL_VERSION : \ElggInstaller::MYSQL_MINIMAL_VERSION;
+$server = $db->isMariaDB() ? 'mariadb' : $db->getConnection(DbConfig::READ_WRITE)->getDatabasePlatform()->getName();
 $subtext = '';
 $icon = $icon_ok;
 
-if ($server !== 'mysql' || version_compare($version ?: '0', \ElggInstaller::MYSQL_MINIMAL_VERSION, '<')) {
-	$subtext = elgg_echo('admin:server:requirements:database:server:required_version', [\ElggInstaller::MYSQL_MINIMAL_VERSION]);
+if (!in_array($server, ['mysql', 'mariadb']) || version_compare($version ?: '0', $min_version, '<')) {
+	$subtext = elgg_echo('admin:server:requirements:database:server:required_version', [$min_version]);
 	$icon = $icon_error;
 }
 
 echo $view_module($icon, elgg_echo('admin:server:requirements:database:server'), "{$server} v{$version}", $subtext);
 
 // db client information
-$client_parts = explode('\\', get_class($db->getDriver()));
+$client_parts = explode('\\', get_class($db->getConnection(DbConfig::READ_WRITE)->getDriver()));
 $client_parts = array_slice($client_parts, 3);
 $client = implode(' ', $client_parts);
 
