@@ -39,6 +39,7 @@ use Elgg\Exceptions\PluginException;
  */
 class ElggInstaller {
 	
+	public const MARIADB_MINIMAL_VERSION = '10.3';
 	public const MYSQL_MINIMAL_VERSION = '5.7';
 	public const PHP_MINIMAL_VERSION = '7.4.0';
 	
@@ -1259,9 +1260,11 @@ class ElggInstaller {
 		}
 
 		// check MySQL version
-		$version = $db->getServerVersion(DbConfig::READ_WRITE);
-		if (version_compare($version, self::MYSQL_MINIMAL_VERSION, '<')) {
-			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:mysql_version', [self::MYSQL_MINIMAL_VERSION, $version]));
+		$version = $db->getServerVersion();
+		$min_version = $db->isMariaDB() ? self::MARIADB_MINIMAL_VERSION : self::MYSQL_MINIMAL_VERSION;
+		
+		if (version_compare($version, $min_version, '<')) {
+			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:database_version', [$min_version, $version]));
 
 			return false;
 		}

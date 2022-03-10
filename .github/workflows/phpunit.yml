@@ -15,12 +15,12 @@ env:
 
 jobs:
   phpunit:
-    name: PHP ${{ matrix.php-versions }} - MySQL ${{ matrix.mysql-versions }} ${{ matrix.extra-title }}
+    name: PHP ${{ matrix.php-versions }} - ${{ matrix.db-image }} ${{ matrix.extra-title }}
     runs-on: ubuntu-20.04
     continue-on-error: ${{ matrix.experimental }}
     services:
       elggdb:
-        image: mysql:${{ matrix.mysql-versions }}
+        image: ${{ matrix.db-image }}
         env:
           MYSQL_DATABASE: elgg
           MYSQL_ROOT_PASSWORD: password
@@ -42,26 +42,38 @@ jobs:
         experimental: [false]
         extra-title: ['']
         memcache: [0]
-        mysql-versions: [5.7]
+        db-image: ['mysql:5.7']
         redis: [0]
         include:
           - php-versions: '7.4'
             experimental: false
             extra-title: '- Memcache'
             memcache: 1
-            mysql-versions: 5.7
+            db-image: 'mysql:5.7'
             redis: 0
           - php-versions: '7.4'
             experimental: false
             extra-title: '- Redis'
             memcache: 0
-            mysql-versions: 5.7
+            db-image: 'mysql:5.7'
             redis: 1
           - php-versions: '7.4'
             experimental: false
             extra-title: ''
             memcache: 0
-            mysql-versions: 8.0
+            db-image: 'mysql:8.0'
+            redis: 0
+          - php-versions: '7.4'
+            experimental: false
+            extra-title: ''
+            memcache: 0
+            db-image: 'mariadb:10.3'
+            redis: 0
+          - php-versions: '7.4'
+            experimental: false
+            extra-title: ''
+            memcache: 0
+            db-image: 'mariadb:10.6'
             redis: 0
     env:
       ELGG_MEMCACHE: ${{ matrix.memcache }}
