@@ -9,6 +9,7 @@ return array(
 	'item:object:reported_content' => 'Gemelde items',
 	'collection:object:reported_content' => 'Gemelde items',
 	'admin:administer_utilities:reportedcontent' => 'Gemelde inhoud',
+	'admin:administer_utilities:reportedcontent:archive' => 'Gemelde inhoud - archief',
 	
 	'reportedcontent' => 'Gemelde inhoud',
 	'reportedcontent:this' => 'Meld dit',
@@ -23,6 +24,7 @@ return array(
 	'reportedcontent:report' => 'Meld aan beheerder',
 	'reportedcontent:numbertodisplay' => 'Aantal meldingen om weer te geven',
 	'reportedcontent:user' => 'Meld deze gebruiker bij de sitebeheerder',
+	'reportedcontent:new' => 'Nieuwe meldingen',
 	'reportedcontent:archived' => 'De melding is gearchiveerd',
 
 	'reportedcontent:failed' => 'Sorry, de poging om deze inhoud te melden is mislukt.',
@@ -30,4 +32,18 @@ return array(
 	
 	'widgets:reportedcontent:name' => 'Gemelde inhoud',
 	'widgets:reportedcontent:description' => 'Toon gemelde inhoud',
+	
+	'reportedcontent:usersettings:notifications:reportedcontent:description' => 'Ontvang een notificatie indien er content wordt gemeld',
+	
+	'reportedcontent:notifications:create:admin:subject' => 'Nieuwe content gemeld: %s',
+	'reportedcontent:notifications:create:admin:summary' => 'Nieuwe content gemeld: %s',
+	'reportedcontent:notifications:create:admin:body' => '%s heeft het volgende gemeld:
+
+%s
+
+Bekijk de gemelde pagina:
+%s
+
+Om alle meldingen te bekijken:
+%s',
 );
