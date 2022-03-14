@@ -1105,6 +1105,7 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'untitled' => 'Untitled',
 	'help' => 'Help',
 	'send' => 'Send',
+	'resend' => 'Resend',
 	'post' => 'Post',
 	'submit' => 'Submit',
 	'comment' => 'Comment',

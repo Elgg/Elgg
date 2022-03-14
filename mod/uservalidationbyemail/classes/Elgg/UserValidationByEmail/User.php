@@ -83,12 +83,11 @@ class User {
 				// email address already validated, or account created before plugin was enabled
 				return;
 			}
-			
-			// send new validation email
-			uservalidationbyemail_request_validation($user->guid);
-			
-			// throw error so we get a nice error message
-			throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
+
+			$exception = new LoginException();
+			$exception->setRedirectUrl(elgg_http_get_signed_url(elgg_generate_url('account:validation:email:change', ['guid' => $user->guid]), '+5 minutes'));
+
+			throw $exception;
 		});
 	}
 }

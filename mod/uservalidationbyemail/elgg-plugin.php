@@ -8,11 +8,22 @@ return [
 		'activate_on_install' => true,
 	],
 	'actions' => [
+		'uservalidationbyemail/change_email' => [
+			'access' => 'logged_out',
+		],
 		'uservalidationbyemail/resend_validation' => [
 			'access' => 'admin',
 		],
 	],
 	'routes' => [
+		'account:validation:email:change' => [
+			'path' => '/uservalidationbyemail/change_email',
+			'resource' => 'uservalidationbyemail/change_email',
+			'walled' => false,
+			'middleware' => [
+				\Elgg\Router\Middleware\LoggedOutGatekeeper::class,
+			],
+		],
 		'account:validation:email:confirm' => [
 			'path' => '/uservalidationbyemail/confirm',
 			'controller' => \Elgg\UserValidationByEmail\ConfirmController::class,

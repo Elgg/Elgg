@@ -57,6 +57,20 @@ try {
 
 	login($user, $persistent);
 } catch (LoginException $e) {
+	$forward = $e->getRedirectUrl();
+	// if a forward url is set we need to use a ok response.
+	// The login action is mostly used as an AJAX action and AJAX actions do not support redirects.
+	if (!empty($forward)) {
+		// Registering an error as we use an OK response
+		// It makes no sense for AJAX actions as a OK response with a forward will instantly redirect without time to read the message
+		$error = $e->getMessage();
+		if (!empty($error) && !elgg_is_xhr()) {
+			register_error($error);
+		}
+		
+		return elgg_ok_response('', '', $forward);
+	}
+	
 	return elgg_error_response($e->getMessage(), REFERRER, ELGG_HTTP_UNAUTHORIZED);
 }
 
