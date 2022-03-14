@@ -80,7 +80,7 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 			'my_plugin/action/default' => [],
 
 			'my_plugin/action/custom_access' => [
-				'access' => 'public', // supports 'public', 'logged_in', 'admin'
+				'access' => 'public', // supports 'public', 'logged_in', 'logged_out', 'admin'
 			],
 
 			// you can use action controllers instead of action files by setting the controller parameters

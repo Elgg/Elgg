@@ -37,7 +37,7 @@ class ActionRegistrationIntegrationTest extends ActionResponseTestCase {
 
 		$actions = _elgg_services()->actions->getAllActions();
 		foreach ($actions as $name => $params) {
-			$provides[] = [$name];
+			$provides[] = [$name, $params['access']];
 		}
 
 		return $provides;
@@ -46,12 +46,16 @@ class ActionRegistrationIntegrationTest extends ActionResponseTestCase {
 	/**
 	 * @dataProvider actionsProvider
 	 */
-	public function testCanRequestActionWithoutParameters($name) {
+	public function testCanRequestActionWithoutParameters($name, $access) {
 
 		if (in_array($name, $this->skips)) {
 			$this->markTestSkipped("Can not test action '{$name}'");
 		}
 
+		if ($access === 'logged_out') {
+			_elgg_services()->session->removeLoggedInUser();
+		}
+		
 		$response = $this->executeAction($name);
 
 		$this->assertInstanceOf(ResponseBuilder::class, $response);
@@ -60,10 +64,14 @@ class ActionRegistrationIntegrationTest extends ActionResponseTestCase {
 	/**
 	 * @dataProvider actionsProvider
 	 */
-	public function testCanRequestActionWithoutParametersViaAjax($name) {
+	public function testCanRequestActionWithoutParametersViaAjax($name, $access) {
 
 		if (in_array($name, $this->skips)) {
 			$this->markTestSkipped("Can not test action '{$name}'");
+		}
+		
+		if ($access === 'logged_out') {
+			_elgg_services()->session->removeLoggedInUser();
 		}
 
 		$response = $this->executeAction($name, [], 2);
