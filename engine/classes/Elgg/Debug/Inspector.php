@@ -152,6 +152,7 @@ class Inspector {
 		$access = [
 			'public' => 'public',
 			'logged_in' => 'logged in only',
+			'logged_out' => 'logged out only',
 			'admin' => 'admin only',
 		];
 		$start = strlen(elgg_get_root_path());

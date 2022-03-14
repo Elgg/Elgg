@@ -96,6 +96,12 @@ To restrict an action to only administrators, pass ``"admin"`` for the last para
 
    elgg_register_action("example", $filepath, "admin");
 
+To restrict an action to only logged out users, pass ``"logged_out"`` for the last parameter:
+
+.. code-block:: php
+
+   elgg_register_action("example", $filepath, "logged_out");
+
 Writing action files
 --------------------
 

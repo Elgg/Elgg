@@ -7,6 +7,7 @@ use Elgg\Router\Middleware\ActionMiddleware;
 use Elgg\Router\Middleware\AdminGatekeeper;
 use Elgg\Router\Middleware\CsrfFirewall;
 use Elgg\Router\Middleware\Gatekeeper as MiddlewareGateKeeper;
+use Elgg\Router\Middleware\LoggedOutGatekeeper;
 use Elgg\Router\RouteRegistrationService;
 use Elgg\Traits\Loggable;
 
@@ -23,7 +24,7 @@ class ActionsService {
 	/**
 	 * @var string[]
 	 */
-	private static $access_levels = ['public', 'logged_in', 'admin'];
+	private static $access_levels = ['public', 'logged_in', 'logged_out', 'admin'];
 
 	/**
 	 * Actions for which CSRF firewall should be bypassed
@@ -60,7 +61,7 @@ class ActionsService {
 	 * @param string          $action  The name of the action (eg "register", "account/settings/save")
 	 * @param string|callable $handler Optionally, the filename where this action is located. If not specified,
 	 *                                 will assume the action is in elgg/actions/<action>.php
-	 * @param string          $access  Who is allowed to execute this action: public, logged_in, admin.
+	 * @param string          $access  Who is allowed to execute this action: public, logged_in, logged_out, admin.
 	 *                                 (default: logged_in)
 	 *
 	 * @return bool
@@ -99,8 +100,10 @@ class ActionsService {
 
 		if ($access == 'admin') {
 			$middleware[] = AdminGatekeeper::class;
-		} else if ($access == 'logged_in') {
+		} elseif ($access == 'logged_in') {
 			$middleware[] = MiddlewareGateKeeper::class;
+		} elseif ($access == 'logged_out') {
+			$middleware[] = LoggedOutGatekeeper::class;
 		}
 
 		$middleware[] = ActionMiddleware::class;
@@ -190,7 +193,9 @@ class ActionsService {
 			$middleware = (array) $route->getDefault('_middleware');
 			if (in_array(MiddlewareGateKeeper::class, $middleware)) {
 				$access = 'logged_in';
-			} else if (in_array(AdminGatekeeper::class, $middleware)) {
+			} elseif (in_array(LoggedOutGatekeeper::class, $middleware)) {
+				$access = 'logged_out';
+			} elseif (in_array(AdminGatekeeper::class, $middleware)) {
 				$access = 'admin';
 			}
 
