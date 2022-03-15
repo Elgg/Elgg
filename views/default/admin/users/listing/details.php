@@ -33,7 +33,7 @@ echo elgg_view('page/components/tabs', [
 		// content statistics
 		[
 			'text' => elgg_echo('admin:users:details:statistics'),
-			'content' => elgg_view('admin/users/listing/statistics', $vars),
+			'content' => elgg_view('core/settings/statistics/numentities', $vars),
 		],
 		// profile data
 		[
