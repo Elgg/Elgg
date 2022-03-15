@@ -18,7 +18,6 @@
  * @uses $vars['list_class']   Additional CSS class for the <table> element
  * @uses $vars['item_class']   Additional CSS class for the <td> elements
  * @uses $vars['item_view']    Alternative view to render list items
- * @uses $vars['no_results']   Message to display if no results (string|Closure)
  */
 
 use Elgg\Views\TableColumn;

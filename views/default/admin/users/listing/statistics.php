@@ -12,7 +12,7 @@ if (!$entity instanceof \ElggUser) {
 
 $entity_stats = get_entity_statistics($entity->guid);
 if (empty($entity_stats)) {
-	echo elgg_view('page/components/no_results', ['no_results' => elgg_echo('notfound')]);
+	echo elgg_view('page/components/no_results', ['no_results' => true]);
 	return;
 }
 
