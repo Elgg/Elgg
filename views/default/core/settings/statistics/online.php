@@ -1,9 +1,11 @@
 <?php
 /**
  * Statistics about this user.
+ *
+ * @uses $vars['entity'] The user entity for whom to show statistics
  */
 
-$user = elgg_get_page_owner_entity();
+$user = elgg_extract('entity', $vars, elgg_get_page_owner_entity()); // page owner for BC reasons
 if (!$user instanceof ElggUser) {
 	return;
 }
@@ -22,7 +24,11 @@ $last_login = elgg_view('output/date', [
 	'format' => DATE_RFC2822,
 ]);
 
-$title = elgg_echo('usersettings:statistics:yourdetails');
+if ($user->guid === elgg_get_logged_in_user_guid()) {
+	$title = elgg_echo('usersettings:statistics:yourdetails');
+} else {
+	$title = elgg_echo('usersettings:statistics:details:user', [$user->getDisplayName()]);
+}
 
 $content = <<<__HTML
 <table class="elgg-table-alt">
@@ -32,7 +38,7 @@ $content = <<<__HTML
 	</tr>
 	<tr>
 		<td class="column-one">$label_email</td>
-		<td>$user->email</td>
+		<td>{$user->email}</td>
 	</tr>
 	<tr>
 		<td class="column-one">$label_member_since</td>

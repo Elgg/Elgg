@@ -600,6 +600,7 @@ function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities', 
 	}
 	
 	if ($options['no_results'] === true) {
+		// @todo remove this conversion in 5.0 in favour of page/components/no_results
 		$options['no_results'] = elgg_echo('notfound');
 	}
 

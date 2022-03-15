@@ -129,7 +129,7 @@ elgg_register_menu_item('page', [
 
 if (empty($results)) {
 	$results = elgg_view('page/components/no_results', [
-		'no_results' => elgg_echo('notfound'),
+		'no_results' => true,
 	]);
 }
 

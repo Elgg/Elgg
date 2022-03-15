@@ -1016,6 +1016,7 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'usersettings:description' => "The user settings panel allows you to control all your personal settings, from user management to how plugins behave. Choose an option below to get started.",
 
 	'usersettings:statistics' => "Your statistics",
+	'usersettings:statistics:user' => "%s's statistics",
 	'usersettings:statistics:opt:description' => "View statistical information about users and objects on your site.",
 	'usersettings:statistics:opt:linktext' => "Account statistics",
 
@@ -1032,13 +1033,15 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'usersettings:plugins:opt:linktext' => "Configure your tools",
 
 	'usersettings:plugins:description' => "This panel allows you to control and configure the personal settings for the tools installed by your system administrator.",
-	'usersettings:statistics:label:numentities' => "Your content",
-
+	
 	'usersettings:statistics:yourdetails' => "Your details",
+	'usersettings:statistics:details:user' => "Details for %s",
+	'usersettings:statistics:numentities:user' => "Content statistics for %s",
 	'usersettings:statistics:label:name' => "Full name",
 	'usersettings:statistics:label:email' => "Email",
-	'usersettings:statistics:label:membersince' => "Member since",
 	'usersettings:statistics:label:lastlogin' => "Last logged in",
+	'usersettings:statistics:label:membersince' => "Member since",
+	'usersettings:statistics:label:numentities' => "Your content",
 	
 	'usersettings:delayed_email' => "Delayed email settings",
 	'usersettings:delayed_email:interval' => "Configure the interval at which delayed email notifications will be delivered",

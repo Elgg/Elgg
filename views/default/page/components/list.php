@@ -14,17 +14,11 @@
  * @uses $vars['item_class']                Additional CSS class for the <li> elements
  * @uses $vars['item_view']                 Alternative view to render list items content
  * @uses $vars['list_item_view']            Alternative view to render list items
- * @uses $vars['no_results']                Message to display if no results (string|true|Closure)
  */
 
 $items = elgg_extract('items', $vars);
 
-$no_results = elgg_extract('no_results', $vars, '');
-if ($no_results === true) {
-	$vars['no_results'] = elgg_echo('notfound');
-}
-
-if (!$items && $no_results) {
+if (!$items) {
 	echo elgg_view('page/components/no_results', $vars);
 	echo elgg_view('page/components/list/out_of_bounds', $vars);
 	return;
@@ -97,7 +91,7 @@ if ($pagination && ($position == 'before' || $position == 'both')) {
 	$result .= elgg_view('navigation/pagination', $pagination_options);
 }
 
-if (empty($list_items) && $no_results) {
+if (empty($list_items)) {
 	// there are scenarios where item views do not output html. In those cases show the no results info
 	$result .= elgg_view('page/components/no_results', $vars);
 } else {
