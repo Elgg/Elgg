@@ -27,8 +27,10 @@ class EntityUrlHandler {
 				return 'admin/statistics';
 			case 'cron_status':
 				return 'admin/cron';
+			case 'banned_users':
+				return 'admin/users/banned';
 			case 'new_users':
-				return 'admin/users/newest';
+				return 'admin/users';
 			case 'online_users':
 				return 'admin/users/online';
 		}

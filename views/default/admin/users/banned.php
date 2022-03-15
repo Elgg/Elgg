@@ -1,19 +1,13 @@
 <?php
 /**
- * Show a listing of all site administrators
+ * Show a listing of all banned users
  */
 
 echo elgg_view('admin/users/header', [
-	'filter' => 'admin',
+	'filter' => 'banned',
 ]);
 
 $buttons = [
-	[
-		'#type' => 'submit',
-		'icon' => 'ban',
-		'value' => elgg_echo('ban'),
-		'formaction' => elgg_generate_action_url('admin/user/bulk/ban', [], false),
-	],
 	[
 		'#type' => 'submit',
 		'icon' => 'ban',
@@ -34,10 +28,10 @@ echo elgg_view_form('admin/users/bulk_actions', [
 	'prevent_double_submit' => false,
 ], [
 	'buttons' => $buttons,
-	'filter' => 'admins',
+	'filter' => 'banned',
 	'options' => [
 		'metadata_name_value_pairs' => [
-			'admin' => 'yes',
+			'banned' => 'yes',
 		],
 	],
 ]);

@@ -156,4 +156,59 @@ class Filter {
 		
 		return $result;
 	}
+	
+	/**
+	 * Register the default All and Mine filter menu items
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:filter:admin/users'
+	 *
+	 * @return MenuItems
+	 */
+	public static function registerAdminUsers(\Elgg\Hook $hook): MenuItems {
+		/* @var $result MenuItems */
+		$result = $hook->getValue();
+		
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'all',
+			'text' => elgg_echo('all'),
+			'href' => 'admin/users',
+			'priority' => 100,
+		]);
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'online',
+			'text' => elgg_echo('admin:users:online'),
+			'href' => 'admin/users/online',
+			'priority' => 200,
+		]);
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'admins',
+			'text' => elgg_echo('admin:users:admins'),
+			'href' => 'admin/users/admins',
+			'priority' => 300,
+		]);
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'banned',
+			'text' => elgg_echo('admin:users:banned'),
+			'href' => 'admin/users/banned',
+			'priority' => 400,
+		]);
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'unvalidated',
+			'text' => elgg_echo('admin:users:unvalidated'),
+			'href' => 'admin/users/unvalidated',
+			'priority' => 500,
+		]);
+		
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'search',
+			'icon' => 'search',
+			'text' => elgg_echo('search'),
+			'href' => false,
+			'rel' => 'toggle',
+			'data-toggle-selector' => '.elgg-form-admin-users-search',
+			'priority' => 9999,
+		]);
+		
+		return $result;
+	}
 }

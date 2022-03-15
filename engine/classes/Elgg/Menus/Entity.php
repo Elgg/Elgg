@@ -226,4 +226,41 @@ class Entity {
 		
 		return $result;
 	}
+	
+	/**
+	 * Add the user hover admin section to the entity menu of an ElggUser, if requested
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
+	 *
+	 * @return void|MenuItems
+	 */
+	public static function registerUserHoverAdminSection(\Elgg\Hook $hook) {
+		$entity = $hook->getEntityParam();
+		if (!$entity instanceof \ElggUser || !elgg_is_admin_logged_in()) {
+			return;
+		}
+		
+		if (!(bool) $hook->getParam('add_user_hover_admin_section', false)) {
+			return;
+		}
+		
+		$user_hover = elgg()->menus->getUnpreparedMenu('user_hover', [
+			'entity' => $entity,
+		]);
+		
+		/* @var $result MenuItems */
+		$result = $hook->getValue();
+		
+		/* @var $menu_item \ElggMenuItem */
+		foreach ($user_hover->getItems() as $menu_item) {
+			if ($menu_item->getSection() !== 'admin') {
+				continue;
+			}
+			
+			$menu_item->setSection('default');
+			$result[] = $menu_item;
+		}
+		
+		return $result;
+	}
 }

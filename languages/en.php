@@ -139,15 +139,21 @@ return array(
  */
 	'table_columns:fromView:admin' => 'Admin',
 	'table_columns:fromView:banned' => 'Banned',
+	'table_columns:fromView:checkbox' => 'Select',
 	'table_columns:fromView:container' => 'Container',
+	'table_columns:fromView:entity_menu' => 'Menu',
 	'table_columns:fromView:excerpt' => 'Description',
 	'table_columns:fromView:link' => 'Name/Title',
 	'table_columns:fromView:icon' => 'Icon',
 	'table_columns:fromView:item' => 'Item',
 	'table_columns:fromView:language' => 'Language',
+	'table_columns:fromView:last_action' => 'Last action',
+	'table_columns:fromView:last_login' => 'Last login',
 	'table_columns:fromView:owner' => 'Owner',
+	'table_columns:fromView:prev_last_login' => 'Previous last login',
 	'table_columns:fromView:time_created' => 'Time Created',
 	'table_columns:fromView:time_updated' => 'Time Updated',
+	'table_columns:fromView:unvalidated_menu' => 'Menu',
 	'table_columns:fromView:user' => 'User',
 
 	'table_columns:fromProperty:description' => 'Description',
@@ -155,6 +161,7 @@ return array(
 	'table_columns:fromProperty:name' => 'Name',
 	'table_columns:fromProperty:type' => 'Type',
 	'table_columns:fromProperty:username' => 'Username',
+	'table_columns:fromProperty:validated' => 'Validated',
 
 	'table_columns:fromMethod:getSubtype' => 'Subtype',
 	'table_columns:fromMethod:getDisplayName' => 'Name/Title',
@@ -272,6 +279,9 @@ return array(
 	'action:user:login_as:success' => "You are now logged in as %s",
 	'action:user:login_as:unknown' => "Unknown user. Could not login.",
 	'action:user:login_as:error' => "Could not login as %s",
+	
+	'action:admin:user:bulk:ban' => "Successfully banned %s users",
+	'action:admin:user:bulk:unban' => "Successfully unbanned %s users",
 
 /**
  * Feeds
@@ -532,6 +542,7 @@ Since Elgg has a lot of file access this will negatively impact performance. Als
 	'admin:users:online' => 'Currently Online',
 	'admin:users:newest' => 'Newest',
 	'admin:users:admins' => 'Administrators',
+	'admin:users:banned' => 'Banned',
 	'admin:users:searchuser' => 'Search user to make them admin',
 	'admin:users:existingadmins' => 'List of existing admins',
 	'admin:users:add' => 'Add New User',
@@ -545,6 +556,11 @@ Since Elgg has a lot of file access this will negatively impact performance. Als
 	'admin:users:unvalidated:registered' => 'Registered: %s',
 	'admin:users:unvalidated:change_email' => 'Change e-mail address',
 	'admin:users:unvalidated:change_email:user' => 'Change e-mail address for: %s',
+	'admin:users:details:attributes' => 'User attributes',
+	'admin:users:details:profile' => 'Profile information',
+	'admin:users:details:profile:no_fields' => 'No profile fields configured',
+	'admin:users:details:profile:no_information' => 'No profile information available',
+	'admin:users:details:statistics' => 'Content statistics',
 	
 	'admin:configure_utilities:maintenance' => 'Maintenance mode',
 	'admin:upgrades' => 'Upgrades',

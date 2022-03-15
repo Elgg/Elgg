@@ -21,7 +21,7 @@ class UserHover {
 	public static function register(\Elgg\Hook $hook) {
 		
 		$user = $hook->getEntityParam();
-		if (!$user instanceof \ElggUser) {
+		if (!$user instanceof \ElggUser || !$user->isEnabled()) {
 			return;
 		}
 		

@@ -42,9 +42,6 @@ return [
 			'menu:user:unvalidated' => [
 				'Elgg\UserValidationByEmail\Menus\UserUnvalidated::register' => [],
 			],
-			'menu:user:unvalidated:bulk' => [
-				'Elgg\UserValidationByEmail\Menus\UserUnvalidatedBulk::register' => [],
-			],
 			'user' => [
 				'Elgg\UserValidationByEmail\User::disableUserOnRegistration' => [],
 			],
@@ -52,6 +49,11 @@ return [
 		'response' => [
 			'action:register' => [
 				'Elgg\UserValidationByEmail\Response::redirectToEmailSent' => [],
+			],
+		],
+		'view_vars' => [
+			'forms/admin/users/bulk_actions' => [
+				'Elgg\UserValidationByEmail\Views::addResendBulkAction' => [],
 			],
 		],
 	],

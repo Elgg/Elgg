@@ -20,7 +20,7 @@ class UserHover {
 	public static function register(\Elgg\Hook $hook) {
 		
 		$user = $hook->getEntityParam();
-		if (!elgg_is_logged_in() || !$user instanceof \ElggUser) {
+		if (!elgg_is_logged_in() || !$user instanceof \ElggUser || !$user->isEnabled()) {
 			return;
 		}
 		

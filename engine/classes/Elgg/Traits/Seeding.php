@@ -133,7 +133,7 @@ trait Seeding {
 				$guid = register_user($metadata['username'], $metadata['password'], $metadata['name'], $metadata['email'], false, $attributes['subtype']);
 
 				$user = get_user($guid);
-				if (!$user) {
+				if (!$user instanceof \ElggUser) {
 					throw new \Exception("Unable to create new user with attributes: " . print_r($attributes, true));
 				}
 
@@ -160,19 +160,28 @@ trait Seeding {
 					}
 				}
 
+				if (!isset($metadata['validated'])) {
+					$metadata['validated'] = $this->faker()->boolean(80);
+				}
+				$user->setValidationStatus((bool) $metadata['validated'], 'seeder');
+				
+				if (!$user->isValidated()) {
+					$user->disable('seeder invalidation');
+				}
+				
 				unset($metadata['username']);
 				unset($metadata['password']);
 				unset($metadata['name']);
 				unset($metadata['email']);
 				unset($metadata['banned']);
 				unset($metadata['admin']);
-
-				$user->setValidationStatus($this->faker()->boolean(), 'seeder');
-
+				unset($metadata['validated']);
+				
 				$user->setNotificationSetting('email', false);
 				$user->setNotificationSetting('site', true);
 
 				$profile_fields = elgg_extract('profile_fields', $options, []);
+				/* @var $user \ElggUser */
 				$user = $this->populateMetadata($user, $profile_fields, $metadata);
 
 				$user->save();
@@ -192,7 +201,7 @@ trait Seeding {
 			}
 		};
 
-		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($create) {
+		return elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($create) {
 			$user = false;
 			$attempts = 0;
 			while (!$user instanceof \ElggUser && $attempts < $this->MAX_ATTEMPTS) {
