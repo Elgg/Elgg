@@ -53,7 +53,10 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 		'linkClass' => [],
 
 		// array AMD modules required by this menu item
-		'deps' => []
+		'deps' => [],
+		
+		// which view should be used to output the menu item contents
+		'item_contents_view' => null,
 	];
 
 	/**
@@ -504,7 +507,6 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 		$this->addClass($this->data['itemClass'], $class);
 	}
 
-	// @codingStandardsIgnoreStart
 	/**
 	 * Add additional classes
 	 *
@@ -519,7 +521,6 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 			$current = array_merge($current, $additional);
 		}
 	}
-	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Set the priority of the menu item
@@ -672,5 +673,37 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 */
 	public function getID() {
 		return $this->getName();
+	}
+	
+	/**
+	 * Set the item contents view
+	 *
+	 * @param string $view_name the name of the output view
+	 *
+	 * @return void
+	 * @since 4.2
+	 */
+	public function setItemContentsView(string $view_name): void {
+		$this->data['item_contents_view'] = $view_name;
+	}
+	
+	/**
+	 * Get the item contents view
+	 *
+	 * @return string|null
+	 * @since 4.2
+	 */
+	public function getItemContentsView(): ?string {
+		return $this->data['item_contents_view'];
+	}
+	
+	/**
+	 * Check if the menu items has a contents view set
+	 *
+	 * @return bool
+	 * @since 4.2
+	 */
+	public function hasItemContentsView(): bool {
+		return isset($this->data['item_contents_view']);
 	}
 }
