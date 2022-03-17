@@ -2,9 +2,9 @@
 /**
  * Form wrapper for bulk actions on a user listing
  *
- * @uses $vars['buttons'] An array of bulk action buttons (these should set the 'formaction' attribute to point to the correct action)
- * @uses $vars['filter']  An indication of what the listing is used for (eg all, online, admin, etc.) (default: all)
- * @uses $vars['options'] Additional options for the user selection
+ * @uses $vars['filter']    An indication of what the listing is used for (eg all, online, admin, etc.) (default: all)
+ * @uses $vars['menu_vars'] An array of additional option to pass to the buttons menu
+ * @uses $vars['options']   Additional options for the user selection
  */
 
 elgg_require_css('forms/admin/users/bulk_actions');
@@ -61,18 +61,20 @@ if (empty($users)) {
 	return;
 }
 
-$buttons = elgg_extract('buttons', $vars);
-if (!empty($buttons)) {
-	foreach ($buttons as &$button) {
-		$button['disabled'] = true;
-	}
-	
-	echo elgg_view_field([
-		'#type' => 'fieldset',
-		'#class' => ['elgg-admin-users-bulkactions-buttons', 'mbs'],
-		'align' => 'horizontal',
-		'fields' => $buttons,
-	]);
-}
+// draw a menu for bulk actions
+// the menu items will be shown as submit buttons with a custom formaction
+$default_menu_vars = [
+	'class' => ['elgg-menu-hz', 'elgg-admin-users-bulkactions-buttons'],
+	'item_contents_view' => 'navigation/menu/elements/item/submit',
+	'filter_value' => elgg_extract('filter', $vars, 'all'),
+	// @see \Elgg\Menus\AdminUsersBulk::registerActions()
+	'show_ban' => true,
+	'show_unban' => true,
+	'show_delete' => true,
+	'show_validate' => false,
+];
+$menu_vars = (array) elgg_extract('menu_vars', $vars, []);
+$menu_vars = array_merge($default_menu_vars, $menu_vars);
+echo elgg_view_menu('admin:users:bulk', $menu_vars);
 
 echo $users;

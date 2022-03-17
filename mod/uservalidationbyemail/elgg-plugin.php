@@ -39,6 +39,9 @@ return [
 	],
 	'hooks' => [
 		'register' => [
+			'menu:admin:users:bulk' => [
+				'Elgg\UserValidationByEmail\Menus\AdminUsersBulk::register' => [],
+			],
 			'menu:user:unvalidated' => [
 				'Elgg\UserValidationByEmail\Menus\UserUnvalidated::register' => [],
 			],
@@ -49,11 +52,6 @@ return [
 		'response' => [
 			'action:register' => [
 				'Elgg\UserValidationByEmail\Response::redirectToEmailSent' => [],
-			],
-		],
-		'view_vars' => [
-			'forms/admin/users/bulk_actions' => [
-				'Elgg\UserValidationByEmail\Views::addResendBulkAction' => [],
 			],
 		],
 	],
