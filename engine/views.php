@@ -21,7 +21,7 @@ return [
 		// need to use some folder structure, because FontAwesome includes fonts relative to css
 		"font-awesome/" => "vendor/fortawesome/font-awesome/",
 
-		"jquery-ui/" => "vendor/npm-asset/components-jqueryui/ui",
+		"jquery-ui/" => "vendor/npm-asset/jquery-ui/ui",
 		"tagify/" => "vendor/npm-asset/yaireo--tagify/dist",
 		
 		/**
