@@ -68,7 +68,7 @@ if (!$new_page && $parent_guid && $parent_guid !== $page_guid) {
 		$tree_page = $tree_page->getParentEntity();
 	}
 	// If is below, bring all child elements forward
-	if ($page_guid === $tree_page->guid) {
+	if ($tree_page instanceof ElggPage && ($page_guid === $tree_page->guid)) {
 		$previous_parent = $page->getParentGUID();
 
 		$children = elgg_get_entities([
