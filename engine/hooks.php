@@ -112,6 +112,9 @@ return [
 		'breadcrumbs' => [
 			\Elgg\Page\PrepareBreadcrumbsHandler::class => [],
 		],
+		'menu:admin:users:bulk' => [
+			'Elgg\Menus\AdminUsersBulk::disableItems' => [],
+		],
 		'menu:site' => [
 			'Elgg\Menus\Site::reorderItems' => [
 				'priority' => 999,
@@ -137,6 +140,9 @@ return [
 		],
 		'menu:admin_footer' => [
 			'Elgg\Menus\AdminFooter::registerHelpResources' => [],
+		],
+		'menu:admin:users:bulk' => [
+			'Elgg\Menus\AdminUsersBulk::registerActions' => [],
 		],
 		'menu:annotation' => [
 			'Elgg\Menus\Annotation::registerDelete' => [],

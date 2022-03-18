@@ -33,6 +33,7 @@ class ElggMenuItemUnitTest extends \Elgg\UnitTestCase {
 			'priority' => 50,
 			'selected' => true,
 			'parent_name' => 'node',
+			'item_contents_view' => 'some_view_name',
 		);
 		$item = \ElggMenuItem::factory($params);
 
@@ -48,6 +49,7 @@ class ElggMenuItemUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($params['priority'], $item->getPriority());
 		$this->assertEquals($params['selected'], $item->getSelected());
 		$this->assertEquals($params['parent_name'], $item->getParentName());
+		$this->assertEquals($params['item_contents_view'], $item->getItemContentsView());
 	}
 
 	public function testFactorySetData() {
@@ -60,6 +62,7 @@ class ElggMenuItemUnitTest extends \Elgg\UnitTestCase {
 				'priority' => 50,
 				'selected' => true,
 				'parent_name' => 'node',
+				'item_contents_view' => 'some_view_name',
 			),
 		);
 		$item = \ElggMenuItem::factory($params);
@@ -68,6 +71,7 @@ class ElggMenuItemUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($params['data']['priority'], $item->getPriority());
 		$this->assertEquals($params['data']['selected'], $item->getSelected());
 		$this->assertEquals($params['data']['parent_name'], $item->getParentName());
+		$this->assertEquals($params['data']['item_contents_view'], $item->getItemContentsView());
 	}
 
 	public function testFactoryContextShortcut() {
@@ -233,7 +237,7 @@ class ElggMenuItemUnitTest extends \Elgg\UnitTestCase {
 				'message' => 'Second argument of elgg_register_menu_item() must be an instance of ElggMenuItem or an array of menu item factory options',
 				'level' => 'error',
 			],
-				], $logged);
+		], $logged);
 	}
 	
 	public function testAutoDetectSelectedState() {
@@ -253,5 +257,17 @@ class ElggMenuItemUnitTest extends \Elgg\UnitTestCase {
 		]);
 		
 		$this->assertTrue($should_be_selected->getSelected());
+	}
+	
+	public function testItemContentsView() {
+		$menu_item = new ElggMenuItem('name', 'text', 'url');
+		
+		$this->assertFalse($menu_item->hasItemContentsView());
+		$this->assertEmpty($menu_item->getItemContentsView());
+		
+		$menu_item->setItemContentsView('some_view');
+		
+		$this->assertTrue($menu_item->hasItemContentsView());
+		$this->assertEquals('some_view', $menu_item->getItemContentsView());
 	}
 }

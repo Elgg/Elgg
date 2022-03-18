@@ -28,3 +28,8 @@ Javascript functions
 
 The Elgg javascript libraries have gotten a massive overhaul. A lot of functions have been deprecated. 
 You can find all deprecated functions and globals in `views/default/core/js/deprecated.js`.
+
+Deprecated APIs
+---------------
+
+ * ``elgg_view_menu_item()`` use ``elgg_view('navigation/menu/elements/item/url', ['item' => $myMenuItem])``

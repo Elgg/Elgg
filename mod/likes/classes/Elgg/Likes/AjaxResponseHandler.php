@@ -26,8 +26,8 @@ class AjaxResponseHandler {
 		$response->getData()->likes_status = [
 			'guid' => $entity->guid,
 			'count' => likes_count($entity),
-			'count_menu_item' => elgg_view_menu_item(_likes_count_menu_item($entity)),
-			'like_menu_item' => elgg_view_menu_item(_likes_menu_item($entity)),
+			'count_menu_item' => elgg_view('navigation/menu/elements/item/url', ['item' => _likes_count_menu_item($entity)]),
+			'like_menu_item' => elgg_view('navigation/menu/elements/item/url', ['item' => _likes_menu_item($entity)]),
 			'is_liked' => DataService::instance()->currentUserLikesEntity($entity->guid),
 		];
 		
