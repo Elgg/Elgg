@@ -12,6 +12,8 @@ if (!is_string($title) || $title === '') {
 	return;
 }
 
+$title = elgg_get_excerpt($title, 250);
+
 $attributes = [
 	'class' => elgg_extract_class($vars),
 ];

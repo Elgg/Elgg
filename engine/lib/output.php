@@ -240,7 +240,8 @@ function elgg_get_friendly_title($title) {
 	
 	$title = \Elgg\Translit::urlize($title);
 
-	return $title;
+	// limit length to prevent issues with too long URLS (Request-URI Too Large)
+	return elgg_substr($title, 0, 100);
 }
 
 /**
