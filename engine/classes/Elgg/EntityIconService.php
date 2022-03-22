@@ -5,6 +5,7 @@ namespace Elgg;
 use Elgg\Database\EntityTable;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Filesystem\MimeTypeService;
+use Elgg\Http\Request;
 use Elgg\Traits\Loggable;
 use Elgg\Traits\TimeUsing;
 
@@ -48,6 +49,11 @@ class EntityIconService {
 	 * @var MimeTypeService
 	 */
 	protected $mimetype;
+	
+	/**
+	 * @var Request
+	 */
+	protected $request;
 
 	/**
 	 * Constructor
@@ -58,6 +64,7 @@ class EntityIconService {
 	 * @param UploadService      $uploads  Upload service
 	 * @param ImageService       $images   Image service
 	 * @param MimeTypeService    $mimetype MimeType service
+	 * @param Request            $request  Http Request service
 	 */
 	public function __construct(
 		Config $config,
@@ -65,7 +72,8 @@ class EntityIconService {
 		EntityTable $entities,
 		UploadService $uploads,
 		ImageService $images,
-		MimeTypeService $mimetype
+		MimeTypeService $mimetype,
+		Request $request
 	) {
 		$this->config = $config;
 		$this->hooks = $hooks;
@@ -73,6 +81,7 @@ class EntityIconService {
 		$this->uploads = $uploads;
 		$this->images = $images;
 		$this->mimetype = $mimetype;
+		$this->request = $request;
 	}
 
 	/**
@@ -411,6 +420,12 @@ class EntityIconService {
 			throw new InvalidParameterException("'entity:$type:file', $entity_type hook must return an instance of ElggIcon");
 		}
 		
+		if ($size !== 'master' && $this->hasWebPSupport()) {
+			if (pathinfo($icon->getFilename(), PATHINFO_EXTENSION) === 'jpg') {
+				$icon->setFilename(substr($icon->getFilename(), 0, -3) . 'webp');
+			}
+		}
+		
 		if ($icon->exists() || !$generate) {
 			return $icon;
 		}
@@ -672,4 +687,12 @@ class EntityIconService {
 		return $auto_coords;
 	}
 
+	/**
+	 * Checks if browser has WebP support
+	 *
+	 * @return bool
+	 */
+	protected function hasWebPSupport(): bool {
+		return in_array('image/webp', $this->request->getAcceptableContentTypes());
+	}
 }

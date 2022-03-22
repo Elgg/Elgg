@@ -50,6 +50,7 @@ class MimeTypeDetector {
 		'tif' => 'image/tiff',
 		'svg' => 'image/svg+xml',
 		'svgz' => 'image/svg+xml',
+		'webp' => 'image/webp',
 
 		// archives
 		'zip' => 'application/zip',
