@@ -67,6 +67,7 @@ class AdminUsersBulk {
 				'href' => elgg_generate_action_url('admin/user/bulk/delete', [], false),
 				'confirm' => elgg_echo('deleteconfirm:plural'),
 				'priority' => 900,
+				'link_class' => ['elgg-button-delete'],
 			]);
 		}
 		

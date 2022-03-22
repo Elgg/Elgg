@@ -17,5 +17,6 @@ echo elgg_view('output/url', [
 	'text' => elgg_echo('back'),
 	'href' => 'javascript: history.back()',
 	'class' => 'float-alt',
+	'allowed_schemes' => ['javascript'],
 ]);
 echo '</div>';
