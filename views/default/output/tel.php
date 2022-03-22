@@ -10,4 +10,5 @@ $value = elgg_extract('value', $vars);
 echo elgg_view('output/url', [
   'text' => $value,
   'href' => "tel:{$value}",
+  'allowed_schemes' => ['tel'],
 ]);
