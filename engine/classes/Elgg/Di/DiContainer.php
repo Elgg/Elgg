@@ -22,15 +22,19 @@ abstract class DiContainer extends Container {
 		$traits = class_uses($service, true);
 		
 		// check for certain global cases
-		if (in_array(\Elgg\Traits\Debug\Profilable::class, $traits)) {
+		if (in_array(\Elgg\Traits\Debug\Profilable::class, $traits) && !$service->hasTimer()) {
 			// profiling is supported
 			if ($service instanceof \Elgg\Database) {
 				// the database uses a different config flag to enable profiling
 				if ($this->config->profiling_sql) {
-					$service->setTimer($this->timer);
+					// need to get the timer from the InternalContainer
+					// especially if the current DiContainer is the PublicContainer
+					$service->setTimer(_elgg_services()->timer);
 				}
 			} elseif ($this->config->enable_profiling) {
-				$service->setTimer($this->timer);
+				// need to get the timer from the InternalContainer
+				// especially if the current DiContainer is the PublicContainer
+				$service->setTimer(_elgg_services()->timer);
 			}
 		}
 		
