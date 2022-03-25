@@ -20,6 +20,7 @@ return array(
 
 	'login' => "Aanmelden",
 	'loginok' => "Je bent aangemeld.",
+	'login:continue' => "Meld je aan om verder te gaan",
 	'login:empty' => "Gebruikersnaam en wachtwoord zijn verplicht.",
 	'login:baduser' => "Je account kon niet worden geladen.",
 	'auth:nopams' => "Interne fout. Geen methode voor gebruikersvalidatie gedefinieerd.",
@@ -264,6 +265,13 @@ return array(
 	'action:user:validate:already' => "%s was al gevalideerd",
 	'action:user:validate:success' => "%s is gevalideerd",
 	'action:user:validate:error' => "Een fout is opgetreden tijdens het valideren van %s",
+	
+	'action:user:login_as' => "Aanmelden als",
+	'action:user:logout_as' => "Keer terug als %s",
+	
+	'action:user:login_as:success' => "Je bent nu aangemeld als %s",
+	'action:user:login_as:unknown' => "Onbekende gebruiker. Je kon niet worden aangemeld.",
+	'action:user:login_as:error' => "Het was niet mogelijk je aan te melden als %s",
 
 /**
  * Feeds
@@ -595,6 +603,16 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:statistics:numentities:number' => 'Nummer',
 	'admin:statistics:numentities:searchable' => 'Doorzoekbare entiteiten',
 	'admin:statistics:numentities:other' => 'Andere entiteiten',
+
+	'admin:statistics:database' => 'Database informatie',
+	'admin:statistics:database:table' => 'Tabel',
+	'admin:statistics:database:row_count' => 'Aantal regels',
+
+	'admin:statistics:queue' => 'Wachtrij informatie',
+	'admin:statistics:queue:name' => 'Naam',
+	'admin:statistics:queue:row_count' => 'Aantal regels',
+	'admin:statistics:queue:oldest' => 'Oudste regel',
+	'admin:statistics:queue:newest' => 'Nieuwste regel',
 
 	'admin:widget:admin_welcome' => 'Welkom',
 	'admin:widget:admin_welcome:help' => "Een korte introductie op het beheerdeel van Elgg",
@@ -995,13 +1013,13 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'usersettings:plugins:opt:linktext' => "Configureer je plugins",
 
 	'usersettings:plugins:description' => "Dit paneel staat je toe persoonlijke instellingen te maken voor plugins die door de sitebeheerder zijn geïnstalleerd.",
-	'usersettings:statistics:label:numentities' => "Jouw inhoud",
-
+	
 	'usersettings:statistics:yourdetails' => "Jouw details",
 	'usersettings:statistics:label:name' => "Volledige naam",
 	'usersettings:statistics:label:email' => "E-mailadres",
-	'usersettings:statistics:label:membersince' => "Lid sinds",
 	'usersettings:statistics:label:lastlogin' => "Laatst aangemeld op",
+	'usersettings:statistics:label:membersince' => "Lid sinds",
+	'usersettings:statistics:label:numentities' => "Jouw inhoud",
 	
 	'usersettings:delayed_email' => "Uitgestelde email instellingen",
 	'usersettings:delayed_email:interval' => "Configureer de frequentie waarmee uitgestelde email notificaties worden afgeleverd",
@@ -1264,6 +1282,9 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'input:date_format' => 'Y-m-d',
 	'input:date_format:datepicker' => 'yy-mm-dd', // jQuery UI datepicker format
 	'input:time_format' => 'G:i',
+
+	'friendlytime:updated' => "%s - Bewerkt",
+	'friendlytime:updated:title' => "Aangemaakt op: %s \nBijgewerkt op: %s",
 	
 	'friendlytime:justnow' => "zojuist",
 	'friendlytime:minutes' => "%s minuten geleden",

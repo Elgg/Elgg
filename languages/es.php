@@ -713,13 +713,13 @@ return array(
 	'usersettings:plugins:opt:linktext' => "Configure sus herramientas",
 
 	'usersettings:plugins:description' => "Este panel le permite establecer sus preferencias personales para las herramientas habilitadas por el administrador del sistema",
-	'usersettings:statistics:label:numentities' => "Su contenido",
-
+	
 	'usersettings:statistics:yourdetails' => "Sus detalles",
 	'usersettings:statistics:label:name' => "Nombre completo",
 	'usersettings:statistics:label:email' => "Email",
-	'usersettings:statistics:label:membersince' => "Membro desde",
 	'usersettings:statistics:label:lastlogin' => "&uacute;ltimo acceso",
+	'usersettings:statistics:label:membersince' => "Membro desde",
+	'usersettings:statistics:label:numentities' => "Su contenido",
 
 /**
  * Activity river

@@ -1,3 +1,25 @@
+<a name="4.1.5"></a>
+### 4.1.5  (2022-03-25)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+* Jeroen Dalsem (1)
+
+#### Bug Fixes
+
+* **di:** fetch timer from the correct DiContainer ([abc25bd9](https://github.com/Elgg/Elgg/commit/abc25bd911b06b2b3e4dfa2d7ad43fcb57575e60))
+* **pages:** prevent warning when trying to access guid on bool ([8ff80f9e](https://github.com/Elgg/Elgg/commit/8ff80f9e07618699032ec74ea77d3e00bfcb1db7))
+
+
+<a name="4.1.4"></a>
+### 4.1.4  (2022-03-11)
+
+#### Contributors
+
+* Jeroen Dalsem (1)
+* Jerôme Bakker (1)
+
 <a name="4.1.3"></a>
 ### 4.1.3  (2022-02-25)
 

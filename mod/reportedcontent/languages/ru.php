@@ -9,6 +9,7 @@ return array(
 	'item:object:reported_content' => 'Жалоба',
 	'collection:object:reported_content' => 'Жалобы',
 	'admin:administer_utilities:reportedcontent' => 'Жалобы',
+	'admin:administer_utilities:reportedcontent:archive' => 'Жалобы - архив',
 	
 	'reportedcontent' => 'Жалобы',
 	'reportedcontent:this' => 'Пожаловаться',
@@ -23,6 +24,7 @@ return array(
 	'reportedcontent:report' => 'Пожаловаться администратору',
 	'reportedcontent:numbertodisplay' => 'Количество жалоб для отображения',
 	'reportedcontent:user' => 'Пожаловаться на пользователя',
+	'reportedcontent:new' => 'Новые жалобы',
 	'reportedcontent:archived' => 'Жалоба заархивирована',
 
 	'reportedcontent:failed' => 'Произошла ошибка при отправке жалобы на этот контент',
@@ -30,4 +32,18 @@ return array(
 	
 	'widgets:reportedcontent:name' => 'Жалобы',
 	'widgets:reportedcontent:description' => 'Отображает жалобы на контент',
+	
+	'reportedcontent:usersettings:notifications:reportedcontent:description' => 'Получать уведомление о жалобе на контент',
+	
+	'reportedcontent:notifications:create:admin:subject' => 'Новая жалоба на контент: %s',
+	'reportedcontent:notifications:create:admin:summary' => 'Новая жалоба на контент: %s',
+	'reportedcontent:notifications:create:admin:body' => '%s обжалует следующее:
+
+%s
+
+Проверить страницу:
+%s
+
+Просмотреть все жалобы:
+%s',
 );
