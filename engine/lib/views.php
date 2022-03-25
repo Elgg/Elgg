@@ -1384,15 +1384,15 @@ function elgg_views_boot() {
 	_elgg_services()->viewCacher->registerCoreViews();
 
 	// jQuery and UI must come before require. See #9024
-	elgg_register_external_file('js', 'jquery', elgg_get_simplecache_url('jquery.js'), 'head');
+	elgg_register_external_file('js', 'jquery', elgg_get_simplecache_url('jquery.js'));
 	elgg_load_external_file('js', 'jquery');
 
 	elgg_extend_view('require.js', 'elgg/require_config.js', 100);
 
-	elgg_register_external_file('js', 'require', elgg_get_simplecache_url('require.js'), 'head');
+	elgg_register_external_file('js', 'require', elgg_get_simplecache_url('require.js'));
 	elgg_load_external_file('js', 'require');
 
-	elgg_register_external_file('js', 'elgg', elgg_get_simplecache_url('elgg.js'), 'head');
+	elgg_register_external_file('js', 'elgg', elgg_get_simplecache_url('elgg.js'));
 	elgg_load_external_file('js', 'elgg');
 
 	elgg_register_external_file('css', 'font-awesome', elgg_get_simplecache_url('font-awesome/css/all.min.css'));

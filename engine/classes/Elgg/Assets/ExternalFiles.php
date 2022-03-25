@@ -102,7 +102,7 @@ class ExternalFiles {
 			];
 			if (elgg_view_exists($name)) {
 				$item->url = elgg_get_simplecache_url($name);
-				$item->location = ($type == 'js') ? 'foot' : 'head';
+				$item->location = ($type === 'js') ? 'footer' : 'head';
 			}
 		}
 		

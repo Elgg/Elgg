@@ -9,21 +9,31 @@
  * @uses $vars['links'] Array of links
  */
 
-$metas = elgg_extract('metas', $vars, []);
-$links = elgg_extract('links', $vars, []);
-
 echo elgg_format_element('title', [], elgg_extract('title', $vars), ['encode_text' => true]);
+
+$metas = elgg_extract('metas', $vars, []);
 foreach ($metas as $attributes) {
 	echo elgg_format_element('meta', $attributes);
 }
+
+$links = elgg_extract('links', $vars, []);
 foreach ($links as $attributes) {
 	echo elgg_format_element('link', $attributes);
 }
 
-$stylesheets = elgg_get_loaded_external_files('css', 'head');
+$js_foot = elgg_get_loaded_external_files('js', 'footer');
+foreach ($js_foot as $url) {
+	echo elgg_format_element('link', ['rel' => 'preload', 'as' => 'script', 'href' => $url]);
+}
 
+$stylesheets = elgg_get_loaded_external_files('css', 'head');
 foreach ($stylesheets as $url) {
 	echo elgg_format_element('link', ['rel' => 'stylesheet', 'href' => $url]);
+}
+
+$js_head = elgg_get_loaded_external_files('js', 'head');
+foreach ($js_head as $url) {
+	echo elgg_format_element('script', ['src' => $url]);
 }
 
 // A non-empty script *must* come below the CSS links, otherwise Firefox will exhibit FOUC

@@ -723,6 +723,7 @@ class Application {
 			'deprecated-4.2.php',
 			'deprecation.php',
 			'entities.php',
+			'external_files.php',
 			'filestore.php',
 			'gatekeepers.php',
 			'input.php',
