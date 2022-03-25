@@ -92,8 +92,12 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$svc->views->autoregisterViews('', "$this->viewsDir/json", 'json');
 		$svc->views->setViewtype('');
 
-		_elgg_register_routes();
-
+		$conf = \Elgg\Project\Paths::elgg() . 'engine/routes.php';
+		$routes = \Elgg\Includer::includeFile($conf);
+	
+		foreach ($routes as $name => $def) {
+			$svc->routes->register($name, $def);
+		}
 	}
 
 	protected function route(Request $request) {
