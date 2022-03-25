@@ -61,6 +61,8 @@ Bekijk en reageer hier op de discussie:
 %s',
 
 	'groups:tool:forum' => 'Activeer groepsdiscussies',
+
+	'discussions:groups:edit:add_group_subscribers_to_discussion_comments' => 'Voeg groep abonnees toe aan de discussie reactie notificatie',
 	
 	/**
 	 * Discussion status
@@ -76,4 +78,6 @@ Bekijk en reageer hier op de discussie:
 	'discussion:topic:toggle_status:closed:confirm' => 'Weet je zeker dat je deze discussie wilt sluiten?',
 	
 	// widgets
+	'widgets:discussions:name' => 'Discussies',
+	'widgets:discussions:description' => 'Toont recente discussies',
 );

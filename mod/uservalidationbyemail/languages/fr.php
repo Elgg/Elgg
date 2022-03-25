@@ -21,7 +21,9 @@ Si vous ne pouvez pas cliquer sur le lien, copiez et collez-le manuellement dans
 	'uservalidationbyemail:registerok' => "Pour activer votre compte, veuillez confirmer votre adresse e-mail en cliquant sur le lien qui vient de vous être envoyé par e-mail.
 
 Si vous ne recevez rien, veuillez vérifier votre dossier Spam ou Courrier Indésirable.",
-	'uservalidationbyemail:login:fail' => "Votre compte n'a pas encore été confirmé, c'est pourquoi la tentative de connexion a échoué. Pour vous permettre de continuer, un nouvel e-mail de confirmation vient d'être envoyé à votre adresse e-mail.",
+	'uservalidationbyemail:login:fail' => "La tentative de connexion a échoué car votre compte n'a pas encore été confirmé. Pour vous permettre de continuer, un nouvel e-mail de validation vient de vous être envoyé.",
+	'uservalidationbyemail:change_email' => "Renvoyer l'e-mail de validation",
+	'uservalidationbyemail:change_email:info' => "La tentative de connexion a échoué car votre compte n'est pas validé. Vous pouvez demander un nouveau lien de validation ou mettre à jour l'adresse e-mail associée à votre compte.",
 
 	'uservalidationbyemail:admin:resend_validation' => 'Renvoyer l\'e-mail de confirmation',
 	'uservalidationbyemail:confirm_resend_validation' => 'Renvoyer l\'e-mail de confirmation à %s ?',
