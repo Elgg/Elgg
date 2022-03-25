@@ -105,7 +105,7 @@ class BootHandler {
 
 		$events->registerHandler('plugins_load:before', 'system', 'elgg_views_boot');
 		$events->registerHandler('plugins_load:after', 'system', function() {
-			_elgg_session_boot($this->app->internal_services);
+			$this->app->internal_services->session->boot();
 		});
 
 		$events->registerHandler('plugins_boot', 'system', '_elgg_register_routes');

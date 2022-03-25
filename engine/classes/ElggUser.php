@@ -253,8 +253,6 @@ class ElggUser extends \ElggEntity {
 	/**
 	 * Sets the last action time of the given user to right now.
 	 *
-	 * @see _elgg_session_boot() The session boot calls this at the beginning of every request
-	 *
 	 * @return void
 	 */
 	public function setLastAction() {
