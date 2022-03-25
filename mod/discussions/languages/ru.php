@@ -61,6 +61,8 @@ return array(
 %s',
 
 	'groups:tool:forum' => 'Включить дискуссии в группах',
+
+	'discussions:groups:edit:add_group_subscribers_to_discussion_comments' => 'Добавьте подписчика группы в уведомления о комментариях к дискуссии',
 	
 	/**
 	 * Discussion status
@@ -76,4 +78,6 @@ return array(
 	'discussion:topic:toggle_status:closed:confirm' => 'Уверены, что хотите закрыть эту дискуссию?',
 	
 	// widgets
+	'widgets:discussions:name' => 'Дискуссии',
+	'widgets:discussions:description' => 'Отображает недавние дискуссии',
 );

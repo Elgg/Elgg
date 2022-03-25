@@ -950,13 +950,13 @@ Siehe die vollständige Liste dieser Benutzer hier:
 	'usersettings:plugins:opt:linktext' => "Konfiguriere Deine Tools",
 
 	'usersettings:plugins:description' => "Hier kannst Du Deine persönlichen Einstellungen für die vom Administrator installierten Tools konfigurieren.",
-	'usersettings:statistics:label:numentities' => "Deine Beiträge",
-
+	
 	'usersettings:statistics:yourdetails' => "Deine Accountdetails",
 	'usersettings:statistics:label:name' => "Vollständiger Name",
 	'usersettings:statistics:label:email' => "Email-Adresse",
-	'usersettings:statistics:label:membersince' => "Mitglied seit",
 	'usersettings:statistics:label:lastlogin' => "Zuletzt angemeldet",
+	'usersettings:statistics:label:membersince' => "Mitglied seit",
+	'usersettings:statistics:label:numentities' => "Deine Beiträge",
 	
 	'usersettings:delayed_email' => "Sammel-Emails-Einstellungen",
 	'usersettings:delayed_email:interval' => "Konfiguriere das Zeitinterval zu dem die Sammer-Emails versendet werden sollen",

@@ -619,13 +619,13 @@ return array(
 	'usersettings:plugins:opt:linktext' => "Nastavit nástroje",
 
 	'usersettings:plugins:description' => "Tento panel umožňuje ovládat a měnit osobní nastavení pro nástroje nainstalované vaším správcem.",
-	'usersettings:statistics:label:numentities' => "Váš obsah",
-
+	
 	'usersettings:statistics:yourdetails' => "Vaše detaily",
 	'usersettings:statistics:label:name' => "Celé jméno",
 	'usersettings:statistics:label:email' => "E-mail",
-	'usersettings:statistics:label:membersince' => "Členem od",
 	'usersettings:statistics:label:lastlogin' => "Poslední přihlášení",
+	'usersettings:statistics:label:membersince' => "Členem od",
+	'usersettings:statistics:label:numentities' => "Váš obsah",
 
 /**
  * Activity river
