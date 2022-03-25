@@ -622,13 +622,13 @@ return array(
 	'usersettings:plugins:opt:linktext' => "ツールの設定をする",
 
 	'usersettings:plugins:description' => "このパネルでは、システム管理者がインストールしたツールの個人的なコントロールや設定をすることができます。",
-	'usersettings:statistics:label:numentities' => "コンテント",
-
+	
 	'usersettings:statistics:yourdetails' => "詳細",
 	'usersettings:statistics:label:name' => "氏名",
 	'usersettings:statistics:label:email' => "Eメール",
-	'usersettings:statistics:label:membersince' => "利用開始時期",
 	'usersettings:statistics:label:lastlogin' => "前回のログイン",
+	'usersettings:statistics:label:membersince' => "利用開始時期",
+	'usersettings:statistics:label:numentities' => "コンテント",
 
 /**
  * Activity river

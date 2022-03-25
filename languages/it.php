@@ -622,13 +622,13 @@ return array(
 	'usersettings:plugins:opt:linktext' => "Configura i tuoi strumenti",
 
 	'usersettings:plugins:description' => "Questo pannello permette di controllare e configurare le impostazioni personali degli strumenti installati dall'amministratore.",
-	'usersettings:statistics:label:numentities' => "I tuoi contenuti",
-
+	
 	'usersettings:statistics:yourdetails' => "I tuoi dati",
 	'usersettings:statistics:label:name' => "Nome completo",
 	'usersettings:statistics:label:email' => "Email",
-	'usersettings:statistics:label:membersince' => "Membro dal",
 	'usersettings:statistics:label:lastlogin' => "Ultimo accesso",
+	'usersettings:statistics:label:membersince' => "Membro dal",
+	'usersettings:statistics:label:numentities' => "I tuoi contenuti",
 
 /**
  * Activity river

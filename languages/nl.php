@@ -1013,13 +1013,13 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'usersettings:plugins:opt:linktext' => "Configureer je plugins",
 
 	'usersettings:plugins:description' => "Dit paneel staat je toe persoonlijke instellingen te maken voor plugins die door de sitebeheerder zijn geïnstalleerd.",
-	'usersettings:statistics:label:numentities' => "Jouw inhoud",
-
+	
 	'usersettings:statistics:yourdetails' => "Jouw details",
 	'usersettings:statistics:label:name' => "Volledige naam",
 	'usersettings:statistics:label:email' => "E-mailadres",
-	'usersettings:statistics:label:membersince' => "Lid sinds",
 	'usersettings:statistics:label:lastlogin' => "Laatst aangemeld op",
+	'usersettings:statistics:label:membersince' => "Lid sinds",
+	'usersettings:statistics:label:numentities' => "Jouw inhoud",
 	
 	'usersettings:delayed_email' => "Uitgestelde email instellingen",
 	'usersettings:delayed_email:interval' => "Configureer de frequentie waarmee uitgestelde email notificaties worden afgeleverd",

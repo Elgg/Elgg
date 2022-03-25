@@ -591,13 +591,13 @@ return array(
 	'usersettings:plugins:opt:linktext' => "Konfiguruj swoje narzędzia.",
 
 	'usersettings:plugins:description' => "Panel umożliwia na kontrolę i konfigurację ustawień osobistych, narzędzi zainstalowanych przez administratora systemu.",
-	'usersettings:statistics:label:numentities' => "Twoje jednostki",
-
+	
 	'usersettings:statistics:yourdetails' => "Twoje szczegóły",
 	'usersettings:statistics:label:name' => "Pełne imię",
 	'usersettings:statistics:label:email' => "Email",
-	'usersettings:statistics:label:membersince' => "Członek od",
 	'usersettings:statistics:label:lastlogin' => "Ostatnie logowanie",
+	'usersettings:statistics:label:membersince' => "Członek od",
+	'usersettings:statistics:label:numentities' => "Twoje jednostki",
 
 /**
  * Activity river
