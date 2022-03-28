@@ -3,7 +3,7 @@
  * Redis info
  */
 $servers = elgg_get_config('redis_servers');
-if (!elgg_get_config('redis') || empty($servers) || !\Stash\Driver\Redis::isAvailable()) {
+if (!elgg_get_config('redis') || empty($servers) || !\Elgg\Cache\CompositeCache::isRedisAvailable()) {
 	echo '<p>' . elgg_echo('admin:server:redis:inactive') . '</p>';
 
 	return;

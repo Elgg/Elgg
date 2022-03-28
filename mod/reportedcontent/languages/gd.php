@@ -6,10 +6,10 @@
  */
 
 return array(
-
 	'item:object:reported_content' => 'Rud aithriste',
 	'collection:object:reported_content' => 'Rudan aithriste',
 	'admin:administer_utilities:reportedcontent' => 'Susbaint aithriste',
+	
 	'reportedcontent' => 'Susbaint aithriste',
 	'reportedcontent:this' => 'Dèan aithris air seo',
 	'reportedcontent:this:tooltip' => 'Dèan aithris air an duilleag seo don rianaire',
@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:report' => 'Dèan aithris don rianaire',
 	'reportedcontent:numbertodisplay' => 'An àireamh de dh\'aithrisean a chithear',
 	'reportedcontent:user' => 'Dèan aithris air a\' chleachdaiche',
+	'reportedcontent:archived' => 'Chaidh an aithris a chur san tasg-lann',
 
 	'reportedcontent:failed' => 'Tha sinn duilich, dh\'fhàillig an oidhirp gus aithris a dhèanamh air an t-susbaint seo.',
 	'reportedcontent:notarchived' => 'Cha b\' urrainn dhuinn an aithris sin a chur san tasg-lann',

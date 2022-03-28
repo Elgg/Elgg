@@ -227,12 +227,28 @@ select:not([multiple]) {
 			}
 		}
 		
-		&.elgg-justify-right .elgg-field {
-			margin: 0 0 0 1rem;
+		&.elgg-fieldset-wrap {
+			flex-wrap: wrap;
+			
+			.elgg-field {
+				margin-bottom: 0.5rem;
+			}
 		}
 		
-		&.elgg-justify-center .elgg-field {
-			margin: 0 5px;
+		&.elgg-justify-right {
+			justify-content: flex-end;
+			
+			.elgg-field {
+				margin: 0 0 0 1rem;
+			}
+		}
+		
+		&.elgg-justify-center {
+			justify-content: center;
+		
+			.elgg-field {
+				margin: 0 5px;
+			}
 		}
 	}
 }

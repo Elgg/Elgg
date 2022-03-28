@@ -2,10 +2,6 @@
  * Javascript hook interface
  */
 
-elgg.provide('elgg.config.hooks');
-elgg.provide('elgg.config.instant_hooks');
-elgg.provide('elgg.config.triggered_hooks');
-
 !function() {
 	// counter for tracking registration order
 	var index = 0;
@@ -57,6 +53,42 @@ elgg.provide('elgg.config.triggered_hooks');
 }();
 
 /**
+ * Adds child to object[parent] array.
+ *
+ * @param {Object} object The object to add to
+ * @param {String} parent The parent array to add to.
+ * @param {*}      value  The value
+ */
+elgg.push_to_object_array = function(object, parent, value) {
+	elgg.assertTypeOf('object', object);
+	elgg.assertTypeOf('string', parent);
+
+	if (!(object[parent] instanceof Array)) {
+		object[parent] = [];
+	}
+
+	if ($.inArray(value, object[parent]) < 0) {
+		return object[parent].push(value);
+	}
+
+	return false;
+};
+
+/**
+ * Tests if object[parent] contains child
+ *
+ * @param {Object} object The object to add to
+ * @param {String} parent The parent array to add to.
+ * @param {*}      value  The value
+ */
+elgg.is_in_object_array = function(object, parent, value) {
+	elgg.assertTypeOf('object', object);
+	elgg.assertTypeOf('string', parent);
+
+	return typeof(object[parent]) != 'undefined' && $.inArray(value, object[parent]) >= 0;
+};
+
+/**
  * Emits a synchronous hook, calling only synchronous handlers
  *
  * Loops through all registered hooks and calls the handler functions in order.
@@ -84,7 +116,7 @@ elgg.trigger_hook = function(name, type, params, value) {
 	elgg.set_triggered_hook(name, type);
 
 	// default to null if unpassed
-	value = !elgg.isNullOrUndefined(value) ? value : null;
+	value = (value != null) ? value : null;
 
 	var hooks = elgg.config.hooks,
 		registrations = [],
@@ -130,7 +162,7 @@ elgg.trigger_hook = function(name, type, params, value) {
 	// only synchronous handlers
 	$.each(registrations, function (i, registration) {
 		var handler_return = registration.handler(name, type, params, value);
-		if (!elgg.isNullOrUndefined(handler_return)) {
+		if (handler_return != null) {
 			value = handler_return;
 		}
 	});

@@ -715,13 +715,13 @@ return array(
 	'usersettings:plugins:opt:linktext' => "配置你的工具",
 
 	'usersettings:plugins:description' => "此面板允许你控制和配置个人设置。",
-	'usersettings:statistics:label:numentities' => "您的内容",
-
+	
 	'usersettings:statistics:yourdetails' => "您的细节",
 	'usersettings:statistics:label:name' => "全名",
 	'usersettings:statistics:label:email' => "Email",
-	'usersettings:statistics:label:membersince' => "成员来自",
 	'usersettings:statistics:label:lastlogin' => "最后登录",
+	'usersettings:statistics:label:membersince' => "成员来自",
+	'usersettings:statistics:label:numentities' => "您的内容",
 
 /**
  * Activity river
@@ -944,7 +944,7 @@ return array(
 	'input:date_format' => 'Y-m-d',
 	'input:date_format:datepicker' => 'yy-mm-dd', // jQuery UI datepicker format
 	'input:time_format' => 'g:ia',
-
+	
 	'friendlytime:justnow' => "刚刚",
 	'friendlytime:minutes' => "%s 分钟前",
 	'friendlytime:minutes:singular' => "1分钟前",

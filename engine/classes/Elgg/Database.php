@@ -469,10 +469,12 @@ class Database {
 				
 		try {
 			$result = $this->trackQuery($sql, $params, function() use ($query, $params, $connection, $sql) {
-				if ($query instanceof \Elgg\Database\QueryBuilder) {
-					return $query->execute(false);
-				} elseif ($query instanceof QueryBuilder) {
-					return $query->execute();
+				if ($query instanceof QueryBuilder) {
+					if ($query->getType() === QueryBuilder::SELECT) {
+						return $query->executeQuery();
+					} else {
+						return $query->executeStatement();
+					}
 				} elseif (!empty($params)) {
 					return $connection->executeQuery($sql, $params);
 				} else {
@@ -630,15 +632,41 @@ class Database {
 	 *
 	 * @return string Empty if version cannot be determined
 	 */
-	public function getServerVersion(string $type): string {
+	public function getServerVersion(string $type = DbConfig::READ_WRITE): string {
 		$driver = $this->getConnection($type)->getWrappedConnection();
 		if ($driver instanceof ServerInfoAwareConnection) {
-			return $driver->getServerVersion();
+			$version = $driver->getServerVersion();
+			
+			if ($this->isMariaDB($type)) {
+				if (strpos($version, '5.5.5-') === 0) {
+					$version = substr($version, 6);
+				}
+			}
+			
+			return $version;
 		}
 
 		return '';
 	}
 
+	/**
+	 * Is the database MariaDB
+	 *
+	 * @param string $type Connection type (Config constants, e.g. Config::READ_WRITE)
+	 *
+	 * @return bool if MariaDB is detected
+	 */
+	public function isMariaDB(string $type = DbConfig::READ_WRITE): bool {
+		$driver = $this->getConnection($type)->getWrappedConnection();
+		if ($driver instanceof ServerInfoAwareConnection) {
+			$version = $driver->getServerVersion();
+			
+			return stristr($version, 'mariadb') !== false;
+		}
+
+		return false;
+	}
+	
 	/**
 	 * Handle magic property reads
 	 *

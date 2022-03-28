@@ -43,8 +43,6 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery.colorbox'], function ($, elgg, Aj
 				// don't move colorbox on small viewports https://github.com/Elgg/Elgg/issues/5312
 				defaults.reposition = $(window).height() > 600;
 			}
-
-			elgg.provide('elgg.ui.lightbox');
 			
 			var settings = $.extend({}, defaults, opts);
 

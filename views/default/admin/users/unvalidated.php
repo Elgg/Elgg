@@ -5,30 +5,42 @@
  * Allows for manual actions like validate/delete
  */
 
-
-echo elgg_view_form('admin/users/search', [
-	'method' => 'GET',
-	'action' => 'admin/users/unvalidated',
-	'class' => 'mbm',
+echo elgg_view('admin/users/header', [
+	'filter' => 'unvalidated',
 ]);
 
-$form = elgg_view_form('admin/users/unvalidated', [
-	'id' => 'admin-users-unvalidated-bulk',
+echo elgg_view_form('admin/users/bulk_actions', [
+	'prevent_double_submit' => false,
+], [
+	'filter' => 'unvalidated',
+	'options' => [
+		'columns' => [
+			elgg()->table_columns->checkbox(elgg_view('input/checkbox', [
+				'name' => 'user_guids',
+				'title' => elgg_echo('table_columns:fromView:select'),
+			]), [
+				'name' => 'user_guids[]',
+			]),
+			elgg()->table_columns->icon(null, [
+				'use_hover' => false,
+			]),
+			elgg()->table_columns->user(null, [
+				'item_view' => 'user/default/admin_column',
+			]),
+			elgg()->table_columns->email(),
+			elgg()->table_columns->time_created(null, [
+				'format' => 'friendly',
+			]),
+			elgg()->table_columns->unvalidated_menu(),
+		],
+		'metadata_name_value_pairs' => [
+			'validated' => false,
+		],
+	],
+	'menu_vars' => [
+		'show_ban' => false,
+		'show_unban' => false,
+		'show_validate' => true,
+	],
+	'no_results' => elgg_echo('admin:users:unvalidated:no_results'),
 ]);
-
-if (empty($form)) {
-	echo elgg_view('output/longtext', [
-		'value' => elgg_echo('admin:users:unvalidated:no_results'),
-	]);
-	return;
-}
-
-elgg_require_css('admin/users/unvalidated');
-
-// add header
-$header = elgg_view_menu('user:unvalidated:bulk', [
-	'class' => 'elgg-menu-hz',
-]);
-
-// show list
-echo elgg_view_module('info', '', $form, ['header' => $header]);

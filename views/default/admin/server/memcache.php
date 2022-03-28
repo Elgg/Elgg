@@ -3,7 +3,7 @@
  * Memcache info
  */
 $servers = elgg_get_config('memcache_servers');
-if (!elgg_get_config('memcache') || empty($servers) || !\Stash\Driver\Memcache::isAvailable()) {
+if (!elgg_get_config('memcache') || empty($servers) || !\Elgg\Cache\CompositeCache::isMemcacheAvailable()) {
 	echo '<p>' . elgg_echo('admin:server:memcache:inactive') . '</p>';
 	return;
 }

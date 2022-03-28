@@ -45,6 +45,8 @@ class UpgradeController {
 				throw $exception;
 			}
 		);
+		
+		_elgg_generate_plugin_entities();
 
 		return $response;
 	}

@@ -167,6 +167,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertTrue(_elgg_services()->actions->register('test/output', "$this->actionsDir/output.php", 'public'));
 		$this->assertTrue(_elgg_services()->actions->register('test/output_logged_in', "$this->actionsDir/output.php", 'logged_in'));
+		$this->assertTrue(_elgg_services()->actions->register('test/output_logged_out', "$this->actionsDir/output.php", 'logged_out'));
 		$this->assertTrue(_elgg_services()->actions->register('test/output_admin', "$this->actionsDir/output.php", 'admin'));
 	}
 

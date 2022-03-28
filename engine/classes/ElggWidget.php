@@ -106,7 +106,7 @@ class ElggWidget extends \ElggObject {
 		}
 		
 		$container = $this->getContainerEntity() ? : null;
-		return _elgg_services()->widgets->getNameById($this->handler, (string) $this->context, $container);
+		return _elgg_services()->widgets->getNameById($this->handler, (string) $this->context, $container) ?: (string) $this->handler;
 	}
 
 	/**

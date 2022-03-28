@@ -26,6 +26,7 @@ $bookmarklet = elgg_view('output/url', [
 	'onclick' => 'return false',
 	'class' => 'elgg-button elgg-button-action',
 	'style' => 'cursor:move',
+	'allowed_schemes' => ['javascript'],
 ]);
 
 ?>

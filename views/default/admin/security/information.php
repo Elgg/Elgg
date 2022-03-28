@@ -135,7 +135,8 @@ if ($probability > 0 && $divisor > 0) {
 	$icon = $icon_ok;
 	$value = elgg_echo('status:enabled');
 	
-	$chance = $probability / $divisor;
+	// https://www.php.net/manual/en/session.configuration.php#ini.session.gc-probability
+	$chance = ($probability / $divisor) * 100;
 	$subtext = elgg_echo('admin:security:information:php:session_gc:chance', [$chance]);
 	$subtext .= ' ' . elgg_echo('admin:security:information:php:session_gc:lifetime', [$maxlifetime]);
 }

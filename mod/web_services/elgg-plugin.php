@@ -72,6 +72,7 @@ return [
 				'segments' => '.+',
 			],
 			'walled' => false,
+			'legacy_page_owner_detection' => false, // we do not want accidental pageowner detection
 		],
 	],
 	'view_extensions' => [

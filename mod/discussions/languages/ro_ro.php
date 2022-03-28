@@ -61,7 +61,7 @@ Vezi și comentează la discuție:
 %s',
 
 	'groups:tool:forum' => 'Activează discuțiile de grup',
-
+	
 	/**
 	 * Discussion status
 	 */
@@ -74,4 +74,6 @@ Vezi și comentează la discuție:
 	'discussion:topic:toggle_status:open:confirm' => 'Sigur dorești să redeschizi acest subiect?',
 	'discussion:topic:toggle_status:closed' => 'Subiectul de discuție a fost închis cu succes',
 	'discussion:topic:toggle_status:closed:confirm' => 'Sigur dorești să închizi acest subiect?',
+	
+	// widgets
 );

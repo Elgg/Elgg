@@ -14,5 +14,7 @@ if (!$item instanceof ElggEntity) {
 }
 
 $size = elgg_extract('size', $vars, 'small');
+unset($vars['item']);
+unset($vars['size']);
 
-echo elgg_view_entity_icon($item, $size);
+echo elgg_view_entity_icon($item, $size, $vars);

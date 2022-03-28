@@ -270,7 +270,12 @@ class Settings {
 		}
 	
 		try {
-			_elgg_services()->accounts->assertValidEmail($email, true);
+			$assert_unregistered = true;
+			if ($actor->isAdmin() && $user->guid !== $actor->guid) {
+				// admins changing another users email address are allowed to set it to a duplicate email address
+				$assert_unregistered = false;
+			}
+			_elgg_services()->accounts->assertValidEmail($email, $assert_unregistered);
 		} catch (RegistrationException $ex) {
 			$request->validation()->fail('email', $email, $ex->getMessage());
 	
@@ -294,7 +299,7 @@ class Settings {
 			return;
 		}
 		
-		if (_elgg_services()->config->security_email_require_confirmation) {
+		if (_elgg_services()->config->security_email_require_confirmation && (!$actor->isAdmin() || $user->guid === $actor->guid)) {
 			// validate the new email address
 			try {
 				_elgg_services()->accounts->requestNewEmailValidation($user, $email);
@@ -337,7 +342,7 @@ class Settings {
 		}
 	
 		if (!$user->setPrivateSetting('elgg_default_access', $default_access)) {
-			$request->validation()->fail('default_access', $default_access, elgg_echo(elgg_echo('user:default_access:failure')));
+			$request->validation()->fail('default_access', $default_access, elgg_echo('user:default_access:failure'));
 			return;
 		}
 		

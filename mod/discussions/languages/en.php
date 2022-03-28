@@ -62,6 +62,8 @@ View and comment on the discussion:
 
 	'groups:tool:forum' => 'Enable group discussions',
 
+	'discussions:groups:edit:add_group_subscribers_to_discussion_comments' => 'Add group subscriber to discussion comment notifications',
+	
 	/**
 	 * Discussion status
 	 */
@@ -74,4 +76,8 @@ View and comment on the discussion:
 	'discussion:topic:toggle_status:open:confirm' => 'Are you sure you wish to reopen this topic?',
 	'discussion:topic:toggle_status:closed' => 'The discussion topic was successfully closed',
 	'discussion:topic:toggle_status:closed:confirm' => 'Are you sure you wish to close this topic?',
+	
+	// widgets
+	'widgets:discussions:name' => 'Discussions',
+	'widgets:discussions:description' => 'Shows recent discussions',
 );

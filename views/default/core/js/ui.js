@@ -1,5 +1,3 @@
-elgg.provide('elgg.ui');
-
 elgg.ui.init = function () {
 	// @todo we need better documentation for this hack
 	// iOS Hover Event Class Fix

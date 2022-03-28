@@ -128,6 +128,7 @@ define('ELGG_VALUE_STRING', 'string');
 define('ELGG_VALUE_GUID', 'guid');
 define('ELGG_VALUE_ID', 'id');
 define('ELGG_VALUE_TIMESTAMP', 'timestamp');
+define('ELGG_VALUE_BOOL', 'bool');
 
 /**
  * Cache init values
@@ -136,7 +137,7 @@ define('ELGG_CACHE_BLACK_HOLE', 1);
 define('ELGG_CACHE_RUNTIME', 2);
 define('ELGG_CACHE_FILESYSTEM', 4);
 define('ELGG_CACHE_PERSISTENT', 8);
-define('ELGG_CACHE_APC', 16);
+define('ELGG_CACHE_APC', 16); // deprecated in Elgg 4.2
 define('ELGG_CACHE_LOCALFILESYSTEM', 32);
 
 /**

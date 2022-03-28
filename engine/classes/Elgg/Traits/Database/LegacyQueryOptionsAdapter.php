@@ -203,6 +203,8 @@ trait LegacyQueryOptionsAdapter {
 					$options['type_subtype_pairs'][$type] = isset($options['subtypes']) ? (array) $options['subtypes'] : null;
 				}
 			}
+		} else if (isset($options['subtypes'])) {
+			throw new \Elgg\Exceptions\InvalidArgumentException('If filtering for entity subtypes it is required to provide one or more entity types.');
 		}
 
 		if (isset($options['type_subtype_pairs']) && is_array($options['type_subtype_pairs'])) {

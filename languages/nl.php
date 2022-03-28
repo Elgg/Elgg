@@ -20,6 +20,7 @@ return array(
 
 	'login' => "Aanmelden",
 	'loginok' => "Je bent aangemeld.",
+	'login:continue' => "Meld je aan om verder te gaan",
 	'login:empty' => "Gebruikersnaam en wachtwoord zijn verplicht.",
 	'login:baduser' => "Je account kon niet worden geladen.",
 	'auth:nopams' => "Interne fout. Geen methode voor gebruikersvalidatie gedefinieerd.",
@@ -264,6 +265,13 @@ return array(
 	'action:user:validate:already' => "%s was al gevalideerd",
 	'action:user:validate:success' => "%s is gevalideerd",
 	'action:user:validate:error' => "Een fout is opgetreden tijdens het valideren van %s",
+	
+	'action:user:login_as' => "Aanmelden als",
+	'action:user:logout_as' => "Keer terug als %s",
+	
+	'action:user:login_as:success' => "Je bent nu aangemeld als %s",
+	'action:user:login_as:unknown' => "Onbekende gebruiker. Je kon niet worden aangemeld.",
+	'action:user:login_as:error' => "Het was niet mogelijk je aan te melden als %s",
 
 /**
  * Feeds
@@ -596,6 +604,16 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:statistics:numentities:searchable' => 'Doorzoekbare entiteiten',
 	'admin:statistics:numentities:other' => 'Andere entiteiten',
 
+	'admin:statistics:database' => 'Database informatie',
+	'admin:statistics:database:table' => 'Tabel',
+	'admin:statistics:database:row_count' => 'Aantal regels',
+
+	'admin:statistics:queue' => 'Wachtrij informatie',
+	'admin:statistics:queue:name' => 'Naam',
+	'admin:statistics:queue:row_count' => 'Aantal regels',
+	'admin:statistics:queue:oldest' => 'Oudste regel',
+	'admin:statistics:queue:newest' => 'Nieuwste regel',
+
 	'admin:widget:admin_welcome' => 'Welkom',
 	'admin:widget:admin_welcome:help' => "Een korte introductie op het beheerdeel van Elgg",
 	'admin:widget:admin_welcome:intro' => 'Welkom in Elgg! Op dit moment kijk je naar het beheerdersdashboard. Dit is makkelijk om te zien wat er op je site gebeurt.',
@@ -672,7 +690,7 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:security:information:username_length:warning' => "Het is aanbevolen om een minimale gebruikersnaam lengte te hebben van tenminste 4 tekens.",
 	'admin:security:information:php:session_gc' => "PHP sessie opschoning",
 	'admin:security:information:php:session_gc:chance' => "Opschoningskans: %s%%",
-	'admin:security:information:php:session_gc:lifetime' => "Sessie levensduur %sseconden",
+	'admin:security:information:php:session_gc:lifetime' => "Sessie levensduur %s seconden",
 	'admin:security:information:php:session_gc:error' => "Het is aanbevolen om de PHP instellingen  'session.gc_probability' en 'session.gc_divisor' in te stellen. Dit schoont verlopen sessies op in de database en zorgt er voor dat oude sessies niet opnieuw gebruikt kunnen worden.",
 	'admin:security:information:htaccess:hardening' => ".htaccess file access hardening",
 	'admin:security:information:htaccess:hardening:help' => "In het .htaccess bestand kan toegang to bepaalde bestanden worden geblokkeerd om de veiligheid van je site te verhogen. Voor meer informatie kijk in het .htaccess bestand.",
@@ -995,13 +1013,13 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'usersettings:plugins:opt:linktext' => "Configureer je plugins",
 
 	'usersettings:plugins:description' => "Dit paneel staat je toe persoonlijke instellingen te maken voor plugins die door de sitebeheerder zijn geïnstalleerd.",
-	'usersettings:statistics:label:numentities' => "Jouw inhoud",
-
+	
 	'usersettings:statistics:yourdetails' => "Jouw details",
 	'usersettings:statistics:label:name' => "Volledige naam",
 	'usersettings:statistics:label:email' => "E-mailadres",
-	'usersettings:statistics:label:membersince' => "Lid sinds",
 	'usersettings:statistics:label:lastlogin' => "Laatst aangemeld op",
+	'usersettings:statistics:label:membersince' => "Lid sinds",
+	'usersettings:statistics:label:numentities' => "Jouw inhoud",
 	
 	'usersettings:delayed_email' => "Uitgestelde email instellingen",
 	'usersettings:delayed_email:interval' => "Configureer de frequentie waarmee uitgestelde email notificaties worden afgeleverd",
@@ -1265,6 +1283,9 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'input:date_format:datepicker' => 'yy-mm-dd', // jQuery UI datepicker format
 	'input:time_format' => 'G:i',
 
+	'friendlytime:updated' => "%s - Bewerkt",
+	'friendlytime:updated:title' => "Aangemaakt op: %s \nBijgewerkt op: %s",
+	
 	'friendlytime:justnow' => "zojuist",
 	'friendlytime:minutes' => "%s minuten geleden",
 	'friendlytime:minutes:singular' => "een minuut geleden",
@@ -1422,6 +1443,9 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'config:content:comments_group_only' => "Alleen groepsleden kunnen reageren op content in de groep",
 	'config:content:comments_latest_first' => "De reacties moeten worden getoond met de meest recente eerst",
 	'config:content:comments_latest_first:help' => "Dit bepaald de standaard sortering van de reacties bij de volledige weergave van content. Indien dit uitgeschakeld wordt, zal ook het reactie formulier onderaan de lijst worden getoond.",
+	'config:content:comments_max_depth' => "Maximale diepte van geneste reacties",
+	'config:content:comments_max_depth:help' => "Indien dit wordt ingeschakeld kunnen er reacties op reacties gemaakt worden tot de opgegeven diepte.",
+	'config:content:comments_max_depth:none' => "Geneste reacties zijn niet toegestaan",
 	'config:content:comments_per_page' => "Het aantal reacties per pagina",
 	'config:content:pagination_behaviour' => "Standaard paginering gedrag van lijsten",
 	'config:content:pagination_behaviour:help' => "Bepaalt hoe data in lijsten wordt bijgewerkt bij gebruik van paginering. Afzonderlijke lijsten kunnen van dit gedrag afwijken.",

@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Views\TableColumn;
 
 use Elgg\Values;
@@ -19,11 +20,15 @@ use Elgg\Views\TableColumn;
  *
  * @method TableColumn admin($heading = null, $vars = [])
  * @method TableColumn banned($heading = null, $vars = [])
+ * @method TableColumn checkbox($heading = null, $vars = [])
  * @method TableColumn container($heading = null, $vars = [])
+ * @method TableColumn entity_menu($heading = null, $vars = [])
  * @method TableColumn excerpt($heading = null, $vars = [])
  * @method TableColumn icon($heading = null, $vars = [])
  * @method TableColumn item($heading = null, $vars = [])
  * @method TableColumn language($heading = null, $vars = [])
+ * @method TableColumn last_action($heading = null, $vars = [])
+ * @method TableColumn last_login($heading = null, $vars = [])
  * @method TableColumn link($heading = null, $vars = [])
  * @method TableColumn owner($heading = null, $vars = [])
  * @method TableColumn time_created($heading = null, $vars = [])
@@ -32,6 +37,7 @@ use Elgg\Views\TableColumn;
  * @method TableColumn email($heading = null)
  * @method TableColumn name($heading = null)
  * @method TableColumn type($heading = null)
+ * @method TableColumn unvalidated_menu($heading = null, $vars = [])
  * @method TableColumn user($heading = null, $vars = [])
  * @method TableColumn username($heading = null)
  * @method TableColumn getSubtype($heading = null)

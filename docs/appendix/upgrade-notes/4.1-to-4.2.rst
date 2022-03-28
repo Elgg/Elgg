@@ -1,0 +1,49 @@
+From 4.1 to 4.2
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+   
+Stash replaced with Phpfastcache
+--------------------------------
+
+The internal caching library Stash has been replaced with `Phpfastcache <https://www.phpfastcache.com/>`_. 
+Phpfastcache is better maintained, provides more cachedrivers and adds more features to the cache implementation. 
+This change should cause no issues on any existing installation. 
+If you have Memcache or Redis configured in your `elgg-config/settings.php` you might need to update your configuration.
+
+Metadata and Annotation boolean values
+--------------------------------------
+
+The database model has been changed to keep boolean values intact between saving and retrieving. 
+Before this change if you saved a boolean value it would be returned as an integer. Now it will remain a boolean. 
+
+.. warning::
+
+	If you saved boolean values previously they will still be integers in the database (until saved again).
+
+Javascript functions
+--------------------
+
+The Elgg javascript libraries have gotten a massive overhaul. A lot of functions have been deprecated. 
+You can find all deprecated functions and globals in `views/default/core/js/deprecated.js`.
+
+Security
+--------
+
+``output/url`` now has added security features to help prevent malicious user generated output. 
+The view supports ``$vars['allowed_schemes']`` which contains a list of allowed URL schemes. The provided ``$vars['href']`` will be
+matched against the allowed list. If the URL doesn't have an allowed scheme the URL will be prefixed with ``denied:``.
+
+This will help to prevent user input like ``javascript:alert('just testing');`` from being presented to the users.
+
+By default the following schemes are allowed: ``http, https, ftp, sftp, ssh, file``
+
+If you use the pattern ``elgg_view('output/url', ['text' => 'something', 'href' => 'javascript:void(0);'])`` update your code to set
+``href`` to ``false``.
+
+Deprecated APIs
+---------------
+
+ * ``elgg_view_menu_item()`` use ``elgg_view('navigation/menu/elements/item/url', ['item' => $myMenuItem])``

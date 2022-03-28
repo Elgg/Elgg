@@ -126,7 +126,7 @@ class AnnotationsTable {
 		$qb->values([
 			'entity_guid' => $qb->param($annotation->entity_guid, ELGG_VALUE_INTEGER),
 			'name' => $qb->param($annotation->name, ELGG_VALUE_STRING),
-			'value' => $qb->param($annotation->value, $annotation->value_type === 'integer' ? ELGG_VALUE_INTEGER : ELGG_VALUE_STRING),
+			'value' => $qb->param($annotation->value, $annotation->value_type === 'text' ? ELGG_VALUE_STRING : ELGG_VALUE_INTEGER),
 			'value_type' => $qb->param($annotation->value_type, ELGG_VALUE_STRING),
 			'owner_guid' => $qb->param($annotation->owner_guid, ELGG_VALUE_INTEGER),
 			'time_created' => $qb->param($time_created, ELGG_VALUE_INTEGER),

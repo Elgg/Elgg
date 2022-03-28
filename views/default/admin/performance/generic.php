@@ -102,7 +102,7 @@ $title = elgg_echo('admin:server:label:memcache');
 $value = elgg_echo('status:unavailable');
 $subtext = '';
 
-if (\Stash\Driver\Memcache::isAvailable()) {
+if (\Elgg\Cache\CompositeCache::isMemcacheAvailable()) {
 	$icon = $icon_warning;
 	
 	if (elgg_get_config('memcache') && !empty(elgg_get_config('memcache_servers'))) {
@@ -122,7 +122,7 @@ $title = elgg_echo('admin:server:label:redis');
 $value = elgg_echo('status:unavailable');
 $subtext = '';
 
-if (\Stash\Driver\Redis::isAvailable()) {
+if (\Elgg\Cache\CompositeCache::isRedisAvailable()) {
 	$icon = $icon_warning;
 	
 	if (elgg_get_config('redis') && !empty(elgg_get_config('redis_servers'))) {

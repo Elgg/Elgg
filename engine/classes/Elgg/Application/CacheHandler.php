@@ -207,7 +207,7 @@ class CacheHandler {
 		}
 
 		return [
-			'ts' => $matches[1],
+			'ts' => (int) $matches[1],
 			'viewtype' => $matches[2],
 			'view' => $matches[3],
 		];

@@ -61,7 +61,7 @@ Seall agus fàg beachd air
 %s',
 
 	'groups:tool:forum' => 'Cuir an comas deasbadan ann am buidhnean',
-
+	
 	/**
 	 * Discussion status
 	 */
@@ -74,4 +74,6 @@ Seall agus fàg beachd air
 	'discussion:topic:toggle_status:open:confirm' => 'A bheil thu cinnteach gu bheil thu airson an deasbad seo fhosgladh a-rithist?',
 	'discussion:topic:toggle_status:closed' => 'Chaidh an deasbad seo a dhùnadh gu soirbheachail',
 	'discussion:topic:toggle_status:closed:confirm' => 'A bheil thu cinnteach gu bheil thu airson an deasbad seo a dhùnadh?',
+	
+	// widgets
 );

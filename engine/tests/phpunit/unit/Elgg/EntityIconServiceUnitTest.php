@@ -123,7 +123,8 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 			$this->entities,
 			$this->uploads,
 			$this->images,
-			$this->mimetype
+			$this->mimetype,
+			$this->request
 		);
 		$service->setLogger($this->logger);
 		

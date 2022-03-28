@@ -603,13 +603,13 @@ return array(
 	'usersettings:plugins:opt:linktext' => "Configurar as súas ferramentas",
 
 	'usersettings:plugins:description' => "Este panel permítelle controlar e cambiar a súa configuración persoal das ferramentas instaladas polo administrador do sistema.",
-	'usersettings:statistics:label:numentities' => "Contido persoal",
-
+	
 	'usersettings:statistics:yourdetails' => "Detalles persoais",
 	'usersettings:statistics:label:name' => "Nome complet",
 	'usersettings:statistics:label:email' => "Correo",
-	'usersettings:statistics:label:membersince' => "Membro desde",
 	'usersettings:statistics:label:lastlogin' => "Último acces",
+	'usersettings:statistics:label:membersince' => "Membro desde",
+	'usersettings:statistics:label:numentities' => "Contido persoal",
 
 /**
  * Activity river
@@ -825,7 +825,7 @@ return array(
  * Time
  */
 	'input:date_format:datepicker' => '', // jQuery UI datepicker format
-
+	
 	'friendlytime:justnow' => "hai un intre",
 	'friendlytime:minutes' => "hai %s minutos",
 	'friendlytime:minutes:singular' => "hai un minuto",

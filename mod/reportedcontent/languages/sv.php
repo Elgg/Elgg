@@ -6,9 +6,9 @@
  */
 
 return array(
-
 	'item:object:reported_content' => 'Anmälda objekt',
 	'admin:administer_utilities:reportedcontent' => 'Anmält innehåll',
+	
 	'reportedcontent' => 'Anmäl innehåll',
 	'reportedcontent:this' => 'Anmäl detta',
 	'reportedcontent:this:tooltip' => 'Anmäl den här sidan till en administratör',
@@ -22,6 +22,7 @@ return array(
 	'reportedcontent:report' => 'Anmäl till admin',
 	'reportedcontent:numbertodisplay' => 'Antal anmälningar att visa',
 	'reportedcontent:user' => 'Anmäl användare',
+	'reportedcontent:archived' => 'Anmälan har arkiverats',
 
 	'reportedcontent:failed' => 'Tyvärr, försöket att anmäla det här innehållet misslyckades.',
 	'reportedcontent:notarchived' => 'Vi kunde inte arkivera den anmälan',

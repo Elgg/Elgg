@@ -91,6 +91,7 @@ function groups_get_invited_groups($user_guid, $return_guids = false, $options =
 
 	$groups = elgg_call(ELGG_IGNORE_ACCESS, function() use ($user_guid, $options) {
 		$defaults = [
+			'type' => 'group',
 			'relationship' => 'invited',
 			'relationship_guid' => (int) $user_guid,
 			'inverse_relationship' => true,

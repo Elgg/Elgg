@@ -6,9 +6,9 @@
  */
 
 return array(
-
 	'item:object:reported_content' => 'Elementi segnalati',
 	'admin:administer_utilities:reportedcontent' => 'Contenuti segnalati',
+	
 	'reportedcontent' => 'Contenuti segnalati',
 	'reportedcontent:this' => 'Segnala questo',
 	'reportedcontent:this:tooltip' => 'Segnala questa pagina a un amministratore',
@@ -22,6 +22,7 @@ return array(
 	'reportedcontent:report' => 'Segnala all\'amministratore',
 	'reportedcontent:numbertodisplay' => 'Numero di segnalazioni da visualizzare',
 	'reportedcontent:user' => 'Segnala utente',
+	'reportedcontent:archived' => 'Segnalazione archiviata',
 
 	'reportedcontent:failed' => 'Spiacenti, il tentativo di segnalare questo contenuto non è andato a buon fine.',
 	'reportedcontent:notarchived' => 'Non è stato possibile archiviare la segnalazione',

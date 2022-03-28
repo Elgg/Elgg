@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-23 13:47+0100\n"
+"POT-Creation-Date: 2022-02-25 11:16+0100\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -205,7 +205,7 @@ msgstr ""
 "intégrer de cette manière une visionneuse, par exemple pour des documents "
 "Word."
 
-#: ../../plugins/file.rst:32
+#: ../../plugins/file.rst:32 ../../plugins/site_notifications.rst:16
 msgid "Note for developers"
 msgstr "Note pour les développeurs"
 
@@ -331,7 +331,7 @@ msgstr ""
 "Elgg est fourni avec un jeu de plugins. Ils fournissent les fonctionnalités "
 "fondamentales pour votre réseau social."
 
-#: ../../plugins/index.rst:23
+#: ../../plugins/index.rst:24
 msgid ""
 "The following plugins are also bundled with Elgg, but are not (yet) "
 "documented"
@@ -339,49 +339,45 @@ msgstr ""
 "Les plugins suivants sont également distribués avec Elgg, mais ne sont pas "
 "(encore) documentés"
 
-#: ../../plugins/index.rst:25
+#: ../../plugins/index.rst:26
 msgid "activity"
 msgstr "activity"
 
-#: ../../plugins/index.rst:26
+#: ../../plugins/index.rst:27
 msgid "bookmarks"
 msgstr "bookmarks"
 
-#: ../../plugins/index.rst:27
+#: ../../plugins/index.rst:28
 msgid "ckeditor"
 msgstr "ckeditor"
 
-#: ../../plugins/index.rst:28
+#: ../../plugins/index.rst:29
 msgid "custom_index"
 msgstr "custom_index"
 
-#: ../../plugins/index.rst:29
+#: ../../plugins/index.rst:30
 msgid "developers"
 msgstr "developers"
 
-#: ../../plugins/index.rst:30
+#: ../../plugins/index.rst:31
 msgid "embed"
 msgstr "embed"
 
-#: ../../plugins/index.rst:31
+#: ../../plugins/index.rst:32
 msgid "externalpages"
 msgstr "externalpages"
 
-#: ../../plugins/index.rst:32
+#: ../../plugins/index.rst:33
 msgid "friends_collections"
 msgstr "friends_collections"
 
-#: ../../plugins/index.rst:33
+#: ../../plugins/index.rst:34
 msgid "garbagecollector"
 msgstr "garbagecollector"
 
-#: ../../plugins/index.rst:34
+#: ../../plugins/index.rst:35
 msgid "invitefriends"
 msgstr "invitefriends"
-
-#: ../../plugins/index.rst:35
-msgid "likes"
-msgstr "likes"
 
 #: ../../plugins/index.rst:36
 msgid "members"
@@ -406,6 +402,35 @@ msgstr "tagcloud"
 #: ../../plugins/index.rst:41
 msgid "web_services"
 msgstr "web_services"
+
+#: ../../plugins/likes.rst:2
+msgid "Likes"
+msgstr "Likes"
+
+#: ../../plugins/likes.rst:4
+msgid ""
+"Allow users to like content on your site. If content supports being likable "
+"a 'thumbs up' will appear as a social interaction with this content. Liking "
+"content will also notify the content owner about the new like. A counter "
+"will show next to the like action reporting about the amount of likes the "
+"content has. Clicking on the counter will show a list of users who recently "
+"liked the content."
+msgstr ""
+"Permet aux utilisateurs d'aimer le contenu de votre site. Si le contenu "
+"prend en charge le fait d'être liké, un 'pouce levé' apparaîtra comme une "
+"interaction sociale avec ce contenu. Le fait d'aimer le contenu informera "
+"également le propriétaire du contenu du nouveau J'aime. Un compteur "
+"s'affichera à côté de l'action, indiquant le nombre de likes du contenu. "
+"Cliquer sur le compteur affichera une liste d'utilisateurs qui ont récemment"
+" aimé le contenu."
+
+#: ../../plugins/likes.rst:10
+msgid ""
+"The likes plugin uses the entity capability `likable`. This capability "
+"defines if an entity is likable."
+msgstr ""
+"Le plugin likes utilise la capacité d'entité `likable`. Cette capacité "
+"définit si une entité peut être aimée."
 
 #: ../../plugins/messageboard.rst:2
 msgid "Messageboard"
@@ -695,6 +720,19 @@ msgid ""
 msgstr ""
 "Les paramètres du plugin permettent de nettoyer automatiquement les "
 "notifications lues / non lues"
+
+#: ../../plugins/site_notifications.rst:18
+msgid ""
+"The cron based cleanup of (un)read site notifications removes the entities "
+"directly from the database. It isn't using ``$entity->delete()`` to help "
+"with performance. This means that no events are triggered for the entities "
+"which are removed during the cleanup."
+msgstr ""
+"Le nettoyage via cron des notifications de site (non) lues supprime "
+"directement les entités de la base de données. Il n'utilise pas "
+"``$entity->delete()`` afin d'améliorer les performances. Cela signifie "
+"qu'aucun événement n'est déclenché pour les entités supprimées lors du "
+"nettoyage."
 
 #: ../../plugins/thewire.rst:2
 msgid "The Wire"

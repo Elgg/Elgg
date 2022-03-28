@@ -12,7 +12,7 @@ class ElggUserPluginSettingsIntegrationTest extends ElggEntityPluginSettingsTest
 	}
 	
 	public function testPluginSettingsFallbackToPluginDefaults() {
-		$plugin = elgg_get_plugin_from_id('test_plugin');
+		$plugin = \ElggPlugin::fromId('test_plugin', $this->normalizeTestFilePath('mod/'));
 		$user_settings = $plugin->getStaticConfig('user_settings', []);
 		
 		$this->assertNotEmpty($user_settings);

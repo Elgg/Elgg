@@ -12,7 +12,7 @@ if (!$item instanceof ElggUser) {
 	return;
 }
 
-$vars['item_view'] = 'user/default/column';
+$vars['item_view'] = elgg_extract('item_view', $vars, 'user/default/column');
 $vars['full_view'] = false;
 
 echo elgg_view_entity($item, $vars);

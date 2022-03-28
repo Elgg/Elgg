@@ -1,0 +1,7 @@
+.elgg-menu-filter-admin-users-container {
+	.elgg-menu-item-search {
+		background: none;
+		border: none;
+		margin-left: auto;
+	}
+}

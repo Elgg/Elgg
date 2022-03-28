@@ -112,6 +112,9 @@ return [
 		'breadcrumbs' => [
 			\Elgg\Page\PrepareBreadcrumbsHandler::class => [],
 		],
+		'menu:admin:users:bulk' => [
+			'Elgg\Menus\AdminUsersBulk::disableItems' => [],
+		],
 		'menu:site' => [
 			'Elgg\Menus\Site::reorderItems' => [
 				'priority' => 999,
@@ -138,12 +141,17 @@ return [
 		'menu:admin_footer' => [
 			'Elgg\Menus\AdminFooter::registerHelpResources' => [],
 		],
+		'menu:admin:users:bulk' => [
+			'Elgg\Menus\AdminUsersBulk::registerActions' => [],
+		],
 		'menu:annotation' => [
 			'Elgg\Menus\Annotation::registerDelete' => [],
 		],
 		'menu:entity' => [
 			'Elgg\Menus\Entity::registerDelete' => [],
 			'Elgg\Menus\Entity::registerEdit' => [],
+			'Elgg\Menus\Entity::registerUserHoverAdminSection' => [],
+			'Elgg\Menus\UserHover::registerLoginAs' => [],
 		],
 		'menu:entity:object:elgg_upgrade' => [
 			'Elgg\Menus\Entity::registerUpgrade' => [],
@@ -156,6 +164,9 @@ return [
 		],
 		'menu:filter:admin/upgrades' => [
 			'Elgg\Menus\Filter::registerAdminUpgrades' => [],
+		],
+		'menu:filter:admin/users' => [
+			'Elgg\Menus\Filter::registerAdminUsers' => [],
 		],
 		'menu:filter:filter' => [
 			'Elgg\Menus\Filter::registerFilterTabs' => ['priority' => 1],
@@ -198,17 +209,16 @@ return [
 		],
 		'menu:topbar' => [
 			'Elgg\Menus\Topbar::registerUserLinks' => [],
+			'Elgg\Menus\Topbar::registerLogoutAs' => [],
 			'Elgg\Menus\Topbar::registerMaintenance' => [],
 		],
 		'menu:user:unvalidated' => [
 			'Elgg\Menus\UserUnvalidated::register' => [],
 		],
-		'menu:user:unvalidated:bulk' => [
-			'Elgg\Menus\UserUnvalidatedBulk::registerActions' => [],
-		],
 		'menu:user_hover' => [
 			'Elgg\Menus\UserHover::registerAvatarEdit' => [],
 			'Elgg\Menus\UserHover::registerAdminActions' => [],
+			'Elgg\Menus\UserHover::registerLoginAs' => [],
 		],
 		'menu:walled_garden' => [
 			'Elgg\Menus\WalledGarden::registerHome' => [],

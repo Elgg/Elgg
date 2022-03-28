@@ -65,7 +65,96 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 
 		return $metadata;
 	}
+	
+	public function testMetadataValueTypes() {
+		$this->object->string_md = 'string_value';
+		$this->object->integer_md = 1234;
+		$this->object->bool_true_md = true;
+		$this->object->bool_false_md = false;
+		
+		$this->object->invalidateCache();
+		
+		$md = elgg_get_metadata([
+			'entity_guid' => $this->object->guid,
+			'metadata_name' => 'string_md',
+		])[0];
+		
+		$this->assertIsString($md->value);
+		$this->assertEquals('text', $md->value_type);
+		
+		$md = elgg_get_metadata([
+			'entity_guid' => $this->object->guid,
+			'metadata_name' => 'integer_md',
+		])[0];
+		
+		$this->assertIsInt($md->value);
+		$this->assertEquals('integer', $md->value_type);
+		
+		$md = elgg_get_metadata([
+			'entity_guid' => $this->object->guid,
+			'metadata_name' => 'bool_true_md',
+		])[0];
+		
+		$this->assertIsBool($md->value);
+		$this->assertEquals('bool', $md->value_type);
 
+		$md = elgg_get_metadata([
+			'entity_guid' => $this->object->guid,
+			'metadata_name' => 'bool_false_md',
+		])[0];
+		
+		$this->assertIsBool($md->value);
+		$this->assertEquals('bool', $md->value_type);
+		
+		$this->object->invalidateCache();
+		
+		$this->assertIsString($this->object->string_md);
+		$this->assertIsInt($this->object->integer_md);
+		$this->assertTrue($this->object->bool_true_md);
+		$this->assertFalse($this->object->bool_false_md);
+	}
+	
+	public function testAnnotationValueTypes() {
+		$this->object->annotate('string_name', 'string_value');
+		$this->object->annotate('integer_name', 1234);
+		$this->object->annotate('bool_false_name', false);
+		$this->object->annotate('bool_true_name', true);
+		
+		$this->object->invalidateCache();
+		
+		$annotation = elgg_get_annotations([
+			'guid' => $this->object->guid,
+			'annotation_name' => 'string_name',
+		])[0];
+		
+		$this->assertIsString($annotation->value);
+		$this->assertEquals('text', $annotation->value_type);
+		
+		$annotation = elgg_get_annotations([
+			'guid' => $this->object->guid,
+			'annotation_name' => 'integer_name',
+		])[0];
+		
+		$this->assertIsInt($annotation->value);
+		$this->assertEquals('integer', $annotation->value_type);
+		
+		$annotation = elgg_get_annotations([
+			'guid' => $this->object->guid,
+			'annotation_name' => 'bool_false_name',
+		])[0];
+		
+		$this->assertFalse($annotation->value);
+		$this->assertEquals('bool', $annotation->value_type);
+
+		$annotation = elgg_get_annotations([
+			'guid' => $this->object->guid,
+			'annotation_name' => 'bool_true_name',
+		])[0];
+		
+		$this->assertTrue($annotation->value);
+		$this->assertEquals('bool', $annotation->value_type);
+	}
+	
 	public function testDeleteByID() {
 		$db_prefix = _elgg_services()->config->dbprefix;
 		

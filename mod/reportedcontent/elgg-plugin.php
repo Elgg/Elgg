@@ -48,4 +48,16 @@ return [
 			],
 		],
 	],
+	'notifications' => [
+		'object' => [
+			'reported_content' => [
+				'create' => \Elgg\ReportedContent\Notifications\CreateReportedContentNotificationHandler::class,
+			],
+		],
+	],
+	'view_extensions' => [
+		'notifications/settings/records' => [
+			'reportedcontent/notifications/settings' => [],
+		],
+	],
 ];

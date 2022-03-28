@@ -292,7 +292,7 @@ entity, which is defined as:
         $value,          // The value of the annotation
         $access_id = 0,  // The access level of the annotation
         $owner_id = 0,   // The annotation owner, defaults to current user
-        $vartype = ""    // 'text' or 'integer'
+        $vartype = ""    // 'text', 'bool' or 'integer'
     )
 
 For example, to leave a rating on an entity, you might call:
@@ -353,14 +353,9 @@ Under the hood, metadata is stored as an instance of the
 practice (although if you're interested, see the ``ElggMetadata`` class
 reference). What you need to know is:
 
--  Metadata has an owner, which may be different to the owner of the entity
-   it's attached to
 -  You can potentially have multiple items of each type of metadata
    attached to a single entity
--  Like annotations, values are stored as strings unless the value given is a PHP integer (``is_int($value)`` is true),
-   or unless the ``$value_type`` is manually specified as ``integer`` (see below).
-
-.. note:: As of Elgg 3.0, metadata no longer have ``access_id``.
+-  Like annotations, values are stored as strings, booleans or integers
 
 The simple case
 ---------------
@@ -388,7 +383,6 @@ Or to add a couple of tags to an object:
 
 When adding metadata like this:
 
--  The owner is set to the currently logged-in user
 -  Reassigning a piece of metadata will overwrite the old value
 
 This is suitable for most purposes. Be careful to note which attributes
@@ -398,8 +392,6 @@ metadata. You do need to save an entity if you have changed one of its
 built in attributes. As an example, if you changed the access id of an
 ElggObject, you need to save it or the change isn't pushed to the
 database.
-
-.. note:: As of Elgg 3.0, metadata's ``access_id`` property is ignored.
 
 Reading metadata
 ~~~~~~~~~~~~~~~~
@@ -442,21 +434,19 @@ E.g., to retrieve a user's DOB
 
 .. code-block:: php
 
-    elgg_get_metadata(array(
+    elgg_get_metadata([
         'metadata_name' => 'dob',
-        'metadata_owner_guid' => $user_guid,
-    ));
+        'guid' => $user_guid,
+    ]);
 
 Or to get all metadata objects:
 
 .. code-block:: php
 
-    elgg_get_metadata(array(
-        'metadata_owner_guid' => $user_guid,
-        'limit' => 0,
-    ));
-
-.. complete list of metadata functions: http://reference.elgg.org/engine_2lib_2metadata_8php.html
+    elgg_get_metadata([
+        'guid' => $user_guid,
+        'limit' => false,
+    ]);
 
 Common mistakes
 ---------------

@@ -16,5 +16,6 @@ if (empty($value)) {
 $vars['href'] = "mailto:{$value}";
 $vars['encode_text'] = true;
 $vars['text'] = elgg_extract('text', $vars, $value);
+$vars['allowed_schemes'] = ['mailto'];
 
 echo elgg_view('output/url', $vars);

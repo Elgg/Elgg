@@ -47,6 +47,9 @@ După activarea cererilor de prietenie, atunci când utilizatorul A dorește să
 	'widgets:friends:name' => "Prieteni",
 	'widgets:friends:description' => "Afișează-ți câțiva prieteni.",
 	
+	'widgets:friends_of:name' => "Prieteni cu",
+	'widgets:friends_of:description' => "Arată cine te-a făcut prieten/ă",
+	
 	'friends:notification:request:subject' => "%s dorește să-ți fie prieten/ă!",
 	'friends:notification:request:message' => "%s a cerut să-ți fie prieten/ă pe %s.
 
@@ -54,8 +57,10 @@ Pentru a vedea cererea de prietenie, apasă aici:
 %s",
 	
 	'friends:notification:request:decline:subject' => "%s a respins cererea ta de prietenie",
+	'friends:notification:request:decline:message' => "%s a respins cererea ta de prietenie.",
 	
 	'friends:notification:request:accept:subject' => "%s a acceptat cererea ta de prietenie",
+	'friends:notification:request:accept:message' => "%s a acceptat cererea ta de prietenie.",
 	
 	'friends:action:friendrequest:revoke:fail' => "O eroare a apărut la revocarea cererii de prietenie, te rugăm să încerci din nou",
 	'friends:action:friendrequest:revoke:success' => "Cererea de prietenie a fost revocată",

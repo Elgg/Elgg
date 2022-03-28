@@ -19,7 +19,12 @@ class SyncContainerAccessHandler {
 	public function __invoke(\Elgg\Event $event) {
 		$entity = $event->getObject();
 		if (!$entity instanceof \ElggEntity) {
-			return true;
+			return;
+		}
+		
+		// only need update query if access_id of entity has been changed
+		if (!array_key_exists('access_id', $entity->getOriginalAttributes())) {
+			return;
 		}
 		
 		// need to override access in case comments ended up with ACCESS_PRIVATE
@@ -45,7 +50,5 @@ class SyncContainerAccessHandler {
 				$comment->save();
 			}
 		});
-			
-		return true;
 	}
 }

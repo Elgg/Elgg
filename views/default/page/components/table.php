@@ -1,7 +1,4 @@
 <?php
-
-use Elgg\Views\TableColumn;
-
 /**
  * View a table of items
  *
@@ -21,12 +18,13 @@ use Elgg\Views\TableColumn;
  * @uses $vars['list_class']   Additional CSS class for the <table> element
  * @uses $vars['item_class']   Additional CSS class for the <td> elements
  * @uses $vars['item_view']    Alternative view to render list items
- * @uses $vars['no_results']   Message to display if no results (string|Closure)
  */
+
+use Elgg\Views\TableColumn;
+
 $items = elgg_extract('items', $vars);
 $pagination = elgg_extract('pagination', $vars, true);
 $position = elgg_extract('position', $vars, 'after');
-$no_results = elgg_extract('no_results', $vars, '');
 
 $columns = elgg_extract('columns', $vars);
 /* @var TableColumn[] $columns */
@@ -36,13 +34,7 @@ if (empty($columns) || !is_array($columns)) {
 }
 
 if (!is_array($items) || count($items) == 0) {
-	if ($no_results) {
-		if ($no_results instanceof Closure) {
-			echo $no_results();
-			return;
-		}
-		echo "<p class='elgg-no-results'>$no_results</p>";
-	}
+	echo elgg_view('page/components/no_results', $vars);
 	return;
 }
 

@@ -20,6 +20,7 @@ return array(
 
 	'login' => "Connexion",
 	'loginok' => "Connexion réussie.",
+	'login:continue' => "Identifiez-vous pour continuer",
 	'login:empty' => "Identifiant ou adresse e-mail et mot de passe sont requis.",
 	'login:baduser' => "Impossible de charger votre compte utilisateur.",
 	'auth:nopams' => "Erreur interne. Aucune méthode d'authentification des utilisateurs n'est installée.",
@@ -138,15 +139,21 @@ return array(
  */
 	'table_columns:fromView:admin' => 'Admin',
 	'table_columns:fromView:banned' => 'Banni',
+	'table_columns:fromView:checkbox' => 'Sélectionner',
 	'table_columns:fromView:container' => 'Conteneur (container)',
+	'table_columns:fromView:entity_menu' => 'Menu',
 	'table_columns:fromView:excerpt' => 'Description',
 	'table_columns:fromView:link' => 'Nom/Titre',
 	'table_columns:fromView:icon' => 'Icône',
 	'table_columns:fromView:item' => 'Élément',
 	'table_columns:fromView:language' => 'Langue',
+	'table_columns:fromView:last_action' => 'Dernière action',
+	'table_columns:fromView:last_login' => 'Dernière connexion',
 	'table_columns:fromView:owner' => 'Propriétaire',
+	'table_columns:fromView:prev_last_login' => 'Précédente dernière connexion',
 	'table_columns:fromView:time_created' => 'Date de création',
 	'table_columns:fromView:time_updated' => 'Date de mise à jour',
+	'table_columns:fromView:unvalidated_menu' => 'Menu',
 	'table_columns:fromView:user' => 'Utilisateur',
 
 	'table_columns:fromProperty:description' => 'Description',
@@ -154,6 +161,7 @@ return array(
 	'table_columns:fromProperty:name' => 'Nom',
 	'table_columns:fromProperty:type' => 'Type',
 	'table_columns:fromProperty:username' => 'Identifiant',
+	'table_columns:fromProperty:validated' => 'Validé',
 
 	'table_columns:fromMethod:getSubtype' => 'Sous-type - subtype',
 	'table_columns:fromMethod:getDisplayName' => 'Nom/Titre',
@@ -266,6 +274,16 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'action:user:validate:already' => "%s a déjà été validé",
 	'action:user:validate:success' => "%s a été validé",
 	'action:user:validate:error' => "Une erreur est survenue lors de la validation de %s",
+	
+	'action:user:login_as' => "Se connecter en tant que",
+	'action:user:logout_as' => "Revenir à %s",
+	
+	'action:user:login_as:success' => "Vous êtes maintenant connecté en tant que %s",
+	'action:user:login_as:unknown' => "Utilisateur inconnu. Impossible de se connecter.",
+	'action:user:login_as:error' => "Impossible de se connecter en tant que %s",
+	
+	'action:admin:user:bulk:ban' => "%s utilisateurs ont été réintégrés",
+	'action:admin:user:bulk:unban' => "%s utilisateurs ont été bannis",
 
 /**
  * Feeds
@@ -526,6 +544,7 @@ Comme Elgg a un grand nombre d\'accès aux fichiers cela va avoir un effet néga
 	'admin:users:online' => 'Actuellement en ligne',
 	'admin:users:newest' => 'Nouveaux',
 	'admin:users:admins' => 'Administrateurs',
+	'admin:users:banned' => 'Banni',
 	'admin:users:searchuser' => 'Recherchez des utilisateurs pour les rendre administrateurs',
 	'admin:users:existingadmins' => 'Liste des administrateurs',
 	'admin:users:add' => 'Créer un utilisateur',
@@ -539,6 +558,11 @@ Comme Elgg a un grand nombre d\'accès aux fichiers cela va avoir un effet néga
 	'admin:users:unvalidated:registered' => 'Enregistré : %s',
 	'admin:users:unvalidated:change_email' => 'Modifier l\'adresse e-mail',
 	'admin:users:unvalidated:change_email:user' => 'Modifier l\'adresse e-mail pour : %s',
+	'admin:users:details:attributes' => 'Attributs utiisateur',
+	'admin:users:details:profile' => 'Informations du profil',
+	'admin:users:details:profile:no_fields' => 'Aucun champ de profil configuré',
+	'admin:users:details:profile:no_information' => 'Aucune information de profil disponible',
+	'admin:users:details:statistics' => 'Statistiques des contenus',
 	
 	'admin:configure_utilities:maintenance' => 'Mode de maintenance',
 	'admin:upgrades' => 'Mises à niveau',
@@ -597,6 +621,16 @@ Comme Elgg a un grand nombre d\'accès aux fichiers cela va avoir un effet néga
 	'admin:statistics:numentities:number' => 'Nombre',
 	'admin:statistics:numentities:searchable' => 'Entités consultables',
 	'admin:statistics:numentities:other' => 'Autre entités',
+
+	'admin:statistics:database' => 'Informations de la base de données',
+	'admin:statistics:database:table' => 'Table',
+	'admin:statistics:database:row_count' => 'Nombre de lignes',
+
+	'admin:statistics:queue' => 'Informations de la file d\'attente',
+	'admin:statistics:queue:name' => 'Nom',
+	'admin:statistics:queue:row_count' => 'Nombre de lignes',
+	'admin:statistics:queue:oldest' => 'Enregistrement le plus ancien',
+	'admin:statistics:queue:newest' => 'Enregistrement le plus récent',
 
 	'admin:widget:admin_welcome' => 'Bienvenue',
 	'admin:widget:admin_welcome:help' => "Une courte présentation de la zone d'administration de Elgg",
@@ -983,6 +1017,7 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'usersettings:description' => "Le panneau de configuration utilisateur vous permet de contrôler tous vos paramètres personnels, de la gestion de votre compte aux fonctionnement des outils du site. Choisissez une option ci-dessous pour commencer.",
 
 	'usersettings:statistics' => "Vos statistiques",
+	'usersettings:statistics:user' => "Statistiques de %s",
 	'usersettings:statistics:opt:description' => "Visualiser les statistiques des utilisateurs et des objets sur le site.",
 	'usersettings:statistics:opt:linktext' => "Statistiques du compte.",
 
@@ -999,13 +1034,15 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'usersettings:plugins:opt:linktext' => "Configurez vos outils",
 
 	'usersettings:plugins:description' => "Ce panneau vous permet de vérifier et de configurer les paramètres personnels des outils installés par l'administrateur.",
-	'usersettings:statistics:label:numentities' => "Vos contenus",
-
+	
 	'usersettings:statistics:yourdetails' => "Vos informations",
+	'usersettings:statistics:details:user' => "Informations pour %s",
+	'usersettings:statistics:numentities:user' => "Statistiques de contenu pour %s",
 	'usersettings:statistics:label:name' => "Votre nom complet",
 	'usersettings:statistics:label:email' => "E-mail",
-	'usersettings:statistics:label:membersince' => "Membre depuis",
 	'usersettings:statistics:label:lastlogin' => "Dernière connexion",
+	'usersettings:statistics:label:membersince' => "Membre depuis",
+	'usersettings:statistics:label:numentities' => "Vos contenus",
 	
 	'usersettings:delayed_email' => "Paramètres des e-mails différés",
 	'usersettings:delayed_email:interval' => "Configurez à quel intervalle les e-mails différés doivent être envoyés",
@@ -1088,6 +1125,7 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'untitled' => 'Sans titre',
 	'help' => 'Aide',
 	'send' => 'Envoyer',
+	'resend' => 'Renvoyer',
 	'post' => 'Publier',
 	'submit' => 'Soumettre',
 	'comment' => 'Commenter',
@@ -1270,6 +1308,9 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'input:date_format:datepicker' => 'yy-mm-dd', // jQuery UI datepicker format
 	'input:time_format' => 'G:i',
 
+	'friendlytime:updated' => "%s - Édité",
+	'friendlytime:updated:title' => "Créé : %s \nMis à jour : %s",
+	
 	'friendlytime:justnow' => "à l'instant",
 	'friendlytime:minutes' => "il y a %s minutes",
 	'friendlytime:minutes:singular' => "il y a une minute",
@@ -1427,6 +1468,9 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'config:content:comments_group_only' => "Seuls les membres du groupe peuvent commenter le contenu du groupe",
 	'config:content:comments_latest_first' => "Les commentaires devraient être listés avec le commentaire le plus récent en premier",
 	'config:content:comments_latest_first:help' => "Ceci contrôle le comportement par défaut de la liste des commentaires sur une page détaillée d'un contenu. Si désactivé ceci va également déplacer la boîte de commentaires à la fin de la liste des commentaires",
+	'config:content:comments_max_depth' => "Niveaux maximum de commentaires imbriqués",
+	'config:content:comments_max_depth:help' => "Lorsque c'est activé, des commentaires peuvent être faits sur d'autres commentaires jusqu'à la profondeur maximale configurée.",
+	'config:content:comments_max_depth:none' => "Aucun commentaire imbriqué autorisé",
 	'config:content:comments_per_page' => "Le nombre de commentaires par page",
 	'config:content:pagination_behaviour' => "Comportement de pagination par défaut des listes",
 	'config:content:pagination_behaviour:help' => "Contrôle la façon dont les données de la liste sont mises à jour lors de l'utilisation de la pagination. Les listes individuelles peuvent remplacer ce comportement par défaut.",

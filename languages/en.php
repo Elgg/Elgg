@@ -20,6 +20,7 @@ return array(
 
 	'login' => "Log in",
 	'loginok' => "You have been logged in.",
+	'login:continue' => "Log in to continue",
 	'login:empty' => "Username/email and password are required.",
 	'login:baduser' => "Unable to load your user account.",
 	'auth:nopams' => "Internal error. No user authentication method installed.",
@@ -138,15 +139,21 @@ return array(
  */
 	'table_columns:fromView:admin' => 'Admin',
 	'table_columns:fromView:banned' => 'Banned',
+	'table_columns:fromView:checkbox' => 'Select',
 	'table_columns:fromView:container' => 'Container',
+	'table_columns:fromView:entity_menu' => 'Menu',
 	'table_columns:fromView:excerpt' => 'Description',
 	'table_columns:fromView:link' => 'Name/Title',
 	'table_columns:fromView:icon' => 'Icon',
 	'table_columns:fromView:item' => 'Item',
 	'table_columns:fromView:language' => 'Language',
+	'table_columns:fromView:last_action' => 'Last action',
+	'table_columns:fromView:last_login' => 'Last login',
 	'table_columns:fromView:owner' => 'Owner',
+	'table_columns:fromView:prev_last_login' => 'Previous last login',
 	'table_columns:fromView:time_created' => 'Time Created',
 	'table_columns:fromView:time_updated' => 'Time Updated',
+	'table_columns:fromView:unvalidated_menu' => 'Menu',
 	'table_columns:fromView:user' => 'User',
 
 	'table_columns:fromProperty:description' => 'Description',
@@ -154,6 +161,7 @@ return array(
 	'table_columns:fromProperty:name' => 'Name',
 	'table_columns:fromProperty:type' => 'Type',
 	'table_columns:fromProperty:username' => 'Username',
+	'table_columns:fromProperty:validated' => 'Validated',
 
 	'table_columns:fromMethod:getSubtype' => 'Subtype',
 	'table_columns:fromMethod:getDisplayName' => 'Name/Title',
@@ -264,6 +272,16 @@ return array(
 	'action:user:validate:already' => "%s was already validated",
 	'action:user:validate:success' => "%s has been validated",
 	'action:user:validate:error' => "An error occurred while validating %s",
+	
+	'action:user:login_as' => "Login as",
+	'action:user:logout_as' => "Return to %s",
+	
+	'action:user:login_as:success' => "You are now logged in as %s",
+	'action:user:login_as:unknown' => "Unknown user. Could not login.",
+	'action:user:login_as:error' => "Could not login as %s",
+	
+	'action:admin:user:bulk:ban' => "Successfully banned %s users",
+	'action:admin:user:bulk:unban' => "Successfully unbanned %s users",
 
 /**
  * Feeds
@@ -524,6 +542,7 @@ Since Elgg has a lot of file access this will negatively impact performance. Als
 	'admin:users:online' => 'Currently Online',
 	'admin:users:newest' => 'Newest',
 	'admin:users:admins' => 'Administrators',
+	'admin:users:banned' => 'Banned',
 	'admin:users:searchuser' => 'Search user to make them admin',
 	'admin:users:existingadmins' => 'List of existing admins',
 	'admin:users:add' => 'Add New User',
@@ -537,6 +556,11 @@ Since Elgg has a lot of file access this will negatively impact performance. Als
 	'admin:users:unvalidated:registered' => 'Registered: %s',
 	'admin:users:unvalidated:change_email' => 'Change e-mail address',
 	'admin:users:unvalidated:change_email:user' => 'Change e-mail address for: %s',
+	'admin:users:details:attributes' => 'User attributes',
+	'admin:users:details:profile' => 'Profile information',
+	'admin:users:details:profile:no_fields' => 'No profile fields configured',
+	'admin:users:details:profile:no_information' => 'No profile information available',
+	'admin:users:details:statistics' => 'Content statistics',
 	
 	'admin:configure_utilities:maintenance' => 'Maintenance mode',
 	'admin:upgrades' => 'Upgrades',
@@ -595,6 +619,16 @@ Since Elgg has a lot of file access this will negatively impact performance. Als
 	'admin:statistics:numentities:number' => 'Number',
 	'admin:statistics:numentities:searchable' => 'Searchable entities',
 	'admin:statistics:numentities:other' => 'Other entities',
+
+	'admin:statistics:database' => 'Database Information',
+	'admin:statistics:database:table' => 'Table',
+	'admin:statistics:database:row_count' => 'Row count',
+
+	'admin:statistics:queue' => 'Queue information',
+	'admin:statistics:queue:name' => 'Name',
+	'admin:statistics:queue:row_count' => 'Row count',
+	'admin:statistics:queue:oldest' => 'Oldest record',
+	'admin:statistics:queue:newest' => 'Newest record',
 
 	'admin:widget:admin_welcome' => 'Welcome',
 	'admin:widget:admin_welcome:help' => "A short introduction to Elgg's admin area",
@@ -982,6 +1016,7 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'usersettings:description' => "The user settings panel allows you to control all your personal settings, from user management to how plugins behave. Choose an option below to get started.",
 
 	'usersettings:statistics' => "Your statistics",
+	'usersettings:statistics:user' => "%s's statistics",
 	'usersettings:statistics:opt:description' => "View statistical information about users and objects on your site.",
 	'usersettings:statistics:opt:linktext' => "Account statistics",
 
@@ -998,13 +1033,15 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'usersettings:plugins:opt:linktext' => "Configure your tools",
 
 	'usersettings:plugins:description' => "This panel allows you to control and configure the personal settings for the tools installed by your system administrator.",
-	'usersettings:statistics:label:numentities' => "Your content",
-
+	
 	'usersettings:statistics:yourdetails' => "Your details",
+	'usersettings:statistics:details:user' => "Details for %s",
+	'usersettings:statistics:numentities:user' => "Content statistics for %s",
 	'usersettings:statistics:label:name' => "Full name",
 	'usersettings:statistics:label:email' => "Email",
-	'usersettings:statistics:label:membersince' => "Member since",
 	'usersettings:statistics:label:lastlogin' => "Last logged in",
+	'usersettings:statistics:label:membersince' => "Member since",
+	'usersettings:statistics:label:numentities' => "Your content",
 	
 	'usersettings:delayed_email' => "Delayed email settings",
 	'usersettings:delayed_email:interval' => "Configure the interval at which delayed email notifications will be delivered",
@@ -1087,6 +1124,7 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'untitled' => 'Untitled',
 	'help' => 'Help',
 	'send' => 'Send',
+	'resend' => 'Resend',
 	'post' => 'Post',
 	'submit' => 'Submit',
 	'comment' => 'Comment',
@@ -1268,6 +1306,9 @@ Once you have logged in, we highly recommend that you change your password.',
 	'input:date_format:datepicker' => 'yy-mm-dd', // jQuery UI datepicker format
 	'input:time_format' => 'g:ia',
 
+	'friendlytime:updated' => "%s - Edited",
+	'friendlytime:updated:title' => "Created at: %s \nUpdated at: %s",
+	
 	'friendlytime:justnow' => "just now",
 	'friendlytime:minutes' => "%s minutes ago",
 	'friendlytime:minutes:singular' => "a minute ago",

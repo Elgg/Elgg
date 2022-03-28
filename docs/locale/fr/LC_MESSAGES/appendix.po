@@ -6,16 +6,16 @@
 # Translators:
 # Jerôme Bakker, 2021
 # Jeroen Dalsem, 2021
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2022
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-23 13:47+0100\n"
+"POT-Creation-Date: 2022-02-25 11:16+0100\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2022\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -46,6 +46,7 @@ msgstr "Ci-dessous quelques questions fréquemment posées à propos de Elgg."
 #: ../../appendix/upgrade-notes/3.1-to-3.2.rst:6
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:7
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:6
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:6
 msgid "Contents"
 msgstr "Contenu"
 
@@ -2677,11 +2678,19 @@ msgstr "**Jusqu'à la 5.0**"
 msgid "4.0"
 msgstr "4.0"
 
+#: ../../appendix/support.rst:71 ../../appendix/support.rst:73
+msgid "January 2022"
+msgstr "Janvier 2022"
+
 #: ../../appendix/support.rst:73
+msgid "4.1"
+msgstr "4.1"
+
+#: ../../appendix/support.rst:75
 msgid "5.0"
 msgstr "5.0"
 
-#: ../../appendix/support.rst:73
+#: ../../appendix/support.rst:75
 msgid "TBD"
 msgstr "A FAIRE"
 
@@ -5066,6 +5075,7 @@ msgstr "De 2.0 à 2.1"
 #: ../../appendix/upgrade-notes/3.0-to-3.1.rst:94
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:77
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:892
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:29
 msgid "Deprecated APIs"
 msgstr "APIs dépréciées"
 
@@ -7759,8 +7769,8 @@ msgid ""
 "User capabilities service will no longer trigger permission check hooks "
 "when:"
 msgstr ""
-"Le service des fonctionnalités de l'utilisateur ne déclenche plus les hooks "
-"de vérification des autorisations lorsque :"
+"Le service des capacités de l'utilisateur ne déclenche plus les hooks de "
+"vérification des autorisations lorsque :"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:440
 msgid "permissions are checked for an admin user"
@@ -8051,7 +8061,7 @@ msgid ""
 msgstr ""
 "Voyez la documentation du :doc:`Service de recherche </guides/search>` et "
 "des :ref:`Hooks de recherche <guides/hooks-list#search>` pour des "
-"informations détaillées sur les nouvelles fonctionnalités de recherche."
+"informations détaillées sur les nouvelles capacités de recherche."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:536
 msgid "Form and field related changes"
@@ -12461,6 +12471,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:535
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:901
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:937
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:32
 msgid "Lib functions"
 msgstr "Fonctions de la bibliothèque"
 
@@ -14794,6 +14805,7 @@ msgstr ""
 "``elgg_redirect_response()``"
 
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:906
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:38
 msgid "Plugin hooks"
 msgstr "Hooks plugin"
 
@@ -15256,3 +15268,103 @@ msgid ""
 msgstr ""
 "L'action ``reportedcontent/delete`` a été remplacée par une action de "
 "suppression d'entité générique"
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:2
+msgid "From 4.0 to 4.1"
+msgstr "De 4.0 à 4.1"
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:9
+msgid "Entity Capabilities"
+msgstr "Capacités des entités"
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:11
+msgid ""
+"A new way of registering entity capabilities has been introduced. The "
+"following related functions have been deprecated:"
+msgstr ""
+"Une nouvelle façon d'enregistrer les capacités des entités a été introduite."
+" Les fonctions associées suivantes ont été dépréciées :"
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:13
+msgid ""
+"``elgg_register_entity_type()`` use ``elgg_entity_enable_capability($type, "
+"$subtype, 'searchable')``"
+msgstr ""
+"``elgg_register_entity_type()`` utilisez "
+"``elgg_entity_enable_capability($type, $subtype, 'searchable')``"
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:14
+msgid ""
+"``elgg_unregister_entity_type()`` use "
+"``elgg_entity_disable_capability($type, $subtype, 'searchable')``"
+msgstr ""
+"``elgg_unregister_entity_type()`` utilisez "
+"``elgg_entity_disable_capability($type, $subtype, 'searchable')``"
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:15
+msgid ""
+"``get_registered_entity_types()`` use "
+"``elgg_entity_types_with_capability('searchable')``"
+msgstr ""
+"``get_registered_entity_types()`` utilisez "
+"``elgg_entity_types_with_capability('searchable')``"
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:16
+msgid ""
+"``is_registered_entity_type()`` use ``elgg_entity_has_capability($type, "
+"$subtype, 'searchable')``"
+msgstr ""
+"``is_registered_entity_type()`` utilisez ``elgg_entity_has_capability($type,"
+" $subtype, 'searchable')``"
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:18
+msgid "The config variable ``registered_entities`` is no longer available."
+msgstr ""
+"La variable de configuration ``registered_entities`` n'est plus disponible."
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:20
+msgid ""
+"The current implemented capabilities are 'commentable', 'likable' and "
+"'searchable'."
+msgstr ""
+"Les capacités actuellement implémentées sont 'commentable', 'likable' et "
+"'searchable'."
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:23
+msgid "Threaded Comments"
+msgstr "Commentaires imbriqués"
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:25
+msgid ""
+"Support for threaded comments has been added. This feature needs to be "
+"enable in the site settings. To make this work changes have been made to "
+"comments related JavaScript and CSS. If you use specific styling or have "
+"custom features related to this feature you might need to give it some extra"
+" attention."
+msgstr ""
+"La prise en charge des commentaires imbriqués a été ajoutée. Cette "
+"fonctionnalité doit être activée dans les paramètres du site. Pour faire ce "
+"travail, des modifications ont été apportées aux commentaires liés à "
+"JavaScript et CSS. Si vous utilisez un style spécifique ou avez des "
+"fonctionnalités personnalisées liées à cette fonctionnalité, vous devrez "
+"peut-être leur accorder une attention supplémentaire."
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:34
+msgid "``elgg_get_version()`` use ``elgg_get_release()``"
+msgstr "``elgg_get_version()`` utilisez ``elgg_get_release()``"
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:35
+msgid ""
+"``get_user_by_code()`` use ``elgg_get_user_by_persistent_token()`` where you"
+" only need to provide the token, not the hashed token"
+msgstr ""
+"``get_user_by_code()`` utilisez ``elgg_get_user_by_persistent_token()`` où "
+"vous devez uniquement fournir le jeton, pas le jeton haché"
+
+#: ../../appendix/upgrade-notes/4.0-to-4.1.rst:40
+msgid ""
+"``'likes:is_likable', '<type>:<subtype>'`` use  "
+"``$entity->hasCapability('likable')``"
+msgstr ""
+"``'likes:is_likable', '<type>:<subtype>'`` utilisez  "
+"``$entity->hasCapability('likable')``"

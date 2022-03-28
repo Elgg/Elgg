@@ -11,7 +11,7 @@ define(['jquery', 'elgg', 'elgg/lightbox', 'elgg/Ajax'], function ($, elgg, ligh
 		init: function() {
 
 			// we only need to bind these events once
-			embed.init = elgg.nullFunction;
+			embed.init = function() {};
 
 			// inserts the embed content into the textarea
 			$(document).on('click', ".embed-item", embed.insert);
@@ -48,7 +48,7 @@ define(['jquery', 'elgg', 'elgg/lightbox', 'elgg/Ajax'], function ($, elgg, ligh
 			}
 
 			textArea.focus();
-			if (!elgg.isNullOrUndefined(textArea.prop('selectionStart'))) {
+			if (textArea.prop('selectionStart') != null) {
 				var cursorPos = textArea.prop('selectionStart');
 				var textBefore = value.substring(0, cursorPos);
 				var textAfter = value.substring(cursorPos, value.length);

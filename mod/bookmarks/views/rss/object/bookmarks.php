@@ -5,7 +5,7 @@
 
 $title = $vars['entity']->getDisplayName();
 if (empty($title)) {
-	$title = strip_tags($vars['entity']->description);
+	$title = strip_tags($vars['entity']->description ?: '');
 	$title = elgg_get_excerpt($title, 32);
 }
 

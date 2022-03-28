@@ -1,7 +1,19 @@
 <?php
+/**
+ * Show a listing of all site administrators
+ */
 
-$make_admin_form = elgg_view_form('admin/user/makeadmin');
-echo elgg_view_module('info', elgg_echo('admin:users:searchuser'), $make_admin_form);
+echo elgg_view('admin/users/header', [
+	'filter' => 'admin',
+]);
 
-$body = elgg_list_entities([], 'elgg_get_admins');
-echo elgg_view_module('info', elgg_echo('admin:users:existingadmins'), $body);
+echo elgg_view_form('admin/users/bulk_actions', [
+	'prevent_double_submit' => false,
+], [
+	'filter' => 'admins',
+	'options' => [
+		'metadata_name_value_pairs' => [
+			'admin' => 'yes',
+		],
+	],
+]);

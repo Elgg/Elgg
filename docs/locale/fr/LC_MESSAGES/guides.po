@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-23 13:47+0100\n"
+"POT-Creation-Date: 2022-02-25 11:16+0100\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -38,12 +38,13 @@ msgstr ""
 "dans la base de données."
 
 #: ../../guides/access.rst:8 ../../guides/actions.rst:16
-#: ../../guides/ajax.rst:8 ../../guides/database.rst:8
-#: ../../guides/email.rst:10 ../../guides/events-list.rst:8
-#: ../../guides/file-system.rst:6 ../../guides/guidelines.rst:18
-#: ../../guides/helpers.rst:6 ../../guides/javascript.rst:6
-#: ../../guides/menus.rst:12 ../../guides/notifications.rst:10
-#: ../../guides/plugins.rst:8 ../../guides/plugins/bootstrap.rst:13
+#: ../../guides/ajax.rst:8 ../../guides/capabilities.rst:6
+#: ../../guides/database.rst:8 ../../guides/email.rst:10
+#: ../../guides/events-list.rst:8 ../../guides/file-system.rst:6
+#: ../../guides/guidelines.rst:18 ../../guides/helpers.rst:6
+#: ../../guides/javascript.rst:6 ../../guides/menus.rst:12
+#: ../../guides/notifications.rst:10 ../../guides/plugins.rst:8
+#: ../../guides/plugins/bootstrap.rst:13
 #: ../../guides/plugins/dependencies.rst:8 ../../guides/search.rst:7
 #: ../../guides/settings.rst:6 ../../guides/themes.rst:14
 #: ../../guides/views.rst:6 ../../guides/web-services.rst:24
@@ -1100,11 +1101,23 @@ msgstr ""
 "Les ensembles d’action d’inscription créent le formulaire persistant et "
 "l’effacent une fois l’action terminée :"
 
-#: ../../guides/actions.rst:493
+#: ../../guides/actions.rst:494
+msgid ""
+"The function ``elgg_make_sticky_form()`` supports an optional second "
+"argument ``$ignored_field_names``. This needs to be an ``array`` of the "
+"field names you don't wish to be made sticky. This is usefull for fields "
+"which contain sensitive data, like passwords."
+msgstr ""
+"La fonction ``elgg_make_sticky_form()`` supporte un second argument "
+"optionnel ``$ignored_field_names``. Cela doit être un ``array`` des noms de "
+"champs que vous ne souhaitez pas rendre persistants. Ceci est utile pour les"
+" champs qui contiennent des données sensibles, comme les mots de passe."
+
+#: ../../guides/actions.rst:498
 msgid "Example: Bookmarks"
 msgstr "Exemple : Signets - Bookmarks"
 
-#: ../../guides/actions.rst:495
+#: ../../guides/actions.rst:500
 msgid ""
 "The bundled plugin Bookmarks' save form and action is an example of a "
 "complex sticky form."
@@ -1112,7 +1125,7 @@ msgstr ""
 "Le formulaire et l’action d’enregistrement du plugin \"Bookmarks\" inclus "
 "est un exemple de formulaire persistant complexe."
 
-#: ../../guides/actions.rst:497
+#: ../../guides/actions.rst:502
 msgid ""
 "The form view for the save bookmark action uses ``elgg_extract()`` to pull "
 "values from the ``$vars`` array:"
@@ -1120,7 +1133,7 @@ msgstr ""
 "La vue du formulaire pour l’action d'enregistrement d'un signet utilise "
 "``elgg_extract()`` pour extraire des valeurs du tableau ``$vars`` :"
 
-#: ../../guides/actions.rst:511
+#: ../../guides/actions.rst:516
 msgid ""
 "The page handler scripts prepares the form variables and calls "
 "``elgg_view_form()`` passing the correct values:"
@@ -1128,7 +1141,7 @@ msgstr ""
 "Les scripts du gestionnaire de page préparent les variables de formulaire et"
 " appellent ``elgg_view_form()`` en passant les valeurs correctes :"
 
-#: ../../guides/actions.rst:519
+#: ../../guides/actions.rst:524
 msgid ""
 "Similarly, ``mod/bookmarks/pages/edit.php`` uses the same function, but "
 "passes the entity that is being edited as an argument:"
@@ -1136,7 +1149,7 @@ msgstr ""
 "De même, ``mod/bookmarks/pages/edit.php`` utilise la même fonction, mais "
 "passe l’entité qui est en cours d'édition comme argument :"
 
-#: ../../guides/actions.rst:531
+#: ../../guides/actions.rst:536
 msgid ""
 "The library file defines ``bookmarks_prepare_form_vars()``. This function "
 "accepts an ``ElggEntity`` as an argument and does 3 things:"
@@ -1144,32 +1157,32 @@ msgstr ""
 "Le fichier de la bibliothèque définit ``bookmarks_prepare_form_vars()``. "
 "Cette fonction accepte une ``ElggEntity`` comme argument et fait 3 choses :"
 
-#: ../../guides/actions.rst:533
+#: ../../guides/actions.rst:538
 msgid "Defines the input names and default values for form inputs."
 msgstr ""
 "Définit les noms et les valeurs par défaut pour les champs de formulaire."
 
-#: ../../guides/actions.rst:534
+#: ../../guides/actions.rst:539
 msgid "Extracts the values from a bookmark object if it's passed."
 msgstr "Extrait les valeurs d’un objet bookmark s’il est passé."
 
-#: ../../guides/actions.rst:535
+#: ../../guides/actions.rst:540
 msgid "Extracts the values from a sticky form if it exists."
 msgstr "Extrait les valeurs d’un formulaire persistant si celui-ci existe."
 
-#: ../../guides/actions.rst:574
+#: ../../guides/actions.rst:579
 msgid ""
 "The save action checks the input, then clears the sticky form upon success:"
 msgstr ""
 "L’action d'enregistrement save vérifie l’entrée, puis efface le formulaire "
 "persistant en cas de réussite :"
 
-#: ../../guides/actions.rst:588 ../../guides/ajax.rst:2
+#: ../../guides/actions.rst:593 ../../guides/ajax.rst:2
 #: ../../guides/hooks-list.rst:373
 msgid "Ajax"
 msgstr "Ajax"
 
-#: ../../guides/actions.rst:590
+#: ../../guides/actions.rst:595
 msgid ""
 "See the :doc:`Ajax guide</guides/ajax>` for instructions on calling actions "
 "from JavaScript."
@@ -1177,11 +1190,11 @@ msgstr ""
 "Voir le :doc:`guide Ajax</guides/ajax>` pour savoir comment appeler les "
 "actions depuis JavaScript."
 
-#: ../../guides/actions.rst:593 ../../guides/web-services.rst:27
+#: ../../guides/actions.rst:598 ../../guides/web-services.rst:27
 msgid "Security"
 msgstr "Sécurité"
 
-#: ../../guides/actions.rst:595
+#: ../../guides/actions.rst:600
 msgid ""
 "For enhanced security, all actions require an CSRF token. Calls to action "
 "URLs that do not include security tokens will be ignored and a warning will "
@@ -1191,30 +1204,30 @@ msgstr ""
 "Les appels aux URLs d’action qui n’incluent pas les jetons de sécurité "
 "seront ignorés et un avertissement sera généré."
 
-#: ../../guides/actions.rst:598
+#: ../../guides/actions.rst:603
 msgid "A few views and functions automatically generate security tokens:"
 msgstr ""
 "Quelques vues et fonctions génèrent automatiquement des jetons de sécurité :"
 
-#: ../../guides/actions.rst:607
+#: ../../guides/actions.rst:612
 msgid "In rare cases, you may need to generate tokens manually:"
 msgstr ""
 "Dans de rares cas, vous devrez peut-être générer des jetons manuellement :"
 
-#: ../../guides/actions.rst:614
+#: ../../guides/actions.rst:619
 msgid "You can also access the tokens from javascript:"
 msgstr "Vous pouvez aussi accéder aux jetons depuis JavaScript :"
 
-#: ../../guides/actions.rst:621
+#: ../../guides/actions.rst:626
 msgid "These are refreshed periodically so should always be up-to-date."
 msgstr ""
 "Ces jetonsci sont rafraîchis périodiquement aussi ils devraient être à jour."
 
-#: ../../guides/actions.rst:624
+#: ../../guides/actions.rst:629
 msgid "Security Tokens"
 msgstr "Jetons de sécurité"
 
-#: ../../guides/actions.rst:626
+#: ../../guides/actions.rst:631
 msgid ""
 "On occasion we need to pass data through an untrusted party or generate an "
 "\"unguessable token\" based on some data. The industry-standard `HMAC "
@@ -1232,7 +1245,7 @@ msgstr ""
 "fortes comme SHA-2 ne devraient *pas* être utilisés sans HMAC pour ces "
 "tâches."
 
-#: ../../guides/actions.rst:631
+#: ../../guides/actions.rst:636
 msgid ""
 "Elgg provides ``elgg_build_hmac()`` to generate and validate HMAC message "
 "authentication codes that are unguessable without the site's private key."
@@ -1241,7 +1254,7 @@ msgstr ""
 "d’authentification des messages HMAC qui ne puissent pas être devinés sans "
 "la clé privée du site."
 
-#: ../../guides/actions.rst:655
+#: ../../guides/actions.rst:660
 msgid ""
 "Note: If you use a non-string as HMAC data, you must use types consistently."
 " Consider the following:"
@@ -1249,11 +1262,11 @@ msgstr ""
 "Remarque : si vous utilisez une non-chaîne comme données HMAC, vous devez "
 "utiliser les types de manière cohérente. Considérez ce qui suit :"
 
-#: ../../guides/actions.rst:668
+#: ../../guides/actions.rst:673
 msgid "Signed URLs"
 msgstr "URLs signées"
 
-#: ../../guides/actions.rst:670
+#: ../../guides/actions.rst:675
 msgid ""
 "Signed URLs offer a limited level of security for situations where action "
 "tokens are not suitable, for example when sending a confirmation link via "
@@ -1267,7 +1280,7 @@ msgstr ""
 " a été générée par votre installation Elgg (en utilisant le secret du site) "
 "et que les éléments de l'URL de requête n’ont pas été trafiqués."
 
-#: ../../guides/actions.rst:674
+#: ../../guides/actions.rst:679
 msgid ""
 "URLs a signed with an unguessable SHA-256 HMAC key. See `Security Tokens`_ "
 "for more details."
@@ -1275,7 +1288,7 @@ msgstr ""
 "URLs signées avec une clef SHA-256 HMAC impossible à deviner. Pour plus de "
 "détails, consultez `Jetons de Sécurité`_ ."
 
-#: ../../guides/actions.rst:688
+#: ../../guides/actions.rst:693
 msgid ""
 "Signed URLs do not offer CSRF protection and should not be used instead of "
 "action tokens."
@@ -2077,6 +2090,94 @@ msgstr ""
 " d'un utilisateur est assez simple et se fait par ``login()``, qui s’attend "
 "à recevoir un objet ``ElggUser``."
 
+#: ../../guides/capabilities.rst:2
+msgid "Capabilities"
+msgstr "Capacités"
+
+#: ../../guides/capabilities.rst:9
+msgid "Entity Capabilities"
+msgstr "Capacités des entités"
+
+#: ../../guides/capabilities.rst:12
+msgid "Defining capabilities"
+msgstr "Définition des capacités"
+
+#: ../../guides/capabilities.rst:14
+msgid ""
+"There is no need to explicitly define or register a new capability to the "
+"system. For example the `search` plugin uses the `searchable` capability."
+msgstr ""
+"Il n'est pas nécessaire de définir ou d'enregistrer explicitement une "
+"nouvelle capacité dans le système. Par exemple, le plugin `search` utilise "
+"la capacité `searchable`."
+
+#: ../../guides/capabilities.rst:17
+msgid "Registering for capabilities"
+msgstr "Enregistrement des capacités"
+
+#: ../../guides/capabilities.rst:19
+msgid ""
+"If an entity supports a certain capability (or feature) this should be "
+"registered in the system. This can be done by registering the capability in "
+"the `entities` section of the `elgg-plugin.php` of the plugin."
+msgstr ""
+"Si une entité prend en charge une certaine capacité (ou fonctionnalité), "
+"celle-ci doit être enregistrée dans le système. Cela peut être fait en "
+"enregistrant la capacité dans la section `entities` du `elgg-plugin.php` du "
+"plugin."
+
+#: ../../guides/capabilities.rst:34
+msgid ""
+"There is also the option to enable (or disable) a capability for a certain "
+"entity type/subtype using one of the following functions:"
+msgstr ""
+"Il existe également une option pour activer (ou désactiver) une capacité "
+"pour un certain type/sous-type d'entité à l'aide de l'une des fonctions "
+"suivantes :"
+
+#: ../../guides/capabilities.rst:36
+msgid ""
+"``elgg_entity_enable_capability($type, $subtype, $capability)`` use this for"
+" enabling a certain capability"
+msgstr ""
+"``elgg_entity_enable_capability($type, $subtype, $capability)`` utilisez "
+"ceci pour activer une certaine capacité"
+
+#: ../../guides/capabilities.rst:37
+msgid ""
+"``elgg_entity_disable_capability($type, $subtype, $capability)`` use this "
+"for disabling a certain capability"
+msgstr ""
+"``elgg_entity_disable_capability($type, $subtype, $capability)`` utilisez "
+"ceci pour désactiver une certaine capacité"
+
+#: ../../guides/capabilities.rst:40
+msgid "Checking for capabilities"
+msgstr "Vérification des capacités"
+
+#: ../../guides/capabilities.rst:42
+msgid ""
+"There are helper functions to check if a certain capability is supported in "
+"the system. You can check if an entity supports a certain capability using "
+"the `$entity->hasCapability($capability)` function. Alternatively if you do "
+"not have an entity at your disposal, you can use "
+"`elgg_entity_has_capability($type, $subtype, $capability)`."
+msgstr ""
+"Il existe plusieurs fonctions d'aide pour vérifier si une certaine capacité "
+"est prise en charge dans le système. Vous pouvez vérifier si une entité "
+"prend en charge une certaine capacité en utilisant la fonction "
+"`$entity->hasCapability($capability)`. Alternativement, si vous n'avez pas "
+"d'entité à votre disposition, vous pouvez utiliser "
+"`elgg_entity_has_capability($type, $subtype, $capability)`."
+
+#: ../../guides/capabilities.rst:46
+msgid ""
+"There is also a function available to get an array of all type/subtypes in "
+"the system that support a certain capability."
+msgstr ""
+"Il existe également une fonction pour obtenir un tableau de tous les "
+"types/sous-types du système prenant en charge une certaine capacité."
+
 #: ../../guides/context.rst:2
 msgid "Context"
 msgstr "Contexte"
@@ -2761,11 +2862,11 @@ msgid "In your plugins ``elgg-plugin.php`` file add the ``entities`` section."
 msgstr ""
 "Dans votre fichier ``elgg-plugin.php`` ajoutez la section ``entities``."
 
-#: ../../guides/database.rst:305
+#: ../../guides/database.rst:307
 msgid "The entities will be registered upon activation of the plugin."
 msgstr "Les entités seront enregistrées lors de l’activation du plugin."
 
-#: ../../guides/database.rst:307
+#: ../../guides/database.rst:309
 msgid ""
 "Now if you invoke ``get_entity()`` with the GUID of a committee object, "
 "you'll get back an object of type Committee."
@@ -2773,15 +2874,15 @@ msgstr ""
 "Maintenant, si vous invoquez ``get_entity()`` avec le GUID d’un objet de "
 "comité, vous récupérerez un objet de type Comité - Committee."
 
-#: ../../guides/database.rst:311
+#: ../../guides/database.rst:313
 msgid "Advanced features"
 msgstr "Fonctionnalités avancées"
 
-#: ../../guides/database.rst:314
+#: ../../guides/database.rst:316
 msgid "Entity URLs"
 msgstr "URLs des entités"
 
-#: ../../guides/database.rst:316
+#: ../../guides/database.rst:318
 msgid ""
 "Entity urls are provided by the ``getURL()`` interface and provide the Elgg "
 "framework with a common way of directing users to the appropriate display "
@@ -2791,11 +2892,11 @@ msgstr ""
 "au framework Elgg un moyen commun de diriger les utilisateurs vers le "
 "gestionnaire d’affichage approprié pour n’importe quel objet donné."
 
-#: ../../guides/database.rst:320
+#: ../../guides/database.rst:322
 msgid "For example, a profile page in the case of users."
 msgstr "Par exemple, une page de profil dans le cas des utilisateurs."
 
-#: ../../guides/database.rst:322
+#: ../../guides/database.rst:324
 msgid ""
 "The url is set using the ``elgg\\_register\\_entity\\_url\\_handler()`` "
 "function. The function you register must return the appropriate url for the "
@@ -2806,16 +2907,16 @@ msgstr ""
 "enregistrez doit renvoyer l’URL appropriée pour le type donné - qui peut "
 "elle-même être une adresse configurée par un gestionnaire de page."
 
-#: ../../guides/database.rst:329
+#: ../../guides/database.rst:331
 msgid "The default handler is to use the default export interface."
 msgstr ""
 "Le gestionnaire par défaut doit utiliser l’interface d’export par défaut."
 
-#: ../../guides/database.rst:332
+#: ../../guides/database.rst:334
 msgid "Entity loading performance"
 msgstr "Performance de chargement des entités"
 
-#: ../../guides/database.rst:334
+#: ../../guides/database.rst:336
 msgid ""
 "``elgg_get_entities`` has a couple options that can sometimes be useful to "
 "improve performance."
@@ -2823,7 +2924,7 @@ msgstr ""
 "``elgg_get_entities`` dispose de quelques options qui peuvent être utiles "
 "pour améliorer les performances."
 
-#: ../../guides/database.rst:336
+#: ../../guides/database.rst:338
 msgid ""
 "**preload_owners**: If the entities fetched will be displayed in a list with"
 " the owner information, you can set this option to ``true`` to efficiently "
@@ -2834,7 +2935,7 @@ msgstr ""
 " sur ``true`` pour charger efficacement les utilisateurs propriétaires des "
 "entités récupérées."
 
-#: ../../guides/database.rst:337
+#: ../../guides/database.rst:339
 msgid ""
 "**preload_containers**: If the entities fetched will be displayed in a list "
 "using info from their containers, you can set this option to ``true`` to "
@@ -2844,7 +2945,7 @@ msgstr ""
 "liste avec des informations sur leurs conteneurs, vous pouvez définir cette "
 "option sur ``true`` pour les charger efficacement."
 
-#: ../../guides/database.rst:338
+#: ../../guides/database.rst:340
 msgid ""
 "**distinct**: When Elgg fetches entities using an SQL query, Elgg must be "
 "sure that each entity row appears only once in the result set. By default it"
@@ -2861,7 +2962,7 @@ msgstr ""
 "sur false supprime ce modificateur et s’appuie sur la requête pour s'assurer"
 " de l'unicité des résultats."
 
-#: ../../guides/database.rst:340
+#: ../../guides/database.rst:342
 msgid ""
 "The internals of Elgg entity queries is a complex subject and it's "
 "recommended to seek help on the Elgg Community site before using the "
@@ -2871,11 +2972,11 @@ msgstr ""
 "et il est recommandé de demander de l’aide sur le site de la communauté Elgg"
 " avant d’utiliser l’option ``distinct``."
 
-#: ../../guides/database.rst:343
+#: ../../guides/database.rst:345
 msgid "Custom database functionality"
 msgstr "Fonctionnalité de base de données personnalisée"
 
-#: ../../guides/database.rst:345
+#: ../../guides/database.rst:347
 msgid ""
 "It is strongly recommended to use entities wherever possible. However, Elgg "
 "supports custom SQL queries using the database API."
@@ -2884,17 +2985,17 @@ msgstr ""
 "possible. Toutefois, Elgg prend en charge les requêtes SQL personnalisées à "
 "l’aide de l’API de base de données."
 
-#: ../../guides/database.rst:348
+#: ../../guides/database.rst:350
 msgid "Systemlog"
 msgstr "Systemlog"
 
-#: ../../guides/database.rst:352
+#: ../../guides/database.rst:354
 msgid "This section need some attention and will contain outdated information"
 msgstr ""
 "Cette section requiert une certaine attention et risque de contenir des "
 "informations obsolètes"
 
-#: ../../guides/database.rst:354
+#: ../../guides/database.rst:356
 msgid ""
 "The default Elgg system log is a simple way of recording what happens within"
 " an Elgg system. It's viewable and searchable directly from the "
@@ -2904,11 +3005,11 @@ msgstr ""
 "qui se passe dans un système Elgg. Il est visible et consultable directement"
 " à partir du panneau d’administration."
 
-#: ../../guides/database.rst:357
+#: ../../guides/database.rst:359
 msgid "System log storage"
 msgstr "Conservation du journal système"
 
-#: ../../guides/database.rst:359
+#: ../../guides/database.rst:361
 msgid ""
 "A system log row is stored whenever an event concerning an object whose "
 "class implements the :doc:`/design/loggable` interface is triggered. "
@@ -2923,31 +3024,31 @@ msgstr ""
 "système est créée chaque fois qu’un événement est effectué sur tous les "
 "objets, utilisateurs, groupes, sites, métadonnées et annotations."
 
-#: ../../guides/database.rst:361
+#: ../../guides/database.rst:363
 msgid "Common events include:"
 msgstr "Les événements courants comprennent :"
 
-#: ../../guides/database.rst:363
+#: ../../guides/database.rst:365
 msgid "create"
 msgstr "create"
 
-#: ../../guides/database.rst:364
+#: ../../guides/database.rst:366
 msgid "update"
 msgstr "update"
 
-#: ../../guides/database.rst:365
+#: ../../guides/database.rst:367
 msgid "delete"
 msgstr "delete"
 
-#: ../../guides/database.rst:366
+#: ../../guides/database.rst:368
 msgid "login"
 msgstr "login"
 
-#: ../../guides/database.rst:369
+#: ../../guides/database.rst:371
 msgid "Creating your own system log"
 msgstr "Création de votre propre journal système"
 
-#: ../../guides/database.rst:371
+#: ../../guides/database.rst:373
 msgid ""
 "There are some reasons why you might want to create your own system log. For"
 " example, you might need to store a full copy of entities when they are "
@@ -2960,7 +3061,7 @@ msgstr ""
 " à des fins d’audit. Vous pourriez aussi avoir besoin d'aviser un "
 "administrateur lorsque certains types d’événements se produisent."
 
-#: ../../guides/database.rst:373
+#: ../../guides/database.rst:375
 msgid ""
 "To do this, you can create a function that listens to all events for all "
 "types of object:"
@@ -2968,11 +3069,11 @@ msgstr ""
 "Pour ce faire, vous pouvez créer une fonction qui écoute tous les événements"
 " pour tous les types d’objets :"
 
-#: ../../guides/database.rst:379
+#: ../../guides/database.rst:381
 msgid "Your function can then be defined as:"
 msgstr "Votre fonction peut alors être définie comme :"
 
-#: ../../guides/database.rst:389
+#: ../../guides/database.rst:391
 msgid ""
 "You can then use the extra methods defined by :doc:`/design/loggable` to "
 "extract the information you need."
@@ -8129,38 +8230,14 @@ msgid "Filter the HTMLawed ``$spec`` string (default empty)."
 msgstr "Filtre la chaîne HTMLawed ``$spec`` (vide par défaut)."
 
 #: ../../guides/hooks-list.rst:1152
-msgid "Likes"
-msgstr "Likes"
-
-#: ../../guides/hooks-list.rst:1158
-msgid "**likes:is_likable, <type>:<subtype>**"
-msgstr "**likes:is_likable, <type>:<subtype>**"
-
-#: ../../guides/hooks-list.rst:1155
-msgid ""
-"This is called to set the default permissions for whether to display/allow "
-"likes on an entity of type ``<type>`` and subtype ``<subtype>``."
-msgstr ""
-"Ceci est appelé pour définir les autorisations par défaut pour déterminer "
-"s’il faut afficher/autoriser les mentions J’aime sur une entité de type "
-"``<type>`` et de sous-type ``<subtype>``."
-
-#: ../../guides/hooks-list.rst:1158
-msgid ""
-"The callback ``'Elgg\\Values::getTrue'`` is a useful handler for this hook."
-msgstr ""
-"La fonction de rappel ``'Elgg\\Values::getTrue'`` est un gestionnaire utile "
-"pour ce hook."
-
-#: ../../guides/hooks-list.rst:1161
 msgid "Members"
 msgstr "Membres"
 
-#: ../../guides/hooks-list.rst:1164
+#: ../../guides/hooks-list.rst:1155
 msgid "**members:list, <page_segment>**"
 msgstr "**members:list, <page_segment>**"
 
-#: ../../guides/hooks-list.rst:1164
+#: ../../guides/hooks-list.rst:1155
 msgid ""
 "To handle the page ``/members/$page_segment``, register for this hook and "
 "return the HTML of the list."
@@ -8168,11 +8245,11 @@ msgstr ""
 "Pour gérer la page ``/members/$page_segment``, enregistrez pour ce hook et "
 "renvoyez le HTML de la liste."
 
-#: ../../guides/hooks-list.rst:1168
+#: ../../guides/hooks-list.rst:1159
 msgid "**members:config, tabs**"
 msgstr "**members:config, tabs**"
 
-#: ../../guides/hooks-list.rst:1167
+#: ../../guides/hooks-list.rst:1158
 msgid ""
 "This hook is used to assemble an array of tabs to be passed to the "
 "navigation/tabs view for the members pages."
@@ -8180,15 +8257,15 @@ msgstr ""
 "Ce hook est utilisé pour assembler un tableau d’onglets à transmettre à la "
 "vue navigation/tabs pour les pages des membres."
 
-#: ../../guides/hooks-list.rst:1171
+#: ../../guides/hooks-list.rst:1162
 msgid "Web Services"
 msgstr "Web Services"
 
-#: ../../guides/hooks-list.rst:1175
+#: ../../guides/hooks-list.rst:1166
 msgid "**rest, init**"
 msgstr "**rest, init**"
 
-#: ../../guides/hooks-list.rst:1174
+#: ../../guides/hooks-list.rst:1165
 msgid ""
 "Triggered by the web services rest handler. Plugins can set up their own "
 "authentication handlers, then return ``true`` to prevent the default "
@@ -8198,11 +8275,11 @@ msgstr ""
 "configurer leurs propres gestionnaires d’authentification, puis renvoyer "
 "``true`` pour empêcher les gestionnaires par défaut d’être enregistrés."
 
-#: ../../guides/hooks-list.rst:1177
+#: ../../guides/hooks-list.rst:1168
 msgid "**rest:output, <method_name>**"
 msgstr "**rest:output, <method_name>**"
 
-#: ../../guides/hooks-list.rst:1178
+#: ../../guides/hooks-list.rst:1169
 msgid "Filter the result (and subsequently the output) of the API method"
 msgstr "Filtrer le résultat (et par la suite la sortie) de la méthode API"
 
@@ -8219,10 +8296,10 @@ msgstr ""
 #: ../../guides/i18n.rst:6
 msgid ""
 "If you’d like to contribute translations to Elgg, see :doc:`the "
-"contributors' guide </about/contributing>`."
+"contributors' guide </contribute/i18n>`."
 msgstr ""
 "Si vous souhaitez contribuer à des traductions pour Elgg, consultez :doc:`le"
-" guide des contributeurs </about/contributing>`."
+" guide des contributeurs </contribute/i18n>`."
 
 #: ../../guides/i18n.rst:8
 msgid ""
@@ -10541,11 +10618,11 @@ msgstr ""
 msgid "``notifications`` - an array of notification events"
 msgstr "``notifications`` - un tableau d'événements de notification"
 
-#: ../../guides/plugins.rst:232
+#: ../../guides/plugins.rst:231
 msgid "Bootstrap class"
 msgstr "Classe d'initialisation - Bootstrap"
 
-#: ../../guides/plugins.rst:234
+#: ../../guides/plugins.rst:233
 msgid ""
 "As of Elgg 3.0 the recommended way to bootstrap you plugin is to use a "
 "bootstrap class. This class must implement the "
@@ -10557,7 +10634,7 @@ msgstr ""
 "l’interface ``\\Elgg\\PluginBootstrapInterface``. Vous pouvez inscrire votre"
 " classe bootstrap dans ``elgg-plugin.php``."
 
-#: ../../guides/plugins.rst:237
+#: ../../guides/plugins.rst:236
 msgid ""
 "The bootstrap interface defines several function to be implemented which are"
 " called during different events in the system booting process."
@@ -10566,7 +10643,7 @@ msgstr ""
 "implémenter qui sont appelées lors de différents événements dans le "
 "processus de démarrage du système."
 
-#: ../../guides/plugins.rst:241
+#: ../../guides/plugins.rst:240
 msgid ""
 "For more information about the different functions defined in the "
 "``\\Elgg\\PluginBootstrapInterface`` please read  :doc:`plugins/bootstrap`"
@@ -10574,11 +10651,11 @@ msgstr ""
 "Pour plus d’informations sur les différentes fonctions définies dans "
 "``\\Elgg\\PluginBootstrapInterface`` veuillez lire :doc:`plugins/bootstrap`"
 
-#: ../../guides/plugins.rst:244
+#: ../../guides/plugins.rst:243
 msgid "elgg-services.php"
 msgstr "elgg-services.php"
 
-#: ../../guides/plugins.rst:246
+#: ../../guides/plugins.rst:245
 msgid ""
 "Plugins can attach their services to Elgg's public DI container by providing"
 " PHP-DI definitions in ``elgg-services.php`` in the root of the plugin "
@@ -10588,7 +10665,7 @@ msgstr ""
 "en fournissant des définitions PHP-DI dans ``elgg-services.php``, situé à la"
 " racine du répertoire du plugin."
 
-#: ../../guides/plugins.rst:249
+#: ../../guides/plugins.rst:248
 msgid ""
 "This file must return an array of PHP-DI definitions. Services will by "
 "available via ``elgg()``."
@@ -10596,13 +10673,13 @@ msgstr ""
 "Ce fichier doit renvoyer un tableau de définitions PHP-DI. Les services "
 "seront disponibles via ``elgg()``."
 
-#: ../../guides/plugins.rst:257
+#: ../../guides/plugins.rst:256
 msgid "Plugins can then use PHP-DI API to autowire and call the service:"
 msgstr ""
 "Les plugins peuvent ensuite utiliser l’API PHP-DI pour s'auto-câbler et "
 "appeler le service :"
 
-#: ../../guides/plugins.rst:263
+#: ../../guides/plugins.rst:262
 msgid ""
 "See `PHP-DI documentation <http://php-di.org>`_ for a comprehensive list of "
 "definition and invokation possibilities."
@@ -10610,11 +10687,11 @@ msgstr ""
 "Voyez la `documentation PHP-DI <https://php-di.org/>`_ pour une liste "
 "complète des possibilités de définition et d’invocation."
 
-#: ../../guides/plugins.rst:266
+#: ../../guides/plugins.rst:265
 msgid "composer.json"
 msgstr "composer.json"
 
-#: ../../guides/plugins.rst:268
+#: ../../guides/plugins.rst:267
 msgid ""
 "Since Elgg supports being installed as a `Composer`_ dependency, having your"
 " plugins also support Composer makes for easier installation by site "
@@ -10627,22 +10704,22 @@ msgstr ""
 "votre plugin compatible avec Composer, vous devez au moins avoir un fichier "
 "``composer.json`` dans la racine de votre plugin."
 
-#: ../../guides/plugins.rst:272
+#: ../../guides/plugins.rst:271
 msgid "Here is an example of a ``composer.json`` file:"
 msgstr "Voici un exemple de fichier ``composer.json`` :"
 
-#: ../../guides/plugins.rst:277
+#: ../../guides/plugins.rst:276
 msgid ""
 "Read more about the ``composer.json`` format on the `Composer`_ website."
 msgstr ""
 "Apprenez-en plus sur le format de ``composer.json`` sur le site de "
 "`Composer`_."
 
-#: ../../guides/plugins.rst:279
+#: ../../guides/plugins.rst:278
 msgid "Important parts in the ``composer.json`` file are:"
 msgstr "Les parties importantes du fichier ``composer.json`` sont :"
 
-#: ../../guides/plugins.rst:281
+#: ../../guides/plugins.rst:280
 msgid ""
 "``name``: the name of your plugin, keep this inline with the name of your "
 "plugin folder to ensure correct installation"
@@ -10650,7 +10727,7 @@ msgstr ""
 "``name`` : le nom de votre plugin, utilisez le même que le nom de dossier de"
 " votre plugin pour assurer une installation correcte"
 
-#: ../../guides/plugins.rst:282
+#: ../../guides/plugins.rst:281
 msgid ""
 "``type``: this will tell Composer where to install your plugin, ALWAYS keep "
 "this as ``elgg-plugin``"
@@ -10658,7 +10735,7 @@ msgstr ""
 "``type`` : indique à Composer où installer votre plugin, laissez TOUJOURS "
 "ceci sur ``elgg-plugin``"
 
-#: ../../guides/plugins.rst:283
+#: ../../guides/plugins.rst:282
 msgid ""
 "``require``: the ``composer/installers`` requirement is to make sure "
 "Composer knows where to install your plugin"
@@ -10666,7 +10743,7 @@ msgstr ""
 "``require`` : l'exigence ``composer/installers`` vise à s'assurer que "
 "Composer sait où installer votre plugin"
 
-#: ../../guides/plugins.rst:285
+#: ../../guides/plugins.rst:284
 msgid ""
 "As a suggestion, include a ``conflict`` rule with any Elgg version below "
 "your mininal required version, this will help prevent the accidental "
@@ -10677,7 +10754,7 @@ msgstr ""
 "aidera à éviter l’installation accidentelle de votre plugin sur une version "
 "de Elgg incompatible."
 
-#: ../../guides/plugins.rst:288
+#: ../../guides/plugins.rst:287
 msgid ""
 "After adding a ``composer.json`` file to your plugin project, you need to "
 "register your project on `Packagist`_ in order for other people to be able "
@@ -10687,11 +10764,11 @@ msgstr ""
 "vous devez enregistrer votre projet sur `Packagist`_ afin que d’autres "
 "personnes puissent installer votre plugin."
 
-#: ../../guides/plugins.rst:292
+#: ../../guides/plugins.rst:291
 msgid "Tests"
 msgstr "Tests"
 
-#: ../../guides/plugins.rst:294
+#: ../../guides/plugins.rst:293
 msgid ""
 "It's encouraged to create PHPUnit test for your plugin. All tests should be "
 "located in ``tests/phpunit/unit`` for unit tests and "
@@ -10701,7 +10778,7 @@ msgstr ""
 "tests devraient être situés dans ``tests/phpunit/unit`` pour les tests "
 "unitaires et ``tests/phpunit/integration`` pour les tests d'intégration."
 
-#: ../../guides/plugins.rst:297
+#: ../../guides/plugins.rst:296
 msgid ""
 "An easy example of adding test is the ``ViewStackTest``, this will test that"
 " the views in your plugin are registered correctly and have no syntax "
@@ -10715,18 +10792,18 @@ msgstr ""
 "``tests/phpunit/unit/<YourNameSpace>/<YourPluginName>/`` avec le contenu "
 "suivant :"
 
-#: ../../guides/plugins.rst:314
+#: ../../guides/plugins.rst:313
 msgid ""
 "If you wish to see a better example, look in any of the Elgg core plugins."
 msgstr ""
 "Si vous souhaitez voir un meilleur exemple, regardez dans l’un des plugins "
 "du noyau de Elgg."
 
-#: ../../guides/plugins.rst:318
+#: ../../guides/plugins.rst:317
 msgid ":doc:`/contribute/tests`"
 msgstr ":doc:`/contribute/tests`"
 
-#: ../../guides/plugins.rst:321 ../../guides/views.rst:647
+#: ../../guides/plugins.rst:320 ../../guides/views.rst:647
 #: ../../guides/web-services.rst:368
 msgid "Related"
 msgstr "Connexe"
@@ -12242,23 +12319,36 @@ msgstr "Entités pouvant être recherchées"
 
 #: ../../guides/search.rst:75
 msgid ""
-"To register an entity type for search, use ``elgg_register_entity_type()``, "
-"or do so when defining an entity type in ``elgg-plugin.php``. To combine "
-"search results or filter how search results are presented in the search "
-"plugin, use ``'search:config', 'type_subtype_pairs'`` hook."
+"To register an entity type for search, use "
+"``elgg_entity_enable_capability($type, $subtype, 'searchable')``, or do so "
+"when defining an entity type in ``elgg-plugin.php``."
 msgstr ""
-"Pour enregistrer un type d’entité pour la recherche, utilisez "
-"``elgg_register_entity_type()``, ou faites-le lors de la définition d’un "
-"type d’entité dans ``elgg-plugin.php``. Pour combiner des résultats de "
-"recherche ou filtrer la façon dont les résultats de recherche sont présentés"
-" dans le plugin de recherche, utilisez le hook ``'search:config', "
-"'type_subtype_pairs'``."
+"Pour enregistrer un type d'entité pour la recherche, utilisez "
+"``elgg_entity_enable_capability($type, $subtype, 'searchable')``, ou faites-"
+"le lors de la définition du type d'entité dans ``elgg-plugin.php``."
 
-#: ../../guides/search.rst:130
+#: ../../guides/search.rst:79
+msgid ""
+"The search plugin uses the entity capability `searchable`. This capability "
+"defines if an entity is searchable."
+msgstr ""
+"Le plugin de recherche utilise la capacité d'entité `searchable`. Cette "
+"capacité définit si une entité peut être recherchée."
+
+#: ../../guides/search.rst:81
+msgid ""
+"To combine search results or filter how search results are presented in the "
+"search plugin, use ``'search:config', 'type_subtype_pairs'`` hook."
+msgstr ""
+"Pour combiner les résultats de la recherche ou filtrer la présentation des "
+"résultats de la recherche dans le plugin de recherche, utilisez le hook "
+"``'search:config', 'type_subtype_pairs'``."
+
+#: ../../guides/search.rst:135
 msgid "Custom search types"
 msgstr "Types de recherches personnalisés"
 
-#: ../../guides/search.rst:132
+#: ../../guides/search.rst:137
 msgid ""
 "Elgg core only supports entity search. You can implement custom searches, "
 "e.g. using search query as a location and listing entities by proximity to "
@@ -12269,11 +12359,11 @@ msgstr ""
 "une requête de recherche comme un emplacement pour lister les entités à "
 "proximité de cet emplacement."
 
-#: ../../guides/search.rst:179
+#: ../../guides/search.rst:184
 msgid "Autocomplete and livesearch endpoint"
 msgstr "Points de terminaison pour l'autocomplétion et la recherche en direct"
 
-#: ../../guides/search.rst:181
+#: ../../guides/search.rst:186
 msgid ""
 "Core provides a JSON endpoint for searching users and groups. These "
 "endpoints are used by ``input/autocomplete`` and ``input/userpicker`` views."
@@ -12282,7 +12372,7 @@ msgstr ""
 "d’utilisateurs et de groupes. Ces points de terminaison sont utilisés par "
 "les vues ``input/autocomplete`` et ``input/userpicker``."
 
-#: ../../guides/search.rst:189
+#: ../../guides/search.rst:194
 msgid ""
 "You can add custom search types, by adding a corresponding resource view:"
 msgstr ""

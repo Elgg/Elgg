@@ -21,7 +21,7 @@ class UserHover {
 	 */
 	public static function registerAvatarEdit(\Elgg\Hook $hook) {
 		$user = $hook->getEntityParam();
-		if (!$user instanceof \ElggUser || !$user->canEdit()) {
+		if (!$user instanceof \ElggUser || !$user->isEnabled() || !$user->canEdit()) {
 			return;
 		}
 		
@@ -60,6 +60,48 @@ class UserHover {
 		/* @var $return MenuItems */
 		$return = $hook->getValue();
 		
+		// delete
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'delete',
+			'icon' => 'delete',
+			'text' => elgg_echo('delete'),
+			'href' => elgg_generate_action_url('admin/user/delete', [
+				'guid' => $user->guid,
+			]),
+			'confirm' => true,
+			'section' => 'admin',
+			'priority' => 999,
+		]);
+		
+		if ($user->isValidated() === false) {
+			$return[] = \ElggMenuItem::factory([
+				'name' => 'change_email',
+				'icon' => 'edit',
+				'text' => elgg_echo('admin:users:unvalidated:change_email'),
+				'href' => elgg_http_add_url_query_elements('ajax/form/admin/user/change_email', [
+					'user_guid' => $user->guid,
+				]),
+				'link_class' => 'elgg-lightbox',
+				'section' => 'admin',
+			]);
+			
+			$return[] = \ElggMenuItem::factory([
+				'name' => 'validate',
+				'icon' => 'check',
+				'text' => elgg_echo('validate'),
+				'href' => elgg_generate_action_url('admin/user/validate', [
+					'user_guid' => $user->guid,
+				]),
+				'confirm' => true,
+				'section' => 'admin',
+			]);
+		}
+		
+		if (!$user->isEnabled()) {
+			// in certain admin cases
+			return $return;
+		}
+		
 		// (un)ban
 		if (!$user->isBanned()) {
 			$return[] = \ElggMenuItem::factory([
@@ -84,18 +126,6 @@ class UserHover {
 				'section' => 'admin',
 			]);
 		}
-		
-		// delete
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'delete',
-			'icon' => 'delete',
-			'text' => elgg_echo('delete'),
-			'href' => elgg_generate_action_url('admin/user/delete', [
-				'guid' => $user->guid,
-			]),
-			'confirm' => true,
-			'section' => 'admin',
-		]);
 		
 		// reset password
 		$return[] = \ElggMenuItem::factory([
@@ -148,5 +178,51 @@ class UserHover {
 		]);
 		
 		return $return;
+	}
+	
+	/**
+	 * Register admin action to login as another user
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:user_hover|menu:entity'
+	 *
+	 * @return void|MenuItems
+	 */
+	public static function registerLoginAs(\Elgg\Hook $hook) {
+		$user = $hook->getEntityParam();
+		$logged_in_user = elgg_get_logged_in_user_entity();
+		
+		if (!$user instanceof \ElggUser || $user->isBanned() || !$user->isEnabled()) {
+			// no user, banned user or disabled user (is certain admin cases) is unable to login
+			return;
+		}
+		
+		if (!$logged_in_user instanceof \ElggUser || !$logged_in_user->isAdmin()) {
+			// no admin user logged in
+			return;
+		}
+		
+		if ($logged_in_user->guid === $user->guid) {
+			// don't show menu on self
+			return;
+		}
+		
+		if (!empty(elgg_get_session()->get('login_as_original_user_guid'))) {
+			// don't show menu if already logged in as someone else
+			return;
+		}
+		
+		$menu = $hook->getValue();
+		
+		$menu[] = \ElggMenuItem::factory([
+			'name' => 'login_as',
+			'icon' => 'sign-in-alt',
+			'text' => elgg_echo('action:user:login_as'),
+			'href' => elgg_generate_action_url('admin/user/login_as', [
+				'user_guid' => $user->guid,
+			]),
+			'section' => $hook->getType() === 'menu:user_hover' ? 'admin' : 'default',
+		]);
+		
+		return $menu;
 	}
 }

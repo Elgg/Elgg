@@ -21,6 +21,7 @@ class ImageService {
 	use Loggable;
 
 	const JPEG_QUALITY = 75;
+	const WEBP_QUALITY = 75;
 
 	/**
 	 * @var ImagineInterface
@@ -109,10 +110,18 @@ class ImageService {
 			$target_size = new Box($max_width, $max_height);
 			$thumbnail = $image->resize($target_size);
 
-			$thumbnail->save($destination, [
-				'jpeg_quality' => elgg_extract('jpeg_quality', $params, self::JPEG_QUALITY),
-				'format' => $this->getFileFormat($source, $params),
-			]);
+			if (pathinfo($destination, PATHINFO_EXTENSION) === 'webp') {
+				$options = [
+					'webp_quality' => elgg_extract('webp_quality', $params, self::WEBP_QUALITY),
+				];
+			} else {
+				$options = [
+					'format' => $this->getFileFormat($source, $params),
+					'jpeg_quality' => elgg_extract('jpeg_quality', $params, self::JPEG_QUALITY),
+				];
+			}
+			
+			$thumbnail->save($destination, $options);
 
 			unset($image);
 			unset($thumbnail);

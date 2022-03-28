@@ -11,7 +11,7 @@ if (!$entity instanceof ElggEntity) {
 }
 
 // title cannot contain HTML but descriptions can.
-$title = strip_tags($entity->getVolatileData('search_matched_title'));
+$title = strip_tags($entity->getVolatileData('search_matched_title') ?: '');
 $description = $entity->getVolatileData('search_matched_description');
 
 ?>

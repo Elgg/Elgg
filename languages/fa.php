@@ -614,13 +614,13 @@ return array(
 	'usersettings:plugins:opt:linktext' => "تنظیم ابزارها",
 
 	'usersettings:plugins:description' => "این پنل مدیریت به شما اجازه کنترل و تنظیم اطلاعات شخصی برای ابزارهایی که توسط مدیر روی سایت نصب شده را می دهد",
-	'usersettings:statistics:label:numentities' => "محتوای شما",
-
+	
 	'usersettings:statistics:yourdetails' => "جزئیات شما",
 	'usersettings:statistics:label:name' => "نام کامل",
 	'usersettings:statistics:label:email' => "ایمیل",
-	'usersettings:statistics:label:membersince' => "عضو از",
 	'usersettings:statistics:label:lastlogin' => "آخرین ورود",
+	'usersettings:statistics:label:membersince' => "عضو از",
+	'usersettings:statistics:label:numentities' => "محتوای شما",
 
 /**
  * Activity river
@@ -832,7 +832,7 @@ return array(
  * Time
  */
 	'input:date_format:datepicker' => '', // jQuery UI datepicker format
-
+	
 	'friendlytime:justnow' => "هم اکنون",
 	'friendlytime:minutes' => "%s دقیقه پیش",
 	'friendlytime:minutes:singular' => "یک دقیقه پیش",

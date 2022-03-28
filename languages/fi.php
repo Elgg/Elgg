@@ -622,13 +622,13 @@ return array(
 	'usersettings:plugins:opt:linktext' => "Konfiguroi työkalusi",
 
 	'usersettings:plugins:description' => "Tämän paneelin avulla voit muokata omia asetuksiasi eri työkaluissa.",
-	'usersettings:statistics:label:numentities' => "Kohteiden määrä",
-
+	
 	'usersettings:statistics:yourdetails' => "Yksityiskohdat",
 	'usersettings:statistics:label:name' => "Koko nimi",
 	'usersettings:statistics:label:email' => "Sähköpostiosoite",
-	'usersettings:statistics:label:membersince' => "Jäsenenä alkaen",
 	'usersettings:statistics:label:lastlogin' => "Viimeisin kirjautuminen",
+	'usersettings:statistics:label:membersince' => "Jäsenenä alkaen",
+	'usersettings:statistics:label:numentities' => "Kohteiden määrä",
 
 /**
  * Activity river
@@ -844,7 +844,7 @@ return array(
  * Time
  */
 	'input:date_format:datepicker' => '', // jQuery UI datepicker format
-
+	
 	'friendlytime:justnow' => "juuri nyt",
 	'friendlytime:minutes' => "%s minuuttia sitten",
 	'friendlytime:minutes:singular' => "hetki sitten",

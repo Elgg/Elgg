@@ -31,8 +31,6 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		elgg_register_plugin_hook_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setEmail');
 		
 		elgg_register_plugin_hook_handler('registeruser:validate:password', 'all', [_elgg_services()->passwordGenerator, 'registerUserPasswordValidation']);
-
-		_elgg_services()->system_messages->dumpRegister();
 	}
 
 	public function down() {

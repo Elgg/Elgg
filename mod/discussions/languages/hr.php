@@ -41,7 +41,7 @@ return array(
 	'discussion:comment:notify:summary' => 'Novi komentar u temi: %s',
 
 	'groups:tool:forum' => 'Omogući grupnu raspravu',
-
+	
 	/**
 	 * Discussion status
 	 */
@@ -50,4 +50,6 @@ return array(
 	'discussion:topic:closed:desc' => 'Rasprava je zatvorena te nije više moguće komentirati. ',
 
 	'discussion:topic:description' => 'Tema poruke',
+	
+	// widgets
 );

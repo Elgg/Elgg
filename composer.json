@@ -1,6 +1,6 @@
 {
     "name": "elgg/elgg",
-    "version": "4.1.0-beta.1",
+    "version": "4.1.5",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0-only",
     "minimum-stability": "dev",
@@ -12,7 +12,6 @@
         "ext-gd": "*",
         "ext-json": "*",
         "ext-xml": "*",
-        "elgg/login_as": "~3.1.0",
         "ckeditor/ckeditor": "~4.16.0",
         "composer/semver": "~3.2.0",
         "css-crush/css-crush": "3.0.1",
@@ -22,7 +21,7 @@
         "fzaninotto/faker": "^1.9",
         "guzzlehttp/guzzle": "~7.4.0",
         "hackzilla/password-generator": "~1.6.0",
-        "imagine/imagine": "1.2.4",
+        "imagine/imagine": "~1.3.0",
         "laminas/laminas-mail": "~2.4",
         "laminas/laminas-mime": "2.9.1",
         "laminas/laminas-servicemanager": "^3.3.1",
@@ -32,11 +31,11 @@
         "michelf/php-markdown": "^1.5.0",
         "misd/linkify": "~1.1.2",
         "monolog/monolog": "~2.3.0",
-        "npm-asset/components-jqueryui": "~1.12.1",
         "npm-asset/cropperjs": "~1.5.9",
         "npm-asset/jquery": "~3.6.0",
         "npm-asset/jquery-cropper": "~1.0.0",
         "npm-asset/jquery-colorbox": "^1.6.4",
+        "npm-asset/jquery-ui": "~1.13.1",
         "npm-asset/jquery-ui-touch-punch": "~0.2.3",
         "npm-asset/normalize.css": "~8.0.1",
         "npm-asset/requirejs": "^2.3.6",
@@ -46,14 +45,15 @@
         "pelago/emogrifier": "^6.0.0",
         "peppeocchi/php-cron-scheduler": "~4.0",
         "php-di/php-di": "~6.3.0",
+        "phpfastcache/phpfastcache": "8.1.0",
         "react/promise": "^2.5",
         "roave/security-advisories": "dev-master",
         "robmorgan/phinx": "~0.12.7",
         "symfony/console": "~5.3",
         "symfony/http-foundation": "~5.3",
+        "symfony/mime": "~5.3",
         "symfony/routing": "~5.3",
         "symfony/var-dumper": "~5.3",
-        "tedivm/stash": "0.16.0",
         "vanilla/htmlawed": "~2.2.0"
     },
     "config": {
@@ -79,9 +79,8 @@
         "psr-4": {
             "CssCrush\\": "engine/vendor_classes/CssCrush/",
             "Elgg\\": "engine/classes/Elgg/",
-            "Imagine\\Image\\Metadata\\": "engine/vendor_classes/Imagine/Image/Metadata",
             "Laminas\\Mime\\": "engine/vendor_classes/Laminas/Mime/",
-            "Stash\\": "engine/vendor_classes/Stash/"
+            "Phpfastcache\\": "engine/vendor_classes/Phpfastcache/"
         }
     },
     "autoload-dev": {

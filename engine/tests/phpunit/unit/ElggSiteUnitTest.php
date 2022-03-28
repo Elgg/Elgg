@@ -112,4 +112,12 @@ class ElggSiteUnitTest extends \Elgg\UnitTestCase {
 		
 		$this->assertFalse($site->canComment());
 	}
+	
+	public function testGetDisplaynameReturnsString() {
+		$site = new ElggSite();
+		$this->assertEquals('', $site->getDisplayName());
+		
+		$site->name = 'foo';
+		$this->assertEquals('foo', $site->getDisplayName());
+	}
 }

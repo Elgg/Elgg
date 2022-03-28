@@ -148,11 +148,17 @@ $CONFIG->dbencoding = 'utf8mb4';
 //$CONFIG->memcache = true;
 //
 //$CONFIG->memcache_servers = array (
-//	array('server1', 11211),
-//	array('server2', 11211)
+//	array(
+// 		'host' => 'server1',
+//		'port' => 11211,
+// 	),
+//	array(
+// 		'host' => 'server2',
+//		'port' => 11211,
+// 	),
 //);
 
-// namespace prefix
+// namespace prefix (can only be used with memcached)
 // $CONFIG->memcache_namespace_prefix = '';
 
 /**
@@ -166,9 +172,12 @@ $CONFIG->dbencoding = 'utf8mb4';
 //	'password' => '', // The "password" option is used for clusters which required authentication.
 //);
 //
+// Only one server can be configured
 //$CONFIG->redis_servers = array (
-//	array('server1', 6379),
-//	array('server2', 6379)
+//	array(
+//		'host' => 'server1',
+//		'port' => 6379,
+//	),
 //);
 
 /**

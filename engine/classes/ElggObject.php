@@ -36,7 +36,7 @@ class ElggObject extends \ElggEntity {
 	 * {@inheritdoc}
 	 */
 	public function getDisplayName() {
-		return $this->title;
+		return (string) $this->title;
 	}
 
 	/**

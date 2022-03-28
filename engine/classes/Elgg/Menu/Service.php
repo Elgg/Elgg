@@ -135,6 +135,7 @@ class Service {
 		$params['menu'] = $this->prepareVerticalMenu($params['menu'], $params);
 		$params['menu'] = $this->prepareDropdownMenu($params['menu'], $params);
 		$params['menu'] = $this->prepareSelectedParents($params['menu'], $params);
+		$params['menu'] = $this->prepareItemContentsView($params['menu'], $params);
 		
 		return new Menu($params);
 	}
@@ -164,11 +165,11 @@ class Service {
 			}
 		};
 		
-		foreach ($menu as $menu_items) {
-			foreach ($menu_items as $menu_item) {
-				if ($menu_item instanceof \ElggMenuItem) {
-					$prepare($menu_item);
-				}
+		/* @var $section MenuSection */
+		foreach ($menu as $section) {
+			/* @var $menu_item \ElggMenuItem */
+			foreach ($section as $menu_item) {
+				$prepare($menu_item);
 			}
 		}
 		
@@ -236,6 +237,39 @@ class Service {
 				'children' => $items,
 			]),
 		]);
+		
+		return $menu;
+	}
+	
+	/**
+	 * Set a content view for each menu item based on the default for the menu
+	 *
+	 * @param PreparedMenu $menu   the current prepared menu
+	 * @param array        $params the menu params
+	 *
+	 * @return PreparedMenu
+	 * @since 4.2
+	 */
+	protected function prepareItemContentsView(PreparedMenu $menu, array $params): PreparedMenu {
+		$item_contents_view = elgg_extract('item_contents_view', $params, 'navigation/menu/elements/item/url');
+		
+		$prepare = function(\ElggMenuItem $menu_item) use (&$prepare, $item_contents_view) {
+			if (!$menu_item->hasItemContentsView()) {
+				$menu_item->setItemContentsView($item_contents_view);
+			}
+			
+			foreach ($menu_item->getChildren() as $child_menu_item) {
+				$prepare($child_menu_item);
+			}
+		};
+		
+		/* @var $section MenuSection */
+		foreach ($menu as $section) {
+			/* @var $menu_item \ElggMenuItem */
+			foreach ($section as $menu_item) {
+				$prepare($menu_item);
+			}
+		}
 		
 		return $menu;
 	}

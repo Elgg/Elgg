@@ -483,6 +483,7 @@ function elgg_view_layout($layout_name, $vars = []) {
  *    selected_item_name   => (string) the menu item name to be selected
  *    prepare_vertical     => (bool) prepares the menu items for vertical display (default false)
  *    prepare_dropdown     => (bool) will put all menu items (section=default) behind a dropdown (default false)
+ *    item_contents_view   => (string) the view to use for the output of the menu item contents (default: 'navigation/menu/elements/item/url')
  *
  * @param string|Menu|UnpreparedMenu $menu Menu name (or object)
  * @param array                      $vars An associative array of display options for the menu.
@@ -519,38 +520,6 @@ function elgg_view_menu($menu, array $vars = []) {
 			return elgg_view($view, $params);
 		}
 	}
-}
-
-/**
- * Render a menu item (usually as a link)
- *
- * @param \ElggMenuItem $item The menu item
- * @param array         $vars Options to pass to output/url if a link
- * @return string
- * @since 1.9.0
- */
-function elgg_view_menu_item(\ElggMenuItem $item, array $vars = []) {
-
-	$vars = array_merge($item->getValues(), $vars);
-	$vars['class'] = elgg_extract_class($vars, ['elgg-menu-content']);
-
-	if ($item->getLinkClass()) {
-		$vars['class'][] = $item->getLinkClass();
-	}
-
-	if ($item->getHref() === false || $item->getHref() === null) {
-		$vars['class'][] = 'elgg-non-link';
-	}
-
-	if (!isset($vars['rel']) && !isset($vars['is_trusted'])) {
-		$vars['is_trusted'] = true;
-	}
-
-	if ($item->getConfirmText()) {
-		$vars['confirm'] = $item->getConfirmText();
-	}
-
-	return elgg_view('output/url', $vars);
 }
 
 /**
@@ -909,14 +878,18 @@ function elgg_view_title($title, array $vars = []) {
  *
  * @see elgg_get_friendly_time()
  *
- * @param int $time A UNIX epoch timestamp
+ * @param int|string|\DateTime|\Elgg\I18n\DateTime $time         A UNIX epoch timestamp, a date string or a DateTime object
+ * @param int|string|\DateTime|\Elgg\I18n\DateTime $time_updated A UNIX epoch timestamp, a date string or a DateTime object
  *
  * @return string The friendly time HTML
  * @since 1.7.2
  */
-function elgg_view_friendly_time($time) {
+function elgg_view_friendly_time($time, $time_updated = null) {
 	$view = 'output/friendlytime';
-	$vars = ['time' => $time];
+	$vars = [
+		'time' => $time,
+		'time_updated' => $time_updated,
+	];
 	$viewtype = elgg_view_exists($view) ? '' : 'default';
 
 	return _elgg_view_under_viewtype($view, $vars, $viewtype);
@@ -1411,15 +1384,15 @@ function elgg_views_boot() {
 	_elgg_services()->viewCacher->registerCoreViews();
 
 	// jQuery and UI must come before require. See #9024
-	elgg_register_external_file('js', 'jquery', elgg_get_simplecache_url('jquery.js'), 'head');
+	elgg_register_external_file('js', 'jquery', elgg_get_simplecache_url('jquery.js'));
 	elgg_load_external_file('js', 'jquery');
 
 	elgg_extend_view('require.js', 'elgg/require_config.js', 100);
 
-	elgg_register_external_file('js', 'require', elgg_get_simplecache_url('require.js'), 'head');
+	elgg_register_external_file('js', 'require', elgg_get_simplecache_url('require.js'));
 	elgg_load_external_file('js', 'require');
 
-	elgg_register_external_file('js', 'elgg', elgg_get_simplecache_url('elgg.js'), 'head');
+	elgg_register_external_file('js', 'elgg', elgg_get_simplecache_url('elgg.js'));
 	elgg_load_external_file('js', 'elgg');
 
 	elgg_register_external_file('css', 'font-awesome', elgg_get_simplecache_url('font-awesome/css/all.min.css'));

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-23 13:47+0100\n"
+"POT-Creation-Date: 2022-02-25 11:16+0100\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Jeroen Dalsem, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -232,7 +232,7 @@ msgstr ""
 "diverses fonctionnalités du plugin. Il peut, par exemple, être utilisé pour "
 "configurer des entités, des actions, des widgets et des routes."
 
-#: ../../tutorials/blog.rst:211
+#: ../../tutorials/blog.rst:213
 msgid ""
 "Registering the save action will make it available as "
 "``/action/my_blog/save``. By default, all actions are available only to "
@@ -247,11 +247,11 @@ msgstr ""
 "non identifiés, vous pouvez passer respectivement ``['access' => 'admin']`` "
 "ou ``['access' => 'public']`` lors de enregistrement de l'action."
 
-#: ../../tutorials/blog.rst:219
+#: ../../tutorials/blog.rst:221
 msgid "Create a page for viewing a blog post"
 msgstr "Créez une page pour afficher l'article de blog"
 
-#: ../../tutorials/blog.rst:221
+#: ../../tutorials/blog.rst:223
 msgid ""
 "To be able to view a my_blog post on its own page, you need to make a view "
 "page. Create the file "
@@ -261,7 +261,7 @@ msgstr ""
 "créer une page d'affichage. Créez le fichier "
 "``/mod/my_blog/views/default/resources/my_blog/view.php``:"
 
-#: ../../tutorials/blog.rst:239
+#: ../../tutorials/blog.rst:241
 msgid ""
 "This page has much in common with the ``add.php`` page. The biggest "
 "differences are that some information is extracted from the my_blog entity, "
@@ -275,11 +275,11 @@ msgstr ""
 "``elgg_view_entity`` est appelée. Cette fonction donne les informations de "
 "l'entité à ce qu'on appelle la vue de l'objet."
 
-#: ../../tutorials/blog.rst:245
+#: ../../tutorials/blog.rst:247
 msgid "Create the object view"
 msgstr "Créez la vue de l'objet"
 
-#: ../../tutorials/blog.rst:247
+#: ../../tutorials/blog.rst:249
 msgid ""
 "When ``elgg_view_entity`` is called or when my_blogs are viewed in a list "
 "for example, the object view will generate the appropriate content. Create "
@@ -290,7 +290,7 @@ msgstr ""
 " approprié. Créez le fichier "
 "``/mod/my_blog/views/default/object/my_blog.php`` :"
 
-#: ../../tutorials/blog.rst:258
+#: ../../tutorials/blog.rst:260
 msgid ""
 "As you can see in the previous section, each my\\_blog post is passed to the"
 " object view as ``$vars['entity']``. (``$vars`` is an array used in the "
@@ -301,7 +301,7 @@ msgstr ""
 "(``$vars`` est un tableau utilisé dans le système de vues pour passer des "
 "variables à une vue.)"
 
-#: ../../tutorials/blog.rst:262
+#: ../../tutorials/blog.rst:264
 msgid ""
 "The last line takes the tags on the my\\_blog post and automatically "
 "displays them as a series of clickable links. Search is handled "
@@ -311,7 +311,7 @@ msgstr ""
 "automatiquement sous la forme d'une série de liens cliquables. La recherche "
 "est gérée automatiquement."
 
-#: ../../tutorials/blog.rst:266
+#: ../../tutorials/blog.rst:268
 msgid ""
 "(If you're wondering about the \"``default``\" in ``/views/default/``, you "
 "can create alternative views. RSS, OpenDD, FOAF, mobile and others are all "
@@ -321,11 +321,11 @@ msgstr ""
 "vous pouvez créer des vues alternatives. RSS, OpenDD, FOAF, vue mobile et "
 "d'autres sont divers types de vues valides.)"
 
-#: ../../tutorials/blog.rst:271
+#: ../../tutorials/blog.rst:273
 msgid "Trying it out"
 msgstr "Tester le plugin"
 
-#: ../../tutorials/blog.rst:273
+#: ../../tutorials/blog.rst:275
 msgid ""
 "Go to your Elgg site's administration page, list the plugins and activate "
 "the ``my_blog`` plugin."
@@ -333,7 +333,7 @@ msgstr ""
 "Rendez-vous sur la page d'administration de Elgg, listez les plugins, et "
 "activez le plugin ``my_blog``."
 
-#: ../../tutorials/blog.rst:276
+#: ../../tutorials/blog.rst:278
 msgid ""
 "The page to create a new my\\_blog post should now be accessible at "
 "``https://elgg.example.com/my_blog/add``, and after successfully saving the "
@@ -343,22 +343,22 @@ msgstr ""
 "accessible via ``https://elgg.example.com/my_blog/add``, et après avoir "
 "enregistré l'article, vous devriez le voir affiché sur sa propre page."
 
-#: ../../tutorials/blog.rst:281
+#: ../../tutorials/blog.rst:283
 msgid "Displaying a list of blog posts"
 msgstr "Afficher une liste des articles de blog"
 
-#: ../../tutorials/blog.rst:283
+#: ../../tutorials/blog.rst:285
 msgid ""
 "Let's also create a page that lists my\\_blog entries that have been "
 "created."
 msgstr ""
 "Créons également une page qui liste les entrées my_blog qui ont été créées"
 
-#: ../../tutorials/blog.rst:285
+#: ../../tutorials/blog.rst:287
 msgid "Create ``/mod/my_blog/views/default/resources/my_blog/all.php``:"
 msgstr "Créez ``/mod/my_blog/views/default/resources/my_blog/all.php`` :"
 
-#: ../../tutorials/blog.rst:303
+#: ../../tutorials/blog.rst:305
 msgid ""
 "The ``elgg_list_entities`` function grabs the latest my_blog posts and "
 "passes them to the object view file. Note that this function returns only "
@@ -374,7 +374,7 @@ msgstr ""
 "cousines) gère également de manière transparente la pagination, et crée même"
 " un flux RSS pour votre my\\_blogs si vous avez défini cette vue."
 
-#: ../../tutorials/blog.rst:311
+#: ../../tutorials/blog.rst:313
 msgid ""
 "The list function can also limit the my_blog posts to those of a specified "
 "user. For example, the function ``elgg_get_logged_in_user_guid`` grabs the "
@@ -388,7 +388,7 @@ msgstr ""
 "l'utilisateur connecté, et en le passant à ``elgg_list_entities`` la liste "
 "n'affichera que les articles de l'utilisateur connecté :"
 
-#: ../../tutorials/blog.rst:324
+#: ../../tutorials/blog.rst:326
 msgid ""
 "Next, you will need to register your route to return the new page when the "
 "URL is set to ``/my_blog/all``. Configure the ``routes`` section in ``elgg-"
@@ -398,7 +398,7 @@ msgstr ""
 "lorsque l'URL est définie sur ``/my_blog/all``. Configurez la section "
 "``routes`` dans ``elgg-plugin.php`` pour contenir les éléments suivants :"
 
-#: ../../tutorials/blog.rst:337
+#: ../../tutorials/blog.rst:339
 msgid ""
 "Now, if the URL contains ``/my_blog/all``, the user will see an \"All Site "
 "My_Blogs\" page."
@@ -406,7 +406,7 @@ msgstr ""
 "Désormais, si l'URL contient ``/my_blog/all``, l'utilisateur verra une page "
 "\"Tous les My_Blogs du site\"."
 
-#: ../../tutorials/blog.rst:339
+#: ../../tutorials/blog.rst:341
 msgid ""
 "You might also want to update the object view to handle different kinds of "
 "viewing, because otherwise the list of all my_blogs will also show the full "
@@ -419,7 +419,7 @@ msgstr ""
 "``/mod/my_blog/views/default/object/my_blog.php`` pour qu'il ressemble à "
 "ceci :"
 
-#: ../../tutorials/blog.rst:365
+#: ../../tutorials/blog.rst:367
 msgid ""
 "Now, if ``full_view`` is ``true`` (as it was pre-emptively set to be in "
 ":ref:`this section <tutorials/blog#view>`), the object view will show the "
@@ -432,11 +432,11 @@ msgstr ""
 " affiché par ``view.php``). Sinon la vue de l'objet ne va afficher que le "
 "titre et les tags de l'article."
 
-#: ../../tutorials/blog.rst:372
+#: ../../tutorials/blog.rst:374
 msgid "The end"
 msgstr "FIN"
 
-#: ../../tutorials/blog.rst:374
+#: ../../tutorials/blog.rst:376
 msgid ""
 "There's much more that could be done, but hopefully this gives you a good "
 "idea of how to get started."

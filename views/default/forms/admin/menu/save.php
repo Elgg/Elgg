@@ -36,7 +36,6 @@ for ($i = 0; $i < $num_featured_items; $i++) {
 
 	$fields[] = [
 		'#type' => 'select',
-		'#class' => 'is-3',
 		'options_values' => $dropdown_values,
 		'name' => 'featured_menu_names[]',
 		'value' => $current_value,
@@ -45,6 +44,7 @@ for ($i = 0; $i < $num_featured_items; $i++) {
 
 $configure .= elgg_view_field([
 	'#type' => 'fieldset',
+	'class' => 'elgg-fieldset-wrap',
 	'align' => 'horizontal',
 	'fields' => $fields,
 ]);
