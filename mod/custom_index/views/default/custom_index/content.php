@@ -37,6 +37,16 @@ if (!elgg_is_logged_in() && $is_module_enabled('login')) {
 	$modules[] = elgg_view_module('featured', elgg_echo('login'), elgg_view_form('login'));
 }
 
+// activity
+if (elgg_is_active_plugin('activity') && $is_module_enabled('activity')) {
+	$modules[] = elgg_view_module('featured', elgg_echo('collection:river'), elgg_list_river([
+		'distinct' => false,
+		'no_results' => elgg_echo('river:none'),
+		'limit' => 5,
+		'pagination' => false,
+	]));
+}
+
 // files
 if (elgg_is_active_plugin('file') && $is_module_enabled('file')) {
 	$modules[] = elgg_view_module('featured', elgg_echo('collection:object:file'), elgg_list_entities($get_list_params(['subtype' => 'file'])));
