@@ -20,7 +20,7 @@ class RefreshCsrfToken {
 	 */
 	public function __invoke(\Elgg\Http\Request $request) {
 
-		_elgg_session_boot(_elgg_services());
+		_elgg_services()->session->boot();
 		
 		// the page's session_token might have expired (not matching __elgg_session in the session), but
 		// we still allow it to be given to validate the tokens in the page.

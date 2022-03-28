@@ -68,9 +68,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$svc->logger->disable();
 
 		_elgg_services()->translator->addTranslation('en', ['__test__' => 'Test']);
-
-		_elgg_register_routes();
-
 	}
 
 	function addCsrfTokens(Request $request) {

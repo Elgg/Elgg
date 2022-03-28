@@ -3,6 +3,7 @@
 use Elgg\Config;
 use Elgg\Database;
 use Elgg\Http\DatabaseSessionHandler;
+use Elgg\Traits\Debug\Profilable;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
@@ -16,6 +17,8 @@ use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
  * @see elgg_get_session()
  */
 class ElggSession {
+	
+	use Profilable;
 
 	/**
 	 * @var SessionInterface
@@ -44,6 +47,50 @@ class ElggSession {
 	 */
 	public function __construct(SessionInterface $storage) {
 		$this->storage = $storage;
+	}
+	
+	/**
+	 * Initializes the session and checks for the remember me cookie
+	 *
+	 * @return void
+	 *
+	 * @internal
+	 */
+	public function boot(): void {
+	
+		$this->beginTimer([__METHOD__]);
+	
+		$this->start();
+	
+		// test whether we have a user session
+		if ($this->has('guid')) {
+			$user = _elgg_services()->entityTable->get($this->get('guid'), 'user');
+			if (!$user instanceof ElggUser) {
+				// OMG user has been deleted.
+				$this->invalidate();
+				
+				// redirect to homepage
+				$this->endTimer([__METHOD__]);
+				_elgg_services()->responseFactory->redirect('');
+			}
+		} else {
+			$user = _elgg_services()->persistentLogin->bootSession();
+			if ($user instanceof ElggUser) {
+				_elgg_services()->persistentLogin->updateTokenUsage($user);
+			}
+		}
+	
+		if ($user instanceof ElggUser) {
+			$this->setLoggedInUser($user);
+			$user->setLastAction();
+	
+			// logout a user with open session who has been banned
+			if ($user->isBanned()) {
+				logout();
+			}
+		}
+	
+		$this->endTimer([__METHOD__]);
 	}
 
 	/**
