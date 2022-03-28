@@ -30,8 +30,8 @@ class ApiUsersTable extends dbApiUsersTable {
 	 * {@inheritDoc}
 	 */
 	public function createApiUser() {
-		$public = $this->crypto->getRandomString(40, \ElggCrypto::CHARS_HEX);
-		$secret = $this->crypto->getRandomString(40, \ElggCrypto::CHARS_HEX);
+		$public = $this->crypto->getRandomString(40, \Elgg\Security\Crypto::CHARS_HEX);
+		$secret = $this->crypto->getRandomString(40, \Elgg\Security\Crypto::CHARS_HEX);
 		
 		self::$iterator++;
 		

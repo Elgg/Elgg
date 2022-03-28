@@ -26,7 +26,7 @@ class UsersApiSessionsTable extends dbUsersApiSessionsTable {
 	 */
 	protected static $iterator = 100;
 	
-	public function __construct(Database $database, \ElggCrypto $crypto) {
+	public function __construct(Database $database, \Elgg\Security\Crypto $crypto) {
 		parent::__construct($database, $crypto);
 		
 		$this->setCurrentTime();
@@ -36,7 +36,7 @@ class UsersApiSessionsTable extends dbUsersApiSessionsTable {
 	 * {@inheritDoc}
 	 */
 	public function createToken(int $user_guid, int $expires = 60) {
-		$token = $this->crypto->getRandomString(32, \ElggCrypto::CHARS_HEX);
+		$token = $this->crypto->getRandomString(32, \Elgg\Security\Crypto::CHARS_HEX);
 		$expires = $this->getCurrentTime("+{$expires} minutes");
 		
 		self::$iterator++;

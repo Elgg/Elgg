@@ -34,7 +34,7 @@ class PersistentLoginService {
 	protected $session;
 	
 	/**
-	 * @var \ElggCrypto
+	 * @var \Elgg\Security\Crypto
 	 */
 	protected $crypto;
 	
@@ -54,14 +54,14 @@ class PersistentLoginService {
 	 *
 	 * @param UsersRememberMeCookiesTable $cookie_table  The persistent cookie storage table
 	 * @param \ElggSession                $session       The Elgg session
-	 * @param \ElggCrypto                 $crypto        The cryptography service
+	 * @param \Elgg\Security\Crypto       $crypto        The cryptography service
 	 * @param array                       $cookie_config The persistent login cookie settings
 	 * @param string                      $cookie_token  The token from the request cookie
 	 */
 	public function __construct(
 			UsersRememberMeCookiesTable $cookie_table,
 			\ElggSession $session,
-			\ElggCrypto $crypto,
+			\Elgg\Security\Crypto $crypto,
 			array $cookie_config,
 			$cookie_token) {
 		$this->persistent_cookie_table = $cookie_table;
