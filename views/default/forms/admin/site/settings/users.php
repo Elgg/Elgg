@@ -39,6 +39,15 @@ $result .= elgg_view_field([
 ]);
 
 $result .= elgg_view_field([
+	'#type' => 'number',
+	'#label' => elgg_echo('config:users:remove_unvalidated_users_days'),
+	'#help' => elgg_echo('config:users:remove_unvalidated_users_days:help'),
+	'name' => 'remove_unvalidated_users_days',
+	'value' => elgg_get_config('remove_unvalidated_users_days'),
+	'min' => 0,
+]);
+
+$result .= elgg_view_field([
 	'#type' => 'checkbox',
 	'#label' => elgg_echo('config:users:can_change_username'),
 	'#help' => elgg_echo('config:users:can_change_username:help'),

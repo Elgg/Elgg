@@ -41,6 +41,14 @@ if (empty($admin_validation_notification)) {
 	elgg_save_config('admin_validation_notification', $admin_validation_notification);
 }
 
+// remove unvalidated users after x days
+$remove_unvalidated_users_days = (int) get_input('remove_unvalidated_users_days');
+if ($remove_unvalidated_users_days < 1) {
+	elgg_remove_config('remove_unvalidated_users_days');
+} else {
+	elgg_save_config('remove_unvalidated_users_days', $remove_unvalidated_users_days);
+}
+
 // setup walled garden
 $walled_garden = ('on' === get_input('walled_garden', false));
 elgg_save_config('walled_garden', $walled_garden);

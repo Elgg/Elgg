@@ -104,6 +104,7 @@ use Elgg\Traits\Loggable;
  * @property array         $redis_options
  * @property array         $redis_servers
  * @property bool          $remove_branding 						Is Elgg branding disabled
+ * @property int           $remove_unvalidated_users_days			The number of days after which unvalidated users will be removed
  * @property bool          $require_admin_validation
  * @property bool          $security_disable_password_autocomplete
  * @property bool          $security_email_require_password

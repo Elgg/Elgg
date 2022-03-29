@@ -40,6 +40,7 @@ return [
 	'cron' => [
 		'daily' => [
 			\Elgg\Email\DelayedQueue\CronHandler::class => [],
+			'Elgg\Users\Validation::removeUnvalidatedUsers' => [],
 			'Elgg\Users\Validation::notifyAdminsAboutPendingUsers' => [],
 			\Elgg\Users\CleanupPersistentLoginHandler::class => [],
 		],

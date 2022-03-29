@@ -1453,6 +1453,8 @@ Once you have logged in, we highly recommend that you change your password.',
 	'config:i18n:who_can_change_language:admin_only' => "Administrators only",
 	'config:i18n:who_can_change_language:nobody' => "Nobody",
 	
+	'config:users:remove_unvalidated_users_days' => "Numbers of days after which unvalidated users will be removed",
+	'config:users:remove_unvalidated_users_days:help' => "Unvalidated users will automatically be removed after the configured number of days. If left empty the unvalidated users will not be removed automatically.",
 	'config:users:can_change_username' => "Allow users to change their username",
 	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Remove Elgg branding",
