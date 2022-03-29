@@ -198,4 +198,45 @@ class Validation {
 		
 		return $response;
 	}
+	
+	/**
+	 * Remove unvalidated users after x days
+	 *
+	 * @param \Elgg\Hook $hook 'cron', 'daily'
+	 *
+	 * @return void
+	 * @since 4.2
+	 */
+	public static function removeUnvalidatedUsers(\Elgg\Hook $hook): void {
+		
+		$days = (int) elgg_get_config('remove_unvalidated_users_days');
+		if ($days < 1) {
+			return;
+		}
+		
+		// removing users could take a while
+		set_time_limit(0);
+		
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($days) {
+			/* @var $users \ElggBatch */
+			$users = elgg_get_entities([
+				'type' => 'user',
+				'metadata_name_value_pairs' => [
+					'validated' => false,
+				],
+				'created_before' => "-{$days} days",
+				'limit' => false,
+				'batch' => true,
+				'batch_inc_offset' => false,
+			]);
+			
+			/* @var $user \ElggUser */
+			foreach ($users as $user) {
+				if (!$user->delete()) {
+					// make sure the batch skips over the failed user in the next iteration
+					$users->reportFailure();
+				}
+			}
+		});
+	}
 }
