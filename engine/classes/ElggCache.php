@@ -9,7 +9,7 @@ abstract class ElggCache implements \ArrayAccess {
 	 *
 	 * @var array
 	 */
-	private $variables;
+	private $variables = [];
 
 	/**
 	 * @var bool
@@ -20,22 +20,17 @@ abstract class ElggCache implements \ArrayAccess {
 	 * Set the constructor.
 	 */
 	public function __construct() {
-		$this->variables = [];
 	}
-
+	
 	/**
 	 * Set a cache variable.
 	 *
 	 * @param string $variable Name
-	 * @param string $value    Value
+	 * @param mixed  $value    Value
 	 *
 	 * @return void
 	 */
-	public function setVariable($variable, $value) {
-		if (!is_array($this->variables)) {
-			$this->variables = [];
-		}
-
+	public function setVariable(string $variable, $value): void {
 		$this->variables[$variable] = $value;
 	}
 
@@ -46,12 +41,8 @@ abstract class ElggCache implements \ArrayAccess {
 	 *
 	 * @return mixed The variable or null;
 	 */
-	public function getVariable($variable) {
-		if (isset($this->variables[$variable])) {
-			return $this->variables[$variable];
-		}
-
-		return null;
+	public function getVariable(string $variable) {
+		return $this->variables[$variable] ?? null;
 	}
 
 	/**
@@ -61,7 +52,7 @@ abstract class ElggCache implements \ArrayAccess {
 	 *
 	 * @return mixed
 	 */
-	public function __get($key) {
+	public function __get(string $key) {
 		return $this->load($key);
 	}
 
@@ -73,7 +64,7 @@ abstract class ElggCache implements \ArrayAccess {
 	 *
 	 * @return void
 	 */
-	public function __set($key, $value) {
+	public function __set(string $key, $value): void {
 		$this->save($key, $value);
 	}
 
@@ -84,7 +75,7 @@ abstract class ElggCache implements \ArrayAccess {
 	 *
 	 * @return bool
 	 */
-	public function __isset($key) {
+	public function __isset(string $key): bool {
 		return (bool) $this->load($key);
 	}
 
@@ -93,10 +84,10 @@ abstract class ElggCache implements \ArrayAccess {
 	 *
 	 * @param string $key The name of the attribute or metadata.
 	 *
-	 * @return bool
+	 * @return void
 	 */
-	public function __unset($key) {
-		return $this->delete($key);
+	public function __unset(string $key): void {
+		$this->delete($key);
 	}
 
 	/**
@@ -154,7 +145,7 @@ abstract class ElggCache implements \ArrayAccess {
 	 * Do not write or read from cache
 	 * @return void
 	 */
-	public function disable() {
+	public function disable(): void {
 		$this->disabled = true;
 	}
 
@@ -162,7 +153,7 @@ abstract class ElggCache implements \ArrayAccess {
 	 * Enable disabled cache
 	 * @return void
 	 */
-	public function enable() {
+	public function enable(): void {
 		$this->disabled = false;
 	}
 
@@ -174,7 +165,7 @@ abstract class ElggCache implements \ArrayAccess {
 	 *
 	 * @return void
 	 */
-	public function populate($values, $expires_after) {
+	public function populate(array $values, int $expires_after = null): void {
 		$this->clear();
 		foreach ($values as $key => $value) {
 			$this->save($key, $value, $expires_after);
@@ -187,11 +178,11 @@ abstract class ElggCache implements \ArrayAccess {
 	 * provides a better way then override this accordingly.
 	 *
 	 * @param string $key  Name
-	 * @param string $data Value
+	 * @param mixed  $data Value
 	 *
 	 * @return bool
 	 */
-	public function add($key, $data) {
+	public function add(string $key, $data): bool {
 		if (!isset($this[$key])) {
 			return $this->save($key, $data);
 		}

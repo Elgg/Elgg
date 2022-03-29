@@ -3,6 +3,7 @@
 namespace Elgg\Database;
 
 use Elgg\Database;
+use Elgg\Security\Crypto;
 
 /**
  * Manage the contents of the api_users table
@@ -18,7 +19,7 @@ class ApiUsersTable {
 	protected $database;
 	
 	/**
-	 * @var \ElggCrypto
+	 * @var Crypto
 	 */
 	protected $crypto;
 	
@@ -30,10 +31,10 @@ class ApiUsersTable {
 	/**
 	 * Create a new table handler
 	 *
-	 * @param Database    $database the Elgg database handler
-	 * @param \ElggCrypto $crypto   crypto handler
+	 * @param Database $database the Elgg database handler
+	 * @param Crypto   $crypto   crypto handler
 	 */
-	public function __construct(Database $database, \ElggCrypto $crypto) {
+	public function __construct(Database $database, Crypto $crypto) {
 		$this->database = $database;
 		$this->crypto = $crypto;
 	}
@@ -44,8 +45,8 @@ class ApiUsersTable {
 	 * @return false|\stdClass object or false
 	 */
 	public function createApiUser() {
-		$public = $this->crypto->getRandomString(40, \ElggCrypto::CHARS_HEX);
-		$secret = $this->crypto->getRandomString(40, \ElggCrypto::CHARS_HEX);
+		$public = $this->crypto->getRandomString(40, Crypto::CHARS_HEX);
+		$secret = $this->crypto->getRandomString(40, Crypto::CHARS_HEX);
 		
 		$insert = Insert::intoTable($this->table);
 		$insert->values([

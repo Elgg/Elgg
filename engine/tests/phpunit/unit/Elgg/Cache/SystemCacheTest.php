@@ -3,6 +3,7 @@
 namespace Elgg\Cache;
 
 use Elgg\UnitTestCase;
+use Phpfastcache\Cluster\ClusterPoolInterface;
 
 /**
  * @group Cache
@@ -103,5 +104,35 @@ class SystemCacheTest extends UnitTestCase {
 		$this->assertEquals('bar2', elgg_load_system_cache('foo2'));
 		
 		elgg_reset_system_cache();
+	}
+	
+	public function testCanStoreItemWithTTL() {
+		elgg_enable_system_cache();
+		elgg_reset_system_cache();
+		
+		elgg_save_system_cache('foo', 'bar', 1);
+		
+		$cache = elgg_get_system_cache();
+		
+		$reflector = new \ReflectionClass($cache);
+		$property = $reflector->getProperty('pool');
+		$property->setAccessible(true);
+		
+		$pool = $property->getValue($cache);
+		
+		if ($pool instanceof ClusterPoolInterface) {
+			$this->markTestSkipped('Unable to test a cluster as it does not implement detachAllItems for all pool drivers');
+		}
+		
+		$pool->detachAllItems();
+		
+		// need to wait longer than the previous set TTL
+		sleep(2);
+		$this->assertNull(elgg_load_system_cache('foo'));
+		
+		elgg_save_system_cache('foo', 'bar', 5);
+		$pool->detachAllItems();
+		
+		$this->assertEquals('bar', elgg_load_system_cache('foo'));
 	}
 }

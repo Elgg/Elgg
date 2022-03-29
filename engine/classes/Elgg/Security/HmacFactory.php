@@ -1,7 +1,6 @@
 <?php
 namespace Elgg\Security;
 
-use ElggCrypto;
 use Elgg\Database\SiteSecret;
 
 /**
@@ -15,7 +14,7 @@ class HmacFactory {
 	private $site_secret;
 
 	/**
-	 * @var ElggCrypto
+	 * @var Crypto
 	 */
 	private $crypto;
 
@@ -23,9 +22,9 @@ class HmacFactory {
 	 * Constructor
 	 *
 	 * @param SiteSecret $secret Site secret
-	 * @param ElggCrypto $crypto Elgg crypto service
+	 * @param Crypto     $crypto Elgg crypto service
 	 */
-	public function __construct(SiteSecret $secret, ElggCrypto $crypto) {
+	public function __construct(SiteSecret $secret, Crypto $crypto) {
 		$this->site_secret = $secret;
 		$this->crypto = $crypto;
 	}

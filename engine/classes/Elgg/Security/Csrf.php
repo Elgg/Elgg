@@ -25,7 +25,7 @@ class Csrf {
 	protected $session;
 
 	/**
-	 * @var \ElggCrypto
+	 * @var Crypto
 	 */
 	protected $crypto;
 
@@ -39,13 +39,13 @@ class Csrf {
 	 *
 	 * @param Config       $config  Elgg config
 	 * @param \ElggSession $session Session
-	 * @param \ElggCrypto  $crypto  Crypto service
+	 * @param Crypto       $crypto  Crypto service
 	 * @param HmacFactory  $hmac    HMAC service
 	 */
 	public function __construct(
 		Config $config,
 		\ElggSession $session,
-		\ElggCrypto $crypto,
+		Crypto $crypto,
 		HmacFactory $hmac
 	) {
 

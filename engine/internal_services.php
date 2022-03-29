@@ -55,7 +55,7 @@ return [
 	// the 'config' service is available but is set as part of the construction of the application
 	'configTable' => DI\autowire(\Elgg\Database\ConfigTable::class),
 	'cron' => DI\autowire(\Elgg\Cron::class),
-	'crypto' => DI\autowire(\ElggCrypto::class),
+	'crypto' => DI\autowire(\Elgg\Security\Crypto::class),
 	'dataCache' => DI\autowire(\Elgg\Cache\DataCache::class),
 	'db' => DI\autowire(\Elgg\Database::class),
 	// the 'dbConfig' service is available but is set as part of the construction of the application
@@ -248,7 +248,6 @@ return [
 	
 	// map classes to alias to allow autowiring
 	\ElggAutoP::class => DI\get('autoP'),
-	\ElggCrypto::class => DI\get('crypto'),
 	\ElggDiskFilestore::class => DI\get('filestore'),
 	\ElggSession::class => DI\get('session'),
 	\ElggTempDiskFilestore::class => DI\get('temp_filestore'),
@@ -333,6 +332,7 @@ return [
 	\Elgg\Router\UrlGenerator::class => DI\get('urlGenerator'),
 	\Elgg\Router\UrlMatcher::class => DI\get('urlMatcher'),
 	\Elgg\Search\SearchService::class => DI\get('search'),
+	\Elgg\Security\Crypto::class => DI\get('crypto'),
 	\Elgg\Security\Csrf::class => DI\get('csrf'),
 	\Elgg\Security\HmacFactory::class => DI\get('hmac'),
 	\Elgg\Security\PasswordGeneratorService::class => DI\get('passwordGenerator'),
