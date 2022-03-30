@@ -20,9 +20,9 @@ elgg.system_messages = function(msgs, delay, type) {
 		i;
 
 	//validate delay.  Must be a positive integer.
-	delay = parseInt(delay || 6000, 10);
+	delay = parseInt(delay || elgg.config.message_delay, 10);
 	if (isNaN(delay) || delay <= 0) {
-		delay = 6000;
+		delay = elgg.config.message_delay;
 	}
 
 	//Handle non-arrays

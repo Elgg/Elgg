@@ -127,5 +127,8 @@ if ($friendly_time_number_of_days === '') {
 	$friendly_time_number_of_days = 30;
 }
 elgg_save_config('friendly_time_number_of_days', (int) $friendly_time_number_of_days);
+elgg_save_config('message_delay', (int) get_input('message_delay', 6));
+
+elgg_invalidate_caches();
 
 return elgg_ok_response('', elgg_echo('admin:configuration:success'));

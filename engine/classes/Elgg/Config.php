@@ -209,6 +209,7 @@ class Config {
 		],
 		'language_detect_from_browser' => true,
 		'lastcache' => 0,
+		'message_delay' => 6,
 		'min_password_length' => 6,
 		'minusername' => 4,
 		'notifications_max_runtime' => 45,
