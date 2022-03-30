@@ -1487,6 +1487,8 @@ Once you have logged in, we highly recommend that you change your password.',
 	'config:email_html_part_images:attach' => "Attachments",
 	'config:delayed_email:label' => "Enable delayed email notifications",
 	'config:delayed_email:help' => "Offer users delayed email notifications to bundle notifications received in a period (daily, weekly)",
+	'config:message_delay:label' => "System message delay",
+	'config:message_delay:help' => "Default number of seconds before a success message disappears",
 
 	'upgrading' => 'Upgrading...',
 	'upgrade:core' => 'Your Elgg installation was upgraded.',

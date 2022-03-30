@@ -30,4 +30,13 @@ $body .= elgg_view_field([
 	'min' => 0,
 ]);
 
+$body .= elgg_view_field([
+	'#type' => 'number',
+	'#label' => elgg_echo('config:message_delay:label'),
+	'#help' => elgg_echo('config:message_delay:help'),
+	'name' => 'message_delay',
+	'value' => (int) elgg_get_config('message_delay'),
+	'min' => 1,
+]);
+
 echo elgg_view_module('info', elgg_echo('other'), $body, ['id' => 'elgg-settings-advanced-other']);

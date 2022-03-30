@@ -1433,10 +1433,17 @@ function elgg_views_boot() {
  * @internal
  */
 function _elgg_get_js_site_data() {
+	
+	$message_delay = (int) elgg_get_config('message_delay');
+	if ($message_delay < 1) {
+		$message_delay = 6;
+	}
+	
 	return [
 		'elgg.data' => (object) elgg_trigger_plugin_hook('elgg.data', 'site', null, []),
 		'elgg.release' => elgg_get_release(),
 		'elgg.config.wwwroot' => elgg_get_site_url(),
+		'elgg.config.message_delay' => $message_delay * 1000,
 
 		// refresh token 3 times during its lifetime (in microseconds 1000 * 1/3)
 		'elgg.security.interval' => (int) _elgg_services()->csrf->getActionTokenTimeout() * 333,
