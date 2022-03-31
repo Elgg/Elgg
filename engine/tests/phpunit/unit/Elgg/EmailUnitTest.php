@@ -111,7 +111,7 @@ class EmailUnitTest extends UnitTestCase {
 		$this->assertEquals(['Baz' => 1], $email->getParams());
 	}
 
-	function testFactoryAddAttachmentFromParams() {
+	public function testFactoryAddAttachmentFromParams() {
 		
 		$email = Email::factory([
 			'from' => 'from@elgg.org',
@@ -133,7 +133,7 @@ class EmailUnitTest extends UnitTestCase {
 		$this->assertCount(1, $email->getAttachments());
 	}
 	
-	function testFactoryAddAttachmentsFromParams() {
+	public function testFactoryAddAttachmentsFromParams() {
 		
 		$file = new \ElggFile();
 		$file->owner_guid = 1;
@@ -162,7 +162,7 @@ class EmailUnitTest extends UnitTestCase {
 		$this->assertCount(2, $email->getAttachments());
 	}
 	
-	function testFactoryAddAttachments() {
+	public function testFactoryAddAttachments() {
 		
 		$file = new \ElggFile();
 		$file->owner_guid = 1;
@@ -202,7 +202,7 @@ class EmailUnitTest extends UnitTestCase {
 		$this->assertCount(3, $email->getAttachments());
 	}
 	
-	function testAddAttachmentFromPart() {
+	public function testAddAttachmentFromPart() {
 		
 		$email = new Email();
 		
@@ -224,7 +224,7 @@ class EmailUnitTest extends UnitTestCase {
 		$this->assertEquals($part->getDisposition(), $email_part->getDisposition());
 	}
 	
-	function testAddAttachmentFromElggFile() {
+	public function testAddAttachmentFromElggFile() {
 		
 		$file = new \ElggFile();
 		$file->owner_guid = 1;
@@ -248,7 +248,7 @@ class EmailUnitTest extends UnitTestCase {
 		$this->assertEquals($file->getFilename(), $email_part->getFileName());
 	}
 	
-	function testAddAttachmentFromArray() {
+	public function testAddAttachmentFromArray() {
 		
 		$attachment = [
 			'content' => 'Test file content',
@@ -271,7 +271,7 @@ class EmailUnitTest extends UnitTestCase {
 		$this->assertEquals($attachment['filename'], $email_part->getFileName());
 	}
 	
-	function testAddInvalidAttachmentFromArray() {
+	public function testAddInvalidAttachmentFromArray() {
 		
 		$attachment = [
 			'filename' => 'test.txt',
@@ -290,7 +290,7 @@ class EmailUnitTest extends UnitTestCase {
 		$this->assertCount(0, $email->getAttachments());
 	}
 	
-	function testSenderSetAndGet() {
+	public function testSenderSetAndGet() {
 		
 		$email = new Email();
 		$this->assertNull($email->getSender());
@@ -299,11 +299,24 @@ class EmailUnitTest extends UnitTestCase {
 		$this->assertEquals('bar', $email->getSender());
 	}
 	
-	function testSubjectIsLimited() {
+	public function testSubjectIsLimited() {
 		_elgg_services()->config->email_subject_limit = 7;
 		$email = new Email();
 		$email->setSubject('too long text');
 		
 		$this->assertEquals('too lon', $email->getSubject());
+	}
+	
+	public function testCreateEntityMessageID() {
+		$email = new Email();
+		$entity = $this->createObject();
+		
+		// without microtime
+		$result = $email->createEntityMessageID($entity);
+		$this->assertMatchesRegularExpression('/\S+\.entity\.[0-9]+@\S+/', $result);
+		
+		// with microtime
+		$result = $email->createEntityMessageID($entity, true);
+		$this->assertMatchesRegularExpression('/\S+\.entity\.[0-9]+\.[0-9\.]+@\S+/', $result);
 	}
 }

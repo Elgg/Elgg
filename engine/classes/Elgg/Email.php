@@ -348,6 +348,27 @@ final class Email {
 	public function getAttachments() {
 		return $this->attachments;
 	}
+	
+	/**
+	 * Create a Message-ID header string for the given entity
+	 *
+	 * @param \ElggEntity $entity        The entity to generate the header for
+	 * @param bool        $add_microtime Add a microtime to the header (used for non create events)
+	 *
+	 * @return string
+	 * @since 4.2
+	 */
+	public function createEntityMessageID(\ElggEntity $entity, bool $add_microtime = false): string {
+		$microtime = '';
+		if ($add_microtime) {
+			$microtime = '.' . microtime(true);
+		}
+		
+		$hostname = parse_url(elgg_get_site_url(), PHP_URL_HOST);
+		$urlPath = parse_url(elgg_get_site_url(), PHP_URL_PATH);
+		
+		return "{$urlPath}.entity.{$entity->guid}{$microtime}@{$hostname}";
+	}
 
 	/**
 	 * Converts mixed input to an instance of Laminas addres
