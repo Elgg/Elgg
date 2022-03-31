@@ -4,6 +4,7 @@ define(function(require) {
 	var $ = require('jquery');
 	require('jquery-mockjax');
 	var Ajax = require('elgg/Ajax');
+	var system_messages = require('elgg/system_messages');
 	var ajax = new Ajax();
 
 	$.mockjaxSettings.responseTime = 10;
@@ -269,15 +270,15 @@ define(function(require) {
 		});
 
 		it("handles server-sent messages and dependencies", function(done) {
-			var tmp_system_message = elgg.system_message;
-			var tmp_register_error = elgg.register_error;
+			var tmp_system_message = system_messages.success;
+			var tmp_register_error = system_messages.error;
 			var tmp_require = Ajax._require;
 			var captured = {};
 
-			elgg.system_message = function (arg) {
+			system_messages.success = function (arg) {
 				captured.msg = arg;
 			};
-			elgg.register_error = function (arg) {
+			system_messages.error = function (arg) {
 				captured.error = arg;
 			};
 			Ajax._require = function (arg) {
@@ -304,8 +305,8 @@ define(function(require) {
 					deps: ['foo']
 				});
 
-				elgg.system_message = tmp_system_message;
-				elgg.register_error = tmp_register_error;
+				system_messages.success = tmp_system_message;
+				system_messages.error = tmp_register_error;
 				Ajax._require = tmp_require;
 
 				done();
@@ -313,15 +314,15 @@ define(function(require) {
 		});
 		
 		it("can prevent output of server-sent messages and dependencies", function(done) {
-			var tmp_system_message = elgg.system_message;
-			var tmp_register_error = elgg.register_error;
+			var tmp_system_message = system_messages.success;
+			var tmp_register_error = system_messages.error;
 			var tmp_require = Ajax._require;
 			var captured = {};
 			
-			elgg.system_message = function (arg) {
+			system_messages.success = function (arg) {
 				captured.msg = arg;
 			};
-			elgg.register_error = function (arg) {
+			system_messages.error = function (arg) {
 				captured.error = arg;
 			};
 			Ajax._require = function (arg) {
@@ -346,8 +347,8 @@ define(function(require) {
 					deps: ['foo']
 				});
 				
-				elgg.system_message = tmp_system_message;
-				elgg.register_error = tmp_register_error;
+				system_messages.success = tmp_system_message;
+				system_messages.error = tmp_register_error;
 				Ajax._require = tmp_require;
 				
 				done();
@@ -355,15 +356,15 @@ define(function(require) {
 		});
 
 		it("error handler still handles server-sent messages and dependencies", function (done) {
-			var tmp_system_message = elgg.system_message;
-			var tmp_register_error = elgg.register_error;
+			var tmp_system_message = system_messages.success;
+			var tmp_register_error = system_messages.error;
 			var tmp_require = Ajax._require;
 			var captured = {};
 
-			elgg.system_message = function (arg) {
+			system_messages.success = function (arg) {
 				captured.msg = arg;
 			};
-			elgg.register_error = function (arg) {
+			system_messages.error = function (arg) {
 				captured.error = arg;
 			};
 			Ajax._require = function (arg) {
@@ -391,8 +392,8 @@ define(function(require) {
 					deps: ['foo']
 				});
 
-				elgg.system_message = tmp_system_message;
-				elgg.register_error = tmp_register_error;
+				system_messages.success = tmp_system_message;
+				system_messages.error = tmp_register_error;
 				Ajax._require = tmp_require;
 
 				done();
@@ -400,10 +401,10 @@ define(function(require) {
 		});
 
 		it("outputs the generic error if no server-sent message", function (done) {
-			var tmp_register_error = elgg.register_error;
+			var tmp_register_error = system_messages.error;
 			var captured = {};
 
-			elgg.register_error = function (arg) {
+			system_messages.error = function (arg) {
 				captured.error = arg;
 			};
 
@@ -419,17 +420,17 @@ define(function(require) {
 					error: elgg.echo('ajax:error')
 				});
 
-				elgg.register_error = tmp_register_error;
+				system_messages.error = tmp_register_error;
 
 				done();
 			});
 		});
 
 		it("outputs the error message of the non-200 response", function (done) {
-			var tmp_register_error = elgg.register_error;
+			var tmp_register_error = system_messages.error;
 			var captured = {};
 
-			elgg.register_error = function (arg) {
+			system_messages.error = function (arg) {
 				captured.error = arg;
 			};
 
@@ -447,7 +448,7 @@ define(function(require) {
 					error: 'Server throws'
 				});
 
-				elgg.register_error = tmp_register_error;
+				system_messages.error = tmp_register_error;
 
 				done();
 			});

@@ -1,4 +1,4 @@
-define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
+define(['jquery', 'elgg/Ajax', 'elgg/system_messages'], function ($, Ajax, system_messages) {
 
 	$(document).on('submit', '.elgg-js-ajax-form', function (e) {
 		e.preventDefault();
@@ -10,7 +10,7 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 			data: ajax.objectify($form),
 			beforeSend: function() {
 				$form.find('[type="submit"]').prop('disabled', true);
-				elgg.clear_system_messages();
+				system_messages.clear();
 			}
 		}).done(function (json, status, jqXHR) {
 			if (typeof jqXHR.AjaxData.forward_url === 'string') {

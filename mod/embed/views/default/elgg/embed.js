@@ -1,7 +1,7 @@
 /**
  * Embed module bootstraps the embed funtionality
  */
-define(['jquery', 'elgg', 'elgg/lightbox', 'elgg/Ajax'], function ($, elgg, lightbox, Ajax) {
+define(['jquery', 'elgg', 'elgg/lightbox', 'elgg/Ajax', 'elgg/system_messages'], function ($, elgg, lightbox, Ajax, system_messages) {
 
 	var embed = {
 		/**
@@ -106,7 +106,7 @@ define(['jquery', 'elgg', 'elgg/lightbox', 'elgg/Ajax'], function ($, elgg, ligh
 					$('.embed-wrapper').parent().load(url);
 				},
 				error: function() {
-					elgg.register_error(elgg.echo('actiongatekeeper:uploadexceeded'));
+					system_messages.error(elgg.echo('actiongatekeeper:uploadexceeded'));
 					$('.embed-throbber').hide();
 					$('.embed-wrapper .elgg-form-file-upload').show();
 				}

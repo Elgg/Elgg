@@ -4,7 +4,7 @@
  * @internal
  * @since 3.0.0
  */
-define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup', 'jquery-ui/widgets/progressbar'], function($, elgg, Ajax, spinner, popup) {
+define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup', 'elgg/system_messages', 'jquery-ui/widgets/progressbar'], function($, elgg, Ajax, spinner, popup, system_messages) {
 
 	var UNKNOWN_COUNT = -1;
 	var upgrades = $('.elgg-item-object-elgg_upgrade');
@@ -180,7 +180,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup', 'jquery-ui/
 				if (done) {
 					if (numError > 0) {
 						// Upgrade finished with errors. Give instructions on how to proceed.
-						elgg.register_error(elgg.echo('upgrade:finished_with_errors'));
+						system_messages.error(elgg.echo('upgrade:finished_with_errors'));
 					}
 	
 					if (total == UNKNOWN_COUNT) {
