@@ -15,34 +15,6 @@ elgg.assertTypeOf = function(type, val) {
 };
 
 /**
- * Inherit the prototype methods from one constructor into another.
- *
- * @example
- * <pre>
- * function ParentClass(a, b) { }
- *
- * ParentClass.prototype.foo = function(a) { alert(a); }
- *
- * function ChildClass(a, b, c) {
- *     //equivalent of parent::__construct(a, b); in PHP
- *     ParentClass.call(this, a, b);
- * }
- *
- * elgg.inherit(ChildClass, ParentClass);
- *
- * var child = new ChildClass('a', 'b', 'see');
- * child.foo('boo!'); // alert('boo!');
- * </pre>
- *
- * @param {Function} Child Child class constructor.
- * @param {Function} Parent Parent class constructor.
- */
-elgg.inherit = function(Child, Parent) {
-	Child.prototype = new Parent();
-	Child.prototype.constructor = Child;
-};
-
-/**
  * Converts shorthand urls to absolute urls.
  *
  * If the url is already absolute or protocol-relative, no change is made.
@@ -285,4 +257,31 @@ elgg.getSelectorFromUrlFragment = function(url) {
 		}
 	}
 	return '';
+};
+
+/**
+ * Returns the GUID of the logged in user or 0.
+ *
+ * @return {number} The GUID of the logged in user
+ */
+elgg.get_logged_in_user_guid = function() {
+	return elgg.user ? elgg.user.guid : 0;
+};
+
+/**
+ * Returns if a user is logged in.
+ *
+ * @return {boolean} Whether there is a user logged in
+ */
+elgg.is_logged_in = function() {
+	return elgg.get_logged_in_user_guid > 0;
+};
+
+/**
+ * Returns if the currently logged in user is an admin.
+ *
+ * @return {boolean} Whether there is an admin logged in
+ */
+elgg.is_admin_logged_in = function() {
+	return elgg.user ? elgg.user.admin : false;
 };

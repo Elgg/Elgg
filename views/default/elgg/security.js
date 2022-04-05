@@ -78,6 +78,7 @@ define(['jquery', 'elgg'], function ($, elgg) {
 	
 						if (elgg.get_logged_in_user_guid() != data.user_guid) {
 							elgg.session.user = null;
+							elgg.user = null;
 							clearInterval(tokenRefreshTimer);
 							if (data.user_guid) {
 								system_messages.error(elgg.echo('session_changed_user'));

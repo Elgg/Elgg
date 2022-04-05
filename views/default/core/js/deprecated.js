@@ -391,3 +391,105 @@ elgg.security.addToken = function (data) {
 		security.addToken(data);
 	});
 };
+
+/**
+ * Inherit the prototype methods from one constructor into another.
+ *
+ * @example
+ * <pre>
+ * function ParentClass(a, b) { }
+ *
+ * ParentClass.prototype.foo = function(a) { alert(a); }
+ *
+ * function ChildClass(a, b, c) {
+ *     //equivalent of parent::__construct(a, b); in PHP
+ *     ParentClass.call(this, a, b);
+ * }
+ *
+ * elgg.inherit(ChildClass, ParentClass);
+ *
+ * var child = new ChildClass('a', 'b', 'see');
+ * child.foo('boo!'); // alert('boo!');
+ * </pre>
+ *
+ * @param {Function} Child Child class constructor.
+ * @param {Function} Parent Parent class constructor.
+ * @deprecated
+ */
+elgg.inherit = function(Child, Parent) {
+	Child.prototype = new Parent();
+	Child.prototype.constructor = Child;
+};
+
+/**
+ * Create a new ElggEntity
+ *
+ * @class Represents an ElggEntity
+ * @property {number} guid
+ * @property {string} type
+ * @property {string} subtype
+ * @property {number} owner_guid
+ * @property {number} container_guid
+ * @property {number} time_created
+ * @property {number} time_updated
+ * @property {string} url
+ * @deprecated
+ */
+elgg.ElggEntity = function(o) {
+	$.extend(this, o);
+};
+
+/**
+ * Create a new ElggUser
+ *
+ * @param {Object} o
+ * @extends ElggEntity
+ * @class Represents an ElggUser
+ * @property {string} name
+ * @property {string} username
+ * @property {string} language
+ * @property {boolean} admin
+ * @deprecated
+ */
+elgg.ElggUser = function(o) {
+	elgg.ElggEntity.call(this, o);
+};
+
+elgg.inherit(elgg.ElggUser, elgg.ElggEntity);
+
+/**
+ * Is this user an admin?
+ *
+ * @warning The admin state of the user should be checked on the server for any
+ * actions taken that require admin privileges.
+ *
+ * @return {boolean}
+ * @deprecated
+ */
+elgg.ElggUser.prototype.isAdmin = function() {
+	return this.admin;
+};
+
+// This just has to happen after ElggUser is defined, however it's probably
+// better to have this procedural code here than in ElggUser.js
+if (elgg.session.user) {
+	elgg.session.user = new elgg.ElggUser(elgg.session.user);
+}
+
+/**
+ * Returns the object of the user logged in.
+ *
+ * @return {ElggUser} The logged in user
+ * @deprecated
+ */
+elgg.get_logged_in_user_entity = function() {
+	return elgg.session.user;
+};
+
+/**
+ * @return {number} The GUID of the page owner entity or 0 for no owner
+ * @deprecated
+ */
+elgg.get_page_owner_guid = function() {
+	return elgg.page_owner ? elgg.page_owner.guid : 0;
+};

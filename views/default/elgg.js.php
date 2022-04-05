@@ -8,14 +8,9 @@ $core_js_views = [
 	'elgglib.js',
 	'deprecated.js',
 	
-	// class definitions
-	'ElggEntity.js',
-	'ElggUser.js',
-	
 	//libraries
 	'hooks.js',
 	'languages.js',
-	'session.js',
 	'configuration.js',
 	
 	//ui
