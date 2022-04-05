@@ -166,4 +166,4 @@ elgg.security.init = function () {
 	elgg.security.tokenRefreshTimer = setInterval(elgg.security.refreshToken, elgg.security.interval);
 };
 
-elgg.register_hook_handler('boot', 'system', elgg.security.init);
+elgg.register_hook_handler('init', 'system', elgg.security.init);
