@@ -1484,10 +1484,6 @@ function _elgg_get_js_page_data() {
 		'_data' => (object) $data,
 	];
 
-	if (_elgg_services()->config->elgg_load_sync_code) {
-		$elgg['config']['load_sync_code'] = true;
-	}
-
 	$page_owner = elgg_get_page_owner_entity();
 	if ($page_owner instanceof ElggEntity) {
 		$elgg['page_owner'] = $page_owner->toObject(); // @todo remove in Elgg 5.0

@@ -52,7 +52,6 @@ use Elgg\Traits\Loggable;
  * @property int           $default_limit							The default "limit" used in listings and queries
  * @property bool          $disable_rss 							Is RSS disabled
  * @property bool          $elgg_config_locks 						The application will lock some settings (default true)
- * @property bool          $elgg_load_sync_code
  * @property bool          $elgg_maintenance_mode                   Flag if maintenance mode is enabled
  * @property string        $elgg_settings_file
  * @property bool          $email_html_part                         Determines if email has a html part
