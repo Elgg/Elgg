@@ -1,4 +1,4 @@
-define(['jquery', 'elgg', 'elgg/spinner', 'elgg/Ajax', 'elgg/system_messages', 'jquery-ui/widgets/sortable'], function($, elgg, spinner, Ajax, system_messages) {
+define(['jquery', 'elgg', 'elgg/spinner', 'elgg/Ajax', 'elgg/system_messages', 'elgg/security', 'jquery-ui/widgets/sortable'], function($, elgg, spinner, Ajax, system_messages, security) {
 
 	function freezePlugins() {
 		$('#elgg-plugin-list-cover').css('display', 'block');
@@ -85,7 +85,7 @@ define(['jquery', 'elgg', 'elgg/spinner', 'elgg/Ajax', 'elgg/system_messages', '
 		// the new page. Using ajax leads to complexity because Elgg wants to send the error
 		// messages back to the client.
 		var $form = $('<form method="post" />');
-		$form.prop('action', elgg.security.addToken(this.href));
+		$form.prop('action', security.addToken(this.href));
 		$form.append('<input type="hidden" name="guids" value="' + guids.join(',') + '" />');
 		$form.appendTo("body").submit();
 	};

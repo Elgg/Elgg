@@ -14,7 +14,6 @@ $core_js_views = [
 	
 	//libraries
 	'hooks.js',
-	'security.js',
 	'languages.js',
 	'session.js',
 	'configuration.js',
@@ -68,4 +67,4 @@ if (!window._require_queue) {
 
 elgg.trigger_hook('init', 'system');
 
-require(['elgg/lightbox']);
+require(['elgg/lightbox', 'elgg/security']);

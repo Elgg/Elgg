@@ -298,35 +298,6 @@ Emit a hook event in the event system.
     value = elgg.trigger_hook('my_plugin:filter', 'value', {}, value);
 
 
-``elgg.security.refreshToken()``
-
-Force a refresh of all XSRF tokens on the page.
-
-This is automatically called every 5 minutes by default.
-
-The user will be warned if their session has expired.
-
-
-``elgg.security.addToken()``
-
-Add a security token to an object, URL, or query string:
-
-.. code-block:: js
-
-   // returns {
-   //   __elgg_token: "1468dc44c5b437f34423e2d55acfdd87",
-   //   __elgg_ts: 1328143779,
-   //   other: "data"
-   // }
-   elgg.security.addToken({'other': 'data'});
-
-   // returns: "action/add?__elgg_ts=1328144079&__elgg_token=55fd9c2d7f5075d11e722358afd5fde2"
-   elgg.security.addToken("action/add");
-
-   // returns "?arg=val&__elgg_ts=1328144079&__elgg_token=55fd9c2d7f5075d11e722358afd5fde2"
-   elgg.security.addToken("?arg=val");
-
-
 ``elgg.get_logged_in_user_entity()``
 
 Returns the logged in user as an JS ElggUser object.
@@ -387,6 +358,28 @@ The ``elgg/system_messages`` module can be used to show system messages to the u
        system_messages.clear();
    });
 
+Module ``elgg/security``
+------------------------
+
+The ``elgg/security`` module can be used to add a security token to an object, URL, or query string:
+
+.. code-block:: js
+
+	define(['elgg/security'], function (security) {
+       // returns {
+	   //   __elgg_token: "1468dc44c5b437f34423e2d55acfdd87",
+	   //   __elgg_ts: 1328143779,
+	   //   other: "data"
+	   // }
+	   security.addToken({'other': 'data'});
+	
+	   // returns: "action/add?__elgg_ts=1328144079&__elgg_token=55fd9c2d7f5075d11e722358afd5fde2"
+	   security.addToken("action/add");
+	
+	   // returns "?arg=val&__elgg_ts=1328144079&__elgg_token=55fd9c2d7f5075d11e722358afd5fde2"
+	   security.addToken("?arg=val");
+   });
+   
 Module ``elgg/spinner``
 -----------------------
 

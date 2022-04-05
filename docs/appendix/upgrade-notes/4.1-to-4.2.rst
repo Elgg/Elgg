@@ -34,6 +34,11 @@ System messages
 
 If you use system messages in your javascript, you now should require the `elgg/system_messages` module.
 
+Security tokens
+~~~~~~~~~~~~~~~
+
+If you use ``elgg.security.addToken()`` in your javascript, you now should require the `elgg/security` module.
+
 Security
 --------
 
