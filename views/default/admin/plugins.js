@@ -1,4 +1,4 @@
-define(['jquery', 'elgg', 'elgg/spinner', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function($, elgg, spinner, Ajax) {
+define(['jquery', 'elgg', 'elgg/spinner', 'elgg/Ajax', 'elgg/system_messages', 'jquery-ui/widgets/sortable'], function($, elgg, spinner, Ajax, system_messages) {
 
 	function freezePlugins() {
 		$('#elgg-plugin-list-cover').css('display', 'block');
@@ -73,7 +73,7 @@ define(['jquery', 'elgg', 'elgg/spinner', 'elgg/Ajax', 'jquery-ui/widgets/sortab
 		});
 
 		if (!guids.length) {
-			elgg.register_error(elgg.echo('admin:plugins:already:' + state));
+			system_messages.error(elgg.echo('admin:plugins:already:' + state));
 			unfreezePlugins();
 			return;
 		}

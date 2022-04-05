@@ -71,7 +71,7 @@ elgg.security.refreshToken = function () {
 		return key;
 	});
 
-	require(['elgg/Ajax'], function(Ajax) {
+	require(['elgg/Ajax', 'elgg/system_messages'], function(Ajax, system_messages) {
 		var ajax = new Ajax(false);
 		ajax.path('refresh_token', {
 			data: {
@@ -87,9 +87,9 @@ elgg.security.refreshToken = function () {
 						elgg.session.user = null;
 						clearInterval(elgg.security.tokenRefreshTimer);
 						if (data.user_guid) {
-							elgg.register_error(elgg.echo('session_changed_user'));
+							system_messages.error(elgg.echo('session_changed_user'));
 						} else {
-							elgg.register_error(elgg.echo('session_expired'));
+							system_messages.error(elgg.echo('session_expired'));
 						}
 					}
 				}

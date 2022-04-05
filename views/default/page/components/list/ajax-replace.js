@@ -1,7 +1,7 @@
 /**
  * Ajax lists - replace behaviour
  */
-define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
+define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/system_messages'], function ($, elgg, Ajax, system_messages) {
 	// register click event
 	$(document).on('click', '.elgg-list-container-ajax-replace .elgg-pagination a', function (event) {
 		event.preventDefault();
@@ -36,7 +36,7 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 						scrollTop: $(id_selector).offset().top
 					}, 500);
 				} else {
-					elgg.register_error(elgg.echo('ajax:pagination:no_data'));
+					system_messages.error(elgg.echo('ajax:pagination:no_data'));
 				}
 			},
 		});

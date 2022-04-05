@@ -29,6 +29,11 @@ Javascript functions
 The Elgg javascript libraries have gotten a massive overhaul. A lot of functions have been deprecated. 
 You can find all deprecated functions and globals in `views/default/core/js/deprecated.js`.
 
+System messages
+~~~~~~~~~~~~~~~
+
+If you use system messages in your javascript, you now should require the `elgg/system_messages` module.
+
 Security
 --------
 

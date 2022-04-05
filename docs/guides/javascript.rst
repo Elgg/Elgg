@@ -245,24 +245,6 @@ Translate interface text
    elgg.echo('example:text', ['arg1']);
 
 
-``elgg.system_message()``
-
-Display a status message to the user.
-
-.. code-block:: js
-
-   elgg.system_message(elgg.echo('success'));
-
-
-``elgg.register_error()``
-
-Display an error message to the user.
-
-.. code-block:: js
-
-   elgg.register_error(elgg.echo('error'));
-
-
 ``elgg.normalize_url()``
 
 Normalize a URL relative to the elgg root:
@@ -389,6 +371,21 @@ Module ``elgg/Ajax``
 --------------------
 
 See the :doc:`ajax` page for details.
+
+Module ``elgg/system_messages``
+-------------------------------
+
+The ``elgg/system_messages`` module can be used to show system messages to the user. 
+
+.. code-block:: js
+
+   define(['elgg/system_messages'], function (system_messages) {
+       system_messages.success('Your success message');
+       
+       system_messages.error('Your error message');
+       
+       system_messages.clear();
+   });
 
 Module ``elgg/spinner``
 -----------------------

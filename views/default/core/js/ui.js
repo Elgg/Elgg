@@ -18,9 +18,6 @@ elgg.ui.init = function () {
 		}
 	});
 
-	$('.elgg-page-default .elgg-system-messages .elgg-message').parent().animate({opacity: 0.9}, elgg.config.message_delay);
-	$('.elgg-page-default .elgg-system-messages .elgg-message-success').parent().fadeOut('slow');
-
 	$(document).on('click', '[rel=toggle]', elgg.ui.toggles);
 
 	require(['elgg/popup'], function(popup) {
