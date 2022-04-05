@@ -210,7 +210,12 @@ define(['jquery', 'elgg', 'elgg/spinner'], function ($, elgg, spinner) {
 
 				jqXHR.AjaxData = data;
 
-				return JSON.stringify(data.value);
+				if (data.value !== undefined) {
+					// regular JSON responses wrap the 'data' in 'value'
+					return JSON.stringify(data.value);
+				}
+				
+				return JSON.stringify(data);
 			};
 
 			options.url = elgg.normalize_url(options.url);
