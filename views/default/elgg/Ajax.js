@@ -1,4 +1,4 @@
-define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages'], function ($, elgg, spinner, system_messages) {
+define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages', 'elgg/security'], function ($, elgg, spinner, system_messages, security) {
 	
 	var site_url = elgg.get_site_url(),
 		action_base = site_url + 'action/',
@@ -351,7 +351,7 @@ define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages'], function ($, 
 			if (m && /(^|&)__elgg_ts=/.test(m[1])) {
 				// token will be in the URL
 			} else {
-				options.data = elgg.security.addToken(options.data);
+				options.data = security.addToken(options.data);
 			}
 
 			options.method = options.method || 'POST';

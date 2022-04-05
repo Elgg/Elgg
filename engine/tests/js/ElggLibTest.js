@@ -85,7 +85,6 @@ define(function(require) {
 					elgg.require('jQuery');
 					elgg.require('elgg');
 					elgg.require('elgg.config');
-					elgg.require('elgg.security');
 				}).not.toThrow();
 			});
 			

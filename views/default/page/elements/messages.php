@@ -8,6 +8,10 @@
 
 $messages = (array) elgg_extract('object', $vars, []);
 
+if (!empty($messages)) {
+	elgg_require_js('elgg/system_messages');
+}
+
 // hidden li so we validate, we need this for javascript added system messages
 $list_items = elgg_format_element('li', ['class' => 'hidden']);
 

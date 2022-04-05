@@ -3,6 +3,7 @@ define(function(require) {
 	var elgg = require('elgg');
 	var $ = require('jquery');
 	require('jquery-mockjax');
+	var security = require('elgg/security');
 	var Ajax = require('elgg/Ajax');
 	var system_messages = require('elgg/system_messages');
 	var ajax = new Ajax();
@@ -251,7 +252,7 @@ define(function(require) {
 		it("does not add tokens if already in action URL", function() {
 			var ts = elgg.security.token.__elgg_ts;
 
-			var url = elgg.security.addToken(root + 'action/foo');
+			var url = security.addToken(root + 'action/foo');
 
 			ajax.action(url);
 			expect(ajax._ajax_options.data.__elgg_ts).toBe(undefined);

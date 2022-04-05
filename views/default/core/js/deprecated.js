@@ -378,3 +378,16 @@ elgg.register_error = function(errors, delay) {
 		messages.error(errors, delay);
 	});
 };
+
+/**
+ * Add elgg action tokens to an object, URL, or query string (with a ?).
+ *
+ * @param {FormData|Object|string} data
+ * @return {FormData|Object|string} The new data object including action tokens
+ * @deprecated
+ */
+elgg.security.addToken = function (data) {
+	require(['elgg/security'], function(security) {
+		security.addToken(data);
+	});
+};
