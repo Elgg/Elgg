@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
+	use MessageTesting;
+	
 	/**
 	 * @var ActionsService
 	 */
@@ -710,7 +712,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(RedirectResponse::class, $response);
 		$this->assertEquals(ELGG_HTTP_FOUND, $response->getStatusCode());
 		$this->assertEquals(elgg_normalize_url('index'), $response->getTargetURL());
-		$this->assertContains('success', _elgg_services()->system_messages->dumpRegister()['success']);
+		
+		$this->assertSystemMessageEmitted('success');
 	}
 
 	public function testCanRespondToNonAjaxRequestFromErrorResponseBuilder() {
@@ -732,7 +735,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(RedirectResponse::class, $response);
 		$this->assertEquals(ELGG_HTTP_FOUND, $response->getStatusCode());
 		$this->assertEquals(elgg_normalize_url('index'), $response->getTargetURL());
-		$this->assertContains('error', _elgg_services()->system_messages->dumpRegister()['error']);
+		
+		$this->assertErrorMessageEmitted('error');
 	}
 
 	public function testCanRespondToNonAjaxRequestFromRedirectResponseBuilder() {

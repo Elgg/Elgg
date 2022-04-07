@@ -1,7 +1,7 @@
 <?php
 
 if (!isset($vars['entity']) || !$vars['entity'] instanceof ElggSite) {
-	register_error('$vars not set by ajax.form()');
+	elgg_register_error_message('$vars not set by ajax.form()');
 }
 
 ?><p>view demo</p>

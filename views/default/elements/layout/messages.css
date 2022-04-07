@@ -7,7 +7,41 @@
 	right: 1rem;
 	max-width: 30rem;
 	
-	&.elgg-message {
-		cursor: pointer;
+	.elgg-message{
+		position: relative;
+		
+		&:before {
+			content: "x";
+			top: -8px;
+			right: -8px;
+			position: absolute;
+			
+			color: inherit;
+			border-width: 2px;
+			border-style: solid;
+			border-color: inherit;
+			background: inherit;
+			width: 20px;
+			height: 20px;
+			border-radius: 500px;
+			text-align: center;
+			cursor: pointer;
+			
+			font-size: 14px;
+			font-weight: bold;
+			line-height: 14px;
+		}
+	}
+}
+
+@media (hover: hover) {
+	.elgg-system-messages .elgg-message {
+		&:before {
+			display: none;
+		}
+		
+		&:hover:before {
+			display: block;
+		}
 	}
 }

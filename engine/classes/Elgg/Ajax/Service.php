@@ -241,7 +241,14 @@ class Service {
 		}
 
 		if ($this->request->getParam('elgg_fetch_messages', true)) {
-			$response->getData()->_elgg_msgs = (object) $this->msgs->dumpRegister();
+			$messages = $this->msgs->dumpRegister();
+			foreach ($messages as $type => $msgs) {
+				$messages[$type] = array_map(function($value) {
+					return (string) $value;
+				}, $msgs);
+			}
+			
+			$response->getData()->_elgg_msgs = (object) $messages;
 		}
 
 		if ($this->request->getParam('elgg_fetch_deps', true)) {

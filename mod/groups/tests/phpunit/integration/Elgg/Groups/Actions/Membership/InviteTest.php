@@ -6,6 +6,8 @@ use Elgg\ActionResponseTestCase;
 
 class InviteTest extends ActionResponseTestCase {
 	
+	use \Elgg\MessageTesting;
+	
 	/**
 	 * @var \ElggGroup
 	 */
@@ -88,10 +90,7 @@ class InviteTest extends ActionResponseTestCase {
 		
 		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
 		
-		$system_messages = _elgg_services()->system_messages->dumpRegister();
-		$this->assertIsArray($system_messages);
-		$this->assertArrayHasKey('error', $system_messages);
-		$this->assertContains(elgg_echo('groups:useralreadyinvited'), $system_messages['error']);
+		$this->assertErrorMessageEmitted(elgg_echo('groups:useralreadyinvited'));
 	}
 	
 	public function testAlreadyInvitedUserWithResendInvite() {
@@ -105,10 +104,7 @@ class InviteTest extends ActionResponseTestCase {
 		
 		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
 		
-		$system_messages = _elgg_services()->system_messages->dumpRegister();
-		$this->assertIsArray($system_messages);
-		$this->assertArrayHasKey('success', $system_messages);
-		$this->assertContains(elgg_echo('groups:userinvited'), $system_messages['success']);
+		$this->assertSystemMessageEmitted(elgg_echo('groups:userinvited'));
 	}
 	
 	public function testInviteGroupMember() {
@@ -137,10 +133,7 @@ class InviteTest extends ActionResponseTestCase {
 		
 		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
 		
-		$system_messages = _elgg_services()->system_messages->dumpRegister();
-		$this->assertIsArray($system_messages);
-		$this->assertArrayHasKey('success', $system_messages);
-		$this->assertContains(elgg_echo('groups:userinvited'), $system_messages['success']);
+		$this->assertSystemMessageEmitted(elgg_echo('groups:userinvited'));
 		
 		$this->assertNotFalse(check_entity_relationship($this->group->guid, 'invited', $this->user->guid));
 	}

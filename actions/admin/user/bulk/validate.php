@@ -23,11 +23,11 @@ elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($user_guids) {
 		$user->setValidationStatus(true, 'manual');
 		
 		if ($user->isValidated() !== true) {
-			register_error(elgg_echo('action:user:validate:error', [$user->getDisplayName()]));
+			elgg_register_error_message(elgg_echo('action:user:validate:error', [$user->getDisplayName()]));
 			continue;
 		}
 		
-		system_message(elgg_echo('action:user:validate:success', [$user->getDisplayName()]));
+		elgg_register_success_message(elgg_echo('action:user:validate:success', [$user->getDisplayName()]));
 	}
 });
 

@@ -10,6 +10,7 @@ echo elgg_view_message('help', 'Help message (.elgg-message-help) example with a
 		'class' => ['elgg-button', 'elgg-button-action'],
 	]]]),
 ]);
+echo elgg_view_message('info', 'Info message (.elgg-message-info) example with a call to action', ['link' => '<a href="#">Do it!</a>']);
 echo elgg_view_message('info', 'Info message (.elgg-message-info) example with a <a href="#">link</a>');
 echo elgg_view_message('warning', 'Warning message (.elgg-message-warning) example with a <a href="#">link</a>');
 echo elgg_view_message('error', 'Error message (.elgg-message-error) example with a <a href="#">link</a>');

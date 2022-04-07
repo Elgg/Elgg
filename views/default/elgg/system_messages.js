@@ -1,7 +1,41 @@
 define(['jquery', 'elgg'], function ($, elgg) {
 
 	// hide the current messages (not on admin pages)
-	$('.elgg-page-default .elgg-system-messages .elgg-message-success').parent().animate({opacity: '1.0'}, elgg.config.message_delay).fadeOut('slow');
+	$('.elgg-page-default .elgg-system-messages .elgg-message').each(function () {
+		var $message = $(this);
+		
+		var delay = $message.data().ttl;
+		if (delay === 0) {
+			// 0 means an explicit persistent message
+			return;
+		}
+		
+		if (!delay && !$message.hasClass('elgg-message-error')) {
+			delay = elgg.config.message_delay;
+		}
+		
+		if (!delay) {
+			return;
+		}
+		
+		var $list_item = $message.parent();
+		$list_item.animate({opacity: '1.0'}, delay).fadeOut('slow');
+	});
+
+	// if the user clicks the before pseudo selector of a system message, make it disappear
+	$(document).on('click', '.elgg-system-messages .elgg-message', function(e) {
+		var $this = $(this);
+
+		// slideUp allows dismissals without notices shifting around unpredictably
+		$this.clearQueue().slideUp(100, function () {
+			$this.remove();
+		});
+	});
+	
+	$(document).on('click', '.elgg-system-messages .elgg-message .elgg-inner', function(e) {
+		// prevent clicks from bubbling to top so 'closing' a message only works with before pseudo selector content
+		e.stopImmediatePropagation();
+	});
 	
 	/**
 	 * Displays system messages via javascript rather than php.

@@ -1,12 +1,13 @@
 <?php
 /**
- * Elgg message element
+ * Elgg message element (all unsupported vars will be passed as attributes to the container)
  *
  * @uses $vars['type']      The type of message (error, success, warning, help, notice, info)
  * @uses $vars['title']     Optional title text, will default to the type
  * @uses $vars['icon_name'] Optional iconname to override default icon
  * @uses $vars['menu']      Optional menu to show in the title bar
  * @uses $vars['body']      Content of the body
+ * @uses $vars['link']      Optional call to action text added to the body
  * @uses $vars['class']     Optional additional class for message
  */
 
@@ -14,9 +15,14 @@ $type = elgg_extract('type', $vars, false);
 $title = elgg_extract('title', $vars);
 $menu = elgg_extract('menu', $vars);
 $body = elgg_extract('body', $vars, '');
+$link = elgg_extract('link', $vars);
 
 if (empty($title) && empty($body)) {
 	return;
+}
+
+if (!empty($link)) {
+	$body = elgg_view_image_block('', $body, ['image_alt' => $link]);
 }
 
 $attrs = [
@@ -24,7 +30,7 @@ $attrs = [
 ];
 
 if ($type) {
-	$attrs['class'][] = "elgg-message-$type";
+	$attrs['class'][] = "elgg-message-{$type}";
 }
 
 $default_icons = [
@@ -65,5 +71,15 @@ if (!empty($body)) {
 }
 
 $contents = elgg_format_element('div', ['class' => 'elgg-inner'], $header . $body);
+
+unset($vars['type']);
+unset($vars['title']);
+unset($vars['icon_name']);
+unset($vars['menu']);
+unset($vars['body']);
+unset($vars['link']);
+unset($vars['class']);
+
+$attrs = array_merge($vars, $attrs);
 
 echo elgg_format_element('div', $attrs, $contents);

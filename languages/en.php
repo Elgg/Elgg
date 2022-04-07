@@ -1189,7 +1189,7 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'content:latest' => 'Latest activity',
 	
 	'list:out_of_bounds' => "You have reached a part of the list without any content, however there is content available.",
-	'list:out_of_bounds:link' => "Go back to the first page of this listing.",
+	'list:out_of_bounds:link' => "Go back to the first page",
 
 	'link:text' => 'view link',
 

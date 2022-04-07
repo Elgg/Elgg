@@ -15,17 +15,17 @@ foreach ($plugin_guids as $guid) {
 	$plugin = get_entity($guid);
 
 	if (!$plugin instanceof ElggPlugin) {
-		register_error(elgg_echo('admin:plugins:deactivate:no', [$guid]));
+		elgg_register_error_message(elgg_echo('admin:plugins:deactivate:no', [$guid]));
 		continue;
 	}
 
 	try {
 		if (!$plugin->deactivate()) {
-			register_error(elgg_echo('admin:plugins:deactivate:no', [$plugin->getDisplayName()]));
+			elgg_register_error_message(elgg_echo('admin:plugins:deactivate:no', [$plugin->getDisplayName()]));
 			continue;
 		}
 	} catch (\Elgg\Exceptions\PluginException $e) {
-		register_error(elgg_echo('admin:plugins:deactivate:no_with_msg', [$plugin->getDisplayName(), $e->getMessage()]));
+		elgg_register_error_message(elgg_echo('admin:plugins:deactivate:no_with_msg', [$plugin->getDisplayName(), $e->getMessage()]));
 		continue;
 	}
 	

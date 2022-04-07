@@ -52,6 +52,6 @@ Interface and annotations
 Messages
 --------
 
-- ``system_message($message)`` Registers a success message
-- ``register_error($message)`` Registers an error message
+- ``elgg_register_success_message($message)`` Registers a success message
+- ``elgg_register_error_message($message)`` Registers an error message
 - ``elgg_view_message($type, $message)`` Outputs a message

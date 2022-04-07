@@ -37,3 +37,33 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = []) {
 	
 	return elgg_view('output/url', $vars);
 }
+
+/**
+ * Display a system message on next page load.
+ *
+ * @param string|array $message Message or messages to add
+ *
+ * @return bool
+ * @deprecated 4.2 use elgg_register_success_message()
+ */
+function system_message($message) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated use elgg_register_success_message()', '4.2');
+	
+	_elgg_services()->system_messages->addSuccessMessage($message);
+	return true;
+}
+
+/**
+ * Display an error on next page load.
+ *
+ * @param string|array $error Error or errors to add
+ *
+ * @return bool
+ * @deprecated 4.2 use elgg_register_error_message()
+ */
+function register_error($error) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated use elgg_register_error_message()', '4.2');
+	
+	_elgg_services()->system_messages->addErrorMessage($error);
+	return true;
+}

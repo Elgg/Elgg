@@ -65,7 +65,7 @@ try {
 		// It makes no sense for AJAX actions as a OK response with a forward will instantly redirect without time to read the message
 		$error = $e->getMessage();
 		if (!empty($error) && !elgg_is_xhr()) {
-			register_error($error);
+			elgg_register_error_message($error);
 		}
 		
 		return elgg_ok_response('', '', $forward);

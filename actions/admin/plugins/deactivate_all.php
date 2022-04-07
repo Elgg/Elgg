@@ -43,7 +43,7 @@ if (empty($errors)) {
 }
 
 foreach ($errors as $error) {
-	register_error($error);
+	elgg_register_error_message($error);
 }
 
 return elgg_error_response();
