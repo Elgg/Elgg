@@ -1484,20 +1484,18 @@ function _elgg_get_js_page_data() {
 		'_data' => (object) $data,
 	];
 
-	if (_elgg_services()->config->elgg_load_sync_code) {
-		$elgg['config']['load_sync_code'] = true;
-	}
-
 	$page_owner = elgg_get_page_owner_entity();
 	if ($page_owner instanceof ElggEntity) {
-		$elgg['page_owner'] = $page_owner->toObject();
+		$elgg['page_owner'] = $page_owner->toObject(); // @todo remove in Elgg 5.0
 	}
 
 	$user = elgg_get_logged_in_user_entity();
 	if ($user instanceof ElggUser) {
 		$user_object = $user->toObject();
 		$user_object->admin = $user->isAdmin();
-		$elgg['session']['user'] = $user_object;
+		$elgg['session']['user'] = $user_object; // @todo remove in Elgg 5.0
+		
+		$elgg['user'] = (array) $user_object;
 	}
 
 	return $elgg;

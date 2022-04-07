@@ -39,6 +39,12 @@ Security tokens
 
 If you use ``elgg.security.addToken()`` in your javascript, you now should require the `elgg/security` module.
 
+ElggUser & ElggEntity
+~~~~~~~~~~~~~~~~~~~~~
+
+The javascript equivalent of the ``ElggUser`` and ``ElggEntity`` should no longer be used. The logged in user entity should no longer be referenced in
+the ``elgg.session.user`` page data. You can find its attributes in ``elgg.user`` as an array.
+
 Security
 --------
 
