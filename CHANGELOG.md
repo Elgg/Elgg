@@ -1,3 +1,22 @@
+<a name="4.1.6"></a>
+### 4.1.6  (2022-04-08)
+
+#### Contributors
+
+* Jeroen Dalsem (2)
+* Jerôme Bakker (2)
+
+#### Performance
+
+* **input:** only filter input params once ([66107ced](https://github.com/Elgg/Elgg/commit/66107ced1f74f228c914fd6c3b4a6387ac3e8c60))
+
+
+#### Bug Fixes
+
+* **custom_index:** added missing activity module content ([ed4575bd](https://github.com/Elgg/Elgg/commit/ed4575bd11b0626b92245345795d953a978af49f))
+* **js:** security tokens are refreshed automatically ([26fc2206](https://github.com/Elgg/Elgg/commit/26fc2206cb9c66e6104470c71d6b9086648d8f41))
+
+
 <a name="4.1.5"></a>
 ### 4.1.5  (2022-03-25)
 
