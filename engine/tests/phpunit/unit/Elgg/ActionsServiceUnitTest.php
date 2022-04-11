@@ -51,7 +51,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	public function down() {
 		_elgg_services()->hooks->restore();
-		_elgg_services()->logger->enable();
 	}
 
 	function createService(Request $request) {

@@ -41,18 +41,6 @@ System hooks
 **diagnostics:report, system**
 	Filters the output for a diagnostic report.
 
-**debug, log**
-	Triggered by the Logger. Return false to stop the default logging method. ``$params`` includes:
-
-	* level - The debug level. One of:
-		* ``Elgg_Logger::OFF``
-		* ``Elgg_Logger::ERROR``
-		* ``Elgg_Logger::WARNING``
-		* ``Elgg_Logger::NOTICE``
-		* ``Elgg_Logger::INFO``
-	* msg - The message
-	* display - Should this message be displayed?
-
 **format, friendly:title**
 	Formats the "friendly" title for strings. This is used for generating URLs.
 

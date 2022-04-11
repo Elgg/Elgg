@@ -16,10 +16,6 @@ class PluginsListCommandTest extends UnitTestCase {
 		_elgg_services()->logger->disable();
 	}
 
-	public function down() {
-		_elgg_services()->logger->enable();
-	}
-
 	/**
 	 * @dataProvider statusProvider
 	 */

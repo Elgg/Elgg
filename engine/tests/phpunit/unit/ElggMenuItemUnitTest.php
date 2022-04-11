@@ -11,7 +11,6 @@ class ElggMenuItemUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->logger->disable();
 		$this->assertNull(\ElggMenuItem::factory(array('name' => 'test')));
 		$this->assertNull(\ElggMenuItem::factory(array('text' => 'test')));
-		_elgg_services()->logger->enable();
 	}
 
 	public function testFactoryNoHref() {

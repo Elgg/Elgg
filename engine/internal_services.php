@@ -115,7 +115,6 @@ return [
 		$logger = \Elgg\Logger::factory($c->cli_input, $c->cli_output);
 
 		$logger->setLevel($c->config->debug);
-		$logger->setHooks($c->hooks);
 
 		return $logger;
     }),

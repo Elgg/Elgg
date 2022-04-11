@@ -93,8 +93,6 @@ abstract class ElggEntityPluginSettingsTestCase extends IntegrationTestCase {
 		_elgg_services()->logger->disable();
 		
 		$this->assertFalse($this->entity->setPluginSetting('test_plugin', 'invalid_value', $value));
-		
-		_elgg_services()->logger->enable();
 	}
 	
 	/**
