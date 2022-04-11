@@ -82,6 +82,11 @@ class EntityTable {
 	 * @var Translator
 	 */
 	protected $translator;
+	
+	/**
+	 * @var int[]
+	 */
+	protected $deleted_guids = [];
 
 	/**
 	 * Constructor
@@ -561,6 +566,9 @@ class EntityTable {
 			$entity->ban();
 		}
 
+		// we're going to delete this entity, log the guid to prevent deadloops
+		$this->deleted_guids[] = $entity->guid;
+		
 		if ($recursive) {
 			$this->deleteRelatedEntities($entity);
 		}
@@ -606,6 +614,12 @@ class EntityTable {
 			]);
 			/* @var $e \ElggEntity */
 			foreach ($batch as $e) {
+				if (in_array($e->guid, $this->deleted_guids)) {
+					// prevent deadloops, doing this here in case of large deletes which could cause query length issues
+					$batch->reportFailure();
+					continue;
+				}
+				
 				if (!$this->delete($e, true)) {
 					$batch->reportFailure();
 				}

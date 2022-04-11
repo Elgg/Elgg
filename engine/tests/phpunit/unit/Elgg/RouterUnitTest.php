@@ -72,7 +72,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	public function down() {
 		_elgg_services()->hooks->restore();
-		_elgg_services()->logger->enable();
 	}
 
 	protected function createService(Request $request) {

@@ -62,14 +62,9 @@ class Logger extends \Monolog\Logger {
 	protected $level;
 
 	/**
-	 * @var PluginHooksService
-	 */
-	protected $hooks;
-
-	/**
 	 * @var array
 	 */
-	private $disabled_stack;
+	protected $disabled_stack = [];
 
 	/**
 	 * Build a new logger
@@ -342,17 +337,5 @@ class Logger extends \Monolog\Logger {
 	 */
 	public function enable() {
 		return array_pop($this->disabled_stack);
-	}
-
-	/**
-	 * Reset the hooks service for this instance (testing)
-	 *
-	 * @param PluginHooksService $hooks the plugin hooks service
-	 *
-	 * @return void
-	 * @internal
-	 */
-	public function setHooks(PluginHooksService $hooks) {
-		$this->hooks = $hooks;
 	}
 }

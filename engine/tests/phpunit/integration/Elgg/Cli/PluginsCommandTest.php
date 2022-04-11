@@ -44,8 +44,6 @@ class PluginsCommandTest extends IntegrationTestCase {
 				elgg_get_plugin_from_id($id)->delete();
 			});
 		}
-
-		_elgg_services()->logger->enable();
 	}
 
 	public function testActivatesPluginsWithDependencies() {

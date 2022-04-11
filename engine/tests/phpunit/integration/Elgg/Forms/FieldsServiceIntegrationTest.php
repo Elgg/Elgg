@@ -72,8 +72,6 @@ class FieldsServiceIntegrationTest extends IntegrationTestCase {
 				'something' => 'else',
 			],
 		], elgg()->fields->get('foo', 'bar'));
-		
-		_elgg_services()->logger->enable();
 	}
 	
 	public function testFieldsConfigIsCached() {

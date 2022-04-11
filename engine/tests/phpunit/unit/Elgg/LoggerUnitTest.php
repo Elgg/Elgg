@@ -10,52 +10,46 @@ use Psr\Log\LogLevel;
  */
 class LoggerUnitTest extends \Elgg\UnitTestCase {
 
+	/**
+	 * @var Logger
+	 */
+	protected $service;
+	
+	public function up() {
+		$this->service = _elgg_services()->logger;
+	}
+	
 	public function testLoggingOff() {
-		$logger = $this->getLoggerInstance();
+		$logger = $this->service;
 		$logger->setLevel(false);
 		$logger->log(LogLevel::NOTICE, "hello");
 	}
 
 	public function testLoggingLevelTooLow() {
-		$logger = $this->getLoggerInstance();
+		$logger = $this->service;
 		$logger->setLevel(LogLevel::WARNING);
 		$logger->log(LogLevel::NOTICE, "hello");
 	}
 
 	public function testLoggingLevelNotExist() {
-		$logger = $this->getLoggerInstance();
+		$logger = $this->service;
 		$logger->log(12, "hello");
 	}
 
 	public function testDisablePreventsProcessingAndCapturesLogCalls() {
-		$logger = _elgg_services()->logger;
+		$logger = $this->service;
+		
 		$logger->disable();
-		$hooks = _elgg_services()->hooks;
-		$logger->setHooks($hooks);
-		$hooks->backup();
-
-		$num_processed = 0;
-		$hooks->registerHandler('debug', 'log', function (\Elgg\Hook $hook) use (&$num_processed) {
-			$num_processed++;
-			return false;
-		});
+		
 		$logger->error("Testing");
-
-		$this->assertEquals(0, $num_processed, "disable() still allowed log to be processed");
-
-		$captured = $logger->enable();
-
+		
 		$this->assertEquals([
 			['message' => 'Testing', 'level' => LogLevel::ERROR],
-				], $captured);
-
-		$hooks->restore();
+		], $logger->enable());
 	}
 
 	public function testDisableEnableActsAsAStack() {
-		$logger = _elgg_services()->logger;
-		$hooks = _elgg_services()->hooks;
-		$hooks->backup();
+		$logger = $this->service;
 
 		$logger->disable();
 		$logger->error("Test1");
@@ -65,24 +59,10 @@ class LoggerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals([
 			['message' => 'Test2', 'level' => LogLevel::WARNING],
-				], $logger->enable());
+		], $logger->enable());
 
 		$this->assertEquals([
 			['message' => 'Test1', 'level' => LogLevel::ERROR],
-				], $logger->enable());
-
-		$hooks->restore();
-	}
-
-	protected function getLoggerInstance() {
-		$mock = $this->createMock('\Elgg\PluginHooksService', array('trigger'));
-		$mock->expects($this->never())->method('trigger');
-
-		$logger =  new \Elgg\Logger('elgg');
-		$logger->setHooks($mock);
-
-		_elgg_services()->set('logger', $logger);
-
-		return $logger;
+		], $logger->enable());
 	}
 }

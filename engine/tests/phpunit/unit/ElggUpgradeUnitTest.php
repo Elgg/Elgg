@@ -88,8 +88,6 @@ class ElggUpgradeUnitTest extends \Elgg\UnitTestCase {
 
 		$this->obj->setClass(\Elgg\Helpers\Upgrade\TestBatch::class);
 		$this->assertInstanceOf(\Elgg\Helpers\Upgrade\TestBatch::class, $this->obj->getBatch());
-
-		_elgg_services()->logger->enable();
 	}
 	
 	public function testSetCompleted() {
