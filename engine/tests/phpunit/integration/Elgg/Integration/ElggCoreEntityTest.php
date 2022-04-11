@@ -696,4 +696,38 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		];
 	}
 	
+	public function testDeleteDeadloopPrevented() {
+		$user = $this->getAdmin();
+		
+		$session = elgg_get_session();
+		$session->setLoggedInUser($user);
+		
+		$object1 = $this->createObject([
+			'owner_guid' => $user->guid,
+		]);
+		$object2 = $this->createObject([
+			'owner_guid' => $user->guid,
+			'container_guid' => $object1->guid,
+		]);
+		$object3 = $this->createObject([
+			'owner_guid' => $user->guid,
+			'container_guid' => $object2->guid,
+		]);
+		
+		$object1->container_guid = $object3->guid;
+		$object1->save();
+		
+		$called_guids = [];
+		$testing_event = $this->registerTestingEvent('delete:before', 'object', function(\Elgg\Event $event) use (&$called_guids) {
+			$object = $event->getObject();
+			$this->assertNotContains($object->guid, $called_guids, 'Deadloop detected during entity delete');
+			
+			$called_guids[] = $object->guid;
+		});
+		
+		$object1->delete();
+		
+		$testing_event->assertNumberOfCalls(3);
+		$testing_event->unregister();
+	}
 }
