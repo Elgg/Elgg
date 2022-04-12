@@ -6,6 +6,8 @@ use Elgg\ActionResponseTestCase;
 
 class JoinTest extends ActionResponseTestCase {
 	
+	use \Elgg\MessageTesting;
+	
 	/**
 	 * @var \ElggGroup
 	 */
@@ -65,11 +67,8 @@ class JoinTest extends ActionResponseTestCase {
 		
 		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
 		$this->assertEquals($this->group->getURL(), $response->getForwardURL());
-		
-		$system_messages = _elgg_services()->system_messages->dumpRegister('success');
-		$this->assertIsArray($system_messages);
-		$this->assertArrayHasKey('success', $system_messages);
-		$this->assertContains(elgg_echo('groups:joined'), $system_messages['success']);
+				
+		$this->assertSystemMessageEmitted(elgg_echo('groups:joined'));
 		
 		$this->assertTrue($this->group->isMember($this->user));
 	}
@@ -87,10 +86,7 @@ class JoinTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
 		$this->assertEquals($this->group->getURL(), $response->getForwardURL());
 		
-		$system_messages = _elgg_services()->system_messages->dumpRegister('success');
-		$this->assertIsArray($system_messages);
-		$this->assertArrayHasKey('success', $system_messages);
-		$this->assertContains(elgg_echo('groups:joined'), $system_messages['success']);
+		$this->assertSystemMessageEmitted(elgg_echo('groups:joined'));
 		
 		$this->assertTrue($this->group->isMember($this->user));
 	}
@@ -108,10 +104,7 @@ class JoinTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
 		$this->assertEquals($this->group->getURL(), $response->getForwardURL());
 		
-		$system_messages = _elgg_services()->system_messages->dumpRegister('success');
-		$this->assertIsArray($system_messages);
-		$this->assertArrayHasKey('success', $system_messages);
-		$this->assertContains(elgg_echo('groups:joined'), $system_messages['success']);
+		$this->assertSystemMessageEmitted(elgg_echo('groups:joined'));
 		
 		$this->assertTrue($this->group->isMember($this->user));
 	}
@@ -141,10 +134,7 @@ class JoinTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
 		$this->assertEquals(REFERER, $response->getForwardURL());
 		
-		$system_messages = _elgg_services()->system_messages->dumpRegister('success');
-		$this->assertIsArray($system_messages);
-		$this->assertArrayHasKey('success', $system_messages);
-		$this->assertContains(elgg_echo('groups:joinrequestmade'), $system_messages['success']);
+		$this->assertSystemMessageEmitted(elgg_echo('groups:joinrequestmade'));
 		
 		$this->assertNotFalse(check_entity_relationship($this->user->guid, 'membership_request', $this->group->guid));
 	}

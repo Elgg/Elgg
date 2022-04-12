@@ -31,27 +31,41 @@ function elgg_set_http_header($header, $replace = true) {
 }
 
 /**
- * Display a system message on next page load.
+ * Registers a success system message
  *
- * @param string|array $message Message or messages to add
+ * @param string|array $options a single string or an array of system message options
  *
- * @return bool
+ * @see \ElggSystemMessage::factory()
+ *
+ * @return void
+ * @since 4.2
  */
-function system_message($message) {
-	_elgg_services()->system_messages->addSuccessMessage($message);
-	return true;
+function elgg_register_success_message($options): void {
+	if (!is_array($options)) {
+		$options = ['message' => $options];
+	}
+	
+	$options['type'] = 'success';
+	_elgg_services()->system_messages->addMessage($options);
 }
 
 /**
- * Display an error on next page load.
+ * Registers a error system message
  *
- * @param string|array $error Error or errors to add
+ * @param string|array $options a single string or an array of system message options
  *
- * @return bool
+ * @see \ElggSystemMessage::factory()
+ *
+ * @return void
+ * @since 4.2
  */
-function register_error($error) {
-	_elgg_services()->system_messages->addErrorMessage($error);
-	return true;
+function elgg_register_error_message($options): void {
+	if (!is_array($options)) {
+		$options = ['message' => $options];
+	}
+	
+	$options['type'] = 'error';
+	_elgg_services()->system_messages->addMessage($options);
 }
 
 /**

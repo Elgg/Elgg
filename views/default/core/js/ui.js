@@ -6,18 +6,6 @@ elgg.ui.init = function () {
 	// add user hover menus
 	elgg.ui.initHoverMenu();
 
-	// if the user clicks a system message (not a link inside one), make it disappear
-	$(document).on('click', '.elgg-system-messages .elgg-message', function(e) {
-		if (!$(e.target).is('a')) {
-			var $this = $(this);
-
-			// slideUp allows dismissals without notices shifting around unpredictably
-			$this.clearQueue().slideUp(100, function () {
-				$this.remove();
-			});
-		}
-	});
-
 	$(document).on('click', '[rel=toggle]', elgg.ui.toggles);
 
 	require(['elgg/popup'], function(popup) {

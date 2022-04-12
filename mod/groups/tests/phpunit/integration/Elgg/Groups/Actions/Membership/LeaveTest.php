@@ -6,6 +6,8 @@ use Elgg\ActionResponseTestCase;
 
 class LeaveTest extends ActionResponseTestCase {
 	
+	use \Elgg\MessageTesting;
+	
 	/**
 	 * @var \ElggGroup
 	 */
@@ -90,11 +92,8 @@ class LeaveTest extends ActionResponseTestCase {
 		
 		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
 		$this->assertEquals(REFERER, $response->getForwardURL());
-		
-		$system_messages = _elgg_services()->system_messages->dumpRegister('success');
-		$this->assertIsArray($system_messages);
-		$this->assertArrayHasKey('success', $system_messages);
-		$this->assertContains(elgg_echo('groups:left'), $system_messages['success']);
+
+		$this->assertSystemMessageEmitted(elgg_echo('groups:left'));
 		
 		$this->assertFalse($this->group->isMember($this->user));
 	}

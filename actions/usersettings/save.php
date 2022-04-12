@@ -41,11 +41,11 @@ if (elgg_trigger_plugin_hook('usersettings:save', 'user', $hooks_params, true)) 
 foreach ($request->validation()->all() as $item) {
 	if ($item->isValid()) {
 		if ($message = $item->getMessage()) {
-			system_message($message);
+			elgg_register_success_message($message);
 		}
 	} else {
 		if ($error = $item->getError()) {
-			register_error($error);
+			elgg_register_error_message($error);
 		}
 	}
 }

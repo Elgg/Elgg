@@ -18,8 +18,6 @@ if (empty($user_guid)) {
 	return elgg_ok_response();
 }
 
-$errors = [];
-
 foreach ($user_guid as $u_guid) {
 	$user = get_user($u_guid);
 	if (empty($user)) {
@@ -27,7 +25,7 @@ foreach ($user_guid as $u_guid) {
 	}
 	
 	if ($group->isMember($user)) {
-		$errors[] = elgg_echo('groups:add:alreadymember', [$user->getDisplayName()]);
+		elgg_register_error_message(elgg_echo('groups:add:alreadymember', [$user->getDisplayName()]));
 		
 		// if an invitation is still pending clear it up, we don't need it
 		remove_entity_relationship($group->guid, 'invited', $user->guid);
@@ -39,7 +37,7 @@ foreach ($user_guid as $u_guid) {
 	}
 	
 	if (!$group->join($user, ['create_river_item' => true])) {
-		$errors[] = elgg_echo('groups:error:addedtogroup', [$user->getDisplayName()]);
+		elgg_register_error_message(elgg_echo('groups:error:addedtogroup', [$user->getDisplayName()]));
 		
 		continue;
 	}
@@ -59,14 +57,6 @@ foreach ($user_guid as $u_guid) {
 
 	// Send welcome notification to user
 	notify_user($user->getGUID(), $group->owner_guid, $subject, $body, $params);
-
-	system_message(elgg_echo('groups:addedtogroup'));
 }
 
-if ($errors) {
-	foreach ($errors as $error) {
-		register_error($error);
-	}
-}
-
-return elgg_ok_response();
+return elgg_ok_response('', elgg_echo('groups:addedtogroup'));

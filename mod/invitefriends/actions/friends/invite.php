@@ -74,14 +74,14 @@ foreach ($emails as $email_address) {
 }
 
 if ($error) {
-	register_error(elgg_echo('invitefriends:invitations_sent', [$sent_total]));
+	elgg_register_error_message(elgg_echo('invitefriends:invitations_sent', [$sent_total]));
 
 	if (count($bad_emails) > 0) {
-		register_error(elgg_echo('invitefriends:email_error', [implode(', ', $bad_emails)]));
+		elgg_register_error_message(elgg_echo('invitefriends:email_error', [implode(', ', $bad_emails)]));
 	}
 
 	if (count($already_members) > 0) {
-		register_error(elgg_echo('invitefriends:already_members', [implode(', ', $already_members)]));
+		elgg_register_error_message(elgg_echo('invitefriends:already_members', [implode(', ', $already_members)]));
 	}
 	
 	return elgg_error_response();

@@ -32,7 +32,7 @@ foreach ($user_guids as $guid) {
 	if (check_entity_relationship($group->guid, 'invited', $user->guid)) {
 		// user already invited, do we need to resend the invitation
 		if (!$resend_invitation) {
-			register_error(elgg_echo('groups:useralreadyinvited'));
+			elgg_register_error_message(elgg_echo('groups:useralreadyinvited'));
 			continue;
 		}
 		$invite = false;
@@ -72,9 +72,9 @@ foreach ($user_guids as $guid) {
 	$result = notify_user($user->guid, $group->owner_guid, $subject, $body, $params);
 
 	if ($result) {
-		system_message(elgg_echo('groups:userinvited'));
+		elgg_register_success_message(elgg_echo('groups:userinvited'));
 	} else {
-		register_error(elgg_echo('groups:usernotinvited'));
+		elgg_register_error_message(elgg_echo('groups:usernotinvited'));
 	}
 }
 

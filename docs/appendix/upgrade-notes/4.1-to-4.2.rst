@@ -23,6 +23,12 @@ Before this change if you saved a boolean value it would be returned as an integ
 
 	If you saved boolean values previously they will still be integers in the database (until saved again).
 
+System message functions
+------------------------
+
+The functions ``system_message()`` and ``register_error()`` have been replaced by ``elgg_register_success_message()`` and ``elgg_register_error_message()``. 
+The new functions have the ability to pass extra options to the system messages registry. 
+
 Javascript functions
 --------------------
 
@@ -63,3 +69,6 @@ Deprecated APIs
 ---------------
 
  * ``elgg_view_menu_item()`` use ``elgg_view('navigation/menu/elements/item/url', ['item' => $myMenuItem])``
+ * ``register_error()`` use ``elgg_register_error_message()``
+ * ``system_message()`` use ``elgg_register_success_message()``
+ 
