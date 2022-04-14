@@ -15,7 +15,7 @@ In addition to all parameters accepted by ``elgg_get_entities()``, ``elgg_search
 
  * ``query``         Search query
  * ``fields``        An array of names by property type to search in (see example below)
- * ``sort``          An array containing sorting options, including `property`, `property_type` and `direction`
+ * ``sort_by``       An array containing sorting options, including `property`, `property_type` and `direction`
  * ``type``          Entity type to search
  * ``subtype``       Optional entity subtype to search
  * ``search_type``   Custom search type (required if no ``type`` is provided)
@@ -36,11 +36,11 @@ In addition to all parameters accepted by ``elgg_get_entities()``, ``elgg_search
             'metadata' => ['description'],
             'annotations' => ['location'],
         ],
-        'sort' => [
+        'sort_by' => [
             'property' => 'zipcode',
             'property_type' => 'annotation',
             'direction' => 'asc',
-        ]
+        ],
     ];
 
     echo elgg_list_entities($options, 'elgg_search');

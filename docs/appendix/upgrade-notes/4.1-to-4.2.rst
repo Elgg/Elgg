@@ -65,10 +65,19 @@ By default the following schemes are allowed: ``http, https, ftp, sftp, ssh, fil
 If you use the pattern ``elgg_view('output/url', ['text' => 'something', 'href' => 'javascript:void(0);'])`` update your code to set
 ``href`` to ``false``.
 
+Groups
+------
+
+The menu name for the tabs on the group members page has been replaced to use the default filter menu logic. Rewrite your plugin hooks 
+from ``menu:groups_members`` to ``menu:filter:groups/members``. Since this is a different menu the current group entity is now available
+in the hook parameter ``filter_entity``.
+
 Deprecated APIs
 ---------------
+
+Lib functions
+~~~~~~~~~~~~~
 
  * ``elgg_view_menu_item()`` use ``elgg_view('navigation/menu/elements/item/url', ['item' => $myMenuItem])``
  * ``register_error()`` use ``elgg_register_error_message()``
  * ``system_message()`` use ``elgg_register_success_message()``
- 

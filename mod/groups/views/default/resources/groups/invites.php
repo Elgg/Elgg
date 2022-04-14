@@ -22,13 +22,11 @@ $content = elgg_list_relationships([
 	'no_results' => true,
 ]);
 
-$tabs = elgg_view_menu('groups_members', [
-	'entity' => $group,
-	'class' => 'elgg-tabs'
-]);
-
 // draw page
 echo elgg_view_page(elgg_echo('groups:invitedmembers'), [
 	'content' => $content,
-	'filter' => $tabs,
+	'filter_id' => 'groups/members',
+	'filter_value' => 'membership_invites',
+	'filter_entity' => $group,
+	'filter_sorting' => false,
 ]);

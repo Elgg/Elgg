@@ -1503,6 +1503,71 @@ class QueryOptionsTest extends UnitTestCase {
 		$this->assertEquals('foo.baz', $clause->expr);
 		$this->assertEquals('DESC', $clause->direction);
 	}
+	
+	public function testNormalizeSortByOptionsAsArray() {
+		
+		$options = $this->options->normalizeOptions([
+			'order_by' => null,
+			'sort_by' => [
+				[
+					'property_type' => 'attribute',
+					'property' => 'time_created',
+					'direction' => 'asc',
+					'signed' => false,
+				],
+				[
+					'property_type' => 'metadata',
+					'property' => 'name',
+					'direction' => 'desc',
+				],
+			],
+		]);
+		
+		$this->assertEquals(2, count($options['order_by']));
+		
+		$clause = array_shift($options['order_by']);
+		/* @var $clause \Elgg\Database\Clauses\EntitySortByClause */
+		
+		$this->assertInstanceOf(EntitySortByClause::class, $clause);
+		$this->assertEquals('attribute', $clause->property_type);
+		$this->assertEquals('time_created', $clause->property);
+		$this->assertEquals('asc', $clause->direction);
+		$this->assertEquals('inner', $clause->join_type);
+		$this->assertFalse($clause->signed);
+		
+		$clause = array_shift($options['order_by']);
+		
+		$this->assertInstanceOf(EntitySortByClause::class, $clause);
+		$this->assertEquals('metadata', $clause->property_type);
+		$this->assertEquals('name', $clause->property);
+		$this->assertEquals('desc', $clause->direction);
+		$this->assertEquals('inner', $clause->join_type);
+	}
+	
+	public function testNormalizeSortByOptionsAsSingleArray() {
+
+		$options = $this->options->normalizeOptions([
+			'order_by' => null,
+			'sort_by' => [
+				'property_type' => 'attribute',
+				'property' => 'time_created',
+				'direction' => 'asc',
+				'signed' => false,
+			],
+		]);
+
+		$this->assertCount(1, $options['order_by']);
+
+		$clause = array_shift($options['order_by']);
+		/* @var $clause \Elgg\Database\Clauses\EntitySortByClause */
+
+		$this->assertInstanceOf(EntitySortByClause::class, $clause);
+		$this->assertEquals('attribute', $clause->property_type);
+		$this->assertEquals('time_created', $clause->property);
+		$this->assertEquals('asc', $clause->direction);
+		$this->assertEquals('inner', $clause->join_type);
+		$this->assertFalse($clause->signed);
+	}
 
 	public function testNormalizeGroupByOptions() {
 		$options = $this->options->normalizeOptions([

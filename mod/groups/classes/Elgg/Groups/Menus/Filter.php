@@ -22,21 +22,10 @@ class Filter {
 	
 		$return = $hook->getValue();
 		$return[] = \ElggMenuItem::factory([
-			'name' => 'newest',
-			'text' => elgg_echo('sort:newest'),
-			'href' => elgg_generate_url('collection:group:group:all', [
-				'filter' => 'newest',
-			]),
+			'name' => 'all',
+			'text' => elgg_echo('all'),
+			'href' => elgg_generate_url('collection:group:group:all'),
 			'priority' => 200,
-		]);
-	
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'alpha',
-			'text' => elgg_echo('sort:alpha'),
-			'href' => elgg_generate_url('collection:group:group:all', [
-				'filter' => 'alpha',
-			]),
-			'priority' => 250,
 		]);
 	
 		$return[] = \ElggMenuItem::factory([
@@ -87,5 +76,50 @@ class Filter {
 		]);
 		
 		return $return;
+	}
+	
+	/**
+	 * Setup group members tabs
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:filter:groups/members'
+	 *
+	 * @return void|\Elgg\Menu\MenuItems
+	 */
+	public static function registerGroupsMembers(\Elgg\Hook $hook) {
+		
+		$entity = $hook->getParam('filter_entity');
+		if (!$entity instanceof \ElggGroup) {
+			return;
+		}
+		
+		$menu = $hook->getValue();
+		$menu[] = \ElggMenuItem::factory([
+			'name' => 'members',
+			'text' => elgg_echo('groups:members'),
+			'href' => elgg_generate_url('collection:user:user:group_members', [
+				'guid' => $entity->guid,
+			]),
+			'priority' => 100,
+		]);
+		
+		if ($entity->canEdit()) {
+			$menu[] = \ElggMenuItem::factory([
+				'name' => 'membership_requests',
+				'text' => elgg_echo('groups:membershiprequests'),
+				'href' => elgg_generate_entity_url($entity, 'requests'),
+				'priority' => 300,
+			]);
+			
+			$menu[] = \ElggMenuItem::factory([
+				'name' => 'membership_invites',
+				'text' => elgg_echo('groups:invitedmembers'),
+				'href' => elgg_generate_url('collection:user:user:group_invites', [
+					'guid' => $entity->guid,
+				]),
+				'priority' => 400,
+			]);
+		}
+		
+		return $menu;
 	}
 }

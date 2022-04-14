@@ -376,11 +376,14 @@ function elgg_get_site_entity() {
  * Order by value of a specific annotation
  * @option array $order_by_annotation
  *
- * Order by value of a specific metadata/attribute
+ * Order by value of a specific metadata name
  * @option array $order_by_metadata
  *
  * Order by arbitrary clauses
  * @option array $order_by
+ *
+ * Order by attribute/annotation/metadata/private setting
+ * @option sort_by an array of sorting definitions
  *
  * <code>
  * $options['order_by_metadata'] = [
@@ -404,6 +407,32 @@ function elgg_get_site_entity() {
  * $options['order_by'] = [
  *     $sort_by,
  *     $fallback,
+ * ];
+ *
+ * // @see \Elgg\Database\Clauses\EntitySortByClause
+ * $options['sort_by'] = [
+ * 		[
+ * 			'property_type' => 'attribute',
+ * 			'property' => 'time_created',
+ * 			'direction' => 'ASC',
+ * 		],
+ * 		[
+ * 			'property_type' => 'metadata',
+ * 			'property' => 'name',
+ * 			'direction' => 'DESC',
+ * 		],
+ * 		[
+ * 			'property_type' => 'private_setting',
+ * 			'property' => 'some_name',
+ * 			'direction' => 'ASC',
+ * 			'signed' => true, // treat the value as an integer
+ * 		],
+ * 		[
+ * 			'property_type' => 'relationship',
+ * 			'property' => 'members',
+ * 			'direction' => 'ASC',
+ * 			'inverse_relationship' => true,
+ * 		],
  * ];
  * </code>
  *
@@ -585,6 +614,7 @@ function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities', 
 	$defaults = [
 		'offset' => (int) max(get_input($offset_key, 0), 0),
 		'limit' => (int) max(get_input('limit', _elgg_services()->config->default_limit), 0),
+		'sort_by' => get_input('sort_by', []),
 		'full_view' => false,
 		'pagination' => true,
 		'no_results' => '',
@@ -661,7 +691,6 @@ function elgg_get_entity_dates(array $options = []) {
  * 			'annotations' => ['some annotation name', 'some other annotation name'],
  * 			'private_settings' => ['some private_setting name', 'some other private_setting name'],
  * 		]
- * @option string $sort          An array containing 'property', 'property_type', 'direction' and 'signed'
  * @option bool   $partial_match Allow partial matches, e.g. find 'elgg' when search for 'el'
  * @option bool   $tokenize      Break down search query into tokens,
  *                               e.g. find 'elgg has been released' when searching for 'elgg released'

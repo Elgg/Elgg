@@ -85,11 +85,8 @@ return [
 			'resource' => 'groups/search',
 		],
 		'collection:user:user:group_members' => [
-			'path' => '/groups/members/{guid}/{sort?}',
+			'path' => '/groups/members/{guid}',
 			'resource' => 'groups/members',
-			'default' => [
-				'sort' => 'alpha',
-			],
 		],
 		'collection:user:user:group_invites' => [
 			'path' => '/groups/invites/{guid}',
@@ -222,12 +219,18 @@ return [
 			],
 			'menu:filter:groups/all' => [
 				'Elgg\Groups\Menus\Filter::registerGroupsAll' => [],
+				'Elgg\Menus\FilterSortItems::registerTimeCreatedSorting' => [],
+				'Elgg\Menus\FilterSortItems::registerNameSorting' => [],
+				'Elgg\Menus\FilterSortItems::registerSortingDropdown' => ['priority' => 9999],
 			],
 			'menu:filter:settings/notifications' => [
 				'Elgg\Groups\Menus\Filter::registerNotificationSettings' => [],
 			],
-			'menu:groups_members' => [
-				'Elgg\Groups\Menus\GroupsMembers::register' => [],
+			'menu:filter:groups/members' => [
+				'Elgg\Groups\Menus\Filter::registerGroupsMembers' => [],
+				'Elgg\Groups\Menus\FilterSortItems::registerMembershipSorting' => [],
+				'Elgg\Menus\FilterSortItems::registerNameSorting' => [],
+				'Elgg\Menus\FilterSortItems::registerSortingDropdown' => ['priority' => 9999],
 			],
 			'menu:page' => [
 				'Elgg\Groups\Menus\Page::register' => [],

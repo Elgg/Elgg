@@ -12,8 +12,11 @@ $options = [
 	'query' => $query,
 	'type' => 'group',
 	'limit' => $limit,
-	'sort' => 'name',
-	'order' => 'ASC',
+	'sort_by' => [
+		'property_type' => 'metadata',
+		'property' => 'name',
+		'direction' => 'ASC',
+	],
 	'fields' => ['metadata' => ['name']],
 	'item_view' => elgg_extract('item_view', $vars, 'search/entity'),
 	'input_name' => $input_name,
