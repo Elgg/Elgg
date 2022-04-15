@@ -62,6 +62,8 @@ if ($show_menu) {
 	$content .= elgg_view('navigation/menu/user_hover/placeholder', ['entity' => $user]);
 	
 	$wrapper_class[] = 'elgg-avatar-menu';
+	
+	elgg_require_js('icon/user/default');
 }
 
 if (elgg_extract('use_link', $vars, true)) {

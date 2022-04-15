@@ -531,3 +531,21 @@ elgg.echo = function(key, argv, language) {
 	var i18n = require('elgg/i18n');
 	return i18n.echo(key, argv, language);
 };
+
+/**
+ * This function registers two menu items that are actions that are the opposite
+ * of each other and ajaxifies them. E.g. like/unlike, friend/unfriend, ban/unban, etc.
+ *
+ * You can also add the data parameter 'data-toggle' to menu items to have them automatically
+ * registered as toggleable without the need to call this function.
+ * @deprecated
+ */
+elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
+	require(['navigation/menu/elements/item_toggle'], function() {
+		menuItemNameA = menuItemNameA.replace('_', '-');
+		menuItemNameB = menuItemNameB.replace('_', '-');
+
+		$('.elgg-menu-item-' + menuItemNameA + ' a').not('[data-toggle]').attr('data-toggle', menuItemNameB);
+		$('.elgg-menu-item-' + menuItemNameB + ' a').not('[data-toggle]').attr('data-toggle', menuItemNameA);
+	});
+};

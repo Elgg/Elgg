@@ -780,16 +780,18 @@ Javascript guidelines
 
 Same formatting standards as PHP apply.
 
-All functions should be in the ``elgg`` namespace.
+Related functions should be in a namespaced ``AMD`` module.
 
 Function expressions should end with a semi-colon.
 
 .. code-block:: js
 
-	elgg.ui.toggles = function(event) {
-		event.preventDefault();
-		$(target).slideToggle('medium');
-	};
+	define(['elgg'], function(elgg) {
+		function toggles(event) {
+			event.preventDefault();
+			$(target).slideToggle('medium');
+		};
+	});
 
 
 Deprecating APIs
