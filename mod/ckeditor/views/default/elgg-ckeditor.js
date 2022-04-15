@@ -14,6 +14,7 @@
 define(function (require) {
 	var elgg = require('elgg');
 	var $ = require('jquery');
+	var i18n = require('i18n');
 	require('jquery.ckeditor');
 
 	var CKEDITOR = require('ckeditor/ckeditor');
@@ -106,10 +107,10 @@ define(function (require) {
 			$(textarea).each(function() {
 				if (!$(this).data('ckeditorInstance')) {
 					$(this).ckeditor(elggCKEditor.init, $(this).data('elggCKEeditorConfig'));
-					$(this).data('toggler').html(elgg.echo('ckeditor:html'));
+					$(this).data('toggler').html(i18n.echo('ckeditor:html'));
 				} else {
 					$(this).ckeditorGet().destroy();
-					$(this).data('toggler').html(elgg.echo('ckeditor:visual'));
+					$(this).data('toggler').html(i18n.echo('ckeditor:visual'));
 				}
 			});
 		},
@@ -180,7 +181,7 @@ define(function (require) {
 			}
 
 			if (visual === false) {
-				$toggler.html(elgg.echo('ckeditor:visual'));
+				$toggler.html(i18n.echo('ckeditor:visual'));
 			}
 
 			// show the toggle-editor link which is hidden by default, so it will only show up if the editor is correctly loaded

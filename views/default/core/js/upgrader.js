@@ -4,7 +4,7 @@
  * @internal
  * @since 3.0.0
  */
-define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup', 'elgg/system_messages', 'jquery-ui/widgets/progressbar'], function($, elgg, Ajax, spinner, popup, system_messages) {
+define(['jquery', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup', 'elgg/system_messages', 'elgg/i18n', 'jquery-ui/widgets/progressbar'], function($, Ajax, spinner, popup, system_messages, i18n) {
 
 	var UNKNOWN_COUNT = -1;
 	var upgrades = $('.elgg-item-object-elgg_upgrade');
@@ -164,7 +164,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup', 'elgg/syste
 	
 				if (numError > 0) {
 					errorCounter
-						.text(elgg.echo('upgrade:error_count', [messages.length]))
+						.text(i18n.echo('upgrade:error_count', [messages.length]))
 						.css('color', 'red');
 				}
 	
@@ -180,7 +180,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup', 'elgg/syste
 				if (done) {
 					if (numError > 0) {
 						// Upgrade finished with errors. Give instructions on how to proceed.
-						system_messages.error(elgg.echo('upgrade:finished_with_errors'));
+						system_messages.error(i18n.echo('upgrade:finished_with_errors'));
 					}
 	
 					if (total == UNKNOWN_COUNT) {

@@ -64,7 +64,7 @@ define(['jquery', 'elgg'], function ($, elgg) {
 			return key;
 		});
 	
-		require(['elgg/Ajax', 'elgg/system_messages'], function(Ajax, system_messages) {
+		require(['elgg/Ajax', 'elgg/system_messages', 'elgg/i18n'], function(Ajax, system_messages, i18n) {
 			var ajax = new Ajax(false);
 			ajax.path('refresh_token', {
 				data: {
@@ -81,9 +81,9 @@ define(['jquery', 'elgg'], function ($, elgg) {
 							elgg.user = null;
 							clearInterval(tokenRefreshTimer);
 							if (data.user_guid) {
-								system_messages.error(elgg.echo('session_changed_user'));
+								system_messages.error(i18n.echo('session_changed_user'));
 							} else {
-								system_messages.error(elgg.echo('session_expired'));
+								system_messages.error(i18n.echo('session_expired'));
 							}
 						}
 					}

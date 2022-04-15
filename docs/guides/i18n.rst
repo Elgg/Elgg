@@ -89,7 +89,7 @@ To first test whether ``elgg_echo()`` can find a translation:
 Javascript API
 ==============
 
-``elgg.echo(key, args)``
+``i18n.echo(key, args)``
 
 This function is like ``elgg_echo`` in PHP.
 
@@ -97,8 +97,8 @@ Client-side translations are loaded asynchronously. Ensure translations are avai
 
 .. code-block:: js
 
-	define(['elgg'], function(elgg) {
-		alert(elgg.echo('my_key'));
+	define(['elgg/i18n'], function(i18n) {
+		alert(i18n.echo('my_key'));
 	});
 
 Translations are also available after the ``init, system`` JavaScript event.

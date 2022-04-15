@@ -493,3 +493,42 @@ elgg.get_logged_in_user_entity = function() {
 elgg.get_page_owner_guid = function() {
 	return elgg.page_owner ? elgg.page_owner.guid : 0;
 };
+
+/**
+ * Analagous to the php version.  Merges translations for a
+ * given language into the current translations map.
+ * @deprecated
+ */
+elgg.add_translation = function(lang, translations) {
+	var i18n = require('elgg/i18n');
+	i18n.addTranslation(lang, translations);
+};
+
+/**
+ * Get the current language
+ * @return {String}
+ * @deprecated
+ */
+elgg.get_language = function() {
+	return elgg.config.current_language;
+};
+
+/**
+ * Translates a string
+ *
+ * @note The current system only loads a single language module per page, and it comes pre-merged with English
+ *       translations. Hence, elgg.echo() can only return translations in the language returned by
+ *       elgg.get_language(). Requests for other languages will fail unless a 3rd party plugin has manually
+ *       used elgg.add_translation() to merge the language module ahead of time.
+ *
+ * @param {String} key      Message key
+ * @param {Array}  argv     vsprintf() arguments
+ * @param {String} language Requested language. Not recommended (see above).
+ *
+ * @return {String} The translation or the given key if no translation available
+ * @deprecated
+ */
+elgg.echo = function(key, argv, language) {
+	var i18n = require('elgg/i18n');
+	return i18n.echo(key, argv, language);
+};

@@ -1,7 +1,7 @@
 /**
  * Tabbed module
  */
-define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
+define(['jquery', 'elgg/Ajax'], function ($, Ajax) {
 
 	var ajax = new Ajax(false);
 
@@ -85,7 +85,9 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 				
 				changeTab($tab, true);
 			}).fail(function() {
-				$target.removeClass('elgg-ajax-loader').html(elgg.echo('ajax:error'));
+				require(['elgg/i18n'], function(i18n) {
+					$target.removeClass('elgg-ajax-loader').html(i18n.echo('ajax:error'));
+				});
 			});
 		}
 	};

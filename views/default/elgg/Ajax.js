@@ -1,4 +1,4 @@
-define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages', 'elgg/security'], function ($, elgg, spinner, system_messages, security) {
+define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages', 'elgg/security', 'elgg/i18n'], function ($, elgg, spinner, system_messages, security, i18n) {
 	
 	var site_url = elgg.get_site_url(),
 		action_base = site_url + 'action/',
@@ -185,7 +185,7 @@ define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages', 'elgg/security
 				}
 
 				if (!error_displayed && options.showErrorMessages) {
-					system_messages.error(elgg.echo('ajax:error'));
+					system_messages.error(i18n.echo('ajax:error'));
 				}
 				
 				// trigger custom error

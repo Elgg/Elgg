@@ -162,7 +162,8 @@ elgg.ui.initHoverMenu = function(parent) {
  * @return void
  */
 elgg.ui.requiresConfirmation = function(e) {
-	var confirmText = $(this).data('confirm') || elgg.echo('question:areyousure');
+	var i18n = require('elgg/i18n');
+	var confirmText = $(this).data('confirm') || i18n.echo('question:areyousure');
 	if (!confirm(confirmText)) {
 		e.preventDefault();
 		e.stopPropagation();

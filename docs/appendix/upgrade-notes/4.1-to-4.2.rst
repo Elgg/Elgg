@@ -45,6 +45,11 @@ Security tokens
 
 If you use ``elgg.security.addToken()`` in your javascript, you now should require the `elgg/security` module.
 
+Translations
+~~~~~~~~~~~~
+
+If you use ``elgg.echo()`` in your javascript, you now should require the `elgg/i18n` module.
+
 ElggUser & ElggEntity
 ~~~~~~~~~~~~~~~~~~~~~
 

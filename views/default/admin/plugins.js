@@ -1,4 +1,4 @@
-define(['jquery', 'elgg', 'elgg/spinner', 'elgg/Ajax', 'elgg/system_messages', 'elgg/security', 'jquery-ui/widgets/sortable'], function($, elgg, spinner, Ajax, system_messages, security) {
+define(['jquery', 'elgg/spinner', 'elgg/Ajax', 'elgg/system_messages', 'elgg/security', 'elgg/i18n', 'jquery-ui/widgets/sortable'], function($, spinner, Ajax, system_messages, security, i18n) {
 
 	function freezePlugins() {
 		$('#elgg-plugin-list-cover').css('display', 'block');
@@ -55,7 +55,7 @@ define(['jquery', 'elgg', 'elgg/spinner', 'elgg/Ajax', 'elgg/system_messages', '
 	function toggleAllPlugins(event) {
 		event.preventDefault();
 
-		if (!confirm(elgg.echo('question:areyousure'))) {
+		if (!confirm(i18n.echo('question:areyousure'))) {
 			return;
 		}
 
@@ -73,7 +73,7 @@ define(['jquery', 'elgg', 'elgg/spinner', 'elgg/Ajax', 'elgg/system_messages', '
 		});
 
 		if (!guids.length) {
-			system_messages.error(elgg.echo('admin:plugins:already:' + state));
+			system_messages.error(i18n.echo('admin:plugins:already:' + state));
 			unfreezePlugins();
 			return;
 		}

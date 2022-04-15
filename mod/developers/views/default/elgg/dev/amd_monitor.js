@@ -4,7 +4,7 @@
 
 	define(function (require) {
 		var $ = require('jquery');
-		var elgg = require('elgg');
+		var i18n = require('elgg/i18n');
 
 		var known = {};
 		var count = 0;
@@ -14,7 +14,7 @@
 				if (!known[name]) {
 					known[name] = 1;
 					count++;
-					console.log(count + ' ' + elgg.echo('developers:amd') + '(' + name + ')', val);
+					console.log(count + ' ' + i18n.echo('developers:amd') + '(' + name + ')', val);
 				}
 			});
 		}

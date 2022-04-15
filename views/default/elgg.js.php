@@ -3,32 +3,16 @@
  * Core Elgg JavaScript file
  */
 
-$core_js_views = [
-	// these must come first
-	'elgglib.js',
-	'deprecated.js',
-	
-	//libraries
-	'hooks.js',
-	'languages.js',
-	'configuration.js',
-	
-	//ui
-	'ui.js',
-];
-
-foreach ($core_js_views as $view) {
-	echo elgg_view("core/js/{$view}");
-	// putting a new line between the files to address https://github.com/elgg/elgg/issues/3081
-	echo PHP_EOL;
-}
+echo elgg_view('core/js/elgglib.js');
+echo elgg_view('core/js/deprecated.js');
+echo elgg_view('core/js/hooks.js');
+echo elgg_view('core/js/ui.js');
 
 foreach (_elgg_get_js_site_data() as $expression => $value) {
 	$value = json_encode($value);
 	echo "{$expression} = {$value};" . PHP_EOL;
 }
 ?>
-//<script>
 
 // page data overrides site data
 elgg.data = $.extend(true, {}, elgg.data, elgg._data);
@@ -39,13 +23,12 @@ define('jquery', function () {
 	return jQuery;
 });
 
-define('elgg', ['sprintf', 'jquery', 'languages/' + elgg.get_language()], function(vsprintf, $, translations) {
-	elgg.add_translation(elgg.get_language(), translations);
-
+define('elgg', [], function() {
 	return elgg;
 });
 
-require(['elgg']); // Forces the define() function to always run
+// @todo no longer require elgg/i18n in Elgg 5.0
+require(['elgg', 'elgg/i18n']); // Forces the define() function to always run
 
 // Process queue. We have to wait until now because many modules depend on 'elgg' and we can't load
 // it asynchronously.
