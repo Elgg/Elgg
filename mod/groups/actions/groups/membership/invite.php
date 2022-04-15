@@ -44,7 +44,10 @@ foreach ($user_guids as $guid) {
 
 	if ($invite) {
 		// Create relationship
-		add_entity_relationship($group->guid, 'invited', $user->guid);
+		if (!add_entity_relationship($group->guid, 'invited', $user->guid)) {
+			elgg_register_error_message(elgg_echo('groups:usernotinvited'));
+			continue;
+		}
 	}
 
 	$url = elgg_generate_url('collection:group:group:invitations', [
@@ -69,13 +72,9 @@ foreach ($user_guids as $guid) {
 	];
 
 	// Send notification
-	$result = notify_user($user->guid, $group->owner_guid, $subject, $body, $params);
-
-	if ($result) {
-		elgg_register_success_message(elgg_echo('groups:userinvited'));
-	} else {
-		elgg_register_error_message(elgg_echo('groups:usernotinvited'));
-	}
+	notify_user($user->guid, $group->owner_guid, $subject, $body, $params);
+	
+	elgg_register_success_message(elgg_echo('groups:userinvited'));
 }
 
 return elgg_ok_response();
