@@ -387,9 +387,8 @@ elgg.register_error = function(errors, delay) {
  * @deprecated
  */
 elgg.security.addToken = function (data) {
-	require(['elgg/security'], function(security) {
-		security.addToken(data);
-	});
+	var security = require('elgg/security');
+	return security.addToken(data);
 };
 
 /**
