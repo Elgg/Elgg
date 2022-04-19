@@ -36,8 +36,8 @@ Here we define a basic module that alters the page, by passing a "definition fun
 
     // in views/default/myplugin/say_hello.js
 
-    define(['jquery', 'elgg'], function($, elgg) {
-        $('body').append(elgg.echo('hello_world'));
+    define(['jquery', 'elgg/i18n'], function($, i18n) {
+        $('body').append(i18n.echo('hello_world'));
     });
 
 The module's name is determined by the view name, which here is ``myplugin/say_hello.js``.
@@ -57,8 +57,8 @@ the greeting:
 
     // in views/default/myplugin/hello.js
 
-    define(['elgg'], function(elgg) {
-        return elgg.echo('hello_world');
+    define(['elgg/i18n'], function(i18n) {
+        return i18n.echo('hello_world');
     });
 
 .. code-block:: js
@@ -236,15 +236,6 @@ Modules provided with Elgg
 Module ``elgg``
 ---------------
 
-``elgg.echo()``
-
-Translate interface text
-
-.. code-block:: js
-
-   elgg.echo('example:text', ['arg1']);
-
-
 ``elgg.normalize_url()``
 
 Normalize a URL relative to the elgg root:
@@ -342,6 +333,19 @@ Module ``elgg/Ajax``
 --------------------
 
 See the :doc:`ajax` page for details.
+
+Module ``elgg/i18n``
+-------------------------------
+
+The ``elgg/i18n`` module can be used to use translations. 
+
+Translate interface text
+
+.. code-block:: js
+
+   define(['elgg/i18n'], function (i18n) {
+       i18n.echo('example:text', ['arg1']);
+   });
 
 Module ``elgg/system_messages``
 -------------------------------

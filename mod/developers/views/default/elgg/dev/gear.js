@@ -1,12 +1,12 @@
 /**
  * Note, depends on $.colorbox!
  */
-define(['jquery', 'elgg', 'elgg/spinner', 'text!elgg/dev/gear.html', 'elgg/lightbox'], function ($, elgg, spinner, gear_html, lightbox) {
+define(['jquery', 'elgg', 'elgg/spinner', 'text!elgg/dev/gear.html', 'elgg/lightbox', 'elgg/i18n'], function ($, elgg, spinner, gear_html, lightbox, i18n) {
 
 	$(gear_html)
 		.appendTo('body')
 		.find('.elgg-icon')
-		.prop('title', elgg.echo('admin:developers:settings'))
+		.prop('title', i18n.echo('admin:developers:settings'))
 		.on('click', function () {
 			lightbox.open({
 				href: elgg.get_site_url() + 'ajax/view/developers/gear_popup',

@@ -1,7 +1,7 @@
 /**
  * Save draft through ajax
  */
-define(['jquery', 'elgg', 'elgg/Ajax'], function($, elgg, Ajax) {
+define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/i18n'], function($, elgg, Ajax, i18n) {
 	
 	var oldDescription = '';
 
@@ -21,7 +21,7 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function($, elgg, Ajax) {
 			}
 			$form.find('.blog-save-status-time').html(d.toLocaleDateString() + " @ " + d.getHours() + ":" + mins);
 		} else {
-			$form.find('.blog-save-status-time').html(elgg.echo('error'));
+			$form.find('.blog-save-status-time').html(i18n.echo('error'));
 		}
 	};
 

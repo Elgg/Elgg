@@ -11,6 +11,7 @@
  * @uses $vars['only_friends'] If enabled, will turn the input into a friends picker (default: false)
  * @uses $vars['show_friends'] Show the option to limit the search to friends (default: true)
  * @uses $vars['include_banned'] Include banned users in the search results (default: false)
+ * @uses $vars['placeholder'] Optional placeholder text for the input
  *
  * Defaults to lazy load user lists in alphabetical order. User needs
  * to type two characters before seeing the user popup list.
@@ -56,6 +57,7 @@ $picker = elgg_format_element('input', [
 	'type' => 'text',
 	'class' => 'elgg-input-user-picker',
 	'size' => 30,
+	'placeholder' => elgg_extract('placeholder', $vars),
 ]);
 
 $picker .= elgg_view('input/hidden', ['name' => $name]);

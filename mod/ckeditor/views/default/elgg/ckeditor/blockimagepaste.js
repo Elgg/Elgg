@@ -4,7 +4,9 @@ CKEDITOR.plugins.add( 'blockimagepaste', {
 	init : function(editor) {
 		function replaceImgText(html) {
 			var ret = html.replace( /<img[^>]*src="data:image\/(bmp|dds|gif|jpg|jpeg|png|psd|pspimage|tga|thm|tif|tiff|yuv|ai|eps|ps|svg);base64,.*?"[^>]*>/gi, function( img ){
-				alert(elgg.echo('ckeditor:blockimagepaste'));
+				require(['elgg/i18n'], function(i18n) {
+					alert(i18n.echo('ckeditor:blockimagepaste'));
+				});
 				return '';
 			});
 			return ret;

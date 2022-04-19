@@ -22,10 +22,6 @@ module.exports = function(config) {
 			'views/default/core/js/deprecated.js',
 			'views/default/core/js/hooks.js',
 
-			'views/default/core/js/configuration.js',
-			'views/default/core/js/languages.js',
-			'views/default/core/js/ui.js',
-
 			'node_modules/formdata-polyfill/formdata.min.js',
 			
 			'engine/tests/js/requirejs.config.js',
