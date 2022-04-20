@@ -156,35 +156,59 @@ class Search {
 		$owner_guid = get_input('owner_guid', ELGG_ENTITIES_ANY_VALUE);
 		$container_guid = get_input('container_guid', ELGG_ENTITIES_ANY_VALUE);
 
-		$default_order = 'desc';
+		$order = get_input('order', 'desc');
 		$sort = get_input('sort', 'time_created');
+		$sort_by = [];
 		switch ($sort) {
-			case 'action_on' :
-				$sort = 'last_action';
+			case 'action_on':
+				$sort_by[] = [
+					'property_type' => 'attribute',
+					'property' => 'last_action',
+					'direction' => $order,
+				];
+				$sort = null;
+				$order = null;
 				break;
 
-			case 'created' :
-				$sort = 'time_created';
+			case 'created':
+			case 'time_created':
+				$sort_by[] = [
+					'property_type' => 'attribute',
+					'property' => 'time_created',
+					'direction' => $order,
+				];
+				$sort = null;
+				$order = null;
 				break;
 
-			case 'updated' :
-				$sort = 'time_updated';
+			case 'updated':
+				$sort_by[] = [
+					'property_type' => 'attribute',
+					'property' => 'time_updated',
+					'direction' => $order,
+				];
+				$sort = null;
+				$order = null;
 				break;
 
 			case 'alpha' :
-				$default_order = 'asc';
-				$sort = 'name';
+				$sort_by[] = [
+					'property_type' => 'metadata',
+					'property' => $entity_type === 'object' ? 'title' : 'name',
+					'direction' => get_input('order', 'asc'), // different default value
+				];
+				$sort = null;
+				$order = null;
 				break;
 		}
 
-		$order = get_input('order', $default_order);
-		
 		$current_params = [
 			'query' => $query,
 			'offset' => $offset,
 			'limit' => $limit,
-			'sort' => $sort,
-			'order' => $order,
+			'sort_by' => $sort_by,
+			'sort' => $sort, // deprecated
+			'order' => $order, // deprecated
 			'search_type' => $search_type,
 			'fields' => $fields,
 			'partial_match' => $partial_match,

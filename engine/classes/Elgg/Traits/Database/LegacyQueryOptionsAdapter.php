@@ -1063,6 +1063,7 @@ trait LegacyQueryOptionsAdapter {
 				}
 
 				$order = trim($order);
+				$parts = [];
 				if (preg_match('/(.*)(?=\s+(asc|desc))/i', $order, $parts)) {
 					$column = $parts[1];
 					$direction = $parts[2];
@@ -1071,22 +1072,26 @@ trait LegacyQueryOptionsAdapter {
 					$direction = 'ASC';
 				}
 
-				$direction = in_array(strtoupper($direction), [
-					'ASC',
-					'DESC'
-				]) ? strtoupper($direction) : 'ASC';
+				$direction = strtoupper($direction) === 'DESC' ? 'DESC' : 'ASC';
 
 				$options['order_by'][] = new OrderByClause($column, $direction);
 			}
 		}
 
-		foreach ($options['sort_by'] as $value) {
+		$sort_by = $options['sort_by'];
+		if (isset($sort_by['property_type'])) {
+			// single array variant, convert to an array of sort_by specs
+			$options['sort_by'] = [$sort_by];
+		}
+		
+		foreach ($options['sort_by'] as $sort_spec) {
 			$clause = new EntitySortByClause();
-			$clause->property = elgg_extract('property', $value);
-			$clause->property_type = elgg_extract('property_type', $value);
-			$clause->join_type = elgg_extract('join_type', $value, 'inner');
-			$clause->direction = elgg_extract('direction', $value);
-			$clause->signed = elgg_extract('signed', $value);
+			$clause->property = elgg_extract('property', $sort_spec);
+			$clause->property_type = elgg_extract('property_type', $sort_spec);
+			$clause->join_type = elgg_extract('join_type', $sort_spec, 'inner');
+			$clause->direction = elgg_extract('direction', $sort_spec);
+			$clause->signed = elgg_extract('signed', $sort_spec);
+			$clause->inverse_relationship = elgg_extract('inverse_relationship', $sort_spec);
 
 			$options['order_by'][] = $clause;
 		}

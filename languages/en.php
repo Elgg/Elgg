@@ -1222,9 +1222,13 @@ For improved performance, it is recommended that you enable and configure OPcach
  */
 
 	'sort:newest' => 'Newest',
+	'sort:oldest' => 'Oldest',
 	'sort:popular' => 'Popular',
 	'sort:alpha' => 'Alphabetical',
 	'sort:priority' => 'Priority',
+	'sort:relevance' => 'Relevance',
+	'sort:az' => '%s (A-Z)',
+	'sort:za' => '%s (Z-A)',
 
 /**
  * Generic data words

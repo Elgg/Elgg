@@ -241,54 +241,38 @@ class SearchServiceTest extends UnitTestCase {
 			'order' => 'desc',
 		]);
 
-		$sort = array_shift($options['order_by']);
-		/* @var $sort EntitySortByClause */
-
-		$this->assertInstanceOf(EntitySortByClause::class, $sort);
-
-		$this->assertEquals('prop', $sort->property);
-		$this->assertEquals('desc', strtolower($sort->direction));
-
+		$sort = array_shift($options['sort_by']);
+		$this->assertNotEmpty($sort);
+		$this->assertIsArray($sort);
+		
+		$this->assertArrayHasKey('property', $sort);
+		$this->assertEquals('prop', $sort['property']);
+		
+		$this->assertArrayHasKey('direction', $sort);
+		$this->assertEquals('desc', $sort['direction']);
 	}
 
 	public function testCanPrepareSortOptionsFromArray() {
 
+		$expected = [
+			'property' => 'prop',
+			'property_type' => 'annotation',
+			'direction' => 'desc',
+			'signed' => true,
+		];
 		$options = _elgg_services()->search->prepareSearchOptions([
-			'sort' => [
-				'property' => 'prop',
-				'property_type' => 'annotation',
-				'direction' => 'desc',
-				'signed' => true,
-			]
+			'sort' => $expected,
 		]);
 
-		$sort = array_shift($options['order_by']);
-		/* @var $sort EntitySortByClause */
-
-		$this->assertInstanceOf(EntitySortByClause::class, $sort);
-
-		$this->assertEquals('prop', $sort->property);
-		$this->assertEquals('desc', strtolower($sort->direction));
-		$this->assertEquals('annotation', $sort->property_type);
-		$this->assertEquals(true, $sort->signed);
-
+		$sort = array_shift($options['sort_by']);
+		$this->assertNotEmpty($sort);
+		$this->assertIsArray($sort);
+		
+		foreach ($expected as $key => $value) {
+			$this->assertArrayHasKey($key, $sort);
+			$this->assertEquals($value, $sort[$key]);
+		}
 	}
-
-	public function testCanSortDefaultsToTimeCreated() {
-
-		$options = _elgg_services()->search->prepareSearchOptions([]);
-
-		$sort = array_shift($options['order_by']);
-		/* @var $sort EntitySortByClause */
-
-		$this->assertInstanceOf(EntitySortByClause::class, $sort);
-
-		$this->assertEquals('time_created', $sort->property);
-		$this->assertEquals('attribute', $sort->property_type);
-		$this->assertEquals('desc', strtolower($sort->direction));
-
-	}
-
 
 	public function testEndToEndSearchForAnnotationsWithExactMatchAndWithoutTokenization() {
 
@@ -334,7 +318,8 @@ class SearchServiceTest extends UnitTestCase {
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.guid', 'desc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -414,7 +399,8 @@ class SearchServiceTest extends UnitTestCase {
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.guid', 'desc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -494,7 +480,8 @@ class SearchServiceTest extends UnitTestCase {
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.guid', 'desc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -567,7 +554,8 @@ class SearchServiceTest extends UnitTestCase {
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.guid', 'desc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -647,7 +635,8 @@ class SearchServiceTest extends UnitTestCase {
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.guid', 'desc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -727,7 +716,8 @@ class SearchServiceTest extends UnitTestCase {
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.guid', 'desc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -800,7 +790,8 @@ class SearchServiceTest extends UnitTestCase {
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.guid', 'desc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -880,7 +871,8 @@ class SearchServiceTest extends UnitTestCase {
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.guid', 'desc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -960,7 +952,8 @@ class SearchServiceTest extends UnitTestCase {
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.guid', 'desc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -1065,7 +1058,8 @@ class SearchServiceTest extends UnitTestCase {
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.time_created', 'desc');
+		$select->addOrderBy('e.guid', 'desc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([

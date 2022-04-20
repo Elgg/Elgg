@@ -11,8 +11,11 @@ $options = [
 	'type' => 'object',
 	'subtype' => elgg_extract('subtype', $vars),
 	'limit' => $limit,
-	'sort' => 'title',
-	'order' => 'ASC',
+	'sort_by' => [
+		'property_type' => 'metadata',
+		'property' => 'title',
+		'direction' => 'ASC',
+	],
 	'fields' => ['metadata' => ['title']],
 	'item_view' => elgg_extract('item_view', $vars, 'search/entity'),
 	'input_name' => $input_name,

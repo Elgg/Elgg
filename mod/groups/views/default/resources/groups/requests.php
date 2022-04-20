@@ -1,4 +1,7 @@
 <?php
+/**
+ * Show a listing of all pending group membership requests
+ */
 
 use Elgg\Database\Clauses\OrderByClause;
 
@@ -18,8 +21,8 @@ $content = elgg_list_relationships([
 // draw page
 echo elgg_view_page(elgg_echo('groups:membershiprequests'), [
 	'content' => $content,
-	'filter' => elgg_view_menu('groups_members', [
-		'entity' => $group,
-		'class' => 'elgg-tabs'
-	]),
+	'filter_id' => 'groups/members',
+	'filter_value' => 'membership_requests',
+	'filter_entity' => $group,
+	'filter_sorting' => false,
 ]);

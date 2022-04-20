@@ -4,4 +4,8 @@
 		border: none;
 		margin-left: auto;
 	}
+	
+	.elgg-menu-item-sort-parent {
+		margin-left: revert;
+	}
 }

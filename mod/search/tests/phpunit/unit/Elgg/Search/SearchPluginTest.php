@@ -34,8 +34,8 @@ class SearchPluginTest extends UnitTestCase {
 			'query_parts' => ['literal needle'],
 			'offset' => 0,
 			'limit' => 10,
-			'sort' => 'time_created',
-			'order' => 'desc',
+			'sort' => null,
+			'order' => null,
 			'search_type' => 'custom',
 			'fields' => [
 				'metadata' => [],
@@ -50,6 +50,13 @@ class SearchPluginTest extends UnitTestCase {
 			'owner_guid' => null,
 			'container_guid' => null,
 			'pagination' => true,
+			'sort_by' => [
+				[
+					'property_type' => 'attribute',
+					'property' => 'time_created',
+					'direction' => 'desc',
+				],
+			],
 		], $svc->getParams());
 	}
 

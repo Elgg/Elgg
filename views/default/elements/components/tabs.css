@@ -56,4 +56,10 @@
 		top: 1px;
 		flex-grow: 0;
 	}
+	
+	.elgg-menu-filter {
+		.elgg-menu-item-sort-parent {
+			margin-left: auto;
+		}
+	}
 }

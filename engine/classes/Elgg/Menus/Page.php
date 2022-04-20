@@ -44,7 +44,6 @@ class Page {
 			'section' => 'administer',
 		]);
 		
-		// Users
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'users',
 			'text' => elgg_echo('admin:users'),
@@ -71,6 +70,50 @@ class Page {
 		]);
 		
 		return $return;
+	}
+	
+	/**
+	 * Prepare the users menu item in the administer section on admin pages
+	 *
+	 * @param \Elgg\Hook $hook 'prepare', 'menu:page'
+	 *
+	 * @return PreparedMenu|null
+	 */
+	public static function prepareAdminAdministerUsersChildren(\Elgg\Hook $hook): ?PreparedMenu {
+		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
+			return null;
+		}
+		
+		/* @var $result PreparedMenu */
+		$result = $hook->getValue();
+		
+		$administer = $result->getSection('administer');
+		/* @var $users \ElggMenuItem */
+		$users = $administer->get('users');
+		if (!$users instanceof \ElggMenuItem || empty($users->getChildren())) {
+			return null;
+		}
+		
+		$children = $users->getChildren();
+		
+		$selected = $users->getSelected();
+		array_unshift($children, \ElggMenuItem::factory([
+			'name' => 'users:all',
+			'text' => elgg_echo('all'),
+			'href' => 'admin/users',
+			'priority' => 1,
+			'selected' => $selected,
+		]));
+		$users->setChildren($children);
+		
+		if ($selected) {
+			$users->addItemClass('elgg-has-selected-child');
+			$users->addItemClass('elgg-state-selected');
+		}
+		
+		$users->setHref(false);
+		
+		return $result;
 	}
 	
 	/**
