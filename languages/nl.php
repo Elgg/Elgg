@@ -139,15 +139,21 @@ return array(
  */
 	'table_columns:fromView:admin' => 'Admin',
 	'table_columns:fromView:banned' => 'Banned',
+	'table_columns:fromView:checkbox' => 'Selecteer',
 	'table_columns:fromView:container' => 'Container',
+	'table_columns:fromView:entity_menu' => 'Menu',
 	'table_columns:fromView:excerpt' => 'Description',
 	'table_columns:fromView:link' => 'Name/Title',
 	'table_columns:fromView:icon' => 'Icon',
 	'table_columns:fromView:item' => 'Item',
 	'table_columns:fromView:language' => 'Language',
+	'table_columns:fromView:last_action' => 'Laatste actie',
+	'table_columns:fromView:last_login' => 'Laatste aanmelding',
 	'table_columns:fromView:owner' => 'Owner',
+	'table_columns:fromView:prev_last_login' => 'Vorige laatste login',
 	'table_columns:fromView:time_created' => 'Time Created',
 	'table_columns:fromView:time_updated' => 'Time Updated',
+	'table_columns:fromView:unvalidated_menu' => 'Menu',
 	'table_columns:fromView:user' => 'User',
 
 	'table_columns:fromProperty:description' => 'Description',
@@ -155,6 +161,7 @@ return array(
 	'table_columns:fromProperty:name' => 'Name',
 	'table_columns:fromProperty:type' => 'Type',
 	'table_columns:fromProperty:username' => 'Username',
+	'table_columns:fromProperty:validated' => 'Gevalideerd',
 
 	'table_columns:fromMethod:getSubtype' => 'Subtype',
 	'table_columns:fromMethod:getDisplayName' => 'Name/Title',
@@ -272,6 +279,9 @@ return array(
 	'action:user:login_as:success' => "Je bent nu aangemeld als %s",
 	'action:user:login_as:unknown' => "Onbekende gebruiker. Je kon niet worden aangemeld.",
 	'action:user:login_as:error' => "Het was niet mogelijk je aan te melden als %s",
+	
+	'action:admin:user:bulk:ban' => "%s gebruikers zijn succesvol geblokkeerd",
+	'action:admin:user:bulk:unban' => "%s gebruikers zijn succesvol gedeblokeerd",
 
 /**
  * Feeds
@@ -532,6 +542,7 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:users:online' => 'Op dit moment online',
 	'admin:users:newest' => 'Nieuwste',
 	'admin:users:admins' => 'Beheerders',
+	'admin:users:banned' => 'Geblokkeerd',
 	'admin:users:searchuser' => 'Zoek de gebruiker die je beheerder wilt maken',
 	'admin:users:existingadmins' => 'Lijst van bestaande beheerders',
 	'admin:users:add' => 'Nieuwe gebruiker',
@@ -545,6 +556,11 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:users:unvalidated:registered' => 'Geregistreerd %s',
 	'admin:users:unvalidated:change_email' => 'Wijzig e-mailadres',
 	'admin:users:unvalidated:change_email:user' => 'Wijzig e-mailadres van: %s',
+	'admin:users:details:attributes' => 'Gebruikersattributen',
+	'admin:users:details:profile' => 'Profiel informatie',
+	'admin:users:details:profile:no_fields' => 'Geen profielvelden geconfigureerd',
+	'admin:users:details:profile:no_information' => 'Geen profielinformatie beschikbaar',
+	'admin:users:details:statistics' => 'Content statistieken',
 	
 	'admin:configure_utilities:maintenance' => 'Onderhoudsmodus',
 	'admin:upgrades' => 'Upgrades',
@@ -997,6 +1013,7 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'usersettings:description' => "Het paneel voor gebruikersinstellingen geeft je controle over al je persoonlijke instellingen: van gebruikersmanagement tot hoe plugins zijn geconfigureerd. Kies een optie om te beginnen.",
 
 	'usersettings:statistics' => "Jouw statistieken",
+	'usersettings:statistics:user' => "Statistieken van %s",
 	'usersettings:statistics:opt:description' => "Bekijk statistische gegevens van gebruikers en objecten op je site.",
 	'usersettings:statistics:opt:linktext' => "Accountstatistieken",
 
@@ -1015,6 +1032,8 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'usersettings:plugins:description' => "Dit paneel staat je toe persoonlijke instellingen te maken voor plugins die door de sitebeheerder zijn geïnstalleerd.",
 	
 	'usersettings:statistics:yourdetails' => "Jouw details",
+	'usersettings:statistics:details:user' => "Details voor %s",
+	'usersettings:statistics:numentities:user' => "Content statistieken voor %s",
 	'usersettings:statistics:label:name' => "Volledige naam",
 	'usersettings:statistics:label:email' => "E-mailadres",
 	'usersettings:statistics:label:lastlogin' => "Laatst aangemeld op",
@@ -1102,6 +1121,7 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'untitled' => 'Geen titel',
 	'help' => 'Help',
 	'send' => 'Verstuur',
+	'resend' => 'Opnieuw versturen',
 	'post' => 'Plaats',
 	'submit' => 'Verstuur',
 	'comment' => 'Reageer',
@@ -1430,6 +1450,8 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'config:i18n:who_can_change_language:admin_only' => "Alleen site beheerders",
 	'config:i18n:who_can_change_language:nobody' => "Niemand",
 	
+	'config:users:remove_unvalidated_users_days' => "Aantal dagen totdat ongevalideerde gebruikers worden verwijderd",
+	'config:users:remove_unvalidated_users_days:help' => "Ongevalideerde gebruikers zullen automatisch worden verwijderd na het opgegeven aantal dagen. Indien dit leeg wordt gelaten zullen de gebruikers niet automatisch worden verwijderd.",
 	'config:users:can_change_username' => "Sta gebruikers toe om hun gebruikersnaam te wijzigen",
 	'config:users:can_change_username:help' => "Indien het niet is toegestaan kan alleen een beheerder de gebruikersnaam van een gebruiker wijzigen",
 	'config:remove_branding:label' => "Verwijder Elgg uitingen",
@@ -1462,6 +1484,8 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'config:email_html_part_images:attach' => "Attachments",
 	'config:delayed_email:label' => "Activeer uitgestelde email notificaties",
 	'config:delayed_email:help' => "Dit geeft gebruikers de mogelijkheid om email notificaties uit te stellen en gebundeld te ontvangen op een opgegeven frequentie (dagelijks, wekelijks)",
+	'config:message_delay:label' => "Systeemberichten vertraging",
+	'config:message_delay:help' => "Het standaard aantal secondes voordat succes systeemberichten verdwijnen",
 
 	'upgrading' => 'Bijwerken',
 	'upgrade:core' => 'Je Elgg-installatie is bijgewerkt',
