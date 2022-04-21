@@ -278,66 +278,37 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 	}
 
 	public function testKeepMeFromDeletingEverything() {
-		foreach ($this->metastringTypes as $type) {
-			$required = [
-				'guid',
-				'guids'
-			];
-
-			switch ($type) {
-				case 'metadata':
-					$metadata_required = [
-						'metadata_name',
-						'metadata_names',
-						'metadata_value',
-						'metadata_values'
-					];
-
-					$required = array_merge($required, $metadata_required);
-					break;
-
-				case 'annotation':
-					$annotations_required = [
-						'annotation_owner_guid',
-						'annotation_owner_guids',
-						'annotation_name',
-						'annotation_names',
-						'annotation_value',
-						'annotation_values'
-					];
-
-					$required = array_merge($required, $annotations_required);
-					break;
-			}
-
-			$options = [];
-			$this->assertFalse(_elgg_is_valid_options_for_batch_operation($options, $type));
-
-			// limit alone isn't valid:
-			$options = ['limit' => 10];
-			$this->assertFalse(_elgg_is_valid_options_for_batch_operation($options, $type));
-
-			foreach ($required as $key) {
-				$options = [];
-
-				$options[$key] = ELGG_ENTITIES_ANY_VALUE;
-				$this->assertFalse(_elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = ELGG_ENTITIES_ANY_VALUE");
-
-				$options[$key] = ELGG_ENTITIES_NO_VALUE;
-				$this->assertFalse(_elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = ELGG_ENTITIES_NO_VALUE");
-
-				$options[$key] = false;
-				$this->assertFalse(_elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = bool false");
-
-				$options[$key] = true;
-				$this->assertTrue(_elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = bool true");
-
-				$options[$key] = 'test';
-				$this->assertTrue(_elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = 'test'");
-
-				$options[$key] = ['test'];
-				$this->assertTrue(_elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = array('test')");
-			}
-		}
+		
+		$options = [
+			'limit' => 10,
+			'guid' => ELGG_ENTITIES_ANY_VALUE,
+			'guids' => ELGG_ENTITIES_NO_VALUE,
+			'metadata_name' => ELGG_ENTITIES_ANY_VALUE,
+			'metadata_names' => ELGG_ENTITIES_NO_VALUE,
+			'metadata_value' => ELGG_ENTITIES_ANY_VALUE,
+			'metadata_values' => ELGG_ENTITIES_NO_VALUE,
+		];
+		
+		$this->assertFalse(elgg_delete_metadata($options));
+		
+		$options['guid'] = -1;
+		$this->assertNull(elgg_delete_metadata($options));
+		
+		// annotations
+		$options = [
+			'limit' => 10,
+			'guid' => ELGG_ENTITIES_ANY_VALUE,
+			'guids' => ELGG_ENTITIES_NO_VALUE,
+			'annotation_name' => ELGG_ENTITIES_ANY_VALUE,
+			'annotation_names' => ELGG_ENTITIES_NO_VALUE,
+			'annotation_value' => ELGG_ENTITIES_ANY_VALUE,
+			'annotation_values' => ELGG_ENTITIES_NO_VALUE,
+			'annotation_owner_guid' => ELGG_ENTITIES_ANY_VALUE,
+			'annotation_owner_guids' => ELGG_ENTITIES_NO_VALUE,
+		];
+		
+		$this->assertFalse(elgg_delete_annotations($options));
+		$options['guid'] = -1;
+		$this->assertNull(elgg_delete_annotations($options));
 	}
 }

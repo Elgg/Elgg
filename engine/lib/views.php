@@ -732,7 +732,6 @@ function elgg_view_entity_list($entities, array $vars = []) {
  *                           'no_results' Message to display if no results (string|true|Closure)
  *
  * @return string The list of annotations
- * @internal
  */
 function elgg_view_annotation_list($annotations, array $vars = []) {
 	// list type can be passed as request parameter
@@ -780,7 +779,6 @@ function elgg_view_annotation_list($annotations, array $vars = []) {
  *                             'no_results' Message to display if no results (string|true|Closure)
  *
  * @return string The list of relationships
- * @internal
  */
 function elgg_view_relationship_list($relationships, array $vars = []) {
 	// list type can be passed as request parameter
@@ -1123,6 +1121,7 @@ function elgg_get_form_footer() {
  * @param array $prefixes Prefixes to split
  *
  * @return array
+ * @internal
  */
 function _elgg_split_vars(array $vars = [], array $prefixes = null) {
 
@@ -1289,7 +1288,6 @@ function elgg_view_tagcloud(array $options = []) {
  *
  * @return false|string
  * @since 1.8.0
- * @internal
  */
 function elgg_view_list_item($item, array $vars = []) {
 

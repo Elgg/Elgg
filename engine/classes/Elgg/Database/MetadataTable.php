@@ -391,7 +391,23 @@ class MetadataTable {
 	 * @return bool|null true on success, false on failure, null if no metadata to delete.
 	 */
 	public function deleteAll(array $options) {
-		if (!_elgg_is_valid_options_for_batch_operation($options, 'metadata')) {
+		$required = [
+			'guid', 'guids',
+			'metadata_name', 'metadata_names',
+			'metadata_value', 'metadata_values'
+		];
+		
+		$found = false;
+		foreach ($required as $key) {
+			// check that it exists and is something.
+			if (isset($options[$key]) && !elgg_is_empty($options[$key])) {
+				$found = true;
+				break;
+			}
+		}
+		
+		if (!$found) {
+			// requirements not met
 			return false;
 		}
 

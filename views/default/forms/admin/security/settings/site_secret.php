@@ -5,7 +5,7 @@
  * @since 3.2
  */
 
-$strength = _elgg_get_site_secret_strength();
+$strength = _elgg_services()->siteSecret->getStrength();
 $current_strength = elgg_echo('site_secret:current_strength');
 $strength_text = elgg_echo("site_secret:strength:$strength");
 $strength_msg = elgg_echo("site_secret:strength_msg:$strength");

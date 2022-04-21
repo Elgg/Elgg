@@ -44,39 +44,19 @@ function elgg_set_entity_class($type, $subtype, $class = "") {
 	_elgg_services()->entityTable->setEntityClass($type, $subtype, $class);
 }
 
-
 /**
  * Returns a database row from the entities table.
  *
  * @tip Use get_entity() to return the fully loaded entity.
  *
  * @warning This will only return results if a) it exists, b) you have access to it.
- * see {@link _elgg_get_access_where_sql()}.
  *
  * @param int $guid The GUID of the object to extract
  *
  * @return \stdClass|false
- * @see entity_row_to_elggstar()
- * @internal
  */
-function get_entity_as_row($guid) {
+function elgg_get_entity_as_row(int $guid) {
 	return _elgg_services()->entityTable->getRow($guid);
-}
-
-/**
- * Create an Elgg* object from a given entity row.
- *
- * Handles loading all tables into the correct class.
- *
- * @param \stdClass $row The row of the entry in the entities table.
- *
- * @return \ElggEntity|false
- * @see get_entity_as_row()
- * @see get_entity()
- * @internal
- */
-function entity_row_to_elggstar($row) {
-	return _elgg_services()->entityTable->rowToElggStar($row);
 }
 
 /**
@@ -531,7 +511,7 @@ function elgg_get_site_entity() {
  *                                        SQL query Elgg creates.
  *                                        Default: true
  * @option callable|false $callback       A callback function to pass each row through
- *                                        Default: entity_row_to_elggstar
+ *                                        Default: _elgg_services()->entityTable->rowToElggStar()
  * @option bool $preload_owners           If set to true, this function will preload
  *                                        all the owners of the returned entities resulting in better
  *                                        performance when displaying entities owned by several users

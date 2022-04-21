@@ -293,7 +293,7 @@ class AnnotationsTable {
 	 * @return bool|null true on success, false on failure, null if no annotations to delete.
 	 */
 	public function deleteAll(array $options) {
-		if (!_elgg_is_valid_options_for_batch_operation($options, 'annotation')) {
+		if (!$this->isValidOptionsForBatchOperation($options)) {
 			return false;
 		}
 
@@ -327,7 +327,7 @@ class AnnotationsTable {
 	 * @return bool|null true on success, false on failure, null if no annotations disabled.
 	 */
 	public function disableAll(array $options) {
-		if (!_elgg_is_valid_options_for_batch_operation($options, 'annotation')) {
+		if (!$this->isValidOptionsForBatchOperation($options)) {
 			return false;
 		}
 
@@ -365,7 +365,7 @@ class AnnotationsTable {
 	 * @return bool|null true on success, false on failure, null if no metadata enabled.
 	 */
 	public function enableAll(array $options) {
-		if (!_elgg_is_valid_options_for_batch_operation($options, 'annotation')) {
+		if (!$this->isValidOptionsForBatchOperation($options)) {
 			return false;
 		}
 
@@ -387,6 +387,31 @@ class AnnotationsTable {
 		}
 
 		return $success == $count;
+	}
+	
+	/**
+	 * Checks if there are some constraints on the options array for potentially dangerous operations
+	 *
+	 * @param array $options options to check
+	 *
+	 * @return bool
+	 */
+	protected function isValidOptionsForBatchOperation(array $options): bool {
+		$required = [
+			'guid', 'guids',
+			'annotation_owner_guid', 'annotation_owner_guids',
+			'annotation_name', 'annotation_names',
+			'annotation_value', 'annotation_values'
+		];
+		
+		foreach ($required as $key) {
+			// check that it exists and is something.
+			if (isset($options[$key]) && !elgg_is_empty($options[$key])) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

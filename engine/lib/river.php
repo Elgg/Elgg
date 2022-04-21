@@ -132,7 +132,25 @@ function elgg_get_river_item_from_id(int $id) {
  */
 function elgg_delete_river(array $options = []) {
 
-	if (!_elgg_is_valid_options_for_batch_operation($options, 'river')) {
+	$required = [
+		'id', 'ids',
+		'subject_guid', 'subject_guids',
+		'object_guid', 'object_guids',
+		'target_guid', 'target_guids',
+		'annotation_id', 'annotation_ids',
+		'view', 'views',
+	];
+
+	$found = false;
+	foreach ($required as $key) {
+		// check that it exists and is something.
+		if (isset($options[$key]) && !elgg_is_empty($options[$key])) {
+			$found = true;
+			break;
+		}
+	}
+	
+	if (!$found) {
 		// requirements not met
 		return false;
 	}
