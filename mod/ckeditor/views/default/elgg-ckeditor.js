@@ -14,7 +14,7 @@
 define(function (require) {
 	var elgg = require('elgg');
 	var $ = require('jquery');
-	var i18n = require('i18n');
+	var i18n = require('elgg/i18n');
 	require('jquery.ckeditor');
 
 	var CKEDITOR = require('ckeditor/ckeditor');
