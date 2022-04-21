@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Exceptions\Http\BadRequestException;
+
 elgg_signed_request_gatekeeper();
 
 $user = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() {
