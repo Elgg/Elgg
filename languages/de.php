@@ -1358,7 +1358,6 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.',
 	
 	'config:i18n:allowed_languages' => "Freigegebene Sprachen",
 	'config:i18n:allowed_languages:help' => "Nur die freigegebenen Sprachen können von den Benutzern als Sprache ausgewählt werden, in denen die Community-Seite für sie dargestellt wird. Englisch und die seitenweite ausgewählte Sprache sind in jedem Fall freigegeben.",
-	
 	'config:users:can_change_username' => "Benutzern erlauben, ihren Benutzernamen zu ändern",
 	'config:users:can_change_username:help' => "Falls es Benutzern nicht erlaubt ist, können nur Admins den Benutzernamen eines Benutzers ändern.",
 	'config:remove_branding:label' => "Elgg-Branding verbergen",
