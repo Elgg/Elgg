@@ -38,7 +38,7 @@ class PluginsListCommand extends Command {
 		}
 
 		if ($this->option('refresh') !== false) {
-			_elgg_generate_plugin_entities();
+			_elgg_services()->plugins->generateEntities();
 		}
 
 		$table = new Table($this->output);

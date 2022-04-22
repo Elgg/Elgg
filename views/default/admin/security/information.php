@@ -110,7 +110,7 @@ $title = elgg_view('output/url', [
 ]);
 $subtext = '';
 
-$strength = _elgg_get_site_secret_strength();
+$strength = _elgg_services()->siteSecret->getStrength();
 $value = elgg_echo("site_secret:strength:$strength");
 
 if ($strength !== 'strong') {

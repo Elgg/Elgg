@@ -378,7 +378,7 @@ Functions not throwing an exception on error should return ``false`` upon failur
 
 .. note::
 
-	Particularly low-level, non-API functions/methods (e.g. entity_row_to_elggstar),
+	Particularly low-level, non-API functions/methods,
 	which should not fail under normal conditions, should throw instead of returning false. 
 
 Functions returning only boolean should be prefaced with ``is_`` or ``has_``

@@ -46,7 +46,7 @@ class UpgradeController {
 			}
 		);
 		
-		_elgg_generate_plugin_entities();
+		_elgg_services()->plugins->generateEntities();
 
 		return $response;
 	}

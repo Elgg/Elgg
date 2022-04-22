@@ -157,12 +157,9 @@ class EntityTable {
 	/**
 	 * Returns a database row from the entities table.
 	 *
-	 * @see     entity_row_to_elggstar()
-	 *
 	 * @tip     Use get_entity() to return the fully loaded entity.
 	 *
 	 * @warning This will only return results if a) it exists, b) you have access to it.
-	 * see {@link _elgg_get_access_where_sql()}.
 	 *
 	 * @param int $guid      The GUID of the object to extract
 	 * @param int $user_guid GUID of the user accessing the row
@@ -239,9 +236,6 @@ class EntityTable {
 	 * Create an Elgg* object from a given entity row.
 	 *
 	 * Handles loading all tables into the correct class.
-	 *
-	 * @see    get_entity_as_row()
-	 * @see    get_entity()
 	 *
 	 * @param \stdClass $row The row of the entry in the entities table.
 	 *

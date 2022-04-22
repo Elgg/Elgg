@@ -212,7 +212,9 @@ function elgg_is_empty($value) {
  *
  * @param string $element    The tag element name
  * @param array  $attributes An array of attributes
+ *
  * @return string
+ * @internal
  */
 function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
 	if ($attributes === false) {

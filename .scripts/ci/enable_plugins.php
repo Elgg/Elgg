@@ -10,7 +10,7 @@ require_once "$root/autoloader.php";
 
 \Elgg\Application::start();
 
-_elgg_generate_plugin_entities();
+_elgg_services()->plugins->generateEntities();
 
 $ordered_plugins = [
 	'activity',

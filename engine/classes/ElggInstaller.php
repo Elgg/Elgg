@@ -1478,7 +1478,7 @@ class ElggInstaller {
 		}
 
 		try {
-			_elgg_generate_plugin_entities();
+			_elgg_services()->plugins->generateEntities();
 
 			$app->internal_services->reset('plugins');
 			
