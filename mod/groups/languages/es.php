@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	'add:group:group' => "Crear un nuevo grupo",
 	
 	'groups' => "Grupos",
 	'groups:owned' => "Grupos que administro",
@@ -19,6 +20,9 @@ return array(
 	'groups:all' => "Todos los grupos",
 	'groups:add' => "Crear un nuevo grupo",
 	'groups:edit' => "Editar grupo",
+	'groups:edit:profile' => "Perfil",
+	'groups:edit:tools' => "Herramientas",
+	'groups:edit:settings' => "Configuraci&oacute;n",
 	'groups:membershiprequests' => 'Administrar solicitudes de uni&oacute;n a grupos',
 	'groups:membershiprequests:pending' => 'Administrar solicitudes de uni&oacute;n (%s)',
 	'groups:invitations' => 'Invitaciones de grupo',

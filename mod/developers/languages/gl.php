@@ -77,6 +77,7 @@ return array(
 	'theme_sandbox:breakout' => 'Saír do marco incrustado (iframe).',
 	'theme_sandbox:buttons' => 'Botóns',
 	'theme_sandbox:components' => 'Compoñentes',
+	'theme_sandbox:email' => 'Correo',
 	'theme_sandbox:forms' => 'Formularios',
 	'theme_sandbox:grid' => 'Grade',
 	'theme_sandbox:icons' => 'Iconas',

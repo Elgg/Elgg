@@ -107,6 +107,7 @@ return array(
 	'table_columns:fromView:admin' => 'Ylläpitäjä',
 	'table_columns:fromView:banned' => 'Bannattu',
 	'table_columns:fromView:container' => 'Container',
+	'table_columns:fromView:entity_menu' => 'Valikko',
 	'table_columns:fromView:excerpt' => 'Kuvaus',
 	'table_columns:fromView:link' => 'Nimi/Otsikko',
 	'table_columns:fromView:icon' => 'Kuvake',
@@ -115,6 +116,7 @@ return array(
 	'table_columns:fromView:owner' => 'Omistaja',
 	'table_columns:fromView:time_created' => 'Luomisaika',
 	'table_columns:fromView:time_updated' => 'Päivitysaika',
+	'table_columns:fromView:unvalidated_menu' => 'Valikko',
 	'table_columns:fromView:user' => 'Käyttäjä',
 
 	'table_columns:fromProperty:description' => 'Kuvaus',
@@ -256,6 +258,7 @@ return array(
  * Notifications
  */
 	'notification:method:email' => 'Sähköposti',
+	'usersettings:notifications:menu:filter:settings' => "Asetukset",
 	'notification:subject' => 'Ilmoitus kohteesta %s',
 	'notification:body' => 'Pääset tarkastelemaan kohdetta tästä: %s',
 
@@ -382,6 +385,7 @@ return array(
 	'admin:users:online' => 'Tällä hetkellä kirjautuneena',
 	'admin:users:newest' => 'Uusimmat',
 	'admin:users:admins' => 'Ylläpitäjät',
+	'admin:users:banned' => 'Bannattu',
 	'admin:users:add' => 'Lisää uusi käyttäjä',
 	'admin:users:description' => "Tämän hallintapaneelin avulla voit vaikuttaa sivustosi käyttäjäasetuksiin. Valitse vaihtoehto alta aloittaaksesi.",
 	'admin:users:adduser:label' => "Klikkaa tästä lisätäksesi uuden käyttäjän...",
@@ -390,6 +394,7 @@ return array(
 	'admin:users:find' => 'Etsi',
 	'admin:users:unvalidated' => 'Vahvistamattomat käyttäjät',
 	'admin:users:unvalidated:no_results' => 'Ei vahvistamattomia käyttäjiä.',
+	'admin:users:details:statistics' => 'Sisältötilastot',
 	
 	'admin:configure_utilities:maintenance' => 'Ylläpitotila',
 	'admin:upgrades' => 'Päivitykset',
@@ -421,6 +426,7 @@ return array(
 	'admin:widget:content_stats:help' => 'Näyttää sivustolle luotujen sisältöjen määrän',
 	'admin:widget:cron_status' => 'Cron-seuranta',
 	'admin:widget:cron_status:help' => 'Näyttää listan Cron-ajojen viimeisimmistä ajankohdista',
+	'admin:statistics:queue:name' => 'Nimi',
 
 	'admin:widget:admin_welcome' => 'Tervetuloa',
 	'admin:widget:admin_welcome:help' => "Lyhyt perehdytys Elggin hallintapaneeliin",
@@ -718,6 +724,7 @@ return array(
 	'activity' => 'Toiminta',
 	'members' => 'Jäsenet',
 	'menu' => 'Valikko',
+	'item' => 'Kohde',
 
 	'up' => 'Ylös',
 	'down' => 'Alas',
@@ -973,6 +980,8 @@ return array(
 	'admin:legend:content_access' => 'Pääsy sisältöihin',
 	'admin:legend:site_access' => 'Pääsy sivustolle',
 	'admin:legend:debug' => 'Lokit ja virheidenjäljitys',
+	'config:i18n:who_can_change_language:admin_only' => "Vain ylläpitäjät",
+	'config:email' => "Sähköposti",
 
 	'upgrading' => 'Päivitetään...',
 	'upgrade:core' => 'Elgg päivitetty.',

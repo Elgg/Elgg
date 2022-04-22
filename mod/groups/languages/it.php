@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	'add:group:group' => "Crea un nuovo gruppo",
 	
 	'groups' => "Gruppi",
 	'groups:owned' => "Gruppi creati da te",
@@ -19,6 +20,9 @@ return array(
 	'groups:all' => "Tutti i gruppi",
 	'groups:add' => "Crea un nuovo gruppo",
 	'groups:edit' => "Modifica gruppo",
+	'groups:edit:profile' => "Profilo",
+	'groups:edit:tools' => "Strumenti",
+	'groups:edit:settings' => "Impostazioni",
 	'groups:membershiprequests' => 'Gestisci richieste di adesione',
 	'groups:membershiprequests:pending' => 'Gestisci richieste di adesione (%s)',
 	'groups:invitations' => 'Gruppi a cui sei invitato',

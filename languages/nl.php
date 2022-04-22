@@ -1186,7 +1186,7 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'content:latest' => 'Laatste activiteit',
 	
 	'list:out_of_bounds' => "Je bent op een deel van de lijst gekomen zonder content, echter is er wel content beschikbaar.",
-	'list:out_of_bounds:link' => "Ga terug naar de eerste pagina van deze lijst",
+	'list:out_of_bounds:link' => "Terug naar de eerste pagina",
 
 	'link:text' => 'bekijk link',
 
@@ -1219,9 +1219,13 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
  */
 
 	'sort:newest' => 'Nieuwste',
+	'sort:oldest' => 'Oudste',
 	'sort:popular' => 'Populair',
 	'sort:alpha' => 'Alfabetisch',
 	'sort:priority' => 'Prioriteit',
+	'sort:relevance' => 'Relevantie',
+	'sort:az' => '%s (A-Z)',
+	'sort:za' => '%s (Z-A)',
 
 /**
  * Generic data words

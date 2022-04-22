@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	'add:group:group' => "Vytvořit novou skupinu",
 	
 	'groups' => "Skupiny",
 	'groups:owned' => "Skupiny, které vlastním",
@@ -19,6 +20,9 @@ return array(
 	'groups:all' => "Všechny skupiny",
 	'groups:add' => "Vytvořit novou skupinu",
 	'groups:edit' => "Upravit skupinu",
+	'groups:edit:profile' => "Profil",
+	'groups:edit:tools' => "Nástroje",
+	'groups:edit:settings' => "Nastavení",
 	'groups:membershiprequests' => 'Spravovat žádosti o přidání',
 	'groups:membershiprequests:pending' => 'Spravovat žádosti o přidání (%s)',
 	'groups:invitations' => 'Pozvání do skupin',

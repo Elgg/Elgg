@@ -8,8 +8,8 @@
 return array(
 	'members:label:online' => 'Онлайн',
 	'members:search' => 'Найти пользователей',
-	'members:title:search' => 'Поиск пользователя %s',
 	'members:total' => 'Всего пользователей: %s',
+	'members:title:all' => 'Все участники',
 	'members:title:newest' => 'Новые',
 	'members:title:popular' => 'Популярные',
 	'members:title:online' => 'Онлайн',

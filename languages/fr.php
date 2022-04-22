@@ -1190,7 +1190,7 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'content:latest' => 'Dernière activité',
 	
 	'list:out_of_bounds' => "Vous avez atteint une partie de la liste sans aucun contenu, toutefois il y a du contenu disponible.",
-	'list:out_of_bounds:link' => "Revenir à la première page de cette liste.",
+	'list:out_of_bounds:link' => "Retour à la première page",
 
 	'link:text' => 'voir le lien',
 
@@ -1223,9 +1223,13 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
  */
 
 	'sort:newest' => 'Date',
+	'sort:oldest' => 'Plus ancien',
 	'sort:popular' => 'Popularité',
 	'sort:alpha' => 'Alphabétique',
 	'sort:priority' => 'Priorité',
+	'sort:relevance' => 'Pertinence',
+	'sort:az' => '%s (A-Z)',
+	'sort:za' => '%s (Z-A)',
 
 /**
  * Generic data words

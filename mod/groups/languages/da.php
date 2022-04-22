@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	'add:group:group' => "Opret en ny gruppe",
 	
 	'groups' => "Grupper",
 	'groups:owned' => "Grupper jeg styrer",
@@ -19,6 +20,9 @@ return array(
 	'groups:all' => "Alle grupper",
 	'groups:add' => "Opret en ny gruppe",
 	'groups:edit' => "Rediger gruppe",
+	'groups:edit:profile' => "Profil",
+	'groups:edit:tools' => "Værktøjer",
+	'groups:edit:settings' => "Udvikler indstillinger",
 	'groups:membershiprequests' => 'Administrer anmodning om deltagelse',
 	'groups:membershiprequests:pending' => 'Manage join requests (%s)',
 	'groups:invitations' => 'Gruppe invitationer',

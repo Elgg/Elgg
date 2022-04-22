@@ -107,6 +107,7 @@ return array(
 	'table_columns:fromView:admin' => 'Admin',
 	'table_columns:fromView:banned' => 'Banned',
 	'table_columns:fromView:container' => 'Container',
+	'table_columns:fromView:entity_menu' => 'Menu',
 	'table_columns:fromView:excerpt' => 'Description',
 	'table_columns:fromView:link' => 'Name/Title',
 	'table_columns:fromView:icon' => 'Icon',
@@ -115,6 +116,7 @@ return array(
 	'table_columns:fromView:owner' => 'Owner',
 	'table_columns:fromView:time_created' => 'Time Created',
 	'table_columns:fromView:time_updated' => 'Time Updated',
+	'table_columns:fromView:unvalidated_menu' => 'Menu',
 	'table_columns:fromView:user' => 'User',
 
 	'table_columns:fromProperty:description' => 'Description',
@@ -256,6 +258,7 @@ return array(
  * Notifications
  */
 	'notification:method:email' => 'Email',
+	'usersettings:notifications:menu:filter:settings' => "Impostazioni",
 	'notification:subject' => 'Notifica su %s',
 	'notification:body' => 'Visualizza la nuova attività qui %s',
 
@@ -382,6 +385,7 @@ return array(
 	'admin:users:online' => 'Online in questo momento',
 	'admin:users:newest' => 'Più recenti',
 	'admin:users:admins' => 'Amministratori',
+	'admin:users:banned' => 'Banned',
 	'admin:users:add' => 'Aggiungi un nuovo utente',
 	'admin:users:description' => "Questo pannello di amministrazione permette di controllare le impostazioni del sito. Selezionare un'opzione qui sotto per iniziare.",
 	'admin:users:adduser:label' => "Cliccare qui per aggiungere un nuovo utente...",
@@ -390,6 +394,7 @@ return array(
 	'admin:users:find' => 'Trova',
 	'admin:users:unvalidated' => 'Utenti non ancora validati',
 	'admin:users:unvalidated:no_results' => 'Nessun utente non ancora validato',
+	'admin:users:details:statistics' => 'Statistiche sui contenuti',
 	
 	'admin:configure_utilities:maintenance' => 'Modalità di manutenzione',
 	'admin:upgrades' => 'Aggiornamenti',
@@ -421,6 +426,7 @@ return array(
 	'admin:widget:content_stats:help' => 'Tiene traccia dei contenuti creati dagli utenti',
 	'admin:widget:cron_status' => 'Stato delle attività pianificate',
 	'admin:widget:cron_status:help' => 'Mostra lo stato dell\'ultimo lavoro completato da Attività pianificate',
+	'admin:statistics:queue:name' => 'Nome',
 
 	'admin:widget:admin_welcome' => 'Benvenuto',
 	'admin:widget:admin_welcome:help' => "Piccola introduzione all'area amministrativa di Elgg",
@@ -718,6 +724,7 @@ return array(
 	'activity' => 'Attività',
 	'members' => 'Utenti',
 	'menu' => 'Menu',
+	'item' => 'Elemento',
 
 	'up' => 'Su',
 	'down' => 'Giù',
@@ -973,6 +980,8 @@ return array(
 	'admin:legend:content_access' => 'Accesso ai contenuti',
 	'admin:legend:site_access' => 'Accesso al sito',
 	'admin:legend:debug' => 'Debug e Log',
+	'config:i18n:who_can_change_language:admin_only' => "Solo amministratori",
+	'config:email' => "Email",
 
 	'upgrading' => 'Aggiornamento in corso...',
 	'upgrade:core' => 'L\'installazione di Elgg è stata aggiornata.',

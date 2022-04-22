@@ -81,6 +81,7 @@ return array(
 	'theme_sandbox:breakout' => 'iframe外で表示する',
 	'theme_sandbox:buttons' => 'ボダン',
 	'theme_sandbox:components' => 'コンポーネント',
+	'theme_sandbox:email' => 'Eメール',
 	'theme_sandbox:forms' => 'フォーム',
 	'theme_sandbox:grid' => 'グリッド',
 	'theme_sandbox:icons' => 'アイコン',

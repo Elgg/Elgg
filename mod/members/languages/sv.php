@@ -8,8 +8,8 @@
 return array(
 	'members:label:online' => 'Online',
 	'members:search' => 'Sök medlemmar',
-	'members:title:search' => 'Medlem söker efter %s',
 	'members:total' => 'Antalet medlemmar: %s',
+	'members:title:all' => 'Alla medlemmar',
 	'members:title:newest' => 'Nyaste medlemmar',
 	'members:title:popular' => 'Mest populära medlemmar',
 	'members:title:online' => 'Online medlemmar',

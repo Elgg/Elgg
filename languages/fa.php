@@ -106,6 +106,7 @@ return array(
 	'table_columns:fromView:admin' => 'مدیر',
 	'table_columns:fromView:banned' => 'ممنوع شده',
 	'table_columns:fromView:container' => 'ظرف',
+	'table_columns:fromView:entity_menu' => 'منو',
 	'table_columns:fromView:excerpt' => 'توضیحات',
 	'table_columns:fromView:link' => 'نام/عنوان',
 	'table_columns:fromView:icon' => 'آیکن',
@@ -114,6 +115,7 @@ return array(
 	'table_columns:fromView:owner' => 'صاحب',
 	'table_columns:fromView:time_created' => 'زمان ایجاد',
 	'table_columns:fromView:time_updated' => 'زمان بروزرسانی',
+	'table_columns:fromView:unvalidated_menu' => 'منو',
 	'table_columns:fromView:user' => 'کاربر',
 
 	'table_columns:fromProperty:description' => 'توضیحات',
@@ -251,6 +253,7 @@ return array(
  * Notifications
  */
 	'notification:method:email' => 'ایمیل',
+	'usersettings:notifications:menu:filter:settings' => "تنظیمات",
 	'notification:subject' => 'اعلان های %s',
 	'notification:body' => 'مشاهده فعالیت جدید در %s',
 
@@ -377,12 +380,14 @@ return array(
 	'admin:users:online' => 'آنلاین ها',
 	'admin:users:newest' => 'جدیدترین',
 	'admin:users:admins' => 'مدیران',
+	'admin:users:banned' => 'ممنوع شده',
 	'admin:users:add' => 'افزودن کاربر جدید',
 	'admin:users:description' => "این قسمت مدیریت به شما اجازه کنترل تنظیمات سایتتان را میدهد. یکی از موارد زیر را جهت شروع انتخاب نمایید",
 	'admin:users:adduser:label' => "برای افزودن کاربر جدید اینجا کلیک کنید..",
 	'admin:users:opt:linktext' => "تنظیمات کاربران",
 	'admin:users:opt:description' => "تنظیمات کاربران و اطلاعات حساب کاربری",
 	'admin:users:find' => 'جستجو',
+	'admin:users:details:statistics' => 'آمار محتوا',
 	
 	'admin:configure_utilities:maintenance' => 'حالت نگهداری سایت',
 	'admin:upgrades' => 'ارتقاء ها',
@@ -414,6 +419,7 @@ return array(
 	'admin:widget:content_stats:help' => 'محتوای تولید شده توسط کاربرانتان را ردگیری کنید',
 	'admin:widget:cron_status' => 'وضعیت cron',
 	'admin:widget:cron_status:help' => 'نمایش وضعیت آخرین اجرای cron job',
+	'admin:statistics:queue:name' => 'نامنا',
 
 	'admin:widget:admin_welcome' => 'خوش آمدید',
 	'admin:widget:admin_welcome:help' => "توضیح مختصری برای محیط مدیریت Elgg",
@@ -709,6 +715,7 @@ return array(
 	'activity' => 'فعالیت',
 	'members' => 'اعضا',
 	'menu' => 'منو',
+	'item' => 'آیتم',
 
 	'up' => 'بالا',
 	'down' => 'پایین',
@@ -960,6 +967,8 @@ return array(
 	'admin:legend:content_access' => 'دسترس محتوا',
 	'admin:legend:site_access' => 'دسترسی سایت',
 	'admin:legend:debug' => 'رفع خطا و لاگ',
+	'config:i18n:who_can_change_language:admin_only' => "فقط مدیر",
+	'config:email' => "ایمیل",
 
 	'upgrading' => 'ارتقاء..',
 	'upgrade:core' => 'نسخه Elgg شما ارتقاء یافت',

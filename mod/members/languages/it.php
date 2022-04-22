@@ -8,8 +8,8 @@
 return array(
 	'members:label:online' => 'Online',
 	'members:search' => 'Cerca iscritti',
-	'members:title:search' => 'Ricerca iscritti per %s',
 	'members:total' => 'Totale iscritti: %s',
+	'members:title:all' => 'Tutti gli iscritti',
 	'members:title:newest' => 'Ultimi iscritti',
 	'members:title:popular' => 'Iscritti più popolari',
 	'members:title:online' => 'Iscritti online',

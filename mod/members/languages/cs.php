@@ -8,8 +8,8 @@
 return array(
 	'members:label:online' => 'Přihlášení',
 	'members:search' => 'Hledat členy',
-	'members:title:search' => 'Nalezení členové pro dotaz %s',
 	'members:total' => 'Celkem členů: %s',
+	'members:title:all' => 'Všichni členové',
 	'members:title:newest' => 'Nejnovější členové',
 	'members:title:popular' => 'Nejoblíbenější členové',
 	'members:title:online' => 'Přihlášení členové',
