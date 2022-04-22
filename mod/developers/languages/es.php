@@ -88,6 +88,7 @@ return array(
 	'theme_sandbox:breakout' => 'Fuera de iframe',
 	'theme_sandbox:buttons' => 'Botones',
 	'theme_sandbox:components' => 'Componentes',
+	'theme_sandbox:email' => 'Correo electr&oacute;nico',
 	'theme_sandbox:forms' => 'Formularios',
 	'theme_sandbox:grid' => 'Grilla',
 	'theme_sandbox:icons' => 'Iconos',

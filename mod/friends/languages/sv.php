@@ -44,6 +44,8 @@ return array(
 	'widgets:friends:name' => "Vänner",
 	'widgets:friends:description' => "Visas några av dina vänner.",
 	
+	'widgets:friends_of:name' => "Vänner för",
+	
 	'friends:notification:request:subject' => "%s vill bli din vän!",
 	
 	'friends:notification:request:decline:subject' => "%s har tackat nej till din vänförfrågan",

@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	'add:group:group' => "新規グループの作成",
 	
 	'groups' => "グループ",
 	'groups:owned' => "私が作ったグループ",

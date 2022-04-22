@@ -11,6 +11,7 @@ return array(
 	 * Menu items and titles
 	 */
 	'add:group:group' => "Créer un nouveau groupe",
+	'groups:menu:sort:member' => "Date d'inscription",
 	
 	'groups' => "Groupes",
 	'groups:owned' => "Groupes dont je suis responsable",

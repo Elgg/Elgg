@@ -8,8 +8,8 @@
 return array(
 	'members:label:online' => 'Онлајн',
 	'members:search' => 'Претражи чланове',
-	'members:title:search' => 'Чретрага члана за %s',
 	'members:total' => 'Укупно корисника: %s',
+	'members:title:all' => 'Сви чланови',
 	'members:title:newest' => 'Најновији чланови',
 	'members:title:popular' => 'Најпопуларнији чланови',
 	'members:title:online' => 'Онлајн чланови',

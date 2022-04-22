@@ -102,10 +102,12 @@ return array(
  */
 	'table_columns:fromView:admin' => 'Administración',
 	'table_columns:fromView:banned' => 'Expulsado',
+	'table_columns:fromView:entity_menu' => 'Menú',
 	'table_columns:fromView:excerpt' => 'Descrición',
 	'table_columns:fromView:item' => 'Item',
 	'table_columns:fromView:language' => 'Idioma',
 	'table_columns:fromView:owner' => 'Administrador',
+	'table_columns:fromView:unvalidated_menu' => 'Menú',
 	'table_columns:fromView:user' => 'Usuarios',
 
 	'table_columns:fromProperty:description' => 'Descrición',
@@ -242,6 +244,7 @@ return array(
  * Notifications
  */
 	'notification:method:email' => 'Correo',
+	'usersettings:notifications:menu:filter:settings' => "Configuración",
 	'notification:subject' => 'Notificación sobre %s',
 	'notification:body' => 'Ver a nova actividade en %s',
 
@@ -368,6 +371,7 @@ return array(
 	'admin:users:online' => 'Conectados agora',
 	'admin:users:newest' => 'Últimos',
 	'admin:users:admins' => 'Administradores',
+	'admin:users:banned' => 'Expulsado',
 	'admin:users:add' => 'Engadir un usuario',
 	'admin:users:description' => "Este panel de administrador permítelle controlar a configuración dos usuarios do sitio. Escolla unha das seguintes opcións para comezar.",
 	'admin:users:adduser:label' => "Prema aquí para engadir un usuario…",
@@ -376,6 +380,7 @@ return array(
 	'admin:users:find' => 'Atopar',
 	'admin:users:unvalidated' => 'Sen validar',
 	'admin:users:unvalidated:no_results' => 'Non hai usuarios sen validar.',
+	'admin:users:details:statistics' => 'Estatísticas do contido',
 	
 	'admin:configure_utilities:maintenance' => 'Modo de mantemento',
 	'admin:upgrades' => 'Anovacións',
@@ -407,6 +412,7 @@ return array(
 	'admin:widget:content_stats:help' => 'Fai un seguimento do contido que crean os usuarios.',
 	'admin:widget:cron_status' => 'Estado das tarefas programadas',
 	'admin:widget:cron_status:help' => 'Mostra o estado das últimas tarefas programadas que se executaron.',
+	'admin:statistics:queue:name' => 'Nome',
 
 	'admin:widget:admin_welcome' => 'Benvida',
 	'admin:widget:admin_welcome:help' => "Unha breve introdución á zona de administración de Elgg",
@@ -699,6 +705,7 @@ return array(
 	'activity' => 'Actividade',
 	'members' => 'Membros',
 	'menu' => 'Menú',
+	'item' => 'Item',
 
 	'up' => 'Subir',
 	'down' => 'Baixar',
@@ -953,6 +960,8 @@ return array(
 	'admin:legend:content_access' => 'Acceso a contidos',
 	'admin:legend:site_access' => 'Acceso ao sitio',
 	'admin:legend:debug' => 'Depuración e rexistr',
+	'config:i18n:who_can_change_language:admin_only' => "Só os administradores",
+	'config:email' => "Correo",
 
 	'upgrading' => 'Anovando…',
 	'upgrade:core' => 'Anovouse a instalación de Elgg.',

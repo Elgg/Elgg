@@ -8,7 +8,6 @@
 return array(
 	'members:label:online' => 'Online',
 	'members:search' => 'Sæg medlemmer',
-	'members:title:search' => 'Brugere ved navn %s',
 	'members:total' => 'Total medlemmer: %s',
 	'members:title:newest' => 'Seneste medlemmer',
 	'members:title:popular' => 'Mest populære medlemmer',

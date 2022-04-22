@@ -88,6 +88,7 @@ return array(
 	'theme_sandbox:breakout' => 'Na celou obrazovku',
 	'theme_sandbox:buttons' => 'Tlačítka',
 	'theme_sandbox:components' => 'Součásti',
+	'theme_sandbox:email' => 'E-mail',
 	'theme_sandbox:forms' => 'Formuláře',
 	'theme_sandbox:grid' => 'Mřížka',
 	'theme_sandbox:icons' => 'Ikonky',

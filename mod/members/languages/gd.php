@@ -8,8 +8,8 @@
 return array(
 	'members:label:online' => 'Air loidhne',
 	'members:search' => 'Lorg sna buill',
-	'members:title:search' => 'Lorg sna buill airson %s',
 	'members:total' => 'Buill gu h-iomlan: %s',
+	'members:title:all' => 'Buill gu lèir',
 	'members:title:newest' => 'Buill as ùire',
 	'members:title:popular' => 'Buill as mòr-chòrdte',
 	'members:title:online' => 'Buill air loidhne',

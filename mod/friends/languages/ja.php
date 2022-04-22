@@ -47,6 +47,8 @@ return array(
 	'widgets:friends:name' => "友達",
 	'widgets:friends:description' => "友達を何人か表示する",
 	
+	'widgets:friends_of:name' => "Friends of",
+	
 	'friends:notification:request:subject' => "%s さんが友達になりたいと言っています！",
 	'friends:notification:request:message' => "%s さんが %s で友達申請をしました。
 

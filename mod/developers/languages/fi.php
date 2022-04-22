@@ -77,6 +77,7 @@ return array(
 	'theme_sandbox:breakout' => 'Käytä koko näytön tilaa',
 	'theme_sandbox:buttons' => 'Painikkeet',
 	'theme_sandbox:components' => 'Komponentit',
+	'theme_sandbox:email' => 'Sähköposti',
 	'theme_sandbox:forms' => 'Lomakkeet',
 	'theme_sandbox:grid' => 'Palstat',
 	'theme_sandbox:icons' => 'Ikonit',

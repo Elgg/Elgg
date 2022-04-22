@@ -17,6 +17,8 @@ return array(
 	'widgets:group_activity:edit:select' => 'Seleziona un gruppo',
 	'widgets:group_activity:content:noactivity' => 'Non ci sono attività in questo gruppo',
 	'widgets:group_activity:content:noselect' => 'Modifica questo widget per selezionare un gruppo',
+	
+	'collection:river' => "Attività",
 	'collection:river:group' => "Attività del gruppo",
 	'groups:tool:activity' => 'Abilita attività del gruppo',
 	

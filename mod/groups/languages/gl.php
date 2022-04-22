@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	'add:group:group' => "Crear un grupo",
 	
 	'groups' => "Grupos",
 	'groups:owned' => "Grupos que administra",
@@ -19,6 +20,9 @@ return array(
 	'groups:all' => "Todos os grupos",
 	'groups:add' => "Crear un grupo",
 	'groups:edit' => "Editar o grupo",
+	'groups:edit:profile' => "Perfi",
+	'groups:edit:tools' => "Ferramentas",
+	'groups:edit:settings' => "Configuración",
 	'groups:membershiprequests' => 'Xestionar as solicitudes de admisión',
 	'groups:membershiprequests:pending' => 'Xestionar as solicitudes de admisión (%s)',
 	'groups:invitations' => 'Invitacións ao grupo',

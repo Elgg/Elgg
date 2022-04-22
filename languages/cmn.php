@@ -10,7 +10,7 @@ return array(
  * Sites
  */
 
-	'item:site:site' => '站点',
+	'item:site:site' => 'Site',
 	'collection:site:site' => '站点',
 	'index:content' => '<p>欢迎来到Elgg站点.</p><p><strong>提示:</strong> 许多站点使用 <code>激活的</code> 插件将站点动态添加到这个页面上。</p>',
 
@@ -70,7 +70,7 @@ return array(
 	'RegistrationException:EmptyPassword' => '密码为必填项',
 	'RegistrationException:PasswordMismatch' => '密码必须相同',
 	'LoginException:BannedUser' => '此账号已被禁止登录！',
-	'LoginException:UsernameFailure' => '登录失败，用户名/Email不存在！',
+	'LoginException:UsernameFailure' => '登录失败， 密码错误！',
 	'LoginException:PasswordFailure' => '登录失败， 密码错误！',
 	'LoginException:AccountLocked' => '由于多次登录失败，您的账户已被锁定。',
 	'LoginException:ChangePasswordFailure' => '当前密码校验失败。',
@@ -82,7 +82,7 @@ return array(
 	'EntityNotFoundException' => '您试图访问的内容已被删除，或者您没有访问它的权限。',
 	'EntityPermissionsException' => '此操作没有足够的权限。',
 	'GatekeeperException' => '您没有权限查看要访问的页面。',
-	'BadRequestException' => '请求失败！',
+	'BadRequestException' => '错误请求！',
 
 	'viewfailure' => '在视图中存在错误 %s',
 	'changebookmark' => '请更改此页的书签！',
@@ -111,8 +111,8 @@ return array(
 /**
  * Table columns
  */
-	'table_columns:fromView:admin' => '管理员',
-	'table_columns:fromView:banned' => '禁止',
+	'table_columns:fromView:admin' => '管理',
+	'table_columns:fromView:banned' => '已禁',
 	'table_columns:fromView:container' => '容器',
 	'table_columns:fromView:entity_menu' => '菜单',
 	'table_columns:fromView:excerpt' => '描述',
@@ -130,7 +130,7 @@ return array(
 	'table_columns:fromProperty:email' => '邮箱',
 	'table_columns:fromProperty:name' => '姓名',
 	'table_columns:fromProperty:type' => '类型',
-	'table_columns:fromProperty:username' => '用户名',
+	'table_columns:fromProperty:username' => '使用者名稱',
 
 	'table_columns:fromMethod:getSubtype' => '子类',
 	'table_columns:fromMethod:getDisplayName' => '名称/标题',
@@ -143,9 +143,9 @@ return array(
 
 	'name' => "姓名",
 	'email' => "邮箱地址",
-	'username' => "用户名",
+	'username' => "使用者名稱",
 	'loginusername' => "用户名或者邮箱",
-	'password' => "密码",
+	'password' => "密碼",
 	'passwordagain' => "密码 (再次输入密码确认)",
 	'admin_option' => "设置此账号为管理员?",
 	'autogen_password_option' => "自动生成安全密码?",
@@ -170,7 +170,7 @@ return array(
  * Dashboard and widgets
  */
 
-	'dashboard' => "个人中心",
+	'dashboard' => "管理中心",
 	'dashboard:nowidgets' => "通过个人中心可以关注与您相关的动态活动与内容。",
 
 	'widgets:add' => '添加组件',
@@ -181,7 +181,7 @@ return array(
 	'widget:delete' => '删除 %s',
 	'widget:edit' => '自定义该组件',
 
-	'widgets' => "组件",
+	'widgets' => "页面组件",
 	'widget' => "组件",
 	'item:object:widget' => "组件",
 	'collection:object:widget' => '页面组件',
@@ -260,7 +260,7 @@ return array(
 	'river:posted:generic' => '%s 发布',
 	'riveritem:single:user' => '单用户',
 	'riveritem:plural:user' => '多用户',
-	'river:ingroup' => '在小组%s中',
+	'river:ingroup' => '在研究组 %s',
 	'river:none' => '还没有动态',
 	'river:update' => '%s的更新',
 	'river:delete' => '删除该动态',
@@ -268,7 +268,7 @@ return array(
 	'river:delete:fail' => '该动态无法删除',
 	'river:delete:lack_permission' => '你无法删除该动态，权限不够！',
 	'river:subject:invalid_subject' => '无效用户',
-	'activity:owner' => '查看动态',
+	'activity:owner' => '动态',
 
 /**
  * Relationships
@@ -277,7 +277,7 @@ return array(
 /**
  * Notifications
  */
-	'notification:method:email' => 'Email',
+	'notification:method:email' => '邮箱',
 	'usersettings:notifications:menu:filter:settings' => "设置",
 	'notification:subject' => '关于%s的消息提醒设置',
 	'notification:body' => '在%s中查看新的动态',
@@ -330,7 +330,7 @@ return array(
 	'adduser:bad' => "新用户创建失败.",
 
 	'user:set:name' => "账户名设置",
-	'user:name:label' => "我的名字",
+	'user:name:label' => "姓名",
 	'user:name:success' => "名字修改成功.",
 	'user:name:fail' => "名字修改失败.",
 	'user:username:success' => "成功更改系统上的用户名。",
@@ -395,7 +395,7 @@ return array(
 	'admin:description' => "管理面板允许你控制系统的各个方面，从用户管理到插件行为，从下面选择一个选项开始。",
 	
 	'admin:statistics' => '统计',
-	'admin:server' => '服务器信息',
+	'admin:server' => '服务器',
 	'admin:cron' => '任务',
 	'admin:cron:record' => '最新Cron工作',
 	'admin:cron:period' => 'Cron周期',
@@ -466,7 +466,7 @@ return array(
 	'admin:statistics:numentities:other' => '其他',
 	'admin:statistics:queue:name' => '姓名',
 
-	'admin:widget:admin_welcome' => '欢迎',
+	'admin:widget:admin_welcome' => '歡迎',
 	'admin:widget:admin_welcome:help' => "管理区域的简短介绍",
 	'admin:widget:admin_welcome:intro' => '欢迎使用Elgg! 现在你正在查看管理面板，它可以跟踪网站使用情况.',
 
@@ -500,7 +500,7 @@ return array(
 	'admin:plugins:category:multimedia' => '多媒体',
 	'admin:plugins:category:theme' => '主题',
 	'admin:plugins:category:widget' => '页面组件',
-	'admin:plugins:category:utility' => '功用',
+	'admin:plugins:category:utility' => '站点设置',
 
 	'admin:plugins:markdown:unknown_plugin' => '未知插件.',
 	'admin:plugins:markdown:unknown_file' => '未知文件.',
@@ -516,7 +516,7 @@ return array(
 	'admin:security:settings:description' => '在这个页面上，您可以配置一些安全特性。请仔细阅读设置。',
 	'admin:security:settings:label:hardening' => '强化',
 	'admin:security:settings:label:account' => '账户',
-	'admin:security:settings:label:notifications' => '通知',
+	'admin:security:settings:label:notifications' => 'Notifications',
 	'admin:security:settings:label:site_secret' => '站点安全',
 	
 	'admin:security:settings:notify_admins' => '当添加或删除管理员时通知所有站点管理员。',
@@ -573,16 +573,16 @@ return array(
 	'item:object:plugin' => '插件',
 	'collection:object:plugin' => '所有插件',
 
-	'admin:plugins' => "插件",
+	'admin:plugins' => "所有插件",
 	'admin:plugins:activate_all' => '激活全部',
 	'admin:plugins:deactivate_all' => '禁用全部',
 	'admin:plugins:activate' => '激活',
-	'admin:plugins:deactivate' => '禁用',
+	'admin:plugins:deactivate' => '停用',
 	'admin:plugins:description' => "管理面板允许你控制和配置安装于网站的工具。",
 	'admin:plugins:opt:linktext' => "配置工具...",
 	'admin:plugins:opt:description' => "配置安装于网站的工具. ",
 	'admin:plugins:label:id' => "ID",
-	'admin:plugins:label:name' => "名称",
+	'admin:plugins:label:name' => "姓名",
 	'admin:plugins:label:copyright' => "版权",
 	'admin:plugins:label:categories' => '类别',
 	'admin:plugins:label:licence' => "授权许可",
@@ -624,7 +624,7 @@ return array(
 	'admin:plugins:warning:unmet_dependencies_active' => '插件已经激活，但是缺少依赖工具，您可能会遇到问题。查看下面的"更多信息" 了解细节。',
 
 	'admin:statistics:description' => "这是网站统计总览，如果你需要更多详细统计，可用专业管理特点.",
-	'admin:statistics:opt:description' => "查看网站用户和对象的统计信息.",
+	'admin:statistics:opt:description' => "你的页面的访问统计.",
 	'admin:statistics:opt:linktext' => "查看统计...",
 	'admin:statistics:label:numentities' => "网站实体",
 	'admin:statistics:label:numusers' => "用户数量",
@@ -724,7 +724,7 @@ return array(
 	
 	'usersettings:statistics:yourdetails' => "您的细节",
 	'usersettings:statistics:label:name' => "全名",
-	'usersettings:statistics:label:email' => "Email",
+	'usersettings:statistics:label:email' => "邮箱",
 	'usersettings:statistics:label:lastlogin' => "最后登录",
 	'usersettings:statistics:label:membersince' => "成员来自",
 	'usersettings:statistics:label:numentities' => "您的内容",
@@ -811,10 +811,10 @@ return array(
 	'remove' => '移除',
 	'revert' => '恢复',
 	'validate' => '验证',
-	'next' => '下一页',
+	'next' => '下一步',
 	'previous' => '上一页',
 	
-	'site' => '网站',
+	'site' => 'Site',
 	'activity' => '动态',
 	'members' => '成员',
 	'menu' => '菜单',
@@ -885,7 +885,7 @@ return array(
  * Generic sorts
  */
 
-	'sort:newest' => '最新',
+	'sort:newest' => '最新用户',
 	'sort:popular' => '流行',
 	'sort:alpha' => '按字母顺序',
 	'sort:priority' => '优先级',
@@ -906,7 +906,7 @@ return array(
 	'annotations' => "注释",
 	'relationships' => "关系",
 	'metadata' => "Meta数据",
-	'tagcloud' => "标签云",
+	'tagcloud' => "標籤雲",
 
 	'on' => '开',
 	'off' => '关',
@@ -1114,7 +1114,7 @@ return array(
  * Welcome
  */
 
-	'welcome' => "欢迎",
+	'welcome' => "歡迎",
 	'welcome:user' => '欢迎%s',
 
 /**
@@ -1127,8 +1127,8 @@ return array(
 	'email:body' => '内容',
 
 	'email:settings' => "Email设置",
-	'email:address:label' => "Email地址",
-	'email:address:password' => "密码",
+	'email:address:label' => "邮箱地址",
+	'email:address:password' => "密碼",
 	'email:address:password:help' => "为了能够更改您的电子邮件地址，您需要提供您当前的密码。",
 
 	'email:save:success' => "新Email地址已经保存，尚需验证",
@@ -1186,7 +1186,7 @@ return array(
 	'byline' => '作者 %s',
 	'byline:ingroup' => '在研究组 %s',
 	
-	'entity:delete:item' => '项目',
+	'entity:delete:item' => '栏目',
 	'entity:delete:item_not_found' => '项目为找到。',
 	'entity:delete:permission_denied' => '您还没有权限删除此项目。',
 	'entity:delete:success' => '%s 已删除。',

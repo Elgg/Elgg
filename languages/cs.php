@@ -106,6 +106,7 @@ return array(
 	'table_columns:fromView:admin' => 'Správce',
 	'table_columns:fromView:banned' => 'Zakázán přístup',
 	'table_columns:fromView:container' => 'Kontejner',
+	'table_columns:fromView:entity_menu' => 'Nabídka',
 	'table_columns:fromView:excerpt' => 'Popis',
 	'table_columns:fromView:link' => 'Jméno/Název',
 	'table_columns:fromView:icon' => 'Ikona',
@@ -114,6 +115,7 @@ return array(
 	'table_columns:fromView:owner' => 'Vlastník',
 	'table_columns:fromView:time_created' => 'Čas vytvoření',
 	'table_columns:fromView:time_updated' => 'Čas aktualizace',
+	'table_columns:fromView:unvalidated_menu' => 'Nabídka',
 	'table_columns:fromView:user' => 'Uživatel',
 
 	'table_columns:fromProperty:description' => 'Popis',
@@ -255,6 +257,7 @@ return array(
  * Notifications
  */
 	'notification:method:email' => 'E-mail',
+	'usersettings:notifications:menu:filter:settings' => "Nastavení",
 	'notification:subject' => 'Oznámení o %s',
 	'notification:body' => 'Zobrazit novou aktivitu v %s',
 
@@ -381,12 +384,14 @@ return array(
 	'admin:users:online' => 'Právě přihlášeni',
 	'admin:users:newest' => 'Nejnovější',
 	'admin:users:admins' => 'Správci',
+	'admin:users:banned' => 'Zakázán přístup',
 	'admin:users:add' => 'Přidat nového uživatele',
 	'admin:users:description' => "Tento správcovský panel umožňuje měnit nastavení členů vašich stránek. Následují dostupné možnosti.",
 	'admin:users:adduser:label' => "Pro přidání nového uživatele klikněte sem...",
 	'admin:users:opt:linktext' => "Nastavit uživatele...",
 	'admin:users:opt:description' => "Umožňuje nastavit uživatele a informace o účtech. ",
 	'admin:users:find' => 'Najít',
+	'admin:users:details:statistics' => 'Statistiky obsahu',
 	
 	'admin:configure_utilities:maintenance' => 'Režim údržby',
 	'admin:upgrades' => 'Aktualizace',
@@ -418,6 +423,7 @@ return array(
 	'admin:widget:content_stats:help' => 'Zobrazuje statistiky obsahu vytvořeného vašimi uživateli',
 	'admin:widget:cron_status' => 'Stav cronu',
 	'admin:widget:cron_status:help' => 'Zobrazuje stav kdy byla úloha cronu naposledy skončena',
+	'admin:statistics:queue:name' => 'Jméno',
 
 	'admin:widget:admin_welcome' => 'Vítejte',
 	'admin:widget:admin_welcome:help' => "Krátké uvedení do administrace projektu Elgg",
@@ -714,6 +720,7 @@ return array(
 	'activity' => 'Aktivita',
 	'members' => 'Členové',
 	'menu' => 'Nabídka',
+	'item' => 'Položka',
 
 	'up' => 'Nahoru',
 	'down' => 'Dolů',
@@ -968,6 +975,8 @@ return array(
 	'admin:legend:content_access' => 'Přístup k obsahu',
 	'admin:legend:site_access' => 'Přístup ke stránkám',
 	'admin:legend:debug' => 'Ladění a výpisy',
+	'config:i18n:who_can_change_language:admin_only' => "Pouze pro správce",
+	'config:email' => "E-mail",
 
 	'upgrading' => 'Aktualizace...',
 	'upgrade:core' => 'Vaše instalace Elgg byla aktualizována.',
