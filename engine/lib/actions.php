@@ -3,8 +3,6 @@
  * Elgg Actions
  */
 
-use Elgg\Database\SiteSecret;
-
 /**
  * Registers an action.
  *
@@ -55,28 +53,6 @@ function elgg_unregister_action(string $action): bool {
  */
 function elgg_build_hmac($data): \Elgg\Security\Hmac {
 	return _elgg_services()->hmac->getHmac($data);
-}
-
-/**
- * Regenerate a new site key (32 bytes: "z" to indicate format + 186-bit key in Base64 URL).
- *
- * @return mixed The site secret hash
- * @internal
- */
-function init_site_secret() {
-	$secret = SiteSecret::regenerate(_elgg_services()->crypto, _elgg_services()->configTable);
-	_elgg_services()->set('siteSecret', $secret);
-	return $secret->get();
-}
-
-/**
- * Get the strength of the site secret
- *
- * @return string "strong", "moderate", or "weak"
- * @internal
- */
-function _elgg_get_site_secret_strength() {
-	return _elgg_services()->siteSecret->getStrength();
 }
 
 /**

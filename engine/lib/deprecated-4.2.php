@@ -67,3 +67,22 @@ function register_error($error) {
 	_elgg_services()->system_messages->addErrorMessage($error);
 	return true;
 }
+
+/**
+ * Returns a database row from the entities table.
+ *
+ * @tip Use get_entity() to return the fully loaded entity.
+ *
+ * @warning This will only return results if a) it exists, b) you have access to it.
+ * see {@link _elgg_get_access_where_sql()}.
+ *
+ * @param int $guid The GUID of the object to extract
+ *
+ * @return \stdClass|false
+ * @deprecated 4.2 use elgg_get_entity_as_row()
+ */
+function get_entity_as_row($guid) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated use elgg_get_entity_as_row()', '4.2');
+	
+	return _elgg_services()->entityTable->getRow($guid);
+}
