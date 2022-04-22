@@ -2,9 +2,9 @@ Elgg
 ====
 
 [![Build status](https://github.com/Elgg/Elgg/workflows/Run%20PHPUnit%20test%20suites/badge.svg?branch=master)](https://github.com/Elgg/Elgg)
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/quality-score.png?s=3.3)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=3.3) 
-[![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/coverage.png?b=3.3)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=3.3) 
-[![Read the docs build status](https://readthedocs.org/projects/elgg/badge/?version=3.3)](http://learn.elgg.org/en/3.3/)
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/quality-score.png?s=4.2)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=4.2) 
+[![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/coverage.png?b=4.2)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=4.2) 
+[![Read the docs build status](https://readthedocs.org/projects/elgg/badge/?version=4.2](http://learn.elgg.org/en/4.2/)
 
 Elgg is an open source rapid development framework for socially aware web applications.
 
