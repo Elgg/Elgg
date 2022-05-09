@@ -72,8 +72,6 @@ class Users extends Seed {
 					continue;
 				}
 
-				$this->createIcon($friend);
-
 				$friends_exclude[] = $friend->guid;
 
 				if ($user->addFriend($friend->guid, true)) {
