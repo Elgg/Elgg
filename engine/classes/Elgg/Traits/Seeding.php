@@ -513,17 +513,20 @@ trait Seeding {
 
 		$exclude[] = 0;
 
-		$users = elgg_get_entities([
-			'types' => 'user',
-			'metadata_names' => ['__faker'],
-			'limit' => 1,
-			'wheres' => [
-				function(QueryBuilder $qb, $main_alias) use ($exclude) {
-					return $qb->compare("{$main_alias}.guid", 'NOT IN', $exclude, ELGG_VALUE_INTEGER);
-				}
-			],
-			'order_by' => new OrderByClause('RAND()', null),
-		]);
+		// make sure the random user isn't disabled
+		$users = elgg_call(ELGG_HIDE_DISABLED_ENTITIES, function() use ($exclude) {
+			return elgg_get_entities([
+				'types' => 'user',
+				'metadata_names' => ['__faker'],
+				'limit' => 1,
+				'wheres' => [
+					function(QueryBuilder $qb, $main_alias) use ($exclude) {
+						return $qb->compare("{$main_alias}.guid", 'NOT IN', $exclude, ELGG_VALUE_INTEGER);
+					}
+				],
+				'order_by' => new OrderByClause('RAND()', null),
+			]);
+		});
 
 		if (!empty($users)) {
 			return $users[0];
@@ -535,7 +538,9 @@ trait Seeding {
 			foreach ($profile_fields_config as $field) {
 				$profile_fields[$field['name']] = $field['#type'];
 			}
-			return $this->createUser([], [], [
+			return $this->createUser([], [
+				'validated' => true,
+			], [
 				'profile_fields' => $profile_fields,
 			]);
 		}
