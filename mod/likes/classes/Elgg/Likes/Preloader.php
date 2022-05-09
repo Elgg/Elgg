@@ -133,14 +133,19 @@ class Preloader {
 
 		foreach ($items as $item) {
 			if ($item instanceof \ElggRiverItem) {
-				// only like group creation #3958
-				if ($item->type == "group" && $item->view != "river/group/create") {
+				$object = $item->getObjectEntity();
+				if (!$object instanceof \ElggEntity) {
 					continue;
 				}
 
-				$type = $item->type;
-				$subtype = $item->subtype;
-				$likable = (bool) elgg_trigger_deprecated_plugin_hook('likes:is_likable', "{$type}:{$subtype}", [], elgg_entity_has_capability($type, $subtype, 'likable'), "Use the capabilities system to register your entity ('{$type}:{$subtype}') as likable.", '4.1');
+				// only like group creation #3958
+				if ($object instanceof \ElggGroup && $item->view != 'river/group/create') {
+					continue;
+				}
+
+				$type = $object->type;
+				$subtype = $object->subtype;
+				$likable = (bool) elgg_trigger_deprecated_plugin_hook('likes:is_likable', "{$type}:{$subtype}", [], $object->hasCapability('likable'), "Use the capabilities system to register your entity ('{$type}:{$subtype}') as likable.", '4.1');
 				if (!$likable) {
 					continue;
 				}
@@ -154,7 +159,7 @@ class Preloader {
 				}
 			} elseif ($item instanceof \ElggEntity) {
 				$type = $item->type;
-				$subtype = $item->getSubtype();
+				$subtype = $item->subtype;
 				$likable = (bool) elgg_trigger_deprecated_plugin_hook('likes:is_likable', "{$type}:{$subtype}", [], $item->hasCapability('likable'), "Use the capabilities system to register your entity ('{$type}:{$subtype}') as likable.", '4.1');
 		
 				if ($likable) {
