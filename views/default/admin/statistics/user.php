@@ -12,10 +12,12 @@ $users_active = elgg_count_entities([
 ]);
 
 // Unverified user count
-$users_unverified = elgg_count_entities([
-	'type' => 'user',
-	'metadata_name_value_pairs' => ['validated' => false],
-]);
+$users_unverified = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function () {
+	return elgg_count_entities([
+		'type' => 'user',
+		'metadata_name_value_pairs' => ['validated' => false],
+	]);
+});
 
 // Total user count (Enable & Disabled)
 $total_users = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function () {
