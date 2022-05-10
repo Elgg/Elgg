@@ -258,6 +258,7 @@ class ElggSession {
 			$this->set('guid', $user->guid);
 			$this->logged_in_user = $user;
 			_elgg_services()->sessionCache->clear();
+			_elgg_services()->entityCache->save($user);
 			_elgg_services()->translator->setCurrentLanguage($user->language);
 		}
 	}
@@ -332,6 +333,7 @@ class ElggSession {
 	 * @return bool Previous setting
 	 */
 	public function setIgnoreAccess($ignore = true) {
+// 		debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 5);
 		$prev = $this->ignore_access;
 		$this->ignore_access = $ignore;
 
