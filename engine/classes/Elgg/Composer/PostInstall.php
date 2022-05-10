@@ -1,14 +1,15 @@
 <?php
+
 namespace Elgg\Composer;
 
 use Composer\Script\Event;
-use Elgg;
-use Elgg\Filesystem\Directory;
+use Elgg\Filesystem\Directory\Local;
 
 /**
  * A composer command handler to run after composer install
  */
 class PostInstall {
+
 	/**
 	 * Copies files that Elgg expects to be in the root directory.
 	 *
@@ -17,10 +18,12 @@ class PostInstall {
 	 * @return void
 	 */
 	public static function execute(Event $event) {
-		self::copyFromElggToRoot("install/config/htaccess.dist", ".htaccess");
-		self::copyFromElggToRoot("index.php", "index.php");
-		self::copyFromElggToRoot("install.php", "install.php");
-		self::copyFromElggToRoot("upgrade.php", "upgrade.php");
+		self::copyFromElggToRoot('install/config/htaccess.dist', '.htaccess');
+		self::copyFromElggToRoot('index.php', 'index.php');
+		self::copyFromElggToRoot('install.php', 'install.php');
+		self::copyFromElggToRoot('upgrade.php', 'upgrade.php');
+
+		self::createProjectModFolder();
 
 		$managed_plugins = \Elgg\Database\Plugins::BUNDLED_PLUGINS;
 
@@ -38,15 +41,39 @@ class PostInstall {
 	 *
 	 * @return boolean Whether the copy succeeded.
 	 */
-	private static function copyFromElggToRoot($elggPath, $rootPath, $overwrite = false) {
-		$from = Elgg\Application::elggDir()->getPath($elggPath);
-		$to = Directory\Local::projectRoot()->getPath($rootPath);
+	protected static function copyFromElggToRoot($elggPath, $rootPath, $overwrite = false) {
+		$from = Local::elggRoot()->getPath($elggPath);
+		$to = Local::projectRoot()->getPath($rootPath);
 
 		if (!$overwrite && file_exists($to)) {
 			return false;
 		}
 
 		return copy($from, $to);
+	}
+	
+	/**
+	 * Make sure the /mod folder exists in when Elgg is installed through a Composer project
+	 * eg. starter project
+	 *
+	 * @return bool
+	 * @since 4.2
+	 */
+	protected static function createProjectModFolder(): bool {
+		$project_mod = Local::projectRoot()->getPath('mod');
+		$elgg_mod = Local::elggRoot()->getPath('mod');
+		
+		if ($project_mod === $elgg_mod) {
+			// Elgg is the main project, no need to create the /mod folder
+			return false;
+		}
+		
+		if (is_dir($project_mod)) {
+			// /mod folder already exists
+			return false;
+		}
+		
+		return mkdir($project_mod, 0755);
 	}
 
 	/**
@@ -57,9 +84,9 @@ class PostInstall {
 	 *
 	 * @return bool Whether the symlink succeeded.
 	 */
-	private static function symlinkPluginFromRootToElgg($plugin) {
-		$link = Directory\Local::projectRoot()->getPath("mod/$plugin");
-		$target = Elgg\Application::elggDir()->getPath("mod/$plugin");
+	protected static function symlinkPluginFromRootToElgg($plugin) {
+		$link = Local::projectRoot()->getPath("mod/{$plugin}");
+		$target = Local::elggRoot()->getPath("mod/{$plugin}");
 
 		return is_dir($target) && !file_exists($link) && symlink($target, $link);
 	}
