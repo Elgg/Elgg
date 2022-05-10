@@ -10,11 +10,6 @@ use ElggBatch;
  */
 class ElggBatchTest extends IntegrationTestCase {
 
-	/**
-	 * @var \ElggEntity[] entities created during the test
-	 */
-	protected $createdEntities = [];
-
 	// see https://github.com/elgg/elgg/issues/4288
 	public function testElggBatchIncOffset() {
 		// normal increment
@@ -106,7 +101,7 @@ class ElggBatchTest extends IntegrationTestCase {
 
 		$subtype ='testCanGetBatchFromAnEntityGetter';
 		for ($i = 1; $i <= 5; $i++) {
-			$this->createdEntities[] = $this->createObject([
+			$this->createObject([
 				'subtype' => $subtype,
 			]);
 		}
@@ -142,7 +137,7 @@ class ElggBatchTest extends IntegrationTestCase {
 		elgg_get_session()->setLoggedInUser($owner);
 		
 		for ($i = 0; $i < 5; $i++) {
-			$this->createdEntities[] = $this->createObject([
+			$this->createObject([
 				'owner_guid' => $owner->guid,
 				'subtype' => $subtype,
 			]);
