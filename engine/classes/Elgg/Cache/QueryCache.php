@@ -58,12 +58,16 @@ class QueryCache extends LRUCache {
 	 * This is useful for special scripts that pull large amounts of data back
 	 * in single queries.
 	 *
+	 * @param bool $clear also clear the cache (default: true)
+	 *
 	 * @return void
 	 */
-	public function disable() {
+	public function disable(bool $clear = true) {
 		$this->runtime_enabled = false;
 		
-		$this->clear();
+		if ($clear) {
+			$this->clear();
+		}
 	}
 	
 	/**
