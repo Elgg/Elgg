@@ -51,10 +51,7 @@ jobs:
           php-version: '7.4'
           coverage: none
           extensions: gd,pdo,xml,json,mysqli,pdo_mysql
-          
-      - name: Install Composer v1
-        run: composer self-update --1
-        
+      
       - name: Code checkout
         uses: actions/checkout@v2
       
