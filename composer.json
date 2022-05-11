@@ -77,6 +77,7 @@
             "engine/classes/"
         ],
         "psr-4": {
+            "CssCrush\\": "engine/vendor_classes/CssCrush/",
             "Elgg\\": "engine/classes/Elgg/",
             "Laminas\\Mime\\": "engine/vendor_classes/Laminas/Mime/",
             "Phpfastcache\\": "engine/vendor_classes/Phpfastcache/"
