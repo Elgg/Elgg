@@ -476,25 +476,20 @@ class EntityTable {
 	 *
 	 * @param int $guid User GUID. Default is logged in user
 	 *
-	 * @return \ElggUser|false
+	 * @return \ElggUser|null
 	 * @throws UserFetchFailureException
 	 */
 	public function getUserForPermissionsCheck($guid = 0) {
-		if (!$guid) {
+		if (!$guid || $guid === $this->session->getLoggedInUserGuid()) {
 			return $this->session->getLoggedInUser();
 		}
 
 		$user = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
 			// need to ignore access and show hidden entities for potential hidden/disabled users
-			$user = $this->get($guid, 'user');
-			if ($user) {
-				$this->metadata_cache->populateFromEntities([$user->guid]);
-			}
-			
-			return $user;
+			return $this->get($guid, 'user');
 		});
 
-		if (!$user) {
+		if (!$user instanceof \ElggUser) {
 			// requested to check access for a specific user_guid, but there is no user entity, so the caller
 			// should cancel the check and return false
 			$message = $this->translator->translate('UserFetchFailureException', [$guid]);
