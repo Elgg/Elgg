@@ -4,8 +4,8 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Jerôme Bakker, 2021
 # Jeroen Dalsem, 2021
+# Jerôme Bakker, 2022
 # Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2022
 # 
 #, fuzzy
@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-08 09:47+0200\n"
+"POT-Creation-Date: 2022-04-22 10:32+0200\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2022\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -47,6 +47,7 @@ msgstr "Ci-dessous quelques questions fréquemment posées à propos de Elgg."
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:7
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:6
 #: ../../appendix/upgrade-notes/4.0-to-4.1.rst:6
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:6
 msgid "Contents"
 msgstr "Contenu"
 
@@ -1328,6 +1329,7 @@ msgstr ""
 "``settings.php`` pour plus d'information."
 
 #: ../../appendix/faqs/security.rst:2 ../../appendix/faqs/security.rst:2
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:65
 msgid "Security"
 msgstr "Sécurité"
 
@@ -5076,6 +5078,7 @@ msgstr "De 2.0 à 2.1"
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:77
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:892
 #: ../../appendix/upgrade-notes/4.0-to-4.1.rst:29
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:86
 msgid "Deprecated APIs"
 msgstr "APIs dépréciées"
 
@@ -12472,6 +12475,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:901
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:937
 #: ../../appendix/upgrade-notes/4.0-to-4.1.rst:32
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:89
 msgid "Lib functions"
 msgstr "Fonctions de la bibliothèque"
 
@@ -15368,3 +15372,222 @@ msgid ""
 msgstr ""
 "``'likes:is_likable', '<type>:<subtype>'`` utilisez  "
 "``$entity->hasCapability('likable')``"
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:2
+msgid "From 4.1 to 4.2"
+msgstr "De 4.1 à 4.2"
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:9
+msgid "Stash replaced with Phpfastcache"
+msgstr "Stash remplacé par Phpfastcache"
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:11
+msgid ""
+"The internal caching library Stash has been replaced with `Phpfastcache "
+"<https://www.phpfastcache.com/>`_. Phpfastcache is better maintained, "
+"provides more cachedrivers and adds more features to the cache "
+"implementation. This change should cause no issues on any existing "
+"installation. If you have Memcache or Redis configured in your ``elgg-"
+"config/settings.php`` you might need to update your configuration."
+msgstr ""
+"La bibliothèque de cache interne Stash a été remplacée par `Phpfastcache "
+"<https://www.phpfastcache.com/>`_. Phpfastcache est mieux entretenu, fournit"
+" plus de pilotes de cache et ajoute plus de fonctionnalités à "
+"l'implémentation du cache. Cette modification ne devrait causer aucun "
+"problème sur les installations existantes. Si vous avez configuré Memcache "
+"ou Redis dans votre ``elgg-config/settings.php``, vous pourriez avoir besoin"
+" de mettre à jour votre configuration."
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:17
+msgid "Metadata and Annotation boolean values"
+msgstr "Valeurs booléennes des Metadata et des Annotation"
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:19
+msgid ""
+"The database model has been changed to keep boolean values intact between "
+"saving and retrieving. Before this change if you saved a boolean value it "
+"would be returned as an integer. Now it will remain a boolean."
+msgstr ""
+"Le modèle de base de données a été modifié pour conserver les valeurs "
+"booléennes intactes entre l'enregistrement et la récupération. Avant ce "
+"changement, si vous enregistriez une valeur booléenne, elle était renvoyée "
+"sous la forme d'un entier. Désormais elle reste un booléen."
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:24
+msgid ""
+"If you saved boolean values previously they will still be integers in the "
+"database (until saved again)."
+msgstr ""
+"Si vous avez précédemment enregistré des valeurs booléennes, elles seront "
+"sous forme d'entiers dans la base de données (jusqu'à ce qu'elles soient de "
+"nouveau enregistrées)."
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:27
+msgid "System message functions"
+msgstr "Fonctions des messages système"
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:29
+msgid ""
+"The functions ``system_message()`` and ``register_error()`` have been "
+"replaced by ``elgg_register_success_message()`` and "
+"``elgg_register_error_message()``. The new functions have the ability to "
+"pass extra options to the system messages registry."
+msgstr ""
+"Le fonctions ``system_message()`` et ``register_error()`` ont été remplacées"
+" par ``elgg_register_success_message()`` et "
+"``elgg_register_error_message()``. Les nouvelles fonctions ont la capacité "
+"de passer des options supplémentaires au registre des messages système."
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:33
+msgid "Javascript functions"
+msgstr "Fonctions Javascript"
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:35
+msgid ""
+"The Elgg javascript libraries have gotten a massive overhaul. A lot of "
+"functions have been deprecated. You can find all deprecated functions and "
+"globals in `views/default/core/js/deprecated.js`."
+msgstr ""
+"Les bibliothèques javascript Elgg ont connu une refonte massive. Beaucoup de"
+" fonctions ont été dépréciées. Vous pouvez trouver toutes les fonctions "
+"obsolètes et globales dans `views/default/core/js/deprecated.js`."
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:39
+msgid "System messages"
+msgstr "Messages système"
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:41
+msgid ""
+"If you use system messages in your javascript, you now should require the "
+"``elgg/system_messages`` module."
+msgstr ""
+"Si vous utilisez les messages système dans votre javascript, vous devriez "
+"maintenant requérir le module ``elgg/system_messages``."
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:44
+msgid "Security tokens"
+msgstr "Jetons de sécurité"
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:46
+msgid ""
+"If you use ``elgg.security.addToken()`` in your javascript, you now should "
+"require the ``elgg/security`` module."
+msgstr ""
+"Si vous utilisez ``elgg.security.addToken()`` dans votre javascript, vous "
+"devriez maintenant requérir le module ``elgg/security``."
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:49
+msgid "Translations"
+msgstr "Traductions"
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:51
+msgid ""
+"If you use ``elgg.echo()`` in your javascript, you now should require the "
+"``elgg/i18n`` module."
+msgstr ""
+"Si vous utilisez ``elgg.echo()`` dans votre javascript, vous devriez "
+"maintenant requérir le module ``elgg/i18n``."
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:54
+msgid "UI functions"
+msgstr "Fonctions UI"
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:56
+msgid ""
+"The user hover menu is no longer initialized from the global ui.js, but "
+"requires the javascript on demand from the ``icon/user/default`` view."
+msgstr ""
+"Le menu déroulant de l'utilisateur n'est plus initialisé à partir du fichier"
+" ui.js global, mais requiert le javascript à la demande à partir de la vue "
+"``icon/user/default``."
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:59
+msgid "ElggUser & ElggEntity"
+msgstr "ElggUser & ElggEntity"
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:61
+msgid ""
+"The javascript equivalent of the ``ElggUser`` and ``ElggEntity`` should no "
+"longer be used. The logged in user entity should no longer be referenced in "
+"the ``elgg.session.user`` page data. You can find its attributes in "
+"``elgg.user`` as an array."
+msgstr ""
+"Les équivalents javascript de ``ElggUser`` et ``ElggEntity`` ne devraient "
+"plus être utilisés. L'entité utilisateur connecté ne devrait plus être "
+"référencée dans les données de la page ``elgg.session.user``. Vous pouvez "
+"trouver ses attributs dans ``elgg.user`` sous forme de tableau."
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:67
+msgid ""
+"``output/url`` now has added security features to help prevent malicious "
+"user generated output. The view supports ``$vars['allowed_schemes']`` which "
+"contains a list of allowed URL schemes. The provided ``$vars['href']`` will "
+"be matched against the allowed list. If the URL doesn't have an allowed "
+"scheme the URL will be prefixed with ``denied:``."
+msgstr ""
+"``output/url`` a maintenant ajouté des fonctionnalités de sécurité pour "
+"aider à bloquer les sorties générées par des utilisateurs malveillants. La "
+"vue prend en charge ``$vars['allowed_schemes']`` qui contient une liste des "
+"schémas d'URL autorisés. Le ``$vars['href']`` fourni est mis en "
+"correspondance avec la liste autorisée. Si l'URL n'a pas de schéma autorisé,"
+" l'URL sera préfixée par ``denied:``."
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:71
+msgid ""
+"This will help to prevent user input like ``javascript:alert('just "
+"testing');`` from being presented to the users."
+msgstr ""
+"Cela aidera à empêcher que des entrées utilisateur telles que "
+"``javascript:alert('just testing');`` ne soient présentées aux utilisateurs."
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:73
+msgid ""
+"By default the following schemes are allowed: ``http, https, ftp, sftp, ssh,"
+" file``"
+msgstr ""
+"Par défaut, les schémas suivants sont autorisés : ``http, https, ftp, sftp, "
+"ssh, file``"
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:75
+msgid ""
+"If you use the pattern ``elgg_view('output/url', ['text' => 'something', "
+"'href' => 'javascript:void(0);'])`` update your code to set ``href`` to "
+"``false``."
+msgstr ""
+"Si vous utilisez le modèle ``elgg_view('output/url', ['text' => 'something',"
+" 'href' => 'javascript:void(0);'])`` mettez à jour votre code pour définir "
+"`` href`` à ``false``."
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:79
+msgid "Groups"
+msgstr "Groupes"
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:81
+msgid ""
+"The menu name for the tabs on the group members page has been replaced to "
+"use the default filter menu logic. Rewrite your plugin hooks from "
+"``menu:groups_members`` to ``menu:filter:groups/members``. Since this is a "
+"different menu the current group entity is now available in the hook "
+"parameter ``filter_entity``."
+msgstr ""
+"Le nom du menu des onglets de la page des membres du groupe a été remplacé "
+"pour utiliser la logique de menu de filtre par défaut. Réécrivez vos hooks "
+"de plugin ``menu:groups_members`` en ``menu:filter:groups/members``. "
+"Puisqu'il s'agit d'un menu différent, l'entité de groupe actuelle est "
+"désormais disponible dans le paramètre de hook ``filter_entity``."
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:91
+msgid ""
+"``elgg_view_menu_item()`` use "
+"``elgg_view('navigation/menu/elements/item/url', ['item' => $myMenuItem])``"
+msgstr ""
+"``elgg_view_menu_item()`` utilisez "
+"``elgg_view('navigation/menu/elements/item/url', ['item' => $myMenuItem])``"
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:92
+msgid "``register_error()`` use ``elgg_register_error_message()``"
+msgstr "``register_error()`` utilisez ``elgg_register_error_message()``"
+
+#: ../../appendix/upgrade-notes/4.1-to-4.2.rst:93
+msgid "``system_message()`` use ``elgg_register_success_message()``"
+msgstr "``system_message()`` utilisez ``elgg_register_success_message()``"
