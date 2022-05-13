@@ -1,3 +1,23 @@
+<a name="4.2.0"></a>
+## 4.2.0  (2022-05-13)
+
+#### Contributors
+
+* Jerôme Bakker (16)
+
+#### Performance
+
+* **batch:** retain query cache during ElggBatch ([8dcebb26](https://github.com/Elgg/Elgg/commit/8dcebb26b355551c5e0ba288c48ecb8ebc9322e0))
+
+
+#### Bug Fixes
+
+* **composer:** postinstall script correctly creates /mod folder ([f2568298](https://github.com/Elgg/Elgg/commit/f25682988f31a8c1505371cfc33b1daa0bcdb395))
+* **likes:** use correct values to check likeable capability ([74b43e15](https://github.com/Elgg/Elgg/commit/74b43e15244d8f0dea4d83d9185a3989033a5514))
+* **session:** make sure to cache the logged in user in the entity cache ([9145183a](https://github.com/Elgg/Elgg/commit/9145183a86d965d7d7964a86b6de7bd2b45412f3))
+* **stats:** correctly show the number of unvalidated users ([cae13aa1](https://github.com/Elgg/Elgg/commit/cae13aa130b4259135b500a762422a2382745a42))
+
+
 <a name="4.2.0-rc.1"></a>
 ### 4.2.0-rc.1  (2022-04-22)
 
