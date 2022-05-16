@@ -390,6 +390,15 @@ function elgg_get_site_entity() {
  * ];
  *
  * // @see \Elgg\Database\Clauses\EntitySortByClause
+ *
+ * // single sort_by option
+ * $options['sort_by'] = [
+ * 		'property_type' => 'attribute',
+ * 		'property' => 'time_created',
+ * 		'direction' => 'ASC',
+ * 	];
+ *
+ * // multiple sort_by options
  * $options['sort_by'] = [
  * 		[
  * 			'property_type' => 'attribute',
