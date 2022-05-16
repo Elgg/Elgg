@@ -173,7 +173,7 @@ class ElggUser extends \ElggEntity {
 	 * @return bool
 	 */
 	public function isBanned() {
-		return $this->banned == 'yes';
+		return $this->banned === 'yes';
 	}
 
 	/**
@@ -182,9 +182,7 @@ class ElggUser extends \ElggEntity {
 	 * @return bool
 	 */
 	public function isAdmin() {
-		return elgg_call(ELGG_IGNORE_ACCESS, function() {
-			return ($this->admin === 'yes');
-		});
+		return $this->admin === 'yes';
 	}
 
 	/**

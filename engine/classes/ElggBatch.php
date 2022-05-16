@@ -290,7 +290,7 @@ class ElggBatch implements \Countable, \Iterator {
 		$options = array_merge($this->options, $current_options);
 
 		// batch result sets tend to be large; we don't want to cache these.
-		_elgg_services()->queryCache->disable();
+		_elgg_services()->queryCache->disable(false);
 
 		$this->results = call_user_func($this->getter, $options);
 
