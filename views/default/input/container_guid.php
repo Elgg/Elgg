@@ -22,6 +22,7 @@ $info = elgg_extract('container_info', $vars);
 if ($info === false) {
 	return;
 }
+
 $container = get_entity($options['value']);
 if (empty($info) && $container instanceof \ElggGroup) {
 	$language_keys = [];
@@ -43,6 +44,10 @@ if (empty($info) && $container instanceof \ElggGroup) {
 		$info = elgg_echo($key, [elgg_view_entity_url($container)]);
 		break;
 	}
+}
+
+if (empty($info)) {
+	return;
 }
 
 echo elgg_format_element('span', ['class' => 'elgg-subtext'], $info);
