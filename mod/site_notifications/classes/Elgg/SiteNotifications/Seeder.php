@@ -36,7 +36,9 @@ class Seeder extends Seed {
 			}
 			
 			// link to entity on site
-			$linked_entity = $this->getRandomLinkedEntity();
+			$linked_entity = $this->getRandomLinkedEntity([
+				$notification->guid, // prevent deadloops
+			]);
 			if ($linked_entity instanceof \ElggEntity) {
 				$notification->setLinkedEntity($linked_entity);
 			}
@@ -115,7 +117,11 @@ class Seeder extends Seed {
 			'wheres' => [
 				function(QueryBuilder $qb, $main_alias) use ($exclude) {
 					return $qb->compare("{$main_alias}.guid", 'NOT IN', $exclude, ELGG_VALUE_INTEGER);
-				}
+				},
+				function (QueryBuilder $qb, $main_alias) {
+					// prevent linking to other site notifications
+					return $qb->compare("{$main_alias}.subtype", '!=', 'site_notification', ELGG_VALUE_STRING);
+				},
 			],
 			'order_by' => new OrderByClause('RAND()', null),
 		]);
