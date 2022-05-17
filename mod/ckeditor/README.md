@@ -3,9 +3,9 @@ CKEditor WYSIWYG plugin
 
 Configuration options
 ----------------------
-CKEditor configuration is set in the view "elgg-ckeditor.js". The configuration object
-is `elgg.ckeditor.config`. A plugin can modify the configuration object by registering
-a function to run before the ckeditor.init function on the `'init', 'system'` hook.
+CKEditor default configuration is set in the view `elgg/ckeditor/config.js`. 
+A plugin can modify the configuration object by replacing the view, or by registering
+a hook callback function to run on the `'config', 'ckeditor'` hook.
 This is where toolbar options and the skin are set.
 
 Content CSS
@@ -18,4 +18,3 @@ elgg-output class for the same reason (see the typography view).
 Hints
 ------------
  * If your theme does not use borders with tables, enable the CKEditor showborders plugin.
-
