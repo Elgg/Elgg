@@ -11,7 +11,7 @@ Stash replaced with Phpfastcache
 The internal caching library Stash has been replaced with `Phpfastcache <https://www.phpfastcache.com/>`_. 
 Phpfastcache is better maintained, provides more cachedrivers and adds more features to the cache implementation. 
 This change should cause no issues on any existing installation. 
-If you have Memcache or Redis configured in your `elgg-config/settings.php` you might need to update your configuration.
+If you have Memcache or Redis configured in your ``elgg-config/settings.php`` you might need to update your configuration.
 
 Metadata and Annotation boolean values
 --------------------------------------
@@ -23,11 +23,43 @@ Before this change if you saved a boolean value it would be returned as an integ
 
 	If you saved boolean values previously they will still be integers in the database (until saved again).
 
+System message functions
+------------------------
+
+The functions ``system_message()`` and ``register_error()`` have been replaced by ``elgg_register_success_message()`` and ``elgg_register_error_message()``. 
+The new functions have the ability to pass extra options to the system messages registry. 
+
 Javascript functions
 --------------------
 
 The Elgg javascript libraries have gotten a massive overhaul. A lot of functions have been deprecated. 
 You can find all deprecated functions and globals in `views/default/core/js/deprecated.js`.
+
+System messages
+~~~~~~~~~~~~~~~
+
+If you use system messages in your javascript, you now should require the ``elgg/system_messages`` module.
+
+Security tokens
+~~~~~~~~~~~~~~~
+
+If you use ``elgg.security.addToken()`` in your javascript, you now should require the ``elgg/security`` module.
+
+Translations
+~~~~~~~~~~~~
+
+If you use ``elgg.echo()`` in your javascript, you now should require the ``elgg/i18n`` module.
+
+UI functions
+~~~~~~~~~~~~
+
+The user hover menu is no longer initialized from the global ui.js, but requires the javascript on demand from the ``icon/user/default`` view.
+
+ElggUser & ElggEntity
+~~~~~~~~~~~~~~~~~~~~~
+
+The javascript equivalent of the ``ElggUser`` and ``ElggEntity`` should no longer be used. The logged in user entity should no longer be referenced in
+the ``elgg.session.user`` page data. You can find its attributes in ``elgg.user`` as an array.
 
 Security
 --------
@@ -43,7 +75,19 @@ By default the following schemes are allowed: ``http, https, ftp, sftp, ssh, fil
 If you use the pattern ``elgg_view('output/url', ['text' => 'something', 'href' => 'javascript:void(0);'])`` update your code to set
 ``href`` to ``false``.
 
+Groups
+------
+
+The menu name for the tabs on the group members page has been replaced to use the default filter menu logic. Rewrite your plugin hooks 
+from ``menu:groups_members`` to ``menu:filter:groups/members``. Since this is a different menu the current group entity is now available
+in the hook parameter ``filter_entity``.
+
 Deprecated APIs
 ---------------
 
+Lib functions
+~~~~~~~~~~~~~
+
  * ``elgg_view_menu_item()`` use ``elgg_view('navigation/menu/elements/item/url', ['item' => $myMenuItem])``
+ * ``register_error()`` use ``elgg_register_error_message()``
+ * ``system_message()`` use ``elgg_register_success_message()``

@@ -17,10 +17,6 @@ abstract class ViewRenderingTestCase extends IntegrationTestCase {
 		_elgg_services()->logger->disable();
 	}
 
-	public function down() {
-		_elgg_services()->logger->enable();
-	}
-
 	/**
 	 * Returns an array of view names to test with given default view vars
 	 *

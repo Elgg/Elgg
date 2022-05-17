@@ -15,34 +15,6 @@ elgg.assertTypeOf = function(type, val) {
 };
 
 /**
- * Inherit the prototype methods from one constructor into another.
- *
- * @example
- * <pre>
- * function ParentClass(a, b) { }
- *
- * ParentClass.prototype.foo = function(a) { alert(a); }
- *
- * function ChildClass(a, b, c) {
- *     //equivalent of parent::__construct(a, b); in PHP
- *     ParentClass.call(this, a, b);
- * }
- *
- * elgg.inherit(ChildClass, ParentClass);
- *
- * var child = new ChildClass('a', 'b', 'see');
- * child.foo('boo!'); // alert('boo!');
- * </pre>
- *
- * @param {Function} Child Child class constructor.
- * @param {Function} Parent Parent class constructor.
- */
-elgg.inherit = function(Child, Parent) {
-	Child.prototype = new Parent();
-	Child.prototype.constructor = Child;
-};
-
-/**
  * Converts shorthand urls to absolute urls.
  *
  * If the url is already absolute or protocol-relative, no change is made.
@@ -261,7 +233,7 @@ elgg.parse_str = function(string) {
 };
 
 /**
- * Returns a jQuery selector from a URL's fragement.  Defaults to expecting an ID.
+ * Returns a jQuery selector from a URL's fragment. Defaults to expecting an ID.
  *
  * Examples:
  *  http://elgg.org/download.php returns ''
@@ -285,4 +257,72 @@ elgg.getSelectorFromUrlFragment = function(url) {
 		}
 	}
 	return '';
+};
+
+/**
+ * Returns the GUID of the logged in user or 0.
+ *
+ * @return {number} The GUID of the logged in user
+ */
+elgg.get_logged_in_user_guid = function() {
+	return elgg.user ? elgg.user.guid : 0;
+};
+
+/**
+ * Returns if a user is logged in.
+ *
+ * @return {boolean} Whether there is a user logged in
+ */
+elgg.is_logged_in = function() {
+	return elgg.get_logged_in_user_guid > 0;
+};
+
+/**
+ * Returns if the currently logged in user is an admin.
+ *
+ * @return {boolean} Whether there is an admin logged in
+ */
+elgg.is_admin_logged_in = function() {
+	return elgg.user ? elgg.user.admin : false;
+};
+
+/**
+ * Returns the current site URL
+ *
+ * @return {String} The site URL.
+ */
+elgg.get_site_url = function() {
+	return elgg.config.wwwroot;
+};
+
+/**
+ * Get the URL for the cached file
+ *
+ * @param {String} view    The full view name
+ * @param {String} subview If the first arg is "css" or "js", the rest of the view name
+ * @return {String} The site URL.
+ */
+elgg.get_simplecache_url = function(view, subview) {
+	elgg.assertTypeOf('string', view);
+	
+	var lastcache, path;
+
+	if (elgg.config.simplecache_enabled) {
+		lastcache = elgg.config.lastcache;
+	} else {
+		lastcache = 0;
+	}
+
+	if (!subview) {
+		path = '/cache/' + lastcache + '/' + elgg.config.viewtype + '/' + view;
+	} else {
+		elgg.assertTypeOf('string', subview);
+		
+		if ((view === 'js' || view === 'css') && 0 === subview.indexOf(view + '/')) {
+			subview = subview.substr(view.length + 1);
+		}
+		path = '/cache/' + lastcache + '/' + elgg.config.viewtype + '/' + view + '/' + subview;
+	}
+
+	return elgg.normalize_url(path);
 };

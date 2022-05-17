@@ -4,7 +4,7 @@
  * @group UnitTests
  * @group Crypto
  */
-class ElggCryptoUnitTest extends \Elgg\UnitTestCase {
+class CryptoUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * @var PHPUnit_Framework_MockObject_MockObject
@@ -12,7 +12,7 @@ class ElggCryptoUnitTest extends \Elgg\UnitTestCase {
 	protected $stub;
 
 	public function up() {
-		$this->stub = $this->getMockBuilder('\ElggCrypto')
+		$this->stub = $this->getMockBuilder('\Elgg\Security\Crypto')
 			->setMethods(array('getRandomBytes'))
 			->getMock();
 
@@ -22,7 +22,7 @@ class ElggCryptoUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	protected function getCrypto() {
-		return new \ElggCrypto(_elgg_services()->siteSecret);
+		return new \Elgg\Security\Crypto();
 	}
 
 	protected function getHmac() {

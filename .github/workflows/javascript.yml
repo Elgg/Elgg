@@ -18,9 +18,6 @@ jobs:
         with:
           node-version: 8
         
-      - name: Install Composer v1
-        run: composer self-update --1
-        
       - name: Code checkout
         uses: actions/checkout@v2
 

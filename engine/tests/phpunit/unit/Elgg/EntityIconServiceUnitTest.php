@@ -72,7 +72,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		
 		$this->request = \Elgg\Http\Request::create("/action/upload");
 		$this->logger = _elgg_services()->logger;
-		$this->logger->setHooks($this->hooks);
 
 		$this->entities = _elgg_services()->entityTable;
 		$this->uploads = new \Elgg\UploadService($this->request);
@@ -191,7 +190,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		// If type is not 'icon', should return an default array with only 'master' size present
 		$this->logger->disable();
 		$this->assertEquals(self::getDefaultIconSizes(), $service->getSizes(null, null, 'foo'));
-		$this->logger->enable();
 	}
 
 	public function testCanSetSizesForCustomIconType() {

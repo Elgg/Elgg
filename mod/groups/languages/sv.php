@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	'add:group:group' => "Skapa en ny grupp",
 	
 	'groups' => "Grupper",
 	'groups:owned' => "Grupper jag äger",
@@ -19,6 +20,9 @@ return array(
 	'groups:all' => "Alla grupper",
 	'groups:add' => "Skapa en ny grupp",
 	'groups:edit' => "Redigera grupp",
+	'groups:edit:profile' => "Profil",
+	'groups:edit:tools' => "Verktyg",
+	'groups:edit:settings' => "Inställningar",
 	'groups:membershiprequests' => 'Hantera begäranden att gå med',
 	'groups:membershiprequests:pending' => 'Hantera begäranden att gå med (%s)',
 	'groups:invitedmembers' => "Hantera inbjudningar",

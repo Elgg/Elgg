@@ -5,7 +5,7 @@ namespace Elgg;
 use Elgg\Database\EntityTable;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Filesystem\MimeTypeService;
-use Elgg\Http\Request;
+use Elgg\Http\Request as HttpRequest;
 use Elgg\Traits\Loggable;
 use Elgg\Traits\TimeUsing;
 
@@ -51,7 +51,7 @@ class EntityIconService {
 	protected $mimetype;
 	
 	/**
-	 * @var Request
+	 * @var HttpRequest
 	 */
 	protected $request;
 
@@ -73,7 +73,7 @@ class EntityIconService {
 		UploadService $uploads,
 		ImageService $images,
 		MimeTypeService $mimetype,
-		Request $request
+		HttpRequest $request
 	) {
 		$this->config = $config;
 		$this->hooks = $hooks;

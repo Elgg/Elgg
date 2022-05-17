@@ -72,7 +72,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	public function down() {
 		_elgg_services()->hooks->restore();
-		_elgg_services()->logger->enable();
 	}
 
 	protected function createService(Request $request) {
@@ -92,8 +91,12 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$svc->views->autoregisterViews('', "$this->viewsDir/json", 'json');
 		$svc->views->setViewtype('');
 
-		_elgg_register_routes();
-
+		$conf = \Elgg\Project\Paths::elgg() . 'engine/routes.php';
+		$routes = \Elgg\Includer::includeFile($conf);
+	
+		foreach ($routes as $name => $def) {
+			$svc->routes->register($name, $def);
+		}
 	}
 
 	protected function route(Request $request) {

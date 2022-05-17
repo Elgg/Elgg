@@ -77,6 +77,7 @@ return array(
 	'theme_sandbox:breakout' => 'Riquadro di iframe',
 	'theme_sandbox:buttons' => 'Pulsanti',
 	'theme_sandbox:components' => 'Componenti',
+	'theme_sandbox:email' => 'Email',
 	'theme_sandbox:forms' => 'Moduli',
 	'theme_sandbox:grid' => 'Griglia',
 	'theme_sandbox:icons' => 'Icone',

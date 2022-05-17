@@ -329,3 +329,223 @@ elgg.session.cookie = function(name, value, options) {
 	
 	document.cookie = cookies.join('; ');
 };
+
+/**
+ * Displays system messages via javascript rather than php.
+ *
+ * @param {String} msgs The message we want to display
+ * @param {Number} delay The amount of time to display the message in milliseconds. Defaults to 6 seconds.
+ * @param {String} type The type of message (typically 'error' or 'message')
+ * @private
+ * @deprecated
+ */
+elgg.system_messages = function(msgs, delay, type) {
+	require(['elgg/system_messages'], function(messages) {
+		messages.showMessage(msgs, delay, type);
+	});
+};
+
+/**
+ * Helper function to remove all current system messages
+ * @deprecated
+ */
+elgg.clear_system_messages = function() {
+	require(['elgg/system_messages'], function(messages) {
+		messages.clear();
+	});
+};
+
+/**
+ * Wrapper function for system_messages. Specifies "success" as the type of message
+ * @param {String} msgs  The message to display
+ * @param {Number} delay How long to display the message (milliseconds)
+ * @deprecated
+ */
+elgg.system_message = function(msgs, delay) {
+	require(['elgg/system_messages'], function(messages) {
+		messages.success(msgs, delay);
+	});
+};
+
+/**
+ * Wrapper function for system_messages.  Specifies "errors" as the type of message
+ * @param {String} errors The error message to display
+ * @param {Number} delay  How long to dispaly the error message (milliseconds)
+ * @deprecated
+ */
+elgg.register_error = function(errors, delay) {
+	require(['elgg/system_messages'], function(messages) {
+		messages.error(errors, delay);
+	});
+};
+
+/**
+ * Add elgg action tokens to an object, URL, or query string (with a ?).
+ *
+ * @param {FormData|Object|string} data
+ * @return {FormData|Object|string} The new data object including action tokens
+ * @deprecated
+ */
+elgg.security.addToken = function (data) {
+	var security = require('elgg/security');
+	return security.addToken(data);
+};
+
+/**
+ * Inherit the prototype methods from one constructor into another.
+ *
+ * @example
+ * <pre>
+ * function ParentClass(a, b) { }
+ *
+ * ParentClass.prototype.foo = function(a) { alert(a); }
+ *
+ * function ChildClass(a, b, c) {
+ *     //equivalent of parent::__construct(a, b); in PHP
+ *     ParentClass.call(this, a, b);
+ * }
+ *
+ * elgg.inherit(ChildClass, ParentClass);
+ *
+ * var child = new ChildClass('a', 'b', 'see');
+ * child.foo('boo!'); // alert('boo!');
+ * </pre>
+ *
+ * @param {Function} Child Child class constructor.
+ * @param {Function} Parent Parent class constructor.
+ * @deprecated
+ */
+elgg.inherit = function(Child, Parent) {
+	Child.prototype = new Parent();
+	Child.prototype.constructor = Child;
+};
+
+/**
+ * Create a new ElggEntity
+ *
+ * @class Represents an ElggEntity
+ * @property {number} guid
+ * @property {string} type
+ * @property {string} subtype
+ * @property {number} owner_guid
+ * @property {number} container_guid
+ * @property {number} time_created
+ * @property {number} time_updated
+ * @property {string} url
+ * @deprecated
+ */
+elgg.ElggEntity = function(o) {
+	$.extend(this, o);
+};
+
+/**
+ * Create a new ElggUser
+ *
+ * @param {Object} o
+ * @extends ElggEntity
+ * @class Represents an ElggUser
+ * @property {string} name
+ * @property {string} username
+ * @property {string} language
+ * @property {boolean} admin
+ * @deprecated
+ */
+elgg.ElggUser = function(o) {
+	elgg.ElggEntity.call(this, o);
+};
+
+elgg.inherit(elgg.ElggUser, elgg.ElggEntity);
+
+/**
+ * Is this user an admin?
+ *
+ * @warning The admin state of the user should be checked on the server for any
+ * actions taken that require admin privileges.
+ *
+ * @return {boolean}
+ * @deprecated
+ */
+elgg.ElggUser.prototype.isAdmin = function() {
+	return this.admin;
+};
+
+// This just has to happen after ElggUser is defined, however it's probably
+// better to have this procedural code here than in ElggUser.js
+if (elgg.session.user) {
+	elgg.session.user = new elgg.ElggUser(elgg.session.user);
+}
+
+/**
+ * Returns the object of the user logged in.
+ *
+ * @return {ElggUser} The logged in user
+ * @deprecated
+ */
+elgg.get_logged_in_user_entity = function() {
+	return elgg.session.user;
+};
+
+/**
+ * @return {number} The GUID of the page owner entity or 0 for no owner
+ * @deprecated
+ */
+elgg.get_page_owner_guid = function() {
+	return elgg.page_owner ? elgg.page_owner.guid : 0;
+};
+
+/**
+ * Analagous to the php version.  Merges translations for a
+ * given language into the current translations map.
+ * @deprecated
+ */
+elgg.add_translation = function(lang, translations) {
+	var i18n = require('elgg/i18n');
+	i18n.addTranslation(lang, translations);
+};
+
+/**
+ * Get the current language
+ * @return {String}
+ * @deprecated
+ */
+elgg.get_language = function() {
+	return elgg.config.current_language;
+};
+
+/**
+ * Translates a string
+ *
+ * @note The current system only loads a single language module per page, and it comes pre-merged with English
+ *       translations. Hence, elgg.echo() can only return translations in the language returned by
+ *       elgg.get_language(). Requests for other languages will fail unless a 3rd party plugin has manually
+ *       used elgg.add_translation() to merge the language module ahead of time.
+ *
+ * @param {String} key      Message key
+ * @param {Array}  argv     vsprintf() arguments
+ * @param {String} language Requested language. Not recommended (see above).
+ *
+ * @return {String} The translation or the given key if no translation available
+ * @deprecated
+ */
+elgg.echo = function(key, argv, language) {
+	var i18n = require('elgg/i18n');
+	return i18n.echo(key, argv, language);
+};
+
+/**
+ * This function registers two menu items that are actions that are the opposite
+ * of each other and ajaxifies them. E.g. like/unlike, friend/unfriend, ban/unban, etc.
+ *
+ * You can also add the data parameter 'data-toggle' to menu items to have them automatically
+ * registered as toggleable without the need to call this function.
+ * @deprecated
+ */
+elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
+	require(['navigation/menu/elements/item_toggle'], function() {
+		menuItemNameA = menuItemNameA.replace('_', '-');
+		menuItemNameB = menuItemNameB.replace('_', '-');
+
+		$('.elgg-menu-item-' + menuItemNameA + ' a').not('[data-toggle]').attr('data-toggle', menuItemNameB);
+		$('.elgg-menu-item-' + menuItemNameB + ' a').not('[data-toggle]').attr('data-toggle', menuItemNameA);
+	});
+};

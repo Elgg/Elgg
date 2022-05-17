@@ -11,6 +11,7 @@ return array(
 	 * Menu items and titles
 	 */
 	'add:group:group' => "Maak een nieuwe groep",
+	'groups:menu:sort:member' => "Datum lid geworden",
 	
 	'groups' => "Groepen",
 	'groups:owned' => "Groepen beheren",

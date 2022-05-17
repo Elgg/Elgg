@@ -13,14 +13,14 @@ namespace Elgg\SystemMessages;
 class RegisterSet {
 
 	/**
-	 * @var string[] Strings added via system_message()
+	 * @var string[] Strings added via elgg_register_success_message()
 	 *
 	 * @note do not change this property name. It must match SystemMessagesService::SUCCESS
 	 */
 	public $success = [];
 
 	/**
-	 * @var string[] Strings added via register_error()
+	 * @var string[] Strings added via elgg_register_error_message()
 	 *
 	 * @note do not change this property name. It must match SystemMessagesService::ERROR
 	 */

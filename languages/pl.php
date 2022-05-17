@@ -101,9 +101,11 @@ return array(
  */
 	'table_columns:fromView:admin' => 'Administracja',
 	'table_columns:fromView:banned' => 'Zbanowany',
+	'table_columns:fromView:entity_menu' => 'Menu',
 	'table_columns:fromView:excerpt' => 'Opis',
 	'table_columns:fromView:language' => 'Twój język',
 	'table_columns:fromView:owner' => 'Właściciel',
+	'table_columns:fromView:unvalidated_menu' => 'Menu',
 	'table_columns:fromView:user' => 'Użytkownicy',
 
 	'table_columns:fromProperty:description' => 'Opis',
@@ -239,6 +241,7 @@ return array(
  * Notifications
  */
 	'notification:method:email' => 'E-mail',
+	'usersettings:notifications:menu:filter:settings' => "Ustawienia",
 	'notification:subject' => 'Powiadomienia o %s',
 	'notification:body' => 'Zobacz nowy element tutaj %s',
 
@@ -361,6 +364,7 @@ return array(
 	'admin:users:online' => 'Obecnie on-line',
 	'admin:users:newest' => 'Najnowsi',
 	'admin:users:admins' => 'Administratorzy',
+	'admin:users:banned' => 'Zbanowany',
 	'admin:users:add' => 'Dodaj nowego użytkownika',
 	'admin:users:description' => "Ten panel umożliwia kontrolę ustawień użytkowników na twojej stronie. Wybierz opcję poniżej, aby rozpocząć.",
 	'admin:users:adduser:label' => "Kliknij tutaj aby dodać nowego użytkownika...",
@@ -369,6 +373,7 @@ return array(
 	'admin:users:find' => 'Szukaj',
 	'admin:users:unvalidated' => 'Niezatwierdzony',
 	'admin:users:unvalidated:no_results' => 'Brak niezatwierdzonych użytkowników.',
+	'admin:users:details:statistics' => 'Statystyki treści',
 	
 	'admin:configure_utilities:maintenance' => 'Tryb konserwacyjny',
 	'admin:upgrades' => 'Aktualizacje',
@@ -400,6 +405,7 @@ return array(
 	'admin:widget:content_stats:help' => 'Śledź treści tworzone przez twoich użytkowników',
 	'admin:widget:cron_status' => 'Cron status',
 	'admin:widget:cron_status:help' => 'Shows the status of the last time cron jobs finished',
+	'admin:statistics:queue:name' => 'Nazwa',
 
 	'admin:widget:admin_welcome' => 'Witaj',
 	'admin:widget:admin_welcome:help' => "Krótkie wprowadzenie to panelu administracyjnego Elgg",
@@ -936,6 +942,8 @@ return array(
 	'admin:legend:content_access' => 'Dostęp do treści',
 	'admin:legend:site_access' => 'Poziom dostępu na stronie',
 	'admin:legend:debug' => 'Odpluskwianie i logowanie',
+	'config:i18n:who_can_change_language:admin_only' => "Tylko administratorzy",
+	'config:email' => "E-mail",
 
 	'upgrading' => 'Aktualizacja',
 	'upgrade:core' => 'Twoja instalacja elgg została zaktualizowana',

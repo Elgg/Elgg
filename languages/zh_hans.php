@@ -114,6 +114,7 @@ return array(
 	'table_columns:fromView:admin' => '管理员',
 	'table_columns:fromView:banned' => '禁止',
 	'table_columns:fromView:container' => '容器',
+	'table_columns:fromView:entity_menu' => '菜单',
 	'table_columns:fromView:excerpt' => '描述',
 	'table_columns:fromView:link' => '名称/标题',
 	'table_columns:fromView:icon' => '图标',
@@ -122,6 +123,7 @@ return array(
 	'table_columns:fromView:owner' => '自己',
 	'table_columns:fromView:time_created' => '创建时间',
 	'table_columns:fromView:time_updated' => '更新时间',
+	'table_columns:fromView:unvalidated_menu' => '菜单',
 	'table_columns:fromView:user' => '用户',
 
 	'table_columns:fromProperty:description' => '描述',
@@ -276,6 +278,7 @@ return array(
  * Notifications
  */
 	'notification:method:email' => 'Email',
+	'usersettings:notifications:menu:filter:settings' => "设置",
 	'notification:subject' => '关于%s的消息提醒设置',
 	'notification:body' => '在%s中查看新的动态',
 
@@ -412,6 +415,7 @@ return array(
 	'admin:users:online' => '当前在线用户',
 	'admin:users:newest' => '最新用户',
 	'admin:users:admins' => '管理员',
+	'admin:users:banned' => '已禁',
 	'admin:users:add' => '添加新用户',
 	'admin:users:description' => "管理面板允许你控制用户设置，从下面选择一个选项开始.",
 	'admin:users:adduser:label' => "点击此处添加新用户...",
@@ -421,6 +425,7 @@ return array(
 	'admin:users:unvalidated' => '未经验证的',
 	'admin:users:unvalidated:no_results' => '无',
 	'admin:users:unvalidated:registered' => '注册: %s',
+	'admin:users:details:statistics' => '内容统计',
 	
 	'admin:configure_utilities:maintenance' => '维护模式',
 	'admin:upgrades' => '升级',
@@ -459,6 +464,7 @@ return array(
 	'admin:statistics:numentities:number' => '数量',
 	'admin:statistics:numentities:searchable' => '搜索',
 	'admin:statistics:numentities:other' => '其他',
+	'admin:statistics:queue:name' => '姓名',
 
 	'admin:widget:admin_welcome' => '欢迎',
 	'admin:widget:admin_welcome:help' => "管理区域的简短介绍",
@@ -812,6 +818,7 @@ return array(
 	'activity' => '动态',
 	'members' => '成员',
 	'menu' => '菜单',
+	'item' => '栏目',
 
 	'up' => '向上',
 	'down' => '向下',
@@ -1074,12 +1081,14 @@ return array(
 	'admin:legend:content_access' => '内容访问',
 	'admin:legend:site_access' => '网站访问',
 	'admin:legend:debug' => '调试和纪录',
+	'config:i18n:who_can_change_language:admin_only' => "仅管理员",
 	'config:remove_branding:label' => "除去Elgg版权",
 	'config:remove_branding:help' => "整个网站有不同的链接和标志表明这个网站是使用Elgg创建。如果你有版权考虑请捐赠在https://elgg.org/supporter.php。",
 	'config:disable_rss:label' => "关闭 RSS 源",
 	'config:disable_rss:help' => "禁用此功能，不再使用RSS提供的可用性。",
 	'config:friendly_time_number_of_days:label' => "呈现人性化天数的时间",
 	'config:friendly_time_number_of_days:help' => "您可以配置使用人性化时间标记的天数。在设定的天数之后，人性化时间将更改为常规日期格式。将此设置为0将禁用人性化的时间格式。",
+	'config:email' => "邮箱",
 
 	'upgrading' => '升级',
 	'upgrade:core' => 'Elgg安装已经升级',

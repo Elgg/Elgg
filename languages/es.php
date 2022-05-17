@@ -117,6 +117,7 @@ return array(
 	'table_columns:fromView:admin' => 'Administrador',
 	'table_columns:fromView:banned' => 'Bloqueado',
 	'table_columns:fromView:container' => 'Contenedor',
+	'table_columns:fromView:entity_menu' => 'Men&uacute;',
 	'table_columns:fromView:excerpt' => 'Descripción',
 	'table_columns:fromView:link' => 'Nombre/Título',
 	'table_columns:fromView:icon' => 'Icono',
@@ -125,6 +126,7 @@ return array(
 	'table_columns:fromView:owner' => 'Propietario',
 	'table_columns:fromView:time_created' => 'Tiempo de creación',
 	'table_columns:fromView:time_updated' => 'Tiempo de actualización',
+	'table_columns:fromView:unvalidated_menu' => 'Men&uacute;',
 	'table_columns:fromView:user' => 'Usuario',
 
 	'table_columns:fromProperty:description' => 'Descripción',
@@ -279,6 +281,7 @@ return array(
  * Notifications
  */
 	'notification:method:email' => 'Correo electr&oacute;nico',
+	'usersettings:notifications:menu:filter:settings' => "Configuraci&oacute;n",
 	'notification:subject' => 'Notificaciones de %s',
 	'notification:body' => 'Ver la nueva actividad en %s',
 
@@ -419,6 +422,7 @@ return array(
 	'admin:users:online' => 'Conectados actualmente',
 	'admin:users:newest' => 'Los mas nuevos',
 	'admin:users:admins' => 'Administrators',
+	'admin:users:banned' => 'Bloqueado',
 	'admin:users:add' => 'Agregar Nuevo Usuario',
 	'admin:users:description' => "Este panel de administraci&oacute;n le permite gestionar la configuraci&oacute;n de usuarios de la red. Seleccione una opci&oacute;n debajo para comenzar",
 	'admin:users:adduser:label' => "Click aqu&iacute; para agregar un nuevo usuario..",
@@ -428,6 +432,7 @@ return array(
 	'admin:users:unvalidated' => 'No validado',
 	'admin:users:unvalidated:no_results' => 'No hay usuarios sin validar.',
 	'admin:users:unvalidated:registered' => 'Registrado: %s',
+	'admin:users:details:statistics' => 'Estad&iacute;sticas de contenido',
 	
 	'admin:configure_utilities:maintenance' => 'Modo mantenimiento',
 	'admin:upgrades' => 'Actualizaciones',
@@ -482,6 +487,7 @@ return array(
 	'admin:statistics:numentities:number' => 'Numero',
 	'admin:statistics:numentities:searchable' => 'Entidades de búsqueda',
 	'admin:statistics:numentities:other' => 'Otras entidades',
+	'admin:statistics:queue:name' => 'Nombre',
 
 	'admin:widget:admin_welcome' => 'Bienvenido',
 	'admin:widget:admin_welcome:help' => "Esta es el &aacute;rea de administraci&oacute;n",
@@ -810,6 +816,7 @@ return array(
 	'activity' => 'Actividad',
 	'members' => 'Miembros',
 	'menu' => 'Men&uacute;',
+	'item' => 'Elemento',
 
 	'up' => 'Arriba',
 	'down' => 'Abajo',
@@ -1070,7 +1077,9 @@ return array(
 	'admin:legend:content_access' => 'Acceso del Contenido',
 	'admin:legend:site_access' => 'Acceso del Sitio',
 	'admin:legend:debug' => 'Depuración y registro',
+	'config:i18n:who_can_change_language:admin_only' => "Solo Administradores",
 	'config:remove_branding:label' => "Eliminar marca de Elgg",
+	'config:email' => "Correo electr&oacute;nico",
 
 	'upgrading' => 'Actualizando..',
 	'upgrade:core' => 'La instalaci&oacute;n de Elgg ha sido actualizada',

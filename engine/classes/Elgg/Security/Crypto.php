@@ -1,5 +1,7 @@
 <?php
 
+namespace Elgg\Security;
+
 use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
 
 /**
@@ -7,7 +9,7 @@ use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
  *
  * @internal
  */
-class ElggCrypto {
+class Crypto {
 
 	/**
 	 * Character set for temp passwords (no risk of embedded profanity/glyphs that look similar)

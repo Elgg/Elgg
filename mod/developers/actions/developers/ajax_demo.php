@@ -10,7 +10,7 @@ elgg_register_plugin_hook_handler('ajax_response', 'action:developers/ajax_demo'
 		$response->getData()->server_response_altered = 2;
 	}
 	
-	register_error('Hello from ajax_response hook');
+	elgg_register_error_message('Hello from ajax_response hook');
 	
 	return $response;
 });

@@ -135,31 +135,4 @@ class HandlersService {
 		}
 		return print_r($callable, true);
 	}
-
-	/**
-	 * Get a string that uniquely identifies a callback across requests (for caching)
-	 *
-	 * @param callable $callable Callable
-	 *
-	 * @return string Empty if cannot uniquely identify this callable
-	 */
-	public function fingerprintCallable($callable) {
-		if (is_string($callable)) {
-			return $callable;
-		}
-		if (is_array($callable)) {
-			if (is_string($callable[0])) {
-				return "{$callable[0]}::{$callable[1]}";
-			}
-			return get_class($callable[0]) . "::{$callable[1]}";
-		}
-		if ($callable instanceof \Closure) {
-			return '';
-		}
-		if (is_object($callable)) {
-			return get_class($callable) . "::__invoke";
-		}
-		// this should not happen
-		return '';
-	}
 }

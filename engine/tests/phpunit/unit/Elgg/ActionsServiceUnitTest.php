@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
+	use MessageTesting;
+	
 	/**
 	 * @var ActionsService
 	 */
@@ -51,7 +53,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	public function down() {
 		_elgg_services()->hooks->restore();
-		_elgg_services()->logger->enable();
 	}
 
 	function createService(Request $request) {
@@ -68,9 +69,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$svc->logger->disable();
 
 		_elgg_services()->translator->addTranslation('en', ['__test__' => 'Test']);
-
-		_elgg_register_routes();
-
 	}
 
 	function addCsrfTokens(Request $request) {
@@ -713,7 +711,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(RedirectResponse::class, $response);
 		$this->assertEquals(ELGG_HTTP_FOUND, $response->getStatusCode());
 		$this->assertEquals(elgg_normalize_url('index'), $response->getTargetURL());
-		$this->assertContains('success', _elgg_services()->system_messages->dumpRegister()['success']);
+		
+		$this->assertSystemMessageEmitted('success');
 	}
 
 	public function testCanRespondToNonAjaxRequestFromErrorResponseBuilder() {
@@ -735,7 +734,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(RedirectResponse::class, $response);
 		$this->assertEquals(ELGG_HTTP_FOUND, $response->getStatusCode());
 		$this->assertEquals(elgg_normalize_url('index'), $response->getTargetURL());
-		$this->assertContains('error', _elgg_services()->system_messages->dumpRegister()['error']);
+		
+		$this->assertErrorMessageEmitted('error');
 	}
 
 	public function testCanRespondToNonAjaxRequestFromRedirectResponseBuilder() {

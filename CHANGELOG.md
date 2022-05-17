@@ -1,3 +1,120 @@
+<a name="4.2.0"></a>
+## 4.2.0  (2022-05-13)
+
+#### Contributors
+
+* Jerôme Bakker (16)
+
+#### Performance
+
+* **batch:** retain query cache during ElggBatch ([8dcebb26](https://github.com/Elgg/Elgg/commit/8dcebb26b355551c5e0ba288c48ecb8ebc9322e0))
+
+
+#### Bug Fixes
+
+* **composer:** postinstall script correctly creates /mod folder ([f2568298](https://github.com/Elgg/Elgg/commit/f25682988f31a8c1505371cfc33b1daa0bcdb395))
+* **likes:** use correct values to check likeable capability ([74b43e15](https://github.com/Elgg/Elgg/commit/74b43e15244d8f0dea4d83d9185a3989033a5514))
+* **session:** make sure to cache the logged in user in the entity cache ([9145183a](https://github.com/Elgg/Elgg/commit/9145183a86d965d7d7964a86b6de7bd2b45412f3))
+* **stats:** correctly show the number of unvalidated users ([cae13aa1](https://github.com/Elgg/Elgg/commit/cae13aa130b4259135b500a762422a2382745a42))
+
+
+<a name="4.2.0-rc.1"></a>
+### 4.2.0-rc.1  (2022-04-22)
+
+#### Contributors
+
+* Jeroen Dalsem (62)
+* Jerôme Bakker (27)
+* Nikolai Shcherbin (1)
+
+#### Features
+
+* **accounts:** admins can set duplicate email addresses for other users ([4e6f7803](https://github.com/Elgg/Elgg/commit/4e6f7803672e940986e513b4e0a192b74a2e1c22))
+* **actions:** added logged_out access level to action registration ([29679c37](https://github.com/Elgg/Elgg/commit/29679c37875000425a07616fb1ec240fee76000a))
+* **activity:** added link to activity widget title ([54b2c580](https://github.com/Elgg/Elgg/commit/54b2c580119a0457f3835fc2d005604355a122c9))
+* **admin:**
+  * improved user management ([084a57cc](https://github.com/Elgg/Elgg/commit/084a57ccd78fc00c3d3950f7d244ade0011e69a2))
+  * added queue statistics ([2a34737a](https://github.com/Elgg/Elgg/commit/2a34737abe3eafec61cd5e812caf85de0c234b43))
+  * added database row count statistics ([a7cc7b23](https://github.com/Elgg/Elgg/commit/a7cc7b23a58909c765ba4aee78b57b25012e3490))
+* **bookmarks:** added link to bookmarks widget title ([d5ab59a2](https://github.com/Elgg/Elgg/commit/d5ab59a2cfc3c614dbd4132b906292eac0cd6692))
+* **cache:**
+  * added option to system cache to set TTL for an item ([45e2f2c7](https://github.com/Elgg/Elgg/commit/45e2f2c7cad6d588f005d16adfe9c2caa883b562))
+  * replaced stash with phpfastcache ([6637015f](https://github.com/Elgg/Elgg/commit/6637015f97f9210f0e044575bb30c7b69ede3738))
+* **config:** added a setting to control the system message delay ([289fb2ba](https://github.com/Elgg/Elgg/commit/289fb2ba8a3ddc97893d6676fb3d70117af5f3e3))
+* **db:** metadata and annotation boolean values keep their type ([c6775bd3](https://github.com/Elgg/Elgg/commit/c6775bd3715cf159a41340eb9108ceb6d2635408))
+* **discussions:**
+  * added a discussions widget for profile and dashboard ([8d2ccea0](https://github.com/Elgg/Elgg/commit/8d2ccea0b3a78a05b83bf0e21225fb8f484ebb5d))
+  * added a group setting to control topic notifications ([72c2674c](https://github.com/Elgg/Elgg/commit/72c2674cefdb6a18139f0a95ffb6394a6c0906e7))
+* **entities:** add generic sort options ([2216bb01](https://github.com/Elgg/Elgg/commit/2216bb01edb118a08105bbc0c805bacd332403d2))
+* **friends:** added link to friends_of widget ([09ad7dae](https://github.com/Elgg/Elgg/commit/09ad7dae5bb12b442f56d16fcd2a0731e5abdf1b))
+* **groups:** added imprint to indicate group owner/membership ([b84f4535](https://github.com/Elgg/Elgg/commit/b84f4535eeb7710a44fca3bebb747bce9eb58cfe))
+* **icons:** serve webp icons if accepted by the browser ([b0188aba](https://github.com/Elgg/Elgg/commit/b0188aba2f77fbfc7f1f5df00a3b996347db537b))
+* **js:** updated jquery-ui to v1.13.1 ([f1874a90](https://github.com/Elgg/Elgg/commit/f1874a90c85266b8c2bd9607a78d12c91bdfa2bf))
+* **menu:** ability to set the output view of a menu item ([5a210df5](https://github.com/Elgg/Elgg/commit/5a210df5bd9da9dafd7aa7f8bb45f6c8e969f754))
+* **messageboard:** added link to messageboard widget title ([ffad7512](https://github.com/Elgg/Elgg/commit/ffad751291d02e07599f9e1799322a4563dd91fb))
+* **plugins:** login as features are now part of core ([55a0c0f9](https://github.com/Elgg/Elgg/commit/55a0c0f9c289931d04ef60c43d85f52ad0cda669))
+* **reportedcontent:**
+  * site admins get notification about new reports ([0536f60e](https://github.com/Elgg/Elgg/commit/0536f60eb6d06b95c8b4ec6de7c3c9e59e8b1782))
+  * separate active/archive listing ([451fce64](https://github.com/Elgg/Elgg/commit/451fce64eb4f7b463d4ec5b52f18546c7f5c19cc))
+* **tests:** added testing and support for MariaDB ([29b3ec2a](https://github.com/Elgg/Elgg/commit/29b3ec2a5b2be2080b3aa5a42023b5a731631ff6))
+* **user:** if unvalidated allow a user to update email address ([aa43b04b](https://github.com/Elgg/Elgg/commit/aa43b04b3840cf75f6dea16ec0edfb60583ba908))
+* **users:** automatically remove unvalidated users ([3eeed1f9](https://github.com/Elgg/Elgg/commit/3eeed1f9c490c75ac7a76a7b04d7e048f0a5c9f5))
+* **view:** url input will auto prepend http protocol if missing ([771a1847](https://github.com/Elgg/Elgg/commit/771a18476b4fe2272aa416176aad9b5a9db9e8d1))
+* **views:**
+  * added placeholder support for autocomplete fields ([889882f2](https://github.com/Elgg/Elgg/commit/889882f27aebd1bebc861925cb5c3c5d331059f1))
+  * added more features to the system messages ([000b92ba](https://github.com/Elgg/Elgg/commit/000b92ba8bd6a1d8f536663b3ec7cdad3715b54b))
+  * entity imprint now shows time updated if appropriate ([049fb14c](https://github.com/Elgg/Elgg/commit/049fb14ca01890e1a33acca31d22e6e1fc82a73a))
+  * login form title indicates forward from protected page ([0946daf9](https://github.com/Elgg/Elgg/commit/0946daf99c1ec802954f5e1226de6edb47331173))
+
+
+#### Bug Fixes
+
+* **composer:** updated imagine for PHP 8.1 compatibility ([33d1c594](https://github.com/Elgg/Elgg/commit/33d1c594ea3e754dd710aa767233b019a9bfb205))
+* **db:** prevent entity subtype queries without a type provided ([3f63e4f9](https://github.com/Elgg/Elgg/commit/3f63e4f93546c57ddd84b670ded13c61b43f2f5d))
+* **developers:** do not disable display errors if enabled from htaccess ([929806c9](https://github.com/Elgg/Elgg/commit/929806c9a22e083be5475bdc1160a4ec2a67c6c5))
+* **entity:** prevent deadloops during recursive entity delete ([139998f5](https://github.com/Elgg/Elgg/commit/139998f5c0f30c76d17efdda8063b34504256654))
+* **forms:** corectly ignore empty form body ([4cdb56fa](https://github.com/Elgg/Elgg/commit/4cdb56faa143ee2503c1743539ad199caef6a017))
+* **groups:** correctly report failure when inviting users ([85814c0b](https://github.com/Elgg/Elgg/commit/85814c0bb4bbd16707ae13642ecea331de01f769))
+* **js:** user picker should respect if default event is prevented ([ce6dab00](https://github.com/Elgg/Elgg/commit/ce6dab00c44f2418b6c6cbffb616385f1dbe58d5))
+* **plugins:** don't show plugin (user)settings form if no content ([bee2f1e2](https://github.com/Elgg/Elgg/commit/bee2f1e2556597abb0715465a9857db33a135af9))
+* **views:** limit long entity titles in url and page titles ([02ed01c3](https://github.com/Elgg/Elgg/commit/02ed01c35c2fb03b437cfecb6420d6fbfcc70d52))
+
+
+#### Deprecations
+
+* **js:**
+  * introduced elgg/i18n module for js translations ([e5e67955](https://github.com/Elgg/Elgg/commit/e5e679559813118d81820c1649445eeabe27cec6))
+  * ElggUser and ElggEntity classes have been deprecated ([bcd6a515](https://github.com/Elgg/Elgg/commit/bcd6a515aa3355b7e879a24aefd1152e895c7a17))
+  * elgg.security related functions moved to AMD ([c7c9a44b](https://github.com/Elgg/Elgg/commit/c7c9a44bcdadbae12b0cbf4969a2ad0ffbf1cebf))
+  * elgg.system_message related functions moved to AMD ([f0781727](https://github.com/Elgg/Elgg/commit/f0781727832bf7049dd16ec54ec8e9c3dc791cb2))
+  * unused and unwanted javascript lib functions ([1982af30](https://github.com/Elgg/Elgg/commit/1982af30d86400d3bcb13fae0646d175c684328b))
+
+
+#### Removed
+
+* **js:** no longer need the prototypes.js helper functions ([09fca863](https://github.com/Elgg/Elgg/commit/09fca863cb81c5e239b353c9deb4fb8c64da9cc8))
+* **tests:** TestSeeder class ([e1ca7c84](https://github.com/Elgg/Elgg/commit/e1ca7c84e0e3b1b793930cc5cca7ea871f7770a9))
+
+
+<a name="4.1.6"></a>
+### 4.1.6  (2022-04-08)
+
+#### Contributors
+
+* Jeroen Dalsem (2)
+* Jerôme Bakker (2)
+
+#### Performance
+
+* **input:** only filter input params once ([66107ced](https://github.com/Elgg/Elgg/commit/66107ced1f74f228c914fd6c3b4a6387ac3e8c60))
+
+
+#### Bug Fixes
+
+* **custom_index:** added missing activity module content ([ed4575bd](https://github.com/Elgg/Elgg/commit/ed4575bd11b0626b92245345795d953a978af49f))
+* **js:** security tokens are refreshed automatically ([26fc2206](https://github.com/Elgg/Elgg/commit/26fc2206cb9c66e6104470c71d6b9086648d8f41))
+
+
 <a name="4.1.5"></a>
 ### 4.1.5  (2022-03-25)
 

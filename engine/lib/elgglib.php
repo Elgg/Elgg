@@ -31,27 +31,41 @@ function elgg_set_http_header($header, $replace = true) {
 }
 
 /**
- * Display a system message on next page load.
+ * Registers a success system message
  *
- * @param string|array $message Message or messages to add
+ * @param string|array $options a single string or an array of system message options
  *
- * @return bool
+ * @see \ElggSystemMessage::factory()
+ *
+ * @return void
+ * @since 4.2
  */
-function system_message($message) {
-	_elgg_services()->system_messages->addSuccessMessage($message);
-	return true;
+function elgg_register_success_message($options): void {
+	if (!is_array($options)) {
+		$options = ['message' => $options];
+	}
+	
+	$options['type'] = 'success';
+	_elgg_services()->system_messages->addMessage($options);
 }
 
 /**
- * Display an error on next page load.
+ * Registers a error system message
  *
- * @param string|array $error Error or errors to add
+ * @param string|array $options a single string or an array of system message options
  *
- * @return bool
+ * @see \ElggSystemMessage::factory()
+ *
+ * @return void
+ * @since 4.2
  */
-function register_error($error) {
-	_elgg_services()->system_messages->addErrorMessage($error);
-	return true;
+function elgg_register_error_message($options): void {
+	if (!is_array($options)) {
+		$options = ['message' => $options];
+	}
+	
+	$options['type'] = 'error';
+	_elgg_services()->system_messages->addMessage($options);
 }
 
 /**
@@ -764,183 +778,6 @@ function _elgg_services() {
 	// This yields a more shallow stack depth in recursive APIs like views. This aids in debugging and
 	// reduces false positives in xdebug's infinite recursion protection.
 	return \Elgg\Application::$_instance->internal_services;
-}
-
-/**
- * Checks if there are some constraints on the options array for
- * potentially dangerous operations.
- *
- * @param array  $options Options array
- * @param string $type    Options type: metadata, annotation or river
- *
- * @return bool
- * @internal
- */
-function _elgg_is_valid_options_for_batch_operation($options, $type) {
-	if (empty($options) || !is_array($options)) {
-		return false;
-	}
-
-	// at least one of these is required.
-	$required = [
-		// generic restraints
-		'guid', 'guids'
-	];
-
-	switch ($type) {
-		case 'metadata':
-			$metadata_required = [
-				'metadata_name', 'metadata_names',
-				'metadata_value', 'metadata_values'
-			];
-
-			$required = array_merge($required, $metadata_required);
-			break;
-
-		case 'annotations':
-		case 'annotation':
-			$annotations_required = [
-				'annotation_owner_guid', 'annotation_owner_guids',
-				'annotation_name', 'annotation_names',
-				'annotation_value', 'annotation_values'
-			];
-
-			$required = array_merge($required, $annotations_required);
-			break;
-
-		case 'river':
-			// overriding generic restraints as guids isn't supported in river
-			$required = [
-				'id', 'ids',
-				'subject_guid', 'subject_guids',
-				'object_guid', 'object_guids',
-				'target_guid', 'target_guids',
-				'annotation_id', 'annotation_ids',
-				'view', 'views',
-			];
-			break;
-		
-		default:
-			return false;
-	}
-
-	foreach ($required as $key) {
-		// check that it exists and is something.
-		if (isset($options[$key]) && $options[$key]) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-/**
- * Register core routes
- * @return void
- * @internal
- */
-function _elgg_register_routes() {
-	$conf = \Elgg\Project\Paths::elgg() . 'engine/routes.php';
-	$routes = \Elgg\Includer::includeFile($conf);
-
-	foreach ($routes as $name => $def) {
-		elgg_register_route($name, $def);
-	}
-}
-
-/**
- * Register core actions
- * @return void
- * @internal
- */
-function _elgg_register_actions() {
-	$conf = \Elgg\Project\Paths::elgg() . 'engine/actions.php';
-	$actions = \Elgg\Includer::includeFile($conf);
-	
-	$root_path = \Elgg\Project\Paths::elgg();
-
-	foreach ($actions as $action => $action_spec) {
-		if (!is_array($action_spec)) {
-			continue;
-		}
-		
-		$access = elgg_extract('access', $action_spec, 'logged_in');
-		$handler = elgg_extract('controller', $action_spec);
-		if (!$handler) {
-			$handler = elgg_extract('filename', $action_spec);
-			if (!$handler) {
-				$handler = "$root_path/actions/{$action}.php";
-			}
-		}
-		
-		elgg_register_action($action, $handler, $access);
-	}
-}
-
-/**
- * Register core hooks
- * @return void
- * @internal
- * @since 4.0
- */
-function _elgg_register_hooks() {
-	$conf = \Elgg\Project\Paths::elgg() . 'engine/hooks.php';
-	$spec = \Elgg\Includer::includeFile($conf);
-	
-	$hooks = _elgg_services()->hooks;
-	
-	foreach ($spec as $name => $types) {
-		foreach ($types as $type => $callbacks) {
-			foreach ($callbacks as $callback => $hook_spec) {
-				if (!is_array($hook_spec)) {
-					continue;
-				}
-				
-				$unregister = (bool) elgg_extract('unregister', $hook_spec, false);
-				
-				if ($unregister) {
-					$hooks->unregisterHandler($name, $type, $callback);
-				} else {
-					$priority = (int) elgg_extract('priority', $hook_spec, 500);
-					
-					$hooks->registerHandler($name, $type, $callback, $priority);
-				}
-			}
-		}
-	}
-}
-
-/**
- * Register core events
- * @return void
- * @internal
- * @since 4.0
- */
-function _elgg_register_events() {
-	$conf = \Elgg\Project\Paths::elgg() . 'engine/events.php';
-	$spec = \Elgg\Includer::includeFile($conf);
-	
-	$events = _elgg_services()->events;
-	
-	foreach ($spec as $name => $types) {
-		foreach ($types as $type => $callbacks) {
-			foreach ($callbacks as $callback => $hook_spec) {
-				if (!is_array($hook_spec)) {
-					continue;
-				}
-				
-				$unregister = (bool) elgg_extract('unregister', $hook_spec, false);
-				
-				if ($unregister) {
-					$events->unregisterHandler($name, $type, $callback);
-				} else {
-					$priority = (int) elgg_extract('priority', $hook_spec, 500);
-					
-					$events->registerHandler($name, $type, $callback, $priority);
-				}
-			}
-		}
-	}
 }
 
 /**

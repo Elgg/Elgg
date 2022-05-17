@@ -2,9 +2,9 @@
 
 namespace Elgg\Database;
 
-use ElggCrypto;
 use Elgg\Config as ElggConfig;
 use Elgg\Exceptions\Configuration\InstallationException;
+use Elgg\Security\Crypto;
 
 /**
  * Manages a site-specific secret key, encoded as a 32 byte string "secret"
@@ -102,11 +102,12 @@ class SiteSecret {
 	 *
 	 * Used during installation or regeneration.
 	 *
-	 * @param ElggCrypto  $crypto Crypto service
+	 * @param Crypto      $crypto Crypto service
 	 * @param ConfigTable $table  Config table
+	 *
 	 * @return SiteSecret
 	 */
-	public static function regenerate(ElggCrypto $crypto, ConfigTable $table) {
+	public static function regenerate(Crypto $crypto, ConfigTable $table) {
 		$key = 'z' . $crypto->getRandomString(31);
 
 		$table->set(self::CONFIG_KEY, $key);

@@ -36,8 +36,8 @@ Here we define a basic module that alters the page, by passing a "definition fun
 
     // in views/default/myplugin/say_hello.js
 
-    define(['jquery', 'elgg'], function($, elgg) {
-        $('body').append(elgg.echo('hello_world'));
+    define(['jquery', 'elgg/i18n'], function($, i18n) {
+        $('body').append(i18n.echo('hello_world'));
     });
 
 The module's name is determined by the view name, which here is ``myplugin/say_hello.js``.
@@ -57,8 +57,8 @@ the greeting:
 
     // in views/default/myplugin/hello.js
 
-    define(['elgg'], function(elgg) {
-        return elgg.echo('hello_world');
+    define(['elgg/i18n'], function(i18n) {
+        return i18n.echo('hello_world');
     });
 
 .. code-block:: js
@@ -236,33 +236,6 @@ Modules provided with Elgg
 Module ``elgg``
 ---------------
 
-``elgg.echo()``
-
-Translate interface text
-
-.. code-block:: js
-
-   elgg.echo('example:text', ['arg1']);
-
-
-``elgg.system_message()``
-
-Display a status message to the user.
-
-.. code-block:: js
-
-   elgg.system_message(elgg.echo('success'));
-
-
-``elgg.register_error()``
-
-Display an error message to the user.
-
-.. code-block:: js
-
-   elgg.register_error(elgg.echo('error'));
-
-
 ``elgg.normalize_url()``
 
 Normalize a URL relative to the elgg root:
@@ -316,35 +289,6 @@ Emit a hook event in the event system.
     value = elgg.trigger_hook('my_plugin:filter', 'value', {}, value);
 
 
-``elgg.security.refreshToken()``
-
-Force a refresh of all XSRF tokens on the page.
-
-This is automatically called every 5 minutes by default.
-
-The user will be warned if their session has expired.
-
-
-``elgg.security.addToken()``
-
-Add a security token to an object, URL, or query string:
-
-.. code-block:: js
-
-   // returns {
-   //   __elgg_token: "1468dc44c5b437f34423e2d55acfdd87",
-   //   __elgg_ts: 1328143779,
-   //   other: "data"
-   // }
-   elgg.security.addToken({'other': 'data'});
-
-   // returns: "action/add?__elgg_ts=1328144079&__elgg_token=55fd9c2d7f5075d11e722358afd5fde2"
-   elgg.security.addToken("action/add");
-
-   // returns "?arg=val&__elgg_ts=1328144079&__elgg_token=55fd9c2d7f5075d11e722358afd5fde2"
-   elgg.security.addToken("?arg=val");
-
-
 ``elgg.get_logged_in_user_entity()``
 
 Returns the logged in user as an JS ElggUser object.
@@ -390,6 +334,56 @@ Module ``elgg/Ajax``
 
 See the :doc:`ajax` page for details.
 
+Module ``elgg/i18n``
+-------------------------------
+
+The ``elgg/i18n`` module can be used to use translations. 
+
+Translate interface text
+
+.. code-block:: js
+
+   define(['elgg/i18n'], function (i18n) {
+       i18n.echo('example:text', ['arg1']);
+   });
+
+Module ``elgg/system_messages``
+-------------------------------
+
+The ``elgg/system_messages`` module can be used to show system messages to the user. 
+
+.. code-block:: js
+
+   define(['elgg/system_messages'], function (system_messages) {
+       system_messages.success('Your success message');
+       
+       system_messages.error('Your error message');
+       
+       system_messages.clear();
+   });
+
+Module ``elgg/security``
+------------------------
+
+The ``elgg/security`` module can be used to add a security token to an object, URL, or query string:
+
+.. code-block:: js
+
+	define(['elgg/security'], function (security) {
+       // returns {
+	   //   __elgg_token: "1468dc44c5b437f34423e2d55acfdd87",
+	   //   __elgg_ts: 1328143779,
+	   //   other: "data"
+	   // }
+	   security.addToken({'other': 'data'});
+	
+	   // returns: "action/add?__elgg_ts=1328144079&__elgg_token=55fd9c2d7f5075d11e722358afd5fde2"
+	   security.addToken("action/add");
+	
+	   // returns "?arg=val&__elgg_ts=1328144079&__elgg_token=55fd9c2d7f5075d11e722358afd5fde2"
+	   security.addToken("?arg=val");
+   });
+   
 Module ``elgg/spinner``
 -----------------------
 

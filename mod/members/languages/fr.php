@@ -7,9 +7,11 @@
 
 return array(
 	'members:label:online' => 'En ligne',
+	'members:label:search' => 'Résultats de recherche',
 	'members:search' => 'Rechercher des membres',
-	'members:title:search' => 'Recherche de membres pour %s',
+	'members:title:search' => "Recherche de membres pour \"%s\"",
 	'members:total' => 'Nombre total de membres : %s',
+	'members:title:all' => 'Tous les membres',
 	'members:title:newest' => 'Nouveaux membres',
 	'members:title:popular' => 'Membres les plus populaires',
 	'members:title:online' => 'Membres en ligne',

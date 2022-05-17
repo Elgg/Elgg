@@ -3,6 +3,7 @@
 namespace Elgg\Database;
 
 use Elgg\Database;
+use Elgg\Security\Crypto;
 use Elgg\Traits\TimeUsing;
 
 /**
@@ -21,7 +22,7 @@ class UsersApiSessionsTable {
 	protected $database;
 	
 	/**
-	 * @var \ElggCrypto
+	 * @var Crypto
 	 */
 	protected $crypto;
 	
@@ -33,10 +34,10 @@ class UsersApiSessionsTable {
 	/**
 	 * Create a new table handler
 	 *
-	 * @param Database    $database the Elgg database handler
-	 * @param \ElggCrypto $crypto   crypto handler
+	 * @param Database $database the Elgg database handler
+	 * @param Crypto   $crypto   crypto handler
 	 */
-	public function __construct(Database $database, \ElggCrypto $crypto) {
+	public function __construct(Database $database, Crypto $crypto) {
 		$this->database = $database;
 		$this->crypto = $crypto;
 	}
@@ -50,7 +51,7 @@ class UsersApiSessionsTable {
 	 * @return false|string
 	 */
 	public function createToken(int $user_guid, int $expires = 60) {
-		$token = $this->crypto->getRandomString(32, \ElggCrypto::CHARS_HEX);
+		$token = $this->crypto->getRandomString(32, Crypto::CHARS_HEX);
 		$expires = $this->getCurrentTime("+{$expires} minutes");
 		
 		$insert = Insert::intoTable($this->table);

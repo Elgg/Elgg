@@ -732,7 +732,6 @@ function elgg_view_entity_list($entities, array $vars = []) {
  *                           'no_results' Message to display if no results (string|true|Closure)
  *
  * @return string The list of annotations
- * @internal
  */
 function elgg_view_annotation_list($annotations, array $vars = []) {
 	// list type can be passed as request parameter
@@ -780,7 +779,6 @@ function elgg_view_annotation_list($annotations, array $vars = []) {
  *                             'no_results' Message to display if no results (string|true|Closure)
  *
  * @return string The list of relationships
- * @internal
  */
 function elgg_view_relationship_list($relationships, array $vars = []) {
 	// list type can be passed as request parameter
@@ -1123,6 +1121,7 @@ function elgg_get_form_footer() {
  * @param array $prefixes Prefixes to split
  *
  * @return array
+ * @internal
  */
 function _elgg_split_vars(array $vars = [], array $prefixes = null) {
 
@@ -1289,7 +1288,6 @@ function elgg_view_tagcloud(array $options = []) {
  *
  * @return false|string
  * @since 1.8.0
- * @internal
  */
 function elgg_view_list_item($item, array $vars = []) {
 
@@ -1433,10 +1431,17 @@ function elgg_views_boot() {
  * @internal
  */
 function _elgg_get_js_site_data() {
+	
+	$message_delay = (int) elgg_get_config('message_delay');
+	if ($message_delay < 1) {
+		$message_delay = 6;
+	}
+	
 	return [
 		'elgg.data' => (object) elgg_trigger_plugin_hook('elgg.data', 'site', null, []),
 		'elgg.release' => elgg_get_release(),
 		'elgg.config.wwwroot' => elgg_get_site_url(),
+		'elgg.config.message_delay' => $message_delay * 1000,
 
 		// refresh token 3 times during its lifetime (in microseconds 1000 * 1/3)
 		'elgg.security.interval' => (int) _elgg_services()->csrf->getActionTokenTimeout() * 333,
@@ -1477,20 +1482,18 @@ function _elgg_get_js_page_data() {
 		'_data' => (object) $data,
 	];
 
-	if (_elgg_services()->config->elgg_load_sync_code) {
-		$elgg['config']['load_sync_code'] = true;
-	}
-
 	$page_owner = elgg_get_page_owner_entity();
 	if ($page_owner instanceof ElggEntity) {
-		$elgg['page_owner'] = $page_owner->toObject();
+		$elgg['page_owner'] = $page_owner->toObject(); // @todo remove in Elgg 5.0
 	}
 
 	$user = elgg_get_logged_in_user_entity();
 	if ($user instanceof ElggUser) {
 		$user_object = $user->toObject();
 		$user_object->admin = $user->isAdmin();
-		$elgg['session']['user'] = $user_object;
+		$elgg['session']['user'] = $user_object; // @todo remove in Elgg 5.0
+		
+		$elgg['user'] = (array) $user_object;
 	}
 
 	return $elgg;

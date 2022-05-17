@@ -143,7 +143,7 @@ class Entities extends Repository {
 		$options['offset'] = (int) $offset;
 		$options['callback'] = $callback ? : $this->options->callback;
 		if (!isset($options['callback'])) {
-			$options['callback'] = 'entity_row_to_elggstar';
+			$options['callback'] = [_elgg_services()->entityTable, 'rowToElggStar'];
 		}
 
 		unset($options['count']);

@@ -8,8 +8,8 @@
 return array(
 	'members:label:online' => 'Kirjautuneet',
 	'members:search' => 'Etsi jäseniä',
-	'members:title:search' => 'Jäsenhaun tulokset hakusanalle "%s"',
 	'members:total' => 'Jäseniä yhteensä: %s',
+	'members:title:all' => 'Kaikki jäsenet',
 	'members:title:newest' => 'Uusimmat',
 	'members:title:popular' => 'Suosituimmat',
 	'members:title:online' => 'Kirjautuneet',

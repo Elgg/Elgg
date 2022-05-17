@@ -167,6 +167,9 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 		$app->internal_services->session->removeLoggedInUser();
 		$app->internal_services->session->setIgnoreAccess(false);
 		$app->internal_services->session->setDisabledEntityVisibility(false);
+		
+		// make sure the logger is enabled before each test, in case a previous test disabled it but forgot to re-enable it
+		$app->internal_services->logger->enable();
 
 		// Make sure the application has been bootstrapped correctly
 		$this->assertInstanceOf(InternalContainer::class, $app->internal_services, __METHOD__ . ': InternalContainer not bootstrapped');

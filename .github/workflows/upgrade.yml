@@ -78,6 +78,9 @@ jobs:
       - name: Elgg CLI upgrade to 3.3
         run: php ./elgg-cli upgrade async --verbose
         
+      - name: Install Composer v2
+        run: composer self-update --2
+        
       - name: Code checkout PR
         uses: actions/checkout@v2
         with:

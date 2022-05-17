@@ -1,7 +1,7 @@
 /**
  * Ajax lists - append behaviour
  */
-define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
+define(['jquery', 'elgg/Ajax', 'elgg/system_messages'], function ($, Ajax, system_messages) {
 	// register click event
 	$(document).on('click', '.elgg-list-container-ajax-append .elgg-pagination a', function (event) {
 		event.preventDefault();
@@ -38,7 +38,9 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 					
 					$target_list.trigger('change');
 				} else {
-					elgg.register_error(elgg.echo('ajax:pagination:no_data'));
+					require(['elgg/i18n'], function(i18n) {
+						system_messages.error(i18n.echo('ajax:pagination:no_data'));
+					});
 				}
 			},
 		});

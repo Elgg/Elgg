@@ -90,10 +90,6 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->logger->disable();
 	}
 
-	public function down() {
-		_elgg_services()->logger->enable();
-	}
-
 	public function createService() {
 		$svc = _elgg_services();
 		

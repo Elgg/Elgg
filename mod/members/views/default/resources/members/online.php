@@ -8,4 +8,5 @@ echo elgg_view_page(elgg_echo('members:title:online'), [
 	'sidebar' => elgg_view('members/sidebar'),
 	'filter_id' => 'members',
 	'filter_value' => 'online',
+	'filter_sorting' => false,
 ]);

@@ -76,8 +76,8 @@ class BootHandler {
 		
 		// need to be registered as part of services, because partial boots do at least include the services
 		// the system relies on the existence of some of the event/hooks
-		_elgg_register_hooks();
-		_elgg_register_events();
+		$this->registerHooks();
+		$this->registerEvents();
 
 		// Connect to database, load language files, load configuration, init session
 		$this->app->internal_services->boot->boot($this->app->internal_services);
@@ -105,11 +105,15 @@ class BootHandler {
 
 		$events->registerHandler('plugins_load:before', 'system', 'elgg_views_boot');
 		$events->registerHandler('plugins_load:after', 'system', function() {
-			_elgg_session_boot($this->app->internal_services);
+			$this->app->internal_services->session->boot();
 		});
 
-		$events->registerHandler('plugins_boot', 'system', '_elgg_register_routes');
-		$events->registerHandler('plugins_boot', 'system', '_elgg_register_actions');
+		$events->registerHandler('plugins_boot', 'system', function() {
+			$this->registerRoutes();
+		});
+		$events->registerHandler('plugins_boot', 'system', function() {
+			$this->registerActions();
+		});
 
 		// Setup all boot sequence handlers for active plugins
 		$this->app->internal_services->plugins->build();
@@ -176,5 +180,109 @@ class BootHandler {
 		elgg_set_entity_class('object', 'comment', \ElggComment::class);
 		elgg_set_entity_class('object', 'elgg_upgrade', \ElggUpgrade::class);
 		elgg_set_entity_class('object', 'admin_notice', \ElggAdminNotice::class);
+	}
+	
+	/**
+	 * Register core hooks
+	 *
+	 * @return void
+	 */
+	protected function registerHooks(): void {
+		$conf = \Elgg\Project\Paths::elgg() . 'engine/hooks.php';
+		$spec = \Elgg\Includer::includeFile($conf);
+		
+		$hooks = $this->app->internal_services->hooks;
+		
+		foreach ($spec as $name => $types) {
+			foreach ($types as $type => $callbacks) {
+				foreach ($callbacks as $callback => $hook_spec) {
+					if (!is_array($hook_spec)) {
+						continue;
+					}
+					
+					$unregister = (bool) elgg_extract('unregister', $hook_spec, false);
+					
+					if ($unregister) {
+						$hooks->unregisterHandler($name, $type, $callback);
+					} else {
+						$priority = (int) elgg_extract('priority', $hook_spec, 500);
+						
+						$hooks->registerHandler($name, $type, $callback, $priority);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Register core events
+	 *
+	 * @return void
+	 */
+	protected function registerEvents(): void {
+		$conf = \Elgg\Project\Paths::elgg() . 'engine/events.php';
+		$spec = \Elgg\Includer::includeFile($conf);
+		
+		$events = $this->app->internal_services->events;
+		
+		foreach ($spec as $name => $types) {
+			foreach ($types as $type => $callbacks) {
+				foreach ($callbacks as $callback => $hook_spec) {
+					if (!is_array($hook_spec)) {
+						continue;
+					}
+					
+					$unregister = (bool) elgg_extract('unregister', $hook_spec, false);
+					
+					if ($unregister) {
+						$events->unregisterHandler($name, $type, $callback);
+					} else {
+						$priority = (int) elgg_extract('priority', $hook_spec, 500);
+						
+						$events->registerHandler($name, $type, $callback, $priority);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Register core routes
+	 *
+	 * @return void
+	 */
+	protected function registerRoutes(): void {
+		$conf = \Elgg\Project\Paths::elgg() . 'engine/routes.php';
+		$routes = \Elgg\Includer::includeFile($conf);
+	
+		foreach ($routes as $name => $def) {
+			$this->app->internal_services->routes->register($name, $def);
+		}
+	}
+	
+	/**
+	 * Register core actions
+	 *
+	 * @return void
+	 */
+	protected function registerActions(): void {
+		$conf = \Elgg\Project\Paths::elgg() . 'engine/actions.php';
+		$actions = \Elgg\Includer::includeFile($conf);
+		
+		$root_path = \Elgg\Project\Paths::elgg();
+	
+		foreach ($actions as $action => $action_spec) {
+			if (!is_array($action_spec)) {
+				continue;
+			}
+			
+			$access = elgg_extract('access', $action_spec, 'logged_in');
+			$handler = elgg_extract('controller', $action_spec);
+			if (!$handler) {
+				$handler = elgg_extract('filename', $action_spec) ?: "{$root_path}/actions/{$action}.php";
+			}
+			
+			$this->app->internal_services->actions->register($action, $handler, $access);
+		}
 	}
 }

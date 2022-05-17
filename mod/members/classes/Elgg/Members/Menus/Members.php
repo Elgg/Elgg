@@ -20,26 +20,32 @@ class Members {
 	public static function register(\Elgg\Hook $hook) {
 		$result = $hook->getValue();
 		
-		$result['newest'] = \ElggMenuItem::factory([
-			'name' => 'newest',
-			'text' => elgg_echo('sort:newest'),
-			'href' => elgg_generate_url('collection:user:user:newest'),
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'all',
+			'text' => elgg_echo('all'),
+			'href' => elgg_generate_url('collection:user:user'),
 		]);
-		$result['alpha'] =\ElggMenuItem::factory([
-			'name' => 'alpha',
-			'text' => elgg_echo('sort:alpha'),
-			'href' => elgg_generate_url('collection:user:user:alpha'),
-		]);
-		$result['popular'] = \ElggMenuItem::factory([
+		$result[] = \ElggMenuItem::factory([
 			'name' => 'popular',
 			'text' => elgg_echo('sort:popular'),
 			'href' => elgg_generate_url('collection:user:user:popular'),
 		]);
-		$result['online'] = \ElggMenuItem::factory([
+		$result[] = \ElggMenuItem::factory([
 			'name' => 'online',
 			'text' => elgg_echo('members:label:online'),
 			'href' => elgg_generate_url('collection:user:user:online'),
 		]);
+		
+		$query = get_input('member_query');
+		if (!empty($query)) {
+			$result[] = \ElggMenuItem::factory([
+				'name' => 'search',
+				'text' => elgg_echo('members:label:search'),
+				'href' => elgg_generate_url('search:user:user', [
+					'member_query' => $query,
+				]),
+			]);
+		}
 		
 		return $result;
 	}

@@ -7,9 +7,11 @@
 
 return array(
 	'members:label:online' => 'Online',
+	'members:label:search' => 'Zoekresultaten',
 	'members:search' => 'Zoek leden',
-	'members:title:search' => 'Zoekopdracht voor %s',
+	'members:title:search' => "Leden gezocht op '%s'",
 	'members:total' => 'Totaal aantal leden: %s',
+	'members:title:all' => 'Alle leden',
 	'members:title:newest' => 'Nieuwste leden',
 	'members:title:popular' => 'Meest populaire leden',
 	'members:title:online' => 'Leden die online zijn',

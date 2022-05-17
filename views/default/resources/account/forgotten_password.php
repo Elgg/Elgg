@@ -6,7 +6,7 @@
 $hash_missing_username = elgg_get_session()->get('forgotpassword:hash_missing');
 if ($hash_missing_username) {
 	elgg_get_session()->remove('forgotpassword:hash_missing');
-	register_error(elgg_echo('user:password:hash_missing'));
+	elgg_register_error_message(elgg_echo('user:password:hash_missing'));
 }
 
 $form_vars = [

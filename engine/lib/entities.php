@@ -44,39 +44,19 @@ function elgg_set_entity_class($type, $subtype, $class = "") {
 	_elgg_services()->entityTable->setEntityClass($type, $subtype, $class);
 }
 
-
 /**
  * Returns a database row from the entities table.
  *
  * @tip Use get_entity() to return the fully loaded entity.
  *
  * @warning This will only return results if a) it exists, b) you have access to it.
- * see {@link _elgg_get_access_where_sql()}.
  *
  * @param int $guid The GUID of the object to extract
  *
  * @return \stdClass|false
- * @see entity_row_to_elggstar()
- * @internal
  */
-function get_entity_as_row($guid) {
+function elgg_get_entity_as_row(int $guid) {
 	return _elgg_services()->entityTable->getRow($guid);
-}
-
-/**
- * Create an Elgg* object from a given entity row.
- *
- * Handles loading all tables into the correct class.
- *
- * @param \stdClass $row The row of the entry in the entities table.
- *
- * @return \ElggEntity|false
- * @see get_entity_as_row()
- * @see get_entity()
- * @internal
- */
-function entity_row_to_elggstar($row) {
-	return _elgg_services()->entityTable->rowToElggStar($row);
 }
 
 /**
@@ -376,11 +356,14 @@ function elgg_get_site_entity() {
  * Order by value of a specific annotation
  * @option array $order_by_annotation
  *
- * Order by value of a specific metadata/attribute
+ * Order by value of a specific metadata name
  * @option array $order_by_metadata
  *
  * Order by arbitrary clauses
  * @option array $order_by
+ *
+ * Order by attribute/annotation/metadata/private setting
+ * @option sort_by an array of sorting definitions
  *
  * <code>
  * $options['order_by_metadata'] = [
@@ -404,6 +387,32 @@ function elgg_get_site_entity() {
  * $options['order_by'] = [
  *     $sort_by,
  *     $fallback,
+ * ];
+ *
+ * // @see \Elgg\Database\Clauses\EntitySortByClause
+ * $options['sort_by'] = [
+ * 		[
+ * 			'property_type' => 'attribute',
+ * 			'property' => 'time_created',
+ * 			'direction' => 'ASC',
+ * 		],
+ * 		[
+ * 			'property_type' => 'metadata',
+ * 			'property' => 'name',
+ * 			'direction' => 'DESC',
+ * 		],
+ * 		[
+ * 			'property_type' => 'private_setting',
+ * 			'property' => 'some_name',
+ * 			'direction' => 'ASC',
+ * 			'signed' => true, // treat the value as an integer
+ * 		],
+ * 		[
+ * 			'property_type' => 'relationship',
+ * 			'property' => 'members',
+ * 			'direction' => 'ASC',
+ * 			'inverse_relationship' => true,
+ * 		],
  * ];
  * </code>
  *
@@ -502,7 +511,7 @@ function elgg_get_site_entity() {
  *                                        SQL query Elgg creates.
  *                                        Default: true
  * @option callable|false $callback       A callback function to pass each row through
- *                                        Default: entity_row_to_elggstar
+ *                                        Default: _elgg_services()->entityTable->rowToElggStar()
  * @option bool $preload_owners           If set to true, this function will preload
  *                                        all the owners of the returned entities resulting in better
  *                                        performance when displaying entities owned by several users
@@ -585,6 +594,7 @@ function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities', 
 	$defaults = [
 		'offset' => (int) max(get_input($offset_key, 0), 0),
 		'limit' => (int) max(get_input('limit', _elgg_services()->config->default_limit), 0),
+		'sort_by' => get_input('sort_by', []),
 		'full_view' => false,
 		'pagination' => true,
 		'no_results' => '',
@@ -661,7 +671,6 @@ function elgg_get_entity_dates(array $options = []) {
  * 			'annotations' => ['some annotation name', 'some other annotation name'],
  * 			'private_settings' => ['some private_setting name', 'some other private_setting name'],
  * 		]
- * @option string $sort          An array containing 'property', 'property_type', 'direction' and 'signed'
  * @option bool   $partial_match Allow partial matches, e.g. find 'elgg' when search for 'el'
  * @option bool   $tokenize      Break down search query into tokens,
  *                               e.g. find 'elgg has been released' when searching for 'elgg released'

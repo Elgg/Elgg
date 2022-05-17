@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\SystemMessages\RegisterSet;
 
 /**
@@ -91,25 +92,56 @@ class SystemMessagesService {
 	 * @return void
 	 */
 	public function addSuccessMessage($message) {
-		$set = $this->loadRegisters();
-		foreach ((array) $message as $str) {
-			$set->success[] = $str;
+		if (!is_string($message)) {
+			elgg_deprecated_notice('You should only provide a string as the message to ' . __METHOD__, '4.2');
 		}
-		$this->saveRegisters($set);
+		
+		foreach ((array) $message as $str) {
+			$this->addMessage(new \ElggSystemMessage($str, 'success'));
+		}
 	}
 
 	/**
 	 * Display an error on next page load.
 	 *
-	 * @param string|string[] $error Error or errors to add
+	 * @param string|string[] $message Error or errors to add
 	 *
 	 * @return void
 	 */
-	public function addErrorMessage($error) {
-		$set = $this->loadRegisters();
-		foreach ((array) $error as $str) {
-			$set->error[] = $str;
+	public function addErrorMessage($message) {
+		if (!is_string($message)) {
+			elgg_deprecated_notice('You should only provide a string as the message to ' . __METHOD__, '4.2');
 		}
+		
+		foreach ((array) $message as $str) {
+			$this->addMessage(new \ElggSystemMessage($str, 'error'));
+		}
+	}
+
+	/**
+	 * Adds a message to the registry
+	 *
+	 * @param \ElggSystemMessage|array $message Error or errors to add
+	 *
+	 * @see \ElggSystemMessage::factory()
+	 *
+	 * @return void
+	 *
+	 * @throws InvalidArgumentException
+	 *
+	 * @since 4.2.0
+	 */
+	public function addMessage($message): void {
+		if (is_array($message)) {
+			$message = \ElggSystemMessage::factory($message);
+		}
+		
+		if (!$message instanceof \ElggSystemMessage) {
+			throw new InvalidArgumentException(__METHOD__ . ' $message needs to be an \ElggSystemMessage or an array of options');
+		}
+		
+		$set = $this->loadRegisters();
+		$set->{$message->getType()}[] = $message;
 		$this->saveRegisters($set);
 	}
 
@@ -142,7 +174,7 @@ class SystemMessagesService {
 	 */
 	public function saveRegisters(RegisterSet $set) {
 		$filter = function ($el) {
-			return is_string($el) && $el !== "";
+			return ($el instanceof \ElggSystemMessage) && $el->getMessage() !== '';
 		};
 
 		$data = [];

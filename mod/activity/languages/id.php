@@ -17,6 +17,8 @@ return array(
 	'widgets:group_activity:edit:select' => 'Pilih grup',
 	'widgets:group_activity:content:noactivity' => 'Tidak ada aktivitas dalam grup ini',
 	'widgets:group_activity:content:noselect' => 'Edit widget ini untuk memilih grup',
+	
+	'collection:river' => "Aktivitas",
 	'collection:river:group' => "Aktifitas grup",
 	'groups:tool:activity' => 'Aktifkan aktivitas grup',
 	

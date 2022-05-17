@@ -52,7 +52,6 @@ use Elgg\Traits\Loggable;
  * @property int           $default_limit							The default "limit" used in listings and queries
  * @property bool          $disable_rss 							Is RSS disabled
  * @property bool          $elgg_config_locks 						The application will lock some settings (default true)
- * @property bool          $elgg_load_sync_code
  * @property bool          $elgg_maintenance_mode                   Flag if maintenance mode is enabled
  * @property string        $elgg_settings_file
  * @property bool          $email_html_part                         Determines if email has a html part
@@ -104,6 +103,7 @@ use Elgg\Traits\Loggable;
  * @property array         $redis_options
  * @property array         $redis_servers
  * @property bool          $remove_branding 						Is Elgg branding disabled
+ * @property int           $remove_unvalidated_users_days			The number of days after which unvalidated users will be removed
  * @property bool          $require_admin_validation
  * @property bool          $security_disable_password_autocomplete
  * @property bool          $security_email_require_password
@@ -209,6 +209,7 @@ class Config {
 		],
 		'language_detect_from_browser' => true,
 		'lastcache' => 0,
+		'message_delay' => 6,
 		'min_password_length' => 6,
 		'minusername' => 4,
 		'notifications_max_runtime' => 45,

@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	'add:group:group' => "Luo uusi ryhmä",
 	
 	'groups' => "Ryhmät",
 	'groups:owned' => "Ryhmät, jotka omistan",
@@ -19,6 +20,9 @@ return array(
 	'groups:all' => "Kaikki ryhmät",
 	'groups:add' => "Luo uusi ryhmä",
 	'groups:edit' => "Muokkaa ryhmää",
+	'groups:edit:profile' => "Profiili",
+	'groups:edit:tools' => "Työkalut",
+	'groups:edit:settings' => "Asetukset",
 	'groups:membershiprequests' => 'Hallinnoi liittymispyyntöjä',
 	'groups:membershiprequests:pending' => 'Hallinnoi liittymispyyntöjä (%s)',
 	'groups:invitations' => 'Ryhmäkutsut',

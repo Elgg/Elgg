@@ -17,9 +17,9 @@ elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($user_guids) {
 		
 		$name = $user->getDisplayName();
 		if ($user->delete()) {
-			system_message(elgg_echo('admin:user:delete:yes', [$name]));
+			elgg_register_success_message(elgg_echo('admin:user:delete:yes', [$name]));
 		} else {
-			register_error(elgg_echo('entity:delete:fail', [$name]));
+			elgg_register_error_message(elgg_echo('entity:delete:fail', [$name]));
 		}
 	}
 });

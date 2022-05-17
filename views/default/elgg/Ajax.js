@@ -1,4 +1,4 @@
-define(['jquery', 'elgg', 'elgg/spinner'], function ($, elgg, spinner) {
+define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages', 'elgg/security', 'elgg/i18n'], function ($, elgg, spinner, system_messages, security, i18n) {
 	
 	var site_url = elgg.get_site_url(),
 		action_base = site_url + 'action/',
@@ -62,7 +62,7 @@ define(['jquery', 'elgg', 'elgg/spinner'], function ($, elgg, spinner) {
 					}
 
 					if (data.error && options.showErrorMessages) {
-						elgg.register_error(data.error);
+						system_messages.error(data.error);
 						error_displayed = true;
 					}
 
@@ -72,7 +72,7 @@ define(['jquery', 'elgg', 'elgg/spinner'], function ($, elgg, spinner) {
 						data.status = 0;
 					}
 
-					m && m.success && options.showSuccessMessages && elgg.system_message(m.success);
+					m && m.success && options.showSuccessMessages && system_messages.success(m.success);
 					delete data._elgg_msgs;
 
 					var deps = data._elgg_deps;
@@ -185,7 +185,7 @@ define(['jquery', 'elgg', 'elgg/spinner'], function ($, elgg, spinner) {
 				}
 
 				if (!error_displayed && options.showErrorMessages) {
-					elgg.register_error(elgg.echo('ajax:error'));
+					system_messages.error(i18n.echo('ajax:error'));
 				}
 				
 				// trigger custom error
@@ -210,7 +210,12 @@ define(['jquery', 'elgg', 'elgg/spinner'], function ($, elgg, spinner) {
 
 				jqXHR.AjaxData = data;
 
-				return JSON.stringify(data.value);
+				if (data.value !== undefined) {
+					// regular JSON responses wrap the 'data' in 'value'
+					return JSON.stringify(data.value);
+				}
+				
+				return JSON.stringify(data);
 			};
 
 			options.url = elgg.normalize_url(options.url);
@@ -346,7 +351,7 @@ define(['jquery', 'elgg', 'elgg/spinner'], function ($, elgg, spinner) {
 			if (m && /(^|&)__elgg_ts=/.test(m[1])) {
 				// token will be in the URL
 			} else {
-				options.data = elgg.security.addToken(options.data);
+				options.data = security.addToken(options.data);
 			}
 
 			options.method = options.method || 'POST';
@@ -420,4 +425,3 @@ define(['jquery', 'elgg', 'elgg/spinner'], function ($, elgg, spinner) {
 
 	return Ajax;
 });
-

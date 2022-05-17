@@ -1190,7 +1190,7 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'content:latest' => 'Dernière activité',
 	
 	'list:out_of_bounds' => "Vous avez atteint une partie de la liste sans aucun contenu, toutefois il y a du contenu disponible.",
-	'list:out_of_bounds:link' => "Revenir à la première page de cette liste.",
+	'list:out_of_bounds:link' => "Retour à la première page",
 
 	'link:text' => 'voir le lien',
 
@@ -1223,9 +1223,13 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
  */
 
 	'sort:newest' => 'Date',
+	'sort:oldest' => 'Plus ancien',
 	'sort:popular' => 'Popularité',
 	'sort:alpha' => 'Alphabétique',
 	'sort:priority' => 'Priorité',
+	'sort:relevance' => 'Pertinence',
+	'sort:az' => '%s (A-Z)',
+	'sort:za' => '%s (Z-A)',
 
 /**
  * Generic data words
@@ -1455,6 +1459,8 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'config:i18n:who_can_change_language:admin_only' => "Seulement les administrateurs",
 	'config:i18n:who_can_change_language:nobody' => "Personne",
 	
+	'config:users:remove_unvalidated_users_days' => "Nombre de jours après lesquels les utilisateurs non validés seront supprimés",
+	'config:users:remove_unvalidated_users_days:help' => "Les utilisateurs non validés seront automatiquement supprimés après le nombre de jours configuré. Si vide, les utilisateurs non validés ne seront pas supprimés automatiquement.",
 	'config:users:can_change_username' => "Permettre aux membres de modifier leur identifiant",
 	'config:users:can_change_username:help' => "Si interdit, seuls les administrateurs peuvent changer l'identifiant d'un compte utilisateur",
 	'config:remove_branding:label' => "Retirer le logo Elgg",
@@ -1487,6 +1493,8 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'config:email_html_part_images:attach' => "Pièces jointes",
 	'config:delayed_email:label' => "Activer les e-mails de notification différés",
 	'config:delayed_email:help' => "Offre aux utilisateurs des notifications par e-mail différées qui regroupent les notifications reçues au cours d'une période (quotidienne, hebdomadaire)",
+	'config:message_delay:label' => "Délai des messages système",
+	'config:message_delay:help' => "Nombre de secondes par défaut avant qu'un message de réussite ne disparaisse",
 
 	'upgrading' => 'Mise à niveau en cours...',
 	'upgrade:core' => 'Votre installation de Elgg a été mise à niveau.',

@@ -12,6 +12,7 @@ requirejs.config({
         'vendor': '../../vendor',
         'node_modules': '../../node_modules',
         'jquery-mockjax': '../../node_modules/jquery-mockjax/dist/jquery.mockjax',
+        'sprintf': '../../node_modules/sprintf-js/src/sprintf',
     },
 
     // ask Require.js to load these files (all our tests)

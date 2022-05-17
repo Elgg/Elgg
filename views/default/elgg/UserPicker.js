@@ -72,6 +72,10 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery
 		 * @param {String} html    HTML for autocomplete item selected by user
 		 */
 		addUser : function(event, guid, html) {
+			if (event.isDefaultPrevented()) {
+				return;
+			}
+			
 			// do not allow users to be added multiple times
 			if (!$('li[data-guid="' + guid + '"]', this.$ul).length) {
 				this.$ul.append(html);

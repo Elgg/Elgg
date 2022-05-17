@@ -3,6 +3,7 @@
 echo elgg_view_field([
 	'#type' => 'text',
 	'name' => 'member_query',
+	'value' => get_input('member_query'),
 	'required' => true,
 ]);
 

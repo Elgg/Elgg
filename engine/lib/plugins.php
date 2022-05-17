@@ -5,20 +5,6 @@
  */
 
 /**
- * Discovers plugins in the plugins_path setting and creates \ElggPlugin
- * entities for them if they don't exist.  If there are plugins with entities
- * but not actual files, will disable the \ElggPlugin entities and mark as inactive.
- * The \ElggPlugin object holds config data, so don't delete.
- *
- * @return bool
- * @since 1.8.0
- * @internal
- */
-function _elgg_generate_plugin_entities(): bool {
-	return _elgg_services()->plugins->generateEntities();
-}
-
-/**
  * Returns an \ElggPlugin object with the path $path.
  *
  * @param string $plugin_id The id (dir name) of the plugin. NOT the guid.

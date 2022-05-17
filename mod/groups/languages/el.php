@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	'add:group:group' => "Δημιουργία ομάδας",
 	
 	'groups' => "Ομάδες",
 	'groups:owned' => "Ομάδες που μου ανήκουν",
@@ -19,6 +20,7 @@ return array(
 	'groups:all' => "Όλες οι ομάδες",
 	'groups:add' => "Δημιουργία ομάδας",
 	'groups:edit' => "Επεξεργασία ομάδας",
+	'groups:edit:profile' => "Προφίλ",
 	'groups:membershiprequests' => 'Διαχείριση αιτημάτων σύνδεσης',
 	'groups:membershiprequests:pending' => 'Διαχείριση αιτημάτων σύνδεσης (%s)',
 	'groups:invitations' => 'Προσκλήσεις ομάδας',

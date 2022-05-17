@@ -107,6 +107,7 @@ return array(
 	'table_columns:fromView:admin' => 'Admin',
 	'table_columns:fromView:banned' => 'Banned',
 	'table_columns:fromView:container' => 'Container',
+	'table_columns:fromView:entity_menu' => 'メニュー',
 	'table_columns:fromView:excerpt' => 'Description',
 	'table_columns:fromView:link' => 'Name/Title',
 	'table_columns:fromView:icon' => 'Icon',
@@ -115,6 +116,7 @@ return array(
 	'table_columns:fromView:owner' => 'Owner',
 	'table_columns:fromView:time_created' => 'Time Created',
 	'table_columns:fromView:time_updated' => 'Time Updated',
+	'table_columns:fromView:unvalidated_menu' => 'メニュー',
 	'table_columns:fromView:user' => 'User',
 
 	'table_columns:fromProperty:description' => 'Description',
@@ -257,6 +259,7 @@ return array(
  * Notifications
  */
 	'notification:method:email' => 'Email',
+	'usersettings:notifications:menu:filter:settings' => "設定",
 	'notification:subject' => '%s についての通知',
 	'notification:body' => '%s にて新しいアクティビティを見る',
 
@@ -383,6 +386,7 @@ return array(
 	'admin:users:online' => 'オンライン中',
 	'admin:users:newest' => '最新',
 	'admin:users:admins' => '管理者',
+	'admin:users:banned' => '入場禁止',
 	'admin:users:add' => '新規ユーザ追加',
 	'admin:users:description' => "この管理者パネルでサイト内でのユーザの設定をコントロールすることができます。開始するには、下のオプションを選択してください。",
 	'admin:users:adduser:label' => "新規ユーザを追加するには、ここをクリック...",
@@ -391,6 +395,7 @@ return array(
 	'admin:users:find' => '検索',
 	'admin:users:unvalidated' => '未確認',
 	'admin:users:unvalidated:no_results' => '未確認のユーザは、いません。',
+	'admin:users:details:statistics' => 'コンテントの統計情報',
 	
 	'admin:configure_utilities:maintenance' => 'メンテナンス・モード',
 	'admin:upgrades' => 'アップグレード',
@@ -422,6 +427,7 @@ return array(
 	'admin:widget:content_stats:help' => 'ユーザが作成したコンテントの記録を保存しています。',
 	'admin:widget:cron_status' => 'Cronの状態',
 	'admin:widget:cron_status:help' => '最後に cron jobs が完了したときの状態を表示する',
+	'admin:statistics:queue:name' => 'Name',
 
 	'admin:widget:admin_welcome' => 'Welcome',
 	'admin:widget:admin_welcome:help' => "Elggの管理エリアについての短い紹介",
@@ -718,6 +724,7 @@ return array(
 	'activity' => 'アクティビティ',
 	'members' => 'メンバ',
 	'menu' => 'メニュー',
+	'item' => 'Item',
 
 	'up' => '上へ',
 	'down' => '下へ',
@@ -973,6 +980,8 @@ return array(
 	'admin:legend:content_access' => 'コンテント・アクセス',
 	'admin:legend:site_access' => 'サイト・アクセス',
 	'admin:legend:debug' => 'デバッグとログ',
+	'config:i18n:who_can_change_language:admin_only' => "管理者のみ",
+	'config:email' => "Eメール",
 
 	'upgrading' => 'アップグレード中...',
 	'upgrade:core' => 'Elggをアップグレードしました。',

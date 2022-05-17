@@ -40,6 +40,11 @@ return [
 				'Elgg\Likes\Permissions::allowLikeOnEntity' => ['priority' => 0],
 			],
 		],
+		'prepare' => [
+			'system:email' => [
+				Elgg\Likes\ThreadHeadersHandler::class => [],
+			],
+		],
 		'register' => [
 			'menu:social' => [
 				'Elgg\Likes\Menus\Social::register' => [],

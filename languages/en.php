@@ -1189,7 +1189,7 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'content:latest' => 'Latest activity',
 	
 	'list:out_of_bounds' => "You have reached a part of the list without any content, however there is content available.",
-	'list:out_of_bounds:link' => "Go back to the first page of this listing.",
+	'list:out_of_bounds:link' => "Go back to the first page",
 
 	'link:text' => 'view link',
 
@@ -1222,9 +1222,13 @@ For improved performance, it is recommended that you enable and configure OPcach
  */
 
 	'sort:newest' => 'Newest',
+	'sort:oldest' => 'Oldest',
 	'sort:popular' => 'Popular',
 	'sort:alpha' => 'Alphabetical',
 	'sort:priority' => 'Priority',
+	'sort:relevance' => 'Relevance',
+	'sort:az' => '%s (A-Z)',
+	'sort:za' => '%s (Z-A)',
 
 /**
  * Generic data words
@@ -1453,6 +1457,8 @@ Once you have logged in, we highly recommend that you change your password.',
 	'config:i18n:who_can_change_language:admin_only' => "Administrators only",
 	'config:i18n:who_can_change_language:nobody' => "Nobody",
 	
+	'config:users:remove_unvalidated_users_days' => "Numbers of days after which unvalidated users will be removed",
+	'config:users:remove_unvalidated_users_days:help' => "Unvalidated users will automatically be removed after the configured number of days. If left empty the unvalidated users will not be removed automatically.",
 	'config:users:can_change_username' => "Allow users to change their username",
 	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Remove Elgg branding",
@@ -1485,6 +1491,8 @@ Once you have logged in, we highly recommend that you change your password.',
 	'config:email_html_part_images:attach' => "Attachments",
 	'config:delayed_email:label' => "Enable delayed email notifications",
 	'config:delayed_email:help' => "Offer users delayed email notifications to bundle notifications received in a period (daily, weekly)",
+	'config:message_delay:label' => "System message delay",
+	'config:message_delay:help' => "Default number of seconds before a success message disappears",
 
 	'upgrading' => 'Upgrading...',
 	'upgrade:core' => 'Your Elgg installation was upgraded.',

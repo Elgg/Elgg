@@ -43,14 +43,15 @@ class SystemCache {
 	/**
 	 * Saves a system cache.
 	 *
-	 * @param string $type The type or identifier of the cache
-	 * @param mixed  $data The data to be saved
+	 * @param string $type         The type or identifier of the cache
+	 * @param mixed  $data         The data to be saved
+	 * @param int    $expire_after Number of seconds to expire the cache after
 	 *
 	 * @return bool
 	 */
-	public function save($type, $data) {
+	public function save($type, $data, int $expire_after = null): bool {
 		if ($this->isEnabled()) {
-			return $this->cache->save($type, $data);
+			return $this->cache->save($type, $data, $expire_after);
 		}
 
 		return false;

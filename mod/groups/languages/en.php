@@ -11,6 +11,7 @@ return array(
 	 * Menu items and titles
 	 */
 	'add:group:group' => "Create a new group",
+	'groups:menu:sort:member' => "Join date",
 	
 	'groups' => "Groups",
 	'groups:owned' => "Groups I own",

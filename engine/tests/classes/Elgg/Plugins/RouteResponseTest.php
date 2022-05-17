@@ -22,10 +22,6 @@ abstract class RouteResponseTest extends UnitTestCase {
 		_elgg_services()->logger->disable();
 	}
 
-	public function down() {
-		_elgg_services()->logger->enable();
-	}
-
 	/**
 	 * Get object subtype
 	 * @return mixed

@@ -11,10 +11,9 @@ if (!empty($items) || !$pagination || empty($count)) {
 	return;
 }
 
-$msg = elgg_echo('list:out_of_bounds') . ' ';
-$msg .= elgg_view('output/url', [
+$link = elgg_view('output/url', [
 	'text' => elgg_echo('list:out_of_bounds:link'),
 	'href' => elgg_http_add_url_query_elements(current_page_url(), ['offset' => null]),
 ]);
 
-echo elgg_view_message('notice', $msg);
+echo elgg_view_message('notice', elgg_echo('list:out_of_bounds'), ['link' => $link]);

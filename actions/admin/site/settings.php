@@ -41,6 +41,14 @@ if (empty($admin_validation_notification)) {
 	elgg_save_config('admin_validation_notification', $admin_validation_notification);
 }
 
+// remove unvalidated users after x days
+$remove_unvalidated_users_days = (int) get_input('remove_unvalidated_users_days');
+if ($remove_unvalidated_users_days < 1) {
+	elgg_remove_config('remove_unvalidated_users_days');
+} else {
+	elgg_save_config('remove_unvalidated_users_days', $remove_unvalidated_users_days);
+}
+
 // setup walled garden
 $walled_garden = ('on' === get_input('walled_garden', false));
 elgg_save_config('walled_garden', $walled_garden);
@@ -85,7 +93,7 @@ if (!elgg()->config->hasInitialValue('simplecache_enabled')) {
 
 if ('on' === get_input('cache_symlink_enabled')) {
 	if (!_elgg_symlink_cache()) {
-		register_error(elgg_echo('installation:cache_symlink:error'));
+		elgg_register_error_message(elgg_echo('installation:cache_symlink:error'));
 	}
 }
 
@@ -127,5 +135,8 @@ if ($friendly_time_number_of_days === '') {
 	$friendly_time_number_of_days = 30;
 }
 elgg_save_config('friendly_time_number_of_days', (int) $friendly_time_number_of_days);
+elgg_save_config('message_delay', (int) get_input('message_delay', 6));
+
+elgg_invalidate_caches();
 
 return elgg_ok_response('', elgg_echo('admin:configuration:success'));

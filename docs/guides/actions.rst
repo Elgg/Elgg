@@ -184,7 +184,7 @@ This is done as follows:
        return;
      }
 
-     register_error(elgg_echo('captcha:captchafail'));
+     elgg_register_error_message(elgg_echo('captcha:captchafail'));
 
      return false;
    }

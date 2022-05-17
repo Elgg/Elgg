@@ -186,27 +186,19 @@ class Loop {
 			$format = elgg_get_config('date_format') ? : DATE_ISO8601;
 
 			if ($this->result->getFailureCount()) {
-				$msg = elgg_echo('admin:upgrades:completed:errors', [
+				elgg_register_error_message(elgg_echo('admin:upgrades:completed:errors', [
 					$upgrade_name,
 					$dt->format($format),
 					$this->result->getFailureCount(),
-				]);
-
-				register_error($msg);
+				]));
 			} else {
-				$msg = elgg_echo('admin:upgrades:completed', [
+				elgg_register_success_message(elgg_echo('admin:upgrades:completed', [
 					$upgrade_name,
 					$dt->format($format),
-				]);
-
-				system_message($msg);
+				]));
 			}
 		} else {
-			$msg = elgg_echo('admin:upgrades:failed', [
-				$upgrade_name
-			]);
-
-			register_error($msg);
+			elgg_register_error_message(elgg_echo('admin:upgrades:failed', [$upgrade_name]));
 		}
 
 		foreach ($this->result->getErrors() as $error) {

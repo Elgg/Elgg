@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	'add:group:group' => "Направи нову групу",
 	
 	'groups' => "Групе",
 	'groups:owned' => "Групе чији сам власник",
@@ -19,6 +20,7 @@ return array(
 	'groups:all' => "Све групе",
 	'groups:add' => "Направи нову групу",
 	'groups:edit' => "Измени групу",
+	'groups:edit:profile' => "Профил",
 	'groups:membershiprequests' => 'Управљај захтевима за придруживање',
 	'groups:membershiprequests:pending' => 'Управљај захтевима за придруживање (%s)',
 	'groups:invitations' => 'Позиви у групу',

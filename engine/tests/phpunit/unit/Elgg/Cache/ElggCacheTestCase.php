@@ -70,6 +70,37 @@ abstract class ElggCacheTestCase extends UnitTestCase {
 		$this->assertNull($this->cache->load($key));
 	}
 
+	public function testCanSaveAndLoadWithTTL() {
+		$value = 'foobar';
+		$key = $this->makeKey();
+
+		$reflector = new \ReflectionClass($this->cache);
+		$property = $reflector->getProperty('pool');
+		$property->setAccessible(true);
+		
+		$pool = $property->getValue($this->cache);
+		
+		$this->assertNull($this->cache->load($key));
+
+		$this->assertTrue($this->cache->save($key, $value, \Elgg\Values::normalizeTime('-1 second')));
+		
+		// need to detach to make sure the item is loaded from the backend and does not use static cache
+		$pool->detachAllItems();
+		
+		$this->assertNull($this->cache->load($key));
+		
+		$this->assertTrue($this->cache->save($key, $value, 5));
+		
+		// need to detach to make sure the item is loaded from the backend and does not use static cache
+		$pool->detachAllItems();
+		
+		$this->assertEquals($value, $this->cache->load($key));
+
+		$this->cache->delete($key);
+
+		$this->assertNull($this->cache->load($key));
+	}
+
 	/**
 	 * @dataProvider cacheableValuesProvider
 	 */

@@ -1,4 +1,4 @@
-define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function ($, elgg, Ajax) {
+define(['jquery', 'elgg/Ajax', 'elgg/i18n', 'jquery-ui/widgets/sortable'], function ($, Ajax, i18n) {
 
 	/**
 	 * Persist the widget's new position
@@ -38,7 +38,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function (
 	function removeWidget(event) {
 		event.preventDefault();
 		
-		if (confirm(elgg.echo('deleteconfirm')) === false) {
+		if (confirm(i18n.echo('deleteconfirm')) === false) {
 			return;
 		}
 

@@ -173,7 +173,7 @@ class ElggUser extends \ElggEntity {
 	 * @return bool
 	 */
 	public function isBanned() {
-		return $this->banned == 'yes';
+		return $this->banned === 'yes';
 	}
 
 	/**
@@ -182,9 +182,7 @@ class ElggUser extends \ElggEntity {
 	 * @return bool
 	 */
 	public function isAdmin() {
-		return elgg_call(ELGG_IGNORE_ACCESS, function() {
-			return ($this->admin === 'yes');
-		});
+		return $this->admin === 'yes';
 	}
 
 	/**
@@ -252,8 +250,6 @@ class ElggUser extends \ElggEntity {
 	
 	/**
 	 * Sets the last action time of the given user to right now.
-	 *
-	 * @see _elgg_session_boot() The session boot calls this at the beginning of every request
 	 *
 	 * @return void
 	 */

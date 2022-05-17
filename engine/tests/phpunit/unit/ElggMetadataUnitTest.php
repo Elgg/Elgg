@@ -136,8 +136,6 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		_elgg_services()->logger->disable();
 		
 		$this->assertFalse($metadata->save());
-		
-		_elgg_services()->logger->enable();
 	}
 
 	public function testCanDeleteMetadata() {

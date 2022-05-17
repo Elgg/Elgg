@@ -22,46 +22,36 @@ class ThreadHeadersHandler {
 		if (!$email instanceof \Elgg\Email) {
 			return;
 		}
-	
-		$notificationParams = $email->getParams();
-	
-		$notification = elgg_extract('notification', $notificationParams);
+		
+		$params = $email->getParams();
+		
+		$notification = elgg_extract('notification', $params);
 		if (!$notification instanceof \Elgg\Notifications\Notification) {
 			return;
 		}
-	
+		
 		$object = elgg_extract('object', $notification->params);
 		if (!$object instanceof \ElggEntity) {
 			return;
 		}
-	
+		
 		$event = elgg_extract('event', $notification->params);
 		if (!$event instanceof \Elgg\Notifications\NotificationEvent) {
 			return;
 		}
-	
-		$hostname = parse_url(elgg_get_site_url(), PHP_URL_HOST);
-		$urlPath = parse_url(elgg_get_site_url(), PHP_URL_PATH);
-	
-		if ($event->getAction() === 'create') {
-			// create event happens once per entity and we need to guarantee message id uniqueness
-			// and at the same time have thread message id that we don't need to store
-			$messageId = "{$urlPath}.entity.{$object->guid}@{$hostname}";
-		} else {
-			$mt = microtime(true);
-			$messageId = "{$urlPath}.entity.{$object->guid}.$mt@{$hostname}";
-		}
-	
-		$email->addHeader('Message-ID', $messageId);
+		
+		$message_id = $email->createEntityMessageID($object, $event->getAction() !== 'create');
+		$email->addHeader('Message-ID', $message_id);
 	
 		// let's just thread comments by default
 		$container = $object->getContainerEntity();
 		if ($container instanceof \ElggEntity && $object instanceof \ElggComment) {
-			$threadMessageId = "<{$urlPath}.entity.{$container->guid}@{$hostname}>";
-			$email->addHeader('In-Reply-To', $threadMessageId);
-			$email->addHeader('References', $threadMessageId);
+			$thread_message_id = "<{$email->createEntityMessageID($container)}>";
+			
+			$email->addHeader('In-Reply-To', $thread_message_id);
+			$email->addHeader('References', $thread_message_id);
 		}
-	
+		
 		return $email;
 	}
 }

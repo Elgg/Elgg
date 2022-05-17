@@ -6,16 +6,16 @@
 # Translators:
 # Jerôme Bakker, 2021
 # Jeroen Dalsem, 2021
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2022
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-25 11:16+0100\n"
+"POT-Creation-Date: 2022-04-22 10:32+0200\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2022\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -298,8 +298,8 @@ msgid "Requirements"
 msgstr "Pré-requis"
 
 #: ../../intro/install.rst:13
-msgid "MySQL 5.7+"
-msgstr "MySQL 5.7+"
+msgid "MySQL 5.7+ or MariaDB 10.3+"
+msgstr "MySQL 5.7+ ou MariaDB 10.3+"
 
 #: ../../intro/install.rst:14
 msgid "PHP 7.4+ with the following extensions:"

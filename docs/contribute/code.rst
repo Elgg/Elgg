@@ -378,7 +378,7 @@ Functions not throwing an exception on error should return ``false`` upon failur
 
 .. note::
 
-	Particularly low-level, non-API functions/methods (e.g. entity_row_to_elggstar),
+	Particularly low-level, non-API functions/methods,
 	which should not fail under normal conditions, should throw instead of returning false. 
 
 Functions returning only boolean should be prefaced with ``is_`` or ``has_``
@@ -780,16 +780,18 @@ Javascript guidelines
 
 Same formatting standards as PHP apply.
 
-All functions should be in the ``elgg`` namespace.
+Related functions should be in a namespaced ``AMD`` module.
 
 Function expressions should end with a semi-colon.
 
 .. code-block:: js
 
-	elgg.ui.toggles = function(event) {
-		event.preventDefault();
-		$(target).slideToggle('medium');
-	};
+	define(['elgg'], function(elgg) {
+		function toggles(event) {
+			event.preventDefault();
+			$(target).slideToggle('medium');
+		};
+	});
 
 
 Deprecating APIs

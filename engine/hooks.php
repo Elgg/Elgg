@@ -40,6 +40,7 @@ return [
 	'cron' => [
 		'daily' => [
 			\Elgg\Email\DelayedQueue\CronHandler::class => [],
+			'Elgg\Users\Validation::removeUnvalidatedUsers' => [],
 			'Elgg\Users\Validation::notifyAdminsAboutPendingUsers' => [],
 			\Elgg\Users\CleanupPersistentLoginHandler::class => [],
 		],
@@ -115,6 +116,9 @@ return [
 		'menu:admin:users:bulk' => [
 			'Elgg\Menus\AdminUsersBulk::disableItems' => [],
 		],
+		'menu:page' => [
+			'Elgg\Menus\Page::prepareAdminAdministerUsersChildren' => [],
+		],
 		'menu:site' => [
 			'Elgg\Menus\Site::reorderItems' => [
 				'priority' => 999,
@@ -167,6 +171,9 @@ return [
 		],
 		'menu:filter:admin/users' => [
 			'Elgg\Menus\Filter::registerAdminUsers' => [],
+			'Elgg\Menus\FilterSortItems::registerTimeCreatedSorting' => [],
+			'Elgg\Menus\FilterSortItems::registerNameSorting' => [],
+			'Elgg\Menus\FilterSortItems::registerSortingDropdown' => ['priority' => 9999],
 		],
 		'menu:filter:filter' => [
 			'Elgg\Menus\Filter::registerFilterTabs' => ['priority' => 1],

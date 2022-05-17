@@ -136,6 +136,7 @@ return array(
 	'table_columns:fromView:admin' => 'Admin',
 	'table_columns:fromView:banned' => 'Gesperrt',
 	'table_columns:fromView:container' => 'Container',
+	'table_columns:fromView:entity_menu' => 'Menü',
 	'table_columns:fromView:excerpt' => 'Beschreibung',
 	'table_columns:fromView:link' => 'Name/Titel',
 	'table_columns:fromView:icon' => 'Icon',
@@ -144,6 +145,7 @@ return array(
 	'table_columns:fromView:owner' => 'Besitzer',
 	'table_columns:fromView:time_created' => 'Erstellungszeitpunkt',
 	'table_columns:fromView:time_updated' => 'Aktualisierungszeitpunkt',
+	'table_columns:fromView:unvalidated_menu' => 'Menü',
 	'table_columns:fromView:user' => 'Benutzer',
 
 	'table_columns:fromProperty:description' => 'Beschreibung',
@@ -511,6 +513,7 @@ Bei der Konfiguration der Simplecache-Option in settings.php kann eine Datenbank
 	'admin:users:online' => 'Online',
 	'admin:users:newest' => 'Neueste',
 	'admin:users:admins' => 'Administratoren',
+	'admin:users:banned' => 'Gesperrt',
 	'admin:users:searchuser' => 'Suche Benutzer, um sie zu Admins zu machen',
 	'admin:users:existingadmins' => 'Liste der existierenden Admins',
 	'admin:users:add' => 'Benutzer hinzufügen',
@@ -524,6 +527,7 @@ Bei der Konfiguration der Simplecache-Option in settings.php kann eine Datenbank
 	'admin:users:unvalidated:registered' => 'Registriert: %s',
 	'admin:users:unvalidated:change_email' => 'Emailadresse ändern',
 	'admin:users:unvalidated:change_email:user' => 'Emailadresse für %s ändern',
+	'admin:users:details:statistics' => 'Inhalts-Statistiken',
 	
 	'admin:configure_utilities:maintenance' => 'Wartungs-Modus',
 	'admin:upgrades' => 'Aktualisierungen',
@@ -579,6 +583,7 @@ Bei der Konfiguration der Simplecache-Option in settings.php kann eine Datenbank
 	'admin:statistics:numentities:number' => 'Anzahl',
 	'admin:statistics:numentities:searchable' => 'Durchsuchbare Entitäten',
 	'admin:statistics:numentities:other' => 'Andere Entitäten',
+	'admin:statistics:queue:name' => 'Name',
 
 	'admin:widget:admin_welcome' => 'Willkommen',
 	'admin:widget:admin_welcome:help' => "Eine kurze Einführung in den Admin-Bereich von Elgg.",
@@ -1103,7 +1108,6 @@ Siehe die vollständige Liste dieser Benutzer hier:
 	'content:latest' => 'Letzte Aktivitäten',
 	
 	'list:out_of_bounds' => "Du hast eine Position in der Listenansicht erreicht, die größer ist als die Gesamtzahl der Listeneinträge. Es gibt Einträge in dieser Listenansicht, aber eben nicht ganz so viele.",
-	'list:out_of_bounds:link' => "Gehe zurück zur ersten Seite dieser Listenansicht.",
 
 	'link:text' => 'Link besuchen',
 
@@ -1358,7 +1362,7 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.',
 	
 	'config:i18n:allowed_languages' => "Freigegebene Sprachen",
 	'config:i18n:allowed_languages:help' => "Nur die freigegebenen Sprachen können von den Benutzern als Sprache ausgewählt werden, in denen die Community-Seite für sie dargestellt wird. Englisch und die seitenweite ausgewählte Sprache sind in jedem Fall freigegeben.",
-	
+	'config:i18n:who_can_change_language:admin_only' => "nur Administratoren",
 	'config:users:can_change_username' => "Benutzern erlauben, ihren Benutzernamen zu ändern",
 	'config:users:can_change_username:help' => "Falls es Benutzern nicht erlaubt ist, können nur Admins den Benutzernamen eines Benutzers ändern.",
 	'config:remove_branding:label' => "Elgg-Branding verbergen",

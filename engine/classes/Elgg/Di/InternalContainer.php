@@ -37,7 +37,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Symfony\Component\Console\Output\OutputInterface $cli_output
  * @property-read \Elgg\Cli\Progress                              $cli_progress
  * @property-read \Elgg\Cron                                      $cron
- * @property-read \ElggCrypto                                     $crypto
+ * @property-read \Elgg\Security\Crypto                           $crypto
  * @property-read \Elgg\Config                                    $config
  * @property-read \Elgg\Database\ConfigTable                      $configTable
  * @property-read \Elgg\Cache\DataCache                           $dataCache

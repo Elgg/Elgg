@@ -1,6 +1,7 @@
 define(function(require) {
 	
 	var elgg = require('elgg');
+	var i18n = require('elgg/i18n');
 	var vsprintf = require('vendor/npm-asset/sprintf-js/src/sprintf');
 	
 	describe("elgg.i18n", function() {

@@ -8,8 +8,8 @@
 return array(
 	'members:label:online' => 'انلاین',
 	'members:search' => 'جستجوی کاربران',
-	'members:title:search' => 'جستجو در بین کاربران برای  %s',
 	'members:total' => 'کل کاربران : %s',
+	'members:title:all' => 'همه کاربران',
 	'members:title:newest' => 'کاربران جدید',
 	'members:title:popular' => 'بیشترین کاربران محبوب',
 	'members:title:online' => 'کاربران انلاین',

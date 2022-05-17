@@ -356,6 +356,7 @@ $ipsum = elgg_view('developers/ipsum');
 			'name' => 'f11a',
 			'id' => 'f11a',
 			'match_on' => 'groups',
+			'placeholder' => 'Placeholder text',
 			'#label' => 'Groups autocomplete input (.elgg-input-autocomplete):',
 		]);
 
@@ -468,6 +469,7 @@ $ipsum = elgg_view('developers/ipsum');
 			'name' => 'f13',
 			'id' => 'f13',
 			'#label' => 'User picker input (.elgg-user-picker):',
+			'placeholder' => 'start typing...',
 		]);
 
 		echo elgg_view_field([
@@ -500,6 +502,7 @@ $ipsum = elgg_view('developers/ipsum');
 			'name' => 'f13b',
 			'id' => 'f13b',
 			'#label' => 'Groups picker input (.elgg-input-grouppicker):',
+			'placeholder' => 'Start searching for a group...',
 		]);
 		
 		echo elgg_view_field([

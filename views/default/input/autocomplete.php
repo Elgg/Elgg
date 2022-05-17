@@ -2,8 +2,6 @@
 /**
  * Displays an autocomplete text input.
  *
- * @todo This currently only works for ONE AUTOCOMPLETE TEXT FIELD on a page.
- *
  * @uses $vars['handler']      Data source URL, defaults to /livesearch handler
  * @uses $vars['options']      Options to be passed to the handler with the URL query
  *                             If using custom options, make sure to impose a signed request gatekeeper in the resource view
@@ -42,13 +40,7 @@ if (!empty($params)) {
 }
 
 $match_on = elgg_extract('match_on', $vars);
-if (empty($match_on) || is_array($match_on)) {
-	elgg_log('"input/autocomplete" must specify a single "match_on" parameter');
-	return;
-}
-
-if ($match_on == 'all') {
-	elgg_log('"input/autocomplete" no longer supports matching on "all" entities');
+if (empty($match_on) || !is_string($match_on)) {
 	return;
 }
 

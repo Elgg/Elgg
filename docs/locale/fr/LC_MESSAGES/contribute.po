@@ -6,16 +6,16 @@
 # Translators:
 # Jerôme Bakker, 2021
 # Jeroen Dalsem, 2021
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2022
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-25 11:16+0100\n"
+"POT-Creation-Date: 2022-04-22 10:32+0200\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2022\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -907,13 +907,12 @@ msgstr ""
 
 #: ../../contribute/code.rst:381
 msgid ""
-"Particularly low-level, non-API functions/methods (e.g. "
-"entity_row_to_elggstar), which should not fail under normal conditions, "
-"should throw instead of returning false."
+"Particularly low-level, non-API functions/methods, which should not fail "
+"under normal conditions, should throw instead of returning false."
 msgstr ""
-"Les fonctions/méthodes particulièrement bas-niveau et sans API (par ex. "
-"entity_row_to_elggstar), qui ne devraient pas échouer dans des conditions "
-"normales, devraient renvoyer une exception au lieu de retourner false."
+"Les fonctions/méthodes d'un particulièrement bas niveau, non API, qui ne "
+"devraient pas échouer dans des conditions normales, devraient lancer une "
+"exception au lieu de renvoyer false."
 
 #: ../../contribute/code.rst:384
 msgid ""
@@ -1308,21 +1307,21 @@ msgid "Same formatting standards as PHP apply."
 msgstr "Les mêmes standards de formatage que PHP s'appliquent."
 
 #: ../../contribute/code.rst:783
-msgid "All functions should be in the ``elgg`` namespace."
+msgid "Related functions should be in a namespaced ``AMD`` module."
 msgstr ""
-"Toutes les fonctions devraient être dans l'espace de nom -namespace- "
-"``elgg``."
+"Les fonctions correspondantes devraient être dans un module ``AMD`` avec un "
+"espace de nom."
 
 #: ../../contribute/code.rst:785
 msgid "Function expressions should end with a semi-colon."
 msgstr ""
 "Les expressions d'une fonction devraient se terminer par un point-virgule."
 
-#: ../../contribute/code.rst:796
+#: ../../contribute/code.rst:798
 msgid "Deprecating APIs"
 msgstr "APIs obsolètes"
 
-#: ../../contribute/code.rst:798
+#: ../../contribute/code.rst:800
 msgid ""
 "Occasionally functions and classes must be deprecated in favor of newer "
 "replacements. Since 3rd party plugin authors rely on a consistent API, "
@@ -1339,7 +1338,7 @@ msgstr ""
 " maintenir la compatibilité ascendante, les API obsolètes vont suivre les "
 "recommandations suivantes :"
 
-#: ../../contribute/code.rst:805
+#: ../../contribute/code.rst:807
 msgid ""
 "Minor version (1.x) that deprecates an API must include a wrapper "
 "function/class (or otherwise appropriate means) to maintain backward "
@@ -1354,7 +1353,7 @@ msgstr ""
 "``elgg_deprecated_notice('...', '1.11')`` pour journaliser le fait que cette"
 " fonction est obsolète."
 
-#: ../../contribute/code.rst:811
+#: ../../contribute/code.rst:813
 msgid ""
 "The next major revision (2.0) removes the compatibility layer. Any use of "
 "the deprecated API should be corrected before this."

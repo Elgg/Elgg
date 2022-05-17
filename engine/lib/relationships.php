@@ -160,8 +160,9 @@ function elgg_get_relationships(array $options = []) {
  */
 function elgg_list_relationships($options) {
 	$defaults = [
-		'limit' => 25,
+		'limit' => (int) max(get_input('limit', max(25, _elgg_services()->config->default_limit)), 0),
 		'offset' => (int) max(get_input('reloff', 0), 0),
+		'sort_by' => get_input('sort_by', []),
 	];
 	
 	$options = array_merge($defaults, $options);

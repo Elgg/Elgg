@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-25 09:58+0100\n"
+"POT-Creation-Date: 2022-05-12 13:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -602,7 +602,7 @@ msgid "Functions not throwing an exception on error should return ``false`` upon
 msgstr ""
 
 #: ../../contribute/code.rst:381
-msgid "Particularly low-level, non-API functions/methods (e.g. entity_row_to_elggstar), which should not fail under normal conditions, should throw instead of returning false."
+msgid "Particularly low-level, non-API functions/methods, which should not fail under normal conditions, should throw instead of returning false."
 msgstr ""
 
 #: ../../contribute/code.rst:384
@@ -894,26 +894,26 @@ msgid "Same formatting standards as PHP apply."
 msgstr ""
 
 #: ../../contribute/code.rst:783
-msgid "All functions should be in the ``elgg`` namespace."
+msgid "Related functions should be in a namespaced ``AMD`` module."
 msgstr ""
 
 #: ../../contribute/code.rst:785
 msgid "Function expressions should end with a semi-colon."
 msgstr ""
 
-#: ../../contribute/code.rst:796
+#: ../../contribute/code.rst:798
 msgid "Deprecating APIs"
 msgstr ""
 
-#: ../../contribute/code.rst:798
+#: ../../contribute/code.rst:800
 msgid "Occasionally functions and classes must be deprecated in favor of newer replacements. Since 3rd party plugin authors rely on a consistent API, backward compatibility must be maintained, but will not be maintained indefinitely as plugin authors are expected to properly update their plugins. In order to maintain backward compatibility, deprecated APIs will follow these guidelines:"
 msgstr ""
 
-#: ../../contribute/code.rst:805
+#: ../../contribute/code.rst:807
 msgid "Minor version (1.x) that deprecates an API must include a wrapper function/class (or otherwise appropriate means) to maintain backward compatibility, including any bugs in the original function/class. This compatibility layer uses ``elgg_deprecated_notice('...', '1.11')`` to log that the function is deprecated."
 msgstr ""
 
-#: ../../contribute/code.rst:811
+#: ../../contribute/code.rst:813
 msgid "The next major revision (2.0) removes the compatibility layer. Any use of the deprecated API should be corrected before this."
 msgstr ""
 

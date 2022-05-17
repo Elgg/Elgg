@@ -19,8 +19,6 @@ class ElggCoreConfigTest extends IntegrationTestCase {
 			$name .= 'a';
 		}
 		$this->assertFalse(elgg_save_config($name, 'foo'));
-
-		_elgg_services()->logger->enable();
 	}
 
 	public function testSetConfigWithNewName() {

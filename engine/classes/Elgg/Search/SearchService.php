@@ -291,31 +291,28 @@ class SearchService {
 	 * @return array
 	 */
 	public function prepareSortOptions(array $options = []) {
-
 		$sort = elgg_extract('sort', $options);
+		if (!isset($sort)) {
+			return $options;
+		}
+		
+		elgg_deprecated_notice("Setting the 'sort' option for elgg_search() is deprecated use 'sort_by'", '4.2');
+		
 		if (is_string($sort)) {
 			$sort = [
 				'property' => $sort,
-				'direction' => elgg_extract('order', $options)
 			];
+			
+			$order = elgg_extract('order', $options);
+			if (isset($order)) {
+				elgg_deprecated_notice("Setting the 'order' option for elgg_search() is deprecated use 'sort_by'", '4.2');
+				
+				$sort['direction'] = $order;
+			}
 		}
-
-		if (!isset($sort['property'])) {
-			$sort = [
-				'property' => 'time_created',
-				'property_type' => 'attribute',
-				'direction' => 'desc',
-			];
-		}
-
-		$clause = new Database\Clauses\EntitySortByClause();
-		$clause->property = elgg_extract('property', $sort);
-		$clause->property_type = elgg_extract('property_type', $sort);
-		$clause->direction = elgg_extract('direction', $sort, 'asc');
-		$clause->signed = elgg_extract('signed', $sort, false);
-
-		$options['order_by'] = [$clause];
-
+		
+		$options['sort_by'][] = $sort;
+		
 		return $options;
 	}
 

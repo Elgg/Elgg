@@ -82,6 +82,11 @@ class EntityTable {
 	 * @var Translator
 	 */
 	protected $translator;
+	
+	/**
+	 * @var int[]
+	 */
+	protected $deleted_guids = [];
 
 	/**
 	 * Constructor
@@ -152,12 +157,9 @@ class EntityTable {
 	/**
 	 * Returns a database row from the entities table.
 	 *
-	 * @see     entity_row_to_elggstar()
-	 *
 	 * @tip     Use get_entity() to return the fully loaded entity.
 	 *
 	 * @warning This will only return results if a) it exists, b) you have access to it.
-	 * see {@link _elgg_get_access_where_sql()}.
 	 *
 	 * @param int $guid      The GUID of the object to extract
 	 * @param int $user_guid GUID of the user accessing the row
@@ -234,9 +236,6 @@ class EntityTable {
 	 * Create an Elgg* object from a given entity row.
 	 *
 	 * Handles loading all tables into the correct class.
-	 *
-	 * @see    get_entity_as_row()
-	 * @see    get_entity()
 	 *
 	 * @param \stdClass $row The row of the entry in the entities table.
 	 *
@@ -477,25 +476,20 @@ class EntityTable {
 	 *
 	 * @param int $guid User GUID. Default is logged in user
 	 *
-	 * @return \ElggUser|false
+	 * @return \ElggUser|null
 	 * @throws UserFetchFailureException
 	 */
 	public function getUserForPermissionsCheck($guid = 0) {
-		if (!$guid) {
+		if (!$guid || $guid === $this->session->getLoggedInUserGuid()) {
 			return $this->session->getLoggedInUser();
 		}
 
 		$user = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
 			// need to ignore access and show hidden entities for potential hidden/disabled users
-			$user = $this->get($guid, 'user');
-			if ($user) {
-				$this->metadata_cache->populateFromEntities([$user->guid]);
-			}
-			
-			return $user;
+			return $this->get($guid, 'user');
 		});
 
-		if (!$user) {
+		if (!$user instanceof \ElggUser) {
 			// requested to check access for a specific user_guid, but there is no user entity, so the caller
 			// should cancel the check and return false
 			$message = $this->translator->translate('UserFetchFailureException', [$guid]);
@@ -561,6 +555,9 @@ class EntityTable {
 			$entity->ban();
 		}
 
+		// we're going to delete this entity, log the guid to prevent deadloops
+		$this->deleted_guids[] = $entity->guid;
+		
 		if ($recursive) {
 			$this->deleteRelatedEntities($entity);
 		}
@@ -606,6 +603,12 @@ class EntityTable {
 			]);
 			/* @var $e \ElggEntity */
 			foreach ($batch as $e) {
+				if (in_array($e->guid, $this->deleted_guids)) {
+					// prevent deadloops, doing this here in case of large deletes which could cause query length issues
+					$batch->reportFailure();
+					continue;
+				}
+				
 				if (!$this->delete($e, true)) {
 					$batch->reportFailure();
 				}

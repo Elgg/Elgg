@@ -114,8 +114,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		// should only ever return one object because of group by
 		$this->assertCount(1, $es);
 		$this->assertEquals($valid, $es[0]->getType());
-		
-		_elgg_services()->logger->enable();
 	}
 
 	public function testElggAPIGettersValidAndInvalidTypesPlural() {
@@ -146,8 +144,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), $valid));
 		}
-		
-		_elgg_services()->logger->enable();
 	}
 
 	/**************************************
@@ -404,8 +400,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			'type' => 'some_invalid_type',
 		]);
 		$this->assertEmpty($es);
-
-		_elgg_services()->logger->enable();
 	}
 
 	/**
@@ -418,8 +412,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			'types' => 'some_invalid_type',
 		]);
 		$this->assertEmpty($es);
-
-		_elgg_services()->logger->enable();
 	}
 
 	/**
@@ -432,8 +424,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			'types' => ['some_invalid_type'],
 		]);
 		$this->assertEmpty($es);
-
-		_elgg_services()->logger->enable();
 	}
 
 	/**
@@ -448,8 +438,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			],
 		]);
 		$this->assertEmpty($es);
-
-		_elgg_services()->logger->enable();
 	}
 
 	public function testElggApiGettersInvalidSubtypeValidType() {
@@ -464,8 +452,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			],
 		]);
 		$this->assertEmpty($es);
-
-		_elgg_services()->logger->enable();
 	}
 
 	public function testElggApiGettersInvalidSubtypeValidTypes() {
@@ -481,8 +467,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			],
 		]);
 		$this->assertEmpty($es);
-
-		_elgg_services()->logger->enable();
 	}
 
 	public function testElggApiGettersInvalidSubtypesValidType() {
@@ -498,8 +482,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			],
 		]);
 		$this->assertEmpty($es);
-
-		_elgg_services()->logger->enable();
 	}
 
 	public function testElggApiGettersInvalidSubtypesValidTypes() {
@@ -516,8 +498,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			],
 		]);
 		$this->assertEmpty($es);
-
-		_elgg_services()->logger->enable();
 	}
 
 	public function testElggApiGettersTSPInvalidType() {
@@ -529,8 +509,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			],
 		]);
 		$this->assertEmpty($es);
-		
-		_elgg_services()->logger->enable();
 	}
 
 	public function testElggApiGettersTSPInvalidTypes() {
@@ -543,8 +521,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			],
 		]);
 		$this->assertEmpty($es);
-		
-		_elgg_services()->logger->enable();
 	}
 
 	public function testElggApiGettersTSPValidTypeInvalidSubtype() {
@@ -556,8 +532,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			],
 		]);
 		$this->assertEmpty($es);
-		
-		_elgg_services()->logger->enable();
 	}
 
 	public function testElggApiGettersTSPValidTypeInvalidSubtypes() {
@@ -572,8 +546,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			],
 		]);
 		$this->assertEmpty($es);
-		
-		_elgg_services()->logger->enable();
 	}
 
 	public function testElggApiGettersTSPValidTypesInvalidSubtypes() {
@@ -592,8 +564,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			],
 		]);
 		$this->assertEmpty($es);
-		
-		_elgg_services()->logger->enable();
 	}
 
 	public function testElggGetEntitiesByGuidSingular() {
@@ -725,18 +695,14 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		$this->assertSame(['foo' => 'bar'], $cache->load($guids[1]));
 	}
 	
-	public function testGetEntityAsRowWithoutGUID() {
-		$this->assertFalse(get_entity_as_row(null));
-	}
-	
 	public function testGetEntityAsRowWithNonExistingGUID() {
-		$this->assertFalse(get_entity_as_row(-1));
+		$this->assertFalse(elgg_get_entity_as_row(-1));
 	}
 	
 	public function testGetEntityAsRowWithExistingGUID() {
 		$object = $this->createObject();
 		
-		$result = get_entity_as_row($object->guid);
+		$result = elgg_get_entity_as_row($object->guid);
 		$this->assertNotFalse($result);
 		$this->assertNotEmpty($result); // should be a \stdClass with data
 	}
