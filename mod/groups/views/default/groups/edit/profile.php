@@ -17,6 +17,7 @@ echo elgg_view('entity/edit/icon', [
 	'entity' => elgg_extract('entity', $vars),
 	'entity_type' => 'group',
 	'entity_subtype' => 'group',
+	'cropper_enabled' => true,
 ]);
 
 // show the configured group profile fields
