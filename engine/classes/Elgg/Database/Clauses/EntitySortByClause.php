@@ -100,7 +100,8 @@ class EntitySortByClause extends OrderByClause {
 				break;
 
 			default:
-				throw new InvalidParameterException("'{$this->property_type}' is not a valid entity property type");
+				elgg_log("'{$this->property_type}' is not a valid entity property type. Sorting ignored.");
+				return null;
 		}
 
 		if ($this->signed) {

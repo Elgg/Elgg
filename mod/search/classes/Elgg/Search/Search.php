@@ -158,7 +158,12 @@ class Search {
 
 		$order = get_input('order', 'desc');
 		$sort = get_input('sort', 'time_created');
-		$sort_by = [];
+		$sort_by = (array) get_input('sort_by', []);
+		if (isset($sort_by['property'])) {
+			// single array variant, convert to an array of sort_by specs
+			$sort_by = [$sort_by];
+		}
+		
 		switch ($sort) {
 			case 'action_on':
 				$sort_by[] = [
