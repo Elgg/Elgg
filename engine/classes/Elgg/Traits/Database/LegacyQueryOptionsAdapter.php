@@ -1079,7 +1079,7 @@ trait LegacyQueryOptionsAdapter {
 		}
 
 		$sort_by = $options['sort_by'];
-		if (isset($sort_by['property_type'])) {
+		if (isset($sort_by['property'])) {
 			// single array variant, convert to an array of sort_by specs
 			$options['sort_by'] = [$sort_by];
 		}
