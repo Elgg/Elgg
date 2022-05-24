@@ -66,17 +66,17 @@ unset($vars['align']);
 
 $vars['class'] = 'elgg-input-radio';
 
-if (is_array($vars['value'])) {
-	$selected_value = array_map('elgg_strtolower', $vars['value']);
+if (is_array(elgg_extract('value', $vars))) {
+	$selected_value = array_map('elgg_strtolower', elgg_extract('value', $vars));
 } else {
-	$selected_value = [elgg_strtolower($vars['value'])];
+	$selected_value = [elgg_strtolower((string) elgg_extract('value', $vars))];
 }
 unset($vars['value']);
 
 $radios = '';
 foreach ($input_options as $label => $option) {
 	$radio_input_options = array_merge($vars, $option);
-	$radio_input_options['checked'] = in_array(elgg_strtolower(elgg_extract('value', $option)), $selected_value);
+	$radio_input_options['checked'] = in_array(elgg_strtolower((string) elgg_extract('value', $option)), $selected_value);
 
 	$label = elgg_extract('text', $radio_input_options, $label);
 	unset($radio_input_options['text']);
