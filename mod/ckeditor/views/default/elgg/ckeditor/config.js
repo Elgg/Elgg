@@ -8,7 +8,7 @@ define(['jquery', 'elgg'], function($, elgg) {
 		baseHref: elgg.get_site_url(),
 		extraPlugins: 'blockimagepaste',
 		defaultLanguage: 'en',
-		language: elgg.get_language(),
+		language: elgg.config.current_language,
 		skin: 'moono-lisa',
 		contentsCss: elgg.get_simplecache_url('elgg/wysiwyg.css'),
 		disableNativeSpellChecker: false,

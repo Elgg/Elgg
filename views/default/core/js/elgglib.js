@@ -274,7 +274,7 @@ elgg.get_logged_in_user_guid = function() {
  * @return {boolean} Whether there is a user logged in
  */
 elgg.is_logged_in = function() {
-	return elgg.get_logged_in_user_guid > 0;
+	return elgg.get_logged_in_user_guid() > 0;
 };
 
 /**

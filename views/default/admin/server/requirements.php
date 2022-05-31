@@ -137,3 +137,6 @@ if (!$tester->runRewriteTest($url)) {
 }
 
 echo $view_module($icon, $title, $value, $subtext);
+
+$icon = _elgg_services()->imageService->hasWebPSupport() ? $icon_ok : $icon_error;
+echo $view_module($icon, elgg_echo('admin:server:requirements:webp'));

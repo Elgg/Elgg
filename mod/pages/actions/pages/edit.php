@@ -3,6 +3,8 @@
  * Create or edit a page
  */
 
+elgg_make_sticky_form('page');
+
 $variables = elgg()->fields->get('object', 'page');
 $input = [];
 foreach ($variables as $field) {
@@ -16,18 +18,16 @@ foreach ($variables as $field) {
 	if ($field['#type'] === 'tags') {
 		$input[$name] = string_to_tag_array($input[$name]);
 	}
+
+	if (elgg_extract('required', $field, false) && elgg_is_empty($input[$name])) {
+		return elgg_error_response(elgg_echo('ValidationException'));
+	}
 }
 
 // Get guids
 $page_guid = (int) get_input('page_guid');
 $container_guid = (int) get_input('container_guid');
 $parent_guid = (int) get_input('parent_guid');
-
-elgg_make_sticky_form('page');
-
-if (!$input['title']) {
-	return elgg_error_response(elgg_echo('pages:error:no_title'));
-}
 
 if ($page_guid) {
 	$page = get_entity($page_guid);
@@ -99,7 +99,7 @@ if (!$page->save()) {
 elgg_clear_sticky_form('page');
 
 // Now save description as an annotation
-$page->annotate('page', $page->description, $page->access_id);
+$page->annotate('page', $page->description ?? '', $page->access_id);
 
 if ($new_page) {
 	elgg_create_river_item([

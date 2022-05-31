@@ -28,9 +28,6 @@ jobs:
           php-version: '7.4'
           coverage: xdebug
           extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring
-      
-      - name: Install Composer v1
-        run: composer self-update --1
         
       - name: Code checkout
         uses: actions/checkout@v2
