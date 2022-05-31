@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-22 10:32+0200\n"
+"POT-Creation-Date: 2022-05-12 13:45+0200\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2022\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: ../../appendix/faqs.rst:2
 msgid "FAQs and Other Troubleshooting"
@@ -2688,11 +2688,19 @@ msgstr "Janvier 2022"
 msgid "4.1"
 msgstr "4.1"
 
+#: ../../appendix/support.rst:73 ../../appendix/support.rst:75
+msgid "April 2022"
+msgstr "Avril 2022"
+
 #: ../../appendix/support.rst:75
+msgid "4.2"
+msgstr "4.2"
+
+#: ../../appendix/support.rst:77
 msgid "5.0"
 msgstr "5.0"
 
-#: ../../appendix/support.rst:75
+#: ../../appendix/support.rst:77
 msgid "TBD"
 msgstr "A FAIRE"
 
