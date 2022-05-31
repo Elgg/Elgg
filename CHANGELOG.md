@@ -1,3 +1,36 @@
+<a name="4.2.1"></a>
+### 4.2.1  (2022-05-31)
+
+#### Contributors
+
+* Jeroen Dalsem (17)
+* Jerôme Bakker (4)
+
+#### Documentation
+
+* **entities:** added info about singular sort_by options ([0340ecea](https://github.com/Elgg/Elgg/commit/0340ecea0d5326312cfca3910c5e8b89f77167c4))
+
+
+#### Bug Fixes
+
+* **bookmarks:** always detect document title for bookmarks link ([6b8e7cb3](https://github.com/Elgg/Elgg/commit/6b8e7cb3d12109595f8381c6cd244edb108e7ae9))
+* **ckeditor:** replaced deprecated get_current_language js function ([036c532d](https://github.com/Elgg/Elgg/commit/036c532d93d958a5263829070c2eca1d1bdcc383))
+* **db:** ignore unsupported sort_by property types instead of crashing ([9eb1e3ba](https://github.com/Elgg/Elgg/commit/9eb1e3bae4489a8d1baec2384d1548282c4efe5a))
+* **forms:** do not draw container_guid subtext if empty ([127352ee](https://github.com/Elgg/Elgg/commit/127352eec3f991fa7095bfe5798fc39fd9a485af))
+* **groups:**
+  * enable cropper on group profile icon ([a0a61cf8](https://github.com/Elgg/Elgg/commit/a0a61cf8a1e03335afe3e28909b213e17a041637))
+  * replaced deprecated sort options in owner transfer ([5b787372](https://github.com/Elgg/Elgg/commit/5b78737216936600e7e9c1770636d3615654b252))
+* **icons:** only generate webp urls if server supports it ([fbf76c11](https://github.com/Elgg/Elgg/commit/fbf76c119fc266b534dfda72e4825bc36270e105))
+* **js:** unable to check for logged in user in javascript ([72d89a96](https://github.com/Elgg/Elgg/commit/72d89a960f13b0af732cb1fac2e21862b435ff55))
+* **menus:** make sure title-menu-toggle is always available ([f81a21e6](https://github.com/Elgg/Elgg/commit/f81a21e65866a5ded806d72cf75f03341b39b280))
+* **navigation:** user hover menu was missing the admin toggle ([06433212](https://github.com/Elgg/Elgg/commit/06433212dc98dae192389e9f8122e71cf2f7e0e7))
+* **pages:**
+  * allow saving with an empty description ([3001a307](https://github.com/Elgg/Elgg/commit/3001a307a4878c46b6f72d1d5237fc4f5bf97a61))
+  * check field config for all required fields on save ([7f72d186](https://github.com/Elgg/Elgg/commit/7f72d1869110fedbe44132f5bba580939fdec284))
+* **search:** allow passing sort_by through query params ([4104a828](https://github.com/Elgg/Elgg/commit/4104a828fd5a10158b00785e07479173e36fdd6a))
+* **site_notifications:** prevent possible deadloops with seeded entities ([8ea5e3ce](https://github.com/Elgg/Elgg/commit/8ea5e3ceee45915ff3c82ce495ffed865353e5af))
+
+
 <a name="4.2.0"></a>
 ## 4.2.0  (2022-05-13)
 
