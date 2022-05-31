@@ -688,11 +688,11 @@ class EntityIconService {
 	}
 
 	/**
-	 * Checks if browser has WebP support
+	 * Checks if browser has WebP support and if the webserver is able to generate
 	 *
 	 * @return bool
 	 */
 	protected function hasWebPSupport(): bool {
-		return in_array('image/webp', $this->request->getAcceptableContentTypes());
+		return in_array('image/webp', $this->request->getAcceptableContentTypes()) && $this->images->hasWebPSupport();
 	}
 }
