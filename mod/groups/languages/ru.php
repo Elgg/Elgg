@@ -11,6 +11,7 @@ return array(
 	 * Menu items and titles
 	 */
 	'add:group:group' => "Создать новую группу",
+	'groups:menu:sort:member' => "Дата вступления",
 	
 	'groups' => "Группы",
 	'groups:owned' => "Свои группы",
