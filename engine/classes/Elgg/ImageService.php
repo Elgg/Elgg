@@ -284,4 +284,19 @@ class ImageService {
 			$this->getLogger()->warning($e);
 		}
 	}
+	
+	/**
+	 * Checks if imagine has WebP support
+	 *
+	 * @return bool
+	 */
+	public function hasWebPSupport(): bool {
+		if ($this->imagine instanceof \Imagine\Imagick\Imagine) {
+			return !empty(\Imagick::queryformats('WEBP*'));
+		} elseif ($this->imagine instanceof \Imagine\Gd\Imagine) {
+			return (bool) elgg_extract('WebP Support', gd_info(), false);
+		}
+		
+		return false;
+	}
 }

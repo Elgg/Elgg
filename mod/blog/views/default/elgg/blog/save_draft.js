@@ -1,9 +1,10 @@
 /**
  * Save draft through ajax
  */
-define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/i18n'], function($, elgg, Ajax, i18n) {
+define(['jquery', 'elgg/Ajax', 'elgg/i18n'], function($, Ajax, i18n) {
 	
-	var oldDescription = '';
+	// get a copy of the body to compare for auto save
+	var oldDescription = $('form.elgg-form-blog-save').find('textarea[name=description]').val();
 
 	var saveDraftCallback = function(data) {
 		var $form = $('form.elgg-form-blog-save');
@@ -45,14 +46,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/i18n'], function($, elgg, Ajax, i18
 		});
 	};
 
-	var init = function() {
-		// get a copy of the body to compare for auto save
-		oldDescription = $('form.elgg-form-blog-save').find('textarea[name=description]').val();
-
-		setInterval(saveDraft, 60000);
-	};
-
-	elgg.register_hook_handler('init', 'system', init);
+	setInterval(saveDraft, 60000);
 
 	return {
 		saveDraft: saveDraft

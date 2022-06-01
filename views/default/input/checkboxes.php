@@ -79,7 +79,7 @@ unset($vars['id']);
 if (is_array(elgg_extract('value', $vars))) {
 	$values = array_map('elgg_strtolower', elgg_extract('value', $vars));
 } else {
-	$values = [elgg_strtolower(elgg_extract('value', $vars))];
+	$values = [elgg_strtolower((string) elgg_extract('value', $vars))];
 }
 
 // include a default value so if nothing is checked 0 will be passed.
@@ -102,7 +102,7 @@ unset($input_vars['align']);
 $checkboxes = '';
 foreach ($input_options as $label => $option) {
 	$checkbox_input_options = array_merge($input_vars, $option);
-	$checkbox_input_options['checked'] = in_array(elgg_strtolower(elgg_extract('value', $option)), $values);
+	$checkbox_input_options['checked'] = in_array(elgg_strtolower((string) elgg_extract('value', $option)), $values);
 	$checkbox_input_options['label'] = elgg_extract('text', $checkbox_input_options, $label);
 	unset($checkbox_input_options['text']);
 

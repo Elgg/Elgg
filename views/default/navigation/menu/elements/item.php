@@ -64,14 +64,10 @@ if ($item->getSelected()) {
 	$item_vars['class'][] = 'elgg-state-selected';
 }
 
-$item_view = '';
-if ($item->hasItemContentsView()) {
-	$item_view .= elgg_view($item->getItemContentsView(), [
-		'item' => $item,
-	]);
-} else {
-	elgg_log("Menu item {$item->getID()} has no item contents view set", 'ERROR');
-}
+$item_view = elgg_view($item->getItemContentsView() ?: 'navigation/menu/elements/item/url', [
+	'item' => $item,
+]);
+
 $item_view .= $child_menu_view;
 
 echo elgg_format_element('li', $item_vars, $item_view);
