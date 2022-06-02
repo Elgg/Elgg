@@ -218,6 +218,8 @@ class FilterSortItems {
 		/* @var $result MenuItems */
 		$result = $hook->getValue();
 		
+		$result->sort([\ElggMenuBuilder::class, 'compareByPriority']);
+		
 		$first_menu_name = null;
 		/* @var $menu_item \ElggMenuItem */
 		foreach ($result as $menu_item) {
