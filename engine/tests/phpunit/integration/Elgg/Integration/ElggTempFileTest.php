@@ -113,7 +113,15 @@ class ElggTempFileTest extends IntegrationTestCase {
 	}
 	
 	public function testLibFunctionToGetTempFile() {
-		
 		$this->assertInstanceOf(ElggTempFile::class, elgg_get_temp_file());
+	}
+	
+	public function testTempFilestore() {
+		$filestore = _elgg_services()->temp_filestore;
+		
+		$this->assertFalse($filestore->setParameters(['unique_sub_dir' => 'foo']));
+		
+		$params = $filestore->getParameters();
+		$this->assertEquals('foo', $params['unique_sub_dir']);
 	}
 }

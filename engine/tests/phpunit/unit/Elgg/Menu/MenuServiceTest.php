@@ -68,9 +68,30 @@ class MenuServiceTest extends UnitTestCase {
 		$this->assertEquals(1, count($menu->getSection('default')->getItems()));
 
 		$prepare_hook->assertNumberOfCalls(1);
-
 	}
-
+	
+	public function testCanUnregisterMenuItem() {
+		$this->assertTrue(elgg_register_menu_item('test', [
+			'name' => 'test1',
+			'text' => 'test1',
+			'href' => 'test1',
+		]));
+		$this->assertTrue(elgg_register_menu_item('test', [
+			'name' => 'test2',
+			'text' => 'test2',
+			'href' => 'test2',
+		]));
+		
+		$items = elgg()->menus->getUnpreparedMenu('test')->getItems();
+		$this->assertTrue($items->has('test1'));
+		$this->assertTrue($items->has('test2'));
+		
+		$this->assertNotEmpty(elgg_unregister_menu_item('test', 'test1'));
+		
+		$items = elgg()->menus->getUnpreparedMenu('test')->getItems();
+		$this->assertFalse($items->has('test1'));
+		$this->assertTrue($items->has('test2'));
+	}
 
 	public function testCanSortMenuByName() {
 

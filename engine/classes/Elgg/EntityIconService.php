@@ -603,7 +603,8 @@ class EntityIconService {
 	 * @return bool
 	 */
 	public function hasIcon(\ElggEntity $entity, $size, $type = 'icon') {
-		return $this->getIcon($entity, $size, $type)->exists();
+		$icon = $this->getIcon($entity, $size, $type);
+		return $icon->exists() && $icon->getSize() > 0;
 	}
 
 	/**
