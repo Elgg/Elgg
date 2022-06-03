@@ -120,6 +120,7 @@ return [
 			'resource' => 'groups/invite',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper::class,
 			],
 			'detect_page_owner' => true,
 		],
