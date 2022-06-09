@@ -32,6 +32,7 @@ class LocalFiles extends Config {
 			'secureFileManipulation' => true,
 			'useStaticItemCaching' => true,
 			'itemDetailedDate' => true,
+			'securityKey' => 'elgg', // to make sure cli and webserver use the same folder
 		]);
 	}
 }
