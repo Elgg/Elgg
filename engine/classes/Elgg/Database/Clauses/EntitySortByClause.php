@@ -35,6 +35,11 @@ class EntitySortByClause extends OrderByClause {
 	 * @var bool
 	 */
 	public $inverse_relationship;
+	
+	/**
+	 * @var int
+	 */
+	public $relationship_guid;
 
 	/**
 	 * {@inheritdoc}
@@ -92,6 +97,10 @@ class EntitySortByClause extends OrderByClause {
 			case 'relationship':
 				if ($qb->getTableName() !== QueryBuilder::TABLE_RELATIONSHIPS) {
 					$er_alias = $qb->joinRelationshipTable($table_alias, $from_column, $this->property, $this->inverse_relationship, $this->join_type);
+					if (!empty($this->relationship_guid)) {
+						$guid_column = $this->inverse_relationship ? 'guid_two' : 'guid_one';
+						$qb->andWhere($qb->compare("{$er_alias}.{$guid_column}", '=', $this->relationship_guid, ELGG_VALUE_GUID));
+					}
 				} else {
 					$er_alias = $table_alias;
 				}
