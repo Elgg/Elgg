@@ -960,6 +960,8 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'admin:server:requirements:database:client' => "Client de la base de données",
 	'admin:server:requirements:database:client:required' => "Elgg a besoin de pdo_mysql pour se connecter au serveur de base de données",
 
+	'admin:server:requirements:webp' => "Support WebP",
+
 	'admin:server:requirements:gc' => "Ramasse-miettes des déchets de session - garbage collection",
 	'admin:server:requirements:gc:info' => "Si le ramasse-miettes n'est pas configuré, la table de session ne sera pas nettoyée. Configurez session.gc_divisor et session.gc_probability dans votre php.ini.",
 	
