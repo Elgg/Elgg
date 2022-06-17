@@ -4,6 +4,7 @@ namespace Elgg\Integration;
 
 use Elgg\EntityDirLocator;
 use Elgg\IntegrationTestCase;
+use Elgg\Project\Paths;
 use ElggFile;
 
 /**
@@ -68,5 +69,9 @@ class ElggCoreFilestoreTest extends IntegrationTestCase {
 
 		$this->assertTrue($file->delete());
 		$this->assertFileDoesNotExist($filepath);
+	}
+	
+	function testGetDirSize() {
+		$this->assertNotEmpty(get_dir_size(Paths::elgg() . "/engine/tests/test_files/actions/"));
 	}
 }

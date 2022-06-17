@@ -37,6 +37,7 @@ $params = [
 	'entity' => $entity,
 	'title' => $title,
 	'metadata' => $metadata,
+	'icon' => false,
 ];
 $params = $params + $vars;
 echo elgg_view('user/elements/summary', $params);

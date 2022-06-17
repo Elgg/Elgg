@@ -133,7 +133,7 @@ return array(
 	'groups:addedtogroup' => 'Gebruiker succesvol toegevoegd aan de groep',
 	'groups:joinrequestnotmade' => 'Lidmaatschapsverzoek kon niet worden gedaan',
 	'groups:joinrequestmade' => 'Lidmaatschapsverzoek succesvol gedaan',
-	'groups:joinrequest:exists' => 'You already requested membership for this group',
+	'groups:joinrequest:exists' => 'Je hebt al eerder lidmaatschap aangevraagd voor deze groep',
 	'groups:button:joined' => 'Lid',
 	'groups:button:owned' => 'Eigenaar',
 	'groups:joined' => 'Je bent lid geworden van de groep!',

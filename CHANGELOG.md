@@ -1,3 +1,23 @@
+<a name="4.2.2"></a>
+### 4.2.2  (2022-06-17)
+
+#### Contributors
+
+* Jeroen Dalsem (8)
+* Jerôme Bakker (5)
+
+#### Bug Fixes
+
+* **cache:** make sure the CLI and webserver use the same cache path ([fda6463e](https://github.com/Elgg/Elgg/commit/fda6463ea413b094eced9d7aa5357ed9347a3192))
+* **db:** support passing relationship guid when sorting by relationship ([21b9f1e6](https://github.com/Elgg/Elgg/commit/21b9f1e6a9cbc50e585bec98e957fbf069d573f4))
+* **groups:** groupprofile rss feed should show recent searchable content ([54353859](https://github.com/Elgg/Elgg/commit/54353859cacfdefe368afe63df23d59acd9c2233))
+* **icons:** check filesize when checking if entity has icon ([50989148](https://github.com/Elgg/Elgg/commit/509891486e4dc7dd42992083f413ca42f6831c19))
+* **menus:**
+  * allow detecting selected sorting parent from view var ([822ac99c](https://github.com/Elgg/Elgg/commit/822ac99cab6386459d8ac84960bd2c1ecaf18283))
+  * sorting parent detection should respect menu item priority ([19fbbcb7](https://github.com/Elgg/Elgg/commit/19fbbcb71dc61726ea09efbc8e0b8e1efdd6b887))
+* **search:** improved search result presentation ([8959c933](https://github.com/Elgg/Elgg/commit/8959c933ce0ad3223966977ab2083f225582c337))
+
+
 <a name="4.2.1"></a>
 ### 4.2.1  (2022-05-31)
 

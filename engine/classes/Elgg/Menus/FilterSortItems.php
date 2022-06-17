@@ -218,23 +218,31 @@ class FilterSortItems {
 		/* @var $result MenuItems */
 		$result = $hook->getValue();
 		
-		$first_menu_name = null;
-		/* @var $menu_item \ElggMenuItem */
-		foreach ($result as $menu_item) {
-			if ($menu_item->getParentName() !== 'sort:parent') {
-				continue;
-			}
+		$first_menu_name = $hook->getParam('filter_sorting_selected');
+		if (isset($first_menu_name) && !$result->has($first_menu_name)) {
+			$first_menu_name = null;
+		}
+		
+		if (!isset($first_menu_name)) {
+			$result->sort([\ElggMenuBuilder::class, 'compareByPriority']);
 			
-			if (!isset($first_menu_name)) {
+			/* @var $menu_item \ElggMenuItem */
+			foreach ($result as $menu_item) {
+				if ($menu_item->getParentName() !== 'sort:parent') {
+					continue;
+				}
+				
+				if (!isset($first_menu_name)) {
+					$first_menu_name = $menu_item->getID();
+				}
+				
+				if (!$menu_item->getSelected()) {
+					continue;
+				}
+				
 				$first_menu_name = $menu_item->getID();
+				break;
 			}
-			
-			if (!$menu_item->getSelected()) {
-				continue;
-			}
-			
-			$first_menu_name = $menu_item->getID();
-			break;
 		}
 		
 		if (!empty($first_menu_name)) {

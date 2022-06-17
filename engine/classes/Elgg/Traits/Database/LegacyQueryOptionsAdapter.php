@@ -1092,6 +1092,7 @@ trait LegacyQueryOptionsAdapter {
 			$clause->direction = elgg_extract('direction', $sort_spec);
 			$clause->signed = elgg_extract('signed', $sort_spec);
 			$clause->inverse_relationship = elgg_extract('inverse_relationship', $sort_spec);
+			$clause->relationship_guid = elgg_extract('relationship_guid', $sort_spec);
 
 			$options['order_by'][] = $clause;
 		}

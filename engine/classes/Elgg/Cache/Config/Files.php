@@ -32,6 +32,7 @@ class Files extends Config {
 			'preventCacheSlams' => true,
 			'useStaticItemCaching' => true,
 			'itemDetailedDate' => true,
+			'securityKey' => 'elgg', // to make sure cli and webserver use the same folder
 		]);
 	}
 }
