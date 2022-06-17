@@ -23,7 +23,7 @@ return array(
 
 	'bookmarks:this' => "Voeg favoriet toe",
 	'bookmarks:this:group' => "Favoriet in '%s'",
-	'bookmarks:bookmarklet' => "Browser-plugin",
+	'bookmarks:bookmarklet' => "Bookmarklet",
 	'bookmarks:bookmarklet:group' => "Verkrijg groeps-bookmarklet",
 	'bookmarks:address' => "Adres van de favoriet",
 	'bookmarks:none' => 'Geen favorieten',
@@ -52,8 +52,8 @@ Bekijk en reageer op de favoriet:
 	'widgets:bookmarks:name' => 'Favorieten',
 	'widgets:bookmarks:description' => "Toon je laatste favorieten",
 
-	'bookmarks:bookmarklet:description' => "A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
-	'bookmarks:bookmarklet:descriptionie' => "Als je Internet Explorer gebruikt moet je met de rechter muisknop op de browser-plugin klikken. Kies daarna voor 'toevoegen aan favorieten', en vervolgens de \"Links-balk\".",
+	'bookmarks:bookmarklet:description' => "Een bookmarklet is een speciale knop die je toevoegt aan de favorietenbalk van je browser. Dit geeft je de mogelijkheid om op willekeurige pagina op het internet de URL naar deze pagina direct op te slaan in je favorieten op deze site. Sleep de onderstaande knop naar je favorieten balk om dit mogelijk te maken:",
+	'bookmarks:bookmarklet:descriptionie' => "Als je Internet Explorer gebruikt moet je met de rechter muisknop op de bookmarklet klikken. Kies daarna voor 'toevoegen aan favorieten', en vervolgens de \"Links-balk\".",
 	'bookmarks:bookmarklet:description:conclusion' => "Je kunt dan iedere pagina die je bezoekt markeren door op de link te klikken.",
 
 	/**

@@ -28,15 +28,15 @@ return array(
 	'logout' => "Afmelden",
 	'logoutok' => "Je bent afgemeld.",
 	'logouterror' => "We konden je niet afmelden. Probeer het nogmaals.",
-	'session_expired' => "Your session has expired. Please <a href='javascript:location.reload(true)'>reload</a> the page to log in.",
-	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
+	'session_expired' => "Je sessie is verlopen. <a href='javascript:location.reload(true)'>Ververs</a> de pagina om je opnieuw aan te melden.",
+	'session_changed_user' => "Je bent aangemeld als een andere gebruiker. <a href='javascript:location.reload(true)'>Ververs</a>de pagina.",
 
 	'loggedinrequired' => "Je moet aangemeld zijn om die pagina te kunnen bekijken.",
 	'loggedoutrequired' => "Je moet afgemeld zijn om die pagina te kunnen bekijken.",
 	'adminrequired' => "Je moet een beheerder zijn om die pagina te kunnen bekijken.",
 	'membershiprequired' => "Je moet lid zijn van deze groep om deze pagina te kunnen bekijken.",
 	'limited_access' => "Je hebt niet de juiste rechten om deze pagina te zien.",
-	'invalid_request_signature' => "The URL of the page you are trying to access is invalid or has expired",
+	'invalid_request_signature' => "De URL van de pagina die je probeert te bekijken is onjuist of is verlopen",
 
 /**
  * Errors
@@ -70,11 +70,11 @@ return array(
 	'ElggPlugin:IdMismatch' => 'De plugin map moet worden hernoemd naar "%s" om te matchen met de projectnaam in de composer.json van de plugin.',
 	'ElggPlugin:Error' => 'Plugin fout',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Kan %s niet laden voor plugin %s (guid: %s) in %s. Controleer de rechten!',
-	'ElggPlugin:Exception:IncludeFileThrew' => 'Threw exception including %s for plugin %s (guid: %s) at %s.',
+	'ElggPlugin:Exception:IncludeFileThrew' => 'Een fout is opgetreden tijdens het inladen van %svoor plugin %s (guid: %s) op regel %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Kan de views-map niet openen van plugin %s (guid: %s) in %s. Controleer de rechten!',
 	'ElggPlugin:InvalidAndDeactivated' => '%s is een ongeldige plugin. Hij is daarom uitgeschakeld.',
-	'ElggPlugin:activate:BadConfigFormat' => 'Plugin file "elgg-plugin.php" did not return a serializable array.',
-	'ElggPlugin:activate:ConfigSentOutput' => 'Plugin file "elgg-plugin.php" sent output.',
+	'ElggPlugin:activate:BadConfigFormat' => 'Plugin bestand "elgg-plugin.php" leverde geen serializable array terug.',
+	'ElggPlugin:activate:ConfigSentOutput' => 'Plugin bestand "elgg-plugin.php" verstuurde output.',
 
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Er zijn plugins die afhankelijk zijn van %s. Je moet eerst de volgende plugins uitschakelen voordat je deze kunt uitschakelen: %s',
 	'ElggPlugin:Dependencies:MustBeActive' => 'Moet geactiveerd zijn',
@@ -137,34 +137,34 @@ return array(
 /**
  * Table columns
  */
-	'table_columns:fromView:admin' => 'Admin',
-	'table_columns:fromView:banned' => 'Banned',
+	'table_columns:fromView:admin' => 'Beheerder',
+	'table_columns:fromView:banned' => 'Geblokkeerd',
 	'table_columns:fromView:checkbox' => 'Selecteer',
 	'table_columns:fromView:container' => 'Container',
 	'table_columns:fromView:entity_menu' => 'Menu',
-	'table_columns:fromView:excerpt' => 'Description',
-	'table_columns:fromView:link' => 'Name/Title',
-	'table_columns:fromView:icon' => 'Icon',
+	'table_columns:fromView:excerpt' => 'Omschrijving',
+	'table_columns:fromView:link' => 'Naam/Titel',
+	'table_columns:fromView:icon' => 'Icoon',
 	'table_columns:fromView:item' => 'Item',
-	'table_columns:fromView:language' => 'Language',
+	'table_columns:fromView:language' => 'Taal',
 	'table_columns:fromView:last_action' => 'Laatste actie',
 	'table_columns:fromView:last_login' => 'Laatste aanmelding',
-	'table_columns:fromView:owner' => 'Owner',
+	'table_columns:fromView:owner' => 'Eigenaar',
 	'table_columns:fromView:prev_last_login' => 'Vorige laatste login',
-	'table_columns:fromView:time_created' => 'Time Created',
-	'table_columns:fromView:time_updated' => 'Time Updated',
+	'table_columns:fromView:time_created' => 'Aanmaakdatum',
+	'table_columns:fromView:time_updated' => 'Bewerkdatum',
 	'table_columns:fromView:unvalidated_menu' => 'Menu',
-	'table_columns:fromView:user' => 'User',
+	'table_columns:fromView:user' => 'Gebruiker',
 
-	'table_columns:fromProperty:description' => 'Description',
-	'table_columns:fromProperty:email' => 'Email',
-	'table_columns:fromProperty:name' => 'Name',
+	'table_columns:fromProperty:description' => 'Omschrijving',
+	'table_columns:fromProperty:email' => 'E-mail',
+	'table_columns:fromProperty:name' => 'Naam',
 	'table_columns:fromProperty:type' => 'Type',
-	'table_columns:fromProperty:username' => 'Username',
+	'table_columns:fromProperty:username' => 'Gebruikersnaam',
 	'table_columns:fromProperty:validated' => 'Gevalideerd',
 
 	'table_columns:fromMethod:getSubtype' => 'Subtype',
-	'table_columns:fromMethod:getDisplayName' => 'Name/Title',
+	'table_columns:fromMethod:getDisplayName' => 'Naam/Titel',
 	'table_columns:fromMethod:getMimeType' => 'MIME Type',
 	'table_columns:fromMethod:getSimpleType' => 'Type',
 
@@ -179,7 +179,7 @@ return array(
 	'password' => "Wachtwoord",
 	'passwordagain' => "Wachtwoord (nogmaals, voor de zekerheid)",
 	'admin_option' => "Wil je deze gebruiker sitebeheerder maken? De gebruiker heeft dan alle rechten op de site.",
-	'autogen_password_option' => "Automatically generate a secure password?",
+	'autogen_password_option' => "Genereer automatisch een veilig wachtwoord?",
 
 /**
  * Access
@@ -309,9 +309,9 @@ return array(
 	'river:none' => 'Geen activiteit',
 	'river:update' => 'Update van %s',
 	'river:delete' => 'Verwijder deze activiteit',
-	'river:delete:success' => 'Activity item has been deleted',
-	'river:delete:fail' => 'Activity item could not be deleted',
-	'river:delete:lack_permission' => 'You lack permission to delete this activity item',
+	'river:delete:success' => 'Activiteit is verwijderd',
+	'river:delete:fail' => 'Activiteit kon niet worden verwijderd',
+	'river:delete:lack_permission' => 'Je hebt niet de juiste rechten om deze activiteit te verwijderen',
 	'river:subject:invalid_subject' => 'Ongeldige gebruiker',
 	'activity:owner' => 'Bekijk activiteit',
 
@@ -881,7 +881,7 @@ Bekijk hier de volledige lijst van gebruikers:
 	'admin:plugins:warning:invalid' => '%s is geen geldige plugin voor Elgg. Controleer <a href="http://docs.elgg.org/Invalid_Plugin" target="_blank">de Elgg-documentatie</a> voor handige tips.',
 	'admin:plugins:warning:invalid:check_docs' => 'Controleer <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">de Elgg documentatie</a> voor tips met betrekking tot foutopsporing.',
 	'admin:plugins:cannot_activate' => 'kan niet activeren',
-	'admin:plugins:cannot_deactivate' => 'cannot deactivate',
+	'admin:plugins:cannot_deactivate' => 'Uitschakelen niet mogelijk',
 	'admin:plugins:already:active' => 'De geselecteerde plugin(s) is/zijn al actief',
 	'admin:plugins:already:inactive' => 'De geselecteerde plugin(s) is/zijn al inactief',
 
@@ -956,6 +956,8 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'admin:server:requirements:database:client' => "Database client",
 	'admin:server:requirements:database:client:required' => "Elgg vereist pdo_mysql om verbinding met de database server te maken",
 
+	'admin:server:requirements:webp' => "WebP ondersteuning",
+
 	'admin:server:requirements:gc' => "Verouderde sessies opschonen",
 	'admin:server:requirements:gc:info' => "Indien het opschonen van sessies niet is geconfigureerd kan de database tabel voor de sessie vol raken. Configureer session.gc_divisor en session.gc_probability in je php.ini.",
 	
@@ -1017,9 +1019,9 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'usersettings:statistics:opt:description' => "Bekijk statistische gegevens van gebruikers en objecten op je site.",
 	'usersettings:statistics:opt:linktext' => "Accountstatistieken",
 
-	'usersettings:statistics:login_history' => "Login History",
-	'usersettings:statistics:login_history:date' => "Date",
-	'usersettings:statistics:login_history:ip' => "IP Address",
+	'usersettings:statistics:login_history' => "Aanmeldgeschiedenis",
+	'usersettings:statistics:login_history:date' => "Datum",
+	'usersettings:statistics:login_history:ip' => "IP Adres",
 
 	'usersettings:user' => "Instellingen van %s",
 	'usersettings:user:opt:description' => "Hier kun je je gebruikersinstellingen configureren.",
@@ -1040,9 +1042,9 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'usersettings:statistics:label:membersince' => "Lid sinds",
 	'usersettings:statistics:label:numentities' => "Jouw inhoud",
 	
-	'usersettings:delayed_email' => "Uitgestelde email instellingen",
-	'usersettings:delayed_email:interval' => "Configureer de frequentie waarmee uitgestelde email notificaties worden afgeleverd",
-	'usersettings:delayed_email:interval:help' => "Alle uitgestelde emailnotificaties zullen worden bewaard en worden afgeleverd in een gecombineerde email op het opgegeven interval.",
+	'usersettings:delayed_email' => "Uitgestelde e-mail instellingen",
+	'usersettings:delayed_email:interval' => "Configureer de frequentie waarmee uitgestelde e-mail notificaties worden afgeleverd",
+	'usersettings:delayed_email:interval:help' => "Alle uitgestelde e-mailnotificaties zullen worden bewaard en worden afgeleverd in een gecombineerde e-mail op het opgegeven interval.",
 
 /**
  * Activity river
@@ -1427,7 +1429,7 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'installation:cache_symlink:description' => "De symbolic link naar de simple cache map staat de webserver toe om statische content te serveren zonder de engine te starten. Dat kan de performance van de server sterk verbeteren",
 	'installation:cache_symlink:label' => "Gebruik een symbolic link naar de simple cache directory (aanbevolen)",
 	'installation:cache_symlink:warning' => "Symbolic link is aangemaakt. Indien je deze link wilt verwijderen, verwijder de symbolic link directory van de server",
-	'installation:cache_symlink:paths' => 'Correctly configured symbolic link must link <i>%s</i> to <i>%s</i>',
+	'installation:cache_symlink:paths' => 'De correct geconfigureerde symbolic link moet <i>%s</i> linken aan <i>%s</i>',
 	'installation:cache_symlink:error' => "Vanwege de server configuratie kan de symbolic link configuratie niet automatisch worden aangemaakt. Kijk naar de documentatie hoe je de link handmatig aan kunt maken.",
 
 	'installation:minify:description' => "De 'simple cache' kan tevens de prestaties verbeteren door JavaScript- en CSS-bestanden te comprimeren. Dit vereist dat 'simple cache' aanstaat. ",
@@ -1479,15 +1481,15 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'config:content:pagination_behaviour:ajax-replace' => "Vervang de lijst met de nieuwe pagina zonder verversing",
 	'config:content:pagination_behaviour:ajax-append' => "Plaats nieuwe data vóór of achter de lijst",
 	'config:content:pagination_behaviour:ajax-append-auto' => "Plaats nieuwe data vóór of achter de lijst (automatisch bij scrollen)",
-	'config:email' => "Email",
+	'config:email' => "E-mail",
 	'config:email_html_part:label' => "Activeer HTML mail",
 	'config:email_html_part:help' => "Uitgaande mail een HTML template worden vorm gegeven",
-	'config:email_html_part_images:label' => "Vervang afbeeldingen in emails",
+	'config:email_html_part_images:label' => "Vervang afbeeldingen in e-mails",
 	'config:email_html_part_images:help' => "Controleer of en hoe afbeeldingen in uitgaande email wordt verwerkt. Indien toegestaan zullen alle afbeeldingen in de mail worden ge-embed. Niet alle email clients ondersteune de verschillende opties. Test de gekozen optie.",
-	'config:email_html_part_images:base64' => "Base64 encoded",
-	'config:email_html_part_images:attach' => "Attachments",
-	'config:delayed_email:label' => "Activeer uitgestelde email notificaties",
-	'config:delayed_email:help' => "Dit geeft gebruikers de mogelijkheid om email notificaties uit te stellen en gebundeld te ontvangen op een opgegeven frequentie (dagelijks, wekelijks)",
+	'config:email_html_part_images:base64' => "Base64 gecodeerd",
+	'config:email_html_part_images:attach' => "Bijlagen",
+	'config:delayed_email:label' => "Activeer uitgestelde e-mail notificaties",
+	'config:delayed_email:help' => "Dit geeft gebruikers de mogelijkheid om e-mail notificaties uit te stellen en gebundeld te ontvangen op een opgegeven frequentie (dagelijks, wekelijks)",
 	'config:message_delay:label' => "Systeemberichten vertraging",
 	'config:message_delay:help' => "Het standaard aantal secondes voordat succes systeemberichten verdwijnen",
 
@@ -1513,7 +1515,7 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'upgrade:count_items' => '%d items te upgraden',
 	
 	// Strings specific for the database guid columns reply upgrade
-	'admin:upgrades:database_guid_columns' => 'Align database GUID columns',
+	'admin:upgrades:database_guid_columns' => 'Database GUID kolommen uitlijnen',
 	
 /**
  * Welcome
