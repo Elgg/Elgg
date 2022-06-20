@@ -1,14 +1,8 @@
 <?php
 
-use Elgg\Exceptions\Http\EntityPermissionsException;
+$group = elgg_get_page_owner_entity();
 
-$guid = elgg_extract('guid', $vars);
-$group = get_entity($guid);
-if (!$group instanceof ElggGroup || !$group->canEdit()) {
-	throw new EntityPermissionsException(elgg_echo('groups:noaccess'));
-}
-
-elgg_set_page_owner_guid($guid);
+elgg_entity_gatekeeper($group->guid, 'group');
 
 elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
