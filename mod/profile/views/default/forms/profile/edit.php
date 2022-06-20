@@ -2,10 +2,7 @@
 /**
  * Edit profile form
  *
- * @tip Use 'profile:fields','profile' hook to modify profile fields configuration.
- * Profile fields are configuration as an array of $shortname => $input_type pairs,
- * where $shortname is the metadata name used to store the value, and the $input_type is
- * an input view used to render the field input element.
+ * @tip Use 'fields', 'user:user' hook to modify profile fields configuration.
  *
  * @uses vars['entity']
  */

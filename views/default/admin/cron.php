@@ -28,19 +28,21 @@ foreach ($periods as $period) {
 
 	// cron output
 	$msg = $cron_service->getLog('output', $period);
-	if ($msg) {
+	if (!empty($msg)) {
 		$msg = nl2br($msg);
+		
+		if (elgg_in_context('widgets')) {
+			$msg = elgg_format_element('div', [], $msg);
+			$msg = elgg_view('output/url', [
+				'href' => false,
+				'text' => false,
+				'icon' => 'info',
+				'class' => ['elgg-lightbox'],
+				'data-colorbox-opts' => json_encode(['html' => $msg]),
+			]);
+		}
 	}
 	
-	if (!empty($msg) && elgg_in_context('widgets')) {
-		$wrapped_message = elgg_format_element('div', [
-			'id' => "cron_{$period}",
-			'class' => 'hidden',
-		], $msg);
-		
-		$msg = elgg_view_url("#cron_{$period}", elgg_echo('show'), ['rel' => 'toggle']);
-		$msg .= $wrapped_message;
-	}
 	$row[] = elgg_format_element('td', [], $msg);
 	
 	$table_content .= elgg_format_element('tr', [], implode(PHP_EOL, $row));
