@@ -12,15 +12,6 @@ class NotificationUnitTest extends UnitTestCase {
 	protected $entities = [];
 	
 	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		foreach ($this->entities as $entity) {
-			$entity->delete();
-		}
-	}
-	
-	/**
 	 * Get a testing notification
 	 *
 	 * @return Notification
