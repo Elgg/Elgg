@@ -14,20 +14,6 @@ use Elgg\Database\Clauses\WhereClause;
 class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest {
 
 	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\Integration\ElggCoreGetEntitiesBaseTest::down()
-	 */
-	public function down() {
-		// cleanup test annotations
-		$this->assertNotFalse(elgg_delete_annotations([
-			'annotation_owner_guid' => $this->user->guid,
-			'limit' => false,
-		]));
-		
-		parent::down();
-	}
-	
-	/**
 	 * Creates random annotations on $entity
 	 *
 	 * @param \ElggEntity $entity

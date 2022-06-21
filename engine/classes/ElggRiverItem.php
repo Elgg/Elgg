@@ -182,11 +182,14 @@ class ElggRiverItem {
 		$object = new \stdClass();
 		$object->id = $this->id;
 		$object->subject_guid = $this->subject_guid;
+		$object->target_guid = $this->target_guid;
 		$object->object_guid = $this->object_guid;
 		$object->annotation_id = $this->annotation_id;
 		$object->read_access = $this->access_id;
 		$object->action = $this->action_type;
+		$object->view = $this->view;
 		$object->time_posted = date('c', $this->getTimePosted());
+		
 		$params = ['item' => $this];
 		return _elgg_services()->hooks->trigger('to:object', 'river_item', $params, $object);
 	}

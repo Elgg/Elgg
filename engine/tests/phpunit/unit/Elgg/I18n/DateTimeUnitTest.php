@@ -9,6 +9,9 @@ use Elgg\UnitTestCase;
  */
 class DateTimeUnitTest extends UnitTestCase {
 
+	/**
+	 * @var string previous default timezone
+	 */
 	protected $timezone;
 	
 	public function up() {

@@ -10,6 +10,11 @@ use Phpfastcache\Cluster\ClusterPoolInterface;
  */
 class SystemCacheTest extends UnitTestCase {
 
+	/**
+	 * @var bool previous System Cache enabled state
+	 */
+	protected $is_enabled;
+	
 	public function up() {
 		$this->is_enabled = _elgg_services()->config->system_cache_enabled;
 		_elgg_services()->config->system_cache_enabled = false;

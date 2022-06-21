@@ -9,6 +9,11 @@ namespace Elgg\Notifications;
  */
 class NotificationsServiceElggMetadataTest extends NotificationsServiceUnitTestCase {
 
+	/**
+	 * @var bool previous IgnoreAccess state
+	 */
+	protected $ignore_access;
+	
 	public function up() {
 		$this->test_object_class = \ElggMetadata::class;
 

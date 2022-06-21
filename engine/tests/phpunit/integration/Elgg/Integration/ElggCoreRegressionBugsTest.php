@@ -10,6 +10,11 @@ namespace Elgg\Integration;
  */
 class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 
+	/**
+	 * @var bool previous IgnoreAccess state
+	 */
+	protected $ia;
+	
 	public function up() {
 		$this->ia = elgg()->session->setIgnoreAccess(true);
 	}

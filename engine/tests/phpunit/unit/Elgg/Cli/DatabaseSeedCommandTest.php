@@ -15,6 +15,11 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class DatabaseSeedCommandTest extends UnitTestCase {
 
+	/**
+	 * @var int previous log level
+	 */
+	protected $loglevel;
+	
 	public function up() {
 		// Need to adjust loglevel to make sure system messages go to screen output and not to logger
 		$app = \Elgg\Application::getInstance();
