@@ -17,7 +17,7 @@ if ($who_can_change_language === 'nobody') {
 	return;
 }
 
-$options = elgg()->translator->getInstalledTranslations(true);
+$options = elgg()->translator->getInstalledTranslations(elgg_is_admin_logged_in());
 $options = array_intersect_key($options, array_flip(elgg()->translator->getAllowedLanguages()));
 
 if (count($options) < 2) {
