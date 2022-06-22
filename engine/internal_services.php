@@ -30,7 +30,7 @@ return [
 	'cssCompiler' => DI\autowire(\Elgg\Assets\CssCompiler::class),
 	'csrf' => DI\autowire(\Elgg\Security\Csrf::class),
 	'classLoader' => DI\factory(function (ContainerInterface $c) {
-		$loader = new \Elgg\ClassLoader(new \Elgg\ClassMap());
+		$loader = new \Elgg\ClassLoader(new \Elgg\ClassMap(), $c->config);
 		$loader->register();
 		return $loader;
     }),

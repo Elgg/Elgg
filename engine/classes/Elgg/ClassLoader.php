@@ -52,6 +52,11 @@ class ClassLoader {
 	protected $fallbacks = [];
 
 	/**
+	 * @var Config
+	 */
+	protected $config;
+	
+	/**
 	 * @var \Elgg\ClassMap Map of classes to files
 	 */
 	protected $map;
@@ -64,10 +69,12 @@ class ClassLoader {
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\ClassMap $map Class map
+	 * @param \Elgg\ClassMap $map    Class map
+	 * @param \Elgg\Config   $config Site config
 	 */
-	public function __construct(\Elgg\ClassMap $map) {
+	public function __construct(\Elgg\ClassMap $map, Config $config) {
 		$this->map = $map;
+		$this->config = $config;
 	}
 
 	/**
@@ -169,14 +176,14 @@ class ClassLoader {
 	 * @return void
 	 */
 	public function loadClass($class) {
-		$file = $this->map->getPath($class);
-		if (is_file($file)) {
-			require $file;
+		// is missing? return
+		if (isset($this->missing[$class])) {
 			return;
 		}
 		
-		// is missing? return
-		if (isset($this->missing[$class])) {
+		$file = $this->map->getPath($class);
+		if (!empty($file) && (!$this->config->class_loader_verify_file_existence || is_file($file))) {
+			require $file;
 			return;
 		}
 
