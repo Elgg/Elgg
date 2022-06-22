@@ -102,6 +102,10 @@ class AnnotationsTable {
 		if ($annotation->id) {
 			return $this->update($annotation);
 		}
+		
+		if (is_null($annotation->owner_guid) || is_null($annotation->name) || is_null($annotation->value)) {
+			return false;
+		}
 
 		$annotation->entity_guid = $entity->guid;
 
@@ -112,7 +116,7 @@ class AnnotationsTable {
 		//	return false;
 		//}
 
-		if (!$this->events->trigger('annotate', $entity->getType(), $entity)) {
+		if (!$this->events->triggerDeprecated('annotate', $entity->getType(), $entity, "The 'annotate', '{$entity->getType()}' event is deprecated. Use the 'create', 'annotation' event instead.", '4.3')) {
 			return false;
 		}
 
@@ -163,6 +167,10 @@ class AnnotationsTable {
 	 */
 	public function update(\ElggAnnotation $annotation) {
 		if (!$annotation->canEdit()) {
+			return false;
+		}
+		
+		if (is_null($annotation->owner_guid) || is_null($annotation->name) || is_null($annotation->value)) {
 			return false;
 		}
 
