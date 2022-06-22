@@ -900,9 +900,7 @@ class ElggPlugin extends ElggObject {
 	 * @return bool
 	 */
 	protected function canReadFile(string $filename): bool {
-		$path = "{$this->getPath()}{$filename}";
-
-		return is_file($path) && is_readable($path);
+		return is_file("{$this->getPath()}{$filename}");
 	}
 
 	/**
