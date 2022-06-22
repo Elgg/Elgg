@@ -183,15 +183,10 @@ class ElggPlugin extends ElggObject {
 	 * Returns the plugin's languages directory full path with trailing slash.
 	 * Returns false if directory does not exist
 	 *
-	 * @return string|false
+	 * @return string
 	 */
 	protected function getLanguagesPath() {
-		$languages_path = $this->getPath() . 'languages/';
-		if (!is_dir($languages_path)) {
-			return false;
-		}
-		
-		return $languages_path;
+		return $this->getPath() . 'languages/';
 	}
 
 	/**
@@ -1085,12 +1080,7 @@ class ElggPlugin extends ElggObject {
 	 * @return void
 	 */
 	public function registerLanguages(): void {
-		$languages_path = $this->getLanguagesPath();
-		if (empty($languages_path)) {
-			return;
-		}
-
-		_elgg_services()->translator->registerLanguagePath($languages_path);
+		_elgg_services()->translator->registerLanguagePath($this->getLanguagesPath());
 	}
 
 	/**
@@ -1104,7 +1094,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	protected function loadLanguages(): void {
 		$languages_path = $this->getLanguagesPath();
-		if (empty($languages_path)) {
+		if (!is_dir($languages_path)) {
 			return;
 		}
 

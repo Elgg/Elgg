@@ -653,7 +653,15 @@ class Translator {
 	 *
 	 * @internal
 	 */
-	public function registerLanguagePath($path) {
+	public function registerLanguagePath(string $path) {
+		if (isset($this->language_paths[$path])) {
+			return;
+		}
+		
+		if (!is_dir($path)) {
+			return;
+		}
+		
 		$this->language_paths[$path] = true;
 	}
 	
