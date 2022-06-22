@@ -262,10 +262,9 @@ class Router {
 	 * @return ResponseBuilder|null
 	 * @throws PageNotFoundException
 	 */
-	protected function getResponseFromFile($file, \Elgg\Request $request) {
-		if (!is_file($file) || !is_readable($file)) {
-			$path = $request->getPath();
-			throw new PageNotFoundException(elgg_echo('actionnotfound', [$path]), ELGG_HTTP_NOT_IMPLEMENTED);
+	protected function getResponseFromFile(string $file, \Elgg\Request $request) {
+		if (!is_file($file)) {
+			throw new PageNotFoundException(elgg_echo('actionnotfound', [$request->getPath()]), ELGG_HTTP_NOT_IMPLEMENTED);
 		}
 
 		ob_start();

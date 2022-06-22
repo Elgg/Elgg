@@ -170,7 +170,7 @@ class ClassLoader {
 	 */
 	public function loadClass($class) {
 		$file = $this->map->getPath($class);
-		if ($file && is_readable($file)) {
+		if (is_file($file)) {
 			require $file;
 			return;
 		}
@@ -181,7 +181,7 @@ class ClassLoader {
 		}
 
 		$file = $this->findFile($class);
-		if ($file && is_readable($file)) {
+		if (!empty($file)) {
 			$this->map->setPath($class, $file);
 			$this->map->setAltered(true);
 			require $file;

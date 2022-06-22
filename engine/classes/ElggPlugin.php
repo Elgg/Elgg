@@ -205,19 +205,13 @@ class ElggPlugin extends ElggObject {
 			$this->static_config = [];
 
 			try {
-				if ($this->canReadFile(self::STATIC_CONFIG_FILENAME)) {
-					$this->static_config = $this->includeFile(self::STATIC_CONFIG_FILENAME);
-				}
+				$this->static_config = $this->includeFile(self::STATIC_CONFIG_FILENAME);
 			} catch (PluginException $ex) {
 				elgg_log($ex, \Psr\Log\LogLevel::ERROR);
 			}
 		}
 
-		if (isset($this->static_config[$key])) {
-			return $this->static_config[$key];
-		} else {
-			return $default;
-		}
+		return $this->static_config[$key] ?? $default;
 	}
 
 	// Load Priority
