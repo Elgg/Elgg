@@ -41,6 +41,7 @@ if ($timeupper) {
 
 $ip_address = get_input('ip_address');
 $object_id = get_input('object_id');
+$event = get_input('event');
 
 $refine = elgg_view('logbrowser/refine', [
 	'timeupper' => $timeupper,
@@ -48,6 +49,7 @@ $refine = elgg_view('logbrowser/refine', [
 	'ip_address' => $ip_address,
 	'username' => $search_username,
 	'object_id' => $object_id,
+	'event' => $event,
 ]);
 
 // Get log entries
@@ -60,6 +62,7 @@ $options = [
 	'created_after' => $timelower,
 	'ip_address' => $ip_address,
 	'object_id' => $object_id,
+	'event' => $event,
 ];
 $log = SystemLog::instance()->getAll($options);
 
@@ -81,11 +84,4 @@ $nav = elgg_view('navigation/pagination', [
 ]);
 
 // display admin body
-$body = <<<__HTML
-$refine
-$nav
-$table
-$nav
-__HTML;
-
-echo $body;
+echo $refine . $nav . $table . $nav;

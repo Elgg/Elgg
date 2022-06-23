@@ -55,6 +55,13 @@ echo elgg_view_field([
 	'value' => $upperval,
 ]);
 
+echo elgg_view_field([
+	'#type' => 'text',
+	'#label' => elgg_echo('logbrowser:action'),
+	'name' => 'event',
+	'value' => elgg_extract('event', $vars),
+]);
+
 $footer = elgg_view_field([
 	'#type' => 'submit',
 	'value' => elgg_echo('search'),
