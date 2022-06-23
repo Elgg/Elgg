@@ -43,8 +43,8 @@ $list = elgg_list_entities([
 			], 'OR');
 		},
 	],
-	'order_by_metadata' => [
-		'name' => 'name',
+	'sort_by' => [
+		'property' => 'name',
 		'direction' => 'ASC',
 	],
 	'group_by' => 'e.guid',

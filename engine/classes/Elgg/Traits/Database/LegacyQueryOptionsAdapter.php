@@ -245,6 +245,8 @@ trait LegacyQueryOptionsAdapter {
 		$options = $this->normalizePairedOptions('metadata', $options);
 
 		if (isset($options['order_by_metadata'])) {
+			elgg_deprecated_notice('Passing "order_by_metadata" to sort your results has been deprecated. Use "sort_by" options instead.', '4.3');
+			
 			$name = elgg_extract('name', $options['order_by_metadata']);
 			$direction = strtoupper(elgg_extract('direction', $options['order_by_metadata'], 'asc'));
 			$as = elgg_extract('as', $options['order_by_metadata']);
@@ -437,6 +439,8 @@ trait LegacyQueryOptionsAdapter {
 		$options = $this->normalizePairedOptions('annotation', $options);
 
 		if (isset($options['order_by_annotation'])) {
+			elgg_deprecated_notice('Passing "order_by_annotation" to sort your results has been deprecated. Use "sort_by" options instead.', '4.3');
+			
 			$name = elgg_extract('name', $options['order_by_annotation']);
 			$direction = strtoupper(elgg_extract('direction', $options['order_by_annotation'], 'asc'));
 			$as = elgg_extract('as', $options['order_by_annotation']);

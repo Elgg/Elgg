@@ -17,14 +17,12 @@ $content = elgg_list_entities([
 	'relationship_guid' => $owner->guid,
 	'inverse_relationship' => false,
 	'type' => 'user',
-	'order_by_metadata' => [
-		[
-			'name' => 'name',
-			'direction' => 'ASC',
-		],
-	],
 	'full_view' => false,
 	'no_results' => elgg_echo('friends:none'),
+	'sort_by' => [
+		'property' => 'name',
+		'direction' => 'ASC',
+	],
 ]);
 
 echo elgg_view_page($title, [

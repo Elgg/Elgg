@@ -29,8 +29,8 @@ $content = elgg_list_entities([
 	'relationship_guid' => elgg_get_page_owner_guid(),
 	'inverse_relationship' => false,
 	'full_view' => false,
-	'order_by_metadata' => [
-		'name' => 'name',
+	'sort_by' => [
+		'property' => 'name',
 		'direction' => 'ASC',
 	],
 	'no_results' => elgg_echo('groups:none'),
