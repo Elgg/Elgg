@@ -4,6 +4,17 @@ namespace Elgg\Traits\Entity;
 
 class ElggUserPluginSettingsIntegrationTest extends ElggEntityPluginSettingsTestCase {
 
+	public function down() {
+		parent::down();
+		
+		elgg_call(ELGG_IGNORE_ACCESS, function() {
+			$plugin = elgg_get_plugin_from_id('test_plugin');
+			if ($plugin) {
+				$plugin->delete();
+			}
+		});
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
