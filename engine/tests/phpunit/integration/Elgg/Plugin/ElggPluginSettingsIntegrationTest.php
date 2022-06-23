@@ -6,10 +6,26 @@ use Elgg\IntegrationTestCase;
 
 class ElggPluginSettingsIntegrationTest extends IntegrationTestCase {
 	
+	public function up() {
+		$this->createApplication([
+			'isolate' => true,
+			'plugins_path' => $this->normalizeTestFilePath('mod/'),
+		]);
+	}
+
+	public function down() {
+		elgg_call(ELGG_IGNORE_ACCESS, function() {
+			$plugin = elgg_get_plugin_from_id('test_plugin');
+			if ($plugin) {
+				$plugin->delete();
+			}
+		});
+	}
+	
 	public function testCanSetSetting() {
 		_elgg_services()->logger->disable();
 		
-		$plugin = \ElggPlugin::fromId('test_plugin', $this->normalizeTestFilePath('mod/'));
+		$plugin = \ElggPlugin::fromId('test_plugin');
 		
 		$this->assertTrue($plugin->activate());
 		
@@ -60,7 +76,7 @@ class ElggPluginSettingsIntegrationTest extends IntegrationTestCase {
 		
 		_elgg_services()->logger->disable();
 		
-		$plugin = \ElggPlugin::fromId('test_plugin', $this->normalizeTestFilePath('mod/'));
+		$plugin = \ElggPlugin::fromId('test_plugin');
 		
 		$plugin->activate();
 		
@@ -85,8 +101,8 @@ class ElggPluginSettingsIntegrationTest extends IntegrationTestCase {
 		$user = $this->createUser();
 		_elgg_services()->session->setLoggedInUser($user);
 		
-		$plugin = \ElggPlugin::fromId('test_plugin', $this->normalizeTestFilePath('mod/'));
-		$untouched_plugin = \ElggPlugin::fromId('languages_plugin', $this->normalizeTestFilePath('mod/'));
+		$plugin = \ElggPlugin::fromId('test_plugin');
+		$untouched_plugin = \ElggPlugin::fromId('languages_plugin');
 		
 		$plugin_setting_name = 'test_name';
 		$plugin_setting_value = rand();
@@ -122,7 +138,7 @@ class ElggPluginSettingsIntegrationTest extends IntegrationTestCase {
 	
 	public function testUnsetAllEntityAndPluginSettingsHookCallback() {
 		
-		$plugin = \ElggPlugin::fromId('test_plugin', $this->normalizeTestFilePath('mod/'));
+		$plugin = \ElggPlugin::fromId('test_plugin');
 		
 		$calls = 0;
 		$callback = function (\Elgg\Hook $hook) use (&$calls) {

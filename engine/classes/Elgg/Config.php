@@ -27,6 +27,7 @@ use Elgg\Traits\Loggable;
  * @property array         $breadcrumbs
  * @property string        $cacheroot            					Path of cache storage with trailing "/"
  * @property bool          $can_change_username						Is user allowed to change the username
+ * @property bool          $class_loader_verify_file_existence		Determines if the class loader checks for file existence when loading files from the class map
  * @property bool          $comment_box_collapses					Determines if the comment box collapses after the first comment
  * @property bool          $comments_group_only					    Are comments on group content only allowed for group members
  * @property bool          $comments_latest_first					Determines if the default order of comments is latest first
@@ -188,6 +189,7 @@ class Config {
 	 */
 	protected $config_defaults = [
 		'batch_run_time_in_secs' => 4,
+		'class_loader_verify_file_existence' => true,
 		'comment_box_collapses' => true,
 		'comments_group_only' => true,
 		'comments_latest_first' => true,

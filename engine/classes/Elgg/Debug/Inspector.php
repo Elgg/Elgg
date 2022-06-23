@@ -419,12 +419,14 @@ class Inspector {
 
 		$tree = [];
 		foreach ($sources as $source) {
-			if (is_file($source) && is_readable($source)) {
-				$services = Includer::includeFile($source);
+			if (!is_file($source)) {
+				continue;
+			}
+			
+			$services = Includer::includeFile($source);
 
-				foreach ($services as $name => $service) {
-					$tree[$name] = [get_class(elgg()->$name), Paths::sanitize($source, false)];
-				}
+			foreach ($services as $name => $service) {
+				$tree[$name] = [get_class(elgg()->$name), Paths::sanitize($source, false)];
 			}
 		}
 
