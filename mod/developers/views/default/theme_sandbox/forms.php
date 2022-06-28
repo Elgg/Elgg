@@ -16,6 +16,17 @@ $ipsum = elgg_view('developers/ipsum');
 		]);
 
 		echo elgg_view_field([
+			'#type' => 'text',
+			'required' => true,
+			'disabled' => true,
+			'name' => 'f1.1',
+			'id' => 'f1.2',
+			'placeholder' => 'placeholder text',
+			'#label' => 'Text input (.elgg-field-disabled):',
+			'#help' => 'This is how help text looks',
+		]);
+
+		echo elgg_view_field([
 			'#type' => 'password',
 			'name' => 'f2',
 			'id' => 'f2',
@@ -33,6 +44,19 @@ $ipsum = elgg_view('developers/ipsum');
 			],
 			'value' => 2,
 			'#label' => 'Radio input (.elgg-input-radios):',
+		]);
+
+		echo elgg_view_field([
+			'#type' => 'radio',
+			'name' => 'f3.1',
+			'id' => 'f3.1',
+			'disabled' => true,
+			'options' => [
+				'a (.elgg-input-radio)' => 1,
+				'b (.elgg-input-radio)' => 2
+			],
+			'value' => 2,
+			'#label' => 'Radio input (.elgg-field-disabled):',
 		]);
 
 		echo elgg_view_field([
@@ -660,6 +684,13 @@ $ipsum = elgg_view('developers/ipsum');
 							'#type' => 'button',
 							'type' => 'submit',
 							'text' => 'Save',
+							'icon' => 'save',
+						],
+						[
+							'#type' => 'button',
+							'disabled' => true,
+							'type' => 'submit',
+							'text' => 'Save (disabled)',
 							'icon' => 'save',
 						],
 						[

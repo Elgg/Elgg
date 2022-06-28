@@ -8,7 +8,6 @@ $plugin = elgg_get_plugin_from_id($plugin_id);
 $filename = elgg_extract('filename', $vars);
 
 elgg_unregister_external_file('css', 'elgg');
-elgg_require_js('elgg/admin');
 
 if (!$plugin) {
 	$error = elgg_echo('admin:plugins:markdown:unknown_plugin');

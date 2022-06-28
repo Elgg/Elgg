@@ -28,7 +28,10 @@ $help = elgg_extract('help', $vars, '');
 
 $class = elgg_extract_class($vars, 'elgg-field');
 if (elgg_extract('required', $vars)) {
-	$class[] = "elgg-field-required";
+	$class[] = 'elgg-field-required';
+}
+if (elgg_extract('disabled', $vars)) {
+	$class[] = 'elgg-field-disabled';
 }
 
 $field = $label . $input . $help;
