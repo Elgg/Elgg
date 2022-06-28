@@ -154,6 +154,7 @@ class SystemLogQuery extends Repository {
 		}
 
 		$qb->orderBy('time_created', 'DESC');
+		$qb->addOrderBy('id', 'DESC');
 
 		return _elgg_services()->db->getData($qb, $this->callback);
 	}
