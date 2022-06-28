@@ -74,7 +74,7 @@ class InternalContainer extends \Elgg\Di\InternalContainer{
 		$container->set('notifications', function(ContainerInterface $c) {
 			$queue = new \Elgg\Queue\MemoryQueue();
 			
-			return new \Elgg\Notifications\NotificationsService($queue, $c->hooks, $c->session);
+			return new \Elgg\Notifications\NotificationsService($queue, $c->hooks, $c->session, $c->events);
 		});
 
 		$container->set('mutex', \DI\autowire(\Elgg\Mocks\Database\Mutex::class));

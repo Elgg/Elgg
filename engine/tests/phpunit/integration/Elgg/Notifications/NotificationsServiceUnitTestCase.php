@@ -102,7 +102,8 @@ abstract class NotificationsServiceUnitTestCase extends IntegrationTestCase {
 		$this->notifications = new NotificationsService(
 			$this->queue,
 			$this->hooks,
-			$this->session
+			$this->session,
+			$this->events
 		);
 		_elgg_services()->set('notifications', $this->notifications);
 	}
