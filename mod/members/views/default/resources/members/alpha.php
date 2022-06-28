@@ -5,8 +5,8 @@
 
 $content = elgg_list_entities([
 	'type' => 'user',
-	'order_by_metadata' => [
-		'name' => 'name',
+	'sort_by' => [
+		'property' => 'name',
 		'direction' => 'ASC',
 	],
 ]);

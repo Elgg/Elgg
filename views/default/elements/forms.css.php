@@ -30,8 +30,10 @@ label, .elgg-field-label {
 	display: block;
 }
 
-label.elgg-state-disabled, .elgg-field-label.elgg-state-disabled {
-	opacity: 0.6;
+.elgg-field-disabled {
+	.elgg-field-label {
+		opacity: 0.6;
+	}
 }
 
 .elgg-required-indicator {

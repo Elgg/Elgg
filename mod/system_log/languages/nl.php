@@ -19,7 +19,7 @@ return array(
 	'logbrowser:user:name' => 'Gebruiker',
 	'logbrowser:user:guid' => 'Gebruikers GUID',
 	'logbrowser:object' => 'Content Type',
-	'logbrowser:object:guid' => 'Object GUID',
+	'logbrowser:object:id' => 'Object GUID',
 	'logbrowser:action' => 'Actie',
 
 	'logrotate:period' => 'Hoe vaak wil je dat het systeem logboek wordt gearchiveerd?',

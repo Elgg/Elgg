@@ -247,6 +247,15 @@ River events
 **delete:after, river**
 	Triggered after a river item was deleted.
 
+Notifications events
+====================
+
+**enqueue, notifications**
+	Called when an ElggData object is being added to the notifications queue 
+
+**dequeue, notifications**
+	Called when an ElggData object is removed from the notifications queue to be processed 
+
 File events
 ===========
 

@@ -10,7 +10,11 @@ use Elgg\Exceptions\Http\PageNotFoundException;
 // Make sure the 'site' css isn't loaded
 elgg_unregister_external_file('css', 'elgg');
 
-elgg_require_js('elgg/admin');
+if (elgg_view_exists('elgg/admin.js')) {
+	elgg_deprecated_notice('No longer rely on the presence of the generic elgg/admin.js. Include your own AMD js module.', '4.3');
+	
+	elgg_require_js('elgg/admin');
+}
 
 $segments = explode('/', trim(elgg_extract('segments', $vars, ''), '/'));
 

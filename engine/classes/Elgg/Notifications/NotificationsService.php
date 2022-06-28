@@ -2,6 +2,7 @@
 
 namespace Elgg\Notifications;
 
+use Elgg\EventsService;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\PluginHooksService;
 use Elgg\Queue\Queue;
@@ -20,6 +21,9 @@ class NotificationsService {
 	/** @var PluginHooksService */
 	protected $hooks;
 
+	/** @var EventsService */
+	protected $elgg_events;
+
 	/** @var \ElggSession */
 	protected $session;
 	
@@ -32,19 +36,22 @@ class NotificationsService {
 	/**
 	 * Constructor
 	 *
-	 * @param Queue              $queue   Queue
-	 * @param PluginHooksService $hooks   Plugin hook service
-	 * @param \ElggSession       $session Session service
+	 * @param Queue              $queue       Queue
+	 * @param PluginHooksService $hooks       Plugin hook service
+	 * @param \ElggSession       $session     Session service
+	 * @param EventsService      $elgg_events Events service
 	 */
 	public function __construct(
 			Queue $queue,
 			PluginHooksService $hooks,
-			\ElggSession $session
+			\ElggSession $session,
+			EventsService $elgg_events
 	) {
 
 		$this->queue = $queue;
 		$this->hooks = $hooks;
 		$this->session = $session;
+		$this->elgg_events = $elgg_events;
 	}
 
 	/**
@@ -200,6 +207,7 @@ class NotificationsService {
 			}
 
 			if ($registered) {
+				$this->elgg_events->trigger('enqueue', 'notifications', $object);
 				$this->queue->enqueue(new SubscriptionNotificationEvent($object, $action));
 			}
 		}
@@ -252,6 +260,8 @@ class NotificationsService {
 					// event object or actor have been deleted since the event was enqueued
 					continue;
 				}
+				
+				$this->elgg_events->trigger('dequeue', 'notifications', $event->getObject());
 	
 				$handler = $this->getNotificationHandler($event);
 	

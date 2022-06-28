@@ -19,7 +19,7 @@ return array(
 	'logbrowser:user:name' => 'User',
 	'logbrowser:user:guid' => 'User GUID',
 	'logbrowser:object' => 'Object type',
-	'logbrowser:object:guid' => 'Object GUID',
+	'logbrowser:object:id' => 'Object ID',
 	'logbrowser:action' => 'Action',
 
 	'logrotate:period' => 'How often should the system log be archived?',

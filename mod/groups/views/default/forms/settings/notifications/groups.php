@@ -45,8 +45,8 @@ $list = elgg_list_entities([
 		},
 	],
 	'group_by' => 'e.guid',
-	'order_by_metadata' => [
-		'name' => 'name',
+	'sort_by' => [
+		'property' => 'name',
 		'direction' => 'ASC',
 	],
 	'offset_key' => 'subscriptions_groups',

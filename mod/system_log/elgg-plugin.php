@@ -46,11 +46,11 @@ return [
 			],
 		],
 		'register' => [
+			'menu:entity' => [
+				'Elgg\SystemLog\Menus\Entity::register' => [],
+			],
 			'menu:page' => [
 				'Elgg\SystemLog\Menus\Page::register' => [],
-			],
-			'menu:user_hover' => [
-				'Elgg\SystemLog\Menus\UserHover::register' => [],
 			],
 		],
 	],
