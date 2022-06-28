@@ -19,7 +19,7 @@ return array(
 	'logbrowser:user:name' => 'Utilisateur',
 	'logbrowser:user:guid' => 'GUID de l\'utilisateur',
 	'logbrowser:object' => 'Type d\'objet',
-	'logbrowser:object:guid' => 'GUID de l\'objet',
+	'logbrowser:object:id' => 'GUID de l\'objet',
 	'logbrowser:action' => 'Action',
 
 	'logrotate:period' => 'A quelle fréquence les journaux système devraient-ils être archivés ?',

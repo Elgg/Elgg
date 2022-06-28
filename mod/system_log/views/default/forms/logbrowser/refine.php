@@ -36,7 +36,7 @@ echo elgg_view_field([
 echo elgg_view_field([
 	'#type' => 'number',
 	'min' => 0,
-	'#label' => elgg_echo('logbrowser:object:guid'),
+	'#label' => elgg_echo('logbrowser:object:id'),
 	'name' => 'object_id',
 	'value' => elgg_extract('object_id', $vars),
 ]);

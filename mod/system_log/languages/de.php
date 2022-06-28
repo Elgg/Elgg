@@ -19,7 +19,7 @@ return array(
 	'logbrowser:user:name' => 'Benutzer',
 	'logbrowser:user:guid' => 'Benutzer-GUID',
 	'logbrowser:object' => 'Objekt-Typ',
-	'logbrowser:object:guid' => 'Objekt-GUID',
+	'logbrowser:object:id' => 'Objekt-GUID',
 	'logbrowser:action' => 'Aktion',
 
 	'logrotate:period' => 'Wie oft sollen die Einträge im Elgglog archiviert werden?',
