@@ -31,8 +31,10 @@
 		width: 24em;
 	}
 
-	h2 {
+	.elgg-menu-section-header {
 		margin-bottom: 10px;
+		font-size: 1.5rem;
+		font-weight: 500;
 	}
 
 	.elgg-child-menu {
