@@ -46,6 +46,28 @@ define(['jquery', 'elgg/Ajax', 'elgg/i18n'], function($, Ajax, i18n) {
 		});
 	};
 
+	// preview button clicked
+	$(document).on('click', '.elgg-form-blog-save button[name="preview"]', function(event) {
+		event.preventDefault();
+		
+		var ajax = new Ajax();
+		var formData = ajax.objectify('form.elgg-form-blog-save');
+		
+		if (!(formData.get('description') && formData.get('title'))) {
+			return false;
+		}
+		
+		// open preview in blank window
+		ajax.action('blog/save', {
+			data: formData,
+			success: function(data) {
+				$('form.elgg-form-blog-save').find('input[name=guid]').val(data.guid);
+				window.open(data.url, '_blank').focus();
+			}
+		});
+	});
+
+	// start auto save interval
 	setInterval(saveDraft, 60000);
 
 	return {
