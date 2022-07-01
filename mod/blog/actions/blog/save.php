@@ -158,4 +158,7 @@ if ($blog->status == 'published' || !$save) {
 	]);
 }
 
-return elgg_ok_response('', elgg_echo('blog:message:saved'), $forward_url);
+return elgg_ok_response([
+	'guid' => $blog->guid,
+	'url' => $blog->getURL(),
+], elgg_echo('blog:message:saved'), $forward_url);
