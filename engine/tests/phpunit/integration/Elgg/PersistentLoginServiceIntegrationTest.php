@@ -313,12 +313,19 @@ class PersistentLoginServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 	}
 	
 	protected function mockServiceWithToken(string $token): PersistentLoginService {
+		$request = _elgg_services()->request;
+		$config = _elgg_services()->config;
+		
+		$global_cookies_config = $config->getCookieConfig();
+		$cookie_name = $global_cookies_config['remember_me']['name'];
+		$request->cookies->set($cookie_name, $token);
+		
 		$service = new PersistentLoginService(
 			_elgg_services()->users_remember_me_cookies_table,
 			_elgg_services()->session,
 			_elgg_services()->crypto,
-			_elgg_services()->config->getCookieConfig()['remember_me'],
-			$token);
+			$config,
+			$request);
 		
 		$service->_callable_elgg_set_cookie = [$this, 'mockSetCookie'];
 		

@@ -31,7 +31,7 @@ class BootService {
 	const DEFAULT_BOOTDATA_PLUGIN_SETTINGS_LIMIT = 40;
 
 	/**
-	 * Cache
+	 * Constructs the bootservice
 	 *
 	 * @param \ElggCache $cache Cache
 	 */

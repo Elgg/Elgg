@@ -16,35 +16,20 @@ return [
 		$obj = new \Elgg\Amd\Config($c->hooks);
 		$obj->setBaseUrl($c->simpleCache->getRoot());
 		return $obj;
-    }),
-    'annotationsTable' => DI\autowire(\Elgg\Database\AnnotationsTable::class),
+	}),
+	'annotationsTable' => DI\autowire(\Elgg\Database\AnnotationsTable::class),
 	'apiUsersTable' => DI\autowire(\Elgg\Database\ApiUsersTable::class),
 	'autoP' => DI\autowire(\ElggAutoP::class),
-	'boot' => DI\factory(function (ContainerInterface $c) {
+	'boot' => DI\autowire(\Elgg\BootService::class)->constructorParameter('cache', DI\get('bootCache')),
+	'bootCache' => DI\factory(function (ContainerInterface $c) {
 		$flags = ELGG_CACHE_PERSISTENT | ELGG_CACHE_FILESYSTEM | ELGG_CACHE_RUNTIME;
-		$cache = new \Elgg\Cache\CompositeCache('elgg_boot', $c->config, $flags);
-		
-		return new \Elgg\BootService($cache);
+		return new \Elgg\Cache\CompositeCache('elgg_boot', $c->config, $flags);
     }),
 	'cacheHandler' => DI\autowire(\Elgg\Application\CacheHandler::class),
 	'cssCompiler' => DI\autowire(\Elgg\Assets\CssCompiler::class),
 	'csrf' => DI\autowire(\Elgg\Security\Csrf::class),
-	'classLoader' => DI\factory(function (ContainerInterface $c) {
-		$loader = new \Elgg\ClassLoader(new \Elgg\ClassMap(), $c->config);
-		$loader->register();
-		return $loader;
-    }),
-	'cli' => DI\factory(function (ContainerInterface $c) {
-		$console = new \Elgg\Cli\Application('Elgg', elgg_get_release());
-		$console->setup($c->cli_input, $c->cli_output);
-
-		return new \Elgg\Cli(
-			$console,
-			$c->hooks,
-			$c->cli_input,
-			$c->cli_output
-		);
-    }),
+	'classLoader' => DI\autowire(\Elgg\ClassLoader::class),
+	'cli' => DI\autowire(\Elgg\Cli::class)->constructorParameter('input', DI\get('cli_input'))->constructorParameter('output', DI\get('cli_output')),
 	'cli_input' => DI\factory(function (ContainerInterface $c) {
 		return \Elgg\Application::getStdIn();
     }),
@@ -88,21 +73,7 @@ return [
 	'hooks' => DI\autowire(\Elgg\PluginHooksService::class),
 	'iconService' => DI\autowire(\Elgg\EntityIconService::class),
 	'imageFetcher' => DI\autowire(\Elgg\Assets\ImageFetcherService::class),
-	'imageService' => DI\factory(function (ContainerInterface $c) {
-		switch ($c->config->image_processor) {
-			case 'imagick':
-				if (extension_loaded('imagick')) {
-					$imagine = new \Imagine\Imagick\Imagine();
-					break;
-				}
-			default:
-				// default use GD
-				$imagine = new \Imagine\Gd\Imagine();
-				break;
-		}
-
-		return new \Elgg\ImageService($imagine, $c->config, $c->mimetype);
-    }),
+	'imageService' => DI\autowire(\Elgg\ImageService::class),
 	'invoker' => DI\factory(function (ContainerInterface $c) {
 		return new \Elgg\Invoker($c->session, elgg());
     }),
@@ -144,34 +115,10 @@ return [
 	'pageOwner' => DI\autowire(\Elgg\Page\PageOwnerService::class),
 	'passwords' => DI\autowire(\Elgg\PasswordService::class),
 	'passwordGenerator' => DI\autowire(\Elgg\Security\PasswordGeneratorService::class),
-	'persistentLogin' => DI\factory(function (ContainerInterface $c) {
-		$global_cookies_config = $c->config->getCookieConfig();
-		$cookie_config = $global_cookies_config['remember_me'];
-		$cookie_name = $cookie_config['name'];
-		$cookie_token = $c->request->cookies->get($cookie_name, '');
-		return new \Elgg\PersistentLoginService(
-			$c->users_remember_me_cookies_table,
-			$c->session,
-			$c->crypto,
-			$cookie_config,
-			$cookie_token
-		);
-    }),
-	'plugins' => DI\factory(function (ContainerInterface $c) {
-		$cache = new \Elgg\Cache\CompositeCache('plugins', $c->config, ELGG_CACHE_RUNTIME);
-
-		return new \Elgg\Database\Plugins(
-			$cache,
-			$c->db,
-			$c->session,
-			$c->events,
-			$c->translator,
-			$c->views,
-			$c->privateSettingsCache,
-			$c->config,
-			$c->system_messages,
-			$c->request->getContextStack()
-		);
+	'persistentLogin' => DI\autowire(\Elgg\PersistentLoginService::class),
+	'plugins' => DI\autowire(\Elgg\Database\Plugins::class)->constructorParameter('cache', DI\get('pluginsCache')),
+	'pluginsCache' => DI\factory(function (ContainerInterface $c) {
+		return new \Elgg\Cache\CompositeCache('plugins', $c->config, ELGG_CACHE_RUNTIME);
     }),
 	'privateSettingsCache' => DI\factory(function (ContainerInterface $c) {
 		$cache = $c->dataCache->private_settings;
@@ -201,10 +148,7 @@ return [
 		$context = new \Elgg\Router\RequestContext();
 		return $context->fromRequest($c->request);
     }),
-	'responseFactory' => DI\factory(function (ContainerInterface $c) {
-		$transport = \Elgg\Application::getResponseTransport();
-		return new \Elgg\Http\ResponseFactory($c->request, $c->hooks, $c->ajax, $transport, $c->events);
-    }),
+	'responseFactory' => DI\autowire(\Elgg\Http\ResponseFactory::class),
 	'riverTable' => DI\autowire(\Elgg\Database\RiverTable::class),
 	'routeCollection' => DI\autowire(\Elgg\Router\RouteCollection::class),
 	'routes' => DI\autowire(\Elgg\Router\RouteRegistrationService::class),

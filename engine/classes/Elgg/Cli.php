@@ -40,17 +40,19 @@ class Cli {
 	/**
 	 * Constructor
 	 *
-	 * @param CliApplication     $console Console application instance
-	 * @param PluginHooksService $hooks   Hooks registration service
-	 * @param InputInterface     $input   Console input
-	 * @param OutputInterface    $output  Console output
+	 * @param PluginHooksService $hooks  Hooks registration service
+	 * @param InputInterface     $input  Console input
+	 * @param OutputInterface    $output Console output
 	 */
 	public function __construct(
-		CliApplication $console,
 		PluginHooksService $hooks,
 		InputInterface $input,
 		OutputInterface $output
 	) {
+		
+		$console = new \Elgg\Cli\Application('Elgg', elgg_get_release());
+		$console->setup($input, $output);
+
 		$this->console = $console;
 		$this->hooks = $hooks;
 		$this->input = $input;

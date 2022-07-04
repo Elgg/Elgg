@@ -102,8 +102,7 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		$svc->set('system_messages', $this->system_messages);
 		$svc->set('ajax', $this->ajax);
 
-		$transport = new \Elgg\Http\OutputBufferTransport();
-		$this->response_factory = new ResponseFactory($this->request, $this->hooks, $this->ajax, $transport, $this->events);
+		$this->response_factory = new ResponseFactory($this->request, $this->hooks, $this->ajax, $this->events);
 		$svc->set('responseFactory', $this->response_factory);
 		return $this->response_factory;
 	}

@@ -61,19 +61,18 @@ class ResponseFactory {
 	/**
 	 * Constructor
 	 *
-	 * @param Request            $request   HTTP request
-	 * @param PluginHooksService $hooks     Plugin hooks service
-	 * @param AjaxService        $ajax      AJAX service
-	 * @param ResponseTransport  $transport Response transport
-	 * @param EventsService      $events    Events service
+	 * @param Request            $request HTTP request
+	 * @param PluginHooksService $hooks   Plugin hooks service
+	 * @param AjaxService        $ajax    AJAX service
+	 * @param EventsService      $events  Events service
 	 */
-	public function __construct(Request $request, PluginHooksService $hooks, AjaxService $ajax, ResponseTransport $transport, EventsService $events) {
+	public function __construct(Request $request, PluginHooksService $hooks, AjaxService $ajax, EventsService $events) {
 		$this->request = $request;
 		$this->hooks = $hooks;
 		$this->ajax = $ajax;
-		$this->transport = $transport;
 		$this->events = $events;
 		
+		$this->transport = \Elgg\Application::getResponseTransport();
 		$this->headers = new ResponseHeaderBag();
 	}
 

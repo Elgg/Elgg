@@ -60,7 +60,7 @@ class InternalContainer extends \Elgg\Di\InternalContainer{
 				$c->privateSettingsCache,
 				$c->config,
 				$c->system_messages,
-				$c->request->getContextStack()
+				$c->request
 			);
 		});
 

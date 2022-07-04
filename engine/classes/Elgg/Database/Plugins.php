@@ -9,6 +9,7 @@ use Elgg\Database;
 use Elgg\EventsService;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\PluginException;
+use Elgg\Http\Request;
 use Elgg\I18n\Translator;
 use Elgg\Project\Paths;
 use Elgg\SystemMessagesService;
@@ -127,7 +128,7 @@ class Plugins {
 	 * @param PrivateSettingsCache  $private_settings_cache Settings cache
 	 * @param Config                $config                 Config
 	 * @param SystemMessagesService $system_messages        System messages
-	 * @param Context               $context                Context
+	 * @param Request               $request                Context
 	 */
 	public function __construct(
 		\ElggCache $cache,
@@ -139,7 +140,7 @@ class Plugins {
 		PrivateSettingsCache $private_settings_cache,
 		Config $config,
 		SystemMessagesService $system_messages,
-		Context $context
+		Request $request
 	) {
 		$this->cache = $cache;
 		$this->db = $db;
@@ -150,7 +151,8 @@ class Plugins {
 		$this->private_settings_cache = $private_settings_cache;
 		$this->config = $config;
 		$this->system_messages = $system_messages;
-		$this->context = $context;
+		
+		$this->context = $request->getContextStack();
 	}
 
 	/**

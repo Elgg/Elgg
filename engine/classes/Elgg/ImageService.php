@@ -26,12 +26,12 @@ class ImageService {
 	/**
 	 * @var ImagineInterface
 	 */
-	private $imagine;
+	protected $imagine;
 
 	/**
 	 * @var Config
 	 */
-	private $config;
+	protected $config;
 	
 	/**
 	 * @var MimeTypeService
@@ -41,12 +41,23 @@ class ImageService {
 	/**
 	 * Constructor
 	 *
-	 * @param ImagineInterface $imagine  Imagine interface
-	 * @param Config           $config   Elgg config
-	 * @param MimeTypeService  $mimetype MimeType service
+	 * @param Config          $config   Elgg config
+	 * @param MimeTypeService $mimetype MimeType service
 	 */
-	public function __construct(ImagineInterface $imagine, Config $config, MimeTypeService $mimetype) {
-		$this->imagine = $imagine;
+	public function __construct(Config $config, MimeTypeService $mimetype) {
+		
+		switch ($config->image_processor) {
+			case 'imagick':
+				if (extension_loaded('imagick')) {
+					$this->imagine = new \Imagine\Imagick\Imagine();
+					break;
+				}
+			default:
+				// default use GD
+				$this->imagine = new \Imagine\Gd\Imagine();
+				break;
+		}
+
 		$this->config = $config;
 		$this->mimetype = $mimetype;
 	}
