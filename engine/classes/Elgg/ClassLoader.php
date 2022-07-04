@@ -69,12 +69,13 @@ class ClassLoader {
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\ClassMap $map    Class map
-	 * @param \Elgg\Config   $config Site config
+	 * @param \Elgg\Config $config Site config
 	 */
-	public function __construct(\Elgg\ClassMap $map, Config $config) {
-		$this->map = $map;
+	public function __construct(Config $config) {
+		$this->map = new \Elgg\ClassMap();
 		$this->config = $config;
+		
+		$this->register();
 	}
 
 	/**

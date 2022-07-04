@@ -52,23 +52,26 @@ class PersistentLoginService {
 	/**
 	 * Constructor
 	 *
-	 * @param UsersRememberMeCookiesTable $cookie_table  The persistent cookie storage table
-	 * @param \ElggSession                $session       The Elgg session
-	 * @param \Elgg\Security\Crypto       $crypto        The cryptography service
-	 * @param array                       $cookie_config The persistent login cookie settings
-	 * @param string                      $cookie_token  The token from the request cookie
+	 * @param UsersRememberMeCookiesTable $cookie_table The persistent cookie storage table
+	 * @param \ElggSession                $session      The Elgg session
+	 * @param \Elgg\Security\Crypto       $crypto       The cryptography service
+	 * @param \Elgg\Config                $config       The site configuration
+	 * @param \Elgg\Http\Request          $request      The request
 	 */
 	public function __construct(
 			UsersRememberMeCookiesTable $cookie_table,
 			\ElggSession $session,
 			\Elgg\Security\Crypto $crypto,
-			array $cookie_config,
-			$cookie_token) {
+			\Elgg\Config $config,
+			\Elgg\Http\Request $request) {
 		$this->persistent_cookie_table = $cookie_table;
 		$this->session = $session;
 		$this->crypto = $crypto;
-		$this->cookie_config = $cookie_config;
-		$this->cookie_token = $cookie_token;
+		
+		$global_cookies_config = $config->getCookieConfig();
+		
+		$this->cookie_config = $global_cookies_config['remember_me'];
+		$this->cookie_token = $request->cookies->get($this->cookie_config['name'], '');
 	}
 
 	/**

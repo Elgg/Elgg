@@ -28,6 +28,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \ElggAutoP                                      $autoP
  * @property-read \Elgg\AutoloadManager                           $autoloadManager
  * @property-read \Elgg\BootService                               $boot
+ * @property-read \ElggCache                                      $bootCache
  * @property-read \Elgg\Application\CacheHandler                  $cacheHandler
  * @property-read \Elgg\Assets\CssCompiler                        $cssCompiler
  * @property-read \Elgg\Security\Csrf                             $csrf
@@ -83,6 +84,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Security\PasswordGeneratorService         $passwordGenerator
  * @property-read \Elgg\PersistentLoginService                    $persistentLogin
  * @property-read \Elgg\Database\Plugins                          $plugins
+ * @property-read \ElggCache                                      $pluginsCache
  * @property-read \Elgg\Cache\PrivateSettingsCache                $privateSettingsCache
  * @property-read \Elgg\Database\PrivateSettingsTable             $privateSettings
  * @property-read \Elgg\Application\Database                      $publicDb
