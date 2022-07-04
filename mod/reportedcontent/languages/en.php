@@ -21,7 +21,6 @@ return array(
 	'reportedcontent:description' => 'Why are you reporting this?',
 	'reportedcontent:address' => 'Location of the item',
 	'reportedcontent:success' => 'Your report has been sent to the site admin',
-	'reportedcontent:report' => 'Report this',
 	'reportedcontent:numbertodisplay' => 'Number of reports to display',
 	'reportedcontent:user' => 'Report user',
 	'reportedcontent:new' => 'New reports',
