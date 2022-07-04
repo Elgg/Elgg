@@ -1,3 +1,17 @@
+<a name="4.2.3"></a>
+### 4.2.3  (2022-07-04)
+
+#### Contributors
+
+* Jeroen Dalsem (2)
+* Jerôme Bakker (2)
+
+#### Bug Fixes
+
+* **blogs:** preview opens in blank window to prevent history issues ([39a99376](https://github.com/Elgg/Elgg/commit/39a9937661b5db392963c2e5c145d7b1c27d48bc))
+* **forms:** datepicker should show correct prev/next characters ([48bff527](https://github.com/Elgg/Elgg/commit/48bff527e91a72f7b91452337e88dd7c1e17ed39))
+
+
 <a name="4.2.2"></a>
 ### 4.2.2  (2022-06-17)
 
