@@ -5,6 +5,7 @@ namespace Elgg\Notifications;
 use Elgg\EventsService;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\PluginHooksService;
+use Elgg\Traits\Loggable;
 use Elgg\Queue\Queue;
 
 /**
@@ -15,6 +16,8 @@ use Elgg\Queue\Queue;
  */
 class NotificationsService {
 
+	use Loggable;
+	
 	/** @var Queue */
 	protected $queue;
 
@@ -240,36 +243,39 @@ class NotificationsService {
 	 * @return int|array The number of notification events handled, or a delivery matrix
 	 */
 	public function processQueue($stopTime, $matrix = false) {
-
+		
 		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($stopTime, $matrix) {
 			$delivery_matrix = [];
-	
+			
 			$count = 0;
-	
+			
 			while (time() < $stopTime) {
 				// dequeue notification event
 				$event = $this->queue->dequeue();
 				/* @var $event NotificationEvent */
-	
+				
 				if (!$event) {
 					// queue is empty
 					break;
 				}
-	
+				
 				if (!$event instanceof NotificationEvent || !$event->getObject() || !$event->getActor()) {
 					// event object or actor have been deleted since the event was enqueued
 					continue;
 				}
 				
 				$this->elgg_events->trigger('dequeue', 'notifications', $event->getObject());
-	
-				$handler = $this->getNotificationHandler($event);
-	
-				$delivery_matrix[$event->getDescription()] = $handler->send();
 				
-				$count++;
+				$handler = $this->getNotificationHandler($event);
+				
+				try {
+					$delivery_matrix[$event->getDescription()] = $handler->send();
+					$count++;
+				} catch (\Throwable $t) {
+					$this->getLogger()->error($t);
+				}
 			}
-	
+			
 			return $matrix ? $delivery_matrix : $count;
 		});
 	}

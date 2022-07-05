@@ -105,7 +105,11 @@ class DelayedEmailService {
 			
 			// process one recipient
 			$processRecipient = function($row = null) use (&$last_recipient_guid, &$notifications, $delivery_interval, $timestamp) {
-				$this->processRecipientNotifications($last_recipient_guid, $notifications, $delivery_interval);
+				try {
+					$this->processRecipientNotifications($last_recipient_guid, $notifications, $delivery_interval);
+				} catch (\Throwable $t) {
+					$this->getLogger()->error($t);
+				}
 				
 				// cleanup the queue for this recipient
 				$this->queue_table->deleteRecipientRows($last_recipient_guid, $delivery_interval, $timestamp);
