@@ -302,6 +302,10 @@ class ImageService {
 	 * @return bool
 	 */
 	public function hasWebPSupport(): bool {
+		if ($this->config->webp_enabled === false) {
+			return false;
+		}
+		
 		if ($this->imagine instanceof \Imagine\Imagick\Imagine) {
 			return !empty(\Imagick::queryformats('WEBP*'));
 		} elseif ($this->imagine instanceof \Imagine\Gd\Imagine) {

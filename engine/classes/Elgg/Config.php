@@ -131,6 +131,7 @@ use Elgg\Traits\Loggable;
  * @property string        $view         							Default viewtype (usually not set)
  * @property bool          $walled_garden							Is current site in walled garden mode?
  * @property string        $who_can_change_language					Who can change the language of a user
+ * @property bool          $webp_enabled                            Are webp icons allowed
  * @property string        $wwwroot      							Site URL
  * @property string        $x_sendfile_type
  * @property string        $x_accel_mapping
@@ -225,6 +226,7 @@ class Config {
 		'simplecache_enabled' => false,
 		'system_cache_enabled' => false,
 		'testing_mode' => false,
+		'webp_enabled' => true,
 		'who_can_change_language' => 'everyone',
 	];
 	

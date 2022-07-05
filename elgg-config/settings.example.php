@@ -390,6 +390,14 @@ $CONFIG->allow_phpinfo = false;
 //$CONFIG->image_processor = 'imagick';
 
 /**
+ * Control if webp images are allowed to be served for icons (if supported by server and browser).
+ * Default enabled
+ *
+ * @global bool $CONFIG->webp_enabled
+ */
+//$CONFIG->webp_enabled = false;
+
+/**
  * Email subject length limit
  *
  * The length limit for email subjects, defaults to 998 as described in http://www.faqs.org/rfcs/rfc2822.html
