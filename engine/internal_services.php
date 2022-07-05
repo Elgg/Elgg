@@ -19,6 +19,7 @@ return [
 	}),
 	'annotationsTable' => DI\autowire(\Elgg\Database\AnnotationsTable::class),
 	'apiUsersTable' => DI\autowire(\Elgg\Database\ApiUsersTable::class),
+	'authentication' => DI\autowire(\Elgg\AuthenticationService::class),
 	'autoP' => DI\autowire(\ElggAutoP::class),
 	'boot' => DI\autowire(\Elgg\BootService::class)->constructorParameter('cache', DI\get('bootCache')),
 	'bootCache' => DI\factory(function (ContainerInterface $c) {
@@ -203,6 +204,7 @@ return [
 	\Elgg\Assets\CssCompiler::class => DI\get('cssCompiler'),
 	\Elgg\Assets\ExternalFiles::class => DI\get('externalFiles'),
 	\Elgg\Assets\ImageFetcherService::class => DI\get('imageFetcher'),
+	\Elgg\AuthenticationService::class => DI\get('authentication'),
 	\Elgg\AutoloadManager::class => DI\get('autoloadManager'),
 	\Elgg\BootService::class => DI\get('boot'),
 	\Elgg\Cache\DataCache::class => DI\get('dataCache'),
