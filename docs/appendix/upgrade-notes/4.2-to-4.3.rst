@@ -1,0 +1,13 @@
+From 4.2 to 4.3
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+   
+Deprecation of rel="toggle" and rel="popup"
+-------------------------------------------
+
+If you are using ``rel="toggle"`` or ``rel="popup"`` for showing some hidden content you will need to update your code.
+The correct javascript will automatically be loaded if you draw content using ``output/url`` (directly or indirectly) and pass the class ``elgg-popup`` or ``elgg-toggle``.
+If you need popup/toggle features on your own elements, you will need to set the correct class and require the correct javascript (``elgg/popup`` or ``elgg/toggle``). 

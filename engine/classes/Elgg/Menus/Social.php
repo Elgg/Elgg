@@ -49,7 +49,7 @@ class Social {
 			$item = $hook->getParam('item');
 			if ($item instanceof \ElggRiverItem && $can_comment) {
 				$options['href'] = "#comments-add-{$entity->guid}-{$item->id}";
-				$options['rel'] = 'toggle';
+				$options['class'] = 'elgg-toggle';
 			}
 			
 			$return[] = \ElggMenuItem::factory($options);

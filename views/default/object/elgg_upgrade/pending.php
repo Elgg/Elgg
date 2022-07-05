@@ -39,8 +39,7 @@ $progressbar = elgg_format_element('div', [
 $errors_link = elgg_view('output/url', [
 	'href' => "#upgrade-errors-{$entity->guid}",
 	'text' => elgg_echo('upgrade:error_count', [0]),
-	'rel' => 'toggle',
-	'class' => 'upgrade-error-counter',
+	'class' => ['elgg-toggle', 'upgrade-error-counter'],
 ]);
 
 $errors = elgg_format_element('ul', [

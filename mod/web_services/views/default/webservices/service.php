@@ -46,9 +46,8 @@ $read_more_class = 'webservices-service-' . elgg_get_friendly_title($service->ge
 $description .= elgg_view('output/url', [
 	'text' => elgg_echo('more_info'),
 	'href' => false,
-	'class' => 'mlm',
-	'data-toggle-Selector' => ".{$read_more_class}",
-	'rel' => 'toggle',
+	'class' => ['elgg-toggle', 'mlm'],
+	'data-toggle-selector' => ".{$read_more_class}",
 ]);
 
 if (!elgg_is_empty($description)) {
