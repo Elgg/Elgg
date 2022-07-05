@@ -16,6 +16,8 @@ if (elgg_is_logged_in()) {
 
 $num_display = (int) $widget->num_display ?: 4;
 
+$more_link = elgg_view_url(elgg_generate_url('collection:annotation:messageboard:owner', ['username' => $owner->username]), elgg_echo('link:view:all'));
+
 echo elgg_list_annotations([
 	'annotation_name' => 'messageboard',
 	'guid' => $owner->guid,
@@ -25,16 +27,7 @@ echo elgg_list_annotations([
 		new OrderByClause('n_table.time_created', 'DESC'),
 		new OrderByClause('n_table.id', 'DESC'),
 	],
+	'widget_more' => $more_link,
 ]);
-
-$more_link = elgg_view('output/url', [
-	'href' => elgg_generate_url('collection:annotation:messageboard:owner', [
-		'username' => $owner->username,
-	]),
-	'text' => elgg_echo('link:view:all'),
-	'is_trusted' => true,
-]);
-
-echo elgg_format_element('div', ['class' => 'elgg-widget-more'], $more_link);
 
 elgg_require_js('elgg/messageboard');

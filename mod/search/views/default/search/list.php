@@ -68,7 +68,7 @@ if (elgg_extract('pagination', $params)) {
 	]);
 } else if ($more_items > 0) {
 	$pagination = elgg_view('output/url', [
-		'class' => 'elgg-widget-more',
+		'class' => 'elgg-more',
 		'href' => elgg_http_remove_url_query_element($base_url, 'limit'),
 		'text' => elgg_echo('search:more', [$count - count($entities), $type_label]),
 	]);

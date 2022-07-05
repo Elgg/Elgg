@@ -13,9 +13,10 @@ echo elgg_list_entities([
 	'type' => 'user',
 	'subtype'=> null,
 	'metadata_name_value_pairs' => [
-		['banned' => 'yes'],
+		'banned' => 'yes',
 	],
 	'pagination' => false,
 	'limit' => $num_display,
 	'no_results' => true,
+	'widget_more' => elgg_view_url('admin/users/banned', elgg_echo('more')),
 ]);

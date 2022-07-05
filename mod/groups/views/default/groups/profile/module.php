@@ -80,7 +80,7 @@ if (!isset($add_link) && $can_default) {
 
 if (!empty($add_link) && !empty($entity_type) && !empty($entity_subtype)) {
 	if ($group->canWriteToContainer(0, $entity_type, $entity_subtype)) {
-		$footer = elgg_format_element('span', ['class' => 'elgg-widget-more'], $add_link);
+		$footer = elgg_format_element('span', ['class' => 'elgg-more'], $add_link);
 	}
 }
 
