@@ -263,6 +263,7 @@ class NotificationEventHandler {
 		$params['object'] = $object;
 		$params['action'] = $this->event->getAction();
 		$params['add_salutation'] = elgg_extract('add_salutation', $params, true);
+		$params['add_mute_link'] = elgg_extract('add_mute_link', $params, $this->addMuteLink());
 
 		$notification = $this->prepareNotification($params);
 		return $this->deliverNotification($notification, $method);
@@ -503,6 +504,15 @@ class NotificationEventHandler {
 	 * @since 4.1
 	 */
 	protected static function isConfigurableForGroup(\ElggGroup $group): bool {
+		return true;
+	}
+	
+	/**
+	 * Add a mute link in the email notification
+	 *
+	 * @return bool
+	 */
+	protected function addMuteLink(): bool {
 		return true;
 	}
 }
