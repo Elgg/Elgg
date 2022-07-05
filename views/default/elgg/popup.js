@@ -169,6 +169,9 @@ define('elgg/popup', ['elgg', 'jquery', 'jquery-ui/position', 'jquery-ui/unique-
 			});
 		}
 	};
-
+	
+	popup.bind($('.elgg-popup'));
+	popup.bind($('[rel="popup"]')); // deprecated
+	
 	return popup;
 });

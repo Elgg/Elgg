@@ -13,7 +13,7 @@ $form = elgg_view_form('logbrowser/refine', $form_vars, $vars);
 $toggle_link = elgg_view('output/url', [
 	'href' => '#log-browser-search-form',
 	'text' => elgg_echo('logbrowser:search'),
-	'rel' => 'toggle',
+	'class' => 'elgg-toggle',
 ]);
 
 $toggle_link = elgg_format_element('div', [], $toggle_link);

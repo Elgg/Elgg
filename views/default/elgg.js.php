@@ -33,11 +33,12 @@ define('elgg', ['jquery'], function($) {
 	$(elementId).addClass('elgg-state-highlight');
 	
 	require(['elgg/popup'], function(popup) {
+		// @todo remove the require here in Elgg 5.0
 		popup.bind($('[rel="popup"]'));
 	});
 	
 	/**
-	 * Toggles an element based on clicking a separate element
+	 * Toggles an element based on clicking a separate element (deprecated, use 'elgg/toggle')
 	 *
 	 * Use rel="toggle" on the toggler element
 	 * Set the href to target the item you want to toggle (<a rel="toggle" href="#id-of-target">)

@@ -71,7 +71,7 @@ if ($protect_cron) {
 	$content .= ' ' . elgg_view('output/url', [
 		'text' => elgg_echo('admin:security:settings:protect_cron:toggle'),
 		'href' => '#security-cron-urls',
-		'rel' => 'toggle',
+		'class' => 'elgg-toggle',
 	]);
 	$content .= $table;
 	

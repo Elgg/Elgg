@@ -404,7 +404,7 @@ Module ``elgg/popup``
 
 The ``elgg/popup`` module can be used to display an overlay positioned relatively to its anchor (trigger).
 
-The ``elgg/popup`` module is loaded by default, and binding a popup module to an anchor is as simple as adding ``rel="popup"``
+The ``elgg/popup`` module is automatically loaded for content drawn using ``output/url`` with the ``class='elgg-popup'``
 attribute and defining target module with a ``href`` (or ``data-href``) attribute. Popup module positioning can be defined with
 ``data-position`` attribute of the trigger element.
 
@@ -421,13 +421,13 @@ attribute and defining target module with a ``href`` (or ``data-href``) attribut
    echo elgg_view('output/url', [
       'href' => '#popup-module',
       'text' => 'Show popup',
-      'rel' => 'popup',
+      'class' => 'elgg-popup',
    ]);
 
    // Button with custom positioning of the popup
+   elgg_require_js('elgg/popup');
    echo elgg_format_element('button', [
-      'rel' => 'popup',
-      'class' => 'elgg-button elgg-button-submit',
+      'class' => 'elgg-button elgg-button-submit elgg-popup',
       'text' => 'Show popup',
       'data-href' => '#popup-module',
       'data-position' => json_encode([

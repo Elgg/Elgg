@@ -29,8 +29,7 @@ if (!empty($secret) && elgg_is_admin_logged_in()) {
 		'text' => elgg_echo('webservices:api_key:secret:show'),
 		'href' => false,
 		'data-toggle-selector' => '.webservices-secret-' . $entity->guid,
-		'rel' => 'toggle',
-		'class' => 'mlm'
+		'class' => ['elgg-toggle', 'mlm'],
 	]);
 	
 	$secret = elgg_format_element('strong', ['class' => 'mrs'], elgg_echo('webservices:api_key:secret'));

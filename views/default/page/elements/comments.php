@@ -120,8 +120,7 @@ if ($show_add_form && $entity->canComment()) {
 					'text' => elgg_echo('generic_comments:add'),
 					'href' => '#' . $form_vars['id'],
 					'icon' => 'plus',
-					'class' => ['elgg-button', 'elgg-button-action'],
-					'rel' => 'toggle',
+					'class' => ['elgg-button', 'elgg-button-action', 'elgg-toggle'],
 				],
 			],
 		]);
@@ -139,9 +138,8 @@ if ($show_add_form && $entity->canComment()) {
 
 	$menu = elgg_view('output/url', [
 		'href' => elgg_get_login_url([], '#comments-login'),
-		'rel' => 'popup',
 		'text' => elgg_echo('login'),
-		'class' => ['elgg-button', 'elgg-button-action'],
+		'class' => ['elgg-button', 'elgg-button-action', 'elgg-popup'],
 		'data-position' => json_encode([
 			'my' => 'right top',
 			'at' => 'right bottom',
