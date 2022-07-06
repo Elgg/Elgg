@@ -352,13 +352,10 @@ use:
 
     function rest_plugin_setup_pams() {
         // user token can also be used for user authentication
-        register_pam_handler('elgg_ws_pam_auth_usertoken');
+        elgg_register_pam_handler(\Elgg\WebServices\PAM\UserToken::class);
 
         // simple API key check
-        register_pam_handler('elgg_ws_pam_auth_api_key', "sufficient", "api");
-        
-        // override the default pams
-        return true;
+        elgg_register_pam_handler(\Elgg\WebServices\PAM\APIKey::class, 'sufficient', 'api');
     }
 
 .. _pluggable authentication module (PAM): http://en.wikipedia.org/wiki/Pluggable_Authentication_Modules

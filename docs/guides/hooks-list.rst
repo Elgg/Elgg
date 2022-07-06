@@ -448,12 +448,8 @@ Permission hooks
 	Return boolean for if the user in ``$params['user']`` can edit the annotation ``$params['annotation']`` on the
 	entity ``$params['entity']``. The user can be null.
 
-**fail, auth**
-	Return the failure message if authentication failed. An array of previous PAM failure methods
-	is passed as ``$params``.
-
 **api_key, use**
-	Triggered by ``elgg_ws_pam_auth_api_key()``. Returning false prevents the key from being authenticated.
+	Triggered in the class ``\Elgg\WebServices\PAM\API\APIKey``. Returning false prevents the key from being authenticated.
 
 **gatekeeper, <entity_type>:<entity_subtype>**
     Filters the result of ``elgg_entity_gatekeeper()`` to prevent or allow access to an entity that user would otherwise have or not have access to.

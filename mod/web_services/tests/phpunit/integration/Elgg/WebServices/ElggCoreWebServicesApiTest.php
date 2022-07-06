@@ -4,6 +4,7 @@ namespace Elgg\WebServices;
 
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\IntegrationTestCase;
+use Elgg\WebServices\PAM\API\APIKey;
 
 /**
  * @group WebServices
@@ -49,20 +50,24 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 	}
 
 	public function testApiAuthKeyNoKey() {
+		$apikey = new APIKey();
+		
 		$this->expectException(\APIException::class);
 		$this->expectExceptionMessage(elgg_echo('APIException:MissingAPIKey'));
-		elgg_ws_pam_auth_api_key();
+		$apikey();
 	}
 
 	public function testApiAuthKeyBadKey() {
+		$apikey = new APIKey();
 		set_input('api_key', 'BAD');
 		
 		$this->expectException(\APIException::class);
 		$this->expectExceptionMessage(elgg_echo('APIException:BadAPIKey'));
-		elgg_ws_pam_auth_api_key();
+		$apikey();
 	}
 	
 	public function testApiAuthKeyDisabled() {
+		$apikey = new APIKey();
 		/* @var $entity \ElggApiKey */
 		$entity = $this->createObject([
 			'subtype' => \ElggApiKey::SUBTYPE,
@@ -72,14 +77,14 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 		
 		set_input('api_key', $entity->getPublicKey());
 		
-		$this->assertTrue(elgg_ws_pam_auth_api_key());
+		$this->assertTrue($apikey());
 		
 		$this->assertTrue($entity->disableKeys());
 		$this->assertFalse($entity->hasActiveKeys());
 		
 		$this->expectException(\APIException::class);
 		$this->expectExceptionMessage(elgg_echo('APIException:BadAPIKey'));
-		elgg_ws_pam_auth_api_key();
+		$apikey();
 	}
 
 	public function methodCallback() {

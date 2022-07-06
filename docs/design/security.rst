@@ -75,7 +75,7 @@ Alternative authentication
 .. note:: This section is very hand-wavy
 
 To replace Elgg's default user authentication system, a plugin could replace the default ``login`` action with its own. 
-Better would be to register a PAM handler using ``register_pam_handler()`` which handles the authentication of the user based on the new requirements.
+Better would be to register a PAM handler using ``elgg_register_pam_handler()`` which handles the authentication of the user based on the new requirements.
 
 HTTPS
 =====

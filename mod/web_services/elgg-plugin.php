@@ -8,7 +8,6 @@ use Elgg\WebServices\Middleware\ViewtypeMiddleware;
 use Elgg\WebServices\RestServiceController;
 
 require_once(__DIR__ . '/lib/functions.php');
-require_once(__DIR__ . '/lib/pam_handlers.php');
 require_once(__DIR__ . '/lib/web_services.php');
 
 return [

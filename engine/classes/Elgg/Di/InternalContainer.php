@@ -25,6 +25,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Amd\Config                                $amdConfig
  * @property-read \Elgg\Database\AnnotationsTable                 $annotationsTable
  * @property-read \Elgg\Database\ApiUsersTable                    $apiUsersTable
+ * @property-read \Elgg\AuthenticationService                     $authentication
  * @property-read \ElggAutoP                                      $autoP
  * @property-read \Elgg\AutoloadManager                           $autoloadManager
  * @property-read \Elgg\BootService                               $boot

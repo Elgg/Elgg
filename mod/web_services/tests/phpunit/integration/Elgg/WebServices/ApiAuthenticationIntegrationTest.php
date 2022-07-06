@@ -23,11 +23,6 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 	protected $plugin_settings;
 	
 	/**
-	 * @var array
-	 */
-	protected $pam_handlers;
-	
-	/**
 	 * @var bool
 	 */
 	protected $gc_enabled;
@@ -43,7 +38,6 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 		
 		$this->plugin = elgg_get_plugin_from_id('web_services');
 		$this->plugin_settings = $this->plugin->getAllSettings();
-		$this->pam_handlers = \ElggPAM::$_handlers;
 	}
 	
 	/**
@@ -54,8 +48,6 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 		foreach ($this->plugin_settings as $name => $value) {
 			$this->plugin->setSetting($name, $value);
 		}
-		
-		\ElggPAM::$_handlers = $this->pam_handlers;
 		
 		if ($this->gc_enabled) {
 			gc_enable();
@@ -96,9 +88,6 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 		
 		// in some cases there was a failure with missing view
 		$app->internal_services->views->registerPluginViews($this->plugin->getPath());
-		
-		// reset all PAM handlers
-		\ElggPAM::$_handlers = [];
 	}
 	
 	/**

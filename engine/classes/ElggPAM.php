@@ -1,15 +1,13 @@
 <?php
 
+use Elgg\Exceptions\AuthenticationException;
+
 /**
  * Pluggable Authentication Module
+ *
+ * @deprecated 4.3 use elgg_pam_authenticate()
  */
 class ElggPAM {
-
-	/**
-	 * @var array
-	 * @internal
-	 */
-	public static $_handlers = [];
 
 	/**
 	 * @var string PAM policy type: user, api or plugin-defined policies
@@ -19,7 +17,7 @@ class ElggPAM {
 	/**
 	 * @var array Failure mesages
 	 */
-	protected $messages;
+	protected $message;
 
 	/**
 	 * \ElggPAM constructor
@@ -28,7 +26,6 @@ class ElggPAM {
 	 */
 	public function __construct($policy) {
 		$this->policy = $policy;
-		$this->messages = ['sufficient' => [], 'required' => []];
 	}
 
 	/**
@@ -47,46 +44,14 @@ class ElggPAM {
 	 * @return bool
 	 */
 	public function authenticate($credentials = []) {
-		if (!isset(self::$_handlers[$this->policy]) ||
-			!is_array(self::$_handlers[$this->policy])) {
-			return false;
+		
+		try {
+			return elgg_pam_authenticate($this->policy, $credentials);
+		} catch (AuthenticationException $e) {
+			$this->message = $e->getMessage();
 		}
-
-		$authenticated = false;
-
-		foreach (self::$_handlers[$this->policy] as $v) {
-			$handler = $v->handler;
-			if (!is_callable($handler)) {
-				_elgg_services()->logger->warning("PAM handler '" . _elgg_services()->handlers->describeCallable($handler) . "' for policy '{$this->policy}' isn't callable");
-				continue;
-			}
-			/* @var callable $handler */
-
-			$importance = $v->importance;
-
-			try {
-				$result = call_user_func($handler, $credentials);
-				if ($result) {
-					$authenticated = true;
-				} elseif ($result === false) {
-					if ($importance == 'required') {
-						$this->messages['required'][] = "$handler:failed";
-						return false;
-					} else {
-						$this->messages['sufficient'][] = "$handler:failed";
-					}
-				}
-			} catch (Exception $e) {
-				if ($importance == 'required') {
-					$this->messages['required'][] = $e->getMessage();
-					return false;
-				} else {
-					$this->messages['sufficient'][] = $e->getMessage();
-				}
-			}
-		}
-
-		return $authenticated;
+		
+		return false;
 	}
 
 	/**
@@ -96,12 +61,10 @@ class ElggPAM {
 	 */
 	public function getFailureMessage() {
 		$message = _elgg_services()->translator->translate('auth:nopams');
-		if (!empty($this->messages['required'])) {
-			$message = $this->messages['required'][0];
-		} elseif (!empty($this->messages['sufficient'])) {
-			$message = $this->messages['sufficient'][0];
+		if (!empty($this->message)) {
+			$message = $this->message;
 		}
 
-		return _elgg_services()->hooks->trigger('fail', 'auth', $this->messages, $message);
+		return _elgg_services()->hooks->triggerDeprecated('fail', 'auth', $this->message, $message, "The 'fail', 'auth' hook is deprecated", '4.3');
 	}
 }

@@ -721,6 +721,7 @@ class Application {
 			'deprecated-4.0.php',
 			'deprecated-4.1.php',
 			'deprecated-4.2.php',
+			'deprecated-4.3.php',
 			'deprecation.php',
 			'entities.php',
 			'external_files.php',
