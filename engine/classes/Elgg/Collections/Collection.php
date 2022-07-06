@@ -6,6 +6,7 @@ use ArrayAccess;
 use Countable;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\OutOfBoundsException;
 use SeekableIterator;
 
 /**
@@ -309,7 +310,7 @@ class Collection implements CollectionInterface,
 		$keys = array_keys($this->items);
 
 		if (!isset($keys[$position])) {
-			throw new \OutOfBoundsException();
+			throw new OutOfBoundsException();
 		}
 
 		$this->position = $position;

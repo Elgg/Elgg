@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Exceptions\AuthenticationException;
+use Elgg\Exceptions\Exception;
 
 class AuthenticationServiceUnitTest extends UnitTestCase {
 	
@@ -146,7 +147,7 @@ class AuthenticationServiceUnitTest extends UnitTestCase {
 	
 	public function testAuthenticateSufficientWithException() {
 		$this->assertTrue($this->service->registerHandler(function() {
-			throw new \Exception('this was required');
+			throw new Exception('this was required');
 		}, 'sufficient', 'bar'));
 		
 		$this->expectException(AuthenticationException::class);
@@ -156,7 +157,7 @@ class AuthenticationServiceUnitTest extends UnitTestCase {
 	
 	public function testAuthenticateMultipleSufficientWithOneException() {
 		$this->assertTrue($this->service->registerHandler(function() {
-			throw new \Exception('this was required');
+			throw new Exception('this was required');
 		}, 'sufficient', 'bar'));
 		$this->assertTrue($this->service->registerHandler(function() {
 			return true;
@@ -167,7 +168,7 @@ class AuthenticationServiceUnitTest extends UnitTestCase {
 	
 	public function testAuthenticateRequiredWithException() {
 		$this->assertTrue($this->service->registerHandler(function() {
-			throw new \Exception('this was required');
+			throw new Exception('this was required');
 		}, 'required', 'bar'));
 		
 		$this->expectException(AuthenticationException::class);

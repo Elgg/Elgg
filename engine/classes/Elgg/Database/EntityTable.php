@@ -10,9 +10,9 @@ use Elgg\Database;
 use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\EntityPreloader;
 use Elgg\EventsService;
+use Elgg\Exceptions\ClassException;
 use Elgg\Exceptions\Database\UserFetchFailureException;
 use Elgg\Exceptions\InvalidParameterException;
-use Elgg\Exceptions\ClassException;
 use Elgg\I18n\Translator;
 use Elgg\Traits\Loggable;
 use Elgg\Traits\TimeUsing;
@@ -132,7 +132,7 @@ class EntityTable {
 	 */
 	public function setEntityClass($type, $subtype, $class = '') {
 		if (!in_array($type, Config::ENTITY_TYPES)) {
-			throw new InvalidParameterException("$type is not a valid entity type");
+			throw new InvalidParameterException("{$type} is not a valid entity type");
 		}
 
 		$this->entity_classes[$type][$subtype] = $class;
@@ -271,7 +271,7 @@ class EntityTable {
 
 		$entity = new $class_name($row);
 		if (!$entity instanceof \ElggEntity) {
-			throw new ClassException("$class_name must extend " . \ElggEntity::class);
+			throw new ClassException("{$class_name} must extend " . \ElggEntity::class);
 		}
 
 		return $entity;

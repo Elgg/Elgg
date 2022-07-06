@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Exceptions\RuntimeException as ElggRuntimeException;
+
 /**
  * Create wrapper P and BR elements in HTML depending on newlines. Useful when
  * users use newlines to signal line and paragraph breaks. In all cases output
@@ -82,7 +84,9 @@ class ElggAutoP {
 	 * least two of them.
 	 *
 	 * @param string $html snippet
+	 *
 	 * @return string|false output or false if parse error occurred
+	 * @throws \Elgg\Exceptions\RuntimeException
 	 */
 	public function process($html) {
 		if (!isset($html)) {
@@ -122,7 +126,7 @@ class ElggAutoP {
 
 			if ($nodeList->item(0) instanceof DOMText) {
 				// not going to work
-				throw new \RuntimeException('DOMXPath::query for BODY element returned a text node');
+				throw new ElggRuntimeException('DOMXPath::query for BODY element returned a text node');
 			}
 		}
 		$this->addParagraphs($nodeList->item(0));

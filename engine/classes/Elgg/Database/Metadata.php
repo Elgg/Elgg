@@ -2,19 +2,15 @@
 
 namespace Elgg\Database;
 
-use Closure;
 use Doctrine\DBAL\Query\Expression\CompositeExpression;
 use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
-use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\InvalidArgumentException;
-use ElggData;
-use ElggEntity;
-use ElggMetadata;
-use LogicException;
+use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\LogicException;
 
 /**
  * Metadata repository contains methods for fetching metadata from database or performing
@@ -68,7 +64,7 @@ class Metadata extends Repository {
 
 		switch ($property_type) {
 			case 'attribute':
-				if (!in_array($property, ElggEntity::PRIMARY_ATTR_NAMES)) {
+				if (!in_array($property, \ElggEntity::PRIMARY_ATTR_NAMES)) {
 					throw new InvalidParameterException("'$property' is not a valid attribute");
 				}
 
@@ -116,7 +112,7 @@ class Metadata extends Repository {
 	 * @param int      $offset   Offset
 	 * @param callable $callback Custom callback
 	 *
-	 * @return ElggMetadata[]
+	 * @return \ElggMetadata[]
 	 */
 	public function get($limit = null, $offset = null, $callback = null) {
 
@@ -144,7 +140,7 @@ class Metadata extends Repository {
 		$callback = $callback ? : $this->options->callback;
 		if (!isset($callback)) {
 			$callback = function ($row) {
-				return new ElggMetadata($row);
+				return new \ElggMetadata($row);
 			};
 		}
 
@@ -154,7 +150,7 @@ class Metadata extends Repository {
 	/**
 	 * Execute the query resolving calculation, count and/or batch options
 	 *
-	 * @return array|ElggData[]|ElggMetadata[]|false|int
+	 * @return array|\ElggData[]|\ElggMetadata[]|false|int
 	 * @throws LogicException
 	 */
 	public function execute() {

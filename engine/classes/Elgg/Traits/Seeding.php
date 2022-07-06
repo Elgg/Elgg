@@ -7,6 +7,7 @@ use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Seeds\Providers\LocalImage;
 use Elgg\Exceptions\Configuration\RegistrationException;
+use Elgg\Exceptions\Exception;
 use Elgg\Exceptions\Seeding\MaxAttemptsException;
 use Elgg\Groups\Tool;
 use Elgg\Traits\Seeding\GroupHelpers;
@@ -100,6 +101,7 @@ trait Seeding {
 	 * @param array $options    Seeding options
 	 *
 	 * @return \ElggUser
+	 * @throws Exception
 	 * @throws MaxAttemptsException
 	 */
 	public function createUser(array $attributes = [], array $metadata = [], array $options = []): \ElggUser {
@@ -134,7 +136,7 @@ trait Seeding {
 
 				$user = get_user($guid);
 				if (!$user instanceof \ElggUser) {
-					throw new \Exception("Unable to create new user with attributes: " . print_r($attributes, true));
+					throw new Exception("Unable to create new user with attributes: " . print_r($attributes, true));
 				}
 
 				if (!isset($attributes['time_created'])) {

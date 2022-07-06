@@ -2,7 +2,7 @@
 
 namespace Elgg\Cli;
 
-use RuntimeException;
+use Elgg\Exceptions\RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

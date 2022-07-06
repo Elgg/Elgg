@@ -16,7 +16,7 @@ use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Database\Clauses\SelectClause;
 use Elgg\Database\Clauses\WhereClause;
-use ElggEntity;
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * This trait serves as an adapter between legacy ege* options and new OO query builder
@@ -178,6 +178,7 @@ trait LegacyQueryOptionsAdapter {
 	 * @param array $options Options
 	 *
 	 * @return array
+	 * @throws InvalidArgumentException
 	 */
 	protected function normalizeTypeSubtypeOptions(array $options = []) {
 
@@ -204,7 +205,7 @@ trait LegacyQueryOptionsAdapter {
 				}
 			}
 		} else if (isset($options['subtypes'])) {
-			throw new \Elgg\Exceptions\InvalidArgumentException('If filtering for entity subtypes it is required to provide one or more entity types.');
+			throw new InvalidArgumentException('If filtering for entity subtypes it is required to provide one or more entity types.');
 		}
 
 		if (isset($options['type_subtype_pairs']) && is_array($options['type_subtype_pairs'])) {
@@ -321,7 +322,7 @@ trait LegacyQueryOptionsAdapter {
 				}, explode(',', $pair['value']));
 			}
 
-			if (in_array($pair['name'], ElggEntity::PRIMARY_ATTR_NAMES)) {
+			if (in_array($pair['name'], \ElggEntity::PRIMARY_ATTR_NAMES)) {
 				$clause = new AttributeWhereClause();
 			} else {
 				$clause = new MetadataWhereClause();
@@ -397,7 +398,7 @@ trait LegacyQueryOptionsAdapter {
 				}, explode(',', $pair['value']));
 			}
 
-			if (in_array($pair['name'], ElggEntity::PRIMARY_ATTR_NAMES)) {
+			if (in_array($pair['name'], \ElggEntity::PRIMARY_ATTR_NAMES)) {
 				$clause = new AttributeWhereClause();
 			} else {
 				$clause = new MetadataWhereClause();

@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Exceptions\RuntimeException as ElggRuntimeException;
+
 /**
  * @group Functions
  */
@@ -35,13 +37,13 @@ class ElggCallUnitTest extends \Elgg\UnitTestCase {
 			$this->assertEquals($ignore_access, elgg_get_ignore_access());
 			$this->assertEquals($show_disabled, elgg()->session->getDisabledEntityVisibility());
 
-			throw new RuntimeException();
+			throw new ElggRuntimeException();
 		};
 
 		$exception_thrown = false;
 		try {
 			elgg_call($flags, $exception_function);
-		} catch (\RuntimeException $ex) {
+		} catch (ElggRuntimeException $ex) {
 			$exception_thrown = true;
 		}
 
