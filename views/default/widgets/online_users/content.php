@@ -14,4 +14,5 @@ echo get_online_users([
 	'pagination' => false,
 	'limit' => $num_display,
 	'no_results' => true,
+	'widget_more' => elgg_view_url('admin/users/online', elgg_echo('more')),
 ]);

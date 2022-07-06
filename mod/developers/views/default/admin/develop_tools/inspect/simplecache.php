@@ -1,15 +1,15 @@
 <?php
 
-$data = elgg_extract("data", $vars);
+$data = elgg_extract('data', $vars);
 
 if (empty($data)) {
 	return;
 }
 
 echo "<table class='elgg-table-alt'>";
-echo "<tr>";
+echo "<thead><tr>";
 echo "<th>" . elgg_echo('developers:inspect:simplecache') . "</th>";
-echo "</tr>";
+echo "</tr></thead>";
 
 foreach ($data as $view => $arr) {
 	echo "<tr><td>";

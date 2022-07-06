@@ -7,15 +7,15 @@ if (empty($data)) {
 }
 
 echo "<table class='elgg-table-alt'>";
-echo "<tr>";
+echo "<thead><tr>";
 echo "<th>" . elgg_echo('developers:inspect:actions') . "</th>";
 echo "<th>" . elgg_echo('developers:inspect:file_location') . "</th>";
 echo "<th>" . elgg_echo('access') . "</th>";
-echo "</tr>";
+echo "</tr></thead>";
 
 foreach ($data as $key => $arr) {
 	echo "<tr>";
-	echo "<td>$key</td>";
+	echo "<td>{$key}</td>";
 	echo "<td>{$arr[0]}</td>";
 	echo "<td>{$arr[1]}</td>";
 	echo "</tr>";

@@ -1,6 +1,6 @@
 <?php
 
-$data = elgg_extract("data", $vars);
+$data = elgg_extract('data', $vars);
 if (empty($data)) {
 	return;
 }
@@ -18,7 +18,7 @@ $make_id = function ($view) {
 	return "z" . md5($view);
 };
 
-$viewtypes = elgg_extract("viewtypes", $vars);
+$viewtypes = elgg_extract('viewtypes', $vars);
 
 foreach ($viewtypes as $type) {
 	$href = "admin/develop_tools/inspect?inspect_type=Views";
@@ -42,17 +42,17 @@ if ($global_hooks) {
 		$hook = "<a href='?inspect_type=Plugin%20Hooks#$id'>$hook</a>";
 	});
 
-	echo "<p>" . elgg_echo("developers:inspect:views:all_filtered") . " ";
+	echo "<p>" . elgg_echo('developers:inspect:views:all_filtered') . " ";
 	echo implode(' | ', $global_hooks);
 	echo "</p>";
 }
 
 echo "<table class='elgg-table-alt'>";
-echo "<tr>";
+echo "<thead><tr>";
 echo "<th>" . elgg_echo('developers:inspect:views') . "</th>";
 echo "<th>" . elgg_echo('developers:inspect:priority') . "</th>";
 echo "<th>" . elgg_echo('developers:inspect:file_location') . "</th>";
-echo "</tr>";
+echo "</tr></thead>";
 
 $last_view = '';
 foreach ($views as $view => $components) {
@@ -66,8 +66,8 @@ foreach ($views as $view => $components) {
 
 	if (in_array($view, $input_filtered_views)) {
 		$rowspan += 1;
-		$id = "z" . md5("view_vars, $view");
-		$link = "<a href='?inspect_type=Plugin%20Hooks#$id'>view_vars, $view</a>";
+		$id = "z" . md5("view_vars, {$view}");
+		$link = "<a href='?inspect_type=Plugin%20Hooks#{$id}'>view_vars, {$view}</a>";
 		$col2 = elgg_echo('developers:inspect:views:input_filtered', [$link]);
 
 		$extra_rows .= "<tr><td>&nbsp;</td><td>$col2</td></tr>";
@@ -75,11 +75,11 @@ foreach ($views as $view => $components) {
 
 	if (in_array($view, $filtered_views)) {
 		$rowspan += 1;
-		$id = "z" . md5("view, $view");
-		$link = "<a href='?inspect_type=Plugin%20Hooks#$id'>view, $view</a>";
+		$id = "z" . md5("view, {$view}");
+		$link = "<a href='?inspect_type=Plugin%20Hooks#{$id}'>view, {$view}</a>";
 		$col2 = elgg_echo('developers:inspect:views:filtered', [$link]);
 
-		$extra_rows .= "<tr><td>&nbsp;</td><td>$col2</td></tr>";
+		$extra_rows .= "<tr><td>&nbsp;</td><td>{$col2}</td></tr>";
 	}
 
 	foreach ($components as $priority => $component) {
@@ -87,24 +87,24 @@ foreach ($views as $view => $components) {
 
 		echo "<tr>";
 		if ($view !== $last_view) {
-			echo "<td id='$view_id' rowspan='$rowspan'>$view</td>";
+			echo "<td id='{$view_id}' rowspan='{$rowspan}'>{$view}</td>";
 			$last_view = $view;
 		}
 
 		if (0 === strpos($priority, "o:")) {
 			echo "<td style='opacity:.6'>over</td>";
-			echo "<td style='opacity:.6'><del>$file</del></td>";
+			echo "<td style='opacity:.6'><del>{$file}</del></td>";
 		} elseif ($priority != 500) {
 			$href = $make_id($component->view);
-			echo "<td>$priority</td>";
+			echo "<td>{$priority}</td>";
 			$link = elgg_view('admin/develop_tools/inspect/views/view_link', [
 				'view' => $component->view,
 				'text' => $file,
 			]);
-			echo "<td style='opacity:.6'>$link</td>";
+			echo "<td style='opacity:.6'>{$link}</td>";
 		} else {
-			echo "<td>$priority</td>";
-			echo "<td>$file</td>";
+			echo "<td>{$priority}</td>";
+			echo "<td>{$file}</td>";
 		}
 		echo "</tr>";
 	}

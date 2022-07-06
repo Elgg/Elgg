@@ -41,6 +41,8 @@ class Bootstrap extends DefaultPluginBootstrap {
 			// don't show in action/simplecache
 			$path = elgg_substr(current_page_url(), elgg_strlen(elgg_get_site_url()));
 			if (!preg_match('~^(cache|action)/~', $path)) {
+				elgg_require_css('developers/log');
+				
 				// Write to JSON file to not take up memory See #11886
 				$uid = substr(hash('md5', uniqid('', true)), 0, 10);
 				$log_file = \Elgg\Project\Paths::sanitize(elgg_get_config('dataroot') . "logs/screen/$uid.html", false);
@@ -120,8 +122,9 @@ class Bootstrap extends DefaultPluginBootstrap {
 			$hooks->registerHandler('all', 'all', __NAMESPACE__ . '\HandlerLogger::trackHook', 1);
 		}
 	
-		if (!empty($settings['show_gear']) && elgg_is_admin_logged_in() && !elgg_in_context('admin')) {
+		if (!empty($settings['show_gear']) && elgg_is_admin_logged_in() && !elgg_in_context('admin') && !elgg_is_xhr()) {
 			elgg_require_js('elgg/dev/gear');
+			elgg_require_css('elgg/dev/gear');
 			elgg_register_ajax_view('developers/gear_popup');
 			elgg_register_simplecache_view('elgg/dev/gear.html');
 	

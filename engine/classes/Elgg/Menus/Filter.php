@@ -204,7 +204,7 @@ class Filter {
 			'icon' => 'search',
 			'text' => elgg_echo('search'),
 			'href' => false,
-			'rel' => 'toggle',
+			'class' => 'elgg-toggle',
 			'data-toggle-selector' => '.elgg-form-admin-users-search',
 			'priority' => 9999,
 		]);
