@@ -95,7 +95,9 @@ jobs:
       
       - name: Composer update
         # using composer update to make sure we have latest dependencies like in the starter project (zip)
-        run: composer update --prefer-dist --no-suggest
+        run: |
+          composer global config --no-plugins allow-plugins.fxp/composer-asset-plugin true
+          composer update --prefer-dist --no-suggest
       
       - name: Elgg CLI upgrade
         run: php ./elgg-cli upgrade async --verbose
