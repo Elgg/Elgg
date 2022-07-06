@@ -41,8 +41,4 @@ switch ($inspect_type) {
 		break;
 }
 
-echo elgg_view('output/longtext', [
-	'value' => elgg_echo('developers:inspect:help'),
-]);
-
 echo $page;

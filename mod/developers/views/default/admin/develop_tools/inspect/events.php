@@ -1,7 +1,7 @@
 <?php
 
-$data = elgg_extract("data", $vars);
-$header = elgg_extract("header", $vars);
+$data = elgg_extract('data', $vars);
+$header = elgg_extract('header', $vars);
 
 if (!$header) {
 	$header = elgg_echo('developers:inspect:events');
@@ -16,11 +16,11 @@ $make_id = function ($name) {
 };
 
 echo "<table class='elgg-table-alt'>";
-echo "<tr>";
-echo "<th>$header</th>";
+echo "<thead><tr>";
+echo "<th>{$header}</th>";
 echo "<th>" . elgg_echo('developers:inspect:priority') . "</th>";
 echo "<th>" . elgg_echo('developers:inspect:functions') . "</th>";
-echo "</tr>";
+echo "</tr></thead>";
 
 $last_key = '';
 foreach ($data as $key => $arr) {
@@ -29,11 +29,11 @@ foreach ($data as $key => $arr) {
 		echo "<tr>";
 		if ($key !== $last_key) {
 			$id = $make_id($key);
-			echo "<td id='$id' rowspan='" . count($arr) . "'>$key</td>";
+			echo "<td id='{$id}' rowspan='" . count($arr) . "'>{$key}</td>";
 			$last_key = $key;
 		}
-		echo "<td>$priority</td>";
-		echo "<td>$desc</td>";
+		echo "<td>${priority}</td>";
+		echo "<td>{$desc}</td>";
 		echo "</tr>";
 	}
 }

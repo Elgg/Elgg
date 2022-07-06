@@ -1,6 +1,6 @@
 <?php
 
-$data = elgg_extract("data", $vars);
+$data = elgg_extract('data', $vars);
 
 if (empty($data)) {
 	return;
@@ -15,7 +15,7 @@ foreach ($data as $key => $arr) {
 		$menu .= "<td>{$subkey}</td>";
 		$menu .= "<td><ul>";
 		foreach ($value as $item) {
-			$menu .= "<li>$item</li>";
+			$menu .= "<li>{$item}</li>";
 		}
 		$menu .= "</ul></td>";
 		$menu .= "</tr>";
@@ -23,5 +23,5 @@ foreach ($data as $key => $arr) {
 
 	$menu .= "</table>";
 	
-	echo elgg_view_module("inline", $key, $menu);
+	echo elgg_view_module('inline', $key, $menu);
 }

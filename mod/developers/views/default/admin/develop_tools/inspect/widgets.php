@@ -1,27 +1,26 @@
 <?php
 
-$data = elgg_extract("data", $vars);
+$data = elgg_extract('data', $vars);
 
 if (empty($data)) {
 	return;
 }
 
 echo "<table class='elgg-table-alt'>";
-echo "<tr>";
+echo "<thead><tr>";
 echo "<th>" . elgg_echo('developers:inspect:widgets') . "</th>";
 echo "<th>" . elgg_echo('title') . "</th>";
 echo "<th>" . elgg_echo('developers:inspect:widgets:context') . "</th>";
-echo "</tr>";
+echo "</tr></thead>";
 
 foreach ($data as $name => $arr) {
-	$view = "widgets/$name/content";
 	$link = elgg_view('admin/develop_tools/inspect/views/view_link', [
-		'view' => $view,
+		'view' => "widgets/{$name}/content",
 		'text' => $name,
 	]);
 
 	echo "<tr>";
-	echo "<td>$link</td>";
+	echo "<td>{$link}</td>";
 	echo "<td>{$arr[0]}</td>";
 	echo "<td>{$arr[1]}</td>";
 	echo "</tr>";
