@@ -9,7 +9,7 @@ if (!$entity instanceof ElggEntity) {
 	return elgg_error_response(elgg_echo('entity:delete:item_not_found'));
 }
 
-if (!$entity->canDelete() || $entity instanceof ElggPlugin || $entity instanceof ElggSite) {
+if (!$entity->canDelete() || $entity instanceof \ElggPlugin || $entity instanceof \ElggSite || $entity instanceof \ElggUser) {
 	return elgg_error_response(elgg_echo('entity:delete:permission_denied'));
 }
 
