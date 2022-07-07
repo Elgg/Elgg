@@ -149,51 +149,8 @@ function elgg_format_element($tag_name, array $attributes = [], $text = '', arra
  *
  * @return string The absolute URL
  */
-function elgg_normalize_url($url) {
-	if (!isset($url)) {
-		$url = '';
-	}
-	
-	$url = str_replace(' ', '%20', $url);
-
-	if (_elgg_sane_validate_url($url)) {
-		// fix invalid scheme in site url
-		$protocol_less_site_url = preg_replace('/^https?:/i', ':', elgg_get_site_url());
-		$protocol_less_site_url = rtrim($protocol_less_site_url, '/');
-		$protocol_less_site_url = str_replace('/', '\/', $protocol_less_site_url);
-
-		return preg_replace("/^https?{$protocol_less_site_url}\/?/i", elgg_get_site_url(), $url);
-	}
-
-	$matches = [];
-	if (preg_match("#^([a-z]+)\\:#", $url, $matches)) {
-		// we don't let http/https: URLs fail filter_var(), but anything else starting with a protocol
-		// is OK
-		if ($matches[1] !== 'http' && $matches[1] !== 'https') {
-			return $url;
-		}
-	}
-
-	if (preg_match("#^(\\#|\\?|//)#", $url)) {
-		// starts with '//' (protocol-relative link), query, or fragment
-		return $url;
-	}
-
-	if (preg_match("#^[^/]*\\.php(\\?.*)?$#", $url)) {
-		// root PHP scripts: 'install.php', 'install.php?step=step'. We don't want to confuse these
-		// for domain names.
-		return elgg_get_site_url() . $url;
-	}
-
-	if (preg_match("#^[^/?]*\\.#", $url)) {
-		// URLs starting with domain: 'example.com', 'example.com/subpage'
-		return "http://$url";
-	}
-
-	// 'page/handler', 'mod/plugin/file.php'
-	// trim off any leading / because the site URL is stored
-	// with a trailing /
-	return elgg_get_site_url() . ltrim($url, '/');
+function elgg_normalize_url($url): string {
+	return _elgg_services()->urls->normalizeUrl((string) $url);
 }
 
 /**
@@ -210,7 +167,7 @@ function elgg_normalize_site_url($unsafe_url) {
 		return false;
 	}
 
-	$unsafe_url = elgg_normalize_url($unsafe_url);
+	$unsafe_url = _elgg_services()->urls->normalizeUrl((string) $unsafe_url);
 	if (0 === elgg_strpos($unsafe_url, elgg_get_site_url())) {
 		return $unsafe_url;
 	}
@@ -414,35 +371,4 @@ function _elgg_get_display_query($string) {
 	}
 	
 	return htmlspecialchars($display_query, ENT_QUOTES, 'UTF-8', false);
-}
-
-/**
- * Use a "fixed" filter_var() with FILTER_VALIDATE_URL that handles multi-byte chars.
- *
- * @param string $url URL to validate
- * @return string|false
- * @internal
- */
-function _elgg_sane_validate_url($url) {
-	// based on http://php.net/manual/en/function.filter-var.php#104160
-	$res = filter_var($url, FILTER_VALIDATE_URL);
-	if ($res) {
-		return $res;
-	}
-
-	// Check if it has unicode chars.
-	$l = elgg_strlen($url);
-	if (strlen($url) == $l) {
-		return $res;
-	}
-
-	// Replace wide chars by X
-	$s = '';
-	for ($i = 0; $i < $l; ++$i) {
-		$ch = elgg_substr($url, $i, 1);
-		$s .= (strlen($ch) > 1) ? 'X' : $ch;
-	}
-
-	// Re-check now.
-	return filter_var($s, FILTER_VALIDATE_URL) ? $url : false;
 }
