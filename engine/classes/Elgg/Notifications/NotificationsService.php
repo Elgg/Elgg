@@ -187,33 +187,44 @@ class NotificationsService {
 	/**
 	 * Add a notification event to the queue
 	 *
-	 * @param string    $action Action name
-	 * @param string    $type   Type of the object of the action
-	 * @param \ElggData $object The object of the action
+	 * @param string      $action Action name
+	 * @param string      $type   Type of the object of the action
+	 * @param \ElggData   $object The object of the action
+	 * @param \ElggEntity $actor  (optional) The actor of the notification (default: logged in user or owner of $object)
 	 *
 	 * @return void
 	 */
-	public function enqueueEvent($action, $type, $object) {
+	public function enqueueEvent($action, $type, $object, \ElggEntity $actor = null): void {
 		
-		if ($object instanceof \ElggData) {
-			$object_type = $object->getType();
-			$object_subtype = $object->getSubtype();
-
-			$registered = isset($this->events[$object_type][$object_subtype][$action]);
-			
-			if ($registered) {
-				$params = [
-					'action' => $action,
-					'object' => $object,
-				];
-				$registered = $this->hooks->trigger('enqueue', 'notification', $params, $registered);
-			}
-
-			if ($registered) {
-				$this->elgg_events->trigger('enqueue', 'notifications', $object);
-				$this->queue->enqueue(new SubscriptionNotificationEvent($object, $action));
-			}
+		if (!$object instanceof \ElggData) {
+			return;
 		}
+		
+		$object_type = $object->getType();
+		$object_subtype = $object->getSubtype();
+		$actor = $actor ?? elgg_get_logged_in_user_entity(); // default to logged in user
+		if (!isset($actor) && ($object instanceof \ElggEntity || $object instanceof \ElggExtender)) {
+			// still not set, default to the owner of $object
+			$actor = $object->getOwnerEntity() ?: null;
+		}
+		
+		$registered = isset($this->events[$object_type][$object_subtype][$action]);
+		
+		if ($registered) {
+			$params = [
+				'action' => $action,
+				'object' => $object,
+				'actor' => $actor,
+			];
+			$registered = (bool) $this->hooks->trigger('enqueue', 'notification', $params, $registered);
+		}
+		
+		if (!$registered) {
+			return;
+		}
+		
+		$this->elgg_events->trigger('enqueue', 'notifications', $object);
+		$this->queue->enqueue(new SubscriptionNotificationEvent($object, $action, $actor));
 	}
 	
 	/**

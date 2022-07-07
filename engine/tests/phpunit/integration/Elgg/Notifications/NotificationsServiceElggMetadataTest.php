@@ -4,10 +4,8 @@ namespace Elgg\Notifications;
 
 /**
  * @group NotificationsService
- * @group MetadataNotifications
- * @group UnitTests
  */
-class NotificationsServiceElggMetadataTest extends NotificationsServiceUnitTestCase {
+class NotificationsServiceElggMetadataTest extends NotificationsServiceIntegrationTestCase {
 
 	/**
 	 * @var bool previous IgnoreAccess state
