@@ -19,6 +19,7 @@ class ActionRegistrationIntegrationTest extends ActionResponseTestCase {
 		'admin/plugins/deactivate_all', // this would break other tests
 		'diagnostics/download', // takes too long to complete
 		'logout',
+		'register', // handled by own test
 	];
 
 	public function up() {
