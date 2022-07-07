@@ -181,6 +181,7 @@ return [
         return new \Elgg\Router\UrlMatcher($c->routeCollection, $c->requestContext);
     }),
 	'urlSigner' => DI\autowire(\Elgg\Security\UrlSigner::class),
+	'urls' => DI\autowire(\Elgg\Http\Urls::class),
 	'userCapabilities' => DI\autowire(\Elgg\UserCapabilities::class),
 	'usersApiSessionsTable' => DI\autowire(\Elgg\Database\UsersApiSessionsTable::class),
 	'users_remember_me_cookies_table' => DI\autowire(\Elgg\Database\UsersRememberMeCookiesTable::class),
@@ -256,6 +257,7 @@ return [
 	\Elgg\HandlersService::class => DI\get('handlers'),
 	\Elgg\Http\Request::class => DI\get('request'),
 	\Elgg\Http\ResponseFactory::class => DI\get('responseFactory'),
+	\Elgg\Http\Urls::class => DI\get('urls'),
 	\Elgg\I18n\LocaleService::class => DI\get('locale'),
 	\Elgg\I18n\Translator::class => DI\get('translator'),
 	\Elgg\ImageService::class => DI\get('imageService'),

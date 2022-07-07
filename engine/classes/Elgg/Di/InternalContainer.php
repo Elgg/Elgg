@@ -120,6 +120,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Upgrade\Locator                           $upgradeLocator
  * @property-read \Elgg\Router\UrlGenerator                       $urlGenerator
  * @property-read \Elgg\Router\UrlMatcher                         $urlMatcher
+ * @property-read \Elgg\Http\Urls                                 $urls
  * @property-read \Elgg\UploadService                             $uploads
  * @property-read \Elgg\UserCapabilities                          $userCapabilities
  * @property-read \Elgg\Database\UsersApiSessionsTable            $usersApiSessionsTable

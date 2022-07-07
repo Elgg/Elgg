@@ -425,26 +425,11 @@ function elgg_dump($value) {
  *                           'user' and 'pass' parts are ignored because of security reasons
  * @param bool  $html_encode HTML Encode the url?
  *
- * @see https://github.com/Elgg/Elgg/pull/8146#issuecomment-91544585
  * @return string Full URL
  * @since 1.7.0
  */
-function elgg_http_build_url(array $parts, $html_encode = true) {
-	// build only what's given to us.
-	$scheme = isset($parts['scheme']) ? "{$parts['scheme']}://" : '';
-	$host = isset($parts['host']) ? "{$parts['host']}" : '';
-	$port = isset($parts['port']) ? ":{$parts['port']}" : '';
-	$path = isset($parts['path']) ? "{$parts['path']}" : '';
-	$query = isset($parts['query']) ? "?{$parts['query']}" : '';
-	$fragment = isset($parts['fragment']) ? "#{$parts['fragment']}" : '';
-
-	$string = $scheme . $host . $port . $path . $query . $fragment;
-
-	if ($html_encode) {
-		return htmlspecialchars($string, ENT_QUOTES, 'UTF-8', false);
-	} else {
-		return $string;
-	}
+function elgg_http_build_url(array $parts, $html_encode = true): string {
+	return _elgg_services()->urls->buildUrl($parts, (bool) $html_encode);
 }
 
 /**
@@ -464,27 +449,8 @@ function elgg_http_build_url(array $parts, $html_encode = true) {
  * @return string URL with action tokens
  * @since 1.7.0
  */
-function elgg_add_action_tokens_to_url($url, $html_encode = false) {
-	$url = elgg_normalize_url($url);
-	$components = parse_url($url);
-
-	if (isset($components['query'])) {
-		$query = elgg_parse_str($components['query']);
-	} else {
-		$query = [];
-	}
-
-	if (isset($query['__elgg_ts']) && isset($query['__elgg_token'])) {
-		return $url;
-	}
-
-	// append action tokens to the existing query
-	$query['__elgg_ts'] = _elgg_services()->csrf->getCurrentTime()->getTimestamp();
-	$query['__elgg_token'] = _elgg_services()->csrf->generateActionToken($query['__elgg_ts']);
-	$components['query'] = http_build_query($query);
-
-	// rebuild the full url
-	return elgg_http_build_url($components, $html_encode);
+function elgg_add_action_tokens_to_url($url, $html_encode = false): string {
+	return _elgg_services()->urls->addActionTokensToUrl((string) $url, (bool) $html_encode);
 }
 
 /**
@@ -498,8 +464,8 @@ function elgg_add_action_tokens_to_url($url, $html_encode = false) {
  * @return string The new URL with the query element removed.
  * @since 1.7.0
  */
-function elgg_http_remove_url_query_element($url, $element) {
-	return elgg_http_add_url_query_elements($url, [$element => null]);
+function elgg_http_remove_url_query_element($url, $element): string {
+	return _elgg_services()->urls->addQueryElementsToUrl((string) $url, [(string) $element => null]);
 }
 
 /**
@@ -512,39 +478,8 @@ function elgg_http_remove_url_query_element($url, $element) {
  * @return string The new URL with the query strings added
  * @since 1.7.0
  */
-function elgg_http_add_url_query_elements($url, array $elements) {
-	$url_array = parse_url($url);
-
-	if (isset($url_array['query'])) {
-		$query = elgg_parse_str($url_array['query']);
-	} else {
-		$query = [];
-	}
-
-	foreach ($elements as $k => $v) {
-		if ($v === null) {
-			unset($query[$k]);
-		} else {
-			$query[$k] = $v;
-		}
-	}
-
-	// why check path? A: if no path, this may be a relative URL like "?foo=1". In this case,
-	// the output "" would be interpreted the current URL, so in this case we *must* set
-	// a query to make sure elements are removed.
-	if ($query || empty($url_array['path'])) {
-		$url_array['query'] = http_build_query($query);
-	} else {
-		unset($url_array['query']);
-	}
-	$string = elgg_http_build_url($url_array, false);
-
-	// Restore relative protocol to url if missing and is provided as part of the initial url (see #9874)
-	if (!isset($url['scheme']) && (substr($url, 0, 2) == '//')) {
-		$string = "//{$string}";
-	}
-	
-	return $string;
+function elgg_http_add_url_query_elements($url, array $elements): string {
+	return _elgg_services()->urls->addQueryElementsToUrl((string) $url, $elements);
 }
 
 /**
@@ -561,86 +496,12 @@ function elgg_http_add_url_query_elements($url, array $elements) {
  * @return bool
  * @since 1.8.0
  */
-function elgg_http_url_is_identical($url1, $url2, $ignore_params = ['offset', 'limit']) {
+function elgg_http_url_is_identical($url1, $url2, $ignore_params = ['offset', 'limit']): bool {
 	if (!is_string($url1) || !is_string($url2)) {
 		return false;
 	}
 	
-	$url1 = elgg_normalize_url($url1);
-	$url2 = elgg_normalize_url($url2);
-
-	if ($url1 == $url2) {
-		return true;
-	}
-
-	$url1_info = parse_url($url1);
-	$url2_info = parse_url($url2);
-
-	if (isset($url1_info['path'])) {
-		$url1_info['path'] = trim($url1_info['path'], '/');
-	}
-	if (isset($url2_info['path'])) {
-		$url2_info['path'] = trim($url2_info['path'], '/');
-	}
-
-	// compare basic bits
-	$parts = ['scheme', 'host', 'path'];
-
-	foreach ($parts as $part) {
-		if ((isset($url1_info[$part]) && isset($url2_info[$part]))
-		&& $url1_info[$part] != $url2_info[$part]) {
-			return false;
-		} elseif (isset($url1_info[$part]) && !isset($url2_info[$part])) {
-			return false;
-		} elseif (!isset($url1_info[$part]) && isset($url2_info[$part])) {
-			return false;
-		}
-	}
-
-	// quick compare of get params
-	if (isset($url1_info['query']) && isset($url2_info['query'])
-	&& $url1_info['query'] == $url2_info['query']) {
-		return true;
-	}
-
-	// compare get params that might be out of order
-	$url1_params = [];
-	$url2_params = [];
-
-	if (isset($url1_info['query'])) {
-		if ($url1_info['query'] = html_entity_decode($url1_info['query'])) {
-			$url1_params = elgg_parse_str($url1_info['query']);
-		}
-	}
-
-	if (isset($url2_info['query'])) {
-		if ($url2_info['query'] = html_entity_decode($url2_info['query'])) {
-			$url2_params = elgg_parse_str($url2_info['query']);
-		}
-	}
-
-	// drop ignored params
-	foreach ($ignore_params as $param) {
-		if (isset($url1_params[$param])) {
-			unset($url1_params[$param]);
-		}
-		if (isset($url2_params[$param])) {
-			unset($url2_params[$param]);
-		}
-	}
-
-	// array_diff_assoc only returns the items in arr1 that aren't in arrN
-	// but not the items that ARE in arrN but NOT in arr1
-	// if arr1 is an empty array, this function will return 0 no matter what.
-	// since we only care if they're different and not how different,
-	// add the results together to get a non-zero (ie, different) result
-	$diff_count = count(_elgg_array_diff_assoc_recursive($url1_params, $url2_params));
-	$diff_count += count(_elgg_array_diff_assoc_recursive($url2_params, $url1_params));
-	if ($diff_count > 0) {
-		return false;
-	}
-
-	return true;
+	return _elgg_services()->urls->isUrlIdentical($url1, $url2, (array) $ignore_params);
 }
 
 /**
@@ -778,46 +639,4 @@ function _elgg_services() {
 	// This yields a more shallow stack depth in recursive APIs like views. This aids in debugging and
 	// reduces false positives in xdebug's infinite recursion protection.
 	return \Elgg\Application::$_instance->internal_services;
-}
-
-/**
- * Computes the difference of arrays with additional index check
- *
- * @return array
- *
- * @since 4.1
- * @internal
- * @see array_diff_assoc()
- * @see https://github.com/Elgg/Elgg/issues/13016
- */
-function _elgg_array_diff_assoc_recursive() {
-	$args = func_get_args();
-	$diff = [];
-	
-	foreach (array_shift($args) as $key => $val) {
-		for ($i = 0, $j = 0, $tmp = [$val], $count = count($args); $i < $count; $i++) {
-			if (is_array($val)) {
-				if (!isset($args[$i][$key]) || !is_array($args[$i][$key]) || empty($args[$i][$key])) {
-					$j++;
-				} else {
-					$tmp[] = $args[$i][$key];
-				}
-			} elseif (!array_key_exists($key, $args[$i]) || $args[$i][$key] !== $val) {
-				$j++;
-			}
-		}
-		
-		if (is_array($val)) {
-			$tmp = call_user_func_array ( __FUNCTION__, $tmp);
-			if (!empty($tmp)) {
-				$diff[$key] = $tmp;
-			} elseif ($j == $count) {
-				$diff[$key] = $val;
-			}
-		} elseif ($j == $count && $count) {
-			$diff[$key] = $val;
-		}
-	}
-	
-	return $diff;
 }

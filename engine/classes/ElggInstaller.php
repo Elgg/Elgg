@@ -237,8 +237,8 @@ class ElggInstaller {
 				throw new InstallationException(elgg_echo('install:error:htaccess'));
 			}
 		}
-
-		if (!_elgg_sane_validate_url($params['wwwroot'])) {
+		
+		if (!\Elgg\Http\Urls::isValidMultiByteUrl($params['wwwroot'])) {
 			throw new InstallationException(elgg_echo('install:error:wwwroot', [$params['wwwroot']]));
 		}
 
@@ -1154,7 +1154,7 @@ class ElggInstaller {
 			}
 		}
 
-		if (!empty($submissionVars['wwwroot']) && !_elgg_sane_validate_url($submissionVars['wwwroot'])) {
+		if (!empty($submissionVars['wwwroot']) && !\Elgg\Http\Urls::isValidMultiByteUrl($submissionVars['wwwroot'])) {
 			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:wwwroot', [$submissionVars['wwwroot']]));
 
 			return false;
