@@ -14,6 +14,7 @@
  * Upon system boot, all values in dbprefix_config are read into $CONFIG.
  */
 
+use Elgg\Exceptions\Exception as ElggException;
 use Elgg\Project\Paths;
 
 /**
@@ -97,7 +98,7 @@ function elgg_get_engine_path() {
  * Get the current Elgg release
  *
  * @return string
- * @throws Exception if something wrong with the composer.json
+ * @throws \Elgg\Exceptions\Exception if something wrong with the composer.json
  * @since 4.1
  */
 function elgg_get_release(): string {
@@ -106,17 +107,17 @@ function elgg_get_release(): string {
 	if (!isset($release)) {
 		$composerJson = file_get_contents(\Elgg\Project\Paths::elgg() . 'composer.json');
 		if ($composerJson === false) {
-			throw new Exception("Unable to read composer.json file!");
+			throw new ElggException("Unable to read composer.json file!");
 		}
 		
 		$composer = json_decode($composerJson);
 		if ($composer === null) {
-			throw new Exception("JSON parse error while reading composer.json!");
+			throw new ElggException("JSON parse error while reading composer.json!");
 		}
 		
 		// Human-friendly version name
 		if (!isset($composer->version)) {
-			throw new Exception("Version field must be set in composer.json!");
+			throw new ElggException("Version field must be set in composer.json!");
 		}
 		$release = $composer->version;
 	}

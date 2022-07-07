@@ -3,6 +3,7 @@
 namespace Elgg\Notifications;
 
 use Elgg\EventsService;
+use Elgg\Exceptions\Exception;
 use Elgg\IntegrationTestCase;
 use Elgg\Logger;
 use Elgg\Mocks\Queue\DatabaseQueue;
@@ -67,7 +68,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegrationTestCase {
 		]);
 
 		if (!isset($this->test_object_class)) {
-			throw new \Exception(get_class($this) . ' must set \$object_test_class before calling ' . __METHOD__);
+			throw new Exception(get_class($this) . ' must set \$object_test_class before calling ' . __METHOD__);
 		}
 
 		$this->hooks = _elgg_services()->hooks;
@@ -162,7 +163,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegrationTestCase {
 				return check_entity_relationship($object->guid, 'test_relationship', $user->guid);
 		}
 
-		throw new \Exception("Test object not found for $this->test_object_class class");
+		throw new Exception("Test object not found for {$this->test_object_class} class");
 	}
 
 	public function testRegisterEvent() {

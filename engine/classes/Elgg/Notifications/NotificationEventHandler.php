@@ -2,6 +2,7 @@
 
 namespace Elgg\Notifications;
 
+use Elgg\Exceptions\RuntimeException;
 use Psr\Log\LogLevel;
 
 /**
@@ -303,22 +304,21 @@ class NotificationEventHandler {
 	 *
 	 * @param array $params Parameters to initialize notification with
 	 *
-	 * @throws \RuntimeException
-	 *
 	 * @return Notification
+	 * @throws RuntimeException
 	 */
 	final protected function prepareNotification(array $params): Notification {
 		$notification = new Notification($params['sender'], $params['recipient'], $params['language'], $params['subject'], $params['body'], $params['summary'], $params);
 
 		$notification = _elgg_services()->hooks->trigger('prepare', 'notification', $params, $notification);
 		if (!$notification instanceof Notification) {
-			throw new \RuntimeException("'prepare','notification' hook must return an instance of " . Notification::class);
+			throw new RuntimeException("'prepare','notification' hook must return an instance of " . Notification::class);
 		}
 
 		$type = 'notification:' . $this->event->getDescription();
 		$notification = _elgg_services()->hooks->trigger('prepare', $type, $params, $notification);
 		if (!$notification instanceof Notification) {
-			throw new \RuntimeException("'prepare','{$type}' hook must return an instance of " . Notification::class);
+			throw new RuntimeException("'prepare','{$type}' hook must return an instance of " . Notification::class);
 		}
 
 		if (elgg_extract('add_salutation', $notification->params) === true) {
@@ -328,7 +328,7 @@ class NotificationEventHandler {
 		
 		$notification = _elgg_services()->hooks->trigger('format', "notification:{$params['method']}", [], $notification);
 		if (!$notification instanceof Notification) {
-			throw new \RuntimeException("'format','notification:{$params['method']}' hook must return an instance of " . Notification::class);
+			throw new RuntimeException("'format','notification:{$params['method']}' hook must return an instance of " . Notification::class);
 		}
 		
 		return $notification;

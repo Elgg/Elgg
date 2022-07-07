@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use Elgg\Exceptions\RuntimeException;
+
 /**
  * Password service
  *
@@ -12,10 +14,12 @@ final class PasswordService {
 
 	/**
 	 * Constructor
+	 *
+	 * @throws RuntimeException
 	 */
 	public function __construct() {
 		if (!function_exists('password_hash')) {
-			throw new \RuntimeException("password_hash and associated functions are required.");
+			throw new RuntimeException("password_hash and associated functions are required.");
 		}
 	}
 

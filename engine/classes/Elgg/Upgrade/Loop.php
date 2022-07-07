@@ -3,6 +3,7 @@
 namespace Elgg\Upgrade;
 
 use Elgg\Cli\Progress;
+use Elgg\Exceptions\RuntimeException;
 use Elgg\Logger;
 use Elgg\Traits\Loggable;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -62,6 +63,8 @@ class Loop {
 	 * @param Result       $result   Upgrade result
 	 * @param Progress     $progress CLI progress helper
 	 * @param Logger       $logger   Logger
+	 *
+	 * @throws RuntimeException
 	 */
 	public function __construct(
 		\ElggUpgrade $upgrade,
@@ -74,7 +77,7 @@ class Loop {
 		// Get the class taking care of the actual upgrading
 		$this->batch = $upgrade->getBatch();
 		if (!$this->batch) {
-			throw new \RuntimeException(elgg_echo('admin:upgrades:error:invalid_batch', [
+			throw new RuntimeException(elgg_echo('admin:upgrades:error:invalid_batch', [
 				$upgrade->getDisplayName(),
 				$upgrade->guid
 			]));

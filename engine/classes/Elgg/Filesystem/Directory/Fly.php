@@ -3,12 +3,12 @@
 namespace Elgg\Filesystem\Directory;
 
 use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\RuntimeException;
 use Elgg\Filesystem\Directory;
 use Elgg\Filesystem\File;
 use Elgg\Structs\Collection;
 use League\Flysystem\Local\LocalFilesystemAdapter as LocalAdapter;
 use League\Flysystem\Filesystem;
-use League\Flysystem\FilesystemException;
 use League\Flysystem\InMemory\InMemoryFilesystemAdapter;
 
 /**
@@ -82,10 +82,12 @@ final class Fly implements Directory {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws RuntimeException
 	 */
 	public function getFile($path) {
 		if ($this->isDirectory($path)) {
-			throw new \RuntimeException("There is already a directory at that location: $path");
+			throw new RuntimeException("There is already a directory at that location: {$path}");
 		}
 
 		return new File($this, $path);
@@ -195,7 +197,6 @@ final class Fly implements Directory {
 	 * @param string $path A relative path within this filesystem
 	 *
 	 * @return string
-	 *
 	 * @throws InvalidArgumentException
 	 */
 	private function normalize($path) {

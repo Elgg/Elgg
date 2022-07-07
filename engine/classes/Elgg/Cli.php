@@ -147,7 +147,6 @@ class Cli {
 	 * @param bool $bootstrap Is bootstrap needed?
 	 *
 	 * @return void
-	 * @throws \Exception
 	 */
 	public function run(bool $bootstrap = true) {
 		if ($bootstrap) {

@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Di\InternalContainer;
+use Elgg\Exceptions\RuntimeException;
 use Elgg\Traits\Cacheable;
 use Elgg\Traits\Debug\Profilable;
 use Psr\Log\LogLevel;
@@ -45,7 +46,7 @@ class BootService {
 	 * @param InternalContainer $services Internal services
 	 *
 	 * @return void
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 */
 	public function boot(InternalContainer $services) {
 		$db = $services->db;
@@ -80,7 +81,7 @@ class BootService {
 			// must be set in config
 			$site = $config->site;
 			if (!$site instanceof \ElggSite) {
-				throw new \RuntimeException('Before installation, config->site must have an unsaved ElggSite.');
+				throw new RuntimeException('Before installation, config->site must have an unsaved ElggSite.');
 			}
 		}
 

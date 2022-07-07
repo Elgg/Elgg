@@ -1,4 +1,7 @@
 <?php
+
+use Elgg\Exceptions\RuntimeException as ElggRuntimeException;
+
 /**
  * A lazy-loading proxy for a result array from a fetching function
  *
@@ -434,12 +437,13 @@ class ElggBatch implements \Countable, \Iterator {
 	 *
 	 * @see Countable::count()
 	 * @return int
+	 * @throws \Elgg\Exceptions\RuntimeException
 	 */
 	#[\ReturnTypeWillChange]
 	public function count() {
 		if (!is_callable($this->getter)) {
 			$inspector = new \Elgg\Debug\Inspector();
-			throw new RuntimeException("Getter is not callable: " . $inspector->describeCallable($this->getter));
+			throw new ElggRuntimeException("Getter is not callable: " . $inspector->describeCallable($this->getter));
 		}
 
 		$options = array_merge($this->options, ['count' => true]);

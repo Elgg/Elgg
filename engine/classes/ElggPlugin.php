@@ -75,7 +75,7 @@ class ElggPlugin extends ElggObject {
 	 * @param string $path      Path, defaults to /mod
 	 *
 	 * @return ElggPlugin
-	 * @throws ElggInvalidArgumentException
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
 	public static function fromId($plugin_id, $path = null) {
 		if (empty($plugin_id)) {

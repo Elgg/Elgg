@@ -10,6 +10,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Elgg\Cache\QueryCache;
 use Elgg\Database\DbConfig;
 use Elgg\Exceptions\DatabaseException;
+use Elgg\Exceptions\RuntimeException;
 use Elgg\Traits\Debug\Profilable;
 use Elgg\Traits\Loggable;
 use Psr\Log\LogLevel;
@@ -372,7 +373,7 @@ class Database {
 	 *
 	 * @return array|\stdClass An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 */
 	protected function getResults($query, $callback = null, bool $single = false, array $params = []) {
 
@@ -389,7 +390,7 @@ class Database {
 		$extras = (int) $single . '|';
 		if ($callback) {
 			if (!is_callable($callback)) {
-				throw new \RuntimeException('$callback must be a callable function. Given '
+				throw new RuntimeException('$callback must be a callable function. Given '
 											. _elgg_services()->handlers->describeCallable($callback));
 			}
 			$extras .= $this->fingerprintCallback($callback);
@@ -673,14 +674,14 @@ class Database {
 	 * @param string $name Property name
 	 *
 	 * @return mixed
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 */
 	public function __get($name) {
 		if ($name === 'prefix') {
 			return $this->table_prefix;
 		}
 
-		throw new \RuntimeException("Cannot read property '$name'");
+		throw new RuntimeException("Cannot read property '{$name}'");
 	}
 
 	/**
@@ -690,9 +691,9 @@ class Database {
 	 * @param mixed  $value Value
 	 *
 	 * @return void
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 */
 	public function __set($name, $value): void {
-		throw new \RuntimeException("Cannot write property '$name'");
+		throw new RuntimeException("Cannot write property '{$name}'");
 	}
 }

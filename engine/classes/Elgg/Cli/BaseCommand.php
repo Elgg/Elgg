@@ -2,6 +2,7 @@
 
 namespace Elgg\Cli;
 
+use Elgg\Exceptions\RuntimeException;
 use Elgg\Traits\Loggable;
 use Psr\Log\LogLevel;
 use Symfony\Component\Console\Helper\FormatterHelper;
@@ -163,10 +164,11 @@ abstract class BaseCommand extends \Symfony\Component\Console\Command\Command {
 	 * @param mixed $answer User answer
 	 *
 	 * @return bool
+	 * @throws RuntimeException
 	 */
 	public function assertNotEmpty($answer) {
 		if (empty($answer)) {
-			throw new \RuntimeException('Please enter a required answer');
+			throw new RuntimeException('Please enter a required answer');
 		}
 
 		return $answer;

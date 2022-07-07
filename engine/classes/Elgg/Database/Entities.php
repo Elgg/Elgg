@@ -2,16 +2,15 @@
 
 namespace Elgg\Database;
 
-use Closure;
 use Doctrine\DBAL\Query\Expression\CompositeExpression;
 use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
-use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\InvalidArgumentException;
-use ElggEntity;
+use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\LogicException;
 
 /**
  * Entities repository contains methods for fetching entities from database or performing
@@ -62,7 +61,7 @@ class Entities extends Repository {
 		}
 
 		if (!isset($property_type)) {
-			if (in_array($property, ElggEntity::PRIMARY_ATTR_NAMES)) {
+			if (in_array($property, \ElggEntity::PRIMARY_ATTR_NAMES)) {
 				$property_type = 'attribute';
 			} else {
 				$property_type = 'metadata';
@@ -73,7 +72,7 @@ class Entities extends Repository {
 
 		switch ($property_type) {
 			case 'attribute':
-				if (!in_array($property, ElggEntity::PRIMARY_ATTR_NAMES)) {
+				if (!in_array($property, \ElggEntity::PRIMARY_ATTR_NAMES)) {
 					throw new InvalidParameterException("'$property' is not a valid attribute");
 				}
 
@@ -111,7 +110,7 @@ class Entities extends Repository {
 	 * @param int      $offset   Offset
 	 * @param callable $callback Custom callback
 	 *
-	 * @return ElggEntity[]
+	 * @return \ElggEntity[]
 	 */
 	public function get($limit = null, $offset = null, $callback = null) {
 
@@ -189,15 +188,15 @@ class Entities extends Repository {
 	/**
 	 * Execute the query resolving calculation, count and/or batch options
 	 *
-	 * @return array|\ElggData[]|ElggEntity[]|false|int
-	 * @throws \LogicException
+	 * @return array|\ElggData[]|\ElggEntity[]|false|int
+	 * @throws LogicException
 	 */
 	public function execute() {
 
 		if ($this->options->annotation_calculation) {
 			$clauses = $this->options->annotation_name_value_pairs;
 			if (count($clauses) > 1 && $this->options->annotation_name_value_pairs_operator !== 'OR') {
-				throw new \LogicException("Annotation calculation can not be performed on multiple annotation name value pairs merged with AND");
+				throw new LogicException("Annotation calculation can not be performed on multiple annotation name value pairs merged with AND");
 			}
 
 			$clause = array_shift($clauses);
@@ -206,7 +205,7 @@ class Entities extends Repository {
 		} else if ($this->options->metadata_calculation) {
 			$clauses = $this->options->metadata_name_value_pairs;
 			if (count($clauses) > 1 && $this->options->metadata_name_value_pairs_operator !== 'OR') {
-				throw new \LogicException("Metadata calculation can not be performed on multiple metadata name value pairs merged with AND");
+				throw new LogicException("Metadata calculation can not be performed on multiple metadata name value pairs merged with AND");
 			}
 
 			$clause = array_shift($clauses);
@@ -262,7 +261,7 @@ class Entities extends Repository {
 	 *
 	 * @param QueryBuilder $qb Query builder
 	 *
-	 * @return Closure|CompositeExpression|mixed|null|string
+	 * @return \Closure|CompositeExpression|mixed|null|string
 	 */
 	protected function buildEntityClause(QueryBuilder $qb) {
 		return EntityWhereClause::factory($this->options)->prepare($qb, 'e');

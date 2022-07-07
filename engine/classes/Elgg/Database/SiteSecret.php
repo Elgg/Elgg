@@ -4,6 +4,7 @@ namespace Elgg\Database;
 
 use Elgg\Config as ElggConfig;
 use Elgg\Exceptions\Configuration\InstallationException;
+use Elgg\Exceptions\RuntimeException;
 use Elgg\Security\Crypto;
 
 /**
@@ -26,6 +27,11 @@ class SiteSecret {
 	const CONFIG_KEY = '__site_secret__';
 
 	/**
+	 * @var string
+	 */
+	private $key;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $key Site key (32 hex chars, or "z" and 31 base64 chars)
@@ -35,11 +41,6 @@ class SiteSecret {
 	}
 
 	/**
-	 * @var string
-	 */
-	private $key;
-
-	/**
 	 * Returns the site secret.
 	 *
 	 * Used to generate difficult to guess hashes for sessions and action tokens.
@@ -47,10 +48,11 @@ class SiteSecret {
 	 * @param bool $raw If true, a binary key will be returned
 	 *
 	 * @return string Site secret
+	 * @throws RuntimeException
 	 */
 	public function get($raw = false) {
 		if (!$this->key) {
-			throw new \RuntimeException('Secret key is not set');
+			throw new RuntimeException('Secret key is not set');
 		}
 
 		if (!$raw) {

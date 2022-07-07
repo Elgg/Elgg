@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Exceptions\RuntimeException as ElggRuntimeException;
+
 /**
  * Access collection class
  *
@@ -42,12 +44,13 @@ class ElggAccessCollection extends ElggData {
 	 *
 	 * @param string $name  Name
 	 * @param mixed  $value Value
+	 *
 	 * @return void
-	 * @throws RuntimeException
+	 * @throws \Elgg\Exceptions\RuntimeException
 	 */
 	public function __set($name, $value) {
 		if (in_array($name, ['id', 'owner_guid', 'subtype'])) {
-			throw new RuntimeException("$name can not be set at runtime");
+			throw new ElggRuntimeException("$name can not be set at runtime");
 		}
 		$this->attributes[$name] = $value;
 	}

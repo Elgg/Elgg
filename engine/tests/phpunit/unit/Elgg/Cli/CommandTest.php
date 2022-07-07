@@ -2,6 +2,7 @@
 
 namespace Elgg\Cli;
 
+use Elgg\Exceptions\Exception;
 use Elgg\Helpers\Cli\TestingCommand;
 use Elgg\Logger;
 use Elgg\UnitTestCase;
@@ -43,7 +44,7 @@ class CommandTest extends UnitTestCase {
 
 	public function testCanHandleExceptions() {
 		$handler = function(){
-			throw new \Exception('Exception thrown');
+			throw new Exception('Exception thrown');
 		};
 
 		$this->assertMatchesRegularExpression('/Exception thrown/im', $this->executeCommand($handler));
