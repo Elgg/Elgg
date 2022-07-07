@@ -223,7 +223,7 @@ class Metadata extends Repository {
 	 *
 	 * @param QueryBuilder $qb Query builder
 	 *
-	 * @return Closure|CompositeExpression|mixed|null|string
+	 * @return \Closure|CompositeExpression|mixed|null|string
 	 */
 	protected function buildEntityWhereClause(QueryBuilder $qb) {
 

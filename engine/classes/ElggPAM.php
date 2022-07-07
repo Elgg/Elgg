@@ -15,7 +15,7 @@ class ElggPAM {
 	protected $policy;
 
 	/**
-	 * @var array Failure mesages
+	 * @var string Failure mesages
 	 */
 	protected $message;
 

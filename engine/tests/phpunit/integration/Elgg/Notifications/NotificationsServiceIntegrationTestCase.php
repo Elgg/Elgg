@@ -10,7 +10,7 @@ use Elgg\Mocks\Queue\DatabaseQueue;
 use Elgg\PluginHooksService;
 use Elgg\Values;
 
-abstract class NotificationsServiceUnitTestCase extends IntegrationTestCase {
+abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCase {
 
 	/**
 	 * @var PluginHooksService
@@ -244,7 +244,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegrationTestCase {
 		$this->assertFalse($this->notifications->unregisterMethod('test_method'));
 	}
 
-	public function testEnqueueEvent() {
+	public function testEnqueueEventLoggedInUser() {
 		$this->setupServices();
 
 		$object = $this->getTestObject();
@@ -256,6 +256,55 @@ abstract class NotificationsServiceUnitTestCase extends IntegrationTestCase {
 		$this->notifications->enqueueEvent('create', $object->getType(), $object);
 
 		$event = new SubscriptionNotificationEvent($object, 'create');
+		$this->assertEquals(unserialize(serialize($event)), $this->queue->dequeue());
+		$this->assertNull($this->queue->dequeue());
+
+		// unregistered action type
+		$this->notifications->enqueueEvent('null', $object->getType(), $object);
+		$this->assertNull($this->queue->dequeue());
+
+		// unregistered object type
+		$this->notifications->enqueueEvent('create', $object->getType(), new \ElggObject());
+		$this->assertNull($this->queue->dequeue());
+	}
+	
+	public function testEnqueueEventProvidedActor() {
+		$this->setupServices();
+
+		$object = $this->getTestObject();
+
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
+
+		$this->notifications->enqueueEvent('create', $object->getType(), $object, $this->actor);
+
+		$event = new SubscriptionNotificationEvent($object, 'create', $this->actor);
+		$this->assertEquals(unserialize(serialize($event)), $this->queue->dequeue());
+		$this->assertNull($this->queue->dequeue());
+
+		// unregistered action type
+		$this->notifications->enqueueEvent('null', $object->getType(), $object);
+		$this->assertNull($this->queue->dequeue());
+
+		// unregistered object type
+		$this->notifications->enqueueEvent('create', $object->getType(), new \ElggObject());
+		$this->assertNull($this->queue->dequeue());
+	}
+	
+	public function testEnqueueEventFallbackToOwner() {
+		$this->setupServices();
+
+		$object = $this->getTestObject();
+
+		$actor = null;
+		if ($object instanceof \ElggEntity || $object instanceof \ElggExtender) {
+			$actor = $object->getOwnerEntity() ?: null;
+		}
+		
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
+
+		$this->notifications->enqueueEvent('create', $object->getType(), $object, $actor);
+
+		$event = new SubscriptionNotificationEvent($object, 'create', $actor);
 		$this->assertEquals(unserialize(serialize($event)), $this->queue->dequeue());
 		$this->assertNull($this->queue->dequeue());
 
