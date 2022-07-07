@@ -52,7 +52,7 @@ try {
 			return elgg_ok_response($output, '', elgg_generate_url('account:password:reset'));
 		}
 
-		throw new LoginException($result);
+		throw new LoginException(elgg_echo('LoginException:Unknown'));
 	}
 
 	if (!$user) {
