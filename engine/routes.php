@@ -239,6 +239,13 @@ return [
 		'path' => '/user/{guid}',
 		'resource' => 'user/view',
 	],
+	'delete:user' => [
+		'path' => '/user/delete/{guid}',
+		'resource' => 'user/delete',
+		'middleware' => [
+			\Elgg\Router\Middleware\AdminGatekeeper::class,
+		],
+	],
 	'edit:user:avatar' => [
 		'path' => '/avatar/edit/{username}',
 		'resource' => 'avatar/edit',
