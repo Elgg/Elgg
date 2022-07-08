@@ -69,3 +69,18 @@ function elgg_authenticate($username, $password) {
 	
 	return true;
 }
+
+/**
+ * Generates a unique invite code for a user
+ *
+ * @param string $username The username of the user sending the invitation
+ *
+ * @return string Invite code
+ * @see elgg_validate_invite_code()
+ * @deprecated 4.3 use elgg_generate_invite_code()
+ */
+function generate_invite_code($username) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated use elgg_generate_invite_code()', '4.3');
+	
+	return elgg_generate_invite_code((string) $username);
+}

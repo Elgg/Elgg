@@ -176,8 +176,9 @@ function elgg_validate_registration_data($username, $password, $name, $email, $a
  *
  * @return string Invite code
  * @see elgg_validate_invite_code()
+ * @since 4.3
  */
-function generate_invite_code($username) {
+function elgg_generate_invite_code(string $username): string {
 	return _elgg_services()->usersTable->generateInviteCode($username);
 }
 
@@ -188,11 +189,11 @@ function generate_invite_code($username) {
  * @param string $code     The invite code
  *
  * @return bool
- * @see   generate_invite_code()
+ * @see elgg_generate_invite_code()
  * @since 1.10
  */
-function elgg_validate_invite_code($username, $code) {
-	return _elgg_services()->usersTable->validateInviteCode($username, $code);
+function elgg_validate_invite_code($username, $code): bool {
+	return _elgg_services()->usersTable->validateInviteCode((string) $username, (string) $code);
 }
 
 /**
@@ -201,14 +202,15 @@ function elgg_validate_invite_code($username, $code) {
  * plugins to alter the default registration URL and append query elements, such as
  * an invitation code and inviting user's guid
  *
- * @param array  $query    An array of query elements
- * @param string $fragment Fragment identifier
+ * @param array  $parameters An array of query elements
+ * @param string $fragment   Fragment identifier
+ *
  * @return string
  */
-function elgg_get_registration_url(array $query = [], $fragment = '') {
-	$url = elgg_generate_url('account:register');
-	$url = elgg_http_add_url_query_elements($url, $query) . $fragment;
-	return elgg_trigger_plugin_hook('registration_url', 'site', $query, $url);
+function elgg_get_registration_url(array $parameters = [], $fragment = ''): string {
+	$url = elgg_generate_url('account:register', $parameters) . $fragment;
+	
+	return (string) elgg_trigger_plugin_hook('registration_url', 'site', $parameters, $url);
 }
 
 /**

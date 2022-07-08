@@ -7,6 +7,7 @@ use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Hook;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
+use Elgg\Exceptions\Http\Gatekeeper\RegistrationAllowedGatekeeperException;
 
 /**
  * @group ActionsService
@@ -354,5 +355,64 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		$this->assertTrue($user->isEnabled());
 		
 		$this->assertNotEmpty(elgg_get_logged_in_user_entity());
+	}
+	
+	public function testRegistrationDisabledGatekeeper() {
+		$this->createApplication([
+			'isolate' => true,
+			'custom_config_values' => [
+				'allow_registration' => false,
+			],
+		]);
+		
+		$this->expectException(RegistrationAllowedGatekeeperException::class);
+		$this->expectExceptionMessage(elgg_echo('registerdisabled'));
+		$this->executeAction('register', [
+			'username' => $this->getRandomUsername(),
+			'password' => '1234567890',
+			'password2' => '1234567890',
+			'email' => $this->getRandomEmail(),
+			'name' => 'Test User',
+		]);
+	}
+	
+	public function testRegistrationDisabledGatekeeperWithValidInviteCode() {
+		$this->createApplication([
+			'isolate' => true,
+			'custom_config_values' => [
+				'allow_registration' => false,
+			],
+		]);
+		
+		$inviting_user = $this->getRandomUser();
+		
+		$response = $this->executeAction('register', [
+			'username' => $this->getRandomUsername(),
+			'password' => '12',
+			'password2' => '123', // intentional mistake
+			'email' => $this->getRandomEmail(),
+			'name' => 'Test User',
+			'friend_guid' => $inviting_user->guid,
+			'invitecode' => elgg_generate_invite_code($inviting_user->username),
+		]);
+		
+		$this->assertInstanceOf(ErrorResponse::class, $response);
+		$this->assertEquals(elgg_echo('RegistrationException:PasswordMismatch'), $response->getContent());
+	}
+	
+	public function testRegistrationGatekeeperWithInvalidInviteCode() {
+		$inviting_user = $this->getRandomUser();
+		
+		$this->expectException(RegistrationAllowedGatekeeperException::class);
+		$this->expectExceptionMessage(elgg_echo('RegistrationAllowedGatekeeperException:invalid_invitecode'));
+		$this->executeAction('register', [
+			'username' => $this->getRandomUsername(),
+			'password' => '1234567890',
+			'password2' => '1234567890',
+			'email' => $this->getRandomEmail(),
+			'name' => 'Test User',
+			'friend_guid' => $inviting_user->guid,
+			'invitecode' => elgg_generate_invite_code($inviting_user->username) . 'fail',
+		]);
 	}
 }

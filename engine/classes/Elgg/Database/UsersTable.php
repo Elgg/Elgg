@@ -171,9 +171,11 @@ class UsersTable {
 	 * @return string Invite code
 	 * @see self::validateInviteCode()
 	 */
-	public function generateInviteCode($username) {
+	public function generateInviteCode(string $username): string {
 		$time = $this->getCurrentTime()->getTimestamp();
-		return "$time." . _elgg_services()->hmac->getHmac([(int) $time, $username])->getToken();
+		$token = _elgg_services()->hmac->getHmac([$time, $username])->getToken();
+		
+		return "{$time}.{$token}";
 	}
 
 	/**
@@ -185,14 +187,15 @@ class UsersTable {
 	 * @return bool
 	 * @see self::generateInviteCode()
 	 */
-	public function validateInviteCode($username, $code) {
-		// validate the format of the token created by ->generateInviteCode()
-		if (!preg_match('~^(\d+)\.([a-zA-Z0-9\-_]+)$~', $code, $m)) {
+	public function validateInviteCode(string $username, string $code): bool {
+		// validate the format of the token created by self::generateInviteCode()
+		$matches = [];
+		if (!preg_match('~^(\d+)\.([a-zA-Z0-9\-_]+)$~', $code, $matches)) {
 			return false;
 		}
-		$time = $m[1];
-		$mac = $m[2];
+		$time = (int) $matches[1];
+		$mac = $matches[2];
 
-		return _elgg_services()->hmac->getHmac([(int) $time, $username])->matchesToken($mac);
+		return _elgg_services()->hmac->getHmac([$time, $username])->matchesToken($mac);
 	}
 }

@@ -10,10 +10,6 @@ use Elgg\Exceptions\LoginException;
 
 elgg_make_sticky_form('register', ['password', 'password2']);
 
-if (!elgg_get_config('allow_registration')) {
-	return elgg_error_response(elgg_echo('registerdisabled'));
-}
-
 // Get variables
 $username = $request->getParam('username');
 $password = $request->getParam('password', null, false);

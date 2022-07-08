@@ -101,6 +101,7 @@ return array(
 	'EntityNotFoundException' => 'The content you were trying to access has been removed or you do not have permissions to access it.',
 	'EntityPermissionsException' => 'You do not have sufficient permissions for this action.',
 	'GatekeeperException' => 'You do not have permissions to view the page you are trying to access',
+	'RegistrationAllowedGatekeeperException:invalid_invitecode' => "The provided invite code is not valid",
 	'BadRequestException' => 'Bad request',
 	'ValidationException' => 'Submitted data did not meet the requirements, please check your input.',
 	'LogicException:InterfaceNotImplemented' => '%s must implement %s',

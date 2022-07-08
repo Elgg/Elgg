@@ -23,10 +23,6 @@ class Page {
 			return;
 		}
 		
-		if (!elgg_get_config('allow_registration')) {
-			return;
-		}
-		
 		$result = $hook->getValue();
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'invite',
