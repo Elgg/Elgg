@@ -447,6 +447,10 @@ return array(
 	'user:changepassword:unknown_user' => 'Invalid user.',
 	'user:changepassword:change_password_confirm' => 'This will change your password.',
 
+	'user:delete:title' => 'Confirm account deletion',
+	'user:delete:description' => 'Please confirm that you wish to delete the account of %s. Deleting the account will also delete all content (including groups) owned by this user. This might also include related content such as group content, subpages or comments on the content. Below you can view a list of content owned by the user.',
+	'user:delete:confirm' => "I hereby confirm I want to delete this user",
+
 	'user:set:language' => "Language settings",
 	'user:language:label' => "Language",
 	'user:language:success' => "Language settings have been updated.",

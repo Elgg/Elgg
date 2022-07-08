@@ -65,10 +65,9 @@ class UserHover {
 			'name' => 'delete',
 			'icon' => 'delete',
 			'text' => elgg_echo('delete'),
-			'href' => elgg_generate_action_url('admin/user/delete', [
+			'href' => elgg_generate_url('delete:user', [
 				'guid' => $user->guid,
 			]),
-			'confirm' => true,
 			'section' => 'admin',
 			'priority' => 999,
 		]);

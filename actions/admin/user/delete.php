@@ -30,9 +30,15 @@ if (!$deleted) {
 }
 
 // forward to user administration if on a user's page as it no longer exists
-$forward = REFERER;
-if (elgg_strpos($_SERVER['HTTP_REFERER'], $username) !== false) {
-	$forward = 'admin/users/newest';
+$forward = get_input('forward_url');
+if (empty($forward)) {
+	$forward = REFERER;
+
+	if (elgg_strpos($_SERVER['HTTP_REFERER'], $username) !== false) {
+		$forward = 'admin/users/newest';
+	}
+} else {
+	$forward = elgg_normalize_site_url($forward) ?: REFERER;
 }
 
 return elgg_ok_response('', elgg_echo('admin:user:delete:yes', [$name]), $forward);
