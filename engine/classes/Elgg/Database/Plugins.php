@@ -708,12 +708,7 @@ class Plugins {
 			],
 		]);
 
-		$disable_plugins = $this->config->auto_disable_plugins;
-		if ($disable_plugins === null) {
-			$disable_plugins = true;
-		}
-
-		if (!$disable_plugins) {
+		if (!$this->config->auto_disable_plugins) {
 			return;
 		}
 

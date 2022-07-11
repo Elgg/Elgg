@@ -1,7 +1,6 @@
 <?php
 
-$dir = elgg_get_config('dataroot') . 'logs/html/';
-
+$dir = elgg_get_data_path() . 'logs/html/';
 if (!is_dir($dir)) {
 	echo elgg_format_element('p', [
 		'class' => 'elgg-no-results',

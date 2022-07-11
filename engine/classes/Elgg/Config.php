@@ -65,6 +65,7 @@ use Elgg\Traits\Loggable;
  * @property array         $emailer_smtp_settings                   This configures SMTP if $emailer_transport is set to "smtp"
  * @property mixed         $embed_tab
  * @property string        $exception_include						This is an optional script used to override Elgg's default handling of uncaught exceptions.
+ * @property int           $friendly_time_number_of_days            Number of days after which timestamps will no longer be presented in a friendly format (x hours ago) but in a full date
  * @property string[]      $group
  * @property string[]      $http_request_trusted_proxy_ips			When Elgg is behind a loadbalancer/proxy this can contain IP adresses to allow access to better client information
  * @property int           $http_request_trusted_proxy_headers		When Elgg is behind a loadbalancer/proxy this can contain a bitwise string of allowed headers for better client information
@@ -114,6 +115,7 @@ use Elgg\Traits\Loggable;
  * @property bool          $security_protect_cron
  * @property bool          $security_protect_upgrade
  * @property string        $seeder_local_image_folder 				Path to a local folder containing images used for seeding
+ * @property bool          $session_bound_entity_icons 				Are the URLs to entity icons session bound (unique per user)
  * @property bool          $simplecache_enabled						Is simplecache enabled?
  * @property bool          $simplecache_minify_css
  * @property bool          $simplecache_minify_js
@@ -189,7 +191,10 @@ class Config {
 	 * @var array
 	 */
 	protected $config_defaults = [
+		'allow_phpinfo' => false,
+		'auto_disable_plugins' => true,
 		'batch_run_time_in_secs' => 4,
+		'can_change_username' => false,
 		'class_loader_verify_file_existence' => true,
 		'comment_box_collapses' => true,
 		'comments_group_only' => true,
@@ -202,6 +207,7 @@ class Config {
 		'email_html_part_images' => 'no',
 		'email_subject_limit' => 998,
 		'enable_delayed_email' => true,
+		'friendly_time_number_of_days' => 30,
 		'icon_sizes' => [
 			'topbar' => ['w' => 16, 'h' => 16, 'square' => true, 'upscale' => true],
 			'tiny' => ['w' => 25, 'h' => 25, 'square' => true, 'upscale' => true],
@@ -223,6 +229,7 @@ class Config {
 		'security_notify_admins' => true,
 		'security_notify_user_password' => true,
 		'security_protect_upgrade' => true,
+		'session_bound_entity_icons' => false,
 		'simplecache_enabled' => false,
 		'system_cache_enabled' => false,
 		'testing_mode' => false,

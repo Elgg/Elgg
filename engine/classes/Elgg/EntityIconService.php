@@ -527,11 +527,11 @@ class EntityIconService {
 		$type = elgg_extract('type', $params) ? : 'icon';
 		$entity_type = $entity->getType();
 
-		$url = $this->hooks->trigger("entity:$type:url", $entity_type, $params, null);
+		$url = $this->hooks->trigger("entity:{$type}:url", $entity_type, $params, null);
 		if ($url == null) {
 			if ($this->hasIcon($entity, $size, $type)) {
 				$icon = $this->getIcon($entity, $size, $type);
-				$default_use_cookie = (bool) elgg_get_config('session_bound_entity_icons', false);
+				$default_use_cookie = (bool) elgg_get_config('session_bound_entity_icons');
 				$url = $icon->getInlineURL((bool) elgg_extract('use_cookie', $params, $default_use_cookie));
 			} else {
 				$url = $this->getFallbackIconUrl($entity, $params);
