@@ -27,6 +27,7 @@ Lib functions
 ~~~~~~~~~~~~~
 
 * ``elgg_authenticate()`` use ``elgg_pam_authenticate()``
+* ``elgg_get_loaded_external_files()`` use ``elgg_get_loaded_external_resources()``
 * ``generate_invite_code()`` use ``elgg_generate_invite_code()``
 * ``register_pam_handler()`` use ``elgg_register_pam_handler()``
 * ``unregister_pam_handler()`` use ``elgg_unregister_pam_handler()``

@@ -147,8 +147,8 @@ function elgg_load_external_file(string $type, string $name): void {
  * @param string $location Page location
  *
  * @return array
- * @since 1.8.0
+ * @since 4.3
  */
-function elgg_get_loaded_external_files(string $type, string $location): array {
-	return _elgg_services()->externalFiles->getLoadedFiles($type, $location);
+function elgg_get_loaded_external_resources(string $type, string $location): array {
+	return _elgg_services()->externalFiles->getLoadedResources($type, $location);
 }
