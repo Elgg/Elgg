@@ -484,4 +484,23 @@ class Request extends SymfonyRequest {
 			throw new BadRequestException($error_msg);
 		}
 	}
+	
+	/**
+	 * Correct the base URL of the request
+	 *
+	 * @param \Elgg\Config $config the Elgg config
+	 *
+	 * @return void
+	 * @see https://github.com/Elgg/Elgg/issues/13667
+	 * @since 4.3
+	 */
+	public function correctBaseURL(\Elgg\Config $config): void {
+		if (\Elgg\Application::isCli()) {
+			return;
+		}
+		
+		$path = parse_url($config->wwwroot, PHP_URL_PATH);
+		
+		$this->baseUrl = rtrim($path, '/');
+	}
 }
