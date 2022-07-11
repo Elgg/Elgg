@@ -141,6 +141,7 @@ return [
 		// global $CONFIG is not set during installer
 		if ($CONFIG instanceof \Elgg\Config) {
 			$request->initializeTrustedProxyConfiguration($CONFIG);
+			$request->correctBaseURL($CONFIG);
 		}
 		
 		return $request;
