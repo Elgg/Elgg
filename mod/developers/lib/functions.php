@@ -24,7 +24,7 @@ function developers_wrap_views(\Elgg\Hook $hook) {
 		return;
 	}
 	
-	if (elgg_stristr(current_page_url(), elgg_normalize_url('cache/'))) {
+	if (elgg_stristr(elgg_get_current_url(), elgg_normalize_url('cache/'))) {
 		return;
 	}
 	

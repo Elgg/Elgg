@@ -27,7 +27,7 @@ System hooks
 **cron:intervals, system**
 	Allow the configuration of custom cron intervals
 
-**validate, input**
+**sanitize, input**
 	Filter GET and POST input. This is used by ``get_input()`` to sanitize user input.
 
 **prepare, html**

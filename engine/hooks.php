@@ -250,6 +250,13 @@ return [
 			],
 		],
 	],
+	'sanitize' => [
+		'input' => [
+			\Elgg\Input\ValidateInputHandler::class => [
+				'priority' => 1,
+			],
+		],
+	],
 	'search:fields' => [
 		'group' => [
 			\Elgg\Search\GroupSearchFieldsHandler::class => [],
@@ -301,13 +308,6 @@ return [
 				'priority' => 100, // this needs to be before email change, for security reasons
 			],
 			'Elgg\Users\Settings::setUsername' => [],
-		],
-	],
-	'validate' => [
-		'input' => [
-			\Elgg\Input\ValidateInputHandler::class => [
-				'priority' => 1,
-			],
 		],
 	],
 	'view_vars' => [

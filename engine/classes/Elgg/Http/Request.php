@@ -193,7 +193,7 @@ class Request extends SymfonyRequest {
 
 		// filter the input params
 		$this->getContextStack()->push('input');
-		$this->filtered_params = filter_tags($this->unfiltered_params);
+		$this->filtered_params = elgg_sanitize_input($this->unfiltered_params);
 		$this->getContextStack()->pop();
 		
 		return $filter_result ? $this->filtered_params : $this->unfiltered_params;
@@ -201,6 +201,9 @@ class Request extends SymfonyRequest {
 
 	/**
 	 * Returns current page URL
+	 *
+	 * It uses the configured site URL for the hostname rather than depending on
+	 * what the server uses to populate $_SERVER.
 	 *
 	 * @return string
 	 */

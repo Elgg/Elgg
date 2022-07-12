@@ -103,7 +103,7 @@ class StickyForms {
 			$value = $data[$form_name][$variable];
 			if ($filter_result) {
 				// XSS filter result
-				$value = filter_tags($value);
+				$value = elgg_sanitize_input($value);
 			}
 			
 			return $value;
@@ -130,7 +130,7 @@ class StickyForms {
 		if ($filter_result) {
 			foreach ($values as $key => $value) {
 				// XSS filter result
-				$values[$key] = filter_tags($value);
+				$values[$key] = elgg_sanitize_input($value);
 			}
 		}
 		

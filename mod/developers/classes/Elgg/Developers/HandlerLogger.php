@@ -63,6 +63,7 @@ class HandlerLogger {
 			'validate',
 			'view',
 			'view_vars',
+			'sanitize',
 		];
 		if (in_array($name, $filter)) {
 			return;

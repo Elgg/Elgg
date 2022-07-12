@@ -9,7 +9,7 @@ $status = get_input('status', 'open');
 $access_id = get_input('access_id');
 $container_guid = (int) get_input('container_guid');
 $guid = (int) get_input('topic_guid');
-$tags = get_input('tags');
+$tags = (string) get_input('tags');
 
 elgg_make_sticky_form('topic');
 
@@ -53,7 +53,7 @@ $topic->status = $status;
 $topic->access_id = $access_id;
 $topic->container_guid = $container_guid;
 
-$topic->tags = string_to_tag_array($tags);
+$topic->tags = elgg_string_to_array($tags);
 
 if (!$topic->save()) {
 	return elgg_error_response(elgg_echo('discussion:error:notsaved'));

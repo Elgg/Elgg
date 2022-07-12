@@ -48,16 +48,6 @@ class ElggHtmLawedTest extends IntegrationTestCase {
 		'text-decoration',
 	];
 
-	public function up() {
-		// only use the Elgg core htmlAwed configuration
-		elgg()->hooks->backup();
-		elgg()->hooks->registerHandler('validate', 'input', '_elgg_htmlawed_filter_tags', 1);
-	}
-
-	public function down() {
-		elgg()->hooks->restore();
-	}
-
 	/**
 	 * Test anchor tags as input
 	 */

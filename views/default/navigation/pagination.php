@@ -39,7 +39,7 @@ if (isset($vars['base_url']) && $vars['base_url']) {
 } elseif ($use_referer && elgg_is_xhr() && !empty($_SERVER['HTTP_REFERER'])) {
 	$base_url = $_SERVER['HTTP_REFERER'];
 } else {
-	$base_url = current_page_url();
+	$base_url = elgg_get_current_url();
 }
 
 $base_url_has_fragment = preg_match('~#.~', $base_url);

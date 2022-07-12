@@ -400,7 +400,7 @@ class EmailService {
 		$defaults = [
 			'subject' => '',
 			'body' => '',
-			'language' => get_current_language(),
+			'language' => elgg_get_current_language(),
 		];
 		
 		$options = array_merge($defaults, $options);

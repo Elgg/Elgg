@@ -36,7 +36,7 @@ foreach ($emails as $email_address) {
 	}
 
 	// send out other email addresses
-	if (!is_email_address($email_address)) {
+	if (!elgg_is_valid_email($email_address)) {
 		$error = true;
 		$bad_emails[] = $email_address;
 		continue;

@@ -17,7 +17,7 @@
  * Instead, simply call elgg_require_js("module/name").
  *
  * @note The configuration is cached in simplecache, so logic should not depend on user-
- *       specific values like get_current_language().
+ *       specific values like elgg_get_current_language().
  *
  * @param string $name   The module name
  * @param array  $config An array like the following:

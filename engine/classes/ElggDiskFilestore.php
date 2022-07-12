@@ -267,6 +267,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 * @param int    $container_guid The guid of the entity whose data you want to check.
 	 *
 	 * @return int|false
+	 * @deprecated 4.3
 	 */
 	public function getSize($prefix, $container_guid) {
 		if ($container_guid) {

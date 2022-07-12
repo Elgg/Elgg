@@ -34,7 +34,7 @@ foreach ($fields as $field) {
 	}
 
 	if ($field['#type'] == 'tags') {
-		$input[$shortname] = string_to_tag_array($input[$shortname]);
+		$input[$shortname] = elgg_string_to_array((string) $input[$shortname]);
 	}
 }
 

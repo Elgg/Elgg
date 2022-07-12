@@ -33,7 +33,7 @@ class FilterSortItems {
 			'name' => 'sort:relationship:desc',
 			'icon' => 'sort-numeric-down-alt',
 			'text' => elgg_echo('groups:menu:sort:member'),
-			'href' => elgg_http_add_url_query_elements(current_page_url(), [
+			'href' => elgg_http_add_url_query_elements(elgg_get_current_url(), [
 				'sort_by' => [
 					'property' => 'member',
 					'property_type' => 'relationship',

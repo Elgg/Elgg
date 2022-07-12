@@ -94,7 +94,7 @@ if ($request->isXhr()) {
 $output = [
 	'user' => $user,
 ];
-$message = elgg_echo('loginok', [], $user->getLanguage(get_current_language()));
+$message = elgg_echo('loginok', [], $user->getLanguage(elgg_get_current_language()));
 $forward_url = _elgg_get_login_forward_url($request, $user);
 
 return elgg_ok_response($output, $message, $forward_url);

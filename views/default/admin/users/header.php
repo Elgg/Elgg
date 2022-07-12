@@ -29,7 +29,7 @@ if (!(bool) elgg_extract('show_search_form', $vars, !empty($search_query))) {
 }
 echo elgg_view_form('admin/users/search', [
 	'method' => 'GET',
-	'action' => current_page_url(),
+	'action' => elgg_get_current_url(),
 	'disable_security' => true,
 	'class' => $search_class,
 ], [

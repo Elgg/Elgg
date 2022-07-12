@@ -61,7 +61,7 @@ class Input {
 		if ($value !== null) {
 			$result = $value;
 			if ($filter_result) {
-				$result = filter_tags($result);
+				$result = elgg_sanitize_input($result);
 			}
 		}
 
@@ -85,7 +85,7 @@ class Input {
 		$result = array_merge($query, $attributes, $post);
 
 		if ($filter_result) {
-			$result = filter_tags($result);
+			$result = elgg_sanitize_input($result);
 		}
 
 		return $result;

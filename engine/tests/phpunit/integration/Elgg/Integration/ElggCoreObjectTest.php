@@ -89,7 +89,7 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 
 		// add tag array
 		$tag_string = 'tag1, tag2, tag3';
-		$tagarray = string_to_tag_array($tag_string);
+		$tagarray = elgg_string_to_array($tag_string);
 		$this->entity->tags = $tagarray;
 
 		// a cloned \ElggEntity has the guid reset
