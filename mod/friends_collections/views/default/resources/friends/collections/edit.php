@@ -6,8 +6,8 @@
 use Elgg\Exceptions\Http\EntityNotFoundException;
 use Elgg\Exceptions\Http\EntityPermissionsException;
 
-$collection_id = elgg_extract('collection_id', $vars);
-$collection = get_access_collection($collection_id);
+$collection_id = (int) elgg_extract('collection_id', $vars);
+$collection = elgg_get_access_collection($collection_id);
 
 if (!$collection || !$collection->canEdit()) {
 	throw new EntityPermissionsException();

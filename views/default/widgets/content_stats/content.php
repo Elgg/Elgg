@@ -3,7 +3,7 @@
  * Content stats widget
  */
 
-$entity_stats = get_entity_statistics();
+$entity_stats = elgg_get_entity_statistics();
 
 $registered_entity_types = elgg_entity_types_with_capability('searchable');
 if (empty($registered_entity_types)) {

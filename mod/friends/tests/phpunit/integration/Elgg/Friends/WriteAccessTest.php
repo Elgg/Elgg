@@ -21,7 +21,7 @@ class WriteAccessTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testFriendsInWriteAccessArray() {
-		$write_access = get_write_access_array($this->user->guid);
+		$write_access = elgg_get_write_access_array($this->user->guid);
 		
 		$acl = $this->user->getOwnedAccessCollection('friends');
 		$this->assertNotEmpty($acl);

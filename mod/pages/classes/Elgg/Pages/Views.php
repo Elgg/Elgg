@@ -29,7 +29,7 @@ class Views {
 			return;
 		}
 		
-		$default_access = get_default_access();
+		$default_access = elgg_get_default_access();
 		
 		if ($value === ACCESS_PUBLIC || $default_access === ACCESS_PUBLIC) {
 			// is the value public, or default which resolves to public?

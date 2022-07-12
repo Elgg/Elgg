@@ -296,7 +296,7 @@ class EntityTable {
 		}
 
 		// Validate accessibility if from cache
-		if (!elgg_get_ignore_access() && !has_access_to_entity($entity)) {
+		if (!elgg_get_ignore_access() && !$entity->hasAccess()) {
 			return false;
 		}
 

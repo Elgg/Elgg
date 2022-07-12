@@ -19,8 +19,7 @@ if (!isset($access_id)) {
 	return;
 }
 
-$access_id_string = get_readable_access_level($access_id);
-
+$access_id = (int) $access_id;
 switch ($access_id) {
 	case ACCESS_PUBLIC :
 		$class[] = 'elgg-access-public';
@@ -35,7 +34,7 @@ switch ($access_id) {
 		break;
 	
 	default:
-		$collection = get_access_collection($access_id);
+		$collection = elgg_get_access_collection($access_id);
 		$owner = false;
 		if ($collection) {
 			$owner = get_entity($collection->owner_guid);
@@ -60,10 +59,10 @@ switch ($access_id) {
 
 echo elgg_format_element([
 	'#tag_name' => 'span',
-	'title' => elgg_echo('access:help'),
-	'class' => $class,
-	'#text' => $access_id_string,
+	'#text' => elgg_get_readable_access_level($access_id),
 	'#options' => [
 		'encode_text' => true,
 	],
+	'title' => elgg_echo('access:help'),
+	'class' => $class,
 ]);

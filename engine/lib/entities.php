@@ -692,8 +692,9 @@ function elgg_search(array $options = []) {
  * @param int $owner_guid Optional owner of the statistics
  *
  * @return array
+ * @since 4.3
  */
-function get_entity_statistics(int $owner_guid = 0): array {
+function elgg_get_entity_statistics(int $owner_guid = 0): array {
 
 	$select = Select::fromTable('entities');
 	$select->select('type')

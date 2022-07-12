@@ -41,7 +41,7 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 		// removing group and acl
 		$this->assertTrue($this->group->delete());
 
-		$this->assertFalse(get_access_collection($acl_id));
+		$this->assertEmpty(elgg_get_access_collection($acl_id));
 	}
 
 	public function testJoinLeaveGroupACL() {
@@ -62,7 +62,7 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 				$acl = $group->getOwnedAccessCollection('group_acl');
 				$can_edit = true;
 				if ($acl instanceof \ElggAccessCollection) {
-					$can_edit = can_edit_access_collection($acl->id, $this->user->guid);
+					$can_edit = $acl->canEdit($this->user->guid);
 				}
 				$this->assertFalse($can_edit);
 			}
@@ -95,11 +95,11 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 			$acl_id = $acl->id;
 			
 			$this->group->setContentAccessMode($membersonly);
-			$write_access = get_write_access_array($new_user->guid, true);
+			$write_access = elgg_get_write_access_array($new_user->guid, true);
 			$this->assertArrayNotHasKey($acl_id, $write_access);
 			// Unrestricted group
 			$this->group->setContentAccessMode($unrestricted);
-			$write_access = get_write_access_array($new_user->guid, true);
+			$write_access = elgg_get_write_access_array($new_user->guid, true);
 			$this->assertArrayNotHasKey($acl_id, $write_access);
 	
 			// User is a member (can write to container)
@@ -107,11 +107,11 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 	
 			// Member-only group
 			$this->group->setContentAccessMode($membersonly);
-			$write_access = get_write_access_array($new_user->guid, true);
+			$write_access = elgg_get_write_access_array($new_user->guid, true);
 			$this->assertArrayHasKey($acl_id, $write_access);
 			// Unrestricted group
 			$this->group->setContentAccessMode($unrestricted);
-			$write_access = get_write_access_array($new_user->guid, true);
+			$write_access = elgg_get_write_access_array($new_user->guid, true);
 			$this->assertArrayHasKey($acl_id, $write_access);
 		});
 		

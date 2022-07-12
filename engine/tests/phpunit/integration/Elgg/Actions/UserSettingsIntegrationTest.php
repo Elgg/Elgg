@@ -331,6 +331,6 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 
 		$this->assertSystemMessageEmitted(elgg_echo('user:default_access:success'));
 
-		$this->assertEquals(ACCESS_PRIVATE, get_default_access($user));
+		$this->assertEquals(ACCESS_PRIVATE, elgg_get_default_access($user));
 	}
 }

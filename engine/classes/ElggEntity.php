@@ -998,6 +998,18 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		
 		return elgg_extract(0, $acls, false);
 	}
+	
+	/**
+	 * Check if the given user has access to this entity
+	 *
+	 * @param int $user_guid the GUID of the user to check access for (default: logged in user_guid)
+	 *
+	 * @return bool
+	 * @since 4.3
+	 */
+	public function hasAccess(int $user_guid = 0): bool {
+		return _elgg_services()->accessCollections->hasAccessToEntity($this, $user_guid);
+	}
 
 	/**
 	 * Gets an array of entities with a relationship to this entity.

@@ -14,13 +14,13 @@ An Access Control List (or ACL) can grant one or more users access to an entity 
 Creating an ACL
 ===============
 
-An access collection can be create by using the function `create_access_collection()`.
+An access collection can be create by using the function ``elgg_create_access_collection()``.
 
 .. code-block:: php
 
 	$owner_guid = elgg_get_logged_in_user_guid();
 
-	$acl = create_access_collection("Sample name", $owner_guid, 'collection_subtype');
+	$acl = elgg_create_access_collection("Sample name", $owner_guid, 'collection_subtype');
 
 ACL subtypes
 ============
@@ -45,15 +45,10 @@ the `access_id` of the ACLs `id`.
 	// creating an ACL
 	$owner_guid = elgg_get_logged_in_user_guid();
 
-	$acl_id = create_access_collection("Sample name", $owner_guid, 'collection_subtype');
-	
-	// add other user (procedural style)
-	add_user_to_access_collection($some_user_guid, $acl_id);
-	
-	// add other user (object oriented style)
 	/* @var $acl ElggAccessCollection */
-	$acl = get_access_collection($acl_id);
+	$acl = elgg_create_access_collection("Sample name", $owner_guid, 'collection_subtype');
 	
+	// add user
 	$acl->addMember($some_other_user_guid);
 
 Removing users from an ACL
@@ -63,12 +58,9 @@ If you no longer wish to allow access for a given user in an ACL you can easily 
 
 .. code-block:: php
 
-	// remove a user from an ACL (procedural style)
-	remove_user_from_access_collection($user_guid_to_be_removed, $acl_id);
-	
-	// remove a user from an ACL (object oriented style)
+	// remove a user from an ACL
 	/* @var $acl ElggAccessCollection */
-	$acl = get_access_collection($acl_id);
+	$acl = elgg_get_access_collection($acl_id);
 	
 	$acl->removeMember(user_guid_to_be_removed);
 
@@ -81,7 +73,7 @@ retrieve an ACL from the database.
 .. code-block:: php
 
 	// get ACL based on known id
-	$acl = get_access_collection($acl_id);
+	$acl = elgg_get_access_collection($acl_id);
 	
 	// get all ACLs of an owner (procedural style)
 	$acls = elgg_get_access_collections([

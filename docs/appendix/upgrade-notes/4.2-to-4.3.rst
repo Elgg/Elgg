@@ -27,15 +27,27 @@ Lib functions
 ~~~~~~~~~~~~~
 
 * ``add_translation()`` use ``elgg()->translator->addTranslation()``
+* ``add_user_to_access_collection()`` use ``\ElggAccessCollection->addMember()``
+* ``can_edit_access_collection()`` use ``\ElggAccessCollection->canEdit()``
+* ``create_access_collection()`` use ``elgg_create_access_collection()``
 * ``current_page_url()`` use ``elgg_get_current_url()``
+* ``delete_access_collection()`` use ``\ElggAccessCollection->delete()``
 * ``elgg_authenticate()`` use ``elgg_pam_authenticate()``
 * ``elgg_get_loaded_external_files()`` use ``elgg_get_loaded_external_resources()``
 * ``filter_tags()`` use ``elgg_sanitize_input()``
 * ``generate_invite_code()`` use ``elgg_generate_invite_code()``
 * ``get_dir_size()``
+* ``get_access_array()`` use ``elgg_get_access_array()``
+* ``get_access_collection()`` use ``elgg_get_access_collection()``
+* ``get_default_access()`` use ``elgg_get_default_access()``
+* ``get_entity_statistics()`` use ``elgg_get_entity_statistics()``
+* ``get_members_of_access_collection()`` use ``\ElggAccessCollection->getMembers()``
+* ``get_readable_access_level()`` use ``elgg_get_readable_access_level()``
+* ``get_write_access_array()`` use ``elgg_get_write_access_array()``
 * ``is_email_address()`` use ``elgg_is_valid_email()``
 * ``parse_urls()`` use ``elgg_parse_urls()``
 * ``register_pam_handler()`` use ``elgg_register_pam_handler()``
+* ``remove_user_from_access_collection()`` use ``\ElggAccessCollection->removeMember()``
 * ``string_to_tag_array()`` use ``elgg_string_to_array()``
 * ``unregister_pam_handler()`` use ``elgg_unregister_pam_handler()``
 

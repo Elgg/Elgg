@@ -77,7 +77,7 @@ if (empty($input)) {
 
 // go through custom fields
 // fetch default access level for the user for use in fallback cases
-$user_default_access = get_default_access($owner);
+$user_default_access = elgg_get_default_access($owner);
 
 foreach ($input as $shortname => $value) {
 	// get field access

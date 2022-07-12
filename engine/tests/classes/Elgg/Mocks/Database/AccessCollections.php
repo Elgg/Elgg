@@ -26,7 +26,7 @@ class AccessCollections extends DbAccessCollections {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function create($name, $owner_guid = 0, $subtype = null) {
+	public function create(string $name, int $owner_guid = 0, string $subtype = null): ?int {
 
 		static::$iterator++;
 		$id = static::$iterator;

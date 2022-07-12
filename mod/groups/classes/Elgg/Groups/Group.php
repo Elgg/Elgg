@@ -25,7 +25,7 @@ class Group {
 			$ac_name = elgg_echo('groups:group') . ": " . $object->getDisplayName();
 			
 			// delete the group if acl creation fails
-			return (bool) create_access_collection($ac_name, $object->guid, 'group_acl');
+			return (bool) elgg_create_access_collection($ac_name, $object->guid, 'group_acl');
 		});
 	}
 	

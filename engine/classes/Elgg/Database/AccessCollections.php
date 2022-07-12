@@ -9,8 +9,8 @@ use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\Database\UserFetchFailureException;
 use Elgg\I18n\Translator;
 use Elgg\PluginHooksService;
-use Elgg\UserCapabilities;
 use Elgg\Traits\Loggable;
+use Elgg\UserCapabilities;
 
 /**
  * Access collections database service
@@ -133,7 +133,7 @@ class AccessCollections {
 	 * retrieving content from the database. The friends access level is handled by
 	 * _elgg_get_access_where_sql().
 	 *
-	 * @see get_write_access_array() for the access levels that a user can write to.
+	 * @see elgg_get_write_access_array() for the access levels that a user can write to.
 	 *
 	 * @param int  $user_guid User ID; defaults to currently logged in user
 	 * @param bool $flush     If set to true, will refresh the access ids from the
@@ -211,31 +211,31 @@ class AccessCollections {
 	 * @tip This is mostly useful for checking if a user other than the logged in
 	 * user has access to an entity that is currently loaded.
 	 *
-	 * @todo This function would be much more useful if we could pass the guid of the
-	 * entity to test access for. We need to be able to tell whether the entity exists
-	 * and whether the user has access to the entity.
-	 *
-	 * @param \ElggEntity $entity The entity to check access for.
-	 * @param \ElggUser   $user   Optionally user to check access for. Defaults to
-	 *                            logged in user (which is a useless default).
+	 * @param \ElggEntity $entity    The entity to check access for
+	 * @param int         $user_guid Optionally user_guid to check access for. Defaults to logged in user
 	 *
 	 * @return bool
 	 */
-	public function hasAccessToEntity(\ElggEntity $entity, \ElggUser $user = null) {
-
+	public function hasAccessToEntity(\ElggEntity $entity, int $user_guid = 0): bool {
 		if ($entity->access_id == ACCESS_PUBLIC) {
 			// Public entities are always accessible
 			return true;
 		}
 
-		$user_guid = isset($user) ? (int) $user->guid : _elgg_services()->session->getLoggedInUserGuid();
+		try {
+			$user = $this->entities->getUserForPermissionsCheck($user_guid);
+			$user_guid = $user ? $user->guid : 0; // No GUID given and not logged in
+		} catch (UserFetchFailureException $e) {
+			// Not a user GUID
+			$user_guid = 0;
+		}
 
-		if ($user_guid && $user_guid == $entity->owner_guid) {
+		if ($user_guid === $entity->owner_guid) {
 			// Owners have access to their own content
 			return true;
 		}
 
-		if ($user_guid && $entity->access_id == ACCESS_LOGGED_IN) {
+		if (!empty($user_guid )&& $entity->access_id === ACCESS_LOGGED_IN) {
 			// Existing users have access to entities with logged in access
 			return true;
 		}
@@ -369,14 +369,13 @@ class AccessCollections {
 	 * Can the user change this access collection?
 	 *
 	 * Use the plugin hook of 'access:collections:write', 'user' to change this.
-	 * @see get_write_access_array() for details on the hook.
+	 * @see elgg_get_write_access_array() for details on the hook.
 	 *
 	 * Respects access control disabling for admin users and {@link elgg_call()}
 	 *
-	 * @see get_write_access_array()
-	 *
 	 * @param int $collection_id The collection id
 	 * @param int $user_guid     The user GUID to check for. Defaults to logged in user.
+	 *
 	 * @return bool
 	 */
 	public function canEdit(int $collection_id, int $user_guid = null) {
@@ -420,21 +419,21 @@ class AccessCollections {
 	 *
 	 * @return int|false The collection ID if successful and false on failure.
 	 */
-	public function create(string $name, int $owner_guid = 0, $subtype = null) {
+	public function create(string $name, int $owner_guid = 0, string $subtype = null): ?int {
 		$name = trim($name);
 		if (empty($name)) {
-			return false;
+			return null;
 		}
 
 		if (isset($subtype)) {
 			$subtype = trim($subtype);
 			if (strlen($subtype) > 255) {
 				$this->getLogger()->error("The subtype length for access collections cannot be greater than 255");
-				return false;
+				return null;
 			}
 		}
 
-		if ($owner_guid == 0) {
+		if ($owner_guid === 0) {
 			$owner_guid = $this->session->getLoggedInUserGuid();
 		}
 
@@ -446,8 +445,8 @@ class AccessCollections {
 		]);
 
 		$id = $this->db->insertData($insert);
-		if (!$id) {
-			return false;
+		if (empty($id)) {
+			return null;
 		}
 
 		$this->access_cache->clear();
@@ -461,7 +460,7 @@ class AccessCollections {
 
 		if (!$this->hooks->trigger('access:collections:addcollection', 'collection', $hook_params, true)) {
 			$this->delete($id);
-			return false;
+			return null;
 		}
 
 		return $id;
@@ -597,28 +596,16 @@ class AccessCollections {
 	/**
 	 * Get a specified access collection
 	 *
-	 * @note This doesn't return the members of an access collection,
-	 * just the database row of the actual collection.
-	 *
-	 * @see get_members_of_access_collection()
-	 *
 	 * @param int $collection_id The collection ID
-	 * @return \ElggAccessCollection|false
+	 *
+	 * @return \ElggAccessCollection|null
 	 */
-	public function get(int $collection_id) {
-
-		$callback = [$this, 'rowToElggAccessCollection'];
-
+	public function get(int $collection_id): ?\ElggAccessCollection {
 		$query = Select::fromTable(self::TABLE_NAME);
 		$query->select('*')
 			->where($query->compare('id', '=', $collection_id, ELGG_VALUE_ID));
-
-		$result = $this->db->getDataRow($query, $callback);
-		if (empty($result)) {
-			return false;
-		}
-
-		return $result;
+		
+		return $this->db->getDataRow($query, [$this, 'rowToElggAccessCollection']) ?: null;
 	}
 
 	/**

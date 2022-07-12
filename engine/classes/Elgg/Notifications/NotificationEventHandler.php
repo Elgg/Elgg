@@ -238,7 +238,7 @@ class NotificationEventHandler {
 				return false;
 			}
 
-			if ($object instanceof \ElggEntity && !_elgg_services()->accessCollections->hasAccessToEntity($object, $recipient)) {
+			if ($object instanceof \ElggEntity && !$object->hasAccess($recipient->guid)) {
 				// Recipient does not have access to the notification object
 				// The access level may have changed since the event was enqueued
 				return false;

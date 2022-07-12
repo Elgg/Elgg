@@ -613,7 +613,7 @@ trait Seeding {
 			'container_guid' => $container ? $container->guid : null,
 		];
 
-		$access_array = get_write_access_array($user->guid, null, false, $params);
+		$access_array = elgg_get_write_access_array($user->guid, false, $params);
 
 		return array_rand($access_array, 1);
 	}
