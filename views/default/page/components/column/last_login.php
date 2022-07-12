@@ -13,16 +13,22 @@ if (!$entity instanceof \ElggUser) {
 	return;
 }
 
+$value = (int) $entity->last_login;
+if (empty($value)) {
+	echo elgg_echo('never');
+	return;
+}
+
 $format = elgg_extract('format', $vars, DATE_RFC2822);
 
 if ($format === 'friendly') {
 	echo elgg_view('output/friendlytime', [
-		'time' => $entity->last_login,
+		'time' => $value,
 	]);
 	return;
 }
 
 echo elgg_view('output/date', [
-	'value' => $entity->last_login,
+	'value' => $value,
 	'format' => $format,
 ]);

@@ -198,6 +198,12 @@ class Filter {
 			'href' => 'admin/users/unvalidated',
 			'priority' => 500,
 		]);
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'inactive',
+			'text' => elgg_echo('admin:users:inactive'),
+			'href' => 'admin/users/inactive',
+			'priority' => 600,
+		]);
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'search',

@@ -97,6 +97,40 @@ class FilterSortItems {
 	}
 	
 	/**
+	 * Register sorting menu items based on the last_login metadata
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:filter<:some filter_id>'
+	 *
+	 * @return MenuItems|null
+	 */
+	public static function registerLastLoginSorting(\Elgg\Hook $hook): ?MenuItems {
+		
+		if (!(bool) $hook->getParam('filter_sorting', true)) {
+			// sorting is disabled for this menu
+			return null;
+		}
+		
+		/* @var $result MenuItems */
+		$result = $hook->getValue();
+		
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'sort:last_login:asc',
+			'icon' => 'sort-numeric-down',
+			'text' => elgg_echo('table_columns:fromView:last_login'),
+			'href' => elgg_http_add_url_query_elements(current_page_url(), [
+				'sort_by' => [
+					'property' => 'last_login',
+					'direction' => 'asc',
+				],
+			]),
+			'parent_name' => 'sort:parent',
+			'priority' => 116,
+		]);
+		
+		return $result;
+	}
+	
+	/**
 	 * Register sorting menu items based on the name metadata
 	 *
 	 * @param \Elgg\Hook $hook 'register', 'menu:filter<:some filter_id>'
