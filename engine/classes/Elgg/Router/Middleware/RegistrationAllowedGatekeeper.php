@@ -27,7 +27,7 @@ class RegistrationAllowedGatekeeper {
 			return;
 		}
 		
-		$this->assertRegistrationEnabled($request);
+		$this->assertRegistrationEnabled();
 	}
 	
 	/**
@@ -62,12 +62,10 @@ class RegistrationAllowedGatekeeper {
 	/**
 	 * Validate if registration is allowed by the site configuration
 	 *
-	 * @param Request $request the current request
-	 *
 	 * @return void
 	 * @throws RegistrationAllowedGatekeeperException
 	 */
-	protected function assertRegistrationEnabled(Request $request): void {
+	protected function assertRegistrationEnabled(): void {
 		if (_elgg_services()->config->allow_registration) {
 			return;
 		}
