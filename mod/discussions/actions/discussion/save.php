@@ -5,7 +5,7 @@
 
 $title = elgg_get_title_input();
 $desc = get_input('description');
-$status = get_input('status');
+$status = get_input('status', 'open');
 $access_id = (int) get_input('access_id');
 $container_guid = (int) get_input('container_guid');
 $guid = (int) get_input('topic_guid');
