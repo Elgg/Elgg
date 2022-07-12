@@ -5,8 +5,8 @@
 
 $title = elgg_get_title_input();
 $desc = get_input('description');
-$status = get_input('status');
-$access_id = (int) get_input('access_id');
+$status = get_input('status', 'open');
+$access_id = get_input('access_id');
 $container_guid = (int) get_input('container_guid');
 $guid = (int) get_input('topic_guid');
 $tags = get_input('tags');
@@ -22,6 +22,17 @@ $container = get_entity($container_guid);
 if (!$container || !$container->canWriteToContainer(0, 'object', 'discussion')) {
 	return elgg_error_response(elgg_echo('discussion:error:permissions'));
 }
+
+if ($container instanceof \ElggGroup && $access_id === null) {
+	// access is null when a group is selected from the container_guid select
+	$acl = $container->getOwnedAccessCollection('group_acl');
+	if ($acl instanceof \ElggAccessCollection) {
+		$access_id = $acl->getID();
+	}
+}
+
+// sanitize access id
+$access_id = (int) $access_id;
 
 // check whether this is a new topic or an edit
 $new_topic = !($guid > 0);
