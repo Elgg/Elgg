@@ -104,6 +104,18 @@ $hardening .= elgg_view_field([
 	'checked' => (bool) elgg_get_config('session_bound_entity_icons'),
 ]);
 
+// subresource integrity
+$hardening .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('admin:security:settings:subresource_integrity_enabled'),
+	'#help' => elgg_echo('admin:security:settings:subresource_integrity_enabled:help'),
+	'name' => 'subresource_integrity_enabled',
+	'default' => 0,
+	'value' => 1,
+	'switch' => true,
+	'checked' => (bool) elgg_get_config('subresource_integrity_enabled'),
+]);
+
 // allow others to extend this section
 $hardening .= elgg_view('admin/security/settings/extend/hardening');
 

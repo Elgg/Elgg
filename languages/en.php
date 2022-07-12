@@ -763,6 +763,9 @@ this will cleanup expired sessions from your database and not allow users to reu
 	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
 	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
 Having icons session bound makes icon urls not shareable between sessions. The side effect is that caching of these urls will only help the active session.',
+
+	'admin:security:settings:subresource_integrity_enabled' => 'Subresource integrity',
+	'admin:security:settings:subresource_integrity_enabled:help' => 'Adds integrity metadata to subresources such as js and css files. This allows browser to validate the content of the resource.',
 	
 	'admin:security:settings:site_secret:intro' => 'Elgg uses a key to create security tokens for various purposes.',
 	'admin:security:settings:site_secret:regenerate' => "Regenerate site secret",

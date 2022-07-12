@@ -6,9 +6,24 @@ namespace Elgg\Assets;
  * @group UnitTests
  */
 class ExternalFilesUnitTest extends \Elgg\UnitTestCase {
+	
+	/**
+	 * @var \Elgg\Assets\ExternalFiles
+	 */
+	protected $service;
+	
+	public function up() {
+		$this->service = new \Elgg\Assets\ExternalFiles(
+			_elgg_services()->config,
+			_elgg_services()->urls,
+			_elgg_services()->views,
+			_elgg_services()->simpleCache,
+			_elgg_services()->serverCache
+		);
+	}
 
 	public function testPreservesInputConfigData() {
-		$externalFiles = new \Elgg\Assets\ExternalFiles();
+		$externalFiles = $this->service;
 		$externalFiles->register('foo', 'bar1', '#', 'custom_location');
 		$externalFiles->register('foo', 'bar2', 'http://elgg.org/', 'custom_location');
 		$externalFiles->load('foo', 'bar2');
@@ -26,7 +41,7 @@ class ExternalFilesUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testRegisterItemsAndLoad() {
-		$externalFiles = new \Elgg\Assets\ExternalFiles();
+		$externalFiles = $this->service;
 
 		$externalFiles->load('foo', 'bar2');
 

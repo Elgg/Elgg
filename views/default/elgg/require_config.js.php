@@ -11,3 +11,11 @@ unset($amdConfig['deps']);
 ?>
 // <script>
 require = <?php echo json_encode($amdConfig, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES); ?>;
+require.onNodeCreated = function(node, config, module, path) {
+	// SRI is populated on first use and provided by a elgg.data hook callback
+	module = module + '.js';
+	if (elgg.data.sri && elgg.data.sri[module]) {
+		node.setAttribute('integrity', elgg.data.sri[module]);
+		node.setAttribute('crossorigin', 'anonymous');
+	}
+};

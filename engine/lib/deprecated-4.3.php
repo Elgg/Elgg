@@ -84,3 +84,19 @@ function generate_invite_code($username) {
 	
 	return elgg_generate_invite_code((string) $username);
 }
+
+/**
+ * Get external resource descriptors
+ *
+ * @param string $type     Type of file: js or css
+ * @param string $location Page location
+ *
+ * @return array
+ * @since 1.8.0
+ * @deprecated 4.3 use elgg_get_loaded_external_resources()
+ */
+function elgg_get_loaded_external_files(string $type, string $location): array {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated use elgg_get_loaded_external_resources()', '4.3');
+	
+	return _elgg_services()->externalFiles->getLoadedFiles($type, $location);
+}

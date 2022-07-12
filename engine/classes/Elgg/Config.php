@@ -125,6 +125,7 @@ use Elgg\Traits\Loggable;
  * @property string[]      $site_custom_menu_items
  * @property string[]      $site_featured_menu_names
  * @property-read int      $site_guid 								The guid of the site object
+ * @property bool          $subresource_integrity_enabled			Should subresources (js/css) get integrity information
  * @property bool          $system_cache_enabled					Is the system cache enabled?
  * @property bool          $system_cache_loaded
  * @property bool          $testing_mode  							Is the current application running (PHPUnit) tests
@@ -231,6 +232,7 @@ class Config {
 		'security_protect_upgrade' => true,
 		'session_bound_entity_icons' => false,
 		'simplecache_enabled' => false,
+		'subresource_integrity_enabled' => false,
 		'system_cache_enabled' => false,
 		'testing_mode' => false,
 		'webp_enabled' => true,

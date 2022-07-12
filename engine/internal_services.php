@@ -55,7 +55,7 @@ return [
 	'entityPreloader' => DI\autowire(\Elgg\EntityPreloader::class),
 	'entityTable' => DI\autowire(\Elgg\Database\EntityTable::class),
 	'events' => DI\autowire(\Elgg\EventsService::class),
-	'externalFiles' => DI\autowire(\Elgg\Assets\ExternalFiles::class),
+	'externalFiles' => DI\autowire(\Elgg\Assets\ExternalFiles::class)->constructorParameter('serverCache', DI\get('serverCache')),
 	'fields' => DI\autowire(\Elgg\Forms\FieldsService::class),
 	'forms' => DI\autowire(\Elgg\FormsService::class),
 	'fileCache' => DI\factory(function (ContainerInterface $c) {
