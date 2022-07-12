@@ -5,7 +5,7 @@
  * @uses $vars['entity'] the user to set settings for
  */
 
-if (!elgg_is_admin_logged_in() && !elgg_get_config('can_change_username', false)) {
+if (!elgg_is_admin_logged_in() && !elgg_get_config('can_change_username')) {
 	// only admins are allowed to change the username
 	return;
 }
