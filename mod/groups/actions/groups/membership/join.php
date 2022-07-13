@@ -18,7 +18,7 @@ $group = elgg_call(ELGG_IGNORE_ACCESS, function() use ($group_guid) {
 	return get_entity($group_guid);
 });
 
-if (!$user || !$group instanceof \ElggGroup) {
+if (!$user instanceof \ElggUser || !$group instanceof \ElggGroup) {
 	return elgg_error_response(elgg_echo('groups:cantjoin'));
 }
 
@@ -32,7 +32,7 @@ if ($group->isPublicMembership() || $group->canEdit($user->guid)) {
 	// anyone can join public groups and admins can join any group
 	$join = true;
 } else {
-	if (check_entity_relationship($group->guid, 'invited', $user->guid)) {
+	if ($group->hasRelationship($user->guid, 'invited')) {
 		// user has invite to closed group
 		$join = true;
 	}
@@ -46,17 +46,16 @@ if ($join) {
 	return elgg_ok_response('', elgg_echo('groups:joined'), $group->getURL());
 }
 
-if (check_entity_relationship($user->guid, 'membership_request', $group->guid)) {
+if ($user->hasRelationship($group->guid, 'membership_request')) {
 	return elgg_error_response(elgg_echo('groups:joinrequest:exists'));
 }
 
-
-if (!add_entity_relationship($user->guid, 'membership_request', $group->guid)) {
+if (!$user->addRelationship($group->guid, 'membership_request')) {
 	return elgg_error_response(elgg_echo('groups:joinrequestnotmade'));
 }
 
+// Notify group owner
 $owner = $group->getOwnerEntity();
-
 $url = elgg_generate_url('requests:group:group', [
 	'guid' => $group->guid,
 ]);
@@ -78,8 +77,6 @@ $params = [
 	'object' => $group,
 	'url' => $url,
 ];
-
-// Notify group owner
 notify_user($owner->guid, $user->guid, $subject, $body, $params);
 
 return elgg_ok_response('', elgg_echo('groups:joinrequestmade'));

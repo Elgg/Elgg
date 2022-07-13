@@ -502,11 +502,11 @@ class Plugins {
 		}
 		
 		$plugin = $this->get($plugin_id);
-		if (!$plugin) {
+		if (!$plugin instanceof \ElggPlugin) {
 			return false;
 		}
 		
-		return check_entity_relationship($plugin->guid, 'active_plugin', 1) instanceof \ElggRelationship;
+		return $plugin->hasRelationship(1, 'active_plugin');
 	}
 
 	/**

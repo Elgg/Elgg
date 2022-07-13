@@ -99,7 +99,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->hooks->restore();
 	}
 
-	public function setupServices() {
+	protected function setupServices() {
 		$this->notifications = new NotificationsService(
 			$this->queue,
 			$this->hooks,
@@ -109,7 +109,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		_elgg_services()->set('notifications', $this->notifications);
 	}
 
-	public function getTestObject() {
+	protected function getTestObject() {
 		$this->setupServices();
 
 		switch ($this->test_object_class) {
@@ -158,9 +158,12 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 			case \ElggRelationship::class :
 				$object = $this->createObject();
 				$user = $this->actor;
-				add_entity_relationship($object->guid, 'test_relationship', $user->guid);
+				$rel_id = _elgg_services()->relationshipsTable->add($object->guid, 'test_relationship', $user->guid, true);
+				if (empty($rel_id)) {
+					break;
+				}
 
-				return check_entity_relationship($object->guid, 'test_relationship', $user->guid);
+				return elgg_get_relationship($rel_id);
 		}
 
 		throw new Exception("Test object not found for {$this->test_object_class} class");

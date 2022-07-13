@@ -276,7 +276,127 @@ function get_readable_access_level(int $entity_access_id): string {
  * @deprecated 4.3 use elgg_get_entity_statistics()
  */
 function get_entity_statistics(int $owner_guid = 0): array {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_get_entity_statistics()', '4.3');
+	
 	return elgg_get_entity_statistics($owner_guid);
+}
+
+/**
+ * Get a relationship by its ID
+ *
+ * @param int $id The relationship ID
+ *
+ * @return \ElggRelationship|false False if not found
+ * @deprecated 4.3 use elgg_get_relationship()
+ */
+function get_relationship($id) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_get_relationship()', '4.3');
+	
+	return _elgg_services()->relationshipsTable->get((int) $id) ?? false;
+}
+
+/**
+ * Delete a relationship by its ID
+ *
+ * @param int $id The relationship ID
+ *
+ * @return bool
+ * @deprecated 4.3 use \ElggRelationship->delete()
+ */
+function delete_relationship($id) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use \ElggRelationship->delete()', '4.3');
+	
+	return _elgg_services()->relationshipsTable->delete((int) $id);
+}
+
+/**
+ * Create a relationship between two entities. E.g. friendship, group membership, site membership.
+ *
+ * This function lets you make the statement "$guid_one is a $relationship of $guid_two". In the statement,
+ * $guid_one is the subject of the relationship, $guid_two is the target, and $relationship is the type.
+ *
+ * @param int    $guid_one     GUID of the subject entity of the relationship
+ * @param string $relationship Type of the relationship
+ * @param int    $guid_two     GUID of the target entity of the relationship
+ *
+ * @return bool
+ * @throws \Elgg\Exceptions\InvalidArgumentException
+ * @deprecated 4.3 use \ElggEntity->addRelationship();
+ */
+function add_entity_relationship($guid_one, $relationship, $guid_two) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use \ElggEntity->addRelationship()', '4.3');
+	
+	return _elgg_services()->relationshipsTable->add((int) $guid_one, (string) $relationship, (int) $guid_two);
+}
+
+/**
+ * Check if a relationship exists between two entities. If so, the relationship object is returned.
+ *
+ * This function lets you ask "Is $guid_one a $relationship of $guid_two?"
+ *
+ * @param int    $guid_one     GUID of the subject entity of the relationship
+ * @param string $relationship Type of the relationship
+ * @param int    $guid_two     GUID of the target entity of the relationship
+ *
+ * @return \ElggRelationship|false Depending on success
+ * @deprecated 4.3 use \ElggEntity->hasRelationship()
+ */
+function check_entity_relationship($guid_one, $relationship, $guid_two) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use \ElggEntity->hasRelationship()', '4.3');
+	
+	return _elgg_services()->relationshipsTable->check((int) $guid_one, (string) $relationship, (int) $guid_two);
+}
+
+/**
+ * Delete a relationship between two entities.
+ *
+ * This function lets you say "$guid_one is no longer a $relationship of $guid_two."
+ *
+ * @param int    $guid_one     GUID of the subject entity of the relationship
+ * @param string $relationship Type of the relationship
+ * @param int    $guid_two     GUID of the target entity of the relationship
+ *
+ * @return bool
+ * @deprecated 4.3 use \ElggEntity->removeRelationship()
+ */
+function remove_entity_relationship($guid_one, $relationship, $guid_two) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use \ElggEntity->removeRelationship()', '4.3');
+	
+	return _elgg_services()->relationshipsTable->remove((int) $guid_one, (string) $relationship, (int) $guid_two);
+}
+
+/**
+ * Removes all relationships originating from a particular entity
+ *
+ * @param int    $guid                 GUID of the subject or target entity (see $inverse)
+ * @param string $relationship         Type of the relationship (optional, default is all relationships)
+ * @param bool   $inverse_relationship Is $guid the target of the deleted relationships? By default, $guid is the
+ *                                     subject of the relationships.
+ * @param string $type                 The type of entity related to $guid (defaults to all)
+ *
+ * @return true
+ * @deprecated 4.3 use \ElggEntity->removeAllRelationships()
+ */
+function remove_entity_relationships($guid, $relationship = "", $inverse_relationship = false, $type = '') {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use \ElggEntity->removeAllRelationships()', '4.3');
+	
+	return _elgg_services()->relationshipsTable->removeAll($guid, $relationship, $inverse_relationship, $type);
+}
+
+/**
+ * Get all the relationships for a given GUID.
+ *
+ * @param int  $guid                 GUID of the subject or target entity (see $inverse)
+ * @param bool $inverse_relationship Is $guid the target of the relationships? By default $guid is
+ *                                   the subject of the relationships.
+ *
+ * @return \ElggRelationship[]
+ * @deprecated 4.3 use elgg_get_relationships()
+ */
+function get_entity_relationships($guid, $inverse_relationship = false) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_get_relationships()', '4.3');
+	
+	return _elgg_services()->relationshipsTable->getAll($guid, $inverse_relationship);
 }
 
 /**

@@ -537,10 +537,6 @@ E.g. to establish that "**$user** is a **fan** of **$artist**"
 
 .. code-block:: php
 
-    // option 1
-    $success = add_entity_relationship($user->guid, 'fan', $artist->guid);
-
-    // option 2
     $success = $user->addRelationship($artist->guid, 'fan');
 
 This triggers the event [create, relationship], passing in
@@ -555,18 +551,8 @@ E.g. to verify that "**$user** is a **fan** of **$artist**":
 
 .. code-block:: php
 
-    if (check_entity_relationship($user->guid, 'fan', $artist->guid)) {
+    if ($user->hasRelationship($artist->guid, 'fan')) {
         // relationship exists
-    }
-
-Note that, if the relationship exists, ``check_entity_relationship()``
-returns an ``ElggRelationship`` object:
-
-.. code-block:: php
-
-    $relationship = check_entity_relationship($user->guid, 'fan', $artist->guid);
-    if ($relationship) {
-        // use $relationship->id or $relationship->time_created
     }
 
 Deleting a relationship
@@ -576,7 +562,7 @@ E.g. to be able to assert that "**$user** is no longer a **fan** of **$artist**"
 
 .. code-block:: php
 
-    $was_removed = remove_entity_relationship($user->guid, 'fan', $artist->guid);
+    $was_removed = $user->removeRelationship($artist->guid, 'fan');
 
 This triggers the event [delete, relationship], passing in
 the associated ``ElggRelationship`` object. If a handler returns
@@ -585,16 +571,16 @@ be ``false``.
 
 Other useful functions:
 
-- ``delete_relationship()`` : delete by ID
-- ``remove_entity_relationships()`` : delete those relating to an entity
+- ``\ElggRelationship->delete()``: delete by object
+- ``\ElggEntity->removeAllRelationships()``: delete those relating to an entity
 
 Finding relationships and related entities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Below are a few functions to fetch relationship objects and/or related entities. A few are listed below:
 
-- ``get_entity_relationships()`` : fetch relationships by subject or target entity
-- ``get_relationship()`` : get a relationship object by ID
+- ``elgg_get_relationship()`` : get a relationship object by ID
+- ``elgg_get_relationships()`` : fetch relationships
 - ``elgg_get_entities()`` : fetch entities in relationships in a variety of ways
 
 E.g. retrieving users who joined your group in January 2014.

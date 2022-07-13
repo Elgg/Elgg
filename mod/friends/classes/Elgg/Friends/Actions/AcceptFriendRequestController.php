@@ -26,7 +26,7 @@ class AcceptFriendRequestController {
 			return elgg_error_response(elgg_echo('error:missing_data'));
 		}
 		
-		$relationship = get_relationship($id);
+		$relationship = elgg_get_relationship($id);
 		if (!$relationship instanceof \ElggRelationship || $relationship->relationship !== 'friendrequest') {
 			return elgg_error_response(elgg_echo('error:missing_data'));
 		}

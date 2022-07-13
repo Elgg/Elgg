@@ -28,10 +28,10 @@ foreach ($user_guid as $u_guid) {
 		elgg_register_error_message(elgg_echo('groups:add:alreadymember', [$user->getDisplayName()]));
 		
 		// if an invitation is still pending clear it up, we don't need it
-		remove_entity_relationship($group->guid, 'invited', $user->guid);
+		$group->removeRelationship($user->guid, 'invited');
 		
 		// if a membership request is still pending clear it up, we don't need it
-		remove_entity_relationship($user->guid, 'membership_request', $group->guid);
+		$user->removeRelationship($group->guid, 'membership_request');
 		
 		continue;
 	}

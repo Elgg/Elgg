@@ -30,7 +30,7 @@ $group = get_entity($vars['group_guid']);
 if ($group instanceof ElggGroup) {
 	if ($group->isMember($entity)) {
 		$title_text .= elgg_format_element('span', ['class' => ['mls', 'elgg-subtext']], elgg_echo('groups:invite:member'));
-	} elseif (check_entity_relationship($group->guid, 'invited', $entity->guid)) {
+	} elseif ($group->hasRelationship($entity->guid, 'invited')) {
 		$title_text .= elgg_format_element('span', ['class' => ['mls', 'elgg-subtext']], elgg_echo('groups:invite:invited'));
 	}
 }

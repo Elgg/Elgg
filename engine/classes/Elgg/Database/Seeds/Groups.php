@@ -81,8 +81,8 @@ class Groups extends Seed {
 					$invitee = $this->getRandomUser($members_exclude);
 					if ($invitee) {
 						$members_exclude[] = $invitee->guid;
-						if (!check_entity_relationship($invitee->guid, 'member', $group->guid)) {
-							add_entity_relationship($group->guid, 'invited', $invitee->guid);
+						if (!$group->isMember($invitee)) {
+							$group->addRelationship($invitee->guid, 'invited');
 							$this->log("User {$invitee->getDisplayName()} [guid: {$invitee->guid}] was invited to {$group->getDisplayName()} [guid: {$group->guid}]");
 						}
 					}
@@ -90,10 +90,10 @@ class Groups extends Seed {
 					$requestor = $this->getRandomUser($members_exclude);
 					if ($requestor) {
 						$members_exclude[] = $requestor->guid;
-						if (!check_entity_relationship($group->guid, 'invited', $requestor->guid)
-							&& !check_entity_relationship($requestor->guid, 'member', $group->guid)
+						if (!$group->hasRelationship($requestor->guid, 'invited')
+							&& !$group->isMember($requestor)
 						) {
-							add_entity_relationship($requestor->guid, 'membership_request', $group->guid);
+							$requestor->addRelationship($group->guid, 'membership_request');
 							$this->log("User {$invitee->getDisplayName()} [guid: {$invitee->guid}] requested to join {$group->getDisplayName()} [guid: {$group->guid}]");
 						}
 					}

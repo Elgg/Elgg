@@ -24,11 +24,12 @@ class ElggRelationshipUnitTest extends \Elgg\UnitTestCase {
 		$subject = $this->createUser();
 		$object = $this->createObject();
 		
-		if (!add_entity_relationship($subject->guid, 'foo', $object->guid)) {
+		$rel_id = _elgg_services()->relationshipsTable->add($subject->guid, 'foo', $object->guid, true);
+		if (empty($rel_id)) {
 			return false;
 		}
 		
-		return check_entity_relationship($subject->guid, 'foo', $object->guid);
+		return elgg_get_relationship($rel_id);
 	}
 	
 	/**
