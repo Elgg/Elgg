@@ -455,7 +455,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertStringContainsStringIgnoringCase('charset=utf-8', $response->headers->get('Content-Type'));
 		$output = json_encode([
 			'value' => 'output3',
-			'current_url' => current_page_url(),
+			'current_url' => elgg_get_current_url(),
 			'forward_url' => $request->headers->get('Referer'),
 		]);
 
@@ -651,7 +651,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'value' => 'output3',
-			'current_url' => current_page_url(),
+			'current_url' => elgg_get_current_url(),
 			'forward_url' => $request->headers->get('Referer'),
 		]);
 
@@ -780,7 +780,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'value' => ['foo', 'bar'],
-			'current_url' => current_page_url(),
+			'current_url' => elgg_get_current_url(),
 			'forward_url' => elgg_normalize_url('index'),
 		]);
 
@@ -833,7 +833,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		
 		$output = json_encode([
 			'value' => '',
-			'current_url' => current_page_url(),
+			'current_url' => elgg_get_current_url(),
 			'forward_url' => elgg_normalize_url('index'),
 		]);
 
@@ -1013,7 +1013,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'value' => 'foo',
-			'current_url' => current_page_url(),
+			'current_url' => elgg_get_current_url(),
 			'forward_url' => $request->headers->get('Referer'),
 		]);
 

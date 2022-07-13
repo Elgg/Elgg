@@ -14,7 +14,7 @@ use Elgg\UnitTestCase;
 class HtmlFormatterUnitTest extends UnitTestCase {
 
 	public function up() {
-		elgg_register_plugin_hook_handler('validate', 'input', \Elgg\Input\ValidateInputHandler::class);
+		elgg_register_plugin_hook_handler('sanitize', 'input', \Elgg\Input\ValidateInputHandler::class);
 	}
 
 	/**

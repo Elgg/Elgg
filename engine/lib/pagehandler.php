@@ -113,6 +113,16 @@ function elgg_route_exists(string $name): bool {
 }
 
 /**
+ * Returns the current page's complete URL.
+ *
+ * @return string
+ * @since 4.3
+ */
+function elgg_get_current_url(): string {
+	return _elgg_services()->request->getCurrentURL();
+}
+
+/**
  * Generate a URL for named route
  *
  * @param string $name       Route name

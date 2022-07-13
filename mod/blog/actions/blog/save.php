@@ -66,7 +66,7 @@ foreach ($values as $name => $default) {
 
 	switch ($name) {
 		case 'tags':
-			$values[$name] = string_to_tag_array($value);
+			$values[$name] = elgg_string_to_array((string) $value);
 			break;
 
 		case 'container_guid':

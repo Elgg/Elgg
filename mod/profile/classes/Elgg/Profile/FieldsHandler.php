@@ -57,7 +57,7 @@ class FieldsHandler {
 		}
 		
 		if (!empty($translations)) {
-			add_translation(get_current_language(), $translations);
+			elgg()->translator->addTranslation(elgg_get_current_language(), $translations);
 		}
 			
 		return $result;

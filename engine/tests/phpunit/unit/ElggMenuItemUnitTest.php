@@ -252,7 +252,7 @@ class ElggMenuItemUnitTest extends \Elgg\UnitTestCase {
 		$should_be_selected = \ElggMenuItem::factory([
 			'name' => 'test',
 			'text' => 'test',
-			'href' => current_page_url(),
+			'href' => elgg_get_current_url(),
 		]);
 		
 		$this->assertTrue($should_be_selected->getSelected());

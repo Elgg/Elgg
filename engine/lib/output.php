@@ -27,8 +27,9 @@ function elgg_format_html($html, array $options = []) {
  * @param string $text The input string
  *
  * @return string The output string with formatted links
+ * @since 4.3
  */
-function parse_urls($text) {
+function elgg_parse_urls(string $text): string {
 	return _elgg_services()->html_formatter->parseUrls($text);
 }
 

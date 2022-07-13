@@ -1419,7 +1419,7 @@ class ElggInstaller {
 		}
 
 		// check that email address is email address
-		if ($submissionVars['siteemail'] && !is_email_address($submissionVars['siteemail'])) {
+		if ($submissionVars['siteemail'] && !elgg_is_valid_email((string) $submissionVars['siteemail'])) {
 			$msg = elgg_echo('install:error:emailaddress', [$submissionVars['siteemail']]);
 			$app->internal_services->system_messages->addErrorMessage($msg);
 
@@ -1551,7 +1551,7 @@ class ElggInstaller {
 		}
 
 		// check that email address is email address
-		if ($submissionVars['email'] && !is_email_address($submissionVars['email'])) {
+		if ($submissionVars['email'] && !elgg_is_valid_email((string) $submissionVars['email'])) {
 			$msg = elgg_echo('install:error:emailaddress', [$submissionVars['email']]);
 			$app->internal_services->system_messages->addErrorMessage($msg);
 

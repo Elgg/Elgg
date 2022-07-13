@@ -47,14 +47,14 @@ foreach ($profile_fields as $field) {
 	
 	// convert tags fields to array values
 	if ($valuetype == 'tags') {
-		$value = string_to_tag_array($value);
+		$value = elgg_string_to_array((string) $value);
 	}
 
 	if ($value && $valuetype == 'url' && !preg_match('~^https?\://~i', $value)) {
 		$value = "http://$value";
 	}
 
-	if ($valuetype == 'email' && !empty($value) && !is_email_address($value)) {
+	if ($valuetype == 'email' && !empty($value) && !elgg_is_valid_email($value)) {
 		return elgg_error_response(elgg_echo('profile:invalid_email', [elgg_echo("profile:{$shortname}")]));
 	}
 	

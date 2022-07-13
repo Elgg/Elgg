@@ -2,32 +2,31 @@
 
 namespace Elgg;
 
-/**
- * @group UnitTests
- */
 class TagsUnitTest extends \Elgg\UnitTestCase {
 
 	/**
-	 * When providing a string to the string_to_tag_array function it should explode it based on a comma and return an array
+	 * When providing a string to the elgg_string_to_array function it should explode it based on a comma and return an array
 	 */
-	public function testStringToTagArrayReturnsArray() {
+	public function testStringToArrayReturnsArray() {
+
+		// test if it returns an array with 0 items
+		$no_tag = elgg_string_to_array('');
+		$this->assertEquals([], $no_tag);
 
 		// test if it returns an array with 1 item
-		$single_tag = string_to_tag_array("a");
-		$this->assertCount(1, $single_tag);
+		$single_tag = elgg_string_to_array('a');
+		$this->assertEquals(['a'], $single_tag);
 
-		// test if it returns an array with 3 item
-		$multiple_tags = string_to_tag_array("a,b,c");
-		$this->assertCount(3, $multiple_tags);
-	}
+		// test if it returns an array with 3 items
+		$multiple_tags = elgg_string_to_array('a,b,c');
+		$this->assertEquals(['a', 'b', 'c'], $multiple_tags);
 
-	/**
-	 * When providing a non-string the string_to_tag_array function should return the original value
-	 */
-	public function testStringToTagArrayReturnsOriginalValue() {
+		// test if it returns an array with correctly stripped items
+		$some_empty_tags = elgg_string_to_array('  a,,  ,0 0 , ,b,0,c,  ');
+		$this->assertEquals(['a', '0 0', 'b', '0', 'c'], $some_empty_tags);
 
-		// test if the original value (int) 1 is returned
-		$result = string_to_tag_array(1);
-		$this->assertEquals(1, $result);
+		// test if it returns unique items
+		$not_unique_tags = elgg_string_to_array('a,a,b,c,c,c,d');
+		$this->assertEquals(['a', 'b', 'c', 'd'], $not_unique_tags);
 	}
 }

@@ -31,7 +31,7 @@ class Footer {
 			'icon' => 'thumbtack',
 			'href' => elgg_generate_url('add:object:bookmarks', [
 				'guid' => elgg_get_logged_in_user_guid(),
-				'address' => current_page_url(),
+				'address' => elgg_get_current_url(),
 			]),
 			'title' => elgg_echo('bookmarks:this'),
 			'rel' => 'nofollow',

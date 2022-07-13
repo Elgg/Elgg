@@ -124,13 +124,10 @@ function thewire_filter($text) {
 	$text = ' ' . $text;
 
 	// email addresses
-	$text = preg_replace(
-				'/(^|[^\w])([\w\-\.]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,})/i',
-				'$1<a href="mailto:$2@$3">$2@$3</a>',
-				$text);
+	$text = elgg_parse_emails($text);
 
 	// links
-	$text = parse_urls($text);
+	$text = elgg_parse_urls($text);
 
 	// usernames
 	$text = preg_replace(

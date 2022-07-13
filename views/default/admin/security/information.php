@@ -59,13 +59,13 @@ if (is_writable(Paths::project())) {
 
 echo $view_module($icon, $title, $value, $subtext);
 
-// hooks on 'validate', 'input' (eg htmlawed)
+// hooks on 'sanitize', 'input' (eg htmlawed)
 $icon = $icon_ok;
 $title = elgg_echo('admin:security:information:validate_input');
 $value = elgg_echo('status:enabled');
 $subtext = '';
 
-if (!(bool) elgg()->hooks->getOrderedHandlers('validate', 'input')) {
+if (!(bool) elgg()->hooks->getOrderedHandlers('sanitize', 'input')) {
 	$icon = $icon_error;
 	$value = elgg_echo('status:disabled');
 	$subtext = elgg_echo('admin:security:information:validate_input:error');

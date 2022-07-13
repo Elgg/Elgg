@@ -12,7 +12,7 @@ class ValidateInputHandler {
 	/**
 	 * htmLawed filtering of data
 	 *
-	 * Called on the 'validate', 'input' plugin hook
+	 * Called on the 'sanitize', 'input' plugin hook
 	 *
 	 * htmLawed's $config argument is filtered by the [config, htmlawed] hook.
 	 * htmLawed's $spec argument is filtered by the [spec, htmlawed] hook.
@@ -20,7 +20,7 @@ class ValidateInputHandler {
 	 * For information on these arguments, see
 	 * http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/htmLawed_README.htm#s2.2
 	 *
-	 * @param \Elgg\Hook $hook 'validate', 'input'
+	 * @param \Elgg\Hook $hook 'sanitize', 'input'
 	 *
 	 * @return mixed
 	 */

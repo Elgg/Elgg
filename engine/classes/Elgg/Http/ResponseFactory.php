@@ -358,7 +358,7 @@ class ResponseFactory {
 
 		if (!$this->isAction()) {
 			$params = [
-				'current_url' => current_page_url(),
+				'current_url' => $this->request->getCurrentURL(),
 				'forward_url' => $forward_url,
 			];
 			// For BC, let plugins serve their own error page
@@ -426,7 +426,7 @@ class ResponseFactory {
 
 		$params = [
 			'value' => '',
-			'current_url' => current_page_url(),
+			'current_url' => $this->request->getCurrentURL(),
 			'forward_url' => elgg_normalize_url($forward_url),
 		];
 
@@ -454,7 +454,7 @@ class ResponseFactory {
 
 		// allow plugins to rewrite redirection URL
 		$params = [
-			'current_url' => current_page_url(),
+			'current_url' => $this->request->getCurrentURL(),
 			'forward_url' => $forward_url,
 			'location' => $location,
 		];

@@ -109,13 +109,13 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 	}
 
 	/**
-	 * Test #5369 -- parse_urls()
+	 * Test #5369 -- elgg_parse_urls()
 	 * @see https://github.com/Elgg/Elgg/issues/5369
 	 *
 	 * @dataProvider parseUrlsProvider
 	 */
 	public function testParseUrls($input, $expected) {
-		$this->assertEquals($expected, parse_urls($input));
+		$this->assertEquals($expected, elgg_parse_urls($input));
 	}
 	
 	public function parseUrlsProvider() {

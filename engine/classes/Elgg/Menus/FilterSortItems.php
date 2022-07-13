@@ -32,7 +32,7 @@ class FilterSortItems {
 			'name' => 'sort:time_created:desc',
 			'icon' => 'sort-numeric-down-alt',
 			'text' => elgg_echo('sort:newest'),
-			'href' => elgg_http_add_url_query_elements(current_page_url(), [
+			'href' => elgg_http_add_url_query_elements(elgg_get_current_url(), [
 				'sort_by' => [
 					'property' => 'time_created',
 					'property_type' => 'attribute',
@@ -47,7 +47,7 @@ class FilterSortItems {
 			'name' => 'sort:time_created:asc',
 			'icon' => 'sort-numeric-down',
 			'text' => elgg_echo('sort:oldest'),
-			'href' => elgg_http_add_url_query_elements(current_page_url(), [
+			'href' => elgg_http_add_url_query_elements(elgg_get_current_url(), [
 				'sort_by' => [
 					'property' => 'time_created',
 					'property_type' => 'attribute',
@@ -82,7 +82,7 @@ class FilterSortItems {
 			'name' => 'sort:last_action:desc',
 			'icon' => 'sort-numeric-down-alt',
 			'text' => elgg_echo('table_columns:fromView:last_action'),
-			'href' => elgg_http_add_url_query_elements(current_page_url(), [
+			'href' => elgg_http_add_url_query_elements(elgg_get_current_url(), [
 				'sort_by' => [
 					'property' => 'last_action',
 					'property_type' => 'attribute',
@@ -117,7 +117,7 @@ class FilterSortItems {
 			'name' => 'sort:last_login:asc',
 			'icon' => 'sort-numeric-down',
 			'text' => elgg_echo('table_columns:fromView:last_login'),
-			'href' => elgg_http_add_url_query_elements(current_page_url(), [
+			'href' => elgg_http_add_url_query_elements(elgg_get_current_url(), [
 				'sort_by' => [
 					'property' => 'last_login',
 					'direction' => 'asc',
@@ -151,7 +151,7 @@ class FilterSortItems {
 			'name' => 'sort:name:asc',
 			'icon' => 'sort-alpha-down',
 			'text' => elgg_echo('sort:az', [elgg_echo('table_columns:fromProperty:name')]),
-			'href' => elgg_http_add_url_query_elements(current_page_url(), [
+			'href' => elgg_http_add_url_query_elements(elgg_get_current_url(), [
 				'sort_by' => [
 					'property' => 'name',
 					'property_type' => 'metadata',
@@ -167,7 +167,7 @@ class FilterSortItems {
 			'name' => 'sort:name:desc',
 			'icon' => 'sort-alpha-down-alt',
 			'text' => elgg_echo('sort:za', [elgg_echo('table_columns:fromProperty:name')]),
-			'href' => elgg_http_add_url_query_elements(current_page_url(), [
+			'href' => elgg_http_add_url_query_elements(elgg_get_current_url(), [
 				'sort_by' => [
 					'property' => 'name',
 					'property_type' => 'metadata',
@@ -203,7 +203,7 @@ class FilterSortItems {
 			'name' => 'sort:title:asc',
 			'icon' => 'sort-alpha-down',
 			'text' => elgg_echo('sort:az', [elgg_echo('title')]),
-			'href' => elgg_http_add_url_query_elements(current_page_url(), [
+			'href' => elgg_http_add_url_query_elements(elgg_get_current_url(), [
 				'sort_by' => [
 					'property' => 'title',
 					'property_type' => 'metadata',
@@ -219,7 +219,7 @@ class FilterSortItems {
 			'name' => 'sort:title:desc',
 			'icon' => 'sort-alpha-down-alt',
 			'text' => elgg_echo('sort:za', [elgg_echo('title')]),
-			'href' => elgg_http_add_url_query_elements(current_page_url(), [
+			'href' => elgg_http_add_url_query_elements(elgg_get_current_url(), [
 				'sort_by' => [
 					'property' => 'title',
 					'property_type' => 'metadata',

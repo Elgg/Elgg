@@ -2,7 +2,7 @@
 
 $ipsum = elgg_view('developers/ipsum');
 
-$page_url = current_page_url();
+$page_url = elgg_get_current_url();
 
 echo elgg_view_layout('default', [
 	'sidebar' => false,

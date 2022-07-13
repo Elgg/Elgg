@@ -67,27 +67,17 @@ function elgg_get_title_input($variable = 'title', $default = '') {
 }
 
 /**
- * Filter tags from a given string based on registered hooks.
+ * Filter input from a given string based on registered hooks.
  *
- * @param mixed $var Anything that does not include an object (strings, ints, arrays)
- *					 This includes multi-dimensional arrays.
+ * @param mixed $input Anything that does not include an object (strings, ints, arrays)
+ *					   This includes multi-dimensional arrays.
  *
- * @return mixed The filtered result - everything will be strings
+ * @return mixed The filtered result
+ * @since 4.3
  */
-function filter_tags($var) {
-	return elgg_trigger_plugin_hook('validate', 'input', null, $var);
-}
-
-/**
- * Returns the current page's complete URL.
- *
- * It uses the configured site URL for the hostname rather than depending on
- * what the server uses to populate $_SERVER.
- *
- * @return string The current page URL.
- */
-function current_page_url() {
-	return _elgg_services()->request->getCurrentURL();
+function elgg_sanitize_input($input) {
+	$input = elgg_trigger_deprecated_plugin_hook('validate', 'input', null, $input, "Use the 'sanitize', 'input' hook.", '4.3');
+	return elgg_trigger_plugin_hook('sanitize', 'input', null, $input);
 }
 
 /**
@@ -96,8 +86,9 @@ function current_page_url() {
  * @param string $address Email address.
  *
  * @return bool
+ * @since 4.3
  */
-function is_email_address($address) {
+function elgg_is_valid_email(string $address): bool {
 	return _elgg_services()->accounts->isValidEmail($address);
 }
 
@@ -274,30 +265,24 @@ function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
 }
 
 /**
- * Takes in a comma-separated string and returns an array of tags
- * which have been trimmed
+ * Takes in a comma-separated string and returns an array of uniquely trimmed and stripped strings
  *
- * @param string $string Comma-separated tag string
+ * @param string $string Comma-separated string
  *
- * @return mixed An array of strings or the original data if input was not a string
+ * @return array
+ * @since 4.3
  */
-function string_to_tag_array($string) {
-	if (!is_string($string)) {
-		return $string;
-	}
-	
+function elgg_string_to_array(string $string): array {
 	$ar = explode(',', $string);
 	$ar = array_map('trim', $ar);
+	$ar = array_map('strip_tags', $ar);
 	
 	$ar = array_filter($ar, function($string) {
-		if (($string === '') || ($string === false) || ($string === null)) {
-			return false;
-		}
-		
-		return true;
+		return !elgg_is_empty($string);
 	});
-		
-	$ar = array_map('strip_tags', $ar);
+	
 	$ar = array_unique($ar);
-	return $ar;
+	
+	// reset keys
+	return array_values($ar);
 }

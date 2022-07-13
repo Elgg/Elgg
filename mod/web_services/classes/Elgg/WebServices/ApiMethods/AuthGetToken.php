@@ -28,7 +28,7 @@ class AuthGetToken {
 	 */
 	public function __invoke(string $username, string $password) {
 		// check if username is an email address
-		if (is_email_address($username)) {
+		if (elgg_is_valid_email($username)) {
 			$users = get_user_by_email($username);
 			
 			// check if we have a unique user

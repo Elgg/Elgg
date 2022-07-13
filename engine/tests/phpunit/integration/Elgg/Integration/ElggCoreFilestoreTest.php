@@ -72,6 +72,6 @@ class ElggCoreFilestoreTest extends IntegrationTestCase {
 	}
 	
 	function testGetDirSize() {
-		$this->assertNotEmpty(get_dir_size(Paths::elgg() . "/engine/tests/test_files/actions/"));
+		$this->assertNotEmpty(get_dir_size(Paths::elgg() . "/engine/tests/test_files/actions/", 0, false));
 	}
 }

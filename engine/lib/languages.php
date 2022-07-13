@@ -20,28 +20,13 @@ function elgg_echo($message_key, array $args = [], $language = "") {
 }
 
 /**
- * Add a translation.
- *
- * Translations are arrays in the Zend Translation array format, eg:
- *
- *	$english = array('message1' => 'message1', 'message2' => 'message2');
- *  $german = array('message1' => 'Nachricht1','message2' => 'Nachricht2');
- *
- * @param string $country_code   Standard country code (eg 'en', 'nl', 'es')
- * @param array  $language_array Formatted array of strings
- *
- * @return bool Depending on success
- */
-function add_translation($country_code, $language_array) {
-	return _elgg_services()->translator->addTranslation($country_code, $language_array);
-}
-
-/**
  * Get the current system/user language or "en".
  *
- * @return string The language code for the site/user or "en" if not set
+ * @return string
+ *
+ * @since 4.3
  */
-function get_current_language() {
+function elgg_get_current_language(): string {
 	return _elgg_services()->translator->getCurrentLanguage();
 }
 

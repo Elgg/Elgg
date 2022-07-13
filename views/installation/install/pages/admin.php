@@ -7,10 +7,8 @@ echo elgg_autop(elgg_echo('install:admin:instructions'));
 
 $vars['type'] = 'admin';
 
-$url = current_page_url();
-
 $form_vars = [
-	'action' => $url,
+	'action' => elgg_get_current_url(),
 	'disable_security' => true,
 ];
 

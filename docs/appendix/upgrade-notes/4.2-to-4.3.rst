@@ -26,16 +26,24 @@ Deprecated APIs
 Lib functions
 ~~~~~~~~~~~~~
 
+* ``add_translation()`` use ``elgg()->translator->addTranslation()``
+* ``current_page_url()`` use ``elgg_get_current_url()``
 * ``elgg_authenticate()`` use ``elgg_pam_authenticate()``
 * ``elgg_get_loaded_external_files()`` use ``elgg_get_loaded_external_resources()``
+* ``filter_tags()`` use ``elgg_sanitize_input()``
 * ``generate_invite_code()`` use ``elgg_generate_invite_code()``
+* ``get_dir_size()``
+* ``is_email_address()`` use ``elgg_is_valid_email()``
+* ``parse_urls()`` use ``elgg_parse_urls()``
 * ``register_pam_handler()`` use ``elgg_register_pam_handler()``
+* ``string_to_tag_array()`` use ``elgg_string_to_array()``
 * ``unregister_pam_handler()`` use ``elgg_unregister_pam_handler()``
 
 Plugin hooks
 ~~~~~~~~~~~~
 
 * ``'fail', 'auth'``
+* ``'validate', 'input'`` use the ``'sanitize', 'input'`` hook 
 
 Classes
 ~~~~~~~

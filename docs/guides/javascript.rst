@@ -228,7 +228,7 @@ Some things to note
 #. Return the value of the module instead of adding to a global variable.
 #. Static (.js,.css,etc.) files are automatically minified and cached by Elgg's simplecache system.
 #. The configuration is also cached in simplecache, and should not rely on user-specific values
-   like ``get_current_language()``.
+   like ``elgg_get_current_language()``.
 
 Modules provided with Elgg
 ==========================

@@ -119,6 +119,7 @@ class ElggFile extends ElggObject {
 	 * @param int    $container_guid The container GUID of the checked filestore
 	 *
 	 * @return int
+	 * @deprecated 4.3
 	 */
 	public function getFilestoreSize($prefix = '', $container_guid = 0) {
 		if (!$container_guid) {

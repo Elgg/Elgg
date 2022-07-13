@@ -7,35 +7,6 @@
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * Get the size of the specified directory.
- *
- * @param string $dir        The full path of the directory
- * @param int    $total_size Add to current dir size
- *
- * @return int The size of the directory in bytes
- */
-function get_dir_size($dir, $total_size = 0) {
-	if (!is_dir($dir)) {
-		return $total_size;
-	}
-	
-	$handle = opendir($dir);
-	while (($file = readdir($handle)) !== false) {
-		if (in_array($file, ['.', '..'])) {
-			continue;
-		}
-		if (is_dir($dir . $file)) {
-			$total_size = get_dir_size($dir . $file . "/", $total_size);
-		} else {
-			$total_size += filesize($dir . $file);
-		}
-	}
-	closedir($handle);
-
-	return($total_size);
-}
-
-/**
  * Crops and resizes an image
  *
  * The following parameters are supported in params:

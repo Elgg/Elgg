@@ -39,7 +39,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		
 		if (!empty($settings['screen_log']) && (elgg_get_viewtype() === 'default') && !\Elgg\Application::isCli()) {
 			// don't show in action/simplecache
-			$path = elgg_substr(current_page_url(), elgg_strlen(elgg_get_site_url()));
+			$path = elgg_substr(elgg_get_current_url(), elgg_strlen(elgg_get_site_url()));
 			if (!preg_match('~^(cache|action)/~', $path)) {
 				elgg_require_css('developers/log');
 				

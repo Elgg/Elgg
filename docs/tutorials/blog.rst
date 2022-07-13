@@ -128,7 +128,7 @@ Create the file ``/mod/my_blog/actions/my_blog/save.php``:
     // get the form inputs
     $title = elgg_get_title_input('title');
     $body = get_input('body');
-    $tags = string_to_tag_array(get_input('tags'));
+    $tags = elgg_string_to_array((string) get_input('tags'));
 
     // create a new my_blog object and put the content in it
     $blog = new ElggObject();

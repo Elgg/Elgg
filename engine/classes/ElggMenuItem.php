@@ -339,7 +339,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 			return $this->data['selected'];
 		}
 
-		return elgg_http_url_is_identical(current_page_url(), $this->getHref());
+		return elgg_http_url_is_identical(elgg_get_current_url(), $this->getHref());
 	}
 
 	/**
