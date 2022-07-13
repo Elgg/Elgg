@@ -329,7 +329,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		]);
 
 		// even though this user can't look up the entity via the DB, permission allows update.
-		$this->assertFalse(has_access_to_entity($this->entity, $user));
+		$this->assertFalse($this->entity->hasAccess($user->guid));
 		$this->assertTrue($this->entity->save());
 
 		elgg_unregister_plugin_hook_handler('permissions_check', 'object', [

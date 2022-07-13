@@ -36,7 +36,7 @@ class Permissions {
 				// Elgg's default decision is what we want
 				return;
 			default:
-				$list = get_access_array($user->guid);
+				$list = elgg_get_access_array($user->guid);
 				if (in_array($write_permission, $list)) {
 					// user in the access collection
 					return true;
@@ -85,6 +85,6 @@ class Permissions {
 		}
 		
 		// check if the page write access is in the users read access array
-		return in_array($page->write_access_id, get_access_array($user->guid));
+		return in_array($page->write_access_id, elgg_get_access_array($user->guid));
 	}
 }

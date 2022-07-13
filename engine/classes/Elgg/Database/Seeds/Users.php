@@ -58,9 +58,9 @@ class Users extends Seed {
 				continue;
 			}
 
-			$collection_id = create_access_collection('Best Fake Friends Collection', $user->guid, 'friends_collection');
-			if ($collection_id > 0) {
-				$this->log("Created new friend collection for user {$user->getDisplayName()} [collection_id: {$collection_id}]");
+			$collection = elgg_create_access_collection('Best Fake Friends Collection', $user->guid, 'friends_collection');
+			if ($collection instanceof \ElggAccessCollection) {
+				$this->log("Created new friend collection for user {$user->getDisplayName()} [collection_id: {$collection->id}]");
 			}
 
 			$friends_limit = $this->faker()->numberBetween(5, 10);
@@ -77,8 +77,8 @@ class Users extends Seed {
 				if ($user->addFriend($friend->guid, true)) {
 					$this->log("User {$user->getDisplayName()} [guid: {$user->guid}] friended user {$friend->getDisplayName()} [guid: {$friend->guid}]");
 
-					if ($this->faker()->boolean() && $collection_id > 0) {
-						add_user_to_access_collection($friend->guid, $collection_id);
+					if ($collection instanceof \ElggAccessCollection && $this->faker()->boolean()) {
+						$collection->addMember($friend->guid);
 					}
 					
 					// randomize the river activity

@@ -53,8 +53,8 @@ class MessagesPluginTest extends IntegrationTestCase {
 			$this->assertEquals($sender, $message->getSender());
 		});
 		
-		$this->assertTrue(has_access_to_entity($message, $recipient));
-		$this->assertFalse(has_access_to_entity($message, $sender));
+		$this->assertTrue($message->hasAccess($recipient->guid));
+		$this->assertFalse($message->hasAccess($sender->guid));
 
 		$notification = _elgg_services()->mailer->getLastMessage();
 		/* @var $notification \Laminas\Mail\Message */

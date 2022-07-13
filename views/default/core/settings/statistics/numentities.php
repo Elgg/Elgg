@@ -10,7 +10,7 @@ if (!$user instanceof ElggUser) {
 	return;
 }
 
-$entity_stats = get_entity_statistics($user->guid);
+$entity_stats = elgg_get_entity_statistics($user->guid);
 if (empty($entity_stats)) {
 	return;
 }

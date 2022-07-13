@@ -282,7 +282,7 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 	}
 
 	/**
-	 * Tests get_entity_statistics() without owner
+	 * Tests elgg_get_entity_statistics() without owner
 	 *
 	 * @see https://github.com/Elgg/Elgg/pull/7845
 	 */
@@ -290,17 +290,17 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 
 		$subtype = 'issue7845' . rand(0, 100);
 
-		$object = $this->createObject([
+		$this->createObject([
 			'subtype' => $subtype,
 		]);
 
-		$stats = get_entity_statistics();
+		$stats = elgg_get_entity_statistics();
 
 		$this->assertEquals(1, $stats['object'][$subtype]);
 	}
 
 	/**
-	 * Tests get_entity_statistics() with an owner
+	 * Tests elgg_get_entity_statistics() with an owner
 	 *
 	 * @see https://github.com/Elgg/Elgg/pull/7845
 	 */
@@ -315,7 +315,7 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 			'owner_guid' => $user->guid,
 		]);
 
-		$stats = get_entity_statistics($user->guid);
+		$stats = elgg_get_entity_statistics($user->guid);
 
 		$this->assertEquals(1, $stats['object'][$subtype]);
 	}

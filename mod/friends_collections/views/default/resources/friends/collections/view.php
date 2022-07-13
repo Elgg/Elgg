@@ -6,10 +6,10 @@
 use Elgg\Exceptions\Http\EntityNotFoundException;
 use Elgg\Exceptions\Http\EntityPermissionsException;
 
-$collection_id = elgg_extract('collection_id', $vars);
-$collection = get_access_collection($collection_id);
+$collection_id = (int) elgg_extract('collection_id', $vars);
 
-if (!$collection || !$collection->canEdit()) {
+$collection = elgg_get_access_collection($collection_id);
+if (!$collection instanceof \ElggAccessCollection || !$collection->canEdit()) {
 	// We don't want to leak friendship/collection information
 	throw new EntityPermissionsException();
 }

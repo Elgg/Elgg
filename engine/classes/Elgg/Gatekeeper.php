@@ -177,12 +177,13 @@ class Gatekeeper {
 	 * @return void
 	 * @throws HttpException
 	 */
-	public function assertAccessibleEntity(ElggEntity $entity, ElggUser $user = null, $validate_can_edit = false) {
+	public function assertAccessibleEntity(ElggEntity $entity, ElggUser $user = null, $validate_can_edit = false): void {
 
 		$result = true;
 
 		try {
-			if (!$this->session->getIgnoreAccess() && !$this->access->hasAccessToEntity($entity, $user)) {
+			$user_guid = $user ? $user->guid : 0;
+			if (!$this->session->getIgnoreAccess() && !$entity->hasAccess($user_guid)) {
 				// user is logged in but still does not have access to it
 				$msg = $this->translator->translate('limited_access');
 				$exception = new EntityPermissionsException($msg);
@@ -193,8 +194,7 @@ class Gatekeeper {
 				]);
 				throw $exception;
 			}
-
-			$user_guid = isset($user) ? (int) $user->guid : $this->session->getLoggedInUserGuid();
+			
 			if ($validate_can_edit && !$entity->canEdit($user_guid)) {
 				// logged in user does not have edit or write access to it
 				$msg = $this->translator->translate('limited_access');

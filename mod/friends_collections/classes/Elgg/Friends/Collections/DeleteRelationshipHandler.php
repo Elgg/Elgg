@@ -2,9 +2,6 @@
 
 namespace Elgg\Friends\Collections;
 
-use Elgg\Event;
-use ElggRelationship;
-
 /**
  * Delete friend relationship handler
  */
@@ -16,10 +13,10 @@ class DeleteRelationshipHandler {
 	 * @param \Elgg\Event $event 'delete' 'relationship'
 	 * @return void
 	 */
-	public function __invoke(Event $event) {
+	public function __invoke(\Elgg\Event $event) {
 
 		$relationship = $event->getObject();
-		if (!$relationship instanceof ElggRelationship) {
+		if (!$relationship instanceof \ElggRelationship) {
 			return;
 		}
 
@@ -37,7 +34,7 @@ class DeleteRelationshipHandler {
 		}
 		
 		foreach ($collections as $collection) {
-			remove_user_from_access_collection($relationship->guid_two, $collection->id);
+			$collection->removeMember($relationship->guid_two);
 		}
 	}
 }
