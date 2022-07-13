@@ -60,7 +60,7 @@ class User {
 	}
 	
 	/**
-	 * Prevent a manual code login with login()
+	 * Prevent a manual code login with elgg_login()
 	 *
 	 * @param \Elgg\Event $event 'login:before', 'user'
 	 *

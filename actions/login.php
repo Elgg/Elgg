@@ -6,8 +6,6 @@
 use Elgg\Exceptions\AuthenticationException;
 use Elgg\Exceptions\LoginException;
 
-/* @var $request \Elgg\Request */
-
 $username = get_input('username');
 $password = get_input('password', null, false);
 $persistent = (bool) get_input("persistent");
@@ -59,7 +57,7 @@ try {
 		throw new LoginException(elgg_echo('login:baduser'));
 	}
 
-	login($user, $persistent);
+	elgg_login($user, $persistent);
 } catch (AuthenticationException | LoginException $e) {
 	$prev = $e->getPrevious();
 	
@@ -86,15 +84,14 @@ try {
 	return elgg_error_response($e->getMessage(), REFERRER, ELGG_HTTP_UNAUTHORIZED);
 }
 
-if ($request->isXhr()) {
+if (elgg_is_xhr()) {
 	// Hold the system messages until the client refreshes the page.
-	$request->setParam('elgg_fetch_messages', 0);
+	set_input('elgg_fetch_messages', 0);
 }
 
 $output = [
 	'user' => $user,
 ];
 $message = elgg_echo('loginok', [], $user->getLanguage(elgg_get_current_language()));
-$forward_url = _elgg_get_login_forward_url($request, $user);
 
-return elgg_ok_response($output, $message, $forward_url);
+return elgg_ok_response($output, $message, elgg_get_login_forward_url($user));

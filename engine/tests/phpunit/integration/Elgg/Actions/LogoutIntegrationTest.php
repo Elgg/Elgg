@@ -35,7 +35,7 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 
 		$user->setValidationStatus(true);
 
-		login($user);
+		elgg_login($user);
 
 		$response = $this->executeAction('logout');
 
@@ -56,7 +56,7 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 
 		$user->setValidationStatus(true);
 
-		login($user);
+		elgg_login($user);
 
 		$response = $this->executeAction('logout', [], false, false);
 
@@ -78,7 +78,7 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 
 		$user->setValidationStatus(true);
 
-		login($user);
+		elgg_login($user);
 
 		elgg_register_event_handler('logout:before', 'user', [Values::class, 'getFalse']);
 

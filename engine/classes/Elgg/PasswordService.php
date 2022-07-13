@@ -175,8 +175,8 @@ final class PasswordService {
 		$user->removePrivateSetting('passwd_conf_code');
 		$user->removePrivateSetting('passwd_conf_time');
 		
-		// clean the logins failures
-		reset_login_failure_count($user_guid);
+		// reset the logins failures
+		elgg_reset_authentication_failures($user);
 
 		$ns = $reset ? 'resetpassword' : 'changepassword';
 

@@ -11,7 +11,7 @@ $site = elgg_get_site_entity();
 // create the from address
 $from = \Elgg\Email\Address::getFormattedEmailAddress($site->getEmailAddress(), $site->getDisplayName());
 
-$emails = get_input('emails');
+$emails = (string) get_input('emails');
 $emailmessage = get_input('emailmessage');
 
 $emails = trim($emails);

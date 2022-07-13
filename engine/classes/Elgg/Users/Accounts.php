@@ -424,4 +424,78 @@ class Accounts {
 		
 		return $this->email->send($notification);
 	}
+	
+	/**
+	 * Registers an authentication failure for a user
+	 *
+	 * @param \ElggUser $user user to log the failure for
+	 *
+	 * @return void
+	 * @since 4.3
+	 */
+	public function registerAuthenticationFailure(\ElggUser $user): void {
+		$fails = (int) $user->getPrivateSetting('authentication_failures');
+		$fails++;
+
+		$user->setPrivateSetting('authentication_failures', $fails);
+		$user->setPrivateSetting("authentication_failure_{$fails}", time());
+		
+	}
+	
+	/**
+	 * Resets all authentication failures for a given user
+	 *
+	 * @param \ElggUser $user user to clear the failures for
+	 *
+	 * @return void
+	 * @since 4.3
+	 */
+	public function resetAuthenticationFailures(\ElggUser $user): void {
+		$fails = (int) $user->getPrivateSetting('authentication_failures');
+		if (empty($fails)) {
+			return;
+		}
+		
+		for ($n = 1; $n <= $fails; $n++) {
+			$user->removePrivateSetting("authentication_failure_{$n}");
+		}
+
+		$user->removePrivateSetting('authentication_failures');
+	}
+	
+	/**
+	 * Checks if the authentication failure limit has been reached
+	 *
+	 * @param \ElggUser $user     User to check the limit for
+	 * @param int       $limit    (optional) number of allowed failures
+	 * @param int       $lifetime (optional) number of seconds before a failure is considered expired
+	 *
+	 * @return bool
+	 * @since 4.3
+	 */
+	public function isAuthenticationFailureLimitReached(\ElggUser $user, int $limit = null, int $lifetime = null): bool {
+		$limit = $limit ?? $this->config->authentication_failures_limit;
+		$lifetime = $lifetime ?? $this->config->authentication_failures_lifetime;
+		
+		$fails = (int) $user->getPrivateSetting('authentication_failures');
+		if (empty($fails) || $fails < $limit) {
+			return false;
+		}
+		
+		$failure_count = 0;
+		$min_time = time() - $lifetime;
+		for ($n = $fails; $n > 0; $n--) {
+			$failure_timestamp = $user->getPrivateSetting("authentication_failure_{$n}");
+			if ($failure_timestamp > $min_time) {
+				$failure_count++;
+			}
+
+			if ($failure_count === $limit) {
+				// Limit reached
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }

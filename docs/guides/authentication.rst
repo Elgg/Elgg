@@ -119,4 +119,4 @@ The authentication handle should return a ``boolean``, indicating if the request
 that in case of a regular user login where credentials are available as username and password the user will get logged in. In 
 case of the XML-RPC example the authentication handler will need to perform this step itself since the rest of the system will 
 not have any idea of either possible formats of credentials passed nor its contents. Logging in a user is quite simple and is 
-being done by ``login()``, which expects an ``ElggUser`` object.
+being done by ``elgg_login()``, which expects an ``ElggUser`` object.

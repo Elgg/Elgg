@@ -36,12 +36,12 @@ class Password {
 			$password = $credentials['password'];
 			$hash = $user->password_hash;
 			
-			if (check_rate_limit_exceeded($user->guid)) {
+			if (elgg_is_authentication_failure_limit_reached($user)) {
 				throw new LoginException(_elgg_services()->translator->translate('LoginException:AccountLocked'));
 			}
 			
 			if (!$password_svc->verify($password, $hash)) {
-				log_login_failure($user->guid);
+				elgg_register_authentication_failure($user);
 				
 				throw new LoginException(_elgg_services()->translator->translate('LoginException:PasswordFailure'));
 			}

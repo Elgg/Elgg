@@ -79,9 +79,9 @@ try {
 	}
 
 	try {
-		login($new_user);
+		elgg_login($new_user);
 		// set forward url
-		$forward_url = _elgg_get_login_forward_url($request, $new_user);
+		$forward_url = elgg_get_login_forward_url($new_user);
 		$response_message = elgg_echo('registerok', [elgg_get_site_entity()->getDisplayName()]);
 
 		return elgg_ok_response($response_data, $response_message, $forward_url);

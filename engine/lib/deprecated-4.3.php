@@ -526,3 +526,112 @@ function get_current_language() {
 	
 	return _elgg_services()->translator->getCurrentLanguage();
 }
+
+/**
+ * Log the current user out
+ *
+ * @return bool
+ *
+ * @deprecated 4.3 use elgg_logout()
+ */
+function logout() {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_logout().', '4.3');
+	
+	return _elgg_services()->session->logout();
+}
+
+/**
+ * Logs in a specified \ElggUser. For standard registration, use in conjunction
+ * with elgg_pam_authenticate.
+ *
+ * @see elgg_pam_authenticate()
+ *
+ * @param \ElggUser $user       A valid Elgg user object
+ * @param boolean   $persistent Should this be a persistent login?
+ *
+ * @return true or throws exception
+ * @throws LoginException
+ *
+ * @deprecated 4.3 use elgg_login()
+ */
+function login(\ElggUser $user, $persistent = false) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_login().', '4.3');
+	
+	_elgg_services()->session->login($user, (bool) $persistent);
+	return true;
+}
+
+/**
+ * Log a failed login for $user_guid
+ *
+ * @param int $user_guid User GUID
+ *
+ * @return bool
+ *
+ * @deprecated 4.3 use elgg_register_authentication_failure()
+ */
+function log_login_failure($user_guid) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_register_authentication_failure().', '4.3');
+	
+	return elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($user_guid) {
+		$user_guid = (int) $user_guid;
+		$user = get_entity($user_guid);
+
+		if ($user instanceof \ElggUser) {
+			_elgg_services()->accounts->registerAuthenticationFailure($user);
+			return true;
+		}
+
+		return false;
+	});
+}
+
+/**
+ * Resets the fail login count for $user_guid
+ *
+ * @param int $user_guid User GUID
+ *
+ * @return bool true on success (success = user has no logged failed attempts)
+ *
+ * @deprecated 4.3 use elgg_reset_authentication_failures()
+ */
+function reset_login_failure_count($user_guid) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_reset_authentication_failures().', '4.3');
+	
+	return elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($user_guid) {
+		$user_guid = (int) $user_guid;
+		$user = get_entity($user_guid);
+
+		if ($user instanceof \ElggUser) {
+			_elgg_services()->accounts->resetAuthenticationFailures($user);
+			return true;
+		}
+
+		return false;
+	});
+}
+
+/**
+ * Checks if the rate limit of failed logins has been exceeded for $user_guid.
+ *
+ * @param int $user_guid User GUID
+ *
+ * @return bool on exceeded limit.
+ *
+ * @deprecated 4.3 use elgg_is_authentication_failure_limit_reached()
+ */
+function check_rate_limit_exceeded($user_guid) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_is_authentication_failure_limit_reached().', '4.3');
+	
+	return elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($user_guid) {
+		$user_guid = (int) $user_guid;
+		$user = get_entity($user_guid);
+
+		if ($user instanceof \ElggUser) {
+			// 5 failures in 5 minutes causes temporary block on logins
+			return _elgg_services()->accounts->isAuthenticationFailureLimitReached($user, 5, 300);
+		}
+
+		return false;
+	});
+}
