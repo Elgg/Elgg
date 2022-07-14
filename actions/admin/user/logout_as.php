@@ -17,7 +17,7 @@ if (!$user instanceof \ElggUser || !$user->isAdmin()) {
 $persistent = (bool) $session->get('login_as_original_persistent');
 
 try {
-	login($user, $persistent);
+	elgg_login($user, $persistent);
 	
 	$session->remove('login_as_original_user_guid');
 	$session->remove('login_as_original_persistent');

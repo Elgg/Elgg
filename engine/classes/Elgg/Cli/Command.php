@@ -65,17 +65,19 @@ abstract class Command extends BaseCommand {
 		if (!$this->getDefinition()->hasOption('as')) {
 			return;
 		}
+		
 		$username = $this->option('as');
 		if (!$username) {
 			return;
 		}
+		
 		$user = get_user_by_username($username);
 		if (!$user) {
 			throw new RuntimeException(elgg_echo('user:username:notfound', [$username]));
 		}
-		if (!login($user)) {
-			throw new RuntimeException(elgg_echo('cli:login:error:unknown', [$username]));
-		}
+		
+		elgg_login($user);
+		
 		elgg_log(elgg_echo('cli:login:success:log', [$username, $user->guid]));
 	}
 
@@ -85,7 +87,7 @@ abstract class Command extends BaseCommand {
 	 */
 	final protected function logout() {
 		if (elgg_is_logged_in()) {
-			logout();
+			elgg_logout();
 		}
 	}
 	

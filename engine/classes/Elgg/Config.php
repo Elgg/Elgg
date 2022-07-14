@@ -19,6 +19,8 @@ use Elgg\Traits\Loggable;
  * @property string        $allow_user_default_access				Are users allowed to set their own default access level
  * @property string        $allowed_languages						Comma seperated string of admin allowed languages
  * @property string        $assetroot            					Path of asset (views) simplecache with trailing "/"
+ * @property int           $authentication_failures_lifetime        Number of seconds before an authentication failure expires
+ * @property int           $authentication_failures_limit           Number of allowed authentication failures
  * @property bool          $auto_disable_plugins					Are unbootable plugins automatically disabled
  * @property int           $batch_run_time_in_secs					Max time for a single upgrade loop
  * @property-read int      $bootdata_plugin_settings_limit			Max amount of plugin settings to determine if plugin will be cached
@@ -193,6 +195,8 @@ class Config {
 	 */
 	protected $config_defaults = [
 		'allow_phpinfo' => false,
+		'authentication_failures_lifetime' => 600,
+		'authentication_failures_limit' => 5,
 		'auto_disable_plugins' => true,
 		'batch_run_time_in_secs' => 4,
 		'can_change_username' => false,

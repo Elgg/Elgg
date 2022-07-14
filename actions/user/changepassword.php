@@ -21,12 +21,13 @@ if ($password !== $password_repeat) {
 	return elgg_error_response(elgg_echo('RegistrationException:PasswordMismatch'));
 }
 
-if (!execute_new_password_request($user_guid, $code, $password)) {
+$user = get_user($user_guid);
+if (!$user instanceof \ElggUser || !execute_new_password_request($user_guid, $code, $password)) {
 	return elgg_error_response(elgg_echo('user:password:fail'));
 }
 
 try {
-	login(get_user($user_guid));
+	elgg_login($user);
 } catch (LoginException $e) {
 	return elgg_error_response($e->getMessage());
 }

@@ -41,7 +41,9 @@ class AuthToken {
 			return false;
 		}
 		
-		// login() throws on failure, which is handled by the Authentication service
-		return login($user);
+		// elgg_login() throws on failure, which is handled by the Authentication service
+		elgg_login($user);
+		
+		return true;
 	}
 }

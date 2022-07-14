@@ -1614,7 +1614,7 @@ class ElggInstaller {
 		}
 
 		try {
-			login($user);
+			elgg_login($user);
 		} catch (LoginException $ex) {
 			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:adminlogin'));
 			

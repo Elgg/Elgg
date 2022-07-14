@@ -30,7 +30,7 @@ $session->set('login_as_original_user_guid', $original_user_guid);
 $session->set('login_as_original_persistent', $persistent);
 
 try {
-	login($user);
+	elgg_login($user);
 	
 	return elgg_ok_response('', elgg_echo('action:user:login_as:success', [$user->getDisplayName()]));
 } catch (LoginException $exc) {
@@ -38,7 +38,7 @@ try {
 	$session->remove('login_as_original_persistent');
 	
 	try {
-		login($original_user);
+		elgg_login($original_user);
 	} catch (LoginException $ex) {
 		// we can't log back in as ourselves? just leave us logged out then...
 	}
