@@ -163,20 +163,30 @@ class Accounts {
 	}
 
 	/**
-	 * Registers a user, returning false if the username already exists
+	 * Registers a user
 	 *
-	 * @param string $username              The username of the new user
-	 * @param string $password              The password
-	 * @param string $name                  The user's display name
-	 * @param string $email                 The user's email address
-	 * @param bool   $allow_multiple_emails Allow the same email address to be
-	 *                                      registered multiple times?
-	 * @param string $subtype               Subtype of the user entity
-	 * @param array  $params                Additional parameters
+	 * @param array $params Array of options with keys:
+	 *                      (string) username              => The username of the new user
+	 *                      (string) password              => The password
+	 *                      (string) name                  => The user's display name
+	 *                      (string) email                 => The user's email address
+	 *                      (string) subtype               => (optional) Subtype of the user entity
+	 *                      (string) language              => (optional) user language (defaults to current language)
+	 *                      (bool)   allow_multiple_emails => (optional) Allow the same email address to be registered multiple times (default false)
+	 *                      (bool)   validated             => (optional) Is the user validated (default true)
 	 *
-	 * @return int|false The new user's GUID; false on failure
+	 * @return \ElggUser
+	 * @throws RegistrationException
 	 */
-	public function register($username, $password, $name, $email, $allow_multiple_emails = false, $subtype = null, array $params = []) {
+	public function register(array $params = []): \ElggUser {
+		$username = (string) elgg_extract('username', $params);
+		$password = (string) elgg_extract('password', $params);
+		$name = (string) elgg_extract('name', $params);
+		$email = (string) elgg_extract('email', $params);
+		$subtype = elgg_extract('subtype', $params);
+		$language = (string) elgg_extract('language', $params, $this->translator->getCurrentLanguage());
+		$allow_multiple_emails = (bool) elgg_extract('allow_multiple_emails', $params, false);
+		$validated = (bool) elgg_extract('validated', $params, true);
 
 		$this->assertValidAccountData($username, $password, $name, $email, $allow_multiple_emails);
 
@@ -199,11 +209,10 @@ class Accounts {
 		$user->username = $username;
 		$user->email = $email;
 		$user->name = $name;
-		
-		$user->language = $this->translator->getCurrentLanguage();
+		$user->language = $language;
 
 		if (!$user->save()) {
-			return false;
+			throw new RegistrationException($this->translator->translate('registerbad'));
 		}
 
 		// doing this after save to prevent metadata save notices on unwritable metadata password_hash
@@ -212,11 +221,11 @@ class Accounts {
 		// Turn on email notifications by default
 		$user->setNotificationSetting('email', true);
 		
-		if (elgg_extract('validated', $params, true)) {
+		if ($validated) {
 			$user->setValidationStatus(true, 'on_create');
 		}
 
-		return $user->guid;
+		return $user;
 	}
 
 	/**

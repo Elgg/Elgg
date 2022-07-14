@@ -1573,28 +1573,14 @@ class ElggInstaller {
 		$app = $this->getApp();
 
 		try {
-			$guid = register_user(
-				$submissionVars['username'],
-				$submissionVars['password1'],
-				$submissionVars['displayname'],
-				$submissionVars['email']
-			);
+			$user = elgg_register_user([
+				'username' => $submissionVars['username'],
+				'password' => $submissionVars['password1'],
+				'name' => $submissionVars['displayname'],
+				'email' => $submissionVars['email'],
+			]);
 		} catch (RegistrationException $e) {
 			$app->internal_services->system_messages->addErrorMessage($e->getMessage());
-
-			return false;
-		}
-
-		if ($guid === false) {
-			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:admin:cannot_create'));
-
-			return false;
-		}
-
-		$user = get_entity($guid);
-
-		if (!$user instanceof ElggUser) {
-			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:loadadmin'));
 
 			return false;
 		}

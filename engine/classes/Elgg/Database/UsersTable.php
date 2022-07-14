@@ -121,6 +121,7 @@ class UsersTable {
 	 *                       - count   (bool) => Return a count instead of users? (default false)
 	 *
 	 * @return \ElggUser[]|int
+	 * @deprecated 4.3
 	 */
 	public function findActive(array $options = []) {
 
@@ -144,7 +145,7 @@ class UsersTable {
 			'count' => $options['count'],
 			'options' => $options,
 		];
-		$data = _elgg_services()->hooks->trigger('find_active_users', 'system', $params, null);
+		$data = _elgg_services()->hooks->triggerDeprecated('find_active_users', 'system', $params, null, "No longer use the 'find_active_users', 'system' hook", '4.3');
 		// check null because the handler could legitimately return falsey values.
 		if ($data !== null) {
 			return $data;

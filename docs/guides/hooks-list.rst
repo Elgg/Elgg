@@ -229,9 +229,6 @@ User hooks
 **login:forward, user**
     Filters the URL to which the user will be forwarded after login.
 
-**find_active_users, system**
-	Return the number of active users.
-
 **status, user**
 	Triggered by The Wire when adding a post.
 

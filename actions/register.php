@@ -32,12 +32,13 @@ try {
 		throw new RegistrationException(implode(PHP_EOL, $messages));
 	}
 
-	$guid = register_user($username, $password, $name, $email, false, null, ['validated' => false]);
-	if ($guid === false) {
-		throw new RegistrationException(elgg_echo('registerbad'));
-	}
-
-	$new_user = get_user($guid);
+	$new_user = elgg_register_user([
+		'username' => $username,
+		'password' => $password,
+		'name' => $name,
+		'email' => $email,
+		'validated' => false,
+	]);
 
 	$fail = function () use ($new_user) {
 		elgg_call(ELGG_IGNORE_ACCESS, function () use ($new_user) {
