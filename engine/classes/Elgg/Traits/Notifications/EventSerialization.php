@@ -64,7 +64,7 @@ trait EventSerialization {
 					$this->object = elgg_get_metadata_from_id($object_id);
 					break;
 				case 'relationship' :
-					$this->object = get_relationship($object_id);
+					$this->object = elgg_get_relationship($object_id);
 					break;
 			}
 		}

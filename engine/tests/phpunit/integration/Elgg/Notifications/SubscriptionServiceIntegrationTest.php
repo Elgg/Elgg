@@ -404,7 +404,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($container->muteNotifications($user->guid));
 		
 		// create a subscription which should exist in the system
-		$this->assertTrue(add_entity_relationship($user->guid, SubscriptionsService::RELATIONSHIP_PREFIX . ':apples', $container->guid));
+		$this->assertTrue($user->addRelationship($container->guid, SubscriptionsService::RELATIONSHIP_PREFIX . ':apples'));
 		
 		$this->assertTrue($container->hasMutedNotifications($user->guid));
 		$this->assertTrue($container->hasSubscription($user->guid, ['apples']));

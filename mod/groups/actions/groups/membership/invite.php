@@ -24,12 +24,12 @@ $resend_invitation = (bool) get_input('resend');
 
 foreach ($user_guids as $guid) {
 	$user = get_user($guid);
-	if (!$user) {
+	if (!$user instanceof \ElggUser) {
 		continue;
 	}
 
 	$invite = true;
-	if (check_entity_relationship($group->guid, 'invited', $user->guid)) {
+	if ($group->hasRelationship($user->guid, 'invited')) {
 		// user already invited, do we need to resend the invitation
 		if (!$resend_invitation) {
 			elgg_register_error_message(elgg_echo('groups:useralreadyinvited'));
@@ -38,13 +38,13 @@ foreach ($user_guids as $guid) {
 		$invite = false;
 	}
 
-	if (check_entity_relationship($user->guid, 'member', $group->guid)) {
+	if ($group->isMember($user)) {
 		continue;
 	}
 
 	if ($invite) {
 		// Create relationship
-		if (!add_entity_relationship($group->guid, 'invited', $user->guid)) {
+		if (!$group->addRelationship($user->guid, 'invited')) {
 			elgg_register_error_message(elgg_echo('groups:usernotinvited'));
 			continue;
 		}

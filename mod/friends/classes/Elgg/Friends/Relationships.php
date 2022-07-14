@@ -24,10 +24,12 @@ class Relationships {
 			return;
 		}
 		
-		$user_guid = $relationship->guid_one;
-		$friend_guid = $relationship->guid_two;
+		$friend = get_user($relationship->guid_two);
+		if (!$friend instanceof \ElggUser) {
+			return;
+		}
 		
-		remove_entity_relationship($friend_guid, 'friendrequest', $user_guid);
+		$friend->removeRelationship($relationship->guid_one, 'friendrequest');
 	}
 	
 	/**
@@ -89,7 +91,10 @@ class Relationships {
 		elgg_unregister_event_handler($event->getName(), $event->getType(), __METHOD__);
 		
 		// remove other friend relationship
-		remove_entity_relationship($relationship->guid_two, 'friend', $relationship->guid_one);
+		$friend = get_user($relationship->guid_two);
+		if ($friend instanceof \ElggUser) {
+			$friend->removeRelationship($relationship->guid_one, 'friend');
+		}
 		
 		// re-register listener
 		elgg_register_event_handler($event->getName(), $event->getType(), __METHOD__);

@@ -1,8 +1,27 @@
 <?php
+/**
+ * List all the relationships of the given entity
+ *
+ * @uses $vars['entity'] the entity to inspect
+ */
 
+use Elgg\Database\Clauses\OrderByClause;
+use Elgg\Database\QueryBuilder;
+
+/* @var $entity \ElggEntity */
 $entity = elgg_extract('entity', $vars);
 
-$entity_relationships = get_entity_relationships($entity->guid);
+$entity_relationships = elgg_get_relationships([
+	'limit' => false,
+	'wheres' => [
+		function(QueryBuilder $qb, $main_alias) use ($entity) {
+			return $qb->compare("{$main_alias}.guid_one", '=', $entity->guid, ELGG_VALUE_GUID);
+		}
+	],
+	'order_by' => new OrderByClause(function(QueryBuilder $qb, $main_alias) {
+		return "{$main_alias}.id";
+	}, 'asc'),
+]);
 
 if (empty($entity_relationships)) {
 	$relationship_info = elgg_echo('notfound');

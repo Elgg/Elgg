@@ -134,7 +134,7 @@ class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 	}
 	
 	public function testGetRelationshipByUnknownID() {
-		$this->assertFalse($this->service->get(123));
+		$this->assertNull($this->service->get(123));
 	}
 	
 	public function testDeleteRelationshipByID() {

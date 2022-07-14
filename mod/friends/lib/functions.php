@@ -40,9 +40,8 @@ function _elgg_friends_get_add_friend_menu_items(\ElggUser $user, bool $make_but
 	$add_toggle = 'remove_friend';
 	$pending_request = false;
 	if ((bool) elgg_get_plugin_setting('friend_request', 'friends')) {
-		$sent_request = (bool) check_entity_relationship($user->guid, 'friendrequest', $current_user->guid);
-		$pending_request = (bool) check_entity_relationship($current_user->guid, 'friendrequest', $user->guid);
-		if (!$isFriend && !$sent_request) {
+		$pending_request = (bool) $current_user->hasRelationship($user->guid, 'friendrequest');
+		if (!$isFriend && !$user->hasRelationship($current_user->guid, 'friendrequest')) {
 			// no current friend, and no pending request
 			$add_toggle = 'friend_requests';
 		}

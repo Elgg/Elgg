@@ -22,7 +22,7 @@ trait Friends {
 			return false;
 		}
 
-		if (!add_entity_relationship($this->guid, 'friend', $friend_guid)) {
+		if (!$this->addRelationship($friend_guid, 'friend')) {
 			return false;
 		}
 
@@ -66,7 +66,7 @@ trait Friends {
 	 * @return bool
 	 */
 	public function isFriendsWith(int $user_guid): bool {
-		return (bool) check_entity_relationship($this->guid, 'friend', $user_guid);
+		return $this->hasRelationship($user_guid, 'friend');
 	}
 
 	/**
@@ -77,7 +77,7 @@ trait Friends {
 	 * @return bool
 	 */
 	public function isFriendOf(int $user_guid): bool {
-		return (bool) check_entity_relationship($user_guid, 'friend', $this->guid);
+		return (bool) _elgg_services()->relationshipsTable->check($user_guid, 'friend', $this->guid);
 	}
 
 	/**

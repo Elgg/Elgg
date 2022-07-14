@@ -3,8 +3,6 @@
 namespace Elgg\Integration;
 
 use Elgg\IntegrationTestCase;
-use ElggEntity;
-use ElggObject;
 
 /**
  * @group IntegrationTests
@@ -12,17 +10,17 @@ use ElggObject;
 class ElggRelationshipTest extends IntegrationTestCase {
 
 	/**
-	 * @var ElggEntity
+	 * @var \ElggEntity
 	 */
 	protected $entity1;
 
 	/**
-	 * @var ElggEntity
+	 * @var \ElggEntity
 	 */
 	protected $entity2;
 
 	/**
-	 * @var ElggEntity
+	 * @var \ElggEntity
 	 */
 	protected $entity3;
 	
@@ -48,98 +46,96 @@ class ElggRelationshipTest extends IntegrationTestCase {
 
 	public function testAddRelationship() {
 		// test adding a relationship
-		$this->assertTrue(add_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
+		$this->assertTrue($this->entity1->addRelationship($this->entity2->guid, 'test_relationship'));
 
-		$r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, $r);
+		$this->assertTrue($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
 	}
 
 	public function testRemoveRelationship() {
 		// test adding a relationship
-		$this->assertTrue(add_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
+		$this->assertTrue($this->entity1->addRelationship($this->entity2->guid, 'test_relationship'));
 
-		$r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, $r);
+		$this->assertTrue($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
 
-		$this->assertTrue(remove_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
+		$this->assertTrue($this->entity1->removeRelationship($this->entity2->guid, 'test_relationship'));
 
-		$this->assertFalse(check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
+		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
 	}
 
 	public function testPreventAddRelationship() {
 		// test event handler - should prevent the addition of a relationship
 		elgg_register_event_handler('create', 'relationship', 'Elgg\Values::getFalse');
 
-		$this->assertFalse(add_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
+		$this->assertFalse($this->entity1->addRelationship($this->entity2->guid, 'test_relationship'));
 
 		elgg_unregister_event_handler('create', 'relationship', 'Elgg\Values::getFalse');
 
-		$this->assertFalse(check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
+		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
 	}
 
 	public function testPreventRemoveRelationship() {
-		$this->assertTrue(add_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
-		$r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, $r);
+		$this->assertTrue($this->entity1->addRelationship($this->entity2->guid, 'test_relationship'));
+		$this->assertTrue($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
 
 		elgg_register_event_handler('delete', 'relationship', 'Elgg\Values::getFalse');
 
-		$this->assertFalse(remove_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
+		$this->assertFalse($this->entity1->removeRelationship($this->entity2->guid, 'test_relationship'));
 
 		elgg_unregister_event_handler('delete', 'relationship', 'Elgg\Values::getFalse');
 
-		$r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, $r);
+		$this->assertTrue($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
 	}
 
 	public function testRelationshipSave() {
-		$this->assertTrue(add_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
-		$r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, $r);
-		$old_id = $r->id;
+		$rel_id = _elgg_services()->relationshipsTable->add($this->entity1->guid, 'test_relationship', $this->entity2->guid, true);
+		$this->assertIsInt($rel_id);
 
-		$r->guid_two = $this->entity3->guid;
-		$this->assertTrue($r->save());
-		$this->assertGreaterThan(0, $r->id);
-		$this->assertNotEquals($old_id, $r->id);
+		$rel = elgg_get_relationship($rel_id);
+		$this->assertInstanceOf(\ElggRelationship::class, $rel);
 
-		$test_r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity3->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, $test_r);
-		$this->assertEquals($r->guid_one, $test_r->guid_one);
-		$this->assertEquals($r->guid_two, $test_r->guid_two);
-		$this->assertEquals($r->relationship, $test_r->relationship);
+		$rel->guid_two = $this->entity3->guid;
+		$this->assertTrue($rel->save());
+		$this->assertGreaterThan(0, $rel->id);
+		$this->assertNotEquals($rel_id, $rel->id);
+
+		$new_rel = elgg_get_relationship($rel->id);
+		$this->assertInstanceOf(\ElggRelationship::class, $new_rel);
+		$this->assertEquals($rel->guid_one, $new_rel->guid_one);
+		$this->assertEquals($rel->guid_two, $new_rel->guid_two);
+		$this->assertEquals($rel->relationship, $new_rel->relationship);
 
 		// the original shouldn't exist anymore
-		$this->assertFalse(check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
+		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
 	}
 
 	public function testRelationshipDelete() {
-		$this->assertTrue(add_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
-		$r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, $r);
+		$rel_id = _elgg_services()->relationshipsTable->add($this->entity1->guid, 'test_relationship', $this->entity2->guid, true);
+		$this->assertIsInt($rel_id);
 
-		$this->assertTrue($r->delete());
-		$this->assertFalse(check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
+		$rel = elgg_get_relationship($rel_id);
+		$this->assertInstanceOf(\ElggRelationship::class, $rel);
+
+		$this->assertTrue($rel->delete());
+		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
 	}
 
 	public function testRelationshipOnEntityDelete() {
-		$this->assertTrue(add_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
+		$this->assertTrue($this->entity1->addRelationship($this->entity2->guid, 'test_relationship'));
 
 		// test deleting entity in guid_one position
 		$this->entity1->delete();
-		$this->assertFalse(check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
+		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
 
-		$this->assertTrue(add_entity_relationship($this->entity2->guid, 'test_relationship', $this->entity3->guid));
+		$this->assertTrue($this->entity2->addRelationship($this->entity3->guid, 'test_relationship'));
 
 		// test deleting entity in guid_two position
 		$this->entity3->delete();
-		$this->assertFalse(check_entity_relationship($this->entity2->guid, 'test_relationship', $this->entity3->guid));
+		$this->assertFalse($this->entity2->hasRelationship($this->entity3->guid, 'test_relationship'));
 	}
 
 	public function testPreventRelationshipOnEntityDelete() {
-		$this->assertTrue(add_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
-		$this->assertTrue(add_entity_relationship($this->entity2->guid, 'test_relationship', $this->entity1->guid));
-		$guid = $this->entity1->guid;
+		$this->assertTrue($this->entity1->addRelationship($this->entity2->guid, 'test_relationship'));
+		$this->assertTrue($this->entity2->addRelationship($this->entity1->guid, 'test_relationship'));
 
 		elgg_register_event_handler('delete', 'relationship', 'Elgg\Values::getFalse');
 
@@ -149,74 +145,60 @@ class ElggRelationshipTest extends IntegrationTestCase {
 
 		// relationships should still be gone as there is no entity
 		// despite the fact we have a handler trying to prevent it
-		$this->assertFalse(check_entity_relationship($guid, 'test_relationship', $this->entity2->guid));
-		$this->assertFalse(check_entity_relationship($this->entity2->guid, 'test_relationship', $guid));
-	}
-
-	public function testEntityMethodAddRelationship() {
-		$this->assertTrue($this->entity1->addRelationship($this->entity2->guid, 'test_relationship'));
-		$r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, $r);
+		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
+		$this->assertFalse($this->entity2->hasRelationship($this->entity1->guid, 'test_relationship'));
 	}
 
 	public function testEntityMethodRemoveRelationship() {
 		$this->assertTrue($this->entity1->addRelationship($this->entity2->guid, 'test_relationship'));
-		$r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, $r);
+		$this->assertTrue($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
 
 		$this->assertTrue($this->entity1->removeRelationship($this->entity2->guid, 'test_relationship'));
-		$this->assertFalse(check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
+		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
+	}
+
+	public function testEntityMethodDeleteSpecificRelationships() {
+		$this->assertTrue($this->entity1->addRelationship($this->entity2->guid, 'test_relationship'));
+		$this->assertTrue($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
+
+		$this->assertTrue($this->entity1->addRelationship($this->entity3->guid, 'test_relationship'));
+		$this->assertTrue($this->entity1->hasRelationship($this->entity3->guid, 'test_relationship'));
+
+		$this->assertTrue($this->entity3->addRelationship($this->entity1->guid, 'test_relationship'));
+		$this->assertTrue($this->entity3->hasRelationship($this->entity1->guid, 'test_relationship'));
+
+		$this->assertTrue($this->entity1->removeAllRelationships('test_relationship'));
+		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
+		$this->assertFalse($this->entity1->hasRelationship($this->entity3->guid, 'test_relationship'));
+
+		// inverse relationships should be gone too
+		$this->assertFalse($this->entity3->hasRelationship($this->entity1->guid, 'test_relationship'));
 	}
 
 	public function testEntityMethodDeleteRelationships() {
 		$this->assertTrue($this->entity1->addRelationship($this->entity2->guid, 'test_relationship'));
-		$r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, $r);
+		$this->assertTrue($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
 
 		$this->assertTrue($this->entity1->addRelationship($this->entity3->guid, 'test_relationship'));
-		$r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity3->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, $r);
+		$this->assertTrue($this->entity1->hasRelationship($this->entity3->guid, 'test_relationship'));
 
 		$this->assertTrue($this->entity3->addRelationship($this->entity1->guid, 'test_relationship'));
-		$r = check_entity_relationship($this->entity3->guid, 'test_relationship', $this->entity1->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, $r);
-
-		$this->assertTrue($this->entity1->deleteRelationships('test_relationship'));
-		$this->assertFalse(check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
-		$this->assertFalse(check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity3->guid));
-
-		// inverse relationships should be gone too
-		$this->assertFalse(check_entity_relationship($this->entity3->guid, 'test_relationship', $this->entity1->guid));
-
-
-		// Repeat above test, but with no relationship - should remove all relationships
-		$this->assertTrue($this->entity1->addRelationship($this->entity2->guid, 'test_relationship'));
-		$r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, $r);
-
-		$this->assertTrue($this->entity1->addRelationship($this->entity3->guid, 'test_relationship'));
-		$r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity3->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, $r);
-
-		$this->assertTrue($this->entity3->addRelationship($this->entity1->guid, 'test_relationship'));
-		$r = check_entity_relationship($this->entity3->guid, 'test_relationship', $this->entity1->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, $r);
+		$this->assertTrue($this->entity3->hasRelationship($this->entity1->guid, 'test_relationship'));
 
 		$this->assertTrue($this->entity1->addRelationship($this->entity2->guid, 'test_relationship2'));
-		$r = check_entity_relationship($this->entity1->guid, 'test_relationship2', $this->entity2->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, $r);
+		$this->assertTrue($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship2'));
 
 		$this->assertTrue($this->entity1->addRelationship($this->entity3->guid, 'test_relationship2'));
-		$r = check_entity_relationship($this->entity1->guid, 'test_relationship2', $this->entity3->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, $r);
+		$this->assertTrue($this->entity1->hasRelationship($this->entity3->guid, 'test_relationship2'));
 
-		$this->assertTrue($this->entity1->deleteRelationships());
-		$this->assertFalse(check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
-		$this->assertFalse(check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity3->guid));
-		$this->assertFalse(check_entity_relationship($this->entity1->guid, 'test_relationship2', $this->entity2->guid));
-		$this->assertFalse(check_entity_relationship($this->entity1->guid, 'test_relationship2', $this->entity3->guid));
+		// remove all relationships
+		$this->assertTrue($this->entity1->removeAllRelationships());
+		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
+		$this->assertFalse($this->entity1->hasRelationship($this->entity3->guid, 'test_relationship'));
+		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship2'));
+		$this->assertFalse($this->entity1->hasRelationship($this->entity3->guid, 'test_relationship2'));
 
 		// inverse relationships should be gone too
-		$this->assertFalse(check_entity_relationship($this->entity3->guid, 'test_relationship', $this->entity1->guid));
+		$this->assertFalse($this->entity3->hasRelationship($this->entity1->guid, 'test_relationship'));
 	}
 }

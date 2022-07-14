@@ -136,6 +136,6 @@ class JoinTest extends ActionResponseTestCase {
 		
 		$this->assertSystemMessageEmitted(elgg_echo('groups:joinrequestmade'));
 		
-		$this->assertNotFalse(check_entity_relationship($this->user->guid, 'membership_request', $this->group->guid));
+		$this->assertTrue($this->user->hasRelationship($this->group->guid, 'membership_request'));
 	}
 }
