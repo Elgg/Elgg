@@ -853,7 +853,16 @@ function send_new_password_request($user_guid) {
 function execute_new_password_request($user_guid, $conf_code, $password = null) {
 	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_save_new_password().', '4.3');
 	
-	return _elgg_services()->passwords->executeNewPasswordReset($user_guid, $conf_code, $password);
+	$user = get_user($user_guid);
+	if (!$user instanceof \ElggUser) {
+		return false;
+	}
+	
+	if (isset($password) && !is_string($password)) {
+		$password = (string) $password;
+	}
+	
+	return _elgg_services()->passwords->saveNewPassword($user, (string) $conf_code, $password);
 }
 
 /**

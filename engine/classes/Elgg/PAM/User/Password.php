@@ -47,7 +47,7 @@ class Password {
 			}
 			
 			if ($password_svc->needsRehash($hash)) {
-				$password_svc->forcePasswordReset($user, $password);
+				$user->setPassword($password);
 			}
 			
 			return true;

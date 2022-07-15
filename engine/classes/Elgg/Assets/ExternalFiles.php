@@ -49,6 +49,11 @@ class ExternalFiles {
 	protected $simpleCache;
 	
 	/**
+	 * @var SystemCache
+	 */
+	protected $serverCache;
+	
+	/**
 	 * Constructor
 	 *
 	 * @param Config       $config      config
