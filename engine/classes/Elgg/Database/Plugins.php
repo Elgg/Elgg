@@ -419,38 +419,33 @@ class Plugins {
 	 * @return \ElggPlugin|null
 	 */
 	public function get(string $plugin_id): ?\ElggPlugin {
-		if (!$plugin_id) {
+		if (empty($plugin_id)) {
 			return null;
 		}
-
-		$fallback = function () use ($plugin_id) {
-			$plugins = elgg_get_entities([
-				'type' => 'object',
-				'subtype' => 'plugin',
-				'metadata_name_value_pairs' => [
-					'name' => 'title',
-					'value' => $plugin_id,
-				],
-				'limit' => 1,
-				'distinct' => false,
-			]);
-
-			if ($plugins) {
-				return $plugins[0];
-			}
-
-			return null;
-		};
 
 		$plugin = $this->cache->load($plugin_id);
-		if (!isset($plugin)) {
-			$plugin = $fallback();
-			if ($plugin instanceof \ElggPlugin) {
-				$plugin->cache();
-			}
+		if ($plugin instanceof \ElggPlugin) {
+			return $plugin;
 		}
 
-		return $plugin;
+		$plugins = elgg_get_entities([
+			'type' => 'object',
+			'subtype' => 'plugin',
+			'metadata_name_value_pairs' => [
+				'name' => 'title',
+				'value' => $plugin_id,
+			],
+			'limit' => 1,
+			'distinct' => false,
+		]);
+
+		if (empty($plugins)) {
+			return null;
+		}
+
+		$plugins[0]->cache();
+
+		return $plugins[0];
 	}
 
 	/**

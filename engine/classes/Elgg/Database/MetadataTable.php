@@ -446,7 +446,7 @@ class MetadataTable {
 	 *
 	 * @return int[]|int|null
 	 */
-	public function getIDsByName($entity_guid, $name) {
+	protected function getIDsByName($entity_guid, $name) {
 		if ($this->metadata_cache->isLoaded($entity_guid)) {
 			$ids = $this->metadata_cache->getSingleId($entity_guid, $name);
 		} else {
