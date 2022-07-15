@@ -374,7 +374,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 		});
 	}
 
-	public function testCanDeleteMetadataById() {
+	public function testCanDeleteMetadataByObject() {
 
 		$entity = $this->createObject([], [
 			'foo' => 'bar',
@@ -387,7 +387,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 		]);
 
 		foreach ($mds as $md) {
-			$this->assertTrue(elgg_delete_metadata_by_id($md->id));
+			$this->assertTrue($md->delete());
 		}
 
 		$this->assertNull($entity->foo);

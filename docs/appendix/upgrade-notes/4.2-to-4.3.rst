@@ -37,6 +37,7 @@ Lib functions
 * ``delete_access_collection()`` use ``\ElggAccessCollection->delete()``
 * ``delete_relationship()`` use ``\ElggRelationship->delete()``
 * ``elgg_authenticate()`` use ``elgg_pam_authenticate()``
+* ``elgg_delete_metadata_by_id()`` use ``\ElggMetadata->delete()()``
 * ``elgg_get_engine_path()``
 * ``elgg_get_loaded_external_files()`` use ``elgg_get_loaded_external_resources()``
 * ``execute_new_password_request()`` use ``elgg_save_new_password()``

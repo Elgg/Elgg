@@ -906,3 +906,21 @@ function elgg_get_engine_path() {
 	
 	return \Elgg\Project\Paths::elgg() . 'engine';
 }
+
+/**
+ * Deletes metadata using its ID.
+ *
+ * @param int $id The metadata ID to delete.
+ *
+ * @return bool
+ * @deprecated 4.3 use \ElggMetadata->delete()
+ */
+function elgg_delete_metadata_by_id($id) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use \ElggMetadata->delete()', '4.3');
+	
+	$metadata = elgg_get_metadata_from_id($id);
+	if (!$metadata) {
+		return false;
+	}
+	return $metadata->delete();
+}
