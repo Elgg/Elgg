@@ -74,6 +74,10 @@ Class functions
 ~~~~~~~~~~~~~~~
 
 * ``\ElggEntity->deleteRelationships()`` use ``\ElggEntity->removeAllRelationships()``
+* ``\ElggUser->getFriends()`` use ``\ElggUser->getEntitiesFromRelationship()``
+* ``\ElggUser->getFriendsObjects()`` use ``\ElggUser->getEntitiesFromRelationship()``
+* ``\ElggUser->getFriendsOf()`` use ``\ElggUser->getEntitiesFromRelationship()``
+* ``\ElggUser->isFriend()`` use ``\ElggUser->isFriendOf()``
 
 Plugin hooks
 ~~~~~~~~~~~~

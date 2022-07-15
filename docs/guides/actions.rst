@@ -124,7 +124,11 @@ to the client for XHR calls (this data will be ignored for non-XHR calls)
    $action_data = [
       'entity' => $user,
       'stats' => [
-          'friends' => $user->getFriends(['count' => true]);
+          'friends_count' => $user->getEntitiesFromRelationship([
+              'type' => 'user',
+              'relationship' => 'friend',
+              'count' => true,
+          ]);
       ],
    ];
 
