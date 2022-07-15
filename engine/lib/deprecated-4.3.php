@@ -755,3 +755,133 @@ function check_rate_limit_exceeded($user_guid) {
 		return false;
 	});
 }
+
+/**
+ * Return users (or the number of them) who have been active within a recent period.
+ *
+ * @param array $options Array of options with keys:
+ *                       seconds (int)  => Length of period (default 600 = 10min)
+ *                       limit   (int)  => Limit (default from settings)
+ *                       offset  (int)  => Offset (default 0)
+ *                       count   (bool) => Return a count instead of users? (default false)
+ *
+ * @return \ElggUser[]|int
+ *
+ * @deprecated 4.3
+ */
+function find_active_users(array $options = []) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated', '4.3');
+
+	return _elgg_services()->usersTable->findActive($options);
+}
+
+/**
+ * Render a list of currently online users
+ *
+ * @tip This also support options from elgg_list_entities().
+ *
+ * @param array $options Options array with keys:
+ *                       seconds (int) => Number of seconds (default 600 = 10min)
+ *
+ * @return string
+ *
+ * @deprecated 4.3
+ */
+function get_online_users(array $options = []) {
+	$options = array_merge([
+		'seconds' => 600,
+	], $options);
+
+	return elgg_list_entities($options, 'find_active_users');
+}
+
+/**
+ * Generate a random 12 character clear text password.
+ *
+ * @return string
+ *
+ * @deprecated 4.3 use elgg_generate_password()
+ */
+function generate_random_cleartext_password() {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_generate_password().', '4.3');
+	
+	return _elgg_services()->passwordGenerator->generatePassword();
+}
+
+/**
+ * Low level function to reset a given user's password.
+ *
+ * @param int    $user_guid The user.
+ * @param string $password  Text (which will then be converted into a hash and stored)
+ *
+ * @return bool
+ *
+ * @deprecated 4.3 use \ElggUser->setPassword()
+ */
+function force_user_password_reset($user_guid, $password) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use \ElggUser->setPassword().', '4.3');
+	
+	return _elgg_services()->passwords->forcePasswordReset($user_guid, $password);
+}
+
+/**
+ * Generate and send a password request email to a given user's registered email address.
+ *
+ * @param int $user_guid User GUID
+ *
+ * @return false|array
+ *
+ * @deprecated 4.3 use elgg_request_new_password()
+ */
+function send_new_password_request($user_guid) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_request_new_password().', '4.3');
+	
+	return _elgg_services()->passwords->sendNewPasswordRequest($user_guid);
+}
+
+/**
+ * Validate and change password for a user.
+ *
+ * @param int    $user_guid The user id
+ * @param string $conf_code Confirmation code as sent in the request email.
+ * @param string $password  Optional new password, if not randomly generated.
+ *
+ * @return bool True on success
+ *
+ * @deprecated 4.3 use elgg_save_new_password()
+ */
+function execute_new_password_request($user_guid, $conf_code, $password = null) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_save_new_password().', '4.3');
+	
+	return _elgg_services()->passwords->executeNewPasswordReset($user_guid, $conf_code, $password);
+}
+
+/**
+ * Registers a user, returning false if the username already exists
+ *
+ * @param string $username              The username of the new user
+ * @param string $password              The password
+ * @param string $name                  The user's display name
+ * @param string $email                 The user's email address
+ * @param bool   $allow_multiple_emails Allow the same email address to be
+ *                                      registered multiple times?
+ * @param string $subtype               Subtype of the user entity
+ * @param array  $params                Additional parameters
+ *
+ * @return int|false The new user's GUID; false on failure
+ * @throws RegistrationException
+ *
+ * @deprecated 4.3 use elgg_register_user()
+ */
+function register_user($username, $password, $name, $email, $allow_multiple_emails = false, $subtype = null, array $params = []) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_register_user().', '4.3');
+	
+	$params['username'] = $username;
+	$params['password'] = $password;
+	$params['name'] = $name;
+	$params['email'] = $email;
+	$params['allow_multiple_emails'] = $allow_multiple_emails;
+	$params['subtype'] = $subtype;
+	
+	return _elgg_services()->accounts->register($params)->guid;
+}

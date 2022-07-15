@@ -110,7 +110,7 @@ trait Seeding {
 			$metadata['__faker'] = true;
 
 			if (empty($metadata['password'])) {
-				$metadata['password'] = generate_random_cleartext_password();
+				$metadata['password'] = elgg_generate_password();
 			}
 
 			if (empty($metadata['name'])) {
@@ -132,12 +132,16 @@ trait Seeding {
 			$user = false;
 
 			try {
-				$guid = register_user($metadata['username'], $metadata['password'], $metadata['name'], $metadata['email'], false, $attributes['subtype']);
-
-				$user = get_user($guid);
-				if (!$user instanceof \ElggUser) {
-					throw new Exception("Unable to create new user with attributes: " . print_r($attributes, true));
-				}
+				$user = elgg_register_user([
+					'username' => elgg_extract('username', $metadata),
+					'password' => elgg_extract('password', $metadata),
+					'name' => elgg_extract('name', $metadata),
+					'email' => elgg_extract('email', $metadata),
+					'subtype' => elgg_extract('subtype', $attributes),
+				]);
+				
+				// make sure we have a cleanly loaded user entity
+				$user = get_user($user->guid);
 
 				if (!isset($attributes['time_created'])) {
 					$attributes['time_created'] = $this->getRandomCreationTimestamp();
@@ -737,7 +741,7 @@ trait Seeding {
 							break;
 
 						case 'password' :
-							$metadata[$name] = generate_random_cleartext_password();
+							$metadata[$name] = elgg_generate_password();
 							break;
 
 						case 'location' :

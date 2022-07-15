@@ -61,8 +61,14 @@ class ElggUserIntegrationTest extends IntegrationTestCase {
 		
 		$name = $this->faker()->name;
 		$username = $this->getRandomUsername($name);
-		$user_guid = register_user($username, generate_random_cleartext_password(), $name, $this->getRandomEmail($username), false, 'user',  ['validated' => false]);
-		$user = $this->user = get_entity($user_guid);
+		
+		$user = $this->user = elgg_register_user([
+			'username' => $username,
+			'password' => elgg_generate_password(),
+			'name' => $name,
+			'email' => $this->getRandomEmail($username),
+			'validated' => false,
+		]);
 		
 		$validate_event->assertNumberOfCalls(0);
 		$invalidate_event->assertNumberOfCalls(0);

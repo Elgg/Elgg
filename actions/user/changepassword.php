@@ -22,7 +22,7 @@ if ($password !== $password_repeat) {
 }
 
 $user = get_user($user_guid);
-if (!$user instanceof \ElggUser || !execute_new_password_request($user_guid, $code, $password)) {
+if (!$user instanceof \ElggUser || !elgg_save_new_password($user, $code, $password)) {
 	return elgg_error_response(elgg_echo('user:password:fail'));
 }
 

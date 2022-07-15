@@ -38,16 +38,21 @@ Lib functions
 * ``delete_relationship()`` use ``\ElggRelationship->delete()``
 * ``elgg_authenticate()`` use ``elgg_pam_authenticate()``
 * ``elgg_get_loaded_external_files()`` use ``elgg_get_loaded_external_resources()``
+* ``execute_new_password_request()`` use ``elgg_save_new_password()``
 * ``filter_tags()`` use ``elgg_sanitize_input()``
+* ``find_active_users()`` use ``elgg_get_entities()``
+* ``force_user_password_reset()`` use ``\ElggUser->setPassword()``
 * ``generate_invite_code()`` use ``elgg_generate_invite_code()``
-* ``get_current_language()`` use ``elgg_get_current_language()``
-* ``get_dir_size()``
+* ``generate_random_cleartext_password()`` use ``elgg_generate_password()``
 * ``get_access_array()`` use ``elgg_get_access_array()``
 * ``get_access_collection()`` use ``elgg_get_access_collection()``
+* ``get_current_language()`` use ``elgg_get_current_language()``
 * ``get_default_access()`` use ``elgg_get_default_access()``
+* ``get_dir_size()``
 * ``get_entity_relationships()`` use ``elgg_get_relationships()``
 * ``get_entity_statistics()`` use ``elgg_get_entity_statistics()``
 * ``get_members_of_access_collection()`` use ``\ElggAccessCollection->getMembers()``
+* ``get_online_users()`` use ``elgg_list_entities()``
 * ``get_readable_access_level()`` use ``elgg_get_readable_access_level()``
 * ``get_relationship()`` use ``elgg_get_relationship()``
 * ``get_write_access_array()`` use ``elgg_get_write_access_array()``
@@ -61,6 +66,7 @@ Lib functions
 * ``remove_entity_relationships()`` use ``\ElggEntity->removeAllRelationships()``
 * ``remove_user_from_access_collection()`` use ``\ElggAccessCollection->removeMember()``
 * ``reset_login_failure_count()`` use ``elgg_reset_authentication_failures()``
+* ``send_new_password_request()`` use ``elgg_request_new_password()``
 * ``string_to_tag_array()`` use ``elgg_string_to_array()``
 * ``unregister_pam_handler()`` use ``elgg_unregister_pam_handler()``
 
@@ -73,6 +79,7 @@ Plugin hooks
 ~~~~~~~~~~~~
 
 * ``'fail', 'auth'``
+* ``'find_active_users', 'system'``
 * ``'validate', 'input'`` use the ``'sanitize', 'input'`` hook 
 
 Classes

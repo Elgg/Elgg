@@ -15,7 +15,7 @@ $anchor2 = elgg_view('output/url', [
 
 $query = [];
 for ($i=0; $i<50; $i++) {
-	$query['q'][$i] = generate_random_cleartext_password();
+	$query['q'][$i] = elgg_generate_password();
 }
 
 $anchor3 = elgg_view('output/url', [

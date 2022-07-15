@@ -58,7 +58,7 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 	}
 
 	public function testPasswordChangeFailsWithInvalidNewPassword() {
-		$pwd = generate_random_cleartext_password();
+		$pwd = elgg_generate_password();
 
 		$user = $this->createUser();
 		$user->setPassword($pwd);
@@ -78,7 +78,7 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 	}
 
 	public function testPasswordChangeFailsWithMismatchingNewPassword() {
-		$pwd = generate_random_cleartext_password();
+		$pwd = elgg_generate_password();
 
 		$user = $this->createUser();
 		$user->setPassword($pwd);
@@ -98,7 +98,7 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 	}
 
 	public function testPasswordChangeSucceeds() {
-		$pwd = generate_random_cleartext_password();
+		$pwd = elgg_generate_password();
 
 		$user = $this->createUser();
 		$user->setPassword($pwd);
@@ -107,7 +107,7 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 
 		_elgg_services()->session->setLoggedInUser($user);
 
-		$new_pwd = generate_random_cleartext_password();
+		$new_pwd = elgg_generate_password();
 
 		$response = $this->executeAction('usersettings/save', [
 			'guid' => $user->guid,
@@ -291,7 +291,7 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		elgg()->config->security_email_require_password = true;
 		elgg()->config->security_email_require_confirmation = false;
 
-		$pwd = generate_random_cleartext_password();
+		$pwd = elgg_generate_password();
 
 		$user = $this->createUser();
 		$user->setPassword($pwd);
