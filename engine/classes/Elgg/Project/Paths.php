@@ -66,10 +66,10 @@ class Paths {
 	}
 
 	/**
-	 * Sanitise file paths ensuring that they begin and end with slashes etc.
+	 * Sanitize file paths ensuring that they begin and end with slashes etc.
 	 *
 	 * @param string $path         The path
-	 * @param bool   $append_slash Add tailing slash
+	 * @param bool   $append_slash Add trailing slash
 	 *
 	 * @return string
 	 */

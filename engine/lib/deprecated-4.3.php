@@ -670,7 +670,7 @@ function logout() {
  * @param boolean   $persistent Should this be a persistent login?
  *
  * @return true or throws exception
- * @throws LoginException
+ * @throws \Elgg\Exceptions\LoginException
  *
  * @deprecated 4.3 use elgg_login()
  */
@@ -878,7 +878,7 @@ function execute_new_password_request($user_guid, $conf_code, $password = null) 
  * @param array  $params                Additional parameters
  *
  * @return int|false The new user's GUID; false on failure
- * @throws RegistrationException
+ * @throws \Elgg\Exceptions\Configuration\RegistrationException
  *
  * @deprecated 4.3 use elgg_register_user()
  */
@@ -893,4 +893,16 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 	$params['subtype'] = $subtype;
 	
 	return _elgg_services()->accounts->register($params)->guid;
+}
+
+/**
+ * /path/to/elgg/engine with no trailing slash.
+ *
+ * @return string
+ * @deprecated 4.3
+ */
+function elgg_get_engine_path() {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated.', '4.3');
+	
+	return \Elgg\Project\Paths::elgg() . 'engine';
 }

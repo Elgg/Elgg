@@ -45,7 +45,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 				
 				// Write to JSON file to not take up memory See #11886
 				$uid = substr(hash('md5', uniqid('', true)), 0, 10);
-				$log_file = \Elgg\Project\Paths::sanitize(elgg_get_data_path() . "logs/screen/{$uid}.html", false);
+				$log_file = elgg_sanitize_path(elgg_get_data_path() . "logs/screen/{$uid}.html", false);
 				$elgg->config->log_cache = $log_file;
 	
 				$handler = new \Monolog\Handler\StreamHandler(
@@ -143,7 +143,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 	
 		if (!empty($settings['enable_error_log'])) {
 			$handler = new \Monolog\Handler\RotatingFileHandler(
-				\Elgg\Project\Paths::sanitize(elgg_get_data_path() . 'logs/html/errors.html', false),
+				elgg_sanitize_path(elgg_get_data_path() . 'logs/html/errors.html', false),
 				elgg_extract('error_log_max_files', $settings, 60),
 				\Monolog\Logger::ERROR
 			);
