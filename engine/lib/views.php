@@ -100,49 +100,23 @@ function elgg_register_viewtype_fallback($viewtype) {
  * 'text/html'.
  *
  * @param string $view The view name
+ *
  * @return void
  * @since 1.8.3
  */
-function elgg_register_ajax_view($view) {
-	elgg_register_external_view($view, false);
-}
-
-/**
- * Unregister a view for ajax calls
- *
- * @param string $view The view name
- * @return void
- * @since 1.8.3
- */
-function elgg_unregister_ajax_view($view) {
-	elgg_unregister_external_view($view);
-}
-
-/**
- * Registers a view as being available externally (i.e. via URL).
- *
- * @param string  $view      The name of the view.
- * @param boolean $cacheable Whether this view can be cached.
- * @return void
- * @since 1.9.0
- */
-function elgg_register_external_view($view, $cacheable = false) {
-
+function elgg_register_ajax_view($view): void {
 	_elgg_services()->ajax->registerView($view);
-
-	if ($cacheable) {
-		_elgg_services()->views->registerCacheableView($view);
-	}
 }
 
 /**
  * Unregister a view for ajax calls
  *
  * @param string $view The view name
+ *
  * @return void
- * @since 1.9.0
+ * @since 1.8.3
  */
-function elgg_unregister_external_view($view) {
+function elgg_unregister_ajax_view($view): void {
 	_elgg_services()->ajax->unregisterView($view);
 }
 
