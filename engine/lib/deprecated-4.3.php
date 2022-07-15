@@ -924,3 +924,19 @@ function elgg_delete_metadata_by_id($id) {
 	}
 	return $metadata->delete();
 }
+
+/**
+ * Remove one value of form submission data from the session
+ *
+ * @param string $form_name The name of the form
+ * @param string $variable  The name of the variable to clear
+ *
+ * @return void
+ * @since 1.8.0
+ * @deprecated 4.3
+ */
+function elgg_clear_sticky_value($form_name, $variable): void {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated.', '4.3');
+	
+	_elgg_services()->stickyForms->clearStickyValue((string) $form_name, (string) $variable);
+}
