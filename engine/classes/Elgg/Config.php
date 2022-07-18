@@ -55,7 +55,6 @@ use Elgg\Traits\Loggable;
  * @property bool          $disable_rss 							Is RSS disabled
  * @property bool          $elgg_config_locks 						The application will lock some settings (default true)
  * @property bool          $elgg_maintenance_mode                   Flag if maintenance mode is enabled
- * @property string        $elgg_settings_file
  * @property bool          $email_html_part                         Determines if email has a html part
  * @property string        $email_html_part_images                  How to deal with images in html part of email
  * @property int           $email_subject_limit                     The length limit for email subjects, defaults to 998 as described in http://www.faqs.org/rfcs/rfc2822.html
@@ -67,13 +66,11 @@ use Elgg\Traits\Loggable;
  * @property mixed         $embed_tab
  * @property string        $exception_include						This is an optional script used to override Elgg's default handling of uncaught exceptions.
  * @property int           $friendly_time_number_of_days            Number of days after which timestamps will no longer be presented in a friendly format (x hours ago) but in a full date
- * @property string[]      $group
  * @property string[]      $http_request_trusted_proxy_ips			When Elgg is behind a loadbalancer/proxy this can contain IP adresses to allow access to better client information
  * @property int           $http_request_trusted_proxy_headers		When Elgg is behind a loadbalancer/proxy this can contain a bitwise string of allowed headers for better client information
- * @property bool          $i18n_loaded_from_cache
  * @property array         $icon_sizes
  * @property string        $image_processor
- * @property string        $installed 								Is the site fully installed?
+ * @property int           $installed 								Set during installation to the timestamp of installation
  * @property bool          $installer_running
  * @property string        $language                   				Site language code
  * @property string[]      $language_to_locale_mapping 				A language to locale mapping (eg. 'en' => ['en_US'] or 'nl' => ['nl_NL'])
@@ -92,13 +89,9 @@ use Elgg\Traits\Loggable;
  * @property int           $minusername                             The minimal length of a username
  * @property int           $notifications_max_runtime               The max runtime for the notification queue processing in seconds since the start of the cron interval
  * @property int           $notifications_queue_delay               Number of seconds to delay the processing of the notifications queue
- * @property string[]      $pages
  * @property string        $pagination_behaviour                    Behaviour of pagination in lists
- * @property-read string   $path         							Path of composer install with trailing "/"
- * @property-read string   $pluginspath  							Alias of plugins_path
  * @property-read string   $plugins_path 							Path of project "mod/" directory where the plugins are stored
  * @property array         $profile_custom_fields
- * @property array         $profile_fields
  * @property string        $profiling_minimum_percentage
  * @property bool          $profiling_sql
  * @property array         $proxy                                   Contains proxy related settings
@@ -121,17 +114,13 @@ use Elgg\Traits\Loggable;
  * @property bool          $simplecache_minify_css
  * @property bool          $simplecache_minify_js
  * @property \ElggSite     $site 									The site entity
- * @property string        $sitedescription							The site description
- * @property string        $sitename 								The name of the site
  * @property string[]      $site_custom_menu_items
  * @property string[]      $site_featured_menu_names
- * @property-read int      $site_guid 								The guid of the site object
  * @property bool          $subresource_integrity_enabled			Should subresources (js/css) get integrity information
  * @property bool          $system_cache_enabled					Is the system cache enabled?
  * @property bool          $system_cache_loaded
  * @property bool          $testing_mode  							Is the current application running (PHPUnit) tests
  * @property string        $time_format  							Preferred PHP time format
- * @property string        $url          							Alias of "wwwroot"
  * @property string        $view         							Default viewtype (usually not set)
  * @property bool          $walled_garden							Is current site in walled garden mode?
  * @property string        $who_can_change_language					Who can change the language of a user
@@ -187,6 +176,12 @@ class Config {
 	 */
 	protected $deprecated = [
 		'elgg_settings_file' => '4.3',
+		'path' => '4.3',
+		'pluginspath' => '4.3',
+		'site_guid' => '4.3',
+		'sitedescription' => '4.3',
+		'sitename' => '4.3',
+		'url' => '4.3',
 	];
 
 	/**

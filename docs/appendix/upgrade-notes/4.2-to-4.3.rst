@@ -100,3 +100,14 @@ Classes
 ~~~~~~~
 
 * ``\ElggPAM`` use ``elgg_pam_authenticate()``
+
+Deprecated Config values
+------------------------
+
+* ``elgg_settings_file``
+* ``path`` use ``elgg_get_root_path()``
+* ``pluginspath`` use ``elgg_get_plugins_path()``
+* ``site_guid`` use ``elgg_get_site_entity()->guid``
+* ``sitedescription`` use ``elgg_get_site_entity()->description``
+* ``sitename`` use ``elgg_get_site_entity()->getDisplayName()``
+* ``url`` use ``elgg_get_site_url()``

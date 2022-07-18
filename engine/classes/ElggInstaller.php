@@ -1194,7 +1194,7 @@ class ElggInstaller {
 		}
 
 		// check that data root is not subdirectory of Elgg root
-		if (stripos($submissionVars['dataroot'], $app->internal_services->config->path) === 0) {
+		if (stripos($submissionVars['dataroot'], Paths::project()) === 0) {
 			$msg = elgg_echo('install:error:locationdatadirectory', [$submissionVars['dataroot']]);
 			$app->internal_services->system_messages->addErrorMessage($msg);
 
