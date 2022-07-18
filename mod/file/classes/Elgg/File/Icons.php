@@ -14,8 +14,6 @@ class Icons {
 	/**
 	 * Override the default entity icon for files
 	 *
-	 * Plugins can override or extend the icons using the plugin hook: 'file:icon:url', 'override'
-	 *
 	 * @param \Elgg\Hook $hook 'entity:icon:url', 'object'
 	 *
 	 * @return void|string
@@ -80,7 +78,7 @@ class Icons {
 		}
 	
 		$url = elgg_get_simplecache_url("file/icons/{$type}{$ext}.gif");
-		return elgg_trigger_plugin_hook('file:icon:url', 'override', $hook->getParams(), $url);
+		return elgg_trigger_deprecated_plugin_hook('file:icon:url', 'override', $hook->getParams(), $url, "The 'file:icon:url', 'override' hook has been deprecated. Use the 'entity:icon:url', 'object' hook instead.", '4.3');
 	}
 	
 	/**

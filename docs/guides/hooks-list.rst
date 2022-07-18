@@ -10,11 +10,6 @@ For more information on how hooks work visit :doc:`/design/events`.
 System hooks
 ============
 
-**page_owner, system**
-	Filter the page_owner for the current page. No options are passed.
-
-**siteid, system**
-
 **gc, system**
 	Allows plugins to run garbage collection for ``$params['period']``.
 
@@ -37,9 +32,6 @@ System hooks
 
 	 * ``html`` - HTML string being prepared
 	 * ``options`` - Preparation options
-
-**diagnostics:report, system**
-	Filters the output for a diagnostic report.
 
 **format, friendly:title**
 	Formats the "friendly" title for strings. This is used for generating URLs.
@@ -126,10 +118,6 @@ System hooks
 
 	If the routes aren't registered the tabs will not appear.
 
-**creating, river**
-	The options for ``elgg_create_river_item`` are filtered through this hook. You may alter values
-	or return ``false`` to cancel the item creation.
-
 **simplecache:generate, <view>**
 	Filters the view output for a ``/cache`` URL when simplecache is enabled.
 
@@ -200,10 +188,6 @@ User hooks
 	 * ``email`` - Email address that passes sanity checks
 	 * ``request`` - ``\Elgg\Request`` to the action controller
 
-**access:collections:write, user**
-	Filters an array of access permissions that the user ``$params['user_id']`` is allowed to save
-	content with. Permissions returned are of the form (id => 'Human Readable Name').
-
 **registeruser:validate:username, all**
 	Return boolean for if the string in ``$params['username']`` is valid for a username.
 	Hook handler can throw ``\Elgg\Exceptions\Configuration\RegistrationException`` with an error message to be shown to the user.
@@ -228,9 +212,6 @@ User hooks
 
 **login:forward, user**
     Filters the URL to which the user will be forwarded after login.
-
-**status, user**
-	Triggered by The Wire when adding a post.
 
 **username:character_blacklist, user**
 	Filters the string of blacklisted characters used to validate username during registration.
@@ -339,10 +320,6 @@ Action hooks
 **action_gatekeeper:permissions:check, all**
 	Triggered after a CSRF token is validated. Return false to prevent validation.
 
-**action_gatekeeper:upload_exceeded_msg, all**
-	Triggered when a POST exceeds the max size allowed by the server. Return an error message
-	to display.
-
 **forward, <reason>**
 	Filter the URL to forward a user to when ``forward($url, $reason)`` is called.
 	In certain cases, the ``params`` array will contain an instance of ``\Elgg\Exceptions\HttpException`` that triggered the error.
@@ -371,6 +348,19 @@ Ajax
 	view()            view:<view_name>
 	form()            form:<action_name>
 	================  ====================
+
+**ajax_response, action:<action_name>**
+    Filters ``action/`` responses before they're sent back to the ``elgg/Ajax`` module.
+    
+**ajax_response, path:<path>**
+    Filters ajax responses before they're sent back to the ``elgg/Ajax`` module. This hook type will
+    only be used if the path did not start with "action/" or "ajax/".
+    
+**ajax_response, view:<view>**
+    Filters ``ajax/view/`` responses before they're sent back to the ``elgg/Ajax`` module.
+
+**ajax_response, form:<action_name>**
+    Filters ``ajax/form/`` responses before they're sent back to the ``elgg/Ajax`` module.
 
 .. _guides/hooks-list#permission-hooks:
 
@@ -441,10 +431,6 @@ Permission hooks
 **permissions_check:annotate, <entity_type>**
 	Return boolean for if the user ``$params['user']`` can create an annotation ``$params['annotation_name']``
 	on the entity ``$params['entity']``. if logged in, the default is true.
-
-**permissions_check:annotation**
-	Return boolean for if the user in ``$params['user']`` can edit the annotation ``$params['annotation']`` on the
-	entity ``$params['entity']``. The user can be null.
 
 **api_key, use**
 	Triggered in the class ``\Elgg\WebServices\PAM\API\APIKey``. Returning false prevents the key from being authenticated.
@@ -635,10 +621,6 @@ Routing
     Note that the ``<path>`` value is parsed from the request URL, therefore plugins using the ``route`` hook should
     use the original ``<path>`` to filter the response, or switch to using the ``route:rewrite`` hook.
 
-**ajax_response, path:<path>**
-    Filters ajax responses before they're sent back to the ``elgg/Ajax`` module. This hook type will
-    only be used if the path did not start with "action/" or "ajax/".
-
 
 .. _guides/hooks-list#views:
 
@@ -697,11 +679,14 @@ Views
     ];
 
 
-**ajax_response, view:<view>**
-    Filters ``ajax/view/`` responses before they're sent back to the ``elgg/Ajax`` module.
+**allowed_styles, htmlawed**
+	Filter the HTMLawed allowed style array.
 
-**ajax_response, form:<action>**
-    Filters ``ajax/form/`` responses before they're sent back to the ``elgg/Ajax`` module.
+**config, htmlawed**
+	Filter the HTMLawed ``$config`` array.
+
+**spec, htmlawed**
+	Filter the HTMLawed ``$spec`` string (default empty).
 
 **response, view:<view_name>**
     Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
@@ -1012,12 +997,6 @@ Other
 **extender:url, <annotation|metadata>**
 	Return the URL for the annotation or metadatum ``$params['extender']``.
 
-**file:icon:url, override**
-	Override a file icon URL.
-
-**is_member, group**
-	Return boolean for if the user ``$params['user']`` is a member of the group ``$params['group']``.
-
 **setting, plugin**
 	Filter plugin settings. ``$params`` contains:
 
@@ -1076,11 +1055,6 @@ Other
 
 	 * ``url`` - URL of the page being tested for public accessibility
 
-**volatile, metadata**
-	Triggered when exporting an entity through the export handler. This is rare.
-	This allows handler to handle any volatile (non-persisted) metadata on the entity.
-	It's preferred to use the ``to:object, <type>`` hook.
-
 **maintenance:allow, url**
     Return boolean if the URL ``$params['current_url']`` and the path ``$params['current_path']``
 	is allowed during maintenance mode.
@@ -1094,20 +1068,8 @@ Other
 Plugins
 =======
 
-Embed
------
-
-**embed_get_items, <active_section>**
-
-**embed_get_sections, all**
-
-**embed_get_upload_sections, all**
-
 Groups
 ------
-
-**profile_buttons, group**
-	Filters buttons (``ElggMenuItem`` instances) to be registered in the title menu of the group profile page
 
 **tool_options, group**
 	Filters a collection of tools available within a specific group:
@@ -1117,28 +1079,6 @@ Groups
 	The ``$params`` array contains:
 
 	 * ``entity`` - ``\ElggGroup``
-
-HTMLawed
---------
-
-**allowed_styles, htmlawed**
-	Filter the HTMLawed allowed style array.
-
-**config, htmlawed**
-	Filter the HTMLawed ``$config`` array.
-
-**spec, htmlawed**
-	Filter the HTMLawed ``$spec`` string (default empty).
-
-Members
--------
-
-**members:list, <page_segment>**
-    To handle the page ``/members/$page_segment``, register for this hook and return the HTML of the list.
-
-**members:config, tabs**
-    This hook is used to assemble an array of tabs to be passed to the navigation/tabs view
-    for the members pages.
 
 Web Services
 ------------
