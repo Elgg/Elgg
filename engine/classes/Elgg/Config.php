@@ -183,6 +183,13 @@ class Config {
 	private $locked = [];
 
 	/**
+	 * @var array
+	 */
+	protected $deprecated = [
+		'elgg_settings_file' => '4.3',
+	];
+
+	/**
 	 * @var string
 	 */
 	private $settings_path;
@@ -466,6 +473,11 @@ class Config {
 	 * @return mixed null if does not exist
 	 */
 	public function __get($name) {
+
+		if (array_key_exists($name, $this->deprecated)) {
+			elgg_deprecated_notice("Using '{$name}' from config has been deprecated", $this->deprecated[$name]);
+		}
+		
 		if (isset($this->values[$name])) {
 			return $this->values[$name];
 		}
