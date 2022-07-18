@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a087e9c1555c7b2e49e6f088c040a34a",
+    "content-hash": "3edfcf214c286763ea9d6888863ea928",
     "packages": [
         {
             "name": "cakephp/core",
@@ -237,16 +237,16 @@
         },
         {
             "name": "ckeditor/ckeditor",
-            "version": "4.18.0",
+            "version": "4.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ckeditor/ckeditor4-releases.git",
-                "reference": "9335fb40486008aeec9f150574d53f35d3aba9c7"
+                "reference": "db9342ad88e04de66dcf9b132ff41061727778c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ckeditor/ckeditor4-releases/zipball/9335fb40486008aeec9f150574d53f35d3aba9c7",
-                "reference": "9335fb40486008aeec9f150574d53f35d3aba9c7",
+                "url": "https://api.github.com/repos/ckeditor/ckeditor4-releases/zipball/db9342ad88e04de66dcf9b132ff41061727778c5",
+                "reference": "db9342ad88e04de66dcf9b132ff41061727778c5",
                 "shasum": ""
             },
             "type": "library",
@@ -281,7 +281,7 @@
                 "source": "https://github.com/ckeditor/ckeditor4",
                 "wiki": "https://ckeditor.com/docs/ckeditor4/latest/"
             },
-            "time": "2022-03-16T10:52:12+00:00"
+            "time": "2022-05-18T10:49:44+00:00"
         },
         {
             "name": "composer/semver",
