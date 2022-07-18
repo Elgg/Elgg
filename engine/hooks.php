@@ -317,6 +317,9 @@ return [
 		'input/password' => [
 			\Elgg\Input\DisablePasswordAutocompleteHandler::class => [],
 		],
+		'output/icon' => [
+			\Elgg\Icons\AddFontAwesomeClassesHandler::class => ['priority' => 100],
+		],
 		'page/components/list' => [
 			'Elgg\Comments\Preloader::preload' => [],
 		],
