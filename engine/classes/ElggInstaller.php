@@ -1193,14 +1193,12 @@ class ElggInstaller {
 			return false;
 		}
 
-		if (!$app->internal_services->config->data_dir_override) {
-			// check that data root is not subdirectory of Elgg root
-			if (stripos($submissionVars['dataroot'], $app->internal_services->config->path) === 0) {
-				$msg = elgg_echo('install:error:locationdatadirectory', [$submissionVars['dataroot']]);
-				$app->internal_services->system_messages->addErrorMessage($msg);
+		// check that data root is not subdirectory of Elgg root
+		if (stripos($submissionVars['dataroot'], $app->internal_services->config->path) === 0) {
+			$msg = elgg_echo('install:error:locationdatadirectory', [$submissionVars['dataroot']]);
+			$app->internal_services->system_messages->addErrorMessage($msg);
 
-				return false;
-			}
+			return false;
 		}
 
 		// according to postgres documentation: SQL identifiers and key words must
