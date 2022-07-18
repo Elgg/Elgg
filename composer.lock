@@ -8,7 +8,7 @@
     "packages": [
         {
             "name": "cakephp/core",
-            "version": "4.4.1",
+            "version": "4.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/core.git",
@@ -65,16 +65,16 @@
         },
         {
             "name": "cakephp/database",
-            "version": "4.4.1",
+            "version": "4.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/database.git",
-                "reference": "9bb8b691f36729fd630118a1cc7b52f9ae13d126"
+                "reference": "61b147195a5899a9b51989af9150a13b647e9190"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/database/zipball/9bb8b691f36729fd630118a1cc7b52f9ae13d126",
-                "reference": "9bb8b691f36729fd630118a1cc7b52f9ae13d126",
+                "url": "https://api.github.com/repos/cakephp/database/zipball/61b147195a5899a9b51989af9150a13b647e9190",
+                "reference": "61b147195a5899a9b51989af9150a13b647e9190",
                 "shasum": ""
             },
             "require": {
@@ -116,20 +116,20 @@
                 "issues": "https://github.com/cakephp/cakephp/issues",
                 "source": "https://github.com/cakephp/database"
             },
-            "time": "2022-04-12T01:11:53+00:00"
+            "time": "2022-06-20T14:25:54+00:00"
         },
         {
             "name": "cakephp/datasource",
-            "version": "4.4.1",
+            "version": "4.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/datasource.git",
-                "reference": "3a3e3fcd171f8b90fee8a614b53d913114e4fc09"
+                "reference": "41b4243d226fc802e1075247c81c8bc48fad4343"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/datasource/zipball/3a3e3fcd171f8b90fee8a614b53d913114e4fc09",
-                "reference": "3a3e3fcd171f8b90fee8a614b53d913114e4fc09",
+                "url": "https://api.github.com/repos/cakephp/datasource/zipball/41b4243d226fc802e1075247c81c8bc48fad4343",
+                "reference": "41b4243d226fc802e1075247c81c8bc48fad4343",
                 "shasum": ""
             },
             "require": {
@@ -174,20 +174,20 @@
                 "issues": "https://github.com/cakephp/cakephp/issues",
                 "source": "https://github.com/cakephp/datasource"
             },
-            "time": "2022-06-10T21:39:25+00:00"
+            "time": "2022-06-27T10:55:08+00:00"
         },
         {
             "name": "cakephp/utility",
-            "version": "4.4.1",
+            "version": "4.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/utility.git",
-                "reference": "b2a47e038954432b2e09d3406559a75656ebe131"
+                "reference": "564cf3bea3bb31e0cb53fa199c39f17105af01ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/utility/zipball/b2a47e038954432b2e09d3406559a75656ebe131",
-                "reference": "b2a47e038954432b2e09d3406559a75656ebe131",
+                "url": "https://api.github.com/repos/cakephp/utility/zipball/564cf3bea3bb31e0cb53fa199c39f17105af01ec",
+                "reference": "564cf3bea3bb31e0cb53fa199c39f17105af01ec",
                 "shasum": ""
             },
             "require": {
@@ -233,7 +233,7 @@
                 "issues": "https://github.com/cakephp/cakephp/issues",
                 "source": "https://github.com/cakephp/utility"
             },
-            "time": "2022-05-20T04:16:49+00:00"
+            "time": "2022-07-05T07:59:19+00:00"
         },
         {
             "name": "ckeditor/ckeditor",
@@ -1762,16 +1762,16 @@
         },
         {
             "name": "laminas/laminas-servicemanager",
-            "version": "3.13.0",
+            "version": "3.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-servicemanager.git",
-                "reference": "6f96556ee314f9e0d57d83967c0087332836c31d"
+                "reference": "918de970b2c3d42acebff3d431d76db52b6a32a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-servicemanager/zipball/6f96556ee314f9e0d57d83967c0087332836c31d",
-                "reference": "6f96556ee314f9e0d57d83967c0087332836c31d",
+                "url": "https://api.github.com/repos/laminas/laminas-servicemanager/zipball/918de970b2c3d42acebff3d431d76db52b6a32a2",
+                "reference": "918de970b2c3d42acebff3d431d76db52b6a32a2",
                 "shasum": ""
             },
             "require": {
@@ -1849,7 +1849,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-06-29T08:01:37+00:00"
+            "time": "2022-07-07T16:13:26+00:00"
         },
         {
             "name": "laminas/laminas-stdlib",
@@ -2629,10 +2629,10 @@
         },
         {
             "name": "npm-asset/jquery-ui",
-            "version": "1.13.1",
+            "version": "1.13.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/jquery-ui/-/jquery-ui-1.13.1.tgz"
+                "url": "https://registry.npmjs.org/jquery-ui/-/jquery-ui-1.13.2.tgz"
             },
             "require": {
                 "npm-asset/jquery": ">=1.8.0,<4.0.0"
@@ -3626,12 +3626,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "7a8c86df136ffe6bd7bc4655d15629a87e5bd022"
+                "reference": "0144c1225b5e4da02cf2c27a0e2cb2705168c47c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/7a8c86df136ffe6bd7bc4655d15629a87e5bd022",
-                "reference": "7a8c86df136ffe6bd7bc4655d15629a87e5bd022",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/0144c1225b5e4da02cf2c27a0e2cb2705168c47c",
+                "reference": "0144c1225b5e4da02cf2c27a0e2cb2705168c47c",
                 "shasum": ""
             },
             "conflict": {
@@ -3693,7 +3693,7 @@
                 "contao/managed-edition": "<=1.5",
                 "craftcms/cms": "<3.7.36",
                 "croogo/croogo": "<3.0.7",
-                "cuyz/valinor": ">=0.5,<0.7",
+                "cuyz/valinor": "<0.12",
                 "czproject/git-php": "<4.0.3",
                 "darylldoyle/safe-svg": "<1.9.10",
                 "datadog/dd-trace": ">=0.30,<0.30.2",
@@ -3710,7 +3710,7 @@
                 "doctrine/mongodb-odm-bundle": ">=2,<3.0.1",
                 "doctrine/orm": ">=2,<2.4.8|>=2.5,<2.5.1|>=2.8.3,<2.8.4",
                 "dolibarr/dolibarr": "<16|= 12.0.5|>= 3.3.beta1, < 13.0.2",
-                "dompdf/dompdf": "<1.2.1",
+                "dompdf/dompdf": "<2",
                 "drupal/core": ">=7,<7.88|>=8,<9.2.13|>=9.3,<9.3.6",
                 "drupal/drupal": ">=7,<7.80|>=8,<8.9.16|>=9,<9.1.12|>=9.2,<9.2.4",
                 "dweeves/magmi": "<=0.7.24",
@@ -3763,7 +3763,7 @@
                 "fuel/core": "<1.8.1",
                 "gaoming13/wechat-php-sdk": "<=1.10.2",
                 "genix/cms": "<=1.1.11",
-                "getgrav/grav": "<1.7.33",
+                "getgrav/grav": "<1.7.34",
                 "getkirby/cms": "<3.5.8",
                 "getkirby/panel": "<2.5.14",
                 "gilacms/gila": "<=1.11.4",
@@ -3783,6 +3783,7 @@
                 "ibexa/core": ">=4,<4.0.7|>=4.1,<4.1.4",
                 "ibexa/post-install": "<=1.0.4",
                 "icecoder/icecoder": "<=8.1",
+                "idno/known": "<=1.3.1",
                 "illuminate/auth": ">=4,<4.0.99|>=4.1,<=4.1.31|>=4.2,<=4.2.22|>=5,<=5.0.35|>=5.1,<=5.1.46|>=5.2,<=5.2.45|>=5.3,<=5.3.31|>=5.4,<=5.4.36|>=5.5,<5.5.10",
                 "illuminate/cookie": ">=4,<=4.0.11|>=4.1,<=4.1.99999|>=4.2,<=4.2.99999|>=5,<=5.0.99999|>=5.1,<=5.1.99999|>=5.2,<=5.2.99999|>=5.3,<=5.3.99999|>=5.4,<=5.4.99999|>=5.5,<=5.5.49|>=5.6,<=5.6.99999|>=5.7,<=5.7.99999|>=5.8,<=5.8.99999|>=6,<6.18.31|>=7,<7.22.4",
                 "illuminate/database": "<6.20.26|>=7,<7.30.5|>=8,<8.40",
@@ -3790,6 +3791,7 @@
                 "illuminate/view": "<6.20.42|>=7,<7.30.6|>=8,<8.75",
                 "impresscms/impresscms": "<=1.4.3",
                 "in2code/femanager": "<5.5.1|>=6,<6.3.1",
+                "in2code/lux": "<17.6.1|>=18,<24.0.2",
                 "intelliants/subrion": "<=4.2.1",
                 "ivankristianto/phpwhois": "<=4.3",
                 "jackalope/jackalope-doctrine-dbal": "<1.7.4",
@@ -3862,7 +3864,7 @@
                 "october/cms": "= 1.1.1|= 1.0.471|= 1.0.469|>=1.0.319,<1.0.469",
                 "october/october": ">=1.0.319,<1.0.466|>=2.1,<2.1.12",
                 "october/rain": "<1.0.472|>=1.1,<1.1.2",
-                "october/system": "<1.0.475|>=1.1,<1.1.11|>=2,<2.1.27",
+                "october/system": "<1.0.476|>=1.1,<1.1.12|>=2,<2.2.15",
                 "onelogin/php-saml": "<2.10.4",
                 "oneup/uploader-bundle": "<1.9.3|>=2,<2.1.5",
                 "open-web-analytics/open-web-analytics": "<1.7.4",
@@ -3870,8 +3872,10 @@
                 "openid/php-openid": "<2.3",
                 "openmage/magento-lts": "<19.4.15|>=20,<20.0.13",
                 "orchid/platform": ">=9,<9.4.4",
+                "oro/commerce": ">=5,<5.0.4",
                 "oro/crm": ">=1.7,<1.7.4|>=3.1,<4.1.17|>=4.2,<4.2.7",
                 "oro/platform": ">=1.7,<1.7.4|>=3.1,<3.1.29|>=4.1,<4.1.17|>=4.2,<4.2.8",
+                "packbackbooks/lti-1-3-php-library": "<5",
                 "padraic/humbug_get_contents": "<1.1.2",
                 "pagarme/pagarme-php": ">=0,<3",
                 "pagekit/pagekit": "<=1.0.18",
@@ -4017,7 +4021,7 @@
                 "thinkcmf/thinkcmf": "<=5.1.7",
                 "tinymce/tinymce": "<5.10",
                 "titon/framework": ">=0,<9.9.99",
-                "topthink/framework": "<6.0.12",
+                "topthink/framework": "<=6.0.12",
                 "topthink/think": "<=6.0.9",
                 "topthink/thinkphp": "<=3.2.3",
                 "tribalsystems/zenario": "<9.2.55826",
@@ -4045,6 +4049,7 @@
                 "webcoast/deferred-image-processing": "<1.0.2",
                 "wikimedia/parsoid": "<0.12.2",
                 "willdurand/js-translation-bundle": "<2.1.1",
+                "wintercms/winter": "<1.0.475|>=1.1,<1.1.9",
                 "wp-cli/wp-cli": "<2.5",
                 "wp-graphql/wp-graphql": "<0.3.5",
                 "wpanel/wpanel4-cms": "<=4.3.1",
@@ -4123,20 +4128,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-29T23:04:12+00:00"
+            "time": "2022-07-15T22:04:13+00:00"
         },
         {
             "name": "robmorgan/phinx",
-            "version": "0.12.10",
+            "version": "0.12.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/phinx.git",
-                "reference": "ad056cff354fc67fedf9bf96c441c2b428afad0c"
+                "reference": "9a6ce1e7fdf0fa4e602ba5875b5bc9442ccaa115"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/phinx/zipball/ad056cff354fc67fedf9bf96c441c2b428afad0c",
-                "reference": "ad056cff354fc67fedf9bf96c441c2b428afad0c",
+                "url": "https://api.github.com/repos/cakephp/phinx/zipball/9a6ce1e7fdf0fa4e602ba5875b5bc9442ccaa115",
+                "reference": "9a6ce1e7fdf0fa4e602ba5875b5bc9442ccaa115",
                 "shasum": ""
             },
             "require": {
@@ -4207,9 +4212,9 @@
             ],
             "support": {
                 "issues": "https://github.com/cakephp/phinx/issues",
-                "source": "https://github.com/cakephp/phinx/tree/0.12.10"
+                "source": "https://github.com/cakephp/phinx/tree/0.12.12"
             },
-            "time": "2022-01-21T19:53:14+00:00"
+            "time": "2022-07-09T18:53:51+00:00"
         },
         {
             "name": "sabberworm/php-css-parser",
