@@ -92,7 +92,7 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 		'url' => $post->getURL(),
 		'origin' => 'thewire',
 	];
-	elgg_trigger_plugin_hook('status', 'user', $params);
+	elgg_trigger_deprecated_plugin_hook('status', 'user', $params, null, "The 'status', 'user' hook has been deprecated. Use 'create', 'object' event.", '4.3');
 	
 	return $post->guid;
 }

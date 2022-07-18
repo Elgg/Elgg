@@ -2,11 +2,6 @@
 
 namespace Elgg\Views;
 
-/**
- * @group Glyphs
- * @group ViewRendering
- * @group ViewsService
- */
 class ElggIconMappingTest extends ViewRenderingTestCase {
 
 	public function getViewNames() {
@@ -19,14 +14,6 @@ class ElggIconMappingTest extends ViewRenderingTestCase {
 		return [
 			'class' => 'elgg-icon-wizard-of-oz',
 		];
-	}
-
-	public function testCanMapIcon() {
-		$classes = _elgg_map_icon_glyph_class(['elgg-icon-mail']);
-
-		$this->assertContains('far', $classes);
-		$this->assertContains('fa-envelope', $classes);
-		$this->assertContains('elgg-icon-mail', $classes);
 	}
 
 	public function testCanViewIcon() {
@@ -43,13 +30,15 @@ class ElggIconMappingTest extends ViewRenderingTestCase {
 
 	public function testCanAlterIconClasses() {
 
-		$hook = $this->registerTestingHook('classes', 'icon', function() {
-			return ['override'];
+		$hook = $this->registerTestingHook('view_vars', 'output/icon', function(\Elgg\Hook $hook) {
+			$vars = $hook->getValue();
+			$vars['class'] = ['override'];
+			return $vars;
 		});
 
 		$view = elgg_view_icon('abcdefg', ['data-icon' => 'foo']);
 
-		$this->assertXmlStringEqualsXmlString($view, '<span class="override" data-icon="foo"/>');
+		$this->assertXmlStringEqualsXmlString($view, '<span class="elgg-icon override" data-icon="foo"/>');
 
 		$hook->unregister();
 	}

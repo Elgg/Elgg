@@ -21,9 +21,9 @@ class AddTitleHandler {
 	
 		$title = $hook->getParam('title');
 		if (empty($title)) {
-			$head_params['title'] = _elgg_services()->config->sitename;
+			$head_params['title'] = elgg_get_site_entity()->getDisplayName();
 		} else {
-			$head_params['title'] = $title . ' : ' . _elgg_services()->config->sitename;
+			$head_params['title'] = $title . ' : ' . elgg_get_site_entity()->getDisplayName();
 		}
 	
 		return $head_params;

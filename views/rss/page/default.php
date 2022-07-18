@@ -16,9 +16,9 @@ if (elgg()->config->disable_rss) {
 
 // Set title
 if (empty($vars['title'])) {
-	$title = elgg_get_config('sitename');
+	$title = elgg_get_site_entity()->getDisplayName();
 } else {
-	$title = elgg_get_config('sitename') . ": " . $vars['title'];
+	$title = elgg_get_site_entity()->getDisplayName() . ": " . $vars['title'];
 }
 
 // Remove RSS from URL

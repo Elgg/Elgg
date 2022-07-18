@@ -47,7 +47,7 @@ function blog_prepare_form_vars($post = null, $revision = null) {
 	}
 
 	$params = ['entity' => $post];
-	$values = elgg_trigger_plugin_hook('form:values', 'blog', $params, $values);
+	$values = elgg_trigger_deprecated_plugin_hook('form:values', 'blog', $params, $values, "The 'form:values', 'blog' has been deprecated.", '4.3');
 
 	elgg_clear_sticky_form('blog');
 
