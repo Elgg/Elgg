@@ -37,6 +37,9 @@ Lib functions
 * ``delete_access_collection()`` use ``\ElggAccessCollection->delete()``
 * ``delete_relationship()`` use ``\ElggRelationship->delete()``
 * ``elgg_authenticate()`` use ``elgg_pam_authenticate()``
+* ``elgg_clear_sticky_value()``
+* ``elgg_delete_metadata_by_id()`` use ``\ElggMetadata->delete()()``
+* ``elgg_get_engine_path()``
 * ``elgg_get_loaded_external_files()`` use ``elgg_get_loaded_external_resources()``
 * ``execute_new_password_request()`` use ``elgg_save_new_password()``
 * ``filter_tags()`` use ``elgg_sanitize_input()``
@@ -74,6 +77,10 @@ Class functions
 ~~~~~~~~~~~~~~~
 
 * ``\ElggEntity->deleteRelationships()`` use ``\ElggEntity->removeAllRelationships()``
+* ``\ElggUser->getFriends()`` use ``\ElggUser->getEntitiesFromRelationship()``
+* ``\ElggUser->getFriendsObjects()`` use ``\ElggUser->getEntitiesFromRelationship()``
+* ``\ElggUser->getFriendsOf()`` use ``\ElggUser->getEntitiesFromRelationship()``
+* ``\ElggUser->isFriend()`` use ``\ElggUser->isFriendOf()``
 
 Plugin hooks
 ~~~~~~~~~~~~

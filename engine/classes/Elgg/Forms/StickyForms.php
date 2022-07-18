@@ -144,6 +144,7 @@ class StickyForms {
 	 * @param string $variable  The name of the variable to clear
 	 *
 	 * @return void
+	 * @deprecated 4.3
 	 */
 	public function clearStickyValue(string $form_name, string $variable): void {
 		$data = $this->session->get('sticky_forms', []);

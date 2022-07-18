@@ -86,12 +86,16 @@ function elgg_get_root_path() {
 }
 
 /**
- * /path/to/elgg/engine with no trailing slash.
+ * Sanitize file paths ensuring that they begin and end with slashes etc.
+ *
+ * @param string $path         The path
+ * @param bool   $append_slash Add trailing slash
  *
  * @return string
+ * @since 4.3
  */
-function elgg_get_engine_path() {
-	return Paths::elgg() . 'engine';
+function elgg_sanitize_path(string $path, bool $append_slash = true): string {
+	return Paths::sanitize($path, $append_slash);
 }
 
 /**

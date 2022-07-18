@@ -166,19 +166,6 @@ function elgg_get_sticky_values($form_name, $filter_result = true): array {
 }
 
 /**
- * Remove one value of form submission data from the session
- *
- * @param string $form_name The name of the form
- * @param string $variable  The name of the variable to clear
- *
- * @return void
- * @since 1.8.0
- */
-function elgg_clear_sticky_value($form_name, $variable): void {
-	_elgg_services()->stickyForms->clearStickyValue((string) $form_name, (string) $variable);
-}
-
-/**
  * Check if a value isn't empty, but allow 0 and '0'
  *
  * @param mixed $value the value to check

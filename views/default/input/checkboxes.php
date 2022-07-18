@@ -1,16 +1,11 @@
 <?php
 /**
- * Elgg checkbox input
  * Displays a checkbox input field
  *
  * @note This also includes a hidden input with the same name as the checkboxes
  * to make sure something is sent to the server.  The default value is 0.
  * If using JS, be specific to avoid selecting the hidden default value:
  * 	$('input[type=checkbox][name=name]')
- *
- * @warning Passing integers as labels does not currently work due to a
- * deprecated hack that will be removed in Elgg 1.9. To use integer labels,
- * the labels must be character codes: 1 would be &#0049;
  *
  * @uses string $vars['name']           The name of the input fields
  *                                      (Forced to an array by appending [])
@@ -23,7 +18,6 @@
  * @uses string $vars['value']          The current value. Single value or array. Optional.
  * @uses string $vars['class']          Additional class of the list. Optional.
  * @uses string $vars['align']          'horizontal' or 'vertical' Default: 'vertical'
- *
  */
 
 $defaults = [

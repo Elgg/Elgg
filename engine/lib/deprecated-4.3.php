@@ -670,7 +670,7 @@ function logout() {
  * @param boolean   $persistent Should this be a persistent login?
  *
  * @return true or throws exception
- * @throws LoginException
+ * @throws \Elgg\Exceptions\LoginException
  *
  * @deprecated 4.3 use elgg_login()
  */
@@ -853,7 +853,16 @@ function send_new_password_request($user_guid) {
 function execute_new_password_request($user_guid, $conf_code, $password = null) {
 	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_save_new_password().', '4.3');
 	
-	return _elgg_services()->passwords->executeNewPasswordReset($user_guid, $conf_code, $password);
+	$user = get_user($user_guid);
+	if (!$user instanceof \ElggUser) {
+		return false;
+	}
+	
+	if (isset($password) && !is_string($password)) {
+		$password = (string) $password;
+	}
+	
+	return _elgg_services()->passwords->saveNewPassword($user, (string) $conf_code, $password);
 }
 
 /**
@@ -869,7 +878,7 @@ function execute_new_password_request($user_guid, $conf_code, $password = null) 
  * @param array  $params                Additional parameters
  *
  * @return int|false The new user's GUID; false on failure
- * @throws RegistrationException
+ * @throws \Elgg\Exceptions\Configuration\RegistrationException
  *
  * @deprecated 4.3 use elgg_register_user()
  */
@@ -884,4 +893,85 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 	$params['subtype'] = $subtype;
 	
 	return _elgg_services()->accounts->register($params)->guid;
+}
+
+/**
+ * /path/to/elgg/engine with no trailing slash.
+ *
+ * @return string
+ * @deprecated 4.3
+ */
+function elgg_get_engine_path() {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated.', '4.3');
+	
+	return \Elgg\Project\Paths::elgg() . 'engine';
+}
+
+/**
+ * Deletes metadata using its ID.
+ *
+ * @param int $id The metadata ID to delete.
+ *
+ * @return bool
+ * @deprecated 4.3 use \ElggMetadata->delete()
+ */
+function elgg_delete_metadata_by_id($id) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use \ElggMetadata->delete().', '4.3');
+	
+	$metadata = elgg_get_metadata_from_id($id);
+	if (!$metadata) {
+		return false;
+	}
+	return $metadata->delete();
+}
+
+/**
+ * Remove one value of form submission data from the session
+ *
+ * @param string $form_name The name of the form
+ * @param string $variable  The name of the variable to clear
+ *
+ * @return void
+ * @since 1.8.0
+ * @deprecated 4.3
+ */
+function elgg_clear_sticky_value($form_name, $variable): void {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated.', '4.3');
+	
+	_elgg_services()->stickyForms->clearStickyValue((string) $form_name, (string) $variable);
+}
+
+/**
+ * Registers a view as being available externally (i.e. via URL).
+ *
+ * @param string  $view      The name of the view.
+ * @param boolean $cacheable Whether this view can be cached.
+ *
+ * @return void
+ * @since 1.9.0
+ * @deprecated 4.3 use elgg_register_ajax_view() and elgg_register_simplecache_view()
+ */
+function elgg_register_external_view($view, $cacheable = false) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_register_ajax_view() and elgg_register_simplecache_view().', '4.3');
+	
+	_elgg_services()->ajax->registerView($view);
+	
+	if ($cacheable) {
+		_elgg_services()->views->registerCacheableView($view);
+	}
+}
+
+/**
+ * Unregister a view for ajax calls
+ *
+ * @param string $view The view name
+ *
+ * @return void
+ * @since 1.9.0
+ * @deprecated 4.3 use elgg_unregister_ajax_view()
+ */
+function elgg_unregister_external_view($view) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_unregister_ajax_view().', '4.3');
+	
+	_elgg_services()->ajax->unregisterView($view);
 }

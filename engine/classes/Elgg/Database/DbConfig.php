@@ -80,6 +80,8 @@ class DbConfig {
 
 		// this was the recommend structure from Elgg 1.0 to 1.8
 		if (isset($this->db->split)) {
+			elgg_deprecated_notice('Database configuration should be updated to an array. Check the settings.example.php', '4.3');
+			
 			return $this->db->split;
 		}
 
@@ -144,6 +146,8 @@ class DbConfig {
 	 */
 	protected function getParticularConnectionConfig($type) {
 		if (is_object($this->db[$type])) {
+			elgg_deprecated_notice('Database configuration should be updated to an array. Check the settings.example.php', '4.3');
+
 			// old style single connection (Elgg < 1.9)
 			$config = [
 				'host' => $this->db[$type]->dbhost,
@@ -162,6 +166,8 @@ class DbConfig {
 				'database' => $this->db[$type]['dbname'],
 			];
 		} else if (is_object(current($this->db[$type]))) {
+			elgg_deprecated_notice('Database configuration should be updated to an array. Check the settings.example.php', '4.3');
+
 			// old style multiple connections
 			$index = array_rand($this->db[$type]);
 			$config = [
