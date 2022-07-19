@@ -2,7 +2,6 @@
 
 namespace Elgg;
 
-use Elgg\Database\ConfigTable;
 use Elgg\Exceptions\ConfigurationException;
 use Elgg\Project\Paths;
 use Elgg\Traits\Loggable;
@@ -23,9 +22,8 @@ use Elgg\Traits\Loggable;
  * @property int           $authentication_failures_limit           Number of allowed authentication failures
  * @property bool          $auto_disable_plugins					Are unbootable plugins automatically disabled
  * @property int           $batch_run_time_in_secs					Max time for a single upgrade loop
- * @property-read int      $bootdata_plugin_settings_limit			Max amount of plugin settings to determine if plugin will be cached
- * @property bool          $boot_complete
- * @property int           $boot_cache_ttl
+ * @property int           $bootdata_plugin_settings_limit			Max amount of plugin settings to determine if plugin will be cached
+ * @property int           $boot_cache_ttl                          Time to live for boot cache in seconds
  * @property array         $breadcrumbs
  * @property string        $cacheroot            					Path of cache storage with trailing "/"
  * @property bool          $can_change_username						Is user allowed to change the username
@@ -53,7 +51,6 @@ use Elgg\Traits\Loggable;
  * @property int           $default_access							Default access
  * @property int           $default_limit							The default "limit" used in listings and queries
  * @property bool          $disable_rss 							Is RSS disabled
- * @property bool          $elgg_config_locks 						The application will lock some settings (default true)
  * @property bool          $elgg_maintenance_mode                   Flag if maintenance mode is enabled
  * @property bool          $email_html_part                         Determines if email has a html part
  * @property string        $email_html_part_images                  How to deal with images in html part of email
@@ -130,12 +127,6 @@ use Elgg\Traits\Loggable;
  * @property string        $x_accel_mapping
  * @property bool          $_boot_cache_hit
  * @property bool          $_elgg_autofeed
- *
- * @property bool          $_service_boot_complete
- * @property bool          $_plugins_boot_complete
- * @property bool          $_application_boot_complete
- *
- * @internal
  */
 class Config {
 	
@@ -160,16 +151,25 @@ class Config {
 	 * @var array
 	 */
 	private $cookies = [];
-
+	
 	/**
-	 * @var ConfigTable Do not use directly. Use getConfigTable().
-	 */
-	private $config_table;
-
-	/**
+	 * The following values can only be set once
+	 *
 	 * @var array
 	 */
-	private $locked = [];
+	protected $locked_values = [
+		'assetroot',
+		'cacheroot',
+		'dataroot',
+		'elgg_settings_file',
+		'installed',
+		'path',
+		'plugins_path',
+		'pluginspath',
+		'site_guid',
+		'url',
+		'wwwroot',
+	];
 
 	/**
 	 * @var array
@@ -183,11 +183,6 @@ class Config {
 		'sitename' => '4.3',
 		'url' => '4.3',
 	];
-
-	/**
-	 * @var string
-	 */
-	private $settings_path;
 	
 	/**
 	 * Holds the set of default values
@@ -200,6 +195,8 @@ class Config {
 		'authentication_failures_limit' => 5,
 		'auto_disable_plugins' => true,
 		'batch_run_time_in_secs' => 4,
+		'boot_cache_ttl' => 3600,
+		'bootdata_plugin_settings_limit' => 40,
 		'can_change_username' => false,
 		'class_loader_verify_file_existence' => true,
 		'comment_box_collapses' => true,
@@ -208,6 +205,7 @@ class Config {
 		'comments_max_depth' => 0,
 		'comments_per_page' => 25,
 		'db_query_cache_limit' => 50,
+		'default_limit' => 10,
 		'elgg_maintenance_mode' => false,
 		'email_html_part' => true,
 		'email_html_part_images' => 'no',
@@ -222,6 +220,7 @@ class Config {
 			'large' => ['w' => 200, 'h' => 200, 'square' => true, 'upscale' => true],
 			'master' => ['w' => 10240, 'h' => 10240, 'square' => false, 'upscale' => false, 'crop' => false],
 		],
+		'language' => 'en',
 		'language_detect_from_browser' => true,
 		'lastcache' => 0,
 		'message_delay' => 6,
@@ -237,11 +236,23 @@ class Config {
 		'security_protect_upgrade' => true,
 		'session_bound_entity_icons' => false,
 		'simplecache_enabled' => false,
+		'site_guid' => 1, // deprecated
 		'subresource_integrity_enabled' => false,
 		'system_cache_enabled' => false,
 		'testing_mode' => false,
 		'webp_enabled' => true,
 		'who_can_change_language' => 'everyone',
+	];
+	
+	/**
+	 * The path properties will be sanitized when set
+	 *
+	 * @var array
+	 */
+	protected $path_properties = [
+		'dataroot',
+		'cacheroot',
+		'assetroot',
 	];
 	
 	/**
@@ -251,6 +262,21 @@ class Config {
 	 */
 	const ENTITY_TYPES = ['group', 'object', 'site', 'user'];
 
+	/**
+	 * Sensitive properties that should not be visible
+	 *
+	 * @var array
+	 */
+	const SENSITIVE_PROPERTIES = [
+		'__site_secret__',
+		'db',
+		'dbhost',
+		'dbport',
+		'dbuser',
+		'dbpass',
+		'dbname',
+	];
+	
 	/**
 	 * Constructor
 	 *
@@ -274,17 +300,7 @@ class Config {
 	 */
 	protected function saveInitialValues(array $values): void {
 		// Don't keep copies of these in case config gets dumped
-		$sensitive_props = [
-			'__site_secret__',
-			'db',
-			'dbhost',
-			'dbport',
-			'dbuser',
-			'dbpass',
-			'dbname',
-		];
-		
-		foreach ($sensitive_props as $name) {
+		foreach (self::SENSITIVE_PROPERTIES as $name) {
 			unset($values[$name]);
 		}
 		
@@ -310,8 +326,6 @@ class Config {
 		if (!$config) {
 			throw new ConfigurationException(__METHOD__ . ": Reading configs failed: $reason1");
 		}
-
-		$config->settings_path = $settings_path;
 
 		return $config;
 	}
@@ -376,7 +390,6 @@ class Config {
 		}
 
 		$config->elgg_settings_file = $path;
-		$config->lock('elgg_settings_file');
 
 		return $config;
 	}
@@ -405,6 +418,8 @@ class Config {
 	 *
 	 * @param array $values Values
 	 * @return void
+	 *
+	 * @deprecated 4.3
 	 */
 	public function mergeValues(array $values) {
 		foreach ($values as $name => $value) {
@@ -498,7 +513,7 @@ class Config {
 	 * @return mixed null = not set
 	 */
 	public function getInitialValue($name) {
-		return isset($this->initial_values[$name]) ? $this->initial_values[$name] : null;
+		return $this->initial_values[$name] ?? null;
 	}
 
 	/**
@@ -517,9 +532,10 @@ class Config {
 	 *
 	 * @param string $name Name
 	 * @return void
+	 * @deprecated 4.3
 	 */
 	public function lock($name) {
-		$this->locked[$name] = true;
+		elgg_deprecated_notice(__METHOD__ . 'has been deprecated. It is no longer possible to lock config values.', '4.3');
 	}
 
 	/**
@@ -530,7 +546,8 @@ class Config {
 	 * @return bool
 	 */
 	public function isLocked($name) {
-		return isset($this->locked[$name]);
+		$testing = $this->values['testing_mode'] ?? false;
+		return !$testing && in_array($name, $this->locked_values) && $this->hasValue($name);
 	}
 
 	/**
@@ -546,6 +563,11 @@ class Config {
 		if ($this->wasWarnedLocked($name)) {
 			return;
 		}
+		
+		if (in_array($name, $this->path_properties)) {
+			$value = Paths::sanitize($value);
+		}
+		
 		$this->values[$name] = $value;
 	}
 
@@ -596,7 +618,7 @@ class Config {
 			return $this->remove($name);
 		}
 		
-		$result = $this->getConfigTable()->set($name, $value);
+		$result = _elgg_services()->configTable->set($name, $value);
 
 		$this->__set($name, $value);
 	
@@ -615,7 +637,7 @@ class Config {
 			return false;
 		}
 
-		$result = $this->getConfigTable()->remove($name);
+		$result = _elgg_services()->configTable->remove($name);
 
 		unset($this->values[$name]);
 	
@@ -628,28 +650,13 @@ class Config {
 	 * @param string $name Name
 	 * @return bool
 	 */
-	private function wasWarnedLocked($name) {
-		if (!isset($this->locked[$name])) {
+	protected function wasWarnedLocked($name): bool {
+		if (!$this->isLocked($name)) {
 			return false;
 		}
-
+		
 		$this->getLogger()->warning("The property {$name} is read-only.");
 
 		return true;
-	}
-
-	/**
-	 * Get the config table API
-	 *
-	 * This is a necessary evil until we refactor so that the service provider has no dependencies.
-	 *
-	 * @return ConfigTable
-	 */
-	private function getConfigTable() {
-		if (!$this->config_table) {
-			$this->config_table = _elgg_services()->configTable;
-		}
-
-		return $this->config_table;
 	}
 }
