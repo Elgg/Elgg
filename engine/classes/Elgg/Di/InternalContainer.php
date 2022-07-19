@@ -238,9 +238,7 @@ class InternalContainer extends DiContainer {
 		unset($config->dbuser);
 		unset($config->dbpass);
 		unset($config->{\Elgg\Database\SiteSecret::CONFIG_KEY});
-		
-		$config->boot_complete = false;
-		
+
 		return $config;
 	}
 	

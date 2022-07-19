@@ -103,7 +103,7 @@ abstract class IntegrationTestCase extends BaseTestCase {
 
 		// prevent loading of 'active' plugins from database if loading application with a custom plugins path
 		if (isset($params['plugins_path'])) {
-			$app->internal_services->config->_plugins_boot_complete = true;
+			$app->setBootStatus('plugins_boot_completed', true);
 		}
 		
 		$app->bootCore();

@@ -24,7 +24,6 @@ use Elgg\Traits\Loggable;
  * @property bool          $auto_disable_plugins					Are unbootable plugins automatically disabled
  * @property int           $batch_run_time_in_secs					Max time for a single upgrade loop
  * @property-read int      $bootdata_plugin_settings_limit			Max amount of plugin settings to determine if plugin will be cached
- * @property bool          $boot_complete
  * @property int           $boot_cache_ttl
  * @property array         $breadcrumbs
  * @property string        $cacheroot            					Path of cache storage with trailing "/"
@@ -130,12 +129,6 @@ use Elgg\Traits\Loggable;
  * @property string        $x_accel_mapping
  * @property bool          $_boot_cache_hit
  * @property bool          $_elgg_autofeed
- *
- * @property bool          $_service_boot_complete
- * @property bool          $_plugins_boot_complete
- * @property bool          $_application_boot_complete
- *
- * @internal
  */
 class Config {
 	

@@ -24,7 +24,6 @@ class ShutdownHandlerUnitTest extends UnitTestCase {
 
 		// persistentLogin service needs this set to instantiate without calling DB
 		$sp->config->getCookieConfig();
-		$sp->config->boot_complete = false;
 		$sp->config->system_cache_enabled = false;
 		$sp->config->site = new \ElggSite((object) [
 			'guid' => 1,

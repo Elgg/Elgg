@@ -23,7 +23,6 @@ class BootHandlerUnitTest extends UnitTestCase {
 
 		// persistentLogin service needs this set to instantiate without calling DB
 		$sp->config->getCookieConfig();
-		$sp->config->boot_complete = false;
 		$sp->config->system_cache_enabled = false;
 		$sp->config->site = new \ElggSite((object) [
 			'guid' => 1,
@@ -48,7 +47,10 @@ class BootHandlerUnitTest extends UnitTestCase {
 
 		$app->bootCore();
 
-		$this->assertTrue($app->internal_services->config->boot_complete);
+		$this->assertTrue($app->getBootStatus('full_boot_completed'));
+		$this->assertTrue($app->getBootStatus('service_boot_completed'));
+		$this->assertTrue($app->getBootStatus('plugins_boot_completed'));
+		$this->assertTrue($app->getBootStatus('application_boot_completed'));
 	}
 
 	public function testCanDoFullBootWithoutDb() {
@@ -63,11 +65,11 @@ class BootHandlerUnitTest extends UnitTestCase {
 
 		$app->bootCore();
 
-		$this->assertTrue($app->internal_services->config->boot_complete);
+		$this->assertTrue($app->getBootStatus('full_boot_completed'));
 
-		$this->assertFalse($app->internal_services->config->_service_boot_complete);
-		$this->assertFalse($app->internal_services->config->_plugins_boot_complete);
-		$this->assertFalse($app->internal_services->config->_application_boot_complete);
+		$this->assertFalse($app->getBootStatus('service_boot_completed'));
+		$this->assertFalse($app->getBootStatus('plugins_boot_completed'));
+		$this->assertFalse($app->getBootStatus('application_boot_completed'));
 	}
 
 	public function testCanBootServices() {
@@ -77,7 +79,7 @@ class BootHandlerUnitTest extends UnitTestCase {
 		$boot = new BootHandler($app);
 		$boot->bootServices();
 
-		$this->assertTrue($app->internal_services->config->_service_boot_complete);
+		$this->assertTrue($app->getBootStatus('service_boot_completed'));
 	}
 
 	public function testCanBootPlugins() {
@@ -88,7 +90,7 @@ class BootHandlerUnitTest extends UnitTestCase {
 		$boot->bootServices();
 		$boot->bootPlugins();
 
-		$this->assertTrue($app->internal_services->config->_plugins_boot_complete);
+		$this->assertTrue($app->getBootStatus('plugins_boot_completed'));
 	}
 
 	public function testCanBootApplication() {
@@ -99,7 +101,7 @@ class BootHandlerUnitTest extends UnitTestCase {
 		$boot->bootPlugins();
 		$boot->bootApplication();
 
-		$this->assertTrue($app->internal_services->config->_application_boot_complete);
+		$this->assertTrue($app->getBootStatus('application_boot_completed'));
 	}
 
 	public function testBootEventCalls() {
@@ -128,7 +130,7 @@ class BootHandlerUnitTest extends UnitTestCase {
 
 		$app->bootCore();
 
-		$this->assertTrue($app->internal_services->config->boot_complete);
+		$this->assertTrue($app->getBootStatus('full_boot_completed'));
 
 		foreach ($calls as $count) {
 			$this->assertEquals(1, $count);
