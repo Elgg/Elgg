@@ -20,18 +20,6 @@ class BootService {
 	use Cacheable;
 
 	/**
-	 * The default TTL if not set in settings.php
-	 */
-	const DEFAULT_BOOT_CACHE_TTL = 3600;
-
-	/**
-	 * The default limit for the number of plugin settings a plugin can have before it won't be loaded into bootdata
-	 *
-	 * Can be set in settings.php
-	 */
-	const DEFAULT_BOOTDATA_PLUGIN_SETTINGS_LIMIT = 40;
-
-	/**
 	 * Constructs the bootservice
 	 *
 	 * @param \ElggCache $cache Cache
@@ -49,16 +37,7 @@ class BootService {
 	 * @throws RuntimeException
 	 */
 	public function boot(InternalContainer $services) {
-		$db = $services->db;
 		$config = $services->config;
-
-		// defaults in case these aren't in config table
-		if ($config->boot_cache_ttl === null) {
-			$config->boot_cache_ttl = self::DEFAULT_BOOT_CACHE_TTL;
-		}
-		if ($config->bootdata_plugin_settings_limit === null) {
-			$config->bootdata_plugin_settings_limit = self::DEFAULT_BOOTDATA_PLUGIN_SETTINGS_LIMIT;
-		}
 
 		// we were using NOTICE temporarily so we can't just check for null
 		if (!$config->hasInitialValue('debug') && !$config->debug) {
@@ -66,18 +45,22 @@ class BootService {
 		}
 
 		// copy all table values into config
-		$config->mergeValues($services->configTable->getAll());
+		foreach ($services->configTable->getAll() as $name => $value) {
+			$config->$name = $value;
+		}
 		
 		// prevent some data showing up in $config
-		unset($config->{\Elgg\Database\SiteSecret::CONFIG_KEY});
-
-		$installed = isset($config->installed);
+		foreach ($config::SENSITIVE_PROPERTIES as $name) {
+			unset($config->{$name});
+		}
 
 		// early config is done, now get the core boot data
-		$data = $this->getBootData($config, $db, $installed);
+		$data = $this->getBootData($config, $services->db, $config->hasValue('installed'));
 
 		$site = $data->getSite();
-		if (!$site) {
+		if ($site) {
+			$config->site = $site;
+		} else {
 			// must be set in config
 			$site = $config->site;
 			if (!$site instanceof \ElggSite) {
@@ -85,12 +68,10 @@ class BootService {
 			}
 		}
 
-		$config->site = $site;
-		$config->sitename = $site->name;
-		$config->sitedescription = $site->description;
+		$config->sitename = $site->name; // deprecated
+		$config->sitedescription = $site->description; // deprecated
 
-		$settings = $data->getPluginSettings();
-		foreach ($settings as $guid => $entity_settings) {
+		foreach ($data->getPluginSettings() as $guid => $entity_settings) {
 			$services->privateSettingsCache->save($guid, $entity_settings);
 		}
 
@@ -101,15 +82,11 @@ class BootService {
 		$services->plugins->setBootPlugins($data->getActivePlugins(), false);
 
 		// use value in settings.php if available
-		$debug = $config->hasInitialValue('debug') ? $config->getInitialValue('debug') : ($config->debug ?: LogLevel::CRITICAL);
+		$debug = $config->getInitialValue('debug') ?? ($config->debug ?: LogLevel::CRITICAL);
 		$services->logger->setLevel($debug);
 
 		if ($config->system_cache_enabled) {
-			$config->system_cache_loaded = false;
-
-			if ($services->views->configureFromCache($services->serverCache)) {
-				$config->system_cache_loaded = true;
-			}
+			$config->system_cache_loaded = $services->views->configureFromCache($services->serverCache);
 		}
 	}
 

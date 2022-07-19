@@ -144,70 +144,31 @@ class InternalContainer extends DiContainer {
 	 * @throws ConfigurationException
 	 */
 	public function initConfig(Config $config): Config {
-		if ($config->elgg_config_locks === null) {
-			$config->elgg_config_locks = true;
-		}
-
-		if ($config->elgg_config_locks) {
-			$lock = function ($name) use ($config) {
-				$config->lock($name);
-			};
-		} else {
-			// the installer needs to build an application with defaults then update
-			// them after they're validated, so we don't want to lock them.
-			$lock = function () {
-			};
-		}
-
 		$this->timer->begin([]);
 
-		if ($config->dataroot) {
-			$config->dataroot = Paths::sanitize($config->dataroot);
-		} else {
-			if (!$config->installer_running) {
-				throw new ConfigurationException('Config value "dataroot" is required.');
-			}
+		if (!$config->dataroot && !$config->installer_running) {
+			throw new ConfigurationException('Config value "dataroot" is required.');
 		}
-		$lock('dataroot');
 
-		if ($config->cacheroot) {
-			$config->cacheroot = Paths::sanitize($config->cacheroot);
-		} else {
+		if (!$config->cacheroot) {
 			$config->cacheroot = Paths::sanitize($config->dataroot . 'caches');
 		}
-		$lock('cacheroot');
 
-		if ($config->assetroot) {
-			$config->assetroot = Paths::sanitize($config->assetroot);
-		} else {
+		if (!$config->assetroot) {
 			$config->assetroot = Paths::sanitize($config->cacheroot . 'views_simplecache');
 		}
-		$lock('assetroot');
 		
-		if ($config->wwwroot) {
-			$config->wwwroot = rtrim($config->wwwroot, '/') . '/';
-		} else {
+		if (!$config->wwwroot) {
 			$config->wwwroot = $this->request->sniffElggUrl();
 		}
-		$lock('wwwroot');
 
-		if ($config->plugins_path) {
-			$plugins_path = rtrim($config->plugins_path, '/') . '/';
-		} else {
-			$plugins_path = Paths::project() . 'mod/';
+		if (!$config->plugins_path) {
+			$config->plugins_path = Paths::project() . 'mod/';
 		}
 
-		$locked_props = [
-			'site_guid' => 1,
-			'path' => Paths::project(),
-			'plugins_path' => $plugins_path,
-			'pluginspath' => $plugins_path,
-			'url' => $config->wwwroot,
-		];
-		foreach ($locked_props as $name => $value) {
-			$config->$name = $value;
-			$lock($name);
-		}
+		$config->path = Paths::project(); // deprecated
+		$config->pluginspath = $config->plugins_path; // deprecated alias
+		$config->url = $config->wwwroot; // deprecated alias
 
 		// move sensitive credentials into isolated services
 		$this->set('dbConfig', DbConfig::fromElggConfig($config));
@@ -221,13 +182,9 @@ class InternalContainer extends DiContainer {
 		}
 
 		// get this stuff out of config!
-		unset($config->db);
-		unset($config->dbname);
-		unset($config->dbhost);
-		unset($config->dbport);
-		unset($config->dbuser);
-		unset($config->dbpass);
-		unset($config->{\Elgg\Database\SiteSecret::CONFIG_KEY});
+		foreach ($config::SENSITIVE_PROPERTIES as $name) {
+			unset($config->{$name});
+		}
 
 		return $config;
 	}

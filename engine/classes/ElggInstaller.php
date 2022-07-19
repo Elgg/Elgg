@@ -115,7 +115,6 @@ class ElggInstaller {
 
 		try {
 			$config = new Config();
-			$config->elgg_config_locks = false;
 			$config->installer_running = true;
 			$config->dbencoding = 'utf8mb4';
 			$config->boot_cache_ttl = 0;
