@@ -191,16 +191,6 @@ class InternalContainer extends DiContainer {
 		}
 		$lock('wwwroot');
 
-		if (!$config->language) {
-			$config->language = Application::DEFAULT_LANG;
-		}
-
-		if ($config->default_limit) {
-			$lock('default_limit');
-		} else {
-			$config->default_limit = Application::DEFAULT_LIMIT;
-		}
-
 		if ($config->plugins_path) {
 			$plugins_path = rtrim($config->plugins_path, '/') . '/';
 		} else {

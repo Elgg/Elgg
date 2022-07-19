@@ -49,9 +49,6 @@ class Application {
 
 	use Loggable;
 
-	const DEFAULT_LANG = 'en';
-	const DEFAULT_LIMIT = 10;
-
 	/**
 	 * @var InternalContainer
 	 *
