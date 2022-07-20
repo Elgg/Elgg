@@ -52,6 +52,7 @@ use Elgg\Traits\Loggable;
  * @property int           $default_limit							The default "limit" used in listings and queries
  * @property bool          $disable_rss 							Is RSS disabled
  * @property bool          $elgg_maintenance_mode                   Flag if maintenance mode is enabled
+ * @property-read string   $elgg_settings_file                      Location of the settings file used to initialize the config
  * @property bool          $email_html_part                         Determines if email has a html part
  * @property string        $email_html_part_images                  How to deal with images in html part of email
  * @property int           $email_subject_limit                     The length limit for email subjects, defaults to 998 as described in http://www.faqs.org/rfcs/rfc2822.html
