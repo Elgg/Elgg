@@ -50,6 +50,19 @@ abstract class DiContainer extends Container {
 	}
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function set(string $name, $value) {
+		parent::set($name, $value);
+		
+		if (is_object($value)) {
+			// need to also reset related class name as it is also stored as a reference for autowired classes
+			// this happens for example in the installer where the plugins service is autowired with 'old' config (found by classname) as config by name is set
+			$this->reset(get_class($value));
+		}
+	}
+
+	/**
 	 * Unsets the service to force rebuild on next request
 	 *
 	 * @param string $name
@@ -57,7 +70,17 @@ abstract class DiContainer extends Container {
 	 * @return void
 	 */
 	public function reset(string $name): void {
+		if (!isset($this->resolvedEntries[$name])) {
+			return;
+		}
+		
+		$value = $this->resolvedEntries[$name];
+		
 		unset($this->resolvedEntries[$name]);
+		if (is_object($value)) {
+			// need to also reset related class name as it is also stored as a reference for autowired classes
+			unset($this->resolvedEntries[get_class($value)]);
+		}
 	}
 
 	/**
