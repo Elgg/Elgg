@@ -151,11 +151,11 @@ class InternalContainer extends DiContainer {
 		}
 
 		if (!$config->cacheroot) {
-			$config->cacheroot = Paths::sanitize($config->dataroot . 'caches');
+			$config->cacheroot = $config->dataroot . 'caches';
 		}
 
 		if (!$config->assetroot) {
-			$config->assetroot = Paths::sanitize($config->cacheroot . 'views_simplecache');
+			$config->assetroot = $config->cacheroot . 'views_simplecache';
 		}
 		
 		if (!$config->wwwroot) {
