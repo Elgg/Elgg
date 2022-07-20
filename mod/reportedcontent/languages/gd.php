@@ -20,7 +20,6 @@ return array(
 	'reportedcontent:description' => 'Carson a tha thu a\' dèanamh aithris air seo?',
 	'reportedcontent:address' => 'Suidheachadh an rud',
 	'reportedcontent:success' => 'Chaidh an aithris agad a chur don rianaire',
-	'reportedcontent:report' => 'Dèan aithris don rianaire',
 	'reportedcontent:numbertodisplay' => 'An àireamh de dh\'aithrisean a chithear',
 	'reportedcontent:user' => 'Dèan aithris air a\' chleachdaiche',
 	'reportedcontent:archived' => 'Chaidh an aithris a chur san tasg-lann',

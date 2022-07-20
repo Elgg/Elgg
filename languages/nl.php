@@ -29,7 +29,7 @@ return array(
 	'logoutok' => "Je bent afgemeld.",
 	'logouterror' => "We konden je niet afmelden. Probeer het nogmaals.",
 	'session_expired' => "Je sessie is verlopen. <a href='javascript:location.reload(true)'>Ververs</a> de pagina om je opnieuw aan te melden.",
-	'session_changed_user' => "Je bent aangemeld als een andere gebruiker. <a href='javascript:location.reload(true)'>Ververs</a>de pagina.",
+	'session_changed_user' => "Je bent aangemeld als een andere gebruiker. <a href='javascript:location.reload(true)'>Ververs</a> de pagina.",
 
 	'loggedinrequired' => "Je moet aangemeld zijn om die pagina te kunnen bekijken.",
 	'loggedoutrequired' => "Je moet afgemeld zijn om die pagina te kunnen bekijken.",
@@ -101,6 +101,7 @@ return array(
 	'EntityNotFoundException' => 'De inhoud is verwijderd of je hebt geen rechten om die te mogen bekijken.',
 	'EntityPermissionsException' => 'Je hebt onvoldoende rechten om deze actie uit te mogen voeren',
 	'GatekeeperException' => 'Je hebt niet de juiste rechten om deze pagina te zien.',
+	'RegistrationAllowedGatekeeperException:invalid_invitecode' => "De opgegeven uitnodigingscode is niet geldig",
 	'BadRequestException' => 'Het verzoek is onjuist',
 	'ValidationException' => 'De opgestuurde data voldoet niet aan de vereisten, controleer de invoer',
 	'LogicException:InterfaceNotImplemented' => '%smoet %s implementeren',
@@ -251,23 +252,23 @@ return array(
 	'friends' => "Vrienden",
 	'collection:friends' => '%s van vrienden',
 
-	'avatar' => 'Avatar',
-	'avatar:noaccess' => "Je hebt geen rechten om de avatar van deze gebruiker te bewerken.",
-	'avatar:create' => 'Maak je avatar',
-	'avatar:edit' => 'Bewerk avatar',
-	'avatar:upload' => 'Upload een nieuwe avatar',
-	'avatar:current' => 'Huidige avatar',
-	'avatar:remove' => 'Verwijder je avatar en gebruik het standaard icoon',
-	'avatar:crop:title' => 'Avatar bijsnijden',
-	'avatar:upload:instructions' => "Je avatar wordt weergegeven op verschillende plaatsen op de site. Je kunt je avatar zo vaak als je wilt vervangen. (Ondersteunde bestandsformaten: GIF, JPG of PNG)",
-	'avatar:create:instructions' => 'Hieronder kun je de avatar aanpassen door hem in een vierkant bij te snijden. Een voorbeeld zal hiernaast verschijnen. Zodra je tevreden bent met het voorbeeld klik je op de knop \'Maak avatar\'. Deze aangepaste versie zal worden gebruikt op verschillende plaatsen op de site en is zichtbaar voor andere gebruikers.',
-	'avatar:upload:success' => 'Avatar succesvol geüpload',
-	'avatar:upload:fail' => 'Upload van avatar mislukt',
-	'avatar:resize:fail' => 'Schalen van de avatar mislukt',
-	'avatar:crop:success' => 'Bijsnijden van de avatar succesvol',
+	'avatar' => 'Profielfoto',
+	'avatar:noaccess' => "Je hebt geen rechten om de profielfoto van deze gebruiker te bewerken.",
+	'avatar:create' => 'Maak je profielfoto',
+	'avatar:edit' => 'Bewerk profielfoto',
+	'avatar:upload' => 'Upload een nieuwe profielfoto',
+	'avatar:current' => 'Huidige profielfoto',
+	'avatar:remove' => 'Verwijder je profielfoto en gebruik het standaard icoon',
+	'avatar:crop:title' => 'Profielfoto bijsnijden',
+	'avatar:upload:instructions' => "Je profielfoto wordt weergegeven op verschillende plaatsen op de site. Je kunt je profielfoto zo vaak als je wilt vervangen. (Ondersteunde bestandsformaten: GIF, JPG of PNG)",
+	'avatar:create:instructions' => 'Hieronder kun je je profielfoto aanpassen door hem in een vierkant bij te snijden. Een voorbeeld zal hiernaast verschijnen. Zodra je tevreden bent met het voorbeeld klik je op de knop \'Maak profielfoto\'. Deze aangepaste versie zal worden gebruikt op verschillende plaatsen op de site en is zichtbaar voor andere gebruikers.',
+	'avatar:upload:success' => 'Profielfoto succesvol geüpload',
+	'avatar:upload:fail' => 'Upload van profielfoto mislukt',
+	'avatar:resize:fail' => 'Schalen van de profielfoto mislukt',
+	'avatar:crop:success' => 'Bijsnijden van de profielfoto succesvol',
 	'avatar:crop:fail' => 'Bijsnijden van de avatar mislukt',
-	'avatar:remove:success' => 'Avatar succesvol verwijderd',
-	'avatar:remove:fail' => 'Avatar verwijderen is mislukt',
+	'avatar:remove:success' => 'Profielfoto succesvol verwijderd',
+	'avatar:remove:fail' => 'Profielfoto verwijderen is mislukt',
 	
 	'action:user:validate:already' => "%s was al gevalideerd",
 	'action:user:validate:success' => "%s is gevalideerd",
@@ -300,7 +301,7 @@ return array(
  */
 	'river' => "River",
 	'river:user:friend' => "%s is nu bevriend met %s",
-	'river:update:user:avatar' => '%s heeft een nieuwe avatar',
+	'river:update:user:avatar' => '%s heeft een nieuwe profielfoto',
 	'river:noaccess' => 'Je hebt geen toegang tot dit item.',
 	'river:posted:generic' => '%s plaatste',
 	'riveritem:single:user' => 'een gebruiker',
@@ -414,7 +415,7 @@ return array(
 	'register:fields' => 'Alle velden zijn verplicht',
 
 	'registration:noname' => 'Weergavenaam is verplicht',
-	'registration:notemail' => 'Het opgegeven e-mailadres lijkt niet te kloppen. Het e-mailadres moet het format aaa@bbbb.ccc hebben!',
+	'registration:notemail' => 'Het opgegeven e-mailadres lijkt geen geldig e-mailadres te zijn.',
 	'registration:userexists' => 'Deze gebruikersnaam bestaat al.',
 	'registration:usernametooshort' => 'Je gebruikersnaam moet minimaal %u karakters lang zijn.',
 	'registration:usernametoolong' => 'Je gebruikersnaam is te lang. Je kunt maximaal %u karakters gebruiken.',
@@ -447,6 +448,10 @@ De volgende karakters zijn niet toegestaan: %s',
 	'user:password:fail:incorrect_current_password' => 'Het opgegeven huidige wachtwoord is onjuist.',
 	'user:changepassword:unknown_user' => 'Ongeldige gebruiker',
 	'user:changepassword:change_password_confirm' => 'Hiermee wijzig je je wachtwoord.',
+
+	'user:delete:title' => 'Bevestig account verwijdering',
+	'user:delete:description' => 'Bevestig dat het account van %s verwijderd mag worden. Het verwijderen van het account zal ook alle content van deze gebruiker (inclusief groepen) verwijderen. Mogelijk gerelateerde content, zoals groepscontent, subpagina\'s of reacties op content zullen ook verwijderd worden. Hieronder een overzicht van de content waar deze gebruiker de eigenaar van is.',
+	'user:delete:confirm' => "Ik ga akkoord met het verwijderen van deze gebruiker",
 
 	'user:set:language' => "Taalinstelling",
 	'user:language:label' => "Jouw taal",
@@ -556,6 +561,9 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:users:unvalidated:registered' => 'Geregistreerd %s',
 	'admin:users:unvalidated:change_email' => 'Wijzig e-mailadres',
 	'admin:users:unvalidated:change_email:user' => 'Wijzig e-mailadres van: %s',
+	'admin:users:inactive' => 'Inactief',
+	'admin:users:inactive:last_login_before' => "Toon gebruikers die niet meer aangemeld zijn na",
+	'admin:users:inactive:last_login_before:help' => "Dit toont ook gebruikers die nog nooit zijn aangemeld.",
 	'admin:users:details:attributes' => 'Gebruikersattributen',
 	'admin:users:details:profile' => 'Profiel informatie',
 	'admin:users:details:profile:no_fields' => 'Geen profielvelden geconfigureerd',
@@ -580,7 +588,7 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:upgrades:completed' => 'Upgrade "%s" is afgerond om %s',
 	'admin:upgrades:completed:errors' => 'Upgrade "%s" is afgerond om %s, maar bevatte %s fouten',
 	'admin:upgrades:failed' => 'Upgrade "%s" is mislukt',
-	'admin:action:upgrade:reset:success' => 'Upgrade "%s" is herstart',
+	'admin:action:upgrade:reset:success' => 'Upgrade "%s" is gereset',
 
 	'admin:settings' => 'Instellingen',
 	'admin:settings:basic' => 'Basisinstellingen',
@@ -590,6 +598,11 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:site_icons' => "Site iconen",
 	'admin:site_icons:site_icon' => "Site Icoon",
 	'admin:site_icons:info' => "Upload een icoon gerelateerd aan je website. Dit icoon zal worden gebruikt als favicon en als de site wordt weergegeven, bijvoorbeeld als afzender van site notificaties.",
+	'admin:site_icons:font_awesome' => "Font Awesome",
+	'admin:site_icons:font_awesome:zip' => "Upload ZIP bestand",
+	'admin:site_icons:font_awesome:zip:help' => "Upload hier je Font Awesome iconen. Je kunt deze downloaden van https://fontawesome.com/download. Het webfont wordt dan lokaal geserveerd.",
+	'admin:site_icons:font_awesome:zip:error' => "De ZIP kon niet worden uitgepakt",
+	'admin:site_icons:font_awesome:remove_zip' => "Verwijderd geüploade lettertype",
 	'admin:site_settings' => "Instellingen",
 	'admin:site:description' => "Via dit beheerpaneel kun je de algemene instellingen van de site beheren. Kies een optie om te beginnen.",
 	'admin:site:opt:linktext' => "Configureer site",
@@ -750,6 +763,9 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 
 	'admin:security:settings:session_bound_entity_icons' => 'Sessie gebonden entity iconen',
 	'admin:security:settings:session_bound_entity_icons:help' => 'Entity iconen zijn standaard sessie gebonden. Dit houdt in dat de URLs naar de iconen informatie bevatten over de huidige sessie. Indien iconen sessiegebonden zijn, zijn ze niet deelbaar tussen sessies en dus meer afgeschermd. Het bijeffect is dat de iconen alleen voor de huidige sessie cachebaar zijn.',
+
+	'admin:security:settings:subresource_integrity_enabled' => 'Subresource integrity',
+	'admin:security:settings:subresource_integrity_enabled:help' => 'Voegt een integriteitscontrole toe aan subresources zoals js en css bestanden. Dit geeft browsers de mogelijkheid om de inhoud van deze bestanden te valideren.',
 	
 	'admin:security:settings:site_secret:intro' => 'Elgg gebruikt een sleutel om tokens te genereren voor verschillende doeleinden.',
 	'admin:security:settings:site_secret:regenerate' => "Regenereer site secret",
@@ -1043,8 +1059,8 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'usersettings:statistics:label:numentities' => "Jouw inhoud",
 	
 	'usersettings:delayed_email' => "Uitgestelde e-mail instellingen",
-	'usersettings:delayed_email:interval' => "Configureer de frequentie waarmee uitgestelde e-mail notificaties worden afgeleverd",
-	'usersettings:delayed_email:interval:help' => "Alle uitgestelde e-mailnotificaties zullen worden bewaard en worden afgeleverd in een gecombineerde e-mail op het opgegeven interval.",
+	'usersettings:delayed_email:interval' => "Frequentie voor uitgestelde e-mailnotificaties",
+	'usersettings:delayed_email:interval:help' => "Alle uitgestelde e-mailnotificaties worden afgeleverd in een gecombineerde email volgens de opgegeven frequentie.",
 
 /**
  * Activity river
@@ -1063,7 +1079,7 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
  * Icons
  */
 
-	'icon:size' => "Grootte van de avatar",
+	'icon:size' => "Afbeeldingsformaat",
 	'icon:size:topbar' => "Bovenbalk",
 	'icon:size:tiny' => "Extra klein",
 	'icon:size:small' => "Klein",
@@ -1075,7 +1091,7 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'entity:edit:icon:crop_messages:width' => "Het is aanbevolen om een afbeelding met een minimale breedte van tenminste %dpx te gebruiken.",
 	'entity:edit:icon:crop_messages:height' => "Het is aanbevolen om een afbeelding met een minimale hoogte van tenminste %dpx te gebruiken.",
 	'entity:edit:icon:file:label' => "Upload een nieuw icoon",
-	'entity:edit:icon:file:help' => "Laat dit leeg om het huidige icoon te behouden",
+	'entity:edit:icon:file:help' => "Laat dit leeg om het huidige icoon te behouden.",
 	'entity:edit:icon:remove:label' => "Verwijder het icoon",
 
 /**
@@ -1245,7 +1261,7 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'annotations' => "Opmerkingen",
 	'relationships' => "Relaties",
 	'metadata' => "Metadata",
-	'tagcloud' => "Tag-cloud",
+	'tagcloud' => "Tag cloud",
 
 	'on' => 'Aan',
 	'off' => 'Uit',
@@ -1488,8 +1504,8 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'config:email_html_part_images:help' => "Controleer of en hoe afbeeldingen in uitgaande email wordt verwerkt. Indien toegestaan zullen alle afbeeldingen in de mail worden ge-embed. Niet alle email clients ondersteune de verschillende opties. Test de gekozen optie.",
 	'config:email_html_part_images:base64' => "Base64 gecodeerd",
 	'config:email_html_part_images:attach' => "Bijlagen",
-	'config:delayed_email:label' => "Activeer uitgestelde e-mail notificaties",
-	'config:delayed_email:help' => "Dit geeft gebruikers de mogelijkheid om e-mail notificaties uit te stellen en gebundeld te ontvangen op een opgegeven frequentie (dagelijks, wekelijks)",
+	'config:delayed_email:label' => "Activeer uitgestelde e-mailnotificaties",
+	'config:delayed_email:help' => "Dit geeft gebruikers de mogelijkheid om e-mailnotificaties uit te stellen en gebundeld te ontvangen op een opgegeven frequentie (dagelijks, wekelijks)",
 	'config:message_delay:label' => "Systeemberichten vertraging",
 	'config:message_delay:help' => "Het standaard aantal secondes voordat succes systeemberichten verdwijnen",
 
@@ -1512,7 +1528,7 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'upgrade:finished' => 'Upgrade is voltooid.',
 	'upgrade:finished_with_errors' => '<p>De upgrade is afgerond, maar er zijn fouten geconstateerd. Ververs de pagina en probeer de upgrade opnieuw uit te voeren.</p></p><br />Als de fouten zich opnieuw voordoen, kijk dan in je serverlog of daar een mogelijke oorzaak te vinden is. Je kunt bijstand krijgen bij het oplossen van de fout op de community van Elgg <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">in de groep \'technisch(e) support\'</a>',
 	'upgrade:should_be_skipped' => 'Geen items om te upgraden',
-	'upgrade:count_items' => '%d items te upgraden',
+	'upgrade:count_items' => '%d items om te upgraden',
 	
 	// Strings specific for the database guid columns reply upgrade
 	'admin:upgrades:database_guid_columns' => 'Database GUID kolommen uitlijnen',
@@ -1631,7 +1647,7 @@ Klik hier om naar de website te gaan:
 	'generic_comment:updated' => "De reactie is gewijzigd",
 	'entity:delete:object:comment:success' => "De reactie is succesvol verwijderd",
 	'generic_comment:blank' => "Sorry, je moet wel wat invullen voordat we je reactie kunnen opslaan!",
-	'generic_comment:notfound' => "Sorry, we konden de opgegeven reactie niet vinden.",
+	'generic_comment:notfound' => "Sorry, we konden de reactie niet vinden.",
 	'generic_comment:failure' => "Er is een fout opgetreden tijdens het opslaan van je reactie. Probeer het nogmaals.",
 	'generic_comment:none' => 'Geen reacties',
 	'generic_comment:title' => 'Reactie door %s',
@@ -1649,7 +1665,7 @@ Om te reageren of het originele item te bekijken, klik hier:
 %s",
 	
 	'generic_comment:notification:user:summary' => 'Een nieuwe reactie op: %s',
-	'generic_comment:notification:user:body' => "Er is een nieuwe reactie geplaatst.
+	'generic_comment:notification:user:body' => "Er is een nieuwe reactie:
 
 %s
 

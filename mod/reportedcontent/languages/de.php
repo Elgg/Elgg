@@ -20,7 +20,6 @@ return array(
 	'reportedcontent:description' => 'Warum möchtest Du diesen Beitrag melden?',
 	'reportedcontent:address' => 'Adresse des Beitrags',
 	'reportedcontent:success' => 'Deine Meldung wurde an den Admin gesendet.',
-	'reportedcontent:report' => 'Einem Admin melden',
 	'reportedcontent:numbertodisplay' => 'Anzahl der anzuzeigenden Meldungen',
 	'reportedcontent:user' => 'Benutzer melden',
 	'reportedcontent:archived' => 'Die Meldung wurde archiviert.',

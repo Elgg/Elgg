@@ -19,7 +19,6 @@ return array(
 	'reportedcontent:description' => 'Miksi ilmoitat tästä',
 	'reportedcontent:address' => 'Kohteen sijainti',
 	'reportedcontent:success' => 'Ilmoitus lähetettiin sivuston ylläpitäjälle',
-	'reportedcontent:report' => 'Ilmoita ylläpitäjälle',
 	'reportedcontent:numbertodisplay' => 'Näytettävien kohteiden määrä',
 	'reportedcontent:user' => 'Ilmianna käyttäjä',
 	'reportedcontent:archived' => 'Ilmoitus arkistoitiin',

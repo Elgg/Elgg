@@ -19,7 +19,6 @@ return array(
 	'reportedcontent:description' => 'Varför anmäler du det här?',
 	'reportedcontent:address' => 'Plats för objekt',
 	'reportedcontent:success' => 'Din rapport har skickats till webbplatsens admin',
-	'reportedcontent:report' => 'Anmäl till admin',
 	'reportedcontent:numbertodisplay' => 'Antal anmälningar att visa',
 	'reportedcontent:user' => 'Anmäl användare',
 	'reportedcontent:archived' => 'Anmälan har arkiverats',

@@ -19,7 +19,6 @@ return array(
 	'reportedcontent:description' => 'Per qu&egrave; denuncies aix&ograve;?',
 	'reportedcontent:address' => 'Ubicació de l&acute;element',
 	'reportedcontent:success' => 'La seva denúncia ha estat enviada als administradors',
-	'reportedcontent:report' => 'Denunciar aix&ograve;',
 	'reportedcontent:numbertodisplay' => 'Quantitat de denúncies a mostrar',
 	'reportedcontent:user' => 'Denunciar usuària',
 	'reportedcontent:archived' => 'La denúncia ha quedat desada',

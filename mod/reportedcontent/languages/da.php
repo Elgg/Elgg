@@ -19,7 +19,6 @@ return array(
 	'reportedcontent:description' => 'Hvorfor rapporterer du dette?',
 	'reportedcontent:address' => 'Placering af emnet',
 	'reportedcontent:success' => 'Din rapport er blevet sendt til administrationen',
-	'reportedcontent:report' => 'Rapporter til administrationen',
 	'reportedcontent:numbertodisplay' => 'Antal rapporter, der skal vises',
 	'reportedcontent:user' => 'Rapporter bruger',
 	'reportedcontent:archived' => 'Rapporten er blevet arkiveret',

@@ -6,7 +6,7 @@
  */
 
 return array(
-	'item:object:blog' => 'Blogberichten',
+	'item:object:blog' => 'Blog',
 	'collection:object:blog' => 'Blogs',
 	'collection:object:blog:all' => 'Alle blogs van de site',
 	'collection:object:blog:owner' => 'Blogs van %s',
@@ -60,6 +60,6 @@ Bekijk en reageer hier op de blog:
 	// widget
 	'widgets:blog:name' => 'Blogs',
 	'widgets:blog:description' => 'Toon je laatste blogs',
-	'blog:moreblogs' => 'Meer blogberichten',
-	'blog:numbertodisplay' => 'Aantal blogberichten om te tonen:',
+	'blog:moreblogs' => 'Meer blogs',
+	'blog:numbertodisplay' => 'Aantal blogs om te tonen',
 );

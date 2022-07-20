@@ -21,7 +21,6 @@ return array(
 	'reportedcontent:description' => 'Pourquoi souhaitez-vous signaler ceci ?',
 	'reportedcontent:address' => 'Adresse de l\'élément',
 	'reportedcontent:success' => 'Votre signalement a bien été envoyé à l\'administrateur du site',
-	'reportedcontent:report' => 'Signaler à l\'administrateur',
 	'reportedcontent:numbertodisplay' => 'Nombre de signalements à afficher',
 	'reportedcontent:user' => 'Signaler cet utilisateur',
 	'reportedcontent:new' => 'Nouveaux signalements',

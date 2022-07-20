@@ -19,7 +19,6 @@ return array(
 	'reportedcontent:description' => 'Dlaczego chcesz to zgłosić?',
 	'reportedcontent:address' => 'Lokalizacja elementu',
 	'reportedcontent:success' => 'Zgłoszenie zostało wysłane do administratora strony',
-	'reportedcontent:report' => 'Zgłoś administratorowi',
 	'reportedcontent:numbertodisplay' => 'Ilość wyświetlanych zgłoszeń',
 	'reportedcontent:user' => 'Zgłoś użytkownika',
 	'reportedcontent:archived' => 'Zgłoszenie zostało zarchiwizowane',
