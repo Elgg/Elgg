@@ -19,7 +19,6 @@ return array(
 	'reportedcontent:description' => 'Perché stai segnalando questo contenuto?',
 	'reportedcontent:address' => 'Ubicazione dell\'elemento',
 	'reportedcontent:success' => 'La segnalazione è stata inviata agli amministratori del sito',
-	'reportedcontent:report' => 'Segnala all\'amministratore',
 	'reportedcontent:numbertodisplay' => 'Numero di segnalazioni da visualizzare',
 	'reportedcontent:user' => 'Segnala utente',
 	'reportedcontent:archived' => 'Segnalazione archiviata',

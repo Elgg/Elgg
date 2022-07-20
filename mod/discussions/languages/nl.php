@@ -70,6 +70,8 @@ Bekijk en reageer hier op de discussie:
 	'discussion:topic:status' => 'Status',
 	'discussion:topic:closed:title' => 'Deze discussie is gesloten.',
 	'discussion:topic:closed:desc' => 'Deze discussie is gesloten. Er kunnen geen reacties meer geplaatst worden.',
+	'discussion:topic:container' => 'Selecteer (optioneel) een groep waarin je deze discussie wilt starten',
+	'discussion:topic:container:help' => 'Indien een discussie in een groep wordt gestart, dan wordt de toegankelijkheid standaard op de groepsleden ingesteld.',
 
 	'discussion:topic:description' => 'Onderwerp van je discussie',
 	'discussion:topic:toggle_status:open' => 'De discussie is opnieuw geopend',

@@ -19,7 +19,6 @@ return array(
 	'reportedcontent:description' => '&iquest;Por qu&eacute; deseas reportar esto?',
 	'reportedcontent:address' => 'Ubicaci&oacute;n del elemento',
 	'reportedcontent:success' => 'Tu reporte ha sido enviado',
-	'reportedcontent:report' => 'Reportar',
 	'reportedcontent:numbertodisplay' => 'N&uacute;mero de reportes a mostrar',
 	'reportedcontent:user' => 'Reportar usuario',
 	'reportedcontent:archived' => 'El reporta ha sido archivado',

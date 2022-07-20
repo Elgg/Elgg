@@ -20,7 +20,6 @@ return array(
 	'reportedcontent:description' => 'なぜこれを管理者に報告するのですか？',
 	'reportedcontent:address' => '報告対象の場所',
 	'reportedcontent:success' => 'あなたの報告をサイト管理者に送信しました。',
-	'reportedcontent:report' => '管理者に報告',
 	'reportedcontent:numbertodisplay' => '報告の表示数',
 	'reportedcontent:user' => '不適切なユーザを報告',
 	'reportedcontent:archived' => '報告を書庫に保存しました',

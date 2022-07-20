@@ -21,7 +21,6 @@ return array(
 	'reportedcontent:description' => 'Om welke reden wil je dit melden?',
 	'reportedcontent:address' => 'Locatie van het item',
 	'reportedcontent:success' => 'Je melding is verstuurd naar de sitebeheerder',
-	'reportedcontent:report' => 'Meld aan beheerder',
 	'reportedcontent:numbertodisplay' => 'Aantal meldingen om weer te geven',
 	'reportedcontent:user' => 'Meld deze gebruiker bij de sitebeheerder',
 	'reportedcontent:new' => 'Nieuwe meldingen',

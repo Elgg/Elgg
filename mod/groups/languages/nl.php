@@ -18,7 +18,7 @@ return array(
 	'groups:owned:user' => 'Groepen waar %s beheerder van is',
 	'groups:yours' => "Mijn groepen",
 	'groups:user' => "Groepen waarvan %s lid is",
-	'groups:all' => "Alle groepen op de site",
+	'groups:all' => "Alle groepen",
 	'groups:add' => "Maak een nieuwe groep",
 	'groups:edit' => "Bewerk groep",
 	'groups:edit:profile' => "Profiel",

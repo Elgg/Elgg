@@ -19,7 +19,6 @@ return array(
 	'reportedcontent:description' => 'Γιατί αναφέρετε αυτό;',
 	'reportedcontent:address' => 'Τοποθεσία στοιχείου',
 	'reportedcontent:success' => 'Η αναφορά σας στάλθηκε στο διαχειριστή του ιστότοπου',
-	'reportedcontent:report' => 'Αναφέρατε αυτό',
 	'reportedcontent:numbertodisplay' => 'Αριθμός αναφορών για εμφάνιση',
 	'reportedcontent:user' => 'Αναφορά χρήστη',
 	'reportedcontent:archived' => 'Η αναφορά μπήκε στο αρχείο',

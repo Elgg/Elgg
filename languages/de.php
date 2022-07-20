@@ -527,6 +527,7 @@ Bei der Konfiguration der Simplecache-Option in settings.php kann eine Datenbank
 	'admin:users:unvalidated:registered' => 'Registriert: %s',
 	'admin:users:unvalidated:change_email' => 'Emailadresse ändern',
 	'admin:users:unvalidated:change_email:user' => 'Emailadresse für %s ändern',
+	'admin:users:inactive' => 'Inaktiv',
 	'admin:users:details:statistics' => 'Inhalts-Statistiken',
 	
 	'admin:configure_utilities:maintenance' => 'Wartungs-Modus',
