@@ -49,6 +49,7 @@ class ElggRelationshipTest extends IntegrationTestCase {
 		$this->assertTrue($this->entity1->addRelationship($this->entity2->guid, 'test_relationship'));
 
 		$this->assertTrue($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
+		$this->assertTrue($this->entity1->getRelationship($this->entity2->guid, 'test_relationship') instanceof \ElggRelationship);
 	}
 
 	public function testRemoveRelationship() {
@@ -60,6 +61,7 @@ class ElggRelationshipTest extends IntegrationTestCase {
 		$this->assertTrue($this->entity1->removeRelationship($this->entity2->guid, 'test_relationship'));
 
 		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
+		$this->assertNull($this->entity1->getRelationship($this->entity2->guid, 'test_relationship'));
 	}
 
 	public function testPreventAddRelationship() {
@@ -171,6 +173,8 @@ class ElggRelationshipTest extends IntegrationTestCase {
 		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
 		$this->assertFalse($this->entity1->hasRelationship($this->entity3->guid, 'test_relationship'));
 
+		$this->assertTrue($this->entity3->hasRelationship($this->entity1->guid, 'test_relationship'));
+		$this->assertTrue($this->entity1->removeAllRelationships('test_relationship', true));
 		// inverse relationships should be gone too
 		$this->assertFalse($this->entity3->hasRelationship($this->entity1->guid, 'test_relationship'));
 	}
@@ -193,6 +197,7 @@ class ElggRelationshipTest extends IntegrationTestCase {
 
 		// remove all relationships
 		$this->assertTrue($this->entity1->removeAllRelationships());
+		$this->assertTrue($this->entity1->removeAllRelationships(null, true));
 		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
 		$this->assertFalse($this->entity1->hasRelationship($this->entity3->guid, 'test_relationship'));
 		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship2'));

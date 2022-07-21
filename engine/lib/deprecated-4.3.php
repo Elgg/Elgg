@@ -339,10 +339,10 @@ function add_entity_relationship($guid_one, $relationship, $guid_two) {
  * @param int    $guid_two     GUID of the target entity of the relationship
  *
  * @return \ElggRelationship|false Depending on success
- * @deprecated 4.3 use \ElggEntity->hasRelationship()
+ * @deprecated 4.3 use \ElggEntity->hasRelationship() or \ElggEntity->hasRelationship()
  */
 function check_entity_relationship($guid_one, $relationship, $guid_two) {
-	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use \ElggEntity->hasRelationship()', '4.3');
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use \ElggEntity->hasRelationship() or \ElggEntity->hasRelationship()', '4.3');
 	
 	return _elgg_services()->relationshipsTable->check((int) $guid_one, (string) $relationship, (int) $guid_two);
 }
