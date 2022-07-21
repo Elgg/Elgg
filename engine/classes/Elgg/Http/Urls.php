@@ -2,8 +2,6 @@
 
 namespace Elgg\Http;
 
-use Elgg\Security\Csrf;
-
 /**
  * Create, sanitize and compare urls
  *
@@ -11,20 +9,6 @@ use Elgg\Security\Csrf;
  * @internal
  */
 class Urls {
-	
-	/**
-	 * @var Csrf
-	 */
-	protected $csrf;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param Csrf $csrf Csrf protection service
-	 */
-	public function __construct(Csrf $csrf) {
-		$this->csrf = $csrf;
-	}
 
 	/**
 	 * Sets elements in a URL's query string.
@@ -97,8 +81,9 @@ class Urls {
 		}
 	
 		// append action tokens to the existing query
-		$query['__elgg_ts'] = $this->csrf->getCurrentTime()->getTimestamp();
-		$query['__elgg_token'] = $this->csrf->generateActionToken($query['__elgg_ts']);
+		// CSRF service is not DI injected because Urls is used by installer and CSRF requires DB installed
+		$query['__elgg_ts'] = _elgg_services()->csrf->getCurrentTime()->getTimestamp();
+		$query['__elgg_token'] = _elgg_services()->csrf->generateActionToken($query['__elgg_ts']);
 		$components['query'] = http_build_query($query);
 	
 		// rebuild the full url
