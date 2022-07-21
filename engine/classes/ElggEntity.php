@@ -630,21 +630,20 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	}
 	
 	/**
-	 * Remove all relationships to and from this entity.
-	 * If you pass a relationship name, only relationships matching that name
-	 * will be deleted.
+	 * Remove all relationships to or from this entity.
 	 *
-	 * @warning Calling this with no $relationship will clear all relationships
-	 * for this entity.
+	 * If you pass a relationship name, only relationships matching that name will be deleted.
 	 *
-	 * @param string|null $relationship (optional) The name of the relationship to remove
+	 * @warning Calling this with no $relationship will clear all relationships with this entity.
+	 *
+	 * @param string|null $relationship         (optional) The name of the relationship to remove
+	 * @param bool        $inverse_relationship (optional) Inverse the relationship
 	 *
 	 * @return bool
 	 * @since 4.3
 	 */
-	public function removeAllRelationships(string $relationship = null): bool {
-		$result = _elgg_services()->relationshipsTable->removeAll($this->guid, $relationship);
-		return $result && _elgg_services()->relationshipsTable->removeAll($this->guid, $relationship, true);
+	public function removeAllRelationships(string $relationship = null, bool $inverse_relationship = false): bool {
+		return _elgg_services()->relationshipsTable->removeAll($this->guid, $relationship, $inverse_relationship);
 	}
 	
 	/**
@@ -663,7 +662,8 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	public function deleteRelationships($relationship = null) {
 		elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use \ElggEntity->removeAllRelationships()', '4.3');
 		
-		return $this->removeAllRelationships($relationship);
+		$result = $this->removeAllRelationships($relationship);
+		return $result && $this->removeAllRelationships($relationship, true);
 	}
 
 	/**
