@@ -1,3 +1,91 @@
+<a name="4.3.0-rc.1"></a>
+### 4.3.0-rc.1  (2022-07-21)
+
+#### Contributors
+
+* Jeroen Dalsem (50)
+* Jerôme Bakker (31)
+* Ally Petitt (1)
+* Nikolai Shcherbin (1)
+
+#### Features
+
+* **admin:** open recent cron log in lightbox instead of in widget ([db25a973](https://github.com/Elgg/Elgg/commit/db25a9739e394cc6dc3d7cfb3eeccabee89a1f6c))
+* **ckeditor:** updated to ckeditor v4.19.0 ([d0e47c05](https://github.com/Elgg/Elgg/commit/d0e47c051bd467a524966dc269eaf3b0225eea4d))
+* **core:**
+  * add path sanitization function ([c7abf151](https://github.com/Elgg/Elgg/commit/c7abf151ee0c26b4d22d8c923983bff3f924e62f))
+  * implement generic namespace of exceptions ([0fd13f0e](https://github.com/Elgg/Elgg/commit/0fd13f0ee67c55d3ece0c895d631afb7be59bfbb))
+  * move the PAM handlers to a service ([4cb55938](https://github.com/Elgg/Elgg/commit/4cb559389e30a6da4e67a0771ea33a517231566c))
+* **discussions:** added group selection when starting a global topic ([dfe38f67](https://github.com/Elgg/Elgg/commit/dfe38f67a2a0053e67e47d6a665db6df90a52671))
+* **forms:** added class to fields that have been disabled ([b95821f6](https://github.com/Elgg/Elgg/commit/b95821f6d0b6379280de9bf564fcf761ece0d8a1))
+* **groups:** moved group tool field into its own view ([77ff14cc](https://github.com/Elgg/Elgg/commit/77ff14cc67ee17aaec2552b134b9f3c78a145aca))
+* **html:** added SRI validation to local scripts and stylesheets ([516412e4](https://github.com/Elgg/Elgg/commit/516412e4abb5b14b6c1f63428fd656d4beb689b1))
+* **icons:**
+  * added config flag to enabled/disable webp icons ([c2a78165](https://github.com/Elgg/Elgg/commit/c2a78165d8ea9c4bb61a57a629d76d29e80a8bd9))
+  * added FontAwesome zip upload so admins can update icons ([02a4030a](https://github.com/Elgg/Elgg/commit/02a4030a3e625f785441e435e270c11019395240))
+* **menus:** added support for a custom tag name for section headers ([a3c521c3](https://github.com/Elgg/Elgg/commit/a3c521c3b15ad4696c7577e84ad7a037285a413c))
+* **notifications:**
+  * allow to provide a notification actor ([a314571f](https://github.com/Elgg/Elgg/commit/a314571f7d4aca60c50c3ed944fad3d6cfa06ac7))
+  * notification handlers can controll e-mail mute link ([422019b9](https://github.com/Elgg/Elgg/commit/422019b9a0a638e87a7588063812eb8b0660ffbc))
+  * added triggers to track en/dequeue events ([9569225e](https://github.com/Elgg/Elgg/commit/9569225e1d977a9e23a6a5f1b2524ff5ab41fe2b))
+* **registration:** allow to register with a valid invitation code ([04127336](https://github.com/Elgg/Elgg/commit/04127336450b2fff71ac4be3f7d5c139e13f40ac))
+* **system_log:**
+  * added event type to the event action logged ([eb4273cf](https://github.com/Elgg/Elgg/commit/eb4273cfc01d88b8a3484e7a65f5ca0e0aab10e4))
+  * improved logbrowser features ([4a7b350c](https://github.com/Elgg/Elgg/commit/4a7b350ca0e585e413154b22340f7de1532e800e))
+* **user:** added internal cache for profile data ([7be4ca64](https://github.com/Elgg/Elgg/commit/7be4ca64eac049bc184edc99a052b9859c3a1469))
+* **users:**
+  * allow filtering of inactive users ([6ca3d63a](https://github.com/Elgg/Elgg/commit/6ca3d63a817a4c67f4530538ccd0e6919bfc7bfe))
+  * added confirmation form when deleting a user ([2234de28](https://github.com/Elgg/Elgg/commit/2234de2854636eeb41be64cd856c9e00bf918612))
+* **views:**
+  * added widget_more element to entity listings ([6ca4c78a](https://github.com/Elgg/Elgg/commit/6ca4c78a835f352dba42cb84b75963f862bc3dd5))
+  * added html5 video support to the file plugin ([d713749e](https://github.com/Elgg/Elgg/commit/d713749e4a51ddce6e30df05f8a5c02ea1784467))
+
+
+#### Performance
+
+* **core:** added config flag to disable file exist check in classloader ([234e9891](https://github.com/Elgg/Elgg/commit/234e98912247c051ae871303ba43f3296cfde9fa))
+
+
+#### Documentation
+
+* **release:** update core release documentation ([600b7517](https://github.com/Elgg/Elgg/commit/600b7517f10dd92a78e123c3b1b9e5054c758883))
+* **support:** added 4.3 to the support page ([9216020e](https://github.com/Elgg/Elgg/commit/9216020e68df5538c20f69d001a0930af086dfe2))
+
+
+#### Bug Fixes
+
+* **annotations:** save/update annotations return false on null values ([4947ede8](https://github.com/Elgg/Elgg/commit/4947ede8ad8d2e6a5493f2051e4691dbf1261a6d))
+* **core:** generate correct URLs in special request cases ([8f602520](https://github.com/Elgg/Elgg/commit/8f6025209f49434ef5e4ea77f85f10f41ab64cba))
+* **notifications:** handle exceptions during notification processing ([d94cb193](https://github.com/Elgg/Elgg/commit/d94cb19354fea23878cdddbaf27d86de7d59e076))
+* **user:** only show language completeness on user settings for admins ([65205220](https://github.com/Elgg/Elgg/commit/652052206f2a638cd0422d0d5fbb08b39dd01750))
+* **users:** briefdescription icon should be false by default ([f40750cc](https://github.com/Elgg/Elgg/commit/f40750ccee04b772c6ee7b33b25a1c9d933f57a7))
+
+
+#### Deprecations
+
+* **annotations:** annotate event is deprecated ([072ca669](https://github.com/Elgg/Elgg/commit/072ca6690374e380982a1a2bec0ba47cd7e5cb42))
+* **config:**
+  * changed the way config variables are protected ([3a53a6cd](https://github.com/Elgg/Elgg/commit/3a53a6cd793f692be6239035f05bd20bb62756ed))
+  * deprecated some more config variables ([c8190587](https://github.com/Elgg/Elgg/commit/c81905874c64172a7bc2cd9865c5499468eb15ed))
+  * do not use config->elgg_settings_file ([14b8073c](https://github.com/Elgg/Elgg/commit/14b8073ce10be5723addde7c28a42531aa666a36))
+* **core:**
+  * renamed various user related lib functions ([0f1d15fb](https://github.com/Elgg/Elgg/commit/0f1d15fb35c816e36e7f74b16b65c3296cdec096))
+  * prefix relationship functions with elgg_ ([4467cb8b](https://github.com/Elgg/Elgg/commit/4467cb8b2042b9259bdc02f2dcb404209dad9b43))
+  * renamed various session related lib functions ([82b6ffe4](https://github.com/Elgg/Elgg/commit/82b6ffe4df9edea5ddddb7368918540f1034a61b))
+  * prefix core functions with elgg_ ([517e9d25](https://github.com/Elgg/Elgg/commit/517e9d25b969033791798c288732a3743531abc7))
+  * various lib functions and hooks deprecated ([22fe011a](https://github.com/Elgg/Elgg/commit/22fe011ad6aa7af0f34b8fc424e834ebaba879cf))
+* **db:**
+  * old style database configuration ([5c5d2394](https://github.com/Elgg/Elgg/commit/5c5d2394225c31055d52cfeb48c3f3f2e34b33f9))
+  * using order_by_[metadata|annotation] is deprecated ([ae12730d](https://github.com/Elgg/Elgg/commit/ae12730db3fc7d21f9a514147d1e7cb64e5fc8c2))
+* **forms:** clear a single sticky form value ([d950a3d3](https://github.com/Elgg/Elgg/commit/d950a3d3fae70af9cbd01aaa214efe7a0506e663))
+* **friends:** Friends trait functions ([1221d6ce](https://github.com/Elgg/Elgg/commit/1221d6ce6f3895588ad6f8a8ebe4e54197d6d11c))
+* **hooks:** old or obsolete hooks have been deprecated ([d46f320a](https://github.com/Elgg/Elgg/commit/d46f320a47b654dc5a2b3d554e9b6711dcafdbe0))
+* **icons:** replaced the 'classes', 'icon' hook ([0acb87fc](https://github.com/Elgg/Elgg/commit/0acb87fcbb20faba5631dbb0fed0a8cbf206bc10))
+* **js:** toggle and popup now init with a class instead of rel ([97ba1790](https://github.com/Elgg/Elgg/commit/97ba179060925c40a1d753a7982484b8d8369643))
+* **metadata:** delete metadata by id ([d7b3c1fb](https://github.com/Elgg/Elgg/commit/d7b3c1fbcd41f73b9c9fe291518ca100f9f3a352))
+* **views:** (un)register external views ([2aa22ba7](https://github.com/Elgg/Elgg/commit/2aa22ba721c82807bbf5cab92172db0ee8c9f16a))
+
+
 <a name="4.2.3"></a>
 ### 4.2.3  (2022-07-04)
 
