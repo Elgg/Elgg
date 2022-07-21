@@ -88,7 +88,7 @@ Plugin hooks
 * ``'action_gatekeeper:upload_exceeded_msg', 'all'``
 * ``'classes', 'icon'`` use the ``'view_vars', 'output/icon'`` hook
 * ``'fail', 'auth'``
-* ``'file:icon:url', override''`` use the ``'entity:icon:url', 'object'`` hook
+* ``'file:icon:url', 'override'`` use the ``'entity:icon:url', 'object'`` hook
 * ``'find_active_users', 'system'``
 * ``'form:values', 'blog'``
 * ``'is_member', 'group'`` use the ``'gatekeeper', 'all'`` hook
