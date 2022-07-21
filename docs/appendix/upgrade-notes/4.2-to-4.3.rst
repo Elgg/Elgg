@@ -30,7 +30,7 @@ Lib functions
 * ``add_translation()`` use ``elgg()->translator->addTranslation()``
 * ``add_user_to_access_collection()`` use ``\ElggAccessCollection->addMember()``
 * ``can_edit_access_collection()`` use ``\ElggAccessCollection->canEdit()``
-* ``check_entity_relationship()`` use ``\ElggEntity->hasRelationship()``
+* ``check_entity_relationship()`` use ``\ElggEntity->hasRelationship()`` or ``\ElggEntity->getRelationship()`` 
 * ``check_rate_limit_exceeded()`` use ``elgg_is_authentication_failure_limit_reached()``
 * ``create_access_collection()`` use ``elgg_create_access_collection()``
 * ``current_page_url()`` use ``elgg_get_current_url()``

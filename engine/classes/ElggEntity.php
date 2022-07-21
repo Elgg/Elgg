@@ -574,6 +574,19 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	}
 	
 	/**
+	 * Return the relationship if this entity has a relationship with another entity
+	 *
+	 * @param int    $guid_two     GUID of the target entity of the relationship
+	 * @param string $relationship The type of relationship
+	 *
+	 * @return \ElggRelationship|null
+	 * @since 4.3
+	 */
+	public function getRelationship(int $guid_two, string $relationship): ?\ElggRelationship {
+		return _elgg_services()->relationshipsTable->check($this->guid, $relationship, $guid_two) ?: null;
+	}
+	
+	/**
 	 * Gets an array of entities with a relationship to this entity.
 	 *
 	 * @param array $options Options array. See elgg_get_entities()

@@ -49,6 +49,7 @@ class ElggRelationshipTest extends IntegrationTestCase {
 		$this->assertTrue($this->entity1->addRelationship($this->entity2->guid, 'test_relationship'));
 
 		$this->assertTrue($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
+		$this->assertTrue($this->entity1->getRelationship($this->entity2->guid, 'test_relationship') instanceof \ElggRelationship);
 	}
 
 	public function testRemoveRelationship() {
@@ -60,6 +61,7 @@ class ElggRelationshipTest extends IntegrationTestCase {
 		$this->assertTrue($this->entity1->removeRelationship($this->entity2->guid, 'test_relationship'));
 
 		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
+		$this->assertNull($this->entity1->getRelationship($this->entity2->guid, 'test_relationship'));
 	}
 
 	public function testPreventAddRelationship() {
