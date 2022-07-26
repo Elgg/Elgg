@@ -122,7 +122,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 			$hooks->registerHandler('all', 'all', __NAMESPACE__ . '\HandlerLogger::trackHook', 1);
 		}
 	
-		if (!empty($settings['show_gear']) && elgg_is_admin_logged_in() && !elgg_in_context('admin') && !elgg_is_xhr()) {
+		if (!empty($settings['show_gear']) && elgg_is_admin_logged_in() && !elgg_in_context('admin')) {
 			elgg_require_js('elgg/dev/gear');
 			elgg_require_css('elgg/dev/gear');
 			elgg_register_ajax_view('developers/gear_popup');
