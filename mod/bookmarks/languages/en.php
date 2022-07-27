@@ -45,6 +45,7 @@ View and comment on the bookmark:
 	'river:object:bookmarks:comment' => '%s commented on a bookmark %s',
 
 	'groups:tool:bookmarks' => 'Enable group bookmarks',
+	'groups:tool:bookmarks:description' => 'Allow group members to share bookmarks in this group.',
 	
 	/**
 	 * Widget and bookmarklet

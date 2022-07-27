@@ -21,5 +21,6 @@ return array(
 	'collection:river' => "Activity",
 	'collection:river:group' => "Group activity",
 	'groups:tool:activity' => 'Enable group activity',
+	'groups:tool:activity:description' => 'Show an activity feed about group related content.',
 	
 );
