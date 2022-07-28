@@ -27,10 +27,12 @@ abstract class ElggCacheTestCase extends UnitTestCase {
 	}
 
 	/**
+	 * @param string $namespace
+	 *
 	 * @return CompositeCache
 	 * @throws ConfigurationException
 	 */
-	abstract function createCache();
+	abstract function createCache(string $namespace);
 
 	public function cacheableValuesProvider() {
 		return [
@@ -147,5 +149,41 @@ abstract class ElggCacheTestCase extends UnitTestCase {
 		$this->assertEquals('bar', $this->cache->getVariable('foo'));
 
 		$this->cache->setVariable('foo', null);
+	}
+	
+	public function testCanSeparateCachesWithNamespaces() {
+		$cache1 = $this->createCache('cache_namespace1');
+		$cache2 = $this->createCache('cache_namespace2');
+		
+		// repeating tests need to start with empty cache
+		$cache1->clear();
+		$cache2->clear();
+		
+		$cache1->save('foo1', 'bar');
+		$cache2->save('foo2', 'bar');
+		
+		$this->assertEquals('bar', $cache1->load('foo1'));
+		$this->assertEquals('bar', $cache2->load('foo2'));
+		
+		// check if values are written to the correct namespaced cache
+		$this->assertNull($cache1->load('foo2'));
+		$this->assertNull($cache2->load('foo1'));
+
+		// redis/memcache do not support flushing namespaces
+		if (static::class !== 'Elgg\Cache\PersistentCacheTest') {
+			// check if clearing namespace 1 does not clear namespace 2
+			$cache1->clear();
+			$this->assertNull($cache1->load('foo1'));
+			
+			$reflector = new \ReflectionClass($cache2);
+			$property = $reflector->getProperty('pool');
+			$property->setAccessible(true);
+			
+			$pool = $property->getValue($cache2);
+			
+			// need to detach to make sure the item is loaded from the backend and does not use static cache
+			$pool->detachAllItems();
+			$this->assertEquals('bar', $cache2->load('foo2'));
+		}
 	}
 }
