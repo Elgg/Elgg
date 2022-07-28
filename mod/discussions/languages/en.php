@@ -61,6 +61,7 @@ View and comment on the discussion:
 %s',
 
 	'groups:tool:forum' => 'Enable group discussions',
+	'groups:tool:forum:description' => 'Allow group members to start a discussion in this group.',
 
 	'discussions:groups:edit:add_group_subscribers_to_discussion_comments' => 'Add group subscriber to discussion comment notifications',
 	

@@ -54,6 +54,7 @@ return array(
 	'widgets:filerepo:description' => "Showcase your latest files",
 
 	'groups:tool:file' => 'Enable group files',
+	'groups:tool:file:description' => 'Allow group members to share files in this group.',
 
 	'river:object:file:create' => '%s uploaded the file %s',
 	'river:object:file:comment' => '%s commented on the file %s',
