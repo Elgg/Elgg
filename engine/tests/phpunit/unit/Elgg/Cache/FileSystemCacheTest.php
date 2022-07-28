@@ -7,8 +7,8 @@ namespace Elgg\Cache;
  */
 class FileSystemCacheTest extends ElggCacheTestCase {
 
-	function createCache() {
-		return new CompositeCache('filesystem_test', _elgg_services()->config, ELGG_CACHE_FILESYSTEM);
+	function createCache(string $namespace = 'filesystem_test') {
+		return new CompositeCache($namespace, _elgg_services()->config, ELGG_CACHE_FILESYSTEM);
 	}
 
 }
