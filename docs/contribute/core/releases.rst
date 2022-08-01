@@ -166,6 +166,14 @@ Additional actions for the first new minor / major
 * Configure `Scrutinizer`_ to build the new branch
 * Check the Elgg starter project for potential requirement / config changes in the ``composer.json``
 * Add the new minor / major version to the ``Elgg/community_plugins`` repository so developers can upload plugins for the new release
+* Update the build configuration for the `Elgg reference`_ (on the Elgg.org webserver)
+
+.. code-block:: sh
+
+	# in the file /root/elgg-scripts/cron/make_reference
+	# set the main build branch to the correct branch
+	# make sure if you change the main build branch to add the previous branch to the other branches to build
+	# the new configuration will be applied by the daily cron
 
 Additional action for the first new major
 -----------------------------------------
@@ -229,3 +237,4 @@ This should be the very last thing you do.
 .. _Twitter account: https://twitter.com/elgg
 .. _Read The Docs: https://readthedocs.org/projects/elgg/
 .. _Scrutinizer: https://scrutinizer-ci.com/g/Elgg/Elgg/
+.. _Elgg reference: http://reference.elgg.org/

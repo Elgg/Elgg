@@ -297,7 +297,7 @@ class CompositeCache extends ElggCache {
 			return null;
 		}
 		
-		$config = \Elgg\Cache\Config\Redis::fromElggConfig($this->config);
+		$config = \Elgg\Cache\Config\Redis::fromElggConfig($this->namespace, $this->config);
 		if (empty($config)) {
 			return null;
 		}
@@ -318,22 +318,12 @@ class CompositeCache extends ElggCache {
 			return null;
 		}
 		
-		$config = \Elgg\Cache\Config\Memcached::fromElggConfig($this->config);
+		$config = \Elgg\Cache\Config\Memcached::fromElggConfig($this->namespace, $this->config);
 		if (empty($config)) {
 			return null;
 		}
-				
-		$driver = class_exists('Memcached') ? 'Memcached' : 'Memcache';
 		
-		if (!empty($this->config->memcache_namespace_prefix)) {
-			if ($driver !== 'Memcached') {
-				elgg_log('The setting memcache_namespace_prefix is only working if you use Memcached (not Memcache)', \Psr\Log\LogLevel::WARNING);
-			} else {
-				$config->setOptPrefix($this->config->memcache_namespace_prefix);
-			}
-		}
-		
-		return CacheManager::getInstance($driver, $config, $this->prefixInstanceId('memcache'));
+		return CacheManager::getInstance('Memcached', $config, $this->prefixInstanceId('memcache'));
 	}
 
 	/**
@@ -345,7 +335,7 @@ class CompositeCache extends ElggCache {
 			return null;
 		}
 		
-		$config = \Elgg\Cache\Config\Files::fromElggConfig($this->config);
+		$config = \Elgg\Cache\Config\Files::fromElggConfig($this->namespace, $this->config);
 		if (empty($config)) {
 			return null;
 		}
@@ -370,7 +360,7 @@ class CompositeCache extends ElggCache {
 			return null;
 		}
 
-		$config = \Elgg\Cache\Config\LocalFiles::fromElggConfig($this->config);
+		$config = \Elgg\Cache\Config\LocalFiles::fromElggConfig($this->namespace, $this->config);
 		if (empty($config)) {
 			return null;
 		}
@@ -425,7 +415,7 @@ class CompositeCache extends ElggCache {
 	 * @since 4.2
 	 */
 	public static function isMemcacheAvailable(): bool {
-		return class_exists('Memcached') || class_exists('Memcache');
+		return class_exists('Memcached');
 	}
 	
 	/**

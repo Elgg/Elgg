@@ -15,11 +15,12 @@ class Redis extends Config {
 	/**
 	 * Factory to return a config object to be used when starting a driver
 	 *
-	 * @param \Elgg\Config $config Elgg configuration
+	 * @param string       $namespace cache namespace
+	 * @param \Elgg\Config $config    Elgg configuration
 	 *
 	 * @return self|NULL
 	 */
-	public static function fromElggConfig(\Elgg\Config $config): ?self {
+	public static function fromElggConfig(string $namespace, \Elgg\Config $config): ?self {
 		
 		if (!$config->redis || empty($config->redis_servers) || !is_array($config->redis_servers)) {
 			return null;
@@ -29,6 +30,7 @@ class Redis extends Config {
 			'preventCacheSlams' => true,
 			'useStaticItemCaching' => true,
 			'itemDetailedDate' => true,
+			'optPrefix' => $namespace,
 		];
 		if (!empty($config->redis_options) && is_array($config->redis_options)) {
 			$options = $config->redis_options;
