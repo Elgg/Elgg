@@ -16,7 +16,7 @@ foreach ($variables as $field) {
 		$input[$name] = get_input($name);
 	}
 	if ($field['#type'] === 'tags') {
-		$input[$name] = string_to_tag_array($input[$name]);
+		$input[$name] = elgg_string_to_array((string) $input[$name]);
 	}
 
 	if (elgg_extract('required', $field, false) && elgg_is_empty($input[$name])) {

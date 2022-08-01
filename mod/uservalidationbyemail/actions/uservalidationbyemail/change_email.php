@@ -20,8 +20,8 @@ if (!$hmac->matchesToken(get_input('change_secret'))) {
 	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 
-$email = get_input('email');
-if (!is_email_address($email)) {
+$email = (string) get_input('email');
+if (!elgg_is_valid_email($email)) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 

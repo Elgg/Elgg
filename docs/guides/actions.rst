@@ -124,7 +124,11 @@ to the client for XHR calls (this data will be ignored for non-XHR calls)
    $action_data = [
       'entity' => $user,
       'stats' => [
-          'friends' => $user->getFriends(['count' => true]);
+          'friends_count' => $user->getEntitiesFromRelationship([
+              'type' => 'user',
+              'relationship' => 'friend',
+              'count' => true,
+          ]);
       ],
    ];
 
@@ -486,14 +490,14 @@ The registration action sets creates the sticky form and clears it once the acti
    // actions/register.php
    elgg_make_sticky_form('register', ['password', 'password2']);
 
-   ...
-
-   $guid = register_user($username, $password, $name, $email, false, $friend_guid, $invitecode);
-
-   if ($guid) {
-      elgg_clear_sticky_form('register');
-      ....
-   }
+   elgg_register_user([
+      'username' => $username,
+      'password' => $password,
+      'name' => $name,
+      'email' => $email,
+   ]);
+   
+   elgg_clear_sticky_form('register');
 
 .. tip::
 

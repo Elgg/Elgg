@@ -73,6 +73,13 @@ class RemoveAdminUserEventHandler extends NotificationEventHandler {
 	}
 	
 	/**
+	 * {@inheritDoc}
+	 */
+	protected function addMuteLink(): bool {
+		return false;
+	}
+	
+	/**
 	 * Add the user to the subscribers when changing admin rights
 	 *
 	 * {@inheritDoc}

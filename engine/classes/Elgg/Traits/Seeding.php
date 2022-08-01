@@ -7,6 +7,7 @@ use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Seeds\Providers\LocalImage;
 use Elgg\Exceptions\Configuration\RegistrationException;
+use Elgg\Exceptions\Exception;
 use Elgg\Exceptions\Seeding\MaxAttemptsException;
 use Elgg\Groups\Tool;
 use Elgg\Traits\Seeding\GroupHelpers;
@@ -100,6 +101,7 @@ trait Seeding {
 	 * @param array $options    Seeding options
 	 *
 	 * @return \ElggUser
+	 * @throws Exception
 	 * @throws MaxAttemptsException
 	 */
 	public function createUser(array $attributes = [], array $metadata = [], array $options = []): \ElggUser {
@@ -108,7 +110,7 @@ trait Seeding {
 			$metadata['__faker'] = true;
 
 			if (empty($metadata['password'])) {
-				$metadata['password'] = generate_random_cleartext_password();
+				$metadata['password'] = elgg_generate_password();
 			}
 
 			if (empty($metadata['name'])) {
@@ -130,12 +132,16 @@ trait Seeding {
 			$user = false;
 
 			try {
-				$guid = register_user($metadata['username'], $metadata['password'], $metadata['name'], $metadata['email'], false, $attributes['subtype']);
-
-				$user = get_user($guid);
-				if (!$user instanceof \ElggUser) {
-					throw new \Exception("Unable to create new user with attributes: " . print_r($attributes, true));
-				}
+				$user = elgg_register_user([
+					'username' => elgg_extract('username', $metadata),
+					'password' => elgg_extract('password', $metadata),
+					'name' => elgg_extract('name', $metadata),
+					'email' => elgg_extract('email', $metadata),
+					'subtype' => elgg_extract('subtype', $attributes),
+				]);
+				
+				// make sure we have a cleanly loaded user entity
+				$user = get_user($user->guid);
 
 				if (!isset($attributes['time_created'])) {
 					$attributes['time_created'] = $this->getRandomCreationTimestamp();
@@ -611,7 +617,7 @@ trait Seeding {
 			'container_guid' => $container ? $container->guid : null,
 		];
 
-		$access_array = get_write_access_array($user->guid, null, false, $params);
+		$access_array = elgg_get_write_access_array($user->guid, false, $params);
 
 		return array_rand($access_array, 1);
 	}
@@ -735,7 +741,7 @@ trait Seeding {
 							break;
 
 						case 'password' :
-							$metadata[$name] = generate_random_cleartext_password();
+							$metadata[$name] = elgg_generate_password();
 							break;
 
 						case 'location' :

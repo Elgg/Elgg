@@ -61,6 +61,9 @@ return [
 		],
 	],
 	'elgg.data' => [
+		'page' => [
+			\Elgg\Javascript\AddSRIConfig::class => [],
+		],
 		'site' => [
 			\Elgg\Javascript\SetLightboxConfigHandler::class => [],
 		],
@@ -247,6 +250,13 @@ return [
 			],
 		],
 	],
+	'sanitize' => [
+		'input' => [
+			\Elgg\Input\ValidateInputHandler::class => [
+				'priority' => 1,
+			],
+		],
+	],
 	'search:fields' => [
 		'group' => [
 			\Elgg\Search\GroupSearchFieldsHandler::class => [],
@@ -277,11 +287,13 @@ return [
 	],
 	'simplecache:generate' => [
 		'css' => [
+			\Elgg\Views\CalculateSRI::class => ['priority' => 999],
 			\Elgg\Views\PreProcessCssHandler::class => [],
 			\Elgg\Views\MinifyHandler::class => [],
 		],
 		'js' => [
 			\Elgg\Views\AddAmdModuleNameHandler::class => [],
+			\Elgg\Views\CalculateSRI::class => ['priority' => 999],
 			\Elgg\Views\MinifyHandler::class => [],
 		],
 	],
@@ -298,19 +310,15 @@ return [
 			'Elgg\Users\Settings::setUsername' => [],
 		],
 	],
-	'validate' => [
-		'input' => [
-			\Elgg\Input\ValidateInputHandler::class => [
-				'priority' => 1,
-			],
-		],
-	],
 	'view_vars' => [
 		'elements/forms/help' => [
 			\Elgg\Input\AddFileHelpTextHandler::class => [],
 		],
 		'input/password' => [
 			\Elgg\Input\DisablePasswordAutocompleteHandler::class => [],
+		],
+		'output/icon' => [
+			\Elgg\Icons\AddFontAwesomeClassesHandler::class => ['priority' => 100],
 		],
 		'page/components/list' => [
 			'Elgg\Comments\Preloader::preload' => [],

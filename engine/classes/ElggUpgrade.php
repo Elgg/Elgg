@@ -5,6 +5,7 @@
  */
 
 use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
+use Elgg\Exceptions\UnexpectedValueException as ElggUnexpectedValueException;
 use Elgg\Traits\TimeUsing;
 use Elgg\Upgrade\Batch;
 
@@ -194,7 +195,7 @@ class ElggUpgrade extends ElggObject {
 
 	/**
 	 * {@inheritDoc}
-	 * @throws UnexpectedValueException
+	 * @throws \Elgg\Exceptions\UnexpectedValueException
 	 */
 	public function save() : bool {
 		if (!isset($this->is_completed)) {
@@ -203,7 +204,7 @@ class ElggUpgrade extends ElggObject {
 
 		foreach ($this->requiredProperties as $prop) {
 			if (!$this->$prop) {
-				throw new UnexpectedValueException("ElggUpgrade objects must have a value for the {$prop} property.");
+				throw new ElggUnexpectedValueException("ElggUpgrade objects must have a value for the {$prop} property.");
 			}
 		}
 

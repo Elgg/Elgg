@@ -9,6 +9,7 @@ use Elgg\Database;
 use Elgg\EventsService;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\PluginException;
+use Elgg\Http\Request;
 use Elgg\I18n\Translator;
 use Elgg\Project\Paths;
 use Elgg\SystemMessagesService;
@@ -127,7 +128,7 @@ class Plugins {
 	 * @param PrivateSettingsCache  $private_settings_cache Settings cache
 	 * @param Config                $config                 Config
 	 * @param SystemMessagesService $system_messages        System messages
-	 * @param Context               $context                Context
+	 * @param Request               $request                Context
 	 */
 	public function __construct(
 		\ElggCache $cache,
@@ -139,7 +140,7 @@ class Plugins {
 		PrivateSettingsCache $private_settings_cache,
 		Config $config,
 		SystemMessagesService $system_messages,
-		Context $context
+		Request $request
 	) {
 		$this->cache = $cache;
 		$this->db = $db;
@@ -150,7 +151,8 @@ class Plugins {
 		$this->private_settings_cache = $private_settings_cache;
 		$this->config = $config;
 		$this->system_messages = $system_messages;
-		$this->context = $context;
+		
+		$this->context = $request->getContextStack();
 	}
 
 	/**
@@ -417,38 +419,33 @@ class Plugins {
 	 * @return \ElggPlugin|null
 	 */
 	public function get(string $plugin_id): ?\ElggPlugin {
-		if (!$plugin_id) {
+		if (empty($plugin_id)) {
 			return null;
 		}
-
-		$fallback = function () use ($plugin_id) {
-			$plugins = elgg_get_entities([
-				'type' => 'object',
-				'subtype' => 'plugin',
-				'metadata_name_value_pairs' => [
-					'name' => 'title',
-					'value' => $plugin_id,
-				],
-				'limit' => 1,
-				'distinct' => false,
-			]);
-
-			if ($plugins) {
-				return $plugins[0];
-			}
-
-			return null;
-		};
 
 		$plugin = $this->cache->load($plugin_id);
-		if (!isset($plugin)) {
-			$plugin = $fallback();
-			if ($plugin instanceof \ElggPlugin) {
-				$plugin->cache();
-			}
+		if ($plugin instanceof \ElggPlugin) {
+			return $plugin;
 		}
 
-		return $plugin;
+		$plugins = elgg_get_entities([
+			'type' => 'object',
+			'subtype' => 'plugin',
+			'metadata_name_value_pairs' => [
+				'name' => 'title',
+				'value' => $plugin_id,
+			],
+			'limit' => 1,
+			'distinct' => false,
+		]);
+
+		if (empty($plugins)) {
+			return null;
+		}
+
+		$plugins[0]->cache();
+
+		return $plugins[0];
 	}
 
 	/**
@@ -500,11 +497,11 @@ class Plugins {
 		}
 		
 		$plugin = $this->get($plugin_id);
-		if (!$plugin) {
+		if (!$plugin instanceof \ElggPlugin) {
 			return false;
 		}
 		
-		return check_entity_relationship($plugin->guid, 'active_plugin', 1) instanceof \ElggRelationship;
+		return $plugin->hasRelationship(1, 'active_plugin');
 	}
 
 	/**
@@ -706,12 +703,7 @@ class Plugins {
 			],
 		]);
 
-		$disable_plugins = $this->config->auto_disable_plugins;
-		if ($disable_plugins === null) {
-			$disable_plugins = true;
-		}
-
-		if (!$disable_plugins) {
+		if (!$this->config->auto_disable_plugins) {
 			return;
 		}
 

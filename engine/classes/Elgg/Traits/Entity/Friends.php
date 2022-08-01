@@ -22,7 +22,7 @@ trait Friends {
 			return false;
 		}
 
-		if (!add_entity_relationship($this->guid, 'friend', $friend_guid)) {
+		if (!$this->addRelationship($friend_guid, 'friend')) {
 			return false;
 		}
 
@@ -53,8 +53,11 @@ trait Friends {
 	 * Determines whether or not this user is a friend of the currently logged in user
 	 *
 	 * @return bool
+	 * @deprecated 4.3 use \ElggUser->isFriendOf()
 	 */
 	public function isFriend(): bool {
+		elgg_deprecated_notice(__CLASS__ . '->' . __FUNCTION__ . '() has been deprecated. Use ' . __CLASS__ . '->isFriendOf()', '4.3');
+
 		return $this->isFriendOf(_elgg_services()->session->getLoggedInUserGuid());
 	}
 
@@ -66,7 +69,7 @@ trait Friends {
 	 * @return bool
 	 */
 	public function isFriendsWith(int $user_guid): bool {
-		return (bool) check_entity_relationship($this->guid, 'friend', $user_guid);
+		return $this->hasRelationship($user_guid, 'friend');
 	}
 
 	/**
@@ -77,7 +80,7 @@ trait Friends {
 	 * @return bool
 	 */
 	public function isFriendOf(int $user_guid): bool {
-		return (bool) check_entity_relationship($user_guid, 'friend', $this->guid);
+		return (bool) _elgg_services()->relationshipsTable->check($user_guid, 'friend', $this->guid);
 	}
 
 	/**
@@ -88,8 +91,11 @@ trait Friends {
 	 *                       this entity, relationship name to 'friend' and type to 'user'.
 	 *
 	 * @return \ElggUser[]|int|mixed
+	 * @deprecated 4.3 use \ElggEntity->getEntitiesFromRelationship()
 	 */
 	public function getFriends(array $options = []) {
+		elgg_deprecated_notice(__CLASS__ . '->' . __FUNCTION__ . '() has been deprecated. Use ' . __CLASS__ . '->getEntitiesFromRelationship()', '4.3');
+
 		$options['relationship'] = 'friend';
 		$options['relationship_guid'] = $this->guid;
 		$options['type'] = 'user';
@@ -106,8 +112,11 @@ trait Friends {
 	 *                       and inverse_relationship to true.
 	 *
 	 * @return \ElggUser[]|int|mixed
+	 * @deprecated 4.3 use \ElggEntity->getEntitiesFromRelationship()
 	 */
 	public function getFriendsOf(array $options = []) {
+		elgg_deprecated_notice(__CLASS__ . '->' . __FUNCTION__ . '() has been deprecated. Use ' . __CLASS__ . '->getEntitiesFromRelationship()', '4.3');
+
 		$options['relationship'] = 'friend';
 		$options['relationship_guid'] = $this->guid;
 		$options['inverse_relationship'] = true;
@@ -125,8 +134,11 @@ trait Friends {
 	 *                       and relationship_join_on to 'container_guid'.
 	 *
 	 * @return \ElggObject[]|int|mixed
+	 * @deprecated 4.3 use \ElggEntity->getEntitiesFromRelationship()
 	 */
 	public function getFriendsObjects(array $options = []) {
+		elgg_deprecated_notice(__CLASS__ . '->' . __FUNCTION__ . '() has been deprecated. Use ' . __CLASS__ . '->getEntitiesFromRelationship()', '4.3');
+
 		$options['type'] = 'object';
 		$options['relationship'] = 'friend';
 		$options['relationship_guid'] = $this->guid;

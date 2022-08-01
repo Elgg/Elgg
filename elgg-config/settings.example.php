@@ -317,6 +317,14 @@ $CONFIG->db_disable_query_cache = false;
 $CONFIG->auto_disable_plugins = true;
 
 /**
+ * Control if Elgg should always validate classes previously stored in the ClassMap.
+ * You can disable this for performance reasons (less disk checks) but you need to make sure the class map will never get stale data.
+ *
+ * @global bool $CONFIG->class_loader_verify_file_existence
+ */
+//$CONFIG->class_loader_verify_file_existence = false;
+
+/**
  * This is an optional script used to override Elgg's default handling of
  * uncaught exceptions.
  *
@@ -380,6 +388,14 @@ $CONFIG->allow_phpinfo = false;
  * @global string $CONFIG->image_processor
  */
 //$CONFIG->image_processor = 'imagick';
+
+/**
+ * Control if webp images are allowed to be served for icons (if supported by server and browser).
+ * Default enabled
+ *
+ * @global bool $CONFIG->webp_enabled
+ */
+//$CONFIG->webp_enabled = false;
 
 /**
  * Email subject length limit

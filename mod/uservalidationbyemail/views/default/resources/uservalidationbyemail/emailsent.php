@@ -3,8 +3,8 @@
 use Elgg\Exceptions\Http\BadRequestException;
 
 $session = elgg_get_session();
-$email = $session->get('emailsent', '');
-if (!is_email_address($email)) {
+$email = (string) $session->get('emailsent', '');
+if (!elgg_is_valid_email($email)) {
 	throw new BadRequestException();
 }
 

@@ -2,6 +2,12 @@
 
 namespace Elgg\Assets;
 
+use Elgg\Cache\SimpleCache;
+use Elgg\Cache\SystemCache;
+use Elgg\Config;
+use Elgg\Http\Urls;
+use Elgg\ViewsService;
+
 /**
  * External files service
  *
@@ -14,6 +20,55 @@ class ExternalFiles {
 	 * @var array
 	 */
 	protected $files = [];
+
+	/**
+	 * Subresource integrity data (loaded on first use)
+	 *
+	 * @var array
+	 */
+	protected $sri;
+	
+	/**
+	 * @var Config
+	 */
+	protected $config;
+	
+	/**
+	 * @var Urls
+	 */
+	protected $urls;
+	
+	/**
+	 * @var ViewsService
+	 */
+	protected $views;
+	
+	/**
+	 * @var SimpleCache
+	 */
+	protected $simpleCache;
+	
+	/**
+	 * @var SystemCache
+	 */
+	protected $serverCache;
+	
+	/**
+	 * Constructor
+	 *
+	 * @param Config       $config      config
+	 * @param Urls         $urls        urls service
+	 * @param ViewsService $views       views service
+	 * @param SimpleCache  $simpleCache simplecache
+	 * @param SystemCache  $serverCache server cache
+	 */
+	public function __construct(Config $config, Urls $urls, ViewsService $views, SimpleCache $simpleCache, SystemCache $serverCache) {
+		$this->config = $config;
+		$this->urls = $urls;
+		$this->views = $views;
+		$this->simpleCache = $simpleCache;
+		$this->serverCache = $serverCache;
+	}
 
 	/**
 	 * Core registration function for external files
@@ -31,7 +86,7 @@ class ExternalFiles {
 			return false;
 		}
 	
-		$url = elgg_normalize_url($url);
+		$url = $this->urls->normalizeUrl($url);
 
 		$this->setupType($type);
 	
@@ -100,8 +155,8 @@ class ExternalFiles {
 				'url' => '',
 				'location' => '',
 			];
-			if (elgg_view_exists($name)) {
-				$item->url = elgg_get_simplecache_url($name);
+			if ($this->views->viewExists($name)) {
+				$item->url = $this->simpleCache->getUrl($name);
 				$item->location = ($type === 'js') ? 'footer' : 'head';
 			}
 		}
@@ -116,8 +171,29 @@ class ExternalFiles {
 	 * @param string $location Page location
 	 *
 	 * @return string[] URLs of files to load
+	 *
+	 * @deprecated 4.3 When removing this function in Elgg 5 update the unit tests to use getLoadedResources directly
 	 */
 	public function getLoadedFiles(string $type, string $location): array {
+		$items = $this->getLoadedResources($type, $location);
+		
+		// return only urls
+		array_walk($items, function(&$v, $k){
+			$v = $v->url;
+		});
+		
+		return $items;
+	}
+	
+	/**
+	 * Get external resource descriptors
+	 *
+	 * @param string $type     Type of file: js or css
+	 * @param string $location Page location
+	 *
+	 * @return string[] Resources to load
+	 */
+	public function getLoadedResources(string $type, string $location): array {
 		if (!isset($this->files[$type])) {
 			return [];
 		}
@@ -129,12 +205,14 @@ class ExternalFiles {
 			return $v->loaded == true && $v->location == $location;
 		});
 		
-		// return only urls
-		if (!empty($items)) {
-			array_walk($items, function(&$v, $k){
-				$v = $v->url;
-			});
-		}
+		$cache_ts = $this->config->lastcache;
+		$cache_url = $this->config->wwwroot . "cache/{$cache_ts}/default/";
+		
+		// check if SRI data is available
+		array_walk($items, function(&$v, $k) use ($type, $cache_url) {
+			$view = str_replace($cache_url, '', $v->url);
+			$v->integrity = $this->getSubResourceIntegrity($type, $view);
+		});
 		
 		return $items;
 	}
@@ -158,5 +236,24 @@ class ExternalFiles {
 		if (!isset($this->files[$type])) {
 			$this->files[$type] = [];
 		}
+	}
+	
+	/**
+	 * Returns the integrity related to the resource file
+	 *
+	 * @param string $type     type of resource
+	 * @param string $resource name of resource
+	 * @return string|NULL
+	 */
+	protected function getSubResourceIntegrity(string $type, string $resource): ?string {
+		if (!$this->config->subresource_integrity_enabled) {
+			return null;
+		}
+		
+		if (!isset($this->sri)) {
+			$this->sri = $this->serverCache->load('sri') ?? [];
+		}
+		
+		return $this->sri[$type][$resource] ?? null;
 	}
 }

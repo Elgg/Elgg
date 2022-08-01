@@ -4,10 +4,8 @@ namespace Elgg\Notifications;
 
 /**
  * @group NotificationsService
- * @group AnnotationNotifications
- * @group UnitTests
  */
-class NotificationsServiceElggAnnotationTest extends NotificationsServiceUnitTestCase {
+class NotificationsServiceElggAnnotationTest extends NotificationsServiceIntegrationTestCase {
 
 	public function up() {
 		$this->test_object_class = \ElggAnnotation::class;

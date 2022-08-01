@@ -4,13 +4,13 @@
  */
 
 $guid = (int) get_input('user_guid');
-$email = get_input('email');
+$email = (string) get_input('email');
 
 if (empty($guid) || empty($email)) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
-if (!is_email_address($email)) {
+if (!elgg_is_valid_email($email)) {
 	return elgg_error_response(elgg_echo('registration:emailnotvalid'));
 }
 

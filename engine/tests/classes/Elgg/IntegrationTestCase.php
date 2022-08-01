@@ -101,6 +101,11 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		$app->internal_services->events->unregisterHandler('all', 'all', 'Elgg\SystemLog\Logger::listen');
 		$app->internal_services->events->unregisterHandler('log', 'systemlog', 'Elgg\SystemLog\Logger::log');
 
+		// prevent loading of 'active' plugins from database if loading application with a custom plugins path
+		if (isset($params['plugins_path'])) {
+			$app->setBootStatus('plugins_boot_completed', true);
+		}
+		
 		$app->bootCore();
 		
 		// set custom config values again (as they might be overriden by DB config values

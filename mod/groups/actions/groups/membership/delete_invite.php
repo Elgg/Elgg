@@ -23,7 +23,7 @@ if (!$user->canEdit() && !$group->canEdit()) {
 
 // If join request made
 $message = '';
-if (remove_entity_relationship($group->guid, 'invited', $user->guid)) {
+if ($group->removeRelationship($user->guid, 'invited')) {
 	$message = elgg_echo('groups:invitekilled');
 }
 

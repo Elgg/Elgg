@@ -7,6 +7,7 @@ use Elgg\Database;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\EventsService as Events;
+use Elgg\Exceptions\LogicException;
 use Elgg\Traits\TimeUsing;
 
 /**
@@ -206,7 +207,7 @@ class MetadataTable {
 	 * @param bool          $allow_multiple Allow multiple values for one key. Default is false
 	 *
 	 * @return int|false id of metadata or false if failure
-	 * @throws \LogicException
+	 * @throws LogicException
 	 */
 	public function create(\ElggMetadata $metadata, $allow_multiple = false) {
 		if (!isset($metadata->value) || !isset($metadata->entity_guid)) {
@@ -238,7 +239,7 @@ class MetadataTable {
 			$id = $this->getIDsByName($metadata->entity_guid, $metadata->name);
 
 			if (is_array($id)) {
-				throw new \LogicException("
+				throw new LogicException("
 					Multiple '{$metadata->name}' metadata values exist for entity [guid: {$metadata->entity_guid}].
 					Use ElggEntity::setMetadata()
 				");
@@ -445,7 +446,7 @@ class MetadataTable {
 	 *
 	 * @return int[]|int|null
 	 */
-	public function getIDsByName($entity_guid, $name) {
+	protected function getIDsByName($entity_guid, $name) {
 		if ($this->metadata_cache->isLoaded($entity_guid)) {
 			$ids = $this->metadata_cache->getSingleId($entity_guid, $name);
 		} else {

@@ -14,27 +14,20 @@ $options = [
 	'limit' => $num_display,
 	'pagination' => false,
 	'distinct' => false,
+	'no_results' => elgg_echo('bookmarks:none'),
 ];
 
 $owner = $widget->getOwnerEntity();
 if ($owner instanceof \ElggUser) {
 	$options['owner_guid'] = $owner->guid;
-} else {
+	$url = elgg_generate_url('collection:object:bookmarks:owner', ['username' => $owner->username]);
+} elseif ($owner instanceof \ElggGroup) {
 	$options['container_guid'] = $widget->owner_guid;
-}
-
-$content = elgg_list_entities($options);
-if (empty($content)) {
-	echo elgg_echo('bookmarks:none');
-	return;
-}
-
-echo $content;
-
-if ($owner instanceof \ElggGroup) {
 	$url = elgg_generate_url('collection:object:bookmarks:group', ['guid' => $owner->guid]);
 } else {
-	$url = elgg_generate_url('collection:object:bookmarks:owner', ['username' => $owner->username]);
+	$url = elgg_generate_url('collection:object:bookmarks:all');
 }
 
-echo elgg_format_element('div', ['class' => 'elgg-widget-more'], elgg_view_url($url, elgg_echo('more')));
+$options['widget_more'] = elgg_view_url($url, elgg_echo('more'));
+
+echo elgg_list_entities($options);

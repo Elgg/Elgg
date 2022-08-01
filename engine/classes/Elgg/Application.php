@@ -49,9 +49,6 @@ class Application {
 
 	use Loggable;
 
-	const DEFAULT_LANG = 'en';
-	const DEFAULT_LIMIT = 10;
-
 	/**
 	 * @var InternalContainer
 	 *
@@ -73,6 +70,18 @@ class Application {
 	 * @var Application
 	 */
 	public static $_instance;
+	
+	/**
+	 * Stores status about the boot process
+	 *
+	 * @var array
+	 */
+	protected $boot_status = [
+		'application_boot_completed' => false,
+		'full_boot_completed' => false,
+		'plugins_boot_completed' => false,
+		'service_boot_completed' => false,
+	];
 
 	/**
 	 * Get the global Application instance. If not set, it's auto-created and wired to $CONFIG.
@@ -179,6 +188,33 @@ class Application {
 		$boot = new BootHandler($this);
 		$boot();
 	}
+	
+	/**
+	 * Retrieve the boot status of the application
+	 *
+	 * @param string $type status to check
+	 *
+	 * @return bool
+	 *
+	 * @since 4.3
+	 */
+	public function getBootStatus(string $type): bool {
+		return $this->boot_status[$type] ?? false;
+	}
+
+	/**
+	 * Sets the boot status
+	 *
+	 * @param string $type   type of status to set
+	 * @param bool   $status value of the status
+	 *
+	 * @return void
+	 *
+	 * @since 4.3
+	 */
+	public function setBootStatus(string $type, bool $status): void {
+		$this->boot_status[$type] = $status;
+	}
 
 	/**
 	 * Get a Database wrapper for performing queries without booting Elgg
@@ -259,6 +295,7 @@ class Application {
 		if ($spec['request']) {
 			if ($spec['request'] instanceof HttpRequest) {
 				$spec['request']->initializeTrustedProxyConfiguration($spec['internal_services']->config);
+				$spec['request']->correctBaseURL($spec['internal_services']->config);
 				$spec['internal_services']->set('request', $spec['request']);
 			} else {
 				throw new InvalidArgumentException("Given request is not a " . HttpRequest::class);
@@ -721,6 +758,7 @@ class Application {
 			'deprecated-4.0.php',
 			'deprecated-4.1.php',
 			'deprecated-4.2.php',
+			'deprecated-4.3.php',
 			'deprecation.php',
 			'entities.php',
 			'external_files.php',

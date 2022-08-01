@@ -163,20 +163,30 @@ class Accounts {
 	}
 
 	/**
-	 * Registers a user, returning false if the username already exists
+	 * Registers a user
 	 *
-	 * @param string $username              The username of the new user
-	 * @param string $password              The password
-	 * @param string $name                  The user's display name
-	 * @param string $email                 The user's email address
-	 * @param bool   $allow_multiple_emails Allow the same email address to be
-	 *                                      registered multiple times?
-	 * @param string $subtype               Subtype of the user entity
-	 * @param array  $params                Additional parameters
+	 * @param array $params Array of options with keys:
+	 *                      (string) username              => The username of the new user
+	 *                      (string) password              => The password
+	 *                      (string) name                  => The user's display name
+	 *                      (string) email                 => The user's email address
+	 *                      (string) subtype               => (optional) Subtype of the user entity
+	 *                      (string) language              => (optional) user language (defaults to current language)
+	 *                      (bool)   allow_multiple_emails => (optional) Allow the same email address to be registered multiple times (default false)
+	 *                      (bool)   validated             => (optional) Is the user validated (default true)
 	 *
-	 * @return int|false The new user's GUID; false on failure
+	 * @return \ElggUser
+	 * @throws RegistrationException
 	 */
-	public function register($username, $password, $name, $email, $allow_multiple_emails = false, $subtype = null, array $params = []) {
+	public function register(array $params = []): \ElggUser {
+		$username = (string) elgg_extract('username', $params);
+		$password = (string) elgg_extract('password', $params);
+		$name = (string) elgg_extract('name', $params);
+		$email = (string) elgg_extract('email', $params);
+		$subtype = elgg_extract('subtype', $params);
+		$language = (string) elgg_extract('language', $params, $this->translator->getCurrentLanguage());
+		$allow_multiple_emails = (bool) elgg_extract('allow_multiple_emails', $params, false);
+		$validated = (bool) elgg_extract('validated', $params, true);
 
 		$this->assertValidAccountData($username, $password, $name, $email, $allow_multiple_emails);
 
@@ -199,11 +209,10 @@ class Accounts {
 		$user->username = $username;
 		$user->email = $email;
 		$user->name = $name;
-		
-		$user->language = $this->translator->getCurrentLanguage();
+		$user->language = $language;
 
 		if (!$user->save()) {
-			return false;
+			throw new RegistrationException($this->translator->translate('registerbad'));
 		}
 
 		// doing this after save to prevent metadata save notices on unwritable metadata password_hash
@@ -212,11 +221,11 @@ class Accounts {
 		// Turn on email notifications by default
 		$user->setNotificationSetting('email', true);
 		
-		if (elgg_extract('validated', $params, true)) {
+		if ($validated) {
 			$user->setValidationStatus(true, 'on_create');
 		}
 
-		return $user->guid;
+		return $user;
 	}
 
 	/**
@@ -423,5 +432,79 @@ class Accounts {
 		]);
 		
 		return $this->email->send($notification);
+	}
+	
+	/**
+	 * Registers an authentication failure for a user
+	 *
+	 * @param \ElggUser $user user to log the failure for
+	 *
+	 * @return void
+	 * @since 4.3
+	 */
+	public function registerAuthenticationFailure(\ElggUser $user): void {
+		$fails = (int) $user->getPrivateSetting('authentication_failures');
+		$fails++;
+
+		$user->setPrivateSetting('authentication_failures', $fails);
+		$user->setPrivateSetting("authentication_failure_{$fails}", time());
+		
+	}
+	
+	/**
+	 * Resets all authentication failures for a given user
+	 *
+	 * @param \ElggUser $user user to clear the failures for
+	 *
+	 * @return void
+	 * @since 4.3
+	 */
+	public function resetAuthenticationFailures(\ElggUser $user): void {
+		$fails = (int) $user->getPrivateSetting('authentication_failures');
+		if (empty($fails)) {
+			return;
+		}
+		
+		for ($n = 1; $n <= $fails; $n++) {
+			$user->removePrivateSetting("authentication_failure_{$n}");
+		}
+
+		$user->removePrivateSetting('authentication_failures');
+	}
+	
+	/**
+	 * Checks if the authentication failure limit has been reached
+	 *
+	 * @param \ElggUser $user     User to check the limit for
+	 * @param int       $limit    (optional) number of allowed failures
+	 * @param int       $lifetime (optional) number of seconds before a failure is considered expired
+	 *
+	 * @return bool
+	 * @since 4.3
+	 */
+	public function isAuthenticationFailureLimitReached(\ElggUser $user, int $limit = null, int $lifetime = null): bool {
+		$limit = $limit ?? $this->config->authentication_failures_limit;
+		$lifetime = $lifetime ?? $this->config->authentication_failures_lifetime;
+		
+		$fails = (int) $user->getPrivateSetting('authentication_failures');
+		if (empty($fails) || $fails < $limit) {
+			return false;
+		}
+		
+		$failure_count = 0;
+		$min_time = time() - $lifetime;
+		for ($n = $fails; $n > 0; $n--) {
+			$failure_timestamp = $user->getPrivateSetting("authentication_failure_{$n}");
+			if ($failure_timestamp > $min_time) {
+				$failure_count++;
+			}
+
+			if ($failure_count === $limit) {
+				// Limit reached
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }

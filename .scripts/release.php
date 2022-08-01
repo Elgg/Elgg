@@ -56,12 +56,10 @@ run_commands([
 ]);
 
 // Update version in composer.json
-$encoding = new \Elgg\Json\EmptyKeyEncoding();
-
 $composer_path = "{$elgg_path}/composer.json";
-$composer_config = $encoding->decode(file_get_contents($composer_path));
+$composer_config = json_decode(file_get_contents($composer_path));
 $composer_config->version = $version;
-$json = $encoding->encode($composer_config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+$json = json_encode($composer_config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL;
 file_put_contents($composer_path, $json);
 
 // make the new release

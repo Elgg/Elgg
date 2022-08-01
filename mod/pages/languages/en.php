@@ -23,6 +23,7 @@ return array(
 	'notifications:mute:object:page' => "about the page '%s'",
 
 	'groups:tool:pages' => 'Enable group pages',
+	'groups:tool:pages:description' => 'Allow group members to work together on pages in this group.',
 	
 	'annotation:delete:page:success' => 'The page revision was successfully deleted',
 	'annotation:delete:page:fail' => 'The page revision could not be deleted',

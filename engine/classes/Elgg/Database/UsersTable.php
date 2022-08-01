@@ -121,6 +121,7 @@ class UsersTable {
 	 *                       - count   (bool) => Return a count instead of users? (default false)
 	 *
 	 * @return \ElggUser[]|int
+	 * @deprecated 4.3
 	 */
 	public function findActive(array $options = []) {
 
@@ -144,7 +145,7 @@ class UsersTable {
 			'count' => $options['count'],
 			'options' => $options,
 		];
-		$data = _elgg_services()->hooks->trigger('find_active_users', 'system', $params, null);
+		$data = _elgg_services()->hooks->triggerDeprecated('find_active_users', 'system', $params, null, "No longer use the 'find_active_users', 'system' hook", '4.3');
 		// check null because the handler could legitimately return falsey values.
 		if ($data !== null) {
 			return $data;
@@ -171,9 +172,11 @@ class UsersTable {
 	 * @return string Invite code
 	 * @see self::validateInviteCode()
 	 */
-	public function generateInviteCode($username) {
+	public function generateInviteCode(string $username): string {
 		$time = $this->getCurrentTime()->getTimestamp();
-		return "$time." . _elgg_services()->hmac->getHmac([(int) $time, $username])->getToken();
+		$token = _elgg_services()->hmac->getHmac([$time, $username])->getToken();
+		
+		return "{$time}.{$token}";
 	}
 
 	/**
@@ -185,14 +188,15 @@ class UsersTable {
 	 * @return bool
 	 * @see self::generateInviteCode()
 	 */
-	public function validateInviteCode($username, $code) {
-		// validate the format of the token created by ->generateInviteCode()
-		if (!preg_match('~^(\d+)\.([a-zA-Z0-9\-_]+)$~', $code, $m)) {
+	public function validateInviteCode(string $username, string $code): bool {
+		// validate the format of the token created by self::generateInviteCode()
+		$matches = [];
+		if (!preg_match('~^(\d+)\.([a-zA-Z0-9\-_]+)$~', $code, $matches)) {
 			return false;
 		}
-		$time = $m[1];
-		$mac = $m[2];
+		$time = (int) $matches[1];
+		$mac = $matches[2];
 
-		return _elgg_services()->hmac->getHmac([(int) $time, $username])->matchesToken($mac);
+		return _elgg_services()->hmac->getHmac([$time, $username])->matchesToken($mac);
 	}
 }

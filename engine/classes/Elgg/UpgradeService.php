@@ -174,7 +174,6 @@ class UpgradeService {
 	 * @param \ElggUpgrade[] $upgrades Upgrades to run
 	 *
 	 * @return Promise
-	 * @throws \RuntimeException
 	 */
 	public function run($upgrades = null) {
 		// turn off time limit
@@ -312,7 +311,6 @@ class UpgradeService {
 	 *                                   Set to false to execute an entire upgrade
 	 *
 	 * @return Result
-	 * @throws \RuntimeException
 	 */
 	public function executeUpgrade(\ElggUpgrade $upgrade, $max_duration = null) {
 		// Upgrade also disabled data, so the compatibility is

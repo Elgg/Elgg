@@ -153,7 +153,7 @@ class Settings {
 			return;
 		}
 	
-		if (!elgg_is_admin_logged_in() && !elgg_get_config('can_change_username', false)) {
+		if (!elgg_is_admin_logged_in() && !elgg_get_config('can_change_username')) {
 			return;
 		}
 		

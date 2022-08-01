@@ -5,6 +5,7 @@ namespace Elgg;
 use Elgg\Database\Plugins;
 use Elgg\Exceptions\Http\BadRequestException ;
 use Elgg\Exceptions\Http\PageNotFoundException;
+use Elgg\Exceptions\RuntimeException;
 use Elgg\Http\Request as HttpRequest;
 use Elgg\Http\ResponseBuilder;
 use Elgg\Http\ResponseFactory;
@@ -262,10 +263,9 @@ class Router {
 	 * @return ResponseBuilder|null
 	 * @throws PageNotFoundException
 	 */
-	protected function getResponseFromFile($file, \Elgg\Request $request) {
-		if (!is_file($file) || !is_readable($file)) {
-			$path = $request->getPath();
-			throw new PageNotFoundException(elgg_echo('actionnotfound', [$path]), ELGG_HTTP_NOT_IMPLEMENTED);
+	protected function getResponseFromFile(string $file, \Elgg\Request $request) {
+		if (!is_file($file)) {
+			throw new PageNotFoundException(elgg_echo('actionnotfound', [$request->getPath()]), ELGG_HTTP_NOT_IMPLEMENTED);
 		}
 
 		ob_start();
@@ -292,7 +292,7 @@ class Router {
 	 * @param \Elgg\Http\Request $request Elgg request
 	 *
 	 * @return \Elgg\Http\Request
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 */
 	public function allowRewrite(HttpRequest $request) {
 		$segments = $request->getUrlSegments();
@@ -317,7 +317,7 @@ class Router {
 			!is_string($new['identifier']) ||
 			!is_array($new['segments'])
 		) {
-			throw new \RuntimeException('rewrite_path handler returned invalid route data.');
+			throw new RuntimeException('rewrite_path handler returned invalid route data.');
 		}
 
 		// rewrite request

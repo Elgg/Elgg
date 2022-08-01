@@ -203,12 +203,6 @@ Metadata events
 **delete, metadata**
     Called before metadata is deleted. Return false to prevent deletion.
 
-**enable, metadata**
-	Called when enabling metadata. Return false to prevent enabling.
-
-**disable, metadata**
-	Called when disabling metadata. Return false to prevent disabling.
-
 Annotation events
 =================
 
@@ -247,6 +241,15 @@ River events
 **delete:after, river**
 	Triggered after a river item was deleted.
 
+Notifications events
+====================
+
+**enqueue, notifications**
+	Called when an ElggData object is being added to the notifications queue 
+
+**dequeue, notifications**
+	Called when an ElggData object is removed from the notifications queue to be processed 
+
 File events
 ===========
 
@@ -254,9 +257,3 @@ File events
     Called after an uploaded file has been written to filestore. Receives an
     instance of ``ElggFile`` the uploaded file was written to. The ``ElggFile``
     may or may not be an entity with a GUID.
-
-Notes
-=====
-
-Because of bugs in the Elgg core, some events may be thrown more than once
-on the same action. For example, ``update, object`` is thrown twice.

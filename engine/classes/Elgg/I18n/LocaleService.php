@@ -105,7 +105,7 @@ class LocaleService {
 	 */
 	public function setLocaleFromLanguageKey(int $category, string $language = null) {
 		if (!isset($language)) {
-			$language = get_current_language();
+			$language = elgg_get_current_language();
 		}
 		
 		$locale = [

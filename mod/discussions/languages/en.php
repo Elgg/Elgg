@@ -61,6 +61,7 @@ View and comment on the discussion:
 %s',
 
 	'groups:tool:forum' => 'Enable group discussions',
+	'groups:tool:forum:description' => 'Allow group members to start a discussion in this group.',
 
 	'discussions:groups:edit:add_group_subscribers_to_discussion_comments' => 'Add group subscriber to discussion comment notifications',
 	
@@ -70,6 +71,8 @@ View and comment on the discussion:
 	'discussion:topic:status' => 'Topic status',
 	'discussion:topic:closed:title' => 'This discussion is closed.',
 	'discussion:topic:closed:desc' => 'This discussion is closed and is not accepting new comments.',
+	'discussion:topic:container' => 'Select an optional group to start this discussion',
+	'discussion:topic:container:help' => 'Starting a discussion in a group will limit the access to group members by default',
 
 	'discussion:topic:description' => 'Topic message',
 	'discussion:topic:toggle_status:open' => 'The discussion topic was successfully reopened',

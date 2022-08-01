@@ -19,9 +19,7 @@ $sections = [
 	'outro' => [],
 ];
 
-// don't use longtext because it filters output.
-// that's annoying.
-echo '<div class="elgg-output">';
+$results = '';
 foreach ($sections as $section => $strings) {
 	if ($section === 'registration') {
 		if (!elgg_get_config('allow_registration')) {
@@ -32,6 +30,7 @@ foreach ($sections as $section => $strings) {
 		continue;
 	}
 	
-	echo '<p>' . elgg_echo("admin:widget:admin_welcome:{$section}", $strings) . '</p>';
+	$results .= elgg_format_element('p', [], elgg_echo("admin:widget:admin_welcome:{$section}", $strings));
 }
-echo '</div>';
+
+echo elgg_view('output/longtext', ['value' => $results, 'sanitize' => false]);

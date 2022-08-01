@@ -3,7 +3,7 @@
  * Elgg logout action
  */
 
-if (!logout()) {
+if (!elgg_logout()) {
 	return elgg_error_response(elgg_echo('logouterror'));
 }
 

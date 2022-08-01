@@ -184,7 +184,7 @@ class Access {
 	public static function allowProfilePage(\Elgg\Hook $hook) {
 	
 		$entity = $hook->getEntityParam();
-		if (!has_access_to_entity($entity)) {
+		if (!$entity instanceof \ElggGroup || !$entity->hasAccess()) {
 			return;
 		}
 	

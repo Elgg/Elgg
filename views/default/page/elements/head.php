@@ -21,19 +21,49 @@ foreach ($links as $attributes) {
 	echo elgg_format_element('link', $attributes);
 }
 
-$js_foot = elgg_get_loaded_external_files('js', 'footer');
-foreach ($js_foot as $url) {
-	echo elgg_format_element('link', ['rel' => 'preload', 'as' => 'script', 'href' => $url]);
+$js_foot = elgg_get_loaded_external_resources('js', 'footer');
+foreach ($js_foot as $resource) {
+	$options = [
+		'rel' => 'preload',
+		'as' => 'script',
+		'href' => $resource->url,
+	];
+	
+	if (!empty($resource->integrity)) {
+		$options['integrity'] = $resource->integrity;
+		$options['crossorigin'] = 'anonymous';
+	}
+	
+	echo elgg_format_element('link', $options);
 }
 
-$stylesheets = elgg_get_loaded_external_files('css', 'head');
-foreach ($stylesheets as $url) {
-	echo elgg_format_element('link', ['rel' => 'stylesheet', 'href' => $url]);
+$stylesheets = elgg_get_loaded_external_resources('css', 'head');
+foreach ($stylesheets as $resource) {
+	$options = [
+		'rel' => 'stylesheet',
+		'href' => $resource->url,
+	];
+	
+	if (!empty($resource->integrity)) {
+		$options['integrity'] = $resource->integrity;
+		$options['crossorigin'] = 'anonymous';
+	}
+	
+	echo elgg_format_element('link', $options);
 }
 
-$js_head = elgg_get_loaded_external_files('js', 'head');
-foreach ($js_head as $url) {
-	echo elgg_format_element('script', ['src' => $url]);
+$js_head = elgg_get_loaded_external_resources('js', 'head');
+foreach ($js_head as $resource) {
+	$options = [
+		'src' => $resource->url,
+	];
+	
+	if (!empty($resource->integrity)) {
+		$options['integrity'] = $resource->integrity;
+		$options['crossorigin'] = 'anonymous';
+	}
+	
+	echo elgg_format_element('script', $options);
 }
 
 // A non-empty script *must* come below the CSS links, otherwise Firefox will exhibit FOUC

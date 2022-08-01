@@ -100,11 +100,13 @@ class AccountsServiceUnitTest extends UnitTestCase {
 
 		$this->assertFalse($failures);
 
-		$guid = elgg()->accounts->register($username, $password, $name, $email, false, 'custom');
-
-		$this->assertNotFalse($guid);
-
-		$user = get_entity($guid);
+		$user = elgg()->accounts->register([
+			'username' => $username,
+			'password' => $password,
+			'name' => $name,
+			'email' => $email,
+			'subtype' => 'custom',
+		]);
 
 		$this->assertInstanceOf(CustomUser::class, $user);
 

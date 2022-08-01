@@ -198,15 +198,15 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		$object = $this->createObject();
 		$target = $this->createObject();
 
-		$this->assertFalse(check_entity_relationship($object->guid, 'related', $target->guid));
+		$this->assertFalse($object->hasRelationship($target->guid, 'related'));
 
 		$object->addRelationship($target->guid, 'related');
 
-		$this->assertInstanceOf(\ElggRelationship::class, check_entity_relationship($object->guid, 'related', $target->guid));
+		$this->assertTrue($object->hasRelationship($target->guid, 'related'));
 
 		$object->removeRelationship($target->guid, 'related');
 
-		$this->assertFalse(check_entity_relationship($object->guid, 'related', $target->guid));
+		$this->assertFalse($object->hasRelationship($target->guid, 'related'));
 	}
 
 	public function testCanSerialize() {

@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\LogicException;
 use Elgg\Filesystem\MimeTypeService;
 use Elgg\Traits\Loggable;
 use Imagine\Filter\Basic\Autorotate;
@@ -26,12 +27,12 @@ class ImageService {
 	/**
 	 * @var ImagineInterface
 	 */
-	private $imagine;
+	protected $imagine;
 
 	/**
 	 * @var Config
 	 */
-	private $config;
+	protected $config;
 	
 	/**
 	 * @var MimeTypeService
@@ -41,12 +42,23 @@ class ImageService {
 	/**
 	 * Constructor
 	 *
-	 * @param ImagineInterface $imagine  Imagine interface
-	 * @param Config           $config   Elgg config
-	 * @param MimeTypeService  $mimetype MimeType service
+	 * @param Config          $config   Elgg config
+	 * @param MimeTypeService $mimetype MimeType service
 	 */
-	public function __construct(ImagineInterface $imagine, Config $config, MimeTypeService $mimetype) {
-		$this->imagine = $imagine;
+	public function __construct(Config $config, MimeTypeService $mimetype) {
+		
+		switch ($config->image_processor) {
+			case 'imagick':
+				if (extension_loaded('imagick')) {
+					$this->imagine = new \Imagine\Imagick\Imagine();
+					break;
+				}
+			default:
+				// default use GD
+				$this->imagine = new \Imagine\Gd\Imagine();
+				break;
+		}
+
 		$this->config = $config;
 		$this->mimetype = $mimetype;
 	}
@@ -176,14 +188,14 @@ class ImageService {
 	 *                      - 'x1', 'y1', 'x2', 'y2' cropping coordinates
 	 *
 	 * @return array
-	 * @throws \LogicException
+	 * @throws LogicException
 	 */
 	public function normalizeResizeParameters($width, $height, array $params = []) {
 
 		$max_width = (int) elgg_extract('w', $params, 100, false);
 		$max_height = (int) elgg_extract('h', $params, 100, false);
 		if (!$max_height || !$max_width) {
-			throw new \LogicException("Resize width and height parameters are required");
+			throw new LogicException("Resize width and height parameters are required");
 		}
 
 		$square = elgg_extract('square', $params, false);
@@ -200,7 +212,7 @@ class ImageService {
 			$crop_width = $x2 - $x1;
 			$crop_height = $y2 - $y1;
 			if ($crop_width <= 0 || $crop_height <= 0 || $crop_width > $width || $crop_height > $height) {
-				throw new \LogicException("Coordinates [$x1, $y1], [$x2, $y2] are invalid for image cropping");
+				throw new LogicException("Coordinates [$x1, $y1], [$x2, $y2] are invalid for image cropping");
 			}
 		} else {
 			// everything selected if no crop parameters
@@ -291,6 +303,10 @@ class ImageService {
 	 * @return bool
 	 */
 	public function hasWebPSupport(): bool {
+		if ($this->config->webp_enabled === false) {
+			return false;
+		}
+		
 		if ($this->imagine instanceof \Imagine\Imagick\Imagine) {
 			return !empty(\Imagick::queryformats('WEBP*'));
 		} elseif ($this->imagine instanceof \Imagine\Gd\Imagine) {

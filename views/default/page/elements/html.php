@@ -10,7 +10,7 @@
 // Set the content type
 elgg_set_http_header("Content-type: text/html; charset=UTF-8");
 
-$lang = get_current_language();
+$lang = elgg_get_current_language();
 
 $default_html_attrs = [
 	'xmlns' => 'http://www.w3.org/1999/xhtml',

@@ -35,8 +35,8 @@ define(['jquery', 'elgg', 'jquery-ui/widgets/datepicker'], function ($, elgg) {
 			}
 			var defaults = {
 				dateFormat: 'yy-mm-dd',
-				nextText: '&#xBB;',
-				prevText: '&#xAB;',
+				nextText: '»',
+				prevText: '«',
 				changeMonth: true,
 				changeYear: true
 			};

@@ -290,13 +290,17 @@ class GatekeeperUnitTest extends UnitTestCase {
 	}
 
 	public function testEntityGatekeeperPreventsAccessToPublicEntityWithNonPublicParent() {
+		$user = $this->createUser();
+		
 		$container = $this->createObject([
 			'access_id' => ACCESS_LOGGED_IN,
+			'owner_guid' => $user->guid,
 		]);
 
 		$object = $this->createObject([
 			'access_id' => ACCESS_PUBLIC,
 			'container_guid' => $container->guid,
+			'owner_guid' => $user->guid,
 		]);
 
 		$this->expectException(EntityPermissionsException::class);

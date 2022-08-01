@@ -10,10 +10,6 @@ use Elgg\Exceptions\LoginException;
 
 elgg_make_sticky_form('register', ['password', 'password2']);
 
-if (!elgg_get_config('allow_registration')) {
-	return elgg_error_response(elgg_echo('registerdisabled'));
-}
-
 // Get variables
 $username = $request->getParam('username');
 $password = $request->getParam('password', null, false);
@@ -36,12 +32,13 @@ try {
 		throw new RegistrationException(implode(PHP_EOL, $messages));
 	}
 
-	$guid = register_user($username, $password, $name, $email, false, null, ['validated' => false]);
-	if ($guid === false) {
-		throw new RegistrationException(elgg_echo('registerbad'));
-	}
-
-	$new_user = get_user($guid);
+	$new_user = elgg_register_user([
+		'username' => $username,
+		'password' => $password,
+		'name' => $name,
+		'email' => $email,
+		'validated' => false,
+	]);
 
 	$fail = function () use ($new_user) {
 		elgg_call(ELGG_IGNORE_ACCESS, function () use ($new_user) {
@@ -83,9 +80,9 @@ try {
 	}
 
 	try {
-		login($new_user);
+		elgg_login($new_user);
 		// set forward url
-		$forward_url = _elgg_get_login_forward_url($request, $new_user);
+		$forward_url = elgg_get_login_forward_url($new_user);
 		$response_message = elgg_echo('registerok', [elgg_get_site_entity()->getDisplayName()]);
 
 		return elgg_ok_response($response_data, $response_message, $forward_url);

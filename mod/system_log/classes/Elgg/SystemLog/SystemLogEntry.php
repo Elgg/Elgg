@@ -50,7 +50,7 @@ class SystemLogEntry {
 		$getters = [
 			\ElggAnnotation::class => 'elgg_get_annotation_from_id',
 			\ElggMetadata::class => 'elgg_get_metadata_from_id',
-			\ElggRelationship::class => 'get_relationship',
+			\ElggRelationship::class => 'elgg_get_relationship',
 		];
 
 		if (isset($getters[$class]) && is_callable($getters[$class])) {

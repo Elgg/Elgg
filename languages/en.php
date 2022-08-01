@@ -101,6 +101,7 @@ return array(
 	'EntityNotFoundException' => 'The content you were trying to access has been removed or you do not have permissions to access it.',
 	'EntityPermissionsException' => 'You do not have sufficient permissions for this action.',
 	'GatekeeperException' => 'You do not have permissions to view the page you are trying to access',
+	'RegistrationAllowedGatekeeperException:invalid_invitecode' => "The provided invite code is not valid",
 	'BadRequestException' => 'Bad request',
 	'ValidationException' => 'Submitted data did not meet the requirements, please check your input.',
 	'LogicException:InterfaceNotImplemented' => '%s must implement %s',
@@ -447,6 +448,10 @@ return array(
 	'user:changepassword:unknown_user' => 'Invalid user.',
 	'user:changepassword:change_password_confirm' => 'This will change your password.',
 
+	'user:delete:title' => 'Confirm account deletion',
+	'user:delete:description' => 'Please confirm that you wish to delete the account of %s. Deleting the account will also delete all content (including groups) owned by this user. This might also include related content such as group content, subpages or comments on the content. Below you can view a list of content owned by the user.',
+	'user:delete:confirm' => "I hereby confirm I want to delete this user",
+
 	'user:set:language' => "Language settings",
 	'user:language:label' => "Language",
 	'user:language:success' => "Language settings have been updated.",
@@ -556,6 +561,9 @@ Since Elgg has a lot of file access this will negatively impact performance. Als
 	'admin:users:unvalidated:registered' => 'Registered: %s',
 	'admin:users:unvalidated:change_email' => 'Change e-mail address',
 	'admin:users:unvalidated:change_email:user' => 'Change e-mail address for: %s',
+	'admin:users:inactive' => 'Inactive',
+	'admin:users:inactive:last_login_before' => "Show users not logged in after",
+	'admin:users:inactive:last_login_before:help' => "This will also show users who have never logged in.",
 	'admin:users:details:attributes' => 'User attributes',
 	'admin:users:details:profile' => 'Profile information',
 	'admin:users:details:profile:no_fields' => 'No profile fields configured',
@@ -590,6 +598,11 @@ Since Elgg has a lot of file access this will negatively impact performance. Als
 	'admin:site_icons' => "Site Icons",
 	'admin:site_icons:site_icon' => "Site Icon",
 	'admin:site_icons:info' => "Upload an icon related to your site. This icon will be used as a favicon and when showing the site for example as the sender in site notifications.",
+	'admin:site_icons:font_awesome' => "Font Awesome",
+	'admin:site_icons:font_awesome:zip' => "Upload ZIP file",
+	'admin:site_icons:font_awesome:zip:help' => "Here you can upload a Font Awesome download from https://fontawesome.com/download. This webfont will be served locally.",
+	'admin:site_icons:font_awesome:zip:error' => "Uploaded ZIP can not be extracted",
+	'admin:site_icons:font_awesome:remove_zip' => "Remove uploaded font",
 	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "This admin panel allows you to control global settings for your site. Choose an option below to get started.",
 	'admin:site:opt:linktext' => "Configure site...",
@@ -753,6 +766,9 @@ this will cleanup expired sessions from your database and not allow users to reu
 	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
 	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
 Having icons session bound makes icon urls not shareable between sessions. The side effect is that caching of these urls will only help the active session.',
+
+	'admin:security:settings:subresource_integrity_enabled' => 'Subresource integrity',
+	'admin:security:settings:subresource_integrity_enabled:help' => 'Adds integrity metadata to subresources such as js and css files. This allows browser to validate the content of the resource.',
 	
 	'admin:security:settings:site_secret:intro' => 'Elgg uses a key to create security tokens for various purposes.',
 	'admin:security:settings:site_secret:regenerate' => "Regenerate site secret",

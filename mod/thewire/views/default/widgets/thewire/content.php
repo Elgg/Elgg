@@ -14,32 +14,17 @@ $options = [
 	'limit' => $num_display,
 	'pagination' => false,
 	'distinct' => false,
+	'no_results' => elgg_echo('thewire:noposts'),
 ];
 
 $owner = $widget->getOwnerEntity();
 if ($owner instanceof \ElggUser) {
 	$options['owner_guid'] = $owner->guid;
-} else {
+	$options['widget_more'] = elgg_view_url(elgg_generate_url('collection:object:thewire:owner', ['username' => $owner->username]), elgg_echo('thewire:moreposts'));
+} elseif ($owner instanceof \ElggGroup) {
 	$options['container_guid'] = $widget->owner_guid;
+} else {
+	$options['widget_more'] = elgg_view_url(elgg_generate_url('collection:object:thewire:all'), elgg_echo('thewire:moreposts'));
 }
 
-$content = elgg_list_entities($options);
-if (empty($content)) {
-	echo elgg_echo('thewire:noposts');
-	return;
-}
-
-echo $content;
-
-if (!$owner instanceof \ElggUser) {
-	return;
-}
-
-$more_link = elgg_view('output/url', [
-	'text' => elgg_echo('thewire:moreposts'),
-	'href' => elgg_generate_url('collection:object:thewire:owner', [
-		'username' => $owner->username,
-	]),
-	'is_trusted' => true,
-]);
-echo elgg_format_element('div', ['class' => 'elgg-widget-more'], $more_link);
+echo elgg_list_entities($options);

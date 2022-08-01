@@ -18,7 +18,7 @@ function file_register_toggle() {
 		$icon = elgg_view_icon('list');
 	}
 
-	$url = elgg_http_add_url_query_elements(current_page_url(), ['list_type' => $list_type]);
+	$url = elgg_http_add_url_query_elements(elgg_get_current_url(), ['list_type' => $list_type]);
 	
 	elgg_register_menu_item('filter:filter', [
 		'name' => 'file_list',

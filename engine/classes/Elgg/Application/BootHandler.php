@@ -31,10 +31,8 @@ class BootHandler {
 	 *
 	 * @return void
 	 */
-	public function __invoke() {
-		$config = $this->app->internal_services->config;
-
-		if ($config->boot_complete) {
+	public function __invoke(): void {
+		if ($this->app->getBootStatus('full_boot_completed')) {
 			return;
 		}
 
@@ -48,10 +46,8 @@ class BootHandler {
 	 *
 	 * @return void
 	 */
-	public function bootServices() {
-		$config = $this->app->internal_services->config;
-
-		if ($config->_service_boot_complete) {
+	public function bootServices(): void {
+		if ($this->app->getBootStatus('service_boot_completed')) {
 			return;
 		}
 
@@ -66,8 +62,7 @@ class BootHandler {
 
 			\Elgg\Application\SystemEventHandlers::init();
 
-			$config->boot_complete = true;
-			$config->lock('boot_complete');
+			$this->app->setBootStatus('full_boot_completed', true);
 
 			return;
 		}
@@ -85,8 +80,7 @@ class BootHandler {
 		// we don't store langs in boot data because it varies by user
 		$this->app->internal_services->translator->bootTranslations();
 		
-		$config->_service_boot_complete = true;
-		$config->lock('_service_boot_complete');
+		$this->app->setBootStatus('service_boot_completed', true);
 	}
 
 	/**
@@ -94,10 +88,8 @@ class BootHandler {
 	 *
 	 * @return void
 	 */
-	public function bootPlugins() {
-		$config = $this->app->internal_services->config;
-
-		if ($config->_plugins_boot_complete || !$this->app->internal_services->db) {
+	public function bootPlugins(): void {
+		if ($this->app->getBootStatus('plugins_boot_completed') || !$this->app->internal_services->db) {
 			return;
 		}
 
@@ -127,8 +119,7 @@ class BootHandler {
 		// Call PluginBootstrap::boot()
 		$events->triggerSequence('plugins_boot', 'system');
 
-		$config->_plugins_boot_complete = true;
-		$config->lock('_plugins_boot_complete');
+		$this->app->setBootStatus('plugins_boot_completed', true);
 	}
 
 	/**
@@ -136,10 +127,8 @@ class BootHandler {
 	 *
 	 * @return void
 	 */
-	public function bootApplication() {
-		$config = $this->app->internal_services->config;
-
-		if ($config->_application_boot_complete || !$this->app->internal_services->db) {
+	public function bootApplication(): void {
+		if ($this->app->getBootStatus('application_boot_completed') || !$this->app->internal_services->db) {
 			return;
 		}
 
@@ -151,8 +140,7 @@ class BootHandler {
 		// Complete the boot process for both engine and plugins
 		$events->triggerSequence('init', 'system');
 
-		$config->boot_complete = true;
-		$config->lock('boot_complete');
+		$this->app->setBootStatus('full_boot_completed', true);
 
 		// Tell the access functions the system has booted, plugins are loaded,
 		// and the user is logged in so it can start caching
@@ -161,8 +149,7 @@ class BootHandler {
 		// System loaded and ready
 		$events->triggerSequence('ready', 'system');
 
-		$config->_application_boot_complete = true;
-		$config->lock('_application_boot_complete');
+		$this->app->setBootStatus('application_boot_completed', true);
 	}
 
 	/**
@@ -170,7 +157,7 @@ class BootHandler {
 	 *
 	 * @return void
 	 */
-	public function setEntityClasses() {
+	public function setEntityClasses(): void {
 		elgg_set_entity_class('user', 'user', \ElggUser::class);
 		elgg_set_entity_class('group', 'group', \ElggGroup::class);
 		elgg_set_entity_class('site', 'site', \ElggSite::class);

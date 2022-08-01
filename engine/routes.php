@@ -29,7 +29,18 @@ return [
 		'walled' => false,
 		'middleware' => [
 			\Elgg\Router\Middleware\LoggedOutGatekeeper::class,
+			\Elgg\Router\Middleware\RegistrationAllowedGatekeeper::class,
 		],
+	],
+	'action:register' => [
+		// this action is registered here because of the additional middleware
+		'path' => '/action/register',
+		'file' => dirname(__DIR__) . '/actions/register.php',
+		'middleware' => [
+			\Elgg\Router\Middleware\LoggedOutGatekeeper::class,
+			\Elgg\Router\Middleware\RegistrationAllowedGatekeeper::class,
+		],
+		'walled' => false,
 	],
 	'account:login' => [
 		'path' => '/login',
@@ -227,6 +238,13 @@ return [
 	'view:user' => [
 		'path' => '/user/{guid}',
 		'resource' => 'user/view',
+	],
+	'delete:user' => [
+		'path' => '/user/delete/{guid}',
+		'resource' => 'user/delete',
+		'middleware' => [
+			\Elgg\Router\Middleware\AdminGatekeeper::class,
+		],
 	],
 	'edit:user:avatar' => [
 		'path' => '/avatar/edit/{username}',

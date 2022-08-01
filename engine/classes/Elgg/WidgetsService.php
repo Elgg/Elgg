@@ -117,10 +117,10 @@ class WidgetsService {
 			return false;
 		}
 
-		$widget = new \ElggWidget;
+		$widget = new \ElggWidget();
 		$widget->owner_guid = $owner_guid;
 		$widget->container_guid = $owner_guid;
-		$widget->access_id = isset($access_id) ? $access_id : get_default_access();
+		$widget->access_id = $access_id ?? elgg_get_default_access();
 		
 		if (!$widget->save()) {
 			return false;

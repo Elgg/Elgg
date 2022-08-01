@@ -92,7 +92,7 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 		'url' => $post->getURL(),
 		'origin' => 'thewire',
 	];
-	elgg_trigger_plugin_hook('status', 'user', $params);
+	elgg_trigger_deprecated_plugin_hook('status', 'user', $params, null, "The 'status', 'user' hook has been deprecated. Use 'create', 'object' event.", '4.3');
 	
 	return $post->guid;
 }
@@ -124,13 +124,10 @@ function thewire_filter($text) {
 	$text = ' ' . $text;
 
 	// email addresses
-	$text = preg_replace(
-				'/(^|[^\w])([\w\-\.]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,})/i',
-				'$1<a href="mailto:$2@$3">$2@$3</a>',
-				$text);
+	$text = elgg_parse_emails($text);
 
 	// links
-	$text = parse_urls($text);
+	$text = elgg_parse_urls($text);
 
 	// usernames
 	$text = preg_replace(

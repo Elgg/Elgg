@@ -3,11 +3,11 @@
 namespace Elgg\Ajax;
 
 use Elgg\Amd\Config;
+use Elgg\Exceptions\RuntimeException;
 use Elgg\Http\Request;
 use Elgg\PluginHooksService;
 use Elgg\Services\AjaxResponse;
 use Elgg\SystemMessagesService;
-use RuntimeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -174,6 +174,7 @@ class Service {
 	 * @param string       $hook_type    The hook type. If given, the response will be filtered by hook
 	 *
 	 * @return AjaxResponse
+	 * @throws RuntimeException
 	 */
 	private function filterApiResponse(AjaxResponse $api_response, $hook_type = '') {
 		$api_response->setTtl($this->request->getParam('elgg_response_ttl', 0, false));

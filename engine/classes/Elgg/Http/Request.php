@@ -193,7 +193,7 @@ class Request extends SymfonyRequest {
 
 		// filter the input params
 		$this->getContextStack()->push('input');
-		$this->filtered_params = filter_tags($this->unfiltered_params);
+		$this->filtered_params = elgg_sanitize_input($this->unfiltered_params);
 		$this->getContextStack()->pop();
 		
 		return $filter_result ? $this->filtered_params : $this->unfiltered_params;
@@ -201,6 +201,9 @@ class Request extends SymfonyRequest {
 
 	/**
 	 * Returns current page URL
+	 *
+	 * It uses the configured site URL for the hostname rather than depending on
+	 * what the server uses to populate $_SERVER.
 	 *
 	 * @return string
 	 */
@@ -476,12 +479,31 @@ class Request extends SymfonyRequest {
 		};
 
 		if (!$is_valid()) {
-			$error_msg = elgg_trigger_plugin_hook('action_gatekeeper:upload_exceeded_msg', 'all', [
+			$error_msg = elgg_trigger_deprecated_plugin_hook('action_gatekeeper:upload_exceeded_msg', 'all', [
 				'post_size' => $reported_bytes,
 				'visible_errors' => true,
-			], elgg_echo('actiongatekeeper:uploadexceeded'));
+			], elgg_echo('actiongatekeeper:uploadexceeded'), "The 'action_gatekeeper:upload_exceeded_msg', 'all' has been deprecated", '4.3');
 
 			throw new BadRequestException($error_msg);
 		}
+	}
+	
+	/**
+	 * Correct the base URL of the request
+	 *
+	 * @param \Elgg\Config $config the Elgg config
+	 *
+	 * @return void
+	 * @see https://github.com/Elgg/Elgg/issues/13667
+	 * @since 4.3
+	 */
+	public function correctBaseURL(\Elgg\Config $config): void {
+		if (\Elgg\Application::isCli()) {
+			return;
+		}
+		
+		$path = parse_url($config->wwwroot, PHP_URL_PATH);
+		
+		$this->baseUrl = rtrim($path, '/');
 	}
 }

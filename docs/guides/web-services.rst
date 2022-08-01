@@ -209,14 +209,15 @@ Key-based authentication
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 As an example, let's write a function that returns the number of users
-that have viewed the site in the last x minutes.
+that have registered on your site since a certain timestamp.
 
 .. code-block:: php
 
-    function count_active_users($minutes=10) {
-        $seconds = 60 * $minutes;
-        $count = count(find_active_users($seconds, 9999));
-        return $count;
+    function count_new_users($since) {
+        return elgg_count_entities([
+            'type' => 'user',
+            'created_since' => $since,
+        ]);
     }
 
 Now, let's expose it and make the number of minutes an optional
@@ -225,12 +226,12 @@ parameter:
 .. code-block:: php
 
 	elgg_ws_expose_function(
-		"users.active",
-		"count_active_users",
+		"users.new",
+		"count_new_users",
 		[
-			"minutes" => [
+			"since" => [
 				'type' => 'int',
-				'required' => false,
+				'required' => true,
 			],
 		],
 		'Number of users who have used the site in the past x minutes',
@@ -352,13 +353,10 @@ use:
 
     function rest_plugin_setup_pams() {
         // user token can also be used for user authentication
-        register_pam_handler('elgg_ws_pam_auth_usertoken');
+        elgg_register_pam_handler(\Elgg\WebServices\PAM\UserToken::class);
 
         // simple API key check
-        register_pam_handler('elgg_ws_pam_auth_api_key', "sufficient", "api");
-        
-        // override the default pams
-        return true;
+        elgg_register_pam_handler(\Elgg\WebServices\PAM\APIKey::class, 'sufficient', 'api');
     }
 
 .. _pluggable authentication module (PAM): http://en.wikipedia.org/wiki/Pluggable_Authentication_Modules

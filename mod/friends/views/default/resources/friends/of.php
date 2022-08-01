@@ -20,11 +20,9 @@ $content = elgg_list_entities([
 	'relationship_guid' => $owner->getGUID(),
 	'inverse_relationship' => true,
 	'type' => 'user',
-	'order_by_metadata' => [
-		[
-			'name' => 'name',
-			'direction' => 'ASC',
-		],
+	'sort_by' => [
+		'property' => 'name',
+		'direction' => 'ASC',
 	],
 	'full_view' => false,
 	'no_results' => elgg_echo('friends:none'),

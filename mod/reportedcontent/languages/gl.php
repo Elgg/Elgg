@@ -19,7 +19,6 @@ return array(
 	'reportedcontent:description' => 'Por que está a denunciar isto?',
 	'reportedcontent:address' => 'Lugar onde se atopa o elemento.',
 	'reportedcontent:success' => 'Enviouse a denuncia ao administrador do sitio.',
-	'reportedcontent:report' => 'Denunciar ante un administrador',
 	'reportedcontent:numbertodisplay' => 'Número de denuncias para mostrar',
 	'reportedcontent:user' => 'Denunciar o usuario',
 	'reportedcontent:archived' => 'Arquivouse a denuncia.',

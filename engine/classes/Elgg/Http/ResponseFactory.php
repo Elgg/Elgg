@@ -61,19 +61,18 @@ class ResponseFactory {
 	/**
 	 * Constructor
 	 *
-	 * @param Request            $request   HTTP request
-	 * @param PluginHooksService $hooks     Plugin hooks service
-	 * @param AjaxService        $ajax      AJAX service
-	 * @param ResponseTransport  $transport Response transport
-	 * @param EventsService      $events    Events service
+	 * @param Request            $request HTTP request
+	 * @param PluginHooksService $hooks   Plugin hooks service
+	 * @param AjaxService        $ajax    AJAX service
+	 * @param EventsService      $events  Events service
 	 */
-	public function __construct(Request $request, PluginHooksService $hooks, AjaxService $ajax, ResponseTransport $transport, EventsService $events) {
+	public function __construct(Request $request, PluginHooksService $hooks, AjaxService $ajax, EventsService $events) {
 		$this->request = $request;
 		$this->hooks = $hooks;
 		$this->ajax = $ajax;
-		$this->transport = $transport;
 		$this->events = $events;
 		
+		$this->transport = \Elgg\Application::getResponseTransport();
 		$this->headers = new ResponseHeaderBag();
 	}
 
@@ -359,7 +358,7 @@ class ResponseFactory {
 
 		if (!$this->isAction()) {
 			$params = [
-				'current_url' => current_page_url(),
+				'current_url' => $this->request->getCurrentURL(),
 				'forward_url' => $forward_url,
 			];
 			// For BC, let plugins serve their own error page
@@ -427,7 +426,7 @@ class ResponseFactory {
 
 		$params = [
 			'value' => '',
-			'current_url' => current_page_url(),
+			'current_url' => $this->request->getCurrentURL(),
 			'forward_url' => elgg_normalize_url($forward_url),
 		];
 
@@ -455,7 +454,7 @@ class ResponseFactory {
 
 		// allow plugins to rewrite redirection URL
 		$params = [
-			'current_url' => current_page_url(),
+			'current_url' => $this->request->getCurrentURL(),
 			'forward_url' => $forward_url,
 			'location' => $location,
 		];

@@ -10,6 +10,11 @@ namespace Elgg\Integration;
  */
 class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 
+	/**
+	 * @var bool previous IgnoreAccess state
+	 */
+	protected $ia;
+	
 	public function up() {
 		$this->ia = elgg()->session->setIgnoreAccess(true);
 	}
@@ -104,13 +109,13 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 	}
 
 	/**
-	 * Test #5369 -- parse_urls()
+	 * Test #5369 -- elgg_parse_urls()
 	 * @see https://github.com/Elgg/Elgg/issues/5369
 	 *
 	 * @dataProvider parseUrlsProvider
 	 */
 	public function testParseUrls($input, $expected) {
-		$this->assertEquals($expected, parse_urls($input));
+		$this->assertEquals($expected, elgg_parse_urls($input));
 	}
 	
 	public function parseUrlsProvider() {
@@ -277,7 +282,7 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 	}
 
 	/**
-	 * Tests get_entity_statistics() without owner
+	 * Tests elgg_get_entity_statistics() without owner
 	 *
 	 * @see https://github.com/Elgg/Elgg/pull/7845
 	 */
@@ -285,17 +290,17 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 
 		$subtype = 'issue7845' . rand(0, 100);
 
-		$object = $this->createObject([
+		$this->createObject([
 			'subtype' => $subtype,
 		]);
 
-		$stats = get_entity_statistics();
+		$stats = elgg_get_entity_statistics();
 
 		$this->assertEquals(1, $stats['object'][$subtype]);
 	}
 
 	/**
-	 * Tests get_entity_statistics() with an owner
+	 * Tests elgg_get_entity_statistics() with an owner
 	 *
 	 * @see https://github.com/Elgg/Elgg/pull/7845
 	 */
@@ -310,7 +315,7 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 			'owner_guid' => $user->guid,
 		]);
 
-		$stats = get_entity_statistics($user->guid);
+		$stats = elgg_get_entity_statistics($user->guid);
 
 		$this->assertEquals(1, $stats['object'][$subtype]);
 	}

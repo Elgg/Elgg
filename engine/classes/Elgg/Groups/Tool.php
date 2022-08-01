@@ -79,7 +79,8 @@ class Tool implements CollectionItemInterface {
 	}
 
 	/**
-	 * Get module title
+	 * Get tool label
+	 *
 	 * @return string
 	 */
 	public function getLabel() {
@@ -89,6 +90,20 @@ class Tool implements CollectionItemInterface {
 		}
 
 		return elgg_echo("groups:tool:{$this->name}");
+	}
+
+	/**
+	 * Get tool description
+	 *
+	 * @return string|null
+	 */
+	public function getDescription(): ?string {
+		$lan_key = "groups:tool:{$this->name}:description";
+		if (!elgg_language_key_exists($lan_key)) {
+			return null;
+		}
+		
+		return elgg_echo($lan_key);
 	}
 
 	/**

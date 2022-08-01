@@ -19,13 +19,6 @@ class DelayedEmailQueueTableIntegrationTest extends IntegrationTestCase {
 	public function up() {
 		$this->table = _elgg_services()->delayedEmailQueueTable;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function down() {
-		$dt = $this->table->getCurrentTime('+10 seconds');
-	}
 	
 	/**
 	 * Create test notification

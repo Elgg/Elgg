@@ -18,11 +18,9 @@ if (!$user || !$user->canEdit()) {
 	return elgg_error_response(elgg_echo('admin:user:resetpassword:no'));
 }
 
-$password = generate_random_cleartext_password();
+$password = elgg_generate_password();
 
-if (!force_user_password_reset($user->guid, $password)) {
-	return elgg_error_response(elgg_echo('admin:user:resetpassword:no'));
-}
+$user->setPassword($password);
 
 notify_user($user->guid,
 	elgg_get_site_entity()->guid,

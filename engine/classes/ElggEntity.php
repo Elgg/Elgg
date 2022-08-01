@@ -544,6 +544,109 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	}
 
 	/**
+	 * Add a relationship between this an another entity.
+	 *
+	 * @tip Read the relationship like "This entity is a $relationship of $guid_two."
+	 *
+	 * @param int    $guid_two     GUID of the target entity of the relationship
+	 * @param string $relationship The type of relationship
+	 *
+	 * @return bool
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
+	 */
+	public function addRelationship($guid_two, $relationship) {
+		return _elgg_services()->relationshipsTable->add($this->guid, (string) $relationship, (int) $guid_two);
+	}
+	
+	/**
+	 * Check if this entity has a relationship with another entity
+	 *
+	 * @tip Read the relationship like "This entity is a $relationship of $guid_two."
+	 *
+	 * @param int    $guid_two     GUID of the target entity of the relationship
+	 * @param string $relationship The type of relationship
+	 *
+	 * @return bool
+	 * @since 4.3
+	 */
+	public function hasRelationship(int $guid_two, string $relationship): bool {
+		return (bool) _elgg_services()->relationshipsTable->check($this->guid, $relationship, $guid_two);
+	}
+	
+	/**
+	 * Return the relationship if this entity has a relationship with another entity
+	 *
+	 * @param int    $guid_two     GUID of the target entity of the relationship
+	 * @param string $relationship The type of relationship
+	 *
+	 * @return \ElggRelationship|null
+	 * @since 4.3
+	 */
+	public function getRelationship(int $guid_two, string $relationship): ?\ElggRelationship {
+		return _elgg_services()->relationshipsTable->check($this->guid, $relationship, $guid_two) ?: null;
+	}
+	
+	/**
+	 * Gets an array of entities with a relationship to this entity.
+	 *
+	 * @param array $options Options array. See elgg_get_entities()
+	 *                       for a list of options. 'relationship_guid' is set to
+	 *                       this entity
+	 *
+	 * @return \ElggEntity[]|int|mixed
+	 * @see elgg_get_entities()
+	 */
+	public function getEntitiesFromRelationship(array $options = []) {
+		$options['relationship_guid'] = $this->guid;
+		return elgg_get_entities($options);
+	}
+	
+	/**
+	 * Gets the number of entities from a specific relationship type
+	 *
+	 * @param string $relationship         Relationship type (eg "friends")
+	 * @param bool   $inverse_relationship Invert relationship
+	 *
+	 * @return int
+	 */
+	public function countEntitiesFromRelationship($relationship, $inverse_relationship = false) {
+		return elgg_count_entities([
+			'relationship' => $relationship,
+			'relationship_guid' => $this->guid,
+			'inverse_relationship' => $inverse_relationship,
+		]);
+	}
+
+	/**
+	 * Remove a relationship
+	 *
+	 * @param int    $guid_two     GUID of the target entity of the relationship
+	 * @param string $relationship The type of relationship
+	 *
+	 * @return bool
+	 */
+	public function removeRelationship($guid_two, $relationship) {
+		return _elgg_services()->relationshipsTable->remove($this->guid, (string) $relationship, (int) $guid_two);
+	}
+	
+	/**
+	 * Remove all relationships to or from this entity.
+	 *
+	 * If you pass a relationship name, only relationships matching that name will be deleted.
+	 *
+	 * @warning Calling this with no $relationship will clear all relationships with this entity.
+	 *
+	 * @param string|null $relationship         (optional) The name of the relationship to remove
+	 * @param bool        $inverse_relationship (optional) Inverse the relationship
+	 *
+	 * @return bool
+	 * @since 4.3
+	 */
+	public function removeAllRelationships(string $relationship = null, bool $inverse_relationship = false): bool {
+		return _elgg_services()->relationshipsTable->removeAll($this->guid, $relationship, $inverse_relationship);
+	}
+	
+	/**
 	 * Remove all relationships to and from this entity.
 	 * If you pass a relationship name, only relationships matching that name
 	 * will be deleted.
@@ -551,45 +654,16 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @warning Calling this with no $relationship will clear all relationships
 	 * for this entity.
 	 *
-	 * @param null|string $relationship The name of the relationship to remove.
+	 * @param null|string $relationship The name of the relationship to remove
+	 *
 	 * @return bool
-	 * @see \ElggEntity::addRelationship()
-	 * @see \ElggEntity::removeRelationship()
+	 * @deprecated 4.3 use \ElggEntity->removeAllRelationships()
 	 */
 	public function deleteRelationships($relationship = null) {
-		$relationship = (string) $relationship;
-		$result = remove_entity_relationships($this->getGUID(), $relationship);
-		return $result && remove_entity_relationships($this->getGUID(), $relationship, true);
-	}
-
-	/**
-	 * Add a relationship between this an another entity.
-	 *
-	 * @tip Read the relationship like "This entity is a $relationship of $guid_two."
-	 *
-	 * @param int    $guid_two     GUID of the target entity of the relationship.
-	 * @param string $relationship The type of relationship.
-	 *
-	 * @return bool
-	 * @see \ElggEntity::removeRelationship()
-	 * @see \ElggEntity::deleteRelationships()
-	 */
-	public function addRelationship($guid_two, $relationship) {
-		return add_entity_relationship($this->getGUID(), $relationship, $guid_two);
-	}
-
-	/**
-	 * Remove a relationship
-	 *
-	 * @param int    $guid_two     GUID of the target entity of the relationship.
-	 * @param string $relationship The type of relationship.
-	 *
-	 * @return bool
-	 * @see \ElggEntity::addRelationship()
-	 * @see \ElggEntity::deleteRelationships()
-	 */
-	public function removeRelationship($guid_two, $relationship) {
-		return remove_entity_relationship($this->getGUID(), $relationship, $guid_two);
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use \ElggEntity->removeAllRelationships()', '4.3');
+		
+		$result = $this->removeAllRelationships($relationship);
+		return $result && $this->removeAllRelationships($relationship, true);
 	}
 
 	/**
@@ -998,37 +1072,20 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		
 		return elgg_extract(0, $acls, false);
 	}
-
+	
 	/**
-	 * Gets an array of entities with a relationship to this entity.
+	 * Check if the given user has access to this entity
 	 *
-	 * @param array $options Options array. See elgg_get_entities()
-	 *                       for a list of options. 'relationship_guid' is set to
-	 *                       this entity.
+	 * @param int $user_guid the GUID of the user to check access for (default: logged in user_guid)
 	 *
-	 * @return \ElggEntity[]|int|mixed
-	 * @see elgg_get_entities()
+	 * @return bool
+	 * @since 4.3
 	 */
-	public function getEntitiesFromRelationship(array $options = []) {
-		$options['relationship_guid'] = $this->guid;
-		return elgg_get_entities($options);
+	public function hasAccess(int $user_guid = 0): bool {
+		return _elgg_services()->accessCollections->hasAccessToEntity($this, $user_guid);
 	}
 
-	/**
-	 * Gets the number of entities from a specific relationship type
-	 *
-	 * @param string $relationship         Relationship type (eg "friends")
-	 * @param bool   $inverse_relationship Invert relationship
-	 *
-	 * @return int
-	 */
-	public function countEntitiesFromRelationship($relationship, $inverse_relationship = false) {
-		return elgg_count_entities([
-			'relationship' => $relationship,
-			'relationship_guid' => $this->getGUID(),
-			'inverse_relationship' => $inverse_relationship,
-		]);
-	}
+	
 
 	/**
 	 * Can a user edit this entity?
@@ -1674,7 +1731,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 						if (!$subentity->isEnabled()) {
 							continue;
 						}
-						add_entity_relationship($subentity->guid, 'disabled_with', $guid);
+						$subentity->addRelationship($guid, 'disabled_with');
 						$subentity->disable($reason, true);
 					}
 				}
@@ -1737,7 +1794,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
 				foreach ($disabled_with_it as $e) {
 					$e->enable($recursive);
-					remove_entity_relationship($e->guid, 'disabled_with', $this->guid);
+					$e->removeRelationship($this->guid, 'disabled_with');
 				}
 			}
 

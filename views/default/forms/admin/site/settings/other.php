@@ -26,7 +26,7 @@ $body .= elgg_view_field([
 	'#label' => elgg_echo('config:friendly_time_number_of_days:label'),
 	'#help' => elgg_echo('config:friendly_time_number_of_days:help'),
 	'name' => 'friendly_time_number_of_days',
-	'value' => (int) elgg_get_config('friendly_time_number_of_days', 30),
+	'value' => (int) elgg_get_config('friendly_time_number_of_days'),
 	'min' => 0,
 ]);
 

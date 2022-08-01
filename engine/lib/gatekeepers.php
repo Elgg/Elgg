@@ -51,7 +51,7 @@ function elgg_signed_request_gatekeeper() {
 		return;
 	}
 	
-	_elgg_services()->urlSigner->assertValid(current_page_url());
+	_elgg_services()->urlSigner->assertValid(elgg_get_current_url());
 }
 
 /**

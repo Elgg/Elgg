@@ -19,7 +19,6 @@ return array(
 	'reportedcontent:description' => 'Proč toto nahlašujete?',
 	'reportedcontent:address' => 'Umístění položky',
 	'reportedcontent:success' => 'Hlášení bylo odesláno správci stránek',
-	'reportedcontent:report' => 'Nahlásit správci',
 	'reportedcontent:numbertodisplay' => 'Počet zobrazených hlášení',
 	'reportedcontent:user' => 'Nahlásit uživatele',
 	'reportedcontent:archived' => 'Hlášení bylo archivováno',

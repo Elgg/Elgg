@@ -1,6 +1,6 @@
 <?php
 // Get entity statistics
-$entity_stats = get_entity_statistics();
+$entity_stats = elgg_get_entity_statistics();
 
 $searchable = [];
 $other = [];

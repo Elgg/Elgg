@@ -12,7 +12,7 @@ $categories = [];
 foreach ($plugins as $plugin) {
 	if (!$plugin->isValid()) {
 		if ($plugin->isActive()) {
-			if (elgg_get_config('auto_disable_plugins', true)) {
+			if (elgg_get_config('auto_disable_plugins')) {
 				try {
 					// force disable and warn
 					$plugin->deactivate();

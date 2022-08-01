@@ -36,7 +36,11 @@ class ToolsUnitTest extends UnitTestCase {
 		$this->assertEquals('yes', $tool->mapMetadataValue(true));
 		$this->assertEquals('no', $tool->mapMetadataValue(false));
 		$this->assertEquals(300, $tool->priority);
-
+		
+		$this->assertNull($tool->getDescription());
+		elgg()->translator->addTranslation('en', ['groups:tool:my-tool:description' => 'translated tool description']);
+		$this->assertEquals('translated tool description', $tool->getDescription());
+		
 		elgg()->group_tools->unregister('my-tool');
 
 		$tool = elgg()->group_tools->get('my-tool');

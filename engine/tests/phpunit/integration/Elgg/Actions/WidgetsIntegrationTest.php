@@ -38,6 +38,8 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 
 	public function down() {
 		_elgg_services()->hooks->restore();
+		
+		parent::down();
 	}
 	
 	public function testWidgetAddFailsWithMissingPageOwner() {

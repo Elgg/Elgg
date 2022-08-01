@@ -113,20 +113,20 @@ class ElggGroup extends \ElggEntity {
 	 * @return bool
 	 */
 	public function isMember(\ElggUser $user = null) {
-		if ($user == null) {
+		if ($user === null) {
 			$user = _elgg_services()->session->getLoggedInUser();
 		}
-		if (!$user) {
+		if (!$user instanceof \ElggUser) {
 			return false;
 		}
 
-		$result = (bool) check_entity_relationship($user->guid, 'member', $this->guid);
+		$result = $user->hasRelationship($this->guid, 'member');
 
 		$params = [
 			'user' => $user,
 			'group' => $this,
 		];
-		return _elgg_services()->hooks->trigger('is_member', 'group', $params, $result);
+		return _elgg_services()->hooks->triggerDeprecated('is_member', 'group', $params, $result, "Hook 'is_member', 'group' has been deprecated. Use 'gatekeeper', 'all' hook instead.", '4.3');
 	}
 
 	/**
@@ -138,9 +138,7 @@ class ElggGroup extends \ElggEntity {
 	 * @return bool Whether joining was successful.
 	 */
 	public function join(\ElggUser $user, $params = []) {
-		$result = add_entity_relationship($user->guid, 'member', $this->guid);
-	
-		if (!$result) {
+		if (!$user->addRelationship($this->guid, 'member')) {
 			return false;
 		}
 		
@@ -154,7 +152,7 @@ class ElggGroup extends \ElggEntity {
 		}
 		
 		_elgg_services()->events->trigger('join', 'group', $event_params);
-	
+		
 		return true;
 	}
 
@@ -167,10 +165,13 @@ class ElggGroup extends \ElggEntity {
 	 */
 	public function leave(\ElggUser $user) {
 		// event needs to be triggered while user is still member of group to have access to group acl
-		$params = ['group' => $this, 'user' => $user];
+		$params = [
+			'group' => $this,
+			'user' => $user,
+		];
 		_elgg_services()->events->trigger('leave', 'group', $params);
 
-		return remove_entity_relationship($user->guid, 'member', $this->guid);
+		return $user->removeRelationship($this->guid, 'member');
 	}
 
 	/**

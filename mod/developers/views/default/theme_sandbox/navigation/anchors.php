@@ -15,11 +15,11 @@ $anchor2 = elgg_view('output/url', [
 
 $query = [];
 for ($i=0; $i<50; $i++) {
-	$query['q'][$i] = generate_random_cleartext_password();
+	$query['q'][$i] = elgg_generate_password();
 }
 
 $anchor3 = elgg_view('output/url', [
-	'href' => elgg_http_add_url_query_elements(current_page_url(), $query),
+	'href' => elgg_http_add_url_query_elements(elgg_get_current_url(), $query),
 	'icon' => 'globe',
 	'title' => 'Very long URL',
 ]);

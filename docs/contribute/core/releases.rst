@@ -22,6 +22,8 @@ Requirements
 * Sphinx installed (``easy_install sphinx && easy_install sphinx-intl``)
 * Transifex client installed (``easy_install transifex-client``)
 * Transifex account with access to Elgg project
+* Admin access to `Read The Docs`_
+* Admin access to `Scrutinizer`_
 
 Merge commits up from lower branches
 ====================================
@@ -75,8 +77,12 @@ Install the prerequisites:
 .. code-block:: sh
 
     easy_install transifex-client
+    easy_install sphinx
+    easy_install sphinx-intl
 
-.. note:: On Windows you need to run these command in a console with admin privileges
+.. note:: 
+	
+	On Windows you need to run these command in a console with admin privileges
 
 Run the ``languages.php`` script. For example, to pull translations:
 
@@ -109,10 +115,10 @@ Install the prerequisites:
 .. code-block:: sh
 
     yarn install elgg-conventional-changelog
-    easy_install sphinx
-    easy_install sphinx-intl
-    
-.. note:: On Windows you need to run these command in a console with admin privileges
+
+.. note:: 
+
+	On Windows you need to run these command in a console with admin privileges
 
 Run the ``release.php`` script. For example, to release 1.12.5:
 
@@ -132,15 +138,7 @@ Next, submit a pull request via GitHub for automated testing and approval by ano
 Tag the release
 ===============
 
-Once approved and merged, tag the release:
-
-.. code-block:: sh
-
-    git checkout release-${version}
-    git tag -a ${version} -m'Elgg ${version}'
-    git push --tags origin release-${version}
-
-Or create a release on GitHub
+Once approved and merged, create a release on GitHub:
 
 * Goto releases
 * Click 'Draft a new release'
@@ -148,6 +146,11 @@ Or create a release on GitHub
 * Select the correct branch (eg 1.12 for a 1.12.x release, 2.3 for a 2.3.x release, etc)
 * Set the release title as 'Elgg {version}'
 * Paste the CHANGELOG.md part related to this release in the description
+
+.. note::
+
+	GitHub is setup to listen to the creation of a new release to automaticly make the ZIP release of Elgg.
+	After the release was created wait a few minutes and the ZIP should be added to the release.
 
 Some final administration
 
@@ -159,9 +162,18 @@ Additional actions for the first new minor / major
 
 * Make a new branch on GitHub (for example 3.3)
 * Set the new branch as the default branch (optional, but suggested for stable releases)
-* Configure Read The Docs to build the new branch (not the new tag)
+* Configure `Read The Docs`_ to build the new branch (not the new tag)
+* Configure `Scrutinizer`_ to build the new branch
 * Check the Elgg starter project for potential requirement / config changes in the ``composer.json``
 * Add the new minor / major version to the ``Elgg/community_plugins`` repository so developers can upload plugins for the new release
+* Update the build configuration for the `Elgg reference`_ (on the Elgg.org webserver)
+
+.. code-block:: sh
+
+	# in the file /root/elgg-scripts/cron/make_reference
+	# set the main build branch to the correct branch
+	# make sure if you change the main build branch to add the previous branch to the other branches to build
+	# the new configuration will be applied by the daily cron
 
 Additional action for the first new major
 -----------------------------------------
@@ -172,50 +184,25 @@ Additional action for the first new major
 Update the website
 ==================
 
-* ssh to elgg.org
-* Clone https://github.com/Elgg/elgg-scripts
-
-Build zip package
------------------
-
-Use ``elgg-scripts/build/elgg-starter-project.sh`` to generate the .zip file. Run without arguments to see usage.
-
-.. code-block:: sh
-	
-	# login as user deploy
-	sudo -su deploy
-	
-	# regular release
-	./elgg-starter-project.sh master 3.0.0 /var/www/www.elgg.org/download/
-	
-	# MIT release
-	./elgg-starter-project.sh master 3.0.0-mit /var/www/www.elgg.org/download/
-
-.. note::
-
-	For Elgg 2.x releases use the ``2.x`` branch of the starter-project (eg. ``./elgg-starter-project.sh 2.x 2.0.4 /var/www/www.elgg.org/download/``)
-
-* Verify that ``vendor/elgg/elgg/composer.json`` in the zip file has the expected version.
-* If not, make sure GitHub has the release tag, and that the starter project has a compatible ``elgg/elgg``
-  item in the composer requires list.
-
 Update elgg.org download page
 -----------------------------
 
 * Clone https://github.com/Elgg/community
 * Add the new version to ``classes/Elgg/Releases.php``
 * Commit and push the changes
-* Update the plugin on www.elgg.org
+* Download the ZIP release from GitHub
+* Upload the ZIP to the elgg.org webserver
 
 .. code-block:: sh
 
-	composer update elgg/community
+	sudo mv ~/elgg-x.y.z.zip /var/www/www.elgg.org/download
+	sudo chown deploy:deploy /var/www/www.elgg.org/download/elgg-x.y.z.zip
 
 Update elgg.org
 ---------------
 
 * Clone https://github.com/Elgg/www.elgg.org
-* Change the required Elgg version in ``composer.json``
+* (optional) Change the required Elgg version in ``composer.json``
 * Update vendors
 
 .. code-block:: sh
@@ -227,17 +214,14 @@ Update elgg.org
 
 .. code-block:: sh
 
-    cd /var/www/www.elgg.org && sudo su deploy && git pull
-      
-* Update dependencies
-
-.. code-block:: sh
-
-    composer install --no-dev --prefer-dist --optimize-autoloader
+    sudo -su deploy 
+    cd /var/www/www.elgg.org 
+    git pull
+    composer install --no-dev
 
 * Go to community admin panel
-    * Flush APC cache
-    * Run upgrade
+* Flush APC cache
+* Run upgrade
 
 Make the announcement
 =====================
@@ -251,3 +235,6 @@ This should be the very last thing you do.
 #. Tweet from the elgg `Twitter account`_
 
 .. _Twitter account: https://twitter.com/elgg
+.. _Read The Docs: https://readthedocs.org/projects/elgg/
+.. _Scrutinizer: https://scrutinizer-ci.com/g/Elgg/Elgg/
+.. _Elgg reference: http://reference.elgg.org/

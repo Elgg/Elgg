@@ -15,11 +15,12 @@ class Files extends Config {
 	/**
 	 * Factory to return a config object to be used when starting a driver
 	 *
-	 * @param \Elgg\Config $config Elgg configuration
+	 * @param string       $namespace cache namespace
+	 * @param \Elgg\Config $config    Elgg configuration
 	 *
 	 * @return self|NULL
 	 */
-	public static function fromElggConfig(\Elgg\Config $config): ?self {
+	public static function fromElggConfig(string $namespace, \Elgg\Config $config): ?self {
 		
 		$path = $config->cacheroot ?: $config->dataroot;
 		if (!$path) {
@@ -32,7 +33,7 @@ class Files extends Config {
 			'preventCacheSlams' => true,
 			'useStaticItemCaching' => true,
 			'itemDetailedDate' => true,
-			'securityKey' => 'elgg', // to make sure cli and webserver use the same folder
+			'securityKey' => $namespace, // to make sure cli and webserver use the same folder and to separate caches
 		]);
 	}
 }

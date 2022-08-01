@@ -2,6 +2,7 @@
 
 namespace Elgg\WebServices\ApiMethods;
 
+use Elgg\Exceptions\AuthenticationException;
 use Elgg\Exceptions\SecurityException;
 
 /**
@@ -27,7 +28,7 @@ class AuthGetToken {
 	 */
 	public function __invoke(string $username, string $password) {
 		// check if username is an email address
-		if (is_email_address($username)) {
+		if (elgg_is_valid_email($username)) {
 			$users = get_user_by_email($username);
 			
 			// check if we have a unique user
@@ -38,17 +39,25 @@ class AuthGetToken {
 			}
 		}
 		
-		// validate username and password
-		if (true === elgg_authenticate($username, $password)) {
-			$user = get_user_by_username($username);
-			if ($user->isBanned()) {
-				throw new SecurityException(elgg_echo('SecurityException:BannedUser'));
+		try {
+			// validate username and password
+			$authenticated = elgg_pam_authenticate('user', [
+				'username' => $username,
+				'password' => $password,
+			]);
+			if ($authenticated === true) {
+				$user = get_user_by_username($username);
+				if ($user->isBanned()) {
+					throw new SecurityException(elgg_echo('SecurityException:BannedUser'));
+				}
+				
+				$token = _elgg_services()->usersApiSessionsTable->createToken($user->guid);
+				if ($token !== false) {
+					return $token;
+				}
 			}
-			
-			$token = _elgg_services()->usersApiSessionsTable->createToken($user->guid);
-			if ($token !== false) {
-				return $token;
-			}
+		} catch (AuthenticationException $e) {
+			// authentication failed
 		}
 		
 		throw new SecurityException(elgg_echo('SecurityException:authenticationfailed'));

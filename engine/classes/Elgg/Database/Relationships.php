@@ -8,8 +8,9 @@ use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
-use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\LogicException;
 
 /**
  * Relationships repository contains methods for fetching relationships from database or performing
@@ -109,7 +110,7 @@ class Relationships extends Repository {
 		if ($this->options->annotation_calculation) {
 			$clauses = $this->options->annotation_name_value_pairs;
 			if (count($clauses) > 1 && $this->options->annotation_name_value_pairs_operator !== 'OR') {
-				throw new \LogicException("Annotation calculation can not be performed on multiple annotation name value pairs merged with AND");
+				throw new LogicException("Annotation calculation can not be performed on multiple annotation name value pairs merged with AND");
 			}
 			
 			$clause = array_shift($clauses);
@@ -118,7 +119,7 @@ class Relationships extends Repository {
 		} elseif ($this->options->metadata_calculation) {
 			$clauses = $this->options->metadata_name_value_pairs;
 			if (count($clauses) > 1 && $this->options->metadata_name_value_pairs_operator !== 'OR') {
-				throw new \LogicException("Metadata calculation can not be performed on multiple metadata name value pairs merged with AND");
+				throw new LogicException("Metadata calculation can not be performed on multiple metadata name value pairs merged with AND");
 			}
 			
 			$clause = array_shift($clauses);

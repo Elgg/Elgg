@@ -77,7 +77,7 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 	// if the new message is a reply then create a relationship link between the new message
 	// and the message it is in reply to
 	if ($original_msg_guid) {
-		add_entity_relationship($message_sent->guid, "reply", $original_msg_guid);
+		$message_sent->addRelationship($original_msg_guid, 'reply');
 	}
 
 	if (($recipient_guid != elgg_get_logged_in_user_guid()) && $notify) {

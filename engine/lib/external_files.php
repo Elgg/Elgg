@@ -17,7 +17,7 @@
  * Instead, simply call elgg_require_js("module/name").
  *
  * @note The configuration is cached in simplecache, so logic should not depend on user-
- *       specific values like get_current_language().
+ *       specific values like elgg_get_current_language().
  *
  * @param string $name   The module name
  * @param array  $config An array like the following:
@@ -147,8 +147,8 @@ function elgg_load_external_file(string $type, string $name): void {
  * @param string $location Page location
  *
  * @return array
- * @since 1.8.0
+ * @since 4.3
  */
-function elgg_get_loaded_external_files(string $type, string $location): array {
-	return _elgg_services()->externalFiles->getLoadedFiles($type, $location);
+function elgg_get_loaded_external_resources(string $type, string $location): array {
+	return _elgg_services()->externalFiles->getLoadedResources($type, $location);
 }

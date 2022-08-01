@@ -30,6 +30,13 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 	 */
 	public function down() {
 		_elgg_services()->events->restore();
+		
+		elgg_call(ELGG_IGNORE_ACCESS, function() {
+			$plugin = elgg_get_plugin_from_id('static_config');
+			if ($plugin) {
+				$plugin->delete();
+			}
+		});
 	}
 	
 	/**

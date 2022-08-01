@@ -21,7 +21,6 @@ return array(
 	'reportedcontent:description' => 'На что жалуетесь?',
 	'reportedcontent:address' => 'Адрес',
 	'reportedcontent:success' => 'Ваша жалоба отправлена администратору',
-	'reportedcontent:report' => 'Пожаловаться администратору',
 	'reportedcontent:numbertodisplay' => 'Количество жалоб для отображения',
 	'reportedcontent:user' => 'Пожаловаться на пользователя',
 	'reportedcontent:new' => 'Новые жалобы',

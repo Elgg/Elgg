@@ -16,7 +16,7 @@ if (!isset($metadata)) {
 	$show_entity_menu_default = true;
 	if ($entity instanceof \ElggEntity) {
 		$entity_url = $entity->getURL();
-		if (!empty($entity_url) && stripos(current_page_url(), $entity_url) !== false) {
+		if (!empty($entity_url) && stripos(elgg_get_current_url(), $entity_url) !== false) {
 			// probably on a full view of an entity
 			$show_entity_menu_default = false;
 		}

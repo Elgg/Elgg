@@ -98,4 +98,11 @@ class CreateReportedContentNotificationHandler extends NotificationEventHandler 
 	protected function getNotificationURL(\ElggUser $recipient, string $method): string {
 		return elgg_normalize_url('admin/administer_utilities/reportedcontent');
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function addMuteLink(): bool {
+		return false;
+	}
 }

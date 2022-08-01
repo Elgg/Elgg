@@ -40,7 +40,7 @@ class ConfirmController {
 			});
 			
 			try {
-				login($user);
+				elgg_login($user);
 			} catch (LoginException $e) {
 				return elgg_error_response($e->getMessage());
 			}

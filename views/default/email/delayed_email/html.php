@@ -38,7 +38,7 @@ foreach ($notifications as $index => $notification) {
 		$entity = $object->getEntity();
 	}
 	
-	if ($entity instanceof ElggEntity && $recipient instanceof ElggUser && !has_access_to_entity($entity, $recipient)) {
+	if ($entity instanceof ElggEntity && $recipient instanceof ElggUser && !$entity->hasAccess($recipient->guid)) {
 		// user no longer has access to entity
 		continue;
 	}

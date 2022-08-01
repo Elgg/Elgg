@@ -2,8 +2,10 @@
 
 namespace Elgg\Notifications;
 
+use Elgg\EventsService;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\PluginHooksService;
+use Elgg\Traits\Loggable;
 use Elgg\Queue\Queue;
 
 /**
@@ -14,11 +16,16 @@ use Elgg\Queue\Queue;
  */
 class NotificationsService {
 
+	use Loggable;
+	
 	/** @var Queue */
 	protected $queue;
 
 	/** @var PluginHooksService */
 	protected $hooks;
+
+	/** @var EventsService */
+	protected $elgg_events;
 
 	/** @var \ElggSession */
 	protected $session;
@@ -32,19 +39,22 @@ class NotificationsService {
 	/**
 	 * Constructor
 	 *
-	 * @param Queue              $queue   Queue
-	 * @param PluginHooksService $hooks   Plugin hook service
-	 * @param \ElggSession       $session Session service
+	 * @param Queue              $queue       Queue
+	 * @param PluginHooksService $hooks       Plugin hook service
+	 * @param \ElggSession       $session     Session service
+	 * @param EventsService      $elgg_events Events service
 	 */
 	public function __construct(
 			Queue $queue,
 			PluginHooksService $hooks,
-			\ElggSession $session
+			\ElggSession $session,
+			EventsService $elgg_events
 	) {
 
 		$this->queue = $queue;
 		$this->hooks = $hooks;
 		$this->session = $session;
+		$this->elgg_events = $elgg_events;
 	}
 
 	/**
@@ -177,32 +187,44 @@ class NotificationsService {
 	/**
 	 * Add a notification event to the queue
 	 *
-	 * @param string    $action Action name
-	 * @param string    $type   Type of the object of the action
-	 * @param \ElggData $object The object of the action
+	 * @param string      $action Action name
+	 * @param string      $type   Type of the object of the action
+	 * @param \ElggData   $object The object of the action
+	 * @param \ElggEntity $actor  (optional) The actor of the notification (default: logged in user or owner of $object)
 	 *
 	 * @return void
 	 */
-	public function enqueueEvent($action, $type, $object) {
+	public function enqueueEvent($action, $type, $object, \ElggEntity $actor = null): void {
 		
-		if ($object instanceof \ElggData) {
-			$object_type = $object->getType();
-			$object_subtype = $object->getSubtype();
-
-			$registered = isset($this->events[$object_type][$object_subtype][$action]);
-			
-			if ($registered) {
-				$params = [
-					'action' => $action,
-					'object' => $object,
-				];
-				$registered = $this->hooks->trigger('enqueue', 'notification', $params, $registered);
-			}
-
-			if ($registered) {
-				$this->queue->enqueue(new SubscriptionNotificationEvent($object, $action));
-			}
+		if (!$object instanceof \ElggData) {
+			return;
 		}
+		
+		$object_type = $object->getType();
+		$object_subtype = $object->getSubtype();
+		$actor = $actor ?? elgg_get_logged_in_user_entity(); // default to logged in user
+		if (!isset($actor) && ($object instanceof \ElggEntity || $object instanceof \ElggExtender)) {
+			// still not set, default to the owner of $object
+			$actor = $object->getOwnerEntity() ?: null;
+		}
+		
+		$registered = isset($this->events[$object_type][$object_subtype][$action]);
+		
+		if ($registered) {
+			$params = [
+				'action' => $action,
+				'object' => $object,
+				'actor' => $actor,
+			];
+			$registered = (bool) $this->hooks->trigger('enqueue', 'notification', $params, $registered);
+		}
+		
+		if (!$registered) {
+			return;
+		}
+		
+		$this->elgg_events->trigger('enqueue', 'notifications', $object);
+		$this->queue->enqueue(new SubscriptionNotificationEvent($object, $action, $actor));
 	}
 	
 	/**
@@ -232,34 +254,39 @@ class NotificationsService {
 	 * @return int|array The number of notification events handled, or a delivery matrix
 	 */
 	public function processQueue($stopTime, $matrix = false) {
-
+		
 		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($stopTime, $matrix) {
 			$delivery_matrix = [];
-	
+			
 			$count = 0;
-	
+			
 			while (time() < $stopTime) {
 				// dequeue notification event
 				$event = $this->queue->dequeue();
 				/* @var $event NotificationEvent */
-	
+				
 				if (!$event) {
 					// queue is empty
 					break;
 				}
-	
+				
 				if (!$event instanceof NotificationEvent || !$event->getObject() || !$event->getActor()) {
 					// event object or actor have been deleted since the event was enqueued
 					continue;
 				}
-	
-				$handler = $this->getNotificationHandler($event);
-	
-				$delivery_matrix[$event->getDescription()] = $handler->send();
 				
-				$count++;
+				$this->elgg_events->trigger('dequeue', 'notifications', $event->getObject());
+				
+				$handler = $this->getNotificationHandler($event);
+				
+				try {
+					$delivery_matrix[$event->getDescription()] = $handler->send();
+					$count++;
+				} catch (\Throwable $t) {
+					$this->getLogger()->error($t);
+				}
 			}
-	
+			
 			return $matrix ? $delivery_matrix : $count;
 		});
 	}

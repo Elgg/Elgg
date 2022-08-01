@@ -7,7 +7,7 @@ $title = elgg_get_title_input();
 $description = get_input('description');
 $address = get_input('address');
 $access_id = (int) get_input('access_id');
-$tags = get_input('tags');
+$tags = (string) get_input('tags');
 $guid = (int) get_input('guid');
 $container_guid = (int) get_input('container_guid', elgg_get_logged_in_user_guid());
 
@@ -43,7 +43,7 @@ $bookmark->title = $title;
 $bookmark->address = $address;
 $bookmark->description = $description;
 $bookmark->access_id = $access_id;
-$bookmark->tags = string_to_tag_array($tags);
+$bookmark->tags = elgg_string_to_array($tags);
 
 if (!$bookmark->save()) {
 	return elgg_error_response(elgg_echo('bookmarks:save:failed'));

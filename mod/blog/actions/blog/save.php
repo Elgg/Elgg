@@ -66,7 +66,7 @@ foreach ($values as $name => $default) {
 
 	switch ($name) {
 		case 'tags':
-			$values[$name] = string_to_tag_array($value);
+			$values[$name] = elgg_string_to_array((string) $value);
 			break;
 
 		case 'container_guid':
@@ -158,4 +158,7 @@ if ($blog->status == 'published' || !$save) {
 	]);
 }
 
-return elgg_ok_response('', elgg_echo('blog:message:saved'), $forward_url);
+return elgg_ok_response([
+	'guid' => $blog->guid,
+	'url' => $blog->getURL(),
+], elgg_echo('blog:message:saved'), $forward_url);

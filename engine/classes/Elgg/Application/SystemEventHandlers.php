@@ -99,7 +99,7 @@ class SystemEventHandlers {
 	 * @return void
 	 */
 	public static function initEarly() {
-		register_pam_handler('pam_auth_userpass');
+		elgg_register_pam_handler(\Elgg\PAM\User\Password::class);
 	}
 	
 	/**

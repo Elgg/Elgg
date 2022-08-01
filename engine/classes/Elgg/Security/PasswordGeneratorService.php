@@ -56,7 +56,7 @@ class PasswordGeneratorService {
 	 *
 	 * @return string
 	 */
-	public function generatePassword(int $length = 12) {
+	public function generatePassword(int $length = 12): string {
 		
 		$length = $this->getValidLength($length);
 		

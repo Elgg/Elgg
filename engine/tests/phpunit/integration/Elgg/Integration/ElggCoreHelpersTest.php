@@ -69,7 +69,7 @@ class ElggCoreHelpersTest extends IntegrationTestCase {
 	}
 
 	/**
-	 * Test elgg_get_loaded_external_files('js')
+	 * Test elgg_get_loaded_external_resources('js')
 	 */
 	public function testElggGetJS() {
 		$base = trim(elgg_get_site_url(), "/");
@@ -85,19 +85,19 @@ class ElggCoreHelpersTest extends IntegrationTestCase {
 			elgg_load_external_file('js', $id);
 		}
 
-		$js_urls = elgg_get_loaded_external_files('js', 'head');
+		$js_urls = elgg_get_loaded_external_resources('js', 'head');
 		$this->assertIsArray($js_urls);
 
-		$this->assertEquals($urls['id1'], $js_urls['id1']);
-		$this->assertEquals($urls['id2'], $js_urls['id2']);
-		$this->assertEquals($urls['id3'], $js_urls['id3']);
+		$this->assertEquals($urls['id1'], $js_urls['id1']->url);
+		$this->assertEquals($urls['id2'], $js_urls['id2']->url);
+		$this->assertEquals($urls['id3'], $js_urls['id3']->url);
 
-		$js_urls = elgg_get_loaded_external_files('js', 'footer');
+		$js_urls = elgg_get_loaded_external_resources('js', 'footer');
 		$this->assertEquals([], $js_urls);
 	}
 
 	/**
-	 * Test elgg_get_loaded_external_files('js')
+	 * Test elgg_get_loaded_external_resources('js')
 	 */
 	public function testRegisterExternalDefaultLocations() {
 		$base = trim(elgg_get_site_url(), '/');
@@ -108,8 +108,8 @@ class ElggCoreHelpersTest extends IntegrationTestCase {
 		elgg_register_external_file('css', 'id2', "$base/urlb");
 		elgg_load_external_file('css', 'id2');
 		
-		$this->assertArrayHasKey('id1', elgg_get_loaded_external_files('js', 'footer'));
-		$this->assertArrayHasKey('id2', elgg_get_loaded_external_files('css', 'head'));
+		$this->assertArrayHasKey('id1', elgg_get_loaded_external_resources('js', 'footer'));
+		$this->assertArrayHasKey('id2', elgg_get_loaded_external_resources('css', 'head'));
 		
 	}
 }

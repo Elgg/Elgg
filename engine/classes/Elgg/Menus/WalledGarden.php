@@ -20,7 +20,7 @@ class WalledGarden {
 	 * @return void|MenuItems
 	 */
 	public static function registerHome(\Elgg\Hook $hook) {
-		if (current_page_url() === elgg_get_site_url()) {
+		if (elgg_get_current_url() === elgg_get_site_url()) {
 			return;
 		}
 		

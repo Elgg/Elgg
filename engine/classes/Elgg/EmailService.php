@@ -7,6 +7,7 @@ use Elgg\Assets\ImageFetcherService;
 use Elgg\Email\Attachment;
 use Elgg\Email\HtmlPart;
 use Elgg\Email\PlainTextPart;
+use Elgg\Exceptions\RuntimeException;
 use Elgg\Traits\Loggable;
 use Elgg\Views\HtmlFormatter;
 use Laminas\Mail\Header\ContentType;
@@ -16,7 +17,6 @@ use Laminas\Mime\Message as MimeMessage;
 use Laminas\Mime\Exception\InvalidArgumentException;
 use Laminas\Mime\Part;
 use Laminas\Mime\Mime;
-use RuntimeException;
 
 /**
  * Email service
@@ -400,7 +400,7 @@ class EmailService {
 		$defaults = [
 			'subject' => '',
 			'body' => '',
-			'language' => get_current_language(),
+			'language' => elgg_get_current_language(),
 		];
 		
 		$options = array_merge($defaults, $options);

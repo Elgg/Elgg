@@ -20,7 +20,6 @@ return array(
 	'reportedcontent:description' => 'De ce raportezi asta?',
 	'reportedcontent:address' => 'Locația elementului',
 	'reportedcontent:success' => 'Raportul tău a fost trimis către adminul site-ului',
-	'reportedcontent:report' => 'Raportează unui admin',
 	'reportedcontent:numbertodisplay' => 'Numărul de rapoarte de afișat',
 	'reportedcontent:user' => 'Raportează utilizatorul',
 	'reportedcontent:archived' => 'Raportul a fost arhivat',

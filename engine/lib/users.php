@@ -54,102 +54,62 @@ function get_user_by_email($email) {
 }
 
 /**
- * Return users (or the number of them) who have been active within a recent period.
- *
- * @param array $options Array of options with keys:
- *                       seconds (int)  => Length of period (default 600 = 10min)
- *                       limit   (int)  => Limit (default from settings)
- *                       offset  (int)  => Offset (default 0)
- *                       count   (bool) => Return a count instead of users? (default false)
- *
- * @return \ElggUser[]|int
- */
-function find_active_users(array $options = []) {
-	return _elgg_services()->usersTable->findActive($options);
-}
-
-/**
- * Render a list of currently online users
- *
- * @tip This also support options from elgg_list_entities().
- *
- * @param array $options Options array with keys:
- *                       seconds (int) => Number of seconds (default 600 = 10min)
- *
- * @return string
- */
-function get_online_users(array $options = []) {
-	$options = array_merge([
-		'seconds' => 600,
-	], $options);
-
-	return elgg_list_entities($options, 'find_active_users');
-}
-
-/**
  * Generate and send a password request email to a given user's registered email address.
  *
- * @param int $user_guid User GUID
+ * @param \ElggUser $user the user to notify
  *
- * @return false|array
+ * @return void
+ *
+ * @since 4.3
  */
-function send_new_password_request($user_guid) {
-	return _elgg_services()->passwords->sendNewPasswordRequest($user_guid);
-}
-
-/**
- * Low level function to reset a given user's password.
- *
- * This can only be called from execute_new_password_request().
- *
- * @param int    $user_guid The user.
- * @param string $password  Text (which will then be converted into a hash and stored)
- *
- * @return bool
- */
-function force_user_password_reset($user_guid, $password) {
-	return _elgg_services()->passwords->forcePasswordReset($user_guid, $password);
+function elgg_request_new_password(\ElggUser $user): void {
+	_elgg_services()->passwords->requestNewPassword($user);
 }
 
 /**
  * Validate and change password for a user.
  *
- * @param int    $user_guid The user id
- * @param string $conf_code Confirmation code as sent in the request email.
- * @param string $password  Optional new password, if not randomly generated.
+ * @param \ElggUser $user      The user
+ * @param string    $conf_code Confirmation code as sent in the request email.
+ * @param string    $password  Optional new password, if not randomly generated.
  *
- * @return bool True on success
+ * @return bool
+ *
+ * @since 4.3
  */
-function execute_new_password_request($user_guid, $conf_code, $password = null) {
-	return _elgg_services()->passwords->executeNewPasswordReset($user_guid, $conf_code, $password);
+function elgg_save_new_password(\ElggUser $user, string $conf_code, string $password = null): bool {
+	return _elgg_services()->passwords->saveNewPassword($user, $conf_code, $password);
 }
 
 /**
  * Generate a random 12 character clear text password.
  *
  * @return string
+ *
+ * @since 4.3
  */
-function generate_random_cleartext_password() {
+function elgg_generate_password(): string {
 	return _elgg_services()->passwordGenerator->generatePassword();
 }
 
 /**
- * Registers a user, returning false if the username already exists
+ * Registers a user
  *
- * @param string $username              The username of the new user
- * @param string $password              The password
- * @param string $name                  The user's display name
- * @param string $email                 The user's email address
- * @param bool   $allow_multiple_emails Allow the same email address to be
- *                                      registered multiple times?
- * @param string $subtype               Subtype of the user entity
- * @param array  $params                Additional parameters
+ * @param array $params Array of options with keys:
+ *                      (string) username              => The username of the new user
+ *                      (string) password              => The password
+ *                      (string) name                  => The user's display name
+ *                      (string) email                 => The user's email address
+ *                      (string) subtype               => (optional) Subtype of the user entity
+ *                      (string) language              => (optional) user language (defaults to current language)
+ *                      (bool)   allow_multiple_emails => (optional) Allow the same email address to be registered multiple times (default false)
+ *                      (bool)   validated             => (optional) Is the user validated (default true)
  *
- * @return int|false The new user's GUID; false on failure
+ * @return \ElggUser
  * @throws RegistrationException
  */
-function register_user($username, $password, $name, $email, $allow_multiple_emails = false, $subtype = null, array $params = []) {
-	return _elgg_services()->accounts->register($username, $password, $name, $email, $allow_multiple_emails, $subtype, $params);
+function elgg_register_user(array $params = []): \ElggUser {
+	return _elgg_services()->accounts->register($params);
 }
 
 /**
@@ -176,8 +136,9 @@ function elgg_validate_registration_data($username, $password, $name, $email, $a
  *
  * @return string Invite code
  * @see elgg_validate_invite_code()
+ * @since 4.3
  */
-function generate_invite_code($username) {
+function elgg_generate_invite_code(string $username): string {
 	return _elgg_services()->usersTable->generateInviteCode($username);
 }
 
@@ -188,11 +149,11 @@ function generate_invite_code($username) {
  * @param string $code     The invite code
  *
  * @return bool
- * @see   generate_invite_code()
+ * @see elgg_generate_invite_code()
  * @since 1.10
  */
-function elgg_validate_invite_code($username, $code) {
-	return _elgg_services()->usersTable->validateInviteCode($username, $code);
+function elgg_validate_invite_code($username, $code): bool {
+	return _elgg_services()->usersTable->validateInviteCode((string) $username, (string) $code);
 }
 
 /**
@@ -201,14 +162,15 @@ function elgg_validate_invite_code($username, $code) {
  * plugins to alter the default registration URL and append query elements, such as
  * an invitation code and inviting user's guid
  *
- * @param array  $query    An array of query elements
- * @param string $fragment Fragment identifier
+ * @param array  $parameters An array of query elements
+ * @param string $fragment   Fragment identifier
+ *
  * @return string
  */
-function elgg_get_registration_url(array $query = [], $fragment = '') {
-	$url = elgg_generate_url('account:register');
-	$url = elgg_http_add_url_query_elements($url, $query) . $fragment;
-	return elgg_trigger_plugin_hook('registration_url', 'site', $query, $url);
+function elgg_get_registration_url(array $parameters = [], $fragment = ''): string {
+	$url = elgg_generate_url('account:register', $parameters) . $fragment;
+	
+	return (string) elgg_trigger_plugin_hook('registration_url', 'site', $parameters, $url);
 }
 
 /**

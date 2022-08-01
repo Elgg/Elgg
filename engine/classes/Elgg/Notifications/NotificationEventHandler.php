@@ -2,6 +2,7 @@
 
 namespace Elgg\Notifications;
 
+use Elgg\Exceptions\RuntimeException;
 use Psr\Log\LogLevel;
 
 /**
@@ -237,7 +238,7 @@ class NotificationEventHandler {
 				return false;
 			}
 
-			if ($object instanceof \ElggEntity && !_elgg_services()->accessCollections->hasAccessToEntity($object, $recipient)) {
+			if ($object instanceof \ElggEntity && !$object->hasAccess($recipient->guid)) {
 				// Recipient does not have access to the notification object
 				// The access level may have changed since the event was enqueued
 				return false;
@@ -263,6 +264,7 @@ class NotificationEventHandler {
 		$params['object'] = $object;
 		$params['action'] = $this->event->getAction();
 		$params['add_salutation'] = elgg_extract('add_salutation', $params, true);
+		$params['add_mute_link'] = elgg_extract('add_mute_link', $params, $this->addMuteLink());
 
 		$notification = $this->prepareNotification($params);
 		return $this->deliverNotification($notification, $method);
@@ -302,22 +304,21 @@ class NotificationEventHandler {
 	 *
 	 * @param array $params Parameters to initialize notification with
 	 *
-	 * @throws \RuntimeException
-	 *
 	 * @return Notification
+	 * @throws RuntimeException
 	 */
 	final protected function prepareNotification(array $params): Notification {
 		$notification = new Notification($params['sender'], $params['recipient'], $params['language'], $params['subject'], $params['body'], $params['summary'], $params);
 
 		$notification = _elgg_services()->hooks->trigger('prepare', 'notification', $params, $notification);
 		if (!$notification instanceof Notification) {
-			throw new \RuntimeException("'prepare','notification' hook must return an instance of " . Notification::class);
+			throw new RuntimeException("'prepare','notification' hook must return an instance of " . Notification::class);
 		}
 
 		$type = 'notification:' . $this->event->getDescription();
 		$notification = _elgg_services()->hooks->trigger('prepare', $type, $params, $notification);
 		if (!$notification instanceof Notification) {
-			throw new \RuntimeException("'prepare','{$type}' hook must return an instance of " . Notification::class);
+			throw new RuntimeException("'prepare','{$type}' hook must return an instance of " . Notification::class);
 		}
 
 		if (elgg_extract('add_salutation', $notification->params) === true) {
@@ -327,7 +328,7 @@ class NotificationEventHandler {
 		
 		$notification = _elgg_services()->hooks->trigger('format', "notification:{$params['method']}", [], $notification);
 		if (!$notification instanceof Notification) {
-			throw new \RuntimeException("'format','notification:{$params['method']}' hook must return an instance of " . Notification::class);
+			throw new RuntimeException("'format','notification:{$params['method']}' hook must return an instance of " . Notification::class);
 		}
 		
 		return $notification;
@@ -503,6 +504,15 @@ class NotificationEventHandler {
 	 * @since 4.1
 	 */
 	protected static function isConfigurableForGroup(\ElggGroup $group): bool {
+		return true;
+	}
+	
+	/**
+	 * Add a mute link in the email notification
+	 *
+	 * @return bool
+	 */
+	protected function addMuteLink(): bool {
 		return true;
 	}
 }

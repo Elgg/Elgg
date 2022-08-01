@@ -3,7 +3,6 @@
 namespace Elgg\Integration;
 
 use Elgg\Values;
-use ElggRiveritem;
 
 /**
  * Elgg Test river api
@@ -76,7 +75,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		$params['return_item'] = true;
 		$item = elgg_create_river_item($params);
 
-		$this->assertInstanceOf(ElggRiverItem::class, $item);
+		$this->assertInstanceOf(\ElggRiverItem::class, $item);
 		$this->assertTrue(elgg_delete_river(['id' => $item->id]));
 	}
 
@@ -101,7 +100,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		elgg_register_event_handler('create:before', 'river', $before_handler);
 		elgg_register_event_handler('create:after', 'river', $after_handler);
 		$item = elgg_create_river_item($params);
-		$this->assertInstanceOf(ElggRiverItem::class, $item);
+		$this->assertInstanceOf(\ElggRiverItem::class, $item);
 		elgg_unregister_event_handler('create:before', 'river', $before_handler);
 		elgg_unregister_event_handler('create:after', 'river', $after_handler);
 

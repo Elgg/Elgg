@@ -1,4 +1,7 @@
 <?php
+
+use Elgg\Exceptions\UnexpectedValueException as ElggUnexpectedValueException;
+
 /**
  * The base class for \ElggEntity extenders.
  *
@@ -85,7 +88,9 @@ abstract class ElggExtender extends \ElggData {
 	 * Gets an attribute
 	 *
 	 * @param string $name Name
+	 *
 	 * @return mixed
+	 * @throws \Elgg\Exceptions\UnexpectedValueException
 	 */
 	public function __get($name) {
 		if (array_key_exists($name, $this->attributes)) {
@@ -99,7 +104,7 @@ abstract class ElggExtender extends \ElggData {
 						return $this->attributes['value'];
 					default :
 						$msg = "{$this->attributes['value_type']} is not a supported \ElggExtender value type.";
-						throw new \UnexpectedValueException($msg);
+						throw new ElggUnexpectedValueException($msg);
 						break;
 				}
 			}

@@ -26,7 +26,7 @@ class AddMetasHandler {
 		
 		$head_params['metas']['description'] = [
 			'name' => 'description',
-			'content' => _elgg_services()->config->sitedescription
+			'content' => elgg_get_site_entity()->description,
 		];
 		
 		// https://developer.chrome.com/multidevice/android/installtohomescreen

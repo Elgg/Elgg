@@ -12,6 +12,7 @@ for (var i = 0; i < lightbox_links.length; i++) {
 	};
 }
 
+// @todo: in Elgg 5.0 remove the rel="toggle" related code and just leave the class="elgg-toggle"
 var toggle_links = document.querySelectorAll('a[rel="toggle"]');
 
 for (var i = 0; i < toggle_links.length; i++) {
@@ -19,3 +20,12 @@ for (var i = 0; i < toggle_links.length; i++) {
 		return false;
 	};
 }
+
+var toggle_links = document.querySelectorAll('a[class*="elgg-toggle"]');
+
+for (var i = 0; i < toggle_links.length; i++) {
+	toggle_links[i].onclick = function () {
+		return false;
+	};
+}
+

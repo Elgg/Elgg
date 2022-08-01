@@ -16,7 +16,7 @@ $vars = array_merge($item->getValues(), $vars);
 $vars['class'] = elgg_extract_class($vars, ['elgg-menu-content']);
 
 if ($item->getLinkClass()) {
-	$vars['class'][] = $item->getLinkClass();
+	$vars['class'] = array_merge($vars['class'], explode(' ', $item->getLinkClass()));
 }
 
 if ($item->getHref() === false || $item->getHref() === null) {

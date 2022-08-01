@@ -43,7 +43,7 @@ class ElggMetadata extends ElggExtender {
 	 * @return bool
 	 */
 	public function canEdit($user_guid = 0) {
-		return has_access_to_entity($this->getEntity());
+		return elgg_has_access_to_entity($this->entity_guid, (int) $user_guid);
 	}
 
 	/**

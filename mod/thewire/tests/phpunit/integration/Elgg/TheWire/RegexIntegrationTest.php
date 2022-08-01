@@ -43,7 +43,7 @@ class RegexIntegrationTest extends IntegrationTestCase {
 	 * @return string
 	 */
 	protected function getEmailLink($address) {
-		return "<a href=\"mailto:$address\">$address</a>";
+		return elgg_parse_emails($address);
 	}
 
 	/**
@@ -53,7 +53,7 @@ class RegexIntegrationTest extends IntegrationTestCase {
 	 * @return string
 	 */
 	protected function getLink($address) {
-		return parse_urls($address);
+		return elgg_parse_urls($address);
 	}
 	
 	/**

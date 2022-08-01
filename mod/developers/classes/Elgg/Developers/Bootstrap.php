@@ -39,11 +39,13 @@ class Bootstrap extends DefaultPluginBootstrap {
 		
 		if (!empty($settings['screen_log']) && (elgg_get_viewtype() === 'default') && !\Elgg\Application::isCli()) {
 			// don't show in action/simplecache
-			$path = elgg_substr(current_page_url(), elgg_strlen(elgg_get_site_url()));
+			$path = elgg_substr(elgg_get_current_url(), elgg_strlen(elgg_get_site_url()));
 			if (!preg_match('~^(cache|action)/~', $path)) {
+				elgg_require_css('developers/log');
+				
 				// Write to JSON file to not take up memory See #11886
 				$uid = substr(hash('md5', uniqid('', true)), 0, 10);
-				$log_file = \Elgg\Project\Paths::sanitize(elgg_get_config('dataroot') . "logs/screen/$uid.html", false);
+				$log_file = elgg_sanitize_path(elgg_get_data_path() . "logs/screen/{$uid}.html", false);
 				$elgg->config->log_cache = $log_file;
 	
 				$handler = new \Monolog\Handler\StreamHandler(
@@ -122,6 +124,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 	
 		if (!empty($settings['show_gear']) && elgg_is_admin_logged_in() && !elgg_in_context('admin')) {
 			elgg_require_js('elgg/dev/gear');
+			elgg_require_css('elgg/dev/gear');
 			elgg_register_ajax_view('developers/gear_popup');
 			elgg_register_simplecache_view('elgg/dev/gear.html');
 	
@@ -140,7 +143,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 	
 		if (!empty($settings['enable_error_log'])) {
 			$handler = new \Monolog\Handler\RotatingFileHandler(
-				\Elgg\Project\Paths::sanitize(elgg_get_config('dataroot') . 'logs/html/errors.html', false),
+				elgg_sanitize_path(elgg_get_data_path() . 'logs/html/errors.html', false),
 				elgg_extract('error_log_max_files', $settings, 60),
 				\Monolog\Logger::ERROR
 			);

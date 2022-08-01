@@ -2,7 +2,6 @@
 
 namespace Elgg;
 
-use Elgg\Database\ConfigTable;
 use Elgg\Exceptions\ConfigurationException;
 use Elgg\Project\Paths;
 use Elgg\Traits\Loggable;
@@ -19,14 +18,16 @@ use Elgg\Traits\Loggable;
  * @property string        $allow_user_default_access				Are users allowed to set their own default access level
  * @property string        $allowed_languages						Comma seperated string of admin allowed languages
  * @property string        $assetroot            					Path of asset (views) simplecache with trailing "/"
+ * @property int           $authentication_failures_lifetime        Number of seconds before an authentication failure expires
+ * @property int           $authentication_failures_limit           Number of allowed authentication failures
  * @property bool          $auto_disable_plugins					Are unbootable plugins automatically disabled
  * @property int           $batch_run_time_in_secs					Max time for a single upgrade loop
- * @property-read int      $bootdata_plugin_settings_limit			Max amount of plugin settings to determine if plugin will be cached
- * @property bool          $boot_complete
- * @property int           $boot_cache_ttl
+ * @property int           $bootdata_plugin_settings_limit			Max amount of plugin settings to determine if plugin will be cached
+ * @property int           $boot_cache_ttl                          Time to live for boot cache in seconds
  * @property array         $breadcrumbs
  * @property string        $cacheroot            					Path of cache storage with trailing "/"
  * @property bool          $can_change_username						Is user allowed to change the username
+ * @property bool          $class_loader_verify_file_existence		Determines if the class loader checks for file existence when loading files from the class map
  * @property bool          $comment_box_collapses					Determines if the comment box collapses after the first comment
  * @property bool          $comments_group_only					    Are comments on group content only allowed for group members
  * @property bool          $comments_latest_first					Determines if the default order of comments is latest first
@@ -34,7 +35,6 @@ use Elgg\Traits\Loggable;
  * @property int           $comments_per_page						Number of comments per page
  * @property array         $css_compiler_options 					Options passed to CssCrush during CSS compilation
  * @property string        $dataroot             					Path of data storage with trailing "/"
- * @property bool          $data_dir_override
  * @property string        $date_format          					Preferred PHP date format
  * @property string        $date_format_datepicker 					Preferred jQuery datepicker date format
  * @property array         $db
@@ -51,9 +51,8 @@ use Elgg\Traits\Loggable;
  * @property int           $default_access							Default access
  * @property int           $default_limit							The default "limit" used in listings and queries
  * @property bool          $disable_rss 							Is RSS disabled
- * @property bool          $elgg_config_locks 						The application will lock some settings (default true)
  * @property bool          $elgg_maintenance_mode                   Flag if maintenance mode is enabled
- * @property string        $elgg_settings_file
+ * @property-read string   $elgg_settings_file                      Location of the settings file used to initialize the config
  * @property bool          $email_html_part                         Determines if email has a html part
  * @property string        $email_html_part_images                  How to deal with images in html part of email
  * @property int           $email_subject_limit                     The length limit for email subjects, defaults to 998 as described in http://www.faqs.org/rfcs/rfc2822.html
@@ -64,13 +63,12 @@ use Elgg\Traits\Loggable;
  * @property array         $emailer_smtp_settings                   This configures SMTP if $emailer_transport is set to "smtp"
  * @property mixed         $embed_tab
  * @property string        $exception_include						This is an optional script used to override Elgg's default handling of uncaught exceptions.
- * @property string[]      $group
+ * @property int           $friendly_time_number_of_days            Number of days after which timestamps will no longer be presented in a friendly format (x hours ago) but in a full date
  * @property string[]      $http_request_trusted_proxy_ips			When Elgg is behind a loadbalancer/proxy this can contain IP adresses to allow access to better client information
  * @property int           $http_request_trusted_proxy_headers		When Elgg is behind a loadbalancer/proxy this can contain a bitwise string of allowed headers for better client information
- * @property bool          $i18n_loaded_from_cache
  * @property array         $icon_sizes
  * @property string        $image_processor
- * @property string        $installed 								Is the site fully installed?
+ * @property int           $installed 								Set during installation to the timestamp of installation
  * @property bool          $installer_running
  * @property string        $language                   				Site language code
  * @property string[]      $language_to_locale_mapping 				A language to locale mapping (eg. 'en' => ['en_US'] or 'nl' => ['nl_NL'])
@@ -89,13 +87,9 @@ use Elgg\Traits\Loggable;
  * @property int           $minusername                             The minimal length of a username
  * @property int           $notifications_max_runtime               The max runtime for the notification queue processing in seconds since the start of the cron interval
  * @property int           $notifications_queue_delay               Number of seconds to delay the processing of the notifications queue
- * @property string[]      $pages
  * @property string        $pagination_behaviour                    Behaviour of pagination in lists
- * @property-read string   $path         							Path of composer install with trailing "/"
- * @property-read string   $pluginspath  							Alias of plugins_path
  * @property-read string   $plugins_path 							Path of project "mod/" directory where the plugins are stored
  * @property array         $profile_custom_fields
- * @property array         $profile_fields
  * @property string        $profiling_minimum_percentage
  * @property bool          $profiling_sql
  * @property array         $proxy                                   Contains proxy related settings
@@ -113,34 +107,27 @@ use Elgg\Traits\Loggable;
  * @property bool          $security_protect_cron
  * @property bool          $security_protect_upgrade
  * @property string        $seeder_local_image_folder 				Path to a local folder containing images used for seeding
+ * @property bool          $session_bound_entity_icons 				Are the URLs to entity icons session bound (unique per user)
  * @property bool          $simplecache_enabled						Is simplecache enabled?
  * @property bool          $simplecache_minify_css
  * @property bool          $simplecache_minify_js
  * @property \ElggSite     $site 									The site entity
- * @property string        $sitedescription							The site description
- * @property string        $sitename 								The name of the site
  * @property string[]      $site_custom_menu_items
  * @property string[]      $site_featured_menu_names
- * @property-read int      $site_guid 								The guid of the site object
+ * @property bool          $subresource_integrity_enabled			Should subresources (js/css) get integrity information
  * @property bool          $system_cache_enabled					Is the system cache enabled?
  * @property bool          $system_cache_loaded
  * @property bool          $testing_mode  							Is the current application running (PHPUnit) tests
  * @property string        $time_format  							Preferred PHP time format
- * @property string        $url          							Alias of "wwwroot"
  * @property string        $view         							Default viewtype (usually not set)
  * @property bool          $walled_garden							Is current site in walled garden mode?
  * @property string        $who_can_change_language					Who can change the language of a user
+ * @property bool          $webp_enabled                            Are webp icons allowed
  * @property string        $wwwroot      							Site URL
  * @property string        $x_sendfile_type
  * @property string        $x_accel_mapping
  * @property bool          $_boot_cache_hit
  * @property bool          $_elgg_autofeed
- *
- * @property bool          $_service_boot_complete
- * @property bool          $_plugins_boot_complete
- * @property bool          $_application_boot_complete
- *
- * @internal
  */
 class Config {
 	
@@ -165,21 +152,38 @@ class Config {
 	 * @var array
 	 */
 	private $cookies = [];
-
+	
 	/**
-	 * @var ConfigTable Do not use directly. Use getConfigTable().
+	 * The following values can only be set once
+	 *
+	 * @var array
 	 */
-	private $config_table;
+	protected $locked_values = [
+		'assetroot',
+		'cacheroot',
+		'dataroot',
+		'elgg_settings_file',
+		'installed',
+		'path',
+		'plugins_path',
+		'pluginspath',
+		'site_guid',
+		'url',
+		'wwwroot',
+	];
 
 	/**
 	 * @var array
 	 */
-	private $locked = [];
-
-	/**
-	 * @var string
-	 */
-	private $settings_path;
+	protected $deprecated = [
+		'elgg_settings_file' => '4.3',
+		'path' => '4.3',
+		'pluginspath' => '4.3',
+		'site_guid' => '4.3',
+		'sitedescription' => '4.3',
+		'sitename' => '4.3',
+		'url' => '4.3',
+	];
 	
 	/**
 	 * Holds the set of default values
@@ -187,18 +191,28 @@ class Config {
 	 * @var array
 	 */
 	protected $config_defaults = [
+		'allow_phpinfo' => false,
+		'authentication_failures_lifetime' => 600,
+		'authentication_failures_limit' => 5,
+		'auto_disable_plugins' => true,
 		'batch_run_time_in_secs' => 4,
+		'boot_cache_ttl' => 3600,
+		'bootdata_plugin_settings_limit' => 40,
+		'can_change_username' => false,
+		'class_loader_verify_file_existence' => true,
 		'comment_box_collapses' => true,
 		'comments_group_only' => true,
 		'comments_latest_first' => true,
 		'comments_max_depth' => 0,
 		'comments_per_page' => 25,
 		'db_query_cache_limit' => 50,
+		'default_limit' => 10,
 		'elgg_maintenance_mode' => false,
 		'email_html_part' => true,
 		'email_html_part_images' => 'no',
 		'email_subject_limit' => 998,
 		'enable_delayed_email' => true,
+		'friendly_time_number_of_days' => 30,
 		'icon_sizes' => [
 			'topbar' => ['w' => 16, 'h' => 16, 'square' => true, 'upscale' => true],
 			'tiny' => ['w' => 25, 'h' => 25, 'square' => true, 'upscale' => true],
@@ -207,6 +221,7 @@ class Config {
 			'large' => ['w' => 200, 'h' => 200, 'square' => true, 'upscale' => true],
 			'master' => ['w' => 10240, 'h' => 10240, 'square' => false, 'upscale' => false, 'crop' => false],
 		],
+		'language' => 'en',
 		'language_detect_from_browser' => true,
 		'lastcache' => 0,
 		'message_delay' => 6,
@@ -220,10 +235,25 @@ class Config {
 		'security_notify_admins' => true,
 		'security_notify_user_password' => true,
 		'security_protect_upgrade' => true,
+		'session_bound_entity_icons' => false,
 		'simplecache_enabled' => false,
+		'site_guid' => 1, // deprecated
+		'subresource_integrity_enabled' => false,
 		'system_cache_enabled' => false,
 		'testing_mode' => false,
+		'webp_enabled' => true,
 		'who_can_change_language' => 'everyone',
+	];
+	
+	/**
+	 * The path properties will be sanitized when set
+	 *
+	 * @var array
+	 */
+	protected $path_properties = [
+		'dataroot',
+		'cacheroot',
+		'assetroot',
 	];
 	
 	/**
@@ -233,6 +263,21 @@ class Config {
 	 */
 	const ENTITY_TYPES = ['group', 'object', 'site', 'user'];
 
+	/**
+	 * Sensitive properties that should not be visible
+	 *
+	 * @var array
+	 */
+	const SENSITIVE_PROPERTIES = [
+		'__site_secret__',
+		'db',
+		'dbhost',
+		'dbport',
+		'dbuser',
+		'dbpass',
+		'dbname',
+	];
+	
 	/**
 	 * Constructor
 	 *
@@ -256,17 +301,7 @@ class Config {
 	 */
 	protected function saveInitialValues(array $values): void {
 		// Don't keep copies of these in case config gets dumped
-		$sensitive_props = [
-			'__site_secret__',
-			'db',
-			'dbhost',
-			'dbport',
-			'dbuser',
-			'dbpass',
-			'dbname',
-		];
-		
-		foreach ($sensitive_props as $name) {
+		foreach (self::SENSITIVE_PROPERTIES as $name) {
 			unset($values[$name]);
 		}
 		
@@ -292,8 +327,6 @@ class Config {
 		if (!$config) {
 			throw new ConfigurationException(__METHOD__ . ": Reading configs failed: $reason1");
 		}
-
-		$config->settings_path = $settings_path;
 
 		return $config;
 	}
@@ -358,7 +391,6 @@ class Config {
 		}
 
 		$config->elgg_settings_file = $path;
-		$config->lock('elgg_settings_file');
 
 		return $config;
 	}
@@ -387,6 +419,8 @@ class Config {
 	 *
 	 * @param array $values Values
 	 * @return void
+	 *
+	 * @deprecated 4.3
 	 */
 	public function mergeValues(array $values) {
 		foreach ($values as $name => $value) {
@@ -450,6 +484,11 @@ class Config {
 	 * @return mixed null if does not exist
 	 */
 	public function __get($name) {
+
+		if (array_key_exists($name, $this->deprecated)) {
+			elgg_deprecated_notice("Using '{$name}' from config has been deprecated", $this->deprecated[$name]);
+		}
+		
 		if (isset($this->values[$name])) {
 			return $this->values[$name];
 		}
@@ -475,7 +514,7 @@ class Config {
 	 * @return mixed null = not set
 	 */
 	public function getInitialValue($name) {
-		return isset($this->initial_values[$name]) ? $this->initial_values[$name] : null;
+		return $this->initial_values[$name] ?? null;
 	}
 
 	/**
@@ -494,9 +533,10 @@ class Config {
 	 *
 	 * @param string $name Name
 	 * @return void
+	 * @deprecated 4.3
 	 */
 	public function lock($name) {
-		$this->locked[$name] = true;
+		elgg_deprecated_notice(__METHOD__ . 'has been deprecated. It is no longer possible to lock config values.', '4.3');
 	}
 
 	/**
@@ -507,7 +547,8 @@ class Config {
 	 * @return bool
 	 */
 	public function isLocked($name) {
-		return isset($this->locked[$name]);
+		$testing = $this->values['testing_mode'] ?? false;
+		return !$testing && in_array($name, $this->locked_values) && $this->hasValue($name);
 	}
 
 	/**
@@ -523,6 +564,11 @@ class Config {
 		if ($this->wasWarnedLocked($name)) {
 			return;
 		}
+		
+		if (in_array($name, $this->path_properties)) {
+			$value = Paths::sanitize($value);
+		}
+		
 		$this->values[$name] = $value;
 	}
 
@@ -573,7 +619,7 @@ class Config {
 			return $this->remove($name);
 		}
 		
-		$result = $this->getConfigTable()->set($name, $value);
+		$result = _elgg_services()->configTable->set($name, $value);
 
 		$this->__set($name, $value);
 	
@@ -592,7 +638,7 @@ class Config {
 			return false;
 		}
 
-		$result = $this->getConfigTable()->remove($name);
+		$result = _elgg_services()->configTable->remove($name);
 
 		unset($this->values[$name]);
 	
@@ -605,28 +651,13 @@ class Config {
 	 * @param string $name Name
 	 * @return bool
 	 */
-	private function wasWarnedLocked($name) {
-		if (!isset($this->locked[$name])) {
+	protected function wasWarnedLocked($name): bool {
+		if (!$this->isLocked($name)) {
 			return false;
 		}
-
+		
 		$this->getLogger()->warning("The property {$name} is read-only.");
 
 		return true;
-	}
-
-	/**
-	 * Get the config table API
-	 *
-	 * This is a necessary evil until we refactor so that the service provider has no dependencies.
-	 *
-	 * @return ConfigTable
-	 */
-	private function getConfigTable() {
-		if (!$this->config_table) {
-			$this->config_table = _elgg_services()->configTable;
-		}
-
-		return $this->config_table;
 	}
 }

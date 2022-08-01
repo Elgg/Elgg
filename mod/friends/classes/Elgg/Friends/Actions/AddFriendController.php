@@ -77,7 +77,7 @@ class AddFriendController {
 			return $result;
 		}
 		
-		if (check_entity_relationship($friend->guid, 'friendrequest', $user->guid)) {
+		if ($friend->hasRelationship($user->guid, 'friendrequest')) {
 			// friend requested to be friends with user, so accept request
 			$friend->addFriend($user->guid, true);
 			$result = $this->addFriend($user, $friend);
@@ -89,7 +89,7 @@ class AddFriendController {
 			return $result;
 		}
 		
-		if (add_entity_relationship($user->guid, 'friendrequest', $friend->guid)) {
+		if ($user->addRelationship($friend->guid, 'friendrequest')) {
 			// friend request made, notify potential friend
 			$site = elgg_get_site_entity();
 			

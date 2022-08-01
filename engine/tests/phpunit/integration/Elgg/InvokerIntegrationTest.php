@@ -7,7 +7,7 @@ class InvokerIntegrationTest extends IntegrationTestCase {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function down() {
+	public function up() {
 		self::createApplication(['isolate' => true]);
 	}
 	

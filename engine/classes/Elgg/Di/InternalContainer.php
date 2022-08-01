@@ -25,9 +25,11 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Amd\Config                                $amdConfig
  * @property-read \Elgg\Database\AnnotationsTable                 $annotationsTable
  * @property-read \Elgg\Database\ApiUsersTable                    $apiUsersTable
+ * @property-read \Elgg\AuthenticationService                     $authentication
  * @property-read \ElggAutoP                                      $autoP
  * @property-read \Elgg\AutoloadManager                           $autoloadManager
  * @property-read \Elgg\BootService                               $boot
+ * @property-read \ElggCache                                      $bootCache
  * @property-read \Elgg\Application\CacheHandler                  $cacheHandler
  * @property-read \Elgg\Assets\CssCompiler                        $cssCompiler
  * @property-read \Elgg\Security\Csrf                             $csrf
@@ -83,6 +85,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Security\PasswordGeneratorService         $passwordGenerator
  * @property-read \Elgg\PersistentLoginService                    $persistentLogin
  * @property-read \Elgg\Database\Plugins                          $plugins
+ * @property-read \ElggCache                                      $pluginsCache
  * @property-read \Elgg\Cache\PrivateSettingsCache                $privateSettingsCache
  * @property-read \Elgg\Database\PrivateSettingsTable             $privateSettings
  * @property-read \Elgg\Application\Database                      $publicDb
@@ -117,6 +120,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Upgrade\Locator                           $upgradeLocator
  * @property-read \Elgg\Router\UrlGenerator                       $urlGenerator
  * @property-read \Elgg\Router\UrlMatcher                         $urlMatcher
+ * @property-read \Elgg\Http\Urls                                 $urls
  * @property-read \Elgg\UploadService                             $uploads
  * @property-read \Elgg\UserCapabilities                          $userCapabilities
  * @property-read \Elgg\Database\UsersApiSessionsTable            $usersApiSessionsTable
@@ -140,80 +144,31 @@ class InternalContainer extends DiContainer {
 	 * @throws ConfigurationException
 	 */
 	public function initConfig(Config $config): Config {
-		if ($config->elgg_config_locks === null) {
-			$config->elgg_config_locks = true;
-		}
-
-		if ($config->elgg_config_locks) {
-			$lock = function ($name) use ($config) {
-				$config->lock($name);
-			};
-		} else {
-			// the installer needs to build an application with defaults then update
-			// them after they're validated, so we don't want to lock them.
-			$lock = function () {
-			};
-		}
-
 		$this->timer->begin([]);
 
-		if ($config->dataroot) {
-			$config->dataroot = Paths::sanitize($config->dataroot);
-		} else {
-			if (!$config->installer_running) {
-				throw new ConfigurationException('Config value "dataroot" is required.');
-			}
+		if (!$config->dataroot && !$config->installer_running) {
+			throw new ConfigurationException('Config value "dataroot" is required.');
 		}
-		$lock('dataroot');
 
-		if ($config->cacheroot) {
-			$config->cacheroot = Paths::sanitize($config->cacheroot);
-		} else {
-			$config->cacheroot = Paths::sanitize($config->dataroot . 'caches');
+		if (!$config->cacheroot) {
+			$config->cacheroot = $config->dataroot . 'caches';
 		}
-		$lock('cacheroot');
 
-		if ($config->assetroot) {
-			$config->assetroot = Paths::sanitize($config->assetroot);
-		} else {
-			$config->assetroot = Paths::sanitize($config->cacheroot . 'views_simplecache');
+		if (!$config->assetroot) {
+			$config->assetroot = $config->cacheroot . 'views_simplecache';
 		}
-		$lock('assetroot');
 		
-		if ($config->wwwroot) {
-			$config->wwwroot = rtrim($config->wwwroot, '/') . '/';
-		} else {
+		if (!$config->wwwroot) {
 			$config->wwwroot = $this->request->sniffElggUrl();
 		}
-		$lock('wwwroot');
 
-		if (!$config->language) {
-			$config->language = Application::DEFAULT_LANG;
+		if (!$config->plugins_path) {
+			$config->plugins_path = Paths::project() . 'mod/';
 		}
 
-		if ($config->default_limit) {
-			$lock('default_limit');
-		} else {
-			$config->default_limit = Application::DEFAULT_LIMIT;
-		}
-
-		if ($config->plugins_path) {
-			$plugins_path = rtrim($config->plugins_path, '/') . '/';
-		} else {
-			$plugins_path = Paths::project() . 'mod/';
-		}
-
-		$locked_props = [
-			'site_guid' => 1,
-			'path' => Paths::project(),
-			'plugins_path' => $plugins_path,
-			'pluginspath' => $plugins_path,
-			'url' => $config->wwwroot,
-		];
-		foreach ($locked_props as $name => $value) {
-			$config->$name = $value;
-			$lock($name);
-		}
+		$config->path = Paths::project(); // deprecated
+		$config->pluginspath = $config->plugins_path; // deprecated alias
+		$config->url = $config->wwwroot; // deprecated alias
 
 		// move sensitive credentials into isolated services
 		$this->set('dbConfig', DbConfig::fromElggConfig($config));
@@ -227,16 +182,10 @@ class InternalContainer extends DiContainer {
 		}
 
 		// get this stuff out of config!
-		unset($config->db);
-		unset($config->dbname);
-		unset($config->dbhost);
-		unset($config->dbport);
-		unset($config->dbuser);
-		unset($config->dbpass);
-		unset($config->{\Elgg\Database\SiteSecret::CONFIG_KEY});
-		
-		$config->boot_complete = false;
-		
+		foreach ($config::SENSITIVE_PROPERTIES as $name) {
+			unset($config->{$name});
+		}
+
 		return $config;
 	}
 	

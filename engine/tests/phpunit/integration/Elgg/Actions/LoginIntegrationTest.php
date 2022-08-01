@@ -207,7 +207,9 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$first_login_event = $this->registerTestingEvent('login:first', 'user', function(\Elgg\Event $event) {});
 		
 		$this->assertEmpty($user->first_login);
-		$this->assertTrue(login($user));
+		
+		elgg_login($user);
+		
 		$login_before_event->assertNumberOfCalls(1);
 		$login_after_event->assertNumberOfCalls(1);
 		$first_login_event->assertNumberOfCalls(1);
@@ -220,8 +222,9 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$login_after_event->assertObject($user);
 		$first_login_event->assertObject($user);
 		
-		$this->assertTrue(logout($user));
-		$this->assertTrue(login($user));
+		$this->assertTrue(elgg_logout($user));
+		
+		elgg_login($user);
 		
 		$this->assertEquals($first_login - 1, $user->first_login);
 		
@@ -229,7 +232,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$login_after_event->assertNumberOfCalls(2);
 		$first_login_event->assertNumberOfCalls(1);
 		
-		$this->assertTrue(logout($user));
+		$this->assertTrue(elgg_logout($user));
 	}
 
 	public function testCanPersistLogin() {

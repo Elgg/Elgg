@@ -19,7 +19,6 @@ return array(
 	'reportedcontent:description' => '您為什麼要報告這個？',
 	'reportedcontent:address' => '項目的位置',
 	'reportedcontent:success' => '您的報告已發送給站臺管理者',
-	'reportedcontent:report' => '報告給管理者',
 	'reportedcontent:numbertodisplay' => '要顯示的報告數量',
 	'reportedcontent:user' => '報告的使用者',
 	'reportedcontent:archived' => '報告已封存',

@@ -16,14 +16,13 @@ if (elgg()->config->disable_rss) {
 
 // Set title
 if (empty($vars['title'])) {
-	$title = elgg_get_config('sitename');
+	$title = elgg_get_site_entity()->getDisplayName();
 } else {
-	$title = elgg_get_config('sitename') . ": " . $vars['title'];
+	$title = elgg_get_site_entity()->getDisplayName() . ": " . $vars['title'];
 }
 
 // Remove RSS from URL
-$rssurl = current_page_url();
-$url = elgg_http_remove_url_query_element($rssurl, 'view');
+$url = elgg_http_remove_url_query_element(elgg_get_current_url(), 'view');
 
 $rssurl = htmlspecialchars($url, ENT_NOQUOTES, 'UTF-8');
 $url = htmlspecialchars($url, ENT_NOQUOTES, 'UTF-8');

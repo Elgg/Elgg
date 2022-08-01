@@ -22,6 +22,6 @@ class CreateAclHandler {
 			return;
 		}
 		
-		create_access_collection('friends', $user->guid, 'friends');
+		elgg_create_access_collection('friends', $user->guid, 'friends');
 	}
 }

@@ -12,6 +12,7 @@ $bool_settings = [
 	'security_notify_user_ban',
 	'security_notify_user_password',
 	'session_bound_entity_icons',
+	'subresource_integrity_enabled',
 ];
 
 foreach ($bool_settings as $setting) {

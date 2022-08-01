@@ -25,7 +25,7 @@ class Group {
 			$ac_name = elgg_echo('groups:group') . ": " . $object->getDisplayName();
 			
 			// delete the group if acl creation fails
-			return (bool) create_access_collection($ac_name, $object->guid, 'group_acl');
+			return (bool) elgg_create_access_collection($ac_name, $object->guid, 'group_acl');
 		});
 	}
 	
@@ -93,8 +93,8 @@ class Group {
 		}
 		
 		// Remove any invite or join request flags
-		remove_entity_relationship($group->guid, 'invited', $user->guid);
-		remove_entity_relationship($user->guid, 'membership_request', $group->guid);
+		$group->removeRelationship($user->guid, 'invited');
+		$user->removeRelationship($group->guid, 'membership_request');
 	
 		if (elgg_extract('create_river_item', $params)) {
 			elgg_create_river_item([
@@ -127,8 +127,8 @@ class Group {
 		}
 		
 		// Remove any invite or join request flags (for some edge cases)
-		remove_entity_relationship($group->guid, 'invited', $user->guid);
-		remove_entity_relationship($user->guid, 'membership_request', $group->guid);
+		$group->removeRelationship($user->guid, 'invited');
+		$user->removeRelationship($group->guid, 'membership_request');
 		
 		// Removes a user from the group's access control
 		$collection = $group->getOwnedAccessCollection('group_acl');

@@ -93,7 +93,7 @@ class PageOwnerService {
 			return;
 		}
 		
-		$this->page_owner_guid = (int) $this->hooks->trigger('page_owner', 'system', null, $this->page_owner_guid);
+		$this->page_owner_guid = (int) $this->hooks->triggerDeprecated('page_owner', 'system', null, $this->page_owner_guid, "No longer set page owner using the 'page_owner', 'system' hook. Use route definitions instead.", '4.3');
 	}
 	
 	/**

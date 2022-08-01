@@ -3,10 +3,7 @@
  * Content stats widget
  */
 
-/* @var $widget \ElggWidget */
-$widget = elgg_extract('entity', $vars);
-
-$entity_stats = get_entity_statistics();
+$entity_stats = elgg_get_entity_statistics();
 
 $registered_entity_types = elgg_entity_types_with_capability('searchable');
 if (empty($registered_entity_types)) {
@@ -36,6 +33,4 @@ foreach ($stats as $name => $num) {
 }
 echo '</table>';
 
-echo '<div class="mtm elgg-widget-more">';
-echo elgg_view_url('admin/statistics/numentities', elgg_echo('more'));
-echo '</div>';
+echo elgg_view('page/components/list/widget_more', ['widget_more' => elgg_view_url('admin/statistics/numentities', elgg_echo('more'))]);

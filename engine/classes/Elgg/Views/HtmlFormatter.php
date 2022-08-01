@@ -91,7 +91,7 @@ class HtmlFormatter {
 		}
 
 		if (elgg_extract('sanitize', $options)) {
-			$html = filter_tags($html);
+			$html = elgg_sanitize_input($html);
 		}
 
 		if (elgg_extract('autop', $options)) {

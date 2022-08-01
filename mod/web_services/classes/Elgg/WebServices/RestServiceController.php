@@ -5,6 +5,7 @@ namespace Elgg\WebServices;
 use Elgg\Request;
 use Elgg\Http\ResponseBuilder;
 use Elgg\WebServices\Di\ApiRegistrationService;
+use Elgg\Exceptions\AuthenticationException;
 
 /**
  * Handle /services/api/rest/... calls
@@ -24,15 +25,15 @@ class RestServiceController {
 		// plugins should return true to control what API and user authentication handlers are registered
 		if (elgg_trigger_plugin_hook('rest', 'init', null, false) === false) {
 			// user token can also be used for user authentication
-			register_pam_handler('elgg_ws_pam_auth_usertoken');
+			elgg_register_pam_handler(\Elgg\WebServices\PAM\User\AuthToken::class);
 			
 			// simple API key check
 			if (elgg_get_plugin_setting('auth_allow_key', 'web_services')) {
-				register_pam_handler('elgg_ws_pam_auth_api_key', 'sufficient', 'api');
+				elgg_register_pam_handler(\Elgg\WebServices\PAM\API\APIKey::class, 'sufficient', 'api');
 			}
 			// hmac
 			if (elgg_get_plugin_setting('auth_allow_hmac', 'web_services')) {
-				register_pam_handler('elgg_ws_pam_auth_api_hmac', 'sufficient', 'api');
+				elgg_register_pam_handler(\Elgg\WebServices\PAM\API\Hmac::class, 'sufficient', 'api');
 			}
 		}
 		
@@ -71,22 +72,36 @@ class RestServiceController {
 		
 		// check API authentication if required
 		if ($api->require_api_auth) {
-			$api_pam = new \ElggPAM('api');
-			if ($api_pam->authenticate() !== true) {
+			try {
+				$api_authenticated = elgg_pam_authenticate('api');
+			} catch (AuthenticationException $api_exception) {
+				// API authentication failed
+				$api_authenticated = false;
+			}
+			
+			if ($api_authenticated !== true) {
 				throw new \APIException(elgg_echo('APIException:APIAuthenticationFailed'));
 			}
 		}
 		
-		// authenticate (and login) user for aip call that can handle different results for logged in and out users
+		// authenticate (and login) user for api call that can handle different results for logged in and out users
 		// eg. blog listing
-		$user_pam = new \ElggPAM('user');
-		$user_auth_result = $user_pam->authenticate([]);
+		$user_exception = null;
+		try {
+			$user_authenticated = elgg_pam_authenticate('user');
+		} catch (AuthenticationException $user_exception) {
+			// user authentication failed
+			$user_authenticated = false;
+		}
 		
 		// check if user authentication is required
-		if ($api->require_user_auth) {
-			if (!$user_auth_result) {
-				throw new \APIException($user_pam->getFailureMessage(), \ErrorResult::$RESULT_FAIL_AUTHTOKEN);
+		if ($api->require_user_auth && $user_authenticated !== true) {
+			$message = elgg_echo('SecurityException:authenticationfailed');
+			if ($user_exception instanceof AuthenticationException) {
+				$message = $user_exception->getMessage();
 			}
+			
+			throw new \APIException($message, \ErrorResult::$RESULT_FAIL_AUTHTOKEN);
 		}
 		
 		return $api;

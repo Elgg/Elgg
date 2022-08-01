@@ -67,19 +67,14 @@ class RelationshipsTable {
 	 *
 	 * @param int $id The relationship ID
 	 *
-	 * @return \ElggRelationship|false False if not found
+	 * @return \ElggRelationship|null
 	 */
-	public function get($id) {
+	public function get(int $id): ?\ElggRelationship {
 		$select = Select::fromTable('entity_relationships');
 		$select->select('*')
 			->where($select->compare('id', '=', $id, ELGG_VALUE_ID));
 		
-		$relationship = $this->db->getDataRow($select, [$this, 'rowToElggRelationship']);
-		if (!$relationship) {
-			return false;
-		}
-
-		return $relationship;
+		return $this->db->getDataRow($select, [$this, 'rowToElggRelationship']) ?: null;
 	}
 
 	/**
@@ -90,7 +85,7 @@ class RelationshipsTable {
 	 *
 	 * @return bool
 	 */
-	public function delete($id, $call_event = true) {
+	public function delete(int $id, bool $call_event = true): bool {
 		$relationship = $this->get($id);
 		if (!$relationship instanceof \ElggRelationship) {
 			return false;
@@ -120,7 +115,7 @@ class RelationshipsTable {
 	 * @return bool|int
 	 * @throws InvalidArgumentException
 	 */
-	public function add($guid_one, $relationship, $guid_two, $return_id = false) {
+	public function add(int $guid_one, string $relationship, int $guid_two, bool $return_id = false) {
 		if (strlen($relationship) > self::RELATIONSHIP_COLUMN_LENGTH) {
 			throw new InvalidArgumentException('Relationship name cannot be longer than ' . self::RELATIONSHIP_COLUMN_LENGTH);
 		}
@@ -181,7 +176,7 @@ class RelationshipsTable {
 	 *
 	 * @return \ElggRelationship|false Depending on success
 	 */
-	public function check($guid_one, $relationship, $guid_two) {
+	public function check(int $guid_one, string $relationship, int $guid_two) {
 		$select = Select::fromTable('entity_relationships');
 		$select->select('*')
 			->where($select->compare('guid_one', '=', $guid_one, ELGG_VALUE_GUID))
@@ -208,7 +203,7 @@ class RelationshipsTable {
 	 *
 	 * @return bool
 	 */
-	public function remove($guid_one, $relationship, $guid_two) {
+	public function remove(int $guid_one, string $relationship, int $guid_two): bool {
 		$obj = $this->check($guid_one, $relationship, $guid_two);
 		if (!$obj instanceof \ElggRelationship) {
 			return false;
@@ -357,6 +352,7 @@ class RelationshipsTable {
 	 *                                   the subject of the relationships.
 	 *
 	 * @return \ElggRelationship[]
+	 * @deprecated 4.3
 	 */
 	public function getAll($guid, $inverse_relationship = false) {
 		$select = Select::fromTable('entity_relationships');

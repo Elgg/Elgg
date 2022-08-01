@@ -1,11 +1,6 @@
 <?php
 /**
- * Elgg radio input
  * Displays a radio input field
- *
- * @warning Passing integers as labels does not currently work due to a
- * deprecated hack that will be removed in Elgg 1.9. To use integer labels,
- * the labels must be character codes: 1 would be &#0049;
  *
  * @uses $vars['value']          The current value, if any
  * @uses $vars['name']           The name of the input field

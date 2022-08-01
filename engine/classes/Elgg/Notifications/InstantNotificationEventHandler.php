@@ -30,4 +30,11 @@ final class InstantNotificationEventHandler extends NotificationEventHandler {
 
 		return $subscriptions;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function addMuteLink(): bool {
+		return false;
+	}
 }

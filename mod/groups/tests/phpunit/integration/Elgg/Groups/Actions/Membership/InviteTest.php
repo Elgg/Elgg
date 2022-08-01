@@ -124,7 +124,7 @@ class InviteTest extends ActionResponseTestCase {
 	}
 	
 	public function testInviteUser() {
-		$this->assertFalse(check_entity_relationship($this->group->guid, 'invited', $this->user->guid));
+		$this->assertFalse($this->group->hasRelationship($this->user->guid, 'invited'));
 		
 		$response = $this->executeAction('groups/invite', [
 			'user_guid' => $this->user->guid,
@@ -135,6 +135,6 @@ class InviteTest extends ActionResponseTestCase {
 		
 		$this->assertSystemMessageEmitted(elgg_echo('groups:userinvited'));
 		
-		$this->assertNotFalse(check_entity_relationship($this->group->guid, 'invited', $this->user->guid));
+		$this->assertTrue($this->group->hasRelationship($this->user->guid, 'invited'));
 	}
 }

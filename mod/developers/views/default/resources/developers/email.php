@@ -38,7 +38,7 @@ notify_user($user->guid, $site->guid, $subject, $plain_message, ['apply_muting' 
 $options = [
 	'subject' => $subject,
 	'body' => $prepared_body,
-	'language' => get_current_language(),
+	'language' => elgg_get_current_language(),
 	'email' => $email,
 ];
 

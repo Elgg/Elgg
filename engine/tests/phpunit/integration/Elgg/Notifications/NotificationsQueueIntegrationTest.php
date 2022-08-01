@@ -3,12 +3,11 @@
 namespace Elgg\Notifications;
 
 use Elgg\IntegrationTestCase;
-use ColdTrick\AdvancedNotifications\NotificationQueue;
 
 class NotificationsQueueIntegrationTest extends IntegrationTestCase {
 
 	/**
-	 * @var NotificationQueue
+	 * @var NotificationsQueue
 	 */
 	protected $service;
 	

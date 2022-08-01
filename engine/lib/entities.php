@@ -353,12 +353,6 @@ function elgg_get_site_entity() {
  * Order by a calculation performed on annotation name value pairs
  * $option array annotation_sort_by_calculation e.g. avg, max, min, sum
  *
- * Order by value of a specific annotation
- * @option array $order_by_annotation
- *
- * Order by value of a specific metadata name
- * @option array $order_by_metadata
- *
  * Order by arbitrary clauses
  * @option array $order_by
  *
@@ -366,16 +360,6 @@ function elgg_get_site_entity() {
  * @option sort_by an array of sorting definitions
  *
  * <code>
- * $options['order_by_metadata'] = [
- *     'name' => 'priority',
- *     'direction' => 'DESC',
- *     'as' => 'integer',
- * ];
- * $options['order_by_annotation'] = [
- *     'name' => 'priority',
- *     'direction' => 'DESC',
- *     'as' => 'integer',
- * ];
  *
  * $sort_by = new \Elgg\Database\Clauses\EntitySortByClause();
  * $sort_by->property = 'private';
@@ -409,6 +393,12 @@ function elgg_get_site_entity() {
  * 			'property_type' => 'metadata',
  * 			'property' => 'name',
  * 			'direction' => 'DESC',
+ * 		],
+ * 		[
+ * 			'property_type' => 'annotation',
+ * 			'property' => 'priority',
+ * 			'direction' => 'ASC',
+ * 			'signed' => true,
  * 		],
  * 		[
  * 			'property_type' => 'private_setting',
@@ -702,8 +692,9 @@ function elgg_search(array $options = []) {
  * @param int $owner_guid Optional owner of the statistics
  *
  * @return array
+ * @since 4.3
  */
-function get_entity_statistics(int $owner_guid = 0): array {
+function elgg_get_entity_statistics(int $owner_guid = 0): array {
 
 	$select = Select::fromTable('entities');
 	$select->select('type')

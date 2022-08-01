@@ -16,7 +16,7 @@ use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Database\Clauses\SelectClause;
 use Elgg\Database\Clauses\WhereClause;
-use ElggEntity;
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * This trait serves as an adapter between legacy ege* options and new OO query builder
@@ -178,6 +178,7 @@ trait LegacyQueryOptionsAdapter {
 	 * @param array $options Options
 	 *
 	 * @return array
+	 * @throws InvalidArgumentException
 	 */
 	protected function normalizeTypeSubtypeOptions(array $options = []) {
 
@@ -204,7 +205,7 @@ trait LegacyQueryOptionsAdapter {
 				}
 			}
 		} else if (isset($options['subtypes'])) {
-			throw new \Elgg\Exceptions\InvalidArgumentException('If filtering for entity subtypes it is required to provide one or more entity types.');
+			throw new InvalidArgumentException('If filtering for entity subtypes it is required to provide one or more entity types.');
 		}
 
 		if (isset($options['type_subtype_pairs']) && is_array($options['type_subtype_pairs'])) {
@@ -245,6 +246,8 @@ trait LegacyQueryOptionsAdapter {
 		$options = $this->normalizePairedOptions('metadata', $options);
 
 		if (isset($options['order_by_metadata'])) {
+			elgg_deprecated_notice('Passing "order_by_metadata" to sort your results has been deprecated. Use "sort_by" options instead.', '4.3');
+			
 			$name = elgg_extract('name', $options['order_by_metadata']);
 			$direction = strtoupper(elgg_extract('direction', $options['order_by_metadata'], 'asc'));
 			$as = elgg_extract('as', $options['order_by_metadata']);
@@ -319,7 +322,7 @@ trait LegacyQueryOptionsAdapter {
 				}, explode(',', $pair['value']));
 			}
 
-			if (in_array($pair['name'], ElggEntity::PRIMARY_ATTR_NAMES)) {
+			if (in_array($pair['name'], \ElggEntity::PRIMARY_ATTR_NAMES)) {
 				$clause = new AttributeWhereClause();
 			} else {
 				$clause = new MetadataWhereClause();
@@ -395,7 +398,7 @@ trait LegacyQueryOptionsAdapter {
 				}, explode(',', $pair['value']));
 			}
 
-			if (in_array($pair['name'], ElggEntity::PRIMARY_ATTR_NAMES)) {
+			if (in_array($pair['name'], \ElggEntity::PRIMARY_ATTR_NAMES)) {
 				$clause = new AttributeWhereClause();
 			} else {
 				$clause = new MetadataWhereClause();
@@ -437,6 +440,8 @@ trait LegacyQueryOptionsAdapter {
 		$options = $this->normalizePairedOptions('annotation', $options);
 
 		if (isset($options['order_by_annotation'])) {
+			elgg_deprecated_notice('Passing "order_by_annotation" to sort your results has been deprecated. Use "sort_by" options instead.', '4.3');
+			
 			$name = elgg_extract('name', $options['order_by_annotation']);
 			$direction = strtoupper(elgg_extract('direction', $options['order_by_annotation'], 'asc'));
 			$as = elgg_extract('as', $options['order_by_annotation']);

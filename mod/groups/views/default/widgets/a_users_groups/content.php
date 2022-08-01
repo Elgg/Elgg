@@ -1,11 +1,14 @@
 <?php
 /**
- * Elgg file widget view
+ * Group membership widget
  */
 
 $widget = elgg_extract('entity', $vars);
+$owner = $widget->getOwnerEntity();
 
 $num_display = (int) $widget->num_display ?: 4;
+
+$more_link = elgg_view_url(elgg_generate_url('collection:group:group:member', ['username' => $owner->username]), elgg_echo('groups:more'));
 
 echo elgg_list_entities([
 	'type' => 'group',
@@ -14,13 +17,5 @@ echo elgg_list_entities([
 	'limit' => $num_display,
 	'pagination' => false,
 	'no_results' => elgg_echo('groups:none'),
+	'widget_more' => $more_link,
 ]);
-
-$more_link = elgg_view('output/url', [
-	'href' => elgg_generate_url('collection:group:group:member', [
-		'username' => $widget->getOwnerEntity()->username,
-	]),
-	'text' => elgg_echo('groups:more'),
-	'is_trusted' => true,
-]);
-echo elgg_format_element('div', ['class' => 'elgg-widget-more'], $more_link);

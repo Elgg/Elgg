@@ -70,6 +70,8 @@ return array(
 	'discussion:topic:status' => 'Статус дискуссии',
 	'discussion:topic:closed:title' => 'Дискуссия закрыта.',
 	'discussion:topic:closed:desc' => 'Дискуссия закрыта и не принимает новые комментарии.',
+	'discussion:topic:container' => 'Выберите группу, чтобы начать это обсуждение',
+	'discussion:topic:container:help' => 'По умолчанию, начало обсуждения в группе ограничивается доступом членов группы.',
 
 	'discussion:topic:description' => 'Тема дискуссии',
 	'discussion:topic:toggle_status:open' => 'Дискуссия снова открыта',

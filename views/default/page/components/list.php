@@ -105,6 +105,11 @@ if ($pagination && ($position == 'after' || $position == 'both')) {
 	$result .= elgg_view('navigation/pagination', $pagination_options);
 }
 
+$limit = elgg_extract('limit', $vars);
+if (!$pagination && $limit !== false && !empty($items) && count($items) >= $limit) {
+	$result .= elgg_view('page/components/list/widget_more', $vars);
+}
+
 $base_url = elgg_extract('base_url', $vars);
 if (!empty($base_url)) {
 	// strip offset and limit from base url as they always change when navigating and therefore should not be part of base url

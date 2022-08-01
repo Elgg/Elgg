@@ -19,7 +19,6 @@ return array(
 	'logbrowser:user:name' => 'Användare',
 	'logbrowser:user:guid' => 'Användares GUID',
 	'logbrowser:object' => 'Objekttyp',
-	'logbrowser:object:guid' => 'Objektets GUID',
 	'logbrowser:action' => 'Handling',
 
 	'logrotate:period' => 'Hur ofta ska systemets logg arkiveras?',

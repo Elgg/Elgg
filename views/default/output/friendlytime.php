@@ -25,7 +25,7 @@ try {
 	return;
 }
 		
-$default_friendly_time_number_of_days = elgg_get_config('friendly_time_number_of_days', 30);
+$default_friendly_time_number_of_days = elgg_get_config('friendly_time_number_of_days');
 $friendly_time_number_of_days = (int) elgg_extract('number_of_days', $vars, $default_friendly_time_number_of_days);
 
 if (strtotime("-{$friendly_time_number_of_days}days") < $date->getTimestamp()) {

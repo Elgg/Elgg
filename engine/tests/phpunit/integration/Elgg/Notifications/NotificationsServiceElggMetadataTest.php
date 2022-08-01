@@ -4,11 +4,14 @@ namespace Elgg\Notifications;
 
 /**
  * @group NotificationsService
- * @group MetadataNotifications
- * @group UnitTests
  */
-class NotificationsServiceElggMetadataTest extends NotificationsServiceUnitTestCase {
+class NotificationsServiceElggMetadataTest extends NotificationsServiceIntegrationTestCase {
 
+	/**
+	 * @var bool previous IgnoreAccess state
+	 */
+	protected $ignore_access;
+	
 	public function up() {
 		$this->test_object_class = \ElggMetadata::class;
 

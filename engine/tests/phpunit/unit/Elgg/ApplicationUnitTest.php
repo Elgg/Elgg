@@ -34,7 +34,6 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 
 		// persistentLogin service needs this set to instantiate without calling DB
 		$sp->config->getCookieConfig();
-		$sp->config->boot_complete = false;
 		$sp->config->system_cache_enabled = false;
 		$sp->config->site = new \ElggSite((object) [
 			'guid' => 1,
@@ -105,7 +104,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 	function testCanBootCore() {
 		$app = $this->createMockApplication();
 		$app->bootCore();
-		$this->assertTrue($app->internal_services->config->boot_complete);
+		$this->assertTrue($app->getBootStatus('full_boot_completed'));
 	}
 
 	function testBootLoadsCore() {
@@ -117,7 +116,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 	function testCanStart() {
 		$app = $this->createMockApplication();
 		$app->start();
-		$this->assertTrue($app->internal_services->config->boot_complete);
+		$this->assertTrue($app->getBootStatus('full_boot_completed'));
 	}
 
 	function testCanBuildRequestForNewApplication() {

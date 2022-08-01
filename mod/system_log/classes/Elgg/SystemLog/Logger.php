@@ -47,7 +47,7 @@ class Logger {
 			}
 		}
 		
-		elgg_trigger_event('log', 'systemlog', ['object' => $event->getObject(), 'event' => $event->getName()]);
+		elgg_trigger_event('log', 'systemlog', ['object' => $event->getObject(), 'event' => $event->getName() . ':' . $event->getType()]);
 	}
 	
 	/**

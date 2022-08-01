@@ -193,7 +193,7 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 		
 		'group_tools' => [
 			'activity' => [], // just use default behaviour
-			'blog', [
+			'blog' => [
 				'default_on' => false,
 			],
 			'forum' => [

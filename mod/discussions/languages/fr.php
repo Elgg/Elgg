@@ -70,6 +70,8 @@ Voir la discussion et y répondre :
 	'discussion:topic:status' => 'Statut de la discussion',
 	'discussion:topic:closed:title' => 'Cette discussion est fermée.',
 	'discussion:topic:closed:desc' => 'Cette discussion a été fermée et n\'accepte plus de nouveaux commentaires.',
+	'discussion:topic:container' => 'Sélectionnez un groupe (facultatif) pour démarrer cette discussion',
+	'discussion:topic:container:help' => 'Commencer une discussion dans un groupe limitera par défaut l\'accès aux membres du groupe',
 
 	'discussion:topic:description' => 'Message du sujet de discussion',
 	'discussion:topic:toggle_status:open' => 'Le sujet de discussion a bien été rouvert.',

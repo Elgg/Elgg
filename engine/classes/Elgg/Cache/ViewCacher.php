@@ -53,6 +53,11 @@ class ViewCacher {
 		
 		$spec = Includer::includeFile($file);
 		if (is_array($spec)) {
+			// check for uploaded fontawesome font
+			if (elgg_get_config('font_awesome_zip')) {
+				$spec['default']['font-awesome/'] = elgg_get_data_path() . 'fontawesome/webfont/';
+			}
+			
 			$this->views->mergeViewsSpec($spec);
 		}
 	}

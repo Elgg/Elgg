@@ -2,11 +2,9 @@
 /**
 * Display an icon from the FontAwesome library.
 *
-* @uses $vars['class']   Class of elgg-icon
+* @uses $vars['class'] Class of elgg-icon
 */
 
-$class = elgg_extract_class($vars, ['elgg-icon']);
-
-$vars['class'] = _elgg_map_icon_glyph_class($class);
+$vars['class'] = elgg_extract_class($vars, ['elgg-icon']);
 
 echo elgg_format_element('span', $vars);

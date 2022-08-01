@@ -75,7 +75,7 @@ class ElggPlugin extends ElggObject {
 	 * @param string $path      Path, defaults to /mod
 	 *
 	 * @return ElggPlugin
-	 * @throws ElggInvalidArgumentException
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
 	public static function fromId($plugin_id, $path = null) {
 		if (empty($plugin_id)) {
@@ -183,15 +183,10 @@ class ElggPlugin extends ElggObject {
 	 * Returns the plugin's languages directory full path with trailing slash.
 	 * Returns false if directory does not exist
 	 *
-	 * @return string|false
+	 * @return string
 	 */
 	protected function getLanguagesPath() {
-		$languages_path = $this->getPath() . 'languages/';
-		if (!is_dir($languages_path)) {
-			return false;
-		}
-		
-		return $languages_path;
+		return $this->getPath() . 'languages/';
 	}
 
 	/**
@@ -210,19 +205,13 @@ class ElggPlugin extends ElggObject {
 			$this->static_config = [];
 
 			try {
-				if ($this->canReadFile(self::STATIC_CONFIG_FILENAME)) {
-					$this->static_config = $this->includeFile(self::STATIC_CONFIG_FILENAME);
-				}
+				$this->static_config = $this->includeFile(self::STATIC_CONFIG_FILENAME);
 			} catch (PluginException $ex) {
 				elgg_log($ex, \Psr\Log\LogLevel::ERROR);
 			}
 		}
 
-		if (isset($this->static_config[$key])) {
-			return $this->static_config[$key];
-		} else {
-			return $default;
-		}
+		return $this->static_config[$key] ?? $default;
 	}
 
 	// Load Priority
@@ -900,9 +889,7 @@ class ElggPlugin extends ElggObject {
 	 * @return bool
 	 */
 	protected function canReadFile(string $filename): bool {
-		$path = "{$this->getPath()}{$filename}";
-
-		return is_file($path) && is_readable($path);
+		return is_file("{$this->getPath()}{$filename}");
 	}
 
 	/**
@@ -1087,12 +1074,7 @@ class ElggPlugin extends ElggObject {
 	 * @return void
 	 */
 	public function registerLanguages(): void {
-		$languages_path = $this->getLanguagesPath();
-		if (empty($languages_path)) {
-			return;
-		}
-
-		_elgg_services()->translator->registerLanguagePath($languages_path);
+		_elgg_services()->translator->registerLanguagePath($this->getLanguagesPath());
 	}
 
 	/**
@@ -1106,7 +1088,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	protected function loadLanguages(): void {
 		$languages_path = $this->getLanguagesPath();
-		if (empty($languages_path)) {
+		if (!is_dir($languages_path)) {
 			return;
 		}
 

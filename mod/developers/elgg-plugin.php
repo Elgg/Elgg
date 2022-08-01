@@ -61,14 +61,4 @@ return [
 		'forms/developers/ajax_demo' => ['ajax' => true],
 		'theme_sandbox/components/tabs/ajax' => ['ajax' => true],
 	],
-	'view_extensions' => [
-		'admin.css' => [
-			'admin/develop_tools/error_log.css' => [],
-			'developers/css' => [],
-		],
-		'elgg.css' => [
-			'admin/develop_tools/error_log.css' => [],
-			'developers/css' => [],
-		],
-	],
 ];

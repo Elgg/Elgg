@@ -7,15 +7,11 @@ use Elgg\Email;
 
 elgg_make_sticky_form('invitefriends');
 
-if (!elgg_get_config('allow_registration')) {
-	return elgg_error_response(elgg_echo('invitefriends:registration_disabled'));
-}
-
 $site = elgg_get_site_entity();
 // create the from address
 $from = \Elgg\Email\Address::getFormattedEmailAddress($site->getEmailAddress(), $site->getDisplayName());
 
-$emails = get_input('emails');
+$emails = (string) get_input('emails');
 $emailmessage = get_input('emailmessage');
 
 $emails = trim($emails);
@@ -40,7 +36,7 @@ foreach ($emails as $email_address) {
 	}
 
 	// send out other email addresses
-	if (!is_email_address($email_address)) {
+	if (!elgg_is_valid_email($email_address)) {
 		$error = true;
 		$bad_emails[] = $email_address;
 		continue;
@@ -52,9 +48,9 @@ foreach ($emails as $email_address) {
 		continue;
 	}
 
-	$link = elgg_get_registration_url([
+	$invite_link = elgg_get_registration_url([
 		'friend_guid' => $current_user->guid,
-		'invitecode' => generate_invite_code($current_user->username),
+		'invitecode' => elgg_generate_invite_code($current_user->username),
 	]);
 	
 	$email = Email::factory([
@@ -65,7 +61,7 @@ foreach ($emails as $email_address) {
 			$site->getDisplayName(),
 			$current_user->getDisplayName(),
 			$emailmessage,
-			$link,
+			$invite_link,
 		]),
 	]);
 	

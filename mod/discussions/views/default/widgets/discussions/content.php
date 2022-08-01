@@ -17,6 +17,7 @@ $options = [
 	'pagination' => false,
 	'distinct' => false,
 	'order_by' => new OrderByClause('e.last_action', 'desc'),
+	'no_results' => elgg_echo('discussion:none'),
 ];
 
 $owner = $widget->getOwnerEntity();
@@ -46,12 +47,6 @@ if ($owner instanceof \ElggUser) {
 	$url = elgg_generate_url('collection:object:discussion:group', ['guid' => $owner->guid]);
 }
 
-$content = elgg_list_entities($options);
-if (empty($content)) {
-	echo elgg_echo('discussion:none');
-	return;
-}
+$options['widget_more'] = elgg_view_url($url, elgg_echo('more'));
 
-echo $content;
-
-echo elgg_format_element('div', ['class' => 'elgg-widget-more'], elgg_view_url($url, elgg_echo('more')));
+echo elgg_list_entities($options);

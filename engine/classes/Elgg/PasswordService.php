@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use Elgg\Exceptions\RuntimeException;
+
 /**
  * Password service
  *
@@ -12,10 +14,12 @@ final class PasswordService {
 
 	/**
 	 * Constructor
+	 *
+	 * @throws RuntimeException
 	 */
 	public function __construct() {
 		if (!function_exists('password_hash')) {
-			throw new \RuntimeException("password_hash and associated functions are required.");
+			throw new RuntimeException("password_hash and associated functions are required.");
 		}
 	}
 
@@ -26,9 +30,9 @@ final class PasswordService {
 	 *
 	 * @param string $hash The hash to test
 	 *
-	 * @return boolean True if the password needs to be rehashed.
+	 * @return bool
 	 */
-	public function needsRehash($hash) {
+	public function needsRehash(string $hash): bool {
 		return password_needs_rehash($hash, PASSWORD_DEFAULT);
 	}
 
@@ -38,9 +42,9 @@ final class PasswordService {
 	 * @param string $password The password to verify
 	 * @param string $hash     The hash to verify against
 	 *
-	 * @return boolean If the password matches the hash
+	 * @return bool
 	 */
-	public function verify($password, $hash) {
+	public function verify(string $password, string $hash): bool {
 		return password_verify($password, $hash);
 	}
 
@@ -49,9 +53,9 @@ final class PasswordService {
 	 *
 	 * @param string $password Password in clear text
 	 *
-	 * @return string
+	 * @return string|false
 	 */
-	public function generateHash($password) {
+	public function generateHash(string $password) {
 		return password_hash($password, PASSWORD_DEFAULT);
 	}
 
@@ -62,6 +66,8 @@ final class PasswordService {
 	 *
 	 * @return false|array
 	 * @see notify_user()
+	 *
+	 * @deprecated 4.3 use requestNewPassword()
 	 */
 	public function sendNewPasswordRequest($user_guid) {
 		$user_guid = (int) $user_guid;
@@ -72,7 +78,7 @@ final class PasswordService {
 		}
 
 		// generate code
-		$code = generate_random_cleartext_password();
+		$code = elgg_generate_password();
 		$user->setPrivateSetting('passwd_conf_code', $code);
 		$user->setPrivateSetting('passwd_conf_time', time());
 
@@ -89,6 +95,7 @@ final class PasswordService {
 			$ip_address,
 			$link,
 		], $user->language);
+		
 		$subject = _elgg_services()->translator->translate('email:changereq:subject', [], $user->language);
 
 		$params = [
@@ -97,20 +104,62 @@ final class PasswordService {
 			'ip_address' => $ip_address,
 			'link' => $link,
 			'apply_muting' => false,
+			'add_mute_link' => false,
 		];
 		
 		return notify_user($user->guid, elgg_get_site_entity()->guid, $subject, $message, $params, 'email');
 	}
 
 	/**
-	 * Set a user's new password and save the entity.
+	 * Generate and send a password request email to a given user's registered email address.
 	 *
-	 * This can only be called from execute_new_password_request().
+	 * @param \ElggUser $user the user to notify
+	 *
+	 * @return void
+	 */
+	public function requestNewPassword(\ElggUser $user): void {
+		// generate code
+		$code = elgg_generate_password();
+		$user->setPrivateSetting('passwd_conf_code', $code);
+		$user->setPrivateSetting('passwd_conf_time', time());
+
+		// generate link
+		$link = elgg_generate_url('account:password:change', [
+			'u' => $user->guid,
+			'c' => $code,
+		]);
+		$link = _elgg_services()->urlSigner->sign($link, '+1 day');
+
+		// generate email
+		$ip_address = _elgg_services()->request->getClientIp();
+		$message = _elgg_services()->translator->translate('email:changereq:body', [
+			$ip_address,
+			$link,
+		], $user->getLanguage());
+		
+		$subject = _elgg_services()->translator->translate('email:changereq:subject', [], $user->getLanguage());
+
+		$params = [
+			'action' => 'requestnewpassword',
+			'object' => $user,
+			'ip_address' => $ip_address,
+			'link' => $link,
+			'apply_muting' => false,
+			'add_mute_link' => false,
+		];
+		
+		notify_user($user->guid, elgg_get_site_entity()->guid, $subject, $message, $params, 'email');
+	}
+
+	/**
+	 * Set a user's new password and save the entity.
 	 *
 	 * @param \ElggUser|int $user     The user GUID or entity
 	 * @param string        $password Text (which will then be converted into a hash and stored)
 	 *
 	 * @return bool
+	 *
+	 * @deprecated 4.3
 	 */
 	public function forcePasswordReset($user, $password) {
 		if (!$user instanceof \ElggUser) {
@@ -130,25 +179,20 @@ final class PasswordService {
 	/**
 	 * Validate and change password for a user.
 	 *
-	 * @param int    $user_guid The user id
-	 * @param string $conf_code Confirmation code as sent in the request email.
-	 * @param string $password  Optional new password, if not randomly generated.
+	 * @param \ElggUser $user      The user
+	 * @param string    $conf_code Confirmation code as sent in the request email.
+	 * @param string    $password  Optional new password, if not randomly generated.
 	 *
-	 * @return bool True on success
+	 * @return bool
+	 *
+	 * @since 4.3
 	 */
-	public function executeNewPasswordReset($user_guid, $conf_code, $password = null) {
-		$user_guid = (int) $user_guid;
-		$user = get_entity($user_guid);
-
+	public function saveNewPassword(\ElggUser $user, string $conf_code, string $password = null): bool {
 		if ($password === null) {
-			$password = generate_random_cleartext_password();
+			$password = elgg_generate_password();
 			$reset = true;
 		} else {
 			$reset = false;
-		}
-
-		if (!$user instanceof \ElggUser) {
-			return false;
 		}
 
 		$saved_code = $user->getPrivateSetting('passwd_conf_code');
@@ -164,24 +208,21 @@ final class PasswordService {
 			return false;
 		}
 
-		if (!$this->forcePasswordReset($user, $password)) {
-			return false;
-		}
-
+		$user->setPassword($password);
+		
 		$user->removePrivateSetting('passwd_conf_code');
 		$user->removePrivateSetting('passwd_conf_time');
 		
-		// clean the logins failures
-		reset_login_failure_count($user_guid);
+		// reset the logins failures
+		elgg_reset_authentication_failures($user);
 
-		$ns = $reset ? 'resetpassword' : 'changepassword';
+		$action = $reset ? 'resetpassword' : 'changepassword';
 
-		$message = _elgg_services()->translator->translate(
-			"email:$ns:body", [$user->username, $password], $user->language);
-		$subject = _elgg_services()->translator->translate("email:$ns:subject", [], $user->language);
+		$message = _elgg_services()->translator->translate("email:{$action}:body", [$user->username, $password], $user->getLanguage());
+		$subject = _elgg_services()->translator->translate("email:{$action}:subject", [], $user->getLanguage());
 
 		$params = [
-			'action' => $ns,
+			'action' => $action,
 			'object' => $user,
 			'password' => $password,
 			'apply_muting' => false,

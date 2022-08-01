@@ -1,0 +1,127 @@
+From 4.2 to 4.3
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+   
+Deprecation of rel="toggle" and rel="popup"
+-------------------------------------------
+
+If you are using ``rel="toggle"`` or ``rel="popup"`` for showing some hidden content you will need to update your code.
+The correct javascript will automatically be loaded if you draw content using ``output/url`` (directly or indirectly) and pass the class ``elgg-popup`` or ``elgg-toggle``.
+If you need popup/toggle features on your own elements, you will need to set the correct class and require the correct javascript (``elgg/popup`` or ``elgg/toggle``). 
+
+PAM handlers
+------------
+
+PAM handlers, which handle authentication, have been reworked. The registration now uses a DI service instead of a static variable in a class.
+
+Because of the rework PAM handlers can now also be invokable classes and Elgg core (including the Webservices plugin) is using this. 
+If as a developer you unregistered certain PAM handlers please check the new code.
+
+Deprecated APIs
+---------------
+
+Lib functions
+~~~~~~~~~~~~~
+
+* ``add_entity_relationship()`` use ``\ElggEntity->addRelationship()``
+* ``add_translation()`` use ``elgg()->translator->addTranslation()``
+* ``add_user_to_access_collection()`` use ``\ElggAccessCollection->addMember()``
+* ``can_edit_access_collection()`` use ``\ElggAccessCollection->canEdit()``
+* ``check_entity_relationship()`` use ``\ElggEntity->hasRelationship()`` or ``\ElggEntity->getRelationship()`` 
+* ``check_rate_limit_exceeded()`` use ``elgg_is_authentication_failure_limit_reached()``
+* ``create_access_collection()`` use ``elgg_create_access_collection()``
+* ``current_page_url()`` use ``elgg_get_current_url()``
+* ``delete_access_collection()`` use ``\ElggAccessCollection->delete()``
+* ``delete_relationship()`` use ``\ElggRelationship->delete()``
+* ``elgg_authenticate()`` use ``elgg_pam_authenticate()``
+* ``elgg_clear_sticky_value()``
+* ``elgg_delete_metadata_by_id()`` use ``\ElggMetadata->delete()()``
+* ``elgg_get_engine_path()``
+* ``elgg_get_loaded_external_files()`` use ``elgg_get_loaded_external_resources()``
+* ``elgg_register_external_view()`` use ``elgg_register_ajax_view()`` and ``elgg_register_simplecache_view()``
+* ``elgg_unregister_external_view()`` use ``elgg_unregister_ajax_view()``
+* ``execute_new_password_request()`` use ``elgg_save_new_password()``
+* ``filter_tags()`` use ``elgg_sanitize_input()``
+* ``find_active_users()`` use ``elgg_get_entities()``
+* ``force_user_password_reset()`` use ``\ElggUser->setPassword()``
+* ``generate_invite_code()`` use ``elgg_generate_invite_code()``
+* ``generate_random_cleartext_password()`` use ``elgg_generate_password()``
+* ``get_access_array()`` use ``elgg_get_access_array()``
+* ``get_access_collection()`` use ``elgg_get_access_collection()``
+* ``get_current_language()`` use ``elgg_get_current_language()``
+* ``get_default_access()`` use ``elgg_get_default_access()``
+* ``get_dir_size()``
+* ``get_entity_relationships()`` use ``elgg_get_relationships()``
+* ``get_entity_statistics()`` use ``elgg_get_entity_statistics()``
+* ``get_members_of_access_collection()`` use ``\ElggAccessCollection->getMembers()``
+* ``get_online_users()`` use ``elgg_list_entities()``
+* ``get_readable_access_level()`` use ``elgg_get_readable_access_level()``
+* ``get_relationship()`` use ``elgg_get_relationship()``
+* ``get_write_access_array()`` use ``elgg_get_write_access_array()``
+* ``has_access_to_entity()`` use ``\ElggEnity->hasAccess()`` or ``elgg_has_access_to_entity()``
+* ``is_email_address()`` use ``elgg_is_valid_email()``
+* ``log_login_failure()`` use ``elgg_register_authentication_failure()``
+* ``login()`` use ``elgg_login()``
+* ``logout()`` use ``elgg_logout()``
+* ``parse_urls()`` use ``elgg_parse_urls()``
+* ``register_pam_handler()`` use ``elgg_register_pam_handler()``
+* ``register_user()`` use ``elgg_register_user()``
+* ``remove_entity_relationship()`` use ``\ElggEntity->removeRelationship()``
+* ``remove_entity_relationships()`` use ``\ElggEntity->removeAllRelationships()``
+* ``remove_user_from_access_collection()`` use ``\ElggAccessCollection->removeMember()``
+* ``reset_login_failure_count()`` use ``elgg_reset_authentication_failures()``
+* ``send_new_password_request()`` use ``elgg_request_new_password()``
+* ``string_to_tag_array()`` use ``elgg_string_to_array()``
+* ``unregister_pam_handler()`` use ``elgg_unregister_pam_handler()``
+
+Class functions
+~~~~~~~~~~~~~~~
+
+* ``\ElggEntity->deleteRelationships()`` use ``\ElggEntity->removeAllRelationships()``
+* ``\ElggUser->getFriends()`` use ``\ElggUser->getEntitiesFromRelationship()``
+* ``\ElggUser->getFriendsObjects()`` use ``\ElggUser->getEntitiesFromRelationship()``
+* ``\ElggUser->getFriendsOf()`` use ``\ElggUser->getEntitiesFromRelationship()``
+* ``\ElggUser->isFriend()`` use ``\ElggUser->isFriendOf()``
+
+Events
+~~~~~~
+
+* ``'annotate', '{$entity->getType()}'`` use the ``'create', 'annotate'`` event
+
+Hooks
+~~~~~
+
+* ``'action_gatekeeper:upload_exceeded_msg', 'all'``
+* ``'classes', 'icon'`` use the ``'view_vars', 'output/icon'`` hook
+* ``'fail', 'auth'``
+* ``'file:icon:url', 'override'`` use the ``'entity:icon:url', 'object'`` hook
+* ``'find_active_users', 'system'``
+* ``'form:values', 'blog'``
+* ``'is_member', 'group'`` use the ``'gatekeeper', 'all'`` hook
+* ``'page_owner', 'system'`` use route definitions
+* ``'status', 'user'`` use the ``'create', 'object'`` event
+* ``'validate', 'input'`` use the ``'sanitize', 'input'`` hook 
+
+Classes
+~~~~~~~
+
+* ``\ElggPAM`` use ``elgg_pam_authenticate()``
+
+Notable function parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Passing ``order_by_metadata`` or ``order_by_annotation`` to ``elgg_get_entities`` is deprecated. Use ``sort_by`` instead.
+
+Deprecated Config values
+------------------------
+
+* ``elgg_settings_file``
+* ``path`` use ``elgg_get_root_path()``
+* ``pluginspath`` use ``elgg_get_plugins_path()``
+* ``site_guid`` use ``elgg_get_site_entity()->guid``
+* ``sitedescription`` use ``elgg_get_site_entity()->description``
+* ``sitename`` use ``elgg_get_site_entity()->getDisplayName()``
+* ``url`` use ``elgg_get_site_url()``

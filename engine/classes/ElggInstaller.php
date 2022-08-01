@@ -115,7 +115,6 @@ class ElggInstaller {
 
 		try {
 			$config = new Config();
-			$config->elgg_config_locks = false;
 			$config->installer_running = true;
 			$config->dbencoding = 'utf8mb4';
 			$config->boot_cache_ttl = 0;
@@ -237,8 +236,8 @@ class ElggInstaller {
 				throw new InstallationException(elgg_echo('install:error:htaccess'));
 			}
 		}
-
-		if (!_elgg_sane_validate_url($params['wwwroot'])) {
+		
+		if (!\Elgg\Http\Urls::isValidMultiByteUrl($params['wwwroot'])) {
 			throw new InstallationException(elgg_echo('install:error:wwwroot', [$params['wwwroot']]));
 		}
 
@@ -1154,7 +1153,7 @@ class ElggInstaller {
 			}
 		}
 
-		if (!empty($submissionVars['wwwroot']) && !_elgg_sane_validate_url($submissionVars['wwwroot'])) {
+		if (!empty($submissionVars['wwwroot']) && !\Elgg\Http\Urls::isValidMultiByteUrl($submissionVars['wwwroot'])) {
 			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:wwwroot', [$submissionVars['wwwroot']]));
 
 			return false;
@@ -1193,14 +1192,12 @@ class ElggInstaller {
 			return false;
 		}
 
-		if (!$app->internal_services->config->data_dir_override) {
-			// check that data root is not subdirectory of Elgg root
-			if (stripos($submissionVars['dataroot'], $app->internal_services->config->path) === 0) {
-				$msg = elgg_echo('install:error:locationdatadirectory', [$submissionVars['dataroot']]);
-				$app->internal_services->system_messages->addErrorMessage($msg);
+		// check that data root is not subdirectory of Elgg root
+		if (stripos($submissionVars['dataroot'], Paths::project()) === 0) {
+			$msg = elgg_echo('install:error:locationdatadirectory', [$submissionVars['dataroot']]);
+			$app->internal_services->system_messages->addErrorMessage($msg);
 
-				return false;
-			}
+			return false;
 		}
 
 		// according to postgres documentation: SQL identifiers and key words must
@@ -1419,7 +1416,7 @@ class ElggInstaller {
 		}
 
 		// check that email address is email address
-		if ($submissionVars['siteemail'] && !is_email_address($submissionVars['siteemail'])) {
+		if ($submissionVars['siteemail'] && !elgg_is_valid_email((string) $submissionVars['siteemail'])) {
 			$msg = elgg_echo('install:error:emailaddress', [$submissionVars['siteemail']]);
 			$app->internal_services->system_messages->addErrorMessage($msg);
 
@@ -1551,7 +1548,7 @@ class ElggInstaller {
 		}
 
 		// check that email address is email address
-		if ($submissionVars['email'] && !is_email_address($submissionVars['email'])) {
+		if ($submissionVars['email'] && !elgg_is_valid_email((string) $submissionVars['email'])) {
 			$msg = elgg_echo('install:error:emailaddress', [$submissionVars['email']]);
 			$app->internal_services->system_messages->addErrorMessage($msg);
 
@@ -1573,28 +1570,14 @@ class ElggInstaller {
 		$app = $this->getApp();
 
 		try {
-			$guid = register_user(
-				$submissionVars['username'],
-				$submissionVars['password1'],
-				$submissionVars['displayname'],
-				$submissionVars['email']
-			);
+			$user = elgg_register_user([
+				'username' => $submissionVars['username'],
+				'password' => $submissionVars['password1'],
+				'name' => $submissionVars['displayname'],
+				'email' => $submissionVars['email'],
+			]);
 		} catch (RegistrationException $e) {
 			$app->internal_services->system_messages->addErrorMessage($e->getMessage());
-
-			return false;
-		}
-
-		if ($guid === false) {
-			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:admin:cannot_create'));
-
-			return false;
-		}
-
-		$user = get_entity($guid);
-
-		if (!$user instanceof ElggUser) {
-			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:loadadmin'));
 
 			return false;
 		}
@@ -1614,7 +1597,7 @@ class ElggInstaller {
 		}
 
 		try {
-			login($user);
+			elgg_login($user);
 		} catch (LoginException $ex) {
 			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:adminlogin'));
 			

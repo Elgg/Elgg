@@ -50,11 +50,7 @@ class WalledGarden {
 	 * @return bool
 	 * @internal
 	 */
-	protected function isPublicPage($url = '') {
-		if (empty($url)) {
-			$url = current_page_url();
-		}
-
+	protected function isPublicPage(string $url): bool {
 		$parts = parse_url($url);
 		unset($parts['query']);
 		unset($parts['fragment']);

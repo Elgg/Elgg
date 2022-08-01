@@ -20,7 +20,7 @@ $tabs = [
 ];
 
 // Show phpinfo page
-if (elgg_get_config('allow_phpinfo') === true) {
+if (elgg_get_config('allow_phpinfo')) {
 	$tabs[] = [
 		'text' => elgg_echo('admin:server:label:phpinfo'),
 		'content' => elgg_view('output/iframe', [

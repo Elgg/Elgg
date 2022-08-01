@@ -18,6 +18,14 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 				$plugin->delete();
 			});
 		}
+		
+		elgg_call(ELGG_IGNORE_ACCESS, function() {
+			foreach ($this->plugins as $plugin) {
+				if ($plugin instanceof ElggEntity) {
+					$plugin->delete();
+				}
+			}
+		});
 	}
 
 	public function testCanSetPriority() {
@@ -51,14 +59,6 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 		$max_priority = _elgg_services()->plugins->getMaxPriority();
 		$last->setPriority('last');
 		$this->assertEquals($max_priority, $last->getPriority());
-
-		elgg_call(ELGG_IGNORE_ACCESS, function() {
-			foreach ($this->plugins as $plugin) {
-				if ($plugin instanceof ElggEntity) {
-					$plugin->delete();
-				}
-			}
-		});
 	}
 
 	public function testCanLoadExistingPlugin() {
