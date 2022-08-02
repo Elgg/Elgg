@@ -88,10 +88,18 @@ class EntityTable extends DbEntityTable {
 	 * {@inheritdoc}
 	 */
 	public function insertRow(\stdClass $row, array $attributes = []) {
+		// lock the time to prevent testing issues
+		$this->setCurrentTime();
+		
 		$subtype = isset($row->subtype) ? $row->subtype : null;
 		$this->setup(null, $row->type, $subtype, array_merge($attributes, (array) $row));
 
-		return parent::insertRow($row);
+		$result = parent::insertRow($row);
+		
+		// reset the time
+		$this->resetCurrentTime();
+		
+		return $result;
 	}
 
 	/**

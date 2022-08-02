@@ -69,6 +69,9 @@ class AnnotationsTable extends DbAnnotations {
 		self::$iterator++;
 		$id = self::$iterator;
 
+		// lock the time to prevent testing issues
+		$this->setCurrentTime();
+		
 		$row = (object) [
 			'type' => 'annotation',
 			'id' => $id,
@@ -86,7 +89,12 @@ class AnnotationsTable extends DbAnnotations {
 
 		$this->addQuerySpecs($row);
 
-		return parent::create($annotation, $entity);
+		$result = parent::create($annotation, $entity);
+		
+		// reset the time
+		$this->resetCurrentTime();
+		
+		return $result;
 	}
 
 	/**
