@@ -5,7 +5,6 @@ namespace Elgg\Mocks\Database;
 use Elgg\Database\UsersApiSessionsTable as dbUsersApiSessionsTable;
 use Elgg\Database\Insert;
 use Elgg\Database\Select;
-use Elgg\Database;
 use Elgg\Database\Delete;
 
 class UsersApiSessionsTable extends dbUsersApiSessionsTable {
@@ -26,16 +25,13 @@ class UsersApiSessionsTable extends dbUsersApiSessionsTable {
 	 */
 	protected static $iterator = 100;
 	
-	public function __construct(Database $database, \Elgg\Security\Crypto $crypto) {
-		parent::__construct($database, $crypto);
-		
-		$this->setCurrentTime();
-	}
-	
 	/**
 	 * {@inheritDoc}
 	 */
 	public function createToken(int $user_guid, int $expires = 60) {
+		// lock the time to prevent testing issues
+		$this->setCurrentTime();
+		
 		$token = $this->crypto->getRandomString(32, \Elgg\Security\Crypto::CHARS_HEX);
 		$expires = $this->getCurrentTime("+{$expires} minutes");
 		
@@ -50,6 +46,9 @@ class UsersApiSessionsTable extends dbUsersApiSessionsTable {
 		
 		$this->addQuerySpecs($row);
 		$this->rows[$row->id] = $row;
+		
+		// reset the time
+		$this->resetCurrentTime();
 		
 		return $token;
 	}
