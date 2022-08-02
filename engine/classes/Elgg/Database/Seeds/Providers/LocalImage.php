@@ -12,10 +12,20 @@ class LocalImage extends Image {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function image($dir = null, $width = 640, $height = 480, $category = null, $fullPath = true, $randomize = true, $word = null, $gray = false) {
+	public static function image(
+		$dir = null,
+		$width = 640,
+		$height = 480,
+		$category = null,
+		$fullPath = true,
+		$randomize = true,
+		$word = null,
+		$gray = false,
+		$format = 'png'
+	) {
 		$local_folder = elgg_get_config('seeder_local_image_folder');
 		if (empty($local_folder) || !is_dir($local_folder)) {
-			return parent::image($dir, $width, $height, $category, $fullPath, $randomize, $word);
+			return parent::image($dir, $width, $height, $category, $fullPath, $randomize, $word, $format);
 		}
 		
 		$files = [];
@@ -32,7 +42,7 @@ class LocalImage extends Image {
 		}
 		
 		if (empty($files)) {
-			return parent::image($dir, $width, $height, $category, $fullPath, $randomize, $word);
+			return parent::image($dir, $width, $height, $category, $fullPath, $randomize, $word, $format);
 		}
 		
 		// return random file

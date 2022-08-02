@@ -77,9 +77,29 @@ jobs:
         
       - name: Elgg CLI upgrade to 3.3
         run: php ./elgg-cli upgrade async --verbose
-        
+ 
       - name: Install Composer v2
         run: composer self-update --2
+             
+      - name: Code checkout Elgg 4.3
+        uses: actions/checkout@v2
+        with:
+          repository: 'Elgg/Elgg'
+          ref: '4.3'
+          clean: false
+      
+      - name: Composer install Elgg 4.3 dependencies
+        run: composer install --prefer-dist --no-suggest
+        
+      - name: Elgg CLI upgrade to 4.3
+        run: php ./elgg-cli upgrade async --verbose
+        
+      - name: Update PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          coverage: none
+          extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring
         
       - name: Code checkout PR
         uses: actions/checkout@v2

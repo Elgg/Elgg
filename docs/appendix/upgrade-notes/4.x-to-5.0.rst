@@ -1,0 +1,19 @@
+From 4.x to 5.0
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+   
+Composer
+--------
+
+PHP Requirements
+~~~~~~~~~~~~~~~~
+
+The minimal PHP version is now 8.0.
+
+Faker
+~~~~~
+
+The faker library is no longer maintained by fzaninotto so we switched to a fork which is maintained by FakerPHP.
