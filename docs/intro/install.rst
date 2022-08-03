@@ -11,7 +11,7 @@ Requirements
 ============
 
 - MySQL 5.7+ or MariaDB 10.3+
-- PHP 7.4+ with the following extensions:
+- PHP 8.0+ with the following extensions:
 
    -  GD (for graphics processing)
    -  PDO (for database connection)
@@ -64,7 +64,7 @@ Major browsers here means all of the following, plus their mobile counterparts:
  * Android Browser
  * Chrome
  * Firefox
- * IE
+ * Edge
  * Safari
 
 "Support" may mean that we take advantage of newer, unimplemented technologies
