@@ -517,9 +517,7 @@ class AddFontAwesomeClassesHandler {
 			$classes[] = "fa-{$base_icon}";
 		}
 
-		$classes = array_unique($classes);
-
-		$vars['class'] = elgg_trigger_deprecated_plugin_hook('classes', 'icon', null, $classes, "The 'classes', 'icon' hook is deprecated. Use the 'view_vars', 'output/icon' hook instead.", '4.3');
+		$vars['class'] = array_unique($classes);
 	
 		return $vars;
 	}

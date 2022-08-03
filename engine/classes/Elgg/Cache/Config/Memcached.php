@@ -34,19 +34,8 @@ class Memcached extends Config {
 				'saslUser' => false,
 				'saslPassword' => false,
 			];
-			
-			if (array_key_exists('host', $server)) {
-				// assume correct config
-				$server_config = array_merge($server_config, $server);
-			} else {
-				// assume old config syntax
-				elgg_deprecated_notice("Memcache server({$server[0]}) configuration format has been changed. Please update the configuration in elgg-config/settings.php", '4.2');
-				
-				$server_config['host'] = $server[0];
-				$server_config['port'] = $server[1];
-			}
-			
-			$servers[] = $server_config;
+
+			$servers[] = array_merge($server_config, $server);
 		}
 		
 		$opt_prefix = (string) $config->memcache_namespace_prefix;

@@ -203,7 +203,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 			}
 		}
 		
-		return _elgg_services()->db->trackQuery($this, [], function() {
+		return _elgg_services()->db->trackQuery($this, function() {
 			if ($this instanceof Select) {
 				return parent::executeQuery();
 			} else {

@@ -1,6 +1,6 @@
-define(['jquery', 'elgg'], function($, elgg) {
+define(['elgg/hooks'], function(hooks) {
 
-	return elgg.trigger_hook('config', 'ckeditor', {'editor': 'default'}, {
+	return hooks.trigger('config', 'ckeditor', {'editor': 'default'}, {
 		toolbar: [['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat'], ['NumberedList', 'BulletedList', 'Undo', 'Redo', 'Link', 'Unlink', 'Image', 'Blockquote', 'Paste', 'PasteFromWord', 'Maximize']],
 		removeButtons: 'Subscript,Superscript', // To have Underline back
 		allowedContent: true,

@@ -1,18 +1,10 @@
-define(['elgg', 'elgg/Ajax'], function(elgg, Ajax) {
+define(['hooks', 'elgg/Ajax'], function(hooks, Ajax) {
 
 	var ajax = new Ajax();
 	var log = console.log.bind(console);
 
-	// log data passed through all hooks
-	//elgg.register_hook_handler(Ajax.REQUEST_DATA_HOOK, 'all', function (name, type, params, value) {
-	//	log(arguments);
-	//});
-	//elgg.register_hook_handler(Ajax.RESPONSE_DATA_HOOK, 'all', function (name, type, params, value) {
-	//	log(arguments);
-	//});
-
 	// alter request data for the action
-	elgg.register_hook_handler(
+	hooks.register(
 		Ajax.REQUEST_DATA_HOOK,
 		'action:developers/ajax_demo',
 		function (name, type, params, value) {
@@ -27,7 +19,7 @@ define(['elgg', 'elgg/Ajax'], function(elgg, Ajax) {
 	log("Expecting 6 passes...");
 
 	// alter request data response for the action
-	elgg.register_hook_handler(
+	hooks.register(
 		Ajax.RESPONSE_DATA_HOOK,
 		'action:developers/ajax_demo',
 		function (name, type, params, data) {

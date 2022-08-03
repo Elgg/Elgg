@@ -1,7 +1,7 @@
 /**
  * Adds menu item toggle features
  */
-define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
+define(['jquery', 'elgg/hooks', 'elgg/Ajax'], function ($, hooks, Ajax) {
 	
 	$(document).on('click', '.elgg-menu a[data-toggle]', function() {
 		var $item_clicked = $(this).closest('li');
@@ -24,7 +24,7 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 		ajax.action($(this).attr('href'), {
 			success: function(result) {
 				// let others know we toggled the menu item
-				elgg.trigger_hook('toggle', 'menu_item', {
+				hooks.trigger('toggle', 'menu_item', {
 					itemClicked: $item_clicked,
 					itemToggled: $other_item,
 					menu: $menu,

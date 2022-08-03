@@ -286,38 +286,4 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship2', $object1->guid));
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship3', $object1->guid));
 	}
-	
-	public function testgetAllRelationshipsByGUID() {
-		$object1 = $this->createObject();
-		$object2 = $this->createObject();
-		
-		$this->service->add($object1->guid, 'testRelationship', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship2', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship3', $object2->guid);
-		$this->service->add($object2->guid, 'testRelationship', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship2', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship3', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship4', $object1->guid);
-		
-		$relationships = $this->service->getAll($object1->guid);
-		$this->assertIsArray($relationships);
-		$this->assertCount(3, $relationships);
-	}
-	
-	public function testgetAllRelationshipsByGUIDAndInverse() {
-		$object1 = $this->createObject();
-		$object2 = $this->createObject();
-		
-		$this->service->add($object1->guid, 'testRelationship', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship2', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship3', $object2->guid);
-		$this->service->add($object2->guid, 'testRelationship', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship2', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship3', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship4', $object1->guid);
-		
-		$relationships = $this->service->getAll($object1->guid, true);
-		$this->assertIsArray($relationships);
-		$this->assertCount(4, $relationships);
-	}
 }

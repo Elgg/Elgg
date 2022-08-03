@@ -3,6 +3,7 @@
 namespace Elgg\Application;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Elgg\Database as ElggDb;
 
 /**
@@ -39,15 +40,14 @@ class Database {
 	 * argument to $callback.  If no callback function is defined, the
 	 * entire result set is returned as an array.
 	 *
-	 * @param string   $query    The query being passed.
-	 * @param callable $callback Optionally, the name of a function to call back to on each row
-	 * @param array    $params   Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
+	 * @param QueryBuilder $query    The query being passed.
+	 * @param callable     $callback Optionally, the name of a function to call back to on each row
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
 	 */
-	public function getData($query, $callback = '', array $params = []) {
-		return $this->db->getData($query, $callback, $params);
+	public function getData(QueryBuilder $query, $callback = '') {
+		return $this->db->getData($query, $callback);
 	}
 
 	/**
@@ -57,14 +57,13 @@ class Database {
 	 * matched.  If a callback function $callback is specified, the row will be passed
 	 * as the only argument to $callback.
 	 *
-	 * @param string   $query    The query to execute.
-	 * @param callable $callback A callback function to apply to the row
-	 * @param array    $params   Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
+	 * @param QueryBuilder $query    The query to execute.
+	 * @param callable     $callback A callback function to apply to the row
 	 *
 	 * @return mixed A single database result object or the result of the callback function.
 	 */
-	public function getDataRow($query, $callback = '', array $params = []) {
-		return $this->db->getDataRow($query, $callback, $params);
+	public function getDataRow(QueryBuilder $query, $callback = '') {
+		return $this->db->getDataRow($query, $callback);
 	}
 
 	/**
@@ -72,14 +71,13 @@ class Database {
 	 *
 	 * @note Altering the DB invalidates all queries in the query cache.
 	 *
-	 * @param string $query  The query to execute.
-	 * @param array  $params Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
+	 * @param QueryBuilder $query The query to execute
 	 *
 	 * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is
 	 *                   defined, 0 if not, and false on failure.
 	 */
-	public function insertData($query, array $params = []) {
-		return $this->db->insertData($query, $params);
+	public function insertData(QueryBuilder $query) {
+		return $this->db->insertData($query);
 	}
 
 	/**
@@ -87,14 +85,13 @@ class Database {
 	 *
 	 * @note Altering the DB invalidates all queries in the query cache.
 	 *
-	 * @param string $query      The query to run.
-	 * @param bool   $getNumRows Return the number of rows affected (default: false).
-	 * @param array  $params     Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
+	 * @param QueryBuilder $query      The query to run.
+	 * @param bool         $getNumRows Return the number of rows affected (default: false).
 	 *
 	 * @return bool|int
 	 */
-	public function updateData($query, $getNumRows = false, array $params = []) {
-		return $this->db->updateData($query, $getNumRows, $params);
+	public function updateData(QueryBuilder $query, bool $getNumRows = false) {
+		return $this->db->updateData($query, $getNumRows);
 	}
 
 	/**
@@ -102,13 +99,12 @@ class Database {
 	 *
 	 * @note Altering the DB invalidates all queries in query cache.
 	 *
-	 * @param string $query  The SQL query to run
-	 * @param array  $params Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
+	 * @param QueryBuilder $query The SQL query to run
 	 *
 	 * @return int The number of affected rows
 	 */
-	public function deleteData($query, array $params = []) {
-		return $this->db->deleteData($query, $params);
+	public function deleteData(QueryBuilder $query): int {
+		return $this->db->deleteData($query);
 	}
 
 	/**
@@ -129,16 +125,14 @@ class Database {
 	 * You can specify a callback if you care about the result. This function will always
 	 * be passed a \Doctrine\DBAL\Driver\Statement.
 	 *
-	 * @param string   $query    The query to execute
-	 * @param string   $type     The query type ('read' or 'write')
-	 * @param callable $callback A callback function to pass the results array to
-	 * @param array    $params   Query params. E.g. [1, 'steve'] or ['id' => 1, 'name' => 'steve']
+	 * @param QueryBuilder $query    The query to execute
+	 * @param callable     $callback A callback function to pass the results array to
 	 *
-	 * @return boolean Whether registering was successful.
+	 * @return void
 	 * @internal
 	 */
-	public function registerDelayedQuery($query, $type, $callback = null, array $params = []) {
-		return $this->db->registerDelayedQuery($query, $type, $callback, $params);
+	public function registerDelayedQuery(QueryBuilder $query, $callback = null): void {
+		$this->db->registerDelayedQuery($query, $callback);
 	}
 
 	/**

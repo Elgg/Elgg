@@ -24,10 +24,12 @@ class SystemMessagesServiceUnitTest extends \Elgg\UnitTestCase {
 
 	function testCanStoreAndDumpMessages() {
 		$this->svc->addSuccessMessage('s1');
-		$this->svc->addSuccessMessage(['s2', 's3']);
+		$this->svc->addSuccessMessage('s2');
+		$this->svc->addSuccessMessage('s3');
 
 		$this->svc->addErrorMessage('e1');
-		$this->svc->addErrorMessage(['e2', 'e3']);
+		$this->svc->addErrorMessage('e2');
+		$this->svc->addErrorMessage('e3');
 
 		$this->assertEquals([
 			'success' => ['s1', 's2', 's3'],
@@ -44,8 +46,11 @@ class SystemMessagesServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	function testCanDumpOneRegister() {
-		$this->svc->addSuccessMessage(['s2', 's3']);
-		$this->svc->addErrorMessage(['e1', 'e2', 'e3']);
+		$this->svc->addSuccessMessage('s2');
+		$this->svc->addSuccessMessage('s3');
+		$this->svc->addErrorMessage('e1');
+		$this->svc->addErrorMessage('e2');
+		$this->svc->addErrorMessage('e3');
 
 		$this->assertEquals([
 			'success' => ['s2', 's3'],
@@ -63,8 +68,11 @@ class SystemMessagesServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	function testCanCount() {
-		$this->svc->addSuccessMessage(['s2', 's3']);
-		$this->svc->addErrorMessage(['e1', 'e2', 'e3']);
+		$this->svc->addSuccessMessage('s2');
+		$this->svc->addSuccessMessage('s3');
+		$this->svc->addErrorMessage('e1');
+		$this->svc->addErrorMessage('e2');
+		$this->svc->addErrorMessage('e3');
 
 		$this->assertEquals(2, $this->svc->count("success"));
 		$this->assertEquals(3, $this->svc->count("error"));

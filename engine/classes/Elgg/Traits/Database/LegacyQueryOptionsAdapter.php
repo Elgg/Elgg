@@ -109,7 +109,6 @@ trait LegacyQueryOptionsAdapter {
 			'metadata_name_value_pairs' => null,
 			'metadata_name_value_pairs_operator' => 'AND',
 			'metadata_case_sensitive' => true,
-			'order_by_metadata' => null,
 			'metadata_ids' => null,
 			'metadata_created_time_lower' => null,
 			'metadata_created_time_upper' => null,
@@ -122,7 +121,6 @@ trait LegacyQueryOptionsAdapter {
 			'annotation_name_value_pairs' => null,
 			'annotation_name_value_pairs_operator' => 'AND',
 			'annotation_case_sensitive' => true,
-			'order_by_annotation' => null,
 			'annotation_ids' => null,
 			'annotation_created_time_lower' => null,
 			'annotation_created_time_upper' => null,
@@ -244,26 +242,6 @@ trait LegacyQueryOptionsAdapter {
 		$options = self::normalizePluralOptions($options, $singulars);
 
 		$options = $this->normalizePairedOptions('metadata', $options);
-
-		if (isset($options['order_by_metadata'])) {
-			elgg_deprecated_notice('Passing "order_by_metadata" to sort your results has been deprecated. Use "sort_by" options instead.', '4.3');
-			
-			$name = elgg_extract('name', $options['order_by_metadata']);
-			$direction = strtoupper(elgg_extract('direction', $options['order_by_metadata'], 'asc'));
-			$as = elgg_extract('as', $options['order_by_metadata']);
-
-			if ($name) {
-				$options['sort_by'][] = [
-					'property' => $name,
-					'direction' => in_array($direction, ['ASC', 'DESC']) ? $direction : null,
-					'signed' => $as === ELGG_VALUE_INTEGER,
-					'property_type' => 'metadata',
-				];
-			}
-
-			$options['order_by'] = null;
-			$options['order_by_metadata'] = null;
-		}
 
 		$props = [
 			'metadata_ids',
@@ -438,26 +416,6 @@ trait LegacyQueryOptionsAdapter {
 		$options = self::normalizePluralOptions($options, $singulars);
 
 		$options = $this->normalizePairedOptions('annotation', $options);
-
-		if (isset($options['order_by_annotation'])) {
-			elgg_deprecated_notice('Passing "order_by_annotation" to sort your results has been deprecated. Use "sort_by" options instead.', '4.3');
-			
-			$name = elgg_extract('name', $options['order_by_annotation']);
-			$direction = strtoupper(elgg_extract('direction', $options['order_by_annotation'], 'asc'));
-			$as = elgg_extract('as', $options['order_by_annotation']);
-
-			if ($name) {
-				$options['sort_by'][] = [
-					'property' => $name,
-					'property_type' => 'annotation',
-					'direction' => in_array($direction, ['ASC', 'DESC']) ? $direction : null,
-					'signed' => $as === ELGG_VALUE_INTEGER,
-				];
-			}
-
-			$options['order_by'] = null;
-			$options['order_by_annotation'] = null;
-		}
 
 		$props = [
 			'annotation_ids',
@@ -974,16 +932,6 @@ trait LegacyQueryOptionsAdapter {
 				continue;
 			}
 
-			if (is_string($clause)) {
-				elgg_deprecated_notice("
-					Using literal MySQL statements in 'wheres' options parameter is deprecated.
-					Instead use a closure that receives an instanceof of QueryBuilder
-					and returns a composite DBAL expression
-					
-					{{ $clause }}
-				", '3.0');
-			}
-
 			$options['wheres'][$key] = new WhereClause($clause);
 		}
 
@@ -1023,14 +971,6 @@ trait LegacyQueryOptionsAdapter {
 				if (!elgg_is_empty($dbprefix) && strpos($table, $dbprefix) === 0) {
 					$table = substr($table, strlen($dbprefix));
 				}
-
-				elgg_deprecated_notice("
-					Using literal MySQL statements in 'joins' options parameter is deprecated.
-					Instead use a closure that receives an instanceof of QueryBuilder and returns an instanceof of JoinClause,
-					also consider using one of the built-in methods in QueryBuilder.
-					
-					{{ $join }}
-				", '3.0');
 
 				$clause = new JoinClause($table, $alias, $condition, $type);
 				$options['joins'][$key] = $clause;
@@ -1135,28 +1075,12 @@ trait LegacyQueryOptionsAdapter {
 		}
 
 		if (is_string($options['group_by'])) {
-			$clause = $options['group_by'];
-
-			$options['group_by'] = explode(',', $options['group_by']);
-
-			if (count($options['group_by']) > 1) {
-				elgg_deprecated_notice("
-					Using literal MySQL statements in 'group_by' options parameter is deprecated.
-					Instead use a closure that receives an instanceof of QueryBuilder
-					and returns a prepared clause.
-					
-					{{ $clause }}
-				", '3.0');
-			}
+			$options['group_by'] = (array) trim($options['group_by']);
 		}
 
 		foreach ($options['group_by'] as $key => $expr) {
 			if ($expr instanceof GroupByClause) {
 				continue;
-			}
-			
-			if (is_string($expr)) {
-				$expr = trim($expr);
 			}
 			
 			$options['group_by'][$key] = new GroupByClause($expr);

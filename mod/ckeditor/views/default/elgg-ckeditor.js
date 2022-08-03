@@ -13,6 +13,7 @@
  */
 define(function (require) {
 	var elgg = require('elgg');
+	var hooks = require('elgg/hooks');
 	var $ = require('jquery');
 	var i18n = require('elgg/i18n');
 	require('jquery.ckeditor');
@@ -26,7 +27,7 @@ define(function (require) {
 
 			require([config_module], function (config) {
 				elggCKEditor.registerHandlers();
-				CKEDITOR = elgg.trigger_hook('prepare', 'ckeditor', null, CKEDITOR);
+				CKEDITOR = hooks.trigger('prepare', 'ckeditor', null, CKEDITOR);
 				selector = selector || '.elgg-input-longtext';
 				if ($(selector).length === 0) {
 					return;
@@ -63,12 +64,12 @@ define(function (require) {
 		 * @return void
 		 */
 		registerHandlers: function () {
-			elgg.register_hook_handler('prepare', 'ckeditor', function (hook, type, params, CKEDITOR) {
+			hooks.register('prepare', 'ckeditor', function (hook, type, params, CKEDITOR) {
 				CKEDITOR.plugins.addExternal('blockimagepaste', elgg.get_simplecache_url('elgg/ckeditor/blockimagepaste.js'), '');
 				CKEDITOR.on('instanceReady', elggCKEditor.fixImageAttributes);
 				return CKEDITOR;
 			});
-			elgg.register_hook_handler('embed', 'editor', function (hook, type, params, value) {
+			hooks.register('embed', 'editor', function (hook, type, params, value) {
 				var textArea = $('#' + params.textAreaId);
 				var content = params.content;
 				if ($.fn.ckeditorGet) {

@@ -13,14 +13,14 @@ class CliSeeder extends Seed {
 	 * {@inheritDoc}
 	 */
 	public function seed() {
-		system_message(__METHOD__);
+		elgg_register_success_message(__METHOD__);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function unseed() {
-		system_message(__METHOD__);
+		elgg_register_success_message(__METHOD__);
 	}
 	
 	/**

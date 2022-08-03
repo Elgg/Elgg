@@ -85,7 +85,6 @@ class RouteRegistrationService {
 		$deprecated = elgg_extract('deprecated', $params, '');
 		$required_plugins = elgg_extract('required_plugins', $params, []);
 		$detect_page_owner = (bool) elgg_extract('detect_page_owner', $params, false);
-		$legacy_page_owner_detection = (bool) elgg_extract('legacy_page_owner_detection', $params, true);
 
 		if (!$path || (!$controller && !$resource && !$handler && !$file)) {
 			throw new InvalidParameterException(
@@ -148,7 +147,6 @@ class RouteRegistrationService {
 		$defaults['_middleware'] = $middleware;
 		$defaults['_required_plugins'] = $required_plugins;
 		$defaults['_detect_page_owner'] = $detect_page_owner;
-		$defaults['_legacy_page_owner_detection'] = $legacy_page_owner_detection;
 
 		$route = new Route($path, $defaults, $requirements, [
 			'utf8' => true,

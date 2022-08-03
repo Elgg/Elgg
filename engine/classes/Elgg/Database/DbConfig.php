@@ -74,18 +74,7 @@ class DbConfig {
 	 * @return bool
 	 */
 	public function isDatabaseSplit() {
-		if (isset($this->db['split'])) {
-			return $this->db['split'];
-		}
-
-		// this was the recommend structure from Elgg 1.0 to 1.8
-		if (isset($this->db->split)) {
-			elgg_deprecated_notice('Database configuration should be updated to an array. Check the settings.example.php', '4.3');
-			
-			return $this->db->split;
-		}
-
-		return false;
+		return $this->db['split'] ?? false;
 	}
 
 	/**
@@ -145,37 +134,14 @@ class DbConfig {
 	 * @return array
 	 */
 	protected function getParticularConnectionConfig($type) {
-		if (is_object($this->db[$type])) {
-			elgg_deprecated_notice('Database configuration should be updated to an array. Check the settings.example.php', '4.3');
-
-			// old style single connection (Elgg < 1.9)
-			$config = [
-				'host' => $this->db[$type]->dbhost,
-				'port' => $this->db[$type]->dbport,
-				'user' => $this->db[$type]->dbuser,
-				'password' => $this->db[$type]->dbpass,
-				'database' => $this->db[$type]->dbname,
-			];
-		} else if (array_key_exists('dbhost', $this->db[$type])) {
-			// new style single connection
+		if (array_key_exists('dbhost', $this->db[$type])) {
+			// single connection
 			$config = [
 				'host' => $this->db[$type]['dbhost'],
 				'port' => $this->db[$type]['dbport'],
 				'user' => $this->db[$type]['dbuser'],
 				'password' => $this->db[$type]['dbpass'],
 				'database' => $this->db[$type]['dbname'],
-			];
-		} else if (is_object(current($this->db[$type]))) {
-			elgg_deprecated_notice('Database configuration should be updated to an array. Check the settings.example.php', '4.3');
-
-			// old style multiple connections
-			$index = array_rand($this->db[$type]);
-			$config = [
-				'host' => $this->db[$type][$index]->dbhost,
-				'port' => $this->db[$type][$index]->dbport,
-				'user' => $this->db[$type][$index]->dbuser,
-				'password' => $this->db[$type][$index]->dbpass,
-				'database' => $this->db[$type][$index]->dbname,
 			];
 		} else {
 			// new style multiple connections

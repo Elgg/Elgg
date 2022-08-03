@@ -30,7 +30,7 @@ class SearchViewsRenderingTest extends ViewRenderingTestCase {
 	}
 
 	public function getDefaultViewVars() {
-		$entity = $this->createObject();
+		$entity = $this->createObject(['subtype' => 'commentable']);
 		$comment = $this->createObject([
 			'subtype' => 'comment',
 			'container_guid' => $entity->guid,

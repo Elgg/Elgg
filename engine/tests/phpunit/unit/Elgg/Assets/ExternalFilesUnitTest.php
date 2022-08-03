@@ -21,6 +21,17 @@ class ExternalFilesUnitTest extends \Elgg\UnitTestCase {
 			_elgg_services()->serverCache
 		);
 	}
+	
+	protected function getLoadedFiles(string $type, string $location): array {
+		$items = $this->service->getLoadedResources($type, $location);
+		
+		// return only urls
+		array_walk($items, function(&$v, $k){
+			$v = $v->url;
+		});
+		
+		return $items;
+	}
 
 	public function testPreservesInputConfigData() {
 		$externalFiles = $this->service;
@@ -30,14 +41,14 @@ class ExternalFilesUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals(array(
 			'bar2' => 'http://elgg.org/'
-				), $externalFiles->getLoadedFiles('foo', 'custom_location'));
+				), $this->getLoadedFiles('foo', 'custom_location'));
 
 		$externalFiles->load('foo', 'bar1');
 
 		$this->assertEquals(array(
 			'bar1' => '#',
 			'bar2' => 'http://elgg.org/'
-				), $externalFiles->getLoadedFiles('foo', 'custom_location'));
+				), $this->getLoadedFiles('foo', 'custom_location'));
 	}
 
 	public function testRegisterItemsAndLoad() {
@@ -55,14 +66,14 @@ class ExternalFilesUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals(array(
 			'bar2' => 'http://elgg.org/'
-				), $externalFiles->getLoadedFiles('foo', 'custom_location'));
+				), $this->getLoadedFiles('foo', 'custom_location'));
 
 		$externalFiles->load('foo', 'bar1');
 
 		$this->assertEquals(array(
 			'bar2' => 'http://elgg.org/',
 			'bar1' => '#'
-				), $externalFiles->getLoadedFiles('foo', 'custom_location'));
+				), $this->getLoadedFiles('foo', 'custom_location'));
 
 		$externalFiles->load('foo', 'bar3');
 
@@ -70,14 +81,14 @@ class ExternalFilesUnitTest extends \Elgg\UnitTestCase {
 			'bar2' => 'http://elgg.org/',
 			'bar1' => '#',
 			'bar3' => 'http://community.elgg.org/'
-				), $externalFiles->getLoadedFiles('foo', 'custom_location'));
+				), $this->getLoadedFiles('foo', 'custom_location'));
 
 		$this->assertTrue($externalFiles->unregister('foo', 'bar1'));
 
 		$this->assertEquals(array(
 			'bar2' => 'http://elgg.org/',
 			'bar3' => 'http://community.elgg.org/'
-				), $externalFiles->getLoadedFiles('foo', 'custom_location'));
+				), $this->getLoadedFiles('foo', 'custom_location'));
 
 		$this->assertFalse($externalFiles->unregister('foo', 'bar1'));
 
@@ -85,8 +96,8 @@ class ExternalFilesUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals(array(
 			'bar5' => ''
-				), $externalFiles->getLoadedFiles('foo', ''));
+				), $this->getLoadedFiles('foo', ''));
 
-		$this->assertEquals(array(), $externalFiles->getLoadedFiles('nonexistent', 'custom_location'));
+		$this->assertEquals(array(), $this->getLoadedFiles('nonexistent', 'custom_location'));
 	}
 }

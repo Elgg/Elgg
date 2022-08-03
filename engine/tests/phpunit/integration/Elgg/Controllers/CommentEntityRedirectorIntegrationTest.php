@@ -31,6 +31,7 @@ class CommentEntityRedirectorIntegrationTest extends IntegrationTestCase {
 		elgg()->session->setLoggedInUser($this->owner);
 		
 		$this->entity = $this->createObject([
+			'subtype' => 'commentable',
 			'owner_guid' => $this->owner->guid,
 			'container_guid' => $this->owner->guid,
 			'access_id' => ACCESS_PRIVATE,

@@ -8,6 +8,7 @@ class ElggCommentIntegrationTest extends IntegrationTestCase {
 		$owner = $this->createUser();
 		$content_owner = $this->createUser();
 		$content = $this->createObject([
+			'subtype' => 'commentable',
 			'owner_guid' => $content_owner->guid,
 		]);
 		$comment = $this->createObject([
@@ -29,6 +30,7 @@ class ElggCommentIntegrationTest extends IntegrationTestCase {
 			'owner_guid' => $group_owner->guid,
 		]);
 		$content = $this->createObject([
+			'subtype' => 'commentable',
 			'owner_guid' => $content_owner->guid,
 			'container_guid' => $group->guid,
 		]);

@@ -223,8 +223,6 @@ When this is requested client-side:
 Some things to note
 ^^^^^^^^^^^^^^^^^^^
 
-#. Do not use ``elgg.provide()`` anymore nor other means to attach code to ``elgg`` or other
-   global objects. Use modules.
 #. Return the value of the module instead of adding to a global variable.
 #. Static (.js,.css,etc.) files are automatically minified and cached by Elgg's simplecache system.
 #. The configuration is also cached in simplecache, and should not rely on user-specific values
@@ -271,29 +269,6 @@ Parse a URL into its component parts:
    elgg.parse_url('http://community.elgg.org/file.php?arg=val#fragment');
 
 
-``elgg.get_page_owner_guid()``
-
-Get the GUID of the current page's owner.
-
-
-``elgg.register_hook_handler()``
-
-Register a hook handler with the event system.
-
-``elgg.trigger_hook()``
-
-Emit a hook event in the event system.
-
-.. code-block:: js
-
-    value = elgg.trigger_hook('my_plugin:filter', 'value', {}, value);
-
-
-``elgg.get_logged_in_user_entity()``
-
-Returns the logged in user as an JS ElggUser object.
-
-
 ``elgg.get_logged_in_user_guid()``
 
 Returns the logged in user's guid.
@@ -309,11 +284,6 @@ True if the user is logged in.
 True if the user is logged in and is an admin.
 
 
-``elgg.config.get_language()``
-
-Get the current page's language.
-
-
 There are a number of configuration values set in the elgg object:
 
 .. code-block:: js
@@ -322,10 +292,6 @@ There are a number of configuration values set in the elgg object:
     elgg.config.wwwroot;
     // The default site language.
     elgg.config.language;
-    // The current page's viewtype
-    elgg.config.viewtype;
-    // The Elgg version (YYYYMMDDXX).
-    elgg.config.version;
     // The Elgg release (X.Y.Z).
     elgg.config.release;
 
@@ -333,6 +299,20 @@ Module ``elgg/Ajax``
 --------------------
 
 See the :doc:`ajax` page for details.
+
+Module ``elgg/hooks``
+-------------------------------
+
+The ``elgg/hooks`` module can be used to have plugins interact with eachother. 
+
+Translate interface text
+
+.. code-block:: js
+
+   define(['elgg/hooks'], function (hooks) {
+       hooks.register('my_plugin:filter', 'value', handler, priority);
+       
+       var result = hooks.trigger('my_plugin:filter', 'value', {}, 'default');
 
 Module ``elgg/i18n``
 -------------------------------
@@ -650,7 +630,13 @@ The JS engine has a hooks system similar to the PHP engine's plugin hooks: hooks
 Registering hook handlers
 -------------------------
 
-Handler functions are registered using ``elgg.register_hook_handler()``. Multiple handlers can be registered for the same hook.
+Handler functions are registered using ``hooks.register()``. Multiple handlers can be registered for the same hook.
+
+.. code-block:: js
+
+    define(['elgg/hooks'], function(hooks) {
+        hooks.register('name', 'type', {handler}, {priority});
+    });
 
 The handler function
 --------------------
@@ -671,8 +657,8 @@ Plugins can trigger their own hooks:
 
 .. code-block:: js
 
-    define(['elgg'], function(elgg) {
-        elgg.trigger_hook('name', 'type', {params}, "value");
+    define(['elgg/hooks'], function(hooks) {
+        hooks.trigger('name', 'type', {params}, "value");
     });
 
 Available hooks

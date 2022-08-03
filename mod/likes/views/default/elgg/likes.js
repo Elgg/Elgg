@@ -1,7 +1,7 @@
 /**
  * Likes module
  */
-define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
+define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/hooks'], function ($, elgg, Ajax, hooks) {
 
 	var ajax = new Ajax();
 
@@ -37,7 +37,7 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 	});
 
 	// Any Ajax operation can return likes data
-	elgg.register_hook_handler(Ajax.RESPONSE_DATA_HOOK, 'all', function (hook, type, params, value) {
+	hooks.register(Ajax.RESPONSE_DATA_HOOK, 'all', function (hook, type, params, value) {
 		if (value.likes_status) {
 			var status = value.likes_status;
 			update_like_menu_item(status.guid, status.like_menu_item);

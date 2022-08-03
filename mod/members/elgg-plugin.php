@@ -10,16 +10,6 @@ return [
 			'path' => '/members',
 			'resource' => 'members/all',
 		],
-		'collection:user:user:alpha' => [
-			'path' => '/members/alpha',
-			'resource' => 'members/alpha',
-			'deprecated' => '4.2',
-		],
-		'collection:user:user:newest' => [
-			'path' => '/members/newest',
-			'resource' => 'members/newest',
-			'deprecated' => '4.2',
-		],
 		'collection:user:user:online' => [
 			'path' => '/members/online',
 			'resource' => 'members/online',

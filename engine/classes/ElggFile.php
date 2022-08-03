@@ -113,23 +113,6 @@ class ElggFile extends ElggObject {
 	}
 
 	/**
-	 * Return the size of the filestore associated with this file
-	 *
-	 * @param string $prefix         Storage prefix
-	 * @param int    $container_guid The container GUID of the checked filestore
-	 *
-	 * @return int
-	 * @deprecated 4.3
-	 */
-	public function getFilestoreSize($prefix = '', $container_guid = 0) {
-		if (!$container_guid) {
-			$container_guid = $this->container_guid;
-		}
-		
-		return (int) $this->getFilestore()->getSize($prefix, $container_guid);
-	}
-
-	/**
 	 * Get the mime type of the file.
 	 * Returns mimetype metadata value if set, otherwise attempts to detect it.
 	 *

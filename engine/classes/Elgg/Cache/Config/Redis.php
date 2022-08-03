@@ -37,18 +37,12 @@ class Redis extends Config {
 		}
 		
 		if (count($config->redis_servers) > 1) {
-			elgg_deprecated_notice("Multiple Redis servers are not supported. Only the first server will be used. Please update the configuration in elgg-config/settings.php", '4.2');
+			elgg_log('Multiple Redis servers are not supported. Only the first server will be used. Please update the configuration in elgg-config/settings.php', 'warning');
 		}
 		
 		$server = $config->redis_servers[0];
-		if (!array_key_exists('host', $server)) {
-			// assume old config syntax
-			elgg_deprecated_notice("Redis server({$server[0]}) configuration format has been changed. Please update the configuration in elgg-config/settings.php", '4.2');
-			$options['host'] = $server[0];
-			$options['port'] = $server[1];
-		} else {
-			$options = array_merge($options, $server);
-		}
+
+		$options = array_merge($options, $server);
 		
 		return new self($options);
 	}

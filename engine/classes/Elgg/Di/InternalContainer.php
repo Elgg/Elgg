@@ -166,10 +166,6 @@ class InternalContainer extends DiContainer {
 			$config->plugins_path = Paths::project() . 'mod/';
 		}
 
-		$config->path = Paths::project(); // deprecated
-		$config->pluginspath = $config->plugins_path; // deprecated alias
-		$config->url = $config->wwwroot; // deprecated alias
-
 		// move sensitive credentials into isolated services
 		$this->set('dbConfig', DbConfig::fromElggConfig($config));
 		$secret = \Elgg\Database\SiteSecret::fromConfig($config);

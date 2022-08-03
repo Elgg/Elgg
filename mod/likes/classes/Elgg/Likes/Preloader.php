@@ -143,10 +143,7 @@ class Preloader {
 					continue;
 				}
 
-				$type = $object->type;
-				$subtype = $object->subtype;
-				$likable = (bool) elgg_trigger_deprecated_plugin_hook('likes:is_likable', "{$type}:{$subtype}", [], $object->hasCapability('likable'), "Use the capabilities system to register your entity ('{$type}:{$subtype}') as likable.", '4.1');
-				if (!$likable) {
+				if (!$object->hasCapability('likable')) {
 					continue;
 				}
 
@@ -158,15 +155,12 @@ class Preloader {
 					$guids[$item->object_guid] = true;
 				}
 			} elseif ($item instanceof \ElggEntity) {
-				$type = $item->type;
-				$subtype = $item->subtype;
-				$likable = (bool) elgg_trigger_deprecated_plugin_hook('likes:is_likable', "{$type}:{$subtype}", [], $item->hasCapability('likable'), "Use the capabilities system to register your entity ('{$type}:{$subtype}') as likable.", '4.1');
-		
-				if ($likable) {
+				if ($item->hasCapability('likable')) {
 					$guids[$item->guid] = true;
 				}
 			}
 		}
+		
 		return array_keys($guids);
 	}
 

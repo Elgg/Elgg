@@ -179,7 +179,7 @@ class SystemLog {
 			'ip_address' => $qb->param($object->ip_address, ELGG_VALUE_STRING),
 		]);
 
-		$this->db->registerDelayedQuery($qb, 'write');
+		$this->db->registerDelayedQuery($qb);
 
 		// The only purpose of the cache is to prevent the same event from writing to the database twice
 		// Setting early expiration to avoid cache from taking up too much memory

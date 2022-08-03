@@ -264,11 +264,11 @@ Let's say when the view ``foo`` is fetched, we want to also send the server some
 
     // in your boot module
     var Ajax = require('elgg/Ajax');
-    var elgg = require('elgg');
+    var hooks = require('elgg/hooks');
 
     var ajax = new Ajax();
 
-    elgg.register_hook_handler(Ajax.REQUEST_DATA_HOOK, 'view:foo', function (name, type, params, data) {
+    hooks.register(Ajax.REQUEST_DATA_HOOK, 'view:foo', function (name, type, params, data) {
         // send some data back
         data.bar = 1;
         return data;
@@ -314,9 +314,9 @@ To capture the metadata send back to the client, we use the client-side ``ajax_r
 
     // in your boot module
     var Ajax = require('elgg/Ajax');
-    var elgg = require('elgg');
+    var hooks = require('elgg/hooks');
 
-    elgg.register_hook_handler(Ajax.RESPONSE_DATA_HOOK, 'view:foo', function (name, type, params, data) {
+    hooks.register(Ajax.RESPONSE_DATA_HOOK, 'view:foo', function (name, type, params, data) {
 
         // the return value is data.value
 

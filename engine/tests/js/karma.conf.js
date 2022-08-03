@@ -19,8 +19,6 @@ module.exports = function(config) {
 			
 			// these libs get loaded directly
 			'views/default/core/js/elgglib.js',
-			'views/default/core/js/deprecated.js',
-			'views/default/core/js/hooks.js',
 
 			'node_modules/formdata-polyfill/formdata.min.js',
 			

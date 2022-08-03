@@ -366,24 +366,30 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->assertFalse($entity->canComment());
 
 		$this->assertFalse($owner->canComment($owner->guid));
-		$this->assertTrue($object->canComment($owner->guid));
+		$this->assertFalse($object->canComment($owner->guid));
 		$this->assertFalse($group->canComment($owner->guid));
-		$this->assertTrue($entity->canComment($owner->guid));
+		$this->assertFalse($entity->canComment($owner->guid));
 
 		$this->assertFalse($owner->canComment($viewer->guid));
 		$this->assertFalse($object->canComment($viewer->guid));
 		$this->assertFalse($entity->canComment($viewer->guid));
 		$this->assertFalse($group->canComment($viewer->guid));
 		
+		// make entities commentable
+		elgg_entity_enable_capability($object->type, $object->subtype, 'commentable');
+		elgg_entity_enable_capability($entity->getType(), $entity->getSubtype(), 'commentable');
+		
+		$this->assertTrue($object->canComment($owner->guid));
+		$this->assertTrue($entity->canComment($owner->guid));
+		
+		$this->assertFalse($object->canComment($viewer->guid));
+		$this->assertFalse($entity->canComment($viewer->guid));
+				
 		// make sure hook is registered
 		_elgg_services()->hooks->registerHandler('container_permissions_check', 'object', \Elgg\Comments\ContainerPermissionsHandler::class);
 		$this->assertTrue($object->canComment($viewer->guid));
 		$this->assertTrue($entity->canComment($viewer->guid));
 		_elgg_services()->hooks->unregisterHandler('container_permissions_check', 'object', \Elgg\Comments\ContainerPermissionsHandler::class);
-		
-		// can pass default value
-		$this->assertTrue($object->canComment($viewer->guid, true));
-		$this->assertFalse($object->canComment($viewer->guid, false));
 
 		$admin_user = $this->createUser([], [
 			'admin' => 'yes',

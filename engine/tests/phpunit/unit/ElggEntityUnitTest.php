@@ -126,14 +126,12 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 
 	public function testSimpleGetters() {
 		$this->obj->owner_guid = 77;
-		$this->obj->access_id = 2;
 		$this->obj->time_created = 123456789;
 
 		$this->assertEquals($this->obj->getGUID(), $this->obj->guid);
 		$this->assertEquals($this->obj->getType(), $this->obj->type);
 		$this->assertEquals($this->obj->getSubtype(), $this->obj->subtype);
 		$this->assertEquals($this->obj->getOwnerGUID(), $this->obj->owner_guid);
-		$this->assertEquals($this->obj->getAccessID(), $this->obj->access_id);
 		$this->assertEquals($this->obj->getTimeCreated(), $this->obj->time_created);
 		$this->assertEquals($this->obj->getTimeUpdated(), $this->obj->time_updated);
 	}

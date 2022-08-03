@@ -1,7 +1,7 @@
 /**
  * Embed module bootstraps the embed funtionality
  */
-define(['jquery', 'elgg', 'elgg/lightbox', 'elgg/Ajax', 'elgg/system_messages', 'elgg/i18n'], function ($, elgg, lightbox, Ajax, system_messages, i18n) {
+define(['jquery', 'elgg', 'elgg/lightbox', 'elgg/Ajax', 'elgg/system_messages', 'elgg/i18n', 'elgg/hooks'], function ($, elgg, lightbox, Ajax, system_messages, i18n, hooks) {
 
 	var embed = {
 		/**
@@ -61,7 +61,7 @@ define(['jquery', 'elgg', 'elgg/lightbox', 'elgg/Ajax', 'elgg/system_messages', 
 			}
 
 			// See the ckeditor plugin for an example of this hook
-			result = elgg.trigger_hook('embed', 'editor', {
+			result = hooks.trigger('embed', 'editor', {
 				textAreaId: textAreaId,
 				content: content,
 				value: value,

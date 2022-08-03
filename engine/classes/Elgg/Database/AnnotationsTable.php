@@ -116,10 +116,6 @@ class AnnotationsTable {
 		//	return false;
 		//}
 
-		if (!$this->events->triggerDeprecated('annotate', $entity->getType(), $entity, "The 'annotate', '{$entity->getType()}' event is deprecated. Use the 'create', 'annotation' event instead.", '4.3')) {
-			return false;
-		}
-
 		if (!$this->events->triggerBefore('create', 'annotation', $annotation)) {
 			return false;
 		}

@@ -26,24 +26,6 @@ namespace Elgg\Di;
  * @property-read \Elgg\I18n\Translator                 $translator       Translator
  */
 class PublicContainer extends DiContainer {
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function __call($name, $arguments) {
-		$proxies = [
-			'echo' => ['translator', 'translate'],
-		];
-
-		if (!empty($proxies[$name])) {
-			$svc = $proxies[$name][0];
-			$method = $proxies[$name][1];
-			
-			elgg_deprecated_notice('Using the proxy elgg()->echo() has been deprecated. Use elgg_echo or elgg()->translator->translate()', '4.1');
-
-			return call_user_func_array([$this->$svc, $method], $arguments);
-		}
-	}
 	
 	/**
 	 * {@inheritDoc}

@@ -68,9 +68,6 @@ class BootService {
 			}
 		}
 
-		$config->sitename = $site->name; // deprecated
-		$config->sitedescription = $site->description; // deprecated
-
 		foreach ($data->getPluginSettings() as $guid => $entity_settings) {
 			$services->privateSettingsCache->save($guid, $entity_settings);
 		}

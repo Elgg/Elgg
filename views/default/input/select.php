@@ -22,10 +22,7 @@
  * @uses $vars['class']          Additional CSS class
  */
 
-$vars['class'] = elgg_extract_class($vars, [
-	'elgg-input-dropdown', // legacy class
-	'elgg-input-select',
-]);
+$vars['class'] = elgg_extract_class($vars, ['elgg-input-select']);
 
 $defaults = [
 	'disabled' => false,

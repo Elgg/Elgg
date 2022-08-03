@@ -10,8 +10,8 @@ class ElggObjectIntegrationTest extends IntegrationTestCase {
 	
 	public function testCantCommentLoggedOut() {
 		$user = $this->createUser();
-		$object = $this->createObject();
-		$object2 = $this->createObject();
+		$object = $this->createObject(['subtype' => 'commentable']);
+		$object2 = $this->createObject(['subtype' => 'commentable']);
 		
 		$this->assertFalse($object->canComment());
 		$this->assertTrue($object->canComment($user->guid));
@@ -27,8 +27,8 @@ class ElggObjectIntegrationTest extends IntegrationTestCase {
 		$session = elgg_get_session();
 		$session->setLoggedInUser($user);
 		
-		$object = $this->createObject();
-		$object2 = $this->createObject();
+		$object = $this->createObject(['subtype' => 'commentable']);
+		$object2 = $this->createObject(['subtype' => 'commentable']);
 				
 		$this->assertTrue($object->canComment());
 		$this->assertTrue($object->canComment($other_user->guid));
@@ -48,6 +48,7 @@ class ElggObjectIntegrationTest extends IntegrationTestCase {
 		]);
 		
 		$object = $this->createObject([
+			'subtype' => 'commentable',
 			'owner_guid' => $user2->guid,
 			'container_guid' => $group->guid,
 		]);

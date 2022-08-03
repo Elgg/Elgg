@@ -496,31 +496,6 @@ class QueryOptionsTest extends UnitTestCase {
 		$this->assertEmpty($pair->names);
 	}
 
-	public function testNormalizesOrderByMetadataOption() {
-		$options = $this->options->normalizeOptions([
-			'order_by_metadata' => [
-				'name' => 'priority',
-				'direction' => 'asc',
-				'as' => 'integer',
-			],
-			'order_by' => 'e.guid desc',
-		]);
-
-		$this->assertEquals(1, count($options['order_by']));
-
-		$clause = array_shift($options['order_by']);
-		/* @var $clause EntitySortByClause */
-
-		$this->assertInstanceOf(EntitySortByClause::class, $clause);
-
-		$this->assertEquals('priority', $clause->property);
-		$this->assertEquals('metadata', $clause->property_type);
-		$this->assertEquals('ASC', $clause->direction);
-		$this->assertEquals('inner', $clause->join_type);
-		$this->assertTrue($clause->signed);
-
-	}
-
 	public function testNormalizesMetadataOptionsOnMultipleRuns() {
 
 		$after = (new \DateTime())->modify('-1 day');
@@ -925,31 +900,6 @@ class QueryOptionsTest extends UnitTestCase {
 		$this->assertEquals(null, $pair->values);
 		$this->assertEquals(null, $pair->created_after);
 		$this->assertEquals(null, $pair->created_before);
-	}
-
-	public function testNormalizesOrderByAnnotationsOption() {
-		$options = $this->options->normalizeOptions([
-			'order_by_annotation' => [
-				'name' => 'priority',
-				'direction' => 'asc',
-				'as' => 'integer',
-			],
-			'order_by' => 'e.guid desc',
-		]);
-
-		$this->assertEquals(1, count($options['order_by']));
-
-		$clause = array_shift($options['order_by']);
-		/* @var $clause EntitySortByClause */
-
-		$this->assertInstanceOf(EntitySortByClause::class, $clause);
-
-		$this->assertEquals('priority', $clause->property);
-		$this->assertEquals('annotation', $clause->property_type);
-		$this->assertEquals('ASC', $clause->direction);
-		$this->assertEquals('inner', $clause->join_type);
-		$this->assertTrue($clause->signed);
-
 	}
 
 	public function testNormalizesAnnotationsOptionsOnMultipleRuns() {
@@ -1572,7 +1522,7 @@ class QueryOptionsTest extends UnitTestCase {
 	public function testNormalizeGroupByOptions() {
 		$options = $this->options->normalizeOptions([
 			'having' => 'foo.bar = 1',
-			'group_by' => 'foo.bar, foo.baz',
+			'group_by' => 'foo.bar',
 		]);
 
 		$this->assertEquals(1, count($options['having']));
@@ -1583,19 +1533,13 @@ class QueryOptionsTest extends UnitTestCase {
 		$this->assertInstanceOf(HavingClause::class, $clause);
 		$this->assertEquals('foo.bar = 1', $clause->expr);
 
-		$this->assertEquals(2, count($options['group_by']));
+		$this->assertEquals(1, count($options['group_by']));
 
 		$clause = array_shift($options['group_by']);
 		/* @var $clause \Elgg\Database\Clauses\GroupByClause */
 
 		$this->assertInstanceOf(GroupByClause::class, $clause);
 		$this->assertEquals('foo.bar', $clause->expr);
-
-		$clause = array_shift($options['group_by']);
-		/* @var $clause \Elgg\Database\Clauses\GroupByClause */
-
-		$this->assertInstanceOf(GroupByClause::class, $clause);
-		$this->assertEquals('foo.baz', $clause->expr);
 	}
 
 	public function testNormalizeGroupByOptionsAsArray() {

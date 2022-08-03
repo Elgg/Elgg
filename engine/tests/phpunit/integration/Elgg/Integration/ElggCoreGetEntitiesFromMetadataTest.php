@@ -901,7 +901,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		}
 	}
 
-	public function testElggApiGettersEntityMetadataNVPOrderByMDText() {
+	public function testElggApiGettersEntityMetadataNVPSortByMDText() {
 		$subtype = $this->getRandomSubtype();
 
 		$md_name = 'test_metadata_name_' . rand();
@@ -933,9 +933,9 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
-			'order_by_metadata' => [
-				'name' => $md_name,
-				'as' => 'integer',
+			'sort_by' => [
+				'property' => $md_name,
+				'signed' => true,
 			],
 		]);
 
@@ -957,7 +957,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		}
 	}
 
-	public function testElggApiGettersEntityMetadataNVPOrderByMDString() {
+	public function testElggApiGettersEntityMetadataNVPSortByMDString() {
 		$subtype = $this->getRandomSubtype();
 
 		$md_name = 'test_metadata_name_' . rand();
@@ -990,9 +990,9 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name' => $md_name,
-			'order_by_metadata' => [
-				'name' => $md_name,
-				'as' => 'text',
+			'sort_by' => [
+				'property' => $md_name,
+				'signed' => false,
 			],
 		]);
 
@@ -1021,7 +1021,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	// test getting by name sorting by value as integer
-	public function testElggApiGettersEntityMetadataNOrderByMDInt() {
+	public function testElggApiGettersEntityMetadataNSortByMDInt() {
 		$subtype = $this->getRandomSubtype();
 
 		$md_name = 'test_metadata_name_' . rand();
@@ -1054,9 +1054,9 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name' => $md_name,
-			'order_by_metadata' => [
-				'name' => $md_name,
-				'as' => 'integer',
+			'sort_by' => [
+				'property' => $md_name,
+				'signed' => true,
 			],
 		]);
 
@@ -1085,7 +1085,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	// test getting by name sorting by value as integer with defined values
-	public function testElggApiGettersEntityMetadataNOrderByMDIntDefinedVals() {
+	public function testElggApiGettersEntityMetadataNSortByMDIntDefinedVals() {
 		$subtype = $this->getRandomSubtype();
 
 		$md_name = 'test_metadata_name_' . rand();
@@ -1125,9 +1125,9 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 			'subtype' => $subtype,
 			'metadata_name' => $md_name,
 			'metadata_values' => $num,
-			'order_by_metadata' => [
-				'name' => $md_name,
-				'as' => 'integer'
+			'sort_by' => [
+				'property' => $md_name,
+				'signed' => true,
 			]
 		]);
 
@@ -1151,7 +1151,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 	// test getting by name_value_pairs sorting by value as integer
 	// because string comparison '5' > '15'
-	public function testElggApiGettersEntityMetadataNVPOrderByMDInt() {
+	public function testElggApiGettersEntityMetadataNVPSortByMDInt() {
 		$subtype = $this->getRandomSubtype();
 
 		$md_name = 'test_metadata_name_' . rand();
@@ -1193,9 +1193,9 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 				'name' => $md_name,
 				'value' => $num,
 			],
-			'order_by_metadata' => [
-				'name' => $md_name,
-				'as' => 'integer',
+			'sort_by' => [
+				'property' => $md_name,
+				'signed' => true,
 			],
 		]);
 
@@ -1255,9 +1255,9 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 				'value' => 4,
 				'operand' => '>',
 			],
-			'order_by_metadata' => [
-				'name' => $md_name,
-				'as' => 'integer',
+			'sort_by' => [
+				'property' => $md_name,
+				'signed' => true,
 			],
 		]);
 

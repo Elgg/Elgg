@@ -116,6 +116,9 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		// set correct base classes for testing purposes
 		$app->internal_services->entityTable->setEntityClass('object', 'plugin', \Elgg\Mocks\ElggPlugin::class);
 
+		// register object/commentable as a subtype that is always commentable
+		elgg_entity_enable_capability('object', 'commentable', 'commentable');
+		
 		if (!$isolate) {
 			self::$_testing_app = $app;
 		}

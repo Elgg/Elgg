@@ -76,7 +76,6 @@ function elgg_get_title_input($variable = 'title', $default = '') {
  * @since 4.3
  */
 function elgg_sanitize_input($input) {
-	$input = elgg_trigger_deprecated_plugin_hook('validate', 'input', null, $input, "Use the 'sanitize', 'input' hook.", '4.3');
 	return elgg_trigger_plugin_hook('sanitize', 'input', null, $input);
 }
 

@@ -170,27 +170,6 @@ class ExternalFiles {
 	 * @param string $type     Type of file: js or css
 	 * @param string $location Page location
 	 *
-	 * @return string[] URLs of files to load
-	 *
-	 * @deprecated 4.3 When removing this function in Elgg 5 update the unit tests to use getLoadedResources directly
-	 */
-	public function getLoadedFiles(string $type, string $location): array {
-		$items = $this->getLoadedResources($type, $location);
-		
-		// return only urls
-		array_walk($items, function(&$v, $k){
-			$v = $v->url;
-		});
-		
-		return $items;
-	}
-	
-	/**
-	 * Get external resource descriptors
-	 *
-	 * @param string $type     Type of file: js or css
-	 * @param string $location Page location
-	 *
 	 * @return string[] Resources to load
 	 */
 	public function getLoadedResources(string $type, string $location): array {
