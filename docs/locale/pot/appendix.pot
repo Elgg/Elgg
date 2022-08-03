@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-20 10:58+0200\n"
+"POT-Creation-Date: 2022-08-03 16:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -7076,7 +7076,7 @@ msgid "``elgg_split()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/3.2-to-3.3.rst:99
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:105
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:119
 msgid "Deprecated Config values"
 msgstr ""
 
@@ -7197,7 +7197,7 @@ msgid "The ajax function ``elgg.api`` has been moved to the ``executeMethod`` fu
 msgstr ""
 
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:76
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:100
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:109
 msgid "Classes"
 msgstr ""
 
@@ -8014,7 +8014,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:529
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:895
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:914
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:77
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:81
 msgid "Class functions"
 msgstr ""
 
@@ -9286,7 +9286,6 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:906
 #: ../../appendix/upgrade-notes/4.0-to-4.1.rst:38
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:86
 msgid "Plugin hooks"
 msgstr ""
 
@@ -9815,7 +9814,7 @@ msgid "``can_edit_access_collection()`` use ``\\ElggAccessCollection->canEdit()`
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:33
-msgid "``check_entity_relationship()`` use ``\\ElggEntity->hasRelationship()``"
+msgid "``check_entity_relationship()`` use ``\\ElggEntity->hasRelationship()`` or ``\\ElggEntity->getRelationship()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:34
@@ -9859,217 +9858,253 @@ msgid "``elgg_get_loaded_external_files()`` use ``elgg_get_loaded_external_resou
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:44
-msgid "``execute_new_password_request()`` use ``elgg_save_new_password()``"
+msgid "``elgg_register_external_view()`` use ``elgg_register_ajax_view()`` and ``elgg_register_simplecache_view()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:45
-msgid "``filter_tags()`` use ``elgg_sanitize_input()``"
+msgid "``elgg_unregister_external_view()`` use ``elgg_unregister_ajax_view()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:46
-msgid "``find_active_users()`` use ``elgg_get_entities()``"
+msgid "``execute_new_password_request()`` use ``elgg_save_new_password()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:47
-msgid "``force_user_password_reset()`` use ``\\ElggUser->setPassword()``"
+msgid "``filter_tags()`` use ``elgg_sanitize_input()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:48
-msgid "``generate_invite_code()`` use ``elgg_generate_invite_code()``"
+msgid "``find_active_users()`` use ``elgg_get_entities()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:49
-msgid "``generate_random_cleartext_password()`` use ``elgg_generate_password()``"
+msgid "``force_user_password_reset()`` use ``\\ElggUser->setPassword()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:50
-msgid "``get_access_array()`` use ``elgg_get_access_array()``"
+msgid "``generate_invite_code()`` use ``elgg_generate_invite_code()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:51
-msgid "``get_access_collection()`` use ``elgg_get_access_collection()``"
+msgid "``generate_random_cleartext_password()`` use ``elgg_generate_password()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:52
-msgid "``get_current_language()`` use ``elgg_get_current_language()``"
+msgid "``get_access_array()`` use ``elgg_get_access_array()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:53
-msgid "``get_default_access()`` use ``elgg_get_default_access()``"
+msgid "``get_access_collection()`` use ``elgg_get_access_collection()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:54
-msgid "``get_dir_size()``"
+msgid "``get_current_language()`` use ``elgg_get_current_language()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:55
-msgid "``get_entity_relationships()`` use ``elgg_get_relationships()``"
+msgid "``get_default_access()`` use ``elgg_get_default_access()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:56
-msgid "``get_entity_statistics()`` use ``elgg_get_entity_statistics()``"
+msgid "``get_dir_size()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:57
-msgid "``get_members_of_access_collection()`` use ``\\ElggAccessCollection->getMembers()``"
+msgid "``get_entity_relationships()`` use ``elgg_get_relationships()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:58
-msgid "``get_online_users()`` use ``elgg_list_entities()``"
+msgid "``get_entity_statistics()`` use ``elgg_get_entity_statistics()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:59
-msgid "``get_readable_access_level()`` use ``elgg_get_readable_access_level()``"
+msgid "``get_members_of_access_collection()`` use ``\\ElggAccessCollection->getMembers()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:60
-msgid "``get_relationship()`` use ``elgg_get_relationship()``"
+msgid "``get_online_users()`` use ``elgg_list_entities()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:61
-msgid "``get_write_access_array()`` use ``elgg_get_write_access_array()``"
+msgid "``get_readable_access_level()`` use ``elgg_get_readable_access_level()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:62
-msgid "``is_email_address()`` use ``elgg_is_valid_email()``"
+msgid "``get_relationship()`` use ``elgg_get_relationship()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:63
-msgid "``log_login_failure()`` use ``elgg_register_authentication_failure()``"
+msgid "``get_write_access_array()`` use ``elgg_get_write_access_array()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:64
-msgid "``login()`` use ``elgg_login()``"
+msgid "``has_access_to_entity()`` use ``\\ElggEnity->hasAccess()`` or ``elgg_has_access_to_entity()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:65
-msgid "``logout()`` use ``elgg_logout()``"
+msgid "``is_email_address()`` use ``elgg_is_valid_email()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:66
-msgid "``parse_urls()`` use ``elgg_parse_urls()``"
+msgid "``log_login_failure()`` use ``elgg_register_authentication_failure()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:67
-msgid "``register_pam_handler()`` use ``elgg_register_pam_handler()``"
+msgid "``login()`` use ``elgg_login()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:68
-msgid "``remove_entity_relationship()`` use ``\\ElggEntity->removeRelationship()``"
+msgid "``logout()`` use ``elgg_logout()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:69
-msgid "``remove_entity_relationships()`` use ``\\ElggEntity->removeAllRelationships()``"
+msgid "``parse_urls()`` use ``elgg_parse_urls()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:70
-msgid "``remove_user_from_access_collection()`` use ``\\ElggAccessCollection->removeMember()``"
+msgid "``register_pam_handler()`` use ``elgg_register_pam_handler()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:71
-msgid "``reset_login_failure_count()`` use ``elgg_reset_authentication_failures()``"
+msgid "``register_user()`` use ``elgg_register_user()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:72
-msgid "``send_new_password_request()`` use ``elgg_request_new_password()``"
+msgid "``remove_entity_relationship()`` use ``\\ElggEntity->removeRelationship()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:73
-msgid "``string_to_tag_array()`` use ``elgg_string_to_array()``"
+msgid "``remove_entity_relationships()`` use ``\\ElggEntity->removeAllRelationships()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:74
+msgid "``remove_user_from_access_collection()`` use ``\\ElggAccessCollection->removeMember()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:75
+msgid "``reset_login_failure_count()`` use ``elgg_reset_authentication_failures()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:76
+msgid "``send_new_password_request()`` use ``elgg_request_new_password()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:77
+msgid "``string_to_tag_array()`` use ``elgg_string_to_array()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:78
 msgid "``unregister_pam_handler()`` use ``elgg_unregister_pam_handler()``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:79
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:83
 msgid "``\\ElggEntity->deleteRelationships()`` use ``\\ElggEntity->removeAllRelationships()``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:80
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:84
 msgid "``\\ElggUser->getFriends()`` use ``\\ElggUser->getEntitiesFromRelationship()``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:81
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:85
 msgid "``\\ElggUser->getFriendsObjects()`` use ``\\ElggUser->getEntitiesFromRelationship()``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:82
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:86
 msgid "``\\ElggUser->getFriendsOf()`` use ``\\ElggUser->getEntitiesFromRelationship()``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:83
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:87
 msgid "``\\ElggUser->isFriend()`` use ``\\ElggUser->isFriendOf()``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:88
-msgid "``'action_gatekeeper:upload_exceeded_msg', 'all'``"
-msgstr ""
-
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:89
-msgid "``'classes', 'icon'`` use the ``'view_vars', 'output/icon'`` hook"
-msgstr ""
-
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:90
-msgid "``'fail', 'auth'``"
-msgstr ""
-
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:91
-msgid "``'file:icon:url', override''`` use the ``'entity:icon:url', 'object'`` hook"
+msgid "Events"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:92
-msgid "``'find_active_users', 'system'``"
-msgstr ""
-
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:93
-msgid "``'form:values', 'blog'``"
-msgstr ""
-
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:94
-msgid "``'is_member', 'group'`` use the ``'gatekeeper', 'all'`` hook"
+msgid "``'annotate', '{$entity->getType()}'`` use the ``'create', 'annotate'`` event"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:95
-msgid "``'page_owner', 'system'`` use route definitions"
-msgstr ""
-
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:96
-msgid "``'status', 'user'`` use the ``'create', 'object'`` event"
+msgid "Hooks"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:97
-msgid "``'validate', 'input'`` use the ``'sanitize', 'input'`` hook"
+msgid "``'action_gatekeeper:upload_exceeded_msg', 'all'``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:98
+msgid "``'classes', 'icon'`` use the ``'view_vars', 'output/icon'`` hook"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:99
+msgid "``'fail', 'auth'``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:100
+msgid "``'file:icon:url', 'override'`` use the ``'entity:icon:url', 'object'`` hook"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:101
+msgid "``'find_active_users', 'system'``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:102
-msgid "``\\ElggPAM`` use ``elgg_pam_authenticate()``"
+msgid "``'form:values', 'blog'``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:107
-msgid "``elgg_settings_file``"
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:103
+msgid "``'is_member', 'group'`` use the ``'gatekeeper', 'all'`` hook"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:108
-msgid "``path`` use ``elgg_get_root_path()``"
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:104
+msgid "``'page_owner', 'system'`` use route definitions"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:109
-msgid "``pluginspath`` use ``elgg_get_plugins_path()``"
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:105
+msgid "``'status', 'user'`` use the ``'create', 'object'`` event"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:110
-msgid "``site_guid`` use ``elgg_get_site_entity()->guid``"
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:106
+msgid "``'validate', 'input'`` use the ``'sanitize', 'input'`` hook"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:111
+msgid "``\\ElggPAM`` use ``elgg_pam_authenticate()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:114
+msgid "Notable function parameters"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:116
+msgid "Passing ``order_by_metadata`` or ``order_by_annotation`` to ``elgg_get_entities`` is deprecated. Use ``sort_by`` instead."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:121
+msgid "``elgg_settings_file``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:122
+msgid "``path`` use ``elgg_get_root_path()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:123
+msgid "``pluginspath`` use ``elgg_get_plugins_path()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:124
+msgid "``site_guid`` use ``elgg_get_site_entity()->guid``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:125
 msgid "``sitedescription`` use ``elgg_get_site_entity()->description``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:112
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:126
 msgid "``sitename`` use ``elgg_get_site_entity()->getDisplayName()``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:113
+#: ../../appendix/upgrade-notes/4.2-to-4.3.rst:127
 msgid "``url`` use ``elgg_get_site_url()``"
 msgstr ""
