@@ -67,6 +67,7 @@ class Widget {
 			'href' => elgg_generate_action_url('widgets/delete', [
 				'widget_guid' => $widget->guid,
 			]),
+			'confirm' => elgg_echo('deleteconfirm'),
 			'link_class' => 'elgg-widget-delete-button',
 			'id' => "elgg-widget-delete-button-{$widget->guid}",
 			'data-elgg-widget-type' => $widget->handler,

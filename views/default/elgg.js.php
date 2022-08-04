@@ -37,8 +37,7 @@ define('elgg', ['jquery'], function($) {
 	 * @return void
 	 */
 	function requiresConfirmation(e) {
-		var i18n = require('elgg/i18n');
-		var confirmText = $(this).data('confirm') || i18n.echo('question:areyousure');
+		var confirmText = $(this).data('confirm');
 		if (!confirm(confirmText)) {
 			e.preventDefault();
 			e.stopPropagation();
