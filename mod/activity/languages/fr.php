@@ -21,5 +21,6 @@ return array(
 	'collection:river' => "Activité",
 	'collection:river:group' => "Activité du groupe",
 	'groups:tool:activity' => 'Activer l\'activité du groupe',
+	'groups:tool:activity:description' => 'Affiche un flux d\'activité à propos du contenu relatif au groupe.',
 	
 );

@@ -54,6 +54,7 @@ return array(
 	'widgets:filerepo:description' => "Affiche une liste de vos derniers fichiers",
 
 	'groups:tool:file' => 'Activer les fichiers du groupe',
+	'groups:tool:file:description' => 'Autoriser les membres du groupe à partager des fichiers dans ce groupe.',
 
 	'river:object:file:create' => '%s a publié le fichier %s',
 	'river:object:file:comment' => '%s a commenté le fichier %s',

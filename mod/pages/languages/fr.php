@@ -23,6 +23,7 @@ return array(
 	'notifications:mute:object:page' => "à propos de la page '%s'",
 
 	'groups:tool:pages' => 'Activer les pages du groupe',
+	'groups:tool:pages:description' => 'Permettre aux membres du groupe de travailler ensemble sur les pages de ce groupe.',
 	
 	'annotation:delete:page:success' => 'La révision de la page a bien été supprimée.',
 	'annotation:delete:page:fail' => 'La révision de la page n\'a pas pu être supprimée.',
