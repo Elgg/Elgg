@@ -95,11 +95,11 @@ foreach ($views as $view => $components) {
 			echo "<td style='opacity:.6'>over</td>";
 			echo "<td style='opacity:.6'><del>{$file}</del></td>";
 		} elseif ($priority != 500) {
-			$href = $make_id($component->view);
 			echo "<td>{$priority}</td>";
 			$link = elgg_view('admin/develop_tools/inspect/views/view_link', [
 				'view' => $component->view,
 				'text' => $file,
+				'view_id' => $make_id($component->view),
 			]);
 			echo "<td style='opacity:.6'>{$link}</td>";
 		} else {
