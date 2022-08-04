@@ -2,6 +2,7 @@
 
 namespace Elgg\Integration;
 
+use Elgg\Database\Select;
 use Elgg\Hook;
 use ElggObject;
 use ElggUser;
@@ -175,24 +176,22 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testElggEntityDisableAndEnable() {
-		$dbprefix = elgg()->db->prefix;
-
 		// add annotations and metadata to check if they're disabled.
 		$annotation_id = $this->entity->annotate('test_annotation_' . rand(), 'test_value_' . rand());
 		
 		$this->assertTrue($this->entity->disable());
 
 		// ensure disabled by comparing directly with database
-		$entity = elgg()->db->getDataRow("SELECT *
-			FROM {$dbprefix}entities
-			WHERE guid = '{$this->entity->guid}'
-		");
+		$select_entity = Select::fromTable('entities')->select('*');
+		$select_entity->where($select_entity->compare('guid', '=', $this->entity->guid, ELGG_VALUE_GUID));
+		
+		$entity = elgg()->db->getDataRow($select_entity);
 		$this->assertEquals('no', $entity->enabled);
 
-		$annotation = elgg()->db->getDataRow("SELECT *
-			FROM {$dbprefix}annotations
-			WHERE id = '$annotation_id'
-		");
+		$select_annotation = Select::fromTable('annotations')->select('*');
+		$select_annotation->where($select_annotation->compare('id', '=', $annotation_id, ELGG_VALUE_ID));
+		
+		$annotation = elgg()->db->getDataRow($select_annotation);
 		$this->assertEquals('no', $annotation->enabled);
 
 		// re-enable for deletion to work
@@ -200,16 +199,10 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 
 		// check enabled
 		// check annotations and metadata enabled.
-		$entity = elgg()->db->getDataRow("SELECT *
-			FROM {$dbprefix}entities
-			WHERE guid = '{$this->entity->guid}'
-		");
+		$entity = elgg()->db->getDataRow($select_entity);
 		$this->assertEquals('yes', $entity->enabled);
 
-		$annotation = elgg()->db->getDataRow("SELECT *
-			FROM {$dbprefix}annotations
-			WHERE id = '$annotation_id'
-		");
+		$annotation = elgg()->db->getDataRow($select_annotation);
 		$this->assertEquals('yes', $annotation->enabled);
 
 		$this->assertTrue($this->entity->delete());
@@ -233,23 +226,22 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 
 		// disable entities container by $this->entity
 		$this->assertTrue($this->entity->disable());
-		$entity = elgg()->db->getDataRow("SELECT *
-			FROM {$CONFIG->dbprefix}entities
-			WHERE guid = '{$obj1->guid}'
-		");
+		
+		$select_entity = Select::fromTable('entities')->select('*');
+		$select_entity->where($select_entity->compare('guid', '=', $obj1->guid, ELGG_VALUE_GUID));
+		
+		$entity = elgg()->db->getDataRow($select_entity);
 		$this->assertEquals('no', $entity->enabled);
 
 		// enable entities that were disabled with the container (but not $obj2)
 		$this->assertTrue($this->entity->enable());
-		$entity = elgg()->db->getDataRow("SELECT *
-			FROM {$CONFIG->dbprefix}entities
-			WHERE guid = '{$obj1->guid}'
-		");
+		$entity = elgg()->db->getDataRow($select_entity);
 		$this->assertEquals('yes', $entity->enabled);
-		$entity = elgg()->db->getDataRow("SELECT *
-			FROM {$CONFIG->dbprefix}entities
-			WHERE guid = '{$obj2->guid}'
-		");
+		
+		$select_sub_entity = Select::fromTable('entities')->select('*');
+		$select_sub_entity->where($select_sub_entity->compare('guid', '=', $obj2->guid, ELGG_VALUE_GUID));
+		
+		$entity = elgg()->db->getDataRow($select_sub_entity);
 		$this->assertEquals('no', $entity->enabled);
 
 		// cleanup

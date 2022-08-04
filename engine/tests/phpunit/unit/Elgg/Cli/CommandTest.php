@@ -68,7 +68,7 @@ class CommandTest extends UnitTestCase {
 
 	public function testCanRegisterSystemError() {
 		$handler = function(Command $instance) {
-			register_error('Life is unfair');
+			elgg_register_error_message('Life is unfair');
 		};
 
 		$this->assertMatchesRegularExpression('/Life is unfair/im', $this->executeCommand($handler));
@@ -76,7 +76,7 @@ class CommandTest extends UnitTestCase {
 
 	public function testCanRegisterSystemMessage() {
 		$handler = function(Command $instance) {
-			system_message('Akuna matata');
+			elgg_register_success_message('Akuna matata');
 		};
 
 		$this->assertMatchesRegularExpression('/Akuna matata/im', $this->executeCommand($handler));

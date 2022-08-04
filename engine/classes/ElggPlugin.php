@@ -372,73 +372,6 @@ class ElggPlugin extends ElggObject {
 
 		return true;
 	}
-
-	// User settings
-
-	/**
-	 * Returns a user's setting for this plugin
-	 *
-	 * @param string $name      The setting name
-	 * @param int    $user_guid The user GUID
-	 * @param mixed  $default   The default value to return if none is set
-	 *
-	 * @return mixed The setting string value or the default value
-	 *
-	 * @deprecated 4.0 use \ElggUser::getPluginSetting()
-	 */
-	public function getUserSetting(string $name, int $user_guid = 0, $default = null) {
-		$this->logDeprecatedMessage(__METHOD__ . ' is deprecated use \ElggUser::getPluginSetting()', '4.0');
-		
-		$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
-		if (!$user instanceof ElggUser) {
-			return $default;
-		}
-		
-		return $user->getPluginSetting($this->getID(), $name, $default);
-	}
-
-	/**
-	 * Sets a user setting for a plugin
-	 *
-	 * @param string $name      The setting name
-	 * @param mixed  $value     The setting value
-	 * @param int    $user_guid The user GUID
-	 *
-	 * @return bool
-	 *
-	 * @deprecated 4.0 use \ElggUser::setPluginSetting()
-	 */
-	public function setUserSetting(string $name, $value, int $user_guid = 0): bool {
-		$this->logDeprecatedMessage(__METHOD__ . ' is deprecated use \ElggUser::setPluginSetting()', '4.0');
-		
-		$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
-		if (!$user instanceof ElggUser) {
-			return false;
-		}
-
-		return $user->setPluginSetting($this->getID(), $name, $value);
-	}
-
-	/**
-	 * Removes a user setting name and value.
-	 *
-	 * @param string $name      The user setting name
-	 * @param int    $user_guid The user GUID
-	 *
-	 * @return bool
-	 *
-	 * @deprecated 4.0 use \ElggUser::removePluginSetting()
-	 */
-	public function unsetUserSetting(string $name, int $user_guid = 0): bool {
-		$this->logDeprecatedMessage(__METHOD__ . ' is deprecated use \ElggUser::removePluginSetting()', '4.0');
-		
-		$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
-		if (!$user instanceof ElggUser) {
-			return false;
-		}
-		
-		return $user->removePluginSetting($this->getID(), $name);
-	}
 	
 	/**
 	 * Remove all entity and plugin settings for this plugin
@@ -980,13 +913,6 @@ class ElggPlugin extends ElggObject {
 		foreach ($spec as $entity) {
 			if (!isset($entity['type']) || !isset($entity['subtype'])) {
 				continue;
-			}
-			
-			$searchable = elgg_extract('searchable', $entity);
-			if ($searchable) {
-				elgg_deprecated_notice("Registering the [{$entity['type']}-{$entity['subtype']}] entity as searchable should be done in the capabilities section of your elgg-plugin.php.", '4.1');
-				
-				elgg_entity_enable_capability($entity['type'], $entity['subtype'], 'searchable');
 			}
 			
 			$capabilities = elgg_extract('capabilities', $entity, []);

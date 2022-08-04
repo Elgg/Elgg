@@ -7,7 +7,7 @@ use Elgg\IntegrationTestCase;
 class CountPreloaderIntegrationTest extends IntegrationTestCase {
 
 	public function testPersistentInstance() {
-		$object = $this->createObject();
+		$object = $this->createObject(['subtype' => 'commentable']);
 		
 		$service = \Elgg\Comments\DataService::instance();
 		$service->setCommentsCount($object->guid, 5678);
@@ -20,11 +20,11 @@ class CountPreloaderIntegrationTest extends IntegrationTestCase {
 	
 	public function testListEntitiesPreloadsData() {
 		$guids = [
-			$this->createObject()->guid,
-			$this->createObject()->guid,
-			$this->createObject()->guid,
-			$this->createObject()->guid,
-			$this->createObject()->guid,
+			$this->createObject(['subtype' => 'commentable'])->guid,
+			$this->createObject(['subtype' => 'commentable'])->guid,
+			$this->createObject(['subtype' => 'commentable'])->guid,
+			$this->createObject(['subtype' => 'commentable'])->guid,
+			$this->createObject(['subtype' => 'commentable'])->guid,
 		];
 
 		// comments

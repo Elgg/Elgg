@@ -12,10 +12,10 @@ if (is_array($output)){
 	echo $output;
 }
 if ($system_message) {
-	system_message($system_message);
+	elgg_register_success_message($system_message);
 }
 if ($error_message) {
-	register_error($error_message);
+	elgg_register_error_message($error_message);
 }
 if ($forward_url || $forward_url === '') {
 	if ($forward_url === '-1') {

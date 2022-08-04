@@ -155,8 +155,6 @@ class SearchService {
 			return $this->buildSearchWhereQuery($qb, $alias, $fields, $query_parts, $partial);
 		};
 
-		$options = $this->prepareSortOptions($options);
-
 		return $options;
 	}
 
@@ -280,39 +278,6 @@ class SearchService {
 			}
 		}
 
-		return $options;
-	}
-
-	/**
-	 * Normalizes sort options
-	 *
-	 * @param array $options Search parameters
-	 *
-	 * @return array
-	 */
-	public function prepareSortOptions(array $options = []) {
-		$sort = elgg_extract('sort', $options);
-		if (!isset($sort)) {
-			return $options;
-		}
-		
-		elgg_deprecated_notice("Setting the 'sort' option for elgg_search() is deprecated use 'sort_by'", '4.2');
-		
-		if (is_string($sort)) {
-			$sort = [
-				'property' => $sort,
-			];
-			
-			$order = elgg_extract('order', $options);
-			if (isset($order)) {
-				elgg_deprecated_notice("Setting the 'order' option for elgg_search() is deprecated use 'sort_by'", '4.2');
-				
-				$sort['direction'] = $order;
-			}
-		}
-		
-		$options['sort_by'][] = $sort;
-		
 		return $options;
 	}
 

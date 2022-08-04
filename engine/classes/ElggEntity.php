@@ -645,26 +645,6 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	public function removeAllRelationships(string $relationship = null, bool $inverse_relationship = false): bool {
 		return _elgg_services()->relationshipsTable->removeAll($this->guid, $relationship, $inverse_relationship);
 	}
-	
-	/**
-	 * Remove all relationships to and from this entity.
-	 * If you pass a relationship name, only relationships matching that name
-	 * will be deleted.
-	 *
-	 * @warning Calling this with no $relationship will clear all relationships
-	 * for this entity.
-	 *
-	 * @param null|string $relationship The name of the relationship to remove
-	 *
-	 * @return bool
-	 * @deprecated 4.3 use \ElggEntity->removeAllRelationships()
-	 */
-	public function deleteRelationships($relationship = null) {
-		elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use \ElggEntity->removeAllRelationships()', '4.3');
-		
-		$result = $this->removeAllRelationships($relationship);
-		return $result && $this->removeAllRelationships($relationship, true);
-	}
 
 	/**
 	 * Adds a private setting to this entity.
@@ -1163,16 +1143,6 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 */
 	public function canAnnotate($user_guid = 0, $annotation_name = '') {
 		return _elgg_services()->userCapabilities->canAnnotate($this, $user_guid, $annotation_name);
-	}
-
-	/**
-	 * Returns the access_id.
-	 *
-	 * @return int The access ID
-	 */
-	public function getAccessID() {
-		elgg_deprecated_notice(__METHOD__ . ' is deprecated. Use the attribute "access_id" directly.', '4.1');
-		return $this->access_id;
 	}
 
 	/**

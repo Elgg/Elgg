@@ -52,7 +52,6 @@ use Elgg\Traits\Loggable;
  * @property int           $default_limit							The default "limit" used in listings and queries
  * @property bool          $disable_rss 							Is RSS disabled
  * @property bool          $elgg_maintenance_mode                   Flag if maintenance mode is enabled
- * @property-read string   $elgg_settings_file                      Location of the settings file used to initialize the config
  * @property bool          $email_html_part                         Determines if email has a html part
  * @property string        $email_html_part_images                  How to deal with images in html part of email
  * @property int           $email_subject_limit                     The length limit for email subjects, defaults to 998 as described in http://www.faqs.org/rfcs/rfc2822.html
@@ -162,13 +161,8 @@ class Config {
 		'assetroot',
 		'cacheroot',
 		'dataroot',
-		'elgg_settings_file',
 		'installed',
-		'path',
 		'plugins_path',
-		'pluginspath',
-		'site_guid',
-		'url',
 		'wwwroot',
 	];
 
@@ -237,7 +231,6 @@ class Config {
 		'security_protect_upgrade' => true,
 		'session_bound_entity_icons' => false,
 		'simplecache_enabled' => false,
-		'site_guid' => 1, // deprecated
 		'subresource_integrity_enabled' => false,
 		'system_cache_enabled' => false,
 		'testing_mode' => false,
@@ -415,20 +408,6 @@ class Config {
 	}
 
 	/**
-	 * Set an array of values
-	 *
-	 * @param array $values Values
-	 * @return void
-	 *
-	 * @deprecated 4.3
-	 */
-	public function mergeValues(array $values) {
-		foreach ($values as $name => $value) {
-			$this->__set($name, $value);
-		}
-	}
-
-	/**
 	 * Get all values
 	 *
 	 * @return array
@@ -526,17 +505,6 @@ class Config {
 	 */
 	public function hasInitialValue($name) {
 		return isset($this->initial_values[$name]);
-	}
-
-	/**
-	 * Make a value read-only
-	 *
-	 * @param string $name Name
-	 * @return void
-	 * @deprecated 4.3
-	 */
-	public function lock($name) {
-		elgg_deprecated_notice(__METHOD__ . 'has been deprecated. It is no longer possible to lock config values.', '4.3');
 	}
 
 	/**

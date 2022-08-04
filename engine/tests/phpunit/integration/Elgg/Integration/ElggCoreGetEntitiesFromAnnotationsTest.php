@@ -3,6 +3,7 @@
 namespace Elgg\Integration;
 
 use Elgg\Database\Clauses\WhereClause;
+use Elgg\Database\Update;
 
 /**
  * Test elgg_get_entities() with annotation options
@@ -41,8 +42,6 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest
 
 		$user1 = $this->createUser();
 
-		$prefix = _elgg_services()->config->dbprefix;
-
 		$annotation_name = 'test_annotation_name_' . rand();
 
 		// our targets
@@ -51,11 +50,11 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest
 
 		// this one earlier
 		$yesterday = time() - 86400;
-		elgg()->db->updateData("
-			UPDATE {$prefix}annotations
-			SET time_created = $yesterday
-			WHERE id = $id1
-		");
+		
+		$update = Update::table('annotations');
+		$update->set('time_created', $update->param($yesterday, ELGG_VALUE_TIMESTAMP));
+		$update->where($update->compare('id', '=', $id1, ELGG_VALUE_ID));
+		elgg()->db->updateData($update);
 
 		$valid2 = $this->createOne();
 		$valid2->annotate($annotation_name, 1, ACCESS_PUBLIC, $user1->guid);

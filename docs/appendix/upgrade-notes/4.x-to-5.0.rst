@@ -17,3 +17,27 @@ Faker
 ~~~~~
 
 The faker library is no longer maintained by fzaninotto so we switched to a fork which is maintained by FakerPHP.
+
+   
+Javascript
+----------
+
+Hooks system
+~~~~~~~~~~~~
+
+The javascript hook functions have been moved to an AMD module. If you used javascript hooks than you need to update your code to use the ``elgg/hook`` module.
+The concept of 'instant hooks' is no longer present in the system.
+
+The ``'init', 'system'`` event is no longer triggered in javascript.
+
+Removed functions
+~~~~~~~~~~~~~~~~~
+
+* ``elgg.is_in_object_array``
+* ``elgg.is_instant_hook``
+* ``elgg.is_triggered_hook``
+* ``elgg.push_to_object_array``
+* ``elgg.register_hook_handler`` use the ``register`` function provide by the ``elgg\hooks`` module
+* ``elgg.register_instant_hook``
+* ``elgg.set_triggered_hook``
+* ``elgg.trigger_hook`` use the ``trigger`` function provide by the ``elgg\hooks`` module

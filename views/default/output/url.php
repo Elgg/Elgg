@@ -152,9 +152,4 @@ if (in_array('elgg-toggle', $classes)) {
 	elgg_require_js('elgg/toggle');
 }
 
-$rel = elgg_extract('rel', $vars);
-if ($rel === 'popup' || $rel === 'toggle') {
-	elgg_deprecated_notice("Using rel='{$rel}' has been deprecated. Use class='elgg-{$rel}' and require 'elgg\\{$rel}' if not using the 'output/url' view.", '4.3');
-}
-
 echo elgg_format_element('a', $vars, $icon . $text . $icon_alt . $badge);

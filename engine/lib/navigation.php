@@ -184,16 +184,12 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
 		return;
 	}
 	
-	$href = elgg_generate_url("$name:$entity_type:$entity_subtype", [
+	$href = elgg_generate_url("{$name}:{$entity_type}:{$entity_subtype}", [
 		'guid' => $owner->guid,
 	]);
 	
-	if (empty($href) && isset($handler)) {
-		elgg_deprecated_notice('Using handler for fallback HREF determination is no longer supported in ' . __METHOD__, '4.0');
-	}
-	
-	if (elgg_language_key_exists("$name:$entity_type:$entity_subtype")) {
-		$text = elgg_echo("$name:$entity_type:$entity_subtype");
+	if (elgg_language_key_exists("{$name}:{$entity_type}:{$entity_subtype}")) {
+		$text = elgg_echo("{$name}:{$entity_type}:{$entity_subtype}");
 	} else {
 		$text = elgg_echo($name);
 	}

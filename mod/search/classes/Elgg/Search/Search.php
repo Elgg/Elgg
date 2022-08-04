@@ -212,8 +212,6 @@ class Search {
 			'offset' => $offset,
 			'limit' => $limit,
 			'sort_by' => $sort_by,
-			'sort' => $sort, // deprecated
-			'order' => $order, // deprecated
 			'search_type' => $search_type,
 			'fields' => $fields,
 			'partial_match' => $partial_match,

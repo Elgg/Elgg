@@ -78,12 +78,6 @@ class StickyFormsIntegrationTest extends IntegrationTestCase {
 		
 		// get sticky value and not the default value
 		$this->assertEquals('foo', $this->service->getStickyValue('foo', 'name', 'bar'));
-		
-		// clear a single value
-		$this->service->clearStickyValue('foo', 'name');
-		
-		$this->assertEmpty($this->service->getStickyValue('foo', 'name'));
-		$this->assertEquals('bar', $this->service->getStickyValue('foo', 'other_input'));
 	}
 }
 

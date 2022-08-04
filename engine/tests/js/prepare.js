@@ -9,6 +9,7 @@ elgg.config.current_language = 'en';
 
 elgg.security = elgg.security || {};
 elgg.security.interval = (24 * 60 * 60 * 1000); // make sure during tests the refresh interval does not trigger
+elgg.security.token = elgg.security.token || {};
 
 define('elgg', function() {
 	return elgg;

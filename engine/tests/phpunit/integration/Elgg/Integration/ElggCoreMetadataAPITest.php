@@ -3,6 +3,7 @@
 namespace Elgg\Integration;
 
 use Elgg\Database\Select;
+use Elgg\Database\Update;
 use Elgg\IntegrationTestCase;
 use ElggMetadata;
 use ElggObject;
@@ -329,7 +330,6 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 			$obj->test_md = [1, 2, 3];
 	
 			$time = time();
-			$prefix = _elgg_services()->db->prefix;
 	
 			// all times the same
 			$mds = elgg_get_metadata([
@@ -339,11 +339,11 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 			]);
 	
 			foreach ($mds as $md) {
-				elgg()->db->updateData("
-					UPDATE {$prefix}metadata
-					SET time_created = " . ($time) . "
-					WHERE id = {$md->id}
-				");
+				$update_metadata = Update::table('metadata');
+				$update_metadata->set('time_created', $update_metadata->param($time, ELGG_VALUE_TIMESTAMP));
+				$update_metadata->where($update_metadata->compare('id', '=', $md->id, ELGG_VALUE_ID));
+				
+				elgg()->db->updateData($update_metadata);
 			}
 	
 			// with the same time_created expecting row order by ID

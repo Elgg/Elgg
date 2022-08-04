@@ -261,25 +261,6 @@ class ElggDiskFilestore extends \ElggFilestore {
 	}
 
 	/**
-	 * Returns the size of all data stored under a directory in the disk store.
-	 *
-	 * @param string $prefix         The prefix to check under.
-	 * @param int    $container_guid The guid of the entity whose data you want to check.
-	 *
-	 * @return int|false
-	 * @deprecated 4.3
-	 */
-	public function getSize($prefix, $container_guid) {
-		if ($container_guid) {
-			$dir = new \Elgg\EntityDirLocator($container_guid);
-			
-			return get_dir_size(Paths::sanitize($this->dir_root . $dir . $prefix));
-		}
-		
-		return false;
-	}
-
-	/**
 	 * Create a directory $dirroot
 	 *
 	 * @param string $dirroot The full path of the directory to create

@@ -136,20 +136,4 @@ class StickyForms {
 		
 		return $values;
 	}
-	
-	/**
-	 * Remove one value of form submission data from the session
-	 *
-	 * @param string $form_name The name of the form
-	 * @param string $variable  The name of the variable to clear
-	 *
-	 * @return void
-	 * @deprecated 4.3
-	 */
-	public function clearStickyValue(string $form_name, string $variable): void {
-		$data = $this->session->get('sticky_forms', []);
-		unset($data[$form_name][$variable]);
-		
-		$this->session->set('sticky_forms', $data);
-	}
 }

@@ -158,27 +158,15 @@ class PersistentLoginService {
 		}
 		
 		$hash = $this->hashToken($token);
-		return $this->getUserFromHash($hash);
-	}
-	
-	/**
-	 * Find a user with the given hash
-	 *
-	 * @param string $hash The hashed token
-	 *
-	 * @return \ElggUser|null
-	 * @todo make this a protected function or remove it in Elgg 5.0
-	 */
-	public function getUserFromHash(string $hash): ?\ElggUser {
 		if (empty($hash)) {
 			return null;
 		}
-
+		
 		$user_row = $this->persistent_cookie_table->getRowFromHash($hash);
 		if (empty($user_row)) {
 			return null;
 		}
-
+		
 		$user = get_user($user_row->guid);
 		return ($user instanceof \ElggUser) ? $user : null;
 	}

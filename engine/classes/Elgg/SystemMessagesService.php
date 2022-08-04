@@ -87,35 +87,23 @@ class SystemMessagesService {
 	/**
 	 * Display a system message on next page load.
 	 *
-	 * @param string|string[] $message Message or messages to add
+	 * @param string $message Message or messages to add
 	 *
 	 * @return void
 	 */
-	public function addSuccessMessage($message) {
-		if (!is_string($message)) {
-			elgg_deprecated_notice('You should only provide a string as the message to ' . __METHOD__, '4.2');
-		}
-		
-		foreach ((array) $message as $str) {
-			$this->addMessage(new \ElggSystemMessage($str, 'success'));
-		}
+	public function addSuccessMessage(string $message): void {
+		$this->addMessage(new \ElggSystemMessage($message, 'success'));
 	}
 
 	/**
 	 * Display an error on next page load.
 	 *
-	 * @param string|string[] $message Error or errors to add
+	 * @param string $message Error or errors to add
 	 *
 	 * @return void
 	 */
-	public function addErrorMessage($message) {
-		if (!is_string($message)) {
-			elgg_deprecated_notice('You should only provide a string as the message to ' . __METHOD__, '4.2');
-		}
-		
-		foreach ((array) $message as $str) {
-			$this->addMessage(new \ElggSystemMessage($str, 'error'));
-		}
+	public function addErrorMessage(string $message): void {
+		$this->addMessage(new \ElggSystemMessage($message, 'error'));
 	}
 
 	/**

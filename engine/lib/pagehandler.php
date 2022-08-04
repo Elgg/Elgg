@@ -210,27 +210,21 @@ function elgg_generate_action_url($action, array $query = [], $add_csrf_tokens =
 /**
  * Prepares a successful response to be returned by a page or an action handler
  *
- * @param mixed                 $content     Response content
- *                                           In page handlers, response content should contain an HTML string
- *                                           In action handlers, response content can contain either a JSON string or an array of data
- * @param string|string[]|array $message     System message visible to the client
- *                                           Can be used by handlers to display a system message
- * @param string                $forward_url Forward URL
- *                                           Can be used by handlers to redirect the client on non-ajax requests
- * @param int                   $status_code HTTP status code
- *                                           Status code of the HTTP response (defaults to 200)
+ * @param mixed        $content     Response content
+ *                                  In page handlers, response content should contain an HTML string
+ *                                  In action handlers, response content can contain either a JSON string or an array of data
+ * @param string|array $message     System message visible to the client
+ *                                  Can be used by handlers to display a system message
+ * @param string       $forward_url Forward URL
+ *                                  Can be used by handlers to redirect the client on non-ajax requests
+ * @param int          $status_code HTTP status code
+ *                                  Status code of the HTTP response (defaults to 200)
  *
  * @return \Elgg\Http\OkResponse
  */
 function elgg_ok_response($content = '', $message = '', $forward_url = null, int $status_code = ELGG_HTTP_OK) {
 	if ($message) {
-		if (is_array($message) && !array_key_exists('message', $message)) {
-			elgg_deprecated_notice('Passing an array of messages to ' . __METHOD__ . ' has been deprecated', '4.2');
-			
-			_elgg_services()->system_messages->addSuccessMessage($message);
-		} else {
-			elgg_register_success_message($message);
-		}
+		elgg_register_success_message($message);
 	}
 
 	return new \Elgg\Http\OkResponse($content, $status_code, $forward_url);
@@ -239,28 +233,22 @@ function elgg_ok_response($content = '', $message = '', $forward_url = null, int
 /**
  * Prepare an error response to be returned by a page or an action handler
  *
- * @param string|string[]|array $message     Error message
- *                                           Can be used by handlers to display an error message
- *                                           For certain requests this error message will also be used as the response body
- * @param string                $forward_url URL to redirect the client to
- *                                           Can be used by handlers to redirect the client on non-ajax requests
- * @param int                   $status_code HTTP status code
- *                                           Status code of the HTTP response
+ * @param string|array $message     Error message
+ *                                  Can be used by handlers to display an error message
+ *                                  For certain requests this error message will also be used as the response body
+ * @param string       $forward_url URL to redirect the client to
+ *                                  Can be used by handlers to redirect the client on non-ajax requests
+ * @param int          $status_code HTTP status code
+ *                                  Status code of the HTTP response
  *
  * @return \Elgg\Http\ErrorResponse
  */
 function elgg_error_response($message = '', $forward_url = REFERRER, int $status_code = ELGG_HTTP_BAD_REQUEST) {
 	if ($message) {
-		if (is_array($message) && !array_key_exists('message', $message)) {
-			elgg_deprecated_notice('Passing an array of messages to ' . __METHOD__ . ' has been deprecated', '4.2');
-			
-			_elgg_services()->system_messages->addErrorMessage($message);
-		} else {
-			elgg_register_error_message($message);
-			
-			// needed to convert the error message back to a string as the ErrorResponse does not support an array of \ElggSystemMessage options
-			$message = is_array($message) ? $message['message'] : $message;
-		}
+		elgg_register_error_message($message);
+		
+		// needed to convert the error message back to a string as the ErrorResponse does not support an array of \ElggSystemMessage options
+		$message = is_array($message) ? $message['message'] : $message;
 	}
 
 	return new \Elgg\Http\ErrorResponse($message, $status_code, $forward_url);

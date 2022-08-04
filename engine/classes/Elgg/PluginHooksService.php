@@ -51,31 +51,12 @@ class PluginHooksService extends HooksRegistrationService {
 		$handlers = $this->events->getHandlersService();
 
 		foreach ($this->getOrderedHandlers($name, $type) as $handler) {
-			$exit_warning = null;
-
-			if (in_array($name, ['forward', 'action', 'route'])) {
-				// assume the handler is going to exit the request...
-				$exit_warning = function () use ($name, $type, $handler, $handlers) {
-					$this->logDeprecatedMessage(
-						"'{$name}', '{$type}' plugin hook should not be used to serve a response. Instead return an "
-						. "appropriate ResponseBuilder instance from an action or page handler. Do not terminate "
-						. "code execution with exit() or die() in {$handlers->describeCallable($handler)}",
-						'2.3'
-					);
-				};
-				$this->events->registerHandler('shutdown', 'system', $exit_warning);
-			}
-
 			list($success, $return, $hook) = $handlers->call($handler, $hook, [$name, $type, $value, $params]);
-
-			if ($exit_warning) {
-				// an exit did not occur, so no need for the warning...
-				$this->events->unregisterHandler('shutdown', 'system', $exit_warning);
-			}
 
 			if (!$success) {
 				continue;
 			}
+
 			if ($return !== null) {
 				$value = $return;
 				if ($hook instanceof HrsHook) {

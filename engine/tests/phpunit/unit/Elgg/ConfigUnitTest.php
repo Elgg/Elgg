@@ -32,7 +32,6 @@ class ConfigUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(realpath(elgg_get_plugins_path()), realpath(Paths::project() . 'mod/'));
 
 		$engine_path = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
-		$this->assertEquals(realpath(elgg_get_engine_path()), $engine_path);
 
 		$vendor_path = dirname($engine_path) . '/vendor/';
 		if (is_dir($vendor_path)) {

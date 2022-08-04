@@ -1809,14 +1809,6 @@ Global variables:
 	'cli:plugins:list:option:refresh' => "Refresh plugin list with recently installed plugins",
 	'cli:plugins:list:error:status' => "%s is not a valid status. Allowed options are: %s",
 	
-	'cli:simpletest:description' => "Run simpletest test suite (deprecated)",
-	'cli:simpletest:option:config' => "Path to settings file that the Elgg Application should be bootstrapped with",
-	'cli:simpletest:option:plugins' => "A list of plugins to enable for testing or 'all' to enable all plugins",
-	'cli:simpletest:option:filter' => "Only run tests that match filter pattern",
-	'cli:simpletest:error:class' => "You must install your Elgg application using '%s'",
-	'cli:simpletest:error:file' => "%s is not a valid simpletest class",
-	'cli:simpletest:output:summary' => "Time: %.2f seconds, Memory: %.2fMb",
-	
 	'cli:upgrade:description' => "Run system upgrades",
 	'cli:upgrade:option:force' => "Force the upgrades to run even if currently an upgrade is already running.",
 	'cli:upgrade:argument:async' => "Execute pending asynchronous upgrades",

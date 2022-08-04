@@ -8,7 +8,7 @@ $error = elgg_extract('error', $vars);
 echo $output;
 
 if ($error) {
-	register_error($error);
+	elgg_register_error_message($error);
 }
 
 _elgg_services()->responseFactory->redirect($forward_url, $forward_reason);

@@ -116,17 +116,12 @@ class ElggGroup extends \ElggEntity {
 		if ($user === null) {
 			$user = _elgg_services()->session->getLoggedInUser();
 		}
+		
 		if (!$user instanceof \ElggUser) {
 			return false;
 		}
 
-		$result = $user->hasRelationship($this->guid, 'member');
-
-		$params = [
-			'user' => $user,
-			'group' => $this,
-		];
-		return _elgg_services()->hooks->triggerDeprecated('is_member', 'group', $params, $result, "Hook 'is_member', 'group' has been deprecated. Use 'gatekeeper', 'all' hook instead.", '4.3');
+		return $user->hasRelationship($this->guid, 'member');
 	}
 
 	/**

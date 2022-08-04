@@ -234,46 +234,6 @@ class SearchServiceTest extends UnitTestCase {
 		]));
 	}
 
-	public function testCanPrepareSortOptions() {
-
-		$options = _elgg_services()->search->prepareSearchOptions([
-			'sort' => 'prop',
-			'order' => 'desc',
-		]);
-
-		$sort = array_shift($options['sort_by']);
-		$this->assertNotEmpty($sort);
-		$this->assertIsArray($sort);
-		
-		$this->assertArrayHasKey('property', $sort);
-		$this->assertEquals('prop', $sort['property']);
-		
-		$this->assertArrayHasKey('direction', $sort);
-		$this->assertEquals('desc', $sort['direction']);
-	}
-
-	public function testCanPrepareSortOptionsFromArray() {
-
-		$expected = [
-			'property' => 'prop',
-			'property_type' => 'annotation',
-			'direction' => 'desc',
-			'signed' => true,
-		];
-		$options = _elgg_services()->search->prepareSearchOptions([
-			'sort' => $expected,
-		]);
-
-		$sort = array_shift($options['sort_by']);
-		$this->assertNotEmpty($sort);
-		$this->assertIsArray($sort);
-		
-		foreach ($expected as $key => $value) {
-			$this->assertArrayHasKey($key, $sort);
-			$this->assertEquals($value, $sort[$key]);
-		}
-	}
-
 	public function testEndToEndSearchForAnnotationsWithExactMatchAndWithoutTokenization() {
 
 		elgg_register_plugin_hook_handler('search:fields', 'object', function (\Elgg\Hook $hook) {

@@ -3,10 +3,6 @@ define(function(require) {
 	var elgg = require('elgg');
 	
 	describe("Elgg", function() {
-	
-		it("gives access to window via elgg.global", function() {
-			expect(elgg.global).toBe(window);
-		});
 		
 		describe("elgg.parse_url()", function() {
 			it("break urls down into component parts", function() {
@@ -39,74 +35,13 @@ define(function(require) {
 				    elgg.assertTypeOf('boolean', false);
 				    elgg.assertTypeOf('undefined', undefined);
 				    elgg.assertTypeOf('number', 1);
-				    elgg.assertTypeOf('function', elgg.nullFunction);
+				    elgg.assertTypeOf('function', function() {});
 				}).not.toThrow();
 			});
 			
 			it("throws an exception when the value is not of the given type", function() {
 				expect(function() { elgg.assertTypeOf('function', {}); }).toThrow();
-				expect(function() { elgg.assertTypeOf('object', elgg.nullFunction); }).toThrow();
-			});
-		});
-		
-		describe("elgg.provide()", function() {
-			it("generates a global namespace", function() {
-				expect(window.foo).toBe(undefined);
-				
-				elgg.provide('foo.bar.baz');
-				
-				expect(window.foo.bar.baz).not.toBe(undefined);
-				
-				window.foo = undefined; // cleanup
-			});
-			
-			it("plays nice with existing namespaces", function() {
-				elgg.provide('foo.bar.baz');
-			
-				window.foo.bar.baz.oof = "test";
-			
-				elgg.provide('foo.bar.baz');
-			
-				expect(window.foo.bar.baz.oof).toBe("test");
-				
-				window.foo = undefined; // cleanup
-			});
-
-			it("can handle array names with periods", function () {
-				elgg.provide(['foo', 'bar.baz']);
-
-				expect(window.foo['bar.baz']).not.toBe(undefined);
-			});
-		});
-		
-		describe("elgg.require()", function() {
-			it("is a noop if the namespace exists", function() {
-				expect(function(){
-					elgg.require('jQuery');
-					elgg.require('elgg');
-					elgg.require('elgg.config');
-				}).not.toThrow();
-			});
-			
-			it("throws an exception when then the namespace does not exist", function() {
-				expect(function(){ elgg.require(''); }).toThrow();
-				expect(function(){ elgg.require('garbage'); }).toThrow();
-				expect(function(){ elgg.require('gar.ba.ge'); }).toThrow();			
-			});
-		});
-		
-		describe("elgg.inherit()", function() {
-			function Base() {}
-			
-			function Child() {}	
-			elgg.inherit(Child, Base);
-	
-			it("establishes an inheritance relationship between classes", function() {
-				expect(new Child() instanceof Base).toBe(true);
-			});
-			
-			it("preserves the constructor prototype property", function() {
-				expect(Child.prototype.constructor).toBe(Child);
+				expect(function() { elgg.assertTypeOf('object', function() {}); }).toThrow();
 			});
 		});
 		

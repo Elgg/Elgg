@@ -479,12 +479,7 @@ class Request extends SymfonyRequest {
 		};
 
 		if (!$is_valid()) {
-			$error_msg = elgg_trigger_deprecated_plugin_hook('action_gatekeeper:upload_exceeded_msg', 'all', [
-				'post_size' => $reported_bytes,
-				'visible_errors' => true,
-			], elgg_echo('actiongatekeeper:uploadexceeded'), "The 'action_gatekeeper:upload_exceeded_msg', 'all' has been deprecated", '4.3');
-
-			throw new BadRequestException($error_msg);
+			throw new BadRequestException(elgg_echo('actiongatekeeper:uploadexceeded'));
 		}
 	}
 	

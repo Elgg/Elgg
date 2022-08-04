@@ -4,7 +4,9 @@ define(function(require) {
 	var $ = require('jquery');
 	require('jquery-mockjax');
 	var security = require('elgg/security');
+	var i18n = require('elgg/i18n');
 	var Ajax = require('elgg/Ajax');
+	var hooks = require('elgg/hooks');
 	var system_messages = require('elgg/system_messages');
 	var ajax = new Ajax();
 
@@ -20,10 +22,10 @@ define(function(require) {
 			$.mockjaxSettings.logging = false;
 			$.mockjax.clear();
 
-			elgg.config.hooks = {};
+			hooks.reset();
 
 			// note, "all" type > always higher priority than specific types
-			elgg.register_hook_handler(Ajax.REQUEST_DATA_HOOK, 'all', function (h, t, p, v) {
+			hooks.register(Ajax.REQUEST_DATA_HOOK, 'all', function (h, t, p, v) {
 				captured_hook = {
 					t: t,
 					p: p,
@@ -69,7 +71,7 @@ define(function(require) {
 
 			var hook_calls = 0;
 
-			elgg.register_hook_handler(Ajax.RESPONSE_DATA_HOOK, 'path:foo', function (h, t, p, v) {
+			hooks.register(Ajax.RESPONSE_DATA_HOOK, 'path:foo', function (h, t, p, v) {
 				hook_calls++;
 				expect(v).toEqual({
 					value: 1,
@@ -163,7 +165,7 @@ define(function(require) {
 		});
 
 		it("allows altering value via hook", function(done) {
-			elgg.register_hook_handler(Ajax.REQUEST_DATA_HOOK, 'path:foo/bar', function (h, t, p, v) {
+			hooks.register(Ajax.REQUEST_DATA_HOOK, 'path:foo/bar', function (h, t, p, v) {
 				v.arg3 = 3;
 				return v;
 			}, 900);
@@ -418,7 +420,7 @@ define(function(require) {
 
 			ajax.path('foo').fail(function () {
 				expect(captured).toEqual({
-					error: elgg.echo('ajax:error')
+					error: i18n.echo('ajax:error')
 				});
 
 				system_messages.error = tmp_register_error;

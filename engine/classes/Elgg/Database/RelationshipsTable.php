@@ -345,29 +345,6 @@ class RelationshipsTable {
 	}
 
 	/**
-	 * Get all the relationships for a given GUID.
-	 *
-	 * @param int  $guid                 GUID of the subject or target entity (see $inverse)
-	 * @param bool $inverse_relationship Is $guid the target of the deleted relationships? By default $guid is
-	 *                                   the subject of the relationships.
-	 *
-	 * @return \ElggRelationship[]
-	 * @deprecated 4.3
-	 */
-	public function getAll($guid, $inverse_relationship = false) {
-		$select = Select::fromTable('entity_relationships');
-		$select->select('*');
-		
-		if ((bool) $inverse_relationship) {
-			$select->where($select->compare('guid_two', '=', $guid, ELGG_VALUE_GUID));
-		} else {
-			$select->where($select->compare('guid_one', '=', $guid, ELGG_VALUE_GUID));
-		}
-		
-		return $this->db->getData($select, [$this, 'rowToElggRelationship']);
-	}
-
-	/**
 	 * Gets the number of entities by a the number of entities related to them in a particular way.
 	 * This is a good way to get out the users with the most friends, or the groups with the
 	 * most members.

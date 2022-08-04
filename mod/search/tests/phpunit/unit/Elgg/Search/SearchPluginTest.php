@@ -34,8 +34,6 @@ class SearchPluginTest extends UnitTestCase {
 			'query_parts' => ['literal needle'],
 			'offset' => 0,
 			'limit' => 10,
-			'sort' => null,
-			'order' => null,
 			'search_type' => 'custom',
 			'fields' => [
 				'metadata' => [],

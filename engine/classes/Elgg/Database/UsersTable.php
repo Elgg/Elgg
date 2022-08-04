@@ -112,59 +112,6 @@ class UsersTable {
 	}
 
 	/**
-	 * Return users (or the number of them) who have been active within a recent period.
-	 *
-	 * @param array $options Array of options with keys:
-	 *                       - seconds (int)  => Length of period (default 600 = 10min)
-	 *                       - limit   (int)  => Limit (default 10)
-	 *                       - offset  (int)  => Offset (default 0)
-	 *                       - count   (bool) => Return a count instead of users? (default false)
-	 *
-	 * @return \ElggUser[]|int
-	 * @deprecated 4.3
-	 */
-	public function findActive(array $options = []) {
-
-		$options = array_merge([
-			'seconds' => 600,
-			'limit' => $this->config->default_limit,
-			'offset' => 0,
-		], $options);
-
-		// cast options we're sending to hook
-		foreach (['seconds', 'limit', 'offset'] as $key) {
-			$options[$key] = (int) $options[$key];
-		}
-		$options['count'] = (bool) $options['count'];
-
-		// allow plugins to override
-		$params = [
-			'seconds' => $options['seconds'],
-			'limit' => $options['limit'],
-			'offset' => $options['offset'],
-			'count' => $options['count'],
-			'options' => $options,
-		];
-		$data = _elgg_services()->hooks->triggerDeprecated('find_active_users', 'system', $params, null, "No longer use the 'find_active_users', 'system' hook", '4.3');
-		// check null because the handler could legitimately return falsey values.
-		if ($data !== null) {
-			return $data;
-		}
-
-		$time = $this->getCurrentTime()->getTimestamp() - $options['seconds'];
-		return elgg_get_entities([
-			'type' => 'user',
-			'limit' => $options['limit'],
-			'offset' => $options['offset'],
-			'count' => $options['count'],
-			'wheres' => function(QueryBuilder $qb, $main_alias) use ($time) {
-				return $qb->compare("{$main_alias}.last_action", '>=', $time, ELGG_VALUE_INTEGER);
-			},
-			'order_by' => new OrderByClause('e.last_action', 'DESC'),
-		]);
-	}
-
-	/**
 	 * Generates a unique invite code for a user
 	 *
 	 * @param string $username The username of the user sending the invitation

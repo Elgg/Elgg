@@ -1,4 +1,4 @@
-define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages', 'elgg/security', 'elgg/i18n'], function ($, elgg, spinner, system_messages, security, i18n) {
+define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages', 'elgg/security', 'elgg/i18n', 'elgg/hooks'], function ($, elgg, spinner, system_messages, security, i18n, hooks) {
 	
 	var site_url = elgg.get_site_url(),
 		action_base = site_url + 'action/',
@@ -132,7 +132,7 @@ define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages', 'elgg/security
 				options: options
 			};
 			if (hook_type && typeof options.data !== 'string') {
-				options.data = elgg.trigger_hook(Ajax.REQUEST_DATA_HOOK, hook_type, params, options.data);
+				options.data = hooks.trigger(Ajax.REQUEST_DATA_HOOK, hook_type, params, options.data);
 			}
 
 			// we do this here because hook may have made data non-empty, in which case we'd need to
@@ -205,7 +205,7 @@ define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages', 'elgg/security
 					options: orig_options
 				};
 				if (hook_type) {
-					data = elgg.trigger_hook(Ajax.RESPONSE_DATA_HOOK, hook_type, params, data);
+					data = hooks.trigger(Ajax.RESPONSE_DATA_HOOK, hook_type, params, data);
 				}
 
 				jqXHR.AjaxData = data;

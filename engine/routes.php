@@ -222,7 +222,6 @@ return [
 		'middleware' => [
 			\Elgg\Router\Middleware\Gatekeeper::class,
 		],
-		'legacy_page_owner_detection' => false, // prevents notices about legacy logic, page owner is explicitely set in the resource
 	],
 	'view:object:comment' => [
 		'path' => '/comment/view/{guid}/{container_guid?}',

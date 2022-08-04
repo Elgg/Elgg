@@ -77,8 +77,7 @@ class Icons {
 			$ext = '';
 		}
 	
-		$url = elgg_get_simplecache_url("file/icons/{$type}{$ext}.gif");
-		return elgg_trigger_deprecated_plugin_hook('file:icon:url', 'override', $hook->getParams(), $url, "The 'file:icon:url', 'override' hook has been deprecated. Use the 'entity:icon:url', 'object' hook instead.", '4.3');
+		return elgg_get_simplecache_url("file/icons/{$type}{$ext}.gif");
 	}
 	
 	/**

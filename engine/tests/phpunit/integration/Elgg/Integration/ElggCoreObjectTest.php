@@ -2,6 +2,7 @@
 
 namespace Elgg\Integration;
 
+use Elgg\Database\Select;
 use Elgg\Helpers\ElggObjectWithExposableAttributes;
 
 /**
@@ -177,20 +178,22 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		$this->assertEmpty(get_entity($guid1));
 		$this->assertEmpty(get_entity($guid2));
 
-		$db_prefix = _elgg_services()->config->dbprefix;
-		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $guid1";
-		$r = elgg()->db->getDataRow($q);
+		$select1 = Select::fromTable('entities')->select('*');
+		$select1->where($select1->compare('guid', '=', $guid1, ELGG_VALUE_GUID));
+		
+		$r = elgg()->db->getDataRow($select1);
 		$this->assertEquals('no', $r->enabled);
 
-		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $guid2";
-		$r = elgg()->db->getDataRow($q);
+		$select2 = Select::fromTable('entities')->select('*');
+		$select2->where($select2->compare('guid', '=', $guid2, ELGG_VALUE_GUID));
+		
+		$r = elgg()->db->getDataRow($select2);
 		$this->assertEquals('no', $r->enabled);
 	}
 
 	public function testElggRecursiveDelete() {
 		$types = ['group', 'object', 'user'];
-		$db_prefix = _elgg_services()->config->dbprefix;
-
+		
 		foreach ($types as $type) {
 			$parent = $this->createOne($type);
 			
@@ -213,21 +216,12 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 				$this->assertTrue($parent->delete(true));
 			});
 
-			$q = "SELECT * FROM {$db_prefix}entities WHERE guid = {$parent->guid}";
-			$r = elgg()->db->getData($q);
-			$this->assertEmpty($r);
-
-			$q = "SELECT * FROM {$db_prefix}entities WHERE guid = {$child->guid}";
-			$r = elgg()->db->getData($q);
-			$this->assertEmpty($r);
-
-			$q = "SELECT * FROM {$db_prefix}entities WHERE guid = {$child2->guid}";
-			$r = elgg()->db->getData($q);
-			$this->assertEmpty($r);
-
-			$q = "SELECT * FROM {$db_prefix}entities WHERE guid = {$grandchild->guid}";
-			$r = elgg()->db->getData($q);
-			$this->assertEmpty($r);
+			foreach ([$parent->guid, $child->guid, $child2->guid, $grandchild->guid] as $guid) {
+				$entities = Select::fromTable('entities')->select('*');
+				$entities->where($entities->compare('guid', '=', $guid, ELGG_VALUE_GUID));
+				
+				$this->assertEmpty(elgg()->db->getData($entities));
+			}
 		}
 
 		// object that owns itself
@@ -236,15 +230,15 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		$obj->owner_guid = $obj->guid;
 		$obj->save();
 
-		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = {$obj->guid}";
-		$r = elgg()->db->getDataRow($q);
+		$entities = Select::fromTable('entities')->select('*');
+		$entities->where($entities->compare('guid', '=', $obj->guid, ELGG_VALUE_GUID));
+				
+		$r = elgg()->db->getDataRow($entities);
 		$this->assertEquals($obj->guid, $r->owner_guid);
 
 		$this->assertTrue($obj->delete(true));
 
-		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = {$obj->guid}";
-		$r = elgg()->db->getDataRow($q);
-		$this->assertEmpty($r);
+		$this->assertEmpty(elgg()->db->getDataRow($entities));
 	}
 
 	public function testCanGetTags() {
@@ -293,8 +287,9 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 	}
 
 	protected function get_entity_row($guid) {
-		$CONFIG = _elgg_services()->config;
+		$select = Select::fromTable('entities')->select('*');
+		$select->where($select->compare('guid', '=', $guid, ELGG_VALUE_GUID));
 
-		return elgg()->db->getDataRow("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid='{$guid}'");
+		return elgg()->db->getDataRow($select);
 	}
 }

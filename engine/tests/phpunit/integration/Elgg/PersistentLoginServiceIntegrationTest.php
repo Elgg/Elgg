@@ -191,45 +191,6 @@ class PersistentLoginServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 		$this->assertNull($service->getUserFromToken($cookie_token . 'invalid'));
 	}
 	
-	public function testGetUserFromEmptyHash() {
-		$user = $this->createUser();
-		$service = $this->mockService();
-		
-		$service->makeLoginPersistent($user);
-		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
-		$this->assertIsString($this->cookie->value);
-		
-		$this->assertNull($service->getUserFromHash(''));
-	}
-	
-	public function testGetUserFromHash() {
-		$user = $this->createUser();
-		$service = $this->mockService();
-		
-		$service->makeLoginPersistent($user);
-		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
-		$this->assertIsString($this->cookie->value);
-		
-		$cookie_token = $this->cookie->value;
-		
-		$found = $service->getUserFromHash(md5($cookie_token));
-		$this->assertInstanceOf(\ElggUser::class, $found);
-		$this->assertEquals($user->guid, $found->guid);
-	}
-	
-	public function testGetUserFromInvalidHash() {
-		$user = $this->createUser();
-		$service = $this->mockService();
-		
-		$service->makeLoginPersistent($user);
-		$this->assertInstanceOf(\ElggCookie::class, $this->cookie);
-		$this->assertIsString($this->cookie->value);
-		
-		$cookie_token = $this->cookie->value;
-		
-		$this->assertNull($service->getUserFromHash($cookie_token));
-	}
-	
 	public function testUpdateTokenUsageWithoutServiceToken() {
 		$user = $this->createUser();
 		$service = $this->mockService();

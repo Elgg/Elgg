@@ -5,7 +5,7 @@
  * @module elgg/popup
  * @since 2.2
  */
-define('elgg/popup', ['elgg', 'jquery', 'jquery-ui/position', 'jquery-ui/unique-id'], function (elgg, $) {
+define('elgg/popup', ['jquery', 'elgg', 'elgg/hooks', 'jquery-ui/position', 'jquery-ui/unique-id'], function ($, elgg, hooks) {
 
 	var popup = {
 		/**
@@ -105,7 +105,7 @@ define('elgg/popup', ['elgg', 'jquery', 'jquery-ui/position', 'jquery-ui/unique-
 
 			$.extend(position, $trigger.data('position'));
 
-			position = elgg.trigger_hook('getOptions', 'ui.popup', params, position);
+			position = hooks.trigger('getOptions', 'ui.popup', params, position);
 
 			if (!position) {
 				return;
@@ -171,7 +171,6 @@ define('elgg/popup', ['elgg', 'jquery', 'jquery-ui/position', 'jquery-ui/unique-
 	};
 	
 	popup.bind($('.elgg-popup'));
-	popup.bind($('[rel="popup"]')); // deprecated
 	
 	return popup;
 });

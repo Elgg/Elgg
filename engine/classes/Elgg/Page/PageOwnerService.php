@@ -71,133 +71,26 @@ class PageOwnerService {
 		$this->users_table = $users_table;
 		$this->invoker = $invoker;
 		
-		$this->initializePageOwner();
-	}
-	
-	/**
-	 * Initialize the page owner by trying to autodetect or let a hook to provide the page owner
-	 *
-	 * @return void
-	 */
-	protected function initializePageOwner() {
-		
-		$page_owner_guid = $this->detectPageOwnerFromRoute();
-		if (!empty($page_owner_guid)) {
-			$this->page_owner_guid = $page_owner_guid;
-			return;
-		}
-		
-		$page_owner_guid = $this->detectLegacyPageOwner();
-		if (!empty($page_owner_guid)) {
-			$this->page_owner_guid = $page_owner_guid;
-			return;
-		}
-		
-		$this->page_owner_guid = (int) $this->hooks->triggerDeprecated('page_owner', 'system', null, $this->page_owner_guid, "No longer set page owner using the 'page_owner', 'system' hook. Use route definitions instead.", '4.3');
+		$this->page_owner_guid = $this->detectPageOwnerFromRoute();
 	}
 	
 	/**
 	 * Detects page owner from route
 	 *
-	 * @return int|void detected page owner guid or void if none detected
+	 * @return int detected page owner guid or void if none detected
 	 */
-	protected function detectPageOwnerFromRoute() {
+	protected function detectPageOwnerFromRoute(): int {
 		$route = $this->request->getRoute();
 		if (!$route instanceof Route) {
-			return;
+			return 0;
 		}
 		
 		$page_owner = $route->resolvePageOwner();
 		if (!$page_owner instanceof \ElggEntity) {
-			return;
+			return 0;
 		}
 		
 		return $page_owner->guid;
-	}
-	
-	/**
-	 * Sets the page owner based on request
-	 *
-	 * Tries to figure out the page owner by looking at the URL or a request
-	 * parameter. The request parameters used are 'username' and 'owner_guid'.
-	 * Otherwise, this function attempts to figure out the owner if the url
-	 * fits the patterns of:
-	 *   <identifier>/owner/<username>
-	 *   <identifier>/friends/<username>
-	 *   <identifier>/view/<entity guid>
-	 *   <identifier>/add/<container guid>
-	 *   <identifier>/edit/<entity guid>
-	 *   <identifier>/group/<group guid>
-	 *
-	 * @note Access is disabled while finding the page owner for the group gatekeeper functions.
-	 *
-	 * @return int|void
-	 */
-	private function detectLegacyPageOwner() {
-		$route = $this->request->getRoute();
-		if ($route instanceof Route) {
-			if ($route->getDefault('_legacy_page_owner_detection') === false) {
-				return;
-			}
-		}
-		
-		$guid = $this->invoker->call(ELGG_IGNORE_ACCESS, function() {
-		
-			$username = $this->request->getParam('username');
-			if ($user = $this->users_table->getByUsername($username)) {
-				return $user->guid;
-			}
-		
-			$owner = $this->request->getParam('owner_guid');
-			if (is_numeric($owner)) {
-				if ($user = $this->entity_table->get((int) $owner)) {
-					return $user->guid;
-				}
-			}
-		});
-		
-		if (is_int($guid)) {
-			if (!$this->request->isAction()) {
-				elgg_deprecated_notice('The automatic legacy page owner detection based on request parameters has been deprecated. Use route definitions if possible.', '4.1');
-			}
-			return $guid;
-		}
-		
-		$guid = $this->invoker->call(ELGG_IGNORE_ACCESS, function() {
-			$segments = $this->request->getUrlSegments();
-			if (!isset($segments[1]) || !isset($segments[2])) {
-				return;
-			}
-			
-			switch ($segments[1]) {
-				case 'owner':
-				case 'friends':
-					$user = $this->users_table->getByUsername($segments[2]);
-					if ($user) {
-						return $user->guid;
-					}
-					break;
-				case 'view':
-				case 'edit':
-					$entity = $this->entity_table->get($segments[2]);
-					if ($entity) {
-						return $entity->container_guid;
-					}
-					break;
-				case 'add':
-				case 'group':
-					$entity = $this->entity_table->get($segments[2]);
-					if ($entity) {
-						return $entity->guid;
-					}
-					break;
-			}
-		});
-	
-		if (is_int($guid)) {
-			elgg_deprecated_notice('The automatic legacy page owner detection based on url segments has been deprecated. Use route definitions.', '4.1');
-			return $guid;
-		}
 	}
 	
 	/**

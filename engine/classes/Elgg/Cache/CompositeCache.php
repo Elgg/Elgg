@@ -226,7 +226,6 @@ class CompositeCache extends ElggCache {
 	protected function createPool() {
 		
 		$drivers = [];
-		$drivers[] = $this->buildApcDriver();
 		$drivers[] = $this->buildRedisDriver();
 		$drivers[] = $this->buildMemcachedDriver();
 		$drivers[] = $this->buildFileSystemDriver();
@@ -264,24 +263,6 @@ class CompositeCache extends ElggCache {
 		$cluster_driver->getConfig()->setItemDetailedDate(true);
 		
 		return $cluster_driver;
-	}
-
-	/**
-	 * Builds APC driver
-	 * @return null
-	 */
-	protected function buildApcDriver() {
-		if (!($this->flags & ELGG_CACHE_APC)) {
-			return null;
-		}
-
-		if (!extension_loaded('apc') || !ini_get('apc.enabled')) {
-			return null;
-		}
-
-		elgg_deprecated_notice('The APC driver for caching is no longer available. Switch to an alternative method for caching.', '4.1');
-		
-		return null;
 	}
 
 	/**

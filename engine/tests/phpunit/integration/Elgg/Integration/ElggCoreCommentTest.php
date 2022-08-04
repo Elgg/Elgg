@@ -27,6 +27,7 @@ class ElggCoreCommentTest extends IntegrationTestCase {
 		
 		$this->container_owner = $this->createUser();
 		$this->container = $this->createObject([
+			'subtype' => 'commentable',
 			'owner_guid' => $this->container_owner->guid,
 		]);
 
