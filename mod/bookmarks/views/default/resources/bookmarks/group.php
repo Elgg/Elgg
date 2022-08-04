@@ -8,7 +8,7 @@ elgg_group_tool_gatekeeper('bookmarks', $group_guid);
 
 $group = get_entity($group_guid);
 
-elgg_register_title_button('bookmarks', 'add', 'object', 'bookmarks');
+elgg_register_title_button('add', 'object', 'bookmarks');
 
 elgg_push_collection_breadcrumbs('object', 'bookmarks', $group);
 

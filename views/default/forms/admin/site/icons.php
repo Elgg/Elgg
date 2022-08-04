@@ -4,7 +4,6 @@ $site_icon = elgg_view('output/longtext', ['value' => elgg_echo('admin:site_icon
 
 $site_icon .= elgg_view('entity/edit/icon', [
 	'entity' => elgg_get_site_entity(),
-	'cropper_enabled' => true,
 ]);
 
 echo elgg_view_module('info', elgg_echo('admin:site_icons:site_icon'), $site_icon);

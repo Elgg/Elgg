@@ -14,7 +14,7 @@ if (!$user) {
 
 elgg_push_collection_breadcrumbs('object', 'file', $user);
 
-elgg_register_title_button('file', 'add', 'object', 'file');
+elgg_register_title_button('add', 'object', 'file');
 
 $title = elgg_echo('collection:object:file:owner', [$user->getDisplayName()]);
 

@@ -9,7 +9,7 @@
  * @uses $vars['cropper_enabled'] enable cropper features (default: false), when cropper is enabled thumbnail is disabled by default
  */
 
-if (elgg_extract('show_thumb', $vars, !elgg_extract('cropper_enabled', $vars, false)) === false) {
+if (elgg_extract('show_thumb', $vars, !elgg_extract('cropper_enabled', $vars, true)) === false) {
 	return;
 }
 

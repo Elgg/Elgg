@@ -14,7 +14,7 @@ if (!$owner instanceof ElggUser) {
 
 elgg_push_collection_breadcrumbs('object', 'page', $owner, true);
 
-elgg_register_title_button('pages', 'add', 'object', 'page');
+elgg_register_title_button('add', 'object', 'page');
 
 $title = elgg_echo('collection:object:page:friends');
 

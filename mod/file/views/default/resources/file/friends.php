@@ -14,7 +14,7 @@ if (!$owner) {
 
 elgg_push_collection_breadcrumbs('object', 'file', $owner, true);
 
-elgg_register_title_button('file', 'add', 'object', 'file');
+elgg_register_title_button('add', 'object', 'file');
 
 $params = $vars;
 $params['entity'] = $owner;
