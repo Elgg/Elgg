@@ -13,7 +13,7 @@ if (!$user) {
 
 elgg_push_collection_breadcrumbs('object', 'blog', $user, true);
 
-elgg_register_title_button('blog', 'add', 'object', 'blog');
+elgg_register_title_button('add', 'object', 'blog');
 
 $title = elgg_echo('collection:object:blog:friends');
 if ($lower) {

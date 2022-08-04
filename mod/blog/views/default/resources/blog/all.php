@@ -3,7 +3,7 @@
 $lower = elgg_extract('lower', $vars);
 $upper = elgg_extract('upper', $vars);
 
-elgg_register_title_button('blog', 'add', 'object', 'blog');
+elgg_register_title_button('add', 'object', 'blog');
 
 elgg_push_collection_breadcrumbs('object', 'blog');
 

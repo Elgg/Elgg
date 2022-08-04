@@ -14,7 +14,7 @@ if (!$user) {
 
 elgg_push_collection_breadcrumbs('object', 'bookmarks', $user);
 
-elgg_register_title_button('bookmarks', 'add', 'object', 'bookmarks');
+elgg_register_title_button('add', 'object', 'bookmarks');
 
 $vars['entity'] = $user;
 

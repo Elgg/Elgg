@@ -13,7 +13,7 @@ $group = get_entity($guid);
 
 elgg_push_collection_breadcrumbs('object', 'page', $group);
 
-elgg_register_title_button('pages', 'add', 'object', 'page');
+elgg_register_title_button('add', 'object', 'page');
 
 
 echo elgg_view_page(elgg_echo('collection:object:page'), [

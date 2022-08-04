@@ -41,3 +41,12 @@ Removed functions
 * ``elgg.register_instant_hook``
 * ``elgg.set_triggered_hook``
 * ``elgg.trigger_hook`` use the ``trigger`` function provide by the ``elgg\hooks`` module
+
+   
+Change in function parameters
+-----------------------------
+
+Lib functions
+~~~~~~~~~~~~~
+
+* ``elgg_register_title_button()`` has the first argument (``$handler``) removed

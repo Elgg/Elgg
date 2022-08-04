@@ -155,14 +155,13 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
  *
  * This is used primarily to support adding an add content button
  *
- * @param string $handler        (deprecated) The handler to use or null to autodetect from context
  * @param string $name           Name of the button (defaults to 'add')
  * @param string $entity_type    Optional entity type to be added (used to verify canWriteToContainer permission)
  * @param string $entity_subtype Optional entity subtype to be added (used to verify canWriteToContainer permission)
  * @return void
  * @since 1.8.0
  */
-function elgg_register_title_button($handler = null, $name = 'add', $entity_type = '', $entity_subtype = '') {
+function elgg_register_title_button($name = 'add', $entity_type = '', $entity_subtype = '') {
 
 	$owner = elgg_get_page_owner_entity();
 	if (!$owner) {

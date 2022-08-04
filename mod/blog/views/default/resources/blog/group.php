@@ -10,7 +10,7 @@ elgg_group_tool_gatekeeper('blog', $group_guid);
 
 $group = get_entity($group_guid);
 
-elgg_register_title_button('blog', 'add', 'object', 'blog');
+elgg_register_title_button('add', 'object', 'blog');
 
 elgg_push_collection_breadcrumbs('object', 'blog', $group);
 
