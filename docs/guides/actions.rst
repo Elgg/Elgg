@@ -403,6 +403,7 @@ The view supports some variables to control the output
 * ``name`` - name of the input/file (default: icon)
 * ``remove_name`` - name of the remove icon toggle (default: $vars['name'] . '_remove')
 * ``required`` - is icon upload required (default: false)
+* ``cropper_enabled`` - is icon cropping allowed (default: true)
 * ``show_remove`` - show the remove icon option (default: true)
 * ``show_thumb`` - show the thumb of the entity if available (default: true)
 * ``thumb_size`` - the icon size to use as the thumb (default: medium)

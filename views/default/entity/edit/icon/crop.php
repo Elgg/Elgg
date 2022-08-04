@@ -5,7 +5,7 @@
  * @uses $vars['entity']                    the entity being edited
  * @uses $vars['entity_type']               the type of the entity
  * @uses $vars['entity_subtype']            the subtype of the entity
- * @uses $vars['cropper_enabled']           enable cropper features (default: false)
+ * @uses $vars['cropper_enabled']           enable cropper features (default: true)
  * @uses $vars['cropper_config']            configuration for CropperJS
  * @uses $vars['cropper_aspect_ratio_size'] the icon size to use to detect cropping aspact ratio (default: master) pass 'false' to disable
  * @uses $vars['cropper_show_messages']     show messages (default: true for icon_type = 'icon', false otherwise)
@@ -13,7 +13,7 @@
  * @uses $vars['cropper_min_height']        the minimal height of the cropped image
  */
 
-if (elgg_extract('cropper_enabled', $vars, false) === false) {
+if (elgg_extract('cropper_enabled', $vars, true) === false) {
 	return;
 }
 

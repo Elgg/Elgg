@@ -12,7 +12,7 @@
  * @uses $vars['show_remove']     show the remove icon option (default: true)
  * @uses $vars['show_thumb']      show the thumb of the entity if available (default: true)
  * @uses $vars['thumb_size']      the icon size to use as the thumb (default: medium)
- * @uses $vars['cropper_enabled'] enable cropper features (default: false), see the view 'entity/edit/icon/crop' for more details
+ * @uses $vars['cropper_enabled'] enable cropper features (default: true), see the view 'entity/edit/icon/crop' for more details
  */
 
 $entity = elgg_extract('entity', $vars);
