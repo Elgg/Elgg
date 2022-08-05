@@ -21,6 +21,7 @@ return array(
 	'blog:archives' => 'Archives',
 
 	'groups:tool:blog' => 'Activer le blog du groupe',
+	'groups:tool:blog:description' => 'Autoriser les membres du groupe à écrire des articles de blog dans ce groupe.',
 
 	// Editing
 	'blog:excerpt' => 'Extrait',

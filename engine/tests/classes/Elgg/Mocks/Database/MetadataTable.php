@@ -35,11 +35,6 @@ class MetadataTable extends DbMetadataTabe {
 	 */
 	protected static $iterator = 100;
 
-	public function __construct(MetadataCache $metadata_cache, Database $db, Events $events, EntityTable $entityTable) {
-		$this->setCurrentTime();
-		parent::__construct($metadata_cache, $db, $events, $entityTable);
-	}
-
 	/**
 	 * {@inheritdoc}
 	 */
@@ -80,6 +75,9 @@ class MetadataTable extends DbMetadataTabe {
 		self::$iterator++;
 		$id = self::$iterator;
 
+		// lock the time to prevent testing issues
+		$this->setCurrentTime();
+
 		$row = (object) [
 			'type' => 'metadata',
 			'id' => $id,
@@ -94,7 +92,12 @@ class MetadataTable extends DbMetadataTabe {
 
 		$this->addQuerySpecs($row);
 
-		return parent::create($metadata, $allow_multiple);
+		$result = parent::create($metadata, $allow_multiple);
+		
+		// reset the time
+		$this->resetCurrentTime();
+		
+		return $result;
 	}
 
 	/**

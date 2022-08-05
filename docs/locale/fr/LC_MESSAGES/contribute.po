@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-17 09:48+0200\n"
+"POT-Creation-Date: 2022-07-20 10:58+0200\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2022\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -1667,11 +1667,19 @@ msgstr "Client Transifex installé (``easy_install transifex-client``)"
 msgid "Transifex account with access to Elgg project"
 msgstr "Compte Transifex avec accès au projet Elgg"
 
-#: ../../contribute/core/releases.rst:27
+#: ../../contribute/core/releases.rst:25
+msgid "Admin access to `Read The Docs`_"
+msgstr "Accès administrateur à `Read The Docs`_"
+
+#: ../../contribute/core/releases.rst:26
+msgid "Admin access to `Scrutinizer`_"
+msgstr "Accès administrateur à `Scrutinizer`_"
+
+#: ../../contribute/core/releases.rst:29
 msgid "Merge commits up from lower branches"
 msgstr "Fusionnez les commits à partir des branches les plus basses"
 
-#: ../../contribute/core/releases.rst:29
+#: ../../contribute/core/releases.rst:31
 msgid ""
 "Determine the LTS branch. We need to merge any new commits there up through "
 "the other branches."
@@ -1679,11 +1687,11 @@ msgstr ""
 "Déterminez la branche LTS. Nous devons fusionner tous les nouveaux commits "
 "jusqu'ici en passant par les autres branches."
 
-#: ../../contribute/core/releases.rst:32
+#: ../../contribute/core/releases.rst:34
 msgid "For each branch"
 msgstr "Pour chaque branche"
 
-#: ../../contribute/core/releases.rst:34
+#: ../../contribute/core/releases.rst:36
 msgid ""
 "Check out the branch, make sure it's up to date, and make a new work branch "
 "with the merge. E.g. here we're merging 1.12 commits into 2.0:"
@@ -1692,7 +1700,7 @@ msgstr ""
 "branche de travail avec la fusion. Par ex. ici nous fusionnons les commits "
 "de la 1.12 dans la 2.0 :"
 
-#: ../../contribute/core/releases.rst:44
+#: ../../contribute/core/releases.rst:46
 msgid ""
 "If already up-to-date (no commits to merge), we can stop here for this "
 "branch."
@@ -1700,12 +1708,12 @@ msgstr ""
 "Si elle est déjà à jour (aucun commit à fusionner), nous pouvons nous "
 "arrêter ici pour cette branche."
 
-#: ../../contribute/core/releases.rst:46
+#: ../../contribute/core/releases.rst:48
 msgid ""
 "If there are conflicts, resolve them, ``git add .``, and ``git merge``."
 msgstr "S'il y a des conflits, résolvez-les, ``git add .``, et ``git merge``."
 
-#: ../../contribute/core/releases.rst:48
+#: ../../contribute/core/releases.rst:50
 msgid ""
 "Make a PR for the branch and wait for automated tests and approval by other "
 "dev(s)."
@@ -1713,18 +1721,18 @@ msgstr ""
 "Faites un PR pour la branche et attendez le résultat des tests automatiques "
 "et l'approbation par un autre développeur (ou plusieurs)."
 
-#: ../../contribute/core/releases.rst:54
+#: ../../contribute/core/releases.rst:56
 msgid ""
 "Once merged, we would repeat the process to merge 2.0 commits into 2.1."
 msgstr ""
 "Une fois la fusion effectuée, nous répéterions le processus pour fusionner "
 "les commits de la 2.0 dans la 2.1."
 
-#: ../../contribute/core/releases.rst:57
+#: ../../contribute/core/releases.rst:59
 msgid "Preparation for first new stable minor/major release"
 msgstr "Préparation pour la première nouvelle version stable mineure/majeure"
 
-#: ../../contribute/core/releases.rst:59
+#: ../../contribute/core/releases.rst:61
 msgid ""
 "Update the :doc:`/appendix/support` to include the new minor/major release "
 "date and fill in the blanks for the previous release."
@@ -1733,7 +1741,7 @@ msgstr ""
 "date de version mineure/majeure et complétez les vides de la version "
 "précédente."
 
-#: ../../contribute/core/releases.rst:60
+#: ../../contribute/core/releases.rst:62
 msgid ""
 "Update the README.md file badges to point to the correct new release "
 "numbers."
@@ -1741,11 +1749,11 @@ msgstr ""
 "Mettez à jour les badges du fichier README.md pour indiquer les nouveaux "
 "numéros de version corrects."
 
-#: ../../contribute/core/releases.rst:63
+#: ../../contribute/core/releases.rst:65
 msgid "Preparation for a new major release"
 msgstr "Préparation pour une nouvelle version majeure"
 
-#: ../../contribute/core/releases.rst:65
+#: ../../contribute/core/releases.rst:67
 msgid ""
 "Change the Transifex configuration to push translations to a different "
 "project"
@@ -1753,34 +1761,34 @@ msgstr ""
 "Modifiez la configuration Transifex pour pousser les traductions vers un "
 "autre projet"
 
-#: ../../contribute/core/releases.rst:68
+#: ../../contribute/core/releases.rst:70
 msgid "Prepare the release"
 msgstr "Préparez la publication"
 
-#: ../../contribute/core/releases.rst:71
+#: ../../contribute/core/releases.rst:73
 msgid "Make a PR with translation updates"
 msgstr "Faites un PR avec les mises à jour des traductions"
 
-#: ../../contribute/core/releases.rst:73
-#: ../../contribute/core/releases.rst:107
+#: ../../contribute/core/releases.rst:75
+#: ../../contribute/core/releases.rst:113
 msgid "Install the prerequisites:"
 msgstr "Installez les pré-requis :"
 
-#: ../../contribute/core/releases.rst:79
-#: ../../contribute/core/releases.rst:115
+#: ../../contribute/core/releases.rst:85
+#: ../../contribute/core/releases.rst:121
 msgid ""
 "On Windows you need to run these command in a console with admin privileges"
 msgstr ""
 "Sur Windows, vous devrez exécuter ces commandes dans une console avec des "
 "privilèges admin"
 
-#: ../../contribute/core/releases.rst:81
+#: ../../contribute/core/releases.rst:87
 msgid "Run the ``languages.php`` script. For example, to pull translations:"
 msgstr ""
 "Exécutez le script ``languages.php``. Par exemple, pour extraire les "
 "traductions :"
 
-#: ../../contribute/core/releases.rst:87
+#: ../../contribute/core/releases.rst:93
 msgid ""
 "Make a pull request with the new translations and have it merged before the "
 "next step."
@@ -1788,7 +1796,7 @@ msgstr ""
 "Faites une demande de fusion -PR- avec les nouvelles traductions et faites-"
 "la fusionner avant l’étape suivante."
 
-#: ../../contribute/core/releases.rst:89
+#: ../../contribute/core/releases.rst:95
 msgid ""
 "Next, manually browse to the ``/admin/site_settings`` page and verify it "
 "loads. If it does not, a language file from Transifex may have a PHP syntax "
@@ -1799,21 +1807,21 @@ msgstr ""
 "Transifex peut avoir une erreur de syntaxe PHP. Corrigez l’erreur et "
 "modifiez votre commit avec le nouveau fichier :"
 
-#: ../../contribute/core/releases.rst:99
+#: ../../contribute/core/releases.rst:105
 msgid "Make the release PR"
 msgstr "Faites le PR de la version"
 
-#: ../../contribute/core/releases.rst:101
+#: ../../contribute/core/releases.rst:107
 msgid "Bring your local git clone up to date."
 msgstr "Mettez à jour votre clone git local."
 
-#: ../../contribute/core/releases.rst:103
+#: ../../contribute/core/releases.rst:109
 msgid "Merge latest commits up from lowest supported branch."
 msgstr ""
 "Fusionnez les derniers commits vers le haut en commençant par la branche "
 "supportée la plus basse."
 
-#: ../../contribute/core/releases.rst:105
+#: ../../contribute/core/releases.rst:111
 msgid ""
 "Visit ``https://github.com/Elgg/Elgg/compare/<new>...<old>`` and submit the "
 "PR if there is anything that needs to be merged up."
@@ -1821,16 +1829,16 @@ msgstr ""
 "Visitez ``https://github.com/Elgg/Elgg/compare/<new>...<old>`` et soumettez "
 "le PR si quoi que ce soit a besoin d'être fusionné plus haut."
 
-#: ../../contribute/core/releases.rst:117
+#: ../../contribute/core/releases.rst:123
 msgid "Run the ``release.php`` script. For example, to release 1.12.5:"
 msgstr ""
 "Exécutez le script ``release.php``. Par exemple, pour publier 1.12.5 :"
 
-#: ../../contribute/core/releases.rst:124
+#: ../../contribute/core/releases.rst:130
 msgid "This creates a ``release-1.12.5`` branch in your local repo."
 msgstr "Ceci crée une branche ``release-1.12.5`` dans votre repo local."
 
-#: ../../contribute/core/releases.rst:126
+#: ../../contribute/core/releases.rst:132
 msgid ""
 "Next, submit a pull request via GitHub for automated testing and approval by"
 " another developer:"
@@ -1838,31 +1846,27 @@ msgstr ""
 "Ensuite, soumettez une demande de fusion -PR- via GitHub pour les tests "
 "automatisés et l’approbation par un autre développeur :"
 
-#: ../../contribute/core/releases.rst:133
+#: ../../contribute/core/releases.rst:139
 msgid "Tag the release"
 msgstr "Taguez la release"
 
-#: ../../contribute/core/releases.rst:135
-msgid "Once approved and merged, tag the release:"
-msgstr "Une fois approuvée et fusionnée, taguez la release :"
+#: ../../contribute/core/releases.rst:141
+msgid "Once approved and merged, create a release on GitHub:"
+msgstr "Une fois approuvée et fusionnée, créez une version sur GitHub :"
 
 #: ../../contribute/core/releases.rst:143
-msgid "Or create a release on GitHub"
-msgstr "Ou créez une release sur Github"
-
-#: ../../contribute/core/releases.rst:145
 msgid "Goto releases"
 msgstr "Allez sur les releases"
 
-#: ../../contribute/core/releases.rst:146
+#: ../../contribute/core/releases.rst:144
 msgid "Click 'Draft a new release'"
 msgstr "Cliquez sur 'Draft a new release'"
 
-#: ../../contribute/core/releases.rst:147
+#: ../../contribute/core/releases.rst:145
 msgid "Enter the version"
 msgstr "Saisissez la version"
 
-#: ../../contribute/core/releases.rst:148
+#: ../../contribute/core/releases.rst:146
 msgid ""
 "Select the correct branch (eg 1.12 for a 1.12.x release, 2.3 for a 2.3.x "
 "release, etc)"
@@ -1870,39 +1874,49 @@ msgstr ""
 "Sélectionnez la bonne branche (par ex. 1.12 pour une release 1.12.x, 2.3 "
 "pour une release 2.3.x, etc.)"
 
-#: ../../contribute/core/releases.rst:149
+#: ../../contribute/core/releases.rst:147
 msgid "Set the release title as 'Elgg {version}'"
 msgstr "Définissez le titre de la release comme 'Elgg {version}'"
 
-#: ../../contribute/core/releases.rst:150
+#: ../../contribute/core/releases.rst:148
 msgid "Paste the CHANGELOG.md part related to this release in the description"
 msgstr ""
 "Collez la partie de CHANGELOG.md relative à cette release dans la "
 "description"
 
 #: ../../contribute/core/releases.rst:152
+msgid ""
+"GitHub is setup to listen to the creation of a new release to automaticly "
+"make the ZIP release of Elgg. After the release was created wait a few "
+"minutes and the ZIP should be added to the release."
+msgstr ""
+"GitHub est configuré pour écouter la création d'une nouvelle version afin de"
+" créer automatiquement la version ZIP de Elgg. Une fois la version créée, "
+"attendez quelques minutes et le ZIP devrait être ajouté à la version."
+
+#: ../../contribute/core/releases.rst:155
 msgid "Some final administration"
 msgstr "Un peu d'administration pour terminer"
 
-#: ../../contribute/core/releases.rst:154
+#: ../../contribute/core/releases.rst:157
 msgid "Mark GitHub release milestones as completed"
 msgstr "Marquez les jalons de release Github comme terminés"
 
-#: ../../contribute/core/releases.rst:155
+#: ../../contribute/core/releases.rst:158
 msgid "Move unresolved tickets in released milestones to later milestones"
 msgstr ""
 "Déplacez les tickets non résolus des jalons publiés vers des jalons "
 "ultérieurs"
 
-#: ../../contribute/core/releases.rst:158
+#: ../../contribute/core/releases.rst:161
 msgid "Additional actions for the first new minor / major"
 msgstr "Actions supplémentaires pour la première nouvelle mineure / majeure"
 
-#: ../../contribute/core/releases.rst:160
+#: ../../contribute/core/releases.rst:163
 msgid "Make a new branch on GitHub (for example 3.3)"
 msgstr "Créez une nouvelle branche sur GitHub (par exemple 3.3)"
 
-#: ../../contribute/core/releases.rst:161
+#: ../../contribute/core/releases.rst:164
 msgid ""
 "Set the new branch as the default branch (optional, but suggested for stable"
 " releases)"
@@ -1910,13 +1924,17 @@ msgstr ""
 "Définissez la nouvelle branche comme branche par défaut (facultatif, mais "
 "suggéré pour les versions stables)"
 
-#: ../../contribute/core/releases.rst:162
-msgid "Configure Read The Docs to build the new branch (not the new tag)"
+#: ../../contribute/core/releases.rst:165
+msgid "Configure `Read The Docs`_ to build the new branch (not the new tag)"
 msgstr ""
-"Configurez Read The Docs pour construire la nouvelle branche (et non la "
-"nouvelle balise)"
+"Configurez `Read The Docs`_ pour créer la nouvelle branche (pas le nouveau "
+"tag)"
 
-#: ../../contribute/core/releases.rst:163
+#: ../../contribute/core/releases.rst:166
+msgid "Configure `Scrutinizer`_ to build the new branch"
+msgstr "Configurez `Scrutinizer`_ pour créer la nouvelle branche"
+
+#: ../../contribute/core/releases.rst:167
 msgid ""
 "Check the Elgg starter project for potential requirement / config changes in"
 " the ``composer.json``"
@@ -1924,7 +1942,7 @@ msgstr ""
 "Vérifiez le projet de démarrage Elgg pour les pré-requis potentiels / "
 "modifications de configuration dans le ``composer.json``"
 
-#: ../../contribute/core/releases.rst:164
+#: ../../contribute/core/releases.rst:168
 msgid ""
 "Add the new minor / major version to the ``Elgg/community_plugins`` "
 "repository so developers can upload plugins for the new release"
@@ -1933,138 +1951,93 @@ msgstr ""
 "``Elgg/community_plugins`` afin que les développeurs puissent télécharger "
 "des plugins pour la nouvelle version"
 
-#: ../../contribute/core/releases.rst:167
+#: ../../contribute/core/releases.rst:171
 msgid "Additional action for the first new major"
 msgstr "Action supplémentaire pour la première nouvelle majeure"
 
-#: ../../contribute/core/releases.rst:169
+#: ../../contribute/core/releases.rst:173
 msgid "On GitHub add a branch protection rule (for example ``4.*``)"
 msgstr ""
 "Sur GitHub ajoutez une règle de protection de branche (par exemple ``4.*``)"
 
-#: ../../contribute/core/releases.rst:170
+#: ../../contribute/core/releases.rst:174
 msgid ""
 "Configure Scrutinizer to track the new major branches (for example ``4.*``)"
 msgstr ""
 "Configurez Scrutinizer pour suivre les nouvelles branches principales (par "
 "exemple ``4.*``)"
 
-#: ../../contribute/core/releases.rst:173
+#: ../../contribute/core/releases.rst:177
 msgid "Update the website"
 msgstr "Mettez à jour le site web"
 
-#: ../../contribute/core/releases.rst:175
-msgid "ssh to elgg.org"
-msgstr "ssh vers elgg.org"
-
-#: ../../contribute/core/releases.rst:176
-msgid "Clone https://github.com/Elgg/elgg-scripts"
-msgstr "Clonez https://github.com/Elgg/elgg-scripts"
-
-#: ../../contribute/core/releases.rst:179
-msgid "Build zip package"
-msgstr "Construisez le package zip"
-
-#: ../../contribute/core/releases.rst:181
-msgid ""
-"Use ``elgg-scripts/build/elgg-starter-project.sh`` to generate the .zip "
-"file. Run without arguments to see usage."
-msgstr ""
-"Utilisez ``elgg-scripts/build/elgg-starter-project.sh`` pour générer le "
-"fichier .zip. Exécutez sans argument pour voir son utilisation."
-
-#: ../../contribute/core/releases.rst:196
-msgid ""
-"For Elgg 2.x releases use the ``2.x`` branch of the starter-project (eg. "
-"``./elgg-starter-project.sh 2.x 2.0.4 /var/www/www.elgg.org/download/``)"
-msgstr ""
-"Pour les releases Elgg 2.x utilisez la branche ``2.x`` du starter-project "
-"(par ex. ``./elgg-starter-project.sh 2.x 2.0.4 "
-"/var/www/www.elgg.org/download/``)"
-
-#: ../../contribute/core/releases.rst:198
-msgid ""
-"Verify that ``vendor/elgg/elgg/composer.json`` in the zip file has the "
-"expected version."
-msgstr ""
-"Vérifiez que ``vendor/elgg/elgg/composer.json`` dans le fichier zip a bien "
-"la version attendue."
-
-#: ../../contribute/core/releases.rst:199
-msgid ""
-"If not, make sure GitHub has the release tag, and that the starter project "
-"has a compatible ``elgg/elgg`` item in the composer requires list."
-msgstr ""
-"Si ce n'est pas le cas, assurez-vous que GitHub a bien le tag de release, et"
-" que le projet de démarrage a un élément compatible ``elgg/elgg`` dans la "
-"liste \"requires\" de composer."
-
-#: ../../contribute/core/releases.rst:203
+#: ../../contribute/core/releases.rst:180
 msgid "Update elgg.org download page"
 msgstr "Mettez à jour la page de téléchargement de elgg.org"
 
-#: ../../contribute/core/releases.rst:205
+#: ../../contribute/core/releases.rst:182
 msgid "Clone https://github.com/Elgg/community"
 msgstr "Clonez https://github.com/Elgg/community"
 
-#: ../../contribute/core/releases.rst:206
+#: ../../contribute/core/releases.rst:183
 msgid "Add the new version to ``classes/Elgg/Releases.php``"
 msgstr "Ajoutez la nouvelle version dans ``classes/Elgg/Releases.php``"
 
-#: ../../contribute/core/releases.rst:207
-#: ../../contribute/core/releases.rst:225
+#: ../../contribute/core/releases.rst:184
+#: ../../contribute/core/releases.rst:204
 msgid "Commit and push the changes"
 msgstr "Commitez et poussez les modifications"
 
-#: ../../contribute/core/releases.rst:208
-msgid "Update the plugin on www.elgg.org"
-msgstr "Mettez à jour le plugin sur www.elgg.org"
+#: ../../contribute/core/releases.rst:185
+msgid "Download the ZIP release from GitHub"
+msgstr "Téléchargez la version ZIP depuis GitHub"
 
-#: ../../contribute/core/releases.rst:215
+#: ../../contribute/core/releases.rst:186
+msgid "Upload the ZIP to the elgg.org webserver"
+msgstr "Chargez le ZIP sur le serveur web elgg.org"
+
+#: ../../contribute/core/releases.rst:194
 msgid "Update elgg.org"
 msgstr "Mettez à jour elgg.org"
 
-#: ../../contribute/core/releases.rst:217
+#: ../../contribute/core/releases.rst:196
 msgid "Clone https://github.com/Elgg/www.elgg.org"
 msgstr "Clonez https://github.com/Elgg/www.elgg.org"
 
-#: ../../contribute/core/releases.rst:218
-msgid "Change the required Elgg version in ``composer.json``"
-msgstr "Modifiez la version de Elgg requise dans ``composer.json``"
+#: ../../contribute/core/releases.rst:197
+msgid "(optional) Change the required Elgg version in ``composer.json``"
+msgstr ""
+"(facultatif) Modifiez la version de Elgg requise dans ``composer.json``"
 
-#: ../../contribute/core/releases.rst:219
+#: ../../contribute/core/releases.rst:198
 msgid "Update vendors"
 msgstr "Mettez à jours les vendors"
 
-#: ../../contribute/core/releases.rst:226
+#: ../../contribute/core/releases.rst:205
 msgid "Pull to live site"
 msgstr "Faites un pull vers le site en activité"
 
-#: ../../contribute/core/releases.rst:232
-msgid "Update dependencies"
-msgstr "Mettez à jour les dépendances"
-
-#: ../../contribute/core/releases.rst:240
+#: ../../contribute/core/releases.rst:214
 msgid "Go to community admin panel"
 msgstr "Allez sur la panneau admin de la communauté"
 
-#: ../../contribute/core/releases.rst:239
+#: ../../contribute/core/releases.rst:215
 msgid "Flush APC cache"
 msgstr "Videz le cache APC"
 
-#: ../../contribute/core/releases.rst:240
+#: ../../contribute/core/releases.rst:216
 msgid "Run upgrade"
 msgstr "Exécutez la mise à niveau"
 
-#: ../../contribute/core/releases.rst:243
+#: ../../contribute/core/releases.rst:219
 msgid "Make the announcement"
 msgstr "Faites l'annonce"
 
-#: ../../contribute/core/releases.rst:245
+#: ../../contribute/core/releases.rst:221
 msgid "This should be the very last thing you do."
 msgstr "Ceci devrait être la toute dernière chose à faire."
 
-#: ../../contribute/core/releases.rst:247
+#: ../../contribute/core/releases.rst:223
 msgid ""
 "Open ``https://github.com/Elgg/Elgg/blob/<tag>/CHANGELOG.md`` and copy the "
 "contents for that version"
@@ -2072,13 +2045,13 @@ msgstr ""
 "Ouvrez ``https://github.com/Elgg/Elgg/blob/<tag>/CHANGELOG.md`` et copiez le"
 " contenu pour cette version"
 
-#: ../../contribute/core/releases.rst:248
+#: ../../contribute/core/releases.rst:224
 msgid "Sign in at https://elgg.org/blog and compose a new blog with a summary"
 msgstr ""
 "Connectez-vous sur https://elgg.org/blog et rédigez un nouvel article de "
 "blog avec un sommaire"
 
-#: ../../contribute/core/releases.rst:249
+#: ../../contribute/core/releases.rst:225
 msgid ""
 "Copy in the CHANGELOG contents, clear formatting, and manually remove the "
 "SVG anchors"
@@ -2086,7 +2059,7 @@ msgstr ""
 "Copiez le contenu dans le CHANGELOG, supprimez le formattage, et supprimez "
 "manuellement les balises SVG"
 
-#: ../../contribute/core/releases.rst:250
+#: ../../contribute/core/releases.rst:226
 msgid ""
 "Add tags ``release`` and ``elgg2.x`` where x is whatever branch is being "
 "released"
@@ -2094,7 +2067,7 @@ msgstr ""
 "Ajoutez les tags ``release`` et ``elgg2.x`` où x est le nom de la branche en"
 " train d'être publiée"
 
-#: ../../contribute/core/releases.rst:251
+#: ../../contribute/core/releases.rst:227
 msgid "Tweet from the elgg `Twitter account`_"
 msgstr "Tweetez depuis le `compte Twitter account`_ de Elgg"
 
