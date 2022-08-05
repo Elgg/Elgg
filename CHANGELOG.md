@@ -1,3 +1,24 @@
+<a name="4.3.0"></a>
+## 4.3.0  (2022-08-05)
+
+#### Contributors
+
+* Jeroen Dalsem (7)
+* Jerôme Bakker (7)
+* Nikolai Shcherbin (1)
+
+#### Features
+
+* **relationships:** added \ElggEntity->getRelationship() ([31a03961](https://github.com/Elgg/Elgg/commit/31a03961d796147023a5e2f015dc2aaa59b46400))
+
+
+#### Bug Fixes
+
+* **cache:** separated cache namespaces should not interfere ([0a2e40ca](https://github.com/Elgg/Elgg/commit/0a2e40caefae8d9617e380437cff7c21afd5dc63))
+* **developers:** gear settings popup works again ([8ba956dc](https://github.com/Elgg/Elgg/commit/8ba956dc9750c08cf3e2fb4c33c4879dfca136e7))
+* **navigation:** correctly merge multiple link classes for menu items ([3f94a30b](https://github.com/Elgg/Elgg/commit/3f94a30bfbf05fe3392ed384eb6010655045cd41))
+
+
 <a name="4.3.0-rc.1"></a>
 ### 4.3.0-rc.1  (2022-07-21)
 
