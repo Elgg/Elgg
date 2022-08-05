@@ -1,10 +1,12 @@
 <?php
 
-$view = $vars['view'];
-
+$view = elgg_extract('view', $vars);
 $text = elgg_extract('text', $vars, $view);
-
-$id = "z" . md5($view);
+$id = elgg_extract('view_id', $vars);
+if (empty($id)) {
+	// this is for BC reasons
+	$id = 'z' . md5($view);
+}
 
 $href = "admin/develop_tools/inspect?inspect_type=Views#{$id}";
 

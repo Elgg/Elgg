@@ -56,7 +56,12 @@ class DelayedEmailQueueTable extends DbDelayedEmailQueueTable{
 		];
 		$this->addQuerySpecs($row);
 		
-		return parent::queueEmail($recipient_guid, $delivery_interval, $item);
+		$result = parent::queueEmail($recipient_guid, $delivery_interval, $item);
+		
+		// unlock the time
+		$this->resetCurrentTime();
+		
+		return $result;
 	}
 	
 	/**

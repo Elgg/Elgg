@@ -45,6 +45,7 @@ Afficher et commenter le signet :
 	'river:object:bookmarks:comment' => '%s a commenté le signet  %s',
 
 	'groups:tool:bookmarks' => 'Activer les signets du groupe',
+	'groups:tool:bookmarks:description' => 'Autoriser les membres du groupe à partager des signets dans ce groupe.',
 	
 	/**
 	 * Widget and bookmarklet

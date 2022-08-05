@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-17 09:48+0200\n"
+"POT-Creation-Date: 2022-07-20 10:58+0200\n"
 "PO-Revision-Date: 2021-06-09 13:32+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2022\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -1332,7 +1332,7 @@ msgstr ""
 "l'artiste **$artist**\" (l'utilisateur est le sujet, l'artiste est la "
 "cible):"
 
-#: ../../design/database.rst:546
+#: ../../design/database.rst:542
 msgid ""
 "This triggers the event [create, relationship], passing in the created "
 "``ElggRelationship`` object. If a handler returns ``false``, the "
@@ -1342,29 +1342,21 @@ msgstr ""
 "``ElggRelationship`` créé. Si un gestionnaire retourne ``false``, la "
 "relation ne sera pas créée et ``$success`` vaudra ``false``."
 
-#: ../../design/database.rst:552
+#: ../../design/database.rst:548
 msgid "Verifying a relationship"
 msgstr "Vérifier une relation"
 
-#: ../../design/database.rst:554
+#: ../../design/database.rst:550
 msgid "E.g. to verify that \"**$user** is a **fan** of **$artist**\":"
 msgstr ""
 "Par exemple pour vérifier que l'utilisateur \"**$user** est un **fan** de "
 "l'artiste **$artist**\":"
 
-#: ../../design/database.rst:562
-msgid ""
-"Note that, if the relationship exists, ``check_entity_relationship()`` "
-"returns an ``ElggRelationship`` object:"
-msgstr ""
-"Notez que si la relation existe, ``check_entity_relationship()`` retourne un"
-" objet ``ElggRelationship`` :"
-
-#: ../../design/database.rst:573
+#: ../../design/database.rst:559
 msgid "Deleting a relationship"
 msgstr "Supprimer une relation"
 
-#: ../../design/database.rst:575
+#: ../../design/database.rst:561
 msgid ""
 "E.g. to be able to assert that \"**$user** is no longer a **fan** of "
 "**$artist**\":"
@@ -1372,7 +1364,7 @@ msgstr ""
 "Par exemple pour pouvoir affirmer que l'utilisateur \"**$user** n'est "
 "désormais plus un **fan** de l'artiste **$artist**\":"
 
-#: ../../design/database.rst:581
+#: ../../design/database.rst:567
 msgid ""
 "This triggers the event [delete, relationship], passing in the associated "
 "``ElggRelationship`` object. If a handler returns ``false``, the "
@@ -1382,25 +1374,27 @@ msgstr ""
 "``ElggRelationship`` associé. Si un gestionnaire retourne ``false``, la "
 "relation sera conservée, et ``$was_removed`` vaudra ``false``."
 
-#: ../../design/database.rst:586
+#: ../../design/database.rst:572
 msgid "Other useful functions:"
 msgstr "Autres fonctions utiles :"
 
-#: ../../design/database.rst:588
-msgid "``delete_relationship()`` : delete by ID"
-msgstr "``delete_relationship()`` : supprimer par ID"
+#: ../../design/database.rst:574
+msgid "``\\ElggRelationship->delete()``: delete by object"
+msgstr "``\\ElggRelationship->delete()``: supprime par objet"
 
-#: ../../design/database.rst:589
-msgid "``remove_entity_relationships()`` : delete those relating to an entity"
+#: ../../design/database.rst:575
+msgid ""
+"``\\ElggEntity->removeAllRelationships()``: delete those relating to an "
+"entity"
 msgstr ""
-"``remove_entity_relationships()`` : supprime celles qui sont liées à une "
-"entité"
+"``\\ElggEntity->removeAllRelationships()``: supprime toutes les relations "
+"associées à une entité"
 
-#: ../../design/database.rst:592
+#: ../../design/database.rst:578
 msgid "Finding relationships and related entities"
 msgstr "Trouver des relations et des entités associées"
 
-#: ../../design/database.rst:594
+#: ../../design/database.rst:580
 msgid ""
 "Below are a few functions to fetch relationship objects and/or related "
 "entities. A few are listed below:"
@@ -1408,19 +1402,16 @@ msgstr ""
 "Vous trouverez ci-dessous quelques fonctions permettant de récupérer des "
 "objets relationnels et/ou des entités associées :"
 
-#: ../../design/database.rst:596
-msgid ""
-"``get_entity_relationships()`` : fetch relationships by subject or target "
-"entity"
+#: ../../design/database.rst:582
+msgid "``elgg_get_relationship()`` : get a relationship object by ID"
 msgstr ""
-"``get_entity_relationships()`` : récupère les relations par entité sujet ou "
-"entité cible"
+"``elgg_get_relationship()`` : récupère un objet relationship par son ID"
 
-#: ../../design/database.rst:597
-msgid "``get_relationship()`` : get a relationship object by ID"
-msgstr "``get_relationship()`` : récupère un objet relation par ID"
+#: ../../design/database.rst:583
+msgid "``elgg_get_relationships()`` : fetch relationships"
+msgstr "``elgg_get_relationships()`` : récupère des relations"
 
-#: ../../design/database.rst:598
+#: ../../design/database.rst:584
 msgid ""
 "``elgg_get_entities()`` : fetch entities in relationships in a variety of "
 "ways"
@@ -1428,17 +1419,17 @@ msgstr ""
 "``elgg_get_entities()`` : récupère les entités dans les relations de "
 "différentes manières"
 
-#: ../../design/database.rst:600
+#: ../../design/database.rst:586
 msgid "E.g. retrieving users who joined your group in January 2014."
 msgstr ""
 "Par ex. retrouver les utilisateurs qui ont rejoint votre groupe en janvier "
 "2014."
 
-#: ../../design/database.rst:616
+#: ../../design/database.rst:602
 msgid "Access Control"
 msgstr "Contrôle d'accès"
 
-#: ../../design/database.rst:618
+#: ../../design/database.rst:604
 msgid ""
 "Granular access controls are one of the fundamental design principles in "
 "Elgg, and a feature that has been at the centre of the system throughout its"
@@ -1451,11 +1442,11 @@ msgstr ""
 "devrait avoir un contrôle total sur qui peut voir un élément de donnée qu'il"
 " ou elle a créé."
 
-#: ../../design/database.rst:624
+#: ../../design/database.rst:610
 msgid "Access controls in the data model"
 msgstr "Niveau d'accès dans le modèle de données"
 
-#: ../../design/database.rst:626
+#: ../../design/database.rst:612
 msgid ""
 "In order to achieve this, every entity and annotation contains an "
 "``access_id`` property, which in turn corresponds to one of the pre-defined "
@@ -1465,27 +1456,27 @@ msgstr ""
 "``access_id``, qui correspond à l'un des niveau d'accès prédéfinis ou à une "
 "entrée dans la table ``access_collections`` de la base de données."
 
-#: ../../design/database.rst:632
+#: ../../design/database.rst:618
 msgid "Pre-defined access controls"
 msgstr "Niveaux d'accès prédéfinis"
 
-#: ../../design/database.rst:634
+#: ../../design/database.rst:620
 msgid "``ACCESS_PRIVATE`` (value: 0) Private."
 msgstr "``ACCESS_PRIVATE`` (valeur : 0) Privé."
 
-#: ../../design/database.rst:635
+#: ../../design/database.rst:621
 msgid "``ACCESS_LOGGED_IN`` (value: 1) Logged in users."
 msgstr "``ACCESS_LOGGED_IN`` (valeur : 1) Utilisateurs connectés."
 
-#: ../../design/database.rst:636
+#: ../../design/database.rst:622
 msgid "``ACCESS_PUBLIC`` (value: 2) Public data."
 msgstr "``ACCESS_PUBLIC`` (valeur : 2) Données publiques."
 
-#: ../../design/database.rst:639
+#: ../../design/database.rst:625
 msgid "User defined access controls"
 msgstr "Niveaux d'accès définis par l'utilisateur"
 
-#: ../../design/database.rst:641
+#: ../../design/database.rst:627
 msgid ""
 "You may define additional access groups and assign them to an entity, or "
 "annotation. A number of functions have been defined to assist you; see the "
@@ -1495,11 +1486,11 @@ msgstr ""
 "entité, ou une annotation. Un certain nombre de fonctions ont été définies "
 "pour vous y aider ; voyez :doc:`/guides/access` pour plus d'informations."
 
-#: ../../design/database.rst:646
+#: ../../design/database.rst:632
 msgid "How access affects data retrieval"
 msgstr "Comment les accès affectent la récupération de données"
 
-#: ../../design/database.rst:648
+#: ../../design/database.rst:634
 msgid ""
 "All data retrieval functions above the database layer - for example "
 "``elgg_get_entities`` will only return items that the current user has "
@@ -1514,19 +1505,19 @@ msgstr ""
 "accès. Ceci rend très difficile de créer un trou de sécurité pour récupérer "
 "des données."
 
-#: ../../design/database.rst:655
+#: ../../design/database.rst:641
 msgid "Write access"
 msgstr "Accès en écriture"
 
-#: ../../design/database.rst:657
+#: ../../design/database.rst:643
 msgid "The following rules govern write access:"
 msgstr "Les règles suivantes gouvernent les accès en écriture :"
 
-#: ../../design/database.rst:659
+#: ../../design/database.rst:645
 msgid "The owner of an entity can always edit it"
 msgstr "Le propriétaire d'une entité peut toujours la modifier"
 
-#: ../../design/database.rst:660
+#: ../../design/database.rst:646
 msgid ""
 "The owner of a container can edit anything therein (note that this does not "
 "mean that the owner of a group can edit anything therein)"
@@ -1535,11 +1526,11 @@ msgstr ""
 "que cela ne signifie pas que le propriétaire d'un groupe peut modifier "
 "toutes les publications dans ce groupe)"
 
-#: ../../design/database.rst:662
+#: ../../design/database.rst:648
 msgid "Admins can edit anything"
 msgstr "Les administrateurs peuvent tout éditer"
 
-#: ../../design/database.rst:664
+#: ../../design/database.rst:650
 msgid ""
 "You can override this behaviour using a :ref:`plugin hook "
 "<design/events#plugin-hooks>` called ``permissions_check``, which passes the"
@@ -1556,11 +1547,11 @@ msgstr ""
 "les permissions\\_check <guides/hooks-list#permission-hooks>` pour plus "
 "d'information."
 
-#: ../../design/database.rst:671
+#: ../../design/database.rst:657
 msgid "Schema"
 msgstr "Schéma"
 
-#: ../../design/database.rst:673
+#: ../../design/database.rst:659
 msgid ""
 "The database contains a number of primary and secondary tables. You can "
 "follow schema changes in ``engine/schema/migrations/``"
@@ -1569,7 +1560,7 @@ msgstr ""
 "secondaires. Vous pouvez suivre les évolutions du schéma dans "
 "``engine/schema/migrations/``"
 
-#: ../../design/database.rst:675
+#: ../../design/database.rst:661
 msgid ""
 "The character set of the database should be ``utf8mb4``, this will provide "
 "full unicode character support when storing data."
@@ -1578,11 +1569,11 @@ msgstr ""
 " fournira une prise en charge complète des caractères unicode lors du "
 "stockage des données."
 
-#: ../../design/database.rst:678
+#: ../../design/database.rst:664
 msgid "InnoDB"
 msgstr "InnoDB"
 
-#: ../../design/database.rst:680
+#: ../../design/database.rst:666
 msgid ""
 "As of Elgg 3.0 the database uses the InnoDB engine. In order for a correct "
 "installation or migration some settings may need to be adjusted in the "
@@ -1592,23 +1583,23 @@ msgstr ""
 "installation ou une migration correcte, certains paramètres peuvent devoir "
 "être ajustés dans les paramètres de la base de données."
 
-#: ../../design/database.rst:683
+#: ../../design/database.rst:669
 msgid "``innodb_large_prefix`` should be ``on``"
 msgstr "``innodb_large_prefix`` devrait être ``on``"
 
-#: ../../design/database.rst:684
+#: ../../design/database.rst:670
 msgid "``innodb_file_format`` should be ``Barracuda``"
 msgstr "``innodb_file_format`` devrait être ``Barracuda``"
 
-#: ../../design/database.rst:685
+#: ../../design/database.rst:671
 msgid "``innodb_file_per_table`` should be ``1``"
 msgstr "``innodb_file_per_table`` devrait être ``1``"
 
-#: ../../design/database.rst:688
+#: ../../design/database.rst:674
 msgid "Main tables"
 msgstr "Tables principales"
 
-#: ../../design/database.rst:690
+#: ../../design/database.rst:676
 msgid ""
 "This is a description of the main tables. Keep in mind that in a given Elgg "
 "installation, the tables will have a prefix (typically \"elgg\\_\")."
@@ -1617,11 +1608,11 @@ msgstr ""
 "installation de Elgg donnée, les tables vont avoir un préfixe (typiquement "
 "\"elgg\\_\")."
 
-#: ../../design/database.rst:694
+#: ../../design/database.rst:680
 msgid "Table: entities"
 msgstr "Table : entities - entités"
 
-#: ../../design/database.rst:696
+#: ../../design/database.rst:682
 msgid ""
 "This is the main `Entities`_ table containing Elgg users, sites, objects and"
 " groups. When you first install Elgg this is automatically populated with "
@@ -1631,11 +1622,11 @@ msgstr ""
 "sites, objets et groupes Elgg. Quand vous installez Elgg la première fois "
 "elle est automatiquement peuplée avec votre premier site."
 
-#: ../../design/database.rst:700
+#: ../../design/database.rst:686
 msgid "It contains the following fields:"
 msgstr "Elle contient les champs suivants :"
 
-#: ../../design/database.rst:702
+#: ../../design/database.rst:688
 msgid ""
 "**guid** An auto-incrementing counter producing a GUID that uniquely "
 "identifies this entity in the system"
@@ -1643,19 +1634,19 @@ msgstr ""
 "**guid** Un compteur auto-incrémenté qui produit un GUID qui identifie de "
 "manière unique cette entité dans le système"
 
-#: ../../design/database.rst:703
+#: ../../design/database.rst:689
 msgid "**type** The type of entity - object, user, group or site"
 msgstr "**type** Le type d'entity - object, user, group ou site"
 
-#: ../../design/database.rst:704
+#: ../../design/database.rst:690
 msgid "**subtype** A subtype of entity"
 msgstr "**subtype** Le sous-type d'entité"
 
-#: ../../design/database.rst:705
+#: ../../design/database.rst:691
 msgid "**owner\\_guid** The GUID of the owner's entity"
 msgstr "**owner\\_guid** Le GUID de l'entité du propriétaire"
 
-#: ../../design/database.rst:706
+#: ../../design/database.rst:692
 msgid ""
 "**container\\_guid** The GUID this entity is contained by - either a user or"
 " a group"
@@ -1663,20 +1654,20 @@ msgstr ""
 "**container\\_guid** Le GUID dans laquelle cette entité est contenue - soit "
 "un utilisateur \"user\" soit un groupe \"group\""
 
-#: ../../design/database.rst:707
+#: ../../design/database.rst:693
 msgid "**access\\_id** Access controls on this entity"
 msgstr "**access\\_id** Contrôles d'accès sur cette entité"
 
-#: ../../design/database.rst:708
+#: ../../design/database.rst:694
 msgid "**time\\_created** Unix timestamp of when the entity is created"
 msgstr "**time\\_created** Le timestamp Unix de création de l'entité"
 
-#: ../../design/database.rst:709
+#: ../../design/database.rst:695
 msgid "**time\\_updated** Unix timestamp of when the entity was updated"
 msgstr ""
 "**time\\_updated** Le timestamp Unix de la dernière modification de l'entité"
 
-#: ../../design/database.rst:710
+#: ../../design/database.rst:696
 msgid ""
 "**enabled** If this is 'yes' an entity is accessible, if 'no' the entity has"
 " been disabled (Elgg treats it as if it were deleted without actually "
@@ -1686,46 +1677,46 @@ msgstr ""
 " été désactivée (Elgg traite cela comme si elle avait été supprimée sans "
 "toutefois la supprimer réellement de la base de données)"
 
-#: ../../design/database.rst:715
+#: ../../design/database.rst:701
 msgid "Table: metadata"
 msgstr "Table : metadata"
 
-#: ../../design/database.rst:717
+#: ../../design/database.rst:703
 msgid ""
 "This table contains `Metadata`_, extra information attached to an entity."
 msgstr ""
 "Cette table contient des métadonnées `Metadata`_, des informations "
 "supplémentaires attachées à une entité."
 
-#: ../../design/database.rst:719 ../../design/database.rst:732
-#: ../../design/database.rst:759
+#: ../../design/database.rst:705 ../../design/database.rst:718
+#: ../../design/database.rst:745
 msgid "**id** A unique IDentifier"
 msgstr "**id** Un IDentifiant unique"
 
-#: ../../design/database.rst:720 ../../design/database.rst:733
+#: ../../design/database.rst:706 ../../design/database.rst:719
 msgid "**entity\\_guid** The entity this is attached to"
 msgstr "**entity\\_guid** L'entité à laquelle cette métadonnée est attachée"
 
-#: ../../design/database.rst:721 ../../design/database.rst:734
+#: ../../design/database.rst:707 ../../design/database.rst:720
 msgid "**name** The name string"
 msgstr "**name** Le nom de la chaîne"
 
-#: ../../design/database.rst:722 ../../design/database.rst:735
+#: ../../design/database.rst:708 ../../design/database.rst:721
 msgid "**value** The value string"
 msgstr "**value** La valeur de la chaîne"
 
-#: ../../design/database.rst:723 ../../design/database.rst:736
+#: ../../design/database.rst:709 ../../design/database.rst:722
 msgid "**value\\_type** The value class, either text or an integer"
 msgstr ""
 "**value\\_type** La classe de la valeur, soit texte \"text\" ou un entier "
 "\"integer\""
 
-#: ../../design/database.rst:724
+#: ../../design/database.rst:710
 msgid "**time\\_created** Unix timestamp of when the metadata is created"
 msgstr ""
 "**time\\_created** Le timestamp Unix de la date de création de la métadonnée"
 
-#: ../../design/database.rst:725 ../../design/database.rst:740
+#: ../../design/database.rst:711 ../../design/database.rst:726
 msgid ""
 "**enabled** If this is 'yes' an item is accessible, if 'no' the item has "
 "been disabled"
@@ -1733,61 +1724,61 @@ msgstr ""
 "**enabled** Si 'yes' -oui- l'élément est accessible, si 'no' -non- l'élément"
 " a été désactivé"
 
-#: ../../design/database.rst:728
+#: ../../design/database.rst:714
 msgid "Table: annotations"
 msgstr "Table : annotations"
 
-#: ../../design/database.rst:730
+#: ../../design/database.rst:716
 msgid "This table contains `Annotations`_, this is distinct from `Metadata`_."
 msgstr ""
 "Cette table contient les `Annotations`_, ce qui est distinct des "
 "`Metadata`_."
 
-#: ../../design/database.rst:737
+#: ../../design/database.rst:723
 msgid "**owner\\_guid** The owner GUID of the owner who set this annotation"
 msgstr "**owner\\_guid** Le GUID du propriétaire qui a défini cette annotation"
 
-#: ../../design/database.rst:738
+#: ../../design/database.rst:724
 msgid "**access\\_id** An Access controls on this annotation"
 msgstr "**access\\_id** Un Contrôle d'Accès sur cette annotation"
 
-#: ../../design/database.rst:739
+#: ../../design/database.rst:725
 msgid "**time\\_created** Unix timestamp of when the annotation is created."
 msgstr ""
 "**time\\_created** Le timestamp Unix de la date de création de l'annotation."
 
-#: ../../design/database.rst:743
+#: ../../design/database.rst:729
 msgid "Table: relationships"
 msgstr "Table : relationships - relations"
 
-#: ../../design/database.rst:745
+#: ../../design/database.rst:731
 msgid ""
 "This table defines `Relationships`_, these link one entity with another."
 msgstr ""
 "Cette table définit les relations `Relationships`_, qui relient une entité "
 "avec une autre."
 
-#: ../../design/database.rst:747
+#: ../../design/database.rst:733
 msgid "**guid\\_one** The GUID of the subject entity."
 msgstr "**guid\\_one** Le GUID de l'entité sujet."
 
-#: ../../design/database.rst:748
+#: ../../design/database.rst:734
 msgid "**relationship** The type of the relationship."
 msgstr "**relationship** Le type de relation."
 
-#: ../../design/database.rst:749
+#: ../../design/database.rst:735
 msgid "**guid\\_two** The GUID of the target entity."
 msgstr "**guid\\_two** Le GUID de l'entité cible."
 
-#: ../../design/database.rst:752
+#: ../../design/database.rst:738
 msgid "Secundairy tables"
 msgstr "Tables secondaires"
 
-#: ../../design/database.rst:755
+#: ../../design/database.rst:741
 msgid "Table: access_collections"
 msgstr "Table : access_collections"
 
-#: ../../design/database.rst:757
+#: ../../design/database.rst:743
 msgid ""
 "This table defines Access Collections, which grant users access to "
 "`Entities`_ or `Annotations`_."
@@ -1795,17 +1786,17 @@ msgstr ""
 "Cette table définit les Collections d'Accès, qui donnent accès aux "
 "utilisateurs aux `Entités`_ ou aux `Annotations`_."
 
-#: ../../design/database.rst:760
+#: ../../design/database.rst:746
 msgid "***name**  The name of the access collection"
 msgstr "***name**  Le nom de la collection d'accès"
 
-#: ../../design/database.rst:761
+#: ../../design/database.rst:747
 msgid "**owner_guid** The GUID of the owning entity (eg. a user or a group)"
 msgstr ""
 "**owner_guid** Le GUID de l'entité propriétaire (par ex. un utilisateur ou "
 "un groupe)"
 
-#: ../../design/database.rst:762
+#: ../../design/database.rst:748
 msgid ""
 "**subtype** the subtype of the access collection (eg. `friends` or "
 "`group_acl`)"
@@ -2695,14 +2686,14 @@ msgstr "Cette section est très lacunaire"
 msgid ""
 "To replace Elgg's default user authentication system, a plugin could replace"
 " the default ``login`` action with its own. Better would be to register a "
-"PAM handler using ``register_pam_handler()`` which handles the "
+"PAM handler using ``elgg_register_pam_handler()`` which handles the "
 "authentication of the user based on the new requirements."
 msgstr ""
 "Pour remplacer le système d'authentification par défaut des utilisateurs de "
 "Elgg, un plugin pourrait remplacer l'action par défaut ``login`` par sa "
 "propre action. Une meilleure alternative est d'enregistrer un gestionnaire "
-"d'authentification PAM en utilisant ``register_pam_handler()`` qui gère "
-"l'authentification des utilisateurs sur la base de nouvelles exigences."
+"d'authentification PAM en utilisant ``elgg_register_pam_handler()`` qui gère"
+" l'authentification des utilisateurs sur la base de nouvelles exigences."
 
 #: ../../design/security.rst:81
 msgid "HTTPS"
@@ -2739,13 +2730,13 @@ msgstr ""
 
 #: ../../design/security.rst:93
 msgid ""
-"Filtering is performed through the function ``filter_tags()``. This function"
-" takes in a string and returns a filtered string. It triggers a ``validate, "
-"input`` plugin hook."
+"Filtering is performed through the function ``elgg_sanitize_input()``. This "
+"function takes in a string and returns a filtered string. It triggers a "
+"``sanitize, input`` plugin hook."
 msgstr ""
-"Le filtrage est assuré à travers la fonction ``filter_tags()``. Cette "
+"Le filtrage est assuré via la fonction ``elgg_sanitize_input()``. Cette "
 "fonction prend une chaîne de caractères et retourne une chaîne filtrée. Elle"
-" déclenche le hook plugin ``validate, input``."
+" déclenche le hook plugin ``sanitize, input``."
 
 #: ../../design/security.rst:96
 msgid ""
@@ -2758,16 +2749,17 @@ msgstr ""
 
 #: ../../design/security.rst:98
 msgid ""
-"The ``filter_tags()`` function is called on any user input as long as the "
-"input is obtained through a call to ``get_input()``. If for some reason a "
-"developer did not want to perform the default filtering on some user input, "
-"the ``get_input()`` function has a parameter for turning off filtering."
+"The ``elgg_sanitize_input()`` function is called on any user input as long "
+"as the input is obtained through a call to ``get_input()``. If for some "
+"reason a developer did not want to perform the default filtering on some "
+"user input, the ``get_input()`` function has a parameter for turning off "
+"filtering."
 msgstr ""
-"La fonction ``filter_tags()`` est appelée pour chaque saisie utilisateur dès"
-" lors que la saisie est obtenue à travers un appel à ``get_input()``. Si "
-"pour quelque raison un développeur souhaite ne pas appliquer le filtrage par"
-" défaut sur certaines saisies utilisateur, la fonction ``get_input()`` a un "
-"paramètre pour désactiver le filtrage."
+"La fonction ``elgg_sanitize_input()`` est appelée pour chaque saisie "
+"utilisateur dès lors que la saisie est obtenue à travers un appel à "
+"``get_input()``. Si pour une raison quelconque un développeur souhaite ne "
+"pas appliquer le filtrage par défaut sur certaines saisies utilisateur, la "
+"fonction ``get_input()`` dispose d'un paramètre pour désactiver le filtrage."
 
 #: ../../design/security.rst:102
 msgid "CSRF / XSRF"
