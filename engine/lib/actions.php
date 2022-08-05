@@ -27,10 +27,10 @@
  * @param string $access   Who is allowed to execute this action: public, logged_in, admin.
  *                         (default: logged_in)
  *
- * @return bool
+ * @return void
  */
-function elgg_register_action(string $action, $filename = '', string $access = 'logged_in'): bool {
-	return _elgg_services()->actions->register($action, $filename, $access);
+function elgg_register_action(string $action, string $filename = '', string $access = 'logged_in'): void {
+	_elgg_services()->actions->register($action, $filename, $access);
 }
 
 /**

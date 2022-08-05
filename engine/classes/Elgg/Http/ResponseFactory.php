@@ -84,7 +84,7 @@ class ResponseFactory {
 	 * @param bool   $replace Replace existing headers
 	 * @return void
 	 */
-	public function setHeader($name, $value, $replace = true) {
+	public function setHeader(string $name, string $value, bool $replace = true): void {
 		$this->headers->set($name, $value, $replace);
 	}
 

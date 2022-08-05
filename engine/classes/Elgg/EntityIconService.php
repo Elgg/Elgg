@@ -617,7 +617,7 @@ class EntityIconService {
 	 * @return array
 	 * @throws InvalidParameterException
 	 */
-	public function getSizes($entity_type = null, $entity_subtype = null, $type = 'icon') {
+	public function getSizes(string $entity_type = null, string $entity_subtype = null, $type = 'icon'): array {
 		$sizes = [];
 		if (!$type) {
 			$type = 'icon';

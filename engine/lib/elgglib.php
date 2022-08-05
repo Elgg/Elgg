@@ -9,7 +9,7 @@
  * @return \Elgg\Di\PublicContainer
  * @since 2.0.0
  */
-function elgg() {
+function elgg(): \Elgg\Di\PublicContainer {
 	return \Elgg\Application::$_instance->public_services;
 }
 
@@ -23,10 +23,10 @@ function elgg() {
  * @return void
  * @since 2.3
  */
-function elgg_set_http_header($header, $replace = true) {
+function elgg_set_http_header(string $header, bool $replace = true): void {
 	if (!preg_match('~^HTTP/\\d\\.\\d~', $header)) {
 		list($name, $value) = explode(':', $header, 2);
-		_elgg_services()->responseFactory->setHeader($name, ltrim($value), $replace);
+		_elgg_services()->responseFactory->setHeader($name, trim($value), $replace);
 	}
 }
 
@@ -40,7 +40,7 @@ function elgg_set_http_header($header, $replace = true) {
  * @return void
  * @since 4.2
  */
-function elgg_register_success_message($options): void {
+function elgg_register_success_message(string|array $options): void {
 	if (!is_array($options)) {
 		$options = ['message' => $options];
 	}
@@ -59,7 +59,7 @@ function elgg_register_success_message($options): void {
  * @return void
  * @since 4.2
  */
-function elgg_register_error_message($options): void {
+function elgg_register_error_message(string|array $options): void {
 	if (!is_array($options)) {
 		$options = ['message' => $options];
 	}
@@ -412,7 +412,7 @@ function elgg_log($message, $level = \Psr\Log\LogLevel::NOTICE) {
  * @return void
  * @since 1.7.0
  */
-function elgg_dump($value) {
+function elgg_dump($value): void {
 	_elgg_services()->logger->dump($value);
 }
 
@@ -428,8 +428,8 @@ function elgg_dump($value) {
  * @return string Full URL
  * @since 1.7.0
  */
-function elgg_http_build_url(array $parts, $html_encode = true): string {
-	return _elgg_services()->urls->buildUrl($parts, (bool) $html_encode);
+function elgg_http_build_url(array $parts, bool $html_encode = true): string {
+	return _elgg_services()->urls->buildUrl($parts, $html_encode);
 }
 
 /**
@@ -449,8 +449,8 @@ function elgg_http_build_url(array $parts, $html_encode = true): string {
  * @return string URL with action tokens
  * @since 1.7.0
  */
-function elgg_add_action_tokens_to_url($url, $html_encode = false): string {
-	return _elgg_services()->urls->addActionTokensToUrl((string) $url, (bool) $html_encode);
+function elgg_add_action_tokens_to_url(string $url, bool $html_encode = false): string {
+	return _elgg_services()->urls->addActionTokensToUrl($url, $html_encode);
 }
 
 /**
@@ -464,8 +464,8 @@ function elgg_add_action_tokens_to_url($url, $html_encode = false): string {
  * @return string The new URL with the query element removed.
  * @since 1.7.0
  */
-function elgg_http_remove_url_query_element($url, $element): string {
-	return _elgg_services()->urls->addQueryElementsToUrl((string) $url, [(string) $element => null]);
+function elgg_http_remove_url_query_element(string $url, string $element): string {
+	return _elgg_services()->urls->addQueryElementsToUrl($url, [$element => null]);
 }
 
 /**
@@ -478,8 +478,8 @@ function elgg_http_remove_url_query_element($url, $element): string {
  * @return string The new URL with the query strings added
  * @since 1.7.0
  */
-function elgg_http_add_url_query_elements($url, array $elements): string {
-	return _elgg_services()->urls->addQueryElementsToUrl((string) $url, $elements);
+function elgg_http_add_url_query_elements(string $url, array $elements): string {
+	return _elgg_services()->urls->addQueryElementsToUrl($url, $elements);
 }
 
 /**
@@ -496,11 +496,7 @@ function elgg_http_add_url_query_elements($url, array $elements): string {
  * @return bool
  * @since 1.8.0
  */
-function elgg_http_url_is_identical($url1, $url2, $ignore_params = ['offset', 'limit']): bool {
-	if (!is_string($url1) || !is_string($url2)) {
-		return false;
-	}
-	
+function elgg_http_url_is_identical(string $url1, string $url2, array $ignore_params = ['offset', 'limit']): bool {
 	return _elgg_services()->urls->isUrlIdentical($url1, $url2, (array) $ignore_params);
 }
 
@@ -512,10 +508,10 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = ['offset', 'l
  * @param string $url     URL to sign
  * @param string $expires Expiration time
  *                        A string suitable for strtotime()
- *                        Falsey values indicate non-expiring URL
+ *                        Null value indicate non-expiring URL
  * @return string
  */
-function elgg_http_get_signed_url($url, $expires = false) {
+function elgg_http_get_signed_url(string $url, string $expires = null): string {
 	return _elgg_services()->urlSigner->sign($url, $expires);
 }
 
@@ -525,7 +521,7 @@ function elgg_http_get_signed_url($url, $expires = false) {
  * @param string $url URL to validate
  * @return bool
  */
-function elgg_http_validate_signed_url($url) {
+function elgg_http_validate_signed_url(string $url): bool {
 	return _elgg_services()->urlSigner->isValid($url);
 }
 
@@ -535,25 +531,25 @@ function elgg_http_validate_signed_url($url) {
  *
  * Shorthand for $value = (isset($array['key'])) ? $array['key'] : 'default';
  *
- * @param string $key     Key to check in the source array
- * @param array  $array   Source array
- * @param mixed  $default Value to return if key is not found
- * @param bool   $strict  Return array key if it's set, even if empty. If false,
- *                        return $default if the array key is unset or empty.
+ * @param string|int $key     Key to check in the source array
+ * @param array      $array   Source array
+ * @param mixed      $default Value to return if key is not found
+ * @param bool       $strict  Return array key if it's set, even if empty. If false,
+ *                            return $default if the array key is unset or empty.
  *
  * @return mixed
  * @since 1.8.0
  */
-function elgg_extract($key, $array, $default = null, $strict = true) {
+function elgg_extract($key, $array, $default = null, bool $strict = true) {
 	if (!is_array($array) && !$array instanceof ArrayAccess) {
 		return $default;
 	}
 
 	if ($strict) {
-		return (isset($array[$key])) ? $array[$key] : $default;
-	} else {
-		return (isset($array[$key]) && !empty($array[$key])) ? $array[$key] : $default;
+		return $array[$key] ?? $default;
 	}
+	
+	return (isset($array[$key]) && !empty($array[$key])) ? $array[$key] : $default;
 }
 
 /**
@@ -566,7 +562,7 @@ function elgg_extract($key, $array, $default = null, $strict = true) {
  *
  * @since 2.3.0
  */
-function elgg_extract_class(array $array, $existing = [], $extract_key = 'class') {
+function elgg_extract_class(array $array, $existing = [], $extract_key = 'class'): array {
 	$existing = empty($existing) ? [] : (array) $existing;
 
 	$merge = (array) elgg_extract($extract_key, $array, []);
@@ -604,7 +600,7 @@ function elgg_call(int $flags, Closure $closure) {
  * @since 1.7.0
  * @link http://www.php.net/manual/en/function.ini-get.php
  */
-function elgg_get_ini_setting_in_bytes($setting) {
+function elgg_get_ini_setting_in_bytes(string $setting): int {
 	// retrieve INI setting
 	$val = ini_get($setting);
 
@@ -635,7 +631,7 @@ function elgg_get_ini_setting_in_bytes($setting) {
  * @return \Elgg\Di\InternalContainer
  * @internal
  */
-function _elgg_services() {
+function _elgg_services(): \Elgg\Di\InternalContainer {
 	// This yields a more shallow stack depth in recursive APIs like views. This aids in debugging and
 	// reduces false positives in xdebug's infinite recursion protection.
 	return \Elgg\Application::$_instance->internal_services;

@@ -58,17 +58,16 @@ class ActionsService {
 	/**
 	 * Registers an action
 	 *
-	 * @param string          $action  The name of the action (eg "register", "account/settings/save")
-	 * @param string|callable $handler Optionally, the filename where this action is located. If not specified,
-	 *                                 will assume the action is in elgg/actions/<action>.php
-	 * @param string          $access  Who is allowed to execute this action: public, logged_in, logged_out, admin.
-	 *                                 (default: logged_in)
+	 * @param string $action  The name of the action (eg "register", "account/settings/save")
+	 * @param string $handler Optionally, the filename where this action is located. If not specified,
+	 *                        will assume the action is in elgg/actions/<action>.php
+	 * @param string $access  Who is allowed to execute this action: public, logged_in, logged_out, admin. (default: logged_in)
 	 *
-	 * @return bool
+	 * @return void
 	 *
 	 * @see    elgg_register_action()
 	 */
-	public function register(string $action, $handler = '', string $access = 'logged_in') {
+	public function register(string $action, string $handler = '', string $access = 'logged_in'): void {
 		// plugins are encouraged to call actions with a trailing / to prevent 301
 		// redirects but we store the actions without it
 		$action = trim($action, '/');
@@ -81,7 +80,7 @@ class ActionsService {
 		$file = null;
 		$controller = null;
 
-		if (is_string($handler) && substr($handler, -4) === '.php') {
+		if (substr($handler, -4) === '.php') {
 			$file = $handler;
 		} else {
 			$controller = $handler;
@@ -115,8 +114,6 @@ class ActionsService {
 			'middleware' => $middleware,
 			'walled' => false,
 		]);
-
-		return true;
 	}
 
 	/**

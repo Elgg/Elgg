@@ -212,7 +212,7 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 	
 			$this->assertTrue($annotation->disable());
 
-			$this->assertFalse(elgg_get_annotation_from_id($id));
+			$this->assertNull(elgg_get_annotation_from_id($id));
 	
 			$result = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($id) {
 				$annotation = elgg_get_annotation_from_id($id);
