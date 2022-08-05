@@ -26,7 +26,7 @@
  * @return bool
  * @since 1.8.0
  */
-function elgg_set_context($context) {
+function elgg_set_context(string $context): bool {
 	return _elgg_services()->request->getContextStack()->set($context);
 }
 
@@ -38,7 +38,7 @@ function elgg_set_context($context) {
  * @return string|null
  * @since 1.8.0
  */
-function elgg_get_context() {
+function elgg_get_context(): ?string {
 	return _elgg_services()->request->getContextStack()->peek();
 }
 
@@ -49,7 +49,7 @@ function elgg_get_context() {
  * @return void
  * @since 1.8.0
  */
-function elgg_push_context($context) {
+function elgg_push_context(string $context): void {
 	_elgg_services()->request->getContextStack()->push($context);
 }
 
@@ -59,7 +59,7 @@ function elgg_push_context($context) {
  * @return string|null
  * @since 1.8.0
  */
-function elgg_pop_context() {
+function elgg_pop_context(): ?string {
 	return _elgg_services()->request->getContextStack()->pop();
 }
 
@@ -75,7 +75,7 @@ function elgg_pop_context() {
  * @return bool
  * @since 1.8.0
  */
-function elgg_in_context($context) {
+function elgg_in_context(string $context): bool {
 	return _elgg_services()->request->getContextStack()->contains($context);
 }
 
@@ -85,7 +85,7 @@ function elgg_in_context($context) {
  * @return string[]
  * @since 1.11
  */
-function elgg_get_context_stack() {
+function elgg_get_context_stack(): array {
 	return _elgg_services()->request->getContextStack()->toArray();
 }
 
@@ -96,6 +96,6 @@ function elgg_get_context_stack() {
  * @return void
  * @since 1.11
  */
-function elgg_set_context_stack(array $stack) {
+function elgg_set_context_stack(array $stack): void {
 	_elgg_services()->request->getContextStack()->fromArray($stack);
 }

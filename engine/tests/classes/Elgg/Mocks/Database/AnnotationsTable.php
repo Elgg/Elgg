@@ -31,7 +31,7 @@ class AnnotationsTable extends DbAnnotations {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get($id) {
+	public function get($id): ?\ElggAnnotation {
 		if (empty($this->rows[$id])) {
 			return false;
 		}

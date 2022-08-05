@@ -310,7 +310,7 @@ class Config {
 	 *
 	 * @throws ConfigurationException
 	 */
-	public static function factory($settings_path = '', $try_env = true) {
+	public static function factory(string $settings_path = '', bool $try_env = true): static {
 		$reason1 = '';
 
 		$settings_path = self::resolvePath($settings_path, $try_env);
@@ -395,7 +395,7 @@ class Config {
 	 * @param bool   $try_env       If path not given, try $_ENV['ELGG_SETTINGS_FILE']
 	 * @return string
 	 */
-	public static function resolvePath($settings_path = '', $try_env = true) {
+	public static function resolvePath(string $settings_path = '', bool $try_env = true): string {
 		if (!$settings_path) {
 			if ($try_env && !empty($_ENV['ELGG_SETTINGS_FILE'])) {
 				$settings_path = $_ENV['ELGG_SETTINGS_FILE'];
@@ -412,7 +412,7 @@ class Config {
 	 *
 	 * @return array
 	 */
-	public function getValues() {
+	public function getValues(): array {
 		return $this->values;
 	}
 
@@ -421,7 +421,7 @@ class Config {
 	 *
 	 * @return array
 	 */
-	public function getCookieConfig() {
+	public function getCookieConfig(): array {
 		if ($this->cookies_configured) {
 			return $this->cookies;
 		}
@@ -462,7 +462,7 @@ class Config {
 	 *
 	 * @return mixed null if does not exist
 	 */
-	public function __get($name) {
+	public function __get(string $name) {
 
 		if (array_key_exists($name, $this->deprecated)) {
 			elgg_deprecated_notice("Using '{$name}' from config has been deprecated", $this->deprecated[$name]);
@@ -482,7 +482,7 @@ class Config {
 	 *
 	 * @return bool
 	 */
-	public function hasValue($name) {
+	public function hasValue(string $name): bool {
 		return isset($this->values[$name]);
 	}
 
@@ -492,7 +492,7 @@ class Config {
 	 * @param string $name Name
 	 * @return mixed null = not set
 	 */
-	public function getInitialValue($name) {
+	public function getInitialValue(string $name) {
 		return $this->initial_values[$name] ?? null;
 	}
 
@@ -503,7 +503,7 @@ class Config {
 	 *
 	 * @return bool
 	 */
-	public function hasInitialValue($name) {
+	public function hasInitialValue(string $name): bool {
 		return isset($this->initial_values[$name]);
 	}
 
@@ -514,7 +514,7 @@ class Config {
 	 *
 	 * @return bool
 	 */
-	public function isLocked($name) {
+	public function isLocked(string $name): bool {
 		$testing = $this->values['testing_mode'] ?? false;
 		return !$testing && in_array($name, $this->locked_values) && $this->hasValue($name);
 	}
@@ -528,7 +528,7 @@ class Config {
 	 * @param mixed  $value Value
 	 * @return void
 	 */
-	public function __set($name, $value) {
+	public function __set(string $name, $value): void {
 		if ($this->wasWarnedLocked($name)) {
 			return;
 		}
@@ -546,7 +546,7 @@ class Config {
 	 * @param string $name Name
 	 * @return bool
 	 */
-	public function __isset($name) {
+	public function __isset(string $name): bool {
 		return $this->__get($name) !== null;
 	}
 
@@ -556,7 +556,7 @@ class Config {
 	 * @param string $name Name
 	 * @return void
 	 */
-	public function __unset($name) {
+	public function __unset(string $name): void {
 		if ($this->wasWarnedLocked($name)) {
 			return;
 		}
@@ -572,7 +572,7 @@ class Config {
 	 *
 	 * @return bool
 	 */
-	public function save($name, $value) {
+	public function save(string $name, $value): bool {
 		if ($this->wasWarnedLocked($name)) {
 			return false;
 		}
@@ -601,7 +601,7 @@ class Config {
 	 *
 	 * @return bool
 	 */
-	public function remove($name) {
+	public function remove(string $name): bool {
 		if ($this->wasWarnedLocked($name)) {
 			return false;
 		}
@@ -619,7 +619,7 @@ class Config {
 	 * @param string $name Name
 	 * @return bool
 	 */
-	protected function wasWarnedLocked($name): bool {
+	protected function wasWarnedLocked(string $name): bool {
 		if (!$this->isLocked($name)) {
 			return false;
 		}

@@ -45,10 +45,10 @@ function elgg_get_admins(array $options = []) {
  * @param string $id      A unique ID that your plugin can remember
  * @param string $message Body of the message
  *
- * @return ElggAdminNotice|bool
+ * @return ElggAdminNotice|null
  * @since 1.8.0
  */
-function elgg_add_admin_notice(string $id, string $message) {
+function elgg_add_admin_notice(string $id, string $message): ?\ElggAdminNotice {
 	return _elgg_services()->adminNotices->add($id, $message);
 }
 

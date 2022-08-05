@@ -42,9 +42,9 @@ class AnnotationsTable {
 	 *
 	 * @param int $id The id of the annotation object
 	 *
-	 * @return \ElggAnnotation|false
+	 * @return \ElggAnnotation|null
 	 */
-	public function get(int $id) {
+	public function get(int $id): ?\ElggAnnotation {
 		$qb = Select::fromTable('annotations');
 		$qb->select('*');
 
@@ -53,11 +53,7 @@ class AnnotationsTable {
 		$qb->addClause($where);
 
 		$row = $this->db->getDataRow($qb);
-		if (!empty($row)) {
-			return new \ElggAnnotation($row);
-		}
-
-		return false;
+		return !empty($row) ? new \ElggAnnotation($row) : null;
 	}
 
 	/**

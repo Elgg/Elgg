@@ -263,7 +263,7 @@ class Application {
 			'request' => null,
 			'internal_services' => null,
 			'set_start_time' => true,
-			'settings_path' => null,
+			'settings_path' => '',
 		];
 		$spec = array_merge($defaults, $spec);
 

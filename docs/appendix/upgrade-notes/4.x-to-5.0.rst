@@ -43,10 +43,45 @@ Removed functions
 * ``elgg.trigger_hook`` use the ``trigger`` function provide by the ``elgg\hooks`` module
 
    
-Change in function parameters
------------------------------
+Changes in functions
+--------------------
+
+The following functions now have their arguments and/or return types type-hinted, this can cause ``TypeError`` errors. 
+Also some class functions have their return value type hinted and you should update your function definition.
+Some function might have their arguments changed or the return type has been changed.
 
 Lib functions
 ~~~~~~~~~~~~~
 
+* ``elgg_add_admin_notice()`` now returns ``null`` on failure instead of a ``bool``
+* ``elgg_get_annotation_from_id()`` now returns ``null`` if no annotation found instead of a ``bool``
+* ``elgg_get_config()`` now requires a ``string`` for ``$name``
+* ``elgg_get_icon_sizes()`` now requires a ``string`` for ``$entity_type`` and ``$entity_subtype``
+* ``elgg_get_simplecache_url()`` now requires a ``string`` for ``$view`` and ``$sub_view``
+* ``elgg_register_action()`` now requires a ``string`` for ``$filename``
+* ``elgg_register_action()`` no longer returns a ``bool``
+* ``elgg_register_simplecache_view()`` now requires a ``string`` for ``$view_name``
 * ``elgg_register_title_button()`` has the first argument (``$handler``) removed
+* ``elgg_remove_config()`` now requires a ``string`` for ``$name``
+* ``elgg_save_config()`` now requires a ``string`` for ``$name``
+* ``elgg_set_config()`` now requires a ``string`` for ``$name``
+
+* ``elgg_set_context()`` now requires a ``string`` for ``$context``
+* ``elgg_push_context()`` now requires a ``string`` for ``$context``
+* ``elgg_in_context()`` now requires a ``string`` for ``$context``
+* ``elgg_set_http_header()`` now requires a ``string`` for ``$header`` and a ``bool`` for ``$replace``
+* ``elgg_register_success_message()`` now requires a ``string|array`` for ``$message``
+* ``elgg_register_error_message()`` now requires a ``string|array`` for ``$message``
+* ``elgg_http_build_url()`` now requires a ``bool`` for ``$html_encode``
+* ``elgg_add_action_tokens_to_url()`` now requires a ``string`` for ``$url`` and a ``bool`` for ``$html_encode``
+* ``elgg_http_remove_url_query_element()`` now requires a ``string`` for ``$url`` and a ``string`` for ``$element``
+* ``elgg_http_add_url_query_elements()`` now requires a ``string`` for ``$url``
+* ``elgg_http_url_is_identical()`` now requires a ``string`` for ``$url1`` and ``$url2`` and an ``array`` for ``$ignore_params``
+* ``elgg_http_get_signed_url()`` now requires a ``string`` for ``$url`` and ``$expires``
+* ``elgg_http_validate_signed_url()`` now requires a ``string`` for ``$url``
+* ``elgg_extract()`` now requires a ``bool`` for ``$strict``
+* ``elgg_get_ini_setting_in_bytes()`` now requires a ``string`` for ``$setting``
+
+Class function parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~
+

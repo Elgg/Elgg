@@ -11,9 +11,9 @@
  *
  * @param int $id The id of the annotation object being retrieved.
  *
- * @return \ElggAnnotation|false
+ * @return \ElggAnnotation|null
  */
-function elgg_get_annotation_from_id(int $id) {
+function elgg_get_annotation_from_id(int $id): ?\ElggAnnotation {
 	return _elgg_services()->annotationsTable->get($id);
 }
 

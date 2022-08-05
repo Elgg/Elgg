@@ -50,7 +50,7 @@ final class Context {
 	 *
 	 * @return string|null
 	 */
-	public function peek() {
+	public function peek(): ?string {
 		$last = end($this->stack);
 		return ($last === false) ? null : $last;
 	}
@@ -61,7 +61,7 @@ final class Context {
 	 * @param string $context The context string to add to the context stack
 	 * @return void
 	 */
-	public function push($context) {
+	public function push(string $context): void {
 		$this->stack[] = "$context";
 	}
 	
@@ -70,7 +70,7 @@ final class Context {
 	 *
 	 * @return string|null
 	 */
-	public function pop() {
+	public function pop(): ?string {
 		return array_pop($this->stack);
 	}
 	
@@ -80,7 +80,7 @@ final class Context {
 	 * @param string $context The context of the page
 	 * @return bool
 	 */
-	public function set($context) {
+	public function set(string $context): bool {
 		$context = trim($context);
 
 		if (empty($context)) {
@@ -106,7 +106,7 @@ final class Context {
 	 * @param string $context The context string to check for
 	 * @return bool
 	 */
-	public function contains($context) {
+	public function contains(string $context): bool {
 		return in_array($context, $this->stack);
 	}
 
@@ -115,7 +115,7 @@ final class Context {
 	 *
 	 * @return string[]
 	 */
-	public function toArray() {
+	public function toArray(): array {
 		return $this->stack;
 	}
 
@@ -125,7 +125,7 @@ final class Context {
 	 * @param string[] $stack All contexts to be placed on the stack
 	 * @return void
 	 */
-	public function fromArray(array $stack) {
+	public function fromArray(array $stack): void {
 		$this->stack = array_map('strval', $stack);
 	}
 }

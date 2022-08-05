@@ -73,7 +73,7 @@ function elgg_get_default_access(\ElggUser $user = null, array $input_params = [
 		'default_access' => $default_access,
 		'input_params' => $input_params,
 	];
-	return _elgg_services()->hooks->trigger('default', 'access', $params, $default_access);
+	return (int) _elgg_services()->hooks->trigger('default', 'access', $params, $default_access);
 }
 
 /**
@@ -172,7 +172,7 @@ function elgg_get_access_collection(int $collection_id): ?\ElggAccessCollection 
  *
  * @return \ElggAccessCollection[]
  */
-function elgg_get_access_collections(array $options = []) {
+function elgg_get_access_collections(array $options = []): array {
 	return _elgg_services()->accessCollections->getEntityCollections($options);
 }
 

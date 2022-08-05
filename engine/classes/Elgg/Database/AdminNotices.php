@@ -16,22 +16,18 @@ class AdminNotices {
 	 * The id is a unique ID that can be cleared once the admin
 	 * completes the action.
 	 *
-	 * eg: add_admin_notice('twitter_services_no_api',
-	 * 	'Before your users can use Twitter services on this site, you must set up
-	 * 	the Twitter API key in the <a href="link">Twitter Services Settings</a>');
-	 *
 	 * @param string $id      A unique ID that your plugin can remember
 	 * @param string $message Body of the message
 	 *
-	 * @return \ElggAdminNotice|bool
+	 * @return \ElggAdminNotice|null
 	 */
-	public function add(string $id, string $message) {
+	public function add(string $id, string $message): ?\ElggAdminNotice {
 		if (!$id || !$message) {
-			return false;
+			return null;
 		}
 		
 		if (elgg_admin_notice_exists($id)) {
-			return false;
+			return null;
 		}
 
 		$admin_notice = new \ElggAdminNotice();
@@ -43,7 +39,7 @@ class AdminNotices {
 			return $admin_notice->save();
 		});
 		
-		return $result ? $admin_notice : false;
+		return $result ? $admin_notice : null;
 	}
 	
 	/**

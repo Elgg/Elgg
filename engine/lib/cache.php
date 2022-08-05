@@ -108,7 +108,7 @@ function elgg_disable_system_cache(): void {
  * @see elgg_get_simplecache_url()
  * @since 1.8.0
  */
-function elgg_register_simplecache_view($view_name): void {
+function elgg_register_simplecache_view(string $view_name): void {
 	_elgg_services()->views->registerCacheableView($view_name);
 }
 
@@ -136,7 +136,7 @@ function elgg_register_simplecache_view($view_name): void {
  * @return string
  * @since 1.8.0
  */
-function elgg_get_simplecache_url($view, $subview = ''): string {
+function elgg_get_simplecache_url(string $view, string $subview = ''): string {
 	return _elgg_services()->simpleCache->getUrl($view, $subview);
 }
 

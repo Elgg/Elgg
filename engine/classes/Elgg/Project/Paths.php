@@ -22,7 +22,7 @@ class Paths {
 	 *
 	 * @return string
 	 */
-	public static function project() {
+	public static function project(): string {
 		static $path;
 		if ($path === null) {
 			$path = self::elgg();
@@ -41,7 +41,7 @@ class Paths {
 	 *
 	 * @return string
 	 */
-	public static function elgg() {
+	public static function elgg(): string {
 		return dirname(dirname(dirname(dirname(__DIR__)))) . DIRECTORY_SEPARATOR;
 	}
 
@@ -50,7 +50,7 @@ class Paths {
 	 *
 	 * @return string
 	 */
-	public static function projectConfig() {
+	public static function projectConfig(): string {
 		return self::project() . self::PATH_TO_CONFIG . DIRECTORY_SEPARATOR;
 	}
 
@@ -61,7 +61,7 @@ class Paths {
 	 *
 	 * @return string
 	 */
-	public static function settingsFile($file = self::SETTINGS_PHP) {
+	public static function settingsFile($file = self::SETTINGS_PHP): string {
 		return self::projectConfig() . $file;
 	}
 
@@ -73,7 +73,7 @@ class Paths {
 	 *
 	 * @return string
 	 */
-	public static function sanitize($path, $append_slash = true) {
+	public static function sanitize($path, $append_slash = true): string {
 		$path = (string) $path;
 		
 		// Convert to correct UNIX paths
