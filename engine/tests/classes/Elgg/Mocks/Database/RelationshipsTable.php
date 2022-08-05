@@ -54,6 +54,9 @@ class RelationshipsTable extends DbRelationshipsTable {
 		self::$iterator++;
 		$id = self::$iterator;
 
+		// lock the time to prevent testing issues
+		$this->setCurrentTime();
+		
 		$row = (object) [
 			'id' => $id,
 			'guid_one' => (int) $guid_one,
@@ -66,7 +69,12 @@ class RelationshipsTable extends DbRelationshipsTable {
 
 		$this->addQuerySpecs($row);
 
-		return parent::add($row->guid_one, $row->relationship, $row->guid_two, $return_id);
+		$result = parent::add($row->guid_one, $row->relationship, $row->guid_two, $return_id);
+		
+		// reset the time
+		$this->resetCurrentTime();
+		
+		return $result;
 	}
 
 	/**

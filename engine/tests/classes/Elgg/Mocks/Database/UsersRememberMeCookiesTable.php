@@ -29,6 +29,7 @@ class UsersRememberMeCookiesTable extends dbUsersRememberMeCookiesTable {
 	 * {@inheritDoc}
 	 */
 	public function insertHash(\ElggUser $user, string $hash): int {
+		// lock the time to prevent testing issues
 		$this->setCurrentTime();
 		
 		$row = (object) [
@@ -45,10 +46,12 @@ class UsersRememberMeCookiesTable extends dbUsersRememberMeCookiesTable {
 			$result = parent::insertHash($user, $hash);
 		} catch (\Throwable $t) {
 			$this->inserting = false;
+			$this->resetCurrentTime();
 			throw $t;
 		}
 		
 		$this->inserting = false;
+		$this->resetCurrentTime();
 		
 		return $result;
 	}

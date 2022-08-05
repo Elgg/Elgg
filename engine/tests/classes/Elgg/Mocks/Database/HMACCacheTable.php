@@ -31,6 +31,9 @@ class HMACCacheTable extends dbHMACCacheTable {
 	 * {@inheritDoc}
 	 */
 	public function storeHMAC(string $hmac) {
+		// lock the time to prevent testing issues
+		$this->setCurrentTime();
+		
 		$row = (object) [
 			'hmac' => $hmac,
 			'ts' => $this->getCurrentTime()->getTimestamp(),
@@ -39,7 +42,12 @@ class HMACCacheTable extends dbHMACCacheTable {
 		$this->rows[$row->hmac] = $row;
 		$this->addQuerySpecs($row);
 		
-		return parent::storeHMAC($hmac);
+		$result = parent::storeHMAC($hmac);
+		
+		// reset the time
+		$this->resetCurrentTime();
+		
+		return $result;
 	}
 	
 	/**

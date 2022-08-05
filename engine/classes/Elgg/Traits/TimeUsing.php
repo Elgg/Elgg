@@ -23,7 +23,7 @@ trait TimeUsing {
 	 * @see \DateTime::modify
 	 */
 	public function getCurrentTime($modifier = '') {
-		$time = $this->time ? $this->time : new \DateTime();
+		$time = $this->time ?? new \DateTime();
 		$time = clone $time;
 		if ($modifier) {
 			$time->modify($modifier);
@@ -39,9 +39,18 @@ trait TimeUsing {
 	 * @return void
 	 */
 	public function setCurrentTime(\DateTime $time = null) {
-		if (!$time) {
-			$time = new \DateTime();
-		}
+		$time = $time ?? new \DateTime();
 		$this->time = clone $time;
+	}
+	
+	/**
+	 * Reset the current time
+	 * Use after the time has been set with setCurrentTime and it no longer needs to be locked
+	 *
+	 * @return void
+	 * @since 4.3
+	 */
+	public function resetCurrentTime(): void {
+		unset($this->time);
 	}
 }

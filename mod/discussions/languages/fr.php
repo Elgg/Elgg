@@ -61,6 +61,7 @@ Voir la discussion et y répondre :
 %s',
 
 	'groups:tool:forum' => 'Activer les discussions du groupe',
+	'groups:tool:forum:description' => 'Autoriser les membres du groupe à démarrer des sujets de discussion dans ce groupe.',
 
 	'discussions:groups:edit:add_group_subscribers_to_discussion_comments' => 'Ajouter les membres du groupe aux notifications des commentaires de discussion',
 	

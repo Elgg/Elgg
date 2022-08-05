@@ -155,14 +155,6 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 			$this->markTestSkipped();
 		}
 
-		$dt = new \DateTime();
-
-		$app->internal_services->entityTable->setCurrentTime($dt);
-		$app->internal_services->metadataTable->setCurrentTime($dt);
-		$app->internal_services->relationshipsTable->setCurrentTime($dt);
-		$app->internal_services->annotationsTable->setCurrentTime($dt);
-		$app->internal_services->usersTable->setCurrentTime($dt);
-
 		$app->internal_services->session->removeLoggedInUser();
 		$app->internal_services->session->setIgnoreAccess(false);
 		$app->internal_services->session->setDisabledEntityVisibility(false);
