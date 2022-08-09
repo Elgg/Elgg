@@ -60,7 +60,7 @@ class ElggRiverItem {
 		switch ($name) {
 			case 'type' :
 			case 'subtype' :
-				$object = get_entity($this->object_guid);
+				$object = $this->getObjectEntity();
 				if ($object) {
 					return $object->$name;
 				}
@@ -71,37 +71,37 @@ class ElggRiverItem {
 	/**
 	 * Get the subject of this river item
 	 *
-	 * @return \ElggEntity
+	 * @return \ElggEntity|null
 	 */
-	public function getSubjectEntity() {
-		return get_entity($this->subject_guid);
+	public function getSubjectEntity(): ?\ElggEntity {
+		return $this->subject_guid ? get_entity($this->subject_guid) : null;
 	}
 
 	/**
 	 * Get the object of this river item
 	 *
-	 * @return \ElggEntity
+	 * @return \ElggEntity|null
 	 */
-	public function getObjectEntity() {
-		return get_entity($this->object_guid);
+	public function getObjectEntity(): ?\ElggEntity {
+		return $this->object_guid ? get_entity($this->object_guid) : null;
 	}
 
 	/**
 	 * Get the target of this river item
 	 *
-	 * @return \ElggEntity
+	 * @return \ElggEntity|null
 	 */
-	public function getTargetEntity() {
-		return get_entity($this->target_guid);
+	public function getTargetEntity(): ?\ElggEntity {
+		return $this->target_guid ? get_entity($this->target_guid) : null;
 	}
 
 	/**
 	 * Get the Annotation for this river item
 	 *
-	 * @return \ElggAnnotation|false
+	 * @return \ElggAnnotation|null
 	 */
-	public function getAnnotation() {
-		return elgg_get_annotation_from_id($this->annotation_id);
+	public function getAnnotation(): ?\ElggAnnotation {
+		return $this->annotation_id ? elgg_get_annotation_from_id($this->annotation_id) : null;
 	}
 
 	/**

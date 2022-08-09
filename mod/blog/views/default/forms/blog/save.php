@@ -5,7 +5,7 @@
 
 elgg_require_js('elgg/blog/save_draft');
 
-$blog = get_entity($vars['guid']);
+$blog = get_entity((int) $vars['guid']);
 $vars['entity'] = $blog;
 
 $draft_warning = elgg_extract('draft_warning', $vars);

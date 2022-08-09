@@ -188,7 +188,7 @@ class Values {
 	 * @return bool
 	 * @since 3.0.0
 	 */
-	public static function isEmpty($value) {
+	public static function isEmpty($value): bool {
 		
 		if ($value === 0 || $value === '0' || $value === 0.0) {
 			return false;

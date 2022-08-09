@@ -1,6 +1,6 @@
 <?php
 
-$guid = elgg_extract('guid', $vars);
+$guid = (int) elgg_extract('guid', $vars);
 elgg_entity_gatekeeper($guid, 'object', 'blog');
 
 $entity = get_entity($guid);

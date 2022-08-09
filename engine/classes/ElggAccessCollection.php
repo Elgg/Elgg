@@ -215,7 +215,7 @@ class ElggAccessCollection extends ElggData {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getObjectFromID($id) {
+	public function getObjectFromID(int $id) {
 		return _elgg_services()->accessCollections->get($id);
 	}
 

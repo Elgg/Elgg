@@ -15,7 +15,7 @@ class AjaxResponseHandler {
 	 * @return void|\Elgg\Services\AjaxResponse
 	 */
 	public function __invoke(\Elgg\Hook $hook) {
-		$entity = get_entity(get_input('guid'));
+		$entity = get_entity((int) get_input('guid'));
 		if (!$entity || elgg_get_viewtype() !== 'default') {
 			return;
 		}

@@ -102,12 +102,10 @@ class UserCapabilities {
 			}
 
 			// favor the persisted attributes if not saved
-			$attrs = array_merge(
-					[
+			$attrs = array_merge([
 				'owner_guid' => $entity->owner_guid,
 				'container_guid' => $entity->container_guid,
-					], $entity->getOriginalAttributes()
-			);
+			], $entity->getOriginalAttributes());
 
 			if ($attrs['owner_guid'] == $user->guid) {
 				return true;
@@ -119,6 +117,10 @@ class UserCapabilities {
 
 			if ($entity->guid == $user->guid) {
 				return true;
+			}
+
+			if (!isset($attrs['container_guid'])) {
+				return false;
 			}
 
 			$container = $this->entities->get($attrs['container_guid']);

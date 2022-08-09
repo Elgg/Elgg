@@ -5,7 +5,7 @@
 
 use Elgg\Exceptions\Http\EntityPermissionsException;
 
-$guid = elgg_extract('guid', $vars);
+$guid = (int) elgg_extract('guid', $vars);
 elgg_entity_gatekeeper($guid);
 
 $page_owner = get_entity($guid);

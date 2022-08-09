@@ -3,15 +3,15 @@
  * Elgg ajax edit comment form
  */
 
-$guid = get_input('guid');
+$guid = (int) get_input('guid');
 
 $comment = get_entity($guid);
-$entity = $comment->getContainerEntity();
-elgg_set_page_owner_guid($entity->getContainerGUID());
-
-if (!($comment instanceof ElggComment) || !$comment->canEdit()) {
+if (!$comment instanceof ElggComment || !$comment->canEdit()) {
 	return false;
 }
+
+$entity = $comment->getContainerEntity();
+elgg_set_page_owner_guid($entity->getContainerGUID());
 
 $form_vars = [
 	'class' => 'hidden mvl',

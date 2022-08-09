@@ -406,7 +406,7 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals(elgg_get_download_url($file), $file->getDownloadURL());
 		$this->assertEquals(elgg_get_download_url($file, false), $file->getDownloadURL(false));
-		$this->assertEquals(elgg_get_download_url($file, null, strtotime('+2 minutes')), $file->getDownloadURL(false, strtotime('+2 minutes')));
+		$this->assertEquals(elgg_get_download_url($file, false, strtotime('+2 minutes')), $file->getDownloadURL(false, strtotime('+2 minutes')));
 
 		_elgg_services()->hooks->registerHandler('download:url', 'file', function (\Elgg\Hook $hook) {
 			$file = $hook->getEntityParam();
@@ -433,7 +433,7 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals(elgg_get_inline_url($file), $file->getInlineURL());
 		$this->assertEquals(elgg_get_inline_url($file, false), $file->getInlineURL(false));
-		$this->assertEquals(elgg_get_inline_url($file, null, strtotime('+2 minutes')), $file->getInlineURL(false, strtotime('+2 minutes')));
+		$this->assertEquals(elgg_get_inline_url($file, false, strtotime('+2 minutes')), $file->getInlineURL(false, strtotime('+2 minutes')));
 
 		_elgg_services()->hooks->registerHandler('inline:url', 'file', function (\Elgg\Hook $hook) {
 			$file = $hook->getEntityParam();

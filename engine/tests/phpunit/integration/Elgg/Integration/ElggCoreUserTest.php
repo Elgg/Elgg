@@ -40,7 +40,7 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$object = $this->createObject();
 		
 		// fail on wrong type
-		$this->assertFalse(get_user($object->guid));
+		$this->assertNull(get_user($object->guid));
 	}
 
 	public function testElggUserSave() {

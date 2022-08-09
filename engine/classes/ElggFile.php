@@ -480,9 +480,9 @@ class ElggFile extends ElggObject {
 	 * @param bool   $use_cookie Limit URL validity to current session only
 	 * @param string $expires    URL expiration, as a string suitable for strtotime()
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	public function getDownloadURL($use_cookie = true, $expires = '+2 hours') {
+	public function getDownloadURL(bool $use_cookie = true, string $expires = '+2 hours'): ?string {
 		$file_svc = new \Elgg\FileService\File();
 		$file_svc->setFile($this);
 		if (!empty($expires)) {
@@ -493,6 +493,8 @@ class ElggFile extends ElggObject {
 
 		$params = [
 			'entity' => $this,
+			'use_cookie' => $use_cookie,
+			'expires' => $expires,
 		];
 		return _elgg_services()->hooks->trigger('download:url', 'file', $params, $file_svc->getURL());
 	}
@@ -506,9 +508,9 @@ class ElggFile extends ElggObject {
 	 * @param bool   $use_cookie Limit URL validity to current session only
 	 * @param string $expires    URL expiration, as a string suitable for strtotime()
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	public function getInlineURL($use_cookie = false, $expires = '') {
+	public function getInlineURL(bool $use_cookie = false, string $expires = ''): ?string {
 		$file_svc = new \Elgg\FileService\File();
 		$file_svc->setFile($this);
 		if (!empty($expires)) {
@@ -519,6 +521,8 @@ class ElggFile extends ElggObject {
 
 		$params = [
 			'entity' => $this,
+			'use_cookie' => $use_cookie,
+			'expires' => $expires,
 		];
 		return _elgg_services()->hooks->trigger('inline:url', 'file', $params, $file_svc->getURL());
 	}

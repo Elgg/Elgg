@@ -2,10 +2,10 @@
 
 use Elgg\Database\Clauses\OrderByClause;
 
-$guid = get_input("guid");
+$guid = (int) get_input('guid');
 
 if (!get_entity($guid)) {
-	echo elgg_echo("error:missing_data");
+	echo elgg_echo('error:missing_data');
 	return;
 }
 

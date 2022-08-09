@@ -151,9 +151,7 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 		});
 		
 		$this->assertNull(_elgg_services()->entityCache->load($object->guid));
-
-		$this->assertFalse(get_entity($object->guid));
-
+		$this->assertNull(get_entity($object->guid));
 	}
 
 	public function testInvalidatesCacheOnSessionChange() {
@@ -176,7 +174,7 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 		$this->assertNull(_elgg_services()->entityCache->load($user->guid));
 		$this->assertNull(_elgg_services()->entityCache->load($object->guid));
 
-		$this->assertFalse(get_entity($object->guid));
+		$this->assertNull(get_entity($object->guid));
 	}
 
 	public function testPropagatesLastActionChangesToCache() {

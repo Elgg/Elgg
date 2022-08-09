@@ -66,7 +66,7 @@ class ElggPage extends ElggObject {
 			return false;
 		}
 		
-		$parent = get_entity($this->parent_guid);
+		$parent = get_entity((int) $this->parent_guid);
 		if ($parent instanceof ElggPage) {
 			return $parent;
 		}

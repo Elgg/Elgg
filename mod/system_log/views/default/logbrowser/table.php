@@ -28,7 +28,7 @@ if (empty($log_entries)) {
 
 /** @var $entry Elgg\SystemLog\SystemLogEntry */
 foreach ($log_entries as $entry) {
-	$user = get_entity($entry->performed_by_guid);
+	$user = $entry->performed_by_guid ? get_entity($entry->performed_by_guid) : null;
 	if ($user) {
 		$user_link = elgg_view_entity_url($user);
 		$user_guid_link = elgg_view_url("admin/administer_utilities/logbrowser?user_guid={$user->guid}", $user->guid);

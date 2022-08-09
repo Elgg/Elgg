@@ -34,7 +34,7 @@ class UploadService {
 	 *
 	 * @return UploadedFile[]
 	 */
-	public function getFiles($input_name) {
+	public function getFiles(string $input_name): array {
 		return $this->request->getFiles($input_name);
 	}
 
@@ -44,9 +44,9 @@ class UploadService {
 	 * @param string $input_name         Form input name
 	 * @param bool   $check_for_validity If there is an uploaded file, is it required to be valid
 	 *
-	 * @return UploadedFile|false
+	 * @return UploadedFile|null
 	 */
-	public function getFile($input_name, $check_for_validity = true) {
+	public function getFile(string $input_name, bool $check_for_validity = true): ?UploadedFile {
 		return $this->request->getFile($input_name, $check_for_validity);
 	}
 }

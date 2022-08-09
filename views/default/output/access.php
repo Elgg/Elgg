@@ -37,7 +37,7 @@ switch ($access_id) {
 		$collection = elgg_get_access_collection($access_id);
 		$owner = false;
 		if ($collection) {
-			$owner = get_entity($collection->owner_guid);
+			$owner = $collection->getOwnerEntity();
 		}
 		if ($owner instanceof ElggGroup) {
 			$class[] = 'elgg-access-group';

@@ -14,8 +14,8 @@ if (!$comment instanceof \ElggComment) {
 	return;
 }
 
-$entity = get_entity($comment->container_guid);
-$commenter = get_user($comment->owner_guid);
+$entity = $comment->getContainerEntity();
+$commenter = $comment->getOwnerEntity();
 if (!$entity || !$commenter) {
 	return;
 }

@@ -1,6 +1,6 @@
 <?php
 
-$guid = elgg_extract('guid', $vars);
+$guid = (int) elgg_extract('guid', $vars);
 
 elgg_register_rss_link();
 

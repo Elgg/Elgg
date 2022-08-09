@@ -8,7 +8,7 @@
  * @uses mixed $_GET['plugin_guids'] The GUIDs of the plugin to activate. Can be an array.
  */
 
-$plugin_guids = get_input('plugin_guids');
+$plugin_guids = get_input('plugin_guids', []);
 
 if (!is_array($plugin_guids)) {
 	$plugin_guids = [$plugin_guids];

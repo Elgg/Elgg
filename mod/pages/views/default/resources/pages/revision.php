@@ -11,7 +11,7 @@ if (!$annotation instanceof ElggAnnotation) {
 	throw new EntityNotFoundException();
 }
 
-$page = get_entity($annotation->entity_guid);
+$page = $annotation->getEntity();
 if (!$page instanceof ElggPage) {
 	throw new EntityNotFoundException();
 }

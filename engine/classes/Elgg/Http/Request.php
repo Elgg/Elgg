@@ -179,7 +179,7 @@ class Request extends SymfonyRequest {
 	 *
 	 * @return array
 	 */
-	public function getParams(bool $filter_result = true) {
+	public function getParams(bool $filter_result = true): array {
 		if (isset($this->filtered_params) && isset($this->unfiltered_params)) {
 			return $filter_result ? $this->filtered_params : $this->unfiltered_params;
 		}
@@ -404,7 +404,7 @@ class Request extends SymfonyRequest {
 	 *
 	 * @return UploadedFile[]
 	 */
-	public function getFiles($input_name) {
+	public function getFiles(string $input_name): array {
 		$files = $this->files->get($input_name);
 		if (empty($files)) {
 			return [];
@@ -423,21 +423,21 @@ class Request extends SymfonyRequest {
 	 * @param string $input_name         Form input name
 	 * @param bool   $check_for_validity If there is an uploaded file, is it required to be valid
 	 *
-	 * @return UploadedFile|false
+	 * @return UploadedFile|null
 	 */
-	public function getFile($input_name, $check_for_validity = true) {
+	public function getFile(string $input_name, bool $check_for_validity = true): ?UploadedFile {
 		$files = $this->getFiles($input_name);
 		if (empty($files)) {
-			return false;
+			return null;
 		}
 
 		$file = $files[0];
 		if (empty($file)) {
-			return false;
+			return null;
 		}
 
 		if ($check_for_validity && !$file->isValid()) {
-			return false;
+			return null;
 		}
 
 		return $file;

@@ -6,7 +6,7 @@
 
 elgg_make_sticky_form('profile:edit');
 
-$guid = get_input('guid');
+$guid = (int) get_input('guid');
 $owner = get_entity($guid);
 
 if (!($owner instanceof ElggUser) || !$owner->canEdit()) {

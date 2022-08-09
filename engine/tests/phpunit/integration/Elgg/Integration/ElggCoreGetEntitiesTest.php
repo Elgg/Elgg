@@ -696,7 +696,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	}
 	
 	public function testGetEntityAsRowWithNonExistingGUID() {
-		$this->assertFalse(elgg_get_entity_as_row(-1));
+		$this->assertnull(elgg_get_entity_as_row(-1));
 	}
 	
 	public function testGetEntityAsRowWithExistingGUID() {

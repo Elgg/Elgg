@@ -215,7 +215,7 @@ class ElggRelationship extends \ElggData {
 	 *
 	 * @return \ElggRelationship|false
 	 */
-	public function getObjectFromID($id) {
+	public function getObjectFromID(int $id) {
 		return _elgg_services()->relationshipsTable->get($id);
 	}
 

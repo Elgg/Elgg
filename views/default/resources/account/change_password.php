@@ -5,7 +5,7 @@
 
 use Elgg\Exceptions\Http\EntityNotFoundException;
 
-$user_guid = get_input('u');
+$user_guid = (int) get_input('u');
 
 $user = get_user($user_guid);
 

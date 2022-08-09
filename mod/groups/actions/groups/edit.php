@@ -39,8 +39,8 @@ foreach ($fields as $field) {
 }
 
 // only set if submitted
-$name = elgg_get_title_input('name', null);
-if ($name !== null) {
+$name = elgg_get_title_input('name');
+if (!elgg_is_empty($name)) {
 	$input['name'] = $name;
 }
 
@@ -61,7 +61,7 @@ if ($group_guid) {
 		return elgg_error_response($error);
 	}
 	
-	$container_guid = get_input('container_guid', $user->guid);
+	$container_guid = (int) get_input('container_guid', $user->guid);
 	$container = get_entity($container_guid);
 	
 	if (!$container || !$container->canWriteToContainer($user->guid, 'group', 'group')) {

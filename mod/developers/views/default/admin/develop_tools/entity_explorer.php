@@ -9,8 +9,8 @@ echo elgg_view_form('developers/entity_explorer', [
 	'class' => 'mbm',
 ]);
 
-$guid = get_input('guid');
-if ($guid === null) {
+$guid = (int) get_input('guid');
+if (empty($guid)) {
 	return;
 }
 

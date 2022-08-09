@@ -3,7 +3,7 @@
  * View conversation thread
  */
 
-$thread_id = elgg_extract('guid', $vars);
+$thread_id = (int) elgg_extract('guid', $vars);
 elgg_entity_gatekeeper($thread_id, 'object', 'thewire');
 
 /* @var $original_post ElggWire */

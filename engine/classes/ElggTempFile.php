@@ -55,14 +55,14 @@ class ElggTempFile extends ElggFile {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getDownloadURL($use_cookie = true, $expires = '+2 hours') {
+	public function getDownloadURL(bool $use_cookie = true, string $expires = '+2 hours'): ?string {
 		return '';
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getInlineURL($use_cookie = false, $expires = '') {
+	public function getInlineURL(bool $use_cookie = false, string $expires = ''): ?string {
 		return '';
 	}
 	

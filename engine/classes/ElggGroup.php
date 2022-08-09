@@ -188,7 +188,7 @@ class ElggGroup extends \ElggEntity {
 	 * @return bool
 	 * @since 3.0.0
 	 */
-	public function isToolEnabled($name) {
+	public function isToolEnabled(string $name): bool {
 		if (empty($name)) {
 			return false;
 		}
@@ -259,7 +259,7 @@ class ElggGroup extends \ElggEntity {
 	 *
 	 * @return Tool|null
 	 */
-	protected function getTool($name) {
+	protected function getTool(string $name): ?Tool {
 		return _elgg_services()->group_tools->group($this)->get($name);
 	}
 
