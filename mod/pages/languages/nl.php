@@ -23,6 +23,7 @@ return array(
 	'notifications:mute:object:page' => "over de pagina '%s'",
 
 	'groups:tool:pages' => 'Schakel groepspagina\'s in',
+	'groups:tool:pages:description' => 'Laat groepsleden samenwerken aan pagina\'s in deze groep.',
 	
 	'annotation:delete:page:success' => 'De paginarevisie is succesvol verwijderd.',
 	'annotation:delete:page:fail' => 'De paginarevisie kon niet worden verwijderd.',

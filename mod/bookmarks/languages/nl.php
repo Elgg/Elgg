@@ -45,6 +45,7 @@ Bekijk en reageer op de favoriet:
 	'river:object:bookmarks:comment' => '%s reageerde op de favoriet%s',
 
 	'groups:tool:bookmarks' => 'Schakel groepsfavorieten in',
+	'groups:tool:bookmarks:description' => 'Laat groepsleden een favorieten delen in deze groep.',
 	
 	/**
 	 * Widget and bookmarklet

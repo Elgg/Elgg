@@ -21,6 +21,7 @@ return array(
 	'blog:archives' => 'Archieven',
 
 	'groups:tool:blog' => 'Groepsblog inschakelen',
+	'groups:tool:blog:description' => 'Laat groepsleden een blog schrijven in deze groep.',
 
 	// Editing
 	'blog:excerpt' => 'Uittreksel',
