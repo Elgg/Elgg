@@ -54,6 +54,7 @@ return array(
 	'widgets:filerepo:description' => "Laat je laatst geüploade bestanden zien",
 
 	'groups:tool:file' => 'Schakel groepsbestanden in',
+	'groups:tool:file:description' => 'Laat groepsleden bestanden delen in deze groep.',
 
 	'river:object:file:create' => '%s heeft het bestand %s geüpload',
 	'river:object:file:comment' => '%s reageerde op het bestand %s',
