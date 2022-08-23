@@ -61,6 +61,7 @@ Bekijk en reageer hier op de discussie:
 %s',
 
 	'groups:tool:forum' => 'Activeer groepsdiscussies',
+	'groups:tool:forum:description' => 'Laat groepsleden een discussie starten in deze groep.',
 
 	'discussions:groups:edit:add_group_subscribers_to_discussion_comments' => 'Voeg groep abonnees toe aan de discussie reactie notificatie',
 	

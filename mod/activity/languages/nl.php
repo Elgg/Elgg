@@ -21,5 +21,6 @@ return array(
 	'collection:river' => "Activiteit",
 	'collection:river:group' => "Groepsactiviteit",
 	'groups:tool:activity' => 'Schakel groepsactiviteit in',
+	'groups:tool:activity:description' => 'Toon activiteiten gerelateerd aan content in deze groep.',
 	
 );

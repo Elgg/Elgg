@@ -79,7 +79,12 @@ jobs:
         run: php ./elgg-cli upgrade async --verbose
  
       - name: Install Composer v2
-        run: composer self-update --2
+        # make sure to remove the global fxp/composer-asset-plugin package as it's no longer needed
+        # also remove the elgg/login_as plugin because after the Composer update it has a hard time removing it
+        run: |
+          composer global remove fxp/composer-asset-plugin
+          composer remove elgg/login_as
+          composer self-update --2
              
       - name: Code checkout Elgg 4.3
         uses: actions/checkout@v2
@@ -115,9 +120,7 @@ jobs:
       
       - name: Composer update
         # using composer update to make sure we have latest dependencies like in the starter project (zip)
-        run: |
-          composer global config --no-plugins allow-plugins.fxp/composer-asset-plugin true
-          composer update --prefer-dist --no-suggest
+        run: composer update --prefer-dist
       
       - name: Elgg CLI upgrade
         run: php ./elgg-cli upgrade async --verbose
