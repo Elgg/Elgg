@@ -477,6 +477,12 @@ class EntityIconService {
 		}
 		
 		$result = true;
+		$supported_extensions = [
+			'jpg',
+		];
+		if ($this->images->hasWebPSupport()) {
+			$supported_extensions[] = 'webp';
+		}
 
 		$sizes = array_keys($this->getSizes($entity->getType(), $entity->getSubtype(), $type));
 		foreach ($sizes as $size) {
@@ -486,6 +492,25 @@ class EntityIconService {
 			
 			$icon = $this->getIcon($entity, $size, $type, false);
 			$result &= $icon->delete();
+			
+			// make sure we remove all supported images (jpg and webp)
+			$current_extension = pathinfo($icon->getFilename(), PATHINFO_EXTENSION);
+			$extensions = $supported_extensions;
+			foreach ($extensions as $extension) {
+				if ($current_extension === $extension) {
+					// already removed
+					continue;
+				}
+				
+				// replace the extension
+				$parts = explode('.', $icon->getFilename());
+				array_pop($parts);
+				$parts[] = $extension;
+				
+				// set new filename and remove the file
+				$icon->setFilename(implode('.', $parts));
+				$result &= $icon->delete();
+			}
 		}
 
 		if ($type == 'icon') {
