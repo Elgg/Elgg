@@ -1,6 +1,6 @@
 <?php
 
-$group_guid = elgg_extract('guid', $vars, elgg_extract('group_guid', $vars)); // group_guid for BC
+$group_guid = (int) elgg_extract('guid', $vars, elgg_extract('group_guid', $vars)); // group_guid for BC
 $lower = elgg_extract('lower', $vars);
 $upper = elgg_extract('upper', $vars);
 

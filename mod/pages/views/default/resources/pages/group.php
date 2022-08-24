@@ -3,7 +3,7 @@
  * List group pages
  */
 
-$guid = elgg_extract('guid', $vars);
+$guid = (int) elgg_extract('guid', $vars);
 
 elgg_entity_gatekeeper($guid, 'group');
 

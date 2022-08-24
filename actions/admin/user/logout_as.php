@@ -7,9 +7,9 @@ use Elgg\Exceptions\LoginException;
 
 $session = elgg_get_session();
 
-$user_guid = $session->get('login_as_original_user_guid');
-$user = get_user($user_guid);
+$user_guid = (int) $session->get('login_as_original_user_guid');
 
+$user = get_user($user_guid);
 if (!$user instanceof \ElggUser || !$user->isAdmin()) {
 	return elgg_error_response(elgg_echo('action:user:login_as:unknown'));
 }

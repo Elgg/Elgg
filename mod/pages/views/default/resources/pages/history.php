@@ -5,7 +5,7 @@
 
 use Elgg\Exceptions\Http\EntityNotFoundException;
 
-$page_guid = elgg_extract('guid', $vars);
+$page_guid = (int) elgg_extract('guid', $vars);
 
 elgg_entity_gatekeeper($page_guid, 'object', 'page');
 

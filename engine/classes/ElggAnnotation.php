@@ -50,6 +50,10 @@ class ElggAnnotation extends \ElggExtender {
 			return _elgg_services()->annotationsTable->update($this);
 		}
 
+		if (!isset($this->entity_guid)) {
+			return false;
+		}
+
 		$entity = get_entity($this->entity_guid);
 		if (!$entity) {
 			return false;
@@ -107,7 +111,7 @@ class ElggAnnotation extends \ElggExtender {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getObjectFromID($id) {
+	public function getObjectFromID(int $id) {
 		return elgg_get_annotation_from_id($id);
 	}
 }

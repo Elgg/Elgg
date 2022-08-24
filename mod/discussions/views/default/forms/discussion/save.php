@@ -9,8 +9,8 @@ $desc = elgg_extract('description', $vars, '');
 $status = elgg_extract('status', $vars, '');
 $tags = elgg_extract('tags', $vars, '');
 $access_id = elgg_extract('access_id', $vars, ACCESS_DEFAULT);
-$container_guid = elgg_extract('container_guid', $vars);
-$guid = elgg_extract('guid', $vars, null);
+$container_guid = (int) elgg_extract('container_guid', $vars);
+$guid = (int) elgg_extract('guid', $vars);
 
 $container_entity = get_entity($container_guid);
 $show_container_input = true;

@@ -15,11 +15,6 @@ use Elgg\Exceptions\Http\Gatekeeper\LoggedInGatekeeperException;
 use Elgg\Exceptions\Http\Gatekeeper\LoggedOutGatekeeperException;
 use Elgg\Http\Request as HttpRequest;
 use Elgg\I18n\Translator;
-use ElggEntity;
-use ElggGroup;
-use ElggSession;
-use ElggUser;
-use Exception;
 
 /**
  * Gatekeeper
@@ -29,7 +24,7 @@ use Exception;
 class Gatekeeper {
 
 	/**
-	 * @var ElggSession
+	 * @var \ElggSession
 	 */
 	protected $session;
 
@@ -61,7 +56,7 @@ class Gatekeeper {
 	/**
 	 * Constructor
 	 *
-	 * @param ElggSession       $session    Session
+	 * @param \ElggSession      $session    Session
 	 * @param HttpRequest       $request    HTTP Request
 	 * @param RedirectService   $redirects  Redirects Service
 	 * @param EntityTable       $entities   Entity table
@@ -69,7 +64,7 @@ class Gatekeeper {
 	 * @param Translator        $translator Translator
 	 */
 	public function __construct(
-		ElggSession $session,
+		\ElggSession $session,
 		HttpRequest $request,
 		RedirectService $redirects,
 		EntityTable $entities,
@@ -144,16 +139,15 @@ class Gatekeeper {
 	 * @param string $type    Entity type
 	 * @param string $subtype Entity subtype
 	 *
-	 * @return ElggEntity
+	 * @return \ElggEntity
 	 * @throws EntityNotFoundException
-	 * @throws Exception
 	 */
-	public function assertExists($guid, $type = null, $subtype = null) {
+	public function assertExists(int $guid, string $type = null, string $subtype = null): \ElggEntity {
 		$entity = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function () use ($guid, $type, $subtype) {
 			return $this->entities->get($guid, $type, $subtype);
 		});
 
-		if (!$entity) {
+		if (!$entity instanceof \ElggEntity) {
 			$exception = new EntityNotFoundException();
 			$exception->setParams([
 				'guid' => $guid,
@@ -170,14 +164,14 @@ class Gatekeeper {
 	/**
 	 * Require that authenticated user has access to entity
 	 *
-	 * @param ElggEntity $entity            Entity
-	 * @param ElggUser   $user              User
-	 * @param bool       $validate_can_edit flag to check canEdit access
+	 * @param \ElggEntity $entity            Entity
+	 * @param \ElggUser   $user              User
+	 * @param bool        $validate_can_edit flag to check canEdit access
 	 *
 	 * @return void
 	 * @throws HttpException
 	 */
-	public function assertAccessibleEntity(ElggEntity $entity, ElggUser $user = null, $validate_can_edit = false): void {
+	public function assertAccessibleEntity(\ElggEntity $entity, \ElggUser $user = null, bool $validate_can_edit = false): void {
 
 		$result = true;
 
@@ -218,7 +212,7 @@ class Gatekeeper {
 				throw $exception;
 			}
 
-			if ($entity instanceof ElggGroup) {
+			if ($entity instanceof \ElggGroup) {
 				$this->assertAccessibleGroup($entity, $user);
 			}
 
@@ -252,13 +246,13 @@ class Gatekeeper {
 	/**
 	 * Validate active user account
 	 *
-	 * @param ElggUser $user   User
-	 * @param ElggUser $viewer Viewing user
+	 * @param \ElggUser $user   User
+	 * @param \ElggUser $viewer Viewing user
 	 *
 	 * @return void
 	 * @throws EntityNotFoundException
 	 */
-	public function assertAccessibleUser(ElggUser $user, ElggUser $viewer = null) {
+	public function assertAccessibleUser(\ElggUser $user, \ElggUser $viewer = null): void {
 		if (!$user->isBanned()) {
 			return;
 		}
@@ -281,14 +275,14 @@ class Gatekeeper {
 	/**
 	 * Validate group content visibility
 	 *
-	 * @param ElggGroup $group Group entity
-	 * @param ElggUser  $user  User entity
+	 * @param \ElggGroup $group Group entity
+	 * @param \ElggUser  $user  User entity
 	 *
 	 * @return void
 	 * @throws GroupGatekeeperException
 	 * @throws GatekeeperException
 	 */
-	public function assertAccessibleGroup(ElggGroup $group, ElggUser $user = null) {
+	public function assertAccessibleGroup(\ElggGroup $group, \ElggUser $user = null): void {
 		if ($group->canAccessContent($user)) {
 			return;
 		}

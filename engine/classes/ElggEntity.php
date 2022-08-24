@@ -1202,10 +1202,10 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	/**
 	 * Gets the \ElggEntity that owns this entity.
 	 *
-	 * @return \ElggEntity The owning entity
+	 * @return \ElggEntity|null
 	 */
-	public function getOwnerEntity() {
-		return get_entity($this->owner_guid);
+	public function getOwnerEntity(): ?\ElggEntity {
+		return $this->owner_guid ? get_entity($this->owner_guid) : null;
 	}
 
 	/**
@@ -1231,11 +1231,11 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	/**
 	 * Get the container entity for this object.
 	 *
-	 * @return \ElggEntity
+	 * @return \ElggEntity|null
 	 * @since 1.8.0
 	 */
-	public function getContainerEntity() {
-		return get_entity($this->getContainerGUID());
+	public function getContainerEntity(): ?\ElggEntity {
+		return $this->container_guid ? get_entity($this->getContainerGUID()) : null;
 	}
 
 	/**
@@ -1903,10 +1903,11 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * For a given ID, return the object associated with it.
 	 * This is used by the system log. It can be called on any Loggable object.
 	 *
-	 * @param int $id GUID.
-	 * @return \ElggEntity|false
+	 * @param int $id GUID
+	 *
+	 * @return \ElggEntity|null
 	 */
-	public function getObjectFromID($id) {
+	public function getObjectFromID(int $id): ?\ElggEntity {
 		return get_entity($id);
 	}
 

@@ -126,10 +126,10 @@ class SiteNotification extends ElggObject {
 	/**
 	 * Get the linked entity for this notification
 	 *
-	 * @return \ElggEntity|false
+	 * @return \ElggEntity|null
 	 */
-	public function getLinkedEntity() {
-		return get_entity($this->linked_entity_guid);
+	public function getLinkedEntity(): ?\ElggEntity {
+		return $this->linked_entity_guid ? get_entity($this->linked_entity_guid) : null;
 	}
 	
 	/**

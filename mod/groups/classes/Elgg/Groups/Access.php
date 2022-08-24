@@ -64,7 +64,7 @@ class Access {
 		$input_params = $hook->getParam('input_params');
 		
 		// try supplied container guid
-		$container_guid = elgg_extract('container_guid', $input_params);
+		$container_guid = (int) elgg_extract('container_guid', $input_params);
 		$container = get_entity($container_guid);
 		if ($container_guid instanceof \ElggGroup) {
 			return $container;

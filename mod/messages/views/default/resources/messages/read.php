@@ -3,7 +3,7 @@
 * Read a message page
 */
 
-$guid = elgg_extract('guid', $vars);
+$guid = (int) elgg_extract('guid', $vars);
 
 elgg_entity_gatekeeper($guid, 'object', 'messages');
 

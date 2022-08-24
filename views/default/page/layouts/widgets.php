@@ -12,7 +12,7 @@
 $num_columns = elgg_extract('num_columns', $vars, 3);
 $show_add_widgets = elgg_extract('show_add_widgets', $vars, true);
 $show_access = elgg_extract('show_access', $vars, true);
-$owner_guid = elgg_extract('owner_guid', $vars);
+$owner_guid = (int) elgg_extract('owner_guid', $vars);
 
 $page_owner = elgg_get_page_owner_entity();
 if ($owner_guid) {

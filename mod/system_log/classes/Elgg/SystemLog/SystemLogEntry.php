@@ -40,7 +40,7 @@ class SystemLogEntry {
 	 */
 	public function getObject() {
 		$class = $this->object_class;
-		$id = $this->object_id;
+		$id = (int) $this->object_id;
 
 		if (!class_exists($class)) {
 			// failed autoload

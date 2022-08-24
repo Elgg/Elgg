@@ -17,7 +17,7 @@ if ($search_username) {
 		$user_guid = null;
 	}
 } else {
-	$user_guid = get_input('user_guid', null);
+	$user_guid = get_input('user_guid');
 	if ($user_guid) {
 		$user_guid = (int) $user_guid;
 		$user = get_entity($user_guid);

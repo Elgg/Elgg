@@ -42,5 +42,5 @@ interface Loggable {
 	 *
 	 * @return static|false
 	 */
-	public function getObjectFromID($id);
+	public function getObjectFromID(int $id);
 }

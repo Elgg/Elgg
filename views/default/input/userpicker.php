@@ -77,13 +77,15 @@ if ($show_friends) {
 
 $items = '';
 foreach ($guids as $guid) {
-	$entity = get_entity($guid);
-	if ($entity) {
-		$items .= elgg_view('input/autocomplete/item', [
-			'entity' => $entity,
-			'input_name' => $name,
-		]);
+	$entity = get_entity((int) $guid);
+	if (!$entity instanceof \ElggEntity) {
+		continue;
 	}
+	
+	$items .= elgg_view('input/autocomplete/item', [
+		'entity' => $entity,
+		'input_name' => $name,
+	]);
 }
 
 $picker .= elgg_format_element('ul', ['class' => 'elgg-list elgg-user-picker-list'], $items);

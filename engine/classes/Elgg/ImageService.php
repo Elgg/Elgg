@@ -91,11 +91,9 @@ class ImageService {
 	 *                            will be upscaled to fit the bounding box.
 	 * @return bool
 	 */
-	public function resize($source, $destination = null, array $params = []) {
+	public function resize(string $source, string $destination = null, array $params = []): bool {
 
-		if (!isset($destination)) {
-			$destination = $source;
-		}
+		$destination = $destination ?? $source;
 
 		try {
 			$image = $this->imagine->open($source);

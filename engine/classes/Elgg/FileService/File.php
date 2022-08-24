@@ -47,9 +47,10 @@ class File {
 
 	/**
 	 * Returns file object
+	 *
 	 * @return \ElggFile|null
 	 */
-	public function getFile() {
+	public function getFile(): ?\ElggFile {
 		return $this->file;
 	}
 
@@ -60,7 +61,7 @@ class File {
 	 *
 	 * @return void
 	 */
-	public function setExpires($expires = '+2 hours') {
+	public function setExpires(string $expires = '+2 hours'): void {
 		$this->expires = strtotime($expires);
 	}
 
@@ -68,9 +69,11 @@ class File {
 	 * Sets content disposition
 	 *
 	 * @param string $disposition Content disposition ('inline' or 'attachment')
+	 *
 	 * @return void
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
-	public function setDisposition($disposition = self::ATTACHMENT) {
+	public function setDisposition(string $disposition = self::ATTACHMENT): void {
 		if (!in_array($disposition, [self::ATTACHMENT, self::INLINE])) {
 			throw new InvalidArgumentException("Disposition $disposition is not supported in " . __CLASS__);
 		}
@@ -81,21 +84,23 @@ class File {
 	 * Bind URL to current user session
 	 *
 	 * @param bool $use_cookie Use cookie
+	 *
 	 * @return void
 	 */
-	public function bindSession($use_cookie = true) {
+	public function bindSession(bool $use_cookie = true): void {
 		$this->use_cookie = $use_cookie;
 	}
 
 	/**
 	 * Returns publicly accessible URL
-	 * @return string|false
+	 *
+	 * @return string|null
 	 */
-	public function getURL() {
+	public function getURL(): ?string {
 
 		if (!$this->file->exists()) {
 			elgg_log("Unable to resolve resource URL for a file that does not exist on filestore");
-			return false;
+			return null;
 		}
 
 		$relative_path = '';
@@ -107,7 +112,7 @@ class File {
 
 		if (!$relative_path) {
 			elgg_log("Unable to resolve relative path of the file on the filestore");
-			return false;
+			return null;
 		}
 
 		if (preg_match('~[^a-zA-Z0-9_\./ ]~', $relative_path)) {
@@ -117,16 +122,16 @@ class File {
 		}
 
 		$data = [
-			'expires' => isset($this->expires) ? $this->expires : 0,
+			'expires' => $this->expires ?? 0,
 			'last_updated' => filemtime($this->file->getFilenameOnFilestore()),
-			'disposition' => $this->disposition == self::INLINE ? 'i' : 'a',
+			'disposition' => $this->disposition === self::INLINE ? 'i' : 'a',
 			'path' => $relative_path,
 		];
 
 		if ($this->use_cookie) {
 			$data['cookie'] = _elgg_services()->session->getID();
 			if (empty($data['cookie'])) {
-				return false;
+				return null;
 			}
 			$data['use_cookie'] = 1;
 		} else {

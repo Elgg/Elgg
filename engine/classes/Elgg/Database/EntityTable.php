@@ -130,7 +130,7 @@ class EntityTable {
 	 * @return void
 	 * @throws InvalidParameterException
 	 */
-	public function setEntityClass($type, $subtype, $class = '') {
+	public function setEntityClass(string $type, string $subtype, string $class = ''): void {
 		if (!in_array($type, Config::ENTITY_TYPES)) {
 			throw new InvalidParameterException("{$type} is not a valid entity type");
 		}
@@ -146,7 +146,7 @@ class EntityTable {
 	 *
 	 * @return string
 	 */
-	public function getEntityClass($type, $subtype) {
+	public function getEntityClass(string $type, string $subtype): string {
 		if (isset($this->entity_classes[$type][$subtype])) {
 			return $this->entity_classes[$type][$subtype];
 		}
@@ -166,23 +166,23 @@ class EntityTable {
 	 *                       Defaults to logged in user if null
 	 *                       Builds an access query for a logged out user if 0
 	 *
-	 * @return \stdClass|false
+	 * @return \stdClass|null
 	 */
-	public function getRow($guid, $user_guid = null) {
+	public function getRow(int $guid, int $user_guid = null): ?\stdClass {
 
-		if (!$guid) {
-			return false;
+		if ($guid < 0) {
+			return null;
 		}
 
 		$where = new EntityWhereClause();
-		$where->guids = (int) $guid;
+		$where->guids = $guid;
 		$where->viewer_guid = $user_guid;
 
 		$select = Select::fromTable(self::TABLE_NAME, 'e');
 		$select->select('e.*');
 		$select->addClause($where);
 
-		return $this->db->getDataRow($select) ?: false;
+		return $this->db->getDataRow($select) ?: null;
 	}
 
 	/**
@@ -239,18 +239,18 @@ class EntityTable {
 	 *
 	 * @param \stdClass $row The row of the entry in the entities table.
 	 *
-	 * @return \ElggEntity|false
+	 * @return \ElggEntity|null
 	 * @throws ClassException
 	 * @throws InvalidParameterException
 	 */
-	public function rowToElggStar(\stdClass $row) {
+	public function rowToElggStar(\stdClass $row): ?\ElggEntity {
 		if (!isset($row->guid) || !isset($row->subtype)) {
-			return false;
+			return null;
 		}
 
 		$class_name = $this->getEntityClass($row->type, $row->subtype);
 		if ($class_name && !class_exists($class_name)) {
-			$this->getLogger()->error("Class '$class_name' was not found, missing plugin?");
+			$this->getLogger()->error("Class '{$class_name}' was not found, missing plugin?");
 			$class_name = '';
 		}
 
@@ -333,16 +333,7 @@ class EntityTable {
 	 *
 	 * @return \ElggEntity|false The correct Elgg or custom object based upon entity type and subtype
 	 */
-	public function get($guid, $type = null, $subtype = null) {
-		// We could also use: if (!(int) $guid) { return false },
-		// but that evaluates to a false positive for $guid = true.
-		// This is a bit slower, but more thorough.
-		if (!is_numeric($guid) || $guid === 0 || $guid === '0') {
-			return false;
-		}
-
-		$guid = (int) $guid;
-
+	public function get(int $guid, string $type = null, string $subtype = null): ?\ElggEntity {
 		$entity = $this->getFromCache($guid);
 		if (
 			$entity instanceof \ElggEntity &&
@@ -354,15 +345,15 @@ class EntityTable {
 
 		$row = $this->getRow($guid);
 		if (empty($row)) {
-			return false;
+			return null;
 		}
 
 		if (isset($type) && $row->type !== $type) {
-			return false;
+			return null;
 		}
 
 		if (isset($subtype) && $row->subtype !== $subtype) {
-			return false;
+			return null;
 		}
 
 		$entity = $row;
@@ -389,7 +380,7 @@ class EntityTable {
 	 *
 	 * @return bool
 	 */
-	public function exists($guid) {
+	public function exists(int $guid): bool {
 
 		$result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
 			// need to ignore access and show hidden entities to check existence

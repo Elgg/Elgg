@@ -23,7 +23,7 @@ if ($info === false) {
 	return;
 }
 
-$container = get_entity($options['value']);
+$container = get_entity((int) $options['value']);
 if (empty($info) && $container instanceof \ElggGroup) {
 	$language_keys = [];
 	

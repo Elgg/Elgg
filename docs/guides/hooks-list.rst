@@ -719,6 +719,8 @@ Files
     ``$params`` array includes:
 
      * ``entity`` - instance of ``ElggFile``
+     * ``use_cookie`` - whether or not to use a cookie to secure download link
+     * ``expires`` - a string representation of when the download link should expire
 
 **inline:url, file**
     Allows plugins to filter the inline URL of the image file.
@@ -727,6 +729,8 @@ Files
     ``$params`` array includes:
 
      * ``entity`` - instance of ``ElggFile``
+     * ``use_cookie`` - whether or not to use a cookie to secure download link
+     * ``expires`` - a string representation of when the download link should expire
 
 **mime_type, file**
 	Return the mimetype for the filename ``$params['filename']`` with original filename ``$params['original_filename']``

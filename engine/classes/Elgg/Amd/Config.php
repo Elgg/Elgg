@@ -45,9 +45,10 @@ class Config {
 	 *
 	 * @param string $name Module name
 	 * @param string $path Full URL of the module
+	 *
 	 * @return void
 	 */
-	public function addPath($name, $path) {
+	public function addPath(string $name, string $path): void {
 		if (preg_match("/\.js$/", $path)) {
 			$path = preg_replace("/\.js$/", '', $path);
 		}
@@ -94,7 +95,7 @@ class Config {
 	 * @return void
 	 * @throws InvalidParameterException
 	 */
-	public function addShim($name, array $config) {
+	public function addShim(string $name, array $config): void {
 		$deps = elgg_extract('deps', $config, []);
 		$exports = elgg_extract('exports', $config);
 
@@ -137,9 +138,10 @@ class Config {
 	 * Add a dependency
 	 *
 	 * @param string $name Name of the dependency
+	 *
 	 * @return void
 	 */
-	public function addDependency($name) {
+	public function addDependency(string $name): void {
 		$this->dependencies[$name] = true;
 	}
 
@@ -147,9 +149,10 @@ class Config {
 	 * Removes a dependency
 	 *
 	 * @param string $name Name of the dependency
+	 *
 	 * @return void
 	 */
-	public function removeDependency($name) {
+	public function removeDependency(string $name): void {
 		unset($this->dependencies[$name]);
 	}
 

@@ -27,10 +27,10 @@
  *
  * @return void
  */
-function elgg_define_js($name, $config) {
+function elgg_define_js(string $name, array $config): void {
 	$src = elgg_extract('src', $config);
 
-	if ($src) {
+	if (!empty($src)) {
 		$url = elgg_normalize_url($src);
 		_elgg_services()->amdConfig->addPath($name, $url);
 	}
@@ -44,22 +44,24 @@ function elgg_define_js($name, $config) {
 /**
  * Request that Elgg load an AMD module onto the page.
  *
- * @param string $name The AMD module name.
+ * @param string $name The AMD module name
+ *
  * @return void
  * @since 1.9.0
  */
-function elgg_require_js($name) {
+function elgg_require_js(string $name): void {
 	_elgg_services()->amdConfig->addDependency($name);
 }
 
 /**
  * Cancel a request to load an AMD module onto the page.
  *
- * @param string $name The AMD module name.
+ * @param string $name The AMD module name
+ *
  * @return void
  * @since 2.1.0
  */
-function elgg_unrequire_js($name) {
+function elgg_unrequire_js(string $name): void {
 	_elgg_services()->amdConfig->removeDependency($name);
 }
 
@@ -69,10 +71,9 @@ function elgg_unrequire_js($name) {
  * @param string $view The css view name
  *
  * @return void
- *
  * @since 3.1
  */
-function elgg_require_css(string $view) {
+function elgg_require_css(string $view): void {
 	$view_name = "{$view}.css";
 	if (!elgg_view_exists($view_name)) {
 		$view_name = $view;
@@ -88,10 +89,9 @@ function elgg_require_css(string $view) {
  * @param string $view The css view name
  *
  * @return void
- *
  * @since 3.1
  */
-function elgg_unrequire_css(string $view) {
+function elgg_unrequire_css(string $view): void {
 	elgg_unregister_external_file('css', $view);
 }
 

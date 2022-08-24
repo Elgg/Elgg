@@ -12,18 +12,16 @@
  * @param string $language    Optionally, the standard language code
  *                            (defaults to site/user default, then English)
  *
- * @return string Either the translated string, the English string,
- * or the original language string.
+ * @return string Either the translated string, the English string or the original language string.
  */
-function elgg_echo($message_key, array $args = [], $language = "") {
+function elgg_echo(string $message_key, array $args = [], string $language = ''): string {
 	return _elgg_services()->translator->translate($message_key, $args, $language);
 }
 
 /**
- * Get the current system/user language or "en".
+ * Get the current system/user language or 'en'.
  *
  * @return string
- *
  * @since 4.3
  */
 function elgg_get_current_language(): string {
@@ -43,6 +41,6 @@ function elgg_get_current_language(): string {
  * @return bool
  * @since 1.11
  */
-function elgg_language_key_exists($key, $language = 'en') {
+function elgg_language_key_exists(string $key, string $language = 'en'): bool {
 	return _elgg_services()->translator->languageKeyExists($key, $language);
 }

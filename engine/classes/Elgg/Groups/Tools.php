@@ -4,7 +4,6 @@ namespace Elgg\Groups;
 
 use Elgg\Collections\Collection;
 use Elgg\PluginHooksService;
-use ElggGroup;
 
 /**
  * Group tools service
@@ -87,11 +86,11 @@ class Tools {
 	/**
 	 * Returns group specific tools
 	 *
-	 * @param ElggGroup $group Group
+	 * @param \ElggGroup $group Group
 	 *
 	 * @return Collection|Tool[]
 	 */
-	public function group(ElggGroup $group) {
+	public function group(\ElggGroup $group) {
 
 		$tool_options = clone $this->tools;
 

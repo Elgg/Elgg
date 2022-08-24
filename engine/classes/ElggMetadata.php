@@ -71,7 +71,7 @@ class ElggMetadata extends ElggExtender {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getObjectFromID($id) {
+	public function getObjectFromID(int $id) {
 		return elgg_get_metadata_from_id($id);
 	}
 }

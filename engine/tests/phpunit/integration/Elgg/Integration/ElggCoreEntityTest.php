@@ -629,7 +629,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->assertNotEmpty($guid);
 		
 		// entity should not be returned from db or cache
-		$this->assertFalse(_elgg_services()->entityTable->get($guid, $check_type, $check_subtype));
+		$this->assertNull(_elgg_services()->entityTable->get($guid, $check_type, $check_subtype));
 	}
 	
 	public function entitiesNotTypesMatch() {

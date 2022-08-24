@@ -41,7 +41,7 @@ $fields = [
 		'#type' => 'access',
 		'name' => 'access_id',
 		'value' => elgg_extract('access_id', $vars, ACCESS_DEFAULT),
-		'entity' => get_entity(elgg_extract('guid', $vars)),
+		'entity' => get_entity((int) elgg_extract('guid', $vars)),
 		'entity_type' => 'object',
 		'entity_subtype' => 'bookmarks',
 	],

@@ -131,19 +131,19 @@ abstract class ElggExtender extends \ElggData {
 	/**
 	 * Get the entity that owns this extender
 	 *
-	 * @return \ElggEntity
+	 * @return \ElggEntity|null
 	 */
-	public function getOwnerEntity() {
-		return get_entity($this->owner_guid);
+	public function getOwnerEntity(): ?\ElggEntity {
+		return $this->owner_guid ? get_entity($this->owner_guid) : null;
 	}
 
 	/**
 	 * Get the entity this describes.
 	 *
-	 * @return \ElggEntity The entity
+	 * @return \ElggEntity|null
 	 */
-	public function getEntity() {
-		return get_entity($this->entity_guid);
+	public function getEntity(): ?\ElggEntity {
+		return $this->entity_guid ? get_entity($this->entity_guid) : null;
 	}
 
 	/**

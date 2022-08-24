@@ -157,9 +157,9 @@ class Entities extends Repository {
 	 *
 	 * @warning Months are returned in the form YYYYMM.
 	 *
-	 * @return array|false Either an array months as YYYYMM, or false on failure
+	 * @return array An array months as YYYYMM
 	 */
-	public function getDates() {
+	public function getDates(): array {
 		
 		$qb = Select::fromTable('entities', 'e');
 
@@ -177,7 +177,7 @@ class Entities extends Repository {
 		$results = _elgg_services()->entityTable->fetch($qb, $options);
 		
 		if (empty($results)) {
-			return false;
+			return [];
 		}
 	
 		return array_map(function ($e) {

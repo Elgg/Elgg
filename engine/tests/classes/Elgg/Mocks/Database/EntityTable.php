@@ -38,7 +38,7 @@ class EntityTable extends DbEntityTable {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getRow($guid, $user_guid = null) {
+	public function getRow(int $guid, int $user_guid = null): ?\stdClass {
 		if ($guid === 1) {
 			return (object) [
 				'guid' => 1,
@@ -55,30 +55,29 @@ class EntityTable extends DbEntityTable {
 		}
 
 		if (empty($this->rows[$guid])) {
-			return false;
+			return null;
 		}
 
-		$entity = $this->rowToElggStar($this->rows[$guid]);
-
-		if ($entity->access_id == ACCESS_PUBLIC) {
+		$row = $this->rows[$guid];
+		if ($row->access_id == ACCESS_PUBLIC) {
 			// Public entities are always accessible
-			return $entity;
+			return $row;
 		}
 
 		$user_guid = isset($user_guid) ? (int) $user_guid : elgg_get_logged_in_user_guid();
 
 		if (_elgg_services()->userCapabilities->canBypassPermissionsCheck($user_guid)) {
-			return $entity;
+			return $row;
 		}
 
-		if ($user_guid && $user_guid == $entity->owner_guid) {
+		if ($user_guid && $user_guid == $row->owner_guid) {
 			// Owners have access to their own content
-			return $entity;
+			return $row;
 		}
 
-		if ($user_guid && $entity->access_id == ACCESS_LOGGED_IN) {
+		if ($user_guid && $row->access_id == ACCESS_LOGGED_IN) {
 			// Existing users have access to entities with logged in access
-			return $entity;
+			return $row;
 		}
 
 		return parent::getRow($guid, $user_guid);

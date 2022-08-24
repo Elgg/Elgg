@@ -17,7 +17,7 @@
  *
  * @return mixed
  */
-function get_input($variable, $default = null, $filter_result = true) {
+function get_input(string $variable, $default = null, bool $filter_result = true) {
 	return _elgg_services()->request->getParam($variable, $default, $filter_result);
 }
 
@@ -26,12 +26,12 @@ function get_input($variable, $default = null, $filter_result = true) {
  *
  * Note: this function does not handle nested arrays (ex: form input of param[m][n])
  *
- * @param string          $variable The name of the variable
- * @param string|string[] $value    The value of the variable
+ * @param string $variable The name of the variable
+ * @param mixed  $value    The value of the variable
  *
  * @return void
  */
-function set_input($variable, $value) {
+function set_input(string $variable, $value): void {
 	_elgg_services()->request->setParam($variable, $value, true);
 }
 
@@ -45,10 +45,9 @@ function set_input($variable, $value) {
  * @param bool $filter_result Sanitize input values
  *
  * @return array
- *
  * @since 3.0
  */
-function elgg_get_request_data($filter_result = true) {
+function elgg_get_request_data(bool $filter_result = true): array {
 	return _elgg_services()->request->getParams($filter_result);
 }
 
@@ -61,7 +60,7 @@ function elgg_get_request_data($filter_result = true) {
  * @return string
  * @since 3.0
  */
-function elgg_get_title_input($variable = 'title', $default = '') {
+function elgg_get_title_input(string $variable = 'title', string $default = ''): string {
 	$raw_input = get_input($variable, $default, false);
 	return htmlspecialchars($raw_input ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
@@ -103,8 +102,8 @@ function elgg_is_valid_email(string $address): bool {
  * @return void
  * @since 1.8.0
  */
-function elgg_make_sticky_form($form_name, array $ignored_field_names = []): void {
-	_elgg_services()->stickyForms->makeStickyForm((string) $form_name, $ignored_field_names);
+function elgg_make_sticky_form(string $form_name, array $ignored_field_names = []): void {
+	_elgg_services()->stickyForms->makeStickyForm($form_name, $ignored_field_names);
 }
 
 /**
@@ -119,8 +118,8 @@ function elgg_make_sticky_form($form_name, array $ignored_field_names = []): voi
  * @return void
  * @since 1.8.0
  */
-function elgg_clear_sticky_form($form_name): void {
-	_elgg_services()->stickyForms->clearStickyForm((string) $form_name);
+function elgg_clear_sticky_form(string $form_name): void {
+	_elgg_services()->stickyForms->clearStickyForm($form_name);
 }
 
 /**
@@ -131,8 +130,8 @@ function elgg_clear_sticky_form($form_name): void {
  * @return boolean
  * @since 1.8.0
  */
-function elgg_is_sticky_form($form_name): bool {
-	return _elgg_services()->stickyForms->isStickyForm((string) $form_name);
+function elgg_is_sticky_form(string $form_name): bool {
+	return _elgg_services()->stickyForms->isStickyForm($form_name);
 }
 
 /**
@@ -144,11 +143,10 @@ function elgg_is_sticky_form($form_name): bool {
  * @param boolean $filter_result Filter for bad input if true
  *
  * @return mixed
- *
  * @since 1.8.0
  */
-function elgg_get_sticky_value($form_name, $variable = '', $default = null, $filter_result = true) {
-	return _elgg_services()->stickyForms->getStickyValue((string) $form_name, (string) $variable, $default, (bool) $filter_result);
+function elgg_get_sticky_value(string $form_name, string $variable = '', $default = null, bool $filter_result = true) {
+	return _elgg_services()->stickyForms->getStickyValue($form_name, $variable, $default, $filter_result);
 }
 
 /**
@@ -160,8 +158,8 @@ function elgg_get_sticky_value($form_name, $variable = '', $default = null, $fil
  * @return array
  * @since 1.8.0
  */
-function elgg_get_sticky_values($form_name, $filter_result = true): array {
-	return _elgg_services()->stickyForms->getStickyValues((string) $form_name, (bool) $filter_result);
+function elgg_get_sticky_values(string $form_name, bool $filter_result = true): array {
+	return _elgg_services()->stickyForms->getStickyValues($form_name, $filter_result);
 }
 
 /**
@@ -175,7 +173,7 @@ function elgg_get_sticky_values($form_name, $filter_result = true): array {
  * @return bool
  * @since 3.0.0
  */
-function elgg_is_empty($value) {
+function elgg_is_empty($value): bool {
 	return Elgg\Values::isEmpty($value);
 }
 
@@ -196,7 +194,7 @@ function elgg_is_empty($value) {
 function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
 	if ($attributes === false) {
 		// This is a closing tag. Prevent further processing to avoid inserting a duplicate tag
-		return "</${element}>";
+		return "</{$element}>";
 	}
 
 	// this list should be coordinated with the WYSIWYG editor used (tinymce, ckeditor, etc.)
@@ -228,26 +226,25 @@ function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
 				$style_value = trim($style_value);
 
 				if (in_array($style_attr, $allowed_styles)) {
-					$style_str .= "$style_attr: $style_value; ";
+					$style_str .= "{$style_attr}: {$style_value}; ";
 				}
 			}
 
 			if ($style_str) {
 				$style_str = trim($style_str);
-				$string .= " style=\"$style_str\"";
+				$string .= " style=\"{$style_str}\"";
 			}
 		} else {
-			$string .= " $attr=\"$value\"";
+			$string .= " {$attr}=\"{$value}\"";
 		}
 	}
 
 	// Some WYSIWYG editors do not like tags like <p > so only add a space if needed.
 	if ($string = trim($string)) {
-		$string = " $string";
+		$string = " {$string}";
 	}
 
-	$r = "<$element$string>";
-	return $r;
+	return "<{$element}{$string}>";
 }
 
 /**

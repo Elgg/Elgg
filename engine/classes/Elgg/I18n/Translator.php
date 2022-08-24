@@ -100,16 +100,14 @@ class Translator {
 	 * @param string $language    Optionally, the standard language code
 	 *                            (defaults to site/user default, then English)
 	 *
-	 * @return string Either the translated string, the English string,
-	 * or the original language string.
+	 * @return string Either the translated string, the English string or the original language string.
 	 */
-	public function translate($message_key, array $args = [], $language = "") {
-		if (!is_string($message_key) || strlen($message_key) < 1) {
-			$this->getLogger()->warning('$message_key needs to be a string in ' . __METHOD__ . '(), ' . gettype($message_key) . ' provided');
+	public function translate(string $message_key, array $args = [], string $language = ''): string {
+		if (\Elgg\Values::isEmpty($message_key)) {
 			return '';
 		}
 
-		if (!$language) {
+		if (empty($language)) {
 			// no language provided, get current language
 			// based on detection, user setting or site
 			$language = $this->getCurrentLanguage();
@@ -216,11 +214,11 @@ class Translator {
 	}
 
 	/**
-	 * Get the current system/user language or "en".
+	 * Get the current system/user language or 'en'.
 	 *
-	 * @return string The language code for the site/user or "en" if not set
+	 * @return string
 	 */
-	public function getCurrentLanguage() {
+	public function getCurrentLanguage(): string {
 		if (!isset($this->current_language)) {
 			$this->current_language = $this->detectLanguage();
 		}
@@ -556,8 +554,8 @@ class Translator {
 	 * @return bool
 	 * @since 1.11
 	 */
-	public function languageKeyExists($key, $language = 'en') {
-		if (empty($key)) {
+	public function languageKeyExists(string $key, string $language = 'en'): bool {
+		if (\Elgg\Values::isEmpty($key)) {
 			return false;
 		}
 

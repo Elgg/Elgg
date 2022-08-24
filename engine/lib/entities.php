@@ -3,9 +3,8 @@
  * Procedural code for creating, loading, and modifying \ElggEntity objects.
  */
 
-use Elgg\Exceptions\InvalidParameterException;
-use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Select;
+use Elgg\Exceptions\InvalidParameterException;
 
 /**
  * Return the class name registered as a constructor for an entity of a given type and subtype
@@ -17,7 +16,7 @@ use Elgg\Database\Select;
  *
  * @return string
  */
-function elgg_get_entity_class($type, $subtype) {
+function elgg_get_entity_class(string $type, string $subtype): string {
 	return _elgg_services()->entityTable->getEntityClass($type, $subtype);
 }
 
@@ -40,7 +39,7 @@ function elgg_get_entity_class($type, $subtype) {
  *
  * @return void
  */
-function elgg_set_entity_class($type, $subtype, $class = "") {
+function elgg_set_entity_class(string $type, string $subtype, string $class = ''): void {
 	_elgg_services()->entityTable->setEntityClass($type, $subtype, $class);
 }
 
@@ -53,9 +52,9 @@ function elgg_set_entity_class($type, $subtype, $class = "") {
  *
  * @param int $guid The GUID of the object to extract
  *
- * @return \stdClass|false
+ * @return \stdClass|null
  */
-function elgg_get_entity_as_row(int $guid) {
+function elgg_get_entity_as_row(int $guid): ?\stdClass {
 	return _elgg_services()->entityTable->getRow($guid);
 }
 
@@ -66,8 +65,8 @@ function elgg_get_entity_as_row(int $guid) {
  *
  * @return \ElggEntity|false The correct Elgg or custom object based upon entity type and subtype
  */
-function get_entity($guid) {
-	if ($guid == 1) {
+function get_entity(int $guid): ?\ElggEntity {
+	if ($guid === 1) {
 		return _elgg_services()->config->site;
 	}
 	return _elgg_services()->entityTable->get($guid);
@@ -86,7 +85,7 @@ function get_entity($guid) {
  * @return bool
  * @since 1.8.0
  */
-function elgg_entity_exists($guid) {
+function elgg_entity_exists(int $guid): bool {
 	return _elgg_services()->entityTable->exists($guid);
 }
 
@@ -96,7 +95,7 @@ function elgg_entity_exists($guid) {
  * @return \ElggSite
  * @since 1.8.0
  */
-function elgg_get_site_entity() {
+function elgg_get_site_entity(): \ElggSite {
 	return _elgg_services()->config->site;
 }
 
@@ -553,7 +552,7 @@ function elgg_get_entities(array $options = []) {
  *
  * @return int
  */
-function elgg_count_entities(array $options = []) {
+function elgg_count_entities(array $options = []): int {
 	$options['count'] = true;
 	
 	return (int) elgg_get_entities($options);
@@ -586,9 +585,10 @@ function elgg_count_entities(array $options = []) {
  * @see elgg_get_entities()
  * @see elgg_view_entity_list()
  */
-function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities', $viewer = 'elgg_view_entity_list') {
-
-	$offset_key = isset($options['offset_key']) ? $options['offset_key'] : 'offset';
+function elgg_list_entities(array $options = [], callable $getter = null, callable $viewer = null): string {
+	$getter = $getter ?? 'elgg_get_entities'; // callables only support default NULL value
+	$viewer = $viewer ?? 'elgg_view_entity_list'; // callables only support default NULL value
+	$offset_key = $options['offset_key'] ?? 'offset';
 
 	$defaults = [
 		'offset' => (int) max(get_input($offset_key, 0), 0),
@@ -641,10 +641,10 @@ function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities', 
  *
  * @param array $options all entity options supported by {@see elgg_get_entities()}
  *
- * @return array|false Either an array months as YYYYMM, or false on failure
+ * @return array An array months as YYYYMM
  * @since 3.0
  */
-function elgg_get_entity_dates(array $options = []) {
+function elgg_get_entity_dates(array $options = []): array {
 	return \Elgg\Database\Entities::with($options)->getDates();
 }
 
