@@ -23,80 +23,6 @@ class ElggWidget extends \ElggObject {
 	}
 
 	/**
-	 * Get a value from attributes, metadata or private settings
-	 *
-	 * @param string $name The name of the value
-	 *
-	 * @return mixed
-	 */
-	public function __get($name) {
-		// See if its in our base attribute
-		if (array_key_exists($name, $this->attributes)) {
-			return $this->attributes[$name];
-		}
-	
-		// object title and description are stored as metadata
-		if (in_array($name, ['title', 'description'])) {
-			return parent::__get($name);
-		}
-
-		return $this->getPrivateSetting($name);
-	}
-
-	/**
-	 * Set an attribute, metadata or private setting value
-	 *
-	 * @param string $name  The name of the value to set
-	 * @param mixed  $value The value to set
-	 *
-	 * @return void
-	 */
-	public function __set($name, $value) {
-		if (array_key_exists($name, $this->attributes)) {
-			// Check that we're not trying to change the guid!
-			if ((array_key_exists('guid', $this->attributes)) && ($name == 'guid')) {
-				return;
-			}
-
-			$this->attributes[$name] = $value;
-			return;
-		}
-		
-		// object title and description are stored as metadata
-		if (in_array($name, ['title', 'description'])) {
-			parent::__set($name, $value);
-			return;
-		}
-		
-		$this->setPrivateSetting($name, $value);
-	}
-	
-	/**
-	 * Test if property is set either as an attribute, metadata or private setting
-	 *
-	 * @tip Use isset($entity->property)
-	 *
-	 * @see \ElggEntity->__isset
-	 *
-	 * @param string $name The name of the attribute or private setting.
-	 *
-	 * @return bool
-	 * @since 2.2.0
-	 */
-	public function __isset($name) {
-		if (array_key_exists($name, $this->attributes)) {
-			return parent::__isset($name);
-		}
-		
-		// object title and description are stored as metadata
-		if (in_array($name, ['title', 'description'])) {
-			return parent::__isset($name);
-		}
-
-		return !is_null($this->getPrivateSetting($name));
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	public function getDisplayName() {
@@ -125,7 +51,7 @@ class ElggWidget extends \ElggObject {
 			'subtype' => 'widget',
 			'container_guid' => $this->container_guid,
 			'limit' => false,
-			'private_setting_name_value_pairs' => [
+			'metadata_name_value_pairs' => [
 				['name' => 'context', 'value' => (string) $this->context],
 				['name' => 'column', 'value' => $column],
 			],
@@ -240,7 +166,7 @@ class ElggWidget extends \ElggObject {
 		if (is_array($params) && count($params) > 0) {
 			foreach ($params as $name => $value) {
 				if (is_array($value)) {
-					// private settings cannot handle arrays
+					// @todo what do we want with arrays? metadata supports it
 					return false;
 				} else {
 					$this->$name = $value;

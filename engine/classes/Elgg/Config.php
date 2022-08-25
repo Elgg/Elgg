@@ -305,7 +305,7 @@ class Config {
 	 * Build a config from default settings locations
 	 *
 	 * @param string $settings_path Path of settings file
-	 * @param bool   $try_env       If path not given, try $_ENV['ELGG_SETTINGS_FILE']
+	 * @param bool   $try_env       If path not given, try the environment variable 'ELGG_SETTINGS_FILE'
 	 * @return Config
 	 *
 	 * @throws ConfigurationException
@@ -392,13 +392,13 @@ class Config {
 	 * Resolve settings path
 	 *
 	 * @param string $settings_path Path of settings file
-	 * @param bool   $try_env       If path not given, try $_ENV['ELGG_SETTINGS_FILE']
+	 * @param bool   $try_env       If path not given, the environment variable 'ELGG_SETTINGS_FILE'
 	 * @return string
 	 */
 	public static function resolvePath(string $settings_path = '', bool $try_env = true): string {
 		if (!$settings_path) {
-			if ($try_env && !empty($_ENV['ELGG_SETTINGS_FILE'])) {
-				$settings_path = $_ENV['ELGG_SETTINGS_FILE'];
+			if ($try_env && !empty(getenv('ELGG_SETTINGS_FILE'))) {
+				$settings_path = getenv('ELGG_SETTINGS_FILE');
 			} else if (!$settings_path) {
 				$settings_path = Paths::settingsFile(Paths::SETTINGS_PHP);
 			}

@@ -50,8 +50,8 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	 * @return Config
 	 */
 	public static function getTestingConfig() {
-		if (!empty($_ENV['ELGG_SETTINGS_FILE'])) {
-			$settings_path = $_ENV['ELGG_SETTINGS_FILE'];
+		if (!empty(getenv('ELGG_SETTINGS_FILE'))) {
+			$settings_path = getenv('ELGG_SETTINGS_FILE');
 
 			return Config::factory($settings_path);
 		}

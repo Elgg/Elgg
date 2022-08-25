@@ -86,8 +86,6 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\PersistentLoginService                    $persistentLogin
  * @property-read \Elgg\Database\Plugins                          $plugins
  * @property-read \ElggCache                                      $pluginsCache
- * @property-read \Elgg\Cache\PrivateSettingsCache                $privateSettingsCache
- * @property-read \Elgg\Database\PrivateSettingsTable             $privateSettings
  * @property-read \Elgg\Application\Database                      $publicDb
  * @property-read \Elgg\Cache\QueryCache                          $queryCache
  * @property-read \Elgg\RedirectService                           $redirects

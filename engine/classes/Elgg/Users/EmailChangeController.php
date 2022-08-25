@@ -30,12 +30,12 @@ class EmailChangeController {
 			return elgg_error_response($translator->translate('error:missing_data'));
 		}
 		
-		$new_email = $user->getPrivateSetting('new_email');
+		$new_email = $user->getMetadata('new_email');
 		if (empty($new_email)) {
 			return elgg_error_response($translator->translate('account:email:request:error:no_new_email'));
 		}
 		
-		$user->removePrivateSetting('new_email');
+		$user->deleteMetadata('new_email');
 		
 		try {
 			$request->elgg()->accounts->assertValidEmail($new_email, true);

@@ -779,7 +779,6 @@ Search
         'attributes' => [],
         'metadata' => ['title', 'description'],
         'annotations' => ['revision'],
-        'private_settings' => ['internal_notes'],
     ];
 
 **search:fields, <entity_type>:<entity_subtype>**

@@ -121,7 +121,7 @@ class Validation {
 		
 		/* @var $admin \ElggUser */
 		foreach ($admins as $admin) {
-			$user_setting = $admin->getPrivateSetting('admin_validation_notification');
+			$user_setting = $admin->getMetadata('admin_validation_notification');
 			if (isset($user_setting) && !(bool) $user_setting) {
 				continue;
 			}

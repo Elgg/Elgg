@@ -214,67 +214,6 @@ class QueryBuilderTest extends UnitTestCase {
 		$this->assertEquals($expected->getParameters(), $this->qb->getParameters());
 	}
 
-	public function testCanJoinPrivateSettingsTableWithAlias() {
-
-		$alias = $this->qb->joinPrivateSettingsTable('f', 'guid', 'private_setting_name', 'inner', 'ps');
-
-		$this->assertEquals('ps', $alias);
-
-		$expected = Select::fromTable('foo', 'f');
-		$on = $expected->merge([
-			$expected->compare("ps.entity_guid", '=', 'f.guid'),
-			$expected->compare("ps.name", '=', 'private_setting_name', ELGG_VALUE_STRING),
-		]);
-		$expected->join('f', $this->qb->prefix('private_settings'), 'ps', $on);
-
-		$this->assertEquals($expected->getSQL(), $this->qb->getSQL());
-		$this->assertEquals($expected->getParameters(), $this->qb->getParameters());
-	}
-
-	public function testCanJoinPrivateSettingsTableWithoutName() {
-
-		$alias = $this->qb->joinPrivateSettingsTable('f', 'guid', null, 'inner', 'ps');
-
-		$this->assertEquals('ps', $alias);
-
-		$expected = Select::fromTable('foo', 'f');
-		$on = $expected->merge([
-			$expected->compare("ps.entity_guid", '=', 'f.guid'),
-		]);
-		$expected->join('f', $this->qb->prefix('private_settings'), 'ps', $on);
-
-		$this->assertEquals($expected->getSQL(), $this->qb->getSQL());
-		$this->assertEquals($expected->getParameters(), $this->qb->getParameters());
-	}
-
-	public function testCanJoinPrivateSettingsTableWithoutAlias() {
-
-		$alias1 = $this->qb->joinPrivateSettingsTable('f', 'guid', 'private_setting_name', 'inner');
-		$alias2 = $this->qb->joinPrivateSettingsTable('f', 'guid', 'private_setting_name', 'inner');
-		$alias3 = $this->qb->joinPrivateSettingsTable('f', 'guid', 'private_setting_name', 'left');
-		$alias4 = $this->qb->joinPrivateSettingsTable('f', 'guid', 'private_setting_name', 'inner', $alias1);
-
-		$this->assertEquals($alias1, $alias2);
-		$this->assertEquals($alias1, $alias4);
-		$this->assertNotEquals($alias1, $alias3);
-
-		$expected = Select::fromTable('foo', 'f');
-		$on = $expected->merge([
-			$expected->compare("$alias1.entity_guid", '=', 'f.guid'),
-			$expected->compare("$alias1.name", '=', 'private_setting_name', ELGG_VALUE_STRING),
-		]);
-		$expected->join('f', $this->qb->prefix('private_settings'), $alias1, $on);
-
-		$on = $expected->merge([
-			$expected->compare("$alias3.entity_guid", '=', 'f.guid'),
-			$expected->compare("$alias3.name", '=', 'private_setting_name', ELGG_VALUE_STRING),
-		]);
-		$expected->leftJoin('f', $this->qb->prefix('private_settings'), $alias3, $on);
-
-		$this->assertEquals($expected->getSQL(), $this->qb->getSQL());
-		$this->assertEquals($expected->getParameters(), $this->qb->getParameters());
-	}
-
 	public function testCanJoinRelationshipTableWithAlias() {
 
 		$alias = $this->qb->joinRelationshipTable('f', 'guid', 'relationship_name', false,'inner', 'r');

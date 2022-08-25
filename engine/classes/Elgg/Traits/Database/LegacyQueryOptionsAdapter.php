@@ -12,7 +12,6 @@ use Elgg\Database\Clauses\HavingClause;
 use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\OrderByClause;
-use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Database\Clauses\SelectClause;
 use Elgg\Database\Clauses\WhereClause;
@@ -47,7 +46,6 @@ trait LegacyQueryOptionsAdapter {
 
 		$options = $this->normalizeTypeSubtypeOptions($options);
 
-		$options = $this->normalizePrivateSettingOptions($options);
 		$options = $this->normalizeRelationshipOptions($options);
 		$options = $this->normalizeAnnotationOptions($options);
 		$options = $this->normalizeMetadataOptions($options);
@@ -135,13 +133,6 @@ trait LegacyQueryOptionsAdapter {
 			'relationship_join_on' => 'guid',
 			'relationship_created_time_lower' => null,
 			'relationship_created_time_upper' => null,
-
-			'private_setting_names' => null,
-			'private_setting_values' => null,
-			'private_setting_name_value_pairs' => null,
-			'private_setting_name_value_pairs_operator' => 'AND',
-			'private_setting_name_prefix' => '',
-			'private_setting_case_sensitive' => false,
 
 			'preload_owners' => false,
 			'preload_containers' => false,
@@ -492,78 +483,6 @@ trait LegacyQueryOptionsAdapter {
 			}
 
 			$options['annotation_name_value_pairs'][$key] = $clause;
-		}
-
-		return $options;
-	}
-
-	/**
-	 * Normalizes private settings options
-	 *
-	 * @param array $options Options
-	 *
-	 * @return array
-	 */
-	protected function normalizePrivateSettingOptions(array $options = []) {
-
-		$singulars = [
-			'private_setting_name',
-			'private_setting_value',
-			'private_setting_name_value_pair',
-		];
-
-		$options = self::normalizePluralOptions($options, $singulars);
-
-		$options = $this->normalizePairedOptions('private_setting', $options);
-
-		foreach ($options['private_setting_name_value_pairs'] as $key => $pair) {
-			if ($pair instanceof WhereClause) {
-				continue;
-			}
-
-			$options['private_setting_name_value_pairs'][$key]['entity_guids'] = $options['guids'];
-		}
-
-		$options['private_setting_name_value_pairs'] = $this->removeKeyPrefix('private_setting_', $options['private_setting_name_value_pairs']);
-
-		$prefix = null;
-		if (isset($options['private_setting_name_prefix'])) {
-			$prefix = $options['private_setting_name_prefix'];
-			unset($options['private_setting_name_prefix']);
-		}
-
-		$defaults = [
-			'name' => null,
-			'value' => null,
-			'comparison' => '=',
-			'type' => ELGG_VALUE_STRING,
-			'case_sensitive' => true,
-			'entity_guids' => null,
-			'ids' => null,
-		];
-
-		foreach ($options['private_setting_name_value_pairs'] as $key => $pair) {
-			if ($pair instanceof WhereClause) {
-				continue;
-			}
-
-			$pair = array_merge($defaults, $pair);
-
-			$names = (array) elgg_extract('name', $pair);
-			$names = array_map(function($name) use ($prefix) {
-				return $prefix ? "$prefix$name" : $name;
-			}, $names);
-
-			$clause = new PrivateSettingWhereClause();
-			$clause->ids = (array) $pair['ids'];
-			$clause->entity_guids = (array) $pair['entity_guids'];
-			$clause->names = $names;
-			$clause->values = (array) $pair['value'];
-			$clause->comparison = $pair['comparison'];
-			$clause->value_type = $pair['type'];
-			$clause->case_sensitive = $pair['case_sensitive'];
-
-			$options['private_setting_name_value_pairs'][$key] = $clause;
 		}
 
 		return $options;

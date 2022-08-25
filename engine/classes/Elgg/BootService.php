@@ -68,10 +68,6 @@ class BootService {
 			}
 		}
 
-		foreach ($data->getPluginSettings() as $guid => $entity_settings) {
-			$services->privateSettingsCache->save($guid, $entity_settings);
-		}
-
 		foreach ($data->getPluginMetadata() as $guid => $metadata) {
 			$services->dataCache->metadata->save($guid, $metadata);
 		}

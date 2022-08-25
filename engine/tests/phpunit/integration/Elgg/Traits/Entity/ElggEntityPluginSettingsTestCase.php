@@ -57,22 +57,18 @@ abstract class ElggEntityPluginSettingsTestCase extends IntegrationTestCase {
 		
 		$this->assertEmpty($this->entity->getPluginSetting($plugin_id, $setting_name));
 		$this->assertEquals('default', $this->entity->getPluginSetting($plugin_id, $setting_name, 'default'));
-		$this->assertEmpty($this->entity->getPrivateSetting($private_setting_name));
+		$this->assertEmpty($this->entity->getMetadata($private_setting_name));
 		
 		$this->assertTrue($this->entity->setPluginSetting($plugin_id, $setting_name, $setting_value));
 		
-		if (is_bool($setting_value)) {
-			// booleans are cast to ints
-			$setting_value = (int) $setting_value;
-		}
-		$this->assertEquals((string) $setting_value, $this->entity->getPluginSetting($plugin_id, $setting_name));
-		$this->assertEquals((string) $setting_value, $this->entity->getPluginSetting($plugin_id, $setting_name, 'default'));
-		$this->assertEquals((string) $setting_value, $this->entity->getPrivateSetting($private_setting_name));
+		$this->assertEquals($setting_value, $this->entity->getPluginSetting($plugin_id, $setting_name));
+		$this->assertEquals($setting_value, $this->entity->getPluginSetting($plugin_id, $setting_name, 'default'));
+		$this->assertEquals($setting_value, $this->entity->getMetadata($private_setting_name));
 		
 		$this->assertTrue($this->entity->removePluginSetting($plugin_id, $setting_name));
 		$this->assertEmpty($this->entity->getPluginSetting($plugin_id, $setting_name));
 		$this->assertEquals('default', $this->entity->getPluginSetting($plugin_id, $setting_name, 'default'));
-		$this->assertEmpty($this->entity->getPrivateSetting($private_setting_name));
+		$this->assertEmpty($this->entity->getMetadata($private_setting_name));
 	}
 	
 	public function setPluginSettingProvider() {

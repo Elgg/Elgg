@@ -142,7 +142,7 @@ class Locator {
 			$upgrades = \Elgg\Database\Entities::find([
 				'type' => 'object',
 				'subtype' => 'elgg_upgrade',
-				'private_setting_name_value_pairs' => [
+				'metadata_name_value_pairs' => [
 					[
 						'name' => 'id',
 						'value' => (string) $upgrade_id,
@@ -168,7 +168,7 @@ class Locator {
 			$upgrades = \Elgg\Database\Entities::find([
 				'type' => 'object',
 				'subtype' => 'elgg_upgrade',
-				'private_setting_name_value_pairs' => [
+				'metadata_name_value_pairs' => [
 					[
 						'name' => 'class',
 						'value' => $class_name,

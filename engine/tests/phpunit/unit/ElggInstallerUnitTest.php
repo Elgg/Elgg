@@ -26,11 +26,11 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 	public function up() {
 
 		$this->settings_path_backup = null;
-		if (isset($_ENV['ELGG_SETTINGS_FILE'])) {
-			$this->settings_path_backup = $_ENV['ELGG_SETTINGS_FILE'];
+		if (!empty(getenv('ELGG_SETTINGS_FILE'))) {
+			$this->settings_path_backup = getenv('ELGG_SETTINGS_FILE');
 		}
 
-		$_ENV['ELGG_SETTINGS_FILE'] = $this->normalizeTestFilePath('installer/settings.php');
+		putenv("ELGG_SETTINGS_FILE=" . $this->normalizeTestFilePath('installer/settings.php'));
 
 		$this->mock = $this->getMockBuilder(ElggInstaller::class)
 			->onlyMethods([
@@ -51,7 +51,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 			unlink($this->normalizeTestFilePath('installer/settings.php'));
 		}
 
-		$_ENV['ELGG_SETTINGS_FILE'] = $this->settings_path_backup;
+		putenv("ELGG_SETTINGS_FILE=" . $this->settings_path_backup);
 	}
 
 	public function getApp() {

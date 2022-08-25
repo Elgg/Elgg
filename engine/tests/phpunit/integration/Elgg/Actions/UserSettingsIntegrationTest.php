@@ -318,7 +318,7 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		elgg()->config->allow_user_default_access = true;
 
 		$user = $this->createUser();
-		$user->setPrivateSetting('elgg_default_access', ACCESS_PUBLIC);
+		$user->setMetadata('elgg_default_access', ACCESS_PUBLIC);
 
 		_elgg_services()->session->setLoggedInUser($user);
 

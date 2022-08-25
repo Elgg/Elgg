@@ -11,7 +11,7 @@ You need to perform some extra steps if your plugin needs settings to be saved a
   name of your plugin’s directory in the ``mod`` hierarchy
 - Fill this file with the form elements you want to display together with :doc:`internationalised <i18n>` text labels
 - Set the name attribute in your form components to ``params[`varname`]`` where ``varname`` is the name of the variable. These will be 
-  saved as private settings attached to a plugin entity. So, if your variable is called ``params[myparameter]`` your plugin (which is also 
+  saved as metadata attached to a plugin entity. So, if your variable is called ``params[myparameter]`` your plugin (which is also 
   passed to this view as ``$vars['entity']``) will be called ``$vars['entity']->myparameter``
 
 An example ``settings.php`` would look like:
@@ -124,8 +124,7 @@ or for group settings:
 
 .. warning::
 
-	Since plugin settings are saved as private settings only `scalar <https://www.php.net/manual/en/function.is-scalar.php>`_ values 
-	are allowed, so no objects or arrays.
+	Plugin settings only supports `scalar <https://www.php.net/manual/en/function.is-scalar.php>`_ values, so no objects or arrays.
 
 Default plugin (group|user) settings
 ------------------------------------

@@ -7,7 +7,6 @@ use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\OrderByClause;
-use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\InvalidArgumentException;
@@ -339,45 +338,6 @@ class RelationshipsRepositoryTest extends UnitTestCase {
 		Relationships::with([])->calculate('max', 'invalid', 'attribute');
 	}
 
-	public function testCanExecutePrivateSettingCalculation() {
-
-		$private_setting_names = ['foo'];
-
-		$select = Select::fromTable('entity_relationships', 'er');
-
-		$alias = $select->joinPrivateSettingsTable('er', 'guid_one', $private_setting_names);
-		$select->select("sum($alias.value) AS calculation");
-
-		$select->joinEntitiesTable('er', 'guid_one', 'inner', 'e');
-		$select->addClause(new EntityWhereClause(), 'e');
-
-		$select->joinPrivateSettingsTable('er', 'guid_one', null, 'inner', 'ps');
-		
-		$private_setting = new PrivateSettingWhereClause();
-		$private_setting->names = $private_setting_names;
-		$select->addClause($private_setting, 'ps');
-
-		$spec = _elgg_services()->db->addQuerySpec([
-			'sql' => $select->getSQL(),
-			'params' => $select->getParameters(),
-			'results' => [
-				(object) [
-					'calculation' => 10,
-				]
-			]
-		]);
-
-		$options = [
-			'private_setting_names' => $private_setting_names,
-		];
-
-		$calculate = Relationships::with($options)->calculate('sum', $private_setting_names, 'private_setting');
-
-		$this->assertEquals(10, $calculate);
-
-		_elgg_services()->db->removeQuerySpec($spec);
-	}
-
 	public function testThrowsOnAnnotationsCalculationWithMultipleAndPairs() {
 
 		$options = [
@@ -639,115 +599,6 @@ class RelationshipsRepositoryTest extends UnitTestCase {
 				'foo2' => 'bar2',
 			],
 			'metadata_name_value_pairs_operator' => 'OR',
-			'order_by' => [
-				new OrderByClause('er.id', 'asc'),
-			],
-		];
-
-		$find = Relationships::find($options);
-
-		$this->assertEquals($rows, $find);
-
-		_elgg_services()->db->removeQuerySpec($spec);
-	}
-
-	public function testCanExecuteQueryWithPrivateSettingsNameValuePairs() {
-
-		$select = Select::fromTable('entity_relationships', 'er');
-		$select->select('DISTINCT er.*');
-		
-		$wheres = [];
-		
-		$select->joinEntitiesTable('er', 'guid_one', 'inner', 'e');
-		$select->addClause(new EntityWhereClause(), 'e');
-
-		$alias1 = $select->joinPrivateSettingsTable('er', 'guid_one', ['foo1']);
-		$private_setting = new PrivateSettingWhereClause();
-		$private_setting->names = ['foo1'];
-		$private_setting->values = ['bar1'];
-		$wheres[] = $private_setting->prepare($select, $alias1);
-
-		$alias2 = $select->joinPrivateSettingsTable('er', 'guid_one', ['foo2']);
-		$private_setting = new PrivateSettingWhereClause();
-		$private_setting->names = ['foo2'];
-		$private_setting->values = ['bar2'];
-		$wheres[] = $private_setting->prepare($select, $alias2);
-
-		$select->andWhere($select->merge($wheres));
-
-		$select->setMaxResults(10);
-		$select->setFirstResult(0);
-
-		$select->orderBy('er.id', 'asc');
-
-		$rows = $this->getRows(5);
-		$spec = _elgg_services()->db->addQuerySpec([
-			'sql' => $select->getSQL(),
-			'params' => $select->getParameters(),
-			'results' => $rows,
-		]);
-
-		$options = [
-			'callback' => false,
-			'private_setting_name_value_pairs' => [
-				'foo1' => 'bar1',
-				'foo2' => 'bar2',
-			],
-			'order_by' => [
-				new OrderByClause('er.id', 'asc'),
-			],
-		];
-
-		$find = Relationships::find($options);
-
-		$this->assertEquals($rows, $find);
-
-		_elgg_services()->db->removeQuerySpec($spec);
-	}
-
-	public function testCanExecuteQueryWithPrivateSettingsNameValuePairsJoinedByOr() {
-
-		$select = Select::fromTable('entity_relationships', 'er');
-		$select->select('DISTINCT er.*');
-		
-		$wheres = [];
-		
-		$select->joinEntitiesTable('er', 'guid_one', 'inner', 'e');
-		$select->addClause(new EntityWhereClause(), 'e');
-
-		$alias = $select->joinPrivateSettingsTable('er', 'guid_one', null, 'inner', 'ps');
-
-		$private_setting = new PrivateSettingWhereClause();
-		$private_setting->names = ['foo1'];
-		$private_setting->values = ['bar1'];
-		$wheres[] = $private_setting->prepare($select, $alias);
-
-		$private_setting = new PrivateSettingWhereClause();
-		$private_setting->names = ['foo2'];
-		$private_setting->values = ['bar2'];
-		$wheres[] = $private_setting->prepare($select, $alias);
-
-		$select->andWhere($select->merge($wheres, 'OR'));
-
-		$select->setMaxResults(10);
-		$select->setFirstResult(0);
-
-		$select->orderBy('er.id', 'asc');
-
-		$rows = $this->getRows(5);
-		$spec = _elgg_services()->db->addQuerySpec([
-			'sql' => $select->getSQL(),
-			'params' => $select->getParameters(),
-			'results' => $rows,
-		]);
-
-		$options = [
-			'callback' => false,
-			'private_setting_name_value_pairs' => [
-				'foo1' => 'bar1',
-				'foo2' => 'bar2',
-			],
-			'private_setting_name_value_pairs_operator' => 'OR',
 			'order_by' => [
 				new OrderByClause('er.id', 'asc'),
 			],

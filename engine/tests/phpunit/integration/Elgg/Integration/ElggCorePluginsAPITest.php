@@ -32,8 +32,8 @@ class ElggCorePluginsAPITest extends \Elgg\IntegrationTestCase {
 			$this->markTestSkipped();
 		}
 
-		$cache = _elgg_services()->privateSettingsCache;
-		$cache->save($plugin->guid, [
+		$cache = _elgg_services()->metadataCache;
+		$cache->inject($plugin->guid, [
 			__METHOD__ => 'foo',
 		]);
 

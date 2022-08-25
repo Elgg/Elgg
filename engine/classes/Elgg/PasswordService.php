@@ -69,8 +69,8 @@ final class PasswordService {
 	public function requestNewPassword(\ElggUser $user): void {
 		// generate code
 		$code = elgg_generate_password();
-		$user->setPrivateSetting('passwd_conf_code', $code);
-		$user->setPrivateSetting('passwd_conf_time', time());
+		$user->passwd_conf_code = $code;
+		$user->passwd_conf_time = time();
 
 		// generate link
 		$link = elgg_generate_url('account:password:change', [
@@ -119,8 +119,8 @@ final class PasswordService {
 			$reset = false;
 		}
 
-		$saved_code = $user->getPrivateSetting('passwd_conf_code');
-		$code_time = (int) $user->getPrivateSetting('passwd_conf_time');
+		$saved_code = $user->passwd_conf_code;
+		$code_time = (int) $user->passwd_conf_time;
 		$codes_match = _elgg_services()->crypto->areEqual($saved_code, $conf_code);
 
 		if (!$saved_code || !$codes_match) {
@@ -134,8 +134,8 @@ final class PasswordService {
 
 		$user->setPassword($password);
 		
-		$user->removePrivateSetting('passwd_conf_code');
-		$user->removePrivateSetting('passwd_conf_time');
+		unset($user->passwd_conf_code);
+		unset($user->passwd_conf_time);
 		
 		// reset the logins failures
 		elgg_reset_authentication_failures($user);

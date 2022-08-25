@@ -22,14 +22,6 @@ class ElggUpgradeUnitTest extends \Elgg\UnitTestCase {
 		return array(new \stdClass());
 	}
 
-	public function mock_egefps_for_path($options) {
-		if ($options['private_setting_value'] === 'test') {
-			return array(new \stdClass());
-		} else {
-			return array();
-		}
-	}
-
 	public function testDefaultAttrs() {
 		$this->assertSame('elgg_upgrade', $this->obj->subtype);
 		$this->assertSame(0, $this->obj->container_guid);

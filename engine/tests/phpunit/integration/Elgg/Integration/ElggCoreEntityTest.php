@@ -7,11 +7,6 @@ use Elgg\Hook;
 use ElggObject;
 use ElggUser;
 
-/**
- * @group IntegrationTests
- * @group Entities
- * @group EntityPrivateSettings
- */
 class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 
 	/**
@@ -30,11 +25,10 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		
 		$this->entity = $this->createObject(['subtype' => 'elgg_entity_test_subtype']);
 
-		// Add temporary metadata, annotation and private settings
+		// Add temporary metadata, annotation
 		// to extend the scope of tests and catch issues with save operations
 		$this->entity->test_metadata = 'bar';
 		$this->entity->annotate('test_annotation', 'baz');
-		$this->entity->setPrivateSetting('test_setting', 'foo');
 
 		$this->entity->save();
 	}
@@ -346,11 +340,10 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$object = new ElggObject();
 		$object->setSubtype('elgg_entity_test_subtype');
 
-		// Add temporary metadata, annotation and private settings
+		// Add temporary metadata, annotation
 		// to extend the scope of tests and catch issues with save operations
 		$object->test_metadata = 'bar';
 		$object->annotate('test_annotation', 'baz');
-		$object->setPrivateSetting('test_setting', 'foo');
 
 		$metadata_called = false;
 		$metadata_event_handler = function (\Elgg\Event $event) use (&$metadata_called) {
@@ -393,11 +386,10 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$user = new ElggUser();
 		$user->username = $this->getRandomUsername();
 
-		// Add temporary metadata, annotation and private settings
+		// Add temporary metadata, annotation
 		// to extend the scope of tests and catch issues with save operations
 		$user->test_metadata = 'bar';
 		$user->annotate('test_annotation', 'baz');
-		$user->setPrivateSetting('test_setting', 'foo');
 
 		$metadata_called = false;
 		$metadata_event_handler = function (\Elgg\Event $event) use (&$metadata_called) {
@@ -440,11 +432,10 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$group = new \ElggGroup();
 		$group->setSubtype('test_group_subtype');
 
-		// Add temporary metadata, annotation and private settings
+		// Add temporary metadata, annotation
 		// to extend the scope of tests and catch issues with save operations
 		$group->test_metadata = 'bar';
 		$group->annotate('test_annotation', 'baz');
-		$group->setPrivateSetting('test_setting', 'foo');
 
 		$metadata_called = false;
 		$metadata_event_handler = function (\Elgg\Event $event) use (&$metadata_called) {
@@ -662,23 +653,6 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		
 		// removing unexisting data should also return true
 		$this->assertTrue($object->setMetadata('foo', $empty_value));
-	}
-	
-	/**
-	 * @dataProvider emptyValues
-	 */
-	public function testSetPrivateSettingEmpty($empty_value) {
-		$object = $this->createObject();
-		
-		$object->setPrivateSetting('foo', 'bar');
-		$this->assertEquals('bar', $object->getPrivateSetting('foo'));
-		
-		// remove private setting by setting to empty value
-		$this->assertTrue($object->setPrivateSetting('foo', $empty_value));
-		$this->assertNull($object->getPrivateSetting('foo'));
-		
-		// removing unexisting data should also return true
-		$this->assertTrue($object->setPrivateSetting('foo', $empty_value));
 	}
 	
 	public function emptyValues() {

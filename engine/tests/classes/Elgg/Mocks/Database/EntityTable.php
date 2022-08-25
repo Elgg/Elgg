@@ -534,16 +534,5 @@ class EntityTable extends DbEntityTable {
 				'times' => 1,
 			]);
 		}
-
-		// Private settings cleanup
-		$qb = Delete::fromTable('private_settings');
-		$qb->where($qb->compare('entity_guid', '=', $row->guid, ELGG_VALUE_INTEGER));
-		
-		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-			'sql' => $qb->getSQL(),
-			'params' => $qb->getParameters(),
-			'row_count' => 0,
-			'times' => 1,
-		]);
 	}
 }

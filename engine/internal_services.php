@@ -121,11 +121,6 @@ return [
 	'pluginsCache' => DI\factory(function (ContainerInterface $c) {
 		return new \Elgg\Cache\CompositeCache('plugins', $c->config, ELGG_CACHE_RUNTIME);
     }),
-	'privateSettingsCache' => DI\factory(function (ContainerInterface $c) {
-		$cache = $c->dataCache->private_settings;
-		return new \Elgg\Cache\PrivateSettingsCache($cache);
-    }),
-	'privateSettings' => DI\autowire(\Elgg\Database\PrivateSettingsTable::class),
 	'publicDb' => DI\autowire(\Elgg\Application\Database::class),
 	'queryCache' => DI\factory(function (ContainerInterface $c) {
 		$config_disabled = $c->config->db_disable_query_cache === true;
@@ -212,7 +207,6 @@ return [
 	\Elgg\Cache\DataCache::class => DI\get('dataCache'),
 	\Elgg\Cache\EntityCache::class => DI\get('entityCache'),
 	\Elgg\Cache\MetadataCache::class => DI\get('metadataCache'),
-	\Elgg\Cache\PrivateSettingsCache::class => DI\get('privateSettingsCache'),
 	\Elgg\Cache\QueryCache::class => DI\get('queryCache'),
 	\Elgg\Cache\SessionCache::class => DI\get('sessionCache'),
 	\Elgg\Cache\SimpleCache::class => DI\get('simpleCache'),
@@ -236,7 +230,6 @@ return [
 	\Elgg\Database\MetadataTable::class => DI\get('metadataTable'),
 	\Elgg\Database\Mutex::class => DI\get('mutex'),
 	\Elgg\Database\Plugins::class => DI\get('plugins'),
-	\Elgg\Database\PrivateSettingsTable::class => DI\get('privateSettings'),
 	\Elgg\Database\RelationshipsTable::class => DI\get('relationshipsTable'),
 	\Elgg\Database\RiverTable::class => DI\get('riverTable'),
 	\Elgg\Database\Seeder::class => DI\get('seeder'),

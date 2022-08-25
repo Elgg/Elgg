@@ -8,7 +8,6 @@ use Elgg\Database;
 use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\AttributeWhereClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
-use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\PluginHooksService;
@@ -206,7 +205,6 @@ class SearchService {
 			'attributes' => [],
 			'metadata' => [],
 			'annotations' => [],
-			'private_settings' => [],
 		];
 
 		$fields = $default_fields;
@@ -297,7 +295,6 @@ class SearchService {
 		$attributes = elgg_extract('attributes', $fields, [], false);
 		$metadata = elgg_extract('metadata', $fields, [], false);
 		$annotations = elgg_extract('annotations', $fields, [], false);
-		$private_settings = elgg_extract('private_settings', $fields, [], false);
 
 		$ors = [];
 
@@ -341,17 +338,6 @@ class SearchService {
 				$annotations_ands[] = $where->prepare($qb, $an_alias);
 			}
 			$ors[] = $qb->merge($annotations_ands, 'AND');
-		}
-
-		if (!empty($private_settings)) {
-			$private_settings_ands = [];
-			$ps_alias = $qb->joinPrivateSettingsTable($alias, 'guid', $private_settings, 'left');
-			foreach ($query_parts as $part) {
-				$where = new PrivateSettingWhereClause();
-				$populate_where($where, $part);
-				$private_settings_ands[] = $where->prepare($qb, $ps_alias);
-			}
-			$ors[] = $qb->merge($private_settings_ands, 'AND');
 		}
 
 		return $qb->merge($ors, 'OR');

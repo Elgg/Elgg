@@ -608,7 +608,7 @@ class SubscriptionsService {
 			'callback' => function ($row) {
 				return (int) $row->guid;
 			},
-			'private_setting_name_value_pairs' => [
+			'metadata_name_value_pairs' => [
 				[
 					'name' => 'timed_muting_start',
 					'value' => time(),

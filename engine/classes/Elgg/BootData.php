@@ -77,7 +77,7 @@ class BootData {
 		// find plugin GUIDs with not too many settings
 		$limit = $config->bootdata_plugin_settings_limit;
 		if ($limit > 0) {
-			$qb = Select::fromTable('private_settings');
+			$qb = Select::fromTable('metadata');
 			$qb->select('entity_guid')
 				->where($qb->compare('entity_guid', 'in', $guids, ELGG_VALUE_GUID))
 				->andWhere($qb->compare('name', 'not like', 'plugin:user_setting:%', ELGG_VALUE_STRING))
@@ -94,7 +94,7 @@ class BootData {
 
 		if (!empty($guids)) {
 			// get the settings
-			$qb = Select::fromTable('private_settings');
+			$qb = Select::fromTable('metadata');
 			$qb->select('entity_guid', 'name', 'value')
 				->where($qb->compare('entity_guid', 'in', $guids, ELGG_VALUE_GUID))
 				->andWhere($qb->compare('name', 'not like', 'plugin:user_setting:%', ELGG_VALUE_STRING));
@@ -125,15 +125,6 @@ class BootData {
 	 */
 	public function getActivePlugins() {
 		return $this->active_plugins;
-	}
-
-	/**
-	 * Get the plugin settings (may not include all active plugins)
-	 *
-	 * @return array
-	 */
-	public function getPluginSettings() {
-		return $this->plugin_settings;
 	}
 
 	/**

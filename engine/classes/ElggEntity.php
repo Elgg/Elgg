@@ -88,13 +88,6 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	protected $temp_annotations = [];
 
 	/**
-	 * Holds private settings until entity is saved. Once the entity is saved,
-	 * private settings are written immediately to the database.
-	 * @var array
-	 */
-	protected $temp_private_settings = [];
-
-	/**
 	 * Volatile data structure for this object, allows for storage of data
 	 * in-memory that isn't sync'd back to the metadata table.
 	 * @var array
@@ -176,7 +169,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * Resets the guid so that the entity can be saved as a distinct entity from
 	 * the original. Creation time will be set when this new entity is saved.
 	 * The owner and container guids come from the original entity. The clone
-	 * method copies metadata but does not copy annotations or private settings.
+	 * method copies metadata but does not copy annotations.
 	 *
 	 * @return void
 	 */
@@ -644,108 +637,6 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 */
 	public function removeAllRelationships(string $relationship = null, bool $inverse_relationship = false): bool {
 		return _elgg_services()->relationshipsTable->removeAll($this->guid, $relationship, $inverse_relationship);
-	}
-
-	/**
-	 * Adds a private setting to this entity.
-	 *
-	 * @warning Private settings are stored as strings
-	 *          Unlike metadata and annotations there is no reverse casting when you retrieve the setting
-	 *          When saving integers, they will be cast to strings
-	 *          Booleans will be cast to '0' and '1'
-	 *
-	 * @param string $name  Name of private setting
-	 * @param mixed  $value Value of private setting
-	 *
-	 * @return bool
-	 */
-	public function setPrivateSetting($name, $value) {
-		
-		if ($value === null || $value === '') {
-			$this->removePrivateSetting($name);
-			
-			// do not check result of removePrivateSetting as it returns false if private setting does not exist
-			return true;
-		}
-		
-		if (is_bool($value)) {
-			$value = (int) $value;
-		}
-		
-		// checking if string value matches saved value (as get privatesettings does not know value type) and db column is a string
-		if (strval($value) === $this->getPrivateSetting($name)) {
-			// no need to update value
-			return true;
-		}
-
-		if (!$this->guid) {
-			$this->temp_private_settings[$name] = $value;
-
-			return true;
-		}
-
-		return _elgg_services()->privateSettings->set($this, $name, $value);
-	}
-
-	/**
-	 * Returns a private setting value
-	 *
-	 * @warning Private settings are always returned as strings
-	 *          Make sure you can your values back to expected type
-	 *
-	 * @param string $name Name of the private setting
-	 *
-	 * @return string|null
-	 */
-	public function getPrivateSetting($name) {
-		if (!$this->guid) {
-			return elgg_extract($name, $this->temp_private_settings);
-		}
-
-		return _elgg_services()->privateSettings->get($this, $name);
-	}
-
-	/**
-	 * Returns all private settings
-	 *
-	 * @return array
-	 */
-	public function getAllPrivateSettings() {
-		if (!$this->guid) {
-			return $this->temp_private_settings;
-		}
-
-		return _elgg_services()->privateSettings->getAllForEntity($this);
-	}
-
-	/**
-	 * Removes private setting
-	 *
-	 * @param string $name Name of the private setting
-	 *
-	 * @return bool
-	 */
-	public function removePrivateSetting($name) {
-		if (!$this->guid) {
-			unset($this->temp_private_settings[$name]);
-			return true;
-		}
-
-		return _elgg_services()->privateSettings->remove($this, $name);
-	}
-
-	/**
-	 * Removes all private settings
-	 *
-	 * @return bool
-	 */
-	public function removeAllPrivateSettings() {
-		if (!$this->guid) {
-			$this->temp_private_settings = [];
-			return true;
-		}
-
-		return _elgg_services()->privateSettings->removeAllForEntity($this);
 	}
 
 	/**
@@ -1520,15 +1411,6 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
 			$this->temp_annotations = [];
 		}
-
-		// Save any unsaved private settings.
-		if (sizeof($this->temp_private_settings) > 0) {
-			foreach ($this->temp_private_settings as $name => $value) {
-				$this->setPrivateSetting($name, $value);
-			}
-
-			$this->temp_private_settings = [];
-		}
 		
 		if (isset($container) && !$container instanceof ElggUser) {
 			// users have their own logic for setting last action
@@ -2102,15 +1984,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		}
 
 		_elgg_services()->entityCache->delete($this->guid);
-
-		$namespaces = [
-			'metadata',
-			'private_settings',
-		];
-
-		foreach ($namespaces as $namespace) {
-			_elgg_services()->dataCache->get($namespace)->delete($this->guid);
-		}
+		_elgg_services()->dataCache->get('metadata')->delete($this->guid);
 	}
 	
 	/**

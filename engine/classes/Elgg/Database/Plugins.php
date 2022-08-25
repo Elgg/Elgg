@@ -2,7 +2,6 @@
 
 namespace Elgg\Database;
 
-use Elgg\Cache\PrivateSettingsCache;
 use Elgg\Config;
 use Elgg\Context;
 use Elgg\Database;
@@ -96,11 +95,6 @@ class Plugins {
 	protected $views;
 
 	/**
-	 * @var PrivateSettingsCache
-	 */
-	protected $private_settings_cache;
-
-	/**
 	 * @var Config
 	 */
 	protected $config;
@@ -119,16 +113,15 @@ class Plugins {
 	/**
 	 * Constructor
 	 *
-	 * @param \ElggCache            $cache                  Cache for referencing plugins by ID
-	 * @param Database              $db                     Database
-	 * @param \ElggSession          $session                Session
-	 * @param EventsService         $events                 Events
-	 * @param Translator            $translator             Translator
-	 * @param ViewsService          $views                  Views service
-	 * @param PrivateSettingsCache  $private_settings_cache Settings cache
-	 * @param Config                $config                 Config
-	 * @param SystemMessagesService $system_messages        System messages
-	 * @param Request               $request                Context
+	 * @param \ElggCache            $cache           Cache for referencing plugins by ID
+	 * @param Database              $db              Database
+	 * @param \ElggSession          $session         Session
+	 * @param EventsService         $events          Events
+	 * @param Translator            $translator      Translator
+	 * @param ViewsService          $views           Views service
+	 * @param Config                $config          Config
+	 * @param SystemMessagesService $system_messages System messages
+	 * @param Request               $request         Context
 	 */
 	public function __construct(
 		\ElggCache $cache,
@@ -137,7 +130,6 @@ class Plugins {
 		EventsService $events,
 		Translator $translator,
 		ViewsService $views,
-		PrivateSettingsCache $private_settings_cache,
 		Config $config,
 		SystemMessagesService $system_messages,
 		Request $request
@@ -148,7 +140,6 @@ class Plugins {
 		$this->events = $events;
 		$this->translator = $translator;
 		$this->views = $views;
-		$this->private_settings_cache = $private_settings_cache;
 		$this->config = $config;
 		$this->system_messages = $system_messages;
 		
@@ -365,7 +356,7 @@ class Plugins {
 			}
 			
 			// remove the priority.
-			$plugin->removePrivateSetting(\ElggPlugin::PRIORITY_SETTING_NAME);
+			$plugin->deleteMetadata(\ElggPlugin::PRIORITY_SETTING_NAME);
 			
 			$plugin->disable();
 		}
@@ -470,9 +461,9 @@ class Plugins {
 	 */
 	public function getMaxPriority() {
 		$qb = Select::fromTable('entities', 'e');
-		$qb->select('MAX(CAST(ps.value AS unsigned)) as max')
-			->join('e', 'private_settings', 'ps', 'e.guid = ps.entity_guid')
-			->where($qb->compare('ps.name', '=', \ElggPlugin::PRIORITY_SETTING_NAME, ELGG_VALUE_STRING))
+		$qb->select('MAX(CAST(md.value AS unsigned)) as max')
+			->join('e', 'metadata', 'md', 'e.guid = md.entity_guid')
+			->where($qb->compare('md.name', '=', \ElggPlugin::PRIORITY_SETTING_NAME, ELGG_VALUE_STRING))
 			->andWhere($qb->compare('e.type', '=', 'object', ELGG_VALUE_STRING))
 			->andWhere($qb->compare('e.subtype', '=', 'plugin', ELGG_VALUE_STRING));
 
@@ -751,10 +742,7 @@ class Plugins {
 			'type' => 'object',
 			'subtype' => 'plugin',
 			'limit' => false,
-			// ORDER BY CAST(ps.value) is super slow. We custom sorting below.
 			'order_by' => false,
-			// preload private settings because private settings will probably be used, at least priority
-			'preload_private_settings' => true,
 		];
 
 		switch ($status) {
@@ -765,8 +753,8 @@ class Plugins {
 				
 				// shorten callstack
 				$volatile_data_name = 'select:value';
-				$options['select'] = ['ps.value'];
-				$options['private_setting_names'] = [
+				$options['select'] = ['n_table.value'];
+				$options['metadata_names'] = [
 					\ElggPlugin::PRIORITY_SETTING_NAME,
 				];
 				break;
@@ -865,7 +853,7 @@ class Plugins {
 				// disabled plugins should not have a priority
 				if ($plugin->getPriority() !== null) {
 					// remove the priority
-					$plugin->removePrivateSetting($name);
+					$plugin->deleteMetadata($name);
 				}
 				continue;
 			}
@@ -879,7 +867,7 @@ class Plugins {
 
 			$priority = array_search($plugin_id, $order) + 1;
 
-			if (!$plugin->setPrivateSetting($name, $priority)) {
+			if (!$plugin->setMetadata($name, $priority)) {
 				return false;
 			}
 		}
@@ -891,7 +879,7 @@ class Plugins {
 
 		foreach ($missing_plugins as $plugin) {
 			$priority++;
-			if (!$plugin->setPrivateSetting($name, $priority)) {
+			if (!$plugin->setMetadata($name, $priority)) {
 				return false;
 			}
 		}
@@ -922,7 +910,7 @@ class Plugins {
 
 		$name = \ElggPlugin::PRIORITY_SETTING_NAME;
 
-		if (!$plugin->setPrivateSetting($name, $priority)) {
+		if (!$plugin->setMetadata($name, $priority)) {
 			return false;
 		}
 
@@ -930,7 +918,7 @@ class Plugins {
 			return false;
 		}
 
-		$qb = Update::table('private_settings');
+		$qb = Update::table('metadata');
 		$qb->where($qb->compare('name', '=', $name, ELGG_VALUE_STRING))
 			->andWhere($qb->compare('entity_guid', '!=', $plugin->guid, ELGG_VALUE_INTEGER));
 
