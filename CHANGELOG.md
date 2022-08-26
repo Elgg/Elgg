@@ -1,3 +1,16 @@
+<a name="4.3.1"></a>
+### 4.3.1  (2022-08-26)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+
+#### Bug Fixes
+
+* **icons:** correctly remove all icons ([85f4ba0f](https://github.com/Elgg/Elgg/commit/85f4ba0f3ec9f7decd3dc522be7f08eb44d1324a))
+* **plugins:** sanitize plugins path ([66a066ab](https://github.com/Elgg/Elgg/commit/66a066abb0c9c8955fcc2199686fdd10672e9a22))
+
+
 <a name="4.3.0"></a>
 ## 4.3.0  (2022-08-05)
 
