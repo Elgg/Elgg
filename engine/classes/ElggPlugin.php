@@ -6,6 +6,7 @@ use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
 use Elgg\Exceptions\PluginException;
 use Elgg\Includer;
+use Elgg\Project\Paths;
 use Elgg\Traits\Loggable as ElggLoggable;
 
 /**
@@ -93,12 +94,12 @@ class ElggPlugin extends ElggObject {
 			});
 		}
 
-		if (!$path) {
+		if (empty($path)) {
 			$path = elgg_get_plugins_path();
 		}
 
-		$path = rtrim($path, '/');
-		$plugin->setPath($path . '/' . $plugin_id);
+		$path = Paths::sanitize($path);
+		$plugin->setPath($path . $plugin_id);
 
 		return $plugin;
 	}
@@ -162,7 +163,7 @@ class ElggPlugin extends ElggObject {
 	 * @internal
 	 */
 	public function setPath($path) {
-		$this->path = \Elgg\Project\Paths::sanitize($path, true);
+		$this->path = Paths::sanitize($path, true);
 	}
 
 	/**
@@ -1003,7 +1004,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	protected function registerActions(): void {
 		$actions = _elgg_services()->actions;
-		$root_path = rtrim($this->getPath(), '/\\');
+		$root_path = $this->getPath();
 
 		$spec = (array) $this->getStaticConfig('actions', []);
 		
@@ -1017,7 +1018,7 @@ class ElggPlugin extends ElggObject {
 			if (!$handler) {
 				$handler = elgg_extract('filename', $action_spec);
 				if (!$handler) {
-					$handler = "$root_path/actions/{$action}.php";
+					$handler = "{$root_path}actions/{$action}.php";
 				}
 			}
 
