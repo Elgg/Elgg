@@ -7,7 +7,6 @@ use Elgg\Database\Clauses\AttributeWhereClause;
 use Elgg\Database\Clauses\EntitySortByClause;
 use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
-use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Select;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\UnitTestCase;
@@ -93,7 +92,6 @@ class SearchServiceTest extends UnitTestCase {
 				'metadata' => ['allowed1', 'allowed2'],
 				'annotations' => ['allowed3', 'allowed4'],
 				'attributes' => false,
-				'private_settings' => null,
 			];
 		};
 
@@ -115,7 +113,6 @@ class SearchServiceTest extends UnitTestCase {
 				'metadata' => ['allowed1', 'allowed2'],
 				'annotations' => ['allowed3', 'allowed4'],
 				'attributes' => false,
-				'private_settings' => null,
 			];
 		};
 
@@ -147,7 +144,6 @@ class SearchServiceTest extends UnitTestCase {
 				'metadata' => [],
 				'attributes' => [],
 				'annotations' => [],
-				'private_settings' => [],
 			],
 			'query_parts' => ['altered', 'query'],
 			'_elgg_search_service_normalize_options' => true,
@@ -161,7 +157,6 @@ class SearchServiceTest extends UnitTestCase {
 				'metadata' => ['allowed1', 'allowed2'],
 				'annotations' => ['allowed3', 'allowed4'],
 				'attributes' => false,
-				'private_settings' => null,
 			];
 		};
 
@@ -181,7 +176,6 @@ class SearchServiceTest extends UnitTestCase {
 				'metadata' => ['allowed2'],
 				'attributes' => [],
 				'annotations' => [],
-				'private_settings' => [],
 			],
 			'query' => '',
 			'query_parts' => [],
@@ -200,7 +194,6 @@ class SearchServiceTest extends UnitTestCase {
 				'metadata' => ['allowed1', 'allowed2'],
 				'annotations' => ['allowed3', 'allowed4'],
 				'attributes' => false,
-				'private_settings' => null,
 			];
 		};
 
@@ -219,7 +212,6 @@ class SearchServiceTest extends UnitTestCase {
 				'metadata' => ['allowed1', 'allowed2'],
 				'annotations' => ['allowed3', 'allowed4'],
 				'attributes' => [],
-				'private_settings' => [],
 			],
 			'query' => '',
 			'query_parts' => [],
@@ -706,242 +698,6 @@ class SearchServiceTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	public function testEndToEndSearchForPrivateSettingsWithExactMatchAndWithoutTokenization() {
-
-		elgg_register_plugin_hook_handler('search:fields', 'object', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
-			$value['private_settings'][] = 'foo1';
-
-			return $value;
-		});
-
-		elgg_register_plugin_hook_handler('search:fields', 'object:blog', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
-			$value['private_settings'][] = 'foo2';
-
-			return $value;
-		});
-
-		elgg_register_plugin_hook_handler('search:fields', 'custom', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
-			$value['private_settings'][] = 'foo3';
-
-			return $value;
-		});
-
-		$select = Select::fromTable('entities', 'e');
-		$select->select('DISTINCT e.*');
-
-		$alias = $select->joinPrivateSettingsTable('e', 'guid', ['foo1', 'foo2', 'foo3'], 'left');
-
-		$property = new PrivateSettingWhereClause();
-		$property->values = 'query1 query2 query3';
-		$property->comparison = "LIKE";
-		$property->case_sensitive = false;
-
-		$select->andWhere($property->prepare($select, $alias));
-
-		$where = new EntityWhereClause();
-		$where->type_subtype_pairs = [
-			'object' => ['blog'],
-		];
-		$select->addClause($where);
-
-		$select->setMaxResults(10);
-		$select->setFirstResult(0);
-
-		$select->addOrderBy('e.time_created', 'desc');
-		$select->addOrderBy('e.guid', 'desc');
-
-		$rows = $this->getRows(5);
-		$spec = _elgg_services()->db->addQuerySpec([
-			'sql' => $select->getSQL(),
-			'params' => $select->getParameters(),
-			'results' => $rows,
-		]);
-
-		$options = [
-			'callback' => false,
-			'query' => 'query1 query2 query3',
-			'type' => 'object',
-			'subtype' => 'blog',
-			'search_type' => 'custom',
-			'tokenize' => false,
-			'partial_match' => false,
-			'fields' => [
-				'private_settings' => ['foo1', 'foo2', 'foo3', 'foo4'],
-			],
-		];
-
-		$find = elgg_search($options);
-
-		$this->assertEquals($rows, $find);
-
-		_elgg_services()->db->removeQuerySpec($spec);
-	}
-
-	public function testEndToEndSearchForPrivateSettingsWithExactMatchAndTokenization() {
-
-		elgg_register_plugin_hook_handler('search:fields', 'object', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
-			$value['private_settings'][] = 'foo1';
-
-			return $value;
-		});
-
-		elgg_register_plugin_hook_handler('search:fields', 'object:blog', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
-			$value['private_settings'][] = 'foo2';
-
-			return $value;
-		});
-
-		elgg_register_plugin_hook_handler('search:fields', 'custom', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
-			$value['private_settings'][] = 'foo3';
-
-			return $value;
-		});
-
-		$select = Select::fromTable('entities', 'e');
-		$select->select('DISTINCT e.*');
-
-		$alias = $select->joinPrivateSettingsTable('e', 'guid', ['foo1', 'foo2', 'foo3'], 'left');
-
-		$query_parts = ['query1', 'query2', 'query3'];
-
-		$wheres = [];
-
-		foreach ($query_parts as $part) {
-			$property = new PrivateSettingWhereClause();
-			$property->values = $part;
-			$property->comparison = "LIKE";
-			$property->case_sensitive = false;
-			$wheres[] = $property->prepare($select, $alias);
-		}
-
-		$select->andWhere($select->merge($wheres, 'AND'));
-
-		$where = new EntityWhereClause();
-		$where->type_subtype_pairs = [
-			'object' => ['blog'],
-		];
-		$select->addClause($where);
-
-		$select->setMaxResults(10);
-		$select->setFirstResult(0);
-
-		$select->addOrderBy('e.time_created', 'desc');
-		$select->addOrderBy('e.guid', 'desc');
-
-		$rows = $this->getRows(5);
-		$spec = _elgg_services()->db->addQuerySpec([
-			'sql' => $select->getSQL(),
-			'params' => $select->getParameters(),
-			'results' => $rows,
-		]);
-
-		$options = [
-			'callback' => false,
-			'query' => 'query1 query2 query3',
-			'type' => 'object',
-			'subtype' => 'blog',
-			'search_type' => 'custom',
-			'tokenize' => true,
-			'partial_match' => false,
-			'fields' => [
-				'private_settings' => ['foo1', 'foo2', 'foo3', 'foo4'],
-			],
-		];
-
-		$find = elgg_search($options);
-
-		$this->assertEquals($rows, $find);
-
-		_elgg_services()->db->removeQuerySpec($spec);
-	}
-
-	public function testEndToEndSearchForPrivateSettingsWithPartialMatchAndTokenization() {
-
-		elgg_register_plugin_hook_handler('search:fields', 'object', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
-			$value['private_settings'][] = 'foo1';
-
-			return $value;
-		});
-
-		elgg_register_plugin_hook_handler('search:fields', 'object:blog', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
-			$value['private_settings'][] = 'foo2';
-
-			return $value;
-		});
-
-		elgg_register_plugin_hook_handler('search:fields', 'custom', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
-			$value['private_settings'][] = 'foo3';
-
-			return $value;
-		});
-
-		$select = Select::fromTable('entities', 'e');
-		$select->select('DISTINCT e.*');
-
-		$alias = $select->joinPrivateSettingsTable('e', 'guid', ['foo1', 'foo2', 'foo3'], 'left');
-
-		$query_parts = ['query1', 'query2', 'query3'];
-
-		$wheres = [];
-
-		foreach ($query_parts as $part) {
-			$property = new PrivateSettingWhereClause();
-			$property->values = "%{$part}%";
-			$property->comparison = "LIKE";
-			$property->case_sensitive = false;
-			$wheres[] = $property->prepare($select, $alias);
-		}
-
-		$select->andWhere($select->merge($wheres, 'AND'));
-
-		$where = new EntityWhereClause();
-		$where->type_subtype_pairs = [
-			'object' => ['blog'],
-		];
-		$select->addClause($where);
-
-		$select->setMaxResults(10);
-		$select->setFirstResult(0);
-
-		$select->addOrderBy('e.time_created', 'desc');
-		$select->addOrderBy('e.guid', 'desc');
-
-		$rows = $this->getRows(5);
-		$spec = _elgg_services()->db->addQuerySpec([
-			'sql' => $select->getSQL(),
-			'params' => $select->getParameters(),
-			'results' => $rows,
-		]);
-
-		$options = [
-			'callback' => false,
-			'query' => 'query1 query2 query3',
-			'type' => 'object',
-			'subtype' => 'blog',
-			'search_type' => 'custom',
-			'tokenize' => true,
-			'partial_match' => true,
-			'fields' => [
-				'private_settings' => ['foo1', 'foo2', 'foo3', 'foo4'],
-			],
-		];
-
-		$find = elgg_search($options);
-
-		$this->assertEquals($rows, $find);
-
-		_elgg_services()->db->removeQuerySpec($spec);
-	}
-
 	public function testEndToEndSearchWithMultipleProperties() {
 
 		elgg_register_plugin_hook_handler('search:fields', 'custom', function (\Elgg\Hook $hook) {
@@ -949,10 +705,8 @@ class SearchServiceTest extends UnitTestCase {
 				'attributes' => ['type', 'subtype'],
 				'metadata' => ['foo1'],
 				'annotations' => ['foo2'],
-				'private_settings' => ['foo3'],
 			];
 		});
-
 
 		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
@@ -996,17 +750,6 @@ class SearchServiceTest extends UnitTestCase {
 		}
 		$ors[] = $select->merge($wheres, 'AND');
 
-		$ps_alias = $select->joinPrivateSettingsTable('e', 'guid', ['foo3'], 'left');
-		$wheres = [];
-		foreach ($query_parts as $part) {
-			$private_setting = new PrivateSettingWhereClause();
-			$private_setting->values = "%{$part}%";
-			$private_setting->comparison = "LIKE";
-			$private_setting->case_sensitive = false;
-			$wheres[] = $private_setting->prepare($select, $ps_alias);
-		}
-		$ors[] = $select->merge($wheres, 'AND');
-
 		$select->andWhere($select->merge($ors, 'OR'));
 
 		$where = new EntityWhereClause();
@@ -1040,7 +783,6 @@ class SearchServiceTest extends UnitTestCase {
 				'attributes' => ['type', 'subtype'],
 				'metadata' => ['foo1', 'bar1'],
 				'annotations' => ['foo2', 'bar2'],
-				'private_settings' => ['foo3', 'bar3'],
 				'whatever' => ['a', 'b', 'c'],
 			],
 		];
@@ -1059,7 +801,6 @@ class SearchServiceTest extends UnitTestCase {
 				'attributes' => ['type', 'subtype'],
 				'metadata' => ['foo1'],
 				'annotations' => ['foo2'],
-				'private_settings' => ['foo3'],
 			];
 		});
 
@@ -1092,7 +833,6 @@ class SearchServiceTest extends UnitTestCase {
 				'attributes' => ['type', 'subtype'],
 				'metadata' => ['foo1'],
 				'annotations' => ['foo2'],
-				'private_settings' => ['foo3'],
 			];
 		});
 

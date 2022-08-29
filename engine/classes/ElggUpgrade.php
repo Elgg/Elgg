@@ -212,51 +212,6 @@ class ElggUpgrade extends ElggObject {
 	}
 
 	/**
-	 * Set a value as private setting or attribute.
-	 *
-	 * Attributes include title and description.
-	 *
-	 * @param string $name  Name of the attribute or private_setting
-	 * @param mixed  $value Value to be set
-	 * @return void
-	 */
-	public function __set($name, $value) {
-		if (array_key_exists($name, $this->attributes)) {
-			parent::__set($name, $value);
-		} else {
-			$this->setPrivateSetting($name, $value);
-		}
-	}
-
-	/**
-	 * Get an attribute or private setting value
-	 *
-	 * @param string $name Name of the attribute or private setting
-	 * @return mixed
-	 */
-	public function __get($name) {
-		// See if its in our base attribute
-		if (array_key_exists($name, $this->attributes)) {
-			return parent::__get($name);
-		}
-
-		return $this->getPrivateSetting($name);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 * @see ElggData::__isset()
-	 */
-	public function __isset($name) {
-		if (array_key_exists($name, $this->attributes)) {
-			return parent::__isset($name);
-		}
-		
-		$private_setting = $this->getPrivateSetting($name);
-		return !is_null($private_setting);
-	}
-
-	/**
 	 * {@inheritdoc}
 	 */
 	public function getDisplayName() {

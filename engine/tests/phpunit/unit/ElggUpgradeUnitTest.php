@@ -15,19 +15,10 @@ class ElggUpgradeUnitTest extends \Elgg\UnitTestCase {
 		$this->obj = $this->getMockBuilder('\ElggUpgrade')
 			->setMethods(null)
 			->getMock();
-
 	}
 
 	public function mock_egefps_with_entities() {
 		return array(new \stdClass());
-	}
-
-	public function mock_egefps_for_path($options) {
-		if ($options['private_setting_value'] === 'test') {
-			return array(new \stdClass());
-		} else {
-			return array();
-		}
 	}
 
 	public function testDefaultAttrs() {

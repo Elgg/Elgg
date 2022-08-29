@@ -10,8 +10,8 @@ if (!$user instanceof \ElggUser) {
 	return;
 }
 
-$start = $user->getPrivateSetting('timed_muting_start');
-$end = $user->getPrivateSetting('timed_muting_end');
+$start = $user->timed_muting_start;
+$end = $user->timed_muting_end;
 
 $fields = [
 	[

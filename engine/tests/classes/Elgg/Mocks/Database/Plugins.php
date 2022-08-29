@@ -105,10 +105,10 @@ class Plugins extends DbPlugins {
 				$sibling_priority++;
 			}
 
-			$sibling->setPrivateSetting('elgg:internal:priority', $sibling_priority);
+			$sibling->setMetadata('elgg:internal:priority', $sibling_priority);
 		}
 
-		$plugin->setPrivateSetting('elgg:internal:priority', $priority);
+		$plugin->setMetadata('elgg:internal:priority', $priority);
 
 		return $priority;
 	}

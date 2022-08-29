@@ -268,13 +268,12 @@ class UpgradeService {
 				$order_by_completed_time = new EntitySortByClause();
 				$order_by_completed_time->direction = 'DESC';
 				$order_by_completed_time->property = 'completed_time';
-				$order_by_completed_time->property_type = 'private_setting';
 				
 				$upgrades = elgg_get_entities([
 					'type' => 'object',
 					'subtype' => 'elgg_upgrade',
-					'private_setting_name' => 'class', // filters old upgrades
-					'private_setting_name_value_pairs' => [
+					'metadata_name' => 'class', // filters old upgrades
+					'metadata_name_value_pairs' => [
 						'name' => 'is_completed',
 						'value' => true,
 					],

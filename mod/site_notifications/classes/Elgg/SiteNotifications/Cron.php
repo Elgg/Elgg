@@ -278,12 +278,6 @@ class Cron {
 		
 		elgg()->db->deleteData($md);
 		
-		// private settings
-		$ps = Delete::fromTable('private_settings');
-		$ps->where($ps->compare('entity_guid', 'in', $guids, ELGG_VALUE_GUID));
-		
-		elgg()->db->deleteData($ps);
-		
 		// river
 		$river = Delete::fromTable('river');
 		$river->where($river->merge([

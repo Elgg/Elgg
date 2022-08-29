@@ -33,7 +33,7 @@ trait PluginSettings {
 		
 		$name = $this->getNamespacedPluginSettingName($plugin_id, $name);
 		
-		return $this->setPrivateSetting($name, $value);
+		return $this->setMetadata($name, $value);
 	}
 	
 	/**
@@ -41,14 +41,14 @@ trait PluginSettings {
 	 *
 	 * @param string $plugin_id plugin ID
 	 * @param string $name      setting name
-	 * @param mixed  $default   default setting value (will be cast to string)
+	 * @param mixed  $default   default setting value
 	 *
-	 * @return string
+	 * @return mixed
 	 */
-	public function getPluginSetting(string $plugin_id, string $name, $default = null): string {
+	public function getPluginSetting(string $plugin_id, string $name, $default = null) {
 		$name = $this->getNamespacedPluginSettingName($plugin_id, $name);
 		
-		return (string) ($this->getPrivateSetting($name) ?? $default);
+		return $this->getMetadata($name) ?? $default;
 	}
 	
 	/**
@@ -62,11 +62,11 @@ trait PluginSettings {
 	public function removePluginSetting(string $plugin_id, string $name): bool {
 		$name = $this->getNamespacedPluginSettingName($plugin_id, $name);
 		
-		return $this->removePrivateSetting($name);
+		return $this->deleteMetadata($name);
 	}
 	
 	/**
-	 * Get the namespaced private setting name where the plugin setting is saved
+	 * Get the namespaced setting name where the plugin setting is saved
 	 *
 	 * @param string $plugin_id plugin ID
 	 * @param string $name      setting name

@@ -7,7 +7,6 @@ use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\OrderByClause;
-use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\InvalidArgumentException;
@@ -376,41 +375,6 @@ class EntitiesRepositoryTest extends UnitTestCase {
 		Entities::with([])->calculate('max', 'invalid', 'attribute');
 	}
 
-	public function testCanExecutePrivateSettingCalculation() {
-
-		$private_setting_names = ['foo'];
-
-		$select = Select::fromTable('entities', 'e');
-		$select->joinPrivateSettingsTable('e', 'guid', $private_setting_names, 'inner', 'ps');
-		$select->select("sum(ps.value) AS calculation");
-
-		$select->addClause(new AccessWhereClause());
-
-		$private_setting = new PrivateSettingWhereClause();
-		$private_setting->names = $private_setting_names;
-		$select->addClause($private_setting, 'ps');
-
-		$spec = _elgg_services()->db->addQuerySpec([
-			'sql' => $select->getSQL(),
-			'params' => $select->getParameters(),
-			'results' => [
-				(object) [
-					'calculation' => 10,
-				]
-			]
-		]);
-
-		$options = [
-			'private_setting_names' => $private_setting_names,
-		];
-
-		$calculate = Entities::with($options)->calculate('sum', $private_setting_names, 'private_setting');
-
-		$this->assertEquals(10, $calculate);
-
-		_elgg_services()->db->removeQuerySpec($spec);
-	}
-
 	public function testThrowsOnMetadataCalculationWithMultipleAndPairs() {
 
 		$options = [
@@ -665,113 +629,6 @@ class EntitiesRepositoryTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	public function testCanExecuteQueryWithPrivateSettingsNameValuePairs() {
-
-		$select = Select::fromTable('entities', 'e');
-		$select->select('DISTINCT e.*');
-
-		$wheres = [];
-		
-		$select->addClause(new AccessWhereClause());
-
-		$alias1 = $select->joinPrivateSettingsTable('e', 'guid', ['foo1']);
-		$private_setting = new PrivateSettingWhereClause();
-		$private_setting->names = ['foo1'];
-		$private_setting->values = ['bar1'];
-		$wheres[] = $private_setting->prepare($select, $alias1);
-
-		$alias2 = $select->joinPrivateSettingsTable('e', 'guid', ['foo2']);
-		$private_setting = new PrivateSettingWhereClause();
-		$private_setting->names = ['foo2'];
-		$private_setting->values = ['bar2'];
-		$wheres[] = $private_setting->prepare($select, $alias2);
-
-		$select->andWhere($select->expr()->andX()->addMultiple($wheres));
-
-		$select->setMaxResults(10);
-		$select->setFirstResult(0);
-
-		$select->orderBy('e.guid', 'asc');
-
-		$rows = $this->getRows(5);
-		$spec = _elgg_services()->db->addQuerySpec([
-			'sql' => $select->getSQL(),
-			'params' => $select->getParameters(),
-			'results' => $rows,
-		]);
-
-		$options = [
-			'callback' => false,
-			'private_setting_name_value_pairs' => [
-				'foo1' => 'bar1',
-				'foo2' => 'bar2',
-			],
-			'order_by' => [
-				new OrderByClause('e.guid', 'asc'),
-			],
-		];
-
-		$find = Entities::find($options);
-
-		$this->assertEquals($rows, $find);
-
-		_elgg_services()->db->removeQuerySpec($spec);
-	}
-
-	public function testCanExecuteQueryWithPrivateSettingsNameValuePairsJoinedByOr() {
-
-		$select = Select::fromTable('entities', 'e');
-		$select->select('DISTINCT e.*');
-		
-		$wheres = [];
-		
-		$select->addClause(new AccessWhereClause());
-
-		$select->joinPrivateSettingsTable('e', 'guid', null, 'inner','ps');
-
-		$private_setting = new PrivateSettingWhereClause();
-		$private_setting->names = ['foo1'];
-		$private_setting->values = ['bar1'];
-		$wheres[] = $private_setting->prepare($select, 'ps');
-
-		$private_setting = new PrivateSettingWhereClause();
-		$private_setting->names = ['foo2'];
-		$private_setting->values = ['bar2'];
-		$wheres[] = $private_setting->prepare($select, 'ps');
-
-		$select->andWhere($select->merge($wheres, 'OR'));
-
-		$select->setMaxResults(10);
-		$select->setFirstResult(0);
-
-		$select->orderBy('e.guid', 'asc');
-
-		$rows = $this->getRows(5);
-		$spec = _elgg_services()->db->addQuerySpec([
-			'sql' => $select->getSQL(),
-			'params' => $select->getParameters(),
-			'results' => $rows,
-		]);
-
-		$options = [
-			'callback' => false,
-			'private_setting_name_value_pairs' => [
-				'foo1' => 'bar1',
-				'foo2' => 'bar2',
-			],
-			'private_setting_name_value_pairs_operator' => 'OR',
-			'order_by' => [
-				new OrderByClause('e.guid', 'asc'),
-			],
-		];
-
-		$find = Entities::find($options);
-
-		$this->assertEquals($rows, $find);
-
-		_elgg_services()->db->removeQuerySpec($spec);
-	}
-
 	/**
 	 * @group RepositoryPairs
 	 */
@@ -785,16 +642,16 @@ class EntitiesRepositoryTest extends UnitTestCase {
 		$select->addClause(new AccessWhereClause());
 
 		$alias1 = $select->joinRelationshipTable('e', 'guid', ['foo1']);
-		$private_setting = new RelationshipWhereClause();
-		$private_setting->names = ['foo1'];
-		$private_setting->subject_guids = [1, 2, 3];
-		$wheres[] = $private_setting->prepare($select, $alias1);
+		$rel1 = new RelationshipWhereClause();
+		$rel1->names = ['foo1'];
+		$rel1->subject_guids = [1, 2, 3];
+		$wheres[] = $rel1->prepare($select, $alias1);
 
 		$alias2 = $select->joinRelationshipTable('e', 'guid', ['foo2'], true);
-		$private_setting = new RelationshipWhereClause();
-		$private_setting->names = ['foo2'];
-		$private_setting->object_guids = [4, 5, 6];
-		$wheres[] = $private_setting->prepare($select, $alias2);
+		$rel2 = new RelationshipWhereClause();
+		$rel2->names = ['foo2'];
+		$rel2->object_guids = [4, 5, 6];
+		$wheres[] = $rel2->prepare($select, $alias2);
 
 		$select->andWhere($select->expr()->andX()->addMultiple($wheres));
 
@@ -846,10 +703,10 @@ class EntitiesRepositoryTest extends UnitTestCase {
 
 		$select->joinRelationshipTable('e', 'guid', null, false, 'inner','r');
 
-		$private_setting = new RelationshipWhereClause();
-		$private_setting->names = ['foo1'];
-		$private_setting->subject_guids = [1, 2, 3];
-		$wheres[] = $private_setting->prepare($select, 'r');
+		$rel = new RelationshipWhereClause();
+		$rel->names = ['foo1'];
+		$rel->subject_guids = [1, 2, 3];
+		$wheres[] = $rel->prepare($select, 'r');
 
 		$select->andWhere($select->merge($wheres, 'OR'));
 

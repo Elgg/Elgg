@@ -112,7 +112,7 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 		
 		$this->assertEquals('test_plugin_edited', $plugin->getMetadata('title'));
 		$this->assertEquals('description', $plugin->getMetadata('description'));
-		$this->assertNull($plugin->getMetadata('foo'));
+		$this->assertEquals('bar', $plugin->getMetadata('foo'));
 
 		$this->assertNull($plugin->getSetting('title'));
 		$this->assertNull($plugin->getSetting('description'));

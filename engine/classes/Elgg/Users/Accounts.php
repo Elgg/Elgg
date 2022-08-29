@@ -414,7 +414,7 @@ class Accounts {
 		
 		$site = elgg_get_site_entity();
 		
-		$user->setPrivateSetting('new_email', $email);
+		$user->new_email = $email;
 		
 		$url = elgg_generate_url('account:email:confirm', [
 			'guid' => $user->guid,
@@ -443,11 +443,11 @@ class Accounts {
 	 * @since 4.3
 	 */
 	public function registerAuthenticationFailure(\ElggUser $user): void {
-		$fails = (int) $user->getPrivateSetting('authentication_failures');
+		$fails = (int) $user->authentication_failures;
 		$fails++;
 
-		$user->setPrivateSetting('authentication_failures', $fails);
-		$user->setPrivateSetting("authentication_failure_{$fails}", time());
+		$user->authentication_failures = $fails;
+		$user->{"authentication_failure_{$fails}"} = time();
 		
 	}
 	
@@ -460,16 +460,16 @@ class Accounts {
 	 * @since 4.3
 	 */
 	public function resetAuthenticationFailures(\ElggUser $user): void {
-		$fails = (int) $user->getPrivateSetting('authentication_failures');
+		$fails = (int) $user->authentication_failures;
 		if (empty($fails)) {
 			return;
 		}
 		
 		for ($n = 1; $n <= $fails; $n++) {
-			$user->removePrivateSetting("authentication_failure_{$n}");
+			unset($user->{"authentication_failure_{$n}"});
 		}
 
-		$user->removePrivateSetting('authentication_failures');
+		unset($user->authentication_failures);
 	}
 	
 	/**
@@ -486,7 +486,7 @@ class Accounts {
 		$limit = $limit ?? $this->config->authentication_failures_limit;
 		$lifetime = $lifetime ?? $this->config->authentication_failures_lifetime;
 		
-		$fails = (int) $user->getPrivateSetting('authentication_failures');
+		$fails = (int) $user->authentication_failures;
 		if (empty($fails) || $fails < $limit) {
 			return false;
 		}
@@ -494,7 +494,7 @@ class Accounts {
 		$failure_count = 0;
 		$min_time = time() - $lifetime;
 		for ($n = $fails; $n > 0; $n--) {
-			$failure_timestamp = $user->getPrivateSetting("authentication_failure_{$n}");
+			$failure_timestamp = $user->{"authentication_failure_{$n}"};
 			if ($failure_timestamp > $min_time) {
 				$failure_count++;
 			}

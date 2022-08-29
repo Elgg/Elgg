@@ -21,7 +21,6 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	const TABLE_METADATA = 'metadata';
 	const TABLE_ANNOTATIONS = 'annotations';
 	const TABLE_RELATIONSHIPS = 'entity_relationships';
-	const TABLE_PRIVATE_SETTINGS = 'private_settings';
 
 	static $calculations = [
 		'avg',
@@ -508,53 +507,6 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 		};
 
 		$clause = new JoinClause(self::TABLE_ANNOTATIONS, $joined_alias, $condition, $join_type);
-
-		$joined_alias = $clause->prepare($this, $from_alias);
-
-		$this->joins[$hash] = $joined_alias;
-
-		return $joined_alias;
-	}
-
-	/**
-	 * Join private settings table from alias and return joined table alias
-	 *
-	 * @param string          $from_alias   Main table alias
-	 * @param string          $from_column  Guid column name in the main table
-	 * @param string|string[] $name         Private setting name
-	 * @param string          $join_type    JOIN type
-	 * @param string          $joined_alias Joined table alias
-	 *
-	 * @return string
-	 */
-	public function joinPrivateSettingsTable($from_alias = '', $from_column = 'guid', $name = null, $join_type = 'inner', $joined_alias = null) {
-		if (in_array($joined_alias, $this->joins)) {
-			return $joined_alias;
-		}
-
-		if ($from_alias) {
-			$from_column = "$from_alias.$from_column";
-		}
-
-		$hash = sha1(serialize([
-			$join_type,
-			self::TABLE_PRIVATE_SETTINGS,
-			$from_column,
-			(array) $name,
-		]));
-
-		if (!isset($joined_alias) && !empty($this->joins[$hash])) {
-			return $this->joins[$hash];
-		}
-
-		$condition = function (QueryBuilder $qb, $joined_alias) use ($from_column, $name) {
-			return $qb->merge([
-				$qb->compare("$joined_alias.entity_guid", '=', $from_column),
-				$qb->compare("$joined_alias.name", '=', $name, ELGG_VALUE_STRING),
-			]);
-		};
-
-		$clause = new JoinClause(self::TABLE_PRIVATE_SETTINGS, $joined_alias, $condition, $join_type);
 
 		$joined_alias = $clause->prepare($this, $from_alias);
 

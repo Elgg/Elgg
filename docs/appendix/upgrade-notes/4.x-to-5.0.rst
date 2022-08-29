@@ -18,6 +18,11 @@ Faker
 
 The faker library is no longer maintained by fzaninotto so we switched to a fork which is maintained by FakerPHP.
 
+Private Settings
+----------------
+
+The concept of private settings has been removed from the system. All private settings have been copied to metadata. All related functions have been removed.
+
 Javascript
 ----------
 

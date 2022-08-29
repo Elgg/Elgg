@@ -452,12 +452,12 @@ class ElggUser extends \ElggEntity {
 	 *
 	 * @param string $plugin_id plugin ID
 	 * @param string $name      setting name
-	 * @param mixed  $default   default setting value (will be cast to string)
+	 * @param mixed  $default   default setting value
 	 *
-	 * @return string
+	 * @return mixed
 	 * @see \Elgg\Traits\Entity\PluginSettings::getPluginSetting()
 	 */
-	public function getPluginSetting(string $plugin_id, string $name, $default = null): string {
+	public function getPluginSetting(string $plugin_id, string $name, $default = null) {
 		$plugin = _elgg_services()->plugins->get($plugin_id);
 		if ($plugin instanceof \ElggPlugin) {
 			$static_defaults = (array) $plugin->getStaticConfig('user_settings', []);

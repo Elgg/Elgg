@@ -30,9 +30,6 @@ return elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() {
 				$relationship->delete();
 			}
 			break;
-		case 'private_setting':
-			$entity->removePrivateSetting($key);
-			break;
 		case 'acl':
 			$acl = elgg_get_access_collection((int) $key);
 			if ($acl instanceof \ElggAccessCollection) {

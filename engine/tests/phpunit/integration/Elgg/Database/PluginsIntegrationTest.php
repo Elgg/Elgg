@@ -37,8 +37,6 @@ class PluginsIntegrationTest extends IntegrationTestCase {
 	 * {@inheritDoc}
 	 */
 	public function down() {
-		$this->createApplication();
-		
 		elgg_call(ELGG_SHOW_DISABLED_ENTITIES | ELGG_IGNORE_ACCESS | ELGG_DISABLE_SYSTEM_LOG, function() {
 			$plugins = $this->getAllPlugins();
 			/* @var $plugin \ElggPlugin */

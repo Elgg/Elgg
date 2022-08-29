@@ -16,7 +16,6 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Mocks\Database\MetadataTable               $metadataTable                   Metadata mocks
  * @property-read \Elgg\Mocks\Database\Mutex                       $mutex                           Mutex
  * @property-read \Elgg\Notifications\NotificationsService         $notifications                   Notification service (with memory queue)
- * @property-read \Elgg\Mocks\Database\PrivateSettingsTable        $privateSettings                 Private settings table mock
  * @property-read \Elgg\Mocks\Database\RelationshipsTable          $relationshipsTable              Annotation mocks
  * @property-read \Elgg\Mocks\I18n\Translator                      $translator                      Translator
  * @property-read \Elgg\Mocks\Database\UsersTable                  $usersTable                      Users table
@@ -41,7 +40,6 @@ class InternalContainer extends \Elgg\Di\InternalContainer{
 		$container->set('annotationsTable', \DI\autowire(\Elgg\Mocks\Database\AnnotationsTable::class));
 		$container->set('relationshipsTable', \DI\autowire(\Elgg\Mocks\Database\RelationshipsTable::class));
 		$container->set('accessCollections', \DI\autowire(\Elgg\Mocks\Database\AccessCollections::class)->constructorParameter('cache', \DI\get('accessCache')));
-		$container->set('privateSettings', \DI\autowire(\Elgg\Mocks\Database\PrivateSettingsTable::class));
 		$container->set('configTable', \DI\autowire(\Elgg\Mocks\Database\ConfigTable::class));
 		$container->set('users_remember_me_cookies_table', \DI\autowire(\Elgg\Mocks\Database\UsersRememberMeCookiesTable::class));
 
@@ -57,7 +55,6 @@ class InternalContainer extends \Elgg\Di\InternalContainer{
 				$c->events,
 				$c->translator,
 				$c->views,
-				$c->privateSettingsCache,
 				$c->config,
 				$c->system_messages,
 				$c->request

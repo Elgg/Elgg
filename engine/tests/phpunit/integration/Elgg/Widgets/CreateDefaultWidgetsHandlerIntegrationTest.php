@@ -76,8 +76,8 @@ class CreateDefaultWidgetsHandlerIntegrationTest extends IntegrationTestCase {
 			'type' => 'object',
 			'subtype' => 'widget',
 			'owner_guid' => $this->user->guid,
-			'private_setting_name' => 'context',
-			'private_setting_value' => 'test_context',
+			'metadata_name' => 'context',
+			'metadata_value' => 'test_context',
 			'limit' => false,
 		];
 		
@@ -130,8 +130,8 @@ class CreateDefaultWidgetsHandlerIntegrationTest extends IntegrationTestCase {
 			'type' => 'object',
 			'subtype' => 'widget',
 			'owner_guid' => $this->user->guid,
-			'private_setting_name' => 'context',
-			'private_setting_value' => 'test_context',
+			'metadata_name' => 'context',
+			'metadata_value' => 'test_context',
 			'limit' => false,
 		];
 		

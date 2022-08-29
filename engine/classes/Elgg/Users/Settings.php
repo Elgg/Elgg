@@ -341,7 +341,7 @@ class Settings {
 			return;
 		}
 	
-		if (!$user->setPrivateSetting('elgg_default_access', $default_access)) {
+		if (!$user->setMetadata('elgg_default_access', $default_access)) {
 			$request->validation()->fail('default_access', $default_access, elgg_echo('user:default_access:failure'));
 			return;
 		}
@@ -369,6 +369,6 @@ class Settings {
 		}
 		
 		$value = (bool) $request->getParam('admin_validation_notification', true);
-		$user->setPrivateSetting('admin_validation_notification', $value);
+		$user->admin_validation_notification = $value;
 	}
 }

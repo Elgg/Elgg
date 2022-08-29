@@ -84,11 +84,6 @@ class EntitySortByClause extends OrderByClause {
 				$column = "{$e_alias}.{$this->property}";
 				break;
 
-			case 'private_setting':
-				$ps_alias = $qb->joinPrivateSettingsTable($table_alias, $from_column, $this->property, $this->join_type);
-				$column = "{$ps_alias}.value";
-				break;
-
 			case 'annotation':
 				$an_alias = $qb->joinAnnotationTable($table_alias, $from_column, $this->property, $this->join_type);
 				$column = "{$an_alias}.value";

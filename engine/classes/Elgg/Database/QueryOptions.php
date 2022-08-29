@@ -9,7 +9,6 @@ use Elgg\Database\Clauses\HavingClause;
 use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\OrderByClause;
-use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Database\Clauses\SelectClause;
 use Elgg\Database\Clauses\WhereClause;
@@ -57,9 +56,6 @@ use Elgg\Traits\Database\LegacyQueryOptionsAdapter;
  * @property string                      $annotation_calculation
  *
  * @property RelationshipWhereClause[]   $relationship_pairs
- *
- * @property PrivateSettingWhereClause[] $private_setting_name_value_pairs
- * @property string                      $private_setting_name_value_pairs_operator
  *
  * @property boolean                     $preload_owners
  * @property boolean                     $preload_containers

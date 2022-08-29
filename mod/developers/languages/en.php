@@ -69,7 +69,6 @@ return array(
 	'developers:entity_explorer:info:attributes' => 'Attributes',
 	'developers:entity_explorer:info:metadata' => 'Metadata',
 	'developers:entity_explorer:info:relationships' => 'Relationships',
-	'developers:entity_explorer:info:private_settings' => 'Private Settings',
 	'developers:entity_explorer:info:owned_acls' => 'Owned Access Collections',
 	'developers:entity_explorer:info:acl_memberships' => 'Access Collections Memberships',
 	'developers:entity_explorer:delete_entity' => 'Remove this entity',

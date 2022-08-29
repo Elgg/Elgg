@@ -20,5 +20,5 @@ echo elgg_view_field([
 		'daily' => elgg_echo('interval:daily'),
 		'weekly' => elgg_echo('interval:weekly'),
 	],
-	'value' => $user->getPrivateSetting('delayed_email_interval'),
+	'value' => $user->delayed_email_interval,
 ]);
