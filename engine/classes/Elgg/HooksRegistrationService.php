@@ -283,19 +283,17 @@ abstract class HooksRegistrationService {
 	 * @return void
 	 */
 	protected function checkDeprecation($name, $type, array $options = []) {
-		$options = array_merge([
-			self::OPTION_DEPRECATION_MESSAGE => '',
-			self::OPTION_DEPRECATION_VERSION => '',
-		], $options);
-		
-		$handlers = $this->hasHandler($name, $type);
-		if (!$handlers || !$options[self::OPTION_DEPRECATION_MESSAGE]) {
+		$message = trim((string) elgg_extract(self::OPTION_DEPRECATION_MESSAGE, $options));
+		if (empty($message)) {
 			return;
 		}
 		
-		$this->logDeprecatedMessage(
-			$options[self::OPTION_DEPRECATION_MESSAGE],
-			$options[self::OPTION_DEPRECATION_VERSION]
-		);
+		if (!$this->hasHandler($name, $type)) {
+			return;
+		}
+		
+		$version = (string) elgg_extract(self::OPTION_DEPRECATION_VERSION, $options, '');
+		
+		$this->logDeprecatedMessage($message, $version);
 	}
 }

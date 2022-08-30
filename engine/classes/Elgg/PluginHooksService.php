@@ -85,7 +85,7 @@ class PluginHooksService extends HooksRegistrationService {
 	 */
 	public function triggerDeprecated($name, $type, $params = null, $value = null, $message = null, $version = null) {
 		$options = [
-			self::OPTION_DEPRECATION_MESSAGE => $message,
+			self::OPTION_DEPRECATION_MESSAGE => "The '{$name}', '{$type}' hook is deprecated. " . $message,
 			self::OPTION_DEPRECATION_VERSION => $version,
 		];
 		
