@@ -53,26 +53,22 @@ abstract class ElggEntityPluginSettingsTestCase extends IntegrationTestCase {
 	 * @dataProvider setPluginSettingProvider
 	 */
 	public function testSetGetRemovePluginSettings(string $plugin_id, string $setting_name, $setting_value) {
-		$private_setting_name = $this->entity->getNamespacedPluginSettingName($plugin_id, $setting_name);
+		$plugin_setting_name = $this->entity->getNamespacedPluginSettingName($plugin_id, $setting_name);
 		
 		$this->assertEmpty($this->entity->getPluginSetting($plugin_id, $setting_name));
 		$this->assertEquals('default', $this->entity->getPluginSetting($plugin_id, $setting_name, 'default'));
-		$this->assertEmpty($this->entity->getPrivateSetting($private_setting_name));
+		$this->assertEmpty($this->entity->getMetadata($plugin_setting_name));
 		
 		$this->assertTrue($this->entity->setPluginSetting($plugin_id, $setting_name, $setting_value));
 		
-		if (is_bool($setting_value)) {
-			// booleans are cast to ints
-			$setting_value = (int) $setting_value;
-		}
-		$this->assertEquals((string) $setting_value, $this->entity->getPluginSetting($plugin_id, $setting_name));
-		$this->assertEquals((string) $setting_value, $this->entity->getPluginSetting($plugin_id, $setting_name, 'default'));
-		$this->assertEquals((string) $setting_value, $this->entity->getPrivateSetting($private_setting_name));
+		$this->assertEquals($setting_value, $this->entity->getPluginSetting($plugin_id, $setting_name));
+		$this->assertEquals($setting_value, $this->entity->getPluginSetting($plugin_id, $setting_name, 'default'));
+		$this->assertEquals($setting_value, $this->entity->getMetadata($plugin_setting_name));
 		
 		$this->assertTrue($this->entity->removePluginSetting($plugin_id, $setting_name));
 		$this->assertEmpty($this->entity->getPluginSetting($plugin_id, $setting_name));
 		$this->assertEquals('default', $this->entity->getPluginSetting($plugin_id, $setting_name, 'default'));
-		$this->assertEmpty($this->entity->getPrivateSetting($private_setting_name));
+		$this->assertEmpty($this->entity->getMetadata($plugin_setting_name));
 	}
 	
 	public function setPluginSettingProvider() {

@@ -296,8 +296,8 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$user2 = $this->createUser();
 		$event = $this->getSubscriptionNotificationEvent();
 		
-		$user1->setPrivateSetting('timed_muting_start', time() - 20);
-		$user1->setPrivateSetting('timed_muting_end', time() - 10);
+		$user1->setMetadata('timed_muting_start', time() - 20);
+		$user1->setMetadata('timed_muting_end', time() - 10);
 		
 		$subscriptions = [
 			$user1->guid => ['apples', 'bananas'],
@@ -312,8 +312,8 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$user2 = $this->createUser();
 		$event = $this->getSubscriptionNotificationEvent();
 		
-		$user1->setPrivateSetting('timed_muting_start', time() - 20);
-		$user1->setPrivateSetting('timed_muting_end', time() + 10);
+		$user1->setMetadata('timed_muting_start', time() - 20);
+		$user1->setMetadata('timed_muting_end', time() + 10);
 		
 		$subscriptions = [
 			$user1->guid => ['apples', 'bananas'],
@@ -332,8 +332,8 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$user2 = $this->createUser();
 		$event = $this->getSubscriptionNotificationEvent();
 		
-		$user1->setPrivateSetting('timed_muting_start', time() + 20);
-		$user1->setPrivateSetting('timed_muting_end', time() + 40);
+		$user1->setMetadata('timed_muting_start', time() + 20);
+		$user1->setMetadata('timed_muting_end', time() + 40);
 		
 		$subscriptions = [
 			$user1->guid => ['apples', 'bananas'],

@@ -6,7 +6,6 @@ use Doctrine\DBAL\Query\Expression\CompositeExpression;
 use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
-use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\InvalidParameterException;
@@ -49,7 +48,7 @@ class Entities extends Repository {
 	 *
 	 * @param string $function      Valid numeric function
 	 * @param string $property      Property name
-	 * @param string $property_type 'attribute'|'metadata'|'annotation'|'private_setting'
+	 * @param string $property_type 'attribute'|'metadata'|'annotation'
 	 *
 	 * @return string
 	 * @throws InvalidParameterException
@@ -86,11 +85,6 @@ class Entities extends Repository {
 
 			case 'annotation' :
 				$alias = $qb->joinAnnotationTable('e', 'guid', $property, 'inner', 'n_table');
-				$qb->addSelect("{$function}({$alias}.value) AS calculation");
-				break;
-
-			case 'private_setting' :
-				$alias = $qb->joinPrivateSettingsTable('e', 'guid', $property, 'inner', 'ps');
 				$qb->addSelect("{$function}({$alias}.value) AS calculation");
 				break;
 		}
@@ -243,7 +237,6 @@ class Entities extends Repository {
 		$ands[] = $this->buildPairedMetadataClause($qb, $this->options->metadata_name_value_pairs, $this->options->metadata_name_value_pairs_operator);
 		$ands[] = $this->buildPairedMetadataClause($qb, $this->options->search_name_value_pairs, 'OR');
 		$ands[] = $this->buildPairedAnnotationClause($qb, $this->options->annotation_name_value_pairs, $this->options->annotation_name_value_pairs_operator);
-		$ands[] = $this->buildPairedPrivateSettingsClause($qb, $this->options->private_setting_name_value_pairs, $this->options->private_setting_name_value_pairs_operator);
 		$ands[] = $this->buildPairedRelationshipClause($qb, $this->options->relationship_pairs);
 
 		$ands = $qb->merge($ands);
@@ -313,31 +306,6 @@ class Entities extends Repository {
 				$joined_alias = $qb->joinAnnotationTable('e', 'guid', null, 'inner', 'n_table');
 			} else {
 				$joined_alias = $qb->joinAnnotationTable('e', 'guid', $clause->names);
-			}
-			$parts[] = $clause->prepare($qb, $joined_alias);
-		}
-
-		return $qb->merge($parts, $boolean);
-	}
-
-	/**
-	 * Process private setting name value pairs
-	 * Joins the private settings table on entity guid in the entities table and applies private setting where clauses
-	 *
-	 * @param QueryBuilder                $qb      Query builder
-	 * @param PrivateSettingWhereClause[] $clauses Where clauses
-	 * @param string                      $boolean Merge boolean
-	 *
-	 * @return CompositeExpression|string
-	 */
-	protected function buildPairedPrivateSettingsClause(QueryBuilder $qb, $clauses, $boolean = 'AND') {
-		$parts = [];
-
-		foreach ($clauses as $clause) {
-			if (strtoupper($boolean) === 'OR' || count($clauses) === 1) {
-				$joined_alias = $qb->joinPrivateSettingsTable('e', 'guid', null, 'inner', 'ps');
-			} else {
-				$joined_alias = $qb->joinPrivateSettingsTable('e', 'guid', $clause->names);
 			}
 			$parts[] = $clause->prepare($qb, $joined_alias);
 		}

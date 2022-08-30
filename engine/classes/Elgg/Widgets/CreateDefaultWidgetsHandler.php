@@ -72,8 +72,8 @@ class CreateDefaultWidgetsHandler {
 					'type' => 'object',
 					'subtype' => 'widget',
 					'owner_guid' => $entity->guid,
-					'private_setting_name' => 'context',
-					'private_setting_value' => $widget_context,
+					'metadata_name' => 'context',
+					'metadata_value' => $widget_context,
 				])) {
 					return;
 				}
@@ -84,8 +84,8 @@ class CreateDefaultWidgetsHandler {
 					'type' => 'object',
 					'subtype' => 'widget',
 					'owner_guid' => elgg_get_site_entity()->guid,
-					'private_setting_name' => 'context',
-					'private_setting_value' => $widget_context,
+					'metadata_name' => 'context',
+					'metadata_value' => $widget_context,
 					'limit' => false,
 					'batch' => true,
 				]);
@@ -96,14 +96,7 @@ class CreateDefaultWidgetsHandler {
 					$new_widget = clone $widget;
 					$new_widget->container_guid = $entity->guid;
 					$new_widget->owner_guid = $entity->guid;
-		
-					// pull in settings
-					$settings = $widget->getAllPrivateSettings();
-		
-					foreach ($settings as $name => $value) {
-						$new_widget->$name = $value;
-					}
-		
+			
 					$new_widget->save();
 				}
 			});

@@ -29,9 +29,6 @@ echo elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
 	// Relationship Information
 	$result .= elgg_view('admin/develop_tools/entity_explorer/relationships', ['entity' => $entity]);
 	
-	// Private Settings Information
-	$result .= elgg_view('admin/develop_tools/entity_explorer/private_settings', ['entity' => $entity]);
-	
 	// Owned ACLs
 	$result .= elgg_view('admin/develop_tools/entity_explorer/owned_acls', ['entity' => $entity]);
 	

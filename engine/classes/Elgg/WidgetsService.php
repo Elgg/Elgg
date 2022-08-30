@@ -48,10 +48,9 @@ class WidgetsService {
 			'type' => 'object',
 			'subtype' => 'widget',
 			'owner_guid' => $owner_guid,
-			'private_setting_name' => 'context',
-			'private_setting_value' => $context,
+			'metadata_name' => 'context',
+			'metadata_value' => $context,
 			'limit' => false,
-			'preload_private_settings' => true,
 		]);
 		
 		if (!$widgets) {
@@ -126,7 +125,6 @@ class WidgetsService {
 			return false;
 		}
 
-		// private settings cannot be set until \ElggWidget saved
 		$widget->handler = $handler;
 		$widget->context = $context;
 

@@ -107,7 +107,7 @@ class ElggPluginSettingsIntegrationTest extends IntegrationTestCase {
 		$plugin_setting_name = 'test_name';
 		$plugin_setting_value = rand();
 		
-		// test for some private settings values
+		// test for some settings values
 		$this->assertNotEmpty($plugin->getPriority());
 		
 		// feed some settings
@@ -132,7 +132,7 @@ class ElggPluginSettingsIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals($plugin_setting_value, $untouched_plugin->getSetting($plugin_setting_name));
 		$this->assertEquals($plugin_setting_value, $user->getPluginSetting($untouched_plugin->getID(), "{$plugin_setting_name}:user"));
 		
-		// verify other private settings still exists
+		// verify other settings still exists
 		$this->assertNotEmpty($plugin->getPriority());
 	}
 	

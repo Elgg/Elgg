@@ -22,7 +22,6 @@ use Elgg\Traits\Loggable;
  * @property int           $authentication_failures_limit           Number of allowed authentication failures
  * @property bool          $auto_disable_plugins					Are unbootable plugins automatically disabled
  * @property int           $batch_run_time_in_secs					Max time for a single upgrade loop
- * @property int           $bootdata_plugin_settings_limit			Max amount of plugin settings to determine if plugin will be cached
  * @property int           $boot_cache_ttl                          Time to live for boot cache in seconds
  * @property array         $breadcrumbs
  * @property string        $cacheroot            					Path of cache storage with trailing "/"
@@ -191,7 +190,6 @@ class Config {
 		'auto_disable_plugins' => true,
 		'batch_run_time_in_secs' => 4,
 		'boot_cache_ttl' => 3600,
-		'bootdata_plugin_settings_limit' => 40,
 		'can_change_username' => false,
 		'class_loader_verify_file_existence' => true,
 		'comment_box_collapses' => true,
@@ -305,7 +303,7 @@ class Config {
 	 * Build a config from default settings locations
 	 *
 	 * @param string $settings_path Path of settings file
-	 * @param bool   $try_env       If path not given, try $_ENV['ELGG_SETTINGS_FILE']
+	 * @param bool   $try_env       If path not given, try environment for 'ELGG_SETTINGS_FILE'
 	 * @return Config
 	 *
 	 * @throws ConfigurationException
@@ -392,13 +390,13 @@ class Config {
 	 * Resolve settings path
 	 *
 	 * @param string $settings_path Path of settings file
-	 * @param bool   $try_env       If path not given, try $_ENV['ELGG_SETTINGS_FILE']
+	 * @param bool   $try_env       If path not given, try environment for 'ELGG_SETTINGS_FILE'
 	 * @return string
 	 */
 	public static function resolvePath(string $settings_path = '', bool $try_env = true): string {
 		if (!$settings_path) {
-			if ($try_env && !empty($_ENV['ELGG_SETTINGS_FILE'])) {
-				$settings_path = $_ENV['ELGG_SETTINGS_FILE'];
+			if ($try_env && !empty(getenv('ELGG_SETTINGS_FILE'))) {
+				$settings_path = getenv('ELGG_SETTINGS_FILE');
 			} else if (!$settings_path) {
 				$settings_path = Paths::settingsFile(Paths::SETTINGS_PHP);
 			}

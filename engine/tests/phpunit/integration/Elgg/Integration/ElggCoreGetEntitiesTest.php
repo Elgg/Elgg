@@ -652,49 +652,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		$this->assertGreaterThan(1, $users);
 	}
 	
-	public function testElggGetEntitiesWithoutPrivateSettingsPreloader() {
-		$entities = $this->createMany('object', 2);
-		
-		$guids = [];
-		foreach ($entities as $e) {
-			$guids[] = $e->guid;
-			$e->setPrivateSetting('foo', 'bar');
-		}
-
-		elgg_get_entities([
-			'guids' => $guids,
-			'limit' => false,
-		]);
-				
-		$cache = _elgg_services()->privateSettingsCache;
-		
-		// cache should not be loaded
-		$this->assertNull($cache->load($guids[0]));
-		$this->assertNull($cache->load($guids[1]));
-	}
-	
-	public function testElggGetEntitiesWithPrivateSettingsPreloader() {
-		$entities = $this->createMany('object', 2);
-		
-		$guids = [];
-		foreach ($entities as $e) {
-			$guids[] = $e->guid;
-			$e->setPrivateSetting('foo', 'bar');
-		}
-
-		elgg_get_entities([
-			'guids' => $guids,
-			'limit' => false,
-			'preload_private_settings' => true,
-		]);
-				
-		$cache = _elgg_services()->privateSettingsCache;
-		
-		// cache should be loaded
-		$this->assertSame(['foo' => 'bar'], $cache->load($guids[0]));
-		$this->assertSame(['foo' => 'bar'], $cache->load($guids[1]));
-	}
-	
 	public function testGetEntityAsRowWithNonExistingGUID() {
 		$this->assertnull(elgg_get_entity_as_row(-1));
 	}

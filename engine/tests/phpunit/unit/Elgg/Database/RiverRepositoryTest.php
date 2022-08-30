@@ -496,16 +496,16 @@ class RiverRepositoryTest extends UnitTestCase {
 		$select = $this->buildQuery($select, $options);
 
 		$alias1 = $select->joinRelationshipTable('rv', 'subject_guid', ['foo1']);
-		$private_setting = new RelationshipWhereClause();
-		$private_setting->names = ['foo1'];
-		$private_setting->subject_guids = [1, 2, 3];
-		$wheres[] = $private_setting->prepare($select, $alias1);
+		$rel1 = new RelationshipWhereClause();
+		$rel1->names = ['foo1'];
+		$rel1->subject_guids = [1, 2, 3];
+		$wheres[] = $rel1->prepare($select, $alias1);
 
 		$alias2 = $select->joinRelationshipTable('rv', 'subject_guid', ['foo2'], true);
-		$private_setting = new RelationshipWhereClause();
-		$private_setting->names = ['foo2'];
-		$private_setting->object_guids = [4, 5, 6];
-		$wheres[] = $private_setting->prepare($select, $alias2);
+		$rel2 = new RelationshipWhereClause();
+		$rel2->names = ['foo2'];
+		$rel2->object_guids = [4, 5, 6];
+		$wheres[] = $rel2->prepare($select, $alias2);
 
 		$select->andWhere($select->expr()->andX()->addMultiple($wheres));
 

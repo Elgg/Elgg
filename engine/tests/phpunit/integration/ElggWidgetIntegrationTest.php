@@ -52,15 +52,6 @@ class ElggWidgetIntegrationTest extends IntegrationTestCase {
 		$this->assertFalse(isset($this->widget->title));
 	}
 		
-	public function testUnsettingPrivateSettings() {
-		$this->widget->order = '123';
-		$this->assertEquals('123', $this->widget->getPrivateSetting('order'));
-		$this->assertTrue(isset($this->widget->order));
-		unset($this->widget->order);
-		$this->assertEmpty($this->widget->getPrivateSetting('order'));
-		$this->assertFalse(isset($this->widget->order));
-	}
-		
 	public function testGetTitle() {
 		$this->widget->title = 'get_title';
 		$this->widget->handler = 'widget_handler';

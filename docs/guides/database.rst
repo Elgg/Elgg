@@ -116,7 +116,7 @@ By properties
 ~~~~~~~~~~~~~
 
 You can fetch entities by their properties using ``elgg_get_entities``. Using specific parameters passed to ``$options``
-array, you can retrieve entities by their attributes, metadata, annotations, private settings and relationships.
+array, you can retrieve entities by their attributes, metadata, annotations and relationships.
 
 
 Displaying entities

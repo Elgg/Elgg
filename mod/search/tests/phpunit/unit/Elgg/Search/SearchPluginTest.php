@@ -38,7 +38,6 @@ class SearchPluginTest extends UnitTestCase {
 			'fields' => [
 				'metadata' => [],
 				'annotations' => [],
-				'private_settings' => [],
 				'attributes' => [],
 			],
 			'partial_match' => true,

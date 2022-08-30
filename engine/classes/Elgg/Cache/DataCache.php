@@ -4,10 +4,9 @@ namespace Elgg\Cache;
 
 /**
  * Persistent data cache
- * Used for caching entities, metadata and private settings
+ * Used for caching metadata
  *
  * @property-read CompositeCache $metadata
- * @property-read CompositeCache $private_settings
  */
 class DataCache extends CacheCollection {
 

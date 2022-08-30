@@ -9,7 +9,7 @@ echo elgg_view_field([
 	'#type' => 'plaintext',
 	'#label' => elgg_echo('admin:robots.txt:instructions'),
 	'name' => 'text',
-	'value' => $site->getPrivateSetting('robots.txt'),
+	'value' => $site->getMetadata('robots.txt'),
 ]);
 
 echo elgg_view_field([

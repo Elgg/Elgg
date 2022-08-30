@@ -75,7 +75,7 @@ class DelayedEmailService {
 	public function enqueueNotification(Notification $notification): bool {
 		$recipient = $notification->getRecipient();
 		
-		$delivery_interval = $recipient->getPrivateSetting('delayed_email_interval') ?? 'daily';
+		$delivery_interval = $recipient->delayed_email_interval ?: 'daily';
 		
 		try {
 			return $this->queue_table->queueEmail($recipient->guid, $delivery_interval, $notification);

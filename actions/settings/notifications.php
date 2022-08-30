@@ -32,9 +32,9 @@ foreach ($notification_settings as $purpose => $prefered_methods) {
 // delayed email interval
 if ((bool) elgg_get_config('enable_delayed_email')) {
 	$delayed_email_interval = get_input('delayed_email_interval');
-	if ($user->getPrivateSetting('delayed_email_interval') !== $delayed_email_interval) {
+	if ($user->delayed_email_interval !== $delayed_email_interval) {
 		// save new setting
-		$user->setPrivateSetting('delayed_email_interval', $delayed_email_interval);
+		$user->delayed_email_interval = $delayed_email_interval;
 		
 		// update all queued notifications to the new interval
 		_elgg_services()->delayedEmailQueueTable->updateRecipientInterval($user->guid, $delayed_email_interval);
@@ -50,11 +50,11 @@ if (!empty($start) && !empty($end) && $start <= $end) {
 	$end_date->setTime(23, 59, 59);
 	$end = $end_date->getTimestamp();
 	
-	$user->setPrivateSetting('timed_muting_start', $start);
-	$user->setPrivateSetting('timed_muting_end', $end);
+	$user->timed_muting_start = $start;
+	$user->timed_muting_end = $end;
 } else {
-	$user->removePrivateSetting('timed_muting_start');
-	$user->removePrivateSetting('timed_muting_end');
+	unset($user->timed_muting_start);
+	unset($user->timed_muting_end);
 }
 
 return elgg_ok_response('', elgg_echo('usersettings:notifications:save:ok'));

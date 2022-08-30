@@ -14,7 +14,6 @@ $tables = [
 	'entity_relationships',
 	'hmac_cache',
 	'metadata',
-	'private_settings',
 	'queue',
 	'river',
 	'system_log',

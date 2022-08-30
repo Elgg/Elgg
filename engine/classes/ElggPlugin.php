@@ -118,7 +118,7 @@ class ElggPlugin extends ElggObject {
 		$new = !$this->guid;
 		$priority = null;
 		if ($new) {
-			$priority = elgg_extract(self::PRIORITY_SETTING_NAME, $this->temp_private_settings, 'new');
+			$priority = elgg_extract(self::PRIORITY_SETTING_NAME, $this->temp_metadata, 'new');
 		} elseif ($this->getPriority() === null) {
 			$priority = 'last';
 		}
@@ -223,7 +223,7 @@ class ElggPlugin extends ElggObject {
 	 * @return int|null
 	 */
 	public function getPriority(): ?int {
-		$priority = $this->getPrivateSetting(self::PRIORITY_SETTING_NAME);
+		$priority = $this->getMetadata(self::PRIORITY_SETTING_NAME);
 		if (isset($priority)) {
 			return (int) $priority;
 		}
@@ -311,7 +311,10 @@ class ElggPlugin extends ElggObject {
 				$defaults = $this->getStaticConfig('settings', []);
 			}
 
-			$settings = $this->getAllPrivateSettings();
+			$settings = $this->getAllMetadata();
+			
+			// title and description are not considered settings
+			unset($settings['title'], $settings['description']);
 
 			return array_merge($defaults, $settings);
 		} catch (DatabaseException $ex) {
@@ -342,7 +345,7 @@ class ElggPlugin extends ElggObject {
 			return false;
 		}
 
-		return $this->setPrivateSetting($name, $value);
+		return $this->setMetadata($name, $value);
 	}
 
 	/**
@@ -353,7 +356,7 @@ class ElggPlugin extends ElggObject {
 	 * @return bool
 	 */
 	public function unsetSetting(string $name): bool {
-		return $this->removePrivateSetting($name);
+		return (bool) $this->deleteMetadata($name);
 	}
 
 	/**
@@ -385,12 +388,12 @@ class ElggPlugin extends ElggObject {
 		$result = $this->unsetAllSettings();
 		
 		// entity plugin settings are stored with the entity
-		$delete = Delete::fromTable('private_settings');
+		$delete = Delete::fromTable('metadata');
 		$delete->andWhere($delete->compare('name', 'like', "plugin:%_setting:{$this->getID()}:%", ELGG_VALUE_STRING));
 		
 		try {
 			_elgg_services()->db->deleteData($delete);
-			_elgg_services()->dataCache->private_settings->clear();
+			_elgg_services()->dataCache->metadata->clear();
 			
 			$result &= true;
 		} catch (DatabaseException $e) {
@@ -1228,9 +1231,9 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
-	 * Get an attribute, metadata or private setting value
+	 * Get an attribute or setting value
 	 *
-	 * @param string $name Name of the attribute or private setting
+	 * @param string $name Name of the attribute or setting
 	 *
 	 * @return mixed
 	 */
@@ -1245,7 +1248,7 @@ class ElggPlugin extends ElggObject {
 			return parent::__get($name);
 		}
 
-		$result = $this->getPrivateSetting($name);
+		$result = $this->getSetting($name);
 		if ($result !== null) {
 			return $result;
 		}
@@ -1256,11 +1259,9 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
-	 * Set a value as attribute, metadata or private setting.
+	 * Set a value as attribute or setting.
 	 *
-	 * Metadata applies to title and description.
-	 *
-	 * @param string $name  Name of the attribute or private_setting
+	 * @param string $name  Name of the attribute or setting
 	 * @param mixed  $value Value to be set
 	 *
 	 * @return void

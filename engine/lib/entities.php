@@ -310,36 +310,6 @@ function elgg_get_site_entity(): \ElggSite {
  * ];
  * </code>
  *
- * ----------------------------
- * PRIVATE SETTINGS CONSTRAINTS
- * ----------------------------
- *
- * Filter entities by their private settings
- *
- * The following options will be merged and applied as a private_setting pair to
- * $options['private_setting_name_value_pairs']
- * @option int[]                $private_setting_ids
- * @option string[]             $private_setting_names
- * @option mixed                $private_setting_values
- * @option bool                 $private_setting_case_sensitive
- *
- * Private name value pairs will be joined by the boolean specified in $private_setting_name_value_pairs_operator
- * @option array                $private_setting_name_value_pairs
- * @option string               $private_setting_name_value_pairs_operator
- *
- * Setting names in all pairs can be namespaced using the prefix
- * @option string               $private_setting_name_prefix
- *
- * <code>
- * $options['private_setting_name_value_pairs'] = [
- *    [
- *       'name' => 'handler',
- *       'value' => ['admin', 'dashboard'],
- *       'operand' => 'IN',
- *    ],
- * ];
- * </code>
- *
  * -------
  * SORTING
  * -------
@@ -355,14 +325,14 @@ function elgg_get_site_entity(): \ElggSite {
  * Order by arbitrary clauses
  * @option array $order_by
  *
- * Order by attribute/annotation/metadata/private setting
+ * Order by attribute/annotation/metadata
  * @option sort_by an array of sorting definitions
  *
  * <code>
  *
  * $sort_by = new \Elgg\Database\Clauses\EntitySortByClause();
  * $sort_by->property = 'private';
- * $sort_by->property_type = 'private_setting';
+ * $sort_by->property_type = 'metadata';
  * $sort_by->join_type = 'left';
  *
  * $fallback = new \Elgg\Database\Clauses\OrderByClause('e.time_created', 'desc');
@@ -398,12 +368,6 @@ function elgg_get_site_entity(): \ElggSite {
  * 			'property' => 'priority',
  * 			'direction' => 'ASC',
  * 			'signed' => true,
- * 		],
- * 		[
- * 			'property_type' => 'private_setting',
- * 			'property' => 'some_name',
- * 			'direction' => 'ASC',
- * 			'signed' => true, // treat the value as an integer
  * 		],
  * 		[
  * 			'property_type' => 'relationship',
@@ -517,10 +481,6 @@ function elgg_get_site_entity(): \ElggSite {
  * @option bool $preload_containers       If set to true, this function will preload
  *                                        all the containers of the returned entities resulting in better
  *                                        performance when displaying entities contained by several users/groups
- *                                        Default: false
- * @option bool $preload_private_settings If set to true, this function will preload
- *                                        all the private settings of the returned entities resulting in better
- *                                        performance when displaying entities where private settings are often used, such as widgets
  *                                        Default: false
  * @option bool $batch                    If set to true, an \ElggBatch object will be returned instead of an array.
  *                                        Default: false
@@ -663,7 +623,6 @@ function elgg_get_entity_dates(array $options = []): array {
  * 			'attributes' => ['some attribute', 'some other attribute'],
  *	 		'metadata' => ['some metadata name', 'some other metadata name'],
  * 			'annotations' => ['some annotation name', 'some other annotation name'],
- * 			'private_settings' => ['some private_setting name', 'some other private_setting name'],
  * 		]
  * @option bool   $partial_match Allow partial matches, e.g. find 'elgg' when search for 'el'
  * @option bool   $tokenize      Break down search query into tokens,

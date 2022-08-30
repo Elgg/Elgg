@@ -119,41 +119,6 @@ class EntitySortByClauseUnitTest extends UnitTestCase {
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 	}
-
-	public function testBuildPrivateSettingSortByClause() {
-
-		$alias = $this->qb->joinPrivateSettingsTable('alias', 'guid', 'foo');
-		$this->qb->orderBy("$alias.value", 'asc');
-
-		$query = new EntitySortByClause();
-		$query->property = 'foo';
-		$query->direction = 'asc';
-		$query->property_type = 'private_setting';
-
-		$qb = Select::fromTable('entities', 'alias');
-		$qb->addClause($query);
-
-		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
-		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
-	}
-
-	public function testBuildSignedPrivateSettingSortByClause() {
-
-		$alias = $this->qb->joinPrivateSettingsTable('alias', 'guid', 'foo');
-		$this->qb->orderBy("CAST($alias.value AS SIGNED)", 'asc');
-
-		$query = new EntitySortByClause();
-		$query->property = 'foo';
-		$query->direction = 'asc';
-		$query->signed = true;
-		$query->property_type = 'private_setting';
-
-		$qb = Select::fromTable('entities', 'alias');
-		$qb->addClause($query);
-
-		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
-		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
-	}
 	
 	public function testThrowsOnInvalidAttributeName() {
 
