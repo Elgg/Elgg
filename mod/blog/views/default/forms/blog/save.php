@@ -30,7 +30,7 @@ $fields = [
 		'#type' => 'text',
 		'name' => 'excerpt',
 		'id' => 'blog_excerpt',
-		'value' => elgg_html_decode(elgg_extract('excerpt', $vars)),
+		'value' => elgg_extract('excerpt', $vars),
 	],
 	[
 		'#label' => elgg_echo('blog:body'),

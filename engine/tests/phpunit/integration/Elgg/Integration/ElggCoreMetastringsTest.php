@@ -272,7 +272,7 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 		$this->assertTrue($annotation->delete());
 	}
 
-	public function testKeepMeFromDeletingEverything() {
+	public function testKeepMeFromDeletingAllMetadata() {
 		$options = [
 			'limit' => 10,
 			'guid' => ELGG_ENTITIES_ANY_VALUE,
@@ -283,11 +283,29 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 			'metadata_values' => false,
 		];
 
-		$this->assertFalse(elgg_delete_metadata($options));
+		$this->expectException(\Elgg\Exceptions\InvalidArgumentException::class);
+		elgg_delete_metadata($options);
 
 		$options['guid'] = -1;
 		$this->assertNull(elgg_delete_metadata($options));
+	}
+	
+	public function testDeleteAllMetadataWithInvalidGUID() {
+		$options = [
+			'limit' => 10,
+			'guid' => ELGG_ENTITIES_ANY_VALUE,
+			'guids' => false,
+			'metadata_name' => ELGG_ENTITIES_ANY_VALUE,
+			'metadata_names' => false,
+			'metadata_value' => ELGG_ENTITIES_ANY_VALUE,
+			'metadata_values' => false,
+			'guid' => -1,
+		];
 
+		$this->assertTrue(elgg_delete_metadata($options));
+	}
+	
+	public function testKeepMeFromDeletingAllAnnotations() {
 		// annotations
 		$options = [
 			'limit' => 10,

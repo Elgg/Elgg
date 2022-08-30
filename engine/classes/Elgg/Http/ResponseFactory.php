@@ -427,7 +427,7 @@ class ResponseFactory {
 		$params = [
 			'value' => '',
 			'current_url' => $this->request->getCurrentURL(),
-			'forward_url' => elgg_normalize_url($forward_url),
+			'forward_url' => elgg_normalize_url((string) $forward_url),
 		];
 
 		$params['value'] = $this->ajax->decodeJson($content);
@@ -640,9 +640,9 @@ class ResponseFactory {
 	 * @return string
 	 */
 	protected function getSiteRefererUrl() {
-		$unsafe_url = $this->request->headers->get('Referer');
+		$unsafe_url = (string) $this->request->headers->get('Referer');
 		$safe_url = elgg_normalize_site_url($unsafe_url);
-		if ($safe_url !== false) {
+		if (isset($safe_url)) {
 			return $safe_url;
 		}
 		

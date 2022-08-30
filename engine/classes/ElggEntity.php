@@ -482,24 +482,23 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @warning Calling this with no $name will clear all metadata on the entity.
 	 *
 	 * @param null|string $name The name of the metadata to remove.
-	 * @return bool|null
+	 *
+	 * @return bool
 	 * @since 1.8
 	 */
-	public function deleteMetadata($name = null) {
+	public function deleteMetadata($name = null): bool {
 
 		if (!$this->guid) {
 			// remove from temp_metadata
-			if ($name) {
-				if (!isset($this->temp_metadata[$name])) {
-					return null;
-				} else {
+			if (isset($name)) {
+				if (isset($this->temp_metadata[$name])) {
 					unset($this->temp_metadata[$name]);
-					return true;
 				}
 			} else {
 				$this->temp_metadata = [];
-				return true;
 			}
+			
+			return true;
 		}
 
 		$options = [

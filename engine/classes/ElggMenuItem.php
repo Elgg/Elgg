@@ -129,12 +129,12 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 *
 	 * @param array $options Option array of key value pairs
 	 *
-	 * @return ElggMenuItem|null null on error
+	 * @return \ElggMenuItem
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
-	public static function factory($options) {
+	public static function factory(array $options): \ElggMenuItem {
 		if (!isset($options['name']) || !isset($options['text'])) {
-			elgg_log(__METHOD__ . ': $options "name" and "text" are required.', 'ERROR');
-			return null;
+			throw new \Elgg\Exceptions\InvalidArgumentException(__METHOD__ . ': $options "name" and "text" are required.');
 		}
 		if (!isset($options['href'])) {
 			$options['href'] = '';

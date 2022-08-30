@@ -70,7 +70,7 @@ use Elgg\Notifications\NotificationEventHandler;
  * @return void
  * @since 1.9
  */
-function elgg_register_notification_event($object_type, $object_subtype, array $actions = [], string $handler = NotificationEventHandler::class): void {
+function elgg_register_notification_event(string $object_type, string $object_subtype, array $actions = [], string $handler = NotificationEventHandler::class): void {
 	_elgg_services()->notifications->registerEvent($object_type, $object_subtype, $actions, $handler);
 }
 
@@ -85,7 +85,7 @@ function elgg_register_notification_event($object_type, $object_subtype, array $
  * @since 1.9
  * @see elgg_register_notification_event()
  */
-function elgg_unregister_notification_event($object_type, $object_subtype, array $actions = []): bool {
+function elgg_unregister_notification_event(string $object_type, string $object_subtype, array $actions = []): bool {
 	return _elgg_services()->notifications->unregisterEvent($object_type, $object_subtype, $actions);
 }
 
@@ -97,11 +97,12 @@ function elgg_unregister_notification_event($object_type, $object_subtype, array
  * hook with the key 'notification'. See \Elgg\Notifications\Notification.
  *
  * @param string $name The notification method name
+ *
  * @return void
  * @see elgg_unregister_notification_method()
  * @since 1.9
  */
-function elgg_register_notification_method($name): void {
+function elgg_register_notification_method(string $name): void {
 	_elgg_services()->notifications->registerMethod($name);
 }
 
@@ -125,12 +126,13 @@ function elgg_get_notification_methods(): array {
  * Unregister a delivery method for notifications
  *
  * @param string $name The notification method name
- * @return bool
+ *
+ * @return void
  * @see elgg_register_notification_method()
  * @since 1.9
  */
-function elgg_unregister_notification_method($name): bool {
-	return _elgg_services()->notifications->unregisterMethod($name);
+function elgg_unregister_notification_method(string $name): void {
+	_elgg_services()->notifications->unregisterMethod($name);
 }
 
 /**
@@ -196,18 +198,18 @@ function elgg_get_subscriptions_for_container(int $container_guid): array {
  *
  * @return array Compound array of each delivery user/delivery method's success or failure.
  */
-function notify_user($to, $from = 0, $subject = '', $message = '', array $params = [], $methods_override = null): array {
+function notify_user(int|array $to, int $from = 0, string $subject = '', string $message = '', array $params = [], $methods_override = null): array {
 
 	$params['subject'] = $subject;
 	$params['body'] = $message;
 	$params['methods_override'] = $methods_override;
 
-	if ($from) {
+	if (!empty($from)) {
 		$sender = get_entity($from);
 	} else {
 		$sender = elgg_get_site_entity();
 	}
-	if (!$sender) {
+	if (!$sender instanceof \ElggEntity) {
 		return [];
 	}
 
@@ -215,7 +217,7 @@ function notify_user($to, $from = 0, $subject = '', $message = '', array $params
 	$to = (array) $to;
 	foreach ($to as $guid) {
 		$recipient = get_entity($guid);
-		if (!$recipient) {
+		if (!$recipient instanceof \ElggEntity) {
 			continue;
 		}
 		$recipients[] = $recipient;
@@ -228,6 +230,7 @@ function notify_user($to, $from = 0, $subject = '', $message = '', array $params
  * Send an email to any email address
  *
  * @param \Elgg\Email $email Email
+ *
  * @return bool
  * @since 1.7.2
  */
@@ -244,6 +247,7 @@ function elgg_send_email(\Elgg\Email $email): bool {
  * via elgg-config/settings.php or use site config DB storage.
  *
  * @param \Laminas\Mail\Transport\TransportInterface $mailer Transport
+ *
  * @return void
  */
 function elgg_set_email_transport(\Laminas\Mail\Transport\TransportInterface $mailer): void {

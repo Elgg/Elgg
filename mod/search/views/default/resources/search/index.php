@@ -21,7 +21,7 @@ if ($container_guid && !is_array($container_guid)) {
 	elgg_set_page_owner_guid($container_guid);
 }
 
-$query = elgg_extract('query', $params);
+$query = (string) elgg_extract('query', $params, '');
 
 $form = elgg_view_form('search', [
 	'action' => elgg_generate_url('default:search'),
