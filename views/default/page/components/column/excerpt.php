@@ -9,12 +9,12 @@
  */
 
 $item = elgg_extract('item', $vars);
-if (!$item instanceof ElggEntity) {
+if (!$item instanceof \ElggEntity) {
 	return;
 }
 
 $length = elgg_extract('length', $vars, 250);
 
-$description = $item->description;
+$description = $item->description ?? '';
 
 echo elgg_get_excerpt($description, $length);

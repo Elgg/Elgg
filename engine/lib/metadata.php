@@ -11,9 +11,9 @@
  *
  * @param int $id The id of the metadata object being retrieved.
  *
- * @return \ElggMetadata|false  false if not found
+ * @return \ElggMetadata|null
  */
-function elgg_get_metadata_from_id($id) {
+function elgg_get_metadata_from_id(int $id): ?\ElggMetadata {
 	return _elgg_services()->metadataTable->get($id);
 }
 
@@ -41,10 +41,12 @@ function elgg_get_metadata(array $options = []) {
  *          metadata_name(s), metadata_value(s), or guid(s) must be set.
  *
  * @param array $options An options array. {@link elgg_get_metadata()}
- * @return bool|null true on success, false on failure, null if no metadata to delete.
+ *
+ * @return bool
+ * @throws \Elgg\Exceptions\InvalidArgumentException
  * @since 1.8.0
  */
-function elgg_delete_metadata(array $options) {
+function elgg_delete_metadata(array $options): bool {
 	return _elgg_services()->metadataTable->deleteAll($options);
 }
 

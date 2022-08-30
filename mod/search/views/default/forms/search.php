@@ -5,7 +5,7 @@
  * @uses $vars['value'] Current search query
  */
 
-$value = elgg_extract('value', $vars, get_input('q', get_input('tag')));
+$value = (string) elgg_extract('value', $vars, get_input('q', get_input('tag')));
 
 echo elgg_view_field([
 	'#type' => 'text',

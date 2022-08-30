@@ -43,7 +43,7 @@ if ($allowed_schemes !== false && !is_array($allowed_schemes)) {
 }
 unset($vars['allowed_schemes']);
 
-$url = elgg_extract('href', $vars, null);
+$url = elgg_extract('href', $vars);
 if ($url === false) {
 	$url = 'javascript:void(0);';
 	$allowed_schemes = false;
@@ -62,7 +62,7 @@ if (isset($vars['text'])) {
 	}
 	unset($vars['text']);
 } else {
-	$text = htmlspecialchars(elgg_get_excerpt($url, $excerpt_length), ENT_QUOTES, 'UTF-8', false);
+	$text = htmlspecialchars(elgg_get_excerpt((string) $url, $excerpt_length), ENT_QUOTES, 'UTF-8', false);
 }
 
 unset($vars['encode_text']);

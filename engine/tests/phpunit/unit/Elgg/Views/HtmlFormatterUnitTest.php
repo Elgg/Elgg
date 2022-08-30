@@ -138,10 +138,10 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 	 */
 	public function testElggFormatElement($expected, $vars) {
 		$tag_name = $vars['tag_name'];
-		$text = isset($vars['text']) ? $vars['text'] : null;
-		$opts = isset($vars['opts']) ? $vars['opts'] : array();
-		$attrs = isset($vars['attrs']) ? $vars['attrs'] : array();
-		$message = isset($vars['_msg']) ? $vars['_msg'] : null;
+		$text = $vars['text'] ?? '';
+		$opts = $vars['opts'] ?? [];
+		$attrs = $vars['attrs'] ?? [];
+		$message = $vars['_msg'] ?? null;
 		unset($vars['tag_name'], $vars['text'], $vars['_msg']);
 
 		$this->assertSame($expected, elgg_format_element($tag_name, $attrs, $text, $opts), $message);

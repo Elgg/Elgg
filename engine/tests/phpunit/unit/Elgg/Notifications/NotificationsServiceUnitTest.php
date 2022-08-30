@@ -21,12 +21,9 @@ class NotificationsServiceUnitTest extends UnitTestCase {
 		$this->assertTrue($service->isRegisteredMethod('apples'));
 		$this->assertFalse($service->isRegisteredMethod('bananas'));
 		
-		$this->assertTrue($service->unregisterMethod('apples'));
+		$service->unregisterMethod('apples');
 		$this->assertEmpty($service->getMethods());
 		$this->assertFalse($service->isRegisteredMethod('apples'));
-		
-		$this->assertFalse($service->unregisterMethod('apples'));
-		$this->assertFalse($service->unregisterMethod('bananas'));
 	}
 	
 	public function testRegisterNotificationMethods() {
@@ -42,7 +39,7 @@ class NotificationsServiceUnitTest extends UnitTestCase {
 		$this->assertTrue($service->isRegisteredMethod('apples'));
 		$this->assertTrue($service->isRegisteredMethod('bananas'));
 		
-		$this->assertTrue($service->unregisterMethod('apples'));
+		$service->unregisterMethod('apples');
 		$this->assertCount(1, $service->getMethods());
 		$this->assertFalse($service->isRegisteredMethod('apples'));
 		$this->assertTrue($service->isRegisteredMethod('bananas'));

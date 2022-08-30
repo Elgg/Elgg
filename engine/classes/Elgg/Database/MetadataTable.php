@@ -7,6 +7,7 @@ use Elgg\Database;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\EventsService as Events;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\LogicException;
 use Elgg\Traits\TimeUsing;
 
@@ -151,9 +152,9 @@ class MetadataTable {
 	 *
 	 * @param int $id The id of the metadata object being retrieved.
 	 *
-	 * @return \ElggMetadata|false  false if not found
+	 * @return \ElggMetadata|null
 	 */
-	public function get($id) {
+	public function get(int $id): ?\ElggMetadata {
 		$qb = Select::fromTable('metadata');
 		$qb->select('*');
 
@@ -166,7 +167,7 @@ class MetadataTable {
 			return new \ElggMetadata($row);
 		}
 
-		return false;
+		return null;
 	}
 
 	/**
@@ -389,9 +390,10 @@ class MetadataTable {
 	 *
 	 * @param array $options Options
 	 *
-	 * @return bool|null true on success, false on failure, null if no metadata to delete.
+	 * @return bool
+	 * @throws InvalidArgumentException
 	 */
-	public function deleteAll(array $options) {
+	public function deleteAll(array $options): bool {
 		$required = [
 			'guid', 'guids',
 			'metadata_name', 'metadata_names',
@@ -409,7 +411,7 @@ class MetadataTable {
 
 		if (!$found) {
 			// requirements not met
-			return false;
+			throw new InvalidArgumentException(__METHOD__ . ' requires at least one of the following keys in $options: ' . implode(', ', $required));
 		}
 
 		// This moved last in case an object's constructor sets metadata. Currently the batch
@@ -424,7 +426,7 @@ class MetadataTable {
 		$count = $metadata->count();
 
 		if (!$count) {
-			return;
+			return true;
 		}
 
 		$success = 0;
@@ -435,7 +437,7 @@ class MetadataTable {
 			}
 		}
 
-		return $success == $count;
+		return $success === $count;
 	}
 
 	/**

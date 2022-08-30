@@ -242,9 +242,8 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->setupServices();
 
 		$this->notifications->registerMethod('test_method');
-		$this->assertTrue($this->notifications->unregisterMethod('test_method'));
+		$this->notifications->unregisterMethod('test_method');
 		$this->assertEquals([], $this->notifications->getMethods());
-		$this->assertFalse($this->notifications->unregisterMethod('test_method'));
 	}
 
 	public function testEnqueueEventLoggedInUser() {

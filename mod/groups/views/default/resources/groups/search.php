@@ -3,7 +3,7 @@
 elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 
 $tag = get_input('tag');
-$display_query = _elgg_get_display_query($tag);
+$display_query = _elgg_get_display_query((string) $tag);
 $title = elgg_echo('groups:search:title', [$display_query]);
 
 $content = elgg_list_entities([

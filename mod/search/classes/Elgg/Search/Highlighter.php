@@ -28,7 +28,7 @@ class Highlighter {
 	 *
 	 * @return string
 	 */
-	public function highlightWords($text) {
+	public function highlightWords(string $text): string {
 
 		$text = _elgg_get_display_query($text);
 

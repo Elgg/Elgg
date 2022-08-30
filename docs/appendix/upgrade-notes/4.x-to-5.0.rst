@@ -52,13 +52,18 @@ Lib functions return types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * ``elgg_add_admin_notice()`` now returns ``null`` on failure instead of a ``bool``
+* ``elgg_delete_metadata()`` no longer returns ``null``
 * ``elgg_get_annotation_from_id()`` now returns ``null`` if no annotation is found instead of a ``bool``
 * ``elgg_get_download_url()`` now returns ``null`` if there is an error
 * ``elgg_get_entity_as_row()`` now returns ``null`` if no entity is found instead of a ``bool``
 * ``elgg_get_entity_dates()`` no longer returns a ``bool``
 * ``elgg_get_inline_url()`` now returns ``null`` if there is an error
+* ``elgg_get_metadata_from_id()`` now returns ``null`` if no metadata could be found
 * ``elgg_get_uploaded_file()`` now returns ``null`` no file could be found or the file was invalid
+* ``elgg_normalize_site_url()`` now returns ``null`` when the url is not a site url
 * ``elgg_register_action()`` no longer returns a ``bool``
+* ``elgg_register_menu_item()`` no longer has a return value
+* ``elgg_unregister_notification_method()`` no longer has a return value
 * ``get_entity()`` now returns ``null`` if no entity is found instead of a ``bool``
 
 Lib functions function parameters
@@ -71,13 +76,21 @@ Lib functions function parameters
 * ``elgg_entity_exists()`` now requires a ``int`` for ``$guid``
 * ``elgg_entity_gatekeeper()`` now requires a ``int`` for ``$guid`` and a ``string`` for ``$type`` and a ``string`` for ``$subtype`` and a ``bool`` for ``$validate_can_edit``
 * ``elgg_extract()`` now requires a ``bool`` for ``$strict``
+* ``elgg_format_bytes()`` now requires an ``int`` for ``$size`` and ``$precision``
+* ``elgg_format_element()`` now requires a ``string|array`` for ``$tag_name`` and a ``string`` for ``$text``
+* ``elgg_format_html()`` now requires a ``string`` for ``$html``
 * ``elgg_get_config()`` now requires a ``string`` for ``$name``
 * ``elgg_get_download_url()`` now requires a ``bool`` for ``$use_cookie`` and a ``string`` for ``$expires``
 * ``elgg_get_embed_url()`` now requires a ``string`` for ``$size``
 * ``elgg_get_entity_class()`` now requires a ``string`` for ``$type`` and a ``string`` for ``$subtype``
+* ``elgg_get_excerpt()`` now requires a ``string`` for ``$text`` and an ``int`` for ``$num_chars``
+* ``elgg_get_friendly_upload_error()`` now requires an ``int`` for ``$error_code``
+* ``elgg_get_friendly_time()`` now requires an ``int`` for ``$time`` and ``$current_time``
+* ``elgg_get_friendly_title()`` now requires a ``string`` for ``$title``
 * ``elgg_get_icon_sizes()`` now requires a ``string`` for ``$entity_type`` and ``$entity_subtype``
 * ``elgg_get_ini_setting_in_bytes()`` now requires a ``string`` for ``$setting``
 * ``elgg_get_inline_url()`` now requires a ``bool`` for ``$use_cookie`` and a ``string`` for ``$expires``
+* ``elgg_get_metadata_from_id()`` now requires an ``int`` for ``$id``
 * ``elgg_get_request_data()`` now requires a ``bool`` for ``$filter_result``
 * ``elgg_get_simplecache_url()`` now requires a ``string`` for ``$view`` and ``$sub_view``
 * ``elgg_get_sticky_value()`` now requires a ``string`` for ``$form_name`` and a string for ``$variable`` and a ``bool`` for ``$filter_result``
@@ -86,6 +99,7 @@ Lib functions function parameters
 * ``elgg_get_uploaded_file()`` now requires a ``string`` for ``$input_name`` and a ``bool`` for ``$check_for_validity``
 * ``elgg_get_uploaded_files()`` now requires a ``string`` for ``$input_name``
 * ``elgg_group_tool_gatekeeper()`` now requires a ``string`` for ``$tool_name`` and an ``int`` for ``$group_guid``
+* ``elgg_html_decode()`` now requires a ``string`` for ``$string``
 * ``elgg_http_add_url_query_elements()`` now requires a ``string`` for ``$url``
 * ``elgg_http_build_url()`` now requires a ``bool`` for ``$html_encode``
 * ``elgg_http_get_signed_url()`` now requires a ``string`` for ``$url`` and ``$expires``
@@ -97,12 +111,18 @@ Lib functions function parameters
 * ``elgg_language_key_exists()`` now requires a ``string`` for ``$key`` and a ``string`` for ``$language``
 * ``elgg_list_entities()`` now requires a ``callable`` for ``$getter`` and a ``callable`` for ``$viewer``
 * ``elgg_make_sticky_form()`` now requires a ``string`` for ``$form_name``
+* ``elgg_normalize_site_url()`` now requires a ``string`` for ``$unsafe_url``
+* ``elgg_normalize_url()`` now requires a ``string`` for ``$url``
+* ``elgg_parse_emails()`` now requires a ``string`` for ``$text``
 * ``elgg_push_context()`` now requires a ``string`` for ``$context``
 * ``elgg_register_action()`` now requires a ``string`` for ``$filename``
 * ``elgg_register_error_message()`` now requires a ``string|array`` for ``$message``
+* ``elgg_register_menu_item()`` now requires a ``string`` for ``$menu_name`` and a ``array|\ElggMenuItem`` for ``$menu_item``
+* ``elgg_register_notification_event()`` now requires a ``string`` for ``$object_type`` and ``$object_subtype``
+* ``elgg_register_notification_method()`` now requires a ``string`` for ``$name``
 * ``elgg_register_simplecache_view()`` now requires a ``string`` for ``$view_name``
 * ``elgg_register_success_message()`` now requires a ``string|array`` for ``$message``
-* ``elgg_register_title_button()`` has the first argument (``$handler``) removed
+* ``elgg_register_title_button()`` has the first argument (``$handler``) removed and requires a ``string`` for ``$name``, ``$entity_type`` and ``$entity_subtype``
 * ``elgg_remove_config()`` now requires a ``string`` for ``$name``
 * ``elgg_require_js()`` now requires a ``string`` for ``$name``
 * ``elgg_save_config()`` now requires a ``string`` for ``$name``
@@ -111,16 +131,23 @@ Lib functions function parameters
 * ``elgg_set_context()`` now requires a ``string`` for ``$context``
 * ``elgg_set_entity_class()`` now requires a ``string`` for ``$type`` and a ``string`` for ``$subtype`` and a ``string`` for ``$class``
 * ``elgg_set_http_header()`` now requires a ``string`` for ``$header`` and a ``bool`` for ``$replace``
+* ``elgg_strip_tags()`` now requires a ``string`` for ``$string`` and ``$allowable_tags``
 * ``elgg_unrequire_js()`` now requires a ``string`` for ``$name``
+* ``elgg_unregister_menu_item()`` now requires a ``string`` for ``$menu_name`` and ``$item_name``
+* ``elgg_unregister_notification_event()`` now requires a ``string`` for ``$object_type`` and ``$object_subtype``
+* ``elgg_unregister_notification_method()`` now requires a ``string`` for ``$name``
 * ``get_entity()`` now requires a ``int`` for ``$guid``
 * ``get_input()`` now requires a ``string`` for ``$variable`` and a ``bool`` for ``$filter_result``
+* ``notify_user()`` now requires an ``int|array`` for ``$to`` and a ``int`` for ``$from`` and a ``string`` for ``$subject`` and ``$message``
 * ``set_input()`` now requires a ``string`` for ``$variable``
 
 Class function return types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+* ``\ElggEntity::deleteMetadata()`` no longer returns ``null``
 * ``\ElggFile::getDownloadURL()`` now returns ``null`` if there is an error
 * ``\ElggFile::getInlineURL()`` now returns ``null`` if there is an error
+* ``\ElggMenuItem::factory()`` no longer returns ``null`` if there is an error
 
 Class function parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -133,5 +160,6 @@ Class function parameters
 * ``\ElggFile::getDownloadURL()`` now requires a ``bool`` for ``$use_cookie`` and a ``string`` for ``$expires``
 * ``\ElggFile::getInlineURL()`` now requires a ``bool`` for ``$use_cookie`` and a ``string`` for ``$expires``
 * ``\ElggGroup::isToolEnabled()`` now requires a ``string`` for ``$name``
+* ``\ElggMenuItem::factory()`` now requires an ``array`` for ``$options``
 * ``\ElggTempFile::getDownloadURL()`` now requires a ``bool`` for ``$use_cookie`` and a ``string`` for ``$expires``
 * ``\ElggTempFile::getInlineURL()`` now requires a ``bool`` for ``$use_cookie`` and a ``string`` for ``$expires``

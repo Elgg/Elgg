@@ -9,7 +9,7 @@
  * @uses $vars['links'] Array of links
  */
 
-echo elgg_format_element('title', [], elgg_extract('title', $vars), ['encode_text' => true]);
+echo elgg_format_element('title', [], (string) elgg_extract('title', $vars), ['encode_text' => true]);
 
 $metas = elgg_extract('metas', $vars, []);
 foreach ($metas as $attributes) {

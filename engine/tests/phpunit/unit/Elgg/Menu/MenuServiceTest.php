@@ -71,16 +71,16 @@ class MenuServiceTest extends UnitTestCase {
 	}
 	
 	public function testCanUnregisterMenuItem() {
-		$this->assertTrue(elgg_register_menu_item('test', [
+		elgg_register_menu_item('test', [
 			'name' => 'test1',
 			'text' => 'test1',
 			'href' => 'test1',
-		]));
-		$this->assertTrue(elgg_register_menu_item('test', [
+		]);
+		elgg_register_menu_item('test', [
 			'name' => 'test2',
 			'text' => 'test2',
 			'href' => 'test2',
-		]));
+		]);
 		
 		$items = elgg()->menus->getUnpreparedMenu('test')->getItems();
 		$this->assertTrue($items->has('test1'));

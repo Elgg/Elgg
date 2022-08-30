@@ -60,11 +60,7 @@ class HtmlFormatter {
 	 *
 	 * @return string
 	 */
-	public function formatBlock($html, array $options = []) {
-		if (!is_string($html)) {
-			return '';
-		}
-
+	public function formatBlock(string $html, array $options = []): string {
 		$options = array_merge([
 			'parse_urls' => true,
 			'parse_emails' => true,
@@ -121,10 +117,9 @@ class HtmlFormatter {
 	 * @param string $text The input string
 	 *
 	 * @return string The output string with formatted links
-	 *
 	 * @since 2.3
 	 */
-	public function parseEmails($text) {
+	public function parseEmails(string $text): string {
 		$linkify = new \Misd\Linkify\Linkify();
 
 		return $linkify->processEmails($text, ['attr' => ['rel' => 'nofollow']]);
@@ -137,7 +132,7 @@ class HtmlFormatter {
 	 *
 	 * @return string
 	 **/
-	public function addParagaraphs($string) {
+	public function addParagaraphs(string $string): string {
 		try {
 			$result = $this->autop->process($string);
 			if ($result !== false) {
@@ -258,7 +253,7 @@ class HtmlFormatter {
 	 * @since 1.9.0
 	 * @throws InvalidArgumentException
 	 */
-	public function formatElement($tag_name, array $attributes = [], $text = '', array $options = []) {
+	public function formatElement(string|array $tag_name, array $attributes = [], string $text = '', array $options = []) {
 		if (is_array($tag_name)) {
 			$args = $tag_name;
 
@@ -324,20 +319,14 @@ class HtmlFormatter {
 	 *
 	 * @return string String run through strip_tags() and any plugin hooks.
 	 */
-	public function stripTags($string, $allowable_tags = null) {
-		if (!isset($string)) {
-			return '';
-		}
-
+	public function stripTags(string $string, string $allowable_tags = null): string {
 		$params = [
 			'original_string' => $string,
 			'allowable_tags' => $allowable_tags,
 		];
 
 		$string = strip_tags($string, $allowable_tags);
-		$string = $this->hooks->trigger('format', 'strip_tags', $params, $string);
-
-		return $string;
+		return (string) $this->hooks->trigger('format', 'strip_tags', $params, $string);
 	}
 
 	/**
@@ -367,11 +356,7 @@ class HtmlFormatter {
 	 * @copyright Copyright (c) 2010 Pádraic Brady (http://blog.astrumfutura.com)
 	 * @license Released under dual-license GPL2/MIT by explicit permission of Pádraic Brady
 	 */
-	public function decode($string) {
-		if (!isset($string)) {
-			return '';
-		}
-		
+	public function decode(string $string): string {
 		$string = str_replace(
 			['&gt;', '&lt;', '&amp;', '&quot;', '&#039;'],
 			['&amp;gt;', '&amp;lt;', '&amp;amp;', '&amp;quot;', '&amp;#039;'],

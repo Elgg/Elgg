@@ -42,7 +42,10 @@ if ($header !== null) {
 	$header = elgg_format_element('div', ['class' => 'elgg-head'], $header);
 }
 
-$body = elgg_format_element('div', ['class' => 'elgg-body'], $body);
+if (!elgg_is_empty($body)) {
+	$body = elgg_format_element('div', ['class' => 'elgg-body'], $body);
+}
+
 if (!elgg_is_empty($footer)) {
 	$footer = elgg_format_element('div', ['class' => 'elgg-foot'], $footer);
 }

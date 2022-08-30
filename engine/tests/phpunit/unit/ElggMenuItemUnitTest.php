@@ -7,10 +7,14 @@
  */
 class ElggMenuItemUnitTest extends \Elgg\UnitTestCase {
 
-	public function testFactoryNoNameOrText() {
-		_elgg_services()->logger->disable();
-		$this->assertNull(\ElggMenuItem::factory(array('name' => 'test')));
-		$this->assertNull(\ElggMenuItem::factory(array('text' => 'test')));
+	public function testFactoryNoName() {
+		$this->expectException(\Elgg\Exceptions\InvalidArgumentException::class);
+		\ElggMenuItem::factory(array('name' => 'test'));
+	}
+	
+	public function testFactoryNoText() {
+		$this->expectException(\Elgg\Exceptions\InvalidArgumentException::class);
+		\ElggMenuItem::factory(array('text' => 'test'));
 	}
 
 	public function testFactoryNoHref() {
@@ -201,42 +205,23 @@ class ElggMenuItemUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testArgumentTypeValidationOnItemRegistration() {
-		_elgg_services()->logger->disable();
-
-		$this->assertTrue(elgg_register_menu_item('foo', new \ElggMenuItem('foo', 'bar', 'url')));
-		$this->assertTrue(elgg_register_menu_item('foo', array('name' => 'foo', 'text' => 'bar')));
-		$this->assertFalse(elgg_register_menu_item('foo', array()));
-		$this->assertFalse(elgg_register_menu_item('foo', array('text' => 'bar')));
-		$this->assertFalse(elgg_register_menu_item('foo', 'bar'));
-		$this->assertFalse(elgg_register_menu_item('foo', new stdClass()));
-
-		$logged = _elgg_services()->logger->enable();
-		$this->assertEquals([
-			[
-				'message' => 'ElggMenuItem::factory: $options "name" and "text" are required.',
-				'level' => 'error',
-			],
-			[
-				'message' => 'Unable to add menu item \'MISSING NAME\' to \'foo\' menu',
-				'level' => 'warning',
-			],
-			[
-				'message' => 'ElggMenuItem::factory: $options "name" and "text" are required.',
-				'level' => 'error',
-			],
-			[
-				'message' => 'Unable to add menu item \'MISSING NAME\' to \'foo\' menu',
-				'level' => 'warning',
-			],
-			[
-				'message' => 'Second argument of elgg_register_menu_item() must be an instance of ElggMenuItem or an array of menu item factory options',
-				'level' => 'error',
-			],
-			[
-				'message' => 'Second argument of elgg_register_menu_item() must be an instance of ElggMenuItem or an array of menu item factory options',
-				'level' => 'error',
-			],
-		], $logged);
+		$this->assertEmpty(elgg_register_menu_item('foo', new \ElggMenuItem('foo', 'bar', 'url')));
+		$this->assertEmpty(elgg_register_menu_item('foo', array('name' => 'foo', 'text' => 'bar')));
+	}
+	
+	/**
+	 * @dataProvider invalidMenuRegistrationOptions
+	 */
+	public function testArgumentTypeValidationOnItemRegistrationWithFails($options) {
+		$this->expectException(\Elgg\Exceptions\InvalidArgumentException::class);
+		elgg_register_menu_item('foo', $options);
+	}
+	
+	public function invalidMenuRegistrationOptions() {
+		return [
+			[[]],
+			[['text' => 'bar']],
+		];
 	}
 	
 	public function testAutoDetectSelectedState() {

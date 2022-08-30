@@ -72,7 +72,7 @@ class NotificationsService {
 	 * @throws InvalidArgumentException
 	 * @see elgg_register_notification_event()
 	 */
-	public function registerEvent($type, $subtype, array $actions = [], string $handler = NotificationEventHandler::class) {
+	public function registerEvent(string $type, string $subtype, array $actions = [], string $handler = NotificationEventHandler::class) {
 		if (!is_a($handler, NotificationEventHandler::class, true)) {
 			throw new InvalidArgumentException('$handler needs to be a ' . NotificationEventHandler::class . ' classname');
 		}
@@ -129,7 +129,7 @@ class NotificationsService {
 	 *
 	 * @return array
 	 */
-	public function getEvents() {
+	public function getEvents(): array {
 		return $this->events;
 	}
 
@@ -141,7 +141,7 @@ class NotificationsService {
 	 * @return void
 	 * @see elgg_register_notification_method()
 	 */
-	public function registerMethod($name) {
+	public function registerMethod(string $name): void {
 		$this->methods[$name] = $name;
 	}
 
@@ -150,17 +150,15 @@ class NotificationsService {
 	 *
 	 * @param string $name The notification method name
 	 *
-	 * @return bool
+	 * @return void
 	 * @see elgg_unregister_notification_method()
 	 */
-	public function unregisterMethod($name) {
-		if ($this->isRegisteredMethod($name)) {
-			unset($this->methods[$name]);
-			
-			return true;
+	public function unregisterMethod(string $name): void {
+		if (!$this->isRegisteredMethod($name)) {
+			return;
 		}
 		
-		return false;
+		unset($this->methods[$name]);
 	}
 
 	/**
@@ -169,7 +167,7 @@ class NotificationsService {
 	 * @return string[]
 	 * @see elgg_get_notification_methods()
 	 */
-	public function getMethods() {
+	public function getMethods(): array {
 		return $this->methods;
 	}
 	

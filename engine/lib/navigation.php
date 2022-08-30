@@ -83,24 +83,17 @@
  * @param string $menu_name The name of the menu: site, page, userhover, userprofile, groupprofile, or any custom menu
  * @param mixed  $menu_item A \ElggMenuItem object or an array of options
  *
- * @return bool False if the item could not be added
+ * @return void
+ * @throws \Elgg\Exceptions\InvalidArgumentException
  * @since 1.8.0
  */
-function elgg_register_menu_item($menu_name, $menu_item) {
+function elgg_register_menu_item(string $menu_name, array|\ElggMenuItem $menu_item): void {
 	if (is_array($menu_item)) {
-		$options = $menu_item;
-		$menu_item = ElggMenuItem::factory($options);
-		if (!$menu_item instanceof ElggMenuItem) {
-			$menu_item_name = elgg_extract('name', $options, 'MISSING NAME');
-			elgg_log("Unable to add menu item '{$menu_item_name}' to '$menu_name' menu", 'WARNING');
-			return false;
-		}
+		$menu_item = \ElggMenuItem::factory($menu_item);
 	}
 
-	if (!$menu_item instanceof ElggMenuItem) {
-		elgg_log('Second argument of elgg_register_menu_item() must be an instance of '
-			. 'ElggMenuItem or an array of menu item factory options', 'ERROR');
-		return false;
+	if (!$menu_item instanceof \ElggMenuItem) {
+		throw new \Elgg\Exceptions\InvalidArgumentException(__METHOD__ . ' requires an \ElggMenuItem or array for the \ElggMenuItem::factory() as a second parameter');
 	}
 
 	$menus = _elgg_services()->config->menus;
@@ -110,8 +103,6 @@ function elgg_register_menu_item($menu_name, $menu_item) {
 
 	$menus[$menu_name][] = $menu_item;
 	_elgg_services()->config->menus = $menus;
-
-	return true;
 }
 
 /**
@@ -123,8 +114,8 @@ function elgg_register_menu_item($menu_name, $menu_item) {
  * @return \ElggMenuItem|null
  * @since 1.8.0
  */
-function elgg_unregister_menu_item($menu_name, $item_name) {
-	$menus = _elgg_services()->config->menus;
+function elgg_unregister_menu_item(string $menu_name, string $item_name): ?\ElggMenuItem {
+	$menus = elgg_get_config('menus');
 	if (empty($menus)) {
 		return null;
 	}
@@ -135,7 +126,7 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
 
 	foreach ($menus[$menu_name] as $index => $menu_object) {
 		/* @var \ElggMenuItem $menu_object */
-		if ($menu_object instanceof ElggMenuItem && $menu_object->getName() == $item_name) {
+		if ($menu_object instanceof \ElggMenuItem && $menu_object->getName() === $item_name) {
 			$item = $menus[$menu_name][$index];
 			unset($menus[$menu_name][$index]);
 			elgg_set_config('menus', $menus);
@@ -158,10 +149,11 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
  * @param string $name           Name of the button (defaults to 'add')
  * @param string $entity_type    Optional entity type to be added (used to verify canWriteToContainer permission)
  * @param string $entity_subtype Optional entity subtype to be added (used to verify canWriteToContainer permission)
+ *
  * @return void
  * @since 1.8.0
  */
-function elgg_register_title_button($name = 'add', $entity_type = '', $entity_subtype = '') {
+function elgg_register_title_button(string $name = 'add', string $entity_type = '', string $entity_subtype = ''): void {
 
 	$owner = elgg_get_page_owner_entity();
 	if (!$owner) {
@@ -169,7 +161,7 @@ function elgg_register_title_button($name = 'add', $entity_type = '', $entity_su
 		$owner = elgg_get_logged_in_user_entity();
 	}
 	
-	if (($name === 'add') && ($owner instanceof ElggUser)) {
+	if ($name === 'add' && $owner instanceof \ElggUser) {
 		// make sure the add link goes to the current logged in user, not the page owner
 		$logged_in_user = elgg_get_logged_in_user_entity();
 		if (!empty($logged_in_user) && ($logged_in_user->guid !== $owner->guid)) {
