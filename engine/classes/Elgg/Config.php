@@ -166,16 +166,11 @@ class Config {
 	];
 
 	/**
+	 * An array of deprecated config options in the format 'option' => '<version number when deprecated>'
+	 *
 	 * @var array
 	 */
 	protected $deprecated = [
-		'elgg_settings_file' => '4.3',
-		'path' => '4.3',
-		'pluginspath' => '4.3',
-		'site_guid' => '4.3',
-		'sitedescription' => '4.3',
-		'sitename' => '4.3',
-		'url' => '4.3',
 	];
 	
 	/**
@@ -380,8 +375,6 @@ class Config {
 			$config->{'x_accel_mapping'} = $config->{'X-Accel-Mapping'};
 			unset($config->{'X-Accel-Mapping'});
 		}
-
-		$config->elgg_settings_file = $path;
 
 		return $config;
 	}

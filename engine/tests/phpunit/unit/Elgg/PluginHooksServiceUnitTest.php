@@ -114,7 +114,7 @@ class PluginHooksServiceUnitTest extends \Elgg\UnitTestCase {
 		
 		_elgg_services()->logger->disable();
 		
-		$this->assertEquals(3, $this->hooks->triggerDeprecated('foo', 'bar', ['foo' => 1], 2, 'The plugin hook "foo":"bar" has been deprecated', '1.0'));
+		$this->assertEquals(3, $this->hooks->triggerDeprecated('foo', 'bar', ['foo' => 1], 2, 'Do not use it!', '1.0'));
 		
 		$logged = _elgg_services()->logger->enable();
 		$this->assertCount(1, $logged);
@@ -123,7 +123,7 @@ class PluginHooksServiceUnitTest extends \Elgg\UnitTestCase {
 		
 		$this->assertArrayHasKey('message', $message_details);
 		$this->assertArrayHasKey('level', $message_details);
-		$this->assertStringStartsWith('Deprecated in 1.0: The plugin hook "foo":"bar" has been deprecated', $message_details['message']);
+		$this->assertStringStartsWith("Deprecated in 1.0: The 'foo', 'bar' hook is deprecated. Do not use it!", $message_details['message']);
 		$this->assertEquals(LogLevel::WARNING, $message_details['level']);
 	}
 

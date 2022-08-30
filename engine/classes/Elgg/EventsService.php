@@ -204,7 +204,7 @@ class EventsService extends HooksRegistrationService {
 	 */
 	public function triggerDeprecated($event, $object_type, $object = null, $message = null, $version = null) {
 		$options = [
-			self::OPTION_DEPRECATION_MESSAGE => $message,
+			self::OPTION_DEPRECATION_MESSAGE => "The '{$event}', '{$object_type}' event is deprecated. " . $message,
 			self::OPTION_DEPRECATION_VERSION => $version,
 		];
 		return $this->trigger($event, $object_type, $object, $options);

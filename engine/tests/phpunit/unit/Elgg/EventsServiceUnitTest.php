@@ -116,7 +116,7 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 		
 		_elgg_services()->logger->disable();
 		
-		$this->assertTrue($this->events->triggerDeprecated('foo', 'bar', null, 'The event "foo":"bar" has been deprecated', '1.0'));
+		$this->assertTrue($this->events->triggerDeprecated('foo', 'bar', null, 'Do not use it!', '1.0'));
 		$this->assertEquals(1, $this->counter);
 		
 		$logged = _elgg_services()->logger->enable();
@@ -126,7 +126,7 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 		
 		$this->assertArrayHasKey('message', $message_details);
 		$this->assertArrayHasKey('level', $message_details);
-		$this->assertStringStartsWith('Deprecated in 1.0: The event "foo":"bar" has been deprecated', $message_details['message']);
+		$this->assertStringStartsWith("Deprecated in 1.0: The 'foo', 'bar' event is deprecated. Do not use it!", $message_details['message']);
 		$this->assertEquals(LogLevel::WARNING, $message_details['level']);
 	}
 
