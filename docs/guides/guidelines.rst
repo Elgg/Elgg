@@ -29,7 +29,7 @@ Use standardized routing with page handlers
    +---------------+-----------------------------------+
    | User          | page_handler/owner/<username>     |
    +---------------+-----------------------------------+
-   | User friends’ | page_handler/friends/<username>   |
+   | User friends' | page_handler/friends/<username>   |
    +---------------+-----------------------------------+
    | Single entity | page_handler/view/<guid>/<title>  |
    +---------------+-----------------------------------+
@@ -53,7 +53,7 @@ Use standardized page handlers and scripts
 - Use ``elgg_view_resource('<page_handler>/<page_name>')`` to render that.
 - Use the default page layout in page handler scripts: ``$content = elgg_view_layout('default', $options);``
 - Page handler scripts should not contain HTML
-- Call ``elgg_push_breadcrumb()`` in the page handler scripts.
+- Call ``elgg_push_entity_breadcrumbs()`` or ``elgg_push_collection_breadcrumbs()`` in the page handler scripts.
 - No need to worry about setting the page owner if the URLs are in the standardized format
 - For group content, check the ``container_guid`` by using ``elgg_get_page_owner_entity()``
 
@@ -62,7 +62,7 @@ The object/<subtype> view
 
 - Example: Bookmarks plugin
 - Make sure there are views for ``$vars['full_view'] == true`` and ``$vars['full_view'] == false``
-- Check for the object in ``$vars['entity']`` . Use ``elgg_instance_of()`` to make sure it’s the type entity you want. Return ``true`` to short circuit the view if the entity is missing or wrong.
+- Check for the object in ``$vars['entity']`` . Use ``elgg_instance_of()`` to make sure it's the type entity you want. Return ``true`` to short circuit the view if the entity is missing or wrong.
 - Use the new list body and list metadata views to help format. You should use almost no markup in these views.
 - Update action structure - Example: Bookmarks plugin.
 - Namespace action files and action names (example: ``mod/blog/actions/blog/save.php`` => ``action/blog/save``)
@@ -105,12 +105,12 @@ Recommended
 These points are good ideas, but are not yet in the official guidelines. Following these suggestions will help to keep your plugin consistent with Elgg core.
 
 - Update the widget views (see the blog or file widgets)
-- Update the group profile “widget” using blog or file plugins as example
+- Update the group profile 'widget' using blog or file plugins as example
 - Update the forms
-   - Move form bodies to ``/forms/<handler>/<action>`` to use Evan’s new ``elgg_view_form()``
+   - Move form bodies to ``/forms/<handler>/<action>`` to use Evan's new ``elgg_view_form()``
    - Use input views in form bodies rather than html
    - Add a function that prepares the form (see ``mod/file/lib/file.php`` for example)
-   - Integrate sticky forms (see the file plugin’s upload action and form prepare function)
+   - Integrate sticky forms (see the file plugin's upload action and form prepare function)
 - Clean up CSS/HTML
    - Should be able to remove almost all CSS (look for patterns that can be moved into core if you need CSS)
 - Use hyphens rather than underscores in classes/ids

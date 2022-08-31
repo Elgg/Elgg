@@ -125,15 +125,6 @@ System hooks
 	Filters the view output for a ``/cache`` URL when simplecache is disabled. Note this will be fired
 	for every ``/cache`` request--no Expires headers are used when simplecache is disabled.
 
-**prepare, breadcrumbs**
-    In ``elgg_get_breadcrumbs()``, this filters the registered breadcrumbs before
-    returning them, allowing a plugin to alter breadcrumb strategy site-wide.
-    ``$params`` array includes:
-
-      * ``breadcrumbs`` - an array of bredcrumbs, each with ``title`` and ``link`` keys
-      * ``identifier`` - route identifier of the current page
-      * ``segments`` - route segments of the current page
-
 **elgg.data, site**
    Filters cached configuration data to pass to the client. :ref:`More info <guides/javascript#config>`
 

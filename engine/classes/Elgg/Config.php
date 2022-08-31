@@ -23,7 +23,6 @@ use Elgg\Traits\Loggable;
  * @property bool          $auto_disable_plugins					Are unbootable plugins automatically disabled
  * @property int           $batch_run_time_in_secs					Max time for a single upgrade loop
  * @property int           $boot_cache_ttl                          Time to live for boot cache in seconds
- * @property array         $breadcrumbs
  * @property string        $cacheroot            					Path of cache storage with trailing "/"
  * @property bool          $can_change_username						Is user allowed to change the username
  * @property bool          $class_loader_verify_file_existence		Determines if the class loader checks for file existence when loading files from the class map
