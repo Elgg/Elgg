@@ -113,11 +113,11 @@ return [
 		],
 	],
 	'prepare' => [
-		'breadcrumbs' => [
-			\Elgg\Page\PrepareBreadcrumbsHandler::class => [],
-		],
 		'menu:admin:users:bulk' => [
 			'Elgg\Menus\AdminUsersBulk::disableItems' => [],
+		],
+		'menu:breadcrumbs' => [
+			'\Elgg\Menus\Breadcrumbs::cleanupBreadcrumbs' => ['priority' => 9999],
 		],
 		'menu:page' => [
 			'Elgg\Menus\Page::prepareAdminAdministerUsersChildren' => [],

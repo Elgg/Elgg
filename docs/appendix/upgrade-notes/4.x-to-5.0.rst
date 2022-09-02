@@ -23,6 +23,12 @@ Private Settings
 
 The concept of private settings has been removed from the system. All private settings have been copied to metadata. All related functions have been removed.
 
+Breadcrumbs integrated into menu system
+---------------------------------------
+
+Helper functions for the breadcrumb menu have been changed to use `elgg_register_menu_item()` for adding items to the breadcrumb menu. 
+Breadcrumb related hooks have been removed in favor of the regular menu hooks. 
+
 Javascript
 ----------
 
@@ -168,3 +174,14 @@ Class function parameters
 * ``\ElggMenuItem::factory()`` now requires an ``array`` for ``$options``
 * ``\ElggTempFile::getDownloadURL()`` now requires a ``bool`` for ``$use_cookie`` and a ``string`` for ``$expires``
 * ``\ElggTempFile::getInlineURL()`` now requires a ``bool`` for ``$use_cookie`` and a ``string`` for ``$expires``
+
+Removed functions
+~~~~~~~~~~~~~~~~~
+
+* ``elgg_get_breadcrumbs``
+* ``elgg_pop_breadcrumb``
+
+Removed hooks
+~~~~~~~~~~~~~
+
+* ``prepare, breadcrumbs`` use ``register, menu:breadcrumbs``
