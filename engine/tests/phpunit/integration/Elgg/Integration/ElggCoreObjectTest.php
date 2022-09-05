@@ -121,7 +121,7 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		// create and save to group
 		$group = $this->createGroup();
 		$guid = $group->guid;
-		$this->assertIsInt($this->entity->setContainerGUID($guid));
+		$this->entity->setContainerGUID($guid);
 
 		// check container
 		$this->assertEquals($guid, $this->entity->getContainerGUID());
@@ -169,7 +169,7 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		elgg()->session->removeLoggedInUser();
 		
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($e1) {
-			$this->assertTrue($e1->disable(null, true));
+			$this->assertTrue($e1->disable('', true));
 		});
 		
 		// restore logged in user

@@ -111,7 +111,7 @@ class RouteRegistrationServiceUnitTest extends UnitTestCase {
 		];
 		
 		$url = $this->service->generateUrl('view:object:blog', $params);
-		$this->assertFalse($url);
+		$this->assertNull($url);
 	}
 	
 	public function testGenerateUrlMissingRequiredParameter() {
@@ -129,7 +129,7 @@ class RouteRegistrationServiceUnitTest extends UnitTestCase {
 		];
 		
 		$url = $this->service->generateUrl('view:object:blog', $params);
-		$this->assertFalse($url);
+		$this->assertNull($url);
 	}
 	
 	public function testGenerateUrlIncorrectRequiredParameterType() {
@@ -148,7 +148,7 @@ class RouteRegistrationServiceUnitTest extends UnitTestCase {
 		];
 		
 		$url = $this->service->generateUrl('view:object:blog', $params);
-		$this->assertFalse($url);
+		$this->assertNull($url);
 	}
 	
 	public function testGenerateUrlForDeprecatedRoute() {

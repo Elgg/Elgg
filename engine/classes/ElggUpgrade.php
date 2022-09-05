@@ -54,7 +54,7 @@ class ElggUpgrade extends ElggObject {
 	 *
 	 * @return void
 	 */
-	public function setCompleted() {
+	public function setCompleted(): void {
 		$this->setStartTime(); // to make sure a start time is present
 		$this->setCompletedTime();
 		$this->is_completed = true;
@@ -67,7 +67,7 @@ class ElggUpgrade extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function isCompleted() {
+	public function isCompleted(): bool {
 		return (bool) $this->is_completed;
 	}
 
@@ -77,7 +77,7 @@ class ElggUpgrade extends ElggObject {
 	 * @param string $id Upgrade id in format <plugin_name>:<yyymmddhh>
 	 * @return void
 	 */
-	public function setID($id) {
+	public function setID(string $id): void {
 		$this->id = $id;
 	}
 
@@ -87,7 +87,7 @@ class ElggUpgrade extends ElggObject {
 	 * @param string $class Fully qualified class name
 	 * @return void
 	 */
-	public function setClass($class) {
+	public function setClass(string $class): void {
 		$this->class = $class;
 	}
 
@@ -95,7 +95,7 @@ class ElggUpgrade extends ElggObject {
 	 * Check if the upgrade should be run asynchronously
 	 * @return bool
 	 */
-	public function isAsynchronous() {
+	public function isAsynchronous(): bool {
 		return !is_subclass_of($this->class, \Elgg\Upgrade\SystemUpgrade::class);
 	}
 
@@ -104,7 +104,7 @@ class ElggUpgrade extends ElggObject {
 	 *
 	 * @return Batch|false
 	 */
-	public function getBatch() {
+	public function getBatch(): Batch|false {
 		try {
 			$batch = _elgg_services()->upgradeLocator->getBatch($this->class);
 		} catch (ElggInvalidArgumentException $ex) {
@@ -132,23 +132,19 @@ class ElggUpgrade extends ElggObject {
 	 *
 	 * @param int $time Timestamp when upgrade finished. Defaults to now
 	 *
-	 * @return int
+	 * @return void
 	 */
-	public function setCompletedTime($time = null) {
-		if (!is_int($time)) {
-			$time = $this->getCurrentTime()->getTimestamp();
-		}
-
-		return $this->completed_time = $time;
+	public function setCompletedTime(int $time = null): void {
+		$this->completed_time = $time ?? $this->getCurrentTime()->getTimestamp();
 	}
 
 	/**
 	 * Gets the time when the upgrade completed.
 	 *
-	 * @return string
+	 * @return int
 	 */
-	public function getCompletedTime() {
-		return $this->completed_time;
+	public function getCompletedTime(): int {
+		return (int) $this->completed_time;
 	}
 	
 	/**
@@ -156,7 +152,7 @@ class ElggUpgrade extends ElggObject {
 	 *
 	 * @return void
 	 */
-	public function reset() {
+	public function reset(): void {
 		unset($this->is_completed);
 		unset($this->completed_time);
 		unset($this->processed);
@@ -170,18 +166,14 @@ class ElggUpgrade extends ElggObject {
 	 *
 	 * @param int $time Timestamp when upgrade started. Defaults to now
 	 *
-	 * @return int
+	 * @return void
 	 */
-	public function setStartTime($time = null) {
-		if (!is_int($time)) {
-			$time = $this->getCurrentTime()->getTimestamp();
-		}
-		
+	public function setStartTime(int $time = null): void {
 		if (isset($this->start_time)) {
-			return $this->start_time;
+			return;
 		}
 		
-		return $this->start_time = $time;
+		$this->start_time = $time ?? $this->getCurrentTime()->getTimestamp();
 	}
 	
 	/**
@@ -197,7 +189,7 @@ class ElggUpgrade extends ElggObject {
 	 * {@inheritDoc}
 	 * @throws \Elgg\Exceptions\UnexpectedValueException
 	 */
-	public function save() : bool {
+	public function save(): bool {
 		if (!isset($this->is_completed)) {
 			$this->is_completed = false;
 		}
@@ -214,7 +206,7 @@ class ElggUpgrade extends ElggObject {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getDisplayName() {
+	public function getDisplayName(): string {
 		return elgg_echo($this->title);
 	}
 }

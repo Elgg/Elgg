@@ -2,10 +2,10 @@
 
 use Elgg\EntityIcon;
 use Elgg\Database\QueryBuilder;
-use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\Filesystem\IOException;
 use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
+use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Traits\Entity\Subscriptions;
 
 /**
@@ -279,7 +279,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return array
 	 */
-	public function getOriginalAttributes() {
+	public function getOriginalAttributes(): array {
 		return $this->orig_attributes;
 	}
 
@@ -308,7 +308,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return string The title or name of this entity.
 	 */
-	public function getDisplayName() {
+	public function getDisplayName(): string {
 		return (string) $this->name;
 	}
 
@@ -318,7 +318,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @param string $display_name The title or name of this entity.
 	 * @return void
 	 */
-	public function setDisplayName($display_name) {
+	public function setDisplayName(string $display_name): void {
 		$this->name = $display_name;
 	}
 
@@ -329,7 +329,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return mixed The value, or null if not found.
 	 */
-	public function getMetadata($name) {
+	public function getMetadata(string $name) {
 		$metadata = $this->getAllMetadata();
 		return elgg_extract($name, $metadata);
 	}
@@ -339,7 +339,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return array
 	 */
-	public function getAllMetadata() {
+	public function getAllMetadata(): array {
 		if (!$this->guid) {
 			return array_map(function($values) {
 				return count($values) > 1 ? $values : $values[0];
@@ -366,7 +366,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return bool
 	 */
-	public function setMetadata($name, $value, $value_type = '', $multiple = false) {
+	public function setMetadata(string $name, $value, string $value_type = '', bool $multiple = false): bool {
 
 		if ($value === null || $value === '') {
 			$result = $this->deleteMetadata($name);
@@ -453,7 +453,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return bool
 	 */
-	protected function setTempMetadata($name, $value, $multiple = false) {
+	protected function setTempMetadata(string $name, $value, bool $multiple = false): bool {
 		// if overwrite, delete first
 		if (!$multiple) {
 			unset($this->temp_metadata[$name]);
@@ -486,7 +486,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return bool
 	 * @since 1.8
 	 */
-	public function deleteMetadata($name = null): bool {
+	public function deleteMetadata(string $name = null): bool {
 
 		if (!$this->guid) {
 			// remove from temp_metadata
@@ -501,15 +501,11 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			return true;
 		}
 
-		$options = [
+		return elgg_delete_metadata([
 			'guid' => $this->guid,
 			'limit' => false,
-		];
-		if ($name) {
-			$options['metadata_name'] = $name;
-		}
-
-		return elgg_delete_metadata($options);
+			'metadata_name' => $name,
+		]);
 	}
 
 	/**
@@ -519,7 +515,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return mixed The value or null if not found.
 	 */
-	public function getVolatileData($name) {
+	public function getVolatileData(string $name) {
 		return array_key_exists($name, $this->volatile) ? $this->volatile[$name] : null;
 	}
 
@@ -531,7 +527,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return void
 	 */
-	public function setVolatileData($name, $value) {
+	public function setVolatileData(string $name, $value): void {
 		$this->volatile[$name] = $value;
 	}
 
@@ -546,7 +542,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return bool
 	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
-	public function addRelationship($guid_two, $relationship) {
+	public function addRelationship(int $guid_two, string $relationship): bool {
 		return _elgg_services()->relationshipsTable->add($this->guid, (string) $relationship, (int) $guid_two);
 	}
 	
@@ -601,7 +597,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return int
 	 */
-	public function countEntitiesFromRelationship($relationship, $inverse_relationship = false) {
+	public function countEntitiesFromRelationship(string $relationship, bool $inverse_relationship = false): int {
 		return elgg_count_entities([
 			'relationship' => $relationship,
 			'relationship_guid' => $this->guid,
@@ -617,7 +613,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return bool
 	 */
-	public function removeRelationship($guid_two, $relationship) {
+	public function removeRelationship(int $guid_two, string $relationship): bool {
 		return _elgg_services()->relationshipsTable->remove($this->guid, (string) $relationship, (int) $guid_two);
 	}
 	
@@ -643,7 +639,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return void
 	 */
-	public function removeAllRelatedRiverItems() {
+	public function removeAllRelatedRiverItems(): void {
 		elgg_delete_river(['subject_guid' => $this->guid, 'limit' => false]);
 		elgg_delete_river(['object_guid' => $this->guid, 'limit' => false]);
 		elgg_delete_river(['target_guid' => $this->guid, 'limit' => false]);
@@ -655,21 +651,17 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @warning Calling this with no or empty arguments will clear all annotations on the entity.
 	 *
-	 * @param null|string $name The annotations name to remove.
+	 * @param string $name An optional name of annotations to remove.
 	 * @return bool
 	 * @since 1.8
 	 */
-	public function deleteAnnotations($name = null) {
+	public function deleteAnnotations(string $name = null): bool {
 		if ($this->guid) {
-			$options = [
+			return elgg_delete_annotations([
 				'guid' => $this->guid,
 				'limit' => false,
-			];
-			if ($name) {
-				$options['annotation_name'] = $name;
-			}
-	
-			return elgg_delete_annotations($options);
+				'annotation_name' => $name,
+			]);
 		}
 		
 		if ($name) {
@@ -685,11 +677,11 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * Deletes all annotations owned by this object (annotations.owner_guid = $this->guid).
 	 * If you pass a name, only annotations matching that name will be deleted.
 	 *
-	 * @param null|string $name The name of annotations to delete.
+	 * @param string $name An optional name of annotations to delete.
 	 * @return bool
 	 * @since 1.8
 	 */
-	public function deleteOwnedAnnotations($name = null) {
+	public function deleteOwnedAnnotations(string $name = null): bool {
 		// access is turned off for this because they might
 		// no longer have access to an entity they created annotations on
 		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($name) {
@@ -704,39 +696,31 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	/**
 	 * Disables annotations for this entity, optionally based on name.
 	 *
-	 * @param string $name An options name of annotations to disable.
+	 * @param string $name An optional name of annotations to disable.
 	 * @return bool
 	 * @since 1.8
 	 */
-	public function disableAnnotations($name = '') {
-		$options = [
+	public function disableAnnotations(string $name = null): bool {
+		return elgg_disable_annotations([
 			'guid' => $this->guid,
 			'limit' => false,
-		];
-		if ($name) {
-			$options['annotation_name'] = $name;
-		}
-
-		return elgg_disable_annotations($options);
+			'annotation_name' => $name,
+		]);
 	}
 
 	/**
 	 * Enables annotations for this entity, optionally based on name.
 	 *
-	 * @param string $name An options name of annotations to enable.
+	 * @param string $name An optional name of annotations to enable.
 	 * @return bool
 	 * @since 1.8
 	 */
-	public function enableAnnotations($name = '') {
-		$options = [
+	public function enableAnnotations(string $name = null) {
+		return elgg_enable_annotations([
 			'guid' => $this->guid,
 			'limit' => false,
-		];
-		if ($name) {
-			$options['annotation_name'] = $name;
-		}
-
-		return elgg_enable_annotations($options);
+			'annotation_name' => $name,
+		]);
 	}
 
 	/**
@@ -838,7 +822,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return int
 	 */
-	public function countAnnotations($name = "") {
+	public function countAnnotations(string $name = ''): int {
 		return $this->getAnnotationCalculation($name, 'count');
 	}
 
@@ -849,7 +833,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return int
 	 */
-	public function getAnnotationsAvg($name) {
+	public function getAnnotationsAvg(string $name) {
 		return $this->getAnnotationCalculation($name, 'avg');
 	}
 
@@ -860,7 +844,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return int
 	 */
-	public function getAnnotationsSum($name) {
+	public function getAnnotationsSum(string $name) {
 		return $this->getAnnotationCalculation($name, 'sum');
 	}
 
@@ -871,7 +855,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return int
 	 */
-	public function getAnnotationsMin($name) {
+	public function getAnnotationsMin(string $name) {
 		return $this->getAnnotationCalculation($name, 'min');
 	}
 
@@ -882,7 +866,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return int
 	 */
-	public function getAnnotationsMax($name) {
+	public function getAnnotationsMax(string $name) {
 		return $this->getAnnotationCalculation($name, 'max');
 	}
 
@@ -892,7 +876,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return int Number of comments
 	 * @since 1.8.0
 	 */
-	public function countComments() {
+	public function countComments(): int {
 		if (!$this->hasCapability('commentable')) {
 			return 0;
 		}
@@ -917,7 +901,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @see elgg_get_access_collections()
 	 * @since 3.0
 	 */
-	public function getOwnedAccessCollections($options = []) {
+	public function getOwnedAccessCollections(array $options = []): array {
 		$options['owner_guid'] = $this->guid;
 		return _elgg_services()->accessCollections->getEntityCollections($options);
 	}
@@ -927,20 +911,21 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @param string $subtype subtype of the ACL
 	 *
-	 * @return \ElggAccessCollection|false
+	 * @return \ElggAccessCollection|null
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 *
 	 * @since 3.0
 	 */
-	public function getOwnedAccessCollection($subtype) {
-		if (!is_string($subtype) || $subtype === '') {
-			return false;
+	public function getOwnedAccessCollection(string $subtype): ?\ElggAccessCollection {
+		if ($subtype === '') {
+			throw new ElggInvalidArgumentException(__METHOD__ . ' requires $subtype to be non empty');
 		}
 		
 		$acls = $this->getOwnedAccessCollections([
 			'subtype' => $subtype,
 		]);
 		
-		return elgg_extract(0, $acls, false);
+		return elgg_extract(0, $acls);
 	}
 	
 	/**
@@ -955,8 +940,6 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		return _elgg_services()->accessCollections->hasAccessToEntity($this, $user_guid);
 	}
 
-	
-
 	/**
 	 * Can a user edit this entity?
 	 *
@@ -966,7 +949,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return bool Whether this entity is editable by the given user.
 	 */
-	public function canEdit($user_guid = 0) {
+	public function canEdit(int $user_guid = 0): bool {
 		return _elgg_services()->userCapabilities->canEdit($this, $user_guid);
 	}
 
@@ -980,7 +963,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return bool Whether this entity is deletable by the given user.
 	 * @since 1.11
 	 */
-	public function canDelete($user_guid = 0) {
+	public function canDelete(int $user_guid = 0): bool {
 		return _elgg_services()->userCapabilities->canDelete($this, $user_guid);
 	}
 
@@ -994,7 +977,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return bool
 	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
-	public function canWriteToContainer($user_guid = 0, $type = '', $subtype = '') {
+	public function canWriteToContainer(int $user_guid = 0, string $type = '', string $subtype = ''): bool {
 		if (empty($type) || empty($subtype)) {
 			throw new ElggInvalidArgumentException(__METHOD__ . ' requires $type and $subtype to be set');
 		}
@@ -1013,7 +996,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return bool
 	 */
-	public function canComment($user_guid = 0, $default = null) {
+	public function canComment(int $user_guid = 0, bool $default = null): bool {
 		return _elgg_services()->userCapabilities->canComment($this, $user_guid, $default);
 	}
 
@@ -1031,7 +1014,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return bool
 	 */
-	public function canAnnotate($user_guid = 0, $annotation_name = '') {
+	public function canAnnotate(int $user_guid = 0, string $annotation_name = ''): bool {
 		return _elgg_services()->userCapabilities->canAnnotate($this, $user_guid, $annotation_name);
 	}
 
@@ -1040,7 +1023,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return int|null GUID
 	 */
-	public function getGUID() {
+	public function getGUID(): ?int {
 		return $this->guid;
 	}
 
@@ -1049,9 +1032,9 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return string The entity type
 	 */
-	public function getType() {
+	public function getType(): string {
 		// this is just for the PHPUnit mocking framework
-		return $this->type;
+		return (string) $this->type;
 	}
 
 	/**
@@ -1062,7 +1045,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return void
 	 * @see self::initializeAttributes()
 	 */
-	public function setSubtype(string $subtype) : void {
+	public function setSubtype(string $subtype): void {
 		// keep original values
 		if ($this->guid && !array_key_exists('subtype', $this->orig_attributes)) {
 			$this->orig_attributes['subtype'] = $this->attributes['subtype'];
@@ -1076,8 +1059,8 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return string The entity subtype
 	 */
-	public function getSubtype() {
-		return $this->attributes['subtype'];
+	public function getSubtype(): string {
+		return (string) $this->attributes['subtype'];
 	}
 
 	/**
@@ -1085,7 +1068,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return int The owner GUID
 	 */
-	public function getOwnerGUID() {
+	public function getOwnerGUID(): int {
 		return (int) $this->owner_guid;
 	}
 
@@ -1103,10 +1086,10 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @param int $container_guid The ID of the container.
 	 *
-	 * @return int
+	 * @return void
 	 */
-	public function setContainerGUID($container_guid) {
-		return $this->container_guid = (int) $container_guid;
+	public function setContainerGUID(int $container_guid): void {
+		$this->container_guid = $container_guid;
 	}
 
 	/**
@@ -1114,7 +1097,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return int
 	 */
-	public function getContainerGUID() {
+	public function getContainerGUID(): int {
 		return (int) $this->container_guid;
 	}
 
@@ -1133,8 +1116,8 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return int UNIX epoch time
 	 */
-	public function getTimeUpdated() {
-		return $this->time_updated;
+	public function getTimeUpdated(): int {
+		return (int) $this->time_updated;
 	}
 
 	/**
@@ -1145,7 +1128,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return string The URL of the entity
 	 */
-	public function getURL() {
+	public function getURL(): string {
 		$url = elgg_generate_entity_url($this, 'view');
 
 		$url = _elgg_services()->hooks->trigger('entity:url', $this->getType(), ['entity' => $this], $url);
@@ -1165,7 +1148,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @param array  $coords     An array of cropping coordinates x1, y1, x2, y2
 	 * @return bool
 	 */
-	public function saveIconFromUploadedFile($input_name, $type = 'icon', array $coords = []) {
+	public function saveIconFromUploadedFile(string $input_name, string $type = 'icon', array $coords = []): bool {
 		return _elgg_services()->iconService->saveIconFromUploadedFile($this, $input_name, $type, $coords);
 	}
 
@@ -1177,7 +1160,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @param array  $coords   An array of cropping coordinates x1, y1, x2, y2
 	 * @return bool
 	 */
-	public function saveIconFromLocalFile($filename, $type = 'icon', array $coords = []) {
+	public function saveIconFromLocalFile(string $filename, string $type = 'icon', array $coords = []): bool {
 		return _elgg_services()->iconService->saveIconFromLocalFile($this, $filename, $type, $coords);
 	}
 
@@ -1189,7 +1172,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @param array  $coords An array of cropping coordinates x1, y1, x2, y2
 	 * @return bool
 	 */
-	public function saveIconFromElggFile(\ElggFile $file, $type = 'icon', array $coords = []) {
+	public function saveIconFromElggFile(\ElggFile $file, string $type = 'icon', array $coords = []): bool {
 		return _elgg_services()->iconService->saveIconFromElggFile($this, $file, $type, $coords);
 	}
 
@@ -1201,7 +1184,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
 	 * @return \ElggIcon
 	 */
-	public function getIcon($size, $type = 'icon') {
+	public function getIcon(string $size, string $type = 'icon'): \ElggIcon {
 		return _elgg_services()->iconService->getIcon($this, $size, $type);
 	}
 
@@ -1211,7 +1194,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
 	 * @return bool
 	 */
-	public function deleteIcon($type = 'icon') {
+	public function deleteIcon(string $type = 'icon'): bool {
 		return _elgg_services()->iconService->deleteIcon($this, $type);
 	}
 
@@ -1223,7 +1206,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return int|null A unix timestamp of when the icon was last changed, or null if not set.
 	 */
-	public function getIconLastChange($size, $type = 'icon') {
+	public function getIconLastChange(string $size, string $type = 'icon'): ?int {
 		return _elgg_services()->iconService->getIconLastChange($this, $size, $type);
 	}
 
@@ -1234,7 +1217,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
 	 * @return bool
 	 */
-	public function hasIcon($size, $type = 'icon') {
+	public function hasIcon(string $size, string $type = 'icon'): bool {
 		return _elgg_services()->iconService->hasIcon($this, $size, $type);
 	}
 
@@ -1249,14 +1232,14 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return string The URL
 	 * @since 1.8.0
 	 */
-	public function getIconURL($params = []) {
+	public function getIconURL(string|array $params = []): string {
 		return _elgg_services()->iconService->getIconURL($this, $params);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function save() : bool {
+	public function save(): bool {
 		$result = false;
 		
 		if ($this->guid > 0) {
@@ -1426,7 +1409,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @throws InvalidParameterException
 	 */
-	protected function update() {
+	protected function update(): bool {
 
 		if (!$this->canEdit()) {
 			return false;
@@ -1487,7 +1470,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return bool
 	 */
-	protected function load(stdClass $row) {
+	protected function load(stdClass $row): bool {
 		$attributes = array_merge($this->attributes, (array) $row);
 
 		if (array_diff(self::PRIMARY_ATTR_NAMES, array_keys($attributes)) !== []) {
@@ -1531,7 +1514,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return bool
 	 * @see \ElggEntity::enable()
 	 */
-	public function disable($reason = "", $recursive = true) {
+	public function disable(string $reason = '', bool $recursive = true): bool {
 		if (!$this->guid) {
 			return false;
 		}
@@ -1552,7 +1535,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			$unban_after = false;
 		}
 
-		if ($reason) {
+		if (!empty($reason)) {
 			$this->disable_reason = $reason;
 		}
 
@@ -1614,7 +1597,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @see access_show_hiden_entities()
 	 * @return bool
 	 */
-	public function enable($recursive = true) {
+	public function enable(bool $recursive = true): bool {
 		if (empty($this->guid)) {
 			return false;
 		}
@@ -1665,7 +1648,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return boolean Whether this entity is enabled.
 	 */
-	public function isEnabled() {
+	public function isEnabled(): bool {
 		return $this->enabled == 'yes';
 	}
 
@@ -1686,7 +1669,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return bool
 	 */
-	public function delete($recursive = true) {
+	public function delete(bool $recursive = true): bool {
 		// first check if we can delete this entity
 		// NOTE: in Elgg <= 1.10.3 this was after the delete event,
 		// which could potentially remove some content if the user didn't have access
@@ -1743,7 +1726,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return void
 	 */
-	public function setLatLong(float $lat, float $long) {
+	public function setLatLong(float $lat, float $long): void {
 		$this->{"geo:lat"} = $lat;
 		$this->{"geo:long"} = $long;
 	}
@@ -1753,7 +1736,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return float
 	 */
-	public function getLatitude() {
+	public function getLatitude(): float {
 		return (float) $this->{"geo:lat"};
 	}
 
@@ -1762,7 +1745,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return float
 	 */
-	public function getLongitude() {
+	public function getLongitude(): float {
 		return (float) $this->{"geo:long"};
 	}
 
@@ -1776,7 +1759,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return int
 	 */
-	public function getSystemLogID() {
+	public function getSystemLogID(): int {
 		return $this->getGUID();
 	}
 
@@ -1893,7 +1876,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return int|false
 	 * @internal
 	 */
-	public function updateLastAction($posted = null) {
+	public function updateLastAction(int $posted = null): int|false {
 		$posted = _elgg_services()->entityTable->updateLastAction($this, $posted);
 		if ($posted) {
 			$this->attributes['last_action'] = $posted;
@@ -1908,7 +1891,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return void
 	 * @internal
 	 */
-	public function disableCaching() {
+	public function disableCaching(): void {
 		$this->_is_cacheable = false;
 		if ($this->guid) {
 			_elgg_services()->entityCache->delete($this->guid);
@@ -1921,7 +1904,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return void
 	 * @internal
 	 */
-	public function enableCaching() {
+	public function enableCaching(): void {
 		$this->_is_cacheable = true;
 	}
 
@@ -1931,7 +1914,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return bool
 	 * @internal
 	 */
-	public function isCacheable() {
+	public function isCacheable(): bool {
 		if (!$this->guid) {
 			return false;
 		}
@@ -1950,7 +1933,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return void
 	 * @internal
 	 */
-	public function cache($persist = true) {
+	public function cache(bool $persist = true): void {
 		if (!$this->isCacheable()) {
 			return;
 		}
@@ -1977,7 +1960,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return void
 	 * @internal
 	 */
-	public function invalidateCache() {
+	public function invalidateCache(): void {
 		if (!$this->guid) {
 			return;
 		}

@@ -2,7 +2,7 @@
 
 namespace Elgg;
 
-use Psr\Log\LogLevel;
+use Elgg\Exceptions\LogicException;
 
 /**
  * @group FormsService
@@ -12,7 +12,7 @@ class FormsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
 		$views_dir = $this->normalizeTestFilePath('views');
-		_elgg_services()->views->autoregisterViews('', "$views_dir/default", 'default');
+		_elgg_services()->views->autoregisterViews('', "{$views_dir}/default", 'default');
 	}
 
 	public function testCanRenderForm() {
@@ -33,30 +33,16 @@ class FormsServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanNotSetFooterOutsideFormView() {
-		_elgg_services()->logger->disable();
-
-		$this->assertFalse(_elgg_services()->forms->setFooter('footer'));
-		$logs = _elgg_services()->logger->enable();
-		$expected = [
-			[
-				'message' => 'Form footer can only be set and retrieved during form rendering, anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)',
-				'level' => LogLevel::ERROR,
-			],
-		];
-		$this->assertEquals($expected, $logs);
+		$this->expectException(LogicException::class);
+		$this->expectExceptionMessage('Form footer can only be set and retrieved during form rendering, anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)');
+		
+		_elgg_services()->forms->setFooter('footer');
 	}
 
 	public function testCanNotGetFooterOutsideFormView() {
-		_elgg_services()->logger->disable();
-		$this->assertFalse(_elgg_services()->forms->getFooter());
-
-		$expected = [
-			[
-				'message' => 'Form footer can only be set and retrieved during form rendering, anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)',
-				'level' => LogLevel::ERROR,
-			]
-		];
-		$logs = _elgg_services()->logger->enable();
-		$this->assertEquals($expected, $logs);
+		$this->expectException(LogicException::class);
+		$this->expectExceptionMessage('Form footer can only be set and retrieved during form rendering, anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)');
+		
+		_elgg_services()->forms->getFooter();
 	}
 }

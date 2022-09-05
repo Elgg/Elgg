@@ -11,7 +11,7 @@ abstract class ElggFilestore {
 	 *
 	 * @return mixed A handle to the opened file or false on error.
 	 */
-	abstract public function open(\ElggFile $file, $mode);
+	abstract public function open(\ElggFile $file, string $mode);
 
 	/**
 	 * Write data to a given file handle.
@@ -19,9 +19,9 @@ abstract class ElggFilestore {
 	 * @param mixed  $f    The file handle - exactly what this is depends on the file system
 	 * @param string $data The binary string of data to write
 	 *
-	 * @return int Number of bytes written.
+	 * @return int Number of bytes written
 	 */
-	abstract public function write($f, $data);
+	abstract public function write($f, string $data): int;
 
 	/**
 	 * Read data from a filestore.
@@ -32,7 +32,7 @@ abstract class ElggFilestore {
 	 *
 	 * @return mixed String of data or false on error.
 	 */
-	abstract public function read($f, $length, $offset = 0);
+	abstract public function read($f, int $length, int $offset = 0);
 
 	/**
 	 * Seek a given position within a file handle.
@@ -42,7 +42,7 @@ abstract class ElggFilestore {
 	 *
 	 * @return int 0 for success, or -1
 	 */
-	abstract public function seek($f, $position);
+	abstract public function seek($f, int $position): int;
 
 	/**
 	 * Return a whether the end of a file has been reached.
@@ -51,16 +51,16 @@ abstract class ElggFilestore {
 	 *
 	 * @return boolean
 	 */
-	abstract public function eof($f);
+	abstract public function eof($f): bool;
 
 	/**
 	 * Return the current position in an open file.
 	 *
 	 * @param mixed $f The file handle.
 	 *
-	 * @return int
+	 * @return int|false
 	 */
-	abstract public function tell($f);
+	abstract public function tell($f): int|false;
 
 	/**
 	 * Close a given file handle.
@@ -69,7 +69,7 @@ abstract class ElggFilestore {
 	 *
 	 * @return bool
 	 */
-	abstract public function close($f);
+	abstract public function close($f): bool;
 
 	/**
 	 * Delete the file associated with a given file handle.
@@ -78,7 +78,7 @@ abstract class ElggFilestore {
 	 * @param bool      $follow_symlinks If true, will also delete the target file if the current file is a symlink
 	 * @return bool
 	 */
-	abstract public function delete(\ElggFile $file, $follow_symlinks = true);
+	abstract public function delete(\ElggFile $file, bool $follow_symlinks = true): bool;
 
 	/**
 	 * Return the size in bytes for a given file.
@@ -87,7 +87,7 @@ abstract class ElggFilestore {
 	 *
 	 * @return int
 	 */
-	abstract public function getFileSize(\ElggFile $file);
+	abstract public function getFileSize(\ElggFile $file): int;
 
 	/**
 	 * Return the filename of a given file as stored on the filestore.
@@ -96,7 +96,7 @@ abstract class ElggFilestore {
 	 *
 	 * @return string
 	 */
-	abstract public function getFilenameOnFilestore(\ElggFile $file);
+	abstract public function getFilenameOnFilestore(\ElggFile $file): string;
 
 	/**
 	 * Get the filestore's creation parameters as an associative array.
@@ -104,7 +104,7 @@ abstract class ElggFilestore {
 	 *
 	 * @return array
 	 */
-	abstract public function getParameters();
+	abstract public function getParameters(): array;
 
 	/**
 	 * Set the parameters from the associative array produced by $this->getParameters().
@@ -113,7 +113,7 @@ abstract class ElggFilestore {
 	 *
 	 * @return bool
 	 */
-	abstract public function setParameters(array $parameters);
+	abstract public function setParameters(array $parameters): bool;
 
 	/**
 	 * Get the contents of the whole file.

@@ -17,7 +17,7 @@ class ThemeSandboxObject extends ElggObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getTimeCreated() {
+	public function getTimeCreated(): int {
 		return time();
 	}
 }

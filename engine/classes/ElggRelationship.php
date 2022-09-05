@@ -129,7 +129,7 @@ class ElggRelationship extends \ElggData {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function save() : bool {
+	public function save(): bool {
 		if (empty($this->orig_attributes)) {
 			// nothing has changed
 			return true;
@@ -160,7 +160,7 @@ class ElggRelationship extends \ElggData {
 	 *
 	 * @return bool
 	 */
-	public function delete() {
+	public function delete(): bool {
 		return _elgg_services()->relationshipsTable->delete($this->id);
 	}
 
@@ -172,7 +172,7 @@ class ElggRelationship extends \ElggData {
 	 *
 	 * @return string
 	 */
-	public function getURL() {
+	public function getURL(): string {
 		$url = _elgg_services()->hooks->trigger('relationship:url', $this->getType(), ['relationship' => $this], '');
 
 		return elgg_normalize_url($url);
@@ -202,7 +202,7 @@ class ElggRelationship extends \ElggData {
 	 *
 	 * @return int
 	 */
-	public function getSystemLogID() {
+	public function getSystemLogID(): int {
 		return $this->id;
 	}
 
@@ -224,7 +224,7 @@ class ElggRelationship extends \ElggData {
 	 *
 	 * @return string 'relationship'
 	 */
-	public function getType() {
+	public function getType(): string {
 		return 'relationship';
 	}
 
@@ -234,7 +234,7 @@ class ElggRelationship extends \ElggData {
 	 *
 	 * @return string
 	 */
-	public function getSubtype() {
+	public function getSubtype(): string {
 		return $this->relationship;
 	}
 	
@@ -243,7 +243,7 @@ class ElggRelationship extends \ElggData {
 	 *
 	 * @return array
 	 */
-	public function getOriginalAttributes() {
+	public function getOriginalAttributes(): array {
 		return $this->orig_attributes;
 	}
 }

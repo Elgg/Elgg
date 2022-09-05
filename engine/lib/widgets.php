@@ -17,7 +17,7 @@
  * @return array An 2D array of \ElggWidget objects
  * @since 1.8.0
  */
-function elgg_get_widgets($owner_guid, $context) {
+function elgg_get_widgets(int $owner_guid, string $context): array {
 	return _elgg_services()->widgets->getWidgets($owner_guid, $context);
 }
 
@@ -32,7 +32,7 @@ function elgg_get_widgets($owner_guid, $context) {
  * @return int|false Widget GUID or false on failure
  * @since 1.8.0
  */
-function elgg_create_widget($owner_guid, $handler, $context, $access_id = null) {
+function elgg_create_widget(int $owner_guid, string $handler, string $context, int $access_id = null) {
 	return _elgg_services()->widgets->createWidget($owner_guid, $handler, $context, $access_id);
 }
 
@@ -47,7 +47,7 @@ function elgg_create_widget($owner_guid, $handler, $context, $access_id = null) 
  * @return bool
  * @since 1.8.0
  */
-function elgg_can_edit_widget_layout($context, $user_guid = 0) {
+function elgg_can_edit_widget_layout(string $context, int $user_guid = 0): bool {
 	return _elgg_services()->widgets->canEditLayout($context, $user_guid);
 }
 
@@ -56,30 +56,15 @@ function elgg_can_edit_widget_layout($context, $user_guid = 0) {
  *
  * This should be called by plugins in their init function.
  *
- * @param string|array $handler     An array of options or the identifier for the widget handler
- * @param string       $name        The name of the widget type
- * @param string       $description A description for the widget type
- * @param array        $context     An array of contexts where this widget is allowed
- * @param bool         $multiple    Whether or not multiple instances of this widget
- *                                  are allowed in a single layout (default: false)
+ * @param array $options An array of options
  *
- * @return bool
+ * @return void
  * @since 1.8.0
  */
-function elgg_register_widget_type($handler, $name = null, $description = null, $context = [], $multiple = false) {
-	if (is_array($handler)) {
-		$definition = \Elgg\WidgetDefinition::factory($handler);
-	} else {
-		$definition = \Elgg\WidgetDefinition::factory([
-			'id' => $handler,
-			'name' => $name,
-			'description' => $description,
-			'context' => $context,
-			'multiple' => $multiple,
-		]);
-	}
+function elgg_register_widget_type(array $options): void {
+	$definition = \Elgg\WidgetDefinition::factory($options);
 
-	return _elgg_services()->widgets->registerType($definition);
+	_elgg_services()->widgets->registerType($definition);
 }
 
 /**
@@ -87,11 +72,11 @@ function elgg_register_widget_type($handler, $name = null, $description = null, 
  *
  * @param string $handler The identifier for the widget
  *
- * @return bool true if handler was found as unregistered
+ * @return void
  * @since 1.8.0
  */
-function elgg_unregister_widget_type($handler) {
-	return _elgg_services()->widgets->unregisterType($handler);
+function elgg_unregister_widget_type(string $handler): void {
+	_elgg_services()->widgets->unregisterType($handler);
 }
 
 /**
@@ -104,7 +89,7 @@ function elgg_unregister_widget_type($handler) {
  * @return bool Whether or not that widget type exists
  * @since 1.8.0
  */
-function elgg_is_widget_type($handler, $context = null, \ElggEntity $container = null) {
+function elgg_is_widget_type(string $handler, string $context = null, \ElggEntity $container = null): bool {
 	return _elgg_services()->widgets->validateType($handler, $context, $container);
 }
 
@@ -124,7 +109,7 @@ function elgg_is_widget_type($handler, $context = null, \ElggEntity $container =
  * @return \Elgg\WidgetDefinition[]
  * @since 1.8.0
  */
-function elgg_get_widget_types($context = "") {
+function elgg_get_widget_types(string|array $context = ''): array {
 	if (is_array($context)) {
 		$params = $context;
 	} else {

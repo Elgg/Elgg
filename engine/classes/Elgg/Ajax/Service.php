@@ -71,7 +71,7 @@ class Service {
 	 *
 	 * @return bool
 	 */
-	public function isAjax2Request() {
+	public function isAjax2Request(): bool {
 		$version = $this->request->headers->get('X-Elgg-Ajax-API');
 		return ($version === '2');
 	}
@@ -85,7 +85,7 @@ class Service {
 	 *
 	 * @return bool
 	 */
-	public function isReady() {
+	public function isReady(): bool {
 		return !$this->response_sent && $this->isAjax2Request();
 	}
 
@@ -113,7 +113,7 @@ class Service {
 	 *
 	 * @return JsonResponse|false
 	 */
-	public function respondFromOutput($output, $hook_type = '', $try_decode = true) {
+	public function respondFromOutput($output, string $hook_type = '', bool $try_decode = true) {
 		if ($try_decode) {
 			$output = $this->decodeJson($output);
 		}
@@ -141,7 +141,7 @@ class Service {
 	 *
 	 * @return JsonResponse|false
 	 */
-	public function respondFromApiResponse(AjaxResponse $api_response, $hook_type = '') {
+	public function respondFromApiResponse(AjaxResponse $api_response, string $hook_type = '') {
 		$api_response = $this->filterApiResponse($api_response, $hook_type);
 		$response = $this->buildHttpResponse($api_response);
 
@@ -157,7 +157,7 @@ class Service {
 	 *
 	 * @return JsonResponse|false
 	 */
-	public function respondWithError($msg = '', $status = 400) {
+	public function respondWithError(string $msg = '', int $status = 400) {
 		$response = new JsonResponse(['error' => $msg], $status);
 		
 		// clear already set system messages as we respond directly with an error as message body
@@ -176,7 +176,7 @@ class Service {
 	 * @return AjaxResponse
 	 * @throws RuntimeException
 	 */
-	private function filterApiResponse(AjaxResponse $api_response, $hook_type = '') {
+	private function filterApiResponse(AjaxResponse $api_response, string $hook_type = ''): AjaxResponse {
 		$api_response->setTtl($this->request->getParam('elgg_response_ttl', 0, false));
 
 		if ($hook_type) {
@@ -199,7 +199,7 @@ class Service {
 	 * @return JsonResponse
 	 * @throws RuntimeException
 	 */
-	private function buildHttpResponse(AjaxResponse $api_response, $allow_removing_headers = null) {
+	private function buildHttpResponse(AjaxResponse $api_response, bool $allow_removing_headers = false): JsonResponse {
 		if ($api_response->isCancelled()) {
 			return new JsonResponse(['error' => "The response was cancelled"], 400);
 		}
@@ -266,7 +266,7 @@ class Service {
 	 *
 	 * @return void
 	 */
-	public function registerView($view) {
+	public function registerView(string $view): void {
 		$this->allowed_views[$view] = true;
 	}
 
@@ -277,7 +277,7 @@ class Service {
 	 *
 	 * @return void
 	 */
-	public function unregisterView($view) {
+	public function unregisterView(string $view): void {
 		unset($this->allowed_views[$view]);
 	}
 
@@ -286,7 +286,7 @@ class Service {
 	 *
 	 * @return string[]
 	 */
-	public function getViews() {
+	public function getViews(): array {
 		return array_keys($this->allowed_views);
 	}
 }

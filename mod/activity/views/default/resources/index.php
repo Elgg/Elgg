@@ -16,7 +16,7 @@ if (elgg_get_config('allow_registration')) {
 	$sidebar = elgg_view('core/account/login_box');
 }
 
-echo elgg_view_page(null, [
+echo elgg_view_page('', [
 	'title' => elgg_echo('content:latest'),
 	'content' => elgg_view('river/listing/all'),
 	'sidebar' => $sidebar,

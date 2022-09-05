@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Exceptions\LogicException;
 use Elgg\Traits\Loggable;
 
 /**
@@ -73,7 +74,7 @@ class FormsService {
 	 *
 	 * @return string The complete form
 	 */
-	public function render($action, $form_vars = [], $body_vars = []) {
+	public function render(string $action, array $form_vars = [], array $body_vars = []): string {
 
 		$defaults = [
 			'action' => elgg_generate_action_url($action, [], false),
@@ -107,7 +108,7 @@ class FormsService {
 			$this->footer = '';
 
 			// Render form body
-			$body = $this->views->renderView("forms/$action", $body_vars);
+			$body = $this->views->renderView("forms/{$action}", $body_vars);
 
 			if (!empty($body)) {
 				// Grab the footer if one was set during form rendering
@@ -134,33 +135,28 @@ class FormsService {
 	 * Footer will be rendered using 'elements/forms/footer' view after form body has finished rendering
 	 *
 	 * @param string $footer Footer
-	 * @return bool
+	 * @return void
+	 * @throws LogicException
 	 */
-	public function setFooter($footer = '') {
-
+	public function setFooter(string $footer = ''): void {
 		if (!$this->rendering) {
-			$this->getLogger()->error('Form footer can only be set and retrieved during form rendering, '
-					. 'anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)');
-			return false;
+			throw new LogicException('Form footer can only be set and retrieved during form rendering, anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)');
 		}
 
 		$this->footer = $footer;
-		return true;
 	}
 
 	/**
-	 * Returns currently set footer, or false if not in the form rendering stack
+	 * Returns currently set footer
 	 *
-	 * @return string|false
+	 * @return string
+	 * @throws LogicException
 	 */
-	public function getFooter() {
+	public function getFooter(): string {
 		if (!$this->rendering) {
-			$this->getLogger()->error('Form footer can only be set and retrieved during form rendering, '
-					. 'anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)');
-			return false;
+			throw new LogicException('Form footer can only be set and retrieved during form rendering, anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)');
 		}
 
 		return $this->footer;
 	}
-
 }

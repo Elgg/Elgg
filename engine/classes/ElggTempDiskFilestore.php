@@ -42,7 +42,7 @@ class ElggTempDiskFilestore extends \ElggDiskFilestore {
 	 *
 	 * @return string The full path of where the file is stored
 	 */
-	public function getFilenameOnFilestore(\ElggFile $file) {
+	public function getFilenameOnFilestore(\ElggFile $file): string {
 		$filename = $file->getFilename();
 		if (!$filename) {
 			return '';
@@ -54,7 +54,7 @@ class ElggTempDiskFilestore extends \ElggDiskFilestore {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getParameters() {
+	public function getParameters(): array {
 		$params = parent::getParameters();
 		$params['unique_sub_dir'] = $this->unique_sub_dir;
 		
@@ -64,7 +64,7 @@ class ElggTempDiskFilestore extends \ElggDiskFilestore {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setParameters(array $parameters) {
+	public function setParameters(array $parameters): bool {
 		
 		if (isset($parameters['unique_sub_dir'])) {
 			$this->unique_sub_dir = $parameters['unique_sub_dir'];

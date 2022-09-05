@@ -16,14 +16,14 @@ interface Loggable {
 	 *
 	 * @return int
 	 */
-	public function getSystemLogID();
+	public function getSystemLogID(): int;
 
 	/**
 	 * Return the type of the object - eg. object, group, user, relationship, metadata, annotation etc
 	 *
 	 * @return string
 	 */
-	public function getType();
+	public function getType(): string;
 
 	/**
 	 * Return a subtype. For metadata & annotations this is the 'name' and for relationship this is the
@@ -31,7 +31,7 @@ interface Loggable {
 	 *
 	 * @return string
 	 */
-	public function getSubtype();
+	public function getSubtype(): string;
 
 	/**
 	 * For a given ID, return the object associated with it.

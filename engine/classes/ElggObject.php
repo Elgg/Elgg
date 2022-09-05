@@ -17,7 +17,7 @@ class ElggObject extends \ElggEntity {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getType() {
+	public function getType(): string {
 		return 'object';
 	}
 
@@ -35,14 +35,14 @@ class ElggObject extends \ElggEntity {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getDisplayName() {
+	public function getDisplayName(): string {
 		return (string) $this->title;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setDisplayName($display_name) {
+	public function setDisplayName(string $display_name): void {
 		$this->title = $display_name;
 	}
 }

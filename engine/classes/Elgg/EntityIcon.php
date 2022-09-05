@@ -13,7 +13,7 @@ interface EntityIcon {
 	 * @param array  $coords     An array of cropping coordinates x1, y1, x2, y2
 	 * @return bool
 	 */
-	public function saveIconFromUploadedFile($input_name, $type = 'icon', array $coords = []);
+	public function saveIconFromUploadedFile(string $input_name, string $type = 'icon', array $coords = []): bool;
 	
 	/**
 	 * Saves icons using a local file as the source.
@@ -23,7 +23,7 @@ interface EntityIcon {
 	 * @param array  $coords   An array of cropping coordinates x1, y1, x2, y2
 	 * @return bool
 	 */
-	public function saveIconFromLocalFile($filename, $type = 'icon', array $coords = []);
+	public function saveIconFromLocalFile(string $filename, string $type = 'icon', array $coords = []): bool;
 	
 	/**
 	 * Saves icons using a file located in the data store as the source.
@@ -33,7 +33,7 @@ interface EntityIcon {
 	 * @param array  $coords An array of cropping coordinates x1, y1, x2, y2
 	 * @return bool
 	 */
-	public function saveIconFromElggFile(\ElggFile $file, $type = 'icon', array $coords = []);
+	public function saveIconFromElggFile(\ElggFile $file, string $type = 'icon', array $coords = []): bool;
 	
 	/**
 	 * Returns entity icon as an ElggIcon object
@@ -43,7 +43,7 @@ interface EntityIcon {
 	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
 	 * @return \ElggIcon
 	 */
-	public function getIcon($size, $type = 'icon');
+	public function getIcon(string $size, string $type = 'icon'): \ElggIcon;
 
 	/**
 	 * Removes all icon files and metadata for the passed type of icon.
@@ -51,7 +51,7 @@ interface EntityIcon {
 	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
 	 * @return bool
 	 */
-	public function deleteIcon($type = 'icon');
+	public function deleteIcon(string $type = 'icon'): bool;
 	
 	/**
 	 * Returns a URL of the icon.
@@ -61,7 +61,7 @@ interface EntityIcon {
 	 *                      string 'type' => the icon type (default: icon)
 	 * @return string
 	 */
-	public function getIconURL($params);
+	public function getIconURL(array $params): string;
 	
 	/**
 	 * Returns the timestamp of when the icon was changed.
@@ -71,7 +71,7 @@ interface EntityIcon {
 	 *
 	 * @return int|null A unix timestamp of when the icon was last changed, or null if not set.
 	 */
-	public function getIconLastChange($size, $type = 'icon');
+	public function getIconLastChange(string $size, string $type = 'icon'): ?int;
 	
 	/**
 	 * Returns if the entity has an icon of the passed type.
@@ -80,5 +80,5 @@ interface EntityIcon {
 	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
 	 * @return bool
 	 */
-	public function hasIcon($size, $type = 'icon');
+	public function hasIcon(string $size, string $type = 'icon'): bool;
 }

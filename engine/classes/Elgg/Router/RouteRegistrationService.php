@@ -71,7 +71,7 @@ class RouteRegistrationService {
 	 * @return Route
 	 * @throws InvalidParameterException
 	 */
-	public function register($name, array $params = []) {
+	public function register(string $name, array $params = []): Route {
 
 		$params = $this->hooks->trigger('route:config', $name, $params, $params);
 
@@ -164,7 +164,7 @@ class RouteRegistrationService {
 	 *
 	 * @return void
 	 */
-	public function unregister($name) {
+	public function unregister(string $name): void {
 		$this->routes->remove($name);
 	}
 
@@ -175,7 +175,7 @@ class RouteRegistrationService {
 	 *
 	 * @return Route|null
 	 */
-	public function get($name) {
+	public function get(string $name): ?Route {
 		return $this->routes->get($name);
 	}
 
@@ -183,7 +183,7 @@ class RouteRegistrationService {
 	 * Get all registered routes
 	 * @return Route[]
 	 */
-	public function all() {
+	public function all(): array {
 		return $this->routes->all();
 	}
 
@@ -193,9 +193,9 @@ class RouteRegistrationService {
 	 * @param string $name       Route name
 	 * @param array  $parameters Query parameters
 	 *
-	 * @return false|string
+	 * @return string|null
 	 */
-	public function generateUrl($name, array $parameters = []) {
+	public function generateUrl(string $name, array $parameters = []): ?string {
 		try {
 			$route = $this->get($name);
 			if ($route instanceof Route) {
@@ -213,7 +213,7 @@ class RouteRegistrationService {
 			$this->getLogger()->notice($exception->getMessage());
 		}
 		
-		return false;
+		return null;
 	}
 
 	/**
@@ -225,7 +225,7 @@ class RouteRegistrationService {
 	 *
 	 * @return array|false
 	 */
-	public function resolveRouteParameters($name, \ElggEntity $entity = null, array $parameters = []) {
+	public function resolveRouteParameters(string $name, \ElggEntity $entity = null, array $parameters = []) {
 		$route = $this->routes->get($name);
 		if (!$route) {
 			return false;

@@ -23,10 +23,22 @@ class CreateDefaultWidgetsHandlerIntegrationTest extends IntegrationTestCase {
 		$this->user = $this->createUser();
 
 		_elgg_services()->session->setLoggedInUser($this->user);
-
-		elgg_register_widget_type('test_default_widget1', 'Default Widget 1', '', ['test_context', 'bar_context']);
-		elgg_register_widget_type('test_default_widget2', 'Default Widget 2', '', ['test_context', 'bar_context']);
-		elgg_register_widget_type('test_default_widget3', 'Default Widget 3', '', ['test_context', 'bar_context']);
+	
+		elgg_register_widget_type([
+			'id' => 'test_default_widget1',
+			'name' => 'Default Widget 1',
+			'context' => ['test_context', 'bar_context'],
+		]);
+		elgg_register_widget_type([
+			'id' => 'test_default_widget2',
+			'name' => 'Default Widget 2',
+			'context' => ['test_context', 'bar_context'],
+		]);
+		elgg_register_widget_type([
+			'id' => 'test_default_widget3',
+			'name' => 'Default Widget 3',
+			'context' => ['test_context', 'bar_context'],
+		]);
 		
 		$this->default_widgets = elgg_call(ELGG_IGNORE_ACCESS, function() {
 			return [

@@ -96,7 +96,7 @@ class ResponseFactory {
 	 * @param \ElggCookie $cookie The cookie that is being set
 	 * @return bool
 	 */
-	public function setCookie(\ElggCookie $cookie) {
+	public function setCookie(\ElggCookie $cookie): bool {
 		if (!$this->events->trigger('init:cookie', $cookie->name, $cookie)) {
 			return false;
 		}

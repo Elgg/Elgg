@@ -53,7 +53,7 @@ class HMACCacheTable extends dbHMACCacheTable {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function loadHMAC(string $hmac) : ?string {
+	public function loadHMAC(string $hmac): ?string {
 		if (isset($this->rows[$hmac])) {
 			return $this->rows[$hmac]->hmac;
 		}
@@ -64,7 +64,7 @@ class HMACCacheTable extends dbHMACCacheTable {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function deleteHMAC(string $hmac) : int {
+	public function deleteHMAC(string $hmac): int {
 		parent::deleteHMAC($hmac);
 		
 		if (!isset($this->rows[$hmac])) {

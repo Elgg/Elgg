@@ -42,8 +42,8 @@ class ElggMetadata extends ElggExtender {
 	 *
 	 * @return bool
 	 */
-	public function canEdit($user_guid = 0) {
-		return elgg_has_access_to_entity($this->entity_guid, (int) $user_guid);
+	public function canEdit(int $user_guid = 0): bool {
+		return elgg_has_access_to_entity($this->entity_guid, $user_guid);
 	}
 
 	/**
@@ -51,7 +51,7 @@ class ElggMetadata extends ElggExtender {
 	 *
 	 * @return bool
 	 */
-	public function save() : bool {
+	public function save(): bool {
 		if (!$this->id) {
 			return (bool) _elgg_services()->metadataTable->create($this);
 		}
@@ -64,7 +64,7 @@ class ElggMetadata extends ElggExtender {
 	 *
 	 * @return bool
 	 */
-	public function delete() {
+	public function delete(): bool {
 		return _elgg_services()->metadataTable->delete($this);
 	}
 

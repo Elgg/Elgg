@@ -30,7 +30,7 @@ class SiteNotification extends ElggObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getDisplayName() {
+	public function getDisplayName(): string {
 		if (!isset($this->title)) {
 			return (string) $this->description; // pre Elgg 4.0 contains summary/subject in description;
 		}
@@ -41,7 +41,7 @@ class SiteNotification extends ElggObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getURL() {
+	public function getURL(): string {
 		if (isset($this->url)) {
 			return (string) $this->url;
 		}
@@ -59,7 +59,7 @@ class SiteNotification extends ElggObject {
 	 *
 	 * @return ElggEntity|null
 	 */
-	public function getActor() {
+	public function getActor(): ?\ElggEntity {
 		$actor = $this->getEntitiesFromRelationship(['relationship' => self::HAS_ACTOR]);
 		if ($actor) {
 			$actor = $actor[0];
@@ -75,7 +75,7 @@ class SiteNotification extends ElggObject {
 	 *
 	 * @return void
 	 */
-	public function setActor(\ElggEntity $entity) {
+	public function setActor(\ElggEntity $entity): void {
 		$this->addRelationship($entity->guid, self::HAS_ACTOR);
 	}
 	
@@ -86,7 +86,7 @@ class SiteNotification extends ElggObject {
 	 *
 	 * @return void
 	 */
-	public function setURL(string $url) {
+	public function setURL(string $url): void {
 		if ($url) {
 			$this->url = $url;
 		}
@@ -99,7 +99,7 @@ class SiteNotification extends ElggObject {
 	 *
 	 * @return void
 	 */
-	public function setRead(bool $read) {
+	public function setRead(bool $read): void {
 		$this->read = $read;
 	}
 	
@@ -108,7 +108,7 @@ class SiteNotification extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function isRead() {
+	public function isRead(): bool {
 		return (bool) $this->read;
 	}
 	
@@ -119,7 +119,7 @@ class SiteNotification extends ElggObject {
 	 *
 	 * @return void
 	 */
-	public function setLinkedEntity(\ElggEntity $entity) {
+	public function setLinkedEntity(\ElggEntity $entity): void {
 		$this->linked_entity_guid = $entity->guid;
 	}
 	

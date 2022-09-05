@@ -97,7 +97,7 @@ class Accounts {
 	 *
 	 * @return ValidationResults
 	 */
-	public function validateAccountData($username, $password, $name, $email, $allow_multiple_emails = false) {
+	public function validateAccountData(string $username, string|array $password, string $name, string $email, bool $allow_multiple_emails = false): ValidationResults {
 
 		return elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function () use ($username, $email, $password, $name, $allow_multiple_emails) {
 			$results = new ValidationResults();
@@ -140,17 +140,16 @@ class Accounts {
 	/**
 	 * Assert that given registration details are valid and can be used to register the user
 	 *
-	 * @param string $username              The username of the new user
-	 * @param string $password              The password
-	 * @param string $name                  The user's display name
-	 * @param string $email                 The user's email address
-	 * @param bool   $allow_multiple_emails Allow the same email address to be
-	 *                                      registered multiple times?
+	 * @param string       $username              The username of the new user
+	 * @param string|array $password              The password
+	 * @param string       $name                  The user's display name
+	 * @param string       $email                 The user's email address
+	 * @param bool         $allow_multiple_emails Allow the same email address to be registered multiple times?
 	 *
 	 * @return void
 	 * @throws RegistrationException
 	 */
-	public function assertValidAccountData($username, $password, $name, $email, $allow_multiple_emails = false) {
+	public function assertValidAccountData(string $username, string|array $password, string $name, string $email, bool $allow_multiple_emails = false): void {
 
 		$results = $this->validateAccountData($username, $password, $name, $email, $allow_multiple_emails);
 
@@ -159,7 +158,6 @@ class Accounts {
 				throw new RegistrationException($result->getError());
 			}
 		}
-
 	}
 
 	/**
@@ -239,7 +237,7 @@ class Accounts {
 	 * @return void
 	 * @throws RegistrationException
 	 */
-	public function assertValidUsername($username, $assert_unregistered = false) {
+	public function assertValidUsername(string $username, bool $assert_unregistered = false): void {
 
 		if (elgg_strlen($username) < $this->config->minusername) {
 			$msg = $this->translator->translate('registration:usernametooshort', [$this->config->minusername]);
@@ -310,7 +308,7 @@ class Accounts {
 	 * @return void
 	 * @throws RegistrationException
 	 */
-	public function assertValidPassword($password) {
+	public function assertValidPassword(string|array $password): void {
 
 		if (is_array($password)) {
 			list($password, $password2) = $password;
@@ -345,7 +343,7 @@ class Accounts {
 	 * @return void
 	 * @throws RegistrationException
 	 */
-	public function assertCurrentPassword(\ElggUser $user, $password) {
+	public function assertCurrentPassword(\ElggUser $user, string $password): void {
 		if (!$this->passwords->verify($password, $user->password_hash)) {
 			throw new RegistrationException($this->translator->translate('LoginException:PasswordFailure'));
 		}
@@ -360,7 +358,7 @@ class Accounts {
 	 * @return void
 	 * @throws RegistrationException
 	 */
-	public function assertValidEmail($address, $assert_unregistered = false) {
+	public function assertValidEmail(string $address, bool $assert_unregistered = false): void {
 		if (!$this->isValidEmail($address)) {
 			throw new RegistrationException($this->translator->translate('registration:notemail'));
 		}
@@ -394,7 +392,7 @@ class Accounts {
 	 *
 	 * @return bool
 	 */
-	public function isValidEmail($address) {
+	public function isValidEmail(string $address): bool {
 		return filter_var($address, FILTER_VALIDATE_EMAIL) === $address;
 	}
 	
@@ -407,7 +405,7 @@ class Accounts {
 	 * @return bool
 	 * @throws InvalidParameterException
 	 */
-	public function requestNewEmailValidation(\ElggUser $user, $email) {
+	public function requestNewEmailValidation(\ElggUser $user, string $email): bool {
 		if (!$this->isValidEmail($email)) {
 			throw new InvalidParameterException($this->translator->translate('registration:notemail'));
 		}

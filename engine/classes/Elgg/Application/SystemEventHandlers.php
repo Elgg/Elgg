@@ -76,12 +76,12 @@ class SystemEventHandlers {
 	
 		$widgets = ['online_users', 'new_users', 'content_stats', 'banned_users', 'admin_welcome', 'cron_status'];
 		foreach ($widgets as $widget) {
-			elgg_register_widget_type(
-				$widget,
-				elgg_echo("admin:widget:{$widget}"),
-				elgg_echo("admin:widget:{$widget}:help"),
-				['admin']
-			);
+			elgg_register_widget_type([
+				'id' => $widget,
+				'name' => elgg_echo("admin:widget:{$widget}"),
+				'description' => elgg_echo("admin:widget:{$widget}:help"),
+				'context' => ['admin'],
+			]);
 		}
 	}
 	

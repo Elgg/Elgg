@@ -28,7 +28,7 @@ class ElggGroup extends \ElggEntity {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getType() {
+	public function getType(): string {
 		return 'group';
 	}
 
@@ -56,7 +56,7 @@ class ElggGroup extends \ElggEntity {
 	 *
 	 * @return bool
 	 */
-	public function isPublicMembership() {
+	public function isPublicMembership(): bool {
 		return ($this->membership == ACCESS_PUBLIC);
 	}
 
@@ -66,7 +66,7 @@ class ElggGroup extends \ElggEntity {
 	 * @return string One of CONTENT_ACCESS_MODE_* constants
 	 * @since 1.9.0
 	 */
-	public function getContentAccessMode() {
+	public function getContentAccessMode(): string {
 		$mode = $this->content_access_mode;
 
 		if (!isset($mode)) {
@@ -92,7 +92,7 @@ class ElggGroup extends \ElggEntity {
 	 * @return void
 	 * @since 1.9.0
 	 */
-	public function setContentAccessMode($mode) {
+	public function setContentAccessMode(string $mode): void {
 		if (!$mode && $this->content_access_mode) {
 			return;
 		}
@@ -112,7 +112,7 @@ class ElggGroup extends \ElggEntity {
 	 *
 	 * @return bool
 	 */
-	public function isMember(\ElggUser $user = null) {
+	public function isMember(\ElggUser $user = null): bool {
 		if ($user === null) {
 			$user = _elgg_services()->session->getLoggedInUser();
 		}
@@ -132,21 +132,15 @@ class ElggGroup extends \ElggEntity {
 	 *
 	 * @return bool Whether joining was successful.
 	 */
-	public function join(\ElggUser $user, $params = []) {
+	public function join(\ElggUser $user, array $params = []): bool {
 		if (!$user->addRelationship($this->guid, 'member')) {
 			return false;
 		}
 		
-		$event_params = [
-			'group' => $this,
-			'user' => $user,
-		];
+		$params['group'] = $this;
+		$params['user'] = $user;
 		
-		if (is_array($params)) {
-			$event_params = array_merge($params, $event_params);
-		}
-		
-		_elgg_services()->events->trigger('join', 'group', $event_params);
+		_elgg_services()->events->trigger('join', 'group', $params);
 		
 		return true;
 	}
@@ -158,7 +152,7 @@ class ElggGroup extends \ElggEntity {
 	 *
 	 * @return bool Whether the user was removed from the group.
 	 */
-	public function leave(\ElggUser $user) {
+	public function leave(\ElggUser $user): bool {
 		// event needs to be triggered while user is still member of group to have access to group acl
 		$params = [
 			'group' => $this,
@@ -216,7 +210,7 @@ class ElggGroup extends \ElggEntity {
 	 * @return bool
 	 * @since 3.0.0
 	 */
-	public function enableTool($name) {
+	public function enableTool(string $name): bool {
 		$tool = $this->getTool($name);
 		if (!$tool instanceof Tool) {
 			return false;
@@ -238,7 +232,7 @@ class ElggGroup extends \ElggEntity {
 	 * @return bool
 	 * @since 3.0.0
 	 */
-	public function disableTool($name) {
+	public function disableTool(string $name): bool {
 		$tool = $this->getTool($name);
 		if (!$tool instanceof Tool) {
 			return false;
@@ -270,7 +264,7 @@ class ElggGroup extends \ElggEntity {
 	 * @param ElggUser|null $user User
 	 * @return bool
 	 */
-	public function canAccessContent(ElggUser $user = null) {
+	public function canAccessContent(ElggUser $user = null): bool {
 		if (!isset($user)) {
 			$user = _elgg_services()->session->getLoggedInUser();
 		}

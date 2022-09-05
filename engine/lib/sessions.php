@@ -12,7 +12,7 @@ use Elgg\Exceptions\LoginException;
  * @return \ElggSession
  * @since 1.9
  */
-function elgg_get_session() {
+function elgg_get_session(): ?\ElggSession {
 	return _elgg_services()->session;
 }
 
@@ -21,7 +21,7 @@ function elgg_get_session() {
  *
  * @return \ElggUser|null
  */
-function elgg_get_logged_in_user_entity() {
+function elgg_get_logged_in_user_entity(): ?\ElggUser {
 	return _elgg_services()->session->getLoggedInUser();
 }
 
@@ -31,7 +31,7 @@ function elgg_get_logged_in_user_entity() {
  * @see elgg_get_logged_in_user_entity()
  * @return int
  */
-function elgg_get_logged_in_user_guid() {
+function elgg_get_logged_in_user_guid(): int {
 	return _elgg_services()->session->getLoggedInUserGuid();
 }
 
@@ -40,7 +40,7 @@ function elgg_get_logged_in_user_guid() {
  *
  * @return bool
  */
-function elgg_is_logged_in() {
+function elgg_is_logged_in(): bool {
 	return _elgg_services()->session->isLoggedIn();
 }
 
@@ -49,7 +49,7 @@ function elgg_is_logged_in() {
  *
  * @return bool
  */
-function elgg_is_admin_logged_in() {
+function elgg_is_admin_logged_in(): bool {
 	return _elgg_services()->session->isAdminLoggedIn();
 }
 
@@ -62,7 +62,7 @@ function elgg_is_admin_logged_in() {
  * @return bool
  * @since 1.9
  */
-function elgg_set_cookie(\ElggCookie $cookie) {
+function elgg_set_cookie(\ElggCookie $cookie): bool {
 	return _elgg_services()->responseFactory->setCookie($cookie);
 }
 
@@ -126,7 +126,7 @@ function elgg_reset_authentication_failures(\ElggUser $user): void {
  * @return bool
  * @since 4.3
  */
-function elgg_is_authentication_failure_limit_reached(\ElggUser $user, int $limit = null, int $lifetime = null) {
+function elgg_is_authentication_failure_limit_reached(\ElggUser $user, int $limit = null, int $lifetime = null): bool {
 	return _elgg_services()->accounts->isAuthenticationFailureLimitReached($user, $limit, $lifetime);
 }
 
@@ -138,7 +138,7 @@ function elgg_is_authentication_failure_limit_reached(\ElggUser $user, int $limi
  * @return string|int url to redirect to. Uses int to indicate REFERER
  * @since 4.3
  */
-function elgg_get_login_forward_url(\ElggUser $user) {
+function elgg_get_login_forward_url(\ElggUser $user): string|int {
 	$session = _elgg_services()->session;
 	if ($session->has('last_forward_from')) {
 		$forward_url = $session->get('last_forward_from');

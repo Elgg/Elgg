@@ -32,7 +32,7 @@ class ElggApiKey extends ElggObject {
 	 * {@inheritDoc}
 	 * @see ElggEntity::delete()
 	 */
-	public function delete($recursive = true) {
+	public function delete(bool $recursive = true): bool {
 		$public_key = $this->public_key;
 		
 		$result = parent::delete($recursive);
@@ -66,7 +66,7 @@ class ElggApiKey extends ElggObject {
 	 *
 	 * @return null|string
 	 */
-	public function getPublicKey() {
+	public function getPublicKey(): ?string {
 		return $this->public_key;
 	}
 	
@@ -89,7 +89,7 @@ class ElggApiKey extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function generateKeys() {
+	public function generateKeys(): bool {
 		
 		$keys = _elgg_services()->apiUsersTable->createApiUser();
 		if (empty($keys)) {
@@ -109,7 +109,7 @@ class ElggApiKey extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function regenerateKeys() {
+	public function regenerateKeys(): bool {
 		$current_public = $this->getPublicKey();
 		
 		if (!$this->generateKeys()) {
@@ -127,7 +127,7 @@ class ElggApiKey extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function hasActiveKeys() {
+	public function hasActiveKeys(): bool {
 		$keys = $this->getKeys();
 		if (empty($keys)) {
 			return false;
@@ -141,7 +141,7 @@ class ElggApiKey extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function enableKeys() {
+	public function enableKeys(): bool {
 		return _elgg_services()->apiUsersTable->enableAPIUser($this->getPublicKey());
 	}
 	
@@ -150,7 +150,7 @@ class ElggApiKey extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function disableKeys() {
+	public function disableKeys(): bool {
 		return _elgg_services()->apiUsersTable->disableAPIUser($this->getPublicKey());
 	}
 }

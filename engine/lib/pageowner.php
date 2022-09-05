@@ -9,18 +9,18 @@
  * @return int The current page owner guid (0 if none).
  * @since 1.8.0
  */
-function elgg_get_page_owner_guid() {
+function elgg_get_page_owner_guid(): int {
 	return _elgg_services()->pageOwner->getPageOwnerGuid();
 }
 
 /**
  * Gets the owner entity for the current page.
  *
- * @return \ElggEntity|false The current page owner or false if none.
+ * @return \ElggEntity|null The current page owner or null if none.
  *
  * @since 1.8.0
  */
-function elgg_get_page_owner_entity() {
+function elgg_get_page_owner_entity(): ?\ElggEntity {
 	return _elgg_services()->pageOwner->getPageOwnerEntity();
 }
 
@@ -31,11 +31,11 @@ function elgg_get_page_owner_entity() {
  * @return void
  * @since 1.8.0
  */
-function elgg_set_page_owner_guid($guid) {
+function elgg_set_page_owner_guid(int $guid): void {
 	$page_owner = _elgg_services()->pageOwner;
 	
-	if ((int) $guid >= 0) {
-		$page_owner->setPageOwnerGuid((int) $guid);
+	if ($guid >= 0) {
+		$page_owner->setPageOwnerGuid($guid);
 		return;
 	}
 	

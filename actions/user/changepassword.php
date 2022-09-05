@@ -6,10 +6,10 @@
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Exceptions\LoginException;
 
-$password = get_input('password1', null, false);
-$password_repeat = get_input('password2', null, false);
+$password = (string) get_input('password1', '', false);
+$password_repeat = (string) get_input('password2', '', false);
 $user_guid = (int) get_input('u');
-$code = get_input('c');
+$code = (string) get_input('c');
 
 try {
 	elgg()->accounts->assertValidPassword($password);

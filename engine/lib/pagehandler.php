@@ -24,7 +24,7 @@
  *
  * @return \Elgg\Router\Route
  */
-function elgg_register_route($name, array $params = []) {
+function elgg_register_route(string $name, array $params = []): \Elgg\Router\Route {
 	return _elgg_services()->routes->register($name, $params);
 }
 
@@ -35,7 +35,7 @@ function elgg_register_route($name, array $params = []) {
  *
  * @return void
  */
-function elgg_unregister_route($name) {
+function elgg_unregister_route(string $name): void {
 	_elgg_services()->routes->unregister($name);
 }
 
@@ -128,9 +128,9 @@ function elgg_get_current_url(): string {
  * @param string $name       Route name
  * @param array  $parameters Parameters
  *
- * @return false|string
+ * @return string|null
  */
-function elgg_generate_url($name, array $parameters = []) {
+function elgg_generate_url(string $name, array $parameters = []): ?string {
 	return _elgg_services()->routes->generateUrl($name, $parameters);
 }
 
@@ -154,9 +154,9 @@ function elgg_generate_url($name, array $parameters = []) {
  * @param string     $subresource Subresource name
  * @param array      $parameters  URL query elements
  *
- * @return false|string
+ * @return string|null
  */
-function elgg_generate_entity_url(ElggEntity $entity, $resource = 'view', $subresource = null, array $parameters = []) {
+function elgg_generate_entity_url(ElggEntity $entity, string $resource = 'view', string $subresource = null, array $parameters = []): ?string {
 
 	$make_route_name = function ($type, $subtype) use ($resource, $subresource) {
 		$route_parts = [
@@ -182,7 +182,7 @@ function elgg_generate_entity_url(ElggEntity $entity, $resource = 'view', $subre
 		}
 	}
 
-	return false;
+	return null;
 }
 
 /**
@@ -194,10 +194,9 @@ function elgg_generate_entity_url(ElggEntity $entity, $resource = 'view', $subre
  *
  * @return string
  */
-function elgg_generate_action_url($action, array $query = [], $add_csrf_tokens = true) {
+function elgg_generate_action_url(string $action, array $query = [], bool $add_csrf_tokens = true): string {
 
-	$url = "action/$action";
-	$url = elgg_http_add_url_query_elements($url, $query);
+	$url = elgg_http_add_url_query_elements("action/{$action}", $query);
 	$url = elgg_normalize_url($url);
 
 	if ($add_csrf_tokens) {
@@ -222,7 +221,7 @@ function elgg_generate_action_url($action, array $query = [], $add_csrf_tokens =
  *
  * @return \Elgg\Http\OkResponse
  */
-function elgg_ok_response($content = '', $message = '', $forward_url = null, int $status_code = ELGG_HTTP_OK) {
+function elgg_ok_response($content = '', string|array $message = '', $forward_url = null, int $status_code = ELGG_HTTP_OK): \Elgg\Http\OkResponse {
 	if ($message) {
 		elgg_register_success_message($message);
 	}
@@ -243,7 +242,7 @@ function elgg_ok_response($content = '', $message = '', $forward_url = null, int
  *
  * @return \Elgg\Http\ErrorResponse
  */
-function elgg_error_response($message = '', $forward_url = REFERRER, int $status_code = ELGG_HTTP_BAD_REQUEST) {
+function elgg_error_response(string|array $message = '', $forward_url = REFERRER, int $status_code = ELGG_HTTP_BAD_REQUEST): \Elgg\Http\ErrorResponse {
 	if ($message) {
 		elgg_register_error_message($message);
 		
@@ -267,6 +266,6 @@ function elgg_error_response($message = '', $forward_url = REFERRER, int $status
  *
  * @return \Elgg\Http\RedirectResponse
  */
-function elgg_redirect_response($forward_url = REFERRER, int $status_code = ELGG_HTTP_FOUND) {
+function elgg_redirect_response($forward_url = REFERRER, int $status_code = ELGG_HTTP_FOUND): \Elgg\Http\RedirectResponse {
 	return new Elgg\Http\RedirectResponse($forward_url, $status_code);
 }

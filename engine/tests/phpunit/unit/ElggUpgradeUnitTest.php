@@ -99,16 +99,16 @@ class ElggUpgradeUnitTest extends \Elgg\UnitTestCase {
 	public function testSetStarttime() {
 		$upgrade = new ElggUpgrade();
 		
-		$started = $upgrade->setStartTime();
+		$upgrade->setStartTime();
 		
+		$started = $upgrade->getStartTime();
 		$this->assertNotEmpty($started);
-		$this->assertEquals($started, $upgrade->getStartTime());
 		$this->assertEquals($started, $upgrade->start_time);
 		
 		// try to override the start time, this is not allowed
-		$override = $upgrade->setStartTime($started + 3600);
+		$upgrade->setStartTime($started + 3600);
+		$override = $upgrade->getStartTime();
 		$this->assertEquals($started, $override);
-		$this->assertEquals($started, $upgrade->getStartTime());
 		$this->assertEquals($started, $upgrade->start_time);
 	}
 	

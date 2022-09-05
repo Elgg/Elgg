@@ -264,8 +264,6 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->assertEquals(elgg_normalize_url('small.jpg'), $obj->getIconURL('small'));
 		// Test mixed params
 		$this->assertEquals($obj->getIconURL('small'), $obj->getIconURL(['size' => 'small']));
-		// Test bad param
-		$this->assertEquals(elgg_normalize_url('medium.jpg'), $obj->getIconURL(new \stdClass));
 
 		elgg_unregister_plugin_hook_handler('entity:icon:url', 'object', $handler, 99999);
 	}

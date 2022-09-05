@@ -247,7 +247,7 @@ class ElggBatch implements \Countable, \Iterator {
 	 *
 	 * @return bool
 	 */
-	private function getNextResultsChunk() {
+	private function getNextResultsChunk(): bool {
 
 		// always reset results.
 		$this->results = [];
@@ -325,7 +325,7 @@ class ElggBatch implements \Countable, \Iterator {
 	 * @param bool $increment Set to false when deleting data
 	 * @return void
 	 */
-	public function setIncrementOffset(bool $increment = true) {
+	public function setIncrementOffset(bool $increment = true): void {
 		$this->incrementOffset = $increment;
 	}
 
@@ -334,7 +334,7 @@ class ElggBatch implements \Countable, \Iterator {
 	 * @param int $size Size
 	 * @return void
 	 */
-	public function setChunkSize(int $size = 25) {
+	public function setChunkSize(int $size = 25): void {
 		$this->chunkSize = $size;
 	}
 	
@@ -346,7 +346,7 @@ class ElggBatch implements \Countable, \Iterator {
 	 *
 	 * @return void
 	 */
-	public function reportFailure(int $num = 1) {
+	public function reportFailure(int $num = 1): void {
 		$this->reportedFailures += $num;
 	}
 	

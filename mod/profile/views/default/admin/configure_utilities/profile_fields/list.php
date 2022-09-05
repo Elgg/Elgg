@@ -11,8 +11,8 @@ if (empty($fieldlist) && $fieldlist !== '0') {
 $item_list = '';
 $fieldlistarray = explode(',', $fieldlist);
 foreach ($fieldlistarray as $name) {
-	$title = elgg_get_config("admin_defined_profile_$name");
-	$type = elgg_get_config("admin_defined_profile_type_$name");
+	$title = elgg_get_config("admin_defined_profile_{$name}");
+	$type = elgg_get_config("admin_defined_profile_type_{$name}");
 	if (!$title || !$type) {
 		continue;
 	}
@@ -27,10 +27,10 @@ foreach ($fieldlistarray as $name) {
 		'text' => elgg_view_icon('delete-alt'),
 		'confirm' => elgg_echo('deleteconfirm'),
 	]);
-	$type = elgg_echo("profile:field:$type");
-	$drag_arrow = elgg_view_icon('arrows-alt', 'elgg-state-draggable');
+	$type = elgg_echo("profile:field:{$type}");
+	$drag_arrow = elgg_view_icon('arrows-alt', ['class' => 'elgg-state-draggable']);
 	
-	$text = "<b>{$title}</b> [$type] $url";
+	$text = "<b>{$title}</b> [{$type}] {$url}";
 	$item_list .= elgg_format_element('li', [
 		'id' => $name,
 	], $drag_arrow . ' ' . $text);

@@ -41,7 +41,7 @@ function elgg_get_entities_from_relationship_count(array $options = []) {
  * @return string
  * @since 1.8.0
  */
-function elgg_list_entities_from_relationship_count($options) {
+function elgg_list_entities_from_relationship_count(array $options): string {
 	return elgg_list_entities($options, 'elgg_get_entities_from_relationship_count');
 }
 
@@ -72,7 +72,7 @@ function elgg_get_relationships(array $options = []) {
  * @return string The list of relationships
  * @since 3.2.0
  */
-function elgg_list_relationships($options) {
+function elgg_list_relationships(array $options): string {
 	$defaults = [
 		'limit' => (int) max(get_input('limit', max(25, _elgg_services()->config->default_limit)), 0),
 		'offset' => (int) max(get_input('reloff', 0), 0),

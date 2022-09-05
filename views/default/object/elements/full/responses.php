@@ -18,7 +18,7 @@ if ($responses === null && ($entity instanceof \ElggEntity)) {
 	$responses = elgg_view_comments($entity, (bool) elgg_extract('show_add_form', $vars, true));
 }
 
-if (!$responses) {
+if (empty($responses)) {
 	return;
 }
 

@@ -58,7 +58,7 @@ class UserCapabilities {
 	 *
 	 * @return bool
 	 */
-	public function canBypassPermissionsCheck($user_guid = 0) {
+	public function canBypassPermissionsCheck(int $user_guid = 0): bool {
 		if ($this->session->getIgnoreAccess()) {
 			// Checking ignored access first to avoid infinite loops,
 			// when trying to fetch a user by guid
@@ -84,7 +84,7 @@ class UserCapabilities {
 	 *
 	 * @return bool Whether this entity is editable by the given user.
 	 */
-	public function canEdit(ElggEntity $entity, $user_guid = 0) {
+	public function canEdit(ElggEntity $entity, int $user_guid = 0): bool {
 		if ($this->canBypassPermissionsCheck($user_guid)) {
 			return true;
 		}
@@ -143,7 +143,7 @@ class UserCapabilities {
 	 * @return bool Whether this entity is deletable by the given user.
 	 * @since 1.11
 	 */
-	public function canDelete(ElggEntity $entity, $user_guid = 0) {
+	public function canDelete(ElggEntity $entity, int $user_guid = 0): bool {
 		if ($this->canBypassPermissionsCheck($user_guid)) {
 			return true;
 		}
@@ -174,7 +174,7 @@ class UserCapabilities {
 	 * @return bool Whether this river item should be considered deletable by the given user.
 	 * @since 2.3
 	 */
-	public function canDeleteRiverItem(ElggRiverItem $item, $user_guid = 0) {
+	public function canDeleteRiverItem(ElggRiverItem $item, int $user_guid = 0): bool {
 		if ($this->canBypassPermissionsCheck($user_guid)) {
 			return true;
 		}
@@ -201,7 +201,7 @@ class UserCapabilities {
 	 *
 	 * @return bool
 	 */
-	public function canEditAnnotation(ElggEntity $entity, $user_guid = 0, ElggAnnotation $annotation = null) {
+	public function canEditAnnotation(ElggEntity $entity, int $user_guid = 0, ElggAnnotation $annotation = null): bool {
 		if (!$annotation) {
 			return false;
 		}
@@ -250,7 +250,7 @@ class UserCapabilities {
 	 *
 	 * @return bool
 	 */
-	public function canWriteToContainer(ElggEntity $entity, string $type, string $subtype, int $user_guid = 0) {
+	public function canWriteToContainer(ElggEntity $entity, string $type, string $subtype, int $user_guid = 0): bool {
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {
@@ -304,7 +304,7 @@ class UserCapabilities {
 	 *
 	 * @return bool
 	 */
-	public function canComment(ElggEntity $entity, $user_guid = 0) {
+	public function canComment(ElggEntity $entity, int $user_guid = 0): bool {
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {
@@ -341,14 +341,7 @@ class UserCapabilities {
 	 *
 	 * @return bool
 	 */
-	public function canAnnotate(ElggEntity $entity, $user_guid = 0, $annotation_name = '') {
-		if ($annotation_name === null || $annotation_name === false) {
-			// accepting these for BC
-			$annotation_name = '';
-		} elseif (!is_string($annotation_name)) {
-			throw new InvalidArgumentException(__METHOD__ . ' expects \$annotation_name to be a string');
-		}
-
+	public function canAnnotate(ElggEntity $entity, int $user_guid = 0, string $annotation_name = ''): bool {
 		if ($this->canBypassPermissionsCheck($user_guid)) {
 			return true;
 		}
@@ -385,7 +378,7 @@ class UserCapabilities {
 	 *
 	 * @return bool
 	 */
-	public function canDownload(ElggFile $entity, $user_guid = 0, $default = true) {
+	public function canDownload(ElggFile $entity, int $user_guid = 0, bool $default = true): bool {
 		if ($this->canBypassPermissionsCheck($user_guid)) {
 			return true;
 		}

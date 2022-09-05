@@ -172,7 +172,7 @@ class RouteMatchingUnitTest extends \Elgg\UnitTestCase {
 	}
 	
 	public function testGenerateURLForUnknownRoute() {
-		$this->assertFalse(elgg_generate_url('unknown:route'));
+		$this->assertNull(elgg_generate_url('unknown:route'));
 	}
 
 	public function testResourceParameterIsNotReplaceableByQueryElements() {
@@ -279,7 +279,7 @@ class RouteMatchingUnitTest extends \Elgg\UnitTestCase {
 			'foo2' => 'right',
 		]);
 		
-		$this->assertFalse($url);
+		$this->assertNull($url);
 	}
 
 	public function testCanGenerateActionUrl() {

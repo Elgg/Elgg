@@ -2,6 +2,7 @@
 
 namespace Elgg\Integration;
 
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Values;
 
 /**
@@ -248,6 +249,11 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		$this->assertEquals($events_fired, 2);
 
 		_elgg_services()->session->setLoggedInUser($old_user);
+	}
+
+	public function testDeleteRiverThrowsException() {
+		$this->expectException(InvalidArgumentException::class);
+		elgg_delete_river(['invalid' => false]);
 	}
 
 	public function testElggCreateRiverItemMissingRequiredParam() {

@@ -104,11 +104,6 @@ abstract class ElggEntitySubscriptionsIntegrationTestCase extends IntegrationTes
 	
 	public function invalidMethodsProvider() {
 		return [
-			[new \stdClass()],
-			[1],
-			[1.0],
-			[true],
-			[false],
 			[''],
 			[['']],
 			[[1]],

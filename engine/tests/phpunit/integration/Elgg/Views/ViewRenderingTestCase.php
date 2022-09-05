@@ -99,14 +99,16 @@ abstract class ViewRenderingTestCase extends IntegrationTestCase {
 		list($component, $subview) = explode('/', $view, 2);
 
 		switch ($component) {
-			case 'form' :
-				$prev_viewtype = elgg_set_viewtype($viewtype);
+			case 'forms' :
+				$prev_viewtype = elgg_get_viewtype();
+				elgg_set_viewtype($viewtype);
 				$output = elgg_view_form($subview, $component_vars, $vars);
 				elgg_set_viewtype($prev_viewtype);
 				return $output;
 
-			case 'resource' :
-				$prev_viewtype = elgg_set_viewtype($viewtype);
+			case 'resources' :
+				$prev_viewtype = elgg_get_viewtype();
+				elgg_set_viewtype($viewtype);
 				$output = elgg_view_resource($subview, $vars);
 				elgg_set_viewtype($prev_viewtype);
 				return $output;

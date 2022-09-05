@@ -321,6 +321,6 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 
 		$this->assertFalse(elgg_delete_annotations($options));
 		$options['guid'] = -1;
-		$this->assertNull(elgg_delete_annotations($options));
+		$this->assertTrue(elgg_delete_annotations($options));
 	}
 }

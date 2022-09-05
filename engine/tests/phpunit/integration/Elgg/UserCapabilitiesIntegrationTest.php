@@ -437,48 +437,6 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		});
 	}
 
-	public function testCanAnnotateThrowsExceptionForNameArgumentSetToAnnotationInstance() {
-		$owner = $this->createUser();
-		$entity = $this->createObject([
-			'owner_guid' => $owner->guid,
-		]);
-
-		$this->expectException(InvalidArgumentException::class);
-		$entity->canAnnotate($owner->guid, new ElggAnnotation());
-	}
-
-	public function testCanAnnotateThrowsExceptionForNameArgumentSetToArray() {
-		$owner = $this->createUser();
-		$entity = $this->createObject([
-			'owner_guid' => $owner->guid,
-		]);
-
-		$this->expectException(InvalidArgumentException::class);
-		$entity->canAnnotate($owner->guid, []);
-	}
-
-	public function testCanAnnotateThrowsExceptionForNameArgumentSetToInteger() {
-		$owner = $this->createUser();
-		$entity = $this->createObject([
-			'owner_guid' => $owner->guid,
-		]);
-
-		$this->expectException(InvalidArgumentException::class);
-		$entity->canAnnotate($owner->guid, 5);
-	}
-
-	public function testCanAnnotateThrowsExceptionForNameArgumentSetToClosure() {
-		$owner = $this->createUser();
-		$entity = $this->createObject([
-			'owner_guid' => $owner->guid,
-		]);
-
-		$this->expectException(InvalidArgumentException::class);
-		$entity->canAnnotate($owner->guid, function() {
-			return 'annotation_name';
-		});
-	}
-
 	public function testCanAnnotateByDefault() {
 
 		$viewer = $this->createUser();
@@ -491,14 +449,10 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($entity->canAnnotate($owner->guid));
 		$this->assertTrue($entity->canAnnotate($owner->guid, 'baz'));
 		$this->assertTrue($entity->canAnnotate($owner->guid, ''));
-		$this->assertTrue($entity->canAnnotate($owner->guid, false)); //BC
-		$this->assertTrue($entity->canAnnotate($owner->guid, null)); //BC
 		// All other users can annotate
 		$this->assertTrue($entity->canAnnotate($viewer->guid));
 		$this->assertTrue($viewer->canAnnotate($viewer->guid, 'baz'));
 		$this->assertTrue($viewer->canAnnotate($viewer->guid, ''));
-		$this->assertTrue($viewer->canAnnotate($viewer->guid, false)); //BC
-		$this->assertTrue($viewer->canAnnotate($viewer->guid, null)); //BC
 	}
 
 	public function testCanOverrideAnnotationPermissionsWithAHookByAnnotationName() {
