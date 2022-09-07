@@ -6,10 +6,10 @@
 /**
  * Prepare discussion topic form variables
  *
- * @param ElggObject $topic Topic object if editing
+ * @param \ElggDiscussion $topic Topic object if editing
  * @return array
  */
-function discussion_prepare_form_vars($topic = null) {
+function discussion_prepare_form_vars(\ElggDiscussion $topic = null): array {
 	// input names => defaults
 	$values = [
 		'title' => '',

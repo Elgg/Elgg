@@ -8,17 +8,14 @@
  *
  * @return int
  */
-function thewire_latest_guid() {
+function thewire_latest_guid(): int {
 	$post = elgg_get_entities([
 		'type' => 'object',
 		'subtype' => 'thewire',
 		'limit' => 1,
 	]);
-	if ($post) {
-		return $post[0]->guid;
-	}
 	
-	return 0;
+	return $post ? $post[0]->guid : 0;
 }
 
 /**
@@ -32,9 +29,9 @@ function thewire_latest_guid() {
  *
  * @return false|int
  */
-function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method = "site") {
+function thewire_save_post(string $text, int $userid, int $access_id, int $parent_guid = 0, string $method = 'site'): int|false {
 	
-	$post = new ElggWire();
+	$post = new \ElggWire();
 	$post->owner_guid = $userid;
 	$post->access_id = $access_id;
 
@@ -94,7 +91,7 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
  *
  * @return array
  */
-function thewire_get_hashtags($text) {
+function thewire_get_hashtags(string $text): array {
 	// beginning of text or white space followed by hashtag
 	// hashtag must begin with # and contain at least one character not digit, space, or punctuation
 	$matches = [];
@@ -110,7 +107,7 @@ function thewire_get_hashtags($text) {
  *
  * @return string
  */
-function thewire_filter($text) {
+function thewire_filter(string $text): string {
 	$text = ' ' . $text;
 
 	// email addresses

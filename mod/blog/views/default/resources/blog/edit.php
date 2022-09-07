@@ -11,12 +11,13 @@ $vars['entity'] = $blog;
 
 elgg_push_entity_breadcrumbs($blog);
 
-$revision = elgg_extract('revision', $vars);
+$revision_id = (int) elgg_extract('revision', $vars);
+$revision = null;
 
 $title = elgg_echo('edit:object:blog');
 
-if ($revision) {
-	$revision = elgg_get_annotation_from_id((int) $revision);
+if ($revision_id) {
+	$revision = elgg_get_annotation_from_id($revision_id);
 	$vars['revision'] = $revision;
 	$title .= ' ' . elgg_echo('blog:edit_revision_notice');
 

@@ -11,7 +11,7 @@
  *
  * @return \ElggMenuItem|false
  */
-function groups_get_group_leave_menu_item(\ElggGroup $group, $user = null) {
+function groups_get_group_leave_menu_item(\ElggGroup $group, \ElggUser $user = null) {
 	
 	if (!$user instanceof \ElggUser) {
 		$user = elgg_get_logged_in_user_entity();
@@ -45,7 +45,7 @@ function groups_get_group_leave_menu_item(\ElggGroup $group, $user = null) {
  *
  * @return \ElggMenuItem|false
  */
-function groups_get_group_join_menu_item(\ElggGroup $group, $user = null) {
+function groups_get_group_join_menu_item(\ElggGroup $group, \ElggUser $user = null) {
 	
 	if (!$user instanceof \ElggUser) {
 		$user = elgg_get_logged_in_user_entity();
@@ -87,7 +87,7 @@ function groups_get_group_join_menu_item(\ElggGroup $group, $user = null) {
  *
  * @return mixed ElggGroups or guids depending on $return_guids, or count
  */
-function groups_get_invited_groups($user_guid, $return_guids = false, $options = []) {
+function groups_get_invited_groups(int $user_guid, bool $return_guids = false, array $options = []) {
 
 	$groups = elgg_call(ELGG_IGNORE_ACCESS, function() use ($user_guid, $options) {
 		$defaults = [

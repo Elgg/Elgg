@@ -14,20 +14,20 @@
  * @link https://www.php.net/manual/en/wrappers.php.php#wrappers.php.input
  * @internal
  */
-function elgg_ws_get_post_data() {
+function elgg_ws_get_post_data(): string|false {
 	return file_get_contents('php://input');
 }
 
 /**
  * This function extracts the various header variables needed for the HMAC PAM
  *
- * @return stdClass Containing all the values
+ * @return \stdClass Containing all the values
  *
  * @throws APIException Detailing any error
  * @internal
  */
-function elgg_ws_get_and_validate_api_headers() {
-	$result = new stdClass;
+function elgg_ws_get_and_validate_api_headers(): \stdClass {
+	$result = new \stdClass;
 
 	$result->method = _elgg_services()->request->getMethod();
 	// Only allow these methods
@@ -103,7 +103,7 @@ function elgg_ws_get_and_validate_api_headers() {
  * @throws APIException if an algorithm is not supported.
  * @internal
  */
-function elgg_ws_map_api_hash(string $algo) {
+function elgg_ws_map_api_hash(string $algo): string {
 	$algo = strtolower($algo);
 	
 	$supported_algos = [
@@ -138,7 +138,7 @@ function elgg_ws_map_api_hash(string $algo) {
  *
  * @internal
  */
-function elgg_ws_calculate_hmac($algo, $time, $nonce, $api_key, $secret_key, $get_variables, $post_hash = '') {
+function elgg_ws_calculate_hmac(string $algo, string $time, string $nonce, string $api_key, string $secret_key, string $get_variables, string $post_hash = ''): string {
 
 	elgg_log("HMAC Parts: $algo, $time, $api_key, $secret_key, $get_variables, $post_hash");
 
@@ -165,7 +165,7 @@ function elgg_ws_calculate_hmac($algo, $time, $nonce, $api_key, $secret_key, $ge
  *
  * @internal
  */
-function elgg_ws_calculate_posthash($postdata, $algo) {
+function elgg_ws_calculate_posthash(string $postdata, string $algo): string {
 	$ctx = hash_init(elgg_ws_map_api_hash($algo));
 
 	hash_update($ctx, $postdata);
@@ -183,7 +183,7 @@ function elgg_ws_calculate_posthash($postdata, $algo) {
  *
  * @internal
  */
-function elgg_ws_cache_hmac_check_replay($hmac) {
+function elgg_ws_cache_hmac_check_replay(string $hmac): bool {
 	if (_elgg_services()->hmacCacheTable->loadHMAC($hmac)) {
 		return true;
 	}

@@ -8,11 +8,10 @@
  * Send email out to the address and request a confirmation.
  *
  * @param int $user_guid The user's GUID
- * @return mixed
+ * @return array|bool
  */
-function uservalidationbyemail_request_validation($user_guid) {
+function uservalidationbyemail_request_validation(int $user_guid): array|bool {
 
-	$user_guid = (int) $user_guid;
 	$user = get_user($user_guid);
 	if (!$user instanceof ElggUser) {
 		return false;

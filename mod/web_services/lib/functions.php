@@ -40,31 +40,29 @@ use Elgg\WebServices\Di\ApiRegistrationService;
  * @param bool     $assoc             (optional) If set to true, the callback function will receive a single argument
  *                                    that contains an associative array of parameter => input pairs for the method.
  *
- * @return bool
+ * @return void
  */
 function elgg_ws_expose_function(
-	$method,
+	string $method,
 	$function,
-	$parameters = null,
-	$description = "",
-	$call_method = "GET",
-	$require_api_auth = false,
-	$require_user_auth = false,
-	$assoc = false
-) {
+	array $parameters = [],
+	string $description = '',
+	string $call_method = 'GET',
+	bool $require_api_auth = false,
+	bool $require_user_auth = false,
+	bool $assoc = false
+): void {
 
 	ApiRegistrationService::instance()->registerApiMethod(
 		$method,
 		$function,
-		$parameters ?: [],
+		$parameters,
 		$description,
 		$call_method,
 		$require_api_auth,
 		$require_user_auth,
 		$assoc
 	);
-
-	return true;
 }
 
 /**
@@ -73,7 +71,7 @@ function elgg_ws_expose_function(
  * @param string $method The api name that was exposed
  * @return void
  */
-function elgg_ws_unexpose_function($method) {
+function elgg_ws_unexpose_function(string $method): void {
 	ApiRegistrationService::instance()->unregisterApiMethod($method);
 }
 
@@ -85,7 +83,7 @@ function elgg_ws_unexpose_function($method) {
  *
  * @return bool Depending on success
  */
-function elgg_ws_register_service_handler($handler, $function) {
+function elgg_ws_register_service_handler(string $handler, $function): bool {
 	
 	$route_config = [
 		'path' => "/services/api/{$handler}/{view}/{segments?}",
@@ -125,6 +123,6 @@ function elgg_ws_register_service_handler($handler, $function) {
  * @param string $handler web services type
  * @return void
  */
-function elgg_ws_unregister_service_handler($handler) {
+function elgg_ws_unregister_service_handler(string $handler): void {
 	elgg_unregister_route("default:service:{$handler}");
 }

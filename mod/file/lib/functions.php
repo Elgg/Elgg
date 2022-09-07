@@ -8,7 +8,7 @@
  *
  * @return void
  */
-function file_register_toggle() {
+function file_register_toggle(): void {
 
 	if (get_input('list_type', 'list') == 'list') {
 		$list_type = 'gallery';
@@ -32,11 +32,11 @@ function file_register_toggle() {
 /**
  * Prepare the upload/edit form variables
  *
- * @param ElggFile $file the file to edit
+ * @param \ElggFile $file the file to edit
  *
  * @return array
  */
-function file_prepare_form_vars($file = null) {
+function file_prepare_form_vars(\ElggFile $file = null): array {
 
 	// input names => defaults
 	$values = [
