@@ -104,7 +104,7 @@ class HtmlFormatter {
 	 *
 	 * @return string The output string with formatted links
 	 */
-	public function parseUrls($text) {
+	public function parseUrls(string $text): string {
 
 		$linkify = new \Misd\Linkify\Linkify();
 
@@ -169,7 +169,7 @@ class HtmlFormatter {
 	 *
 	 * @see elgg_format_element()
 	 */
-	public function formatAttributes(array $attrs = []) {
+	public function formatAttributes(array $attrs = []): string {
 		if (empty($attrs)) {
 			return '';
 		}
@@ -226,56 +226,32 @@ class HtmlFormatter {
 	/**
 	 * Format an HTML element
 	 *
-	 * @param string|array $tag_name   The element tagName. e.g. "div". This will not be validated.
-	 *                                 All function arguments can be given as a single array: The array will be used
-	 *                                 as $attributes, except for the keys "#tag_name", "#text", and "#options", which
-	 *                                 will be extracted as the other arguments.
+	 * @param string $tag_name   The element tagName. e.g. "div". This will not be validated.
 	 *
-	 * @param array        $attributes The element attributes.
+	 * @param array  $attributes The element attributes.
 	 *
-	 * @param string       $text       The contents of the element. Assumed to be HTML unless encode_text is true.
+	 * @param string $text       The contents of the element. Assumed to be HTML unless encode_text is true.
 	 *
-	 * @param array        $options    Options array with keys:
+	 * @param array  $options    Options array with keys:
 	 *
-	 *                                 - encode_text   => (bool, default false) If true, $text will be HTML-escaped. Already-escaped entities
-	 *                                 will not be double-escaped.
+	 *                           - encode_text   => (bool, default false) If true, $text will be HTML-escaped. Already-escaped entities
+	 *                           will not be double-escaped.
 	 *
-	 *                                 - double_encode => (bool, default false) If true, the $text HTML escaping will be allowed to double
-	 *                                 encode HTML entities: '&times;' will become '&amp;times;'
+	 *                           - double_encode => (bool, default false) If true, the $text HTML escaping will be allowed to double
+	 *                           encode HTML entities: '&times;' will become '&amp;times;'
 	 *
-	 *                                 - is_void       => (bool) If given, this determines whether the function will return just the open tag.
-	 *                                 Otherwise this will be determined by the tag name according to this list:
-	 *                                 http://www.w3.org/html/wg/drafts/html/master/single-page.html#void-elements
+	 *                           - is_void       => (bool) If given, this determines whether the function will return just the open tag.
+	 *                           Otherwise this will be determined by the tag name according to this list:
+	 *                           http://www.w3.org/html/wg/drafts/html/master/single-page.html#void-elements
 	 *
-	 *                                 - is_xml        => (bool, default false) If true, void elements will be formatted like "<tag />"
+	 *                           - is_xml        => (bool, default false) If true, void elements will be formatted like "<tag />"
 	 *
 	 * @return string
 	 * @since 1.9.0
 	 * @throws InvalidArgumentException
 	 */
-	public function formatElement(string|array $tag_name, array $attributes = [], string $text = '', array $options = []) {
-		if (is_array($tag_name)) {
-			$args = $tag_name;
-
-			if ($attributes !== [] || $text !== '' || $options !== []) {
-				throw new InvalidArgumentException('If $tag_name is an array, the other arguments must not be set');
-			}
-
-			if (isset($args['#tag_name'])) {
-				$tag_name = $args['#tag_name'];
-			}
-			if (isset($args['#text'])) {
-				$text = $args['#text'];
-			}
-			if (isset($args['#options'])) {
-				$options = $args['#options'];
-			}
-
-			unset($args['#tag_name'], $args['#text'], $args['#options']);
-			$attributes = $args;
-		}
-
-		if (!is_string($tag_name) || $tag_name === '') {
+	public function formatElement(string $tag_name, array $attributes = [], string $text = '', array $options = []): string {
+		if ($tag_name === '') {
 			throw new InvalidArgumentException('$tag_name is required');
 		}
 

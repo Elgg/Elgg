@@ -63,11 +63,7 @@ foreach ($tags as $tag) {
 	if (is_scalar($tag) && elgg_strlen($tag) > 0) {
 		$params['value'] = $tag;
 		$tag_view = elgg_view('output/tag', $params);
-		$list_items[] = elgg_format_element([
-			'#tag_name' => 'span',
-			'#text' => $tag_view,
-			'class' => $item_class,
-		]);
+		$list_items[] = elgg_format_element('span', ['class' => $item_class], $tag_view);
 	}
 }
 
@@ -75,8 +71,4 @@ if (empty($list_items)) {
 	return;
 }
 
-echo elgg_format_element([
-	'#tag_name' => 'div',
-	'#text' => $icon . implode($separator, $list_items),
-	'class' => $list_class,
-]);
+echo elgg_format_element('div', ['class' => $list_class], $icon . implode($separator, $list_items));

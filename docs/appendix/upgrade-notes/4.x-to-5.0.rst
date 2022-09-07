@@ -88,7 +88,7 @@ Lib functions function parameters
 * ``elgg_entity_gatekeeper()`` now requires a ``int`` for ``$guid`` and a ``string`` for ``$type`` and a ``string`` for ``$subtype`` and a ``bool`` for ``$validate_can_edit``
 * ``elgg_extract()`` now requires a ``bool`` for ``$strict``
 * ``elgg_format_bytes()`` now requires an ``int`` for ``$size`` and ``$precision``
-* ``elgg_format_element()`` now requires a ``string|array`` for ``$tag_name`` and a ``string`` for ``$text``
+* ``elgg_format_element()`` now requires a ``string`` for ``$tag_name`` and a ``string`` for ``$text``
 * ``elgg_format_html()`` now requires a ``string`` for ``$html``
 * ``elgg_get_config()`` now requires a ``string`` for ``$name``
 * ``elgg_get_download_url()`` now requires a ``bool`` for ``$use_cookie`` and a ``string`` for ``$expires``
