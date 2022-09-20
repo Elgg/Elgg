@@ -17,7 +17,8 @@ class ElggMessage extends ElggObject {
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
-		$this->attributes['subtype'] = "messages";
+		$this->attributes['access_id'] = ACCESS_PRIVATE;
+		$this->attributes['subtype'] = 'messages';
 	}
 	
 	/**

@@ -60,16 +60,6 @@ return [
 		],
 	],
 	'hooks' => [
-		'container_permissions_check' => [
-			'object' => [
-				'Elgg\Messages\Permissions::canEditContainer' => [],
-			],
-		],
-		'permissions_check' => [
-			'object' => [
-				'Elgg\Messages\Permissions::canEdit' => [],
-			],
-		],
 		'register' => [
 			'menu:page' => [
 				'Elgg\Messages\Menus\Page::register' => [],
