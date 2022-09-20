@@ -57,7 +57,7 @@ class ElggUser extends \ElggEntity {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getType() {
+	public function getType(): string {
 		return 'user';
 	}
 	
@@ -69,7 +69,7 @@ class ElggUser extends \ElggEntity {
 	 *
 	 * @return string
 	 */
-	public function getLanguage($fallback = null) {
+	public function getLanguage(string $fallback = null): string {
 		if (!empty($this->language)) {
 			return $this->language;
 		}
@@ -125,7 +125,7 @@ class ElggUser extends \ElggEntity {
 	 *
 	 * @return bool
 	 */
-	public function ban($reason = '') {
+	public function ban(string $reason = ''): bool {
 
 		if (!$this->canEdit()) {
 			return false;
@@ -148,7 +148,7 @@ class ElggUser extends \ElggEntity {
 	 *
 	 * @return bool
 	 */
-	public function unban() {
+	public function unban(): bool {
 		
 		if (!$this->canEdit()) {
 			return false;
@@ -171,7 +171,7 @@ class ElggUser extends \ElggEntity {
 	 *
 	 * @return bool
 	 */
-	public function isBanned() {
+	public function isBanned(): bool {
 		return $this->banned === 'yes';
 	}
 
@@ -180,7 +180,7 @@ class ElggUser extends \ElggEntity {
 	 *
 	 * @return bool
 	 */
-	public function isAdmin() {
+	public function isAdmin(): bool {
 		return $this->admin === 'yes';
 	}
 
@@ -189,7 +189,7 @@ class ElggUser extends \ElggEntity {
 	 *
 	 * @return bool
 	 */
-	public function makeAdmin() {
+	public function makeAdmin(): bool {
 		
 		if ($this->isAdmin()) {
 			return true;
@@ -211,7 +211,7 @@ class ElggUser extends \ElggEntity {
 	 *
 	 * @return bool
 	 */
-	public function removeAdmin() {
+	public function removeAdmin(): bool {
 
 		if (!$this->isAdmin()) {
 			return true;
@@ -233,7 +233,7 @@ class ElggUser extends \ElggEntity {
 	 *
 	 * @return void
 	 */
-	public function setLastLogin() {
+	public function setLastLogin(): void {
 		
 		$time = $this->getCurrentTime()->getTimestamp();
 		
@@ -252,7 +252,7 @@ class ElggUser extends \ElggEntity {
 	 *
 	 * @return void
 	 */
-	public function setLastAction() {
+	public function setLastAction(): void {
 		
 		$time = $this->getCurrentTime()->getTimestamp();
 		
@@ -276,7 +276,7 @@ class ElggUser extends \ElggEntity {
 	 *
 	 * @return bool|null Null means status was not set for this user.
 	 */
-	public function isValidated() {
+	public function isValidated(): ?bool {
 		if (!isset($this->validated)) {
 			return null;
 		}
@@ -349,7 +349,7 @@ class ElggUser extends \ElggEntity {
 	 *
 	 * @return int
 	 */
-	public function getOwnerGUID() {
+	public function getOwnerGUID(): int {
 		if ($this->owner_guid == 0) {
 			return $this->guid;
 		}
@@ -376,7 +376,7 @@ class ElggUser extends \ElggEntity {
 	 * @return void
 	 * @since 1.10.0
 	 */
-	public function setPassword($password) {
+	public function setPassword(string $password): void {
 		$this->setMetadata('password_hash', _elgg_services()->passwords->generateHash($password));
 	}
 
@@ -390,7 +390,7 @@ class ElggUser extends \ElggEntity {
 	 * @return bool
 	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
-	public function setNotificationSetting(string $method, bool $enabled = true, string $purpose = 'default') {
+	public function setNotificationSetting(string $method, bool $enabled = true, string $purpose = 'default'): bool {
 		if (empty($purpose)) {
 			throw new ElggInvalidArgumentException(__METHOD__ . ' requires $purpose to be set to a non-empty string');
 		}
@@ -413,7 +413,7 @@ class ElggUser extends \ElggEntity {
 	 * @return array
 	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
-	public function getNotificationSettings(string $purpose = 'default') {
+	public function getNotificationSettings(string $purpose = 'default'): array {
 		if (empty($purpose)) {
 			throw new ElggInvalidArgumentException(__METHOD__ . ' requires $purpose to be set to a non-empty string');
 		}
@@ -437,7 +437,7 @@ class ElggUser extends \ElggEntity {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function delete($recursive = true) {
+	public function delete(bool $recursive = true): bool {
 		$result = parent::delete($recursive);
 		if ($result) {
 			// cleanup remember me cookie records

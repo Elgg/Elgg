@@ -534,9 +534,9 @@ class EntityIconService {
 	 * @param \ElggEntity $entity Entity that owns the icon
 	 * @param mixed       $params A string defining the size of the icon (e.g. tiny, small, medium, large)
 	 *                            or an array of parameters including 'size'
-	 * @return string|void
+	 * @return string
 	 */
-	public function getIconURL(\ElggEntity $entity, $params = []) {
+	public function getIconURL(\ElggEntity $entity, string|array $params = []): string {
 		if (is_array($params)) {
 			$size = elgg_extract('size', $params, 'medium');
 		} else {
@@ -566,6 +566,8 @@ class EntityIconService {
 		if ($url) {
 			return elgg_normalize_url($url);
 		}
+		
+		return '';
 	}
 
 	/**

@@ -50,11 +50,11 @@ class UsersTable {
 	 *
 	 * @param string $username The user's username
 	 *
-	 * @return \ElggUser|false Depending on success
+	 * @return \ElggUser|null Depending on success
 	 */
-	public function getByUsername($username) {
+	public function getByUsername(string $username): ?\ElggUser {
 		if (empty($username)) {
-			return false;
+			return null;
 		}
 
 		// Fixes #6052. Username is frequently sniffed from the path info, which,
@@ -62,7 +62,7 @@ class UsersTable {
 		// this is harmless.
 		$username = rawurldecode($username);
 		if (empty($username)) {
-			return false;
+			return null;
 		}
 
 		$logged_in_user = elgg_get_logged_in_user_entity();
@@ -82,7 +82,7 @@ class UsersTable {
 			'limit' => 1,
 		]);
 
-		return $users ? $users[0] : false;
+		return $users ? $users[0] : null;
 	}
 
 	/**
@@ -91,7 +91,7 @@ class UsersTable {
 	 * @param string $email Email address
 	 * @return \ElggUser[]
 	 */
-	public function getByEmail($email) {
+	public function getByEmail(string $email): array {
 		if (!$email) {
 			return [];
 		}
@@ -108,7 +108,7 @@ class UsersTable {
 			'limit' => 1,
 		]);
 
-		return $users ? : [];
+		return $users ?: [];
 	}
 
 	/**

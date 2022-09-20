@@ -60,7 +60,7 @@ use Elgg\Menu\UnpreparedMenu;
  *
  * @return bool
  */
-function elgg_set_viewtype($viewtype = '') {
+function elgg_set_viewtype(string $viewtype = ''): bool {
 	return _elgg_services()->views->setViewtype($viewtype);
 }
 
@@ -73,7 +73,7 @@ function elgg_set_viewtype($viewtype = '') {
  * @return string The viewtype
  * @see elgg_set_viewtype()
  */
-function elgg_get_viewtype() {
+function elgg_get_viewtype(): string {
 	return _elgg_services()->views->getViewtype();
 }
 
@@ -88,7 +88,7 @@ function elgg_get_viewtype() {
  * @return void
  * @since 1.7.2
  */
-function elgg_register_viewtype_fallback($viewtype) {
+function elgg_register_viewtype_fallback(string $viewtype): void {
 	_elgg_services()->views->registerViewtypeFallback($viewtype);
 }
 
@@ -104,7 +104,7 @@ function elgg_register_viewtype_fallback($viewtype) {
  * @return void
  * @since 1.8.3
  */
-function elgg_register_ajax_view($view): void {
+function elgg_register_ajax_view(string $view): void {
 	_elgg_services()->ajax->registerView($view);
 }
 
@@ -116,7 +116,7 @@ function elgg_register_ajax_view($view): void {
  * @return void
  * @since 1.8.3
  */
-function elgg_unregister_ajax_view($view): void {
+function elgg_unregister_ajax_view(string $view): void {
 	_elgg_services()->ajax->unregisterView($view);
 }
 
@@ -134,7 +134,7 @@ function elgg_unregister_ajax_view($view): void {
  *
  * @return void
  */
-function elgg_set_view_location($view, $location, $viewtype = '') {
+function elgg_set_view_location(string $view, string $location, string $viewtype = ''): void {
 	_elgg_services()->views->setViewDir($view, $location, $viewtype);
 }
 
@@ -149,7 +149,7 @@ function elgg_set_view_location($view, $location, $viewtype = '') {
  *
  * @return bool
  */
-function elgg_view_exists($view, $viewtype = '', $recurse = true) {
+function elgg_view_exists(string $view, string $viewtype = '', bool $recurse = true): bool {
 	return _elgg_services()->views->viewExists($view, $viewtype, $recurse);
 }
 
@@ -176,11 +176,7 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
  *
  * @return string The parsed view
  */
-function elgg_view($view, $vars = [], $viewtype = '') {
-	if (func_num_args() == 5) {
-		elgg_log(__FUNCTION__ . ' now has only 3 arguments. Update your usage.', 'ERROR');
-		$viewtype = func_get_arg(4);
-	}
+function elgg_view(string $view, array $vars = [], string $viewtype = ''): string {
 	return _elgg_services()->views->renderView($view, $vars, $viewtype);
 }
 
@@ -207,7 +203,7 @@ function elgg_view($view, $vars = [], $viewtype = '') {
  * @return void
  * @since 1.7.0
  */
-function elgg_extend_view($view, $view_extension, $priority = 501) {
+function elgg_extend_view(string $view, string $view_extension, int $priority = 501): void {
 	_elgg_services()->views->extendView($view, $view_extension, $priority);
 }
 
@@ -220,7 +216,7 @@ function elgg_extend_view($view, $view_extension, $priority = 501) {
  * @return bool
  * @since 1.7.2
  */
-function elgg_unextend_view($view, $view_extension) {
+function elgg_unextend_view(string $view, string $view_extension): bool {
 	return _elgg_services()->views->unextendView($view, $view_extension);
 }
 
@@ -234,7 +230,7 @@ function elgg_unextend_view($view, $view_extension) {
  * @return string[] Keys returned are view priorities.
  * @since 2.3
  */
-function elgg_get_view_extensions($view) {
+function elgg_get_view_extensions(string $view): array {
 	$list = _elgg_services()->views->getViewList($view);
 	unset($list[500]);
 	return $list;
@@ -259,7 +255,7 @@ function elgg_get_view_extensions($view) {
  * @return string The contents of the page
  * @since  1.8
  */
-function elgg_view_page($title, $body, $page_shell = 'default', $vars = []) {
+function elgg_view_page(string $title, string|array $body, string $page_shell = 'default', array $vars = []): string {
 	
 	if (elgg_is_xhr() && get_input('_elgg_ajax_list')) {
 		// requested by ajaxed pagination
@@ -332,8 +328,8 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = []) {
  * @return string
  * @throws PageNotFoundException
  */
-function elgg_view_resource($name, array $vars = []) {
-	$view = "resources/$name";
+function elgg_view_resource(string $name, array $vars = []): string {
+	$view = "resources/{$name}";
 
 	if (elgg_view_exists($view)) {
 		return _elgg_services()->views->renderView($view, $vars);
@@ -343,7 +339,7 @@ function elgg_view_resource($name, array $vars = []) {
 		return _elgg_services()->views->renderView($view, $vars, 'default');
 	}
 
-	_elgg_services()->logger->error("The view $view is missing.");
+	_elgg_services()->logger->error("The view {$view} is missing.");
 
 	// only works for default viewtype
 	throw new PageNotFoundException();
@@ -377,7 +373,7 @@ function elgg_view_resource($name, array $vars = []) {
  *                            based on the current route.
  * @return string
  */
-function elgg_view_layout($layout_name, $vars = []) {
+function elgg_view_layout(string $layout_name, array $vars = []): string {
 	$timer = _elgg_services()->timer;
 	if (!$timer->hasEnded(['build page'])) {
 		$timer->end(['build page']);
@@ -393,7 +389,7 @@ function elgg_view_layout($layout_name, $vars = []) {
 	$vars['layout'] = $layout_name;
 
 	$layout_views = [
-		"page/layouts/$layout_name",
+		"page/layouts/{$layout_name}",
 		"page/layouts/default",
 	];
 
@@ -465,9 +461,9 @@ function elgg_view_layout($layout_name, $vars = []) {
  * @return string
  * @since 1.8.0
  */
-function elgg_view_menu($menu, array $vars = []) {
+function elgg_view_menu($menu, array $vars = []): string {
 
-	$menu_view = elgg_extract('menu_view', $vars);
+	$menu_view = (string) elgg_extract('menu_view', $vars);
 	unset($vars['menu_view']);
 
 	if (is_string($menu)) {
@@ -485,7 +481,7 @@ function elgg_view_menu($menu, array $vars = []) {
 
 	$views = [
 		$menu_view,
-		"navigation/menu/$name",
+		"navigation/menu/{$name}",
 		'navigation/menu/default',
 	];
 
@@ -494,6 +490,8 @@ function elgg_view_menu($menu, array $vars = []) {
 			return elgg_view($view, $params);
 		}
 	}
+	
+	return '';
 }
 
 /**
@@ -513,9 +511,9 @@ function elgg_view_menu($menu, array $vars = []) {
  *                            'item_view'         Alternative view used to render this entity
  *                            'register_rss_link' Register the rss link availability (default: depending on full_view)
  *
- * @return false|string HTML to display or false
+ * @return string HTML to display
  */
-function elgg_view_entity(\ElggEntity $entity, array $vars = []) {
+function elgg_view_entity(\ElggEntity $entity, array $vars = []): string {
 
 	$defaults = [
 		'full_view' => true,
@@ -533,9 +531,9 @@ function elgg_view_entity(\ElggEntity $entity, array $vars = []) {
 	$entity_subtype = $entity->getSubtype();
 
 	$entity_views = [
-		elgg_extract('item_view', $vars, ''),
-		"$entity_type/$entity_subtype",
-		"$entity_type/default",
+		(string) elgg_extract('item_view', $vars, ''),
+		"{$entity_type}/{$entity_subtype}",
+		"{$entity_type}/default",
 	];
 
 	$contents = '';
@@ -564,7 +562,7 @@ function elgg_view_entity(\ElggEntity $entity, array $vars = []) {
  *
  * @return string HTML to display or false
  */
-function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = []) {
+function elgg_view_entity_icon(\ElggEntity $entity, string $size = 'medium', array $vars = []): string {
 
 	$vars['entity'] = $entity;
 	$vars['size'] = $size;
@@ -574,11 +572,11 @@ function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = []
 	$subtype = $entity->getSubtype();
 
 	$contents = '';
-	if (elgg_view_exists("icon/$entity_type/$subtype")) {
-		$contents = elgg_view("icon/$entity_type/$subtype", $vars);
+	if (elgg_view_exists("icon/{$entity_type}/{$subtype}")) {
+		$contents = elgg_view("icon/{$entity_type}/{$subtype}", $vars);
 	}
-	if (empty($contents) && elgg_view_exists("icon/$entity_type/default")) {
-		$contents = elgg_view("icon/$entity_type/default", $vars);
+	if (empty($contents) && elgg_view_exists("icon/{$entity_type}/default")) {
+		$contents = elgg_view("icon/{$entity_type}/default", $vars);
 	}
 	if (empty($contents)) {
 		$contents = elgg_view("icon/default", $vars);
@@ -601,9 +599,9 @@ function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = []
  * @param array           $vars       Variable array for view.
  *                                    'item_view' Alternative view used to render an annotation
  *
- * @return string|false Rendered annotation
+ * @return string Rendered annotation
  */
-function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = []) {
+function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = []): string {
 	$defaults = [
 		'full_view' => true,
 	];
@@ -613,12 +611,12 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = []) {
 
 	$name = $annotation->name;
 	if (empty($name)) {
-		return false;
+		return '';
 	}
 
 	$annotation_views = [
-		elgg_extract('item_view', $vars, ''),
-		"annotation/$name",
+		(string) elgg_extract('item_view', $vars, ''),
+		"annotation/{$name}",
 		"annotation/default",
 	];
 
@@ -658,7 +656,7 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = []) {
  *
  * @return string The rendered list of entities
  */
-function elgg_view_entity_list($entities, array $vars = []) {
+function elgg_view_entity_list(array $entities, array $vars = []): string {
 	$offset = (int) get_input('offset', 0);
 
 	// list type can be passed as request parameter
@@ -676,9 +674,9 @@ function elgg_view_entity_list($entities, array $vars = []) {
 
 	$vars = array_merge($defaults, $vars);
 
-	if (!$vars["limit"] && !$vars["offset"]) {
+	if (!$vars['limit'] && !$vars['offset']) {
 		// no need for pagination if listing is unlimited
-		$vars["pagination"] = false;
+		$vars['pagination'] = false;
 	}
 
 	$view = "page/components/{$vars['list_type']}";
@@ -707,7 +705,7 @@ function elgg_view_entity_list($entities, array $vars = []) {
  *
  * @return string The list of annotations
  */
-function elgg_view_annotation_list($annotations, array $vars = []) {
+function elgg_view_annotation_list(array $annotations, array $vars = []): string {
 	// list type can be passed as request parameter
 	$list_type = get_input('list_type', 'list');
 
@@ -723,9 +721,9 @@ function elgg_view_annotation_list($annotations, array $vars = []) {
 
 	$vars = array_merge($defaults, $vars);
 
-	if (!$vars["limit"] && !$vars["offset"]) {
+	if (!$vars['limit'] && !$vars['offset']) {
 		// no need for pagination if listing is unlimited
-		$vars["pagination"] = false;
+		$vars['pagination'] = false;
 	}
 
 	$view = "page/components/{$vars['list_type']}";
@@ -754,7 +752,7 @@ function elgg_view_annotation_list($annotations, array $vars = []) {
  *
  * @return string The list of relationships
  */
-function elgg_view_relationship_list($relationships, array $vars = []) {
+function elgg_view_relationship_list(array $relationships, array $vars = []): string {
 	// list type can be passed as request parameter
 	$list_type = get_input('list_type', 'list');
 
@@ -797,9 +795,9 @@ function elgg_view_relationship_list($relationships, array $vars = []) {
  * @param array             $vars         Variable array for view.
  *                                        'item_view'  Alternative view used to render a relationship
  *
- * @return string|false Rendered relationship
+ * @return string Rendered relationship
  */
-function elgg_view_relationship(\ElggRelationship $relationship, array $vars = []) {
+function elgg_view_relationship(\ElggRelationship $relationship, array $vars = []): string {
 	$defaults = [
 		'full_view' => true,
 	];
@@ -809,12 +807,12 @@ function elgg_view_relationship(\ElggRelationship $relationship, array $vars = [
 	
 	$name = $relationship->relationship;
 	if (empty($name)) {
-		return false;
+		return '';
 	}
 	
 	$relationship_views = [
-		elgg_extract('item_view', $vars, ''),
-		"relationship/$name",
+		(string) elgg_extract('item_view', $vars, ''),
+		"relationship/{$name}",
 		"relationship/default",
 	];
 	
@@ -839,7 +837,7 @@ function elgg_view_relationship(\ElggRelationship $relationship, array $vars = [
  *
  * @return string The HTML (etc)
  */
-function elgg_view_title($title, array $vars = []) {
+function elgg_view_title(string $title, array $vars = []): string {
 	$vars['title'] = $title;
 
 	return elgg_view('page/elements/title', $vars);
@@ -856,7 +854,7 @@ function elgg_view_title($title, array $vars = []) {
  * @return string The friendly time HTML
  * @since 1.7.2
  */
-function elgg_view_friendly_time($time, $time_updated = null) {
+function elgg_view_friendly_time($time, $time_updated = null): string {
 	$view = 'output/friendlytime';
 	$vars = [
 		'time' => $time,
@@ -878,16 +876,11 @@ function elgg_view_friendly_time($time, $time_updated = null) {
  * @param bool        $add_comment Include a form to add comments?
  * @param array       $vars        Variables to pass to comment view
  *
- * @return string|false Rendered comments or false on failure
+ * @return string Rendered comments
  */
-function elgg_view_comments($entity, $add_comment = true, array $vars = []) {
-	
-	if (!$entity instanceof \ElggEntity) {
-		return false;
-	}
-	
+function elgg_view_comments(\ElggEntity $entity, bool $add_comment = true, array $vars = []): string {
 	if (!$entity->hasCapability('commentable')) {
-		return false;
+		return '';
 	}
 
 	$vars['entity'] = $entity;
@@ -895,7 +888,7 @@ function elgg_view_comments($entity, $add_comment = true, array $vars = []) {
 	$vars['class'] = elgg_extract('class', $vars, "{$entity->getSubtype()}-comments");
 
 	$output = elgg_trigger_plugin_hook('comments', $entity->getType(), $vars, false);
-	if ($output !== false) {
+	if (is_string($output)) {
 		return $output;
 	}
 	
@@ -920,7 +913,7 @@ function elgg_view_comments($entity, $add_comment = true, array $vars = []) {
  * @return string
  * @since 1.8.0
  */
-function elgg_view_image_block($image, $body, $vars = []) {
+function elgg_view_image_block(string $image, string $body, array $vars = []): string {
 	$vars['image'] = $image;
 	$vars['body'] = $body;
 	return elgg_view('page/components/image_block', $vars);
@@ -941,7 +934,7 @@ function elgg_view_image_block($image, $body, $vars = []) {
  * @return string
  * @since 1.8.0
  */
-function elgg_view_module($type, $title, $body, array $vars = []) {
+function elgg_view_module(string $type, string $title, string $body, array $vars = []): string {
 	$vars['type'] = $type;
 	$vars['title'] = $title;
 	$vars['body'] = $body;
@@ -962,7 +955,7 @@ function elgg_view_module($type, $title, $body, array $vars = []) {
  * @return string
  * @since 3.0.0
  */
-function elgg_view_message($type, $body, array $vars = []) {
+function elgg_view_message(string $type, string $body, array $vars = []): string {
 	$vars['type'] = $type;
 	$vars['body'] = $body;
 	return elgg_view('page/components/message', $vars);
@@ -977,11 +970,7 @@ function elgg_view_message($type, $body, array $vars = []) {
  *                             'register_rss_link' Register the rss link availability (default: false)
  * @return string returns empty string if could not be rendered
  */
-function elgg_view_river_item($item, array $vars = []) {
-
-	if (!($item instanceof \ElggRiverItem)) {
-		return '';
-	}
+function elgg_view_river_item(\ElggRiverItem $item, array $vars = []): string {
 
 	// checking default viewtype since some viewtypes do not have unique views per item (rss)
 	$view = $item->getView();
@@ -1061,7 +1050,7 @@ function elgg_view_river_item($item, array $vars = []) {
  *
  * @return string The complete form
  */
-function elgg_view_form($action, $form_vars = [], $body_vars = []) {
+function elgg_view_form(string $action, array $form_vars = [], array $body_vars = []): string {
 	return _elgg_services()->forms->render($action, $form_vars, $body_vars);
 }
 
@@ -1072,17 +1061,17 @@ function elgg_view_form($action, $form_vars = [], $body_vars = []) {
  * Footer will be rendered using 'elements/forms/footer' view after form body has finished rendering
  *
  * @param string $footer Footer
- * @return bool
+ * @return void
  */
-function elgg_set_form_footer($footer = '') {
-	return _elgg_services()->forms->setFooter($footer);
+function elgg_set_form_footer(string $footer = ''): void {
+	_elgg_services()->forms->setFooter($footer);
 }
 
 /**
  * Returns currently set footer, or false if not in the form rendering stack
- * @return string|false
+ * @return string
  */
-function elgg_get_form_footer() {
+function elgg_get_form_footer(): string {
 	return _elgg_services()->forms->getFooter();
 }
 
@@ -1097,7 +1086,7 @@ function elgg_get_form_footer() {
  * @return array
  * @internal
  */
-function _elgg_split_vars(array $vars = [], array $prefixes = null) {
+function _elgg_split_vars(array $vars = [], array $prefixes = null): array {
 
 	if (!isset($prefixes)) {
 		$prefixes = ['#'];
@@ -1140,7 +1129,7 @@ function _elgg_split_vars(array $vars = [], array $prefixes = null) {
  * @return string
  * @since 2.3
  */
-function elgg_view_field(array $params = []) {
+function elgg_view_field(array $params = []): string {
 
 	if (!empty($params['#html'])) {
 		return $params['#html'];
@@ -1159,7 +1148,7 @@ function elgg_view_field(array $params = []) {
 	$hidden_types = ['hidden', 'securitytoken'];
 	if (in_array($input_type, $hidden_types)) {
 		$params = _elgg_split_vars($params);
-		return elgg_view("input/$input_type", $params['']);
+		return elgg_view("input/{$input_type}", $params['']);
 	}
 
 	$id = elgg_extract('id', $params);
@@ -1218,7 +1207,7 @@ function elgg_view_field(array $params = []) {
 		$input_vars['label_tag'] = 'div';
 		unset($element_vars['label']);
 	}
-	$element_vars['input'] = elgg_view("elements/forms/input", $input_vars);
+	$element_vars['input'] = elgg_view('elements/forms/input', $input_vars);
 
 	return elgg_view('elements/forms/field', $element_vars);
 }
@@ -1235,7 +1224,7 @@ function elgg_view_field(array $params = []) {
  * @see elgg_get_tags()
  * @since 1.7.1
  */
-function elgg_view_tagcloud(array $options = []) {
+function elgg_view_tagcloud(array $options = []): string {
 
 	$type = $subtype = '';
 	if (isset($options['type'])) {
@@ -1246,7 +1235,7 @@ function elgg_view_tagcloud(array $options = []) {
 	}
 
 	$tag_data = elgg_get_tags($options);
-	return elgg_view("output/tagcloud", [
+	return elgg_view('output/tagcloud', [
 		'value' => $tag_data,
 		'type' => $type,
 		'subtype' => $subtype,
@@ -1260,10 +1249,10 @@ function elgg_view_tagcloud(array $options = []) {
  * @param array $vars Additional parameters for the rendering
  *                    'item_view' - Alternative view used to render list items (required if rendering list items that are not entity, annotation, relationship or river)
  *
- * @return false|string
+ * @return string
  * @since 1.8.0
  */
-function elgg_view_list_item($item, array $vars = []) {
+function elgg_view_list_item($item, array $vars = []): string {
 
 	if ($item instanceof \ElggEntity) {
 		return elgg_view_entity($item, $vars);
@@ -1275,7 +1264,7 @@ function elgg_view_list_item($item, array $vars = []) {
 		return elgg_view_relationship($item, $vars);
 	}
 
-	$view = elgg_extract('item_view', $vars);
+	$view = (string) elgg_extract('item_view', $vars);
 	if ($view && elgg_view_exists($view)) {
 		$vars['item'] = $item;
 		return elgg_view($view, $vars);
@@ -1288,26 +1277,13 @@ function elgg_view_list_item($item, array $vars = []) {
  * View an icon glyph
  *
  * @param string $name The specific icon to display
- * @param mixed  $vars The additional classname as a string ('float', 'float-alt' or a custom class)
- *                     or an array of variables (array('class' => 'float')) to pass to the icon view.
+ * @param array  $vars An array of variables (['class' => 'float']) to pass to the icon view.
  *
  * @return string The html for displaying an icon
  * @throws \Elgg\Exceptions\InvalidArgumentException
  */
-function elgg_view_icon($name, $vars = []) {
-	if (empty($vars)) {
-		$vars = [];
-	}
-
-	if (is_string($vars)) {
-		$vars = ['class' => $vars];
-	}
-
-	if (!is_array($vars)) {
-		throw new ElggInvalidArgumentException('$vars needs to be a string or an array');
-	}
-
-	$vars['class'] = elgg_extract_class($vars, "elgg-icon-$name");
+function elgg_view_icon(string $name, array $vars = []): string {
+	$vars['class'] = elgg_extract_class($vars, "elgg-icon-{$name}");
 
 	return elgg_view('output/icon', $vars);
 }
@@ -1317,7 +1293,7 @@ function elgg_view_icon($name, $vars = []) {
  *
  * @return void
  */
-function elgg_register_rss_link() {
+function elgg_register_rss_link(): void {
 	_elgg_services()->config->_elgg_autofeed = true;
 }
 
@@ -1326,7 +1302,7 @@ function elgg_register_rss_link() {
  *
  * @return void
  */
-function elgg_unregister_rss_link() {
+function elgg_unregister_rss_link(): void {
 	_elgg_services()->config->_elgg_autofeed = false;
 }
 
@@ -1336,7 +1312,7 @@ function elgg_unregister_rss_link() {
  * @return bool
  * @internal
  */
-function _elgg_has_rss_link() {
+function _elgg_has_rss_link(): bool {
 	if (_elgg_services()->config->disable_rss) {
 		return false;
 	}
@@ -1352,7 +1328,7 @@ function _elgg_has_rss_link() {
  * @internal
  * @elgg_event_handler boot system
  */
-function elgg_views_boot() {
+function elgg_views_boot(): void {
 	_elgg_services()->viewCacher->registerCoreViews();
 
 	// jQuery and UI must come before require. See #9024
@@ -1404,7 +1380,7 @@ function elgg_views_boot() {
  * @return array
  * @internal
  */
-function _elgg_get_js_site_data() {
+function _elgg_get_js_site_data(): array {
 	
 	$message_delay = (int) elgg_get_config('message_delay');
 	if ($message_delay < 1) {
@@ -1429,7 +1405,7 @@ function _elgg_get_js_site_data() {
  * @return array
  * @internal
  */
-function _elgg_get_js_page_data() {
+function _elgg_get_js_page_data(): array {
 	$data = elgg_trigger_plugin_hook('elgg.data', 'page', null, []);
 	if (!is_array($data)) {
 		elgg_log('"elgg.data" plugin hook handlers must return an array. Returned ' . gettype($data) . '.', 'ERROR');
@@ -1475,10 +1451,10 @@ function _elgg_get_js_page_data() {
  * @param array  $vars     View vars
  * @param string $viewtype Temporary viewtype ('' to leave current)
  *
- * @return mixed
+ * @return string
  * @internal
  */
-function _elgg_view_under_viewtype($view, $vars, $viewtype) {
+function _elgg_view_under_viewtype(string $view, array $vars, string $viewtype): string {
 	$current_view_type = null;
 	if ($viewtype) {
 		$current_view_type = elgg_get_viewtype();

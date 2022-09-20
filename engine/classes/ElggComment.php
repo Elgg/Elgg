@@ -26,7 +26,7 @@ class ElggComment extends \ElggObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function delete($recursive = true) {
+	public function delete(bool $recursive = true): bool {
 		$result = parent::delete($recursive);
 		
 		if ($result) {
@@ -57,7 +57,7 @@ class ElggComment extends \ElggObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function canComment($user_guid = 0, $default = null) {
+	public function canComment(int $user_guid = 0, bool $default = null): bool {
 		if ($this->getLevel() >= (int) elgg_get_config('comments_max_depth')) {
 			return false;
 		}

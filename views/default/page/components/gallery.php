@@ -43,7 +43,7 @@ foreach ($items as $item) {
 	$item_view_vars = $vars;
 	$item_view_vars['list_item_index'] = $index;
 	$item_view = elgg_view_list_item($item, $item_view_vars);
-	if (!$item_view) {
+	if (empty($item_view)) {
 		continue;
 	}
 

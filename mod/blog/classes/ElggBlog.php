@@ -15,7 +15,7 @@ class ElggBlog extends ElggObject {
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
-		$this->attributes['subtype'] = "blog";
+		$this->attributes['subtype'] = 'blog';
 	}
 
 	/**
@@ -30,7 +30,7 @@ class ElggBlog extends ElggObject {
 	 *
 	 * @since 1.8.0
 	 */
-	public function canComment($user_guid = 0, $default = null) {
+	public function canComment(int $user_guid = 0, bool $default = null): bool {
 		$result = parent::canComment($user_guid, $default);
 		if (!$result) {
 			return $result;
@@ -50,10 +50,9 @@ class ElggBlog extends ElggObject {
 	 * @return string
 	 * @since 1.9.0
 	 */
-	public function getExcerpt($length = 250) {
+	public function getExcerpt(int $length = 250): string {
 		$excerpt = $this->excerpt ?: $this->description;
 		
 		return elgg_get_excerpt($excerpt, $length);
 	}
-
 }

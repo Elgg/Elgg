@@ -34,21 +34,21 @@ class ElggTempFile extends ElggFile {
 	 *
 	 * @return \ElggTempDiskFilestore
 	 */
-	protected function getFilestore() {
+	protected function getFilestore(): \ElggTempDiskFilestore {
 		return _elgg_services()->temp_filestore;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function transfer($owner_guid, $filename = null) {
+	public function transfer(int $owner_guid, string $filename = null): bool {
 		return false;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function canDownload($user_guid = 0, $default = false) {
+	public function canDownload(int $user_guid = 0, bool $default = false): bool {
 		return false;
 	}
 
@@ -71,7 +71,7 @@ class ElggTempFile extends ElggFile {
 	 *
 	 * @throws \Elgg\Exceptions\Filesystem\IOException
 	 */
-	public function save() : bool {
+	public function save(): bool {
 		throw new IOException("Temp files can't be saved to the database");
 	}
 

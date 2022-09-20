@@ -81,7 +81,7 @@ class HMACCacheTable {
 	 *
 	 * @return int
 	 */
-	public function getTTL() : int {
+	public function getTTL(): int {
 		return $this->ttl;
 	}
 	
@@ -109,7 +109,7 @@ class HMACCacheTable {
 	 *
 	 * @return string|null
 	 */
-	public function loadHMAC(string $hmac) : ?string {
+	public function loadHMAC(string $hmac): ?string {
 		$select = Select::fromTable($this->table);
 		$select->select('*');
 		$select->where($select->compare('hmac', '=', $hmac, ELGG_VALUE_STRING));

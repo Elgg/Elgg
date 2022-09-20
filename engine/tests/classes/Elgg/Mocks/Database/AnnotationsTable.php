@@ -31,7 +31,7 @@ class AnnotationsTable extends DbAnnotations {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get($id): ?\ElggAnnotation {
+	public function get(int $id): ?\ElggAnnotation {
 		if (empty($this->rows[$id])) {
 			return false;
 		}
@@ -65,7 +65,7 @@ class AnnotationsTable extends DbAnnotations {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function create(ElggAnnotation $annotation, \ElggEntity $entity) {
+	public function create(ElggAnnotation $annotation, \ElggEntity $entity): int|bool {
 		self::$iterator++;
 		$id = self::$iterator;
 
@@ -100,7 +100,7 @@ class AnnotationsTable extends DbAnnotations {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function update(ElggAnnotation $annotation) {
+	public function update(ElggAnnotation $annotation): bool {
 		$id = $annotation->id;
 		if (!isset($this->rows[$id])) {
 			return false;
@@ -137,7 +137,7 @@ class AnnotationsTable extends DbAnnotations {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function delete(ElggAnnotation $annotation) {
+	public function delete(ElggAnnotation $annotation): bool {
 		parent::delete($annotation);
 
 		if (!isset($this->rows[$annotation->id])) {

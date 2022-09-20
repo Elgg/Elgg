@@ -71,7 +71,7 @@ class ElggAnnotation extends \ElggExtender {
 	 *
 	 * @return bool
 	 */
-	public function delete() {
+	public function delete(): bool {
 		return _elgg_services()->annotationsTable->delete($this);
 	}
 
@@ -81,7 +81,7 @@ class ElggAnnotation extends \ElggExtender {
 	 * @return bool
 	 * @since 1.8
 	 */
-	public function disable() {
+	public function disable(): bool {
 		return _elgg_services()->annotationsTable->disable($this);
 	}
 
@@ -91,7 +91,7 @@ class ElggAnnotation extends \ElggExtender {
 	 * @return bool
 	 * @since 1.8
 	 */
-	public function enable() {
+	public function enable(): bool {
 		return _elgg_services()->annotationsTable->enable($this);
 	}
 
@@ -102,10 +102,8 @@ class ElggAnnotation extends \ElggExtender {
 	 *
 	 * @return bool
 	 */
-	public function canEdit($user_guid = 0) {
-		$entity = $this->getEntity();
-
-		return _elgg_services()->userCapabilities->canEditAnnotation($entity, $user_guid, $this);
+	public function canEdit(int $user_guid = 0): bool {
+		return _elgg_services()->userCapabilities->canEditAnnotation($this->getEntity(), $user_guid, $this);
 	}
 
 	/**

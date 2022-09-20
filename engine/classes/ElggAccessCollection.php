@@ -71,9 +71,9 @@ class ElggAccessCollection extends ElggData {
 
 	/**
 	 * Returns owner entity of the collection
-	 * @return \ElggEntity|false
+	 * @return \ElggEntity|null
 	 */
-	public function getOwnerEntity() {
+	public function getOwnerEntity(): ?\ElggEntity {
 		return _elgg_services()->entityTable->get($this->owner_guid);
 	}
 
@@ -81,7 +81,7 @@ class ElggAccessCollection extends ElggData {
 	 * Get readable access level name for this collection
 	 * @return string
 	 */
-	public function getDisplayName() {
+	public function getDisplayName(): string {
 
 		$filter = function($name = null) {
 			if (!isset($name)) {
@@ -111,7 +111,7 @@ class ElggAccessCollection extends ElggData {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function save() : bool {
+	public function save(): bool {
 		if ($this->id > 0) {
 			return _elgg_services()->accessCollections->rename($this->id, $this->name);
 		} else {
@@ -122,7 +122,7 @@ class ElggAccessCollection extends ElggData {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function delete() {
+	public function delete(): bool {
 		return _elgg_services()->accessCollections->delete($this->id);
 	}
 
@@ -133,8 +133,8 @@ class ElggAccessCollection extends ElggData {
 	 *
 	 * @return bool
 	 */
-	public function canEdit($user_guid = null) {
-		return _elgg_services()->accessCollections->canEdit($this->id, (int) $user_guid);
+	public function canEdit(int $user_guid = null): bool {
+		return _elgg_services()->accessCollections->canEdit($this->id, $user_guid);
 	}
 
 	/**
@@ -153,7 +153,7 @@ class ElggAccessCollection extends ElggData {
 	 * @param int $member_guid GUID of the user
 	 * @return bool
 	 */
-	public function hasMember($member_guid = 0) {
+	public function hasMember(int $member_guid = 0): bool {
 		return _elgg_services()->accessCollections->hasUser($member_guid, $this->id);
 	}
 
@@ -163,7 +163,7 @@ class ElggAccessCollection extends ElggData {
 	 * @param int $member_guid GUID of the user
 	 * @return bool
 	 */
-	public function addMember($member_guid = 0) {
+	public function addMember(int $member_guid = 0): bool {
 		return _elgg_services()->accessCollections->addUser($member_guid, $this->id);
 	}
 
@@ -173,14 +173,14 @@ class ElggAccessCollection extends ElggData {
 	 * @param int $member_guid GUID of the user
 	 * @return bool
 	 */
-	public function removeMember($member_guid = 0) {
+	public function removeMember(int $member_guid = 0): bool {
 		return _elgg_services()->accessCollections->removeUser($member_guid, $this->id);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getURL() {
+	public function getURL(): string {
 		$type = $this->getType();
 		$params = [
 			'access_collection' => $this,
@@ -208,7 +208,7 @@ class ElggAccessCollection extends ElggData {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getSystemLogID() {
+	public function getSystemLogID(): int {
 		return $this->id;
 	}
 
@@ -222,19 +222,18 @@ class ElggAccessCollection extends ElggData {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getType() {
+	public function getType(): string {
 		return 'access_collection';
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getSubtype() {
+	public function getSubtype(): string {
 		if (isset($this->subtype)) {
 			return $this->subtype;
 		}
 		
 		return $this->name;
 	}
-
 }

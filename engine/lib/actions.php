@@ -37,11 +37,11 @@ function elgg_register_action(string $action, string $filename = '', string $acc
  * Unregisters an action
  *
  * @param string $action Action name
- * @return bool
+ * @return void
  * @since 1.8.1
  */
-function elgg_unregister_action(string $action): bool {
-	return _elgg_services()->actions->unregister($action);
+function elgg_unregister_action(string $action): void {
+	_elgg_services()->actions->unregister($action);
 }
 
 /**

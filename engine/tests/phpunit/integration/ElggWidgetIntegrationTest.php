@@ -60,7 +60,12 @@ class ElggWidgetIntegrationTest extends IntegrationTestCase {
 		
 		unset($this->widget->title);
 		
-		$this->assertTrue(elgg_register_widget_type('widget_handler', 'title_from_definition', 'widget_description', ['widget_context']));
+		elgg_register_widget_type([
+			'id' => 'widget_handler',
+			'name' => 'title_from_definition',
+			'description' => 'widget_description',
+			'context' => ['widget_context'],
+		]);
 		$this->assertEquals('title_from_definition', $this->widget->getDisplayName());
 	}
 	
@@ -70,12 +75,10 @@ class ElggWidgetIntegrationTest extends IntegrationTestCase {
 			'setting_1' => 'value_2',
 		];
 		
-		$result = $this->widget->saveSettings($params);
-		$this->assertFalse($result);
+		$this->assertFalse($this->widget->saveSettings($params));
 		
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($params) {
-			$result = $this->widget->saveSettings($params);
-			$this->assertTrue($result);
+			$this->assertTrue($this->widget->saveSettings($params));
 			
 			foreach ($params as $name => $value) {
 				$this->assertEquals($value, $this->widget->$name);
@@ -85,15 +88,12 @@ class ElggWidgetIntegrationTest extends IntegrationTestCase {
 	
 	public function testHandlerRegistration() {
 		$this->assertFalse(elgg_is_widget_type('test_handler'));
-		$this->assertFalse(elgg_unregister_widget_type('test_handler'));
+		elgg_unregister_widget_type('test_handler');
 		
-		$return = elgg_register_widget_type([
-			'id' => 'test_handler',
-		]);
-		$this->assertTrue($return);
+		elgg_register_widget_type(['id' => 'test_handler', 'context' => []]);
 		$this->assertTrue(elgg_is_widget_type('test_handler'));
-		$this->assertTrue(elgg_unregister_widget_type('test_handler'));
 		
+		elgg_unregister_widget_type('test_handler');
 		$this->assertFalse(elgg_is_widget_type('test_handler'));
 	}
 }

@@ -14,7 +14,7 @@ class ElggPlugin extends \ElggPlugin {
 	 *
 	 * @return string
 	 */
-	public function getPath() {
+	public function getPath(): string {
 		// testing plugins can come from custom locations. If folder does not exist fallback to project mod folder
 		if (!is_dir(parent::getPath())) {
 			$alt_path = Paths::project() . 'mod/' . $this->getID();

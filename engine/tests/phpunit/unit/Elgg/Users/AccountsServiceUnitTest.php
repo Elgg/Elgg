@@ -119,6 +119,11 @@ class AccountsServiceUnitTest extends UnitTestCase {
 		$user = $this->createUser();
 		$new_email = uniqid() . '@example.com';
 		
+		elgg_register_route('account:email:confirm', [
+			'path' => '/emailconfirm/{guid}',
+			'controller' => \Elgg\Users\EmailChangeController::class,
+		]); // required for email generation
+		
 		$this->assertTrue(elgg()->accounts->requestNewEmailValidation($user, $new_email));
 	}
 	

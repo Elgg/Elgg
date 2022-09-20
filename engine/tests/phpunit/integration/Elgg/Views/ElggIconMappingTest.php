@@ -17,7 +17,7 @@ class ElggIconMappingTest extends ViewRenderingTestCase {
 	}
 
 	public function testCanViewIcon() {
-		$view = elgg_view_icon('mail', 'custom-class');
+		$view = elgg_view_icon('mail', ['class' => 'custom-class']);
 
 		$this->assertXmlStringEqualsXmlString($view, '<span class="elgg-icon elgg-icon-mail custom-class far fa-envelope"></span>');
 	}

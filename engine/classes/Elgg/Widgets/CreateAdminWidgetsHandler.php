@@ -20,6 +20,11 @@ class CreateAdminWidgetsHandler {
 		$user = $event->getObject();
 	
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
+			if (empty($user->guid)) {
+				// do not create widgets for unsaved entities... probably during unit testing
+				return;
+			}
+			
 			// check if the user already has widgets
 			if (elgg_get_widgets($user->guid, 'admin')) {
 				return;

@@ -322,7 +322,7 @@ class EntityTable {
 	 *                        If given, even an existing entity with the given GUID
 	 *                        will not be returned unless its subtype matches
 	 *
-	 * @return \ElggEntity|false The correct Elgg or custom object based upon entity type and subtype
+	 * @return \ElggEntity|null The correct Elgg or custom object based upon entity type and subtype
 	 */
 	public function get(int $guid, string $type = null, string $subtype = null): ?\ElggEntity {
 		$entity = $this->getFromCache($guid);

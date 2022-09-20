@@ -60,7 +60,7 @@ class ElggSystemMessage {
 	 *
 	 * @return \ElggSystemMessage
 	 */
-	public static function factory(array $options) {
+	public static function factory(array $options): \ElggSystemMessage {
 		$message = new static(elgg_extract('message', $options));
 		unset($options['message']);
 		

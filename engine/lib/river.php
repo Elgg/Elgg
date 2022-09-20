@@ -4,6 +4,8 @@
  * Activity stream functions.
  */
 
+use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
+
 /**
  * Adds an item to the river.
  *
@@ -106,10 +108,10 @@ function elgg_get_river(array $options = []) {
  *
  * @param int $id ID
  *
- * @return ElggRiverItem|false
+ * @return ElggRiverItem|null
  */
-function elgg_get_river_item_from_id(int $id) {
-	return _elgg_services()->riverTable->get($id) ?? false;
+function elgg_get_river_item_from_id(int $id): ?\ElggRiverItem {
+	return _elgg_services()->riverTable->get($id);
 }
 
 /**
@@ -126,11 +128,12 @@ function elgg_get_river_item_from_id(int $id) {
  *
  * @param array $options An options array. {@link elgg_get_river()}
  *
- * @return bool|null true on success, false on failure, null if no metadata to delete.
+ * @return bool true on success, false on failure
+ * @throws \Elgg\Exceptions\InvalidArgumentException
  *
  * @since   1.8.0
  */
-function elgg_delete_river(array $options = []) {
+function elgg_delete_river(array $options = []): bool {
 
 	$required = [
 		'id', 'ids',
@@ -151,7 +154,8 @@ function elgg_delete_river(array $options = []) {
 	}
 
 	if (!$found) {
-		return false;
+		// requirements not met
+		throw new ElggInvalidArgumentException(__METHOD__ . ' requires at least one of the following keys in $options: ' . implode(', ', $required));
 	}
 
 	return elgg_call(ELGG_IGNORE_ACCESS, function() use ($options) {
@@ -163,7 +167,7 @@ function elgg_delete_river(array $options = []) {
 		$count = $river->count();
 	
 		if (!$count) {
-			return;
+			return true;
 		}
 	
 		$success = 0;
@@ -173,7 +177,7 @@ function elgg_delete_river(array $options = []) {
 			}
 		}
 	
-		return $success == $count;
+		return $success === $count;
 	});
 }
 
@@ -188,7 +192,7 @@ function elgg_delete_river(array $options = []) {
  * @return string
  * @since 1.8.0
  */
-function elgg_list_river(array $options = []) {
+function elgg_list_river(array $options = []): string {
 	$defaults = [
 		'offset'     => (int) max(get_input('offset', 0), 0),
 		'limit'      => (int) max(get_input('limit', max(20, _elgg_services()->config->default_limit)), 0),
@@ -203,9 +207,9 @@ function elgg_list_river(array $options = []) {
 		elgg_register_rss_link();
 	}
 	
-	if (!$options["limit"] && !$options["offset"]) {
+	if (!$options['limit'] && !$options['offset']) {
 		// no need for pagination if listing is unlimited
-		$options["pagination"] = false;
+		$options['pagination'] = false;
 	}
 	
 	$options['count'] = false;

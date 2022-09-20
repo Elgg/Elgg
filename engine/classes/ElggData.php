@@ -41,7 +41,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @return \Elgg\Database The database where this data is (will be) stored.
 	 */
-	protected function getDatabase() {
+	protected function getDatabase(): \Elgg\Database {
 		return _elgg_services()->db;
 	}
 
@@ -76,29 +76,29 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @return string
 	 */
-	abstract public function getURL();
+	abstract public function getURL(): string;
 
 	/**
 	 * Save this data to the appropriate database table.
 	 *
 	 * @return bool
 	 */
-	abstract public function save() : bool;
+	abstract public function save(): bool;
 
 	/**
 	 * Delete this data.
 	 *
 	 * @return bool
 	 */
-	abstract public function delete();
+	abstract public function delete(): bool;
 
 	/**
 	 * Returns the UNIX epoch time that this entity was created
 	 *
 	 * @return int UNIX epoch time
 	 */
-	public function getTimeCreated() {
-		return $this->attributes['time_created'];
+	public function getTimeCreated(): int {
+		return (int) $this->attributes['time_created'];
 	}
 
 	/**

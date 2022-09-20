@@ -82,7 +82,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return void
 	 */
-	public function setFilename($filename) {
+	public function setFilename(string $filename): void {
 		$filename = ltrim(Paths::sanitize($filename, false), '/');
 		
 		parent::__set('filename', $filename);
@@ -93,7 +93,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return string
 	 */
-	public function getFilename() {
+	public function getFilename(): string {
 		$filename = parent::__get('filename');
 		if (empty($filename)) {
 			return '';
@@ -108,7 +108,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return string
 	 */
-	public function getFilenameOnFilestore() {
+	public function getFilenameOnFilestore(): string {
 		return $this->getFilestore()->getFilenameOnFilestore($this);
 	}
 
@@ -118,7 +118,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return string|false
 	 */
-	public function getMimeType() {
+	public function getMimeType(): string|false {
 		if ($this->mimetype) {
 			return $this->mimetype;
 		}
@@ -137,10 +137,10 @@ class ElggFile extends ElggObject {
 	 *
 	 * @param string $mimetype The mimetype
 	 *
-	 * @return string
+	 * @return void
 	 */
-	public function setMimeType($mimetype) {
-		return $this->mimetype = $mimetype;
+	public function setMimeType(string $mimetype): void {
+		$this->mimetype = $mimetype;
 	}
 
 	/**
@@ -149,7 +149,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return string 'document', 'audio', 'video', or 'general' if the MIME type was unrecognized
 	 */
-	public function getSimpleType() {
+	public function getSimpleType(): string {
 		if (isset($this->simpletype)) {
 			return $this->simpletype;
 		}
@@ -167,7 +167,7 @@ class ElggFile extends ElggObject {
 	 * @throws IOException
 	 * @throws InvalidParameterException
 	 */
-	public function open($mode) {
+	public function open(string $mode) {
 		if (!$this->getFilename()) {
 			throw new IOException('You must specify a name before opening a file.');
 		}
@@ -196,7 +196,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return false|int
 	 */
-	public function write($data) {
+	public function write(string $data): int|false {
 		return $this->getFilestore()->write($this->handle, $data);
 	}
 
@@ -208,7 +208,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return mixed Data or false
 	 */
-	public function read($length, $offset = 0) {
+	public function read(int $length, int $offset = 0) {
 		return $this->getFilestore()->read($this->handle, $length, $offset);
 	}
 
@@ -217,7 +217,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return false|string The file contents.
 	 */
-	public function grabFile() {
+	public function grabFile(): string|false {
 		return $this->getFilestore()->grabFile($this);
 	}
 
@@ -226,7 +226,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function close() {
+	public function close(): bool {
 		if ($this->getFilestore()->close($this->handle)) {
 			$this->handle = null;
 
@@ -243,7 +243,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function delete($follow_symlinks = true) {
+	public function delete(bool $follow_symlinks = true): bool {
 		$result = $this->getFilestore()->delete($this, $follow_symlinks);
 
 		if ($this->getGUID() && $result) {
@@ -260,7 +260,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return void
 	 */
-	public function seek($position) {
+	public function seek(int $position): void {
 		$this->getFilestore()->seek($this->handle, $position);
 	}
 
@@ -269,7 +269,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return int The file position
 	 */
-	public function tell() {
+	public function tell(): int {
 		return $this->getFilestore()->tell($this->handle);
 	}
 
@@ -278,7 +278,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function setModifiedTime() {
+	public function setModifiedTime(): bool {
 		$filestorename = $this->getFilenameOnFilestore();
 		
 		$modified = touch($filestorename);
@@ -296,7 +296,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return int
 	 */
-	public function getModifiedTime() {
+	public function getModifiedTime(): int {
 		return filemtime($this->getFilenameOnFilestore());
 	}
 
@@ -306,7 +306,7 @@ class ElggFile extends ElggObject {
 	 * @return int
 	 * @since 1.9
 	 */
-	public function getSize() {
+	public function getSize(): int {
 		return $this->getFilestore()->getFileSize($this);
 	}
 
@@ -315,7 +315,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function eof() {
+	public function eof(): bool {
 		return $this->getFilestore()->eof($this->handle);
 	}
 
@@ -324,7 +324,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function exists() {
+	public function exists(): bool {
 		return $this->getFilestore()->exists($this);
 	}
 
@@ -333,7 +333,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return \ElggDiskFilestore
 	 */
-	protected function getFilestore() {
+	protected function getFilestore(): \ElggDiskFilestore {
 		return _elgg_services()->filestore;
 	}
 
@@ -349,7 +349,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function transfer($owner_guid, $filename = null) {
+	public function transfer(int $owner_guid, string $filename = null): bool {
 		if (!$owner_guid) {
 			return false;
 		}
@@ -387,7 +387,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function acceptUploadedFile(UploadedFile $upload) {
+	public function acceptUploadedFile(UploadedFile $upload): bool {
 		if (!$upload->isValid()) {
 			return false;
 		}
@@ -468,7 +468,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function canDownload($user_guid = 0, $default = true) {
+	public function canDownload(int $user_guid = 0, bool $default = true): bool {
 		return _elgg_services()->userCapabilities->canDownload($this, $user_guid, $default);
 	}
 

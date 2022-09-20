@@ -55,7 +55,7 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('Security:InvalidPasswordLengthException', [3]), $response->getContent());
 
-		$this->assertFalse(get_user_by_username($username));
+		$this->assertNull(get_user_by_username($username));
 	}
 
 	public function testRegistrationFailsWithInvalidPassword() {
@@ -84,7 +84,7 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		$hook->assertNumberOfCalls(1);
 		$hook->unregister();
 
-		$this->assertFalse(get_user_by_username($username));
+		$this->assertNull(get_user_by_username($username));
 	}
 
 	public function testRegistrationFailsWithEmptyPassword() {
@@ -101,7 +101,7 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('RegistrationException:EmptyPassword'), $response->getContent());
 
-		$this->assertFalse(get_user_by_username($username));
+		$this->assertNull(get_user_by_username($username));
 	}
 
 	public function testRegistrationFailsWithMismatchingPassword() {
@@ -119,7 +119,7 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('RegistrationException:PasswordMismatch'), $response->getContent());
 
-		$this->assertFalse(get_user_by_username($username));
+		$this->assertNull(get_user_by_username($username));
 	}
 
 	public function testRegistrationFailsWithInvalidUsername() {
@@ -137,7 +137,7 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		//$this->assertEquals(elgg_echo('registerbad'), $response->getContent());
 
-		$this->assertFalse(get_user_by_username('username\r\n'));
+		$this->assertNull(get_user_by_username('username\r\n'));
 	}
 
 	public function testRegistrationFailsWithInvalidUsernameContainingBlacklistChar() {
@@ -155,7 +155,7 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		//$this->assertEquals(elgg_echo('registerbad'), $response->getContent());
 
-		$this->assertFalse(get_user_by_username('username?#'));
+		$this->assertNull(get_user_by_username('username?#'));
 	}
 
 	public function testRegistrationFailsWithShortUsername() {
@@ -173,7 +173,7 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('registration:usernametooshort', [4]), $response->getContent());
 
-		$this->assertFalse(get_user_by_username('abc'));
+		$this->assertNull(get_user_by_username('abc'));
 	}
 
 	public function testRegistrationFailsWithLongUsername() {
@@ -192,7 +192,7 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('registration:usernametoolong', [128]), $response->getContent());
 
-		$this->assertFalse(get_user_by_username($username));
+		$this->assertNull(get_user_by_username($username));
 	}
 
 	public function testRegistrationFailsWithInvalidEmail() {
@@ -210,7 +210,7 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('registration:notemail'), $response->getContent());
 
-		$this->assertFalse(get_user_by_username($username));
+		$this->assertNull(get_user_by_username($username));
 	}
 
 	public function testRegistrationFailsWithExistingEmail() {
@@ -292,7 +292,7 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		$this->assertEquals('Hello', $response->getContent());
 
 		$user = get_user_by_username($username);
-		$this->assertFalse($user);
+		$this->assertNull($user);
 
 		$hook->assertNumberOfCalls(1);
 		$hook->unregister();

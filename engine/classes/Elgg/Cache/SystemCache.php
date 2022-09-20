@@ -49,7 +49,7 @@ class SystemCache {
 	 *
 	 * @return bool
 	 */
-	public function save($type, $data, int $expire_after = null): bool {
+	public function save(string $type, $data, int $expire_after = null): bool {
 		if ($this->isEnabled()) {
 			return $this->cache->save($type, $data, $expire_after);
 		}
@@ -64,7 +64,7 @@ class SystemCache {
 	 *
 	 * @return mixed null if key not found in cache
 	 */
-	public function load($type) {
+	public function load(string $type) {
 		if (!$this->isEnabled()) {
 			return;
 		}
@@ -81,7 +81,7 @@ class SystemCache {
 	 * @param string $type The type of cache to delete
 	 * @return bool
 	 */
-	public function delete($type) {
+	public function delete(string $type) {
 		return $this->cache->delete($type);
 	}
 	

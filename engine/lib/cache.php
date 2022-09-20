@@ -31,7 +31,7 @@ function elgg_reset_system_cache(): void {
  *
  * @return bool
  */
-function elgg_save_system_cache($type, $data, int $expire_after = null): bool {
+function elgg_save_system_cache(string $type, $data, int $expire_after = null): bool {
 	return _elgg_services()->systemCache->save($type, $data, $expire_after);
 }
 
@@ -42,7 +42,7 @@ function elgg_save_system_cache($type, $data, int $expire_after = null): bool {
  *
  * @return mixed null if key not found in cache
  */
-function elgg_load_system_cache($type) {
+function elgg_load_system_cache(string $type) {
 	return _elgg_services()->systemCache->load($type);
 }
 
@@ -53,7 +53,7 @@ function elgg_load_system_cache($type) {
  * @return bool
  * @since 3.0
  */
-function elgg_delete_system_cache($type): bool {
+function elgg_delete_system_cache(string $type): bool {
 	return _elgg_services()->systemCache->delete($type);
 }
 

@@ -11,7 +11,7 @@ if (elgg_is_logged_in()) {
 	$content = elgg_view_form('login', ['ajax' => true]);
 }
 
-echo elgg_view_page(null, [
+echo elgg_view_page('', [
 	'title' => $title,
 	'content' => $content,
 	'filter_id' => 'index',

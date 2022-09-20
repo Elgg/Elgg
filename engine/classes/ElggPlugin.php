@@ -78,7 +78,7 @@ class ElggPlugin extends ElggObject {
 	 * @return ElggPlugin
 	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
-	public static function fromId($plugin_id, $path = null) {
+	public static function fromId(string $plugin_id, string $path = null): \ElggPlugin {
 		if (empty($plugin_id)) {
 			throw new ElggInvalidArgumentException('Plugin ID must be set');
 		}
@@ -107,7 +107,7 @@ class ElggPlugin extends ElggObject {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function save() : bool {
+	public function save(): bool {
 
 		$site = elgg_get_site_entity();
 
@@ -135,7 +135,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return string
 	 */
-	public function getID() {
+	public function getID(): string {
 		return (string) $this->title;
 	}
 
@@ -145,7 +145,7 @@ class ElggPlugin extends ElggObject {
 	 * @return string
 	 * @since 3.0
 	 */
-	public function getDisplayName() {
+	public function getDisplayName(): string {
 		$name = elgg_extract('name', $this->getStaticConfig('plugin', []), '');
 		if (!empty($name)) {
 			return $name;
@@ -162,7 +162,7 @@ class ElggPlugin extends ElggObject {
 	 * @return void
 	 * @internal
 	 */
-	public function setPath($path) {
+	public function setPath(string $path): void {
 		$this->path = Paths::sanitize($path, true);
 	}
 
@@ -171,7 +171,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return string
 	 */
-	public function getPath() {
+	public function getPath(): string {
 		if (isset($this->path)) {
 			return $this->path;
 		}
@@ -186,7 +186,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return string
 	 */
-	protected function getLanguagesPath() {
+	protected function getLanguagesPath(): string {
 		return $this->getPath() . 'languages/';
 	}
 
@@ -201,7 +201,7 @@ class ElggPlugin extends ElggObject {
 	 * @return mixed
 	 * @internal
 	 */
-	public function getStaticConfig($key, $default = null) {
+	public function getStaticConfig(string $key, $default = null) {
 		if ($this->static_config === null) {
 			$this->static_config = [];
 
@@ -242,7 +242,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return int|false
 	 */
-	public function setPriority($priority) {
+	public function setPriority($priority): int|false {
 		$priority = $this->normalizePriority($priority);
 
 		return _elgg_services()->plugins->setPriority($this, $priority);
@@ -1320,14 +1320,14 @@ class ElggPlugin extends ElggObject {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function isCacheable() {
+	public function isCacheable(): bool {
 		return true;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function cache($persist = true) {
+	public function cache(bool $persist = true): void {
 		_elgg_services()->plugins->cache($this);
 
 		parent::cache($persist);
@@ -1336,7 +1336,7 @@ class ElggPlugin extends ElggObject {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function invalidateCache() {
+	public function invalidateCache(): void {
 		
 		_elgg_services()->boot->clearCache();
 		_elgg_services()->plugins->invalidateCache($this->getID());

@@ -82,7 +82,7 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$this->assertTrue($user->delete());
 
 		$user = get_user_by_username($name);
-		$this->assertFalse($user);
+		$this->assertNull($user);
 	}
 
 	public function testGetUserByUsernameAcceptsUrlEncoded() {

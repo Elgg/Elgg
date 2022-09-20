@@ -51,7 +51,7 @@ trait TimeHelpers {
 	 *
 	 * @return int
 	 */
-	public function getRandomCreationTimestamp() : int {
+	public function getRandomCreationTimestamp(): int {
 		$since = $this->create_since ?: time();
 		$until = $this->create_until ?: time();
 		

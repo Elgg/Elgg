@@ -73,7 +73,7 @@ abstract class Seed implements Seedable {
 	 *
 	 * @return int
 	 */
-	final public function getCount() : int {
+	final public function getCount(): int {
 		if ($this->create) {
 			return $this->seeded_counter;
 		}
@@ -93,7 +93,7 @@ abstract class Seed implements Seedable {
 	 *
 	 * @return void
 	 */
-	public function advance(int $step = 1) {
+	public function advance(int $step = 1): void {
 		$this->seeded_counter += $step;
 		
 		$this->progressAdvance($step);
@@ -118,7 +118,7 @@ abstract class Seed implements Seedable {
 	 *
 	 * @return string
 	 */
-	abstract public static function getType() : string;
+	abstract public static function getType(): string;
 	
 	/**
 	 * Get options for elgg_count_entities()
@@ -126,5 +126,5 @@ abstract class Seed implements Seedable {
 	 * @return array
 	 * @see self::getCount()
 	 */
-	abstract protected function getCountOptions() : array;
+	abstract protected function getCountOptions(): array;
 }

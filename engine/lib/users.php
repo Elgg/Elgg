@@ -15,19 +15,19 @@ use Elgg\Exceptions\Configuration\RegistrationException;
  *
  * @param int $guid The GUID
  *
- * @return \ElggUser|false
+ * @return \ElggUser|null
  */
-function get_user($guid) {
+function get_user(int $guid): ?\ElggUser {
 	try {
 		return _elgg_services()->entityTable->get($guid, 'user');
 	} catch (InvalidParameterException $ex) {
 		elgg_log($ex, 'ERROR');
 
-		return false;
+		return null;
 	} catch (ClassException $ex) {
 		elgg_log($ex, 'ERROR');
 
-		return false;
+		return null;
 	}
 }
 
@@ -36,9 +36,9 @@ function get_user($guid) {
  *
  * @param string $username The user's username
  *
- * @return \ElggUser|false Depending on success
+ * @return \ElggUser|null Depending on success
  */
-function get_user_by_username($username) {
+function get_user_by_username(string $username): ?\ElggUser {
 	return _elgg_services()->usersTable->getByUsername($username);
 }
 
@@ -49,7 +49,7 @@ function get_user_by_username($username) {
  *
  * @return array
  */
-function get_user_by_email($email) {
+function get_user_by_email(string $email): array {
 	return _elgg_services()->usersTable->getByEmail($email);
 }
 
@@ -125,7 +125,7 @@ function elgg_register_user(array $params = []): \ElggUser {
  *
  * @return \Elgg\Validation\ValidationResults
  */
-function elgg_validate_registration_data($username, $password, $name, $email, $allow_multiple_emails = false) {
+function elgg_validate_registration_data(string $username, string|array $password, string $name, string $email, bool $allow_multiple_emails = false): \Elgg\Validation\ValidationResults {
 	return _elgg_services()->accounts->validateAccountData($username, $password, $name, $email, $allow_multiple_emails);
 }
 
@@ -152,8 +152,8 @@ function elgg_generate_invite_code(string $username): string {
  * @see elgg_generate_invite_code()
  * @since 1.10
  */
-function elgg_validate_invite_code($username, $code): bool {
-	return _elgg_services()->usersTable->validateInviteCode((string) $username, (string) $code);
+function elgg_validate_invite_code(string $username, string $code): bool {
+	return _elgg_services()->usersTable->validateInviteCode($username, $code);
 }
 
 /**
@@ -167,7 +167,7 @@ function elgg_validate_invite_code($username, $code): bool {
  *
  * @return string
  */
-function elgg_get_registration_url(array $parameters = [], $fragment = ''): string {
+function elgg_get_registration_url(array $parameters = [], string $fragment = ''): string {
 	$url = elgg_generate_url('account:register', $parameters) . $fragment;
 	
 	return (string) elgg_trigger_plugin_hook('registration_url', 'site', $parameters, $url);
@@ -182,7 +182,7 @@ function elgg_get_registration_url(array $parameters = [], $fragment = ''): stri
  * @param string $fragment Fragment identifier (e.g. #login-dropdown-box)
  * @return string
  */
-function elgg_get_login_url(array $query = [], $fragment = '') {
+function elgg_get_login_url(array $query = [], string $fragment = ''): string {
 	$url = elgg_generate_url('account:login');
 	$url = elgg_http_add_url_query_elements($url, $query) . $fragment;
 	return elgg_trigger_plugin_hook('login_url', 'site', $query, $url);

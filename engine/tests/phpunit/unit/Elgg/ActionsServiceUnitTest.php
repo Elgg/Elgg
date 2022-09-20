@@ -6,12 +6,12 @@ use Elgg\Exceptions\Http\CsrfException;
 use Elgg\Exceptions\Http\GatekeeperException;
 use Elgg\Exceptions\Http\PageNotFoundException;
 use Elgg\Exceptions\Http\ValidationException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Elgg\Http\Request;
 use Elgg\I18n\Translator;
 use Elgg\Project\Paths;
-use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -136,9 +136,9 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->registerActions();
 
-		$this->assertTrue(_elgg_services()->actions->unregister('test/output'));
-		$this->assertTrue(_elgg_services()->actions->unregister('test/non_ex_file'));
-		$this->assertFalse(_elgg_services()->actions->unregister('test/not_registered'));
+		_elgg_services()->actions->unregister('test/output');
+		_elgg_services()->actions->unregister('test/non_ex_file');
+		_elgg_services()->actions->unregister('test/not_registered');
 
 		$this->assertFalse(_elgg_services()->actions->exists('test/output'));
 		$this->assertFalse(_elgg_services()->actions->exists('test/non_ex_file'));
@@ -169,26 +169,11 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->actions->register('test/output_admin', "$this->actionsDir/output.php", 'admin');
 	}
 
-	public function testCanRegisterActionWithUnknownAccessLevel() {
+	public function testCanNotRegisterActionWithUnknownAccessLevel() {
 
-		// Access level will fall back to admin
-		_elgg_services()->logger->disable();
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage('Unrecognized value \'pblc\' for $access in Elgg\\ActionsService::register');
 		_elgg_services()->actions->register('test/output', "$this->actionsDir/output.php", 'pblc');
-		$logged = _elgg_services()->logger->enable();
-
-		$this->assertEquals([
-			[
-				'message' => 'Unrecognized value \'pblc\' for $access in Elgg\\ActionsService::register',
-				'level' => LogLevel::ERROR,
-			]
-		], $logged);
-
-		$actions = _elgg_services()->actions->getAllActions();
-		$this->assertArrayHasKey('test/output', $actions);
-		$this->assertEquals([
-			'file' => "$this->actionsDir/output.php",
-			'access' => 'admin',
-		], $actions['test/output']);
 	}
 
 	public function testCanRegisterActionWithoutFilename() {

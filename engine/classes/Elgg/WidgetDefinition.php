@@ -95,17 +95,7 @@ class WidgetDefinition {
 			$definition->description = $description;
 		}
 		
-		$context = (array) elgg_extract('context', $options, ['all']);
-		if (in_array('all', $context)) {
-			$context[] = 'profile';
-			$context[] = 'dashboard';
-			
-			_elgg_services()->logger->warning("The widget '{$id}' need to be registered for explicit contexts");
-			$pos = array_search('all', $context);
-			unset($context[$pos]);
-			
-			$context = array_unique($context);
-		}
+		$context = (array) elgg_extract('context', $options, ['profile', 'dashboard']);
 		$definition->context = $context;
 		
 		$definition->multiple = (bool) elgg_extract('multiple', $options, false);

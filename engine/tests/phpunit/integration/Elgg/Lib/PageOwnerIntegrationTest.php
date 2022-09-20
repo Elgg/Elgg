@@ -45,8 +45,6 @@ class PageOwnerIntegrationTest extends IntegrationTestCase {
 			[999, 1, 1],
 			[999, 0, 0], // different behaviour in getter function
 			[999, -1, 0],
-			[999, false, 0],
-			[999, null, 0],
 		];
 	}
 		

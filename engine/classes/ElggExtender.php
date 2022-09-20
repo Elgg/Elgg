@@ -79,7 +79,7 @@ abstract class ElggExtender extends \ElggData {
 	 * @return void
 	 * @since 1.9
 	 */
-	public function setValue($value, $value_type = '') {
+	public function setValue($value, string $value_type = ''): void {
 		$this->attributes['value'] = $value;
 		$this->attributes['value_type'] = self::detectValueType($value, $value_type);
 	}
@@ -124,7 +124,7 @@ abstract class ElggExtender extends \ElggData {
 	 *
 	 * @return int The owner GUID
 	 */
-	public function getOwnerGUID() {
+	public function getOwnerGUID(): int {
 		return $this->owner_guid;
 	}
 
@@ -154,7 +154,7 @@ abstract class ElggExtender extends \ElggData {
 	 *
 	 * @return bool
 	 */
-	abstract public function canEdit($user_guid = 0);
+	abstract public function canEdit(int $user_guid = 0): bool;
 
 	/**
 	 * {@inheritdoc}
@@ -185,7 +185,7 @@ abstract class ElggExtender extends \ElggData {
 	 *
 	 * @return int
 	 */
-	public function getSystemLogID() {
+	public function getSystemLogID(): int {
 		return $this->id;
 	}
 
@@ -194,7 +194,7 @@ abstract class ElggExtender extends \ElggData {
 	 *
 	 * @return string
 	 */
-	public function getType() {
+	public function getType(): string {
 		return $this->type;
 	}
 
@@ -204,7 +204,7 @@ abstract class ElggExtender extends \ElggData {
 	 *
 	 * @return string
 	 */
-	public function getSubtype() {
+	public function getSubtype(): string {
 		return $this->name;
 	}
 
@@ -216,7 +216,7 @@ abstract class ElggExtender extends \ElggData {
 	 *
 	 * @return string
 	 */
-	public function getURL() {
+	public function getURL(): string {
 
 		$params = ['extender' => $this];
 		$url = _elgg_services()->hooks->trigger('extender:url', $this->getType(), $params, '');

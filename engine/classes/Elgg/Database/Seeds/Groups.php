@@ -134,14 +134,14 @@ class Groups extends Seed {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function getType() : string {
+	public static function getType(): string {
 		return 'group';
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function getCountOptions() : array {
+	protected function getCountOptions(): array {
 		return [
 			'type' => 'group',
 		];

@@ -23,7 +23,7 @@ class ElggWidget extends \ElggObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getDisplayName() {
+	public function getDisplayName(): string {
 		$result = parent::getDisplayName();
 		if ($result) {
 			return $result;
@@ -42,7 +42,7 @@ class ElggWidget extends \ElggObject {
 	 * @return void
 	 * @since 1.8.0
 	 */
-	public function move($column, $rank) {
+	public function move(int $column, int $rank): void {
 		/* @var $widgets \ElggWidget[] */
 		$widgets = elgg_get_entities([
 			'type' => 'object',
@@ -56,7 +56,7 @@ class ElggWidget extends \ElggObject {
 		]);
 		
 		if (empty($widgets)) {
-			$this->column = (int) $column;
+			$this->column = $column;
 			$this->order = 0;
 			return;
 		}
@@ -146,7 +146,7 @@ class ElggWidget extends \ElggObject {
 	 * @return bool
 	 * @since 1.8.0
 	 */
-	public function saveSettings($params) {
+	public function saveSettings(array $params): bool {
 		if (!$this->canEdit()) {
 			return false;
 		}
@@ -161,7 +161,7 @@ class ElggWidget extends \ElggObject {
 			return true;
 		}
 
-		if (is_array($params) && count($params) > 0) {
+		if (!empty($params)) {
 			foreach ($params as $name => $value) {
 				if (is_array($value)) {
 					// @todo should we support arrays
