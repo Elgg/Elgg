@@ -3,7 +3,6 @@
 namespace Elgg;
 
 use Elgg\Exceptions\InvalidArgumentException;
-use Elgg\SystemMessages\RegisterSet;
 
 /**
  * System messages service
@@ -41,7 +40,7 @@ class SystemMessagesService {
 	 * @return array The array of registers dumped
 	 * @internal
 	 */
-	public function dumpRegister($register_name = '') {
+	public function dumpRegister(string $register_name = ''): array {
 		$set = $this->loadRegisters();
 		$return = [];
 
@@ -51,7 +50,7 @@ class SystemMessagesService {
 					$return[$prop] = $values;
 				}
 
-				$set->{$prop} = [];
+				$set[$prop] = [];
 			}
 		}
 
@@ -71,7 +70,7 @@ class SystemMessagesService {
 	 *
 	 * @return integer The number of messages
 	 */
-	public function count($register_name = "") {
+	public function count(string $register_name = ''): int {
 		$set = $this->loadRegisters();
 		$count = 0;
 
@@ -129,22 +128,17 @@ class SystemMessagesService {
 		}
 		
 		$set = $this->loadRegisters();
-		$set->{$message->getType()}[] = $message;
+		$set[$message->getType()][] = $message;
 		$this->saveRegisters($set);
 	}
 
 	/**
 	 * Load the registers from the session
 	 *
-	 * @return RegisterSet
+	 * @return array
 	 */
-	public function loadRegisters() {
-		$registers = $this->session->get(self::SESSION_KEY, []);
-		$set = new RegisterSet();
-		foreach ($registers as $key => $register) {
-			$set->{$key} = $register;
-		}
-		return $set;
+	public function loadRegisters(): array {
+		return $this->session->get(self::SESSION_KEY, []);
 	}
 
 	/**
@@ -157,10 +151,10 @@ class SystemMessagesService {
 	 *
 	 * Messages are stored as strings in the Elgg session as ['msg'][$register] array.
 	 *
-	 * @param RegisterSet $set The set of registers
+	 * @param array $set The set of registers
 	 * @return void
 	 */
-	public function saveRegisters(RegisterSet $set) {
+	public function saveRegisters(array $set): void {
 		$filter = function ($el) {
 			return ($el instanceof \ElggSystemMessage) && $el->getMessage() !== '';
 		};

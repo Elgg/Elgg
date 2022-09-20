@@ -79,7 +79,7 @@ class SystemMessagesServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(5, $this->svc->count());
 	}
 
-	function testCanModifyRegisterSet() {
+	function testCanModifyRegister() {
 		$s2 = new \ElggSystemMessage('s2', 'success');
 		$s3 = new \ElggSystemMessage('s3', 'success');
 
@@ -94,13 +94,13 @@ class SystemMessagesServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->svc->addMessage($e3);
 
 		$set = $this->svc->loadRegisters();
-		$this->assertEquals([$s2, $s3], $set->success);
-		$this->assertEquals([$e1, $e2, $e3], $set->error);
+		$this->assertEquals([$s2, $s3], $set['success']);
+		$this->assertEquals([$e1, $e2, $e3], $set['error']);
 
 		// will be filtered
-		$set->success = ['', $s2];
-		$set->error = [$e1, false];
-		$set->invalid = true;
+		$set['success'] = ['', $s2];
+		$set['error'] = [$e1, false];
+		$set['invalid'] = true;
 		$this->svc->saveRegisters($set);
 
 		$this->assertEquals([

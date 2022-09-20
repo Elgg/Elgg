@@ -5,7 +5,7 @@ namespace Elgg;
 trait MessageTesting {
 
 	public function assertSystemMessageEmitted($expected) {
-		$registers = _elgg_services()->system_messages->loadRegisters()->success;
+		$registers = elgg_extract('success', _elgg_services()->system_messages->loadRegisters());
 
 		$found = false;
 		foreach ($registers as $msg) {
@@ -19,7 +19,7 @@ trait MessageTesting {
 	}
 
 	public function assertErrorMessageEmitted($expected) {
-		$registers = _elgg_services()->system_messages->loadRegisters()->error;
+		$registers = elgg_extract('error', _elgg_services()->system_messages->loadRegisters());
 
 		$found = false;
 		foreach ($registers as $msg) {
