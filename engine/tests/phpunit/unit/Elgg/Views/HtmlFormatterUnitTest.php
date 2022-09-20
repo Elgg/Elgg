@@ -145,16 +145,11 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 		unset($vars['tag_name'], $vars['text'], $vars['_msg']);
 
 		$this->assertSame($expected, elgg_format_element($tag_name, $attrs, $text, $opts), $message);
-
-		$attrs['#tag_name'] = $tag_name;
-		$attrs['#text'] = $text;
-		$attrs['#options'] = $opts;
-		$this->assertSame($expected, elgg_format_element($attrs), $message);
 	}
 
 	public function testElggFormatElementThrows() {
 		$this->expectException(InvalidArgumentException::class);
-		elgg_format_element(array());
+		elgg_format_element('');
 	}
 
 	function providerElggFormatElement() {

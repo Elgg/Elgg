@@ -57,12 +57,9 @@ switch ($access_id) {
 		break;
 }
 
-echo elgg_format_element([
-	'#tag_name' => 'span',
-	'#text' => elgg_get_readable_access_level($access_id),
-	'#options' => [
-		'encode_text' => true,
-	],
+echo elgg_format_element('span', [
 	'title' => elgg_echo('access:help'),
 	'class' => $class,
+], elgg_get_readable_access_level($access_id), [
+	'encode_text' => true,
 ]);

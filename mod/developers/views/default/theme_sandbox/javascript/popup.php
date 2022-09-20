@@ -16,19 +16,16 @@ echo elgg_view_module('popup', 'Popup Test', $ipsum, [
 ]);
 
 
-echo elgg_format_element([
-	'#tag_name' => 'button',
+echo elgg_format_element('button', [
 	'class' => ['elgg-button', 'elgg-button-submit', 'mll', 'elgg-popup'],
 	'data-href' => "#elgg-popup-test2",
 	'data-position' => json_encode([
 		'my' => 'left top',
 		'at' => 'left bottom',
 	]),
-	'#text' => 'Load content in a popup',
-]);
+], 'Load content in a popup');
 
-echo elgg_format_element([
-	'#tag_name' => 'div',
+echo elgg_format_element('div', [
 	'id' => 'elgg-popup-test2',
 	'class' => 'hidden theme-sandbox-content-thin elgg-module-popup',
 ]);

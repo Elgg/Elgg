@@ -107,30 +107,27 @@ function elgg_format_bytes(int $size, int $precision = 2): string {
 /**
  * Format an HTML element
  *
- * @param string|array $tag_name   The element tagName. e.g. "div". This will not be validated.
- *                                 All function arguments can be given as a single array: The array will be used
- *                                 as $attributes, except for the keys "#tag_name", "#text", and "#options", which
- *                                 will be extracted as the other arguments.
+ * @param string $tag_name   The element tagName. e.g. "div". This will not be validated.
  *
- * @param array        $attributes The element attributes.
+ * @param array  $attributes The element attributes.
  *
- * @param string       $text       The contents of the element. Assumed to be HTML unless encode_text is true.
+ * @param string $text       The contents of the element. Assumed to be HTML unless encode_text is true.
  *
- * @param array        $options    Options array with keys:
- *                                 - encode_text   => (bool, default false) If true, $text will be HTML-escaped. Already-escaped entities will not be double-escaped.
- *                                 - double_encode => (bool, default false) If true, the $text HTML escaping will be allowed to double encode HTML entities: '&times;' will become '&amp;times;'
+ * @param array  $options    Options array with keys:
+ *                           - encode_text   => (bool, default false) If true, $text will be HTML-escaped. Already-escaped entities will not be double-escaped.
+ *                           - double_encode => (bool, default false) If true, the $text HTML escaping will be allowed to double encode HTML entities: '&times;' will become '&amp;times;'
  *
- *                                 - is_void       => (bool) If given, this determines whether the function will return just the open tag.
- *                                 Otherwise this will be determined by the tag name according to this list:
- *                                 http://www.w3.org/html/wg/drafts/html/master/single-page.html#void-elements
+ *                           - is_void       => (bool) If given, this determines whether the function will return just the open tag.
+ *                           Otherwise this will be determined by the tag name according to this list:
+ *                           http://www.w3.org/html/wg/drafts/html/master/single-page.html#void-elements
  *
- *                                 - is_xml        => (bool, default false) If true, void elements will be formatted like "<tag />"
+ *                           - is_xml        => (bool, default false) If true, void elements will be formatted like "<tag />"
  *
  * @return string
  * @throws \Elgg\Exceptions\InvalidArgumentException
  * @since 1.9.0
  */
-function elgg_format_element(string|array $tag_name, array $attributes = [], string $text = '', array $options = []): string {
+function elgg_format_element(string $tag_name, array $attributes = [], string $text = '', array $options = []): string {
 	return _elgg_services()->html_formatter->formatElement($tag_name, $attributes, $text, $options);
 }
 

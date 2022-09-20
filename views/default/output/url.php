@@ -137,11 +137,7 @@ $badge = elgg_extract('badge', $vars);
 unset($vars['badge']);
 
 if (!is_null($badge)) {
-	$badge = elgg_format_element([
-		'#tag_name' => 'span',
-		'#text' => $badge,
-		'class' => 'elgg-badge',
-	]);
+	$badge = elgg_format_element('span', ['class' => 'elgg-badge'], $badge);
 }
 
 $classes = elgg_extract_class($vars);
