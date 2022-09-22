@@ -15,7 +15,7 @@
         "ckeditor/ckeditor": "~4.19.0",
         "composer/semver": "~3.3.0",
         "css-crush/css-crush": "~4.1.0",
-        "doctrine/dbal": "~3.3.0",
+        "doctrine/dbal": "~3.4.4",
         "eloquent/composer-config-reader": "~3.0.0",
         "fakerphp/faker": "~1.20.0",
         "fortawesome/font-awesome": "~5.14",
