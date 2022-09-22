@@ -10,7 +10,7 @@
  * @param ElggAnnotation $revision a revision from which to edit
  * @return array
  */
-function blog_prepare_form_vars($post = null, $revision = null) {
+function blog_prepare_form_vars(\ElggBlog $post = null, \ElggAnnotation $revision = null): array {
 
 	// input names => defaults
 	$values = [
@@ -53,7 +53,7 @@ function blog_prepare_form_vars($post = null, $revision = null) {
 	}
 
 	// load the revision annotation if requested
-	if ($revision instanceof ElggAnnotation && $revision->entity_guid == $post->getGUID()) {
+	if (isset($revision) && $revision->entity_guid == $post->guid) {
 		$values['revision'] = $revision;
 		$values['description'] = $revision->value;
 	}

@@ -8,13 +8,13 @@ use Elgg\Likes\DataService;
 /**
  * Get thumbs up menu item
  *
- * @param ElggEntity $entity   Entity
- * @param int        $priority Item priority
+ * @param \ElggEntity $entity   Entity
+ * @param int         $priority Item priority
  *
  * @return ElggMenuItem
  * @internal
  */
-function _likes_menu_item(ElggEntity $entity, $priority = 500) {
+function _likes_menu_item(\ElggEntity $entity, int $priority = 500): \ElggMenuItem {
 	$is_liked = DataService::instance()->currentUserLikesEntity($entity->guid);
 
 	return \ElggMenuItem::factory([
@@ -34,13 +34,13 @@ function _likes_menu_item(ElggEntity $entity, $priority = 500) {
 /**
  * Get likes count menu item.
  *
- * @param ElggEntity $entity   Entity
- * @param int        $priority Item priority
+ * @param \ElggEntity $entity   Entity
+ * @param int         $priority Item priority
  *
  * @return ElggMenuItem
  * @internal
  */
-function _likes_count_menu_item(ElggEntity $entity, $priority = 500) {
+function _likes_count_menu_item(\ElggEntity $entity, int $priority = 500): \ElggMenuItem {
 	$num_likes = DataService::instance()->getNumLikes($entity);
 
 	if ($num_likes == 1) {
@@ -70,11 +70,11 @@ function _likes_count_menu_item(ElggEntity $entity, $priority = 500) {
 /**
  * Get the count of how many people have liked an entity
  *
- * @param ElggEntity $entity entity to get likes count for
+ * @param \ElggEntity $entity entity to get likes count for
  *
  * @return int
  */
-function likes_count(ElggEntity $entity) {
+function likes_count(\ElggEntity $entity): int {
 	$type = $entity->getType();
 	$params = ['entity' => $entity];
 	$number = elgg_trigger_plugin_hook('likes:count', $type, $params, false);

@@ -12,7 +12,7 @@
  * @param array $vars     Display parameters
  * @return string
  */
-function embed_list_items($entities, $vars = []) {
+function embed_list_items(array $entities, array $vars = []): string {
 
 	$defaults = [
 		'items' => $entities,
@@ -31,7 +31,7 @@ function embed_list_items($entities, $vars = []) {
  *
  * @return array
  */
-function embed_get_list_options($options = []) {
+function embed_get_list_options(array $options = []): array {
 
 	$container_guids = [elgg_get_logged_in_user_guid()];
 	if (elgg_get_page_owner_guid()) {
@@ -48,7 +48,5 @@ function embed_get_list_options($options = []) {
 		'no_results' => true,
 	];
 
-	$options = array_merge($defaults, $options);
-
-	return $options;
+	return array_merge($defaults, $options);
 }

@@ -6,10 +6,10 @@
 /**
  * Prepare the add/edit form variables
  *
- * @param ElggObject $bookmark A bookmark object.
+ * @param \ElggBookmark $bookmark A bookmark object.
  * @return array
  */
-function bookmarks_prepare_form_vars($bookmark = null) {
+function bookmarks_prepare_form_vars(\ElggBookmark $bookmark = null): array {
 	// input names => defaults
 	$values = [
 		'title' => get_input('title', ''), // bookmarklet support

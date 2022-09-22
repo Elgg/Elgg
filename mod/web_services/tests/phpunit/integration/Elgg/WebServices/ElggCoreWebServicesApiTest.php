@@ -41,7 +41,7 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 	public function testExposeFunctionBadHttpMethod() {
 		$this->expectException(InvalidParameterException::class);
 		$this->expectExceptionMessage(elgg_echo('InvalidParameterException:UnrecognisedHttpMethod', ['BAD', 'test']));
-		elgg_ws_expose_function('test', 'test', null, '', 'BAD');
+		elgg_ws_expose_function('test', 'test', [], '', 'BAD');
 	}
 
 	// api key methods

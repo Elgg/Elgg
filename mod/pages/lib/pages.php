@@ -6,13 +6,13 @@
 /**
  * Prepare the add/edit form variables
  *
- * @param ElggPage       $page        the page to edit
- * @param int            $parent_guid parrent page guid
- * @param ElggAnnotation $revision    revision
+ * @param \ElggPage       $page        the page to edit
+ * @param int             $parent_guid parrent page guid
+ * @param \ElggAnnotation $revision    revision
  *
  * @return array
  */
-function pages_prepare_form_vars($page = null, $parent_guid = 0, $revision = null) {
+function pages_prepare_form_vars(\ElggPage $page = null, int $parent_guid = 0, \ElggAnnotation $revision = null): array {
 
 	// input names => defaults
 	$values = [
@@ -61,10 +61,10 @@ function pages_prepare_form_vars($page = null, $parent_guid = 0, $revision = nul
  *
  * @return void
  */
-function pages_prepare_parent_breadcrumbs($page) {
+function pages_prepare_parent_breadcrumbs(\ElggPage $page): void {
 	$crumbs = [];
 
-	while ($page instanceof ElggPage) {
+	while ($page instanceof \ElggPage) {
 		$crumbs[] = [
 			'text' => $page->getDisplayName(),
 			'href' => $page->getURL(),
@@ -87,11 +87,7 @@ function pages_prepare_parent_breadcrumbs($page) {
  *
  * @return array
  */
-function pages_get_navigation_tree($container) {
-	if (!$container instanceof ElggEntity) {
-		return;
-	}
-
+function pages_get_navigation_tree(\ElggEntity $container): array {
 	$top_pages = elgg_get_entities([
 		'type' => 'object',
 		'subtype' => 'page',

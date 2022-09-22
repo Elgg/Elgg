@@ -6,14 +6,14 @@
 /**
  * Add messageboard post
  *
- * @param ElggUser $poster    User posting the message
- * @param ElggUser $owner     User who owns the message board
- * @param string   $message   The posted message
- * @param int      $access_id Access level (see defines in constants.php)
+ * @param \ElggUser $poster    User posting the message
+ * @param \ElggUser $owner     User who owns the message board
+ * @param string    $message   The posted message
+ * @param int       $access_id Access level (see defines in constants.php)
  *
  * @return false|int
  */
-function messageboard_add(\ElggUser $poster, \ElggUser $owner, string $message, int $access_id = ACCESS_PUBLIC) {
+function messageboard_add(\ElggUser $poster, \ElggUser $owner, string $message, int $access_id = ACCESS_PUBLIC): int|false {
 	
 	if (empty($message)) {
 		return false;

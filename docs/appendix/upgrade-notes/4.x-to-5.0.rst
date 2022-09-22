@@ -92,10 +92,14 @@ Lib functions return types
 * ``get_entity()`` now returns ``null`` if no entity is found instead of a ``bool``
 * ``get_user()`` now returns ``null`` if no user is found instead of a ``bool``
 * ``get_user_by_username()`` now returns ``null`` if no user is found instead of a ``bool``
+* ``elgg_ws_expose_function()`` no longer returns a ``bool``
 
 Lib functions function parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+* ``blog_prepare_form_vars()`` now requires a ``ElggBlog`` for ``$blog`` and a ``ElggAnnotation`` for ``$revision``
+* ``bookmarks_prepare_form_vars()`` now requires a ``ElggBookmark`` for ``$bookmark``
+* ``discussion_prepare_form_vars()`` now requires a ``ElggDiscussion`` for ``$topic``
 * ``elgg_add_action_tokens_to_url()`` now requires a ``string`` for ``$url`` and a ``bool`` for ``$html_encode``
 * ``elgg_can_edit_widget_layout()`` now requires a ``string`` for ``$context`` and ``int`` for ``$user_guid``
 * ``elgg_clear_sticky_form()`` now requires a ``string`` for ``$context``
@@ -211,13 +215,30 @@ Lib functions function parameters
 * ``elgg_view_river_item()`` now requires an ``ElggRiverItem`` for ``$item``
 * ``elgg_view_resource()`` now requires a ``string`` for ``$name``
 * ``elgg_view_title()`` now requires a ``string`` for ``$title``
+* ``embed_get_list_options()`` now requires an ``array`` for ``$options``
+* ``embed_list_items()`` now requires an ``array`` for ``$entities`` and ``$vars``
+* ``file_prepare_form_vars()`` now requires an ``ElggFile`` for ``$file``
 * ``get_entity()`` now requires a ``int`` for ``$guid``
 * ``get_input()`` now requires a ``string`` for ``$variable`` and a ``bool`` for ``$filter_result``
 * ``get_user()`` now requires a ``int`` for ``$guid``
 * ``get_user_by_email()`` now requires a ``string`` for ``$email``
 * ``get_user_by_username()`` now requires a ``string`` for ``$username``
+* ``groups_get_group_join_menu_item()`` now requires an ``ElggUser`` for ``$user``
+* ``groups_get_group_leave_menu_item()`` now requires an ``ElggUser`` for ``$user``
+* ``groups_get_invited_groups()`` now requires an ``int`` for ``$user_guid``, a ``bool`` for ``$return_guids`` and an ``array`` for ``$options``
 * ``notify_user()`` now requires an ``int|array`` for ``$to`` and a ``int`` for ``$from`` and a ``string`` for ``$subject`` and ``$message``
+* ``pages_get_navigation_tree()`` now requires a ``ElggEntity`` for ``$container``
+* ``pages_prepare_form_vars()`` now requires a ``ElggPage`` for ``$page``, an ``int`` for ``$parent_guid`` and a ``ElggAnnotation`` for ``$revision``
+* ``pages_prepare_parent_breadcrumbs()`` now requires a ``ElggPage`` for ``$page``
 * ``set_input()`` now requires a ``string`` for ``$variable``
+* ``thewire_filter()`` now requires a ``string`` for ``$text``
+* ``thewire_get_hashtags()`` now requires a ``string`` for ``$text``
+* ``thewire_save_post()`` now requires a ``string`` for ``$text`` and ``$method`` and an ``int`` for ``$userid`` and ``$access_id`` and ``$parent_guid``
+* ``uservalidationbyemail_request_validation()`` now requires an ``int`` for ``$user_guid``
+* ``elgg_ws_expose_function()`` now requires a ``string`` for ``$method`` and ``$description`` and ``$call_method``, an ``array`` for ``$parameters`` and a ``bool`` for ``$require_api_auth`` and ``$require_user_auth`` and ``$assoc``	
+* ``elgg_ws_register_service_handler()`` now requires a ``string`` for ``$handler``	
+* ``elgg_ws_unexpose_function()`` now requires a ``string`` for ``$method``	
+* ``elgg_ws_unregister_service_handler()`` now requires a ``string`` for ``$handler``	
 
 Class function return types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

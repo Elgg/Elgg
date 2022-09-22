@@ -19,7 +19,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 	 */
 	public function init() {
 		// expose the list of api methods
-		elgg_ws_expose_function('system.api.list', SystemApiList::class, null, elgg_echo('system.api.list'), 'GET', false, false);
+		elgg_ws_expose_function('system.api.list', SystemApiList::class, [], elgg_echo('system.api.list'), 'GET', false, false);
 	
 		// The authentication token api
 		elgg_ws_expose_function(

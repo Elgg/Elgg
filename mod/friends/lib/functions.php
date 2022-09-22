@@ -13,7 +13,7 @@
  * @internal
  * @since 3.2
  */
-function _elgg_friends_get_add_friend_menu_items(\ElggUser $user, bool $make_button = false) {
+function _elgg_friends_get_add_friend_menu_items(\ElggUser $user, bool $make_button = false): array {
 	
 	$current_user = elgg_get_logged_in_user_entity();
 	if (!$current_user instanceof \ElggUser || $user->guid === $current_user->guid) {
