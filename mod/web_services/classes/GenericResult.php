@@ -92,12 +92,10 @@ abstract class GenericResult {
 	 * if ELGG_DEBUG is set then additional information about the runtime environment and
 	 * authentication will be returned.
 	 *
-	 * @return stdClass Object containing the serialised result.
+	 * @return \stdClass Object containing the serialised result.
 	 */
 	public function export() {
-		global $_PAM_HANDLERS_MSG;
-		
-		$result = new stdClass;
+		$result = new \stdClass;
 
 		$result->status = $this->getStatusCode();
 		if ($this->getStatusMessage() != "") {
@@ -113,10 +111,6 @@ abstract class GenericResult {
 			$errors = RestApiErrorHandler::instance()->getErrors();
 			if (!empty($errors)) {
 				$result->runtime_errors = $errors;
-			}
-
-			if (!empty($_PAM_HANDLERS_MSG)) {
-				$result->pam = $_PAM_HANDLERS_MSG;
 			}
 		}
 
