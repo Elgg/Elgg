@@ -258,10 +258,6 @@ class ElggSession {
 	 * @since 4.3
 	 */
 	public function login(\ElggUser $user, bool $persistent = false): void {
-		if (!$user->isEnabled()) {
-			throw new LoginException(elgg_echo('LoginException:DisabledUser'));
-		}
-		
 		if ($user->isBanned()) {
 			throw new LoginException(elgg_echo('LoginException:BannedUser'));
 		}
@@ -270,7 +266,12 @@ class ElggSession {
 		if (!elgg_trigger_before_event('login', 'user', $user)) {
 			throw new LoginException(elgg_echo('LoginException:Unknown'));
 		}
-	
+		
+		if (!$user->isEnabled()) {
+			// fallback if no plugin provided a reason
+			throw new LoginException(elgg_echo('LoginException:DisabledUser'));
+		}
+		
 		// #5933: set logged in user early so code in login event will be able to
 		// use elgg_get_logged_in_user_entity().
 		$this->setLoggedInUser($user);
