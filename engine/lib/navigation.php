@@ -84,25 +84,14 @@
  * @param mixed  $menu_item A \ElggMenuItem object or an array of options
  *
  * @return void
- * @throws \Elgg\Exceptions\InvalidArgumentException
  * @since 1.8.0
  */
 function elgg_register_menu_item(string $menu_name, array|\ElggMenuItem $menu_item): void {
 	if (is_array($menu_item)) {
 		$menu_item = \ElggMenuItem::factory($menu_item);
 	}
-
-	if (!$menu_item instanceof \ElggMenuItem) {
-		throw new \Elgg\Exceptions\InvalidArgumentException(__METHOD__ . ' requires an \ElggMenuItem or array for the \ElggMenuItem::factory() as a second parameter');
-	}
-
-	$menus = _elgg_services()->config->menus;
-	if (empty($menus)) {
-		$menus = [];
-	}
-
-	$menus[$menu_name][] = $menu_item;
-	_elgg_services()->config->menus = $menus;
+	
+	_elgg_services()->menus->registerMenuItem($menu_name, $menu_item);
 }
 
 /**
@@ -115,26 +104,7 @@ function elgg_register_menu_item(string $menu_name, array|\ElggMenuItem $menu_it
  * @since 1.8.0
  */
 function elgg_unregister_menu_item(string $menu_name, string $item_name): ?\ElggMenuItem {
-	$menus = elgg_get_config('menus');
-	if (empty($menus)) {
-		return null;
-	}
-	
-	if (!isset($menus[$menu_name])) {
-		return null;
-	}
-
-	foreach ($menus[$menu_name] as $index => $menu_object) {
-		/* @var \ElggMenuItem $menu_object */
-		if ($menu_object instanceof \ElggMenuItem && $menu_object->getName() === $item_name) {
-			$item = $menus[$menu_name][$index];
-			unset($menus[$menu_name][$index]);
-			elgg_set_config('menus', $menus);
-			return $item;
-		}
-	}
-
-	return null;
+	return _elgg_services()->menus->unregisterMenuItem($menu_name, $item_name);
 }
 
 /**

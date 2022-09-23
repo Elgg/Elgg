@@ -11,12 +11,8 @@ class BreadcrumbsIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function down() {
-		$menus = elgg_get_config('menus');
-		
-		unset($menus['breadcrumbs']);
-		elgg_set_config('menus', $menus);
-		
 		_elgg_services()->hooks->restore();
+		_elgg_services()->reset('menus'); // removes registered breadcrumbs
 	}
 	
 	public function testCrumbsAreExcerpted() {

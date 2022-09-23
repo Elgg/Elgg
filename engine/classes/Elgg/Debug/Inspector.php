@@ -256,7 +256,7 @@ class Inspector {
 	 */
 	public function getMenus() {
 
-		$menus = _elgg_services()->config->menus;
+		$menus = _elgg_services()->menus->getAllMenus();
 
 		// get JIT menu items
 		// note that 'river' is absent from this list - hooks attempt to get object/subject entities cause problems

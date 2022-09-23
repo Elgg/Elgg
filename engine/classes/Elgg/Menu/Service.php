@@ -15,12 +15,17 @@ class Service {
 	/**
 	 * @var PluginHooksService
 	 */
-	private $hooks;
+	protected $hooks;
 
 	/**
 	 * @var Config
 	 */
-	private $config;
+	protected $config;
+
+	/**
+	 * @var \ElggMenuItem[]
+	 */
+	protected $menus = [];
 
 	/**
 	 * Constructor
@@ -41,9 +46,9 @@ class Service {
 	 * @param string $name   Menu name
 	 * @param array  $params Hook/view parameters
 	 *
-	 * @return Menu
+	 * @return \Elgg\Menu\Menu
 	 */
-	public function getMenu($name, array $params = []) {
+	public function getMenu(string $name, array $params = []): Menu {
 		return $this->prepareMenu($this->getUnpreparedMenu($name, $params));
 	}
 
@@ -53,20 +58,20 @@ class Service {
 	 * @param string $name   Menu name
 	 * @param array  $params Hook/view parameters
 	 *
-	 * @return UnpreparedMenu
+	 * @return \Elgg\Menu\UnpreparedMenu
 	 */
-	public function getUnpreparedMenu($name, array $params = []) {
+	public function getUnpreparedMenu(string $name, array $params = []): UnpreparedMenu {
 		$items = $this->prepareMenuItems(elgg_extract('items', $params, []));
 		unset($params['items']);
 
-		$registered_items = elgg_extract($name, $this->config->menus);
+		$registered_items = elgg_extract($name, $this->menus);
 		if (is_array($registered_items)) {
 			$items->merge($registered_items);
 		}
 
 		$params['name'] = $name;
 
-		$params = $this->hooks->trigger('parameters', "menu:$name", $params, $params);
+		$params = $this->hooks->trigger('parameters', "menu:{$name}", $params, $params);
 
 		if (!isset($params['sort_by'])) {
 			$params['sort_by'] = 'priority';
@@ -99,9 +104,9 @@ class Service {
 	 *
 	 * @param UnpreparedMenu $menu Menu
 	 *
-	 * @return Menu
+	 * @return \Elgg\Menu\Menu
 	 */
-	public function prepareMenu(UnpreparedMenu $menu) {
+	public function prepareMenu(UnpreparedMenu $menu): Menu {
 		$name = $menu->getName();
 		$params = $menu->getParams();
 		$sort_by = $menu->getSortBy();
@@ -148,7 +153,7 @@ class Service {
 	 *
 	 * @return \Elgg\Menu\PreparedMenu
 	 */
-	protected function prepareVerticalMenu(PreparedMenu $menu, array $params) {
+	protected function prepareVerticalMenu(PreparedMenu $menu, array $params): PreparedMenu {
 		if (elgg_extract('prepare_vertical', $params) !== true) {
 			return $menu;
 		}
@@ -184,7 +189,7 @@ class Service {
 	 *
 	 * @return \Elgg\Menu\PreparedMenu
 	 */
-	protected function prepareSelectedParents(PreparedMenu $menu, array $params) {
+	protected function prepareSelectedParents(PreparedMenu $menu, array $params): PreparedMenu {
 		$selected_item = elgg_extract('selected_item', $params);
 		if (!$selected_item instanceof \ElggMenuItem) {
 			return $menu;
@@ -208,7 +213,7 @@ class Service {
 	 *
 	 * @return \Elgg\Menu\PreparedMenu
 	 */
-	protected function prepareDropdownMenu(PreparedMenu $menu, array $params) {
+	protected function prepareDropdownMenu(PreparedMenu $menu, array $params): PreparedMenu {
 		if (elgg_extract('prepare_dropdown', $params) !== true) {
 			return $menu;
 		}
@@ -247,7 +252,7 @@ class Service {
 	 * @param PreparedMenu $menu   the current prepared menu
 	 * @param array        $params the menu params
 	 *
-	 * @return PreparedMenu
+	 * @return \Elgg\Menu\PreparedMenu
 	 * @since 4.2
 	 */
 	protected function prepareItemContentsView(PreparedMenu $menu, array $params): PreparedMenu {
@@ -284,9 +289,9 @@ class Service {
 	 * @param array    $params   Menu params
 	 * @param string   $new_name Combined menu name (used for the prepare hook)
 	 *
-	 * @return UnpreparedMenu
+	 * @return \Elgg\Menu\UnpreparedMenu
 	 */
-	public function combineMenus(array $names = [], array $params = [], $new_name = '') {
+	public function combineMenus(array $names = [], array $params = [], string $new_name = ''): UnpreparedMenu {
 		if (!$new_name) {
 			$new_name = implode('__', $names);
 		}
@@ -318,9 +323,9 @@ class Service {
 	 *
 	 * @param array $items An array of ElggMenuItem instances or menu item factory options
 	 *
-	 * @return MenuItems
+	 * @return \Elgg\Menu\MenuItems
 	 */
-	public function prepareMenuItems($items = []) {
+	public function prepareMenuItems(array $items = []): MenuItems {
 		$prepared_items = new MenuItems();
 
 		foreach ($items as $item) {
@@ -337,5 +342,54 @@ class Service {
 		}
 
 		return $prepared_items;
+	}
+	
+	/**
+	 * Register a menu item
+	 *
+	 * @param string $menu_name The name of the menu
+	 * @param mixed  $menu_item An \ElggMenuItem object
+	 *
+	 * @return void
+	 * @since 5.0
+	 */
+	public function registerMenuItem(string $menu_name, \ElggMenuItem $menu_item): void {
+		$this->menus[$menu_name][] = $menu_item;
+	}
+	
+	/**
+	 * Remove an item from a menu
+	 *
+	 * @param string $menu_name The name of the menu
+	 * @param string $item_name The unique identifier for this menu item
+	 *
+	 * @return \ElggMenuItem|null
+	 * @since 5.0
+	 */
+	public function unregisterMenuItem(string $menu_name, string $item_name): ?\ElggMenuItem {
+		if (!isset($this->menus[$menu_name])) {
+			return null;
+		}
+		
+		foreach ($this->menus[$menu_name] as $index => $menu_item) {
+			if ($menu_item->getName() === $item_name) {
+				$item = $this->menus[$menu_name][$index];
+				unset($this->menus[$menu_name][$index]);
+				return $item;
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Returns all registered menu items. Used for debugging purpose.
+	 *
+	 * @return \ElggMenuItem[]
+	 * @since 5.0
+	 * @internal
+	 */
+	public function getAllMenus(): array {
+		return $this->menus;
 	}
 }
