@@ -1,3 +1,15 @@
+<a name="4.3.2"></a>
+### 4.3.2  (2022-09-23)
+
+#### Contributors
+
+* Jeroen Dalsem (1)
+
+#### Bug Fixes
+
+* **output:** allow mailto and tel scheme if used directly via output/url ([bad4de81](https://github.com/Elgg/Elgg/commit/bad4de811e6152aeeba56c124e6c5545bd599420))
+
+
 <a name="4.3.1"></a>
 ### 4.3.1  (2022-08-26)
 
