@@ -60,10 +60,6 @@ class InternalContainer extends \Elgg\Di\InternalContainer{
 				$c->request
 			);
 		});
-
-		$container->set('siteSecret', function (ContainerInterface $c) {
-			return new \Elgg\Database\SiteSecret('z1234567890123456789012345678901');
-		});
 		
 		$container->set('translator', \DI\autowire(\Elgg\Mocks\I18n\Translator::class));
 		$container->set('usersTable', \DI\autowire(\Elgg\Mocks\Database\UsersTable::class));

@@ -158,7 +158,7 @@ return [
     }),
 	'sessionCache' => DI\autowire(\Elgg\Cache\SessionCache::class),
 	'simpleCache' => DI\autowire(\Elgg\Cache\SimpleCache::class),
-	// siteSecret definition is created during initConfig of \Elgg\Di\InternalContainer
+	'siteSecret' => DI\autowire(\Elgg\Database\SiteSecret::class),
 	'stickyForms' => DI\autowire(\Elgg\Forms\StickyForms::class),
 	'systemCache' => DI\autowire(\Elgg\Cache\SystemCache::class)->constructorParameter('cache', DI\get('fileCache')),
 	'serverCache' => DI\autowire(\Elgg\Cache\SystemCache::class)->constructorParameter('cache', DI\get('localFileCache')),

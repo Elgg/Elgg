@@ -2,7 +2,6 @@
 
 namespace Elgg\Database;
 
-use Elgg\Config as ElggConfig;
 use Elgg\Exceptions\Configuration\InstallationException;
 use Elgg\Exceptions\RuntimeException;
 use Elgg\Security\Crypto;
@@ -30,13 +29,32 @@ class SiteSecret {
 	 * @var string
 	 */
 	private $key;
+	
+	/**
+	 * @var Crypto
+	 */
+	protected $crypto;
+	
+	/**
+	 * @var ConfigTable
+	 */
+	protected $table;
 
 	/**
 	 * Constructor
 	 *
-	 * @param string $key Site key (32 hex chars, or "z" and 31 base64 chars)
+	 * @param Crypto      $crypto Crypto service
+	 * @param ConfigTable $table  Config table
 	 */
-	public function __construct($key) {
+	public function __construct(Crypto $crypto, ConfigTable $table) {
+		$this->crypto = $crypto;
+		$this->table = $table;
+		
+		$key = $table->get(self::CONFIG_KEY);
+		if (!$key) {
+			throw new InstallationException('Site secret is not in the config table.');
+		}
+		
 		$this->key = $key;
 	}
 
@@ -104,49 +122,11 @@ class SiteSecret {
 	 *
 	 * Used during installation or regeneration.
 	 *
-	 * @param Crypto      $crypto Crypto service
-	 * @param ConfigTable $table  Config table
-	 *
-	 * @return SiteSecret
+	 * @return void
 	 */
-	public static function regenerate(Crypto $crypto, ConfigTable $table) {
-		$key = 'z' . $crypto->getRandomString(31);
+	public function regenerate() {
+		$key = 'z' . $this->crypto->getRandomString(31);
 
-		$table->set(self::CONFIG_KEY, $key);
-
-		return new self($key);
-	}
-
-	/**
-	 * Create from config/storage.
-	 *
-	 * @param ConfigTable $table Config table
-	 *
-	 * @return SiteSecret
-	 * @throws InstallationException
-	 */
-	public static function fromDatabase(ConfigTable $table) {
-		$key = $table->get(self::CONFIG_KEY);
-		if (!$key) {
-			throw new InstallationException('Site secret is not in the config table.');
-		}
-
-		return new self($key);
-	}
-
-	/**
-	 * Create from a config value. If successful, the value will be erased from config.
-	 *
-	 * @param ElggConfig $config Config
-	 *
-	 * @return SiteSecret|false
-	 */
-	public static function fromConfig(ElggConfig $config) {
-		$key = $config->{self::CONFIG_KEY};
-		if (!$key) {
-			return false;
-		}
-
-		return new self($key);
+		$this->table->set(self::CONFIG_KEY, $key);
 	}
 }

@@ -166,14 +166,6 @@ class InternalContainer extends DiContainer {
 
 		// move sensitive credentials into isolated services
 		$this->set('dbConfig', DbConfig::fromElggConfig($config));
-		$secret = \Elgg\Database\SiteSecret::fromConfig($config);
-		if ($secret) {
-			$this->set('siteSecret', $secret);
-		} else {
-			$this->set('siteSecret', function(ContainerInterface $c) {
-				return \Elgg\Database\SiteSecret::fromDatabase($c->configTable);
-			});
-		}
 
 		// get this stuff out of config!
 		foreach ($config::SENSITIVE_PROPERTIES as $name) {
