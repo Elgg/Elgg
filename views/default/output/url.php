@@ -37,7 +37,7 @@ if (!empty($vars['confirm'])) {
 }
 unset($vars['confirm']);
 
-$allowed_schemes = elgg_extract('allowed_schemes', $vars, ['http', 'https', 'ftp', 'sftp', 'ssh', 'file']);
+$allowed_schemes = elgg_extract('allowed_schemes', $vars, ['http', 'https', 'ftp', 'sftp', 'ssh', 'file', 'mailto', 'tel']);
 if ($allowed_schemes !== false && !is_array($allowed_schemes)) {
 	$allowed_schemes = (array) $allowed_schemes;
 }
