@@ -75,7 +75,6 @@ use Elgg\Traits\Loggable;
  * @property bool          $memcache
  * @property string        $memcache_namespace_prefix
  * @property array         $memcache_servers
- * @property array         $menus
  * @property int           $min_password_length                     The minimal length of a password
  * @property int           $min_password_lower                      The minimal number of lower case characters in a password
  * @property int           $min_password_upper                      The minimal number of upper case characters in a password
