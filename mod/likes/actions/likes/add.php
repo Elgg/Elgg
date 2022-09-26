@@ -43,7 +43,7 @@ $annotation = elgg_get_annotation_from_id($annotation_id);
 
 $title_str = $entity->getDisplayName();
 if (!$title_str) {
-	$title_str = elgg_get_excerpt($entity->description, 80);
+	$title_str = elgg_get_excerpt((string) $entity->description, 80);
 }
 
 $site = elgg_get_site_entity();
