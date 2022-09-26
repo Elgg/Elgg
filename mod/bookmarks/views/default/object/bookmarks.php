@@ -60,7 +60,7 @@ HTML;
 // brief view
 $url = $entity->address;
 $display_text = $url;
-$excerpt = elgg_get_excerpt($entity->description);
+$excerpt = elgg_get_excerpt((string) $entity->description);
 if ($excerpt) {
 	$excerpt = " - $excerpt";
 }

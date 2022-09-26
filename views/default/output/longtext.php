@@ -12,7 +12,7 @@
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-output');
 
-$text = elgg_extract('value', $vars);
+$text = (string) elgg_extract('value', $vars);
 unset($vars['value']);
 
 $text = elgg_format_html($text, $vars);

@@ -43,7 +43,7 @@ if ($full && !elgg_in_context('gallery')) {
 } else {
 	// brief view
 	$params = [
-		'content' => elgg_get_excerpt($entity->description),
+		'content' => elgg_get_excerpt((string) $entity->description),
 		'icon_entity' => $entity,
 	];
 	$params = $params + $vars;

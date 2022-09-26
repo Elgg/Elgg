@@ -84,7 +84,7 @@ if ($full_view) {
 
 	$params = [
 		'subtitle' => $subtitle,
-		'content' => elgg_get_excerpt($entity->description),
+		'content' => elgg_get_excerpt((string) $entity->description),
 		'icon' => true,
 	];
 	$params = $params + $vars;
