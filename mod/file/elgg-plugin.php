@@ -135,6 +135,9 @@ return [
 		'extensions/item' => [
 			'file/enclosure' => [],
 		],
+		'object/elements/imprint/contents' => [
+			'object/file/imprint/filetype' => [],
+		],
 		'theme_sandbox/icons' => [
 			'file/theme_sandbox/icons/files' => [],
 		],
