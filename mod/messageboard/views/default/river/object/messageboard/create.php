@@ -9,6 +9,6 @@ if (!$item instanceof ElggRiverItem) {
 }
 
 $messageboard = $item->getAnnotation();
-$vars['message'] = elgg_get_excerpt($messageboard->value);
+$vars['message'] = elgg_get_excerpt((string) $messageboard->value);
 
 echo elgg_view('river/elements/layout', $vars);

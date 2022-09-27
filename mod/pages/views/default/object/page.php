@@ -18,7 +18,7 @@ if ($entity->write_access_id == ACCESS_PUBLIC) {
 	$entity->write_access_id = ACCESS_LOGGED_IN;
 }
 
-$description = $entity->description;
+$description = (string) $entity->description;
 
 $byline_owner_entity = null;
 $icon_entity = null;

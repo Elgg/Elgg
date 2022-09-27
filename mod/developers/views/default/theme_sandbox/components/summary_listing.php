@@ -14,6 +14,6 @@ echo elgg_view('object/elements/summary', [
 	'subtitle' => 'Listing subtitle',
 	'class' => 'theme-sandbox-summary-listing',
 	'handler' => 'theme-sandbox',
-	'content' => elgg_get_excerpt($object->description),
+	'content' => elgg_get_excerpt((string) $object->description),
 	'icon' => $icon,
 ]);

@@ -76,7 +76,7 @@ class CreateTheWireEventHandler extends NotificationEventHandler {
 	 * {@inheritDoc}
 	 */
 	protected function getNotificationSummary(\ElggUser $recipient, string $method): string {
-		return elgg_echo('thewire:notify:summary', [elgg_get_excerpt($this->event->getObject()->description)], $recipient->getLanguage());
+		return elgg_echo('thewire:notify:summary', [elgg_get_excerpt((string) $this->event->getObject()->description)], $recipient->getLanguage());
 	}
 	
 	/**

@@ -32,7 +32,7 @@ class Breadcrumbs {
 		/** @var $crumb \ElggMenuItem */
 		foreach ($items as $crumb) {
 			$last = $crumb;
-			$crumb->setText(elgg_get_excerpt($crumb->getText(), 100));
+			$crumb->setText(elgg_get_excerpt((string) $crumb->getText(), 100));
 		}
 		
 		// remove last crumb if it has no link

@@ -53,6 +53,6 @@ class ElggBlog extends ElggObject {
 	public function getExcerpt(int $length = 250): string {
 		$excerpt = $this->excerpt ?: $this->description;
 		
-		return elgg_get_excerpt($excerpt, $length);
+		return elgg_get_excerpt((string) $excerpt, $length);
 	}
 }

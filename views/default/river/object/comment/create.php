@@ -42,7 +42,7 @@ if ($key !== false) {
 	$vars['summary'] = elgg_echo($key, [$subject_link, $target_link]);
 }
 
-$message = elgg_get_excerpt($comment->description);
+$message = elgg_get_excerpt((string) $comment->description);
 if (elgg_substr($message, -3) === '...') {
 	$message .= elgg_view_url($comment->getURL(), elgg_echo('read_more'), ['class' => 'mls']);
 }

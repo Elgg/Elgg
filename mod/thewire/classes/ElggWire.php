@@ -24,7 +24,7 @@ class ElggWire extends ElggObject {
 	 * @see ElggObject::getDisplayName()
 	 */
 	public function getDisplayName(): string {
-		return elgg_get_excerpt($this->description, 25);
+		return elgg_get_excerpt((string) $this->description, 25);
 	}
 	
 	/**
