@@ -16,6 +16,6 @@ if (!$object instanceof ElggObject) {
 	return;
 }
 
-$vars['message'] = elgg_get_excerpt($object->description);
+$vars['message'] = elgg_get_excerpt((string) $object->description);
 
 echo elgg_view('river/elements/layout', $vars);
