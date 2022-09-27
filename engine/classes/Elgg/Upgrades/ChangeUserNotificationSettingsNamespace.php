@@ -12,7 +12,7 @@ use Elgg\Database\Update;
  *
  * @since 4.0
  */
-class ChangeUserNotificationSettingsNamespace implements SystemUpgrade {
+class ChangeUserNotificationSettingsNamespace extends SystemUpgrade {
 
 	/**
 	 * {@inheritDoc}

@@ -15,7 +15,7 @@ use Elgg\Upgrade\Result;
  *
  * @since 4.0
  */
-class NotificationsPrefix implements AsynchronousUpgrade {
+class NotificationsPrefix extends AsynchronousUpgrade {
 
 	/**
 	 * {@inheritDoc}

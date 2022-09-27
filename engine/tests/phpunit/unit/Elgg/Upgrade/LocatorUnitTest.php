@@ -47,6 +47,10 @@ class LocatorUnitTest extends \Elgg\UnitTestCase {
 			$this->assertEquals('test_plugin:2016101900', $upgrade->id);
 			$this->assertEquals("test_plugin:upgrade:2016101900:title", $upgrade->title);
 			$this->assertEquals("test_plugin:upgrade:2016101900:description", $upgrade->description);
+			
+			$batch = _elgg_services()->upgradeLocator->getBatch($class, $upgrade);
+			$this->assertInstanceOf(ElggUpgrade::class, $batch->getUpgrade());
+			$this->assertEquals($upgrade->guid, $batch->getUpgrade()->guid);
 		});
 	}
 

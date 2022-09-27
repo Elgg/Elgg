@@ -5,7 +5,7 @@ namespace Elgg\Helpers\Upgrade;
 use Elgg\Upgrade\Batch;
 use Elgg\Upgrade\Result;
 
-class TestNoIncrementBatch implements Batch {
+class TestNoIncrementBatch extends Batch {
 
 	/**
 	 * @var int

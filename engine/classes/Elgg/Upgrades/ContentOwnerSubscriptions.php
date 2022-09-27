@@ -12,7 +12,7 @@ use Elgg\Upgrade\Result;
  *
  * @since 4.0
  */
-class ContentOwnerSubscriptions implements AsynchronousUpgrade {
+class ContentOwnerSubscriptions extends AsynchronousUpgrade {
 
 	/**
 	 * {@inheritDoc}
@@ -106,7 +106,7 @@ class ContentOwnerSubscriptions implements AsynchronousUpgrade {
 	 * @see elgg_get_entities()
 	 */
 	protected function getOptions(array $options = []): array {
-		$upgrade = $this->getUpgradeEntity();
+		$upgrade = $this->getUpgrade();
 		
 		$defaults = [
 			'created_before' => $upgrade->time_created,
@@ -155,14 +155,5 @@ class ContentOwnerSubscriptions implements AsynchronousUpgrade {
 		];
 		
 		return array_merge($defaults, $options);
-	}
-	
-	/**
-	 * Get the ElggUpgrade for this Upgrade Batch
-	 *
-	 * @return \ElggUpgrade
-	 */
-	protected function getUpgradeEntity(): \ElggUpgrade {
-		return _elgg_services()->upgradeLocator->getUpgradeByClass(self::class);
 	}
 }

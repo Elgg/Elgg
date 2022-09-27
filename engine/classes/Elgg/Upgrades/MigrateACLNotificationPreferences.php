@@ -12,7 +12,7 @@ use Elgg\Database\QueryBuilder;
  *
  * @since 4.0
  */
-class MigrateACLNotificationPreferences implements AsynchronousUpgrade {
+class MigrateACLNotificationPreferences extends AsynchronousUpgrade {
 
 	/**
 	 * {@inheritDoc}

@@ -7,6 +7,6 @@ namespace Elgg\Upgrade;
  *
  * @see \Elgg\Application::upgrade()
  */
-interface SystemUpgrade extends Batch {
+abstract class SystemUpgrade extends Batch {
 
 }

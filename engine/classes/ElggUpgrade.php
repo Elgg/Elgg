@@ -106,7 +106,7 @@ class ElggUpgrade extends ElggObject {
 	 */
 	public function getBatch(): Batch|false {
 		try {
-			$batch = _elgg_services()->upgradeLocator->getBatch($this->class);
+			$batch = _elgg_services()->upgradeLocator->getBatch($this->class, $this);
 		} catch (ElggInvalidArgumentException $ex) {
 			// only report error if the upgrade still needs to run
 			$loglevel = $this->isCompleted() ? 'INFO' : 'ERROR';

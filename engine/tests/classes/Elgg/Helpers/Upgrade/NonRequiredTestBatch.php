@@ -4,7 +4,7 @@ namespace Elgg\Helpers\Upgrade;
 
 use Elgg\Upgrade\Result;
 
-class NonRequiredTestBatch implements \Elgg\Upgrade\Batch {
+class NonRequiredTestBatch extends \Elgg\Upgrade\Batch {
 
 	/**
 	 * {@inheritDoc}

@@ -5,7 +5,7 @@ namespace Elgg\Helpers\Upgrade;
 use Elgg\Upgrade\Batch;
 use Elgg\Upgrade\Result;
 
-class UnknownSizeTestBatch implements Batch {
+class UnknownSizeTestBatch extends Batch {
 
 	/**
 	 * @var int

@@ -8,7 +8,7 @@ use Elgg\Upgrade\Result;
 /**
  * Updates database charset to utf8mb4
  */
-class AlterDatabaseToMultiByteCharset implements AsynchronousUpgrade {
+class AlterDatabaseToMultiByteCharset extends AsynchronousUpgrade {
 
 	private $utf8mb4_tables = [
 		// InnoDB
