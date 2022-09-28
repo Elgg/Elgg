@@ -16,10 +16,10 @@ if ($full && !elgg_in_context('gallery')) {
 	$base_type = substr($mime, 0, strpos($mime, '/'));
 
 	$extra = '';
-	if (elgg_view_exists("file/specialcontent/$mime")) {
-		$extra = elgg_view("file/specialcontent/$mime", $vars);
-	} elseif (elgg_view_exists("file/specialcontent/$base_type/default")) {
-		$extra = elgg_view("file/specialcontent/$base_type/default", $vars);
+	if (elgg_view_exists("file/specialcontent/{$mime}")) {
+		$extra = elgg_view("file/specialcontent/{$mime}", $vars);
+	} elseif (elgg_view_exists("file/specialcontent/{$base_type}/default")) {
+		$extra = elgg_view("file/specialcontent/{$base_type}/default", $vars);
 	}
 
 	$body = elgg_view('output/longtext', ['value' => $entity->description]);
@@ -44,7 +44,7 @@ if ($full && !elgg_in_context('gallery')) {
 	// brief view
 	$params = [
 		'content' => elgg_get_excerpt((string) $entity->description),
-		'icon_entity' => $entity,
+		'icon_entity' => $entity->getOwnerEntity(),
 	];
 	$params = $params + $vars;
 	echo elgg_view('object/elements/summary', $params);

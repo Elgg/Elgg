@@ -5,7 +5,7 @@ namespace Elgg\Helpers\Upgrade;
 use Elgg\Upgrade\Batch;
 use Elgg\Upgrade\Result;
 
-class TestBatch implements Batch {
+class TestBatch extends Batch {
 
 	/**
 	 * {@inheritDoc}

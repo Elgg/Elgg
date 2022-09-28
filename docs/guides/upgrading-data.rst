@@ -9,7 +9,7 @@ to more efficient or flexible structure. Or perhaps due to a bug the data items 
 been saved in an invalid way, and they needs to be converted to the correct format.
 
 Migrations and convertions like this may take a long time if there is a lot of
-data to be processed. This is why Elgg provides the ``Elgg\Upgrade\Batch`` interface
+data to be processed. This is why Elgg provides the ``Elgg\Upgrade\AsynchronousUpgrade`` class
 that can be used for implementing long-running upgrades.
 
 Declaring a plugin upgrade
@@ -17,7 +17,7 @@ Declaring a plugin upgrade
 
 Plugin can communicate the need for an upgrade under the ``upgrades`` key in
 ``elgg-plugin.php`` file. Each value of the array must be the fully qualified
-name of an upgrade class that implements the ``Elgg\Upgrade\Batch`` interface.
+name of an upgrade class that extends the ``Elgg\Upgrade\AsynchronousUpgrade`` class.
 
 Example from ``mod/blog/elgg-plugin.php`` file:
 
@@ -39,7 +39,7 @@ The class names in the example refer to the classes:
 The upgrade class
 -----------------
 
-A class implementing the ``Elgg\Upgrade\Batch`` interface has a lot of freedom
+A class extending the ``Elgg\Upgrade\AsynchronousUpgrade`` class has a lot of freedom
 on how it wants to handle the actual processing of the data. It must however
 declare some constant variables and also take care of marking whether each
 processed item was upgraded successfully or not.
@@ -52,13 +52,13 @@ The basic structure of the class is the following:
 	
 	namespace Blog\Upgrades;
 
-	use Elgg\Upgrade\Batch;
+	use Elgg\Upgrade\AsynchronousUpgrade;
 	use Elgg\Upgrade\Result;
 	
 	/**
 	 * Fixes invalid blog access values
 	 */
-	class AccessLevelFix implements Batch {
+	class AccessLevelFix extends AsynchronousUpgrade {
 
 		/**
 		 * Version of the upgrade
@@ -208,11 +208,16 @@ In most cases your ``run()`` method will want to pass the ``$offset`` parameter 
 		return $result;
 	}
 
+getUpgrade()
+^^^^^^^^^^^^
+
+Use this function to get the related ``ElggUpgrade`` entity that is related to this upgrade.
+
 
 Administration interface
 ------------------------
 
-Each upgrade implementing the ``Elgg\Upgrade\Batch`` interface gets
+Each upgrade extending the ``Elgg\Upgrade\AsynchronousUpgrade`` class gets
 listed in the admin panel after triggering the site upgrade from the
 Administration dashboard.
 

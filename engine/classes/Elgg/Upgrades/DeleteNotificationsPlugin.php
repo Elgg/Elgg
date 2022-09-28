@@ -8,7 +8,7 @@ use Elgg\Upgrade\Result;
 /**
  * Remove the notifications plugin entity
  */
-class DeleteNotificationsPlugin implements SystemUpgrade {
+class DeleteNotificationsPlugin extends SystemUpgrade {
 
 	/**
 	 * {@inheritDoc}

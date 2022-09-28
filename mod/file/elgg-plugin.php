@@ -86,11 +86,6 @@ return [
 				'Elgg\File\Icons::setIconSizes' => [],
 			],
 		],
-		'entity:icon:url' => [
-			'object' => [
-				'Elgg\File\Icons::setIconUrl' => [],
-			],
-		],
 		'register' => [
 			'menu:embed' => [
 				'Elgg\File\Menus\Embed::registerFile' => [],
@@ -135,8 +130,8 @@ return [
 		'extensions/item' => [
 			'file/enclosure' => [],
 		],
-		'theme_sandbox/icons' => [
-			'file/theme_sandbox/icons/files' => [],
+		'object/elements/imprint/contents' => [
+			'object/file/imprint/filetype' => [],
 		],
 	],
 	'notifications' => [

@@ -8,7 +8,7 @@ use Elgg\Upgrade\Result;
 /**
  * @see \Elgg\Upgrade\LocatorIntegrationTest
  */
-class UpgradeLocatorTestBatch implements AsynchronousUpgrade {
+class UpgradeLocatorTestBatch extends AsynchronousUpgrade {
 	
 	protected $_version;
 	

@@ -22,7 +22,7 @@ $owner = $entity->getOwnerEntity();
 
 $size = elgg_extract('icon_size', $vars, 'small');
 
-if ($entity->hasIcon($size) || $entity instanceof \ElggFile) {
+if ($entity->hasIcon($size)) {
 	echo elgg_view_entity_icon($entity, $size);
 } else if ($entity->getType() === 'user' || $entity->getType() === 'group') {
 	echo elgg_view_entity_icon($entity, $size);

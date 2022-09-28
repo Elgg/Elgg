@@ -29,6 +29,13 @@ Breadcrumbs integrated into menu system
 Helper functions for the breadcrumb menu have been changed to use `elgg_register_menu_item()` for adding items to the breadcrumb menu. 
 Breadcrumb related hooks have been removed in favor of the regular menu hooks. 
 
+Upgrades
+--------
+
+Async or system upgrades are no longer classes that implement interfaces but extend abstract classes. Update your upgrades to extend the correct classes.
+The reason for this change is to be able to access the ``ElggUpgrade`` entity from the ``Batch`` that runs a part of the upgrade. 
+You can access the upgrade by calling ``$this->getUpgrade()``.
+
 Javascript
 ----------
 

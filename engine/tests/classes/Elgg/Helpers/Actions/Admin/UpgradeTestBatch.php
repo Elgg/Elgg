@@ -8,7 +8,7 @@ use Elgg\Upgrade\Result;
 /**
  * @see \Elgg\Actions\Admin\UpgradeTest
  */
-class UpgradeTestBatch implements AsynchronousUpgrade {
+class UpgradeTestBatch extends AsynchronousUpgrade {
 	
 	protected $_version;
 	

@@ -113,12 +113,13 @@ class Locator {
 	/**
 	 * Validates class and returns an instance of batch
 	 *
-	 * @param string $class The fully qualified class name
+	 * @param string       $class   The fully qualified class name
+	 * @param \ElggUpgrade $upgrade The upgrade
 	 *
 	 * @return Batch
 	 * @throws InvalidArgumentException
 	 */
-	public function getBatch($class) {
+	public function getBatch(string $class, \ElggUpgrade $upgrade = null) {
 		if (!class_exists($class)) {
 			throw new InvalidArgumentException("Upgrade class $class was not found");
 		}
@@ -127,7 +128,7 @@ class Locator {
 			throw new InvalidArgumentException("Upgrade class $class should implement " . Batch::class);
 		}
 
-		return new $class;
+		return new $class($upgrade);
 	}
 
 	/**

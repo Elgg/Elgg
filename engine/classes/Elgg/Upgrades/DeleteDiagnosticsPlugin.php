@@ -8,7 +8,7 @@ use Elgg\Upgrade\Result;
 /**
  * Remove the diagnostics plugin entity
  */
-class DeleteDiagnosticsPlugin implements SystemUpgrade {
+class DeleteDiagnosticsPlugin extends SystemUpgrade {
 
 	/**
 	 * {@inheritDoc}

@@ -7,13 +7,27 @@ namespace Elgg\Upgrade;
  *
  * @since 3.0.0
  */
-interface Batch {
+abstract class Batch {
 
 	/**
 	 * countItems() should return this if it doesn't know how many items remain.
 	 */
 	const UNKNOWN_COUNT = -1;
 
+	/**
+	 * @var \ElggUpgrade
+	 */
+	protected $upgrade;
+
+	/**
+	 * Constructs a upgrade batch
+	 *
+	 * @param \ElggUpgrade $upgrade the upgrade related to this batch
+	 */
+	public function __construct(\ElggUpgrade $upgrade = null) {
+		$this->upgrade = $upgrade;
+	}
+	
 	/**
 	 * Version of the upgrade
 	 *
@@ -28,7 +42,7 @@ interface Batch {
 	 *
 	 * @return int E.g. 2016123101
 	 */
-	public function getVersion(): int;
+	abstract public function getVersion(): int;
 
 	/**
 	 * Should this upgrade be skipped?
@@ -37,7 +51,7 @@ interface Batch {
 	 *
 	 * @return bool
 	 */
-	public function shouldBeSkipped(): bool;
+	abstract public function shouldBeSkipped(): bool;
 
 	/**
 	 * Should the run() method receive an offset representing all processed items?
@@ -52,7 +66,7 @@ interface Batch {
 	 *
 	 * @return bool
 	 */
-	public function needsIncrementOffset(): bool;
+	abstract public function needsIncrementOffset(): bool;
 
 	/**
 	 * The total number of items to process during the upgrade
@@ -62,7 +76,7 @@ interface Batch {
 	 *
 	 * @return int
 	 */
-	public function countItems(): int;
+	abstract public function countItems(): int;
 
 	/**
 	 * Runs upgrade on a single batch of items
@@ -75,5 +89,15 @@ interface Batch {
 	 *
 	 * @return Result
 	 */
-	public function run(Result $result, $offset): Result;
+	abstract public function run(Result $result, $offset): Result;
+
+	/**
+	 * Returns the related upgrade entity
+	 *
+	 * @return \ElggUpgrade|null
+	 * @since 5.0
+	 */
+	final public function getUpgrade(): ?\ElggUpgrade {
+		return $this->upgrade;
+	}
 }
