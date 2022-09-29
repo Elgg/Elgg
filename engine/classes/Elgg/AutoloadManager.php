@@ -35,11 +35,11 @@ class AutoloadManager {
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\ClassLoader $loader Class loader object
-	 * @param \Elgg\Config      $config Config
-	 * @param \ElggCache        $cache  local file cache
+	 * @param \Elgg\ClassLoader     $loader Class loader object
+	 * @param \Elgg\Config          $config Config
+	 * @param \Elgg\Cache\BaseCache $cache  local file cache
 	 */
-	public function __construct(\Elgg\ClassLoader $loader, \Elgg\Config $config, \ElggCache $cache) {
+	public function __construct(\Elgg\ClassLoader $loader, \Elgg\Config $config, \Elgg\Cache\BaseCache $cache) {
 		$this->loader = $loader;
 		
 		if (!$config->AutoloaderManager_skip_storage) {

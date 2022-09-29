@@ -1,7 +1,6 @@
 <?php
-namespace Elgg\Security;
 
-use Elgg\Database\SiteSecret;
+namespace Elgg\Security;
 
 /**
  * Provides a factory for HMAC objects
@@ -11,12 +10,12 @@ class HmacFactory {
 	/**
 	 * @var SiteSecret
 	 */
-	private $site_secret;
+	protected $site_secret;
 
 	/**
 	 * @var Crypto
 	 */
-	private $crypto;
+	protected $crypto;
 
 	/**
 	 * Constructor

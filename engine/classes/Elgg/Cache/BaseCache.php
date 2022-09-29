@@ -1,9 +1,13 @@
 <?php
+
+namespace Elgg\Cache;
+
 /**
- * \ElggCache The elgg cache superclass.
+ * The Elgg cache base class.
  * This defines the interface for a cache (wherever that cache is stored).
  */
-abstract class ElggCache implements \ArrayAccess {
+abstract class BaseCache implements \ArrayAccess {
+
 	/**
 	 * Variables for the cache object.
 	 *

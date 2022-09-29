@@ -26,7 +26,7 @@ class HtmlFormatter {
 	protected $hooks;
 
 	/**
-	 * @var
+	 * @var AutoParagraph
 	 */
 	protected $autop;
 
@@ -35,12 +35,12 @@ class HtmlFormatter {
 	 *
 	 * @param ViewsService       $views Views service
 	 * @param PluginHooksService $hooks Hooks
-	 * @param \ElggAutoP         $autop Paragraph wrapper
+	 * @param AutoParagraph      $autop Paragraph wrapper
 	 */
 	public function __construct(
 		ViewsService $views,
 		PluginHooksService $hooks,
-		\ElggAutoP $autop
+		AutoParagraph $autop
 	) {
 		$this->views = $views;
 		$this->hooks = $hooks;
@@ -139,7 +139,7 @@ class HtmlFormatter {
 				return $result;
 			}
 		} catch (\RuntimeException $e) {
-			$this->getLogger()->warning('ElggAutoP failed to process the string: ' . $e->getMessage());
+			$this->getLogger()->warning('AutoParagraph failed to process the string: ' . $e->getMessage());
 		}
 		
 		return $string;

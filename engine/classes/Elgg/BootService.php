@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Cache\BaseCache;
 use Elgg\Di\InternalContainer;
 use Elgg\Exceptions\RuntimeException;
 use Elgg\Traits\Cacheable;
@@ -22,9 +23,9 @@ class BootService {
 	/**
 	 * Constructs the bootservice
 	 *
-	 * @param \ElggCache $cache Cache
+	 * @param BaseCache $cache Cache
 	 */
-	public function __construct(\ElggCache $cache) {
+	public function __construct(BaseCache $cache) {
 		$this->cache = $cache;
 	}
 

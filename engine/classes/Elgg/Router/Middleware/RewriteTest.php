@@ -4,6 +4,7 @@ namespace Elgg\Router\Middleware;
 
 use Elgg\Exceptions\HttpException;
 use Elgg\Request;
+use Elgg\Router\RewriteTester;
 
 /**
  * Ensure that mod_rewrite is enabled and working
@@ -19,7 +20,7 @@ class RewriteTest {
 	 */
 	public function __invoke(Request $request) {
 
-		$rewriteTester = new \ElggRewriteTester();
+		$rewriteTester = new RewriteTester();
 		$url = elgg_get_site_url() . "__testing_rewrite?__testing_rewrite=1";
 		if (!$rewriteTester->runRewriteTest($url)) {
 			// see if there is a problem accessing the site at all

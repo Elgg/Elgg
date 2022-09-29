@@ -1,6 +1,8 @@
 <?php
 
-use Elgg\Exceptions\RuntimeException as ElggRuntimeException;
+namespace Elgg\Views;
+
+use Elgg\Exceptions\RuntimeException;
 
 /**
  * Create wrapper P and BR elements in HTML depending on newlines. Useful when
@@ -10,7 +12,7 @@ use Elgg\Exceptions\RuntimeException as ElggRuntimeException;
  * In DIV elements, Ps are only added when there would be at
  * least two of them.
  */
-class ElggAutoP {
+class AutoParagraph {
 
 	/**
 	 * @var string
@@ -18,12 +20,12 @@ class ElggAutoP {
 	public $encoding = 'UTF-8';
 
 	/**
-	 * @var DOMDocument
+	 * @var \DOMDocument
 	 */
 	protected $_doc = null;
 
 	/**
-	 * @var DOMXPath
+	 * @var \DOMXPath
 	 */
 	protected $_xpath = null;
 
@@ -99,7 +101,7 @@ class ElggAutoP {
 		// allows preserving entities untouched
 		$html = str_replace('&', $this->_unique . 'AMP', $html);
 
-		$this->_doc = new DOMDocument();
+		$this->_doc = new \DOMDocument();
 
 		// parse to DOM, suppressing loadHTML warnings
 		// http://www.php.net/manual/en/domdocument.loadhtml.php#95463
@@ -114,19 +116,19 @@ class ElggAutoP {
 
 		libxml_use_internal_errors($use_internal_errors);
 
-		$this->_xpath = new DOMXPath($this->_doc);
+		$this->_xpath = new \DOMXPath($this->_doc);
 
 		// start processing recursively at the BODY element
 		$nodeList = $this->_xpath->query('//body[1]');
-		if ($nodeList->item(0) instanceof DOMText) {
+		if ($nodeList->item(0) instanceof \DOMText) {
 			// May be https://github.com/facebook/hhvm/issues/7745
 			// Um... try again?
-			$this->_xpath = new DOMXPath($this->_doc);
+			$this->_xpath = new \DOMXPath($this->_doc);
 			$nodeList = $this->_xpath->query('//body[1]');
 
-			if ($nodeList->item(0) instanceof DOMText) {
+			if ($nodeList->item(0) instanceof \DOMText) {
 				// not going to work
-				throw new ElggRuntimeException('DOMXPath::query for BODY element returned a text node');
+				throw new RuntimeException('DOMXPath::query for BODY element returned a text node');
 			}
 		}
 		$this->addParagraphs($nodeList->item(0));
@@ -157,11 +159,11 @@ class ElggAutoP {
 		libxml_use_internal_errors($use_internal_errors);
 
 		// must re-create XPath object after DOM load
-		$this->_xpath = new DOMXPath($this->_doc);
+		$this->_xpath = new \DOMXPath($this->_doc);
 
 		// strip AUTOPs that only have comments/whitespace
 		foreach ($this->_xpath->query('//autop') as $autop) {
-			/* @var DOMElement $autop */
+			/* @var \DOMElement $autop */
 			$hasContent = false;
 			if (trim($autop->textContent) !== '') {
 				$hasContent = true;
@@ -181,11 +183,11 @@ class ElggAutoP {
 
 		// If a DIV contains a single AUTOP, remove it
 		foreach ($this->_xpath->query('//div') as $el) {
-			/* @var DOMElement $el */
+			/* @var \DOMElement $el */
 			$autops = $this->_xpath->query('./autop', $el);
 			if ($autops->length === 1) {
 				$firstAutop = $autops->item(0);
-				/* @var DOMElement $firstAutop */
+				/* @var \DOMElement $firstAutop */
 				$firstAutop->setAttribute("r", "1");
 			}
 		}
@@ -212,10 +214,11 @@ class ElggAutoP {
 	/**
 	 * Add P and BR elements as necessary
 	 *
-	 * @param DOMElement $el DOM element
+	 * @param \DOMElement $el DOM element
+	 *
 	 * @return void
 	 */
-	protected function addParagraphs(DOMElement $el) {
+	protected function addParagraphs(\DOMElement $el) {
 		// no need to call recursively, just queue up
 		$elsToProcess = [$el];
 		$inlinesToProcess = [];
@@ -273,9 +276,10 @@ class ElggAutoP {
 							$nodeText = ltrim($nodeText);
 							$ltrimFirstTextNode = false;
 						}
-						if ($isFollowingBr && preg_match('@^[ \\t]*\\n[ \\t]*@', $nodeText, $m)) {
+						$matches = [];
+						if ($isFollowingBr && preg_match('@^[ \\t]*\\n[ \\t]*@', $nodeText, $matches)) {
 							// if a user ends a line with <br>, don't add a second BR
-							$nodeText = elgg_substr($nodeText, elgg_strlen($m[0]));
+							$nodeText = elgg_substr($nodeText, elgg_strlen($matches[0]));
 						}
 						if ($isLastInline) {
 							// we're at the end of a sequence of text/inline elements

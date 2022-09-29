@@ -5,7 +5,7 @@ namespace Elgg\Cache;
 use Elgg\UnitTestCase;
 use Elgg\Exceptions\ConfigurationException;
 
-abstract class ElggCacheTestCase extends UnitTestCase {
+abstract class BaseCacheTestCase extends UnitTestCase {
 
 	/**
 	 * @var CompositeCache

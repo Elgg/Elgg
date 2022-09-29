@@ -2,8 +2,8 @@
 
 namespace Elgg\Traits;
 
+use Elgg\Cache\BaseCache;
 use Elgg\Cache\CompositeCache;
-use ElggCache;
 
 /**
  * Utility trait for injecting cache
@@ -13,27 +13,27 @@ use ElggCache;
 trait Cacheable {
 
 	/**
-	 * @var ElggCache
+	 * @var BaseCache
 	 */
 	protected $cache;
 
 	/**
 	 * Set cache
 	 *
-	 * @param ElggCache $cache Cache
+	 * @param BaseCache $cache Cache
 	 *
 	 * @return void
 	 */
-	public function setCache(ElggCache $cache) {
+	public function setCache(BaseCache $cache): void {
 		$this->cache = $cache;
 	}
 
 	/**
 	 * Get cache
 	 *
-	 * @return ElggCache
+	 * @return BaseCache
 	 */
-	public function getCache() {
+	public function getCache(): BaseCache {
 		if (!isset($this->cache)) {
 			return new CompositeCache('void', _elgg_services()->config, ELGG_CACHE_BLACK_HOLE);
 		}

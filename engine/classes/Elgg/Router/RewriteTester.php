@@ -1,14 +1,17 @@
 <?php
 
-use Elgg\Filesystem\Directory as ElggDirectory;
-use Elgg\Project\Paths;
+namespace Elgg\Router;
+
+use Elgg\Filesystem\Directory\Local;
 use Elgg\Http\Request;
+use Elgg\Project\Paths;
 
 /**
- * Elgg RewriteTester.
- * Test if URL rewriting is working.
+ * Test if URL rewriting is working
+ *
+ * @internal
  */
-class ElggRewriteTester {
+class RewriteTester {
 	protected $webserver;
 	protected $serverSupportsRemoteRead;
 	protected $rewriteTestPassed;
@@ -31,7 +34,7 @@ class ElggRewriteTester {
 	 */
 	public function run($url, $path = null) {
 
-		$this->webserver = \ElggRewriteTester::guessWebServer();
+		$this->webserver = $this->guessWebServer();
 
 		$this->rewriteTestPassed = $this->runRewriteTest($url);
 
@@ -51,7 +54,7 @@ class ElggRewriteTester {
 	 *
 	 * @return string
 	 */
-	public static function guessWebServer() {
+	protected function guessWebServer() {
 		if (empty($_SERVER['SERVER_SOFTWARE'])) {
 			return 'unknown';
 		}
@@ -74,7 +77,7 @@ class ElggRewriteTester {
 	 * @return string|bool Subdirectory string with beginning and trailing slash or false if were unable to determine subdirectory
 	 * or pointing at root of domain already
 	 */
-	public function guessSubdirectory($url) {
+	protected function guessSubdirectory($url) {
 		$elements = parse_url($url);
 		if (!is_array($elements) || !isset($elements['path'])) {
 			return false;
@@ -150,7 +153,7 @@ class ElggRewriteTester {
 	 * @return bool
 	 */
 	public function createHtaccess($url) {
-		$root = ElggDirectory\Local::projectRoot();
+		$root = Local::projectRoot();
 		$file = $root->getFile(".htaccess");
 
 		if ($file->exists()) {

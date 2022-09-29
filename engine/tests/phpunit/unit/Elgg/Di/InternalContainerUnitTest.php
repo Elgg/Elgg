@@ -1,13 +1,13 @@
 <?php
 /**
  * This is a UnitTestCase because we do not want config data to be
- * manipulated in a real database during the testSetsBackupSiteSecretFactory test
+ * manipulated in a real database
  */
 
-namespace Elgg\Database;
+namespace Elgg\Di;
 
+use Elgg\Security\SiteSecret;
 use Elgg\UnitTestCase;
-use Elgg\Di\InternalContainer;
 
 class InternalContainerUnitTest extends UnitTestCase {
 

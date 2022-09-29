@@ -9,9 +9,10 @@ use Elgg\Exceptions\Configuration\InstallationException;
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\LoginException;
+use Elgg\Exceptions\PluginException;
 use Elgg\Http\Request;
 use Elgg\Project\Paths;
-use Elgg\Exceptions\PluginException;
+use Elgg\Router\RewriteTester;
 
 /**
  * Elgg Installer.
@@ -231,7 +232,7 @@ class ElggInstaller {
 		$params['password1'] = $params['password2'] = $params['password'];
 
 		if ($create_htaccess) {
-			$rewrite_tester = new ElggRewriteTester();
+			$rewrite_tester = new RewriteTester();
 			if (!$rewrite_tester->createHtaccess($params['wwwroot'])) {
 				throw new InstallationException(elgg_echo('install:error:htaccess'));
 			}
@@ -1098,7 +1099,7 @@ class ElggInstaller {
 	protected function checkRewriteRules(&$report) {
 		$app = $this->getApp();
 
-		$tester = new ElggRewriteTester();
+		$tester = new RewriteTester();
 		$url = $app->internal_services->config->wwwroot;
 		$url .= Request::REWRITE_TEST_TOKEN . '?' . http_build_query([
 				Request::REWRITE_TEST_TOKEN => '1',
