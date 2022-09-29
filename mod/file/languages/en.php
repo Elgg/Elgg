@@ -21,6 +21,8 @@ return array(
 	'item:object:file:video' => 'Video',
 	'item:object:file:word' => 'Word',
 	
+	'file:upgrade:2022092801:title' => 'Move Files',
+	'file:upgrade:2022092801:description' => 'Moves files uploaded using the file plugin to the file entity folder instead of the owner entity folder.',
 	
 	'collection:object:file' => 'Files',
 	'collection:object:file:all' => "All site files",

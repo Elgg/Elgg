@@ -13,10 +13,10 @@ $file = elgg_extract('entity', $vars);
 
 $img = elgg_format_element('img', [
 	'class' => 'elgg-photo',
-	'src' => $file->getIconURL('large'),
+	'src' => $file->getIconURL('xlarge'),
 ]);
 $a = elgg_format_element('a', [
-	'href' => $file->canDownload() ? $file->getDownloadURL() : $file->getIconURL('large'),
+	'href' => $file->canDownload() ? $file->getDownloadURL() : $file->getIconURL('xlarge'),
 	'class' => 'elgg-lightbox-photo',
 ], $img);
 

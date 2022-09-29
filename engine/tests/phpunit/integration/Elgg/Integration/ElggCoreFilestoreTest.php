@@ -52,15 +52,17 @@ class ElggCoreFilestoreTest extends IntegrationTestCase {
 
 	function testElggFileDelete() {
 		$user = $this->owner;
-		$dir = new EntityDirLocator($user->guid);
-
+		
 		$file = new ElggFile();
 		$file->owner_guid = $user->guid;
+		$file->save();
+		
 		$file->setFilename('testing/ElggFileDelete');
 		$this->assertTrue(is_resource($file->open('write')));
 		$this->assertIsInt($file->write('Test'));
 		$this->assertTrue($file->close());
-		$file->save();
+		
+		$dir = new EntityDirLocator($file->guid);
 
 		$filename = $file->getFilenameOnFilestore();
 		$filepath = _elgg_services()->config->dataroot . $dir . "testing/ElggFileDelete";

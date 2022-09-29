@@ -208,9 +208,14 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 * @throws InvalidParameterException
 	 */
 	public function getFilenameOnFilestore(\ElggFile $file): string {
-		$owner_guid = $file->getOwnerGuid();
+		
+		$owner_guid = null;
+		if (!empty($file->guid) && $file->getSubtype() === 'file') {
+			$owner_guid = $file->guid;
+		}
+	
 		if (!$owner_guid) {
-			$owner_guid = _elgg_services()->session->getLoggedInUserGuid();
+			$owner_guid = $file->owner_guid ?: _elgg_services()->session->getLoggedInUserGuid();
 		}
 
 		if (!$owner_guid) {

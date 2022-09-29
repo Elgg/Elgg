@@ -36,6 +36,12 @@ Async or system upgrades are no longer classes that implement interfaces but ext
 The reason for this change is to be able to access the ``ElggUpgrade`` entity from the ``Batch`` that runs a part of the upgrade. 
 You can access the upgrade by calling ``$this->getUpgrade()``.
 
+Files plugin
+------------
+
+Files uploaded using the file plugin are no longer stored with the owner but with the file entity. File icons have also been changed. 
+Icon images are only available for image file types. Icon sizes have been changed to use the default icon sizes.
+
 Javascript
 ----------
 

@@ -26,12 +26,12 @@ class Seeder extends Seed {
 
 			$filename = pathinfo($path, PATHINFO_FILENAME);
 
-			$file = $this->createObject($attributes, [], ['save' => false]);
+			$file = $this->createObject($attributes);
 			if (!$file instanceof \ElggFile) {
 				continue;
 			}
 
-			$file->setFilename("file/$filename");
+			$file->setFilename("file/{$filename}");
 			$file->open('write');
 			$file->close();
 
@@ -41,8 +41,6 @@ class Seeder extends Seed {
 				$file->delete();
 				continue;
 			}
-
-			$file->saveIconFromElggFile($file);
 
 			$this->createComments($file);
 			$this->createLikes($file);
