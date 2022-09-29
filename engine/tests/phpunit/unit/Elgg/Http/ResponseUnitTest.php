@@ -150,7 +150,6 @@ abstract class ResponseUnitTest extends \Elgg\UnitTestCase {
 		return [
 			[-1],
 			[REFERRER],
-			[REFERER],
 			['foo'],
 			['/foo'],
 			['http://localhost/'],

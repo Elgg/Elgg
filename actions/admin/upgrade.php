@@ -10,7 +10,7 @@ if (empty($guid)) {
 
 $upgrade = get_entity($guid);
 if (!$upgrade instanceof \ElggUpgrade) {
-	return elgg_error_response(elgg_echo('admin:upgrades:error:invalid_upgrade', [$guid]), REFERER, ELGG_HTTP_NOT_FOUND);
+	return elgg_error_response(elgg_echo('admin:upgrades:error:invalid_upgrade', [$guid]), REFERRER, ELGG_HTTP_NOT_FOUND);
 }
 
 $result = _elgg_services()->upgrades->executeUpgrade($upgrade);

@@ -42,16 +42,6 @@ define('ELGG_ENTITIES_NO_VALUE', 0);
 define('REFERRER', -1);
 
 /**
- * Alternate spelling for REFERRER.  Included because of some bad documentation
- * in the original HTTP spec.
- *
- * @see forward()
- * @link http://en.wikipedia.org/wiki/HTTP_referrer#Origin_of_the_term_referer
- * @var int -1
- */
-define('REFERER', -1);
-
-/**
  * HTTP Response codes
  */
 define('ELGG_HTTP_CONTINUE', 100);

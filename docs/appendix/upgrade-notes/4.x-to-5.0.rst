@@ -328,3 +328,8 @@ Removed hooks
 ~~~~~~~~~~~~~
 
 * ``prepare, breadcrumbs`` use ``register, menu:breadcrumbs``
+
+Constants
+~~~~~~~~~
+
+* The misspelled ``REFERER`` constant has been removed. Use ``REFERRER`` instead.

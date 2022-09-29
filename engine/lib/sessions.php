@@ -135,7 +135,7 @@ function elgg_is_authentication_failure_limit_reached(\ElggUser $user, int $limi
  *
  * @param \ElggUser $user Logged in user
  *
- * @return string|int url to redirect to. Uses int to indicate REFERER
+ * @return string|int url to redirect to. Uses int to indicate REFERRER
  * @since 4.3
  */
 function elgg_get_login_forward_url(\ElggUser $user): string|int {
@@ -145,7 +145,7 @@ function elgg_get_login_forward_url(\ElggUser $user): string|int {
 		$session->remove('last_forward_from');
 		$forward_source = 'last_forward_from';
 	} elseif (get_input('returntoreferer')) {
-		$forward_url = REFERER;
+		$forward_url = REFERRER;
 		$forward_source = 'return_to_referer';
 	} else {
 		// forward to main index page

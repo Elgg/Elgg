@@ -190,7 +190,7 @@ class Validation {
 		}
 		
 		// if other plugins already have set forwarding, don't do anything
-		if (!empty($response->getForwardURL()) && $response->getForwardURL() !== REFERER) {
+		if (!empty($response->getForwardURL()) && $response->getForwardURL() !== REFERRER) {
 			return;
 		}
 		
