@@ -5,12 +5,16 @@
  * @uses $vars['entity']
  */
 
-if ($vars['entity'] instanceof ElggFile && $vars['entity']->canDownload()) {
-	$download_url = $vars['entity']->getDownloadURL();
-	$size = $vars['entity']->getSize();
-	$mime_type = $vars['entity']->getMimeType();
-	echo <<<END
-
-	<enclosure url="$download_url" length="$size" type="$mime_type" />
-END;
+$file = elgg_extract('entity', $vars);
+if (!$file instanceof \ElggFile || !$file->canDownload()) {
+	return;
 }
+
+echo elgg_format_element('enclosure', [
+	'url' => $file->getDownloadURL(),
+	'length' => $file->getSize(),
+	'type' => $file->getMimeType(),
+], '', [
+	'is_void' => true,
+	'is_xml' => true,
+]);

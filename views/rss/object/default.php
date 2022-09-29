@@ -17,7 +17,7 @@ if (empty($title)) {
 $permalink = htmlspecialchars($entity->getURL(), ENT_NOQUOTES, 'UTF-8');
 $pubdate = date('r', $entity->getTimeCreated());
 
-$description = elgg_autop($entity->description);
+$description = elgg_autop((string) $entity->description);
 
 $creator = elgg_view('page/components/creator', $vars);
 $georss = elgg_view('page/components/georss', $vars);

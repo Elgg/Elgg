@@ -16,5 +16,5 @@ $longitude = $entity->getLongitude();
 $latitude = $entity->getLatitude();
 
 if ($longitude && $latitude) {
-	echo "<georss:point>$latitude $longitude</georss:point>";
+	echo elgg_format_element('georss:point', [], "{$latitude} {$longitude}");
 }
