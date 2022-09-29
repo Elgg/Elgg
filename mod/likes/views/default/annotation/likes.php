@@ -17,11 +17,8 @@ if (!$owner instanceof ElggEntity) {
 
 $owner_link = elgg_view_entity_url($owner);
 
-$likes_string = elgg_echo('likes:this');
-
-
 $params = [
-	'title' => $owner_link . ' ' . $likes_string,
+	'title' => elgg_echo('likes:this', [$owner_link]),
 	'content' => false,
 ];
 $params = $params + $vars;

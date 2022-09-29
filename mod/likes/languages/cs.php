@@ -9,7 +9,6 @@ return array(
 	'annotation:delete:likes:fail' => "Při odebírání vašeho \"líbí se\" se vyskytl problém",
 	'annotation:delete:likes:success' => "Vaše \"líbí se\" bylo odstraněno",
 	
-	'likes:this' => 'přidal "líbí se"',
 	'likes:deleted' => 'Vaše "líbí se" bylo odstraněno',
 	'likes:see' => 'Zobraz komu se to líbí',
 	'likes:remove' => 'Zrušit "líbí se"',
