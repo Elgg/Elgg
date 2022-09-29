@@ -122,7 +122,7 @@ Lib functions function parameters
 * ``elgg_echo()`` now requires a ``string`` for ``$message_key`` and a ``string`` for ``$language``
 * ``elgg_entity_exists()`` now requires a ``int`` for ``$guid``
 * ``elgg_entity_gatekeeper()`` now requires a ``int`` for ``$guid`` and a ``string`` for ``$type`` and a ``string`` for ``$subtype`` and a ``bool`` for ``$validate_can_edit``
-* ``elgg_error_response()`` now requires a ``string`` or ``array`` for ``$message``
+* ``elgg_error_response()`` now requires a ``string`` or ``array`` for ``$message`` and a ``string`` for ``$forward_url``
 * ``elgg_extend_view()`` now requires a ``string`` for ``$view`` and ``$view_extension``
 * ``elgg_extract()`` now requires a ``bool`` for ``$strict``
 * ``elgg_format_bytes()`` now requires an ``int`` for ``$size`` and ``$precision``
@@ -174,9 +174,10 @@ Lib functions function parameters
 * ``elgg_make_sticky_form()`` now requires a ``string`` for ``$form_name``
 * ``elgg_normalize_site_url()`` now requires a ``string`` for ``$unsafe_url``
 * ``elgg_normalize_url()`` now requires a ``string`` for ``$url``
-* ``elgg_ok_response()`` now requires a ``string`` or ``array`` for ``$message``
+* ``elgg_ok_response()`` now requires a ``string`` or ``array`` for ``$message`` and a ``string`` for ``$forward_url``
 * ``elgg_parse_emails()`` now requires a ``string`` for ``$text``
 * ``elgg_push_context()`` now requires a ``string`` for ``$context``
+* ``elgg_redirect_response()`` now requires a ``string`` for ``$forward_url``
 * ``elgg_register_action()`` now requires a ``string`` for ``$filename``
 * ``elgg_register_ajax_view()`` now requires a ``string`` for ``$view``
 * ``elgg_register_error_message()`` now requires a ``string|array`` for ``$message``
@@ -333,3 +334,4 @@ Constants
 ~~~~~~~~~
 
 * The misspelled ``REFERER`` constant has been removed. Use ``REFERRER`` instead.
+* The ``REFERRER`` constant has been changed to a string with the value ``__elgg_referrer``

@@ -48,13 +48,13 @@ interface ResponseBuilder {
 	 * @return self
 	 * @throws InvalidArgumentException
 	 */
-	public function setForwardURL($forward_url = REFERRER);
+	public function setForwardURL(string $forward_url = REFERRER);
 
 	/**
 	 * Returns redirect URL
-	 * @return string|int|null string the forward url, null when no url was set or the constant REFERRER
+	 * @return string|null string the forward url, null when no url was set or the constant REFERRER
 	 */
-	public function getForwardURL();
+	public function getForwardURL(): ?string;
 
 	/**
 	 * Sets additional response headers

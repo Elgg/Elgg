@@ -16,7 +16,7 @@ class ErrorResponse extends Response {
 	 *
 	 * @see elgg_error_response()
 	 */
-	public function __construct($error = '', int $status_code = ELGG_HTTP_BAD_REQUEST, $forward_url = REFERRER) {
+	public function __construct($error = '', int $status_code = ELGG_HTTP_BAD_REQUEST, string $forward_url = REFERRER) {
 		if ($status_code < 100 || $status_code > 599) {
 			$status_code = ELGG_HTTP_INTERNAL_SERVER_ERROR;
 		}

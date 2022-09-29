@@ -295,7 +295,7 @@ class ResponseFactory {
 		}
 
 		if ($response->getForwardURL() === REFERRER) {
-			$response->setForwardURL($this->request->headers->get('Referer'));
+			$response->setForwardURL((string) $this->request->headers->get('Referer'));
 		}
 
 		if ($response->getForwardURL() !== null && !$is_xhr) {
@@ -416,7 +416,7 @@ class ResponseFactory {
 	 * @param string $forward_url Forward URL
 	 * @return string
 	 */
-	public function wrapAjaxResponse($content = '', $forward_url = null) {
+	public function wrapAjaxResponse($content = '', string $forward_url = null) {
 
 		$content = $this->stringify($content);
 
@@ -443,7 +443,7 @@ class ResponseFactory {
 	 * @return false|SymfonyResponse
 	 * @throws InvalidParameterException
 	 */
-	public function redirect($forward_url = REFERRER, $status_code = ELGG_HTTP_FOUND) {
+	public function redirect(string $forward_url = REFERRER, $status_code = ELGG_HTTP_FOUND) {
 		$location = $forward_url;
 		
 		if ($forward_url === REFERRER) {
@@ -461,7 +461,7 @@ class ResponseFactory {
 
 		$forward_reason = (string) $status_code;
 
-		$forward_url = $this->hooks->trigger('forward', $forward_reason, $params, $forward_url);
+		$forward_url = (string) $this->hooks->trigger('forward', $forward_reason, $params, $forward_url);
 		
 		if ($this->response_sent) {
 			// Response was sent from a forward hook
@@ -471,10 +471,6 @@ class ResponseFactory {
 
 		if ($forward_url === REFERRER) {
 			$forward_url = $this->getSiteRefererUrl();
-		}
-
-		if (!is_string($forward_url)) {
-			throw new InvalidParameterException("'forward', '$forward_reason' hook must return a valid redirection URL");
 		}
 
 		$forward_url = $this->makeSecureForwardUrl($forward_url);

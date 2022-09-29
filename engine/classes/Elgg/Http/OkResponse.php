@@ -16,9 +16,12 @@ class OkResponse extends Response {
 	 *
 	 * @see elgg_ok_response()
 	 */
-	public function __construct($content = '', int $status_code = ELGG_HTTP_OK, $forward_url = null) {
+	public function __construct($content = '', int $status_code = ELGG_HTTP_OK, string $forward_url = null) {
 		$this->setContent($content);
 		$this->setStatusCode($status_code);
-		$this->setForwardURL($forward_url);
+		
+		if (isset($forward_url)) {
+			$this->setForwardURL($forward_url);
+		}
 	}
 }

@@ -37,9 +37,9 @@ define('ELGG_ENTITIES_NO_VALUE', 0);
  * referring page.
  *
  * @see forward
- * @var int -1
+ * @var string '__elgg_referrer'
  */
-define('REFERRER', -1);
+define('REFERRER', '__elgg_referrer');
 
 /**
  * HTTP Response codes

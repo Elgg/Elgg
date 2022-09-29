@@ -221,7 +221,7 @@ function elgg_generate_action_url(string $action, array $query = [], bool $add_c
  *
  * @return \Elgg\Http\OkResponse
  */
-function elgg_ok_response($content = '', string|array $message = '', $forward_url = null, int $status_code = ELGG_HTTP_OK): \Elgg\Http\OkResponse {
+function elgg_ok_response($content = '', string|array $message = '', string $forward_url = null, int $status_code = ELGG_HTTP_OK): \Elgg\Http\OkResponse {
 	if ($message) {
 		elgg_register_success_message($message);
 	}
@@ -242,7 +242,7 @@ function elgg_ok_response($content = '', string|array $message = '', $forward_ur
  *
  * @return \Elgg\Http\ErrorResponse
  */
-function elgg_error_response(string|array $message = '', $forward_url = REFERRER, int $status_code = ELGG_HTTP_BAD_REQUEST): \Elgg\Http\ErrorResponse {
+function elgg_error_response(string|array $message = '', string $forward_url = REFERRER, int $status_code = ELGG_HTTP_BAD_REQUEST): \Elgg\Http\ErrorResponse {
 	if ($message) {
 		elgg_register_error_message($message);
 		
@@ -266,6 +266,6 @@ function elgg_error_response(string|array $message = '', $forward_url = REFERRER
  *
  * @return \Elgg\Http\RedirectResponse
  */
-function elgg_redirect_response($forward_url = REFERRER, int $status_code = ELGG_HTTP_FOUND): \Elgg\Http\RedirectResponse {
+function elgg_redirect_response(string $forward_url = REFERRER, int $status_code = ELGG_HTTP_FOUND): \Elgg\Http\RedirectResponse {
 	return new Elgg\Http\RedirectResponse($forward_url, $status_code);
 }

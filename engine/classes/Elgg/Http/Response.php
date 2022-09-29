@@ -91,10 +91,7 @@ abstract class Response implements ResponseBuilder {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setForwardURL($forward_url = REFERRER) {
-		if (isset($forward_url) && !is_string($forward_url) && $forward_url !== REFERRER) {
-			throw new InvalidArgumentException(__METHOD__ . ' expects a valid URL or REFERRER');
-		}
+	public function setForwardURL(string $forward_url = REFERRER) {
 		$this->forward_url = $forward_url;
 		return $this;
 	}
@@ -102,7 +99,7 @@ abstract class Response implements ResponseBuilder {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getForwardURL() {
+	public function getForwardURL(): ?string {
 		return $this->forward_url;
 	}
 
