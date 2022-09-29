@@ -20,26 +20,26 @@ $vars['class'] = elgg_extract_class($vars, [
 
 $align = elgg_extract('align', $vars, 'vertical');
 unset($vars['align']);
-$vars['class'][] = "elgg-fieldset-$align";
+$vars['class'][] = "elgg-fieldset-{$align}";
 
-$justify = elgg_extract('justify', $vars, '');
+$justify = elgg_extract('justify', $vars);
 unset($vars['justify']);
-if ($justify) {
-	$vars['class'][] = "elgg-justify-$justify";
+if (!empty($justify)) {
+	$vars['class'][] = "elgg-justify-{$justify}";
 }
 
-$legend = elgg_extract('legend', $vars);
+$fieldset_vars = [];
+$legend = elgg_extract('legend', $vars, '');
 unset($vars['legend']);
+if (!empty($legend)) {
+	$fieldset_vars['class'][] = 'elgg-fieldset-has-legend';
+	$legend = elgg_format_element('legend', [], $legend);
+}
 
 $fields = (array) elgg_extract('fields', $vars, []);
 unset($vars['fields']);
 
 $fieldset = '';
-if ($legend) {
-	$vars['class'][] = 'elgg-fieldset-has-legend';
-	$fieldset .= elgg_format_element('legend', [], $legend);
-}
-
 foreach ($fields as $field) {
 	$fieldset .= elgg_view_field($field);
 }
@@ -47,4 +47,4 @@ foreach ($fields as $field) {
 unset($vars['name']); // name isn't allowed on a DIV, but is commonly supplied to input views
 
 $fieldset = elgg_format_element('div', $vars, $fieldset);
-echo elgg_format_element('fieldset', [], $fieldset);
+echo elgg_format_element('fieldset', $fieldset_vars, $legend . $fieldset);

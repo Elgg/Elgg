@@ -9,7 +9,6 @@ return array(
 	'annotation:delete:likes:fail' => "Tykkäämisen poistaminen epäonnistui",
 	'annotation:delete:likes:success' => "Tykkäys poistettu",
 	
-	'likes:this' => 'tykkää tästä',
 	'likes:deleted' => 'Tykkäys poistettu',
 	'likes:see' => 'Katso, ketkä tykkäsivät tästä',
 	'likes:remove' => 'Poista tykkääminen',

@@ -9,7 +9,6 @@ return array(
 	'annotation:delete:likes:fail' => "Non foi posíbel eliminar o seu «gústame».",
 	'annotation:delete:likes:success' => "Eliminouse o seu «gústame».",
 	
-	'likes:this' => 'gusta disto',
 	'likes:deleted' => 'Eliminouse o seu «gústame».',
 	'likes:see' => 'Ver a quen lle gusta isto',
 	'likes:remove' => 'Non me gusta',

@@ -9,7 +9,7 @@ return array(
 	'annotation:delete:likes:fail' => "There was a problem removing your like",
 	'annotation:delete:likes:success' => "Your like has been removed",
 	
-	'likes:this' => 'liked this',
+	'likes:this' => '%s liked this',
 	'likes:deleted' => 'Your like has been removed',
 	'likes:see' => 'See who liked this',
 	'likes:remove' => 'Unlike this',
