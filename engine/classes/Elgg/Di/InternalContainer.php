@@ -55,7 +55,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Assets\ExternalFiles                        $externalFiles
  * @property-read \Elgg\Forms\FieldsService                         $fields
  * @property-read \Elgg\Cache\BaseCache                             $fileCache
- * @property-read \ElggDiskFilestore                                $filestore
+ * @property-read \Elgg\Filesystem\Filestore\DiskFilestore          $filestore
  * @property-read \Elgg\FormsService                                $forms
  * @property-read \Elgg\Gatekeeper                                  $gatekeeper
  * @property-read \Elgg\Groups\Tools                                $group_tools
@@ -109,7 +109,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Cache\SystemCache                           $systemCache
  * @property-read \Elgg\SystemMessagesService                       $system_messages
  * @property-read \Elgg\Views\TableColumn\ColumnFactory             $table_columns
- * @property-read \ElggTempDiskFilestore                            $temp_filestore
+ * @property-read \Elgg\Filesystem\Filestore\TempDiskFilestore      $temp_filestore
  * @property-read \Elgg\Timer                                       $timer
  * @property-read \Elgg\I18n\Translator                             $translator
  * @property-read \Elgg\Security\UrlSigner                          $urlSigner

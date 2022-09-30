@@ -63,7 +63,7 @@ return [
 		return new \Elgg\Cache\CompositeCache('elgg_system_cache', $c->config, $flags);
     }),
 	'filestore' => DI\factory(function (ContainerInterface $c) {
-		return new \ElggDiskFilestore($c->config->dataroot);
+		return new \Elgg\Filesystem\Filestore\DiskFilestore($c->config->dataroot);
     }),
 	'gatekeeper' => DI\autowire(\Elgg\Gatekeeper::class),
 	'group_tools' => DI\autowire(\Elgg\Groups\Tools::class),
@@ -165,7 +165,7 @@ return [
 	'subscriptions' => DI\autowire(\Elgg\Notifications\SubscriptionsService::class),
 	'system_messages' => DI\autowire(\Elgg\SystemMessagesService::class),
 	'table_columns' => DI\autowire(\Elgg\Views\TableColumn\ColumnFactory::class),
-	'temp_filestore' => DI\autowire(\ElggTempDiskFilestore::class),
+	'temp_filestore' => DI\autowire(\Elgg\Filesystem\Filestore\TempDiskFilestore::class),
 	'timer' => DI\autowire(\Elgg\Timer::class),
 	'translator' => DI\autowire(\Elgg\I18n\Translator::class),
 	'uploads' => DI\autowire(\Elgg\UploadService::class),
@@ -188,9 +188,7 @@ return [
 	'widgets' => DI\autowire(\Elgg\WidgetsService::class),
 	
 	// map classes to alias to allow autowiring
-	\ElggDiskFilestore::class => DI\get('filestore'),
 	\ElggSession::class => DI\get('session'),
-	\ElggTempDiskFilestore::class => DI\get('temp_filestore'),
 	\Elgg\ActionsService::class => DI\get('actions'),
 	\Elgg\Ajax\Service::class => DI\get('ajax'),
 	\Elgg\Amd\Config::class => DI\get('amdConfig'),
@@ -240,6 +238,8 @@ return [
 	\Elgg\Email\DelayedEmailService::class => DI\get('delayedEmailService'),
 	\Elgg\EntityIconService::class => DI\get('iconService'),
 	\Elgg\EventsService::class => DI\get('events'),
+	\Elgg\Filesystem\Filestore\DiskFilestore::class => DI\get('filestore'),
+	\Elgg\Filesystem\Filestore\TempDiskFilestore::class => DI\get('temp_filestore'),
 	\Elgg\Filesystem\MimeTypeService::class => DI\get('mimetype'),
 	\Elgg\FormsService::class => DI\get('forms'),
 	\Elgg\Forms\FieldsService::class => DI\get('fields'),

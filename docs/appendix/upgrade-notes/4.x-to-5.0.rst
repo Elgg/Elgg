@@ -325,7 +325,10 @@ Moved classes
 
 * ``\ElggAutoP`` has been moved to ``\Elgg\Views\AutoParagraph``
 * ``\ElggCache`` has been moved to ``\Elgg\Cache\BaseCache``
+* ``\ElggDiskFilestore`` has been moved to ``\Elgg\Filesystem\Filestore\DiskFilestore``
+* ``\ElggFilestore`` has been moved to ``\Elgg\Filesystem\Filestore``
 * ``\ElggRewriteTester`` has been moved to ``\Elgg\Router\RewriteTester``
+* ``\ElggTempDiskFilestore`` has been moved to ``\Elgg\Filesystem\Filestore\TempDiskFilestore``
 * ``\Elgg\Database\SiteSecret`` has been moved to ``\Elgg\Security\SiteSecret``
 
 Removed functions
