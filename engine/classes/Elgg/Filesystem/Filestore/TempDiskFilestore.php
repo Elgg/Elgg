@@ -1,5 +1,7 @@
 <?php
 
+namespace Elgg\Filesystem\Filestore;
+
 use Elgg\Project\Paths;
 
 /**
@@ -10,7 +12,7 @@ use Elgg\Project\Paths;
  *
  * @since 3.0
  */
-class ElggTempDiskFilestore extends \ElggDiskFilestore {
+class TempDiskFilestore extends DiskFilestore {
 	
 	/**
 	 * @var string

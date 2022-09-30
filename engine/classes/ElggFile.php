@@ -331,9 +331,9 @@ class ElggFile extends ElggObject {
 	/**
 	 * Return the system filestore based on dataroot.
 	 *
-	 * @return \ElggDiskFilestore
+	 * @return \Elgg\Filesystem\Filestore\DiskFilestore
 	 */
-	protected function getFilestore(): \ElggDiskFilestore {
+	protected function getFilestore(): \Elgg\Filesystem\Filestore\DiskFilestore {
 		return _elgg_services()->filestore;
 	}
 

@@ -32,9 +32,9 @@ class ElggTempFile extends ElggFile {
 	/**
 	 * Return the system temp filestore based on the system temp directory.
 	 *
-	 * @return \ElggTempDiskFilestore
+	 * @return \Elgg\Filesystem\Filestore\TempDiskFilestore
 	 */
-	protected function getFilestore(): \ElggTempDiskFilestore {
+	protected function getFilestore(): \Elgg\Filesystem\Filestore\TempDiskFilestore {
 		return _elgg_services()->temp_filestore;
 	}
 

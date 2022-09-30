@@ -1,7 +1,10 @@
 <?php
 
+namespace Elgg\Filesystem\Filestore;
+
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\Filesystem\IOException;
+use Elgg\Filesystem\Filestore;
 use Elgg\Project\Paths;
 
 /**
@@ -10,7 +13,7 @@ use Elgg\Project\Paths;
  * @warning This should be used by a wrapper class
  * like {@link \ElggFile}.
  */
-class ElggDiskFilestore extends \ElggFilestore {
+class DiskFilestore extends Filestore {
 
 	/**
 	 * @var string Directory root
@@ -46,8 +49,8 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 * @param \ElggFile $file The file to open
 	 * @param string    $mode read, write, or append.
 	 *
-	 * @throws InvalidParameterException
 	 * @return false|resource File pointer resource or false on failure
+	 * @throws \Elgg\Exceptions\InvalidParameterException
 	 */
 	public function open(\ElggFile $file, string $mode) {
 		$fullname = $this->getFilenameOnFilestore($file);
@@ -68,7 +71,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 		if ($mode == 'write' || $mode == 'append') {
 			try {
 				$this->makeDirectoryRoot($path);
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				_elgg_services()->logger->warning("Couldn't create directory: {$path}");
 				return false;
 			}
@@ -270,14 +273,16 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 *
 	 * @param string $dirroot The full path of the directory to create
 	 *
-	 * @throws IOException
+	 * @throws \Elgg\Exceptions\Filesystem\IOException
 	 * @return void
 	 */
 	protected function makeDirectoryRoot($dirroot): void {
-		if (!file_exists($dirroot)) {
-			if (!@mkdir($dirroot, 0755, true)) {
-				throw new IOException("Could not make {$dirroot}");
-			}
+		if (file_exists($dirroot)) {
+			return;
+		}
+		
+		if (!@mkdir($dirroot, 0755, true)) {
+			throw new IOException("Could not make {$dirroot}");
 		}
 	}
 
