@@ -3,6 +3,7 @@
 namespace Elgg\Database;
 
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Elgg\Cache\BaseCache;
 use Elgg\Config;
 use Elgg\Database;
 use Elgg\Exceptions\DatabaseException;
@@ -43,7 +44,7 @@ class AccessCollections {
 	protected $db;
 
 	/**
-	 * @vars \ElggCache
+	 * @vars BaseCache
 	 */
 	protected $access_cache;
 
@@ -84,7 +85,7 @@ class AccessCollections {
 	 * @param Database           $db           Database
 	 * @param EntityTable        $entities     Entity table
 	 * @param UserCapabilities   $capabilities User capabilities
-	 * @param \ElggCache         $cache        Access cache
+	 * @param BaseCache          $cache        Access cache
 	 * @param PluginHooksService $hooks        Hooks
 	 * @param \ElggSession       $session      Session
 	 * @param Translator         $translator   Translator
@@ -94,7 +95,7 @@ class AccessCollections {
 		Database $db,
 		EntityTable $entities,
 		UserCapabilities $capabilities,
-		\ElggCache $cache,
+		BaseCache $cache,
 		PluginHooksService $hooks,
 		\ElggSession $session,
 		Translator $translator) {

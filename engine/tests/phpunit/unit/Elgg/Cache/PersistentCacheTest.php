@@ -6,7 +6,7 @@ namespace Elgg\Cache;
  * @group Cache
  * @group Memcache
  */
-class PersistentCacheTest extends ElggCacheTestCase {
+class PersistentCacheTest extends BaseCacheTestCase {
 
 	function createCache(string $namespace = 'persistent_test') {
 		return new CompositeCache($namespace, _elgg_services()->config, ELGG_CACHE_PERSISTENT);

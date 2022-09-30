@@ -1,10 +1,10 @@
 <?php
 
-namespace Elgg\Database;
+namespace Elgg\Security;
 
+use Elgg\Database\ConfigTable;
 use Elgg\Exceptions\Configuration\InstallationException;
 use Elgg\Exceptions\RuntimeException;
-use Elgg\Security\Crypto;
 
 /**
  * Manages a site-specific secret key, encoded as a 32 byte string "secret"

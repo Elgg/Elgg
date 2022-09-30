@@ -18,15 +18,15 @@ class SystemCache {
 	/**
 	 * @var Config
 	 */
-	private $config;
+	protected $config;
 
 	/**
 	 * Constructor
 	 *
-	 * @param \ElggCache $cache  Elgg disk cache
-	 * @param Config     $config Elgg config
+	 * @param BaseCache $cache  Elgg disk cache
+	 * @param Config    $config Elgg config
 	 */
-	public function __construct(\ElggCache $cache, Config $config) {
+	public function __construct(BaseCache $cache, Config $config) {
 		$this->cache = $cache;
 		$this->config = $config;
 	}

@@ -12,7 +12,7 @@ class CreateSiteSecret extends AbstractMigration {
 	 */
 	public function change() {
 
-		$config_key = \Elgg\Database\SiteSecret::CONFIG_KEY;
+		$config_key = \Elgg\Security\SiteSecret::CONFIG_KEY;
 
 		$prefix = $this->getAdapter()->getOption('table_prefix');
 

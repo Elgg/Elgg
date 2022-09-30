@@ -2,8 +2,6 @@
 
 namespace Elgg\Cache;
 
-use DateTime;
-use ElggCache;
 use Elgg\Config;
 use Elgg\Exceptions\ConfigurationException;
 use Elgg\Exceptions\InvalidArgumentException;
@@ -17,7 +15,7 @@ use Phpfastcache\Core\Pool\ExtendedCacheItemPoolInterface;
  *
  * @internal
  */
-class CompositeCache extends ElggCache {
+class CompositeCache extends BaseCache {
 
 	/**
 	 * TTL of saved items (default timeout after a day to prevent anything getting too stale)
@@ -70,9 +68,9 @@ class CompositeCache extends ElggCache {
 	/**
 	 * Save data in a cache.
 	 *
-	 * @param string       $key  Name
-	 * @param mixed        $data Value
-	 * @param int|DateTime $ttl  Expire value after
+	 * @param string        $key  Name
+	 * @param mixed         $data Value
+	 * @param int|\DateTime $ttl  Expire value after
 	 *
 	 * @return bool
 	 */
@@ -88,7 +86,7 @@ class CompositeCache extends ElggCache {
 		
 		if (is_int($ttl)) {
 			$item->expiresAfter($ttl);
-		} elseif ($ttl instanceof DateTime) {
+		} elseif ($ttl instanceof \DateTime) {
 			$item->expiresAt($ttl);
 		}
 			
@@ -126,7 +124,6 @@ class CompositeCache extends ElggCache {
 
 	/**
 	 * {@inheritDoc}
-	 * @see ElggCache::delete()
 	 */
 	public function delete($key) {
 		if ($this->disabled) {
@@ -138,7 +135,6 @@ class CompositeCache extends ElggCache {
 
 	/**
 	 * {@inheritDoc}
-	 * @see ElggCache::clear()
 	 */
 	public function clear() {
 		return $this->pool->clear();
@@ -146,7 +142,6 @@ class CompositeCache extends ElggCache {
 	
 	/**
 	 * {@inheritDoc}
-	 * @see ElggCache::invalidate()
 	 */
 	public function invalidate() {
 		// Phpfastcache doesn't have invalidation as an action.
@@ -156,7 +151,6 @@ class CompositeCache extends ElggCache {
 	
 	/**
 	 * {@inheritDoc}
-	 * @see ElggCache::purge()
 	 */
 	public function purge() {
 		// Phpfastcache doesn't have purge as an action

@@ -2,10 +2,6 @@
 
 namespace Elgg\Cache;
 
-use ElggCache;
-use ElggEntity;
-use ElggSession;
-
 /**
  * Volatile cache for entities
  *
@@ -16,28 +12,21 @@ class EntityCache {
 	const MAX_SIZE = 256;
 
 	/**
-	 * @var ElggSession
+	 * @var BaseCache
 	 */
-	private $session;
-
-	/**
-	 * @var ElggCache
-	 */
-	private $cache;
+	protected $cache;
 
 	/**
 	 * @var int
 	 */
-	private $size = 0;
+	protected $size = 0;
 
 	/**
 	 * Constructor
 	 *
-	 * @param ElggSession $session Session
-	 * @param ElggCache   $cache   Cache
+	 * @param BaseCache $cache Cache
 	 */
-	public function __construct(ElggSession $session, ElggCache $cache) {
-		$this->session = $session;
+	public function __construct(BaseCache $cache) {
 		$this->cache = $cache;
 	}
 
@@ -48,18 +37,18 @@ class EntityCache {
 	 *
 	 * @return \ElggEntity|null
 	 */
-	public function load($guid) {
-		return $this->cache->load((int) $guid);
+	public function load(int $guid): ?\ElggEntity {
+		return $this->cache->load($guid);
 	}
 
 	/**
 	 * Cache an entity.
 	 *
-	 * @param ElggEntity $entity Entity to cache
+	 * @param \ElggEntity $entity Entity to cache
 	 *
 	 * @return void
 	 */
-	public function save(ElggEntity $entity) {
+	public function save(\ElggEntity $entity): void {
 		if (!$entity->guid || !$entity->isCacheable()) {
 			return;
 		}
@@ -80,13 +69,13 @@ class EntityCache {
 	 *
 	 * @return void
 	 */
-	public function delete($guid) {
+	public function delete(int $guid): void {
 		if (!$guid) {
 			return;
 		}
 
 		$entity = $this->cache->load($guid);
-		if (!$entity instanceof ElggEntity) {
+		if (!$entity instanceof \ElggEntity) {
 			return;
 		}
 
@@ -99,9 +88,8 @@ class EntityCache {
 	 *
 	 * @return void
 	 */
-	public function clear() {
+	public function clear(): void {
 		$this->cache->clear();
 		$this->size = 0;
 	}
-
 }

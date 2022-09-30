@@ -2,6 +2,7 @@
 
 namespace Elgg\Database;
 
+use Elgg\Cache\BaseCache;
 use Elgg\Config;
 use Elgg\Context;
 use Elgg\Database;
@@ -113,7 +114,7 @@ class Plugins {
 	/**
 	 * Constructor
 	 *
-	 * @param \ElggCache            $cache           Cache for referencing plugins by ID
+	 * @param BaseCache             $cache           Cache for referencing plugins by ID
 	 * @param Database              $db              Database
 	 * @param \ElggSession          $session         Session
 	 * @param EventsService         $events          Events
@@ -124,7 +125,7 @@ class Plugins {
 	 * @param Request               $request         Context
 	 */
 	public function __construct(
-		\ElggCache $cache,
+		BaseCache $cache,
 		Database $db,
 		\ElggSession $session,
 		EventsService $events,

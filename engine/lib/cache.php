@@ -5,11 +5,11 @@
  */
 
 /**
- * Returns an \ElggCache object suitable for caching system information
+ * Returns an \Elgg\Cache\BaseCache object suitable for caching system information
  *
- * @return ElggCache
+ * @return \Elgg\Cache\BaseCache
  */
-function elgg_get_system_cache(): \ElggCache {
+function elgg_get_system_cache(): \Elgg\Cache\BaseCache {
 	return _elgg_services()->fileCache;
 }
 

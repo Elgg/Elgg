@@ -47,7 +47,7 @@ class InternalContainerIntegrationTest extends IntegrationTestCase {
 				continue;
 			}
 
-			$errors[] = "$name is not present in data provider";
+			$errors[] = "{$name} is not present in data provider";
 		}
 
 		if ($errors) {

@@ -1,17 +1,19 @@
 <?php
 
+namespace Elgg\Views;
+
 /**
  * @group UnitTests
  */
-class ElggAutoPUnitTest extends \Elgg\UnitTestCase {
+class AutoParagraphUnitTest extends \Elgg\UnitTestCase {
 
 	/**
-	 * @var \ElggAutoP
+	 * @var AutoParagraph
 	 */
 	protected $_autop;
 
 	public function up() {
-		$this->_autop = new \ElggAutoP();
+		$this->_autop = new AutoParagraph();
 	}
 
 	public function testDomRoundtrip() {
@@ -20,7 +22,7 @@ class ElggAutoPUnitTest extends \Elgg\UnitTestCase {
 		$exp = file_get_contents($d->path . "/domdoc_exp.html");
 		$exp = $this->flattenString($exp);
 
-		$doc = new DOMDocument();
+		$doc = new \DOMDocument();
 		libxml_use_internal_errors(true);
 		$doc->loadHTML("<html><meta http-equiv='content-type' content='text/html; charset=utf-8'><body>"
 				. $in . '</body></html>', LIBXML_NOBLANKS);
@@ -47,8 +49,9 @@ class ElggAutoPUnitTest extends \Elgg\UnitTestCase {
 		$d = dir($this->normalizeTestFilePath('autop/'));
 		$tests = array();
 		while (false !== ($entry = $d->read())) {
-			if (preg_match('/^([a-z\\-]+)\.in\.html$/i', $entry, $m)) {
-				$tests[] = $m[1];
+			$matches = [];
+			if (preg_match('/^([a-z\\-]+)\.in\.html$/i', $entry, $matches)) {
+				$tests[] = $matches[1];
 			}
 		}
 		
@@ -66,9 +69,10 @@ class ElggAutoPUnitTest extends \Elgg\UnitTestCase {
 	/**
 	 * Different versions of PHP return different whitespace between tags.
 	 * Removing all line breaks normalizes that.
+	 *
+	 * @return string
 	 */
-	public function flattenString($string) {
-		$r = preg_replace('/[\n\r]+/', '', $string);
-		return $r;
+	protected function flattenString($string) {
+		return preg_replace('/[\n\r]+/', '', $string);
 	}
 }
