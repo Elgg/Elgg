@@ -31,18 +31,14 @@ $type_mapping = [
 	'application' => 'application',
 	'audio' => 'music',
 	'image' => 'image',
-	'text' => 'text',
+	'document' => 'text',
 	'video' => 'video',
 ];
 
 $mime = $entity->getMimeType();
 
 if (!empty($mime)) {
-	$type = elgg_extract($mime, $type_mapping);
-	if (empty($type)) {
-		$base_type = substr($mime, 0, strpos($mime, '/'));
-		$type = elgg_extract($base_type, $type_mapping, elgg_echo('unknown'));
-	}
+	$type = elgg_extract($mime, $type_mapping, elgg_extract($entity->getSimpleType(), $type_mapping, elgg_echo('unknown')));
 } else {
 	$type = elgg_echo('unknown');
 }

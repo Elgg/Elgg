@@ -21,6 +21,9 @@ return [
 			],
 		],
 	],
+	'upgrades' => [
+		'Elgg\File\Upgrades\MoveFiles',
+	],
 	'actions' => [
 		'file/upload' => [],
 	],
@@ -76,11 +79,6 @@ return [
 				GroupToolContainerLogicCheck::class => [],
 			],
 		],
-		'entity:icon:file' => [
-			'object' => [
-				'Elgg\File\Icons::setIconFile' => [],
-			],
-		],
 		'entity:icon:sizes' => [
 			'object' => [
 				'Elgg\File\Icons::setIconSizes' => [],
@@ -105,13 +103,6 @@ return [
 		'seeds' => [
 			'database' => [
 				'Elgg\File\Seeder::register' => [],
-			],
-		],
-	],
-	'events' => [
-		'delete' => [
-			'object' => [
-				'Elgg\File\Icons::deleteIconOnElggFileDelete' => ['priority' => 999],
 			],
 		],
 	],

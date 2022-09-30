@@ -36,10 +36,10 @@ if ($full && !elgg_in_context('gallery')) {
 	
 	echo elgg_view('object/elements/full', $params);
 } elseif (elgg_in_context('gallery')) {
-	echo '<div class="file-gallery-item">';
-	echo "<h3>" . $entity->getDisplayName() . "</h3>";
-	echo elgg_view_entity_icon($entity, 'medium');
-	echo '</div>';
+	$title = elgg_format_element('h3', [], $entity->getDisplayName());
+	$icon = elgg_view_entity_icon($entity, 'large');
+
+	echo elgg_format_element('div', ['class' => 'file-gallery-item'], $title . $icon);
 } else {
 	// brief view
 	$params = [

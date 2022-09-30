@@ -16,10 +16,4 @@ if (empty($output)) {
 	$output = elgg_view($item->getView(), $vars, 'default');
 }
 
-$rss_item = <<<__ITEM
-<item>
-	$output
-</item>
-__ITEM;
-
-echo $rss_item;
+echo elgg_format_element('item', [], $output);

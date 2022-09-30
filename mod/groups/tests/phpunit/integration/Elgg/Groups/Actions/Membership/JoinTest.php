@@ -132,7 +132,7 @@ class JoinTest extends ActionResponseTestCase {
 		]);
 		
 		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
-		$this->assertEquals(REFERER, $response->getForwardURL());
+		$this->assertEquals(REFERRER, $response->getForwardURL());
 		
 		$this->assertSystemMessageEmitted(elgg_echo('groups:joinrequestmade'));
 		

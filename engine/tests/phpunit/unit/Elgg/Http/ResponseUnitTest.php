@@ -148,36 +148,11 @@ abstract class ResponseUnitTest extends \Elgg\UnitTestCase {
 
 	public function validForwardURLsProvider() {
 		return [
-			[-1],
 			[REFERRER],
-			[REFERER],
 			['foo'],
 			['/foo'],
 			['http://localhost/'],
 			['?foo=bar'],
-			[null],
-		];
-	}
-
-	/**
-	 * @dataProvider invalidForwardURLsProvider
-	 */
-	public function testThrowsExceptionForInvalidForwardURLs($value) {
-
-		$test_class = $this->class;
-		$response = new $test_class();
-		
-		$this->expectException(InvalidArgumentException::class);
-		$response->setForwardURL($value);
-	}
-
-	public function invalidForwardURLsProvider() {
-		return [
-			[true],
-			[false],
-			[200],
-			[-2],
-			[['url' => '/forward']],
 		];
 	}
 

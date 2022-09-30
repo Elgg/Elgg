@@ -14,7 +14,7 @@ $title = htmlspecialchars($entity->getDisplayName() ?? '', ENT_NOQUOTES, 'UTF-8'
 
 $description = $entity->getProfileData('description');
 if (!empty($description)) {
-	$description = elgg_autop($description);
+	$description = elgg_autop((string) $description);
 }
 
 $georss = elgg_view('page/components/georss', $vars);

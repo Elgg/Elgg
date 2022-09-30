@@ -15,7 +15,7 @@ class RedirectResponse extends Response {
 	 *
 	 * @see elgg_redirect_response()
 	 */
-	public function __construct($forward_url = REFERRER, int $status_code = ELGG_HTTP_FOUND) {
+	public function __construct(string $forward_url = REFERRER, int $status_code = ELGG_HTTP_FOUND) {
 		$this->setForwardURL($forward_url);
 		$this->setStatusCode($status_code);
 	}

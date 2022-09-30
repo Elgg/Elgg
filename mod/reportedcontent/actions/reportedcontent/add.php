@@ -7,7 +7,7 @@ $description = get_input('description');
 $address = get_input('address');
 
 if (!$title || !$address) {
-	return elgg_error_response(elgg_echo('reportedcontent:failed'), $address);
+	return elgg_error_response(elgg_echo('reportedcontent:failed'), $address ?? REFERRER);
 }
 
 $report = new \ElggReportedContent();

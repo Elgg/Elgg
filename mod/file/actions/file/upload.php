@@ -55,21 +55,6 @@ $file->tags = elgg_string_to_array($tags);
 $file->save();
 
 if ($uploaded_file && $uploaded_file->isValid()) {
-	// remove old icons
-	$sizes = elgg_get_icon_sizes($file->getType(), $file->getSubtype());
-	$master_location = null;
-	foreach ($sizes as $size => $props) {
-		$icon = $file->getIcon($size);
-		if ($size === 'master') {
-			// needs to be kept in case upload fails
-			$master_location = $icon->getFilenameOnFilestore();
-			continue;
-		}
-		
-		$icon->delete();
-	}
-	
-	// save master file
 	if (!$file->acceptUploadedFile($uploaded_file)) {
 		return elgg_error_response(elgg_echo('file:uploadfailed'));
 	}
@@ -77,22 +62,14 @@ if ($uploaded_file && $uploaded_file->isValid()) {
 	if (!$file->save()) {
 		return elgg_error_response(elgg_echo('file:uploadfailed'));
 	}
+
+	// remove old icons
+	$file->deleteIcon();
 	
 	// update icons
 	if ($file->getSimpleType() === 'image') {
 		$file->saveIconFromElggFile($file);
 	}
-	
-	// check if we need to remove the 'old' master icon
-	$master = $file->getIcon('master');
-	if ($master->getFilenameOnFilestore() !== $master_location) {
-		unlink($master_location);
-	}
-	
-	// remove legacy metadata
-	unset($file->thumbnail);
-	unset($file->smallthumb);
-	unset($file->largethumb);
 }
 
 // file saved so clear sticky form

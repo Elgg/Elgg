@@ -468,7 +468,7 @@ class Application {
 				'exception' => $ex,
 			];
 
-			$forward_url = $this->internal_services->hooks->trigger('forward', $ex->getCode(), $hook_params, $forward_url);
+			$forward_url = (string) $this->internal_services->hooks->trigger('forward', $ex->getCode(), $hook_params, $forward_url);
 
 			if ($forward_url && !$request->isXmlHttpRequest()) {
 				if ($ex->getMessage()) {
