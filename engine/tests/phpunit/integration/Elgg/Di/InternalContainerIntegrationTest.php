@@ -64,15 +64,10 @@ class InternalContainerIntegrationTest extends IntegrationTestCase {
 		$sets = [];
 		/* @var Tag[] $readonly_props */
 		foreach ($readonly_props as $prop) {
-			$name = $prop->getVariableName();
-			$type = $prop->getType();
-
-			// stuff set in PHPUnit bootstrap
-			if ($name === 'mailer') {
-				$type = InMemory::class;
-			}
-
-			$sets[] = [$name, $type];
+			$sets[] = [
+				$prop->getVariableName(),
+				$prop->getType(),
+			];
 		}
 
 		return $sets;

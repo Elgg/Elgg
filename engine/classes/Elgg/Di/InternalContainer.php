@@ -71,7 +71,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\I18n\LocaleService                          $locale
  * @property-read \Elgg\Cache\BaseCache                             $localFileCache
  * @property-read \Elgg\Logger                                      $logger
- * @property-read Mailer                                            $mailer
+ * @property-read \Laminas\Mail\Transport\TransportInterface        $mailer
  * @property-read \Elgg\Menu\Service                                $menus
  * @property-read \Elgg\Cache\MetadataCache                         $metadataCache
  * @property-read \Elgg\Database\MetadataTable                      $metadataTable
