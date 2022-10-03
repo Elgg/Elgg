@@ -12,9 +12,6 @@ class MessagesPluginTest extends IntegrationTestCase {
 
 	public function up() {
 		self::createApplication(['isolate' => true]);
-		
-		elgg_register_plugin_hook_handler('permissions_check', 'object', 'Elgg\Messages\Permissions::canEdit');
-		elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'Elgg\Messages\Permissions::canEditContainer');
 	}
 
 	public function testCanSendMessage() {
