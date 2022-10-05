@@ -71,7 +71,7 @@ class ApiRegistrationService {
 			bool $require_api_auth = false,
 			bool $require_user_auth = false,
 			bool $assoc = false
-		) {
+		): void {
 		
 		$api = new ApiMethod($name, $function);
 		$api->params = $params;
@@ -87,23 +87,29 @@ class ApiRegistrationService {
 	/**
 	 * Unregister a API method
 	 *
-	 * @param string $name name of the API method
+	 * @param string $name                Name of the API method
+	 * @param string $http_request_method The HTTP call method (GET|POST|...)
 	 *
 	 * @return void
 	 */
-	public function unregisterApiMethod(string $name) {
-		$this->collection->remove($name);
+	public function unregisterApiMethod(string $name, string $http_request_method = 'GET'): void {
+		$http_request_method = strtoupper($http_request_method);
+		
+		$this->collection->remove("{$http_request_method}:{$name}");
 	}
 	
 	/**
 	 * Get an API method based on it's name
 	 *
-	 * @param string $name name of the API method
+	 * @param string $name                Name of the API method
+	 * @param string $http_request_method The HTTP call method (GET|POST|...)
 	 *
 	 * @return null|ApiMethod
 	 */
-	public function getApiMethod(string $name) {
-		return $this->collection->get($name);
+	public function getApiMethod(string $name, string $http_request_method = 'GET'): ?ApiMethod {
+		$http_request_method = strtoupper($http_request_method);
+		
+		return $this->collection->get("{$http_request_method}:{$name}");
 	}
 	
 	/**

@@ -21,7 +21,7 @@ class RestServiceController {
 	 *
 	 * @return ResponseBuilder
 	 */
-	public function __invoke(Request $request) {
+	public function __invoke(Request $request): ResponseBuilder {
 		// plugins should return true to control what API and user authentication handlers are registered
 		if (elgg_trigger_plugin_hook('rest', 'init', null, false) === false) {
 			// user token can also be used for user authentication
@@ -38,10 +38,10 @@ class RestServiceController {
 		}
 		
 		// Get parameter variables
-		$method = $request->getParam('method');
+		$method = (string) $request->getParam('method');
 		
 		// this will throw an exception if authentication fails
-		$api = $this->authenticateMethod($method);
+		$api = $this->authenticateMethod($method, $request->getMethod());
 		
 		// execute the api method
 		$result = $api->execute($request);
@@ -57,13 +57,14 @@ class RestServiceController {
 	/**
 	 * Check that the method call has the proper API and user authentication
 	 *
-	 * @param string $method The api name that was exposed
+	 * @param string $method              The api name that was exposed
+	 * @param string $http_request_method The HTTP call method (GET|POST|...)
 	 *
 	 * @return ApiMethod
 	 * @throws \APIException
 	 */
-	protected function authenticateMethod($method) {
-		$api = ApiRegistrationService::instance()->getApiMethod($method);
+	protected function authenticateMethod(string $method, string $http_request_method): ApiMethod {
+		$api = ApiRegistrationService::instance()->getApiMethod($method, $http_request_method);
 		
 		// method must be exposed
 		if (!$api instanceof ApiMethod) {

@@ -251,9 +251,9 @@ Lib functions function parameters
 * ``thewire_save_post()`` now requires a ``string`` for ``$text`` and ``$method`` and an ``int`` for ``$userid`` and ``$access_id`` and ``$parent_guid``
 * ``uservalidationbyemail_request_validation()`` now requires an ``int`` for ``$user_guid``
 * ``elgg_ws_expose_function()`` now requires a ``string`` for ``$method`` and ``$description`` and ``$call_method``, an ``array`` for ``$parameters`` and a ``bool`` for ``$require_api_auth`` and ``$require_user_auth`` and ``$assoc``	
-* ``elgg_ws_register_service_handler()`` now requires a ``string`` for ``$handler``	
-* ``elgg_ws_unexpose_function()`` now requires a ``string`` for ``$method``	
-* ``elgg_ws_unregister_service_handler()`` now requires a ``string`` for ``$handler``	
+* ``elgg_ws_register_service_handler()`` now requires a ``string`` for ``$handler``
+* ``elgg_ws_unexpose_function()`` now requires a ``string`` for ``$method`` and a ``string`` for ``$http_request_method``
+* ``elgg_ws_unregister_service_handler()`` now requires a ``string`` for ``$handler``
 
 Class function return types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
