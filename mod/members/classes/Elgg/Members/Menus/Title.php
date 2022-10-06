@@ -3,7 +3,7 @@
 namespace Elgg\Members\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,16 +13,16 @@ class Title {
 	/**
 	 * Add create user admin menu item
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:title'
+	 * @param \Elgg\Event $event 'register', 'menu:title'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 		if (!elgg_is_admin_logged_in()) {
 			return;
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'add_user',

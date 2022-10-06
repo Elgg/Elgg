@@ -3,7 +3,7 @@
 namespace Elgg\Profile;
 
 /**
- * Hook callbacks for widgets
+ * Event callbacks for widgets
  *
  * @since 4.0
  * @internal
@@ -13,12 +13,12 @@ class Widgets {
 	/**
 	 * Register profile widgets with default widgets
 	 *
-	 * @param \Elgg\Hook $hook 'get_list', 'default_widgets'
+	 * @param \Elgg\Event $event 'get_list', 'default_widgets'
 	 *
 	 * @return array
 	 */
-	public static function getDefaultWidgetsList(\Elgg\Hook $hook) {
-		$return = $hook->getValue();
+	public static function getDefaultWidgetsList(\Elgg\Event $event) {
+		$return = $event->getValue();
 		$return[] = [
 			'name' => elgg_echo('profile'),
 			'widget_context' => 'profile',

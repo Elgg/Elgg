@@ -15,22 +15,22 @@ class Widget {
 	/**
 	 * Register the edit menu item for widgets
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:widget'
+	 * @param \Elgg\Event $event 'register', 'menu:widget'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerEdit(\Elgg\Hook $hook) {
-		$widget = $hook->getEntityParam();
+	public static function registerEdit(\Elgg\Event $event) {
+		$widget = $event->getEntityParam();
 		if (!$widget instanceof \ElggWidget) {
 			return;
 		}
 		
-		if (!(bool) $hook->getParam('show_edit', $widget->canEdit())) {
+		if (!(bool) $event->getParam('show_edit', $widget->canEdit())) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'settings',
@@ -47,18 +47,18 @@ class Widget {
 	/**
 	 * Register the delete menu item for widgets
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:widget'
+	 * @param \Elgg\Event $event 'register', 'menu:widget'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerDelete(\Elgg\Hook $hook) {
-		$widget = $hook->getEntityParam();
+	public static function registerDelete(\Elgg\Event $event) {
+		$widget = $event->getEntityParam();
 		if (!$widget instanceof \ElggWidget || !$widget->canDelete()) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'delete',

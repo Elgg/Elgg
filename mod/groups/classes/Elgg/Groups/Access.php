@@ -13,13 +13,13 @@ class Access {
 	/**
 	 * Set the default access for content in a group
 	 *
-	 * @param \Elgg\Hook $hook 'default', 'access'
+	 * @param \Elgg\Event $event 'default', 'access'
 	 *
 	 * @return void|int
 	 */
-	public static function getDefaultAccess(\Elgg\Hook $hook) {
+	public static function getDefaultAccess(\Elgg\Event $event) {
 		
-		$group = self::getGroupFromDefaultAccessHook($hook);
+		$group = self::getGroupFromDefaultAccessHook($event);
 		if (!$group instanceof \ElggGroup) {
 			return;
 		}
@@ -55,13 +55,13 @@ class Access {
 	/**
 	 * Get the correct group for default access
 	 *
-	 * @param \Elgg\Hook $hook 'default', 'access'
+	 * @param \Elgg\Event $event 'default', 'access'
 	 *
 	 * @return false|\ElggGroup
 	 */
-	protected static function getGroupFromDefaultAccessHook(\Elgg\Hook $hook) {
+	protected static function getGroupFromDefaultAccessHook(\Elgg\Event $event) {
 		
-		$input_params = (array) $hook->getParam('input_params');
+		$input_params = (array) $event->getParam('input_params');
 		
 		// try supplied container guid
 		$container_guid = (int) elgg_extract('container_guid', $input_params);
@@ -82,12 +82,13 @@ class Access {
 	/**
 	 * Return the write access for the current group if the user has write access to it
 	 *
-	 * @param \Elgg\Hook $hook 'access:collection:write' 'all'
+	 * @param \Elgg\Event $event 'access:collection:write' 'all'
 	 * @return void|array
 	 */
-	public static function getWriteAccess(\Elgg\Hook $hook) {
-	
-		$user_guid = (int) $hook->getParam('user_id');
+	public static function getWriteAccess(\Elgg\Event $event) {
+		
+		$user_guid = (int) $event->getParam('user_id');
+
 		$user = get_user($user_guid);
 		if (!$user instanceof \ElggUser) {
 			return;
@@ -122,7 +123,7 @@ class Access {
 			}
 		}
 	
-		$write_acls = $hook->getValue();
+		$write_acls = $event->getValue();
 	
 		// add write access to the group
 		if ($acl) {
@@ -142,12 +143,12 @@ class Access {
 	/**
 	 * Return the write access for the current group if the user has write access to it
 	 *
-	 * @param \Elgg\Hook $hook 'access_collection:name' 'access_collection'
+	 * @param \Elgg\Event $event 'access_collection:name' 'access_collection'
 	 * @return void|string
 	 */
-	public static function getAccessCollectionName(\Elgg\Hook $hook) {
+	public static function getAccessCollectionName(\Elgg\Event $event) {
 	
-		$access_collection = $hook->getParam('access_collection');
+		$access_collection = $event->getParam('access_collection');
 		if (!$access_collection instanceof \ElggAccessCollection) {
 			return;
 		}
@@ -177,18 +178,18 @@ class Access {
 	/**
 	 * Allow users to visit the group profile page even if group content access mode is set to group members only
 	 *
-	 * @param \Elgg\Hook $hook 'gatekeeper' 'group:group'
+	 * @param \Elgg\Event $event 'gatekeeper' 'group:group'
 	 *
 	 * @return void|true
 	 */
-	public static function allowProfilePage(\Elgg\Hook $hook) {
+	public static function allowProfilePage(\Elgg\Event $event) {
 	
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggGroup || !$entity->hasAccess()) {
 			return;
 		}
 	
-		$route = $hook->getParam('route');
+		$route = $event->getParam('route');
 		if ($route === 'view:group' || $route === 'view:group:group') {
 			return true;
 		}
@@ -199,11 +200,11 @@ class Access {
 	 * for better display of access (can tell it is group only), but does not change
 	 * access to the content.
 	 *
-	 * @param \Elgg\Hook $hook 'default', 'access'
+	 * @param \Elgg\Event $event 'default', 'access'
 	 *
 	 * @return int|void
 	 */
-	public static function overrideDefaultAccess(\Elgg\Hook $hook) {
+	public static function overrideDefaultAccess(\Elgg\Event $event) {
 		$page_owner = elgg_get_page_owner_entity();
 		if (!$page_owner instanceof \ElggGroup) {
 			return;

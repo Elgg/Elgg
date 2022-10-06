@@ -45,7 +45,14 @@ return [
 			'controller' => 'Elgg\SiteNotifications\Controllers\Redirect',
 		],
 	],
-	'hooks' => [
+	'events' => [
+		'create' => [
+			'user' => [
+				'Elgg\SiteNotifications\Users::enableSiteNotifications' => [
+					'priority' => 400, // simple way to prevent priority issues with other developers
+				],
+			],
+		],
 		'cron' => [
 			'all' => [
 				'Elgg\SiteNotifications\Cron::cleanupUnreadSiteNotifications' => [],
@@ -79,15 +86,6 @@ return [
 		'view_vars' => [
 			'object/elements/full' => [
 				'Elgg\SiteNotifications\Views::markLinkedEntityRead' => [],
-			],
-		],
-	],
-	'events' => [
-		'create' => [
-			'user' => [
-				'Elgg\SiteNotifications\Users::enableSiteNotifications' => [
-					'priority' => 400, // simple way to prevent priority issues with other developers
-				],
 			],
 		],
 	],

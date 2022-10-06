@@ -78,10 +78,10 @@ class ElggMetadataUnitTest extends UnitTestCase {
 
 		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
 		
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 
-		_elgg_services()->hooks->registerHandler('extender:url', 'metadata', function(\Elgg\Hook $hook) use ($metadata, $name) {
-			$extender = $hook->getParam('extender');
+		_elgg_services()->events->registerHandler('extender:url', 'metadata', function(\Elgg\Event $event) use ($metadata, $name) {
+			$extender = $event->getParam('extender');
 			$this->assertEquals($metadata, $extender);
 			if ($extender->getSubtype() == $name) {
 				return 'foo';
@@ -90,7 +90,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 
 		$this->assertEquals(elgg_normalize_url('foo'), $metadata->getURL());
 
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 	}
 
 	public function testCanSaveMetadata() {

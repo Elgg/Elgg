@@ -876,7 +876,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		}
 		
 		$params = ['entity' => $this];
-		$num = _elgg_services()->hooks->trigger('comments:count', $this->getType(), $params);
+		$num = _elgg_services()->events->triggerResults('comments:count', $this->getType(), $params);
 
 		if (is_int($num)) {
 			return $num;
@@ -937,7 +937,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	/**
 	 * Can a user edit this entity?
 	 *
-	 * @tip Can be overridden by registering for the permissions_check plugin hook.
+	 * @tip Can be overridden by registering for the permissions_check event.
 	 *
 	 * @param int $user_guid The user GUID, optionally (default: logged in user)
 	 *
@@ -950,7 +950,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	/**
 	 * Can a user delete this entity?
 	 *
-	 * @tip Can be overridden by registering for the permissions_check:delete plugin hook.
+	 * @tip Can be overridden by registering for the permissions_check:delete event.
 	 *
 	 * @param int $user_guid The user GUID, optionally (default: logged in user)
 	 *
@@ -982,8 +982,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	/**
 	 * Can a user comment on an entity?
 	 *
-	 * @tip Can be overridden by registering for the permissions_check:comment,
-	 * <entity type> plugin hook.
+	 * @tip Can be overridden by registering for the 'permissions_check:comment', '<entity type>' event.
 	 *
 	 * @param int $user_guid User guid (default is logged in user)
 	 *
@@ -996,11 +995,11 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	/**
 	 * Can a user annotate an entity?
 	 *
-	 * @tip Can be overridden by registering for the plugin hook [permissions_check:annotate:<name>,
-	 * <entity type>] or [permissions_check:annotate, <entity type>]. The hooks are called in that order.
+	 * @tip Can be overridden by registering for the event [permissions_check:annotate:<name>,
+	 * <entity type>] or [permissions_check:annotate, <entity type>]. The events are called in that order.
 	 *
 	 * @tip If you want logged out users to annotate an object, do not call
-	 * canAnnotate(). It's easier than using the plugin hook.
+	 * canAnnotate(). It's easier than using the event.
 	 *
 	 * @param int    $user_guid       User guid (default is logged in user)
 	 * @param string $annotation_name The name of the annotation (default is unspecified)
@@ -1116,7 +1115,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	/**
 	 * Gets the URL for this entity.
 	 *
-	 * Plugins can register for the 'entity:url', <type> plugin hook to
+	 * Plugins can register for the 'entity:url', '<type>' event to
 	 * customize the url for an entity.
 	 *
 	 * @return string The URL of the entity
@@ -1124,7 +1123,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	public function getURL(): string {
 		$url = elgg_generate_entity_url($this, 'view');
 
-		$url = _elgg_services()->hooks->trigger('entity:url', $this->getType(), ['entity' => $this], $url);
+		$url = _elgg_services()->events->triggerResults('entity:url', $this->getType(), ['entity' => $this], $url);
 
 		if (empty($url)) {
 			return '';
@@ -1217,7 +1216,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	/**
 	 * Get the URL for this entity's icon
 	 *
-	 * Plugins can register for the 'entity:icon:url', <type> plugin hook
+	 * Plugins can register for the 'entity:icon:url', '<type>' event
 	 * to customize the icon for an entity.
 	 *
 	 * @param mixed $params A string defining the size of the icon (e.g. tiny, small, medium, large)
@@ -1681,7 +1680,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	/**
 	 * Export an entity
 	 *
-	 * @param array $params Params to pass to the hook
+	 * @param array $params Params to pass to the event
 	 * @return \Elgg\Export\Entity
 	 */
 	public function toObject(array $params = []) {
@@ -1689,7 +1688,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
 		$params['entity'] = $this;
 
-		return _elgg_services()->hooks->trigger('to:object', 'entity', $params, $object);
+		return _elgg_services()->events->triggerResults('to:object', 'entity', $params, $object);
 	}
 
 	/**

@@ -257,7 +257,7 @@ class PasswordGeneratorServiceIntegrationTest extends IntegrationTestCase {
 	
 	public function testInputPasswordViewVarsCallbackNoAction() {
 		
-		$result = _elgg_services()->hooks->trigger('view_vars', 'input/password', [], []);
+		$result = _elgg_services()->events->triggerResults('view_vars', 'input/password', [], []);
 		
 		$this->assertEquals([], $result);
 	}
@@ -265,7 +265,7 @@ class PasswordGeneratorServiceIntegrationTest extends IntegrationTestCase {
 	public function testInputPasswordViewVarsCallbackWithAction() {
 		$passwordGenerator = _elgg_services()->passwordGenerator;
 		
-		$result = _elgg_services()->hooks->trigger('view_vars', 'input/password', [], ['add_security_requirements' => true]);
+		$result = _elgg_services()->events->triggerResults('view_vars', 'input/password', [], ['add_security_requirements' => true]);
 		
 		$this->assertEquals([
 			'add_security_requirements' => true,

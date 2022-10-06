@@ -9,7 +9,7 @@ use Elgg\Traits\Seeding;
  * Abstract seed
  *
  * Plugins should extend this class to create their own seeders,
- * add use 'seeds','database' plugin hook to add their seed to the sequence.
+ * add use 'seeds','database' event to add their seed to the sequence.
  */
 abstract class Seed implements Seedable {
 
@@ -56,12 +56,12 @@ abstract class Seed implements Seedable {
 	/**
 	 * Register this class for seeding
 	 *
-	 * @param \Elgg\Hook $hook 'seeds', 'database'
+	 * @param \Elgg\Event $event 'seeds', 'database'
 	 *
 	 * @return array
 	 */
-	final public static function register(\Elgg\Hook $hook) {
-		$seeds = $hook->getValue();
+	final public static function register(\Elgg\Event $event) {
+		$seeds = $event->getValue();
 		
 		$seeds[] = static::class;
 		

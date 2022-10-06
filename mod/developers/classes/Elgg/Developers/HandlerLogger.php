@@ -3,7 +3,7 @@
 namespace Elgg\Developers;
 
 /**
- * Track events and hooks
+ * Track events
  *
  * @since 4.0
  * @internal
@@ -25,23 +25,6 @@ class HandlerLogger {
 		}
 		
 		self::track($event->getName(), $event->getType(), $event);
-	}
-	
-	/**
-	 * Track an Elgg hook
-	 *
-	 * @param \Elgg\Hook $hook 'all', 'all'
-	 *
-	 * @return void
-	 */
-	public static function trackHook(\Elgg\Hook $hook) : void {
-		$handlers = elgg()->hooks->getOrderedHandlers($hook->getName(), $hook->getType());
-		if (count($handlers) === 1) {
-			// only this handler
-			return;
-		}
-		
-		self::track($hook->getName(), $hook->getType(), $hook);
 	}
 	
 	/**
@@ -72,18 +55,15 @@ class HandlerLogger {
 		// 0 => this function
 		// 1 => calling function in this class
 		// 2 => call_user_func_array
-		// 3 => hook class call
-		// 4 => hook class trigger
+		// 3 => event class call
+		// 4 => event class trigger
 		$stack = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-		if ($source instanceof \Elgg\Event) {
-			$event_type = 'Event';
-		} else {
-			$event_type = 'Hook';
-		}
+		$event_type = 'Event';
 		
 		$trigger_functions = [
 			'elgg_trigger_event',
-			'elgg_trigger_plugin_hook',
+			'elgg_trigger_event_results',
+			'triggerResults',
 			'triggerSequence',
 			'triggerBefore',
 			'triggerAfter',

@@ -76,7 +76,7 @@ return [
 			'resource' => 'discussion/view',
 		],
 	],
-	'hooks' => [
+	'events' => [
 		'container_logic_check' => [
 			'object' => [
 				'Elgg\Discussions\Permissions::containerLogic' => [],

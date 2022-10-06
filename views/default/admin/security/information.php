@@ -65,7 +65,7 @@ $title = elgg_echo('admin:security:information:validate_input');
 $value = elgg_echo('status:enabled');
 $subtext = '';
 
-if (!(bool) elgg()->hooks->getOrderedHandlers('sanitize', 'input')) {
+if (!(bool) elgg()->events->getOrderedHandlers('sanitize', 'input')) {
 	$icon = $icon_error;
 	$value = elgg_echo('status:disabled');
 	$subtext = elgg_echo('admin:security:information:validate_input:error');

@@ -81,7 +81,7 @@ class Preloader {
 			$type = $entity->getType();
 			$params = ['entity' => $entity];
 
-			$num_likes = elgg_trigger_plugin_hook('likes:count', $type, $params, false);
+			$num_likes = elgg_trigger_event_results('likes:count', $type, $params, false);
 			if ($num_likes) {
 				$this->data->setNumLikes($entity->guid, $num_likes);
 			} else {
@@ -197,12 +197,12 @@ class Preloader {
 	/**
 	 * Hook handler for listings to determine if preloading is needed
 	 *
-	 * @param \Elgg\Hook $hook 'view_vars', 'page/components/list'
+	 * @param \Elgg\Event $event 'view_vars', 'page/components/list'
 	 *
 	 * @return void
 	 */
-	public static function preload(\Elgg\Hook $hook) {
-		$vars = $hook->getValue();
+	public static function preload(\Elgg\Event $event) {
+		$vars = $event->getValue();
 		
 		$items = (array) elgg_extract('items', $vars, []);
 		if (!elgg_is_logged_in() || count($items) < 3) {

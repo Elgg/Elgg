@@ -3,7 +3,7 @@
 namespace Elgg\Groups\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,11 +13,11 @@ class Topbar {
 	/**
 	 * Registers optional group invites menu item to topbar
 	 *
-	 * @param \Elgg\Hook $hook 'register' 'menu:topbar'
+	 * @param \Elgg\Event $event 'register' 'menu:topbar'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 	
 		$user = elgg_get_logged_in_user_entity();
 		if (empty($user)) {
@@ -29,7 +29,7 @@ class Topbar {
 			return;
 		}
 		
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'groups:user:invites',

@@ -3,7 +3,7 @@
 namespace Elgg\Pages;
 
 /**
- * Hook callbacks for views
+ * Event callbacks for views
  *
  * @since 4.0
  * @internal
@@ -14,12 +14,12 @@ class Views {
 	 * Called on view_vars, input/access hook
 	 * Prevent ACCESS_PUBLIC from ending up as a write access option
 	 *
-	 * @param \Elgg\Hook $hook 'view_vars', 'input/access'
+	 * @param \Elgg\Event $event 'view_vars', 'input/access'
 	 *
 	 * @return void|array
 	 */
-	public static function preventAccessPublic(\Elgg\Hook $hook) {
-		$return = $hook->getValue();
+	public static function preventAccessPublic(\Elgg\Event $event) {
+		$return = $event->getValue();
 		if (elgg_extract('name', $return) !== 'write_access_id' || elgg_extract('purpose', $return) !== 'write') {
 			return;
 		}
@@ -43,14 +43,14 @@ class Views {
 	/**
 	 * Return options for the write_access_id input
 	 *
-	 * @param \Elgg\Hook $hook 'access:collections:write', 'user'
+	 * @param \Elgg\Event $event 'access:collections:write', 'user'
 	 *
 	 * @return void|array
 	 */
-	public static function removeAccessPublic(\Elgg\Hook $hook) {
+	public static function removeAccessPublic(\Elgg\Event $event) {
 		
-		$input_params = $hook->getParam('input_params');
-		$return_value = $hook->getValue();
+		$input_params = $event->getParam('input_params');
+		$return_value = $event->getValue();
 		
 		if (empty($input_params) || !isset($return_value[ACCESS_PUBLIC])) {
 			return;

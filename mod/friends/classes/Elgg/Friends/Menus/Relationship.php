@@ -3,7 +3,7 @@
 namespace Elgg\Friends\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  *
@@ -14,13 +14,13 @@ class Relationship {
 		/**
 	 * Add menu items to a pending friend request
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:relationship'
+	 * @param \Elgg\Event $event 'register', 'menu:relationship'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function addPendingFriendRequestItems(\Elgg\Hook $hook) {
+	public static function addPendingFriendRequestItems(\Elgg\Event $event) {
 		
-		$relationship = $hook->getParam('relationship');
+		$relationship = $event->getParam('relationship');
 		if (!$relationship instanceof \ElggRelationship || $relationship->relationship !== 'friendrequest') {
 			return;
 		}
@@ -32,7 +32,7 @@ class Relationship {
 		}
 		
 		/* @var $result \Elgg\Menu\MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'accept',
@@ -63,13 +63,13 @@ class Relationship {
 	/**
 	 * Add menu items to a sent friend request
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:relationship'
+	 * @param \Elgg\Event $event 'register', 'menu:relationship'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function addSentFriendRequestItems(\Elgg\Hook $hook) {
+	public static function addSentFriendRequestItems(\Elgg\Event $event) {
 		
-		$relationship = $hook->getParam('relationship');
+		$relationship = $event->getParam('relationship');
 		if (!$relationship instanceof \ElggRelationship || $relationship->relationship !== 'friendrequest') {
 			return;
 		}
@@ -81,7 +81,7 @@ class Relationship {
 		}
 		
 		/* @var $result \Elgg\Menu\MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'revoke',

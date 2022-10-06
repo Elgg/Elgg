@@ -20,8 +20,8 @@ function elgg_get_ignore_access(): bool {
 /**
  * Returns an array of access IDs a user is permitted to see.
  *
- * Can be overridden with the 'access:collections:read', 'user' plugin hook.
- * @warning A callback for that plugin hook needs to either not retrieve data
+ * Can be overridden with the 'access:collections:read', 'user' event.
+ * @warning A callback for that event needs to either not retrieve data
  * from the database that would use the access system (triggering the plugin again)
  * or ignore the second call. Otherwise, an infinite loop will be created.
  *
@@ -45,7 +45,7 @@ function elgg_get_access_array(int $user_guid = 0): array {
  *
  * This returns the default access level for the site or optionally of the user.
  * If want you to change the default access based on group of other information,
- * use the 'default', 'access' plugin hook.
+ * use the 'default', 'access' event.
  *
  * @param \ElggUser $user         The user for whom we're getting default access. Defaults to logged in user.
  * @param array     $input_params Parameters passed into an input/access view
@@ -73,7 +73,7 @@ function elgg_get_default_access(\ElggUser $user = null, array $input_params = [
 		'default_access' => $default_access,
 		'input_params' => $input_params,
 	];
-	return (int) _elgg_services()->hooks->trigger('default', 'access', $params, $default_access);
+	return (int) _elgg_services()->events->triggerResults('default', 'access', $params, $default_access);
 }
 
 /**
@@ -113,7 +113,7 @@ function elgg_has_access_to_entity(int $entity_guid, int $user_guid = 0): bool {
  *    34 => 'My favorite friends',
  * );
  *
- * Plugin hook of 'access:collections:write', 'user'
+ * Event of 'access:collections:write', 'user'
  *
  * @warning this only returns access collections that the user owns plus the
  * standard access levels. It does not return access collections that the user
@@ -135,7 +135,7 @@ function elgg_get_write_access_array(int $user_guid = 0, bool $flush = false, ar
  *
  * Access colletions allow plugins and users to create granular access for entities.
  *
- * Triggers plugin hook 'access:collections:addcollection', 'collection'
+ * Triggers 'access:collections:addcollection', 'collection' event
  *
  * @param string $name       The name of the collection
  * @param int    $owner_guid The GUID of the owner (default: currently logged in user)

@@ -15,8 +15,8 @@
  * Elgg uses a single interface to manage its menus. Menu items are added with
  * {@link elgg_register_menu_item()}. This is generally used for menus that
  * appear only once per page. For dynamic menus (such as the hover
- * menu for user's avatar), a plugin hook is emitted when the menu is being
- * created. The hook is 'register', 'menu:<menu_name>'. For more details on this,
+ * menu for user's avatar), an event is emitted when the menu is being
+ * created. The event is 'register', 'menu:<menu_name>'. For more details on this,
  * @see elgg_view_menu().
  *
  * Menus supported by the Elgg core
@@ -40,14 +40,14 @@
 /**
  * Register an item for an Elgg menu
  *
- * @warning Generally you should not use this in response to the plugin hook:
+ * @warning Generally you should not use this in response to the event:
  * 'register', 'menu:<menu_name>'. If you do, you may end up with many incorrect
  * links on a dynamic menu.
  *
  * @warning A menu item's name must be unique per menu. If more than one menu
  * item with the same name are registered, the last menu item takes priority.
  *
- * @see elgg_view_menu() for the plugin hooks available for modifying a menu as
+ * @see elgg_view_menu() for the plugin events available for modifying a menu as
  * it is being rendered.
  *
  * @see ElggMenuItem::factory() is used to turn an array value of $menu_item into an

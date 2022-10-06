@@ -3,7 +3,7 @@
 namespace Elgg\Discussions\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,12 +13,12 @@ class OwnerBlock {
 	/**
 	 * Register group item to menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:owner_block'
+	 * @param \Elgg\Event $event 'register', 'menu:owner_block'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function registerGroupItem(\Elgg\Hook $hook) {
-		$entity = $hook->getEntityParam();
+	public static function registerGroupItem(\Elgg\Event $event) {
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggGroup) {
 			return;
 		}
@@ -27,7 +27,7 @@ class OwnerBlock {
 			return;
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'discussion',

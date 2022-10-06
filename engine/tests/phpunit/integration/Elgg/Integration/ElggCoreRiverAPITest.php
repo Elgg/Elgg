@@ -37,27 +37,27 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		
 		// By default, only admins are allowed to delete river items
 		// For the sake of this test case, we will allow the user to delete items
-		elgg_register_plugin_hook_handler('permissions_check:delete', 'river', [
+		elgg_register_event_handler('permissions_check:delete', 'river', [
 			$this,
 			'allowDelete'
 		]);
 	}
 
 	public function down() {
-		elgg_unregister_plugin_hook_handler('permissions_check:delete', 'river', [
+		elgg_unregister_event_handler('permissions_check:delete', 'river', [
 			$this,
 			'allowDelete'
 		]);
 	}
 
-	public function allowDelete(\Elgg\Hook $hook) {
+	public function allowDelete(\Elgg\Event $event) {
 		
-		$hook_user = $hook->getUserParam();
-		if (!$hook_user) {
+		$event_user = $event->getUserParam();
+		if (!$event_user) {
 			return;
 		}
 		
-		if ($this->user->guid === $hook_user->guid) {
+		if ($this->user->guid === $event_user->guid) {
 			return true;
 		}
 	}
@@ -182,7 +182,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		$this->assertSame($item, $captured);
 	}
 
-	public function testRiverDeleteUsesPermissionHook() {
+	public function testRiverDeleteUsesPermissionEvent() {
 		$params = [
 			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
@@ -196,24 +196,24 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		$this->assertTrue($item->canDelete());
 
 		$captured = null;
-		$handler = function (\Elgg\Hook $hook) use (&$captured) {
-			$captured = clone $hook; // need to clone to keep original starting values
+		$handler = function (\Elgg\Event $event) use (&$captured) {
+			$captured = clone $event; // need to clone to keep original starting values
 
 			return false;
 		};
 
-		elgg_register_plugin_hook_handler('permissions_check:delete', 'river', $handler);
+		elgg_register_event_handler('permissions_check:delete', 'river', $handler);
 
 		$this->assertFalse($item->canDelete());
 		
-		$this->assertInstanceOf(\Elgg\Hook::class, $captured);
+		$this->assertInstanceOf(\Elgg\Event::class, $captured);
 		$this->assertTrue($captured->getValue());
 		$this->assertSame($captured->getParam('item'), $item);
 		$this->assertSame($captured->getUserParam(), elgg_get_logged_in_user_entity());
 
 		$this->assertFalse($item->delete());
 
-		elgg_unregister_plugin_hook_handler('permissions_check:delete', 'river', $handler);
+		elgg_unregister_event_handler('permissions_check:delete', 'river', $handler);
 
 		$this->assertTrue($item->delete());
 	}
@@ -236,13 +236,13 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 			$events_fired++;
 		};
 
-		elgg_register_plugin_hook_handler('permissions_check:delete', 'river', $handler);
+		elgg_register_event_handler('permissions_check:delete', 'river', $handler);
 		elgg_register_event_handler('delete:before', 'river', $handler);
 		elgg_register_event_handler('delete:after', 'river', $handler);
 
 		elgg_delete_river(['id' => $id]);
 
-		elgg_unregister_plugin_hook_handler('permissions_check:delete', 'river', $handler);
+		elgg_unregister_event_handler('permissions_check:delete', 'river', $handler);
 		elgg_unregister_event_handler('delete:before', 'river', $handler);
 		elgg_unregister_event_handler('delete:after', 'river', $handler);
 

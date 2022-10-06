@@ -7,7 +7,7 @@ use Elgg\Menu\MenuItems;
 /**
  * Register menu items to any menu to handle entity subscriptions
  *
- * This should be registered to or call from a hook handler 'register', 'menu:<menu name>'
+ * This should be registered to or call from a event handler 'register', 'menu:<menu name>'
  *
  * @since 4.0
  */
@@ -16,18 +16,18 @@ class RegisterSubscriptionMenuItemsHandler {
 	/**
 	 * Add menu items to a menu
 	 *
-	 * The hook requires
+	 * The event requires
 	 * - params['entity'] the entity for which to register the menu items
 	 * - return needs to be a MenuItems collection
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:<menu name>'
+	 * @param \Elgg\Event $event 'register', 'menu:<menu name>'
 	 *
 	 * @return void|MenuItems
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
+	public function __invoke(\Elgg\Event $event) {
 		
-		$result = $hook->getValue();
-		$entity = $hook->getEntityParam();
+		$result = $event->getValue();
+		$entity = $event->getEntityParam();
 		if (!$result instanceof MenuItems || !$entity instanceof \ElggEntity) {
 			return;
 		}
@@ -37,7 +37,7 @@ class RegisterSubscriptionMenuItemsHandler {
 		}
 		
 		$link_classes = [];
-		if ($hook->getParam('name') === 'title') {
+		if ($event->getParam('name') === 'title') {
 			$link_classes = [
 				'elgg-button',
 				'elgg-button-action',

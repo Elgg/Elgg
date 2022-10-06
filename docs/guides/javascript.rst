@@ -74,10 +74,10 @@ the greeting:
 Passing settings to modules
 ---------------------------
 
-The ``elgg.data`` plugin hooks
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The ``elgg.data`` events
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-The ``elgg`` module provides an object ``elgg.data`` which is populated from two server side hooks:
+The ``elgg`` module provides an object ``elgg.data`` which is populated from two server side events:
 
 - **elgg.data, site**: This filters an associative array of site-specific data passed to the client and cached.
 - **elgg.data, page**: This filters an associative array of uncached, page-specific data passed to the client.
@@ -88,8 +88,8 @@ Let's pass some data to a module:
 
     <?php
 
-    function myplugin_config_site(\Elgg\Hook $hook) {
-        $value = $hook->getValue();
+    function myplugin_config_site(\Elgg\Event $event) {
+        $value = $event->getValue();
     	
         // this will be cached client-side
         $value['myplugin']['api'] = elgg_get_site_url() . 'myplugin-api';
@@ -98,21 +98,21 @@ Let's pass some data to a module:
         return $value;
     }
 
-    function myplugin_config_page(\Elgg\Hook $hook) {
+    function myplugin_config_page(\Elgg\Event $event) {
         $user = elgg_get_logged_in_user_entity();
         if (!$user) {
         	return;
         }
         
-        $value = $hook->getValue();
+        $value = $event->getValue();
         
         $value['myplugin']['key'] = $user->myplugin_api_key;
         
         return $value;
     }
 
-    elgg_register_plugin_hook_handler('elgg.data', 'site', 'myplugin_config_site');
-    elgg_register_plugin_hook_handler('elgg.data', 'page', 'myplugin_config_page');
+    elgg_register_event_handler('elgg.data', 'site', 'myplugin_config_site');
+    elgg_register_event_handler('elgg.data', 'page', 'myplugin_config_page');
 
 .. code-block:: js
 
@@ -616,16 +616,16 @@ Traditional scripts
 ===================
 
 Although we highly recommend using AMD modules, and there is no Elgg API for loading the scripts, 
-you can register scripts in a hook handler to add elements to the head links;
+you can register scripts in a event handler to add elements to the head links;
 
 .. code-block:: php
 
-	elgg_register_plugin_hook_handler('head', 'page', $callback);
+	elgg_register_event_handler('head', 'page', $callback);
 
 Hooks
 =====
 
-The JS engine has a hooks system similar to the PHP engine's plugin hooks: hooks are triggered and plugins can register functions to react or alter information. There is no concept of Elgg events in the JS engine; everything in the JS engine is implemented as a hook.
+The JS engine has a hooks system similar to the PHP engine's events: hooks are triggered and plugins can register functions to react or alter information.
 
 Registering hook handlers
 -------------------------

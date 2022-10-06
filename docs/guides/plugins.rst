@@ -24,7 +24,6 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
  * ``views`` - allows plugins to alias vendor assets to a path within the Elgg's view system
  * ``widgets`` - eliminates the need for calling ``elgg_register_widget_type()``
  * ``events`` - eliminates the need for calling ``elgg_register_event_handler()``
- * ``hooks`` - eliminates the need for calling ``elgg_register_plugin_hook_handler()``
  * ``cli_commands`` - an array of ``Elgg/Cli/Command`` classes to extend the feature of ``elgg-cli``
  * ``view_extensions`` - eliminates the need for calling ``elgg_extend_view()`` or ``elgg_unextend_view()``
  * ``theme`` - an array of theme variables
@@ -131,21 +130,6 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 			],
 		],
 		
-		'hooks' => [
-			'register' => [
-				'menu:owner_block' => [
-					'blog_owner_block_menu' => [
-						'priority' => 700,
-					],
-				],
-			],
-			'usersettings:save' => [
-				'user' => [
-					'_elgg_save_notification_user_settings' => ['unregister' => true],
-				],
-			],
-		],
-		
 		'events' => [
 			'delete' => [
 				'object' => [
@@ -162,6 +146,18 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 			'log' => [
 				'systemlog' => [
 					'Elgg\SystemLog\Logger::log' => ['unregister' => true],
+				],
+			],
+			'register' => [
+				'menu:owner_block' => [
+					'blog_owner_block_menu' => [
+						'priority' => 700,
+					],
+				],
+			],
+			'usersettings:save' => [
+				'user' => [
+					'_elgg_save_notification_user_settings' => ['unregister' => true],
 				],
 			],
 		],

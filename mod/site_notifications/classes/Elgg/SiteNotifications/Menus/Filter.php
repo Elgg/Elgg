@@ -15,11 +15,11 @@ class Filter {
 	/**
 	 * Add tabs to the site notifications pages
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:site_notifications'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:site_notifications'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerTabs(\Elgg\Hook $hook) {
+	public static function registerTabs(\Elgg\Event $event) {
 		
 		$page_owner = elgg_get_page_owner_entity();
 		if (!$page_owner instanceof \ElggUser) {
@@ -27,7 +27,7 @@ class Filter {
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'owner',

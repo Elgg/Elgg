@@ -12,12 +12,12 @@ class DefaultWidgetsContainerPermissionsHandler {
 	/**
 	 * Overrides permissions checks when creating widgets for logged out users.
 	 *
-	 * @param \Elgg\Hook $hook 'container_permissions_check', 'object'
+	 * @param \Elgg\Event $event 'container_permissions_check', 'object'
 	 *
 	 * @return void|true
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		if ($hook->getParam('subtype') !== 'widget') {
+	public function __invoke(\Elgg\Event $event) {
+		if ($event->getParam('subtype') !== 'widget') {
 			return;
 		}
 		

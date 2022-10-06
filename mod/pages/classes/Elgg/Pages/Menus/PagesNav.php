@@ -3,7 +3,7 @@
 namespace Elgg\Pages\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,17 +13,17 @@ class PagesNav {
 	/**
 	 * Register menu items for pages_nav menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:pages_nav'
+	 * @param \Elgg\Event $event 'register', 'menu:pages_nav'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
-		$entity = $hook->getEntityParam();
+	public static function register(\Elgg\Event $event) {
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggPage) {
 			return;
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$top = $entity->getTopParentEntity();
 				

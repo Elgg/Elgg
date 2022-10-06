@@ -5,7 +5,7 @@ namespace Elgg\Friends\Menus;
 use Elgg\Menu\MenuItems;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  *
@@ -16,11 +16,11 @@ class Filter {
 	/**
 	 * Add 'Friends' tab to common filter
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:filter'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:filter'
 	 *
 	 * @return MenuItems|null
 	 */
-	public static function registerFilterTabs(\Elgg\Hook $hook): ?MenuItems {
+	public static function registerFilterTabs(\Elgg\Event $event): ?MenuItems {
 		
 		$user = elgg_get_logged_in_user_entity();
 		if (!$user instanceof \ElggUser) {
@@ -28,10 +28,10 @@ class Filter {
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
-		$entity_type = $hook->getParam('entity_type', '');
-		$entity_subtype = $hook->getParam('entity_subtype', '');
+		$entity_type = $event->getParam('entity_type', '');
+		$entity_subtype = $event->getParam('entity_subtype', '');
 		if (empty($entity_type) || empty($entity_subtype)) {
 			$route_name = elgg_get_current_route_name();
 			if (!empty($route_name)) {
@@ -44,7 +44,7 @@ class Filter {
 			}
 		}
 		
-		$friend_link = $hook->getParam('friend_link');
+		$friend_link = $event->getParam('friend_link');
 		if (empty($friend_link)) {
 			if (elgg_route_exists("collection:{$entity_type}:{$entity_subtype}:friends")) {
 				$friend_link = elgg_generate_url("collection:{$entity_type}:{$entity_subtype}:friends", [
@@ -74,11 +74,11 @@ class Filter {
 	/**
 	 * Add the friend request tabs
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:friends'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:friends'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function addFriendRequestTabs(\Elgg\Hook $hook) {
+	public static function addFriendRequestTabs(\Elgg\Event $event) {
 		
 		if (!(bool) elgg_get_plugin_setting('friend_request', 'friends')) {
 			return;
@@ -90,7 +90,7 @@ class Filter {
 		}
 		
 		/* @var $result \Elgg\Menu\MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		// add friends
 		$result[] = \ElggMenuItem::factory([

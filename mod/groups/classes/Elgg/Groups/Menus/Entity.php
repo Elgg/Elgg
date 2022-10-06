@@ -3,7 +3,7 @@
 namespace Elgg\Groups\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  *
@@ -14,12 +14,12 @@ class Entity {
 	/**
 	 * Add join/leave menu items
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:entity:group:group'
+	 * @param \Elgg\Event $event 'register', 'menu:entity:group:group'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
-		$entity = $hook->getEntityParam();
+	public static function register(\Elgg\Event $event) {
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggGroup) {
 			return;
 		}
@@ -29,7 +29,7 @@ class Entity {
 			return;
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		$group_join = groups_get_group_join_menu_item($entity, $user);
 		if (!empty($group_join)) {
 			$return[] = $group_join;
@@ -46,12 +46,12 @@ class Entity {
 	/**
 	 * Add (un)feature toggle
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:entity:group:group'
+	 * @param \Elgg\Event $event 'register', 'menu:entity:group:group'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function registerFeature(\Elgg\Hook $hook) {
-		$entity = $hook->getEntityParam();
+	public static function registerFeature(\Elgg\Event $event) {
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggGroup) {
 			return;
 		}
@@ -60,7 +60,7 @@ class Entity {
 			return;
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$isFeatured = $entity->featured_group === "yes";
 	

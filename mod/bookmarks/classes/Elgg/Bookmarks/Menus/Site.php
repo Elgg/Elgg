@@ -3,7 +3,7 @@
 namespace Elgg\Bookmarks\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  *
@@ -14,12 +14,12 @@ class Site {
 	/**
 	 * Register item to menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:site'
+	 * @param \Elgg\Event $event 'register', 'menu:site'
 	 *
 	 * @return \Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
-		$return = $hook->getValue();
+	public static function register(\Elgg\Event $event) {
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'bookmarks',

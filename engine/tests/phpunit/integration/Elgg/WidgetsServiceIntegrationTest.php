@@ -73,11 +73,11 @@ class WidgetsServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertFalse(elgg_can_edit_widget_layout('random_layout', $editor->guid));
 		$this->assertTrue(elgg_can_edit_widget_layout('random_layout', $admin->guid));
 		
-		$hook = $this->registerTestingHook('permissions_check', 'widget_layout', 'Elgg\Values::getTrue');
+		$event = $this->registerTestingEvent('permissions_check', 'widget_layout', 'Elgg\Values::getTrue');
 		$this->assertTrue(elgg_can_edit_widget_layout('random_layout', $editor->guid));
-		$hook->assertNumberOfCalls(1);
-		$hook->assertParamBefore('context', 'random_layout');
-		$hook->assertParamBefore('user', $editor);
-		$hook->assertParamBefore('page_owner', $owner);
+		$event->assertNumberOfCalls(1);
+		$event->assertParamBefore('context', 'random_layout');
+		$event->assertParamBefore('user', $editor);
+		$event->assertParamBefore('page_owner', $owner);
 	}
 }

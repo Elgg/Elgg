@@ -15,17 +15,17 @@ class WalledGarden {
 	/**
 	 * Adds home link to walled garden menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:walled_garden'
+	 * @param \Elgg\Event $event 'register', 'menu:walled_garden'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerHome(\Elgg\Hook $hook) {
+	public static function registerHome(\Elgg\Event $event) {
 		if (elgg_get_current_url() === elgg_get_site_url()) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'home',

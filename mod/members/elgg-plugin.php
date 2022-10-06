@@ -23,7 +23,7 @@ return [
 			'resource' => 'members/search',
 		],
 	],
-	'hooks' => [
+	'events' => [
 		'register' => [
 			'menu:filter:members' => [
 				'Elgg\Members\Menus\Members::register' => [],

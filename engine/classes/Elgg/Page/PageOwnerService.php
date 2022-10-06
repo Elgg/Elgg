@@ -4,10 +4,10 @@ namespace Elgg\Page;
 
 use Elgg\Database\EntityTable;
 use Elgg\Database\UsersTable;
+use Elgg\EventsService;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Http\Request;
 use Elgg\Invoker;
-use Elgg\PluginHooksService;
 use Elgg\Router\Route;
 
 /**
@@ -35,9 +35,9 @@ class PageOwnerService {
 	protected $users_table;
 
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	protected $hooks;
+	protected $events;
 
 	/**
 	 * @var Invoker
@@ -52,22 +52,22 @@ class PageOwnerService {
 	/**
 	 * Constructor
 	 *
-	 * @param Request            $request      Request
-	 * @param EntityTable        $entity_table Entity table
-	 * @param PluginHooksService $hooks        Hooks
-	 * @param UsersTable         $users_table  Users table
-	 * @param Invoker            $invoker      Invoker
+	 * @param Request       $request      Request
+	 * @param EntityTable   $entity_table Entity table
+	 * @param EventsService $events       Events
+	 * @param UsersTable    $users_table  Users table
+	 * @param Invoker       $invoker      Invoker
 	 */
 	public function __construct(
 			Request $request,
 			EntityTable $entity_table,
-			PluginHooksService $hooks,
+		EventsService $events,
 			UsersTable $users_table,
 			Invoker $invoker
 	) {
 		$this->request = $request;
 		$this->entity_table = $entity_table;
-		$this->hooks = $hooks;
+		$this->events = $events;
 		$this->users_table = $users_table;
 		$this->invoker = $invoker;
 		

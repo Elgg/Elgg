@@ -2,11 +2,6 @@
 
 namespace Elgg\Friends\Collections;
 
-use Elgg\Hook;
-use ElggAccessCollection;
-use ElggMenuItem;
-use ElggUser;
-
 /**
  * Register entity menu item
  */
@@ -15,19 +10,19 @@ class EntityMenuHandler {
 	/**
 	 * Setup entity menu
 	 *
-	 * @param \Elgg\Hook $hook 'register' 'menu:entity:user:user'
+	 * @param \Elgg\Event $event 'register' 'menu:entity:user:user'
 	 *
 	 * @return void|\ElggMenuItem[]
 	 */
-	public function __invoke(Hook $hook) {
+	public function __invoke(\Elgg\Event $event) {
 
-		$entity = $hook->getEntityParam();
-		if (!$entity instanceof ElggUser) {
+		$entity = $event->getEntityParam();
+		if (!$entity instanceof \ElggUser) {
 			return;
 		}
 
 		$collection = $entity->getVolatileData('friends:collection');
-		if (!$collection instanceof ElggAccessCollection) {
+		if (!$collection instanceof \ElggAccessCollection) {
 			return;
 		}
 
@@ -35,9 +30,9 @@ class EntityMenuHandler {
 			return;
 		}
 
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
-		$return[] = ElggMenuItem::factory([
+		$return[] = \ElggMenuItem::factory([
 			'name' => 'remove_member',
 			'text' => elgg_echo('remove'),
 			'href' => elgg_generate_action_url('friends/collections/remove_member', [

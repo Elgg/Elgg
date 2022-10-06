@@ -71,8 +71,8 @@ class SystemEventHandlers {
 		elgg_register_external_file('css', 'admin/users/unvalidated', elgg_get_simplecache_url('admin/users/unvalidated.css'));
 		elgg_register_external_file('css', 'maintenance', elgg_get_simplecache_url('maintenance.css'));
 		
-		elgg_register_plugin_hook_handler('registeruser:validate:password', 'all', [_elgg_services()->passwordGenerator, 'registerUserPasswordValidation']);
-		elgg_register_plugin_hook_handler('view_vars', 'input/password', [_elgg_services()->passwordGenerator, 'addInputRequirements']);
+		elgg_register_event_handler('registeruser:validate:password', 'all', [_elgg_services()->passwordGenerator, 'registerUserPasswordValidation']);
+		elgg_register_event_handler('view_vars', 'input/password', [_elgg_services()->passwordGenerator, 'addInputRequirements']);
 	
 		$widgets = ['online_users', 'new_users', 'content_stats', 'banned_users', 'admin_welcome', 'cron_status'];
 		foreach ($widgets as $widget) {
@@ -92,6 +92,11 @@ class SystemEventHandlers {
 	 */
 	public static function initEarly() {
 		elgg_register_pam_handler(\Elgg\PAM\User\Password::class);
+		
+		// @todo registering an alias helps in the transition from Elgg 4 to Elgg 5. This can be removed in Elgg 6
+		if (!class_exists('Elgg\Hook')) {
+			class_alias(\Elgg\Event::class, 'Elgg\Hook');
+		}
 	}
 	
 	/**

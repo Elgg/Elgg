@@ -54,12 +54,12 @@ try {
 		$params = $request->getParams();
 		$params['user'] = $new_user;
 
-		if (!elgg_trigger_plugin_hook('register', 'user', $params, true)) {
+		if (!elgg_trigger_event_results('register', 'user', $params, true)) {
 			throw new RegistrationException(elgg_echo('registerbad'));
 		}
 		
 		if ($new_user->isValidated() === null) {
-			// no hook decided to set validation status, so it will become validated
+			// no event decided to set validation status, so it will become validated
 			$new_user->setValidationStatus(true, 'register_action');
 		}
 	} catch (\Exception $e) {
@@ -75,7 +75,7 @@ try {
 	];
 
 	if (!$new_user->isEnabled()) {
-		// Plugins can alter forwarding URL by registering for 'response', 'action:register' hook
+		// Plugins can alter forwarding URL by registering for 'response', 'action:register' event
 		return elgg_ok_response($response_data);
 	}
 

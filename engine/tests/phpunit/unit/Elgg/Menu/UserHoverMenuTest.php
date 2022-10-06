@@ -10,14 +10,14 @@ use Elgg\UnitTestCase;
 class UserHoverMenuTest extends UnitTestCase {
 
 	public function up() {
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 
-		_elgg_services()->hooks->registerHandler('register', 'menu:user_hover', 'Elgg\Menus\UserHover::registerAvatarEdit');
-		_elgg_services()->hooks->registerHandler('register', 'menu:user_hover', 'Elgg\Menus\UserHover::registerAdminActions');
+		_elgg_services()->events->registerHandler('register', 'menu:user_hover', 'Elgg\Menus\UserHover::registerAvatarEdit');
+		_elgg_services()->events->registerHandler('register', 'menu:user_hover', 'Elgg\Menus\UserHover::registerAdminActions');
 	}
 	
 	public function down() {
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 	}
 
 	public function testUserHoverMenuWithoutUser() {

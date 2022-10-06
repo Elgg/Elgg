@@ -159,18 +159,18 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 		$this->assertFalse($widgets->validateType('static_config', 'dashboard'));
 	}
 	
-	public function testHooksRegistration() {
-		$hooks = _elgg_services()->hooks;
+	public function testEventsRegistration() {
+		$events = _elgg_services()->events;
 		
-		$hooks->registerHandler('prevent', 'something', '\Elgg\Plugin\ElggPluginStaticConfigIntegrationTest::hookCallback');
+		$events->registerHandler('prevent', 'something', '\Elgg\Plugin\ElggPluginStaticConfigIntegrationTest::hookCallback');
 		
-		$ordered = $hooks->getOrderedHandlers('prevent', 'something');
+		$ordered = $events->getOrderedHandlers('prevent', 'something');
 		$this->assertIsArray($ordered);
 		$this->assertCount(1, $ordered);
 		
-		$this->callReflectorMethod('registerHooks');
+		$this->callReflectorMethod('registerEvents');
 		
-		$ordered = $hooks->getOrderedHandlers('prevent', 'something');
+		$ordered = $events->getOrderedHandlers('prevent', 'something');
 		$this->assertIsArray($ordered);
 		$this->assertCount(2, $ordered);
 		
@@ -178,28 +178,6 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals([
 			'\Elgg\StaticConfig\HookCallback',
 			'\Elgg\StaticConfig\HookCallback::highPriority',
-		], $ordered);
-	}
-	
-	public function testEventsRegistration() {
-		$events = _elgg_services()->events;
-		
-		$events->registerHandler('do', 'something', '\Elgg\Plugin\ElggPluginStaticConfigIntegrationTest::eventCallback');
-		
-		$ordered = $events->getOrderedHandlers('do', 'something');
-		$this->assertIsArray($ordered);
-		$this->assertCount(1, $ordered);
-		
-		$this->callReflectorMethod('registerEvents');
-		
-		$ordered = $events->getOrderedHandlers('do', 'something');
-		$this->assertIsArray($ordered);
-		$this->assertCount(2, $ordered);
-		
-		$this->assertNotContains('\Elgg\Plugin\ElggPluginStaticConfigIntegrationTest::eventCallback', $ordered);
-		$this->assertEquals([
-			'\Elgg\StaticConfig\EventCallback',
-			'\Elgg\StaticConfig\EventCallback::highPriority',
 		], $ordered);
 	}
 	
@@ -276,8 +254,8 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 		$this->assertArrayNotHasKey('update', $events['object']['static_config_subtype']);
 	}
 	
-	public static function hookCallback(\Elgg\Hook $hook) {
-		$result = $hook->getValue();
+	public static function hookCallback(\Elgg\Event $event) {
+		$result = $event->getValue();
 		
 		$result[] = __METHOD__;
 		

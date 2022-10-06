@@ -4,7 +4,6 @@ namespace Elgg\Actions;
 
 use Elgg\ActionResponseTestCase;
 use Elgg\Exceptions\Configuration\RegistrationException;
-use Elgg\Hook;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Elgg\Exceptions\Http\Gatekeeper\RegistrationAllowedGatekeeperException;
@@ -28,13 +27,13 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 			],
 		]);
 
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 		
-		elgg_register_plugin_hook_handler('registeruser:validate:password', 'all', [_elgg_services()->passwordGenerator, 'registerUserPasswordValidation']);
+		elgg_register_event_handler('registeruser:validate:password', 'all', [_elgg_services()->passwordGenerator, 'registerUserPasswordValidation']);
 	}
 
 	public function down() {
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 
 		parent::down();
 	}
@@ -60,8 +59,8 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 	public function testRegistrationFailsWithInvalidPassword() {
 
-		$hook = $this->registerTestingHook('registeruser:validate:password', 'all', function (Hook $hook) {
-			if (strpos($hook->getParam('password'), 'X') === false) {
+		$event = $this->registerTestingEvent('registeruser:validate:password', 'all', function (\Elgg\Event $event) {
+			if (strpos($event->getParam('password'), 'X') === false) {
 				return;
 			}
 
@@ -81,8 +80,8 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('registration:passwordnotvalid'), $response->getContent());
 
-		$hook->assertNumberOfCalls(1);
-		$hook->unregister();
+		$event->assertNumberOfCalls(1);
+		$event->unregister();
 
 		$this->assertNull(get_user_by_username($username));
 	}
@@ -272,9 +271,9 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		$this->assertEquals($user->guid, elgg_get_logged_in_user_guid());
 	}
 
-	public function testRegistrationSucceedsButExceptionThrownFromHook() {
+	public function testRegistrationSucceedsButExceptionThrownFromEvent() {
 
-		$hook = $this->registerTestingHook('register', 'user', function () {
+		$event = $this->registerTestingEvent('register', 'user', function () {
 			throw new RegistrationException('Hello');
 		});
 
@@ -294,16 +293,16 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		$user = get_user_by_username($username);
 		$this->assertNull($user);
 
-		$hook->assertNumberOfCalls(1);
-		$hook->unregister();
+		$event->assertNumberOfCalls(1);
+		$event->unregister();
 	}
 	
 	public function testRegisterWithAdminValidation() {
 		
 		_elgg_services()->config->require_admin_validation = true;
 		
-		// re-register admin validation hooks
-		_elgg_services()->hooks->registerHandler('register', 'user', 'Elgg\Users\Validation::checkAdminValidation', 999);
+		// re-register admin validation events
+		_elgg_services()->events->registerHandler('register', 'user', 'Elgg\Users\Validation::checkAdminValidation', 999);
 		
 		$username = $this->getRandomUsername();
 		

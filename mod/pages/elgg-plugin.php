@@ -79,7 +79,7 @@ return [
 			'resource' => 'pages/revision',
 		],
 	],
-	'hooks' => [
+	'events' => [
 		'access:collections:write' => [
 			'user' => [
 				'Elgg\Pages\Views::removeAccessPublic' => [],

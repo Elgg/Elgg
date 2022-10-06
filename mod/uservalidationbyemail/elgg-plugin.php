@@ -47,8 +47,6 @@ return [
 				'Elgg\UserValidationByEmail\User::preventLogin' => [],
 			],
 		],
-	],
-	'hooks' => [
 		'register' => [
 			'menu:admin:users:bulk' => [
 				'Elgg\UserValidationByEmail\Menus\AdminUsersBulk::register' => [],

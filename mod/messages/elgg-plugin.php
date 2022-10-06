@@ -59,7 +59,12 @@ return [
 			'messages/css' => [],
 		],
 	],
-	'hooks' => [
+	'events' => [
+		'delete:after' => [
+			'user' => [
+				'Elgg\Messages\User::purgeMessages' => [],
+			],
+		],
 		'register' => [
 			'menu:page' => [
 				'Elgg\Messages\Menus\Page::register' => [],
@@ -72,13 +77,6 @@ return [
 			],
 			'menu:user_hover' => [
 				'Elgg\Messages\Menus\UserHover::register' => [],
-			],
-		],
-	],
-	'events' => [
-		'delete:after' => [
-			'user' => [
-				'Elgg\Messages\User::purgeMessages' => [],
 			],
 		],
 	],

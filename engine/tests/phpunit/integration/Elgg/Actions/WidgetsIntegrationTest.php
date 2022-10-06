@@ -33,11 +33,11 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 			'tags' => 'tag',
 		]);
 		
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 	}
 
 	public function down() {
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 		
 		parent::down();
 	}
@@ -60,7 +60,7 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 	}
 	
 	public function testWidgetAddFailsCantCreate() {
-		elgg_register_plugin_hook_handler('permissions_check', 'widget_layout', '\Elgg\Values::getTrue');
+		elgg_register_event_handler('permissions_check', 'widget_layout', '\Elgg\Values::getTrue');
 		
 		$response = $this->executeAction('widgets/add', [
 			'page_owner_guid' => $this->user->guid,
@@ -72,7 +72,7 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 	}
 	
 	public function testWidgetAddSuccess() {
-		elgg_register_plugin_hook_handler('permissions_check', 'widget_layout', '\Elgg\Values::getTrue');
+		elgg_register_event_handler('permissions_check', 'widget_layout', '\Elgg\Values::getTrue');
 		
 		$other_user = $this->createUser();
 		
@@ -108,7 +108,7 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 	}
 
 	public function testWidgetDeleteFailsIfCantEditContext() {
-		elgg_register_plugin_hook_handler('permissions_check', 'widget_layout', '\Elgg\Values::getFalse');
+		elgg_register_event_handler('permissions_check', 'widget_layout', '\Elgg\Values::getFalse');
 		$response = $this->executeAction('widgets/delete', [
 			'widget_guid' => $this->widget->guid,
 		]);
@@ -118,7 +118,7 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 	}
 
 	public function testWidgetDeleteFailsCantDelete() {
-		elgg_register_plugin_hook_handler('permissions_check', 'widget_layout', '\Elgg\Values::getTrue');
+		elgg_register_event_handler('permissions_check', 'widget_layout', '\Elgg\Values::getTrue');
 		
 		$other_user = $this->createUser();
 		_elgg_services()->session->setLoggedInUser($other_user);
@@ -138,7 +138,7 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 	}
 
 	public function testWidgetDeleteSuccess() {
-		elgg_register_plugin_hook_handler('permissions_check', 'widget_layout', '\Elgg\Values::getTrue');
+		elgg_register_event_handler('permissions_check', 'widget_layout', '\Elgg\Values::getTrue');
 		
 		$widget = $this->createObject([
 			'subtype' => 'widget',
@@ -169,7 +169,7 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 	}
 
 	public function testWidgetMoveFailsIfCantEditContext() {
-		elgg_register_plugin_hook_handler('permissions_check', 'widget_layout', '\Elgg\Values::getFalse');
+		elgg_register_event_handler('permissions_check', 'widget_layout', '\Elgg\Values::getFalse');
 		
 		$response = $this->executeAction('widgets/move', [
 			'widget_guid' => $this->widget->guid,

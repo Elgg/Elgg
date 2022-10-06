@@ -13,12 +13,12 @@ class Access {
 	/**
 	 * Register friends to the write access array
 	 *
-	 * @param \Elgg\Hook $hook 'access:collections:write:subtypes', 'user'
+	 * @param \Elgg\Event $event 'access:collections:write:subtypes', 'user'
 	 *
 	 * @return array
 	 */
-	public static function registerAccessCollectionType(\Elgg\Hook $hook) {
-		$return = $hook->getValue();
+	public static function registerAccessCollectionType(\Elgg\Event $event) {
+		$return = $event->getValue();
 		$return[] = 'friends';
 		return $return;
 	}

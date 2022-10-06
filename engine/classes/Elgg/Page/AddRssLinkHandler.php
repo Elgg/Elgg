@@ -12,16 +12,16 @@ class AddRssLinkHandler {
 	/**
 	 * Add rss link to HTML head
 	 *
-	 * @param \Elgg\Hook $hook 'head', 'page'
+	 * @param \Elgg\Event $event 'head', 'page'
 	 *
 	 * @return array|void
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
+	public function __invoke(\Elgg\Event $event) {
 		if (!_elgg_has_rss_link()) {
 			return;
 		}
 		
-		$head_params = $hook->getValue();
+		$head_params = $event->getValue();
 
 		$head_params['links']['rss'] = [
 			'rel' => 'alternative',

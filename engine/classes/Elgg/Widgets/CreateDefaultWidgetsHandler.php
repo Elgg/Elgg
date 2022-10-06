@@ -10,7 +10,7 @@ namespace Elgg\Widgets;
 class CreateDefaultWidgetsHandler {
 	
 	/**
-	 * This plugin hook handler is registered for events based on what kinds of
+	 * This event handler is registered for events based on what kinds of
 	 * default widgets have been registered. See elgg_default_widgets_init() for
 	 * information on registering new default widget contexts.
 	 *
@@ -32,7 +32,7 @@ class CreateDefaultWidgetsHandler {
 			return;
 		}
 		
-		$default_widget_info = elgg_trigger_plugin_hook('get_list', 'default_widgets', null, []);
+		$default_widget_info = elgg_trigger_event_results('get_list', 'default_widgets', [], []);
 		if (empty($default_widget_info)) {
 			return;
 		}

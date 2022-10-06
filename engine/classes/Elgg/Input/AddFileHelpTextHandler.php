@@ -14,12 +14,12 @@ class AddFileHelpTextHandler {
 	 *
 	 * In order to not show the help text supply 'show_upload_limit' => false to elgg_view_field()
 	 *
-	 * @param \Elgg\Hook $hook 'view_vars' 'elements/forms/help'
+	 * @param \Elgg\Event $event 'view_vars' 'elements/forms/help'
 	 *
 	 * @return void|array
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		$return = $hook->getValue();
+	public function __invoke(\Elgg\Event $event) {
+		$return = $event->getValue();
 		if (elgg_extract('input_type', $return) !== 'file') {
 			return;
 		}

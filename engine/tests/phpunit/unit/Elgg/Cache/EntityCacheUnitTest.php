@@ -203,7 +203,7 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 	public function testRemovesBannedUserFromCache() {
 		$user = $this->createUser();
 
-		elgg_register_plugin_hook_handler('permissions_check', 'user', [Values::class, 'getTrue']);
+		elgg_register_event_handler('permissions_check', 'user', [Values::class, 'getTrue']);
 
 		$user = get_entity($user->guid);
 		/* @var $user \ElggUser */
@@ -214,7 +214,7 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertNull(_elgg_services()->entityCache->load($user->guid));
 
-		elgg_unregister_plugin_hook_handler('permissions_check', 'user', [Values::class, 'getTrue']);
+		elgg_unregister_event_handler('permissions_check', 'user', [Values::class, 'getTrue']);
 	}
 
 	public function testRemovesUnbannedUserFromCache() {
@@ -222,7 +222,7 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 			'banned' => 'yes',
 		]);
 
-		elgg_register_plugin_hook_handler('permissions_check', 'user', [Values::class, 'getTrue']);
+		elgg_register_event_handler('permissions_check', 'user', [Values::class, 'getTrue']);
 
 		$user = get_entity($user->guid);
 
@@ -232,7 +232,7 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertNull(_elgg_services()->entityCache->load($user->guid));
 
-		elgg_unregister_plugin_hook_handler('permissions_check', 'user', [Values::class, 'getTrue']);
+		elgg_unregister_event_handler('permissions_check', 'user', [Values::class, 'getTrue']);
 	}
 
 	public function testRemovesNewAdminUserFromCache() {

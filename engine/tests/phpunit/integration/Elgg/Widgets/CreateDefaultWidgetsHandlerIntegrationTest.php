@@ -12,9 +12,7 @@ class CreateDefaultWidgetsHandlerIntegrationTest extends IntegrationTestCase {
 	 * @var \ElggUser
 	 */
 	var $user;
-	
-	var $default_widgets_hook;
-	
+		
 	/**
 	 * {@inheritDoc}
 	 * @see \Elgg\BaseTestCase::up()
@@ -70,8 +68,8 @@ class CreateDefaultWidgetsHandlerIntegrationTest extends IntegrationTestCase {
 	public function testDefaultWidgetsCreatedOnEvent() {
 		elgg_register_event_handler('widgets:test', 'user', CreateDefaultWidgetsHandler::class);
 		
-		$test_hook = $this->registerTestingHook('get_list', 'default_widgets', function(\Elgg\Hook $hook) {
-			$return = $hook->getValue();
+		$test_event = $this->registerTestingEvent('get_list', 'default_widgets', function(\Elgg\Event $event) {
+			$return = $event->getValue();
 			$return[] = [
 				'widget_context' => 'test_context',
 				
@@ -97,11 +95,11 @@ class CreateDefaultWidgetsHandlerIntegrationTest extends IntegrationTestCase {
 		
 		elgg_trigger_event('widgets:test', 'user', $this->user);
 		
-		$test_hook->assertNumberOfCalls(1);
+		$test_event->assertNumberOfCalls(1);
 		
-		// triggering event twice should not trigger default widgets hook twice
+		// triggering event twice should not trigger default widgets event twice
 		elgg_trigger_event('widgets:test', 'user', $this->user);
-		$test_hook->assertNumberOfCalls(1);
+		$test_event->assertNumberOfCalls(1);
 		
 		$widgets = elgg_get_entities($widget_options);
 		
@@ -124,8 +122,8 @@ class CreateDefaultWidgetsHandlerIntegrationTest extends IntegrationTestCase {
 	public function testDefaultWidgetsNotCreatedIfWidgetsAlreadyExist() {
 		elgg_register_event_handler('widgets:test2', 'user', CreateDefaultWidgetsHandler::class);
 		
-		$test_hook = $this->registerTestingHook('get_list', 'default_widgets', function(\Elgg\Hook $hook) {
-			$return = $hook->getValue();
+		$test_event = $this->registerTestingEvent('get_list', 'default_widgets', function(\Elgg\Event $event) {
+			$return = $event->getValue();
 			$return[] = [
 				'widget_context' => 'test_context',
 				
@@ -155,7 +153,7 @@ class CreateDefaultWidgetsHandlerIntegrationTest extends IntegrationTestCase {
 		
 		elgg_trigger_event('widgets:test2', 'user', $this->user);
 		
-		$test_hook->assertNumberOfCalls(1);
+		$test_event->assertNumberOfCalls(1);
 		
 		$this->assertEquals(1, elgg_count_entities($widget_options));
 	}

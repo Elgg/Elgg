@@ -12,9 +12,9 @@ use Elgg\Exceptions\InvalidParameterException;
 class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 	/**
-	 * @var \Elgg\PluginHooksService
+	 * @var \Elgg\EventsService
 	 */
-	private $hooks;
+	private $events;
 
 	/**
 	 * @var \Elgg\Http\Request
@@ -68,7 +68,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
 
-		$this->hooks = new PluginHooksService(_elgg_services()->events);
+		$this->events = new EventsService(_elgg_services()->handlers);
 		
 		$this->request = \Elgg\Http\Request::create("/action/upload");
 		$this->logger = _elgg_services()->logger;
@@ -118,7 +118,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	protected function createService() {
 		$service = new \Elgg\EntityIconService(
 			_elgg_services()->config,
-			$this->hooks,
+			$this->events,
 			$this->entities,
 			$this->uploads,
 			$this->images,
@@ -156,10 +156,10 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		return array_merge($cover_sizes, self::getDefaultIconSizes());
 	}
 
-	public static function getIconSizesForSubtype(\Elgg\Hook $hook) {
-		$subtype = $hook->getParam('entity_subtype');
-		$icon_type = $hook->getParam('type');
-		if ($hook->getType() == 'object' && $subtype == 'foo' && $icon_type == 'icon') {
+	public static function getIconSizesForSubtype(\Elgg\Event $event) {
+		$subtype = $event->getParam('entity_subtype');
+		$icon_type = $event->getParam('type');
+		if ($event->getType() == 'object' && $subtype == 'foo' && $icon_type == 'icon') {
 			return self::getTestSizes();
 		}
 	}
@@ -184,7 +184,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	public function testGetDefaultSizes() {
 		$service = $this->createService();
 
-		// Should return config values, as we do not have any registered hook
+		// Should return config values, as we do not have any registered event
 		$this->assertEquals(_elgg_services()->config->icon_sizes, $service->getSizes());
 
 		// If type is not 'icon', should return an default array with only 'master' size present
@@ -198,13 +198,13 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(self::getDefaultIconSizes(), $service->getSizes('object', 'foo', 'cover'));
 		$this->logger->enable();
 
-		$this->hooks->registerHandler('entity:cover:sizes', 'object', array($this, 'getCoverSizes'));
+		$this->events->registerHandler('entity:cover:sizes', 'object', array($this, 'getCoverSizes'));
 		$service = $this->createService();
 		$this->assertEquals(self::getCoverSizes(), $service->getSizes('object', 'foo', 'cover'));
 	}
 
 	public function testCanFilterIconSizesForEntityTypeSubtypePair() {
-		$this->hooks->registerHandler('entity:icon:sizes', 'object', array($this, 'getIconSizesForSubtype'));
+		$this->events->registerHandler('entity:icon:sizes', 'object', array($this, 'getIconSizesForSubtype'));
 		$service = $this->createService();
 		$this->assertEquals(self::getTestSizes(), $service->getSizes('object', 'foo', 'icon'));
 	}
@@ -225,20 +225,20 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanReplaceIconFile() {
-		$callback = function(\Elgg\Hook $hook) {
-			$size = $hook->getParam('size');
-			$type = $hook->getParam('type');
-			$icon = $hook->getValue();
+		$callback = function(\Elgg\Event $event) {
+			$size = $event->getParam('size');
+			$type = $event->getParam('type');
+			$icon = $event->getValue();
 			
-			$entity = $hook->getEntityParam();
+			$entity = $event->getEntityParam();
 			if ($entity->getSubtype() == 'foo') {
 				$icon->owner_guid = $entity->owner_guid;
 				$icon->setFilename("foo/bar/$type/$size.jpg");
 			}
 			return $icon;
 		};
-		$this->hooks->registerHandler('entity:icon:file', 'object', $callback);
-		$this->hooks->registerHandler('entity:cover:file', 'object', $callback);
+		$this->events->registerHandler('entity:icon:file', 'object', $callback);
+		$this->events->registerHandler('entity:cover:file', 'object', $callback);
 
 		$service = $this->createService();
 
@@ -249,12 +249,12 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($this->owner_dir_path . 'foo/bar/cover/large.jpg', $cover->getFilenameOnFilestore());
 	}
 
-	public function testThrowsExceptionOnInvalidHookHandlerReturnForIconFile() {
-		$callback = function(\Elgg\Hook $hook) {
+	public function testThrowsExceptionOnInvalidEventHandlerReturnForIconFile() {
+		$callback = function(\Elgg\Event $event) {
 			return '/path/to/foo.jpg';
 		};
 
-		$this->hooks->registerHandler('entity:icon:file', 'object', $callback);
+		$this->events->registerHandler('entity:icon:file', 'object', $callback);
 
 		$service = $this->createService();
 		
@@ -398,7 +398,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanReplaceDefaultIconURL() {
 
-		$this->hooks->registerHandler('entity:icon:url', 'object', function(\Elgg\Hook $hook) {
+		$this->events->registerHandler('entity:icon:url', 'object', function(\Elgg\Event $event) {
 			return '/path/to/icon.png';
 		});
 
@@ -453,7 +453,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	function testEmptySizeConfigSavesUnmodifiedVersion() {
-		$this->hooks->registerHandler('entity:cover:sizes', 'object', array($this, 'getCoverSizes'));
+		$this->events->registerHandler('entity:cover:sizes', 'object', array($this, 'getCoverSizes'));
 
 		$service = $this->createService();
 
@@ -538,10 +538,10 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		// make sure we have a wide master
 		$this->assertTrue($size[0] > $size[1]);
 
-		$this->hooks->registerHandler('entity:icon:prepare', 'object', function(\Elgg\Hook $hook) {
+		$this->events->registerHandler('entity:icon:prepare', 'object', function(\Elgg\Event $event) {
 			// make sure we passed in documented params
-			$file = $hook->getValue();
-			if (!$hook->getEntityParam() instanceof \ElggEntity || !$hook->getParam('file') instanceof \ElggFile || !$file instanceof \ElggFile) {
+			$file = $event->getValue();
+			if (!$event->getEntityParam() instanceof \ElggEntity || !$event->getParam('file') instanceof \ElggFile || !$file instanceof \ElggFile) {
 				return;
 			}
 			$new_source = new \ElggFile();
@@ -549,7 +549,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 			$new_source->setFilename('300x600.jpg');
 
 			// replace with tall image
-			$file->owner_guid = $hook->getEntityParam()->guid;
+			$file->owner_guid = $event->getEntityParam()->guid;
 			$file->setFilename('tmp/tmp.jpg');
 			$file->open('write');
 			$file->close();
@@ -559,7 +559,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 			return $file;
 		});
 
-		$this->assertTrue($this->hooks->hasHandler('entity:icon:prepare', 'object'));
+		$this->assertTrue($this->events->hasHandler('entity:icon:prepare', 'object'));
 
 		$service = $this->createService();
 
@@ -580,26 +580,26 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	/**
 	 * @group IconService
 	 */
-	public function testCanSaveIconsWithAHookHandler() {
+	public function testCanSaveIconsWithAnEventHandler() {
 
 		$file = new \ElggFile();
 		$file->owner_guid = 1;
 		$file->setFilename('600x300.jpg');
 
-		$this->hooks->registerHandler('entity:icon:save', 'object', function(\Elgg\Hook $hook) {
-			if ($hook->getValue()) {
+		$this->events->registerHandler('entity:icon:save', 'object', function(\Elgg\Event $event) {
+			if ($event->getValue()) {
 				return;
 			}
 
 			// make sure we passed in documented params
-			if (!$hook->getEntityParam() instanceof \ElggEntity || !$hook->getParam('file') instanceof \ElggFile) {
+			if (!$event->getEntityParam() instanceof \ElggEntity || !$event->getParam('file') instanceof \ElggFile) {
 				return;
 			}
 
-			$x1 = $hook->getParam('x1');
-			$x2 = $hook->getParam('x2');
-			$y1 = $hook->getParam('y1');
-			$y2 = $hook->getParam('y2');
+			$x1 = $event->getParam('x1');
+			$x2 = $event->getParam('x2');
+			$y1 = $event->getParam('y1');
+			$y2 = $event->getParam('y2');
 			if (!isset($x1) || !isset($x2) || !isset($y1) || !isset($y2)) {
 				return;
 			}
@@ -607,7 +607,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 			return true;
 		});
 
-		$this->assertTrue($this->hooks->hasHandler('entity:icon:save', 'object'));
+		$this->assertTrue($this->events->hasHandler('entity:icon:save', 'object'));
 
 		$service = $this->createService();
 
@@ -616,7 +616,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		// original file should stay where it is
 		$this->assertTrue($file->exists());
 
-		// hook returned true without generating icons
+		// event returned true without generating icons
 		$this->assertFalse($service->hasIcon($this->entity, 'master'));
 		$this->assertFalse($service->hasIcon($this->entity, 'large'));
 		$this->assertFalse($service->hasIcon($this->entity, 'medium'));
@@ -628,26 +628,26 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	/**
 	 * @group IconService
 	 */
-	public function testCanDeleteIconsWithAHookHandler() {
+	public function testCanDeleteIconsWithAnEventHandler() {
 
 		$file = new \ElggFile();
 		$file->owner_guid = 1;
 		$file->setFilename('600x300.jpg');
 
-		$this->hooks->registerHandler('entity:icon:delete', 'object', function(\Elgg\Hook $hook) {
-			if ($hook->getValue() === false) {
+		$this->events->registerHandler('entity:icon:delete', 'object', function(\Elgg\Event $event) {
+			if ($event->getValue() === false) {
 				return;
 			}
 
 			// make sure we passed in documented params
-			if (!$hook->getEntityParam() instanceof \ElggEntity) {
+			if (!$event->getEntityParam() instanceof \ElggEntity) {
 				return;
 			}
 
 			return false;
 		});
 
-		$this->assertTrue($this->hooks->hasHandler('entity:icon:delete', 'object'));
+		$this->assertTrue($this->events->hasHandler('entity:icon:delete', 'object'));
 
 		$service = $this->createService();
 
@@ -656,7 +656,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		// original file should stay where it is
 		$this->assertTrue($file->exists());
 
-		// hook returned false without deleting icons
+		// event returned false without deleting icons
 		$this->assertTrue($service->hasIcon($this->entity, 'master'));
 		$this->assertTrue($service->hasIcon($this->entity, 'large'));
 		$this->assertTrue($service->hasIcon($this->entity, 'medium'));
@@ -668,38 +668,38 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	/**
 	 * @group IconService
 	 */
-	public function testCanListenToIconsSavedHook() {
+	public function testCanListenToIconsSavedEvent() {
 
 		$file = new \ElggFile();
 		$file->owner_guid = 1;
 		$file->setFilename('600x300.jpg');
 
-		$this->hooks->registerHandler('entity:icon:saved', 'object', function(\Elgg\Hook $hook) {
+		$this->events->registerHandler('entity:icon:saved', 'object', function(\Elgg\Event $event) {
 
 			// make sure we passed in documented params
-			if (!$hook->getEntityParam() instanceof \ElggEntity) {
+			if (!$event->getEntityParam() instanceof \ElggEntity) {
 				return;
 			}
 
-			$x1 = $hook->getParam('x1');
-			$x2 = $hook->getParam('x2');
-			$y1 = $hook->getParam('y1');
-			$y2 = $hook->getParam('y2');
+			$x1 = $event->getParam('x1');
+			$x2 = $event->getParam('x2');
+			$y1 = $event->getParam('y1');
+			$y2 = $event->getParam('y2');
 			if (!isset($x1) || !isset($x2) || !isset($y1) || !isset($y2)) {
 				return;
 			}
 
-			_elgg_services()->iconService->deleteIcon($hook->getEntityParam());
+			_elgg_services()->iconService->deleteIcon($event->getEntityParam());
 		});
 
-		$this->assertTrue($this->hooks->hasHandler('entity:icon:saved', 'object'));
+		$this->assertTrue($this->events->hasHandler('entity:icon:saved', 'object'));
 
 		$service = $this->createService();
 		_elgg_services()->set('iconService', $service);
 
 		$service->saveIconFromElggFile($this->entity, $file);
 
-		// icons were deleted by the hook
+		// icons were deleted by the event
 		$this->assertFalse($service->hasIcon($this->entity, 'master'));
 		$this->assertFalse($service->hasIcon($this->entity, 'large'));
 		$this->assertFalse($service->hasIcon($this->entity, 'medium'));

@@ -12,16 +12,16 @@ class ContainerLogicHandler {
 	/**
 	 * Prevent commenting on a container if container is not commentable
 	 *
-	 * @param \Elgg\Hook $hook 'container_logic_check', 'all'
+	 * @param \Elgg\Event $event 'container_logic_check', 'all'
 	 *
 	 * @return void|false
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		if ($hook->getParam('subtype') !== 'comment') {
+	public function __invoke(\Elgg\Event $event) {
+		if ($event->getParam('subtype') !== 'comment') {
 			return;
 		}
 		
-		$container = $hook->getParam('container');
+		$container = $event->getParam('container');
 		if (!$container instanceof \ElggEntity) {
 			return;
 		}

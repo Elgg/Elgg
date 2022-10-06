@@ -39,7 +39,7 @@ function elgg_create_widget(int $owner_guid, string $handler, string $context, i
 /**
  * Can the user edit the widget layout
  *
- * Triggers a 'permissions_check', 'widget_layout' plugin hook
+ * Triggers a 'permissions_check', 'widget_layout' event
  *
  * @param string $context   The widget context
  * @param int    $user_guid The GUID of the user (0 for logged in user)
@@ -102,7 +102,7 @@ function elgg_is_widget_type(string $handler, string $context = null, \ElggEntit
  *     'exact'   => bool (defaults to false),
  *     'container' => \ElggEntity (defaults to null)
  * )
- * The contents of the array will be passed to the handlers:widgets hook.
+ * The contents of the array will be passed to the 'handlers:widgets' event.
  *
  * @param array|string $context An associative array of options or the widget context
  *

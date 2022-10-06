@@ -3,7 +3,7 @@
 namespace Elgg\SiteNotifications\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,19 +13,19 @@ class Entity {
 	/**
 	 * Fixes unwanted menu items on the entity menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
+	 * @param \Elgg\Event $event 'register', 'menu:entity'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 		
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \SiteNotification) {
 			return;
 		}
 		
 		/* @var $return \Elgg\Menu\MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return->remove('edit');
 		

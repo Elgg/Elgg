@@ -12,11 +12,11 @@ class SetXFrameOptionsHeaderHandler {
 	/**
 	 * Sends X-Frame-Options header on page requests
 	 *
-	 * @param \Elgg\Hook $hook 'output:before', 'page'
+	 * @param \Elgg\Event $event 'output:before', 'page'
 	 *
 	 * @return void
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
+	public function __invoke(\Elgg\Event $event) {
 		elgg_set_http_header('X-Frame-Options: SAMEORIGIN');
 	}
 }

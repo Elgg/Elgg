@@ -3,7 +3,7 @@
 namespace Elgg\ReportedContent\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,17 +13,17 @@ class Footer {
 	/**
 	 * Add report this to footer
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:footer'
+	 * @param \Elgg\Event $event 'register', 'menu:footer'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 		
 		if (!elgg_is_logged_in()) {
 			return;
 		}
 				
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'report_this',
 			'href' => 'ajax/form/reportedcontent/add',

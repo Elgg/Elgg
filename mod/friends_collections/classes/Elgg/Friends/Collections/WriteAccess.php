@@ -2,8 +2,6 @@
 
 namespace Elgg\Friends\Collections;
 
-use Elgg\Hook;
-
 /**
  * Handles write access subtype registration
  */
@@ -12,15 +10,15 @@ class WriteAccess {
 	/**
 	 * Register subtype
 	 *
-	 * @param \Elgg\Hook $hook 'access:collections:write:subtypes' 'user'
+	 * @param \Elgg\Event $event 'access:collections:write:subtypes' 'user'
 	 *
 	 * @return array
 	 *
 	 * @since 3.2
 	 */
-	public function __invoke(Hook $hook) {
+	public function __invoke(\Elgg\Event $event) {
 
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		$return[] = 'friends_collection';
 		return $return;
 	}

@@ -12,14 +12,14 @@ class AddTitleHandler {
 	/**
 	 * Add title to HTML head
 	 *
-	 * @param \Elgg\Hook $hook 'head', 'page'
+	 * @param \Elgg\Event $event 'head', 'page'
 	 *
 	 * @return array
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		$head_params = $hook->getValue();
+	public function __invoke(\Elgg\Event $event) {
+		$head_params = $event->getValue();
 	
-		$title = $hook->getParam('title');
+		$title = $event->getParam('title');
 		if (empty($title)) {
 			$head_params['title'] = elgg_get_site_entity()->getDisplayName();
 		} else {

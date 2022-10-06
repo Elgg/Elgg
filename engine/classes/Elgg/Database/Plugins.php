@@ -496,7 +496,7 @@ class Plugins {
 	}
 
 	/**
-	 * Registers lifecycle hooks for all active plugins sorted by their priority
+	 * Registers lifecycle events for all active plugins sorted by their priority
 	 *
 	 * @note   This is called on every page load. If a plugin is active and problematic, it
 	 * will be disabled and a visible error emitted. This does not check the deps system because

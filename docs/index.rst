@@ -9,7 +9,7 @@ Features
 
  * **Well-documented core API** that allows developers to kick start their new project with a simple learning curve
  * **Composer** is the package manager of choice that greatly simplifes installation and maintenance of Elgg core and plugins
- * **Flexible system of hooks and events** that allows plugins to extend and modify most aspects of application's functionality and behavior
+ * **Flexible system of events** that allows plugins to extend and modify most aspects of application's functionality and behavior
  * **Extendable system of views** that allows plugins to collaborate on application's presentation layer and built out complex custom themes
  * **Cacheable system of static assets** that allows themes and plugins to serve images, stylesheets, fonts and scripts bypassing the engine
  * **User authentication** is powered by pluggable auth modules, which allow applications to implement custom authentication protocols

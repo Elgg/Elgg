@@ -12,13 +12,13 @@ class ProcessQueueCronHandler {
 	/**
 	 * Process notification queue
 	 *
-	 * @param \Elgg\Hook $hook 'cron', 'minute'
+	 * @param \Elgg\Event $event 'cron', 'minute'
 	 *
 	 * @return void
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
+	public function __invoke(\Elgg\Event $event) {
 		// calculate when we should stop
-		$stop_time = $hook->getParam('time') + (int) elgg_get_config('notifications_max_runtime');
+		$stop_time = $event->getParam('time') + (int) elgg_get_config('notifications_max_runtime');
 		_elgg_services()->notifications->processQueue($stop_time);
 	}
 }

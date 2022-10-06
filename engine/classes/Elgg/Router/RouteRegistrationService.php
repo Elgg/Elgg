@@ -2,8 +2,8 @@
 
 namespace Elgg\Router;
 
+use Elgg\EventsService;
 use Elgg\Exceptions\InvalidParameterException;
-use Elgg\PluginHooksService;
 use Elgg\Router\Middleware\MaintenanceGatekeeper;
 use Elgg\Router\Middleware\WalledGarden;
 use Elgg\Traits\Loggable;
@@ -18,9 +18,9 @@ class RouteRegistrationService {
 	use Loggable;
 
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	protected $hooks;
+	protected $events;
 
 	/**
 	 * @var RouteCollection
@@ -35,16 +35,16 @@ class RouteRegistrationService {
 	/**
 	 * Constructor
 	 *
-	 * @param PluginHooksService $hooks     Hook service
-	 * @param RouteCollection    $routes    Route collection
-	 * @param UrlGenerator       $generator URL Generator
+	 * @param EventsService   $events    Events service
+	 * @param RouteCollection $routes    Route collection
+	 * @param UrlGenerator    $generator URL Generator
 	 */
 	public function __construct(
-		PluginHooksService $hooks,
+		EventsService $events,
 		RouteCollection $routes,
 		UrlGenerator $generator
 	) {
-		$this->hooks = $hooks;
+		$this->events = $events;
 		$this->routes = $routes;
 		$this->generator = $generator;
 	}
@@ -73,7 +73,7 @@ class RouteRegistrationService {
 	 */
 	public function register(string $name, array $params = []): Route {
 
-		$params = $this->hooks->trigger('route:config', $name, $params, $params);
+		$params = $this->events->triggerResults('route:config', $name, $params, $params);
 
 		$path = elgg_extract('path', $params);
 		$controller = elgg_extract('controller', $params);

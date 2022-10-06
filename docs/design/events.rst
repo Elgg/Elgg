@@ -1,5 +1,5 @@
-Events and Plugin Hooks
-#######################
+Events
+######
 
 .. contents:: Contents
    :local:
@@ -8,36 +8,17 @@ Events and Plugin Hooks
 Overview
 ========
 
-Elgg has an event system that can be used to replace or extend core
-functionality.
+Elgg has an event system that can be used to replace or extend core functionality.
 
 Plugins influence the system by creating handlers (`callables <http://php.net/manual/en/language.types.callable.php>`_
-such as functions and methods) and registering them to handle
-two types of events: :ref:`design/events#events` and :ref:`design/events#plugin-hooks`.
+such as functions and methods) and registering them to handle the events.
 
-When an event is triggered, a set of handlers is executed in order
-of priority. Each handler is passed arguments
-and has a chance to influence the process. After execution, the "trigger"
-function returns a value based on the behavior of the handlers.
+When an event is triggered, a set of handlers is executed in order of priority. Each handler is passed arguments
+and has a chance to influence the process. After execution, the "trigger" function returns a value based on the behavior of the handlers.
 
 .. seealso::
 
 	- :doc:`/guides/events-list`
-	- :doc:`/guides/hooks-list`
-
-Elgg Events vs. Plugin Hooks
-----------------------------
-
-The main differences between :ref:`design/events#events` and :ref:`design/events#plugin-hooks` are:
-
-#. Most Elgg events can be cancelled; unless the event is an "after" event,
-   a handler that returns `false` can cancel the event, and no more handlers
-   are called.
-#. Plugin hooks cannot be cancelled; all handlers are always called.
-#. Plugin hooks pass an arbitrary value through the handlers, giving each
-   a chance to alter along the way.
-
-.. _design/events#events:
 
 Elgg Events
 ===========
@@ -46,13 +27,12 @@ Elgg Events are triggered when an Elgg object is created, updated, or
 deleted; and at important milestones while the Elgg framework is
 loading. Examples: a blog post being created or a user logging in.
 
-Unlike :ref:`design/events#plugin-hooks`, *most Elgg events can be cancelled*, halting the
-execution of the handlers, and possibly cancelling an some
-action in the Elgg core.
+These events are mostly used to notify the rest of the system that something has happened.
 
-Each Elgg event has a name and an object type (system, user, object,
-relationship name, annotation, group) describing the type of object
-passed to the handlers.
+There are also events that are used to influence output, configuration or behaviour of the system.
+
+Each Elgg event has a name and a type (system, user, object, relationship name, annotation, group) 
+describing the type of object passed to the handlers.
 
 .. _before-after:
 
@@ -64,12 +44,11 @@ around the state of the system while in flux. E.g. Is the user
 logged in during the [login, user] event?
 
 Before Events have names ending in ":before" and are triggered before
-something happens. Like traditional events, handlers can cancel the
-event by returning ``false``.
+something happens. Handlers can cancel the event by returning ``false``.
+When ``false`` is returned by a handler, following handlers will not be called.
 
 After Events, with names ending in ":after", are triggered after
-something happens. Unlike traditional events, handlers *cannot* cancel
-these events; all handlers will always be called.
+something happened. Handlers *cannot* cancel these events; all handlers will always be called.
 
 Where before and after events are available, developers are encouraged
 to transition to them, though older events will be supported for
@@ -96,9 +75,6 @@ Elgg event handlers are callables:
 In ``event_handler``, the ``Event`` object has various methods for getting the name, object type,
 and object of the event. See the ``Elgg\Event`` class for details.
 
-If a handler returns ``false``, the event is cancelled, preventing execution of the
-other handlers. All other return values are ignored.
-
 Register to handle an Elgg Event
 --------------------------------
 
@@ -108,18 +84,14 @@ Register your handler to an event using ``elgg_register_event_handler``:
 
     <?php
 
-    elgg_register_event_handler($event, $object_type, $handler, $priority);
+    elgg_register_event_handler($event, $type, $handler, $priority);
 
 Parameters:
 
 -  **$event** The event name.
--  **$object_type** The object type (e.g. "user" or "object") or 'all' for
-   all types on which the event is fired.
+-  **$type** The event type (e.g. "user" or "object") or 'all' for all types on which the event is fired.
 -  **$handler** The callback of the handler function.
 -  **$priority** The priority - 0 is first and the default is 500.
-
-**Object** here does not refer to an ``ElggObject`` but rather a string describing any object
-in the framework: system, user, object, relationship, annotation, group.
 
 Example:
 
@@ -141,7 +113,7 @@ Invokable classes as handlers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You may use a class with an ``__invoke()`` method as a handler. Just register the class name and it will be instantiated (with no arguments) 
-for the lifetime of the event (or hook).
+for the lifetime of the event.
 
 .. code-block:: php
 
@@ -201,6 +173,34 @@ The function will return ``false`` if any of the selected handlers returned
 
 .. _design/events#event-sequence:
 
+Trigger an Event with results
+-----------------------------
+
+Events with results provide a way for plugins to collaboratively determine or alter
+a value. For example, to decide whether a user has permission to edit an entity
+or to add additional configuration options to a plugin.
+
+An event has a value passed into the trigger function, and each handler
+has an opportunity to alter the value before it's passed to the next handler.
+After the last handler has completed, the final value is returned by the
+trigger.
+
+You can trigger a custom event using ``elgg_trigger_event_results``:
+
+.. code-block:: php
+
+    <?php
+
+    // filter $value through the handlers
+    $value = elgg_trigger_event_results($name, $type, $params, $value);
+
+Parameters:
+
+-  **$name** The name of the event.
+-  **$type** The type of the event or 'all' for all types.
+-  **$params** Arbitrary data passed from the trigger to the handlers.
+-  **$value** The initial value of the event.
+
 Trigger an Elgg Event sequence
 ------------------------------
 
@@ -224,102 +224,10 @@ Parameters:
 - **$object** The object (e.g. an instance of ``ElggUser`` or ``ElggGroup``)
 - **$callable** Callable to run on successful event, before event:after
 
-.. _design/events#plugin-hooks:
+Unregister Event Handlers
+-------------------------
 
-Plugin Hooks
-============
-
-Plugin Hooks provide a way for plugins to collaboratively determine or alter
-a value. For example, to decide whether a user has permission to edit an entity
-or to add additional configuration options to a plugin.
-
-A plugin hook has a value passed into the trigger function, and each handler
-has an opportunity to alter the value before it's passed to the next handler.
-After the last handler has completed, the final value is returned by the
-trigger.
-
-Plugin Hook Handlers
---------------------
-
-Hook handlers are callables with the following prototype:
-
-.. code-block:: php
-
-    <?php
-
-    /**
-     * @param \Elgg\Hook $hook The hook object
-     *
-     * @return mixed if not null, this will be the new value of the plugin hook
-     */
-    function plugin_hook_handler(\Elgg\Hook $hook) {
-        ...
-    }
-
-In ``plugin_hook_handler``, the ``Hook`` object has various methods for getting the name, type, value,
-and parameters of the hook. See the ``Elgg\Hook`` interface for details.
-
-If the handler returns no value (or ``null`` explicitly), the plugin hook value
-is not altered. Otherwise the returned value becomes the new value of the plugin hook, and it
-will then be available as ``$hook->getValue()`` in the next handler.
-
-Register to handle a Plugin Hook
---------------------------------
-
-Register your handler to a plugin hook using ``elgg_register_plugin_hook_handler``:
-
-.. code-block:: php
-
-    <?php
-
-    elgg_register_plugin_hook_handler($hook, $type, $handler, $priority);
-
-Parameters:
-
--  **$hook** The name of the plugin hook.
--  **$type** The type of the hook or 'all' for all types.
--  **$handler** The callback of the handler function.
--  **$priority** The priority - 0 is first and the default is 500.
-
-**Type** can vary in meaning. It may mean an Elgg entity type or something
-specific to the plugin hook name.
-
-Example:
-
-.. code-block:: php
-
-    <?php
-
-    // Register the function myPlugin_hourly_job() to be called with priority 400.
-    elgg_register_plugin_hook_handler('cron', 'hourly', 'myPlugin_hourly_job', 400);
-
-
-Trigger a Plugin Hook
----------------------
-
-You can trigger a custom plugin hook using ``elgg_trigger_plugin_hook``:
-
-.. code-block:: php
-
-    <?php
-
-    // filter $value through the handlers
-    $value = elgg_trigger_plugin_hook($hook, $type, $params, $value);
-
-Parameters:
-
--  **$hook** The name of the plugin hook.
--  **$type** The type of the hook or 'all' for all types.
--  **$params** Arbitrary data passed from the trigger to the handlers.
--  **$value** The initial value of the plugin hook.
-
-.. warning:: The `$params` and `$value` arguments are reversed between the plugin hook handlers and trigger functions!
-
-
-Unregister Event/Hook Handlers
-------------------------------
-
-The functions ``elgg_unregister_event_handler`` and ``elgg_unregister_plugin_hook_handler`` can be used to remove
+The functions ``elgg_unregister_event_handler`` can be used to remove
 handlers already registered by another plugin or Elgg core. The parameters are in the same order as the registration
 functions, except there's no priority parameter.
 
@@ -337,11 +245,11 @@ by giving the static version of the callback:
     <?php
 
     $obj = new MyPlugin\Handlers();
-    elgg_register_plugin_hook_handler('foo', 'bar', [$obj, 'handleFoo']);
+    elgg_register_event_handler('foo', 'bar', [$obj, 'handleFoo']);
 
     // ... elsewhere
 
-    elgg_unregister_plugin_hook_handler('foo', 'bar', 'MyPlugin\Handlers::handleFoo');
+    elgg_unregister_event_handler('foo', 'bar', 'MyPlugin\Handlers::handleFoo');
 
 Even though the event handler references a dynamic method call, the code above will successfully
 remove the handler.

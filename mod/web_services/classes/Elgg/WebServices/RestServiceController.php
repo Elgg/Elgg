@@ -23,7 +23,7 @@ class RestServiceController {
 	 */
 	public function __invoke(Request $request): ResponseBuilder {
 		// plugins should return true to control what API and user authentication handlers are registered
-		if (elgg_trigger_plugin_hook('rest', 'init', null, false) === false) {
+		if (elgg_trigger_event_results('rest', 'init', [], false) === false) {
 			// user token can also be used for user authentication
 			elgg_register_pam_handler(\Elgg\WebServices\PAM\User\AuthToken::class);
 			

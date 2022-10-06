@@ -77,7 +77,7 @@ function _likes_count_menu_item(\ElggEntity $entity, int $priority = 500): \Elgg
 function likes_count(\ElggEntity $entity): int {
 	$type = $entity->getType();
 	$params = ['entity' => $entity];
-	$number = elgg_trigger_plugin_hook('likes:count', $type, $params, false);
+	$number = elgg_trigger_event_results('likes:count', $type, $params, false);
 
 	if ($number !== false) {
 		return (int) $number;

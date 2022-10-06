@@ -148,7 +148,7 @@ class ElggRiverItem {
 	/**
 	 * Can a user delete this river item?
 	 *
-	 * @tip Can be overridden by registering for the "permissions_check:delete", "river" plugin hook.
+	 * @tip Can be overridden by registering for the "permissions_check:delete", "river" event.
 	 *
 	 * @param int $user_guid The user GUID, optionally (default: logged in user)
 	 *
@@ -191,7 +191,7 @@ class ElggRiverItem {
 		$object->time_posted = date('c', $this->getTimePosted());
 		
 		$params = ['item' => $this];
-		return _elgg_services()->hooks->trigger('to:object', 'river_item', $params, $object);
+		return _elgg_services()->events->triggerResults('to:object', 'river_item', $params, $object);
 	}
 	
 	/**

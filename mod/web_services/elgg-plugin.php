@@ -78,7 +78,7 @@ return [
 			'webservices/admin.css' => [],
 		],
 	],
-	'hooks' => [
+	'events' => [
 		'register' => [
 			'menu:entity' => [
 				'\Elgg\WebServices\EntityMenu' => [],

@@ -3,7 +3,7 @@
 namespace Elgg\Menu;
 
 /**
- * A complete menu, sorted, filtered by the "prepare" hook, and split into sections.
+ * A complete menu, sorted, filtered by the "prepare" event, and split into sections.
  *
  * This also encapsulates parameters to be passed to views.
  */

@@ -3,7 +3,7 @@
 namespace Elgg\UserValidationByEmail\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,17 +13,17 @@ class UserUnvalidated {
 	/**
 	 * Add a menu item to an unvalidated user
 	 *
-	 * @param \Elgg\Hook $hook the plugin hook 'register' 'menu:user:unvalidated'
+	 * @param \Elgg\Event $event the plugin hook 'register' 'menu:user:unvalidated'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 		
 		if (!elgg_is_admin_logged_in()) {
 			return;
 		}
 		
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggUser) {
 			return;
 		}
@@ -34,7 +34,7 @@ class UserUnvalidated {
 			return;
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'uservalidationbyemail:resend',

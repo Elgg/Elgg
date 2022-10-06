@@ -251,7 +251,7 @@ Elgg uses CssCrush for preprocessing CSS files. This gives us the flexibility of
 Plugins should, wherever possible, use global CSS variables, and extend the core theme with their plugin variables, so they
 can be simply altered by other plugins.
 
-To add or alter variables, use the ``vars:compiler, css`` hook. Note that you may need to flush the cache to see your
+To add or alter variables, use the ``vars:compiler, css`` event. Note that you may need to flush the cache to see your
 changes in action.
 
 For a list of default core variables, see ``engine/theme.php``.

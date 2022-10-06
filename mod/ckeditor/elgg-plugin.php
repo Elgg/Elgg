@@ -27,7 +27,7 @@ return [
 			'ckeditor/init' => [],
 		],
 	],
-	'hooks' => [
+	'events' => [
 		'register' => [
 			'menu:longtext' => [
 				'Elgg\CKEditor\Menus\LongText::registerToggler' => [],

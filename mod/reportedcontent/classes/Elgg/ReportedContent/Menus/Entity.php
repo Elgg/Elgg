@@ -3,7 +3,7 @@
 namespace Elgg\ReportedContent\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,13 +13,13 @@ class Entity {
 	/**
 	 * Add items to entity menu for archiving
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:entity:object:reported_content'
+	 * @param \Elgg\Event $event 'register', 'menu:entity:object:reported_content'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function registerArchive(\Elgg\Hook $hook) {
+	public static function registerArchive(\Elgg\Event $event) {
 		
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggReportedContent) {
 			return;
 		}
@@ -32,7 +32,7 @@ class Entity {
 			return;
 		}
 				
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'archive',
 			'icon' => 'archive',
@@ -54,23 +54,23 @@ class Entity {
 	/**
 	 * Add items to entity menu for reporting entities
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
+	 * @param \Elgg\Event $event 'register', 'menu:entity'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function registerEntityReporting(\Elgg\Hook $hook) {
+	public static function registerEntityReporting(\Elgg\Event $event) {
 		
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggEntity || !elgg_is_logged_in()) {
 			return;
 		}
 		
-		$report_this = (bool) $hook->getParam('report_this', $entity->hasCapability('searchable'));
+		$report_this = (bool) $event->getParam('report_this', $entity->hasCapability('searchable'));
 		if (!$report_this) {
 			return;
 		}
 				
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'report_this',
 			'href' => elgg_http_add_url_query_elements('ajax/form/reportedcontent/add', [

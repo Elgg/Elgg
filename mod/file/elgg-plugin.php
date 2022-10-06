@@ -73,7 +73,7 @@ return [
 			'resource' => 'file/view',
 		],
 	],
-	'hooks' => [
+	'events' => [
 		'container_logic_check' => [
 			'object' => [
 				GroupToolContainerLogicCheck::class => [],

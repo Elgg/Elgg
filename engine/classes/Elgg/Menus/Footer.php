@@ -15,18 +15,18 @@ class Footer {
 	/**
 	 * Add the rss menu item
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:footer'
+	 * @param \Elgg\Event $event 'register', 'menu:footer'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerRSS(\Elgg\Hook $hook) {
+	public static function registerRSS(\Elgg\Event $event) {
 		
 		if (!elgg_is_logged_in() || !_elgg_has_rss_link()) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'rss',
@@ -44,17 +44,17 @@ class Footer {
 	/**
 	 * Add Elgg branding
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:footer'
+	 * @param \Elgg\Event $event 'register', 'menu:footer'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerElggBranding(\Elgg\Hook $hook) {
+	public static function registerElggBranding(\Elgg\Event $event) {
 		if (_elgg_services()->config->remove_branding) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'powered',

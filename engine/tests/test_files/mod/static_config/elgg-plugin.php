@@ -37,14 +37,6 @@ return [
 				],
 			],
 		],
-	],
-	'group_tools' => [
-		'static_config_unregister' => [
-			'unregister' => true,
-		],
-		'static_config' => [],
-	],
-	'hooks' => [
 		'prevent' => [
 			'something' => [
 				'Elgg\Plugin\ElggPluginStaticConfigIntegrationTest::hookCallback' => [
@@ -58,6 +50,12 @@ return [
 				],
 			],
 		],
+	],
+	'group_tools' => [
+		'static_config_unregister' => [
+			'unregister' => true,
+		],
+		'static_config' => [],
 	],
 	'notifications' => [
 		'object' => [

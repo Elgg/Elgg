@@ -29,7 +29,7 @@ return [
 	'view_options' => [
 		'forms/reportedcontent/add' => ['ajax' => true],
 	],
-	'hooks' => [
+	'events' => [
 		'register' => [
 			'menu:entity:object:reported_content' => [
 				'Elgg\ReportedContent\Menus\Entity::registerArchive' => [],

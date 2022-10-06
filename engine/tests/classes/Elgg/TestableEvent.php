@@ -38,6 +38,21 @@ class TestableEvent {
 	 * @var int
 	 */
 	protected $calls = 0;
+	
+	/**
+	 * @var Event
+	 */
+	protected $before_state;
+	
+	/**
+	 * @var mixed
+	 */
+	protected $result;
+	
+	/**
+	 * @var Event
+	 */
+	protected $after_state;
 
 	/**
 	 * Register a new testing event handler
@@ -71,16 +86,33 @@ class TestableEvent {
 	 */
 	public function handler(\Elgg\Event $event) {
 		$this->calls++;
+		$this->before_state = clone $event; // using clone so the event isn't used by reference
 		
 		$this->object = $event->getObject();
 
 		list(, $return, $event) = _elgg_services()->handlers->call($this->handler, $event, [
 			$this->name,
 			$this->type,
-			$this->object,
+			$event->getValue(),
+			$event->getParams(),
 		]);
 
+		$this->after_state = $event;
+		
+		if ($return !== null) {
+			$this->result = $return;
+		} else {
+			$this->result = $event->getValue();
+		}
+		
 		return $return;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function getResult() {
+		return $this->result;
 	}
 
 	/**
@@ -99,5 +131,43 @@ class TestableEvent {
 	 */
 	public function assertObject($object) {
 		$this->test_case->assertEquals($this->object, $object);
+	}
+	
+	/**
+	 * Assert that before event handler is called the named parameter had a specific value
+	 *
+	 * @param string $name  Name
+	 * @param mixed  $value Value
+	 */
+	public function assertParamBefore($name, $value) {
+		$this->test_case->assertEquals($this->before_state->getParam($name), $value);
+	}
+	
+	/**
+	 * Assert that before event handler is called the named parameter has a specific
+	 *
+	 * @param string $name  Name
+	 * @param mixed  $value Value
+	 */
+	public function assertParamAfter($name, $value) {
+		$this->test_case->assertEquals($this->after_state->getParam($name), $value);
+	}
+	
+	/**
+	 * Assert event value before the handler was called
+	 *
+	 * @param mixed $value Value
+	 */
+	public function assertValueBefore($value) {
+		$this->test_case->assertEquals($this->before_state->getValue(), $value);
+	}
+	
+	/**
+	 * Assert event value after the handler was called
+	 *
+	 * @param mixed $value Value
+	 */
+	public function assertValueAfter($value) {
+		$this->test_case->assertEquals($this->after_state->getValue(), $value);
 	}
 }

@@ -20,7 +20,7 @@ return [
 			'resource' => 'messageboard/owner',
 		],
 	],
-	'hooks' => [
+	'events' => [
 		'entity:url' => [
 			'object' => [
 				'Elgg\MessageBoard\Widgets::widgetURL' => [],

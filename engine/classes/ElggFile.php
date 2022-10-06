@@ -410,12 +410,12 @@ class ElggFile extends ElggObject {
 		$this->setFilename($filename);
 		$this->filestore_prefix = $prefix;
 
-		$hook_params = [
+		$params = [
 			'file' => $this,
 			'upload' => $upload,
 		];
 
-		$uploaded = _elgg_services()->hooks->trigger('upload', 'file', $hook_params);
+		$uploaded = _elgg_services()->events->triggerResults('upload', 'file', $params);
 		if ($uploaded !== true && $uploaded !== false) {
 			$filestorename = $this->getFilenameOnFilestore();
 			try {
@@ -438,7 +438,7 @@ class ElggFile extends ElggObject {
 				$this->setMimeType($mime_type);
 				$this->simpletype = _elgg_services()->mimetype->getSimpleType($mime_type);
 			} catch (ElggInvalidArgumentException $e) {
-				// this can fail if the upload hooks returns true, but the file is not present on the filestore
+				// this can fail if the upload events returns true, but the file is not present on the filestore
 				// this happens in a unittest
 			}
 			_elgg_services()->events->triggerAfter('upload', 'file', $this);
@@ -496,7 +496,7 @@ class ElggFile extends ElggObject {
 			'use_cookie' => $use_cookie,
 			'expires' => $expires,
 		];
-		return _elgg_services()->hooks->trigger('download:url', 'file', $params, $file_svc->getURL());
+		return _elgg_services()->events->triggerResults('download:url', 'file', $params, $file_svc->getURL());
 	}
 
 	/**
@@ -524,6 +524,6 @@ class ElggFile extends ElggObject {
 			'use_cookie' => $use_cookie,
 			'expires' => $expires,
 		];
-		return _elgg_services()->hooks->trigger('inline:url', 'file', $params, $file_svc->getURL());
+		return _elgg_services()->events->triggerResults('inline:url', 'file', $params, $file_svc->getURL());
 	}
 }

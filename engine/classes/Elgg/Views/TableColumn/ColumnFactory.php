@@ -14,7 +14,7 @@ use Elgg\Views\TableColumn;
  * like `page/components/column/*`, properties, or methods.
  *
  * Numerous pre-existing methods are provided via `__call()` magic. See this method to find out how
- * to add your own methods, override the existing ones, or completely replace a method via hook.
+ * to add your own methods, override the existing ones, or completely replace a method via event.
  *
  * @internal Use elgg()->table_columns to access the instance of this.
  *
@@ -123,9 +123,9 @@ class ColumnFactory {
 	}
 
 	/**
-	 * Provide additional methods via hook and specified language keys.
+	 * Provide additional methods via events and specified language keys.
 	 *
-	 * First, the hook `table_columns:call` is called. Details in `docs/guides/hooks-list.rst`.
+	 * First, the event `table_columns:call` is called. Details in `docs/guides/events-list.rst`.
 	 *
 	 * Then it checks existence of 3 language keys in order to defer processing to a local method:
 	 *
@@ -141,8 +141,8 @@ class ColumnFactory {
 	 * @return TableColumn
 	 */
 	public function __call($name, $arguments) {
-		// allow hook to hijack magic methods
-		$column = _elgg_services()->hooks->trigger('table_columns:call', $name, [
+		// allow event to hijack magic methods
+		$column = _elgg_services()->events->triggerResults('table_columns:call', $name, [
 			'arguments' => $arguments,
 		]);
 		if ($column instanceof TableColumn) {

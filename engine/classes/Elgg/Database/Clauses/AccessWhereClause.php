@@ -84,7 +84,7 @@ class AccessWhereClause extends WhereClause {
 			$ands[] = $qb->compare($alias($this->enabled_column), '=', 'yes', ELGG_VALUE_STRING);
 		}
 
-		$hook_params = [
+		$params = [
 			'table_alias' => $table_alias,
 			'user_guid' => $this->viewer_guid,
 			'ignore_access' => $this->ignore_access,
@@ -96,7 +96,7 @@ class AccessWhereClause extends WhereClause {
 			'query_builder' => $qb,
 		];
 
-		$clauses = _elgg_services()->hooks->trigger('get_sql', 'access', $hook_params, [
+		$clauses = _elgg_services()->events->triggerResults('get_sql', 'access', $params, [
 			'ors' => $ors,
 			'ands' => $ands,
 		]);

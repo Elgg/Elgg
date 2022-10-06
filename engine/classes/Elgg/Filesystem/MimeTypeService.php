@@ -2,8 +2,8 @@
 
 namespace Elgg\Filesystem;
 
+use Elgg\EventsService;
 use Elgg\Exceptions\InvalidArgumentException;
-use Elgg\PluginHooksService;
 
 /**
  * Public service related to MIME type detection
@@ -12,15 +12,15 @@ use Elgg\PluginHooksService;
  */
 class MimeTypeService {
 
-	protected $hooks;
+	protected $events;
 	
 	/**
 	 * Constructor
 	 *
-	 * @param PluginHooksService $hooks Plugin hooks service
+	 * @param EventsService $events Events service
 	 */
-	public function __construct(PluginHooksService $hooks) {
-		$this->hooks = $hooks;
+	public function __construct(EventsService $events) {
+		$this->events = $events;
 	}
 	
 	/**
@@ -47,7 +47,7 @@ class MimeTypeService {
 			'default' => $default,
 		];
 		
-		return $this->hooks->trigger('mime_type', 'file', $params, $mime);
+		return $this->events->triggerResults('mime_type', 'file', $params, $mime);
 	}
 	
 	/**
@@ -84,7 +84,7 @@ class MimeTypeService {
 		$params = [
 			'mime_type' => $mimetype,
 		];
-		return $this->hooks->trigger('simple_type', 'file', $params, $result);
+		return $this->events->triggerResults('simple_type', 'file', $params, $result);
 	}
 	
 	/**

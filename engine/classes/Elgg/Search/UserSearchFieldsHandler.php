@@ -2,8 +2,6 @@
 
 namespace Elgg\Search;
 
-use Elgg\Hook;
-
 /**
  * @internal
  * @since  3.0
@@ -13,15 +11,13 @@ class UserSearchFieldsHandler {
 	/**
 	 * Populate default search fields for user entities
 	 *
-	 * @elgg_plugin_hook search:fields user
-	 *
-	 * @param Hook $hook Hook
+	 * @param \Elgg\Event $event 'search:fields', 'user'
 	 *
 	 * @return array
 	 */
-	public function __invoke(Hook $hook) {
+	public function __invoke(\Elgg\Event $event) {
 
-		$value = (array) $hook->getValue();
+		$value = (array) $event->getValue();
 
 		$defaults = [
 			'metadata' => [],

@@ -23,9 +23,9 @@ class Cli {
 	protected $console;
 
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	protected $hooks;
+	protected $events;
 
 	/**
 	 * @var InputInterface
@@ -40,12 +40,12 @@ class Cli {
 	/**
 	 * Constructor
 	 *
-	 * @param PluginHooksService $hooks  Hooks registration service
-	 * @param InputInterface     $input  Console input
-	 * @param OutputInterface    $output Console output
+	 * @param EventsService   $events Events service
+	 * @param InputInterface  $input  Console input
+	 * @param OutputInterface $output Console output
 	 */
 	public function __construct(
-		PluginHooksService $hooks,
+		EventsService $events,
 		InputInterface $input,
 		OutputInterface $output
 	) {
@@ -54,7 +54,7 @@ class Cli {
 		$console->setup($input, $output);
 
 		$this->console = $console;
-		$this->hooks = $hooks;
+		$this->events = $events;
 		$this->input = $input;
 		$this->output = $output;
 	}
@@ -65,7 +65,7 @@ class Cli {
 	 */
 	protected function bootstrap() {
 		$commands = array_merge($this->getCoreCommands(), $this->getPluginCommands());
-		$commands = $this->hooks->trigger('commands', 'cli', null, $commands);
+		$commands = $this->events->triggerResults('commands', 'cli', [], $commands);
 
 		foreach ($commands as $command) {
 			$this->add($command);

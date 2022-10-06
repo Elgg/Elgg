@@ -31,7 +31,7 @@ trait TestSeeding {
 	}
 
 	/**
-	 * Create an entity for testing with all hooks, events and permissions check disabled
+	 * Create an entity for testing with all events and permissions check disabled
 	 *
 	 * @param string $types      An array of entity types
 	 * @param array  $attributes Entity attributes
@@ -46,7 +46,7 @@ trait TestSeeding {
 	}
 
 	/**
-	 * Create a set of entities for testing with all hooks, events and permissions check disabled
+	 * Create a set of entities for testing with all events and permissions check disabled
 	 *
 	 * @param mixed $types An array of entity types
 	 * @param int   $limit Number of entities to seed

@@ -12,12 +12,12 @@ class AddManifestLinkHandler {
 	/**
 	 * Adds the manifest.json to head links
 	 *
-	 * @param \Elgg\Hook $hook 'head', 'page'
+	 * @param \Elgg\Event $event 'head', 'page'
 	 *
 	 * @return array
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		$result = $hook->getValue();
+	public function __invoke(\Elgg\Event $event) {
+		$result = $event->getValue();
 		$result['links']['manifest'] = [
 			'rel' => 'manifest',
 			'href' => elgg_get_simplecache_url('resources/manifest.json'),

@@ -136,18 +136,18 @@ class ElggPluginSettingsIntegrationTest extends IntegrationTestCase {
 		$this->assertNotEmpty($plugin->getPriority());
 	}
 	
-	public function testUnsetAllEntityAndPluginSettingsHookCallback() {
+	public function testUnsetAllEntityAndPluginSettingsEventCallback() {
 		
 		$plugin = \ElggPlugin::fromId('test_plugin');
 		
 		$calls = 0;
-		$callback = function (\Elgg\Hook $hook) use (&$calls) {
+		$callback = function (\Elgg\Event $event) use (&$calls) {
 			$calls++;
 			
 			return false;
 		};
 		
-		elgg_register_plugin_hook_handler('remove:settings', 'plugin', $callback);
+		elgg_register_event_handler('remove:settings', 'plugin', $callback);
 		
 		$this->assertFalse($plugin->unsetAllEntityAndPluginSettings());
 		$this->assertEquals(1, $calls);

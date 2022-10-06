@@ -61,7 +61,7 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 		return new SubscriptionsService(
 			$this->db,
 			_elgg_services()->relationshipsTable,
-			_elgg_services()->hooks
+			_elgg_services()->events
 		);
 	}
 	

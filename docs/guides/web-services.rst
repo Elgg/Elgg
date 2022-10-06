@@ -87,7 +87,7 @@ and you should see JSON data like this:
     }
 
 Plugins can filter the output of individual API methods by registering a handler
-for ``'rest:output',$method`` plugin hook.
+for ``'rest:output',$method`` event.
 
 Response formats
 ~~~~~~~~~~~~~~~~
@@ -339,12 +339,11 @@ authenticated. This provides you the flexibility to add and remove
 authentication modules. Do you want to not use the default user
 authentication PAM but would prefer using OAuth? You can do this.
 
-The first step is registering a callback function for the *rest, init*
-plugin hook:
+The first step is registering a callback function for the *rest, init* event:
 
 .. code-block:: php
 
-    register_plugin_hook('rest', 'init', 'rest_plugin_setup_pams');
+    elgg_register_event_handler('rest', 'init', 'rest_plugin_setup_pams');
 
 Then in the callback function, you register the PAMs that you want to
 use:

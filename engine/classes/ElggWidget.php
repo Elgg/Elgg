@@ -134,9 +134,9 @@ class ElggWidget extends \ElggObject {
 	/**
 	 * Saves the widget's settings
 	 *
-	 * Plugins can override the save mechanism using the plugin hook:
+	 * Plugins can override the save mechanism using the event:
 	 * 'widget_settings', <widget handler identifier>. The widget and
-	 * the parameters are passed. The plugin hook handler should return
+	 * the parameters are passed. The event handler should return
 	 * true to indicate that it has successfully saved the settings.
 	 *
 	 * @warning The values in the parameter array cannot be arrays
@@ -151,13 +151,13 @@ class ElggWidget extends \ElggObject {
 			return false;
 		}
 
-		// plugin hook handlers should return true to indicate the settings have
+		// Event handlers should return true to indicate the settings have
 		// been saved so that default code does not run
-		$hook_params = [
+		$event_params = [
 			'widget' => $this,
 			'params' => $params
 		];
-		if (_elgg_services()->hooks->trigger('widget_settings', $this->handler, $hook_params, false) === true) {
+		if (_elgg_services()->events->triggerResults('widget_settings', (string) $this->handler, $event_params, false) === true) {
 			return true;
 		}
 

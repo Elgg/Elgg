@@ -6,10 +6,10 @@ use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Elgg\Cache\BaseCache;
 use Elgg\Config;
 use Elgg\Database;
+use Elgg\EventsService;
 use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\Database\UserFetchFailureException;
 use Elgg\I18n\Translator;
-use Elgg\PluginHooksService;
 use Elgg\Traits\Loggable;
 use Elgg\UserCapabilities;
 
@@ -49,9 +49,9 @@ class AccessCollections {
 	protected $access_cache;
 
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	protected $hooks;
+	protected $events;
 
 	/**
 	 * @var \ElggSession
@@ -81,14 +81,14 @@ class AccessCollections {
 	/**
 	 * Constructor
 	 *
-	 * @param Config             $config       Config
-	 * @param Database           $db           Database
-	 * @param EntityTable        $entities     Entity table
-	 * @param UserCapabilities   $capabilities User capabilities
-	 * @param BaseCache          $cache        Access cache
-	 * @param PluginHooksService $hooks        Hooks
-	 * @param \ElggSession       $session      Session
-	 * @param Translator         $translator   Translator
+	 * @param Config           $config       Config
+	 * @param Database         $db           Database
+	 * @param EntityTable      $entities     Entity table
+	 * @param UserCapabilities $capabilities User capabilities
+	 * @param BaseCache        $cache        Access cache
+	 * @param EventsService    $events       Events
+	 * @param \ElggSession     $session      Session
+	 * @param Translator       $translator   Translator
 	 */
 	public function __construct(
 		Config $config,
@@ -96,7 +96,7 @@ class AccessCollections {
 		EntityTable $entities,
 		UserCapabilities $capabilities,
 		BaseCache $cache,
-		PluginHooksService $hooks,
+		EventsService $events,
 		\ElggSession $session,
 		Translator $translator) {
 		$this->config = $config;
@@ -104,7 +104,7 @@ class AccessCollections {
 		$this->entities = $entities;
 		$this->capabilities = $capabilities;
 		$this->access_cache = $cache;
-		$this->hooks = $hooks;
+		$this->events = $events;
 		$this->session = $session;
 		$this->translator = $translator;
 	}
@@ -121,8 +121,8 @@ class AccessCollections {
 	/**
 	 * Returns an array of access IDs a user is permitted to see.
 	 *
-	 * Can be overridden with the 'access:collections:read', 'user' plugin hook.
-	 * @warning A callback for that plugin hook needs to either not retrieve data
+	 * Can be overridden with the 'access:collections:read', 'user' event.
+	 * @warning A callback for that event needs to either not retrieve data
 	 * from the database that would use the access system (triggering the plugin again)
 	 * or ignore the second call. Otherwise, an infinite loop will be created.
 	 *
@@ -200,7 +200,7 @@ class AccessCollections {
 		];
 
 		// see the warning in the docs for this function about infinite loop potential
-		return $this->hooks->trigger('access:collections:read', 'user', $options, $access_array);
+		return $this->events->triggerResults('access:collections:read', 'user', $options, $access_array);
 	}
 
 	/**
@@ -262,8 +262,6 @@ class AccessCollections {
 	 *    34 => 'My favorite friends',
 	 * );
 	 *
-	 * Plugin hook of 'access:collections:write', 'user'
-	 *
 	 * @warning this only returns access collections that the user owns plus the
 	 * standard access levels. It does not return access collections that the user
 	 * belongs to such as the access collection for a group.
@@ -310,7 +308,7 @@ class AccessCollections {
 			'input_params' => $input_params,
 		];
 		
-		$access_array = $this->hooks->trigger('access:collections:write', 'user', $options, $access_array);
+		$access_array = $this->events->triggerResults('access:collections:write', 'user', $options, $access_array);
 		
 		// move logged in and public to the end of the array
 		foreach ([ACCESS_LOGGED_IN, ACCESS_PUBLIC] as $access) {
@@ -337,7 +335,7 @@ class AccessCollections {
 	 * @since 3.2
 	 */
 	protected function getCollectionsForWriteAccess(int $owner_guid) {
-		$subtypes =  $this->hooks->trigger('access:collections:write:subtypes', 'user', ['owner_guid' => $owner_guid], []);
+		$subtypes =  $this->events->triggerResults('access:collections:write:subtypes', 'user', ['owner_guid' => $owner_guid], []);
 		
 		$select = Select::fromTable(self::TABLE_NAME);
 		
@@ -369,8 +367,8 @@ class AccessCollections {
 	/**
 	 * Can the user change this access collection?
 	 *
-	 * Use the plugin hook of 'access:collections:write', 'user' to change this.
-	 * @see elgg_get_write_access_array() for details on the hook.
+	 * Use the event of 'access:collections:write', 'user' to change this.
+	 * @see elgg_get_write_access_array() for details on the event.
 	 *
 	 * Respects access control disabling for admin users and {@link elgg_call()}
 	 *
@@ -409,7 +407,7 @@ class AccessCollections {
 	 * Access colletions allow plugins and users to create granular access
 	 * for entities.
 	 *
-	 * Triggers plugin hook 'access:collections:addcollection', 'collection'
+	 * Triggers event 'access:collections:addcollection', 'collection'
 	 *
 	 * @internal Access collections are stored in the access_collections table.
 	 * Memberships to collections are in access_collections_membership.
@@ -452,14 +450,15 @@ class AccessCollections {
 
 		$this->access_cache->clear();
 
-		$hook_params = [
+		$event_params = [
 			'collection_id' => $id,
 			'name' => $name,
 			'subtype' => $subtype,
 			'owner_guid' => $owner_guid,
 		];
 
-		if (!$this->hooks->trigger('access:collections:addcollection', 'collection', $hook_params, true)) {
+		// @todo https://github.com/Elgg/Elgg/issues/10823
+		if (!$this->events->triggerResults('access:collections:addcollection', 'collection', $event_params, true)) {
 			$this->delete($id);
 			return null;
 		}
@@ -496,7 +495,7 @@ class AccessCollections {
 	 * @warning Expects a full list of all members that should
 	 * be part of the access collection
 	 *
-	 * @note This will run all hooks associated with adding or removing
+	 * @note This will run all events associated with adding or removing
 	 * members to access collections.
 	 *
 	 * @param int   $collection_id ID of the collection.
@@ -563,7 +562,8 @@ class AccessCollections {
 			'collection_id' => $collection_id,
 		];
 
-		if (!$this->hooks->trigger('access:collections:deletecollection', 'collection', $params, true)) {
+		// @todo https://github.com/Elgg/Elgg/issues/10823
+		if (!$this->events->triggerResults('access:collections:deletecollection', 'collection', $params, true)) {
 			return false;
 		}
 
@@ -627,7 +627,7 @@ class AccessCollections {
 	/**
 	 * Adds a user to an access collection.
 	 *
-	 * Triggers the 'access:collections:add_user', 'collection' plugin hook.
+	 * Triggers the 'access:collections:add_user', 'collection' event.
 	 *
 	 * @param int $user_guid     GUID of the user to add
 	 * @param int $collection_id ID of the collection to add them to
@@ -646,12 +646,13 @@ class AccessCollections {
 			return false;
 		}
 
-		$hook_params = [
+		$event_params = [
 			'collection_id' => $collection->id,
 			'user_guid' => $user_guid
 		];
 
-		$result = $this->hooks->trigger('access:collections:add_user', 'collection', $hook_params, true);
+		// @todo https://github.com/Elgg/Elgg/issues/10823
+		$result = $this->events->triggerResults('access:collections:add_user', 'collection', $event_params, true);
 		if ($result == false) {
 			return false;
 		}
@@ -683,7 +684,7 @@ class AccessCollections {
 	/**
 	 * Removes a user from an access collection.
 	 *
-	 * Triggers the 'access:collections:remove_user', 'collection' plugin hook.
+	 * Triggers the 'access:collections:remove_user', 'collection' event.
 	 *
 	 * @param int $user_guid     GUID of the user
 	 * @param int $collection_id ID of the collection
@@ -697,7 +698,8 @@ class AccessCollections {
 			'user_guid' => $user_guid,
 		];
 
-		if (!$this->hooks->trigger('access:collections:remove_user', 'collection', $params, true)) {
+		// @todo https://github.com/Elgg/Elgg/issues/10823
+		if (!$this->events->triggerResults('access:collections:remove_user', 'collection', $params, true)) {
 			return false;
 		}
 

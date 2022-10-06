@@ -3,22 +3,22 @@
 namespace Elgg\Developers;
 
 /**
- * Plugin hook handlers for Developers plugin
+ * Event handlers for Developers plugin
  */
-class Hooks {
+class Events {
 
 	/**
 	 * Alter input of menu sections in "gear" popup
 	 *
-	 * @param \Elgg\Hook $hook 'view_vars', 'navigation/menu/elements/section'
+	 * @param \Elgg\Event $event 'view_vars', 'navigation/menu/elements/section'
 	 *
 	 * @return mixed
 	 */
-	public static function alterMenuSectionVars(\Elgg\Hook $hook) {
+	public static function alterMenuSectionVars(\Elgg\Event $event) {
 		if (!elgg_in_context('developers_gear')) {
 			return;
 		}
-		$value = $hook->getValue();
+		$value = $event->getValue();
 		$idx = array_search('elgg-menu-page', $value['class']);
 		if ($idx !== false) {
 			unset($value['class'][$idx]);
@@ -39,17 +39,17 @@ class Hooks {
 	/**
 	 * Alter output of menu sections in "gear" popup
 	 *
-	 * @param \Elgg\Hook $hook 'view', 'navigation/menu/elements/section'
+	 * @param \Elgg\Event $event 'view', 'navigation/menu/elements/section'
 	 *
 	 * @return mixed
 	 */
-	public static function alterMenuSections(\Elgg\Hook $hook) {
+	public static function alterMenuSections(\Elgg\Event $event) {
 		if (!elgg_in_context('developers_gear')) {
 			return;
 		}
-		$params = $hook->getParams();
+		$params = $event->getParams();
 		if (in_array('elgg-developers-gear', $params['vars']['class'])) {
-			$output = $hook->getValue();
+			$output = $event->getValue();
 			return "<section>$output</section>";
 		}
 	}
@@ -57,16 +57,16 @@ class Hooks {
 	/**
 	 * Alter output of complete menu in "gear" popup
 	 *
-	 * @param \Elgg\Hook $hook 'view', 'navigation/menu/default'
+	 * @param \Elgg\Event $event 'view', 'navigation/menu/default'
 	 *
 	 * @return mixed
 	 */
-	public static function alterMenu(\Elgg\Hook $hook) {
+	public static function alterMenu(\Elgg\Event $event) {
 		if (!elgg_in_context('developers_gear')) {
 			return;
 		}
 		
-		$output = $hook->getValue();
+		$output = $event->getValue();
 		$output = preg_replace('~^<nav\b[^>]+>~', '', $output);
 		$output = preg_replace('~^</nav>$~', '', $output);
 		return $output;
@@ -75,12 +75,12 @@ class Hooks {
 	/**
 	 * Change the to address if a forwarding address isset
 	 *
-	 * @param \Elgg\Hook $hook The hook for 'prepare', 'system:email'
+	 * @param \Elgg\Event $event The hook for 'prepare', 'system:email'
 	 *
 	 * @since 3.0
 	 * @return void|\Elgg\Email
 	 */
-	public static function setForwardEmailAddress(\Elgg\Hook $hook) {
+	public static function setForwardEmailAddress(\Elgg\Event $event) {
 		
 		if (elgg_get_plugin_setting('block_email', 'developers') !== 'forward') {
 			return;
@@ -91,7 +91,7 @@ class Hooks {
 			return;
 		}
 		
-		$email = $hook->getValue();
+		$email = $event->getValue();
 		if (!($email instanceof \Elgg\Email)) {
 			return;
 		}
@@ -107,12 +107,12 @@ class Hooks {
 	/**
 	 * Block outgoing emails
 	 *
-	 * @param \Elgg\Hook $hook The hook for 'transport', 'system:email'
+	 * @param \Elgg\Event $event The hook for 'transport', 'system:email'
 	 *
 	 * @since 3.0
 	 * @return void|true
 	 */
-	public static function blockOutgoingEmails(\Elgg\Hook $hook) {
+	public static function blockOutgoingEmails(\Elgg\Event $event) {
 		
 		$block_setting = elgg_get_plugin_setting('block_email', 'developers');
 		if (!in_array($block_setting, ['all', 'users'])) {
@@ -127,7 +127,7 @@ class Hooks {
 		
 		// only block outgoing e-mails for regular users
 		// so check if the receiver is an admin
-		$email = $hook->getParam('email');
+		$email = $event->getParam('email');
 		if (!($email instanceof \Elgg\Email)) {
 			return;
 		}

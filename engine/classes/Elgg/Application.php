@@ -464,11 +464,7 @@ class Application {
 				}
 			}
 
-			$hook_params = [
-				'exception' => $ex,
-			];
-
-			$forward_url = (string) $this->internal_services->hooks->trigger('forward', $ex->getCode(), $hook_params, $forward_url);
+			$forward_url = (string) $this->internal_services->events->triggerResults('forward', $ex->getCode(), ['exception' => $ex], $forward_url);
 
 			if ($forward_url && !$request->isXmlHttpRequest()) {
 				if ($ex->getMessage()) {
@@ -746,6 +742,7 @@ class Application {
 	private static function getEngineLibs() {
 		return [
 			'elgglib.php',
+			'events.php',
 			'access.php',
 			'actions.php',
 			'admin.php',
@@ -755,7 +752,7 @@ class Application {
 			'configuration.php',
 			'constants.php',
 			'context.php',
-			'deprecation.php',
+			'deprecated-5.0.php',
 			'entities.php',
 			'external_files.php',
 			'filestore.php',

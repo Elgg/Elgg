@@ -64,9 +64,9 @@ class ViewsService {
 	private $fallbacks = [];
 
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	private $hooks;
+	private $events;
 
 	/**
 	 * @var SystemCache|null This is set if the views are configured via cache
@@ -86,11 +86,11 @@ class ViewsService {
 	/**
 	 * Constructor
 	 *
-	 * @param PluginHooksService $hooks   The hooks service
+	 * @param EventsService      $events  Events service
 	 * @param \Elgg\Http\Request $request Http Request
 	 */
-	public function __construct(PluginHooksService $hooks, HttpRequest $request) {
-		$this->hooks = $hooks;
+	public function __construct(EventsService $events, HttpRequest $request) {
+		$this->events = $events;
 		$this->request = $request;
 	}
 
@@ -410,12 +410,12 @@ class ViewsService {
 		}
 
 		// allow altering $vars
-		$vars_hook_params = [
+		$vars_event_params = [
 			'view' => $view,
 			'vars' => $vars,
 			'viewtype' => $viewtype,
 		];
-		$vars = $this->hooks->trigger(self::VIEW_VARS_HOOK, $view, $vars_hook_params, $vars);
+		$vars = $this->events->triggerResults(self::VIEW_VARS_HOOK, $view, $vars_event_params, $vars);
 
 		// allow $vars to hijack output
 		if (isset($vars[self::OUTPUT_KEY])) {
@@ -448,14 +448,13 @@ class ViewsService {
 			}
 		}
 
-		// Plugin hook
 		$params = [
 			'view' => $view,
 			'vars' => $vars,
 			'viewtype' => $viewtype,
 		];
 		
-		return (string) $this->hooks->trigger(self::VIEW_HOOK, $view, $params, $content);
+		return (string) $this->events->triggerResults(self::VIEW_HOOK, $view, $params, $content);
 	}
 
 	/**
@@ -591,28 +590,6 @@ class ViewsService {
 
 		$this->extensions[$view][$priority] = (string) $view_extension;
 		ksort($this->extensions[$view]);
-	}
-
-	/**
-	 * Is the given view extended?
-	 *
-	 * @param string $view View name
-	 *
-	 * @return bool
-	 */
-	public function viewIsExtended(string $view): bool {
-		return count($this->getViewList($view)) > 1;
-	}
-
-	/**
-	 * Do hook handlers exist to modify the view?
-	 *
-	 * @param string $view View name
-	 *
-	 * @return bool
-	 */
-	public function viewHasHookHandlers(string $view): bool {
-		return $this->hooks->hasHandler('view', $view) || $this->hooks->hasHandler('view_vars', $view);
 	}
 
 	/**

@@ -19,10 +19,24 @@ return [
 			'elgg/likes.css' => [],
 		],
 	],
-	'hooks' => [
+	'events' => [
 		'ajax_response' => [
 			'all' => [
 				Elgg\Likes\AjaxResponseHandler::class => [],
+			],
+		],
+		'delete' => [
+			'group' => [
+				'\Elgg\Likes\Delete::deleteLikes' => [],
+			],
+			'object' => [
+				'\Elgg\Likes\Delete::deleteLikes' => [],
+			],
+			'site' => [
+				'\Elgg\Likes\Delete::deleteLikes' => [],
+			],
+			'user' => [
+				'\Elgg\Likes\Delete::deleteLikes' => [],
 			],
 		],
 		'elgg.data' => [
@@ -53,22 +67,6 @@ return [
 		'view_vars' => [
 			'page/components/list' => [
 				'Elgg\Likes\Preloader::preload' => [],
-			],
-		],
-	],
-	'events' => [
-		'delete' => [
-			'group' => [
-				'\Elgg\Likes\Delete::deleteLikes' => [],
-			],
-			'object' => [
-				'\Elgg\Likes\Delete::deleteLikes' => [],
-			],
-			'site' => [
-				'\Elgg\Likes\Delete::deleteLikes' => [],
-			],
-			'user' => [
-				'\Elgg\Likes\Delete::deleteLikes' => [],
 			],
 		],
 	],

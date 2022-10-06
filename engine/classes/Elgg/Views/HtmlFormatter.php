@@ -2,11 +2,12 @@
 
 namespace Elgg\Views;
 
+use Elgg\EventsService;
 use Elgg\Exceptions\InvalidArgumentException;
-use Elgg\PluginHooksService;
 use Elgg\Traits\Loggable;
 use Elgg\ViewsService;
 use Pelago\Emogrifier\CssInliner;
+
 
 /**
  * Various helper method for formatting and sanitizing output
@@ -21,9 +22,9 @@ class HtmlFormatter {
 	protected $views;
 
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	protected $hooks;
+	protected $events;
 
 	/**
 	 * @var AutoParagraph
@@ -33,17 +34,17 @@ class HtmlFormatter {
 	/**
 	 * Output constructor.
 	 *
-	 * @param ViewsService       $views Views service
-	 * @param PluginHooksService $hooks Hooks
-	 * @param AutoParagraph      $autop Paragraph wrapper
+	 * @param ViewsService  $views  Views service
+	 * @param EventsService $events Events service
+	 * @param AutoParagraph $autop  Paragraph wrapper
 	 */
 	public function __construct(
 		ViewsService $views,
-		PluginHooksService $hooks,
+		EventsService $events,
 		AutoParagraph $autop
 	) {
 		$this->views = $views;
-		$this->hooks = $hooks;
+		$this->events = $events;
 		$this->autop = $autop;
 	}
 
@@ -73,7 +74,7 @@ class HtmlFormatter {
 			'html' => $html,
 		];
 
-		$params = $this->hooks->trigger('prepare', 'html', null, $params);
+		$params = $this->events->triggerResults('prepare', 'html', [], $params);
 
 		$html = (string) elgg_extract('html', $params);
 		$options = (array) elgg_extract('options', $params);
@@ -287,13 +288,13 @@ class HtmlFormatter {
 
 	/**
 	 * Strip tags and offer plugins the chance.
-	 * Plugins register for output:strip_tags plugin hook.
+	 * Plugins register for output:strip_tags event.
 	 * Original string included in $params['original_string']
 	 *
 	 * @param string $string         Formatted string
 	 * @param string $allowable_tags Optional parameter to specify tags which should not be stripped
 	 *
-	 * @return string String run through strip_tags() and any plugin hooks.
+	 * @return string String run through strip_tags() and any event.
 	 */
 	public function stripTags(string $string, string $allowable_tags = null): string {
 		$params = [
@@ -302,7 +303,7 @@ class HtmlFormatter {
 		];
 
 		$string = strip_tags($string, $allowable_tags);
-		return (string) $this->hooks->trigger('format', 'strip_tags', $params, $string);
+		return (string) $this->events->triggerResults('format', 'strip_tags', $params, $string);
 	}
 
 	/**

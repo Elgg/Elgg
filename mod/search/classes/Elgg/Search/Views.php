@@ -3,7 +3,7 @@
 namespace Elgg\Search;
 
 /**
- * Hook callbacks for views
+ * Event callbacks for views
  *
  * @since 4.0
  * @internal
@@ -13,12 +13,12 @@ class Views {
 	/**
 	 * Adds search 'href' to output/tag view vars
 	 *
-	 * @param \Elgg\Hook $hook 'view_vars' 'output/tag'
+	 * @param \Elgg\Event $event 'view_vars' 'output/tag'
 	 *
 	 * @return void|array
 	 */
-	public static function setSearchHref(\Elgg\Hook $hook) {
-		$vars = $hook->getValue();
+	public static function setSearchHref(\Elgg\Event $event) {
+		$vars = $event->getValue();
 		if (isset($vars['href'])) {
 			// leave unaltered
 			return;

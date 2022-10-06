@@ -10,12 +10,12 @@ class HookCallback {
 	/**
 	 * Called on a low (100) priority
 	 *
-	 * @param \Elgg\Hook $hook 'prevent', 'something'
+	 * @param \Elgg\Event $event 'prevent', 'something'
 	 *
 	 * @return mixed
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		$result = $hook->getValue();
+	public function __invoke(\Elgg\Event $event) {
+		$result = $event->getValue();
 		
 		$result[] = __METHOD__;
 		
@@ -25,12 +25,12 @@ class HookCallback {
 	/**
 	 * Called on a high (900) priority
 	 *
-	 * @param \Elgg\Hook $hook 'prevent', 'something'
+	 * @param \Elgg\Event $event 'prevent', 'something'
 	 *
 	 * @return mixed
 	 */
-	public static function highPriority(\Elgg\Hook $hook)  {
-		$result = $hook->getValue();
+	public static function highPriority(\Elgg\Event $event)  {
+		$result = $event->getValue();
 		
 		$result[] = __METHOD__;
 		

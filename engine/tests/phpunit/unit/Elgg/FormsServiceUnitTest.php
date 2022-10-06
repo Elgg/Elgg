@@ -34,14 +34,14 @@ class FormsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanNotSetFooterOutsideFormView() {
 		$this->expectException(LogicException::class);
-		$this->expectExceptionMessage('Form footer can only be set and retrieved during form rendering, anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)');
+		$this->expectExceptionMessage('Form footer can only be set and retrieved during form rendering, anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view events)');
 		
 		_elgg_services()->forms->setFooter('footer');
 	}
 
 	public function testCanNotGetFooterOutsideFormView() {
 		$this->expectException(LogicException::class);
-		$this->expectExceptionMessage('Form footer can only be set and retrieved during form rendering, anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)');
+		$this->expectExceptionMessage('Form footer can only be set and retrieved during form rendering, anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view events)');
 		
 		_elgg_services()->forms->getFooter();
 	}

@@ -33,7 +33,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 		$dir = (new EntityDirLocator($this->owner_guid))->getPath();
 		$this->owner_dir_path = _elgg_services()->config->dataroot . $dir;
 
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 		_elgg_services()->events->backup();
 
 		// Events service is trying to connect to the DB
@@ -52,7 +52,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 	public function down() {
 		elgg_delete_directory($this->owner_dir_path);
 		
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 		_elgg_services()->events->restore();
 	}
 
@@ -199,12 +199,12 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 			$upload_event_calls++;
 		});
 
-		_elgg_services()->hooks->registerHandler('upload', 'file', function(\Elgg\Hook $hook) use (&$upload_hook_calls) {
-			$this->assertNull($hook->getValue());
-			$this->assertEquals('upload', $hook->getName());
-			$this->assertEquals('file', $hook->getType());
-			$this->assertInstanceOf(\ElggFile::class, $hook->getParam('file'));
-			$this->assertInstanceOf(UploadedFile::class, $hook->getParam('upload'));
+		_elgg_services()->events->registerHandler('upload', 'file', function(\Elgg\Event $event) use (&$upload_hook_calls) {
+			$this->assertNull($event->getValue());
+			$this->assertEquals('upload', $event->getName());
+			$this->assertEquals('file', $event->getType());
+			$this->assertInstanceOf(\ElggFile::class, $event->getParam('file'));
+			$this->assertInstanceOf(UploadedFile::class, $event->getParam('upload'));
 			$upload_hook_calls++;
 			return false;
 		});
@@ -214,7 +214,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(1, $upload_hook_calls);
 		$this->assertFalse($file->exists());
 
-		_elgg_services()->hooks->registerHandler('upload', 'file', function() use (&$upload_hook_calls) {
+		_elgg_services()->events->registerHandler('upload', 'file', function() use (&$upload_hook_calls) {
 			$upload_hook_calls++;
 			return true;
 		});

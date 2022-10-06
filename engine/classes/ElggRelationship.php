@@ -167,13 +167,13 @@ class ElggRelationship extends \ElggData {
 	/**
 	 * Get a URL for this relationship.
 	 *
-	 * Plugins can register for the 'relationship:url', 'relationship' plugin hook to
+	 * Plugins can register for the 'relationship:url', 'relationship' event to
 	 * customize the url for a relationship.
 	 *
 	 * @return string
 	 */
 	public function getURL(): string {
-		$url = _elgg_services()->hooks->trigger('relationship:url', $this->getType(), ['relationship' => $this], '');
+		$url = _elgg_services()->events->triggerResults('relationship:url', $this->getType(), ['relationship' => $this], '');
 
 		return elgg_normalize_url($url);
 	}
@@ -191,7 +191,7 @@ class ElggRelationship extends \ElggData {
 
 		$params['relationship'] = $this;
 
-		return _elgg_services()->hooks->trigger('to:object', 'relationship', $params, $object);
+		return _elgg_services()->events->triggerResults('to:object', 'relationship', $params, $object);
 	}
 
 	// SYSTEM LOG INTERFACE ////////////////////////////////////////////////////////////

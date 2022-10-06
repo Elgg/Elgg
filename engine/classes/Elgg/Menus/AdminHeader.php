@@ -15,17 +15,17 @@ class AdminHeader {
 	/**
 	 * Add the default menu items
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:admin_header'
+	 * @param \Elgg\Event $event 'register', 'menu:admin_header'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 		if (!elgg_is_admin_logged_in()) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$admin = elgg_get_logged_in_user_entity();
 		
@@ -64,11 +64,11 @@ class AdminHeader {
 	/**
 	 * Add the maintenance link
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:admin_header'
+	 * @param \Elgg\Event $event 'register', 'menu:admin_header'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerMaintenance(\Elgg\Hook $hook) {
+	public static function registerMaintenance(\Elgg\Event $event) {
 		if (!elgg_is_admin_logged_in()) {
 			return;
 		}
@@ -78,7 +78,7 @@ class AdminHeader {
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'maintenance',

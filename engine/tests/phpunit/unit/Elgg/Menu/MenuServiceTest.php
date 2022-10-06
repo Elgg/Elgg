@@ -2,7 +2,6 @@
 
 namespace Elgg\Menu;
 
-use Elgg\Hook;
 use Elgg\UnitTestCase;
 
 /**
@@ -12,13 +11,13 @@ class MenuServiceTest extends UnitTestCase {
 
 	public function testCanUnpreparedMenu() {
 
-		$params_hook = $this->registerTestingHook('parameters', 'menu:test', function (Hook $hook) {
-			$this->assertEquals('bar', $hook->getParam('foo'));
-			$this->assertEquals('test', $hook->getParam('name'));
+		$params_event = $this->registerTestingEvent('parameters', 'menu:test', function (\Elgg\Event $event) {
+			$this->assertEquals('bar', $event->getParam('foo'));
+			$this->assertEquals('test', $event->getParam('name'));
 		});
 
-		$register_hook = $this->registerTestingHook('register', 'menu:test', function (Hook $hook) {
-			$this->assertInstanceOf(MenuItems::class, $hook->getValue());
+		$register_event = $this->registerTestingEvent('register', 'menu:test', function (\Elgg\Event $event) {
+			$this->assertInstanceOf(MenuItems::class, $event->getValue());
 		});
 
 		$items = $this->buildMenu();
@@ -32,17 +31,16 @@ class MenuServiceTest extends UnitTestCase {
 		$this->assertEquals(count($items), count($menu->getItems()));
 		$this->assertEquals('priority', $menu->getSortBy());
 
-		$params_hook->assertNumberOfCalls(1);
-		$register_hook->assertNumberOfCalls(1);
-
+		$params_event->assertNumberOfCalls(1);
+		$register_event->assertNumberOfCalls(1);
 	}
 
 	public function testCanGetPreparedMenu() {
 
-		$prepare_hook = $this->registerTestingHook('prepare', 'menu:test', function (Hook $hook) {
-			$this->assertEquals('test', $hook->getParam('name'));
-			$this->assertEquals('bar', $hook->getParam('foo'));
-			$this->assertInstanceOf(PreparedMenu::class, $hook->getValue());
+		$prepare_event = $this->registerTestingEvent('prepare', 'menu:test', function (\Elgg\Event $event) {
+			$this->assertEquals('test', $event->getParam('name'));
+			$this->assertEquals('bar', $event->getParam('foo'));
+			$this->assertInstanceOf(PreparedMenu::class, $event->getValue());
 		});
 
 		$items = $this->buildMenu();
@@ -67,7 +65,7 @@ class MenuServiceTest extends UnitTestCase {
 
 		$this->assertEquals(1, count($menu->getSection('default')->getItems()));
 
-		$prepare_hook->assertNumberOfCalls(1);
+		$prepare_event->assertNumberOfCalls(1);
 	}
 	
 	public function testCanUnregisterMenuItem() {
@@ -95,10 +93,10 @@ class MenuServiceTest extends UnitTestCase {
 
 	public function testCanSortMenuByName() {
 
-		$prepare_hook = $this->registerTestingHook('prepare', 'menu:test', function (Hook $hook) {
-			$this->assertEquals('test', $hook->getParam('name'));
-			$this->assertEquals('bar', $hook->getParam('foo'));
-			$this->assertInstanceOf(PreparedMenu::class, $hook->getValue());
+		$prepare_event = $this->registerTestingEvent('prepare', 'menu:test', function (\Elgg\Event $event) {
+			$this->assertEquals('test', $event->getParam('name'));
+			$this->assertEquals('bar', $event->getParam('foo'));
+			$this->assertInstanceOf(PreparedMenu::class, $event->getValue());
 		});
 
 		$items = $this->buildMenu();
@@ -120,15 +118,15 @@ class MenuServiceTest extends UnitTestCase {
 
 		$this->assertEquals(["n:100", "n:200", "n:300", "n:400"], $sorts);
 
-		$prepare_hook->assertNumberOfCalls(1);
+		$prepare_event->assertNumberOfCalls(1);
 	}
 
 	public function testCanSortMenuByText() {
 
-		$prepare_hook = $this->registerTestingHook('prepare', 'menu:test', function (Hook $hook) {
-			$this->assertEquals('test', $hook->getParam('name'));
-			$this->assertEquals('bar', $hook->getParam('foo'));
-			$this->assertInstanceOf(PreparedMenu::class, $hook->getValue());
+		$prepare_event = $this->registerTestingEvent('prepare', 'menu:test', function (\Elgg\Event $event) {
+			$this->assertEquals('test', $event->getParam('name'));
+			$this->assertEquals('bar', $event->getParam('foo'));
+			$this->assertInstanceOf(PreparedMenu::class, $event->getValue());
 		});
 
 		$items = $this->buildMenu();
@@ -150,7 +148,7 @@ class MenuServiceTest extends UnitTestCase {
 
 		$this->assertEquals(["t:100", "t:200", "t:300", "t:400"], $sorts);
 
-		$prepare_hook->assertNumberOfCalls(1);
+		$prepare_event->assertNumberOfCalls(1);
 	}
 
 	public function testCanCombineMenus() {

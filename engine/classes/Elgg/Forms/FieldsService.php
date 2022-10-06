@@ -2,7 +2,7 @@
 
 namespace Elgg\Forms;
 
-use Elgg\PluginHooksService;
+use Elgg\EventsService;
 use Elgg\I18n\Translator;
 use Elgg\Traits\Loggable;
 
@@ -21,9 +21,9 @@ class FieldsService {
 	protected $fields = [];
 
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	protected $hooks;
+	protected $events;
 
 	/**
 	 * @var Translator
@@ -33,11 +33,11 @@ class FieldsService {
 	/**
 	 * Constructor
 	 *
-	 * @param PluginHooksService $hooks      hooks service
-	 * @param Translator         $translator translator service
+	 * @param EventsService $events     events service
+	 * @param Translator    $translator translator service
 	 */
-	public function __construct(PluginHooksService $hooks, Translator $translator) {
-		$this->hooks = $hooks;
+	public function __construct(EventsService $events, Translator $translator) {
+		$this->events = $events;
 		$this->translator = $translator;
 	}
 	
@@ -54,7 +54,7 @@ class FieldsService {
 			return $this->fields[$type][$subtype];
 		}
 		
-		$result = (array) $this->hooks->trigger('fields', "{$type}:{$subtype}", [
+		$result = (array) $this->events->triggerResults('fields', "{$type}:{$subtype}", [
 			'type' => $type,
 			'subtype' => $subtype,
 		], []);

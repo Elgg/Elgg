@@ -15,7 +15,7 @@ echo elgg_view_field([
 echo elgg_view_field([
 	'#type' => 'plaintext',
 	'#label' => elgg_echo('admin:robots.txt:plugins'),
-	'value' => elgg_trigger_plugin_hook('robots.txt', 'site', ['site' => $site], ''),
+	'value' => elgg_trigger_event_results('robots.txt', 'site', ['site' => $site], ''),
 	'readonly' => true,
 ]);
 

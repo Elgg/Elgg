@@ -90,7 +90,7 @@ class ElggAccessCollection extends ElggData {
 			$params = [
 				'access_collection' => $this,
 			];
-			return (string) _elgg_services()->hooks->trigger('access_collection:name', $this->getType(), $params, $name);
+			return (string) _elgg_services()->events->triggerResults('access_collection:name', $this->getType(), $params, $name);
 		};
 
 		$user = _elgg_services()->session->getLoggedInUser();
@@ -185,7 +185,7 @@ class ElggAccessCollection extends ElggData {
 		$params = [
 			'access_collection' => $this,
 		];
-		$url = _elgg_services()->hooks->trigger('access_collection:url', $type, $params);
+		$url = _elgg_services()->events->triggerResults('access_collection:url', $type, $params);
 		return elgg_normalize_url($url);
 	}
 
@@ -202,7 +202,7 @@ class ElggAccessCollection extends ElggData {
 
 		$params['access_collection'] = $this;
 
-		return _elgg_services()->hooks->trigger('to:object', 'access_collection', $params, $object);
+		return _elgg_services()->events->triggerResults('to:object', 'access_collection', $params, $object);
 	}
 
 	/**

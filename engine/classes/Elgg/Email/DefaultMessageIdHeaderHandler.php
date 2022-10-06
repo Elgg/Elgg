@@ -12,14 +12,14 @@ class DefaultMessageIdHeaderHandler {
 	/**
 	 * Adds default Message-ID header to all e-mails
 	 *
-	 * @param \Elgg\Hook $hook 'prepare', 'system:email'
+	 * @param \Elgg\Event $event 'prepare', 'system:email'
 	 *
 	 * @see    https://tools.ietf.org/html/rfc5322#section-3.6.4
 	 *
 	 * @return void|\Elgg\Email
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		$email = $hook->getValue();
+	public function __invoke(\Elgg\Event $event) {
+		$email = $event->getValue();
 		if (!$email instanceof \Elgg\Email) {
 			return;
 		}

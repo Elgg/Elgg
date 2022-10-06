@@ -91,10 +91,10 @@ Classes and functions marked with ``@internal`` are not considered part of the p
 If a class is marked with ``@internal`` all properties and methods in that class are considered private API and therefor can be 
 changed / removed at any time.
 
-Event and plugin hook callbacks
-===============================
+Event callbacks
+===============
 
-All event and plugin hook callbacks should never be called directly but only be called by their respective event / plugin hook.
+All event callbacks should never be called directly but only be called by triggering the event.
 
 The name of the callback function is considered API as plugin developers need to be able to rely on the fact that they can 
 (un)register a callback. This only applies if the callback still serves the same purpose. If a callback becomes obsolete its allowed 

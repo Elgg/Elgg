@@ -12,15 +12,15 @@ class SetUserIconFileHandler {
 	/**
 	 * Set user icon file
 	 *
-	 * @param \Elgg\Hook $hook 'entity:icon:file', 'user'
+	 * @param \Elgg\Event $event 'entity:icon:file', 'user'
 	 *
 	 * @return \ElggIcon
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		$icon = $hook->getValue();
+	public function __invoke(\Elgg\Event $event) {
+		$icon = $event->getValue();
 	
-		$entity = $hook->getEntityParam();
-		$size = $hook->getParam('size', 'medium');
+		$entity = $event->getEntityParam();
+		$size = $event->getParam('size', 'medium');
 	
 		$icon->owner_guid = $entity->guid;
 		$icon->setFilename("profile/{$entity->guid}{$size}.jpg");

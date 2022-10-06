@@ -3,9 +3,9 @@
 namespace Elgg\Helpers;
 
 /**
- * @see \Elgg\HooksRegistrationServiceUnitTest
+ * @see \Elgg\EventsServiceUnitTest
  */
-class HooksRegistrationServiceTestInvokable {
+class EventsServiceTestInvokable {
 	
 	const KLASS = __CLASS__;
 	

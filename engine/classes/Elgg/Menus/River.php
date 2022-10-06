@@ -15,19 +15,19 @@ class River {
 	/**
 	 * Add the delete to river actions menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:river'
+	 * @param \Elgg\Event $event 'register', 'menu:river'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerDelete(\Elgg\Hook $hook) {
+	public static function registerDelete(\Elgg\Event $event) {
 		
-		$item = $hook->getParam('item');
+		$item = $event->getParam('item');
 		if (!$item instanceof \ElggRiverItem || !$item->canDelete()) {
 			return;
 		}
 		
 		/* @Var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'delete',

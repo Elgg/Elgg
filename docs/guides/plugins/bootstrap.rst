@@ -88,13 +88,10 @@ This assumes your bootstrap class extends the ``\Elgg\PluginBootstrap`` abstract
 ->elgg()
 --------
 
-Returns Elgg's public DI container. This can be helpfull if you wish to register plugin hooks or event listeners.
+Returns Elgg's public DI container. This can be helpfull if you wish to register event listeners.
 
 .. code-block:: php
 
-	$hooks = $this->elgg()->hooks;
-	$hooks->registerHandler('register', 'menu:entity', 'my_custom_menu_callback');
-	
 	$events = $this->elgg()->events;
 	$events->registerHandler('create', 'object', MyCustomObjectHandler::class);
 

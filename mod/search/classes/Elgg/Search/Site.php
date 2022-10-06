@@ -3,7 +3,7 @@
 namespace Elgg\Search;
 
 /**
- * Hook callbacks for site
+ * Event callbacks for site
  *
  * @since 4.0
  * @internal
@@ -15,10 +15,10 @@ class Site {
 	 *
 	 * This is good for performance since search is slow and there are many pages all with the same content.
 	 *
-	 * @param \Elgg\Hook $hook 'robots.txt' 'site'
+	 * @param \Elgg\Event $event 'robots.txt' 'site'
 	 * @return string
 	 */
-	public static function preventSearchIndexing(\Elgg\Hook $hook) {
+	public static function preventSearchIndexing(\Elgg\Event $event) {
 		$rules = [
 			'',
 			'User-agent: *',
@@ -26,7 +26,7 @@ class Site {
 			''
 		];
 	
-		$text = $hook->getValue();
+		$text = $event->getValue();
 		$text .= implode("\r\n", $rules);
 		return $text;
 	}

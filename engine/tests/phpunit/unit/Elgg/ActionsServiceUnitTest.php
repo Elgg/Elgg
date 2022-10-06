@@ -35,11 +35,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 	private $request;
 
 	/**
-	 * @var PluginHooksService
-	 */
-	private $hooks;
-
-	/**
 	 * @var Translator
 	 */
 	private $translator;
@@ -52,7 +47,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function down() {
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 	}
 
 	function createService(Request $request) {
@@ -65,7 +60,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$svc->session->start();
 
-		$svc->hooks->backup();
+		$svc->events->backup();
 		$svc->logger->disable();
 
 		_elgg_services()->translator->addTranslation('en', ['__test__' => 'Test']);
@@ -356,12 +351,12 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->router->getResponse($request);
 	}
 
-	public function testValidateHookIsTriggered() {
+	public function testValidateEventIsTriggered() {
 		$request = $this->prepareHttpRequest('action/output3', 'POST', [], false);
 		$this->createService($request);
 		$this->addCsrfTokens($request);
 
-		_elgg_services()->hooks->registerHandler('action:validate', 'output3', function (\Elgg\Hook $hook) {
+		_elgg_services()->events->registerHandler('action:validate', 'output3', function (\Elgg\Event $event) {
 			throw new ValidationException('Invalid');
 		});
 
@@ -395,7 +390,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * Non-xhr call to an action must always result in a redirect
-	 * This test will implement the flow without triggering ajax forward hook
+	 * This test will implement the flow without triggering ajax forward event
 	 */
 	public function testCanRespondToNonAjaxRequest() {
 		$request = $this->prepareHttpRequest('action/output3', 'POST', [], false);
@@ -418,7 +413,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * This test will implement the flow without triggering ajax forward hook
+	 * This test will implement the flow without triggering ajax forward event
 	 */
 	public function testCanRespondToAjaxRequest() {
 
@@ -448,7 +443,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * This test will implement the flow without triggering ajax forward hook
+	 * This test will implement the flow without triggering ajax forward event
 	 * @group AjaxService
 	 */
 	public function testCanRespondToAjax2Request() {
@@ -495,9 +490,9 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->createService($request);
 		$this->addCsrfTokens($request);
 
-		_elgg_services()->hooks->registerHandler(Services\AjaxResponse::RESPONSE_HOOK, 'action:output3', function (\Elgg\Hook $hook) {
+		_elgg_services()->events->registerHandler(Services\AjaxResponse::RESPONSE_EVENT, 'action:output3', function (\Elgg\Event $event) {
 			/* @var $api_response Services\AjaxResponse */
-			$api_response = $hook->getValue();
+			$api_response = $event->getValue();
 			
 			$api_response->setTtl(1000);
 			$api_response->setData((object) ['value' => 'output3_modified']);
@@ -547,9 +542,9 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->createService($request);
 		$this->addCsrfTokens($request);
 
-		_elgg_services()->hooks->registerHandler(Services\AjaxResponse::RESPONSE_HOOK, 'action:output3', function (\Elgg\Hook $hook) {
+		_elgg_services()->events->registerHandler(Services\AjaxResponse::RESPONSE_EVENT, 'action:output3', function (\Elgg\Event $event) {
 			/* @var $api_response Services\AjaxResponse */
-			$api_response = $hook->getValue();
+			$api_response = $event->getValue();
 			
 			return $api_response->cancel();
 		});
@@ -582,7 +577,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->createService($request);
 		$this->addCsrfTokens($request);
 
-		_elgg_services()->hooks->registerHandler(Services\AjaxResponse::RESPONSE_HOOK, 'action:output3', [
+		_elgg_services()->events->registerHandler(Services\AjaxResponse::RESPONSE_EVENT, 'action:output3', [
 			Values::class,
 			'getFalse'
 		]);
@@ -1047,12 +1042,11 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->createService($request);
 		$this->addCsrfTokens($request);
 
-		_elgg_services()->hooks->registerHandler('response', 'action:output4', function (\Elgg\Hook $hook) {
-			$response = $hook->getValue();
+		_elgg_services()->events->registerHandler('response', 'action:output4', function (\Elgg\Event $event) {
+			$response = $event->getValue();
 			
-			$this->assertEquals('response', $hook->getName());
-			$this->assertEquals('action:output4', $hook->getType());
-			$this->assertEquals($response, $hook->getParams());
+			$this->assertEquals('response', $event->getName());
+			$this->assertEquals('action:output4', $event->getType());
 			$this->assertInstanceOf(OkResponse::class, $response);
 
 			$response->setContent('good bye');

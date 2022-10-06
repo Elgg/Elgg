@@ -47,8 +47,6 @@ return [
 				\Elgg\Widgets\CreateDefaultWidgetsHandler::class => [],
 			],
 		],
-	],
-	'hooks' => [
 		'fields' => [
 			'user:user' => [
 				\Elgg\Profile\FieldsHandler::class => [],

@@ -3,7 +3,7 @@
 namespace Elgg\Members\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,12 +13,12 @@ class Members {
 	/**
 	 * Registers members filter menu items
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:members'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:members'
 	 *
 	 * @return \Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
-		$result = $hook->getValue();
+	public static function register(\Elgg\Event $event) {
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'all',

@@ -24,11 +24,11 @@ class Profiler {
 	/**
 	 * Append a SCRIPT element to the page output
 	 *
-	 * @param \Elgg\Hook $hook 'output', 'page'
+	 * @param \Elgg\Event $event 'output', 'page'
 	 *
 	 * @return string
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
+	public function __invoke(\Elgg\Event $event) {
 		
 		if (!_elgg_services()->config->enable_profiling) {
 			return;
@@ -58,7 +58,7 @@ class Profiler {
 			
 			$data['list'] = $list;
 			
-			$html = $hook->getValue();
+			$html = $event->getValue();
 			$html .= "<script>console.log(" . json_encode($data) . ");</script>";
 			
 			return $html;

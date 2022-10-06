@@ -12,12 +12,12 @@ class EntityUrlHandler {
 	/**
 	 * Returns widget URLS used in widget titles
 	 *
-	 * @param \Elgg\Hook $hook 'entity:url', 'object'
+	 * @param \Elgg\Event $event 'entity:url', 'object'
 	 *
 	 * @return void|string
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		$widget = $hook->getEntityParam();
+	public function __invoke(\Elgg\Event $event) {
+		$widget = $event->getEntityParam();
 		if (!$widget instanceof \ElggWidget) {
 			return;
 		}

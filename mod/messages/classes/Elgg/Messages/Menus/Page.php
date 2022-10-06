@@ -3,7 +3,7 @@
 namespace Elgg\Messages\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,11 +13,11 @@ class Page {
 	/**
 	 * Registers menu items
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:page'
+	 * @param \Elgg\Event $event 'register', 'menu:page'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 		$user = elgg_get_logged_in_user_entity();
 		if (!$user instanceof \ElggUser) {
 			return;
@@ -27,7 +27,7 @@ class Page {
 			return;
 		}
 		
-		$result = $hook->getValue();
+		$result = $event->getValue();
 			
 		$result['inbox'] = \ElggMenuItem::factory([
 			'name' => 'messages:inbox',

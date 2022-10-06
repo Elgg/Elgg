@@ -408,7 +408,7 @@ class GatekeeperUnitTest extends UnitTestCase {
 		$this->assertNull($this->gatekeeper->assertAccessibleEntity($object));
 	}
 
-	public function testEntityGatekeeperCanPreventAccessToEntityWithAHook() {
+	public function testEntityGatekeeperCanPreventAccessToEntityWithEvent() {
 		$user = $this->createUser();
 
 		$object = $this->createObject([
@@ -416,13 +416,13 @@ class GatekeeperUnitTest extends UnitTestCase {
 			'owner_guid' => $user->guid,
 		]);
 
-		$handler = function (Hook $hook) {
-			$this->assertTrue($hook->getValue());
+		$handler = function (\Elgg\Event $event) {
+			$this->assertTrue($event->getValue());
 
 			return new HttpException('Override', ELGG_HTTP_I_AM_A_TEAPOT);
 		};
 
-		$hook = $this->registerTestingHook('gatekeeper', "object:$object->subtype", $handler);
+		$event = $this->registerTestingEvent('gatekeeper', "object:$object->subtype", $handler);
 
 		try {
 			$this->gatekeeper->assertAccessibleEntity($object);
@@ -432,12 +432,12 @@ class GatekeeperUnitTest extends UnitTestCase {
 			$this->assertEquals(ELGG_HTTP_I_AM_A_TEAPOT, $ex->getCode());
 		}
 
-		$this->assertInstanceOf(HttpException::class, $hook->getResult());
+		$this->assertInstanceOf(HttpException::class, $event->getResult());
 
-		$hook->unregister();
+		$event->unregister();
 	}
 
-	public function testEntityGatekeeperCanPreventAccessToEntityWithAHookWithFalseReturn() {
+	public function testEntityGatekeeperCanPreventAccessToEntityWithEventWithFalseReturn() {
 		$user = $this->createUser();
 
 		$object = $this->createObject([
@@ -445,13 +445,13 @@ class GatekeeperUnitTest extends UnitTestCase {
 			'owner_guid' => $user->guid,
 		]);
 
-		$handler = function (Hook $hook) {
-			$this->assertTrue($hook->getValue());
+		$handler = function (\Elgg\Event $event) {
+			$this->assertTrue($event->getValue());
 
 			return false;
 		};
 
-		$hook = $this->registerTestingHook('gatekeeper', "object:$object->subtype", $handler);
+		$event = $this->registerTestingEvent('gatekeeper', "object:$object->subtype", $handler);
 
 		$ex = null;
 		try {
@@ -460,14 +460,14 @@ class GatekeeperUnitTest extends UnitTestCase {
 
 		}
 
-		$this->assertFalse($hook->getResult());
+		$this->assertFalse($event->getResult());
 
-		$hook->unregister();
+		$event->unregister();
 		
 		$this->assertInstanceOf(HttpException::class, $ex);
 	}
 
-	public function testEntityGatekeeperCanAllowAccessToNonAccessibleEntityWithAHook() {
+	public function testEntityGatekeeperCanAllowAccessToNonAccessibleEntityWithEvent() {
 		$user = $this->createUser();
 
 		$object = $this->createObject([
@@ -475,19 +475,19 @@ class GatekeeperUnitTest extends UnitTestCase {
 			'owner_guid' => $user->guid,
 		]);
 
-		$handler = function (Hook $hook) {
-			$this->assertInstanceOf(EntityPermissionsException::class, $hook->getValue());
+		$handler = function (\Elgg\Event $event) {
+			$this->assertInstanceOf(EntityPermissionsException::class, $event->getValue());
 
 			return true;
 		};
 
-		$hook = $this->registerTestingHook('gatekeeper', "object:$object->subtype", $handler);
+		$event = $this->registerTestingEvent('gatekeeper', "object:$object->subtype", $handler);
 
 		$this->assertNull($this->gatekeeper->assertAccessibleEntity($object));
 
-		$this->assertTrue($hook->getResult());
+		$this->assertTrue($event->getResult());
 
-		$hook->unregister();
+		$event->unregister();
 	}
 
 	public function testXhrGatekeeperPreventsAccess() {

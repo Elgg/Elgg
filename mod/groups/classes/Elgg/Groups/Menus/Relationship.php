@@ -3,7 +3,7 @@
 namespace Elgg\Groups\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  *
@@ -14,13 +14,13 @@ class Relationship {
 	/**
 	 * Add a remove user link to relationship menu if it's about a group membership relationship
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:relationship'
+	 * @param \Elgg\Event $event 'register', 'menu:relationship'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function registerRemoveUser(\Elgg\Hook $hook) {
+	public static function registerRemoveUser(\Elgg\Event $event) {
 		
-		$relationship = $hook->getParam('relationship');
+		$relationship = $event->getParam('relationship');
 		if (!$relationship instanceof \ElggRelationship || $relationship->relationship !== 'member') {
 			return;
 		}
@@ -38,7 +38,7 @@ class Relationship {
 			return;
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'removeuser',
 			'href' => elgg_generate_action_url('groups/remove', [
@@ -56,13 +56,13 @@ class Relationship {
 	/**
 	 * Add menu items to the group membership request relationship menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:relationship'
+	 * @param \Elgg\Event $event 'register', 'menu:relationship'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function registerMembershipRequestItems(\Elgg\Hook $hook) {
+	public static function registerMembershipRequestItems(\Elgg\Event $event) {
 		
-		$relationship = $hook->getParam('relationship');
+		$relationship = $event->getParam('relationship');
 		if (!$relationship instanceof \ElggRelationship || $relationship->relationship !== 'membership_request') {
 			return;
 		}
@@ -74,7 +74,7 @@ class Relationship {
 		}
 		
 		/* @var $result \Elgg\Menu\MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$page_owner = elgg_get_page_owner_entity();
 		if ($page_owner->guid === $group->guid && $group->canEdit()) {
@@ -108,13 +108,13 @@ class Relationship {
 	/**
 	 * Add menu items to the invited relationship menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:relationship'
+	 * @param \Elgg\Event $event 'register', 'menu:relationship'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function registerInvitedItems(\Elgg\Hook $hook) {
+	public static function registerInvitedItems(\Elgg\Event $event) {
 		
-		$relationship = $hook->getParam('relationship');
+		$relationship = $event->getParam('relationship');
 		if (!$relationship instanceof \ElggRelationship || $relationship->relationship !== 'invited') {
 			return;
 		}
@@ -126,7 +126,7 @@ class Relationship {
 		}
 		
 		/* @var $result \Elgg\Menu\MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$page_owner = elgg_get_page_owner_entity();
 		if ($page_owner->guid === $group->guid && $group->canEdit()) {

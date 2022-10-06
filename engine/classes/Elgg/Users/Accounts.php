@@ -7,11 +7,11 @@ use Elgg\Database\UsersTable;
 use Elgg\Email;
 use Elgg\Email\Address;
 use Elgg\EmailService;
+use Elgg\EventsService;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\I18n\Translator;
 use Elgg\PasswordService;
-use Elgg\PluginHooksService;
 use Elgg\Security\PasswordGeneratorService;
 use Elgg\Validation\ValidationResults;
 
@@ -41,9 +41,9 @@ class Accounts {
 	protected $users;
 
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	protected $hooks;
+	protected $events;
 	
 	/**
 	 * @var EmailService
@@ -62,7 +62,7 @@ class Accounts {
 	 * @param Translator               $translator         Translator
 	 * @param PasswordService          $passwords          Passwords
 	 * @param UsersTable               $users              Users table
-	 * @param PluginHooksService       $hooks              Plugin hooks service
+	 * @param EventsService            $events             Events service
 	 * @param EmailService             $email              Email service
 	 * @param PasswordGeneratorService $password_generator Password generator service
 	 */
@@ -71,7 +71,7 @@ class Accounts {
 		Translator $translator,
 		PasswordService $passwords,
 		UsersTable $users,
-		PluginHooksService $hooks,
+		EventsService $events,
 		EmailService $email,
 		PasswordGeneratorService $password_generator
 	) {
@@ -79,7 +79,7 @@ class Accounts {
 		$this->translator = $translator;
 		$this->passwords = $passwords;
 		$this->users = $users;
-		$this->hooks = $hooks;
+		$this->events = $events;
 		$this->email = $email;
 		$this->password_generator = $password_generator;
 	}
@@ -262,7 +262,7 @@ class Accounts {
 		// @todo Tidy into main unicode
 		$blacklist2 = '\'/\\"*& ?#%^(){}[]~?<>;|¬`@+=,:';
 
-		$blacklist2 = $this->hooks->trigger(
+		$blacklist2 = $this->events->triggerResults(
 			'username:character_blacklist',
 			'user',
 			['blacklist' => $blacklist2],
@@ -277,7 +277,7 @@ class Accounts {
 			}
 		}
 
-		$result = $this->hooks->trigger(
+		$result = $this->events->triggerResults(
 			'registeruser:validate:username',
 			'all',
 			['username' => $username],
@@ -322,7 +322,7 @@ class Accounts {
 			}
 		}
 		
-		$result = $this->hooks->trigger(
+		$result = $this->events->triggerResults(
 			'registeruser:validate:password',
 			'all',
 			['password' => $password],
@@ -363,7 +363,7 @@ class Accounts {
 			throw new RegistrationException($this->translator->translate('registration:notemail'));
 		}
 
-		$result = $this->hooks->trigger(
+		$result = $this->events->triggerResults(
 			'registeruser:validate:email',
 			'all',
 			['email' => $address],

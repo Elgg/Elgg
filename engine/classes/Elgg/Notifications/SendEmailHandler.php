@@ -12,17 +12,17 @@ class SendEmailHandler {
 	/**
 	 * Send an email notification
 	 *
-	 * @param \Elgg\Hook $hook 'send', 'notification:email'
+	 * @param \Elgg\Event $event 'send', 'notification:email'
 	 *
 	 * @return void|bool
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		if ($hook->getValue() === true) {
+	public function __invoke(\Elgg\Event $event) {
+		if ($event->getValue() === true) {
 			// assume someone else already sent the message
 			return;
 		}
 	
-		$message = $hook->getParam('notification');
+		$message = $event->getParam('notification');
 		if (!$message instanceof \Elgg\Notifications\Notification) {
 			return false;
 		}

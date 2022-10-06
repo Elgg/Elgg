@@ -30,8 +30,8 @@ class ElggIconMappingTest extends ViewRenderingTestCase {
 
 	public function testCanAlterIconClasses() {
 
-		$hook = $this->registerTestingHook('view_vars', 'output/icon', function(\Elgg\Hook $hook) {
-			$vars = $hook->getValue();
+		$event = $this->registerTestingEvent('view_vars', 'output/icon', function(\Elgg\Event $event) {
+			$vars = $event->getValue();
 			$vars['class'] = ['override'];
 			return $vars;
 		});
@@ -40,6 +40,6 @@ class ElggIconMappingTest extends ViewRenderingTestCase {
 
 		$this->assertXmlStringEqualsXmlString($view, '<span class="elgg-icon override" data-icon="foo"/>');
 
-		$hook->unregister();
+		$event->unregister();
 	}
 }

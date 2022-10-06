@@ -4,11 +4,11 @@ namespace Elgg\Notifications;
 
 use Elgg\Database;
 use Elgg\Database\RelationshipsTable;
-use Elgg\PluginHooksService;
 use Elgg\Database\Select;
 use Elgg\Database\Delete;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Entities;
+use Elgg\EventsService;
 use Elgg\Exceptions\InvalidArgumentException;
 
 /**
@@ -40,21 +40,21 @@ class SubscriptionsService {
 	protected $relationshipsTable;
 	
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	protected $hooks;
+	protected $events;
 
 	/**
 	 * Constructor
 	 *
 	 * @param Database           $db                 Database service
 	 * @param RelationshipsTable $relationshipsTable Relationship database table
-	 * @param PluginHooksService $hooks              Plugin hooks service
+	 * @param EventsService      $events             Events service
 	 */
-	public function __construct(Database $db, RelationshipsTable $relationshipsTable, PluginHooksService $hooks) {
+	public function __construct(Database $db, RelationshipsTable $relationshipsTable, EventsService $events) {
 		$this->db = $db;
 		$this->relationshipsTable = $relationshipsTable;
-		$this->hooks = $hooks;
+		$this->events = $events;
 	}
 
 	/**

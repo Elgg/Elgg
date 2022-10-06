@@ -12,13 +12,13 @@ class EditPermissionsHandler {
 	/**
 	 * This makes sure only authors can edit their comments.
 	 *
-	 * @param \Elgg\Hook $hook 'permissions_check', 'object'
+	 * @param \Elgg\Event $event 'permissions_check', 'object'
 	 *
 	 * @return void|boolean Whether the given user is allowed to edit the given comment.
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		$entity = $hook->getEntityParam();
-		$user = $hook->getUserParam();
+	public function __invoke(\Elgg\Event $event) {
+		$entity = $event->getEntityParam();
+		$user = $event->getUserParam();
 		
 		if (!$entity instanceof \ElggComment || !$user instanceof \ElggUser) {
 			return;

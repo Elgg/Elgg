@@ -10,12 +10,12 @@ class Permissions {
 	/**
 	 * Only allow annotation owner (or someone who can edit the owner, like an admin) to delete like
 	 *
-	 * @param \Elgg\Hook $hook 'permissions_check', 'annotation'
+	 * @param \Elgg\Event $event 'permissions_check', 'annotation'
 	 *
 	 * @return void|bool
 	 */
-	public static function allowLikedEntityOwner(\Elgg\Hook $hook) {
-		$annotation = $hook->getParam('annotation');
+	public static function allowLikedEntityOwner(\Elgg\Event $event) {
+		$annotation = $event->getParam('annotation');
 		if (!$annotation || $annotation->name !== 'likes') {
 			return;
 		}
@@ -31,17 +31,17 @@ class Permissions {
 	/**
 	 * Sets the default for whether to allow liking/viewing likes on an entity
 	 *
-	 * @param \Elgg\Hook $hook 'permissions_check:annotate', 'object'|'user'|'group'|'site'
+	 * @param \Elgg\Event $event 'permissions_check:annotate', 'object'|'user'|'group'|'site'
 	 *
 	 * @return void|bool
 	 */
-	public static function allowLikeOnEntity(\Elgg\Hook $hook) {
-		if ($hook->getParam('annotation_name') !== 'likes') {
+	public static function allowLikeOnEntity(\Elgg\Event $event) {
+		if ($event->getParam('annotation_name') !== 'likes') {
 			return;
 		}
 	
-		$user = $hook->getUserParam();
-		$entity = $hook->getEntityParam();
+		$user = $event->getUserParam();
+		$entity = $event->getEntityParam();
 	
 		if (!$user || !$entity instanceof \ElggEntity) {
 			return false;

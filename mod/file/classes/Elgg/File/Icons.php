@@ -3,7 +3,7 @@
 namespace Elgg\File;
 
 /**
- * Hook callbacks for icons
+ * Event callbacks for icons
  *
  * @since 4.0
  *
@@ -14,17 +14,17 @@ class Icons {
 	/**
 	 * Set custom icon sizes for file objects
 	 *
-	 * @param \Elgg\Hook $hook "entity:icon:sizes", "object"
+	 * @param \Elgg\Event $event "entity:icon:sizes", "object"
 	 *
 	 * @return array
 	 */
-	public static function setIconSizes(\Elgg\Hook $hook) {
+	public static function setIconSizes(\Elgg\Event $event) {
 	
-		if ($hook->getParam('entity_subtype') !== 'file') {
+		if ($event->getParam('entity_subtype') !== 'file') {
 			return;
 		}
 	
-		$return = $hook->getValue();
+		$return = $event->getValue();
 
 		$return['xlarge'] = [
 			'w' => 600,

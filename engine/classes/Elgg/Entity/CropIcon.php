@@ -14,11 +14,11 @@ class CropIcon {
 	/**
 	 * Set inputs required to support cropping an existing icon
 	 *
-	 * @param \Elgg\Hook $hook 'action:validate', 'all'
+	 * @param \Elgg\Event $event 'action:validate', 'all'
 	 *
 	 * @return void
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
+	public function __invoke(\Elgg\Event $event) {
 		
 		$entity_guid = (int) get_input('_entity_edit_icon_crop_guid');
 		$input_name = (string) get_input('_entity_edit_icon_crop_input');

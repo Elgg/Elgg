@@ -14,12 +14,12 @@
  * @warning this will break views in the default viewtype that return non-HTML data
  * that do not match the above restrictions.
  *
- * @param \Elgg\Hook $hook 'view', 'all'
+ * @param \Elgg\Event $event 'view', 'all'
  *
  * @return void|string
  */
-function developers_wrap_views(\Elgg\Hook $hook) {
-	$result = $hook->getValue();
+function developers_wrap_views(\Elgg\Event $event) {
+	$result = $event->getValue();
 	if (elgg_get_viewtype() !== 'default' || elgg_is_empty($result)) {
 		return;
 	}
@@ -35,7 +35,7 @@ function developers_wrap_views(\Elgg\Hook $hook) {
 		'page/elements/html',
 	];
 
-	$view = $hook->getParam('view');
+	$view = $event->getParam('view');
 	if (in_array($view, $excluded_views)) {
 		return;
 	}

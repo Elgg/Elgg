@@ -9,11 +9,11 @@
 class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 	}
 
 	public function down() {
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 	}
 
 	public function testCanConstructWithoutArguments() {
@@ -187,8 +187,8 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		$object = $this->createObject();
 		$this->assertFalse($object->canComment());
 		
-		// canComment relies on container permissions hook
-		_elgg_services()->hooks->registerHandler('container_permissions_check', 'object', \Elgg\Comments\ContainerPermissionsHandler::class);
+		// canComment relies on container permissions event
+		_elgg_services()->events->registerHandler('container_permissions_check', 'object', \Elgg\Comments\ContainerPermissionsHandler::class);
 		
 		$this->assertTrue($object->canComment());
 	}

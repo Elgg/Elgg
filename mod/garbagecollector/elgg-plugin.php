@@ -13,7 +13,7 @@ return [
 	'cli_commands' => [
 		\Elgg\GarbageCollector\OptimizeCommand::class,
 	],
-	'hooks' => [
+	'events' => [
 		'cron' => [
 			'all' => [
 				CronRunner::class => [],

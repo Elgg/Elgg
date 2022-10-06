@@ -16,18 +16,18 @@ class Site {
 	/**
 	 * Registers custom menu items
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:site'
+	 * @param \Elgg\Event $event 'register', 'menu:site'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerAdminConfiguredItems(\Elgg\Hook $hook) {
+	public static function registerAdminConfiguredItems(\Elgg\Event $event) {
 		$custom_menu_items = elgg_get_config('site_custom_menu_items');
 		if (empty($custom_menu_items)) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		// add custom menu items
 		$n = 1;
@@ -46,13 +46,13 @@ class Site {
 	/**
 	 * Reorder the site menu based on custom order and move excess to dropdown
 	 *
-	 * @param \Elgg\Hook $hook 'prepare', 'menu:site'
+	 * @param \Elgg\Event $event 'prepare', 'menu:site'
 	 *
 	 * @return void|PreparedMenu
 	 */
-	public static function reorderItems(\Elgg\Hook $hook) {
+	public static function reorderItems(\Elgg\Event $event) {
 		/* @var $menu PreparedMenu */
-		$menu = $hook->getValue();
+		$menu = $event->getValue();
 		
 		$featured_menu_names = array_values((array) elgg_get_config('site_featured_menu_names'));
 		
@@ -105,7 +105,7 @@ class Site {
 		
 		usort($registered, [\ElggMenuBuilder::class, 'compareByPriority']);
 		
-		$max_display_items = $hook->getParam('max_display_items', 5);
+		$max_display_items = $event->getParam('max_display_items', 5);
 		
 		$num_menu_items = count($registered);
 		

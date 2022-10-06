@@ -10,32 +10,32 @@ namespace Elgg\Views;
 class MinifyHandler {
 	
 	/**
-	 * Minifies simplecache CSS and JS views by handling the 'simplecache:generate' hook
+	 * Minifies simplecache CSS and JS views by handling the 'simplecache:generate' event
 	 *
-	 * @param \Elgg\Hook $hook 'simplecache:generate', 'css'
+	 * @param \Elgg\Event $event 'simplecache:generate', 'css'
 	 *
 	 * @return string|null View content minified (if css/js type)
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		if (preg_match('~[\.-]min\.~', $hook->getParam('view'))) {
+	public function __invoke(\Elgg\Event $event) {
+		if (preg_match('~[\.-]min\.~', $event->getParam('view'))) {
 			// bypass minification
 			return;
 		}
 
-		switch ($hook->getType()) {
+		switch ($event->getType()) {
 			case 'js':
 				if (!_elgg_services()->config->simplecache_minify_js) {
 					break;
 				}
 				
-				$minifier = new \MatthiasMullie\Minify\JS($hook->getValue());
+				$minifier = new \MatthiasMullie\Minify\JS($event->getValue());
 				return $minifier->minify();
 			case 'css':
 				if (!_elgg_services()->config->simplecache_minify_css) {
 					break;
 				}
 
-				$minifier = new \MatthiasMullie\Minify\CSS($hook->getValue());
+				$minifier = new \MatthiasMullie\Minify\CSS($event->getValue());
 				return $minifier->minify();
 		}
 	}

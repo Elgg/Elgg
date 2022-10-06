@@ -1,8 +1,8 @@
 <?php
 
-elgg_register_plugin_hook_handler('ajax_response', 'action:developers/ajax_demo', function(\Elgg\Hook $hook) {
+elgg_register_event_handler('ajax_response', 'action:developers/ajax_demo', function(\Elgg\Event $event) {
 	/* @var $response \Elgg\Services\AjaxResponse */
-	$response = $hook->getValue();
+	$response = $event->getValue();
 	
 	// check data added by client hook
 	if (get_input('client_request_altered') == '1') {

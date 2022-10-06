@@ -3,7 +3,7 @@
 namespace Elgg\SystemLog;
 
 /**
- * Hook callbacks for systemlog
+ * Event callbacks for systemlog
  *
  * @since 4.0
  * @internal

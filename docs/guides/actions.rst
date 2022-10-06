@@ -155,13 +155,13 @@ To indicate an error, use ``elgg_error_response()``
 Customizing actions
 -------------------
 
-Before executing any action, Elgg triggers a hook:
+Before executing any action, Elgg triggers an event:
 
 .. code-block:: php
 
-   $result = elgg_trigger_plugin_hook('action:validate', $action, null, true);
+   $result = elgg_trigger_event_results('action:validate', $action, [], true);
 
-Where ``$action`` is the action being called. If the hook returns ``false`` then the action will not be executed. Don't return anything 
+Where ``$action`` is the action being called. If the event returns ``false`` then the action will not be executed. Don't return anything 
 if your validation passes.
 
 Example: Captcha
@@ -175,12 +175,12 @@ This is done as follows:
 
 .. code-block:: php
 
-   elgg_register_plugin_hook_handler("action:validate", "register", "captcha_verify_action_hook");
-   elgg_register_plugin_hook_handler("action:validate", "user/requestnewpassword", "captcha_verify_action_hook");
+   elgg_register_event_handler("action:validate", "register", "captcha_verify_action_event");
+   elgg_register_event_handler("action:validate", "user/requestnewpassword", "captcha_verify_action_event");
 
    ...
 
-   function captcha_verify_action_hook(\Elgg\Hook $hook) {
+   function captcha_verify_action_event(\Elgg\Event $event) {
      $token = get_input('captcha_token');
      $input = get_input('captcha_input');
 

@@ -9,7 +9,7 @@ use Exception;
 
 
 /**
- * Functions for use as plugin hook/event handlers or other situations where you need a
+ * Functions for use as event handlers or other situations where you need a
  * globally accessible callable.
  */
 class Values {
@@ -167,7 +167,7 @@ class Values {
 	}
 
 	/**
-	 * Return array with __view_output set to prevent view output during view_vars hook
+	 * Return array with __view_output set to prevent view output during view_vars event
 	 *
 	 * @see   ViewsService->renderView()
 	 *

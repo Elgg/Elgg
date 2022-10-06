@@ -3,7 +3,7 @@
 namespace Elgg\Dashboard\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,16 +13,16 @@ class Topbar {
 	/**
 	 * Register item to menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:topbar'
+	 * @param \Elgg\Event $event 'register', 'menu:topbar'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 		if (!elgg_is_logged_in()) {
 			return;
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'dashboard',

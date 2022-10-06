@@ -70,8 +70,7 @@ class BootHandler {
 		$this->setEntityClasses();
 		
 		// need to be registered as part of services, because partial boots do at least include the services
-		// the system relies on the existence of some of the event/hooks
-		$this->registerHooks();
+		// the system relies on the existence of some of the event
 		$this->registerEvents();
 
 		// Connect to database, load language files, load configuration, init session
@@ -170,38 +169,6 @@ class BootHandler {
 	}
 	
 	/**
-	 * Register core hooks
-	 *
-	 * @return void
-	 */
-	protected function registerHooks(): void {
-		$conf = \Elgg\Project\Paths::elgg() . 'engine/hooks.php';
-		$spec = \Elgg\Includer::includeFile($conf);
-		
-		$hooks = $this->app->internal_services->hooks;
-		
-		foreach ($spec as $name => $types) {
-			foreach ($types as $type => $callbacks) {
-				foreach ($callbacks as $callback => $hook_spec) {
-					if (!is_array($hook_spec)) {
-						continue;
-					}
-					
-					$unregister = (bool) elgg_extract('unregister', $hook_spec, false);
-					
-					if ($unregister) {
-						$hooks->unregisterHandler($name, $type, $callback);
-					} else {
-						$priority = (int) elgg_extract('priority', $hook_spec, 500);
-						
-						$hooks->registerHandler($name, $type, $callback, $priority);
-					}
-				}
-			}
-		}
-	}
-	
-	/**
 	 * Register core events
 	 *
 	 * @return void
@@ -214,17 +181,17 @@ class BootHandler {
 		
 		foreach ($spec as $name => $types) {
 			foreach ($types as $type => $callbacks) {
-				foreach ($callbacks as $callback => $hook_spec) {
-					if (!is_array($hook_spec)) {
+				foreach ($callbacks as $callback => $event_spec) {
+					if (!is_array($event_spec)) {
 						continue;
 					}
 					
-					$unregister = (bool) elgg_extract('unregister', $hook_spec, false);
+					$unregister = (bool) elgg_extract('unregister', $event_spec, false);
 					
 					if ($unregister) {
 						$events->unregisterHandler($name, $type, $callback);
 					} else {
-						$priority = (int) elgg_extract('priority', $hook_spec, 500);
+						$priority = (int) elgg_extract('priority', $event_spec, 500);
 						
 						$events->registerHandler($name, $type, $callback, $priority);
 					}

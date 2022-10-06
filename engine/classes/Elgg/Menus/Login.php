@@ -15,18 +15,18 @@ class Login {
 	/**
 	 * Add the registration menu item
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:login'
+	 * @param \Elgg\Event $event 'register', 'menu:login'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerRegistration(\Elgg\Hook $hook) {
+	public static function registerRegistration(\Elgg\Event $event) {
 		
 		if (!_elgg_services()->config->allow_registration || _elgg_services()->config->elgg_maintenance_mode) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'register',
@@ -41,18 +41,18 @@ class Login {
 	/**
 	 * Add the forgotten password menu item
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:login'
+	 * @param \Elgg\Event $event 'register', 'menu:login'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerResetPassword(\Elgg\Hook $hook) {
+	public static function registerResetPassword(\Elgg\Event $event) {
 		
 		if (_elgg_services()->config->elgg_maintenance_mode) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'forgotpassword',

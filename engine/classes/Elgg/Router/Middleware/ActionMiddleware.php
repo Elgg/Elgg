@@ -21,9 +21,8 @@ class ActionMiddleware {
 	public function __invoke(\Elgg\Request $request) {
 		$route = $request->getRoute();
 		list($prefix, $action) = explode(':', $route, 2);
-		
-		$hook_params = ['request' => $request];
-		$result = $request->elgg()->hooks->trigger('action:validate', $action, $hook_params, true);
+
+		$result = $request->elgg()->events->triggerResults('action:validate', $action, ['request' => $request], true);
 		if ($result === false) {
 			throw new ValidationException(elgg_echo('ValidationException'));
 		}

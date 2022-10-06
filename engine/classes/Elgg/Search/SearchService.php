@@ -9,8 +9,8 @@ use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\AttributeWhereClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\QueryBuilder;
+use Elgg\EventsService;
 use Elgg\Exceptions\InvalidParameterException;
-use Elgg\PluginHooksService;
 use Elgg\Traits\Database\LegacyQueryOptionsAdapter;
 
 /**
@@ -27,9 +27,9 @@ class SearchService {
 	private $config;
 
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	private $hooks;
+	private $events;
 
 	/**
 	 * @var Database
@@ -41,13 +41,13 @@ class SearchService {
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\Config             $config Config
-	 * @param \Elgg\PluginHooksService $hooks  Hook registration service
-	 * @param Database                 $db     Database
+	 * @param \Elgg\Config        $config Config
+	 * @param \Elgg\EventsService $events Events service
+	 * @param Database            $db     Database
 	 */
-	public function __construct(Config $config, PluginHooksService $hooks, Database $db) {
+	public function __construct(Config $config, EventsService $events, Database $db) {
 		$this->config = $config;
-		$this->hooks = $hooks;
+		$this->events = $events;
 		$this->db = $db;
 	}
 
@@ -90,17 +90,17 @@ class SearchService {
 			throw new InvalidParameterException("'$entity_type' is not a valid entity type");
 		}
 
-		$options = $this->hooks->trigger('search:options', $entity_type, $options, $options);
+		$options = $this->events->triggerResults('search:options', $entity_type, $options, $options);
 		if (!empty($entity_subtype) && is_string($entity_subtype)) {
-			$options = $this->hooks->trigger('search:options', "{$entity_type}:{$entity_subtype}", $options, $options);
+			$options = $this->events->triggerResults('search:options', "{$entity_type}:{$entity_subtype}", $options, $options);
 		}
 
-		$options = $this->hooks->trigger('search:options', $search_type, $options, $options);
+		$options = $this->events->triggerResults('search:options', $search_type, $options, $options);
 
-		if ($this->hooks->hasHandler('search:results', $search_type)) {
-			$results = $this->hooks->trigger('search:results', $search_type, $options);
+		if ($this->events->hasHandler('search:results', $search_type)) {
+			$results = $this->events->triggerResults('search:results', $search_type, $options);
 			if (isset($results)) {
-				// allow hooks to conditionally replace the result set
+				// allow events to conditionally replace the result set
 				return $results;
 			}
 		}
@@ -125,7 +125,7 @@ class SearchService {
 		$search_type = elgg_extract('search_type', $options, 'entities', false);
 		$options['search_type'] = $search_type;
 
-		$options = $this->hooks->trigger('search:params', $search_type, $options, $options);
+		$options = $this->events->triggerResults('search:params', $search_type, $options, $options);
 
 		$options = $this->normalizeQuery($options);
 		$options = $this->normalizeSearchFields($options);
@@ -238,7 +238,7 @@ class SearchService {
 		$type_subtype_pairs = elgg_extract('type_subtype_pairs', $normalized_options);
 		if (!empty($type_subtype_pairs)) {
 			foreach ($type_subtype_pairs as $entity_type => $entity_subtypes) {
-				$result = $this->hooks->trigger('search:fields', $entity_type, $options, $default_fields);
+				$result = $this->events->triggerResults('search:fields', $entity_type, $options, $default_fields);
 				$merge_fields($result);
 				
 				if (elgg_is_empty($entity_subtypes)) {
@@ -246,7 +246,7 @@ class SearchService {
 				}
 				
 				foreach ($entity_subtypes as $entity_subtype) {
-					$result = $this->hooks->trigger('search:fields', "{$entity_type}:{$entity_subtype}", $options, $default_fields);
+					$result = $this->events->triggerResults('search:fields', "{$entity_type}:{$entity_subtype}", $options, $default_fields);
 					$merge_fields($result);
 				}
 			}
@@ -255,7 +255,7 @@ class SearchService {
 		// search fields for search type
 		$search_type = elgg_extract('search_type', $options, 'entities');
 		if ($search_type) {
-			$fields = $this->hooks->trigger('search:fields', $search_type, $options, $fields);
+			$fields = $this->events->triggerResults('search:fields', $search_type, $options, $fields);
 		}
 
 		// make sure all supported field types are available
