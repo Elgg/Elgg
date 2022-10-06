@@ -265,6 +265,7 @@ function login(\ElggUser $user, $persistent = false) {
 	// use elgg_get_logged_in_user_entity().
 	$session = elgg()->session;
 	$session->setLoggedInUser($user);
+	$session->setUserToken();
 
 	// re-register at least the core language file for users with language other than site default
 	elgg()->translator->registerTranslations(\Elgg\Project\Paths::elgg() . 'languages/');
@@ -390,6 +391,8 @@ function _elgg_session_boot(ServiceProvider $services) {
 		$user = $services->persistentLogin->bootSession();
 		if ($user) {
 			$services->persistentLogin->updateTokenUsage($user);
+			// make sure the session is valid as there is no login
+			$session->setUserToken($user);
 		}
 	}
 
@@ -399,6 +402,16 @@ function _elgg_session_boot(ServiceProvider $services) {
 
 		// logout a user with open session who has been banned
 		if ($user->isBanned()) {
+			logout();
+			return false;
+		}
+		
+		// make sure the user hasn't changed in between requests
+		// e.g. password reset
+		try {
+			$session->validateUserToken($user);
+		} catch (\SecurityException $e) {
+			register_error($e->getMessage());
 			logout();
 			return false;
 		}
