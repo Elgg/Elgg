@@ -68,11 +68,13 @@ function elgg_ws_expose_function(
 /**
  * Unregister a web services method
  *
- * @param string $method The api name that was exposed
+ * @param string $method              The API name that was exposed
+ * @param string $http_request_method The HTTP call method (GET|POST|...)
+ *
  * @return void
  */
-function elgg_ws_unexpose_function(string $method): void {
-	ApiRegistrationService::instance()->unregisterApiMethod($method);
+function elgg_ws_unexpose_function(string $method, string $http_request_method = 'GET'): void {
+	ApiRegistrationService::instance()->unregisterApiMethod($method, $http_request_method);
 }
 
 /**

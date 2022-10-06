@@ -95,13 +95,13 @@ class ApiMethod implements CollectionItemInterface {
 				// catch common mistake of not setting up param array correctly
 				$first = current($value);
 				if (!is_array($first)) {
-					throw new InvalidParameterException(elgg_echo('InvalidParameterException:APIParametersArrayStructure', [$this->getID()]));
+					throw new InvalidParameterException(elgg_echo('InvalidParameterException:APIParametersArrayStructure', [$this->method]));
 				}
 				
 				// ensure the required flag is set correctly in default case for each parameter
 				foreach ($value as $key => $v) {
 					if (!isset($v['type'])) {
-						throw new InvalidParameterException(elgg_echo('APIException:InvalidParameter', [$key, $this->getID()]));
+						throw new InvalidParameterException(elgg_echo('APIException:InvalidParameter', [$key, $this->method]));
 					}
 					
 					// check if 'required' was specified - if not, make it true
@@ -119,7 +119,7 @@ class ApiMethod implements CollectionItemInterface {
 				if ($name === 'call_method') {
 					$value = strtoupper($value);
 					if (!in_array($value, ['GET', 'POST'])) {
-						throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnrecognisedHttpMethod', [$value, $this->getID()]));
+						throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnrecognisedHttpMethod', [$value, $this->method]));
 					}
 				}
 				break;
@@ -169,12 +169,12 @@ class ApiMethod implements CollectionItemInterface {
 		
 		// function must be callable
 		if (empty($callable)) {
-			throw new \APIException(elgg_echo('APIException:FunctionDoesNotExist', [$this->getID()]));
+			throw new \APIException(elgg_echo('APIException:FunctionDoesNotExist', [$this->method]));
 		}
 		
 		// check http call method
 		if ($this->call_method !== $request->getMethod()) {
-			throw new \APIException(elgg_echo('APIException:InvalidCallMethod', [$this->getID(), $this->call_method]));
+			throw new \APIException(elgg_echo('APIException:InvalidCallMethod', [$this->method, $this->call_method]));
 		}
 		
 		$parameters = $this->getParameters($request);
@@ -185,7 +185,7 @@ class ApiMethod implements CollectionItemInterface {
 			$result = call_user_func_array($callable, $parameters);
 		}
 		
-		$result = elgg_trigger_plugin_hook('rest:output', $this->getID(), $parameters, $result);
+		$result = elgg_trigger_plugin_hook('rest:output', $this->method, $parameters, $result);
 		
 		// Sanity check result
 		// If this function returns an api result itself, just return it
@@ -243,7 +243,7 @@ class ApiMethod implements CollectionItemInterface {
 			
 			// check required
 			if ((bool) elgg_extract('required', $settings) && elgg_is_empty($value)) {
-				throw new \APIException(elgg_echo('APIException:MissingParameterInMethod', [$key, $this->getID()]));
+				throw new \APIException(elgg_echo('APIException:MissingParameterInMethod', [$key, $this->method]));
 			}
 			
 			// type cast
@@ -300,7 +300,7 @@ class ApiMethod implements CollectionItemInterface {
 				return $value;
 				
 			default:
-				throw new \APIException(elgg_echo('APIException:UnrecognisedTypeCast', [$type, $key, $this->getID()]));
+				throw new \APIException(elgg_echo('APIException:UnrecognisedTypeCast', [$type, $key, $this->method]));
 		}
 		
 		return $value;
@@ -324,6 +324,6 @@ class ApiMethod implements CollectionItemInterface {
 	 * {@inheritDoc}
 	 */
 	public function getID() {
-		return $this->method;
+		return "{$this->call_method}:{$this->method}";
 	}
 }

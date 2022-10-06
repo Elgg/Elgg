@@ -27,18 +27,18 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 	public function testConstructor() {
 		$api = new ApiMethod('foo', [$this, 'callbackTest']);
 		
-		$this->assertEquals('foo', $api->getID());
+		$this->assertEquals('GET:foo', $api->getID());
 		$this->assertEquals('(' . __CLASS__ . ')->callbackTest', $api->describeCallable());
 	}
 	
 	public function testSetterWithProtectedValues() {
 		$api = $this->getApiMethod();
 		
-		$this->assertEquals('foo', $api->getID());
+		$this->assertEquals('GET:foo', $api->getID());
 		$this->assertEquals('(' . __CLASS__ . ')->callbackTest', $api->describeCallable());
 		
 		$api->method = 'bar';
-		$this->assertEquals('foo', $api->getID());
+		$this->assertEquals('GET:foo', $api->getID());
 		
 		$api->callback = 'something';
 		$this->assertEquals('(' . __CLASS__ . ')->callbackTest', $api->describeCallable());
@@ -54,11 +54,10 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 	public function testCollectionItemInterface() {
 		$api = $this->getApiMethod();
 		
-		$interfaces = class_implements($api);
-		$this->assertTrue(in_array(CollectionItemInterface::class, $interfaces));
+		$this->assertInstanceOf(CollectionItemInterface::class, $api);
 		
 		$this->assertEquals(1, $api->getPriority());
-		$this->assertEquals('foo', $api->getID());
+		$this->assertEquals('GET:foo', $api->getID());
 	}
 	
 	/**
