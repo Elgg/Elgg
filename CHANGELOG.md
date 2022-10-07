@@ -920,6 +920,14 @@ fixes #12684 ([13070985](https://github.com/Elgg/Elgg/commit/13070985e840a78fc8b
 * **views:** removed elgg_prepend_css_urls is no longer available ([53cb8819](https://github.com/Elgg/Elgg/commit/53cb881983b1aae39b9966e9d74de807a808f0b9))
 
 
+<a name="3.3.25"></a>
+### 3.3.25  (2022-10-07)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+
+
 <a name="3.3.24"></a>
 ### 3.3.24  (2021-12-23)
 

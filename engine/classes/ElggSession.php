@@ -3,6 +3,7 @@
 use Elgg\Config;
 use Elgg\Database;
 use Elgg\Exceptions\LoginException;
+use Elgg\Exceptions\SecurityException;
 use Elgg\Http\DatabaseSessionHandler;
 use Elgg\SystemMessagesService;
 use Elgg\Traits\Debug\Profilable;
@@ -275,6 +276,7 @@ class ElggSession {
 		// #5933: set logged in user early so code in login event will be able to
 		// use elgg_get_logged_in_user_entity().
 		$this->setLoggedInUser($user);
+		$this->setUserToken($user);
 	
 		// re-register at least the core language file for users with language other than site default
 		_elgg_services()->translator->registerTranslations(\Elgg\Project\Paths::elgg() . 'languages/');
@@ -398,6 +400,62 @@ class ElggSession {
 		$this->logged_in_user = null;
 		$this->remove('guid');
 		_elgg_services()->sessionCache->clear();
+	}
+	
+	/**
+	 * Set a user specific token in the session for the currently logged in user
+	 *
+	 * This will invalidate the session on a password change of the logged in user
+	 *
+	 * @param \ElggUser $user the user to set the token for (default: logged in user)
+	 *
+	 * @return void
+	 * @since 3.3.25
+	 */
+	public function setUserToken(\ElggUser $user = null): void {
+		if (!$user instanceof \ElggUser) {
+			$user = $this->getLoggedInUser();
+		}
+		if (!$user instanceof \ElggUser) {
+			return;
+		}
+		
+		$this->set('__user_token', $this->generateUserToken($user));
+	}
+	
+	/**
+	 * Validate the user token stored in the session
+	 *
+	 * @param \ElggUser $user the user to check for
+	 *
+	 * @return void
+	 * @throws \Elgg\Exceptions\SecurityException
+	 * @since 3.3.25
+	 */
+	public function validateUserToken(\ElggUser $user): void {
+		$session_token = $this->get('__user_token');
+		$user_token = $this->generateUserToken($user);
+		
+		if ($session_token !== $user_token) {
+			throw new SecurityException(elgg_echo('session_expired'));
+		}
+	}
+	
+	/**
+	 * Generate a token for a specific user
+	 *
+	 * @param \ElggUser $user the user to generate the token for
+	 *
+	 * @return string
+	 * @since 3.3.25
+	 */
+	protected function generateUserToken(\ElggUser $user): string {
+		$hmac = _elgg_services()->hmac->getHmac([
+			$user->time_created,
+			$user->guid,
+		], 'sha256', $user->password_hash);
+		
+		return $hmac->getToken();
 	}
 
 	/**
