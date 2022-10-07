@@ -432,7 +432,41 @@ class Request extends SymfonyRequest {
 	 * @throws HttpException
 	 */
 	public function validate() {
+		$this->validateRequestHostHeader();
+		$this->validateRequestBodyTruncated();
+	}
 
+	/**
+	 * Validate that the request was made on the correct host
+	 *
+	 * This will prevent malicious requests from being processed
+	 *
+	 * @return void
+	 * @throws BadRequestException
+	 * @since 3.3.25
+	 */
+	protected function validateRequestHostHeader() {
+		$config = _elgg_services()->config;
+		if (empty($config->wwwroot)) {
+			return;
+		}
+		
+		$config_host = parse_url($config->wwwroot, PHP_URL_HOST);
+		if ($config_host === $this->getHost()) {
+			return;
+		}
+		
+		throw new BadRequestException(elgg_echo('BadRequestException:invalid_host_header'));
+	}
+
+	/**
+	 * Validate that the request body hasn't been truncated (eg. exceeded POST max size)
+	 *
+	 * @return void
+	 * @throws BadRequestException
+	 * @since 3.0
+	 */
+	protected function validateRequestBodyTruncated(): void {
 		$reported_bytes = $this->server->get('CONTENT_LENGTH');
 
 		// Requests with multipart content type
@@ -460,13 +494,15 @@ class Request extends SymfonyRequest {
 			return true;
 		};
 
-		if (!$is_valid()) {
-			$error_msg = elgg_trigger_plugin_hook('action_gatekeeper:upload_exceeded_msg', 'all', [
-				'post_size' => $reported_bytes,
-				'visible_errors' => true,
-			], elgg_echo('actiongatekeeper:uploadexceeded'));
-
-			throw new BadRequestException($error_msg);
+		if ($is_valid()) {
+			return;
 		}
+		
+		$error_msg = elgg_trigger_plugin_hook('action_gatekeeper:upload_exceeded_msg', 'all', [
+			'post_size' => $reported_bytes,
+			'visible_errors' => true,
+		], elgg_echo('actiongatekeeper:uploadexceeded'));
+		
+		throw new BadRequestException($error_msg);
 	}
 }

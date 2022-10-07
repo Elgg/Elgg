@@ -129,6 +129,7 @@ return array(
 	'EntityPermissionsException' => 'You do not have sufficient permissions for this action.',
 	'GatekeeperException' => 'You do not have permissions to view the page you are trying to access',
 	'BadRequestException' => 'Bad request',
+	'BadRequestException:invalid_host_header' => 'The request contains an invalid HOST header',
 	'ValidationException' => 'Submitted data did not meet the requirements, please check your input.',
 	'LogicException:InterfaceNotImplemented' => '%s must implement %s',
 	
