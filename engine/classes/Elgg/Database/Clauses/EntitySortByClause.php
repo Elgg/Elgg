@@ -57,11 +57,18 @@ class EntitySortByClause extends OrderByClause {
 		// get correct base GUID column
 		// default assumes the main table is 'entities'
 		$from_column = 'guid';
-		if ($qb->getTableName() === QueryBuilder::TABLE_RELATIONSHIPS) {
-			$from_column = 'guid_one';
-			if ((bool) $this->inverse_relationship) {
-				$from_column = 'guid_two';
-			}
+		switch ($qb->getTableName()) {
+			case QueryBuilder::TABLE_ANNOTATIONS:
+			case QueryBuilder::TABLE_METADATA:
+			case QueryBuilder::TABLE_PRIVATE_SETTINGS:
+				$from_column = 'entity_guid';
+				break;
+			case QueryBuilder::TABLE_RELATIONSHIPS:
+				$from_column = 'guid_one';
+				if ((bool) $this->inverse_relationship) {
+					$from_column = 'guid_two';
+				}
+				break;
 		}
 
 		switch ($this->property_type) {

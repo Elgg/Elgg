@@ -1,3 +1,16 @@
+<a name="4.3.3"></a>
+### 4.3.3  (2022-10-07)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+
+#### Bug Fixes
+
+* **db:** correctly handle sort_by clauses on more tables ([1c7d6392](https://github.com/Elgg/Elgg/commit/1c7d63921f4b51d5052afda51627d2ff167b0496))
+* **session:** show correct login error message for unvalidated accounts ([713fde5d](https://github.com/Elgg/Elgg/commit/713fde5d6cfd44a4a2d76438d3eb21b9418efc54))
+
+
 <a name="4.3.2"></a>
 ### 4.3.2  (2022-09-23)
 
@@ -918,6 +931,14 @@ fixes #12684 ([13070985](https://github.com/Elgg/Elgg/commit/13070985e840a78fc8b
 * **upgrades:** removed obsolete upgrades ([1f0c968c](https://github.com/Elgg/Elgg/commit/1f0c968cb69f5aa63b06831ff35f90a6c227f346))
 * **users:** replaced validation methods with service functions ([821ccd95](https://github.com/Elgg/Elgg/commit/821ccd95e10c8e45b96f11de8dad88d1f6bbc23f))
 * **views:** removed elgg_prepend_css_urls is no longer available ([53cb8819](https://github.com/Elgg/Elgg/commit/53cb881983b1aae39b9966e9d74de807a808f0b9))
+
+
+<a name="3.3.25"></a>
+### 3.3.25  (2022-10-07)
+
+#### Contributors
+
+* Jerôme Bakker (2)
 
 
 <a name="3.3.24"></a>

@@ -150,6 +150,7 @@ class BootHandlerUnitTest extends UnitTestCase {
 		]);
 
 		$app->internal_services->session->set('guid', $user->guid);
+		$app->internal_services->session->setUserToken($user); // normally this is done during login()
 
 		$user->invalidateCache();
 
