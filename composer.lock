@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a859c1ff1c42edd3f61a618d18547ff5",
+    "content-hash": "8c2af21d3fc7d4734a6223621ef65644",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
             "version": "5.12.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:FortAwesome/Font-Awesome.git",
+                "url": "https://github.com/FortAwesome/Font-Awesome.git",
                 "reference": "d8db3d032d22e7a5e21f3b40905b7867be19bb02"
             },
             "dist": {
@@ -26,7 +26,7 @@
             "version": "2.2.4",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jquery/jquery-dist.git",
+                "url": "https://github.com/jquery/jquery-dist.git",
                 "reference": "c0185ab7c75aab88762c5aae780b9d83b80eda72"
             },
             "dist": {
@@ -56,7 +56,7 @@
             "version": "1.6.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jackmoore/colorbox.git",
+                "url": "git@github.com:jackmoore/colorbox.git",
                 "reference": "bac78120c6ca9e63370cc317ab6f400129cd6608"
             },
             "dist": {
@@ -2987,6 +2987,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
+            "abandoned": "symfony/error-handler",
             "time": "2019-12-16T14:46:54+00:00"
         },
         {
@@ -3687,6 +3688,7 @@
                 "idna",
                 "punycode"
             ],
+            "abandoned": true,
             "time": "2016-11-16T10:37:54+00:00"
         },
         {
