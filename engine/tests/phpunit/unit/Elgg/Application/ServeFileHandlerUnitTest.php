@@ -181,7 +181,7 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->createRequest($file);
 		$response = $this->handler->getResponse($request);
 
-		$this->assertEquals('text/plain', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('text/plain', $response->headers->get('Content-Type'));
 
 		$filesize = filesize($test_file->getFilenameOnFilestore());
 		$this->assertEquals($filesize, $response->headers->get('Content-Length'));
@@ -209,7 +209,7 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->createRequest($file);
 		$response = $this->handler->getResponse($request);
 
-		$this->assertEquals('text/plain', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('text/plain', $response->headers->get('Content-Type'));
 
 		$filesize = filesize($test_file->getFilenameOnFilestore());
 		$this->assertEquals($filesize, $response->headers->get('Content-Length'));
