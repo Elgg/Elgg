@@ -162,10 +162,10 @@ class ElggWidget extends \ElggObject {
 		
 		if ($rank == 0) {
 			// top of the column
-			$this->order = reset($widgets)->order - 10;
+			$this->order = !empty($widgets) ? reset($widgets)->order - 10 : 0;
 		} elseif ($rank == $bottom_rank) {
 			// bottom of the column of active widgets
-			$this->order = end($widgets)->order + 10;
+			$this->order = !empty($widgets) ? end($widgets)->order + 10 : 10;
 		} else {
 			// reorder widgets
 
