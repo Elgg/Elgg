@@ -33,8 +33,8 @@ class Password {
 			}
 			
 			$password_svc = _elgg_services()->passwords;
-			$password = $credentials['password'];
-			$hash = $user->password_hash;
+			$password = (string) $credentials['password'];
+			$hash = (string) $user->password_hash;
 			
 			if (elgg_is_authentication_failure_limit_reached($user)) {
 				throw new LoginException(_elgg_services()->translator->translate('LoginException:AccountLocked'));
