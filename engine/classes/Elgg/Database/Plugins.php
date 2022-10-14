@@ -40,7 +40,6 @@ class Plugins {
 		'dashboard',
 		'developers',
 		'discussions',
-		'embed',
 		'externalpages',
 		'file',
 		'friends',

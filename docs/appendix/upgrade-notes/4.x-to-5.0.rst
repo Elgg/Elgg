@@ -42,6 +42,11 @@ Files plugin
 Files uploaded using the file plugin are no longer stored with the owner but with the file entity. File icons have also been changed. 
 Icon images are only available for image file types. Icon sizes have been changed to use the default icon sizes.
 
+Embed plugin
+------------
+
+The embed plugin has been removed.
+
 Javascript
 ----------
 

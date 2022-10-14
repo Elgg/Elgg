@@ -28,7 +28,6 @@ The following plugins are also bundled with Elgg, but are not (yet) documented
 - ckeditor
 - custom_index
 - developers
-- embed
 - externalpages
 - friends_collections
 - garbagecollector

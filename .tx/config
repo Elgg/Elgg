@@ -56,12 +56,6 @@ source_file = mod/discussions/languages/en.php
 source_lang = en
 type = PHP_ARRAY
 
-[elgg-core-4.embed]
-file_filter = mod/embed/languages/<lang>.php
-source_file = mod/embed/languages/en.php
-source_lang = en
-type = PHP_ARRAY
-
 [elgg-core-4.externalpages]
 file_filter = mod/externalpages/languages/<lang>.php
 source_file = mod/externalpages/languages/en.php

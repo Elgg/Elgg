@@ -42,8 +42,8 @@ function developers_wrap_views(\Elgg\Hook $hook) {
 	
 	$excluded_bases = [
 		'resources',
-		'input', // because of possible html encoding in views, which would result in debug cobe being shown to users
-		'output', // because of possible html encoding in views, which would result in debug cobe being shown to users
+		'input', // because of possible html encoding in views, which would result in debug code being shown to users
+		'output', // because of possible html encoding in views, which would result in debug code being shown to users
 		'embed',
 		'icon',
 		'json',

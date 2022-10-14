@@ -58,7 +58,6 @@ use Elgg\Traits\Loggable;
  * @property string        $emailer_transport                       This is an override for Elgg's default email handling transport (default sendmail)
  * @property array         $emailer_sendmail_settings               This configures SendMail if $emailer_transport is set to "sendmail" or default
  * @property array         $emailer_smtp_settings                   This configures SMTP if $emailer_transport is set to "smtp"
- * @property mixed         $embed_tab
  * @property string        $exception_include						This is an optional script used to override Elgg's default handling of uncaught exceptions.
  * @property int           $friendly_time_number_of_days            Number of days after which timestamps will no longer be presented in a friendly format (x hours ago) but in a full date
  * @property string[]      $http_request_trusted_proxy_ips			When Elgg is behind a loadbalancer/proxy this can contain IP adresses to allow access to better client information

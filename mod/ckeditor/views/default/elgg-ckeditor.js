@@ -69,19 +69,6 @@ define(function (require) {
 				CKEDITOR.on('instanceReady', elggCKEditor.fixImageAttributes);
 				return CKEDITOR;
 			});
-			hooks.register('embed', 'editor', function (hook, type, params, value) {
-				var textArea = $('#' + params.textAreaId);
-				var content = params.content;
-				if ($.fn.ckeditorGet) {
-					try {
-						var editor = textArea.ckeditorGet();
-						editor.insertHtml(content);
-						return false;
-					} catch (e) {
-						// do nothing.
-					}
-				}
-			});
 			elggCKEditor.registerHandlers = function() {};
 		},
 
