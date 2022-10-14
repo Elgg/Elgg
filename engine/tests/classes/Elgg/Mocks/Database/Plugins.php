@@ -52,7 +52,6 @@ class Plugins extends DbPlugins {
 
 		// these plugins need to be activated after a previous activated plugin
 		'custom_index',
-		'embed',
 	];
 
 	public function get(string $plugin_id): ?\ElggPlugin {

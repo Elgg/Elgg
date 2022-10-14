@@ -85,10 +85,6 @@ return [
 			],
 		],
 		'register' => [
-			'menu:embed' => [
-				'Elgg\File\Menus\Embed::registerFile' => [],
-				'Elgg\File\Menus\Embed::registerFileUpload' => [],
-			],
 			'menu:owner_block' => [
 				'Elgg\File\Menus\OwnerBlock::registerUserItem' => [],
 				'Elgg\File\Menus\OwnerBlock::registerGroupItem' => [],

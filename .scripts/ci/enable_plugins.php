@@ -44,7 +44,6 @@ $ordered_plugins = [
 	
 	// these plugins need to be activated after a previous activated plugin
 	'custom_index',
-	'embed',
 ];
 
 foreach ($ordered_plugins as $priority => $plugin_id) {

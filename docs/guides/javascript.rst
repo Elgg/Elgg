@@ -686,9 +686,6 @@ Available hooks
 **ajax_response_data, \***
     This filters the response data returned to users of the ``elgg/Ajax`` module. See :doc:`ajax` for details.
 
-**insert, editor**
-    This hook is triggered by the embed plugin and can be used to filter content before it is inserted into the textarea. This hook can also be used by WYSIWYG editors to insert content using their own API (in this case the handler should return ``false``). See ckeditor plugin for an example.
-
 Third-party assets
 ==================
 
