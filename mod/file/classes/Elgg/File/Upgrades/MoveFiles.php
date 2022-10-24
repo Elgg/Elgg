@@ -50,15 +50,20 @@ class MoveFiles extends AsynchronousUpgrade {
 		
 		/* @var $entity \ElggFile */
 		foreach ($batch as $entity) {
-			if (!$entity->exists()) {
+			
+			$old_file = new \ElggFile();
+			$old_file->owner_guid = $entity->owner_guid; // owned by owner
+			$old_file->setFilename($entity->getFilename());
+			
+			if (!$old_file->exists()) {
 				$result->addSuccesses();
 				$entity->_elgg_file_migrated = time();
 				continue;
 			}
 
-			$old_location = $entity->getFilenameOnFilestore();
+			$old_location = $old_file->getFilenameOnFilestore();
 			$new_file = new \ElggFile();
-			$new_file->owner_guid = $entity->guid;
+			$new_file->owner_guid = $entity->guid; // owned by entity
 			$new_file->setFilename($entity->getFilename());
 			$new_file->open('write');
 			$new_file->close();
