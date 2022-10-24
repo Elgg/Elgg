@@ -58,4 +58,4 @@ jobs:
         run: |
           wget https://scrutinizer-ci.com/ocular.phar
           ./vendor/bin/phpunit --testsuite ${{ matrix.testsuite }} --coverage-clover=coverage.clover
-          php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+          ./vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover
