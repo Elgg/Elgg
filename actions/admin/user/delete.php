@@ -35,7 +35,7 @@ if (empty($forward)) {
 	$forward = REFERRER;
 
 	if (elgg_strpos($_SERVER['HTTP_REFERER'], $username) !== false) {
-		$forward = 'admin/users/newest';
+		$forward = 'admin/users';
 	}
 } else {
 	$forward = elgg_normalize_site_url($forward) ?: REFERRER;
