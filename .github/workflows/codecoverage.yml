@@ -31,6 +31,10 @@ jobs:
         
       - name: Code checkout
         uses: actions/checkout@v2
+        with:
+          # Fetch 10 commits or Scrutinizer will throw ("Failed to retrieve commit parents. If you use a shallow git checkout, please checkout at least a depth of one."), see: RepositoryIntrospector at scrutinizer-ci/ocular GitHub repository
+          # 10 commits is an arbitrary value that is more than 1 commit
+          fetch-depth: 10
         
       - name: Get Composer Cache Directory
         id: composer-cache
@@ -56,6 +60,5 @@ jobs:
       
       - name: Test and publish code coverage
         run: |
-          wget https://scrutinizer-ci.com/ocular.phar
           ./vendor/bin/phpunit --testsuite ${{ matrix.testsuite }} --coverage-clover=coverage.clover
           ./vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover
