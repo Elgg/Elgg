@@ -37,10 +37,15 @@ $type_mapping = [
 
 $mime = $entity->getMimeType();
 
+$type = 'unknown';
 if (!empty($mime)) {
-	$type = elgg_extract($mime, $type_mapping, elgg_extract($entity->getSimpleType(), $type_mapping, elgg_echo('unknown')));
+	$type = elgg_extract($mime, $type_mapping, elgg_extract($entity->getSimpleType(), $type_mapping, 'unknown'));
+}
+
+if (elgg_language_key_exists("item:object:file:{$type}")) {
+	$content = elgg_echo("item:object:file:{$type}");
 } else {
-	$type = elgg_echo('unknown');
+	$content = elgg_echo('unknown');
 }
 	
 $icon_mapping = [
@@ -60,5 +65,5 @@ $icon_mapping = [
 
 echo elgg_view('object/elements/imprint/element', [
 	'icon_name' => elgg_extract($type, $icon_mapping, 'file'),
-	'content' => elgg_echo("item:object:file:{$type}"),
+	'content' => $content,
 ]);
