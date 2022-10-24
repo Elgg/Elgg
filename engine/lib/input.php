@@ -197,7 +197,7 @@ function elgg_is_empty($value) {
 function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
 	if ($attributes === false) {
 		// This is a closing tag. Prevent further processing to avoid inserting a duplicate tag
-		return "</${element}>";
+		return "</{$element}>";
 	}
 
 	// this list should be coordinated with the WYSIWYG editor used (tinymce, ckeditor, etc.)
@@ -221,7 +221,7 @@ function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
 
 			$style_str = '';
 			foreach ($styles as $style) {
-				if (!trim($style)) {
+				if (!trim($style) || strpos($style, ':') === false) {
 					continue;
 				}
 				list($style_attr, $style_value) = explode(':', trim($style));
@@ -229,25 +229,25 @@ function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
 				$style_value = trim($style_value);
 
 				if (in_array($style_attr, $allowed_styles)) {
-					$style_str .= "$style_attr: $style_value; ";
+					$style_str .= "{$style_attr}: {$style_value}; ";
 				}
 			}
 
 			if ($style_str) {
 				$style_str = trim($style_str);
-				$string .= " style=\"$style_str\"";
+				$string .= " style=\"{$style_str}\"";
 			}
 		} else {
-			$string .= " $attr=\"$value\"";
+			$string .= " {$attr}=\"{$value}\"";
 		}
 	}
 
 	// Some WYSIWYG editors do not like tags like <p > so only add a space if needed.
 	if ($string = trim($string)) {
-		$string = " $string";
+		$string = " {$string}";
 	}
 
-	$r = "<$element$string>";
+	$r = "<{$element}{$string}>";
 	return $r;
 }
 
