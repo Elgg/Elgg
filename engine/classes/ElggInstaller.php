@@ -1150,7 +1150,8 @@ class ElggInstaller {
 		}
 
 		if (!empty($submissionVars['wwwroot']) && !\Elgg\Http\Urls::isValidMultiByteUrl($submissionVars['wwwroot'])) {
-			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:wwwroot', [$submissionVars['wwwroot']]));
+			$save_value = $this->sanitizeInputValue($submissionVars['wwwroot']);
+			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:wwwroot', [$save_value]));
 
 			return false;
 		}
@@ -1158,13 +1159,15 @@ class ElggInstaller {
 		// check that data root is absolute path
 		if (stripos(PHP_OS, 'win') === 0) {
 			if (strpos($submissionVars['dataroot'], ':') !== 1) {
-				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:relative_path', [$submissionVars['dataroot']]));
+				$save_value = $this->sanitizeInputValue($submissionVars['dataroot']);
+				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:relative_path', [$save_value]));
 
 				return false;
 			}
 		} else {
 			if (strpos($submissionVars['dataroot'], '/') !== 0) {
-				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:relative_path', [$submissionVars['dataroot']]));
+				$save_value = $this->sanitizeInputValue($submissionVars['dataroot']);
+				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:relative_path', [$save_value]));
 
 				return false;
 			}
@@ -1172,21 +1175,24 @@ class ElggInstaller {
 
 		// check that data root exists
 		if (!is_dir($submissionVars['dataroot'])) {
-			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:datadirectoryexists', [$submissionVars['dataroot']]));
+			$save_value = $this->sanitizeInputValue($submissionVars['dataroot']);
+			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:datadirectoryexists', [$save_value]));
 
 			return false;
 		}
 
 		// check that data root is writable
 		if (!is_writable($submissionVars['dataroot'])) {
-			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:writedatadirectory', [$submissionVars['dataroot']]));
+			$save_value = $this->sanitizeInputValue($submissionVars['dataroot']);
+			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:writedatadirectory', [$save_value]));
 
 			return false;
 		}
 
 		// check that data root is not subdirectory of Elgg root
 		if (stripos($submissionVars['dataroot'], Paths::project()) === 0) {
-			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:locationdatadirectory', [$submissionVars['dataroot']]));
+			$save_value = $this->sanitizeInputValue($submissionVars['dataroot']);
+			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:locationdatadirectory', [$save_value]));
 
 			return false;
 		}
@@ -1241,7 +1247,8 @@ class ElggInstaller {
 			if (0 === strpos($e->getMessage(), "Elgg couldn't connect")) {
 				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:databasesettings'));
 			} else {
-				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:nodatabase', [$dbname]));
+				$save_value = $this->sanitizeInputValue($dbname);
+				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:nodatabase', [$save_value]));
 			}
 
 			return false;
@@ -1408,7 +1415,8 @@ class ElggInstaller {
 
 		// check that email address is email address
 		if ($submissionVars['siteemail'] && !elgg_is_valid_email((string) $submissionVars['siteemail'])) {
-			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:emailaddress', [$submissionVars['siteemail']]));
+			$save_value = $this->sanitizeInputValue($submissionVars['siteemail']);
+			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:emailaddress', [$save_value]));
 
 			return false;
 		}
@@ -1539,7 +1547,8 @@ class ElggInstaller {
 
 		// check that email address is email address
 		if ($submissionVars['email'] && !elgg_is_valid_email((string) $submissionVars['email'])) {
-			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:emailaddress', [$submissionVars['email']]));
+			$save_value = $this->sanitizeInputValue($submissionVars['email']);
+			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:emailaddress', [$save_value]));
 
 			return false;
 		}
@@ -1594,5 +1603,24 @@ class ElggInstaller {
 		}
 
 		return true;
+	}
+	
+	/**
+	 * Sanitize input to help prevent XSS
+	 *
+	 * @param mixed $input_value the input to sanitize
+	 *
+	 * @return mixed
+	 */
+	protected function sanitizeInputValue($input_value) {
+		if (is_array($input_value)) {
+			return array_map([$this, __FUNCTION__], $input_value);
+		}
+		
+		if (!is_string($input_value)) {
+			return $input_value;
+		}
+		
+		return htmlspecialchars($input_value);
 	}
 }
