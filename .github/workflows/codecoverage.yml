@@ -2,14 +2,23 @@ name: Code Coverage
 on: [push]
 env:
   ELGG_DB_USER: root
-  ELGG_DB_PASS: root
+  ELGG_DB_PASS: password
   ELGG_DB_NAME: elgg
   ELGG_DB_PREFIX: elgg_
+  ELGG_DB_HOST: 127.0.0.1
   
 jobs:
   scrutinizer:
     name: Scrutinizer - ${{ matrix.testsuite }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+    services:
+      elggdb:
+        image: 'mysql:5.7'
+        env:
+          MYSQL_DATABASE: elgg
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306:3306
     
     strategy:
       fail-fast: false
@@ -27,7 +36,8 @@ jobs:
         with:
           php-version: '8.0'
           coverage: xdebug
-          extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring
+          extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring,intl
+          ini-values: max_execution_time=180
         
       - name: Code checkout
         uses: actions/checkout@v2
@@ -51,12 +61,10 @@ jobs:
         run: composer install
       
       - name: Install Elgg
-        run: |
-          sudo systemctl start mysql
-          mysql -u root -proot -e 'SET GLOBAL max_connections = 1000;'
-          mysql -u root -proot -e 'create database elgg;'
-          php ./elgg-cli install --config ./install/cli/testing_app.php --verbose
-          php -f ./.scripts/ci/enable_plugins.php
+        run: php ./elgg-cli install --config ./install/cli/testing_app.php --verbose --no-ansi
+      
+      - name: Enable Elgg plugins
+        run: php -f ./.scripts/ci/enable_plugins.php
       
       - name: Test and publish code coverage
         run: |
