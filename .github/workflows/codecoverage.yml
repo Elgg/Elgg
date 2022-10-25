@@ -66,7 +66,9 @@ jobs:
       - name: Enable Elgg plugins
         run: php -f ./.scripts/ci/enable_plugins.php
       
-      - name: Test and publish code coverage
-        run: |
-          ./vendor/bin/phpunit --testsuite ${{ matrix.testsuite }} --coverage-clover=coverage.clover
-          ./vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover
+      - name: Generate code coverage
+        continue-on-error: true
+        run: ./vendor/bin/phpunit --testsuite ${{ matrix.testsuite }} --coverage-clover=coverage.clover
+
+      - name: Upload to scrutinizer
+        run: ./vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover
