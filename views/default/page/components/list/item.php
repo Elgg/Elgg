@@ -7,7 +7,7 @@
  * @uses $vars['content']    Content of the list item
  */
 
-$content = elgg_extract('content', $vars);
+$content = (string) elgg_extract('content', $vars);
 $item = elgg_extract('item', $vars);
 
 $li_attrs = [
@@ -36,7 +36,7 @@ if ($item instanceof \ElggEntity) {
 	if ($object instanceof \ElggEntity) {
 		$li_attrs['class'][] = "elgg-item-{$type}-{$object->getType()}-{$object->getSubtype()}-{$item->action_type}";
 	}
-} elseif ($item instanceof ElggRelationship) {
+} elseif ($item instanceof \ElggRelationship) {
 	$type = $item->getType();
 	$relationship = $item->getSubtype();
 	$id = $item->id;

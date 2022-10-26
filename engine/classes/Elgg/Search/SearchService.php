@@ -76,7 +76,7 @@ class SearchService {
 		$options = $this->prepareSearchOptions($options);
 
 		$query_parts = elgg_extract('query_parts', $options);
-		$fields = elgg_extract('fields', $options);
+		$fields = (array) elgg_extract('fields', $options);
 
 		if (empty($query_parts) || empty(array_filter($fields))) {
 			return false;

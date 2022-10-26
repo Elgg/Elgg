@@ -10,6 +10,9 @@ use Elgg\Activity\GroupRiverFilter;
 
 $options = (array) elgg_extract('options', $vars);
 $entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggGroup) {
+	return;
+}
 
 $group_options = [
 	'wheres' => [

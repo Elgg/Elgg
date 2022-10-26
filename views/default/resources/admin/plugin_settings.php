@@ -11,9 +11,10 @@ use Elgg\Exceptions\Http\PageNotFoundException;
 // Make sure the 'site' css isn't loaded
 elgg_unregister_external_file('css', 'elgg');
 
-$plugin_id = elgg_extract('plugin_id', $vars);
+$plugin_id = (string) elgg_extract('plugin_id', $vars);
+
 $plugin = elgg_get_plugin_from_id($plugin_id);
-if (!$plugin instanceof ElggPlugin) {
+if (!$plugin instanceof \ElggPlugin) {
 	throw new EntityNotFoundException();
 }
 

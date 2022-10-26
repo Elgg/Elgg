@@ -16,7 +16,7 @@ if (!empty($context_stack) && is_array($context_stack)) {
 
 elgg_require_js('resources/widgets/add_panel');
 
-$context = elgg_extract('context', $vars, get_input('context'));
+$context = (string) elgg_extract('context', $vars, get_input('context'));
 $owner_guid = (int) elgg_extract('owner_guid', $vars, (int) get_input('owner_guid'));
 elgg_entity_gatekeeper($owner_guid);
 
@@ -94,6 +94,6 @@ foreach ($widget_types as $handler => $widget_type) {
 	], $item_content);
 }
 
-$result .= "<ul>$list_items</ul>";
+$result .= elgg_format_element('ul', [], $list_items);
 
 echo elgg_view_module('aside', elgg_echo('widgets:add'), $result, ['class' => 'elgg-widgets-add-panel']);

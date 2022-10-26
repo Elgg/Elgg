@@ -19,19 +19,10 @@ class ElggBlog extends ElggObject {
 	}
 
 	/**
-	 * Can a user comment on this blog?
-	 *
-	 * @see ElggObject::canComment()
-	 *
-	 * @param int  $user_guid User guid (default is logged in user)
-	 * @param bool $default   Default permission
-	 *
-	 * @return bool
-	 *
-	 * @since 1.8.0
+	 * {@inheritDoc}
 	 */
-	public function canComment(int $user_guid = 0, bool $default = null): bool {
-		$result = parent::canComment($user_guid, $default);
+	public function canComment(int $user_guid = 0): bool {
+		$result = parent::canComment($user_guid);
 		if (!$result) {
 			return $result;
 		}

@@ -68,7 +68,7 @@ if ($url) {
 		'is_trusted' => true,
 	];
 	$link_class = elgg_extract_class($vars, [], 'link_class');
-	if ($link_class) {
+	if (!empty($link_class)) {
 		$params['class'] = $link_class;
 	}
 

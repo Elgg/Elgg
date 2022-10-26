@@ -18,7 +18,7 @@
 
 $results = elgg_extract('results', $vars);
 $entities = elgg_extract('entities', $results, []);
-$params = elgg_extract('params', $vars, []);
+$params = (array) elgg_extract('params', $vars, []);
 if (!is_array($entities) || empty($entities) || empty($params)) {
 	return;
 }

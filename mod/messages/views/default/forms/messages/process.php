@@ -10,7 +10,7 @@
 
 elgg_require_js('forms/messages/process');
 
-$list = elgg_extract('list', $vars);
+$list = (string) elgg_extract('list', $vars);
 
 echo elgg_format_element('div', ['class' => 'messages-container'], $list);
 

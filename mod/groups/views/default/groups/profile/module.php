@@ -85,7 +85,7 @@ if (!empty($add_link) && !empty($entity_type) && !empty($entity_subtype)) {
 }
 
 // draw module
-echo elgg_view_module('info', $title, $content, [
+echo elgg_view_module('info', (string) $title, (string) $content, [
 	'menu' => $menu,
 	'class' => 'elgg-module-group',
 	'footer' => $footer,

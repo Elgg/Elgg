@@ -37,8 +37,8 @@ class Settings {
 			return;
 		}
 	
-		$password = $request->getParam('password', null, false);
-		$password2 = $request->getParam('password2', null, false);
+		$password = (string) $request->getParam('password', null, false);
+		$password2 = (string) $request->getParam('password2', null, false);
 	
 		if (!$password) {
 			return;
@@ -47,7 +47,7 @@ class Settings {
 		if (!$actor->isAdmin() || $user->guid === $actor->guid) {
 			// let admin user change anyone's password without knowing it except his own.
 	
-			$current_password = $request->getParam('current_password', null, false);
+			$current_password = (string) $request->getParam('current_password', null, false);
 	
 			try {
 				_elgg_services()->accounts->assertCurrentPassword($user, $current_password);
@@ -285,7 +285,7 @@ class Settings {
 		if (_elgg_services()->config->security_email_require_password && $user->guid === $actor->guid) {
 			try {
 				// validate password
-				_elgg_services()->accounts->assertCurrentPassword($user, $request->getParam('email_password'));
+				_elgg_services()->accounts->assertCurrentPassword($user, (string) $request->getParam('email_password'));
 			} catch (RegistrationException $e) {
 				$request->validation()->fail('email', $email, elgg_echo('email:save:fail:password'));
 				return false;

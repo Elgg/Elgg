@@ -5,12 +5,12 @@
  * @uses $vars['user_guid'] the GUID of the user to change
  */
 
-$guid = elgg_extract('user_guid', $vars);
+$guid = (int) elgg_extract('user_guid', $vars);
 $user = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
 	return get_user($guid);
 });
 
-if (!$user instanceof ElggUser || !$user->canEdit()) {
+if (!$user instanceof \ElggUser || !$user->canEdit()) {
 	return;
 }
 

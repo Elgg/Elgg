@@ -58,11 +58,11 @@ class MaintenanceGatekeeper {
 			return false;
 		}
 		
-		$username = $request->getParam('username');
+		$username = (string) $request->getParam('username');
 
 		$user = get_user_by_username($username);
 
-		if (!$user) {
+		if (!$user instanceof \ElggUser) {
 			$users = get_user_by_email($username);
 			if (!empty($users)) {
 				$user = $users[0];

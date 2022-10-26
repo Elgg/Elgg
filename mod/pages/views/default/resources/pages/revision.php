@@ -5,14 +5,14 @@
 
 use Elgg\Exceptions\Http\EntityNotFoundException;
 
-$id = elgg_extract('id', $vars);
+$id = (int) elgg_extract('id', $vars);
 $annotation = elgg_get_annotation_from_id($id);
-if (!$annotation instanceof ElggAnnotation) {
+if (!$annotation instanceof \ElggAnnotation) {
 	throw new EntityNotFoundException();
 }
 
 $page = $annotation->getEntity();
-if (!$page instanceof ElggPage) {
+if (!$page instanceof \ElggPage) {
 	throw new EntityNotFoundException();
 }
 

@@ -1742,7 +1742,7 @@ Generated %s by %s
 
 ',
 	'diagnostics:report:basic' => '
-Elgg Release %s, version %s
+Elgg Release %s
 
 ------------------------------------------------------------------------',
 	'diagnostics:report:php' => '

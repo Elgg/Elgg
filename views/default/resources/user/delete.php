@@ -2,7 +2,7 @@
 
 use Elgg\Exceptions\Http\EntityNotFoundException;
 
-$user = get_user(elgg_extract('guid', $vars));
+$user = get_user((int) elgg_extract('guid', $vars));
 if (!$user instanceof \ElggUser) {
 	throw new EntityNotFoundException();
 }

@@ -217,11 +217,11 @@ class DiskFilestore extends Filestore {
 			$owner_guid = $file->guid;
 		}
 	
-		if (!$owner_guid) {
+		if (empty($owner_guid)) {
 			$owner_guid = $file->owner_guid ?: _elgg_services()->session->getLoggedInUserGuid();
 		}
 
-		if (!$owner_guid) {
+		if (empty($owner_guid)) {
 			throw new InvalidParameterException("File {$file->getFilename()} (file guid: {$file->guid}) is missing an owner!");
 		}
 

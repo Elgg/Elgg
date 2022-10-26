@@ -57,7 +57,7 @@ class ElggComment extends \ElggObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function canComment(int $user_guid = 0, bool $default = null): bool {
+	public function canComment(int $user_guid = 0): bool {
 		if ($this->getLevel() >= (int) elgg_get_config('comments_max_depth')) {
 			return false;
 		}
@@ -67,7 +67,7 @@ class ElggComment extends \ElggObject {
 			return false;
 		}
 		
-		return $container->canComment($user_guid, $default);
+		return $container->canComment($user_guid);
 	}
 	
 	/**

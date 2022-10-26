@@ -1620,10 +1620,6 @@ Generiert %s von %s
 ========================================================================
 
 ',
-	'diagnostics:report:basic' => '
-Elgg-Release %s, Version %s
-
-------------------------------------------------------------------------',
 	'diagnostics:report:php' => '
 PHP-Info:
 %s

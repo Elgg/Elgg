@@ -5,7 +5,7 @@
  * @uses $vars['src'] Source URL of the page
  */
 
-$src = elgg_extract('src', $vars);
+$src = (string) elgg_extract('src', $vars);
 
 $vars['src'] = elgg_normalize_url($src);
 

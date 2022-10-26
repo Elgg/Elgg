@@ -7,7 +7,7 @@ if (empty($data)) {
 
 $views = elgg_extract('views', $data);
 $global_hooks = elgg_extract('global_hooks', $data);
-$filtered_views = elgg_extract('filtered_views', $data);
+$filtered_views = (array) elgg_extract('filtered_views', $data);
 $input_filtered_views = (array) elgg_extract('input_filtered_views', $data);
 
 $root = elgg_get_root_path();

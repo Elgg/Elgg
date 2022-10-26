@@ -2,10 +2,10 @@
 /**
  * Outputs relationship summary content
  *
- * @uses $vars['content']      Summary content
+ * @uses $vars['content'] Summary content
  */
 
-$content = elgg_extract('content', $vars);
+$content = (string) elgg_extract('content', $vars);
 if (elgg_is_empty($content)) {
 	return;
 }

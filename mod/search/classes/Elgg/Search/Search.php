@@ -171,8 +171,6 @@ class Search {
 					'property' => 'last_action',
 					'direction' => $order,
 				];
-				$sort = null;
-				$order = null;
 				break;
 
 			case 'created':
@@ -182,8 +180,6 @@ class Search {
 					'property' => 'time_created',
 					'direction' => $order,
 				];
-				$sort = null;
-				$order = null;
 				break;
 
 			case 'updated':
@@ -192,8 +188,6 @@ class Search {
 					'property' => 'time_updated',
 					'direction' => $order,
 				];
-				$sort = null;
-				$order = null;
 				break;
 
 			case 'alpha' :
@@ -202,8 +196,6 @@ class Search {
 					'property' => $entity_type === 'object' ? 'title' : 'name',
 					'direction' => get_input('order', 'asc'), // different default value
 				];
-				$sort = null;
-				$order = null;
 				break;
 		}
 

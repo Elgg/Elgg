@@ -11,7 +11,7 @@
  * @uses $vars['class']     Optional additional class for message
  */
 
-$type = elgg_extract('type', $vars, false);
+$type = (string) elgg_extract('type', $vars, false);
 $title = elgg_extract('title', $vars);
 $menu = elgg_extract('menu', $vars);
 $body = elgg_extract('body', $vars, '');
@@ -29,7 +29,7 @@ $attrs = [
 	'class' => elgg_extract_class($vars, 'elgg-message'),
 ];
 
-if ($type) {
+if (!empty($type)) {
 	$attrs['class'][] = "elgg-message-{$type}";
 }
 

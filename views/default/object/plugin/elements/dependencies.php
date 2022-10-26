@@ -12,7 +12,11 @@ $plugin = elgg_extract('plugin', $vars, false);
 $deps = $plugin->getDependencies();
 if (!empty($deps)) {
 	$deps_info = '<table class="elgg-table">';
-	$deps_info .= '<thead><tr><th>' . elgg_echo('item:object:plugin') . '</th><th>' . elgg_echo('ElggPlugin:Dependencies:MustBeActive') . '</th><th>' . elgg_echo('ElggPlugin:Dependencies:Position') . '</th></tr></thead>';
+	$deps_info .= '<thead><tr>';
+	$deps_info .= elgg_format_element('th', [], elgg_echo('item:object:plugin'));
+	$deps_info .= elgg_format_element('th', [], elgg_echo('ElggPlugin:Dependencies:MustBeActive'));
+	$deps_info .= elgg_format_element('th', [], elgg_echo('ElggPlugin:Dependencies:Position'));
+	$deps_info .= '</tr></thead>';
 	$deps_info .= '<tbody>';
 	
 	foreach ($deps as $plugin_id => $plugin_dep) {
@@ -28,7 +32,7 @@ if (!empty($deps)) {
 		
 		$plugin_dep_info .= elgg_format_element('td', $must_be_active_options, $must_be_active ? elgg_echo('option:yes') : elgg_echo('option:no'));
 		
-		$position = elgg_extract('position', $plugin_dep);
+		$position = (string) elgg_extract('position', $plugin_dep);
 		$position_options = [];
 		
 		$dependent_plugin = elgg_get_plugin_from_id($plugin_id);

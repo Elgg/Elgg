@@ -178,7 +178,7 @@ class DelayedEmailService {
 		
 		$email = Email::factory([
 			'to' => $recipient,
-			'subject' => $this->translator->translate("notifications:delayed_email:subject:{$delivery_interval}", [], $recipient->language),
+			'subject' => $this->translator->translate("notifications:delayed_email:subject:{$delivery_interval}", [], (string) $recipient->language),
 			'body' => $body,
 			'params' => [
 				'html_body' => $html_body,

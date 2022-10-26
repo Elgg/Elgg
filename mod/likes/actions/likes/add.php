@@ -53,7 +53,7 @@ $summary = elgg_echo('likes:notifications:subject', [
 		$user->getDisplayName(),
 		$title_str,
 	],
-	$owner->language
+	(string) $owner->language
 );
 
 // prevent long subjects in mail
@@ -62,7 +62,7 @@ $subject = elgg_echo('likes:notifications:subject', [
 		$user->getDisplayName(),
 		$title_str,
 	],
-	$owner->language
+	(string) $owner->language
 );
 
 $body = elgg_echo('likes:notifications:body', [
@@ -72,7 +72,7 @@ $body = elgg_echo('likes:notifications:body', [
 		$entity->getURL(),
 		$user->getURL(),
 	],
-	$owner->language
+	(string) $owner->language
 );
 
 notify_user(

@@ -1,7 +1,7 @@
 <?php
 
-$view = elgg_extract('view', $vars);
-$text = elgg_extract('text', $vars, $view);
+$view = (string) elgg_extract('view', $vars);
+$text = (string) elgg_extract('text', $vars, $view);
 $id = elgg_extract('view_id', $vars);
 if (empty($id)) {
 	// this is for BC reasons

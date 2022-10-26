@@ -38,7 +38,7 @@ class ServeIcon {
 		}
 		
 		$guid = (int) $request->getParam('guid');
-		$size = $request->getParam('size');
+		$size = (string) $request->getParam('size');
 		
 		$entity = get_entity($guid);
 		if (!$entity instanceof \ElggEntity) {
