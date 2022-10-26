@@ -31,8 +31,8 @@ foreach ($notification_settings as $purpose => $prefered_methods) {
 
 // delayed email interval
 if ((bool) elgg_get_config('enable_delayed_email')) {
-	$delayed_email_interval = get_input('delayed_email_interval');
-	if ($user->delayed_email_interval !== $delayed_email_interval) {
+	$delayed_email_interval = (string) get_input('delayed_email_interval');
+	if (!empty($delayed_email_interval) && $user->delayed_email_interval !== $delayed_email_interval) {
 		// save new setting
 		$user->delayed_email_interval = $delayed_email_interval;
 		

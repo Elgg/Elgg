@@ -5,8 +5,7 @@
  * @uses $vars['value'] Color code in HexCode format
  */
 
-$value = elgg_extract('value', $vars);
-
+$value = (string) elgg_extract('value', $vars);
 if (!preg_match('/^#[a-f0-9]{6}$/i', $value)) {
 	return;
 }

@@ -7,7 +7,7 @@
  */
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggObject) {
+if (!$entity instanceof \ElggObject) {
 	return;
 }
 
@@ -16,7 +16,7 @@ if (empty($input_name)) {
 	return;
 }
 
-$icon = null;
+$icon = '';
 if ($entity->hasIcon('tiny')) {
 	$icon = elgg_view_entity_icon($entity, 'tiny');
 }

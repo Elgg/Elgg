@@ -21,7 +21,12 @@ if ($owner_guid) {
 	$owner = $page_owner;
 }
 
-if (!$owner) {
+if (!$owner instanceof \ElggEntity) {
+	return;
+}
+
+$context = elgg_get_context();
+if (elgg_is_empty($context)) {
 	return;
 }
 
@@ -31,8 +36,6 @@ elgg_require_js('elgg/widgets');
 if ($owner->guid != $page_owner->guid) {
 	elgg_set_page_owner_guid($owner->guid);
 }
-
-$context = elgg_get_context();
 
 $widgets = elgg_get_widgets($owner->guid, $context);
 
@@ -53,7 +56,7 @@ if ($show_add_widgets && elgg_can_edit_widget_layout($context)) {
 // push context after the add_button as add button uses current context
 elgg_push_context('widgets');
 
-if ($widgets) {
+if (!empty($widgets)) {
 	$widget_types = elgg_get_widget_types([
 		'context' => $context,
 		'container' => $owner,

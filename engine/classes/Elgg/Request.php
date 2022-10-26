@@ -100,16 +100,13 @@ class Request {
 	 *
 	 * @return \ElggEntity|null
 	 */
-	public function getEntityParam($key = 'guid') {
-		$guid = $this->http_request->getParam($key);
-		if ($guid) {
-			$entity = get_entity($guid);
-			if ($entity instanceof \ElggEntity) {
-				return $entity;
-			}
+	public function getEntityParam(string $key = 'guid'): ?\ElggEntity {
+		$guid = (int) $this->http_request->getParam($key);
+		if (empty($guid)) {
+			return null;
 		}
-
-		return null;
+		
+		return get_entity($guid);
 	}
 
 	/**
@@ -119,22 +116,17 @@ class Request {
 	 *
 	 * @return \ElggUser|null
 	 */
-	public function getUserParam($key = 'user_guid') {
+	public function getUserParam(string $key = 'user_guid'): ?\ElggUser {
 		$prop = $this->http_request->getParam($key);
+		if (elgg_is_empty($prop)) {
+			return null;
+		}
+		
 		if ($key === 'username') {
-			$entity = get_user_by_username($prop);
-
-			return $entity ? : null;
+			return get_user_by_username((string) $prop);
 		}
 
-		if ($prop) {
-			$entity = get_entity($prop);
-			if ($entity instanceof \ElggUser) {
-				return $entity;
-			}
-		}
-
-		return null;
+		return get_user((int) $prop);
 	}
 
 	/**

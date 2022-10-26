@@ -38,4 +38,4 @@ echo elgg_view_field([
 	'class' => 'elgg-level',
 ]);
 
-echo elgg_format_element('div', ['class' => 'site-notifications-container'], elgg_extract('list', $vars));
+echo elgg_format_element('div', ['class' => 'site-notifications-container'], (string) elgg_extract('list', $vars));

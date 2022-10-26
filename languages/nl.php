@@ -420,7 +420,7 @@ return array(
 	'registration:usernametooshort' => 'Je gebruikersnaam moet minimaal %u karakters lang zijn.',
 	'registration:usernametoolong' => 'Je gebruikersnaam is te lang. Je kunt maximaal %u karakters gebruiken.',
 	'registration:dupeemail' => 'Dit e-mailadres is al geregistreerd.',
-	'registration:invalidchars' => 'Sorry, je gebruikersnaam bevat het volgende ongeldige karakter: %s 
+	'registration:invalidchars' => 'Sorry, je gebruikersnaam bevat het volgende ongeldige karakter: %s
 De volgende karakters zijn niet toegestaan: %s',
 	'registration:emailnotvalid' => 'Sorry, het opgegeven e-mailadres is ongeldig op dit systeem',
 	'registration:passwordnotvalid' => 'Sorry, het opgegeven wachtwoord is ongeldig op dit systeem',
@@ -1737,10 +1737,6 @@ Generated %s by %s
 ========================================================================
 
 ',
-	'diagnostics:report:basic' => '
-Elgg Release %s, version %s
-
-------------------------------------------------------------------------',
 	'diagnostics:report:php' => '
 PHP info:
 %s

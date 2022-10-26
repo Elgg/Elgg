@@ -75,8 +75,8 @@ class HtmlFormatter {
 
 		$params = $this->hooks->trigger('prepare', 'html', null, $params);
 
-		$html = elgg_extract('html', $params);
-		$options = elgg_extract('options', $params);
+		$html = (string) elgg_extract('html', $params);
+		$options = (array) elgg_extract('options', $params);
 
 		if (elgg_extract('parse_urls', $options)) {
 			$html = $this->parseUrls($html);

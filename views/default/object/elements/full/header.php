@@ -20,9 +20,9 @@ if ($show_summary) {
 	return;
 }
 
-$icon = elgg_extract('icon', $vars);
-$summary = elgg_extract('summary', $vars);
-if (!$icon && !$summary) {
+$icon = (string) elgg_extract('icon', $vars);
+$summary = (string) elgg_extract('summary', $vars);
+if (elgg_is_empty($icon) && elgg_is_empty($summary)) {
 	return;
 }
 

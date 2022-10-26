@@ -279,7 +279,7 @@ Class function parameters
 * ``\ElggEntity::addRelationship()`` now requires an ``int`` for ``$guid_two`` and a ``string`` for ``$relationship``
 * ``\ElggEntity::cache()`` now requires a ``bool`` for ``$persist``
 * ``\ElggEntity::canAnnotate()`` now requires an ``int`` for ``$user_guid`` and a ``string`` for ``$annotation_name``
-* ``\ElggEntity::canComment()`` now requires an ``int`` for ``$user_guid`` and a ``bool`` for ``$default``
+* ``\ElggEntity::canComment()`` now requires an ``int`` for ``$user_guid``
 * ``\ElggEntity::canDelete()`` now requires an ``int`` for ``$user_guid``
 * ``\ElggEntity::canEdit()`` now requires an ``int`` for ``$user_guid``
 * ``\ElggEntity::canWriteToContainer()`` now requires an ``int`` for ``$user_guid`` and a ``string`` for ``$type`` and ``$subtype``

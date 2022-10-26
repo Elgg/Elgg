@@ -247,7 +247,7 @@ class ApiMethod implements CollectionItemInterface {
 			}
 			
 			// type cast
-			$sanitised[$key] = $this->typeCastParameter($key, $value, elgg_extract('type', $settings));
+			$sanitised[$key] = $this->typeCastParameter($key, $value, (string) elgg_extract('type', $settings));
 		}
 		
 		return $sanitised;

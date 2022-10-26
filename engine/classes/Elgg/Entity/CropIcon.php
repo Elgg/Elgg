@@ -21,8 +21,8 @@ class CropIcon {
 	public function __invoke(\Elgg\Hook $hook) {
 		
 		$entity_guid = (int) get_input('_entity_edit_icon_crop_guid');
-		$input_name = get_input('_entity_edit_icon_crop_input');
-		$icon_type = get_input('_entity_edit_icon_crop_type');
+		$input_name = (string) get_input('_entity_edit_icon_crop_input');
+		$icon_type = (string) get_input('_entity_edit_icon_crop_type');
 		
 		if (empty($entity_guid) || elgg_is_empty($input_name) || elgg_is_empty($icon_type)) {
 			// not enough information

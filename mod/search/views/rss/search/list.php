@@ -13,7 +13,7 @@ if (empty($entities)) {
 	return;
 }
 
-$params = elgg_extract('params', $vars);
+$params = (array) elgg_extract('params', $vars, []);
 $service = new \Elgg\Search\Search($params);
 
 foreach ($entities as $entity) {

@@ -150,7 +150,7 @@ class Router {
 		try {
 			$parameters = $this->matcher->match($path);
 
-			$resource = elgg_extract('_resource', $parameters);
+			$resource = (string) elgg_extract('_resource', $parameters);
 			unset($parameters['_resource']);
 
 			$handler = elgg_extract('_handler', $parameters);
@@ -199,17 +199,17 @@ class Router {
 
 			if ($handler) {
 				return $this->getResponseFromHandler($handler, $envelope);
-			} else if ($controller) {
+			} elseif ($controller) {
 				$result =  $this->handlers->call($controller, $envelope, null);
 				if ($result[1] instanceof ResponseBuilder) {
 					return $result[1];
 				}
-			} else if ($file) {
+			} elseif ($file) {
 				return $this->getResponseFromFile($file, $envelope);
-			} else {
-				$output = elgg_view_resource($resource, $parameters);
-				return elgg_ok_response($output);
 			}
+			
+			$output = elgg_view_resource($resource, $parameters);
+			return elgg_ok_response($output);
 		} catch (ResourceNotFoundException $ex) {
 			throw new PageNotFoundException();
 		} catch (MethodNotAllowedException $ex) {

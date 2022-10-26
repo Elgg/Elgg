@@ -63,14 +63,14 @@ $url = elgg_generate_url('requests:group:group', [
 $subject = elgg_echo('groups:request:subject', [
 	$user->getDisplayName(),
 	$group->getDisplayName(),
-], $owner->language);
+], (string) $owner->language);
 
 $body = elgg_echo('groups:request:body', [
 	$user->getDisplayName(),
 	$group->getDisplayName(),
 	$user->getURL(),
 	$url,
-], $owner->language);
+], (string) $owner->language);
 
 $params = [
 	'action' => 'membership_request',

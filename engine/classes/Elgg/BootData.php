@@ -33,8 +33,6 @@ class BootData {
 	/**
 	 * Populate the boot data
 	 *
-	 * @param Config      $config    Elgg config
-	 * @param Database    $db        Elgg database
 	 * @param EntityTable $entities  Entities service
 	 * @param Plugins     $plugins   Plugins service
 	 * @param bool        $installed Is the site installed?
@@ -42,7 +40,7 @@ class BootData {
 	 * @return void
 	 * @throws InstallationException
 	 */
-	public function populate(Config $config, Database $db, EntityTable $entities, Plugins $plugins, $installed) {
+	public function populate(EntityTable $entities, Plugins $plugins, bool $installed) {
 
 		// get site entity
 		$this->site = $entities->get(1, 'site');

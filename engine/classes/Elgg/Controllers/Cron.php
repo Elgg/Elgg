@@ -27,7 +27,7 @@ class Cron {
 			elgg_signed_request_gatekeeper();
 		}
 		
-		$segments = explode('/', trim($request->getParam('segments'), '/'));
+		$segments = explode('/', trim((string) $request->getParam('segments'), '/'));
 		
 		$interval = elgg_strtolower(array_shift($segments));
 		

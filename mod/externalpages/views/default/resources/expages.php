@@ -1,6 +1,6 @@
 <?php
 
-$type = elgg_extract('expage', $vars);
+$type = (string) elgg_extract('expage', $vars);
 $type = strtolower($type);
 
 // admin edit menu item
@@ -9,7 +9,7 @@ if (elgg_is_admin_logged_in()) {
 		'name' => 'edit',
 		'icon' => 'edit',
 		'text' => elgg_echo('edit'),
-		'href' => "admin/configure_utilities/expages?type=$type",
+		'href' => "admin/configure_utilities/expages?type={$type}",
 		'link_class' => 'elgg-button elgg-button-action',
 	]);
 }

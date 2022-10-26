@@ -29,26 +29,26 @@ if (!empty($vars['confirm'])) {
 $type = elgg_extract('type', $vars, 'button', false);
 $vars['type'] = $type;
 
-$text = elgg_extract('text', $vars);
+$text = (string) elgg_extract('text', $vars);
 unset($vars['text']);
 
 $text = elgg_format_element('span', [
 	'class' => 'elgg-button-label',
 ], $text);
 
-$icon = elgg_extract('icon', $vars, '');
+$icon = (string) elgg_extract('icon', $vars);
 unset($vars['icon']);
 
-if ($icon && !preg_match('/^</', $icon)) {
+if (!elgg_is_empty($icon) && !preg_match('/^</', $icon)) {
 	$icon = elgg_view_icon($icon, [
 		'class' => 'elgg-button-icon',
 	]);
 }
 
-$icon_alt = elgg_extract('icon_alt', $vars, '');
+$icon_alt = (string) elgg_extract('icon_alt', $vars);
 unset($vars['icon_alt']);
 
-if ($icon_alt && !preg_match('/^</', $icon_alt)) {
+if (!elgg_is_empty($icon_alt) && !preg_match('/^</', $icon_alt)) {
 	$icon_alt = elgg_view_icon($icon_alt, [
 		'class' => 'elgg-button-icon-alt',
 	]);

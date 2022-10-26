@@ -19,7 +19,7 @@ if (!empty($subject)) {
 	$head .= elgg_format_element('title', [], $subject);
 }
 
-$head .= elgg_format_element('style', [], elgg_extract('css', $vars));
+$head .= elgg_format_element('style', [], (string) elgg_extract('css', $vars));
 
 $vars['head'] = $head;
 

@@ -7,15 +7,15 @@ use Elgg\Exceptions\Http\PageNotFoundException;
 
 $user = elgg_get_page_owner_entity();
 
-$plugin_id = elgg_extract('plugin_id', $vars);
+$plugin_id = (string) elgg_extract('plugin_id', $vars);
 
 $plugin = elgg_get_plugin_from_id($plugin_id);
 if (!$plugin instanceof \ElggPlugin) {
 	throw new PageNotFoundException(elgg_echo('PluginException:InvalidID', [$plugin_id]));
 }
 
-if (elgg_language_key_exists($plugin_id . ':usersettings:title')) {
-	$title = elgg_echo($plugin_id . ':usersettings:title');
+if (elgg_language_key_exists("{$plugin_id}:usersettings:title")) {
+	$title = elgg_echo("{$plugin_id}:usersettings:title");
 } else {
 	$title = $plugin->getDisplayName();
 }

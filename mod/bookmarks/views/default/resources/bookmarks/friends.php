@@ -5,10 +5,10 @@
 
 use Elgg\Exceptions\Http\EntityNotFoundException;
 
-$username = elgg_extract('username', $vars);
+$username = (string) elgg_extract('username', $vars);
 
 $user = get_user_by_username($username);
-if (!$user) {
+if (!$user instanceof \ElggUser) {
 	throw new EntityNotFoundException();
 }
 

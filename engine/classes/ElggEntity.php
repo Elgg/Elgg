@@ -369,13 +369,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	public function setMetadata(string $name, $value, string $value_type = '', bool $multiple = false): bool {
 
 		if ($value === null || $value === '') {
-			$result = $this->deleteMetadata($name);
-			if (is_null($result)) {
-				// null result means no metadata found to be deleted
-				return true;
-			}
-			
-			return $result;
+			return $this->deleteMetadata($name);
 		}
 		
 		// normalize value to an array that we will loop over
@@ -991,13 +985,12 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @tip Can be overridden by registering for the permissions_check:comment,
 	 * <entity type> plugin hook.
 	 *
-	 * @param int  $user_guid User guid (default is logged in user)
-	 * @param bool $default   Default permission
+	 * @param int $user_guid User guid (default is logged in user)
 	 *
 	 * @return bool
 	 */
-	public function canComment(int $user_guid = 0, bool $default = null): bool {
-		return _elgg_services()->userCapabilities->canComment($this, $user_guid, $default);
+	public function canComment(int $user_guid = 0): bool {
+		return _elgg_services()->userCapabilities->canComment($this, $user_guid);
 	}
 
 	/**

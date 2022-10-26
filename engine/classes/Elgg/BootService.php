@@ -56,7 +56,7 @@ class BootService {
 		}
 
 		// early config is done, now get the core boot data
-		$data = $this->getBootData($config, $services->db, $config->hasValue('installed'));
+		$data = $this->getBootData($config, $config->hasValue('installed'));
 
 		$site = $data->getSite();
 		if ($site) {
@@ -99,13 +99,12 @@ class BootService {
 	/**
 	 * Get the boot data
 	 *
-	 * @param Config   $config    Elgg config object
-	 * @param Database $db        Elgg database
-	 * @param bool     $installed Is the site installed?
+	 * @param Config $config    Elgg config object
+	 * @param bool   $installed Is the site installed?
 	 *
 	 * @return BootData
 	 */
-	private function getBootData(Config $config, Database $db, $installed) {
+	private function getBootData(Config $config, bool $installed) {
 		$this->beginTimer([__METHOD__]);
 		
 		$config->_boot_cache_hit = false;
@@ -117,7 +116,7 @@ class BootService {
 
 		if (!isset($data)) {
 			$data = new BootData();
-			$data->populate($config, $db, _elgg_services()->entityTable, _elgg_services()->plugins, $installed);
+			$data->populate(_elgg_services()->entityTable, _elgg_services()->plugins, $installed);
 			if ($config->boot_cache_ttl && $installed) {
 				$this->cache->save('boot_data', $data, $config->boot_cache_ttl);
 			}

@@ -70,7 +70,7 @@ class WidgetDefinition {
 	 */
 	public static function factory(array $options) {
 
-		$id = elgg_extract('id', $options);
+		$id = (string) elgg_extract('id', $options);
 		$definition = new WidgetDefinition($id);
 		
 		$name = elgg_extract('name', $options);

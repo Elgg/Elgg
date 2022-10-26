@@ -13,11 +13,11 @@
  * @uses $vars['show_inner']   Optional flag to leave out inner div (default: false)
  */
 
-$type = elgg_extract('type', $vars);
-$title = elgg_extract('title', $vars);
-$body = elgg_extract('body', $vars);
-$footer = elgg_extract('footer', $vars);
-$show_inner = elgg_extract('show_inner', $vars, false);
+$type = (string) elgg_extract('type', $vars);
+$title = (string) elgg_extract('title', $vars);
+$body = (string) elgg_extract('body', $vars);
+$footer = (string) elgg_extract('footer', $vars);
+$show_inner = (bool) elgg_extract('show_inner', $vars, false);
 
 $attrs = [
 	'id' => elgg_extract('id', $vars),
@@ -25,7 +25,7 @@ $attrs = [
 ];
 
 if (!elgg_is_empty($type)) {
-	$attrs['class'][] = "elgg-module-$type";
+	$attrs['class'][] = "elgg-module-{$type}";
 }
 
 $header = elgg_extract('header', $vars);

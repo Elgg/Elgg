@@ -11,7 +11,7 @@ use Elgg\Notifications\Notification;
 
 $notifications = (array) elgg_extract('notifications', $vars);
 $recipient = elgg_extract('recipient', $vars);
-if (empty($notifications) || !$recipient instanceof ElggEntity) {
+if (empty($notifications) || !$recipient instanceof \ElggEntity) {
 	return;
 }
 
@@ -32,18 +32,18 @@ foreach ($notifications as $index => $notification) {
 	}
 	
 	$entity = false;
-	if ($object instanceof ElggEntity) {
+	if ($object instanceof \ElggEntity) {
 		$entity = $object;
-	} elseif ($object instanceof ElggAnnotation) {
+	} elseif ($object instanceof \ElggAnnotation) {
 		$entity = $object->getEntity();
 	}
 	
-	if ($entity instanceof ElggEntity && $recipient instanceof ElggUser && !$entity->hasAccess($recipient->guid)) {
+	if ($entity instanceof \ElggEntity && $recipient instanceof \ElggUser && !$entity->hasAccess($recipient->guid)) {
 		// user no longer has access to entity
 		continue;
 	}
 	
-	if ($entity instanceof ElggEntity) {
+	if ($entity instanceof \ElggEntity) {
 		if (elgg_language_key_exists("collection:{$entity->type}:{$entity->subtype}")) {
 			$category = "collection:{$entity->type}:{$entity->subtype}";
 		} elseif (elgg_language_key_exists("item:{$entity->type}:{$entity->subtype}")) {
@@ -81,7 +81,7 @@ $output = elgg_echo('notifications:delayed_email:body:intro') . PHP_EOL . PHP_EO
 foreach ($sorted as $category => $sorted_notifications) {
 	uksort($sorted_notifications, 'strnatcasecmp');
 	
-	$output .= elgg_echo($category, [], $recipient->language) . PHP_EOL;
+	$output .= elgg_echo($category, [], (string) $recipient->language) . PHP_EOL;
 	
 	/* @var $notification Notification */
 	foreach ($sorted_notifications as $notification) {
@@ -93,13 +93,13 @@ foreach ($sorted as $category => $sorted_notifications) {
 		
 		$object = $event->getObject();
 		$entity = false;
-		if ($object instanceof ElggEntity) {
+		if ($object instanceof \ElggEntity) {
 			$entity = $object;
-		} elseif ($object instanceof ElggAnnotation) {
+		} elseif ($object instanceof \ElggAnnotation) {
 			$entity = $object->getEntity();
 		}
 		
-		if ($entity instanceof ElggEntity) {
+		if ($entity instanceof \ElggEntity) {
 			$output .= ' ' . $object->getURL();
 		}
 		

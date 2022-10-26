@@ -11,11 +11,11 @@ use Elgg\Exceptions\LoginException;
 elgg_make_sticky_form('register', ['password', 'password2']);
 
 // Get variables
-$username = $request->getParam('username');
-$password = $request->getParam('password', null, false);
-$password2 = $request->getParam('password2', null, false);
-$email = $request->getParam('email', '');
-$name = $request->getParam('name', '');
+$username = (string) $request->getParam('username');
+$password = (string) $request->getParam('password', null, false);
+$password2 = (string) $request->getParam('password2', null, false);
+$email = (string) $request->getParam('email');
+$name = (string) $request->getParam('name');
 
 $username = trim($username);
 $name = trim(strip_tags($name));

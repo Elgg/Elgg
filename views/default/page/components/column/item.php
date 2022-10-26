@@ -8,11 +8,11 @@
  */
 
 $item = elgg_extract('item', $vars);
-if (!$item instanceof ElggEntity) {
+if (!$item instanceof \ElggEntity) {
 	return;
 }
 
 if (elgg_extract('type', $vars)) {
 	// recognized type
-	echo elgg_view_list_item($item, elgg_extract('item_vars', $vars));
+	echo elgg_view_list_item($item, (array) elgg_extract('item_vars', $vars));
 }

@@ -259,7 +259,7 @@ function elgg_view_page(string $title, string|array $body, string $page_shell = 
 	
 	if (elgg_is_xhr() && get_input('_elgg_ajax_list')) {
 		// requested by ajaxed pagination
-		return is_array($body) ? elgg_extract('content', $body) : $body;
+		return is_array($body) ? (string) elgg_extract('content', $body) : $body;
 	}
 	
 	if (is_array($body)) {
@@ -280,7 +280,6 @@ function elgg_view_page(string $title, string|array $body, string $page_shell = 
 	$params['segments'] = _elgg_services()->request->getUrlSegments();
 	array_shift($params['segments']);
 	$page_shell = elgg_trigger_plugin_hook('shell', 'page', $params, $page_shell);
-
 
 	$system_messages = _elgg_services()->system_messages;
 
@@ -308,8 +307,7 @@ function elgg_view_page(string $title, string|array $body, string $page_shell = 
 
 	$vars = elgg_trigger_plugin_hook('output:before', 'page', null, $vars);
 
-	$output = elgg_view("page/$page_shell", $vars);
-
+	$output = elgg_view("page/{$page_shell}", $vars);
 
 	// Allow plugins to modify the output
 	$output = elgg_trigger_plugin_hook('output', 'page', $vars, $output);
