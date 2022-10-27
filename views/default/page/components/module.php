@@ -34,12 +34,12 @@ if (!elgg_is_empty($title)) {
 }
 
 if ($header !== null) {
-	$menu = elgg_extract('menu', $vars);
+	$menu = (string) elgg_extract('menu', $vars);
 	if ($menu) {
 		$header .= elgg_format_element('div', ['class' => 'elgg-module-menu'], $menu);
 	}
 
-	$header = elgg_format_element('div', ['class' => 'elgg-head'], $header);
+	$header = elgg_format_element('div', ['class' => 'elgg-head'], (string) $header);
 }
 
 if (!elgg_is_empty($body)) {
