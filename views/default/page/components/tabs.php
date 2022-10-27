@@ -100,6 +100,6 @@ $content = elgg_format_element('div', [
 $module = (string) elgg_extract('module', $vars, 'tabs');
 unset($vars['module']);
 
-echo elgg_view_module($module, elgg_extract('title', $vars), $tabs . $content, $vars);
+echo elgg_view_module($module, (string) elgg_extract('title', $vars), $tabs . $content, $vars);
 
 elgg_require_js('page/components/tabs');
