@@ -162,7 +162,7 @@ class ElggInstaller {
 			$app->internal_services->views->setViewtype('installation');
 			$app->internal_services->views->registerViewtypeFallback('installation');
 			$app->internal_services->views->registerPluginViews(Paths::elgg());
-			$app->internal_services->translator->registerTranslations(Paths::elgg() . "install/languages/", true);
+			$app->internal_services->translator->registerTranslations(Paths::elgg() . 'install/languages/', true);
 
 			return $this->app;
 		} catch (ConfigurationException $ex) {
@@ -305,8 +305,8 @@ class ElggInstaller {
 	protected function render($step, $vars = []) {
 		$vars['next_step'] = $this->getNextStep($step);
 
-		$title = elgg_echo("install:$step");
-		$body = elgg_view("install/pages/$step", $vars);
+		$title = elgg_echo("install:{$step}");
+		$body = elgg_view("install/pages/{$step}", $vars);
 
 		$output = elgg_view_page(
 			$title,
@@ -365,7 +365,7 @@ class ElggInstaller {
 		$report['database'] = [
 			[
 				'severity' => 'notice',
-				'message' => elgg_echo('install:check:database')
+				'message' => elgg_echo('install:check:database'),
 			]
 		];
 
@@ -710,11 +710,8 @@ class ElggInstaller {
 	 */
 	protected function getNextStep($currentStep) {
 		$index = 1 + array_search($currentStep, $this->steps);
-		if (isset($this->steps[$index])) {
-			return $this->steps[$index];
-		} else {
-			return null;
-		}
+		
+		return $this->steps[$index] ?? null;
 	}
 
 	/**
@@ -728,7 +725,7 @@ class ElggInstaller {
 		$app = $this->getApp();
 		$nextStep = $this->getNextStep($currentStep);
 
-		return $app->internal_services->config->wwwroot . "install.php?step=$nextStep";
+		return $app->internal_services->config->wwwroot . "install.php?step={$nextStep}";
 	}
 
 	/**
@@ -802,7 +799,7 @@ class ElggInstaller {
 				return;
 			}
 		} catch (DatabaseException $ex) {
-			throw new InstallationException('Elgg can not connect to the database: ' . $ex->getMessage());
+			throw new InstallationException('Elgg can not connect to the database: ' . $ex->getMessage(), $ex->getCode(), $ex);
 		}
 
 		return;
@@ -817,11 +814,13 @@ class ElggInstaller {
 	 * @return \Elgg\Http\RedirectResponse|null
 	 */
 	protected function checkInstallCompletion($step) {
-		if ($step != 'complete') {
-			if (!in_array(false, $this->has_completed)) {
-				// install complete but someone is trying to view an install page
-				return new \Elgg\Http\RedirectResponse('/');
-			}
+		if ($step === 'complete') {
+			return;
+		}
+		
+		if (!in_array(false, $this->has_completed)) {
+			// install complete but someone is trying to view an install page
+			return new \Elgg\Http\RedirectResponse('/');
 		}
 	}
 
@@ -844,15 +843,15 @@ class ElggInstaller {
 		}
 
 		if ($this->has_completed['settings'] == false) {
-			return new \Elgg\Http\RedirectResponse("install.php?step=settings");
+			return new \Elgg\Http\RedirectResponse('install.php?step=settings');
 		}
 
 		if ($this->has_completed['admin'] == false) {
-			return new \Elgg\Http\RedirectResponse("install.php?step=admin");
+			return new \Elgg\Http\RedirectResponse('install.php?step=admin');
 		}
 
 		// everything appears to be set up
-		return new \Elgg\Http\RedirectResponse("install.php?step=complete");
+		return new \Elgg\Http\RedirectResponse('install.php?step=complete');
 	}
 
 	/**
@@ -878,7 +877,7 @@ class ElggInstaller {
 			// once the database has been created, load rest of engine
 
 			// dummy site needed to boot
-			$app->internal_services->config->site = new ElggSite();
+			$app->internal_services->config->site = new \ElggSite();
 
 			$app->bootCore();
 		}
@@ -900,8 +899,7 @@ class ElggInstaller {
 			// in case the DB instance is already captured in services, we re-inject its settings.
 			$app->internal_services->db->resetConnections(DbConfig::fromElggConfig($config));
 		} catch (\Exception $e) {
-			$msg = elgg_echo('InstallationException:CannotLoadSettings');
-			throw new InstallationException($msg, 0, $e);
+			throw new InstallationException(elgg_echo('InstallationException:CannotLoadSettings'), 0, $e);
 		}
 	}
 
@@ -936,11 +934,10 @@ class ElggInstaller {
 	 */
 	protected function isInstallDirWritable(&$report) {
 		if (!is_writable(Paths::projectConfig())) {
-			$msg = elgg_echo('install:check:installdir', [Paths::PATH_TO_CONFIG]);
 			$report['settings'] = [
 				[
 					'severity' => 'error',
-					'message' => $msg,
+					'message' => elgg_echo('install:check:installdir', [Paths::PATH_TO_CONFIG]),
 				]
 			];
 
@@ -987,7 +984,7 @@ class ElggInstaller {
 		if (version_compare(PHP_VERSION, self::PHP_MINIMAL_VERSION, '<')) {
 			$phpReport[] = [
 				'severity' => 'error',
-				'message' => elgg_echo('install:check:php:version', [self::PHP_MINIMAL_VERSION, PHP_VERSION])
+				'message' => elgg_echo('install:check:php:version', [self::PHP_MINIMAL_VERSION, PHP_VERSION]),
 			];
 		}
 
@@ -998,7 +995,7 @@ class ElggInstaller {
 		if (count($phpReport) == 0) {
 			$phpReport[] = [
 				'severity' => 'success',
-				'message' => elgg_echo('install:check:php:success')
+				'message' => elgg_echo('install:check:php:success'),
 			];
 		}
 
@@ -1024,7 +1021,7 @@ class ElggInstaller {
 			if (!in_array($extension, $extensions)) {
 				$phpReport[] = [
 					'severity' => 'error',
-					'message' => elgg_echo('install:check:php:extension', [$extension])
+					'message' => elgg_echo('install:check:php:extension', [$extension]),
 				];
 			}
 		}
@@ -1036,7 +1033,7 @@ class ElggInstaller {
 			if (!in_array($extension, $extensions)) {
 				$phpReport[] = [
 					'severity' => 'warning',
-					'message' => elgg_echo('install:check:php:extension:recommend', [$extension])
+					'message' => elgg_echo('install:check:php:extension:recommend', [$extension]),
 				];
 			}
 		}
@@ -1053,37 +1050,36 @@ class ElggInstaller {
 		if (ini_get('open_basedir')) {
 			$phpReport[] = [
 				'severity' => 'warning',
-				'message' => elgg_echo("install:check:php:open_basedir")
+				'message' => elgg_echo('install:check:php:open_basedir'),
 			];
 		}
 
 		if (ini_get('safe_mode')) {
 			$phpReport[] = [
 				'severity' => 'warning',
-				'message' => elgg_echo("install:check:php:safe_mode")
+				'message' => elgg_echo('install:check:php:safe_mode'),
 			];
 		}
 
 		if (ini_get('arg_separator.output') !== '&') {
 			$separator = htmlspecialchars(ini_get('arg_separator.output'));
-			$msg = elgg_echo("install:check:php:arg_separator", [$separator]);
 			$phpReport[] = [
 				'severity' => 'error',
-				'message' => $msg,
+				'message' => elgg_echo('install:check:php:arg_separator', [$separator]),
 			];
 		}
 
 		if (ini_get('register_globals')) {
 			$phpReport[] = [
 				'severity' => 'error',
-				'message' => elgg_echo("install:check:php:register_globals")
+				'message' => elgg_echo('install:check:php:register_globals'),
 			];
 		}
 
 		if (ini_get('session.auto_start')) {
 			$phpReport[] = [
 				'severity' => 'error',
-				'message' => elgg_echo("install:check:php:session.auto_start")
+				'message' => elgg_echo('install:check:php:session.auto_start'),
 			];
 		}
 	}
@@ -1101,8 +1097,8 @@ class ElggInstaller {
 		$tester = new ElggRewriteTester();
 		$url = $app->internal_services->config->wwwroot;
 		$url .= Request::REWRITE_TEST_TOKEN . '?' . http_build_query([
-				Request::REWRITE_TEST_TOKEN => '1',
-			]);
+			Request::REWRITE_TEST_TOKEN => '1',
+		]);
 		$report['rewrite'] = [$tester->run($url)];
 	}
 
@@ -1146,7 +1142,7 @@ class ElggInstaller {
 
 		foreach ($formVars as $field => $info) {
 			if ($info['required'] == true && !$submissionVars[$field]) {
-				$name = elgg_echo("install:database:label:$field");
+				$name = elgg_echo("install:database:label:{$field}");
 				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:requiredfield', [$name]));
 
 				return false;
@@ -1154,7 +1150,8 @@ class ElggInstaller {
 		}
 
 		if (!empty($submissionVars['wwwroot']) && !\Elgg\Http\Urls::isValidMultiByteUrl($submissionVars['wwwroot'])) {
-			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:wwwroot', [$submissionVars['wwwroot']]));
+			$save_value = $this->sanitizeInputValue($submissionVars['wwwroot']);
+			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:wwwroot', [$save_value]));
 
 			return false;
 		}
@@ -1162,15 +1159,15 @@ class ElggInstaller {
 		// check that data root is absolute path
 		if (stripos(PHP_OS, 'win') === 0) {
 			if (strpos($submissionVars['dataroot'], ':') !== 1) {
-				$msg = elgg_echo('install:error:relative_path', [$submissionVars['dataroot']]);
-				$app->internal_services->system_messages->addErrorMessage($msg);
+				$save_value = $this->sanitizeInputValue($submissionVars['dataroot']);
+				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:relative_path', [$save_value]));
 
 				return false;
 			}
 		} else {
 			if (strpos($submissionVars['dataroot'], '/') !== 0) {
-				$msg = elgg_echo('install:error:relative_path', [$submissionVars['dataroot']]);
-				$app->internal_services->system_messages->addErrorMessage($msg);
+				$save_value = $this->sanitizeInputValue($submissionVars['dataroot']);
+				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:relative_path', [$save_value]));
 
 				return false;
 			}
@@ -1178,24 +1175,24 @@ class ElggInstaller {
 
 		// check that data root exists
 		if (!is_dir($submissionVars['dataroot'])) {
-			$msg = elgg_echo('install:error:datadirectoryexists', [$submissionVars['dataroot']]);
-			$app->internal_services->system_messages->addErrorMessage($msg);
+			$save_value = $this->sanitizeInputValue($submissionVars['dataroot']);
+			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:datadirectoryexists', [$save_value]));
 
 			return false;
 		}
 
 		// check that data root is writable
 		if (!is_writable($submissionVars['dataroot'])) {
-			$msg = elgg_echo('install:error:writedatadirectory', [$submissionVars['dataroot']]);
-			$app->internal_services->system_messages->addErrorMessage($msg);
+			$save_value = $this->sanitizeInputValue($submissionVars['dataroot']);
+			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:writedatadirectory', [$save_value]));
 
 			return false;
 		}
 
 		// check that data root is not subdirectory of Elgg root
 		if (stripos($submissionVars['dataroot'], Paths::project()) === 0) {
-			$msg = elgg_echo('install:error:locationdatadirectory', [$submissionVars['dataroot']]);
-			$app->internal_services->system_messages->addErrorMessage($msg);
+			$save_value = $this->sanitizeInputValue($submissionVars['dataroot']);
+			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:locationdatadirectory', [$save_value]));
 
 			return false;
 		}
@@ -1250,7 +1247,8 @@ class ElggInstaller {
 			if (0 === strpos($e->getMessage(), "Elgg couldn't connect")) {
 				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:databasesettings'));
 			} else {
-				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:nodatabase', [$dbname]));
+				$save_value = $this->sanitizeInputValue($dbname);
+				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:nodatabase', [$save_value]));
 			}
 
 			return false;
@@ -1279,7 +1277,7 @@ class ElggInstaller {
 	protected function createSettingsFile($params) {
 		$app = $this->getApp();
 
-		$template = Application::elggDir()->getContents("elgg-config/settings.example.php");
+		$template = Application::elggDir()->getContents('elgg-config/settings.example.php');
 		if (!$template) {
 			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:readsettingsphp'));
 
@@ -1381,7 +1379,7 @@ class ElggInstaller {
 		$dir = \Elgg\Project\Paths::sanitize($submissionVars['path']) . 'data';
 		if (file_exists($dir) || mkdir($dir, 0755)) {
 			$submissionVars['dataroot'] = $dir;
-			if (!file_exists("$dir/.htaccess")) {
+			if (!file_exists("{$dir}/.htaccess")) {
 				$htaccess = "Order Deny,Allow\nDeny from All\n";
 				if (!file_put_contents("$dir/.htaccess", $htaccess)) {
 					return false;
@@ -1408,7 +1406,7 @@ class ElggInstaller {
 		foreach ($formVars as $field => $info) {
 			$submissionVars[$field] = trim($submissionVars[$field]);
 			if ($info['required'] == true && $submissionVars[$field] === '') {
-				$name = elgg_echo("install:settings:label:$field");
+				$name = elgg_echo("install:settings:label:{$field}");
 				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:requiredfield', [$name]));
 
 				return false;
@@ -1417,8 +1415,8 @@ class ElggInstaller {
 
 		// check that email address is email address
 		if ($submissionVars['siteemail'] && !elgg_is_valid_email((string) $submissionVars['siteemail'])) {
-			$msg = elgg_echo('install:error:emailaddress', [$submissionVars['siteemail']]);
-			$app->internal_services->system_messages->addErrorMessage($msg);
+			$save_value = $this->sanitizeInputValue($submissionVars['siteemail']);
+			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:emailaddress', [$save_value]));
 
 			return false;
 		}
@@ -1439,7 +1437,7 @@ class ElggInstaller {
 		$site = elgg_get_site_entity();
 
 		if (!$site->guid) {
-			$site = new ElggSite();
+			$site = new \ElggSite();
 			$site->name = strip_tags($submissionVars['sitename']);
 			$site->access_id = ACCESS_PUBLIC;
 			$site->email = $submissionVars['siteemail'];
@@ -1500,7 +1498,7 @@ class ElggInstaller {
 			foreach ($upgrades as $upgrade) {
 				$upgrade->setCompleted();
 			}
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$app->internal_services->logger->log(\Psr\Log\LogLevel::ERROR, $e);
 		}
 
@@ -1521,7 +1519,7 @@ class ElggInstaller {
 
 		foreach ($formVars as $field => $info) {
 			if ($info['required'] == true && !$submissionVars[$field]) {
-				$name = elgg_echo("install:admin:label:$field");
+				$name = elgg_echo("install:admin:label:{$field}");
 				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:requiredfield', [$name]));
 
 				return false;
@@ -1549,8 +1547,8 @@ class ElggInstaller {
 
 		// check that email address is email address
 		if ($submissionVars['email'] && !elgg_is_valid_email((string) $submissionVars['email'])) {
-			$msg = elgg_echo('install:error:emailaddress', [$submissionVars['email']]);
-			$app->internal_services->system_messages->addErrorMessage($msg);
+			$save_value = $this->sanitizeInputValue($submissionVars['email']);
+			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:emailaddress', [$save_value]));
 
 			return false;
 		}
@@ -1605,5 +1603,24 @@ class ElggInstaller {
 		}
 
 		return true;
+	}
+	
+	/**
+	 * Sanitize input to help prevent XSS
+	 *
+	 * @param mixed $input_value the input to sanitize
+	 *
+	 * @return mixed
+	 */
+	protected function sanitizeInputValue($input_value) {
+		if (is_array($input_value)) {
+			return array_map([$this, __FUNCTION__], $input_value);
+		}
+		
+		if (!is_string($input_value)) {
+			return $input_value;
+		}
+		
+		return htmlspecialchars($input_value);
 	}
 }
