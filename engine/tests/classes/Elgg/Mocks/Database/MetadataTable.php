@@ -77,6 +77,7 @@ class MetadataTable extends DbMetadataTabe {
 
 		// lock the time to prevent testing issues
 		$this->setCurrentTime();
+		$time_created = $this->getCurrentTime()->getTimestamp();
 
 		$row = (object) [
 			'type' => 'metadata',
@@ -85,12 +86,16 @@ class MetadataTable extends DbMetadataTabe {
 			'name' => $metadata->name,
 			'value' => $metadata->value,
 			'value_type' => $metadata->value_type,
-			'time_created' => $this->getCurrentTime()->getTimestamp(),
+			'time_created' => $time_created,
 		];
 
 		$this->rows[$id] = $row;
 
 		$this->addQuerySpecs($row);
+		
+		// because of the query specs making this an existing metadata set some extra data
+		$metadata->id = $id;
+		$metadata->time_created = $time_created;
 
 		$result = parent::create($metadata, $allow_multiple);
 		

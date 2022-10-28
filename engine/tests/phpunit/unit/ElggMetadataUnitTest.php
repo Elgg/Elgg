@@ -15,10 +15,6 @@ use Elgg\UnitTestCase;
  */
 class ElggMetadataUnitTest extends UnitTestCase {
 
-	public function up() {
-		_elgg_services()->metadataTable->setCurrentTime();
-	}
-
 	public function testExtenderConstructor() {
 
 		$owner = $this->createUser();
@@ -106,7 +102,6 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		$metadata->entity_guid = $object->guid;
 		$metadata->name = 'foo';
 		$metadata->value = 'bar';
-		$metadata->time_created = _elgg_services()->metadataTable->getCurrentTime()->getTimestamp();
 
 		$this->assertTrue($metadata->save());
 		$this->assertGreaterThan(0, $metadata->id);
@@ -202,7 +197,6 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		$metadata->entity_guid = $object->guid;
 		$metadata->name = 'foo';
 		$metadata->value = 'bar';
-		$metadata->time_created = _elgg_services()->metadataTable->getCurrentTime()->getTimestamp();
 		$metadata->save();
 
 		$this->assertEquals($metadata->id, $metadata['id']);
@@ -220,7 +214,6 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		$metadata->entity_guid = $object->guid;
 		$metadata->name = 'foo';
 		$metadata->value = 'bar';
-		$metadata->time_created = _elgg_services()->metadataTable->getCurrentTime()->getTimestamp();
 		$metadata->save();
 
 		$this->assertEquals($metadata->id, $metadata->getSystemLogID());
