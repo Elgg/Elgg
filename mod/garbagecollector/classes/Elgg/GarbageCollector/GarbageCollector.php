@@ -2,7 +2,6 @@
 
 namespace Elgg\GarbageCollector;
 
-use Doctrine\DBAL\Result;
 use Elgg\Application\Database;
 use Elgg\I18n\Translator;
 use Elgg\Traits\Di\ServiceFacade;
@@ -70,7 +69,7 @@ class GarbageCollector {
 				continue;
 			}
 
-			$result = $this->optimizeTable($table) !== false;
+			$result = $this->optimizeTable($table) !== 0;
 			$output[] = (object) [
 				'operation' => $this->translator->translate('garbagecollector:optimize', [$table]),
 				'result' => $result,
@@ -93,25 +92,24 @@ class GarbageCollector {
 	 * @return array
 	 */
 	protected function tables(): array {
+		if (isset($this->tables)) {
+			return $this->tables;
+		}
 
-		if (!isset($this->tables)) {
-			$table_prefix = $this->db->prefix;
-			$result = $this->db->getConnection('read')->executeQuery("SHOW TABLES LIKE '{$table_prefix}%'");
+		$table_prefix = $this->db->prefix;
+		$result = $this->db->getConnection('read')->executeQuery("SHOW TABLES LIKE '{$table_prefix}%'");
 
-			$tables = [];
+		$this->tables = [];
 
-			$rows = $result->fetchAllAssociative();
-			foreach ($rows as $row) {
-				if (empty($row)) {
-					continue;
-				}
-
-				foreach ($row as $element) {
-					$tables[] = $element;
-				}
+		$rows = $result->fetchAllAssociative();
+		foreach ($rows as $row) {
+			if (empty($row)) {
+				continue;
 			}
 
-			$this->tables = $tables;
+			foreach ($row as $element) {
+				$this->tables[] = $element;
+			}
 		}
 
 		return $this->tables;

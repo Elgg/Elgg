@@ -38,6 +38,6 @@ class OptimizeCommand extends Command {
 
 		$table->render();
 
-		return 0;
+		return self::SUCCESS;
 	}
 }
