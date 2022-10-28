@@ -17,5 +17,8 @@ return array(
 	'garbagecollector:done' => "Garbage collector done",
 	'garbagecollector:optimize' => "Optimizing %s",
 	
+	'garbagecollector:orphaned' => "Cleanup orphaned data from table '%s'",
+	'garbagecollector:orphaned:done' => "Cleanup orphaned data done",
+	
 	'garbagecollector:cli:database:optimize:description' => "Optimize database tables",
 );
