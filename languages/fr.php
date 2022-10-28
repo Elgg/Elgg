@@ -103,6 +103,7 @@ return array(
 	'GatekeeperException' => 'Vous n\'avez pas les permissions pour consulter la page à laquelle vous tentez d\'accéder.',
 	'RegistrationAllowedGatekeeperException:invalid_invitecode' => "Le code d'invitation fourni n'est pas valide",
 	'BadRequestException' => 'Mauvaise requête',
+	'BadRequestException:invalid_host_header' => 'La requête contient un entête HOST invalide',
 	'ValidationException' => 'Les données envoyées ne satisfont pas les exigences, veuillez vérifier votre saisie.',
 	'LogicException:InterfaceNotImplemented' => '%s doit implémenter %s',
 	

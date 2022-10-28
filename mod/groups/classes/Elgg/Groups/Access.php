@@ -61,12 +61,12 @@ class Access {
 	 */
 	protected static function getGroupFromDefaultAccessHook(\Elgg\Hook $hook) {
 		
-		$input_params = $hook->getParam('input_params');
+		$input_params = (array) $hook->getParam('input_params');
 		
 		// try supplied container guid
 		$container_guid = (int) elgg_extract('container_guid', $input_params);
 		$container = get_entity($container_guid);
-		if ($container_guid instanceof \ElggGroup) {
+		if ($container instanceof \ElggGroup) {
 			return $container;
 		}
 		
@@ -87,9 +87,9 @@ class Access {
 	 */
 	public static function getWriteAccess(\Elgg\Hook $hook) {
 	
-		$user_guid = $hook->getParam('user_id');
+		$user_guid = (int) $hook->getParam('user_id');
 		$user = get_user($user_guid);
-		if (!$user) {
+		if (!$user instanceof \ElggUser) {
 			return;
 		}
 	
@@ -98,7 +98,7 @@ class Access {
 			return;
 		}
 	
-		if (!$page_owner->isMember($user) && !$page_owner->canEdit($user_guid)) {
+		if (!$page_owner->isMember($user) && !$page_owner->canEdit($user->guid)) {
 			return;
 		}
 	
