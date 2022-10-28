@@ -19,5 +19,10 @@ return [
 				CronRunner::class => [],
 			],
 		],
+		'gc' => [
+			'system' => [
+				'\Elgg\GarbageCollector\GarbageCollector::gcCallback' => [],
+			],
+		],
 	],
 ];
