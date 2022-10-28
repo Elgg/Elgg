@@ -1,3 +1,17 @@
+<a name="4.3.4"></a>
+### 4.3.4  (2022-10-27)
+
+#### Contributors
+
+* Jerôme Bakker (8)
+* Jeroen Dalsem (2)
+
+#### Bug Fixes
+
+* **groups:** correctly detect default access based on input parameters ([4a8a05c9](https://github.com/Elgg/Elgg/commit/4a8a05c92b1184a7744d4272b512642c4fd28a9b))
+* **users:** correctly redirect after user deletion ([b5b35701](https://github.com/Elgg/Elgg/commit/b5b35701b61c5aabedbd8bf00fe4a68405d08b39))
+
+
 <a name="4.3.3"></a>
 ### 4.3.3  (2022-10-07)
 
