@@ -240,9 +240,11 @@
 			margin: 0;
 		}
 	}
-	
+		
 	.elgg-menu-site .elgg-menu-item-more,
-	.elgg-menu-topbar .elgg-menu-item-account {
+	.elgg-menu-admin-header .elgg-menu-item-account,
+	.elgg-menu-topbar .elgg-menu-item-account {		
+	
 		> .elgg-menu-parent {
 			display: none;
 		}
@@ -293,6 +295,7 @@
 	}
 
 	.elgg-page-topbar .elgg-menu-site .elgg-menu-item-more > .elgg-menu-parent,
+	.elgg-page-topbar .elgg-menu-admin-header .elgg-menu-item-account > .elgg-menu-parent,
 	.elgg-page-topbar .elgg-menu-topbar .elgg-menu-item-account > .elgg-menu-parent {
 		display: inline-block;
 		width: 100%;

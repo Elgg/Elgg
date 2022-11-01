@@ -32,30 +32,34 @@ class AdminHeader {
 		// link back to the site
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'view_site',
+			'icon' => 'home',
 			'text' => elgg_echo('admin:view_site'),
 			'href' => elgg_get_site_url(),
-			'priority' => 800,
+			'parent_name' => 'account',
+			'priority' => 100,
 		]);
 		
 		// logout action
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'admin_logout',
+			'icon' => 'sign-out-alt',
 			'text' => elgg_echo('logout'),
 			'href' => elgg_generate_action_url('logout'),
-			'priority' => 900,
+			'parent_name' => 'account',
+			'priority' => 1000,
 		]);
 		
 		// link to admin profile
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'account',
-			'text' => $admin->getDisplayName(),
-			'href' => $admin->getURL(),
+			'text' => elgg_echo('account'),
+			'href' => false,
 			'icon' => elgg_view('output/img', [
 				'src' => $admin->getIconURL('small'),
 				'alt' => $admin->getDisplayName(),
 			]),
 			'link_class' => 'elgg-avatar-small',
-			'priority' => 1000,
+			'icon_alt' => 'angle-down',
 		]);
 		
 		return $return;
