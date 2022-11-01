@@ -27,10 +27,10 @@ class ElggAccessCollection extends ElggData {
 	/**
 	 * Initialize the attributes array
 	 *
-	 * @see ElggData::initializeAttributes()
 	 * @return void
+	 * @see ElggData::initializeAttributes()
 	 */
-	protected function initializeAttributes() {
+	protected function initializeAttributes(): void {
 		parent::initializeAttributes();
 
 		$this->attributes['id'] = null;
@@ -48,7 +48,7 @@ class ElggAccessCollection extends ElggData {
 	 * @return void
 	 * @throws \Elgg\Exceptions\RuntimeException
 	 */
-	public function __set($name, $value) {
+	public function __set($name, $value): void {
 		if (in_array($name, ['id', 'owner_guid', 'subtype'])) {
 			throw new ElggRuntimeException("$name can not be set at runtime");
 		}
@@ -58,7 +58,8 @@ class ElggAccessCollection extends ElggData {
 	/**
 	 * Get an attribute
 	 *
-	 * @param string $name Name
+	 * @param string $name The name of the attribute to get
+	 *
 	 * @return mixed
 	 */
 	public function __get($name) {
@@ -71,6 +72,7 @@ class ElggAccessCollection extends ElggData {
 
 	/**
 	 * Returns owner entity of the collection
+	 *
 	 * @return \ElggEntity|null
 	 */
 	public function getOwnerEntity(): ?\ElggEntity {
@@ -79,6 +81,7 @@ class ElggAccessCollection extends ElggData {
 
 	/**
 	 * Get readable access level name for this collection
+	 *
 	 * @return string
 	 */
 	public function getDisplayName(): string {
@@ -114,9 +117,9 @@ class ElggAccessCollection extends ElggData {
 	public function save(): bool {
 		if ($this->id > 0) {
 			return _elgg_services()->accessCollections->rename($this->id, $this->name);
-		} else {
-			return (bool) _elgg_services()->accessCollections->create($this->name, $this->owner_guid);
 		}
+		
+		return (bool) _elgg_services()->accessCollections->create($this->name, $this->owner_guid);
 	}
 
 	/**
@@ -141,6 +144,7 @@ class ElggAccessCollection extends ElggData {
 	 * Returns members of the access collection
 	 *
 	 * @param array $options ege options
+	 *
 	 * @return ElggEntity[]|int|false
 	 */
 	public function getMembers(array $options = []) {
@@ -151,6 +155,7 @@ class ElggAccessCollection extends ElggData {
 	 * Checks if user is already in access collection
 	 *
 	 * @param int $member_guid GUID of the user
+	 *
 	 * @return bool
 	 */
 	public function hasMember(int $member_guid = 0): bool {
@@ -161,6 +166,7 @@ class ElggAccessCollection extends ElggData {
 	 * Adds a user to access collection
 	 *
 	 * @param int $member_guid GUID of the user
+	 *
 	 * @return bool
 	 */
 	public function addMember(int $member_guid = 0): bool {
@@ -171,6 +177,7 @@ class ElggAccessCollection extends ElggData {
 	 * Removes a user from access collection
 	 *
 	 * @param int $member_guid GUID of the user
+	 *
 	 * @return bool
 	 */
 	public function removeMember(int $member_guid = 0): bool {
