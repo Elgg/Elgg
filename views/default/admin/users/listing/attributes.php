@@ -62,7 +62,7 @@ foreach ($data as $row) {
 	$cells = [];
 	
 	foreach ($row as $cell) {
-		$cells[] = elgg_format_element('td', [], $cell);
+		$cells[] = elgg_format_element('td', [], (string) $cell);
 	}
 	
 	$rows[] = elgg_format_element('tr', [], implode(PHP_EOL, $cells));
