@@ -14,16 +14,14 @@ return [
 		],
 	],
 	'events' => [
-		'login:first' => [
-			'user' => [
-				\Elgg\Widgets\CreateDefaultWidgetsHandler::class => [],
-			],
-		],
-	],
-	'hooks' => [
 		'get_list' => [
 			'default_widgets' => [
 				'Elgg\Dashboard\Widgets::extendDefaultWidgetsList' => [],
+			],
+		],
+		'login:first' => [
+			'user' => [
+				\Elgg\Widgets\CreateDefaultWidgetsHandler::class => [],
 			],
 		],
 		'register' => [

@@ -10,25 +10,25 @@ namespace Elgg\Groups;
 abstract class ToolContainerLogicCheck {
 	
 	/**
-	 * Listen to the container logic check hook
+	 * Listen to the container logic check event
 	 *
-	 * @param \Elgg\Hook $hook 'container_logic_check', <type>
+	 * @param \Elgg\Event $event 'container_logic_check', <type>
 	 *
 	 * @return void|false
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
+	public function __invoke(\Elgg\Event $event) {
 		
-		if ($hook->getType() !== $this->getContentType()) {
-			// not the correct hook registration
+		if ($event->getType() !== $this->getContentType()) {
+			// not the correct event registration
 			return;
 		}
 		
-		$container = $hook->getParam('container');
+		$container = $event->getParam('container');
 		if (!$container instanceof \ElggGroup) {
 			return;
 		}
 		
-		if ($hook->getParam('subtype') !== $this->getContentSubtype()) {
+		if ($event->getParam('subtype') !== $this->getContentSubtype()) {
 			return;
 		}
 		

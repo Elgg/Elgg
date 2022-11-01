@@ -3,7 +3,7 @@
 namespace Elgg\Friends\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  *
@@ -14,18 +14,18 @@ class Page {
 	/**
 	 * Register menu items for the friends page menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:page'
+	 * @param \Elgg\Event $event 'register', 'menu:page'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 	
 		$owner = elgg_get_page_owner_entity();
 		if (!$owner instanceof \ElggUser) {
 			return;
 		}
 	
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'friends',
 			'text' => elgg_echo('friends'),

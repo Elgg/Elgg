@@ -71,13 +71,13 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 	public function testAccessCaching() {
 		$access_cache = _elgg_services()->accessCache;
 		
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 		_elgg_services()->events->backup();
 		
-		// need to have no hooks and no events for this test
+		// need to have no events for this test
 		$user = $this->createUser();
 		
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 		_elgg_services()->events->restore();
 
 		$hash = $user->guid . 'get_access_array';

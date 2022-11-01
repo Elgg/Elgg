@@ -15,18 +15,18 @@ class Topbar {
 	/**
 	 * Register menu items for the topbar menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:topbar'
+	 * @param \Elgg\Event $event 'register', 'menu:topbar'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerUserLinks(\Elgg\Hook $hook) {
+	public static function registerUserLinks(\Elgg\Event $event) {
 		$user = elgg_get_logged_in_user_entity();
 		if (!$user instanceof \ElggUser) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'account',
@@ -82,17 +82,17 @@ class Topbar {
 	/**
 	 * Register a link to the maintenance page
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:topbar'
+	 * @param \Elgg\Event $event 'register', 'menu:topbar'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerMaintenance(\Elgg\Hook $hook) {
+	public static function registerMaintenance(\Elgg\Event $event) {
 		if (!elgg_is_admin_logged_in() || !_elgg_services()->config->elgg_maintenance_mode) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory( [
 			'name' => 'maintenance_mode',
@@ -108,11 +108,11 @@ class Topbar {
 	/**
 	 * Register a action to logout out as the temporarily logged in user
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:topbar'
+	 * @param \Elgg\Event $event 'register', 'menu:topbar'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerLogoutAs(\Elgg\Hook $hook) {
+	public static function registerLogoutAs(\Elgg\Event $event) {
 		$original_user_guid = elgg_get_session()->get('login_as_original_user_guid');
 		
 		// quick return if not logged in as someone else.
@@ -131,7 +131,7 @@ class Topbar {
 		]);
 		$icon = elgg_format_element('span', ['class' => ['elgg-avatar', 'elgg-avatar-tiny', 'elgg-anchor-icon']], $icon);
 		
-		$menu = $hook->getValue();
+		$menu = $event->getValue();
 		
 		$menu[] = \ElggMenuItem::factory([
 			'name' => 'logout_as',

@@ -477,12 +477,12 @@ class AddFontAwesomeClassesHandler {
 	/**
 	 * Converts icon classes to correct FontAwesome classes
 	 *
-	 * @param \Elgg\Hook $hook 'view_vars', 'output/icon'
+	 * @param \Elgg\Event $event 'view_vars', 'output/icon'
 	 *
 	 * @return array
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		$vars = $hook->getValue();
+	public function __invoke(\Elgg\Event $event) {
+		$vars = $event->getValue();
 		
 		$classes = elgg_extract_class($vars);
 		

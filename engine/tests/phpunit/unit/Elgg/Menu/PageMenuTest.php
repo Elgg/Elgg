@@ -10,13 +10,13 @@ use Elgg\UnitTestCase;
 class PageMenuTest extends UnitTestCase {
 
 	public function up() {
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 
-		_elgg_services()->hooks->registerHandler('register', 'menu:page', 'Elgg\Menus\Page::registerAvatarEdit');
+		_elgg_services()->events->registerHandler('register', 'menu:page', 'Elgg\Menus\Page::registerAvatarEdit');
 	}
 	
 	public function down() {
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 	}
 
 	public function contextProvider() {

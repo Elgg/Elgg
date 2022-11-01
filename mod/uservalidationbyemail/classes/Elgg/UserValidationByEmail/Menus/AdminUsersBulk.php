@@ -14,17 +14,17 @@ class AdminUsersBulk {
 	/**
 	 * Add the bulk actions
 	 *
-	 * @param \Elgg\Hook $hook 'register' 'menu:admin:users:bulk'
+	 * @param \Elgg\Event $event 'register' 'menu:admin:users:bulk'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
-		if (!elgg_is_admin_logged_in() || $hook->getParam('filter_value') !== 'unvalidated') {
+	public static function register(\Elgg\Event $event) {
+		if (!elgg_is_admin_logged_in() || $event->getParam('filter_value') !== 'unvalidated') {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'resend_validation',

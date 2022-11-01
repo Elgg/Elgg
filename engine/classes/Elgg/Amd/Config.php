@@ -16,17 +16,17 @@ class Config {
 	private $dependencies = [];
 
 	/**
-	 * @var \Elgg\PluginHooksService
+	 * @var \Elgg\EventsService
 	 */
-	private $hooks;
+	protected $events;
 	
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\PluginHooksService $hooks The hooks service
+	 * @param \Elgg\EventsService $events The events service
 	 */
-	public function __construct(\Elgg\PluginHooksService $hooks) {
-		$this->hooks = $hooks;
+	public function __construct(\Elgg\EventsService $events) {
+		$this->events = $events;
 	}
 	
 	/**
@@ -257,6 +257,6 @@ class Config {
 			'defaults' => $defaults
 		];
 		
-		return  $this->hooks->trigger('config', 'amd', $params, $defaults);
+		return  $this->events->triggerResults('config', 'amd', $params, $defaults);
 	}
 }

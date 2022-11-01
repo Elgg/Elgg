@@ -14,19 +14,19 @@ class Entity {
 	/**
 	 * Register menu items to quickly toggle the open/closed status of a discussion
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
+	 * @param \Elgg\Event $event 'register', 'menu:entity'
 	 *
 	 * @return MenuItems|null
 	 */
-	public static function registerStatusToggle(\Elgg\Hook $hook): ?MenuItems {
+	public static function registerStatusToggle(\Elgg\Event $event): ?MenuItems {
 		
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggDiscussion || !$entity->canEdit()) {
 			return null;
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		// add menu items
 		$result[] = \ElggMenuItem::factory([

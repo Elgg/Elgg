@@ -55,17 +55,17 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 		elgg_call(ELGG_ENFORCE_ACCESS, function() use ($user, $object, $group) {
 			$this->assertFalse($object->canWriteToContainer($user->guid, 'object', 'foo'));
 	
-			// register hook to allow access
-			$handler = function (\Elgg\Hook $hook) use ($user) {
-				$hook_user = $hook->getUserParam();
-				if ($hook_user->guid === $user->guid) {
+			// register event to allow access
+			$handler = function (\Elgg\Event $event) use ($user) {
+				$event_user = $event->getUserParam();
+				if ($event_user->guid === $user->guid) {
 					return true;
 				}
 			};
 	
-			elgg_register_plugin_hook_handler('container_permissions_check', 'object', $handler, 600);
+			elgg_register_event_handler('container_permissions_check', 'object', $handler, 600);
 			$this->assertTrue($object->canWriteToContainer($user->guid, 'object', 'foo'));
-			elgg_unregister_plugin_hook_handler('container_permissions_check', 'object', $handler);
+			elgg_unregister_event_handler('container_permissions_check', 'object', $handler);
 	
 			$this->assertFalse($group->canWriteToContainer($user->guid, $object->getType(), $object->getSubtype()));
 			$group->join($user);

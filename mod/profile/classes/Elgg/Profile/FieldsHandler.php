@@ -2,8 +2,6 @@
 
 namespace Elgg\Profile;
 
-use Elgg\Hook;
-
 /**
  * Hook callback for fields
  *
@@ -14,12 +12,12 @@ class FieldsHandler {
 	/**
 	 * Returns fields config for users
 	 *
-	 * @param \Elgg\Hook $hook 'fields' 'user:user'
+	 * @param \Elgg\Event $event 'fields' 'user:user'
 	 *
 	 * @return array
 	 */
-	public function __invoke(Hook $hook) {
-		$return = (array) $hook->getValue();
+	public function __invoke(\Elgg\Event $event) {
+		$return = (array) $event->getValue();
 
 		$fields = $this->getCustomFields() ?: $this->getDefaultFields();
 		

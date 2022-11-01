@@ -69,7 +69,7 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 		$this->assertNull(_elgg_services()->session->getLoggedInUser());
 	}
 
-	public function testCanPreventLogoutWithAHook() {
+	public function testCanPreventLogoutWithEvent() {
 
 		$user = $this->createUser([], [
 			'password' => 123456,

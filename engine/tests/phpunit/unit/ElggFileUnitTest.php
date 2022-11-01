@@ -396,7 +396,7 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanGetDownloadUrl() {
 
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 
 		$file = new ElggFile();
 		$file->owner_guid = 2;
@@ -408,22 +408,22 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(elgg_get_download_url($file, false), $file->getDownloadURL(false));
 		$this->assertEquals(elgg_get_download_url($file, false, strtotime('+2 minutes')), $file->getDownloadURL(false, strtotime('+2 minutes')));
 
-		_elgg_services()->hooks->registerHandler('download:url', 'file', function (\Elgg\Hook $hook) {
-			$file = $hook->getEntityParam();
+		_elgg_services()->events->registerHandler('download:url', 'file', function (\Elgg\Event $event) {
+			$file = $event->getEntityParam();
 
 			return elgg_normalize_url("download/{$file->originalfilename}");
 		});
 
 		$this->assertEquals(elgg_normalize_url("download/{$file->originalfilename}"), $file->getDownloadURL());
 
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 
 		$file->delete();
 	}
 
 	public function testCanGetInlineUrl() {
 
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 
 		$file = new ElggFile();
 		$file->owner_guid = 2;
@@ -435,15 +435,15 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(elgg_get_inline_url($file, false), $file->getInlineURL(false));
 		$this->assertEquals(elgg_get_inline_url($file, false, strtotime('+2 minutes')), $file->getInlineURL(false, strtotime('+2 minutes')));
 
-		_elgg_services()->hooks->registerHandler('inline:url', 'file', function (\Elgg\Hook $hook) {
-			$file = $hook->getEntityParam();
+		_elgg_services()->events->registerHandler('inline:url', 'file', function (\Elgg\Event $event) {
+			$file = $event->getEntityParam();
 
 			return elgg_normalize_url("download/{$file->originalfilename}");
 		});
 
 		$this->assertEquals(elgg_normalize_url("download/{$file->originalfilename}"), $file->getInlineUrl());
 
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 
 		$file->delete();
 	}

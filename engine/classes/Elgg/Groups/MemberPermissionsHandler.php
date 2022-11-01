@@ -12,18 +12,18 @@ class MemberPermissionsHandler {
 	/**
 	 * Allow group members to write to the group container
 	 *
-	 * @param \Elgg\Hook $hook 'container_permissions_check', 'all'
+	 * @param \Elgg\Event $event 'container_permissions_check', 'all'
 	 *
 	 * @return void|true
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
+	public function __invoke(\Elgg\Event $event) {
 		
-		$container = $hook->getParam('container');
+		$container = $event->getParam('container');
 		if (!$container instanceof \ElggGroup) {
 			return;
 		}
 		
-		$user = $hook->getUserParam();
+		$user = $event->getUserParam();
 		if (!$user instanceof \ElggUser) {
 			return;
 		}

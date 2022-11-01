@@ -317,7 +317,7 @@ class UpgradeService {
 		return elgg_call(
 			ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES,
 			function () use ($upgrade, $max_duration) {
-				return $this->events->triggerSequence('upgrade:execute', 'system', $upgrade, function() use ($upgrade, $max_duration) {
+				return $this->events->triggerResultsSequence('upgrade:execute', 'system', ['object' => $upgrade], null, function() use ($upgrade, $max_duration) {
 					$result = new Result();
 					
 					$loop = new Loop(

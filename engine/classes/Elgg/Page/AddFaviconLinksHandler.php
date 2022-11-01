@@ -12,12 +12,12 @@ class AddFaviconLinksHandler {
 	/**
 	 * Add favicon link tags to HTML head
 	 *
-	 * @param \Elgg\Hook $hook 'head', 'page'
+	 * @param \Elgg\Event $event 'head', 'page'
 	 *
 	 * @return array
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		$head_params = $hook->getValue();
+	public function __invoke(\Elgg\Event $event) {
+		$head_params = $event->getValue();
 		
 		if (elgg_get_site_entity()->hasIcon('master', 'favicon')) {
 			$config = $this->getSiteIcons();

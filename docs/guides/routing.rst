@@ -310,29 +310,29 @@ that receives an instance of ``\Elgg\Request``:
 	]);
 
 
-The ``route:rewrite`` Plugin Hook
-=================================
+The ``route:rewrite`` event
+===========================
 
-For URL rewriting, the ``route:rewrite`` hook (with similar arguments as ``route``) is triggered very early,
+For URL rewriting, the ``route:rewrite`` event (with similar arguments as ``route``) is triggered very early,
 and allows modifying the request URL path (relative to the Elgg site).
 
 Here we rewrite requests for ``news/*`` to ``blog/*``:
 
 .. code-block:: php
 
-    function myplugin_rewrite_handler(\Elgg\Hook $hook) {
-        $value = $hook->getValue();
+    function myplugin_rewrite_handler(\Elgg\Event $event) {
+        $value = $event->getValue();
         
         $value['identifier'] = 'blog';
         
         return $value;
     }
 
-    elgg_register_plugin_hook_handler('route:rewrite', 'news', 'myplugin_rewrite_handler');
+    elgg_register_event_handler('route:rewrite', 'news', 'myplugin_rewrite_handler');
 
 .. warning::
 
-	The hook must be registered directly in your plugin Bootstrap ``boot`` function. The ``init`` function is too late.
+	The event must be registered directly in your plugin Bootstrap ``boot`` function. The ``init`` function is too late.
 
 Routing overview
 ================
@@ -342,7 +342,7 @@ For regular pages, Elgg's program flow is something like this:
 #. A user requests ``http://example.com/news/owner/jane``.
 #. Plugins are initialized.
 #. Elgg parses the URL to identifier ``news`` and segments ``['owner', 'jane']``.
-#. Elgg triggers the plugin hook ``route:rewrite, news`` (see above).
+#. Elgg triggers the event ``route:rewrite, news`` (see above).
 #. Elgg finds a registered route that matches the final route path, and renders a resource view associated with it.
    It calls ``elgg_view_resource('blog/owner', $vars)`` where ``$vars`` contains the username.
 #. The ``resources/blog/owner`` view gets the username via ``$vars['username']``, and uses many other views and

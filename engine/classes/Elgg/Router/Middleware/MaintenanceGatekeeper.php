@@ -25,7 +25,7 @@ class MaintenanceGatekeeper {
 			return;
 		}
 		
-		// check hook
+		// check event
 		if (self::allowCurrentUrl($request)) {
 			return;
 		}
@@ -100,6 +100,6 @@ class MaintenanceGatekeeper {
 			'current_url' => $current_url,
 		];
 		
-		return (bool) elgg_trigger_plugin_hook('maintenance:allow', 'url', $params, false);
+		return (bool) elgg_trigger_event_results('maintenance:allow', 'url', $params, false);
 	}
 }

@@ -10,13 +10,13 @@ use Elgg\UnitTestCase;
 class UnvalidatedUserMenuTest extends UnitTestCase {
 
 	public function up() {
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 
-		_elgg_services()->hooks->registerHandler('register', 'menu:user:unvalidated', 'Elgg\Menus\UserUnvalidated::register');
+		_elgg_services()->events->registerHandler('register', 'menu:user:unvalidated', 'Elgg\Menus\UserUnvalidated::register');
 	}
 	
 	public function down() {
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 	}
 
 	public function testUnvalidatedUserMenuWithoutUser() {

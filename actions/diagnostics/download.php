@@ -7,7 +7,7 @@
 set_time_limit(0);
 
 $output = elgg_echo('diagnostics:header', [date('r'), elgg_get_logged_in_user_entity()->getDisplayName()]);
-$output = elgg_trigger_plugin_hook('diagnostics:report', 'system', null, $output);
+$output = elgg_trigger_event_results('diagnostics:report', 'system', [], $output);
 
 header("Cache-Control: public");
 header("Content-Description: File Transfer");

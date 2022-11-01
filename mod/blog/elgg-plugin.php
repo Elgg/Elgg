@@ -103,7 +103,7 @@ return [
 			'resource' => 'blog/all',
 		],
 	],
-	'hooks' => [
+	'events' => [
 		'container_logic_check' => [
 			'object' => [
 				GroupToolContainerLogicCheck::class => [],

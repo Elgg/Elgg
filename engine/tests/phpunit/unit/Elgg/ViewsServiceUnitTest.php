@@ -10,9 +10,9 @@ use Elgg\Project\Paths;
 class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	protected $hooks;
+	protected $events;
 
 	/**
 	 * @var ViewsService
@@ -23,10 +23,10 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 	public function up() {
 		$this->viewsDir = $this->normalizeTestFilePath("views");
 
-		$this->hooks = new PluginHooksService(_elgg_services()->events);
+		$this->events = new EventsService(_elgg_services()->handlers);
 		$logger = $this->createMock('\Elgg\Logger', array(), array(), '', false);
 
-		$this->views = new ViewsService($this->hooks, _elgg_services()->request);
+		$this->views = new ViewsService($this->events, _elgg_services()->request);
 		$this->views->setLogger($logger);
 		$this->views->autoregisterViews('', "$this->viewsDir/default", 'default');
 
@@ -143,8 +143,8 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanAlterViewInput() {
-		$this->hooks->registerHandler('view_vars', 'js/interpreted.js', function (\Elgg\Hook $hook) {
-			$vars = $hook->getValue();
+		$this->events->registerHandler('view_vars', 'js/interpreted.js', function (\Elgg\Event $event) {
+			$vars = $event->getValue();
 			$vars['in'] = 'out';
 			return $vars;
 		});
@@ -153,7 +153,7 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanAlterViewOutput() {
-		$this->hooks->registerHandler('view', 'js/interpreted.js', function (\Elgg\Hook $hook) {
+		$this->events->registerHandler('view', 'js/interpreted.js', function (\Elgg\Event $event) {
 			return '// Hello';
 		});
 
@@ -161,12 +161,12 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanReplaceViews() {
-		$this->hooks->registerHandler('view_vars', 'js/interpreted.js', function (\Elgg\Hook $hook) {
+		$this->events->registerHandler('view_vars', 'js/interpreted.js', function (\Elgg\Event $event) {
 			return ['__view_output' => 123];
 		});
 
-		$this->hooks->registerHandler('view', 'js/interpreted.js', function (\Elgg\Hook $hook) {
-			$this->fail('view hook was called though __view_output was set.');
+		$this->events->registerHandler('view', 'js/interpreted.js', function (\Elgg\Event $event) {
+			$this->fail('view event was called though __view_output was set.');
 		});
 
 		$this->assertSame("123", $this->views->renderView('js/interpreted.js'));

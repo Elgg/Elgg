@@ -10,20 +10,20 @@ class Permissions {
 	/**
 	 * Only allow global discussions if enabled in plugin settings
 	 *
-	 * @param \Elgg\Hook $hook 'container_logic_check', 'object'
+	 * @param \Elgg\Event $event 'container_logic_check', 'object'
 	 *
 	 * @return void|false
 	 *
 	 * @since 3.3
 	 */
-	public static function containerLogic(\Elgg\Hook $hook) {
+	public static function containerLogic(\Elgg\Event $event) {
 		
-		$subtype = $hook->getParam('subtype');
+		$subtype = $event->getParam('subtype');
 		if ($subtype !== 'discussion') {
 			return;
 		}
 		
-		$container = $hook->getParam('container');
+		$container = $event->getParam('container');
 		if ($container instanceof \ElggGroup) {
 			return;
 		}
@@ -36,13 +36,13 @@ class Permissions {
 	/**
 	 * Make sure that discussion comments can not be written to a discussion after it has been closed
 	 *
-	 * @param \Elgg\Hook $hook 'container_logic_check', 'object'
+	 * @param \Elgg\Event $event 'container_logic_check', 'object'
 	 *
 	 * @return void|false
 	 */
-	public static function preventCommentOnClosedDiscussion(\Elgg\Hook $hook) {
+	public static function preventCommentOnClosedDiscussion(\Elgg\Event $event) {
 		
-		$discussion = $hook->getEntityParam();
+		$discussion = $event->getEntityParam();
 		if (!$discussion instanceof \ElggDiscussion) {
 			return;
 		}

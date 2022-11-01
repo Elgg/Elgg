@@ -97,38 +97,38 @@ class WidgetsServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * Tests register and unregister widgets with hook
+	 * Tests register and unregister widgets with event
 	 */
-	public function testCanRegisterAndUnregisterTypeWithHook() {
+	public function testCanRegisterAndUnregisterTypeWithEvent() {
 		$service = new \Elgg\WidgetsService(array($this, 'elgg_set_config'));
 
 		$this->assertFalse($service->validateType('hook_widget'));
 
-		_elgg_services()->hooks->registerHandler('handlers', 'widgets', [$this, 'registerWidgetsHookHandler']);
+		_elgg_services()->events->registerHandler('handlers', 'widgets', [$this, 'registerWidgetsHookHandler']);
 		$this->assertArrayHasKey('hook_widget', $service->getTypes(['context' => 'from_hook']));
 
-		_elgg_services()->hooks->unregisterHandler('handlers', 'widgets', [$this, 'registerWidgetsHookHandler']);
+		_elgg_services()->events->unregisterHandler('handlers', 'widgets', [$this, 'registerWidgetsHookHandler']);
 		$this->assertArrayNotHasKey('hook_widget', $service->getTypes(['context' => 'from_hook']));
 
-		_elgg_services()->hooks->registerHandler('handlers', 'widgets', [$this, 'registerWidgetsHookHandler']);
+		_elgg_services()->events->registerHandler('handlers', 'widgets', [$this, 'registerWidgetsHookHandler']);
 		$this->assertArrayHasKey('hook_widget', $service->getTypes(['context' => 'from_hook']));
 
-		_elgg_services()->hooks->registerHandler('handlers', 'widgets', [$this, 'unregisterWidgetsHookHandler']);
+		_elgg_services()->events->registerHandler('handlers', 'widgets', [$this, 'unregisterWidgetsHookHandler']);
 		$this->assertArrayNotHasKey('hook_widget', $service->getTypes(['context' => 'from_hook']));
 
-		_elgg_services()->hooks->unregisterHandler('handlers', 'widgets', [$this, 'registerWidgetsHookHandler']);
-		_elgg_services()->hooks->unregisterHandler('handlers', 'widgets', [$this, 'unregisterWidgetsHookHandler']);
+		_elgg_services()->events->unregisterHandler('handlers', 'widgets', [$this, 'registerWidgetsHookHandler']);
+		_elgg_services()->events->unregisterHandler('handlers', 'widgets', [$this, 'unregisterWidgetsHookHandler']);
 	}
 
 	/**
 	 * Register a widget
 	 *
-	 * @param \Elgg\Hook $hook 'handlers', 'widgets'
+	 * @param \Elgg\Event $event 'handlers', 'widgets'
 	 *
 	 * @return \Elgg\WidgetDefinition[]
 	 */
-	public function registerWidgetsHookHandler(\Elgg\Hook $hook) {
-		$value = $hook->getValue();
+	public function registerWidgetsHookHandler(\Elgg\Event $event) {
+		$value = $event->getValue();
 		
 		$value[] = \Elgg\WidgetDefinition::factory([
 			'id' => 'hook_widget',
@@ -143,12 +143,12 @@ class WidgetsServiceUnitTest extends \Elgg\UnitTestCase {
 	/**
 	 * Unregister a widget
 	 *
-	 * @param \Elgg\Hook $hook 'handlers', 'widgets'
+	 * @param \Elgg\Event $event 'handlers', 'widgets'
 	 *
 	 * @return \Elgg\WidgetDefinition[]
 	 */
-	public function unregisterWidgetsHookHandler(\Elgg\Hook $hook) {
-		$value = $hook->getValue();
+	public function unregisterWidgetsHookHandler(\Elgg\Event $event) {
+		$value = $event->getValue();
 		
 		foreach ($value as $key => $widget_definition) {
 			if ($widget_definition->id === 'hook_widget') {

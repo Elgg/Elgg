@@ -15,14 +15,14 @@ class ContainerPermissionsHandler {
 	 * Object being commented on is used as the container of the comment so
 	 * permission check must be overridden if user isn't the owner of the object.
 	 *
-	 * @param \Elgg\Hook $hook 'container_permissions_check', 'object'
+	 * @param \Elgg\Event $event 'container_permissions_check', 'object'
 	 *
 	 * @return void|true
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
+	public function __invoke(\Elgg\Event $event) {
 		
 		// is someone trying to comment, if so override permissions check
-		if ($hook->getParam('subtype') === 'comment' && $hook->getUserParam() instanceof \ElggUser) {
+		if ($event->getParam('subtype') === 'comment' && $event->getUserParam() instanceof \ElggUser) {
 			return true;
 		}
 	}

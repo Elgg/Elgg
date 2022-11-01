@@ -239,7 +239,7 @@ If your test relies on Elgg's Internal Services (``_elgg_services()`` returns a 
 
 Due to these local references, replacing services on the SP within a test often will not have the desired effect. Instead, you may need to use functionality baked into the services themselves:
 
-* The ``events`` and ``hooks`` services have methods ``backup()`` and ``restore()``.
+* The ``events`` service has methods ``backup()`` and ``restore()``.
 * The ``logger`` service has methods ``disable()`` and ``enable()``.
 
 Jasmine Tests

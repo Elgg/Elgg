@@ -15,17 +15,17 @@ class EnqueueHandler {
 	/**
 	 * Handle the 'sending' of the delayed email method
 	 *
-	 * @param \Elgg\Hook $hook 'send', 'notification:delayed_email'
+	 * @param \Elgg\Event $event 'send', 'notification:delayed_email'
 	 *
 	 * @return null|bool
 	 */
-	public function __invoke(\Elgg\Hook $hook): ?bool {
-		if ($hook->getValue() === true) {
+	public function __invoke(\Elgg\Event $event): ?bool {
+		if ($event->getValue() === true) {
 			// assume someone else already sent the message
 			return null;
 		}
 		
-		$notification = $hook->getParam('notification');
+		$notification = $event->getParam('notification');
 		if (!$notification instanceof Notification) {
 			return false;
 		}

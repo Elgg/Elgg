@@ -10,8 +10,6 @@ use Elgg\Email\HtmlPart;
 
 class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 
-	public $hookArgs = [];
-
 	/**
 	 * @var InMemoryTransport
 	 */
@@ -59,12 +57,12 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 		$this->assertEquals('UTF-8', $message->getEncoding());
 	}
 
-	function testElggSendEmailUsesHook() {
+	function testElggSendEmailUsesEvent() {
 
 		$calls = 0;
 		$original_email = null;
-		$handler = function (\Elgg\Hook $hook) use (&$original_email, &$calls) {
-			$email = $hook->getValue();
+		$handler = function (\Elgg\Event $event) use (&$original_email, &$calls) {
+			$email = $event->getValue();
 			
 			$calls++;
 			$original_email = clone $email;
@@ -73,7 +71,7 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 			return $email;
 		};
 
-		_elgg_services()->hooks->registerHandler('prepare', 'system:email', $handler);
+		_elgg_services()->events->registerHandler('prepare', 'system:email', $handler);
 
 		elgg_send_email(\Elgg\Email::factory([
 			'from' => "from@elgg.org",
@@ -108,7 +106,7 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 	}
 
 	function testElggSendEmailBypass() {
-		_elgg_services()->hooks->registerHandler('transport', 'system:email', [\Elgg\Values::class, 'getTrue']);
+		_elgg_services()->events->registerHandler('transport', 'system:email', [\Elgg\Values::class, 'getTrue']);
 
 		$this->assertTrue(elgg_send_email(\Elgg\Email::factory([
 			'from' => "from1@elgg.org",

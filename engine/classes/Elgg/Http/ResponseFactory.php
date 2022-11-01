@@ -5,7 +5,6 @@ namespace Elgg\Http;
 use Elgg\Ajax\Service as AjaxService;
 use Elgg\EventsService;
 use Elgg\Exceptions\InvalidParameterException;
-use Elgg\PluginHooksService;
 use Elgg\Traits\Loggable;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
@@ -34,9 +33,9 @@ class ResponseFactory {
 	private $ajax;
 
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	private $hooks;
+	private $events;
 
 	/**
 	 * @var ResponseTransport
@@ -52,23 +51,16 @@ class ResponseFactory {
 	 * @var ResponseHeaderBag
 	 */
 	private $headers;
-	
-	/**
-	 * @var EventsService
-	 */
-	private $events;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Request            $request HTTP request
-	 * @param PluginHooksService $hooks   Plugin hooks service
-	 * @param AjaxService        $ajax    AJAX service
-	 * @param EventsService      $events  Events service
+	 * @param Request       $request HTTP request
+	 * @param AjaxService   $ajax    AJAX service
+	 * @param EventsService $events  Events service
 	 */
-	public function __construct(Request $request, PluginHooksService $hooks, AjaxService $ajax, EventsService $events) {
+	public function __construct(Request $request, AjaxService $ajax, EventsService $events) {
 		$this->request = $request;
-		$this->hooks = $hooks;
 		$this->ajax = $ajax;
 		$this->events = $events;
 		
@@ -267,9 +259,9 @@ class ResponseFactory {
 	public function respond(ResponseBuilder $response) {
 
 		$response_type = $this->parseContext();
-		$response = $this->hooks->trigger('response', $response_type, $response, $response);
+		$response = $this->events->triggerResults('response', $response_type, [], $response);
 		if (!$response instanceof ResponseBuilder) {
-			throw new InvalidParameterException("Handlers for 'response','$response_type' plugin hook must "
+			throw new InvalidParameterException("Handlers for 'response','{$response_type}' event must "
 			. "return an instanceof " . ResponseBuilder::class);
 		}
 
@@ -362,13 +354,13 @@ class ResponseFactory {
 				'forward_url' => $forward_url,
 			];
 			// For BC, let plugins serve their own error page
-			// @todo can this hook be dropped
+			// @todo can this event be dropped
 			$forward_reason = (string) $status_code;
 
-			$this->hooks->trigger('forward', $forward_reason, $params, $forward_url);
+			$this->events->triggerResults('forward', $forward_reason, $params, $forward_url);
 
 			if ($this->response_sent) {
-				// Response was sent from a forward hook
+				// Response was sent from a forward event
 				return $this->response_sent;
 			}
 
@@ -402,8 +394,7 @@ class ResponseFactory {
 		$content = $this->stringify($response->getContent());
 		
 		if ($this->ajax->isReady()) {
-			$hook_type = $this->parseContext();
-			return $this->send($this->ajax->respondFromOutput($content, $hook_type));
+			return $this->send($this->ajax->respondFromOutput($content, $this->parseContext()));
 		}
 
 		return $this->send($this->prepareResponse($content, $response->getStatusCode(), $response->getHeaders()));
@@ -461,10 +452,10 @@ class ResponseFactory {
 
 		$forward_reason = (string) $status_code;
 
-		$forward_url = (string) $this->hooks->trigger('forward', $forward_reason, $params, $forward_url);
+		$forward_url = (string) $this->events->triggerResults('forward', $forward_reason, $params, $forward_url);
 		
 		if ($this->response_sent) {
-			// Response was sent from a forward hook
+			// Response was sent from a forward event
 			// Clearing handlers to void infinite loops
 			return $this->response_sent;
 		}
@@ -524,7 +515,7 @@ class ResponseFactory {
 	}
 
 	/**
-	 * Parses response type to be used as plugin hook type
+	 * Parses response type to be used as event type
 	 * @return string
 	 */
 	public function parseContext() {

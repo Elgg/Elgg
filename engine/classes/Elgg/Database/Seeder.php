@@ -4,8 +4,8 @@ namespace Elgg\Database;
 
 use Elgg\Cli\Progress;
 use Elgg\Database\Seeds\Seed;
+use Elgg\EventsService;
 use Elgg\Invoker;
-use Elgg\PluginHooksService;
 
 /**
  * Seeder class
@@ -17,9 +17,9 @@ use Elgg\PluginHooksService;
 class Seeder {
 
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	protected $hooks;
+	protected $events;
 
 	/**
 	 * @var Progress
@@ -34,16 +34,16 @@ class Seeder {
 	/**
 	 * Seeder constructor.
 	 *
-	 * @param PluginHooksService $hooks    Hooks registration service
-	 * @param Progress           $progress Progress helper
-	 * @param Invoker            $invoker  Invoker service
+	 * @param EventsService $events   Events service
+	 * @param Progress      $progress Progress helper
+	 * @param Invoker       $invoker  Invoker service
 	 */
 	public function __construct(
-		PluginHooksService $hooks,
+		EventsService $events,
 		Progress $progress,
 		Invoker $invoker
 	) {
-		$this->hooks = $hooks;
+		$this->events = $events;
 		$this->progress = $progress;
 		$this->invoker = $invoker;
 	}
@@ -146,7 +146,7 @@ class Seeder {
 	public function getSeederClasses(): array {
 		$result = [];
 		
-		$seeds = $this->hooks->trigger('seeds', 'database', null, []);
+		$seeds = $this->events->triggerResults('seeds', 'database', [], []);
 		foreach ($seeds as $seed) {
 			if (!class_exists($seed)) {
 				elgg_log("Seeding class {$seed} not found", 'ERROR');

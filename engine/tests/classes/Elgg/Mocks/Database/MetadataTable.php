@@ -2,16 +2,12 @@
 
 namespace Elgg\Mocks\Database;
 
-use Elgg\Cache\MetadataCache;
-use Elgg\Database;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Delete;
-use Elgg\Database\EntityTable;
 use Elgg\Database\Insert;
 use Elgg\Database\MetadataTable as DbMetadataTabe;
 use Elgg\Database\Select;
 use Elgg\Database\Update;
-use Elgg\EventsService as Events;
 use ElggMetadata;
 
 /**

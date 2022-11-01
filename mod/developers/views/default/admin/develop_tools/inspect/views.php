@@ -6,7 +6,7 @@ if (empty($data)) {
 }
 
 $views = elgg_extract('views', $data);
-$global_hooks = elgg_extract('global_hooks', $data);
+$global_events = elgg_extract('global_events', $data);
 $filtered_views = (array) elgg_extract('filtered_views', $data);
 $input_filtered_views = (array) elgg_extract('input_filtered_views', $data);
 
@@ -36,14 +36,14 @@ echo elgg_view_menu('developers_inspect_viewtype', [
 	'class' => 'elgg-tabs mbm',
 ]);
 
-if ($global_hooks) {
-	array_walk($global_hooks, function (&$hook) {
-		$id = "z" . md5($hook);
-		$hook = "<a href='?inspect_type=Plugin%20Hooks#$id'>$hook</a>";
+if ($global_events) {
+	array_walk($global_events, function (&$event) {
+		$id = "z" . md5($event);
+		$event = "<a href='?inspect_type=Events#{$id}'>{$event}</a>";
 	});
 
 	echo "<p>" . elgg_echo('developers:inspect:views:all_filtered') . " ";
-	echo implode(' | ', $global_hooks);
+	echo implode(' | ', $global_events);
 	echo "</p>";
 }
 
@@ -67,7 +67,7 @@ foreach ($views as $view => $components) {
 	if (in_array($view, $input_filtered_views)) {
 		$rowspan += 1;
 		$id = "z" . md5("view_vars, {$view}");
-		$link = "<a href='?inspect_type=Plugin%20Hooks#{$id}'>view_vars, {$view}</a>";
+		$link = "<a href='?inspect_type=Events#{$id}'>view_vars, {$view}</a>";
 		$col2 = elgg_echo('developers:inspect:views:input_filtered', [$link]);
 
 		$extra_rows .= "<tr><td>&nbsp;</td><td>$col2</td></tr>";
@@ -76,7 +76,7 @@ foreach ($views as $view => $components) {
 	if (in_array($view, $filtered_views)) {
 		$rowspan += 1;
 		$id = "z" . md5("view, {$view}");
-		$link = "<a href='?inspect_type=Plugin%20Hooks#{$id}'>view, {$view}</a>";
+		$link = "<a href='?inspect_type=Events#{$id}'>view, {$view}</a>";
 		$col2 = elgg_echo('developers:inspect:views:filtered', [$link]);
 
 		$extra_rows .= "<tr><td>&nbsp;</td><td>{$col2}</td></tr>";

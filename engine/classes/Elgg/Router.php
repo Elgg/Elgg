@@ -28,9 +28,9 @@ class Router {
 	use Profilable;
 
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	protected $hooks;
+	protected $events;
 
 	/**
 	 * @var RouteCollection
@@ -60,22 +60,22 @@ class Router {
 	/**
 	 * Constructor
 	 *
-	 * @param PluginHooksService $hooks    Hook service
-	 * @param RouteCollection    $routes   Route collection
-	 * @param UrlMatcher         $matcher  URL Matcher
-	 * @param HandlersService    $handlers Handlers service
-	 * @param ResponseFactory    $response Response
-	 * @param Plugins            $plugins  Plugins
+	 * @param EventsService   $events   Events service
+	 * @param RouteCollection $routes   Route collection
+	 * @param UrlMatcher      $matcher  URL Matcher
+	 * @param HandlersService $handlers Handlers service
+	 * @param ResponseFactory $response Response
+	 * @param Plugins         $plugins  Plugins
 	 */
 	public function __construct(
-		PluginHooksService $hooks,
+		EventsService $events,
 		RouteCollection $routes,
 		UrlMatcher $matcher,
 		HandlersService $handlers,
 		ResponseFactory $response,
 		Plugins $plugins
 	) {
-		$this->hooks = $hooks;
+		$this->events = $events;
 		$this->routes = $routes;
 		$this->matcher = $matcher;
 		$this->handlers = $handlers;
@@ -86,7 +86,7 @@ class Router {
 	/**
 	 * Routes the request to a registered page handler
 	 *
-	 * This function triggers a plugin hook `'route', $identifier` so that plugins can
+	 * This function triggers a `'route', $identifier` event so that plugins can
 	 * modify the routing or handle a request.
 	 *
 	 * @param \Elgg\Http\Request $request The request to handle.
@@ -286,7 +286,7 @@ class Router {
 	}
 
 	/**
-	 * Filter a request through the route:rewrite hook
+	 * Filter a request through the 'route:rewrite' event
 	 *
 	 * @param \Elgg\Http\Request $request Elgg request
 	 *
@@ -305,7 +305,7 @@ class Router {
 			'identifier' => $identifier,
 			'segments' => $segments,
 		];
-		$new = $this->hooks->trigger('route:rewrite', $identifier, $old, $old);
+		$new = $this->events->triggerResults('route:rewrite', $identifier, $old, $old);
 		if ($new === $old) {
 			return $request;
 		}

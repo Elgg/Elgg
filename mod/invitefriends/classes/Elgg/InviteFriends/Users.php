@@ -3,7 +3,7 @@
 namespace Elgg\InviteFriends;
 
 /**
- * Hook callbacks for users
+ * Event callbacks for users
  *
  * @since 4.0
  * @internal
@@ -13,22 +13,22 @@ class Users {
 	/**
 	 * Track future friends if invite code was set
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'user'
+	 * @param \Elgg\Event $event 'register', 'user'
 	 *
 	 * @return void
 	 */
-	public static function addFriendsOnRegister(\Elgg\Hook $hook) {
-		$user = $hook->getUserParam();
+	public static function addFriendsOnRegister(\Elgg\Event $event) {
+		$user = $event->getUserParam();
 		if (!$user instanceof \ElggUser) {
 			return;
 		}
 		
-		$friend_user = get_user((int) $hook->getParam('friend_guid'));
+		$friend_user = get_user((int) $event->getParam('friend_guid'));
 		if (!$friend_user instanceof \ElggUser) {
 			return;
 		}
 			
-		if (!elgg_validate_invite_code($friend_user->username, $hook->getParam('invitecode'))) {
+		if (!elgg_validate_invite_code($friend_user->username, $event->getParam('invitecode'))) {
 			return;
 		}
 		

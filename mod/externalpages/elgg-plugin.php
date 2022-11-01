@@ -58,7 +58,7 @@ return [
 			'access' => 'admin',
 		],
 	],
-	'hooks' => [
+	'events' => [
 		'register' => [
 			'menu:expages' => [
 				'Elgg\ExternalPages\Menus\ExPages::register' => [],

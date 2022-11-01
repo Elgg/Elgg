@@ -17,11 +17,11 @@ use Elgg\UnitTestCase;
 class SearchServiceTest extends UnitTestCase {
 
 	public function up() {
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 	}
 
 	public function down() {
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 	}
 
 	public function testEmptyReturnWithMissingQueryParts() {
@@ -87,7 +87,7 @@ class SearchServiceTest extends UnitTestCase {
 
 	public function testThrowsOnInvalidEntityType() {
 
-		$handler = function (\Elgg\Hook $hook) {
+		$handler = function (\Elgg\Event $event) {
 			return [
 				'metadata' => ['allowed1', 'allowed2'],
 				'annotations' => ['allowed3', 'allowed4'],
@@ -95,7 +95,7 @@ class SearchServiceTest extends UnitTestCase {
 			];
 		};
 
-		elgg_register_plugin_hook_handler('search:fields', 'foo', $handler);
+		elgg_register_event_handler('search:fields', 'foo', $handler);
 
 		$options = [
 			'type' => 'foo',
@@ -108,7 +108,7 @@ class SearchServiceTest extends UnitTestCase {
 	
 	public function testFalseInvalidEntityType() {
 
-		$handler = function (\Elgg\Hook $hook) {
+		$handler = function (\Elgg\Event $event) {
 			return [
 				'metadata' => ['allowed1', 'allowed2'],
 				'annotations' => ['allowed3', 'allowed4'],
@@ -116,7 +116,7 @@ class SearchServiceTest extends UnitTestCase {
 			];
 		};
 
-		elgg_register_plugin_hook_handler('search:fields', 'foo', $handler);
+		elgg_register_event_handler('search:fields', 'foo', $handler);
 
 		$options = [
 			'type' => 'foo',
@@ -126,15 +126,15 @@ class SearchServiceTest extends UnitTestCase {
 		$this->assertFalse(elgg_search($options));
 	}
 
-	public function testCanFilterParamsWithAHook() {
+	public function testCanFilterParamsWithEvent() {
 
-		$handler = function (\Elgg\Hook $hook) {
+		$handler = function (\Elgg\Event $event) {
 			return [
 				'query' => 'altered query',
 			];
 		};
 
-		elgg_register_plugin_hook_handler('search:params', 'entities', $handler);
+		elgg_register_event_handler('search:params', 'entities', $handler);
 
 		$options = _elgg_services()->search->normalizeOptions([]);
 
@@ -152,7 +152,7 @@ class SearchServiceTest extends UnitTestCase {
 
 	public function testCanRegisterAndNormalizeFields() {
 
-		$handler = function (\Elgg\Hook $hook) {
+		$handler = function (\Elgg\Event $event) {
 			return [
 				'metadata' => ['allowed1', 'allowed2'],
 				'annotations' => ['allowed3', 'allowed4'],
@@ -160,7 +160,7 @@ class SearchServiceTest extends UnitTestCase {
 			];
 		};
 
-		elgg_register_plugin_hook_handler('search:fields', 'object', $handler);
+		elgg_register_event_handler('search:fields', 'object', $handler);
 
 		$options = _elgg_services()->search->normalizeOptions([
 			'type' => 'object',
@@ -189,7 +189,7 @@ class SearchServiceTest extends UnitTestCase {
 			'query' => 'hello',
 		]));
 
-		$handler = function (\Elgg\Hook $hook) {
+		$handler = function (\Elgg\Event $event) {
 			return [
 				'metadata' => ['allowed1', 'allowed2'],
 				'annotations' => ['allowed3', 'allowed4'],
@@ -197,7 +197,7 @@ class SearchServiceTest extends UnitTestCase {
 			];
 		};
 
-		elgg_register_plugin_hook_handler('search:fields', 'object:blog', $handler);
+		elgg_register_event_handler('search:fields', 'object:blog', $handler);
 
 		$options = _elgg_services()->search->normalizeOptions([
 			'type' => 'object',
@@ -228,22 +228,22 @@ class SearchServiceTest extends UnitTestCase {
 
 	public function testEndToEndSearchForAnnotationsWithExactMatchAndWithoutTokenization() {
 
-		elgg_register_plugin_hook_handler('search:fields', 'object', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('search:fields', 'object', function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value['annotations'][] = 'foo1';
 
 			return $value;
 		});
 
-		elgg_register_plugin_hook_handler('search:fields', 'object:blog', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('search:fields', 'object:blog', function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value['annotations'][] = 'foo2';
 
 			return $value;
 		});
 
-		elgg_register_plugin_hook_handler('search:fields', 'custom', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('search:fields', 'custom', function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value['annotations'][] = 'foo3';
 
 			return $value;
@@ -302,22 +302,22 @@ class SearchServiceTest extends UnitTestCase {
 
 	public function testEndToEndSearchForAnnotationsWithExactMatchAndTokenization() {
 
-		elgg_register_plugin_hook_handler('search:fields', 'object', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('search:fields', 'object', function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value['annotations'][] = 'foo1';
 
 			return $value;
 		});
 
-		elgg_register_plugin_hook_handler('search:fields', 'object:blog', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('search:fields', 'object:blog', function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value['annotations'][] = 'foo2';
 
 			return $value;
 		});
 
-		elgg_register_plugin_hook_handler('search:fields', 'custom', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('search:fields', 'custom', function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value['annotations'][] = 'foo3';
 
 			return $value;
@@ -383,22 +383,22 @@ class SearchServiceTest extends UnitTestCase {
 
 	public function testEndToEndSearchForAnnotationsWithPartialMatchAndTokenization() {
 
-		elgg_register_plugin_hook_handler('search:fields', 'object', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('search:fields', 'object', function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value['annotations'][] = 'foo1';
 
 			return $value;
 		});
 
-		elgg_register_plugin_hook_handler('search:fields', 'object:blog', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('search:fields', 'object:blog', function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value['annotations'][] = 'foo2';
 
 			return $value;
 		});
 
-		elgg_register_plugin_hook_handler('search:fields', 'custom', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('search:fields', 'custom', function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value['annotations'][] = 'foo3';
 
 			return $value;
@@ -464,22 +464,22 @@ class SearchServiceTest extends UnitTestCase {
 
 	public function testEndToEndSearchForMetadataWithExactMatchAndWithoutTokenization() {
 
-		elgg_register_plugin_hook_handler('search:fields', 'object', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('search:fields', 'object', function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value['metadata'][] = 'foo1';
 
 			return $value;
 		});
 
-		elgg_register_plugin_hook_handler('search:fields', 'object:blog', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('search:fields', 'object:blog', function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value['metadata'][] = 'foo2';
 
 			return $value;
 		});
 
-		elgg_register_plugin_hook_handler('search:fields', 'custom', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('search:fields', 'custom', function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value['metadata'][] = 'foo3';
 
 			return $value;
@@ -538,22 +538,22 @@ class SearchServiceTest extends UnitTestCase {
 
 	public function testEndToEndSearchForMetadataWithExactMatchAndTokenization() {
 
-		elgg_register_plugin_hook_handler('search:fields', 'object', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('search:fields', 'object', function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value['metadata'][] = 'foo1';
 
 			return $value;
 		});
 
-		elgg_register_plugin_hook_handler('search:fields', 'object:blog', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('search:fields', 'object:blog', function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value['metadata'][] = 'foo2';
 
 			return $value;
 		});
 
-		elgg_register_plugin_hook_handler('search:fields', 'custom', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('search:fields', 'custom', function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value['metadata'][] = 'foo3';
 
 			return $value;
@@ -619,22 +619,22 @@ class SearchServiceTest extends UnitTestCase {
 
 	public function testEndToEndSearchForMetadataWithPartialMatchAndTokenization() {
 
-		elgg_register_plugin_hook_handler('search:fields', 'object', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('search:fields', 'object', function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value['metadata'][] = 'foo1';
 
 			return $value;
 		});
 
-		elgg_register_plugin_hook_handler('search:fields', 'object:blog', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('search:fields', 'object:blog', function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value['metadata'][] = 'foo2';
 
 			return $value;
 		});
 
-		elgg_register_plugin_hook_handler('search:fields', 'custom', function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('search:fields', 'custom', function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value['metadata'][] = 'foo3';
 
 			return $value;
@@ -700,7 +700,7 @@ class SearchServiceTest extends UnitTestCase {
 
 	public function testEndToEndSearchWithMultipleProperties() {
 
-		elgg_register_plugin_hook_handler('search:fields', 'custom', function (\Elgg\Hook $hook) {
+		elgg_register_event_handler('search:fields', 'custom', function (\Elgg\Event $event) {
 			return [
 				'attributes' => ['type', 'subtype'],
 				'metadata' => ['foo1'],
@@ -796,7 +796,7 @@ class SearchServiceTest extends UnitTestCase {
 
 	public function testCanAlterOptions() {
 
-		elgg_register_plugin_hook_handler('search:fields', 'custom', function (\Elgg\Hook $hook) {
+		elgg_register_event_handler('search:fields', 'custom', function (\Elgg\Event $event) {
 			return [
 				'attributes' => ['type', 'subtype'],
 				'metadata' => ['foo1'],
@@ -806,13 +806,13 @@ class SearchServiceTest extends UnitTestCase {
 
 		$calls = 0;
 
-		$handler = function (\Elgg\Hook $hook) use (&$calls) {
+		$handler = function (\Elgg\Event $event) use (&$calls) {
 			$calls++;
 		};
 
-		elgg_register_plugin_hook_handler('search:options', 'object', $handler);
-		elgg_register_plugin_hook_handler('search:options', 'object:blog', $handler);
-		elgg_register_plugin_hook_handler('search:options', 'custom', $handler);
+		elgg_register_event_handler('search:options', 'object', $handler);
+		elgg_register_event_handler('search:options', 'object:blog', $handler);
+		elgg_register_event_handler('search:options', 'custom', $handler);
 
 		$options = [
 			'query' => 'query1 query2 query3',
@@ -828,7 +828,7 @@ class SearchServiceTest extends UnitTestCase {
 
 	public function testCanUseCustomResultsProvider() {
 
-		elgg_register_plugin_hook_handler('search:fields', 'custom', function (\Elgg\Hook $hook) {
+		elgg_register_event_handler('search:fields', 'custom', function (\Elgg\Event $event) {
 			return [
 				'attributes' => ['type', 'subtype'],
 				'metadata' => ['foo1'],
@@ -838,11 +838,11 @@ class SearchServiceTest extends UnitTestCase {
 
 		$expected = $this->getRows(2);
 
-		$handler = function (\Elgg\Hook $hook) use ($expected) {
+		$handler = function (\Elgg\Event $event) use ($expected) {
 			return $expected;
 		};
 
-		elgg_register_plugin_hook_handler('search:results', 'custom', $handler);
+		elgg_register_event_handler('search:results', 'custom', $handler);
 
 		$options = [
 			'query' => 'query1 query2 query3',
@@ -857,7 +857,7 @@ class SearchServiceTest extends UnitTestCase {
 	}
 
 	public function testRegisteredUserFields() {
-		elgg_register_plugin_hook_handler('search:fields', 'user', \Elgg\Search\UserSearchFieldsHandler::class);
+		elgg_register_event_handler('search:fields', 'user', \Elgg\Search\UserSearchFieldsHandler::class);
 
 		$options = _elgg_services()->search->normalizeOptions([
 			'type' => 'user',
@@ -876,7 +876,7 @@ class SearchServiceTest extends UnitTestCase {
 	}
 
 	public function testRegisteredGroupFields() {
-		elgg_register_plugin_hook_handler('search:fields', 'group', \Elgg\Search\GroupSearchFieldsHandler::class);
+		elgg_register_event_handler('search:fields', 'group', \Elgg\Search\GroupSearchFieldsHandler::class);
 
 		$options = _elgg_services()->search->normalizeOptions([
 			'type' => 'group',
@@ -886,7 +886,7 @@ class SearchServiceTest extends UnitTestCase {
 	}
 
 	public function testRegisteredObjectFields() {
-		elgg_register_plugin_hook_handler('search:fields', 'object', \Elgg\Search\ObjectSearchFieldsHandler::class);
+		elgg_register_event_handler('search:fields', 'object', \Elgg\Search\ObjectSearchFieldsHandler::class);
 
 		$options = _elgg_services()->search->normalizeOptions([
 			'type' => 'object',

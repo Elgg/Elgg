@@ -3,7 +3,6 @@
 namespace Elgg\Views;
 
 use Elgg\Exceptions\InvalidArgumentException;
-use Elgg\Hook;
 use Elgg\UnitTestCase;
 
 /**
@@ -14,7 +13,7 @@ use Elgg\UnitTestCase;
 class HtmlFormatterUnitTest extends UnitTestCase {
 
 	public function up() {
-		elgg_register_plugin_hook_handler('sanitize', 'input', \Elgg\Input\ValidateInputHandler::class);
+		elgg_register_event_handler('sanitize', 'input', \Elgg\Input\ValidateInputHandler::class);
 	}
 
 	/**
@@ -78,8 +77,8 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 	public function testCanFilterHtmlBlock() {
 		$html = 'Hello, http://world';
 
-		$hook = $this->registerTestingHook('prepare', 'html', function(Hook $hook) use ($html) {
-			$value = $hook->getValue();
+		$event = $this->registerTestingEvent('prepare', 'html', function(\Elgg\Event $event) use ($html) {
+			$value = $event->getValue();
 
 			$this->assertEquals([
 				'parse_urls' => true,
@@ -97,18 +96,18 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 
 		$actual = elgg_format_html($html);
 
-		$hook->assertNumberOfCalls(1);
+		$event->assertNumberOfCalls(1);
 
 		$this->assertXmlStringEqualsXmlString('<p>Hello, world!!!</p>', $actual);
 
-		$hook->unregister();
+		$event->unregister();
 	}
 
 	public function testCanFilterHtmlBlockFormattingOptions() {
 		$html = 'Hello, http://world <script></script>';
 
-		$hook = $this->registerTestingHook('prepare', 'html', function(Hook $hook) use ($html) {
-			$value = $hook->getValue();
+		$event = $this->registerTestingEvent('prepare', 'html', function(\Elgg\Event $event) use ($html) {
+			$value = $event->getValue();
 
 			$this->assertEquals([
 				'parse_urls' => true,
@@ -126,11 +125,11 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 
 		$actual = elgg_format_html($html);
 
-		$hook->assertNumberOfCalls(1);
+		$event->assertNumberOfCalls(1);
 
 		$this->assertEquals('Hello, http://world <script></script>', $actual);
 
-		$hook->unregister();
+		$event->unregister();
 	}
 
 	/**

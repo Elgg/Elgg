@@ -19,7 +19,7 @@ Password validation
 
 The only restriction that Elgg places on a password is that it must be at least 6 characters long by default, though this may be changed 
 in ``/elgg-config/settings.php``. 
-Additional criteria can be added by a plugin by registering for the ``registeruser:validate:password`` plugin hook.
+Additional criteria can be added by a plugin by registering for the ``registeruser:validate:password`` event.
 
 Password hashing
 ----------------
@@ -91,7 +91,7 @@ Filtering is used in Elgg to make XSS attacks more difficult. The purpose of the
 from users.
 
 Filtering is performed through the function ``elgg_sanitize_input()``. This function takes in a string and returns a filtered string. It triggers 
-a ``sanitize, input`` plugin hook.
+a ``sanitize, input`` event.
 
 By default Elgg comes with the htmLawed filtering code. Developers can drop in any additional or replacement filtering code as a plugin.
 

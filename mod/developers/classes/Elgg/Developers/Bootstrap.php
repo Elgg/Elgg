@@ -27,7 +27,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 	 */
 	protected function processSettings() {
 		$elgg = $this->elgg();
-		$hooks = $elgg->hooks;
 		$events = $elgg->events;
 		
 		$settings = $this->plugin()->getAllSettings();
@@ -60,8 +59,8 @@ class Bootstrap extends DefaultPluginBootstrap {
 	
 				$handler->pushProcessor(new \Elgg\Logger\BacktraceProcessor());
 	
-				$hooks->registerHandler('view_vars', 'page/elements/html', function(\Elgg\Hook $hook)  use ($handler) {
-					$vars = $hook->getValue();
+				$events->registerHandler('view_vars', 'page/elements/html', function(\Elgg\Event $event)  use ($handler) {
+					$vars = $event->getValue();
 
 					// prevent logs from showing up in html mails
 					if (elgg_extract('email', $vars) instanceof \Elgg\Email) {
@@ -114,12 +113,11 @@ class Bootstrap extends DefaultPluginBootstrap {
 		}
 	
 		if (!empty($settings['wrap_views'])) {
-			$hooks->registerHandler('view', 'all', 'developers_wrap_views', 600);
+			$events->registerHandler('view', 'all', 'developers_wrap_views', 600);
 		}
 	
 		if (!empty($settings['log_events'])) {
 			$events->registerHandler('all', 'all', __NAMESPACE__ . '\HandlerLogger::trackEvent', 1);
-			$hooks->registerHandler('all', 'all', __NAMESPACE__ . '\HandlerLogger::trackHook', 1);
 		}
 	
 		if (!empty($settings['show_gear']) && elgg_is_admin_logged_in() && !elgg_in_context('admin')) {
@@ -128,16 +126,16 @@ class Bootstrap extends DefaultPluginBootstrap {
 			elgg_register_ajax_view('developers/gear_popup');
 			elgg_register_simplecache_view('elgg/dev/gear.html');
 	
-			$hooks->registerHandler('view_vars', 'navigation/menu/elements/section', __NAMESPACE__ . '\Hooks::alterMenuSectionVars');
-			$hooks->registerHandler('view', 'navigation/menu/elements/section', __NAMESPACE__ . '\Hooks::alterMenuSections');
-			$hooks->registerHandler('view', 'navigation/menu/default', __NAMESPACE__ . '\Hooks::alterMenu');
+			$events->registerHandler('view_vars', 'navigation/menu/elements/section', __NAMESPACE__ . '\Events::alterMenuSectionVars');
+			$events->registerHandler('view', 'navigation/menu/elements/section', __NAMESPACE__ . '\Events::alterMenuSections');
+			$events->registerHandler('view', 'navigation/menu/default', __NAMESPACE__ . '\Events::alterMenu');
 		}
 		
 		if (!empty($settings['block_email'])) {
-			$hooks->registerHandler('transport', 'system:email', __NAMESPACE__ . '\Hooks::blockOutgoingEmails');
+			$events->registerHandler('transport', 'system:email', __NAMESPACE__ . '\Events::blockOutgoingEmails');
 			
 			if (!empty($settings['forward_email'])) {
-				$hooks->registerHandler('prepare', 'system:email', __NAMESPACE__ . '\Hooks::setForwardEmailAddress');
+				$events->registerHandler('prepare', 'system:email', __NAMESPACE__ . '\Events::setForwardEmailAddress');
 			}
 		}
 	

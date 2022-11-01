@@ -5,7 +5,7 @@ namespace Elgg\UserValidationByEmail;
 use Elgg\Exceptions\LoginException;
 
 /**
- * Hook callbacks for users
+ * Event callbacks for users
  *
  * @since 4.0
  * @internal
@@ -15,13 +15,13 @@ class User {
 	/**
 	 * Disables a user upon registration
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'user'
+	 * @param \Elgg\Event $event 'register', 'user'
 	 *
 	 * @return void
 	 */
-	public static function disableUserOnRegistration(\Elgg\Hook $hook) {
+	public static function disableUserOnRegistration(\Elgg\Event $event) {
 		
-		$user = $hook->getUserParam();
+		$user = $event->getUserParam();
 		// no clue what's going on, so don't react.
 		if (!$user instanceof \ElggUser) {
 			return;
@@ -29,7 +29,7 @@ class User {
 	
 		// another plugin is requesting that registration be terminated
 		// no need for uservalidationbyemail
-		if (!$hook->getValue()) {
+		if (!$event->getValue()) {
 			return;
 		}
 	

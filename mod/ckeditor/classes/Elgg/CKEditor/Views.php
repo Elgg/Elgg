@@ -3,7 +3,7 @@
 namespace Elgg\CKEditor;
 
 /**
- * Hook callbacks for views
+ * Event callbacks for views
  *
  * @since 4.0
  * @internal
@@ -13,12 +13,12 @@ class Views {
 	/**
 	 * Adds an ID to the view vars if not set
 	 *
-	 * @param \Elgg\Hook $hook 'view_vars', 'input/longtext'
+	 * @param \Elgg\Event $event 'view_vars', 'input/longtext'
 	 *
 	 * @return array
 	 */
-	public static function setInputLongTextIDViewVar(\Elgg\Hook $hook) {
-		$vars = $hook->getValue();
+	public static function setInputLongTextIDViewVar(\Elgg\Event $event) {
+		$vars = $event->getValue();
 		$id = elgg_extract('id', $vars);
 		if ($id !== null) {
 			return;

@@ -209,7 +209,7 @@ function elgg_comments_are_latest_first(\ElggEntity $container = null): bool {
 	$params = [
 		'entity' => $container,
 	];
-	return (bool) elgg_trigger_plugin_hook('config', 'comments_latest_first', $params, (bool) _elgg_services()->config->comments_latest_first);
+	return (bool) elgg_trigger_event_results('config', 'comments_latest_first', $params, (bool) _elgg_services()->config->comments_latest_first);
 }
 
 /**
@@ -223,5 +223,5 @@ function elgg_comments_per_page(\ElggEntity $container = null): int {
 	$params = [
 		'entity' => $container,
 	];
-	return (int) elgg_trigger_plugin_hook('config', 'comments_per_page', $params, _elgg_services()->config->comments_per_page);
+	return (int) elgg_trigger_event_results('config', 'comments_per_page', $params, _elgg_services()->config->comments_per_page);
 }

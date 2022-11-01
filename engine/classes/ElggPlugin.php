@@ -332,7 +332,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function setSetting(string $name, $value): bool {
 
-		$value = _elgg_services()->hooks->trigger('setting', 'plugin', [
+		$value = _elgg_services()->events->triggerResults('setting', 'plugin', [
 			'plugin_id' => $this->getID(),
 			'plugin' => $this,
 			'name' => $name,
@@ -402,11 +402,11 @@ class ElggPlugin extends ElggObject {
 			$result &= false;
 		}
 		
-		// trigger a hook, so plugin devs can also remove settings
+		// trigger an event, so plugin devs can also remove settings
 		$params = [
 			'entity' => $this,
 		];
-		return (bool) _elgg_services()->hooks->trigger('remove:settings', 'plugin', $params, $result);
+		return (bool) _elgg_services()->events->triggerResults('remove:settings', 'plugin', $params, $result);
 	}
 	
 	/**
@@ -530,7 +530,7 @@ class ElggPlugin extends ElggObject {
 		$return = _elgg_services()->events->trigger('activate', 'plugin', $params);
 
 		// if there are any on_enable functions, start the plugin now and run them
-		// Note: this will not run re-run the init hooks!
+		// Note: this will not run re-run the init events!
 		if ($return) {
 			try {
 				elgg_invalidate_caches();
@@ -1067,12 +1067,18 @@ class ElggPlugin extends ElggObject {
 	/**
 	 * Registers the plugin's hooks provided in the plugin config file
 	 *
+	 * @note using hooks in the static config is deprecated
+	 *
 	 * @return void
 	 */
 	protected function registerHooks(): void {
-		$hooks = _elgg_services()->hooks;
+		$events = _elgg_services()->events;
 
 		$spec = (array) $this->getStaticConfig('hooks', []);
+		
+		if (!empty($spec)) {
+			elgg_deprecated_notice("The plugin {$this->getID()} still has hooks definitions in the elgg-plugin.php. This should be moved to the events configuration.", '5.0');
+		}
 
 		foreach ($spec as $name => $types) {
 			foreach ($types as $type => $callbacks) {
@@ -1084,11 +1090,11 @@ class ElggPlugin extends ElggObject {
 					$unregister = (bool) elgg_extract('unregister', $hook_spec, false);
 					
 					if ($unregister) {
-						$hooks->unregisterHandler($name, $type, $callback);
+						$events->unregisterHandler($name, $type, $callback);
 					} else {
 						$priority = (int) elgg_extract('priority', $hook_spec, 500);
 			
-						$hooks->registerHandler($name, $type, $callback, $priority);
+						$events->registerHandler($name, $type, $callback, $priority);
 					}
 				}
 			}
@@ -1107,17 +1113,17 @@ class ElggPlugin extends ElggObject {
 
 		foreach ($spec as $name => $types) {
 			foreach ($types as $type => $callbacks) {
-				foreach ($callbacks as $callback => $hook_spec) {
-					if (!is_array($hook_spec)) {
+				foreach ($callbacks as $callback => $event_spec) {
+					if (!is_array($event_spec)) {
 						continue;
 					}
 					
-					$unregister = (bool) elgg_extract('unregister', $hook_spec, false);
+					$unregister = (bool) elgg_extract('unregister', $event_spec, false);
 
 					if ($unregister) {
 						$events->unregisterHandler($name, $type, $callback);
 					} else {
-						$priority = (int) elgg_extract('priority', $hook_spec, 500);
+						$priority = (int) elgg_extract('priority', $event_spec, 500);
 			
 						$events->registerHandler($name, $type, $callback, $priority);
 					}
@@ -1285,7 +1291,7 @@ class ElggPlugin extends ElggObject {
 			return;
 		}
 
-		// to make sure we trigger the correct hooks
+		// to make sure we trigger the correct events
 		$this->setSetting($name, $value);
 	}
 

@@ -12,12 +12,12 @@ class AddMetasHandler {
 	/**
 	 * Add metas to HTML head
 	 *
-	 * @param \Elgg\Hook $hook 'head', 'page'
+	 * @param \Elgg\Event $event 'head', 'page'
 	 *
 	 * @return array
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		$head_params = $hook->getValue();
+	public function __invoke(\Elgg\Event $event) {
+		$head_params = $event->getValue();
 		
 		$head_params['metas']['content-type'] = [
 			'http-equiv' => 'Content-Type',

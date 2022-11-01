@@ -140,7 +140,7 @@ class FormsService {
 	 */
 	public function setFooter(string $footer = ''): void {
 		if (!$this->rendering) {
-			throw new LogicException('Form footer can only be set and retrieved during form rendering, anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)');
+			throw new LogicException('Form footer can only be set and retrieved during form rendering, anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view events)');
 		}
 
 		$this->footer = $footer;
@@ -154,7 +154,7 @@ class FormsService {
 	 */
 	public function getFooter(): string {
 		if (!$this->rendering) {
-			throw new LogicException('Form footer can only be set and retrieved during form rendering, anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)');
+			throw new LogicException('Form footer can only be set and retrieved during form rendering, anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view events)');
 		}
 
 		return $this->footer;

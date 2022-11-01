@@ -12,12 +12,12 @@ class PreProcessCssHandler {
 	/**
 	 * Preprocesses CSS views sent by /cache URLs
 	 *
-	 * @param \Elgg\Hook $hook 'cache:generate' | 'simplecache:generate', 'css'
+	 * @param \Elgg\Event $event 'cache:generate' | 'simplecache:generate', 'css'
 	 *
 	 * @return string|null View content
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		$options = $hook->getParam('compiler_options', []);
-		return _elgg_services()->cssCompiler->compile($hook->getValue(), $options);
+	public function __invoke(\Elgg\Event $event) {
+		$options = $event->getParam('compiler_options', []);
+		return _elgg_services()->cssCompiler->compile($event->getValue(), $options);
 	}
 }

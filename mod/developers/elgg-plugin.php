@@ -45,7 +45,7 @@ return [
 			],
 		],
 	],
-	'hooks' => [
+	'events' => [
 		'register' => [
 			'menu:entity' => [
 				'Elgg\Developers\Menus\Entity::registerEntityExplorer' => [],

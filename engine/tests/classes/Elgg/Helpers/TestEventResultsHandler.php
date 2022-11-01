@@ -3,17 +3,17 @@
 namespace Elgg\Helpers;
 
 /**
- * @see \Elgg\PluginHooksServiceUnitTest
+ * @see \Elgg\EventsServiceResultsUnitTest
  */
-class TestHookHandler {
+class TestEventResultsHandler {
 	
 	public static $invocations = [];
 	
-	function __invoke(\Elgg\Hook $hook) {
+	function __invoke(\Elgg\Event $event) {
 		self::$invocations[] = [
 			'this' => $this,
 			'args' => func_get_args(),
 		];
-		return $hook->getValue() + 1;
+		return $event->getValue() + 1;
 	}
 }

@@ -28,11 +28,11 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 
 		$this->user = $this->createUser();
 		_elgg_services()->session->setLoggedInUser($this->user);
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 	}
 
 	public function down() {
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 	}
 
 	public function testCanBuildAccessSqlClausesWithIgnoredAccess() {
@@ -164,15 +164,15 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		_elgg_services()->session->setLoggedInUser($user);
 	}
 
-	public function testAccessPluginHookRemoveEnabled() {
-		$handler = function (\Elgg\Hook $hook) {
-			$clauses = $hook->getValue();
+	public function testAccessEventRemoveEnabled() {
+		$handler = function (\Elgg\Event $event) {
+			$clauses = $event->getValue();
 			$clauses['ands'] = [];
 
 			return $clauses;
 		};
 
-		elgg_register_plugin_hook_handler('get_sql', 'access', $handler);
+		elgg_register_event_handler('get_sql', 'access', $handler);
 
 		// Even though the clause is removed, the parameter is still in the QB parameter list
 		$this->qb->param('yes', ELGG_VALUE_STRING);
@@ -187,18 +187,18 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 
-		elgg_unregister_plugin_hook_handler('get_sql', 'access', $handler);
+		elgg_unregister_event_handler('get_sql', 'access', $handler);
 	}
 
-	public function testAccessPluginHookRemoveOrs() {
-		$handler = function (\Elgg\Hook $hook) {
-			$clauses = $hook->getValue();
+	public function testAccessEventRemoveOrs() {
+		$handler = function (\Elgg\Event $event) {
+			$clauses = $event->getValue();
 			$clauses['ors'] = [];
 
 			return $clauses;
 		};
 
-		elgg_register_plugin_hook_handler('get_sql', 'access', $handler);
+		elgg_register_event_handler('get_sql', 'access', $handler);
 
 		$parts = [];
 		$parts[] = $this->qb->compare('alias.enabled', '=', 'yes', ELGG_VALUE_STRING);
@@ -213,19 +213,19 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 
-		elgg_unregister_plugin_hook_handler('get_sql', 'access', $handler);
+		elgg_unregister_event_handler('get_sql', 'access', $handler);
 	}
 
-	public function testAccessPluginHookAddOr() {
-		$handler = function (\Elgg\Hook $hook) {
-			$clauses = $hook->getValue();
-			$qb = $hook->getParam('query_builder');
+	public function testAccessEventAddOr() {
+		$handler = function (\Elgg\Event $event) {
+			$clauses = $event->getValue();
+			$qb = $event->getParam('query_builder');
 			$clauses['ors'][] = $qb->compare($qb->param(57, ELGG_VALUE_INTEGER), '>', $qb->param(37, ELGG_VALUE_INTEGER));
 
 			return $clauses;
 		};
 
-		elgg_register_plugin_hook_handler('get_sql', 'access', $handler);
+		elgg_register_event_handler('get_sql', 'access', $handler);
 
 		$parts = [];
 		$parts[] = $this->qb->compare('alias.enabled', '=', 'yes', ELGG_VALUE_STRING);
@@ -248,19 +248,19 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 
-		elgg_unregister_plugin_hook_handler('get_sql', 'access', $handler);
+		elgg_unregister_event_handler('get_sql', 'access', $handler);
 	}
 
-	public function testAccessPluginHookAddAnd() {
-		$handler = function (\Elgg\Hook $hook) {
-			$clauses = $hook->getValue();
-			$qb = $hook->getParam('query_builder');
+	public function testAccessEventAddAnd() {
+		$handler = function (\Elgg\Event $event) {
+			$clauses = $event->getValue();
+			$qb = $event->getParam('query_builder');
 			$clauses['ands'][] = $qb->compare($qb->param(57, ELGG_VALUE_INTEGER), '>', $qb->param(37, ELGG_VALUE_INTEGER));
 
 			return $clauses;
 		};
 
-		elgg_register_plugin_hook_handler('get_sql', 'access', $handler);
+		elgg_register_event_handler('get_sql', 'access', $handler);
 
 		$parts = [];
 		$parts[] = $this->qb->compare('alias.enabled', '=', 'yes', ELGG_VALUE_STRING);
@@ -281,7 +281,7 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 
-		elgg_unregister_plugin_hook_handler('get_sql', 'access', $handler);
+		elgg_unregister_event_handler('get_sql', 'access', $handler);
 	}
 
 	protected function getOwnerClause($user_guid, $table_alias, $owner_guid = 'owner_guid') {

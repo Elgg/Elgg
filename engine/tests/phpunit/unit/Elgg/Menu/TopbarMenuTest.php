@@ -10,13 +10,13 @@ use Elgg\UnitTestCase;
 class TopbarMenuTest extends UnitTestCase {
 
 	public function up() {
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 
-		_elgg_services()->hooks->registerHandler('register', 'menu:topbar', 'Elgg\Menus\Topbar::registerUserLinks');
+		_elgg_services()->events->registerHandler('register', 'menu:topbar', 'Elgg\Menus\Topbar::registerUserLinks');
 	}
 	
 	public function down() {
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 	}
 
 	public function testTopbarMenuWithoutUser() {

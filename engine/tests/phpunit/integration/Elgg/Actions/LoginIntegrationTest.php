@@ -107,7 +107,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 	
 	public function testLoginFailsWithDisabledUser() {
 
-		elgg()->hooks->backup();
+		elgg()->events->backup();
 
 		$username = $this->getRandomUsername();
 		$user = $this->user = $this->createUser([], [
@@ -115,7 +115,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 			'password' => 123456,
 		]);
 
-		elgg()->hooks->restore();
+		elgg()->events->restore();
 
 		elgg_call(ELGG_IGNORE_ACCESS, function () use ($user) {
 			$user->setValidationStatus(true, 'login_test');
@@ -170,9 +170,9 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$this->assertEquals(elgg_echo('LoginException:BannedUser'), $response->getContent());
 	}
 
-	public function testCanPreventLoginWithHook() {
+	public function testCanPreventLoginWithEvent() {
 
-		$handler = function(\Elgg\Event $hook) {
+		$handler = function(\Elgg\Event $event) {
 			return false;
 		};
 
@@ -297,17 +297,17 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$last_forward_form = elgg_normalize_site_url('where_i_came_from');
 		$forward_to = elgg_normalize_site_url('where_i_want_to_be');
 
-		$hook_calls = 0;
+		$event_calls = 0;
 
-		$forward_handler = function (\Elgg\Hook $hook) use ($user, $last_forward_form, $forward_to, &$hook_calls) {
-			$this->assertEquals($last_forward_form, $hook->getValue());
-			$this->assertEquals('last_forward_from', $hook->getParam('source'));
-			$this->assertEquals($user, $hook->getParam('user'));
-			$hook_calls++;
+		$forward_handler = function (\Elgg\Event $event) use ($user, $last_forward_form, $forward_to, &$event_calls) {
+			$this->assertEquals($last_forward_form, $event->getValue());
+			$this->assertEquals('last_forward_from', $event->getParam('source'));
+			$this->assertEquals($user, $event->getParam('user'));
+			$event_calls++;
 			return $forward_to;
 		};
 
-		elgg_register_plugin_hook_handler('login:forward', 'user', $forward_handler);
+		elgg_register_event_handler('login:forward', 'user', $forward_handler);
 
 		_elgg_services()->session->set('last_forward_from', $last_forward_form);
 
@@ -317,7 +317,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 			'persistent' => false,
 		]);
 
-		$this->assertEquals(1, $hook_calls);
+		$this->assertEquals(1, $event_calls);
 
 		$this->assertInstanceOf(OkResponse::class, $response);
 		$this->assertEquals($forward_to, $response->getForwardURL());
@@ -326,6 +326,6 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 		_elgg_services()->session->removeLoggedInUser();
 
-		elgg_unregister_plugin_hook_handler('login:forward', 'user', $forward_handler);
+		elgg_unregister_event_handler('login:forward', 'user', $forward_handler);
 	}
 }

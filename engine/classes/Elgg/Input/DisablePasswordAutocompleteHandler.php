@@ -12,16 +12,16 @@ class DisablePasswordAutocompleteHandler {
 	/**
 	 * Disable the autocomplete feature on password fields
 	 *
-	 * @param \Elgg\Hook $hook 'view_vars', 'input/password'
+	 * @param \Elgg\Event $event 'view_vars', 'input/password'
 	 *
 	 * @return void|array
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
+	public function __invoke(\Elgg\Event $event) {
 		if (!_elgg_services()->config->security_disable_password_autocomplete) {
 			return;
 		}
 		
-		$return_value = $hook->getValue();
+		$return_value = $event->getValue();
 		
 		$return_value['autocomplete'] = 'off';
 		

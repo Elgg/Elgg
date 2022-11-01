@@ -3,7 +3,7 @@
 namespace Elgg\Friends\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  *
@@ -14,19 +14,19 @@ class Title {
 	/**
 	 * Adds friending to profile title menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:title'
+	 * @param \Elgg\Event $event 'register', 'menu:title'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 		
-		$user = $hook->getEntityParam();
+		$user = $event->getEntityParam();
 		if (!$user instanceof \ElggUser) {
 			return;
 		}
 		
 		/* @var $return \Elgg\Menu\MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$menu_items = _elgg_friends_get_add_friend_menu_items($user, true);
 		

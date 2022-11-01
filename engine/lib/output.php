@@ -177,7 +177,7 @@ function elgg_normalize_site_url(string $unsafe_url): ?string {
 function elgg_get_friendly_title(string $title): string {
 	// return a URL friendly title to short circuit normal title formatting
 	$params = ['title' => $title];
-	$result = elgg_trigger_plugin_hook('format', 'friendly:title', $params, null);
+	$result = elgg_trigger_event_results('format', 'friendly:title', $params, null);
 	if (is_string($result)) {
 		return $result;
 	}
@@ -210,7 +210,7 @@ function elgg_get_friendly_time(int $time, int $current_time = null): string {
 
 	// return a time string to short circuit normal time formatting
 	$params = ['time' => $time, 'current_time' => $current_time];
-	$result = elgg_trigger_plugin_hook('format', 'friendly:time', $params, null);
+	$result = elgg_trigger_event_results('format', 'friendly:time', $params, null);
 	if (is_string($result)) {
 		return $result;
 	}
@@ -296,13 +296,13 @@ function elgg_get_friendly_upload_error(int $error_code): string {
 
 /**
  * Strip tags and offer plugins the chance.
- * Plugins register for output:strip_tags plugin hook.
+ * Plugins register for output:strip_tags event.
  * Original string included in $params['original_string']
  *
  * @param string $string         Formatted string
  * @param string $allowable_tags Optional parameter to specify tags which should not be stripped
  *
- * @return string String run through strip_tags() and any plugin hooks.
+ * @return string String run through strip_tags() and any events.
  */
 function elgg_strip_tags(string $string, string $allowable_tags = null): string {
 	return _elgg_services()->html_formatter->stripTags($string, $allowable_tags);

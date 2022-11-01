@@ -5,19 +5,19 @@ namespace Elgg\Diagnostics;
 use Elgg\Project\Paths;
 
 /**
- * Plugin hook handlers for Developers plugin
+ * Event handlers for Developers plugin
  */
 class Reports {
 
 	/**
 	 * Generate a basic report
 	 *
-	 * @param \Elgg\Hook $hook 'diagnostics:report', 'system'
+	 * @param \Elgg\Event $event 'diagnostics:report', 'system'
 	 *
 	 * @return string
 	 */
-	public static function getBasic(\Elgg\Hook $hook) {
-		return $hook->getValue() . elgg_echo('diagnostics:report:basic', [elgg_get_release()]);
+	public static function getBasic(\Elgg\Event $event) {
+		return $event->getValue() . elgg_echo('diagnostics:report:basic', [elgg_get_release()]);
 	}
 	
 	/**
@@ -61,22 +61,22 @@ class Reports {
 	/**
 	 * Get some information about the files installed on a system
 	 *
-	 * @param \Elgg\Hook $hook 'diagnostics:report', 'system'
+	 * @param \Elgg\Event $event 'diagnostics:report', 'system'
 	 *
 	 * @return string
 	 */
-	public static function getSigs(\Elgg\Hook $hook) {
-		return $hook->getValue() . elgg_echo('diagnostics:report:md5', [self::md5dir(elgg_get_root_path())]);
+	public static function getSigs(\Elgg\Event $event) {
+		return $event->getValue() . elgg_echo('diagnostics:report:md5', [self::md5dir(elgg_get_root_path())]);
 	}
 	
 	/**
 	 * Get some information about the php install
 	 *
-	 * @param \Elgg\Hook $hook 'diagnostics:report', 'system'
+	 * @param \Elgg\Event $event 'diagnostics:report', 'system'
 	 *
 	 * @return string
 	 */
-	public static function getPHPInfo(\Elgg\Hook $hook) {
+	public static function getPHPInfo(\Elgg\Event $event) {
 	
 		ob_start();
 		phpinfo();
@@ -95,19 +95,19 @@ class Reports {
 			}
 		}
 	
-		return $hook->getValue() . elgg_echo('diagnostics:report:php', [print_r($phpinfo, true)]);
+		return $event->getValue() . elgg_echo('diagnostics:report:php', [print_r($phpinfo, true)]);
 	}
 	
 	/**
 	 * Get global variables
 	 *
-	 * @param \Elgg\Hook $hook 'diagnostics:report', 'system'
+	 * @param \Elgg\Event $event 'diagnostics:report', 'system'
 	 *
 	 * @return string
 	 */
-	public static function getGlobals(\Elgg\Hook $hook) {
+	public static function getGlobals(\Elgg\Event $event) {
 	
 		$output = str_replace(elgg_get_config('dbpass'), '<<DBPASS>>', print_r($GLOBALS, true));
-		return $hook->getValue() . elgg_echo('diagnostics:report:globals', [$output]);
+		return $event->getValue() . elgg_echo('diagnostics:report:globals', [$output]);
 	}
 }

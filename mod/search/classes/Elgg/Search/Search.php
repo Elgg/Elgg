@@ -52,7 +52,7 @@ class Search {
 	 * @return array
 	 */
 	public function getTypeSubtypePairs() {
-		return elgg_trigger_plugin_hook('search:config', 'type_subtype_pairs', $this->params, elgg_entity_types_with_capability('searchable'));
+		return elgg_trigger_event_results('search:config', 'type_subtype_pairs', $this->params, elgg_entity_types_with_capability('searchable'));
 	}
 
 	/**
@@ -61,7 +61,7 @@ class Search {
 	 * @return array
 	 */
 	public function getSearchTypes() {
-		return elgg_trigger_plugin_hook('search:config', 'search_types', $this->params, []);
+		return elgg_trigger_event_results('search:config', 'search_types', $this->params, []);
 	}
 
 	/**

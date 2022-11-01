@@ -18,6 +18,11 @@ Faker
 
 The faker library is no longer maintained by fzaninotto so we switched to a fork which is maintained by FakerPHP.
 
+Events and Hooks
+----------------
+
+These two similar concepts have been merged and from now on we will only refer to events. The public service ``hooks`` no longer exists.
+
 Private Settings
 ----------------
 
@@ -27,7 +32,7 @@ Breadcrumbs integrated into menu system
 ---------------------------------------
 
 Helper functions for the breadcrumb menu have been changed to use `elgg_register_menu_item()` for adding items to the breadcrumb menu. 
-Breadcrumb related hooks have been removed in favor of the regular menu hooks. 
+Breadcrumb related events have been removed in favor of the regular menu events. 
 
 Upgrades
 --------
@@ -101,7 +106,9 @@ Lib functions return types
 * ``elgg_register_menu_item()`` no longer has a return value
 * ``elgg_register_widget_type()`` no longer has a return value
 * ``elgg_set_form_footer()`` no longer has a return value
+* ``elgg_trigger_after_event()`` no longer has a return value
 * ``elgg_unregister_action()`` no longer has a return value
+* ``elgg_unregister_event_handler()`` no longer has a return value
 * ``elgg_unregister_notification_method()`` no longer has a return value
 * ``elgg_unregister_widget_type()`` no longer has a return value
 * ``elgg_view_annotation()`` no longer returns a ``bool``
@@ -121,6 +128,7 @@ Lib functions function parameters
 * ``discussion_prepare_form_vars()`` now requires a ``ElggDiscussion`` for ``$topic``
 * ``elgg_add_action_tokens_to_url()`` now requires a ``string`` for ``$url`` and a ``bool`` for ``$html_encode``
 * ``elgg_can_edit_widget_layout()`` now requires a ``string`` for ``$context`` and ``int`` for ``$user_guid``
+* ``elgg_clear_event_handlers()`` now requires a ``string`` for ``$event`` and ``$type``
 * ``elgg_clear_sticky_form()`` now requires a ``string`` for ``$context``
 * ``elgg_create_widget()`` now requires an ``int`` for ``$owner_guid`` and ``$access_id`` and a ``string`` for ``$handler`` and ``$context``
 * ``elgg_define_js()`` now requires a ``string`` for ``$name`` and an ``array`` for ``$config``
@@ -187,6 +195,7 @@ Lib functions function parameters
 * ``elgg_register_action()`` now requires a ``string`` for ``$filename``
 * ``elgg_register_ajax_view()`` now requires a ``string`` for ``$view``
 * ``elgg_register_error_message()`` now requires a ``string|array`` for ``$message``
+* ``elgg_register_event_handler()`` now requires a ``string`` for ``$event`` and ``$type`` and an ``int`` for ``$priority`` and a ``callable|string`` for ``$callable``
 * ``elgg_register_menu_item()`` now requires a ``string`` for ``$menu_name`` and a ``array|\ElggMenuItem`` for ``$menu_item``
 * ``elgg_register_notification_event()`` now requires a ``string`` for ``$object_type`` and ``$object_subtype``
 * ``elgg_register_notification_method()`` now requires a ``string`` for ``$name``
@@ -210,7 +219,12 @@ Lib functions function parameters
 * ``elgg_set_view_location()`` now requires a ``string`` for ``$view``, ``$location`` and ``$viewtype``
 * ``elgg_set_viewtype()`` now requires a ``string`` for ``$viewtype``
 * ``elgg_strip_tags()`` now requires a ``string`` for ``$string`` and ``$allowable_tags``
+* ``elgg_trigger_after_event()`` now requires a ``string`` for ``$event`` and ``$type``
+* ``elgg_trigger_before_event()`` now requires a ``string`` for ``$event`` and ``$type``
+* ``elgg_trigger_deprecated_event()`` now requires a ``string`` for ``$event``, ``$type``, ``$message`` and ``$version``
+* ``elgg_trigger_event()`` now requires a ``string`` for ``$event`` and ``$type``
 * ``elgg_unregister_ajax_view()`` now requires a ``string`` for ``$view``
+* ``elgg_register_event_handler()`` now requires a ``string`` for ``$event`` and ``$type`` and a ``callable|string`` for ``$callable``
 * ``elgg_unregister_menu_item()`` now requires a ``string`` for ``$menu_name`` and ``$item_name``
 * ``elgg_unregister_notification_event()`` now requires a ``string`` for ``$object_type`` and ``$object_subtype``
 * ``elgg_unregister_notification_method()`` now requires a ``string`` for ``$name``
@@ -221,6 +235,7 @@ Lib functions function parameters
 * ``elgg_validate_registration_data()`` now requires a ``string`` for ``$username``, ``$name`` and ``$email``, a ``bool`` for ``$multiple`` and a ``string|array`` for ``$password``
 * ``elgg_view()`` now requires a ``string`` for ``$view`` and ``$viewtype`` and a ``bool`` for ``$recurse``
 * ``elgg_view_annotation_list()`` now requires an ``array`` for ``$annotations``
+* ``elgg_view_deprecated()`` now requires a ``string`` for ``$view``, ``$message`` and ``$version``
 * ``elgg_view_comments()`` now requires an ``ElggEntity`` for ``$entity`` and a ``bool`` for ``$add_comment``
 * ``elgg_view_entity_icon()`` now requires a ``string`` for ``$size`` and an ``array`` for ``$vars``
 * ``elgg_view_entity_list()`` now requires an ``array`` for ``$entities``
@@ -336,14 +351,23 @@ Moved classes
 * ``\ElggTempDiskFilestore`` has been moved to ``\Elgg\Filesystem\Filestore\TempDiskFilestore``
 * ``\Elgg\Database\SiteSecret`` has been moved to ``\Elgg\Security\SiteSecret``
 
+Deprecated APIs
+~~~~~~~~~~~~~~~
+
+* ``elgg_clear_plugin_hook_handlers`` use ``elgg_clear_event_handlers``
+* ``elgg_register_plugin_hook_handler`` use ``elgg_register_event_handler``
+* ``elgg_trigger_plugin_hook`` use ``elgg_trigger_event_result``
+* ``elgg_unregister_plugin_hook_handler`` use ``elgg_unregister_event_handler``
+
 Removed functions
 ~~~~~~~~~~~~~~~~~
 
 * ``elgg_get_breadcrumbs``
 * ``elgg_pop_breadcrumb``
+* ``elgg_trigger_deprecated_plugin_hook``
 
-Removed hooks
-~~~~~~~~~~~~~
+Removed events
+~~~~~~~~~~~~~~
 
 * ``prepare, breadcrumbs`` use ``register, menu:breadcrumbs``
 

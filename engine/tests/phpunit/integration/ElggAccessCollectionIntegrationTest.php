@@ -3,11 +3,11 @@
 class ElggAccessCollectionIntegrationTest extends \Elgg\IntegrationTestCase {
 
 	public function up() {
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 		
 		// make sure our testing ACL subtype can be retrieved
-		elgg_register_plugin_hook_handler('access:collections:write:subtypes', 'user', function(\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		elgg_register_event_handler('access:collections:write:subtypes', 'user', function(\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value[] = 'foo';
 			
 			return $value;
@@ -15,7 +15,7 @@ class ElggAccessCollectionIntegrationTest extends \Elgg\IntegrationTestCase {
 	}
 	
 	public function down() {
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 	}
 	
 	protected function createCollection(): \ElggAccessCollection {
@@ -46,10 +46,10 @@ class ElggAccessCollectionIntegrationTest extends \Elgg\IntegrationTestCase {
 	public function testCanSetAccessCollectionUrl() {
 		$acl = $this->createCollection();
 
-		_elgg_services()->hooks->registerHandler('access_collection:url', 'access_collection', function (\Elgg\Hook $hook) use ($acl) {
-			$hook_acl = $hook->getParam('access_collection');
-			$this->assertEquals($acl, $hook_acl);
-			if ($hook_acl->getSubtype() === 'foo') {
+		_elgg_services()->events->registerHandler('access_collection:url', 'access_collection', function (\Elgg\Event $event) use ($acl) {
+			$event_acl = $event->getParam('access_collection');
+			$this->assertEquals($acl, $event_acl);
+			if ($event_acl->getSubtype() === 'foo') {
 				return 'bar';
 			}
 		});
@@ -126,14 +126,14 @@ class ElggAccessCollectionIntegrationTest extends \Elgg\IntegrationTestCase {
 		elgg()->session->removeLoggedInUser();
 	}
 	
-	public function testCanEditACLHook() {
+	public function testCanEditACLEvent() {
 		$acl = $this->createCollection();
 		$user = $this->createUser();
 		
-		$handler = function(\Elgg\Hook $hook) use ($acl, $user) {
-			$value = $hook->getValue();
+		$handler = function(\Elgg\Event $event) use ($acl, $user) {
+			$value = $event->getValue();
 			
-			if ($hook->getParam('user_id') == $user->guid) {
+			if ($event->getParam('user_id') == $user->guid) {
 				$value[$acl->id] = $acl->name;
 			}
 			
@@ -142,11 +142,11 @@ class ElggAccessCollectionIntegrationTest extends \Elgg\IntegrationTestCase {
 		
 		$this->assertFalse($acl->canEdit($user->guid));
 		
-		elgg_register_plugin_hook_handler('access:collections:write', 'all', $handler, 600);
+		elgg_register_event_handler('access:collections:write', 'all', $handler, 600);
 		
 		$this->assertTrue($acl->canEdit($user->guid));
 		
-		elgg_unregister_plugin_hook_handler('access:collections:write', 'all', $handler);
+		elgg_unregister_event_handler('access:collections:write', 'all', $handler);
 	}
 	
 	public function testMemberCantEditACL() {

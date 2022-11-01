@@ -77,7 +77,7 @@ if ($active) {
 	$options['disabled'] = true;
 }
 
-$action_button = elgg_trigger_plugin_hook('action_button', 'plugin', ['entity' => $plugin], elgg_view('output/url', $options));
+$action_button = elgg_trigger_event_results('action_button', 'plugin', ['entity' => $plugin], elgg_view('output/url', $options));
 
 // Display categories and make category classes
 $categories = array_keys($plugin->getCategories());

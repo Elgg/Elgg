@@ -20,9 +20,25 @@ return [
 				'Elgg\SystemLog\Logger::listen' => ['priority' => 400],
 			],
 		],
+		'cron' => [
+			'all' => [
+				'Elgg\SystemLog\Cron::rotateLogs' => [],
+			],
+			'daily' => [
+				'Elgg\SystemLog\Cron::deleteLogs' => [],
+			],
+		],
 		'log' => [
 			'systemlog' => [
 				'Elgg\SystemLog\Logger::log' => ['priority' => 999],
+			],
+		],
+		'register' => [
+			'menu:entity' => [
+				'Elgg\SystemLog\Menus\Entity::register' => [],
+			],
+			'menu:page' => [
+				'Elgg\SystemLog\Menus\Page::register' => [],
 			],
 		],
 		'upgrade:before' => [
@@ -33,24 +49,6 @@ return [
 		'upgrade:execute:before' => [
 			'system' => [
 				'Elgg\SystemLog\Logger::disableLogging' => [],
-			],
-		],
-	],
-	'hooks' => [
-		'cron' => [
-			'all' => [
-				'Elgg\SystemLog\Cron::rotateLogs' => [],
-			],
-			'daily' => [
-				'Elgg\SystemLog\Cron::deleteLogs' => [],
-			],
-		],
-		'register' => [
-			'menu:entity' => [
-				'Elgg\SystemLog\Menus\Entity::register' => [],
-			],
-			'menu:page' => [
-				'Elgg\SystemLog\Menus\Page::register' => [],
 			],
 		],
 	],

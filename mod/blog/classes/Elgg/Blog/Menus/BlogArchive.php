@@ -3,7 +3,7 @@
 namespace Elgg\Blog\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,16 +13,16 @@ class BlogArchive {
 	/**
 	 * Register user item to menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:blog_archive'
+	 * @param \Elgg\Event $event 'register', 'menu:blog_archive'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
-		$page_owner = $hook->getParam('entity', elgg_get_page_owner_entity());
-		$page = $hook->getParam('page', 'all');
+	public static function register(\Elgg\Event $event) {
+		$page_owner = $event->getParam('entity', elgg_get_page_owner_entity());
+		$page = $event->getParam('page', 'all');
 		
 		// can't use default param logic as the key exists, but the value is mostly NULL
-		$show_blog_archive = $hook->getParam('show_blog_archive') ?? in_array($page, ['all', 'owner', 'friends', 'group']);
+		$show_blog_archive = $event->getParam('show_blog_archive') ?? in_array($page, ['all', 'owner', 'friends', 'group']);
 		if (!$show_blog_archive) {
 			// only generate archive menu for supported pages
 			return;
@@ -44,14 +44,14 @@ class BlogArchive {
 			$options['container_guid'] = $page_owner->guid;
 		}
 		
-		$options = array_merge($options, (array) $hook->getParam('blog_archive_options', []));
+		$options = array_merge($options, (array) $event->getParam('blog_archive_options', []));
 		
 		$dates = elgg_get_entity_dates($options);
 		if (!$dates) {
 			return;
 		}
 	
-		$blog_archive_url = $hook->getParam('blog_archive_url');
+		$blog_archive_url = $event->getParam('blog_archive_url');
 		$generate_url = function($lower = null, $upper = null) use ($page_owner, $page, $blog_archive_url) {
 			if (!empty($blog_archive_url)) {
 				$url_segment = elgg_http_add_url_query_elements($blog_archive_url, [
@@ -89,7 +89,7 @@ class BlogArchive {
 			return $url_segment;
 		};
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$years = [];
 		$dates = array_reverse($dates);

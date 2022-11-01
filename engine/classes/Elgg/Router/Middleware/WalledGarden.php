@@ -43,7 +43,7 @@ class WalledGarden {
 	/**
 	 * Checks if the page should be allowed to be served in a walled garden mode
 	 *
-	 * Pages are registered to be public by {@elgg_plugin_hook public_pages walled_garden}.
+	 * Pages are registered to be public by 'public_pages', 'walled_garden' event.
 	 *
 	 * @param string $url Defaults to the current URL
 	 *
@@ -77,7 +77,7 @@ class WalledGarden {
 			'url' => $url,
 		];
 
-		$public_routes = _elgg_services()->hooks->trigger('public_pages', 'walled_garden', $params, $defaults);
+		$public_routes = _elgg_services()->events->triggerResults('public_pages', 'walled_garden', $params, $defaults);
 
 		$site_url = preg_quote($site_url);
 		foreach ($public_routes as $public_route) {

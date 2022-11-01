@@ -24,8 +24,8 @@ $formatter = elgg()->html_formatter;
 
 $prepared_body = '';
 
-elgg_register_plugin_hook_handler('send', 'notification:email', function (\Elgg\Hook $hook) use (&$prepared_body) {
-	$notification = $hook->getParam('notification');
+elgg_register_event_handler('send', 'notification:email', function (\Elgg\Event $event) use (&$prepared_body) {
+	$notification = $event->getParam('notification');
 	if ($notification instanceof Notification) {
 		$prepared_body = $notification->body;
 	}

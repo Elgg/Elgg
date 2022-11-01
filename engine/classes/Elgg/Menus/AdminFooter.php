@@ -15,17 +15,17 @@ class AdminFooter {
 	/**
 	 * Add links to Elgg help resources
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:admin_footer'
+	 * @param \Elgg\Event $event 'register', 'menu:admin_footer'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerHelpResources(\Elgg\Hook $hook) {
+	public static function registerHelpResources(\Elgg\Event $event) {
 		if (!elgg_is_admin_logged_in()) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'faq',

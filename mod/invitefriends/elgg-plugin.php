@@ -18,7 +18,7 @@ return [
 			],
 		],
 	],
-	'hooks' => [
+	'events' => [
 		'register' => [
 			'menu:page' => [
 				'Elgg\InviteFriends\Menus\Page::register' => [],
@@ -27,8 +27,6 @@ return [
 				'Elgg\InviteFriends\Users::addFriendsOnRegister' => [],
 			],
 		],
-	],
-	'events' => [
 		'validate:after' => [
 			'user' => [
 				'Elgg\InviteFriends\Users::addFriendsAfterValidation' => [],

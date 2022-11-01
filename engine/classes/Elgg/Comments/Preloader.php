@@ -91,14 +91,14 @@ class Preloader {
 	}
 	
 	/**
-	 * Hook handler for listings to determine if preloading is needed
+	 * Event handler for listings to determine if preloading is needed
 	 *
-	 * @param \Elgg\Hook $hook 'view_vars', 'page/components/list'
+	 * @param \Elgg\Event $event 'view_vars', 'page/components/list'
 	 *
 	 * @return void
 	 */
-	public static function preload(\Elgg\Hook $hook): void {
-		$vars = $hook->getValue();
+	public static function preload(\Elgg\Event $event): void {
+		$vars = $event->getValue();
 		
 		$items = (array) elgg_extract('items', $vars, []);
 		if (!elgg_is_logged_in() || count($items) < 3) {

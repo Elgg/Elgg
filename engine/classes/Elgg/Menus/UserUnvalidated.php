@@ -15,22 +15,22 @@ class UserUnvalidated {
 	/**
 	 * Register default links
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:user:unvalidated'
+	 * @param \Elgg\Event $event 'register', 'menu:user:unvalidated'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 		if (!elgg_is_admin_logged_in()) {
 			return;
 		}
 		
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggUser || $entity->isValidated()) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'change_email',

@@ -20,9 +20,9 @@ use ElggSession;
 class UserCapabilities {
 
 	/**
-	 * @var PluginHooksService $hooks
+	 * @var EventsService
 	 */
-	private $hooks;
+	private $events;
 
 	/**
 	 * @var EntityTable
@@ -37,12 +37,12 @@ class UserCapabilities {
 	/**
 	 * Constructor
 	 *
-	 * @param PluginHooksService $hooks    Plugin hooks service
-	 * @param EntityTable        $entities Entity table
-	 * @param ElggSession        $session  Session
+	 * @param EventsService $events   Events service
+	 * @param EntityTable   $entities Entity table
+	 * @param ElggSession   $session  Session
 	 */
-	public function __construct(PluginHooksService $hooks, EntityTable $entities, ElggSession $session) {
-		$this->hooks = $hooks;
+	public function __construct(EventsService $events, EntityTable $entities, ElggSession $session) {
+		$this->events = $events;
 		$this->entities = $entities;
 		$this->session = $session;
 	}
@@ -77,7 +77,7 @@ class UserCapabilities {
 	/**
 	 * Can a user edit this entity?
 	 *
-	 * @tip Can be overridden by registering for the permissions_check plugin hook.
+	 * @tip Can be overridden by registering for the 'permissions_check' event.
 	 *
 	 * @param ElggEntity $entity    Object entity
 	 * @param int        $user_guid The user GUID, optionally (default: logged in user)
@@ -95,7 +95,7 @@ class UserCapabilities {
 			return false;
 		}
 
-		// Test user if possible - should default to false unless a plugin hook says otherwise
+		// Test user if possible - should default to false unless an event says otherwise
 		$default = call_user_func(function () use ($entity, $user) {
 			if (!$user) {
 				return false;
@@ -129,13 +129,13 @@ class UserCapabilities {
 		});
 
 		$params = ['entity' => $entity, 'user' => $user];
-		return $this->hooks->trigger('permissions_check', $entity->getType(), $params, $default);
+		return $this->events->triggerResults('permissions_check', $entity->getType(), $params, $default);
 	}
 
 	/**
 	 * Can a user delete this entity?
 	 *
-	 * @tip Can be overridden by registering for the permissions_check:delete plugin hook.
+	 * @tip Can be overridden by registering for the 'permissions_check:delete' event.
 	 *
 	 * @param ElggEntity $entity    Object entity
 	 * @param int        $user_guid The user GUID, optionally (default: logged in user)
@@ -160,13 +160,13 @@ class UserCapabilities {
 			'entity' => $entity,
 			'user' => $user
 		];
-		return $this->hooks->trigger('permissions_check:delete', $entity->getType(), $params, $return);
+		return $this->events->triggerResults('permissions_check:delete', $entity->getType(), $params, $return);
 	}
 
 	/**
 	 * Can a user delete this river item?
 	 *
-	 * @tip Can be overridden by registering for the "permissions_check:delete", "river" plugin hook.
+	 * @tip Can be overridden by registering for the "permissions_check:delete", "river" event.
 	 *
 	 * @param ElggRiverItem $item      River item
 	 * @param int           $user_guid The user GUID, optionally (default: logged in user)
@@ -189,7 +189,7 @@ class UserCapabilities {
 			'item' => $item,
 			'user' => $user,
 		];
-		return $this->hooks->trigger('permissions_check:delete', 'river', $params, false);
+		return $this->events->triggerResults('permissions_check:delete', 'river', $params, false);
 	}
 
 	/**
@@ -230,14 +230,14 @@ class UserCapabilities {
 			}
 		}
 
-		// Trigger plugin hook - note that $user may be null
+		// Trigger event - note that $user may be null
 		$params = [
 			'entity' => $entity,
 			'user' => $user,
-			'annotation' => $annotation
+			'annotation' => $annotation,
 		];
 
-		return $this->hooks->trigger('permissions_check', 'annotation', $params, $result);
+		return $this->events->triggerResults('permissions_check', 'annotation', $params, $result);
 	}
 	
 	/**
@@ -270,11 +270,11 @@ class UserCapabilities {
 		// Unlike permissions, logic check can be used to prevent certain entity
 		// types from being contained by other entity types,
 		// e.g. discussion reply objects can only be contained by discussion objects.
-		// This hook can also be used to apply status logic, e.g. to disallow
+		// This event can also be used to apply status logic, e.g. to disallow
 		// new replies in closed discussions.
 		// We do not take a stand hence the return is null. This can be used by
-		// handlers to check if another hook has modified the value.
-		$logic_check = $this->hooks->trigger('container_logic_check', $type, $params);
+		// handlers to check if another event has modified the value.
+		$logic_check = $this->events->triggerResults('container_logic_check', $type, $params);
 
 		if ($logic_check === false) {
 			return false;
@@ -290,14 +290,14 @@ class UserCapabilities {
 		// Container permissions can prevent users from writing to an entity.
 		// For instance, these permissions can prevent non-group members from writing
 		// content to the group.
-		return $this->hooks->trigger('container_permissions_check', $type, $params, $return);
+		return $this->events->triggerResults('container_permissions_check', $type, $params, $return);
 	}
 
 	/**
 	 * Can a user comment on an entity?
 	 *
 	 * @tip Can be overridden by registering for the permissions_check:comment,
-	 * <entity type> plugin hook.
+	 * <entity type> event.
 	 *
 	 * @param ElggEntity $entity    Object entity
 	 * @param int        $user_guid User guid (default is logged in user)
@@ -313,7 +313,7 @@ class UserCapabilities {
 		
 		$container_result = $this->canWriteToContainer($entity, 'object', 'comment', $user_guid);
 		if ($this->canBypassPermissionsCheck($user_guid)) {
-			// doing this again here to prevent bypassed users to be influenced by permissions_check:comment hook
+			// doing this again here to prevent bypassed users to be influenced by 'permissions_check:comment' event
 			return $container_result;
 		}
 		
@@ -323,17 +323,17 @@ class UserCapabilities {
 			'entity' => $entity,
 			'user' => $user,
 		];
-		return $this->hooks->trigger('permissions_check:comment', $entity->getType(), $params, $container_result);
+		return $this->events->triggerResults('permissions_check:comment', $entity->getType(), $params, $container_result);
 	}
 
 	/**
 	 * Can a user annotate an entity?
 	 *
-	 * @tip Can be overridden by registering for the plugin hook [permissions_check:annotate:<name>,
-	 * <entity type>] or [permissions_check:annotate, <entity type>]. The hooks are called in that order.
+	 * @tip Can be overridden by registering for the event [permissions_check:annotate:<name>,
+	 * <entity type>] or [permissions_check:annotate, <entity type>]. The events are called in that order.
 	 *
 	 * @tip If you want logged out users to annotate an object, do not call
-	 * canAnnotate(). It's easier than using the plugin hook.
+	 * canAnnotate(). It's easier than using the event.
 	 *
 	 * @param ElggEntity $entity          Objet entity
 	 * @param int        $user_guid       User guid (default is logged in user)
@@ -361,16 +361,16 @@ class UserCapabilities {
 		];
 
 		if (!empty($annotation_name)) {
-			$return = $this->hooks->trigger("permissions_check:annotate:$annotation_name", $entity->getType(), $params, $return);
+			$return = $this->events->triggerResults("permissions_check:annotate:$annotation_name", $entity->getType(), $params, $return);
 		}
 
-		return $this->hooks->trigger('permissions_check:annotate', $entity->getType(), $params, $return);
+		return $this->events->triggerResults('permissions_check:annotate', $entity->getType(), $params, $return);
 	}
 
 	/**
 	 * Can a user download a file?
 	 *
-	 * @tip Can be overridden by registering for the permissions_check:download,file plugin hook.
+	 * @tip Can be overridden by registering for the 'permissions_check:download', 'file' event.
 	 *
 	 * @param ElggFile $entity    File entity
 	 * @param int      $user_guid User guid (default is logged in user)
@@ -394,7 +394,7 @@ class UserCapabilities {
 			'user' => $user
 		];
 
-		return $this->hooks->trigger('permissions_check:download', 'file', $params, $default);
+		return $this->events->triggerResults('permissions_check:download', 'file', $params, $default);
 	}
 
 }

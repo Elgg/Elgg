@@ -12,12 +12,12 @@ class GetSiteFaviconSizesHandler {
 	/**
 	 * Returns site icon sizes
 	 *
-	 * @param \Elgg\Hook $hook 'entity:favicon:sizes', 'site'
+	 * @param \Elgg\Event $event 'entity:favicon:sizes', 'site'
 	 *
 	 * @return array
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		$sizes = $hook->getValue();
+	public function __invoke(\Elgg\Event $event) {
+		$sizes = $event->getValue();
 	
 		$sizes['icon-16'] = [
 			'w' => 16,

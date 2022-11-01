@@ -12,16 +12,16 @@ class RemovePublicAccessHandler {
 	/**
 	 * Remove public access for walled gardens
 	 *
-	 * @param \Elgg\Hook $hook 'access:collections:write', 'all'
+	 * @param \Elgg\Event $event 'access:collections:write', 'all'
 	 *
 	 * @return array|void
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
+	public function __invoke(\Elgg\Event $event) {
 		if (!_elgg_services()->config->walled_garden) {
 			return;
 		}
 	
-		$accesses = $hook->getValue();
+		$accesses = $event->getValue();
 		if (isset($accesses[ACCESS_PUBLIC])) {
 			unset($accesses[ACCESS_PUBLIC]);
 		}

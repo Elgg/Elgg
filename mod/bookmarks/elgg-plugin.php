@@ -81,7 +81,7 @@ return [
 			],
 		],
 	],
-	'hooks' => [
+	'events' => [
 		'container_logic_check' => [
 			'object' => [
 				GroupToolContainerLogicCheck::class => [],

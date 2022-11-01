@@ -24,15 +24,6 @@ class Inspector {
 	}
 
 	/**
-	 * Get Elgg plugin hooks information
-	 *
-	 * @return array [hook,type] => array(handlers)
-	 */
-	public function getPluginHooks() {
-		return $this->buildHandlerTree(_elgg_services()->hooks->getAllHandlers());
-	}
-
-	/**
 	 * Get all view types for known views
 	 *
 	 * @return string[]
@@ -95,7 +86,7 @@ class Inspector {
 		}
 
 		// view handlers
-		$handlers = _elgg_services()->hooks->getAllHandlers();
+		$handlers = _elgg_services()->events->getAllHandlers();
 
 		$input_filtered_views = [];
 		if (!empty($handlers['view_vars'])) {
@@ -107,17 +98,17 @@ class Inspector {
 			$filtered_views = array_keys($handlers['view']);
 		}
 
-		$global_hooks = [];
+		$global_events = [];
 		if (!empty($handlers['view_vars']['all'])) {
-			$global_hooks[] = 'view_vars, all';
+			$global_events[] = 'view_vars, all';
 		}
 		if (!empty($handlers['view']['all'])) {
-			$global_hooks[] = 'view, all';
+			$global_events[] = 'view, all';
 		}
 
 		return [
 			'views' => $views,
-			'global_hooks' => $global_hooks,
+			'global_events' => $global_events,
 			'input_filtered_views' => $input_filtered_views,
 			'filtered_views' => $filtered_views,
 		];
@@ -259,7 +250,7 @@ class Inspector {
 		$menus = _elgg_services()->menus->getAllMenus();
 
 		// get JIT menu items
-		// note that 'river' is absent from this list - hooks attempt to get object/subject entities cause problems
+		// note that 'river' is absent from this list - events attempt to get object/subject entities cause problems
 		$jit_menus = ['annotation', 'entity', 'login', 'longtext', 'owner_block', 'user_hover', 'widget'];
 
 		// create generic ElggEntity, ElggAnnotation, ElggUser, ElggWidget
@@ -287,7 +278,7 @@ class Inspector {
 		$widget->guid = 999;
 		$widget->title = 'test widget';
 
-		// call plugin hooks
+		// call events
 		foreach ($jit_menus as $type) {
 			$params = ['entity' => $entity, 'annotation' => $annotation, 'user' => $user];
 			switch ($type) {
@@ -305,7 +296,7 @@ class Inspector {
 				default:
 					break;
 			}
-			$menus[$type] = _elgg_services()->hooks->trigger('register', "menu:$type", $params, new MenuItems());
+			$menus[$type] = _elgg_services()->events->triggerResults('register', "menu:{$type}", $params, new MenuItems());
 		}
 
 		// put the menus in tree form for inspection
@@ -358,7 +349,7 @@ class Inspector {
 	/**
 	 * Build a tree of event handlers
 	 *
-	 * @param array $all_handlers Set of handlers from a HooksRegistrationService
+	 * @param array $all_handlers Set of handlers from a EventsService
 	 *
 	 * @return array
 	 */
@@ -367,15 +358,15 @@ class Inspector {
 		$root = elgg_get_root_path();
 		$handlers_svc = _elgg_services()->handlers;
 
-		foreach ($all_handlers as $hook => $types) {
+		foreach ($all_handlers as $event => $types) {
 			foreach ($types as $type => $priorities) {
 				ksort($priorities);
 
 				foreach ($priorities as $priority => $handlers) {
 					foreach ($handlers as $callable) {
 						$description = $handlers_svc->describeCallable($callable, $root);
-						$callable = "$priority: $description";
-						$tree["$hook, $type"][] = $callable;
+						$callable = "{$priority}: {$description}";
+						$tree["{$event}, {$type}"][] = $callable;
 					}
 				}
 			}

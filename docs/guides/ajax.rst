@@ -16,7 +16,7 @@ All the ajax methods perform the following:
 #. The request is made to the server, either rendering a view or a form, calling an action, or loading a path.
 #. The method returns a ``jqXHR`` object, which can be used as a Promise.
 #. Server-echoed content is turned into a response object (``Elgg\Services\AjaxResponse``) containing a string (or a JSON-parsed value).
-#. The response object is filtered by the hook ``ajax_response``.
+#. The response object is filtered by the event ``ajax_response``.
 #. The response object is used to create the HTTP response.
 #. Client-side, the response data is filtered by the hook ``ajax_response_data``.
 #. The ``jqXHR`` promise is resolved and any ``success`` callbacks are called.
@@ -223,7 +223,7 @@ Notes for forms:
 	Only the request data are passed to the requested form view (i.e. as a third parameter accepted by
 	``elgg_view_form()``). If you need to pass attributes or parameters of the form element rendered by the
 	``input/form`` view (i.e. normally passed as a second parameter to ``elgg_view_form()``), use the server-side
-	hook ``view_vars, input/form``.
+	event ``view_vars, input/form``.
 
 .. warning::
 
@@ -283,7 +283,7 @@ This data can be read server-side via ``get_input('bar');``.
 Piggybacking on an Ajax response
 --------------------------------
 
-The server-side ``ajax_response`` hook can be used to append or filter response data (or metadata).
+The server-side ``ajax_response`` event can be used to append or filter response data (or metadata).
 
 Let's say when the view ``foo`` is fetched, we want to also send the client some additional data:
 
@@ -291,10 +291,10 @@ Let's say when the view ``foo`` is fetched, we want to also send the client some
 
     use Elgg\Services\AjaxResponse;
 
-    function myplugin_append_ajax(\Elgg\Hook $hook) {
+    function myplugin_append_ajax(\Elgg\Event $event) {
 
         /* @var $response AjaxResponse */
-        $response = $hook->getValue();
+        $response = $event->getValue();
         
         // alter the value being returned
         $response->getData()->value .= " hello";
@@ -306,9 +306,9 @@ Let's say when the view ``foo`` is fetched, we want to also send the client some
     }
 
     // in myplugin_init()
-    elgg_register_plugin_hook_handler(AjaxResponse::RESPONSE_HOOK, 'view:foo', 'myplugin_append_ajax');
+    elgg_register_event_handler(AjaxResponse::RESPONSE_EVENT, 'view:foo', 'myplugin_append_ajax');
 
-To capture the metadata send back to the client, we use the client-side ``ajax_response`` hook:
+To capture the metadata send back to the client, we use the client-side ``ajax_response_data`` hook:
 
 .. code-block:: js
 

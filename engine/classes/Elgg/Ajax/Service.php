@@ -3,9 +3,9 @@
 namespace Elgg\Ajax;
 
 use Elgg\Amd\Config;
+use Elgg\EventsService;
 use Elgg\Exceptions\RuntimeException;
 use Elgg\Http\Request;
-use Elgg\PluginHooksService;
 use Elgg\Services\AjaxResponse;
 use Elgg\SystemMessagesService;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,9 +19,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class Service {
 
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	private $hooks;
+	private $events;
 
 	/**
 	 * @var SystemMessagesService
@@ -51,19 +51,19 @@ class Service {
 	/**
 	 * Constructor
 	 *
-	 * @param PluginHooksService    $hooks     Hooks service
+	 * @param EventsService         $events    Events service
 	 * @param SystemMessagesService $msgs      System messages service
 	 * @param Request               $request   Http Request
 	 * @param Config                $amdConfig AMD config
 	 */
-	public function __construct(PluginHooksService $hooks, SystemMessagesService $msgs, Request $request, Config $amdConfig) {
-		$this->hooks = $hooks;
+	public function __construct(EventsService $events, SystemMessagesService $msgs, Request $request, Config $amdConfig) {
+		$this->events = $events;
 		$this->msgs = $msgs;
 		$this->request = $request;
 		$this->amd_config = $amdConfig;
 
 		$message_filter = [$this, 'prepareResponse'];
-		$this->hooks->registerHandler(AjaxResponse::RESPONSE_HOOK, 'all', $message_filter, 999);
+		$this->events->registerHandler(AjaxResponse::RESPONSE_EVENT, 'all', $message_filter, 999);
 	}
 
 	/**
@@ -108,12 +108,12 @@ class Service {
 	 * Send a JSON HTTP response with the given output
 	 *
 	 * @param mixed  $output     Output from a page/action handler
-	 * @param string $hook_type  The hook type. If given, the response will be filtered by hook
+	 * @param string $event_type The event type. If given, the response will be filtered by event
 	 * @param bool   $try_decode Try to convert a JSON string back to an abject
 	 *
 	 * @return JsonResponse|false
 	 */
-	public function respondFromOutput($output, string $hook_type = '', bool $try_decode = true) {
+	public function respondFromOutput($output, string $event_type = '', bool $try_decode = true) {
 		if ($try_decode) {
 			$output = $this->decodeJson($output);
 		}
@@ -126,7 +126,7 @@ class Service {
 		} else {
 			$api_response->setData((object) ['value' => $output]);
 		}
-		$api_response = $this->filterApiResponse($api_response, $hook_type);
+		$api_response = $this->filterApiResponse($api_response, $event_type);
 		$response = $this->buildHttpResponse($api_response);
 
 		$this->response_sent = true;
@@ -137,12 +137,12 @@ class Service {
 	 * Send a JSON HTTP response based on the given API response
 	 *
 	 * @param AjaxResponse $api_response API response
-	 * @param string       $hook_type    The hook type. If given, the response will be filtered by hook
+	 * @param string       $event_type   The event type. If given, the response will be filtered by event
 	 *
 	 * @return JsonResponse|false
 	 */
-	public function respondFromApiResponse(AjaxResponse $api_response, string $hook_type = '') {
-		$api_response = $this->filterApiResponse($api_response, $hook_type);
+	public function respondFromApiResponse(AjaxResponse $api_response, string $event_type = '') {
+		$api_response = $this->filterApiResponse($api_response, $event_type);
 		$response = $this->buildHttpResponse($api_response);
 
 		$this->response_sent = true;
@@ -168,22 +168,22 @@ class Service {
 	}
 
 	/**
-	 * Filter an AjaxResponse through a plugin hook
+	 * Filter an AjaxResponse through a event
 	 *
 	 * @param AjaxResponse $api_response The API Response
-	 * @param string       $hook_type    The hook type. If given, the response will be filtered by hook
+	 * @param string       $event_type   The event type. If given, the response will be filtered by event
 	 *
 	 * @return AjaxResponse
 	 * @throws RuntimeException
 	 */
-	private function filterApiResponse(AjaxResponse $api_response, string $hook_type = ''): AjaxResponse {
+	private function filterApiResponse(AjaxResponse $api_response, string $event_type = ''): AjaxResponse {
 		$api_response->setTtl($this->request->getParam('elgg_response_ttl', 0, false));
 
-		if ($hook_type) {
-			$hook = AjaxResponse::RESPONSE_HOOK;
-			$api_response = $this->hooks->trigger($hook, $hook_type, null, $api_response);
+		if ($event_type) {
+			$event_name = AjaxResponse::RESPONSE_EVENT;
+			$api_response = $this->events->triggerResults($event_name, $event_type, [], $api_response);
 			if (!$api_response instanceof AjaxResponse) {
-				throw new RuntimeException("The value returned by hook [$hook, $hook_type] was not an ApiResponse");
+				throw new RuntimeException("The value returned by event [{$event_name}, {$event_type}] was not an ApiResponse");
 			}
 		}
 
@@ -230,13 +230,13 @@ class Service {
 	/**
 	 * Prepare the response with additional metadata, like system messages and required AMD modules
 	 *
-	 * @param \Elgg\Hook $hook "ajax_response", "all"
+	 * @param \Elgg\Event $event "ajax_response", "all"
 	 *
 	 * @return AjaxResponse
 	 * @internal
 	 */
-	public function prepareResponse(\Elgg\Hook $hook) {
-		$response = $hook->getValue();
+	public function prepareResponse(\Elgg\Event $event) {
+		$response = $event->getValue();
 		if (!$response instanceof AjaxResponse) {
 			return;
 		}

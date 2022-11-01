@@ -14,19 +14,19 @@ class FilterSortItems {
 	/**
 	 * Register sorting menu items based on the time_created attribute
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter<:some filter_id>'
+	 * @param \Elgg\Event $event 'register', 'menu:filter<:some filter_id>'
 	 *
 	 * @return MenuItems|null
 	 */
-	public static function registerTimeCreatedSorting(\Elgg\Hook $hook): ?MenuItems {
+	public static function registerTimeCreatedSorting(\Elgg\Event $event): ?MenuItems {
 		
-		if (!(bool) $hook->getParam('filter_sorting', true)) {
+		if (!(bool) $event->getParam('filter_sorting', true)) {
 			// sorting is disabled for this menu
 			return null;
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'sort:time_created:desc',
@@ -64,19 +64,19 @@ class FilterSortItems {
 	/**
 	 * Register sorting menu items based on the last_action attribute
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter<:some filter_id>'
+	 * @param \Elgg\Event $event 'register', 'menu:filter<:some filter_id>'
 	 *
 	 * @return MenuItems|null
 	 */
-	public static function registerLastActionSorting(\Elgg\Hook $hook): ?MenuItems {
+	public static function registerLastActionSorting(\Elgg\Event $event): ?MenuItems {
 		
-		if (!(bool) $hook->getParam('filter_sorting', true)) {
+		if (!(bool) $event->getParam('filter_sorting', true)) {
 			// sorting is disabled for this menu
 			return null;
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'sort:last_action:desc',
@@ -99,19 +99,19 @@ class FilterSortItems {
 	/**
 	 * Register sorting menu items based on the last_login metadata
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter<:some filter_id>'
+	 * @param \Elgg\Event $event 'register', 'menu:filter<:some filter_id>'
 	 *
 	 * @return MenuItems|null
 	 */
-	public static function registerLastLoginSorting(\Elgg\Hook $hook): ?MenuItems {
+	public static function registerLastLoginSorting(\Elgg\Event $event): ?MenuItems {
 		
-		if (!(bool) $hook->getParam('filter_sorting', true)) {
+		if (!(bool) $event->getParam('filter_sorting', true)) {
 			// sorting is disabled for this menu
 			return null;
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'sort:last_login:asc',
@@ -133,19 +133,19 @@ class FilterSortItems {
 	/**
 	 * Register sorting menu items based on the name metadata
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter<:some filter_id>'
+	 * @param \Elgg\Event $event 'register', 'menu:filter<:some filter_id>'
 	 *
 	 * @return MenuItems|null
 	 */
-	public static function registerNameSorting(\Elgg\Hook $hook): ?MenuItems {
+	public static function registerNameSorting(\Elgg\Event $event): ?MenuItems {
 		
-		if (!(bool) $hook->getParam('filter_sorting', true)) {
+		if (!(bool) $event->getParam('filter_sorting', true)) {
 			// sorting is disabled for this menu
 			return null;
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'sort:name:asc',
@@ -185,19 +185,19 @@ class FilterSortItems {
 	/**
 	 * Register sorting menu items based on the title metadata
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter<:some filter_id>'
+	 * @param \Elgg\Event $event 'register', 'menu:filter<:some filter_id>'
 	 *
 	 * @return MenuItems|null
 	 */
-	public static function registerTitleSorting(\Elgg\Hook $hook): ?MenuItems {
+	public static function registerTitleSorting(\Elgg\Event $event): ?MenuItems {
 		
-		if (!(bool) $hook->getParam('filter_sorting', true)) {
+		if (!(bool) $event->getParam('filter_sorting', true)) {
 			// sorting is disabled for this menu
 			return null;
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'sort:title:asc',
@@ -236,23 +236,23 @@ class FilterSortItems {
 	
 	/**
 	 * Setup the sorting options in a dropdown menu, This should be used in combination with the other register function in this class.
-	 * This function should have a very high priority to make sure not to interfere with other register hooks
+	 * This function should have a very high priority to make sure not to interfere with other register events
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter<:some filter_id>'
+	 * @param \Elgg\Event $event 'register', 'menu:filter<:some filter_id>'
 	 *
 	 * @return MenuItems|null
 	 */
-	public static function registerSortingDropdown(\Elgg\Hook $hook): ?MenuItems {
+	public static function registerSortingDropdown(\Elgg\Event $event): ?MenuItems {
 		
-		if (!(bool) $hook->getParam('filter_sorting', true)) {
+		if (!(bool) $event->getParam('filter_sorting', true)) {
 			// sorting is disabled for this menu
 			return null;
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
-		$first_menu_name = $hook->getParam('filter_sorting_selected');
+		$first_menu_name = $event->getParam('filter_sorting_selected');
 		if (isset($first_menu_name) && !$result->has($first_menu_name)) {
 			$first_menu_name = null;
 		}

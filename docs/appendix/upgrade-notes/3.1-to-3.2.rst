@@ -12,7 +12,7 @@ To fix an issue where user owned access collections like `Friends` or `Friend Co
 when creating content, even if related plugins are disabled, we needed to change some internal logic. 
 If you want to have an access collection subtype available in the write access you now need to register the subtype with a plugin hook. 
 See
-:ref:`the plugin hook reference for 'access:collections:write:subtypes' <guides/hooks-list#access-hooks>` for more details. 
+:ref:`the plugin hook reference for 'access:collections:write:subtypes' <guides/events-list#access-events>` for more details. 
 
 River items enabled state
 -------------------------

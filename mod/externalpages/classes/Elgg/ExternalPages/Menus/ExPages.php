@@ -3,7 +3,7 @@
 namespace Elgg\ExternalPages\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  *
@@ -14,13 +14,13 @@ class ExPages {
 	/**
 	 * Adds menu items to the expages edit form
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:expages'
+	 * @param \Elgg\Event $event 'register', 'menu:expages'
 	 *
 	 * @return \Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
-		$type = $hook->getParam('type');
-		$return = $hook->getValue();
+	public static function register(\Elgg\Event $event) {
+		$type = $event->getParam('type');
+		$return = $event->getValue();
 		
 		$pages = ['about', 'terms', 'privacy'];
 		foreach ($pages as $page) {

@@ -17,19 +17,19 @@ class AdminUsersBulk {
 	/**
 	 * Add the bulk actions
 	 *
-	 * @param \Elgg\Hook $hook 'register' 'menu:admin:users:bulk'
+	 * @param \Elgg\Event $event 'register' 'menu:admin:users:bulk'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerActions(\Elgg\Hook $hook) {
+	public static function registerActions(\Elgg\Event $event) {
 		if (!elgg_is_admin_logged_in()) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
-		if ((bool) $hook->getParam('show_ban', true)) {
+		if ((bool) $event->getParam('show_ban', true)) {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'ban',
 				'icon' => 'ban',
@@ -39,7 +39,7 @@ class AdminUsersBulk {
 			]);
 		}
 		
-		if ((bool) $hook->getParam('show_unban', true)) {
+		if ((bool) $event->getParam('show_unban', true)) {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'unban',
 				'icon' => 'ban',
@@ -49,7 +49,7 @@ class AdminUsersBulk {
 			]);
 		}
 		
-		if ((bool) $hook->getParam('show_validate', false)) {
+		if ((bool) $event->getParam('show_validate', false)) {
 			$return[] = \ElggMenuItem::factory([
 				'icon' => 'check',
 				'name' => 'validate',
@@ -59,7 +59,7 @@ class AdminUsersBulk {
 			]);
 		}
 		
-		if ((bool) $hook->getParam('show_delete', true)) {
+		if ((bool) $event->getParam('show_delete', true)) {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'delete',
 				'icon' => 'delete',
@@ -77,12 +77,12 @@ class AdminUsersBulk {
 	/**
 	 * Disable all items which have a href
 	 *
-	 * @param \Elgg\Hook $hook 'prepare', 'menu:admin:users:bulk'
+	 * @param \Elgg\Event $event 'prepare', 'menu:admin:users:bulk'
 	 *
 	 * @return PreparedMenu|null
 	 */
-	public static function disableItems(\Elgg\Hook $hook): ?PreparedMenu {
-		$menu = $hook->getValue();
+	public static function disableItems(\Elgg\Event $event): ?PreparedMenu {
+		$menu = $event->getValue();
 		if (!$menu instanceof PreparedMenu) {
 			return null;
 		}

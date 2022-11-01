@@ -20,21 +20,21 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		_elgg_services()->config->minusername = 4;
 		_elgg_services()->config->allow_registration = true;
 
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 		_elgg_services()->events->backup();
 
-		elgg_register_plugin_hook_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setLanguage');
-		elgg_register_plugin_hook_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setPassword');
-		elgg_register_plugin_hook_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setDefaultAccess');
-		elgg_register_plugin_hook_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setName');
-		elgg_register_plugin_hook_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setUsername');
-		elgg_register_plugin_hook_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setEmail');
+		elgg_register_event_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setLanguage');
+		elgg_register_event_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setPassword');
+		elgg_register_event_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setDefaultAccess');
+		elgg_register_event_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setName');
+		elgg_register_event_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setUsername');
+		elgg_register_event_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setEmail');
 		
-		elgg_register_plugin_hook_handler('registeruser:validate:password', 'all', [_elgg_services()->passwordGenerator, 'registerUserPasswordValidation']);
+		elgg_register_event_handler('registeruser:validate:password', 'all', [_elgg_services()->passwordGenerator, 'registerUserPasswordValidation']);
 	}
 
 	public function down() {
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 		_elgg_services()->events->restore();
 
 		parent::down();

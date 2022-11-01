@@ -15,12 +15,12 @@ class Social {
 	/**
 	 * Adds comment menu items to social menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:social'
+	 * @param \Elgg\Event $event 'register', 'menu:social'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerComments(\Elgg\Hook $hook) {
-		$entity = $hook->getEntityParam();
+	public static function registerComments(\Elgg\Event $event) {
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggEntity || $entity instanceof \ElggComment) {
 			return;
 		}
@@ -30,7 +30,7 @@ class Social {
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$comment_count = $entity->countComments();
 		$can_comment = $entity->canComment();
@@ -46,7 +46,7 @@ class Social {
 				'href' => $entity->getURL() . '#comments',
 			];
 			
-			$item = $hook->getParam('item');
+			$item = $event->getParam('item');
 			if ($item instanceof \ElggRiverItem && $can_comment) {
 				$options['href'] = "#comments-add-{$entity->guid}-{$item->id}";
 				$options['class'] = 'elgg-toggle';

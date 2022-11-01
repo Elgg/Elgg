@@ -13,18 +13,18 @@ class Views {
 	/**
 	 * Mark related site notifications as read when viewing a full view of an entity
 	 *
-	 * @param \Elgg\Hook $hook 'view_vars', 'object/elemens/full'
+	 * @param \Elgg\Event $event 'view_vars', 'object/elemens/full'
 	 *
 	 * @return void
 	 */
-	public static function markLinkedEntityRead(\Elgg\Hook $hook) {
+	public static function markLinkedEntityRead(\Elgg\Event $event) {
 		
 		$user = elgg_get_logged_in_user_entity();
 		if (empty($user)) {
 			return;
 		}
 		
-		$vars = $hook->getValue();
+		$vars = $event->getValue();
 		$entity = elgg_extract('entity', $vars);
 		if (!$entity instanceof \ElggEntity) {
 			return;

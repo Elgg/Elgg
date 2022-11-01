@@ -13,13 +13,13 @@ class CronHandler {
 	/**
 	 * Cron handler to dequeue en handle delayed emails
 	 *
-	 * @param \Elgg\Hook $hook 'cron', 'daily'|'weekly'
+	 * @param \Elgg\Event $event 'cron', 'daily'|'weekly'
 	 *
 	 * @return void
 	 */
-	public function __invoke(\Elgg\Hook $hook): void {
-		$time = $hook->getParam('time');
-		$interval = $hook->getType();
+	public function __invoke(\Elgg\Event $event): void {
+		$time = $event->getParam('time');
+		$interval = $event->getType();
 		
 		_elgg_services()->delayedEmailService->processQueuedNotifications($interval, $time);
 	}

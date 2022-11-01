@@ -16,17 +16,17 @@
  * ===============================
  * 1. Register the event with elgg_register_notification_event()
  *
- * 2. Register for the notification message plugin hook:
+ * 2. Register for the notification message event:
  *    'prepare', 'notification:[event name]'. The event name is of the form
  *    [action]:[type]:[subtype]. For example, the publish event for a blog
  *    would be named 'publish:object:blog'.
  *
- *    The parameter array for the plugin hook has the keys 'event', 'method',
+ *    The parameter array for the event has the keys 'event', 'method',
  *    'recipient', and 'language'. The event is an \Elgg\Notifications\SubscriptionNotificationEvent
  *    object and can provide access to the original object of the event through
  *    the method getObject() and the original actor through getActor().
  *
- *    The plugin hook callback modifies and returns a
+ *    The event callback modifies and returns a
  *    \Elgg\Notifications\Notification object that holds the message content.
  *
  *
@@ -34,7 +34,7 @@
  * =========================
  * 1. Register the delivery method name with elgg_register_notification_method()
  *
- * 2. Register for the plugin hook for sending notifications:
+ * 2. Register for the event for sending notifications:
  *    'send', 'notification:[method name]'. It receives the notification object
  *    of the namespace Elgg\Notifications;
  *
@@ -92,9 +92,9 @@ function elgg_unregister_notification_event(string $object_type, string $object_
 /**
  * Register a delivery method for notifications
  *
- * Register for the 'send', 'notification:[method name]' plugin hook to handle
+ * Register for the 'send', 'notification:[method name]' event to handle
  * sending a notification. A notification object is in the params array for the
- * hook with the key 'notification'. See \Elgg\Notifications\Notification.
+ * event with the key 'notification'. See \Elgg\Notifications\Notification.
  *
  * @param string $name The notification method name
  *

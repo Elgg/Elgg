@@ -5,8 +5,7 @@ namespace Elgg\Navigation;
 use Elgg\IntegrationTestCase;
 
 /**
- * The purpose of these tests is to catch validation problems
- * in menu hooks
+ * The purpose of these tests is to catch validation problems in menu events
  *
  * @group Navigation
  */
@@ -46,8 +45,8 @@ class MenuRenderingIntegrationTest extends IntegrationTestCase {
 
 		foreach ($types as $type) {
 			$calls = 0;
-			$handler = function (\Elgg\Hook $hook) use ($menu_item, &$calls) {
-				$value = $hook->getValue();
+			$handler = function (\Elgg\Event $event) use ($menu_item, &$calls) {
+				$value = $event->getValue();
 				$value[] = $menu_item;
 
 				$calls++;
@@ -55,7 +54,7 @@ class MenuRenderingIntegrationTest extends IntegrationTestCase {
 				return $value;
 			};
 
-			elgg_register_plugin_hook_handler('register', "menu:$menu", $handler);
+			elgg_register_event_handler('register', "menu:$menu", $handler);
 
 			$view = elgg_view_menu($menu, [
 				'entity' => $this->$type,
@@ -64,7 +63,7 @@ class MenuRenderingIntegrationTest extends IntegrationTestCase {
 			$this->assertNotEmpty($view);
 			$this->assertEquals(1, $calls);
 
-			elgg_unregister_plugin_hook_handler('register', "menu:$menu", $handler);
+			elgg_unregister_event_handler('register', "menu:$menu", $handler);
 		}
 	}
 
@@ -91,8 +90,8 @@ class MenuRenderingIntegrationTest extends IntegrationTestCase {
 		]);
 
 		$calls = 0;
-		$handler = function(\Elgg\Hook $hook) use ($menu_item, &$calls) {
-			$value = $hook->getValue();
+		$handler = function(\Elgg\Event $event) use ($menu_item, &$calls) {
+			$value = $event->getValue();
 			$value[] = $menu_item;
 
 			$calls++;
@@ -100,14 +99,14 @@ class MenuRenderingIntegrationTest extends IntegrationTestCase {
 			return $value;
 		};
 
-		elgg_register_plugin_hook_handler('register', "menu:$menu", $handler);
+		elgg_register_event_handler('register', "menu:$menu", $handler);
 
 		$menu = elgg_view_menu($menu);
 
 		$this->assertNotEmpty($menu);
 		$this->assertEquals(1, $calls);
 
-		elgg_unregister_plugin_hook_handler('register', "menu:$menu", $handler);
+		elgg_unregister_event_handler('register', "menu:$menu", $handler);
 	}
 
 	public function testRiverMenu() {
@@ -118,8 +117,8 @@ class MenuRenderingIntegrationTest extends IntegrationTestCase {
 		]);
 
 		$calls = 0;
-		$handler = function(\Elgg\Hook $hook) use ($menu_item, &$calls) {
-			$value = $hook->getValue();
+		$handler = function(\Elgg\Event $event) use ($menu_item, &$calls) {
+			$value = $event->getValue();
 			$value[] = $menu_item;
 
 			$calls++;
@@ -127,7 +126,7 @@ class MenuRenderingIntegrationTest extends IntegrationTestCase {
 			return $value;
 		};
 
-		elgg_register_plugin_hook_handler('register', 'menu:river', $handler);
+		elgg_register_event_handler('register', 'menu:river', $handler);
 
 		$item = new \ElggRiverItem((object) [
 			'view' => 'river/elements/layout',
@@ -145,6 +144,6 @@ class MenuRenderingIntegrationTest extends IntegrationTestCase {
 		$this->assertNotEmpty($menu);
 		$this->assertEquals(1, $calls);
 
-		elgg_unregister_plugin_hook_handler('register', 'menu:river', $handler);
+		elgg_unregister_event_handler('register', 'menu:river', $handler);
 	}
 }

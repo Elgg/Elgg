@@ -5,7 +5,7 @@ namespace Elgg\Discussions\Menus;
 use Elgg\Menu\MenuItems;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -15,14 +15,14 @@ class Filter {
 	/**
 	 * Add / remove tabs from the filter menu on the discussion pages
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:filter'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:filter'
 	 *
 	 * @return MenuItems|null
 	 */
-	public static function filterTabsForDiscussions(\Elgg\Hook $hook): ?MenuItems {
+	public static function filterTabsForDiscussions(\Elgg\Event $event): ?MenuItems {
 		
-		$entity_type = $hook->getParam('entity_type', '');
-		$entity_subtype = $hook->getParam('entity_subtype', '');
+		$entity_type = $event->getParam('entity_type', '');
+		$entity_subtype = $event->getParam('entity_subtype', '');
 		if (empty($entity_type) || empty($entity_subtype)) {
 			$route_name = elgg_get_current_route_name();
 			if (!empty($route_name)) {
@@ -45,7 +45,7 @@ class Filter {
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		// add discussions in my groups
 		$result[] = \ElggMenuItem::factory([

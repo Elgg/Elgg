@@ -16,12 +16,12 @@ Exposing pages through Walled Gardens
 -------------------------------------
 
 Many plugins extend Elgg by adding pages. Walled Garden mode will prevent these pages from being viewed by logged out users.
-Elgg uses :ref:`plugin hook <design/events#plugin-hooks>` to manage which pages are visible through the Walled Garden.
+Elgg uses :doc:`events </design/events>` to manage which pages are visible through the Walled Garden.
 
 Plugin authors must register pages as public if they should be viewable through Walled Gardens:
 
  * by setting ``'walled' => false`` in route configuration
- * by responding to the ``public_pages``, ``walled_garden`` plugin hook. The returned value is an array of regexp expressions for public pages.
+ * by responding to the ``public_pages``, ``walled_garden`` event. The returned value is an array of regexp expressions for public pages.
 
 The following code shows how to expose http://example.org/my_plugin/public_page through a Walled Garden.
 This assumes the plugin has registered a :doc:`route </guides/routing>` for ``my_plugin/public_page``.
@@ -36,10 +36,10 @@ This assumes the plugin has registered a :doc:`route </guides/routing>` for ``my
    ]);
 
    // Legacy approach
-   elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'my_plugin_walled_garden_public_pages');
+   elgg_register_event_handler('public_pages', 'walled_garden', 'my_plugin_walled_garden_public_pages');
    
-   function my_plugin_walled_garden_public_pages(\Elgg\Hook $hook) {
-      $pages = $hook->getValue();
+   function my_plugin_walled_garden_public_pages(\Elgg\Event $event) {
+      $pages = $event->getValue();
       
       $pages[] = 'my_plugin/public_page';
       

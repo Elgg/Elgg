@@ -13,11 +13,11 @@ class HandlerServiceUnitTest extends UnitTestCase {
 		$this->service = _elgg_services()->handlers;
 	}
 	
-	public static function callableHook(\Elgg\Hook $hook) {
-		return 'hook';
+	public function callableEvent(\Elgg\Event $event) {
+		return 'event';
 	}
 	
-	public function callableEvent(\Elgg\Event $event) {
+	public static function staticCallableEvent(\Elgg\Event $event) {
 		return 'event';
 	}
 	
@@ -43,15 +43,9 @@ class HandlerServiceUnitTest extends UnitTestCase {
 		
 		$this->validateCallResult($result, false, null, 'hook');
 	}
-	
-	public function testCallHook() {
-		$result = $this->service->call([$this, 'callableHook'], 'hook', ['unit', 'test', false, []]);
 		
-		$this->validateCallResult($result, true, 'hook', \Elgg\Hook::class);
-	}
-	
 	public function testCallEvent() {
-		$result = $this->service->call([$this, 'callableEvent'], 'event', ['unit', 'test', []]);
+		$result = $this->service->call([$this, 'callableEvent'], 'event', ['unit', 'test', [], []]);
 		
 		$this->validateCallResult($result, true, 'event', \Elgg\Event::class);
 	}
@@ -75,17 +69,17 @@ class HandlerServiceUnitTest extends UnitTestCase {
 	}
 	
 	public function testIsCallable() {
-		$this->assertTrue($this->service->isCallable([$this, 'callableHook']));
-		$this->assertTrue($this->service->isCallable(__CLASS__ .  '::callableHook'));
-		$this->assertTrue($this->service->isCallable(\Elgg\Helpers\HooksRegistrationServiceTestInvokable::class));
+		$this->assertTrue($this->service->isCallable([$this, 'callableEvent']));
+		$this->assertTrue($this->service->isCallable(__CLASS__ .  '::staticCallableEvent'));
+		$this->assertTrue($this->service->isCallable(\Elgg\Helpers\EventsServiceTestInvokable::class));
 		
 		$this->assertFalse($this->service->isCallable([$this, 'uncallable']));
 	}
 	
 	public function testResolveCallable() {
-		$this->assertNotNull($this->service->resolveCallable([$this, 'callableHook']));
-		$this->assertNotNull($this->service->resolveCallable(__CLASS__ .  '::callableHook'));
-		$this->assertNotNull($this->service->resolveCallable(\Elgg\Helpers\HooksRegistrationServiceTestInvokable::class));
+		$this->assertNotNull($this->service->resolveCallable([$this, 'callableEvent']));
+		$this->assertNotNull($this->service->resolveCallable(__CLASS__ .  '::staticCallableEvent'));
+		$this->assertNotNull($this->service->resolveCallable(\Elgg\Helpers\EventsServiceTestInvokable::class));
 		
 		$this->assertNull($this->service->resolveCallable([$this, 'uncallable']));
 	}
@@ -100,10 +94,10 @@ class HandlerServiceUnitTest extends UnitTestCase {
 	public function describeCallableProvider() {
 		return [
 			['some_function_name', '', 'some_function_name'],
-			[[$this, 'callableHook'], '', '(Elgg\HandlerServiceUnitTest)->callableHook'],
-			[[__CLASS__, 'callableHook'], '', 'Elgg\HandlerServiceUnitTest::callableHook'],
-			[function() {}, __DIR__, 'HandlerServiceUnitTest.php:105'], // this is very error prone. Please keep an eye on the line number
-			[new \Elgg\Helpers\HooksRegistrationServiceTestInvokable(), __FILE__, '(Elgg\Helpers\HooksRegistrationServiceTestInvokable)->__invoke()'],
+			[[$this, 'callableEvent'], '', '(Elgg\HandlerServiceUnitTest)->callableEvent'],
+			[[__CLASS__, 'callableEvent'], '', 'Elgg\HandlerServiceUnitTest::callableEvent'],
+			[function() {}, __DIR__, 'HandlerServiceUnitTest.php:99'], // this is very error prone. Please keep an eye on the line number
+			[new \Elgg\Helpers\EventsServiceTestInvokable(), __FILE__, '(Elgg\Helpers\EventsServiceTestInvokable)->__invoke()'],
 		];
 	}
 }

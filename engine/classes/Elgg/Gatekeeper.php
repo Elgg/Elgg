@@ -228,13 +228,13 @@ class Gatekeeper {
 			$result = $ex;
 		}
 
-		$hook_params = [
+		$params = [
 			'entity' => $entity,
 			'user' => $user,
 			'route' => $this->request->get('_route'),
 		];
 
-		$result = _elgg_services()->hooks->trigger('gatekeeper', "{$entity->type}:{$entity->subtype}", $hook_params, $result);
+		$result = _elgg_services()->events->triggerResults('gatekeeper', "{$entity->type}:{$entity->subtype}", $params, $result);
 
 		if ($result instanceof HttpException) {
 			throw $result;

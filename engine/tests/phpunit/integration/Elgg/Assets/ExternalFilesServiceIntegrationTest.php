@@ -13,15 +13,15 @@ class ExternalFilesServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 			],
 		]);
 		
-		_elgg_services()->hooks->backup();
-		_elgg_services()->hooks->registerHandler('simplecache:generate', 'css', \Elgg\Views\CalculateSRI::class);
+		_elgg_services()->events->backup();
+		_elgg_services()->events->registerHandler('simplecache:generate', 'css', \Elgg\Views\CalculateSRI::class);
 		
 		// clear cache used by SRI
 		_elgg_services()->serverCache->delete('sri');
 	}
 
 	public function down() {
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 	}
 	
 	public function testSRICalculate() {
@@ -30,7 +30,7 @@ class ExternalFilesServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 		
 		$content = '.foo { color:red; }';
 		$expected_hash = 'sha256-' . base64_encode(hash('sha256', $content, true));
-		elgg_trigger_plugin_hook('simplecache:generate', 'css', [
+		elgg_trigger_event_results('simplecache:generate', 'css', [
 			'view' => 'foo.css',
 		], $content);
 		

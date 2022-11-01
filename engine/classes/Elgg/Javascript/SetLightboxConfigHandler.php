@@ -12,12 +12,12 @@ class SetLightboxConfigHandler {
 	/**
 	 * Set lightbox config
 	 *
-	 * @param \Elgg\Hook $hook 'elgg.data', 'site'
+	 * @param \Elgg\Event $event 'elgg.data', 'site'
 	 *
 	 * @return array
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		$return = $hook->getValue();
+	public function __invoke(\Elgg\Event $event) {
+		$return = $event->getValue();
 	
 		$return['lightbox'] = [
 			'current' => elgg_echo('js:lightbox:current', ['{current}', '{total}']),

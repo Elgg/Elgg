@@ -7,15 +7,9 @@ use Elgg\Exceptions\Exception;
 use Elgg\IntegrationTestCase;
 use Elgg\Logger;
 use Elgg\Mocks\Queue\DatabaseQueue;
-use Elgg\PluginHooksService;
 use Elgg\Values;
 
 abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCase {
-
-	/**
-	 * @var PluginHooksService
-	 */
-	protected $hooks;
 
 	/**
 	 * @var EventsService
@@ -71,9 +65,6 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 			throw new Exception(get_class($this) . ' must set \$object_test_class before calling ' . __METHOD__);
 		}
 
-		$this->hooks = _elgg_services()->hooks;
-		$this->hooks->backup();
-
 		$this->events = _elgg_services()->events;
 		$this->events->backup();
 
@@ -96,13 +87,11 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 	public function down() {
 		$this->session->invalidate();
 		$this->events->restore();
-		$this->hooks->restore();
 	}
 
 	protected function setupServices() {
 		$this->notifications = new NotificationsService(
 			$this->queue,
-			$this->hooks,
 			$this->session,
 			$this->events
 		);
@@ -321,12 +310,12 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 	public function testStoppingEnqueueEvent() {
 
-		$mock = $this->createMock(PluginHooksService::class, ['trigger']);
+		$mock = $this->createMock(EventsService::class, ['trigger']);
 		$mock->expects($this->once())
-			->method('trigger')
+			->method('triggerResults')
 			->will($this->returnValue(false));
 
-		$this->hooks = $mock;
+		$this->events = $mock;
 
 		$this->setupServices();
 
@@ -408,7 +397,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		_elgg_services()->reset('subscriptions');
 	}
 
-	public function testCanUseEnqueueHookToPreventSubscriptionNotificationEventFromQueueing() {
+	public function testCanUseEnqueueEventToPreventSubscriptionNotificationEventFromQueueing() {
 
 		$object = $this->getTestObject();
 
@@ -430,10 +419,10 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		_elgg_services()->subscriptions = $mock;
 
-		$this->hooks->registerHandler('enqueue', 'notification', function (\Elgg\Hook $hook) use (&$call_count, $object) {
+		$this->events->registerHandler('enqueue', 'notification', function (\Elgg\Event $event) use (&$call_count, $object) {
 			$call_count++;
-			$this->assertEquals($object, $hook->getParam('object'));
-			$this->assertEquals('test_event', $hook->getParam('action'));
+			$this->assertEquals($object, $event->getParam('object'));
+			$this->assertEquals('test_event', $event->getParam('action'));
 
 			return false;
 		});
@@ -458,7 +447,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		_elgg_services()->reset('subscriptions');
 	}
 
-	public function testCanUseHooksBeforeAndAfterSubscriptionNotificationsQueue() {
+	public function testCanUseEventsBeforeAndAfterSubscriptionNotificationsQueue() {
 
 		$object = $this->getTestObject();
 
@@ -486,19 +475,19 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$event = new SubscriptionNotificationEvent($object, 'test_event');
 
-		$this->hooks->registerHandler('send:before', 'notifications', function (\Elgg\Hook $hook) use (&$before_call_count, $event, $subscribers, $object) {
+		$this->events->registerHandler('send:before', 'notifications', function (\Elgg\Event $elgg_event) use (&$before_call_count, $event, $subscribers, $object) {
 			$before_call_count++;
-			$this->assertEquals(unserialize(serialize($event)), $hook->getParam('event'));
-			$this->assertEquals($subscribers, $hook->getParam('subscriptions'));
+			$this->assertEquals(unserialize(serialize($event)), $elgg_event->getParam('event'));
+			$this->assertEquals($subscribers, $elgg_event->getParam('subscriptions'));
 
 			return false;
 		});
 
-		$this->hooks->registerHandler('send:after', 'notifications', function (\Elgg\Hook $hook) use (&$after_call_count, $event, $subscribers, $object) {
+		$this->events->registerHandler('send:after', 'notifications', function (\Elgg\Event $elgg_event) use (&$after_call_count, $event, $subscribers, $object) {
 			$after_call_count++;
-			$this->assertEquals(unserialize(serialize($event)), $hook->getParam('event'));
-			$this->assertEquals($subscribers, $hook->getParam('subscriptions'));
-			$this->assertEmpty($hook->getParam('deliveries'));
+			$this->assertEquals(unserialize(serialize($event)), $elgg_event->getParam('event'));
+			$this->assertEquals($subscribers, $elgg_event->getParam('subscriptions'));
+			$this->assertEmpty($elgg_event->getParam('deliveries'));
 		});
 
 		$this->setupServices();
@@ -558,12 +547,12 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 			'notification:subject' => 'From: %s',
 		]);
 
-		$this->hooks->registerHandler('send', 'notification:test_method', function (\Elgg\Hook $hook) use (&$call_count, $event, $recipient) {
+		$this->events->registerHandler('send', 'notification:test_method', function (\Elgg\Event $elgg_event) use (&$call_count, $event, $recipient) {
 			$call_count++;
-			$this->assertInstanceOf(Notification::class, $hook->getParam('notification'));
-			$this->assertEquals($this->translator->translate('notification:subject', [$event->getActor()->name], $recipient->language), $hook->getParam('notification')->subject);
-			$this->assertStringContainsString($this->translator->translate('notification:body', [$event->getObject()->getURL()], $recipient->language), $hook->getParam('notification')->body);
-			$this->assertEquals($event->toObject(), $hook->getParam('event')->toObject());
+			$this->assertInstanceOf(Notification::class, $elgg_event->getParam('notification'));
+			$this->assertEquals($this->translator->translate('notification:subject', [$event->getActor()->name], $recipient->language), $elgg_event->getParam('notification')->subject);
+			$this->assertStringContainsString($this->translator->translate('notification:body', [$event->getObject()->getURL()], $recipient->language), $elgg_event->getParam('notification')->body);
+			$this->assertEquals($event->toObject(), $elgg_event->getParam('event')->toObject());
 
 			return true;
 		});
@@ -643,7 +632,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 			"notification:{$event->getDescription()}:subject" => '%s %s',
 		]);
 
-		$this->hooks->registerHandler('send', 'notification:test_method', function (\Elgg\Hook $hook) use (&$call_count, $event, $object, $recipient) {
+		$this->events->registerHandler('send', 'notification:test_method', function (\Elgg\Event $elgg_event) use (&$call_count, $event, $object, $recipient) {
 			$call_count++;
 
 			$object = $event->getObject();
@@ -658,19 +647,19 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 				$display_name = '';
 				$container_name = '';
 			}
-			$this->assertInstanceOf(Notification::class, $hook->getParam('notification'));
+			$this->assertInstanceOf(Notification::class, $elgg_event->getParam('notification'));
 			$this->assertEquals($this->translator->translate("notification:{$event->getDescription()}:subject", [
 				$event->getActor()->name,
 				$display_name,
-			], $recipient->language), $hook->getParam('notification')->subject);
+			], $recipient->language), $elgg_event->getParam('notification')->subject);
 			$this->assertStringContainsString($this->translator->translate("notification:{$event->getDescription()}:body", [
 				$event->getActor()->name,
 				$display_name,
 				$container_name,
 				$object->description,
 				$object->getURL(),
-			], $recipient->language), $hook->getParam('notification')->body);
-			$this->assertEquals($event, $hook->getParam('event'));
+			], $recipient->language), $elgg_event->getParam('notification')->body);
+			$this->assertEquals($event, $elgg_event->getParam('event'));
 
 			return true;
 		});
@@ -716,29 +705,29 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$event = new SubscriptionNotificationEvent($object, 'test_event');
 
-		$this->hooks->registerHandler('prepare', 'notification', function (\Elgg\Hook $hook) {
-			$notification = $hook->getValue();
+		$this->events->registerHandler('prepare', 'notification', function (\Elgg\Event $event) {
+			$notification = $event->getValue();
 			$notification->prepare_hook = true;
 
 			return $notification;
 		});
 
-		$this->hooks->registerHandler('prepare', "notification:{$event->getDescription()}", function (\Elgg\Hook $hook) {
-			$notification = $hook->getValue();
+		$this->events->registerHandler('prepare', "notification:{$event->getDescription()}", function (\Elgg\Event $event) {
+			$notification = $event->getValue();
 			$notification->granular_prepare_hook = true;
 
 			return $notification;
 		});
 
-		$this->hooks->registerHandler('format', 'notification:test_method', function (\Elgg\Hook $hook) {
-			$notification = $hook->getValue();
+		$this->events->registerHandler('format', 'notification:test_method', function (\Elgg\Event $event) {
+			$notification = $event->getValue();
 			$notification->format_hook = true;
 
 			return $notification;
 		});
 
-		$this->hooks->registerHandler('send', 'notification:test_method', function (\Elgg\Hook $hook) {
-			$notification = $hook->getParam('notification');
+		$this->events->registerHandler('send', 'notification:test_method', function (\Elgg\Event $event) {
+			$notification = $event->getParam('notification');
 			$this->assertTrue($notification->prepare_hook);
 			$this->assertTrue($notification->granular_prepare_hook);
 			$this->assertTrue($notification->format_hook);
@@ -842,8 +831,8 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$event = new InstantNotificationEvent($object, 'notify_user', $from);
 
-		$this->hooks->registerHandler('get', 'subscriptions', function (\Elgg\Hook $hook) use ($to3) {
-			$return = $hook->getValue();
+		$this->events->registerHandler('get', 'subscriptions', function (\Elgg\Event $event) use ($to3) {
+			$return = $event->getValue();
 			$return[$to3->guid] = [
 				'test_method'
 			];
@@ -851,37 +840,37 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 			return $return;
 		});
 
-		$this->hooks->registerHandler('prepare', 'notification', function (\Elgg\Hook $hook) {
-			$notification = $hook->getValue();
+		$this->events->registerHandler('prepare', 'notification', function (\Elgg\Event $event) {
+			$notification = $event->getValue();
 			$notification->prepare_hook = true;
 
 			return $notification;
 		});
 
-		$this->hooks->registerHandler('prepare', "notification:{$event->getDescription()}", function (\Elgg\Hook $hook) {
-			$notification = $hook->getValue();
+		$this->events->registerHandler('prepare', "notification:{$event->getDescription()}", function (\Elgg\Event $event) {
+			$notification = $event->getValue();
 			$notification->granular_prepare_hook = true;
 
 			return $notification;
 		});
 
-		$this->hooks->registerHandler('format', 'notification:test_method', function (\Elgg\Hook $hook) {
-			$notification = $hook->getValue();
+		$this->events->registerHandler('format', 'notification:test_method', function (\Elgg\Event $event) {
+			$notification = $event->getValue();
 			$notification->format_hook = true;
 
 			return $notification;
 		});
 
 		$sent = 0;
-		$this->hooks->registerHandler('send', 'notification:test_method', function (\Elgg\Hook $hook) use (&$sent, $subject, $body, $event) {
+		$this->events->registerHandler('send', 'notification:test_method', function (\Elgg\Event $elgg_event) use (&$sent, $subject, $body, $event) {
 			$sent++;
-			$notification = $hook->getParam('notification');
+			$notification = $elgg_event->getParam('notification');
 
 			$this->assertInstanceOf(Notification::class, $notification);
 			$this->assertEquals($notification->subject, $subject);
 			$this->assertStringContainsString($body, $notification->body);
 			$this->assertEquals($notification->summary, $subject);
-			$this->assertEquals($event->toObject(), $hook->getParam('event')->toObject());
+			$this->assertEquals($event->toObject(), $elgg_event->getParam('event')->toObject());
 
 			$this->assertTrue($notification->prepare_hook);
 			$this->assertTrue($notification->granular_prepare_hook);
@@ -934,43 +923,43 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$event = new InstantNotificationEvent(null, null, $from);
 
-		$this->hooks->registerHandler('get', 'subscriptions', function (\Elgg\Hook $hook) use ($to3) {
-			$return = $hook->getValue();
+		$this->events->registerHandler('get', 'subscriptions', function (\Elgg\Event $event) use ($to3) {
+			$return = $event->getValue();
 			$return[$to3->guid] = ['test_method'];
 
 			return $return;
 		});
 
-		$this->hooks->registerHandler('prepare', 'notification', function (\Elgg\Hook $hook) {
-			$notification = $hook->getValue();
+		$this->events->registerHandler('prepare', 'notification', function (\Elgg\Event $event) {
+			$notification = $event->getValue();
 			$notification->prepare_hook = true;
 
 			return $notification;
 		});
 
-		$this->hooks->registerHandler('prepare', "notification:{$event->getDescription()}", function (\Elgg\Hook $hook) {
-			$notification = $hook->getValue();
+		$this->events->registerHandler('prepare', "notification:{$event->getDescription()}", function (\Elgg\Event $event) {
+			$notification = $event->getValue();
 			$notification->granular_prepare_hook = true;
 
 			return $notification;
 		});
 
-		$this->hooks->registerHandler('format', 'notification:test_method', function (\Elgg\Hook $hook) {
-			$notification = $hook->getValue();
+		$this->events->registerHandler('format', 'notification:test_method', function (\Elgg\Event $event) {
+			$notification = $event->getValue();
 			$notification->format_hook = true;
 
 			return $notification;
 		});
 
 		$sent = 0;
-		$this->hooks->registerHandler('send', 'notification:test_method', function (\Elgg\Hook $hook) use (&$sent, $subject, $body, $event) {
+		$this->events->registerHandler('send', 'notification:test_method', function (\Elgg\Event $elgg_event) use (&$sent, $subject, $body, $event) {
 			$sent++;
-			$notification = $hook->getParam('notification');
+			$notification = $elgg_event->getParam('notification');
 
 			$this->assertInstanceOf(Notification::class, $notification);
 			$this->assertEquals($subject, $notification->subject);
 			$this->assertStringContainsString($body, $notification->body);
-			$this->assertEquals($event->toObject(), $hook->getParam('event')->toObject());
+			$this->assertEquals($event->toObject(), $elgg_event->getParam('event')->toObject());
 
 			$this->assertTrue($notification->prepare_hook);
 			$this->assertTrue($notification->granular_prepare_hook);
@@ -1005,7 +994,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 	/**
 	 * @group InstantNotificationsService
 	 */
-	public function testCanUseHooksBeforeAndAfterInstantNotificationsQueue() {
+	public function testCanUseEventsBeforeAndAfterInstantNotificationsQueue() {
 
 		$object = $this->getTestObject();
 
@@ -1028,19 +1017,19 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$before_call_count = 0;
 		$after_call_count = 0;
 
-		$this->hooks->registerHandler('send:before', 'notifications', function (\Elgg\Hook $hook) use (&$before_call_count, $event, $subscribers) {
+		$this->events->registerHandler('send:before', 'notifications', function (\Elgg\Event $elgg_event) use (&$before_call_count, $event, $subscribers) {
 			$before_call_count++;
-			$this->assertEquals($event->toObject(), $hook->getParam('event')->toObject());
-			$this->assertEquals($subscribers, $hook->getParam('subscriptions'));
+			$this->assertEquals($event->toObject(), $elgg_event->getParam('event')->toObject());
+			$this->assertEquals($subscribers, $elgg_event->getParam('subscriptions'));
 
 			return false;
 		});
 
-		$this->hooks->registerHandler('send:after', 'notifications', function (\Elgg\Hook $hook) use (&$after_call_count, $event, $subscribers) {
+		$this->events->registerHandler('send:after', 'notifications', function (\Elgg\Event $elgg_event) use (&$after_call_count, $event, $subscribers) {
 			$after_call_count++;
-			$this->assertEquals($event, $hook->getParam('event'));
-			$this->assertEquals($subscribers, $hook->getParam('subscriptions'));
-			$this->assertEmpty($hook->getParam('deliveries'));
+			$this->assertEquals($event, $elgg_event->getParam('event'));
+			$this->assertEquals($subscribers, $elgg_event->getParam('subscriptions'));
+			$this->assertEmpty($elgg_event->getParam('deliveries'));
 		});
 
 		$this->setupServices();
@@ -1075,11 +1064,11 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$subject = 'Test message';
 		$body = 'Lorem ipsum';
-		$this->hooks->registerHandler('send', 'notification:test_method', [
+		$this->events->registerHandler('send', 'notification:test_method', [
 			Values::class,
 			'getFalse'
 		]);
-		$this->hooks->registerHandler('send', 'notification:test_method2', [
+		$this->events->registerHandler('send', 'notification:test_method2', [
 			Values::class,
 			'getTrue'
 		]);

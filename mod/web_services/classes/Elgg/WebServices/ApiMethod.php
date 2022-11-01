@@ -185,7 +185,7 @@ class ApiMethod implements CollectionItemInterface {
 			$result = call_user_func_array($callable, $parameters);
 		}
 		
-		$result = elgg_trigger_plugin_hook('rest:output', $this->method, $parameters, $result);
+		$result = elgg_trigger_event_results('rest:output', $this->method, $parameters, $result);
 		
 		// Sanity check result
 		// If this function returns an api result itself, just return it

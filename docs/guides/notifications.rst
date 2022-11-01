@@ -82,18 +82,18 @@ This is the workflow of the notifications system:
      - The action can be ``create``, ``update`` or ``delete``
      - The target of the action can be any instance of the ``ElggEntity`` class (e.g. a Blog post)
  #. The notifications system saves this event into a notifications queue in the database
- #. When the pluging hook handler for the one-minute interval gets triggered, the event is taken from the queue and it gets processed
+ #. When the event handler for the one-minute interval gets triggered, the event is taken from the queue and it gets processed
  #. Subscriptions are fetched for the user who triggered the event
      - By default this includes all the users who have enabled any notification method
        for the user at ``www.site.com/notifications/personal/<username>``
- #. Plugins are allowed to alter the subscriptions using the ``[get, subscriptions]`` hook
- #. Plugins are allowed to terminate notifications queue processing with the ``[send:before, notifications]`` hook
- #. Plugins are allowed to alter the notification parameters with the ``[prepare, notification]`` hook
- #. Plugins are allowed to alter the notification subject/message/summary with the ``[prepare, notification:<action>:<type>:<subtype>]`` hook
- #. Plugins are allowed to format notification subject/message/summary for individual delivery methods with ``[format, notification:<method>]`` hook
+ #. Plugins are allowed to alter the subscriptions using the ``[get, subscriptions]`` event
+ #. Plugins are allowed to terminate notifications queue processing with the ``[send:before, notifications]`` event
+ #. Plugins are allowed to alter the notification parameters with the ``[prepare, notification]`` event
+ #. Plugins are allowed to alter the notification subject/message/summary with the ``[prepare, notification:<action>:<type>:<subtype>]`` event
+ #. Plugins are allowed to format notification subject/message/summary for individual delivery methods with ``[format, notification:<method>]`` event
  #. Notifications are sent to each subscriber using the methods they have chosen
-     - Plugins can take over or prevent sending of each individual notification with the ``[send, notification:<method>]`` hook
- #. The ``[send:after, notifications]`` hook is triggered for the event after all notifications have been sent
+     - Plugins can take over or prevent sending of each individual notification with the ``[send, notification:<method>]`` event
+ #. The ``[send:after, notifications]`` event is triggered for the event after all notifications have been sent
 
 Notification event registration example
 ---------------------------------------
@@ -127,7 +127,7 @@ Or in the ``elgg-plugin.php``:
 	:doc:`CRON </admin/cron>` interval configured.
 
 Contents of the notification message can be defined with the
-``'prepare', 'notification:[action]:[type]:[subtype]'`` hook.
+``'prepare', 'notification:[action]:[type]:[subtype]'`` event.
 
 
 Custom notification event registration example
@@ -153,7 +153,7 @@ Tell Elgg to send notifications when a new object of the subtype "album" is crea
 		/**
 		 * Overrule this function if you wish to modify the subscribers of this notification
 		 *
-		 * This will influence which subscribers are available in the 'get', 'subscribers' hook
+		 * This will influence which subscribers are available in the 'get', 'subscribers' event
 		 */
 		public function getSubscriptions(): array {
 		}
@@ -219,27 +219,27 @@ the contents of the notification when a new objects of subtype 'photo' is create
 	 */
 	function photos_init() {
 	    elgg_register_notification_event('object', 'photo', array('create'));
-	    elgg_register_plugin_hook_handler('prepare', 'notification:create:object:photo', 'photos_prepare_notification');
+	    elgg_register_event_handler('prepare', 'notification:create:object:photo', 'photos_prepare_notification');
 	}
 
 	/**
 	 * Prepare a notification message about a new photo
 	 *
-	 * @param \Elgg\Hook $hook 'prepare', 'notification:create:object:photo'
+	 * @param \Elgg\Event $event 'prepare', 'notification:create:object:photo'
 	 
 	 * @return \Elgg\Notification\Notification
 	 */
-	function photos_prepare_notification(\Elgg\Hook $hook) {
-	    $event = $hook->getParam('event');
+	function photos_prepare_notification(\Elgg\Event $event) {
+	    $notification_event = $event->getParam('event');
 	    
-	    $entity = $event->getObject();
-	    $owner = $event->getActor();
-	    $recipient = $hook->getParam('recipient');
-	    $language = $hook->getParam('language');
-	    $method = $hook->getParam('method');
+	    $entity = $notification_event->getObject();
+	    $owner = $notification_event->getActor();
+	    $recipient = $event->getParam('recipient');
+	    $language = $event->getParam('language');
+	    $method = $event->getParam('method');
 
 	    /* @var $notification \Elgg\Notification\Notification */
-	    $notification = $hook->getValue();
+	    $notification = $event->getValue();
 	    
 	    // Title for the notification
 	    $notification->subject = elgg_echo('photos:notify:subject', [$entity->getDisplayName()], $language);
@@ -261,7 +261,7 @@ the contents of the notification when a new objects of subtype 'photo' is create
 .. note::
 
 	Make sure the notification will be in the correct language by passing
-	the reciepient's language into the ``elgg_echo()`` function.
+	the recipient's language into the ``elgg_echo()`` function.
 	
 Notification salutation and sign-off
 ====================================
@@ -269,7 +269,7 @@ Notification salutation and sign-off
 Elgg will by default prepend a salutation to all outgoing notification body text. Also a sign-off will be appended.
 This means you will not need to add text like ``Hi Admin,`` or ``Kind regards, your friendly site administrator`` to your notifications body.
 If for some reason you do not need this magic to happen, you can prevent it by setting the notification parameter ``add_salutation`` to ``false``.
-You can do this as part of the parameters in ``notify_user()`` or in the ``prepare, notifications`` hook. 
+You can do this as part of the parameters in ``notify_user()`` or in the ``prepare, notifications`` event. 
 You can change the salutation and sign-off texts in the translations.
 
 You can also customize the salutation by overruling the view ``notifications/elements/salutation`` the sign-off can be customized by overruling the view
@@ -327,7 +327,7 @@ Sending the notifications using your own method
 
 Besides registering the notification method, you also need to register
 a handler that takes care of actually sending the SMS notifications.
-This happens with the ``'send', 'notification:[method]'`` hook.
+This happens with the ``'send', 'notification:[method]'`` event.
 
 Example:
 --------
@@ -339,20 +339,20 @@ Example:
 	 */
 	function sms_notifications_init () {
 		elgg_register_notification_method('sms');
-		elgg_register_plugin_hook_handler('send', 'notification:sms', 'sms_notifications_send');
+		elgg_register_event_handler('send', 'notification:sms', 'sms_notifications_send');
 	}
 
 	/**
 	 * Send an SMS notification
 	 * 
-	 * @param \Elgg\Hook $hook 'send', 'notification:sms'
+	 * @param \Elgg\Event $event 'send', 'notification:sms'
 	 *
 	 * @return bool
 	 * @internal
 	 */
-	function sms_notifications_send(\Elgg\Hook $hook) {
+	function sms_notifications_send(\Elgg\Event $event) {
 		/* @var \Elgg\Notifications\Notification $message */
-		$message = $hook->getParam('notification');
+		$message = $event->getParam('notification');
 
 		$recipient = $message->getRecipient();
 
@@ -375,7 +375,7 @@ Subscriptions can however be:
  - Added using the ``\ElggEntity::addSubscription()`` function
  - Removed using the ``\ElggEntity::removeSubscription()`` function
 
-It's possible to modify the recipients of a notification dynamically with the ``'get', 'subscriptions'`` hook.
+It's possible to modify the recipients of a notification dynamically with the ``'get', 'subscriptions'`` event.
 
 Example:
 --------
@@ -386,24 +386,24 @@ Example:
 	 * Initialize the plugin
 	 */
 	function discussion_init() {
-		elgg_register_plugin_hook_handler('get', 'subscriptions', 'discussion_get_subscriptions');
+		elgg_register_event_handler('get', 'subscriptions', 'discussion_get_subscriptions');
 	}
 
 	/**
 	 * Get subscriptions for group notifications
 	 *
-	 * @param \Elgg\Hook $hook 'get', 'subscriptions'
+	 * @param \Elgg\Event $event 'get', 'subscriptions'
 	 *
 	 * @return void|array
 	 */
-	function discussion_get_subscriptions(\Elgg\Hook $hook) {
-		$reply = $hook->getParam('event')->getObject();
+	function discussion_get_subscriptions(\Elgg\Event $event) {
+		$reply = $event->getParam('event')->getObject();
 
 		if (!$reply instanceof \ElggDiscussionReply) {
 			return;
 		}
 
-		$subscriptions = $hook->getValue();
+		$subscriptions = $event->getValue();
 		
 		$group_guid = $reply->getContainerEntity()->container_guid;
 		$group_subscribers = elgg_get_subscriptions_for_container($group_guid);
@@ -470,7 +470,7 @@ When a user has no setting yet for a non default purpose the system will fallbac
 Notification management
 =======================
 
-A generic menu hook handler is provided to manage notification subscription and muting. If you wish to make it easy for users to subscribe to 
-your entities register a menu hook on ``register`` ``menu:<menu name>:<entity type>:<entity subtype>`` with the callback 
+A generic menu event handler is provided to manage notification subscription and muting. If you wish to make it easy for users to subscribe to 
+your entities register a menu event on ``register`` ``menu:<menu name>:<entity type>:<entity subtype>`` with the callback 
 ``Elgg\Notifications\RegisterSubscriptionMenuItemsHandler`` make sure an ``\ElggEntity`` in ``$params['entity']`` is provided. 
 This will work for most ``elgg_view_menu()`` calls.

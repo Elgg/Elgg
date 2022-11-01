@@ -15,18 +15,18 @@ class Annotation {
 	/**
 	 * Register the generic delete annotation menu item
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:annotation'
+	 * @param \Elgg\Event $event 'register', 'menu:annotation'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerDelete(\Elgg\Hook $hook) {
-		$annotation = $hook->getParam('annotation');
+	public static function registerDelete(\Elgg\Event $event) {
+		$annotation = $event->getParam('annotation');
 		if (!$annotation instanceof \ElggAnnotation || !$annotation->canEdit()) {
 			return;
 		}
 		
 		/* @var $result MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'delete',

@@ -74,7 +74,7 @@ class Csrf {
 				if ($this->validateTokenTimestamp($ts)) {
 					// We have already got this far, so unless anything
 					// else says something to the contrary we assume we're ok
-					$returnval = $request->elgg()->hooks->trigger('action_gatekeeper:permissions:check', 'all', [
+					$returnval = $request->elgg()->events->triggerResults('action_gatekeeper:permissions:check', 'all', [
 						'token' => $token,
 						'time' => $ts
 					], true);

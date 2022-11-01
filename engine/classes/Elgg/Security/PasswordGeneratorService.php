@@ -3,13 +3,14 @@
 namespace Elgg\Security;
 
 use Elgg\Config;
-use Elgg\PluginHooksService;
-use Elgg\Values;
+use Elgg\EventsService;
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Exceptions\Security\InvalidPasswordLengthException;
 use Elgg\Exceptions\Security\InvalidPasswordCharacterRequirementsException;
 use Elgg\I18n\Translator;
+use Elgg\Values;
 use Hackzilla\PasswordGenerator\Generator\RequirementPasswordGenerator;
+
 
 /**
  * Password generator service
@@ -32,21 +33,21 @@ class PasswordGeneratorService {
 	protected $translator;
 	
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	protected $hooks;
+	protected $events;
 	
 	/**
 	 * Constructor
 	 *
-	 * @param Config             $config     Elgg config
-	 * @param Translator         $translator Translator
-	 * @param PluginHooksService $hooks      Hooks service
+	 * @param Config        $config     Elgg config
+	 * @param Translator    $translator Translator
+	 * @param EventsService $events     Events service
 	 */
-	public function __construct(Config $config, Translator $translator, PluginHooksService $hooks) {
+	public function __construct(Config $config, Translator $translator, EventsService $events) {
 		$this->config = $config;
 		$this->translator = $translator;
-		$this->hooks = $hooks;
+		$this->events = $events;
 	}
 	
 	/**
@@ -63,7 +64,7 @@ class PasswordGeneratorService {
 		$generator = $this->getGenerator();
 		$generator->setLength($length);
 		
-		return $this->hooks->trigger('generate', 'password', [], $generator->generatePassword());
+		return $this->events->triggerResults('generate', 'password', [], $generator->generatePassword());
 	}
 	
 	/**
@@ -231,13 +232,13 @@ class PasswordGeneratorService {
 	/**
 	 * Add the security password requirements to an input/password field
 	 *
-	 * @param \Elgg\Hook $hook 'view_vars', 'input/password'
+	 * @param \Elgg\Event $event 'view_vars', 'input/password'
 	 *
 	 * @return void|array
 	 */
-	public function addInputRequirements(\Elgg\Hook $hook) {
+	public function addInputRequirements(\Elgg\Event $event) {
 		
-		$vars = $hook->getValue();
+		$vars = $event->getValue();
 		if (!(bool) elgg_extract('add_security_requirements', $vars, false)) {
 			return;
 		}
@@ -256,14 +257,14 @@ class PasswordGeneratorService {
 	/**
 	 * Validate password during user registration
 	 *
-	 * @param \Elgg\Hook $hook 'registeruser:validate:password', 'all'
+	 * @param \Elgg\Event $event 'registeruser:validate:password', 'all'
 	 *
 	 * @return void
 	 * @throws RegistrationException
 	 */
-	public function registerUserPasswordValidation(\Elgg\Hook $hook) {
+	public function registerUserPasswordValidation(\Elgg\Event $event) {
 		
-		$password = $hook->getParam('password');
+		$password = $event->getParam('password');
 		if (empty($password)) {
 			return;
 		}

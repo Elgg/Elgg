@@ -2,10 +2,8 @@
 
 namespace Elgg\Menu;
 
-use Elgg\PluginHooksService;
 use Elgg\Config;
-use ElggMenuBuilder;
-use ElggMenuItem;
+use Elgg\EventsService;
 
 /**
  * Methods to construct and prepare menus for rendering
@@ -13,9 +11,9 @@ use ElggMenuItem;
 class Service {
 
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	protected $hooks;
+	protected $events;
 
 	/**
 	 * @var Config
@@ -30,21 +28,21 @@ class Service {
 	/**
 	 * Constructor
 	 *
-	 * @param PluginHooksService $hooks  Plugin hooks
-	 * @param Config             $config Elgg config
+	 * @param EventsService $events Events
+	 * @param Config        $config Elgg config
 	 */
-	public function __construct(PluginHooksService $hooks, Config $config) {
-		$this->hooks = $hooks;
+	public function __construct(EventsService $events, Config $config) {
+		$this->events = $events;
 		$this->config = $config;
 	}
 
 	/**
-	 * Build a full menu, pulling items from configuration and the "register" menu hooks.
+	 * Build a full menu, pulling items from configuration and the "register" menu events.
 	 *
-	 * Parameters are filtered by the "parameters" hook.
+	 * Parameters are filtered by the "parameters" event.
 	 *
 	 * @param string $name   Menu name
-	 * @param array  $params Hook/view parameters
+	 * @param array  $params Event/view parameters
 	 *
 	 * @return \Elgg\Menu\Menu
 	 */
@@ -56,7 +54,7 @@ class Service {
 	 * Build an unprepared menu.
 	 *
 	 * @param string $name   Menu name
-	 * @param array  $params Hook/view parameters
+	 * @param array  $params Event/view parameters
 	 *
 	 * @return \Elgg\Menu\UnpreparedMenu
 	 */
@@ -71,36 +69,36 @@ class Service {
 
 		$params['name'] = $name;
 
-		$params = $this->hooks->trigger('parameters', "menu:{$name}", $params, $params);
+		$params = $this->events->triggerResults('parameters', "menu:{$name}", $params, $params);
 
 		if (!isset($params['sort_by'])) {
 			$params['sort_by'] = 'priority';
 		}
 
-		// trigger specific menu hooks
+		// trigger specific menu events
 		$entity = elgg_extract('entity', $params);
 		if ($entity instanceof \ElggEntity) {
-			$items = $this->hooks->trigger('register', "menu:{$name}:{$entity->type}:{$entity->subtype}", $params, $items);
+			$items = $this->events->triggerResults('register', "menu:{$name}:{$entity->type}:{$entity->subtype}", $params, $items);
 		}
 
 		$annotation = elgg_extract('annotation', $params);
 		if ($annotation instanceof \ElggAnnotation) {
-			$items = $this->hooks->trigger('register', "menu:{$name}:{$annotation->getType()}:{$annotation->getSubtype()}", $params, $items);
+			$items = $this->events->triggerResults('register', "menu:{$name}:{$annotation->getType()}:{$annotation->getSubtype()}", $params, $items);
 		}
 
 		$relationship = elgg_extract('relationship', $params);
 		if ($relationship instanceof \ElggRelationship) {
-			$items = $this->hooks->trigger('register', "menu:{$name}:{$relationship->getType()}:{$relationship->getSubtype()}", $params, $items);
+			$items = $this->events->triggerResults('register', "menu:{$name}:{$relationship->getType()}:{$relationship->getSubtype()}", $params, $items);
 		}
 
-		// trigger generic menu hook
-		$items = $this->hooks->trigger('register', "menu:{$name}", $params, $items);
+		// trigger generic menu event
+		$items = $this->events->triggerResults('register', "menu:{$name}", $params, $items);
 
 		return new UnpreparedMenu($params, $items);
 	}
 
 	/**
-	 * Split a menu into sections, and pass it through the "prepare" hook
+	 * Split a menu into sections, and pass it through the "prepare" event
 	 *
 	 * @param UnpreparedMenu $menu Menu
 	 *
@@ -112,30 +110,30 @@ class Service {
 		$sort_by = $menu->getSortBy();
 		$selected_menu_item_name = elgg_extract('selected_item_name', $params, '');
 		
-		$builder = new ElggMenuBuilder($menu->getItems());
+		$builder = new \ElggMenuBuilder($menu->getItems());
 		$builder->setSelected($selected_menu_item_name);
 		
 		$params['menu'] = $builder->getMenu($sort_by);
 		$params['selected_item'] = $builder->getSelected();
 
-		// trigger specific menu hooks
+		// trigger specific menu events
 		$entity = elgg_extract('entity', $params);
 		if ($entity instanceof \ElggEntity) {
-			$params['menu'] = $this->hooks->trigger('prepare', "menu:{$name}:{$entity->type}:{$entity->subtype}", $params, $params['menu']);
+			$params['menu'] = $this->events->triggerResults('prepare', "menu:{$name}:{$entity->type}:{$entity->subtype}", $params, $params['menu']);
 		}
 
 		$annotation = elgg_extract('annotation', $params);
 		if ($annotation instanceof \ElggAnnotation) {
-			$params['menu'] = $this->hooks->trigger('prepare', "menu:{$name}:{$annotation->getType()}:{$annotation->getSubtype()}", $params, $params['menu']);
+			$params['menu'] = $this->events->triggerResults('prepare', "menu:{$name}:{$annotation->getType()}:{$annotation->getSubtype()}", $params, $params['menu']);
 		}
 
 		$relationship = elgg_extract('relationship', $params);
 		if ($relationship instanceof \ElggRelationship) {
-			$params['menu'] = $this->hooks->trigger('prepare', "menu:{$name}:{$relationship->getType()}:{$relationship->getSubtype()}", $params, $params['menu']);
+			$params['menu'] = $this->events->triggerResults('prepare', "menu:{$name}:{$relationship->getType()}:{$relationship->getSubtype()}", $params, $params['menu']);
 		}
 
-		// trigger generic menu hook
-		$params['menu'] = $this->hooks->trigger('prepare', "menu:$name", $params, $params['menu']);
+		// trigger generic menu event
+		$params['menu'] = $this->events->triggerResults('prepare', "menu:$name", $params, $params['menu']);
 		
 		$params['menu'] = $this->prepareVerticalMenu($params['menu'], $params);
 		$params['menu'] = $this->prepareDropdownMenu($params['menu'], $params);
@@ -287,7 +285,7 @@ class Service {
 	 *
 	 * @param string[] $names    Menu names
 	 * @param array    $params   Menu params
-	 * @param string   $new_name Combined menu name (used for the prepare hook)
+	 * @param string   $new_name Combined menu name (used for the prepare event)
 	 *
 	 * @return \Elgg\Menu\UnpreparedMenu
 	 */
@@ -321,7 +319,7 @@ class Service {
 	/**
 	 * Prepare menu items
 	 *
-	 * @param array $items An array of ElggMenuItem instances or menu item factory options
+	 * @param array $items An array of \ElggMenuItem instances or menu item factory options
 	 *
 	 * @return \Elgg\Menu\MenuItems
 	 */
@@ -331,10 +329,10 @@ class Service {
 		foreach ($items as $item) {
 			if (is_array($item)) {
 				$options = $item;
-				$item = ElggMenuItem::factory($options);
+				$item = \ElggMenuItem::factory($options);
 			}
 
-			if (!$item instanceof ElggMenuItem) {
+			if (!$item instanceof \ElggMenuItem) {
 				continue;
 			}
 

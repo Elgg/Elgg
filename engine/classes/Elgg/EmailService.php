@@ -34,9 +34,9 @@ class EmailService {
 	protected $config;
 
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	protected $hooks;
+	protected $events;
 
 	/**
 	 * @var TransportInterface
@@ -67,7 +67,7 @@ class EmailService {
 	 * Constructor
 	 *
 	 * @param Config              $config         Config
-	 * @param PluginHooksService  $hooks          Hook registration service
+	 * @param EventsService       $events         Events service
 	 * @param TransportInterface  $mailer         Mailer
 	 * @param HtmlFormatter       $html_formatter Html formatter
 	 * @param ViewsService        $views          Views service
@@ -76,7 +76,7 @@ class EmailService {
 	 */
 	public function __construct(
 			Config $config,
-			PluginHooksService $hooks,
+			EventsService $events,
 			TransportInterface $mailer,
 			HtmlFormatter $html_formatter,
 			ViewsService $views,
@@ -84,7 +84,7 @@ class EmailService {
 			CssCompiler $css_compiler
 		) {
 		$this->config = $config;
-		$this->hooks = $hooks;
+		$this->events = $events;
 		$this->mailer = $mailer;
 		$this->html_formatter = $html_formatter;
 		$this->views = $views;
@@ -101,18 +101,14 @@ class EmailService {
 	 * @throws RuntimeException
 	 */
 	public function send(Email $email) {
-		$email = $this->hooks->trigger('prepare', 'system:email', null, $email);
+		$email = $this->events->triggerResults('prepare', 'system:email', [], $email);
 		if (!$email instanceof Email) {
-			$msg = "'prepare','system:email' hook handlers should return an instance of " . Email::class;
+			$msg = "'prepare','system:email' event handlers should return an instance of " . Email::class;
 			throw new RuntimeException($msg);
 		}
 
-		$hook_params = [
-			'email' => $email,
-		];
-
 		$is_valid = $email->getFrom() && !empty($email->getTo());
-		if (!$this->hooks->trigger('validate', 'system:email', $hook_params, $is_valid)) {
+		if (!$this->events->triggerResults('validate', 'system:email', ['email' => $email], $is_valid)) {
 			return false;
 		}
 
@@ -129,7 +125,7 @@ class EmailService {
 	 */
 	public function transport(Email $email) {
 
-		if ($this->hooks->trigger('transport', 'system:email', ['email' => $email], false)) {
+		if ($this->events->triggerResults('transport', 'system:email', ['email' => $email], false)) {
 			return true;
 		}
 
@@ -170,7 +166,7 @@ class EmailService {
 		
 		// allow others to modify the $message content
 		// eg. add html body, add attachments
-		$message = $this->hooks->trigger('zend:message', 'system:email', ['email' => $email], $message);
+		$message = $this->events->triggerResults('zend:message', 'system:email', ['email' => $email], $message);
 
 		// fix content type header
 		// @see https://github.com/Elgg/Elgg/issues/12555

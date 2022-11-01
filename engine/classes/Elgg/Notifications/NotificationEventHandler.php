@@ -52,12 +52,12 @@ class NotificationEventHandler {
 		$params['subscriptions'] = $this->prepareSubscriptions();
 
 		// return false to stop the default notification sender
-		if (_elgg_services()->hooks->trigger('send:before', 'notifications', $params, true)) {
+		if (_elgg_services()->events->triggerResults('send:before', 'notifications', $params, true)) {
 			$deliveries = $this->sendNotifications($params['subscriptions'], $params);
 		}
 		
 		$params['deliveries'] = $deliveries;
-		_elgg_services()->hooks->trigger('send:after', 'notifications', $params);
+		_elgg_services()->events->triggerResults('send:after', 'notifications', $params);
 		
 		return $deliveries;
 	}
@@ -75,7 +75,7 @@ class NotificationEventHandler {
 			'methods' => $this->getMethods(),
 			'methods_override' => (array) elgg_extract('methods_override', $this->params, []),
 		];
-		$subscriptions = _elgg_services()->hooks->trigger('get', 'subscriptions', $params, $subscriptions);
+		$subscriptions = _elgg_services()->events->triggerResults('get', 'subscriptions', $params, $subscriptions);
 		
 		return _elgg_services()->subscriptions->filterSubscriptions($subscriptions, $this->event, $this->filterMutedSubscriptions());
 	}
@@ -214,7 +214,7 @@ class NotificationEventHandler {
 	 * @return bool
 	 */
 	final protected function sendNotification(int $guid, string $method, array $params = []): bool {
-		if (!_elgg_services()->hooks->hasHandler('send', "notification:{$method}")) {
+		if (!_elgg_services()->events->hasHandler('send', "notification:{$method}")) {
 			// no way to deliver given the current method, so quitting early
 			return false;
 		}
@@ -285,7 +285,7 @@ class NotificationEventHandler {
 			'event' => $this->event,
 		];
 
-		$result = _elgg_services()->hooks->trigger('send', "notification:{$method}", $params, false);
+		$result = _elgg_services()->events->triggerResults('send', "notification:{$method}", $params, false);
 		
 		if (_elgg_services()->logger->isLoggable(LogLevel::INFO)) {
 			$logger_data = print_r((array) $notification->toObject(), true);
@@ -310,15 +310,15 @@ class NotificationEventHandler {
 	final protected function prepareNotification(array $params): Notification {
 		$notification = new Notification($params['sender'], $params['recipient'], $params['language'], $params['subject'], $params['body'], $params['summary'], $params);
 
-		$notification = _elgg_services()->hooks->trigger('prepare', 'notification', $params, $notification);
+		$notification = _elgg_services()->events->triggerResults('prepare', 'notification', $params, $notification);
 		if (!$notification instanceof Notification) {
-			throw new RuntimeException("'prepare','notification' hook must return an instance of " . Notification::class);
+			throw new RuntimeException("'prepare','notification' event must return an instance of " . Notification::class);
 		}
 
 		$type = 'notification:' . $this->event->getDescription();
-		$notification = _elgg_services()->hooks->trigger('prepare', $type, $params, $notification);
+		$notification = _elgg_services()->events->triggerResults('prepare', $type, $params, $notification);
 		if (!$notification instanceof Notification) {
-			throw new RuntimeException("'prepare','{$type}' hook must return an instance of " . Notification::class);
+			throw new RuntimeException("'prepare','{$type}' event must return an instance of " . Notification::class);
 		}
 
 		if (elgg_extract('add_salutation', $notification->params) === true) {
@@ -326,9 +326,9 @@ class NotificationEventHandler {
 			$notification->body = _elgg_view_under_viewtype('notifications/body', ['notification' => $notification], $viewtype);
 		}
 		
-		$notification = _elgg_services()->hooks->trigger('format', "notification:{$params['method']}", [], $notification);
+		$notification = _elgg_services()->events->triggerResults('format', "notification:{$params['method']}", [], $notification);
 		if (!$notification instanceof Notification) {
-			throw new RuntimeException("'format','notification:{$params['method']}' hook must return an instance of " . Notification::class);
+			throw new RuntimeException("'format','notification:{$params['method']}' event must return an instance of " . Notification::class);
 		}
 		
 		return $notification;

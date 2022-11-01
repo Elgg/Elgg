@@ -15,18 +15,18 @@ class UserHover {
 	/**
 	 * Add a link to the avatar edit page
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:user_hover'
+	 * @param \Elgg\Event $event 'register', 'menu:user_hover'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerAvatarEdit(\Elgg\Hook $hook) {
-		$user = $hook->getEntityParam();
+	public static function registerAvatarEdit(\Elgg\Event $event) {
+		$user = $event->getEntityParam();
 		if (!$user instanceof \ElggUser || !$user->isEnabled() || !$user->canEdit()) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'avatar:edit',
@@ -42,12 +42,12 @@ class UserHover {
 	/**
 	 * Register admin action
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:user_hover'
+	 * @param \Elgg\Event $event 'register', 'menu:user_hover'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerAdminActions(\Elgg\Hook $hook) {
-		$user = $hook->getEntityParam();
+	public static function registerAdminActions(\Elgg\Event $event) {
+		$user = $event->getEntityParam();
 		if (!$user instanceof \ElggUser || !elgg_is_admin_logged_in()) {
 			return;
 		}
@@ -58,7 +58,7 @@ class UserHover {
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		// delete
 		$return[] = \ElggMenuItem::factory([
@@ -182,12 +182,12 @@ class UserHover {
 	/**
 	 * Register admin action to login as another user
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:user_hover|menu:entity'
+	 * @param \Elgg\Event $event 'register', 'menu:user_hover|menu:entity'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerLoginAs(\Elgg\Hook $hook) {
-		$user = $hook->getEntityParam();
+	public static function registerLoginAs(\Elgg\Event $event) {
+		$user = $event->getEntityParam();
 		$logged_in_user = elgg_get_logged_in_user_entity();
 		
 		if (!$user instanceof \ElggUser || $user->isBanned() || !$user->isEnabled()) {
@@ -210,7 +210,7 @@ class UserHover {
 			return;
 		}
 		
-		$menu = $hook->getValue();
+		$menu = $event->getValue();
 		
 		$menu[] = \ElggMenuItem::factory([
 			'name' => 'login_as',
@@ -219,7 +219,7 @@ class UserHover {
 			'href' => elgg_generate_action_url('admin/user/login_as', [
 				'user_guid' => $user->guid,
 			]),
-			'section' => $hook->getType() === 'menu:user_hover' ? 'admin' : 'default',
+			'section' => $event->getType() === 'menu:user_hover' ? 'admin' : 'default',
 		]);
 		
 		return $menu;

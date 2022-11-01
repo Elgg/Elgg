@@ -10,14 +10,14 @@ class FieldsServiceIntegrationTest extends IntegrationTestCase {
 	 * {@inheritDoc}
 	 */
 	public function up() {
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function down() {
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 	}
 
 	public function testFieldsConfig() {
@@ -25,7 +25,7 @@ class FieldsServiceIntegrationTest extends IntegrationTestCase {
 		// this prevents this test from failing when the default language isn't English
 		_elgg_services()->translator->addTranslation('en', ['fields:foo:bar:field_1' => 'Label 1']);
 		
-		_elgg_services()->hooks->registerHandler('fields', 'foo:bar', function() {
+		_elgg_services()->events->registerHandler('fields', 'foo:bar', function() {
 			return [
 				[
 					'name' => null,
@@ -82,17 +82,17 @@ class FieldsServiceIntegrationTest extends IntegrationTestCase {
 			],
 		];
 		
-		$hook = $this->registerTestingHook('fields', 'foo:bar2', function() use ($fields) {
+		$event = $this->registerTestingEvent('fields', 'foo:bar2', function() use ($fields) {
 			return $fields;
 		});
 		
-		$hook->assertNumberOfCalls(0);
+		$event->assertNumberOfCalls(0);
 		
 		$this->assertEquals($fields, elgg()->fields->get('foo', 'bar2'));
-		$hook->assertNumberOfCalls(1);
+		$event->assertNumberOfCalls(1);
 		
 		$this->assertEquals($fields, elgg()->fields->get('foo', 'bar2'));
 		$this->assertEquals($fields, elgg()->fields->get('foo', 'bar2'));
-		$hook->assertNumberOfCalls(1);
+		$event->assertNumberOfCalls(1);
 	}
 }

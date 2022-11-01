@@ -12,12 +12,12 @@ class AclNameHandler {
 	/**
 	 * Return the name of a friends ACL
 	 *
-	 * @param \Elgg\Hook $hook 'access_collection:name', 'access_collection'
+	 * @param \Elgg\Event $event 'access_collection:name', 'access_collection'
 	 *
 	 * @return string|void
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		$access_collection = $hook->getParam('access_collection');
+	public function __invoke(\Elgg\Event $event) {
+		$access_collection = $event->getParam('access_collection');
 		if (!$access_collection instanceof \ElggAccessCollection) {
 			return;
 		}

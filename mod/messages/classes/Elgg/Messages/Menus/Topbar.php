@@ -3,7 +3,7 @@
 namespace Elgg\Messages\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,11 +13,11 @@ class Topbar {
 	/**
 	 * Add inbox link to topbar
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:topbar'
+	 * @param \Elgg\Event $event 'register', 'menu:topbar'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 		if (!elgg_is_logged_in()) {
 			return;
 		}
@@ -32,7 +32,7 @@ class Topbar {
 			$title .= " (" . elgg_echo("messages:unreadcount", [$num_messages]) . ")";
 		}
 	
-		$items = $hook->getValue();
+		$items = $event->getValue();
 		$items[] = \ElggMenuItem::factory([
 			'name' => 'messages',
 			'href' => elgg_generate_url('collection:object:messages:owner', [

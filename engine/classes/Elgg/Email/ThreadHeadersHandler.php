@@ -13,12 +13,12 @@ class ThreadHeadersHandler {
 	 * Adds default thread SMTP headers to group messages correctly.
 	 * Note that it won't be sufficient for some email clients. Ie. Gmail is looking at message subject anyway.
 	 *
-	 * @param \Elgg\Hook $hook 'prepare', 'system:email'
+	 * @param \Elgg\Event $event 'prepare', 'system:email'
 	 *
 	 * @return void|\Elgg\Email
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		$email = $hook->getValue();
+	public function __invoke(\Elgg\Event $event) {
+		$email = $event->getValue();
 		if (!$email instanceof \Elgg\Email) {
 			return;
 		}

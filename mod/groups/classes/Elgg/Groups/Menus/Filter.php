@@ -3,7 +3,7 @@
 namespace Elgg\Groups\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  *
@@ -14,13 +14,13 @@ class Filter {
 	/**
 	 * Setup filter tabs on /groups/all page
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:groups/all'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:groups/all'
 	 *
 	 * @return \Elgg\Menu\MenuItems
 	 */
-	public static function registerGroupsAll(\Elgg\Hook $hook) {
+	public static function registerGroupsAll(\Elgg\Event $event) {
 	
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'all',
 			'text' => elgg_echo('all'),
@@ -52,11 +52,11 @@ class Filter {
 	/**
 	 * Setup filter tabs on notification settings page
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:settings/notifications'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:settings/notifications'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function registerNotificationSettings(\Elgg\Hook $hook) {
+	public static function registerNotificationSettings(\Elgg\Event $event) {
 	
 		$page_owner = elgg_get_page_owner_entity();
 		if (!$page_owner instanceof \ElggUser || !$page_owner->canEdit()) {
@@ -64,7 +64,7 @@ class Filter {
 		}
 		
 		/* @var $return \Elgg\Menu\MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'groups',
@@ -81,18 +81,18 @@ class Filter {
 	/**
 	 * Setup group members tabs
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:groups/members'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:groups/members'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function registerGroupsMembers(\Elgg\Hook $hook) {
+	public static function registerGroupsMembers(\Elgg\Event $event) {
 		
-		$entity = $hook->getParam('filter_entity');
+		$entity = $event->getParam('filter_entity');
 		if (!$entity instanceof \ElggGroup) {
 			return;
 		}
 		
-		$menu = $hook->getValue();
+		$menu = $event->getValue();
 		$menu[] = \ElggMenuItem::factory([
 			'name' => 'members',
 			'text' => elgg_echo('groups:members'),

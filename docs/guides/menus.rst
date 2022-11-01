@@ -5,7 +5,7 @@ Elgg contains helper code to build menus throughout the site.
 
 Every single menu requires a name, as does every single menu item. These are
 required in order to allow easy overriding and manipulation, as well as to
-provide hooks for theming.
+provide events for theming.
 
 .. contents:: Contents
    :local:
@@ -52,15 +52,15 @@ the menu items to ``admin`` so the menu items only show in the ``admin`` context
 Advanced usage
 ==============
 
-You can get more control over menus by using :doc:`plugin hooks </design/events>`
+You can get more control over menus by using :doc:`events </design/events>`
 and the public methods provided by the ``ElggMenuItem`` class.
 
-There are three hooks that can be used to modify a menu:
+There are three events that can be used to modify a menu:
  - ``'parameters', 'menu:<menu name>'`` to add or modify parameters use for the menu building (eg. sorting)
  - ``'register', 'menu:<menu name>'`` to add or modify items (especially in dynamic menus)
  - ``'prepare', 'menu:<menu name>'`` to modify the structure of the menu before it is displayed
 
-When you register a plugin hook handler, replace the ``<menu name>`` part with the
+When you register an event handler, replace the ``<menu name>`` part with the
 internal name of the menu.
 
 The third parameter passed into a menu handler contains all the menu items that
@@ -68,7 +68,7 @@ have been registered so far by Elgg core and other enabled plugins. In the
 handler we can loop through the menu items and use the class methods to
 interact with the properties of the menu item.
 
-In some cases a more granular version of the ``register`` and ``prepare`` menu hooks exist with ``menu:<menu name>:<type>:<subtype>``,
+In some cases a more granular version of the ``register`` and ``prepare`` menu events exist with ``menu:<menu name>:<type>:<subtype>``,
 this applies when the menu gets provided an ``\ElggEntity`` in ``$params['entity']`` or an ``\ElggAnnotation`` in ``$params['annotation']``
 or an ``\ElggRelationship`` in ``$params['relationship']``.
 
@@ -83,15 +83,15 @@ Examples
 	 * Initialize the plugin
 	 */
 	function my_plugin_init() {
-		// Register a plugin hook handler for the owner_block menu 
-		elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'my_owner_block_menu_handler');
+		// Register an event handler for the owner_block menu 
+		elgg_register_event_handler('register', 'menu:owner_block', 'my_owner_block_menu_handler');
 	}
 
 	/**
 	 * Change the URL of the "Albums" menu item in the owner_block menu
 	 */
-	function my_owner_block_menu_handler(\Elgg\Hook $hook) {
-		$owner = $hook->getEntityParam();
+	function my_owner_block_menu_handler(\Elgg\Event $event) {
+		$owner = $event->getEntityParam();
 
 		// Owner can be either user or a group, so we
 		// need to take both URLs into consideration:
@@ -104,7 +104,7 @@ Examples
 				break;
 		}
 
-		$items = $hook->getValue();
+		$items = $event->getValue();
 		if ($items->has('albums')) {
 			$items->get('albums')->setURL($url);
 		}
@@ -122,16 +122,16 @@ Examples
 	 * Initialize the plugin
 	 */
 	function my_plugin_init() {
-		// Register a plugin hook handler for the entity menu 
-		elgg_register_plugin_hook_handler('register', 'menu:entity', 'my_entity_menu_handler');
+		// Register an event handler for the entity menu 
+		elgg_register_event_handler('register', 'menu:entity', 'my_entity_menu_handler');
 	}
 
 	/**
 	 * Customize the entity menu for ElggBlog objects
 	 */
-	function my_entity_menu_handler(\Elgg\Hook $hook) {
+	function my_entity_menu_handler(\Elgg\Event $event) {
 		// The entity can be found from the $params parameter
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 
 		// We want to modify only the ElggBlog objects, so we
 		// return immediately if the entity is something else
@@ -139,7 +139,7 @@ Examples
 			return;
 		}
 
-		$items = $hook->getValue();
+		$items = $event->getValue();
 		
 		$items->remove('likes');
 
@@ -179,7 +179,7 @@ You can now add new items to the menu like this:
 		'text' => elgg_echo('my_plugin:my_page'),
 	));
 
-Furthermore it is now possible to modify the menu using the hooks
+Furthermore it is now possible to modify the menu using the events
 ``'register', 'menu:my_menu'`` and ``'prepare', 'menu:my_menu'``.
 
 Child Dropdown Menus

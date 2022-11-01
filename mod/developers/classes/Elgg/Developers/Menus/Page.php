@@ -3,7 +3,7 @@
 namespace Elgg\Developers\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  *
@@ -14,16 +14,16 @@ class Page {
 	/**
 	 * Register item to menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:page'
+	 * @param \Elgg\Event $event 'register', 'menu:page'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
 			return;
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'dev_settings',
@@ -87,7 +87,6 @@ class Page {
 			'Actions' => elgg_echo('developers:inspect:actions'),
 			'Events' => elgg_echo('developers:inspect:events'),
 			'Menus' => elgg_echo('developers:inspect:menus'),
-			'Plugin Hooks' => elgg_echo('developers:inspect:pluginhooks'),
 			'Routes' => elgg_echo('developers:inspect:routes'),
 			'Services' => elgg_echo('developers:inspect:services'),
 			'Simple Cache' => elgg_echo('developers:inspect:simplecache'),

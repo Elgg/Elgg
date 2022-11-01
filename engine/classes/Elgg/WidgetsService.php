@@ -162,7 +162,7 @@ class WidgetsService {
 			'context' => $context,
 			'page_owner' => $page_owner,
 		];
-		return _elgg_services()->hooks->trigger('permissions_check', 'widget_layout', $params, $default);
+		return _elgg_services()->events->triggerResults('permissions_check', 'widget_layout', $params, $default);
 	}
 
 	/**
@@ -270,7 +270,7 @@ class WidgetsService {
 			$params['context'] = $context;
 		}
 		
-		$available_widgets = _elgg_services()->hooks->trigger('handlers', 'widgets', $params, $this->widgets);
+		$available_widgets = _elgg_services()->events->triggerResults('handlers', 'widgets', $params, $this->widgets);
 		if (!is_array($available_widgets)) {
 			return [];
 		}

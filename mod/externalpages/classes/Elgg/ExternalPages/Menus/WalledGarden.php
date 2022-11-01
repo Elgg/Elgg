@@ -3,7 +3,7 @@
 namespace Elgg\ExternalPages\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  *
@@ -14,12 +14,12 @@ class WalledGarden {
 	/**
 	 * Adds menu items to the walled garden menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:walled_garden'
+	 * @param \Elgg\Event $event 'register', 'menu:walled_garden'
 	 *
 	 * @return \Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
-		$return = $hook->getValue();
+	public static function register(\Elgg\Event $event) {
+		$return = $event->getValue();
 		
 		$pages = ['about', 'terms', 'privacy'];
 		foreach ($pages as $page) {

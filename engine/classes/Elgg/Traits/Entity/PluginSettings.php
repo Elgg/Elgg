@@ -19,7 +19,7 @@ trait PluginSettings {
 	 * @return bool
 	 */
 	public function setPluginSetting(string $plugin_id, string $name, $value): bool {
-		$value = _elgg_services()->hooks->trigger('plugin_setting', $this->getType(), [
+		$value = _elgg_services()->events->triggerResults('plugin_setting', $this->getType(), [
 			'entity' => $this,
 			'plugin_id' => $plugin_id,
 			'name' => $name,

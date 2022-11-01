@@ -12,11 +12,11 @@ class AccessWhereClauseIntegrationTest extends IntegrationTestCase {
 	public function up() {
 		$this->user = $this->createUser();
 		_elgg_services()->session->setLoggedInUser($this->user);
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 	}
 
 	public function down() {
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 	}
 
 	public function testHasAccessToEntity() {

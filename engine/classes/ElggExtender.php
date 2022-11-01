@@ -172,7 +172,7 @@ abstract class ElggExtender extends \ElggData {
 
 		$params[$this->getType()] = $this;
 				
-		return _elgg_services()->hooks->trigger('to:object', $this->getType(), $params, $object);
+		return _elgg_services()->events->triggerResults('to:object', $this->getType(), $params, $object);
 	}
 
 	/*
@@ -211,7 +211,7 @@ abstract class ElggExtender extends \ElggData {
 	/**
 	 * Get a url for this extender.
 	 *
-	 * Plugins can register for the 'extender:url', <type> plugin hook to
+	 * Plugins can register for the 'extender:url', '<type>' event to
 	 * customize the url for an annotation or metadata.
 	 *
 	 * @return string
@@ -219,7 +219,7 @@ abstract class ElggExtender extends \ElggData {
 	public function getURL(): string {
 
 		$params = ['extender' => $this];
-		$url = _elgg_services()->hooks->trigger('extender:url', $this->getType(), $params, '');
+		$url = _elgg_services()->events->triggerResults('extender:url', $this->getType(), $params, '');
 
 		return elgg_normalize_url($url);
 	}

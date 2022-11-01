@@ -158,7 +158,7 @@ function elgg_validate_invite_code(string $username, string $code): bool {
 
 /**
  * Returns site's registration URL
- * Triggers a 'registration_url', 'site' plugin hook that can be used by
+ * Triggers a 'registration_url', 'site' event that can be used by
  * plugins to alter the default registration URL and append query elements, such as
  * an invitation code and inviting user's guid
  *
@@ -170,12 +170,12 @@ function elgg_validate_invite_code(string $username, string $code): bool {
 function elgg_get_registration_url(array $parameters = [], string $fragment = ''): string {
 	$url = elgg_generate_url('account:register', $parameters) . $fragment;
 	
-	return (string) elgg_trigger_plugin_hook('registration_url', 'site', $parameters, $url);
+	return (string) elgg_trigger_event_results('registration_url', 'site', $parameters, $url);
 }
 
 /**
  * Returns site's login URL
- * Triggers a 'login_url', 'site' plugin hook that can be used by
+ * Triggers a 'login_url', 'site' event that can be used by
  * plugins to alter the default login URL
  *
  * @param array  $query    An array of query elements
@@ -185,7 +185,7 @@ function elgg_get_registration_url(array $parameters = [], string $fragment = ''
 function elgg_get_login_url(array $query = [], string $fragment = ''): string {
 	$url = elgg_generate_url('account:login');
 	$url = elgg_http_add_url_query_elements($url, $query) . $fragment;
-	return elgg_trigger_plugin_hook('login_url', 'site', $query, $url);
+	return (string) elgg_trigger_event_results('login_url', 'site', $query, $url);
 }
 
 /**

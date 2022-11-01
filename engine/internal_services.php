@@ -13,7 +13,7 @@ return [
 	'adminNotices' => DI\autowire(\Elgg\Database\AdminNotices::class),
 	'ajax' => DI\autowire(\Elgg\Ajax\Service::class),
 	'amdConfig' => DI\factory(function (ContainerInterface $c) {
-		$obj = new \Elgg\Amd\Config($c->hooks);
+		$obj = new \Elgg\Amd\Config($c->events);
 		$obj->setBaseUrl($c->simpleCache->getRoot());
 		return $obj;
 	}),
@@ -71,7 +71,6 @@ return [
 	'hmac' => DI\autowire(\Elgg\Security\HmacFactory::class),
 	'hmacCacheTable' => DI\autowire(\Elgg\Database\HMACCacheTable::class),
 	'html_formatter' => DI\autowire(\Elgg\Views\HtmlFormatter::class),
-	'hooks' => DI\autowire(\Elgg\PluginHooksService::class),
 	'iconService' => DI\autowire(\Elgg\EntityIconService::class),
 	'imageFetcher' => DI\autowire(\Elgg\Assets\ImageFetcherService::class),
 	'imageService' => DI\autowire(\Elgg\ImageService::class),
@@ -262,7 +261,6 @@ return [
 	\Elgg\Page\PageOwnerService::class => DI\get('pageOwner'),
 	\Elgg\PasswordService::class => DI\get('passwords'),
 	\Elgg\PersistentLoginService::class => DI\get('persistentLogin'),
-	\Elgg\PluginHooksService::class => DI\get('hooks'),
 	\Elgg\RedirectService::class => DI\get('redirects'),
 	\Elgg\Router::class => DI\get('router'),
 	\Elgg\Router\RequestContext::class => DI\get('requestContext'),

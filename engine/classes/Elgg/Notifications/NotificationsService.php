@@ -4,7 +4,6 @@ namespace Elgg\Notifications;
 
 use Elgg\EventsService;
 use Elgg\Exceptions\InvalidArgumentException;
-use Elgg\PluginHooksService;
 use Elgg\Traits\Loggable;
 use Elgg\Queue\Queue;
 
@@ -21,9 +20,6 @@ class NotificationsService {
 	/** @var Queue */
 	protected $queue;
 
-	/** @var PluginHooksService */
-	protected $hooks;
-
 	/** @var EventsService */
 	protected $elgg_events;
 
@@ -39,20 +35,17 @@ class NotificationsService {
 	/**
 	 * Constructor
 	 *
-	 * @param Queue              $queue       Queue
-	 * @param PluginHooksService $hooks       Plugin hook service
-	 * @param \ElggSession       $session     Session service
-	 * @param EventsService      $elgg_events Events service
+	 * @param Queue         $queue       Queue
+	 * @param \ElggSession  $session     Session service
+	 * @param EventsService $elgg_events Events service
 	 */
 	public function __construct(
 			Queue $queue,
-			PluginHooksService $hooks,
 			\ElggSession $session,
 			EventsService $elgg_events
 	) {
 
 		$this->queue = $queue;
-		$this->hooks = $hooks;
 		$this->session = $session;
 		$this->elgg_events = $elgg_events;
 	}
@@ -214,7 +207,7 @@ class NotificationsService {
 				'object' => $object,
 				'actor' => $actor,
 			];
-			$registered = (bool) $this->hooks->trigger('enqueue', 'notification', $params, $registered);
+			$registered = (bool) $this->elgg_events->triggerResults('enqueue', 'notification', $params, $registered);
 		}
 		
 		if (!$registered) {

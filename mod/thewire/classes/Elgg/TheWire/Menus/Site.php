@@ -3,7 +3,7 @@
 namespace Elgg\TheWire\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,13 +13,13 @@ class Site {
 	/**
 	 * Register menu item
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:site'
+	 * @param \Elgg\Event $event 'register', 'menu:site'
 	 *
 	 * @return \Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'thewire',
 			'icon' => 'comments-regular',

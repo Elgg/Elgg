@@ -3,7 +3,7 @@
 namespace Elgg\Groups\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  *
@@ -14,11 +14,11 @@ class Page {
 	/**
 	 * Register menu items for the page menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:page'
+	 * @param \Elgg\Event $event 'register', 'menu:page'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function registerGroupProfile(\Elgg\Hook $hook) {
+	public static function registerGroupProfile(\Elgg\Event $event) {
 		
 		if (!elgg_in_context('group_profile') || !elgg_is_logged_in()) {
 			return;
@@ -31,7 +31,7 @@ class Page {
 		}
 		
 		/* @var $return \Elgg\Menu\MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		if ($page_owner->isPublicMembership()) {
 			// show lint to invited users
@@ -72,11 +72,11 @@ class Page {
 	/**
 	 * Register menu items for the page menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:page'
+	 * @param \Elgg\Event $event 'register', 'menu:page'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 		
 		if (elgg_get_context() !== 'groups') {
 			return;
@@ -88,7 +88,7 @@ class Page {
 			return;
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'groups:all',
 			'text' => elgg_echo('groups:all'),

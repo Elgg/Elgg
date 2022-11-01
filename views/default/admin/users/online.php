@@ -6,8 +6,8 @@
 use Elgg\Database\QueryBuilder;
 use Elgg\Values;
 
-elgg_unregister_plugin_hook_handler('register', 'menu:filter:admin/users', 'Elgg\Menus\FilterSortItems::registerTimeCreatedSorting');
-elgg_register_plugin_hook_handler('register', 'menu:filter:admin/users', 'Elgg\Menus\FilterSortItems::registerLastActionSorting', 499);
+elgg_unregister_event_handler('register', 'menu:filter:admin/users', 'Elgg\Menus\FilterSortItems::registerTimeCreatedSorting');
+elgg_register_event_handler('register', 'menu:filter:admin/users', 'Elgg\Menus\FilterSortItems::registerLastActionSorting', 499);
 
 echo elgg_view('admin/users/header', [
 	'filter' => 'online',

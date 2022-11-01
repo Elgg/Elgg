@@ -333,14 +333,14 @@ class CacheHandler {
 			return false;
 		}
 
-		$hook_name = $this->simplecache->isEnabled() ? 'simplecache:generate' : 'cache:generate';
-		$hook_type = $this->getViewFileType($view);
-		$hook_params = [
+		$name = $this->simplecache->isEnabled() ? 'simplecache:generate' : 'cache:generate';
+		$type = $this->getViewFileType($view);
+		$params = [
 			'view' => $view,
 			'viewtype' => $viewtype,
 			'view_content' => $content,
 		];
-		return _elgg_services()->hooks->trigger($hook_name, $hook_type, $hook_params, $content);
+		return _elgg_services()->events->triggerResults($name, $type, $params, $content);
 	}
 
 	/**

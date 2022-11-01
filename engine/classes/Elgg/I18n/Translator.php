@@ -569,7 +569,7 @@ class Translator {
 	}
 	
 	/**
-	 * Returns an array of all available language keys. Triggers a hook to allow plugins to add/remove languages
+	 * Returns an array of all available language keys. Triggers an event to allow plugins to add/remove languages
 	 *
 	 * @return array
 	 * @since 3.0
@@ -606,7 +606,7 @@ class Translator {
 		
 		$languages = array_keys($languages);
 				
-		return _elgg_services()->hooks->trigger('languages', 'translations', [], $languages);
+		return _elgg_services()->events->triggerResults('languages', 'translations', [], $languages);
 	}
 	
 	/**

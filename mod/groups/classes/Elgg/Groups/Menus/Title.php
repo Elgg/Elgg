@@ -3,7 +3,7 @@
 namespace Elgg\Groups\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,12 +13,12 @@ class Title {
 	/**
 	 * Registers title menu items for group
 	 *
-	 * @param \Elgg\Hook $hook 'register' 'menu:title'
+	 * @param \Elgg\Event $event 'register' 'menu:title'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
-		$group = $hook->getEntityParam();
+	public static function register(\Elgg\Event $event) {
+		$group = $event->getEntityParam();
 		if (!$group instanceof \ElggGroup) {
 			return;
 		}
@@ -28,7 +28,7 @@ class Title {
 			return;
 		}
 		
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		if ($group->canEdit()) {
 			// group owners can edit the group and invite new members
 			$result[] = \ElggMenuItem::factory([

@@ -12,20 +12,20 @@ class ValidateInputHandler {
 	/**
 	 * htmLawed filtering of data
 	 *
-	 * Called on the 'sanitize', 'input' plugin hook
+	 * Called on the 'sanitize', 'input' event
 	 *
-	 * htmLawed's $config argument is filtered by the [config, htmlawed] hook.
-	 * htmLawed's $spec argument is filtered by the [spec, htmlawed] hook.
+	 * htmLawed's $config argument is filtered by the [config, htmlawed] event.
+	 * htmLawed's $spec argument is filtered by the [spec, htmlawed] event.
 	 *
 	 * For information on these arguments, see
 	 * http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/htmLawed_README.htm#s2.2
 	 *
-	 * @param \Elgg\Hook $hook 'sanitize', 'input'
+	 * @param \Elgg\Event $event 'sanitize', 'input'
 	 *
 	 * @return mixed
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		$var = $hook->getValue();
+	public function __invoke(\Elgg\Event $event) {
+		$var = $event->getValue();
 		if ((!is_string($var) && !is_array($var)) || empty($var)) {
 			return $var;
 		}
@@ -56,8 +56,8 @@ class ValidateInputHandler {
 			$config['anti_link_spam'] = ['/./', ''];
 		}
 	
-		$config = elgg_trigger_plugin_hook('config', 'htmlawed', null, $config);
-		$spec = elgg_trigger_plugin_hook('spec', 'htmlawed', null, '');
+		$config = elgg_trigger_event_results('config', 'htmlawed', [], $config);
+		$spec = elgg_trigger_event_results('spec', 'htmlawed', [], '');
 	
 		if (!is_array($var)) {
 			return \Htmlawed::filter($var, $config, $spec);

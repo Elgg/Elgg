@@ -29,21 +29,6 @@ return [
 			'controller' => AcceptFriendRequestController::class,
 		],
 	],
-	'events' => [
-		'create' => [
-			'relationship' => [
-				'Elgg\Friends\Relationships::removePendingFriendRequest' => [],
-				'Elgg\Friends\Relationships::applyFriendNotificationsSettings' => [],
-				'Elgg\Friends\Notifications::sendFriendNotification' => [],
-			],
-		],
-		'delete' => [
-			'relationship' => [
-				'Elgg\Friends\Relationships::deleteFriendRelationship' => [],
-				'Elgg\Friends\Relationships::deleteFriendNotificationSubscription' => [],
-			],
-		],
-	],
 	'routes' => [
 		'collection:friends:owner' => [
 			'path' => '/friends/{username}',
@@ -81,10 +66,23 @@ return [
 			'context' => ['profile', 'dashboard'],
 		],
 	],
-	'hooks' => [
+	'events' => [
 		'access:collections:write:subtypes' => [
 			'user' => [
 				'Elgg\Friends\Access::registerAccessCollectionType' => [],
+			],
+		],
+		'create' => [
+			'relationship' => [
+				'Elgg\Friends\Relationships::removePendingFriendRequest' => [],
+				'Elgg\Friends\Relationships::applyFriendNotificationsSettings' => [],
+				'Elgg\Friends\Notifications::sendFriendNotification' => [],
+			],
+		],
+		'delete' => [
+			'relationship' => [
+				'Elgg\Friends\Relationships::deleteFriendRelationship' => [],
+				'Elgg\Friends\Relationships::deleteFriendNotificationSubscription' => [],
 			],
 		],
 		'entity:url' => [

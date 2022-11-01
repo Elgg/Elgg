@@ -12,13 +12,13 @@ class GroupMemberPermissionsHandler {
 	/**
 	 * Don't allow users to comment on content in a group they aren't a member of
 	 *
-	 * @param \Elgg\Hook $hook 'permissions_check:comment', 'object'
+	 * @param \Elgg\Event $event 'permissions_check:comment', 'object'
 	 *
 	 * @return void|false
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
+	public function __invoke(\Elgg\Event $event) {
 		
-		if ($hook->getValue() === false) {
+		if ($event->getValue() === false) {
 			// already not allowed, no need to check further
 			return;
 		}
@@ -27,8 +27,8 @@ class GroupMemberPermissionsHandler {
 			return;
 		}
 		
-		$entity = $hook->getEntityParam();
-		$user = $hook->getUserParam();
+		$entity = $event->getEntityParam();
+		$user = $event->getUserParam();
 		
 		if (!$entity instanceof \ElggObject || !$user instanceof \ElggUser) {
 			return;

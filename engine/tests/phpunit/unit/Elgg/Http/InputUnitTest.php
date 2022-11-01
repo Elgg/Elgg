@@ -11,7 +11,7 @@ class InputUnitTest extends \Elgg\UnitTestCase {
 		$this->markTestIncomplete();
 	}
 
-	public function testGetInputTriggersValidateInputHookIfAndOnlyIfFilteringIsEnabled() {
+	public function testGetInputTriggersValidateInputEventIfAndOnlyIfFilteringIsEnabled() {
 		$this->markTestIncomplete();
 	}
 

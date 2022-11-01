@@ -3,7 +3,7 @@
 namespace Elgg\SiteNotifications\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,11 +13,11 @@ class Topbar {
 	/**
 	 * Adds menu item
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:topbar'
+	 * @param \Elgg\Event $event 'register', 'menu:topbar'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 		$user = elgg_get_logged_in_user_entity();
 		if (empty($user)) {
 			return;
@@ -32,7 +32,7 @@ class Topbar {
 			],
 		]);
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'site_notifications',
 			'href' => elgg_generate_url('collection:object:site_notification:owner', [

@@ -16,17 +16,17 @@ class Page {
 	/**
 	 * Add the administer section to the admin page menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:page'
+	 * @param \Elgg\Event $event 'register', 'menu:page'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerAdminAdminister(\Elgg\Hook $hook) {
+	public static function registerAdminAdminister(\Elgg\Event $event) {
 		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'dashboard',
@@ -75,17 +75,17 @@ class Page {
 	/**
 	 * Prepare the users menu item in the administer section on admin pages
 	 *
-	 * @param \Elgg\Hook $hook 'prepare', 'menu:page'
+	 * @param \Elgg\Event $event 'prepare', 'menu:page'
 	 *
 	 * @return PreparedMenu|null
 	 */
-	public static function prepareAdminAdministerUsersChildren(\Elgg\Hook $hook): ?PreparedMenu {
+	public static function prepareAdminAdministerUsersChildren(\Elgg\Event $event): ?PreparedMenu {
 		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
 			return null;
 		}
 		
 		/* @var $result PreparedMenu */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$administer = $result->getSection('administer');
 		/* @var $users \ElggMenuItem */
@@ -119,17 +119,17 @@ class Page {
 	/**
 	 * Add the configure section to the admin page menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:page'
+	 * @param \Elgg\Event $event 'register', 'menu:page'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerAdminConfigure(\Elgg\Hook $hook) {
+	public static function registerAdminConfigure(\Elgg\Event $event) {
 		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'settings:basic',
@@ -191,21 +191,21 @@ class Page {
 	/**
 	 * Register menu items for default widgets
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:page'
+	 * @param \Elgg\Event $event 'register', 'menu:page'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerAdminDefaultWidgets(\Elgg\Hook $hook) {
+	public static function registerAdminDefaultWidgets(\Elgg\Event $event) {
 		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
 			return;
 		}
 		
-		if (empty(elgg_trigger_plugin_hook('get_list', 'default_widgets', null, []))) {
+		if (empty(elgg_trigger_event_results('get_list', 'default_widgets', [], []))) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'default_widgets',
@@ -221,17 +221,17 @@ class Page {
 	/**
 	 * Add the information section to the admin page menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:page'
+	 * @param \Elgg\Event $event 'register', 'menu:page'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerAdminInformation(\Elgg\Hook $hook) {
+	public static function registerAdminInformation(\Elgg\Event $event) {
 		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'server',
@@ -281,11 +281,11 @@ class Page {
 	 *
 	 * @note Plugin settings are alphabetically sorted in the submenu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:page'
+	 * @param \Elgg\Event $event 'register', 'menu:page'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerAdminPluginSettings(\Elgg\Hook $hook) {
+	public static function registerAdminPluginSettings(\Elgg\Event $event) {
 		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
 			return;
 		}
@@ -322,7 +322,7 @@ class Page {
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'plugin_settings',
@@ -345,18 +345,18 @@ class Page {
 	/**
 	 * Register menu items for the user settings
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:page'
+	 * @param \Elgg\Event $event 'register', 'menu:page'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerUserSettings(\Elgg\Hook $hook) {
+	public static function registerUserSettings(\Elgg\Event $event) {
 		$user = elgg_get_page_owner_entity();
 		if (!$user instanceof \ElggUser || !elgg_in_context('settings') || !$user->canEdit()) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => '1_account',
@@ -391,18 +391,18 @@ class Page {
 	/**
 	 * Register menu items for the user plugin settings
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:page'
+	 * @param \Elgg\Event $event 'register', 'menu:page'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerUserSettingsPlugins(\Elgg\Hook $hook) {
+	public static function registerUserSettingsPlugins(\Elgg\Event $event) {
 		$user = elgg_get_page_owner_entity();
 		if (!$user instanceof \ElggUser || !elgg_in_context('settings') || !$user->canEdit()) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => '1_plugins',
@@ -442,18 +442,18 @@ class Page {
 	/**
 	 * Add a link to the avatar edit page
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:page'
+	 * @param \Elgg\Event $event 'register', 'menu:page'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerAvatarEdit(\Elgg\Hook $hook) {
-		$user = $hook->getParam('entity', elgg_get_page_owner_entity());
+	public static function registerAvatarEdit(\Elgg\Event $event) {
+		$user = $event->getParam('entity', elgg_get_page_owner_entity());
 		if (!$user instanceof \ElggUser || !$user->canEdit() || !elgg_in_context('settings')) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'edit_avatar',

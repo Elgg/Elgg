@@ -79,7 +79,7 @@ return [
 			'thewire/css' => [],
 		],
 	],
-	'hooks' => [
+	'events' => [
 		'register' => [
 			'menu:entity' => [
 				'Elgg\TheWire\Menus\Entity::register' => [],

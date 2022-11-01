@@ -3,7 +3,7 @@
 namespace Elgg\Pages\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,12 +13,12 @@ class Entity {
 	/**
 	 * Registers menu items
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:entity:object:page'
+	 * @param \Elgg\Event $event 'register', 'menu:entity:object:page'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
-		$entity = $hook->getEntityParam();
+	public static function register(\Elgg\Event $event) {
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggPage) {
 			return;
 		}
@@ -27,7 +27,7 @@ class Entity {
 			return;
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'history',
 			'icon' => 'history',

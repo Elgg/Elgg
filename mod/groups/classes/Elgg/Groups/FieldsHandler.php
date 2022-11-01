@@ -2,8 +2,6 @@
 
 namespace Elgg\Groups;
 
-use Elgg\Hook;
-
 /**
  * Hook callback for fields
  *
@@ -14,12 +12,12 @@ class FieldsHandler {
 	/**
 	 * Returns fields config for groups
 	 *
-	 * @param \Elgg\Hook $hook 'fields' 'group:group'
+	 * @param \Elgg\Event $event 'fields' 'group:group'
 	 *
 	 * @return array
 	 */
-	public function __invoke(Hook $hook) {
-		$return = (array) $hook->getValue();
+	public function __invoke(\Elgg\Event $event) {
+		$return = (array) $event->getValue();
 
 		$return[] = [
 			'#type' => 'longtext',

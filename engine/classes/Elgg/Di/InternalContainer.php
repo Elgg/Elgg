@@ -63,7 +63,6 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Security\HmacFactory                        $hmac
  * @property-read \Elgg\Database\HMACCacheTable                     $hmacCacheTable
  * @property-read \Elgg\Views\HtmlFormatter                         $html_formatter
- * @property-read \Elgg\PluginHooksService                          $hooks
  * @property-read \Elgg\EntityIconService                           $iconService
  * @property-read \Elgg\Assets\ImageFetcherService                  $imageFetcher
  * @property-read \Elgg\ImageService                                $imageService

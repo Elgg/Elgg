@@ -13,14 +13,14 @@ class WalledGardenIntegrationTest extends IntegrationTestCase {
 	 * {@inheritDoc}
 	 */
 	public function up() {
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function down() {
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 	}
 	
 	protected function createService(Request $request) {
@@ -77,8 +77,8 @@ class WalledGardenIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testCanFilterPublicPages() {
-		_elgg_services()->hooks->registerHandler('public_pages', 'walled_garden', function (\Elgg\Hook $hook) {
-			$return = $hook->getValue();
+		_elgg_services()->events->registerHandler('public_pages', 'walled_garden', function (\Elgg\Event $event) {
+			$return = $event->getValue();
 			
 			$return[] = 'allowed/.*';
 			
@@ -106,8 +106,8 @@ class WalledGardenIntegrationTest extends IntegrationTestCase {
 			},
 		]);
 		
-		_elgg_services()->hooks->registerHandler('public_pages', 'walled_garden', function (\Elgg\Hook $hook) {
-			$return = $hook->getValue();
+		_elgg_services()->events->registerHandler('public_pages', 'walled_garden', function (\Elgg\Event $event) {
+			$return = $event->getValue();
 			
 			$return[] = 'foo/.*';
 			

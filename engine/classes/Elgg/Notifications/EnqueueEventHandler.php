@@ -15,7 +15,7 @@ class EnqueueEventHandler {
 	 * Checks to see if this event has been registered for notifications.
 	 * If so, it adds the event to a notification queue.
 	 *
-	 * This function triggers the 'enqueue', 'notification' hook.
+	 * This function triggers the 'enqueue', 'notification' event.
 	 *
 	 * @param \Elgg\Event $event 'all', 'all'
 	 *

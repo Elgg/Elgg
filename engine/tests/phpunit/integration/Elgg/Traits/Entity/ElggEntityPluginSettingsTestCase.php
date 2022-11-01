@@ -94,15 +94,15 @@ abstract class ElggEntityPluginSettingsTestCase extends IntegrationTestCase {
 	/**
 	 * @dataProvider invalidPluginSettingValueProvider
 	 */
-	public function testUseHookToConvertInvalidPluginSettingValue($invalid_value) {
-		$plugin_hook = $this->registerTestingHook('plugin_setting', $this->entity->getType(), function(\Elgg\Hook $hook) {
-			return serialize($hook->getValue());
+	public function testUseEventToConvertInvalidPluginSettingValue($invalid_value) {
+		$plugin_event = $this->registerTestingEvent('plugin_setting', $this->entity->getType(), function(\Elgg\Event $event) {
+			return serialize($event->getValue());
 		});
 		
 		$this->assertTrue($this->entity->setPluginSetting('test_plugin', 'foo', $invalid_value));
-		$plugin_hook->assertNumberOfCalls(1);
-		$plugin_hook->assertValueBefore($invalid_value);
-		$plugin_hook->assertValueAfter(serialize($invalid_value));
+		$plugin_event->assertNumberOfCalls(1);
+		$plugin_event->assertValueBefore($invalid_value);
+		$plugin_event->assertValueAfter(serialize($invalid_value));
 		
 		$this->assertEquals(serialize($invalid_value), $this->entity->getPluginSetting('test_plugin', 'foo'));
 	}

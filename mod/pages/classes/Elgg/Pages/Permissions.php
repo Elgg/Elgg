@@ -3,7 +3,7 @@
 namespace Elgg\Pages;
 
 /**
- * Hook callbacks for views
+ * Event callbacks for views
  *
  * @since 4.0
  * @internal
@@ -13,19 +13,19 @@ class Permissions {
 	/**
 	 * Extend permissions checking to extend can-edit for write users.
 	 *
-	 * @param \Elgg\Hook $hook 'permissions_check', 'object'
+	 * @param \Elgg\Event $event 'permissions_check', 'object'
 	 *
 	 * @return void|bool
 	 */
-	public static function allowWriteAccess(\Elgg\Hook $hook) {
+	public static function allowWriteAccess(\Elgg\Event $event) {
 		
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggPage) {
 			return;
 		}
 		
 		$write_permission = (int) $entity->write_access_id;
-		$user = $hook->getUserParam();
+		$user = $event->getUserParam();
 	
 		if (empty($write_permission) || !$user instanceof \ElggUser) {
 			return;
@@ -48,23 +48,23 @@ class Permissions {
 	/**
 	 * Extend container permissions checking to extend container write access for write users, needed for personal pages
 	 *
-	 * @param \Elgg\Hook $hook 'container_permissions_check', 'object'
+	 * @param \Elgg\Event $event 'container_permissions_check', 'object'
 	 *
 	 * @return void|bool
 	 */
-	public static function allowContainerWriteAccess(\Elgg\Hook $hook) {
+	public static function allowContainerWriteAccess(\Elgg\Event $event) {
 		
-		if ($hook->getValue()) {
+		if ($event->getValue()) {
 			// already have access
 			return;
 		}
 		
 		// check type/subtype
-		if ($hook->getType() !== 'object' || $hook->getParam('subtype') !== 'page') {
+		if ($event->getType() !== 'object' || $event->getParam('subtype') !== 'page') {
 			return;
 		}
 		
-		$user = $hook->getUserParam();
+		$user = $event->getUserParam();
 		if (!$user instanceof \ElggUser) {
 			return;
 		}

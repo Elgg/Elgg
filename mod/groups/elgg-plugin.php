@@ -156,37 +156,6 @@ return [
 		],
 	],
 	'events' => [
-		'create' => [
-			'group' => [
-				'Elgg\Groups\Group::createAccessCollection' => [],
-				\Elgg\Notifications\CreateContentEventHandler::class => [],
-			],
-			'relationship' => [
-				'Elgg\Groups\Relationships::applyGroupNotificationSettings' => [],
-			],
-		],
-		'delete' => [
-			'relationship' => [
-				'Elgg\Groups\Relationships::removeGroupNotificationSubscriptions' => [],
-			],
-		],
-		'join' => [
-			'group' => [
-				'Elgg\Groups\Group::joinGroup' => [],
-			],
-		],
-		'leave' => [
-			'group' => [
-				'Elgg\Groups\Group::leaveGroup' => [],
-			],
-		],
-		'update:after' => [
-			'group' => [
-				'Elgg\Groups\Group::updateGroup' => [],
-			],
-		],
-	],
-	'hooks' => [
 		'access:collections:write' => [
 			'all' => [
 				'Elgg\Groups\Access::getWriteAccess' => ['priority' => 600],
@@ -197,10 +166,24 @@ return [
 				'Elgg\Groups\Access::getAccessCollectionName' => [],
 			],
 		],
+		'create' => [
+			'group' => [
+				'Elgg\Groups\Group::createAccessCollection' => [],
+				\Elgg\Notifications\CreateContentEventHandler::class => [],
+			],
+			'relationship' => [
+				'Elgg\Groups\Relationships::applyGroupNotificationSettings' => [],
+			],
+		],
 		'default' => [
 			'access' => [
 				'Elgg\Groups\Access::getDefaultAccess' => [],
 				'Elgg\Groups\Access::overrideDefaultAccess' => [],
+			],
+		],
+		'delete' => [
+			'relationship' => [
+				'Elgg\Groups\Relationships::removeGroupNotificationSubscriptions' => [],
 			],
 		],
 		'fields' => [
@@ -211,6 +194,16 @@ return [
 		'gatekeeper' => [
 			'group:group' => [
 				'Elgg\Groups\Access::allowProfilePage' => [],
+			],
+		],
+		'join' => [
+			'group' => [
+				'Elgg\Groups\Group::joinGroup' => [],
+			],
+		],
+		'leave' => [
+			'group' => [
+				'Elgg\Groups\Group::leaveGroup' => [],
 			],
 		],
 		'register' => [
@@ -255,6 +248,11 @@ return [
 		'search:fields' => [
 			'group' => [
 				'Elgg\Search\GroupSearchProfileFieldsHandler' => [],
+			],
+		],
+		'update:after' => [
+			'group' => [
+				'Elgg\Groups\Group::updateGroup' => [],
 			],
 		],
 	],

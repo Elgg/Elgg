@@ -12,12 +12,12 @@ class ExtendPublicPagesHandler {
 	/**
 	 * Extend public pages
 	 *
-	 * @param \Elgg\Hook $hook 'public_pages', 'walled_garden'
+	 * @param \Elgg\Event $event 'public_pages', 'walled_garden'
 	 *
 	 * @return string[]
 	 */
-	public function __invoke(\Elgg\Hook $hook) {
-		$return_value = $hook->getValue();
+	public function __invoke(\Elgg\Event $event) {
+		$return_value = $event->getValue();
 	
 		$return_value[] = 'navigation/menu/user_hover/contents';
 		

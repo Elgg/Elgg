@@ -72,7 +72,7 @@ class CronServiceUnitTest extends UnitTestCase {
 			echo 'Success';
 		};
 
-		elgg_register_plugin_hook_handler('cron', 'yearly', $handler);
+		elgg_register_event_handler('cron', 'yearly', $handler);
 
 		$dt = new \DateTime('2017-1-1 0:00:00');
 
@@ -86,7 +86,7 @@ class CronServiceUnitTest extends UnitTestCase {
 			$this->assertNotEmpty($job->getOutput());
 		}
 
-		elgg_unregister_plugin_hook_handler('cron', 'yearly', $handler);
+		elgg_unregister_event_handler('cron', 'yearly', $handler);
 	}
 
 	public function testCanExecuteCronFromPageHandler() {
@@ -96,14 +96,14 @@ class CronServiceUnitTest extends UnitTestCase {
 		$dt = new \DateTime('2017-1-1 0:00:00');
 		$calls = 0;
 
-		$handler = function(\Elgg\Hook $hook) use (&$calls, $dt) {
+		$handler = function(\Elgg\Event $event) use (&$calls, $dt) {
 			$calls++;
-			$this->assertEquals($dt->getTimestamp(), $hook->getParam('time'));
-			$this->assertEquals($dt, $hook->getParam('dt'));
-			echo 'Cron hook handler called';
+			$this->assertEquals($dt->getTimestamp(), $event->getParam('time'));
+			$this->assertEquals($dt, $event->getParam('dt'));
+			echo 'Cron event handler called';
 		};
 
-		elgg_register_plugin_hook_handler('cron', 'yearly', $handler);
+		elgg_register_event_handler('cron', 'yearly', $handler);
 
 		$this->service->setCurrentTime($dt);
 
@@ -113,9 +113,9 @@ class CronServiceUnitTest extends UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		ob_get_clean();
 
-		$this->assertMatchesRegularExpression('/Cron hook handler called/im', $response->getContent());
+		$this->assertMatchesRegularExpression('/Cron event handler called/im', $response->getContent());
 
-		elgg_unregister_plugin_hook_handler('cron', 'yearly', $handler);
+		elgg_unregister_event_handler('cron', 'yearly', $handler);
 	}
 
 	public function testCanExecuteCronFromPageHandlerForInterval() {
@@ -125,14 +125,14 @@ class CronServiceUnitTest extends UnitTestCase {
 		$dt = new \DateTime('2017-1-1 0:00:00');
 		$calls = 0;
 
-		$handler = function(\Elgg\Hook $hook) use (&$calls, $dt) {
+		$handler = function(\Elgg\Event $event) use (&$calls, $dt) {
 			$calls++;
-			$this->assertEquals($dt->getTimestamp(), $hook->getParam('time'));
-			$this->assertEquals($dt, $hook->getParam('dt'));
-			echo 'Cron hook handler called';
+			$this->assertEquals($dt->getTimestamp(), $event->getParam('time'));
+			$this->assertEquals($dt, $event->getParam('dt'));
+			echo 'Cron event handler called';
 		};
 
-		elgg_register_plugin_hook_handler('cron', 'yearly', $handler);
+		elgg_register_event_handler('cron', 'yearly', $handler);
 
 		$this->service->setCurrentTime($dt);
 
@@ -142,9 +142,9 @@ class CronServiceUnitTest extends UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		ob_get_clean();
 
-		$this->assertMatchesRegularExpression('/Cron hook handler called/im', $response->getContent());
+		$this->assertMatchesRegularExpression('/Cron event handler called/im', $response->getContent());
 
-		elgg_unregister_plugin_hook_handler('cron', 'yearly', $handler);
+		elgg_unregister_event_handler('cron', 'yearly', $handler);
 	}
 
 	public function testThrowsOnInvalidInterval() {
@@ -155,14 +155,14 @@ class CronServiceUnitTest extends UnitTestCase {
 	public function testCanRegisterCustomInterval() {
 		
 		// check if it can get registered
-		$custom_interval = function(\Elgg\Hook $hook) {
-			$intervals = $hook->getValue();
+		$custom_interval = function(\Elgg\Event $event) {
+			$intervals = $event->getValue();
 			$intervals['foo'] = '30 16 * * *';
 			
 			return $intervals;
 		};
 		
-		elgg_register_plugin_hook_handler('cron:intervals', 'system', $custom_interval);
+		elgg_register_event_handler('cron:intervals', 'system', $custom_interval);
 		
 		$intervals = $this->service->getConfiguredIntervals();
 		
@@ -176,7 +176,7 @@ class CronServiceUnitTest extends UnitTestCase {
 			echo 'Success';
 		};
 		
-		elgg_register_plugin_hook_handler('cron', 'foo', $handler);
+		elgg_register_event_handler('cron', 'foo', $handler);
 		
 		$dt = new \DateTime('2019-1-14 16:30:00');
 		
@@ -188,7 +188,7 @@ class CronServiceUnitTest extends UnitTestCase {
 		$this->assertEquals(1, $calls);
 		
 		// cleanup
-		elgg_unregister_plugin_hook_handler('cron', 'foo', $handler);
-		elgg_unregister_plugin_hook_handler('cron:intervals', 'system', $custom_interval);
+		elgg_unregister_event_handler('cron', 'foo', $handler);
+		elgg_unregister_event_handler('cron:intervals', 'system', $custom_interval);
 	}
 }

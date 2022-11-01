@@ -3,7 +3,6 @@
 namespace Elgg\Cli;
 
 use Elgg\Helpers\Cli\CliSeeder;
-use Elgg\Hook;
 use Elgg\Logger;
 use Elgg\UnitTestCase;
 use Symfony\Component\Console\Application;
@@ -34,8 +33,8 @@ class DatabaseSeedCommandTest extends UnitTestCase {
 	}
 
 	public function testSeedCommand() {
-		$hook = $this->registerTestingHook('seeds', 'database', function(Hook $hook) {
-			$value = $hook->getValue();
+		$event = $this->registerTestingEvent('seeds', 'database', function(\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value[] = CliSeeder::class;
 			return $value;
 		});
@@ -53,12 +52,12 @@ class DatabaseSeedCommandTest extends UnitTestCase {
 		$seeder = preg_quote(CliSeeder::class);
 		$this->assertMatchesRegularExpression("/{$seeder}::seed/im", $commandTester->getDisplay());
 
-		$hook->unregister();
+		$event->unregister();
 	}
 	
 	public function testUnseedCommand() {
-		$hook = $this->registerTestingHook('seeds', 'database', function(Hook $hook) {
-			$value = $hook->getValue();
+		$event = $this->registerTestingEvent('seeds', 'database', function(\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value[] = CliSeeder::class;
 			return $value;
 		});
@@ -75,6 +74,6 @@ class DatabaseSeedCommandTest extends UnitTestCase {
 		$seeder = preg_quote(CliSeeder::class);
 		$this->assertMatchesRegularExpression("/{$seeder}::unseed/im", $commandTester->getDisplay());
 
-		$hook->unregister();
+		$event->unregister();
 	}
 }

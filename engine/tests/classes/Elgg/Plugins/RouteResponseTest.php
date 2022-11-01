@@ -54,7 +54,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 				return false;
 			};
 
-			elgg_register_plugin_hook_handler('container_permissions_check', 'object', $handler);
+			elgg_register_event_handler('container_permissions_check', 'object', $handler);
 
 			_elgg_services()->session->setLoggedInUser($user);
 
@@ -73,7 +73,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 
 		_elgg_services()->session->removeLoggedInUser();
 
-		elgg_unregister_plugin_hook_handler('container_permissions_check', 'object', $handler);
+		elgg_unregister_event_handler('container_permissions_check', 'object', $handler);
 
 		$this->assertInstanceOf(EntityPermissionsException::class, $ex);
 	}
@@ -86,7 +86,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 			return true;
 		};
 
-		elgg_register_plugin_hook_handler('container_permissions_check', 'object', $handler);
+		elgg_register_event_handler('container_permissions_check', 'object', $handler);
 
 		_elgg_services()->session->setLoggedInUser($user);
 
@@ -107,7 +107,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 
 		_elgg_services()->session->removeLoggedInUser();
 
-		elgg_unregister_plugin_hook_handler('container_permissions_check', 'object', $handler);
+		elgg_unregister_event_handler('container_permissions_check', 'object', $handler);
 	}
 
 	public function testEditRouteRespondsWithErrorWithoutAuthenticatedUser() {
@@ -143,7 +143,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 			return false;
 		};
 
-		elgg_register_plugin_hook_handler('permissions_check', 'object', $handler);
+		elgg_register_event_handler('permissions_check', 'object', $handler);
 
 		_elgg_services()->session->setLoggedInUser($user);
 
@@ -162,7 +162,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 
 		_elgg_services()->session->removeLoggedInUser();
 
-		elgg_unregister_plugin_hook_handler('permissions_check', 'object', $handler);
+		elgg_unregister_event_handler('permissions_check', 'object', $handler);
 
 		$this->assertInstanceOf(EntityPermissionsException::class, $ex);
 	}
@@ -182,7 +182,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 			return true;
 		};
 
-		elgg_register_plugin_hook_handler('permissions_check', 'object', $handler);
+		elgg_register_event_handler('permissions_check', 'object', $handler);
 
 		$url = elgg_generate_url("edit:object:{$this->getSubtype()}", [
 			'guid' => $object->guid,
@@ -201,7 +201,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 
 		_elgg_services()->session->removeLoggedInUser();
 
-		elgg_unregister_plugin_hook_handler('permissions_check', 'object', $handler);
+		elgg_unregister_event_handler('permissions_check', 'object', $handler);
 	}
 
 	public function testViewRouteRespondsWithErrorIfEntityIsNotFound() {
@@ -263,7 +263,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 
 		_elgg_services()->session->setLoggedInUser($user);
 
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 
 		$ex = null;
 
@@ -280,7 +280,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 
 		}
 
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 		_elgg_services()->session->removeLoggedInUser();
 
 		$this->assertInstanceOf(GroupGatekeeperException::class, $ex);
@@ -300,7 +300,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 
 		$ex = null;
 
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 
 		try {
 			$url = elgg_generate_url("collection:object:{$this->getSubtype()}:group", [
@@ -315,7 +315,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 
 		}
 
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 		_elgg_services()->session->removeLoggedInUser();
 
 		$this->assertInstanceOf(GroupGatekeeperException::class, $ex);

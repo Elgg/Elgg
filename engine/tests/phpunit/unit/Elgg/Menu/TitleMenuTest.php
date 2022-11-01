@@ -10,13 +10,13 @@ use Elgg\UnitTestCase;
 class TitleMenuTest extends UnitTestCase {
 
 	public function up() {
-		_elgg_services()->hooks->backup();
+		_elgg_services()->events->backup();
 
-		_elgg_services()->hooks->registerHandler('register', 'menu:title', 'Elgg\Menus\Title::registerAvatarEdit');
+		_elgg_services()->events->registerHandler('register', 'menu:title', 'Elgg\Menus\Title::registerAvatarEdit');
 	}
 	
 	public function down() {
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 	}
 
 	public function testTitleMenuWithoutUser() {

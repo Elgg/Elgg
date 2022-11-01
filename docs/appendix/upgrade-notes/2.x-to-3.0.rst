@@ -530,7 +530,7 @@ Many of the views in the search plugin have been affected by this change.
 
 The FULLTEXT indices have been removed on various tables. The search plugin will now always use a like query when performing a search.
 
-See :doc:`Search Service </guides/search>` and :ref:`Search hooks <guides/hooks-list#search>` documentation for detailed information about new search capabilities.
+See :doc:`Search Service </guides/search>` and :ref:`Search hooks <guides/events-list#search>` documentation for detailed information about new search capabilities.
 
 Form and field related changes
 ------------------------------

@@ -22,7 +22,7 @@ class AttributeWhereClauseUnitTest extends UnitTestCase {
 	}
 
 	public function down() {
-		_elgg_services()->hooks->restore();
+		_elgg_services()->events->restore();
 	}
 
 	public function testBuildEmptyQuery() {

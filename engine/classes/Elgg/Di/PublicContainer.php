@@ -15,7 +15,6 @@ namespace Elgg\Di;
  * @property-read \Elgg\Gatekeeper                      $gatekeeper       Gatekeeper
  * @property-read \Elgg\Groups\Tools                    $group_tools      Group Tools
  * @property-read \Elgg\Views\HtmlFormatter             $html_formatter   HTML formatter
- * @property-read \Elgg\PluginHooksService              $hooks            Hooks service
  * @property-read \Elgg\I18n\LocaleService              $locale           LocaleService
  * @property-read \Elgg\Logger                          $logger           Logger
  * @property-read \Elgg\Menu\Service                    $menus            Menus

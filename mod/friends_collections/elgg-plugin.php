@@ -56,13 +56,6 @@ return [
 		],
 	],
 	'events' => [
-		'delete' => [
-			'relationship' => [
-				DeleteRelationshipHandler::class => [],
-			],
-		],
-	],
-	'hooks' => [
 		'access_collection:url' => [
 			'access_collection' => [
 				UrlHandler::class => [],
@@ -71,6 +64,11 @@ return [
 		'access:collections:write:subtypes' => [
 			'user' => [
 				WriteAccess::class => [],
+			],
+		],
+		'delete' => [
+			'relationship' => [
+				DeleteRelationshipHandler::class => [],
 			],
 		],
 		'register' => [

@@ -3,9 +3,9 @@
  * Widgets CSS
  */
 
-elgg_register_plugin_hook_handler('view', 'widgets/friends/content', 'css_widget_content');
-elgg_register_plugin_hook_handler('view', 'widgets/friends/edit', 'css_widget_content');
-elgg_register_plugin_hook_handler('permissions_check', 'all', 'css_permissions_override', 600);
+elgg_register_event_handler('view', 'widgets/friends/content', 'css_widget_content');
+elgg_register_event_handler('view', 'widgets/friends/edit', 'css_widget_content');
+elgg_register_event_handler('permissions_check', 'all', 'css_permissions_override', 600);
 
 /**
  * Create dummy content

@@ -15,13 +15,13 @@ class Breadcrumbs {
 	 * Prepare breadcrumbs before display. This turns titles into 100-character excerpts, and also
 	 * removes the last crumb if it's not a link.
 	 *
-	 * @param \Elgg\Hook $hook 'prepare', 'menu:breadcrumbs'
+	 * @param \Elgg\Event $event 'prepare', 'menu:breadcrumbs'
 	 *
 	 * @return void|PreparedMenu
 	 */
-	public static function cleanupBreadcrumbs(\Elgg\Hook $hook) {
+	public static function cleanupBreadcrumbs(\Elgg\Event $event) {
 		/** @var $breadcrumbs PreparedMenu */
-		$breadcrumbs = $hook->getValue();
+		$breadcrumbs = $event->getValue();
 		
 		$items = $breadcrumbs->getItems('default');
 		if (empty($items)) {

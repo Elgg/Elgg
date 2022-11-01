@@ -20,7 +20,7 @@ Most common examples of cron jobs in Elgg include:
  * rotating the system log in the database
  * collecting garbage in the database (compacting the database by removing entries that are no longer required)
 
-Plugins can add jobs by registering a plugin hook handler for one of the following cron intervals:
+Plugins can add jobs by registering a event handler for one of the following cron intervals:
 
  * ``minute`` - Run every minute
  * ``fiveminute`` - Run every 5 minutes
@@ -34,7 +34,7 @@ Plugins can add jobs by registering a plugin hook handler for one of the followi
 
 .. code-block:: php
 
-   elgg_register_plugin_hook_handler('cron', 'hourly', function() {
+   elgg_register_event_handler('cron', 'hourly', function() {
 
       $events = my_plugin_get_upcoming_events();
 
@@ -50,7 +50,7 @@ How does it work?
 =================
 
 ``crontab`` must be setup in such a way as to activate Elgg cron handler every minute, or at a specific interval.
-Once cron tab activates the cron job, Elgg executes all hook handlers attached to that interval.
+Once cron tab activates the cron job, Elgg executes all event handlers attached to that interval.
 
 If you have SSH access to your Linux servers, type ``crontab -e`` and add your crontab configuration.
 

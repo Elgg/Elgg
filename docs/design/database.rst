@@ -647,11 +647,11 @@ The following rules govern write access:
    does not mean that the owner of a group can edit anything therein)
 -  Admins can edit anything
 
-You can override this behaviour using a :ref:`plugin hook <design/events#plugin-hooks>` called
+You can override this behaviour using a :doc:`event </design/events>` called
 ``permissions_check``, which passes the entity in question to any
 function that has announced it wants to be referenced. Returning
 ``true`` will allow write access; returning ``false`` will deny it. See
-:ref:`the plugin hook reference for permissions\_check <guides/hooks-list#permission-hooks>` for more details.
+:ref:`the event reference for permissions\_check <guides/events-list#permissions>` for more details.
 
 Schema
 ======

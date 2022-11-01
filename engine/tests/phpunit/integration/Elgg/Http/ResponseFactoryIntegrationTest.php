@@ -145,8 +145,8 @@ class ResponseFactoryIntegrationTest extends IntegrationTestCase {
 		
 		$exception_found = false;
 		
-		elgg_register_plugin_hook_handler('view_vars', 'resources/error', function (\Elgg\Hook $hook) use (&$exception_found) {
-			if (elgg_extract('exception', $hook->getValue()) instanceof \Exception) {
+		elgg_register_event_handler('view_vars', 'resources/error', function (\Elgg\Event $event) use (&$exception_found) {
+			if (elgg_extract('exception', $event->getValue()) instanceof \Exception) {
 				$exception_found = true;
 			}
 		});

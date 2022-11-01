@@ -15,18 +15,18 @@ class EntityNavigation {
 	/**
 	 * Register the previous/next menu items
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:entity_navigation'
+	 * @param \Elgg\Event $event 'register', 'menu:entity_navigation'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerPreviousNext(\Elgg\Hook $hook) {
-		$entity = $hook->getEntityParam();
+	public static function registerPreviousNext(\Elgg\Event $event) {
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggEntity) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$options = [
 			'type' => $entity->getType(),

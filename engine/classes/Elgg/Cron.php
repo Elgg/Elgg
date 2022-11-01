@@ -34,11 +34,6 @@ class Cron {
 	];
 
 	/**
-	 * @var PluginHooksService
-	 */
-	protected $hooks;
-
-	/**
 	 * @var EventsService
 	 */
 	protected $events;
@@ -46,11 +41,9 @@ class Cron {
 	/**
 	 * Constructor
 	 *
-	 * @param PluginHooksService $hooks  Hooks service
-	 * @param EventsService      $events Events service
+	 * @param EventsService $events Events service
 	 */
-	public function __construct(PluginHooksService $hooks, EventsService $events) {
-		$this->hooks = $hooks;
+	public function __construct(EventsService $events) {
 		$this->events = $events;
 	}
 
@@ -147,7 +140,7 @@ class Cron {
 
 		ob_start();
 
-		$old_stdout = $this->hooks->trigger('cron', $interval, [
+		$old_stdout = $this->events->triggerResults('cron', $interval, [
 			'time' => $time->getTimestamp(),
 			'dt' => $time,
 		], '');
@@ -239,9 +232,9 @@ class Cron {
 	 * @since 3.2
 	 */
 	public function getConfiguredIntervals(bool $only_names = false) {
-		$result = $this->hooks->trigger('cron:intervals', 'system', [], $this->default_intervals);
+		$result = $this->events->triggerResults('cron:intervals', 'system', [], $this->default_intervals);
 		if (!is_array($result)) {
-			$this->getLogger()->warning("The plugin hook 'cron:intervals', 'system' should return an array, " . gettype($result) . ' given');
+			$this->getLogger()->warning("The event 'cron:intervals', 'system' should return an array, " . gettype($result) . ' given');
 			
 			$result = $this->default_intervals;
 		}

@@ -3,7 +3,7 @@
 namespace Elgg\Profile\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,22 +13,22 @@ class UserHover {
 	/**
 	 * Register menu items for the user hover menu
 	 *
-	 * @param \Elgg\Hook $hook 'register' 'menu:user_hover'
+	 * @param \Elgg\Event $event 'register' 'menu:user_hover'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 	
 		if (!elgg_is_logged_in()) {
 			return;
 		}
 		
-		$user = $hook->getEntityParam();
+		$user = $event->getEntityParam();
 		if (!$user instanceof \ElggUser || !$user->isEnabled() || !$user->canEdit()) {
 			return;
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'profile:edit',
 			'text' => elgg_echo('profile:edit'),

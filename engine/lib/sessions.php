@@ -158,5 +158,5 @@ function elgg_get_login_forward_url(\ElggUser $user): string {
 		'source' => $forward_source,
 	];
 
-	return elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
+	return elgg_trigger_event_results('login:forward', 'user', $params, $forward_url);
 }

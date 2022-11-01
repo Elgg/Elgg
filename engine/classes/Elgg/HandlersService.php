@@ -2,8 +2,6 @@
 
 namespace Elgg;
 
-use Elgg\HooksRegistrationService\Event as HrsEvent;
-use Elgg\HooksRegistrationService\Hook as HrsHook;
 use Elgg\Traits\Loggable;
 
 /**
@@ -21,21 +19,30 @@ class HandlersService {
 	protected const CLASS_NAME_PATTERN_53 = '/^(\\\\?[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*)+$/i';
 	
 	/**
-	 * Call the handler with the hook/event object
+	 * Call the handler with the event object
 	 *
 	 * @param callable $callable Callable
 	 * @param mixed    $object   Event object
-	 * @param array    $args     Arguments for legacy events/hooks
+	 * @param array    $args     Arguments for legacy events
 	 *
 	 * @return array [success, result, object]
 	 */
-	public function call($callable, $object, $args) {
+	public function call($callable, $object, $args): array {
 		$original = $callable;
 
 		$callable = $this->resolveCallable($callable);
 		if (!is_callable($callable)) {
-			$type = is_string($object) ? $object : $object::EVENT_TYPE;
-			$description = $type . " [{$args[0]}, {$args[1]}]";
+			$type = '';
+			switch (gettype($object)) {
+				case 'string':
+					$type = $object;
+					break;
+				case 'object':
+					$type = $object::class;
+					break;
+			}
+			
+			$description = ltrim($type . " [{$args[0]}, {$args[1]}]");
 
 			$this->getLogger()->warning("Handler for {$description} is not callable: " . $this->describeCallable($original));
 
@@ -44,12 +51,8 @@ class HandlersService {
 
 		if (is_string($object)) {
 			switch ($object) {
-				case 'hook' :
-					$object = new HrsHook(elgg(), $args[0], $args[1], $args[2], $args[3]);
-					break;
-
 				case 'event' :
-					$object = new HrsEvent(elgg(), $args[0], $args[1], $args[2]);
+					$object = new Event(elgg(), $args[0], $args[1], $args[2], $args[3]);
 					break;
 
 				case 'middleware' :

@@ -6,9 +6,9 @@ use Elgg\Exceptions\InvalidArgumentException;
 use ElggMenuItem;
 
 /**
- * Linear set of menu items collected from configuration and the "register" hook.
+ * Linear set of menu items collected from configuration and the "register" event.
  *
- * This also encapsulates parameters to be passed to hooks and views.
+ * This also encapsulates parameters to be passed to events and views.
  */
 class UnpreparedMenu {
 
@@ -25,7 +25,7 @@ class UnpreparedMenu {
 	/**
 	 * Constructor
 	 *
-	 * @param array                    $params Parameters to be passed to the "prepare" hook and views.
+	 * @param array                    $params Parameters to be passed to the "prepare" event and views.
 	 *                                         Must include value for "name".
 	 * @param ElggMenuItem[]|MenuItems $items  Menu items
 	 */

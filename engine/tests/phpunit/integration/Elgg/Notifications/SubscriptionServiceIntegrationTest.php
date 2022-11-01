@@ -3,7 +3,7 @@
 namespace Elgg\Notifications;
 
 use Elgg\IntegrationTestCase;
-use Elgg\TestableHook;
+use Elgg\TestableEventResults;
 
 class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 
@@ -13,9 +13,9 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	protected $service;
 	
 	/**
-	 * @var TestableHook
+	 * @var TestableEventResults
 	 */
-	protected $testing_hook;
+	protected $testing_event;
 	
 	/**
 	 * {@inheritDoc}
@@ -28,15 +28,15 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		_elgg_services()->notifications->registerMethod('bananas');
 		
 		$this->service = _elgg_services()->subscriptions;
-		$this->testing_hook = null;
+		$this->testing_event = null;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function down() {
-		if ($this->testing_hook instanceof TestableHook) {
-			$this->testing_hook->unregister();
+		if ($this->testing_event instanceof TestableEventResults) {
+			$this->testing_event->unregister();
 		}
 	}
 	

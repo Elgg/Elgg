@@ -13,13 +13,13 @@ class Widgets {
 	/**
 	 * Returns widget URLS used in widget titles
 	 *
-	 * @param \Elgg\Hook $hook 'entity:url', 'object'
+	 * @param \Elgg\Event $event 'entity:url', 'object'
 	 *
 	 * @return void|string
 	 * @internal
 	 */
-	public static function setWidgetUrl(\Elgg\Hook $hook) {
-		$widget = $hook->getEntityParam();
+	public static function setWidgetUrl(\Elgg\Event $event) {
+		$widget = $event->getEntityParam();
 		if (!$widget instanceof \ElggWidget) {
 			return;
 		}

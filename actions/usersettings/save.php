@@ -2,7 +2,7 @@
 /**
  * Aggregate action for saving settings
  *
- * To see the individual action methods, enable the developers plugin, visit Admin > Inspect > Plugin Hooks
+ * To see the individual action methods, enable the developers plugin, visit Admin > Inspect > Events
  * and search for "usersettings:save".
  */
 
@@ -28,13 +28,13 @@ if (!$user->canEdit()) {
 
 elgg_make_sticky_form('usersettings', ['password', 'password2']);
 
-$hooks_params = [
+$event_params = [
 	'user' => $user,
 	'request' => $request,
 ];
 
 // callbacks should return false to indicate that the sticky form should not be cleared
-if (elgg_trigger_plugin_hook('usersettings:save', 'user', $hooks_params, true)) {
+if (elgg_trigger_event_results('usersettings:save', 'user', $event_params, true)) {
 	elgg_clear_sticky_form('usersettings');
 }
 

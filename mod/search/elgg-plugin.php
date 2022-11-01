@@ -16,7 +16,7 @@ return [
 			'search/search.css' => [],
 		],
 	],
-	'hooks' => [
+	'events' => [
 		'robots.txt' => [
 			'site' => [
 				'Elgg\Search\Site::preventSearchIndexing' => [],

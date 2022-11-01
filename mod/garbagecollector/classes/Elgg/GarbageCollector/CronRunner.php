@@ -2,8 +2,6 @@
 
 namespace Elgg\GarbageCollector;
 
-use Elgg\Hook;
-
 /**
  * Garbagecollector cron job
  */
@@ -12,20 +10,20 @@ class CronRunner {
 	/**
 	 * Garbagecollector cron job
 	 *
-	 * @param Hook $hook Hook
+	 * @param \Elgg\Event $event event
 	 *
 	 * @return void
 	 */
-	public function __invoke(Hook $hook) {
+	public function __invoke(\Elgg\Event $event) {
 
-		$period = $hook->getType();
+		$period = $event->getType();
 
 		if ($period !== elgg_get_plugin_setting('period', 'garbagecollector')) {
 			return;
 		}
 
 		// Now, because we are nice, trigger a plugin hook to let other plugins do some GC
-		elgg_trigger_plugin_hook('gc', 'system', ['period' => $period]);
+		elgg_trigger_event_results('gc', 'system', ['period' => $period]);
 
 		$ops = GarbageCollector::instance()->optimize();
 

@@ -161,14 +161,12 @@ function elgg_view_exists(string $view, string $viewtype = '', bool $recurse = t
  * Views are called with a special $vars variable set,
  * which includes any variables passed as the second parameter.
  *
- * The input of views can be intercepted by registering for the
- * view_vars, $view_name plugin hook.
+ * The input of views can be intercepted by registering for the 'view_vars', '<$view_name>' event.
  *
  * If the input contains the key "__view_output", the view will output this value as a string.
- * No extensions are used, and the "view" hook is not triggered).
+ * No extensions are used, and the "view" event is not triggered).
  *
- * The output of views can be intercepted by registering for the
- * view, $view_name plugin hook.
+ * The output of views can be intercepted by registering for the 'view', '<$view_name>' event.
  *
  * @param string $view     The name and location of the view to use
  * @param array  $vars     Variables to pass to the view.
@@ -243,7 +241,7 @@ function elgg_get_view_extensions(string $view): array {
  * can be HTML for a browser, RSS for a feed reader, or
  * Javascript, PHP and a number of other formats.
  *
- * For HTML pages, use the 'head', 'page' plugin hook for setting meta elements
+ * For HTML pages, use the 'head', 'page' event for setting meta elements
  * and links.
  *
  * @param string       $title      Title
@@ -279,7 +277,7 @@ function elgg_view_page(string $title, string|array $body, string $page_shell = 
 	$params['identifier'] = _elgg_services()->request->getFirstUrlSegment();
 	$params['segments'] = _elgg_services()->request->getUrlSegments();
 	array_shift($params['segments']);
-	$page_shell = elgg_trigger_plugin_hook('shell', 'page', $params, $page_shell);
+	$page_shell = elgg_trigger_event_results('shell', 'page', $params, $page_shell);
 
 	$system_messages = _elgg_services()->system_messages;
 
@@ -303,14 +301,14 @@ function elgg_view_page(string $title, string|array $body, string $page_shell = 
 	$vars['sysmessages'] = $messages;
 	$vars['page_shell'] = $page_shell;
 
-	$vars['head'] = elgg_trigger_plugin_hook('head', 'page', $vars, ['metas' => [], 'links' => []]);
+	$vars['head'] = elgg_trigger_event_results('head', 'page', $vars, ['metas' => [], 'links' => []]);
 
-	$vars = elgg_trigger_plugin_hook('output:before', 'page', null, $vars);
+	$vars = elgg_trigger_event_results('output:before', 'page', [], $vars);
 
 	$output = elgg_view("page/{$page_shell}", $vars);
 
 	// Allow plugins to modify the output
-	$output = elgg_trigger_plugin_hook('output', 'page', $vars, $output);
+	$output = elgg_trigger_event_results('output', 'page', $vars, $output);
 
 	$timer->end([__FUNCTION__]);
 	return $output;
@@ -364,7 +362,7 @@ function elgg_view_resource(string $name, array $vars = []): string {
  *                            Corresponds to a view in "page/layouts/<layout_name>".
  * @param array  $vars        Layout parameters
  *                            An associative array of parameters to pass to
- *                            the layout hooks and views.
+ *                            the layout events and views.
  *                            Route 'identifier' and 'segments' of the page being
  *                            rendered will be added to this array automatially,
  *                            allowing plugins to alter layout views and subviews
@@ -382,7 +380,7 @@ function elgg_view_layout(string $layout_name, array $vars = []): string {
 	$vars['segments'] = _elgg_services()->request->getUrlSegments();
 	array_shift($vars['segments']);
 
-	$layout_name = elgg_trigger_plugin_hook('layout', 'page', $vars, $layout_name);
+	$layout_name = elgg_trigger_event_results('layout', 'page', $vars, $layout_name);
 
 	$vars['layout'] = $layout_name;
 
@@ -409,24 +407,24 @@ function elgg_view_layout(string $layout_name, array $vars = []): string {
  * @see elgg_register_menu_item() for documentation on adding menu items and
  * navigation.php for information on the different menus available.
  *
- * This function triggers a 'register', 'menu:<menu name>' plugin hook that enables
+ * This function triggers a 'register', 'menu:<menu name>' event that enables
  * plugins to add menu items just before a menu is rendered. This is used by
  * dynamic menus (menus that change based on some input such as the user hover
- * menu). Using elgg_register_menu_item() in response to the hook can cause
+ * menu). Using elgg_register_menu_item() in response to the event can cause
  * incorrect links to show up. See the blog plugin's blog_owner_block_menu()
- * for an example of using this plugin hook.
+ * for an example of using this event.
  *
- * An additional hook is the 'prepare', 'menu:<menu name>' which enables plugins
+ * An additional event is the 'prepare', 'menu:<menu name>' which enables plugins
  * to modify the structure of the menu (sort it, remove items, set variables on
  * the menu items).
  *
  * Preset (unprepared) menu items passed to the this function with the $vars
  * argument, will be merged with the registered items (registered with
  * elgg_register_menu_item()). The combined set of menu items will be passed
- * to 'register', 'menu:<menu_name>' hook.
+ * to 'register', 'menu:<menu_name>' event.
  *
  * Plugins that pass preset menu items to this function and do not wish to be
- * affected by plugin hooks (e.g. if you are displaying multiple menus with
+ * affected by events (e.g. if you are displaying multiple menus with
  * the same name on the page) should instead choose a unqie menu name
  * and define a menu_view argument to render menus consistently.
  * For example, if you have multiple 'filter' menus on the page:
@@ -867,7 +865,7 @@ function elgg_view_friendly_time($time, $time_updated = null): string {
  * Returns rendered comments and a comment form for an entity.
  *
  * @tip Plugins can override the output by registering a handler
- * for the comments, $entity_type hook.  The handler is responsible
+ * for the 'comments', '<$entity_type>' event.  The handler is responsible
  * for formatting the comments and the add comment form.
  *
  * @param \ElggEntity $entity      The entity to view comments of
@@ -885,7 +883,7 @@ function elgg_view_comments(\ElggEntity $entity, bool $add_comment = true, array
 	$vars['show_add_form'] = $add_comment;
 	$vars['class'] = elgg_extract('class', $vars, "{$entity->getSubtype()}-comments");
 
-	$output = elgg_trigger_plugin_hook('comments', $entity->getType(), $vars, false);
+	$output = elgg_trigger_event_results('comments', $entity->getType(), $vars, false);
 	if (is_string($output)) {
 		return $output;
 	}
@@ -1386,7 +1384,7 @@ function _elgg_get_js_site_data(): array {
 	}
 	
 	return [
-		'elgg.data' => (object) elgg_trigger_plugin_hook('elgg.data', 'site', null, []),
+		'elgg.data' => (object) elgg_trigger_event_results('elgg.data', 'site', [], []),
 		'elgg.release' => elgg_get_release(),
 		'elgg.config.wwwroot' => elgg_get_site_url(),
 		'elgg.config.message_delay' => $message_delay * 1000,
@@ -1404,9 +1402,9 @@ function _elgg_get_js_site_data(): array {
  * @internal
  */
 function _elgg_get_js_page_data(): array {
-	$data = elgg_trigger_plugin_hook('elgg.data', 'page', null, []);
+	$data = elgg_trigger_event_results('elgg.data', 'page', [], []);
 	if (!is_array($data)) {
-		elgg_log('"elgg.data" plugin hook handlers must return an array. Returned ' . gettype($data) . '.', 'ERROR');
+		elgg_log('"elgg.data" Event handlers must return an array. Returned ' . gettype($data) . '.', 'ERROR');
 		$data = [];
 	}
 
@@ -1497,4 +1495,20 @@ function elgg_view_url(string $href, string $text = null, array $options = []): 
  */
 function elgg_view_entity_url(\ElggEntity $entity, array $options = []): string {
 	return elgg_view_url($entity->getURL(), $entity->getDisplayName(), $options);
+}
+
+/**
+ * Display a view with a deprecation notice. No missing view NOTICE is logged
+ *
+ * @param string $view       The name and location of the view to use
+ * @param array  $vars       Variables to pass to the view
+ * @param string $suggestion Suggestion with the deprecation message
+ * @param string $version    Human-readable *release* version: 1.7, 1.8, ...
+ *
+ * @return string The parsed view
+ *
+ * @see elgg_view()
+ */
+function elgg_view_deprecated(string $view, array $vars, string $suggestion, string $version): string {
+	return _elgg_services()->views->renderDeprecatedView($view, $vars, $suggestion, $version);
 }

@@ -5,7 +5,7 @@
 
 elgg_push_context('default_widgets');
 $widget_context = get_input('widget_context');
-$list = elgg_trigger_plugin_hook('get_list', 'default_widgets', null, []);
+$list = elgg_trigger_event_results('get_list', 'default_widgets', [], []);
 
 // default to something if we can
 if (!$widget_context && $list) {

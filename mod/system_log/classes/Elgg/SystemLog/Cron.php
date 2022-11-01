@@ -3,7 +3,7 @@
 namespace Elgg\SystemLog;
 
 /**
- * Hook callbacks for cron
+ * Event callbacks for cron
  *
  * @since 4.0
  * @internal
@@ -13,15 +13,15 @@ class Cron {
 	/**
 	 * Trigger the log rotation
 	 *
-	 * @param \Elgg\Hook $hook 'cron', 'all'
+	 * @param \Elgg\Event $event 'cron', 'all'
 	 *
 	 * @return void|string
 	 */
-	public static function rotateLogs(\Elgg\Hook $hook) {
+	public static function rotateLogs(\Elgg\Event $event) {
 		$resulttext = elgg_echo('logrotate:logrotated') . PHP_EOL;
 	
 		$period = elgg_get_plugin_setting('period', 'system_log');
-		if ($period !== $hook->getType()) {
+		if ($period !== $event->getType()) {
 			return;
 		}
 		$offset = self::getSecondsInPeriod($period);
@@ -30,17 +30,17 @@ class Cron {
 			$resulttext = elgg_echo('logrotate:lognotrotated') . PHP_EOL;
 		}
 	
-		return $hook->getValue() . $resulttext;
+		return $event->getValue() . $resulttext;
 	}
 	
 	/**
 	 * Trigger the log deletion
 	 *
-	 * @param \Elgg\Hook $hook 'cron', 'daily'
+	 * @param \Elgg\Event $event 'cron', 'daily'
 	 *
 	 * @return void|string
 	 */
-	public static function deleteLogs(\Elgg\Hook $hook) {
+	public static function deleteLogs(\Elgg\Event $event) {
 		$retention = (int) elgg_get_plugin_setting('retention', 'system_log');
 		if ($retention < 1) {
 			return;
@@ -53,7 +53,7 @@ class Cron {
 			$resulttext = elgg_echo('logrotate:lognotdeleted') . PHP_EOL;
 		}
 		
-		return $hook->getValue() . $resulttext;
+		return $event->getValue() . $resulttext;
 	}
 	
 	/**

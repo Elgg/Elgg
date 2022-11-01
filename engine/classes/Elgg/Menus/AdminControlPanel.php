@@ -15,17 +15,17 @@ class AdminControlPanel {
 	/**
 	 * Add admin control panel actions
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:admin_control_panel'
+	 * @param \Elgg\Event $event 'register', 'menu:admin_control_panel'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 		if (!elgg_is_admin_logged_in()) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'invalidate',

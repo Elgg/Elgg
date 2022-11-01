@@ -51,7 +51,7 @@ return [
 			'river/filter.css' => [],
 		],
 	],
-	'hooks' => [
+	'events' => [
 		'entity:url' => [
 			'object' => [
 				'Elgg\Activity\Widgets::widgetURL' => [],

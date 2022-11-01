@@ -31,7 +31,7 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 	}
 
 	/**
-	 * Parent class will also make assertions that hooks and events
+	 * Parent class will also make assertions that events
 	 * are identical after multiple bootstraps, which will indicate
 	 * that plugins can start multiple times
 	 */
@@ -78,7 +78,6 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 		$this->assertInstanceOf(\ElggPlugin::class, $plugin); // we need a plugin to test with
 
 		$inspector = new Inspector();
-		$hooks = $inspector->getPluginHooks();
 		$events = $inspector->getEvents();
 		$views = $inspector->getViews();
 		$actions = $inspector->getActions();
@@ -101,7 +100,6 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 
 		$this->assertEquals($map($plugins), $map(elgg_get_plugins('active')));
 
-		$this->assertEquals($hooks, $inspector->getPluginHooks());
 		$this->assertEquals($events, $inspector->getEvents());
 		$this->assertEquals($views, $inspector->getViews());
 		$this->assertEquals($actions, $inspector->getActions());

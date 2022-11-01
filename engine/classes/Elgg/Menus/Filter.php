@@ -15,17 +15,17 @@ class Filter {
 	/**
 	 * Add menu items to the filter menu on the admin upgrades page
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:admin/upgrades'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:admin/upgrades'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerAdminUpgrades(\Elgg\Hook $hook) {
+	public static function registerAdminUpgrades(\Elgg\Event $event) {
 		if (!elgg_is_admin_logged_in()) {
 			return;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'pending',
@@ -54,18 +54,18 @@ class Filter {
 	/**
 	 * Register the settings tab to the notification settings pages
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:settings/notifications'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:settings/notifications'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerNotificationSettings(\Elgg\Hook $hook) {
+	public static function registerNotificationSettings(\Elgg\Event $event) {
 		$page_owner = elgg_get_page_owner_entity();
 		if (!$page_owner instanceof \ElggUser || !$page_owner->canEdit()) {
 			return;
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'settings',
@@ -89,16 +89,16 @@ class Filter {
 	/**
 	 * Register the default All and Mine filter menu items
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:filter'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:filter'
 	 *
 	 * @return MenuItems
 	 */
-	public static function registerFilterTabs(\Elgg\Hook $hook): MenuItems {
+	public static function registerFilterTabs(\Elgg\Event $event): MenuItems {
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
-		$entity_type = $hook->getParam('entity_type', '');
-		$entity_subtype = $hook->getParam('entity_subtype', '');
+		$entity_type = $event->getParam('entity_type', '');
+		$entity_subtype = $event->getParam('entity_subtype', '');
 		if (empty($entity_type) || empty($entity_subtype)) {
 			$route_name = elgg_get_current_route_name();
 			if (!empty($route_name)) {
@@ -111,7 +111,7 @@ class Filter {
 			}
 		}
 		
-		$all_link = $hook->getParam('all_link');
+		$all_link = $event->getParam('all_link');
 		if (empty($all_link)) {
 			if (elgg_route_exists("collection:{$entity_type}:{$entity_subtype}:all")) {
 				$all_link = elgg_generate_url("collection:{$entity_type}:{$entity_subtype}:all");
@@ -131,7 +131,7 @@ class Filter {
 		
 		$user = elgg_get_logged_in_user_entity();
 		if ($user instanceof \ElggUser) {
-			$mine_link = $hook->getParam('mine_link');
+			$mine_link = $event->getParam('mine_link');
 			if (empty($mine_link)) {
 				if (elgg_route_exists("collection:{$entity_type}:{$entity_subtype}:owner")) {
 					$mine_link = elgg_generate_url("collection:{$entity_type}:{$entity_subtype}:owner", [
@@ -160,13 +160,13 @@ class Filter {
 	/**
 	 * Register the default All and Mine filter menu items
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:admin/users'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:admin/users'
 	 *
 	 * @return MenuItems
 	 */
-	public static function registerAdminUsers(\Elgg\Hook $hook): MenuItems {
+	public static function registerAdminUsers(\Elgg\Event $event): MenuItems {
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'all',

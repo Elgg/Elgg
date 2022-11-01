@@ -3,7 +3,7 @@
 namespace Elgg\Messages\Menus;
 
 /**
- * Hook callbacks for menus
+ * Event callbacks for menus
  *
  * @since 4.0
  * @internal
@@ -13,13 +13,13 @@ class Title {
 	/**
 	 * Add to the user hover menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:title'
+	 * @param \Elgg\Event $event 'register', 'menu:title'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
-	public static function register(\Elgg\Hook $hook) {
+	public static function register(\Elgg\Event $event) {
 		
-		$user = $hook->getEntityParam();
+		$user = $event->getEntityParam();
 		if (!elgg_is_logged_in() || !$user instanceof \ElggUser) {
 			return;
 		}
@@ -32,7 +32,7 @@ class Title {
 			return;
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'send',

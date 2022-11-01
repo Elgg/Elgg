@@ -8,7 +8,7 @@ use Elgg\Http\ResponseBuilder;
 use Elgg\Request;
 
 /**
- * Plugin hook handlers for user settings
+ * Event handlers for user settings
  *
  * @since 4.0
  */
@@ -19,19 +19,19 @@ class Settings {
 	 *
 	 * Returns false indicating failure if change was needed
 	 *
-	 * @param \Elgg\Hook $hook 'usersettings:save', 'user'
+	 * @param \Elgg\Event $event 'usersettings:save', 'user'
 	 *
 	 * @return false|void
 	 */
-	public static function setPassword(\Elgg\Hook $hook) {
+	public static function setPassword(\Elgg\Event $event) {
 	
 		$actor = elgg_get_logged_in_user_entity();
 		if (!$actor instanceof \ElggUser) {
 			return;
 		}
 	
-		$user = $hook->getUserParam();
-		$request = $hook->getParam('request');
+		$user = $event->getUserParam();
+		$request = $event->getParam('request');
 		
 		if (!$user instanceof \ElggUser || !$request instanceof Request) {
 			return;
@@ -98,16 +98,16 @@ class Settings {
 	 *
 	 * Returns false indicating failure if change was needed
 	 *
-	 * @param \Elgg\Hook $hook 'usersettings:save', 'user'
+	 * @param \Elgg\Event $event 'usersettings:save', 'user'
 	 *
 	 * @return false|void
 	 */
-	public static function setName(\Elgg\Hook $hook) {
+	public static function setName(\Elgg\Event $event) {
 	
-		$user = $hook->getUserParam();
+		$user = $event->getUserParam();
 		
 		/* @var $request \Elgg\Request */
-		$request = $hook->getParam('request');
+		$request = $event->getParam('request');
 		
 		$name = $request->getParam('name');
 		if (!isset($name)) {
@@ -135,14 +135,14 @@ class Settings {
 	 *
 	 * Returns false indicating failure if change was needed
 	 *
-	 * @param \Elgg\Hook $hook 'usersettings:save', 'user'
+	 * @param \Elgg\Event $event 'usersettings:save', 'user'
 	 *
 	 * @return false|void
 	 */
-	public static function setUsername(\Elgg\Hook $hook) {
+	public static function setUsername(\Elgg\Event $event) {
 	
-		$user = $hook->getUserParam();
-		$request = $hook->getParam('request');
+		$user = $event->getUserParam();
+		$request = $event->getParam('request');
 		
 		if (!$user instanceof \ElggUser || !$request instanceof Request) {
 			return;
@@ -179,8 +179,8 @@ class Settings {
 		$request->validation()->pass('username', $username, elgg_echo('user:username:success'));
 	
 		// correctly forward after after a username change
-		elgg_register_plugin_hook_handler('response', 'action:usersettings/save', function (\Elgg\Hook $hook) use ($username) {
-			$response = $hook->getValue();
+		elgg_register_event_handler('response', 'action:usersettings/save', function (\Elgg\Event $event) use ($username) {
+			$response = $event->getValue();
 			if (!$response instanceof ResponseBuilder) {
 				return;
 			}
@@ -198,14 +198,14 @@ class Settings {
 	/**
 	 * Set a user's language
 	 *
-	 * @param \Elgg\Hook $hook 'usersettings:save', 'user'
+	 * @param \Elgg\Event $event 'usersettings:save', 'user'
 	 *
 	 * @return void
 	 */
-	public static function setLanguage(\Elgg\Hook $hook) {
+	public static function setLanguage(\Elgg\Event $event) {
 	
-		$user = $hook->getUserParam();
-		$request = $hook->getParam('request');
+		$user = $event->getUserParam();
+		$request = $event->getParam('request');
 		
 		if (!$user instanceof \ElggUser || !$request instanceof Request) {
 			return;
@@ -241,19 +241,19 @@ class Settings {
 	 *
 	 * Returns true or false indicating success or failure if change was needed
 	 *
-	 * @param \Elgg\Hook $hook 'usersettings:save', 'user'
+	 * @param \Elgg\Event $event 'usersettings:save', 'user'
 	 *
 	 * @return bool|void
 	 */
-	public static function setEmail(\Elgg\Hook $hook) {
+	public static function setEmail(\Elgg\Event $event) {
 		
 		$actor = elgg_get_logged_in_user_entity();
 		if (!$actor instanceof \ElggUser) {
 			return;
 		}
 	
-		$user = $hook->getUserParam();
-		$request = $hook->getParam('request');
+		$user = $event->getUserParam();
+		$request = $event->getParam('request');
 		
 		if (!$user instanceof \ElggUser || !$request instanceof Request) {
 			return;
@@ -292,10 +292,10 @@ class Settings {
 			}
 		}
 	
-		$hook_params = $hook->getParams();
-		$hook_params['email'] = $email;
+		$params = $event->getParams();
+		$params['email'] = $email;
 	
-		if (!elgg_trigger_plugin_hook('change:email', 'user', $hook_params, true)) {
+		if (!elgg_trigger_event_results('change:email', 'user', $params, true)) {
 			return;
 		}
 		
@@ -319,18 +319,18 @@ class Settings {
 	/**
 	 * Set a user's default access level
 	 *
-	 * @param \Elgg\Hook $hook 'usersettings:save', 'user'
+	 * @param \Elgg\Event $event 'usersettings:save', 'user'
 	 *
 	 * @return void
 	 */
-	public static function setDefaultAccess(\Elgg\Hook $hook) {
+	public static function setDefaultAccess(\Elgg\Event $event) {
 	
 		if (!_elgg_services()->config->allow_user_default_access) {
 			return;
 		}
 	
-		$user = $hook->getUserParam();
-		$request = $hook->getParam('request');
+		$user = $event->getUserParam();
+		$request = $event->getParam('request');
 		
 		if (!$user instanceof \ElggUser || !$request instanceof Request) {
 			return;
@@ -352,18 +352,18 @@ class Settings {
 	/**
 	 * Save a setting related to admin approval of new users
 	 *
-	 * @param \Elgg\Hook $hook 'usersettings:save', 'user'
+	 * @param \Elgg\Event $event 'usersettings:save', 'user'
 	 *
 	 * @return void
 	 */
-	public static function setAdminValidationNotification(\Elgg\Hook $hook) {
+	public static function setAdminValidationNotification(\Elgg\Event $event) {
 		
-		$user = $hook->getUserParam();
+		$user = $event->getUserParam();
 		if (!$user instanceof \ElggUser || !$user->isAdmin()) {
 			return;
 		}
 		
-		$request = $hook->getParam('request');
+		$request = $event->getParam('request');
 		if (!$request instanceof \Elgg\Request) {
 			return;
 		}

@@ -66,7 +66,7 @@ function elgg_get_title_input(string $variable = 'title', string $default = ''):
 }
 
 /**
- * Filter input from a given string based on registered hooks.
+ * Filter input from a given string based on registered events.
  *
  * @param mixed $input Anything that does not include an object (strings, ints, arrays)
  *					   This includes multi-dimensional arrays.
@@ -75,7 +75,7 @@ function elgg_get_title_input(string $variable = 'title', string $default = ''):
  * @since 4.3
  */
 function elgg_sanitize_input($input) {
-	return elgg_trigger_plugin_hook('sanitize', 'input', null, $input);
+	return elgg_trigger_event_results('sanitize', 'input', [], $input);
 }
 
 /**
@@ -183,7 +183,7 @@ function elgg_is_empty($value): bool {
  * This runs after htmlawed has filtered. It runs for each tag and filters out
  * style attributes we don't want.
  *
- * This function triggers the 'allowed_styles', 'htmlawed' plugin hook.
+ * This function triggers the 'allowed_styles', 'htmlawed' event.
  *
  * @param string $element    The tag element name
  * @param array  $attributes An array of attributes
@@ -207,7 +207,7 @@ function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
 	];
 
 	$params = ['tag' => $element];
-	$allowed_styles = elgg_trigger_plugin_hook('allowed_styles', 'htmlawed', $params, $allowed_styles);
+	$allowed_styles = elgg_trigger_event_results('allowed_styles', 'htmlawed', $params, $allowed_styles);
 
 	// must return something.
 	$string = '';
