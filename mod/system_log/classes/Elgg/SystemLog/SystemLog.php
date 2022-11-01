@@ -110,7 +110,7 @@ class SystemLog {
 	protected function prepareObjectForInsert(\Loggable $object): \stdClass {
 		$insert = new \stdClass();
 
-		$insert->object_id = (int) $object->getSystemLogID();
+		$insert->object_id = $object->getSystemLogID();
 		$insert->object_class = get_class($object);
 		$insert->object_type = $object->getType();
 		$insert->object_subtype = $object->getSubtype();
@@ -152,7 +152,7 @@ class SystemLog {
 			return;
 		}
 		
-		if (!$object instanceof \Loggable) {
+		if (!$object instanceof \Loggable || empty($object->getSystemLogID())) {
 			return;
 		}
 

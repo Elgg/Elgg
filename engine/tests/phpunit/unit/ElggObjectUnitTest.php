@@ -232,6 +232,9 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testIsLoggable() {
+		$unsaved = new \ElggObject();
+		$this->assertEmpty($unsaved->getSystemLogID());
+		
 		$object = $this->createObject();
 
 		$this->assertEquals($object->guid, $object->getSystemLogID());

@@ -93,6 +93,9 @@ class ElggSiteUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testIsLoggable() {
+		$unsaved = new \ElggSite();
+		$this->assertEmpty($unsaved->getSystemLogID());
+		
 		$site = elgg_get_site_entity();
 
 		$this->assertEquals($site->guid, $site->getSystemLogID());

@@ -96,6 +96,9 @@ class ElggUserUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testIsLoggable() {
+		$unsaved = new \ElggUser();
+		$this->assertEmpty($unsaved->getSystemLogID());
+		
 		$user = $this->createUser();
 
 		$this->assertEquals($user->guid, $user->getSystemLogID());

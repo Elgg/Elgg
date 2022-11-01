@@ -234,7 +234,7 @@ class ElggAccessCollection extends ElggData {
 	 * {@inheritdoc}
 	 */
 	public function getSystemLogID(): int {
-		return $this->id;
+		return (int) $this->id;
 	}
 
 	/**

@@ -21,4 +21,9 @@ class ElggAccessCollectionUnitTest extends UnitTestCase {
 			['owner_guid', -1],
 		];
 	}
+	
+	public function testIsLoggable() {
+		$unsaved = new \ElggAccessCollection();
+		$this->assertEmpty($unsaved->getSystemLogID());
+	}
 }
