@@ -3,13 +3,14 @@
 namespace Elgg\Http;
 
 use Elgg\Exceptions\InvalidArgumentException;
+
 /**
  * @group HttpService
  * @group UnitTests
  */
-abstract class ResponseUnitTest extends \Elgg\UnitTestCase {
+abstract class ResponseUnitTestCase extends \Elgg\UnitTestCase {
 
-	public $class;
+	abstract public function getReponseClassName(): string;
 
 	abstract public function testCanConstructWihtoutArguments();
 
@@ -19,8 +20,7 @@ abstract class ResponseUnitTest extends \Elgg\UnitTestCase {
 	 * @dataProvider validContentValuesProvider
 	 */
 	public function testCanSetContent($value) {
-
-		$test_class = $this->class;
+		$test_class = $this->getReponseClassName();
 		$response = new $test_class();
 
 		$response->setContent($value);
@@ -45,8 +45,7 @@ abstract class ResponseUnitTest extends \Elgg\UnitTestCase {
 	 * @dataProvider invalidContentValuesProvider
 	 */
 	public function testThrowsExceptionForInvalidContent($value) {
-
-		$test_class = $this->class;
+		$test_class = $this->getReponseClassName();
 		$response = new $test_class();
 		
 		$this->expectException(InvalidArgumentException::class);
@@ -71,8 +70,7 @@ abstract class ResponseUnitTest extends \Elgg\UnitTestCase {
 	 * @dataProvider validStatusCodesProvider
 	 */
 	public function testCanSetStatusCode($value) {
-
-		$test_class = $this->class;
+		$test_class = $this->getReponseClassName();
 		$response = new $test_class();
 
 		$response->setStatusCode($value);
@@ -92,8 +90,7 @@ abstract class ResponseUnitTest extends \Elgg\UnitTestCase {
 	 * @dataProvider invalidStatusCodesProvider
 	 */
 	public function testThrowsExceptionForInvalidStatusCodes($value) {
-
-		$test_class = $this->class;
+		$test_class = $this->getReponseClassName();
 		$response = new $test_class();
 		
 		$this->expectException(InvalidArgumentException::class);
@@ -116,8 +113,7 @@ abstract class ResponseUnitTest extends \Elgg\UnitTestCase {
 	 * @dataProvider invalidStatusCodesTypesProvider
 	 */
 	public function testThrowsExceptionForInvalidStatusCodesTypes($value) {
-
-		$test_class = $this->class;
+		$test_class = $this->getReponseClassName();
 		$response = new $test_class();
 		
 		$this->expectException(\TypeError::class);
@@ -138,8 +134,7 @@ abstract class ResponseUnitTest extends \Elgg\UnitTestCase {
 	 * @dataProvider validForwardURLsProvider
 	 */
 	public function testCanSetForwardURL($value) {
-
-		$test_class = $this->class;
+		$test_class = $this->getReponseClassName();
 		$response = new $test_class();
 
 		$response->setForwardURL($value);
@@ -157,8 +152,8 @@ abstract class ResponseUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanSetHeaders() {
-
-		$response = new $this->class();
+		$test_class = $this->getReponseClassName();
+		$response = new $test_class();
 		$this->assertEquals([], $response->getHeaders());
 
 		$response->setHeaders(['Content-Type' => 'application/json']);
@@ -169,9 +164,8 @@ abstract class ResponseUnitTest extends \Elgg\UnitTestCase {
 	 * @dataProvider statusCodesProvider
 	 */
 	public function testCanResolveStatusCodes($code, $status) {
-
-		$test_class = $this->class;
-		$response = new $test_class;
+		$test_class = $this->getReponseClassName();
+		$response = new $test_class();
 		$response->setStatusCode($code);
 
 		$this->assertEquals($status[0], $response->isInformational());
@@ -184,7 +178,6 @@ abstract class ResponseUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function statusCodesProvider() {
-
 		$codes = [];
 		foreach (range(100, 599) as $code) {
 			$codes[] = [
@@ -219,8 +212,7 @@ abstract class ResponseUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanSetException() {
-
-		$test_class = $this->class;
+		$test_class = $this->getReponseClassName();
 		$response = new $test_class();
 
 		$ex = new \Exception('foo');
