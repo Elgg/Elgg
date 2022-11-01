@@ -39,7 +39,7 @@ class Page {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'plugins',
 			'text' => elgg_echo('admin:plugins'),
-			'href' => 'admin/plugins',
+			'href' => elgg_generate_url('admin', ['segments' => 'plugins']),
 			'priority' => 30,
 			'section' => 'administer',
 		]);
@@ -277,7 +277,7 @@ class Page {
 	}
 	
 	/**
-	 * Register links to the plugin settings
+	 * Register links to the plugin settings admin section
 	 *
 	 * @note Plugin settings are alphabetically sorted in the submenu
 	 *
@@ -287,6 +287,11 @@ class Page {
 	 */
 	public static function registerAdminPluginSettings(\Elgg\Event $event) {
 		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
+			return;
+		}
+		
+		$current_route = elgg_get_current_route();
+		if (elgg_extract('segments', $current_route->getMatchedParameters()) !== 'plugins' && $current_route->getName() !== 'admin:plugin_settings') {
 			return;
 		}
 		
@@ -305,6 +310,7 @@ class Page {
 			if (!elgg_view_exists("plugins/{$plugin_id}/settings") ) {
 				continue;
 			}
+			
 			$plugin_name = $plugin->getDisplayName();
 			$plugins_with_settings[strtolower($plugin_name)] = [
 				'name' => "plugin:settings:{$plugin_id}",
@@ -312,8 +318,7 @@ class Page {
 					'plugin_id' => $plugin_id,
 				]),
 				'text' => $plugin_name,
-				'parent_name' => 'plugin_settings',
-				'section' => 'configure',
+				'section' => 'plugin_settings',
 			];
 		}
 		
@@ -323,13 +328,6 @@ class Page {
 		
 		/* @var $return MenuItems */
 		$return = $event->getValue();
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'plugin_settings',
-			'text' => elgg_echo('admin:plugin_settings'),
-			'href' => false,
-			'section' => 'configure',
-		]);
 		
 		ksort($plugins_with_settings);
 		$priority = 0;

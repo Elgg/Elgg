@@ -493,6 +493,7 @@ return array(
 	'menu:page:header:develop' => 'Develop',
 	'menu:page:header:information' => 'Information',
 	'menu:page:header:default' => 'Other',
+	'menu:page:header:plugin_settings' => 'Plugin Settings',
 
 	'admin:view_site' => 'View site',
 	'admin:loggedin' => 'Logged in as %s',
