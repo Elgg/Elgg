@@ -490,67 +490,6 @@ class AccessCollections {
 	}
 
 	/**
-	 * Updates the membership in an access collection.
-	 *
-	 * @warning Expects a full list of all members that should
-	 * be part of the access collection
-	 *
-	 * @note This will run all events associated with adding or removing
-	 * members to access collections.
-	 *
-	 * @param int   $collection_id ID of the collection.
-	 * @param array $new_members   Array of member entities or GUIDs
-	 * @return bool
-	 */
-	public function update($collection_id, array $new_members = []) {
-		$acl = $this->get($collection_id);
-
-		if (!$acl instanceof \ElggAccessCollection) {
-			return false;
-		}
-
-		$to_guid = function($elem) {
-			if (empty($elem)) {
-				return 0;
-			}
-			if (is_object($elem)) {
-				return (int) $elem->guid;
-			}
-			return (int) $elem;
-		};
-
-		$current_members = [];
-		$new_members = array_map($to_guid, $new_members);
-
-		$current_members_batch = $this->getMembers($collection_id, [
-			'batch' => true,
-			'limit' => false,
-			'callback' => false,
-		]);
-
-		foreach ($current_members_batch as $row) {
-			$current_members[] = $to_guid($row);
-		}
-
-		$remove_members = array_diff($current_members, $new_members);
-		$add_members = array_diff($new_members, $current_members);
-
-		$result = true;
-
-		foreach ($add_members as $guid) {
-			$result = $result && $this->addUser($guid, $collection_id);
-		}
-
-		foreach ($remove_members as $guid) {
-			$result = $result && $this->removeUser($guid, $collection_id);
-		}
-
-		$this->access_cache->clear();
-
-		return $result;
-	}
-
-	/**
 	 * Deletes a collection and its membership information
 	 *
 	 * @param int $collection_id ID of the collection
