@@ -1,13 +1,12 @@
 <?php
 
-use Elgg\Exceptions\RuntimeException as ElggRuntimeException;
-
 /**
  * Access collection class
  *
  * @property-read int    $id         The unique identifier (read-only)
  * @property      int    $owner_guid GUID of the owner
  * @property      string $name       Name of the collection
+ * @property      string $subtype    Subtype of the collection
  */
 class ElggAccessCollection extends ElggData {
 
@@ -34,7 +33,7 @@ class ElggAccessCollection extends ElggData {
 		parent::initializeAttributes();
 
 		$this->attributes['id'] = null;
-		$this->attributes['owner_guid'] = null;
+		$this->attributes['owner_guid'] = _elgg_services()->session->getLoggedInUserGuid();
 		$this->attributes['name'] = null;
 		$this->attributes['subtype'] = null;
 	}
@@ -42,16 +41,39 @@ class ElggAccessCollection extends ElggData {
 	/**
 	 * Set an attribute
 	 *
-	 * @param string $name  Name
-	 * @param mixed  $value Value
+	 * @param string $name  The name of the attribute
+	 * @param mixed  $value The value of the attribute
 	 *
 	 * @return void
-	 * @throws \Elgg\Exceptions\RuntimeException
+	 * @throws \Elgg\Exceptions\ExceptionInterface
 	 */
 	public function __set($name, $value): void {
-		if (in_array($name, ['id', 'owner_guid', 'subtype'])) {
-			throw new ElggRuntimeException("$name can not be set at runtime");
+		switch ($name) {
+			case 'id':
+				$value = (int) $value;
+				break;
+			case 'subtype':
+				if (isset($value)) {
+					$value = trim((string) $value);
+					if (strlen($value) > 255) {
+						throw new \Elgg\Exceptions\LengthException('The "subtype" of an ElggAccessCollection cannot be greated than 255 characters');
+					}
+				}
+				break;
+			case 'name':
+				$value = trim((string) $value);
+				if (empty($value)) {
+					throw new \Elgg\Exceptions\LengthException('The "name" of an ElggAccessCollection cannot be empty');
+				}
+				break;
+			case 'owner_guid':
+				$value = (int) $value;
+				if (!_elgg_services()->entityTable->exists($value)) {
+					throw new \Elgg\Exceptions\InvalidArgumentException("The 'owner_guid' ({$value}) for the ElggAccessColelction doesn't seem to exists");
+				}
+				break;
 		}
+		
 		$this->attributes[$name] = $value;
 	}
 
@@ -63,11 +85,7 @@ class ElggAccessCollection extends ElggData {
 	 * @return mixed
 	 */
 	public function __get($name) {
-		if (array_key_exists($name, $this->attributes)) {
-			return $this->attributes[$name];
-		}
-
-		return null;
+		return $this->attributes[$name] ?? null;
 	}
 
 	/**
@@ -116,17 +134,17 @@ class ElggAccessCollection extends ElggData {
 	 */
 	public function save(): bool {
 		if ($this->id > 0) {
-			return _elgg_services()->accessCollections->rename($this->id, $this->name);
+			return _elgg_services()->accessCollections->update($this);
 		}
 		
-		return (bool) _elgg_services()->accessCollections->create($this->name, $this->owner_guid);
+		return _elgg_services()->accessCollections->create($this);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function delete(): bool {
-		return _elgg_services()->accessCollections->delete($this->id);
+		return _elgg_services()->accessCollections->delete($this);
 	}
 
 	/**

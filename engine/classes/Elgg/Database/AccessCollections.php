@@ -407,119 +407,101 @@ class AccessCollections {
 	 * Access colletions allow plugins and users to create granular access
 	 * for entities.
 	 *
-	 * Triggers event 'access:collections:addcollection', 'collection'
+	 * Triggers event sequence 'create', 'access_collection'
 	 *
 	 * @internal Access collections are stored in the access_collections table.
 	 * Memberships to collections are in access_collections_membership.
 	 *
-	 * @param string $name       The name of the collection.
-	 * @param int    $owner_guid The GUID of the owner (default: currently logged in user).
-	 * @param string $subtype    The subtype indicates the usage of the acl
-	 *
-	 * @return int|false The collection ID if successful and false on failure.
-	 */
-	public function create(string $name, int $owner_guid = 0, string $subtype = null): ?int {
-		$name = trim($name);
-		if (empty($name)) {
-			return null;
-		}
-
-		if (isset($subtype)) {
-			$subtype = trim($subtype);
-			if (strlen($subtype) > 255) {
-				$this->getLogger()->error("The subtype length for access collections cannot be greater than 255");
-				return null;
-			}
-		}
-
-		if ($owner_guid === 0) {
-			$owner_guid = $this->session->getLoggedInUserGuid();
-		}
-
-		$insert = Insert::intoTable(self::TABLE_NAME);
-		$insert->values([
-			'name' => $insert->param($name, ELGG_VALUE_STRING),
-			'subtype' => $insert->param($subtype, ELGG_VALUE_STRING),
-			'owner_guid' => $insert->param($owner_guid, ELGG_VALUE_GUID),
-		]);
-
-		$id = $this->db->insertData($insert);
-		if (empty($id)) {
-			return null;
-		}
-
-		$this->access_cache->clear();
-
-		$event_params = [
-			'collection_id' => $id,
-			'name' => $name,
-			'subtype' => $subtype,
-			'owner_guid' => $owner_guid,
-		];
-
-		// @todo https://github.com/Elgg/Elgg/issues/10823
-		if (!$this->events->triggerResults('access:collections:addcollection', 'collection', $event_params, true)) {
-			$this->delete($id);
-			return null;
-		}
-
-		return $id;
-	}
-
-	/**
-	 * Renames an access collection
-	 *
-	 * @param int    $collection_id ID of the collection
-	 * @param string $name          The name of the collection
+	 * @param \ElggAccessCollection $acl the access collection to create
 	 *
 	 * @return bool
 	 */
-	public function rename(int $collection_id, string $name): bool {
-
-		$update = Update::table(self::TABLE_NAME);
-		$update->set('name', $update->param($name, ELGG_VALUE_STRING))
-			->where($update->compare('id', '=', $collection_id, ELGG_VALUE_ID));
-
-		if ($this->db->updateData($update, true)) {
-			$this->access_cache->clear();
-
-			return true;
+	public function create(\ElggAccessCollection $acl): bool {
+		if (!empty($acl->id)) {
+			return $this->update($acl);
 		}
+		
+		return $this->events->triggerSequence('create', $acl->getType(), $acl, function (\ElggAccessCollection $acl) {
+			$insert = Insert::intoTable(self::TABLE_NAME);
+			$insert->values([
+				'name' => $insert->param($acl->name, ELGG_VALUE_STRING),
+				'subtype' => $insert->param($acl->subtype, ELGG_VALUE_STRING),
+				'owner_guid' => $insert->param($acl->owner_guid, ELGG_VALUE_GUID),
+			]);
+			
+			$id = $this->db->insertData($insert);
+			if (empty($id)) {
+				return false;
+			}
+			
+			$acl->id = $id;
+			
+			$this->access_cache->clear();
+			
+			return true;
+		});
+	}
 
-		return false;
+	/**
+	 * Update an existing access collection
+	 *
+	 * @param \ElggAccessCollection $acl the access collection to update
+	 *
+	 * @return bool
+	 */
+	public function update(\ElggAccessCollection $acl): bool {
+		if (empty($acl->id)) {
+			return $this->create($acl);
+		}
+		
+		return $this->events->triggerSequence('update', $acl->getType(), $acl, function (\ElggAccessCollection $acl) {
+			$update = Update::table(self::TABLE_NAME);
+			$update->set('name', $update->param($acl->name, ELGG_VALUE_STRING))
+				->set('subtype', $update->param($acl->subtype, ELGG_VALUE_STRING))
+				->set('owner_guid', $update->param($acl->owner_guid, ELGG_VALUE_GUID))
+				->where($update->compare('id', '=', $acl->id, ELGG_VALUE_ID));
+			
+			if (!$this->db->updateData($update)) {
+				return false;
+			}
+			
+			$this->access_cache->clear();
+			
+			return true;
+		});
 	}
 
 	/**
 	 * Deletes a collection and its membership information
 	 *
-	 * @param int $collection_id ID of the collection
+	 * @param \ElggAccessCollection $acl the access collection to update
 	 *
 	 * @return bool
 	 */
-	public function delete(int $collection_id): bool {
-		$params = [
-			'collection_id' => $collection_id,
-		];
-
-		// @todo https://github.com/Elgg/Elgg/issues/10823
-		if (!$this->events->triggerResults('access:collections:deletecollection', 'collection', $params, true)) {
+	public function delete(\ElggAccessCollection $acl): bool {
+		if (empty($acl->id)) {
 			return false;
 		}
-
-		// Deleting membership doesn't affect result of deleting ACL.
-		$delete_membership = Delete::fromTable(self::MEMBERSHIP_TABLE_NAME);
-		$delete_membership->where($delete_membership->compare('access_collection_id', '=', $collection_id, ELGG_VALUE_ID));
 		
-		$this->db->deleteData($delete_membership);
-
-		$delete = Delete::fromTable(self::TABLE_NAME);
-		$delete->where($delete->compare('id', '=', $collection_id, ELGG_VALUE_ID));
-
-		$result = $this->db->deleteData($delete);
-
-		$this->access_cache->clear();
-
-		return (bool) $result;
+		return $this->events->triggerSequence('delete', $acl->getType(), $acl, function (\ElggAccessCollection $acl) {
+			$delete = Delete::fromTable(self::TABLE_NAME);
+			$delete->where($delete->compare('id', '=', $acl->id, ELGG_VALUE_ID));
+			
+			if (!$this->db->deleteData($delete)) {
+				return false;
+			}
+			
+			// cleanup access collection membership (doesn't affect the result of deleting the ACL)
+			$delete_membership = Delete::fromTable(self::MEMBERSHIP_TABLE_NAME);
+			$delete_membership->where($delete_membership->compare('access_collection_id', '=', $acl->id, ELGG_VALUE_ID));
+			
+			$this->db->deleteData($delete_membership);
+			
+			// clear cache
+			$this->access_cache->clear();
+			
+			return true;
+		});
 	}
 
 	/**

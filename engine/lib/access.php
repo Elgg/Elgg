@@ -135,7 +135,7 @@ function elgg_get_write_access_array(int $user_guid = 0, bool $flush = false, ar
  *
  * Access colletions allow plugins and users to create granular access for entities.
  *
- * Triggers 'access:collections:addcollection', 'collection' event
+ * Triggers 'create', 'access_collection' event sequence
  *
  * @param string $name       The name of the collection
  * @param int    $owner_guid The GUID of the owner (default: currently logged in user)
@@ -145,12 +145,12 @@ function elgg_get_write_access_array(int $user_guid = 0, bool $flush = false, ar
  * @since 4.3
  */
 function elgg_create_access_collection(string $name, int $owner_guid = 0, string $subtype = null): ?\ElggAccessCollection {
-	$acl_id = _elgg_services()->accessCollections->create($name, $owner_guid, $subtype);
-	if (!isset($acl_id)) {
-		return null;
-	}
+	$acl = new \ElggAccessCollection();
+	$acl->name = $name;
+	$acl->owner_guid = $owner_guid ?: _elgg_services()->session->getLoggedInUserGuid();
+	$acl->subtype = $subtype;
 	
-	return _elgg_services()->accessCollections->get($acl_id);
+	return $acl->save() ? $acl : null;
 }
 
 /**
