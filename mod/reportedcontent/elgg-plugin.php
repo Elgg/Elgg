@@ -31,6 +31,9 @@ return [
 	],
 	'events' => [
 		'register' => [
+			'menu:admin_header' => [
+				'Elgg\ReportedContent\Menus\AdminHeader::register' => [],
+			],
 			'menu:entity:object:reported_content' => [
 				'Elgg\ReportedContent\Menus\Entity::registerArchive' => [],
 			],
@@ -39,9 +42,6 @@ return [
 			],
 			'menu:footer' => [
 				'Elgg\ReportedContent\Menus\Footer::register' => [],
-			],
-			'menu:page' => [
-				'Elgg\ReportedContent\Menus\Page::register' => [],
 			],
 			'menu:user_hover' => [
 				'Elgg\ReportedContent\Menus\UserHover::register' => [],

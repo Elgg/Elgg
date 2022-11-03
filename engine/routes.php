@@ -126,14 +126,6 @@ return [
 			\Elgg\Router\Middleware\AdminGatekeeper::class,
 		],
 	],
-	'admin_plugins_refresh' => [
-		'path' => '/admin_plugins_refresh',
-		'controller' => \Elgg\Controllers\AdminPluginsRefresh::class,
-		'middleware' => [
-			\Elgg\Router\Middleware\AdminGatekeeper::class,
-			\Elgg\Router\Middleware\AjaxGatekeeper::class,
-		],
-	],
 	'admin_plugin_text_file' => [
 		'path' => '/admin_plugin_text_file/{plugin_id}/{filename}',
 		'resource' => 'admin/plugin_text_file',

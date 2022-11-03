@@ -14,269 +14,6 @@ use Elgg\Menu\PreparedMenu;
 class Page {
 	
 	/**
-	 * Add the administer section to the admin page menu
-	 *
-	 * @param \Elgg\Event $event 'register', 'menu:page'
-	 *
-	 * @return void|MenuItems
-	 */
-	public static function registerAdminAdminister(\Elgg\Event $event) {
-		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
-			return;
-		}
-		
-		/* @var $return MenuItems */
-		$return = $event->getValue();
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'dashboard',
-			'text' => elgg_echo('admin:dashboard'),
-			'href' => 'admin',
-			'priority' => 10,
-			'section' => 'administer',
-		]);
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'plugins',
-			'text' => elgg_echo('admin:plugins'),
-			'href' => elgg_generate_url('admin', ['segments' => 'plugins']),
-			'priority' => 30,
-			'section' => 'administer',
-		]);
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'users',
-			'text' => elgg_echo('admin:users'),
-			'href' => 'admin/users',
-			'priority' => 40,
-			'section' => 'administer',
-		]);
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'upgrades',
-			'text' => elgg_echo('admin:upgrades'),
-			'href' => 'admin/upgrades',
-			'priority' => 600,
-			'section' => 'administer',
-		]);
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'administer_utilities',
-			'text' => elgg_echo('admin:administer_utilities'),
-			'href' => false,
-			'priority' => 50,
-			'section' => 'administer',
-			'show_with_empty_children' => false,
-		]);
-		
-		return $return;
-	}
-	
-	/**
-	 * Prepare the users menu item in the administer section on admin pages
-	 *
-	 * @param \Elgg\Event $event 'prepare', 'menu:page'
-	 *
-	 * @return PreparedMenu|null
-	 */
-	public static function prepareAdminAdministerUsersChildren(\Elgg\Event $event): ?PreparedMenu {
-		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
-			return null;
-		}
-		
-		/* @var $result PreparedMenu */
-		$result = $event->getValue();
-		
-		$administer = $result->getSection('administer');
-		/* @var $users \ElggMenuItem */
-		$users = $administer->get('users');
-		if (!$users instanceof \ElggMenuItem || empty($users->getChildren())) {
-			return null;
-		}
-		
-		$children = $users->getChildren();
-		
-		$selected = $users->getSelected();
-		array_unshift($children, \ElggMenuItem::factory([
-			'name' => 'users:all',
-			'text' => elgg_echo('all'),
-			'href' => 'admin/users',
-			'priority' => 1,
-			'selected' => $selected,
-		]));
-		$users->setChildren($children);
-		
-		if ($selected) {
-			$users->addItemClass('elgg-has-selected-child');
-			$users->addItemClass('elgg-state-selected');
-		}
-		
-		$users->setHref(false);
-		
-		return $result;
-	}
-	
-	/**
-	 * Add the configure section to the admin page menu
-	 *
-	 * @param \Elgg\Event $event 'register', 'menu:page'
-	 *
-	 * @return void|MenuItems
-	 */
-	public static function registerAdminConfigure(\Elgg\Event $event) {
-		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
-			return;
-		}
-		
-		/* @var $return MenuItems */
-		$return = $event->getValue();
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'settings:basic',
-			'text' => elgg_echo('admin:site_settings'),
-			'href' => 'admin/site_settings',
-			'priority' => 10,
-			'section' => 'configure',
-		]);
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'settings:icons',
-			'text' => elgg_echo('admin:site_icons'),
-			'href' => 'admin/site_icons',
-			'priority' => 20,
-			'section' => 'configure',
-		]);
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'security',
-			'text' => elgg_echo('admin:security'),
-			'href' => 'admin/security',
-			'priority' => 30,
-			'section' => 'configure',
-		]);
-		
-		// Utilities
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'configure_utilities',
-			'text' => elgg_echo('admin:configure_utilities'),
-			'href' => false,
-			'priority' => 600,
-			'section' => 'configure',
-		]);
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'configure_utilities:maintenance',
-			'text' => elgg_echo('admin:configure_utilities:maintenance'),
-			'href' => 'admin/configure_utilities/maintenance',
-			'section' => 'configure',
-			'parent_name' => 'configure_utilities',
-		]);
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'configure_utilities:menu_items',
-			'text' => elgg_echo('admin:configure_utilities:menu_items'),
-			'href' => 'admin/configure_utilities/menu_items',
-			'section' => 'configure',
-			'parent_name' => 'configure_utilities',
-		]);
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'configure_utilities:robots',
-			'text' => elgg_echo('admin:configure_utilities:robots'),
-			'href' => 'admin/configure_utilities/robots',
-			'section' => 'configure',
-			'parent_name' => 'configure_utilities',
-		]);
-		
-		return $return;
-	}
-	
-	/**
-	 * Register menu items for default widgets
-	 *
-	 * @param \Elgg\Event $event 'register', 'menu:page'
-	 *
-	 * @return void|MenuItems
-	 */
-	public static function registerAdminDefaultWidgets(\Elgg\Event $event) {
-		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
-			return;
-		}
-		
-		if (empty(elgg_trigger_event_results('get_list', 'default_widgets', [], []))) {
-			return;
-		}
-		
-		/* @var $return MenuItems */
-		$return = $event->getValue();
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'default_widgets',
-			'text' => elgg_echo('admin:configure_utilities:default_widgets'),
-			'href' => 'admin/configure_utilities/default_widgets',
-			'section' => 'configure',
-			'parent_name' => 'configure_utilities',
-		]);
-
-		return $return;
-	}
-	
-	/**
-	 * Add the information section to the admin page menu
-	 *
-	 * @param \Elgg\Event $event 'register', 'menu:page'
-	 *
-	 * @return void|MenuItems
-	 */
-	public static function registerAdminInformation(\Elgg\Event $event) {
-		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
-			return;
-		}
-		
-		/* @var $return MenuItems */
-		$return = $event->getValue();
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'server',
-			'text' => elgg_echo('admin:server'),
-			'href' => 'admin/server',
-			'section' => 'information',
-			'priority' => 50,
-		]);
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'information:security',
-			'text' => elgg_echo('admin:security'),
-			'href' => 'admin/security/information',
-			'section' => 'information',
-			'priority' => 60,
-		]);
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'information:performance',
-			'text' => elgg_echo('admin:performance'),
-			'href' => 'admin/performance',
-			'section' => 'information',
-			'priority' => 70,
-		]);
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'statistics',
-			'text' => elgg_echo('admin:statistics'),
-			'href' => 'admin/statistics',
-			'section' => 'information',
-			'priority' => 80,
-		]);
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'cron',
-			'text' => elgg_echo('admin:cron'),
-			'href' => 'admin/cron',
-			'section' => 'information',
-			'priority' => 90,
-		]);
-		
-		return $return;
-	}
-	
-	/**
 	 * Register links to the plugin settings admin section
 	 *
 	 * @note Plugin settings are alphabetically sorted in the submenu
@@ -461,5 +198,46 @@ class Page {
 		]);
 		
 		return $return;
+	}
+	
+	/**
+	 * Moves menu items registered to the page to the admin header
+	 *
+	 * @param \Elgg\Event $event 'register', 'menu:page'
+	 *
+	 * @return void
+	 *
+	 * @since 5.0
+	 */
+	public static function moveOldAdminSectionsToAdminHeader(\Elgg\Event $event) {
+		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
+			return;
+		}
+		
+		/* @var $return MenuItems */
+		$return = $event->getValue();
+		
+		$remove_items = [];
+		foreach ($return as $menu_item) {
+			$section_name = $menu_item->getSection();
+			if (!in_array($section_name, ['configure', 'administer', 'information'])) {
+				continue;
+			}
+			
+			$menu_item->setSection('default');
+			if (empty($menu_item->getParentName())) {
+				$menu_item->setParentName($section_name);
+			}
+			
+			elgg_register_menu_item('admin_header', $menu_item);
+			$remove_items[] = $menu_item->getID();
+			
+			elgg_deprecated_notice("The menu item [{$menu_item->getID()}] is using an old section of the admin page menu. These sections have been moved to the 'admin_header' menu. Please update your menu item configuration.", '5.0');
+		}
+		
+		foreach ($remove_items as $id) {
+			// need to remove separately because removing during a foreach has issues
+			$return->remove($id);
+		}
 	}
 }

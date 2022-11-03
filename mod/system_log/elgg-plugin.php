@@ -34,11 +34,11 @@ return [
 			],
 		],
 		'register' => [
+			'menu:admin_header' => [
+				'Elgg\SystemLog\Menus\AdminHeader::register' => [],
+			],
 			'menu:entity' => [
 				'Elgg\SystemLog\Menus\Entity::register' => [],
-			],
-			'menu:page' => [
-				'Elgg\SystemLog\Menus\Page::register' => [],
 			],
 		],
 		'upgrade:before' => [

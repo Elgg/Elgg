@@ -5,15 +5,15 @@ namespace Elgg\SystemLog\Menus;
 /**
  * Event callbacks for menus
  *
- * @since 4.0
+ * @since 5.0
  * @internal
  */
-class Page {
+class AdminHeader {
 	
 	/**
 	 * Add to the page menu
 	 *
-	 * @param \Elgg\Event $event 'register', 'menu:page'
+	 * @param \Elgg\Event $event 'register', 'menu:admin_header'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
@@ -27,7 +27,6 @@ class Page {
 			'name' => 'administer_utilities:logbrowser',
 			'text' => elgg_echo('admin:administer_utilities:logbrowser'),
 			'href' => 'admin/administer_utilities/logbrowser',
-			'section' => 'administer',
 			'parent_name' => 'administer_utilities',
 		]);
 	

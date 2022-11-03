@@ -8,6 +8,10 @@ $menu = elgg_view_menu('page', [
 	'prepare_vertical' => true,
 ]);
 
+if (empty($menu)) {
+	return;
+}
+
 echo elgg_format_element('div', [
 	'class' => 'elgg-admin-sidebar-menu',
 	'id' => 'elgg-admin-nav-collapse'

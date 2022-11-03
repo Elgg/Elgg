@@ -47,11 +47,11 @@ return [
 	],
 	'events' => [
 		'register' => [
+			'menu:admin_header' => [
+				'Elgg\Developers\Menus\AdminHeader::register' => [],
+			],
 			'menu:entity' => [
 				'Elgg\Developers\Menus\Entity::registerEntityExplorer' => [],
-			],
-			'menu:page' => [
-				'Elgg\Developers\Menus\Page::register' => [],
 			],
 		],
 	],

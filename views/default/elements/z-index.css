@@ -30,7 +30,6 @@
 	z-index: 60;
 }
 
-
 @media only $(media-desktop-up) {
 	.elgg-page-topbar .elgg-menu li .elgg-child-menu {
 		z-index: 70;
@@ -56,10 +55,13 @@
 	z-index: 1000;
 }
 
+.elgg-page-admin .elgg-page-topbar li:hover .elgg-child-menu {
+	z-index: 1010;
+}
+
 .elgg-spinner {
 	z-index: 2000;
 }
-
 
 .elgg-menu.elgg-state-popped {
 	z-index: 3000;
