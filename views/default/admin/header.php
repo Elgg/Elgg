@@ -9,7 +9,6 @@ elgg_require_js('page/elements/topbar');
 	<h1 class="elgg-heading-site">
 		<a href="<?= elgg_get_site_url(); ?>admin">
 			<?= elgg_get_site_entity()->getDisplayName() ?>
-			<small><?= elgg_echo('admin') ?></small>
 			<small title="<?= elgg_echo('admin:header:release', [elgg_get_release()]); ?>">[v<?= elgg_get_release(); ?>]</small>
 		</a>
 	</h1>

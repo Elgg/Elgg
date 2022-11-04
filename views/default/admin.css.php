@@ -40,6 +40,10 @@ echo elgg_view('core.css');
 
 	.elgg-page-topbar {
 		background: #2d3047;
+		
+		 .elgg-menu li .elgg-child-menu {
+			background: #2d3047;
+		}
 	}
 
 	.elgg-main {
@@ -50,15 +54,15 @@ echo elgg_view('core.css');
 	}
 
 	.elgg-page-topbar .elgg-menu-container {
-		margin-right: 0;
-		margin-left: auto;
+		justify-content: space-between;
+		width: 100%;
 	}
 }
 
-@media only $(media-desktop-down) {
+@media only $(media-desktop-up) {
 	.elgg-page-admin {
-		.elgg-page-topbar .elgg-menu-container {
-			margin-left: 0;
+		.elgg-page-topbar .elgg-menu-admin-header-alt {
+			order: 2;
 		}
 	}
 }

@@ -3,7 +3,6 @@
 namespace Elgg\WebServices;
 
 use Elgg\Traits\TimeUsing;
-use GuzzleHttp\Client;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
@@ -183,7 +182,7 @@ class ElggApiClient {
 		$client_options['handler'] = $stack;
 		
 		// create client
-		$client = new Client($client_options);
+		$client = elgg_get_http_client($client_options);
 		
 		if ($this->method === 'POST') {
 			$result = $client->post($this->url, [

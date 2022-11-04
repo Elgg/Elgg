@@ -338,8 +338,13 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 		if (isset($this->data['selected'])) {
 			return $this->data['selected'];
 		}
+		
+		$href = $this->getHref();
+		if ($href === false) {
+			return false;
+		}
 
-		return elgg_http_url_is_identical(elgg_get_current_url(), $this->getHref());
+		return elgg_http_url_is_identical(elgg_get_current_url(), $href);
 	}
 
 	/**

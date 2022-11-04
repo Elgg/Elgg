@@ -493,6 +493,7 @@ return array(
 	'menu:page:header:develop' => 'Develop',
 	'menu:page:header:information' => 'Information',
 	'menu:page:header:default' => 'Other',
+	'menu:page:header:plugin_settings' => 'Plugin Settings',
 
 	'admin:view_site' => 'View site',
 	'admin:loggedin' => 'Logged in as %s',
@@ -628,6 +629,9 @@ Since Elgg has a lot of file access this will negatively impact performance. Als
 	'admin:widget:content_stats:help' => 'Keep track of the content created by your users',
 	'admin:widget:cron_status' => 'Cron status',
 	'admin:widget:cron_status:help' => 'Shows the status of the last time cron jobs finished',
+	'admin:widget:elgg_blog' => 'Elgg blog',
+	'admin:widget:elgg_blog:help' => 'Shows the latest posts from the Elgg blog',
+	'admin:widget:elgg_blog:no_results' => 'Unable to fetch the latest Elgg news',
 	'admin:statistics:numentities' => 'Content Statistics',
 	'admin:statistics:numentities:type' => 'Content type',
 	'admin:statistics:numentities:number' => 'Number',

@@ -11,32 +11,6 @@ namespace Elgg\Profile\Menus;
 class Page {
 	
 	/**
-	 * Register menu items for the admin page menu
-	 *
-	 * @param \Elgg\Event $event 'register' 'menu:page'
-	 *
-	 * @return void|\Elgg\Menu\MenuItems
-	 */
-	public static function registerAdminProfileFields(\Elgg\Event $event) {
-	
-		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
-			return;
-		}
-		
-		$return = $event->getValue();
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'configure_utilities:profile_fields',
-			'text' => elgg_echo('admin:configure_utilities:profile_fields'),
-			'href' => 'admin/configure_utilities/profile_fields',
-			'section' => 'configure',
-			'parent_name' => 'configure_utilities',
-		]);
-		
-		return $return;
-	}
-	
-	/**
 	 * Register menu items for the page menu
 	 *
 	 * @param \Elgg\Event $event 'register' 'menu:page'

@@ -197,14 +197,14 @@ return [
 		],
 	],
 	'prepare' => [
+		'menu:admin_header' => [
+			'Elgg\Menus\AdminHeader::prepareAdminAdministerUsersChildren' => [],
+		],
 		'menu:admin:users:bulk' => [
 			'Elgg\Menus\AdminUsersBulk::disableItems' => [],
 		],
 		'menu:breadcrumbs' => [
 			'\Elgg\Menus\Breadcrumbs::cleanupBreadcrumbs' => ['priority' => 9999],
-		],
-		'menu:page' => [
-			'Elgg\Menus\Page::prepareAdminAdministerUsersChildren' => [],
 		],
 		'menu:site' => [
 			'Elgg\Menus\Site::reorderItems' => [
@@ -233,6 +233,10 @@ return [
 		'menu:admin_header' => [
 			'Elgg\Menus\AdminHeader::register' => [],
 			'Elgg\Menus\AdminHeader::registerMaintenance' => [],
+			'Elgg\Menus\AdminHeader::registerAdminAdminister' => [],
+			'Elgg\Menus\AdminHeader::registerAdminConfigure' => [],
+			'Elgg\Menus\AdminHeader::registerAdminDefaultWidgets' => [],
+			'Elgg\Menus\AdminHeader::registerAdminInformation' => [],
 		],
 		'menu:admin_footer' => [
 			'Elgg\Menus\AdminFooter::registerHelpResources' => [],
@@ -282,14 +286,11 @@ return [
 			'Elgg\Menus\Login::registerResetPassword' => [],
 		],
 		'menu:page' => [
-			'Elgg\Menus\Page::registerAdminAdminister' => [],
-			'Elgg\Menus\Page::registerAdminConfigure' => [],
-			'Elgg\Menus\Page::registerAdminDefaultWidgets' => [],
-			'Elgg\Menus\Page::registerAdminInformation' => [],
 			'Elgg\Menus\Page::registerAdminPluginSettings' => [],
 			'Elgg\Menus\Page::registerAvatarEdit' => [],
 			'Elgg\Menus\Page::registerUserSettings' => [],
 			'Elgg\Menus\Page::registerUserSettingsPlugins' => [],
+			'Elgg\Menus\Page::moveOldAdminSectionsToAdminHeader' => ['priority' => 9999],
 		],
 		'menu:river' => [
 			'Elgg\Menus\River::registerDelete' => [],

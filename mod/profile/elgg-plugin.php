@@ -58,8 +58,11 @@ return [
 			],
 		],
 		'register' => [
+			'menu:admin_header' => [
+				'Elgg\Profile\Menus\AdminHeader::register' => [],
+				'Elgg\Profile\Menus\AdminHeader::registerAdminProfileFields' => [],
+			],
 			'menu:page' => [
-				'Elgg\Profile\Menus\Page::registerAdminProfileFields' => [],
 				'Elgg\Profile\Menus\Page::registerProfileEdit' => [],
 			],
 			'menu:title' => [

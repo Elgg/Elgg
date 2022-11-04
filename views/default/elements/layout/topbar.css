@@ -131,39 +131,41 @@
 	-o-transition: ease-in-out 0.25s;
 	-webkit-transition: ease-in-out 0.25s;
 	transition: ease-in-out 0.25s;
+	
+	&:nth-child(1) {
+		top: 0px;
+	}
+	
+	&:nth-child(2) {
+		top: 6px;
+	}
+	
+	&:nth-child(3) {
+		top: 12px;
+	}
 }
 
-.elgg-nav-button span:nth-child(1) {
-	top: 0px;
-}
-
-.elgg-nav-button span:nth-child(2) {
-	top: 6px;
-}
-
-.elgg-nav-button span:nth-child(3) {
-	top: 12px;
-}
-
-.elgg-nav-collapsed .elgg-nav-button span:nth-child(1) {
-	top: 6px;
-	-moz-transform: rotate(135deg);
-	-ms-transform: rotate(135deg);
-	-webkit-transform: rotate(135deg);
-	transform: rotate(135deg);
-}
-
-.elgg-nav-collapsed .elgg-nav-button span:nth-child(2) {
-	opacity: 0;
-	left: -60px;
-}
-
-.elgg-nav-collapsed .elgg-nav-button span:nth-child(3) {
-	top: 6px;
-	-moz-transform: rotate(-135deg);
-	-ms-transform: rotate(-135deg);
-	-webkit-transform: rotate(-135deg);
-	transform: rotate(-135deg);
+.elgg-nav-collapsed .elgg-nav-button span {
+	&:nth-child(1) {
+		top: 6px;
+		-moz-transform: rotate(135deg);
+		-ms-transform: rotate(135deg);
+		-webkit-transform: rotate(135deg);
+		transform: rotate(135deg);
+	}
+	
+	&:nth-child(2) {
+		opacity: 0;
+		left: -60px;
+	}
+	
+	&:nth-child(3) {
+		top: 6px;
+		-moz-transform: rotate(-135deg);
+		-ms-transform: rotate(-135deg);
+		-webkit-transform: rotate(-135deg);
+		transform: rotate(-135deg);
+	}
 }
 
 .elgg-page-topbar {
@@ -183,6 +185,21 @@
 
 	.elgg-menu-container {
 		flex-direction: column;
+		
+		> .elgg-menu > li {
+			> a.elgg-non-link {
+				&:after {
+					content: "\f107";
+					font-family: 'Font Awesome\ 5 Free';
+					font-weight: 900;
+					font-size: 0.5rem;
+					display: none;
+					width: 1.5rem;
+					text-align: center;
+					float: right;
+				}
+			}
+		}
 	}
 	
 	.elgg-menu-topbar-container {
@@ -195,15 +212,6 @@
 	
 	.elgg-menu-site-container {
 		order: 3;
-		
-		.elgg-menu-site {
-			.elgg-anchor-icon {
-				display: none;
-				& + .elgg-anchor-label {
-					margin-left: 0;
-				}
-			}
-		}
 	}
 	
 	.elgg-menu {
@@ -219,8 +227,9 @@
 				border-top: 1px solid rgba(0, 0, 0, 0.05);
 			}
 			
-			.elgg-child-menu .elgg-child-menu {
-				margin-left: 1rem;
+			.elgg-child-menu {
+				margin: 1px 0 0 1rem;
+				border-left: 1px solid rgba(255, 255, 255, 0.1);
 			}
 		}
 		
@@ -228,7 +237,7 @@
 			max-height: 2rem;
 		}
 		
-		li > a:hover,
+		li:hover > a,
 		li.elgg-state-selected > a {
 			background-color: rgba(255, 255, 255, 0.1);
 		}
@@ -239,17 +248,17 @@
 			text-align: center;
 			margin: 0;
 		}
-	}
-	
-	.elgg-menu-site .elgg-menu-item-more,
-	.elgg-menu-topbar .elgg-menu-item-account {
-		> .elgg-menu-parent {
-			display: none;
-		}
 		
-		.elgg-icon-angle-down {
-			font-size: 0.5rem;
-			vertical-align: middle;
+		.elgg-menu-item-more,
+		.elgg-menu-item-account {
+			> .elgg-menu-parent {
+				display: none;
+			}
+			
+			> .elgg-child-menu {
+				margin-left: 0;
+				border: none;
+			}
 		}
 	}
 }
@@ -257,137 +266,159 @@
 @media only $(media-desktop-up) {
 	.elgg-nav-collapse {
 		align-items: center;
+		
+		> .elgg-menu-container > .elgg-menu > li {
+			> a.elgg-non-link {
+				&:after {
+					display: inline-block;
+				}
+			}
+		}
 	}
 
-	.elgg-page-topbar .elgg-nav-search {
-		order: 2;
+	.elgg-page-topbar {
+		.elgg-menu-site-container {
+			order: 1;
+			
+			.elgg-menu-site {
+				.elgg-anchor-icon {
+					display: none;
+					& + .elgg-anchor-label {
+						margin-left: 0;
+					}
+				}
+			}
+		}
+		
+		.elgg-nav-search {
+			order: 2;
+		}
+		
+		.elgg-menu-topbar-container {
+			order: 3;
+			margin-left: auto;
+			margin-right: 0;
+			
+			.elgg-menu-topbar-alt {
+				order: 2;
+			}
+		}
+		
+		.elgg-menu-container {
+			flex-direction: row;
+			align-items: center;
+			margin-right: auto;
+		}
+		
+		.elgg-menu {
+			width: auto;
+			flex-direction: row;
+			align-items: center;
+			
+			&.elgg-child-menu > li {
+				display: block;
+				width: 100%;
+				
+				> a {
+					border-top: 1px solid rgba(0, 0, 0, 0.05);
+				}
+				
+				&:hover > a {
+					background-color: rgba(255, 255, 255, 0.1);
+				}
+			}
+			
+			&:not(.elgg-child-menu) > li > a {
+				padding: 0.5rem 1rem;
+				line-height: 3rem;
+				vertical-align: middle;
+			}
+			
+			li {
+				display: inline-block;
+				width: auto;
+				position: relative;
+				
+				&:hover > .elgg-child-menu {
+					display: flex;
+					animation: menuGrowDown 300ms ease-in-out forwards;
+					transform-origin: top center;
+				}
+				
+				> a {
+					border: none;
+				}
+				
+				.elgg-child-menu {
+					margin: 0;
+					border-left: none;
+				
+					display: none;
+					flex-direction: column;
+					position: absolute;
+					left: 0;
+					width: 12rem;
+					background: $(topbar-background-color, $(background-color-highlight));
+					align-items: flex-start;
+					box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.2);
+					
+					.elgg-child-menu {
+						top: 0;
+						left: 100%;
+						margin: 0;
+					}
+					
+					.elgg-menu-parent:after {
+						content: "\f105";
+						font-family: 'Font Awesome\ 5 Free';
+						font-weight: 900;
+						font-size: 0.5rem;
+						line-height: 1.5rem;
+						width: 1.5rem;
+						text-align: center;
+						float: right;
+					}
+				}
+				
+				&.elgg-menu-item-more,
+				&.elgg-menu-item-account {
+					> .elgg-menu-parent {
+						display: inline-block;
+						width: 100%;
+					}
+					
+					.elgg-child-menu {
+						right: 0;
+						left: unset;
+					}
+				}
+			}
+		}
+				
+		.elgg-menu-topbar {
+			> li > a {
+				.elgg-icon + .elgg-anchor-label {
+					display: none;
+				}
+				
+				.elgg-badge {
+					position: absolute;
+					top: 1rem;
+					right: 0;
+				}
+			}
+		}
 	}
+}
 
-	.elgg-page-topbar .elgg-menu-container {
-		flex-direction: row;
-		align-items: center;
-		order: 1;
-		margin-right: auto;
+@keyframes menuGrowDown {
+	0% {
+		transform: scaleY(0);
 	}
-
-	.elgg-page-topbar .elgg-menu-topbar-container {
-		order: 3;
-		margin-left: auto;
-		margin-right: 0;
+	80% {
+		transform: scaleY(1.1);
 	}
-
-	.elgg-page-topbar .elgg-menu {
-		width: auto;
-		flex-direction: row;
-		align-items: center;
-	}
-
-	.elgg-page-topbar .elgg-menu li {
-		display: inline-block;
-		width: auto;
-		position: relative;
-	}
-
-	.elgg-page-topbar .elgg-menu li > a {
-		border: none;
-	}
-
-	.elgg-page-topbar .elgg-menu-site .elgg-menu-item-more > .elgg-menu-parent,
-	.elgg-page-topbar .elgg-menu-topbar .elgg-menu-item-account > .elgg-menu-parent {
-		display: inline-block;
-		width: 100%;
-	}
-
-	.elgg-page-topbar .elgg-menu li .elgg-child-menu {
-		display: none;
-		flex-direction: column;
-		position: absolute;
-		top: 4rem;
-		right: 0;
-		width: 12rem;
-		background: $(topbar-background-color, $(background-color-highlight));
-		align-items: flex-start;
-		box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
-	}
-
-	.elgg-page-topbar .elgg-menu-site li .elgg-child-menu .elgg-child-menu {
-		top: 0;
-		left: 100%;
-		right: auto;
-		margin: 0;
-	}
-
-	.elgg-page-topbar .elgg-menu-topbar li .elgg-child-menu .elgg-child-menu {
-		top: 0;
-		right: 100%;
-		left: auto;
-		margin: 0;
-	}
-
-	.elgg-page-topbar .elgg-menu li:hover > .elgg-child-menu {
-		display: flex;
-	}
-
-	.elgg-page-topbar .elgg-menu li:hover > .elgg-child-menu:before {
-		content: "\25b2";
-		color: $(topbar-background-color, $(background-color-highlight));
-		position: absolute;
-		text-shadow: 0px -2px 0px rgba(0, 0, 0, 0.05);
-		font-size: 1rem;
-		top: -1rem;
-		right: 0;
-		margin-right: 1.5rem;
-		line-height: 1rem;
-		padding-top: 3px;
-	}
-
-	.elgg-page-topbar .elgg-menu-site li .elgg-child-menu li:hover > .elgg-child-menu:before {
-		content: "\25c0";
-		top: 0;
-		right: 100%;
-		margin: 13px -1px 0 0;
-		text-shadow: -2px 0 rgba(0, 0, 0, 0.05);
-		padding: 0;
-	}
-
-	.elgg-page-topbar .elgg-menu-topbar li .elgg-child-menu li:hover > .elgg-child-menu:before {
-		content: "\25b6";
-		top: 0;
-		left: 100%;
-		margin: 13px 0 0 -2px;
-		padding: 0;
-	}
-
-	.elgg-page-topbar .elgg-menu.elgg-child-menu > li > a {
-		border-top: 1px solid rgba(0, 0, 0, 0.05);
-	}
-
-	.elgg-page-topbar .elgg-menu.elgg-child-menu > li {
-		display: block;
-		width: 100%;
-	}
-
-	.elgg-page-topbar .elgg-menu.elgg-child-menu > li > a:hover {
-		background-color: rgba(255, 255, 255, 0.1);
-	}
-
-	.elgg-page-topbar .elgg-menu-topbar > li > a .elgg-icon + .elgg-anchor-label {
-		display: none;
-	}
-
-	.elgg-page-topbar .elgg-menu-topbar-alt {
-		order: 2;
-	}
-
-	.elgg-page-topbar .elgg-menu:not(.elgg-child-menu) > li > a {
-		padding: 0.5rem 1rem;
-		line-height: 3rem;
-		vertical-align: middle;
-	}
-
-	.elgg-menu-topbar > li > a .elgg-badge {
-		position: absolute;
-		top: 1rem;
-		right: 0;
+	100% {
+		transform: scaleY(1);
 	}
 }

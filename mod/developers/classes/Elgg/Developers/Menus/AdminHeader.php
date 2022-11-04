@@ -5,16 +5,16 @@ namespace Elgg\Developers\Menus;
 /**
  * Event callbacks for menus
  *
- * @since 4.0
+ * @since 5.0
  *
  * @internal
  */
-class Page {
+class AdminHeader {
 
 	/**
 	 * Register item to menu
 	 *
-	 * @param \Elgg\Event $event 'register', 'menu:page'
+	 * @param \Elgg\Event $event 'register', 'menu:admin_header'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
@@ -26,39 +26,45 @@ class Page {
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
+			'name' => 'develop',
+			'text' => elgg_echo('menu:page:header:develop'),
+			'href' => false,
+		]);
+		
+		$return[] = \ElggMenuItem::factory([
 			'name' => 'dev_settings',
 			'href' => 'admin/developers/settings',
 			'text' => elgg_echo('settings'),
 			'priority' => 10,
-			'section' => 'develop',
+			'parent_name' => 'develop',
 		]);
 	
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'error_log',
 			'href' => 'admin/develop_tools/error_log',
 			'text' => elgg_echo('admin:develop_tools:error_log'),
-			'section' => 'develop',
+			'parent_name' => 'develop',
 		]);
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'develop_tools:entity_explorer',
 			'href' => 'admin/develop_tools/entity_explorer',
 			'text' => elgg_echo('admin:develop_tools:entity_explorer'),
-			'section' => 'develop',
+			'parent_name' => 'develop',
 		]);
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'develop_tools:sandbox',
 			'href' => 'theme_sandbox/intro',
 			'text' => elgg_echo('admin:develop_tools:sandbox'),
-			'section' => 'develop',
+			'parent_name' => 'develop',
 			'target' => '_blank',
 		]);
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'inspect',
 			'text' => elgg_echo('admin:inspect'),
-			'section' => 'develop',
+			'parent_name' => 'develop',
 		]);
 		
 		$inspect_options = self::getInspectOptions();
@@ -69,7 +75,6 @@ class Page {
 					'inspect_type' => $key,
 				]),
 				'text' => $value,
-				'section' => 'develop',
 				'parent_name' => 'inspect',
 			]);
 		}

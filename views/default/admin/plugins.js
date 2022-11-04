@@ -19,31 +19,9 @@ define(['jquery', 'elgg/spinner', 'elgg/Ajax', 'elgg/system_messages', 'elgg/sec
 		});
 	};
 
-	function toggleSinglePlugin(event) {
+	function toggleSinglePlugin() {
+		spinner.start();
 		freezePlugins();
-
-		event.preventDefault();
-
-		var ajax = new Ajax();
-		
-		ajax.action(this.href)
-			.done(function() {
-				// second request because views list must be rebuilt and this can't be done
-				// within the first.
-				ajax.path('admin_plugins_refresh')
-					.done(function(output) {
-
-						$('#elgg-plugin-list').html(output.list);
-						$('.elgg-sidebar').html(output.sidebar);
-
-						// reapply category filtering
-						$(".elgg-admin-plugins-categories > li.elgg-state-selected > a").trigger('click');
-						initPluginReordering();
-						unfreezePlugins();
-					});
-			}).fail(function() {
-				location.reload();
-			});
 	};
 
 	/**

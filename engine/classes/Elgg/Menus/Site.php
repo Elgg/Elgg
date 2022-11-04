@@ -119,7 +119,6 @@ class Site {
 				'name' => 'more',
 				'text' => elgg_echo('more'),
 				'href' => false,
-				'icon_alt' => 'angle-down',
 				'priority' => 999,
 			]);
 			

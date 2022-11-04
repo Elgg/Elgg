@@ -37,7 +37,6 @@ class Topbar {
 			'text' => elgg_echo('account'),
 			'href' => false,
 			'link_class' => 'elgg-avatar-small',
-			'icon_alt' => 'angle-down',
 			'priority' => 800,
 			'section' => 'alt',
 		]);
