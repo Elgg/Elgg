@@ -2,8 +2,6 @@
 
 namespace Elgg\Integration;
 
-use Elgg\Database\AccessCollections;
-use Elgg\Database\Select;
 use Elgg\IntegrationTestCase;
 
 /**
@@ -23,49 +21,6 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 	public function up() {
 		$this->user = $this->createUser();
 		elgg()->session->setLoggedInUser($this->user);
-	}
-
-	public function testUpdateACL() {
-		// another fake user to test with
-		$user = $this->createUser();
-
-		$acl = elgg_create_access_collection('test acl');
-		$this->assertInstanceOf(\ElggAccessCollection::class, $acl);
-
-		$member_lists = [
-			// adding
-			[
-				$this->user->guid,
-				$user->guid
-			],
-			// removing one, keeping one.
-			[
-				$user->guid
-			],
-			// removing one, adding one
-			[
-				$this->user->guid,
-			],
-			// removing all.
-			[]
-		];
-
-		foreach ($member_lists as $members) {
-			$result = _elgg_services()->accessCollections->update($acl->id, $members);
-			$this->assertTrue($result);
-
-			$select = Select::fromTable(AccessCollections::MEMBERSHIP_TABLE_NAME);
-			$select->select('*')
-				->where($select->compare('access_collection_id', '=', $acl->id, ELGG_VALUE_ID));
-
-			$data = elgg()->db->getData($select);
-
-			$this->assertCount(count($members), $data);
-
-			foreach ($data as $row) {
-				$this->assertTrue(in_array($row->user_guid, $members));
-			}
-		}
 	}
 
 	public function testAccessCaching() {

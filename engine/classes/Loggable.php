@@ -12,7 +12,7 @@
 interface Loggable {
 	/**
 	 * Return an identification for the object for storage in the system log.
-	 * This id must be an integer.
+	 * This id must be an integer. Unsaved implementations should return 0.
 	 *
 	 * @return int
 	 */

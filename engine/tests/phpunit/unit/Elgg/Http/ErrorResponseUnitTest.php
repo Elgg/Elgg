@@ -6,15 +6,16 @@ namespace Elgg\Http;
  * @group HttpService
  * @group UnitTests
  */
-class ErrorResponseUnitTest extends ResponseUnitTest {
+class ErrorResponseUnitTest extends ResponseUnitTestCase {
 
-	public function up() {
-		$this->class = ErrorResponse::class;
+	public function getReponseClassName(): string {
+		return ErrorResponse::class;
 	}
 
 	public function testCanConstructWihtoutArguments() {
-		$test_class = $this->class;
+		$test_class = $this->getReponseClassName();
 		$response = new $test_class();
+		
 		$this->assertEquals('', $response->getContent());
 		$this->assertEquals(ELGG_HTTP_BAD_REQUEST, $response->getStatusCode());
 		$this->assertEquals(REFERRER, $response->getForwardURL());
@@ -25,8 +26,8 @@ class ErrorResponseUnitTest extends ResponseUnitTest {
 		$error = 'foo';
 		$status_code = ELGG_HTTP_NOT_FOUND;
 		$forward_url = REFERRER;
-
-		$test_class = $this->class;
+		
+		$test_class = $this->getReponseClassName();
 		$response = new $test_class($error, $status_code, $forward_url);
 
 		$this->assertEquals($error, $response->getContent());
@@ -36,8 +37,9 @@ class ErrorResponseUnitTest extends ResponseUnitTest {
 	}
 	
 	public function testConstructWithInvalidStatusCode() {
-		$test_class = $this->class;
+		$test_class = $this->getReponseClassName();
 		$response = new $test_class('foo', 9999);
+		
 		$this->assertEquals(ELGG_HTTP_INTERNAL_SERVER_ERROR, $response->getStatusCode());
 	}
 

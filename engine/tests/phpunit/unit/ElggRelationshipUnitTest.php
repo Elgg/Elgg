@@ -93,6 +93,9 @@ class ElggRelationshipUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testIsLoggable() {
+		$unsaved = new \ElggRelationship(new \stdClass());
+		$this->assertEmpty($unsaved->getSystemLogID());
+		
 		$relationship = $this->createRelationship();
 
 		$this->assertEquals($relationship->id, $relationship->getSystemLogID());

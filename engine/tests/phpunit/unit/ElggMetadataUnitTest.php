@@ -209,6 +209,9 @@ class ElggMetadataUnitTest extends UnitTestCase {
 	}
 
 	public function testIsLoggable() {
+		$unsaved = new \ElggMetadata();
+		$this->assertEmpty($unsaved->getSystemLogID());
+		
 		$object = $this->createObject();
 		$metadata = new ElggMetadata();
 		$metadata->entity_guid = $object->guid;

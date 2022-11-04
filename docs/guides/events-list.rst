@@ -471,7 +471,9 @@ Access events
 **access:collections:read, user** |results|
 	Filters an array of access IDs that the user ``$params['user_id']`` can see.
 
-	.. warning:: The handler needs to either not use parts of the API that use the access system (triggering the event again) or to ignore the second call. Otherwise, an infinite loop will be created.
+	.. warning:: 
+		The handler needs to either not use parts of the API that use the access system (triggering the event again) or 
+		to ignore the second call. Otherwise, an infinite loop will be created.
 
 **access:collections:write, user** |results|
 	Filters an array of access IDs that the user ``$params['user_id']`` can write to. In
@@ -481,19 +483,14 @@ Access events
 	"container_guid" (int) are provided. An empty entity value generally means the form is to
 	create a new object.
 
-	.. warning:: The handler needs to either not use parts of the API that use the access system (triggering the event again) or to ignore the second call. Otherwise, an infinite loop will be created.
+	.. warning:: 
+		The handler needs to either not use parts of the API that use the access system (triggering the event again) or 
+		to ignore the second call. Otherwise, an infinite loop will be created.
 
 **access:collections:write:subtypes, user** |results|
 	Returns an array of access collection subtypes to be used when retrieving access collections owned by a user as part of 
 	the ``elgg_get_write_access_array()`` function.
 	
-**access:collections:addcollection, collection** |results|
-	Triggered after an access collection ``$params['collection_id']`` is created.
-
-**access:collections:deletecollection, collection** |results|
-	Triggered before an access collection ``$params['collection_id']`` is deleted.
-	Return false to prevent deletion.
-
 **access:collections:add_user, collection** |results|
 	Triggered before adding user ``$params['user_id']`` to collection ``$params['collection_id']``.
 	Return false to prevent adding.
@@ -502,10 +499,19 @@ Access events
 	Triggered before removing user ``$params['user_id']`` to collection ``$params['collection_id']``.
 	Return false to prevent removal.
 
+**create, access_collection** |sequence|
+	Triggered during the creation of an ``ElggAccessCollection``.
+
+**delete, access_collection** |sequence|
+	Triggered during the deletion of an ``ElggAccessCollection``.
+
 **get_sql, access** |results|
 	Filters SQL clauses restricting/allowing access to entities and annotations.
 
-	**The event is triggered regardless if the access is ignored**. The handlers may need to check if access is ignored and return early, if appended clauses should only apply to access controlled contexts.
+	.. note::
+		**The event is triggered regardless if the access is ignored**. 
+		The handlers may need to check if access is ignored and return early, if appended clauses should only apply to 
+		access controlled contexts.
 
 	``$return`` value is a nested array of ``ands`` and ``ors``.
 
@@ -519,6 +525,9 @@ Access events
 	 * ``guid_column`` - column in the main table referencing the GUID of the entity
 	 * ``enabled_column`` - column in the main table referencing the enabled status of the entity
 	 * ``query_builder`` - an instance of the ``QueryBuilder``
+
+**update, access_collection** |sequence|
+	Triggered during the update of an ``ElggAccessCollection``.
 	 
 .. _guides/events-list#permissions:
 

@@ -97,16 +97,16 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		$app->internal_services->dataCache->clear();
 		$app->internal_services->sessionCache->clear();
 
-		// turn off system log
-		$app->internal_services->events->unregisterHandler('all', 'all', 'Elgg\SystemLog\Logger::listen');
-		$app->internal_services->events->unregisterHandler('log', 'systemlog', 'Elgg\SystemLog\Logger::log');
-
 		// prevent loading of 'active' plugins from database if loading application with a custom plugins path
 		if (isset($params['plugins_path'])) {
 			$app->setBootStatus('plugins_boot_completed', true);
 		}
 		
 		$app->bootCore();
+		
+		// turn off system log
+		$app->internal_services->events->unregisterHandler('all', 'all', 'Elgg\SystemLog\Logger::listen');
+		$app->internal_services->events->unregisterHandler('log', 'systemlog', 'Elgg\SystemLog\Logger::log');
 		
 		// set custom config values again (as they might be overriden by DB config values
 		foreach ($custom_config_values as $key => $value) {

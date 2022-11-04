@@ -1746,13 +1746,10 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 */
 
 	/**
-	 * Return an identification for the object for storage in the system log.
-	 * This id must be an integer.
-	 *
-	 * @return int
+	 * {@inheritdoc}
 	 */
 	public function getSystemLogID(): int {
-		return $this->getGUID();
+		return (int) $this->getGUID();
 	}
 
 	/**

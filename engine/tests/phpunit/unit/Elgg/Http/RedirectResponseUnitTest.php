@@ -6,15 +6,16 @@ namespace Elgg\Http;
  * @group HttpService
  * @group UnitTests
  */
-class RedirectResponseUnitTest extends ResponseUnitTest {
+class RedirectResponseUnitTest extends ResponseUnitTestCase {
 
-	public function up() {
-		$this->class = RedirectResponse::class;
+	public function getReponseClassName(): string {
+		return RedirectResponse::class;
 	}
 
 	public function testCanConstructWihtoutArguments() {
-		$test_class = $this->class;
+		$test_class = $this->getReponseClassName();
 		$response = new $test_class();
+		
 		$this->assertEquals('', $response->getContent());
 		$this->assertEquals(ELGG_HTTP_FOUND, $response->getStatusCode());
 		$this->assertEquals(REFERRER, $response->getForwardURL());
@@ -25,7 +26,7 @@ class RedirectResponseUnitTest extends ResponseUnitTest {
 		$status_code = ELGG_HTTP_PERMANENTLY_REDIRECT;
 		$forward_url = REFERRER;
 
-		$test_class = $this->class;
+		$test_class = $this->getReponseClassName();
 		$response = new $test_class($forward_url, $status_code);
 
 		$this->assertEquals('', $response->getContent());

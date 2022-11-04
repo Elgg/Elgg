@@ -18,7 +18,6 @@ class AccessCollections extends DbAccessCollections {
 	protected static $iterator = 100;
 	
 	/**
-	 *
 	 * @var array
 	 */
 	protected $query_specs;
@@ -26,23 +25,23 @@ class AccessCollections extends DbAccessCollections {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function create(string $name, int $owner_guid = 0, string $subtype = null): ?int {
+	public function create(\ElggAccessCollection $acl): bool {
 
 		static::$iterator++;
 		$id = static::$iterator;
 		
 		$row = (object) [
 			'id' => $id,
-			'name' => $name,
-			'owner_guid' => $owner_guid,
-			'subtype' => $subtype,
+			'name' => $acl->name,
+			'owner_guid' => $acl->owner_guid,
+			'subtype' => $acl->subtype,
 		];
 
 		$this->rows[$id] = $row;
 
 		$this->addQuerySpecs($row);
 
-		return parent::create($name, $owner_guid, $subtype);
+		return parent::create($acl);
 	}
 	
 	/**

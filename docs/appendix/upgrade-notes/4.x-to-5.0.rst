@@ -369,6 +369,8 @@ Removed functions
 Removed events
 ~~~~~~~~~~~~~~
 
+* ``access:collections:addcollection, collection`` use the ``create, access_collection`` sequence
+* ``access:collections:deletecollection, collection`` use the ``delete, access_collection`` sequence
 * ``prepare, breadcrumbs`` use ``register, menu:breadcrumbs``
 
 Constants

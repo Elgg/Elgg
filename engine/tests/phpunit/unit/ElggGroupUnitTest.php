@@ -47,6 +47,9 @@ class ElggGroupUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testIsLoggable() {
+		$unsaved = new \ElggGroup();
+		$this->assertEmpty($unsaved->getSystemLogID());
+		
 		$group = $this->createGroup();
 
 		$this->assertEquals($group->guid, $group->getSystemLogID());

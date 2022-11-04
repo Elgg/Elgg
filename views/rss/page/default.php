@@ -33,21 +33,20 @@ $description = elgg_extract('description', $vars, '');
 $namespaces = elgg_view('extensions/xmlns');
 $extensions = elgg_view('extensions/channel');
 
-
 // allow caching as required by stupid MS products for https feeds.
 elgg_set_http_header('Pragma: public');
-elgg_set_http_header("Content-Type: text/xml;charset=utf-8");
+elgg_set_http_header("Content-Type: text/xml; charset=utf-8");
 
 echo "<?xml version='1.0'?>";
 echo <<<END
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom" $namespaces>
 <channel>
-	<title><![CDATA[$title]]></title>
-	<link>$url</link>
-	<atom:link href="$rssurl" rel="self" type="application/rss+xml" />
-	<description><![CDATA[$description]]></description>
-	$extensions
-	$body
+	<title><![CDATA[{$title}]]></title>
+	<link>{$url}</link>
+	<atom:link href="{$rssurl}" rel="self" type="application/rss+xml" />
+	<description><![CDATA[{$description}]]></description>
+	{$extensions}
+	{$body}
 </channel>
 </rss>
 END;

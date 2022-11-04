@@ -197,13 +197,10 @@ class ElggRelationship extends \ElggData {
 	// SYSTEM LOG INTERFACE ////////////////////////////////////////////////////////////
 
 	/**
-	 * Return an identification for the object for storage in the system log.
-	 * This id must be an integer.
-	 *
-	 * @return int
+	 * {@inheritdoc}
 	 */
 	public function getSystemLogID(): int {
-		return $this->id;
+		return (int) $this->id;
 	}
 
 	/**

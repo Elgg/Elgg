@@ -269,3 +269,22 @@ function elgg_error_response(string|array $message = '', string $forward_url = R
 function elgg_redirect_response(string $forward_url = REFERRER, int $status_code = ELGG_HTTP_FOUND): \Elgg\Http\RedirectResponse {
 	return new Elgg\Http\RedirectResponse($forward_url, $status_code);
 }
+
+/**
+ * Prepare a download response
+ *
+ * @param string $content  The content of the download
+ * @param string $filename The filename when downloaded
+ * @param bool   $inline   Is this an inline download (default: false, determines the 'Content-Disposition' header)
+ * @param array  $headers  (optional) additional headers for the response
+ *
+ * @return \Elgg\Http\DownloadResponse
+ * @since 5.0
+ */
+function elgg_download_response(string $content, string $filename = '', bool $inline = false, array $headers = []): \Elgg\Http\DownloadResponse {
+	$response = new \Elgg\Http\DownloadResponse($content);
+	$response->setHeaders($headers);
+	$response->setFilename($filename, $inline);
+	
+	return $response;
+}
