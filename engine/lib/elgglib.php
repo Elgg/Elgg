@@ -228,6 +228,17 @@ function elgg_http_validate_signed_url(string $url): bool {
 }
 
 /**
+ * Returns a Guzzle HTTP client
+ *
+ * @param array $options Options for the client
+ *
+ * @return \Elgg\Http\Client
+ */
+function elgg_get_http_client(array $options = []): \Elgg\Http\Client {
+	return new \Elgg\Http\Client($options);
+}
+
+/**
  * Checks for $array[$key] and returns its value if it exists, else
  * returns $default.
  *

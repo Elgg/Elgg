@@ -5,7 +5,6 @@ namespace Elgg\Assets;
 use Elgg\Cache\SystemCache;
 use Elgg\Config;
 use Elgg\Exceptions\InvalidArgumentException;
-use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\RequestOptions;
@@ -25,7 +24,7 @@ class ImageFetcherService {
 	protected $cache;
 	
 	/**
-	 * @var \GuzzleHttp\Client
+	 * @var \Elgg\Http\Client
 	 */
 	protected $client;
 
@@ -51,25 +50,7 @@ class ImageFetcherService {
 		$this->cache = $cache;
 		$this->session = $session;
 		
-		$proxy_config = $this->config->proxy ?? [];
-		
-		$options = [
-			RequestOptions::TIMEOUT => 5,
-			RequestOptions::HTTP_ERRORS => false,
-			RequestOptions::VERIFY => (bool) elgg_extract('verify_ssl', $proxy_config, true),
-		];
-		
-		$host = elgg_extract('host', $proxy_config);
-		if (!empty($host)) {
-			$port = (int) elgg_extract('port', $proxy_config);
-			if ($port > 0) {
-				$host = rtrim($host, ':') . ":{$port}";
-			}
-			
-			$options[RequestOptions::PROXY] = $host;
-		}
-		
-		$this->client = new Client($options);
+		$this->client = elgg_get_http_client();
 	}
 	
 	/**
