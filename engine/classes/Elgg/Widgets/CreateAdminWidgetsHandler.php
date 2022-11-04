@@ -32,7 +32,7 @@ class CreateAdminWidgetsHandler {
 		
 			// In the form column => array of handlers in order, top to bottom
 			$adminWidgets = [
-				1 => ['admin_welcome', 'content_stats'],
+				1 => ['admin_welcome', 'elgg_blog', 'content_stats'],
 				2 => ['online_users', 'new_users'],
 			];
 		

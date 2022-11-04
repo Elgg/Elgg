@@ -33,6 +33,8 @@ class EntityUrlHandler {
 				return 'admin/users';
 			case 'online_users':
 				return 'admin/users/online';
+			case 'elgg_blog':
+				return 'https://elgg.org/blog/all';
 		}
 	}
 }

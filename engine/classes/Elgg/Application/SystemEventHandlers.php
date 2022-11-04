@@ -74,7 +74,7 @@ class SystemEventHandlers {
 		elgg_register_event_handler('registeruser:validate:password', 'all', [_elgg_services()->passwordGenerator, 'registerUserPasswordValidation']);
 		elgg_register_event_handler('view_vars', 'input/password', [_elgg_services()->passwordGenerator, 'addInputRequirements']);
 	
-		$widgets = ['online_users', 'new_users', 'content_stats', 'banned_users', 'admin_welcome', 'cron_status'];
+		$widgets = ['online_users', 'new_users', 'content_stats', 'banned_users', 'admin_welcome', 'cron_status', 'elgg_blog'];
 		foreach ($widgets as $widget) {
 			elgg_register_widget_type([
 				'id' => $widget,
