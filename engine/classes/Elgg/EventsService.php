@@ -108,17 +108,16 @@ class EventsService {
 	/**
 	 * Triggers a event that is allowed to return a mixed result
 	 *
-	 * @param string $name    The name of the event
-	 * @param string $type    The type of the event
-	 * @param mixed  $params  Supplied params for the event
-	 * @param mixed  $value   The value of the event, this can be altered by registered callbacks
-	 * @param array  $options (internal) options for triggering the event
+	 * @param string $name   The name of the event
+	 * @param string $type   The type of the event
+	 * @param mixed  $params Supplied params for the event
+	 * @param mixed  $value  The value of the event, this can be altered by registered callbacks
 	 *
 	 * @return mixed
 	 *
 	 * @see elgg_trigger_event_results()
 	 */
-	public function triggerResults(string $name, string $type, array $params = [], $value = null, array $options = []) {
+	public function triggerResults(string $name, string $type, array $params = [], $value = null) {
 		// This starts as a string, but if a handler type-hints an object we convert it on-demand inside
 		// \Elgg\HandlersService::call and keep it alive during all handler calls. We do this because
 		// creating objects for every triggering is expensive.
@@ -240,7 +239,7 @@ class EventsService {
 			return false;
 		}
 
-		$result = $this->triggerResults($name, $type, $params, $value, $options);
+		$result = $this->triggerResults($name, $type, $params, $value);
 		if ($result === false) {
 			return false;
 		}

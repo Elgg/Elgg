@@ -171,7 +171,7 @@ function elgg_trigger_after_event(string $event, string $type, $object = null): 
  *
  * @see elgg_trigger_event()
  */
-function elgg_trigger_deprecated_event(string $event, string $type, $object = null, string $message = null, string $version = null) {
+function elgg_trigger_deprecated_event(string $event, string $type, $object = null, string $message = '', string $version = '') {
 	return _elgg_services()->events->triggerDeprecated($event, $type, $object, $message, $version);
 }
 
@@ -189,6 +189,6 @@ function elgg_trigger_deprecated_event(string $event, string $type, $object = nu
  *
  * @since 5.0
  */
-function elgg_trigger_deprecated_event_results(string $event, string $type, $params = null, $returnvalue = null, string $message = null, string $version = null) {
-	return _elgg_services()->events->triggerDeprecated($event, $type, $params, $returnvalue, $message, $version);
+function elgg_trigger_deprecated_event_results(string $event, string $type, $params = null, $returnvalue = null, string $message = '', string $version = '') {
+	return _elgg_services()->events->triggerDeprecatedResults($event, $type, $params, $returnvalue, $message, $version);
 }

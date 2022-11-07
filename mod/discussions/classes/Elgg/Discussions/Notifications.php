@@ -14,13 +14,13 @@ class Notifications {
 	/**
 	 * Prepare a notification message about a new comment on a discussion
 	 *
-	 * @param \Elgg\Event $event 'prepare', 'notification:create:object:comment'
+	 * @param \Elgg\Event $elgg_event 'prepare', 'notification:create:object:comment'
 	 *
 	 * @return void|\Elgg\Notifications\Notification
 	 */
-	public static function prepareCommentOnDiscussionNotification(\Elgg\Event $event) {
+	public static function prepareCommentOnDiscussionNotification(\Elgg\Event $elgg_event) {
 		
-		$event = $event->getParam('event');
+		$event = $elgg_event->getParam('event');
 		if (!$event instanceof \Elgg\Notifications\NotificationEvent) {
 			return;
 		}
@@ -35,11 +35,11 @@ class Notifications {
 			return;
 		}
 		
-		$language = $event->getParam('language');
+		$language = $elgg_event->getParam('language');
 		
 		$poster = $comment->getOwnerEntity();
 		
-		$notification = $event->getValue();
+		$notification = $elgg_event->getValue();
 		$notification->subject = elgg_echo('discussion:comment:notify:subject', [$discussion->getDisplayName()], $language);
 		$notification->summary = elgg_echo('discussion:comment:notify:summary', [$discussion->getDisplayName()], $language);
 		$notification->body = elgg_echo('discussion:comment:notify:body', [
@@ -56,13 +56,13 @@ class Notifications {
 	/**
 	 * Add group members to the comment subscriber on a discussion
 	 *
-	 * @param \Elgg\Event $event 'get', 'subscriptions'
+	 * @param \Elgg\Event $elgg_event 'get', 'subscriptions'
 	 *
 	 * @return void|array
 	 */
-	public static function addGroupSubscribersToCommentOnDiscussionSubscriptions(\Elgg\Event $event) {
+	public static function addGroupSubscribersToCommentOnDiscussionSubscriptions(\Elgg\Event $elgg_event) {
 		
-		$event = $event->getParam('event');
+		$event = $elgg_event->getParam('event');
 		if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
 			return;
 		}
@@ -90,7 +90,7 @@ class Notifications {
 			return;
 		}
 		
-		$subscriptions = $event->getValue();
+		$subscriptions = $elgg_event->getValue();
 		
 		// get subscribers on the group (using the discussion create preference for detailed subscriptions)
 		$methods = elgg_get_notification_methods();

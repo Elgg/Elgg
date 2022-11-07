@@ -13,15 +13,15 @@ class Notifications {
 	/**
 	 * Create a site notification
 	 *
-	 * @param \Elgg\Event $event 'send', 'notification:site'
+	 * @param \Elgg\Event $elgg_event 'send', 'notification:site'
 	 *
 	 * @return void|true
 	 */
-	public static function createSiteNotifications(\Elgg\Event $event) {
+	public static function createSiteNotifications(\Elgg\Event $elgg_event) {
 		/* @var $notification \Elgg\Notifications\Notification */
-		$notification = $event->getParam('notification');
+		$notification = $elgg_event->getParam('notification');
 		/* @var $event \Elgg\Notifications\NotificationEvent */
-		$event = $event->getParam('event');
+		$event = $elgg_event->getParam('event');
 		
 		$note = elgg_call(ELGG_IGNORE_ACCESS | ELGG_DISABLE_SYSTEM_LOG, function() use ($notification, $event) {
 			return \SiteNotification::factory($notification, $event);

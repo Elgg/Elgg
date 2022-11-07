@@ -17,7 +17,7 @@ class MinifyHandler {
 	 * @return string|null View content minified (if css/js type)
 	 */
 	public function __invoke(\Elgg\Event $event) {
-		if (preg_match('~[\.-]min\.~', $event->getParam('view'))) {
+		if (preg_match('~[\.-]min\.~', (string) $event->getParam('view'))) {
 			// bypass minification
 			return;
 		}

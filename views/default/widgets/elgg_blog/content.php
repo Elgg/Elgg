@@ -11,6 +11,7 @@ try {
 	$data = $response->getBody()->getContents();
 	$blogs = @json_decode($data);
 } catch (\Exception $e) {
+	// catch any issue and ignore it until later
 }
 
 if (empty($blogs) || !is_array($blogs)) {
