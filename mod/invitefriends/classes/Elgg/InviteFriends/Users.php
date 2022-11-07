@@ -28,7 +28,7 @@ class Users {
 			return;
 		}
 			
-		if (!elgg_validate_invite_code($friend_user->username, $event->getParam('invitecode'))) {
+		if (!elgg_validate_invite_code($friend_user->username, (string) $event->getParam('invitecode'))) {
 			return;
 		}
 		

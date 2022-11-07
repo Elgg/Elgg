@@ -35,7 +35,7 @@ function developers_wrap_views(\Elgg\Event $event) {
 		'page/elements/html',
 	];
 
-	$view = $event->getParam('view');
+	$view = (string) $event->getParam('view');
 	if (in_array($view, $excluded_views)) {
 		return;
 	}

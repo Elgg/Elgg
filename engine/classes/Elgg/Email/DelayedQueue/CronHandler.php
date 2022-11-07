@@ -18,7 +18,7 @@ class CronHandler {
 	 * @return void
 	 */
 	public function __invoke(\Elgg\Event $event): void {
-		$time = $event->getParam('time');
+		$time = (int) $event->getParam('time');
 		$interval = $event->getType();
 		
 		_elgg_services()->delayedEmailService->processQueuedNotifications($interval, $time);

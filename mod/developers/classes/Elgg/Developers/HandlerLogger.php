@@ -30,13 +30,12 @@ class HandlerLogger {
 	/**
 	 * Track the actual event / plugin hook
 	 *
-	 * @param string $name   name of the event / hook
-	 * @param string $type   type of the event / hook
-	 * @param mixed  $source source event / hook
+	 * @param string $name name of the event / hook
+	 * @param string $type type of the event / hook
 	 *
 	 * @return void
 	 */
-	protected static function track(string $name, string $type, $source) : void {
+	protected static function track(string $name, string $type) : void {
 		// filter out some very common events
 		$filter = [
 			'classes',
@@ -63,7 +62,10 @@ class HandlerLogger {
 		$trigger_functions = [
 			'elgg_trigger_event',
 			'elgg_trigger_event_results',
+			'elgg_trigger_after_event',
+			'elgg_trigger_before_event',
 			'triggerResults',
+			'triggerResultsSequence',
 			'triggerSequence',
 			'triggerBefore',
 			'triggerAfter',
