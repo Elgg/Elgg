@@ -373,6 +373,11 @@ Removed events
 * ``access:collections:deletecollection, collection`` use the ``delete, access_collection`` sequence
 * ``prepare, breadcrumbs`` use ``register, menu:breadcrumbs``
 
+Removed exceptions
+~~~~~~~~~~~~~~~~~~
+
+* ``\Elgg\Exceptions\InvalidParameterException``
+
 Constants
 ~~~~~~~~~
 

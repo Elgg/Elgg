@@ -3,7 +3,8 @@
 namespace Elgg\WebServices;
 
 use Elgg\Collections\CollectionItemInterface;
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\DomainException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Request;
 
 /**
@@ -72,8 +73,8 @@ class ApiMethod implements CollectionItemInterface {
 	 * @param mixed  $value the value of the property
 	 *
 	 * @return void
-	 * @throws \TypeError
-	 * @throws InvalidParameterException
+	 * @throws \Elgg\Exceptions\DomainException
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
 	public function __set($name, $value) {
 		
@@ -84,7 +85,7 @@ class ApiMethod implements CollectionItemInterface {
 				return;
 			case 'params':
 				if (!is_array($value)) {
-					throw new \TypeError("'{$name}' needs to be an array, " . gettype($value) . " given.");
+					throw new InvalidArgumentException("'{$name}' needs to be an array, " . gettype($value) . " given.");
 				}
 				
 				if (empty($value)) {
@@ -95,13 +96,13 @@ class ApiMethod implements CollectionItemInterface {
 				// catch common mistake of not setting up param array correctly
 				$first = current($value);
 				if (!is_array($first)) {
-					throw new InvalidParameterException(elgg_echo('InvalidParameterException:APIParametersArrayStructure', [$this->method]));
+					throw new InvalidArgumentException(elgg_echo('InvalidArgumentException:APIParametersArrayStructure', [$this->method]));
 				}
 				
 				// ensure the required flag is set correctly in default case for each parameter
 				foreach ($value as $key => $v) {
 					if (!isset($v['type'])) {
-						throw new InvalidParameterException(elgg_echo('APIException:InvalidParameter', [$key, $this->method]));
+						throw new InvalidArgumentException(elgg_echo('APIException:InvalidParameter', [$key, $this->method]));
 					}
 					
 					// check if 'required' was specified - if not, make it true
@@ -112,14 +113,14 @@ class ApiMethod implements CollectionItemInterface {
 			case 'description':
 			case 'call_method':
 				if (!is_string($value)) {
-					throw new \TypeError("'{$name}' needs to be a string, " . gettype($value) . " given.");
+					throw new InvalidArgumentException("'{$name}' needs to be a string, " . gettype($value) . " given.");
 				}
 				
 				// validate call method
 				if ($name === 'call_method') {
 					$value = strtoupper($value);
 					if (!in_array($value, ['GET', 'POST'])) {
-						throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnrecognisedHttpMethod', [$value, $this->method]));
+						throw new DomainException(elgg_echo('DomainException:UnrecognisedHttpMethod', [$value, $this->method]));
 					}
 				}
 				break;
@@ -127,7 +128,7 @@ class ApiMethod implements CollectionItemInterface {
 			case 'require_user_auth':
 			case 'supply_associative':
 				if (!is_bool($value)) {
-					throw new \TypeError("'{$name}' needs to be a boolean, " . gettype($value) . " given.");
+					throw new InvalidArgumentException("'{$name}' needs to be a boolean, " . gettype($value) . " given.");
 				}
 				break;
 		}

@@ -2,7 +2,7 @@
 
 namespace Elgg;
 
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * WidgetDefinition
@@ -46,11 +46,12 @@ class WidgetDefinition {
 	 * WidgetDefinition constructor
 	 *
 	 * @param string $id Identifier of the widget
-	 * @throws InvalidParameterException
+	 *
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct($id) {
 		if (empty($id)) {
-			throw new InvalidParameterException('Id missing for WidgetDefinition');
+			throw new InvalidArgumentException('"id" missing for ' . __CLASS__);
 		}
 		
 		$this->id = $id;

@@ -1,7 +1,6 @@
 <?php
 
 use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
-use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Traits\Entity\Friends;
 use Elgg\Traits\Entity\PluginSettings;
@@ -81,6 +80,8 @@ class ElggUser extends \ElggEntity {
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
 	public function __set($name, $value) {
 		switch ($name) {
@@ -95,18 +96,18 @@ class ElggUser extends \ElggEntity {
 				try {
 					_elgg_services()->accounts->assertValidEmail($value);
 				} catch (RegistrationException $ex) {
-					throw new InvalidParameterException($ex->getMessage(), $ex->getCode(), $ex);
+					throw new ElggInvalidArgumentException($ex->getMessage(), $ex->getCode(), $ex);
 				}
 				break;
 			case 'username':
 				try {
 					_elgg_services()->accounts->assertValidUsername($value);
 				} catch (RegistrationException $ex) {
-					throw new InvalidParameterException($ex->getMessage(), $ex->getCode(), $ex);
+					throw new ElggInvalidArgumentException($ex->getMessage(), $ex->getCode(), $ex);
 				}
 				$existing_user = get_user_by_username($value);
 				if ($existing_user && ($existing_user->guid !== $this->guid)) {
-					throw new InvalidParameterException("{$name} is supposed to be unique for ElggUser");
+					throw new ElggInvalidArgumentException("{$name} is supposed to be unique for ElggUser");
 				}
 				break;
 			case 'admin':

@@ -32,8 +32,6 @@ return array(
 	'SecurityException:authenticationfailed' => "L'utilisateur n'a pas pu être authentifié",
 	'SecurityException:DuplicateEmailUser' => "Aucun utilisateur unique trouvé pour l'adresse e-mail fournie. Impossible de récupérer un jeton.",
 	'SecurityException:BannedUser' => "Ce compte utilisateur est banni, aucun jeton ne peut être fourni.",
-	'InvalidParameterException:APIParametersArrayStructure' => "La structure des paramètres du tableau est incorrecte pour l'appel pour exposer la méthode '%s'",
-	'InvalidParameterException:UnrecognisedHttpMethod' => "Méthode http %s non reconnue pour la méthode '%s' de l'API",
 	'SecurityException:InvalidPostHash' => "Le hachage des données POST est invalide - %s attendu mais reçu %s.",
 	'SecurityException:DupePacket' => "La signature du paquet a déjà été vue.",
 	'SecurityException:InvalidAPIKey' => "Clé d'API incorrecte ou manquante.",

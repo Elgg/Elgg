@@ -3,7 +3,7 @@
 namespace Elgg\Database;
 
 use Elgg\Database;
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Traits\Loggable;
 
 /**
@@ -22,7 +22,7 @@ class Mutex {
 	/**
 	 * @var Database
 	 */
-	private $db;
+	protected $db;
 
 	/**
 	 * Constructor
@@ -89,12 +89,12 @@ class Mutex {
 	 *
 	 * @param string $namespace Namespace to use for the database table
 	 *
-	 * @throws InvalidParameterException
 	 * @return void
+	 * @throws InvalidArgumentException
 	 */
-	private function assertNamespace(string $namespace): void {
+	protected function assertNamespace(string $namespace): void {
 		if (!ctype_alpha($namespace)) {
-			throw new InvalidParameterException("Mutex namespace can only have characters [A-Za-z].");
+			throw new InvalidArgumentException("Mutex namespace can only have characters [A-Za-z].");
 		}
 	}
 }

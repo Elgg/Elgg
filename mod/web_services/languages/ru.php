@@ -32,8 +32,6 @@ return array(
 	'SecurityException:authenticationfailed' => "Пользователь не может быть аутентифицирован",
 	'SecurityException:DuplicateEmailUser' => "Для данного адреса электронной почты не найдено ни одного уникального пользователя. Не удалось получить токен.",
 	'SecurityException:BannedUser' => "Эта учетная запись пользователя заблокирована, токен не может быть предоставлен.",
-	'InvalidParameterException:APIParametersArrayStructure' => "Неверная структура массива параметров для вызова expose метода '%s'",
-	'InvalidParameterException:UnrecognisedHttpMethod' => "Неизвестный http метод %s для метода API '%s'",
 	'SecurityException:InvalidPostHash' => "Хэш данных POST недействителен — Ожидалось %s получено %s.",
 	'SecurityException:DupePacket' => "Подпись пакета уже видна.",
 	'SecurityException:InvalidAPIKey' => "Недействительный или отсутствующий ключ API.",

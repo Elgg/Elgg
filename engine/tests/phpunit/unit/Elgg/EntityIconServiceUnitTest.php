@@ -2,7 +2,9 @@
 
 namespace Elgg;
 
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\UnexpectedValueException;
+use Elgg\Project\Paths;
 
 /**
  * @group EntityIconService
@@ -70,7 +72,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->events = new EventsService(_elgg_services()->handlers);
 		
-		$this->request = \Elgg\Http\Request::create("/action/upload");
+		$this->request = \Elgg\Http\Request::create('/action/upload');
 		$this->logger = _elgg_services()->logger;
 
 		$this->entities = _elgg_services()->entityTable;
@@ -99,12 +101,12 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function down() {
-		$this->assertTrue(file_exists(_elgg_services()->config->dataroot . '1/1/75x125.jpg'));
-		$this->assertTrue(file_exists(_elgg_services()->config->dataroot . '1/1/300x300.jpg'));
-		$this->assertTrue(file_exists(_elgg_services()->config->dataroot . '1/1/600x300.jpg'));
-		$this->assertTrue(file_exists(_elgg_services()->config->dataroot . '1/1/300x600.jpg'));
-		$this->assertTrue(file_exists(_elgg_services()->config->dataroot . '1/1/400x300.gif'));
-		$this->assertTrue(file_exists(_elgg_services()->config->dataroot . '1/1/400x300.png'));
+		$this->assertFileExists(_elgg_services()->config->dataroot . '1/1/75x125.jpg');
+		$this->assertFileExists(_elgg_services()->config->dataroot . '1/1/300x300.jpg');
+		$this->assertFileExists(_elgg_services()->config->dataroot . '1/1/600x300.jpg');
+		$this->assertFileExists(_elgg_services()->config->dataroot . '1/1/300x600.jpg');
+		$this->assertFileExists(_elgg_services()->config->dataroot . '1/1/400x300.gif');
+		$this->assertFileExists(_elgg_services()->config->dataroot . '1/1/400x300.png');
 		
 		elgg_delete_directory($this->entity_dir_path);
 		elgg_delete_directory($this->owner_dir_path);
@@ -218,10 +220,10 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$service = $this->createService();
 
 		$icon = $service->getIcon($this->entity, 'small');
-		$this->assertEquals($this->entity_dir_path . 'icons/icon/small.jpg', $icon->getFilenameOnFilestore());
+		$this->assertEquals(Paths::sanitize("{$this->entity_dir_path}icons/icon/small.jpg", false), $icon->getFilenameOnFilestore());
 
 		$cover = $service->getIcon($this->entity, 'small', 'cover');
-		$this->assertEquals($this->entity_dir_path . 'icons/cover/small.jpg', $cover->getFilenameOnFilestore());
+		$this->assertEquals(Paths::sanitize("{$this->entity_dir_path}icons/cover/small.jpg", false), $cover->getFilenameOnFilestore());
 	}
 
 	public function testCanReplaceIconFile() {
@@ -233,7 +235,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 			$entity = $event->getEntityParam();
 			if ($entity->getSubtype() == 'foo') {
 				$icon->owner_guid = $entity->owner_guid;
-				$icon->setFilename("foo/bar/$type/$size.jpg");
+				$icon->setFilename("foo/bar/{$type}/{$size}.jpg");
 			}
 			return $icon;
 		};
@@ -243,10 +245,10 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$service = $this->createService();
 
 		$icon = $service->getIcon($this->entity, 'small');
-		$this->assertEquals($this->owner_dir_path . 'foo/bar/icon/small.jpg', $icon->getFilenameOnFilestore());
+		$this->assertEquals(Paths::sanitize("{$this->owner_dir_path}foo/bar/icon/small.jpg", false), $icon->getFilenameOnFilestore());
 
 		$cover = $service->getIcon($this->entity, 'large', 'cover');
-		$this->assertEquals($this->owner_dir_path . 'foo/bar/cover/large.jpg', $cover->getFilenameOnFilestore());
+		$this->assertEquals(Paths::sanitize("{$this->owner_dir_path}foo/bar/cover/large.jpg", false), $cover->getFilenameOnFilestore());
 	}
 
 	public function testThrowsExceptionOnInvalidEventHandlerReturnForIconFile() {
@@ -258,14 +260,14 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$service = $this->createService();
 		
-		$this->expectException(InvalidParameterException::class);
+		$this->expectException(UnexpectedValueException::class);
 		$service->getIcon($this->entity, 'small');
 	}
 
 	public function testThrowsExceptionOnSaveIconFromNonExistentElggFile() {
 		$service = $this->createService();
 		
-		$this->expectException(InvalidParameterException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$service->saveIconFromElggFile($this->entity, new \ElggFile());
 	}
 
@@ -320,7 +322,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$service = $this->createService();
 		$local_file = _elgg_services()->config->dataroot . '_______empty';
 		
-		$this->expectException(InvalidParameterException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$service->saveIconFromLocalFile($this->entity, $local_file);
 	}
 

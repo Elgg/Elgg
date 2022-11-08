@@ -3,7 +3,7 @@
 namespace Elgg\Router;
 
 use Elgg\EventsService;
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Router\Middleware\MaintenanceGatekeeper;
 use Elgg\Router\Middleware\WalledGarden;
 use Elgg\Traits\Loggable;
@@ -69,7 +69,7 @@ class RouteRegistrationService {
 	 *                       - methods : HTTP methods
 	 *
 	 * @return Route
-	 * @throws InvalidParameterException
+	 * @throws InvalidArgumentException
 	 */
 	public function register(string $name, array $params = []): Route {
 
@@ -87,7 +87,7 @@ class RouteRegistrationService {
 		$detect_page_owner = (bool) elgg_extract('detect_page_owner', $params, false);
 
 		if (!$path || (!$controller && !$resource && !$handler && !$file)) {
-			throw new InvalidParameterException(
+			throw new InvalidArgumentException(
 				__METHOD__ . ' requires "path" and one of controller parameters ("resource", "controller", "file" or "handler") to be set'
 			);
 		}

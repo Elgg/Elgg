@@ -3,7 +3,8 @@
 namespace Elgg;
 
 use Elgg\Database\EntityTable;
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\UnexpectedValueException;
 use Elgg\Filesystem\MimeTypeService;
 use Elgg\Http\Request as HttpRequest;
 use Elgg\Traits\Loggable;
@@ -134,11 +135,11 @@ class EntityIconService {
 	 * @param array       $coords   An array of cropping coordinates x1, y1, x2, y2
 	 *
 	 * @return bool
-	 * @throws InvalidParameterException
+	 * @throws InvalidArgumentException
 	 */
 	public function saveIconFromLocalFile(\ElggEntity $entity, $filename, $type = 'icon', array $coords = []) {
 		if (!file_exists($filename) || !is_readable($filename)) {
-			throw new InvalidParameterException(__METHOD__ . " expects a readable local file. $filename is not readable");
+			throw new InvalidArgumentException(__METHOD__ . " expects a readable local file. {$filename} is not readable");
 		}
 				
 		$tmp = new \ElggTempFile();
@@ -167,11 +168,11 @@ class EntityIconService {
 	 * @param array       $coords An array of cropping coordinates x1, y1, x2, y2
 	 *
 	 * @return bool
-	 * @throws InvalidParameterException
+	 * @throws InvalidArgumentException
 	 */
 	public function saveIconFromElggFile(\ElggEntity $entity, \ElggFile $file, $type = 'icon', array $coords = []) {
 		if (!$file->exists()) {
-			throw new InvalidParameterException(__METHOD__ . ' expects an instance of ElggFile with an existing file on filestore');
+			throw new InvalidArgumentException(__METHOD__ . ' expects an instance of ElggFile with an existing file on filestore');
 		}
 		
 		$tmp = new \ElggTempFile();
@@ -211,7 +212,7 @@ class EntityIconService {
 		
 		$entity_type = $entity->getType();
 		
-		$file = $this->events->triggerResults("entity:$type:prepare", $entity_type, [
+		$file = $this->events->triggerResults("entity:{$type}:prepare", $entity_type, [
 			'entity' => $entity,
 			'file' => $file,
 		], $file);
@@ -228,7 +229,7 @@ class EntityIconService {
 		$x2 = (int) elgg_extract('x2', $coords);
 		$y2 = (int) elgg_extract('y2', $coords);
 		
-		$created = $this->events->triggerResults("entity:$type:save", $entity_type, [
+		$created = $this->events->triggerResults("entity:{$type}:save", $entity_type, [
 			'entity' => $entity,
 			'file' => $file,
 			'x1' => $x1,
@@ -270,7 +271,7 @@ class EntityIconService {
 			}
 		}
 		
-		$this->events->triggerResults("entity:$type:saved", $entity->getType(), [
+		$this->events->triggerResults("entity:{$type}:saved", $entity->getType(), [
 			'entity' => $entity,
 			'x1' => $x1,
 			'y1' => $y1,
@@ -397,7 +398,7 @@ class EntityIconService {
 	 *
 	 * @return \ElggIcon
 	 *
-	 * @throws InvalidParameterException
+	 * @throws UnexpectedValueException
 	 */
 	public function getIcon(\ElggEntity $entity, $size, $type = 'icon', $generate = true) {
 
@@ -413,11 +414,11 @@ class EntityIconService {
 
 		$default_icon = new \ElggIcon();
 		$default_icon->owner_guid = $entity->guid;
-		$default_icon->setFilename("icons/$type/$size.jpg");
+		$default_icon->setFilename("icons/{$type}/{$size}.jpg");
 
 		$icon = $this->events->triggerResults("entity:{$type}:file", $entity_type, $params, $default_icon);
 		if (!$icon instanceof \ElggIcon) {
-			throw new InvalidParameterException("'entity:{$type}:file', {$entity_type} event must return an instance of ElggIcon");
+			throw new UnexpectedValueException("'entity:{$type}:file', {$entity_type} event must return an instance of \ElggIcon");
 		}
 		
 		if ($size !== 'master' && $this->hasWebPSupport()) {
@@ -468,7 +469,7 @@ class EntityIconService {
 	 * @return bool
 	 */
 	public function deleteIcon(\ElggEntity $entity, $type = 'icon', $retain_master = false) {
-		$delete = $this->events->triggerResults("entity:$type:delete", $entity->getType(), [
+		$delete = $this->events->triggerResults("entity:{$type}:delete", $entity->getType(), [
 			'entity' => $entity,
 		], true);
 
@@ -590,17 +591,17 @@ class EntityIconService {
 
 		foreach ($exts as $ext) {
 			foreach ([$entity_subtype, 'default'] as $subtype) {
-				if ($ext == 'svg' && elgg_view_exists("$type/$entity_type/$subtype.svg", 'default')) {
-					return elgg_get_simplecache_url("$type/$entity_type/$subtype.svg");
+				if ($ext == 'svg' && elgg_view_exists("{$type}/{$entity_type}/{$subtype}.svg", 'default')) {
+					return elgg_get_simplecache_url("{$type}/{$entity_type}/{$subtype}.svg");
 				}
-				if (elgg_view_exists("$type/$entity_type/$subtype/$size.$ext", 'default')) {
-					return elgg_get_simplecache_url("$type/$entity_type/$subtype/$size.$ext");
+				if (elgg_view_exists("{$type}/{$entity_type}/{$subtype}/{$size}.{$ext}", 'default')) {
+					return elgg_get_simplecache_url("{$type}/{$entity_type}/{$subtype}/{$size}.{$ext}");
 				}
 			}
 		}
 
-		if (elgg_view_exists("$type/default/$size.png", 'default')) {
-			return elgg_get_simplecache_url("$type/default/$size.png");
+		if (elgg_view_exists("{$type}/default/{$size}.png", 'default')) {
+			return elgg_get_simplecache_url("{$type}/default/{$size}.png");
 		}
 	}
 
@@ -642,13 +643,11 @@ class EntityIconService {
 	 * @param string $type           The name of the icon. e.g., 'icon', 'cover_photo'
 	 *
 	 * @return array
-	 * @throws InvalidParameterException
+	 * @throws InvalidArgumentException
 	 */
 	public function getSizes(string $entity_type = null, string $entity_subtype = null, $type = 'icon'): array {
 		$sizes = [];
-		if (!$type) {
-			$type = 'icon';
-		}
+		$type = $type ?: 'icon';
 		if ($type == 'icon') {
 			$sizes = $this->config->icon_sizes;
 		}
@@ -658,11 +657,11 @@ class EntityIconService {
 			'entity_subtype' => $entity_subtype,
 		];
 		if ($entity_type) {
-			$sizes = $this->events->triggerResults("entity:$type:sizes", $entity_type, $params, $sizes);
+			$sizes = $this->events->triggerResults("entity:{$type}:sizes", $entity_type, $params, $sizes);
 		}
 
 		if (!is_array($sizes)) {
-			throw new InvalidParameterException("The icon size configuration for image type '$type' " .
+			throw new InvalidArgumentException("The icon size configuration for image type '{$type}' " .
 				"must be an associative array of image size names and their properties");
 		}
 

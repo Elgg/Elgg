@@ -2,10 +2,10 @@
 
 namespace Elgg\Users;
 
-use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Http\ResponseBuilder;
 use Elgg\Request;
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * Event handlers for user settings
@@ -306,7 +306,7 @@ class Settings {
 				
 				$request->validation()->pass('email', $email, elgg_echo('account:email:request:success', [$email]));
 				return true;
-			} catch (InvalidParameterException $e) {
+			} catch (InvalidArgumentException $e) {
 				$request->validation()->fail('email', $email, elgg_echo('email:save:fail:password'));
 				return false;
 			}

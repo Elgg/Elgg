@@ -2,9 +2,10 @@
 
 namespace Elgg\WebServices;
 
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\IntegrationTestCase;
 use Elgg\WebServices\PAM\API\APIKey;
+use Elgg\Exceptions\DomainException;
 
 /**
  * @group WebServices
@@ -33,14 +34,14 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 	}
 
 	public function testExposeFunctionParametersBadArray() {
-		$this->expectException(InvalidParameterException::class);
-		$this->expectExceptionMessage(elgg_echo('InvalidParameterException:APIParametersArrayStructure', ['test']));
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage(elgg_echo('InvalidArgumentException:APIParametersArrayStructure', ['test']));
 		elgg_ws_expose_function('test', 'test', ['param1' => 'string']);
 	}
 
 	public function testExposeFunctionBadHttpMethod() {
-		$this->expectException(InvalidParameterException::class);
-		$this->expectExceptionMessage(elgg_echo('InvalidParameterException:UnrecognisedHttpMethod', ['BAD', 'test']));
+		$this->expectException(DomainException::class);
+		$this->expectExceptionMessage(elgg_echo('DomainException:UnrecognisedHttpMethod', ['BAD', 'test']));
 		elgg_ws_expose_function('test', 'test', [], '', 'BAD');
 	}
 

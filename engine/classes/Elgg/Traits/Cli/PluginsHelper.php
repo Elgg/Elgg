@@ -2,8 +2,8 @@
 
 namespace Elgg\Traits\Cli;
 
-use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\PluginException;
+use Elgg\Exceptions\UnexpectedValueException;
 
 /**
  * Trait shared by CLI commands to simplify plugin management
@@ -19,13 +19,13 @@ trait PluginsHelper {
 	 * @param bool   $force Resolve conflicts
 	 *
 	 * @return bool
-	 * @throws InvalidParameterException
+	 * @throws UnexpectedValueException
 	 */
 	public function activate($id, $force = false) {
 
 		$plugin = elgg_get_plugin_from_id($id);
-		if (!$plugin) {
-			throw new InvalidParameterException(elgg_echo('PluginException:InvalidID', [$id]));
+		if (!$plugin instanceof \ElggPlugin) {
+			throw new UnexpectedValueException(elgg_echo('PluginException:InvalidID', [$id]));
 		}
 
 		if (!$force) {
@@ -60,12 +60,12 @@ trait PluginsHelper {
 	 * @param bool   $force Also deactivate dependents
 	 *
 	 * @return bool
-	 * @throws InvalidParameterException
+	 * @throws UnexpectedValueException
 	 */
 	public function deactivate($id, $force = false) {
 		$plugin = elgg_get_plugin_from_id($id);
-		if (!$plugin) {
-			throw new InvalidParameterException(elgg_echo('PluginException:InvalidID', [$id]));
+		if (!$plugin instanceof \ElggPlugin) {
+			throw new UnexpectedValueException(elgg_echo('PluginException:InvalidID', [$id]));
 		}
 
 		if (!$force) {

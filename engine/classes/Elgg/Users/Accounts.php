@@ -8,8 +8,8 @@ use Elgg\Email;
 use Elgg\Email\Address;
 use Elgg\EmailService;
 use Elgg\EventsService;
-use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\Configuration\RegistrationException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\I18n\Translator;
 use Elgg\PasswordService;
 use Elgg\Security\PasswordGeneratorService;
@@ -403,11 +403,11 @@ class Accounts {
 	 * @param string    $email E-mail address
 	 *
 	 * @return bool
-	 * @throws InvalidParameterException
+	 * @throws InvalidArgumentException
 	 */
 	public function requestNewEmailValidation(\ElggUser $user, string $email): bool {
 		if (!$this->isValidEmail($email)) {
-			throw new InvalidParameterException($this->translator->translate('registration:notemail'));
+			throw new InvalidArgumentException($this->translator->translate('registration:notemail'));
 		}
 		
 		$site = elgg_get_site_entity();

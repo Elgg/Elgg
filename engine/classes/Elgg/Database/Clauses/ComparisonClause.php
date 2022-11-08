@@ -3,7 +3,7 @@
 namespace Elgg\Database\Clauses;
 
 use Elgg\Database\QueryBuilder;
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\DomainException;
 use Elgg\Values;
 
 /**
@@ -56,7 +56,7 @@ class ComparisonClause extends Clause {
 	/**
 	 * {@inheritdoc}
 	 *
-	 * @throws InvalidParameterException
+	 * @throws DomainException
 	 */
 	public function prepare(QueryBuilder $qb, $table_alias = null) {
 		$x = $this->x;
@@ -157,7 +157,7 @@ class ComparisonClause extends Clause {
 				return "NOT EXISTS ($y)";
 
 			default :
-				throw new InvalidParameterException("'{$this->comparison}' is not a supported comparison operator");
+				throw new DomainException("'{$this->comparison}' is not a supported comparison operator");
 		}
 	}
 }

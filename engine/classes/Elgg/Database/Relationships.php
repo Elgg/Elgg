@@ -7,8 +7,8 @@ use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
+use Elgg\Exceptions\DomainException;
 use Elgg\Exceptions\InvalidArgumentException;
-use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\LogicException;
 
 /**
@@ -22,7 +22,7 @@ class Relationships extends Repository {
 
 	/**
 	 * {@inheritDoc}
-	 * @throws InvalidParameterException;
+	 * @throws DomainException
 	 */
 	public function calculate($function, $property, $property_type = null) {
 		
@@ -45,7 +45,7 @@ class Relationships extends Repository {
 		switch ($property_type) {
 			case 'attribute':
 				if (!in_array($property, \ElggEntity::PRIMARY_ATTR_NAMES)) {
-					throw new InvalidParameterException("'$property' is not a valid attribute");
+					throw new DomainException("'{$property}' is not a valid attribute");
 				}
 				
 				$alias = $select->joinEntitiesTable('er', $join_column, 'inner', 'e');

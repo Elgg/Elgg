@@ -4,9 +4,10 @@ use Elgg\EntityIcon;
 use Elgg\Database\QueryBuilder;
 use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\Filesystem\IOException;
+use Elgg\Exceptions\DomainException as ElggDomainException;
 use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
-use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Traits\Entity\Subscriptions;
+
 
 /**
  * The parent class for all Elgg Entities.
@@ -1267,20 +1268,21 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * the type-specific information is handled in the calling class method.
 	 *
 	 * @return int|false The new entity's GUID or false on failure
-	 * @throws InvalidParameterException If the entity's type has not been set.
-	 * @throws IOException If the new row fails to write to the DB.
+	 *
+	 * @throws \Elgg\Exceptions\DomainException If the entity's type has not been set.
+	 * @throws \Elgg\Exceptions\InvalidArgumentException If the entity's subtype has not been set or access_id is invalid
+	 * @throws \Elgg\Exceptions\Filesystem\IOException If the new row fails to write to the DB.
 	 */
 	protected function create() {
 
 		$type = $this->attributes['type'];
 		if (!in_array($type, \Elgg\Config::ENTITY_TYPES)) {
-			throw new InvalidParameterException('Entity type must be one of the allowed types: '
-				. implode(', ', \Elgg\Config::ENTITY_TYPES));
+			throw new ElggDomainException('Entity type must be one of the allowed types: ' . implode(', ', \Elgg\Config::ENTITY_TYPES));
 		}
 
 		$subtype = $this->attributes['subtype'];
 		if (!$subtype) {
-			throw new InvalidParameterException("All entities must have a subtype");
+			throw new ElggInvalidArgumentException("All entities must have a subtype");
 		}
 
 		$owner_guid = (int) $this->attributes['owner_guid'];
@@ -1296,11 +1298,11 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		$container_guid = (int) $container_guid;
 
 		if ($access_id == ACCESS_DEFAULT) {
-			throw new InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
+			throw new ElggInvalidArgumentException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
 		}
 		
 		if ($access_id == ACCESS_FRIENDS) {
-			throw new InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
+			throw new ElggInvalidArgumentException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
 		}
 
 		$user_guid = _elgg_services()->session->getLoggedInUserGuid();
@@ -1309,16 +1311,16 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		if ($owner_guid) {
 			$owner = $this->getOwnerEntity();
 			if (!$owner) {
-				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype), but the given"
-					. " owner $owner_guid could not be loaded.");
+				_elgg_services()->logger->error("User {$user_guid} tried to create a ({$type}, {$subtype}), but the given"
+					. " owner {$owner_guid} could not be loaded.");
 				return false;
 			}
 
 			// If different owner than logged in, verify can write to container.
 
 			if ($user_guid != $owner_guid && !$owner->canEdit() && !$owner->canWriteToContainer($user_guid, $type, $subtype)) {
-				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype) with owner"
-					. " $owner_guid, but the user wasn't permitted to write to the owner's container.");
+				_elgg_services()->logger->error("User {$user_guid} tried to create a ({$type}, {$subtype}) with owner"
+					. " {$owner_guid}, but the user wasn't permitted to write to the owner's container.");
 				return false;
 			}
 		}
@@ -1327,14 +1329,14 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		if ($container_guid) {
 			$container = $this->getContainerEntity();
 			if (!$container) {
-				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype), but the given"
-					. " container $container_guid could not be loaded.");
+				_elgg_services()->logger->error("User {$user_guid} tried to create a ({$type}, {$subtype}), but the given"
+					. " container {$container_guid} could not be loaded.");
 				return false;
 			}
 
 			if (!$container->canWriteToContainer($user_guid, $type, $subtype)) {
-				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype), but was not"
-					. " permitted to write to container $container_guid.");
+				_elgg_services()->logger->error("User {$user_guid} tried to create a ({$type}, {$subtype}), but was not"
+					. " permitted to write to container {$container_guid}.");
 				return false;
 			}
 		}
@@ -1386,7 +1388,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			$this->temp_annotations = [];
 		}
 		
-		if (isset($container) && !$container instanceof ElggUser) {
+		if (isset($container) && !$container instanceof \ElggUser) {
 			// users have their own logic for setting last action
 			$container->updateLastAction();
 		}
@@ -1399,7 +1401,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return bool Whether the update was successful.
 	 *
-	 * @throws InvalidParameterException
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
 	protected function update(): bool {
 
@@ -1423,11 +1425,11 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		$time = $this->getCurrentTime()->getTimestamp();
 
 		if ($access_id == ACCESS_DEFAULT) {
-			throw new InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
+			throw new ElggInvalidArgumentException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
 		}
 	
 		if ($access_id == ACCESS_FRIENDS) {
-			throw new InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
+			throw new ElggInvalidArgumentException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
 		}
 
 		// Update primary table
@@ -1472,7 +1474,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
 		foreach ($attributes as $name => $value) {
 			if (!in_array($name, self::PRIMARY_ATTR_NAMES)) {
-				$this->setVolatileData("select:$name", $value);
+				$this->setVolatileData("select:{$name}", $value);
 				unset($attributes[$name]);
 				continue;
 			}

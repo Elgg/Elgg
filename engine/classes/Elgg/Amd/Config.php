@@ -2,7 +2,7 @@
 
 namespace Elgg\Amd;
 
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * Control configuration of RequireJS
@@ -93,14 +93,14 @@ class Config {
 	 *                       - exports:  string Name of the shimmed module to export
 	 *
 	 * @return void
-	 * @throws InvalidParameterException
+	 * @throws InvalidArgumentException
 	 */
 	public function addShim(string $name, array $config): void {
 		$deps = elgg_extract('deps', $config, []);
 		$exports = elgg_extract('exports', $config);
 
 		if (empty($deps) && empty($exports)) {
-			throw new InvalidParameterException("Shimmed modules must have deps or exports");
+			throw new InvalidArgumentException("Shimmed modules must have deps or exports");
 		}
 
 		$this->shim[$name] = [];

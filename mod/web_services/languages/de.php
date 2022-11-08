@@ -32,8 +32,6 @@ return array(
 	'SecurityException:authenticationfailed' => "Der Benutzer konnte nicht authentifiziert werden.",
 	'SecurityException:DuplicateEmailUser' => "Kein eindeutiger Benutzer für angegebene Emailadresse gefunden. Token konnte daher nicht erzeugt werden.",
 	'SecurityException:BannedUser' => "Dieser Benutzeraccount ist derzeit gesperrt. Daher kann kein Token bereit gestellt werden.",
-	'InvalidParameterException:APIParametersArrayStructure' => "Die Parameter-Feldstruktur im Aufruf von Expose-Methode '%s' ist falsch.",
-	'InvalidParameterException:UnrecognisedHttpMethod' => "Unbekannte Http-Methode %s für API-Methode '%s'.",
 	'SecurityException:InvalidPostHash' => "POST-Daten-Hash ist ungültig - erwartet wurde %s aber %s erhalten.",
 	'SecurityException:DupePacket' => "Packet-Signatur ist schon von früher bekannt.",
 	'SecurityException:InvalidAPIKey' => "Ungültiger oder fehlender API-Schlüssel.",

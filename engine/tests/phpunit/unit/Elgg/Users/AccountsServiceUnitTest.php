@@ -3,7 +3,7 @@
 namespace Elgg\Users;
 
 use Elgg\Exceptions\Configuration\RegistrationException;
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Helpers\CustomUser;
 use Elgg\UnitTestCase;
 
@@ -131,7 +131,7 @@ class AccountsServiceUnitTest extends UnitTestCase {
 		$user = $this->createUser();
 		$new_email = 'example.com';
 		
-		$this->expectException(InvalidParameterException::class);
+		$this->expectException(InvalidArgumentException::class);
 		elgg()->accounts->requestNewEmailValidation($user, $new_email);
 	}
 }

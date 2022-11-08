@@ -11,7 +11,7 @@ use Elgg\EntityPreloader;
 use Elgg\EventsService;
 use Elgg\Exceptions\ClassException;
 use Elgg\Exceptions\Database\UserFetchFailureException;
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\DomainException;
 use Elgg\I18n\Translator;
 use Elgg\Traits\Loggable;
 use Elgg\Traits\TimeUsing;
@@ -119,11 +119,11 @@ class EntityTable {
 	 * @param string $class   Entity class
 	 *
 	 * @return void
-	 * @throws InvalidParameterException
+	 * @throws DomainException
 	 */
 	public function setEntityClass(string $type, string $subtype, string $class = ''): void {
 		if (!in_array($type, Config::ENTITY_TYPES)) {
-			throw new InvalidParameterException("{$type} is not a valid entity type");
+			throw new DomainException("{$type} is not a valid entity type");
 		}
 
 		$this->entity_classes[$type][$subtype] = $class;
@@ -232,7 +232,7 @@ class EntityTable {
 	 *
 	 * @return \ElggEntity|null
 	 * @throws ClassException
-	 * @throws InvalidParameterException
+	 * @throws DomainException
 	 */
 	public function rowToElggStar(\stdClass $row): ?\ElggEntity {
 		if (!isset($row->guid) || !isset($row->subtype)) {
@@ -256,7 +256,7 @@ class EntityTable {
 			if (isset($map[$row->type])) {
 				$class_name = $map[$row->type];
 			} else {
-				throw new InvalidParameterException("Entity type {$row->type} is not supported.");
+				throw new DomainException("Entity type {$row->type} is not supported.");
 			}
 		}
 

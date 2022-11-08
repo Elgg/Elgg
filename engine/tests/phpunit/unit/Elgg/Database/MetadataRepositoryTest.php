@@ -8,7 +8,7 @@ use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\DomainException;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\UnitTestCase;
 
@@ -395,7 +395,7 @@ class MetadataRepositoryTest extends UnitTestCase {
 	}
 
 	public function testThrowsOnInvalidAttributeCalculation() {
-		$this->expectException(InvalidParameterException::class);
+		$this->expectException(DomainException::class);
 		Metadata::with([])->calculate('max', 'invalid', 'attribute');
 	}
 

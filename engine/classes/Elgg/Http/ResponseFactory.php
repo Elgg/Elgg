@@ -4,7 +4,7 @@ namespace Elgg\Http;
 
 use Elgg\Ajax\Service as AjaxService;
 use Elgg\EventsService;
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\UnexpectedValueException;
 use Elgg\Traits\Loggable;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
@@ -254,15 +254,14 @@ class ResponseFactory {
 	 * @param ResponseBuilder $response ResponseBuilder instance
 	 *                                  An instance of an ErrorResponse, OkResponse or RedirectResponse
 	 * @return false|SymfonyResponse
-	 * @throws InvalidParameterException
+	 * @throws UnexpectedValueException
 	 */
 	public function respond(ResponseBuilder $response) {
 
 		$response_type = $this->parseContext();
 		$response = $this->events->triggerResults('response', $response_type, [], $response);
 		if (!$response instanceof ResponseBuilder) {
-			throw new InvalidParameterException("Handlers for 'response','{$response_type}' event must "
-			. "return an instanceof " . ResponseBuilder::class);
+			throw new UnexpectedValueException("Handlers for 'response', '{$response_type}' event must return an instanceof " . ResponseBuilder::class);
 		}
 
 		if ($response->isNotModified()) {
@@ -431,8 +430,9 @@ class ResponseFactory {
 	 *
 	 * @param string $forward_url Redirection URL
 	 * @param mixed  $status_code HTTP status code or forward reason
+	 *
 	 * @return false|SymfonyResponse
-	 * @throws InvalidParameterException
+	 * @throws UnexpectedValueException
 	 */
 	public function redirect(string $forward_url = REFERRER, $status_code = ELGG_HTTP_FOUND) {
 		$location = $forward_url;

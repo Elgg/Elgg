@@ -1,6 +1,6 @@
 <?php
 
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
 use Elgg\Menu\MenuItems;
 use Elgg\Menu\PreparedMenu;
 
@@ -26,7 +26,7 @@ class ElggMenuBuilder {
 	 *
 	 * @param ElggMenuItem[]|MenuItems $items Array of \ElggMenuItem objects
 	 *
-	 * @throws InvalidParameterException
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
 	public function __construct($items) {
 		if (is_array($items)) {
@@ -34,7 +34,7 @@ class ElggMenuBuilder {
 		}
 
 		if (!$items instanceof MenuItems) {
-			throw new InvalidParameterException(__CLASS__ . ' expects an instanceof of ' . MenuItems::class);
+			throw new ElggInvalidArgumentException(__CLASS__ . ' expects an instanceof of ' . MenuItems::class);
 		}
 
 		$this->items = $items;
