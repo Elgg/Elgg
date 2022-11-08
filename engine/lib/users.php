@@ -20,7 +20,7 @@ function get_user(int $guid): ?\ElggUser {
 		elgg_log($ex, 'ERROR');
 
 		return null;
-	} catch (Elgg\Exceptions\ClassException $ex) {
+	} catch (\Elgg\Exceptions\ClassException $ex) {
 		elgg_log($ex, 'ERROR');
 
 		return null;

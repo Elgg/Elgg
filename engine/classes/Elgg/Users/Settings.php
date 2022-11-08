@@ -3,9 +3,9 @@
 namespace Elgg\Users;
 
 use Elgg\Exceptions\Configuration\RegistrationException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Http\ResponseBuilder;
 use Elgg\Request;
-use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * Event handlers for user settings

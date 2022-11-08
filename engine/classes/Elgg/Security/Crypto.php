@@ -2,7 +2,7 @@
 
 namespace Elgg\Security;
 
-use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
+use Elgg\Exceptions\RangeException;
 
 /**
  * Cryptographic services
@@ -33,7 +33,7 @@ class Crypto {
 	 *
 	 * @return string The random string
 	 *
-	 * @throws ElggInvalidArgumentException
+	 * @throws \Elgg\Exceptions\RangeException
 	 *
 	 * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
 	 * @license   http://framework.zend.com/license/new-bsd New BSD License
@@ -42,7 +42,7 @@ class Crypto {
 	 */
 	public function getRandomString($length, $chars = null) {
 		if ($length < 1) {
-			throw new ElggInvalidArgumentException('Length should be >= 1');
+			throw new RangeException('Length should be >= 1');
 		}
 
 		if (empty($chars)) {

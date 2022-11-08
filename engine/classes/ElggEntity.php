@@ -535,7 +535,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @param string $relationship The type of relationship
 	 *
 	 * @return bool
-	 * @throws \Elgg\Exceptions\InvalidArgumentException
+	 * @throws \Elgg\Exceptions\LengthException
 	 */
 	public function addRelationship(int $guid_two, string $relationship): bool {
 		return _elgg_services()->relationshipsTable->add($this->guid, (string) $relationship, (int) $guid_two);

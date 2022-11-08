@@ -2,7 +2,7 @@
 
 namespace Elgg\FileService;
 
-use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\DomainException;
 use Elgg\Security\Base64Url;
 
 /**
@@ -71,11 +71,11 @@ class File {
 	 * @param string $disposition Content disposition ('inline' or 'attachment')
 	 *
 	 * @return void
-	 * @throws \Elgg\Exceptions\InvalidArgumentException
+	 * @throws \Elgg\Exceptions\DomainException
 	 */
 	public function setDisposition(string $disposition = self::ATTACHMENT): void {
 		if (!in_array($disposition, [self::ATTACHMENT, self::INLINE])) {
-			throw new InvalidArgumentException("Disposition $disposition is not supported in " . __CLASS__);
+			throw new DomainException("Disposition {$disposition} is not supported in " . __CLASS__);
 		}
 		$this->disposition = $disposition;
 	}

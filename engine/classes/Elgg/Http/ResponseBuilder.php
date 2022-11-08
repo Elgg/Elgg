@@ -3,6 +3,7 @@
 namespace Elgg\Http;
 
 use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\RangeException;
 
 /**
  * HTTP response builder interface
@@ -31,7 +32,7 @@ interface ResponseBuilder {
 	 *
 	 * @param int $status_code Status code
 	 * @return self
-	 * @throws InvalidArgumentException
+	 * @throws RangeException
 	 */
 	public function setStatusCode(int $status_code);
 

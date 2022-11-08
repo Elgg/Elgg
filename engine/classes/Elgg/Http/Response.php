@@ -3,6 +3,7 @@
 namespace Elgg\Http;
 
 use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\RangeException;
 
 /**
  * Response builder
@@ -75,9 +76,9 @@ abstract class Response implements ResponseBuilder {
 	 */
 	public function setStatusCode(int $status_code) {
 		if ($status_code < 100 || $status_code > 599) {
-			throw new InvalidArgumentException(__METHOD__ . ' expects a valid HTTP status code');
+			throw new RangeException(__METHOD__ . ' expects a valid HTTP status code');
 		}
-		$this->status_code = (int) $status_code;
+		$this->status_code = $status_code;
 		return $this;
 	}
 

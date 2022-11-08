@@ -1276,7 +1276,6 @@ function elgg_view_list_item($item, array $vars = []): string {
  * @param array  $vars An array of variables (['class' => 'float']) to pass to the icon view.
  *
  * @return string The html for displaying an icon
- * @throws \Elgg\Exceptions\InvalidArgumentException
  */
 function elgg_view_icon(string $name, array $vars = []): string {
 	$vars['class'] = elgg_extract_class($vars, "elgg-icon-{$name}");

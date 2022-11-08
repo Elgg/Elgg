@@ -27,7 +27,7 @@ class Relationships extends Repository {
 	public function calculate($function, $property, $property_type = null) {
 		
 		if (!in_array(strtolower($function), QueryBuilder::$calculations)) {
-			throw new InvalidArgumentException("'$function' is not a valid numeric function");
+			throw new DomainException("'{$function}' is not a valid numeric function");
 		}
 		
 		if (!isset($property_type)) {

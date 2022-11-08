@@ -7,7 +7,7 @@ use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Database\Clauses\RiverWhereClause;
-use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\DomainException;
 use Elgg\Exceptions\LogicException;
 
 /**
@@ -97,12 +97,12 @@ class River extends Repository {
 	 * @param string $property_type 'annotation'
 	 *
 	 * @return int|float
-	 * @throws InvalidArgumentException
+	 * @throws DomainException
 	 */
 	public function calculate($function, $property, $property_type = 'annotation') {
 
 		if (!in_array(strtolower($function), QueryBuilder::$calculations)) {
-			throw new InvalidArgumentException("'{$function}' is not a valid numeric function");
+			throw new DomainException("'{$function}' is not a valid numeric function");
 		}
 
 		$qb = Select::fromTable('river', 'rv');

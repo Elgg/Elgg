@@ -9,7 +9,6 @@ use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Exceptions\DomainException;
-use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\UnitTestCase;
 
 /**
@@ -303,7 +302,7 @@ class RelationshipsRepositoryTest extends UnitTestCase {
 	}
 
 	public function testThrowsOnInvalidCalculation() {
-		$this->expectException(InvalidArgumentException::class);
+		$this->expectException(DomainException::class);
 		Relationships::with([])->calculate('invalid', 'status', 'annotation');
 	}
 

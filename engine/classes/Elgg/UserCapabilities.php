@@ -4,12 +4,6 @@ namespace Elgg;
 
 use Elgg\Database\EntityTable;
 use Elgg\Exceptions\Database\UserFetchFailureException;
-use Elgg\Exceptions\InvalidArgumentException;
-use ElggAnnotation;
-use ElggEntity;
-use ElggFile;
-use ElggRiverItem;
-use ElggSession;
 
 /**
  * User capabilities service
@@ -30,7 +24,7 @@ class UserCapabilities {
 	private $entities;
 
 	/**
-	 * @var ElggSession
+	 * @var \ElggSession
 	 */
 	private $session;
 
@@ -39,9 +33,9 @@ class UserCapabilities {
 	 *
 	 * @param EventsService $events   Events service
 	 * @param EntityTable   $entities Entity table
-	 * @param ElggSession   $session  Session
+	 * @param \ElggSession  $session  Session
 	 */
-	public function __construct(EventsService $events, EntityTable $entities, ElggSession $session) {
+	public function __construct(EventsService $events, EntityTable $entities, \ElggSession $session) {
 		$this->events = $events;
 		$this->entities = $entities;
 		$this->session = $session;
@@ -79,12 +73,12 @@ class UserCapabilities {
 	 *
 	 * @tip Can be overridden by registering for the 'permissions_check' event.
 	 *
-	 * @param ElggEntity $entity    Object entity
-	 * @param int        $user_guid The user GUID, optionally (default: logged in user)
+	 * @param \ElggEntity $entity    Object entity
+	 * @param int         $user_guid The user GUID, optionally (default: logged in user)
 	 *
 	 * @return bool Whether this entity is editable by the given user.
 	 */
-	public function canEdit(ElggEntity $entity, int $user_guid = 0): bool {
+	public function canEdit(\ElggEntity $entity, int $user_guid = 0): bool {
 		if ($this->canBypassPermissionsCheck($user_guid)) {
 			return true;
 		}
@@ -137,13 +131,13 @@ class UserCapabilities {
 	 *
 	 * @tip Can be overridden by registering for the 'permissions_check:delete' event.
 	 *
-	 * @param ElggEntity $entity    Object entity
-	 * @param int        $user_guid The user GUID, optionally (default: logged in user)
+	 * @param \ElggEntity $entity    Object entity
+	 * @param int         $user_guid The user GUID, optionally (default: logged in user)
 	 *
 	 * @return bool Whether this entity is deletable by the given user.
 	 * @since 1.11
 	 */
-	public function canDelete(ElggEntity $entity, int $user_guid = 0): bool {
+	public function canDelete(\ElggEntity $entity, int $user_guid = 0): bool {
 		if ($this->canBypassPermissionsCheck($user_guid)) {
 			return true;
 		}
@@ -168,13 +162,13 @@ class UserCapabilities {
 	 *
 	 * @tip Can be overridden by registering for the "permissions_check:delete", "river" event.
 	 *
-	 * @param ElggRiverItem $item      River item
-	 * @param int           $user_guid The user GUID, optionally (default: logged in user)
+	 * @param \ElggRiverItem $item      River item
+	 * @param int            $user_guid The user GUID, optionally (default: logged in user)
 	 *
 	 * @return bool Whether this river item should be considered deletable by the given user.
 	 * @since 2.3
 	 */
-	public function canDeleteRiverItem(ElggRiverItem $item, int $user_guid = 0): bool {
+	public function canDeleteRiverItem(\ElggRiverItem $item, int $user_guid = 0): bool {
 		if ($this->canBypassPermissionsCheck($user_guid)) {
 			return true;
 		}
@@ -195,13 +189,13 @@ class UserCapabilities {
 	/**
 	 * Determines whether or not the user can edit this annotation
 	 *
-	 * @param Elggentity     $entity     Object entity
-	 * @param int            $user_guid  The GUID of the user (defaults to currently logged in user)
-	 * @param ElggAnnotation $annotation Annotation
+	 * @param \Elggentity     $entity     Object entity
+	 * @param int             $user_guid  The GUID of the user (defaults to currently logged in user)
+	 * @param \ElggAnnotation $annotation Annotation
 	 *
 	 * @return bool
 	 */
-	public function canEditAnnotation(ElggEntity $entity, int $user_guid = 0, ElggAnnotation $annotation = null): bool {
+	public function canEditAnnotation(\ElggEntity $entity, int $user_guid = 0, \ElggAnnotation $annotation = null): bool {
 		if (!$annotation) {
 			return false;
 		}
@@ -243,14 +237,14 @@ class UserCapabilities {
 	/**
 	 * Can a user add an entity to this container
 	 *
-	 * @param ElggEntity $entity    Container entity
-	 * @param string     $type      The type of entity we're looking to write
-	 * @param string     $subtype   The subtype of the entity we're looking to write
-	 * @param int        $user_guid The GUID of the user creating the entity (0 for logged in user).
+	 * @param \ElggEntity $entity    Container entity
+	 * @param string      $type      The type of entity we're looking to write
+	 * @param string      $subtype   The subtype of the entity we're looking to write
+	 * @param int         $user_guid The GUID of the user creating the entity (0 for logged in user).
 	 *
 	 * @return bool
 	 */
-	public function canWriteToContainer(ElggEntity $entity, string $type, string $subtype, int $user_guid = 0): bool {
+	public function canWriteToContainer(\ElggEntity $entity, string $type, string $subtype, int $user_guid = 0): bool {
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {
@@ -299,12 +293,12 @@ class UserCapabilities {
 	 * @tip Can be overridden by registering for the permissions_check:comment,
 	 * <entity type> event.
 	 *
-	 * @param ElggEntity $entity    Object entity
-	 * @param int        $user_guid User guid (default is logged in user)
+	 * @param \ElggEntity $entity    Object entity
+	 * @param int         $user_guid User guid (default is logged in user)
 	 *
 	 * @return bool
 	 */
-	public function canComment(ElggEntity $entity, int $user_guid = 0): bool {
+	public function canComment(\ElggEntity $entity, int $user_guid = 0): bool {
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {
@@ -335,13 +329,13 @@ class UserCapabilities {
 	 * @tip If you want logged out users to annotate an object, do not call
 	 * canAnnotate(). It's easier than using the event.
 	 *
-	 * @param ElggEntity $entity          Objet entity
-	 * @param int        $user_guid       User guid (default is logged in user)
-	 * @param string     $annotation_name The name of the annotation (default is unspecified)
+	 * @param \ElggEntity $entity          Objet entity
+	 * @param int         $user_guid       User guid (default is logged in user)
+	 * @param string      $annotation_name The name of the annotation (default is unspecified)
 	 *
 	 * @return bool
 	 */
-	public function canAnnotate(ElggEntity $entity, int $user_guid = 0, string $annotation_name = ''): bool {
+	public function canAnnotate(\ElggEntity $entity, int $user_guid = 0, string $annotation_name = ''): bool {
 		if ($this->canBypassPermissionsCheck($user_guid)) {
 			return true;
 		}
@@ -372,13 +366,13 @@ class UserCapabilities {
 	 *
 	 * @tip Can be overridden by registering for the 'permissions_check:download', 'file' event.
 	 *
-	 * @param ElggFile $entity    File entity
-	 * @param int      $user_guid User guid (default is logged in user)
-	 * @param bool     $default   Default permission
+	 * @param \ElggFile $entity    File entity
+	 * @param int       $user_guid User guid (default is logged in user)
+	 * @param bool      $default   Default permission
 	 *
 	 * @return bool
 	 */
-	public function canDownload(ElggFile $entity, int $user_guid = 0, bool $default = true): bool {
+	public function canDownload(\ElggFile $entity, int $user_guid = 0, bool $default = true): bool {
 		if ($this->canBypassPermissionsCheck($user_guid)) {
 			return true;
 		}

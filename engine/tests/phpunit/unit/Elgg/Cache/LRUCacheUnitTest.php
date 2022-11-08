@@ -3,6 +3,7 @@
 namespace Elgg\Cache;
 
 use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\RangeException;
 
 /**
  * @group UnitTests
@@ -66,7 +67,7 @@ class LRUCacheUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testThrowExceptionOnNegativeSize() {
-		$this->expectException(InvalidArgumentException::class);
+		$this->expectException(RangeException::class);
 		new LRUCache(-2);
 	}
 

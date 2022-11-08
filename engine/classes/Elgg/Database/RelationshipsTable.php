@@ -9,7 +9,7 @@ use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Clauses\SelectClause;
 use Elgg\EventsService;
 use Elgg\Exceptions\DatabaseException;
-use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\LengthException;
 use Elgg\Traits\TimeUsing;
 
 /**
@@ -113,11 +113,11 @@ class RelationshipsTable {
 	 * @param bool   $return_id    Return the ID instead of bool?
 	 *
 	 * @return bool|int
-	 * @throws InvalidArgumentException
+	 * @throws LengthException
 	 */
 	public function add(int $guid_one, string $relationship, int $guid_two, bool $return_id = false) {
 		if (strlen($relationship) > self::RELATIONSHIP_COLUMN_LENGTH) {
-			throw new InvalidArgumentException('Relationship name cannot be longer than ' . self::RELATIONSHIP_COLUMN_LENGTH);
+			throw new LengthException('Relationship name cannot be longer than ' . self::RELATIONSHIP_COLUMN_LENGTH);
 		}
 
 		// Check for duplicates
