@@ -32,8 +32,6 @@ return array(
 	'SecurityException:authenticationfailed' => "Gebruiker kon niet worden geauthentiseerd.",
 	'SecurityException:DuplicateEmailUser' => "Geen unieke gebruiker gevonden op basis van het emailadres. Kan geen token ophalen.",
 	'SecurityException:BannedUser' => "Deze gebruiker is geblokkeerd. Er kan geen token worden overhandigd.",
-	'InvalidParameterException:APIParametersArrayStructure' => "Parameters array structuur is onjuist voor expost method '%s'",
-	'InvalidParameterException:UnrecognisedHttpMethod' => "Onherkenbare http method %s voor api methode '%s'",
 	'SecurityException:InvalidPostHash' => "POST data hash is ongeldig - Verwachte %s, maar kreeg %s.",
 	'SecurityException:DupePacket' => "Packet signature is al eerder gezien",
 	'SecurityException:InvalidAPIKey' => "Ongeldige of ontbrekende API Key.",

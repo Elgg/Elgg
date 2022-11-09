@@ -3,7 +3,8 @@
 namespace Elgg\WebServices;
 
 use Elgg\Collections\CollectionItemInterface;
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\DomainException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\IntegrationTestCase;
 
 class ApiMethodIntegrationTest extends IntegrationTestCase {
@@ -66,7 +67,7 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 	public function testArrayParams($name) {
 		$api = $this->getApiMethod();
 		
-		$this->expectException(\TypeError::class);
+		$this->expectException(InvalidArgumentException::class);
 		$api->$name = 'string';
 	}
 	
@@ -82,7 +83,7 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 	public function testStringParams($name) {
 		$api = $this->getApiMethod();
 		
-		$this->expectException(\TypeError::class);
+		$this->expectException(InvalidArgumentException::class);
 		$api->$name = [];
 	}
 	
@@ -99,7 +100,7 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 	public function testBooleanParams($name) {
 		$api = $this->getApiMethod();
 		
-		$this->expectException(\TypeError::class);
+		$this->expectException(InvalidArgumentException::class);
 		$api->$name = 'foo';
 	}
 	
@@ -114,14 +115,14 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 	public function testSetParamsToInvalidArrayStructure() {
 		$api = $this->getApiMethod();
 		
-		$this->expectException(InvalidParameterException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$api->params = ['string'];
 	}
 	
 	public function testSetParamsToArrayWithMissingType() {
 		$api = $this->getApiMethod();
 		
-		$this->expectException(InvalidParameterException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$api->params = [
 			'username' => [],
 		];
@@ -157,7 +158,7 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 	public function testSetCallMethodToUnsupportedValue() {
 		$api = $this->getApiMethod();
 		
-		$this->expectException(InvalidParameterException::class);
+		$this->expectException(DomainException::class);
 		$api->call_method = 'PUT';
 	}
 	

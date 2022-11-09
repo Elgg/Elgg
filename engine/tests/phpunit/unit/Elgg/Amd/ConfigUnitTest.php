@@ -3,7 +3,7 @@
 namespace Elgg\Amd;
 
 use Elgg\EventsService;
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * @group UnitTests
@@ -96,7 +96,7 @@ class ConfigUnitTest extends \Elgg\UnitTestCase {
 	public function testThrowsOnBadShim() {
 		$amdConfig = $this->amdConfig;
 		
-		$this->expectException(InvalidParameterException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$amdConfig->addShim('bad_shim', array('invalid' => 'config'));
 
 		$configArray = $amdConfig->getConfig();

@@ -2,7 +2,7 @@
 
 namespace Elgg\Cache;
 
-use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\RangeException;
 
 /**
  * Least Recently Used Cache
@@ -32,11 +32,12 @@ class LRUCache implements \ArrayAccess {
 	 * Create a LRU Cache
 	 *
 	 * @param int $size The size of the cache
-	 * @throws InvalidArgumentException
+	 *
+	 * @throws RangeException
 	 */
 	public function __construct(int $size) {
 		if ($size <= 0) {
-			throw new InvalidArgumentException();
+			throw new RangeException('"size" must be greater than 0');
 		}
 		$this->maximumSize = $size;
 	}

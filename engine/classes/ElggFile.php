@@ -1,8 +1,8 @@
 <?php
 
 use Elgg\Exceptions\Filesystem\IOException;
+use Elgg\Exceptions\DomainException as ElggDomainException;
 use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
-use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Project\Paths;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -165,22 +165,15 @@ class ElggFile extends ElggObject {
 	 * @return false|resource File handler
 	 *
 	 * @throws IOException
-	 * @throws InvalidParameterException
+	 * @throws \Elgg\Exceptions\DomainException
 	 */
 	public function open(string $mode) {
 		if (!$this->getFilename()) {
 			throw new IOException('You must specify a name before opening a file.');
 		}
 
-		// See if file has already been saved
-		// seek on datastore, parameters and name?
-		// Sanity check
-		if (
-				($mode != 'read') &&
-				($mode != 'write') &&
-				($mode != 'append')
-		) {
-			throw new InvalidParameterException("Unrecognized file mode '{$mode}'");
+		if (!in_array($mode, ['read', 'write', 'append'])) {
+			throw new ElggDomainException("Unrecognized file mode '{$mode}'");
 		}
 
 		// Open the file handle

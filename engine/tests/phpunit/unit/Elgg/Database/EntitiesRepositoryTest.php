@@ -8,8 +8,7 @@ use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
-use Elgg\Exceptions\InvalidParameterException;
-use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\DomainException;
 use Elgg\UnitTestCase;
 
 /**
@@ -318,7 +317,7 @@ class EntitiesRepositoryTest extends UnitTestCase {
 	}
 
 	public function testThrowsOnInvalidCalculation() {
-		$this->expectException(InvalidArgumentException::class);
+		$this->expectException(DomainException::class);
 		Entities::with([])->calculate('invalid', 'guid', 'attribute');
 	}
 
@@ -371,7 +370,7 @@ class EntitiesRepositoryTest extends UnitTestCase {
 	}
 
 	public function testThrowsOnInvalidAttributeCalculation() {
-		$this->expectException(InvalidParameterException::class);
+		$this->expectException(DomainException::class);
 		Entities::with([])->calculate('max', 'invalid', 'attribute');
 	}
 

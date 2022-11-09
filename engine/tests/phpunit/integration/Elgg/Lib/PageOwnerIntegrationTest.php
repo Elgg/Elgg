@@ -2,7 +2,7 @@
 
 namespace Elgg\Lib;
 
-use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\RangeException;
 use Elgg\IntegrationTestCase;
 use Elgg\Router\Route;
 
@@ -49,7 +49,7 @@ class PageOwnerIntegrationTest extends IntegrationTestCase {
 	}
 		
 	public function testSettingNegativeOwner() {
-		$this->expectException(InvalidArgumentException::class);
+		$this->expectException(RangeException::class);
 		_elgg_services()->pageOwner->setPageOwnerGuid(-1);
 	}
 	

@@ -2,7 +2,7 @@
 
 namespace Elgg\Router;
 
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\UnitTestCase;
 
 class RouteRegistrationServiceUnitTest extends UnitTestCase {
@@ -42,14 +42,14 @@ class RouteRegistrationServiceUnitTest extends UnitTestCase {
 	}
 	
 	public function testRegisterRouterWithoutPath() {
-		$this->expectException(InvalidParameterException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->service->register('view:object:blog', [
 			'resource' => 'blog/view',
 		]);
 	}
 	
 	public function testRegisterRouterWithoutControllerParam() {
-		$this->expectException(InvalidParameterException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->service->register('view:object:blog', [
 			'path' => '/blog/view/{guid}/{title?}',
 		]);

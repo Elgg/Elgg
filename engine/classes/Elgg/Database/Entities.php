@@ -7,8 +7,8 @@ use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
+use Elgg\Exceptions\DomainException;
 use Elgg\Exceptions\InvalidArgumentException;
-use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\LogicException;
 
 /**
@@ -51,12 +51,12 @@ class Entities extends Repository {
 	 * @param string $property_type 'attribute'|'metadata'|'annotation'
 	 *
 	 * @return string
-	 * @throws InvalidParameterException
+	 * @throws DomainException
 	 */
 	public function calculate($function, $property, $property_type = null) {
 
 		if (!in_array(strtolower($function), QueryBuilder::$calculations)) {
-			throw new InvalidArgumentException("'$function' is not a valid numeric function");
+			throw new DomainException("'{$function}' is not a valid numeric function");
 		}
 
 		if (!isset($property_type)) {
@@ -72,7 +72,7 @@ class Entities extends Repository {
 		switch ($property_type) {
 			case 'attribute':
 				if (!in_array($property, \ElggEntity::PRIMARY_ATTR_NAMES)) {
-					throw new InvalidParameterException("'$property' is not a valid attribute");
+					throw new DomainException("'{$property}' is not a valid attribute");
 				}
 
 				$qb->addSelect("{$function}(e.{$property}) AS calculation");

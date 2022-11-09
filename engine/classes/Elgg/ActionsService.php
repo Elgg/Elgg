@@ -2,7 +2,7 @@
 
 namespace Elgg;
 
-use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\DomainException;
 use Elgg\Project\Paths;
 use Elgg\Router\Middleware\ActionMiddleware;
 use Elgg\Router\Middleware\AdminGatekeeper;
@@ -65,12 +65,12 @@ class ActionsService {
 	 * @param string $access  Who is allowed to execute this action: public, logged_in, logged_out, admin. (default: logged_in)
 	 *
 	 * @return void
-	 *
-	 * @see    elgg_register_action()
+	 * @throws \Elgg\Exceptions\DomainException
+	 * @see elgg_register_action()
 	 */
 	public function register(string $action, string $handler = '', string $access = 'logged_in'): void {
 		if (!in_array($access, self::$access_levels)) {
-			throw new InvalidArgumentException("Unrecognized value '{$access}' for \$access in " . __METHOD__);
+			throw new DomainException("Unrecognized value '{$access}' for \$access in " . __METHOD__);
 		}
 		
 		// plugins are encouraged to call actions with a trailing / to prevent 301

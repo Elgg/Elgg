@@ -6,7 +6,7 @@ use Elgg\Exceptions\Http\CsrfException;
 use Elgg\Exceptions\Http\GatekeeperException;
 use Elgg\Exceptions\Http\PageNotFoundException;
 use Elgg\Exceptions\Http\ValidationException;
-use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\DomainException;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Elgg\Http\Request;
@@ -166,7 +166,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanNotRegisterActionWithUnknownAccessLevel() {
 
-		$this->expectException(InvalidArgumentException::class);
+		$this->expectException(DomainException::class);
 		$this->expectExceptionMessage('Unrecognized value \'pblc\' for $access in Elgg\\ActionsService::register');
 		_elgg_services()->actions->register('test/output', "$this->actionsDir/output.php", 'pblc');
 	}

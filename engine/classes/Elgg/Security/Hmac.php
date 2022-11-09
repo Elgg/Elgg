@@ -36,6 +36,8 @@ class Hmac {
 	 * @param callable $comparator Function that returns true if given two equal strings, else false
 	 * @param mixed    $data       HMAC data string or serializable data
 	 * @param string   $algo       Hash algorithm
+	 *
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
 	public function __construct($key, callable $comparator, $data, $algo = 'sha256') {
 		$this->key = $key;

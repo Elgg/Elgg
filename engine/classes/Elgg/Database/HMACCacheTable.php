@@ -3,7 +3,7 @@
 namespace Elgg\Database;
 
 use Elgg\Database;
-use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\RangeException;
 use Elgg\Traits\TimeUsing;
 
 /**
@@ -66,11 +66,11 @@ class HMACCacheTable {
 	 * @param int $ttl the max TTL of the HMAC keys in seconds (-1 is endless)
 	 *
 	 * @return void
-	 * @throws InvalidArgumentException
+	 * @throws RangeException
 	 */
 	public function setTTL(int $ttl = 0) {
 		if ($ttl < -1) {
-			throw new InvalidArgumentException(__METHOD__ . ': TTL needs to be greater than or equal to -1');
+			throw new RangeException(__METHOD__ . ': TTL needs to be greater than or equal to -1');
 		}
 		
 		$this->ttl = $ttl;

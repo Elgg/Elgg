@@ -75,6 +75,16 @@ Removed functions
 * ``elgg.set_triggered_hook``
 * ``elgg.trigger_hook`` use the ``trigger`` function provide by the ``elgg\hooks`` module
 
+Exceptions
+----------
+
+The uses of exceptions in Elgg has been revisited. The ``\Elgg\Exceptions\InvalidParameterException`` has been removed and replaced with the correct exception.
+Also the use of the ``\Elgg\Exceptions\InvalidArgumentException`` has been checked. In some cases the exception was replaced by a more appropriate exception.
+
+.. note
+
+	All exceptions thrown in Elgg implement the ``\Elgg\Exceptions\ExceptionInterface`` if you wish to easily catch all Elgg exceptions.
+
 Changes in functions
 --------------------
 
@@ -372,6 +382,11 @@ Removed events
 * ``access:collections:addcollection, collection`` use the ``create, access_collection`` sequence
 * ``access:collections:deletecollection, collection`` use the ``delete, access_collection`` sequence
 * ``prepare, breadcrumbs`` use ``register, menu:breadcrumbs``
+
+Removed exceptions
+~~~~~~~~~~~~~~~~~~
+
+* ``\Elgg\Exceptions\InvalidParameterException``
 
 Constants
 ~~~~~~~~~

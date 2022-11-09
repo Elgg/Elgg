@@ -293,13 +293,13 @@ class Application {
 		}
 
 		if ($spec['request']) {
-			if ($spec['request'] instanceof HttpRequest) {
-				$spec['request']->initializeTrustedProxyConfiguration($spec['internal_services']->config);
-				$spec['request']->correctBaseURL($spec['internal_services']->config);
-				$spec['internal_services']->set('request', $spec['request']);
-			} else {
+			if (!$spec['request'] instanceof HttpRequest) {
 				throw new InvalidArgumentException("Given request is not a " . HttpRequest::class);
 			}
+
+			$spec['request']->initializeTrustedProxyConfiguration($spec['internal_services']->config);
+			$spec['request']->correctBaseURL($spec['internal_services']->config);
+			$spec['internal_services']->set('request', $spec['request']);
 		}
 
 		$app = new self($spec['internal_services']);

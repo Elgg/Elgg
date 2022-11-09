@@ -2,20 +2,16 @@
 
 namespace Elgg\Collections;
 
-use ArrayAccess;
-use Countable;
-use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\OutOfBoundsException;
-use SeekableIterator;
 
 /**
  * A collection of unique items
  */
 class Collection implements CollectionInterface,
-							ArrayAccess,
-							SeekableIterator,
-							Countable {
+							\ArrayAccess,
+							\SeekableIterator,
+							\Countable {
 
 	/**
 	 * @var CollectionItemInterface[]
@@ -59,13 +55,13 @@ class Collection implements CollectionInterface,
 	 * @param mixed $item Item
 	 *
 	 * @return void
-	 * @throws \Elgg\Exceptions\InvalidParameterException
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
 	protected function assertValidItem($item) {
-		$class = $this->item_class ? : CollectionItemInterface::class;
+		$class = $this->item_class ?? CollectionItemInterface::class;
 
 		if (!$item instanceof $class) {
-			throw new InvalidParameterException('Collection ' . __CLASS__ . ' only accepts instances of ' . $class);
+			throw new InvalidArgumentException('Collection ' . __CLASS__ . ' only accepts instances of ' . $class);
 		}
 	}
 

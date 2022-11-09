@@ -10,7 +10,7 @@ use Elgg\Database\Clauses\AttributeWhereClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\EventsService;
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\DomainException;
 use Elgg\Traits\Database\LegacyQueryOptionsAdapter;
 
 /**
@@ -68,9 +68,9 @@ class SearchService {
 	 *                               e.g. find 'elgg has been released' when searching for 'elgg released'
 	 *
 	 * @return \ElggBatch|\ElggEntity[]|int|false
-	 * @throws InvalidParameterException
+	 * @throws DomainException
 	 *
-	 * @see    elgg_get_entities()
+	 * @see elgg_get_entities()
 	 */
 	public function search(array $options = []) {
 		$options = $this->prepareSearchOptions($options);
@@ -87,7 +87,7 @@ class SearchService {
 		$search_type = elgg_extract('search_type', $options, 'entities');
 
 		if ($entity_type !== 'all' && !in_array($entity_type, Config::ENTITY_TYPES)) {
-			throw new InvalidParameterException("'$entity_type' is not a valid entity type");
+			throw new DomainException("'{$entity_type}' is not a valid entity type");
 		}
 
 		$options = $this->events->triggerResults('search:options', $entity_type, $options, $options);

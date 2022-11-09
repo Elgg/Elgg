@@ -4,7 +4,7 @@ namespace Elgg;
 
 use Elgg\Email\Address;
 use Elgg\Email\Attachment;
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Laminas\Mime\Part;
 
 /**
@@ -377,7 +377,7 @@ final class Email {
 	 *
 	 * @return Address
 	 *
-	 * @throws InvalidParameterException
+	 * @throws InvalidArgumentException
 	 */
 	protected static function prepareFrom($from) {
 		if (empty($from)) {
@@ -402,7 +402,7 @@ final class Email {
 		}
 		
 		if (!$from instanceof Address) {
-			throw new InvalidParameterException("From address is not in a valid format");
+			throw new InvalidArgumentException('From address is not in a valid format');
 		}
 
 		return $from;
@@ -415,7 +415,7 @@ final class Email {
 	 *
 	 * @return Address[]
 	 *
-	 * @throws InvalidParameterException
+	 * @throws InvalidArgumentException
 	 */
 	protected function prepareRecipients($recipients) {
 		if (empty($recipients)) {
@@ -440,7 +440,7 @@ final class Email {
 			}
 	
 			if (!$recipient instanceof Address) {
-				throw new InvalidParameterException("Recipient address is not in a valid format");
+				throw new InvalidArgumentException('Recipient address is not in a valid format');
 			}
 			
 			$result[] = $recipient;

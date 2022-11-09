@@ -2,8 +2,8 @@
 
 namespace Elgg\Filesystem\Filestore;
 
-use Elgg\Exceptions\InvalidParameterException;
-use Elgg\Exceptions\Filesystem\IOException;
+use Elgg\Exceptions\DomainException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Filesystem\Filestore;
 use Elgg\Project\Paths;
 
@@ -50,7 +50,7 @@ class DiskFilestore extends Filestore {
 	 * @param string    $mode read, write, or append.
 	 *
 	 * @return false|resource File pointer resource or false on failure
-	 * @throws \Elgg\Exceptions\InvalidParameterException
+	 * @throws \Elgg\Exceptions\DomainException
 	 */
 	public function open(\ElggFile $file, string $mode) {
 		$fullname = $this->getFilenameOnFilestore($file);
@@ -88,7 +88,7 @@ class DiskFilestore extends Filestore {
 				$mode = 'a+b';
 				break;
 			default:
-				throw new InvalidParameterException("Unrecognized file mode '{$mode}'");
+				throw new DomainException("Unrecognized file mode '{$mode}'");
 		}
 
 		return fopen($fullname, $mode);
@@ -208,7 +208,7 @@ class DiskFilestore extends Filestore {
 	 * @param \ElggFile $file File object
 	 *
 	 * @return string The full path of where the file is stored
-	 * @throws InvalidParameterException
+	 * @throws InvalidArgumentException
 	 */
 	public function getFilenameOnFilestore(\ElggFile $file): string {
 		
@@ -222,7 +222,7 @@ class DiskFilestore extends Filestore {
 		}
 
 		if (empty($owner_guid)) {
-			throw new InvalidParameterException("File {$file->getFilename()} (file guid: {$file->guid}) is missing an owner!");
+			throw new InvalidArgumentException("File {$file->getFilename()} (file guid: {$file->guid}) is missing an owner!");
 		}
 
 		$filename = $file->getFilename();
@@ -260,7 +260,7 @@ class DiskFilestore extends Filestore {
 		
 		try {
 			$real_filename = $this->getFilenameOnFilestore($file);
-		} catch (InvalidParameterException $e) {
+		} catch (InvalidArgumentException $e) {
 			// something wrong with the filename
 			return false;
 		}

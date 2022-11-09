@@ -28,8 +28,6 @@ return array(
 	'APIException:MissingPOSTAlgo' => "Saknad  X-Elgg-posthash_algo header",
 	'APIException:MissingContentType' => "Saknad innehållstyp för inläggsdata",
 	'SecurityException:authenticationfailed' => "Användare kunde inte autentiseras",
-	'InvalidParameterException:APIParametersArrayStructure' => "Parameters array structure is incorrect for call to expose method '%s'",
-	'InvalidParameterException:UnrecognisedHttpMethod' => "Okänd http-metod %s för api-metod '%s'",
 	'SecurityException:InvalidPostHash' => "POST-data hash är ogiltig - Förväntade %s men fick %s.",
 	'SecurityException:DupePacket' => "Paketsignatur redan skickat.",
 	'SecurityException:InvalidAPIKey' => "Ogiltig eller saknad API-nyckel.",

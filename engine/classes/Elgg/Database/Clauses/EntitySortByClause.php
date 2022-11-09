@@ -3,8 +3,7 @@
 namespace Elgg\Database\Clauses;
 
 use Elgg\Database\QueryBuilder;
-use Elgg\Exceptions\InvalidParameterException;
-use ElggEntity;
+use Elgg\Exceptions\DomainException;
 
 /**
  * Extends QueryBuilder with clauses necesary to sort entity lists by entity properties
@@ -43,11 +42,13 @@ class EntitySortByClause extends OrderByClause {
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @throws DomainException
 	 */
 	public function prepare(QueryBuilder $qb, $table_alias = null) {
 
 		if (!isset($this->property_type)) {
-			if (in_array($this->property, ElggEntity::PRIMARY_ATTR_NAMES)) {
+			if (in_array($this->property, \ElggEntity::PRIMARY_ATTR_NAMES)) {
 				$this->property_type = 'attribute';
 			} else {
 				$this->property_type = 'metadata';
@@ -77,8 +78,8 @@ class EntitySortByClause extends OrderByClause {
 				break;
 
 			case 'attribute':
-				if (!in_array($this->property, ElggEntity::PRIMARY_ATTR_NAMES)) {
-					throw new InvalidParameterException("'{$this->property}' is not a valid entity attribute");
+				if (!in_array($this->property, \ElggEntity::PRIMARY_ATTR_NAMES)) {
+					throw new DomainException("'{$this->property}' is not a valid entity attribute");
 				}
 				
 				if ($qb->getTableName() !== QueryBuilder::TABLE_ENTITIES) {

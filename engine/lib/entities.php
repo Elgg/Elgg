@@ -4,7 +4,6 @@
  */
 
 use Elgg\Database\Select;
-use Elgg\Exceptions\InvalidParameterException;
 
 /**
  * Return the class name registered as a constructor for an entity of a given type and subtype
@@ -635,7 +634,7 @@ function elgg_get_entity_dates(array $options = []): array {
 function elgg_search(array $options = []) {
 	try {
 		return _elgg_services()->search->search($options);
-	} catch (InvalidParameterException $e) {
+	} catch (\Elgg\Exceptions\DomainException $e) {
 		return false;
 	}
 }

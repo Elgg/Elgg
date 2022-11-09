@@ -2,10 +2,9 @@
 
 namespace Elgg\Collections;
 
-use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\InvalidArgumentException;
-use Elgg\UnitTestCase;
 use Elgg\Helpers\Collections\TestItem;
+use Elgg\UnitTestCase;
 
 /**
  * @group Collections
@@ -64,7 +63,7 @@ class CollectionsUnitTest extends UnitTestCase {
 		$a = new TestItem('a', 100);
 		$b = new TestItem('b', 200);
 
-		$this->expectException(InvalidParameterException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$collection = new Collection(['c' => $a, 'd' => $b, null, false, new \stdClass()]);
 
 		$this->assertEquals([
@@ -400,7 +399,7 @@ class CollectionsUnitTest extends UnitTestCase {
 		$this->assertEmpty($collection->get('j'));
 		
 		// test offsetSet() throws exception (needs to be last because exceptions end test execution)
-		$this->expectException(\Elgg\Exceptions\InvalidParameterException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$collection[] = new \stdClass();
 	}
 }

@@ -3,6 +3,7 @@
 namespace Elgg\Http;
 
 use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\RangeException;
 
 /**
  * @group HttpService
@@ -93,7 +94,7 @@ abstract class ResponseUnitTestCase extends \Elgg\UnitTestCase {
 		$test_class = $this->getReponseClassName();
 		$response = new $test_class();
 		
-		$this->expectException(InvalidArgumentException::class);
+		$this->expectException(RangeException::class);
 		$response->setStatusCode($value);
 	}
 

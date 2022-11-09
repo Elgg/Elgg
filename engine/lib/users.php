@@ -4,10 +4,6 @@
  * Functions to manage multiple or single users in an Elgg install
  */
 
-use Elgg\Exceptions\InvalidParameterException;
-use Elgg\Exceptions\ClassException;
-use Elgg\Exceptions\Configuration\RegistrationException;
-
 /**
  * Get a user object from a GUID.
  *
@@ -20,11 +16,11 @@ use Elgg\Exceptions\Configuration\RegistrationException;
 function get_user(int $guid): ?\ElggUser {
 	try {
 		return _elgg_services()->entityTable->get($guid, 'user');
-	} catch (InvalidParameterException $ex) {
+	} catch (\Elgg\Exceptions\DomainException $ex) {
 		elgg_log($ex, 'ERROR');
 
 		return null;
-	} catch (ClassException $ex) {
+	} catch (\Elgg\Exceptions\ClassException $ex) {
 		elgg_log($ex, 'ERROR');
 
 		return null;
@@ -106,7 +102,7 @@ function elgg_generate_password(): string {
  *                      (bool)   validated             => (optional) Is the user validated (default true)
  *
  * @return \ElggUser
- * @throws RegistrationException
+ * @throws \Elgg\Exceptions\Configuration\RegistrationException
  */
 function elgg_register_user(array $params = []): \ElggUser {
 	return _elgg_services()->accounts->register($params);

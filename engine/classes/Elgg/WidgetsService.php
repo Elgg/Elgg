@@ -171,7 +171,6 @@ class WidgetsService {
 	 * @param WidgetDefinition $definition Definition of the widget
 	 *
 	 * @return void
-	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 *
 	 * @see elgg_register_widget_type()
 	 */

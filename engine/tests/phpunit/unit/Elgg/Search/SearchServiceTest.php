@@ -4,11 +4,10 @@ namespace Elgg\Search;
 
 use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\AttributeWhereClause;
-use Elgg\Database\Clauses\EntitySortByClause;
 use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Select;
-use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\DomainException;
 use Elgg\UnitTestCase;
 
 /**
@@ -102,7 +101,7 @@ class SearchServiceTest extends UnitTestCase {
 			'query' => 'bar',
 		];
 
-		$this->expectException(InvalidParameterException::class);
+		$this->expectException(DomainException::class);
 		_elgg_services()->search->search($options);
 	}
 	
