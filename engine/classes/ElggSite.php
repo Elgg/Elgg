@@ -194,7 +194,7 @@ class ElggSite extends \ElggEntity {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function updateLastAction(int $posted = null): int|false {
+	public function updateLastAction(int $posted = null): int {
 		// setting last action on ElggSite makes no sense... just returning current value to be compliant
 		return $this->last_action;
 	}

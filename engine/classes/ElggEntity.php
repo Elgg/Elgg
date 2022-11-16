@@ -1864,15 +1864,15 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * while last_action is only set when explicitly called.
 	 *
 	 * @param int $posted Timestamp of last action
-	 * @return int|false
+	 * @return int
 	 * @internal
 	 */
-	public function updateLastAction(int $posted = null): int|false {
+	public function updateLastAction(int $posted = null): int {
 		$posted = _elgg_services()->entityTable->updateLastAction($this, $posted);
-		if ($posted) {
-			$this->attributes['last_action'] = $posted;
-			$this->cache();
-		}
+		
+		$this->attributes['last_action'] = $posted;
+		$this->cache();
+	
 		return $posted;
 	}
 

@@ -3,6 +3,8 @@
  * Show all site river activity
  */
 
+use Elgg\Database\Clauses\OrderByClause;
+
 // get filter options
 $type = preg_replace('[\W]', '', get_input('type', 'all'));
 $subtype = preg_replace('[\W]', '', get_input('subtype', ''));
@@ -12,6 +14,10 @@ $content = elgg_view('river/listing/all', [
 	'entity_type' => $type,
 	'entity_subtype' => $subtype,
 	'show_filter' => true,
+	'show_comments' => false,
+	'options' => [
+		'order_by' => new OrderByClause('last_action', 'DESC'),
+	],
 ]);
 
 // draw page

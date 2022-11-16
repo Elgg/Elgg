@@ -136,6 +136,7 @@ class RiverTable {
 			'target_guid' => $insert->param($item->target_guid ?? 0, ELGG_VALUE_GUID),
 			'annotation_id' => $insert->param($item->annotation_id ?? 0, ELGG_VALUE_ID),
 			'posted' => $insert->param($created, ELGG_VALUE_TIMESTAMP),
+			'last_action' => $insert->param($created, ELGG_VALUE_TIMESTAMP),
 		]);
 		
 		$id = $this->db->insertData($insert);
@@ -145,6 +146,7 @@ class RiverTable {
 		
 		$item->id = $id;
 		$item->posted = $created;
+		$item->last_action = $created;
 		
 		$this->events->triggerAfter('create', 'river', $item);
 		
@@ -175,5 +177,27 @@ class RiverTable {
 		$this->events->triggerAfter('delete', 'river', $item);
 		
 		return $result;
+	}
+	
+	/**
+	 * Update the last_action column in the river table for $item.
+	 *
+	 * @param \ElggRiverItem $item        River item to update
+	 * @param int            $last_action Timestamp of last action
+	 *
+	 * @return int
+	 */
+	public function updateLastAction(\ElggRiverItem $item, int $last_action = null): int {
+		if ($last_action === null) {
+			$last_action = $this->getCurrentTime()->getTimestamp();
+		}
+		
+		$update = Update::table(self::TABLE_NAME);
+		$update->set('last_action', $update->param($last_action, ELGG_VALUE_TIMESTAMP))
+			->where($update->compare('id', '=', $item->id, ELGG_VALUE_ID));
+		
+		$this->db->updateData($update);
+		
+		return (int) $last_action;
 	}
 }

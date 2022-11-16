@@ -12,6 +12,7 @@
  * @property      string $view          The view for displaying this river item
  * @property      int    $access_id     The visibility of the river item
  * @property      int    $posted        UNIX timestamp when the action occurred
+ * @property      int    $last_action   UNIX timestamp when the river item was bumped
  */
 class ElggRiverItem {
 	
@@ -26,6 +27,7 @@ class ElggRiverItem {
 		'annotation_id',
 		'access_id',
 		'posted',
+		'last_action',
 	];
 	
 	/**
@@ -109,7 +111,7 @@ class ElggRiverItem {
 	 *
 	 * @return string
 	 */
-	public function getView() {
+	public function getView(): string {
 		return $this->view;
 	}
 
@@ -118,8 +120,21 @@ class ElggRiverItem {
 	 *
 	 * @return int
 	 */
-	public function getTimePosted() {
+	public function getTimePosted(): int {
 		return (int) $this->posted;
+	}
+
+	/**
+	 * Update the last_action column in the river table.
+	 *
+	 * @param int $last_action Timestamp of last action
+	 *
+	 * @return int
+	 */
+	public function updateLastAction(int $last_action = null): int {
+		$this->last_action = _elgg_services()->riverTable->updateLastAction($this, $last_action);
+
+		return $this->last_action;
 	}
 
 	/**
@@ -130,7 +145,7 @@ class ElggRiverItem {
 	 *
 	 * @return string 'river'
 	 */
-	public function getType() {
+	public function getType(): string {
 		return 'river';
 	}
 
@@ -141,7 +156,7 @@ class ElggRiverItem {
 	 *
 	 * @return string 'item'
 	 */
-	public function getSubtype() {
+	public function getSubtype(): string {
 		return 'item';
 	}
 
@@ -155,7 +170,7 @@ class ElggRiverItem {
 	 * @return bool Whether this river item should be considered deletable by the given user.
 	 * @since 2.3
 	 */
-	public function canDelete($user_guid = 0) {
+	public function canDelete(int $user_guid = 0): bool {
 		return _elgg_services()->userCapabilities->canDeleteRiverItem($this, $user_guid);
 	}
 
@@ -165,7 +180,7 @@ class ElggRiverItem {
 	 * @return bool False if the user lacks permission or the before event is cancelled
 	 * @since 2.3
 	 */
-	public function delete() {
+	public function delete(): bool {
 		if (!$this->canDelete()) {
 			return false;
 		}
@@ -178,7 +193,7 @@ class ElggRiverItem {
 	 *
 	 * @return \stdClass
 	 */
-	public function toObject() {
+	public function toObject(): \stdClass {
 		$object = new \stdClass();
 		$object->id = $this->id;
 		$object->subject_guid = $this->subject_guid;
@@ -189,6 +204,7 @@ class ElggRiverItem {
 		$object->action = $this->action_type;
 		$object->view = $this->view;
 		$object->time_posted = date('c', $this->getTimePosted());
+		$object->last_action = date('c', $this->last_action);
 		
 		$params = ['item' => $this];
 		return _elgg_services()->events->triggerResults('to:object', 'river_item', $params, $object);
