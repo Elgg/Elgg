@@ -34,7 +34,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('messages:user:blank'), $response->getContent());
-		$this->assertEquals('messages/add', $response->getForwardURL());
+		$this->assertEquals(REFERRER, $response->getForwardURL());
 	}
 
 	public function testSendFailsToSelf() {
@@ -53,7 +53,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('messages:user:self'), $response->getContent());
-		$this->assertEquals('messages/add', $response->getForwardURL());
+		$this->assertEquals(REFERRER, $response->getForwardURL());
 	}
 
 	public function testSendFailsToInvalidUser() {
@@ -72,7 +72,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('messages:user:nonexist'), $response->getContent());
-		$this->assertEquals('messages/add', $response->getForwardURL());
+		$this->assertEquals(REFERRER, $response->getForwardURL());
 	}
 
 	public function testSendFailsWithoutMessageSubject() {
@@ -94,7 +94,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('messages:blank'), $response->getContent());
-		$this->assertEquals('messages/add', $response->getForwardURL());
+		$this->assertEquals(REFERRER, $response->getForwardURL());
 	}
 
 	public function testSendFailsWithoutMessageBody() {
@@ -116,7 +116,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('messages:blank'), $response->getContent());
-		$this->assertEquals('messages/add', $response->getForwardURL());
+		$this->assertEquals(REFERRER, $response->getForwardURL());
 	}
 
 	public function testSendSuccess() {
@@ -142,7 +142,7 @@ class SendActionTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(OkResponse::class, $response);
 
 		$this->assertSystemMessageEmitted(elgg_echo('messages:posted', [], $user->language));
-		$this->assertEquals('messages/inbox/' . $user->username, $response->getForwardURL());
+		$this->assertEquals(elgg_generate_url('collection:object:messages:owner', ['username' => $user->username]), $response->getForwardURL());
 
 		elgg_call(ELGG_IGNORE_ACCESS, function () use ($response) {
 			$data = $response->getContent();

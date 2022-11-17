@@ -16,27 +16,34 @@ class FormsService {
 	use Loggable;
 
 	/**
+	 * @var EventsService
+	 */
+	protected $events;
+	
+	/**
 	 * @var ViewsService
 	 */
-	private $views;
+	protected $views;
 
 	/**
 	 * @var bool
 	 */
-	private $rendering;
+	protected $rendering;
 
 	/**
 	 * @var string
 	 */
-	private $footer = '';
+	protected $footer = '';
 
 	/**
 	 * Constructor
 	 *
-	 * @param ViewsService $views Views service
+	 * @param ViewsService  $views  Views service
+	 * @param EventsService $events Events service
 	 */
-	public function __construct(ViewsService $views) {
+	public function __construct(ViewsService $views, EventsService $events) {
 		$this->views = $views;
+		$this->events = $events;
 	}
 
 	/**
@@ -80,12 +87,16 @@ class FormsService {
 			'action' => elgg_generate_action_url($action, [], false),
 			'method' => 'post',
 			'ajax' => false,
+			'sticky_enabled' => false,
+			'sticky_form_name' => $action,
+			'sticky_ignored_fields' => [],
 		];
 
 		// append elgg-form class to any class options set
-		$form_vars['class'] = (array) elgg_extract('class', $form_vars, []);
-		$form_vars['class'][] = 'elgg-form-' . preg_replace('/[^a-z0-9]/i', '-', $action);
-
+		$form_vars['class'] = elgg_extract_class($form_vars, [
+			'elgg-form-' . preg_replace('/[^a-z0-9]/i', '-', $action)],
+		);
+		
 		$form_vars = array_merge($defaults, $form_vars);
 
 		if (!isset($form_vars['enctype']) && strtolower($form_vars['method']) == 'post') {
@@ -104,6 +115,9 @@ class FormsService {
 		$form_vars['prevent_double_submit'] = (bool) elgg_extract('prevent_double_submit', $form_vars, true);
 		
 		if (!isset($form_vars['body'])) {
+			// prepare body vars
+			$body_vars = (array) $this->events->triggerResults('form:prepare:fields', $action, $form_vars, $body_vars);
+			
 			$this->rendering = true;
 			$this->footer = '';
 

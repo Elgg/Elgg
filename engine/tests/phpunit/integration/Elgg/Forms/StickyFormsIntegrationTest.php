@@ -41,6 +41,23 @@ class StickyFormsIntegrationTest extends IntegrationTestCase {
 		]);
 	}
 	
+	public function testMakeStickyFormDefaultIgnoredFields() {
+		// request also container CSRF tokens, which shouldn't be made sticky
+		$request = $this->prepareHttpRequest('foo', 'POST', [
+			'name' => 'foo',
+			'_elgg_sticky_form_name' => 'foo', // added by sticky form support
+			'_elgg_sticky_ignored_fields' => 'password,password2', // added by sticky form support
+			'_route' => 'action:foo', // added by router
+		], 0, true);
+		
+		$this->createService($request);
+		
+		$this->service->makeStickyForm('foo');
+		$this->assertEquals([
+			'name' => 'foo',
+		], $this->service->getStickyValues('foo'));
+	}
+	
 	public function testMakeStickyFormWithIgnoredFields() {
 		$request = $this->prepareHttpRequest('foo', 'POST', [
 			'name' => 'foo',

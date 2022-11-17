@@ -1,9 +1,8 @@
 <?php
 
+use Elgg\Blog\Forms\PrepareFields;
 use Elgg\Blog\GroupToolContainerLogicCheck;
 use Elgg\Blog\Notifications\PublishBlogEventHandler;
-
-require_once(__DIR__ . '/lib/functions.php');
 
 return [
 	'plugin' => [
@@ -107,6 +106,11 @@ return [
 		'container_logic_check' => [
 			'object' => [
 				GroupToolContainerLogicCheck::class => [],
+			],
+		],
+		'form:prepare:fields' => [
+			'blog/save' => [
+				PrepareFields::class => [],
 			],
 		],
 		'register' => [

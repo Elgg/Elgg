@@ -15,7 +15,7 @@ echo elgg_view_field([
 	'#label' => elgg_echo('invitefriends:emails'),
 	'id' => 'invitefriends-emails',
 	'name' => 'emails',
-	'value' => elgg_get_sticky_value('invitefriends', 'emails'),
+	'value' => elgg_extract('emails', $vars),
 	'required' => true,
 	'rows' => 4,
 ]);
@@ -25,7 +25,7 @@ echo elgg_view_field([
 	'#label' => elgg_echo('invitefriends:message'),
 	'id' => 'invitefriends-emailmessage',
 	'name' => 'emailmessage',
-	'value' => elgg_get_sticky_value('invitefriends', 'emailmessage', $default_message),
+	'value' => elgg_extract('emailmessage', $vars, $default_message),
 ]);
 
 $footer = elgg_view_field([

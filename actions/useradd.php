@@ -5,8 +5,6 @@
 
 use Elgg\Exceptions\Configuration\RegistrationException;
 
-elgg_make_sticky_form('useradd', ['password', 'password2']);
-
 // Get variables
 $username = get_input('username');
 $password = get_input('password', null, false);
@@ -49,8 +47,6 @@ try {
 	if ($admin && elgg_is_admin_logged_in()) {
 		$new_user->makeAdmin();
 	}
-
-	elgg_clear_sticky_form('useradd');
 
 	$new_user->admin_created = true;
 	$new_user->created_by_guid = elgg_get_logged_in_user_guid();

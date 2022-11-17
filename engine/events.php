@@ -149,6 +149,11 @@ return [
 			\Elgg\Widgets\EntityUrlHandler::class => [],
 		],
 	],
+	'form:prepare:fields' => [
+		'all' => [
+			\Elgg\Forms\PrepareFields::class => ['priority' => 9999],
+		],
+	],
 	'head' => [
 		'page' => [
 			\Elgg\Page\AddFaviconLinksHandler::class => [],

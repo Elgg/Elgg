@@ -8,8 +8,6 @@ use Elgg\Exceptions\LoginException;
 
 /* @var $request \Elgg\Request */
 
-elgg_make_sticky_form('register', ['password', 'password2']);
-
 // Get variables
 $username = (string) $request->getParam('username');
 $password = (string) $request->getParam('password', null, false);
@@ -67,8 +65,6 @@ try {
 		$fail();
 		throw $e;
 	}
-
-	elgg_clear_sticky_form('register');
 
 	$response_data = [
 		'user' => $new_user,

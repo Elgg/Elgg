@@ -1,9 +1,8 @@
 <?php
 
+use Elgg\Bookmarks\Forms\PrepareFields;
 use Elgg\Bookmarks\GroupToolContainerLogicCheck;
 use Elgg\Bookmarks\Notifications\CreateBookmarksEventHandler;
-
-require_once(__DIR__ . '/lib/functions.php');
 
 return [
 	'plugin' => [
@@ -90,6 +89,11 @@ return [
 		'entity:url' => [
 			'object' => [
 				'Elgg\Bookmarks\Widgets::widgetURL' => [],
+			],
+		],
+		'form:prepare:fields' => [
+			'bookmarks/save' => [
+				PrepareFields::class => [],
 			],
 		],
 		'register' => [

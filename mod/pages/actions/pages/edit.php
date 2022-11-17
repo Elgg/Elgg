@@ -3,8 +3,6 @@
  * Create or edit a page
  */
 
-elgg_make_sticky_form('page');
-
 $variables = elgg()->fields->get('object', 'page');
 $input = [];
 foreach ($variables as $field) {
@@ -95,8 +93,6 @@ $page->setParentByGUID($parent_guid);
 if (!$page->save()) {
 	return elgg_error_response(elgg_echo('pages:notsaved'));
 }
-
-elgg_clear_sticky_form('page');
 
 // Now save description as an annotation
 $page->annotate('page', $page->description ?? '', $page->access_id);

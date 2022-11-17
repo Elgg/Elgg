@@ -1,5 +1,6 @@
 <?php
 
+use Elgg\File\Forms\PrepareFields;
 use Elgg\File\GroupToolContainerLogicCheck;
 use Elgg\File\Notifications\CreateFileEventHandler;
 
@@ -82,6 +83,11 @@ return [
 		'entity:icon:sizes' => [
 			'object' => [
 				'Elgg\File\Icons::setIconSizes' => [],
+			],
+		],
+		'form:prepare:fields' => [
+			'file/upload' => [
+				PrepareFields::class => [],
 			],
 		],
 		'register' => [

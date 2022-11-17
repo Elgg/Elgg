@@ -9,9 +9,6 @@
  * Drafts are saved with the access set to private.
  */
 
-// start a new sticky form session in case of failure
-elgg_make_sticky_form('blog');
-
 // save or preview
 $save = (bool) get_input('save');
 
@@ -108,9 +105,6 @@ foreach ($values as $name => $value) {
 if (!$blog->save()) {
 	return elgg_error_response(elgg_echo('blog:error:cannot_save'));
 }
-
-// remove sticky form entries
-elgg_clear_sticky_form('blog');
 
 // remove autosave draft if exists
 $blog->deleteAnnotations('blog_auto_save');

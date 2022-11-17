@@ -3,23 +3,6 @@
  * Elgg register form
  */
 
-if (elgg_is_sticky_form('register')) {
-	$values = elgg_get_sticky_values('register');
-
-	// Add the sticky values to $vars so views extending
-	// register/extend also get access to them.
-	$vars = array_merge($vars, $values);
-
-	elgg_clear_sticky_form('register');
-} else {
-	$values = [];
-}
-
-$password = $password2 = '';
-$username = elgg_extract('username', $values, get_input('u'));
-$email = elgg_extract('email', $values, get_input('e'));
-$name = elgg_extract('name', $values, get_input('n'));
-
 $fields = [
 	[
 		'#type' => 'hidden',
@@ -36,7 +19,7 @@ $fields = [
 		'#label' => elgg_echo('name'),
 		'#class' => 'mtm',
 		'name' => 'name',
-		'value' => $name,
+		'value' => elgg_extract('name', $vars, get_input('n')),
 		'autofocus' => true,
 		'required' => true,
 	],
@@ -44,21 +27,20 @@ $fields = [
 		'#type' => 'email',
 		'#label' => elgg_echo('email'),
 		'name' => 'email',
-		'value' => $email,
+		'value' => elgg_extract('email', $vars, get_input('e')),
 		'required' => true,
 	],
 	[
 		'#type' => 'text',
 		'#label' => elgg_echo('username'),
 		'name' => 'username',
-		'value' => $username,
+		'value' => elgg_extract('username', $vars, get_input('u')),
 		'required' => true,
 	],
 	[
 		'#type' => 'password',
 		'#label' => elgg_echo('password'),
 		'name' => 'password',
-		'value' => $password,
 		'required' => true,
 		'autocomplete' => 'new-password',
 		'add_security_requirements' => true,
@@ -67,7 +49,6 @@ $fields = [
 		'#type' => 'password',
 		'#label' => elgg_echo('passwordagain'),
 		'name' => 'password2',
-		'value' => $password2,
 		'required' => true,
 		'autocomplete' => 'new-password',
 		'add_security_requirements' => true,

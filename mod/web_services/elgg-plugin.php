@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Router\Middleware\AdminGatekeeper;
+use Elgg\WebServices\Forms\PrepareFields;
 use Elgg\WebServices\Middleware\ApiContextMiddleware;
 use Elgg\WebServices\Middleware\RestApiErrorHandlingMiddleware;
 use Elgg\WebServices\Middleware\RestApiOutputMiddleware;
@@ -79,6 +80,11 @@ return [
 		],
 	],
 	'events' => [
+		'form:prepare:fields' => [
+			'webservices/api_key/edit' => [
+				PrepareFields::class => [],
+			],
+		],
 		'register' => [
 			'menu:entity' => [
 				'\Elgg\WebServices\EntityMenu' => [],

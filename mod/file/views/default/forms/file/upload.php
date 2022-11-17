@@ -58,7 +58,7 @@ $fields = [
 		'#label' => elgg_echo('access'),
 		'name' => 'access_id',
 		'value' => $access_id,
-		'entity' => get_entity($guid),
+		'entity' => elgg_extract('entity', $vars),
 		'entity_type' => 'object',
 		'entity_subtype' => 'file',
 	],

@@ -5,7 +5,14 @@ if (elgg_is_logged_in()) {
 	$content = elgg_echo('index:content');
 } elseif (elgg_get_config('allow_registration')) {
 	$title = elgg_echo('register');
-	$content = elgg_view_form('register', ['ajax' => true]);
+	$content = elgg_view_form('register', [
+		'ajax' => true,
+		'sticky_enabled' => true,
+		'sticky_ignored_fields' => [
+			'password',
+			'password2',
+		],
+	]);
 } else {
 	$title = elgg_echo('login');
 	$content = elgg_view_form('login', ['ajax' => true]);

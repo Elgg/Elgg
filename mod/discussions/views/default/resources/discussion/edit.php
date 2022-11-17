@@ -4,13 +4,11 @@ $guid = (int) elgg_extract('guid', $vars);
 
 elgg_entity_gatekeeper($guid, 'object', 'discussion', true);
 
-$topic = get_entity($guid);
+$discussion = get_entity($guid);
 
-elgg_push_entity_breadcrumbs($topic);
-
-$body_vars = discussion_prepare_form_vars($topic);
+elgg_push_entity_breadcrumbs($discussion);
 
 echo elgg_view_page(elgg_echo('edit:object:discussion'), [
-	'content' => elgg_view_form('discussion/save', [], $body_vars),
+	'content' => elgg_view_form('discussion/save', ['sticky_enabled' => true], ['entity' => $discussion]),
 	'filter_id' => 'discussion/edit',
 ]);

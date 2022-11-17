@@ -914,6 +914,10 @@ Views
 **config, htmlawed** |results|
 	Filter the HTMLawed ``$config`` array.
 
+**form:prepare:fields, <form_name>** |results|
+	Prepare field values for use in the form. Eg. when editing a blog, fill this with the current values of the blog.
+	Sticky form values will automatically be added to the field values (when available).
+
 **head, page** |results|
     In ``elgg_view_page()``, filters ``$vars['head']``
     Return value contains an array with ``title``, ``metas`` and ``links`` keys,

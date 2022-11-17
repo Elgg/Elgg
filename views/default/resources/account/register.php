@@ -15,6 +15,11 @@ $invitecode = get_input('invitecode');
 $form_params = [
 	'class' => 'elgg-form-account',
 	'ajax' => true,
+	'sticky_enabled' => true,
+	'sticky_ignored_fields' => [
+		'password',
+		'password2',
+	],
 ];
 
 $body_params = [

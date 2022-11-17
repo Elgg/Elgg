@@ -1,9 +1,9 @@
 <?php
-
 /**
  * Discussion topic add/edit form body
  *
  */
+
 $title = elgg_extract('title', $vars, '');
 $desc = elgg_extract('description', $vars, '');
 $status = elgg_extract('status', $vars, '');
@@ -89,7 +89,7 @@ echo elgg_view_field([
 	'#class' => 'discussion-access',
 	'name' => 'access_id',
 	'value' => $access_id,
-	'entity' => get_entity($guid),
+	'entity' => elgg_extract('entity', $vars),
 	'entity_type' => 'object',
 	'entity_subtype' => 'discussion',
 ]);
