@@ -424,7 +424,7 @@ class EntityTable {
 	}
 
 	/**
-	 * Update the last_action column in the entities table for $guid.
+	 * Update the last_action column in the entities table for $entity.
 	 *
 	 * @warning This is different to time_updated.  Time_updated is automatically set,
 	 * while last_action is only set when explicitly called.
@@ -434,7 +434,7 @@ class EntityTable {
 	 *
 	 * @return int
 	 */
-	public function updateLastAction(\ElggEntity $entity, int $posted = null) {
+	public function updateLastAction(\ElggEntity $entity, int $posted = null): int {
 
 		if ($posted === null) {
 			$posted = $this->getCurrentTime()->getTimestamp();
@@ -457,7 +457,7 @@ class EntityTable {
 	 * @return \ElggUser|null
 	 * @throws UserFetchFailureException
 	 */
-	public function getUserForPermissionsCheck($guid = 0) {
+	public function getUserForPermissionsCheck(int $guid = null): ?\ElggUser {
 		if (!$guid || $guid === $this->session->getLoggedInUserGuid()) {
 			return $this->session->getLoggedInUser();
 		}

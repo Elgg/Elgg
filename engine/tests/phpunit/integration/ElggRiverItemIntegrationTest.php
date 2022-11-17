@@ -134,6 +134,24 @@ class ElggRiverItemIntegrationTest extends IntegrationTestCase {
 		$this->assertLessThanOrEqual(time(), $item->getTimePosted());
 	}
 	
+	public function testLastActionOnCreate() {
+		$item = $this->getRiverItem();
+		
+		$this->assertIsInt($item->last_action);
+		$this->assertEquals($item->getTimePosted(), $item->last_action);
+	}
+	
+	public function testUpdateLastAction() {
+		$item = $this->getRiverItem();
+		
+		$new_last_action = $item->last_action + 100;
+		$item->updateLastAction($new_last_action);
+		$this->assertEquals($new_last_action, $item->last_action);
+		
+		$loaded_item = elgg_get_river_item_from_id($item->id);
+		$this->assertEquals($new_last_action, $loaded_item->last_action);
+	}
+	
 	public function testCanDelete() {
 		$item = $this->getRiverItem();
 		

@@ -94,6 +94,7 @@ return [
 	],
 	'create:after' => [
 		'river' => [
+			\Elgg\Comments\UpdateRiverLastActionHandler::class => [],
 			\Elgg\River\UpdateLastActionHandler::class => [],
 		],
 	],
