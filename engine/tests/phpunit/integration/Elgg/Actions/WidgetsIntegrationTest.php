@@ -29,7 +29,6 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 		_elgg_services()->session->setLoggedInUser($this->user);
 		$this->widget = $this->createObject([
 			'subtype' => 'widget',
-		], [
 			'tags' => 'tag',
 		]);
 		
@@ -124,7 +123,6 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 		_elgg_services()->session->setLoggedInUser($other_user);
 		$widget = $this->createObject([
 			'subtype' => 'widget',
-		], [
 			'tags' => 'tag',
 		]);
 		_elgg_services()->session->setLoggedInUser($this->user);
@@ -142,7 +140,6 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 		
 		$widget = $this->createObject([
 			'subtype' => 'widget',
-		], [
 			'tags' => 'tag',
 		]);
 		
@@ -209,7 +206,6 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 		_elgg_services()->session->setLoggedInUser($other_user);
 		$widget = $this->createObject([
 			'subtype' => 'widget',
-		], [
 			'tags' => 'tag',
 		]);
 		_elgg_services()->session->setLoggedInUser($this->user);

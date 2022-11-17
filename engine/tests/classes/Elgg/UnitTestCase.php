@@ -104,7 +104,7 @@ abstract class UnitTestCase extends BaseTestCase {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function createUser(array $attributes = [], array $metadata = []) {
+	public function createUser(array $properties = []): \ElggUser {
 		$unique_id = uniqid('user');
 
 		$defaults = [
@@ -113,44 +113,38 @@ abstract class UnitTestCase extends BaseTestCase {
 			'email' => "john_doe_{$unique_id}@example.com",
 		];
 
-		$attributes = array_merge($defaults, $metadata, $attributes);
+		$properties = array_merge($defaults, $properties);
 
-		$subtype = isset($attributes['subtype']) ? $attributes['subtype'] : 'foo_user';
+		$subtype = elgg_extract('subtype', $properties, 'foo_user');
 
-		return _elgg_services()->entityTable->setup(null, 'user', $subtype, $attributes);
+		return _elgg_services()->entityTable->setup(null, 'user', $subtype, $properties);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function createObject(array $attributes = [], array $metadata = []) {
-		$attributes = array_merge($metadata, $attributes);
+	public function createObject(array $properties = []): \ElggObject {
+		$subtype = elgg_extract('subtype', $properties, 'foo_object');
 
-		$subtype = isset($attributes['subtype']) ? $attributes['subtype'] : 'foo_object';
-
-		return _elgg_services()->entityTable->setup(null, 'object', $subtype, $attributes);
+		return _elgg_services()->entityTable->setup(null, 'object', $subtype, $properties);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function createGroup(array $attributes = [], array $metadata = []) {
-		$attributes = array_merge($metadata, $attributes);
+	public function createGroup(array $properties = []): \ElggGroup {
+		$subtype = elgg_extract('subtype', $properties, 'foo_group');
 
-		$subtype = isset($attributes['subtype']) ? $attributes['subtype'] : 'foo_group';
-
-		return _elgg_services()->entityTable->setup(null, 'group', $subtype, $attributes);
+		return _elgg_services()->entityTable->setup(null, 'group', $subtype, $properties);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function createSite(array $attributes = [], array $metadata = []) {
-		$attributes = array_merge($metadata, $attributes);
+	public function createSite(array $properties = []): \ElggSite {
+		$subtype = elgg_extract('subtype', $properties, 'foo_site');
 
-		$subtype = isset($attributes['subtype']) ? $attributes['subtype'] : 'foo_site';
-
-		return _elgg_services()->entityTable->setup(null, 'site', $subtype, $attributes);
+		return _elgg_services()->entityTable->setup(null, 'site', $subtype, $properties);
 	}
 
 }

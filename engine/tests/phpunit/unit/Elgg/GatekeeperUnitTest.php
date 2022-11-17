@@ -41,9 +41,9 @@ class GatekeeperUnitTest extends UnitTestCase {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function createUser(array $attributes = [], array $metadata = []) {
-		return $this->invoker->call(ELGG_IGNORE_ACCESS, function() use ($attributes, $metadata) {
-			return parent::createUser($attributes, $metadata);
+	public function createUser(array $properties = []): \ElggUser {
+		return $this->invoker->call(ELGG_IGNORE_ACCESS, function() use ($properties) {
+			return parent::createUser($properties);
 		});
 	}
 

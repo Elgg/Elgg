@@ -21,7 +21,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 	public function testSendFailsWithoutRecipient() {
 
-		$user = $this->createUser([], [
+		$user = $this->createUser([
 			'language' => 'de',
 		]);
 
@@ -39,7 +39,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 	public function testSendFailsToSelf() {
 
-		$user = $this->createUser([], [
+		$user = $this->createUser([
 			'language' => 'de',
 		]);
 
@@ -58,7 +58,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 	public function testSendFailsToInvalidUser() {
 
-		$user = $this->createUser([], [
+		$user = $this->createUser([
 			'language' => 'de',
 		]);
 
@@ -77,7 +77,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 	public function testSendFailsWithoutMessageSubject() {
 
-		$user = $this->createUser([], [
+		$user = $this->createUser([
 			'language' => 'de',
 		]);
 
@@ -99,7 +99,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 	public function testSendFailsWithoutMessageBody() {
 
-		$user = $this->createUser([], [
+		$user = $this->createUser([
 			'language' => 'de',
 		]);
 
@@ -121,7 +121,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 	public function testSendSuccess() {
 
-		$user = $this->createUser([], [
+		$user = $this->createUser([
 			'language' => 'de',
 		]);
 

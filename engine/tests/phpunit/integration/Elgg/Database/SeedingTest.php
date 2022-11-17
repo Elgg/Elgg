@@ -42,7 +42,7 @@ class SeedingTest extends IntegrationTestCase {
 
 	public function testCanCreateAdminUser() {
 
-		$user = $this->createUser([], [
+		$user = $this->createUser([
 			'admin' => 'yes',
 		]);
 
@@ -56,7 +56,7 @@ class SeedingTest extends IntegrationTestCase {
 
 	public function testCanCreateBannedUser() {
 
-		$user = $this->createUser([], [
+		$user = $this->createUser([
 			'banned' => true,
 		]);
 
@@ -70,7 +70,7 @@ class SeedingTest extends IntegrationTestCase {
 
 	public function testCanSetUserLanguage() {
 
-		$user = $this->createUser([], [
+		$user = $this->createUser([
 			'language' => 'de',
 		]);
 

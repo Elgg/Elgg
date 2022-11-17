@@ -165,7 +165,7 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 
 		$other = $this->createUser();
 		$user = $this->createUser();
-		$admin = $this->createUser([], [
+		$admin = $this->createUser([
 			'admin' => 'yes',
 		]);
 
@@ -188,7 +188,7 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 	public function testUsernameChangeSucceeds() {
 
 		$user = $this->createUser();
-		$admin = $this->createUser([], [
+		$admin = $this->createUser([
 			'admin' => 'yes',
 		]);
 
@@ -210,7 +210,7 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 
 	public function testLanguageChangeSucceeds() {
 
-		$user = $this->createUser([], ['language' => 'en']);
+		$user = $this->createUser(['language' => 'en']);
 
 		// Go through the allowed languages and find the first non-English language to change the user to
 		// this is done in case the database has a limited number of allowed languages

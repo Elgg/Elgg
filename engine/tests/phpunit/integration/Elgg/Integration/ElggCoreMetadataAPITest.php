@@ -376,7 +376,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 
 	public function testCanDeleteMetadataByObject() {
 
-		$entity = $this->createObject([], [
+		$entity = $this->createObject([
 			'foo' => 'bar',
 			'bar' => 'baz',
 		]);

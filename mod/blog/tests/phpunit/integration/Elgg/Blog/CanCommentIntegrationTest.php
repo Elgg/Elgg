@@ -17,7 +17,6 @@ class CanCommentIntegrationTest extends \Elgg\IntegrationTestCase {
 	public function testCanComment($enable_comments, $status, $expected) {
 		$blog = $this->createObject([
 			'subtype' => 'blog',
-		], [
 			'comments_on' => $enable_comments,
 			'status' => $status,
 		]);

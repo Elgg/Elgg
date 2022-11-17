@@ -403,7 +403,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$call_count = 0;
 
-		$recipient = $this->createUser([], [
+		$recipient = $this->createUser([
 			'language' => 'en',
 		]);
 
@@ -599,7 +599,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$call_count = 0;
 
-		$recipient = $this->createUser([], [
+		$recipient = $this->createUser([
 			'language' => 'en',
 		]);
 
@@ -684,7 +684,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$object = $this->getTestObject();
 
-		$recipient = $this->createUser([], [
+		$recipient = $this->createUser([
 			'language' => 'en',
 		]);
 

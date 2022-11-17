@@ -37,7 +37,7 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($entity->canEdit($owner->guid));
 		$this->assertFalse($entity->canEdit($viewer->guid));
 
-		$admin_user = $this->createUser([], [
+		$admin_user = $this->createUser([
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($entity->canEdit($admin_user->guid));
@@ -66,7 +66,7 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($user->canEdit($user->guid));
 		$this->assertFalse($user->canEdit($viewer->guid));
 
-		$admin_user = $this->createUser([], [
+		$admin_user = $this->createUser([
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($user->canEdit($admin_user->guid));
@@ -96,7 +96,7 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->assertFalse($entity->canEdit($user->guid));
 
 		// Permissions events should not be triggered for admin users and with ignored access
-		$admin_user = $this->createUser([], [
+		$admin_user = $this->createUser([
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($entity->canEdit($admin_user->guid));
@@ -143,7 +143,7 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 
 		$this->assertFalse($entity->canDelete($owner->guid));
 
-		$admin_user = $this->createUser([], [
+		$admin_user = $this->createUser([
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($entity->canEdit($admin_user->guid));
@@ -202,7 +202,7 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($entity->canWriteToContainer($owner->guid, 'object', 'foo'));
 
 		// Admins should always be allowed
-		$admin_user = $this->createUser([], [
+		$admin_user = $this->createUser([
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($entity->canWriteToContainer($admin_user->guid, 'object', 'bar'));
@@ -240,7 +240,7 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->assertFalse($annotation->canEdit($viewer->guid));
 
 
-		$admin_user = $this->createUser([], [
+		$admin_user = $this->createUser([
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($annotation->canEdit($admin_user->guid));
@@ -265,7 +265,7 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->assertFalse($annotation->canEdit($viewer->guid));
 
 
-		$admin_user = $this->createUser([], [
+		$admin_user = $this->createUser([
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($annotation->canEdit($admin_user->guid));
@@ -314,7 +314,7 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->assertFalse($annotation->canEdit($owner->guid));
 
 
-		$admin_user = $this->createUser([], [
+		$admin_user = $this->createUser([
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($annotation->canEdit($admin_user->guid));
@@ -386,7 +386,7 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($entity->canComment($viewer->guid));
 		_elgg_services()->events->unregisterHandler('container_permissions_check', 'object', \Elgg\Comments\ContainerPermissionsHandler::class);
 
-		$admin_user = $this->createUser([], [
+		$admin_user = $this->createUser([
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($object->canComment($admin_user->guid));
@@ -422,7 +422,7 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 
 		$this->assertFalse($entity->canComment($owner->guid));
 
-		$admin_user = $this->createUser([], [
+		$admin_user = $this->createUser([
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($entity->canComment($admin_user->guid));
@@ -470,7 +470,7 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 
 		$this->assertFalse($entity->canAnnotate($owner->guid, 'baz'));
 
-		$admin_user = $this->createUser([], [
+		$admin_user = $this->createUser([
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($entity->canAnnotate($admin_user->guid, 'baz'));
@@ -500,7 +500,7 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 
 		$this->assertFalse($entity->canAnnotate($owner->guid, 'baz'));
 
-		$admin_user = $this->createUser([], [
+		$admin_user = $this->createUser([
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($entity->canAnnotate($admin_user->guid, 'baz'));
@@ -585,7 +585,7 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->assertFalse($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
 
 		// Container logic checks should not be affected admin permissions or ignored access
-		$admin_user = $this->createUser([], [
+		$admin_user = $this->createUser([
 			'admin' => 'yes',
 		]);
 		$this->assertFalse($entity->canWriteToContainer($admin_user->guid, 'object', 'bar'));
@@ -634,7 +634,7 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->assertFalse($entity->canDownload($owner->guid));
 		$this->assertFalse($entity->canDownload($viewer->guid));
 
-		$admin_user = $this->createUser([], [
+		$admin_user = $this->createUser([
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($entity->canDownload($admin_user->guid));

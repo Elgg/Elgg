@@ -215,7 +215,7 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 	public function testRegistrationFailsWithExistingEmail() {
 
 		$username = $this->getRandomUsername();
-		$this->createUser([], [
+		$this->createUser([
 			'email' => "$username@example.com",
 		]);
 
@@ -235,7 +235,7 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 	public function testRegistrationFailsWithExistingUsername() {
 
 		$username = $this->getRandomUsername();
-		$this->createUser([], [
+		$this->createUser([
 			'username' => $username,
 		]);
 
