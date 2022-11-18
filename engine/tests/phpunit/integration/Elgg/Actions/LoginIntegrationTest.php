@@ -31,7 +31,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testLoginWithUsernameAndPassword() {
 
-		$user = $this->user = $this->createUser([], [
+		$user = $this->user = $this->createUser([
 			'password' => 123456,
 			'language' => 'de',
 		]);
@@ -55,7 +55,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testLoginWithEmailAndPassword() {
 
-		$user = $this->user = $this->createUser([], [
+		$user = $this->user = $this->createUser([
 			'password' => 123456,
 		]);
 
@@ -74,7 +74,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testLoginFailsWithEmptyPassword() {
 
-		$user = $this->user = $this->createUser([], [
+		$user = $this->user = $this->createUser([
 			'password' => 123456,
 		]);
 
@@ -90,7 +90,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testLoginFailsWithIncorrectPassword() {
 
-		$user = $this->user = $this->createUser([], [
+		$user = $this->user = $this->createUser([
 			'password' => 123456,
 		]);
 
@@ -110,7 +110,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		elgg()->events->backup();
 
 		$username = $this->getRandomUsername();
-		$user = $this->user = $this->createUser([], [
+		$user = $this->user = $this->createUser([
 			'username' => $username,
 			'password' => 123456,
 		]);
@@ -153,7 +153,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testLoginFailsWithBannedUser() {
 
-		$user = $this->user = $this->createUser([], [
+		$user = $this->user = $this->createUser([
 			'password' => 123456,
 			'banned' => true,
 		]);
@@ -178,7 +178,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 		_elgg_services()->events->registerHandler('login:before', 'user', $handler);
 
-		$user = $this->user = $this->createUser([], [
+		$user = $this->user = $this->createUser([
 			'password' => 123456,
 			'language' => 'de',
 		]);
@@ -237,7 +237,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testCanPersistLogin() {
 
-		$user = $this->user = $this->createUser([], [
+		$user = $this->user = $this->createUser([
 			'password' => 123456,
 			'language' => 'de',
 		]);
@@ -288,7 +288,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testRespectsLastForwardFrom() {
 
-		$user = $this->user = $this->createUser([], [
+		$user = $this->user = $this->createUser([
 			'password' => 123456,
 		]);
 

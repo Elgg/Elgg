@@ -17,7 +17,7 @@ trait TestSeeding {
 	 */
 	private $_seeds = [];
 
-	public function clearSeeds() {
+	public function clearSeeds(): void {
 		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() {
 			foreach ($this->_seeds as $seed) {
 				if (!elgg_entity_exists($seed->guid)) {
@@ -33,14 +33,13 @@ trait TestSeeding {
 	/**
 	 * Create an entity for testing with all events and permissions check disabled
 	 *
-	 * @param string $types      An array of entity types
-	 * @param array  $attributes Entity attributes
-	 * @param array  $metadata   Entity metadata
+	 * @param string|array $types      An array of entity types
+	 * @param array        $properties Entity attributes/metadata
 	 *
 	 * @return \ElggEntity
 	 */
-	public function createOne($types = 'object', array $attributes = [], array $metadata = []) {
-		$seeds = $this->createMany($types, 1, $attributes, $metadata);
+	public function createOne(string|array $types = 'object', array $properties = []): \ElggEntity {
+		$seeds = $this->createMany($types, 1, $properties);
 
 		return array_shift($seeds);
 	}
@@ -48,12 +47,13 @@ trait TestSeeding {
 	/**
 	 * Create a set of entities for testing with all events and permissions check disabled
 	 *
-	 * @param mixed $types An array of entity types
-	 * @param int   $limit Number of entities to seed
+	 * @param string|array $types      An array of entity types
+	 * @param int          $limit      Number of entities to seed
+	 * @param array        $properties Entity attributes/metadata
 	 *
 	 * @return \ElggEntity[]
 	 */
-	public function createMany($types = 'object', $limit = 2, array $attributes = [], array $metadata = []) {
+	public function createMany(string|array $types = 'object', int $limit = 2, array $properties = []): array {
 
 		$types = (array) $types;
 		$entities = [];
@@ -62,21 +62,21 @@ trait TestSeeding {
 			$seeded = 0;
 			while ($seeded < $limit) {
 				$seeded++;
-				if (!isset($attributes['subtype'])) {
-					$attributes['subtype'] = $this->getRandomSubtype();
+				if (!isset($properties['subtype'])) {
+					$properties['subtype'] = $this->getRandomSubtype();
 				}
 				
 				switch ($type) {
 					case 'object' :
-						$entities[] = $this->createObject($attributes, $metadata);
+						$entities[] = $this->createObject($properties);
 						break;
 
 					case 'user' :
-						$entities[] = $this->createUser($attributes, $metadata);
+						$entities[] = $this->createUser($properties);
 						break;
 
 					case 'group' :
-						$entities[] = $this->createGroup($attributes, $metadata);
+						$entities[] = $this->createGroup($properties);
 						break;
 				}
 			}
@@ -88,17 +88,16 @@ trait TestSeeding {
 	/**
 	 * Takes over seeding from the Seeding trait to keep track of the seeded entity
 	 *
-	 * @param array $attributes User entity attributes
-	 * @param array $metadata   User entity metadata
+	 * @param array $properties Entity attributes/metadata
 	 * @param array $options    Seeding options
 	 *
 	 * @return \ElggUser
 	 */
-	final public function createUser(array $attributes = [], array $metadata = [], array $options = []) {
-		$metadata = array_merge([
+	final public function createUser(array $properties = [], array $options = []): \ElggUser {
+		$properties = array_merge([
 			'validated' => true, //by default all users in the tests are validated
-		], $metadata);
-		$entity = $this->createSeededUser($attributes, $metadata, $options);
+		], $properties);
+		$entity = $this->createSeededUser($properties, $options);
 		
 		$this->_seeds[] = $entity;
 		
@@ -108,14 +107,13 @@ trait TestSeeding {
 	/**
 	 * Takes over seeding from the Seeding trait to keep track of the seeded entity
 	 *
-	 * @param array $attributes Group entity attributes
-	 * @param array $metadata   Group entity metadata
+	 * @param array $properties Entity attributes/metadata
 	 * @param array $options    Additional options
 	 *
 	 * @return \ElggGroup
 	 */
-	final public function createGroup(array $attributes = [], array $metadata = [], array $options = []) {
-		$entity = $this->createSeededGroup($attributes, $metadata, $options);
+	final public function createGroup(array $properties = [], array $options = []): \ElggGroup {
+		$entity = $this->createSeededGroup($properties, $options);
 
 		$this->_seeds[] = $entity;
 		
@@ -125,14 +123,13 @@ trait TestSeeding {
 	/**
 	 * Takes over seeding from the Seeding trait to keep track of the seeded entity
 	 *
-	 * @param array $attributes Object entity attributes
-	 * @param array $metadata   Object entity metadata
+	 * @param array $properties Entity attributes/metadata
 	 * @param array $options    Additional options
 	 *
 	 * @return \ElggObject
 	 */
-	final public function createObject(array $attributes = [], array $metadata = [], array $options = []) {
-		$entity = $this->createSeededObject($attributes, $metadata, $options);
+	final public function createObject(array $properties = [], array $options = []): \ElggObject {
+		$entity = $this->createSeededObject($properties, $options);
 		
 		$this->_seeds[] = $entity;
 		

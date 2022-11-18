@@ -22,7 +22,6 @@ class ElggWidgetIntegrationTest extends IntegrationTestCase {
 		
 		$this->widget = $this->createObject([
 			'subtype' => 'widget',
-		], [
 			'tags' => 'tag',
 		]);
 		_elgg_services()->session->removeLoggedInUser();

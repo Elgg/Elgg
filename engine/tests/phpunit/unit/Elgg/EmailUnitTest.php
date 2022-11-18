@@ -29,12 +29,12 @@ class EmailUnitTest extends UnitTestCase {
 
 	public function testFactoryFromElggUser() {
 
-		$from = $this->createUser([], [
+		$from = $this->createUser([
 			'email' => 'from@elgg.org',
 			'name' => 'From',
 		]);
 		
-		$to = $this->createUser([], [
+		$to = $this->createUser([
 			'email' => 'to@elgg.org',
 			'name' => 'To',
 		]);

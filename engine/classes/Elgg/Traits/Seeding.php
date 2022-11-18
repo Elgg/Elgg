@@ -45,7 +45,7 @@ trait Seeding {
 	 *
 	 * @return \Faker\Generator
 	 */
-	public function faker($locale = 'en_US') {
+	public function faker(string $locale = 'en_US'): \Faker\Generator {
 		if (!isset($this->faker)) {
 			$this->faker = Factory::create($locale);
 		}
@@ -60,7 +60,7 @@ trait Seeding {
 	 *
 	 * @return string
 	 */
-	public function getDomain() {
+	public function getDomain(): string {
 		return elgg_get_site_entity()->getDomain();
 	}
 
@@ -69,7 +69,7 @@ trait Seeding {
 	 *
 	 * @return string
 	 */
-	public function getEmailDomain() {
+	public function getEmailDomain(): string {
 		$email = elgg_get_site_entity()->email;
 		if (!$email) {
 			$email = "noreply@{$this->getDomain()}";
@@ -89,106 +89,105 @@ trait Seeding {
 	 *
 	 * @return bool|string
 	 */
-	public function getRandomSubtype() {
+	public function getRandomSubtype(): bool|string {
 		return substr(sha1(microtime() . rand()), 0, 25);
 	}
 
 	/**
 	 * Create a new fake user
 	 *
-	 * @param array $attributes User entity attributes
-	 * @param array $metadata   User entity metadata
+	 * @param array $properties Entity attributes/metadata
 	 * @param array $options    Seeding options
 	 *
 	 * @return \ElggUser
 	 * @throws Exception
 	 * @throws MaxAttemptsException
 	 */
-	public function createUser(array $attributes = [], array $metadata = [], array $options = []): \ElggUser {
+	public function createUser(array $properties = [], array $options = []): \ElggUser {
 
-		$create = function () use ($attributes, $metadata, $options) {
-			$metadata['__faker'] = true;
+		$create = function () use ($properties, $options) {
+			$properties['__faker'] = true;
 
-			if (empty($metadata['password'])) {
-				$metadata['password'] = elgg_generate_password();
+			if (empty($properties['password'])) {
+				$properties['password'] = elgg_generate_password();
 			}
 
-			if (empty($metadata['name'])) {
-				$metadata['name'] = $this->faker()->name;
+			if (empty($properties['name'])) {
+				$properties['name'] = $this->faker()->name;
 			}
 
-			if (empty($metadata['username'])) {
-				$metadata['username'] = $this->getRandomUsername($metadata['name']);
+			if (empty($properties['username'])) {
+				$properties['username'] = $this->getRandomUsername($properties['name']);
 			}
 
-			if (empty($metadata['email'])) {
-				$metadata['email'] = $this->getRandomEmail($metadata['username']);
+			if (empty($properties['email'])) {
+				$properties['email'] = $this->getRandomEmail($properties['username']);
 			}
 
-			if (empty($attributes['subtype'])) {
-				$attributes['subtype'] = 'user';
+			if (empty($properties['subtype'])) {
+				$properties['subtype'] = 'user';
 			}
 
 			$user = false;
 
 			try {
 				$user = elgg_register_user([
-					'username' => elgg_extract('username', $metadata),
-					'password' => elgg_extract('password', $metadata),
-					'name' => elgg_extract('name', $metadata),
-					'email' => elgg_extract('email', $metadata),
-					'subtype' => elgg_extract('subtype', $attributes),
+					'username' => elgg_extract('username', $properties),
+					'password' => elgg_extract('password', $properties),
+					'name' => elgg_extract('name', $properties),
+					'email' => elgg_extract('email', $properties),
+					'subtype' => elgg_extract('subtype', $properties),
 				]);
 				
 				// make sure we have a cleanly loaded user entity
 				$user = get_user($user->guid);
 
-				if (!isset($attributes['time_created'])) {
-					$attributes['time_created'] = $this->getRandomCreationTimestamp();
+				if (!isset($properties['time_created'])) {
+					$properties['time_created'] = $this->getRandomCreationTimestamp();
 				}
-				if (!empty($attributes['time_created'])) {
-					$user->time_created = $attributes['time_created'];
+				if (!empty($properties['time_created'])) {
+					$user->time_created = $properties['time_created'];
 				}
 				
-				if (isset($metadata['admin'])) {
-					if ($metadata['admin']) {
+				if (isset($properties['admin'])) {
+					if ($properties['admin']) {
 						$user->makeAdmin();
 					} else {
 						$user->removeAdmin();
 					}
 				}
 
-				if (isset($metadata['banned'])) {
-					if ($metadata['banned']) {
+				if (isset($properties['banned'])) {
+					if ($properties['banned']) {
 						$user->ban('Banned by seeder');
 					} else {
 						$user->unban();
 					}
 				}
 
-				if (!isset($metadata['validated'])) {
-					$metadata['validated'] = $this->faker()->boolean(80);
+				if (!isset($properties['validated'])) {
+					$properties['validated'] = $this->faker()->boolean(80);
 				}
-				$user->setValidationStatus((bool) $metadata['validated'], 'seeder');
+				$user->setValidationStatus((bool) $properties['validated'], 'seeder');
 				
 				if (!$user->isValidated()) {
 					$user->disable('seeder invalidation');
 				}
 				
-				unset($metadata['username']);
-				unset($metadata['password']);
-				unset($metadata['name']);
-				unset($metadata['email']);
-				unset($metadata['banned']);
-				unset($metadata['admin']);
-				unset($metadata['validated']);
+				unset($properties['username']);
+				unset($properties['password']);
+				unset($properties['name']);
+				unset($properties['email']);
+				unset($properties['banned']);
+				unset($properties['admin']);
+				unset($properties['validated']);
 				
 				$user->setNotificationSetting('email', false);
 				$user->setNotificationSetting('site', true);
 
 				$profile_fields = elgg_extract('profile_fields', $options, []);
 				/* @var $user \ElggUser */
-				$user = $this->populateMetadata($user, $profile_fields, $metadata);
+				$user = $this->populateMetadata($user, $profile_fields, $properties);
 
 				$user->save();
 
@@ -200,8 +199,8 @@ trait Seeding {
 					$user->delete();
 				}
 
-				$attr_log = print_r($attributes, true);
-				$this->log("User creation failed with message {$e->getMessage()} [attributes: $attr_log]");
+				$attr_log = print_r($properties, true);
+				$this->log("User creation failed with message {$e->getMessage()} [properties: $attr_log]");
 
 				return false;
 			}
@@ -231,19 +230,15 @@ trait Seeding {
 	/**
 	 * Create a new fake group
 	 *
-	 * @param array $attributes Group entity attributes
-	 * @param array $metadata   Group entity metadata
+	 * @param array $properties Entity attributes/metadata
 	 * @param array $options    Additional options
 	 *
 	 * @return \ElggGroup
 	 * @throws MaxAttemptsException
 	 */
-	public function createGroup(array $attributes = [], array $metadata = [], array $options = []): \ElggGroup {
+	public function createGroup(array $properties = [], array $options = []): \ElggGroup {
 
-		$create = function () use ($attributes, $metadata, $options) {
-
-			$properties = array_merge($metadata, $attributes);
-
+		$create = function () use ($properties, $options) {
 			$properties['__faker'] = true;
 
 			if (!isset($properties['time_created'])) {
@@ -377,19 +372,15 @@ trait Seeding {
 	/**
 	 * Create a new fake object
 	 *
-	 * @param array $attributes Object entity attributes
-	 * @param array $metadata   Object entity metadata
+	 * @param array $properties Entity attributes/metadata
 	 * @param array $options    Additional options
 	 *
 	 * @return \ElggObject
 	 * @throws MaxAttemptsException
 	 */
-	public function createObject(array $attributes = [], array $metadata = [], array $options = []): \ElggObject {
+	public function createObject(array $properties = [], array $options = []): \ElggObject {
 
-		$create = function () use ($attributes, $metadata, $options) {
-
-			$properties = array_merge($metadata, $attributes);
-
+		$create = function () use ($properties, $options) {
 			$properties['__faker'] = true;
 
 			if (!isset($properties['time_created'])) {
@@ -497,12 +488,11 @@ trait Seeding {
 	/**
 	 * Create a new fake site
 	 *
-	 * @param array $attributes Object entity attributes
-	 * @param array $metadata   Object entity metadata
+	 * @param array $properties Entity attributes/metadata
 	 *
 	 * @return \ElggSite
 	 */
-	public function createSite(array $attributes = [], array $metadata = []): \ElggSite {
+	public function createSite(array $properties = []): \ElggSite {
 		// We don't want to create more than one site
 		return elgg_get_site_entity();
 	}

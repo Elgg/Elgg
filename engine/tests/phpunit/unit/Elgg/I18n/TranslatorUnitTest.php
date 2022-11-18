@@ -149,7 +149,7 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 
 		$language = 'ab';
 
-		$user = $this->createUser([], [
+		$user = $this->createUser([
 			'language' => $language,
 		]);
 		

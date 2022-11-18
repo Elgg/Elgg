@@ -218,7 +218,7 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testRemovesUnbannedUserFromCache() {
-		$user = $this->createUser([], [
+		$user = $this->createUser([
 			'banned' => 'yes',
 		]);
 
@@ -249,7 +249,7 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testRemovesRemovedAdminUserFromCache() {
-		$user = $this->createUser([], [
+		$user = $this->createUser([
 			'admin' => 'yes',
 		]);
 

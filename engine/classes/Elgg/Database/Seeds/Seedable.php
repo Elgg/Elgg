@@ -10,40 +10,36 @@ interface Seedable {
 	/**
 	 * Create a new fake user
 	 *
-	 * @param array $attributes User entity attributes
-	 * @param array $metadata   User entity metadata
+	 * @param array $properties Entity attributes/metadata
 	 *
 	 * @return \ElggUser
 	 */
-	public function createUser(array $attributes = [], array $metadata = []);
+	public function createUser(array $properties = []);
 
 	/**
 	 * Create a new fake group
 	 *
-	 * @param array $attributes Group entity attributes
-	 * @param array $metadata   Group entity metadata
+	 * @param array $properties Entity attributes/metadata
 	 *
 	 * @return \ElggGroup
 	 */
-	public function createGroup(array $attributes = [], array $metadata = []);
+	public function createGroup(array $properties = []);
 
 	/**
 	 * Create a new fake object
 	 *
-	 * @param array $attributes Object entity attributes
-	 * @param array $metadata   Object entity metadata
+	 * @param array $properties Entity attributes/metadata
 	 *
 	 * @return \ElggObject
 	 */
-	public function createObject(array $attributes = [], array $metadata = []);
+	public function createObject(array $properties = []);
 
 	/**
 	 * Create a new fake site
 	 *
-	 * @param array $attributes Site entity attributes
-	 * @param array $metadata   Site entity metadata
+	 * @param array $properties Entity attributes/metadata
 	 *
 	 * @return \ElggSite
 	 */
-	public function createSite(array $attributes = [], array $metadata = []);
+	public function createSite(array $properties = []);
 }
