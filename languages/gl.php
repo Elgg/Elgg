@@ -160,8 +160,6 @@ return array(
 	'widget' => "Trebello",
 	'item:object:widget' => "Trebellos",
 	'collection:object:widget' => 'Trebellos',
-	'widgets:save:success' => "O trebello gardouse correctamente.",
-	'widgets:save:failure' => "Non foi posíbel gardar o trebello.",
 	'widgets:add:success' => "O trebello engadiuse correctamente.",
 	'widgets:add:failure' => "Non foi posíbel engadir o trebello.",
 	'widgets:move:failure' => "Non foi posíbel almacenar a nova posición do trebello.",

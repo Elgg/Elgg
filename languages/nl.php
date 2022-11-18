@@ -217,8 +217,6 @@ return array(
 	'widget' => "Widget",
 	'item:object:widget' => "Widgets",
 	'collection:object:widget' => 'Widgets',
-	'widgets:save:success' => "De widget is succesvol opgeslagen.",
-	'widgets:save:failure' => "Er ging iets mis tijdens het opslaan van je widget. Probeer het nog een keer.",
 	'widgets:add:success' => "De widget is toegevoegd.",
 	'widgets:add:failure' => "De widget kon niet worden toegevoegd.",
 	'widgets:move:failure' => "De nieuwe widgetpositie kon niet worden opgeslagen.",

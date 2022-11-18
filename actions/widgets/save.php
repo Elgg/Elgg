@@ -16,9 +16,20 @@ $default_widgets = (int) get_input('default_widgets', 0);
 $context = get_input('context');
 
 $widget = get_entity($guid);
-if (!$widget instanceof \ElggWidget || !$widget->saveSettings($params)) {
-	return elgg_error_response(elgg_echo('widgets:save:failure'));
+if (!$widget instanceof \ElggWidget) {
+	return elgg_error_response(elgg_echo('error:missing_data'));
 }
+
+if (!$widget->canEdit()) {
+	return elgg_error_response(elgg_echo('actionunauthorized'));
+}
+
+foreach ($params as $name => $value) {
+	$widget->$name = $value;
+}
+
+// trigger save for cache invalidation
+$widget->save();
 
 $context_stack = [];
 

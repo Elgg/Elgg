@@ -375,6 +375,7 @@ Removed functions
 * ``elgg_get_breadcrumbs``
 * ``elgg_pop_breadcrumb``
 * ``elgg_trigger_deprecated_plugin_hook``
+* ``\ElggWidget->saveSettings()``
 
 Removed events
 ~~~~~~~~~~~~~~
@@ -382,6 +383,7 @@ Removed events
 * ``access:collections:addcollection, collection`` use the ``create, access_collection`` sequence
 * ``access:collections:deletecollection, collection`` use the ``delete, access_collection`` sequence
 * ``prepare, breadcrumbs`` use ``register, menu:breadcrumbs``
+* ``widget_settings, <widget_handler>``
 
 Removed exceptions
 ~~~~~~~~~~~~~~~~~~

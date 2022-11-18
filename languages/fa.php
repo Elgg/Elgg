@@ -170,8 +170,6 @@ return array(
 	'widget' => "ابزارک",
 	'item:object:widget' => "ابزار ها",
 	'collection:object:widget' => 'ابزار ها',
-	'widgets:save:success' => "ابزارک با موفقیت ذخیره شد",
-	'widgets:save:failure' => "امکان ذخیره سازی ابزارک نیست",
 	'widgets:add:success' => "ابزارک با موفقیت افزوده شد",
 	'widgets:add:failure' => "امکان افزودن ابزارک نبود.",
 	'widgets:move:failure' => "امکان ذخیره سازی مکان ابزارک جدید نبود.",

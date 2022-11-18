@@ -1293,10 +1293,6 @@ Other
 **to:object, <entity_type|metadata|annotation|relationship|river_item>**
 	Converts the entity ``$params['entity']`` to a StdClass object. This is used mostly for exporting
 	entity properties for portable data formats like JSON and XML.
-	
-**widget_settings, <widget_handler>** |results|
-	Triggered when saving a widget settings ``$params['params']`` for widget ``$params['widget']``.
-	If handling saving the settings, the handler should return true to prevent the default code from running.
 
 Plugins
 =======

@@ -68,23 +68,6 @@ class ElggWidgetIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals('title_from_definition', $this->widget->getDisplayName());
 	}
 	
-	public function testSaveSettings() {
-		$params = [
-			'setting_1' => 'value_1',
-			'setting_1' => 'value_2',
-		];
-		
-		$this->assertFalse($this->widget->saveSettings($params));
-		
-		elgg_call(ELGG_IGNORE_ACCESS, function() use ($params) {
-			$this->assertTrue($this->widget->saveSettings($params));
-			
-			foreach ($params as $name => $value) {
-				$this->assertEquals($value, $this->widget->$name);
-			}
-		});
-	}
-	
 	public function testHandlerRegistration() {
 		$this->assertFalse(elgg_is_widget_type('test_handler'));
 		elgg_unregister_widget_type('test_handler');

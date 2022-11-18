@@ -172,8 +172,6 @@ return array(
 	'widget' => "Udělátko",
 	'item:object:widget' => "Udělátka",
 	'collection:object:widget' => 'Udělátka',
-	'widgets:save:success' => "Udělátko bylo úspěšně uloženo.",
-	'widgets:save:failure' => "Nemohu uložit udělátko.",
 	'widgets:add:success' => "Udělátko bylo úspěšně přidáno.",
 	'widgets:add:failure' => "Nemohu přidat udělátko.",
 	'widgets:move:failure' => "Nemohu uložit novou pozici udělátka.",
