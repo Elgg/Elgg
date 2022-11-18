@@ -14,7 +14,7 @@ trait PluginSettings {
 	 *
 	 * @param string $plugin_id plugin ID
 	 * @param string $name      setting name
-	 * @param mixed  $value     setting value (needs to be a scalar)
+	 * @param mixed  $value     setting value
 	 *
 	 * @return bool
 	 */
@@ -25,11 +25,6 @@ trait PluginSettings {
 			'name' => $name,
 			'value' => $value,
 		], $value);
-		
-		if (isset($value) && !is_scalar($value)) {
-			elgg_log("Invalid value type provided to save plugin setting '{$name}' for plugin '{$plugin_id}' only scalars are allowed", 'ERROR');
-			return false;
-		}
 		
 		$name = $this->getNamespacedPluginSettingName($plugin_id, $name);
 		

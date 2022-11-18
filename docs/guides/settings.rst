@@ -122,9 +122,6 @@ or for group settings:
 
    The ``$plugin_id`` needs to be provided when setting plugin (user)settings.
 
-.. warning::
-
-	Plugin settings only supports `scalar <https://www.php.net/manual/en/function.is-scalar.php>`_ values, so no objects or arrays.
 
 Default plugin (group|user) settings
 ------------------------------------

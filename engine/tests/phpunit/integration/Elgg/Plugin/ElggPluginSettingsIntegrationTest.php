@@ -83,8 +83,8 @@ class ElggPluginSettingsIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($user->setPluginSetting('test_plugin', 'foo1', 'bar1'));
 		$this->assertEquals('bar1', $user->getPluginSetting('test_plugin', 'foo1'));
 		
-		$this->assertFalse($user->setPluginSetting('test_plugin', 'foo2', ['bar1', 'bar2']));
-		$this->assertEmpty($user->getPluginSetting('test_plugin', 'foo2'));
+		$this->assertTrue($user->setPluginSetting('test_plugin', 'foo2', ['bar1', 'bar2']));
+		$this->assertEquals(['bar1', 'bar2'], $user->getPluginSetting('test_plugin', 'foo2'));
 		
 		$this->assertTrue($user->setPluginSetting('test_plugin', 'foo3', 'bar3'));
 		
