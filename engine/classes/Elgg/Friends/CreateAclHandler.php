@@ -12,7 +12,7 @@ class CreateAclHandler {
 	/**
 	 * Creates a Friends ACL for a user
 	 *
-	 * @param \Elgg\Event $event 'create', 'user'
+	 * @param \Elgg\Event $event 'create:after', 'user'
 	 *
 	 * @return void
 	 */

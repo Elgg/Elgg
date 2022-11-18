@@ -226,6 +226,6 @@ To have widgets be created you need to register the following event:
 
 .. code-block:: php
 
-    elgg_register_event_handler('create', 'object', 'Elgg\Widgets\CreateDefaultWidgetsHandler');
+    elgg_register_event_handler('create:after', 'object', 'Elgg\Widgets\CreateDefaultWidgetsHandler');
 
 When an object triggers an event that matches the event, entity\_type, and entity\_subtype parameters passed, Elgg core will look for default widgets that match the widget\_context and will copy them to that object's owner\_guid and container\_guid. All widget settings will also be copied.

@@ -465,6 +465,28 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 	}
 
 	/**
+	 * Checks if you can return false from a create:before event to prevent entity being saved to the database
+	 */
+	public function testBeforeEventCanStopEntityCreation() {
+
+		$object = new \ElggObject();
+		$object->setSubtype('elgg_entity_test_subtype_prevent');
+		
+		$prevent_create = function(\Elgg\Event $event) {
+			$entity = $event->getObject();
+			if ($entity->subtype === 'elgg_entity_test_subtype_prevent') {
+				return false;
+			}
+		};
+		
+		elgg_register_event_handler('create:before', 'object', $prevent_create);
+				
+		$this->assertFalse($object->save());
+		
+		elgg_unregister_event_handler('create:before', 'object', $prevent_create);
+	}
+
+	/**
 	 * @see https://github.com/Elgg/Elgg/pull/11998
 	 *
 	 * @group AccessSQL

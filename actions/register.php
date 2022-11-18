@@ -49,7 +49,7 @@ try {
 	try {
 		// allow plugins to respond to self registration
 		// note: To catch all new users, even those created by an admin,
-		// register for the create, user event instead.
+		// register for the create:after, user event instead.
 		// only passing vars that aren't in ElggUser.
 		$params = $request->getParams();
 		$params['user'] = $new_user;

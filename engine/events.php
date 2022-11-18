@@ -80,22 +80,22 @@ return [
 		],
 	],
 	'create' => [
+		'relationship' => [
+			\Elgg\Friends\AddToAclHandler::class => [],
+		],
+	],
+	'create:after' => [
 		'object' => [
 			\Elgg\Comments\AutoSubscribeHandler::class => [],
 			\Elgg\Notifications\CreateContentEventHandler::class => [],
 			\Elgg\Upgrade\CreateAdminNoticeHandler::class => [],
 		],
-		'relationship' => [
-			\Elgg\Friends\AddToAclHandler::class => [],
-		],
-		'user' => [
-			\Elgg\Friends\CreateAclHandler::class => [],
-		],
-	],
-	'create:after' => [
 		'river' => [
 			\Elgg\Comments\UpdateRiverLastActionHandler::class => [],
 			\Elgg\River\UpdateLastActionHandler::class => [],
+		],
+		'user' => [
+			\Elgg\Friends\CreateAclHandler::class => [],
 		],
 	],
 	'cron' => [

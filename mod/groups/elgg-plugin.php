@@ -167,12 +167,14 @@ return [
 			],
 		],
 		'create' => [
+			'relationship' => [
+				'Elgg\Groups\Relationships::applyGroupNotificationSettings' => [],
+			],
+		],
+		'create:after' => [
 			'group' => [
 				'Elgg\Groups\Group::createAccessCollection' => [],
 				\Elgg\Notifications\CreateContentEventHandler::class => [],
-			],
-			'relationship' => [
-				'Elgg\Groups\Relationships::applyGroupNotificationSettings' => [],
 			],
 		],
 		'default' => [
