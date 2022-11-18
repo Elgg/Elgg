@@ -157,8 +157,6 @@ return array(
 	'widget' => "Gadżet",
 	'item:object:widget' => "Gadżety",
 	'collection:object:widget' => 'Gadżety',
-	'widgets:save:success' => "Gadżet został zapisany pomyślnie.",
-	'widgets:save:failure' => "Nie można było zapisać gadżetu.",
 	'widgets:add:success' => "Gadżet dodany pomyślnie.",
 	'widgets:add:failure' => "Nie mogliśmy dodać tego gadżetu.",
 	'widgets:move:failure' => "Nie mogliśmy zapisać nowej pozycji gadżetu.",

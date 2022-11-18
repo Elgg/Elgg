@@ -173,8 +173,6 @@ return array(
 	'widget' => "ウィジェット",
 	'item:object:widget' => "ウィジェット",
 	'collection:object:widget' => 'Widgets（ウィジェット）',
-	'widgets:save:success' => "ウィジェットを保存しました。",
-	'widgets:save:failure' => "ウィジェットを保存できませんでした。",
 	'widgets:add:success' => "ウィジェットを追加しました。",
 	'widgets:add:failure' => "あなたのウィジェットを追加できませんでした。",
 	'widgets:move:failure' => "ウィジェットを新しい場所に移動できませんでした。",

@@ -188,8 +188,6 @@ return array(
 	'widget' => "Widget",
 	'item:object:widget' => "Widgets",
 	'collection:object:widget' => 'Widgets',
-	'widgets:save:success' => "El widget se guard&oacute; correctamente",
-	'widgets:save:failure' => "No se pudo guardar el widget, por favor intente nuevamente",
 	'widgets:add:success' => "Se agreg&oacute; correctamente el widget",
 	'widgets:add:failure' => "No se pudo a&ntilde;adir el widget",
 	'widgets:move:failure' => "No se pudo guardar la nueva posici&oacute;n del widget",

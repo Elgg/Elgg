@@ -207,8 +207,6 @@ return array(
 	'widget' => "Widget",
 	'item:object:widget' => "Widgets",
 	'collection:object:widget' => 'Widgets',
-	'widgets:save:success' => "Das Widget wurde hinzugefügt.",
-	'widgets:save:failure' => "Das Widget konnte nicht hinzugefügt werden. Bitte versuche es noch einmal.",
 	'widgets:add:success' => "Das Widget wurde hinzugefügt.",
 	'widgets:add:failure' => "Das Hinzufügen des Widgets ist fehlgeschlagen.",
 	'widgets:move:failure' => "Die Position des Widgets auf Deiner Seite konnte nicht gespeichert werden.",

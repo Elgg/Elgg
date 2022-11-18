@@ -191,14 +191,14 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 		$response = $this->executeAction('widgets/save');
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
-		$this->assertEquals(elgg_echo('widgets:save:failure'), $response->getContent());
+		$this->assertEquals(elgg_echo('error:missing_data'), $response->getContent());
 
 		$response = $this->executeAction('widgets/save', [
 			'guid' => $this->user->guid,
 		]);
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
-		$this->assertEquals(elgg_echo('widgets:save:failure'), $response->getContent());
+		$this->assertEquals(elgg_echo('error:missing_data'), $response->getContent());
 	}
 	
 	public function testWidgetSaveFailsIfCantEdit() {
@@ -215,7 +215,7 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 		]);
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
-		$this->assertEquals(elgg_echo('widgets:save:failure'), $response->getContent());
+		$this->assertEquals(elgg_echo('actionunauthorized'), $response->getContent());
 	}
 	
 	public function testWidgetSaveSuccess() {

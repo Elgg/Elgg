@@ -173,8 +173,6 @@ return array(
 	'widget' => "Vimpain",
 	'item:object:widget' => "Vimpaimet",
 	'collection:object:widget' => 'Vimpaimet',
-	'widgets:save:success' => "Vimpain tallennettu onnistuneesti.",
-	'widgets:save:failure' => "Vimpaimen tallentaminen epäonnistui.",
 	'widgets:add:success' => "Vimpain lisättiin onnituneesti.",
 	'widgets:add:failure' => "Vimpaimen lisääminen epäonnistui.",
 	'widgets:move:failure' => "Vimpaimen uuden sijainnin tallentaminen epäonnistui.",

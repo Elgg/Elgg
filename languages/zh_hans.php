@@ -185,8 +185,6 @@ return array(
 	'widget' => "组件",
 	'item:object:widget' => "组件",
 	'collection:object:widget' => '页面组件',
-	'widgets:save:success' => "该组件保存成功！",
-	'widgets:save:failure' => "无法保存该组件！",
 	'widgets:add:success' => "组件添加成功！",
 	'widgets:add:failure' => "无法添加该组件！",
 	'widgets:move:failure' => "不能保存新组件位置。",

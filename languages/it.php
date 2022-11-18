@@ -173,8 +173,6 @@ return array(
 	'widget' => "Widget",
 	'item:object:widget' => "Widget",
 	'collection:object:widget' => 'Widget',
-	'widgets:save:success' => "Il Widget è stato salvato.",
-	'widgets:save:failure' => "Impossibile salvare il tuo widget.",
 	'widgets:add:success' => "Il widget è stato aggiunto.",
 	'widgets:add:failure' => "Impossibile aggiungere il tuo widget.",
 	'widgets:move:failure' => "Impossibile memorizzare la posizione del nuovo widget.",

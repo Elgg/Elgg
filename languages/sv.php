@@ -194,8 +194,6 @@ return array(
 	'widget' => "Widget",
 	'item:object:widget' => "Widget",
 	'collection:object:widget' => 'Widgets',
-	'widgets:save:success' => "Widgeten sparades med lyckat resultat.",
-	'widgets:save:failure' => "Vi kunde inte spara din widget.",
 	'widgets:add:success' => "Widgeten lades till med lyckat resultat.",
 	'widgets:add:failure' => "Vi kunde inte lägga till din widget.",
 	'widgets:move:failure' => "Vi kunde inte lagra den nya widgetens position.",
@@ -234,7 +232,7 @@ return array(
 	'avatar:current' => 'Nuvarande avatar',
 	'avatar:remove' => 'Ta bort din avatar och ställ in standardikonen',
 	'avatar:crop:title' => 'Beskärningsverktyg för avatar',
-	'avatar:upload:instructions' => "Din avatar visas runt om på den här webbplatsen. Du kan 
+	'avatar:upload:instructions' => "Din avatar visas runt om på den här webbplatsen. Du kan
 ändra den hur ofta du vill. (Accepterade fil-format: GIF, JPG eller PNG)",
 	'avatar:create:instructions' => 'Tryck och dra en fyrkant nedan för att matcha hur du vill att din avatar blir beskuren. En förhandsvisning kommer att visa sig i en box till höger. När du är nöjd med förhandsvisningen, tryck "Skapa din avatar". Den här beskurna versionen kommer användas runt omkring på webbplatsen som din avatar.',
 	'avatar:upload:success' => 'Avatar laddades upp med lyckat resultat',
