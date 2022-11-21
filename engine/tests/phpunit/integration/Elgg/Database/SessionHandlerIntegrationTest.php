@@ -1,18 +1,18 @@
 <?php
 
-namespace Elgg\Http;
+namespace Elgg\Database;
 
 use Elgg\IntegrationTestCase;
 
-class DatabaseSessionHandlerIntegrationTest extends IntegrationTestCase {
+class SessionHandlerIntegrationTest extends IntegrationTestCase {
 	
 	/**
-	 * @var DatabaseSessionHandler
+	 * @var SessionHandler
 	 */
 	protected $handler;
 	
 	public function up() {
-		$this->handler = new DatabaseSessionHandler(_elgg_services()->db);
+		$this->handler = new SessionHandler(_elgg_services()->db);
 	}
 	
 	public function testReadWriteDestroy() {

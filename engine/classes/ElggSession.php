@@ -4,7 +4,7 @@ use Elgg\Config;
 use Elgg\Database;
 use Elgg\Exceptions\LoginException;
 use Elgg\Exceptions\SecurityException;
-use Elgg\Http\DatabaseSessionHandler;
+use Elgg\Database\SessionHandler;
 use Elgg\SystemMessagesService;
 use Elgg\Traits\Debug\Profilable;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -557,7 +557,7 @@ class ElggSession {
 			'cookie_lifetime' => $params['lifetime'],
 		];
 
-		$handler = new DatabaseSessionHandler($db);
+		$handler = new SessionHandler($db);
 		$storage = new NativeSessionStorage($options, $handler);
 		$session = new Session($storage);
 		return new self($session);

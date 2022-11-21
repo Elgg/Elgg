@@ -1,11 +1,7 @@
 <?php
 
-namespace Elgg\Http;
+namespace Elgg\Database;
 
-use Elgg\Database\Delete;
-use Elgg\Database\Insert;
-use Elgg\Database\Select;
-use Elgg\Database\Update;
 use Elgg\Traits\TimeUsing;
 
 /**
@@ -13,7 +9,7 @@ use Elgg\Traits\TimeUsing;
  *
  * @internal
  */
-class DatabaseSessionHandler implements \SessionHandlerInterface {
+class SessionHandler implements \SessionHandlerInterface {
 
 	use TimeUsing;
 	
