@@ -100,6 +100,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Cache\SystemCache                           $serverCache
  * @property-read \ElggSession                                      $session
  * @property-read \Elgg\Cache\SessionCache                          $sessionCache
+ * @property-read \Elgg\SessionManagerService                       $session_manager
  * @property-read \Elgg\Search\SearchService                        $search
  * @property-read \Elgg\Cache\SimpleCache                           $simpleCache
  * @property-read \Elgg\Security\SiteSecret                         $siteSecret

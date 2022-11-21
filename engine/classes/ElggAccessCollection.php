@@ -33,7 +33,7 @@ class ElggAccessCollection extends ElggData {
 		parent::initializeAttributes();
 
 		$this->attributes['id'] = null;
-		$this->attributes['owner_guid'] = _elgg_services()->session->getLoggedInUserGuid();
+		$this->attributes['owner_guid'] = _elgg_services()->session_manager->getLoggedInUserGuid();
 		$this->attributes['name'] = null;
 		$this->attributes['subtype'] = null;
 	}
@@ -114,7 +114,7 @@ class ElggAccessCollection extends ElggData {
 			return (string) _elgg_services()->events->triggerResults('access_collection:name', $this->getType(), $params, $name);
 		};
 
-		$user = _elgg_services()->session->getLoggedInUser();
+		$user = _elgg_services()->session_manager->getLoggedInUser();
 		$owner = $this->getOwnerEntity();
 		if (!$user || !$owner) {
 			// User is not logged in or does not access to the owner entity:

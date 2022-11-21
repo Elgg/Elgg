@@ -95,8 +95,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		elgg_delete_directory($this->owner_dir_path);
 		
 		// Needed to test elgg_get_inline_url()
-		$session = \ElggSession::getMock();
-		_elgg_services()->set('session', $session);
+		_elgg_services()->set('session', \ElggSession::getMock());
 		_elgg_services()->session->start();
 	}
 

@@ -42,11 +42,11 @@ class RefreshCsrfToken {
 			'token' => [
 				'__elgg_ts' => $ts,
 				'__elgg_token' => $token,
-				'logged_in' => _elgg_services()->session->isLoggedIn(),
+				'logged_in' => _elgg_services()->session_manager->isLoggedIn(),
 			],
 			'valid_tokens' => $valid_tokens,
 			'session_token' => _elgg_services()->session->get('__elgg_session'),
-			'user_guid' => _elgg_services()->session->getLoggedInUserGuid(),
+			'user_guid' => _elgg_services()->session_manager->getLoggedInUserGuid(),
 		];
 
 		$response = new Response();

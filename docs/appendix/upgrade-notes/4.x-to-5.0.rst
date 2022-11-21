@@ -41,6 +41,11 @@ Async or system upgrades are no longer classes that implement interfaces but ext
 The reason for this change is to be able to access the ``ElggUpgrade`` entity from the ``Batch`` that runs a part of the upgrade. 
 You can access the upgrade by calling ``$this->getUpgrade()``.
 
+Session
+-------
+
+If you use the session service directly (or via ``elgg_get_session()``) you might need to update your code. Various functions of this class have been moved to the ``elgg()->session_manager`` service.
+
 Files plugin
 ------------
 

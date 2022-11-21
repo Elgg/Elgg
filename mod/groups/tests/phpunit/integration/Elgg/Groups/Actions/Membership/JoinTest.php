@@ -23,7 +23,7 @@ class JoinTest extends ActionResponseTestCase {
 		
 		$this->group = $this->createGroup();
 		$this->user = $this->createUser();
-		elgg_get_session()->setLoggedInUser($this->user);
+		_elgg_services()->session_manager->setLoggedInUser($this->user);
 	}
 	
 	public function down() {
@@ -32,7 +32,7 @@ class JoinTest extends ActionResponseTestCase {
 	}
 	
 	public function testLoggedInUserRequired() {
-		elgg_get_session()->removeLoggedInUser();
+		_elgg_services()->session_manager->removeLoggedInUser();
 		
 		$this->expectException(\Elgg\Exceptions\Http\Gatekeeper\LoggedInGatekeeperException::class);
 		$this->executeAction('groups/join');
@@ -77,7 +77,7 @@ class JoinTest extends ActionResponseTestCase {
 		$this->group->membership = ACCESS_PUBLIC;
 		$this->assertTrue($this->group->isPublicMembership());
 		
-		elgg_get_session()->setLoggedInUser($this->group->getOwnerEntity());
+		_elgg_services()->session_manager->setLoggedInUser($this->group->getOwnerEntity());
 		$response = $this->executeAction('groups/join', [
 			'group_guid' => $this->group->guid,
 			'user_guid' => $this->user->guid,

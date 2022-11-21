@@ -51,7 +51,7 @@ class InternalContainer extends \Elgg\Di\InternalContainer{
 			return new \Elgg\Mocks\Database\Plugins(
 				$c->dataCache->plugins,
 				$c->db,
-				$c->session,
+				$c->session_manager,
 				$c->events,
 				$c->translator,
 				$c->views,

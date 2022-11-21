@@ -266,7 +266,7 @@ trait Seeding {
 			}
 
 			if (!isset($properties['owner_guid'])) {
-				$user = _elgg_services()->session->getLoggedInUser();
+				$user = _elgg_services()->session_manager->getLoggedInUser();
 				if (!$user) {
 					$user = $this->getRandomUser();
 				}
@@ -404,7 +404,7 @@ trait Seeding {
 			}
 
 			if (!isset($properties['owner_guid'])) {
-				$user = _elgg_services()->session->getLoggedInUser();
+				$user = _elgg_services()->session_manager->getLoggedInUser();
 				if (!$user) {
 					$user = $this->getRandomUser();
 				}

@@ -114,7 +114,7 @@ class ElggGroup extends \ElggEntity {
 	 */
 	public function isMember(\ElggUser $user = null): bool {
 		if ($user === null) {
-			$user = _elgg_services()->session->getLoggedInUser();
+			$user = _elgg_services()->session_manager->getLoggedInUser();
 		}
 		
 		if (!$user instanceof \ElggUser) {
@@ -266,7 +266,7 @@ class ElggGroup extends \ElggEntity {
 	 */
 	public function canAccessContent(ElggUser $user = null): bool {
 		if (!isset($user)) {
-			$user = _elgg_services()->session->getLoggedInUser();
+			$user = _elgg_services()->session_manager->getLoggedInUser();
 		}
 
 		if ($this->getContentAccessMode() == self::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {

@@ -23,7 +23,7 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 	
 	public function up() {
 		$this->user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($this->user);
+		_elgg_services()->session_manager->setLoggedInUser($this->user);
 		
 		$this->group = $this->createGroup();
 	}

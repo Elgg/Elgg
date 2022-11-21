@@ -12,6 +12,7 @@ use Elgg\Exceptions\PluginException;
 use Elgg\Http\Request;
 use Elgg\I18n\Translator;
 use Elgg\Project\Paths;
+use Elgg\SessionManagerService;
 use Elgg\SystemMessagesService;
 use Elgg\Traits\Cacheable;
 use Elgg\Traits\Debug\Profilable;
@@ -75,9 +76,9 @@ class Plugins {
 	protected $db;
 
 	/**
-	 * @var \ElggSession
+	 * @var SessionManagerService
 	 */
-	protected $session;
+	protected $session_manager;
 
 	/**
 	 * @var EventsService
@@ -115,7 +116,7 @@ class Plugins {
 	 *
 	 * @param BaseCache             $cache           Cache for referencing plugins by ID
 	 * @param Database              $db              Database
-	 * @param \ElggSession          $session         Session
+	 * @param SessionManagerService $session_manager Session
 	 * @param EventsService         $events          Events
 	 * @param Translator            $translator      Translator
 	 * @param ViewsService          $views           Views service
@@ -126,7 +127,7 @@ class Plugins {
 	public function __construct(
 		BaseCache $cache,
 		Database $db,
-		\ElggSession $session,
+		SessionManagerService $session_manager,
 		EventsService $events,
 		Translator $translator,
 		ViewsService $views,
@@ -136,7 +137,7 @@ class Plugins {
 	) {
 		$this->cache = $cache;
 		$this->db = $db;
-		$this->session = $session;
+		$this->session_manager = $session_manager;
 		$this->events = $events;
 		$this->translator = $translator;
 		$this->views = $views;
@@ -262,10 +263,10 @@ class Plugins {
 		$mod_dir = $this->getPath();
 
 		// ignore access in case this is called with no admin logged in - needed for creating plugins perhaps?
-		$old_ia = $this->session->setIgnoreAccess(true);
+		$old_ia = $this->session_manager->setIgnoreAccess(true);
 
 		// show hidden entities so that we can enable them if appropriate
-		$old_access = $this->session->setDisabledEntityVisibility(true);
+		$old_access = $this->session_manager->setDisabledEntityVisibility(true);
 
 		$known_plugins = $this->find('all');
 		if (empty($known_plugins)) {
@@ -304,8 +305,8 @@ class Plugins {
 
 		$physical_plugins = $this->getDirsInDir($mod_dir);
 		if (empty($physical_plugins)) {
-			$this->session->setIgnoreAccess($old_ia);
-			$this->session->setDisabledEntityVisibility($old_access);
+			$this->session_manager->setIgnoreAccess($old_ia);
+			$this->session_manager->setDisabledEntityVisibility($old_access);
 
 			return false;
 		}
@@ -365,8 +366,8 @@ class Plugins {
 			$this->reindexPriorities();
 		}
 
-		$this->session->setIgnoreAccess($old_ia);
-		$this->session->setDisabledEntityVisibility($old_access);
+		$this->session_manager->setIgnoreAccess($old_ia);
+		$this->session_manager->setDisabledEntityVisibility($old_access);
 
 		return true;
 	}
@@ -510,7 +511,7 @@ class Plugins {
 
 		// temporary disable all plugins if there is a file called 'disabled' in the plugin dir
 		if (file_exists("$plugins_path/disabled")) {
-			if ($this->session->isAdminLoggedIn() && $this->context->contains('admin')) {
+			if ($this->session_manager->isAdminLoggedIn() && $this->context->contains('admin')) {
 				$this->system_messages->addSuccessMessage($this->translator->translate('plugins:disabled'));
 			}
 
@@ -775,9 +776,9 @@ class Plugins {
 				break;
 		}
 
-		$old_ia = $this->session->setIgnoreAccess(true);
+		$old_ia = $this->session_manager->setIgnoreAccess(true);
 		$plugins = elgg_get_entities($options) ? : [];
-		$this->session->setIgnoreAccess($old_ia);
+		$this->session_manager->setIgnoreAccess($old_ia);
 
 		$result = $this->orderPluginsByPriority($plugins, $volatile_data_name);
 		

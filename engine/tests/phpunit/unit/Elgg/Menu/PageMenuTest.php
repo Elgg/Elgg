@@ -57,7 +57,7 @@ class PageMenuTest extends UnitTestCase {
 		elgg_set_context('settings');
 
 		$viewer = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($viewer);
+		_elgg_services()->session_manager->setLoggedInUser($viewer);
 
 		$menu = _elgg_services()->menus->getUnpreparedMenu('page', [
 			'entity' => $this->createUser(),
@@ -73,7 +73,7 @@ class PageMenuTest extends UnitTestCase {
 		elgg_set_context('settings');
 
 		$viewer = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($viewer);
+		_elgg_services()->session_manager->setLoggedInUser($viewer);
 
 		$menu = _elgg_services()->menus->getUnpreparedMenu('page', [
 			'entity' => $viewer,
@@ -92,7 +92,7 @@ class PageMenuTest extends UnitTestCase {
 			'admin' => 'yes',
 		]);
 
-		_elgg_services()->session->setLoggedInUser($viewer);
+		_elgg_services()->session_manager->setLoggedInUser($viewer);
 
 		$menu = _elgg_services()->menus->getUnpreparedMenu('page', [
 			'entity' => $this->createUser(),

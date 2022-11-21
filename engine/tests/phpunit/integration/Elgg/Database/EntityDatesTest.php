@@ -14,7 +14,7 @@ class EntityDatesTest extends IntegrationTestCase {
 	 * {@inheritDoc}
 	 */
 	public function up() {
-		_elgg_services()->session->setIgnoreAccess(true);
+		_elgg_services()->session_manager->setIgnoreAccess(true);
 		
 		$this->seed();
 	}
@@ -23,7 +23,7 @@ class EntityDatesTest extends IntegrationTestCase {
 	 * {@inheritDoc}
 	 */
 	public function down() {
-		_elgg_services()->session->setIgnoreAccess(false);
+		_elgg_services()->session_manager->setIgnoreAccess(false);
 	}
 
 	/**

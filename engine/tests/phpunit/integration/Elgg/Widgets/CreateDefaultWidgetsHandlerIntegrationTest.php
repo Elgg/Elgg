@@ -20,7 +20,7 @@ class CreateDefaultWidgetsHandlerIntegrationTest extends IntegrationTestCase {
 	public function up() {
 		$this->user = $this->createUser();
 
-		_elgg_services()->session->setLoggedInUser($this->user);
+		_elgg_services()->session_manager->setLoggedInUser($this->user);
 	
 		elgg_register_widget_type([
 			'id' => 'test_default_widget1',

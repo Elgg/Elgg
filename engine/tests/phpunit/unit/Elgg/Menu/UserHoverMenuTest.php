@@ -45,7 +45,7 @@ class UserHoverMenuTest extends UnitTestCase {
 	public function testUserHoverMenuViewedByUser() {
 
 		$viewer = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($viewer);
+		_elgg_services()->session_manager->setLoggedInUser($viewer);
 
 		$menu = _elgg_services()->menus->getUnpreparedMenu('user_hover', [
 			'entity' => $this->createUser(),
@@ -66,7 +66,7 @@ class UserHoverMenuTest extends UnitTestCase {
 	public function testUserHoverMenuViewedBySelf() {
 
 		$viewer = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($viewer);
+		_elgg_services()->session_manager->setLoggedInUser($viewer);
 
 		$menu = _elgg_services()->menus->getUnpreparedMenu('user_hover', [
 			'entity' => $viewer,
@@ -89,7 +89,7 @@ class UserHoverMenuTest extends UnitTestCase {
 		$viewer = $this->createUser([
 			'admin' => 'yes',
 		]);
-		_elgg_services()->session->setLoggedInUser($viewer);
+		_elgg_services()->session_manager->setLoggedInUser($viewer);
 
 		$menu = _elgg_services()->menus->getUnpreparedMenu('user_hover', [
 			'entity' => $this->createUser(),
@@ -112,7 +112,7 @@ class UserHoverMenuTest extends UnitTestCase {
 		$viewer = $this->createUser([
 			'admin' => 'yes',
 		]);
-		_elgg_services()->session->setLoggedInUser($viewer);
+		_elgg_services()->session_manager->setLoggedInUser($viewer);
 
 		$menu = _elgg_services()->menus->getUnpreparedMenu('user_hover', [
 			'entity' => $this->createUser([
@@ -137,7 +137,7 @@ class UserHoverMenuTest extends UnitTestCase {
 		$viewer = $this->createUser([
 			'admin' => 'yes',
 		]);
-		_elgg_services()->session->setLoggedInUser($viewer);
+		_elgg_services()->session_manager->setLoggedInUser($viewer);
 
 		$menu = _elgg_services()->menus->getUnpreparedMenu('user_hover', [
 			'entity' => $this->createUser([
@@ -162,7 +162,7 @@ class UserHoverMenuTest extends UnitTestCase {
 		$viewer = $this->createUser([
 			'admin' => 'yes',
 		]);
-		_elgg_services()->session->setLoggedInUser($viewer);
+		_elgg_services()->session_manager->setLoggedInUser($viewer);
 
 		$menu = _elgg_services()->menus->getUnpreparedMenu('user_hover', [
 			'entity' => $viewer,

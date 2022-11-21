@@ -22,9 +22,9 @@ class EntityTableUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanGetUserForPermissionsCheckWhileLoggedIn() {
 		$user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
-		$this->assertEquals($user, _elgg_services()->session->getLoggedInUser());
+		$this->assertEquals($user, _elgg_services()->session_manager->getLoggedInUser());
 		
 		$this->assertEquals($user, _elgg_services()->entityTable->getUserForPermissionsCheck());
 

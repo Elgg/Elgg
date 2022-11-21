@@ -382,7 +382,7 @@ class ElggUser extends \ElggEntity {
 		if ($this->guid === elgg_get_logged_in_user_guid()) {
 			// update the session user token, so this session remains valid
 			// other sessions for this user will be invalidated
-			_elgg_services()->session->setUserToken();
+			_elgg_services()->session_manager->setUserToken();
 		}
 	}
 

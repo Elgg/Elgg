@@ -72,7 +72,7 @@ class ElggPluginSettingsIntegrationTest extends IntegrationTestCase {
 	
 	public function testCanSetUserSetting() {
 		$user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 		
 		_elgg_services()->logger->disable();
 		
@@ -99,7 +99,7 @@ class ElggPluginSettingsIntegrationTest extends IntegrationTestCase {
 	public function testUnsetAllEntityAndPluginSettings() {
 		
 		$user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 		
 		$plugin = \ElggPlugin::fromId('test_plugin');
 		$untouched_plugin = \ElggPlugin::fromId('languages_plugin');

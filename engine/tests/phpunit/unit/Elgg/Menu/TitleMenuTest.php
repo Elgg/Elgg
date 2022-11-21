@@ -44,7 +44,7 @@ class TitleMenuTest extends UnitTestCase {
 	public function testTitleMenuViewedByUser() {
 
 		$viewer = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($viewer);
+		_elgg_services()->session_manager->setLoggedInUser($viewer);
 
 		$menu = _elgg_services()->menus->getUnpreparedMenu('title', [
 			'entity' => $this->createUser(),
@@ -58,7 +58,7 @@ class TitleMenuTest extends UnitTestCase {
 	public function testTitleMenuViewedBySelf() {
 
 		$viewer = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($viewer);
+		_elgg_services()->session_manager->setLoggedInUser($viewer);
 
 		$menu = _elgg_services()->menus->getUnpreparedMenu('title', [
 			'entity' => $viewer,
@@ -74,7 +74,7 @@ class TitleMenuTest extends UnitTestCase {
 		$viewer = $this->createUser([
 			'admin' => 'yes',
 		]);
-		_elgg_services()->session->setLoggedInUser($viewer);
+		_elgg_services()->session_manager->setLoggedInUser($viewer);
 
 		$menu = _elgg_services()->menus->getUnpreparedMenu('title', [
 			'entity' => $this->createUser(),

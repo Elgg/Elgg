@@ -16,11 +16,11 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 	protected $ia;
 	
 	public function up() {
-		$this->ia = elgg()->session->setIgnoreAccess(true);
+		$this->ia = elgg()->session_manager->setIgnoreAccess(true);
 	}
 
 	public function down() {
-		elgg()->session->setIgnoreAccess($this->ia);
+		elgg()->session_manager->setIgnoreAccess($this->ia);
 	}
 
 	/**

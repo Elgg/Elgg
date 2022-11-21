@@ -17,7 +17,7 @@ class MaintenanceGatekeeper {
 	 * @return \Elgg\Http\OkResponse|\Elgg\Http\ErrorResponse|void
 	 */
 	public function __invoke(Request $request) {
-		if ($request->elgg()->session->isAdminLoggedIn()) {
+		if ($request->elgg()->session_manager->isAdminLoggedIn()) {
 			return;
 		}
 		

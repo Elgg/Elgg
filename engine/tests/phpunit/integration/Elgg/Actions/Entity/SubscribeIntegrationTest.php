@@ -32,7 +32,7 @@ class SubscribeIntegrationTest extends ActionResponseTestCase {
 		$this->user->setNotificationSetting('apples', true);
 		$this->user->setNotificationSetting('bananas', false);
 		
-		_elgg_services()->session->setLoggedInUser($this->user);
+		_elgg_services()->session_manager->setLoggedInUser($this->user);
 	}
 	
 	public function testFailsWithMissingEntityGUID() {

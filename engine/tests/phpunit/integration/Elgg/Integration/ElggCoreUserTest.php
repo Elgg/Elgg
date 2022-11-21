@@ -19,7 +19,7 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 	private $user;
 
 	public function up() {
-		_elgg_services()->session->setLoggedInUser($this->getAdmin());
+		_elgg_services()->session_manager->setLoggedInUser($this->getAdmin());
 
 		$this->user = new ElggUserWithExposableAttributes();
 		$this->user->username = $this->getRandomUsername();
@@ -213,7 +213,7 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$profile_user = $this->createUser();
 		$reading_user = $this->createUser();
 		
-		$session = elgg_get_session();
+		$session = _elgg_services()->session_manager;
 		
 		// store profile data
 		$session->setLoggedInUser($profile_user);
@@ -237,7 +237,7 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$profile_user = $this->createUser();
 		$reading_user = $this->createUser();
 		
-		$session = elgg_get_session();
+		$session = _elgg_services()->session_manager;
 		
 		// store profile data
 		$session->setLoggedInUser($profile_user);

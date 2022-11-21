@@ -20,6 +20,6 @@ abstract class ElggCoreGetEntitiesBaseTest extends IntegrationTestCase {
 	 */
 	public function up() {
 		$this->user = $this->createUser();
-		elgg()->session->setLoggedInUser($this->user);
+		elgg()->session_manager->setLoggedInUser($this->user);
 	}
 }

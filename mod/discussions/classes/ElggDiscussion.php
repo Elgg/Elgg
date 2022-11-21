@@ -21,7 +21,7 @@ class ElggDiscussion extends ElggObject {
 	 */
 	public function hasSubscriptions(int $user_guid = 0, string|array $methods = []): bool {
 		if ($user_guid === 0) {
-			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
+			$user_guid = _elgg_services()->session_manager->getLoggedInUserGuid();
 		}
 		
 		$methods = $this->normalizeSubscriptionMethods($methods);

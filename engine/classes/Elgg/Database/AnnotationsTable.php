@@ -333,7 +333,7 @@ class AnnotationsTable {
 
 		// if we can see hidden (disabled) we need to use the offset
 		// otherwise we risk an infinite loop if there are more than 50
-		$inc_offset = _elgg_services()->session->getDisabledEntityVisibility();
+		$inc_offset = _elgg_services()->session_manager->getDisabledEntityVisibility();
 
 		$options['batch'] = true;
 		$options['batch_size'] = 50;

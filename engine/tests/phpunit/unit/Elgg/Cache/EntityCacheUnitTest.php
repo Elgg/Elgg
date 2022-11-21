@@ -95,7 +95,7 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 
 		$user = $this->createUser();
 
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		$object = $this->createObject([
 			'owner_guid' => $user->guid,
@@ -112,7 +112,7 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 
 		$user = $this->createUser();
 
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		$object = $this->createObject([
 			'owner_guid' => $user->guid,
@@ -130,7 +130,7 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 		$user = $this->createUser();
 		$object = null;
 		
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($user, &$object) {
 		
@@ -143,7 +143,7 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 	
 			$this->assertEquals($object, get_entity($object->guid));
 	
-			_elgg_services()->session->removeLoggedInUser();
+			_elgg_services()->session_manager->removeLoggedInUser();
 	
 			$this->assertEquals($object, get_entity($object->guid));
 			
@@ -158,7 +158,7 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 
 		$user = $this->createUser();
 
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		$object = $this->createObject([
 			'owner_guid' => $user->guid,
@@ -169,7 +169,7 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals($object, get_entity($object->guid));
 
-		_elgg_services()->session->removeLoggedInUser();
+		_elgg_services()->session_manager->removeLoggedInUser();
 
 		$this->assertNull(_elgg_services()->entityCache->load($user->guid));
 		$this->assertNull(_elgg_services()->entityCache->load($object->guid));

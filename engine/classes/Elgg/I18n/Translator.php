@@ -251,7 +251,7 @@ class Translator {
 	public function detectLanguage() {
 		// detect from URL
 		$url_lang = _elgg_services()->request->getParam('hl');
-		$user = _elgg_services()->session->getLoggedInUser();
+		$user = _elgg_services()->session_manager->getLoggedInUser();
 		
 		if (!empty($url_lang)) {
 			// store language for logged out users

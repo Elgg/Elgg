@@ -9,7 +9,7 @@ use Elgg\Http\OkResponse;
 class SaveIntegrationTest extends ActionResponseTestCase {
 		
 	public function testCommentSaveAction() {
-		_elgg_services()->session->setLoggedInUser($this->createUser());
+		_elgg_services()->session_manager->setLoggedInUser($this->createUser());
 		
 		$entity = $this->createObject();
 		

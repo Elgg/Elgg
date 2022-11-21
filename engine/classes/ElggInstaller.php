@@ -1581,11 +1581,11 @@ class ElggInstaller {
 			return false;
 		}
 
-		$ia = $app->internal_services->session->setIgnoreAccess(true);
+		$ia = $app->internal_services->session_manager->setIgnoreAccess(true);
 		if (!$user->makeAdmin()) {
 			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:adminaccess'));
 		}
-		$app->internal_services->session->setIgnoreAccess($ia);
+		$app->internal_services->session_manager->setIgnoreAccess($ia);
 
 		// add validation data to satisfy user validation plugins
 		$user->validated = true;

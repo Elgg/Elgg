@@ -22,7 +22,7 @@ function elgg_get_session(): ?\ElggSession {
  * @return \ElggUser|null
  */
 function elgg_get_logged_in_user_entity(): ?\ElggUser {
-	return _elgg_services()->session->getLoggedInUser();
+	return _elgg_services()->session_manager->getLoggedInUser();
 }
 
 /**
@@ -32,7 +32,7 @@ function elgg_get_logged_in_user_entity(): ?\ElggUser {
  * @return int
  */
 function elgg_get_logged_in_user_guid(): int {
-	return _elgg_services()->session->getLoggedInUserGuid();
+	return _elgg_services()->session_manager->getLoggedInUserGuid();
 }
 
 /**
@@ -41,7 +41,7 @@ function elgg_get_logged_in_user_guid(): int {
  * @return bool
  */
 function elgg_is_logged_in(): bool {
-	return _elgg_services()->session->isLoggedIn();
+	return _elgg_services()->session_manager->isLoggedIn();
 }
 
 /**
@@ -50,7 +50,7 @@ function elgg_is_logged_in(): bool {
  * @return bool
  */
 function elgg_is_admin_logged_in(): bool {
-	return _elgg_services()->session->isAdminLoggedIn();
+	return _elgg_services()->session_manager->isAdminLoggedIn();
 }
 
 /**
@@ -79,7 +79,7 @@ function elgg_set_cookie(\ElggCookie $cookie): bool {
  * @since 4.3
  */
 function elgg_login(\ElggUser $user, bool $persistent = false): void {
-	_elgg_services()->session->login($user, $persistent);
+	_elgg_services()->session_manager->login($user, $persistent);
 }
 
 /**
@@ -89,7 +89,7 @@ function elgg_login(\ElggUser $user, bool $persistent = false): void {
  * @since 4.3
  */
 function elgg_logout(): bool {
-	return _elgg_services()->session->logout();
+	return _elgg_services()->session_manager->logout();
 }
 
 /**

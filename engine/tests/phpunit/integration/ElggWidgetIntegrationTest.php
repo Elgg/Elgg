@@ -18,13 +18,13 @@ class ElggWidgetIntegrationTest extends IntegrationTestCase {
 
 	public function up() {
 		$this->user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($this->user);
+		_elgg_services()->session_manager->setLoggedInUser($this->user);
 		
 		$this->widget = $this->createObject([
 			'subtype' => 'widget',
 			'tags' => 'tag',
 		]);
-		_elgg_services()->session->removeLoggedInUser();
+		_elgg_services()->session_manager->removeLoggedInUser();
 	}
 
 	public function testSettingAllowedMetadata() {

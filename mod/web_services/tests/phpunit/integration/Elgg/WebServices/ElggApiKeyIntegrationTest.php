@@ -54,8 +54,7 @@ class ElggApiKeyIntegrationTest extends IntegrationTestCase {
 	public function testDelete() {
 		
 		$admin = $this->getAdmin();
-		$session = elgg_get_session();
-		$session->setLoggedInUser($admin);
+		_elgg_services()->session_manager->setLoggedInUser($admin);
 		
 		/* @var $entity \ElggApiKey */
 		$entity = $this->createObject([

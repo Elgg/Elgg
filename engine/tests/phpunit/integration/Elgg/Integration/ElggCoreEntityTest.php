@@ -18,7 +18,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 
 	public function up() {
 		$this->owner = $this->createUser();
-		elgg()->session->setLoggedInUser($this->owner);
+		elgg()->session_manager->setLoggedInUser($this->owner);
 		
 		$this->entity = $this->createObject(['subtype' => 'elgg_entity_test_subtype']);
 
@@ -288,8 +288,8 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 
 		$user = $this->createUser();
 
-		$old_user = elgg()->session->getLoggedInUser();
-		elgg()->session->setLoggedInUser($user);
+		$old_user = elgg()->session_manager->getLoggedInUser();
+		elgg()->session_manager->setLoggedInUser($user);
 		
 		// even owner can't bypass permissions
 		elgg_register_event_handler('permissions_check', 'object', [
@@ -323,7 +323,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 			$this->assertTrue($this->entity->save());
 		});
 		
-		elgg()->session->setLoggedInUser($old_user);
+		elgg()->session_manager->setLoggedInUser($old_user);
 	}
 
 	/**
@@ -682,8 +682,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 	public function testDeleteDeadloopPrevented() {
 		$user = $this->getAdmin();
 		
-		$session = elgg_get_session();
-		$session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 		
 		$object1 = $this->createObject([
 			'owner_guid' => $user->guid,

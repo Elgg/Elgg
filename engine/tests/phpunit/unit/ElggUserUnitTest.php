@@ -141,9 +141,8 @@ class ElggUserUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($user->canComment());
 		
 		$user2 = $this->createUser();
-		$session = _elgg_services()->session;
 		
-		$session->setLoggedInUser($user2);
+		_elgg_services()->session_manager->setLoggedInUser($user2);
 		
 		$this->assertFalse($user->canComment());
 	}

@@ -25,9 +25,8 @@ class CanCommentIntegrationTest extends \Elgg\IntegrationTestCase {
 		$this->assertFalse($blog->canComment());
 		
 		$user = $this->createUser();
-		$session = _elgg_services()->session;
 		
-		$session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 		
 		$this->assertEquals($expected, $blog->canComment());
 	}

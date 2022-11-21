@@ -27,7 +27,7 @@ abstract class GroupToolContainerLogicIntegrationTest extends IntegrationTestCas
 	 */
 	public function up() {
 		$this->owner = $this->createUser();
-		elgg()->session->setLoggedInUser($this->owner);
+		elgg()->session_manager->setLoggedInUser($this->owner);
 		
 		$this->group = $this->createGroup();
 	}

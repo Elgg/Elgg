@@ -48,7 +48,7 @@ class SubscriptionNotificationEvent implements NotificationEvent {
 		
 		$this->actor = $actor;
 		if (!isset($actor)) {
-			$this->actor = _elgg_services()->session->getLoggedInUser();
+			$this->actor = _elgg_services()->session_manager->getLoggedInUser();
 		}
 		
 		$this->action = $action;

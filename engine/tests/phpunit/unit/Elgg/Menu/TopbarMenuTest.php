@@ -42,7 +42,7 @@ class TopbarMenuTest extends UnitTestCase {
 	public function testTopbarMenuViewedByUser() {
 
 		$viewer = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($viewer);
+		_elgg_services()->session_manager->setLoggedInUser($viewer);
 
 		$menu = _elgg_services()->menus->getUnpreparedMenu('topbar');
 
@@ -59,7 +59,7 @@ class TopbarMenuTest extends UnitTestCase {
 		$viewer = $this->createUser([
 			'admin' => 'yes',
 		]);
-		_elgg_services()->session->setLoggedInUser($viewer);
+		_elgg_services()->session_manager->setLoggedInUser($viewer);
 
 		$menu = _elgg_services()->menus->getUnpreparedMenu('topbar');
 

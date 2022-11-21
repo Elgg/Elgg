@@ -32,7 +32,7 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 
 	public function up() {
 		$this->user = $this->createUser();
-		elgg()->session->setLoggedInUser($this->user);
+		elgg()->session_manager->setLoggedInUser($this->user);
 		
 		$this->subtype = $this->getRandomSubtype();
 		$this->entity = new ElggObjectWithExposableAttributes();
@@ -166,14 +166,14 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		$guid2 = $e2->guid;
 
 		// fake being logged out
-		elgg()->session->removeLoggedInUser();
+		elgg()->session_manager->removeLoggedInUser();
 		
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($e1) {
 			$this->assertTrue($e1->disable('', true));
 		});
 		
 		// restore logged in user
-		elgg()->session->setLoggedInUser($this->user);
+		elgg()->session_manager->setLoggedInUser($this->user);
 		
 		$this->assertEmpty(get_entity($guid1));
 		$this->assertEmpty(get_entity($guid2));
