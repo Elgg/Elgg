@@ -13,7 +13,7 @@ class Users {
 	/**
 	 * Enable site notifications when a user is created
 	 *
-	 * @param \Elgg\Event $event 'create', 'user'
+	 * @param \Elgg\Event $event 'create:after', 'user'
 	 *
 	 * @return void
 	 */

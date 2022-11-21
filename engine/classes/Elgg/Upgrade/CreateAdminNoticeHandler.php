@@ -12,7 +12,7 @@ class CreateAdminNoticeHandler {
 	/**
 	 * Add an admin notice when a new \ElggUpgrade object is created.
 	 *
-	 * @param \Elgg\Event $event 'create', 'object'
+	 * @param \Elgg\Event $event 'create:after', 'object'
 	 *
 	 * @return void
 	 */

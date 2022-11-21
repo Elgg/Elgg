@@ -14,7 +14,7 @@ class AutoSubscribeHandler {
 	/**
 	 * Subscribe the user to the comment container
 	 *
-	 * @param \Elgg\Event $event 'create', 'object'
+	 * @param \Elgg\Event $event 'create:after', 'object'
 	 *
 	 * @return void
 	 */

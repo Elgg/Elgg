@@ -79,6 +79,7 @@ abstract class ElggEntityPluginSettingsTestCase extends IntegrationTestCase {
 			['test_plugin', 'foo', 1.23],
 			['test_plugin', 'foo', false],
 			['test_plugin', 'foo', true],
+			['test_plugin', 'multiple', ['a', 'b']],
 		];
 	}
 	
@@ -110,7 +111,6 @@ abstract class ElggEntityPluginSettingsTestCase extends IntegrationTestCase {
 	public function invalidPluginSettingValueProvider() {
 		return [
 			[new \stdClass()],
-			[['a', 'b']],
 		];
 	}
 }

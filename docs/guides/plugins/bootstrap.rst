@@ -93,7 +93,7 @@ Returns Elgg's public DI container. This can be helpfull if you wish to register
 .. code-block:: php
 
 	$events = $this->elgg()->events;
-	$events->registerHandler('create', 'object', MyCustomObjectHandler::class);
+	$events->registerHandler('create:after', 'object', MyCustomObjectHandler::class);
 
 ->plugin()
 ----------

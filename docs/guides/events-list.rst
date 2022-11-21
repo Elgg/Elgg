@@ -360,9 +360,12 @@ Entity events
 
 **comments:count, <entity_type>** |results|
 	Return the number of comments on ``$params['entity']``.
+
+**create:after, <entity type>**
+    Triggered for user, group, object, and site entities after creation.
 	
-**create, <entity type>**
-    Triggered for user, group, object, and site entities after creation. Return false to delete entity.
+**create:before, <entity type>**
+    Triggered for user, group, object, and site entities before creation. Return false to prevent creating the entity.
 
 **delete, <entity type>**
     Triggered before entity deletion.

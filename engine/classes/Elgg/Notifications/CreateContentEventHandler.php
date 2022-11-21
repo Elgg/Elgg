@@ -13,7 +13,7 @@ class CreateContentEventHandler {
 	/**
 	 * Subscribe to content you just created in order to receive notifications
 	 *
-	 * @param \Elgg\Event $event 'create', 'object'|'group'
+	 * @param \Elgg\Event $event 'create:after', 'object'|'group'
 	 *
 	 * @return void
 	 */

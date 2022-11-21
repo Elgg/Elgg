@@ -382,6 +382,7 @@ Removed events
 
 * ``access:collections:addcollection, collection`` use the ``create, access_collection`` sequence
 * ``access:collections:deletecollection, collection`` use the ``delete, access_collection`` sequence
+* ``create, <object|group|user|site>`` use the ``create:before, <type>`` or ``create:after, <type>`` event
 * ``prepare, breadcrumbs`` use ``register, menu:breadcrumbs``
 * ``widget_settings, <widget_handler>``
 

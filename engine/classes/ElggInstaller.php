@@ -1494,7 +1494,7 @@ class ElggInstaller {
 			}
 
 			// Wo don't need to run upgrades on new installations
-			$app->internal_services->events->unregisterHandler('create', 'object', \Elgg\Upgrade\CreateAdminNoticeHandler::class);
+			$app->internal_services->events->unregisterHandler('create:after', 'object', \Elgg\Upgrade\CreateAdminNoticeHandler::class);
 			$upgrades = $app->internal_services->upgradeLocator->locate();
 			foreach ($upgrades as $upgrade) {
 				$upgrade->setCompleted();

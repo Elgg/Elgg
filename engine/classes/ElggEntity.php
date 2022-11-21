@@ -1233,25 +1233,10 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * {@inheritDoc}
 	 */
 	public function save(): bool {
-		$result = false;
-		
 		if ($this->guid > 0) {
 			$result = $this->update();
 		} else {
-			$guid = $this->create();
-			if ($guid === false) {
-				return false;
-			}
-			
-			if (!_elgg_services()->events->trigger('create', $this->type, $this)) {
-				// plugins that return false to event don't need to override the access system
-				elgg_call(ELGG_IGNORE_ACCESS, function() {
-					return $this->delete();
-				});
-				return false;
-			}
-			
-			$result = true;
+			$result = $this->create() !== false;
 		}
 
 		if ($result) {
@@ -1282,7 +1267,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
 		$subtype = $this->attributes['subtype'];
 		if (!$subtype) {
-			throw new ElggInvalidArgumentException("All entities must have a subtype");
+			throw new ElggInvalidArgumentException('All entities must have a subtype');
 		}
 
 		$owner_guid = (int) $this->attributes['owner_guid'];
@@ -1340,6 +1325,10 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 				return false;
 			}
 		}
+		
+		if (!_elgg_services()->events->triggerBefore('create', $this->type, $this)) {
+			return false;
+		}
 
 		// Create primary table row
 		$guid = _elgg_services()->entityTable->insertRow((object) [
@@ -1392,6 +1381,8 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			// users have their own logic for setting last action
 			$container->updateLastAction();
 		}
+		
+		_elgg_services()->events->triggerAfter('create', $this->type, $this);
 
 		return $guid;
 	}
