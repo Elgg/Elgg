@@ -19,18 +19,15 @@ class Seeder extends Seed {
 	public function seed() {
 		$this->advance($this->getCount());
 		
-		$attributes = [
-			'subtype' => 'site_notification',
-			'access_id' => ACCESS_PRIVATE,
-		];
-		
 		while ($this->getCount() < $this->limit) {
-			$metadata = [
+			$properties = [
+				'subtype' => 'site_notification',
+				'access_id' => ACCESS_PRIVATE,
 				'read' => $this->faker()->boolean(),
 				'summary' => $this->faker()->sentence(),
 			];
 			
-			$notification = $this->createObject($attributes, $metadata);
+			$notification = $this->createObject($properties);
 			if (!$notification instanceof \SiteNotification) {
 				continue;
 			}

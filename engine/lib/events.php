@@ -189,6 +189,6 @@ function elgg_trigger_deprecated_event(string $event, string $type, $object = nu
  *
  * @since 5.0
  */
-function elgg_trigger_deprecated_event_results(string $event, string $type, $params = null, $returnvalue = null, string $message = '', string $version = '') {
+function elgg_trigger_deprecated_event_results(string $event, string $type, array $params = [], $returnvalue = null, string $message = '', string $version = '') {
 	return _elgg_services()->events->triggerDeprecatedResults($event, $type, $params, $returnvalue, $message, $version);
 }

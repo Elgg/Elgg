@@ -534,7 +534,7 @@ trait Seeding {
 			foreach ($profile_fields_config as $field) {
 				$profile_fields[$field['name']] = $field['#type'];
 			}
-			return $this->createUser([], [
+			return $this->createUser([
 				'validated' => true,
 			], [
 				'profile_fields' => $profile_fields,
@@ -581,7 +581,6 @@ trait Seeding {
 		
 			return $this->createGroup([
 				'access_id' => $this->getRandomGroupVisibility(),
-			], [
 				'content_access_mode' => $this->getRandomGroupContentAccessMode(),
 				'membership' => $this->getRandomGroupMembership(),
 			], [

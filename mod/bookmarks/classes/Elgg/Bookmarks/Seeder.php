@@ -17,16 +17,13 @@ class Seeder extends Seed {
 	public function seed() {
 		$this->advance($this->getCount());
 
-		$attributes = [
-			'subtype' => 'bookmarks',
-		];
-
 		while ($this->getCount() < $this->limit) {
-			$metadata = [
+			$properties = [
+				'subtype' => 'bookmarks',
 				'address' => $this->faker()->url,
 			];
 
-			$bookmark = $this->createObject($attributes, $metadata);
+			$bookmark = $this->createObject($properties);
 			if (!$bookmark) {
 				continue;
 			}

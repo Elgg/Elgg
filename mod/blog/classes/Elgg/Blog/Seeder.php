@@ -22,18 +22,15 @@ class Seeder extends Seed {
 	public function seed() {
 		$this->advance($this->getCount());
 
-		$attributes = [
-			'subtype' => 'blog',
-		];
-
 		while ($this->getCount() < $this->limit) {
-			$metadata = [
+			$properties = [
+				'subtype' => 'blog',
 				'status' => $this->getRandomStatus(),
 				'comments_on' => $this->faker()->boolean() ? 'On' : 'Off',
 				'excerpt' => $this->faker()->sentence(),
 			];
 
-			$blog = $this->createObject($attributes, $metadata);
+			$blog = $this->createObject($properties);
 			if (!$blog) {
 				continue;
 			}

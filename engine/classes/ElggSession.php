@@ -2,7 +2,7 @@
 
 use Elgg\Config;
 use Elgg\Database;
-use Elgg\Database\SessionHandler;
+use Elgg\Database\SessionHandler as ElggSessionHandler;
 use Elgg\Traits\Debug\Profilable;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -282,7 +282,7 @@ class ElggSession {
 			'cookie_lifetime' => $params['lifetime'],
 		];
 
-		$handler = new SessionHandler($db);
+		$handler = new ElggSessionHandler($db);
 		$storage = new NativeSessionStorage($options, $handler);
 		$session = new Session($storage);
 		return new self($session);

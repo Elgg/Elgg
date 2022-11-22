@@ -3,6 +3,7 @@
 namespace Elgg\Filesystem\Filestore;
 
 use Elgg\Exceptions\DomainException;
+use Elgg\Exceptions\Filesystem\IOException;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Filesystem\Filestore;
 use Elgg\Project\Paths;

@@ -459,7 +459,7 @@ class EntityTable {
 	 * @throws UserFetchFailureException
 	 */
 	public function getUserForPermissionsCheck(int $guid = null): ?\ElggUser {
-		if (!$guid || $guid === $this->session_manager->getLoggedInUserGuid()) {
+		if (empty($guid) || $guid === $this->session_manager->getLoggedInUserGuid()) {
 			return $this->session_manager->getLoggedInUser();
 		}
 
