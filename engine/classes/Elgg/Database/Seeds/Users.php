@@ -37,7 +37,7 @@ class Users extends Seed {
 		
 		while ($this->getCount() < $this->limit) {
 			if ($this->create) {
-				$user = $this->createUser([], [], [
+				$user = $this->createUser([], [
 					'profile_fields' => $profile_fields,
 				]);
 			} else {

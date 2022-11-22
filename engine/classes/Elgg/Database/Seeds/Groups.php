@@ -37,7 +37,6 @@ class Groups extends Seed {
 			if ($this->create) {
 				$group = $this->createGroup([
 					'access_id' => $this->getRandomGroupVisibility(),
-				], [
 					'content_access_mode' => $this->getRandomGroupContentAccessMode(),
 					'membership' => $this->getRandomGroupMembership(),
 				], [

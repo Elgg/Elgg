@@ -24,7 +24,7 @@ class HandlerLogger {
 			return;
 		}
 		
-		self::track($event->getName(), $event->getType(), $event);
+		self::track($event->getName(), $event->getType());
 	}
 	
 	/**

@@ -18,15 +18,12 @@ class Seeder extends Seed {
 		$this->advance($this->getCount());
 
 		$create_page = function () {
-			$metadata = [
+			$properties = [
+				'subtype' => 'page',
 				'write_access_id' => ACCESS_LOGGED_IN,
 			];
 
-			$attributes = [
-				'subtype' => 'page',
-			];
-
-			$page = $this->createObject($attributes, $metadata);
+			$page = $this->createObject($properties);
 			if (!$page) {
 				return;
 			}

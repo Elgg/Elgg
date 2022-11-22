@@ -23,17 +23,14 @@ class Seeder extends Seed {
 		$this->advance($this->getCount());
 
 		while ($this->getCount() < $this->limit) {
-			$metadata = [
+			$properties = [
+				'subtype' => 'discussion',
+				'container_guid' => $this->getRandomGroup()->guid,
 				'status' => $this->getRandomStatus(),
 				'excerpt' => $this->faker()->sentence(),
 			];
 
-			$attributes = [
-				'subtype' => 'discussion',
-				'container_guid' => $this->getRandomGroup()->guid,
-			];
-
-			$discussion = $this->createObject($attributes, $metadata);
+			$discussion = $this->createObject($properties);
 			if (!$discussion) {
 				continue;
 			}
