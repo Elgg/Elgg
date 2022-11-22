@@ -84,7 +84,7 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 			'language' => 'de',
 		]);
 		
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 		
 		$this->assertEquals('de', $this->translator->detectLanguage());
 		
@@ -144,7 +144,7 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanDetectCurrentLanguageFromUserSettings() {
-
+		_elgg_services()->reset('session_manager');
 		$this->translator->setCurrentLanguage(null);
 
 		$language = 'ab';
@@ -155,7 +155,7 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		
 		$this->assertEquals('en', $this->translator->getCurrentLanguage());
 
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		$this->assertEquals($language, $this->translator->getCurrentLanguage());
 	}

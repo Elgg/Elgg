@@ -26,7 +26,7 @@ class ActionRegistrationIntegrationTest extends ActionResponseTestCase {
 		parent::up();
 		
 		// Logging in admin so all actions are accessible
-		_elgg_services()->session->setLoggedInUser($this->getAdmin());
+		_elgg_services()->session_manager->setLoggedInUser($this->getAdmin());
 	}
 
 	public function actionsProvider() {
@@ -54,7 +54,7 @@ class ActionRegistrationIntegrationTest extends ActionResponseTestCase {
 		}
 
 		if ($access === 'logged_out') {
-			_elgg_services()->session->removeLoggedInUser();
+			_elgg_services()->session_manager->removeLoggedInUser();
 		}
 		
 		$response = $this->executeAction($name);
@@ -72,7 +72,7 @@ class ActionRegistrationIntegrationTest extends ActionResponseTestCase {
 		}
 		
 		if ($access === 'logged_out') {
-			_elgg_services()->session->removeLoggedInUser();
+			_elgg_services()->session_manager->removeLoggedInUser();
 		}
 
 		$response = $this->executeAction($name, [], 2);

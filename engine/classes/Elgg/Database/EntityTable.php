@@ -13,6 +13,7 @@ use Elgg\Exceptions\ClassException;
 use Elgg\Exceptions\Database\UserFetchFailureException;
 use Elgg\Exceptions\DomainException;
 use Elgg\I18n\Translator;
+use Elgg\SessionManagerService;
 use Elgg\Traits\Loggable;
 use Elgg\Traits\TimeUsing;
 
@@ -68,9 +69,9 @@ class EntityTable {
 	protected $events;
 
 	/**
-	 * @var \ElggSession
+	 * @var SessionManagerService
 	 */
-	protected $session;
+	protected $session_manager;
 
 	/**
 	 * @var Translator
@@ -85,13 +86,13 @@ class EntityTable {
 	/**
 	 * Constructor
 	 *
-	 * @param Config        $config         Config
-	 * @param Database      $db             Database
-	 * @param EntityCache   $entity_cache   Entity cache
-	 * @param MetadataCache $metadata_cache Metadata cache
-	 * @param EventsService $events         Events service
-	 * @param \ElggSession  $session        Session
-	 * @param Translator    $translator     Translator
+	 * @param Config                $config          Config
+	 * @param Database              $db              Database
+	 * @param EntityCache           $entity_cache    Entity cache
+	 * @param MetadataCache         $metadata_cache  Metadata cache
+	 * @param EventsService         $events          Events service
+	 * @param SessionManagerService $session_manager Session manager
+	 * @param Translator            $translator      Translator
 	 */
 	public function __construct(
 		Config $config,
@@ -99,7 +100,7 @@ class EntityTable {
 		EntityCache $entity_cache,
 		MetadataCache $metadata_cache,
 		EventsService $events,
-		\ElggSession $session,
+		SessionManagerService $session_manager,
 		Translator $translator
 	) {
 		$this->config = $config;
@@ -107,7 +108,7 @@ class EntityTable {
 		$this->entity_cache = $entity_cache;
 		$this->metadata_cache = $metadata_cache;
 		$this->events = $events;
-		$this->session = $session;
+		$this->session_manager = $session_manager;
 		$this->translator = $translator;
 	}
 
@@ -458,8 +459,8 @@ class EntityTable {
 	 * @throws UserFetchFailureException
 	 */
 	public function getUserForPermissionsCheck(int $guid = null): ?\ElggUser {
-		if (!$guid || $guid === $this->session->getLoggedInUserGuid()) {
-			return $this->session->getLoggedInUser();
+		if (!$guid || $guid === $this->session_manager->getLoggedInUserGuid()) {
+			return $this->session_manager->getLoggedInUser();
 		}
 
 		$user = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {

@@ -145,7 +145,7 @@ class WalledGardenIntegrationTest extends IntegrationTestCase {
 		$this->createService($request);
 		
 		$user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 		
 		elgg_register_route('foo', [
 			'path' => '/bar/foo',

@@ -23,9 +23,9 @@ class GatekeeperUnitTest extends UnitTestCase {
 	protected $gatekeeper;
 
 	/**
-	 * @var \ElggSession
+	 * @var SessionManagerService
 	 */
-	protected $session;
+	protected $session_manager;
 	
 	/**
 	 * @var Invoker
@@ -33,7 +33,7 @@ class GatekeeperUnitTest extends UnitTestCase {
 	protected $invoker;
 
 	public function up() {
-		$this->session = _elgg_services()->session;
+		$this->session_manager = _elgg_services()->session_manager;
 		$this->gatekeeper = _elgg_services()->gatekeeper;
 		$this->invoker = _elgg_services()->invoker;
 	}
@@ -55,14 +55,14 @@ class GatekeeperUnitTest extends UnitTestCase {
 	public function testGatekeeperAllowsAccessToLoggedInUser() {
 
 		$user = $this->createUser();
-		$this->session->setLoggedInUser($user);
+		$this->session_manager->setLoggedInUser($user);
 
 		$this->assertNull($this->gatekeeper->assertAuthenticatedUser());
 	}
 
 	public function testGatekeeperPreventsAccessByLoggedInUser() {
 		$user = $this->createUser();
-		$this->session->setLoggedInUser($user);
+		$this->session_manager->setLoggedInUser($user);
 
 		$this->expectException(LoggedOutGatekeeperException::class);
 		$this->gatekeeper->assertUnauthenticatedUser();
@@ -90,7 +90,7 @@ class GatekeeperUnitTest extends UnitTestCase {
 		$this->assertTrue($user->isBanned());
 		
 		$authenticated_user = $this->createUser();
-		$this->session->setLoggedInUser($authenticated_user);
+		$this->session_manager->setLoggedInUser($authenticated_user);
 		
 		$this->expectException(EntityNotFoundException::class);
 		$this->gatekeeper->assertAccessibleUser($user);
@@ -116,7 +116,7 @@ class GatekeeperUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($admin->isAdmin());
 		
-		$this->session->setLoggedInUser($admin);
+		$this->session_manager->setLoggedInUser($admin);
 		
 		$this->gatekeeper->assertAccessibleUser($user);
 	}
@@ -128,7 +128,7 @@ class GatekeeperUnitTest extends UnitTestCase {
 
 	public function testAdminGatekeeperPreventsAccessByNonAdminUser() {
 		$user = $this->createUser();
-		$this->session->setLoggedInUser($user);
+		$this->session_manager->setLoggedInUser($user);
 
 		$this->expectException(AdminGatekeeperException::class);
 		$this->gatekeeper->assertAuthenticatedAdmin();
@@ -140,7 +140,7 @@ class GatekeeperUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($user->isAdmin());
 		
-		$this->session->setLoggedInUser($user);
+		$this->session_manager->setLoggedInUser($user);
 
 		$this->assertNull($this->gatekeeper->assertAuthenticatedAdmin());
 	}
@@ -176,9 +176,9 @@ class GatekeeperUnitTest extends UnitTestCase {
 			'owner_guid' => $user->guid,
 		]);
 
-		$this->session->setIgnoreAccess();
+		$this->session_manager->setIgnoreAccess();
 		$this->assertNull($this->gatekeeper->assertAccessibleEntity($object));
-		$this->session->setIgnoreAccess(false);
+		$this->session_manager->setIgnoreAccess(false);
 	}
 
 	public function testEntityGatekeeperAllowsAccessToAccessControlledEntityByAuthenticatedUser() {
@@ -191,7 +191,7 @@ class GatekeeperUnitTest extends UnitTestCase {
 
 		$viewer = $this->createUser();
 
-		$this->session->setLoggedInUser($viewer);
+		$this->session_manager->setLoggedInUser($viewer);
 
 		$this->assertNull($this->gatekeeper->assertAccessibleEntity($object));
 	}
@@ -204,7 +204,7 @@ class GatekeeperUnitTest extends UnitTestCase {
 			'owner_guid' => $user->guid,
 		]);
 		
-		$this->session->setLoggedInUser($user);
+		$this->session_manager->setLoggedInUser($user);
 		
 		$this->assertNull($this->gatekeeper->assertAccessibleEntity($object, null, true));
 	}
@@ -219,7 +219,7 @@ class GatekeeperUnitTest extends UnitTestCase {
 		
 		$viewer = $this->createUser();
 		
-		$this->session->setLoggedInUser($viewer);
+		$this->session_manager->setLoggedInUser($viewer);
 		
 		$this->expectException(EntityPermissionsException::class);
 		$this->assertNull($this->gatekeeper->assertAccessibleEntity($object, null, true));
@@ -349,7 +349,7 @@ class GatekeeperUnitTest extends UnitTestCase {
 		]);
 
 		$viewer = $this->createUser();
-		$this->session->setLoggedInUser($viewer);
+		$this->session_manager->setLoggedInUser($viewer);
 
 		$this->assertNull($this->gatekeeper->assertAccessibleEntity($object));
 	}
@@ -367,7 +367,7 @@ class GatekeeperUnitTest extends UnitTestCase {
 		]);
 
 		$viewer = $this->createUser();
-		$this->session->setLoggedInUser($viewer);
+		$this->session_manager->setLoggedInUser($viewer);
 
 		$this->expectException(GroupGatekeeperException::class);
 		$this->gatekeeper->assertAccessibleEntity($object);
@@ -381,7 +381,7 @@ class GatekeeperUnitTest extends UnitTestCase {
 		]);
 
 		$viewer = $this->createUser();
-		$this->session->setLoggedInUser($viewer);
+		$this->session_manager->setLoggedInUser($viewer);
 
 		$this->expectException(GroupGatekeeperException::class);
 		$this->gatekeeper->assertAccessibleEntity($group);
@@ -403,7 +403,7 @@ class GatekeeperUnitTest extends UnitTestCase {
 
 		$group->join($viewer);
 
-		$this->session->setLoggedInUser($viewer);
+		$this->session_manager->setLoggedInUser($viewer);
 
 		$this->assertNull($this->gatekeeper->assertAccessibleEntity($object));
 	}

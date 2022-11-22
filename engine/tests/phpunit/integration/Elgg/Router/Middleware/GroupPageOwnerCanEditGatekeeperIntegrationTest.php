@@ -106,7 +106,7 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 	public function testLoggedInOtherCantAccessUserPage(string $route_name, array $route_params) {
 		
 		$this->loggedin_user = $this->createUser();
-		elgg_get_session()->setLoggedInUser($this->loggedin_user);
+		_elgg_services()->session_manager->setLoggedInUser($this->loggedin_user);
 		
 		$this->user = $this->createUser();
 		
@@ -130,7 +130,7 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 	public function testLoggedInOtherCantAccessGroupPage(string $route_name, array $route_params) {
 		
 		$this->loggedin_user = $this->createUser();
-		elgg_get_session()->setLoggedInUser($this->loggedin_user);
+		_elgg_services()->session_manager->setLoggedInUser($this->loggedin_user);
 		
 		$this->user = $this->createUser();
 		$this->group = $this->createGroup([
@@ -157,7 +157,7 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 	public function testLoggedInOtherCantAccessEntityPage(string $route_name, array $route_params) {
 		
 		$this->loggedin_user = $this->createUser();
-		elgg_get_session()->setLoggedInUser($this->loggedin_user);
+		_elgg_services()->session_manager->setLoggedInUser($this->loggedin_user);
 		
 		$this->user = $this->createUser();
 		$this->group = $this->createGroup([
@@ -188,7 +188,7 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 	public function testLoggedInCantAccessUserPage(string $route_name, array $route_params) {
 		
 		$this->loggedin_user = $this->createUser();
-		elgg_get_session()->setLoggedInUser($this->loggedin_user);
+		_elgg_services()->session_manager->setLoggedInUser($this->loggedin_user);
 		
 		elgg_register_route($route_name, $route_params);
 		$url = elgg_generate_url($route_name, [
@@ -211,7 +211,7 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 	public function testLoggedInCanAccessGroupPage(string $route_name, array $route_params) {
 		
 		$this->loggedin_user = $this->createUser();
-		elgg_get_session()->setLoggedInUser($this->loggedin_user);
+		_elgg_services()->session_manager->setLoggedInUser($this->loggedin_user);
 		
 		$this->group = $this->createGroup([
 			'owner_guid' => $this->loggedin_user->guid,
@@ -237,7 +237,7 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 	public function testLoggedInCanAccessEntityPage(string $route_name, array $route_params) {
 		
 		$this->loggedin_user = $this->createUser();
-		elgg_get_session()->setLoggedInUser($this->loggedin_user);
+		_elgg_services()->session_manager->setLoggedInUser($this->loggedin_user);
 		
 		$this->group = $this->createGroup([
 			'owner_guid' => $this->loggedin_user->guid,
@@ -267,7 +267,7 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 	public function testLoggedInCantAccessEntityPage(string $route_name, array $route_params) {
 		
 		$this->loggedin_user = $this->createUser();
-		elgg_get_session()->setLoggedInUser($this->loggedin_user);
+		_elgg_services()->session_manager->setLoggedInUser($this->loggedin_user);
 		
 		$this->object = $this->createObject([
 			'owner_guid' => $this->loggedin_user->guid,

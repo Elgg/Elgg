@@ -134,7 +134,7 @@ class ElggBatchTest extends IntegrationTestCase {
 		$time = time();
 		$subtype = 'elggBatchReportFailureSubtype';
 		$owner = $this->getRandomUser();
-		elgg_get_session()->setLoggedInUser($owner);
+		_elgg_services()->session_manager->setLoggedInUser($owner);
 		
 		for ($i = 0; $i < 5; $i++) {
 			$this->createObject([
@@ -183,7 +183,7 @@ class ElggBatchTest extends IntegrationTestCase {
 		$time = time();
 		$subtype = 'queryCacheTest';
 		$owner = $this->getRandomUser();
-		elgg_get_session()->setLoggedInUser($owner);
+		_elgg_services()->session_manager->setLoggedInUser($owner);
 		
 		for ($i = 0; $i < 5; $i++) {
 			$this->createObject([

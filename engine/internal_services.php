@@ -74,9 +74,7 @@ return [
 	'iconService' => DI\autowire(\Elgg\EntityIconService::class),
 	'imageFetcher' => DI\autowire(\Elgg\Assets\ImageFetcherService::class),
 	'imageService' => DI\autowire(\Elgg\ImageService::class),
-	'invoker' => DI\factory(function (ContainerInterface $c) {
-		return new \Elgg\Invoker($c->session, elgg());
-    }),
+	'invoker' => DI\autowire(\Elgg\Invoker::class)->constructorParameter('dic', function() { return elgg(); }),
 	'locale' => DI\autowire(\Elgg\I18n\LocaleService::class),
 	'localFileCache' => DI\factory(function (ContainerInterface $c) {
 		$flags = ELGG_CACHE_LOCALFILESYSTEM | ELGG_CACHE_RUNTIME;
@@ -156,6 +154,7 @@ return [
         return \ElggSession::fromDatabase($c->config, $c->db);
     }),
 	'sessionCache' => DI\autowire(\Elgg\Cache\SessionCache::class),
+	'session_manager' => DI\autowire(\Elgg\SessionManagerService::class),
 	'simpleCache' => DI\autowire(\Elgg\Cache\SimpleCache::class),
 	'siteSecret' => DI\autowire(\Elgg\Security\SiteSecret::class),
 	'stickyForms' => DI\autowire(\Elgg\Forms\StickyForms::class),
@@ -275,6 +274,7 @@ return [
 	\Elgg\Security\PasswordGeneratorService::class => DI\get('passwordGenerator'),
 	\Elgg\Security\SiteSecret::class => DI\get('siteSecret'),
 	\Elgg\Security\UrlSigner::class => DI\get('urlSigner'),
+	\Elgg\SessionManagerService::class => DI\get('session_manager'),
 	\Elgg\SystemMessagesService::class => DI\get('system_messages'),
 	\Elgg\Timer::class => DI\get('timer'),
 	\Elgg\UpgradeService::class => DI\get('upgrades'),

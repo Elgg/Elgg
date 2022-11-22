@@ -109,7 +109,7 @@ class ElggAccessCollectionIntegrationTest extends \Elgg\IntegrationTestCase {
 		$this->assertFalse($acl->canEdit());
 		
 		$new_user = $this->createUser();
-		elgg()->session->setLoggedInUser($new_user);
+		elgg()->session_manager->setLoggedInUser($new_user);
 		
 		// should be true since IA is on.
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($acl) {
@@ -123,7 +123,7 @@ class ElggAccessCollectionIntegrationTest extends \Elgg\IntegrationTestCase {
 			$this->assertFalse($acl->canEdit());
 		});
 		
-		elgg()->session->removeLoggedInUser();
+		elgg()->session_manager->removeLoggedInUser();
 	}
 	
 	public function testCanEditACLEvent() {

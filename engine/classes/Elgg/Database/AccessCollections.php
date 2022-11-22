@@ -10,6 +10,7 @@ use Elgg\EventsService;
 use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\Database\UserFetchFailureException;
 use Elgg\I18n\Translator;
+use Elgg\SessionManagerService;
 use Elgg\Traits\Loggable;
 use Elgg\UserCapabilities;
 
@@ -54,9 +55,9 @@ class AccessCollections {
 	protected $events;
 
 	/**
-	 * @var \ElggSession
+	 * @var SessionManagerService
 	 */
-	protected $session;
+	protected $session_manager;
 
 	/**
 	 * @var EntityTable
@@ -81,14 +82,14 @@ class AccessCollections {
 	/**
 	 * Constructor
 	 *
-	 * @param Config           $config       Config
-	 * @param Database         $db           Database
-	 * @param EntityTable      $entities     Entity table
-	 * @param UserCapabilities $capabilities User capabilities
-	 * @param BaseCache        $cache        Access cache
-	 * @param EventsService    $events       Events
-	 * @param \ElggSession     $session      Session
-	 * @param Translator       $translator   Translator
+	 * @param Config                $config          Config
+	 * @param Database              $db              Database
+	 * @param EntityTable           $entities        Entity table
+	 * @param UserCapabilities      $capabilities    User capabilities
+	 * @param BaseCache             $cache           Access cache
+	 * @param EventsService         $events          Events
+	 * @param SessionManagerService $session_manager Session
+	 * @param Translator            $translator      Translator
 	 */
 	public function __construct(
 		Config $config,
@@ -97,7 +98,7 @@ class AccessCollections {
 		UserCapabilities $capabilities,
 		BaseCache $cache,
 		EventsService $events,
-		\ElggSession $session,
+		SessionManagerService $session_manager,
 		Translator $translator) {
 		$this->config = $config;
 		$this->db = $db;
@@ -105,7 +106,7 @@ class AccessCollections {
 		$this->capabilities = $capabilities;
 		$this->access_cache = $cache;
 		$this->events = $events;
-		$this->session = $session;
+		$this->session_manager = $session_manager;
 		$this->translator = $translator;
 	}
 
@@ -150,7 +151,7 @@ class AccessCollections {
 		}
 
 		if ($user_guid == 0) {
-			$user_guid = $this->session->getLoggedInUserGuid();
+			$user_guid = $this->session_manager->getLoggedInUserGuid();
 		}
 
 		$hash = $user_guid . 'get_access_array';
@@ -280,7 +281,7 @@ class AccessCollections {
 		}
 
 		if ($user_guid == 0) {
-			$user_guid = $this->session->getLoggedInUserGuid();
+			$user_guid = $this->session_manager->getLoggedInUserGuid();
 		}
 
 		$user_guid = (int) $user_guid;

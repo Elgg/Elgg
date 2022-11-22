@@ -56,7 +56,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 
 			elgg_register_event_handler('container_permissions_check', 'object', $handler);
 
-			_elgg_services()->session->setLoggedInUser($user);
+			_elgg_services()->session_manager->setLoggedInUser($user);
 
 			$url = elgg_generate_url("add:object:{$this->getSubtype()}", [
 				'guid' => $user->guid,
@@ -71,7 +71,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 
 		}
 
-		_elgg_services()->session->removeLoggedInUser();
+		_elgg_services()->session_manager->removeLoggedInUser();
 
 		elgg_unregister_event_handler('container_permissions_check', 'object', $handler);
 
@@ -88,7 +88,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 
 		elgg_register_event_handler('container_permissions_check', 'object', $handler);
 
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		$url = elgg_generate_url("add:object:{$this->getSubtype()}", [
 			'guid' => $user->guid,
@@ -105,7 +105,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 
-		_elgg_services()->session->removeLoggedInUser();
+		_elgg_services()->session_manager->removeLoggedInUser();
 
 		elgg_unregister_event_handler('container_permissions_check', 'object', $handler);
 	}
@@ -145,7 +145,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 
 		elgg_register_event_handler('permissions_check', 'object', $handler);
 
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		$url = elgg_generate_url("edit:object:{$this->getSubtype()}", [
 			'guid' => $object->guid,
@@ -160,7 +160,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 
 		}
 
-		_elgg_services()->session->removeLoggedInUser();
+		_elgg_services()->session_manager->removeLoggedInUser();
 
 		elgg_unregister_event_handler('permissions_check', 'object', $handler);
 
@@ -176,7 +176,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 			'owner_guid' => $user->guid,
 		]);
 
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		$handler = function () {
 			return true;
@@ -199,7 +199,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 
-		_elgg_services()->session->removeLoggedInUser();
+		_elgg_services()->session_manager->removeLoggedInUser();
 
 		elgg_unregister_event_handler('permissions_check', 'object', $handler);
 	}
@@ -261,7 +261,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 			'access_id' => ACCESS_PUBLIC,
 		]);
 
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		_elgg_services()->events->backup();
 
@@ -281,7 +281,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 		}
 
 		_elgg_services()->events->restore();
-		_elgg_services()->session->removeLoggedInUser();
+		_elgg_services()->session_manager->removeLoggedInUser();
 
 		$this->assertInstanceOf(GroupGatekeeperException::class, $ex);
 	}
@@ -296,7 +296,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 			'content_access_mode' => \ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY,
 		]);
 
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		$ex = null;
 
@@ -316,7 +316,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 		}
 
 		_elgg_services()->events->restore();
-		_elgg_services()->session->removeLoggedInUser();
+		_elgg_services()->session_manager->removeLoggedInUser();
 
 		$this->assertInstanceOf(GroupGatekeeperException::class, $ex);
 	}

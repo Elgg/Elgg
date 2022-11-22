@@ -14,7 +14,7 @@
  * @since 1.7.0
  */
 function elgg_get_ignore_access(): bool {
-	return _elgg_services()->session->getIgnoreAccess();
+	return _elgg_services()->session_manager->getIgnoreAccess();
 }
 
 /**
@@ -58,7 +58,7 @@ function elgg_get_default_access(\ElggUser $user = null, array $input_params = [
 	$default_access = (int) _elgg_services()->config->default_access;
 	
 	// default to logged in user
-	$user = $user ?? _elgg_services()->session->getLoggedInUser();
+	$user = $user ?? _elgg_services()->session_manager->getLoggedInUser();
 	
 	// user default access if enabled
 	if (_elgg_services()->config->allow_user_default_access && $user instanceof \ElggUser) {
@@ -147,7 +147,7 @@ function elgg_get_write_access_array(int $user_guid = 0, bool $flush = false, ar
 function elgg_create_access_collection(string $name, int $owner_guid = 0, string $subtype = null): ?\ElggAccessCollection {
 	$acl = new \ElggAccessCollection();
 	$acl->name = $name;
-	$acl->owner_guid = $owner_guid ?: _elgg_services()->session->getLoggedInUserGuid();
+	$acl->owner_guid = $owner_guid ?: _elgg_services()->session_manager->getLoggedInUserGuid();
 	$acl->subtype = $subtype;
 	
 	return $acl->save() ? $acl : null;

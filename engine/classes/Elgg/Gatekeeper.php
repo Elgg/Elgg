@@ -24,9 +24,9 @@ use Elgg\I18n\Translator;
 class Gatekeeper {
 
 	/**
-	 * @var \ElggSession
+	 * @var SessionManagerService
 	 */
-	protected $session;
+	protected $session_manager;
 
 	/**
 	 * @var \Elgg\Http\Request
@@ -56,22 +56,22 @@ class Gatekeeper {
 	/**
 	 * Constructor
 	 *
-	 * @param \ElggSession      $session    Session
-	 * @param HttpRequest       $request    HTTP Request
-	 * @param RedirectService   $redirects  Redirects Service
-	 * @param EntityTable       $entities   Entity table
-	 * @param AccessCollections $access     Access collection table
-	 * @param Translator        $translator Translator
+	 * @param SessionManagerService $session_manager Session manager
+	 * @param HttpRequest           $request         HTTP Request
+	 * @param RedirectService       $redirects       Redirects Service
+	 * @param EntityTable           $entities        Entity table
+	 * @param AccessCollections     $access          Access collection table
+	 * @param Translator            $translator      Translator
 	 */
 	public function __construct(
-		\ElggSession $session,
+		SessionManagerService $session_manager,
 		HttpRequest $request,
 		RedirectService $redirects,
 		EntityTable $entities,
 		AccessCollections $access,
 		Translator $translator
 	) {
-		$this->session = $session;
+		$this->session_manager = $session_manager;
 		$this->request = $request;
 		$this->redirects = $redirects;
 		$this->entities = $entities;
@@ -85,7 +85,7 @@ class Gatekeeper {
 	 * @throws LoggedInGatekeeperException
 	 */
 	public function assertAuthenticatedUser() {
-		if ($this->session->isLoggedIn()) {
+		if ($this->session_manager->isLoggedIn()) {
 			return;
 		}
 
@@ -100,7 +100,7 @@ class Gatekeeper {
 	 * @throws LoggedOutGatekeeperException
 	 */
 	public function assertUnauthenticatedUser() {
-		if (!$this->session->isLoggedIn()) {
+		if (!$this->session_manager->isLoggedIn()) {
 			return;
 		}
 
@@ -119,7 +119,7 @@ class Gatekeeper {
 	public function assertAuthenticatedAdmin() {
 		$this->assertAuthenticatedUser();
 
-		$user = $this->session->getLoggedInUser();
+		$user = $this->session_manager->getLoggedInUser();
 		if ($user->isAdmin()) {
 			return;
 		}
@@ -177,7 +177,7 @@ class Gatekeeper {
 
 		try {
 			$user_guid = $user ? $user->guid : 0;
-			if (!$this->session->getIgnoreAccess() && !$entity->hasAccess($user_guid)) {
+			if (!$this->session_manager->getIgnoreAccess() && !$entity->hasAccess($user_guid)) {
 				// user is logged in but still does not have access to it
 				$msg = $this->translator->translate('limited_access');
 				$exception = new EntityPermissionsException($msg);
@@ -201,7 +201,7 @@ class Gatekeeper {
 				throw $exception;
 			}
 
-			if (!$entity->isEnabled() && !$this->session->getDisabledEntityVisibility()) {
+			if (!$entity->isEnabled() && !$this->session_manager->getDisabledEntityVisibility()) {
 				// entity exists, but is disabled
 				$exception = new EntityNotFoundException();
 				$exception->setParams([
@@ -258,7 +258,7 @@ class Gatekeeper {
 		}
 		
 		if (!isset($viewer)) {
-			$viewer = $this->session->getLoggedInUser();
+			$viewer = $this->session_manager->getLoggedInUser();
 		}
 
 		if (!$viewer || !$viewer->isAdmin()) {

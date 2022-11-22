@@ -26,7 +26,7 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 		
 		$this->user = $this->createUser();
 		
-		_elgg_services()->session->setLoggedInUser($this->user);
+		_elgg_services()->session_manager->setLoggedInUser($this->user);
 		$this->widget = $this->createObject([
 			'subtype' => 'widget',
 			'tags' => 'tag',
@@ -120,12 +120,12 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 		elgg_register_event_handler('permissions_check', 'widget_layout', '\Elgg\Values::getTrue');
 		
 		$other_user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($other_user);
+		_elgg_services()->session_manager->setLoggedInUser($other_user);
 		$widget = $this->createObject([
 			'subtype' => 'widget',
 			'tags' => 'tag',
 		]);
-		_elgg_services()->session->setLoggedInUser($this->user);
+		_elgg_services()->session_manager->setLoggedInUser($this->user);
 		
 		$response = $this->executeAction('widgets/delete', [
 			'widget_guid' => $widget->guid,
@@ -203,12 +203,12 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 	
 	public function testWidgetSaveFailsIfCantEdit() {
 		$other_user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($other_user);
+		_elgg_services()->session_manager->setLoggedInUser($other_user);
 		$widget = $this->createObject([
 			'subtype' => 'widget',
 			'tags' => 'tag',
 		]);
-		_elgg_services()->session->setLoggedInUser($this->user);
+		_elgg_services()->session_manager->setLoggedInUser($this->user);
 		
 		$response = $this->executeAction('widgets/save', [
 			'guid' => $widget->guid,

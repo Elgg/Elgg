@@ -27,7 +27,7 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		$this->qb = Select::fromTable('entities', 'alias');
 
 		$this->user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($this->user);
+		_elgg_services()->session_manager->setLoggedInUser($this->user);
 		_elgg_services()->events->backup();
 	}
 
@@ -139,8 +139,8 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 
 	public function testCanBuildAccessSqlForLoggedOutUser() {
 
-		$user = _elgg_services()->session->getLoggedInUser();
-		_elgg_services()->session->removeLoggedInUser();
+		$user = _elgg_services()->session_manager->getLoggedInUser();
+		_elgg_services()->session_manager->removeLoggedInUser();
 
 		$parts = [];
 
@@ -161,7 +161,7 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 	}
 
 	public function testAccessEventRemoveEnabled() {

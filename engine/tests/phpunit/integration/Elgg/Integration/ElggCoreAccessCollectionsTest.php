@@ -20,7 +20,7 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 
 	public function up() {
 		$this->user = $this->createUser();
-		elgg()->session->setLoggedInUser($this->user);
+		elgg()->session_manager->setLoggedInUser($this->user);
 	}
 
 	public function testAccessCaching() {
@@ -67,8 +67,8 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 	}
 
 	public function testCanGetGuestReadAcccessArray() {
-		$logged_in_user = _elgg_services()->session->getLoggedInUser();
-		_elgg_services()->session->removeLoggedInUser();
+		$logged_in_user = _elgg_services()->session_manager->getLoggedInUser();
+		_elgg_services()->session_manager->removeLoggedInUser();
 
 		$actual = elgg_get_access_array();
 
@@ -77,7 +77,7 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 		$this->assertFalse(in_array(ACCESS_PRIVATE, $actual)); // Private access needs to be prohibited
 
 		if ($logged_in_user instanceof \ElggUser){
-			_elgg_services()->session->setLoggedInUser($logged_in_user);
+			_elgg_services()->session_manager->setLoggedInUser($logged_in_user);
 		}
 	}
 

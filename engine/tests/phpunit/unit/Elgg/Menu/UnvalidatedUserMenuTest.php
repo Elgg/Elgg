@@ -44,7 +44,7 @@ class UnvalidatedUserMenuTest extends UnitTestCase {
 	public function testUnvalidatedUserMenuViewedByUser() {
 
 		$viewer = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($viewer);
+		_elgg_services()->session_manager->setLoggedInUser($viewer);
 
 		$menu = _elgg_services()->menus->getUnpreparedMenu('user:unvalidated', [
 			'entity' => $this->createUser(),
@@ -61,7 +61,7 @@ class UnvalidatedUserMenuTest extends UnitTestCase {
 			'admin' => 'yes',
 		]);
 
-		_elgg_services()->session->setLoggedInUser($viewer);
+		_elgg_services()->session_manager->setLoggedInUser($viewer);
 
 		$user = $this->createUser();
 		$user->setValidationStatus(false);

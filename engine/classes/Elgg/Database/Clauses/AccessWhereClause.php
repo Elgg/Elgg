@@ -53,7 +53,7 @@ class AccessWhereClause extends WhereClause {
 		};
 
 		if (!isset($this->viewer_guid)) {
-			$this->viewer_guid = _elgg_services()->session->getLoggedInUserGuid();
+			$this->viewer_guid = _elgg_services()->session_manager->getLoggedInUserGuid();
 		}
 
 		if (!isset($this->ignore_access)) {
@@ -61,7 +61,7 @@ class AccessWhereClause extends WhereClause {
 		}
 
 		if (!isset($this->use_enabled_clause)) {
-			$this->use_enabled_clause = !_elgg_services()->session->getDisabledEntityVisibility();
+			$this->use_enabled_clause = !_elgg_services()->session_manager->getDisabledEntityVisibility();
 		}
 
 		$ors = [];

@@ -11,7 +11,7 @@ class AccessWhereClauseIntegrationTest extends IntegrationTestCase {
 
 	public function up() {
 		$this->user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($this->user);
+		_elgg_services()->session_manager->setLoggedInUser($this->user);
 		_elgg_services()->events->backup();
 	}
 
@@ -20,7 +20,7 @@ class AccessWhereClauseIntegrationTest extends IntegrationTestCase {
 	}
 
 	public function testHasAccessToEntity() {
-		$session = elgg_get_session();
+		$session = _elgg_services()->session_manager;
 
 		$viewer = $session->getLoggedInUser();
 		$owner = $this->createUser();

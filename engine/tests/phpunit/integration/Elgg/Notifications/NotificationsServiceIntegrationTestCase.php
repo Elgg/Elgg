@@ -74,6 +74,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->time = $this->entities->getCurrentTime()->getTimestamp();
 
 		$this->session = _elgg_services()->session;
+		$this->session_manager = _elgg_services()->session_manager;
 
 		$this->logger = _elgg_services()->logger;
 
@@ -240,7 +241,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$object = $this->getTestObject();
 
-		$this->session->setLoggedInUser($this->actor);
+		$this->session_manager->setLoggedInUser($this->actor);
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
 
@@ -321,7 +322,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$object = $this->getTestObject();
 
-		$this->session->setLoggedInUser($this->actor);
+		$this->session_manager->setLoggedInUser($this->actor);
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
 
@@ -347,7 +348,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$object = $this->getTestObject();
 
-		$this->session->setLoggedInUser($this->actor);
+		$this->session_manager->setLoggedInUser($this->actor);
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), [
 			'event1',
@@ -359,7 +360,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->notifications->enqueueEvent('event2', $object->getType(), $object);
 		$this->notifications->enqueueEvent('event3', $object->getType(), $object);
 
-		$this->session->removeLoggedInUser();
+		$this->session_manager->removeLoggedInUser();
 
 		$this->assertEquals(3, $this->notifications->processQueue($this->time + 10));
 		_elgg_services()->reset('subscriptions');
@@ -378,7 +379,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$object = $this->getTestObject();
 
-		$this->session->setLoggedInUser($this->actor);
+		$this->session_manager->setLoggedInUser($this->actor);
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), [
 			'event1',
@@ -390,7 +391,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->notifications->enqueueEvent('event2', $object->getType(), $object);
 		$this->notifications->enqueueEvent('event3', $object->getType(), $object);
 
-		$this->session->removeLoggedInUser();
+		$this->session_manager->removeLoggedInUser();
 
 		$this->assertEquals(0, $this->notifications->processQueue($this->time));
 		
@@ -431,7 +432,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$this->notifications->registerMethod('test_method');
 
-		$this->session->setLoggedInUser($this->actor);
+		$this->session_manager->setLoggedInUser($this->actor);
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
 
@@ -440,7 +441,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->assertEquals(1, $call_count);
 		$this->assertEquals(0, $this->queue->size());
 
-		$this->session->removeLoggedInUser();
+		$this->session_manager->removeLoggedInUser();
 
 		$this->assertEquals(0, $this->notifications->processQueue($this->time + 10));
 		
@@ -471,7 +472,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		_elgg_services()->subscriptions = $mock;
 
-		$this->session->setLoggedInUser($this->actor);
+		$this->session_manager->setLoggedInUser($this->actor);
 
 		$event = new SubscriptionNotificationEvent($object, 'test_event');
 
@@ -500,7 +501,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
 		$this->assertEquals(1, $this->queue->size());
 
-		$this->session->removeLoggedInUser();
+		$this->session_manager->removeLoggedInUser();
 
 		$this->assertEquals(1, $this->notifications->processQueue($this->time + 10));
 
@@ -538,7 +539,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		_elgg_services()->subscriptions = $mock;
 
-		$this->session->setLoggedInUser($this->actor);
+		$this->session_manager->setLoggedInUser($this->actor);
 
 		$event = new SubscriptionNotificationEvent($object, 'test_event');
 
@@ -584,7 +585,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 			]
 		];
 
-		$this->session->removeLoggedInUser();
+		$this->session_manager->removeLoggedInUser();
 
 		$result = $this->notifications->processQueue($this->time + 10, true);
 		$this->assertEquals(1, $call_count);
@@ -623,7 +624,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 			
 		_elgg_services()->subscriptions = $mock;
 
-		$this->session->setLoggedInUser($this->actor);
+		$this->session_manager->setLoggedInUser($this->actor);
 
 		$event = new SubscriptionNotificationEvent($object, 'test_event');
 
@@ -671,7 +672,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
 		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
 
-		$this->session->removeLoggedInUser();
+		$this->session_manager->removeLoggedInUser();
 
 		$this->notifications->processQueue($this->time + 10);
 
@@ -701,7 +702,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		_elgg_services()->subscriptions = $mock;
 
-		$this->session->setLoggedInUser($this->actor);
+		$this->session_manager->setLoggedInUser($this->actor);
 
 		$event = new SubscriptionNotificationEvent($object, 'test_event');
 
@@ -742,7 +743,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
 		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
 
-		$this->session->removeLoggedInUser();
+		$this->session_manager->removeLoggedInUser();
 
 		$this->assertEquals(1, $this->notifications->processQueue($this->time + 10));
 		
@@ -767,14 +768,14 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$this->notifications->registerMethod('test_method');
 
-		$this->session->setLoggedInUser($this->actor);
+		$this->session_manager->setLoggedInUser($this->actor);
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
 		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
 
 		$object->delete();
 
-		$this->session->removeLoggedInUser();
+		$this->session_manager->removeLoggedInUser();
 
 		$this->assertEquals(0, $this->notifications->processQueue($this->time + 10));
 		
@@ -799,12 +800,12 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$this->notifications->registerMethod('test_method');
 
-		$this->session->setLoggedInUser($this->actor);
+		$this->session_manager->setLoggedInUser($this->actor);
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
 		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
 
-		$this->session->removeLoggedInUser();
+		$this->session_manager->removeLoggedInUser();
 
 		$this->assertEquals(0, $this->notifications->processQueue($this->time + 10));
 		

@@ -16,29 +16,29 @@ class UserCapabilities {
 	/**
 	 * @var EventsService
 	 */
-	private $events;
+	protected $events;
 
 	/**
 	 * @var EntityTable
 	 */
-	private $entities;
+	protected $entities;
 
 	/**
-	 * @var \ElggSession
+	 * @var SessionManagerService
 	 */
-	private $session;
+	protected $session_manager;
 
 	/**
 	 * Constructor
 	 *
-	 * @param EventsService $events   Events service
-	 * @param EntityTable   $entities Entity table
-	 * @param \ElggSession  $session  Session
+	 * @param EventsService         $events          Events service
+	 * @param EntityTable           $entities        Entity table
+	 * @param SessionManagerService $session_manager Session
 	 */
-	public function __construct(EventsService $events, EntityTable $entities, \ElggSession $session) {
+	public function __construct(EventsService $events, EntityTable $entities, SessionManagerService $session_manager) {
 		$this->events = $events;
 		$this->entities = $entities;
-		$this->session = $session;
+		$this->session_manager = $session_manager;
 	}
 
 	/**
@@ -53,7 +53,7 @@ class UserCapabilities {
 	 * @return bool
 	 */
 	public function canBypassPermissionsCheck(int $user_guid = 0): bool {
-		if ($this->session->getIgnoreAccess()) {
+		if ($this->session_manager->getIgnoreAccess()) {
 			// Checking ignored access first to avoid infinite loops,
 			// when trying to fetch a user by guid
 			return true;

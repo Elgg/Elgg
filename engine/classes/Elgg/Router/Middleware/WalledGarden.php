@@ -19,7 +19,7 @@ class WalledGarden {
 	 * @throws WalledGardenException
 	 */
 	public function __invoke(Request $request) {
-		if ($request->elgg()->session->isLoggedIn()) {
+		if ($request->elgg()->session_manager->isLoggedIn()) {
 			return;
 		}
 

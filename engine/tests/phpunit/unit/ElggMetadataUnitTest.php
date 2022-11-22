@@ -92,7 +92,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 	public function testCanSaveMetadata() {
 
 		$owner = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($owner);
+		_elgg_services()->session_manager->setLoggedInUser($owner);
 
 		$object = $this->createObject([
 			'owner_guid' => $owner->guid,
@@ -109,7 +109,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 	
 	public function testCanUpdateMetadata() {
 		$owner = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($owner);
+		_elgg_services()->session_manager->setLoggedInUser($owner);
 
 		$object = $this->createObject([
 			'owner_guid' => $owner->guid,
@@ -136,7 +136,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 	public function testCanDeleteMetadata() {
 
 		$owner = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($owner);
+		_elgg_services()->session_manager->setLoggedInUser($owner);
 
 		$object = $this->createObject([
 			'owner_guid' => $owner->guid,

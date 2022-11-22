@@ -24,8 +24,7 @@ class ElggObjectIntegrationTest extends IntegrationTestCase {
 		$user = $this->createUser();
 		$other_user = $this->createUser();
 		
-		$session = elgg_get_session();
-		$session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 		
 		$object = $this->createObject(['subtype' => 'commentable']);
 		$object2 = $this->createObject(['subtype' => 'commentable']);
@@ -40,8 +39,7 @@ class ElggObjectIntegrationTest extends IntegrationTestCase {
 		$user = $this->createUser();
 		$user2 = $this->createUser();
 		
-		$session = elgg_get_session();
-		$session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 		
 		$group = $this->createGroup([
 			'owner_guid' => $user2->guid,

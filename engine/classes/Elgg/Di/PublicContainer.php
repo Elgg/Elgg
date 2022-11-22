@@ -20,6 +20,7 @@ namespace Elgg\Di;
  * @property-read \Elgg\Menu\Service                    $menus            Menus
  * @property-read \Elgg\Filesystem\MimeTypeService      $mimetype         MIME type detection
  * @property-read \ElggSession                          $session          Session
+ * @property-read \Elgg\SessionManagerService           $session_manager  Session manager
  * @property-read \Elgg\SystemMessagesService           $system_messages  System messages
  * @property-read \Elgg\Views\TableColumn\ColumnFactory $table_columns    Table columns
  * @property-read \Elgg\I18n\Translator                 $translator       Translator

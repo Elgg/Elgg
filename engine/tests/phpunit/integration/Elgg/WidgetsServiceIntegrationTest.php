@@ -59,11 +59,11 @@ class WidgetsServiceIntegrationTest extends IntegrationTestCase {
 		$admin->makeAdmin();
 		
 		// make sure there is no logged in user
-		elgg()->session->removeLoggedInUser();
+		elgg()->session_manager->removeLoggedInUser();
 		
 		$this->assertFalse(elgg_can_edit_widget_layout('random_layout'));
 		
-		elgg()->session->setLoggedInUser($owner);
+		elgg()->session_manager->setLoggedInUser($owner);
 		$this->assertFalse(elgg_can_edit_widget_layout('random_layout'));
 		
 		elgg_set_page_owner_guid($owner->guid);

@@ -155,8 +155,8 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		$this->attributes['type'] = $this->getType();
 		$this->attributes['subtype'] = null;
 
-		$this->attributes['owner_guid'] = _elgg_services()->session->getLoggedInUserGuid();
-		$this->attributes['container_guid'] = _elgg_services()->session->getLoggedInUserGuid();
+		$this->attributes['owner_guid'] = _elgg_services()->session_manager->getLoggedInUserGuid();
+		$this->attributes['container_guid'] = _elgg_services()->session_manager->getLoggedInUserGuid();
 
 		$this->attributes['access_id'] = ACCESS_PRIVATE;
 		$this->attributes['time_updated'] = null;
@@ -762,7 +762,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		}
 		
 		if (!$owner_guid) {
-			$owner_guid = _elgg_services()->session->getLoggedInUserGuid();
+			$owner_guid = _elgg_services()->session_manager->getLoggedInUserGuid();
 		}
 		
 		$annotation = new ElggAnnotation();
@@ -1290,7 +1290,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			throw new ElggInvalidArgumentException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
 		}
 
-		$user_guid = _elgg_services()->session->getLoggedInUserGuid();
+		$user_guid = _elgg_services()->session_manager->getLoggedInUserGuid();
 
 		// If given an owner, verify it can be loaded
 		if ($owner_guid) {
@@ -1901,7 +1901,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			return false;
 		}
 		
-		if (_elgg_services()->session->getIgnoreAccess()) {
+		if (_elgg_services()->session_manager->getIgnoreAccess()) {
 			return false;
 		}
 		return $this->_is_cacheable;

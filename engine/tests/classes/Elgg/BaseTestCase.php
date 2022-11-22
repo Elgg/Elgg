@@ -154,9 +154,9 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 			$this->markTestSkipped();
 		}
 
-		$app->internal_services->session->removeLoggedInUser();
-		$app->internal_services->session->setIgnoreAccess(false);
-		$app->internal_services->session->setDisabledEntityVisibility(false);
+		$app->internal_services->session_manager->removeLoggedInUser();
+		$app->internal_services->session_manager->setIgnoreAccess(false);
+		$app->internal_services->session_manager->setDisabledEntityVisibility(false);
 		
 		// make sure the logger is enabled before each test, in case a previous test disabled it but forgot to re-enable it
 		$app->internal_services->logger->enable();
@@ -172,16 +172,16 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	protected function tearDown(): void {
 
 		// We do not want overflowing ignored access
-		$this->assertFalse((bool) _elgg_services()->session->getIgnoreAccess(), __METHOD__ . ': ignored access not reset');
+		$this->assertFalse((bool) _elgg_services()->session_manager->getIgnoreAccess(), __METHOD__ . ': ignored access not reset');
 
 		// We do not want overflowing show hidden status
-		$this->assertFalse((bool) _elgg_services()->session->getDisabledEntityVisibility(), __METHOD__ . ': hidden entities not reset');
+		$this->assertFalse((bool) _elgg_services()->session_manager->getDisabledEntityVisibility(), __METHOD__ . ': hidden entities not reset');
 
 		// Tests should run without a logged in user
-		if (_elgg_services()->session->isLoggedIn()) {
-			_elgg_services()->session->removeLoggedInUser();
+		if (_elgg_services()->session_manager->isLoggedIn()) {
+			_elgg_services()->session_manager->removeLoggedInUser();
 		}
-		$this->assertFalse((bool) _elgg_services()->session->isLoggedIn(), __METHOD__ . ': there should be no logged in user');
+		$this->assertFalse((bool) _elgg_services()->session_manager->isLoggedIn(), __METHOD__ . ': there should be no logged in user');
 		
 		// cleanup admin user
 		$admin = $this->_testing_admin;

@@ -218,7 +218,7 @@ class DiskFilestore extends Filestore {
 		}
 	
 		if (empty($owner_guid)) {
-			$owner_guid = $file->owner_guid ?: _elgg_services()->session->getLoggedInUserGuid();
+			$owner_guid = $file->owner_guid ?: _elgg_services()->session_manager->getLoggedInUserGuid();
 		}
 
 		if (empty($owner_guid)) {

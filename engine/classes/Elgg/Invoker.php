@@ -2,9 +2,7 @@
 
 namespace Elgg;
 
-use Closure;
 use Elgg\Di\PublicContainer;
-use ElggSession;
 
 /**
  * Invocation service
@@ -12,9 +10,9 @@ use ElggSession;
 class Invoker {
 
 	/**
-	 * @var ElggSession
+	 * @var SessionManagerService
 	 */
-	protected $session;
+	protected $session_manager;
 
 	/**
 	 * @var PublicContainer
@@ -24,11 +22,11 @@ class Invoker {
 	/**
 	 * Constructor
 	 *
-	 * @param ElggSession     $session Session
-	 * @param PublicContainer $dic     DI container
+	 * @param SessionManagerService $session_manager Session
+	 * @param PublicContainer       $dic             DI container
 	 */
-	public function __construct(ElggSession $session, PublicContainer $dic) {
-		$this->session = $session;
+	public function __construct(SessionManagerService $session_manager, PublicContainer $dic) {
+		$this->session_manager = $session_manager;
 		$this->dic = $dic;
 	}
 
@@ -36,30 +34,30 @@ class Invoker {
 	 * Calls a callable autowiring the arguments using public DI services
 	 * and applying logic based on flags
 	 *
-	 * @param int     $flags   Bitwise flags
-	 *                         ELGG_IGNORE_ACCESS
-	 *                         ELGG_ENFORCE_ACCESS
-	 *                         ELGG_SHOW_DISABLED_ENTITIES
-	 *                         ELGG_HIDE_DISABLED_ENTITIES
-	 * @param Closure $closure Callable to call
+	 * @param int      $flags   Bitwise flags
+	 *                          ELGG_IGNORE_ACCESS
+	 *                          ELGG_ENFORCE_ACCESS
+	 *                          ELGG_SHOW_DISABLED_ENTITIES
+	 *                          ELGG_HIDE_DISABLED_ENTITIES
+	 * @param \Closure $closure Callable to call
 	 *
 	 * @return mixed
 	 * @throws \Exception
 	 */
-	public function call(int $flags, Closure $closure) {
+	public function call(int $flags, \Closure $closure) {
 
-		$ia = $this->session->getIgnoreAccess();
+		$ia = $this->session_manager->getIgnoreAccess();
 		if ($flags & ELGG_IGNORE_ACCESS) {
-			$this->session->setIgnoreAccess(true);
+			$this->session_manager->setIgnoreAccess(true);
 		} else if ($flags & ELGG_ENFORCE_ACCESS) {
-			$this->session->setIgnoreAccess(false);
+			$this->session_manager->setIgnoreAccess(false);
 		}
 
-		$ha = $this->session->getDisabledEntityVisibility();
+		$ha = $this->session_manager->getDisabledEntityVisibility();
 		if ($flags & ELGG_SHOW_DISABLED_ENTITIES) {
-			$this->session->setDisabledEntityVisibility(true);
+			$this->session_manager->setDisabledEntityVisibility(true);
 		} else if ($flags & ELGG_HIDE_DISABLED_ENTITIES) {
-			$this->session->setDisabledEntityVisibility(false);
+			$this->session_manager->setDisabledEntityVisibility(false);
 		}
 		
 		$system_log_enabled = null;
@@ -80,8 +78,8 @@ class Invoker {
 		}
 
 		$restore = function () use ($ia, $ha, $system_log_service, $system_log_enabled) {
-			$this->session->setIgnoreAccess($ia);
-			$this->session->setDisabledEntityVisibility($ha);
+			$this->session_manager->setIgnoreAccess($ia);
+			$this->session_manager->setDisabledEntityVisibility($ha);
 			
 			if (isset($system_log_service)) {
 				if ($system_log_enabled) {

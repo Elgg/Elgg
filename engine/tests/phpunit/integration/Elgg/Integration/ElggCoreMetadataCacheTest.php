@@ -23,14 +23,14 @@ class ElggCoreMetadataCacheTest extends IntegrationTestCase {
 	protected $ignoreAccess;
 
 	public function up() {
-		$this->ignoreAccess = elgg()->session->setIgnoreAccess(false);
+		$this->ignoreAccess = elgg()->session_manager->setIgnoreAccess(false);
 
 		$this->cache = _elgg_services()->metadataCache;
 	}
 
 	public function down() {
 
-		elgg()->session->setIgnoreAccess($this->ignoreAccess);
+		elgg()->session_manager->setIgnoreAccess($this->ignoreAccess);
 
 		$this->cache->clearAll();
 	}

@@ -78,7 +78,7 @@ class ControllerIntegrationTest extends IntegrationTestCase {
 		$this->prepareService($request);
 		
 		$user = $this->createUser();
-		elgg_get_session()->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 		
 		$this->expectException(\Elgg\Exceptions\Http\Gatekeeper\AdminGatekeeperException::class);
 		$this->executeRequest($request, false);
@@ -90,7 +90,7 @@ class ControllerIntegrationTest extends IntegrationTestCase {
 		$this->prepareService($request);
 		
 		$user = $this->getAdmin();
-		elgg_get_session()->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 		
 		$response = $this->executeRequest($request, false);
 		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
@@ -138,7 +138,7 @@ class ControllerIntegrationTest extends IntegrationTestCase {
 		$this->prepareService($request);
 		
 		$user = $this->createUser();
-		elgg_get_session()->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 		
 		$this->expectException(\Elgg\Exceptions\Http\Gatekeeper\AdminGatekeeperException::class);
 		$this->executeRequest($request, false);
@@ -150,7 +150,7 @@ class ControllerIntegrationTest extends IntegrationTestCase {
 		$this->prepareService($request);
 		
 		$user = $this->getAdmin();
-		elgg_get_session()->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 		
 		$response = $this->executeRequest($request, false);
 		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);

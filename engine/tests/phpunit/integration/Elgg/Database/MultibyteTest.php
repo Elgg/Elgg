@@ -12,11 +12,11 @@ use Elgg\IntegrationTestCase;
 class MultibyteTest extends IntegrationTestCase {
 
 	public function up() {
-		_elgg_services()->session->setIgnoreAccess(true);
+		_elgg_services()->session_manager->setIgnoreAccess(true);
 	}
 
 	public function down() {
-		_elgg_services()->session->setIgnoreAccess(false);
+		_elgg_services()->session_manager->setIgnoreAccess(false);
 	}
 
 	public function testCanUseMultibyteCharsInMetadata() {

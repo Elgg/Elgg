@@ -19,7 +19,7 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 	protected $object;
 
 	public function up() {
-		_elgg_services()->session->setLoggedInUser($this->getAdmin());
+		_elgg_services()->session_manager->setLoggedInUser($this->getAdmin());
 
 		$this->object = $this->createObject();
 	}

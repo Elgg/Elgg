@@ -33,7 +33,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		$this->user = $user;
 		$this->entity = $entity;
 
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 		
 		// By default, only admins are allowed to delete river items
 		// For the sake of this test case, we will allow the user to delete items
@@ -228,8 +228,8 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		$id = elgg_create_river_item($params);
 
 		$owner = $this->entity->getOwnerEntity();
-		$old_user = _elgg_services()->session->getLoggedInUser();
-		_elgg_services()->session->setLoggedInUser($owner);
+		$old_user = _elgg_services()->session_manager->getLoggedInUser();
+		_elgg_services()->session_manager->setLoggedInUser($owner);
 
 		$events_fired = 0;
 		$handler = function () use (&$events_fired) {
@@ -248,7 +248,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 
 		$this->assertEquals($events_fired, 2);
 
-		_elgg_services()->session->setLoggedInUser($old_user);
+		_elgg_services()->session_manager->setLoggedInUser($old_user);
 	}
 
 	public function testDeleteRiverThrowsException() {
@@ -288,7 +288,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		$this->assertNotFalse(elgg_create_river_item($no_subject));
 		
 		// missing subject_guid
-		_elgg_services()->session->removeLoggedInUser();
+		_elgg_services()->session_manager->removeLoggedInUser();
 		$this->assertFalse(elgg_create_river_item($no_subject));
 		
 		// still logged out, but now supplied subject_guid

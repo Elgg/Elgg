@@ -75,10 +75,10 @@ class PluginsUnitTest extends \Elgg\UnitTestCase {
 	protected function getNonMockedPluginService() {
 		$sp = _elgg_services();
 		
-		$plugins = new Plugins(
+		return new Plugins(
 			$sp->dataCache->plugins,
 			$sp->db,
-			$sp->session,
+			$sp->session_manager,
 			$sp->events,
 			$sp->translator,
 			$sp->views,
@@ -86,7 +86,5 @@ class PluginsUnitTest extends \Elgg\UnitTestCase {
 			$sp->system_messages,
 			$sp->request
 		);
-		
-		return $plugins;
 	}
 }

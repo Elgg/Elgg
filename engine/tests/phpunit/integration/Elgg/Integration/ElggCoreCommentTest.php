@@ -23,7 +23,7 @@ class ElggCoreCommentTest extends IntegrationTestCase {
 	public function up() {
 
 		$this->commenter = $this->createUser();
-		elgg()->session->setLoggedInUser($this->commenter);
+		elgg()->session_manager->setLoggedInUser($this->commenter);
 		
 		$this->container_owner = $this->createUser();
 		$this->container = $this->createObject([

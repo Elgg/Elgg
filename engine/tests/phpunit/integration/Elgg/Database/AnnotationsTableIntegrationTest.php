@@ -22,7 +22,7 @@ class AnnotationsTableIntegrationTest extends IntegrationTestCase {
 	public function up() {
 		$this->service = _elgg_services()->annotationsTable;
 		$this->owner = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($this->owner);
+		_elgg_services()->session_manager->setLoggedInUser($this->owner);
 	}
 
 	public function testCreateAnnotation() {

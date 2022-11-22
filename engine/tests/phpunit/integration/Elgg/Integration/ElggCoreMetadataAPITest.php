@@ -22,7 +22,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 	protected $object;
 
 	public function up() {
-		_elgg_services()->session->setLoggedInUser($this->getAdmin());
+		_elgg_services()->session_manager->setLoggedInUser($this->getAdmin());
 		
 		// can not use createObject(). The tests rely on an unsaved entity
 		$this->object = new \ElggObject();
@@ -263,8 +263,8 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 
 		// need to fake different logins.
 		// good times without mocking.
-		$original_user = _elgg_services()->session->getLoggedInUser();
-		_elgg_services()->session->setLoggedInUser($user1);
+		$original_user = _elgg_services()->session_manager->getLoggedInUser();
+		_elgg_services()->session_manager->setLoggedInUser($user1);
 
 		elgg_call(ELGG_ENFORCE_ACCESS, function() use ($entity, $user2) {
 			$md_values = [
@@ -292,7 +292,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 			}
 	
 			// add md w/ same name as a different user
-			_elgg_services()->session->setLoggedInUser($user2);
+			_elgg_services()->session_manager->setLoggedInUser($user2);
 			$md_values2 = [
 				'four',
 				'five',
@@ -312,7 +312,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 			}
 		});
 		
-		_elgg_services()->session->setLoggedInUser($original_user);
+		_elgg_services()->session_manager->setLoggedInUser($original_user);
 	}
 
 	public function testDefaultOrderedById() {

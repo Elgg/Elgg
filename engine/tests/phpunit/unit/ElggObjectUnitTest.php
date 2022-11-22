@@ -53,7 +53,7 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		$subtype = 'test_subtype';
 
 		$user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 		
 		$object = new \ElggObject();
 		$object->setSubtype($subtype);
@@ -88,7 +88,7 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 	public function testCanUpdateObject() {
 
 		$user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		$object = $this->createObject([
 			'owner_guid' => $user->guid,
@@ -182,7 +182,7 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 	public function testCanCommentWhenLoggedIn() {
 		
 		$user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		$object = $this->createObject();
 		$this->assertFalse($object->canComment());

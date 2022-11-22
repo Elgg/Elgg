@@ -15,7 +15,7 @@ class AdminNoticesTest extends ActionResponseTestCase {
 	public function up() {
 		parent::up();
 		
-		_elgg_services()->session->setLoggedInUser($this->getAdmin());
+		_elgg_services()->session_manager->setLoggedInUser($this->getAdmin());
 	}
 
 	public function testDeletesSingleAdminNotice() {

@@ -8,7 +8,7 @@ class ThreadPreloaderIntegrationTest extends IntegrationTestCase {
 
 	public function testPageElementsCommentsPreloadsCommentThreads() {
 		
-		_elgg_services()->session->setLoggedInUser($this->createUser());
+		_elgg_services()->session_manager->setLoggedInUser($this->createUser());
 		
 		$entity = $this->createObject();
 		

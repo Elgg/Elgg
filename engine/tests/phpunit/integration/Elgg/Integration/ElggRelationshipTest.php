@@ -33,7 +33,7 @@ class ElggRelationshipTest extends IntegrationTestCase {
 		_elgg_services()->events->backup();
 
 		$this->user = $this->createUser();
-		elgg()->session->setLoggedInUser($this->user);
+		elgg()->session_manager->setLoggedInUser($this->user);
 		
 		$this->entity1 = $this->createObject(['subtype' => 'elgg_relationship_test']);
 		$this->entity2 = $this->createObject(['subtype' => 'elgg_relationship_test']);

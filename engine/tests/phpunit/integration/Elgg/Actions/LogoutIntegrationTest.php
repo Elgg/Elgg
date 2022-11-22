@@ -33,8 +33,6 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 			'language' => 'de',
 		]);
 
-		$user->setValidationStatus(true);
-
 		elgg_login($user);
 
 		$response = $this->executeAction('logout');
@@ -45,7 +43,7 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 		$this->assertNotEmpty($messages['success']);
 		$this->assertEquals(elgg_echo('logoutok', [], $user->language), array_shift($messages['success']));
 
-		$this->assertNull(_elgg_services()->session->getLoggedInUser());
+		$this->assertNull(_elgg_services()->session_manager->getLoggedInUser());
 	}
 
 	public function testCanUseLogoutActionWithoutTokens() {
@@ -53,8 +51,6 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 			'password' => 123456,
 			'language' => 'de',
 		]);
-
-		$user->setValidationStatus(true);
 
 		elgg_login($user);
 
@@ -66,7 +62,7 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 		$this->assertNotEmpty($messages['success']);
 		$this->assertEquals(elgg_echo('logoutok', [], $user->language), array_shift($messages['success']));
 
-		$this->assertNull(_elgg_services()->session->getLoggedInUser());
+		$this->assertNull(_elgg_services()->session_manager->getLoggedInUser());
 	}
 
 	public function testCanPreventLogoutWithEvent() {
@@ -87,9 +83,9 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('logouterror'), $response->getContent());
 
-		$this->assertEquals($user, _elgg_services()->session->getLoggedInUser());
+		$this->assertEquals($user, _elgg_services()->session_manager->getLoggedInUser());
 
-		_elgg_services()->session->removeLoggedInUser();
+		_elgg_services()->session_manager->removeLoggedInUser();
 
 		elgg_unregister_event_handler('logout:before', 'user', [Values::class, 'getFalse']);
 	}

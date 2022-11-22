@@ -29,7 +29,7 @@ class ElggPageIntegrationTest extends \Elgg\IntegrationTestCase {
 	 */
 	public function up() {
 		$this->user = $this->createUser();
-		elgg_get_session()->setLoggedInUser($this->user);
+		_elgg_services()->session_manager->setLoggedInUser($this->user);
 		
 		// create a top page
 		$top_page = new ElggPage();

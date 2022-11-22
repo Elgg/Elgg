@@ -25,7 +25,7 @@ class SendActionTest extends ActionResponseTestCase {
 			'language' => 'de',
 		]);
 
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		$response = $this->executeAction('messages/send', [
 			'subject' => 'Message Subject',
@@ -43,7 +43,7 @@ class SendActionTest extends ActionResponseTestCase {
 			'language' => 'de',
 		]);
 
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		$response = $this->executeAction('messages/send', [
 			'subject' => 'Message Subject',
@@ -62,7 +62,7 @@ class SendActionTest extends ActionResponseTestCase {
 			'language' => 'de',
 		]);
 
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		$response = $this->executeAction('messages/send', [
 			'subject' => 'Message Subject',
@@ -85,7 +85,7 @@ class SendActionTest extends ActionResponseTestCase {
 			'language' => 'es',
 		]);
 
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		$response = $this->executeAction('messages/send', [
 			'body' => 'Message Body',
@@ -107,7 +107,7 @@ class SendActionTest extends ActionResponseTestCase {
 			'language' => 'es',
 		]);
 
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		$response = $this->executeAction('messages/send', [
 			'subject' => 'Message Subject',
@@ -131,7 +131,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 		$recipient->setNotificationSetting('email', true);
 
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		$response = $this->executeAction('messages/send', [
 			'subject' => 'Message Subject',

@@ -99,7 +99,7 @@ class ElggTempFileTest extends IntegrationTestCase {
 		$temp_file = $this->temp_file;
 		
 		$user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
 		
 		$this->assertFalse($temp_file->canDownload());
 		$this->assertFalse($temp_file->transfer($user->guid));

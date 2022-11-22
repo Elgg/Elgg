@@ -23,7 +23,7 @@ class InviteTest extends ActionResponseTestCase {
 		
 		$this->group = $this->createGroup();
 		$this->user = $this->createUser();
-		elgg_get_session()->setLoggedInUser($this->group->getOwnerEntity());
+		_elgg_services()->session_manager->setLoggedInUser($this->group->getOwnerEntity());
 	}
 	
 	public function down() {
@@ -32,7 +32,7 @@ class InviteTest extends ActionResponseTestCase {
 	}
 	
 	public function testLoggedInUserRequired() {
-		elgg_get_session()->removeLoggedInUser();
+		_elgg_services()->session_manager->removeLoggedInUser();
 		
 		$this->expectException(\Elgg\Exceptions\Http\Gatekeeper\LoggedInGatekeeperException::class);
 		$this->executeAction('groups/invite');
@@ -55,7 +55,7 @@ class InviteTest extends ActionResponseTestCase {
 	}
 	
 	public function testNormalUserTriesInvite() {
-		elgg_get_session()->setLoggedInUser($this->user);
+		_elgg_services()->session_manager->setLoggedInUser($this->user);
 		
 		$response = $this->executeAction('groups/invite', [
 			'user_guid' => $this->user->guid,

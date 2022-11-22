@@ -50,7 +50,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$this->assertNotEmpty($messages['success']);
 		$this->assertEquals(elgg_echo('loginok', [], $user->language), array_shift($messages['success']));
 
-		$this->assertEquals($user, _elgg_services()->session->getLoggedInUser());
+		$this->assertEquals($user, _elgg_services()->session_manager->getLoggedInUser());
 	}
 
 	public function testLoginWithEmailAndPassword() {
@@ -69,7 +69,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(OkResponse::class, $response);
 
-		$this->assertEquals($user, _elgg_services()->session->getLoggedInUser());
+		$this->assertEquals($user, _elgg_services()->session_manager->getLoggedInUser());
 	}
 
 	public function testLoginFailsWithEmptyPassword() {
@@ -194,7 +194,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('LoginException:Unknown'), $response->getContent());
 
-		$this->assertEmpty(_elgg_services()->session->getLoggedInUser());
+		$this->assertEmpty(_elgg_services()->session_manager->getLoggedInUser());
 
 		_elgg_services()->events->unregisterHandler('before:login', 'user', $handler);
 	}
@@ -256,9 +256,9 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$this->assertNotEmpty($messages['success']);
 		$this->assertEquals(elgg_echo('loginok', [], $user->language), array_shift($messages['success']));
 		
-		$this->assertEquals($user, _elgg_services()->session->getLoggedInUser());
+		$this->assertEquals($user, _elgg_services()->session_manager->getLoggedInUser());
 		
-		_elgg_services()->session->removeLoggedInUser();
+		_elgg_services()->session_manager->removeLoggedInUser();
 		
 		ob_start();
 		$response = _elgg_services()->responseFactory->respond($action_response);
@@ -322,9 +322,9 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(OkResponse::class, $response);
 		$this->assertEquals($forward_to, $response->getForwardURL());
 
-		$this->assertEquals($user, _elgg_services()->session->getLoggedInUser());
+		$this->assertEquals($user, _elgg_services()->session_manager->getLoggedInUser());
 
-		_elgg_services()->session->removeLoggedInUser();
+		_elgg_services()->session_manager->removeLoggedInUser();
 
 		elgg_unregister_event_handler('login:forward', 'user', $forward_handler);
 	}

@@ -30,7 +30,7 @@ class UnmuteIntegrationTest extends ActionResponseTestCase {
 		$this->entity = $this->createObject();
 		$this->user = $this->createUser();
 		
-		_elgg_services()->session->setLoggedInUser($this->user);
+		_elgg_services()->session_manager->setLoggedInUser($this->user);
 	}
 
 	public function testFailsWithMissingEntityGUID() {
