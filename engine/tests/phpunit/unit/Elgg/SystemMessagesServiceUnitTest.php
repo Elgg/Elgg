@@ -18,7 +18,7 @@ class SystemMessagesServiceUnitTest extends \Elgg\UnitTestCase {
 	protected $session;
 
 	public function up() {
-		$this->session = \ElggSession::getMock();
+		$this->session = _elgg_services()->session;
 		$this->svc = new SystemMessagesService($this->session);
 	}
 
