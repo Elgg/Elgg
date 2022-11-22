@@ -5,16 +5,16 @@ namespace Elgg\ExternalPages\Menus;
 /**
  * Event callbacks for menus
  *
- * @since 4.0
+ * @since 5.0
  *
  * @internal
  */
-class Page {
+class AdminHeader {
 
 	/**
 	 * Adds menu items to the admin page menu
 	 *
-	 * @param \Elgg\Event $event 'register', 'menu:page'
+	 * @param \Elgg\Event $event 'register', 'menu:admin_header'
 	 *
 	 * @return \Elgg\Menu\MenuItems
 	 */
@@ -29,7 +29,6 @@ class Page {
 			'name' => 'configure_utilities:expages',
 			'text' => elgg_echo('admin:configure_utilities:expages'),
 			'href' => 'admin/configure_utilities/expages',
-			'section' => 'configure',
 			'parent_name' => 'configure_utilities',
 		]);
 	
