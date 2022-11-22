@@ -3,8 +3,6 @@
  * Friends collection edit action
  */
 
-elgg_make_sticky_form('friends/collections/edit');
-
 $collection_name = elgg_get_title_input('collection_name');
 $friend_guids = (array) get_input('collection_friends', []);
 $collection_id = (int) get_input('collection_id');
@@ -38,8 +36,6 @@ foreach ($friend_guids as $friend_guid) {
 if (empty($count)) {
 	return elgg_error_response(elgg_echo('friends:collections:edit:fail'));
 }
-
-elgg_clear_sticky_form('friends/collections/edit');
 
 $data = [
 	'collection' => $collection,

@@ -1,5 +1,6 @@
 <?php
 
+use Elgg\Pages\Forms\PrepareFields;
 use Elgg\Pages\GroupToolContainerLogicCheck;
 use Elgg\Pages\Notifications\CreatePageEventHandler;
 
@@ -108,6 +109,11 @@ return [
 		'fields' => [
 			'object:page' => [
 				\Elgg\Pages\FieldsHandler::class => [],
+			],
+		],
+		'form:prepare:fields' => [
+			'pages/edit' => [
+				PrepareFields::class => [],
 			],
 		],
 		'permissions_check' => [

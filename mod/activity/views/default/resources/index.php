@@ -11,7 +11,13 @@ if (elgg_is_logged_in()) {
 }
 
 if (elgg_get_config('allow_registration')) {
-	$sidebar = elgg_view_module('aside', elgg_echo('register'), elgg_view_form('register'));
+	$sidebar = elgg_view_module('aside', elgg_echo('register'), elgg_view_form('register', [
+		'sticky_enabled' => true,
+		'sticky_ignored_fields' => [
+			'password',
+			'password2',
+		],
+	]));
 } else {
 	$sidebar = elgg_view('core/account/login_box');
 }

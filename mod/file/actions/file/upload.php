@@ -13,8 +13,6 @@ $tags = (string) get_input('tags');
 
 $container_guid = $container_guid ?: elgg_get_logged_in_user_guid();
 
-elgg_make_sticky_form('file');
-
 // check if upload attempted and failed
 $uploaded_file = elgg_get_uploaded_file('upload', false);
 if ($uploaded_file && !$uploaded_file->isValid()) {
@@ -71,9 +69,6 @@ if ($uploaded_file && $uploaded_file->isValid()) {
 		$file->saveIconFromElggFile($file);
 	}
 }
-
-// file saved so clear sticky form
-elgg_clear_sticky_form('file');
 
 $forward = $file->getURL();
 

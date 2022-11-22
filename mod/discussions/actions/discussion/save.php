@@ -11,8 +11,6 @@ $container_guid = (int) get_input('container_guid');
 $guid = (int) get_input('topic_guid');
 $tags = (string) get_input('tags');
 
-elgg_make_sticky_form('topic');
-
 // validation of inputs
 if (!$title || !$desc) {
 	return elgg_error_response(elgg_echo('discussion:error:missing'));
@@ -58,9 +56,6 @@ $topic->tags = elgg_string_to_array($tags);
 if (!$topic->save()) {
 	return elgg_error_response(elgg_echo('discussion:error:notsaved'));
 }
-
-// topic saved so clear sticky form
-elgg_clear_sticky_form('topic');
 
 // handle results differently for new topics and topic edits
 if (!$new_topic) {

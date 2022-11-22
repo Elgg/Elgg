@@ -6,8 +6,6 @@
  * elements may be omitted and the corresponding data will be left as is.
  */
 
-elgg_make_sticky_form('groups');
-
 // Get group fields
 $input = [];
 
@@ -210,9 +208,6 @@ foreach ($settings as $plugin_id => $plugin_settings) {
 if (!$group->save()) {
 	return elgg_error_response(elgg_echo('groups:save_error'));
 }
-
-// group saved so clear sticky form
-elgg_clear_sticky_form('groups');
 
 // group creator needs to be member of new group and river entry created
 if ($is_new_group) {

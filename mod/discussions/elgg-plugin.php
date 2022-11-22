@@ -1,9 +1,8 @@
 <?php
 
+use Elgg\Discussions\Forms\PrepareFields;
 use Elgg\Discussions\GroupToolContainerLogicCheck;
 use Elgg\Discussions\Notifications\CreateDiscussionEventHandler;
-
-require_once(__DIR__ . '/lib/functions.php');
 
 return [
 	'plugin' => [
@@ -86,6 +85,11 @@ return [
 		'entity:url' => [
 			'object' => [
 				'Elgg\Discussions\Widgets::widgetURL' => [],
+			],
+		],
+		'form:prepare:fields' => [
+			'discussion/save' => [
+				PrepareFields::class => [],
 			],
 		],
 		'get' => [

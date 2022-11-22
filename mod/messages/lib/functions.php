@@ -140,30 +140,3 @@ function messages_get_unread(int $user_guid = 0, int $limit = null, int $offset 
 function messages_count_unread(int $user_guid = 0): int {
 	return (int) messages_get_unread($user_guid, 10, 0, true);
 }
-
-/**
- * Prepare the compose form variables
- *
- * @param int $recipient_guid new message recipient
- *
- * @return array
- */
-function messages_prepare_form_vars(int $recipient_guid = 0): array {
-
-	$recipients = [];
-	$recipient = get_user($recipient_guid);
-	if (!empty($recipient)) {
-		$recipients[] = $recipient->getGUID();
-	}
-
-	// input names => defaults
-	$values = [
-		'subject' => elgg_get_sticky_value('messages', 'subject', ''),
-		'body' => elgg_get_sticky_value('messages', 'body', ''),
-		'recipients' => elgg_get_sticky_value('messages', 'recipients', $recipients),
-	];
-
-	elgg_clear_sticky_form('messages');
-
-	return $values;
-}

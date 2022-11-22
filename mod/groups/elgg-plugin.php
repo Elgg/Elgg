@@ -1,5 +1,6 @@
 <?php
 
+use Elgg\Groups\Forms\PrepareFields;
 use Elgg\Groups\Middleware\LimitedGroupCreation;
 
 require_once(__DIR__ . '/lib/functions.php');
@@ -191,6 +192,11 @@ return [
 		'fields' => [
 			'group:group' => [
 				\Elgg\Groups\FieldsHandler::class => [],
+			],
+		],
+		'form:prepare:fields' => [
+			'groups/edit' => [
+				PrepareFields::class => [],
 			],
 		],
 		'gatekeeper' => [

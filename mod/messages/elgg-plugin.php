@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Messages\Forms\PrepareFields;
+
 require_once(__DIR__ . '/lib/functions.php');
 
 return [
@@ -63,6 +65,11 @@ return [
 		'delete:after' => [
 			'user' => [
 				'Elgg\Messages\User::purgeMessages' => [],
+			],
+		],
+		'form:prepare:fields' => [
+			'messages/send' => [
+				PrepareFields::class => [],
 			],
 		],
 		'register' => [

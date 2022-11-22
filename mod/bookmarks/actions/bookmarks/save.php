@@ -11,8 +11,6 @@ $tags = (string) get_input('tags');
 $guid = (int) get_input('guid');
 $container_guid = (int) get_input('container_guid', elgg_get_logged_in_user_guid());
 
-elgg_make_sticky_form('bookmarks');
-
 // don't use elgg_normalize_url() because we don't want
 // relative links resolved to this site.
 if ($address && !preg_match("#^((ht|f)tps?:)?//#i", $address)) {
@@ -48,8 +46,6 @@ $bookmark->tags = elgg_string_to_array($tags);
 if (!$bookmark->save()) {
 	return elgg_error_response(elgg_echo('bookmarks:save:failed'));
 }
-
-elgg_clear_sticky_form('bookmarks');
 
 //add to river only if new
 if ($new) {
