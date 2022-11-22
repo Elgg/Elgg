@@ -30,7 +30,6 @@ return array(
 	'APIException:InvalidCallMethod' => "%s должен вызываться с использованием '%s'",
 	'APIException:CallMethodNotImplemented' => "Метод вызова '%s' в настоящее время не поддерживается.",
 	'SecurityException:authenticationfailed' => "Пользователь не может быть аутентифицирован",
-	'SecurityException:DuplicateEmailUser' => "Для данного адреса электронной почты не найдено ни одного уникального пользователя. Не удалось получить токен.",
 	'SecurityException:BannedUser' => "Эта учетная запись пользователя заблокирована, токен не может быть предоставлен.",
 	'SecurityException:InvalidPostHash' => "Хэш данных POST недействителен — Ожидалось %s получено %s.",
 	'SecurityException:DupePacket' => "Подпись пакета уже видна.",

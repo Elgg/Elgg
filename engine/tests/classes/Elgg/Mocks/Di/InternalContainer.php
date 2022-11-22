@@ -18,7 +18,6 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Notifications\NotificationsService         $notifications                   Notification service (with memory queue)
  * @property-read \Elgg\Mocks\Database\RelationshipsTable          $relationshipsTable              Annotation mocks
  * @property-read \Elgg\Mocks\I18n\Translator                      $translator                      Translator
- * @property-read \Elgg\Mocks\Database\UsersTable                  $usersTable                      Users table
  * @property-read \Elgg\Mocks\Database\UsersRememberMeCookiesTable $users_remember_me_cookies_table Users remember me cookies table
  */
 class InternalContainer extends \Elgg\Di\InternalContainer{
@@ -62,7 +61,6 @@ class InternalContainer extends \Elgg\Di\InternalContainer{
 		});
 		
 		$container->set('translator', \DI\autowire(\Elgg\Mocks\I18n\Translator::class));
-		$container->set('usersTable', \DI\autowire(\Elgg\Mocks\Database\UsersTable::class));
 
 		$container->set('notifications', function(ContainerInterface $c) {
 			$queue = new \Elgg\Queue\MemoryQueue();

@@ -165,3 +165,31 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
 	$params = $params ?? [];
 	return elgg_trigger_event_results((string) $hook, (string) $type, $params, $returnvalue);
 }
+
+/**
+ * Get user by username
+ *
+ * @param string $username The user's username
+ *
+ * @return \ElggUser|false Depending on success
+ * @deprecated 5.0 use elgg_get_user_by_username()
+ */
+function get_user_by_username($username) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_get_user_by_username()', '5.0');
+	
+	return elgg_get_user_by_username((string) $username);
+}
+
+/**
+ * Get an array of users from an email address
+ *
+ * @param string $email Email address.
+ *
+ * @return array
+ * @deprecated 5.0 use elgg_get_user_by_email()
+ */
+function get_user_by_email($email) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_get_user_by_email()', '5.0');
+	
+	return (array) elgg_get_user_by_email((string) $email);
+}

@@ -8,12 +8,8 @@ if (empty($username)) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
-// allow email addresses
-if (elgg_strpos($username, '@') !== false && ($users = get_user_by_email($username))) {
-	$username = $users[0]->username;
-}
-
-$user = get_user_by_username($username);
+// also allow by email addresses
+$user = elgg_get_user_by_username($username, true);
 if (!$user instanceof \ElggUser) {
 	return elgg_error_response(elgg_echo('user:username:notfound', [$username]));
 }

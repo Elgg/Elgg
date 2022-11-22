@@ -57,18 +57,8 @@ class MaintenanceGatekeeper {
 		if ($route !== 'action:login') {
 			return false;
 		}
-		
-		$username = (string) $request->getParam('username');
 
-		$user = get_user_by_username($username);
-
-		if (!$user instanceof \ElggUser) {
-			$users = get_user_by_email($username);
-			if (!empty($users)) {
-				$user = $users[0];
-			}
-		}
-
+		$user = elgg_get_user_by_username((string) $request->getParam('username'), true);
 		if ($user instanceof \ElggUser && $user->isAdmin()) {
 			return true;
 		}

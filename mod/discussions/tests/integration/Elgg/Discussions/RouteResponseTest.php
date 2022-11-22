@@ -6,7 +6,7 @@ namespace Elgg\Discussions;
  * @group Router
  * @group DiscussionsRoutes
  */
-class RouteResponseTest extends \Elgg\Plugins\RouteResponseTest {
+class RouteResponseTest extends \Elgg\Plugins\Integration\RouteResponseTestCase {
 
 	public function getSubtype() {
 		return 'discussion';

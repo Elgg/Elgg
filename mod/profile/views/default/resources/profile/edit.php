@@ -8,7 +8,7 @@ use Elgg\Exceptions\Http\EntityPermissionsException;
 
 $username = (string) elgg_extract('username', $vars);
 
-$user = get_user_by_username($username);
+$user = elgg_get_user_by_username($username);
 if (!$user instanceof \ElggUser) {
 	throw new EntityNotFoundException(elgg_echo("profile:notfound"));
 }

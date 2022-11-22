@@ -3,7 +3,6 @@
 namespace Elgg\Users;
 
 use Elgg\Config;
-use Elgg\Database\UsersTable;
 use Elgg\Email;
 use Elgg\Email\Address;
 use Elgg\EmailService;
@@ -36,11 +35,6 @@ class Accounts {
 	protected $passwords;
 
 	/**
-	 * @var UsersTable
-	 */
-	protected $users;
-
-	/**
 	 * @var EventsService
 	 */
 	protected $events;
@@ -61,7 +55,6 @@ class Accounts {
 	 * @param Config                   $config             Config
 	 * @param Translator               $translator         Translator
 	 * @param PasswordService          $passwords          Passwords
-	 * @param UsersTable               $users              Users table
 	 * @param EventsService            $events             Events service
 	 * @param EmailService             $email              Email service
 	 * @param PasswordGeneratorService $password_generator Password generator service
@@ -70,7 +63,6 @@ class Accounts {
 		Config $config,
 		Translator $translator,
 		PasswordService $passwords,
-		UsersTable $users,
 		EventsService $events,
 		EmailService $email,
 		PasswordGeneratorService $password_generator
@@ -78,7 +70,6 @@ class Accounts {
 		$this->config = $config;
 		$this->translator = $translator;
 		$this->passwords = $passwords;
-		$this->users = $users;
 		$this->events = $events;
 		$this->email = $email;
 		$this->password_generator = $password_generator;
@@ -290,10 +281,10 @@ class Accounts {
 
 		if ($assert_unregistered) {
 			$exists = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function () use ($username) {
-				return $this->users->getByUsername($username);
+				return elgg_get_user_by_username($username);
 			});
 
-			if ($exists) {
+			if ($exists instanceof \ElggUser) {
 				throw new RegistrationException($this->translator->translate('registration:userexists'));
 			}
 		}
@@ -376,10 +367,10 @@ class Accounts {
 
 		if ($assert_unregistered) {
 			$exists = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function () use ($address) {
-				return $this->users->getByEmail($address);
+				return elgg_get_user_by_email($address);
 			});
 
-			if ($exists) {
+			if ($exists instanceof \ElggUser) {
 				throw new RegistrationException($this->translator->translate('registration:dupeemail'));
 			}
 		}

@@ -6,7 +6,7 @@ $username = (string) elgg_extract('username', $vars);
 $lower = elgg_extract('lower', $vars);
 $upper = elgg_extract('upper', $vars);
 
-$user = get_user_by_username($username);
+$user = elgg_get_user_by_username($username);
 if (!$user instanceof \ElggUser) {
 	throw new EntityNotFoundException();
 }

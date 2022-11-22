@@ -77,11 +77,11 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$db_user = $this->fetchUser($this->user->guid);
 		$this->assertNotEmpty($db_user);
 
-		$user = get_user_by_username($name);
+		$user = elgg_get_user_by_username($name);
 
 		$this->assertTrue($user->delete());
 
-		$user = get_user_by_username($name);
+		$user = elgg_get_user_by_username($name);
 		$this->assertNull($user);
 	}
 
@@ -96,7 +96,7 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$first_letter = str_pad('%' . dechex(ord($first_letter)), 2, '0', STR_PAD_LEFT);
 		$username =   $first_letter . substr($username, 1);
 
-		$user = get_user_by_username($username);
+		$user = elgg_get_user_by_username($username);
 		$this->assertTrue((bool) $user);
 		$this->assertEquals($user->guid, $this->user->guid);
 
@@ -111,7 +111,7 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 
 		$uc_username = strtoupper($username);
 		
-		$user = get_user_by_username($uc_username);
+		$user = elgg_get_user_by_username($uc_username);
 		$this->assertTrue((bool) $user);
 		$this->assertEquals($user->guid, $this->user->guid);
 
@@ -124,17 +124,23 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$this->user->email = $email;
 		$this->assertTrue($this->user->save());
 
-		$users = get_user_by_email($email);
+		$user = elgg_get_user_by_email($email);
 		
-		$this->assertCount(1, $users);
-		$this->assertEquals($users[0]->guid, $this->user->guid);
+		$this->assertInstanceOf(\ElggUser::class, $user);
+		$this->assertEquals($user->guid, $this->user->guid);
 		
 		// lower case
 		$email = strtolower($email);
-		$users = get_user_by_email($email);
+		$user = elgg_get_user_by_email($email);
 		
-		$this->assertCount(1, $users);
-		$this->assertEquals($users[0]->guid, $this->user->guid);
+		$this->assertInstanceOf(\ElggUser::class, $user);
+		$this->assertEquals($user->guid, $this->user->guid);
+		
+		// get by email username
+		$user = elgg_get_user_by_username($email, true);
+		
+		$this->assertInstanceOf(\ElggUser::class, $user);
+		$this->assertEquals($user->guid, $this->user->guid);
 
 		$this->user->delete();
 	}

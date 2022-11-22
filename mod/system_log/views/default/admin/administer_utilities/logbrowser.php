@@ -10,7 +10,7 @@ $offset = get_input('offset');
 
 $search_username = (string) get_input('search_username');
 if (!empty($search_username)) {
-	$user = get_user_by_username($search_username);
+	$user = elgg_get_user_by_username($search_username);
 	if ($user) {
 		$user_guid = $user->guid;
 	} else {

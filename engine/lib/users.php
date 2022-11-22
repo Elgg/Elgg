@@ -28,25 +28,80 @@ function get_user(int $guid): ?\ElggUser {
 }
 
 /**
- * Get user by username
+ * Get a user by username
  *
- * @param string $username The user's username
+ * @param string $username  The user's username
+ * @param bool   $try_email If the username contains an '@' try based on email first
  *
- * @return \ElggUser|null Depending on success
+ * @return \ElggUser|null
+ * @since 5.0
  */
-function get_user_by_username(string $username): ?\ElggUser {
-	return _elgg_services()->usersTable->getByUsername($username);
+function elgg_get_user_by_username(string $username, bool $try_email = false): ?\ElggUser {
+	if (empty($username)) {
+		return null;
+	}
+	
+	if ($try_email && elgg_is_valid_email($username)) {
+		$user = elgg_get_user_by_email($username);
+		if ($user instanceof \ElggUser) {
+			return $user;
+		}
+	}
+	
+	// Fixes #6052. Username is frequently sniffed from the path info, which,
+	// unlike $_GET, is not URL decoded. If the username was not URL encoded,
+	// this is harmless.
+	$username = rawurldecode($username);
+	if (empty($username)) {
+		return null;
+	}
+	
+	$logged_in_user = elgg_get_logged_in_user_entity();
+	if (!empty($logged_in_user) && ($logged_in_user->username === $username)) {
+		return $logged_in_user;
+	}
+	
+	$users = elgg_get_entities([
+		'types' => 'user',
+		'metadata_name_value_pairs' => [
+			[
+				'name' => 'username',
+				'value' => $username,
+				'case_sensitive' => false,
+			],
+		],
+		'limit' => 1,
+	]);
+	
+	return $users ? $users[0] : null;
 }
 
 /**
- * Get an array of users from an email address
+ * Get a user from an email address
  *
- * @param string $email Email address.
+ * @param string $email Email address
  *
- * @return array
+ * @return \ElggUser|null
+ * @since 5.0
  */
-function get_user_by_email(string $email): array {
-	return _elgg_services()->usersTable->getByEmail($email);
+function elgg_get_user_by_email(string $email): ?\ElggUser {
+	if (empty($email)) {
+		return null;
+	}
+	
+	$users = elgg_get_entities([
+		'types' => 'user',
+		'metadata_name_value_pairs' => [
+			[
+				'name' => 'email',
+				'value' => $email,
+				'case_sensitive' => false,
+			],
+		],
+		'limit' => 1,
+	]);
+	
+	return $users ? $users[0] : null;
 }
 
 /**
@@ -135,7 +190,7 @@ function elgg_validate_registration_data(string $username, string|array $passwor
  * @since 4.3
  */
 function elgg_generate_invite_code(string $username): string {
-	return _elgg_services()->usersTable->generateInviteCode($username);
+	return _elgg_services()->hmac->generateInviteCode($username);
 }
 
 /**
@@ -149,7 +204,7 @@ function elgg_generate_invite_code(string $username): string {
  * @since 1.10
  */
 function elgg_validate_invite_code(string $username, string $code): bool {
-	return _elgg_services()->usersTable->validateInviteCode($username, $code);
+	return _elgg_services()->hmac->validateInviteCode($username, $code);
 }
 
 /**

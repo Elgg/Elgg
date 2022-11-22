@@ -30,7 +30,6 @@ return array(
 	'APIException:InvalidCallMethod' => "%s must be called using '%s'",
 	'APIException:CallMethodNotImplemented' => "Call method '%s' is currently not supported.",
 	'SecurityException:authenticationfailed' => "User could not be authenticated",
-	'SecurityException:DuplicateEmailUser' => "No unique user found for the given e-mail address. Unable to get token.",
 	'SecurityException:BannedUser' => "This user account is banned, no token can be provided.",
 	'InvalidArgumentException:APIParametersArrayStructure' => "Parameters array structure is incorrect for call to expose method '%s'",
 	'DomainException:UnrecognisedHttpMethod' => "Unrecognised http method %s for api method '%s'",

@@ -22,7 +22,7 @@ if (!$user instanceof ElggUser) {
 }
 
 $users = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($email) {
-	return get_user_by_email($email);
+	return elgg_get_user_by_email($email);
 });
 
 if (count($users) > 1) {

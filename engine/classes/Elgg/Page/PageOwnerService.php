@@ -3,7 +3,6 @@
 namespace Elgg\Page;
 
 use Elgg\Database\EntityTable;
-use Elgg\Database\UsersTable;
 use Elgg\EventsService;
 use Elgg\Exceptions\RangeException;
 use Elgg\Http\Request;
@@ -30,11 +29,6 @@ class PageOwnerService {
 	protected $entity_table;
 
 	/**
-	 * @var UsersTable
-	 */
-	protected $users_table;
-
-	/**
 	 * @var EventsService
 	 */
 	protected $events;
@@ -55,20 +49,17 @@ class PageOwnerService {
 	 * @param Request       $request      Request
 	 * @param EntityTable   $entity_table Entity table
 	 * @param EventsService $events       Events
-	 * @param UsersTable    $users_table  Users table
 	 * @param Invoker       $invoker      Invoker
 	 */
 	public function __construct(
-			Request $request,
-			EntityTable $entity_table,
+		Request $request,
+		EntityTable $entity_table,
 		EventsService $events,
-			UsersTable $users_table,
-			Invoker $invoker
+		Invoker $invoker
 	) {
 		$this->request = $request;
 		$this->entity_table = $entity_table;
 		$this->events = $events;
-		$this->users_table = $users_table;
 		$this->invoker = $invoker;
 		
 		$this->page_owner_guid = $this->detectPageOwnerFromRoute();

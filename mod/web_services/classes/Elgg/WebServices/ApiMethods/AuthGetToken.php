@@ -27,16 +27,11 @@ class AuthGetToken {
 	 * @throws SecurityException
 	 */
 	public function __invoke(string $username, string $password) {
-		// check if username is an email address
-		if (elgg_is_valid_email($username)) {
-			$users = get_user_by_email($username);
-			
-			// check if we have a unique user
-			if (count($users) === 1) {
-				$username = $users[0]->username;
-			} else {
-				throw new SecurityException(elgg_echo('SecurityException:DuplicateEmailUser'));
-			}
+		// also check if username is an email address
+		$user = elgg_get_user_by_username($username, true);
+		if ($user instanceof \ElggUser) {
+			// could be fetched based on email address
+			$username = $user->username;
 		}
 		
 		try {
@@ -45,8 +40,7 @@ class AuthGetToken {
 				'username' => $username,
 				'password' => $password,
 			]);
-			if ($authenticated === true) {
-				$user = get_user_by_username($username);
+			if ($authenticated === true && $user instanceof \ElggUser) {
 				if ($user->isBanned()) {
 					throw new SecurityException(elgg_echo('SecurityException:BannedUser'));
 				}

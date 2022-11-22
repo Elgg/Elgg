@@ -6,7 +6,7 @@ namespace Elgg\Bookmarks;
  * @group Router
  * @group BookmarksRoutes
  */
-class RouteResponseTest extends \Elgg\Plugins\RouteResponseTest {
+class RouteResponseTest extends \Elgg\Plugins\Integration\RouteResponseTestCase {
 
 	public function getSubtype() {
 		return 'bookmarks';

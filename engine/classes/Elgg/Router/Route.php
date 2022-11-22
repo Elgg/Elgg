@@ -70,31 +70,31 @@ class Route extends \Symfony\Component\Routing\Route {
 		switch ($route_parts[0]) {
 			case 'view' :
 			case 'edit' :
-				$username = elgg_extract('username', $params);
-				if ($username) {
-					return get_user_by_username($username) ?: null;
+				$username = (string) elgg_extract('username', $params);
+				if (!empty($username)) {
+					return elgg_get_user_by_username($username);
 				}
 
-				$guid = elgg_extract('guid', $params);
-				if ($guid) {
+				$guid = (int) elgg_extract('guid', $params);
+				if (!empty($guid)) {
 					return $from_guid($guid);
 				}
 				break;
 
 			case 'add' :
 			case 'collection' :
-				$username = elgg_extract('username', $params);
-				if ($username) {
-					return get_user_by_username($username) ?: null;
+				$username = (string) elgg_extract('username', $params);
+				if (!empty($username)) {
+					return elgg_get_user_by_username($username);
 				}
 
-				$guid = elgg_extract('guid', $params);
-				if ($guid) {
+				$guid = (int) elgg_extract('guid', $params);
+				if (!empty($guid)) {
 					return $from_guid($guid);
 				}
 
-				$container_guid = elgg_extract('container_guid', $params);
-				if ($container_guid) {
+				$container_guid = (int) elgg_extract('container_guid', $params);
+				if (!empty($container_guid)) {
 					return $from_guid($container_guid);
 				}
 				break;
@@ -107,18 +107,18 @@ class Route extends \Symfony\Component\Routing\Route {
 					break;
 				}
 				
-				$username = elgg_extract('username', $params);
-				if ($username) {
-					return get_user_by_username($username) ?: null;
+				$username = (string) elgg_extract('username', $params);
+				if (!empty($username)) {
+					return elgg_get_user_by_username($username);
 				}
 				
-				$guid = elgg_extract('guid', $params);
-				if ($guid) {
+				$guid = (int) elgg_extract('guid', $params);
+				if (!empty($guid)) {
 					return $from_guid($guid);
 				}
 				
-				$container_guid = elgg_extract('container_guid', $params);
-				if ($container_guid) {
+				$container_guid = (int) elgg_extract('container_guid', $params);
+				if (!empty($container_guid)) {
 					return $from_guid($container_guid);
 				}
 				break;
