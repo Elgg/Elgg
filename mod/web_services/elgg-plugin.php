@@ -86,11 +86,11 @@ return [
 			],
 		],
 		'register' => [
+			'menu:admin_header' => [
+				'\Elgg\WebServices\AdminHeaderMenu' => [],
+			],
 			'menu:entity' => [
 				'\Elgg\WebServices\EntityMenu' => [],
-			],
-			'menu:page' => [
-				'\Elgg\WebServices\AdminPageMenu' => [],
 			],
 		],
 	],

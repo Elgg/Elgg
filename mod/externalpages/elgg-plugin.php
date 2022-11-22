@@ -60,14 +60,14 @@ return [
 	],
 	'events' => [
 		'register' => [
+			'menu:admin_header' => [
+				'Elgg\ExternalPages\Menus\AdminHeader::register' => [],
+			],
 			'menu:expages' => [
 				'Elgg\ExternalPages\Menus\ExPages::register' => [],
 			],
 			'menu:footer' => [
 				'Elgg\ExternalPages\Menus\Footer::register' => [],
-			],
-			'menu:page' => [
-				'Elgg\ExternalPages\Menus\Page::register' => [],
 			],
 			'menu:walled_garden' => [
 				'Elgg\ExternalPages\Menus\WalledGarden::register' => [],

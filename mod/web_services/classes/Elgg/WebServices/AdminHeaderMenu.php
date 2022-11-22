@@ -7,9 +7,9 @@ use Elgg\Menu\MenuItems;
 /**
  * Add menu items to page menu
  *
- * @since 3.2
+ * @since 5.0
  */
-class AdminPageMenu {
+class AdminHeaderMenu {
 	
 	/**
 	 * Add menu items to the admin page menu
@@ -31,7 +31,7 @@ class AdminPageMenu {
 			'name' => 'webservices',
 			'text' => elgg_echo('admin:configure_utilities:webservices'),
 			'href' => false,
-			'section' => 'configure',
+			'parent_name' => 'configure',
 		]);
 		
 		$return[] = \ElggMenuItem::factory([
@@ -39,7 +39,6 @@ class AdminPageMenu {
 			'text' => elgg_echo('admin:configure_utilities:ws_list'),
 			'href' => '/admin/configure_utilities/ws_list',
 			'parent_name' => 'webservices',
-			'section' => 'configure',
 		]);
 		
 		$return[] = \ElggMenuItem::factory([
@@ -47,7 +46,6 @@ class AdminPageMenu {
 			'text' => elgg_echo('admin:configure_utilities:ws_tokens'),
 			'href' => '/admin/configure_utilities/ws_tokens',
 			'parent_name' => 'webservices',
-			'section' => 'configure',
 		]);
 		
 		return $return;
