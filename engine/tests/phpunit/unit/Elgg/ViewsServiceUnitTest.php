@@ -29,9 +29,6 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->views = new ViewsService($this->events, _elgg_services()->request);
 		$this->views->setLogger($logger);
 		$this->views->autoregisterViews('', "$this->viewsDir/default", 'default');
-
-		// supports deprecation wrapper for $vars['user']
-		_elgg_services()->set('session', \ElggSession::getMock());
 	}
 
 	public function testCanExtendViews() {

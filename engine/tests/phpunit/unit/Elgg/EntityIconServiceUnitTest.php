@@ -93,10 +93,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$dir = (new \Elgg\EntityDirLocator($this->entity->owner_guid))->getPath();
 		$this->owner_dir_path = _elgg_services()->config->dataroot . $dir;
 		elgg_delete_directory($this->owner_dir_path);
-		
-		// Needed to test elgg_get_inline_url()
-		_elgg_services()->set('session', \ElggSession::getMock());
-		_elgg_services()->session->start();
 	}
 
 	public function down() {

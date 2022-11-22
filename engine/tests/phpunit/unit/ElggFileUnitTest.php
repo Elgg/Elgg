@@ -16,9 +16,6 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 	protected $file;
 
 	public function up() {
-		_elgg_services()->set('session', \ElggSession::getMock());
-		_elgg_services()->session->start();
-
 		$file = new \ElggFile();
 		$file->owner_guid = 1;
 		$file->setFilename("foobar.txt");
