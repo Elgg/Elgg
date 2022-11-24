@@ -40,7 +40,7 @@ foreach ($emails as $email_address) {
 		continue;
 	}
 
-	if (get_user_by_email($email_address)) {
+	if (elgg_get_user_by_email($email_address)) {
 		$error = true;
 		$already_members[] = $email_address;
 		continue;

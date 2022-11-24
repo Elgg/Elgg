@@ -15,21 +15,15 @@ if (empty($username) || empty($password)) {
 	return elgg_error_response(elgg_echo('login:empty'), REFERRER, ELGG_HTTP_BAD_REQUEST);
 }
 
-// check if logging in with email address
-if (elgg_strpos($username, '@') !== false) {
-	$users = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($username) {
-		return get_user_by_email($username);
-	});
-	
-	if (!empty($users)) {
-		$username = $users[0]->username;
-	}
-}
-
 // fetch the user (even disabled)
-$user = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function () use ($username) {
-	return get_user_by_username($username);
+$user = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($username) {
+	return elgg_get_user_by_username($username, true);
 });
+
+if ($user instanceof \ElggUser) {
+	// could be fetched based on email address
+	$username = $user->username;
+}
 
 try {
 	// try to authenticate

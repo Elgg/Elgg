@@ -105,8 +105,8 @@ class ElggUser extends \ElggEntity {
 				} catch (RegistrationException $ex) {
 					throw new ElggInvalidArgumentException($ex->getMessage(), $ex->getCode(), $ex);
 				}
-				$existing_user = get_user_by_username($value);
-				if ($existing_user && ($existing_user->guid !== $this->guid)) {
+				$existing_user = elgg_get_user_by_username($value);
+				if ($existing_user instanceof \ElggUser && ($existing_user->guid !== $this->guid)) {
 					throw new ElggInvalidArgumentException("{$name} is supposed to be unique for ElggUser");
 				}
 				break;

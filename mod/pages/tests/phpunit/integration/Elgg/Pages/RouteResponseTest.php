@@ -6,7 +6,7 @@ namespace Elgg\Pages;
  * @group Router
  * @group PagesRoutes
  */
-class RouteResponseTest extends \Elgg\Plugins\RouteResponseTest {
+class RouteResponseTest extends \Elgg\Plugins\Integration\RouteResponseTestCase {
 
 	public function getSubtype() {
 		return 'page';

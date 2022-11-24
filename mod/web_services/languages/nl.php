@@ -30,7 +30,6 @@ return array(
 	'APIException:InvalidCallMethod' => "%s moet worden aangeroepen middels '%s'",
 	'APIException:CallMethodNotImplemented' => "Aanroep methode '%s' is op dit moment niet ondersteund.",
 	'SecurityException:authenticationfailed' => "Gebruiker kon niet worden geauthentiseerd.",
-	'SecurityException:DuplicateEmailUser' => "Geen unieke gebruiker gevonden op basis van het emailadres. Kan geen token ophalen.",
 	'SecurityException:BannedUser' => "Deze gebruiker is geblokkeerd. Er kan geen token worden overhandigd.",
 	'SecurityException:InvalidPostHash' => "POST data hash is ongeldig - Verwachte %s, maar kreeg %s.",
 	'SecurityException:DupePacket' => "Packet signature is al eerder gezien",

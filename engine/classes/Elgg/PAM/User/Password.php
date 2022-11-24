@@ -27,7 +27,7 @@ class Password {
 		}
 		
 		return elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($credentials) {
-			$user = get_user_by_username($credentials['username']);
+			$user = elgg_get_user_by_username($credentials['username']);
 			if (!$user) {
 				throw new LoginException(_elgg_services()->translator->translate('LoginException:UsernameFailure'));
 			}

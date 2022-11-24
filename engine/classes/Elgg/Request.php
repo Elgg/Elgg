@@ -123,7 +123,7 @@ class Request {
 		}
 		
 		if ($key === 'username') {
-			return get_user_by_username((string) $prop);
+			return elgg_get_user_by_username((string) $prop);
 		}
 
 		return get_user((int) $prop);

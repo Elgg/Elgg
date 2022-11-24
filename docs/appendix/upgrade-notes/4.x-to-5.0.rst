@@ -132,7 +132,6 @@ Lib functions return types
 * ``elgg_view_relationship()`` no longer returns a ``bool``
 * ``get_entity()`` now returns ``null`` if no entity is found instead of a ``bool``
 * ``get_user()`` now returns ``null`` if no user is found instead of a ``bool``
-* ``get_user_by_username()`` now returns ``null`` if no user is found instead of a ``bool``
 * ``elgg_ws_expose_function()`` no longer returns a ``bool``
 
 Lib functions function parameters
@@ -271,8 +270,6 @@ Lib functions function parameters
 * ``get_entity()`` now requires a ``int`` for ``$guid``
 * ``get_input()`` now requires a ``string`` for ``$variable`` and a ``bool`` for ``$filter_result``
 * ``get_user()`` now requires a ``int`` for ``$guid``
-* ``get_user_by_email()`` now requires a ``string`` for ``$email``
-* ``get_user_by_username()`` now requires a ``string`` for ``$username``
 * ``groups_get_group_join_menu_item()`` now requires an ``ElggUser`` for ``$user``
 * ``groups_get_group_leave_menu_item()`` now requires an ``ElggUser`` for ``$user``
 * ``groups_get_invited_groups()`` now requires an ``int`` for ``$user_guid``, a ``bool`` for ``$return_guids`` and an ``array`` for ``$options``
@@ -373,6 +370,8 @@ Deprecated APIs
 * ``elgg_register_plugin_hook_handler`` use ``elgg_register_event_handler``
 * ``elgg_trigger_plugin_hook`` use ``elgg_trigger_event_result``
 * ``elgg_unregister_plugin_hook_handler`` use ``elgg_unregister_event_handler``
+* ``get_user_by_email`` use ``elgg_get_user_by_email``
+* ``get_user_by_username`` use ``elgg_get_user_by_username``
 
 Removed classes
 ~~~~~~~~~~~~~~~
@@ -389,6 +388,8 @@ Removed functions
 * ``elgg_pop_breadcrumb``
 * ``elgg_trigger_deprecated_plugin_hook``
 * ``file_prepare_form_vars``
+* ``get_user_by_email`` use ``elgg_get_user_by_email``
+* ``get_user_by_username`` use ``elgg_get_user_by_username``
 * ``groups_prepare_form_vars``
 * ``messages_prepare_form_vars``
 * ``pages_prepare_form_vars``

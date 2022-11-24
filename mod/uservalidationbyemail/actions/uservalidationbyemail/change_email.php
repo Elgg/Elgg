@@ -27,7 +27,7 @@ if (!elgg_is_valid_email($email)) {
 
 if ($user->email !== $email) {
 	$existing_user = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function () use ($email) {
-		return get_user_by_email($email);
+		return elgg_get_user_by_email($email);
 	});
 
 	if (!empty($existing_user)) {

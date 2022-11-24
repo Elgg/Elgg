@@ -30,7 +30,6 @@ return array(
 	'APIException:InvalidCallMethod' => "%s muss mit '%s' aufgerufen werden.",
 	'APIException:CallMethodNotImplemented' => "Anfrage-Methode '%s' wird derzeit nicht unterstützt.",
 	'SecurityException:authenticationfailed' => "Der Benutzer konnte nicht authentifiziert werden.",
-	'SecurityException:DuplicateEmailUser' => "Kein eindeutiger Benutzer für angegebene Emailadresse gefunden. Token konnte daher nicht erzeugt werden.",
 	'SecurityException:BannedUser' => "Dieser Benutzeraccount ist derzeit gesperrt. Daher kann kein Token bereit gestellt werden.",
 	'SecurityException:InvalidPostHash' => "POST-Daten-Hash ist ungültig - erwartet wurde %s aber %s erhalten.",
 	'SecurityException:DupePacket' => "Packet-Signatur ist schon von früher bekannt.",

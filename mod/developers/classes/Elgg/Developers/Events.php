@@ -128,23 +128,21 @@ class Events {
 		// only block outgoing e-mails for regular users
 		// so check if the receiver is an admin
 		$email = $event->getParam('email');
-		if (!($email instanceof \Elgg\Email)) {
+		if (!$email instanceof \Elgg\Email) {
 			return;
 		}
 		
 		$to = $email->getTo();
-		$users = get_user_by_email($to->getEmail());
-		if (empty($users)) {
+		$user = elgg_get_user_by_email($to->getEmail());
+		if (!$user instanceof \ElggUser) {
 			// no user found, so this should be blocked
 			// as this e-mail address doesn't belong to any user
 			return true;
 		}
 		
-		foreach ($users as $user) {
-			if (!$user->isAdmin()) {
-				// found a non admin, so block outgoing e-mails
-				return true;
-			}
+		if (!$user->isAdmin()) {
+			// found a non admin, so block outgoing e-mails
+			return true;
 		}
 	}
 }

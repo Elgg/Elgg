@@ -125,7 +125,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		
 		/* @var $user \ElggUser */
 		$user = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($username) {
-			return get_user_by_username($username);
+			return elgg_get_user_by_username($username);
 		});
 		
 		$this->assertFalse($user->isEnabled());

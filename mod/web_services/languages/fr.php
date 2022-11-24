@@ -30,7 +30,6 @@ return array(
 	'APIException:InvalidCallMethod' => "%s doit être appelé en utilisant '%s'",
 	'APIException:CallMethodNotImplemented' => "L'appel à la méthode '%s' n'est actuellement pas supporté.",
 	'SecurityException:authenticationfailed' => "L'utilisateur n'a pas pu être authentifié",
-	'SecurityException:DuplicateEmailUser' => "Aucun utilisateur unique trouvé pour l'adresse e-mail fournie. Impossible de récupérer un jeton.",
 	'SecurityException:BannedUser' => "Ce compte utilisateur est banni, aucun jeton ne peut être fourni.",
 	'SecurityException:InvalidPostHash' => "Le hachage des données POST est invalide - %s attendu mais reçu %s.",
 	'SecurityException:DupePacket' => "La signature du paquet a déjà été vue.",

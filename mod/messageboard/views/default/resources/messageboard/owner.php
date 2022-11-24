@@ -14,7 +14,7 @@ if (!$page_owner instanceof \ElggUser) {
 }
 
 $history_username = (string) elgg_extract('history_username', $vars);
-$history_user = get_user_by_username($history_username);
+$history_user = elgg_get_user_by_username($history_username);
 
 elgg_push_breadcrumb($page_owner->getDisplayName(), $page_owner->getURL());
 
