@@ -7,7 +7,8 @@ $page_owner_guid = (int) get_input('page_owner_guid');
 $handler = (string) get_input('handler');
 $context = (string) get_input('context');
 $show_access = (bool) get_input('show_access', true);
-$column = (int) get_input('column', 1);
+$column = (int) get_input('new_widget_column', 1);
+$position = get_input('new_widget_position', 'top') === 'top' ? 0 : -1;
 $default_widgets = (int) get_input('default_widgets', 0);
 
 elgg_set_page_owner_guid($page_owner_guid);
@@ -30,7 +31,7 @@ if ($guid === false) {
 $widget = get_entity($guid);
 
 // position the widget
-$widget->move($column, 0);
+$widget->move($column, $position);
 
 $context_stack = [];
 

@@ -37,7 +37,7 @@ class ElggWidget extends \ElggObject {
 	 * Move the widget
 	 *
 	 * @param int $column The widget column
-	 * @param int $rank   Zero-based rank from the top of the column
+	 * @param int $rank   Zero-based rank from the top of the column (-1 is bottom of column)
 	 *
 	 * @return void
 	 * @since 1.8.0
@@ -84,10 +84,14 @@ class ElggWidget extends \ElggObject {
 			$bottom_rank--;
 		}
 		
-		if ($rank == 0) {
+		if ($rank === -1) {
+			$rank = $bottom_rank;
+		}
+		
+		if ($rank === 0) {
 			// top of the column
 			$this->order = !empty($widgets) ? reset($widgets)->order - 10 : 0;
-		} elseif ($rank == $bottom_rank) {
+		} elseif ($rank === $bottom_rank) {
 			// bottom of the column of active widgets
 			$this->order = !empty($widgets) ? end($widgets)->order + 10 : 10;
 		} else {
@@ -95,7 +99,7 @@ class ElggWidget extends \ElggObject {
 
 			// remove the widget that's being moved from the array
 			foreach ($widgets as $index => $widget) {
-				if ($widget->guid == $this->guid) {
+				if ($widget->guid === $this->guid) {
 					unset($widgets[$index]);
 				}
 			}
