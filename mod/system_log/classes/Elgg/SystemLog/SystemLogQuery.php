@@ -150,7 +150,7 @@ class SystemLogQuery extends Repository {
 		$limit = (int) $limit;
 		if ($limit > 0) {
 			$qb->setMaxResults($limit);
-			$qb->setFirstResult($offset);
+			$qb->setFirstResult((int) $offset);
 		}
 
 		$qb->orderBy('time_created', 'DESC');
