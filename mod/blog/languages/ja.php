@@ -28,14 +28,11 @@ return array(
 	'blog:save_status' => '最後に保存:',
 
 	'blog:revision' => '変更履歴',
-	'blog:auto_saved_revision' => '自動保存された変更履歴',
-
+	
 	// messages
 	'blog:message:saved' => 'ブログ記事を保存しました。',
 	'blog:error:cannot_save' => 'ブログ記事を保存できませんでした。',
-	'blog:error:cannot_auto_save' => 'ブログ記事を自動的に保存出来ません。',
 	'blog:error:cannot_write_to_container' => 'あなたの権限ではグループにブログを保存する事はできません。',
-	'blog:messages:warning:draft' => '保存されていない下書きの記事があります！',
 	'blog:edit_revision_notice' => '(前の版)',
 	'blog:none' => 'ブログ記事は一件もありません',
 	'blog:error:missing:title' => 'ブログのタイトルを入力してください！',

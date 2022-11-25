@@ -25,14 +25,11 @@ return array(
 	'blog:save_status' => 'Ostatnio zapisano:',
 
 	'blog:revision' => 'Wersja',
-	'blog:auto_saved_revision' => 'Automatycznie zapisana wersja',
-
+	
 	// messages
 	'blog:message:saved' => 'Wpis na blogu został zapisany.',
 	'blog:error:cannot_save' => 'Zapis posta się nie powiódł.',
-	'blog:error:cannot_auto_save' => 'Nie powiódł się automatyczny zapis wpisu na blogu.',
 	'blog:error:cannot_write_to_container' => 'Masz niedostateczne uprawnienia, aby dodawać wpisy na blogu w tej grupie.',
-	'blog:messages:warning:draft' => 'Szkic wpisu nie został zapisany!',
 	'blog:edit_revision_notice' => '(Stara wersja)',
 	'blog:none' => 'Brak wpisów na blogu',
 	'blog:error:missing:title' => 'Proszę podać tytuł wpisu!',

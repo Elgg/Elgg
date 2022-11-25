@@ -23,7 +23,6 @@ return [
 	],
 	'actions' => [
 		'blog/save' => [],
-		'blog/auto_save_revision' => [],
 	],
 	'routes' => [
 		'collection:object:blog:owner' => [

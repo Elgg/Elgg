@@ -26,14 +26,11 @@ return array(
 	'blog:save_status' => 'Senast sparat:',
 
 	'blog:revision' => 'Utgåva',
-	'blog:auto_saved_revision' => 'Automatiskt Sparad Utgåva',
-
+	
 	// messages
 	'blog:message:saved' => 'Blogginlägg sparat.',
 	'blog:error:cannot_save' => 'Kan inte spara blogginlägg.',
-	'blog:error:cannot_auto_save' => 'Kan inte automatiskt spara blogginlägg.',
 	'blog:error:cannot_write_to_container' => 'Otillräcklig åtkomst för att spara blogg till grupp.',
-	'blog:messages:warning:draft' => 'Det finns ett osparat utkast av detta inlägg!',
 	'blog:edit_revision_notice' => '(Gammal version)',
 	'blog:none' => 'Inga blogginlägg',
 	'blog:error:missing:title' => 'Vänligen ange en titel på bloggen!',

@@ -17,14 +17,11 @@ return array(
 	'blog:save_status' => 'Naposledy uloženo:',
 
 	'blog:revision' => 'Revize',
-	'blog:auto_saved_revision' => 'Automaticky uložená revize',
 
 	// messages
 	'blog:message:saved' => 'Blog byl publikován.',
 	'blog:error:cannot_save' => 'Nemohu uložit blog.',
-	'blog:error:cannot_auto_save' => 'Nemohu automaticky uložit blog.',
 	'blog:error:cannot_write_to_container' => 'Nemáte práva k uložení blogu do skupiny.',
-	'blog:messages:warning:draft' => 'Pro tento příspěvek máte neuložený koncept!',
 	'blog:edit_revision_notice' => '(Stará verze)',
 	'blog:none' => 'Žádné blogy.',
 	'blog:error:missing:title' => 'Zadejte prosím nadpis blogu!',

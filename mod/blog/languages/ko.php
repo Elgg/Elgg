@@ -26,14 +26,11 @@ return array(
 	'blog:save_status' => '마지막 저장:',
 
 	'blog:revision' => '개정',
-	'blog:auto_saved_revision' => '자동저장',
-
+	
 	// messages
 	'blog:message:saved' => '블로그 글이 저장되었습니다.',
 	'blog:error:cannot_save' => '블로그 글을 저장할 수 없습니다.',
-	'blog:error:cannot_auto_save' => '블로그 글을 자동저장할 수 없습니다.',
 	'blog:error:cannot_write_to_container' => '모둠에 블로그를 저장할 권한이 부족합니다. ',
-	'blog:messages:warning:draft' => '이 글의 저장되지 않은 초본이 있습니다. ',
 	'blog:edit_revision_notice' => '(구 판)',
 	'blog:none' => '블로그 글이 없습니다. ',
 	'blog:error:missing:title' => '블로그의 제목을 입력하세요',

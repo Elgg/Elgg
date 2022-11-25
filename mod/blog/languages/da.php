@@ -25,14 +25,11 @@ return array(
 	'blog:save_status' => 'Sidst gemt: ',
 
 	'blog:revision' => 'Revision',
-	'blog:auto_saved_revision' => 'Auto gemt revision',
 
 	// messages
 	'blog:message:saved' => 'Blogindlæg gemt.',
 	'blog:error:cannot_save' => 'Kan ikke gemme blogindlæg.',
-	'blog:error:cannot_auto_save' => 'Kan ikke automatisk gemme blog indlægget',
 	'blog:error:cannot_write_to_container' => 'Utilstrækkelig adgang til at gemme bloggen til gruppe.',
-	'blog:messages:warning:draft' => 'Der er en ikke gemt kladde til dette indlæg!',
 	'blog:edit_revision_notice' => '(Gammel version)',
 	'blog:none' => 'Ingen blogindlæg',
 	'blog:error:missing:title' => 'Angiv en blog titel!',

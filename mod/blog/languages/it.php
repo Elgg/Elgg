@@ -25,14 +25,11 @@ return array(
 	'blog:save_status' => 'Ultimo salvataggio:',
 
 	'blog:revision' => 'Revisione',
-	'blog:auto_saved_revision' => 'Revisione salvata automaticamente',
-
+	
 	// messages
 	'blog:message:saved' => 'Articolo salvato.',
 	'blog:error:cannot_save' => 'Impossibile salvare l\'articolo.',
-	'blog:error:cannot_auto_save' => 'Impossibile salvare automaticamente l\'articolo.',
 	'blog:error:cannot_write_to_container' => 'Privilegi insufficienti per salvare l\'articolo sul gruppo.',
-	'blog:messages:warning:draft' => 'C\'è una bozza non salvata di questo articolo!',
 	'blog:edit_revision_notice' => '(Vecchia versione)',
 	'blog:none' => 'Nessun articolo.',
 	'blog:error:missing:title' => 'Si prega di inserire un titolo per l\'articolo.',

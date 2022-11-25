@@ -28,14 +28,11 @@ return array(
 	'blog:save_status' => 'Сохранено: ',
 
 	'blog:revision' => 'Редакция',
-	'blog:auto_saved_revision' => 'Автосохраненная редакция',
-
+	
 	// messages
 	'blog:message:saved' => 'Публикация сохранена.',
 	'blog:error:cannot_save' => 'Не удается сохранить публикацию.',
-	'blog:error:cannot_auto_save' => 'Не удается автоматически сохранить публикацию.',
 	'blog:error:cannot_write_to_container' => 'Недостаточно прав для сохранения блога в группе.',
-	'blog:messages:warning:draft' => 'Это не сохраненный черновик публикации!',
 	'blog:edit_revision_notice' => '(Старая версия)',
 	'blog:none' => 'Нет публикаций в блоге',
 	'blog:error:missing:title' => 'Введите название!',

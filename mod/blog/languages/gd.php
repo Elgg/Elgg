@@ -28,14 +28,11 @@ return array(
 	'blog:save_status' => 'Air a shàbhaladh mu dheireadh:',
 
 	'blog:revision' => 'Lèirmheas',
-	'blog:auto_saved_revision' => 'Lèirmheas air a shàbhaladh gu fèin-obrachail',
-
+	
 	// messages
 	'blog:message:saved' => 'Chaidh am brath-bloga a shàbhaladh.',
 	'blog:error:cannot_save' => 'Chan urrainn dhuinn am brath-bloga a shàbhaladh.',
-	'blog:error:cannot_auto_save' => 'Chan urrainn dhuinn am brath-bloga a shàbhaladh gu fèin-obrachail.',
 	'blog:error:cannot_write_to_container' => 'Chan eilear còirichean gu leòr gus am blog a shàbhaladh dhan bhuidheann',
-	'blog:messages:warning:draft' => 'Tha dreach dhen phost seo ann nach deach a shàbhaladh!',
 	'blog:edit_revision_notice' => '(Seann-tionndadh)',
 	'blog:none' => 'Chan eil brath-bloga sam bith ann',
 	'blog:error:missing:title' => 'Cuir a-steach tiotal a\' bhratha-bhloga!',

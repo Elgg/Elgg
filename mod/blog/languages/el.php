@@ -26,14 +26,11 @@ return array(
 	'blog:save_status' => 'Τελευταία αποθήκευση:',
 
 	'blog:revision' => 'Αναθεώρηση',
-	'blog:auto_saved_revision' => 'Αυτόματη αποθήκευση αναθεώρησης',
 
 	// messages
 	'blog:message:saved' => 'Η ανάρτηση αποθηκεύτηκε',
 	'blog:error:cannot_save' => 'Αδύνατη η αποθήκευση της ανάρτησης',
-	'blog:error:cannot_auto_save' => 'Αδύνατη η αυτόματη αποθήκευση της ανάρτησης',
 	'blog:error:cannot_write_to_container' => 'Μη έγκυρη πρόσβαση για αποθήκευση της ανάρτησης στην ομάδα',
-	'blog:messages:warning:draft' => 'Υπάρχει μη αποθηκευμένο προσχέδιο αυτής της ανάρτησης!',
 	'blog:edit_revision_notice' => '(Παλιά έκδοση)',
 	'blog:none' => 'Δεν υπάρχουν αναρτήσεις',
 	'blog:error:missing:title' => 'Παρακαλούμε εισάγετε τίτλο της ανάρτησης!',

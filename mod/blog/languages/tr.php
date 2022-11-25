@@ -27,14 +27,11 @@ return array(
 	'blog:save_status' => 'Son kayıt:',
 
 	'blog:revision' => 'Düzeltme',
-	'blog:auto_saved_revision' => 'Otomatik Kaydedilmiş Düzeltme',
-
+	
 	// messages
 	'blog:message:saved' => 'Blog gönderisi kaydedildi.',
 	'blog:error:cannot_save' => 'Blog gönderisi kaydedilemedi.',
-	'blog:error:cannot_auto_save' => 'Blog gönderisi otomatik olarak kaydedilemedi.',
 	'blog:error:cannot_write_to_container' => 'Gruba blog kaydedebilmek için yetkisiz erişim.',
-	'blog:messages:warning:draft' => 'Bu gönderinin kaydedilmemiş bir taslağı var!',
 	'blog:edit_revision_notice' => '(Eski sürüm)',
 	'blog:none' => 'Blog gönderisi yok',
 	'blog:error:missing:title' => 'Lütfen bir blog başlığı girin!',

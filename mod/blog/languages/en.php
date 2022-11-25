@@ -29,14 +29,11 @@ return array(
 	'blog:save_status' => 'Last saved: ',
 
 	'blog:revision' => 'Revision',
-	'blog:auto_saved_revision' => 'Auto Saved Revision',
-
+	
 	// messages
 	'blog:message:saved' => 'Blog post saved.',
 	'blog:error:cannot_save' => 'Cannot save blog post.',
-	'blog:error:cannot_auto_save' => 'Cannot automatically save blog post.',
 	'blog:error:cannot_write_to_container' => 'Insufficient access to save blog to group.',
-	'blog:messages:warning:draft' => 'There is an unsaved draft of this post!',
 	'blog:edit_revision_notice' => '(Old version)',
 	'blog:none' => 'No blog posts',
 	'blog:error:missing:title' => 'Please enter a blog title!',
