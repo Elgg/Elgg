@@ -377,6 +377,7 @@ Removed classes
 ~~~~~~~~~~~~~~~
 
 * ``Elgg\WebServices\ApiKeyForm``
+* ``Loggable`` this interface has been merged into the ``ElggData`` class
 
 Removed functions
 ~~~~~~~~~~~~~~~~~

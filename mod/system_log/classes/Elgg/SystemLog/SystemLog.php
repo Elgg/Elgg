@@ -103,11 +103,11 @@ class SystemLog {
 	/**
 	 * Prepare an object for DB insert
 	 *
-	 * @param \Loggable $object Object
+	 * @param \ElggData $object Object
 	 *
 	 * @return \stdClass
 	 */
-	protected function prepareObjectForInsert(\Loggable $object): \stdClass {
+	protected function prepareObjectForInsert(\ElggData $object): \stdClass {
 		$insert = new \stdClass();
 
 		$insert->object_id = $object->getSystemLogID();
@@ -152,7 +152,7 @@ class SystemLog {
 			return;
 		}
 		
-		if (!$object instanceof \Loggable || empty($object->getSystemLogID())) {
+		if (!$object instanceof \ElggData || empty($object->getSystemLogID())) {
 			return;
 		}
 
