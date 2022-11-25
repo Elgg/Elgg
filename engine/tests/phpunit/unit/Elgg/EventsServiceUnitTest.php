@@ -56,6 +56,44 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 		)));
 		$this->assertEquals($this->counter, 1);
 	}
+	
+	public function testIndividualTriggersHaveNoSquenceID() {
+		$calls = 0;
+		$this->events->registerHandler('all', 'non_sequence', function(\Elgg\Event $event) use (&$calls) {
+			$calls++;
+			$this->assertNull($event->getSequenceID());
+		});
+		
+		$this->events->triggerBefore('foo', 'non_sequence');
+		$this->events->trigger('foo', 'non_sequence');
+		$this->events->triggerAfter('foo', 'non_sequence');
+		$this->events->triggerDeprecated('foo:deprecated', 'non_sequence');
+		
+		$this->events->triggerResults('results', 'non_sequence');
+		$this->events->triggerDeprecatedResults('results:deprecated', 'non_sequence');
+		
+		$this->assertEquals(6, $calls);
+	}
+	
+	public function testTriggerSequenceHasSquenceID() {
+		$calls = 0;
+		$sequence_ids = [];
+		$this->events->registerHandler('all', 'sequence', function(\Elgg\Event $event) use (&$calls, &$sequence_ids) {
+			$calls++;
+			$this->assertNotNull($event->getSequenceID());
+			$sequence_ids[] = $event->getSequenceID();
+		});
+		
+		$this->events->triggerSequence('foo', 'sequence');
+		$this->events->triggerSequence('foo', 'sequence'); // this should give a new unique sequence ID
+		$this->events->triggerResultsSequence('results', 'sequence');
+		$this->events->triggerResultsSequence('results', 'sequence'); // this should give a new unique sequence ID
+		
+		$sequence_ids = array_unique($sequence_ids);
+		
+		$this->assertEquals(12, $calls);
+		$this->assertCount(4, $sequence_ids);
+	}
 
 	public function testUncallableHandlersAreLogged() {
 		$this->events->registerHandler('foo', 'bar', array(new \stdClass(), 'uncallableMethod'));

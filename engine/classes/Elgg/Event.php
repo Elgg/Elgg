@@ -160,4 +160,13 @@ class Event {
 	public function elgg(): PublicContainer {
 		return $this->dic;
 	}
+	
+	/**
+	 * When the event is part of a sequence a unique ID is set for each sequence
+	 *
+	 * @return string|null
+	 */
+	public function getSequenceID(): ?string {
+		return elgg_extract('_elgg_sequence_id', $this->params);
+	}
 }
