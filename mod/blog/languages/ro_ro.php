@@ -28,14 +28,11 @@ return array(
 	'blog:save_status' => 'Ultima salvare:',
 
 	'blog:revision' => 'Revizuire',
-	'blog:auto_saved_revision' => 'Revizuire salvată automat',
 
 	// messages
 	'blog:message:saved' => 'Postare de blog salvată.',
 	'blog:error:cannot_save' => 'Nu am putut salva postarea de blog.',
-	'blog:error:cannot_auto_save' => 'Nu am putut salva automat postarea de blog.',
 	'blog:error:cannot_write_to_container' => 'Acces insuficient pentru a salva blogul către grup.',
-	'blog:messages:warning:draft' => 'Există o schiță nesalvată a acestei postări!',
 	'blog:edit_revision_notice' => '(Versiune veche)',
 	'blog:none' => 'Nu există postări de blog.',
 	'blog:error:missing:title' => 'Te rugăm să introduci un titlu de blog!',

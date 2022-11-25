@@ -3,15 +3,9 @@
  * Edit blog form
  */
 
-elgg_require_js('elgg/blog/save_draft');
+elgg_require_js('forms/blog/save');
 
-$blog = get_entity((int) $vars['guid']);
-$vars['entity'] = $blog;
-
-$draft_warning = elgg_extract('draft_warning', $vars);
-if ($draft_warning) {
-	echo '<span class="mbm elgg-text-help">' . $draft_warning . '</span>';
-}
+$blog = elgg_extract('entity', $vars);
 
 $categories_vars = $vars;
 $categories_vars['#type'] = 'categories';
@@ -96,18 +90,10 @@ foreach ($fields as $field) {
 	echo elgg_view_field($field);
 }
 
-$save_status = elgg_echo('blog:save_status');
-if ($blog) {
-	$saved = date('F j, Y @ H:i', $blog->time_updated);
-} else {
-	$saved = elgg_echo('never');
-}
+$saved = $blog instanceof \ElggBlog ? elgg_view('output/friendlytime', ['time' => $blog->time_updated]) : elgg_echo('never');
+$saved = elgg_format_element('span', ['class' => 'blog-save-status-time'], $saved);
 
-$footer = <<<___HTML
-<div class="elgg-subtext mbm">
-	$save_status <span class="blog-save-status-time">$saved</span>
-</div>
-___HTML;
+$footer = elgg_format_element('div', ['class' => ['elgg-subtext', 'mbm']], elgg_echo('blog:save_status') . ' ' . $saved);
 
 $footer .= elgg_view('input/submit', [
 	'value' => elgg_echo('save'),
@@ -115,7 +101,7 @@ $footer .= elgg_view('input/submit', [
 ]);
 
 // published blogs do not get the preview button
-if (!$blog || $blog->status != 'published') {
+if (!$blog instanceof \ElggBlog || $blog->status != 'published') {
 	$footer .= elgg_view('input/button', [
 		'value' => elgg_echo('preview'),
 		'name' => 'preview',
@@ -123,14 +109,14 @@ if (!$blog || $blog->status != 'published') {
 	]);
 }
 
-if ($blog) {
+if ($blog instanceof \ElggBlog) {
 	// add a delete button if editing
 	$footer .= elgg_view('output/url', [
 		'href' => elgg_generate_action_url('entity/delete', [
 			'guid' => $blog->guid,
 		]),
 		'text' => elgg_echo('delete'),
-		'class' => 'elgg-button elgg-button-delete float-alt',
+		'class' => ['elgg-button', 'elgg-button-delete', 'float-alt'],
 		'confirm' => true,
 	]);
 }

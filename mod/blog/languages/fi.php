@@ -25,14 +25,11 @@ return array(
 	'blog:save_status' => 'Tallennettu viimeksi: ',
 
 	'blog:revision' => 'Versio',
-	'blog:auto_saved_revision' => 'Versio  Auto Saved Revision',
-
+	
 	// messages
 	'blog:message:saved' => 'Blogi tallennettu.',
 	'blog:error:cannot_save' => 'Blogiviestiä ei voida tallentaa.',
-	'blog:error:cannot_auto_save' => 'Blogin automaattinen tallentaminen ei toimi.',
 	'blog:error:cannot_write_to_container' => 'Sinulla ei ole oikeuksia luoda blogia tähän ryhmään.',
-	'blog:messages:warning:draft' => 'Tästä blogiviestistä on tallentamaton luonnos!',
 	'blog:edit_revision_notice' => '(Vanha versio)',
 	'blog:none' => 'Ei blogiviestejä',
 	'blog:error:missing:title' => 'Syötä blogille otsikko!',

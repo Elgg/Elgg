@@ -26,14 +26,11 @@ return array(
 	'blog:save_status' => '最后保存',
 
 	'blog:revision' => '修订',
-	'blog:auto_saved_revision' => '自动保存修订',
-
+	
 	// messages
 	'blog:message:saved' => '博客已保存',
 	'blog:error:cannot_save' => '无法保存博客',
-	'blog:error:cannot_auto_save' => '无法自动保存博客',
 	'blog:error:cannot_write_to_container' => '无权限保存圈子博客',
-	'blog:messages:warning:draft' => '有未保存的草稿',
 	'blog:edit_revision_notice' => '（旧版）',
 	'blog:none' => '无博客',
 	'blog:error:missing:title' => '请输入博客标题',

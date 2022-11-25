@@ -25,14 +25,11 @@ return array(
 	'blog:save_status' => 'Задњи пут сачуваноЧ',
 
 	'blog:revision' => 'Ревизија',
-	'blog:auto_saved_revision' => 'Аутоматски сачувана ревизија',
-
+	
 	// messages
 	'blog:message:saved' => 'Блог чланак је сачуван.',
 	'blog:error:cannot_save' => 'Није успело чување чланка.',
-	'blog:error:cannot_auto_save' => 'Није успело аутоматско чување чланка.',
 	'blog:error:cannot_write_to_container' => 'Недовољне привилегије да би чланак био сачуван.',
-	'blog:messages:warning:draft' => 'Постоји несачуван нацрт овог чланка!',
 	'blog:edit_revision_notice' => '(Стара верзија)',
 	'blog:none' => 'Нема чланака.',
 	'blog:error:missing:title' => 'Унесите наслов чланка.',

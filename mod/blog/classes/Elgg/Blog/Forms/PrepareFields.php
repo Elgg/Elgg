@@ -30,7 +30,6 @@ class PrepareFields {
 			'tags' => null,
 			'container_guid' => null,
 			'guid' => null,
-			'draft_warning' => '',
 		];
 		
 		$blog = elgg_extract('entity', $vars);
@@ -51,21 +50,6 @@ class PrepareFields {
 			if ($revision instanceof \ElggAnnotation && $revision->entity_guid == $blog->guid) {
 				$values['revision'] = $revision;
 				$values['description'] = $revision->value;
-			}
-			
-			// display a notice if there's an autosaved annotation
-			// and we're not editing it.
-			$auto_save = false;
-			$auto_save_annotations = $blog->getAnnotations([
-				'annotation_name' => 'blog_auto_save',
-				'limit' => 1,
-			]);
-			if (!empty($auto_save_annotations)) {
-				$auto_save = $auto_save_annotations[0];
-			}
-			
-			if ($auto_save instanceof \ElggAnnotation && $revision instanceof \ElggAnnotation && $auto_save->id !== $revision->id) {
-				$values['draft_warning'] = elgg_echo('blog:messages:warning:draft');
 			}
 		}
 		

@@ -29,14 +29,11 @@ return array(
 	'blog:save_status' => 'Dernier enregistrement :',
 
 	'blog:revision' => 'Révision',
-	'blog:auto_saved_revision' => 'Révision automatiquement enregistrée',
-
+	
 	// messages
 	'blog:message:saved' => 'Article de blog enregistré.',
 	'blog:error:cannot_save' => 'Impossible d\'enregistrer l\'article de blog.',
-	'blog:error:cannot_auto_save' => 'Impossible de sauvegarder automatiquement l\'article de blog. ',
 	'blog:error:cannot_write_to_container' => 'Droits d\'accès insuffisants pour enregistrer l\'article dans ce groupe.',
-	'blog:messages:warning:draft' => 'Il y a un brouillon non enregistré de cet article !',
 	'blog:edit_revision_notice' => '(Ancienne version)',
 	'blog:none' => 'Aucun article de blog',
 	'blog:error:missing:title' => 'Vous devez donner un titre à votre article !',

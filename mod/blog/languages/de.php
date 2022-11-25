@@ -28,14 +28,11 @@ return array(
 	'blog:save_status' => 'Zuletzt gespeichert: ',
 
 	'blog:revision' => 'Revision',
-	'blog:auto_saved_revision' => 'Automatisch gespeicherte Revision',
 
 	// messages
 	'blog:message:saved' => 'Dein Blog-Eintrag wurde gespeichert.',
 	'blog:error:cannot_save' => 'Dein Blog-Eintrag konnte nicht gespeichert werden.',
-	'blog:error:cannot_auto_save' => 'Das automatische Speichern Deines Blog-Eintrags ist fehlgeschlagen.',
 	'blog:error:cannot_write_to_container' => 'Keine ausreichenden Zugriffsrechte zum Speichern des Blog-Eintrags im Gruppenblog vorhanden.',
-	'blog:messages:warning:draft' => 'Die Entwurfsversion dieses Eintrags wurde nocht nicht gespeichert!',
 	'blog:edit_revision_notice' => '(Alte Revision)',
 	'blog:none' => 'Keine Blog-Einträge vorhanden.',
 	'blog:error:missing:title' => 'Bitte einen Titel für Deinen Blog-Eintrag angeben!',

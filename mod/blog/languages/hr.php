@@ -26,14 +26,11 @@ return array(
 	'blog:save_status' => 'Zadnja izmjena:',
 
 	'blog:revision' => 'Revizija',
-	'blog:auto_saved_revision' => 'Automatski spremljena revizija',
-
+	
 	// messages
 	'blog:message:saved' => 'Objava na blogu je sačuvana. ',
 	'blog:error:cannot_save' => 'Nije moguće sačuvati objavu na blogu. ',
-	'blog:error:cannot_auto_save' => 'Nije moguće automatski sačuvati objavu na blogu. ',
 	'blog:error:cannot_write_to_container' => 'Nije dozvoljeno spremanje bloga u grupi. ',
-	'blog:messages:warning:draft' => 'Postoji nesačuvana inačica ove objave!',
 	'blog:edit_revision_notice' => '(Prethodna inačica)',
 	'blog:none' => 'Ne postoji objava na blogu. ',
 	'blog:error:missing:title' => 'Molimo upišite naslov bloga!',

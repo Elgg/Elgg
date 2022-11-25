@@ -25,14 +25,11 @@ return array(
 	'blog:save_status' => 'Gardado:',
 
 	'blog:revision' => 'Revisión',
-	'blog:auto_saved_revision' => 'Revisión gardada automaticamente',
-
+	
 	// messages
 	'blog:message:saved' => 'Gardouse o artigo',
 	'blog:error:cannot_save' => 'Non foi posíbel gardar o artigo.',
-	'blog:error:cannot_auto_save' => 'Non pode gardarse automaticamente o artigo.',
 	'blog:error:cannot_write_to_container' => 'Non ten acceso dabondo para gardar a bitácora no grupo.',
-	'blog:messages:warning:draft' => 'Hai un borrador sen gardar deste artig!',
 	'blog:edit_revision_notice' => '(versión vella)',
 	'blog:none' => 'Non hai artigos.',
 	'blog:error:missing:title' => 'Escriba o nome da bitácora',

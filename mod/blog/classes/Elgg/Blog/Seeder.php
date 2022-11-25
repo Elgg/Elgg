@@ -57,10 +57,6 @@ class Seeder extends Seed {
 			}
 
 			if ($this->faker()->boolean()) {
-				$blog->annotate('blog_auto_save', $this->faker()->text(500), ACCESS_PRIVATE, $blog->owner_guid);
-			}
-
-			if ($this->faker()->boolean()) {
 				$blog->annotate('blog_revision', $blog->description, ACCESS_PRIVATE, $blog->owner_guid);
 				$blog->description = $this->faker()->text(500);
 			}

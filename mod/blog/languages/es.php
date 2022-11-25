@@ -26,14 +26,11 @@ return array(
 	'blog:save_status' => '&Uacute;ltimo guardado: ',
 
 	'blog:revision' => 'Revisi&oacute;n',
-	'blog:auto_saved_revision' => 'Revisi&oacute;n autoguardada',
-
+	
 	// messages
 	'blog:message:saved' => 'Entrada guardada.',
 	'blog:error:cannot_save' => 'No se puede guardar la entrada.',
-	'blog:error:cannot_auto_save' => 'No se puede guardar la entrada de blog automáticamente.',
 	'blog:error:cannot_write_to_container' => 'Acceso insuficiente para guardar la entrada.',
-	'blog:messages:warning:draft' => '¡Este es un borrador no guardado de esta entrada!',
 	'blog:edit_revision_notice' => '(Versi&oacute;n antigua)',
 	'blog:none' => 'No hay entradas',
 	'blog:error:missing:title' => '¡Por favor ingresa un t&iacute;tulo!',

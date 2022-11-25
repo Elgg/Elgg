@@ -14,6 +14,7 @@ $save = (bool) get_input('save');
 
 // edit or create a new entity
 $guid = (int) get_input('guid');
+$new_post = true;
 
 if ($guid) {
 	$entity = get_entity($guid);
@@ -25,10 +26,9 @@ if ($guid) {
 
 	// save some data for revisions once we save the new edit
 	$revision_text = $blog->description;
-	$new_post = (bool) $blog->new_post;
+	$new_post = false;
 } else {
 	$blog = new \ElggBlog();
-	$new_post = true;
 }
 
 // set the previous status for the hooks to update the time_created and river entries
@@ -105,12 +105,6 @@ foreach ($values as $name => $value) {
 if (!$blog->save()) {
 	return elgg_error_response(elgg_echo('blog:error:cannot_save'));
 }
-
-// remove autosave draft if exists
-$blog->deleteAnnotations('blog_auto_save');
-
-// no longer a brand new post.
-$blog->deleteMetadata('new_post');
 
 // if this was an edit, create a revision annotation
 if (!$new_post && $revision_text) {
