@@ -8,7 +8,6 @@ use Elgg\Traits\TimeUsing;
  * \ElggExtender, \ElggEntity, and \ElggRelationship
  */
 abstract class ElggData implements CollectionItemInterface,
-								   Loggable,
 								   Iterator,
 								   ArrayAccess {
 
@@ -109,6 +108,44 @@ abstract class ElggData implements CollectionItemInterface,
 	 * @return \Elgg\Export\Data
 	 */
 	abstract public function toObject(array $params = []);
+	
+	/*
+	 * SYSTEM LOG RELATED FUNCTIONS
+	 */
+	
+	/**
+	 * Return an identification for the object for storage in the system log.
+	 * This id must be an integer. Unsaved implementations should return 0.
+	 *
+	 * @return int
+	 */
+	abstract public function getSystemLogID(): int;
+	
+	/**
+	 * Return the type of the object - eg. object, group, user, relationship, metadata, annotation etc
+	 *
+	 * @return string
+	 */
+	abstract public function getType(): string;
+	
+	/**
+	 * Return a subtype. For metadata & annotations this is the 'name' and for relationship this is the
+	 * relationship type.
+	 *
+	 * @return string
+	 */
+	abstract public function getSubtype(): string;
+	
+	/**
+	 * For a given ID, return the object associated with it.
+	 * This is used by the river functionality primarily.
+	 * This is useful for checking access permissions etc on objects.
+	 *
+	 * @param int $id GUID of an entity
+	 *
+	 * @return static|false
+	 */
+	abstract public function getObjectFromID(int $id);
 
 	/*
 	 * ITERATOR INTERFACE
