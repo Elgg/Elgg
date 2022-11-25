@@ -109,16 +109,4 @@ if (!$blog instanceof \ElggBlog || $blog->status != 'published') {
 	]);
 }
 
-if ($blog instanceof \ElggBlog) {
-	// add a delete button if editing
-	$footer .= elgg_view('output/url', [
-		'href' => elgg_generate_action_url('entity/delete', [
-			'guid' => $blog->guid,
-		]),
-		'text' => elgg_echo('delete'),
-		'class' => ['elgg-button', 'elgg-button-delete', 'float-alt'],
-		'confirm' => true,
-	]);
-}
-
 elgg_set_form_footer($footer);
