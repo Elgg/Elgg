@@ -11,17 +11,20 @@ namespace Elgg\SystemLog;
 class Logger {
 
 	/**
+	 * @var string[]
+	 */
+	protected static $sequence_ids = [];
+	
+	/**
 	 * Default system log handler, allows plugins to override, extend or disable logging.
 	 *
 	 * @param \Elgg\Event $event 'log', 'systemlog'
 	 *
-	 * @return true
+	 * @return void
 	 */
-	public static function log(\Elgg\Event $event) {
+	public static function log(\Elgg\Event $event): void {
 		$object = $event->getObject();
 		SystemLog::instance()->insert($object['object'], $object['event']);
-	
-		return true;
 	}
 	
 	/**
@@ -32,7 +35,7 @@ class Logger {
 	 *
 	 * @return void
 	 */
-	public static function listen(\Elgg\Event $event) {
+	public static function listen(\Elgg\Event $event): void {
 		$type = $event->getType();
 		$name = $event->getName();
 		
@@ -40,14 +43,31 @@ class Logger {
 			return;
 		}
 		
-		// ignore before and after events if there are no event handlers registered
+		// check if this event is part of a sequence and can't be logged yet
+		// so we can delay the logging to the :after event
+		$sequence_id = $event->getSequenceID();
+		if (isset($sequence_id) && strpos($name, ':after') === false && strpos($name, ':before')) {
+			$object = $event->getObject();
+			if ($object instanceof \ElggData && empty($object->getSystemLogID())) {
+				self::$sequence_ids[$sequence_id] = $sequence_id;
+			}
+		}
+		
+		// validate :before and :after events
 		if (strpos($name, ':after') > 0 || strpos($name, ':before') > 0) {
-			if (!elgg()->events->hasHandler($name, $type) && !elgg()->events->hasHandler($name, 'all')) {
+			if (isset($sequence_id) && isset(self::$sequence_ids[$sequence_id]) && strpos($name, ':after') > 0) {
+				// this was a delayed event sequence
+				unset(self::$sequence_ids[$sequence_id]);
+			} elseif (!elgg()->events->hasHandler($name, $type) && !elgg()->events->hasHandler($name, 'all')) {
+				// ignore before and after events if there are no event handlers registered
 				return;
 			}
 		}
 		
-		elgg_trigger_event('log', 'systemlog', ['object' => $event->getObject(), 'event' => $event->getName() . ':' . $event->getType()]);
+		elgg_trigger_event('log', 'systemlog', [
+			'object' => $event->getObject(),
+			'event' => "{$name}:{$type}",
+		]);
 	}
 	
 	/**
@@ -55,9 +75,9 @@ class Logger {
 	 *
 	 * @param \Elgg\Event $event 'all', 'all'
 	 *
-	 * @return true
+	 * @return void
 	 */
-	public static function disableLogging(\Elgg\Event $event) {
+	public static function disableLogging(\Elgg\Event $event): void {
 		// disable the system log for upgrades to avoid exceptions when the schema changes.
 		elgg_unregister_event_handler('log', 'systemlog', 'Elgg\SystemLog\Logger::log');
 		elgg_unregister_event_handler('all', 'all', 'Elgg\SystemLog\Logger::listen');

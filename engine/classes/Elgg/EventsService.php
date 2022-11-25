@@ -87,7 +87,15 @@ class EventsService {
 				$this->beginTimer(["[{$name},{$type}]", $handler_description]);
 			}
 
-			list($success, $return, $event) = $this->handlers->call($handler, $event, [$name, $type, null, ['object' => $object]]);
+			list($success, $return, $event) = $this->handlers->call($handler, $event, [
+				$name,
+				$type,
+				null,
+				[
+					'object' => $object,
+					'_elgg_sequence_id' => elgg_extract('_elgg_sequence_id', $options),
+				],
+			]);
 
 			if ($handler_description) {
 				$this->endTimer(["[{$name},{$type}]", $handler_description]);
@@ -202,6 +210,9 @@ class EventsService {
 	 * @return bool
 	 */
 	public function triggerSequence(string $name, string $type, $object = null, callable $callable = null, array $options = []): bool {
+		// generate a unique ID to identify this sequence
+		$options['_elgg_sequence_id'] = uniqid("{$name}{$type}", true);
+		
 		if (!$this->triggerBefore($name, $type, $object, $options)) {
 			return false;
 		}
@@ -235,6 +246,11 @@ class EventsService {
 	 * @return mixed
 	 */
 	public function triggerResultsSequence(string $name, string $type, array $params = [], $value = null, callable $callable = null, array $options = []) {
+		// generate a unique ID to identify this sequence
+		$unique_id = uniqid("{$name}{$type}results", true);
+		$options['_elgg_sequence_id'] = $unique_id;
+		$params['_elgg_sequence_id'] = $unique_id;
+		
 		if (!$this->triggerBefore($name, $type, $params, $options)) {
 			return false;
 		}
