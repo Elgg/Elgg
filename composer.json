@@ -28,7 +28,7 @@
         "league/flysystem": "~2.4.0",
         "league/flysystem-memory": "~2.0.0",
         "matthiasmullie/minify": "~1.3.0",
-        "michelf/php-markdown": "^1.5.0",
+        "michelf/php-markdown": "~2.0.0",
         "misd/linkify": "~1.1.2",
         "monolog/monolog": "~2.8.0",
         "npm-asset/cropperjs": "~1.5.9",
