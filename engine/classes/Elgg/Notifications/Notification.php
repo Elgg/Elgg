@@ -7,6 +7,7 @@ namespace Elgg\Notifications;
  *
  * @since 1.10
  */
+#[\AllowDynamicProperties]
 class Notification {
 	
 	/**

@@ -11,6 +11,8 @@ namespace Elgg\Exceptions;
  */
 class PluginException extends Exception {
 
+	public \ElggPlugin $plugin;
+	
 	/**
 	 * {@inheritdoc}
 	 */

@@ -177,8 +177,8 @@ class RouteMatchingUnitTest extends \Elgg\UnitTestCase {
 
 	public function testResourceParameterIsNotReplaceableByQueryElements() {
 
-		$this->viewsDir = $this->normalizeTestFilePath('views');
-		_elgg_services()->views->autoregisterViews('', "$this->viewsDir/default", 'default');
+		$viewsDir = $this->normalizeTestFilePath('views');
+		_elgg_services()->views->autoregisterViews('', "{$viewsDir}/default", 'default');
 
 		elgg_register_route('foo:bar', [
 			'path' => '/foo/{bar}',
@@ -208,8 +208,8 @@ class RouteMatchingUnitTest extends \Elgg\UnitTestCase {
 
 	public function testHandlerParameterIsNotReplaceableByQueryElements() {
 
-		$this->viewsDir = $this->normalizeTestFilePath('views');
-		_elgg_services()->views->autoregisterViews('', "$this->viewsDir/default", 'default');
+		$viewsDir = $this->normalizeTestFilePath('views');
+		_elgg_services()->views->autoregisterViews('', "{$viewsDir}/default", 'default');
 
 		$calls = 0;
 		elgg_register_route('foo:bar', [

@@ -20,6 +20,12 @@ class Request extends SymfonyRequest {
 	const REWRITE_TEST_OUTPUT = 'success';
 
 	/**
+	 * @var bool is this Request used in an integration test
+	 * @internal
+	 */
+	public bool $_integration_testing = false;
+	
+	/**
 	 * @var Context
 	 */
 	protected $context_stack;

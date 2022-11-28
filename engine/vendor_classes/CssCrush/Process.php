@@ -7,6 +7,7 @@
  */
 namespace CssCrush;
 
+#[\AllowDynamicProperties]
 class Process
 {
 	use EventEmitter;

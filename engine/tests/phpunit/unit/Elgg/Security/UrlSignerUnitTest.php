@@ -11,10 +11,8 @@ use Elgg\Exceptions\InvalidArgumentException;
  */
 class SignedUrlUnitTest extends \Elgg\UnitTestCase {
 
-	/**
-	 * @var UrlSigner
-	 */
-	private $service;
+	protected UrlSigner $service;
+	protected string $url;
 
 	public function up() {
 		$this->service = new UrlSigner();

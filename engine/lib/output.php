@@ -352,7 +352,7 @@ function _elgg_get_display_query(string $string): string {
 		return $string;
 	}
 	
-	$string = elgg_convert_encoding($string);
+	$string = htmlentities($string,  ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401, 'UTF-8');
 	
 	return htmlspecialchars($string, ENT_QUOTES, 'UTF-8', false);
 }

@@ -22,19 +22,19 @@ class ElggCoreCommentTest extends IntegrationTestCase {
 
 	public function up() {
 
-		$this->commenter = $this->createUser();
-		elgg()->session_manager->setLoggedInUser($this->commenter);
+		$commenter = $this->createUser();
+		elgg()->session_manager->setLoggedInUser($commenter);
 		
-		$this->container_owner = $this->createUser();
+		$container_owner = $this->createUser();
 		$this->container = $this->createObject([
 			'subtype' => 'commentable',
-			'owner_guid' => $this->container_owner->guid,
+			'owner_guid' => $container_owner->guid,
 		]);
 
 		$this->comment = $this->createObject([
 			'subtype' => 'comment',
 			'container_guid' => $this->container->guid,
-			'owner_guid' => $this->commenter->guid,
+			'owner_guid' => $commenter->guid,
 		]);
 	}
 

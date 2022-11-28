@@ -11,6 +11,9 @@ use Elgg\I18n\DateTime;
  */
 class DateOutputTest extends ViewRenderingTestCase {
 
+	protected DateTime $date;
+	protected string $format;
+	
 	public function up() {
 		parent::up();
 

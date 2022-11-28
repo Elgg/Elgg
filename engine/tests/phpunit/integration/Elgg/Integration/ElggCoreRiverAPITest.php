@@ -70,7 +70,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		];
 
 		$id = elgg_create_river_item($params);
-		$this->assertTrue(is_int($id));
+		$this->assertIsInt($id);
 		$this->assertTrue(elgg_delete_river(['id' => $id]));
 		
 		$params['return_item'] = true;
@@ -141,6 +141,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 			'return_item' => true,
 		];
 		$item = elgg_create_river_item($params);
+		$this->assertInstanceOf(\ElggRiverItem::class, $item);
 
 		elgg_register_event_handler('delete:before', 'river', [
 			Values::class,
@@ -169,6 +170,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 			'return_item' => true,
 		];
 		$item = elgg_create_river_item($params);
+		$this->assertInstanceOf(\ElggRiverItem::class, $item);
 
 		$captured = null;
 		$event_handler = function (\Elgg\Event $event) use (&$captured) {
@@ -191,6 +193,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 			'return_item' => true,
 		];
 		$item = elgg_create_river_item($params);
+		$this->assertInstanceOf(\ElggRiverItem::class, $item);
 
 		//permissions_check:delete, river
 		$this->assertTrue($item->canDelete());
@@ -226,6 +229,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 			'object_guid' => $this->entity->guid,
 		];
 		$id = elgg_create_river_item($params);
+		$this->assertIsInt($id);
 
 		$owner = $this->entity->getOwnerEntity();
 		$old_user = _elgg_services()->session_manager->getLoggedInUser();
