@@ -67,5 +67,4 @@ return array(
 	'file:none' => "Non hai ficheiros",
 	'file:uploadfailed' => "Non foi posíbel gardar o ficheiro",
 	'file:noaccess' => "Non ten permisos para cambiar o ficheiro.",
-	'file:cannotload' => "There was an error uploading the file",
 );

@@ -23,7 +23,6 @@ return array(
 	'login:continue' => "Meld je aan om verder te gaan",
 	'login:empty' => "Gebruikersnaam en wachtwoord zijn verplicht.",
 	'login:baduser' => "Je account kon niet worden geladen.",
-	'auth:nopams' => "Interne fout. Geen methode voor gebruikersvalidatie gedefinieerd.",
 
 	'logout' => "Afmelden",
 	'logoutok' => "Je bent afgemeld.",
@@ -60,7 +59,6 @@ return array(
 
 	'PluginException:CannotStart' => '%s (guid: %s) kan niet starten. Reden: %s',
 	'PluginException:InvalidID' => "%s is een ongeldige plugin-ID.",
-	'PluginException:InvalidPath' => "%s is een ongeldig plugin-pad.",
 	'PluginException:PluginMustBeActive' => "Vereist dat plugin '%s' actief is.",
 	'PluginException:PluginMustBeAfter' => "Vereist ná plugin '%s' te zijn gepositioneerd.",
 	'PluginException:PluginMustBeBefore' => "Vereist vóór plugin '%s' te zijn gepositioneerd.",
@@ -213,9 +211,7 @@ return array(
 	'widget:delete' => 'Verwijder %s',
 	'widget:edit' => 'Pas de widget aan jouw wensen aan',
 
-	'widgets' => "Widgets",
-	'widget' => "Widget",
-	'item:object:widget' => "Widgets",
+	'item:object:widget' => "Widget",
 	'collection:object:widget' => 'Widgets',
 	'widgets:add:success' => "De widget is toegevoegd.",
 	'widgets:add:failure' => "De widget kon niet worden toegevoegd.",
@@ -251,20 +247,11 @@ return array(
 	'collection:friends' => '%s van vrienden',
 
 	'avatar' => 'Profielfoto',
-	'avatar:noaccess' => "Je hebt geen rechten om de profielfoto van deze gebruiker te bewerken.",
-	'avatar:create' => 'Maak je profielfoto',
 	'avatar:edit' => 'Bewerk profielfoto',
-	'avatar:upload' => 'Upload een nieuwe profielfoto',
-	'avatar:current' => 'Huidige profielfoto',
-	'avatar:remove' => 'Verwijder je profielfoto en gebruik het standaard icoon',
-	'avatar:crop:title' => 'Profielfoto bijsnijden',
 	'avatar:upload:instructions' => "Je profielfoto wordt weergegeven op verschillende plaatsen op de site. Je kunt je profielfoto zo vaak als je wilt vervangen. (Ondersteunde bestandsformaten: GIF, JPG of PNG)",
-	'avatar:create:instructions' => 'Hieronder kun je je profielfoto aanpassen door hem in een vierkant bij te snijden. Een voorbeeld zal hiernaast verschijnen. Zodra je tevreden bent met het voorbeeld klik je op de knop \'Maak profielfoto\'. Deze aangepaste versie zal worden gebruikt op verschillende plaatsen op de site en is zichtbaar voor andere gebruikers.',
 	'avatar:upload:success' => 'Profielfoto succesvol geüpload',
 	'avatar:upload:fail' => 'Upload van profielfoto mislukt',
 	'avatar:resize:fail' => 'Schalen van de profielfoto mislukt',
-	'avatar:crop:success' => 'Bijsnijden van de profielfoto succesvol',
-	'avatar:crop:fail' => 'Bijsnijden van de avatar mislukt',
 	'avatar:remove:success' => 'Profielfoto succesvol verwijderd',
 	'avatar:remove:fail' => 'Profielfoto verwijderen is mislukt',
 	
@@ -300,10 +287,7 @@ return array(
 	'river' => "River",
 	'river:user:friend' => "%s is nu bevriend met %s",
 	'river:update:user:avatar' => '%s heeft een nieuwe profielfoto',
-	'river:noaccess' => 'Je hebt geen toegang tot dit item.',
 	'river:posted:generic' => '%s plaatste',
-	'riveritem:single:user' => 'een gebruiker',
-	'riveritem:plural:user' => 'sommige gebruikers',
 	'river:ingroup' => 'in de groep %s',
 	'river:none' => 'Geen activiteit',
 	'river:update' => 'Update van %s',
@@ -385,10 +369,6 @@ return array(
  */
 
 	'search' => "Zoeken",
-	'searchtitle' => "Zoeken: %s",
-	'users:searchtitle' => "Zoeken naar gebruikers: %s",
-	'groups:searchtitle' => "Zoeken naar groepen: %s",
-	'advancedsearchtitle' => "%s gevonden met %s",
 	'notfound' => "Geen resultaten gevonden.",
 
 	'viewtype:change' => "Wijzig de wijze van weergave",
@@ -424,9 +404,7 @@ De volgende karakters zijn niet toegestaan: %s',
 	'registration:passwordnotvalid' => 'Sorry, het opgegeven wachtwoord is ongeldig op dit systeem',
 	'registration:usernamenotvalid' => 'Sorry, de opgegeven gebruikersnaam is ongeldig op dit systeem',
 
-	'adduser' => "Gebruiker toevoegen",
 	'adduser:ok' => "Nieuwe gebruiker is succesvol aangemaakt.",
-	'adduser:bad' => "De nieuwe gebruiker kon niet worden aangemaakt.",
 
 	'user:set:name' => "Instellingen van accountnaam",
 	'user:name:label' => "Mijn weergavenaam",
@@ -440,10 +418,6 @@ De volgende karakters zijn niet toegestaan: %s',
 	'user:password:label' => "Je nieuwe wachtwoord",
 	'user:password2:label' => "Nogmaals je nieuwe wachtwoord",
 	'user:password:success' => "Wachtwoord gewijzigd",
-	'user:password:fail' => "Er is een fout opgetreden tijdens het wijzigen van je wachtwoord.",
-	'user:password:fail:notsame' => "De twee wachtwoorden komen niet overeen!",
-	'user:password:fail:tooshort' => "Het wachtwoord is te kort!",
-	'user:password:fail:incorrect_current_password' => 'Het opgegeven huidige wachtwoord is onjuist.',
 	'user:changepassword:unknown_user' => 'Ongeldige gebruiker',
 	'user:changepassword:change_password_confirm' => 'Hiermee wijzig je je wachtwoord.',
 
@@ -454,7 +428,6 @@ De volgende karakters zijn niet toegestaan: %s',
 	'user:set:language' => "Taalinstelling",
 	'user:language:label' => "Jouw taal",
 	'user:language:success' => "Je taalinstelling is gewijzigd.",
-	'user:language:fail' => "Er is een fout opgetreden tijdens het wijzigen van je taalinstelling.",
 
 	'user:username:notfound' => 'Gebruikersnaam %s niet gevonden.',
 	'user:username:help' => 'Houd er rekening mee dat een wijziging van de gebruikersnaam alle dynamische links mbt je account worden gewijzigd',
@@ -462,7 +435,6 @@ De volgende karakters zijn niet toegestaan: %s',
 	'user:password:lost' => 'Wachtwoord vergeten',
 	'user:password:hash_missing' => 'We moeten je vragen om je wachtwoord te wijzigen. De veiligheid van de wachtwoorden is verbeterd, echter konden we niet all accounts migrereren.',
 	'user:password:changereq:success' => 'De aanvraag voor een nieuw wachtwoord is gelukt. Er wordt een e-mail verstuurd.',
-	'user:password:changereq:fail' => 'Er kan geen nieuw wachtwoord aangevraagd worden.',
 
 	'user:password:text' => 'Om een nieuw wachtwoord aan te vragen vul je hieronder je gebruikersnaam of e-mailadres In. Klik daarna op de knop \'Aanvragen\'.',
 
@@ -1026,11 +998,8 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
  * User settings
  */
 
-	'usersettings:description' => "Het paneel voor gebruikersinstellingen geeft je controle over al je persoonlijke instellingen: van gebruikersmanagement tot hoe plugins zijn geconfigureerd. Kies een optie om te beginnen.",
-
 	'usersettings:statistics' => "Jouw statistieken",
 	'usersettings:statistics:user' => "Statistieken van %s",
-	'usersettings:statistics:opt:description' => "Bekijk statistische gegevens van gebruikers en objecten op je site.",
 	'usersettings:statistics:opt:linktext' => "Accountstatistieken",
 
 	'usersettings:statistics:login_history' => "Aanmeldgeschiedenis",
@@ -1038,14 +1007,9 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'usersettings:statistics:login_history:ip' => "IP Adres",
 
 	'usersettings:user' => "Instellingen van %s",
-	'usersettings:user:opt:description' => "Hier kun je je gebruikersinstellingen configureren.",
 	'usersettings:user:opt:linktext' => "Wijzig je instellingen",
 
-	'usersettings:plugins' => "Plugins",
-	'usersettings:plugins:opt:description' => "Configureer instellingen (als die er zijn) voor je actieve plugins.",
 	'usersettings:plugins:opt:linktext' => "Configureer je plugins",
-
-	'usersettings:plugins:description' => "Dit paneel staat je toe persoonlijke instellingen te maken voor plugins die door de sitebeheerder zijn geïnstalleerd.",
 	
 	'usersettings:statistics:yourdetails' => "Jouw details",
 	'usersettings:statistics:details:user' => "Details voor %s",
@@ -1056,7 +1020,6 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'usersettings:statistics:label:membersince' => "Lid sinds",
 	'usersettings:statistics:label:numentities' => "Jouw inhoud",
 	
-	'usersettings:delayed_email' => "Uitgestelde e-mail instellingen",
 	'usersettings:delayed_email:interval' => "Frequentie voor uitgestelde e-mailnotificaties",
 	'usersettings:delayed_email:interval:help' => "Alle uitgestelde e-mailnotificaties worden afgeleverd in een gecombineerde email volgens de opgegeven frequentie.",
 
@@ -1069,9 +1032,7 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'river:owner' => 'Activiteit van %s',
 	'river:friends' => 'Activiteit van vrienden',
 	'river:select' => 'Toon %s',
-	'river:comments:more' => '+%u meer',
 	'river:comments:all' => 'Bekijk alle %u reacties',
-	'river:generic_comment' => 'reageerde op %s %s',
 
 /**
  * Icons
@@ -1402,10 +1363,6 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'installation:sitename' => "De naam van je site (bijvoorbeeld 'Mijn sociale netwerksite'):",
 	'installation:sitedescription' => "Korte omschrijving van je site (optioneel)",
 	'installation:sitedescription:help' => "Met de gebundelde plugins zal dit enkel verschijnen in de 'description' meta-tag voor zoekmachine resultaten.",
-	'installation:wwwroot' => "De site-URL, gevolgd door een slash:",
-	'installation:path' => "Het volledige pad naar de hoofdmap van de site op de schijf, gevolgd door een slash:",
-	'installation:dataroot' => "Het volledige pad naar de map waar de uploads worden opgeslagen, gevolgd door een slash:",
-	'installation:dataroot:warning' => "Je moet deze map handmatig aanmaken. Je plaatst de map <strong>buiten</strong> de mapstructuur van de Elgg-installatie!",
 	'installation:sitepermissions' => "Het standaard toegangsniveau:",
 	'installation:language' => "De standaardtaal voor de site:",
 	'installation:debug' => "Debug mode geeft extra informatie die gebruikt kan worden om fouten te achterhalen. Let op: dit vertraagt het systeem! Gebruik dit alleen als je problemen ondervindt. ",
@@ -1426,8 +1383,6 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'installation:adminvalidation:notification:direct' => 'Direct',
 	'installation:walled_garden:description' => 'Maak van deze site een privénetwerk. Dit zorgt ervoor dat niet-aangemelde gebruikers niets kunnen zien van deze site, tenzij inhoud die geplaatst wordt specifiek publiekelijk is gedeeld.',
 	'installation:walled_garden:label' => 'Alleen aangemelde gebruikers mogen pagina\'s zien.',
-
-	'installation:view' => "Geeft de view op die standaard wordt gebruikt binnen de site, of laat het leeg voor de standaardview. Bij twijfel, laat de standaard staan!",
 
 	'installation:siteemail' => "Site e-mailadres (dit wordt gebruikt voor het verzenden van systeem e-mails):",
 	'installation:siteemail:help' => "Waarschuwing: Gebruik geen e-mailadres dat geassocieerd is met andere third-party diensten, zoals een helpdesk systeem, die overweg kan met inkomende emailberichten, aangezien dat een risico bevat dat er onbedoelde privé informatie gedeeld kan worden. Idealiter is een e-mailadres gewenst dat enkel voor deze website gebruikt zal worden.",
@@ -1799,14 +1754,6 @@ Global variables:
 	'cli:plugins:list:option:status' => "Plugin status ( %s )",
 	'cli:plugins:list:option:refresh' => "Ververs de plugin lijst met recentelijk geïnstalleerde plugins",
 	'cli:plugins:list:error:status' => "%s is geen valide status. Toegestane opties zijn: %s",
-	
-	'cli:simpletest:description' => "Voer simpletest test suite uit (verouderd)",
-	'cli:simpletest:option:config' => "Pad naar settings bestand waarmee de Elgg Applicatie moet worden gestart",
-	'cli:simpletest:option:plugins' => "Een lijst van plugins die aan moeten staan voor de tests. Gebruik 'all' voor alle plugins",
-	'cli:simpletest:option:filter' => "Enkel tests uitvoeren die aan het filter voldoen",
-	'cli:simpletest:error:class' => "De Elgg applicatie moet geïnstalleerd worden met '%s'",
-	'cli:simpletest:error:file' => "%sis geen geldige simpletest class",
-	'cli:simpletest:output:summary' => "Duur: %.2fseconden, Geheugen: %.2fMb",
 	
 	'cli:upgrade:description' => "Start systeem upgrades",
 	'cli:upgrade:option:force' => "Forceer upgrades om uit te voeren, ook al loopt er een andere upgrade.",

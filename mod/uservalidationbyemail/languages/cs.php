@@ -12,7 +12,6 @@ return array(
 
 	'uservalidationbyemail:emailsent' => "E-mail byl odeslán na <em>%s</em>",
 	'uservalidationbyemail:registerok' => "Potvrďte prosím vaši e-mailovou adresu přes odkaz, který jsme vám poslali. Poté bude váš účet aktivován.",
-	'uservalidationbyemail:login:fail' => "Přihlášení bylo neúspěšné, protože váš účet není ověřený. Byl vám zaslán další ověřovací e-mail.",
 
 	'uservalidationbyemail:admin:resend_validation' => 'Znovu poslat ověření',
 	'uservalidationbyemail:confirm_resend_validation' => 'Znovu poslat ověřovací e-mail na %s?',

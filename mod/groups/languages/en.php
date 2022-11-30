@@ -34,12 +34,10 @@ return array(
 	'relationship:invited' => '%2$s was invited to join %1$s',
 	'relationship:membership_request' => '%s requested to join %s',
 
-	'groups:icon' => 'Group icon (leave blank to leave unchanged)',
 	'groups:name' => 'Group name',
 	'groups:description' => 'Description',
 	'groups:briefdescription' => 'Brief description',
 	'groups:interests' => 'Tags',
-	'groups:website' => 'Website',
 	'groups:members' => 'Group members',
 
 	'groups:members_count' => '%s members',
@@ -51,14 +49,12 @@ return array(
 	'groups:content_access_mode:warning' => "Warning: Changing this setting won't change the access permission of existing group content.",
 	'groups:content_access_mode:unrestricted' => "Unrestricted - Access depends on content-level settings",
 	'groups:content_access_mode:membersonly' => "Members Only - Non-members can never access group content",
-	'groups:access' => "Access permissions",
 	'groups:owner' => "Owner",
 	'groups:owner:warning' => "Warning: if you change this value, you will no longer be the owner of this group.",
 	'groups:widget:num_display' => 'Number of groups to display',
 	'widgets:a_users_groups:name' => 'Group membership',
 	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
 
-	'groups:noaccess' => 'No access to group',
 	'groups:cantcreate' => 'You can not create a group. Only admins can.',
 	'groups:cantedit' => 'You can not edit this group',
 	'groups:saved' => 'Group saved',
@@ -96,7 +92,6 @@ return array(
 
 	'groups:open' => "open group",
 	'groups:closed' => "closed group",
-	'groups:member' => "members",
 	'groups:search' => "Search for groups",
 
 	'groups:more' => 'More groups',

@@ -25,8 +25,6 @@ return array(
 	'messages:toggle' => 'Alternalo todo',
 	'messages:markread' => 'Marcar como lida',
 
-	'notification:method:site' => 'Siti',
-
 	'messages:error' => 'Non foi posíbel gardar a mensaxe. Inténteo de novo',
 
 	'item:object:messages' => 'Mensaxe',

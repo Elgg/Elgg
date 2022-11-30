@@ -12,7 +12,6 @@ return array(
 
 	'uservalidationbyemail:emailsent' => "Osoitteeseen <em>%s</em> on lähetetty vahvistusviesti",
 	'uservalidationbyemail:registerok' => "Saat tilin käyttöösi klikkaamalla sähköpostiisi lähetettyä linkkiä. Jos viestiä ei löydy, tarkista myös roskapostikansio.",
-	'uservalidationbyemail:login:fail' => "Käyttäjätiliäsi ei ole vahvistettu, joten kirjautuminen epäonnistui. Sähköpostiisi on lähetetty uusi vahvistusviesti.",
 
 	'uservalidationbyemail:admin:resend_validation' => 'Lähetä vahvistusviesti uudelleen',
 	'uservalidationbyemail:confirm_resend_validation' => 'Lähetä vahvistusviesti uudelleen käyttäjälle %s?',

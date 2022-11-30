@@ -19,7 +19,6 @@ Indien je niet op de link kunt klikken, kopieer en plak deze handmatig in je bro
 
 	'uservalidationbyemail:emailsent' => "E-mail verzonden naar <em>%s</em>",
 	'uservalidationbyemail:registerok' => "Wil je jouw account activeren? Bevestig dan je e-mailadres door op de link die we je gestuurd hebben te klikken.",
-	'uservalidationbyemail:login:fail' => "Je account is nog niet gevalideerd, dus het aanmelden is mislukt. We hebben je nog een validatiemail verstuurd. Nadat je jouw e-mailadres daarmee hebt bevestigd kun je inloggen!",
 	'uservalidationbyemail:change_email' => "Validatie e-mail nogmaals verzenden",
 	'uservalidationbyemail:change_email:info' => "Je account is nog niet gevalideerd, dus het aanmelden is mislukt. Je kunt een nieuwe validatie link aanvragen of het e-mailadres van je account bijwerken.",
 

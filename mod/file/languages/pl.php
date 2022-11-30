@@ -67,5 +67,4 @@ return array(
 	'file:none' => "Brak plików.",
 	'file:uploadfailed' => "Przykro nam, nie można było zapisać pliku.",
 	'file:noaccess' => "Nie masz uprawnień do modyfikacji tego pliku",
-	'file:cannotload' => "There was an error uploading the file",
 );

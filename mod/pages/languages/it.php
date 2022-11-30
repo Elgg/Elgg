@@ -56,7 +56,6 @@ return array(
 	'pages:cantedit' => 'Non puoi modificare questa pagina',
 	'pages:saved' => 'Pagina salvata',
 	'pages:notsaved' => 'La pagina non può essare salvata',
-	'pages:error:no_title' => 'Devi specificare un titolo per questa pagina.',
 	'entity:delete:object:page:success' => 'La pagina è stata eliminata con successo.',
 
 	/**

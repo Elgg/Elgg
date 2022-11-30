@@ -12,7 +12,6 @@ return array(
 
 	'uservalidationbyemail:emailsent' => "Enviouse unha mensaxe por correo electrónico a <em>%s</em>.",
 	'uservalidationbyemail:registerok' => "Para activar a conta, siga a ligazón que lle acabamos de enviar para confirmar o seu enderezo de correo electrónico.",
-	'uservalidationbyemail:login:fail' => "A conta non está validada, así que non puido acceder. Acabámoslle de enviar un novo correo electrónico de validación.",
 
 	'uservalidationbyemail:admin:resend_validation' => 'Enviar a validación de nov',
 	'uservalidationbyemail:confirm_resend_validation' => 'Enviar de novo a mensaxe de validación a %s?',

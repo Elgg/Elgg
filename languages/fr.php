@@ -23,7 +23,6 @@ return array(
 	'login:continue' => "Identifiez-vous pour continuer",
 	'login:empty' => "Identifiant ou adresse e-mail et mot de passe sont requis.",
 	'login:baduser' => "Impossible de charger votre compte utilisateur.",
-	'auth:nopams' => "Erreur interne. Aucune méthode d'authentification des utilisateurs n'est installée.",
 
 	'logout' => "Déconnexion",
 	'logoutok' => "Déconnexion réussie.",
@@ -60,7 +59,6 @@ return array(
 
 	'PluginException:CannotStart' => '%s (guid : %s) ne peut pas démarrer et a été désactivé.  Cause : %s',
 	'PluginException:InvalidID' => "%s est un ID de plugin invalide.",
-	'PluginException:InvalidPath' => "%s est un chemin de plugin invalide.",
 	'PluginException:PluginMustBeActive' => "Nécessite que le plugin '%s' soit activé.",
 	'PluginException:PluginMustBeAfter' => "Nécessite d'être positionné après le plugin '%s'.",
 	'PluginException:PluginMustBeBefore' => "Nécessite d'être positionné avant le plugin '%s'.",
@@ -216,8 +214,6 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'widget:delete' => 'Supprimer %s',
 	'widget:edit' => 'Personnaliser ce widget',
 
-	'widgets' => "Widgets",
-	'widget' => "Widget",
 	'item:object:widget' => "Widget",
 	'collection:object:widget' => 'Widgets',
 	'widgets:add:success' => "Le widget a bien été ajouté.",
@@ -254,20 +250,11 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'collection:friends' => '%s des contacts',
 
 	'avatar' => 'Image du profil',
-	'avatar:noaccess' => "Vous n'êtes pas autorisé à modifier l'image du profil de cet utilisateur",
-	'avatar:create' => 'Créer l\'image du profil',
 	'avatar:edit' => 'Modifier l\'image du profil',
-	'avatar:upload' => 'Envoyer une nouvelle image du profil',
-	'avatar:current' => 'Image actuelle',
-	'avatar:remove' => 'Supprime votre image du profil et restaure l\'icône par défaut',
-	'avatar:crop:title' => 'Recadrage de l\'image',
 	'avatar:upload:instructions' => "Votre image du profil est affichée sur tout le site. Vous pouvez la changer quand vous le souhaitez. (Formats de fichiers acceptés: GIF, JPG ou PNG)",
-	'avatar:create:instructions' => 'Cliquez et faites glisser le carré ci-dessous selon la façon dont vous voulez que votre photo soit recadrée. Un aperçu s\'affiche sur la droite. Lorsque le résultat vous convient, cliquez sur «&nbsp;Créer l\'image du profil&nbsp;». Cette version recadrée sera utilisée sur l\'ensemble du site pour vous représenter.',
 	'avatar:upload:success' => 'L\'image du profil a bien été chargée',
 	'avatar:upload:fail' => 'Échec du chargement de l\'image du profil',
 	'avatar:resize:fail' => 'Le redimensionnement de l\'image a échoué',
-	'avatar:crop:success' => 'Le recadrage de l\'image a réussi',
-	'avatar:crop:fail' => 'Le recadrage de l\'image a échoué',
 	'avatar:remove:success' => 'L\'image du profil a bien été supprimée',
 	'avatar:remove:fail' => 'Échec de la suppression de l\'image du profil',
 	
@@ -303,10 +290,7 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'river' => "Flux d'activité",
 	'river:user:friend' => "%s est maintenant en contact avec  %s",
 	'river:update:user:avatar' => '%s a changé son image du profil',
-	'river:noaccess' => 'Vous n\'avez pas la permission de voir cet élément.',
 	'river:posted:generic' => '%s a publié',
-	'riveritem:single:user' => 'un utilisateur',
-	'riveritem:plural:user' => 'des utilisateurs',
 	'river:ingroup' => 'dans le groupe %s',
 	'river:none' => 'Aucune activité',
 	'river:update' => 'Mise à jour pour %s',
@@ -388,10 +372,6 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
  */
 
 	'search' => "Chercher",
-	'searchtitle' => "Rechercher : %s",
-	'users:searchtitle' => "Recherche de membres : %s",
-	'groups:searchtitle' => "Recherche de groupes : %s",
-	'advancedsearchtitle' => "%s résultats pour %s",
 	'notfound' => "Aucun résultat trouvé.",
 
 	'viewtype:change' => "Changer le type de liste",
@@ -426,9 +406,7 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'registration:passwordnotvalid' => 'Désolé, le mot de passe que vous avez entré est invalide sur ce site.',
 	'registration:usernamenotvalid' => 'Désolé, l\'identfiant que vous avez indiqué est invalide sur ce site.',
 
-	'adduser' => "Ajouter un utilisateur",
 	'adduser:ok' => "Vous avez bien ajouté un nouvel utilisateur.",
-	'adduser:bad' => "Le nouvel utilisateur n'a pas pu être créé.",
 
 	'user:set:name' => "Paramètres du nom du compte",
 	'user:name:label' => "Nom",
@@ -442,10 +420,6 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'user:password:label' => "Nouveau mot de passe",
 	'user:password2:label' => "Nouveau mot de passe - confirmation",
 	'user:password:success' => "Le mot de passe a bien été modifié",
-	'user:password:fail' => "Impossible de modifier votre mot de passe.",
-	'user:password:fail:notsame' => "Les deux mots de passe ne correspondent pas !",
-	'user:password:fail:tooshort' => "Le mot de passe est trop court !",
-	'user:password:fail:incorrect_current_password' => 'Le mot de passe actuel que vous avez indiqué est incorrect.',
 	'user:changepassword:unknown_user' => 'Utilisateur inconnu.',
 	'user:changepassword:change_password_confirm' => 'Cela modifiera votre mot de passe.',
 
@@ -456,7 +430,6 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'user:set:language' => "Langue",
 	'user:language:label' => "Votre langue",
 	'user:language:success' => "Votre préférence de langue a bien été enregistré.",
-	'user:language:fail' => "Votre préférence de langue n'a pas pu être enregistré.",
 
 	'user:username:notfound' => 'Identifiant %s non trouvé.',
 	'user:username:help' => 'Soyez bien conscient que le changement de l\'identifiant va modifier tous les liens dynamiques relatifs à ce compte utilisateur',
@@ -464,7 +437,6 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'user:password:lost' => 'Mot de passe perdu',
 	'user:password:hash_missing' => 'Nous regrettons de devoir vous demander de réinitialiser votre mot de passe.  La sécurité des mots de passe a été améliorée sur le site, mais il n\'est pas possible de conserver les mots de passe lors de cette opération.',
 	'user:password:changereq:success' => 'Vous avez demandé un nouveau mot de passe, un e-mail de confirmation vient de vous être envoyé',
-	'user:password:changereq:fail' => 'Impossible de demander un nouveau mot de passe.',
 
 	'user:password:text' => 'Pour générer un nouveau mot de passe, entrez votre identifiant ou votre e-mail ci-dessous, puis cliquez sur le bouton.',
 
@@ -1031,11 +1003,8 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
  * User settings
  */
 
-	'usersettings:description' => "Le panneau de configuration utilisateur vous permet de contrôler tous vos paramètres personnels, de la gestion de votre compte aux fonctionnement des outils du site. Choisissez une option ci-dessous pour commencer.",
-
 	'usersettings:statistics' => "Vos statistiques",
 	'usersettings:statistics:user' => "Statistiques de %s",
-	'usersettings:statistics:opt:description' => "Visualiser les statistiques des utilisateurs et des objets sur le site.",
 	'usersettings:statistics:opt:linktext' => "Statistiques du compte.",
 
 	'usersettings:statistics:login_history' => "Historique de connexion",
@@ -1043,14 +1012,9 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'usersettings:statistics:login_history:ip' => "Adresse IP",
 
 	'usersettings:user' => "Paramètres de %s",
-	'usersettings:user:opt:description' => "Ceci vous permet de contrôler les paramètres de votre compte.",
 	'usersettings:user:opt:linktext' => "Modifier vos paramètres",
 
-	'usersettings:plugins' => "Outils",
-	'usersettings:plugins:opt:description' => "Configurer les paramètres de vos outils actifs (s'il y en a).",
 	'usersettings:plugins:opt:linktext' => "Configurez vos outils",
-
-	'usersettings:plugins:description' => "Ce panneau vous permet de vérifier et de configurer les paramètres personnels des outils installés par l'administrateur.",
 	
 	'usersettings:statistics:yourdetails' => "Vos informations",
 	'usersettings:statistics:details:user' => "Informations pour %s",
@@ -1061,7 +1025,6 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'usersettings:statistics:label:membersince' => "Membre depuis",
 	'usersettings:statistics:label:numentities' => "Vos contenus",
 	
-	'usersettings:delayed_email' => "Paramètres des e-mails différés",
 	'usersettings:delayed_email:interval' => "Configurez à quel intervalle les e-mails différés doivent être envoyés",
 	'usersettings:delayed_email:interval:help' => "Tous les e-mails de notification différés seront enregistrés et livrés dans un seul e-mail combiné à l'intervalle configuré",
 
@@ -1074,9 +1037,7 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'river:owner' => 'Activité de %s',
 	'river:friends' => 'Activités des contacts',
 	'river:select' => 'Montrer %s',
-	'river:comments:more' => '+%u autres',
 	'river:comments:all' => 'Voir tous les %u commentaires',
-	'river:generic_comment' => 'a commenté %s %s',
 
 /**
  * Icons
@@ -1408,10 +1369,6 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'installation:sitename' => "Le nom de votre site :",
 	'installation:sitedescription' => "Brève description du site (facultatif) : ",
 	'installation:sitedescription:help' => "Avec les plugins inclus ceci n'apparaît que dans les métadonnées de description pour les résultats des moteurs de recherche.",
-	'installation:wwwroot' => "L'URL du site :",
-	'installation:path' => "Le chemin complet de votre installation de Elgg :",
-	'installation:dataroot' => "Le chemin complet du dossier de données :",
-	'installation:dataroot:warning' => "Vous devez créer ce répertoire manuellement. Il doit se situer dans un répertoire différent de celui de votre installation de Elgg.",
 	'installation:sitepermissions' => "Les niveaux d’accès par défaut : ",
 	'installation:language' => "La langue par défaut de votre site : ",
 	'installation:debug' => "Contrôle la quantité d'information écrite dans les journaux du serveur.",
@@ -1432,8 +1389,6 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'installation:adminvalidation:notification:direct' => 'Direct',
 	'installation:walled_garden:description' => 'Si activé, les visiteurs non identifiés ne peuvent voir que les pages indiquées comme publiques (comme la page de connexion et d\'inscription).',
 	'installation:walled_garden:label' => 'Restreindre l\'accès au site aux membres identifiés',
-
-	'installation:view' => "Entrez le nom de la vue qui sera utilisée par défaut pour l'affichage du site, ou laissez vide pour la vue par défaut (en cas de doute, laissez la valeur par défaut) :",
 
 	'installation:siteemail' => "L'adresse e-mail du site (utilisée lors de l'envoi d'e-mails par le système) :",
 	'installation:siteemail:help' => "Attention : n'utilisez pas une adresse e-mail que vous pourriez avoir associé avec un autre service tiers, tels qu'un système de gestions de tickets, qui effectue des analyses des e-mails entrants, car cela peut vous exposer vous et vos utilisateurs à la fuite non intentionnelle de données privées et de jetons de sécurité. Dans l'idéal, créez une nouvelle adresse e-mail dédiée qui va servir exclusivement pour ce site.",
@@ -1805,14 +1760,6 @@ Variables globales :
 	'cli:plugins:list:option:status' => "Statut du plugin ( %s )",
 	'cli:plugins:list:option:refresh' => "Rafraîchir la liste des plugins avec les plugins récemment installés",
 	'cli:plugins:list:error:status' => "%s n'est pas un statut valide. Les options autorisées sont : %s",
-	
-	'cli:simpletest:description' => "Exécuter la suite de test simpletest (obsolète)",
-	'cli:simpletest:option:config' => "Chemin vers le fichier de configuration avec lequel Elgg devrait être amorcé",
-	'cli:simpletest:option:plugins' => "Une liste de plugins à activer pour les tests, ou 'all' pour activer tous les plugins",
-	'cli:simpletest:option:filter' => "N'exécuter que les tests qui correspondent au motif de filtre",
-	'cli:simpletest:error:class' => "Vous devez installer votre application Elgg en utilisant '%s'",
-	'cli:simpletest:error:file' => "%s n'est pas une classe simpletest valide",
-	'cli:simpletest:output:summary' => "Durée : %.2f secondes, Mémoire : %.2f Mo",
 	
 	'cli:upgrade:description' => "Exécuter les mises à niveau du système",
 	'cli:upgrade:option:force' => "Forcer les mises à niveau à s'exécuter même si une mise à niveau est déjà en cours d'exécution.",

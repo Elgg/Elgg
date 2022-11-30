@@ -22,7 +22,6 @@ return array(
 	'loginok' => "Ha iniciado sesi&oacute;n",
 	'login:empty' => "El nombre de usuario y contrase&ntilde;a son requeridos",
 	'login:baduser' => "No se pudo cargar su cuenta de usuario",
-	'auth:nopams' => "Error interno. No se encuentra un m&eacute;todo de autenticaci&oacute;n instalado",
 
 	'logout' => "Cerrar sesi&oacute;n",
 	'logoutok' => "Se ha cerrado la sesi&oacute;n",
@@ -52,7 +51,6 @@ return array(
 
 	'PluginException:CannotStart' => '%s (guid: %s) no puede iniciarse. Motivo: %s',
 	'PluginException:InvalidID' => "%s no es un ID de plugin v&aacute;lido",
-	'PluginException:InvalidPath' => "%s es un path de plugin inv&aacute;lido",
 	'ElggPlugin:MissingID' => 'No se encuentra el ID del plugin (guid %s)',
 	'ElggPlugin:Error' => 'Error del plugin',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'No puede incluirse %s para el plugin %s (guid: %s) en %s. Verifique los permisos!',
@@ -75,7 +73,6 @@ return array(
 	'LoginException:PasswordFailure' => 'No pudo iniciarse la sesi&oacute;n. Por favor verifique su nombre de usuario y contrase&ntilde;a',
 	'LoginException:AccountLocked' => 'Su cuenta ha sido bloqueada por la cantidad de intentos fallidos de inicio de sesion',
 	'LoginException:ChangePasswordFailure' => 'Fall&oacute; el cambio de contrase&ntilde;a. revisa la antigua y nueva contrase&ntilde;a.',
-	'LoginException:Unknown' => 'We could not log you in due to an unknown error.',
 
 	'UserFetchFailureException' => 'No se pueden revisar los permisos para el user_guid [%s] porque el usuario no existe.',
 
@@ -83,7 +80,6 @@ return array(
 	'EntityNotFoundException' => 'El contenido al que intentas acceder ha sido eliminado o no tienes permiso para verlo.',
 	'EntityPermissionsException' => 'No tienes permisos suficientes para esta acción.',
 	'GatekeeperException' => 'No tienes permisos para ver la pagina a la que intentas acceder',
-	'BadRequestException' => 'Bad request',
 	'ValidationException' => 'Los datos enviados no cumplen los requerimientos, por favor comprueba los datos.',
 	'LogicException:InterfaceNotImplemented' => '%s debe de ser implementado %s',
 
@@ -184,8 +180,6 @@ return array(
 	'widget:delete' => 'Quitar %s',
 	'widget:edit' => 'Personalizar este widget',
 
-	'widgets' => "Widgets",
-	'widget' => "Widget",
 	'item:object:widget' => "Widgets",
 	'collection:object:widget' => 'Widgets',
 	'widgets:add:success' => "Se agreg&oacute; correctamente el widget",
@@ -218,20 +212,11 @@ return array(
 	'friends' => "Amigos",
 
 	'avatar' => 'Imagen de perfil',
-	'avatar:noaccess' => "No tienes permitido editar el avatar de este usuario",
-	'avatar:create' => 'Cree su imagen de perfil',
 	'avatar:edit' => 'Editar imagen de perfil',
-	'avatar:upload' => 'Subir nueva imagen de perfil',
-	'avatar:current' => 'Imagen de perfil actual',
-	'avatar:remove' => 'Remove your avatar and set the default icon',
-	'avatar:crop:title' => 'Herramienta de recorte de imagen de perfil',
 	'avatar:upload:instructions' => "Su imagen de perfil se mostrar&aacute; en la red. Podr&aacute; modificarla siempre que lo desee (Formatos de archivo aceptados: GIF, JPG o PNG)",
-	'avatar:create:instructions' => 'Haga click y arrastre un cuadrado debajo para seleccionar el recorte de la imagen. Aparecer&aacute; una previsualizaci&oacute;n en la caja de la deracha. Cuando est&eacute; conforme con la previsualizaci&oacute;n, haga click en \'Crear imagen de perfil\'. La versi&oacute;n recortada ser&aacute; la que se utilice para mostrar en la red',
 	'avatar:upload:success' => 'Imagen de perfil subida correctamente',
 	'avatar:upload:fail' => 'Fall&oacute; la subida de la imagen de perfil',
 	'avatar:resize:fail' => 'Error al modificar el tama&ntilde;o de la imagen de perfil',
-	'avatar:crop:success' => 'Recorte de la imagen de perfil finalizado correctamente',
-	'avatar:crop:fail' => 'El recortado del avatar ha fallado',
 	'avatar:remove:success' => 'Se ha eliminado el avatar',
 	'avatar:remove:fail' => 'fall&oacute; al remover el avatar',
 	
@@ -257,10 +242,7 @@ return array(
 	'river' => "River",
 	'river:user:friend' => "%s ahora es amigo con %s",
 	'river:update:user:avatar' => '%s tiene una nueva imagen de perfil',
-	'river:noaccess' => 'No posee permisos para visualizar este elemento',
 	'river:posted:generic' => '%s publicado',
-	'riveritem:single:user' => 'un usuario',
-	'riveritem:plural:user' => 'algunos usuarios',
 	'river:ingroup' => 'en el grupo %s',
 	'river:none' => 'Sin actividad',
 	'river:update' => 'Actualizaciones de %s',
@@ -288,10 +270,6 @@ return array(
  */
 
 	'search' => "Buscar",
-	'searchtitle' => "Buscar: %s",
-	'users:searchtitle' => "Buscar para usuarios: %s",
-	'groups:searchtitle' => "Buscar para grupos: %s",
-	'advancedsearchtitle' => "%s con coincidencias en resultados %s",
 	'notfound' => "No se encontraron resultados",
 
 	'viewtype:change' => "Modificar tipo de lista",
@@ -326,9 +304,7 @@ return array(
 	'registration:passwordnotvalid' => 'Lo sentimos, la contrase&ntilde;a que ha ingresado es inv&aacute;lida en el sistema',
 	'registration:usernamenotvalid' => 'Lo sentimos, el nombre de usuario que ha ingresado es inv&aacute;lida en el sistema',
 
-	'adduser' => "Nuevo usuario",
 	'adduser:ok' => "Se agreg&oacute; correctamente un nuevo usuario",
-	'adduser:bad' => "No se pudo agregar el nuevo usuario",
 
 	'user:set:name' => "Configuraci&oacute;n del nombre de cuenta",
 	'user:name:label' => "Mi nombre para mostrar",
@@ -342,17 +318,12 @@ return array(
 	'user:password:label' => "Nueva contrase&ntilde;a",
 	'user:password2:label' => "Confirmar nueva contrase&ntilde;a",
 	'user:password:success' => "Contrase&ntilde;a modificada",
-	'user:password:fail' => "No se pudo modificar la contrase&ntilde;a en  la red",
-	'user:password:fail:notsame' => "Las dos contrase&ntilde;as no coinciden!",
-	'user:password:fail:tooshort' => "La contrase&ntilde;a es demasiado corta!",
-	'user:password:fail:incorrect_current_password' => 'La contrase&ntilde;a actual ingresada es incorrecta',
 	'user:changepassword:unknown_user' => 'Usuario inv&aacute;lido',
 	'user:changepassword:change_password_confirm' => 'Esto cambiará su contraseña.',
 
 	'user:set:language' => "Configuraci&oacute;n de lenguaje",
 	'user:language:label' => "Su lenguaje",
 	'user:language:success' => "Se actualiz&oacute; su configuraci&oacute;n de lenguaje",
-	'user:language:fail' => "No se pudo actualizar su configuraci&oacute;n de lenguaje",
 
 	'user:username:notfound' => 'No se encuentra el usuario %s',
 	'user:username:help' => 'Tenga en cuenta que cambiar un nombre de usuario cambiará todos los enlaces dinámicos relacionados con el usuario',
@@ -360,7 +331,6 @@ return array(
 	'user:password:lost' => 'Olvid&eacute; mi contrase&ntilde;a',
 	'user:password:hash_missing' => 'Lamentablemente, debemos pedirle que restablezca su contraseña. Hemos mejorado la seguridad de las contraseñas en el sitio, pero no hemos podido migrar todas las cuentas en el proceso.',
 	'user:password:changereq:success' => 'Solicitud de nueva contrase&ntilde;a confirmada, se le ha enviado un Email',
-	'user:password:changereq:fail' => 'No se pudo solicitar una nueva contrase&ntilde;a',
 
 	'user:password:text' => 'Para solicitar una nueva contrase&ntilde;a ingrese su nombre de usuario y presione el bot&oacute;n debajo',
 
@@ -700,23 +670,15 @@ return array(
  * User settings
  */
 
-	'usersettings:description' => "El panel de configuraci&oacute;n permite parametrizar sus preferencias personales, desde la administraci&oacute;n de usuarios al comportamiento de los plugins. Seleccione una opci&oacute;n debajo para comenzar",
-
 	'usersettings:statistics' => "Sus estad&iacute;sticas",
-	'usersettings:statistics:opt:description' => "Ver informaci&oacute;n estad&iacute;stica de usuarios y objectos en la red",
 	'usersettings:statistics:opt:linktext' => "Estad&iacute;sticas de la cuenta",
 
 	'usersettings:statistics:login_history' => "Historial de inicio de sesión",
 	'usersettings:statistics:login_history:date' => "Fecha",
 	'usersettings:statistics:login_history:ip' => "Dirección IP",
-	'usersettings:user:opt:description' => "Esto le permite establecer sus preferencias",
 	'usersettings:user:opt:linktext' => "Modificar sus preferencias",
 
-	'usersettings:plugins' => "Herramientas",
-	'usersettings:plugins:opt:description' => "Preferencias de Configuraci&oacute;n para sus herramientas activas",
 	'usersettings:plugins:opt:linktext' => "Configure sus herramientas",
-
-	'usersettings:plugins:description' => "Este panel le permite establecer sus preferencias personales para las herramientas habilitadas por el administrador del sistema",
 	
 	'usersettings:statistics:yourdetails' => "Sus detalles",
 	'usersettings:statistics:label:name' => "Nombre completo",
@@ -734,9 +696,7 @@ return array(
 	'river:owner' => 'Actividad de %s',
 	'river:friends' => 'Actividad de Amigos',
 	'river:select' => 'Mostrar %s',
-	'river:comments:more' => '%u m&aacute;s',
 	'river:comments:all' => 'Ver todos los comentarios de %u',
-	'river:generic_comment' => 'comentado en %s %s',
 
 /**
  * Icons
@@ -1021,10 +981,6 @@ return array(
 
 	'installation:sitename' => "El nombre del sitio:",
 	'installation:sitedescription' => "Breve descripci&oacute;n del sitio (opcional):",
-	'installation:wwwroot' => "URL del sitio:",
-	'installation:path' => "El path completo a la instalaci&oacute;n de Elgg:",
-	'installation:dataroot' => "El path completo al directorio de datos:",
-	'installation:dataroot:warning' => "Debe crear este directorio manualmente. Debe encontrarse en un directorio diferente al de la instalaci&oacute;n de Elgg",
 	'installation:sitepermissions' => "Permisos de acceso por defecto:",
 	'installation:language' => "Lenguaje por defecto para el sitio:",
 	'installation:debug' => "El modo Debug provee informaci&oacute;n extra que puede utilizarse para evaluar eventualidades. Puede enlentecer el funcionamiento del sistema y debe utilizarse s&oacute;lo cuando se detectan problemas:",
@@ -1040,8 +996,6 @@ return array(
 	'installation:registration:label' => 'Permitir el registro de nuevos usuarios',
 	'installation:walled_garden:description' => 'Habilitar al sitio para ejecutarse como una red privada. Esto impedir&aacute; a usuarios no registrados visualizar cualquier p&aacute;gina del sitio, exceptuando las establecidas como p&uacute;blicas',
 	'installation:walled_garden:label' => 'Restringir p&aacute;ginas a usuarios registrados',
-
-	'installation:view' => "Ingrese la vista que se visualizar&aacute; por defecto en el sitio o deje esto en blanco para la vista por defecto (si tiene dudas, d&eacute;jelo por defecto):",
 
 	'installation:siteemail' => "Direcci&oacute;n de Email del sitio (utilizada para enviar mails desde el sistema):",
 	'installation:default_limit' => "N&uacute;mero por defecto de elementos por p&aacute;gina",
@@ -1066,9 +1020,6 @@ return array(
 	'installation:htaccess:needs_upgrade' => "Debe actualizar el archivo .htaccess para que la ruta se inyecte en el parámetro GET __elgg_uri (puede usar install/config/htaccess.dist como guía)",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg no puede conectarse a sí mismo para poner a prueba las reglas de substitución. Asegúrese de que «curl» está funcionando, y de que no existen restricciones por dirección IP que impidan las conexiones locales al propio servidor (localhost).",
 
-	'installation:systemcache:description' => "The system cache decreases the loading time of the Elgg engine by caching data to files.",
-	'installation:systemcache:label' => "Use system cache (recommended)",
-
 	'admin:legend:system' => 'Sistema',
 	'admin:legend:caching' => 'Caché',
 	'admin:legend:content' => 'Contenido',
@@ -1081,9 +1032,6 @@ return array(
 
 	'upgrading' => 'Actualizando..',
 	'upgrade:core' => 'La instalaci&oacute;n de Elgg ha sido actualizada',
-	'upgrade:unlock' => 'Unlock upgrade',
-	'upgrade:unlock:confirm' => "The database is locked for another upgrade. Running concurrent upgrades is dangerous. You should only continue if you know there is not another upgrade running. Unlock?",
-	'upgrade:locked' => "Cannot upgrade. Another upgrade is running. To clear the upgrade lock, visit the Admin section.",
 	'upgrade:unlock:success' => "Desbloqueo de Actualización exitoso.",
 
 	'admin:pending_upgrades' => 'Este sitio tiene actualizaciones pendientes que requieren tu atención inmediata',
@@ -1119,7 +1067,6 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
 	'email:address:label' => "Direcci&oacute;n de Email",
 	'email:address:password' => "Contraseña",
 
-	'email:save:success' => "New email address saved.",
 	'email:save:fail' => "No se pudo guardar la nueva direcci&oacute;n de Email",
 
 	'friend:newfriend:subject' => "%s te ha puesto como amigo suyo!",
@@ -1185,7 +1132,6 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
  */
 
 	'actiongatekeeper:missingfields' => 'En el formulario faltan __token o campos __ts',
-	'actiongatekeeper:tokeninvalid' => "The page you were using had expired. Please try again.",
 	'actiongatekeeper:timeerror' => 'La p&aacute;gina que se encontraba utilizando ha expirado. Por favor refresque la p&aacute;gina e intente nuevamente',
 	'actiongatekeeper:pluginprevents' => 'Lo sentimos. No se ha podido enviar el formulario por motivos desconocidos.',
 	'actiongatekeeper:uploadexceeded' => 'El tama&ntilde;o del(los) archivo(s) supera el m&iacute;mite establecido',
@@ -1194,7 +1140,6 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
  * Javascript
  */
 
-	'js:security:token_refresh_failed' => 'Failed to contact %s. You may experience problems saving content. Please refresh this page.',
 	'js:lightbox:current' => "imagen %s de %s",
 
 /**

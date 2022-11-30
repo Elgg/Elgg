@@ -9,8 +9,6 @@ return array(
 
 	'friends:invite' => 'Vrienden uitnodigen',
 	
-	'invitefriends:registration_disabled' => 'Registratie van nieuwe gebruikers is uitgeschakeld op deze site. Je kunt geen nieuwe gebruikers uitnodigen.',
-	
 	'invitefriends:introduction' => 'Je kunt vrienden uitnodigen om lid te worden van dit netwerk. Vul daarvoor hun e-mailadressen hieronder in (één per regel):',
 	'invitefriends:emails' => 'E-mail adressen (één per regel)',
 	'invitefriends:message' => 'Hieronder kun je een bericht kwijt dat in de uitnodiging komt te staan:',

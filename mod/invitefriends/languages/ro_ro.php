@@ -9,8 +9,6 @@ return array(
 
 	'friends:invite' => 'Invită prieteni',
 	
-	'invitefriends:registration_disabled' => 'Înregistrarea de noi utilizatori a fost dezactivată pe acest site; nu poți invita noi utilizatori.',
-	
 	'invitefriends:introduction' => 'Pentru a invita prieteni pentru a se alătura cu tine în această rețea, introdu-le adresele de email și un mesaj pe care îl vor primi împreună cu invitația ta',
 	'invitefriends:emails' => 'Adresele de email (una pe rând)',
 	'invitefriends:message' => 'Mesaj',

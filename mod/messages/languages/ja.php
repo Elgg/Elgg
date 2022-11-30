@@ -25,8 +25,6 @@ return array(
 	'messages:toggle' => '全てを選択',
 	'messages:markread' => '既読マーク',
 
-	'notification:method:site' => 'サイト',
-
 	'messages:error' => 'メッセージの保存の際に問題が発生しました。もう一度やり直してください。',
 
 	'item:object:messages' => 'メッセージ',

@@ -33,12 +33,10 @@ return array(
 	'relationship:invited' => '%2$s さんは、 %1$s に招待されました',
 	'relationship:membership_request' => '%s さんは %s に参加希望を申請しました。',
 
-	'groups:icon' => 'グループアイコン(変更なしなら空欄のまま)',
 	'groups:name' => 'グループ名',
 	'groups:description' => '説明',
 	'groups:briefdescription' => '簡単な説明',
 	'groups:interests' => 'タグ',
-	'groups:website' => 'Website',
 	'groups:members' => 'グループメンバ',
 
 	'groups:members_count' => '%s 人のメンバー',
@@ -50,14 +48,12 @@ return array(
 	'groups:content_access_mode:warning' => "警告: 変更はこれから作成されるコンテントのみ有効で、すでに存在しているグループコンテントに対しては効果ありません。",
 	'groups:content_access_mode:unrestricted' => "制限なし - アクセスはコンテントレベルでの設定に依ります。",
 	'groups:content_access_mode:membersonly' => "メンバ限定 - 非メンバはグループコンテントに決してアクセスできません。",
-	'groups:access' => "公開範囲の許可",
 	'groups:owner' => "班長",
 	'groups:owner:warning' => "警告: この値を変更しますと、あなたはこのグループの班長ではなくなってしまいますが、よろしいでしょうか。",
 	'groups:widget:num_display' => '一覧表示数',
 	'widgets:a_users_groups:name' => '参加グループ',
 	'widgets:a_users_groups:description' => '所属するグループをプロフィールに表示する',
 
-	'groups:noaccess' => 'グループへのアクセスを許可しない',
 	'groups:cantcreate' => 'あなたは、グループを作成することができません。管理者のみ作成できます。',
 	'groups:cantedit' => 'このグループを編集できません。',
 	'groups:saved' => 'グループを保存しました',
@@ -95,7 +91,6 @@ return array(
 
 	'groups:open' => "オープングループ",
 	'groups:closed' => "クローズドグループ",
-	'groups:member' => "会員",
 	'groups:search' => "グループを検索",
 
 	'groups:more' => '次のグループ',
@@ -132,7 +127,6 @@ return array(
 	'groups:addedtogroup' => 'グループにユーザーを追加しました。',
 	'groups:joinrequestnotmade' => 'グループ参加の申請に失敗しました。',
 	'groups:joinrequestmade' => 'グループ参加希望を申請しました。',
-	'groups:joinrequest:exists' => 'You already requested membership for this group',
 	'groups:button:joined' => '参加しています',
 	'groups:button:owned' => '所有しています',
 	'groups:joined' => 'グループに参加しました！',

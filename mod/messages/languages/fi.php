@@ -25,8 +25,6 @@ return array(
 	'messages:toggle' => 'Valitse kaikki',
 	'messages:markread' => 'Merkitse luetuksi',
 
-	'notification:method:site' => 'Viestit',
-
 	'messages:error' => 'Viestisi tallentaminen epäonnistui. Yritä uudelleen.',
 
 	'item:object:messages' => 'Viesti',

@@ -48,14 +48,12 @@ return array(
 	'install:database:label:dbname' => '資料庫名稱',
 	'install:database:label:dbhost' => '資料庫主機',
 	'install:database:label:dbprefix' => '資料表前綴',
-	'install:database:label:timezone' => "Timezone",
 
 	'install:database:help:dbuser' => '擁有您為 Elgg 所建立的 MySQL 資料庫完整權限的使用者',
 	'install:database:help:dbpassword' => '用於以上資料庫的使用者密碼',
 	'install:database:help:dbname' => 'Elgg 資料庫的名稱',
 	'install:database:help:dbhost' => 'MySQL 伺服器的主機名稱 (通常是 localhost)',
 	'install:database:help:dbprefix' => "賦予所有 Elgg 資料表的前綴 (通常是 elgg_)",
-	'install:database:help:timezone' => "The default timezone in which the site will operate",
 
 	'install:settings:label:sitename' => '站臺名稱',
 	'install:settings:label:siteemail' => '站臺電子郵件地址',
@@ -96,8 +94,6 @@ return array(
 	'install:complete:instructions' => 'Elgg 站臺現在已準備好要使用。按以下按鈕以進入站臺。',
 	'install:complete:gotosite' => '前往站臺',
 
-	'InstallationException:CannotLoadSettings' => 'Elgg could not load the settings file. It does not exist or there is a file permissions issue.',
-
 	'install:success:database' => '資料庫已安裝。',
 	'install:success:settings' => '站臺設定值已儲存。',
 	'install:success:admin' => '管理帳號已建立。',
@@ -110,8 +106,6 @@ return array(
 	'install:error:nodatabase' => '無法使用資料庫 %s。它可能不存在。',
 	'install:error:cannotloadtables' => '無法載入資料表格',
 	'install:error:tables_exist' => '在資料庫中已有 Elgg 表格。您需要選擇丟棄那些表格，或是重新啟動安裝程式而我們將試圖去使用它們。如果要重新啟動安裝程式，請自瀏覽器網址列中移除 \'?step=database\' 並按下輸入鍵。',
-	'install:error:readsettingsphp' => 'Unable to read /elgg-config/settings.example.php',
-	'install:error:writesettingphp' => 'Unable to write /elgg-config/settings.php',
 	'install:error:requiredfield' => '%s 為必要項目',
 	'install:error:relative_path' => '我們不認為 %s 是資料目錄的絕對路徑',
 	'install:error:datadirectoryexists' => '資料目錄 %s 不存在。',

@@ -32,12 +32,10 @@ return array(
 	'relationship:invited' => '%2$s blev inbjuden att gå med i %1$s',
 	'relationship:membership_request' => '%s begärde att gå med i %s',
 
-	'groups:icon' => 'Gruppikon (lämna tomt för att inte gör någon ändring)',
 	'groups:name' => 'Gruppnamn',
 	'groups:description' => 'Beskrivning',
 	'groups:briefdescription' => 'Kort beskrivning',
 	'groups:interests' => 'Taggar',
-	'groups:website' => 'Webbplats',
 	'groups:members' => 'Gruppmedlemmar',
 
 	'groups:members_count' => '%s medlemmar',
@@ -49,14 +47,12 @@ return array(
 	'groups:content_access_mode:warning' => "Varning: Ändring av dessa inställningar kommer inte ändra åtkomstbehörigheten för existerande innehåll i grupp.",
 	'groups:content_access_mode:unrestricted' => "Obegränsat - Åtkomst beror på inställningar på innehållsnivå.",
 	'groups:content_access_mode:membersonly' => "Endast medlemmar - Icke medlemmar kan aldrig komma åt gruppens innehåll",
-	'groups:access' => "Åtkomstbehörigheter",
 	'groups:owner' => "Ägare",
 	'groups:owner:warning' => "Varning: Om du ändrar det här värdet, kommer du inte längre vara ägaren av den här gruppen.",
 	'groups:widget:num_display' => 'Antalet grupper att visa',
 	'widgets:a_users_groups:name' => 'Medlemskap i grupp',
 	'widgets:a_users_groups:description' => 'Visa grupperna du är medlem i på din profil',
 
-	'groups:noaccess' => 'Inget åtkomst till grupp',
 	'groups:cantcreate' => 'Du kan inte skapa en grupp- Bara admins kan göra det. ',
 	'groups:cantedit' => 'Du kan inte redigera den här gruppen',
 	'groups:saved' => 'Gruppen sparad',
@@ -94,7 +90,6 @@ return array(
 
 	'groups:open' => "öppen grupp",
 	'groups:closed' => "stängd grupp",
-	'groups:member' => "medlemmar",
 	'groups:search' => "Sök efter grupper",
 
 	'groups:more' => 'Fler grupper',

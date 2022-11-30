@@ -28,12 +28,10 @@ return array(
 	'groups:invitations' => 'Gruppi a cui sei invitato',
 	'groups:invitations:pending' => 'Gruppi a cui sei invitato (%s)',
 
-	'groups:icon' => 'Icona del gruppo (lasciare vuoto per tenerla invariata)',
 	'groups:name' => 'Nome del gruppo',
 	'groups:description' => 'Descrizione',
 	'groups:briefdescription' => 'Breve descrizione',
 	'groups:interests' => 'Tag',
-	'groups:website' => 'Sito web',
 	'groups:members' => 'Membri del gruppo',
 
 	'groups:members_count' => '%s membri',
@@ -45,14 +43,12 @@ return array(
 	'groups:content_access_mode:warning' => "Attenzione: cambiare questa impostazione non cambierà i permessi di accesso dei contenuti di gruppo già esistenti.",
 	'groups:content_access_mode:unrestricted' => "Liberi - L'accesso dipende dalle impostazioni di accesso a livello di contenuto",
 	'groups:content_access_mode:membersonly' => "Solo membri - Solo i membri del gruppo possono accedere ai contenuti di gruppo",
-	'groups:access' => "Autorizzazioni di accesso",
 	'groups:owner' => "Responsabile",
 	'groups:owner:warning' => "Attenzione: con questa modifica non sarai più il responsabile di questo gruppo.",
 	'groups:widget:num_display' => 'Numero di gruppi da visualizzare',
 	'widgets:a_users_groups:name' => 'Gruppi di cui fai parte',
 	'widgets:a_users_groups:description' => 'Visualizza i gruppi di cui sei membro nel tuo profilo',
 
-	'groups:noaccess' => 'Nessun accesso al gruppo',
 	'groups:cantcreate' => 'Non puoi creare un gruppo. Funzione riservata agli amministratori',
 	'groups:cantedit' => 'Non puoi modificare questo gruppo',
 	'groups:saved' => 'Gruppo salvato',
@@ -88,7 +84,6 @@ return array(
 
 	'groups:open' => "gruppo aperto",
 	'groups:closed' => "gruppo chiuso",
-	'groups:member' => "membri",
 	'groups:search' => "Cerca gruppi",
 
 	'groups:more' => 'Altri gruppi',
@@ -122,7 +117,6 @@ return array(
 	'groups:addedtogroup' => 'L\'utente è stato aggiunto al gruppo',
 	'groups:joinrequestnotmade' => 'Impossibile richiedere l\'iscrizione al gruppo',
 	'groups:joinrequestmade' => 'Hanno richiesto di iscriversi al gruppo',
-	'groups:joinrequest:exists' => 'You already requested membership for this group',
 	'groups:button:joined' => 'Hai aderito',
 	'groups:button:owned' => 'Di tua proprietà',
 	'groups:joined' => 'Ora fai parte del gruppo!',

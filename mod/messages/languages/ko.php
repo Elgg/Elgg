@@ -25,8 +25,6 @@ return array(
 	'messages:toggle' => '모두 선택',
 	'messages:markread' => '읽은 것으로 표시',
 
-	'notification:method:site' => '누리집',
-
 	'messages:error' => '쪽지를 저장하는데 문제가 있었습니다. 다시 시도해 보세요.',
 
 	'item:object:messages' => '쪽지',

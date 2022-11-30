@@ -52,7 +52,6 @@ return array(
 	'pages:cantedit' => 'No puedes editar esta p&aacute;gina',
 	'pages:saved' => 'P&aacute;gina guardada',
 	'pages:notsaved' => 'La p&aacute;gina no pudo ser guardada',
-	'pages:error:no_title' => 'Debes especificar un t&iacute;tulo para esta p&aacute;gina.',
 	'entity:delete:object:page:success' => 'La p&aacute;gina ha sido borrada.',
 
 	/**

@@ -68,7 +68,6 @@ View and comment on the page:
 	'pages:cantedit' => 'You cannot edit this page',
 	'pages:saved' => 'Page saved',
 	'pages:notsaved' => 'Page could not be saved',
-	'pages:error:no_title' => 'You must specify a title for this page.',
 	'entity:delete:object:page:success' => 'The page was successfully deleted.',
 
 	/**

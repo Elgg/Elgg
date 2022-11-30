@@ -25,8 +25,6 @@ return array(
 	'messages:toggle' => 'Přepnout vše',
 	'messages:markread' => 'Označit jako přečteno',
 
-	'notification:method:site' => 'Stránky',
-
 	'messages:error' => 'Vyskytl se problém s ukládáním vaší zprávy. Zkuste to prosím znovu.',
 
 	'item:object:messages' => 'Zpráva',

@@ -48,14 +48,12 @@ return array(
 	'install:database:label:dbname' => 'Nome da base de dados <i>(Database Name)</i>',
 	'install:database:label:dbhost' => 'Hospedagem da base de dados <i>(Database Host)</i>',
 	'install:database:label:dbprefix' => 'Prefixo das tabelas no banco de dados <i>(Database Table Prefix)</i>',
-	'install:database:label:timezone' => "Timezone",
 
 	'install:database:help:dbuser' => 'Usuario que possui acesso pleno ao banco de dados MySQL que voce criou para o Elgg',
 	'install:database:help:dbpassword' => 'Senha para a conta do usuário da base de dados definida acima',
 	'install:database:help:dbname' => 'Nome da base de dados do Elgg',
 	'install:database:help:dbhost' => 'Hospedagem do servidor MySQL (geralmente <b>localhost</b>)',
 	'install:database:help:dbprefix' => "O prefixo a ser atribuido para todas as tabelas do Elgg (geralmente <b>elgg_</b>)",
-	'install:database:help:timezone' => "The default timezone in which the site will operate",
 
 	'install:settings:label:sitename' => 'Nome do Site <i>(Site Name)</i>',
 	'install:settings:label:siteemail' => 'Endereco de email do site <i>(Site Email Address)</i>',
@@ -110,8 +108,6 @@ return array(
 	'install:error:nodatabase' => 'Não foi possivel usar o banco de dados %s. Ele pode não existir.',
 	'install:error:cannotloadtables' => 'Não foi possivel carregar as tabelas da base de dados',
 	'install:error:tables_exist' => 'Já existem tabelas do Elgg no banco de dados. Voce precisa apagar estas tabelas ou reiniciar o instalador e nos tentaremos utiliza-las. Para reiniciar o instalar, remova o <b>\'?step=database\' </b> do URL no seu endereco na barra do navegador e pressione ENTER.',
-	'install:error:readsettingsphp' => 'Unable to read /elgg-config/settings.example.php',
-	'install:error:writesettingphp' => 'Unable to write /elgg-config/settings.php',
 	'install:error:requiredfield' => '%s é necessario',
 	'install:error:relative_path' => 'Nao acreditamos que "%s" seja um caminho absoluto para seu diretorio de dados (data directory)',
 	'install:error:datadirectoryexists' => 'Seu diretório de dados <i>(data directory)</i> %s não existe.',

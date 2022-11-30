@@ -20,7 +20,6 @@ return array(
 	'loginok' => "Byl/a jste přihlášen/a.",
 	'login:empty' => "Je vyžadováno uživatelské jméno/e-mail a heslo.",
 	'login:baduser' => "Váš profil není možné načíst.",
-	'auth:nopams' => "Vnitřní chyba. Není nainstalovaná ověřovací metoda uživatele.",
 
 	'logout' => "Odhlásit se",
 	'logoutok' => "Byl/a jste odhlášen/a.",
@@ -49,7 +48,6 @@ return array(
 
 	'PluginException:CannotStart' => '%s (guid: %s) se nespustil a byl deaktivován. Důvod: %s',
 	'PluginException:InvalidID' => "%s je neplatné ID doplňku.",
-	'PluginException:InvalidPath' => "%s je neplatná cesta doplňku.",
 	'ElggPlugin:MissingID' => 'Postrádám ID doplňku (guid %s)',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Nemohu vložit %s pro doplněk %s (guid: %s) na %s.',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Vyhozena výjimka obsahující %s pro doplněk %s (guid: %s) na %s.',
@@ -168,8 +166,6 @@ return array(
 	'widget:delete' => 'Odebrat %s',
 	'widget:edit' => 'Upravit udělátko',
 
-	'widgets' => "Udělátka",
-	'widget' => "Udělátko",
 	'item:object:widget' => "Udělátka",
 	'collection:object:widget' => 'Udělátka',
 	'widgets:add:success' => "Udělátko bylo úspěšně přidáno.",
@@ -200,20 +196,11 @@ return array(
 	'friends' => "Přátelé",
 
 	'avatar' => 'Portrét',
-	'avatar:noaccess' => "Nemáte povoleno upravovat portrét tohoto uživatele",
-	'avatar:create' => 'Vytvořit portrét',
 	'avatar:edit' => 'Upravit portrét',
-	'avatar:upload' => 'Nahrát nový portrét',
-	'avatar:current' => 'Současný portrét',
-	'avatar:remove' => 'Odebrat portrét a nastavit výchozí obrázek',
-	'avatar:crop:title' => 'Nástroj pro ořez portrétu',
 	'avatar:upload:instructions' => "Portrét je zobrazen u vašich aktivit na těchto stránkách. Můžete jej měnit tak často jak chcete. (Jsou přijímány formáty GIF, JPG a PNG.)",
-	'avatar:create:instructions' => 'Myší natáhněte a přemisťte čtverec vespod tak aby odpovídal požadovanému ořezu. V pravé části se zobrazí náhled. Až budete s náhledem spokojen/a, klikněte na \'Vytvořit portrét\'. Tato oříznutá verze bude zobrazena u všech vašich aktivit.',
 	'avatar:upload:success' => 'Portrét úspěšně nahrán',
 	'avatar:upload:fail' => 'Nahrání portrétu se nezdařilo',
 	'avatar:resize:fail' => 'Změna velikosti portrétu se nezdařila',
-	'avatar:crop:success' => 'Portrét úspěšně oříznut',
-	'avatar:crop:fail' => 'Oříznutí portrétu se nezdařilo',
 	'avatar:remove:success' => 'Portrét úspěšně odebrán',
 	'avatar:remove:fail' => 'Odebrání portrétu se nezdařilo',
 
@@ -233,10 +220,7 @@ return array(
  */
 	'river' => "Aktivita",
 	'river:update:user:avatar' => '%s má nový portrét',
-	'river:noaccess' => 'Nemáte oprávnění vidět tuto položku.',
 	'river:posted:generic' => '%s odesláno',
-	'riveritem:single:user' => 'uživatel',
-	'riveritem:plural:user' => 'někteří uživatelé',
 	'river:ingroup' => 've skupině %s',
 	'river:none' => 'Žádná aktivita',
 	'river:update' => 'Aktualizace pro %s',
@@ -264,10 +248,6 @@ return array(
  */
 
 	'search' => "Hledat",
-	'searchtitle' => "Hledat: %s",
-	'users:searchtitle' => "Hledat uživatele: %s",
-	'groups:searchtitle' => "Hledat skupiny: %s",
-	'advancedsearchtitle' => "%s s výsledky shodující se s %s",
 	'notfound' => "Nic nenalezeno.",
 
 	'viewtype:change' => "Změnit typ výpisu",
@@ -300,9 +280,7 @@ return array(
 	'registration:passwordnotvalid' => 'Heslo které jste zadal/a je bohužel neplatné',
 	'registration:usernamenotvalid' => 'Uživatelské jméno které jste zadal/a je bohužel neplatné',
 
-	'adduser' => "Přidat uživatele",
 	'adduser:ok' => "Úspěšně jste přidal/a nového uživatele.",
-	'adduser:bad' => "Nový uživatel nemůže být vytvořen.",
 
 	'user:set:name' => "Nastavení jména účtu",
 	'user:name:label' => "Zobrazené jméno",
@@ -314,23 +292,17 @@ return array(
 	'user:password:label' => "Nové heslo",
 	'user:password2:label' => "Nové heslo znovu",
 	'user:password:success' => "Heslo bylo změněno",
-	'user:password:fail' => "Nemohu změnit vaše heslo.",
-	'user:password:fail:notsame' => "Obě zadaná hesla nejsou stejná!",
-	'user:password:fail:tooshort' => "Heslo je příliš krátké!",
-	'user:password:fail:incorrect_current_password' => 'Současné heslo není zadáno správně.',
 	'user:changepassword:unknown_user' => 'Neplatný úživatel.',
 	'user:changepassword:change_password_confirm' => 'Tímto změníte vaše heslo.',
 
 	'user:set:language' => "Nastavení jazyka",
 	'user:language:label' => "Jazyk",
 	'user:language:success' => "Jazykové nastavení bylo aktualizováno.",
-	'user:language:fail' => "Jazykové nastavení není možné uložit.",
 
 	'user:username:notfound' => 'Uživatelské jméno %s nebylo nalezeno.',
 
 	'user:password:lost' => 'Ztracené heslo',
 	'user:password:changereq:success' => 'Požadavek na nové heslo byl úspěšný, e-mail byl odeslán',
-	'user:password:changereq:fail' => 'Nelze požádat o nové heslo.',
 
 	'user:password:text' => 'O nové heslo požádáte zadáním uživatelského jména nebo e-mailové adresy do následujícího formuláře a následným stiskem tlačítka Požádat.',
 
@@ -604,10 +576,7 @@ return array(
  * User settings
  */
 
-	'usersettings:description' => "Panel nastavení uživatelů umožňuje řídit veškeré osobní nastavení, od správy uživatelů po chování doplňků. ",
-
 	'usersettings:statistics' => "Vaše statistiky",
-	'usersettings:statistics:opt:description' => "Zobrazí statistické informace o uživatelích a objektech na vašich stránkách.",
 	'usersettings:statistics:opt:linktext' => "Statistiky účtu",
 
 	'usersettings:statistics:login_history' => "Historie přihlášení",
@@ -615,14 +584,9 @@ return array(
 	'usersettings:statistics:login_history:ip' => "IP adresa",
 
 	'usersettings:user' => "%s - nastavení",
-	'usersettings:user:opt:description' => "Zde můžete měnit nastavení uživatele.",
 	'usersettings:user:opt:linktext' => "Změnit nastavení",
 
-	'usersettings:plugins' => "Nástroje",
-	'usersettings:plugins:opt:description' => "Upravte nastavení (pokud je) ve vašich aktivních nástrojích.",
 	'usersettings:plugins:opt:linktext' => "Nastavit nástroje",
-
-	'usersettings:plugins:description' => "Tento panel umožňuje ovládat a měnit osobní nastavení pro nástroje nainstalované vaším správcem.",
 	
 	'usersettings:statistics:yourdetails' => "Vaše detaily",
 	'usersettings:statistics:label:name' => "Celé jméno",
@@ -640,9 +604,7 @@ return array(
 	'river:owner' => 'Aktivita uživatele %s',
 	'river:friends' => 'Aktivita přátel',
 	'river:select' => 'Zobrazená aktivita: %s',
-	'river:comments:more' => '+%u dalších',
 	'river:comments:all' => 'Zobrazit všech %u komentářů',
-	'river:generic_comment' => 'přidal/a komentář k %s %s',
 
 /**
  * Icons
@@ -919,10 +881,6 @@ return array(
 
 	'installation:sitename' => "Jméno vašich stránek:",
 	'installation:sitedescription' => "Krátký popis vašich stránek (volitelné):",
-	'installation:wwwroot' => "URL stránek:",
-	'installation:path' => "Úplná cesta k instalaci systému Elgg:",
-	'installation:dataroot' => "Úplná cesta k datovému adresáři:",
-	'installation:dataroot:warning' => "Tento adresář si musíte vyrobit ručně. Měl by být v jiném adresáři než je nainstalován systém Elgg.",
 	'installation:sitepermissions' => "Výchozí nastavení přístupových práv:",
 	'installation:language' => "Výchozí jazyk vašich stránek:",
 	'installation:debug' => "Ovládá množství informací zapsaných do logu serveru.",
@@ -938,8 +896,6 @@ return array(
 	'installation:registration:label' => 'Povolit nové registrace uživatelů',
 	'installation:walled_garden:description' => 'Povolením této volby zamezíte nečlenům prohlížení stránek s výjimkou součástí označených jako veřejné (např. přihlášení a registrace).',
 	'installation:walled_garden:label' => 'Omezit stánky pouze pro členy',
-
-	'installation:view' => "Zadejte pohled, který bude použit jako výchozí na stránkách nebo ponechte prázdné pro výchozí pohled (jste-li na pochybách, nechte jak je):",
 
 	'installation:siteemail' => "E-mailová adresa stránek (použita při rozesílání systémových e-mailů):",
 	'installation:default_limit' => "Výchozí počet položek na stránce",

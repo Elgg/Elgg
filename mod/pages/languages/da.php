@@ -23,9 +23,6 @@ return array(
 	'groups:tool:pages' => 'Aktiver gruppe sider',
 
 	'pages:history' => "Sidehistorik",
-	'pages:revision' => "Revision",
-
-	'pages:navigation' => "Navigation",
 
 	'pages:notify:summary' => 'Ny side kaldt %s',
 	'pages:notify:subject' => "En ny side: %s",
@@ -44,7 +41,6 @@ return array(
 	'pages:title' => 'Side titel',
 	'pages:description' => 'Side indhold',
 	'pages:tags' => 'Tags',
-	'pages:parent_guid' => 'Parent page',
 
 	/**
 	 * Status and error messages
@@ -52,13 +48,7 @@ return array(
 	'pages:cantedit' => 'Du kan ikke redigere denne side',
 	'pages:saved' => 'Siden gemt',
 	'pages:notsaved' => 'Siden kunne ikke gemmes',
-	'pages:error:no_title' => 'Din side skal have en titel.',
 	'entity:delete:object:page:success' => 'Din side er blevet slettet',
-
-	/**
-	 * History
-	 */
-	'pages:revision:subtitle' => 'Revision created %s by %s',
 
 	/**
 	 * Widget

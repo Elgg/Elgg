@@ -54,7 +54,6 @@ return array(
 	'developers:entity_explorer:info:attributes' => 'Vlastnosti',
 	'developers:entity_explorer:info:metadata' => 'Metadata',
 	'developers:entity_explorer:info:relationships' => 'Relace',
-	'developers:entity_explorer:info:private_settings' => 'Neveřejná nastavení',
 	'developers:entity_explorer:delete_entity' => 'Odebrat tuto entitu',
 	
 	// inspection
@@ -62,7 +61,6 @@ return array(
 	'developers:inspect:actions' => 'Akce',
 	'developers:inspect:events' => 'Události',
 	'developers:inspect:menus' => 'Nabídky',
-	'developers:inspect:pluginhooks' => 'Zapojení doplňků',
 	'developers:inspect:priority' => 'Priorita',
 	'developers:inspect:simplecache' => 'Simple cache',
 	'developers:inspect:views' => 'Pohledy',

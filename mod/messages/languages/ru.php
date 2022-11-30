@@ -25,8 +25,6 @@ return array(
 	'messages:toggle' => 'Отметить все',
 	'messages:markread' => 'Отметить прочитанными',
 
-	'notification:method:site' => 'Сайт',
-
 	'messages:error' => 'Возникла проблема с сохранением вашего сообщения. Попробуйте еще раз.',
 
 	'item:object:messages' => 'Сообщение',

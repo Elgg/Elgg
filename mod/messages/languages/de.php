@@ -25,8 +25,6 @@ return array(
 	'messages:toggle' => 'Alle auswählen',
 	'messages:markread' => 'Als gelesen markieren',
 
-	'notification:method:site' => 'Seite',
-
 	'messages:error' => 'Beim Speichern Deiner Nachricht ist ein Problem aufgetreten. Bitte versuche es noch einmal.',
 
 	'item:object:messages' => 'Nachricht',

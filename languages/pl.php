@@ -21,7 +21,6 @@ return array(
 	'loginok' => "Zostałeś zalogowany.",
 	'login:empty' => "Wymagana jest nazwa użytkownika lub adres e-mail.",
 	'login:baduser' => "Nie można było wczytać konta użytkownika.",
-	'auth:nopams' => "Błąd wewnętrzny. Brak zainstalowanej metody uwierzytelniania użytkowników.",
 
 	'logout' => "Wyloguj",
 	'logoutok' => "Zostałeś wylogowany.",
@@ -43,22 +42,14 @@ return array(
 	'actionnotfound' => "Nie odnaleziono pliku akcji %s.",
 	'actionunauthorized' => 'Nie masz uprawnień do wykonania tej akcji.',
 
-	'ajax:error' => 'Unexpected error while performing an AJAX call. Maybe the connection to the server is lost.',
-	'ajax:not_is_xhr' => 'You cannot access AJAX views directly',
-
 	'PluginException:CannotStart' => '%s (guid: %s) nie mógł wystartować i został wyłączony. Przyczyna: %s',
 	'PluginException:InvalidID' => "%s jest niepoprawnym identyfikatorem rozszerzenia.",
-	'PluginException:InvalidPath' => "%s jest niepoprawną ścieżką rozszerzenia.",
 	'ElggPlugin:MissingID' => 'Brak identyfikatora rozszerzenia (guid %s)',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Nie można wczytać %s dla rozszerzenia %s (guid: %s) w %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Nie można otworzyć katalogu widoków rozszerzenia %s (guid: %s) w %s.',
 	'ElggPlugin:InvalidAndDeactivated' => '%s jest niepoprawnym rozszerzeniem i został wyłączony.',
 
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Inne rozszerzenia korzystają z %s jako zależności. Aby go wyłączyć, musisz najpierw wyłączyć następujące rozszerzenia: %s',
-
-	'ElggMenuBuilder:Trees:NoParents' => 'Menu items found without parents to link them to',
-	'ElggMenuBuilder:Trees:OrphanedChild' => 'Menu item [%s] found with a missing parent[%s]',
-	'ElggMenuBuilder:Trees:DuplicateChild' => 'Duplicate registration found for menu item [%s]',
 
 	'RegistrationException:EmptyPassword' => 'Hasło nie może być puste',
 	'RegistrationException:PasswordMismatch' => 'Hasła muszą być jednakowe',
@@ -69,9 +60,6 @@ return array(
 	'LoginException:ChangePasswordFailure' => 'Nie powiodła się weryfikacja obecnego hasła.',
 	'LoginException:Unknown' => 'Nie można się zalogować z powodu nieznanego błędu.',
 
-	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
-	'BadRequestException' => 'Bad request',
-
 	'viewfailure' => 'Wystąpił wewnętrzny błąd w widoku %s',
 	'changebookmark' => 'Proszę zaktualizować swoją zakładkę dla tej strony',
 	'error:missing_data' => 'Zabrakło pewnych danych w twoim zapytaniu',
@@ -80,10 +68,6 @@ return array(
 
 	'error:default:title' => 'Ojoj...',
 	'error:default:content' => 'Kurza twarz... coś poszło nie tak',
-	'error:400:title' => 'Bad request',
-	'error:400:content' => 'Sorry. The request is invalid or incomplete.',
-	'error:403:title' => 'Forbidden',
-	'error:403:content' => 'Sorry. You are not allowed to access the requested page.',
 	'error:404:title' => 'Nie znaleziono strony',
 	'error:404:content' => 'Przepraszamy. Nie można znaleźć wskazanej strony.',
 
@@ -153,8 +137,6 @@ return array(
 	'widget:delete' => 'Usuń %s',
 	'widget:edit' => 'Personalizuj ten gadżet',
 
-	'widgets' => "Gadżety",
-	'widget' => "Gadżet",
 	'item:object:widget' => "Gadżety",
 	'collection:object:widget' => 'Gadżety',
 	'widgets:add:success' => "Gadżet dodany pomyślnie.",
@@ -185,20 +167,11 @@ return array(
 	'friends' => "Znajomi",
 
 	'avatar' => 'Awatar',
-	'avatar:noaccess' => "Nie masz uprawnień aby edytować awatar tego użytkownika",
-	'avatar:create' => 'Utwórz swój awatar',
 	'avatar:edit' => 'Edytuj awatar',
-	'avatar:upload' => 'Wgraj nowy awatar',
-	'avatar:current' => 'Obecny awatar',
-	'avatar:remove' => 'Usuń obecny awatar i ustaw domyślną ikonę',
-	'avatar:crop:title' => 'Narzędzie do przycinania awatara',
 	'avatar:upload:instructions' => "Twój awatar jest wyświetlany wszędzie na stronie. Możesz go zmieniać tak często jak masz na to ochotę. (Akceptowane formaty plików: GIF, JPG lub PNG)",
-	'avatar:create:instructions' => 'Kliknij i przeciągnij kwadrat poniżej aby zaznaczyć obszar przycięcia awatara. Podgląd pokaże się po prawej. Gdy będziesz usatysfakcjonowany wyglądem, kliknij \'Utwórz awatar\'. Przycięta wersja będzie używana wszędzie na stronie jako twój awatar.',
 	'avatar:upload:success' => 'Pomyślnie wgrano awatar',
 	'avatar:upload:fail' => 'Nie powiodło się wgrywanie awatara',
 	'avatar:resize:fail' => 'Nie powiodło się przeskalowywanie awatara',
-	'avatar:crop:success' => 'Pomyślnie przycięto awatar',
-	'avatar:crop:fail' => 'Nie powiodło się przycinanie awatara',
 	'avatar:remove:success' => 'Usunięto awatar',
 	'avatar:remove:fail' => 'Nie powiodło się usuwanie awatara',
 
@@ -218,10 +191,7 @@ return array(
  */
 	'river' => "Aktywność",
 	'river:update:user:avatar' => '%s ma nowy awatar',
-	'river:noaccess' => 'Nie masz uprawnień do wyświetlania tego elementu.',
 	'river:posted:generic' => '%s napisał',
-	'riveritem:single:user' => 'jakiś użytkownik',
-	'riveritem:plural:user' => 'jacyś użytkownicy',
 	'river:ingroup' => 'w grupie %s',
 	'river:none' => 'Brak aktywności',
 	'river:update' => 'Aktualizuj dla %s',
@@ -248,10 +218,6 @@ return array(
  */
 
 	'search' => "Szukaj",
-	'searchtitle' => "Szukaj: %s",
-	'users:searchtitle' => "Szukano: %s",
-	'groups:searchtitle' => "Wyszukiwanie grup: %s",
-	'advancedsearchtitle' => "%s z pasujących wyników %s",
 	'notfound' => "Nie znaleziono nic.",
 
 	'viewtype:change' => "Wybierz typ wyświetlania wyników",
@@ -282,9 +248,7 @@ return array(
 	'registration:passwordnotvalid' => 'Twoje hasło które podałeś jest niepoprawne dla systemu.',
 	'registration:usernamenotvalid' => 'Użytkownik którego nazwę podałeś jest niepoprawny dla systemu.',
 
-	'adduser' => "Dodaj użytkownika",
 	'adduser:ok' => "Nowy użytkownik dodany pomyślnie.",
-	'adduser:bad' => "Nowy użytkownik nie został utworzony.",
 
 	'user:set:name' => "Ustawienia nazwy konta",
 	'user:name:label' => "Twoje imię",
@@ -296,23 +260,17 @@ return array(
 	'user:password:label' => "Twoje nowe hasło",
 	'user:password2:label' => "Twoje nowe hasło ponownie",
 	'user:password:success' => "Zmiana hasła",
-	'user:password:fail' => "Nie można zmienić twojego hasła.",
-	'user:password:fail:notsame' => "Hasła nie są takie same!",
-	'user:password:fail:tooshort' => "Hasło jest za krótkie!",
-	'user:password:fail:incorrect_current_password' => 'Wprowadzono niepoprawne aktualne hasło.',
 	'user:changepassword:unknown_user' => 'Niepoprawny użytkownik.',
 	'user:changepassword:change_password_confirm' => 'Twoje hasło zostanie zmienione.',
 
 	'user:set:language' => "Ustawienia języka",
 	'user:language:label' => "Twój język",
 	'user:language:success' => "Ustawienia twojego języka zostały pomyśłnie aktualizowane.",
-	'user:language:fail' => "Twój język nie został zapisany.",
 
 	'user:username:notfound' => 'Użytkownik %s nie znaleziony.',
 
 	'user:password:lost' => 'Zapomniane hasło',
 	'user:password:changereq:success' => 'Nowe hasło wygenerowano pomyślnie, wysłano e-mail.',
-	'user:password:changereq:fail' => 'Nie można wygenerowaćnowego hasła.',
 
 	'user:password:text' => 'Aby wygenerować nowe hasło wpisz poniżej swoją nazwę użytkownika. Otrzymasz e-mail z linkiem weryfikacyjnym, po kliknięciu nowe hasło zostanie wysłane.',
 
@@ -337,7 +295,6 @@ return array(
 	'admin:configuration:success' => "Twoje ustawienia zostały zapisane.",
 	'admin:configuration:fail' => "Twoje ustawienie nie zostały zapisane.",
 	'admin:configuration:dataroot:relative_path' => 'Nie można ustawić "%s" jako dataroot, ponieważ nie jest to ścieżka bezwzględna.',
-	'admin:configuration:default_limit' => 'The number of items per page must be at least 1.',
 
 	'admin:unknown_section' => 'Niepoprawna sekcja panelu administracyjnego.',
 
@@ -401,8 +358,6 @@ return array(
 	'admin:widget:banned_users:help' => 'Wyświetla zbanowanych użytkowników',
 	'admin:widget:content_stats' => 'Statystyki treści',
 	'admin:widget:content_stats:help' => 'Śledź treści tworzone przez twoich użytkowników',
-	'admin:widget:cron_status' => 'Cron status',
-	'admin:widget:cron_status:help' => 'Shows the status of the last time cron jobs finished',
 	'admin:statistics:queue:name' => 'Nazwa',
 
 	'admin:widget:admin_welcome' => 'Witaj',
@@ -474,15 +429,9 @@ return array(
 	'admin:plugins:opt:linktext' => "Konfiguracja narzędzi...",
 	'admin:plugins:opt:description' => "Konfigurowanie narzędzi zainstalowanych w serwisie. ",
 	'admin:plugins:label:id' => "ID",
-	'admin:plugins:label:name' => "Name",
-	'admin:plugins:label:copyright' => "Copyright",
 	'admin:plugins:label:categories' => 'Kategorie',
 	'admin:plugins:label:licence' => "Licencja",
 	'admin:plugins:label:website' => "Adres",
-	'admin:plugins:label:info' => "Info",
-	'admin:plugins:label:files' => "Files",
-	'admin:plugins:label:resources' => "Resources",
-	'admin:plugins:label:screenshots' => "Screenshots",
 	'admin:plugins:label:repository' => "Kod",
 	'admin:plugins:label:bugtracker' => "Zgłoś problem",
 	'admin:plugins:label:donate' => "Wesprzyj",
@@ -582,19 +531,11 @@ return array(
  * User settings
  */
 
-	'usersettings:description' => "Panel ustawień użytkownika pozwala na kontrolę wszystkich ustawień osobistych oraz zachowania rozszerzeń. Wybierz opcję poniżej, aby rozpocząć.",
-
-	'usersettings:statistics' => "Twoje statystyki",
-	'usersettings:statistics:opt:description' => "Zobacz informacje statystyczne na temat użytkowników i obiektów na stronie.",
+		'usersettings:statistics' => "Twoje statystyki",
 	'usersettings:statistics:opt:linktext' => "Ustawienia konta",
-	'usersettings:user:opt:description' => "To pozwala na kontrolę ustawień użytkownika.",
 	'usersettings:user:opt:linktext' => "Zmień swoje ustawienia",
 
-	'usersettings:plugins' => "Narzędzia",
-	'usersettings:plugins:opt:description' => "Konfiguracja ustawień dla twoich aktywnych narzędzi.",
 	'usersettings:plugins:opt:linktext' => "Konfiguruj swoje narzędzia.",
-
-	'usersettings:plugins:description' => "Panel umożliwia na kontrolę i konfigurację ustawień osobistych, narzędzi zainstalowanych przez administratora systemu.",
 	
 	'usersettings:statistics:yourdetails' => "Twoje szczegóły",
 	'usersettings:statistics:label:name' => "Pełne imię",
@@ -612,9 +553,6 @@ return array(
 	'river:owner' => 'Aktywność użytkownika %s',
 	'river:friends' => 'Aktywność znajomych',
 	'river:select' => 'Pokaż %s',
-	'river:comments:more' => '+%u więcej',
-	'river:comments:all' => 'View all %u comments',
-	'river:generic_comment' => 'skomentował %s %s',
 
 /**
  * Icons
@@ -847,19 +785,6 @@ return array(
 	'date:month:11' => 'Listopad %s',
 	'date:month:12' => 'Grudzień %s',
 
-	'date:month:short:01' => 'Jan %s',
-	'date:month:short:02' => 'Feb %s',
-	'date:month:short:03' => 'Mar %s',
-	'date:month:short:04' => 'Apr %s',
-	'date:month:short:05' => 'May %s',
-	'date:month:short:06' => 'Jun %s',
-	'date:month:short:07' => 'Jul %s',
-	'date:month:short:08' => 'Aug %s',
-	'date:month:short:09' => 'Sep %s',
-	'date:month:short:10' => 'Oct %s',
-	'date:month:short:11' => 'Nov %s',
-	'date:month:short:12' => 'Dec %s',
-
 	'date:weekday:0' => 'Niedziela',
 	'date:weekday:1' => 'Poniedziałek',
 	'date:weekday:2' => 'Wtorek',
@@ -867,14 +792,6 @@ return array(
 	'date:weekday:4' => 'Czwartek',
 	'date:weekday:5' => 'Piątek',
 	'date:weekday:6' => 'Sobota',
-
-	'date:weekday:short:0' => 'Sun',
-	'date:weekday:short:1' => 'Mon',
-	'date:weekday:short:2' => 'Tue',
-	'date:weekday:short:3' => 'Wed',
-	'date:weekday:short:4' => 'Thu',
-	'date:weekday:short:5' => 'Fri',
-	'date:weekday:short:6' => 'Sat',
 
 	'interval:minute' => 'Co minutę',
 	'interval:fiveminute' => 'Co pięć minut',
@@ -892,10 +809,6 @@ return array(
 
 	'installation:sitename' => "Nazwa strony (np. \"Moja strona\")",
 	'installation:sitedescription' => "Krótki opis strony (opcjonalny)",
-	'installation:wwwroot' => "Pełny adres URL strony:",
-	'installation:path' => "Pełna ścieżka do katalogu głównego Elgg.",
-	'installation:dataroot' => "Pełna ścieżka do katalogu gdzie zapisywane będą pliki.",
-	'installation:dataroot:warning' => "Musisz utworzyć katalog ręcznie. Musi on znajdować się poza katalogiem Elgg.",
 	'installation:sitepermissions' => "DOmyślne uprawnienia dostępu:",
 	'installation:language' => "Domyślny język dla twojej strony:",
 	'installation:debug' => "Tryb debuggera dostarcza dodatkowe informacje użyteczne przy diagnozowaniu błędów, spowalnia jednak to znacznie system, używaj tylko wtedy gdy masz problem.",
@@ -912,10 +825,7 @@ return array(
 	'installation:walled_garden:description' => 'Włącz tryb prywatnej sieci dla swojej strony. To uniemożliwi niezalogowanym użytkownikom, na wyświetlanie jakichkolwiek stron, poza wyraźnie wskazanymi jako publiczne.',
 	'installation:walled_garden:label' => 'Pozwól na przeglądanie stron tylko zalogowanym użytkownikom',
 
-	'installation:view' => "Wprowadź widok, który będzie domyślnie używany przez twoją stronę lub pozostaw wartość domyślną (w razie wątpliwości, pozostaw wartość domyślną):",
-
 	'installation:siteemail' => "Adres e-mail strony (używany do wysyłania systemowych e-mail)",
-	'installation:default_limit' => "Default number of items per page",
 
 	'admin:site:access:warning' => "Modyfikacja ustawienia poziomu dostępu, wpływa wyłącznie na treści tworzone w przyszłości.",
 	'installation:allow_user_default_access:description' => "Jeśli zaznaczone, indywidualni użytkownicy będą mogli ustawić własny, domyślny poziom dostępu nadpisujący systemowy domyślny poziom dostępu.",
@@ -1030,7 +940,6 @@ return array(
  */
 
 	'byline' => 'Przez %s',
-	'byline:ingroup' => 'in the group %s',
 	'entity:delete:success' => 'Element %s został skasowany',
 	'entity:delete:fail' => 'Element %s nie został skasowany',
 
@@ -1217,6 +1126,4 @@ return array(
 	"za" => "Zuang",
 	"zh" => "Chinese",
 	"zu" => "Zulu",
-
-	"field:required" => 'Required',
 );

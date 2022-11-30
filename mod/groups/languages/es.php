@@ -28,12 +28,10 @@ return array(
 	'groups:invitations' => 'Invitaciones de grupo',
 	'groups:invitations:pending' => 'Invitaciones de grupo (%s)',
 
-	'groups:icon' => 'Icono de grupo (dejar en blanco para no hacer cambios)',
 	'groups:name' => 'Nombre del grupo',
 	'groups:description' => 'Descripci&oacute;n completa',
 	'groups:briefdescription' => 'Breve descripci&oacute;n',
 	'groups:interests' => 'Etiquetas',
-	'groups:website' => 'Sitio Web',
 	'groups:members' => 'Miembros del grupo',
 
 	'groups:members:title' => 'Miembros de %s',
@@ -43,14 +41,12 @@ return array(
 	'groups:content_access_mode:warning' => "Advertencia: Cambiar esta preferencia no cambiara los permisos de acceso al contenido existente en el grupo.",
 	'groups:content_access_mode:unrestricted' => "Sin restringir &mdash; el acceso depende de la configuración individual de cada contenido.",
 	'groups:content_access_mode:membersonly' => "Solo miembros - Los que no son miembros nunca podrán accesar al contenido del grupo",
-	'groups:access' => "Permisos de acceso",
 	'groups:owner' => "Propietario",
 	'groups:owner:warning' => "Advertencia: si cambia este valor, usted ya no será el dueño de este grupo.",
 	'groups:widget:num_display' => 'N&uacute;mero de miembros a mostrar',
 	'widgets:a_users_groups:name' => 'Miembros del grupo',
 	'widgets:a_users_groups:description' => 'Muestra los grupos en dond eeres miembro',
 
-	'groups:noaccess' => 'No hay acceso al grupo',
 	'groups:cantcreate' => 'No se puede crear un grupo. Sólo los administradores pueden.',
 	'groups:cantedit' => 'No puedes editar este grupo',
 	'groups:saved' => 'Grupo guardado',
@@ -84,7 +80,6 @@ return array(
 
 	'groups:open' => "grupo abierto",
 	'groups:closed' => "grupo cerrado",
-	'groups:member' => "miembros",
 
 	'groups:more' => 'M&aacute;s grupos',
 	'groups:none' => 'No hay grupos',

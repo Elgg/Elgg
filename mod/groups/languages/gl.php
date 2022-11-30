@@ -28,12 +28,10 @@ return array(
 	'groups:invitations' => 'Invitacións ao grupo',
 	'groups:invitations:pending' => 'Invitacións ao grupo (%s)',
 
-	'groups:icon' => 'Icona do grupo (deixe o cambio baleiro para mantela)',
 	'groups:name' => 'Nome',
 	'groups:description' => 'Descrición',
 	'groups:briefdescription' => 'Descrición breve.',
 	'groups:interests' => 'Etiquetas',
-	'groups:website' => 'Sitio web',
 	'groups:members' => 'Membros',
 
 	'groups:members:title' => 'Membros de %s',
@@ -43,14 +41,12 @@ return array(
 	'groups:content_access_mode:warning' => "Aviso: cambiar esta opción non afectará aos permisos de acceso do contido existente do grupo.",
 	'groups:content_access_mode:unrestricted' => "Ilimitado — O acceso ao contido depende da configuración de acceso de cada contido.",
 	'groups:content_access_mode:membersonly' => "Só membros — Só os membros do grupo poden acceder ao seu contido.",
-	'groups:access' => "Permisos de acces",
 	'groups:owner' => "Administrador",
 	'groups:owner:warning' => "Aviso: se cambia o valor, deixará de ser o administrador do grupo.",
 	'groups:widget:num_display' => 'Número de grupos para mostrar',
 	'widgets:a_users_groups:name' => 'Grupos aos que pertence',
 	'widgets:a_users_groups:description' => 'Mostrar os grupos aos que pertence no seu perfil.',
 
-	'groups:noaccess' => 'Non ten acceso ao grupo.',
 	'groups:cantcreate' => 'Só os administradores poden crear grupos.',
 	'groups:cantedit' => 'Non pode editar o grupo.',
 	'groups:saved' => 'Gardouse o grupo.',
@@ -84,7 +80,6 @@ return array(
 
 	'groups:open' => "Grupo abert",
 	'groups:closed' => "Grupo pechado",
-	'groups:member' => "Membros",
 
 	'groups:more' => 'Máis grupos',
 	'groups:none' => 'Non hai grupos.',
@@ -117,7 +112,6 @@ return array(
 	'groups:addedtogroup' => 'Engadiuse o usuario ao grupo.',
 	'groups:joinrequestnotmade' => 'Non foi posíbel solicitar unirse ao grupo.',
 	'groups:joinrequestmade' => 'Solicitouse unirse ao grupo.',
-	'groups:joinrequest:exists' => 'You already requested membership for this group',
 	'groups:joined' => 'Uniuse ao grupo.',
 	'groups:left' => 'Deixou o grupo.',
 	'groups:userinvited' => 'Invitouse o usuario.',

@@ -21,13 +21,10 @@ return array(
 	'loginok' => "Accedeu correctamente.",
 	'login:empty' => "Debe introducir o seu nome de usuario ou conta de correo electrónico e mailo seu contrasinal.",
 	'login:baduser' => "Non foi posíbel cargar a súa conta de usuario.",
-	'auth:nopams' => "Produciuse un erro interno. Non hai ningún método de autenticación de usuarios instalado.",
 
 	'logout' => "Saír",
 	'logoutok' => "Pechouse a súa sesión.",
 	'logouterror' => "Non foi posíbel pechar a súa sesión. Inténteo de novo.",
-	'session_expired' => "Your session has expired. Please <a href='javascript:location.reload(true)'>reload</a> the page to log in.",
-	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
 
 	'loggedinrequired' => "Identifíquese para poder ver a páxina.",
 	'adminrequired' => "Debe ser administrador para poder ver a páxina.",
@@ -49,7 +46,6 @@ return array(
 
 	'PluginException:CannotStart' => 'O complemento «%s» (GUID: %s) non pode iniciarse e foi desactivado. Motivo: %s',
 	'PluginException:InvalidID' => "«%s» non é un identificador de complemento válido.",
-	'PluginException:InvalidPath' => "«%s» non é unha ruta de complemento válida.",
 	'ElggPlugin:MissingID' => 'O complemento carece de identificador (GUID: %s).',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Non é posíbel incluír «%s» para o complemento «%s» (GUID: %s) en «%s».',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Non é posíbel abrir o cartafol de vistas para o complemento «%s» (GUID: %s) en «%s».',
@@ -70,7 +66,6 @@ return array(
 	'LoginException:ChangePasswordFailure' => 'O contrasinal actual introducido non coincide co contrasinal actual real.',
 	'LoginException:Unknown' => 'Non foi posíbel autenticalo debido a un erro descoñecido.',
 
-	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
 	'BadRequestException' => 'Solicitude non válida',
 
 	'viewfailure' => 'Produciuse un erro interno na vista «%s».',
@@ -128,7 +123,6 @@ return array(
 	'password' => "Contrasinal",
 	'passwordagain' => "Contrasinal (repítaa para asegurarse)",
 	'admin_option' => "Converter o usuario en administrador?",
-	'autogen_password_option' => "Automatically generate a secure password?",
 
 /**
  * Access
@@ -156,8 +150,6 @@ return array(
 	'widget:delete' => 'Retirar «%s»',
 	'widget:edit' => 'Personalizar o trebello',
 
-	'widgets' => "Trebellos",
-	'widget' => "Trebello",
 	'item:object:widget' => "Trebellos",
 	'collection:object:widget' => 'Trebellos',
 	'widgets:add:success' => "O trebello engadiuse correctamente.",
@@ -188,20 +180,11 @@ return array(
 	'friends' => "Contactos",
 
 	'avatar' => 'Imaxe de perfi',
-	'avatar:noaccess' => "Non ten permisos para editar a imaxe de perfil deste usuario.",
-	'avatar:create' => 'Crear a imaxe de perfil',
 	'avatar:edit' => 'Editar a imaxe de perfil',
-	'avatar:upload' => 'Enviar unha nova imaxe de perfil',
-	'avatar:current' => 'Imaxe de perfil actual',
-	'avatar:remove' => 'Eliminar a súa imaxe de perfil e usar a icona predeterminada',
-	'avatar:crop:title' => 'Ferramenta para recortar a imaxe de perfil',
 	'avatar:upload:instructions' => "A súa imaxe de perfil móstrase en varias partes do sitio. Pode cambiala sempre que queira. Acéptanse os seguintes formatos de imaxe: GIF, JPG e PNG.",
-	'avatar:create:instructions' => 'Prema e arrastre na imaxe para formar un cadrado. O contido do cadrado será a súa imaxe de perfil. A caixa da dereita mostrará unha vista previa. Cando estea contento co resultado, prema «Crear a imaxe de perfil».',
 	'avatar:upload:success' => 'Enviouse da imaxe de perfil.',
 	'avatar:upload:fail' => 'Non foi posíbel enviar a imaxe de perfil.',
 	'avatar:resize:fail' => 'Non foi posíbel axustar o tamaño da imaxe de perfil.',
-	'avatar:crop:success' => 'Recortouse a imaxe de perfil.',
-	'avatar:crop:fail' => 'Non foi posíbel recortar a imaxe de perfil.',
 	'avatar:remove:success' => 'Eliminouse a imaxe de perfil.',
 	'avatar:remove:fail' => 'Non foi posíbel eliminar a imaxe de perfil.',
 
@@ -221,10 +204,7 @@ return array(
  */
 	'river' => "Onda",
 	'river:update:user:avatar' => '%s ten unha nova imaxe de perfil.',
-	'river:noaccess' => 'Non ten permisos para ver isto.',
 	'river:posted:generic' => '%s publicou',
-	'riveritem:single:user' => 'un usuario',
-	'riveritem:plural:user' => 'algúns usuarios',
 	'river:ingroup' => 'no grupo %s',
 	'river:none' => 'Non hai actividade.',
 	'river:update' => 'Actualización de %s',
@@ -251,10 +231,6 @@ return array(
  */
 
 	'search' => "Buscar",
-	'searchtitle' => "Buscar: %s",
-	'users:searchtitle' => "Buscando usuarios: %s",
-	'groups:searchtitle' => "Buscando grupos: %s",
-	'advancedsearchtitle' => "%s con resultados para %s",
 	'notfound' => "Non se atopou ningún resultado.",
 
 	'viewtype:change' => "Cambiar o tipo de lista",
@@ -287,9 +263,7 @@ return array(
 	'registration:passwordnotvalid' => 'O seu contrasinal non está permitido.',
 	'registration:usernamenotvalid' => 'O seu nome de usuario non é válido.',
 
-	'adduser' => "Engadir o usuario",
 	'adduser:ok' => "Engadiuse o usuario.",
-	'adduser:bad' => "Non foi posíbel crear o usuario.",
 
 	'user:set:name' => "Configuración do nome da conta",
 	'user:name:label' => "Nome para mostrar",
@@ -301,23 +275,17 @@ return array(
 	'user:password:label' => "Contrasinal novo",
 	'user:password2:label' => "Contrasinal novo (repítao)",
 	'user:password:success' => "Cambiouse o contrasinal.",
-	'user:password:fail' => "Non foi posíbel cambiar o contrasinal.",
-	'user:password:fail:notsame' => "Os contrasinais non coinciden.",
-	'user:password:fail:tooshort' => "O contrasinal é curto de máis.",
-	'user:password:fail:incorrect_current_password' => 'O contrasinal actual introducido non é correcto.',
 	'user:changepassword:unknown_user' => 'O usuario non é válido.',
 	'user:changepassword:change_password_confirm' => 'Isto cambiará o seu contrasinal.',
 
 	'user:set:language' => "Configuración do idioma",
 	'user:language:label' => "Idioma",
 	'user:language:success' => "Actualizouse a configuración do idioma.",
-	'user:language:fail' => "Non foi posíbel gardar a configuración do idioma.",
 
 	'user:username:notfound' => 'Non se atopou o nome de usuario «%s».',
 
 	'user:password:lost' => 'Perdín o contrasinal',
 	'user:password:changereq:success' => 'Solicitou un novo contrasinal, recibirá un correo en breves.',
-	'user:password:changereq:fail' => 'Non foi posíbel solicitar un novo contrasinal.',
 
 	'user:password:text' => 'Para solicitar un novo contrasinal, escriba o seu nome de usuario ou a súa conta de correo electrónico e prema o botón de «Solicitar».',
 
@@ -355,9 +323,6 @@ return array(
 	'admin:cron:period' => 'Período de Cron',
 	'admin:cron:friendly' => 'Completado por última vez',
 	'admin:cron:date' => 'Data e hora',
-	'admin:cron:msg' => 'Message',
-	'admin:cron:started' => 'Cron jobs for "%s" started at %s',
-	'admin:cron:complete' => 'Cron jobs for "%s" completed at %s',
 
 	'admin:appearance' => 'Aparencia',
 	'admin:administer_utilities' => 'Utilidades',
@@ -487,9 +452,6 @@ return array(
 	'admin:plugins:label:licence' => "Licenza",
 	'admin:plugins:label:website' => "URL",
 	'admin:plugins:label:info' => "Info",
-	'admin:plugins:label:files' => "Files",
-	'admin:plugins:label:resources' => "Resources",
-	'admin:plugins:label:screenshots' => "Screenshots",
 	'admin:plugins:label:repository' => "Código",
 	'admin:plugins:label:bugtracker' => "Informar dun problema",
 	'admin:plugins:label:donate' => "Doar",
@@ -503,8 +465,6 @@ return array(
 	'admin:plugins:warning:invalid' => 'O complemento non é válido: %s',
 	'admin:plugins:warning:invalid:check_docs' => 'Na <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">documentación de Elss</a> atopará consellos para evitar e solucionar problemas.',
 	'admin:plugins:cannot_activate' => 'Non pode activarse',
-	'admin:plugins:already:active' => 'The selected plugin(s) are already active.',
-	'admin:plugins:already:inactive' => 'The selected plugin(s) are already inactive.',
 
 	'admin:plugins:set_priority:yes' => "Cambiouse a posición de «%s».",
 	'admin:plugins:set_priority:no' => "Non foi posíbel cambiar a posición de «%s».",
@@ -592,21 +552,13 @@ return array(
  * User settings
  */
 
-	'usersettings:description' => "O panel de configuración de usuarios permítelle controlar a súa configuración persoal, desde a xestión de usuarios ata o comportamento dos complementos. Escolla unha das seguintes opcións para comezar.",
-
 	'usersettings:statistics' => "Estatísticas súas",
-	'usersettings:statistics:opt:description' => "Ver información estatística sobre usuarios e obxectos do sitio.",
 	'usersettings:statistics:opt:linktext' => "Estatísticas das contas",
 
 	'usersettings:user' => "Configuración de %s",
-	'usersettings:user:opt:description' => "Isto permítelle controlar a configuración dos usuarios",
 	'usersettings:user:opt:linktext' => "Cambiar a súa configuración",
 
-	'usersettings:plugins' => "Ferramentas",
-	'usersettings:plugins:opt:description' => "Configurar as súas ferramentas activas",
 	'usersettings:plugins:opt:linktext' => "Configurar as súas ferramentas",
-
-	'usersettings:plugins:description' => "Este panel permítelle controlar e cambiar a súa configuración persoal das ferramentas instaladas polo administrador do sistema.",
 	
 	'usersettings:statistics:yourdetails' => "Detalles persoais",
 	'usersettings:statistics:label:name' => "Nome complet",
@@ -624,9 +576,7 @@ return array(
 	'river:owner' => 'Actividade de %s',
 	'river:friends' => 'Actividade dos contactos',
 	'river:select' => 'Mostrar %s',
-	'river:comments:more' => '+%u máis',
 	'river:comments:all' => 'Ver os %u comentarios',
-	'river:generic_comment' => 'deixou un comentario en %s %s',
 
 /**
  * Icons
@@ -860,19 +810,6 @@ return array(
 	'date:month:11' => '%s de novembr',
 	'date:month:12' => '%s de decembr',
 
-	'date:month:short:01' => 'Jan %s',
-	'date:month:short:02' => 'Feb %s',
-	'date:month:short:03' => 'Mar %s',
-	'date:month:short:04' => 'Apr %s',
-	'date:month:short:05' => 'May %s',
-	'date:month:short:06' => 'Jun %s',
-	'date:month:short:07' => 'Jul %s',
-	'date:month:short:08' => 'Aug %s',
-	'date:month:short:09' => 'Sep %s',
-	'date:month:short:10' => 'Oct %s',
-	'date:month:short:11' => 'Nov %s',
-	'date:month:short:12' => 'Dec %s',
-
 	'date:weekday:0' => 'Doming',
 	'date:weekday:1' => 'Luns',
 	'date:weekday:2' => 'Martes',
@@ -880,14 +817,6 @@ return array(
 	'date:weekday:4' => 'Xoves',
 	'date:weekday:5' => 'Venres',
 	'date:weekday:6' => 'Sábad',
-
-	'date:weekday:short:0' => 'Sun',
-	'date:weekday:short:1' => 'Mon',
-	'date:weekday:short:2' => 'Tue',
-	'date:weekday:short:3' => 'Wed',
-	'date:weekday:short:4' => 'Thu',
-	'date:weekday:short:5' => 'Fri',
-	'date:weekday:short:6' => 'Sat',
 
 	'interval:minute' => 'Cada minuto',
 	'interval:fiveminute' => 'Cada cindo minutos',
@@ -905,10 +834,6 @@ return array(
 
 	'installation:sitename' => "Nome do sitio:",
 	'installation:sitedescription' => "Descrición curta do sitio (opcional):",
-	'installation:wwwroot' => "URL do sitio:",
-	'installation:path' => "Ruta completa da instalación de Elgg:",
-	'installation:dataroot' => "Ruta completa do cartafol dos datos:",
-	'installation:dataroot:warning' => "Debe crear este cartafol manualmente. Debería estar fóra do cartafol de instalación de Elgg.",
 	'installation:sitepermissions' => "Permisos de acceso predeterminados:",
 	'installation:language' => "Idioma predeterminado:",
 	'installation:debug' => "Controle a cantidade de información que se garda no rexistro do servidor.",
@@ -925,8 +850,6 @@ return array(
 	'installation:walled_garden:description' => 'Active isto para evitar que usuarios anónimos poidan acceder a páxinas do sitio que non estean marcadas como públicas, como pode ser o caso das páxinas de acceso e rexistro de contas.',
 	'installation:walled_garden:label' => 'Restrinxir as páxinas a usuarios rexistrados.',
 
-	'installation:view' => "Indique a vista que se usará como vista predeterminada do sitio, ou non indique nada para usar a vista predeterminada. En caso de dúbida, deixe o campo baleiro.",
-
 	'installation:siteemail' => "Enderezo de correo electrónico do sitio (co que enviar as mensaxes do sistema):",
 	'installation:default_limit' => "Número predeterminado de elementos por páxina.",
 
@@ -936,11 +859,6 @@ return array(
 
 	'installation:simplecache:description' => "A caché simple almacena contido estático, incluídos ficheiros CSS e JavaScript, mellorando así o rendemento.",
 	'installation:simplecache:label' => "Usar a caché simple (recomendado).",
-
-	'installation:cache_symlink:description' => "The symbolic link to the simple cache directory allows the server to serve static views bypassing the engine, which considerably improves performance and reduces the server load",
-	'installation:cache_symlink:label' => "Use symbolic link to simple cache directory (recommended)",
-	'installation:cache_symlink:warning' => "Symbolic link has been established. If, for some reason, you want to remove the link, delete the symbolic link directory from your server",
-	'installation:cache_symlink:error' => "Due to your server configuration the symbolic link can not be established automatically. Please refer to the documentation and establish the symbolic link manually.",
 
 	'installation:minify:description' => "A caché simple tamén pode comprimir os ficheiros CSS e JavaScript para mellorar o rendemento. Para activar esta opción active primeiro a caché simple.",
 	'installation:minify_js:label' => "Comprimir o código JavaScript (recomendado).",
@@ -1050,13 +968,6 @@ Se o erro persiste, comprobe o rexistro de erros do servidor, a ver se pode inde
  */
 
 	'byline' => 'De %s',
-	'byline:ingroup' => 'in the group %s',
-	
-	'entity:delete:item' => 'Item',
-	'entity:delete:item_not_found' => 'Item not found.',
-	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
-	'entity:delete:success' => '%s has been deleted.',
-	'entity:delete:fail' => '%s could not be deleted.',
 
 /**
  * Annotations
@@ -1245,6 +1156,4 @@ Se o erro persiste, comprobe o rexistro de erros do servidor, a ver se pode inde
 	"zh" => "Chinés",
 	"zh_hans" => "Chinese Simplified",
 	"zu" => "Zulú",
-
-	"field:required" => 'Required',
 );

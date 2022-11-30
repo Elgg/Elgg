@@ -34,12 +34,10 @@ return array(
 	'relationship:invited' => '%2$s a été invité à rejoindre %1$s',
 	'relationship:membership_request' => '%s a demandé à rejoindre %s',
 
-	'groups:icon' => 'Icône du groupe (laisser vide pour ne pas changer)',
 	'groups:name' => 'Nom du groupe',
 	'groups:description' => 'Description',
 	'groups:briefdescription' => 'Brève description',
 	'groups:interests' => 'Tags',
-	'groups:website' => 'Site web',
 	'groups:members' => 'Membres du groupe',
 
 	'groups:members_count' => '%s membres',
@@ -51,14 +49,12 @@ return array(
 	'groups:content_access_mode:warning' => "Attention : le changement de ce paramètre ne changera pas le niveau d'accès des contenus déjà publiés.",
 	'groups:content_access_mode:unrestricted' => "Sans restriction - Les membres peuvent définir les accès au niveau de chaque nouvelle publication",
 	'groups:content_access_mode:membersonly' => "Membres seulement - Seuls les membres du groupe peuvent accéder à son contenu",
-	'groups:access' => "Autorisations d'accès",
 	'groups:owner' => "Propriétaire",
 	'groups:owner:warning' => "Attention : si vous faites cette modification vous ne serez plus le propriétaire du groupe.",
 	'groups:widget:num_display' => 'Nombre de groupes à afficher',
 	'widgets:a_users_groups:name' => 'Adhésion au groupe',
 	'widgets:a_users_groups:description' => 'Affiche les groupes dont vous êtes membre sur votre profil',
 
-	'groups:noaccess' => 'Vous n\'avez pas accès au groupe',
 	'groups:cantcreate' => 'Vous ne pouvez créer un groupe. Seuls les administrateurs le peuvent.',
 	'groups:cantedit' => 'Vous ne pouvez pas modifier ce groupe',
 	'groups:saved' => 'Groupe enregistré',
@@ -96,7 +92,6 @@ return array(
 
 	'groups:open' => "groupe ouvert",
 	'groups:closed' => "groupe fermé",
-	'groups:member' => "membres",
 	'groups:search' => "Rechercher des groupes",
 
 	'groups:more' => 'Plus de groupes',

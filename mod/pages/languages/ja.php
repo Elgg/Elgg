@@ -41,9 +41,6 @@ return array(
 このページの表示とコメントは:
 %s',
 
-	'pages:more' => 'More pages',
-	'pages:none' => 'No pages created yet',
-
 	/**
 	* River
 	**/
@@ -67,7 +64,6 @@ return array(
 	'pages:cantedit' => 'このページの編集はできません。',
 	'pages:saved' => 'ページを保存しました。',
 	'pages:notsaved' => 'ページを保存できません。',
-	'pages:error:no_title' => 'このページにはタイトルが付けられていません。タイトルをつけてください。',
 	'entity:delete:object:page:success' => 'ページを削除しました。',
 
 	/**

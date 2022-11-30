@@ -23,8 +23,6 @@ return array(
 	'thewire:tags' => "Wire indlæg tagged med '%s'",
 	'thewire:noposts' => "Ingen wire indlæg endnu",
 
-	'thewire:by' => 'Wire post by %s',
-	
 	/**
 	 * The wire river
 	 */
@@ -55,10 +53,4 @@ return array(
 	'thewire:notify:reply' => '%s svarede på %s på the wire:',
 	'thewire:notify:post' => '%s skrev på the wire:',
 	'thewire:notify:footer' => "See og svar:\n%s",
-
-	/**
-	 * Settings
-	 */
-	'thewire:settings:limit' => "Maximum number of characters for wire messages:",
-	'thewire:settings:limit:none' => "No limit",
 );

@@ -33,12 +33,10 @@ return array(
 	'relationship:invited' => '%2$s a fost invitat/ă să se alăture pe %1$s',
 	'relationship:membership_request' => '%s a cerut să se alăture pe %s',
 
-	'groups:icon' => 'Imaginea grupului (lasă gol fără schimbare)',
 	'groups:name' => 'Numele grupului',
 	'groups:description' => 'Descriere',
 	'groups:briefdescription' => 'Descriere scurtă',
 	'groups:interests' => 'Etichete',
-	'groups:website' => 'Site web',
 	'groups:members' => 'Membri grupului',
 
 	'groups:members_count' => '%s membri',
@@ -50,14 +48,12 @@ return array(
 	'groups:content_access_mode:warning' => "Atenție: Schimbând această setare nu va schimba și permisiunea de acces a conținutului de grup existent.",
 	'groups:content_access_mode:unrestricted' => "Nerestricționat - Accesul depinde de setările la nivel de conținut",
 	'groups:content_access_mode:membersonly' => "Numai Membri - Cei care nu sunt membri nu pot accesa conținutul de grup",
-	'groups:access' => "Permisiuni de acces",
 	'groups:owner' => "Deținător",
 	'groups:owner:warning' => "Atenție: dacă schimbi această valoare, nu vei mai fi deținătorul acestui grup.",
 	'groups:widget:num_display' => 'Numărul de grupuri pentru afișare',
 	'widgets:a_users_groups:name' => 'Apartenența grupului',
 	'widgets:a_users_groups:description' => 'Afișează pe profilul tău grupurile din care faci parte',
 
-	'groups:noaccess' => 'Fără acces pe grup',
 	'groups:cantcreate' => 'Nu poți crea un grup. Numai administratorii pot.',
 	'groups:cantedit' => 'Nu poți edita acest grup',
 	'groups:saved' => 'Grupul a fost salvat',
@@ -95,7 +91,6 @@ return array(
 
 	'groups:open' => "grup deschis",
 	'groups:closed' => "grup închis",
-	'groups:member' => "membri",
 	'groups:search' => "Caută grupuri",
 
 	'groups:more' => 'Mai multe grupuri',

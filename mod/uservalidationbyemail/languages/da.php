@@ -12,7 +12,6 @@ return array(
 
 	'uservalidationbyemail:emailsent' => "Email sendt til <em>%s</em>",
 	'uservalidationbyemail:registerok' => "Aktiver venligst din konto ved at bekræfte din e-mail adresse i det link vi lige har sendt til dig.",
-	'uservalidationbyemail:login:fail' => "Din konto er ikke valideret så log ind forsøget mislykkedes. En ny validerings e-mail er blevet sendt.",
 
 	'uservalidationbyemail:admin:resend_validation' => 'Gensend validering',
 	'uservalidationbyemail:confirm_resend_validation' => 'Gensend validerings e-mail til %s?',

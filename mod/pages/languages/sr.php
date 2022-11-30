@@ -52,7 +52,6 @@ return array(
 	'pages:cantedit' => 'Не можете да уредите ову страну',
 	'pages:saved' => 'Страна сачувана',
 	'pages:notsaved' => 'Није било могуће сачувати ову страну',
-	'pages:error:no_title' => 'Морате да унесете наслов за ову стране.',
 	'entity:delete:object:page:success' => 'Ова страна је успешно обрисана',
 
 	/**

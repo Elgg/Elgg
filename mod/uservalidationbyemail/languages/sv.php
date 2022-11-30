@@ -12,7 +12,6 @@ return array(
 
 	'uservalidationbyemail:emailsent' => "Mejl skickat till <em>%s</em>",
 	'uservalidationbyemail:registerok' => "För att aktivera ditt konto, vänligen bekräfta din e-postadress genom att trycka på länken vi just skickade till dig.",
-	'uservalidationbyemail:login:fail' => "Ditt konto är inte validerat så inloggningsförsöket misslyckades. Ett annat valideringsmejl har skickats.",
 
 	'uservalidationbyemail:admin:resend_validation' => 'Återsända validering',
 	'uservalidationbyemail:confirm_resend_validation' => 'Återsända valideringsmejl till %s?',

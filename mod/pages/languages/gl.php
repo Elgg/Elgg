@@ -52,7 +52,6 @@ return array(
 	'pages:cantedit' => 'Non pode editar a páxina.',
 	'pages:saved' => 'Gardouse a páxina.',
 	'pages:notsaved' => 'Non foi posíbel gardar a páxina.',
-	'pages:error:no_title' => 'Debe poñerlle título á páxina.',
 	'entity:delete:object:page:success' => 'Eliminouse a páxina.',
 
 	/**

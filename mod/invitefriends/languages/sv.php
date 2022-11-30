@@ -9,8 +9,6 @@ return array(
 
 	'friends:invite' => 'Bjud in vänner',
 	
-	'invitefriends:registration_disabled' => 'Registrering för nya användare har stängts av för den här webbplatsen; du kan inte bjuda in nya användare.',
-	
 	'invitefriends:introduction' => 'För att bjuda in vänner att förenas med dig i det här nätverket, ange deras e-postadresser och ett meddelande som de kommer få i din inbjudan',
 	'invitefriends:emails' => 'E-postadresser (en per rad)',
 	'invitefriends:message' => 'Meddelande',

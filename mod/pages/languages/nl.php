@@ -68,7 +68,6 @@ Om de pagina te bekijken en te reageren, klik hier:
 	'pages:cantedit' => 'Je kunt deze pagina niet bewerken',
 	'pages:saved' => 'Pagina opgeslagen',
 	'pages:notsaved' => 'Pagina kon niet worden opgeslagen',
-	'pages:error:no_title' => 'Je moet een titel opgeven voor deze pagina.',
 	'entity:delete:object:page:success' => 'Pagina succesvol verwijderd',
 
 	/**

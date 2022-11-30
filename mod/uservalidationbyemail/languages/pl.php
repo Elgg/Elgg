@@ -11,7 +11,6 @@ return array(
 
 	'uservalidationbyemail:emailsent' => "Wysłano e-mail do <em>%s</em>",
 	'uservalidationbyemail:registerok' => "Aby aktywować swoje konto proszę potwierdź swój adres e-mail poprzez kliknięcie w link który do Ciebie wysłaliśmy.",
-	'uservalidationbyemail:login:fail' => "Twoje konto jest niezweryfikowane więc nie możesz się logować. Wysłaliśmy kolejny e-mail potwierdzający.",
 
 	'uservalidationbyemail:admin:resend_validation' => 'Wyślij ponownie e-mail potwierdzający',
 	'uservalidationbyemail:confirm_resend_validation' => 'Wysłać ponownie e-mail potwierdzający do %s?',

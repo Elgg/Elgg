@@ -67,7 +67,6 @@ return array(
 	'pages:cantedit' => 'Вы не можете изменить эту страницу',
 	'pages:saved' => 'Страница сохранена',
 	'pages:notsaved' => 'Страница не может быть сохранена',
-	'pages:error:no_title' => 'Вы должны указать название страницы.',
 	'entity:delete:object:page:success' => 'Страница успешно удалена.',
 
 	/**

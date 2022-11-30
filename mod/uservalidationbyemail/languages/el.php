@@ -10,9 +10,7 @@ return array(
 	'email:confirm:success' => "Έχετε επιβεβαιώσει την ηλεκτρονική σας διεύθυνση (email)!",
 	'email:confirm:fail' => "Η ηλεκτρονική σας διεύθυνση δεν ήταν δυνατόν να επιβεβαιωθεί.",
 
-	'uservalidationbyemail:emailsent' => "Email sent to <em>%s</em>",
 	'uservalidationbyemail:registerok' => "Για να ενεργοποιήσετε το λογαριασμό σας, παρακαλούμε επιβεβαιώστε την  ηλεκτρονική σας διεύθυνση (email) πατώντας στο σύνδεσμο που σας στάλθηκε.",
-	'uservalidationbyemail:login:fail' => "Ο λογαριασμός σας δεν έχει επιβεβαιωθεί οπότε η προσπάθεια σύνδεσης σας απέτυχε. Ένα άλλο μήνυμα ηλεκτρονικού ταχυδρομείου επαλήθευσης έχει σταλεί.",
 
 	'uservalidationbyemail:admin:resend_validation' => 'Πρόσφατη επιβεβαίωση',
 	'uservalidationbyemail:confirm_resend_validation' => 'Επανάληψη αποστολής email επαλήθευσης για  %s;',

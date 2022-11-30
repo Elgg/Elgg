@@ -35,8 +35,6 @@ return array(
 	'friends:none' => "現在友達はいません。",
 	'friends:of:owned' => "%s さんと友達の人",
 
-	'friends:of' => "Friends of",
-	
 	'friends:request:pending' => "友達申請の処理を中断する",
 	'friends:request:pending:none' => "友達申請の処理が中断しているものはありません。",
 	'friends:request:sent' => "友達申請をする",
@@ -46,8 +44,6 @@ return array(
 	
 	'widgets:friends:name' => "友達",
 	'widgets:friends:description' => "友達を何人か表示する",
-	
-	'widgets:friends_of:name' => "Friends of",
 	
 	'friends:notification:request:subject' => "%s さんが友達になりたいと言っています！",
 	'friends:notification:request:message' => "%s さんが %s で友達申請をしました。

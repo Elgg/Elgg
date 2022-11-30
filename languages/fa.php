@@ -20,7 +20,6 @@ return array(
 	'loginok' => "شما وارد سیستم شده اید",
 	'login:empty' => "نام کاربری/ایمیل و کلمه عبور اجباری هستند",
 	'login:baduser' => "امکان بارگزاری اطلاعات کاربری شما نیست.",
-	'auth:nopams' => "خطای داخلی. هیچ متدی برای ورود کاربر نصب نشده است.",
 
 	'logout' => "خروج",
 	'logoutok' => "شما از سیستم خارج شده اید.",
@@ -49,7 +48,6 @@ return array(
 
 	'PluginException:CannotStart' => '%s (guid: %s) امکان شروع شدن ندارد و غیرفعال شده است. به علت: %s',
 	'PluginException:InvalidID' => "%s یک کد پلاگین نامعتبر است.",
-	'PluginException:InvalidPath' => "%s یک مسیر پلاگین نامعتبر است.",
 	'ElggPlugin:MissingID' => 'کد پلاگین پیدا نشد (guid %s)',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'امکان استفاده از %s برای پلاگین %s (guid: %s ) در %s نیست.',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'خطای %s برای پلاگین  %s (guid: %s) در  %s رخ داد.',
@@ -166,8 +164,6 @@ return array(
 	'widget:numbertodisplay' => 'تعداد موارد قابل نمایش',
 	'widget:edit' => 'شخصی سازی این ابزارک',
 
-	'widgets' => "ابزار ها",
-	'widget' => "ابزارک",
 	'item:object:widget' => "ابزار ها",
 	'collection:object:widget' => 'ابزار ها',
 	'widgets:add:success' => "ابزارک با موفقیت افزوده شد",
@@ -196,20 +192,11 @@ return array(
 	'friends' => "دوستان",
 
 	'avatar' => 'شکلک',
-	'avatar:noaccess' => "شما امکان ویرایش شکلک این کاربر را ندارید",
-	'avatar:create' => 'شکلک خود را ایجاد نمایید',
 	'avatar:edit' => 'ویرایش شکلک',
-	'avatar:upload' => 'بارگزاری شکلک جدید',
-	'avatar:current' => 'شکلک فعلی',
-	'avatar:remove' => 'حذف شکلک شما و تنظیم آیکن پیش فرض',
-	'avatar:crop:title' => 'ابزار برش شکلک',
 	'avatar:upload:instructions' => "شکلک شما در داخل سایت نمایش داده می شود. هرموقع که خواستید می توانید آن را تغییر دهید. (فایل های با فرمت: GIF, JPG یا PNG قابل قبول هستند).",
-	'avatar:create:instructions' => 'با کلیک کردن و رسم مربع می توانید قسمت قابل برش شکلک خود را انتخاب نمایید. در قسمت سمت راست نیز پیش نمایش را مشاهده می کنید. بر روی دکمه "ایجاد شکلک" شکل برش زده انتخاب خواهد شد. نسخه برش زده شده به عنوان شکلک شما در داخل سایت نمایش داده خواهد شد.',
 	'avatar:upload:success' => 'شکلک با موفقیت بارگزاری شد',
 	'avatar:upload:fail' => 'بارگزاری شکلک شکست خورد',
 	'avatar:resize:fail' => 'تغییر اندازه شکلک شکست خورد.',
-	'avatar:crop:success' => 'برش شکلک با موفقیت انجام شد',
-	'avatar:crop:fail' => 'برش شکلک با شکست مواجه شد',
 	'avatar:remove:success' => 'شکلک با موفقیت حذف شد',
 	'avatar:remove:fail' => 'خذف شکلک ما مشکل مواجه شد',
 
@@ -229,10 +216,7 @@ return array(
  */
 	'river' => "رود",
 	'river:update:user:avatar' => '%s یک شکلک جدید دارد',
-	'river:noaccess' => 'شما مجوز ویرایش این مورد را ندارید',
 	'river:posted:generic' => '%s منتشر شد',
-	'riveritem:single:user' => 'یک کاربر',
-	'riveritem:plural:user' => 'تعدادی از کاربران',
 	'river:ingroup' => 'در گروه %s',
 	'river:none' => 'هیچ فعالیتی نیست',
 	'river:update' => 'برای %s بروزرسانی شد',
@@ -260,10 +244,6 @@ return array(
  */
 
 	'search' => "جستجو",
-	'searchtitle' => "جستجو: %s",
-	'users:searchtitle' => "جستجوی کاربران: %s",
-	'groups:searchtitle' => "جستجو گروهها: %s",
-	'advancedsearchtitle' => "%s نتیجه منطبق با %s",
 	'notfound' => "هیچ نتیجه ای یافت نشد",
 
 	'viewtype:change' => "تغییر نوع لیست",
@@ -296,9 +276,7 @@ return array(
 	'registration:passwordnotvalid' => 'متاسفانه کلمه عبور شما توسط سیستم معتبر شناخته نشد',
 	'registration:usernamenotvalid' => 'متاسفانه کلمه عبور توسط سیستم معتبر شناخته نشد',
 
-	'adduser' => "افزودن کاربر",
 	'adduser:ok' => "شما با موفقیت یک کاربر جدید اضافه کردید",
-	'adduser:bad' => "امکان ایجاد این کاربر نیست.",
 
 	'user:set:name' => "تنظیمات نام حساب کاربری",
 	'user:name:label' => "نام قابل نمایش",
@@ -310,23 +288,17 @@ return array(
 	'user:password:label' => "کلمه عبور جدید",
 	'user:password2:label' => "تکرار کلمه عبور",
 	'user:password:success' => "کلمه عبور تغییر کرد",
-	'user:password:fail' => "امکان تغییر کلمه عبور نیست.",
-	'user:password:fail:notsame' => "کلمه عبور و تکرار آن مطابقت ندارد",
-	'user:password:fail:tooshort' => "کلمه عبور خیلی کوتاه است",
-	'user:password:fail:incorrect_current_password' => 'کلمه عبور فعلی اشتباه وارد شده است',
 	'user:changepassword:unknown_user' => 'کاربر نامعتبر',
 	'user:changepassword:change_password_confirm' => 'این کلمه عبور را تغییر خواهد داد',
 
 	'user:set:language' => "تنظیمات زبان",
 	'user:language:label' => "زبان",
 	'user:language:success' => "تنظیمات زبان بروزرسانی شد",
-	'user:language:fail' => "تنظیمات زبان ذخیره نشد",
 
 	'user:username:notfound' => 'کاربر %s پیدا نشد',
 
 	'user:password:lost' => 'فراموشی کلمه عبور',
 	'user:password:changereq:success' => 'ایمیل حاوی کلمه عبور جدید با موفقیت ارسال شد',
-	'user:password:changereq:fail' => 'امکان درخواست کلمه عبور جدید نیست',
 
 	'user:password:text' => 'برای درخواست کلمه عبور جدید نام کاربری یا آدرس ایمیل خود را وارد کنید و دکمه درخواست را کلیک کنید',
 
@@ -599,10 +571,7 @@ return array(
  * User settings
  */
 
-	'usersettings:description' => "پنل مدیریت کاربران به شما اجازه کنترل همه اطلاعات شخصی را می دهد. از تنظیمات کاربران گرفته تا رفتار پلاگین ها. یکی از موارد زیر را جهت شروع انتخاب نمایید",
-
 	'usersettings:statistics' => "آمار شما",
-	'usersettings:statistics:opt:description' => "نمایش اطلاعات آمار در مورد کاربران و قسمت های سایت شما",
 	'usersettings:statistics:opt:linktext' => "آمار حساب کاربری",
 
 	'usersettings:statistics:login_history' => "تاریخچه ورود",
@@ -610,14 +579,9 @@ return array(
 	'usersettings:statistics:login_history:ip' => "آدرس IP",
 
 	'usersettings:user' => "تنظیمات %s",
-	'usersettings:user:opt:description' => "این به شما اجازه کنترل تنظیمات کاربر را می دهد",
 	'usersettings:user:opt:linktext' => "تغییر تنظیمات شما",
 
-	'usersettings:plugins' => "ابزارها",
-	'usersettings:plugins:opt:description' => "تنظیم ابزارهای فعال",
 	'usersettings:plugins:opt:linktext' => "تنظیم ابزارها",
-
-	'usersettings:plugins:description' => "این پنل مدیریت به شما اجازه کنترل و تنظیم اطلاعات شخصی برای ابزارهایی که توسط مدیر روی سایت نصب شده را می دهد",
 	
 	'usersettings:statistics:yourdetails' => "جزئیات شما",
 	'usersettings:statistics:label:name' => "نام کامل",
@@ -635,9 +599,7 @@ return array(
 	'river:owner' => 'فعالیت های %s',
 	'river:friends' => 'فعالیت دوستان',
 	'river:select' => 'نماش %s',
-	'river:comments:more' => '+%u بیشتر',
 	'river:comments:all' => 'نمایش همه %u دیدگاه',
-	'river:generic_comment' => 'دیدگاههای %s%s',
 
 /**
  * Icons
@@ -911,10 +873,6 @@ return array(
 
 	'installation:sitename' => "نام سایت شما:",
 	'installation:sitedescription' => "توضیح مختصر از سایت (اختیاری):",
-	'installation:wwwroot' => "آدرس سایت:",
-	'installation:path' => "مسیر کامل نصب Elgg :",
-	'installation:dataroot' => "مسیر کامل پوشه داده ها:",
-	'installation:dataroot:warning' => "شما باید این پوشه را دستی ایجاد کنید. و باید در مسیری بجز مسیر نصب Elgg باشد.",
 	'installation:sitepermissions' => "مجوزهای دسترسی پیشفرض",
 	'installation:language' => "زبان پیش فرض سایت شما:",
 	'installation:debug' => "کنترل حجم داده هایی که در سرور لاگ می شوند.",
@@ -930,8 +888,6 @@ return array(
 	'installation:registration:label' => 'اجازه ثبت نام به کاربران جدید',
 	'installation:walled_garden:description' => 'با فعال کردن این گزینه افرادی که عضو سایت شما نیستند امکان مشاهده سایت شما را نخواهند داشت و فقط صفحات عمومی را خواهند دید (مانند ثبت نام و ورود)',
 	'installation:walled_garden:label' => 'محدود کردن صفحات به کاربران وارد شده',
-
-	'installation:view' => "نمایه پیش فرص سایتتان را انتخاب کنید، در صورت عدم انتخاب نمایه پیش فرض نمایش داده خواهد شد (می توانید حالت پیش فرض را نگه دارید)",
 
 	'installation:siteemail' => "ایمیل سایت (برای ارسال ایمیل های سیستمی استفاده میشود)",
 	'installation:default_limit' => "تعداد پیش فرض موارد قابل نمایش در صفحه",

@@ -9,8 +9,6 @@ return array(
 
 	'friends:invite' => 'Kutsu kavereita',
 	
-	'invitefriends:registration_disabled' => 'Käyttäjien vapaata rekisteröitymistä sivustolle ei ole sallittu. Et voi kutsua uusia kavereita.',
-	
 	'invitefriends:introduction' => 'Kutsuaksesi kavereitasi sivustolle, syötä heidän sähköpostiosoitteensa (yksi per rivi):',
 	'invitefriends:emails' => 'Sähköpostiosoitteet (yksi per rivi)',
 	'invitefriends:message' => 'Syötä viesti, jonka he saavat kutsun mukana:',

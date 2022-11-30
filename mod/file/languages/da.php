@@ -25,9 +25,6 @@ return array(
 
 	'file:file' => "Fil",
 
-	'file:list:list' => 'Switch to the list view',
-	'file:list:gallery' => 'Switch to the gallery view',
-
 	'file:type:' => 'Filer',
 	'file:type:all' => "Alle filer",
 	'file:type:video' => "Videoer",
@@ -67,5 +64,4 @@ return array(
 	'file:none' => "Vi kan ikke finde nogle filer i øjeblikket",
 	'file:uploadfailed' => "Beklager, vi kunne ikke gemme din fil.",
 	'file:noaccess' => "Du har ikke tilladelse ti at ændre denne fil",
-	'file:cannotload' => "There was an error uploading the file",
 );

@@ -31,10 +31,4 @@ return array(
 
 	'logrotate:logdeleted' => "Log verwijderd",
 	'logrotate:lognotdeleted' => "Er zijn geen logs verwijderd",
-
-	// not used any more since Elgg 4.1, can be cleaned in Elgg 5.0
-	'logrotate:delete' => 'Verwijder gearchiveerde logs ouder dan één',
-	'logrotate:week' => 'week',
-	'logrotate:month' => 'maand',
-	'logrotate:year' => 'jaar',
 );

@@ -23,7 +23,6 @@ return array(
 	'login:continue' => "Log in to continue",
 	'login:empty' => "Username/email and password are required.",
 	'login:baduser' => "Unable to load your user account.",
-	'auth:nopams' => "Internal error. No user authentication method installed.",
 
 	'logout' => "Log out",
 	'logoutok' => "You have been logged out.",
@@ -60,7 +59,6 @@ return array(
 
 	'PluginException:CannotStart' => '%s (guid: %s) cannot start and has been deactivated.  Reason: %s',
 	'PluginException:InvalidID' => "%s is an invalid plugin ID.",
-	'PluginException:InvalidPath' => "%s is an invalid plugin path.",
 	'PluginException:PluginMustBeActive' => "Requires plugin '%s' to be active.",
 	'PluginException:PluginMustBeAfter' => "Requires to be positioned after plugin '%s'.",
 	'PluginException:PluginMustBeBefore' => "Requires to be positioned before plugin '%s'.",
@@ -214,8 +212,6 @@ return array(
 	'widget:delete' => 'Remove %s',
 	'widget:edit' => 'Customize this widget',
 
-	'widgets' => "Widgets",
-	'widget' => "Widget",
 	'item:object:widget' => "Widget",
 	'collection:object:widget' => 'Widgets',
 	'widgets:add:success' => "The widget was successfully added.",
@@ -252,20 +248,11 @@ return array(
 	'collection:friends' => 'Friends\' %s',
 
 	'avatar' => 'Avatar',
-	'avatar:noaccess' => "You're not allowed to edit this user's avatar",
-	'avatar:create' => 'Create your avatar',
 	'avatar:edit' => 'Edit avatar',
-	'avatar:upload' => 'Upload a new avatar',
-	'avatar:current' => 'Current avatar',
-	'avatar:remove' => 'Remove your avatar and set the default icon',
-	'avatar:crop:title' => 'Avatar cropping tool',
 	'avatar:upload:instructions' => "Your avatar is displayed throughout the site. You can change it as often as you'd like. (File formats accepted: GIF, JPG or PNG)",
-	'avatar:create:instructions' => 'Click and drag a square below to match how you want your avatar cropped. A preview will appear in the box on the right. When you are happy with the preview, click \'Create your avatar\'. This cropped version will be used throughout the site as your avatar.',
 	'avatar:upload:success' => 'Avatar successfully uploaded',
 	'avatar:upload:fail' => 'Avatar upload failed',
 	'avatar:resize:fail' => 'Resize of the avatar failed',
-	'avatar:crop:success' => 'Cropping the avatar succeeded',
-	'avatar:crop:fail' => 'Avatar cropping failed',
 	'avatar:remove:success' => 'Removing the avatar succeeded',
 	'avatar:remove:fail' => 'Avatar remove failed',
 	
@@ -301,10 +288,7 @@ return array(
 	'river' => "River",
 	'river:user:friend' => "%s is now a friend with %s",
 	'river:update:user:avatar' => '%s has a new avatar',
-	'river:noaccess' => 'You do not have permission to view this item.',
 	'river:posted:generic' => '%s posted',
-	'riveritem:single:user' => 'a user',
-	'riveritem:plural:user' => 'some users',
 	'river:ingroup' => 'in the group %s',
 	'river:none' => 'No activity',
 	'river:update' => 'Update for %s',
@@ -386,10 +370,6 @@ return array(
  */
 
 	'search' => "Search",
-	'searchtitle' => "Search: %s",
-	'users:searchtitle' => "Searching for users: %s",
-	'groups:searchtitle' => "Searching for groups: %s",
-	'advancedsearchtitle' => "%s with results matching %s",
 	'notfound' => "No results found.",
 
 	'viewtype:change' => "Change list type",
@@ -424,10 +404,8 @@ return array(
 	'registration:passwordnotvalid' => 'Sorry, the password you entered is invalid on this system',
 	'registration:usernamenotvalid' => 'Sorry, the username you entered is invalid on this system',
 
-	'adduser' => "Add User",
 	'adduser:ok' => "You have successfully added a new user.",
-	'adduser:bad' => "The new user could not be created.",
-
+	
 	'user:set:name' => "Account name settings",
 	'user:name:label' => "Display name",
 	'user:name:success' => "Successfully changed display name on the system.",
@@ -440,10 +418,6 @@ return array(
 	'user:password:label' => "New password",
 	'user:password2:label' => "New password again",
 	'user:password:success' => "Password changed",
-	'user:password:fail' => "Could not change your password on the system.",
-	'user:password:fail:notsame' => "The two passwords are not the same!",
-	'user:password:fail:tooshort' => "Password is too short!",
-	'user:password:fail:incorrect_current_password' => 'The current password entered is incorrect.',
 	'user:changepassword:unknown_user' => 'Invalid user.',
 	'user:changepassword:change_password_confirm' => 'This will change your password.',
 
@@ -454,7 +428,6 @@ return array(
 	'user:set:language' => "Language settings",
 	'user:language:label' => "Language",
 	'user:language:success' => "Language settings have been updated.",
-	'user:language:fail' => "Language settings could not be saved.",
 
 	'user:username:notfound' => 'Username %s not found.',
 	'user:username:help' => 'Please be aware that changing a username will change all dynamic user related links',
@@ -462,7 +435,6 @@ return array(
 	'user:password:lost' => 'Lost password',
 	'user:password:hash_missing' => 'Regretfully, we must ask you to reset your password. We have improved the security of passwords on the site, but were unable to migrate all accounts in the process.',
 	'user:password:changereq:success' => 'Successfully requested a new password, email sent',
-	'user:password:changereq:fail' => 'Could not request a new password.',
 
 	'user:password:text' => 'To request a new password, enter your username or email address below and click the Request button.',
 
@@ -1034,11 +1006,8 @@ For improved performance, it is recommended that you enable and configure OPcach
  * User settings
  */
 
-	'usersettings:description' => "The user settings panel allows you to control all your personal settings, from user management to how plugins behave. Choose an option below to get started.",
-
 	'usersettings:statistics' => "Your statistics",
 	'usersettings:statistics:user' => "%s's statistics",
-	'usersettings:statistics:opt:description' => "View statistical information about users and objects on your site.",
 	'usersettings:statistics:opt:linktext' => "Account statistics",
 
 	'usersettings:statistics:login_history' => "Login History",
@@ -1046,14 +1015,9 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'usersettings:statistics:login_history:ip' => "IP Address",
 
 	'usersettings:user' => "%s's settings",
-	'usersettings:user:opt:description' => "This allows you to control user settings.",
 	'usersettings:user:opt:linktext' => "Change your settings",
 
-	'usersettings:plugins' => "Tools",
-	'usersettings:plugins:opt:description' => "Configure settings (if any) for your active tools.",
 	'usersettings:plugins:opt:linktext' => "Configure your tools",
-
-	'usersettings:plugins:description' => "This panel allows you to control and configure the personal settings for the tools installed by your system administrator.",
 	
 	'usersettings:statistics:yourdetails' => "Your details",
 	'usersettings:statistics:details:user' => "Details for %s",
@@ -1064,7 +1028,6 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'usersettings:statistics:label:membersince' => "Member since",
 	'usersettings:statistics:label:numentities' => "Your content",
 	
-	'usersettings:delayed_email' => "Delayed email settings",
 	'usersettings:delayed_email:interval' => "Configure the interval at which delayed email notifications will be delivered",
 	'usersettings:delayed_email:interval:help' => "All delayed email notifications will be saved up and delivered in one combined mail at the configured interval",
 
@@ -1077,9 +1040,7 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'river:owner' => 'Activity of %s',
 	'river:friends' => 'Friends Activity',
 	'river:select' => 'Show %s',
-	'river:comments:more' => '+%u more',
 	'river:comments:all' => 'View all %u comments',
-	'river:generic_comment' => 'commented on %s %s',
 
 /**
  * Icons
@@ -1410,10 +1371,6 @@ Once you have logged in, we highly recommend that you change your password.',
 	'installation:sitename' => "The name of your site:",
 	'installation:sitedescription' => "Short description of your site (optional):",
 	'installation:sitedescription:help' => "With bundled plugins this appears only in the description meta tag for search engine results.",
-	'installation:wwwroot' => "The site URL:",
-	'installation:path' => "The full path of the Elgg installation:",
-	'installation:dataroot' => "The full path of the data directory:",
-	'installation:dataroot:warning' => "You must create this directory manually. It should be in a different directory to your Elgg installation.",
 	'installation:sitepermissions' => "The default access permissions:",
 	'installation:language' => "The default language for your site:",
 	'installation:debug' => "Control the amount of information written to the server's log.",
@@ -1434,8 +1391,6 @@ Once you have logged in, we highly recommend that you change your password.',
 	'installation:adminvalidation:notification:direct' => 'Direct',
 	'installation:walled_garden:description' => 'If enabled, logged-out visitors can see only pages marked public (such as login and registration).',
 	'installation:walled_garden:label' => 'Restrict pages to logged-in users',
-
-	'installation:view' => "Enter the view which will be used as the default for your site or leave this blank for the default view (if in doubt, leave as default):",
 
 	'installation:siteemail' => "Site email address (used when sending system emails):",
 	'installation:siteemail:help' => "Warning: Do no use an email address that you may have associated with other third-party services, such as ticketing systems, that perform inbound email parsing, as it may expose you and your users to unintentional leakage of private data and security tokens. Ideally, create a new dedicated email address that will serve only this website.",

@@ -12,7 +12,6 @@ return array(
 
 	'uservalidationbyemail:emailsent' => "Correo electrónico enviado a <em> %s </em>",
 	'uservalidationbyemail:registerok' => "Para activar tu cuenta, por favor confirma tu dirección de email a trav&eacute;s del enlace que se te ha enviado.",
-	'uservalidationbyemail:login:fail' => "Tu cuenta no ha sido validada debido a intentos fallidos anteriores. Otra confirmación de dirección de email ha sido enviada.",
 
 	'uservalidationbyemail:admin:resend_validation' => 'Reeniar validaci&oacute;n',
 	'uservalidationbyemail:confirm_resend_validation' => '&iquest;Reenviar confirmaci&oacute;n de email a %s?',

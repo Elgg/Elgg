@@ -34,12 +34,10 @@ return array(
 	'relationship:invited' => '%2$s is uitgenodigd om lid te worden van %1$s',
 	'relationship:membership_request' => '%s wil graag lid worden van %s',
 
-	'groups:icon' => 'Groepsicoon (laat leeg om het huidige icoon te behouden)',
 	'groups:name' => 'Groepsnaam',
 	'groups:description' => 'Omschrijving',
 	'groups:briefdescription' => 'Korte omschrijving',
 	'groups:interests' => 'Tags',
-	'groups:website' => 'Website',
 	'groups:members' => 'Groepsleden',
 
 	'groups:members_count' => '%s leden',
@@ -51,14 +49,12 @@ return array(
 	'groups:content_access_mode:warning' => "Let op! Als je deze instelling verandert heeft dat <em>geen</em> invloed op de toegangsrechten van de reeds bestaande groepsinhoud!",
 	'groups:content_access_mode:unrestricted' => "Geen beperkingen. Toegang hangt af van de instelling van de content.",
 	'groups:content_access_mode:membersonly' => "Alleen voor leden - Niet-leden kunnen nooit de inhoud van de groep zien.",
-	'groups:access' => "Toegangsrechten",
 	'groups:owner' => "Eigenaar",
 	'groups:owner:warning' => "Opgelet: als je deze waarde aanpast ben je niet meer de eigenaar van deze groep",
 	'groups:widget:num_display' => 'Aantal groepen om weer te geven',
 	'widgets:a_users_groups:name' => 'Groepslidmaatschap',
 	'widgets:a_users_groups:description' => 'Laat de groepen waarvan je lid bent zien op je profiel',
 
-	'groups:noaccess' => 'Geen toegang tot de groep',
 	'groups:cantcreate' => 'Alleen sitebeheerders mogen nieuwe groepen aanmaken.',
 	'groups:cantedit' => 'Je kunt deze groep niet bewerken',
 	'groups:saved' => 'Groep opgeslagen',
@@ -96,7 +92,6 @@ return array(
 
 	'groups:open' => "open groep",
 	'groups:closed' => "besloten groep",
-	'groups:member' => "leden",
 	'groups:search' => "Zoek naar groepen",
 
 	'groups:more' => 'Meer groepen',

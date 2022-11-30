@@ -25,8 +25,6 @@ return array(
 	'messages:toggle' => 'Selecteer alles',
 	'messages:markread' => 'Markeer als gelezen',
 
-	'notification:method:site' => 'Site',
-
 	'messages:error' => 'Er was een probleem tijdens het opslaan van je bericht. Probeer het nogmaals.',
 
 	'item:object:messages' => 'Bericht',
