@@ -10,6 +10,7 @@
  *
  * @since 1.8.0
  */
+#[\AllowDynamicProperties]
 class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 
 	/**

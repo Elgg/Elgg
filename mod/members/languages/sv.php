@@ -6,7 +6,6 @@
  */
 
 return array(
-	'members:label:online' => 'Online',
 	'members:search' => 'Sök medlemmar',
 	'members:total' => 'Antalet medlemmar: %s',
 	'members:title:all' => 'Alla medlemmar',

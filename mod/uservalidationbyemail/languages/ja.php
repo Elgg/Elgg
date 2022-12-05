@@ -19,7 +19,6 @@ return array(
 
 	'uservalidationbyemail:emailsent' => "<em>%s</em> さんにEmailを送信しました",
 	'uservalidationbyemail:registerok' => "先ほどあなたが登録されたメールアドレスに確認メールをお送りしました。ご登録されたメールアドレスが正しければご覧になれるはずです。その確認メールに書いておりますリンクをクリックしていただくと、アカウントが有効になり登録が完了となります。",
-	'uservalidationbyemail:login:fail' => "あなたのアカウントはまだご確認させていただいておりませんので、ログインすることができません。再度別の確認メールをお送りいたしますのでそれにしたがって、確認作業を完了させていただくよう、よろしくお願いします。",
 
 	'uservalidationbyemail:admin:resend_validation' => '確認メールを再送',
 	'uservalidationbyemail:confirm_resend_validation' => '%s さんに確認メールを再送しますか？',

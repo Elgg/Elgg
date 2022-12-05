@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Exceptions\RuntimeException as ElggRuntimeException;
+
 /**
  * River item class
  *
@@ -10,7 +12,6 @@
  * @property      int    $annotation_id The ID of the annotation involved in the action
  * @property      string $action_type   The name of the action
  * @property      string $view          The view for displaying this river item
- * @property      int    $access_id     The visibility of the river item
  * @property      int    $posted        UNIX timestamp when the action occurred
  * @property      int    $last_action   UNIX timestamp when the river item was bumped
  */
@@ -30,29 +31,48 @@ class ElggRiverItem {
 		'last_action',
 	];
 	
+	protected array $attributes = [];
+	
 	/**
 	 * Construct a river item object
 	 *
 	 * @param \stdClass $row (optional) object obtained from database
 	 */
 	public function __construct(\stdClass $row = null) {
-		if (!empty($row)) {
-			// build from database
-			foreach ($row as $key => $value) {
-				if (in_array($key, static::INTEGER_ATTR_NAMES)) {
-					$this->$key = (int) $value;
-				} else {
-					$this->$key = $value;
-				}
+		$this->initializeAttributes();
+		
+		if (empty($row)) {
+			return;
+		}
+		
+		// build from database
+		foreach ($row as $key => $value) {
+			if (!array_key_exists($key, $this->attributes)) {
+				continue;
 			}
+			
+			if (in_array($key, static::INTEGER_ATTR_NAMES)) {
+				$value = (int) $value;
+			}
+			
+			$this->attributes[$key] = $value;
 		}
 	}
 	
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @throws \Elgg\Exceptions\RuntimeException
 	 */
 	public function __set(string $name, $value) {
-		$this->$name = $value;
+		if (!array_key_exists($name, $this->attributes)) {
+			throw new ElggRuntimeException("It's not allowed to set {$name} on " . get_class($this));
+		}
+		
+		if (in_array($name, static::INTEGER_ATTR_NAMES)) {
+			$value = (int) $value;
+		}
+		$this->attributes[$name] = $value;
 	}
 
 	/**
@@ -67,7 +87,47 @@ class ElggRiverItem {
 					return $object->$name;
 				}
 				break;
+			default:
+				if (array_key_exists($name, $this->attributes)) {
+					return $this->attributes[$name];
+				}
+				break;
 		}
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function __isset($name) : bool {
+		return isset($this->attributes[$name]);
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function __unset($name): void {
+		if (!array_key_exists($name, $this->attributes)) {
+			return;
+		}
+		
+		$this->attributes[$name] = null;
+	}
+	
+	/**
+	 * Initialize the attributes array
+	 *
+	 * @return void
+	 */
+	protected function initializeAttributes(): void {
+		$this->attributes['id'] = null;
+		$this->attributes['action_type'] = null;
+		$this->attributes['view'] = null;
+		$this->attributes['subject_guid'] = null;
+		$this->attributes['object_guid'] = null;
+		$this->attributes['target_guid'] = null;
+		$this->attributes['annotation_id'] = null;
+		$this->attributes['posted'] = null;
+		$this->attributes['last_action'] = null;
 	}
 
 	/**
@@ -200,7 +260,6 @@ class ElggRiverItem {
 		$object->target_guid = $this->target_guid;
 		$object->object_guid = $this->object_guid;
 		$object->annotation_id = $this->annotation_id;
-		$object->read_access = $this->access_id;
 		$object->action = $this->action_type;
 		$object->view = $this->view;
 		$object->time_posted = date('c', $this->getTimePosted());

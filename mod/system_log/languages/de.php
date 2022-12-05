@@ -30,10 +30,4 @@ return array(
 
 	'logrotate:logdeleted' => "Alte archivierte Elgglogs wurden gelöscht.",
 	'logrotate:lognotdeleted' => "Beim Löschen alter archivierter Elgglogs ist ein Fehler aufgetreten.",
-
-	// not used any more since Elgg 4.1, can be cleaned in Elgg 5.0
-	'logrotate:delete' => 'Löschen von archivierten Elgglogs älter als',
-	'logrotate:week' => 'eine Woche',
-	'logrotate:month' => 'einen Monat',
-	'logrotate:year' => 'ein Jahr',
 );

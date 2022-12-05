@@ -39,7 +39,6 @@ return array(
 	'widgets:bookmarks:name' => 'Bogmærker',
 	'widgets:bookmarks:description' => "Vis dine nyeste bogmærker.",
 
-	'bookmarks:bookmarklet:description' => "A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
 	'bookmarks:bookmarklet:descriptionie' => "Hvis du bruger Internet Explorer, er du nødt til at højreklikke på \"Bookmarklet\" ikonet og vælge \"Føj til Favoritter\" og derefter \"Linkbar\".",
 	'bookmarks:bookmarklet:description:conclusion' => "Du kan så gemme enhver side, du besøger ved at klikke på ikonet.",
 

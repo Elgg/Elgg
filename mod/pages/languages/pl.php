@@ -52,7 +52,6 @@ return array(
 	'pages:cantedit' => 'Nie można edytować tej strony',
 	'pages:saved' => 'Strona zapisana',
 	'pages:notsaved' => 'Strona nie mogła zostać zapisana',
-	'pages:error:no_title' => 'Musisz podać tytuł dla tej strony.',
 	'entity:delete:object:page:success' => 'Twoja strona została pomyślnie usunięta.',
 
 	/**

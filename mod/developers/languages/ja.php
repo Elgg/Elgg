@@ -32,19 +32,12 @@ return array(
 	'developers:help:show_strings' => "elgg_echo()で使われる翻訳キー(\$message_key)を表示します。",
 	'developers:label:show_modules' => "コンソールにロードされた AMD モジュールを表示する",
 	'developers:help:show_modules' => "ロードされたモジュールや値をあなたの JavaScript コンソールに配信します。",
-	'developers:label:wrap_views' => "Wrap views",
 	'developers:label:log_events' => "イベントとプラグインhooksを記録する",
 	'developers:help:log_events' => "イベントとプラグインhooksをログに記録します。【警告】１ページでも、たくさん吐き出しますので注意してください。",
 	'developers:label:show_gear' => "adminエリアの外側で %s を使用する",
 	'developers:help:show_gear' => "ビューポートの右下のアイコン。それを通してadminsが開発用設定とリンクにアクセスできるようになります。",
 
 	'developers:label:submit' => "キャッシュの保存と消去",
-	
-	'developers:debug:off' => 'Off',
-	'developers:debug:error' => 'Error',
-	'developers:debug:warning' => 'Warning',
-	'developers:debug:notice' => 'Notice',
-	'developers:debug:info' => 'Info',
 	
 	// entity explorer
 	'developers:entity_explorer:info:metadata' => 'メタデータ',
@@ -55,12 +48,9 @@ return array(
 	'developers:inspect:actions' => 'Actions（アクション）',
 	'developers:inspect:events' => 'Events（イベント）',
 	'developers:inspect:menus' => 'Menus（メニュー）',
-	'developers:inspect:pluginhooks' => 'Plugin Hooks（プラグイン・フック）',
 	'developers:inspect:priority' => '優先度',
 	'developers:inspect:simplecache' => 'Simple Cache（シンプル・キャッシュ）',
 	'developers:inspect:views' => 'Views（ビュー）',
-	'developers:inspect:views:all_filtered' => "<b>Note!</b> All view input/output is filtered through these Plugin Hooks:",
-	'developers:inspect:views:input_filtered' => "(input filtered by plugin hook: %s)",
 	'developers:inspect:views:filtered' => "(plugin hook「 %s 」によってフィルタされています)",
 	'developers:inspect:widgets' => 'Widgets（ウィジェット）',
 	'developers:inspect:widgets:context' => 'Context（コンテキスト）',
@@ -85,7 +75,6 @@ return array(
 	'theme_sandbox:forms' => 'フォーム',
 	'theme_sandbox:grid' => 'グリッド',
 	'theme_sandbox:icons' => 'アイコン',
-	'theme_sandbox:javascript' => 'JavaScript',
 	'theme_sandbox:layouts' => 'レイアウト',
 	'theme_sandbox:modules' => 'モジュール',
 	'theme_sandbox:navigation' => 'ナビゲーション',
@@ -95,6 +84,4 @@ return array(
 
 	// status messages
 	'developers:settings:success' => '設定を保存しました',
-
-	'developers:amd' => 'AMD',
 );

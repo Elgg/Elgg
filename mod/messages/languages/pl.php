@@ -25,8 +25,6 @@ return array(
 	'messages:toggle' => 'Przełącz wszystkie',
 	'messages:markread' => 'Oznacz jako przeczytane',
 
-	'notification:method:site' => 'Strona',
-
 	'messages:error' => 'Wystąpił problem w trakcie zapisu wiadomości. Proszę spróbować ponownie.',
 
 	'item:object:messages' => 'Wiadomość',

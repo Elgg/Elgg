@@ -2,14 +2,14 @@
 
 namespace Elgg\SystemLog;
 
-use stdClass;
+use Elgg\Exceptions\RuntimeException;
 
 /**
  * Represents a system log entry
  *
  * @property int    $id
+ * @property int    $object_id
  * @property string $object_class
- * @property string $object_id
  * @property string $object_type
  * @property string $object_subtype
  * @property string $event
@@ -22,15 +22,97 @@ use stdClass;
  */
 class SystemLogEntry {
 
+	protected const INTEGER_ATTR_NAMES = [
+		'id',
+		'object_id',
+		'performed_by_guid',
+		'owner_guid',
+		'access_id',
+		'time_created',
+	];
+	
+	protected array $attributes = [];
+	
 	/**
 	 * Constructor
 	 *
-	 * @param stdClass $row DB row
+	 * @param \stdClass $row DB row
 	 */
-	public function __construct(stdClass $row) {
+	public function __construct(\stdClass $row) {
+		$this->initializeAttributes();
+		
 		foreach ($row as $key => $value) {
-			$this->$key = $value;
+			if (!array_key_exists($key, $this->attributes)) {
+				continue;
+			}
+			
+			if (in_array($key, static::INTEGER_ATTR_NAMES)) {
+				$value = (int) $value;
+			}
+			
+			$this->attributes[$key] = $value;
 		}
+	}
+	
+	/**
+	 * Initialize the attributes array
+	 *
+	 * @return void
+	 */
+	protected function initializeAttributes(): void {
+		$this->attributes['id'] = null;
+		$this->attributes['object_id'] = null;
+		$this->attributes['object_class'] = null;
+		$this->attributes['object_type'] = null;
+		$this->attributes['object_subtype'] = null;
+		$this->attributes['event'] = null;
+		$this->attributes['performed_by_guid'] = null;
+		$this->attributes['owner_guid'] = null;
+		$this->attributes['access_id'] = null;
+		$this->attributes['enabled'] = null;
+		$this->attributes['time_created'] = null;
+		$this->attributes['ip_address'] = null;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 *
+	 * @throws \Elgg\Exceptions\RuntimeException
+	 */
+	public function __set(string $name, $value) {
+		if (!array_key_exists($name, $this->attributes)) {
+			throw new RuntimeException("It's not allowed to set {$name} on " . get_class($this));
+		}
+		
+		if (in_array($name, static::INTEGER_ATTR_NAMES)) {
+			$value = (int) $value;
+		}
+		$this->attributes[$name] = $value;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public function __get($name) {
+		return $this->attributes[$name] ?? null;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function __isset($name) : bool {
+		return isset($this->attributes[$name]);
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function __unset($name): void {
+		if (!array_key_exists($name, $this->attributes)) {
+			return;
+		}
+		
+		$this->attributes[$name] = null;
 	}
 
 	/**
@@ -40,7 +122,7 @@ class SystemLogEntry {
 	 */
 	public function getObject() {
 		$class = $this->object_class;
-		$id = (int) $this->object_id;
+		$id = $this->object_id;
 
 		if (!class_exists($class)) {
 			// failed autoload
@@ -61,9 +143,7 @@ class SystemLogEntry {
 			// surround with try/catch because object could be disabled
 			try {
 				// assuming the object is a custom entity class
-				$object = get_entity($id);
-
-				return $object;
+				return get_entity($id);
 			} catch (\Exception $e) {
 				return false;
 			} catch (\Error $e) {

@@ -6,7 +6,6 @@
  */
 
 return array(
-	'members:label:online' => 'Online',
 	'members:search' => 'Caută membri',
 	'members:total' => 'Total membri: %s',
 	'members:title:all' => 'Toți membri',

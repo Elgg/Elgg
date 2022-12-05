@@ -67,7 +67,6 @@ Schau Dir die neue Coop-Seite an und schreibe einen Kommentar:
 	'pages:cantedit' => 'Du kannst diese Coop-Seite nicht bearbeiten.',
 	'pages:saved' => 'Die Coop-Seite wurde gespeichert.',
 	'pages:notsaved' => 'Die Coop-Seite konnte nicht gespeichert werden.',
-	'pages:error:no_title' => 'Du mußt einen Titel für diese Coop-Seite eingeben.',
 	'entity:delete:object:page:success' => 'Die Coop-Seite wurde gelöscht.',
 
 	/**

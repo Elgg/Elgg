@@ -21,7 +21,6 @@ return array(
 	'loginok' => "Olet kirjautunut sisään.",
 	'login:empty' => "Syötä käyttäjätunnus/sähköposti ja salasana.",
 	'login:baduser' => "Tiliisi kirjautuminen on estetty.",
-	'auth:nopams' => "Sisäinen virhe. Toimintoa käyttäjän sisäänkirjaamiseen ei ole asennettuna.",
 
 	'logout' => "Kirjaudu ulos",
 	'logoutok' => "Olet kirjautunut ulos.",
@@ -50,10 +49,8 @@ return array(
 
 	'PluginException:CannotStart' => '%s (guid: %s) ei käynnisty. Syy: %s',
 	'PluginException:InvalidID' => "%s on virheellinen pluginin ID.",
-	'PluginException:InvalidPath' => "%s on virheellinen pluginipolku.",
 	'ElggPlugin:MissingID' => 'Plugin-ID puuttuu (guid %s)',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Ei voida lisätä toiminnallisuutta %s pluginille %s (guid: %s) sijainnissa %s. Tarkista tiedosto-oikeudet!',
-	'ElggPlugin:Exception:IncludeFileThrew' => 'Threw exception including %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Ei voida avata näkymähakemistoa pluginille %s (guid: %s) sijainnissa %s. Tarkista tiedosto-oikeudet!',
 	'ElggPlugin:InvalidAndDeactivated' => '%s on virheellinen liitännäinen, joten se poistettiin käytöstä.',
 	'ElggPlugin:activate:BadConfigFormat' => 'Tiedoston "elgg-plugin.php" sisältö on virheellinen.',
@@ -169,8 +166,6 @@ return array(
 	'widget:delete' => 'Poista %s',
 	'widget:edit' => 'Muokkaa vimpainta',
 
-	'widgets' => "Vimpaimet",
-	'widget' => "Vimpain",
 	'item:object:widget' => "Vimpaimet",
 	'collection:object:widget' => 'Vimpaimet',
 	'widgets:add:success' => "Vimpain lisättiin onnituneesti.",
@@ -201,20 +196,11 @@ return array(
 	'friends' => "Ystävät",
 
 	'avatar' => 'Profiilikuva',
-	'avatar:noaccess' => "Sinulla ei ole oikeuksia muokata tämän käyttäjän profiilikuvaa",
-	'avatar:create' => 'Rajaa profiilikuva',
 	'avatar:edit' => 'Muokkaa profiilikuvaa',
-	'avatar:upload' => 'Vaihda profiilikuva',
-	'avatar:current' => 'Nykyinen profiilikuva',
-	'avatar:remove' => 'Poista profiilikuva',
-	'avatar:crop:title' => 'Profiilikuvan rajaustyökalu',
 	'avatar:upload:instructions' => "Profiilikuvasi on kuva, jota käytetään ympäri sivustoa. Voit vaihtaa sen niin usein kun haluat. (Sallitut tiedostomuodot ovat: GIF, JPG ja PNG)",
-	'avatar:create:instructions' => 'Rajaa hiirellä neliö alapuolella olevaan kuvaan määritelläksesi kuvan rajauksen. Esikatselu rajatusta kuvasta näkyy oikealla. Kun olet tyytyväinen esikatselukuvaan, klikkaa "Rajaa profiilikuva"-painiketta, jolloin rajatusta alueesta luodaan uusi profiilikuvasi.',
 	'avatar:upload:success' => 'Profiilikuva ladattiin onnistuneesti',
 	'avatar:upload:fail' => 'Profiilikuvan lataaminen epäonnistui',
 	'avatar:resize:fail' => 'Profiilikuvan koon muuttaminen epäonnistui',
-	'avatar:crop:success' => 'Profiilikuva rajattiin onnistuneesti',
-	'avatar:crop:fail' => 'Profiilikuvan rajaaminen epäonnistui',
 	'avatar:remove:success' => 'Profiilikuva poistettu',
 	'avatar:remove:fail' => 'Profiilikuvan poistaminen epäonnistui.',
 
@@ -234,10 +220,7 @@ return array(
  */
 	'river' => "Toimintalista",
 	'river:update:user:avatar' => 'Käyttäjä %s päivitti profiilikuvansa',
-	'river:noaccess' => 'Sinulla ei ole oikeuksia tämän kohteen näkemiseen.',
 	'river:posted:generic' => '%s lähetti',
-	'riveritem:single:user' => 'a user',
-	'riveritem:plural:user' => 'some users',
 	'river:ingroup' => 'ryhmässä %s',
 	'river:none' => 'Ei uutta toimintaa',
 	'river:update' => 'Päivitys kohteelle %s',
@@ -265,10 +248,6 @@ return array(
  */
 
 	'search' => "Haku",
-	'searchtitle' => "Haku: %s",
-	'users:searchtitle' => "Etsitään käyttäjiä: %s",
-	'groups:searchtitle' => "Etsitään ryhmiä: %s",
-	'advancedsearchtitle' => "%s jotka täsmäävät hakuun %s",
 	'notfound' => "Ei hakutuloksia.",
 
 	'viewtype:change' => "Vaihda listatyyppi",
@@ -301,9 +280,7 @@ return array(
 	'registration:passwordnotvalid' => 'Syöttämäsi salasana ei ole kelvollinen',
 	'registration:usernamenotvalid' => 'Syöttämäsi käyttäjätunnus ei ole kelvollinen',
 
-	'adduser' => "Lisää käyttäjä",
 	'adduser:ok' => "Olet lisännyt uuden käyttäjän.",
-	'adduser:bad' => "Uuden käyttäjän luonti epäonnistui.",
 
 	'user:set:name' => "Tilin nimiasetukset",
 	'user:name:label' => "Nimi",
@@ -315,23 +292,17 @@ return array(
 	'user:password:label' => "Uusi salasana",
 	'user:password2:label' => "Uusi salasana uudelleen",
 	'user:password:success' => "Salasana vaihdettu",
-	'user:password:fail' => "Salasanan vaihtaminen epäonnistui.",
-	'user:password:fail:notsame' => "Salasanat eivät täsmää!",
-	'user:password:fail:tooshort' => "Salasana on liian lyhyt!",
-	'user:password:fail:incorrect_current_password' => 'Salasana ei vastannut nykyistä salsanaasi.',
 	'user:changepassword:unknown_user' => 'Virheellinen käyttäjä.',
 	'user:changepassword:change_password_confirm' => 'Syötä uusi salasana.',
 
 	'user:set:language' => "Kieliasetukset",
 	'user:language:label' => "Kieli",
 	'user:language:success' => "Kieliasetus päivitetty.",
-	'user:language:fail' => "Kieliasetuksen tallentaminen epäonnistui.",
 
 	'user:username:notfound' => 'Käyttäjätunnusta %s ei löytynyt.',
 
 	'user:password:lost' => 'Unohtunut salasana',
 	'user:password:changereq:success' => 'Pyydettiin uutta salasanaa, sähköposti lähetetty',
-	'user:password:changereq:fail' => 'Uuden salasanan pyytäminen epäonnistui.',
 
 	'user:password:text' => 'Syötä käyttäjätunnuksesi tai sähköpostiosoitteesi. Saat sähköpostiisi linkin, jonka kautta pääset syöttämään uuden salasanan.',
 
@@ -607,10 +578,7 @@ return array(
  * User settings
  */
 
-	'usersettings:description' => "Käyttäjäasetuksista voit määritellä kaikki henkilökohtaiset asetuksesi. Valitse vaihtoehto alapuolelta aloittaaksesi.",
-
 	'usersettings:statistics' => "Tilastotietosi",
-	'usersettings:statistics:opt:description' => "Katsele tilastotietoja käyttäjistä ja sivuston objekteista.",
 	'usersettings:statistics:opt:linktext' => "Tilin tilastotiedot",
 
 	'usersettings:statistics:login_history' => "Kirjautumishistoria",
@@ -618,14 +586,9 @@ return array(
 	'usersettings:statistics:login_history:ip' => "IP-osoite",
 
 	'usersettings:user' => "Käyttäjän %s asetukset",
-	'usersettings:user:opt:description' => "Voit muuttaa käyttäjäkohtaisia asetuksia.",
 	'usersettings:user:opt:linktext' => "Muuta asetuksiasi",
 
-	'usersettings:plugins' => "Työkalut",
-	'usersettings:plugins:opt:description' => "Määrittele työkalujesi asetukset.",
 	'usersettings:plugins:opt:linktext' => "Konfiguroi työkalusi",
-
-	'usersettings:plugins:description' => "Tämän paneelin avulla voit muokata omia asetuksiasi eri työkaluissa.",
 	
 	'usersettings:statistics:yourdetails' => "Yksityiskohdat",
 	'usersettings:statistics:label:name' => "Koko nimi",
@@ -643,9 +606,7 @@ return array(
 	'river:owner' => 'Käyttäjän %s toiminta',
 	'river:friends' => 'Ystävien toiminta',
 	'river:select' => 'Näytä %s',
-	'river:comments:more' => '+%u lisää',
 	'river:comments:all' => 'Kaikki %u kommenttia',
-	'river:generic_comment' => 'kommentoi %s %s',
 
 /**
  * Icons
@@ -780,7 +741,6 @@ return array(
 	'status:draft' => 'Luonnos',
 	'status:unpublished' => 'Julkaisematon',
 	'status:published' => 'Julkaistu',
-	'status:featured' => 'Featured',
 	'status:open' => 'Avoin',
 	'status:closed' => 'Suljettu',
 	'status:active' => 'Aktiivista',
@@ -924,10 +884,6 @@ return array(
 
 	'installation:sitename' => "Sivuston nimi:",
 	'installation:sitedescription' => "Sivuston kuvaus (vapaaehtoinen):",
-	'installation:wwwroot' => "Sivuston URL:",
-	'installation:path' => "Polku Elgg-asennukseen:",
-	'installation:dataroot' => "Polku datahakemistoon:",
-	'installation:dataroot:warning' => "Sinun pitää luoda tämä hakemisto manuaalisesti. Sen tulee olla eri hakemistossa kuin Elgg-asennuksesi.",
 	'installation:sitepermissions' => "Oletusoikeudet:",
 	'installation:language' => "Sivuston oletuskieli:",
 	'installation:debug' => "Määritä palvelimen lokiin tallennettavat tiedot.",
@@ -944,9 +900,6 @@ return array(
 	'installation:walled_garden:description' => 'Rajoita sivusto yksityiseksi. Rekisteröitymättömät käyttäjät voivat nähdä vain sisällöt, jotka on erikseen määritetty julkisiksi.',
 	'installation:walled_garden:label' => 'Rajoita sivusto vain kirjautuneille käyttäjille',
 
-	'installation:view' => "Syötä näkymä, jota käytetään sivustosi etusivuna. Jätä kenttä tyhjäksi käyttääksesi oletusnäkymää (jos et ole varma, jätä tämä oletukseksi):",
-
-	'installation:siteemail' => "Site email address (used when sending system emails):",
 	'installation:default_limit' => "Listauksissa näytettävien kohteiden oletusmäärä",
 
 	'admin:site:access:warning' => "Tämä määrittää oletusasetuksen, kun ollaan luomassa uutta sisältöä. Tämän asetuksen muuttaminen ei vaikuta jo olemassa oleviin sisältöihin.",
@@ -997,9 +950,6 @@ return array(
 	'upgrade:finished' => 'Päivitys on valmis',
 	'upgrade:finished_with_errors' => '<p>Päivityksen aikana ilmeni virheitä. Päivitä sivu ja yritä ajaa päivitys uudelleen.<br /></p><p>Jos virheet toistuvat, yritä selvittää niiden syy palvelimen virhelokeista. Tarvittaessa voit pyytää apua Elggin yhteisön <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">teknisen tuen ryhmästä</a>.</p>',
 	
-	// Strings specific for the database guid columns reply upgrade
-	'admin:upgrades:database_guid_columns' => 'Align database GUID columns',
-	
 /**
  * Welcome
  */
@@ -1011,8 +961,6 @@ return array(
  * Emails
  */
 
-	'email:from' => 'From',
-	'email:to' => 'To',
 	'email:subject' => 'Otsikko',
 	'email:body' => 'Viesti',
 
@@ -1062,7 +1010,6 @@ return array(
 	'generic_comment:none' => 'Ei kommentteja',
 	'generic_comment:title' => 'Kommentti käyttäjältä %s',
 	'generic_comment:on' => '%s kohteessa %s',
-	'generic_comments:latest:posted' => 'posted a',
 
 /**
  * Entities
@@ -1105,7 +1052,6 @@ return array(
 /**
  * Miscellaneous
  */
-	'elgg:powered' => "Powered by Elgg",
 	
 /**
  * Cli commands

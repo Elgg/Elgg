@@ -67,7 +67,6 @@ Faodaidh tu fhaicinn is beachd fhàgail air aig:
 	'pages:cantedit' => 'Chan fhaod thu an duilleag seo a dheasachadh',
 	'pages:saved' => 'Chaidh an duilleag a shàbhaladh',
 	'pages:notsaved' => 'Cha b\' urrainnear an duilleag a shàbhaladh',
-	'pages:error:no_title' => 'Feumaidh tu tiotal a chur air an duilleag seo.',
 	'entity:delete:object:page:success' => 'Chaidh an duilleag a sguabadh às gu soirbheachail.',
 
 	/**

@@ -107,6 +107,8 @@ class ReleaseCleaner {
 			}
 			
 			if ($code !== 'en' && file_exists("{$dir}/{$code}.php")) {
+// 				$this->detectAdditionalKeys($dir, $code);
+// 				$this->detectIdenticalTranslations($dir, $code);
 				$this->cleanupMissingTranslationParameters($dir, $code);
 				$this->cleanupEmptyTranslations("{$dir}/{$code}.php");
 			}
@@ -193,5 +195,57 @@ class ReleaseCleaner {
 		$code = preg_replace('~[^a-z0-9]~', '_', $code);
 		
 		return $code;
+	}
+	
+	/**
+	 * Detect translation keys that (still) exist in a translation but no longer in the English translation
+	 *
+	 * @param string $directory     Directory to read translation from
+	 * @param string $language_code Translation to compare to English
+	 *
+	 * @return void
+	 */
+	protected function detectAdditionalKeys(string $directory, string $language_code): void {
+		$english = Includer::includeFile("{$directory}/en.php");
+		$translation = Includer::includeFile("{$directory}/{$language_code}.php");
+		
+		foreach ($translation as $key => $value) {
+			if (array_key_exists($key, $english)) {
+				continue;
+			}
+			
+			$this->log[] = "The translation key '{$key}' exists in the '{$language_code}' translation but not in English";
+		}
+	}
+	
+	/**
+	 * Detect identical translations, this could be due to a wrong Transifex import
+	 *
+	 * @param string $directory     Directory to read translation from
+	 * @param string $language_code Translation to compare to English
+	 *
+	 * @return void
+	 */
+	protected function detectIdenticalTranslations(string $directory, string $language_code): void {
+		$english = Includer::includeFile("{$directory}/en.php");
+		$translation = Includer::includeFile("{$directory}/{$language_code}.php");
+		
+		foreach ($translation as $key => $value) {
+			if (!array_key_exists($key, $english)) {
+				// shouldn't happen
+				continue;
+			}
+			
+			if (strlen($key) < 3) {
+				// probably a language code
+				continue;
+			}
+			
+			if ($english[$key] !== $value) {
+				continue;
+			}
+			
+			$this->log[] = "The translation key '{$key}' in the '{$language_code}' translation is identical to the English translation";
+		}
 	}
 }

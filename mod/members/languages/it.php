@@ -6,7 +6,6 @@
  */
 
 return array(
-	'members:label:online' => 'Online',
 	'members:search' => 'Cerca iscritti',
 	'members:total' => 'Totale iscritti: %s',
 	'members:title:all' => 'Tutti gli iscritti',

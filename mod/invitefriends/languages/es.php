@@ -9,8 +9,6 @@ return array(
 
 	'friends:invite' => 'Invitar amigos',
 	
-	'invitefriends:registration_disabled' => 'El registro de nuevos usuarios ha sido deshabilitado y no puedes invitar amigos.',
-	
 	'invitefriends:introduction' => 'Para invitar a tus amigos a unirse a esta red, escribe sus direcciones de correo y un mensaje que ellos recibiran con tu invitación',
 	'invitefriends:emails' => 'Dirección de correo electrónico ( uno por linea)',
 	'invitefriends:message' => 'Mensaje',

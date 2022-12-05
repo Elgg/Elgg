@@ -25,8 +25,6 @@ return array(
 	'messages:toggle' => 'Inverti selezione a tutti',
 	'messages:markread' => 'Segna come già letto',
 
-	'notification:method:site' => 'Sito',
-
 	'messages:error' => 'Si è verificato un errore salvando il messaggio. Per favore riprova.',
 
 	'item:object:messages' => 'Messaggio',

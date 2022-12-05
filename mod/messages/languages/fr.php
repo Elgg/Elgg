@@ -25,8 +25,6 @@ return array(
 	'messages:toggle' => 'Inverser la sélection',
 	'messages:markread' => 'Marquer comme lu',
 
-	'notification:method:site' => 'Site',
-
 	'messages:error' => 'Un problème est survenu lors de l\'enregistrement de votre message. Veuillez réessayer.',
 
 	'item:object:messages' => 'Message',

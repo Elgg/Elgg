@@ -31,10 +31,4 @@ return array(
 
 	'logrotate:logdeleted' => "Журнал логов удален",
 	'logrotate:lognotdeleted' => "Журналы логов не удалены",
-
-	// not used any more since Elgg 4.1, can be cleaned in Elgg 5.0
-	'logrotate:delete' => 'Удалить архивные журналы логов старше',
-	'logrotate:week' => 'неделя',
-	'logrotate:month' => 'месяц',
-	'logrotate:year' => 'год',
 );

@@ -67,7 +67,6 @@ Vezi și comentează pe pagină:
 	'pages:cantedit' => 'Nu poți edita această pagină',
 	'pages:saved' => 'Pagină salvată',
 	'pages:notsaved' => 'Pagina nu a putut fi salvată',
-	'pages:error:no_title' => 'Trebuie să specifici un titlu acestei pagini.',
 	'entity:delete:object:page:success' => 'Pagina a fost ștearsă cu succes.',
 
 	/**

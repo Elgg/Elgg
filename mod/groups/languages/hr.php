@@ -16,7 +16,6 @@ return array(
 	'groups:all' => "Sve grupe",
 	'groups:add' => "Stvori novu grupu",
 	'groups:edit' => "Uredi grupu",
-	'groups:delete' => 'Izbriši grupu',
 	'groups:name' => 'Naziv grupe',
 	'groups:description' => 'Opis',
 	'groups:briefdescription' => 'Kratak opis',
@@ -25,7 +24,6 @@ return array(
 	'groups:members:more' => "Pregledaj sve članove",
 	'groups:membership' => "Ovlasti članova u grupi",
 	'groups:content_access_mode:membersonly' => "Rezervirano za članove - nečlanovi ne mogu pristupiti sadržaju grupe",
-	'groups:access' => "Ovlasti pristupa",
 	'groups:owner' => "Vlasnik",
 	'groups:owner:warning' => "Upozorenje: ako promijenite ovu vrijednost nećete više biti vlasnik grupe",
 	'groups:widget:num_display' => 'Broj grupa za prikaz',
@@ -44,7 +42,6 @@ return array(
 
 	'groups:nofriendsatall' => 'Nije moguće pozvati još prijatelja!',
 	'groups:group' => "Grupa",
-	'groups:search:tags' => "oznaka",
 	'groups:search:title' => "Pretraži grupu naziva '%s'",
 	'groups:search_in_group' => "Pretraži ovu grupu",
 	'groups:acl' => "Grupa: %s",
@@ -54,7 +51,6 @@ return array(
 
 	'groups:open' => "otvorena grupa",
 	'groups:closed' => "zatvorena grupa",
-	'groups:member' => "članovi",
 	'groups:search' => "Pretraži grupe",
 
 	'groups:more' => 'Više grupa',
@@ -102,10 +98,6 @@ return array(
 	/**
 	 * Action messages
 	 */
-	'groups:deleted' => 'Grupa i sadržaj grupe su izbrisani',
-	'groups:notdeleted' => 'Grupu nije moguće izbrisati',
-	'groups:deletewarning' => "Jeste li sigurni da želite izbrisati ovu grupu? Ne postoji mogućnost povrata!",
-
 	'groups:invitekilled' => 'Poziv je izbrisan. ',
 	'groups:joinrequestkilled' => 'Zahtjev za priključivanjem grupi je izbrisan. ',
 	'groups:error:addedtogroup' => "Grupi nije moguće dodati %s",

@@ -20,7 +20,6 @@ Mura h-eil thu comasach air a' cheangal a bhriogadh, dèan leth-bhreac dheth is 
 
 	'uservalidationbyemail:emailsent' => "Post-d air a chur gu <em>%s</em>",
 	'uservalidationbyemail:registerok' => "Briog air a' cheangal a chur sinn thugad air post-d gus an seòladh puist-d agad a dhearbhadh agus an cunntas agad a chur an comas.",
-	'uservalidationbyemail:login:fail' => "Chan urrainn dhut logadh a-steach air sgàth 's nach eil thu air an cunntas agad a dhearbhadh fhathast. Tha sinn air post-d dearbhaidh eile a chur thugad.",
 
 	'uservalidationbyemail:admin:resend_validation' => 'Cuir post-d dearbhaidh eile',
 	'uservalidationbyemail:confirm_resend_validation' => 'A bheil thu airson post-d dearbhaidh eile a chur gu %s?',

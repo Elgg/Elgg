@@ -25,8 +25,6 @@ return array(
 	'messages:toggle' => 'Comută toate',
 	'messages:markread' => 'Marchează ca citit',
 
-	'notification:method:site' => 'Site',
-
 	'messages:error' => 'A fost o problemă la salvarea mesajului tău. Te rugăm să încerci din nou.',
 
 	'item:object:messages' => 'Mesaj',

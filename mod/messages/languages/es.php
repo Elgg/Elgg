@@ -17,15 +17,12 @@ return array(
 	'messages:sent' => "Enviado",
 	'messages:message' => "Mensaje",
 	'messages:title' => "Asunto",
-	'messages:to:help' => "Write recipient's username here.",
 	'messages:inbox' => "Bandeja de entrada",
 	'messages:sendmessage' => "Enviar un mensaje",
 	'messages:add' => "Escribir un mensaje",
 	'messages:sentmessages' => "Mensajes enviados",
 	'messages:toggle' => 'Activar/desactivar todos',
 	'messages:markread' => 'Marcar como leido',
-
-	'notification:method:site' => 'Sitio',
 
 	'messages:error' => 'Ocurri&oacute; un problema al guardar el mensaje. Por favor intenta de nuevo.',
 

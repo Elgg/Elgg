@@ -28,8 +28,6 @@ return array(
 	'pages:history' => "Historik",
 	'pages:revision' => "Utgåva",
 
-	'pages:navigation' => "Navigation",
-
 	'pages:notify:summary' => 'Ny sida med namnet %s',
 	'pages:notify:subject' => "En ny sida: %s",
 
@@ -59,7 +57,6 @@ return array(
 	'pages:cantedit' => 'Du kan inte redigera den här sidan',
 	'pages:saved' => 'Sidan sparad',
 	'pages:notsaved' => 'Sida kunde inte sparas',
-	'pages:error:no_title' => 'Du måste ange en titel för den här sidan.',
 	'entity:delete:object:page:success' => 'Sidan togs bort.',
 
 	/**

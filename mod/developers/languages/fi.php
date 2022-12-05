@@ -55,7 +55,6 @@ return array(
 	'developers:inspect:actions' => 'Actions',
 	'developers:inspect:events' => 'Events',
 	'developers:inspect:menus' => 'Menus',
-	'developers:inspect:pluginhooks' => 'Plugin hooks',
 	'developers:inspect:priority' => 'Tärkeysjärjestys',
 	'developers:inspect:simplecache' => 'Simple cache',
 	'developers:inspect:views' => 'Views',

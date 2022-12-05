@@ -9,8 +9,6 @@ return array(
 
 	'friends:invite' => 'Pozvat přátele',
 	
-	'invitefriends:registration_disabled' => 'Nemůžete pozvat nové uživatele - pro tyto stánky je zakázána registrace nových uživatelů.',
-	
 	'invitefriends:introduction' => 'Chcete-li pozvat přátele, aby se k vám připojili na těchto stránkách, zadejte jejich e-mailové adresy a zprávu, kterou obdrží současně s vaší pozvánkou.',
 	'invitefriends:emails' => 'E-mailové adresy (jedna na řádek)',
 	'invitefriends:message' => 'Zpráva',

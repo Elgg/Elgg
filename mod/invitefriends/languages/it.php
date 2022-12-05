@@ -9,8 +9,6 @@ return array(
 
 	'friends:invite' => 'Invita amici',
 	
-	'invitefriends:registration_disabled' => 'Impossibile invitare nuovi utenti in questo sito, perché l\'iscrizione di nuovi utenti è stata disabilitata.',
-	
 	'invitefriends:introduction' => 'Per invitare degli amici ad iscriversi a questo social, inserire il loro indirizzo email e un messaggio che riceveranno assieme al tuo invito',
 	'invitefriends:emails' => 'Indirizzi email (uno per riga)',
 	'invitefriends:message' => 'Messaggio',

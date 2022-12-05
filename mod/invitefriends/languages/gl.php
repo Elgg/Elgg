@@ -9,8 +9,6 @@ return array(
 
 	'friends:invite' => 'Invitar amigos',
 	
-	'invitefriends:registration_disabled' => 'Desactivouse o rexistro de novas contas de usuario no sitio. Non pode invitar a novos usuarios.',
-	
 	'invitefriends:introduction' => 'Para invitar a contactos a unirse a vostede nesta rede, escriba os seus enderezos de correo electrónicos, e recibirán unha mensaxe coa súa invitación.',
 	'invitefriends:emails' => 'Enderezos de correo (un por liña)',
 	'invitefriends:message' => 'Mensaxe',

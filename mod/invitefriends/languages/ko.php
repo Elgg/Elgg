@@ -9,8 +9,6 @@ return array(
 
 	'friends:invite' => '친구 초대',
 	
-	'invitefriends:registration_disabled' => '이 누리집은 새 사용자 등록이 비활성화 되어있어서 새 사용자를 초대할 수 없습니다.',
-	
 	'invitefriends:introduction' => '친구를 초대하려면 그의 전자우편주소를 적고 초대글을 쓰세요.',
 	'invitefriends:emails' => '전자우편주소 (한줄에 하나씩)',
 	'invitefriends:message' => '쪽지',

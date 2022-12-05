@@ -17,15 +17,12 @@ return array(
 	'messages:sent' => "Στάλθηκε",
 	'messages:message' => "Μήνυμα",
 	'messages:title' => "Θέμα",
-	'messages:to:help' => "Write recipient's username here.",
 	'messages:inbox' => "Εισερχόμενα",
 	'messages:sendmessage' => "Αποστολή μηνύματος",
 	'messages:add' => "Σύνθεση μηνύματος",
 	'messages:sentmessages' => "Απεσταλμένα μηνύματα",
 	'messages:toggle' => 'Εναλλαγή όλων',
 	'messages:markread' => 'Σημειώστε το ως διαβασμένο',
-
-	'notification:method:site' => 'Ιστότοπος',
 
 	'messages:error' => 'Παρουσιάστηκε πρόβλημα κατά την αποθήκευση του μηνύματος σας. Παρακαλούμε προσπαθήστε ξανά.',
 
@@ -55,7 +52,6 @@ return array(
 	'messages:nomessages' => "Δεν υπάρχουν μηνύματα.",
 	'messages:user:nonexist' => "Δεν βρέθηκε ο παραλήπτης στη βάση δεδομένων των χρηστών.",
 	'messages:user:blank' => "Δεν επιλέξατε κάποιο χρήστη για την αποστολή του μηνύματος",
-	'messages:user:self' => "You cannot send a message to yourself.",
 
 	'messages:deleted_sender' => 'Διαγραμμένος χρήστης',
 	

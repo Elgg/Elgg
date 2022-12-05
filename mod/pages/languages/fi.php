@@ -52,7 +52,6 @@ return array(
 	'pages:cantedit' => 'Sinulla ei ole oikeuksia muokata tätä wikisivua',
 	'pages:saved' => 'Sivu tallennettu',
 	'pages:notsaved' => 'Sivun tallentaminen epäonnistui',
-	'pages:error:no_title' => 'Syötä sivulle otsikko.',
 	'entity:delete:object:page:success' => 'Sivu poistettiin.',
 
 	/**

@@ -25,8 +25,6 @@ return array(
 	'messages:toggle' => 'Toggle all',
 	'messages:markread' => 'Mark read',
 
-	'notification:method:site' => 'Site',
-
 	'messages:error' => 'There was a problem saving your message. Please try again.',
 
 	'item:object:messages' => 'Message',

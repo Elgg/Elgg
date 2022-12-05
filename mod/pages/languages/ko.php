@@ -56,7 +56,6 @@ return array(
 	'pages:cantedit' => '이 페이지를 수정할 수 없습니다.',
 	'pages:saved' => '페이지 저장됨',
 	'pages:notsaved' => '페이지를 저장할 수 없슴',
-	'pages:error:no_title' => '이 페이지의 제목을 입력해야합니다.',
 	'entity:delete:object:page:success' => '페이지가 성공적으로 삭제되었습니다.',
 
 	/**

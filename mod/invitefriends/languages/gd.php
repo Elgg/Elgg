@@ -9,8 +9,6 @@ return array(
 
 	'friends:invite' => 'Thoir cuireadh ri do chàirdean',
 	
-	'invitefriends:registration_disabled' => 'Chan fhaod thu cuiridhean a chur do chleachdaichean ùra o chionn \'s gun deach clàradh a chur à comas.',
-	
 	'invitefriends:introduction' => 'Airson cuireadh a chur do charaid, cuir a-steach an seòladh puist-d aca agus sgrìobh teachdaireachd thuca',
 	'invitefriends:emails' => 'Seòlaidhean puist-d (cuir aon anns gach loidhne)',
 	'invitefriends:message' => 'Teachdaireachd',

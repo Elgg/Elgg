@@ -15,14 +15,16 @@ use ElggAnnotation;
  */
 class ElggCoreMetastringsTest extends IntegrationTestCase {
 
-	public $metastringTypes = [
+	protected array $metastringTypes = [
 		'metadata',
-		'annotation'
+		'annotation',
 	];
-	public $metastringTables = [
+	protected array $metastringTables = [
 		'metadata' => 'metadata',
 		'annotation' => 'annotations',
 	];
+
+	protected \ElggObject $object;
 
 	public function up() {
 		_elgg_services()->session_manager->setLoggedInUser($this->getAdmin());

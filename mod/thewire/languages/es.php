@@ -55,10 +55,4 @@ return array(
 	'thewire:notify:reply' => '%s ha respondido a %s en the wire:',
 	'thewire:notify:post' => '%s ha posteado en the wire:',
 	'thewire:notify:footer' => "Ver y responder:\n%s",
-
-	/**
-	 * Settings
-	 */
-	'thewire:settings:limit' => "Maximum number of characters for wire messages:",
-	'thewire:settings:limit:none' => "No limit",
 );

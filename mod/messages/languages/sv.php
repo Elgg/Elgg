@@ -25,8 +25,6 @@ return array(
 	'messages:toggle' => 'Växla alla',
 	'messages:markread' => 'Markera som lästa',
 
-	'notification:method:site' => 'Webbplats',
-
 	'messages:error' => 'Det var ett problem att spara ditt meddelande. Vänligen försök igen.',
 
 	'item:object:messages' => 'Meddelande',

@@ -31,10 +31,4 @@ return array(
 
 	'logrotate:logdeleted' => "Journal supprimé",
 	'logrotate:lognotdeleted' => "Aucun journal supprimé",
-
-	// not used any more since Elgg 4.1, can be cleaned in Elgg 5.0
-	'logrotate:delete' => 'Supprimer les journaux archivés plus anciens que ',
-	'logrotate:week' => 'semaine',
-	'logrotate:month' => 'mois',
-	'logrotate:year' => 'année',
 );

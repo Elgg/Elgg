@@ -6,7 +6,6 @@
  */
 
 return array(
-	'members:label:online' => 'Online',
 	'members:search' => 'Sæg medlemmer',
 	'members:total' => 'Total medlemmer: %s',
 	'members:title:newest' => 'Seneste medlemmer',

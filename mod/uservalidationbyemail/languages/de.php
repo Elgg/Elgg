@@ -19,7 +19,6 @@ Wenn Du nicht direkt auf den Link klicken kannst, kopiere ihn bitte von Hand aus
 
 	'uservalidationbyemail:emailsent' => "Die Email an <em>%s</em> wurde gesendet.",
 	'uservalidationbyemail:registerok' => "Um Deinen Account zu aktivieren, mußt Du Deine Email-Adresse bestätigen, indem Du dem Link in der Email folgst, die wir Dir gerade gesendet haben.",
-	'uservalidationbyemail:login:fail' => "Dein Account ist noch nicht validiert, daher ist die Anmeldung auf dieser Community-Seite noch nicht möglich. Es wurde eine neue Validierungs-Email an die von Dir angegebene Email-Adresse gesendet.",
 
 	'uservalidationbyemail:admin:resend_validation' => 'Bestätigungs-Email erneut senden',
 	'uservalidationbyemail:confirm_resend_validation' => 'Bestätigungs-Email an %s erneut senden?',

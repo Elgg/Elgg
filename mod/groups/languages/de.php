@@ -33,12 +33,10 @@ return array(
 	'relationship:invited' => '%2$s wurde eingeladen, %1$s beizutreten',
 	'relationship:membership_request' => '%s hat angefragt, %s beizutreten',
 
-	'groups:icon' => 'Gruppen-Icon (leer lassen, um nicht zu ändern)',
 	'groups:name' => 'Gruppenname',
 	'groups:description' => 'Beschreibung',
 	'groups:briefdescription' => 'Kurzbeschreibung',
 	'groups:interests' => 'Tags',
-	'groups:website' => 'Webseite',
 	'groups:members' => 'Gruppen-Mitglieder',
 
 	'groups:members_count' => '%s Mitglieder',
@@ -50,14 +48,12 @@ return array(
 	'groups:content_access_mode:warning' => "Warnung: eine Änderung dieser Einstellung verändert nicht die Zugangsberechtigungen für schon existierende Inhalte der Gruppe.",
 	'groups:content_access_mode:unrestricted' => "Ohne Beschränkung - Zugriffsbeschränkung allein durch inhaltsspezifischen Zugangslevel",
 	'groups:content_access_mode:membersonly' => "Nur Mitglieder - Inhalte der Gruppe für andere nicht zugänglich",
-	'groups:access' => "Zugangslevel",
 	'groups:owner' => "Gründer",
 	'groups:owner:warning' => "Warnung: wenn Du diesen Wert veränderst, bist Du nicht länger der Gründer dieser Gruppe.",
 	'groups:widget:num_display' => 'Anzahl der anzuzeigenden Gruppen',
 	'widgets:a_users_groups:name' => 'Gruppen-Mitgliedschaft',
 	'widgets:a_users_groups:description' => 'Auflistung der Gruppen, in denen Du Mitglied bist.',
 
-	'groups:noaccess' => 'Zugang zur Gruppe verweigert.',
 	'groups:cantcreate' => 'Du kannst keine Gruppe erstellen. Dies können nur Administratoren.',
 	'groups:cantedit' => 'Du kannst die Gruppen-Einstellungen nicht bearbeiten.',
 	'groups:saved' => 'Gruppe angelegt.',
@@ -95,7 +91,6 @@ return array(
 
 	'groups:open' => "Öffentliche Gruppe",
 	'groups:closed' => "Nicht-öffentliche Gruppe",
-	'groups:member' => "Mitglieder",
 	'groups:search' => "Suche nach Gruppen",
 
 	'groups:more' => 'Weitere Gruppen',

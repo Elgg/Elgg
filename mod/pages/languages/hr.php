@@ -54,7 +54,6 @@ return array(
 	 */
 	'pages:saved' => 'Stranica je sačuvana',
 	'pages:notsaved' => 'Stranicu nije moguće sačuvati',
-	'pages:error:no_title' => 'Potrebno je odrediti naziv stranice. ',
 	'entity:delete:object:page:success' => 'Stranica je uspješno izbrisana.',
 
 	/**

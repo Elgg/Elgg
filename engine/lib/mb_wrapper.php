@@ -223,21 +223,3 @@ function elgg_substr() {
 	}
 	return call_user_func_array('substr', $args);
 }
-
-/**
- * Wrapper function for mb_convert_encoding(). Falls back to preg_replace if
- * mb_convert_encoding() isn't available.
- *
- * @param string $string the string to convert
- *
- * @return string
- * @since 5.0
- */
-function elgg_convert_encoding(string $string): string {
-	//encode <,>,&, quotes and characters above 127
-	if (is_callable('mb_convert_encoding')) {
-		return mb_convert_encoding($string, 'HTML-ENTITIES', 'UTF-8');
-	}
-	// if no mbstring extension, we just strip characters
-	return (string) preg_replace("/[^\x01-\x7F]/", '', $string);
-}

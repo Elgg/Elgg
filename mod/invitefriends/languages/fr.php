@@ -9,8 +9,6 @@ return array(
 
 	'friends:invite' => 'Inviter des contacts',
 	
-	'invitefriends:registration_disabled' => 'L\'inscription de nouveaux utilisateurs a été désactivée sur ce site ; vous ne pouvez pas inviter de nouveaux utilisateurs.',
-	
 	'invitefriends:introduction' => 'Pour inviter des contacts à vous rejoindre sur ce réseau, saisissez leur adresse e-mail et un message qu\'ils recevront avec votre invitation.',
 	'invitefriends:emails' => 'Adresses e-mail (une par ligne)',
 	'invitefriends:message' => 'Message',

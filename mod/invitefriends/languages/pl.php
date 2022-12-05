@@ -9,8 +9,6 @@ return array(
 
 	'friends:invite' => 'Zaproś znajomych',
 	
-	'invitefriends:registration_disabled' => 'Rejestracja nowych użytkowników została zablokowana. Nie można zaprosić nowych osób.',
-	
 	'invitefriends:introduction' => 'Aby zaprosić znajomych do twojej sieci, wprowadź ich adresy e-mail aby wysłać im wiadomość z zaproszeniem.',
 	'invitefriends:emails' => 'Adresy e-mail (każdy w osobnej linii)',
 	'invitefriends:message' => 'Wiadomość',

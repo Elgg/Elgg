@@ -12,7 +12,6 @@ return array(
 
 	'uservalidationbyemail:emailsent' => "Email inviata a <em>%s</em>",
 	'uservalidationbyemail:registerok' => "Per attivare il tuo account, per favore conferma il tuo indirizzo email facendo click sul collegamento che ti abbiamo appena inviato tramite email. (\"Dov'è l'email che mi avete mandato?\" Hai provato a guardare se è finita nello spam?)",
-	'uservalidationbyemail:login:fail' => "Il tuo account non è stato convalidato quindi il tuo tentativo di entrare non ha avuto successo. Ti è stata inviata un'altra e-mail di convalida. (\"Dov'è l'email che mi avete mandato?\" Hai provato a guardare se è finita nello spam?)",
 
 	'uservalidationbyemail:admin:resend_validation' => 'Rispedisci convalidazione',
 	'uservalidationbyemail:confirm_resend_validation' => 'Rispedire l\'email di convalidazione a %s?',

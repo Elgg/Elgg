@@ -12,7 +12,7 @@ if (!$user || !$user->canEdit()) {
 
 $methods = elgg_get_notification_methods();
 if (empty($methods)) {
-	return elgg_error_response('usersettings:notifications:subscriptions:save:fail');
+	return elgg_error_response(elgg_echo('usersettings:notifications:subscriptions:save:fail'));
 }
 
 $subscriptions = (array) get_input('subscriptions', []);

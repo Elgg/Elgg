@@ -9,8 +9,6 @@ return array(
 
 	'friends:invite' => 'Пригласить друзей',
 	
-	'invitefriends:registration_disabled' => 'На этом сайте отключена регистрация новых пользователей; вы не можете приглашать новых пользователей.',
-	
 	'invitefriends:introduction' => 'Чтобы пригласить друзей на сайт, введите их электронные адреса и сообщение, которое они получат с приглашением',
 	'invitefriends:emails' => 'Email адреса (по одному в строке)',
 	'invitefriends:message' => 'Сообщение',

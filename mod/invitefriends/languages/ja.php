@@ -9,8 +9,6 @@ return array(
 
 	'friends:invite' => '友達を招待する',
 	
-	'invitefriends:registration_disabled' => 'このサイトでは新規ユーザ登録はできないように設定されていまので、新しいユーザを招待することはできません。',
-	
 	'invitefriends:introduction' => '記入力欄にEメールアドレスと招待のメッセージを入力して、このネットワークに友達を招待しましょう。',
 	'invitefriends:emails' => 'Eメールアドレス (一行に一件ずつ)',
 	'invitefriends:message' => 'メッセージ',

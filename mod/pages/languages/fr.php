@@ -68,7 +68,6 @@ Voir et commenter la page :
 	'pages:cantedit' => 'Vous ne pouvez pas modifier cette page',
 	'pages:saved' => 'Page enregistrée',
 	'pages:notsaved' => 'La page n\'a pas pu être enregistrée',
-	'pages:error:no_title' => 'Vous devez donner un titre à cette page.',
 	'entity:delete:object:page:success' => 'La page a bien été supprimée.',
 
 	/**

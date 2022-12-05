@@ -5,56 +5,20 @@ namespace Elgg\Notifications;
 use Elgg\EventsService;
 use Elgg\Exceptions\Exception;
 use Elgg\IntegrationTestCase;
-use Elgg\Logger;
 use Elgg\Mocks\Queue\DatabaseQueue;
 use Elgg\Values;
 
 abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCase {
 
-	/**
-	 * @var EventsService
-	 */
-	protected $events;
-
-	/**
-	 * @var DatabaseQueue
-	 */
-	protected $queue;
-
-	/**
-	 * @var SubscriptionsService
-	 */
-	protected $subscriptions;
-
-	/**
-	 * @var \ElggSession
-	 */
-	protected $session;
-
-	/**
-	 * @var Logger
-	 */
-	protected $logger;
-
-	/**
-	 * @var NotificationsService
-	 */
-	protected $notifications;
-
-	/**
-	 * @var string
-	 */
-	protected $test_object_class;
-
-	/**
-	 * @var \ElggUser
-	 */
-	protected $actor;
-
-	/**
-	 * @var int
-	 */
-	protected $time;
+	protected EventsService $events;
+	protected DatabaseQueue $queue;
+	protected \ElggSession $session;
+	protected \Elgg\SessionManagerService $session_manager;
+	protected \Elgg\I18n\Translator $translator;
+	protected NotificationsService $notifications;
+	protected string $test_object_class;
+	protected \ElggUser $actor;
+	protected int $time;
 
 	public function up() {
 		$this->createApplication([
@@ -70,13 +34,10 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$this->queue = new DatabaseQueue();
 
-		$this->entities = _elgg_services()->entityTable;
-		$this->time = $this->entities->getCurrentTime()->getTimestamp();
+		$this->time = _elgg_services()->entityTable->getCurrentTime()->getTimestamp();
 
 		$this->session = _elgg_services()->session;
 		$this->session_manager = _elgg_services()->session_manager;
-
-		$this->logger = _elgg_services()->logger;
 
 		$this->translator = _elgg_services()->translator;
 

@@ -9,6 +9,8 @@ use Elgg\IntegrationTestCase;
  */
 class AccessWhereClauseIntegrationTest extends IntegrationTestCase {
 
+	protected \ElggUser $user;
+	
 	public function up() {
 		$this->user = $this->createUser();
 		_elgg_services()->session_manager->setLoggedInUser($this->user);

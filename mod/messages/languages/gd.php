@@ -25,8 +25,6 @@ return array(
 	'messages:toggle' => 'Toglaich na h-uile',
 	'messages:markread' => 'Comharraich gun deach a leughadh',
 
-	'notification:method:site' => 'Làrach',
-
 	'messages:error' => 'Bha duilgheadas ann agus cha deach an teachdaireachd agad a shàbhaladh. Feuch ris a-rithist.',
 
 	'item:object:messages' => 'Teachdaireachd',

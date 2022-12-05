@@ -19,7 +19,6 @@ If you can't click on the link, copy and paste it to your browser manually.",
 
 	'uservalidationbyemail:emailsent' => "Email sent to <em>%s</em>",
 	'uservalidationbyemail:registerok' => "To activate your account, please confirm your email address by clicking on the link we just sent you.",
-	'uservalidationbyemail:login:fail' => "Your account is not validated so the login attempt failed. Another validation email has been sent.",
 	'uservalidationbyemail:change_email' => "Resend validation email",
 	'uservalidationbyemail:change_email:info' => "Your account is not validated so the login attempt failed. You can request a new validation link or update the email address related to your account.",
 

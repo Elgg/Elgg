@@ -19,7 +19,6 @@ Dacă nu poți apăsa pe link, copiază-l și adaugă-l manual în navigatorul t
 
 	'uservalidationbyemail:emailsent' => "Email trimis către <em>%s</em>",
 	'uservalidationbyemail:registerok' => "Pentru a-ți activa contul, te rugăm să-ți confirmi adresa de email apăsând pe link-ul pe care tocmai ce ți l-am trimis.",
-	'uservalidationbyemail:login:fail' => "Contul tău nu este validat așa că încercarea de conectare a eșuat. Un alt email de validare a fost trimis.",
 
 	'uservalidationbyemail:admin:resend_validation' => 'Retrimite validarea',
 	'uservalidationbyemail:confirm_resend_validation' => 'Retrimiți email-ul de validare către %s?',

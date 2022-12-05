@@ -10,7 +10,11 @@ use Elgg\IntegrationTestCase;
  * @group Navigation
  */
 class MenuRenderingIntegrationTest extends IntegrationTestCase {
-
+	
+	protected \ElggUser $user;
+	protected \ElggObject $object;
+	protected \ElggGroup $group;
+	
 	public function up() {
 		$this->user = $this->createUser();
 		elgg_set_page_owner_guid($this->user->guid);

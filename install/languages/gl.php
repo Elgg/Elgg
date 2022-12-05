@@ -49,14 +49,12 @@ return array(
 	'install:database:label:dbname' => 'Base de datos',
 	'install:database:label:dbhost' => 'Servidor',
 	'install:database:label:dbprefix' => 'Prefixo das táboas',
-	'install:database:label:timezone' => "Timezone",
 
 	'install:database:help:dbuser' => 'Usuario que ten todos os permisos posíbeis sobre a base de datos MySQL que creou para Elgg.',
 	'install:database:help:dbpassword' => 'Contrasinal da conta de usuario da base de datos introducida no campo anterior.',
 	'install:database:help:dbname' => 'Nome da base de datos para Elgg.',
 	'install:database:help:dbhost' => 'Enderezo do servidor de MySQL (normalmente é «localhost»).',
 	'install:database:help:dbprefix' => "O prefixo que se lles engade a todas as táboas de Elgg (normalmente é «elgg_»).",
-	'install:database:help:timezone' => "The default timezone in which the site will operate",
 
 	'install:settings:label:sitename' => 'Nome',
 	'install:settings:label:siteemail' => 'Enderezo de correo',
@@ -111,8 +109,6 @@ return array(
 	'install:error:nodatabase' => 'Non foi posíbel usar a base de datos «%s». Pode que non exista.',
 	'install:error:cannotloadtables' => 'Non foi posíbel cargar as táboas da base de datos.',
 	'install:error:tables_exist' => 'A base de datos xa contén táboas de Elgg. Ten que eliminar esas táboas ou reiniciar o instalador e intentar facer uso delas. Para reiniciar o instalador, elimine a parte de «?step=database» do URL na barra do URL do navegador, e prema Intro.',
-	'install:error:readsettingsphp' => 'Unable to read /elgg-config/settings.example.php',
-	'install:error:writesettingphp' => 'Unable to write /elgg-config/settings.php',
 	'install:error:requiredfield' => 'Necesítase «%s».',
 	'install:error:relative_path' => 'A ruta «%s» para o cartafol de datos non parece unha ruta absoluta.',
 	'install:error:datadirectoryexists' => 'O cartafol de datos, «%s», non existe.',

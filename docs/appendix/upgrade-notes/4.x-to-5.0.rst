@@ -90,6 +90,22 @@ Also the use of the ``\Elgg\Exceptions\InvalidArgumentException`` has been check
 
 	All exceptions thrown in Elgg implement the ``\Elgg\Exceptions\ExceptionInterface`` if you wish to easily catch all Elgg exceptions.
 
+ElggRiverItem
+-------------
+
+It's no longer allowed to set arbitrary data during runtime on an ``ElggRiverItem``. Since the data was only available during runtime and not saved to the database this distinction has been removed.
+When setting an unsupported attribute an ``\Elgg\Exceptions\RuntimeException`` is thrown. 
+
+.. code-block:: php
+
+	// this is allowed
+	$item = new \ElggRiverItem();
+	$item->subject_guid = elgg_get_logged_in_user_guid();
+	
+	// this is no longer allowed (causes an \Elgg\Exceptions\RuntimeException)
+	$item = new \ElggRiverItem();
+	$item->foo = 'bar';
+
 Changes in functions
 --------------------
 

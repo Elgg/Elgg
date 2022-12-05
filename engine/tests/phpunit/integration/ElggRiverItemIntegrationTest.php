@@ -35,6 +35,7 @@ class ElggRiverItemIntegrationTest extends IntegrationTestCase {
 		$this->target = $this->createGroup();
 		
 		$annotation_id = $this->object->annotate('foo', 'bar', ACCESS_PUBLIC);
+		$this->assertIsInt($annotation_id);
 		$this->annotation = elgg_get_annotation_from_id($annotation_id);
 		
 		return elgg_create_river_item([
@@ -45,7 +46,6 @@ class ElggRiverItemIntegrationTest extends IntegrationTestCase {
 			'target_guid' => $this->target->guid,
 			'annotation_id' => $annotation_id,
 			'posted' => time(),
-			'access_id' => ACCESS_PUBLIC,
 			'return_item' => true,
 		]);
 	}
@@ -54,31 +54,6 @@ class ElggRiverItemIntegrationTest extends IntegrationTestCase {
 		$this->createApplication([
 			'isolate' => true,
 		]);
-	}
-	
-	public function testSetRandomDataNotPersistent() {
-		$item = new \ElggRiverItem();
-		$item->view = 'river/object/create';
-		$item->action_type = 'create';
-		$item->object_guid = $this->createObject()->guid;
-		$item->subject_guid = $this->createUser()->guid;
-		$item->access_id = ACCESS_PUBLIC;
-		
-		$item->foo = 'bar';
-		
-		$this->assertEquals('river/object/create', $item->view);
-		$this->assertEquals('create', $item->action_type);
-		$this->assertEquals('bar', $item->foo);
-		
-		$this->assertTrue($item->save());
-		$this->assertIsInt($item->id);
-		
-		$loaded_item = elgg_get_river_item_from_id($item->id);
-		
-		$this->assertInstanceOf(\ElggRiverItem::class, $loaded_item);
-		$this->assertEquals('river/object/create', $loaded_item->view);
-		$this->assertEquals('create', $loaded_item->action_type);
-		$this->assertEmpty($loaded_item->foo);
 	}
 	
 	public function testGetTypeSubtype() {

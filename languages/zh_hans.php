@@ -22,7 +22,6 @@ return array(
 	'loginok' => "请勿重复登录，如果您需要切换账号请先注销。",
 	'login:empty' => "请输入登录信息！",
 	'login:baduser' => "此账号已经被禁止登录。",
-	'auth:nopams' => "网络故障，无法认证当前登录信息！",
 
 	'logout' => "注销",
 	'logoutok' => "注销成功！",
@@ -51,7 +50,6 @@ return array(
 
 	'PluginException:CannotStart' => '%s (guid: %s) 无法启用， 原因: %s',
 	'PluginException:InvalidID' => "插件ID无效： %s ",
-	'PluginException:InvalidPath' => "插件路径无效 ： %s ",
 	'ElggPlugin:MissingID' => '插件ID错误(guid %s)',
 	'ElggPlugin:Error' => '插件错误',
 	'ElggPlugin:Exception:CannotIncludeFile' => '无法包含 %s 在插件 %s (guid: %s) 中 %s。',
@@ -181,8 +179,6 @@ return array(
 	'widget:delete' => '删除 %s',
 	'widget:edit' => '自定义该组件',
 
-	'widgets' => "组件",
-	'widget' => "组件",
 	'item:object:widget' => "组件",
 	'collection:object:widget' => '页面组件',
 	'widgets:add:success' => "组件添加成功！",
@@ -215,20 +211,10 @@ return array(
 	'collection:friends' => '好友\' %s',
 
 	'avatar' => '头像',
-	'avatar:noaccess' => "你没有编辑该用户头像的权限",
-	'avatar:create' => '创建头像',
 	'avatar:edit' => '编辑头像',
-	'avatar:upload' => '上传新头像',
-	'avatar:current' => '当前头像',
-	'avatar:remove' => '删除头像，恢复系统默认头像图标',
-	'avatar:crop:title' => '头像裁剪工具',
 	'avatar:upload:instructions' => "头像在网站内显示，您可以根据自己的喜好随时更换.（头像文件类型：gif，jpg或png）",
-	'avatar:create:instructions' => '点击拖动方框来裁剪头像，右边的方框显示预览，点击\'创建头像\'即可完成. ',
-	'avatar:upload:success' => '头像上传成功',
 	'avatar:upload:fail' => '头像上传失败',
 	'avatar:resize:fail' => '调整头像大小失败',
-	'avatar:crop:success' => '裁剪头像成功',
-	'avatar:crop:fail' => '裁剪头像失败',
 	'avatar:remove:success' => '删除头像成功',
 	'avatar:remove:fail' => '删除头像失败',
 	
@@ -254,10 +240,7 @@ return array(
 	'river' => "动态",
 	'river:user:friend' => "%s 已经关注了 %s",
 	'river:update:user:avatar' => '%s 更新了头像',
-	'river:noaccess' => '您还没有权限查看该内容。',
 	'river:posted:generic' => '%s 发布',
-	'riveritem:single:user' => '单用户',
-	'riveritem:plural:user' => '多用户',
 	'river:ingroup' => '在小组%s中',
 	'river:none' => '还没有动态',
 	'river:update' => '%s的更新',
@@ -285,10 +268,6 @@ return array(
  */
 
 	'search' => "搜索",
-	'searchtitle' => "搜索: %s",
-	'users:searchtitle' => "搜索用户: %s",
-	'groups:searchtitle' => "搜索研究组: %s",
-	'advancedsearchtitle' => "%s 匹配的搜索 %s",
 	'notfound' => "未找到.",
 
 	'viewtype:change' => "更换显示方式",
@@ -323,9 +302,7 @@ return array(
 	'registration:passwordnotvalid' => '对不起，你输入的密码在此系统无效',
 	'registration:usernamenotvalid' => '对不起，你输入的用户名无效',
 
-	'adduser' => "添加用户",
 	'adduser:ok' => "您已经成功添加了一个新用户.",
-	'adduser:bad' => "新用户创建失败.",
 
 	'user:set:name' => "账户名设置",
 	'user:name:label' => "我的名字",
@@ -339,17 +316,12 @@ return array(
 	'user:password:label' => "新密码",
 	'user:password2:label' => "新密码确认",
 	'user:password:success' => "密码修改成功",
-	'user:password:fail' => "密码修改失败.",
-	'user:password:fail:notsame' => "密码不一致!",
-	'user:password:fail:tooshort' => "密码太短!",
-	'user:password:fail:incorrect_current_password' => '当前密码输入不正确.',
 	'user:changepassword:unknown_user' => '无效的用户名',
 	'user:changepassword:change_password_confirm' => '此操作将修改您的密码.',
 
 	'user:set:language' => "语言设置",
 	'user:language:label' => "语言",
 	'user:language:success' => "语言设置成功更新.",
-	'user:language:fail' => "语言设置失败.",
 
 	'user:username:notfound' => '用户名 %s未找到。',
 	'user:username:help' => '请注意，更改用户名将改变所有动态的与用户相关的链接。',
@@ -357,7 +329,6 @@ return array(
 	'user:password:lost' => '忘记密码',
 	'user:password:hash_missing' => '很遗憾，我们必须要求您重新设置密码。我们改进了站点上的密码安全性，但无法在进程中迁移所有帐户。',
 	'user:password:changereq:success' => '成功重置了密码, 邮件已经发出',
-	'user:password:changereq:fail' => '不能重置新密码.',
 
 	'user:password:text' => '输入你的用户名或者Email地址，点击找回密码按钮找回密码.',
 
@@ -548,16 +519,6 @@ return array(
 	'admin:site:secret:regenerated' => "您的站点密钥已被重新生成",
 	'admin:site:secret:prevented' => "站点秘密的再生被阻止。",
 	
-	'admin:notification:make_admin:admin:subject' => 'A new site administrator was added to %s',
-	
-	'admin:notification:make_admin:user:subject' => 'You were added as a site administator of %s',
-	'admin:notification:remove_admin:admin:subject' => 'A site administrator was removed from %s',
-	
-	'admin:notification:remove_admin:user:subject' => 'You were removed as a site administator from %s',
-	'user:notification:ban:subject' => 'Your account on %s was banned',
-	
-	'user:notification:unban:subject' => 'Your account on %s is no longer banned',
-
 /**
  * Plugins
  */
@@ -700,10 +661,7 @@ return array(
  * User settings
  */
 
-	'usersettings:description' => "用户设置面板允许你控制所有个人设置, 从用户管理到插件行为，从下面选择一个选项开始吧",
-
 	'usersettings:statistics' => "你的账户统计",
-	'usersettings:statistics:opt:description' => "你的页面的访问统计.",
 	'usersettings:statistics:opt:linktext' => "账户统计",
 
 	'usersettings:statistics:login_history' => "登录历史记录",
@@ -711,18 +669,12 @@ return array(
 	'usersettings:statistics:login_history:ip' => "IP",
 
 	'usersettings:user' => "%s的设置",
-	'usersettings:user:opt:description' => "您可以控制用户设置。",
 	'usersettings:user:opt:linktext' => "变更您的设置",
 
-	'usersettings:plugins' => "工具",
-	'usersettings:plugins:opt:description' => "为你的工具配置设置。",
 	'usersettings:plugins:opt:linktext' => "配置你的工具",
-
-	'usersettings:plugins:description' => "此面板允许你控制和配置个人设置。",
 	
 	'usersettings:statistics:yourdetails' => "您的细节",
 	'usersettings:statistics:label:name' => "全名",
-	'usersettings:statistics:label:email' => "Email",
 	'usersettings:statistics:label:lastlogin' => "最后登录",
 	'usersettings:statistics:label:membersince' => "成员来自",
 	'usersettings:statistics:label:numentities' => "您的内容",
@@ -736,9 +688,7 @@ return array(
 	'river:owner' => '%s的动态',
 	'river:friends' => '研友动态',
 	'river:select' => '显示 %s',
-	'river:comments:more' => '+%u 更多',
 	'river:comments:all' => '查看 %u 条全部评论',
-	'river:generic_comment' => '评论%s %s',
 
 /**
  * Icons
@@ -1025,10 +975,6 @@ return array(
 	'installation:sitename' => "网站名称:",
 	'installation:sitedescription' => "网站的简短描述(可选):",
 	'installation:sitedescription:help' => "使用捆绑的插件，这只出现在搜索引擎结果的描述meta标签中。",
-	'installation:wwwroot' => "网站URL:",
-	'installation:path' => "Elgg安装的完整路径:",
-	'installation:dataroot' => "数据目录的完整路径:",
-	'installation:dataroot:warning' => "你必须手动创建这个路径，它独立于Elgg安装文件夹.",
 	'installation:sitepermissions' => "默认访问权限:",
 	'installation:language' => "网站默认语言:",
 	'installation:debug' => "控制写入服务器日志的信息量.",
@@ -1044,8 +990,6 @@ return array(
 	'installation:registration:label' => '允许新用户注册',
 	'installation:walled_garden:description' => '开启将阻止非会员访问网站，除非你期望网站标记为公开（比如注册登录）',
 	'installation:walled_garden:label' => '仅对登陆用户开放',
-
-	'installation:view' => "输入将用作站点默认值的视图，或将此空白保留为默认视图（如果不确定，请默认为左）：",
 
 	'installation:siteemail' => "站点电子邮件地址（用于发送系统电子邮件）：",
 	'installation:default_limit' => "每页的默认项目数",
@@ -1098,7 +1042,6 @@ return array(
 	'admin:pending_upgrades' => '网站有待处理的升级，需要你的注意',
 	'admin:view_upgrades' => '查看待处理的升级',
 	'item:object:elgg_upgrade' => '网站升级',
-	'collection:object:elgg_upgrade' => 'Site upgrades',
 	'admin:upgrades:none' => '安装已经是最新',
 
 	'upgrade:success_count' => '升级:',
@@ -1218,7 +1161,6 @@ return array(
 /**
  * Miscellaneous
  */
-	'elgg:powered' => "Powered by Elgg",
 	
 /**
  * Cli commands
@@ -1379,7 +1321,4 @@ return array(
 	"zu" => "Zulu",
 
 	"field:required" => '需要的',
-
-	"core:upgrade:2017080900:title" => "Alter database encoding for multi-byte support",
-	"core:upgrade:2017080900:description" => "Alters database and table encoding to utf8mb4, in order to support multi-byte characters such as emoji",
 );

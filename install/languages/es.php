@@ -96,8 +96,6 @@ return array(
 	'install:complete:instructions' => 'Su sitio Elgg ahora está listo para su uso. Haga click en el botón de abajo para ir a visitar el sitio.',
 	'install:complete:gotosite' => 'Ir al sitio',
 
-	'InstallationException:CannotLoadSettings' => 'Elgg could not load the settings file. It does not exist or there is a file permissions issue.',
-
 	'install:success:database' => 'Se ha instalado la base de datos.',
 	'install:success:settings' => 'Se ha guardado la configuración del sitio.',
 	'install:success:admin' => 'Se ha creado la cuenta Admin.',
@@ -113,7 +111,6 @@ return array(
 	'install:error:readsettingsphp' => 'No se puede leer /elgg-config/settings.example.php',
 	'install:error:writesettingphp' => 'No se puede escribir /elgg-config/settings.php',
 	'install:error:requiredfield' => '%s es requerido',
-	'install:error:relative_path' => 'We don\'t think "%s" is an absolute path for your data directory',
 	'install:error:datadirectoryexists' => 'El directorio de datos (data) %s no existe.',
 	'install:error:writedatadirectory' => 'El servidor no puede escribir en el directorio de datos (data) %s.',
 	'install:error:locationdatadirectory' => 'El directorio de datos (data) %s debe encontrarse fuera de la carpeta de instalación por motivos de seguridad.',
@@ -137,6 +134,5 @@ return array(
 	'install:warning:rewrite:unknown' => 'Su servidor no soporta la prueba automática de reescritura de reglas. Puede continuar con la instalación, pero puede experimentar problemas con el sitio. Puede probar manualmente las reescritura de reglas accediento a este enlace: <a href="%s" target="_blank">pruebas</a>. Observará la palabra success si la ejecución ha sido exitosa.',
 
 	// Bring over some error messages you might see in setup
-	'exception:contact_admin' => 'An unrecoverable error has occurred and has been logged. If you are the site administrator check your settings file, otherwise contact the site administrator with the following information:',
 	'DatabaseException:WrongCredentials' => "Elgg no puede conectar con la base de datos, usando los credenciales. Consulte en el archivo 'settings'.",
 );

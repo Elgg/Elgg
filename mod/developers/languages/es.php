@@ -54,7 +54,6 @@ return array(
 	'developers:entity_explorer:info:attributes' => 'Atributos',
 	'developers:entity_explorer:info:metadata' => 'Metadatos',
 	'developers:entity_explorer:info:relationships' => 'Relaciones',
-	'developers:entity_explorer:info:private_settings' => 'Configuración privada',
 	'developers:entity_explorer:delete_entity' => 'Eliminar esta entidad',
 	
 	// inspection
@@ -62,7 +61,6 @@ return array(
 	'developers:inspect:actions' => 'Acciones',
 	'developers:inspect:events' => 'Eventos',
 	'developers:inspect:menus' => 'Menús',
-	'developers:inspect:pluginhooks' => 'Ganchos de complementos',
 	'developers:inspect:priority' => 'Prioridad',
 	'developers:inspect:simplecache' => 'Caché Simple',
 	'developers:inspect:views' => 'Vistas',

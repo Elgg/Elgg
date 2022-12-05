@@ -22,7 +22,6 @@ return array(
 	'loginok' => "Du bist nun angemeldet.",
 	'login:empty' => "Benutzername/Email-Adresse und Passwort müssen eingegeben werden.",
 	'login:baduser' => "Dein Benutzeraccount ist nicht verfügbar.",
-	'auth:nopams' => "Interner Fehler. Keine Methode zur Benutzerauthentifizierung installiert.",
 
 	'logout' => "Abmelden",
 	'logoutok' => "Du bist nun abgemeldet.",
@@ -59,7 +58,6 @@ return array(
 
 	'PluginException:CannotStart' => '%s (GUID: %s) kann nicht gestartet werden und wurde deaktiviert. Ursache: %s.',
 	'PluginException:InvalidID' => "%s ist eine ungültig Plugin-ID.",
-	'PluginException:InvalidPath' => "%s ist ungültiger Plugin-Dateipfad.",
 	'ElggPlugin:MissingID' => 'Fehlende Plugin-ID (GUID: %s).',
 	'ElggPlugin:NoPluginComposer' => 'Fehlende composer.json für Plugin-ID %s (GUID: %s).',
 	'ElggPlugin:StartFound' => 'Für Plugin-ID %s wurde eine start.php gefunden. Dies deutet darauf hin, dass dies eine nicht unterstützte Plugin-Version ist.',
@@ -203,8 +201,6 @@ return array(
 	'widget:delete' => '%s entfernen',
 	'widget:edit' => 'Dieses Widget konfigurieren',
 
-	'widgets' => "Widgets",
-	'widget' => "Widget",
 	'item:object:widget' => "Widgets",
 	'collection:object:widget' => 'Widgets',
 	'widgets:add:success' => "Das Widget wurde hinzugefügt.",
@@ -241,20 +237,11 @@ return array(
 	'collection:friends' => '%s von Freunden',
 
 	'avatar' => 'Profilbild',
-	'avatar:noaccess' => "Du hast keine Berechtigung, das Profilbild dieses Benutzers zu bearbeiten.",
-	'avatar:create' => 'Profilbild erstellen',
 	'avatar:edit' => 'Profilbild bearbeiten',
-	'avatar:upload' => 'Profilbild hochladen',
-	'avatar:current' => 'Derzeitiges Profilbild',
-	'avatar:remove' => 'Löschen Deines Profilbildes und Wiederherstellen des Standardbildes',
-	'avatar:crop:title' => 'Tool zum Zuschneiden des Profilbildes',
 	'avatar:upload:instructions' => "Das Profilbild ist das Bild, das auf Deiner Profilseite und bei all Deinen Beiträgen auf der Community-Seite angezeigt wird. Du kannst es so oft ändern wie Du willst (mögliche Dateiformate: GIF, JPG oder PNG).",
-	'avatar:create:instructions' => 'Um Dein Profilbild nach Deinen Wünschen zuzuschneiden (optional), klicke es an und markiere einen quadratischen Ausschnitt während Du die Maustaste gedrückt hältst. Du kannst den Ausschnitt anschließend auch verschieben und in der Größe anpassen. Eine Vorschau Deines Profilbildes wird in der Box rechts daneben dargestellt. Wenn Du zufrieden mit dem Zuschneiden bist, klicke auf \'Profilbild erstellen\', um das zugeschnittene Profilbild zu übernehmen. Das zugeschnittene Bild wird dann auf der ganzen Community-Seite als Dein Profilbild verwendet.',
 	'avatar:upload:success' => 'Dein Profilbild wurde hochgeladen.',
 	'avatar:upload:fail' => 'Das Hochladen des Profilbildes ist fehlgeschlagen.',
 	'avatar:resize:fail' => 'Die Größenanpassung des Profilbildes ist fehlgeschlagen.',
-	'avatar:crop:success' => 'Das Zuschneiden des Profilbildes war erfolgreich.',
-	'avatar:crop:fail' => 'Das Zuschneiden des Profilbildes ist fehlgeschlagen.',
 	'avatar:remove:success' => 'Das Profilbild wurde gelöscht.',
 	'avatar:remove:fail' => 'Das Löschen des Profilbildes ist fehlgeschlagen.',
 	
@@ -280,10 +267,7 @@ return array(
 	'river' => "River",
 	'river:user:friend' => "%s ist nun mit %s befreundet",
 	'river:update:user:avatar' => '%s hat ein neues Profilbild hochgeladen',
-	'river:noaccess' => 'Du hast keine Berechtigung um diesen Eintrag anzuzeigen.',
 	'river:posted:generic' => '%s schrieb',
-	'riveritem:single:user' => 'ein Mitglied',
-	'riveritem:plural:user' => 'einige Mitglieder',
 	'river:ingroup' => 'in der Gruppe %s',
 	'river:none' => 'Keine Aktivität',
 	'river:update' => 'Aktualisierung für %s',
@@ -358,10 +342,6 @@ return array(
  */
 
 	'search' => "Suche",
-	'searchtitle' => "Suche: %s",
-	'users:searchtitle' => "Suche nach Mitgliedern: %s",
-	'groups:searchtitle' => "Suche nach Gruppen: %s",
-	'advancedsearchtitle' => "%s mit Treffern passend zu %s",
 	'notfound' => "Keine Treffer.",
 
 	'viewtype:change' => "Ansicht wechseln",
@@ -396,9 +376,7 @@ return array(
 	'registration:passwordnotvalid' => 'Entschuldigung, das angegebene Passwort ist auf dieser Seite nicht zulässig.',
 	'registration:usernamenotvalid' => 'Entschuldigung, der angegebene Benutzername ist auf dieser Seite nicht zulässig.',
 
-	'adduser' => "Benutzer hinzufügen",
 	'adduser:ok' => "Es wurde ein neuer Benutzer hinzugefügt.",
-	'adduser:bad' => "Der neue Benutzeraccount konnte nicht erzeugt werden.",
 
 	'user:set:name' => "Benutzernamen-Einstellungen",
 	'user:name:label' => "Name",
@@ -412,17 +390,12 @@ return array(
 	'user:password:label' => "Neues Passwort",
 	'user:password2:label' => "Neues Passwort noch einmal eingeben",
 	'user:password:success' => "Das Passwort wurde geändert.",
-	'user:password:fail' => "Die Änderung Deines Passworts ist fehlgeschlagen.",
-	'user:password:fail:notsame' => "Die zwei eingegebenen Passwörter stimmen nicht überein!",
-	'user:password:fail:tooshort' => "Das eingegebene Passwort ist zu kurz!",
-	'user:password:fail:incorrect_current_password' => 'Deine Eingabe stimmt nicht mit Deinem derzeitigen Passwort überein.',
 	'user:changepassword:unknown_user' => 'Unbekannter Benutzername.',
 	'user:changepassword:change_password_confirm' => 'Dein Passwort wird nun geändert.',
 
 	'user:set:language' => "Sprache der Community-Seite",
 	'user:language:label' => "Deine Sprache",
 	'user:language:success' => "Deine Spracheinstellung wurde aktualisiert.",
-	'user:language:fail' => "Die Änderung Deiner Spracheinstellung konnte nicht gespeichert werden.",
 
 	'user:username:notfound' => 'Benutzername %s unbekannt.',
 	'user:username:help' => 'Achtung: beachte bitte, dass sich durch die Änderung Deines Benutzernamens alle dynamischen URLs, die Deinen Benutzernamen enthalten, ebenfalls ändern.',
@@ -430,7 +403,6 @@ return array(
 	'user:password:lost' => 'Neues Passwort',
 	'user:password:hash_missing' => 'Wir müssen Dich leider darum bitten, Dein Passwort zurückzusetzen. Durch ein Update der Community-Seite hat sich der Schutz der Passwörter verbessert. Es war aber im Zuge dieses Updates bedauerlicherweise nicht möglich, die Passwörter aller Accounts automatisch in das neue System zu übernehmen.',
 	'user:password:changereq:success' => 'Die Anforderung eines neuen Passworts war erfolgreich. Eine Email mit dem neuen Passwort wurde gesendet.',
-	'user:password:changereq:fail' => 'Die Anforderung eines neuen Passworts ist fehlgeschlagen.',
 
 	'user:password:text' => 'Um ein neues Passwort anzufordern, gebe im folgenden Textfeld Deinen Benutzernamen oder Deine Email-Adresse ein. Wir werden Dir dann eine Email zur Bestätigung der Anfrage zusenden. Folge dem Link in dieser Email, um Deine Passwort-Anfrage zu bestätigen. Dann wird Dir ein neues Passwort zugesandt.',
 
@@ -935,10 +907,7 @@ Siehe die vollständige Liste dieser Benutzer hier:
  * User settings
  */
 
-	'usersettings:description' => "Hier kannst Du alle Deine persönlichen Einstellungen vornehmen, beispielsweise Accounteinstellungen oder von Tools (Plugins) angebotene Konfigurationsoptionen.",
-
 	'usersettings:statistics' => "Deine persönliche Statistik",
-	'usersettings:statistics:opt:description' => "Überblick über Statistiken zu Benutzern und Objekten Deiner Community-Seite.",
 	'usersettings:statistics:opt:linktext' => "Account-Statistik",
 
 	'usersettings:statistics:login_history' => "Login-Übersicht",
@@ -946,14 +915,9 @@ Siehe die vollständige Liste dieser Benutzer hier:
 	'usersettings:statistics:login_history:ip' => "IP-Adresse",
 
 	'usersettings:user' => "Einstellungen von %s",
-	'usersettings:user:opt:description' => "Hier kannst Du Benutzereinstellungen konfigurieren.",
 	'usersettings:user:opt:linktext' => "Account konfigurieren",
 
-	'usersettings:plugins' => "Tools",
-	'usersettings:plugins:opt:description' => "Einstellungen (falls vorhanden) der aktivierten Tools konfigurieren.",
 	'usersettings:plugins:opt:linktext' => "Konfiguriere Deine Tools",
-
-	'usersettings:plugins:description' => "Hier kannst Du Deine persönlichen Einstellungen für die vom Administrator installierten Tools konfigurieren.",
 	
 	'usersettings:statistics:yourdetails' => "Deine Accountdetails",
 	'usersettings:statistics:label:name' => "Vollständiger Name",
@@ -962,7 +926,6 @@ Siehe die vollständige Liste dieser Benutzer hier:
 	'usersettings:statistics:label:membersince' => "Mitglied seit",
 	'usersettings:statistics:label:numentities' => "Deine Beiträge",
 	
-	'usersettings:delayed_email' => "Sammel-Emails-Einstellungen",
 	'usersettings:delayed_email:interval' => "Konfiguriere das Zeitinterval zu dem die Sammer-Emails versendet werden sollen",
 	'usersettings:delayed_email:interval:help' => "Alle während des Intervals auflaufenden Sammel-Emails werden zu einer einzigen kombinierten Email zusammengefaßt und jeweils zu dem konfigurierten Zeitinterval versendet.",
 
@@ -975,9 +938,7 @@ Siehe die vollständige Liste dieser Benutzer hier:
 	'river:owner' => 'Aktivitäten von %s',
 	'river:friends' => 'Aktivitäten von Freunden',
 	'river:select' => 'Zeige %s',
-	'river:comments:more' => '+%u weitere',
 	'river:comments:all' => 'Zeige alle %u Kommentare',
-	'river:generic_comment' => 'kommentierte %s %s',
 
 /**
  * Icons
@@ -1298,10 +1259,6 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.',
 	'installation:sitename' => "Name Deiner Community-Seite:",
 	'installation:sitedescription' => "Eine kurze Beschreibung Deiner Seite (optional):",
 	'installation:sitedescription:help' => "Von Elgg und den mitgelieferten Plugins wird diese Kurzbeschreibung nur im \"description\"-Metatag verwendet, das von Suchmaschinen indiziert wird.",
-	'installation:wwwroot' => "URL Deiner Community-Seite:",
-	'installation:path' => "Vollständiger Pfad zum Elgg-Installationsverzeichnis auf Deinem Server:",
-	'installation:dataroot' => "Vollständiger Pfad zum Elgg-Datenverzeichnis auf Deinem Server:",
-	'installation:dataroot:warning' => "Du mußt dieses Verzeichnis selbst erzeugen. Es muß in einem Verzeichnis außerhalb Deines Elgg-Installationsverzeichnisses sein.",
 	'installation:sitepermissions' => "Standardmäßige Zugangslevel: ",
 	'installation:language' => "Standardsprache Deiner Community-Seite: ",
 	'installation:debug' => "Detailgrad der Informationen / Anzahl der Einträge, die im Serverlog protokolliert werden sollen.",
@@ -1322,8 +1279,6 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.',
 	'installation:adminvalidation:notification:direct' => 'Unmittelbar',
 	'installation:walled_garden:description' => 'Aktiviere diese Option, um Besuchern Deiner Community-Seite, die nicht angemeldet sind, den Zugriff auf die Inhalte zu verwehren mit Ausnahme der Seiten, die als "public" konfiguriert sind (beispielsweise die Login- und Registrierungsseiten).',
 	'installation:walled_garden:label' => 'Zugriff auf angemeldete Benutzer beschränken',
-
-	'installation:view' => "Gebe den Ansichtsmodus an, der für Deine Community-Seite verwendet werden soll. Wenn Du nicht sicher bist was Du eingeben sollst, lass das Textfeld leer oder verwende \"default\", um den Standardmodus zu verwenden:",
 
 	'installation:siteemail' => "Email-Adresse Deiner Community-Seite (wird vom System verwendet, um Benachrichtigungen zu versenden)",
 	'installation:siteemail:help' => "Warnung: verwende keine Email-Adresse, die Du bereits anderweitig einsetzt oder einsetzen willst, beispielweise bei externen Services wie Ticketsystemen oder anderen ähnlichen Systemen, die eingehende Emails analysieren oder anderweitig verarbeiten. Dies könnte dazu führen, dass unauthorisierte Personen an private Daten von Dir oder anderen Benutzern oder Sicherheits-Token gelangen könnten. Idealerweise verwendest Du eine Email-Adresse, die Du auschließlich als Email-Adresse dieser Community-Seite einsetzen kannst.",
@@ -1682,14 +1637,6 @@ Globale Variablen:
 	'cli:plugins:list:option:status' => "Plugin-Status ( %s )",
 	'cli:plugins:list:option:refresh' => "Aktualisiere die Plugin-Liste mit kürzlich installierten Plugins",
 	'cli:plugins:list:error:status' => "%s ist kein zulässiger Status. Erlaubte Optionen sind: %s",
-	
-	'cli:simpletest:description' => "Simpletest-Tests ausführen (veraltet)",
-	'cli:simpletest:option:config' => "Dateipfad zur settings.php-Datei, die bei der Ausführung der Elgg-Anwendung miteinbezogen werden soll",
-	'cli:simpletest:option:plugins' => "Eine Liste von Plugins, die testhalber aktiviert werden sollen oder 'all' um alle Plugins zu aktivieren",
-	'cli:simpletest:option:filter' => "Nur die Tests ausführen, die mit dem Suchmuster übereinstimmen",
-	'cli:simpletest:error:class' => "Du mußt Deine Elgg-Anwendung unter Verwendung von '%s' installieren",
-	'cli:simpletest:error:file' => "%s ist keine zulässige Simpletest-Klasse",
-	'cli:simpletest:output:summary' => "Zeit: %.2f Sekunden, Speicher: %.2fMb",
 	
 	'cli:upgrade:batch:description' => "Eine oder mehrere Aktualisierungen ausführen.",
 	'cli:upgrade:batch:argument:upgrades' => "Eine oder mehrere Aktualisierungen (Namen der Klassen), die ausgeführt werden sollen",

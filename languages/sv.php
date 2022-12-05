@@ -20,10 +20,8 @@ return array(
 
 	'login' => "Logga in",
 	'loginok' => "Du har loggats in.",
-	'loginerror' => "Vi kunde inte logga in dig. Vänligen, kontrollera dina användaruppgifter och försök igen.",
 	'login:empty' => "Användarnamn/e-post och lösenord krävs.",
 	'login:baduser' => "Det går inte ladda in ditt användarkonto.",
-	'auth:nopams' => "Internt fel. Ingen autentiseringsmetod för användare är installerad. ",
 
 	'logout' => "Logga ut",
 	'logoutok' => "Du har loggats ut.",
@@ -45,23 +43,14 @@ return array(
 	'exception:title' => "Allvarligt fel.",
 	'exception:contact_admin' => 'Ett oåterkalleligt fel har inträffat och har loggats. Kontakta webbplatsens administratör med följande information:',
 
-	'actionundefined' => "Den begärda handlingen (%s) definierades inte i systemet.",
-	'actionloggedout' => "Du kan tyvärr inte utföra den här handlingen när du är utloggad.",
 	'actionunauthorized' => 'Du är obehörig att utföra den här handlingen',
 
 	'ajax:error' => 'Oväntat fel vid ett anrop till AJAX utfördes. Kanske har anslutningen till servern tappats.',
 	'ajax:not_is_xhr' => 'Du kan inte nå AJAX-vyer direkt',
 
-	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) är ett felkonfigurerat tillägg. Det har avaktiverats. Vänligen sök i Elgg wiki för möjliga orsaker (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) kan inte starta och har avaktiverats.  Orsak: %s',
 	'PluginException:InvalidID' => "%s är ett ogiltigt ID för tillägg.",
-	'PluginException:InvalidPath' => "%s är en ogiltig sökväg för tillägg.",
-	'PluginException:InvalidManifest' => 'Ogiltig manifest-fil för tillägg %s',
-	'PluginException:InvalidPlugin' => '%s är inte ett giltigt tillägg.',
-	'PluginException:InvalidPlugin:Details' => '%s är inte ett giltigt tillägg: %s',
 	'ElggPlugin:MissingID' => 'ID för tillägg saknas (guid %s)',
-	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'Filen "%s" som krävs saknas.',
-	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Manifestet innehåller en ogiltig beroendetyp "%s".',
 
 	'RegistrationException:EmptyPassword' => 'Lösenordsfältet kan inte vara tomt',
 	'RegistrationException:PasswordMismatch' => 'Lösenord måste matcha',
@@ -86,16 +75,11 @@ return array(
 	'Security:InvalidPasswordCharacterRequirementsException' => "Det angivna lösenordet uppfyller inte teckenkraven",
 	'Security:InvalidPasswordLengthException' => "Det angivna lösenordet uppfyller inte minsta längd på %s tecken",
 
-	'pageownerunavailable' => 'Varning: Sidägaren %d kan inte nås!',
 	'viewfailure' => 'Det var ett internt fel i vyn %s',
-	'view:missing_param' => "Parametern som krävs '%s' saknas i vyn %s",
 	'changebookmark' => 'Vänligen ändra till bokmärke för den här sidan',
-	'noaccess' => 'Innehållet du försökte visa har tagits bort eller så har du inte behörighet att visa det.',
 	'error:missing_data' => 'Det saknades lite data i din förfrågan',
 	'save:fail' => 'Det blev något fel när din data skulle sparas',
 	'save:success' => 'Din data har sparats',
-
-	'forward:error' => 'Tyvärr blev det ett fel när du skulle omdirigeras till en annan webbplats.',
 
 	'error:default:title' => 'Oj...',
 	'error:default:content' => 'Oj..något blev fel.',
@@ -165,14 +149,11 @@ return array(
 	'access:label:logged_out' => "Utloggade användare",
 	'access:label:friends' => "Vänner",
 	'access' => "Vem kan se det här",
-	'access:overridenotice' => "Notering: Med anledning av gruppolicy, kommer det här innehållet bara kommas åt av gruppmedlemmar.",
 	'access:limited:label' => "Begränsad",
 	'access:help' => "Åtkomstnivån",
 	'access:read' => "Läsrättighet",
 	'access:write' => "Skrivrättighet",
 	'access:admin_only' => "Endast administratörer",
-	'access:missing_name' => "Saknat nivånamn",
-	'access:comments:change' => "Den här diskussionen är för närvarande synlig för en begränsad publik. Tänk dig med vem du delar den med.",
 
 /**
  * Dashboard and widgets
@@ -183,15 +164,12 @@ return array(
 
 	'widgets:add' => 'Lägg till widgets',
 	'widgets:add:description' => "Tryck på vilken widget-knapp som helst nedan, för att lägga till den på sidan.",
-	'widgets:position:fixed' => '(Fixed position på sidan)',
 	'widget:unavailable' => 'Du har redan lagt till den här widgeten',
 	'widget:numbertodisplay' => 'Antal objekt att visa',
 
 	'widget:delete' => 'Ta bort  %s',
 	'widget:edit' => 'Skräddarsy den här widgeten',
 
-	'widgets' => "Widgets",
-	'widget' => "Widget",
 	'item:object:widget' => "Widget",
 	'collection:object:widget' => 'Widgets',
 	'widgets:add:success' => "Widgeten lades till med lyckat resultat.",
@@ -225,21 +203,12 @@ return array(
 	'collection:friends' => 'Vänners\' %s',
 
 	'avatar' => 'Avatar',
-	'avatar:noaccess' => "Du har inte tillåtelse att redigera den här användarens avatar",
-	'avatar:create' => 'Skapa din avatar',
 	'avatar:edit' => 'Redigera avatar',
-	'avatar:upload' => 'Ladda upp en ny avatar',
-	'avatar:current' => 'Nuvarande avatar',
-	'avatar:remove' => 'Ta bort din avatar och ställ in standardikonen',
-	'avatar:crop:title' => 'Beskärningsverktyg för avatar',
 	'avatar:upload:instructions' => "Din avatar visas runt om på den här webbplatsen. Du kan
 ändra den hur ofta du vill. (Accepterade fil-format: GIF, JPG eller PNG)",
-	'avatar:create:instructions' => 'Tryck och dra en fyrkant nedan för att matcha hur du vill att din avatar blir beskuren. En förhandsvisning kommer att visa sig i en box till höger. När du är nöjd med förhandsvisningen, tryck "Skapa din avatar". Den här beskurna versionen kommer användas runt omkring på webbplatsen som din avatar.',
 	'avatar:upload:success' => 'Avatar laddades upp med lyckat resultat',
 	'avatar:upload:fail' => 'Uppladdningen av avataren misslyckades',
 	'avatar:resize:fail' => 'Ändring av storleken för avataren misslyckades',
-	'avatar:crop:success' => 'Beskärningen av avataren lyckades. ',
-	'avatar:crop:fail' => 'Beskärningen av avatar misslyckades',
 	'avatar:remove:success' => 'Borttagningen av avatar lyckades',
 	'avatar:remove:fail' => 'Det misslyckades med att ta bort avataren',
 	
@@ -264,10 +233,7 @@ return array(
  */
 	'river:user:friend' => "%s är nu vän med %s",
 	'river:update:user:avatar' => '%s har en ny avatar',
-	'river:noaccess' => 'Du har inte behörighet att visa det här objektet.',
 	'river:posted:generic' => '%s skickad',
-	'riveritem:single:user' => 'en användare',
-	'riveritem:plural:user' => 'några användare',
 	'river:ingroup' => 'i gruppen %s',
 	'river:none' => 'Ingen aktivitet',
 	'river:update' => 'Uppdatering för %s',
@@ -296,23 +262,12 @@ return array(
  */
 
 	'search' => "Sök",
-	'searchtitle' => "Sök: %s",
-	'users:searchtitle' => "Sök efter användare: %s",
-	'groups:searchtitle' => "Sök efter grupper: %s",
-	'advancedsearchtitle' => "%s med resultat som matchar %s",
 	'notfound' => "Inga resultat hittades.",
 
 	'viewtype:change' => "Ändra listtyp",
 	'viewtype:list' => "Listvy",
 	'viewtype:gallery' => "Galleri",
 
-	'tag:search:startblurb' => "Objekt med taggar som matchar '%s':",
-
-	'user:search:startblurb' => "Användare som matchar '%s':",
-	'user:search:finishblurb' => "För att visa mer, tryck här.",
-
-	'group:search:startblurb' => "Grupper som matchar '%s':",
-	'group:search:finishblurb' => "För att visa mer, tryck här.",
 	'search:go' => 'Gå',
 	'userpicker:only_friends' => 'Bara vänner',
 
@@ -336,16 +291,13 @@ return array(
 	'registration:userexists' => 'Det användarnamnet finns redan.',
 	'registration:usernametooshort' => 'Ditt användarnamn måste vara minst %u tecken långt.',
 	'registration:usernametoolong' => 'Ditt användarnamn är för långt. Det kan ha maximalt %u tecken.',
-	'registration:passwordtooshort' => 'Lösenordet måste vara minst %u tecken långt.',
 	'registration:dupeemail' => 'Den här e-postadressen har redan registrerats.',
 	'registration:invalidchars' => 'Tyvärr innehåller ditt användarnamn tecknet %s som är ogiltigt. Följande tecken är ogiltiga: %s',
 	'registration:emailnotvalid' => 'Tyvärr e-postadressen du fyllde i är ogiltig i det här systemet',
 	'registration:passwordnotvalid' => 'Tyvärr lösenordet du fyllde i är ogiltig i det här systemet',
 	'registration:usernamenotvalid' => 'Tyvärr användarnamnet du fyllde i är ogiltig i det här systemet',
 
-	'adduser' => "Lägg till användare",
 	'adduser:ok' => "Du har lagt till en ny användare med lyckat resultat.",
-	'adduser:bad' => "Den nya användaren kunde inte skapas.",
 
 	'user:set:name' => "Inställningar för kontonamn",
 	'user:name:label' => "Visningsnamn",
@@ -358,17 +310,12 @@ return array(
 	'user:password:label' => "Nytt lösenord",
 	'user:password2:label' => "Nytt lösenord igen",
 	'user:password:success' => "Lösenordet ändrades",
-	'user:password:fail' => "Det gick inte att ändra ditt lösenord i systemet.",
-	'user:password:fail:notsame' => "De två lösenorden stämmer inte överens!",
-	'user:password:fail:tooshort' => "Lösenord är för kort!",
-	'user:password:fail:incorrect_current_password' => 'Lösenordet du angav är inkorrekt.',
 	'user:changepassword:unknown_user' => 'Ogiltig användare.',
 	'user:changepassword:change_password_confirm' => 'Det kommer ändra ditt lösenord.',
 
 	'user:set:language' => "Språkinställningar",
 	'user:language:label' => "Språk",
 	'user:language:success' => "Språkinställningar har uppdaterats.",
-	'user:language:fail' => "Språkinställningar kunde inte sparas.",
 
 	'user:username:notfound' => 'Användarnamn %s hittades inte.',
 	'user:username:help' => 'Var medveten om att ändring av användarnamn kommer ändra alla dynamiska användarrelaterade länkar',
@@ -376,7 +323,6 @@ return array(
 	'user:password:lost' => 'Glömt lösenord',
 	'user:password:hash_missing' => 'Tyvärr måste vi be dig att återställa ditt lösenord. Vi har förbättrat säkerheten för lösenord på den här sidan, men kunde inte migrera alla konton i processen.',
 	'user:password:changereq:success' => 'Du har bett om ett nytt lösenord, e-post är skickad',
-	'user:password:changereq:fail' => 'Det gick inte att be om en nytt lösenord.',
 
 	'user:password:text' => 'För att be om ett nytt lösenord, ange ditt användarnamn eller e-postadress nedan och tryck på knappen.',
 
@@ -672,10 +618,7 @@ return array(
  * User settings
  */
 
-	'usersettings:description' => "Panelen för användarinställningarna låter dig hålla koll på alla dina personliga inställningar, från användarhantering till hur tillägg beter sig. Välj ett alternativ nedan för att börja.",
-
 	'usersettings:statistics' => "Din statistik",
-	'usersettings:statistics:opt:description' => "Visa statistisk information om användare och objekt på din webbplats.",
 	'usersettings:statistics:opt:linktext' => "Kontostatistik",
 
 	'usersettings:statistics:login_history' => "Inloggningshistorik",
@@ -683,16 +626,11 @@ return array(
 	'usersettings:statistics:login_history:ip' => "IP-Adress",
 
 	'usersettings:user' => "%ss inställningar",
-	'usersettings:user:opt:description' => "Den här låter dig att hålla koll på användarinställningar.",
 	'usersettings:user:opt:linktext' => "Ändra dina inställningar",
 
-	'usersettings:plugins' => "Verktyg",
-	'usersettings:plugins:opt:description' => "Konfigurera inställningar (om några) för dina aktiva verktyg.",
 	'usersettings:plugins:opt:linktext' => "Konfigurera dina verktyg",
 
-	'usersettings:plugins:description' => "Den här panelen låter dig hålla koll på och konfigurera de personliga inställningarna för verktygen som är installerade av din systemadministratör.",
 	'usersettings:statistics:label:numentities' => "Ditt innehåll",
-
 	'usersettings:statistics:yourdetails' => "Dina detaljer",
 	'usersettings:statistics:label:name' => "Namn",
 	'usersettings:statistics:label:email' => "E-post",
@@ -708,21 +646,13 @@ return array(
 	'river:owner' => 'Aktivitet för %s',
 	'river:friends' => 'Vänners Aktivitet',
 	'river:select' => 'Visa %s',
-	'river:comments:more' => '+%u mer',
 	'river:comments:all' => 'Visa alla %u kommentarer',
-	'river:generic_comment' => 'kommented på %s %s',
 
 /**
  * Icons
  */
 
 	'icon:size' => "Storlek på ikon",
-	'icon:size:topbar' => "Topbar",
-	'icon:size:tiny' => "Tiny",
-	'icon:size:small' => "Small",
-	'icon:size:medium' => "Medium",
-	'icon:size:large' => "Large",
-	'icon:size:master' => "Extra Large",
 	
 	'entity:edit:icon:crop_messages:generic' => "Den valda bilden uppfyller inte de rekommenderade dimensionerna. Det här kan resultera i ikoner med låg kvalité.",
 	'entity:edit:icon:crop_messages:width' => "Det rekommenderas att använda en bild med en bredd på minst %dpx.",
@@ -832,7 +762,6 @@ return array(
 
 	'content' => "innehåll",
 	'content:latest' => 'Senaste aktivitet',
-	'content:latest:blurb' => 'Alternativt, tryck här för att visa det senaste innehållet från hela webbplatsen.',
 	
 	'list:out_of_bounds' => "Du har nått en del av listan utan något innehåll, men det finns tillgängligt innehåll tillgängligt.",
 	'list:out_of_bounds:link' => "Gå tillbaka till den första sidan i den här listan.",
@@ -924,13 +853,6 @@ return array(
 	'useradd:subject' => 'Användarkonto skapat',
 
 /**
- * System messages
- */
-
-	'systemmessages:dismiss' => "Tryck för att avvisa",
-
-
-/**
  * Messages
  */
 	'messages:title:success' => 'Framgång',
@@ -939,13 +861,6 @@ return array(
 	'messages:title:help' => 'Hjälp',
 	'messages:title:notice' => 'Notis',
 	'messages:title:info' => 'Info',
-
-/**
- * Import / export
- */
-
-	'importsuccess' => "Import av data lyckades",
-	'importfail' => "Import av data misslyckades.",
 
 /**
  * Time
@@ -1031,7 +946,6 @@ return array(
 	'installation:sitename' => "Namnet på din webbplats",
 	'installation:sitedescription' => "Kort beskrivning på din webbplats (valfritt):",
 	'installation:sitedescription:help' => "Med sammanslagna tillägg visas det här bara i beskrivningens meta tag i resultaten för sökmotorer.",
-	'installation:wwwroot' => "Webbplatsens URL:",
 	'installation:sitepermissions' => "Standard åtkomstbehörigheter:",
 	'installation:language' => "Standardspråk för din webbplats:",
 	'installation:debug' => "Kontrollera hur mycket information som skrivs till serverns logg.",
@@ -1134,7 +1048,6 @@ För att visa deras profil, tryck här:
 	'entity:delete:object:comment:success' => "Kommentaren togs bort.",
 	'generic_comment:blank' => "Du måste lägga in något i din kommentar, innan vi kan spara det.",
 	'generic_comment:notfound' => "Tyvärr kunde vi inte hitta den specificerade kommentaren.",
-	'generic_comment:notfound_fallback' => "Tyvärr kunde vi inte hitta den specificerade kommentaren, men vi har vidarebefordrat dig till sidan den lämnades.",
 	'generic_comment:failure' => "Ett oväntat fel uppstod när kommentaren skulle sparas.",
 	'generic_comment:none' => 'Inga kommentarer',
 	'generic_comment:title' => 'Kommentar av %s',
@@ -1149,7 +1062,6 @@ För att visa deras profil, tryck här:
 
 	'byline' => 'Av %s',
 	'byline:ingroup' => 'i gruppen %s',
-	'entity:default:missingsupport:popup' => 'Den här enheten kan inte visas korrekt. Det kan bero på att den kräver stöd som erhålles av ett tillägg, som inte längre är installerat.',
 
 	'entity:delete:item' => 'Objekt',
 	'entity:delete:item_not_found' => 'Objektet hittades inte.',
@@ -1173,7 +1085,6 @@ För att visa deras profil, tryck här:
 	'actiongatekeeper:timeerror' => 'Sidan du använde har gått ut. Vänligen uppdatera och försök igen.',
 	'actiongatekeeper:pluginprevents' => 'Tyvärr, kunde ditt formulär inte lämnas in av en okänd anledning.',
 	'actiongatekeeper:uploadexceeded' => 'Storleken på filen (filerna) som laddades upp, översteg gränsen som ställts in av din webbplats administratör',
-	'actiongatekeeper:crosssitelogin' => "Tyvärr, är det inte tillåtet att logga in från en annan domän. Vänligen försök igen.",
 
 /**
  * Word blacklists
@@ -1184,7 +1095,6 @@ För att visa deras profil, tryck här:
  */
 
 	'js:security:token_refresh_failed' => 'Det misslyckades att kontakta %s. Du kan uppleva problem med att spara innehåll. Vänligen uppdatera den här sidan.',
-	'js:security:token_refreshed' => 'Anslutning till %s återställd!',
 	'js:lightbox:current' => "bild %s av %s",
 
 /**
