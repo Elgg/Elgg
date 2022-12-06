@@ -83,10 +83,10 @@ define(['jquery', 'jquery-cropper/jquery-cropper'], function($) {
 				that.showMessage('height');
 			}
 			
-			$inputWrapper.find('input[name="x1"]').val(cropDetails.x);
-			$inputWrapper.find('input[name="y1"]').val(cropDetails.y);
-			$inputWrapper.find('input[name="x2"]').val(cropDetails.x + cropDetails.width);
-			$inputWrapper.find('input[name="y2"]').val(cropDetails.y + cropDetails.height);
+			$inputWrapper.find('input[name$="x1"]').val(cropDetails.x);
+			$inputWrapper.find('input[name$="y1"]').val(cropDetails.y);
+			$inputWrapper.find('input[name$="x2"]').val(cropDetails.x + cropDetails.width);
+			$inputWrapper.find('input[name$="y2"]').val(cropDetails.y + cropDetails.height);
 		};
 		
 		this.resetMessages = function() {
