@@ -133,7 +133,6 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 
 	'install:error:htaccess' => 'Das Erzeugen der .htaccess-Datei ist fehlgeschlagen.',
 	'install:error:settings' => 'Die settings-Datei konnte nicht erzeugt werden.',
-	'install:error:settings_mismatch' => 'Der Wert von "%s" in settings.php stimmt nicht mit dem Wert im $params-Array überein.',
 	'install:error:databasesettings' => 'Elgg konnte mit den eingegebenen Verbindungsparametern keine Verbindung mit der Datenbank herstellen.',
 	'install:error:database_prefix' => 'Das eingegebene Tabellen-Prefix enthält unzulässige Zeichen.',
 	'install:error:oldmysql2' => 'Voraussetzung für Elgg ist MySQL in Version 5.5.3 oder neuer. Dein Server verwendet Version %s.',

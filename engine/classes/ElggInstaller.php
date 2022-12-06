@@ -269,7 +269,7 @@ class ElggInstaller {
 		];
 		foreach ($config_keys as $params_key => $config_key) {
 			if ($params[$params_key] !== $config->$config_key) {
-				throw new InstallationException(elgg_echo('install:error:settings_mismatch', [$config_key]) . $params[$params_key] . ' ' . $config->$config_key);
+				throw new InstallationException(elgg_echo('install:error:settings_mismatch', [$config_key, $params[$params_key], $config->$config_key]));
 			}
 		}
 

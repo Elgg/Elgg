@@ -5,6 +5,8 @@
 /mod/*
 /composer.phar
 /cache
+/caches/
+/phpunit.xml
 
 # don't ignore example settings
 !/elgg-config/settings.example.php

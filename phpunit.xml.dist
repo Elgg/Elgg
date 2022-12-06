@@ -29,9 +29,7 @@
     </exclude>
   </coverage>
   <php>
-    <!-- You can specify your own settings.php path -->
-    <!-- <env name="ELGG_SETTINGS_FILE" value="path/to/settings.php"/> -->
-    <!-- or configure individual settings via env-->
+    <!-- configure individual settings via env (copy this file to 'phpunix.xml' and fill in the values you need, it won't be committed to GitHub) -->
     <!--
         <env name="ELGG_DB_HOST" value="localhost"/>
         <env name="ELGG_DB_NAME" value=""/>
@@ -54,7 +52,7 @@
         <env name="ELGG_WWWROOT" value="http://localhost/"/>
         
         <env name="ELGG_SEEDER_LOCAL_IMAGE_FOLDER" value=""/>
-        -->
+    -->
     <ini name="memory_limit" value="-1"/>
     <ini name="max_execution_time" value="0"/>
     <ini name="max_input_time" value="0"/>
