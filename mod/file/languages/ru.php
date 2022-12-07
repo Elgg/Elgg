@@ -54,6 +54,7 @@ return array(
 	'widgets:filerepo:description' => "Ваши последние файлы",
 
 	'groups:tool:file' => 'Разрешить файлы в группе',
+	'groups:tool:file:description' => 'Разрешить членам группы обмениваться файлами в этой группе.',
 
 	'river:object:file:create' => '%sзагрузил файл %s',
 	'river:object:file:comment' => '%sпрокомментировал файл %s',

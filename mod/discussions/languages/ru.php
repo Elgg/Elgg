@@ -61,6 +61,7 @@ return array(
 %s',
 
 	'groups:tool:forum' => 'Включить дискуссии в группах',
+	'groups:tool:forum:description' => 'Разрешить участникам группы начинать дискуссию в этой группе.',
 
 	'discussions:groups:edit:add_group_subscribers_to_discussion_comments' => 'Добавьте подписчика группы в уведомления о комментариях к дискуссии',
 	
