@@ -1,3 +1,19 @@
+<a name="4.3.5"></a>
+### 4.3.5  (2022-12-07)
+
+#### Contributors
+
+* Jerôme Bakker (7)
+
+#### Bug Fixes
+
+* **account:** improved valid username detection ([0115b714](https://github.com/Elgg/Elgg/commit/0115b7141feb8feee8d6918b9982f7040cb67cc6))
+* **developers:** correctly show metadata boolean values ([189370c3](https://github.com/Elgg/Elgg/commit/189370c36ea57eb9a2cece5f351f592f76269b45))
+* **icon:** improved handling of multiple icon uploads on the same page ([d7da537a](https://github.com/Elgg/Elgg/commit/d7da537a3d07ec588ffcec335ee8276159033a85))
+* **register:** set correct middleware on registration action ([39648e30](https://github.com/Elgg/Elgg/commit/39648e30e801a1bd0fc9f3b544cff0217bb87c0d))
+* **webservices:** pass authentication failure message to api result ([5d852205](https://github.com/Elgg/Elgg/commit/5d85220551506b95dc72e6720a01c6864999da61))
+
+
 <a name="4.3.4"></a>
 ### 4.3.4  (2022-10-27)
 
