@@ -46,6 +46,7 @@ return array(
 	'river:object:bookmarks:comment' => '%s прокомментировал закладку %s',
 
 	'groups:tool:bookmarks' => 'Включить закладки группы',
+	'groups:tool:bookmarks:description' => 'Разрешить участникам группы делиться закладками в этой группе.',
 	
 	/**
 	 * Widget and bookmarklet

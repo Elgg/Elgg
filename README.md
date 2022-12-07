@@ -4,7 +4,7 @@ Elgg
 [![PHPUnit test suites](https://github.com/Elgg/Elgg/actions/workflows/phpunit.yml/badge.svg?branch=4.3)](https://github.com/Elgg/Elgg/actions/workflows/phpunit.yml)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/quality-score.png?s=4.3)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=4.3) 
 [![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/coverage.png?b=4.3)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=4.3) 
-[![Read the docs build status](https://readthedocs.org/projects/elgg/badge/?badge=4.3](http://learn.elgg.org/en/4.3/)
+[![Read the docs build status](https://readthedocs.org/projects/elgg/badge/?badge=4.3)](http://learn.elgg.org/en/4.3/)
 
 Elgg is an open source rapid development framework for socially aware web applications.
 

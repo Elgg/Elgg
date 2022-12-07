@@ -21,5 +21,6 @@ return array(
 	'collection:river' => "Лента активности",
 	'collection:river:group' => "Активность группы",
 	'groups:tool:activity' => 'Включить активность группы',
+	'groups:tool:activity:description' => 'Показать ленту активности с контентом, связанным с группой.',
 	
 );
