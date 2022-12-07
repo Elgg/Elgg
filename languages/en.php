@@ -422,6 +422,7 @@ return array(
 	'registration:usernametoolong' => 'Your username is too long. It can have a maximum of %u characters.',
 	'registration:dupeemail' => 'This email address has already been registered.',
 	'registration:invalidchars' => 'Sorry, your username contains the character %s which is invalid. The following characters are invalid: %s',
+	'registration:invalidchars:route' => 'Sorry, your username contains the character %s which is invalid.',
 	'registration:emailnotvalid' => 'Sorry, the email address you entered is invalid on this system',
 	'registration:passwordnotvalid' => 'Sorry, the password you entered is invalid on this system',
 	'registration:usernamenotvalid' => 'Sorry, the username you entered is invalid on this system',
