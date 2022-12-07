@@ -135,7 +135,7 @@ If you are ready to proceed, click the Next button.",
 
 	'install:error:htaccess' => 'Unable to create an .htaccess',
 	'install:error:settings' => 'Unable to create the settings file',
-	'install:error:settings_mismatch' => 'The settings file value for "%s" does not match the given $params.',
+	'install:error:settings_mismatch' => 'The settings file value for "%s" does not match the given $params. Expected: "%s" Actual: "%s"',
 	'install:error:databasesettings' => 'Unable to connect to the database with these settings.',
 	'install:error:database_prefix' => 'Invalid characters in database prefix',
 	'install:error:oldmysql2' => 'MySQL must be version 5.5.3 or above. Your server is using %s.',

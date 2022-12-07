@@ -295,20 +295,19 @@ class Config {
 	 * Build a config from default settings locations
 	 *
 	 * @param string $settings_path Path of settings file
-	 * @param bool   $try_env       If path not given, try environment for 'ELGG_SETTINGS_FILE'
-	 * @return Config
 	 *
+	 * @return Config
 	 * @throws ConfigurationException
 	 */
-	public static function factory(string $settings_path = '', bool $try_env = true): static {
+	public static function factory(string $settings_path = ''): static {
 		$reason1 = '';
 
-		$settings_path = self::resolvePath($settings_path, $try_env);
+		$settings_path = self::resolvePath($settings_path);
 
 		$config = self::fromFile($settings_path, $reason1);
 
-		if (!$config) {
-			throw new ConfigurationException(__METHOD__ . ": Reading configs failed: $reason1");
+		if (!$config instanceof Config) {
+			throw new ConfigurationException(__METHOD__ . ": Reading configs failed: {$reason1}");
 		}
 
 		return $config;
@@ -380,16 +379,12 @@ class Config {
 	 * Resolve settings path
 	 *
 	 * @param string $settings_path Path of settings file
-	 * @param bool   $try_env       If path not given, try environment for 'ELGG_SETTINGS_FILE'
+	 *
 	 * @return string
 	 */
-	public static function resolvePath(string $settings_path = '', bool $try_env = true): string {
-		if (!$settings_path) {
-			if ($try_env && !empty(getenv('ELGG_SETTINGS_FILE'))) {
-				$settings_path = getenv('ELGG_SETTINGS_FILE');
-			} else if (!$settings_path) {
-				$settings_path = Paths::settingsFile(Paths::SETTINGS_PHP);
-			}
+	public static function resolvePath(string $settings_path = ''): string {
+		if (empty($settings_path)) {
+			$settings_path = Paths::settingsFile(Paths::SETTINGS_PHP);
 		}
 
 		return \Elgg\Project\Paths::sanitize($settings_path, false);

@@ -134,7 +134,6 @@ Als je klaar bent on verder te gaan, klik op de Volgende knop.",
 
 	'install:error:htaccess' => 'Er kon geen .htaccess bestand aangemaakt worden',
 	'install:error:settings' => 'Er kon geen instellingen bestand aangemaakt worden',
-	'install:error:settings_mismatch' => 'De waarde van "%s" in het instellingen bestand komt niet overeen met de opgegeven $params.',
 	'install:error:databasesettings' => 'Kon met deze instellingen niet met de database verbinden.',
 	'install:error:database_prefix' => 'Ongeldige karakters in het database voorvoegsel',
 	'install:error:oldmysql2' => 'MySQL moet versie 5.5.3 zijn of hoger. Jouw server gebruikt %s.',

@@ -4,7 +4,6 @@ use Elgg\Application;
 use Elgg\Config;
 use Elgg\Mocks\Di\InternalContainer;
 use Elgg\Project\Paths;
-use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @group Installer
@@ -12,46 +11,32 @@ use PHPUnit\Framework\MockObject\MockObject;
 class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 	/**
-	 * @var MockObject
-	 */
-	private $mock;
-
-	/**
 	 * @var Application
 	 */
-	private $app;
-
-	private $settings_path_backup;
-
-	public function up() {
-
-		$this->settings_path_backup = null;
-		if (!empty(getenv('ELGG_SETTINGS_FILE'))) {
-			$this->settings_path_backup = getenv('ELGG_SETTINGS_FILE');
-		}
-
-		putenv('ELGG_SETTINGS_FILE=' . $this->normalizeTestFilePath('installer/settings.php'));
-
-		$this->mock = $this->getMockBuilder(ElggInstaller::class)
-			->onlyMethods([
-				'getApp',
-				'checkRewriteRules',
-			])
-			->getMock();
-
-		$this->mock->method('getApp')
-			->will($this->returnCallback([$this, 'getApp']));
-
-		$this->mock->method('checkRewriteRules')
-			->will($this->returnCallback([$this, 'checkRewriteRules']));
-	}
+	protected $app;
 
 	public function down() {
 		if (is_file($this->normalizeTestFilePath('installer/settings.php'))) {
 			unlink($this->normalizeTestFilePath('installer/settings.php'));
 		}
-
-		putenv('ELGG_SETTINGS_FILE=' . $this->settings_path_backup);
+	}
+	
+	protected function getMock(array $methods = []) {
+		$defaults = [
+			'getApp' => [$this, 'getApp'],
+			'checkRewriteRules' => [$this, 'checkRewriteRules'],
+		];
+		$methods = array_merge($defaults, $methods);
+		
+		$mock = $this->getMockBuilder(\ElggInstaller::class)
+			->onlyMethods(array_keys($methods))
+			->getMock();
+		
+		foreach ($methods as $method => $callback) {
+			$mock->method($method)->will($this->returnCallback($callback));
+		}
+		
+		return $mock;
 	}
 
 	public function getApp() {
@@ -113,11 +98,11 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 			'dbhost' => getenv('ELGG_DB_HOST') ? : 'localhost',
 			'dbport' => getenv('ELGG_DB_PORT') ? : 3306,
 			'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
-			'dataroot' => \Elgg\Project\Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/dataroot/'),
+			'dataroot' => Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/dataroot/'),
 			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
 			'timezone' => 'UTC',
-			'cacheroot' => \Elgg\Project\Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/cacheroot/'),
-			'assetroot' => \Elgg\Project\Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/assetroot/'),
+			'cacheroot' => Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/cacheroot/'),
+			'assetroot' => Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/assetroot/'),
 		];
 
 		foreach ($params as $k => $v) {
@@ -129,8 +114,8 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 	public function testWelcome() {
 
-		$mock = $this->mock;
 		/* @var $mock ElggInstaller */
+		$mock = $this->getMock(['checkDatabaseSettings' => function() { return false;}]);
 
 		$response = $mock->run();
 
@@ -166,8 +151,8 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->getApp()->internal_services->request->setParam('step', 'requirements');
 
-		$mock = $this->mock;
 		/* @var $mock ElggInstaller */
+		$mock = $this->getMock(['checkDatabaseSettings' => function() { return false;}]);
 
 		$response = $mock->run();
 
@@ -227,8 +212,11 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->getApp()->internal_services->request->setParam('step', 'database');
 
-		$mock = $this->mock;
 		/* @var $mock ElggInstaller */
+		$mock = $this->getMock([
+			'checkDatabaseSettings' => function() { return false;},
+			'checkSettingsFile' => function() { return false;},
+		]);
 
 		$response = $mock->run();
 
@@ -333,8 +321,8 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->getApp()->internal_services->set('request', $request);
 
-		$mock = $this->mock;
 		/* @var $mock ElggInstaller */
+		$mock = $this->getMock(['checkDatabaseSettings' => function() { return false;}]);
 
 		$response = $mock->run();
 
@@ -366,8 +354,8 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->getApp()->internal_services->set('request', $request);
 
-		$mock = $this->mock;
 		/* @var $mock ElggInstaller */
+		$mock = $this->getMock(['checkDatabaseSettings' => function() { return false;}]);
 
 		$response = $mock->run();
 
@@ -393,8 +381,8 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->getApp()->internal_services->request->setParam('step', 'settings');
 
-		$mock = $this->mock;
 		/* @var $mock ElggInstaller */
+		$mock = $this->getMock();
 
 		$response = $mock->run();
 
@@ -468,8 +456,8 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->getApp()->internal_services->set('request', $request);
 
-		$mock = $this->mock;
 		/* @var $mock ElggInstaller */
+		$mock = $this->getMock();
 
 		$response = $mock->run();
 
@@ -495,8 +483,8 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->getApp()->internal_services->request->setParam('step', 'admin');
 
-		$mock = $this->mock;
 		/* @var $mock ElggInstaller */
+		$mock = $this->getMock();
 
 		$response = $mock->run();
 
@@ -585,8 +573,8 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->getApp()->internal_services->set('request', $request);
 
-		$mock = $this->mock;
 		/* @var $mock ElggInstaller */
+		$mock = $this->getMock();
 
 		$response = $mock->run();
 
@@ -608,7 +596,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 			],
 		]);
 
-		$this->mock->batchInstall([
+		$this->getMock()->batchInstall([
 			// database settings
 			'dbuser' => getenv('ELGG_DB_USER') ? : 'c_i_elgg_dbuser',
 			'dbpassword' => getenv('ELGG_DB_PASS') ? : 'c_i_elgg_dbpwd',
@@ -622,7 +610,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 			'sitename' => 'Elgg CI Site',
 			'siteemail' => 'no_reply@ci.elgg.org',
 			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
-			'dataroot' => getenv('HOME') . '/engine/tests/test_files/dataroot/',
+			'dataroot' => Paths::elgg() . '/engine/tests/test_files/dataroot/',
 
 			// admin account
 			'displayname' => 'Administrator',

@@ -134,7 +134,6 @@ return array(
 
 	'install:error:htaccess' => 'Не удается создать .htaccess',
 	'install:error:settings' => 'Невозможно создать файл настроек',
-	'install:error:settings_mismatch' => 'Значение файла настроек для "%s" не соответствует заданным $params.',
 	'install:error:databasesettings' => 'Невозможно подключиться к базе данных с данными настройками.',
 	'install:error:database_prefix' => 'Недопустимые символы в префиксе базы данных',
 	'install:error:oldmysql2' => 'MySQL должен быть версии 5.5.3 или выше. Ваш сервер использует %s.',
