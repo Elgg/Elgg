@@ -21,6 +21,7 @@ return array(
 	'blog:archives' => 'Архив',
 
 	'groups:tool:blog' => 'Включить блог группы',
+	'groups:tool:blog:description' => 'Разрешить членам группы вести блоги в этой группе.',
 
 	// Editing
 	'blog:excerpt' => 'Краткое описание',

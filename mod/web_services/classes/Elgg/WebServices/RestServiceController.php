@@ -73,14 +73,14 @@ class RestServiceController {
 		// check API authentication if required
 		if ($api->require_api_auth) {
 			try {
-				$api_authenticated = elgg_pam_authenticate('api');
+				if (!elgg_pam_authenticate('api')) {
+					throw new \APIException(elgg_echo('APIException:APIAuthenticationFailed'));
+				}
 			} catch (AuthenticationException $api_exception) {
 				// API authentication failed
-				$api_authenticated = false;
-			}
-			
-			if ($api_authenticated !== true) {
-				throw new \APIException(elgg_echo('APIException:APIAuthenticationFailed'));
+				$message = $api_exception->getMessage() ?: elgg_echo('APIException:APIAuthenticationFailed');
+				$code = $api_exception->getCode() ?: \ErrorResult::$RESULT_FAIL;
+				throw new \APIException($message, $code, $api_exception);
 			}
 		}
 		

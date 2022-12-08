@@ -40,12 +40,18 @@ class AccountsServiceUnitTest extends UnitTestCase {
 		elgg()->accounts->assertValidUsername($username);
 	}
 	
+	/**
+	 * @see \Elgg\Router\RouteRegistrationServiceUnitTest::invalidUsernameProvider()
+	 *
+	 * @return array
+	 */
 	public function invalidUsernameProvider() {
 		return [
 			[str_repeat('a', $this->minusername - 1)], // too short
 			[str_repeat('a', 129)], // too long, this is hard coded
 			['username#'],
 			['username@'],
+			['Username™'], // https://github.com/Elgg/Elgg/issues/14239
 		];
 	}
 
@@ -61,6 +67,11 @@ class AccountsServiceUnitTest extends UnitTestCase {
 		elgg()->accounts->assertValidUsername($username);
 	}
 	
+	/**
+	 * @see \Elgg\Router\RouteRegistrationServiceUnitTest::validUsernameProvider()
+	 *
+	 * @return array
+	 */
 	public function validUsernameProvider() {
 		return [
 			['username'],
