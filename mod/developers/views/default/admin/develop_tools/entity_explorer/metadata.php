@@ -20,7 +20,17 @@ if (empty($entity_metadata)) {
 	foreach ($entity_metadata as $md) {
 		$metadata_info .= '<tr>';
 		foreach ($md_columns as $md_col) {
-			$value = elgg_view('output/text', ['value' => $md->$md_col]);
+			switch ($md_col) {
+				case 'value':
+					if (is_bool($md->$md_col)) {
+						$value = elgg_view('output/text', ['value' => $md->$md_col ? 'true' : 'false']);
+						break;
+					}
+				default:
+					$value = elgg_view('output/text', ['value' => $md->$md_col]);
+					break;
+			}
+			
 			$metadata_info .= '<td>' . $value . '</td>';
 		}
 		$metadata_info .= '<td>' . elgg_view('output/url', [

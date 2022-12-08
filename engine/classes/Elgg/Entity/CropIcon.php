@@ -20,15 +20,46 @@ class CropIcon {
 	 */
 	public function __invoke(\Elgg\Event $event) {
 		
-		$entity_guid = (int) get_input('_entity_edit_icon_crop_guid');
-		$input_name = (string) get_input('_entity_edit_icon_crop_input');
-		$icon_type = (string) get_input('_entity_edit_icon_crop_type');
+		$crop_input = (array) get_input('_entity_edit_icon_crop');
+		if (empty($crop_input)) {
+			// BC fallback
+			$entity_guid = (int) get_input('_entity_edit_icon_crop_guid');
+			$input_name = (string) get_input('_entity_edit_icon_crop_input');
+			$icon_type = (string) get_input('_entity_edit_icon_crop_type');
+			
+			if (empty($entity_guid) || elgg_is_empty($input_name) || elgg_is_empty($icon_type)) {
+				// not enough information
+				return;
+			}
 		
-		if (empty($entity_guid) || elgg_is_empty($input_name) || elgg_is_empty($icon_type)) {
-			// not enough information
-			return;
+			$crop_input[$input_name] = [
+				'guid' => $entity_guid,
+				'type' => $icon_type,
+			];
 		}
 		
+		foreach ($crop_input as $input_name => $info) {
+			$entity_guid = (int) elgg_extract('guid', $info);
+			$icon_type = (string) elgg_extract('type', $info);
+			
+			if (empty($entity_guid) || elgg_is_empty($input_name) || elgg_is_empty($icon_type)) {
+				continue;
+			}
+			
+			$this->prepareUpload($entity_guid, $input_name, $icon_type);
+		}
+	}
+	
+	/**
+	 * Prepare a single existing icon for cropping
+	 *
+	 * @param int    $entity_guid the Entity GUID
+	 * @param string $input_name  input name for the icon
+	 * @param string $icon_type   name of the icon type
+	 *
+	 * @return void
+	 */
+	protected function prepareUpload(int $entity_guid, string $input_name, string $icon_type): void {
 		if (get_input("{$input_name}_remove") || elgg_get_uploaded_file($input_name)) {
 			// user wanted to remove icon, or provided own icon
 			return;
@@ -66,10 +97,10 @@ class CropIcon {
 		});
 		
 		$input_cropping_coords = [
-			'x1' => (int) get_input('x1'),
-			'y1' => (int) get_input('y1'),
-			'x2' => (int) get_input('x2'),
-			'y2' => (int) get_input('y2'),
+			'x1' => (int) get_input("{$input_name}_x1", get_input('x1')),
+			'y1' => (int) get_input("{$input_name}_y1", get_input('y1')),
+			'x2' => (int) get_input("{$input_name}_x2", get_input('x2')),
+			'y2' => (int) get_input("{$input_name}_y2", get_input('y2')),
 		];
 		
 		$diff = array_diff_assoc($input_cropping_coords, $current);

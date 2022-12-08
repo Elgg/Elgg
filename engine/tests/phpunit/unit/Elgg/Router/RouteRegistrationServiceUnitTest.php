@@ -12,18 +12,10 @@ class RouteRegistrationServiceUnitTest extends UnitTestCase {
 	 */
 	protected $service;
 	
-	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::up()
-	 */
 	public function up() {
 		$this->service = _elgg_services()->routes;
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\BaseTestCase::down()
-	 */
 	public function down() {
 		unset($this->service);
 	}
@@ -171,5 +163,66 @@ class RouteRegistrationServiceUnitTest extends UnitTestCase {
 		$message_details = $logged[0];
 		
 		$this->assertStringContainsString('The route "view:foo:bar" has been deprecated.', $message_details['message']);
+	}
+	
+	/**
+	 * @dataProvider validUsernameProvider
+	 */
+	public function testGenerateUrlWithValidUsername($username) {
+		$this->service->register('valid:username', [
+			'path' => '/valid/{username}',
+			'resource' => 'dummy',
+		]);
+		
+		$url = $this->service->generateUrl('valid:username', [
+			'username' => $username,
+		]);
+		$this->assertIsString($url);
+	}
+	
+	/**
+	 * @see \Elgg\Users\AccountsServiceUnitTest::validUsernameProvider()
+	 *
+	 * @return array
+	 */
+	public function validUsernameProvider() {
+		return [
+			['username'],
+			['úsernâmé'],
+			['user1234'],
+			['123456789'],
+			['user-name'],
+			['user.name'],
+			['user_name'],
+			['देवनागरी'], // https://github.com/Elgg/Elgg/issues/12518 and https://github.com/Elgg/Elgg/issues/13067
+		];
+	}
+	
+	/**
+	 * @dataProvider invalidUsernameProvider
+	 */
+	public function testGenerateUrlWithInvalidUsername($username) {
+		$this->service->register('invalid:username', [
+			'path' => '/invalid/{username}',
+			'resource' => 'dummy',
+		]);
+		
+		$url = $this->service->generateUrl('invalid:username', [
+			'username' => $username,
+		]);
+		$this->assertNull($url);
+	}
+	
+	/**
+	 * @see \Elgg\Users\AccountsServiceUnitTest::invalidUsernameProvider()
+	 *
+	 * @return array
+	 */
+	public function invalidUsernameProvider() {
+		return [
+			['username#'],
+			['username@'],
+			['Username™'],
+		];
 	}
 }

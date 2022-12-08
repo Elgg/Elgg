@@ -125,7 +125,7 @@ $input ='';
 foreach (['x1', 'y1', 'x2', 'y2'] as $coord) {
 	$input .= elgg_view_field([
 		'#type' => 'hidden',
-		'name' => $coord,
+		'name' => "{$input_name}_{$coord}",
 		'value' => elgg_extract($coord, $entity_coords),
 	]);
 }
@@ -133,18 +133,13 @@ foreach (['x1', 'y1', 'x2', 'y2'] as $coord) {
 if (!empty($img_url)) {
 	$input .= elgg_view_field([
 		'#type' => 'hidden',
-		'name' => '_entity_edit_icon_crop_guid',
+		'name' => "_entity_edit_icon_crop[{$input_name}][guid]",
 		'value' => $entity->guid,
 	]);
 	$input .= elgg_view_field([
 		'#type' => 'hidden',
-		'name' => '_entity_edit_icon_crop_type',
+		'name' => "_entity_edit_icon_crop[{$input_name}][type]",
 		'value' => $icon_type,
-	]);
-	$input .= elgg_view_field([
-		'#type' => 'hidden',
-		'name' => '_entity_edit_icon_crop_input',
-		'value' => $input_name,
 	]);
 }
 
