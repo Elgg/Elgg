@@ -103,7 +103,7 @@ class EntityIconService {
 				
 		// auto detect cropping coordinates
 		if (empty($coords)) {
-			$auto_coords = $this->detectCroppingCoordinates();
+			$auto_coords = $this->detectCroppingCoordinates($input_name);
 			if (!empty($auto_coords)) {
 				$coords = $auto_coords;
 			}
@@ -687,15 +687,17 @@ class EntityIconService {
 	 *
 	 * Based in the input names x1, x2, y1 and y2
 	 *
+	 * @param string $input_name the file input name which is the prefix for the cropping coordinates
+	 *
 	 * @return false|array
 	 */
-	protected function detectCroppingCoordinates() {
+	protected function detectCroppingCoordinates(string $input_name) {
 		
 		$auto_coords = [
-			'x1' => get_input('x1'),
-			'x2' => get_input('x2'),
-			'y1' => get_input('y1'),
-			'y2' => get_input('y2'),
+			'x1' => get_input("{$input_name}_x1", get_input('x1')), // x1 is BC fallback
+			'x2' => get_input("{$input_name}_x2", get_input('x2')), // x2 is BC fallback
+			'y1' => get_input("{$input_name}_y1", get_input('y1')), // y1 is BC fallback
+			'y2' => get_input("{$input_name}_y2", get_input('y2')), // y2 is BC fallback
 		];
 		
 		$auto_coords = array_filter($auto_coords, function($value) {

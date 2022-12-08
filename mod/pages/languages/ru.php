@@ -23,6 +23,7 @@ return array(
 	'notifications:mute:object:page' => "о странице '%s'",
 
 	'groups:tool:pages' => 'Включить страницы группы',
+	'groups:tool:pages:description' => 'Разрешить участникам группы работать вместе над страницами в этой группе.',
 	
 	'annotation:delete:page:success' => 'Редакция страницы была удалена.',
 	'annotation:delete:page:fail' => 'Редакция страницы не может быть удалена.',

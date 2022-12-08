@@ -244,9 +244,10 @@ class Accounts {
 		// Whitelist all supported route characters
 		// @see Elgg\Router\RouteRegistrationService::register()
 		// @link https://github.com/Elgg/Elgg/issues/12518
-		$whitelist = '/[\p{L}\p{M}\p{Nd}._-]+/';
-		if (!preg_match_all($whitelist, $username)) {
-			throw new RegistrationException($this->translator->translate('registration:invalidchars'));
+		// @link https://github.com/Elgg/Elgg/issues/14239
+		$invalid_chars = [];
+		if (preg_match_all('/[^\p{L}\p{M}\p{Nd}._-]+/iu', $username, $invalid_chars)) {
+			throw new RegistrationException($this->translator->translate('registration:invalidchars:route', [implode(',', $invalid_chars[0])]));
 		}
 
 		// Belts and braces

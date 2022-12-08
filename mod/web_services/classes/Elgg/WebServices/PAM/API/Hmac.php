@@ -17,6 +17,7 @@ class Hmac {
 	 * Validate the HMAC signature of an API call
 	 *
 	 * @return bool
+	 * @throws \Elgg\Exceptions\SecurityException
 	 */
 	public function __invoke(): bool {
 		// Get api header
