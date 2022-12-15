@@ -1,10 +1,10 @@
-
 $(function() {
 	// prevent double-submission of forms
 	$('form').submit(function() {
 		if ($(this).data('submitted')) {
 			return false;
 		}
+		
 		$(this).data('submitted', true);
 		return true;
 	});
@@ -44,4 +44,3 @@ elgg.installer.rewriteTest = function(url, success_msg, nextURL) {
 		}
 	});
 };
-

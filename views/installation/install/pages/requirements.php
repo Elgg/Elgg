@@ -8,7 +8,12 @@
 
 if ($vars['num_failures'] != 0) {
 	$instruct_text = elgg_echo('install:requirements:instructions:failure');
+	
+	// cannot advance to next step with a failure
+	$vars['advance'] = false;
+	$vars['refresh'] = true;
 } elseif ($vars['num_warnings'] != 0) {
+	$vars['refresh'] = true;
 	$instruct_text = elgg_echo('install:requirements:instructions:warning');
 } else {
 	$instruct_text = elgg_echo('install:requirements:instructions:success');
@@ -18,22 +23,15 @@ echo elgg_autop($instruct_text);
 
 $report = elgg_extract('report', $vars);
 foreach ($report as $category => $checks) {
-	$title = elgg_echo("install:require:$category");
-	echo "<h3>$title</h3>";
-	echo "<ul class=\"elgg-require-$category\">";
+	echo elgg_format_element('h3', [], elgg_echo("install:require:{$category}"));
+	
+	$list_items = '';
 	foreach ($checks as $check) {
-		echo '<li>';
-		echo elgg_view_message(elgg_extract('severity', $check, 'notice'), elgg_autop($check['message']));
-		echo '</li>';
+		$message = elgg_view_message(elgg_extract('severity', $check, 'notice'), elgg_autop($check['message']), ['icon_name' => false]);
+		$list_items .= elgg_format_element('li', [], $message);
 	}
-	echo "</ul>";
-}
-
-$vars['refresh'] = true;
-
-// cannot advance to next step with a failure
-if ($vars['num_failures'] != 0) {
-	$vars['advance'] = false;
+	
+	echo elgg_format_element('ul', ['class' => "elgg-require-{$category}"], $list_items);
 }
 
 echo elgg_view('install/nav', $vars);

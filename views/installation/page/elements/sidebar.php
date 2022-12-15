@@ -14,7 +14,7 @@ if (empty($steps)) {
 
 $current_step_index = array_search($current_step, $steps);
 
-echo '<ol>';
+$list_items = '';
 foreach ($steps as $index => $step) {
 	if ($index < $current_step_index) {
 		$class = 'past';
@@ -23,10 +23,11 @@ foreach ($steps as $index => $step) {
 	} else {
 		$class = 'future';
 	}
-	$text = elgg_echo("install:$step");
-	echo "<li class=\"$class\">$text</li>";
+	
+	$list_items .= elgg_format_element('li', ['class' => $class], elgg_echo("install:{$step}"));
 }
-echo '</ol>';
+
+echo elgg_format_element('ol', [], $list_items);
 
 $options_values = [];
 foreach (_elgg_services()->translator->getInstalledTranslations() as $key => $value) {

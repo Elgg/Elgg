@@ -10,15 +10,16 @@ if (isset($vars['failure']) && $vars['failure']) {
 	$vars['refresh'] = true;
 	$vars['advance'] = false;
 	echo elgg_view('install/nav', $vars);
-} else {
-	echo elgg_autop(elgg_echo('install:database:instructions'));
-	
-	$vars['type'] = 'database';
-	
-	$form_vars = [
-		'action' => elgg_get_current_url(),
-		'disable_security' => true,
-	];
-	
-	echo elgg_view_form('install/template', $form_vars, $vars);
+	return;
 }
+
+echo elgg_autop(elgg_echo('install:database:instructions'));
+	
+$vars['type'] = 'database';
+
+$form_vars = [
+	'action' => elgg_get_current_url(),
+	'disable_security' => true,
+];
+
+echo elgg_view_form('install/template', $form_vars, $vars);
