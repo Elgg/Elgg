@@ -35,16 +35,14 @@ function uservalidationbyemail_request_validation(int $user_guid): array|bool {
 	elgg_get_session()->set('emailsent', $user->email);
 
 	$subject = elgg_echo('email:validate:subject', [
-			$user->getDisplayName(),
-			$site->getDisplayName()
-		], $user->language
-	);
+		$user->getDisplayName(),
+		$site->getDisplayName(),
+	], $user->language);
 
 	$body = elgg_echo('email:validate:body', [
-			$site->getDisplayName(),
-			$link,
-		], $user->language
-	);
+		$site->getDisplayName(),
+		$link,
+	], $user->language);
 
 	$params = [
 		'action' => 'uservalidationbyemail',

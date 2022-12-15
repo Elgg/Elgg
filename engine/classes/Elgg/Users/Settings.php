@@ -275,6 +275,7 @@ class Settings {
 				// admins changing another users email address are allowed to set it to a duplicate email address
 				$assert_unregistered = false;
 			}
+			
 			_elgg_services()->accounts->assertValidEmail($email, $assert_unregistered);
 		} catch (RegistrationException $ex) {
 			$request->validation()->fail('email', $email, $ex->getMessage());

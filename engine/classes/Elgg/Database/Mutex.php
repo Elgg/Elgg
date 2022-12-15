@@ -94,7 +94,7 @@ class Mutex {
 	 */
 	protected function assertNamespace(string $namespace): void {
 		if (!ctype_alpha($namespace)) {
-			throw new InvalidArgumentException("Mutex namespace can only have characters [A-Za-z].");
+			throw new InvalidArgumentException('Mutex namespace can only have characters [A-Za-z].');
 		}
 	}
 }

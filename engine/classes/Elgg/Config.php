@@ -354,6 +354,7 @@ class Config {
 			$config->{'x_sendfile_type'} = $config->{'X-Sendfile-Type'};
 			unset($config->{'X-Sendfile-Type'});
 		}
+		
 		if ($config->{'X-Accel-Mapping'}) {
 			$config->{'x_accel_mapping'} = $config->{'X-Accel-Mapping'};
 			unset($config->{'X-Accel-Mapping'});
@@ -405,6 +406,7 @@ class Config {
 		if (!isset($cookies['session'])) {
 			$cookies['session'] = [];
 		}
+		
 		$session_defaults = session_get_cookie_params();
 		$session_defaults['name'] = 'Elgg';
 		$cookies['session'] = array_merge($session_defaults, $cookies['session']);
@@ -413,8 +415,9 @@ class Config {
 		if (!isset($cookies['remember_me'])) {
 			$cookies['remember_me'] = [];
 		}
+		
 		$session_defaults['name'] = 'elggperm';
-		$session_defaults['expire'] = strtotime("+30 days");
+		$session_defaults['expire'] = strtotime('+30 days');
 		$cookies['remember_me'] = array_merge($session_defaults, $cookies['remember_me']);
 
 		$this->cookies = $cookies;
@@ -548,7 +551,7 @@ class Config {
 		}
 
 		if (strlen($name) > 255) {
-			$this->getLogger()->error("The name length for configuration variables cannot be greater than 255");
+			$this->getLogger()->error('The name length for configuration variables cannot be greater than 255');
 			return false;
 		}
 

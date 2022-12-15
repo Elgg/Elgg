@@ -47,7 +47,7 @@ class RestApiErrorHandlingMiddleware {
 	public function exceptionHandler(\Throwable $throwable) {
 		error_log('*** FATAL EXCEPTION (API) *** : ' . $throwable);
 		
-		$code = $throwable->getCode() === 0 ? \ErrorResult::$RESULT_FAIL : $throwable->getCode();
+		$code = $throwable->getCode() === 0 ? \ErrorResult::RESULT_FAIL : $throwable->getCode();
 		$result = new \ErrorResult($throwable->getMessage(), $code);
 		
 		echo elgg_view_page($throwable->getMessage(), elgg_view('api/output', [

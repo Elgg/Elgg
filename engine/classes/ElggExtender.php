@@ -62,9 +62,11 @@ abstract class ElggExtender extends \ElggData {
 		if ($name === 'access_id' && $this instanceof ElggMetadata) {
 			$value = ACCESS_PUBLIC;
 		}
+		
 		if (isset($value) && in_array($name, static::INTEGER_ATTR_NAMES)) {
 			$value = (int) $value;
 		}
+		
 		$this->attributes[$name] = $value;
 		if ($name == 'value') {
 			$this->attributes['value_type'] = self::detectValueType($value);
@@ -96,13 +98,13 @@ abstract class ElggExtender extends \ElggData {
 		if (array_key_exists($name, $this->attributes)) {
 			if ($name == 'value') {
 				switch ($this->attributes['value_type']) {
-					case 'bool' :
+					case 'bool':
 						return (bool) $this->attributes['value'];
-					case 'integer' :
+					case 'integer':
 						return (int) $this->attributes['value'];
-					case 'text' :
+					case 'text':
 						return $this->attributes['value'];
-					default :
+					default:
 						$msg = "{$this->attributes['value_type']} is not a supported \ElggExtender value type.";
 						throw new ElggUnexpectedValueException($msg);
 						break;

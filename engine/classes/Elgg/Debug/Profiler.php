@@ -12,8 +12,10 @@ use Elgg\Timer;
  */
 class Profiler {
 
-	protected $percentage_format = "%01.2f";
-	protected $duration_format = "%01.6f";
+	protected $percentage_format = '%01.2f';
+	
+	protected $duration_format = '%01.6f';
+	
 	protected $minimum_percentage = 0.2;
 
 	/**
@@ -29,7 +31,6 @@ class Profiler {
 	 * @return string
 	 */
 	public function __invoke(\Elgg\Event $event) {
-		
 		if (!_elgg_services()->config->enable_profiling) {
 			return;
 		}
@@ -44,7 +45,7 @@ class Profiler {
 		$tree = $profiler->formatTree($tree);
 		$data = [
 			'tree' => $tree,
-			'total' => $tree['duration'] . " seconds",
+			'total' => $tree['duration'] . ' seconds',
 		];
 		
 		$list = [];
@@ -52,22 +53,23 @@ class Profiler {
 		
 		$root = Paths::project();
 		$list = array_map(function ($period) use ($root) {
-			$period['name'] = str_replace("Closure $root", "Closure ", $period['name']);
+			$period['name'] = str_replace("Closure {$root}", 'Closure ', $period['name']);
 			return "{$period['percentage']}% ({$period['duration']}) {$period['name']}";
 		}, $list);
-			
-			$data['list'] = $list;
-			
-			$html = $event->getValue();
-			$html .= "<script>console.log(" . json_encode($data) . ");</script>";
-			
-			return $html;
+		
+		$data['list'] = $list;
+		
+		$html = $event->getValue();
+		$html .= '<script>console.log(' . json_encode($data) . ');</script>';
+		
+		return $html;
 	}
 	
 	/**
 	 * Return a tree of time periods from a Timer
 	 *
 	 * @param Timer $timer Timer object
+	 *
 	 * @return false|array
 	 */
 	protected function buildTree(Timer $timer) {
@@ -90,6 +92,7 @@ class Profiler {
 	 * @param array  $list   Output list of times to populate
 	 * @param array  $tree   Result of buildTree()
 	 * @param string $prefix Prefix of period string. Leave empty.
+	 *
 	 * @return void
 	 */
 	protected function flattenTree(array &$list = [], array $tree = [], $prefix = '') {
@@ -99,8 +102,10 @@ class Profiler {
 			foreach ($tree['periods'] as $period) {
 				$this->flattenTree($list, $period, "{$prefix}  {$period['name']}");
 			}
+			
 			unset($tree['periods']);
 		}
+		
 		$tree['name'] = trim($prefix);
 		$list[] = $tree;
 
@@ -109,6 +114,7 @@ class Profiler {
 				if ($a['duration'] == $b['duration']) {
 					return 0;
 				}
+				
 				return ($a['duration'] > $b['duration']) ? -1 : 1;
 			});
 		}
@@ -118,6 +124,7 @@ class Profiler {
 	 * Nicely format the elapsed time values
 	 *
 	 * @param array $tree Result of buildTree()
+	 *
 	 * @return array
 	 */
 	protected function formatTree(array $tree) {
@@ -125,9 +132,11 @@ class Profiler {
 		if (isset($tree['percentage'])) {
 			$tree['percentage'] = sprintf($this->percentage_format, $tree['percentage']);
 		}
+		
 		if (isset($tree['periods'])) {
 			$tree['periods'] = array_map([$this, 'formatTree'], $tree['periods']);
 		}
+		
 		return $tree;
 	}
 
@@ -145,6 +154,7 @@ class Profiler {
 		if ($begin === false || $end === false) {
 			return false;
 		}
+		
 		$has_own_markers = isset($times[Timer::MARKER_BEGIN]) && isset($times[Timer::MARKER_BEGIN]);
 		unset($times[Timer::MARKER_BEGIN], $times[Timer::MARKER_END]);
 
@@ -160,10 +170,12 @@ class Profiler {
 			if ($period === false) {
 				continue;
 			}
+			
 			$period['percentage'] = 100 * $period['duration'] / $this->total;
 			if ($period['percentage'] < $this->minimum_percentage) {
 				continue;
 			}
+			
 			$ret['periods'][] = $period;
 		}
 
@@ -174,6 +186,7 @@ class Profiler {
 				foreach ($ret['periods'] as $period) {
 					$ret['duration'] += $period['duration'];
 				}
+				
 				$ret['percentage'] = 100 * $ret['duration'] / $this->total;
 			}
 			
@@ -181,6 +194,7 @@ class Profiler {
 				if ($a['duration'] == $b['duration']) {
 					return 0;
 				}
+				
 				return ($a['duration'] > $b['duration']) ? -1 : 1;
 			});
 		}
@@ -192,17 +206,20 @@ class Profiler {
 	 * Get the microtime start time
 	 *
 	 * @param array $times Time periods
+	 *
 	 * @return float|false
 	 */
 	protected function findBeginTime(array $times) {
 		if (isset($times[Timer::MARKER_BEGIN])) {
 			return $times[Timer::MARKER_BEGIN];
 		}
+		
 		unset($times[Timer::MARKER_BEGIN], $times[Timer::MARKER_END]);
 		$first = reset($times);
 		if (is_array($first)) {
 			return $this->findBeginTime($first);
 		}
+		
 		return false;
 	}
 
@@ -217,11 +234,13 @@ class Profiler {
 		if (isset($times[Timer::MARKER_END])) {
 			return $times[Timer::MARKER_END];
 		}
+		
 		unset($times[Timer::MARKER_BEGIN], $times[Timer::MARKER_END]);
 		$last = end($times);
 		if (is_array($last)) {
 			return $this->findEndTime($last);
 		}
+		
 		return false;
 	}
 

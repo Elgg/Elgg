@@ -15,7 +15,15 @@ use Monolog\Formatter\FormatterInterface;
  * Console handler
  */
 class ErrorHandler extends AbstractProcessingHandler {
-
+	
+	const VERBOSITY_LEVEL_MAP = [
+		OutputInterface::VERBOSITY_QUIET => Logger::OFF,
+		OutputInterface::VERBOSITY_NORMAL => Logger::WARNING,
+		OutputInterface::VERBOSITY_VERBOSE => Logger::NOTICE,
+		OutputInterface::VERBOSITY_VERY_VERBOSE => Logger::INFO,
+		OutputInterface::VERBOSITY_DEBUG => Logger::DEBUG,
+	];
+	
 	/**
 	 * @var OutputInterface
 	 */
@@ -25,17 +33,6 @@ class ErrorHandler extends AbstractProcessingHandler {
 	 * @var OutputInterface
 	 */
 	protected $stderr;
-
-	/**
-	 * @var array
-	 */
-	static $verbosityLevelMap = [
-		OutputInterface::VERBOSITY_QUIET => Logger::OFF,
-		OutputInterface::VERBOSITY_NORMAL => Logger::WARNING,
-		OutputInterface::VERBOSITY_VERBOSE => Logger::NOTICE,
-		OutputInterface::VERBOSITY_VERY_VERBOSE => Logger::INFO,
-		OutputInterface::VERBOSITY_DEBUG => Logger::DEBUG,
-	];
 
 	/**
 	 * Constructor
@@ -49,13 +46,12 @@ class ErrorHandler extends AbstractProcessingHandler {
 		OutputInterface $stderr = null,
 		$bubble = true
 	) {
-
 		$this->stdout = $stdout;
-		$this->stderr = $stderr ? : $stdout;
+		$this->stderr = $stderr ?: $stdout;
 
-		$verbosity = $this->stdout->getVerbosity() ? : OutputInterface::VERBOSITY_NORMAL;
+		$verbosity = $this->stdout->getVerbosity() ?: OutputInterface::VERBOSITY_NORMAL;
 
-		$level = self::$verbosityLevelMap[$verbosity];
+		$level = self::VERBOSITY_LEVEL_MAP[$verbosity];
 
 		parent::__construct($level, $bubble);
 	}

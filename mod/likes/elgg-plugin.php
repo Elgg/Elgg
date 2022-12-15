@@ -46,7 +46,7 @@ return [
 		],
 		'permissions_check' => [
 			'annotation' => [
-				'Elgg\Likes\Permissions::allowLikedEntityOwner' =>[],
+				'Elgg\Likes\Permissions::allowLikedEntityOwner' => [],
 			],
 		],
 		'permissions_check:annotate' => [

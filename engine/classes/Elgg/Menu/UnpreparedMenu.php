@@ -37,8 +37,9 @@ class UnpreparedMenu {
 		}
 
 		if (!$items instanceof MenuItems) {
-			throw new InvalidArgumentException("Items collection must implement " . MenuItems::class);
+			throw new InvalidArgumentException('Items collection must implement ' . MenuItems::class);
 		}
+		
 		$this->items = $items;
 	}
 

@@ -22,6 +22,7 @@ class LongText {
 		if ($id === null) {
 			return;
 		}
+		
 		$items = $event->getValue();
 		
 		$items[] = \ElggMenuItem::factory([

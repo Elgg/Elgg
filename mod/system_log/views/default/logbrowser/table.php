@@ -24,16 +24,18 @@ if (empty($log_entries)) {
 			<th><?php echo elgg_echo('logbrowser:action'); ?></th>
 		</tr>
 	</thead>
+	<tbody>
 <?php
 
 /** @var $entry Elgg\SystemLog\SystemLogEntry */
 foreach ($log_entries as $entry) {
 	$user = $entry->performed_by_guid ? get_entity($entry->performed_by_guid) : null;
-	if ($user) {
+	if ($user instanceof \ElggUser) {
 		$user_link = elgg_view_entity_url($user);
 		$user_guid_link = elgg_view_url("admin/administer_utilities/logbrowser?user_guid={$user->guid}", $user->guid);
 	} else {
-		$user_guid_link = $user_link = '&nbsp;';
+		$user_link = '&nbsp;';
+		$user_guid_link = '&nbsp;';
 	}
 
 	$object = $entry->getObject();
@@ -56,5 +58,6 @@ foreach ($log_entries as $entry) {
 	echo elgg_format_element('tr', [], $row);
 }
 ?>
+	</tbody>
 </table>
 <?php

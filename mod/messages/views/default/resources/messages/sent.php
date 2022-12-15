@@ -1,7 +1,7 @@
 <?php
 /**
-* Elgg sent messages page
-*/
+ * Elgg sent messages page
+ */
 
 /* @var $page_owner \ElggUser */
 $page_owner = elgg_get_page_owner_entity();

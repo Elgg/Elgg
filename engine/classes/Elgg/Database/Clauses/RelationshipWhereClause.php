@@ -69,5 +69,4 @@ class RelationshipWhereClause extends WhereClause {
 
 		return $qb->merge($wheres);
 	}
-
 }

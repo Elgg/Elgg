@@ -8,7 +8,6 @@ use Elgg\Exceptions\DomainException as ElggDomainException;
 use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
 use Elgg\Traits\Entity\Subscriptions;
 
-
 /**
  * The parent class for all Elgg Entities.
  *
@@ -135,9 +134,8 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	public function __construct(stdClass $row = null) {
 		$this->initializeAttributes();
 
-		if ($row && !$this->load($row)) {
-			$msg = "Failed to load new " . get_class() . " for GUID:" . $row->guid;
-			throw new IOException($msg);
+		if (!empty($row) && !$this->load($row)) {
+			throw new IOException('Failed to load new ' . get_class() . " for GUID: {$row->guid}");
 		}
 	}
 
@@ -161,7 +159,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		$this->attributes['access_id'] = ACCESS_PRIVATE;
 		$this->attributes['time_updated'] = null;
 		$this->attributes['last_action'] = null;
-		$this->attributes['enabled'] = "yes";
+		$this->attributes['enabled'] = 'yes';
 	}
 
 	/**
@@ -201,6 +199,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			foreach ($metadata_array as $metadata) {
 				$metadata_names[] = $metadata->name;
 			}
+			
 			// arrays are stored with multiple enties per name
 			$metadata_names = array_unique($metadata_names);
 
@@ -269,6 +268,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 					$this->attributes[$name] = $value;
 					break;
 			}
+			
 			return;
 		}
 
@@ -407,7 +407,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 					]);
 				});
 
-				if (false === $delete_result) {
+				if ($delete_result === false) {
 					return false;
 				}
 			}
@@ -456,6 +456,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 				// only save if value array contains data
 				$this->temp_metadata[$name] = $value;
 			}
+			
 			return true;
 		}
 
@@ -467,8 +468,6 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
 		return true;
 	}
-
-
 
 	/**
 	 * Deletes all metadata on this object (metadata.entity_guid = $this->guid).
@@ -755,7 +754,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @return bool|int Returns int if an annotation is saved
 	 */
-	public function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_guid = 0, $value_type = "") {
+	public function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_guid = 0, $value_type = '') {
 		if (!$this->guid) {
 			$this->temp_annotations[$name] = $value;
 			return true;
@@ -1280,6 +1279,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			$container_guid = $owner_guid;
 			$this->attributes['container_guid'] = $container_guid;
 		}
+		
 		$container_guid = (int) $container_guid;
 
 		if ($access_id == ACCESS_DEFAULT) {
@@ -1293,35 +1293,38 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		$user_guid = _elgg_services()->session_manager->getLoggedInUserGuid();
 
 		// If given an owner, verify it can be loaded
-		if ($owner_guid) {
+		if (!empty($owner_guid)) {
 			$owner = $this->getOwnerEntity();
-			if (!$owner) {
-				_elgg_services()->logger->error("User {$user_guid} tried to create a ({$type}, {$subtype}), but the given"
-					. " owner {$owner_guid} could not be loaded.");
+			if (!$owner instanceof \ElggEntity) {
+				$error = "User {$user_guid} tried to create a ({$type}, {$subtype}),";
+				$error .= " but the given owner {$owner_guid} could not be loaded.";
+				_elgg_services()->logger->error($error);
 				return false;
 			}
 
 			// If different owner than logged in, verify can write to container.
-
-			if ($user_guid != $owner_guid && !$owner->canEdit() && !$owner->canWriteToContainer($user_guid, $type, $subtype)) {
-				_elgg_services()->logger->error("User {$user_guid} tried to create a ({$type}, {$subtype}) with owner"
-					. " {$owner_guid}, but the user wasn't permitted to write to the owner's container.");
+			if ($user_guid !== $owner_guid && !$owner->canEdit() && !$owner->canWriteToContainer($user_guid, $type, $subtype)) {
+				$error = "User {$user_guid} tried to create a ({$type}, {$subtype}) with owner {$owner_guid},";
+				$error .= " but the user wasn't permitted to write to the owner's container.";
+				_elgg_services()->logger->error($error);
 				return false;
 			}
 		}
 
 		// If given a container, verify it can be loaded and that the current user can write to it
-		if ($container_guid) {
+		if (!empty($container_guid)) {
 			$container = $this->getContainerEntity();
-			if (!$container) {
-				_elgg_services()->logger->error("User {$user_guid} tried to create a ({$type}, {$subtype}), but the given"
-					. " container {$container_guid} could not be loaded.");
+			if (!$container instanceof \ElggEntity) {
+				$error = "User {$user_guid} tried to create a ({$type}, {$subtype}),";
+				$error .= " but the given container {$container_guid} could not be loaded.";
+				_elgg_services()->logger->error($error);
 				return false;
 			}
 
 			if (!$container->canWriteToContainer($user_guid, $type, $subtype)) {
-				_elgg_services()->logger->error("User {$user_guid} tried to create a ({$type}, {$subtype}), but was not"
-					. " permitted to write to container {$container_guid}.");
+				$error = "User {$user_guid} tried to create a ({$type}, {$subtype}),";
+				$error .= " but was not permitted to write to container {$container_guid}.";
+				_elgg_services()->logger->error($error);
 				return false;
 			}
 		}
@@ -1359,7 +1362,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		$this->cache();
 
 		// Save any unsaved metadata
-		if (sizeof($this->temp_metadata) > 0) {
+		if (count($this->temp_metadata) > 0) {
 			foreach ($this->temp_metadata as $name => $value) {
 				// temp metadata is always an array, but if there is only one value return just the value
 				$this->setMetadata($name, $value, '', count($value) > 1);
@@ -1369,7 +1372,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		}
 
 		// Save any unsaved annotations.
-		if (sizeof($this->temp_annotations) > 0) {
+		if (count($this->temp_annotations) > 0) {
 			foreach ($this->temp_annotations as $name => $value) {
 				$this->annotate($name, $value);
 			}
@@ -1544,12 +1547,12 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 					$options[$db_column] = $guid;
 
 					$subentities = elgg_get_entities($options);
-
+					/* @var $subentity \ElggEntity */
 					foreach ($subentities as $subentity) {
-						/* @var $subentity \ElggEntity */
 						if (!$subentity->isEnabled()) {
 							continue;
 						}
+						
 						$subentity->addRelationship($guid, 'disabled_with');
 						$subentity->disable($reason, true);
 					}
@@ -1712,8 +1715,8 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return void
 	 */
 	public function setLatLong(float $lat, float $long): void {
-		$this->{"geo:lat"} = $lat;
-		$this->{"geo:long"} = $long;
+		$this->{'geo:lat'} = $lat;
+		$this->{'geo:long'} = $long;
 	}
 
 	/**
@@ -1722,7 +1725,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return float
 	 */
 	public function getLatitude(): float {
-		return (float) $this->{"geo:lat"};
+		return (float) $this->{'geo:lat'};
 	}
 
 	/**
@@ -1731,7 +1734,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return float
 	 */
 	public function getLongitude(): float {
-		return (float) $this->{"geo:long"};
+		return (float) $this->{'geo:long'};
 	}
 
 	/*
@@ -1904,6 +1907,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		if (_elgg_services()->session_manager->getIgnoreAccess()) {
 			return false;
 		}
+		
 		return $this->_is_cacheable;
 	}
 

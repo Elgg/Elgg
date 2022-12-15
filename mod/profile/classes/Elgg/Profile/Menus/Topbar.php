@@ -20,9 +20,10 @@ class Topbar {
 	public static function register(\Elgg\Event $event) {
 	
 		$viewer = elgg_get_logged_in_user_entity();
-		if (!$viewer) {
+		if (!$viewer instanceof \ElggUser) {
 			 return;
 		}
+		
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([

@@ -43,7 +43,7 @@ final class Fly implements Directory {
 	 */
 	public function __construct(Filesystem $filesystem, $local_path = '', $chroot = '') {
 		$this->fs = $filesystem;
-		$this->local_path = rtrim(strtr($local_path, '\\', '/'), "/\\");
+		$this->local_path = rtrim(strtr($local_path, '\\', '/'), '/\\');
 		$this->chroot = $this->normalize($chroot);
 	}
 
@@ -200,12 +200,11 @@ final class Fly implements Directory {
 	 * @throws InvalidArgumentException
 	 */
 	private function normalize($path) {
-
-		$test_path = "/$path/";
+		$test_path = "/{$path}/";
 		if (strpos($test_path, '/./') !== false || strpos($test_path, '/../') !== false) {
 			throw new InvalidArgumentException('Paths cannot contain "." or ".."');
 		}
 
-		return trim(strtr($path, '\\', '/'), "/");
+		return trim(strtr($path, '\\', '/'), '/');
 	}
 }

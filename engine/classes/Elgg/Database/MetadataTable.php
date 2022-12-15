@@ -212,7 +212,7 @@ class MetadataTable {
 	 */
 	public function create(\ElggMetadata $metadata, $allow_multiple = false) {
 		if (!isset($metadata->value) || !isset($metadata->entity_guid)) {
-			elgg_log("Metadata must have a value and entity guid", 'ERROR');
+			elgg_log('Metadata must have a value and entity guid', 'ERROR');
 			return false;
 		}
 
@@ -222,7 +222,7 @@ class MetadataTable {
 		}
 		
 		if (!is_scalar($metadata->value)) {
-			elgg_log("To set multiple metadata values use ElggEntity::setMetadata", 'ERROR');
+			elgg_log('To set multiple metadata values use ElggEntity::setMetadata', 'ERROR');
 			return false;
 		}
 

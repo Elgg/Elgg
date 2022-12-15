@@ -109,7 +109,7 @@ if ($show_group_owner_transfer && $entity && ($owner_guid == elgg_get_logged_in_
 		'#type' => 'userpicker',
 		'#label' => elgg_echo('groups:owner'),
 		'name' => 'owner_guid',
-		'value' =>  $owner_guid,
+		'value' => $owner_guid,
 		'limit' => 1,
 		'match_on' => 'group_members',
 		'show_friends' => false,

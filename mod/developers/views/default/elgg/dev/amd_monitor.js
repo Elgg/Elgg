@@ -1,4 +1,4 @@
-!function(){
+!function() {
 	// http://stackoverflow.com/a/19043564/3779
 	var defined_modules = require.s.contexts._.defined;
 
@@ -24,7 +24,7 @@
 		} else {
 			setInterval(update, 1000);
 		}
+		
 		update();
 	});
 }();
-

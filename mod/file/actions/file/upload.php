@@ -42,9 +42,10 @@ if ($new_file) {
 	}
 }
 
-if ($title) {
+if (!elgg_is_empty($title)) {
 	$file->title = $title;
 }
+
 $file->description = $desc;
 $file->access_id = $access_id;
 $file->container_guid = $container_guid;

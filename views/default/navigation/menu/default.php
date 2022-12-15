@@ -26,7 +26,7 @@ $name_class_selector = preg_replace('/[^a-z0-9\-]/i', '-', elgg_strtolower($name
 $show_section_headers = elgg_extract('show_section_headers', $vars, false);
 $item_class = elgg_extract_class($vars, [], 'item_class');
 
-$class = elgg_extract_class($vars, ["elgg-menu", "elgg-menu-{$name_class_selector}"]);
+$class = elgg_extract_class($vars, ['elgg-menu', "elgg-menu-{$name_class_selector}"]);
 
 $menu_view = '';
 

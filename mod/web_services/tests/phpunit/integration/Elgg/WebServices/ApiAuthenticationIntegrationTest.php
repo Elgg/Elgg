@@ -151,7 +151,7 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 		$content = json_decode($content, true);
 		$this->assertIsArray($content);
 		$this->assertArrayHasKey('status', $content);
-		$this->assertEquals(\SuccessResult::$RESULT_SUCCESS, $content['status']);
+		$this->assertEquals(\SuccessResult::RESULT_SUCCESS, $content['status']);
 		
 		$this->assertArrayHasKey('result', $content);
 		$this->assertArrayHasKey('called', $content['result']);
@@ -256,7 +256,7 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 		$content = json_decode($content, true);
 		$this->assertIsArray($content);
 		$this->assertArrayHasKey('status', $content);
-		$this->assertEquals(\SuccessResult::$RESULT_SUCCESS, $content['status']);
+		$this->assertEquals(\SuccessResult::RESULT_SUCCESS, $content['status']);
 		
 		$this->assertArrayHasKey('result', $content);
 		$this->assertArrayHasKey('called', $content['result']);

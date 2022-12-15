@@ -185,7 +185,7 @@ class Cron {
 	 * @return void
 	 */
 	protected function log($setting, $interval, $msg = '') {
-		$suffix = $setting ? : 'output';
+		$suffix = $setting ?: 'output';
 		
 		$fh = new \ElggFile();
 		$fh->owner_guid = elgg_get_site_entity()->guid;
@@ -205,7 +205,7 @@ class Cron {
 	 * @return string
 	 */
 	public function getLog($setting, $interval) {
-		$suffix = $setting ? : 'output';
+		$suffix = $setting ?: 'output';
 		
 		$fh = new \ElggFile();
 		$fh->owner_guid = elgg_get_site_entity()->guid;

@@ -45,6 +45,7 @@ abstract class Response implements ResponseBuilder {
 		if (isset($content) && !is_scalar($content) && !is_array($content)) {
 			throw new InvalidArgumentException(__METHOD__ . ' expects content as a scalar value or array');
 		}
+		
 		$this->content = $content;
 		return $this;
 	}
@@ -78,6 +79,7 @@ abstract class Response implements ResponseBuilder {
 		if ($status_code < 100 || $status_code > 599) {
 			throw new RangeException(__METHOD__ . ' expects a valid HTTP status code');
 		}
+		
 		$this->status_code = $status_code;
 		return $this;
 	}

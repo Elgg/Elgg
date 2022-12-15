@@ -74,5 +74,4 @@ class ElggTempFile extends ElggFile {
 	public function save(): bool {
 		throw new IOException("Temp files can't be saved to the database");
 	}
-
 }

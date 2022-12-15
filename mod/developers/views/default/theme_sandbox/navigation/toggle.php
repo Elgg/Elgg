@@ -19,7 +19,7 @@ foreach (['anchor', 'binoculars', 'building', 'birthday-cake'] as $icon) {
 	$items[] = [
 		'name' => $icon,
 		'icon' => $icon,
-		'text' => "Menu item",
+		'text' => 'Menu item',
 		'href' => '#',
 		'parent_name' => 'parent',
 	];

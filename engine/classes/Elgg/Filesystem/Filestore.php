@@ -6,6 +6,7 @@ namespace Elgg\Filesystem;
  * This class defines the interface for all elgg data repositories.
  */
 abstract class Filestore {
+	
 	/**
 	 * Attempt to open the file $file for storage or writing.
 	 *

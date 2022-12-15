@@ -12,6 +12,7 @@ interface QueryExecuting {
 
 	/**
 	 * Count rows
+	 *
 	 * @return int
 	 */
 	public function count();
@@ -51,6 +52,7 @@ interface QueryExecuting {
 
 	/**
 	 * Apply correct execution method based on calculation, count or other criteria
+	 *
 	 * @return mixed
 	 */
 	public function execute();
@@ -121,5 +123,4 @@ interface QueryExecuting {
 	 * @return static
 	 */
 	public function orderBy($expression, $direction);
-
 }

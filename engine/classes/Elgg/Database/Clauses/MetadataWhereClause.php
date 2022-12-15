@@ -73,5 +73,4 @@ class MetadataWhereClause extends WhereClause {
 
 		return $qb->merge($wheres);
 	}
-
 }

@@ -73,6 +73,7 @@ class NotificationsService {
 		if (!isset($this->events[$type])) {
 			$this->events[$type] = [];
 		}
+		
 		if (!isset($this->events[$type][$subtype])) {
 			$this->events[$type][$subtype] = [];
 		}

@@ -2,10 +2,11 @@
 /**
  * Default entity delete action
  */
-$guid = (int) get_input('guid');
-$entity = get_entity($guid);
 
-if (!$entity instanceof ElggEntity) {
+$guid = (int) get_input('guid');
+
+$entity = get_entity($guid);
+if (!$entity instanceof \ElggEntity) {
 	return elgg_error_response(elgg_echo('entity:delete:item_not_found'));
 }
 
@@ -33,14 +34,14 @@ if (!$forward_url) {
 	$referrer_url = elgg_extract('HTTP_REFERER', $_SERVER, '');
 	$site_url = elgg_get_site_url();
 	
-	$find_forward_url = function (ElggEntity $container = null) use ($type, $subtype) {
+	$find_forward_url = function (\ElggEntity $container = null) use ($type, $subtype) {
 		$routes = _elgg_services()->routes;
 		
 		// check if there is a collection route (eg. blog/owner/username)
 		$route_name = false;
-		if ($container instanceof ElggUser) {
+		if ($container instanceof \ElggUser) {
 			$route_name = "collection:{$type}:{$subtype}:owner";
-		} elseif ($container instanceof ElggGroup) {
+		} elseif ($container instanceof \ElggGroup) {
 			$route_name = "collection:{$type}:{$subtype}:group";
 		}
 		
@@ -51,7 +52,7 @@ if (!$forward_url) {
 		}
 		
 		// no route found, fallback to container url
-		if ($container instanceof ElggEntity) {
+		if ($container instanceof \ElggEntity) {
 			return $container->getURL();
 		}
 		
@@ -59,7 +60,7 @@ if (!$forward_url) {
 		return '';
 	};
 	
-	if ($referrer_url && 0 == elgg_strpos($referrer_url, $site_url)) {
+	if (!empty($referrer_url) && elgg_strpos($referrer_url, $site_url) === 0) {
 		// referer is on current site
 		$referrer_path = elgg_substr($referrer_url, elgg_strlen($site_url));
 		$segments = explode('/', $referrer_path);
@@ -68,15 +69,15 @@ if (!$forward_url) {
 			// referrer URL contains a reference to the entity that will be deleted
 			$forward_url = $find_forward_url($container);
 		}
-	} elseif ($container) {
+	} elseif ($container instanceof \ElggEntity) {
 		$forward_url = $find_forward_url($container);
 	}
 }
 
 $success_keys = [
-	"entity:delete:$type:$subtype:success",
-	"entity:delete:$type:success",
-	"entity:delete:success",
+	"entity:delete:{$type}:{$subtype}:success",
+	"entity:delete:{$type}:success",
+	'entity:delete:success',
 ];
 
 $message = '';

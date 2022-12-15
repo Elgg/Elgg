@@ -4,15 +4,15 @@
  * The error result class.
  */
 class ErrorResult extends GenericResult {
-	// Fail with no specific code
-	public static $RESULT_FAIL = -1 ;
 
-	public static $RESULT_FAIL_APIKEY_DISABLED = -30;
-	public static $RESULT_FAIL_APIKEY_INACTIVE = -31;
-	public static $RESULT_FAIL_APIKEY_INVALID = -32;
+	public const RESULT_FAIL = -1;
+
+	public const RESULT_FAIL_APIKEY_DISABLED = -30;
+	public const RESULT_FAIL_APIKEY_INACTIVE = -31;
+	public const RESULT_FAIL_APIKEY_INVALID = -32;
 
 	// Invalid, expired or missing auth token
-	public static $RESULT_FAIL_AUTHTOKEN = -20;
+	public const RESULT_FAIL_AUTHTOKEN = -20;
 
 	/**
 	 * A new error result
@@ -25,7 +25,7 @@ class ErrorResult extends GenericResult {
 	 */
 	public function __construct($message, $code = null, Throwable $exception = null) {
 		if (!isset($code)) {
-			$code = ErrorResult::$RESULT_FAIL;
+			$code = self::RESULT_FAIL;
 		}
 
 		if ($exception instanceof Throwable) {

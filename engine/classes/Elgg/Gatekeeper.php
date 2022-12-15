@@ -314,5 +314,4 @@ class Gatekeeper {
 
 		throw new AjaxGatekeeperException();
 	}
-
 }

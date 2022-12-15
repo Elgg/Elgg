@@ -21,8 +21,8 @@ elgg_register_menu_item('title', [
 	'link_class' => 'elgg-button elgg-button-action',
 ]);
 
-echo elgg_view_module('info', "One Column", elgg_view('theme_sandbox/layouts/one_column'));
+echo elgg_view_module('info', 'One Column', elgg_view('theme_sandbox/layouts/one_column'));
 
-echo elgg_view_module('info', "One Sidebar", elgg_view('theme_sandbox/layouts/one_sidebar'));
+echo elgg_view_module('info', 'One Sidebar', elgg_view('theme_sandbox/layouts/one_sidebar'));
 
-echo elgg_view_module('info', "Two Sidebar", elgg_view('theme_sandbox/layouts/two_sidebar'));
+echo elgg_view_module('info', 'Two Sidebar', elgg_view('theme_sandbox/layouts/two_sidebar'));

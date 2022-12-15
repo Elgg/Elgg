@@ -29,7 +29,7 @@ class ElggWidget extends \ElggObject {
 			return $result;
 		}
 		
-		$container = $this->getContainerEntity() ? : null;
+		$container = $this->getContainerEntity() ?: null;
 		return _elgg_services()->widgets->getNameById($this->handler, (string) $this->context, $container) ?: (string) $this->handler;
 	}
 
@@ -125,6 +125,7 @@ class ElggWidget extends \ElggObject {
 					$bottom = $widget->order;
 				}
 			}
+			
 			$bottom += 10;
 			foreach ($inactive_widgets as $widget) {
 				$widget->order = $bottom;

@@ -13,17 +13,22 @@ if (empty($acls)) {
 	$result = '<table class="elgg-table">';
 	$result .= '<thead><tr>';
 	foreach ($acl_columns as $col_name) {
-		$result .= '<th>' . $col_name . '</th>';
+		$result .= elgg_format_element('th', [], $col_name);
 	}
+	
 	$result .= '</tr></thead>';
+	$result .= '<tbody>';
 	
 	foreach ($acls as $acl) {
 		$result .= '<tr>';
 		foreach ($acl_columns as $col_name) {
-			$result .= '<td>' . $acl->$col_name . '</td>';
+			$result .= elgg_format_element('td', [], $acl->$col_name);
 		}
+		
 		$result .= '</tr>';
 	}
+	
+	$result .= '</tbody>';
 	$result .= '</table>';
 }
 

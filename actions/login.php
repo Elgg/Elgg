@@ -8,7 +8,7 @@ use Elgg\Exceptions\LoginException;
 
 $username = get_input('username');
 $password = get_input('password', null, false);
-$persistent = (bool) get_input("persistent");
+$persistent = (bool) get_input('persistent');
 $result = false;
 
 if (empty($username) || empty($password)) {

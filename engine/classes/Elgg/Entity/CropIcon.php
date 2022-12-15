@@ -121,9 +121,9 @@ class CropIcon {
 		$file = [
 			'name' => basename($master->getFilenameOnFilestore()),
 			'type' => $master->getMimeType(),
-			'size'=> $master->getSize(),
-			'tmp_name'=> $tmp_file->getFilenameOnFilestore(),
-			'error'=> UPLOAD_ERR_OK,
+			'size' => $master->getSize(),
+			'tmp_name' => $tmp_file->getFilenameOnFilestore(),
+			'error' => UPLOAD_ERR_OK,
 		];
 		
 		// store the 'new' file in PHP global

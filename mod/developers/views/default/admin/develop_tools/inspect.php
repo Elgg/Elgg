@@ -1,9 +1,9 @@
 <?php
 /**
-* Inspect View
-*
-* Inspect global variables of Elgg
-*/
+ * Inspect View
+ *
+ * Inspect global variables of Elgg
+ */
 
 use Elgg\Exceptions\Http\EntityNotFoundException;
 

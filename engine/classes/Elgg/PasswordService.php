@@ -19,7 +19,7 @@ final class PasswordService {
 	 */
 	public function __construct() {
 		if (!function_exists('password_hash')) {
-			throw new RuntimeException("password_hash and associated functions are required.");
+			throw new RuntimeException('password_hash and associated functions are required.');
 		}
 	}
 

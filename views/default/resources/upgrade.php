@@ -20,7 +20,7 @@ $refresh_url = elgg_generate_url('upgrade:run', [
 $refresh_url = elgg_http_get_signed_url($refresh_url);
 
 // render content before head so that JavaScript and CSS can be loaded. See #4032
-$body = "<div style='margin-top:200px'>" . elgg_view('graphics/ajax_loader', ['hidden' => false]) . "</div>";
+$body = elgg_format_element('div', ['style' => 'margin-top: 200px;'], elgg_view('graphics/ajax_loader', ['hidden' => false]));
 
 $head = elgg_view('page/elements/head', ['title' => elgg_echo('upgrading')]);
 
@@ -29,4 +29,7 @@ $head .= elgg_format_element('meta', [
 	'content' => '1;url=' . $refresh_url,
 ], '', ['is_xml' => true]);
 
-echo elgg_view('page/elements/html', ['head' => $head, 'body' => $body]);
+echo elgg_view('page/elements/html', [
+	'head' => $head,
+	'body' => $body,
+]);

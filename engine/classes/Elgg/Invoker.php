@@ -96,6 +96,7 @@ class Invoker {
 			$restore();
 			throw $e;
 		}
+		
 		$restore();
 
 		return $result;

@@ -39,6 +39,7 @@ foreach (array_keys($combine_languages) as $language) {
 	if (!isset($all_translations[$language])) {
 		continue;
 	}
+	
 	$translations = array_merge($all_translations[$language], $translations);
 }
 

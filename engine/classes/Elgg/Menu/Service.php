@@ -161,6 +161,7 @@ class Service {
 			if (empty($child_menu_vars['display'])) {
 				$child_menu_vars['display'] = 'toggle';
 			}
+			
 			$menu_item->setChildMenuOptions($child_menu_vars);
 			
 			foreach ($menu_item->getChildren() as $child_menu_item) {
@@ -305,6 +306,7 @@ class Service {
 				if ($section === 'default') {
 					$item->setSection($name);
 				}
+				
 				$item->setData('menu_name', $name);
 
 				$all_items->add($item);

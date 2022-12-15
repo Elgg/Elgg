@@ -63,11 +63,11 @@ class JoinClause extends Clause {
 		}
 
 		switch (strtolower($this->join_type ?? '')) {
-			case 'left' :
+			case 'left':
 				$qb->leftJoin($table_alias, $this->joined_table, $joined_alias, $condition);
 				break;
 
-			case 'right' :
+			case 'right':
 				$qb->rightJoin($table_alias, $this->joined_table, $joined_alias, $condition);
 				break;
 

@@ -14,12 +14,13 @@ $no = elgg_echo('option:no');
 
 $msgs = [];
 $msgs[] = elgg_view_title(elgg_echo('developers:request_stats'));
-$msgs[] = elgg_echo('developers:elapsed_time') . ": " . sprintf('%1.3f', $elapsed);
+$msgs[] = elgg_echo('developers:elapsed_time') . ': ' . sprintf('%1.3f', $elapsed);
 $msgs[] = elgg_echo('developers:log_queries', [$query_count]);
 if ($boot_cache_rebuilt) {
 	$msgs[] = '(' . elgg_echo('developers:boot_cache_rebuilt') . ')';
 }
-$msgs[] = elgg_echo('developers:label:system_cache') . ": " . ($system_cache ? $yes : $no);
+
+$msgs[] = elgg_echo('developers:label:system_cache') . ': ' . ($system_cache ? $yes : $no);
 
 $log = '';
 
@@ -31,7 +32,7 @@ if (is_file($log_file)) {
 ?>
 <div class="developers-log">
 	<pre>
-		<?= implode("\r\n", $msgs) ?>
+		<?= implode(PHP_EOL, $msgs) ?>
 	</pre>
 	<br />
 	<?= nl2br($log) ?>

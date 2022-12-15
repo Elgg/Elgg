@@ -390,5 +390,4 @@ class UserCapabilities {
 
 		return $this->events->triggerResults('permissions_check:download', 'file', $params, $default);
 	}
-
 }

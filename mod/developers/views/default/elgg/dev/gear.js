@@ -44,7 +44,7 @@ define(['jquery', 'elgg', 'elgg/spinner', 'text!elgg/dev/gear.html', 'elgg/light
 		if ($(this).is('.elgg-menu-parent')) {
 			return false;
 		}
+		
 		spinner.start();
 	});
 });
-

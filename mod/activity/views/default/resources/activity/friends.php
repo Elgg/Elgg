@@ -27,7 +27,7 @@ $content = elgg_view('river/listing/friends', [
 
 // draw page
 echo elgg_view_page(elgg_echo('river:friends'), [
-	'content' =>  $content,
+	'content' => $content,
 	'sidebar' => elgg_view('river/sidebar'),
 	'filter_value' => $page_owner->guid === elgg_get_logged_in_user_guid() ? 'friends' : 'none',
 	'class' => 'elgg-river-layout',

@@ -16,13 +16,8 @@ use Elgg\Values;
  * Database abstraction query builder
  */
 abstract class QueryBuilder extends DbalQueryBuilder {
-
-	const TABLE_ENTITIES = 'entities';
-	const TABLE_METADATA = 'metadata';
-	const TABLE_ANNOTATIONS = 'annotations';
-	const TABLE_RELATIONSHIPS = 'entity_relationships';
-
-	static $calculations = [
+	
+	const CALCULATIONS = [
 		'avg',
 		'count',
 		'greatest',
@@ -31,6 +26,10 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 		'min',
 		'sum',
 	];
+	const TABLE_ANNOTATIONS = 'annotations';
+	const TABLE_ENTITIES = 'entities';
+	const TABLE_METADATA = 'metadata';
+	const TABLE_RELATIONSHIPS = 'entity_relationships';
 
 	/**
 	 * @var array
@@ -79,6 +78,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 		if (!isset($alias)) {
 			$alias = $this->getTableAlias();
 		}
+		
 		$expr = $clause->prepare($this, $alias);
 		if ($clause instanceof WhereClause && ($expr instanceof CompositeExpression || is_string($expr))) {
 			$this->andWhere($expr);
@@ -305,6 +305,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 			if (empty($e)) {
 				return false;
 			}
+			
 			if (!$e instanceof CompositeExpression && !is_string($e)) {
 				return false;
 			}
@@ -363,6 +364,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 		if ($lower) {
 			$wheres[] = $this->compare($x, '>=', $lower, $type);
 		}
+		
 		if ($upper) {
 			$wheres[] = $this->compare($x, '<=', $upper, $type);
 		}
@@ -551,11 +553,12 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 		$condition = function (QueryBuilder $qb, $joined_alias) use ($from_column, $name, $inverse) {
 			$parts = [];
 			if ($inverse) {
-				$parts[] = $qb->compare("$joined_alias.guid_one", '=', $from_column);
+				$parts[] = $qb->compare("{$joined_alias}.guid_one", '=', $from_column);
 			} else {
-				$parts[] = $qb->compare("$joined_alias.guid_two", '=', $from_column);
+				$parts[] = $qb->compare("{$joined_alias}.guid_two", '=', $from_column);
 			}
-			$parts[] = $qb->compare("$joined_alias.relationship", '=', $name, ELGG_VALUE_STRING);
+			
+			$parts[] = $qb->compare("{$joined_alias}.relationship", '=', $name, ELGG_VALUE_STRING);
 			return $qb->merge($parts);
 		};
 

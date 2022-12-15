@@ -216,13 +216,13 @@ class Request extends SymfonyRequest {
 	public function getCurrentURL() {
 		$url = parse_url(elgg_get_site_url());
 
-		$page = $url['scheme'] . "://" . $url['host'];
+		$page = $url['scheme'] . '://' . $url['host'];
 
 		if (isset($url['port']) && $url['port']) {
-			$page .= ":" . $url['port'];
+			$page .= ':' . $url['port'];
 		}
 
-		$page = trim($page, "/");
+		$page = trim($page, '/');
 
 		$page .= $this->getRequestUri();
 
@@ -241,7 +241,8 @@ class Request extends SymfonyRequest {
 		if (!$raw) {
 			$path = htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
 		}
-		if (!$path) {
+		
+		if (empty($path)) {
 			return [];
 		}
 
@@ -285,7 +286,7 @@ class Request extends SymfonyRequest {
 	 * @return string
 	 */
 	public function getElggPath() {
-		if (php_sapi_name() === 'cli-server') {
+		if (PHP_SAPI === 'cli-server') {
 			$path = $this->getRequestUri();
 		} else {
 			$path = $this->getPathInfo();
@@ -331,7 +332,7 @@ class Request extends SymfonyRequest {
 		$base_url = $this->getBaseUrl();
 
 		// baseURL may end with the PHP script
-		if ('.php' === substr($base_url, -4)) {
+		if (substr($base_url, -4) === '.php') {
 			$base_url = dirname($base_url);
 		}
 
@@ -373,7 +374,7 @@ class Request extends SymfonyRequest {
 	 * @return bool
 	 */
 	public function isCliServer() {
-		return php_sapi_name() === 'cli-server';
+		return PHP_SAPI === 'cli-server';
 	}
 
 	/**
@@ -390,7 +391,10 @@ class Request extends SymfonyRequest {
 		}
 
 		// http://php.net/manual/en/features.commandline.webserver.php
-		$extensions = ".3gp, .apk, .avi, .bmp, .css, .csv, .doc, .docx, .flac, .gif, .gz, .gzip, .htm, .html, .ics, .jpe, .jpeg, .jpg, .js, .kml, .kmz, .m4a, .mov, .mp3, .mp4, .mpeg, .mpg, .odp, .ods, .odt, .oga, .ogg, .ogv, .pdf, .pdf, .png, .pps, .pptx, .qt, .svg, .swf, .tar, .text, .tif, .txt, .wav, .webm, .wmv, .xls, .xlsx, .xml, .xsl, .xsd, and .zip";
+		$extensions = '.3gp, .apk, .avi, .bmp, .css, .csv, .doc, .docx, .flac, .gif, .gz, .gzip, .htm, .html, .ics,';
+		$extensions .= ' .jpe, .jpeg, .jpg, .js, .kml, .kmz, .m4a, .mov, .mp3, .mp4, .mpeg, .mpg, .odp, .ods, .odt,';
+		$extensions .= ' .oga, .ogg, .ogv, .pdf, .pdf, .png, .pps, .pptx, .qt, .svg, .swf, .tar, .text, .tif, .txt,';
+		$extensions .= ' .wav, .webm, .wmv, .xls, .xlsx, .xml, .xsl, .xsd, and .zip';
 
 		// The CLI server routes ALL requests here (even existing files), so we have to check for these.
 		$ext = pathinfo($file, PATHINFO_EXTENSION);

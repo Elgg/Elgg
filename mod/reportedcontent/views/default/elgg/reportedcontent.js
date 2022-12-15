@@ -22,8 +22,8 @@ define(['jquery', 'elgg/Ajax', 'elgg/lightbox'], function ($, Ajax, lightbox) {
 	
 	$('.elgg-menu-item-report-this a, .elgg-menu-item-reportuser a').each(function () {
 		if (!/address=/.test(this.href)) {
-			this.href += '?address=' + encodeURIComponent(location.href) +
-						'&title=' + encodeURIComponent(document.title);
+			this.href += '?address=' + encodeURIComponent(location.href);
+			this.href += '&title=' + encodeURIComponent(document.title);
 		}
 	});
 

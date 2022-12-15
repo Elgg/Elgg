@@ -30,7 +30,6 @@ class CronCommand extends Command {
 	 * {@inheritdoc}
 	 */
 	protected function command() {
-
 		$intervals = null;
 		$interval = $this->option('interval');
 		if ($interval) {
@@ -53,6 +52,6 @@ class CronCommand extends Command {
 			}
 		}
 
-		return 0;
+		return self::SUCCESS;
 	}
 }

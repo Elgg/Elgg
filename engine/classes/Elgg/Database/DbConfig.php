@@ -15,15 +15,46 @@ class DbConfig {
 	const READ = 'read';
 	const WRITE = 'write';
 	const READ_WRITE = 'readwrite';
-
-	protected $db;
-	protected $dbprefix;
-	protected $dbhost;
-	protected $dbport;
-	protected $dbuser;
-	protected $dbpass;
-	protected $dbname;
-	protected $dbencoding;
+	
+	/**
+	 * @var array|null Multiple database configuration
+	 */
+	protected ?array $db;
+	
+	/**
+	 * @var string|null Database table prefix
+	 */
+	protected ?string $dbprefix;
+	
+	/**
+	 * @var string|null Database host
+	 */
+	protected ?string $dbhost;
+	
+	/**
+	 * @var int|null Database port
+	 */
+	protected ?int $dbport;
+	
+	/**
+	 * @var string|null Database username
+	 */
+	protected ?string $dbuser;
+	
+	/**
+	 * @var string|null Database password
+	 */
+	protected ?string $dbpass;
+	
+	/**
+	 * @var string|null Database name
+	 */
+	protected ?string $dbname;
+	
+	/**
+	 * @var string|null Database encoding
+	 */
+	protected ?string $dbencoding;
 
 	/**
 	 * Constructor
@@ -40,7 +71,7 @@ class DbConfig {
 	 */
 	public function __construct(\stdClass $config) {
 		foreach (array_keys(get_class_vars(__CLASS__)) as $prop) {
-			$this->{$prop} = isset($config->{$prop}) ? $config->{$prop} : null;
+			$this->{$prop} = $config->{$prop} ?? null;
 		}
 	}
 
@@ -56,6 +87,7 @@ class DbConfig {
 		foreach (array_keys(get_class_vars(__CLASS__)) as $prop) {
 			$obj->{$prop} = $config->{$prop};
 		}
+		
 		return new self($obj);
 	}
 

@@ -118,5 +118,6 @@ function elgg_get_widget_types(string|array $context = ''): array {
 			'container' => null,
 		];
 	}
+	
 	return _elgg_services()->widgets->getTypes($params);
 }

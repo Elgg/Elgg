@@ -24,6 +24,7 @@ class Cron {
 		if ($period !== $event->getType()) {
 			return;
 		}
+		
 		$offset = self::getSecondsInPeriod($period);
 	
 		if (!self::archiveLog($offset)) {

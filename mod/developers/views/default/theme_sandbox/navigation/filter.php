@@ -6,7 +6,7 @@ foreach (['heart-regular', 'star-regular', 'bell-regular'] as $icon) {
 	$items[] = [
 		'name' => $icon,
 		'icon' => $icon,
-		'text' => "Menu item",
+		'text' => 'Menu item',
 		'href' => '#',
 		'child_menu' => [
 			'display' => 'dropdown',
@@ -22,9 +22,9 @@ foreach (['heart-regular', 'star-regular', 'bell-regular'] as $icon) {
 
 foreach (['A', 'B', 'C'] as $letter) {
 	$items[] = [
-		'name' => "bell-o:$letter",
+		'name' => "bell-o:{$letter}",
 		'href' => '#',
-		'text' => "Child $letter",
+		'text' => "Child {$letter}",
 		'parent_name' => $icon,
 		'child_menu' => [
 			'display' => 'toggle',
@@ -33,10 +33,10 @@ foreach (['A', 'B', 'C'] as $letter) {
 
 	foreach (['AA', 'BB', 'CC'] as $subletter) {
 		$items[] = [
-			'name' => "bell-o:$letter:$subletter",
+			'name' => "bell-o:{$letter}:{$subletter}",
 			'href' => '#',
-			'text' => "Child $subletter",
-			'parent_name' => "$icon:$letter",
+			'text' => "Child {$subletter}",
+			'parent_name' => "{$icon}:{$letter}",
 		];
 	}
 }

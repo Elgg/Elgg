@@ -20,6 +20,7 @@ $briefdescription = elgg_extract('briefdescription', $vars);
 if (!isset($briefdescription)) {
 	$briefdescription = $entity->getProfileData('briefdescription');
 }
+
 if (elgg_is_empty($briefdescription) || !is_string($briefdescription)) {
 	return;
 }

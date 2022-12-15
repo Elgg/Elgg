@@ -15,6 +15,7 @@ $items = elgg_extract('items', $vars, []);
 if (empty($items) || !is_array($items)) {
 	return;
 }
+
 unset($vars['items']);
 
 $headers = elgg_extract('show_section_headers', $vars, false);

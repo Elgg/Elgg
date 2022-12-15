@@ -25,6 +25,7 @@ foreach ($categories as $key => $category) {
 	if ($key === $input_filter) {
 		$options['class'] = 'elgg-state-selected';
 	}
+	
 	$list_items .= elgg_format_element('li', $options, elgg_view_url('#', $category, ['rel' => $key]));
 }
 

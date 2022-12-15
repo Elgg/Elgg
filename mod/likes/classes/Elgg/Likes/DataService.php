@@ -54,6 +54,7 @@ class DataService {
 		if (!isset($this->current_user_likes[$entity_guid])) {
 			$this->current_user_likes[$entity_guid] = elgg_annotation_exists($entity_guid, 'likes');
 		}
+		
 		return $this->current_user_likes[$entity_guid];
 	}
 
@@ -69,6 +70,7 @@ class DataService {
 		if (!isset($this->num_likes[$guid])) {
 			$this->num_likes[$guid] = likes_count($entity);
 		}
+		
 		return $this->num_likes[$guid];
 	}
 
@@ -82,6 +84,7 @@ class DataService {
 		if ($inst === null) {
 			$inst = new self();
 		}
+		
 		return $inst;
 	}
 }

@@ -13,17 +13,20 @@ if (empty($acls)) {
 	$result = '<table class="elgg-table">';
 	$result .= '<thead><tr>';
 	foreach ($acl_columns as $col_name) {
-		$result .= '<th>' . $col_name . '</th>';
+		$result .= elgg_format_element('th', [], $col_name);
 	}
+	
 	$result .= '<th>&nbsp;</th>';
 	$result .= '</tr></thead>';
+	$result .= '<tbody>';
 	
 	foreach ($acls as $acl) {
 		$result .= '<tr>';
 		foreach ($acl_columns as $col_name) {
-			$result .= '<td>' . $acl->$col_name . '</td>';
+			$result .= elgg_format_element('td', [], $acl->$col_name);
 		}
-		$result .= '<td>' . elgg_view('output/url', [
+		
+		$result .= elgg_format_element('td', [], elgg_view('output/url', [
 			'text' => elgg_view_icon('remove'),
 			'href' => elgg_http_add_url_query_elements('action/developers/entity_explorer_delete', [
 				'guid' => $entity->guid,
@@ -31,9 +34,11 @@ if (empty($acls)) {
 				'key' => $acl->id,
 			]),
 			'confirm' => true,
-		]) . '</td>';
+		]));
 		$result .= '</tr>';
 	}
+	
+	$result .= '</tbody>';
 	$result .= '</table>';
 }
 

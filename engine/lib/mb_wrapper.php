@@ -37,6 +37,7 @@ function elgg_stristr() {
 	if (is_callable('mb_stristr')) {
 		return call_user_func_array('mb_stristr', $args);
 	}
+	
 	return call_user_func_array('stristr', $args);
 }
 
@@ -54,6 +55,7 @@ function elgg_strlen() {
 	if (is_callable('mb_strlen')) {
 		return call_user_func_array('mb_strlen', $args);
 	}
+	
 	return call_user_func_array('strlen', $args);
 }
 
@@ -71,6 +73,7 @@ function elgg_strpos() {
 	if (is_callable('mb_strpos')) {
 		return call_user_func_array('mb_strpos', $args);
 	}
+	
 	return call_user_func_array('strpos', $args);
 }
 
@@ -88,6 +91,7 @@ function elgg_strrchr() {
 	if (is_callable('mb_strrchr')) {
 		return call_user_func_array('mb_strrchr', $args);
 	}
+	
 	return call_user_func_array('strrchr', $args);
 }
 
@@ -105,6 +109,7 @@ function elgg_strripos() {
 	if (is_callable('mb_strripos')) {
 		return call_user_func_array('mb_strripos', $args);
 	}
+	
 	return call_user_func_array('strripos', $args);
 }
 
@@ -122,6 +127,7 @@ function elgg_strrpos() {
 	if (is_callable('mb_strrpos')) {
 		return call_user_func_array('mb_strrpos', $args);
 	}
+	
 	return call_user_func_array('strrpos', $args);
 }
 
@@ -139,6 +145,7 @@ function elgg_strstr() {
 	if (is_callable('mb_strstr')) {
 		return call_user_func_array('mb_strstr', $args);
 	}
+	
 	return call_user_func_array('strstr', $args);
 }
 
@@ -156,6 +163,7 @@ function elgg_strtolower() {
 	if (is_callable('mb_strtolower')) {
 		return call_user_func_array('mb_strtolower', $args);
 	}
+	
 	return call_user_func_array('strtolower', $args);
 }
 
@@ -173,6 +181,7 @@ function elgg_strtoupper() {
 	if (is_callable('mb_strtoupper')) {
 		return call_user_func_array('mb_strtoupper', $args);
 	}
+	
 	return call_user_func_array('strtoupper', $args);
 }
 
@@ -187,6 +196,7 @@ function elgg_ucwords($str) {
 	if (is_callable('mb_convert_case')) {
 		return mb_convert_case($str, MB_CASE_TITLE, 'UTF-8');
 	}
+	
 	return ucwords($str);
 }
 
@@ -204,6 +214,7 @@ function elgg_substr_count() {
 	if (is_callable('mb_substr_count')) {
 		return call_user_func_array('mb_substr_count', $args);
 	}
+	
 	return call_user_func_array('substr_count', $args);
 }
 
@@ -221,5 +232,6 @@ function elgg_substr() {
 	if (is_callable('mb_substr')) {
 		return call_user_func_array('mb_substr', $args);
 	}
+	
 	return call_user_func_array('substr', $args);
 }

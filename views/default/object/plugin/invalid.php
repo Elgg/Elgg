@@ -11,7 +11,7 @@
 $plugin = elgg_extract('entity', $vars);
 
 $error = elgg_echo('admin:plugins:warning:invalid', [elgg_extract('error', $vars)]);
-$error .= ' ' . elgg_echo('admin:plugins:label:location') . ": " . htmlspecialchars($plugin->getPath());
+$error .= ' ' . elgg_echo('admin:plugins:label:location') . ': ' . htmlspecialchars($plugin->getPath());
 
 $body = elgg_view_message('error', $error, ['title' => false, 'class' => 'elgg-subtext']);
 $body .= elgg_view_message('notice', elgg_echo('admin:plugins:warning:invalid:check_docs'), ['title' => false, 'class' => 'elgg-subtext']);

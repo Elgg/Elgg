@@ -1,5 +1,4 @@
 define(['jquery', 'elgg/spinner', 'elgg/Ajax', 'elgg/system_messages', 'elgg/security', 'elgg/i18n', 'jquery-ui/widgets/sortable'], function($, spinner, Ajax, system_messages, security, i18n) {
-
 	function freezePlugins() {
 		$('#elgg-plugin-list-cover').css('display', 'block');
 	};
@@ -9,13 +8,13 @@ define(['jquery', 'elgg/spinner', 'elgg/Ajax', 'elgg/system_messages', 'elgg/sec
 
 	function initPluginReordering() {
 		$('#elgg-plugin-list > .elgg-list-container > ul').sortable({
-			items:                'li:has(> .elgg-state-draggable)',
-			handle:               '.elgg-body',
+			items: 'li:has(> .elgg-state-draggable)',
+			handle: '.elgg-body',
 			forcePlaceholderSize: true,
-			placeholder:          'elgg-plugin-placeholder',
-			opacity:              0.8,
-			revert:               500,
-			stop:                 movePlugin
+			placeholder: 'elgg-plugin-placeholder',
+			opacity: 0.8,
+			revert: 500,
+			stop: movePlugin
 		});
 	};
 

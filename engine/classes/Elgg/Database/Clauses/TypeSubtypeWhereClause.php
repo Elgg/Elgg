@@ -57,5 +57,4 @@ class TypeSubtypeWhereClause extends WhereClause {
 
 		return $qb->merge($wheres);
 	}
-
 }

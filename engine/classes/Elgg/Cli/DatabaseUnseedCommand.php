@@ -33,7 +33,7 @@ class DatabaseUnseedCommand extends Command {
 
 		if (!class_exists('\Faker\Generator')) {
 			elgg_log(elgg_echo('cli:database:seed:log:error:faker'), 'ERROR');
-			return 1;
+			return self::FAILURE;
 		}
 
 		set_time_limit(0);
@@ -48,9 +48,9 @@ class DatabaseUnseedCommand extends Command {
 			_elgg_services()->seeder->unseed($options);
 		} catch (\Exception $e) {
 			elgg_log($e->getMessage(), 'ERROR');
-			return $e->getCode() ? : 3;
+			return $e->getCode() ?: 3;
 		}
 
-		return 0;
+		return self::SUCCESS;
 	}
 }

@@ -23,7 +23,7 @@ if (!elgg_view_exists("plugins/{$plugin_id}/settings")) {
 }
 
 // build page elements
-$title = elgg_echo("admin:plugin_settings") . ': ' . $plugin->getDisplayName();
+$title = elgg_echo('admin:plugin_settings') . ': ' . $plugin->getDisplayName();
 
 $content = elgg_view('admin/plugin_settings', [
 	'entity' => $plugin,

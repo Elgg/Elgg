@@ -438,7 +438,6 @@ class Accounts {
 
 		$user->authentication_failures = $fails;
 		$user->{"authentication_failure_{$fails}"} = time();
-		
 	}
 	
 	/**

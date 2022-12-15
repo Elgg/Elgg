@@ -106,6 +106,7 @@ class EntitySortByClause extends OrderByClause {
 				} else {
 					$er_alias = $table_alias;
 				}
+				
 				$column = "{$er_alias}.time_created";
 				
 				break;

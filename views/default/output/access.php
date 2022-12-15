@@ -1,17 +1,16 @@
 <?php
-
 /**
  * Displays HTML with human readable representation of an access level
  *
  * @uses ElggEntity $vars['entity'] Optional. The entity whose access ID to display. If provided, additional logic is used to determine CSS classes
  * @uses int        $vars['value']  Optional. Access ID to display.
  */
-$class = elgg_extract_class($vars, 'elgg-access');
 
+$class = elgg_extract_class($vars, 'elgg-access');
 $access_id = elgg_extract('value', $vars);
 
 $entity = elgg_extract('entity', $vars);
-if ($entity instanceof ElggEntity) {
+if ($entity instanceof \ElggEntity) {
 	$access_id = $entity->access_id;
 }
 
@@ -21,15 +20,15 @@ if (!isset($access_id)) {
 
 $access_id = (int) $access_id;
 switch ($access_id) {
-	case ACCESS_PUBLIC :
+	case ACCESS_PUBLIC:
 		$class[] = 'elgg-access-public';
 		break;
 
-	case ACCESS_LOGGED_IN :
+	case ACCESS_LOGGED_IN:
 		$class[] = 'elgg-access-loggedin';
 		break;
 
-	case ACCESS_PRIVATE :
+	case ACCESS_PRIVATE:
 		$class[] = 'elgg-access-private';
 		break;
 	
@@ -39,6 +38,7 @@ switch ($access_id) {
 		if ($collection) {
 			$owner = $collection->getOwnerEntity();
 		}
+		
 		if ($owner instanceof ElggGroup) {
 			$class[] = 'elgg-access-group';
 			$membership = $owner->membership;

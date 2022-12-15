@@ -63,7 +63,7 @@ function elgg_create_river_item(array $options = []): ?\ElggRiverItem {
  *   type_subtype_pairs   => ARR     Array of type => subtype pairs where subtype
  *                                   can be an array of subtype strings
  *
- *   @note If using types and subtypes in a query, they are joined with an AND.
+ *   NOTE: If using types and subtypes in a query, they are joined with an AND.
  *
  *   Additionally accepts all "relationship_*" options supported by {@link elgg_get_entities()}
  *   relationship         => STR     Relationship identifier

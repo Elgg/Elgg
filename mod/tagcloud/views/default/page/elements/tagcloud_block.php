@@ -27,15 +27,16 @@ $title = elgg_echo('tagcloud');
 if (is_array($options['subtype']) && count($options['subtype']) > 1) {
 	// we cannot provide links to tagged objects with multiple types
 	$tag_data = elgg_get_tags($options);
-	$cloud = elgg_view("output/tagcloud", [
+	$cloud = elgg_view('output/tagcloud', [
 		'value' => $tag_data,
 		'type' => $type,
 	]);
 } else {
 	$cloud = elgg_view_tagcloud($options);
 }
-if (!$cloud) {
-	return true;
+
+if (empty($cloud)) {
+	return;
 }
 
 // add a link to all site tags

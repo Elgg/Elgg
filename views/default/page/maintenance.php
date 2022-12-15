@@ -9,21 +9,14 @@
 
 // render content before head so that JavaScript and CSS can be loaded. See #4032
 $messages = elgg_view('page/elements/messages', ['object' => elgg_extract('sysmessages', $vars)]);
-$content = elgg_extract('body', $vars);
+$content = (string) elgg_extract('body', $vars);
 
 elgg_unregister_external_file('css', 'elgg');
 elgg_load_external_file('css', 'maintenance');
 
-$body = <<<__BODY
-<div class="elgg-page elgg-page-maintenance" id="elgg-maintenance-page-wrapper">
-	<div class="elgg-page-messages">
-		$messages
-	</div>
-	<div class="elgg-body-maintenance">
-		$content
-	</div>
-</div>
-__BODY;
+$body = elgg_format_element('div', ['class' => 'elgg-page-messages'], $messages);
+$body .= elgg_format_element('div', ['class' => 'elgg-body-maintenance'], $content);
+$body = elgg_format_element('div', ['class' => ['elgg-page', 'elgg-page-maintenance'], 'id' => 'elgg-maintenance-page-wrapper'], $body);
 
 $head = elgg_view('page/elements/head', elgg_extract('head', $vars, []));
 

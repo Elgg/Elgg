@@ -20,7 +20,7 @@ foreach (['bell', 'bank', 'coffee', 'car'] as $icon) {
 	$items[] = [
 		'name' => $icon,
 		'icon' => $icon,
-		'text' => "Menu item",
+		'text' => 'Menu item',
 		'href' => '#',
 		'parent_name' => 'parent',
 		'child_menu' => [
@@ -31,9 +31,9 @@ foreach (['bell', 'bank', 'coffee', 'car'] as $icon) {
 
 	foreach (['A', 'B', 'C'] as $letter) {
 		$items[] = [
-			'name' => "$icon:$letter",
+			'name' => "{$icon}:{$letter}",
 			'href' => '#',
-			'text' => "Child $letter",
+			'text' => "Child {$letter}",
 			'parent_name' => $icon,
 			'child_menu' => [
 				'display' => 'toggle',
@@ -42,10 +42,10 @@ foreach (['bell', 'bank', 'coffee', 'car'] as $icon) {
 
 		foreach (['AA', 'BB', 'CC'] as $subletter) {
 			$items[] = [
-				'name' => "$icon:$letter:$subletter",
+				'name' => "{$icon}:{$letter}:{$subletter}",
 				'href' => '#',
-				'text' => "Child $subletter",
-				'parent_name' => "$icon:$letter",
+				'text' => "Child {$subletter}",
+				'parent_name' => "{$icon}:{$letter}",
 			];
 		}
 	}

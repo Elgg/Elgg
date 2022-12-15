@@ -56,6 +56,7 @@ class AutoloadManager {
 	 * rescan unless the cache is emptied.
 	 *
 	 * @param string $dir Directory of classes
+	 *
 	 * @return \Elgg\AutoloadManager
 	 */
 	public function addClasses($dir) {
@@ -65,6 +66,7 @@ class AutoloadManager {
 			$this->scannedDirs[] = $dir;
 			$this->altered = true;
 		}
+		
 		$this->loader->addFallback($dir);
 		return $this;
 	}
@@ -76,6 +78,7 @@ class AutoloadManager {
 	 * the autoloader is PSR-0 compatible.
 	 *
 	 * @param string $dir Directory of classes
+	 *
 	 * @return array
 	 */
 	protected function scanClassesDir($dir) {
@@ -101,6 +104,7 @@ class AutoloadManager {
 			$class = $file->getBasename('.php');
 			$map[$class] = $path;
 		}
+		
 		return $map;
 	}
 
@@ -150,6 +154,7 @@ class AutoloadManager {
 			$this->scannedDirs = $cache[self::KEY_SCANNED_DIRS];
 			return true;
 		}
+		
 		$this->altered = true;
 		return false;
 	}

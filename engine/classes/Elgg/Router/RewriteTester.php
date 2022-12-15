@@ -12,10 +12,14 @@ use Elgg\Project\Paths;
  * @internal
  */
 class RewriteTester {
-	protected $webserver;
-	protected $serverSupportsRemoteRead;
-	protected $rewriteTestPassed;
-	protected $htaccessIssue;
+	
+	protected string $webserver;
+	
+	protected bool $serverSupportsRemoteRead;
+	
+	protected bool $rewriteTestPassed;
+	
+	protected string $htaccessIssue;
 
 	/**
 	 * Set the webserver as unknown.
@@ -66,6 +70,7 @@ class RewriteTester {
 				return $server;
 			}
 		}
+		
 		return 'unknown';
 	}
 
@@ -154,7 +159,7 @@ class RewriteTester {
 	 */
 	public function createHtaccess($url) {
 		$root = Local::projectRoot();
-		$file = $root->getFile(".htaccess");
+		$file = $root->getFile('.htaccess');
 
 		if ($file->exists()) {
 			// check that this is the Elgg .htaccess
@@ -175,6 +180,7 @@ class RewriteTester {
 				$this->htaccessIssue = 'old_elgg_htaccess';
 				return false;
 			}
+			
 			return true;
 		}
 
@@ -184,7 +190,7 @@ class RewriteTester {
 		}
 
 		// create the .htaccess file
-		$result = copy(Paths::elgg() . "install/config/htaccess.dist", $file->getPath());
+		$result = copy(Paths::elgg() . 'install/config/htaccess.dist', $file->getPath());
 		if (!$result) {
 			$this->htaccessIssue = 'cannot_copy';
 			return false;
@@ -193,7 +199,8 @@ class RewriteTester {
 		// does default RewriteBase work already?
 		if (!$this->runRewriteTest($url)) {
 			//try to rewrite to guessed subdirectory
-			if ($subdir = $this->guessSubdirectory($url)) {
+			$subdir = $this->guessSubdirectory($url);
+			if (!empty($subdir)) {
 				$contents = $file->getContents();
 				$contents = preg_replace("/#RewriteBase \/(\r?\n)/", "RewriteBase $subdir\$1", $contents);
 				if ($contents) {
@@ -231,8 +238,8 @@ class RewriteTester {
 		}
 
 		if ($this->webserver == 'apache') {
-			$serverString = _elgg_services()->translator->translate('install:error:rewrite:apache');
-			$msg = "$serverString\n\n";
+			$msg = _elgg_services()->translator->translate('install:error:rewrite:apache');
+			$msg .= PHP_EOL . PHP_EOL;
 			if (!isset($this->htaccessIssue)) {
 				$msg .= _elgg_services()->translator->translate('install:error:rewrite:allowoverride');
 				$msg .= elgg_view('install/js_rewrite_check', ['url' => $url]);
@@ -242,6 +249,7 @@ class RewriteTester {
 					'message' => $msg,
 				];
 			}
+			
 			$msg .= _elgg_services()->translator->translate("install:error:rewrite:htaccess:{$this->htaccessIssue}");
 			return [
 				'severity' => 'warning',
@@ -250,9 +258,9 @@ class RewriteTester {
 		}
 
 		if ($this->webserver != 'unknown') {
-			$serverString = _elgg_services()->translator->translate("install:error:rewrite:{$this->webserver}");
-			$msg = "$serverString\n\n";
-			$msg .= _elgg_services()->translator->translate("install:error:rewrite:altserver");
+			$msg = _elgg_services()->translator->translate("install:error:rewrite:{$this->webserver}");
+			$msg .= PHP_EOL . PHP_EOL;
+			$msg .= _elgg_services()->translator->translate('install:error:rewrite:altserver');
 			return [
 				'severity' => 'warning',
 				'message' => $msg,

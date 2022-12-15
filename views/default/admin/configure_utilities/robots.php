@@ -3,7 +3,7 @@
  * Set robots.txt
  */
 
-if ('/' !== parse_url(elgg_get_site_url(), PHP_URL_PATH)) {
+if (parse_url(elgg_get_site_url(), PHP_URL_PATH) !== '/') {
 	echo elgg_view_message('warning', elgg_echo('admin:robots.txt:subdir'));
 }
 

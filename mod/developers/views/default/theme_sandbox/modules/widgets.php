@@ -30,12 +30,13 @@ function css_permissions_override() {
 	<?php echo elgg_view('theme_sandbox/header', $vars); ?>
 <?php
 $w = [];
-for ($i=1; $i<=6; $i++) {
+for ($i = 1; $i <= 6; $i++) {
 	$obj = new ElggWidget();
 	$obj->handler = 'friends';
-	$obj->title = "Widget $i";
+	$obj->title = "Widget {$i}";
 	$w[] = $obj;
 }
+
 $column1 = [$w[0], $w[1]];
 $column2 = [$w[2], $w[3]];
 $column3 = [$w[4], $w[5]];
@@ -48,14 +49,16 @@ $widget_class = "elgg-col-1of{$num_columns}";
 for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 	$column_widgets = $widgets[$column_index];
 
-	echo "<div class=\"$widget_class elgg-widgets\" id=\"elgg-widget-col-$column_index\">";
-	if (is_array($column_widgets) && sizeof($column_widgets) > 0) {
+	echo "<div class='{$widget_class} elgg-widgets' id='elgg-widget-col-{$column_index}'>";
+	if (is_array($column_widgets) && count($column_widgets) > 0) {
 		foreach ($column_widgets as $widget) {
 			echo elgg_view_entity($widget);
 		}
 	}
+	
 	echo '</div>';
 }
+
 echo '</div>';
 echo '</div>';
 

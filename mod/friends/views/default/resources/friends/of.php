@@ -13,7 +13,7 @@ if (!$owner instanceof ElggUser) {
 	throw new EntityNotFoundException;
 }
 
-$title = elgg_echo("friends:of:owned", [$owner->getDisplayName()]);
+$title = elgg_echo('friends:of:owned', [$owner->getDisplayName()]);
 
 $content = elgg_list_entities([
 	'relationship' => 'friend',

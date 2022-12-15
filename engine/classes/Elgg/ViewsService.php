@@ -107,6 +107,7 @@ class ViewsService {
 
 			return true;
 		}
+		
 		if ($this->isValidViewtype($viewtype)) {
 			$this->viewtype = $viewtype;
 
@@ -195,15 +196,15 @@ class ViewsService {
 		$extension = pathinfo($canonical, PATHINFO_EXTENSION);
 		$hasValidFileExtension = isset(CacheHandler::$extensions[$extension]);
 
-		if (strpos($canonical, "js/") === 0) {
+		if (strpos($canonical, 'js/') === 0) {
 			$canonical = substr($canonical, 3);
 			if (!$hasValidFileExtension) {
-				$canonical .= ".js";
+				$canonical .= '.js';
 			}
-		} else if (strpos($canonical, "css/") === 0) {
+		} else if (strpos($canonical, 'css/') === 0) {
 			$canonical = substr($canonical, 4);
 			if (!$hasValidFileExtension) {
-				$canonical .= ".css";
+				$canonical .= '.css';
 			}
 		}
 
@@ -402,6 +403,7 @@ class ViewsService {
 
 			return '';
 		}
+		
 		$extensions_tree[] = $view;
 
 		// Get the current viewtype
@@ -556,7 +558,6 @@ class ViewsService {
 		}
 
 		return false;
-
 	}
 
 	/**
@@ -696,10 +697,10 @@ class ViewsService {
 			return false;
 		}
 
-		while (false !== ($view_type = readdir($handle))) {
+		while (($view_type = readdir($handle)) !== false) {
 			$view_type_dir = $view_dir . $view_type;
 
-			if ('.' !== substr($view_type, 0, 1) && is_dir($view_type_dir)) {
+			if (substr($view_type, 0, 1) !== '.' && is_dir($view_type_dir)) {
 				if (!$this->autoregisterViews('', $view_type_dir, $view_type)) {
 					return false;
 				}
@@ -727,9 +728,7 @@ class ViewsService {
 				}
 
 				foreach ($paths as $path) {
-					if (preg_match('~^([/\\\\]|[a-zA-Z]\:)~', $path)) {
-						// absolute path
-					} else {
+					if (!preg_match('~^([/\\\\]|[a-zA-Z]\:)~', $path)) {
 						// relative path
 						$path = Directory\Local::projectRoot()->getPath($path);
 					}
@@ -795,6 +794,7 @@ class ViewsService {
 		if (!is_array($data)) {
 			return false;
 		}
+		
 		// format changed, check version
 		if (empty($data['version']) || $data['version'] !== '2.0') {
 			return false;
@@ -839,6 +839,7 @@ class ViewsService {
 		if (isset($this->locations[$viewtype][$view]) && $path !== $this->locations[$viewtype][$view]) {
 			$this->overrides[$viewtype][$view][] = $this->locations[$viewtype][$view];
 		}
+		
 		$this->locations[$viewtype][$view] = $path;
 
 		// Test if view is cacheable and push it to the cacheable views stack,

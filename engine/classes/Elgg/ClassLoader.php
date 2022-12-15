@@ -48,7 +48,9 @@ namespace Elgg;
 class ClassLoader {
 
 	protected $namespaces = [];
+	
 	protected $prefixes = [];
+	
 	protected $fallbacks = [];
 
 	/**
@@ -109,6 +111,7 @@ class ClassLoader {
 	 * Registers an array of namespaces
 	 *
 	 * @param array $namespaces An array of namespaces (namespaces as keys and locations as values)
+	 *
 	 * @return void
 	 */
 	public function registerNamespaces(array $namespaces) {
@@ -122,6 +125,7 @@ class ClassLoader {
 	 *
 	 * @param string       $namespace The namespace
 	 * @param array|string $paths     The location(s) of the namespace
+	 *
 	 * @return void
 	 */
 	public function registerNamespace($namespace, $paths) {
@@ -132,6 +136,7 @@ class ClassLoader {
 	 * Registers an array of classes using the PEAR naming convention.
 	 *
 	 * @param array $classes An array of classes (prefixes as keys and locations as values)
+	 *
 	 * @return void
 	 */
 	public function registerPrefixes(array $classes) {
@@ -145,6 +150,7 @@ class ClassLoader {
 	 *
 	 * @param string       $prefix The classes prefix
 	 * @param array|string $paths  The location(s) of the classes
+	 *
 	 * @return void
 	 */
 	public function registerPrefix($prefix, $paths) {
@@ -155,6 +161,7 @@ class ClassLoader {
 	 * Add a directory to search if no registered directory is found.
 	 *
 	 * @param string $path The directory
+	 *
 	 * @return void
 	 */
 	public function addFallback($path) {
@@ -174,6 +181,7 @@ class ClassLoader {
 	 * Loads the given class or interface, possibly updating the class map.
 	 *
 	 * @param string $class The name of the class
+	 *
 	 * @return void
 	 */
 	public function loadClass($class) {
@@ -207,12 +215,12 @@ class ClassLoader {
 	 * @return string|null The path, if found
 	 */
 	public function findFile($class) {
-		if ('\\' == $class[0]) {
+		if ($class[0] === '\\') {
 			$class = substr($class, 1);
 		}
 
 		$pos = strrpos($class, '\\');
-		if (false !== $pos) {
+		if ($pos !== false) {
 			// namespaced class name
 			$namespace = substr($class, 0, $pos);
 			$className = substr($class, $pos + 1);
@@ -220,7 +228,7 @@ class ClassLoader {
 				. DIRECTORY_SEPARATOR
 				. str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
 			foreach ($this->namespaces as $ns => $dirs) {
-				if (0 !== strpos($namespace, $ns)) {
+				if (strpos($namespace, $ns) !== 0) {
 					continue;
 				}
 
@@ -235,7 +243,7 @@ class ClassLoader {
 			// PEAR-like class name
 			$normalizedClass = str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
 			foreach ($this->prefixes as $prefix => $dirs) {
-				if (0 !== strpos($class, $prefix)) {
+				if (strpos($class, $prefix) !== 0) {
 					continue;
 				}
 

@@ -197,7 +197,7 @@ class EmailService {
 		$subject = elgg_strip_tags($subject);
 		$subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
 		// Sanitise subject by stripping line endings
-		$subject = preg_replace("/(\r\n|\r|\n)/", " ", $subject);
+		$subject = preg_replace("/(\r\n|\r|\n)/", ' ', $subject);
 		return trim($subject);
 	}
 	

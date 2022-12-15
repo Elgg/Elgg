@@ -24,7 +24,7 @@ if (!$entity instanceof ElggEntity) {
 	return;
 }
 
-$owner= $annotation->getOwnerEntity();
+$owner = $annotation->getOwnerEntity();
 if (!$owner instanceof ElggEntity) {
 	return;
 }

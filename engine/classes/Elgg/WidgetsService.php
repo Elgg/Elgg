@@ -112,6 +112,7 @@ class WidgetsService {
 		if (!$owner) {
 			return false;
 		}
+		
 		if (!$this->validateType($handler, $context, $owner)) {
 			return false;
 		}

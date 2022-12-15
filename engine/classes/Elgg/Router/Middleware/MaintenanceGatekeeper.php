@@ -77,7 +77,7 @@ class MaintenanceGatekeeper {
 		$current_url = $request->getURL();
 		$site_path = preg_replace('/^https?/', '', elgg_get_site_url());
 		$current_path = preg_replace('/^https?/', '', $current_url);
-		if (0 === elgg_strpos($current_path, $site_path)) {
+		if (elgg_strpos($current_path, $site_path) === 0) {
 			$current_path = ($current_path === $site_path) ? '' : elgg_substr($current_path, elgg_strlen($site_path));
 		} else {
 			$current_path = false;

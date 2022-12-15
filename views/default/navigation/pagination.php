@@ -19,15 +19,13 @@
  */
 
 $count = (int) elgg_extract('count', $vars, 0);
-if (!$count) {
+if (empty($count)) {
 	return;
 }
 
 $offset = abs((int) elgg_extract('offset', $vars, 0));
 // because you can say $vars['limit'] = 0
-if (!$limit = (int) elgg_extract('limit', $vars, elgg_get_config('default_limit'))) {
-	$limit = 10;
-}
+$limit = (int) elgg_extract('limit', $vars, elgg_get_config('default_limit'), false);
 
 $offset_key = elgg_extract('offset_key', $vars, 'offset');
 $url_fragment = elgg_extract('url_fragment', $vars, '');
@@ -49,6 +47,7 @@ $get_href = function ($offset) use ($base_url, $base_url_has_fragment, $offset_k
 	if (!$base_url_has_fragment && $offset) {
 		$link .= "#$url_fragment";
 	}
+	
 	return $link;
 };
 
@@ -83,12 +82,12 @@ if ((bool) elgg_extract('pagination_show_previous', $vars, true) && ($current_pa
 // show in between page numbers
 if ((bool) elgg_extract('pagination_show_numbers', $vars, true)) {
 	// add first page to be listed
-	if (1 < $start_page) {
+	if ($start_page > 1) {
 		$pages[1] = [];
 	}
 	
 	// added dotted spacer
-	if (1 < ($start_page - 2)) {
+	if (($start_page - 2) > 1) {
 		$pages[] = ['text' => '...', 'disabled' => true];
 	} elseif ($start_page == 3) {
 		$pages[2] = [];
@@ -99,6 +98,7 @@ if ((bool) elgg_extract('pagination_show_numbers', $vars, true)) {
 		if ($max > 5) {
 			break;
 		}
+		
 		$pages[$page] = [];
 		$max++;
 	}
@@ -146,6 +146,7 @@ foreach ($pages as $page_num => $page) {
 				// don't include offset=0
 				$page_offset = null;
 			}
+			
 			$href = $get_href($page_offset);
 		}
 		

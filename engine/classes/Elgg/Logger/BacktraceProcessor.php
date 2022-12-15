@@ -8,6 +8,7 @@ use Elgg\Logger;
  * Inject backtrace stack into the record
  */
 class BacktraceProcessor {
+	
 	private $level;
 
 	private $backtrace_level;
@@ -59,6 +60,7 @@ class BacktraceProcessor {
 				if ($backtrace_level <= 1) {
 					break;
 				}
+				
 				$backtrace_level--;
 			}
 		}
@@ -67,5 +69,4 @@ class BacktraceProcessor {
 
 		return $record;
 	}
-
 }

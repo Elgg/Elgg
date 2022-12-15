@@ -62,6 +62,7 @@ class Preloader {
 		foreach ($guids as $guid) {
 			$this->data->setCommentsCount($guid, 0);
 		}
+		
 		foreach ($count_rows as $row) {
 			$this->data->setCommentsCount($row->container_guid, $row->cnt);
 		}

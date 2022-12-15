@@ -48,17 +48,17 @@ function elgg_save_resized_image(string $source, string $destination = null, arr
  * @since 3.1
  */
 function elgg_delete_directory(string $directory, bool $leave_base_directory = false): bool {
-
 	if (!file_exists($directory)) {
 		return true;
 	}
-
+	
 	if (!is_dir($directory)) {
 		return false;
 	}
 
 	// sanity check: must be a directory
-	if (!$handle = opendir($directory)) {
+	$handle = opendir($directory);
+	if (empty($handle)) {
 		return false;
 	}
 

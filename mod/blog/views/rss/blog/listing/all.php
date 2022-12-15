@@ -21,15 +21,18 @@ $defaults = [
 $options = (array) elgg_extract('options', $vars, []);
 $options = array_merge($defaults, $options);
 
-if ($after = elgg_extract('created_after', $vars)) {
+$after = elgg_extract('created_after', $vars);
+if (!empty($after)) {
 	$options['created_after'] = $after;
 }
 
-if ($before = elgg_extract('created_before', $vars)) {
+$before = elgg_extract('created_before', $vars);
+if (!empty($before)) {
 	$options['created_before'] = $before;
 }
 
-if ($status = elgg_extract('status', $vars)) {
+$status = elgg_extract('status', $vars);
+if (!empty($status)) {
 	$options['metadata_name_value_pairs']['status'] = $status;
 }
 

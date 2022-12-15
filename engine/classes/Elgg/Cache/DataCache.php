@@ -20,5 +20,4 @@ class DataCache extends CacheCollection {
 	protected function create($namespace) {
 		return new CompositeCache($namespace, $this->config, ELGG_CACHE_RUNTIME);
 	}
-
 }

@@ -19,13 +19,12 @@ class CacheClearCommand extends Command {
 	 * {@inheritdoc}
 	 */
 	protected function command() {
-
 		elgg_clear_caches();
 		
 		if (!$this->option('quiet')) {
 			$this->write(elgg_echo('admin:cache:cleared'));
 		}
 
-		return 0;
+		return self::SUCCESS;
 	}
 }

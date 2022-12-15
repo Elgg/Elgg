@@ -190,7 +190,7 @@ class Search {
 				];
 				break;
 
-			case 'alpha' :
+			case 'alpha':
 				$sort_by[] = [
 					'property_type' => 'metadata',
 					'property' => $entity_type === 'object' ? 'title' : 'name',
@@ -225,6 +225,7 @@ class Search {
 			// no fields provided by input, so unset the magic fields from normalilzation
 			unset($this->params['fields']);
 		}
+		
 		unset($this->params['_elgg_search_service_normalize_options']);
 	}
 }

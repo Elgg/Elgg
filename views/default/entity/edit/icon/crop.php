@@ -121,7 +121,7 @@ $img = elgg_format_element('img', [
 
 echo elgg_format_element('div', ['class' => ['elgg-entity-edit-icon-crop-wrapper', 'hidden', 'mbm']], $img);
 
-$input ='';
+$input = '';
 foreach (['x1', 'y1', 'x2', 'y2'] as $coord) {
 	$input .= elgg_view_field([
 		'#type' => 'hidden',

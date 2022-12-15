@@ -116,6 +116,7 @@ if ($client !== 'PDO MySQL Driver') {
 	$subtext = elgg_echo('admin:server:requirements:database:client:required');
 	$icon = $icon_error;
 }
+
 echo $view_module($icon, elgg_echo('admin:server:requirements:database:client'), $client, $subtext);
 
 // rewrite test

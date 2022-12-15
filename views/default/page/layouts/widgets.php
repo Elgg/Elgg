@@ -77,6 +77,7 @@ foreach ($widgets as $index => $column_widgets) {
 	foreach ($column_widgets as $column_widget) {
 		$widgets[$num_columns][] = $column_widget;
 	}
+	
 	unset($widgets[$index]);
 }
 

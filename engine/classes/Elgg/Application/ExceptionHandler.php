@@ -115,7 +115,7 @@ class ExceptionHandler {
 				$response = new Response('', ELGG_HTTP_INTERNAL_SERVER_ERROR, $headers);
 			}
 
-			$body = elgg_view("messages/exceptions/exception", [
+			$body = elgg_view('messages/exceptions/exception', [
 				'object' => $exception,
 				'ts' => $exception->timestamp,
 			]);

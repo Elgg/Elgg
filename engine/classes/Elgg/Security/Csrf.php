@@ -196,5 +196,4 @@ class Csrf {
 			->getHmac([(int) $timestamp, $session_token], 'md5')
 			->getToken();
 	}
-
 }

@@ -45,6 +45,7 @@ foreach ($options_values as $key => $value) {
 			'value' => $key,
 		];
 	}
+	
 	$input_options[$key] = $value;
 }
 
@@ -91,6 +92,7 @@ $input_vars['default'] = false;
 if (elgg_extract('name', $vars)) {
 	$input_vars['name'] = "{$vars['name']}[]";
 }
+
 unset($input_vars['align']);
 
 $checkboxes = '';
@@ -102,7 +104,7 @@ foreach ($input_options as $label => $option) {
 
 	$input = elgg_view('input/checkbox', $checkbox_input_options);
 
-	$checkboxes .= "<li>$input</li>";
+	$checkboxes .= elgg_format_element('li', [], $input);
 }
 
 echo elgg_format_element('ul', ['class' => $list_class, 'id' => $id], $checkboxes);

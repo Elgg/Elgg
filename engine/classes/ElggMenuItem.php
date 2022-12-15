@@ -80,7 +80,6 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 */
 	protected $confirm = '';
 
-
 	/**
 	 * \ElggMenuItem constructor
 	 *
@@ -110,11 +109,6 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 *                        null = current URL.
 	 *                        "" = current URL.
 	 *                        "/" = site home page.
-	 *                        @warning If href is false, the <a> tag will
-	 *                        not appear, so the link_class will not apply. If you
-	 *                        put <a> tags in manually through the 'text' option
-	 *                        the default CSS selector .elgg-menu-$menu > li > a
-	 *                        may affect formatting. Wrap in a <span> if it does.)
 	 *
 	 *    section     => STR  Menu section identifier
 	 *    link_class  => STR  A class or classes for the <a> tag
@@ -137,6 +131,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 		if (!isset($options['name']) || !isset($options['text'])) {
 			throw new \Elgg\Exceptions\InvalidArgumentException(__METHOD__ . ': $options "name" and "text" are required.');
 		}
+		
 		if (!isset($options['href'])) {
 			$options['href'] = '';
 		}
@@ -283,6 +278,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 		if (is_string($contexts)) {
 			$contexts = [$contexts];
 		}
+		
 		$this->data['contexts'] = $contexts;
 	}
 
@@ -657,6 +653,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 			$node->data['original_order'] = $key;
 			$node->sortChildren($sortFunction);
 		}
+		
 		usort($this->data['children'], $sortFunction);
 	}
 

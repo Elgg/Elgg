@@ -16,7 +16,7 @@ if (isset($vars['id'])) {
 $attributes['class'] = elgg_extract_class($vars, 'elgg-ajax-loader');
 
 if (elgg_extract('hidden', $vars, true)) {
-	$attributes['class'][] = "hidden";
+	$attributes['class'][] = 'hidden';
 }
 
 echo elgg_format_element('div', $attributes);

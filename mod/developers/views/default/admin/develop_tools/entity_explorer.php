@@ -1,6 +1,6 @@
 <?php
 
-echo '<p>' . elgg_echo('developers:entity_explorer:help') . '</p>';
+echo elgg_format_element('p', [], elgg_echo('developers:entity_explorer:help'));
 
 echo elgg_view_form('developers/entity_explorer', [
 	'action' => 'admin/develop_tools/entity_explorer',
@@ -41,6 +41,7 @@ echo elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
 			'class' => 'elgg-button elgg-button-action',
 		]);
 	}
+	
 	$result .= elgg_view('output/url', [
 		'text' => elgg_echo('developers:entity_explorer:delete_entity'),
 		'href' => elgg_generate_action_url('developers/entity_explorer_delete', [

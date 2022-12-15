@@ -6,7 +6,7 @@ $ipsum = elgg_view('developers/ipsum');
 
 echo elgg_view('output/url', [
 	'text' => 'Popup content',
-	'href' => "#elgg-popup-test",
+	'href' => '#elgg-popup-test',
 	'class' => 'elgg-popup',
 ]);
 
@@ -18,7 +18,7 @@ echo elgg_view_module('popup', 'Popup Test', $ipsum, [
 
 echo elgg_format_element('button', [
 	'class' => ['elgg-button', 'elgg-button-submit', 'mll', 'elgg-popup'],
-	'data-href' => "#elgg-popup-test2",
+	'data-href' => '#elgg-popup-test2',
 	'data-position' => json_encode([
 		'my' => 'left top',
 		'at' => 'left bottom',

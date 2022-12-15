@@ -109,10 +109,12 @@ class SiteSecret {
 			if ($rand_max < pow(2, 16)) {
 				return 'weak';
 			}
+			
 			if ($rand_max < pow(2, 32)) {
 				return 'moderate';
 			}
 		}
+		
 		return 'strong';
 	}
 

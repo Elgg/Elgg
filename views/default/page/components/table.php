@@ -26,9 +26,8 @@ $items = elgg_extract('items', $vars);
 $pagination = elgg_extract('pagination', $vars, true);
 $position = elgg_extract('position', $vars, 'after');
 
-$columns = elgg_extract('columns', $vars);
 /* @var TableColumn[] $columns */
-
+$columns = elgg_extract('columns', $vars);
 if (empty($columns) || !is_array($columns)) {
 	return;
 }
@@ -48,10 +47,12 @@ foreach ($columns as $column) {
 
 	$cell = trim($column->renderHeading());
 	if (!preg_match('~^<t[dh]~i', $cell)) {
-		$cell = "<th>$cell</th>";
+		$cell = elgg_format_element('th', [], $cell);
 	}
+	
 	$headings .= $cell;
 }
+
 $headings = "<thead><tr>$headings</tr></thead>";
 
 $table_classes = elgg_extract_class($vars, ['elgg-list', 'elgg-table'], 'list_class');
@@ -90,8 +91,9 @@ foreach ($items as $item) {
 	foreach ($columns as $column) {
 		$cell = trim($column->renderCell($item, $type, $vars));
 		if (!preg_match('~^<t[dh]~i', $cell)) {
-			$cell = "<td>$cell</td>";
+			$cell = elgg_format_element('td', [], $cell);
 		}
+		
 		$row .= $cell;
 	}
 

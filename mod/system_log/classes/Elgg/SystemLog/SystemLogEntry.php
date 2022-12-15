@@ -87,6 +87,7 @@ class SystemLogEntry {
 		if (in_array($name, static::INTEGER_ATTR_NAMES)) {
 			$value = (int) $value;
 		}
+		
 		$this->attributes[$name] = $value;
 	}
 	
@@ -158,5 +159,4 @@ class SystemLogEntry {
 
 		return $object;
 	}
-
 }

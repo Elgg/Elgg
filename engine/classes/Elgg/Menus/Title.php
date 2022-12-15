@@ -69,6 +69,7 @@ class Title {
 					// move edit always to z-last location
 					$return->get('edit')->setSection('z-last');
 				}
+				
 				continue;
 			}
 			

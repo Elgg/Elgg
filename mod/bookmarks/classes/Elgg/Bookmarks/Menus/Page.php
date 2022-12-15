@@ -6,7 +6,6 @@ namespace Elgg\Bookmarks\Menus;
  * Event callbacks for menus
  *
  * @since 4.0
- *
  * @internal
  */
 class Page {
@@ -22,6 +21,7 @@ class Page {
 		if (!elgg_is_logged_in()) {
 			return;
 		}
+		
 		// only show bookmarklet on bookmark pages
 		if (!elgg_in_context('bookmarks')) {
 			return;

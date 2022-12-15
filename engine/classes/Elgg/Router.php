@@ -3,7 +3,7 @@
 namespace Elgg;
 
 use Elgg\Database\Plugins;
-use Elgg\Exceptions\Http\BadRequestException ;
+use Elgg\Exceptions\Http\BadRequestException;
 use Elgg\Exceptions\Http\PageNotFoundException;
 use Elgg\Exceptions\RuntimeException;
 use Elgg\Http\Request as HttpRequest;
@@ -200,7 +200,7 @@ class Router {
 			if ($handler) {
 				return $this->getResponseFromHandler($handler, $envelope);
 			} elseif ($controller) {
-				$result =  $this->handlers->call($controller, $envelope, null);
+				$result = $this->handlers->call($controller, $envelope, null);
 				if ($result[1] instanceof ResponseBuilder) {
 					return $result[1];
 				}
@@ -232,7 +232,7 @@ class Router {
 
 		$path = trim($request->getPath(), '/');
 		$segments = explode('/', $path);
-		$identifier = array_shift($segments) ? : '';
+		$identifier = array_shift($segments) ?: '';
 
 		ob_start();
 		try {
@@ -310,8 +310,7 @@ class Router {
 			return $request;
 		}
 
-		if (
-			!isset($new['identifier']) ||
+		if (!isset($new['identifier']) ||
 			!isset($new['segments']) ||
 			!is_string($new['identifier']) ||
 			!is_array($new['segments'])

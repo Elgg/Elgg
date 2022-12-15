@@ -119,8 +119,8 @@ class ElggUpgrade extends ElggObject {
 		$version = $batch->getVersion();
 
 		// Version must be in format yyyymmddnn
-		if (preg_match("/^[0-9]{10}$/", $version) == 0) {
-			elgg_log("Upgrade $this->class returned an invalid version: $version");
+		if (preg_match('/^[0-9]{10}$/', $version) === 0) {
+			elgg_log("Upgrade {$this->class} returned an invalid version: {$version}");
 			return false;
 		}
 

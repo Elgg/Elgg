@@ -19,13 +19,12 @@ class CacheInvalidateCommand extends Command {
 	 * {@inheritdoc}
 	 */
 	protected function command() {
-
 		elgg_invalidate_caches();
 		
 		if (!$this->option('quiet')) {
 			$this->write(elgg_echo('admin:cache:invalidated'));
 		}
 
-		return 0;
+		return self::SUCCESS;
 	}
 }

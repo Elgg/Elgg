@@ -38,6 +38,7 @@ $context_stack = [];
 if ($default_widgets) {
 	$context_stack[] = 'default_widgets';
 }
+
 $context_stack[] = 'widgets';
 if ($context) {
 	$context_stack[] = $context;

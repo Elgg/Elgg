@@ -23,6 +23,7 @@ if ($required) {
 			'class' => 'elgg-required-indicator',
 		], '&ast;');
 	}
+	
 	if ($indicator) {
 		$label .= $indicator;
 	}

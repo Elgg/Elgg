@@ -3,32 +3,35 @@
  * Elgg thewire rss view
  */
 
-$owner = $vars['entity']->getOwnerEntity();
-if (!$owner) {
-	return true;
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggWire) {
+	return;
+}
+
+$owner = $entity->getOwnerEntity();
+if (!$owner instanceof \ElggEntity) {
+	return;
 }
 
 $title = elgg_echo('thewire:by', [$owner->getDisplayName()]);
 
-$permalink = htmlspecialchars($vars['entity']->getURL(), ENT_NOQUOTES, 'UTF-8');
-$pubdate = date('r', $vars['entity']->getTimeCreated());
+$permalink = htmlspecialchars($entity->getURL(), ENT_NOQUOTES, 'UTF-8');
+$pubdate = date('r', $entity->getTimeCreated());
 
-$description = elgg_autop($vars['entity']->description);
+$description = elgg_autop($entity->description);
 
 $creator = elgg_view('page/components/creator', $vars);
 $georss = elgg_view('page/components/georss', $vars);
 $extension = elgg_view('extensions/item', $vars);
 
-$item = <<<__HTML
+?>
 <item>
-	<guid isPermaLink="true">$permalink</guid>
-	<pubDate>$pubdate</pubDate>
-	<link>$permalink</link>
-	<title><![CDATA[$title]]></title>
-	<description><![CDATA[$description]]></description>
-	$creator$georss$extension
+	<guid isPermaLink="true"><?= $permalink; ?></guid>
+	<pubDate><?= $pubdate; ?></pubDate>
+	<link><?= $permalink; ?></link>
+	<title><![CDATA[<?= $title; ?>]]></title>
+	<description><![CDATA[<?= $description; ?>]]></description>
+	<?= $creator; ?>
+	<?= $georss; ?>
+	<?= $extension; ?>
 </item>
-
-__HTML;
-
-echo $item;

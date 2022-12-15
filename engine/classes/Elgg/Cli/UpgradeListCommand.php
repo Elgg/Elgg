@@ -57,6 +57,6 @@ class UpgradeListCommand extends Command {
 			$this->write(elgg_echo('cli:upgrade:list:notfound'));
 		}
 
-		return 0;
+		return self::SUCCESS;
 	}
 }

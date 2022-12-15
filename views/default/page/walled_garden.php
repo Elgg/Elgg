@@ -14,44 +14,20 @@ elgg_load_external_file('css', 'elgg.walled_garden');
 
 // render content before head so that JavaScript and CSS can be loaded. See #4032
 $messages = elgg_view('page/elements/messages', ['object' => elgg_extract('sysmessages', $vars)]);
-$content = elgg_extract('body', $vars);
-
 $header = elgg_view('page/elements/walled_garden/header', $vars);
 $footer = elgg_view('page/elements/walled_garden/footer', $vars);
 
-$body = <<<__BODY
-<div class="elgg-page elgg-page-walled-garden">
-	<div class="elgg-page-walled-garden-background"></div>
-	<div class="elgg-page-messages">
-		$messages
-	</div>
-	<div class="elgg-inner">
-		<div class="elgg-page-header">
-			<div class="elgg-inner">
-				$header
-			</div>
-		</div>
-		<div class="elgg-page-body">
-			<div class="elgg-inner">
-				$content
-			</div>
-		</div>
-		<div class="elgg-page-footer">
-			<div class="elgg-inner">
-				$footer
-			</div>
-		</div>
-	</div>
-</div>
-__BODY;
-
+$body = elgg_view('page/elements/walled_garden/body', [
+	'messages' => $messages,
+	'header' => $header,
+	'content' => elgg_extract('body', $vars),
+	'footer' => $footer,
+]);
 $body .= elgg_view('page/elements/foot');
 
 $head = elgg_view('page/elements/head', elgg_extract('head', $vars, []));
 
-$params = [
+echo elgg_view('page/elements/html', [
 	'head' => $head,
 	'body' => $body,
-];
-
-echo elgg_view('page/elements/html', $params);
+]);

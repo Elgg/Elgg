@@ -1,5 +1,4 @@
 define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages', 'elgg/security', 'elgg/i18n', 'elgg/hooks'], function ($, elgg, spinner, system_messages, security, i18n, hooks) {
-	
 	var site_url = elgg.get_site_url(),
 		action_base = site_url + 'action/',
 		fragment_pattern = /#.*$/,
@@ -98,6 +97,7 @@ define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages', 'elgg/security
 			if (!$.isPlainObject(options)) {
 				throw new Error('options must be a plain object with key "url"');
 			}
+			
 			if (!options.url && hook_type !== 'path:') {
 				throw new Error('options must be a plain object with key "url"');
 			}
@@ -106,12 +106,15 @@ define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages', 'elgg/security
 			if (options.data === undefined) {
 				options.data = {};
 			}
+			
 			if (options.showSuccessMessages === undefined) {
 				options.showSuccessMessages = true;
 			}
+			
 			if (options.showErrorMessages === undefined) {
 				options.showErrorMessages = true;
 			}
+			
 			if ($.isPlainObject(options.data)) {
 				options.data = options.data || {};
 			} else if (options.data instanceof FormData) {
@@ -155,6 +158,7 @@ define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages', 'elgg/security
 					if (spinner_starts < 1) {
 						spinner.stop();
 					}
+					
 					orig_options.complete && orig_options.complete.apply(null, arguments);
 				};
 			}
@@ -251,6 +255,7 @@ define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages', 'elgg/security
 			if (path.indexOf(site_url) === 0) {
 				path = path.substr(site_url.length);
 			}
+			
 			path = path.replace(fragment_pattern, '');
 
 			assertNotUrl(path);
@@ -339,6 +344,7 @@ define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages', 'elgg/security
 			if (action.indexOf(action_base) === 0) {
 				action = action.substr(action_base.length);
 			}
+			
 			action = action.replace(leading_slash_pattern, '').replace(fragment_pattern, '');
 
 			assertNotUrl(action);

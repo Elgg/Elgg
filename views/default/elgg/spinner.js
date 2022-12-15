@@ -1,5 +1,4 @@
 define(['jquery'], function ($) {
-
 	var active = false;
 	var SHOW_DELAY = 20;
 
@@ -57,4 +56,3 @@ define(['jquery'], function ($) {
 
 	return spinner;
 });
-

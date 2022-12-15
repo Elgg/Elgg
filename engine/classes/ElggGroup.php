@@ -81,6 +81,7 @@ class ElggGroup extends \ElggEntity {
 		if ($mode === self::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
 			return $mode;
 		}
+		
 		return self::CONTENT_ACCESS_MODE_UNRESTRICTED;
 	}
 

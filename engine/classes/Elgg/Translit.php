@@ -48,6 +48,7 @@ class Translit {
 				$string = $nfc;
 			}
 		}
+		
 		// Internationalization, AND 日本語!
 		$string = self::transliterateAscii($string);
 
@@ -64,17 +65,18 @@ class Translit {
 
 		// remove all ASCII except 0-9a-zA-Z, hyphen, underscore, and whitespace
 		// note: "x" modifier did not work with this pattern.
-		$string = preg_replace('~['
-			. '\x00-\x08'  // control chars
-			. '\x0b\x0c'   // vert tab, form feed
-			. '\x0e-\x1f'  // control chars
-			. '\x21-\x2c'  // ! ... ,
-			. '\x2e\x2f'   // . slash
-			. '\x3a-\x40'  // : ... @
-			. '\x5b-\x5e'  // [ ... ^
-			. '\x60'       // `
-			. '\x7b-\x7f'  // { ... DEL
-			. ']~', '', $string);
+		$pattern = '~[';
+		$pattern .= '\x00-\x08';  // control chars
+		$pattern .= '\x0b\x0c';   // vert tab, form feed
+		$pattern .= '\x0e-\x1f';  // control chars
+		$pattern .= '\x21-\x2c';  // ! ... ,
+		$pattern .= '\x2e\x2f';   // . slash
+		$pattern .= '\x3a-\x40';  // : ... @
+		$pattern .= '\x5b-\x5e';  // [ ... ^
+		$pattern .= '\x60';       // `
+		$pattern .= '\x7b-\x7f';  // { ... DEL
+		$pattern .= ']~';
+		$string = preg_replace($pattern, '', $string);
 		$string = strtr($string, '', '');
 
 		// internationalization, and 日本語!
@@ -84,12 +86,12 @@ class Translit {
 		// split by ASCII chars not in 0-9a-zA-Z
 		// note: we cannot use [^0-9a-zA-Z] because that matches multibyte chars.
 		// note: "x" modifier did not work with this pattern.
-		$pattern = '~['
-			. '\x00-\x2f'  // controls ... slash
-			. '\x3a-\x40'  // : ... @
-			. '\x5b-\x60'  // [ ... `
-			. '\x7b-\x7f'  // { ... DEL
-			. ']+~x';
+		$pattern = '~[';
+		$pattern .= '\x00-\x2f';  // controls ... slash
+		$pattern .= '\x3a-\x40';  // : ... @
+		$pattern .= '\x5b-\x60';  // [ ... `
+		$pattern .= '\x7b-\x7f';  // { ... DEL
+		$pattern .= ']+~x';
 
 		// ['internationalization', 'and', '日本語']
 		$words = preg_split($pattern, $string, -1, PREG_SPLIT_NO_EMPTY);
@@ -112,9 +114,11 @@ class Translit {
 		if (!preg_match('/[\x80-\xff]/', $utf8)) {
 			return $utf8;
 		}
-		if (null === $map) {
+		
+		if (!isset($map)) {
 			$map = self::getAsciiTranslitMap();
 		}
+		
 		return strtr($utf8, $map);
 	}
 
@@ -258,12 +262,13 @@ class Translit {
 	 */
 	public static function hasNormalizerSupport() {
 		static $ret = null;
-		if (null === $ret) {
+		if (!isset($ret)) {
 			$form_c = "\xC3\x85"; // 'LATIN CAPITAL LETTER A WITH RING ABOVE' (U+00C5)
 			$form_d = "A\xCC\x8A"; // A followed by 'COMBINING RING ABOVE' (U+030A)
 			$ret = (function_exists('normalizer_normalize')
 				&& $form_c === normalizer_normalize($form_d));
 		}
+		
 		return $ret;
 	}
 }

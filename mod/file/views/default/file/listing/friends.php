@@ -17,5 +17,5 @@ echo elgg_list_entities([
 	'relationship' => 'friend',
 	'relationship_guid' => $entity->guid,
 	'relationship_join_on' => 'owner_guid',
-	'no_results' => elgg_echo("file:none"),
+	'no_results' => elgg_echo('file:none'),
 ]);

@@ -7,7 +7,6 @@ use Elgg\I18n\DateTime as ElggDateTime;
 use Elgg\Exceptions\DataFormatException;
 use Exception;
 
-
 /**
  * Functions for use as event handlers or other situations where you need a
  * globally accessible callable.
@@ -112,14 +111,15 @@ class Values {
 			if (!isset($arg)) {
 				continue;
 			}
+			
 			if (is_object($arg) && isset($arg->id)) {
 				$ids[] = (int) $arg->id;
-			} else if (is_array($arg)) {
+			} elseif (is_array($arg)) {
 				foreach ($arg as $a) {
 					$el_ids = self::normalizeIds($a);
 					$ids = array_merge($ids, $el_ids);
 				}
-			} else if (is_numeric($arg)) {
+			} elseif (is_numeric($arg)) {
 				$ids[] = (int) $arg;
 			} else {
 				$arg = print_r($arg, true);
@@ -148,14 +148,15 @@ class Values {
 			if (!isset($arg)) {
 				continue;
 			}
+			
 			if (is_object($arg) && isset($arg->guid)) {
 				$guids[] = (int) $arg->guid;
-			} else if (is_array($arg)) {
+			} elseif (is_array($arg)) {
 				foreach ($arg as $a) {
 					$el_guids = self::normalizeGuids($a);
 					$guids = array_merge($guids, $el_guids);
 				}
-			} else if (is_numeric($arg)) {
+			} elseif (is_numeric($arg)) {
 				$guids[] = (int) $arg;
 			} else {
 				$arg = print_r($arg, true);

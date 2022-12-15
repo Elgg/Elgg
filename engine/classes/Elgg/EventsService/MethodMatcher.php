@@ -41,7 +41,7 @@ class MethodMatcher {
 		// We don't use the callable type-hint because it unnecessarily autoloads for static methods.
 
 		if (is_string($subject)) {
-			if (false === strpos($subject, '::')) {
+			if (strpos($subject, '::') === false) {
 				return false;
 			}
 
@@ -66,6 +66,4 @@ class MethodMatcher {
 
 		return (strtolower(ltrim($subject[0], '\\')) === $this->type);
 	}
-
-
 }

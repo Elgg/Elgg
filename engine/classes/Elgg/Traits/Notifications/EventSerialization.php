@@ -51,19 +51,19 @@ trait EventSerialization {
 		if (isset($data['object_id']) && isset($data['object_type'])) {
 			$object_id = $data['object_id'];
 			switch ($data['object_type']) {
-				case 'object' :
-				case 'user' :
-				case 'group' :
-				case 'site' :
+				case 'object':
+				case 'user':
+				case 'group':
+				case 'site':
 					$this->object = get_entity($object_id);
 					break;
-				case 'annotation' :
+				case 'annotation':
 					$this->object = elgg_get_annotation_from_id($object_id);
 					break;
-				case 'metadata' :
+				case 'metadata':
 					$this->object = elgg_get_metadata_from_id($object_id);
 					break;
-				case 'relationship' :
+				case 'relationship':
 					$this->object = elgg_get_relationship($object_id);
 					break;
 			}

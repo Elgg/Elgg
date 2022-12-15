@@ -28,7 +28,6 @@ class InstallCommand extends BaseCommand {
 	 * {@inheritdoc}
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output) {
-
 		$this->input = $input;
 		$this->output = $output;
 
@@ -72,7 +71,7 @@ class InstallCommand extends BaseCommand {
 			$this->dumpRegisters();
 			$this->error($ex);
 
-			return 1;
+			return self::FAILURE;
 		}
 
 		\Elgg\Application::start();
@@ -80,11 +79,11 @@ class InstallCommand extends BaseCommand {
 		$release = elgg_get_release();
 
 		$this->notice("Elgg {$release} install successful");
-		$this->notice("wwwroot: " . elgg_get_site_url());
-		$this->notice("dataroot: " . elgg_get_data_path());
-		$this->notice("cacheroot: " . elgg_get_cache_path());
-		$this->notice("assetroot: " . elgg_get_asset_path());
+		$this->notice('wwwroot: ' . elgg_get_site_url());
+		$this->notice('dataroot: ' . elgg_get_data_path());
+		$this->notice('cacheroot: ' . elgg_get_cache_path());
+		$this->notice('assetroot: ' . elgg_get_asset_path());
 
-		return 0;
+		return self::SUCCESS;
 	}
 }

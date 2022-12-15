@@ -28,6 +28,7 @@ $space = elgg_strrpos($excerpt, ' ', 0);
 if ($space === false) {
 	$space = $num_chars;
 }
+
 $excerpt = trim(elgg_substr($excerpt, 0, $space));
 
 if ($string_length != elgg_strlen($excerpt)) {

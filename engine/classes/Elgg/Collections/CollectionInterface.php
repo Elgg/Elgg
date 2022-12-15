@@ -105,9 +105,10 @@ interface CollectionInterface {
 	 * @see CollectionInterface::map()
 	 *
 	 * @param callable $callback Callback function
+	 *
 	 * @return static
 	 */
-	public function walk(callable  $callback);
+	public function walk(callable $callback);
 
 	/**
 	 * Walk through all items in the collection and apply a callback

@@ -62,7 +62,7 @@ class Entity {
 		
 		$return = $event->getValue();
 		
-		$isFeatured = $entity->featured_group === "yes";
+		$isFeatured = $entity->featured_group === 'yes';
 	
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'feature',

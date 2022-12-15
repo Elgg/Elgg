@@ -174,7 +174,6 @@ class Access {
 		}
 	}
 	
-
 	/**
 	 * Allow users to visit the group profile page even if group content access mode is set to group members only
 	 *

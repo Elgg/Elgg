@@ -11,7 +11,7 @@ namespace Elgg\Friends\Menus;
  */
 class Relationship {
 
-		/**
+	/**
 	 * Add menu items to a pending friend request
 	 *
 	 * @param \Elgg\Event $event 'register', 'menu:relationship'

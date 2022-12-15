@@ -17,5 +17,4 @@ class Insert extends QueryBuilder {
 
 		return $qb;
 	}
-
 }

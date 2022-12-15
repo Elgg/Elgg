@@ -36,12 +36,9 @@ if ($site_url['path']) {
 	$path = "::{$path}";
 }
 
-$html = <<<__HTML
-	<guid isPermaLink="false">{$domain}{$path}::river::{$item->id}</guid>
-	<pubDate>{$timestamp}</pubDate>
-	<link>{$url}</link>
-	<title><![CDATA[{$title}]]></title>
-	<description><![CDATA[{$body}]]></description>
-__HTML;
-
-echo $html;
+?>
+<guid isPermaLink="false"><?php echo "{$domain}{$path}::river::{$item->id}"; ?></guid>
+<pubDate><?= $timestamp; ?></pubDate>
+<link><?= $url; ?></link>
+<title><![CDATA[<?= $title; ?>}]]></title>
+<description><![CDATA[<?= $body; ?>}]]></description>

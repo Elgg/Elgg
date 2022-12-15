@@ -77,6 +77,7 @@ class File {
 		if (!in_array($disposition, [self::ATTACHMENT, self::INLINE])) {
 			throw new DomainException("Disposition {$disposition} is not supported in " . __CLASS__);
 		}
+		
 		$this->disposition = $disposition;
 	}
 
@@ -99,7 +100,7 @@ class File {
 	public function getURL(): ?string {
 
 		if (!$this->file->exists()) {
-			elgg_log("Unable to resolve resource URL for a file that does not exist on filestore");
+			elgg_log('Unable to resolve resource URL for a file that does not exist on filestore');
 			return null;
 		}
 
@@ -111,7 +112,7 @@ class File {
 		}
 
 		if (!$relative_path) {
-			elgg_log("Unable to resolve relative path of the file on the filestore");
+			elgg_log('Unable to resolve relative path of the file on the filestore');
 			return null;
 		}
 
@@ -133,6 +134,7 @@ class File {
 			if (empty($data['cookie'])) {
 				return null;
 			}
+			
 			$data['use_cookie'] = 1;
 		} else {
 			$data['use_cookie'] = 0;

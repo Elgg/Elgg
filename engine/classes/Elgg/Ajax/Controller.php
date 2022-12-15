@@ -35,6 +35,7 @@ class Controller {
 					// protect admin views similar to all admin pages that are protected automatically in the admin_page_handler
 					elgg_admin_gatekeeper();
 				}
+				
 				// ignore 'view/'
 				$view = implode('/', array_slice($segments, 1));
 				break;
@@ -43,6 +44,7 @@ class Controller {
 					// protect admin views similar to all admin pages that are protected automatically in the admin_page_handler
 					elgg_admin_gatekeeper();
 				}
+				
 				// form views start with "forms", not "form"
 				$view = 'forms/' . implode('/', array_slice($segments, 1));
 				break;
@@ -82,13 +84,13 @@ class Controller {
 			
 			// Try to guess the mime-type
 			switch ($segments[1]) {
-				case "js":
+				case 'js':
 					$content_type = 'text/javascript;charset=utf-8';
 					break;
-				case "css":
+				case 'css':
 					$content_type = 'text/css;charset=utf-8';
 					break;
-				default :
+				default:
 					if (_elgg_services()->views->isCacheableView($view)) {
 						$file = _elgg_services()->views->findViewFile($view, elgg_get_viewtype());
 						$content_type = 'text/html';

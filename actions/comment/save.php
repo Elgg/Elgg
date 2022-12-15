@@ -14,10 +14,10 @@ if (empty($comment_text)) {
 if ($comment_guid) {
 	// Edit an existing comment
 	$comment = get_entity($comment_guid);
-
-	if (!$comment instanceof ElggComment) {
+	if (!$comment instanceof \ElggComment) {
 		return elgg_error_response(elgg_echo('generic_comment:notfound'));
 	}
+	
 	if (!$comment->canEdit()) {
 		return elgg_error_response(elgg_echo('actionunauthorized'));
 	}
@@ -31,7 +31,7 @@ if ($comment_guid) {
 } else {
 	// Create a new comment on the target entity
 	$entity = get_entity($entity_guid);
-	if (!$entity) {
+	if (!$entity instanceof \ElggEntity) {
 		return elgg_error_response(elgg_echo('generic_comment:notfound'));
 	}
 	
@@ -39,7 +39,7 @@ if ($comment_guid) {
 		return elgg_error_response(elgg_echo('actionunauthorized'));
 	}
 
-	$comment = new ElggComment();
+	$comment = new \ElggComment();
 	$comment->description = $comment_text;
 	
 	if ($entity instanceof \ElggComment) {

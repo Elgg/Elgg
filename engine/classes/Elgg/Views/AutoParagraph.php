@@ -107,9 +107,8 @@ class AutoParagraph {
 		// http://www.php.net/manual/en/domdocument.loadhtml.php#95463
 		$use_internal_errors = libxml_use_internal_errors(true);
 
-		if (!$this->_doc->loadHTML("<html><meta http-equiv='content-type' "
-				. "content='text/html; charset={$this->encoding}'><body>{$html}</body>"
-				. "</html>", LIBXML_NOBLANKS)) {
+		$test_html = "<html><meta http-equiv='content-type' content='text/html; charset={$this->encoding}'><body>{$html}</body></html>";
+		if (!$this->_doc->loadHTML($test_html, LIBXML_NOBLANKS)) {
 			libxml_use_internal_errors($use_internal_errors);
 			return false;
 		}
@@ -131,6 +130,7 @@ class AutoParagraph {
 				throw new RuntimeException('DOMXPath::query for BODY element returned a text node');
 			}
 		}
+		
 		$this->addParagraphs($nodeList->item(0));
 
 		// serialize back to HTML
@@ -175,9 +175,10 @@ class AutoParagraph {
 					}
 				}
 			}
+			
 			if (!$hasContent) {
 				// mark to be later replaced w/ preg_replace (faster than moving nodes out)
-				$autop->setAttribute("r", "1");
+				$autop->setAttribute('r', '1');
 			}
 		}
 
@@ -188,7 +189,7 @@ class AutoParagraph {
 			if ($autops->length === 1) {
 				$firstAutop = $autops->item(0);
 				/* @var \DOMElement $firstAutop */
-				$firstAutop->setAttribute("r", "1");
+				$firstAutop->setAttribute('r', '1');
 			}
 		}
 
@@ -239,7 +240,7 @@ class AutoParagraph {
 			$isFollowingBr = false;
 
 			$node = $el->firstChild;
-			while (null !== $node) {
+			while (isset($node)) {
 				if ($alterInline) {
 					if ($openP) {
 						$openP = false;
@@ -261,7 +262,7 @@ class AutoParagraph {
 
 				if ($alterInline) {
 					$isText = ($node->nodeType === XML_TEXT_NODE);
-					$isLastInline = (! $node->nextSibling
+					$isLastInline = (!$node->nextSibling
 							|| ($node->nextSibling->nodeType === XML_ELEMENT_NODE
 								&& in_array($node->nextSibling->nodeName, $this->_blocks)));
 					if ($isElement) {
@@ -276,15 +277,18 @@ class AutoParagraph {
 							$nodeText = ltrim($nodeText);
 							$ltrimFirstTextNode = false;
 						}
+						
 						$matches = [];
 						if ($isFollowingBr && preg_match('@^[ \\t]*\\n[ \\t]*@', $nodeText, $matches)) {
 							// if a user ends a line with <br>, don't add a second BR
 							$nodeText = elgg_substr($nodeText, elgg_strlen($matches[0]));
 						}
+						
 						if ($isLastInline) {
 							// we're at the end of a sequence of text/inline elements
 							$nodeText = rtrim($nodeText);
 						}
+						
 						$nodeText = str_replace("\n", $this->_unique . 'NL', $nodeText);
 						$tmpNode = $node;
 						$node = $node->nextSibling; // move loop to next node
@@ -296,22 +300,26 @@ class AutoParagraph {
 						continue;
 					}
 				}
-				if ($isBlock || ! $node->nextSibling) {
+				
+				if ($isBlock || !$node->nextSibling) {
 					if ($isBlock) {
 						if (in_array($node->nodeName, $this->_descendList)) {
 							$elsToProcess[] = $node;
 							//$this->addParagraphs($node);
 						}
 					}
+					
 					$openP = true;
 					$ltrimFirstTextNode = true;
 				}
+				
 				if ($alterInline) {
-					if (! $isBlock) {
+					if (!$isBlock) {
 						$tmpNode = $node;
-						if ($isElement && false !== elgg_strpos($tmpNode->textContent, "\n")) {
+						if ($isElement && elgg_strpos($tmpNode->textContent, "\n") !== false) {
 							$inlinesToProcess[] = $tmpNode;
 						}
+						
 						$node = $node->nextSibling;
 						$autop->appendChild($tmpNode);
 						continue;
@@ -332,10 +340,11 @@ class AutoParagraph {
 						$ignoreLeadingNewline = true;
 					} else {
 						$ignoreLeadingNewline = false;
-						if (false !== elgg_strpos($node->textContent, "\n")) {
+						if (elgg_strpos($node->textContent, "\n") !== false) {
 							$inlinesToProcess[] = $node;
 						}
 					}
+					
 					continue;
 				} elseif ($node->nodeType === XML_TEXT_NODE) {
 					$text = $node->nodeValue;
@@ -343,6 +352,7 @@ class AutoParagraph {
 						$text = substr($text, 1);
 						$ignoreLeadingNewline = false;
 					}
+					
 					$node->nodeValue = str_replace("\n", $this->_unique . 'BR', $text);
 				}
 			}

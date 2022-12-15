@@ -1,7 +1,7 @@
 <?php
 /**
-* Profile widgets/tools
-*/
+ * Profile widgets/tools
+ */
 
 $modules = elgg_view('groups/profile/modules', $vars);
 

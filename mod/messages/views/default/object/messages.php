@@ -31,7 +31,7 @@ if ($entity->toId == elgg_get_page_owner_guid()) {
 		$byline = elgg_echo('email:from') . ' ' . $user_link;
 	}
 
-	$class[] = $entity->readYet ? 'read': 'unread';
+	$class[] = $entity->readYet ? 'read' : 'unread';
 } else {
 	// sent
 	$user = $entity->getRecipient();

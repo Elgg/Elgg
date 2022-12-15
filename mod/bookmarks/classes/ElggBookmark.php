@@ -13,6 +13,6 @@ class ElggBookmark extends ElggObject {
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
-		$this->attributes['subtype'] = "bookmarks";
+		$this->attributes['subtype'] = 'bookmarks';
 	}
 }

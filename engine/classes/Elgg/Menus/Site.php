@@ -72,6 +72,7 @@ class Site {
 				$item->setPriority($priority);
 				$priority++;
 			}
+			
 			if ($item->getSelected()) {
 				$has_selected = true;
 			}

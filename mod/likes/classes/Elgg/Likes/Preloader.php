@@ -61,6 +61,7 @@ class Preloader {
 		foreach ($guids as $guid) {
 			$this->data->setNumLikes($guid, 0);
 		}
+		
 		foreach ($count_rows as $row) {
 			$this->data->setNumLikes($row->guid, $row->cnt);
 		}
@@ -116,6 +117,7 @@ class Preloader {
 		foreach ($guids as $guid) {
 			$this->data->setLikedByCurrentUser($guid, false);
 		}
+		
 		foreach ($annotation_rows as $row) {
 			$this->data->setLikedByCurrentUser($row->entity_guid, true);
 		}
@@ -184,6 +186,7 @@ class Preloader {
 				$fetch_guids[] = $guid;
 			}
 		}
+		
 		if ($fetch_guids) {
 			$fetched = elgg_get_entities([
 				'guids' => $fetch_guids,
@@ -191,6 +194,7 @@ class Preloader {
 			]);
 			array_splice($entities, count($entities), 0, $fetched);
 		}
+		
 		return $entities;
 	}
 	

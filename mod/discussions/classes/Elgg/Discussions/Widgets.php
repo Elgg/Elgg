@@ -5,7 +5,7 @@ namespace Elgg\Discussions;
 /**
  * Widget related functions
  */
-class Widgets{
+class Widgets {
 
 	/**
 	 * Set the title URL for the discussions widget
@@ -32,6 +32,7 @@ class Widgets{
 			if ($widget->context === 'dashboard') {
 				return elgg_generate_url('collection:object:discussion:my_groups', ['username' => $owner->username]);
 			}
+			
 			return elgg_generate_url('collection:object:discussion:owner', ['username' => $owner->username]);
 		} elseif ($owner instanceof \ElggGroup) {
 			return elgg_generate_url('collection:object:discussion:group', ['guid' => $owner->guid]);

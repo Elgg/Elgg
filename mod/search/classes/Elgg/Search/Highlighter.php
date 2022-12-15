@@ -3,7 +3,7 @@
 namespace Elgg\Search;
 
 /**
- * Highlights relavant substrings in search results
+ * Highlights relevant substrings in search results
  */
 class Highlighter {
 
@@ -39,20 +39,20 @@ class Highlighter {
 
 		foreach ($parts as $index => $part) {
 			// remove any boolean mode operators
-			$part = preg_replace("/([\-\+~])([\w]+)/i", '$2', $part);
+			$part = preg_replace('/([\-\+~])([\w]+)/i', '$2', $part);
 
 			// escape the delimiter and any other regexp special chars
 			$part = preg_quote($part, '/');
 			$parts[$index] = $part;
 		}
 		
-		$search = "/(" . implode('|', $parts) . ")/i";
+		$search = '/(' . implode('|', $parts) . ')/i';
 
 		return preg_replace_callback($search, function($matches) use ($parts) {
 			$text = $matches[0];
 			$i = array_search($text, $parts) + 1;
 			
-			return "<span class=\"search-highlight search-highlight-color{$i}\">{$text}</span>";
+			return elgg_format_element('span', ['class' => ['search-highlight', "search-highlight-color{$i}"]], $text);
 		}, $text);
 	}
 
@@ -98,7 +98,8 @@ class Highlighter {
 			// find the start positions for the words
 			if ($count > 1) {
 				$offset = 0;
-				while (false !== $pos = elgg_strpos($haystack_lc, $part, $offset)) {
+				$pos = elgg_strpos($haystack_lc, $part, $offset);
+				while ($pos !== false) {
 					$start = ($pos - $min_match_context > 0) ? $pos - $min_match_context : 0;
 					$starts[] = $start;
 					$stop = $pos + $word_len + $min_match_context;
@@ -108,6 +109,8 @@ class Highlighter {
 					if ($offset >= $haystack_len) {
 						break;
 					}
+					
+					$pos = elgg_strpos($haystack_lc, $part, $offset);
 				}
 			} else {
 				$pos = elgg_strpos($haystack_lc, $part);
@@ -216,6 +219,7 @@ class Highlighter {
 				if (!array_key_exists($i, $offsets)) {
 					break;
 				}
+				
 				$end_pos = $lengths[$i] + $offsets[$i];
 			}
 
@@ -227,5 +231,4 @@ class Highlighter {
 
 		return $return;
 	}
-
 }

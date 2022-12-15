@@ -68,6 +68,7 @@ function get_entity(int $guid): ?\ElggEntity {
 	if ($guid === 1) {
 		return _elgg_services()->config->site;
 	}
+	
 	return _elgg_services()->entityTable->get($guid);
 }
 
@@ -254,7 +255,7 @@ function elgg_get_site_entity(): \ElggSite {
  * Annotation name value pairs will be joined by the boolean specified in $annotation_name_value_pairs_operator
  * @option array                $annotation_name_value_pairs
  * @option string               $annotation_name_value_pairs_operator
- **
+ *
  * <code>
  * $options['annotation_name_value_pairs'] = [
  *    [

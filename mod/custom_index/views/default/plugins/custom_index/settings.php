@@ -6,7 +6,7 @@ $custom_index = elgg_extract('entity', $vars);
 echo elgg_view_field([
 	'#type' => 'longtext',
 	'#label' => elgg_echo('custom_index:settings:about'),
-	'name' => "params[about]",
+	'name' => 'params[about]',
 	'value' => $custom_index->about,
 ]);
 

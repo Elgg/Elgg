@@ -21,6 +21,7 @@ $size = elgg_extract('size', $vars, 'medium');
 if (!array_key_exists($size, $icon_sizes)) {
 	$size = 'medium';
 }
+
 $vars['size'] = $size;
 
 $img_class = elgg_extract_class($vars, [], 'img_class');
@@ -35,6 +36,7 @@ if (elgg_extract('use_link', $vars, true)) {
 if (!isset($vars['width'])) {
 	$vars['width'] = $size != 'master' ? $icon_sizes[$size]['w'] : null;
 }
+
 if (!isset($vars['height'])) {
 	$vars['height'] = $size != 'master' ? $icon_sizes[$size]['h'] : null;
 }

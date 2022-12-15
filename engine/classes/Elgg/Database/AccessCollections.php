@@ -219,7 +219,7 @@ class AccessCollections {
 	 * @return bool
 	 */
 	public function hasAccessToEntity(\ElggEntity $entity, int $user_guid = 0): bool {
-		if ($entity->access_id == ACCESS_PUBLIC) {
+		if ($entity->access_id === ACCESS_PUBLIC) {
 			// Public entities are always accessible
 			return true;
 		}
@@ -237,7 +237,7 @@ class AccessCollections {
 			return true;
 		}
 
-		if (!empty($user_guid )&& $entity->access_id === ACCESS_LOGGED_IN) {
+		if (!empty($user_guid) && $entity->access_id === ACCESS_LOGGED_IN) {
 			// Existing users have access to entities with logged in access
 			return true;
 		}
@@ -332,11 +332,10 @@ class AccessCollections {
 	 * @param int $owner_guid owner of the collections
 	 *
 	 * @return array
-	 *
 	 * @since 3.2
 	 */
 	protected function getCollectionsForWriteAccess(int $owner_guid) {
-		$subtypes =  $this->events->triggerResults('access:collections:write:subtypes', 'user', ['owner_guid' => $owner_guid], []);
+		$subtypes = $this->events->triggerResults('access:collections:write:subtypes', 'user', ['owner_guid' => $owner_guid], []);
 		
 		$select = Select::fromTable(self::TABLE_NAME);
 		

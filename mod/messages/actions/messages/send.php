@@ -1,7 +1,7 @@
 <?php
 /**
-* Ssend a message action
-*/
+ * Ssend a message action
+ */
 
 $subject = elgg_strip_tags((string) get_input('subject'));
 $body = get_input('body');

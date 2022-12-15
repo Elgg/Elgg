@@ -7,7 +7,7 @@
 
 $items = elgg_extract('items', $vars);
 
-if (is_array($items) && sizeof($items) > 0) {
+if (is_array($items) && count($items) > 0) {
 	foreach ($items as $item) {
 		echo elgg_view_list_item($item, $vars);
 	}

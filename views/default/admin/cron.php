@@ -48,25 +48,15 @@ foreach ($periods as $period) {
 	$table_content .= elgg_format_element('tr', [], implode(PHP_EOL, $row));
 }
 
-$period_hd = elgg_echo('admin:cron:period');
-$friendly_hd = elgg_echo('admin:cron:friendly');
-$date_hd = elgg_echo('admin:cron:date');
-$msg_hd = elgg_echo('admin:cron:msg');
+$header = elgg_format_element('th', [], elgg_echo('admin:cron:period'));
+$header .= elgg_format_element('th', [], elgg_echo('admin:cron:friendly'));
+$header .= elgg_format_element('th', [], elgg_echo('admin:cron:date'));
+$header .= elgg_format_element('th', [], elgg_echo('admin:cron:msg'));
+$header = elgg_format_element('tr', [], $header);
+$header = elgg_format_element('thead', [], $header);
 
-$table = <<<HTML
-<table class="elgg-table">
-	<thead>
-		<tr>
-			<th>$period_hd</th>
-			<th>$friendly_hd</th>
-			<th>$date_hd</th>
-			<th>$msg_hd</th>
-		</tr>
-	</thead>
-	<tbody>
-		$table_content
-	</tbody>
-</table>
-HTML;
+$table_content = elgg_format_element('tbody', [], $table_content);
+
+$table = elgg_format_element('table', ['class' => 'elgg-table'], $header . $table_content);
 
 echo elgg_view_module('info', elgg_echo('admin:cron:record'), $table);

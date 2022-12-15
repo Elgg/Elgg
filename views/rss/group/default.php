@@ -24,16 +24,14 @@ $creator = elgg_view('page/components/creator', $vars);
 $georss = elgg_view('page/components/georss', $vars);
 $extension = elgg_view('extensions/item', $vars);
 
-$item = <<<__HTML
+?>
 <item>
-	<guid isPermaLink="true">$permalink</guid>
-	<pubDate>$pubdate</pubDate>
-	<link>$permalink</link>
-	<title><![CDATA[$title]]></title>
-	<description><![CDATA[$description]]></description>
-	$creator$georss$extension
+	<guid isPermaLink="true"><?= $permalink; ?></guid>
+	<pubDate><?= $pubdate; ?></pubDate>
+	<link><?= $permalink; ?></link>
+	<title><![CDATA[<?= $title; ?>]]></title>
+	<description><![CDATA[<?= $description; ?>]]></description>
+	<?= $creator; ?>
+	<?= $georss; ?>
+	<?= $extension; ?>
 </item>
-
-__HTML;
-
-echo $item;

@@ -1,8 +1,11 @@
 <?php
-// This will be fetched via ajax by the developers/ajax_example AMD module
+/**
+ * This will be fetched via ajax by the developers/ajax_example AMD module
+ */
 
-if (!isset($vars['entity']) || !$vars['entity'] instanceof ElggSite) {
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggSite) {
 	elgg_register_error_message('$vars not set by ajax.view()');
 }
 
-echo "form demo";
+echo 'form demo';

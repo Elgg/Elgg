@@ -22,7 +22,7 @@ $vars['class'] = elgg_extract_class($vars, 'elgg-input-longtext');
 $defaults = [
 	'rows' => '10',
 	'cols' => '50',
-	'id' => "elgg-input-" . base_convert(mt_rand(), 10, 36),
+	'id' => 'elgg-input-' . base_convert(mt_rand(), 10, 36),
 ];
 
 $vars = array_merge($defaults, $vars);

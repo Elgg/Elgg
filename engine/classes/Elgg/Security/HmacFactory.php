@@ -45,6 +45,7 @@ class HmacFactory {
 		if (!$key) {
 			$key = $this->site_secret->get(true);
 		}
+		
 		return new Hmac($key, [$this->crypto, 'areEqual'], $data, $algo);
 	}
 	
@@ -80,6 +81,7 @@ class HmacFactory {
 		if (!preg_match('~^(\d+)\.([a-zA-Z0-9\-_]+)$~', $code, $matches)) {
 			return false;
 		}
+		
 		$time = (int) $matches[1];
 		$mac = $matches[2];
 		

@@ -250,12 +250,12 @@ class RouteRegistrationService {
 			}
 
 			switch ($prop) {
-				case 'title' :
-				case 'name' :
+				case 'title':
+				case 'name':
 					$parameters[$prop] = elgg_get_friendly_title($entity->getDisplayName());
 					break;
 
-				default :
+				default:
 					$parameters[$prop] = $entity->$prop;
 					break;
 			}

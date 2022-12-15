@@ -42,7 +42,6 @@ abstract class BaseCommand extends \Symfony\Component\Console\Command\Command {
 	 * @return mixed
 	 */
 	public function ask($question, $default = null, $hidden = false, $required = true) {
-
 		/* @var $helper QuestionHelper */
 		$helper = $this->getHelper('question');
 
@@ -51,6 +50,7 @@ abstract class BaseCommand extends \Symfony\Component\Console\Command\Command {
 		if (is_scalar($default) && !is_bool($default)) {
 			$question .= " [{$default}]";
 		}
+		
 		$question .= ': ';
 		
 		$q = new Question($question, $default);
@@ -94,18 +94,18 @@ abstract class BaseCommand extends \Symfony\Component\Console\Command\Command {
 		$formatter = new FormatterHelper();
 
 		switch ($level) {
-			case LogLevel::EMERGENCY :
-			case LogLevel::CRITICAL :
-			case LogLevel::ALERT :
-			case LogLevel::ERROR :
+			case LogLevel::EMERGENCY:
+			case LogLevel::CRITICAL:
+			case LogLevel::ALERT:
+			case LogLevel::ERROR:
 				$style = 'error';
 				break;
 
-			case LogLevel::WARNING :
+			case LogLevel::WARNING:
 				$style = 'comment';
 				break;
 
-			default :
+			default:
 				$style = 'info';
 				break;
 		}

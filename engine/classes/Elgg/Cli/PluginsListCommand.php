@@ -34,7 +34,7 @@ class PluginsListCommand extends Command {
 		$status = $this->option('status');
 		if (!in_array($status, ['all', 'active', 'inactive'])) {
 			$this->error(elgg_echo('cli:plugins:list:error:status', [$status, 'all | active | inactive']));
-			return 1;
+			return self::FAILURE;
 		}
 
 		if ($this->option('refresh') !== false) {
@@ -65,9 +65,9 @@ class PluginsListCommand extends Command {
 
 			$table->render();
 		} catch (PluginException $ex) {
-			return 2;
+			return self::INVALID;
 		}
 
-		return 0;
+		return self::SUCCESS;
 	}
 }

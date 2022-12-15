@@ -96,6 +96,7 @@ class PageOwnerService {
 		if ($guid < 0) {
 			throw new RangeException(__METHOD__ . ' requires a positive integer.');
 		}
+		
 		$this->page_owner_guid = $guid;
 	}
 	

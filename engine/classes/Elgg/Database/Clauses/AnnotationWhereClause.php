@@ -124,25 +124,25 @@ class AnnotationWhereClause extends WhereClause {
 		$wheres[] = $qb->between($alias('time_created'), $this->created_after, $this->created_before, ELGG_VALUE_TIMESTAMP);
 
 		if ($this->sort_by_calculation) {
-			if (!in_array(strtolower($this->sort_by_calculation), QueryBuilder::$calculations)) {
+			if (!in_array(strtolower($this->sort_by_calculation), QueryBuilder::CALCULATIONS)) {
 				throw new DomainException("'{$this->sort_by_calculation}' is not a valid numeric calculation formula");
 			}
 
 			$calculation = "{$this->sort_by_calculation}(CAST({$alias('value')} AS DECIMAL(10, 2)))";
-			$select_alias = "annotation_calculation";
+			$select_alias = 'annotation_calculation';
 
-			$qb->addSelect("$calculation AS $select_alias");
+			$qb->addSelect("{$calculation} AS {$select_alias}");
 			$qb->addGroupBy($alias('entity_guid'));
 			$qb->addOrderBy($select_alias, $this->sort_by_direction);
-		} else if ($this->sort_by_direction) {
+		} elseif ($this->sort_by_direction) {
 			$column = $alias('value');
 			if ($this->value_type == ELGG_VALUE_INTEGER) {
-				$column = "CAST($column AS SIGNED)";
+				$column = "CAST({$column} AS SIGNED)";
 			}
+			
 			$qb->addOrderBy($column, $this->sort_by_direction);
 		}
 
 		return $qb->merge($wheres);
 	}
-
 }

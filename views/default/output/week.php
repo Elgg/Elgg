@@ -6,6 +6,6 @@
  * @uses $vars['format'] Display format (Default: 2019 28)
  */
  
-$vars['format'] = elgg_extract('format', $vars, "Y W");
+$vars['format'] = elgg_extract('format', $vars, 'Y W');
 
-echo elgg_view("output/date", $vars);
+echo elgg_view('output/date', $vars);

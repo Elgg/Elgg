@@ -24,7 +24,7 @@ jobs:
         with:
           pattern: '^.{1,160}(\n|$)'
           flags: ''
-          error: 'Maximun line length of 160 characters exceeded on the first line'
+          error: 'Maximum line length of 160 characters exceeded on the first line'
           excludeTitle: true
           excludeDescription: true
           checkAllCommitMessages: true
@@ -74,4 +74,4 @@ jobs:
           composer install
           
       - name: PHP Code Style checks
-        run: vendor/bin/phpcs -v --standard=vendor/elgg/sniffs/elgg.xml -sp --ignore=*/mod/login_as/* engine/classes engine/lib actions mod views
+        run: vendor/bin/phpcs --standard=vendor/elgg/sniffs/src/Elgg -sp engine/classes engine/lib actions mod views

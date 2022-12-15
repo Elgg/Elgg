@@ -17,9 +17,11 @@ foreach ($filter_tabs as $name => $tab) {
 	if (!is_array($tab)) {
 		continue;
 	}
+	
 	if (!isset($tab['name'])) {
 		$tab['name'] = $name;
 	}
+	
 	$filter_tabs[$name] = ElggMenuItem::factory($tab);
 }
 

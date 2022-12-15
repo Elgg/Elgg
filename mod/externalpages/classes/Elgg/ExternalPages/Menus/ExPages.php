@@ -33,6 +33,7 @@ class ExPages {
 				'selected' => $page === $type,
 			]);
 		}
+		
 		return $return;
 	}
 }

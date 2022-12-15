@@ -85,8 +85,8 @@ try {
 	} catch (LoginException $e) {
 		// if exception thrown, this probably means there is a validation
 		// plugin that has disabled the user
-		return elgg_error_response($e->getMessage(), REFERRER, $e->getCode() ? : ELGG_HTTP_UNAUTHORIZED);
+		return elgg_error_response($e->getMessage(), REFERRER, $e->getCode() ?: ELGG_HTTP_UNAUTHORIZED);
 	}
 } catch (RegistrationException $r) {
-	return elgg_error_response($r->getMessage(), REFERRER, $r->getCode() ? : ELGG_HTTP_BAD_REQUEST);
+	return elgg_error_response($r->getMessage(), REFERRER, $r->getCode() ?: ELGG_HTTP_BAD_REQUEST);
 }

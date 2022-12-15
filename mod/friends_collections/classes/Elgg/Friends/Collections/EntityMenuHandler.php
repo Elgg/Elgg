@@ -15,7 +15,6 @@ class EntityMenuHandler {
 	 * @return void|\ElggMenuItem[]
 	 */
 	public function __invoke(\Elgg\Event $event) {
-
 		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggUser) {
 			return;
@@ -45,5 +44,4 @@ class EntityMenuHandler {
 
 		return $return;
 	}
-
 }

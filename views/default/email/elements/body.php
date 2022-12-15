@@ -32,7 +32,7 @@ if ($add_mute_link && $object instanceof \ElggEntity && $recipient instanceof \E
 	])), elgg_echo('notifications:mute:email:footer'));
 }
 
-echo <<<__BODY
+?>
 <table class="body-wrapper">
 	<tr>
 		<td>
@@ -45,21 +45,21 @@ echo <<<__BODY
 									<table class="header">
 										<tr>
 											<td>
-												<h1>{$body_title}</h1>
+												<h1><?= $body_title; ?></h1>
 											</td>
 										</tr>
 									</table>
 									<table class="content">
 										<tr>
 											<td>
-												{$body}
+												<?= $body; ?>
 											</td>
 										</tr>
 									</table>
 									<table class="footer">
 										<tr>
 											<td>
-												{$site_link}
+												<?= $site_link; ?>
 											</td>
 										</tr>
 									</table>
@@ -72,4 +72,3 @@ echo <<<__BODY
 		</td>
 	</tr>
 </table>
-__BODY;

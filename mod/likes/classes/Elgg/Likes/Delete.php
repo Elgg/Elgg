@@ -17,9 +17,9 @@ class Delete {
 	 *
 	 * @param \Elgg\Event $event 'delete', 'group'|'object'|'site'|'user'
 	 *
-	 *  @return void
+	 * @return void
 	 */
-	public static function deleteLikes(\Elgg\Event $event) {
+	public static function deleteLikes(\Elgg\Event $event): void {
 		
 		$entity = $event->getObject();
 		if (!$entity instanceof \ElggEntity) {

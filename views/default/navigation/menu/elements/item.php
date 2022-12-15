@@ -20,6 +20,7 @@ if (!empty($children)) {
 	if ($item->getSelected()) {
 		$link_class = 'elgg-menu-opened';
 	}
+	
 	$item->addLinkClass($link_class);
 
 	$item->addLinkClass('elgg-menu-parent');
@@ -32,12 +33,12 @@ if (!empty($children)) {
 	unset($child_menu_vars['display']);
 
 	switch ($display) {
-		case 'dropdown' :
+		case 'dropdown':
 			$item->addDeps(['elgg/menus/dropdown']);
 			$item->addItemClass('elgg-menu-item-has-dropdown');
 			break;
 
-		case 'toggle' :
+		case 'toggle':
 			$item->addDeps(['elgg/menus/toggle']);
 			$item->addItemClass('elgg-menu-item-has-toggle');
 			break;

@@ -77,6 +77,7 @@ class DataService {
 		if ($inst === null) {
 			$inst = new self();
 		}
+		
 		return $inst;
 	}
 }

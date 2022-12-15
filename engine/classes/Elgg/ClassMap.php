@@ -23,13 +23,15 @@ class ClassMap {
 	 * Get the path for a class/interface/trait
 	 *
 	 * @param string $class a class/interface/trait name
+	 *
 	 * @return string the file path or empty string
 	 */
 	public function getPath($class) {
-		if ('\\' === $class[0]) {
+		if ($class[0] === '\\') {
 			$class = substr($class, 1);
 		}
-		return isset($this->map[$class]) ? $this->map[$class] : "";
+		
+		return $this->map[$class] ?? '';
 	}
 
 	/**
@@ -37,16 +39,19 @@ class ClassMap {
 	 *
 	 * @param string $class a class/interface/trait name
 	 * @param string $path  absolute file path
+	 *
 	 * @return \Elgg\ClassMap
 	 */
 	public function setPath($class, $path) {
-		if ('\\' === $class[0]) {
+		if ($class[0] === '\\') {
 			$class = substr($class, 1);
 		}
+		
 		if (!isset($this->map[$class]) || $this->map[$class] !== $path) {
 			$this->map[$class] = $path;
 			$this->altered = true;
 		}
+		
 		return $this;
 	}
 
@@ -63,6 +68,7 @@ class ClassMap {
 	 * Set the altered flag
 	 *
 	 * @param bool $altered Whether the class map has been altered
+	 *
 	 * @return \Elgg\ClassMap
 	 */
 	public function setAltered($altered) {
@@ -84,6 +90,7 @@ class ClassMap {
 	 *
 	 * @param array $map array with keys being class/interface/trait names and
 	 *                   values the absolute file paths that define them
+	 *
 	 * @return \Elgg\ClassMap
 	 */
 	public function setMap(array $map) {
@@ -96,6 +103,7 @@ class ClassMap {
 	 *
 	 * @param array $map array with keys being class/interface/trait names and
 	 *                   values the absolute file paths that define them
+	 *
 	 * @return \Elgg\ClassMap
 	 */
 	public function mergeMap(array $map) {

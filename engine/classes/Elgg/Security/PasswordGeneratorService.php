@@ -11,7 +11,6 @@ use Elgg\I18n\Translator;
 use Elgg\Values;
 use Hackzilla\PasswordGenerator\Generator\RequirementPasswordGenerator;
 
-
 /**
  * Password generator service
  *

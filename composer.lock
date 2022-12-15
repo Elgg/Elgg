@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c240873b3da4378aa26c3af234b75fc3",
+    "content-hash": "a17263b51bb0d6f555b07834ea779b4e",
     "packages": [
         {
             "name": "cakephp/core",
@@ -6258,21 +6258,22 @@
         },
         {
             "name": "elgg/sniffs",
-            "version": "4.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elgg/elgg-coding-standards.git",
-                "reference": "f0214119318906abe27ca9a7e0b16c17b62b3caa"
+                "reference": "5f64222380dbaf2fa9586be312e1e2b4f3417074"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elgg/elgg-coding-standards/zipball/f0214119318906abe27ca9a7e0b16c17b62b3caa",
-                "reference": "f0214119318906abe27ca9a7e0b16c17b62b3caa",
+                "url": "https://api.github.com/repos/Elgg/elgg-coding-standards/zipball/5f64222380dbaf2fa9586be312e1e2b4f3417074",
+                "reference": "5f64222380dbaf2fa9586be312e1e2b4f3417074",
                 "shasum": ""
             },
             "require": {
                 "squizlabs/php_codesniffer": "^3.5.4"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -6286,9 +6287,9 @@
             "description": "Elgg coding standards",
             "support": {
                 "issues": "https://github.com/Elgg/elgg-coding-standards/issues",
-                "source": "https://github.com/Elgg/elgg-coding-standards/tree/4.x"
+                "source": "https://github.com/Elgg/elgg-coding-standards/tree/master"
             },
-            "time": "2020-02-26T15:26:16+00:00"
+            "time": "2022-12-19T14:53:48+00:00"
         },
         {
             "name": "jms/metadata",

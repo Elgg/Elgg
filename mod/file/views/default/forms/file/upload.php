@@ -12,6 +12,7 @@ $container_guid = elgg_extract('container_guid', $vars);
 if (!$container_guid) {
 	$container_guid = elgg_get_logged_in_user_guid();
 }
+
 $guid = (int) elgg_extract('guid', $vars);
 
 if (!empty($guid)) {

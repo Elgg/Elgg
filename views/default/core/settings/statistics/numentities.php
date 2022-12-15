@@ -27,7 +27,7 @@ foreach ($entity_stats as $type => $subtypes) {
 			$label = elgg_echo("item:{$type}:{$subtype}");
 		}
 		
-		$cells[] = elgg_format_element('td', ['class' => 'column-one'], elgg_format_element('b', [], "{$label}:"));
+		$cells[] = elgg_format_element('td', [], elgg_format_element('b', [], "{$label}:"));
 		$cells[] = elgg_format_element('td', [], $count);
 		
 		if (elgg_entity_has_capability($type, $subtype, 'searchable') || elgg_is_admin_logged_in()) {

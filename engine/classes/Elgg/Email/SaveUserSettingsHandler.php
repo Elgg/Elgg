@@ -27,7 +27,7 @@ class SaveUserSettingsHandler {
 			return;
 		}
 		
-		if ($user->delayed_email_interval  === $delayed_email_interval) {
+		if ($user->delayed_email_interval === $delayed_email_interval) {
 			// no change
 			return;
 		}

@@ -23,6 +23,7 @@ if (!isset($time)) {
 	$time = $entity->time_created;
 	$time_updated = $entity->time_updated;
 }
+
 if (!$time) {
 	return;
 }

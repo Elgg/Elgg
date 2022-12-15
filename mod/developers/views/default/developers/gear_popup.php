@@ -17,7 +17,7 @@ $settings_form = elgg_view('admin/developers/settings');
 elgg_pop_context();
 elgg_pop_context();
 
-$form_heading = elgg_echo('menu:page:header:develop') . ": " . elgg_echo('admin:developers:settings');
+$form_heading = elgg_echo('menu:page:header:develop') . ': ' . elgg_echo('admin:developers:settings');
 
 ?>
 <div class='developers-gear-popup'>

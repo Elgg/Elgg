@@ -17,7 +17,7 @@ $export = $result->export();
 			<td>
 				<?php
 				if ($result instanceof SuccessResult) {
-					echo "OK";
+					echo 'OK';
 				} else {
 					echo "**** ERROR ({$export->status}) ****";
 				}
@@ -25,7 +25,7 @@ $export = $result->export();
 			</td>
 		</tr>
 
-		<?php if ($export->message!="") { ?>
+		<?php if ($export->message != '') { ?>
 		<tr><td width="100" valign="top"><b>Message:</b></td> <td><?php echo $export->message; ?></td></tr>
 		<?php } ?>
 		<?php if ($export->result) { ?>

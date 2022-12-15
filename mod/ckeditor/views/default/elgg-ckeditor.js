@@ -42,6 +42,7 @@ define(function (require) {
 							// Editor has been disabled
 							return;
 						}
+						
 						delete opts.disabled;
 
 						var visual = opts.state !== 'html';
@@ -201,6 +202,7 @@ define(function (require) {
 							if (width) {
 								element.attributes.width = width;
 							}
+							
 							match = /(?:^|\s)height\s*:\s*(\d+)px/i.exec(style);
 							var height = match && match[1];
 							if (height) {

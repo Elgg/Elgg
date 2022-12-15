@@ -10,7 +10,7 @@ use Elgg\Exceptions\LoginException;
 $user_guid = (int) get_input('user_guid');
 
 $user = get_user($user_guid);
-if (empty($user)) {
+if (!$user instanceof \ElggUser) {
 	return elgg_error_response(elgg_echo('action:user:login_as:unknown'));
 }
 
@@ -20,7 +20,8 @@ $original_user_guid = $original_user->guid;
 // store the original persistent login state to restore on logout_as.
 $persistent = false;
 if (isset($_COOKIE['elggperm'])) {
-	if (($original_perm_user = elgg_get_user_by_persistent_token($_COOKIE['elggperm'])) && $original_user->guid == $original_perm_user->guid) {
+	$original_perm_user = elgg_get_user_by_persistent_token($_COOKIE['elggperm']);
+	if ($original_perm_user instanceof \ElggUser && $original_user->guid === $original_perm_user->guid) {
 		$persistent = true;
 	}
 }

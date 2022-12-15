@@ -1,5 +1,4 @@
 define(['jquery', 'elgg', 'jquery-ui/widgets/datepicker'], function ($, elgg) {
-
 	// the language module may need loading
 	var i18n_ready = $.Deferred();
 	if (elgg.config.current_language === 'en') {
@@ -33,6 +32,7 @@ define(['jquery', 'elgg', 'jquery-ui/widgets/datepicker'], function ($, elgg) {
 			if (!$(selector).length) {
 				return;
 			}
+			
 			var defaults = {
 				dateFormat: 'yy-mm-dd',
 				nextText: '»',
@@ -54,6 +54,7 @@ define(['jquery', 'elgg', 'jquery-ui/widgets/datepicker'], function ($, elgg) {
 							var timestamp = Date.UTC(instance.selectedYear, instance.selectedMonth, instance.selectedDay);
 							timestamp = timestamp / 1000;
 						}
+						
 						$('input[rel="' + this.id + '"]').val(timestamp);
 					}
 				};
@@ -76,4 +77,3 @@ define(['jquery', 'elgg', 'jquery-ui/widgets/datepicker'], function ($, elgg) {
 
 	return datepicker;
 });
-

@@ -4,7 +4,6 @@ namespace Elgg\Filesystem;
 
 use Elgg\Exceptions\InvalidArgumentException;
 
-
 /**
  * A simple directory abstraction.
  *
@@ -82,7 +81,6 @@ interface Directory {
 	 * @throws InvalidArgumentException
 	 */
 	public function getPath($path = '');
-	
 	
 	/**
 	 * Do a PHP include of the file and return the result.

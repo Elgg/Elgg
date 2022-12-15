@@ -147,10 +147,13 @@ abstract class ElggData implements CollectionItemInterface,
 	 */
 	abstract public function getObjectFromID(int $id);
 
-	/*
+	/**
 	 * ITERATOR INTERFACE
 	 */
-
+	
+	/**
+	 * @var bool is the iterator still valid
+	 */
 	protected $valid = false;
 
 	/**
@@ -162,7 +165,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 */
 	#[\ReturnTypeWillChange]
 	public function rewind() {
-		$this->valid = (false !== reset($this->attributes));
+		$this->valid = (reset($this->attributes) !== false);
 	}
 
 	/**
@@ -198,7 +201,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 */
 	#[\ReturnTypeWillChange]
 	public function next() {
-		$this->valid = (false !== next($this->attributes));
+		$this->valid = (next($this->attributes) !== false);
 	}
 
 	/**

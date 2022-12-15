@@ -68,8 +68,8 @@ class Route extends \Symfony\Component\Routing\Route {
 		};
 
 		switch ($route_parts[0]) {
-			case 'view' :
-			case 'edit' :
+			case 'view':
+			case 'edit':
 				$username = (string) elgg_extract('username', $params);
 				if (!empty($username)) {
 					return elgg_get_user_by_username($username);
@@ -81,8 +81,8 @@ class Route extends \Symfony\Component\Routing\Route {
 				}
 				break;
 
-			case 'add' :
-			case 'collection' :
+			case 'add':
+			case 'collection':
 				$username = (string) elgg_extract('username', $params);
 				if (!empty($username)) {
 					return elgg_get_user_by_username($username);

@@ -127,6 +127,7 @@ class Crypto {
 		if (function_exists('mb_strlen')) {
 			return mb_strlen($binary_string, '8bit');
 		}
+		
 		return strlen($binary_string);
 	}
 }

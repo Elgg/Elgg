@@ -1,5 +1,7 @@
 <?php
 
+use \Michelf\MarkdownExtra;
+
 elgg_set_context('admin');
 
 $plugin_id = (string) elgg_extract('plugin_id', $vars);
@@ -16,7 +18,7 @@ if (!$plugin instanceof \ElggPlugin) {
 		'title' => $error,
 	]);
 	echo elgg_view_page($error, $body, 'admin');
-	return true;
+	return;
 }
 
 $file_contents = false;
@@ -28,12 +30,11 @@ if (!$file_contents) {
 	$error = elgg_echo('admin:plugins:markdown:unknown_file');
 	$body = elgg_view_layout('admin', ['content' => $error, 'title' => $error]);
 	echo elgg_view_page($error, $body, 'admin');
-	return true;
+	return;
 }
 
 $title = $plugin->getDisplayName() . ": $filename";
 
-use \Michelf\MarkdownExtra;
 $text = MarkdownExtra::defaultTransform($file_contents);
 
 $body = elgg_view_layout('admin', [

@@ -1,6 +1,5 @@
 <?php
 
-
 $anchor1 = elgg_view('output/url', [
 	'text' => 'Simple anchor',
 	'href' => '#anchor',
@@ -14,7 +13,7 @@ $anchor2 = elgg_view('output/url', [
 ]);
 
 $query = [];
-for ($i=0; $i<50; $i++) {
+for ($i = 0; $i < 50; $i++) {
 	$query['q'][$i] = elgg_generate_password();
 }
 
@@ -50,5 +49,3 @@ volutpat enim diam eget metus. Maecenas ornare tortor. Donec sed tellus
 eget sapien <?= $anchor3 ?> nonummy. Mauris a ante. Suspendisse quam sem,
 consequat at, commodo vitae, feugiat in, nunc. Morbi imperdiet augue
 quis tellus <?= $anchor4 ?>.</p>
-
-

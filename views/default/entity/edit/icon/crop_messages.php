@@ -26,6 +26,7 @@ if ($min_width > 0) {
 		'data-min-width' => $min_width,
 	], elgg_echo('entity:edit:icon:crop_messages:width', [$min_width]) . '&nbsp;');
 }
+
 $min_height = (int) elgg_extract('cropper_min_height', $vars);
 if ($min_height > 0) {
 	$errors[] = elgg_format_element('span', [

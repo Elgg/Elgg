@@ -11,6 +11,7 @@ $tabs = elgg_extract('tabs', $vars);
 if (empty($tabs) || !is_array($tabs)) {
 	return;
 }
+
 unset($vars['tabs']);
 
 // make sure tabs have a name (for menu item rendering)

@@ -60,6 +60,7 @@ if ($timestamp) {
 	if (!isset($vars['id'])) {
 		$vars['id'] = $name;
 	}
+	
 	echo elgg_view('input/hidden', [
 		'name' => $name,
 		'value' => $value_timestamp,

@@ -42,7 +42,7 @@ class ElggSite extends \ElggEntity {
 		$this->attributes['access_id'] = ACCESS_PUBLIC;
 		$this->attributes['time_updated'] = null;
 		$this->attributes['last_action'] = null;
-		$this->attributes['enabled'] = "yes";
+		$this->attributes['enabled'] = 'yes';
 	}
 
 	/**
@@ -118,9 +118,10 @@ class ElggSite extends \ElggEntity {
 	 */
 	public function __set($name, $value) {
 		if ($name === 'url') {
-			_elgg_services()->logger->warning("ElggSite::url cannot be set");
+			_elgg_services()->logger->warning('ElggSite::url cannot be set');
 			return;
 		}
+		
 		parent::__set($name, $value);
 	}
 
@@ -131,6 +132,7 @@ class ElggSite extends \ElggEntity {
 		if ($name === 'url') {
 			return $this->getURL();
 		}
+		
 		return parent::__get($name);
 	}
 

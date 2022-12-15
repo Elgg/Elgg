@@ -79,13 +79,13 @@ class DiskFilestore extends Filestore {
 		}
 
 		switch ($mode) {
-			case 'read' :
+			case 'read':
 				$mode = 'rb';
 				break;
-			case 'write' :
+			case 'write':
 				$mode = 'w+b';
 				break;
-			case 'append' :
+			case 'append':
 				$mode = 'a+b';
 				break;
 			default:
@@ -150,6 +150,7 @@ class DiskFilestore extends Filestore {
 				$target = readlink($filename);
 				file_exists($target) && unlink($target);
 			}
+			
 			return unlink($filename);
 		}
 

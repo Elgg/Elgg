@@ -48,6 +48,7 @@ if (!$current_info) {
 	]);
 	elgg_pop_context();
 }
+
 elgg_pop_context();
 
 echo $content;

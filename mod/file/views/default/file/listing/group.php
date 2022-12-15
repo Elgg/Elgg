@@ -16,6 +16,6 @@ echo elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'file',
 	'container_guid' => $container->guid,
-	'no_results' => elgg_echo("file:none"),
+	'no_results' => elgg_echo('file:none'),
 	'distinct' => false,
 ]);

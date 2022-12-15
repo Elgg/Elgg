@@ -586,6 +586,7 @@ class SubscriptionsService {
 			if (!in_array('delayed_email', $user_methods) || !in_array('email', $user_methods)) {
 				return $user_methods;
 			}
+			
 			$pos = array_search('delayed_email', $user_methods);
 			unset($user_methods[$pos]);
 			

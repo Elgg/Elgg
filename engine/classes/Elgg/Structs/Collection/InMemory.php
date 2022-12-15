@@ -11,6 +11,7 @@ use Elgg\Structs\Collection;
  * @internal
  */
 final class InMemory implements Collection {
+	
 	/** @var array */
 	private $items;
 	
@@ -77,6 +78,7 @@ final class InMemory implements Collection {
 		foreach ($this->items as $item) {
 			$results[] = $mapper($item);
 		}
+		
 		return self::fromArray($results);
 	}
 	

@@ -140,7 +140,7 @@ function elgg_ws_map_api_hash(string $algo): string {
  */
 function elgg_ws_calculate_hmac(string $algo, string $time, string $nonce, string $api_key, string $secret_key, string $get_variables, string $post_hash = ''): string {
 
-	elgg_log("HMAC Parts: $algo, $time, $api_key, $secret_key, $get_variables, $post_hash");
+	elgg_log("HMAC Parts: {$algo}, {$time}, {$api_key}, {$secret_key}, {$get_variables}, {$post_hash}");
 
 	$ctx = hash_init(elgg_ws_map_api_hash($algo), HASH_HMAC, $secret_key);
 
@@ -148,7 +148,7 @@ function elgg_ws_calculate_hmac(string $algo, string $time, string $nonce, strin
 	hash_update($ctx, trim($nonce));
 	hash_update($ctx, trim($api_key));
 	hash_update($ctx, trim($get_variables));
-	if (trim($post_hash) != "") {
+	if (trim($post_hash) !== '') {
 		hash_update($ctx, trim($post_hash));
 	}
 
