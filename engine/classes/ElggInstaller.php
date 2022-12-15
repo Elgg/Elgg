@@ -894,7 +894,7 @@ class ElggInstaller {
 		try {
 			$app = $this->getApp();
 
-			$config = Config::fromFile(Config::resolvePath());
+			$config = Config::factory();
 			$app->internal_services->set('config', $config);
 
 			// in case the DB instance is already captured in services, we re-inject its settings.

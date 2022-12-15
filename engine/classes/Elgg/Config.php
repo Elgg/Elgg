@@ -297,39 +297,28 @@ class Config {
 	 * @param string $settings_path Path of settings file
 	 *
 	 * @return Config
-	 * @throws ConfigurationException
 	 */
 	public static function factory(string $settings_path = ''): static {
-		$reason1 = '';
-
 		$settings_path = self::resolvePath($settings_path);
 
-		$config = self::fromFile($settings_path, $reason1);
-
-		if (!$config instanceof Config) {
-			throw new ConfigurationException(__METHOD__ . ": Reading configs failed: {$reason1}");
-		}
-
-		return $config;
+		return self::fromFile($settings_path);
 	}
 
 	/**
 	 * Build a config from a file
 	 *
-	 * @param string $path   Path of settings.php
-	 * @param string $reason Returned reason for failure
+	 * @param string $path Path of settings.php
 	 *
-	 * @return bool|Config false on failure
+	 * @return Config
+	 * @throws ConfigurationException
 	 */
-	public static function fromFile($path, &$reason = '') {
+	protected static function fromFile($path): static {
 		if (!is_file($path)) {
-			$reason = "File $path not present.";
-			return false;
+			throw new ConfigurationException(__METHOD__ . ": Reading configs failed: File {$path} not present.");
 		}
 
 		if (!is_readable($path)) {
-			$reason = "File $path not readable.";
-			return false;
+			throw new ConfigurationException(__METHOD__ . ": Reading configs failed: File {$path} not readable.");
 		}
 
 		// legacy loading. If $CONFIG doesn't exist, remove it after the
@@ -345,13 +334,11 @@ class Config {
 		Includer::requireFile($path);
 
 		if (empty($GLOBALS['CONFIG']->dataroot)) {
-			$reason = 'The Elgg settings file is missing $CONFIG->dataroot.';
-			return false;
+			throw new ConfigurationException(__METHOD__ . ': Reading configs failed: The Elgg settings file is missing $CONFIG->dataroot.');
 		}
 
 		if (empty($GLOBALS['CONFIG']->wwwroot)) {
-			$reason = 'The Elgg settings file is missing $CONFIG->wwwroot.';
-			return false;
+			throw new ConfigurationException(__METHOD__ . ': Reading configs failed: The Elgg settings file is missing $CONFIG->wwwroot.');
 		}
 
 		$config = new self(get_object_vars($GLOBALS['CONFIG']));
