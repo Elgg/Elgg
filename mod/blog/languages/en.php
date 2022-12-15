@@ -54,6 +54,8 @@ return array(
 
 View and comment on the blog post:
 %s',
+	
+	'notification:mentions:object:blog:subject' => '%s mentioned you in a blog post',
 
 	// widget
 	'widgets:blog:name' => 'Blog posts',

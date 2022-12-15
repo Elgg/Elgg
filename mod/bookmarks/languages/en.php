@@ -38,7 +38,9 @@ Address: %s
 
 View and comment on the bookmark:
 %s',
-
+	
+	'notification:mentions:object:bookmarks:subject' => '%s mentioned you in a bookmark',
+	
 	'bookmarks:numbertodisplay' => 'Number of bookmarks to display',
 
 	'river:object:bookmarks:create' => '%s bookmarked %s',

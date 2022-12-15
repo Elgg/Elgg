@@ -41,6 +41,8 @@ return array(
 
 View and comment on the page:
 %s',
+	
+	'notification:mentions:object:page:subject' => '%s mentioned you in a page',
 
 	'pages:more' => 'More pages',
 	'pages:none' => 'No pages created yet',

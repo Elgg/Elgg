@@ -3,8 +3,8 @@
  * Groups plugin settings
  */
 
-$plugin = elgg_extract('entity', $vars);
 /* @var ElggPlugin $plugin */
+$plugin = elgg_extract('entity', $vars);
 
 $fields = [
 	[

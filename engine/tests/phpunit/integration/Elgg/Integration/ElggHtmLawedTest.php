@@ -49,6 +49,7 @@ class ElggHtmLawedTest extends IntegrationTestCase {
 		// only use the Elgg core htmlAwed configuration
 		elgg()->events->backup();
 		elgg()->events->registerHandler('sanitize', 'input', \Elgg\Input\ValidateInputHandler::class, 1);
+		elgg()->events->registerHandler('attributes', 'htmlawed', '\Elgg\Input\ValidateInputHandler::sanitizeStyles');
 	}
 
 	public function down() {

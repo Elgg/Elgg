@@ -3,8 +3,7 @@
  * Action for adding a wire post
  */
 
-// don't filter since we strip and filter escapes some characters
-$body = get_input('body', '', false);
+$body = get_input('body');
 $parent_guid = (int) get_input('parent_guid');
 
 // make sure the post isn't blank
@@ -22,7 +21,7 @@ $forward = null;
 // if reply, forward to thread display page
 if ($parent_guid) {
 	$parent = get_entity($parent_guid);
-	if ($parent instanceof ElggWire) {
+	if ($parent instanceof \ElggWire) {
 		$forward = elgg_generate_url('collection:object:thewire:thread', [
 			'guid' => $parent->wire_thread,
 		]);

@@ -83,6 +83,7 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 			$this->assertEquals([
 				'parse_urls' => true,
 				'parse_emails' => true,
+				'parse_mentions' => true,
 				'autop' => true,
 				'sanitize' => true,
 			], $value['options']);
@@ -112,6 +113,7 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 			$this->assertEquals([
 				'parse_urls' => true,
 				'parse_emails' => true,
+				'parse_mentions' => true,
 				'autop' => true,
 				'sanitize' => true,
 			], $value['options']);

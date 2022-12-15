@@ -912,8 +912,11 @@ Routing
 Views
 =====
 
+**attributes, htmlawed** |results|
+	Allows changes to individual attributes.
+
 **allowed_styles, htmlawed** |results|
-	Filter the HTMLawed allowed style array.
+	Configure allowed styles for HTMLawed.
 
 **config, htmlawed** |results|
 	Filter the HTMLawed ``$config`` array.

@@ -98,13 +98,6 @@ textarea:focus {
 	outline: 0 none;
 }
 
-.elgg-longtext-control {
-	float: right;
-	margin-left: 14px;
-	font-size: 80%;
-	cursor: pointer;
-}
-
 input[type="checkbox"],
 input[type="radio"] {
 	margin: 0 0.25rem 0 0;

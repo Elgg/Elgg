@@ -15,7 +15,6 @@ $params = [
 	'tags' => false,
 	'access' => false,
 	'icon_entity' => $entity->getOwnerEntity(),
-	'class' => 'thewire-post',
 ];
 
 if (elgg_extract('full_view', $vars)) {

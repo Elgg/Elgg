@@ -102,6 +102,7 @@ return array(
 	'RegistrationAllowedGatekeeperException:invalid_invitecode' => "The provided invite code is not valid",
 	'BadRequestException' => 'Bad request',
 	'BadRequestException:invalid_host_header' => 'The request contains an invalid HOST header',
+	'BadRequestException:livesearch:no_query' => 'Livesearch requires a query',
 	'ValidationException' => 'Submitted data did not meet the requirements, please check your input.',
 	'LogicException:InterfaceNotImplemented' => '%s must implement %s',
 	
@@ -328,6 +329,7 @@ return array(
 	'usersettings:notifications:default:description' => 'Default notification settings for events from the system',
 	'usersettings:notifications:content_create:description' => 'Default notification settings for new content you created, this can cause notifications when others take action on you content like leaving a comment',
 	'usersettings:notifications:create_comment:description' => "Default notification setting when you comment on content in order to follow the rest of the conversation",
+	'usersettings:notifications:mentions:description' => "Receive a notification when you get @mentioned",
 
 	'usersettings:notifications:timed_muting' => "Temporarily disable notifications",
 	'usersettings:notifications:timed_muting:help' => "If you don't wish to receive any notifications during a certain period (for example a holiday) you can set a start and end date to temporarily disable all notifications",
@@ -347,6 +349,12 @@ return array(
 %s',
 	'notification:subject' => 'Notification about %s',
 	'notification:body' => 'View the new activity at %s',
+	
+	'notification:mentions:subject' => '%s mentioned you',
+	'notification:mentions:body' => "%s mentioned you in '%s'.
+
+To see the full post, click on the link below:
+%s",
 	
 	'notifications:delayed_email:subject:daily' => "Daily notifications",
 	'notifications:delayed_email:subject:weekly' => "Weekly notifications",
@@ -1470,6 +1478,10 @@ Once you have logged in, we highly recommend that you change your password.',
 	'config:content:pagination_behaviour:ajax-replace' => "Replace the list data without reloading the full page",
 	'config:content:pagination_behaviour:ajax-append' => "Append new list data before or after the list",
 	'config:content:pagination_behaviour:ajax-append-auto' => "Append new list data before or after the list (automatically if scrolled into view)",
+	'config:content:mentions_display_format' => "Mentions display format",
+	'config:content:mentions_display_format:help' => "This decides how a mentioned user will be visible in your content",
+	'config:content:mentions_display_format:username' => "Username",
+	'config:content:mentions_display_format:display_name' => "Display name",
 	'config:email' => "Email",
 	'config:email_html_part:label' => "Enable HTML mail",
 	'config:email_html_part:help' => "Outgoing mail will be wrapped in a HTML template",
@@ -1644,6 +1656,12 @@ To reply or view the original item, click here:
 
 To reply or view the original item, click here:
 %s",
+
+	'notification:mentions:object:comment:subject' => '%s mentioned you in a comment',
+	'notification:mentions:object:comment:body' => '%1$s mentioned you in a comment.
+	
+To see the full comment, click on the link below:
+%3$s',
 
 /**
  * Entities

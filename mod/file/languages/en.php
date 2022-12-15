@@ -83,6 +83,8 @@ return array(
 
 View and comment on the file:
 %s',
+	
+	'notification:mentions:object:file:subject' => '%s mentioned you in a file',
 
 	/**
 	 * Status messages

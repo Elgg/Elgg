@@ -5,6 +5,7 @@
  * /livesearch/<match_on>?q=<query>
  */
 
+use Elgg\Exceptions\Http\BadRequestException;
 use Elgg\Exceptions\Http\PageNotFoundException;
 
 /* @var $request \Elgg\Http\Request */
@@ -25,6 +26,16 @@ foreach ($input_params as $name => $value) {
 	// extract with false in order to replace empty value in $vars with request data
 	$vars[$name] = elgg_extract($name, $vars, $value, false);
 }
+
+// term is used in jquery autocomplete, but sometimes q is passed as the query, this will put q into term
+$vars['term'] = trim(elgg_extract('term', $vars, elgg_extract('q', $vars)));
+
+// check if we have a query
+if (elgg_is_empty($vars['term'])) {
+	throw new BadRequestException(elgg_echo('BadRequestException:livesearch:no_query'));
+}
+
+$vars['limit'] = (int) elgg_extract('limit', $vars, elgg_get_config('default_limit'));
 
 $match_on = elgg_extract('match_on', $vars);
 

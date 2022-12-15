@@ -12,14 +12,10 @@ if (elgg_is_logged_in()) {
 	]);
 }
 
-$content .= elgg_list_entities([
-	'type' => 'object',
-	'subtype' => 'thewire',
-	'limit' => get_input('limit', 15),
-]);
+$content .= elgg_view('thewire/listing/all');
 
 echo elgg_view_page(elgg_echo('collection:object:thewire:all'), [
-	'filter_value' => 'all',
 	'content' => $content,
 	'sidebar' => elgg_view('thewire/sidebar'),
+	'filter_value' => 'all',
 ]);

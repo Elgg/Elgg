@@ -5,37 +5,60 @@ return [
 		'name' => 'CKEditor',
 		'activate_on_install' => true,
 	],
-	'bootstrap' => Elgg\CKEditor\Bootstrap::class,
 	'views' => [
 		'default' => [
-			'ckeditor/' => 'vendor/ckeditor/ckeditor/',
-			'jquery.ckeditor.js' => 'vendor/ckeditor/ckeditor/adapters/jquery.js',
+			'ckeditor/' => __DIR__ . '/vendors/ckeditor5/build/',
 		],
 	],
 	'view_extensions' => [
-		'admin.css' => [
-			'ckeditor.css' => [],
-		],
 		'elgg.css' => [
-			'ckeditor.css' => [],
-		],
-		'elgg/wysiwyg.css' => [
-			'elements/reset.css' => ['priority' => 100],
-			'elements/typography.css' => ['priority' => 100],
+			'ckeditor/content.css' => [],
 		],
 		'input/longtext' => [
 			'ckeditor/init' => [],
 		],
 	],
 	'events' => [
-		'register' => [
-			'menu:longtext' => [
-				'Elgg\CKEditor\Menus\LongText::registerToggler' => [],
+		'attributes' => [
+			'htmlawed' => [
+				'\Elgg\Input\ValidateInputHandler::sanitizeStyles' => ['unregister' => true],
+			],
+		],
+		'config' => [
+			'htmlawed' => [
+				'Elgg\CKEditor\HTMLawed::changeConfig' => [],
+			],
+		],
+		'elgg.data' => [
+			'site' => [
+				'\Elgg\CKEditor\Views::setToolbarConfig' => [],
+			],
+		],
+		'to:object' => [
+			'entity' => [
+				'\Elgg\CKEditor\Views::changeToObjectForLivesearch' => [],
+			],
+		],
+		'usernames' => [
+			'mentions' => [
+				'\Elgg\CKEditor\Views::extractUsernames' => [],
 			],
 		],
 		'view_vars' => [
 			'input/longtext' => [
 				'Elgg\CKEditor\Views::setInputLongTextIDViewVar' => [],
+			],
+			'output/longtext' => [
+				'Elgg\CKEditor\Views::setOutputLongTextClass' => [],
+			],
+		],
+	],
+	'routes' => [
+		'default:ckeditor:upload' => [
+			'path' => '/ckeditor/upload',
+			'controller' => \Elgg\CKEditor\Upload::class,
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
 			],
 		],
 	],

@@ -46,6 +46,18 @@ function elgg_parse_emails(string $text): string {
 }
 
 /**
+ * Takes a string and turns any @ mentions into formatted links
+ *
+ * @param string $text The input string
+ *
+ * @return string The output string with formatted links
+ * @since 5.0
+ */
+function elgg_parse_mentions(string $text): string {
+	return _elgg_services()->html_formatter->parseMentions($text);
+}
+
+/**
  * Create paragraphs from text with line spacing
  *
  * @param string $string The string
