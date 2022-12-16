@@ -293,6 +293,12 @@
 		.elgg-nav-search {
 			order: 2;
 		}
+				
+		.elgg-menu-container {
+			flex-direction: row;
+			align-items: center;
+			margin-right: auto;
+		}
 		
 		.elgg-menu-topbar-container {
 			order: 3;
@@ -302,12 +308,6 @@
 			.elgg-menu-topbar-alt {
 				order: 2;
 			}
-		}
-		
-		.elgg-menu-container {
-			flex-direction: row;
-			align-items: center;
-			margin-right: auto;
 		}
 		
 		.elgg-menu {
