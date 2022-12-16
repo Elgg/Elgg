@@ -81,12 +81,12 @@ function elgg_register_notification_event(string $object_type, string $object_su
  * @param string $object_subtype The type of the entity
  * @param array  $actions        The notification action to unregister, leave empty for all actions. Example ('create', 'delete', 'publish')
  *
- * @return bool
+ * @return void
  * @since 1.9
  * @see elgg_register_notification_event()
  */
-function elgg_unregister_notification_event(string $object_type, string $object_subtype, array $actions = []): bool {
-	return _elgg_services()->notifications->unregisterEvent($object_type, $object_subtype, $actions);
+function elgg_unregister_notification_event(string $object_type, string $object_subtype, array $actions = []): void {
+	_elgg_services()->notifications->unregisterEvent($object_type, $object_subtype, $actions);
 }
 
 /**
@@ -236,22 +236,6 @@ function notify_user(int|array $to, int $from = 0, string $subject = '', string 
  */
 function elgg_send_email(\Elgg\Email $email): bool {
 	return _elgg_services()->emails->send($email);
-}
-
-/**
- * Replace default email transport
- *
- * @note If you are replacing the transport persistently, e.g. on each page request via
- * a plugin, avoid using plugin settings to store transport configuration, as it
- * may be expensive to fetch these settings. Instead, configure the transport
- * via elgg-config/settings.php or use site config DB storage.
- *
- * @param \Laminas\Mail\Transport\TransportInterface $mailer Transport
- *
- * @return void
- */
-function elgg_set_email_transport(\Laminas\Mail\Transport\TransportInterface $mailer): void {
-	_elgg_services()->set('mailer', $mailer);
 }
 
 /**

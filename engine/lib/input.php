@@ -185,13 +185,13 @@ function elgg_is_empty($value): bool {
  *
  * This function triggers the 'allowed_styles', 'htmlawed' event.
  *
- * @param string $element    The tag element name
- * @param array  $attributes An array of attributes
+ * @param string      $element    The tag element name
+ * @param array|false $attributes An array of attributes (false indicates a closing tag)
  *
  * @return string
  * @internal
  */
-function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
+function _elgg_htmlawed_tag_post_processor(string $element, array|false $attributes = false): string {
 	if ($attributes === false) {
 		// This is a closing tag. Prevent further processing to avoid inserting a duplicate tag
 		return "</{$element}>";

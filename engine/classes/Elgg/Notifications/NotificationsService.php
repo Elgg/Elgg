@@ -93,10 +93,10 @@ class NotificationsService {
 	 * @param string $subtype The type of the entity
 	 * @param array  $actions The notification action to unregister, leave empty for all actions
 	 *
-	 * @return bool
+	 * @return void
 	 * @see elgg_unregister_notification_event()
 	 */
-	public function unregisterEvent($type, $subtype, array $actions = []) {
+	public function unregisterEvent($type, $subtype, array $actions = []): void {
 
 		if (empty($actions)) {
 			unset($this->events[$type][$subtype]);
@@ -113,8 +113,6 @@ class NotificationsService {
 		if (empty($this->events[$type])) {
 			unset($this->events[$type]);
 		}
-		
-		return true;
 	}
 
 	/**
