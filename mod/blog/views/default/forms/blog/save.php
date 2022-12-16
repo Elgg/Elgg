@@ -44,14 +44,13 @@ $fields = [
 	$categories_vars,
 	[
 		'#label' => elgg_echo('comments'),
-		'#type' => 'select',
+		'#type' => 'checkbox',
 		'name' => 'comments_on',
 		'id' => 'blog_comments_on',
-		'value' => elgg_extract('comments_on', $vars),
-		'options_values' => [
-			'On' => elgg_echo('on'),
-			'Off' => elgg_echo('off'),
-		],
+		'default' => 'Off',
+		'value' => 'On',
+		'switch' => true,
+		'checked' => elgg_extract('comments_on', $vars) === 'On',
 	],
 	[
 		'#label' => elgg_echo('access'),
