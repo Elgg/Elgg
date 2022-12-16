@@ -6,14 +6,12 @@
 	z-index: 10;
 }
 
-
 .elgg-page-walled-garden > .elgg-inner {
 	z-index: 20;
 }
 
 .elgg-comments .elgg-list:before,
 .elgg-river-comments:before {
-	
 	z-index: 30;
 }
 

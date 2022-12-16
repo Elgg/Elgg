@@ -30,54 +30,40 @@ Search plugin
 }
 
 .elgg-page-topbar {
-
 	.elgg-form-search {
 		padding: 0.5rem;
 		position: relative;
-	}
+	
+		.elgg-field {
+			margin: 0;
+			width: 100%;
+		}
+		
+		[type="text"] {
+			box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+			border: none;
+			background: transparent;
+			color: #fff;
+			font-size: 0.9rem;
+			
+			&:focus {
+				border: none;
+				background: rgba(255, 255, 255, 0.1);
+				box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+			}
 
-	.elgg-form-search .elgg-field {
-		margin: 0;
-		width: 100%;
+			&::placeholder {
+				color: #ffffff;
+			}
+		}
+		
+		[type="submit"] {
+			position: absolute;
+			right: 0;
+			top: 0;
+			margin: 0.5rem;
+			background: transparent;
+			display: block;
+		}
 	}
-
-	.elgg-form-search [type="text"] {
-		box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
-		border: none;
-		background: transparent;
-		color: #fff;
-		font-size: 0.9rem;
-	}
-
-	.elgg-form-search [type="text"]:focus {
-		border: none;
-		background: rgba(255, 255, 255, 0.1);
-		box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
-	}
-
-	.elgg-form-search [type="submit"] {
-		position: absolute;
-		right: 0;
-		top: 0;
-		margin: 0.5rem;
-		background: transparent;
-		display: block;
-	}
-
-	.elgg-form-search [type="text"]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-		color: #ffffff;
-	}
-
-	.elgg-form-search [type="text"]::-moz-placeholder { /* Firefox 19+ */
-		color: #ffffff;
-	}
-
-	.elgg-form-search [type="text"]:-ms-input-placeholder { /* IE 10+ */
-		color: #ffffff;
-	}
-
-	.elgg-form-search [type="text"]:-moz-placeholder { /* Firefox 18- */
-		color: #ffffff;
-	}
-
 }

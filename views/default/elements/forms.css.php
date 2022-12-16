@@ -23,7 +23,6 @@ label, .elgg-field-label {
 	font-weight: 600;
 	font-size: 0.9rem;
 	line-height: 1.8rem;
-
 }
 
 .elgg-field-label {

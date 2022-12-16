@@ -1,12 +1,14 @@
-.elgg-page-default .elgg-page-section > .elgg-inner {
-	max-width: $(desktop);
-	margin: 0 auto;
-	padding: 0 0.5rem;
-}
-
-.elgg-page-default .elgg-page-body > .elgg-inner {
-	padding-top: 1rem;
-	padding-bottom: 1rem;
+.elgg-page-default {
+	.elgg-page-section > .elgg-inner {
+		max-width: $(desktop);
+		margin: 0 auto;
+		padding: 0 0.5rem;
+	}
+	
+	.elgg-page-body > .elgg-inner {
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+	}
 }
 
 @media $(media-desktop-up) {

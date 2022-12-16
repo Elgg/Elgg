@@ -44,4 +44,19 @@ define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 	};
 	
 	$(document).on('click', '.elgg-widgets-add-panel .elgg-widgets-add-actions .elgg-button-submit', addWidget);
+	
+	$(document).on('keyup', '.elgg-widgets-add-panel input[name="widget_search"]', function() {
+		var $container = $('.elgg-widgets-add-panel');
+		var $items = $container.find('> .elgg-body > ul > li');
+		var q = $(this).val();
+
+		if (q === '') {
+			$items.show();
+		} else {
+			$items.hide();
+			$items.filter(function () {
+				return $(this).text().toUpperCase().indexOf(q.toUpperCase()) >= 0;
+			}).show();
+		}
+	});
 });

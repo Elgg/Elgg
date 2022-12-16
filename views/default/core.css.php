@@ -12,8 +12,6 @@ echo elgg_view('elements/modules.css', $vars);
 echo elgg_view('elements/widgets.css', $vars);
 echo elgg_view('elements/components.css', $vars);
 echo elgg_view('elements/layout.css', $vars);
-echo elgg_view('elements/misc.css', $vars);
 echo elgg_view('elements/misc/spinner.css', $vars);
-echo elgg_view('elements/fa.css', $vars);
 echo elgg_view('elements/helpers.css', $vars);
 echo elgg_view('elements/z-index.css', $vars);

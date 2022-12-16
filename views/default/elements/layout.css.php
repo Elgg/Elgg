@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Page Layout
  *

@@ -103,4 +103,13 @@ foreach ($widget_types as $handler => $widget_type) {
 
 $result .= elgg_format_element('ul', [], $list_items);
 
-echo elgg_view_module('aside', elgg_echo('widgets:add'), $result, ['class' => 'elgg-widgets-add-panel']);
+$search_box = elgg_view('input/text', [
+	'name' => 'widget_search',
+	'title' => elgg_echo('search'),
+	'placeholder' => elgg_echo('search'),
+]);
+
+echo elgg_view_module('info', elgg_echo('widgets:add'), $result, [
+	'class' => 'elgg-widgets-add-panel',
+	'menu' => $search_box,
+]);
