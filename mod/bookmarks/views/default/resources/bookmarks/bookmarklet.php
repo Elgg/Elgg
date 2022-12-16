@@ -11,10 +11,11 @@ if ($container instanceof ElggObject) {
 	$page_owner = $container->getContainerEntity();
 }
 
-elgg_set_page_owner_guid($page_owner->getGUID());
+elgg_set_page_owner_guid($page_owner->guid);
 
 elgg_push_collection_breadcrumbs('object', 'bookmarks', $page_owner);
 
 echo elgg_view_page(elgg_echo('bookmarks:bookmarklet'), [
 	'content' => elgg_view('bookmarks/bookmarklet'),
+	'filter' => false,
 ]);
