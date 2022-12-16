@@ -29,17 +29,22 @@
 	padding: 0.5rem;
 }
 
-.elgg-widgets-add-panel ul {
-	border-top: 1px solid $(border-color-soft);
-	margin-top: 0.5rem;
+.elgg-widgets-add-panel {
+	input[name="widget_search"] {
+		height: auto;
+	}
 	
-	> li {
-		padding: 0.5rem;
-		transition: background 0.2s linear;
-		border-bottom: 1px solid $(border-color-soft);
+	ul {
+		margin-top: 0.5rem;
 		
-		&:hover {
-			background: $(background-color-mild);
+		> li {
+			padding: 0.5rem;
+			transition: background 0.2s linear;
+			border-bottom: 1px solid $(border-color-soft);
+			
+			&:hover {
+				background: $(background-color-mild);
+			}
 		}
 	}
 }
