@@ -46,7 +46,6 @@ class ElggRiverItemIntegrationTest extends IntegrationTestCase {
 			'target_guid' => $this->target->guid,
 			'annotation_id' => $annotation_id,
 			'posted' => time(),
-			'return_item' => true,
 		]);
 	}
 	

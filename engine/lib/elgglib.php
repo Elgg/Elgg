@@ -80,11 +80,11 @@ function elgg_register_error_message(string|array $options): void {
  * @param string $message User message
  * @param string $level   NOTICE | WARNING | ERROR
  *
- * @return bool
+ * @return void
  * @since 1.7.0
  */
-function elgg_log($message, $level = \Psr\Log\LogLevel::NOTICE) {
-	return _elgg_services()->logger->log($level, $message);
+function elgg_log($message, $level = \Psr\Log\LogLevel::NOTICE): void {
+	_elgg_services()->logger->log($level, $message);
 }
 
 /**
@@ -109,13 +109,11 @@ function elgg_dump($value): void {
  * @param string $msg         Message to log
  * @param string $dep_version Human-readable *release* version: 1.7, 1.8, ...
  *
- * @return true
+ * @return void
  * @since 1.7.0
  */
-function elgg_deprecated_notice(string $msg, string $dep_version): bool {
+function elgg_deprecated_notice(string $msg, string $dep_version): void {
 	_elgg_services()->logger->warning("Deprecated in {$dep_version}: {$msg}");
-	
-	return true;
 }
 
 /**

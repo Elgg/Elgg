@@ -82,16 +82,16 @@ class AttributeLoaderTest extends IntegrationTestCase {
 	
 	public function testRiverItemAttributes() {
 		
-		$river_item_id = elgg_create_river_item([
+		$created_river_item = elgg_create_river_item([
 			'view' => 'river/object/blog/create',
 			'action_type' => 'create',
 			'subject_guid' => $this->object->owner_guid,
 			'object_guid' => $this->object->guid,
 		]);
 		
-		$this->assertIsInt($river_item_id);
+		$this->assertInstanceOf(\ElggRiverItem::class, $created_river_item);
 		
-		$river_item = elgg_get_river_item_from_id($river_item_id);
+		$river_item = elgg_get_river_item_from_id($created_river_item->id);
 		$this->assertInstanceOf(\ElggRiverItem::class, $river_item);
 		foreach ([
 			'id',

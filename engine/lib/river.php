@@ -21,12 +21,11 @@ use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
  * @option int    $target_guid   The GUID of the the object entity's container
  * @option int    $posted        The UNIX epoch timestamp of the river item (default: now)
  * @option int    $annotation_id The annotation ID associated with this river entry
- * @option bool   $return_item   set to true to return the ElggRiverItem created
  *
- * @return int|ElggRiverItem|bool River ID/item or false on failure
+ * @return ElggRiverItem|null Riveritem or null on failure
  * @since  1.9
  */
-function elgg_create_river_item(array $options = []) {
+function elgg_create_river_item(array $options = []): ?\ElggRiverItem {
 	$item = new \ElggRiverItem();
 	$item->action_type = elgg_extract('action_type', $options);
 	$item->view = elgg_extract('view', $options);
@@ -37,10 +36,10 @@ function elgg_create_river_item(array $options = []) {
 	$item->posted = elgg_extract('posted', $options);
 	
 	if (!$item->save()) {
-		return false;
+		return null;
 	}
 	
-	return (bool) elgg_extract('return_item', $options, false) ? $item : $item->id;
+	return $item;
 }
 
 /**

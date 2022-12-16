@@ -117,8 +117,10 @@ Lib functions return types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * ``elgg_add_admin_notice()`` now returns ``null`` on failure instead of a ``bool``
+* ``elgg_create_river_item()`` now returns ``null`` on failure or an ``ElggRiverItem``
 * ``elgg_delete_metadata()`` no longer returns ``null``
 * ``elgg_delete_river()`` no longer returns ``null``
+* ``elgg_deprecated_notice()`` no longer returns ``bool``
 * ``elgg_generate_entity_url()`` now returns ``null`` on failure instead of a ``bool``
 * ``elgg_generate_url()`` now returns ``null`` on failure instead of a ``bool``
 * ``elgg_get_annotation_from_id()`` now returns ``null`` if no annotation is found instead of a ``bool``
@@ -140,6 +142,7 @@ Lib functions return types
 * ``elgg_trigger_after_event()`` no longer has a return value
 * ``elgg_unregister_action()`` no longer has a return value
 * ``elgg_unregister_event_handler()`` no longer has a return value
+* ``elgg_unregister_notification_event()`` no longer has a return value
 * ``elgg_unregister_notification_method()`` no longer has a return value
 * ``elgg_unregister_widget_type()`` no longer has a return value
 * ``elgg_view_annotation()`` no longer returns a ``bool``
@@ -403,6 +406,7 @@ Removed functions
 * ``discussion_prepare_form_vars``
 * ``elgg_get_breadcrumbs``
 * ``elgg_pop_breadcrumb``
+* ``elgg_set_email_transport`` use ``_elgg_services()->set('mailer', ...)``
 * ``elgg_trigger_deprecated_plugin_hook``
 * ``file_prepare_form_vars``
 * ``get_user_by_email`` use ``elgg_get_user_by_email``

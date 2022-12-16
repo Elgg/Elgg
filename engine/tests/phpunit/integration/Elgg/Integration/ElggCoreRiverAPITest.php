@@ -63,18 +63,10 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testCanCreateRiverItem() {
-
-		$params = [
+		$item = elgg_create_river_item([
 			'action_type' => 'create',
 			'object_guid' => $this->entity->guid,
-		];
-
-		$id = elgg_create_river_item($params);
-		$this->assertIsInt($id);
-		$this->assertTrue(elgg_delete_river(['id' => $id]));
-		
-		$params['return_item'] = true;
-		$item = elgg_create_river_item($params);
+		]);
 
 		$this->assertInstanceOf(\ElggRiverItem::class, $item);
 		$this->assertTrue(elgg_delete_river(['id' => $item->id]));
@@ -87,7 +79,6 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
 			'posted' => time(),
-			'return_item' => true,
 		];
 
 		$captured = [];
@@ -123,13 +114,13 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 			Values::class,
 			'getFalse'
 		]);
-		$id = elgg_create_river_item($params);
+		$item = elgg_create_river_item($params);
 		elgg_unregister_event_handler('create:before', 'river', [
 			Values::class,
 			'getFalse'
 		]);
 
-		$this->assertFalse($id); // prevented
+		$this->assertNull($item); // prevented
 	}
 
 	public function testCanCancelRiverDeleteByEvent() {
@@ -138,7 +129,6 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 			'action_type' => 'create',
 			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
-			'return_item' => true,
 		];
 		$item = elgg_create_river_item($params);
 		$this->assertInstanceOf(\ElggRiverItem::class, $item);
@@ -190,7 +180,6 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 			'action_type' => 'create',
 			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
-			'return_item' => true,
 		];
 		$item = elgg_create_river_item($params);
 		$this->assertInstanceOf(\ElggRiverItem::class, $item);
@@ -228,8 +217,8 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
 		];
-		$id = elgg_create_river_item($params);
-		$this->assertIsInt($id);
+		$item = elgg_create_river_item($params);
+		$this->assertNotNull($item);
 
 		$owner = $this->entity->getOwnerEntity();
 		$old_user = _elgg_services()->session_manager->getLoggedInUser();
@@ -244,7 +233,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		elgg_register_event_handler('delete:before', 'river', $handler);
 		elgg_register_event_handler('delete:after', 'river', $handler);
 
-		elgg_delete_river(['id' => $id]);
+		elgg_delete_river(['id' => $item->id]);
 
 		elgg_unregister_event_handler('permissions_check:delete', 'river', $handler);
 		elgg_unregister_event_handler('delete:before', 'river', $handler);
@@ -270,11 +259,11 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 
 		$no_action = $params;
 		unset($no_action['action_type']);
-		$this->assertFalse(elgg_create_river_item($no_action));
+		$this->assertNull(elgg_create_river_item($no_action));
 
 		$no_object = $params;
 		unset($no_object['object_guid']);
-		$this->assertFalse(elgg_create_river_item($no_object));
+		$this->assertNull(elgg_create_river_item($no_object));
 	}
 	
 	public function testElggCreateRiverItemSubjectGuid() {
@@ -289,14 +278,14 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		unset($no_subject['subject_guid']);
 		
 		// subject_guid is filled by logged in user
-		$this->assertNotFalse(elgg_create_river_item($no_subject));
+		$this->assertNotNull(elgg_create_river_item($no_subject));
 		
 		// missing subject_guid
 		_elgg_services()->session_manager->removeLoggedInUser();
-		$this->assertFalse(elgg_create_river_item($no_subject));
+		$this->assertNull(elgg_create_river_item($no_subject));
 		
 		// still logged out, but now supplied subject_guid
-		$this->assertNotFalse(elgg_create_river_item($params));
+		$this->assertNotNull(elgg_create_river_item($params));
 	}
 
 	public function testElggCreateRiverItemViewNotExist() {
@@ -307,7 +296,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 			'object_guid' => $this->entity->guid,
 		];
 
-		$this->assertFalse(elgg_create_river_item($params));
+		$this->assertNull(elgg_create_river_item($params));
 	}
 
 	public function testElggCreateRiverItemBadEntity() {
@@ -321,14 +310,14 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 
 		$bad_subject = $params;
 		$bad_subject['subject_guid'] = -1;
-		$this->assertFalse(elgg_create_river_item($bad_subject));
+		$this->assertNull(elgg_create_river_item($bad_subject));
 
 		$bad_object = $params;
 		$bad_object['object_guid'] = -1;
-		$this->assertFalse(elgg_create_river_item($bad_object));
+		$this->assertNull(elgg_create_river_item($bad_object));
 
 		$bad_target = $params;
 		$bad_target['target_guid'] = -1;
-		$this->assertFalse(elgg_create_river_item($bad_target));
+		$this->assertNull(elgg_create_river_item($bad_target));
 	}
 }

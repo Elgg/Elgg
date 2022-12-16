@@ -1000,15 +1000,13 @@ function elgg_view_river_item(\ElggRiverItem $item, array $vars = []): string {
 		'river/elements/layout',
 	];
 
-	$contents = '';
 	foreach ($river_views as $view) {
 		if (elgg_view_exists($view)) {
-			$contents = elgg_view($view, $vars);
-			break;
+			return elgg_view($view, $vars);
 		}
 	}
 
-	return $contents;
+	return '';
 }
 
 /**
@@ -1221,20 +1219,10 @@ function elgg_view_field(array $params = []): string {
  * @since 1.7.1
  */
 function elgg_view_tagcloud(array $options = []): string {
-
-	$type = $subtype = '';
-	if (isset($options['type'])) {
-		$type = $options['type'];
-	}
-	if (isset($options['subtype'])) {
-		$subtype = $options['subtype'];
-	}
-
-	$tag_data = elgg_get_tags($options);
 	return elgg_view('output/tagcloud', [
-		'value' => $tag_data,
-		'type' => $type,
-		'subtype' => $subtype,
+		'value' => elgg_get_tags($options),
+		'type' => elgg_extract('type', $options, ''),
+		'subtype' => elgg_extract('subtype', $options, ''),
 	]);
 }
 

@@ -152,10 +152,10 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$object = $this->getTestObject();
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
-		$this->assertTrue($this->notifications->unregisterEvent($object->getType(), $object->getSubtype()));
+		$this->notifications->unregisterEvent($object->getType(), $object->getSubtype());
 
 		$this->assertEquals([], $this->notifications->getEvents());
-		$this->assertTrue($this->notifications->unregisterEvent($object->getType(), $object->getSubtype()));
+		$this->notifications->unregisterEvent($object->getType(), $object->getSubtype());
 	}
 	
 	public function testUnregisterEventSpecificAction() {
@@ -166,7 +166,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['create', 'delete']);
 		
 		// unregister one action
-		$this->assertTrue($this->notifications->unregisterEvent($object->getType(), $object->getSubtype(), ['create']));
+		$this->notifications->unregisterEvent($object->getType(), $object->getSubtype(), ['create']);
 
 		$events = [
 			$object->getType() => [
@@ -176,7 +176,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->assertEquals($events, $this->notifications->getEvents());
 		
 		// unregister last remaining action
-		$this->assertTrue($this->notifications->unregisterEvent($object->getType(), $object->getSubtype(), ['delete']));
+		$this->notifications->unregisterEvent($object->getType(), $object->getSubtype(), ['delete']);
 		
 		$this->assertEquals([], $this->notifications->getEvents());
 	}
