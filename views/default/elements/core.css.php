@@ -25,4 +25,3 @@
 	clear: both;
 	height: 0;
 }
-

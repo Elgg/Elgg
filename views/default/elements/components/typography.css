@@ -12,12 +12,12 @@ body {
 
 a {
 	color: $(anchor-color);
-}
-
-a:hover,
-a.selected {
-	color: $(anchor-color-hover);
-	text-decoration: underline;
+	
+	&:hover,
+	&.selected {
+		color: $(anchor-color-hover);
+		text-decoration: underline;
+	}
 }
 
 pre, code {

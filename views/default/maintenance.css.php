@@ -53,15 +53,18 @@ a {
 
 	border-radius: 3px;
 	box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.25);
-}
-.elgg-module-maintenance > .elgg-head {
-	padding: 20px 20px 0 20px;
-}
-.elgg-module-maintenance > .elgg-body {
-	padding: 0 20px;
-}
-.elgg-module-maintenance > .elgg-foot {
-	padding: 0 20px 20px 20px;
+	
+	> .elgg-head {
+		padding: 20px 20px 0 20px;
+	}
+	
+	> .elgg-body {
+		padding: 0 20px;
+	}
+	
+	> .elgg-foot {
+		padding: 0 20px 20px 20px;
+	}
 }
 
 .elgg-system-messages {
@@ -81,6 +84,7 @@ a {
 	border-radius: 5px;
 	margin-bottom: 42px;
 }
+
 .elgg-form-login {
 	max-width: 470px;
 }
@@ -91,32 +95,41 @@ a {
 
 .elgg-output {
 	margin-top: 10px;
-}
-.elgg-output dt { font-weight: bold }
-.elgg-output dd { margin: 0 0 1em 1em }
-
-.elgg-output ul, .elgg-output ol {
-	margin: 0 1.5em 1.5em 0;
-	padding-left: 1.5em;
-}
-.elgg-output ul {
-	list-style-type: disc;
-}
-.elgg-output ol {
-	list-style-type: decimal;
-	list-style-position: inside;
-	padding-left: .4em;
-}
-.elgg-output table {
-	border: 1px solid #DCDCDC;
-}
-.elgg-output table td {
-	border: 1px solid #DCDCDC;
-	padding: 3px 5px;
-}
-.elgg-output img {
-	max-width: 100%;
-	height: auto;
+	
+	dt {
+		font-weight: bold;
+	}
+	
+	dd {
+		margin: 0 0 1em 1em;
+	}
+	
+	ul {
+		list-style-type: disc;
+		margin: 0 1.5em 1.5em 0;
+		padding-left: 1.5em;
+	}
+	
+	ol {
+		list-style-type: decimal;
+		list-style-position: inside;
+		margin: 0 1.5em 1.5em 0;
+		padding-left: .4em;
+	}
+	
+	table {
+		border: 1px solid #DCDCDC;
+		
+		td {
+			border: 1px solid #DCDCDC;
+			padding: 3px 5px;
+		}
+	}
+	
+	img {
+		max-width: 100%;
+		height: auto;
+	}
 }
 
 /* ***************************************
@@ -125,11 +138,12 @@ a {
 
 fieldset > div {
 	margin-bottom: 15px;
+	
+	&:last-child {
+		margin-bottom: 0;
+	}
 }
 
-fieldset > div:last-child {
-	margin-bottom: 0;
-}
 label {
 	font-weight: bold;
 	color: #333;

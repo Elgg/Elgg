@@ -13,7 +13,9 @@
 	}
 }
 
-.elgg-user-picker.elgg-state-disabled > input,
-.elgg-user-picker.elgg-state-disabled > label {
-	display: none;
+.elgg-user-picker.elgg-state-disabled {
+	> input,
+	> label {
+		display: none;
+	}
 }
