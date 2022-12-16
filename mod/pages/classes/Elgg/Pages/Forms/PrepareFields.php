@@ -27,7 +27,7 @@ class PrepareFields {
 		// handle customizable fields
 		$fields = elgg()->fields->get('object', 'page');
 		foreach ($fields as $field) {
-			$default_value = $field['#type'] === 'access' ? ACCESS_DEFAULT : '';
+			$default_value = $field['#type'] === 'access' ? ACCESS_DEFAULT : elgg_extract($field['name'], $vars, '');
 			$values[$field['name']] = $default_value;
 		}
 		
