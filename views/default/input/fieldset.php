@@ -13,10 +13,7 @@
  *                        elgg_view_field()
  */
 
-$vars['class'] = elgg_extract_class($vars, [
-	'elgg-fieldset',
-	'clearfix',
-]);
+$vars['class'] = elgg_extract_class($vars, ['elgg-fieldset']);
 
 $align = elgg_extract('align', $vars, 'vertical');
 unset($vars['align']);

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Layout sidebar
  *
@@ -10,7 +9,5 @@ $sidebar = elgg_extract('sidebar', $vars);
 if (empty($sidebar)) {
 	return;
 }
-?>
-<div class="elgg-sidebar elgg-layout-sidebar clearfix">
-	<?= $sidebar ?>
-</div>
+
+echo elgg_format_element('div', ['class' => ['elgg-sidebar', 'elgg-layout-sidebar']], $sidebar);

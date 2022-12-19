@@ -37,10 +37,7 @@
 $layout_attrs = elgg_extract('layout_attrs', $vars, []);
 unset($vars['layout_attrs']);
 
-$class = elgg_extract_class($vars, [
-	'elgg-layout',
-	'clearfix'
-]);
+$class = elgg_extract_class($vars, ['elgg-layout']);
 unset($vars['class']);
 
 // Prepare layout sidebar

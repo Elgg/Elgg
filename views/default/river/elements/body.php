@@ -70,12 +70,7 @@ if (!empty($message)) {
 // attachments
 $attachments = elgg_extract('attachments', $vars);
 if (!empty($attachments)) {
-	echo elgg_format_element('div', [
-		'class' => [
-			'elgg-river-attachments',
-			'clearfix',
-		],
-	], $attachments);
+	echo elgg_format_element('div', ['class' => 'elgg-river-attachments'], $attachments);
 }
 
 // responses (eg. comments)

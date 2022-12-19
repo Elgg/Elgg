@@ -19,7 +19,7 @@ if (!$entity instanceof ElggEntity) {
 	return;
 }
 
-$class = elgg_extract_class($vars, ['elgg-listing-full', 'elgg-content', 'clearfix']);
+$class = elgg_extract_class($vars, ['elgg-listing-full', 'elgg-content']);
 unset($vars['class']);
 
 $content = elgg_view('object/elements/full/header', $vars);

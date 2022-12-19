@@ -86,7 +86,7 @@ class EntityTable extends DbEntityTable {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function insertRow(\stdClass $row, array $attributes = []) {
+	public function insertRow(\stdClass $row, array $attributes = []): int {
 		// lock the time to prevent testing issues
 		$this->setCurrentTime();
 		
@@ -104,7 +104,7 @@ class EntityTable extends DbEntityTable {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function updateRow($guid, \stdClass $row) {
+	public function updateRow($guid, \stdClass $row): bool {
 		$attributes = array_merge((array) $this->rows[$guid], (array) $row);
 
 		// Rebuild query specs for the udpated row

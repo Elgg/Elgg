@@ -34,10 +34,7 @@ if ($entity->status && $entity->status !== 'open') {
 }
 
 if ($full_view) {
-	$body = elgg_view('output/longtext', [
-		'value' => $entity->description,
-		'class' => 'clearfix',
-	]);
+	$body = elgg_view('output/longtext', ['value' => $entity->description]);
 
 	$responses = null;
 	if ($entity->status == 'closed') {

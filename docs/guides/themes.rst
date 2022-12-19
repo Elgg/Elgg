@@ -97,7 +97,6 @@ Theming Principles and Best Practices
 
 **Flexbox driven**
 	Flexbox provides simplicity in stacking elements into grids. Flexbox is used for everything from menus to layout elements.
-	We avoid ``float`` and ``clearfix`` as they are hard to collaborate on and create lots of room for failure and distortion.
 
 .. code-block:: css
 
@@ -241,7 +240,6 @@ Here is a list of the existing CSS views:
  * rtl.css: Custom rules for users viewing your site in a right-to-left language.
  * admin.css: A completely separate theme for the admin area (usually not overridden).
  * elgg.css: Compiles all the core elements/\* files into one file (DO NOT OVERRIDE).
- * elements/core.css: Contains base styles for the more complicated “css objects”. If you find yourself wanting to override this, you probably need to report a bug to Elgg core instead (DO NOT OVERRIDE).
  * elements/reset.css: Contains a reset stylesheet that forces elements to have the same default
 
 CSS variables

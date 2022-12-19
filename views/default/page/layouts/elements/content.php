@@ -1,13 +1,8 @@
 <?php
-
 /**
  * Layout content
  *
  * @uses $vars['content'] Content
  */
 
-$content = elgg_extract('content', $vars, '');
-?>
-<div class="elgg-layout-content clearfix">
-	<?= $content ?>
-</div>
+echo elgg_format_element('div', ['class' => 'elgg-layout-content'], (string) elgg_extract('content', $vars));

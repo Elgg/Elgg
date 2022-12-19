@@ -11,7 +11,6 @@ $class = elgg_extract_class($vars, [
 	'elgg-layout',
 	'elgg-layout-one-column',
 	'elgg-layout-error',
-	'clearfix',
 ]);
 unset($vars['class']);
 
@@ -21,10 +20,6 @@ $vars['filter'] = false;
 $header = elgg_view('page/layouts/elements/header', $vars);
 $body = elgg_view('page/layouts/elements/body', $vars);
 
-$layout = elgg_format_element('div', [
-	'class' => 'elgg-layout-columns',
-], $body);
+$layout = elgg_format_element('div', ['class' => 'elgg-layout-columns'], $body);
 
-echo elgg_format_element('div', [
-	'class' => $class,
-], $header . $layout);
+echo elgg_format_element('div', ['class' => $class], $header . $layout);

@@ -402,7 +402,7 @@ class Database {
 		
 		try {
 			$result = $this->trackQuery($query, function() use ($query) {
-				if ($query->getType() === QueryBuilder::SELECT) {
+				if ($query instanceof \Elgg\Database\Select) {
 					return $query->executeQuery();
 				} else {
 					return $query->executeStatement();
