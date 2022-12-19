@@ -1,7 +1,6 @@
 <?php
 
 $getAnchor = function(array $options = []) {
-	
 	$vars = [
 		'class' => elgg_extract_class($options, ['elgg-button']),
 		'href' => '#',
@@ -13,7 +12,6 @@ $getAnchor = function(array $options = []) {
 };
 
 $getButton = function(array $options = []) {
-	
 	$vars = [
 		'value' => elgg_echo('submit'),
 	];

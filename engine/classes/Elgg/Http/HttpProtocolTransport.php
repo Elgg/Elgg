@@ -23,5 +23,4 @@ class HttpProtocolTransport implements ResponseTransport {
 		$response->send();
 		return true;
 	}
-
 }

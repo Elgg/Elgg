@@ -13,6 +13,7 @@ class AccessWhereClause extends WhereClause {
 	 * @var string
 	 */
 	public $access_column = 'access_id';
+
 	/**
 	 * @var string
 	 */
@@ -47,7 +48,6 @@ class AccessWhereClause extends WhereClause {
 	 * {@inheritdoc}
 	 */
 	public function prepare(QueryBuilder $qb, $table_alias = null) {
-
 		$alias = function ($column) use ($table_alias) {
 			return $table_alias ? "{$table_alias}.{$column}" : $column;
 		};
@@ -110,5 +110,4 @@ class AccessWhereClause extends WhereClause {
 
 		return $qb->merge($ands);
 	}
-
 }

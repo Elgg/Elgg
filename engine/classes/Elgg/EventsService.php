@@ -454,16 +454,19 @@ class EventsService {
 				array_splice($registrations, count($registrations), 0, $this->registrations[$name][$type]);
 			}
 		}
+		
 		if (!empty($this->registrations['all'][$type])) {
 			if ($type !== 'all') {
 				array_splice($registrations, count($registrations), 0, $this->registrations['all'][$type]);
 			}
 		}
+		
 		if (!empty($this->registrations[$name]['all'])) {
 			if ($name !== 'all') {
 				array_splice($registrations, count($registrations), 0, $this->registrations[$name]['all']);
 			}
 		}
+		
 		if (!empty($this->registrations['all']['all'])) {
 			array_splice($registrations, count($registrations), 0, $this->registrations['all']['all']);
 		}
@@ -473,9 +476,11 @@ class EventsService {
 			if ($a[self::REG_KEY_PRIORITY] < $b[self::REG_KEY_PRIORITY]) {
 				return -1;
 			}
+			
 			if ($a[self::REG_KEY_PRIORITY] > $b[self::REG_KEY_PRIORITY]) {
 				return 1;
 			}
+			
 			// then insertion order
 			return ($a[self::REG_KEY_INDEX] < $b[self::REG_KEY_INDEX]) ? -1 : 1;
 		});
@@ -496,7 +501,7 @@ class EventsService {
 	 * @return MethodMatcher|null
 	 */
 	protected function getMatcher($spec): ?MethodMatcher {
-		if (is_string($spec) && false !== strpos($spec, '::')) {
+		if (is_string($spec) && strpos($spec, '::') !== false) {
 			list ($type, $method) = explode('::', $spec, 2);
 			return new MethodMatcher($type, $method);
 		}

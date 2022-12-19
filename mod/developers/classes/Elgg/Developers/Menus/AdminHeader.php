@@ -33,30 +33,30 @@ class AdminHeader {
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'dev_settings',
-			'href' => 'admin/developers/settings',
 			'text' => elgg_echo('settings'),
+			'href' => 'admin/developers/settings',
 			'priority' => 10,
 			'parent_name' => 'develop',
 		]);
 	
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'error_log',
-			'href' => 'admin/develop_tools/error_log',
 			'text' => elgg_echo('admin:develop_tools:error_log'),
+			'href' => 'admin/develop_tools/error_log',
 			'parent_name' => 'develop',
 		]);
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'develop_tools:entity_explorer',
-			'href' => 'admin/develop_tools/entity_explorer',
 			'text' => elgg_echo('admin:develop_tools:entity_explorer'),
+			'href' => 'admin/develop_tools/entity_explorer',
 			'parent_name' => 'develop',
 		]);
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'develop_tools:sandbox',
-			'href' => 'theme_sandbox/intro',
 			'text' => elgg_echo('admin:develop_tools:sandbox'),
+			'href' => 'theme_sandbox/intro',
 			'parent_name' => 'develop',
 			'target' => '_blank',
 		]);
@@ -64,6 +64,7 @@ class AdminHeader {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'inspect',
 			'text' => elgg_echo('admin:inspect'),
+			'href' => false,
 			'parent_name' => 'develop',
 		]);
 		
@@ -71,10 +72,10 @@ class AdminHeader {
 		foreach ($inspect_options as $key => $value) {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'dev_inspect_' . elgg_get_friendly_title($key),
-				'href' => "admin/develop_tools/inspect?" . http_build_query([
+				'text' => $value,
+				'href' => elgg_http_add_url_query_elements('admin/develop_tools/inspect', [
 					'inspect_type' => $key,
 				]),
-				'text' => $value,
 				'parent_name' => 'inspect',
 			]);
 		}

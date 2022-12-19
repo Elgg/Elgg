@@ -47,10 +47,10 @@ class Tool implements CollectionItemInterface {
 	 */
 	public function __get($name) {
 		switch ($name) {
-			case 'label' :
+			case 'label':
 				return $this->getLabel();
 
-			case 'default_on' :
+			case 'default_on':
 				return $this->isEnabledByDefault();
 		}
 

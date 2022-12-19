@@ -75,6 +75,7 @@ class Permissions {
 			// try the parent guid for use in the action
 			$page_guid = (int) get_input('parent_guid');
 		}
+		
 		if (empty($page_guid)) {
 			return;
 		}

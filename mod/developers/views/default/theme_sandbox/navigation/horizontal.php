@@ -2,28 +2,28 @@
 
 $items = [
 	[
-		'name' => "hz1",
+		'name' => 'hz1',
 		'href' => '#',
-		'text' => "The first item",
+		'text' => 'The first item',
 	],
 	[
-		'name' => "hz2",
+		'name' => 'hz2',
 		'href' => '#',
-		'text' => "Item with badge",
+		'text' => 'Item with badge',
 		'badge' => 3,
 	],
 	[
-		'name' => "hz3",
+		'name' => 'hz3',
 		'href' => '#',
-		'text' => "Item with icon",
-		'icon' => "user",
+		'text' => 'Item with icon',
+		'icon' => 'user',
 	],
 	[
-		'name' => "hz3",
+		'name' => 'hz3',
 		'href' => '#',
-		'text' => "Item with badge and icon",
-		'icon' => "user",
-		'badge' => "33",
+		'text' => 'Item with badge and icon',
+		'icon' => 'user',
+		'badge' => '33',
 	],
 ];
 

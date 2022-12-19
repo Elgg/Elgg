@@ -2,7 +2,7 @@
 
 echo elgg_view('output/url', [
 	'text' => 'Open lightbox',
-	'href' => "ajax/view/developers/ajax",
+	'href' => 'ajax/view/developers/ajax',
 	'class' => 'elgg-lightbox'
 ]);
 
@@ -38,9 +38,9 @@ $files = elgg_get_entities([
 		'name' => 'simpletype',
 		'value' => 'image',
 	],
-		]);
+]);
 
-if (!$files) {
+if (empty($files)) {
 	return;
 }
 
@@ -70,4 +70,3 @@ echo elgg_view('output/url', [
 	}
 	?>
 </ul>
-

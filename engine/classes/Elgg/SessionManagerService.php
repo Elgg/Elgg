@@ -146,6 +146,7 @@ class SessionManagerService {
 		if (!$user instanceof \ElggUser) {
 			$user = $this->getLoggedInUser();
 		}
+		
 		if (!$user instanceof \ElggUser) {
 			return;
 		}

@@ -195,7 +195,6 @@ class Application {
 	 * @param string $type status to check
 	 *
 	 * @return bool
-	 *
 	 * @since 4.3
 	 */
 	public function getBootStatus(string $type): bool {
@@ -209,7 +208,6 @@ class Application {
 	 * @param bool   $status value of the status
 	 *
 	 * @return void
-	 *
 	 * @since 4.3
 	 */
 	public function setBootStatus(string $type, bool $status): void {
@@ -289,12 +287,13 @@ class Application {
 			if (!$spec['config']) {
 				$spec['config'] = Config::factory($spec['settings_path']);
 			}
+			
 			$spec['internal_services'] = InternalContainer::factory(['config' => $spec['config']]);
 		}
 
 		if ($spec['request']) {
 			if (!$spec['request'] instanceof HttpRequest) {
-				throw new InvalidArgumentException("Given request is not a " . HttpRequest::class);
+				throw new InvalidArgumentException('Given request is not a ' . HttpRequest::class);
 			}
 
 			$spec['request']->initializeTrustedProxyConfiguration($spec['internal_services']->config);
@@ -417,7 +416,7 @@ class Application {
 				$config->wwwroot_cli_server = $www_root;
 			}
 
-			if (0 === strpos($request->getElggPath(), '/cache/')) {
+			if (strpos($request->getElggPath(), '/cache/') === 0) {
 				$config->_disable_session_save = true;
 				$response = $this->internal_services->cacheHandler->handleRequest($request, $this)->prepare($request);
 				self::getResponseTransport()->send($response);
@@ -434,7 +433,7 @@ class Application {
 				return $response;
 			}
 
-			if (0 === strpos($request->getElggPath(), '/serve-file/')) {
+			if (strpos($request->getElggPath(), '/serve-file/') === 0) {
 				$config->_disable_session_save = true;
 				$response = $this->internal_services->serveFileHandler->getResponse($request);
 				self::getResponseTransport()->send($response);
@@ -470,6 +469,7 @@ class Application {
 				if ($ex->getMessage()) {
 					$this->internal_services->system_messages->addErrorMessage($ex->getMessage());
 				}
+				
 				$response = new RedirectResponse($forward_url);
 			} else {
 				$response = new ErrorResponse($ex->getMessage(), $ex->getCode(), $forward_url);
@@ -563,7 +563,7 @@ class Application {
 
 			$response = new RedirectResponse($url, ELGG_HTTP_PERMANENTLY_REDIRECT);
 		} catch (\Exception $ex) {
-			$response = new ErrorResponse($ex->getMessage(), $ex->getCode() ? : ELGG_HTTP_INTERNAL_SERVER_ERROR);
+			$response = new ErrorResponse($ex->getMessage(), $ex->getCode() ?: ELGG_HTTP_INTERNAL_SERVER_ERROR);
 		}
 
 		return self::respond($response);
@@ -603,6 +603,7 @@ class Application {
 
 	/**
 	 * Returns configuration array for database migrations
+	 *
 	 * @return array
 	 */
 	public static function getMigrationSettings() {
@@ -617,21 +618,21 @@ class Application {
 		}
 
 		return [
-			"paths" => [
-				"migrations" => Paths::elgg() . 'engine/schema/migrations/',
+			'paths' => [
+				'migrations' => Paths::elgg() . 'engine/schema/migrations/',
 			],
-			"environments" => [
-				"default_migration_table" => "{$conn['prefix']}migrations",
-				"default_database" => "prod",
-				"prod" => [
-					"adapter" => "mysql",
-					"host" => $conn['host'],
-					"port" => $conn['port'],
-					"name" => $conn['database'],
-					"user" => $conn['user'],
-					"pass" => $conn['password'],
-					"charset" => $conn['encoding'],
-					"table_prefix" => $conn['prefix'],
+			'environments' => [
+				'default_migration_table' => "{$conn['prefix']}migrations",
+				'default_database' => 'prod',
+				'prod' => [
+					'adapter' => 'mysql',
+					'host' => $conn['host'],
+					'port' => $conn['port'],
+					'name' => $conn['database'],
+					'user' => $conn['user'],
+					'pass' => $conn['password'],
+					'charset' => $conn['encoding'],
+					'table_prefix' => $conn['prefix'],
 				],
 			],
 		];
@@ -641,7 +642,6 @@ class Application {
 	 * Allow plugins to rewrite the path.
 	 *
 	 * @return void
-	 *
 	 * @internal
 	 */
 	public function allowPathRewrite() {
@@ -656,12 +656,13 @@ class Application {
 
 	/**
 	 * Is application running in CLI
+	 *
 	 * @return bool
 	 */
 	public static function isCli() {
-		switch (php_sapi_name()) {
-			case 'cli' :
-			case 'phpdbg' :
+		switch (PHP_SAPI) {
+			case 'cli':
+			case 'phpdbg':
 				return true;
 
 			default:
@@ -671,6 +672,7 @@ class Application {
 
 	/**
 	 * Build request object
+	 *
 	 * @return \Elgg\Http\Request
 	 */
 	public static function getRequest() {
@@ -683,12 +685,13 @@ class Application {
 
 	/**
 	 * Load console input interface
+	 *
 	 * @return InputInterface
 	 */
 	public static function getStdIn() {
 		if (self::isCli()) {
 			$request = self::getRequest();
-			$argv = $request->server->get('argv') ? : [];
+			$argv = $request->server->get('argv') ?: [];
 			return new ArgvInput($argv);
 		}
 
@@ -697,6 +700,7 @@ class Application {
 
 	/**
 	 * Load console output interface
+	 *
 	 * @return OutputInterface
 	 */
 	public static function getStdOut() {
@@ -709,6 +713,7 @@ class Application {
 
 	/**
 	 * Load console error output interface
+	 *
 	 * @return OutputInterface
 	 */
 	public static function getStdErr() {
@@ -722,6 +727,7 @@ class Application {
 
 	/**
 	 * Build a transport for sending responses
+	 *
 	 * @return ResponseTransport
 	 */
 	public static function getResponseTransport() {

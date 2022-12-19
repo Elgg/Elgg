@@ -314,6 +314,7 @@ class SearchService {
 					$populate_where($where, $part);
 					$attribute_ands[] = $where->prepare($qb, $alias);
 				}
+				
 				$ors[] = $qb->merge($attribute_ands, 'AND');
 			}
 		}
@@ -326,6 +327,7 @@ class SearchService {
 				$populate_where($where, $part);
 				$metadata_ands[] = $where->prepare($qb, $md_alias);
 			}
+			
 			$ors[] = $qb->merge($metadata_ands, 'AND');
 		}
 
@@ -337,10 +339,10 @@ class SearchService {
 				$populate_where($where, $part);
 				$annotations_ands[] = $where->prepare($qb, $an_alias);
 			}
+			
 			$ors[] = $qb->merge($annotations_ands, 'AND');
 		}
 
 		return $qb->merge($ors, 'OR');
 	}
-
 }

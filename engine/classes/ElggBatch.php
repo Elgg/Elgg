@@ -309,6 +309,7 @@ class ElggBatch implements \Countable, \Iterator {
 				// offer at least one row to iterate over, or give up.
 				return $this->getNextResultsChunk();
 			}
+			
 			_elgg_services()->queryCache->enable();
 			return true;
 		}
@@ -425,6 +426,7 @@ class ElggBatch implements \Countable, \Iterator {
 		if (!is_array($this->results)) {
 			return false;
 		}
+		
 		$key = key($this->results);
 		return ($key !== null && $key !== false);
 	}
@@ -443,7 +445,7 @@ class ElggBatch implements \Countable, \Iterator {
 	public function count() {
 		if (!is_callable($this->getter)) {
 			$inspector = new \Elgg\Debug\Inspector();
-			throw new ElggRuntimeException("Getter is not callable: " . $inspector->describeCallable($this->getter));
+			throw new ElggRuntimeException('Getter is not callable: ' . $inspector->describeCallable($this->getter));
 		}
 
 		$options = array_merge($this->options, ['count' => true]);

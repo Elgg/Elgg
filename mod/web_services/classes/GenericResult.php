@@ -5,6 +5,7 @@ use Elgg\WebServices\Di\RestApiErrorHandler;
  * GenericResult Result superclass.
  */
 abstract class GenericResult {
+	
 	/**
 	 * The status of the result.
 	 * @var int
@@ -34,7 +35,7 @@ abstract class GenericResult {
 	 *
 	 * @return void
 	 */
-	protected function setStatusCode($status, $message = "") {
+	protected function setStatusCode($status, $message = '') {
 		$this->status_code = $status;
 		$this->message = $message;
 	}
@@ -98,7 +99,7 @@ abstract class GenericResult {
 		$result = new \stdClass;
 
 		$result->status = $this->getStatusCode();
-		if ($this->getStatusMessage() != "") {
+		if ($this->getStatusMessage() != '') {
 			$result->message = $this->getStatusMessage();
 		}
 

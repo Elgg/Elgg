@@ -50,17 +50,15 @@ $use_type = function ($search_type, $type = null, $subtype = null) use ($params)
 	}
 
 	switch ($params['search_type']) {
-		case 'entities' :
+		case 'entities':
 			if ($params['type'] && $params['type'] != $type) {
 				return false;
-			} else if ($params['subtype'] && $params['subtype'] !== $subtype) {
+			} elseif ($params['subtype'] && $params['subtype'] !== $subtype) {
 				return false;
 			}
-
 			return true;
-
-		// custom search type
-		default :
+		default:
+			// custom search type
 			return $params['search_type'] == $search_type;
 	}
 };

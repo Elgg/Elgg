@@ -22,6 +22,7 @@ $error = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function () use ($user_guids) {
 			continue;
 		}
 	}
+	
 	return $error;
 });
 

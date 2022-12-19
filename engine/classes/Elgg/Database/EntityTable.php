@@ -292,8 +292,7 @@ class EntityTable {
 	 */
 	public function get(int $guid, string $type = null, string $subtype = null): ?\ElggEntity {
 		$entity = $this->getFromCache($guid);
-		if (
-			$entity instanceof \ElggEntity &&
+		if ($entity instanceof \ElggEntity &&
 			(!isset($type) || $entity->type === $type) &&
 			(!isset($subtype) || $entity->subtype === $subtype)
 		) {

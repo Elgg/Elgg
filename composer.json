@@ -98,7 +98,7 @@
         }
     },
     "require-dev": {
-        "elgg/sniffs": "4.x-dev",
+        "elgg/sniffs": "dev-master",
         "phpunit/phpunit": "~9.5",
         "phpdocumentor/reflection-docblock": "^5.2",
         "scrutinizer/ocular": "^1.9"

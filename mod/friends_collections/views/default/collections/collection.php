@@ -33,6 +33,7 @@ if ($full_view) {
 		} else {
 			$item->addLinkClass('elgg-button elgg-button-action');
 		}
+		
 		elgg_register_menu_item('title', $item);
 	}
 } else {

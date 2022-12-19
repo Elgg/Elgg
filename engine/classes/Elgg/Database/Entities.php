@@ -29,7 +29,7 @@ class Entities extends Repository {
 	public function count() {
 		$qb = Select::fromTable('entities', 'e');
 
-		$count_expr = $this->options->distinct ? "DISTINCT e.guid" : "*";
+		$count_expr = $this->options->distinct ? 'DISTINCT e.guid' : '*';
 		$qb->select("COUNT({$count_expr}) AS total");
 
 		$qb = $this->buildQuery($qb);
@@ -54,8 +54,7 @@ class Entities extends Repository {
 	 * @throws DomainException
 	 */
 	public function calculate($function, $property, $property_type = null) {
-
-		if (!in_array(strtolower($function), QueryBuilder::$calculations)) {
+		if (!in_array(strtolower($function), QueryBuilder::CALCULATIONS)) {
 			throw new DomainException("'{$function}' is not a valid numeric function");
 		}
 
@@ -78,12 +77,12 @@ class Entities extends Repository {
 				$qb->addSelect("{$function}(e.{$property}) AS calculation");
 				break;
 
-			case 'metadata' :
+			case 'metadata':
 				$alias = $qb->joinMetadataTable('e', 'guid', $property, 'inner', 'n_table');
 				$qb->addSelect("{$function}({$alias}.value) AS calculation");
 				break;
 
-			case 'annotation' :
+			case 'annotation':
 				$alias = $qb->joinAnnotationTable('e', 'guid', $property, 'inner', 'n_table');
 				$qb->addSelect("{$function}({$alias}.value) AS calculation");
 				break;
@@ -107,11 +106,10 @@ class Entities extends Repository {
 	 * @return \ElggEntity[]
 	 */
 	public function get($limit = null, $offset = null, $callback = null) {
-
 		$qb = Select::fromTable('entities', 'e');
 
-		$distinct = $this->options->distinct ? "DISTINCT" : "";
-		$qb->select("$distinct e.*");
+		$distinct = $this->options->distinct ? 'DISTINCT' : '';
+		$qb->select("{$distinct} e.*");
 
 		$this->expandInto($qb, 'e');
 
@@ -134,7 +132,7 @@ class Entities extends Repository {
 
 		$options['limit'] = (int) $limit;
 		$options['offset'] = (int) $offset;
-		$options['callback'] = $callback ? : $this->options->callback;
+		$options['callback'] = $callback ?: $this->options->callback;
 		if (!isset($options['callback'])) {
 			$options['callback'] = [_elgg_services()->entityTable, 'rowToElggStar'];
 		}
@@ -154,10 +152,9 @@ class Entities extends Repository {
 	 * @return array An array months as YYYYMM
 	 */
 	public function getDates(): array {
-		
 		$qb = Select::fromTable('entities', 'e');
 
-		$qb->select("DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(e.time_created)) AS yearmonth");
+		$qb->select('DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(e.time_created)) AS yearmonth');
 
 		$this->expandInto($qb, 'e');
 
@@ -186,11 +183,10 @@ class Entities extends Repository {
 	 * @throws LogicException
 	 */
 	public function execute() {
-
 		if ($this->options->annotation_calculation) {
 			$clauses = $this->options->annotation_name_value_pairs;
 			if (count($clauses) > 1 && $this->options->annotation_name_value_pairs_operator !== 'OR') {
-				throw new LogicException("Annotation calculation can not be performed on multiple annotation name value pairs merged with AND");
+				throw new LogicException('Annotation calculation can not be performed on multiple annotation name value pairs merged with AND');
 			}
 
 			$clause = array_shift($clauses);
@@ -199,7 +195,7 @@ class Entities extends Repository {
 		} else if ($this->options->metadata_calculation) {
 			$clauses = $this->options->metadata_name_value_pairs;
 			if (count($clauses) > 1 && $this->options->metadata_name_value_pairs_operator !== 'OR') {
-				throw new LogicException("Metadata calculation can not be performed on multiple metadata name value pairs merged with AND");
+				throw new LogicException('Metadata calculation can not be performed on multiple metadata name value pairs merged with AND');
 			}
 
 			$clause = array_shift($clauses);
@@ -222,7 +218,6 @@ class Entities extends Repository {
 	 * @return QueryBuilder
 	 */
 	protected function buildQuery(QueryBuilder $qb) {
-
 		$ands = [];
 
 		foreach ($this->options->joins as $join) {
@@ -273,7 +268,6 @@ class Entities extends Repository {
 	protected function buildPairedMetadataClause(QueryBuilder $qb, $clauses, $boolean = 'AND') {
 		$parts = [];
 
-
 		foreach ($clauses as $clause) {
 			if ($clause instanceof MetadataWhereClause) {
 				if (strtoupper($boolean) === 'OR' || count($clauses) === 1) {
@@ -281,6 +275,7 @@ class Entities extends Repository {
 				} else {
 					$joined_alias = $qb->joinMetadataTable('e', 'guid', $clause->names);
 				}
+				
 				$parts[] = $clause->prepare($qb, $joined_alias);
 			}
 		}
@@ -307,6 +302,7 @@ class Entities extends Repository {
 			} else {
 				$joined_alias = $qb->joinAnnotationTable('e', 'guid', $clause->names);
 			}
+			
 			$parts[] = $clause->prepare($qb, $joined_alias);
 		}
 
@@ -331,6 +327,7 @@ class Entities extends Repository {
 			} else {
 				$joined_alias = $qb->joinRelationshipTable('e', $clause->join_on, $clause->names, $clause->inverse);
 			}
+			
 			$parts[] = $clause->prepare($qb, $joined_alias);
 		}
 

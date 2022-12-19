@@ -159,7 +159,7 @@ function elgg_normalize_url(string $url): string {
  */
 function elgg_normalize_site_url(string $unsafe_url): ?string {
 	$unsafe_url = _elgg_services()->urls->normalizeUrl($unsafe_url);
-	if (0 === elgg_strpos($unsafe_url, elgg_get_site_url())) {
+	if (elgg_strpos($unsafe_url, elgg_get_site_url()) === 0) {
 		return $unsafe_url;
 	}
 

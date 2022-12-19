@@ -30,6 +30,7 @@ $vars = array_merge($defaults, $vars);
 if (!isset($vars['data-tagify-opts']) && isset($vars['tagify_options'])) {
 	$vars['data-tagify-opts'] = json_encode($vars['tagify_options']);
 }
+
 unset($vars['tagify_options']);
 
 if (is_array($vars['value'])) {
@@ -43,7 +44,7 @@ if (is_array($vars['value'])) {
 		}
 	}
 
-	$vars['value'] = implode(", ", $tags);
+	$vars['value'] = implode(', ', $tags);
 }
 
 echo elgg_format_element('input', $vars);

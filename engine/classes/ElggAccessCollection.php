@@ -108,6 +108,7 @@ class ElggAccessCollection extends ElggData {
 			if (!isset($name)) {
 				$name = _elgg_services()->translator->translate('access:limited:label');
 			}
+			
 			$params = [
 				'access_collection' => $this,
 			];

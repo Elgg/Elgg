@@ -9,6 +9,7 @@ namespace Elgg\Queue;
  * @since 1.9.0
  */
 interface Queue {
+
 	/**
 	 * Add an item to the queue
 	 *

@@ -10,20 +10,21 @@
  * @property-read string $name Name of the cookie
  */
 class ElggCookie {
+	
 	/** @var string */
 	private $name;
 	
 	/** @var string */
-	public $value = "";
+	public $value = '';
 	
 	/** @var int */
 	public $expire = 0;
 	
 	/** @var string */
-	public $path = "/";
+	public $path = '/';
 	
 	/** @var string */
-	public $domain = "";
+	public $domain = '';
 	
 	/** @var bool */
 	public $secure = false;

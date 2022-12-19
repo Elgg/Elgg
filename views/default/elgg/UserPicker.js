@@ -1,6 +1,5 @@
 /** @module elgg/UserPicker */
 define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery.ui.autocomplete.html'], function($, elgg, Ajax) {
-
 	/**
 	 * @param {HTMLElement} wrapper outer div
 	 * @constructor
@@ -71,7 +70,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery
 		 * @param {Number} guid    GUID of autocomplete item selected by user
 		 * @param {String} html    HTML for autocomplete item selected by user
 		 */
-		addUser : function(event, guid, html) {
+		addUser: function(event, guid, html) {
 			if (event.isDefaultPrevented()) {
 				return;
 			}
@@ -80,6 +79,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery
 			if (!$('li[data-guid="' + guid + '"]', this.$ul).length) {
 				this.$ul.append(html);
 			}
+			
 			this.$input.val('');
 
 			this.enforceLimit();
@@ -92,7 +92,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery
 		 *
 		 * @param {Object} event
 		 */
-		removeUser : function(event) {
+		removeUser: function(event) {
 			$(event.target).closest('.elgg-user-picker-list > li').remove();
 
 			this.enforceLimit();
@@ -103,7 +103,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery
 		/**
 		 * Make sure user can't add more than limit
 		 */
-		enforceLimit : function() {
+		enforceLimit: function() {
 			if (this.limit) {
 				if ($('li[data-guid]', this.$ul).length >= this.limit) {
 					if (!this.isSealed) {
@@ -120,7 +120,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery
 		/**
 		 * Don't allow user to add users
 		 */
-		seal : function() {
+		seal: function() {
 			this.$input.prop('disabled', true);
 			this.$wrapper.addClass('elgg-state-disabled');
 			this.isSealed = true;
@@ -129,7 +129,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery
 		/**
 		 * Allow user to add users
 		 */
-		unseal : function() {
+		unseal: function() {
 			this.$input.prop('disabled', false);
 			this.$wrapper.removeClass('elgg-state-disabled');
 			this.isSealed = false;

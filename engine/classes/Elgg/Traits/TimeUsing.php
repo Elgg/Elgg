@@ -28,6 +28,7 @@ trait TimeUsing {
 		if ($modifier) {
 			$time->modify($modifier);
 		}
+		
 		return $time;
 	}
 

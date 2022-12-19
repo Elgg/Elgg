@@ -1,7 +1,7 @@
 // originaly copied from http://www.isummation.com/blog/block-drag-drop-image-or-direct-image-paste-into-ckeditor-using-firefox/
 
 CKEDITOR.plugins.add( 'blockimagepaste', {
-	init : function(editor) {
+	init: function(editor) {
 		function replaceImgText(html) {
 			var ret = html.replace( /<img[^>]*src="data:image\/(bmp|dds|gif|jpg|jpeg|png|psd|pspimage|tga|thm|tif|tiff|yuv|ai|eps|ps|svg);base64,.*?"[^>]*>/gi, function( img ){
 				require(['elgg/i18n'], function(i18n) {

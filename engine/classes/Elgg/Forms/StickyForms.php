@@ -55,6 +55,7 @@ class StickyForms {
 		foreach ($ignored_field_names as $key) {
 			unset($vars[$key]);
 		}
+		
 		$data[$form_name] = $vars;
 	
 		$this->session->set('sticky_forms', $data);

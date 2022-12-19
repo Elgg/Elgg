@@ -19,6 +19,7 @@ $dropdown_values = [];
 foreach ($menu_items as $item) {
 	$dropdown_values[$item->getName()] = $item->getText();
 }
+
 $dropdown_values[' '] = elgg_echo('none');
 
 $configure = elgg_view('output/longtext', [

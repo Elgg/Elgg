@@ -15,7 +15,7 @@ abstract class Data extends ArrayObject {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function __construct($input = [], int $flags = ArrayObject::ARRAY_AS_PROPS, string $iterator_class = "ArrayIterator") {
+	public function __construct($input = [], int $flags = ArrayObject::ARRAY_AS_PROPS, string $iterator_class = 'ArrayIterator') {
 		parent::__construct($input, $flags, $iterator_class);
 	}
 

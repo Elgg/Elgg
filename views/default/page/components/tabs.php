@@ -31,9 +31,10 @@
  *                        </code>
  */
 $id = elgg_extract('id', $vars);
-if (!isset($vars['id'])) {
-	$id = "elgg-tabs-" . base_convert(mt_rand(), 10, 36);
+if (!isset($id)) {
+	$id = 'elgg-tabs-' . base_convert(mt_rand(), 10, 36);
 }
+
 $vars['id'] = $id;
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-tabs-component');

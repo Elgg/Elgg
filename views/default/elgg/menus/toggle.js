@@ -4,9 +4,7 @@
  * @module elgg/menus/toggle
  */
 define(['jquery', 'elgg'], function ($, elgg) {
-
 	var toggle = {
-
 		init: function () {
 			// handles clicking on a menu item that has toggleable childmenu
 			$(document).on('click', '.elgg-menu-item-has-toggle > a', function (e) {
@@ -55,4 +53,3 @@ define(['jquery', 'elgg'], function ($, elgg) {
 
 	return toggle;
 });
-

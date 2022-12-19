@@ -85,7 +85,8 @@ class ApiMethod implements CollectionItemInterface {
 				return;
 			case 'params':
 				if (!is_array($value)) {
-					throw new InvalidArgumentException("'{$name}' needs to be an array, " . gettype($value) . " given.");
+					$value_type = gettype($value);
+					throw new InvalidArgumentException("'{$name}' needs to be an array, '{$value_type}}' given.");
 				}
 				
 				if (empty($value)) {
@@ -108,12 +109,12 @@ class ApiMethod implements CollectionItemInterface {
 					// check if 'required' was specified - if not, make it true
 					$value[$key]['required'] = (bool) elgg_extract('required', $v, true);
 				}
-				
 				break;
 			case 'description':
 			case 'call_method':
 				if (!is_string($value)) {
-					throw new InvalidArgumentException("'{$name}' needs to be a string, " . gettype($value) . " given.");
+					$value_type = gettype($value);
+					throw new InvalidArgumentException("'{$name}' needs to be a string, '{$value_type}' given.");
 				}
 				
 				// validate call method
@@ -128,7 +129,8 @@ class ApiMethod implements CollectionItemInterface {
 			case 'require_user_auth':
 			case 'supply_associative':
 				if (!is_bool($value)) {
-					throw new InvalidArgumentException("'{$name}' needs to be a boolean, " . gettype($value) . " given.");
+					$value_type = gettype($value);
+					throw new InvalidArgumentException("'{$name}' needs to be a boolean, '{$value_type}' given.");
 				}
 				break;
 		}
@@ -274,7 +276,7 @@ class ApiMethod implements CollectionItemInterface {
 		
 		switch (strtolower($type)) {
 			case 'int':
-			case 'integer' :
+			case 'integer':
 				return (int) $value;
 				
 			case 'bool':
@@ -283,7 +285,6 @@ class ApiMethod implements CollectionItemInterface {
 				if ($value === 'false' || $value === 0 || $value === '0') {
 					return false;
 				}
-				
 				return true;
 				
 			case 'string':
@@ -297,7 +298,6 @@ class ApiMethod implements CollectionItemInterface {
 				if (!is_array($value)) {
 					throw new \APIException(elgg_echo('APIException:ParameterNotArray', [$key]));
 				}
-				
 				return $value;
 				
 			default:

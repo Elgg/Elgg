@@ -41,11 +41,10 @@ class BootData {
 	 * @throws InstallationException
 	 */
 	public function populate(EntityTable $entities, Plugins $plugins, bool $installed) {
-
 		// get site entity
 		$this->site = $entities->get(1, 'site');
 		if (!$this->site && $installed) {
-			throw new InstallationException("Unable to handle this request. This site is not configured or the database is down.");
+			throw new InstallationException('Unable to handle this request. This site is not configured or the database is down.');
 		}
 
 		// get plugins

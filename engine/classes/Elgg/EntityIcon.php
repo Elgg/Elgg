@@ -5,6 +5,7 @@ namespace Elgg;
  * Entities that support icons should implement this interface
  */
 interface EntityIcon {
+
 	/**
 	 * Saves icons using an uploaded file as the source.
 	 *

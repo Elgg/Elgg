@@ -10,12 +10,12 @@ $username = (string) elgg_extract('username', $vars);
 
 $user = elgg_get_user_by_username($username);
 if (!$user instanceof \ElggUser) {
-	throw new EntityNotFoundException(elgg_echo("profile:notfound"));
+	throw new EntityNotFoundException(elgg_echo('profile:notfound'));
 }
 
 // check if logged in user can edit this profile
 if (!$user->canEdit()) {
-	throw new EntityPermissionsException(elgg_echo("profile:noaccess"));
+	throw new EntityPermissionsException(elgg_echo('profile:noaccess'));
 }
 
 elgg_set_page_owner_guid($user->guid);

@@ -107,7 +107,6 @@ class Users extends Seed {
 
 			$this->advance();
 		}
-
 	}
 
 	/**

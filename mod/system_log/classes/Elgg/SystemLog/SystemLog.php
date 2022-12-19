@@ -114,7 +114,7 @@ class SystemLog {
 		$insert->object_class = get_class($object);
 		$insert->object_type = $object->getType();
 		$insert->object_subtype = $object->getSubtype();
-		$insert->ip_address = _elgg_services()->request->getClientIp() ? : '0.0.0.0';
+		$insert->ip_address = _elgg_services()->request->getClientIp() ?: '0.0.0.0';
 		$insert->performed_by_guid = elgg_get_logged_in_user_guid();
 
 		if (isset($object->access_id)) {

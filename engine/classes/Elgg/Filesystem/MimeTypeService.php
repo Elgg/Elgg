@@ -77,7 +77,7 @@ class MimeTypeService {
 			$result = $matches[1];
 		}
 		
-		if (0 === strpos($mimetype, 'text/') || false !== strpos($mimetype, 'opendocument')) {
+		if (strpos($mimetype, 'text/') === 0 || strpos($mimetype, 'opendocument') !== false) {
 			$result = 'document';
 		}
 		

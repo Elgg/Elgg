@@ -129,6 +129,7 @@ class ElggFile extends ElggObject {
 			// the file has no file on the filesystem
 			// can happen in tests etc.
 		}
+		
 		return false;
 	}
 
@@ -343,7 +344,7 @@ class ElggFile extends ElggObject {
 	 * @return bool
 	 */
 	public function transfer(int $owner_guid, string $filename = null): bool {
-		if (!$owner_guid) {
+		if ($owner_guid < 1) {
 			return false;
 		}
 
@@ -351,9 +352,10 @@ class ElggFile extends ElggObject {
 			return false;
 		}
 
-		if (!$filename) {
+		if (empty($filename)) {
 			$filename = $this->getFilename();
 		}
+		
 		$filestorename = $this->getFilenameOnFilestore();
 
 		$this->owner_guid = $owner_guid;
@@ -434,6 +436,7 @@ class ElggFile extends ElggObject {
 				// this can fail if the upload events returns true, but the file is not present on the filestore
 				// this happens in a unittest
 			}
+			
 			_elgg_services()->events->triggerAfter('upload', 'file', $this);
 			return true;
 		}
@@ -481,6 +484,7 @@ class ElggFile extends ElggObject {
 		if (!empty($expires)) {
 			$file_svc->setExpires($expires);
 		}
+		
 		$file_svc->setDisposition('attachment');
 		$file_svc->bindSession($use_cookie);
 
@@ -509,6 +513,7 @@ class ElggFile extends ElggObject {
 		if (!empty($expires)) {
 			$file_svc->setExpires($expires);
 		}
+		
 		$file_svc->setDisposition('inline');
 		$file_svc->bindSession($use_cookie);
 

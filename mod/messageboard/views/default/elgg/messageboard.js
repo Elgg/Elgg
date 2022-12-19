@@ -20,6 +20,7 @@ define(['jquery', 'elgg/Ajax'], function ($, Ajax) {
 				} else {
 					ul.prepend($(data).find('li:first'));
 				}
+				
 				form.find('textarea').val('');
 			}
 		});

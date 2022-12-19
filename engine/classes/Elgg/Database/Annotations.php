@@ -25,7 +25,7 @@ class Annotations extends Repository {
 	public function count() {
 		$qb = Select::fromTable('annotations', 'n_table');
 
-		$count_expr = $this->options->distinct ? "DISTINCT n_table.id" : "*";
+		$count_expr = $this->options->distinct ? 'DISTINCT n_table.id' : '*';
 		$qb->select("COUNT({$count_expr}) AS total");
 
 		$qb = $this->buildQuery($qb);
@@ -50,8 +50,7 @@ class Annotations extends Repository {
 	 * @throws DomainException
 	 */
 	public function calculate($function, $property, $property_type = null) {
-
-		if (!in_array(strtolower($function), QueryBuilder::$calculations)) {
+		if (!in_array(strtolower($function), QueryBuilder::CALCULATIONS)) {
 			throw new DomainException("'{$function}' is not a valid numeric function");
 		}
 
@@ -71,15 +70,16 @@ class Annotations extends Repository {
 				$qb->select("{$function}({$alias}.{$property}) AS calculation");
 				break;
 
-			case 'annotation' :
+			case 'annotation':
 				$alias = 'n_table';
 				if (!empty($this->options->annotation_name_value_pairs) && $this->options->annotation_name_value_pairs[0]->names != $property) {
 					$alias = $qb->joinAnnotationTable('n_table', 'entity_guid', $property);
 				}
+				
 				$qb->select("{$function}($alias.value) AS calculation");
 				break;
 
-			case 'metadata' :
+			case 'metadata':
 				$alias = $qb->joinMetadataTable('n_table', 'entity_guid', $property);
 				$qb->select("{$function}({$alias}.value) AS calculation");
 				break;
@@ -106,11 +106,10 @@ class Annotations extends Repository {
 	 * @return \ElggAnnotation[]
 	 */
 	public function get($limit = null, $offset = null, $callback = null) {
-
 		$qb = Select::fromTable('annotations', 'n_table');
 
-		$distinct = $this->options->distinct ? "DISTINCT" : "";
-		$qb->select("$distinct n_table.*");
+		$distinct = $this->options->distinct ? 'DISTINCT' : '';
+		$qb->select("{$distinct} n_table.*");
 
 		$this->expandInto($qb, 'n_table');
 
@@ -128,7 +127,7 @@ class Annotations extends Repository {
 			$qb->setFirstResult((int) $offset);
 		}
 
-		$callback = $callback ? : $this->options->callback;
+		$callback = $callback ?: $this->options->callback;
 		if (!isset($callback)) {
 			$callback = function ($row) {
 				return new \ElggAnnotation($row);
@@ -150,28 +149,27 @@ class Annotations extends Repository {
 	 * @throws LogicException
 	 */
 	public function execute() {
-
 		if ($this->options->annotation_calculation) {
 			$clauses = $this->options->annotation_name_value_pairs;
 			if (count($clauses) > 1 && $this->options->annotation_name_value_pairs_operator !== 'OR') {
-				throw new LogicException("Annotation calculation can not be performed on multiple annotation name value pairs merged with AND");
+				throw new LogicException('Annotation calculation can not be performed on multiple annotation name value pairs merged with AND');
 			}
 
 			$clause = array_shift($clauses);
 
 			return $this->calculate($this->options->annotation_calculation, $clause->names, 'annotation');
-		} else if ($this->options->metadata_calculation) {
+		} elseif ($this->options->metadata_calculation) {
 			$clauses = $this->options->metadata_name_value_pairs;
 			if (count($clauses) > 1 && $this->options->metadata_name_value_pairs_operator !== 'OR') {
-				throw new LogicException("Metadata calculation can not be performed on multiple metadata name value pairs merged with AND");
+				throw new LogicException('Metadata calculation can not be performed on multiple metadata name value pairs merged with AND');
 			}
 
 			$clause = array_shift($clauses);
 
 			return $this->calculate($this->options->metadata_calculation, $clause->names, 'metadata');
-		} else if ($this->options->count) {
+		} elseif ($this->options->count) {
 			return $this->count();
-		} else if ($this->options->batch) {
+		} elseif ($this->options->batch) {
 			return $this->batch($this->options->limit, $this->options->offset, $this->options->callback);
 		} else {
 			return $this->get($this->options->limit, $this->options->offset, $this->options->callback);
@@ -186,7 +184,6 @@ class Annotations extends Repository {
 	 * @return QueryBuilder
 	 */
 	protected function buildQuery(QueryBuilder $qb) {
-
 		$ands = [];
 
 		foreach ($this->options->joins as $join) {
@@ -269,6 +266,7 @@ class Annotations extends Repository {
 			} else {
 				$joined_alias = $qb->joinMetadataTable('n_table', 'entity_guid', $clause->names);
 			}
+			
 			$parts[] = $clause->prepare($qb, $joined_alias);
 		}
 
@@ -295,6 +293,7 @@ class Annotations extends Repository {
 			} else {
 				$joined_alias = $qb->joinRelationshipTable('n_table', $join_on, $clause->names, $clause->inverse);
 			}
+			
 			$parts[] = $clause->prepare($qb, $joined_alias);
 		}
 

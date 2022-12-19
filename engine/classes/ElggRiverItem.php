@@ -72,6 +72,7 @@ class ElggRiverItem {
 		if (in_array($name, static::INTEGER_ATTR_NAMES)) {
 			$value = (int) $value;
 		}
+		
 		$this->attributes[$name] = $value;
 	}
 
@@ -80,8 +81,8 @@ class ElggRiverItem {
 	 */
 	public function __get($name) {
 		switch ($name) {
-			case 'type' :
-			case 'subtype' :
+			case 'type':
+			case 'subtype':
 				$object = $this->getObjectEntity();
 				if ($object) {
 					return $object->$name;

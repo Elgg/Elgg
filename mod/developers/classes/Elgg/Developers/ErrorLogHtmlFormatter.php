@@ -22,7 +22,7 @@ class ErrorLogHtmlFormatter extends HtmlFormatter {
 	protected function addRow(string $th, string $td = ' ', bool $escapeTd = true): string {
 		$th = htmlspecialchars($th, ENT_NOQUOTES, 'UTF-8');
 		if ($escapeTd) {
-			$td = '<pre>' . htmlspecialchars($td, ENT_NOQUOTES, 'UTF-8') . '</pre>';
+			$td = elgg_format_element('pre', [], htmlspecialchars($td, ENT_NOQUOTES, 'UTF-8'));
 		}
 
 		return "<tr class=\"developers-error-log-row\"><th>$th:</th><td>$td</td></tr>";
@@ -80,6 +80,7 @@ class ErrorLogHtmlFormatter extends HtmlFormatter {
 				$output .= $this->addRow($key, $this->convertToString($value));
 			}
 		}
+		
 		if ($record['extra']) {
 			foreach ($record['extra'] as $key => $value) {
 				$output .= $this->addRow($key, $this->convertToString($value));

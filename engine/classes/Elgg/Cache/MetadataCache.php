@@ -115,7 +115,6 @@ class MetadataCache {
 		}
 
 		return count($values) > 1 ? $values : $values[0];
-
 	}
 
 	/**
@@ -280,7 +279,6 @@ class MetadataCache {
 	 * @return array
 	 */
 	public function filterMetadataHeavyEntities(array $guids, $limit = 1024000) {
-
 		$guids = _elgg_services()->metadataTable->getAll([
 			'guids' => $guids,
 			'limit' => false,
@@ -300,6 +298,6 @@ class MetadataCache {
 			]
 		]);
 
-		return $guids ? : [];
+		return $guids ?: [];
 	}
 }

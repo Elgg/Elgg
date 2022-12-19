@@ -7,6 +7,7 @@ use Composer\Installer\PackageEvent;
  * A composer command handler to run after post-package-update event
  */
 class PostUpdate {
+	
 	/**
 	 * Todo
 	 *
@@ -15,6 +16,5 @@ class PostUpdate {
 	 * @return void
 	 */
 	public static function execute(PackageEvent $event) {
-
 	}
 }

@@ -54,6 +54,8 @@ class ImageService {
 					$this->imagine = new \Imagine\Imagick\Imagine();
 					break;
 				}
+				
+				// fallback to GD if Imagick is not loaded
 			default:
 				// default use GD
 				$this->imagine = new \Imagine\Gd\Imagine();
@@ -194,7 +196,7 @@ class ImageService {
 		$max_width = (int) elgg_extract('w', $params, 100, false);
 		$max_height = (int) elgg_extract('h', $params, 100, false);
 		if (!$max_height || !$max_width) {
-			throw new InvalidArgumentException("Resize width and height parameters are required");
+			throw new InvalidArgumentException('Resize width and height parameters are required');
 		}
 
 		$square = elgg_extract('square', $params, false);
@@ -224,11 +226,13 @@ class ImageService {
 			// asking for a square image back
 			
 			// size of the new square image
-			$max_width = $max_height = min($max_width, $max_height);
-
+			$max_width = min($max_width, $max_height);
+			$max_height = $max_width;
+			
 			// find largest square that fits within the selected region
-			$crop_width = $crop_height = min($crop_width, $crop_height);
-
+			$crop_width = min($crop_width, $crop_height);
+			$crop_height = $crop_width;
+			
 			if (!$cropping_mode) {
 				// place square region in the center
 				$x1 = floor(($width - $crop_width) / 2);

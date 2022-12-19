@@ -535,6 +535,7 @@ class EntityIconService {
 	 * @param \ElggEntity $entity Entity that owns the icon
 	 * @param mixed       $params A string defining the size of the icon (e.g. tiny, small, medium, large)
 	 *                            or an array of parameters including 'size'
+	 *
 	 * @return string
 	 */
 	public function getIconURL(\ElggEntity $entity, string|array $params = []): string {
@@ -550,11 +551,11 @@ class EntityIconService {
 		$params['entity'] = $entity;
 		$params['size'] = $size;
 
-		$type = elgg_extract('type', $params) ? : 'icon';
+		$type = elgg_extract('type', $params, 'icon', false);
 		$entity_type = $entity->getType();
 
 		$url = $this->events->triggerResults("entity:{$type}:url", $entity_type, $params, null);
-		if ($url == null) {
+		if (!isset($url)) {
 			if ($this->hasIcon($entity, $size, $type)) {
 				$icon = $this->getIcon($entity, $size, $type);
 				$default_use_cookie = (bool) elgg_get_config('session_bound_entity_icons');
@@ -564,7 +565,7 @@ class EntityIconService {
 			}
 		}
 
-		if ($url) {
+		if (!empty($url)) {
 			return elgg_normalize_url($url);
 		}
 		
@@ -580,9 +581,8 @@ class EntityIconService {
 	 * @return string
 	 */
 	public function getFallbackIconUrl(\ElggEntity $entity, array $params = []) {
-
-		$type = elgg_extract('type', $params) ? : 'icon';
-		$size = elgg_extract('size', $params) ? : 'medium';
+		$type = elgg_extract('type', $params, 'icon', false);
+		$size = elgg_extract('size', $params, 'medium', false);
 		
 		$entity_type = $entity->getType();
 		$entity_subtype = $entity->getSubtype();
@@ -594,6 +594,7 @@ class EntityIconService {
 				if ($ext == 'svg' && elgg_view_exists("{$type}/{$entity_type}/{$subtype}.svg", 'default')) {
 					return elgg_get_simplecache_url("{$type}/{$entity_type}/{$subtype}.svg");
 				}
+				
 				if (elgg_view_exists("{$type}/{$entity_type}/{$subtype}/{$size}.{$ext}", 'default')) {
 					return elgg_get_simplecache_url("{$type}/{$entity_type}/{$subtype}/{$size}.{$ext}");
 				}
@@ -651,6 +652,7 @@ class EntityIconService {
 		if ($type == 'icon') {
 			$sizes = $this->config->icon_sizes;
 		}
+		
 		$params = [
 			'type' => $type,
 			'entity_type' => $entity_type,
@@ -661,8 +663,9 @@ class EntityIconService {
 		}
 
 		if (!is_array($sizes)) {
-			throw new InvalidArgumentException("The icon size configuration for image type '{$type}' " .
-				"must be an associative array of image size names and their properties");
+			$msg = "The icon size configuration for image type '{$type}'";
+			$msg .= ' must be an associative array of image size names and their properties';
+			throw new InvalidArgumentException($msg);
 		}
 
 		// lazy generation of icons requires a 'master' size

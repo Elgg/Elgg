@@ -144,7 +144,7 @@ class Urls {
 		}
 	
 		$matches = [];
-		if (preg_match("#^([a-z]+)\\:#", $url, $matches)) {
+		if (preg_match('#^([a-z]+)\\:#', $url, $matches)) {
 			// we don't let http/https: URLs fail filter_var(), but anything else starting with a protocol
 			// is OK
 			if ($matches[1] !== 'http' && $matches[1] !== 'https') {
@@ -152,18 +152,18 @@ class Urls {
 			}
 		}
 	
-		if (preg_match("#^(\\#|\\?|//)#", $url)) {
+		if (preg_match('#^(\\#|\\?|//)#', $url)) {
 			// starts with '//' (protocol-relative link), query, or fragment
 			return $url;
 		}
 	
-		if (preg_match("#^[^/]*\\.php(\\?.*)?$#", $url)) {
+		if (preg_match('#^[^/]*\\.php(\\?.*)?$#', $url)) {
 			// root PHP scripts: 'install.php', 'install.php?step=step'. We don't want to confuse these
 			// for domain names.
 			return elgg_get_site_url() . $url;
 		}
 	
-		if (preg_match("#^[^/?]*\\.#", $url)) {
+		if (preg_match('#^[^/?]*\\.#', $url)) {
 			// URLs starting with domain: 'example.com', 'example.com/subpage'
 			return "http://{$url}";
 		}
@@ -201,6 +201,7 @@ class Urls {
 		if (isset($url1_info['path'])) {
 			$url1_info['path'] = trim($url1_info['path'], '/');
 		}
+		
 		if (isset($url2_info['path'])) {
 			$url2_info['path'] = trim($url2_info['path'], '/');
 		}
@@ -228,25 +229,23 @@ class Urls {
 		$url2_params = [];
 	
 		if (isset($url1_info['query'])) {
-			if ($url1_info['query'] = html_entity_decode($url1_info['query'])) {
+			$url1_info['query'] = html_entity_decode($url1_info['query']);
+			if (!elgg_is_empty($url1_info['query'])) {
 				$url1_params = elgg_parse_str($url1_info['query']);
 			}
 		}
 	
 		if (isset($url2_info['query'])) {
-			if ($url2_info['query'] = html_entity_decode($url2_info['query'])) {
+			$url2_info['query'] = html_entity_decode($url2_info['query']);
+			if (!elgg_is_empty($url2_info['query'])) {
 				$url2_params = elgg_parse_str($url2_info['query']);
 			}
 		}
 	
 		// drop ignored params
 		foreach ($ignore_params as $param) {
-			if (isset($url1_params[$param])) {
-				unset($url1_params[$param]);
-			}
-			if (isset($url2_params[$param])) {
-				unset($url2_params[$param]);
-			}
+			unset($url1_params[$param]);
+			unset($url2_params[$param]);
 		}
 	
 		// array_diff_assoc only returns the items in arr1 that aren't in arrN

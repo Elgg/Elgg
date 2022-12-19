@@ -29,7 +29,7 @@ $view_module = function($icon, $title, $value = '', $subtext = '') {
 // Check if the function exists before callling it else it may fail in case of Nginx or other Non Apache servers
 if (function_exists('apache_get_version')) {
 	if (apache_get_version() !== false) {
-		$icon =  $icon_warning;
+		$icon = $icon_warning;
 		$title = elgg_echo('admin:performance:apache:mod_cache');
 		$value = elgg_echo('status:unavailable');
 		$subtext = '';
@@ -58,7 +58,7 @@ if (!empty($open_basedirs)) {
 	
 	$separator = ':';
 	if (stripos(PHP_OS, 'WIN') === 0) {
-		$open_basedirs = $separator = ';';
+		$separator = ';';
 	}
 	
 	$parsed_open_basedirs = explode($separator, $open_basedirs);

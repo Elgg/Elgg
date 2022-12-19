@@ -221,6 +221,7 @@ function _elgg_htmlawed_tag_post_processor(string $element, array|false $attribu
 				if (!trim($style) || strpos($style, ':') === false) {
 					continue;
 				}
+				
 				list($style_attr, $style_value) = explode(':', trim($style));
 				$style_attr = trim($style_attr);
 				$style_value = trim($style_value);
@@ -240,7 +241,8 @@ function _elgg_htmlawed_tag_post_processor(string $element, array|false $attribu
 	}
 
 	// Some WYSIWYG editors do not like tags like <p > so only add a space if needed.
-	if ($string = trim($string)) {
+	$string = trim($string);
+	if (!elgg_is_empty($string)) {
 		$string = " {$string}";
 	}
 

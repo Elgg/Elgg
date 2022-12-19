@@ -3,6 +3,7 @@
 namespace Elgg\Menus;
 
 use Elgg\Menu\MenuItems;
+use Elgg\Upgrade\Batch;
 
 /**
  * Register menu items to the entity menu
@@ -209,8 +210,9 @@ class Entity {
 				'data-guid' => $entity->guid,
 				'priority' => 600,
 			]);
-		} elseif ($batch = $entity->getBatch()) {
-			if (!$batch->shouldBeSkipped()) {
+		} else {
+			$batch = $entity->getBatch();
+			if ($batch instanceof Batch && !$batch->shouldBeSkipped()) {
 				// only show reset if it will have an effect
 				$result[] = \ElggMenuItem::factory([
 					'name' => 'reset',

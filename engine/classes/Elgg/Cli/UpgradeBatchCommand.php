@@ -50,6 +50,6 @@ class UpgradeBatchCommand extends Command {
 			$this->write(elgg_echo('cli:upgrade:batch:finished'));
 		}
 
-		return 0;
+		return self::SUCCESS;
 	}
 }

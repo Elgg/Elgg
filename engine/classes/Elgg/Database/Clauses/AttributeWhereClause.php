@@ -51,5 +51,4 @@ class AttributeWhereClause extends WhereClause {
 
 		return $qb->merge($wheres);
 	}
-
 }

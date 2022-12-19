@@ -8,7 +8,6 @@ use Elgg\Traits\Loggable;
 use Elgg\ViewsService;
 use Pelago\Emogrifier\CssInliner;
 
-
 /**
  * Various helper method for formatting and sanitizing output
  */
@@ -178,7 +177,7 @@ class HtmlFormatter {
 		$attributes = [];
 
 		foreach ($attrs as $attr => $val) {
-			if (0 !== strpos($attr, 'data-') && false !== strpos($attr, '_')) {
+			if (strpos($attr, 'data-') !== 0 && strpos($attr, '_') !== false) {
 				// this is probably a view $vars variable not meant for output
 				continue;
 			}

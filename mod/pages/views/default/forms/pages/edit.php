@@ -20,8 +20,8 @@ foreach ($fields as $field) {
 	$name = $field['name'];
 	
 	switch ($name) {
-		case 'access_id' :
-		case 'write_access_id' :
+		case 'access_id':
+		case 'write_access_id':
 			if (!$can_change_access) {
 				// Only owner and admins can change access
 				continue(2);
@@ -30,7 +30,7 @@ foreach ($fields as $field) {
 			$field['entity'] = $entity;
 			break;
 
-		case 'parent_guid' :
+		case 'parent_guid':
 			if (empty($parent_guid)) {
 				// skip field if there is no parent_guid
 				continue(2);

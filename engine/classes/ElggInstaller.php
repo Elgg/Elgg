@@ -98,7 +98,7 @@ class ElggInstaller {
 
 		$params = $app->internal_services->request->request->all();
 
-		$method = "run" . ucwords($step);
+		$method = 'run' . ucwords($step);
 
 		return $this->$method($params);
 	}
@@ -223,13 +223,13 @@ class ElggInstaller {
 		];
 		foreach ($required_params as $key) {
 			if (empty($params[$key])) {
-				$msg = elgg_echo('install:error:requiredfield', [$key]);
-				throw new InstallationException($msg);
+				throw new InstallationException(elgg_echo('install:error:requiredfield', [$key]));
 			}
 		}
 
 		// password is passed in once
-		$params['password1'] = $params['password2'] = $params['password'];
+		$params['password1'] = $params['password'];
+		$params['password2'] = $params['password'];
 
 		if ($create_htaccess) {
 			$rewrite_tester = new RewriteTester();
@@ -768,11 +768,13 @@ class ElggInstaller {
 			if (empty($result)) {
 				return;
 			}
+			
 			foreach ($result->fetchAllAssociative() as $table) {
 				if (in_array("{$db->prefix}config", $table)) {
 					$this->has_completed['database'] = true;
 				}
 			}
+			
 			if ($this->has_completed['database'] == false) {
 				return;
 			}
@@ -1124,7 +1126,6 @@ class ElggInstaller {
 		return $count;
 	}
 
-
 	/**
 	 * Database support methods
 	 */
@@ -1203,7 +1204,7 @@ class ElggInstaller {
 		// non-Latin letters) or an underscore (_). Subsequent characters in an
 		// identifier or key word can be letters, underscores, digits (0-9), or dollar signs ($).
 		// Refs #4994
-		if (!empty($submissionVars['dbprefix']) && !preg_match("/^[a-zA-Z_][\w]*$/", $submissionVars['dbprefix'])) {
+		if (!empty($submissionVars['dbprefix']) && !preg_match('/^[a-zA-Z_][\w]*$/', $submissionVars['dbprefix'])) {
 			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:database_prefix'));
 
 			return false;
@@ -1245,7 +1246,7 @@ class ElggInstaller {
 		try {
 			$db->getConnection('read')->executeQuery('SELECT 1');
 		} catch (DatabaseException $e) {
-			if (0 === strpos($e->getMessage(), "Elgg couldn't connect")) {
+			if (strpos($e->getMessage(), "Elgg couldn't connect") === 0) {
 				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:databasesettings'));
 			} else {
 				$save_value = $this->sanitizeInputValue($dbname);
@@ -1296,7 +1297,7 @@ class ElggInstaller {
 					break;
 			}
 
-			$template = str_replace("{{" . $k . "}}", $v, $template);
+			$template = str_replace('{{' . $k . '}}', $v, $template);
 		}
 
 		$result = file_put_contents(Config::resolvePath(), $template);
@@ -1533,7 +1534,7 @@ class ElggInstaller {
 			return false;
 		}
 
-		if (trim($submissionVars['password1']) == "") {
+		if (trim($submissionVars['password1']) === '') {
 			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:admin:password:empty'));
 
 			return false;
@@ -1585,6 +1586,7 @@ class ElggInstaller {
 		if (!$user->makeAdmin()) {
 			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:adminaccess'));
 		}
+		
 		$app->internal_services->session_manager->setIgnoreAccess($ia);
 
 		// add validation data to satisfy user validation plugins

@@ -63,15 +63,19 @@ class MoveIconsOnOwnerChangeHandler {
 				// there is already a new icon
 				// just removing the old one
 				$old_icon->delete();
-				elgg_log("Entity $entity->guid has been transferred to a new owner but an icon was "
-					. "left behind under {$old_icon->getFilenameOnFilestore()}. "
-					. "Old icon has been deleted", 'NOTICE');
+				
+				$notice = "Entity {$entity->guid} has been transferred to a new owner but an icon was";
+				$notice .= " left behind under {$old_icon->getFilenameOnFilestore()}.";
+				$notice .= ' Old icon has been deleted';
+				elgg_log($notice, 'NOTICE');
 				continue;
 			}
 	
 			$old_icon->transfer($new_icon->owner_guid, $new_icon->getFilename());
-			elgg_log("Entity $entity->guid has been transferred to a new owner. "
-				. "Icon was moved from {$old_icon->getFilenameOnFilestore()} to {$new_icon->getFilenameOnFilestore()}.", 'NOTICE');
+			
+			$notice = "Entity {$entity->guid} has been transferred to a new owner.";
+			$notice .= " Icon was moved from {$old_icon->getFilenameOnFilestore()} to {$new_icon->getFilenameOnFilestore()}.";
+			elgg_log($notice, 'NOTICE');
 		}
 	}
 }

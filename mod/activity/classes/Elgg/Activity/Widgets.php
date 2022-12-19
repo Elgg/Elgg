@@ -5,7 +5,7 @@ namespace Elgg\Activity;
 /**
  * Widget related functions
  */
-class Widgets{
+class Widgets {
 
 	/**
 	 * Set the title URL for the activity widget
@@ -15,7 +15,6 @@ class Widgets{
 	 * @return void|string
 	 */
 	public static function widgetURL(\Elgg\Event $event) {
-		
 		$return_value = $event->getValue();
 		if (!empty($return_value)) {
 			// someone already set an url

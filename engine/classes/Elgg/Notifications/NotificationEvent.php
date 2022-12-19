@@ -43,5 +43,4 @@ interface NotificationEvent {
 	 * @return string
 	 */
 	public function getDescription();
-	
 }

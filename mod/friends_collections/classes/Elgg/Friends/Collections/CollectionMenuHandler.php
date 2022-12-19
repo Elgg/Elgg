@@ -18,7 +18,6 @@ class CollectionMenuHandler {
 	 * @return void|\ElggMenuItem[]
 	 */
 	public function __invoke(\Elgg\Event $event) {
-
 		$collection = $event->getParam('collection');
 		if (!$collection instanceof ElggAccessCollection) {
 			return;
@@ -53,5 +52,4 @@ class CollectionMenuHandler {
 
 		return $return;
 	}
-
 }

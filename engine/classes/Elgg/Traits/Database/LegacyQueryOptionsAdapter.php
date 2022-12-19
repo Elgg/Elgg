@@ -202,6 +202,7 @@ trait LegacyQueryOptionsAdapter {
 				if (!in_array($type, Config::ENTITY_TYPES)) {
 					elgg_log("'$type' is not a valid entity type", 'WARNING');
 				}
+				
 				if (!empty($subtypes) && !is_array($subtypes)) {
 					$options['type_subtype_pairs'][$type] = [$subtypes];
 				}
@@ -538,7 +539,7 @@ trait LegacyQueryOptionsAdapter {
 		foreach ($options["{$type}_name_value_pairs"] as $index => $pair) {
 			if (is_array($pair)) {
 				$keys = array_keys($pair);
-				if (sizeof($keys) === 1 && is_string($keys[0]) && $keys[0] !== 'name' && $keys[0] !== 'value') {
+				if (count($keys) === 1 && is_string($keys[0]) && $keys[0] !== 'name' && $keys[0] !== 'value') {
 					$options["{$type}_name_value_pairs"][$index] = [
 						'name' => $keys[0],
 						'value' => $pair[$keys[0]],
@@ -565,6 +566,7 @@ trait LegacyQueryOptionsAdapter {
 					continue;
 				}
 			}
+			
 			$options["{$type}_name_value_pairs"][$index] = [
 				'name' => $index,
 				'value' => $values,
@@ -588,16 +590,19 @@ trait LegacyQueryOptionsAdapter {
 			if (!isset($value['case_sensitive'])) {
 				$value['case_sensitive'] = $case_sensitive_default;
 			}
+			
 			if (!isset($value['type'])) {
 				if (isset($value['value']) && is_bool($value['value'])) {
 					$value['value'] = (int) $value['value'];
 				}
+				
 				if (isset($value['value']) && is_int($value['value'])) {
 					$value['type'] = ELGG_VALUE_INTEGER;
 				} else {
 					$value['type'] = ELGG_VALUE_STRING;
 				}
 			}
+			
 			if (!isset($value['comparison']) && isset($value['operand'])) {
 				$value['comparison'] = $value['operand'];
 				unset($value['operand']);
@@ -638,6 +643,7 @@ trait LegacyQueryOptionsAdapter {
 			if (isset($options[$prop])) {
 				$pair[$prop] = $options[$prop];
 			}
+			
 			unset($options[$prop]);
 		}
 
@@ -677,6 +683,7 @@ trait LegacyQueryOptionsAdapter {
 			} else {
 				$clause->subject_guids = (array) $pair['guid'];
 			}
+			
 			$clause->created_after = $pair['created_after'];
 			$clause->created_before = $pair['created_before'];
 
@@ -788,9 +795,11 @@ trait LegacyQueryOptionsAdapter {
 			if (strpos($key, $prefix) === 0) {
 				$new_key = substr($key, strlen($prefix));
 			}
+			
 			if (!isset($array[$new_key])) {
 				$array[$new_key] = $array[$key];
 			}
+			
 			if ($new_key !== $key) {
 				unset($array[$key]);
 			}

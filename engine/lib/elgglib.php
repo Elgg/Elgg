@@ -320,6 +320,7 @@ function elgg_get_ini_setting_in_bytes(string $setting): int {
 	if (in_array($last, ['g', 'm', 'k'])) {
 		$val = substr($val, 0, -1);
 	}
+	
 	$val = (int) $val;
 	switch ($last) {
 		case 'g':

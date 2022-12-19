@@ -72,9 +72,11 @@ define(['hooks', 'elgg/Ajax'], function(hooks, Ajax) {
 			if (obj.sum === 5) {
 				log("PASS action()");
 			}
+			
 			if (got_metadata_from_server) {
 				log("PASS got metadata from server response hook");
 			}
+			
 			if (obj.altered_value) {
 				log("PASS client response hook altered value");
 			}

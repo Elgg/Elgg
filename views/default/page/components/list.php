@@ -42,7 +42,8 @@ $pagination_after_options = (array) elgg_extract('pagination_after_options', $va
 unset($vars['pagination_after_options']);
 
 if (in_array($pagination_behaviour, ['ajax-append', 'ajax-append-auto'])) {
-	$vars['position'] = $position = 'both';
+	$position = 'both';
+	$vars['position'] = $position;
 
 	// set before options
 	$pagination_before_options['pagination_show_numbers'] = false;

@@ -40,19 +40,19 @@ if (elgg_trigger_event_results('usersettings:save', 'user', $event_params, true)
 
 foreach ($request->validation()->all() as $item) {
 	if ($item->isValid()) {
-		if ($message = $item->getMessage()) {
+		$message = $item->getMessage();
+		if (!elgg_is_empty($message)) {
 			elgg_register_success_message($message);
 		}
 	} else {
-		if ($error = $item->getError()) {
+		$error = $item->getError();
+		if (!elgg_is_empty($error)) {
 			elgg_register_error_message($error);
 		}
 	}
 }
 
-$data = [
+return elgg_ok_response([
 	'user' => $user,
 	'validation' => $request->validation(),
-];
-
-return elgg_ok_response($data);
+]);

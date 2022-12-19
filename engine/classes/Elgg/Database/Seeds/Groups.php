@@ -101,7 +101,6 @@ class Groups extends Seed {
 
 			$this->advance();
 		}
-
 	}
 
 	/**

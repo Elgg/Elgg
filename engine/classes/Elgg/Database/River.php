@@ -75,7 +75,7 @@ class River extends Repository {
 	public function count() {
 		$qb = Select::fromTable('river', 'rv');
 
-		$count_expr = $this->options->distinct ? "DISTINCT rv.id" : "*";
+		$count_expr = $this->options->distinct ? 'DISTINCT rv.id' : '*';
 		$qb->select("COUNT({$count_expr}) AS total");
 
 		$qb = $this->buildQuery($qb);
@@ -100,8 +100,7 @@ class River extends Repository {
 	 * @throws DomainException
 	 */
 	public function calculate($function, $property, $property_type = 'annotation') {
-
-		if (!in_array(strtolower($function), QueryBuilder::$calculations)) {
+		if (!in_array(strtolower($function), QueryBuilder::CALCULATIONS)) {
 			throw new DomainException("'{$function}' is not a valid numeric function");
 		}
 
@@ -140,11 +139,10 @@ class River extends Repository {
 	 * @return \ElggEntity[]
 	 */
 	public function get($limit = null, $offset = null, $callback = null) {
-
 		$qb = Select::fromTable('river', 'rv');
 
-		$distinct = $this->options->distinct ? "DISTINCT" : "";
-		$qb->select("$distinct rv.*");
+		$distinct = $this->options->distinct ? 'DISTINCT' : '';
+		$qb->select("{$distinct} rv.*");
 
 		$this->expandInto($qb, 'rv');
 
@@ -161,7 +159,7 @@ class River extends Repository {
 			$qb->setFirstResult((int) $offset);
 		}
 
-		$callback = $callback ? : $this->options->callback;
+		$callback = $callback ?: $this->options->callback;
 		if (!isset($callback)) {
 			$callback = function ($row) {
 				return new \ElggRiverItem($row);
@@ -192,19 +190,18 @@ class River extends Repository {
 	 * @throws LogicException
 	 */
 	public function execute() {
-
 		if ($this->options->annotation_calculation) {
 			$clauses = $this->options->annotation_name_value_pairs;
 			if (count($clauses) > 1 && $this->options->annotation_name_value_pairs_operator !== 'OR') {
-				throw new LogicException("Annotation calculation can not be performed on multiple annotation name value pairs merged with AND");
+				throw new LogicException('Annotation calculation can not be performed on multiple annotation name value pairs merged with AND');
 			}
 
 			$clause = array_shift($clauses);
 
 			return $this->calculate($this->options->annotation_calculation, $clause->names, 'annotation');
-		} else if ($this->options->count) {
+		} elseif ($this->options->count) {
 			return $this->count();
-		} else if ($this->options->batch) {
+		} elseif ($this->options->batch) {
 			return $this->batch($this->options->limit, $this->options->offset, $this->options->callback);
 		} else {
 			return $this->get($this->options->limit, $this->options->offset, $this->options->callback);
@@ -219,7 +216,6 @@ class River extends Repository {
 	 * @return QueryBuilder
 	 */
 	protected function buildQuery(QueryBuilder $qb) {
-
 		$ands = [];
 
 		foreach ($this->options->joins as $join) {
@@ -275,7 +271,6 @@ class River extends Repository {
 	 * @return CompositeExpression|mixed|null|string
 	 */
 	public function buildEntityClauses($qb) {
-
 		$use_access_clause = !_elgg_services()->userCapabilities->canBypassPermissionsCheck();
 
 		$ands = [];
@@ -328,6 +323,7 @@ class River extends Repository {
 			} else {
 				$joined_alias = $qb->getNextJoinAlias();
 			}
+			
 			$joins = $qb->getQueryPart('join');
 			$is_joined = false;
 			if (!empty($joins['rv'])) {
@@ -367,6 +363,7 @@ class River extends Repository {
 			} else {
 				$joined_alias = $qb->joinRelationshipTable('rv', $join_on, $clause->names, $clause->inverse);
 			}
+			
 			$parts[] = $clause->prepare($qb, $joined_alias);
 		}
 

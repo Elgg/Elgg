@@ -235,6 +235,7 @@ class Translator {
 				$cookie->value = $url_lang;
 				elgg_set_cookie($cookie);
 			}
+			
 			return $url_lang;
 		}
 		

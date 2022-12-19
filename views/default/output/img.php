@@ -12,7 +12,7 @@ if (empty($src)) {
 }
 
 if (!isset($vars['alt'])) {
-	elgg_log("The view output/img requires that the alternate text be set.", 'NOTICE');
+	elgg_log('The view output/img requires that the alternate text be set.', 'NOTICE');
 }
 
 $vars['src'] = elgg_normalize_url($src);

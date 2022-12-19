@@ -154,8 +154,8 @@ class Collection implements CollectionInterface,
 	public function sort(callable $callback = null) {
 		if (!$callback) {
 			$callback = function (CollectionItemInterface $f1, CollectionItemInterface $f2) {
-				$p1 = $f1->getPriority() ? : 500;
-				$p2 = $f2->getPriority() ? : 500;
+				$p1 = $f1->getPriority() ?: 500;
+				$p2 = $f2->getPriority() ?: 500;
 				if ($p1 === $p2) {
 					return 0;
 				}

@@ -35,6 +35,7 @@ foreach ($options_values as $key => $value) {
 			'value' => $key,
 		];
 	}
+	
 	$input_options[$key] = $value;
 }
 
@@ -66,6 +67,7 @@ if (is_array(elgg_extract('value', $vars))) {
 } else {
 	$selected_value = [elgg_strtolower((string) elgg_extract('value', $vars))];
 }
+
 unset($vars['value']);
 
 $radios = '';

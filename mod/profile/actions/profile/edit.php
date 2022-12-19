@@ -9,7 +9,7 @@ elgg_make_sticky_form('profile:edit');
 $guid = (int) get_input('guid');
 $owner = get_entity($guid);
 
-if (!($owner instanceof ElggUser) || !$owner->canEdit()) {
+if (!$owner instanceof \ElggUser || !$owner->canEdit()) {
 	return elgg_error_response(elgg_echo('profile:noaccess'));
 }
 
@@ -94,4 +94,4 @@ elgg_trigger_event('profileupdate', $owner->type, $owner);
 
 elgg_clear_sticky_form('profile:edit');
 
-return elgg_ok_response('', elgg_echo("profile:saved"), $owner->getUrl());
+return elgg_ok_response('', elgg_echo('profile:saved'), $owner->getUrl());

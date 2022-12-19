@@ -55,7 +55,7 @@ function elgg_get_data_path(): string {
  * @return string
  */
 function elgg_get_cache_path(): string {
-	$path = _elgg_services()->config->cacheroot ? : elgg_get_data_path() . 'caches/';
+	$path = _elgg_services()->config->cacheroot ?: elgg_get_data_path() . 'caches/';
 	return Paths::sanitize($path);
 }
 
@@ -67,7 +67,7 @@ function elgg_get_cache_path(): string {
  * @return string
  */
 function elgg_get_asset_path(): string {
-	$path = _elgg_services()->config->assetroot ? : elgg_get_cache_path() . 'views_simplecache/';
+	$path = _elgg_services()->config->assetroot ?: elgg_get_cache_path() . 'views_simplecache/';
 	return Paths::sanitize($path);
 }
 
@@ -111,18 +111,19 @@ function elgg_get_release(): string {
 	if (!isset($release)) {
 		$composerJson = file_get_contents(\Elgg\Project\Paths::elgg() . 'composer.json');
 		if ($composerJson === false) {
-			throw new ElggException("Unable to read composer.json file!");
+			throw new ElggException('Unable to read composer.json file!');
 		}
 		
 		$composer = json_decode($composerJson);
 		if ($composer === null) {
-			throw new ElggException("JSON parse error while reading composer.json!");
+			throw new ElggException('JSON parse error while reading composer.json!');
 		}
 		
 		// Human-friendly version name
 		if (!isset($composer->version)) {
-			throw new ElggException("Version field must be set in composer.json!");
+			throw new ElggException('Version field must be set in composer.json!');
 		}
+		
 		$release = $composer->version;
 	}
 	

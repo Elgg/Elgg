@@ -31,6 +31,7 @@ class RestServiceController {
 			if (elgg_get_plugin_setting('auth_allow_key', 'web_services')) {
 				elgg_register_pam_handler(\Elgg\WebServices\PAM\API\APIKey::class, 'sufficient', 'api');
 			}
+			
 			// hmac
 			if (elgg_get_plugin_setting('auth_allow_hmac', 'web_services')) {
 				elgg_register_pam_handler(\Elgg\WebServices\PAM\API\Hmac::class, 'sufficient', 'api');
@@ -80,7 +81,7 @@ class RestServiceController {
 			} catch (AuthenticationException $api_exception) {
 				// API authentication failed
 				$message = $api_exception->getMessage() ?: elgg_echo('APIException:APIAuthenticationFailed');
-				$code = $api_exception->getCode() ?: \ErrorResult::$RESULT_FAIL;
+				$code = $api_exception->getCode() ?: \ErrorResult::RESULT_FAIL;
 				throw new \APIException($message, $code, $api_exception);
 			}
 		}
@@ -102,7 +103,7 @@ class RestServiceController {
 				$message = $user_exception->getMessage();
 			}
 			
-			throw new \APIException($message, \ErrorResult::$RESULT_FAIL_AUTHTOKEN);
+			throw new \APIException($message, \ErrorResult::RESULT_FAIL_AUTHTOKEN);
 		}
 		
 		return $api;

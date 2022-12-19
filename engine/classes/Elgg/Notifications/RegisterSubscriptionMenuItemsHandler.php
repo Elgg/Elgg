@@ -65,7 +65,7 @@ class RegisterSubscriptionMenuItemsHandler {
 			$subscribe_options['data-toggle'] = 'entity_mute';
 		} else {
 			$subscribe_options['link_class'][] = 'elgg-state-disabled';
-			$subscribe_options['title']= elgg_echo('entity:subscribe:disabled');
+			$subscribe_options['title'] = elgg_echo('entity:subscribe:disabled');
 		}
 		
 		$result[] = \ElggMenuItem::factory($subscribe_options);

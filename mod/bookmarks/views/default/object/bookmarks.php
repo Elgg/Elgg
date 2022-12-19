@@ -21,28 +21,21 @@ if (elgg_in_context('gallery')) {
 	$owner_link = elgg_view_entity_url($owner);
 	$date = elgg_view_friendly_time($entity->time_created);
 
-	echo <<<HTML
-<div class="bookmarks-gallery-item">
-	<h3>{$entity->getDisplayName()}</h3>
-	<p class='subtitle'>$owner_link $date</p>
-</div>
-HTML;
-
+	$content = elgg_format_element('h3', [], $entity->getDisplayName());
+	$content .= elgg_format_element('p', ['class' => 'subtitle'], $owner_link . ' ' . $date);
+	
+	echo elgg_format_element('div', ['bookmarks-gallery-item'], $content);
 	return;
 }
 
 if (elgg_extract('full_view', $vars)) {
-	$description = elgg_view('output/longtext', [
+	$body = elgg_format_element('span', ['class' => ['elgg-heading-basic', 'mbs']], $link);
+	$body .= elgg_view('output/longtext', [
 		'value' => $entity->description,
 		'class' => 'pbl',
 	]);
-
-	$body = <<<HTML
-<div class="bookmark elgg-content mts">
-	<span class="elgg-heading-basic mbs">$link</span>
-	$description
-</div>
-HTML;
+	
+	$body = elgg_format_element('div', ['class' => ['bookmark', 'elgg-content', 'mts']], $body);
 	
 	$params = [
 		'icon' => true,
@@ -61,8 +54,8 @@ HTML;
 $url = $entity->address;
 $display_text = $url;
 $excerpt = elgg_get_excerpt((string) $entity->description);
-if ($excerpt) {
-	$excerpt = " - $excerpt";
+if (!elgg_is_empty($excerpt)) {
+	$excerpt = " - {$excerpt}";
 }
 
 if (elgg_strlen($url) > 25) {
@@ -80,10 +73,8 @@ $link = elgg_view('output/url', [
 	'icon' => 'thumbtack',
 ]);
 
-$content = "$link{$excerpt}";
-
 $params = [
-	'content' => $content,
+	'content' => $link . $excerpt,
 	'icon' => true,
 ];
 $params = $params + $vars;

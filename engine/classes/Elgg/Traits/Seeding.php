@@ -77,7 +77,7 @@ trait Seeding {
 
 		list(, $domain) = explode('@', $email);
 
-		if (sizeof(explode('.', $domain)) <= 1) {
+		if (count(explode('.', $domain)) <= 1) {
 			$domain = 'example.net';
 		}
 
@@ -145,6 +145,7 @@ trait Seeding {
 				if (!isset($properties['time_created'])) {
 					$properties['time_created'] = $this->getRandomCreationTimestamp();
 				}
+				
 				if (!empty($properties['time_created'])) {
 					$user->time_created = $properties['time_created'];
 				}
@@ -168,6 +169,7 @@ trait Seeding {
 				if (!isset($properties['validated'])) {
 					$properties['validated'] = $this->faker()->boolean(80);
 				}
+				
 				$user->setValidationStatus((bool) $properties['validated'], 'seeder');
 				
 				if (!$user->isValidated()) {
@@ -534,6 +536,7 @@ trait Seeding {
 			foreach ($profile_fields_config as $field) {
 				$profile_fields[$field['name']] = $field['#type'];
 			}
+			
 			return $this->createUser([
 				'validated' => true,
 			], [
@@ -693,57 +696,56 @@ trait Seeding {
 			}
 
 			switch ($name) {
-				case 'phone' :
-				case 'mobile' :
+				case 'phone':
+				case 'mobile':
 					$metadata[$name] = $this->faker()->phoneNumber;
 					break;
 
-				default :
+				default:
 					switch ($type) {
-						case 'plaintext' :
-						case 'longtext' :
+						case 'plaintext':
+						case 'longtext':
 							$metadata[$name] = $this->faker()->text($this->faker()->numberBetween(500, 1000));
 							break;
 
-						case 'text' :
+						case 'text':
 							$metadata[$name] = $this->faker()->sentence;
 							break;
 
-						case 'tags' :
+						case 'tags':
 							$metadata[$name] = $this->faker()->words(10);
 							break;
 
-						case 'url' :
+						case 'url':
 							$metadata[$name] = $this->faker()->url;
 							break;
 
-						case 'email' :
+						case 'email':
 							$metadata[$name] = $this->faker()->email;
 							break;
 
-						case 'number' :
+						case 'number':
 							$metadata[$name] = $this->faker()->randomNumber();
 							break;
 
-						case 'date' :
+						case 'date':
 							$metadata[$name] = $this->faker()->unixTime;
 							break;
 
-						case 'password' :
+						case 'password':
 							$metadata[$name] = elgg_generate_password();
 							break;
 
-						case 'location' :
+						case 'location':
 							$metadata[$name] = $this->faker()->address;
 							$metadata['geo:lat'] = $this->faker()->latitude;
 							$metadata['geo:long'] = $this->faker()->longitude;
 							break;
 
-						default :
+						default:
 							$metadata[$name] = '';
 							break;
 					}
-
 					break;
 			}
 		}
@@ -816,7 +818,7 @@ trait Seeding {
 			
 			while ($tries < $limit) {
 				$comment = new \ElggComment();
-				$comment->owner_guid = $this->getRandomUser()->guid ? : $entity->owner_guid;
+				$comment->owner_guid = $this->getRandomUser()->guid ?: $entity->owner_guid;
 				$comment->container_guid = $entity->guid;
 				$comment->description = $this->faker()->paragraph;
 				$comment->time_created = $this->getRandomCreationTimestamp();

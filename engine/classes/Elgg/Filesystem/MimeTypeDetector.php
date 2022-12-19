@@ -111,6 +111,7 @@ class MimeTypeDetector {
 	 *
 	 * @param string $file    File path
 	 * @param string $default Default type to return on failure
+	 *
 	 * @return string MIME type
 	 */
 	public function getType($file, $default = self::DEFAULT_TYPE) {
@@ -138,17 +139,18 @@ class MimeTypeDetector {
 	 * Detect MIME type using various strategies
 	 *
 	 * @param string $file File path
+	 *
 	 * @return string Type detected. Empty string on failure
 	 */
 	public function tryStrategies($file) {
-		$type = '';
 		foreach ($this->strategies as $strategy) {
 			$type = call_user_func($strategy, $file);
-			if ($type) {
-				break;
+			if (!empty($type)) {
+				return $type;
 			}
 		}
-		return $type;
+		
+		return '';
 	}
 
 	/**
@@ -156,6 +158,7 @@ class MimeTypeDetector {
 	 *
 	 * @param string $type      MIME type detected
 	 * @param string $extension Filename extensions
+	 *
 	 * @return string Fixed MIME type
 	 */
 	public function fixDetectionErrors($type, $extension) {
@@ -163,21 +166,21 @@ class MimeTypeDetector {
 			// hack for Microsoft zipped formats
 			switch ($extension) {
 				case 'docx':
-					return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+					return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
 				case 'xlsx':
-					return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+					return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 				case 'pptx':
-					return "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+					return 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
 			}
 		}
 
 		// check for bad ppt detection
-		if ($type === "application/vnd.ms-office" && $extension === "ppt") {
-			return "application/vnd.ms-powerpoint";
+		if ($type === 'application/vnd.ms-office' && $extension === 'ppt') {
+			return 'application/vnd.ms-powerpoint';
 		}
 		
 		// try extension detection as a fallback for octet-stream
-		if ($type === "application/octet-stream" && $this->use_extension && isset($this->extensions[$extension])) {
+		if ($type === 'application/octet-stream' && $this->use_extension && isset($this->extensions[$extension])) {
 			return $this->extensions[$extension];
 		}
 
@@ -188,6 +191,7 @@ class MimeTypeDetector {
 	 * Detect MIME type using finfo_open
 	 *
 	 * @param string $file File path
+	 *
 	 * @return string Type detected. Empty string on failure
 	 */
 	public static function tryFinfo($file) {
@@ -202,6 +206,7 @@ class MimeTypeDetector {
 		if (strpos($type, ';')) {
 			list($type,) = explode(';', $type);
 		}
+		
 		return $type;
 	}
 
@@ -209,6 +214,7 @@ class MimeTypeDetector {
 	 * Detect MIME type using mime_content_type
 	 *
 	 * @param string $file File path
+	 *
 	 * @return string Type detected. Empty string on failure
 	 */
 	public static function tryMimeContentType($file) {
@@ -219,20 +225,23 @@ class MimeTypeDetector {
 	 * Detect MIME type using file(1)
 	 *
 	 * @param string $file File path
+	 *
 	 * @return string Type detected. Empty string on failure
 	 */
 	public static function tryFile($file) {
 		if (DIRECTORY_SEPARATOR !== '/' || !function_exists('exec')) {
 			return '';
 		}
-		$type = @exec("file -b --mime-type " . escapeshellarg($file));
-		return $type ? $type : '';
+		
+		$type = @exec('file -b --mime-type ' . escapeshellarg($file));
+		return $type ?: '';
 	}
 
 	/**
 	 * Detect MIME type
 	 *
 	 * @param string $file File path
+	 *
 	 * @return string Type detected. Empty string on failure
 	 */
 	public static function tryGetimagesize($file) {

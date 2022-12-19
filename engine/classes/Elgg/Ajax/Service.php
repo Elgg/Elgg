@@ -100,6 +100,7 @@ class Service {
 		if (!is_string($string)) {
 			return $string;
 		}
+		
 		$object = json_decode($string);
 		return ($object === null) ? $string : $object;
 	}
@@ -121,11 +122,12 @@ class Service {
 		$api_response = new Response();
 		if (is_object($output) && isset($output->value)) {
 			$api_response->setData($output);
-		} else if (is_array($output) && isset($output['value'])) {
+		} elseif (is_array($output) && isset($output['value'])) {
 			$api_response->setData((object) $output);
 		} else {
 			$api_response->setData((object) ['value' => $output]);
 		}
+		
 		$api_response = $this->filterApiResponse($api_response, $event_type);
 		$response = $this->buildHttpResponse($api_response);
 
@@ -201,7 +203,7 @@ class Service {
 	 */
 	private function buildHttpResponse(AjaxResponse $api_response, bool $allow_removing_headers = false): JsonResponse {
 		if ($api_response->isCancelled()) {
-			return new JsonResponse(['error' => "The response was cancelled"], 400);
+			return new JsonResponse(['error' => 'The response was cancelled'], 400);
 		}
 
 		$response = _elgg_services()->responseFactory->prepareJsonResponse($api_response->getData());

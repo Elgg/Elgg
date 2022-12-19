@@ -38,7 +38,7 @@ class ErrorHandler {
 	 * @throws \Elgg\Exceptions\ErrorException
 	 */
 	public function __invoke($errno, $errmsg, $filename = '', $linenum = 0) {
-		$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
+		$error = date('Y-m-d H:i:s (T)') . ": \"{$errmsg}\" in file {$filename} (line {$linenum})";
 
 		// check if the error wasn't suppressed by the error control operator (@)
 		// error_reporting === 0 for PHP < 8.0
@@ -46,28 +46,27 @@ class ErrorHandler {
 		
 		switch ($errno) {
 			case E_USER_ERROR:
-				$this->log(LogLevel::ERROR, "PHP ERROR: $error");
+				$this->log(LogLevel::ERROR, "PHP ERROR: {$error}");
 
 				if (Application::isCoreLoaded()) {
-					Application::$_instance->internal_services->system_messages->addErrorMessage("ERROR: $error");
+					Application::$_instance->internal_services->system_messages->addErrorMessage("ERROR: {$error}");
 				}
 
 				// Since this is a fatal error, we want to stop any further execution but do so gracefully.
 				throw new ErrorException($error, 0, $errno, $filename, $linenum);
 
-			case E_WARNING :
-			case E_USER_WARNING :
+			case E_WARNING:
+			case E_USER_WARNING:
 			case E_RECOVERABLE_ERROR: // (e.g. type hint violation)
 				if (!$reporting_disabled) {
-					$this->log(LogLevel::WARNING, "PHP: $error");
+					$this->log(LogLevel::WARNING, "PHP: {$error}");
 				}
 				break;
 
 			default:
 				if (!$reporting_disabled) {
-					$this->log(LogLevel::NOTICE, "PHP NOTICE: $error");
+					$this->log(LogLevel::NOTICE, "PHP NOTICE: {$error}");
 				}
-				
 				break;
 		}
 

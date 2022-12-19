@@ -29,7 +29,7 @@ class Topbar {
 	
 		$num_messages = (int) messages_count_unread();
 		if ($num_messages) {
-			$title .= " (" . elgg_echo("messages:unreadcount", [$num_messages]) . ")";
+			$title .= ' (' . elgg_echo('messages:unreadcount', [$num_messages]) . ')';
 		}
 	
 		$items = $event->getValue();

@@ -35,12 +35,14 @@ if (!empty($vars['confirm'])) {
 		$vars['data-confirm'] = elgg_echo('question:areyousure');
 	}
 }
+
 unset($vars['confirm']);
 
 $allowed_schemes = elgg_extract('allowed_schemes', $vars, ['http', 'https', 'ftp', 'sftp', 'ssh', 'file', 'mailto', 'tel']);
 if ($allowed_schemes !== false && !is_array($allowed_schemes)) {
 	$allowed_schemes = (array) $allowed_schemes;
 }
+
 unset($vars['allowed_schemes']);
 
 $url = elgg_extract('href', $vars);
@@ -60,6 +62,7 @@ if (isset($vars['text'])) {
 	} else {
 		$text = elgg_extract('text', $vars);
 	}
+	
 	unset($vars['text']);
 } else {
 	$text = htmlspecialchars(elgg_get_excerpt((string) $url, $excerpt_length), ENT_QUOTES, 'UTF-8', false);
@@ -90,6 +93,7 @@ if ($url) {
 				$site_url_host = parse_url($site_url, PHP_URL_HOST);
 				$is_trusted = $url_host == $site_url_host;
 			}
+			
 			if ($is_trusted === false) {
 				// this is an external URL, which we do not want to be indexed by crawlers
 				$vars['rel'] = 'nofollow';
@@ -144,6 +148,7 @@ $classes = elgg_extract_class($vars);
 if (in_array('elgg-popup', $classes)) {
 	elgg_require_js('elgg/popup');
 }
+
 if (in_array('elgg-toggle', $classes)) {
 	elgg_require_js('elgg/toggle');
 }

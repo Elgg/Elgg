@@ -79,8 +79,8 @@ class Logger extends \Monolog\Logger {
 
 		if (\Elgg\Application::isCli()) {
 			if (is_null($input) || is_null($output)) {
-				$input = $input ? : \Elgg\Application::getStdIn();
-				$output = $output ? : \Elgg\Application::getStdOut();
+				$input = $input ?: \Elgg\Application::getStdIn();
+				$output = $output ?: \Elgg\Application::getStdOut();
 
 				$app = new CliApplication();
 				$app->setup($input, $output);

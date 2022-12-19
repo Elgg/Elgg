@@ -130,7 +130,6 @@ class QueryCache extends LRUCache {
 	 * @return string
 	 */
 	public function getHash(string $sql, array $params = [], string $extras = '') {
-		
 		$query_id = $sql . '|';
 		if (!empty($params)) {
 			$query_id .= serialize($params) . '|';
@@ -141,5 +140,4 @@ class QueryCache extends LRUCache {
 		// MD5 yields smaller mem usage for cache and cleaner logs
 		return md5($query_id);
 	}
-	
 }

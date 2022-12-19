@@ -47,6 +47,7 @@ class ElggPage extends ElggObject {
 			if (!$new_top) {
 				break;
 			}
+			
 			$top_entity = $new_top;
 		}
 		

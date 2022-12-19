@@ -79,6 +79,7 @@ class Seeder {
 			if ($options['image_folder'] !== $defaults['image_folder']) {
 				elgg_set_config('seeder_local_image_folder', $options['image_folder']);
 			}
+			
 			unset($options['image_folder']);
 
 			foreach ($seeds as $seed) {
@@ -152,6 +153,7 @@ class Seeder {
 				elgg_log("Seeding class {$seed} not found", 'ERROR');
 				continue;
 			}
+			
 			if (!is_subclass_of($seed, Seed::class)) {
 				elgg_log("Seeding class {$seed} does not extend " . Seed::class, 'ERROR');
 				continue;

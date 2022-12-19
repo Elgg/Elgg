@@ -65,7 +65,9 @@ if (!empty($label)) {
 	if ($switch && ($html_tag !== 'label')) {
 		$input = elgg_format_element('label', [], $input);
 	}
+	
 	echo elgg_format_element($html_tag, ['class' => $label_class], "$input $label");
-} else {
-	echo $input;
+	return;
 }
+
+echo $input;

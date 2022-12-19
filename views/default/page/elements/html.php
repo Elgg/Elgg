@@ -8,7 +8,7 @@
  * @uses $vars['body']       The main content of the page
  */
 // Set the content type
-elgg_set_http_header("Content-type: text/html; charset=utf-8");
+elgg_set_http_header('Content-type: text/html; charset=utf-8');
 
 $lang = elgg_get_current_language();
 

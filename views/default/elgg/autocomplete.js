@@ -1,5 +1,4 @@
 define(['jquery', 'jquery-ui/widgets/autocomplete', 'jquery.ui.autocomplete.html'], function ($) {
-
 	return {
 		init: function () {
 			$('.elgg-input-autocomplete').each(function () {
@@ -22,4 +21,3 @@ define(['jquery', 'jquery-ui/widgets/autocomplete', 'jquery.ui.autocomplete.html
 		}
 	};
 });
-

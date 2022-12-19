@@ -23,10 +23,15 @@ class ResponseFactory {
 	use Loggable;
 
 	protected Request $request;
+	
 	protected AjaxService $ajax;
+	
 	protected EventsService $events;
+	
 	protected ResponseTransport $transport;
+	
 	protected ResponseHeaderBag $headers;
+	
 	protected ?SymfonyResponse $response_sent = null;
 
 	/**
@@ -182,7 +187,6 @@ class ResponseFactory {
 	 * @return SymfonyResponse|false
 	 */
 	public function send(SymfonyResponse $response): SymfonyResponse|false {
-
 		if (isset($this->response_sent)) {
 			if ($this->response_sent !== $response) {
 				$this->getLogger()->error('Unable to send the following response: ' . PHP_EOL
@@ -196,7 +200,7 @@ class ResponseFactory {
 			}
 
 			$request = $this->request;
-			$method = $request->getRealMethod() ? : 'GET';
+			$method = $request->getRealMethod() ?: 'GET';
 			$path = $request->getElggPath();
 
 			$this->getLogger()->notice("Responding to {$method} {$path}");
@@ -346,6 +350,7 @@ class ResponseFactory {
 			if (!elgg_is_empty($error)) {
 				$params['params']['error'] = $error;
 			}
+			
 			$error_page = elgg_view_resource('error', $params);
 		} else {
 			$error_page = $error;
@@ -444,7 +449,7 @@ class ResponseFactory {
 			case 'login':
 			case 'member':
 			case 'walled_garden':
-			default :
+			default:
 				$status_code = (int) $status_code;
 				if (!$status_code || $status_code < 100 || $status_code > 599) {
 					$status_code = ELGG_HTTP_SEE_OTHER;
@@ -480,6 +485,7 @@ class ResponseFactory {
 		if ($response->isRedirection()) {
 			return $this->send($this->prepareRedirectResponse($forward_url, $status_code));
 		}
+		
 		return $this->respond($response);
 	}
 
@@ -493,19 +499,20 @@ class ResponseFactory {
 
 		$identifier = array_shift($segments);
 		switch ($identifier) {
-			case 'ajax' :
+			case 'ajax':
 				$page = array_shift($segments);
 				if ($page === 'view') {
 					$view = implode('/', $segments);
 					return "view:{$view}";
-				} else if ($page === 'form') {
+				} elseif ($page === 'form') {
 					$form = implode('/', $segments);
 					return "form:{$form}";
 				}
 				
 				array_unshift($segments, $page);
 				break;
-			case 'action' :
+
+			case 'action':
 				$action = implode('/', $segments);
 				return "action:{$action}";
 		}

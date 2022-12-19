@@ -51,13 +51,13 @@ class HandlersService {
 
 		if (is_string($object)) {
 			switch ($object) {
-				case 'event' :
+				case 'event':
 					$object = new Event(elgg(), $args[0], $args[1], $args[2], $args[3]);
 					break;
 
-				case 'middleware' :
-				case 'controller' :
-				case 'action' :
+				case 'middleware':
+				case 'controller':
+				case 'action':
 					$object = new Request(elgg(), $args[0]);
 					break;
 			}
@@ -116,26 +116,31 @@ class HandlersService {
 		if (is_string($callable)) {
 			return $callable;
 		}
+		
 		if (is_array($callable) && array_keys($callable) === [0, 1] && is_string($callable[1])) {
 			if (is_string($callable[0])) {
 				return "{$callable[0]}::{$callable[1]}";
 			}
-			return "(" . get_class($callable[0]) . ")->{$callable[1]}";
+			
+			return '(' . get_class($callable[0]) . ")->{$callable[1]}";
 		}
+		
 		if ($callable instanceof \Closure) {
 			$ref = new \ReflectionFunction($callable);
 			$file = $ref->getFileName();
 			$line = $ref->getStartLine();
 
-			if ($file_root && 0 === strpos($file, $file_root)) {
+			if ($file_root && strpos($file, $file_root) === 0) {
 				$file = substr($file, strlen($file_root));
 			}
 
 			return "(Closure {$file}:{$line})";
 		}
+		
 		if (is_object($callable)) {
-			return "(" . get_class($callable) . ")->__invoke()";
+			return '(' . get_class($callable) . ')->__invoke()';
 		}
+		
 		return print_r($callable, true);
 	}
 }

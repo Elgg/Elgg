@@ -1,5 +1,4 @@
 define(['jquery', 'elgg'], function ($, elgg) {
-
 	/* Autofocuses first text input in a comment form when toggled */
 	$(document).on('elgg_ui_toggle', function (e, data) {
 		var $toggle = $(e.target);
@@ -102,6 +101,7 @@ define(['jquery', 'elgg'], function ($, elgg) {
 			dc = new Comment(guid, $trigger.closest('.elgg-item-object-comment'));
 			$(this).data('Comment', dc);
 		}
+		
 		dc.toggleEdit();
 		
 		require(['elgg/popup'], function(popup) {
@@ -198,6 +198,7 @@ define(['jquery', 'elgg'], function ($, elgg) {
 			} else {
 				this.loadForm();
 			}
+			
 			return false;
 		}
 	};

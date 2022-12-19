@@ -75,18 +75,16 @@ function messages_send(string $subject, string $body, int $recipient_guid, int $
 		
 		$subject = elgg_echo('messages:email:subject', [], $recipient->language);
 		$body = elgg_echo('messages:email:body', [
-				$sender->getDisplayName(),
-				$message_contents,
-				elgg_generate_url('collection:object:messages:owner', [
-					'username' => $recipient->username,
-				]),
-				$sender->getDisplayName(),
-				elgg_generate_url('add:object:messages', [
-					'send_to' => $sender_guid,
-				]),
-			],
-			$recipient->language
-		);
+			$sender->getDisplayName(),
+			$message_contents,
+			elgg_generate_url('collection:object:messages:owner', [
+				'username' => $recipient->username,
+			]),
+			$sender->getDisplayName(),
+			elgg_generate_url('add:object:messages', [
+				'send_to' => $sender_guid,
+			]),
+		], $recipient->language);
 
 		$params = [
 			'object' => $message_to,
@@ -123,7 +121,7 @@ function messages_get_unread(int $user_guid = 0, int $limit = null, int $offset 
 			'readYet' => 0,
 		],
 		'owner_guid' => $user_guid,
-		'limit' => $limit ? : elgg_get_config('default_limit'),
+		'limit' => $limit ?: elgg_get_config('default_limit'),
 		'offset' => $offset,
 		'count' => $count,
 		'distinct' => false,

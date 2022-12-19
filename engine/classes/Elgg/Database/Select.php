@@ -18,5 +18,4 @@ class Select extends QueryBuilder {
 
 		return $qb;
 	}
-
 }

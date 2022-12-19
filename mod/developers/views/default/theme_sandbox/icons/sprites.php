@@ -50,15 +50,12 @@ $icons = [
 	'users',
 	'video',
 ];
-?>
-<p>
-	<?php echo elgg_echo('theme_sandbox:icons:blurb'); ?>
-</p>
 
-<ul class="elgg-gallery">
-<?php
+echo elgg_format_element('p', [], elgg_echo('theme_sandbox:icons:blurb'));
+
+$lis = [];
 foreach ($icons as $icon) {
-	echo "<li title=\"elgg-icon-$icon\" style=\"margin:10px\">" . elgg_view_icon($icon) . "</li>";
+	$lis[] = elgg_format_element('li', ['title' => "elgg-icon-{$icon}", 'style' => 'margin: 10px;'], elgg_view_icon($icon));
 }
-?>
-</ul>
+
+echo elgg_format_element('ul', ['class' => 'elgg-gallery'], implode(PHP_EOL, $lis));

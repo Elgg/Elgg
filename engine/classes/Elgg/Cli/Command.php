@@ -15,7 +15,6 @@ abstract class Command extends BaseCommand {
 	 * {@inheritdoc}
 	 */
 	final public function execute(InputInterface $input, OutputInterface $output) {
-
 		$this->input = $input;
 		$this->output = $output;
 
@@ -34,7 +33,7 @@ abstract class Command extends BaseCommand {
 		} catch (\Exception $ex) {
 			$this->error($ex);
 
-			$result = $ex->getCode() ? : 1;
+			$result = $ex->getCode() ?: 1;
 		}
 
 		$this->dumpRegisters();

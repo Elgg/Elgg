@@ -62,6 +62,7 @@ class Inspector {
 					$view_list[$priority] = $views[$ext_view][500];
 				}
 			}
+			
 			if (count($view_list) > 0) {
 				$views[$view] = $view_list;
 			}
@@ -81,6 +82,7 @@ class Inspector {
 
 					$overrides_list["o:$i"] = $component;
 				}
+				
 				$views[$view] = $overrides_list + $view_list;
 			}
 		}
@@ -102,6 +104,7 @@ class Inspector {
 		if (!empty($handlers['view_vars']['all'])) {
 			$global_events[] = 'view_vars, all';
 		}
+		
 		if (!empty($handlers['view']['all'])) {
 			$global_events[] = 'view, all';
 		}
@@ -130,7 +133,6 @@ class Inspector {
 		return $tree;
 	}
 
-
 	/**
 	 * Get Elgg actions information
 	 *
@@ -153,8 +155,10 @@ class Inspector {
 			} else if ($info['controller']) {
 				$info['file'] = $this->describeCallable($info['controller']);
 			}
+			
 			$tree[$action] = [$info['file'], $access[$info['access']]];
 		}
+		
 		ksort($tree);
 		return $tree;
 	}
@@ -165,7 +169,6 @@ class Inspector {
 	 * @return array [views]
 	 */
 	public function getSimpleCache() {
-		
 		$simplecache = elgg_extract('simplecache', $this->getViewsData(), []);
 		$locations = elgg_extract('locations', $this->getViewsData(), []);
 		
@@ -198,19 +201,19 @@ class Inspector {
 	public function getRoutes() {
 		$tree = [];
 		foreach (_elgg_services()->routeCollection->all() as $name => $route) {
-			$handler = $route->getDefault('_handler') ? : '';
+			$handler = $route->getDefault('_handler') ?: '';
 			if ($handler) {
 				$handler = $this->describeCallable($handler);
 			}
 
-			$controller = $route->getDefault('_controller') ? : '';
+			$controller = $route->getDefault('_controller') ?: '';
 			if ($controller) {
 				$controller = $this->describeCallable($controller);
 			}
 
-			$resource = $route->getDefault('_resource') ? : '';
+			$resource = $route->getDefault('_resource') ?: '';
 
-			$file = $route->getDefault('_file') ? : '';
+			$file = $route->getDefault('_file') ?: '';
 
 			$middleware = $route->getDefault('_middleware');
 			if (!is_array($middleware)) {
@@ -220,6 +223,7 @@ class Inspector {
 					$middleware = [];
 				}
 			}
+			
 			$middleware = array_map(function($e) {
 				return $this->describeCallable($e);
 			}, $middleware);
@@ -233,6 +237,7 @@ class Inspector {
 				$middleware,
 			];
 		}
+		
 		uasort($tree, function($e1, $e2) {
 			return strcmp($e1[0], $e2[0]);
 		});
@@ -246,7 +251,6 @@ class Inspector {
 	 * @return array [menu name] => array(item name => array(text, href, section, parent))
 	 */
 	public function getMenus() {
-
 		$menus = _elgg_services()->menus->getAllMenus();
 
 		// get JIT menu items
@@ -270,7 +274,7 @@ class Inspector {
 		if (!$user instanceof \ElggUser) {
 			$user = new \ElggUser();
 			$user->guid = 999;
-			$user->name = "Test User";
+			$user->name = 'Test User';
 			$user->username = 'test_user';
 		}
 
@@ -296,6 +300,7 @@ class Inspector {
 				default:
 					break;
 			}
+			
 			$menus[$type] = _elgg_services()->events->triggerResults('register', "menu:{$type}", $params, new MenuItems());
 		}
 
@@ -303,16 +308,17 @@ class Inspector {
 		$tree = [];
 
 		foreach ($menus as $menu_name => $attributes) {
+			/* @var \ElggMenuItem $item */
 			foreach ($attributes as $item) {
-				/* @var \ElggMenuItem $item */
 				$name = $item->getName();
 				$text = htmlspecialchars($item->getText() ?? '', ENT_QUOTES, 'UTF-8', false);
 				$href = $item->getHref();
 				if ($href === false) {
 					$href = 'not a link';
-				} elseif ($href === "") {
+				} elseif ($href === '') {
 					$href = 'not a direct link - possibly ajax';
 				}
+				
 				$section = $item->getSection();
 				$parent = $item->getParentName();
 				if (!$parent) {
@@ -320,10 +326,10 @@ class Inspector {
 				}
 
 				$tree[$menu_name][$name] = [
-					"text: $text",
-					"href: $href",
-					"section: $section",
-					"parent: $parent",
+					"text: {$text}",
+					"href: {$href}",
+					"section: {$section}",
+					"parent: {$parent}",
 				];
 			}
 		}
@@ -387,6 +393,7 @@ class Inspector {
 		if ($data === null) {
 			$data = _elgg_services()->views->getInspectorData();
 		}
+		
 		return $data;
 	}
 

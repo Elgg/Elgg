@@ -16,6 +16,7 @@ if ($delete_flag) {
 			$message->delete();
 		}
 	}
+	
 	return elgg_ok_response('', elgg_echo('messages:success:delete'));
 }
 
@@ -26,4 +27,5 @@ foreach ($message_guids as $guid) {
 		$message->readYet = 1;
 	}
 }
+
 return elgg_ok_response('', elgg_echo('messages:success:read'));

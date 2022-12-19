@@ -123,9 +123,11 @@ define(['jquery', 'elgg'], function ($, elgg) {
 						// with query string
 						args = elgg.parse_str(parts['query']);
 					}
+					
 					var split = data.split('?');
 					base = split[0] + '?';
 				}
+				
 				args["__elgg_ts"] = elgg.security.token.__elgg_ts;
 				args["__elgg_token"] = elgg.security.token.__elgg_token;
 		

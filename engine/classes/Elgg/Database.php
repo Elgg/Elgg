@@ -180,11 +180,11 @@ class Database {
 			$this->log(LogLevel::ERROR, $e);
 
 			if ($e->getCode() == 1102 || $e->getCode() == 1049) {
-				$msg = "Elgg couldn't select the database '{$conf['database']}'. "
-					. "Please check that the database is created and you have access to it.";
+				$msg = "Elgg couldn't select the database '{$conf['database']}'. Please check that the database is created and you have access to it.";
 			} else {
 				$msg = "Elgg couldn't connect to the database using the given credentials. Check the settings file.";
 			}
+			
 			throw new DatabaseException($msg);
 		}
 	}
@@ -238,7 +238,7 @@ class Database {
 		$params = $query->getParameters();
 		$sql = $query->getSQL();
 		
-		$this->getLogger()->info("DB insert query {$sql} (params: " . print_r($params, true) . ")");
+		$this->getLogger()->info("DB insert query {$sql} (params: " . print_r($params, true) . ')');
 
 		$this->query_cache->clear();
 
@@ -260,7 +260,7 @@ class Database {
 		$params = $query->getParameters();
 		$sql = $query->getSQL();
 	
-		$this->getLogger()->info("DB update query {$sql} (params: " . print_r($params, true) . ")");
+		$this->getLogger()->info("DB update query {$sql} (params: " . print_r($params, true) . ')');
 
 		$this->query_cache->clear();
 
@@ -285,7 +285,7 @@ class Database {
 		$params = $query->getParameters();
 		$sql = $query->getSQL();
 
-		$this->getLogger()->info("DB delete query {$sql} (params: " . print_r($params, true) . ")");
+		$this->getLogger()->info("DB delete query {$sql} (params: " . print_r($params, true) . ')');
 
 		$this->query_cache->clear();
 
@@ -338,7 +338,6 @@ class Database {
 	 * @throws RuntimeException
 	 */
 	protected function getResults(QueryBuilder $query, $callback = null, bool $single = false) {
-
 		$params = $query->getParameters();
 		$sql = $query->getSQL();
 		
@@ -348,9 +347,9 @@ class Database {
 		$extras = (int) $single . '|';
 		if ($callback) {
 			if (!is_callable($callback)) {
-				throw new RuntimeException('$callback must be a callable function. Given '
-											. _elgg_services()->handlers->describeCallable($callback));
+				throw new RuntimeException('$callback must be a callable function. Given ' . _elgg_services()->handlers->describeCallable($callback));
 			}
+			
 			$extras .= $this->fingerprintCallback($callback);
 		}
 		
@@ -361,7 +360,7 @@ class Database {
 			return $cached_results;
 		}
 		
-		$this->getLogger()->info("DB select query {$sql} (params: " . print_r($params, true) . ")");
+		$this->getLogger()->info("DB select query {$sql} (params: " . print_r($params, true) . ')');
 		
 		$return = [];
 

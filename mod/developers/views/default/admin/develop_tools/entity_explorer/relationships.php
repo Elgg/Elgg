@@ -31,17 +31,20 @@ if (empty($entity_relationships)) {
 	$relationship_info = '<table class="elgg-table">';
 	$relationship_info .= '<thead><tr>';
 	foreach ($relationship_columns as $relationship_col) {
-		$relationship_info .= '<th>' . $relationship_col . '</th>';
+		$relationship_info .= elgg_format_element('th', [], $relationship_col);
 	}
+	
 	$relationship_info .= '<th>&nbsp;</th>';
 	$relationship_info .= '</tr></thead>';
+	$relationship_info .= '<tbody>';
 	
 	foreach ($entity_relationships as $relationship) {
 		$relationship_info .= '<tr>';
 		foreach ($relationship_columns as $relationship_col) {
-			$relationship_info .= '<td>' . $relationship->$relationship_col . '</td>';
+			$relationship_info .= elgg_format_element('td', [], $relationship->$relationship_col);
 		}
-		$relationship_info .= '<td>' . elgg_view('output/url', [
+		
+		$relationship_info .= elgg_format_element('td', [], elgg_view('output/url', [
 			'text' => elgg_view_icon('remove'),
 			'href' => elgg_http_add_url_query_elements('action/developers/entity_explorer_delete', [
 				'guid' => $entity->guid,
@@ -49,9 +52,12 @@ if (empty($entity_relationships)) {
 				'key' => $relationship->id,
 			]),
 			'confirm' => true,
-		]) . '</td>';
+		]));
 		$relationship_info .= '</tr>';
 	}
+	
+	$relationship_info .= '</tbody>';
 	$relationship_info .= '</table>';
 }
+
 echo elgg_view_module('info', elgg_echo('developers:entity_explorer:info:relationships'), $relationship_info);

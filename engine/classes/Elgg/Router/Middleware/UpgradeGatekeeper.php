@@ -33,5 +33,4 @@ class UpgradeGatekeeper {
 			throw new UpgradeGatekeeperException();
 		}
 	}
-
 }

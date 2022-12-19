@@ -2,8 +2,6 @@
 
 namespace Elgg\Http;
 
-use ElggSite;
-
 /**
  * Overview: http://html5doctor.com/web-manifest-specification/
  * Spec: https://w3c.github.io/manifest/
@@ -15,15 +13,16 @@ use ElggSite;
  * @internal
  */
 class WebAppManifestResource {
-	/** @var ElggSite */
+	
+	/** @var \ElggSite */
 	private $site;
 	
 	/**
 	 * Constructor
 	 *
-	 * @param ElggSite $site The site serving this manifest.
+	 * @param \ElggSite $site The site serving this manifest.
 	 */
-	public function __construct(ElggSite $site) {
+	public function __construct(\ElggSite $site) {
 		$this->site = $site;
 	}
 	

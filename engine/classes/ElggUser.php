@@ -72,9 +72,11 @@ class ElggUser extends \ElggEntity {
 		if (!empty($this->language)) {
 			return $this->language;
 		}
+		
 		if ($fallback !== null) {
 			return $fallback;
 		}
+		
 		return elgg_get_config('language');
 	}
 
@@ -90,7 +92,7 @@ class ElggUser extends \ElggEntity {
 				_elgg_services()->logger->error("User entities no longer contain {$name}");
 				return;
 			case 'password_hash':
-				_elgg_services()->logger->error("password_hash is a readonly attribute.");
+				_elgg_services()->logger->error('password_hash is a readonly attribute.');
 				return;
 			case 'email':
 				try {
@@ -105,6 +107,7 @@ class ElggUser extends \ElggEntity {
 				} catch (RegistrationException $ex) {
 					throw new ElggInvalidArgumentException($ex->getMessage(), $ex->getCode(), $ex);
 				}
+				
 				$existing_user = elgg_get_user_by_username($value);
 				if ($existing_user instanceof \ElggUser && ($existing_user->guid !== $this->guid)) {
 					throw new ElggInvalidArgumentException("{$name} is supposed to be unique for ElggUser");
@@ -281,6 +284,7 @@ class ElggUser extends \ElggEntity {
 		if (!isset($this->validated)) {
 			return null;
 		}
+		
 		return (bool) $this->validated;
 	}
 	
@@ -437,7 +441,6 @@ class ElggUser extends \ElggEntity {
 		}
 
 		return $settings;
-	
 	}
 	
 	/**

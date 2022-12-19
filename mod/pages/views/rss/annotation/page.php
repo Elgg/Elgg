@@ -4,7 +4,7 @@
  */
 
 $revision = elgg_extract('annotation', $vars);
-if (!$revision instanceof ElggAnnotation) {
+if (!$revision instanceof \ElggAnnotation) {
 	return;
 }
 
@@ -18,16 +18,13 @@ $title = elgg_echo('pages:revision:subtitle', ['', $poster_name]);
 $creator = elgg_view('page/components/creator', ['entity' => $revision]);
 $extensions = elgg_view('pages/extensions/item', $vars);
 
-$item = <<<__HTML
+?>
 <item>
-	<guid isPermaLink='true'>$permalink</guid>
-	<pubDate>$pubdate</pubDate>
-	<link>$permalink</link>
-	<title><![CDATA[$title]]></title>
-	<description><![CDATA[{$vars['annotation']->value}]]></description>
-	$creator$extensions
+	<guid isPermaLink='true'><?= $permalink; ?></guid>
+	<pubDate><?= $pubdate; ?></pubDate>
+	<link><?= $permalink; ?></link>
+	<title><![CDATA[<?= $title; ?>]]></title>
+	<description><![CDATA[<?= $revision->value; ?>]]></description>
+	<?= $creator; ?>
+	<?= $extensions; ?>
 </item>
-
-__HTML;
-
-echo $item;

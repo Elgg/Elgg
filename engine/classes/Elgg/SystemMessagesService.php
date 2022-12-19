@@ -164,6 +164,7 @@ class SystemMessagesService {
 			if (!is_array($values)) {
 				continue;
 			}
+			
 			$arr = array_filter($values, $filter);
 			if (!empty($arr)) {
 				$data[$prop] = array_values($arr);

@@ -27,6 +27,7 @@ $search_query = get_input('q');
 if (!(bool) elgg_extract('show_search_form', $vars, !empty($search_query))) {
 	$search_class[] = 'hidden';
 }
+
 echo elgg_view_form('admin/users/search', [
 	'method' => 'GET',
 	'action' => elgg_get_current_url(),

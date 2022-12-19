@@ -35,6 +35,7 @@ foreach ($user_guids as $guid) {
 			elgg_register_error_message(elgg_echo('groups:useralreadyinvited'));
 			continue;
 		}
+		
 		$invite = false;
 	}
 

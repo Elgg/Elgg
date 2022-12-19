@@ -146,6 +146,7 @@ class UpgradeService {
 			if (!$upgrade instanceof \ElggUpgrade) {
 				continue;
 			}
+			
 			$promises[] = new Promise(function ($resolve, $reject) use ($upgrade) {
 				try {
 					$result = $this->executeUpgrade($upgrade, false);

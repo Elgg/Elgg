@@ -20,6 +20,7 @@ if (!$poster instanceof ElggEntity) {
 	if ($full_view) {
 		throw new EntityNotFoundException($msg);
 	}
+	
 	return;
 }
 

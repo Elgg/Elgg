@@ -1,5 +1,4 @@
 define(['jquery', 'jquery-cropper/jquery-cropper'], function($) {
-	
 	function Cropper() {
 		var $field;
 		var $fieldWrapper;
@@ -78,6 +77,7 @@ define(['jquery', 'jquery-cropper/jquery-cropper'], function($) {
 			if (minWidth > 0 && cropDetails.width < minWidth) {
 				that.showMessage('width');
 			}
+			
 			var minHeight = $messagesWrapper.find('.elgg-entity-edit-icon-crop-error-height').data('minHeight');
 			if (minHeight > 0 && cropDetails.height < minHeight) {
 				that.showMessage('height');

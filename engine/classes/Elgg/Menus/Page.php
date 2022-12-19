@@ -44,7 +44,7 @@ class Page {
 		foreach ($active_plugins as $plugin) {
 			$plugin_id = $plugin->getID();
 			
-			if (!elgg_view_exists("plugins/{$plugin_id}/settings") ) {
+			if (!elgg_view_exists("plugins/{$plugin_id}/settings")) {
 				continue;
 			}
 			

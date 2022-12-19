@@ -43,6 +43,7 @@ if (elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != $user->guid) 
 	foreach ($admin as $menu_item) {
 		$admin_links .= elgg_view('navigation/menu/elements/item', ['item' => $menu_item]);
 	}
+	
 	$admin_links .= '</ul>';
 	$admin_links .= '</li>';
 	$admin_links .= '</ul>';
@@ -55,12 +56,4 @@ $content_menu = elgg_view_menu('owner_block', [
 	'prepare_vertical' => true,
 ]);
 
-echo <<<HTML
-
-<div id="profile-owner-block">
-	$icon
-	$content_menu
-	$admin_links
-</div>
-
-HTML;
+echo elgg_format_element('div', ['id' => 'profile-owner-block'], $icon . $content_menu . $admin_links);

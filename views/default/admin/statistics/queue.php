@@ -19,14 +19,14 @@ if (empty($queue_names)) {
 $rows = '';
 foreach ($queue_names as $queue) {
 	$qb = Select::fromTable('queue');
-	$qb->select("COUNT(*) AS total");
+	$qb->select('COUNT(*) AS total');
 	$qb->where($qb->compare('name', '=', $queue->name, ELGG_VALUE_STRING, true));
 
 	$row_count = _elgg_services()->db->getDataRow($qb);
 	$row_count = empty($row_count) ? 0 : (int) $row_count->total;
 	
 	$qb = Select::fromTable('queue');
-	$qb->select("MIN(timestamp) AS min");
+	$qb->select('MIN(timestamp) AS min');
 	$qb->where($qb->compare('name', '=', $queue->name, ELGG_VALUE_STRING, true));
 	
 	$oldest = _elgg_services()->db->getDataRow($qb);
@@ -34,7 +34,7 @@ foreach ($queue_names as $queue) {
 	$oldest = elgg_view('output/datetime-local', ['value' => $oldest]);
 	
 	$qb = Select::fromTable('queue');
-	$qb->select("MAX(timestamp) AS max");
+	$qb->select('MAX(timestamp) AS max');
 	$qb->where($qb->compare('name', '=', $queue->name, ELGG_VALUE_STRING, true));
 	
 	$newest = _elgg_services()->db->getDataRow($qb);

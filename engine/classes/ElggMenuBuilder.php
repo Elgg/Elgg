@@ -211,6 +211,7 @@ class ElggMenuBuilder {
 					continue;
 				}
 			}
+			
 			// convert keys to indexes for first level of tree
 			$parents = array_values($parents);
 
@@ -273,13 +274,13 @@ class ElggMenuBuilder {
 	protected function getSortCallback($sort_by = null) {
 		switch ($sort_by) {
 			case 'text':
-				return [\ElggMenuBuilder::class, 'compareByText'];
+				return [self::class, 'compareByText'];
 
 			case 'name':
-				return [\ElggMenuBuilder::class, 'compareByName'];
+				return [self::class, 'compareByName'];
 
 			case 'priority':
-				return [\ElggMenuBuilder::class, 'compareByPriority'];
+				return [self::class, 'compareByPriority'];
 		}
 
 		return $sort_by && is_callable($sort_by) ? $sort_by : null;

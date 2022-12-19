@@ -27,7 +27,7 @@ class Hmac {
 		$api_user = _elgg_services()->apiUsersTable->getApiUser($api_header->api_key);
 		
 		if (!$api_user) {
-			throw new SecurityException(elgg_echo('SecurityException:InvalidAPIKey'), \ErrorResult::$RESULT_FAIL_APIKEY_INVALID);
+			throw new SecurityException(elgg_echo('SecurityException:InvalidAPIKey'), \ErrorResult::RESULT_FAIL_APIKEY_INVALID);
 		}
 		
 		// calculate expected HMAC

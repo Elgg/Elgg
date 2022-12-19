@@ -19,5 +19,4 @@ class OutputBufferTransport implements ResponseTransport {
 		echo $response->getContent();
 		return true;
 	}
-
 }

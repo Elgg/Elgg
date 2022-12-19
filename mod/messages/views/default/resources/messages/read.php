@@ -1,7 +1,7 @@
 <?php
 /**
-* Read a message page
-*/
+ * Read a message page
+ */
 
 $guid = (int) elgg_extract('guid', $vars);
 

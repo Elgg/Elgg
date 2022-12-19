@@ -189,7 +189,7 @@ class CacheHandler {
 	 */
 	public function parsePath($path) {
 		// no '..'
-		if (false !== strpos($path, '..')) {
+		if (strpos($path, '..') !== false) {
 			return [];
 		}
 
@@ -252,7 +252,7 @@ class CacheHandler {
 	 * @return void
 	 */
 	protected function setRevalidateHeaders($etag, Response $response) {
-		$response->headers->set('Cache-Control', "public, max-age=0, must-revalidate", true);
+		$response->headers->set('Cache-Control', 'public, max-age=0, must-revalidate', true);
 		$response->headers->set('ETag', $etag);
 	}
 
@@ -271,9 +271,10 @@ class CacheHandler {
 
 		// strip -gzip and leading /W
 		$if_none_match = trim($if_none_match);
-		if (0 === strpos($if_none_match, 'W/')) {
+		if (strpos($if_none_match, 'W/') === 0) {
 			$if_none_match = substr($if_none_match, 2);
 		}
+		
 		$if_none_match = str_replace('-gzip', '', $if_none_match);
 
 		return ($if_none_match === $etag);
@@ -355,7 +356,7 @@ class CacheHandler {
 		elgg_set_viewtype($viewtype);
 
 		$matches = [];
-		if ($viewtype === 'default' && preg_match("#^languages/(.*?)\\.js$#", $view, $matches)) {
+		if ($viewtype === 'default' && preg_match('#^languages/(.*?)\\.js$#', $view, $matches)) {
 			$view = 'languages.js';
 			$vars = ['language' => $matches[1]];
 		} else {

@@ -271,6 +271,7 @@ function elgg_view_page(string $title, string|array $body, string $page_shell = 
 	if (!$timer->hasEnded(['build page'])) {
 		$timer->end(['build page']);
 	}
+	
 	$timer->begin([__FUNCTION__]);
 
 	$params = [];
@@ -374,6 +375,7 @@ function elgg_view_layout(string $layout_name, array $vars = []): string {
 	if (!$timer->hasEnded(['build page'])) {
 		$timer->end(['build page']);
 	}
+	
 	$timer->begin([__FUNCTION__]);
 	
 	$vars['identifier'] = _elgg_services()->request->getFirstUrlSegment();
@@ -386,7 +388,7 @@ function elgg_view_layout(string $layout_name, array $vars = []): string {
 
 	$layout_views = [
 		"page/layouts/{$layout_name}",
-		"page/layouts/default",
+		'page/layouts/default',
 	];
 
 	$output = '';
@@ -571,11 +573,13 @@ function elgg_view_entity_icon(\ElggEntity $entity, string $size = 'medium', arr
 	if (elgg_view_exists("icon/{$entity_type}/{$subtype}")) {
 		$contents = elgg_view("icon/{$entity_type}/{$subtype}", $vars);
 	}
+	
 	if (empty($contents) && elgg_view_exists("icon/{$entity_type}/default")) {
 		$contents = elgg_view("icon/{$entity_type}/default", $vars);
 	}
+	
 	if (empty($contents)) {
-		$contents = elgg_view("icon/default", $vars);
+		$contents = elgg_view('icon/default', $vars);
 	}
 
 	return $contents;
@@ -613,18 +617,16 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = []): st
 	$annotation_views = [
 		(string) elgg_extract('item_view', $vars, ''),
 		"annotation/{$name}",
-		"annotation/default",
+		'annotation/default',
 	];
 
-	$contents = '';
 	foreach ($annotation_views as $view) {
 		if (elgg_view_exists($view)) {
-			$contents = elgg_view($view, $vars);
-			break;
+			return elgg_view($view, $vars);
 		}
 	}
 
-	return $contents;
+	return '';
 }
 
 /**
@@ -809,18 +811,16 @@ function elgg_view_relationship(\ElggRelationship $relationship, array $vars = [
 	$relationship_views = [
 		(string) elgg_extract('item_view', $vars, ''),
 		"relationship/{$name}",
-		"relationship/default",
+		'relationship/default',
 	];
 	
-	$contents = '';
 	foreach ($relationship_views as $view) {
 		if (elgg_view_exists($view)) {
-			$contents = elgg_view($view, $vars);
-			break;
+			return elgg_view($view, $vars);
 		}
 	}
 	
-	return $contents;
+	return '';
 }
 
 /**
@@ -1145,10 +1145,8 @@ function elgg_view_field(array $params = []): string {
 		return elgg_view("input/{$input_type}", $params['']);
 	}
 
-	$id = elgg_extract('id', $params);
-	if (!$id) {
-		$id = "elgg-field-" . base_convert(mt_rand(), 10, 36);
-		$params['id'] = $id;
+	if (empty($params['id'])) {
+		$params['id'] = 'elgg-field-' . base_convert(mt_rand(), 10, 36);
 	}
 
 	$make_special_checkbox_label = false;
@@ -1201,6 +1199,7 @@ function elgg_view_field(array $params = []): string {
 		$input_vars['label_tag'] = 'div';
 		unset($element_vars['label']);
 	}
+	
 	$element_vars['input'] = elgg_view('elements/forms/input', $input_vars);
 
 	return elgg_view('elements/forms/field', $element_vars);

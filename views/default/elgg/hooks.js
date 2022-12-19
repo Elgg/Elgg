@@ -1,5 +1,4 @@
 define(['jquery', 'elgg'], function ($, elgg) {
-
 	// counter for tracking registration order
 	var index = 0;
 	
@@ -120,6 +119,7 @@ define(['jquery', 'elgg'], function ($, elgg) {
 				if (a.priority < b.priority) {
 					return -1;
 				}
+				
 				if (a.priority > b.priority) {
 					return 1;
 				}

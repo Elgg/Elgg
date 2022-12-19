@@ -9,6 +9,7 @@ use CssCrush\Process;
  * @internal
  */
 class CssCrushProcess extends Process {
+	
 	protected $iniOriginal = [];
 	
 	/**

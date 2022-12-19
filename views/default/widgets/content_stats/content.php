@@ -26,11 +26,19 @@ foreach ($registered_entity_types as $type => $subtypes) {
 arsort($stats);
 
 echo '<table class="elgg-table">';
-echo '<thead><tr><th>' . elgg_echo('admin:statistics:numentities:type') . '</th>';
-echo '<th>' . elgg_echo('admin:statistics:numentities:number') . '</th></tr></thead>';
+echo '<thead><tr>';
+echo elgg_format_element('th', [], elgg_echo('admin:statistics:numentities:type'));
+echo elgg_format_element('th', [], elgg_echo('admin:statistics:numentities:number'));
+echo '</tr></thead>';
+echo '<tbody>';
+
 foreach ($stats as $name => $num) {
-	echo "<tr><td>$name</td><td>$num</td></tr>";
+	echo "<tr><td>{$name}</td><td>{$num}</td></tr>";
 }
+
+echo '</tbody>';
 echo '</table>';
 
-echo elgg_view('page/components/list/widget_more', ['widget_more' => elgg_view_url('admin/statistics/numentities', elgg_echo('more'))]);
+echo elgg_view('page/components/list/widget_more', [
+	'widget_more' => elgg_view_url('admin/statistics/numentities', elgg_echo('more')),
+]);

@@ -25,6 +25,7 @@ class RemovePublicAccessHandler {
 		if (isset($accesses[ACCESS_PUBLIC])) {
 			unset($accesses[ACCESS_PUBLIC]);
 		}
+		
 		return $accesses;
 	}
 }

@@ -224,15 +224,15 @@ function elgg_purge_caches(): void {
  * @internal
  */
 function _elgg_is_cache_symlinked(): bool {
-	$root_path = elgg_get_root_path();
-
 	$simplecache_path = elgg_get_asset_path();
-	$symlink_path = "{$root_path}cache";
-
 	if (!is_dir($simplecache_path)) {
 		return false;
 	}
-	return is_dir($symlink_path) && realpath($simplecache_path) == realpath($symlink_path);
+	
+	$root_path = elgg_get_root_path();
+	$symlink_path = "{$root_path}cache";
+	
+	return is_dir($symlink_path) && realpath($simplecache_path) === realpath($symlink_path);
 }
 
 /**

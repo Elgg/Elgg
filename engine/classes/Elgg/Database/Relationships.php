@@ -25,8 +25,7 @@ class Relationships extends Repository {
 	 * @throws DomainException
 	 */
 	public function calculate($function, $property, $property_type = null) {
-		
-		if (!in_array(strtolower($function), QueryBuilder::$calculations)) {
+		if (!in_array(strtolower($function), QueryBuilder::CALCULATIONS)) {
 			throw new DomainException("'{$function}' is not a valid numeric function");
 		}
 		
@@ -52,15 +51,16 @@ class Relationships extends Repository {
 				$select->select("{$function}({$alias}.{$property}) AS calculation");
 				break;
 				
-			case 'annotation' :
+			case 'annotation':
 				$alias = 'n_table';
 				if (!empty($this->options->annotation_name_value_pairs) && $this->options->annotation_name_value_pairs[0]->names != $property) {
 					$alias = $select->joinAnnotationTable('er', $join_column, $property);
 				}
+				
 				$select->select("{$function}($alias.value) AS calculation");
 				break;
 				
-			case 'metadata' :
+			case 'metadata':
 				$alias = $select->joinMetadataTable('er', $join_column, $property);
 				$select->select("{$function}({$alias}.value) AS calculation");
 				break;
@@ -83,7 +83,7 @@ class Relationships extends Repository {
 	public function count() {
 		$select = Select::fromTable('entity_relationships', 'er');
 		
-		$count_expr = $this->options->distinct ? "DISTINCT er.id" : "*";
+		$count_expr = $this->options->distinct ? 'DISTINCT er.id' : '*';
 		$select->select("COUNT({$count_expr}) AS total");
 		
 		$select = $this->buildQuery($select);
@@ -100,11 +100,10 @@ class Relationships extends Repository {
 	 * {@inheritDoc}
 	 */
 	public function execute() {
-		
 		if ($this->options->annotation_calculation) {
 			$clauses = $this->options->annotation_name_value_pairs;
 			if (count($clauses) > 1 && $this->options->annotation_name_value_pairs_operator !== 'OR') {
-				throw new LogicException("Annotation calculation can not be performed on multiple annotation name value pairs merged with AND");
+				throw new LogicException('Annotation calculation can not be performed on multiple annotation name value pairs merged with AND');
 			}
 			
 			$clause = array_shift($clauses);
@@ -113,7 +112,7 @@ class Relationships extends Repository {
 		} elseif ($this->options->metadata_calculation) {
 			$clauses = $this->options->metadata_name_value_pairs;
 			if (count($clauses) > 1 && $this->options->metadata_name_value_pairs_operator !== 'OR') {
-				throw new LogicException("Metadata calculation can not be performed on multiple metadata name value pairs merged with AND");
+				throw new LogicException('Metadata calculation can not be performed on multiple metadata name value pairs merged with AND');
 			}
 			
 			$clause = array_shift($clauses);
@@ -153,7 +152,7 @@ class Relationships extends Repository {
 			$select->setFirstResult((int) $offset);
 		}
 		
-		$callback = $callback ? : $this->options->callback;
+		$callback = $callback ?: $this->options->callback;
 		if (!isset($callback)) {
 			$callback = function ($row) {
 				return new \ElggRelationship($row);
@@ -242,6 +241,7 @@ class Relationships extends Repository {
 				} else {
 					$joined_alias = $qb->joinMetadataTable('er', $join_column, $clause->names);
 				}
+				
 				$parts[] = $clause->prepare($qb, $joined_alias);
 			}
 		}
@@ -270,6 +270,7 @@ class Relationships extends Repository {
 			} else {
 				$joined_alias = $qb->joinAnnotationTable('er', $join_column, $clause->names);
 			}
+			
 			$parts[] = $clause->prepare($qb, $joined_alias);
 		}
 		

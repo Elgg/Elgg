@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Views\TableColumn;
 
 use Elgg\Views\TableColumn;
@@ -37,6 +38,7 @@ class ViewColumn implements TableColumn {
 		if (!is_string($heading)) {
 			$heading = elgg_echo("ViewColumn:view:$view");
 		}
+		
 		$this->heading = $heading;
 	}
 

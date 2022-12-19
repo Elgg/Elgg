@@ -17,7 +17,7 @@ $subtype = $entity->getSubtype();
 $views = [
 	"input/autocomplete/{$type}/{$subtype}",
 	"input/autocomplete/{$type}/default",
-	"input/autocomplete/default",
+	'input/autocomplete/default',
 ];
 foreach ($views as $view) {
 	if (elgg_view_exists($view)) {

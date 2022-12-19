@@ -50,6 +50,7 @@ class ServeFileHandler {
 	 * Handle a request for a file
 	 *
 	 * @param Request $request HTTP request
+	 *
 	 * @return Response
 	 */
 	public function getResponse(Request $request) {
@@ -82,6 +83,7 @@ class ServeFileHandler {
 		if ((bool) $use_cookie) {
 			$hmac_data['cookie'] = $this->getCookieValue($request);
 		}
+		
 		ksort($hmac_data);
 
 		$hmac = $this->hmac->getHmac($hmac_data);
@@ -90,7 +92,7 @@ class ServeFileHandler {
 		}
 
 		// Path may have been encoded to avoid problems with special chars in URLs
-		if (0 === strpos($path_from_dataroot, ':')) {
+		if (strpos($path_from_dataroot, ':') === 0) {
 			$path_from_dataroot = Base64Url::decode(substr($path_from_dataroot, 1));
 		}
 
@@ -141,6 +143,7 @@ class ServeFileHandler {
 		if (empty($expires)) {
 			$expires = strtotime('+1 year');
 		}
+		
 		$expires_dt = (new DateTime())->setTimestamp($expires);
 		$response->setExpires($expires_dt);
 
@@ -152,6 +155,7 @@ class ServeFileHandler {
 	 * Get the session ID from the cookie
 	 *
 	 * @param Request $request Elgg request
+	 *
 	 * @return string
 	 */
 	private function getCookieValue(Request $request) {

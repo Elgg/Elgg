@@ -39,6 +39,7 @@ if (!empty($authors)) {
 				'class' => 'mls',
 			]);
 		}
+		
 		if ($author->homepage()) {
 			$author_content .= elgg_view('output/url', [
 				'icon' => 'globe-americas',
@@ -50,6 +51,7 @@ if (!empty($authors)) {
 		
 		$authors_text .= elgg_format_element('li', [], $author_content);
 	}
+	
 	$info[elgg_echo('admin:plugins:label:authors')] = elgg_format_element('ul', [], $authors_text);
 }
 
@@ -66,9 +68,10 @@ $info[elgg_echo('admin:plugins:label:licence')] = elgg_view('output/text', [
 
 $site_path = elgg_get_root_path();
 $path = $plugin->getPath();
-if (0 === strpos($path, $site_path)) {
+if (strpos($path, $site_path) === 0) {
 	$path = substr($path, strlen($site_path));
 }
+
 $info[elgg_echo('admin:plugins:label:location')] = htmlspecialchars($path);
 
 $categories = array_values($plugin->getCategories());
@@ -80,7 +83,8 @@ foreach ($info as $name => $value) {
 	if (trim($value) === '') {
 		continue;
 	}
-	$rows .= "<tr><th>$name</th><td>$value</td></tr>";
+	
+	$rows .= "<tr><th>{$name}</th><td>{$value}</td></tr>";
 }
 
 $info_html = elgg_format_element('table', ['class' => 'elgg-table'], $rows);

@@ -151,6 +151,7 @@ class RelationshipsTable {
 				// duplicate key error see https://github.com/Elgg/Elgg/issues/9179
 				return false;
 			}
+			
 			throw $e;
 		}
 
@@ -354,7 +355,7 @@ class RelationshipsTable {
 	 * @return \ElggEntity[]|int|boolean If count, int. If not count, array. false on errors.
 	 */
 	public function getEntitiesFromCount(array $options = []) {
-		$options['selects'][] = new SelectClause("COUNT(e.guid) AS total");
+		$options['selects'][] = new SelectClause('COUNT(e.guid) AS total');
 		$options['group_by'][] = new GroupByClause('r.guid_two');
 		$options['order_by'][] = new OrderByClause('total', 'desc');
 

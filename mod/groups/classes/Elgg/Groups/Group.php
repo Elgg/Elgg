@@ -22,7 +22,7 @@ class Group {
 		// prior to joining the group
 		$object = $event->getObject();
 		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($object) {
-			$ac_name = elgg_echo('groups:group') . ": " . $object->getDisplayName();
+			$ac_name = elgg_echo('groups:group') . ': ' . $object->getDisplayName();
 			
 			// delete the group if acl creation fails
 			return (bool) elgg_create_access_collection($ac_name, $object->guid, 'group_acl');
@@ -68,7 +68,7 @@ class Group {
 		if (!empty($original_attributes['name'])) {
 			// update access collection name if group name changes
 			$group_name = html_entity_decode($group->getDisplayName(), ENT_QUOTES, 'UTF-8');
-			$ac_name = elgg_echo('groups:group') . ": " . $group_name;
+			$ac_name = elgg_echo('groups:group') . ': ' . $group_name;
 			$acl = $group->getOwnedAccessCollection('group_acl');
 			if ($acl instanceof \ElggAccessCollection) {
 				$acl->name = $ac_name;

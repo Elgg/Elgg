@@ -69,12 +69,14 @@ class EntityPreloader {
 	 *
 	 * @param object[] $objects         Objects from which to pluck GUIDs
 	 * @param string[] $guid_properties e.g. array("owner_guid")
+	 *
 	 * @return int[]
 	 */
 	protected function getGuidsToLoad($objects, array $guid_properties) {
 		if (!is_array($objects) || count($objects) < 2) {
 			return [];
 		}
+		
 		$preload_guids = [];
 		foreach ($objects as $object) {
 			if (is_object($object)) {
@@ -82,6 +84,7 @@ class EntityPreloader {
 					if (empty($object->{$property})) {
 						continue;
 					}
+					
 					$guid = $object->{$property};
 					if ($guid && !call_user_func($this->_callable_cache_checker, $guid)) {
 						$preload_guids[] = $guid;
@@ -89,6 +92,7 @@ class EntityPreloader {
 				}
 			}
 		}
+		
 		return array_unique($preload_guids);
 	}
 }

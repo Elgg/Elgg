@@ -52,6 +52,6 @@ class PluginsDeactivateCommand extends Command {
 
 		$helper->finish($progress);
 
-		return 0;
+		return self::SUCCESS;
 	}
 }

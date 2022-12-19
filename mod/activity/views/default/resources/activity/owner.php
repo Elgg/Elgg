@@ -36,7 +36,7 @@ $content = elgg_view('river/listing/owner', [
 
 // draw page
 echo elgg_view_page($title, [
-	'content' =>  $content,
+	'content' => $content,
 	'sidebar' => elgg_view('river/sidebar'),
 	'filter_value' => $page_filter,
 	'class' => 'elgg-river-layout',

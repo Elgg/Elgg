@@ -24,6 +24,7 @@ class CreateDefaultWidgetsHandler {
 		if (isset($processed_events["{$event->getName()}.{$event->getType()}"])) {
 			return;
 		}
+		
 		// only create default widgets once per event
 		$processed_events["{$event->getName()}.{$event->getType()}"] = true;
 		

@@ -39,6 +39,7 @@ class LRUCache implements \ArrayAccess {
 		if ($size <= 0) {
 			throw new RangeException('"size" must be greater than 0');
 		}
+		
 		$this->maximumSize = $size;
 	}
 
@@ -47,6 +48,7 @@ class LRUCache implements \ArrayAccess {
 	 *
 	 * @param int|string $key     The key. Strings that are ints are cast to ints.
 	 * @param mixed      $default The value to be returned if key not found. (Optional)
+	 *
 	 * @return mixed
 	 */
 	public function get($key, $default = null) {
@@ -64,6 +66,7 @@ class LRUCache implements \ArrayAccess {
 	 *
 	 * @param int|string $key   The key. Strings that are ints are cast to ints.
 	 * @param mixed      $value The value to cache
+	 *
 	 * @return void
 	 */
 	public function set($key, $value) {
@@ -93,6 +96,7 @@ class LRUCache implements \ArrayAccess {
 	 * Does the cache contain an element with this key
 	 *
 	 * @param int|string $key The key
+	 *
 	 * @return boolean
 	 */
 	public function containsKey($key) {
@@ -103,6 +107,7 @@ class LRUCache implements \ArrayAccess {
 	 * Remove the element with this key.
 	 *
 	 * @param int|string $key The key
+	 *
 	 * @return mixed Value or null if not set
 	 */
 	public function remove($key) {
@@ -128,6 +133,7 @@ class LRUCache implements \ArrayAccess {
 	 * Moves the element from current position to end of array
 	 *
 	 * @param int|string $key The key
+	 *
 	 * @return void
 	 */
 	protected function recordAccess($key) {
@@ -139,11 +145,11 @@ class LRUCache implements \ArrayAccess {
 	/**
 	 * Assigns a value for the specified key
 	 *
-	 * @see \ArrayAccess::offsetSet()
-	 *
 	 * @param int|string $key   The key to assign the value to.
 	 * @param mixed      $value The value to set.
+	 *
 	 * @return void
+	 * @see \ArrayAccess::offsetSet()
 	 */
 	#[\ReturnTypeWillChange]
 	public function offsetSet($key, $value) {
@@ -153,10 +159,10 @@ class LRUCache implements \ArrayAccess {
 	/**
 	 * Get the value for specified key
 	 *
-	 * @see \ArrayAccess::offsetGet()
-	 *
 	 * @param int|string $key The key to retrieve.
+	 *
 	 * @return mixed
+	 * @see \ArrayAccess::offsetGet()
 	 */
 	#[\ReturnTypeWillChange]
 	public function offsetGet($key) {
@@ -166,10 +172,10 @@ class LRUCache implements \ArrayAccess {
 	/**
 	 * Unsets a key.
 	 *
-	 * @see \ArrayAccess::offsetUnset()
-	 *
 	 * @param int|string $key The key to unset.
+	 *
 	 * @return void
+	 * @see \ArrayAccess::offsetUnset()
 	 */
 	#[\ReturnTypeWillChange]
 	public function offsetUnset($key) {
@@ -179,10 +185,10 @@ class LRUCache implements \ArrayAccess {
 	/**
 	 * Does key exist?
 	 *
-	 * @see \ArrayAccess::offsetExists()
-	 *
 	 * @param int|string $key A key to check for.
+	 *
 	 * @return boolean
+	 * @see \ArrayAccess::offsetExists()
 	 */
 	#[\ReturnTypeWillChange]
 	public function offsetExists($key) {

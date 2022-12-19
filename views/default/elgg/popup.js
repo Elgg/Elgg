@@ -6,7 +6,6 @@
  * @since 2.2
  */
 define('elgg/popup', ['jquery', 'elgg', 'elgg/hooks', 'jquery-ui/position', 'jquery-ui/unique-id'], function ($, elgg, hooks) {
-
 	var popup = {
 		/**
 		 * Initializes a popup module and binds an event to hide visible popup
@@ -21,10 +20,12 @@ define('elgg/popup', ['jquery', 'elgg', 'elgg/hooks', 'jquery-ui/position', 'jqu
 				if (e.isDefaultPrevented()) {
 					return;
 				}
+				
 				var $eventTargets = $(e.target).parents().addBack();
 				if ($eventTargets.is('.elgg-state-popped')) {
 					return;
 				}
+				
 				popup.close();
 			});
 			// Bind events only once
@@ -48,6 +49,7 @@ define('elgg/popup', ['jquery', 'elgg', 'elgg/hooks', 'jquery-ui/position', 'jqu
 						if (e.isDefaultPrevented()) {
 							return;
 						}
+						
 						e.preventDefault();
 						e.stopPropagation();
 						popup.open($(this));
@@ -149,9 +151,11 @@ define('elgg/popup', ['jquery', 'elgg', 'elgg/hooks', 'jquery-ui/position', 'jqu
 			if (typeof $targets === 'undefined') {
 				$targets = $('.elgg-state-popped');
 			}
+			
 			if (!$targets.length) {
 				return;
 			}
+			
 			$targets.each(function () {
 				var $target = $(this);
 				if (!$target.is(':visible')) {

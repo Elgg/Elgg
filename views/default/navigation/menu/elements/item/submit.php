@@ -24,6 +24,7 @@ if (!elgg_is_empty($href)) {
 	// the href of the menu item is used as the custom formaction for the button
 	$vars['formaction'] = $href;
 }
+
 unset($vars['href']);
 
 if ($item->getConfirmText()) {

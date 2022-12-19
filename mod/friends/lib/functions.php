@@ -67,7 +67,7 @@ function _elgg_friends_get_add_friend_menu_items(\ElggUser $user, bool $make_but
 			'friend' => $user->guid,
 		]),
 		'section' => 'action',
-		'link_class' =>  $make_button ? 'elgg-button elgg-button-action' : null,
+		'link_class' => $make_button ? 'elgg-button elgg-button-action' : null,
 		'item_class' => ($pending_request || $isFriend) ? 'hidden' : '',
 		'data-toggle' => $add_toggle,
 	]);

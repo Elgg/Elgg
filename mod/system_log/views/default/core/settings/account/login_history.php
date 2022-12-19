@@ -17,12 +17,14 @@ $log = SystemLog::instance()->getAll([
 if (empty($log)) {
 	return;
 }
+
 $body = '<table class="elgg-table">';
 $body .= '<thead><tr>';
-$body .= '<th>' . elgg_echo('usersettings:statistics:login_history:date') . '</th><th>' . elgg_echo('usersettings:statistics:login_history:ip') . '</th>';
+$body .= elgg_format_element('th', [], elgg_echo('usersettings:statistics:login_history:date'));
+$body .= elgg_format_element('th', [], elgg_echo('usersettings:statistics:login_history:ip'));
 $body .= '</tr></thead>';
 $body .= '<tbody>';
-				
+
 foreach ($log as $entry) {
 	if ($entry->ip_address) {
 		$ip_address = $entry->ip_address;

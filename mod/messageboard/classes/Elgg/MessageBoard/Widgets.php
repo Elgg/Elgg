@@ -5,7 +5,7 @@ namespace Elgg\MessageBoard;
 /**
  * Widget related functions
  */
-class Widgets{
+class Widgets {
 
 	/**
 	 * Set the title URL for the messageboard widgets

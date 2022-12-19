@@ -32,6 +32,7 @@ class ReleaseCleaner {
 		if (empty($codes)) {
 			$codes = _elgg_services()->locale->getLanguageCodes();
 		}
+		
 		$this->codes = $codes;
 	}
 
@@ -129,7 +130,7 @@ class ReleaseCleaner {
 		
 		foreach ($english as $key => $value) {
 			$english_matches = preg_match_all('/%[a-zA-Z]/m', $value);
-			if (!array_key_exists($key, $translation) ||  $english_matches === false) {
+			if (!array_key_exists($key, $translation) || $english_matches === false) {
 				continue;
 			}
 			

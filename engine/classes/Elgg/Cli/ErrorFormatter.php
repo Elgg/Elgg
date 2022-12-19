@@ -11,7 +11,7 @@ use Symfony\Component\Console\Helper\FormatterHelper;
  */
 class ErrorFormatter extends ElggLogFormatter {
 
-	const SIMPLE_FORMAT = "%level_name%: %message%";
+	const SIMPLE_FORMAT = '%level_name%: %message%';
 
 	/**
 	 * {@inheritdoc}
@@ -22,18 +22,18 @@ class ErrorFormatter extends ElggLogFormatter {
 		$formatter = new FormatterHelper();
 
 		switch ($record['level']) {
-			case Logger::EMERGENCY :
-			case Logger::CRITICAL :
-			case Logger::ALERT :
-			case Logger::ERROR :
+			case Logger::EMERGENCY:
+			case Logger::CRITICAL:
+			case Logger::ALERT:
+			case Logger::ERROR:
 				$style = 'error';
 				break;
 
-			case Logger::WARNING :
+			case Logger::WARNING:
 				$style = 'comment';
 				break;
 
-			default :
+			default:
 				$style = 'info';
 				break;
 		}

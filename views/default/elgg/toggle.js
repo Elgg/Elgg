@@ -1,5 +1,4 @@
 define(['jquery'], function ($) {
-	
 	/**
 	 * Toggles an element based on clicking a separate element
 	 *

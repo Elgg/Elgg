@@ -10,11 +10,8 @@
 use Elgg\Exceptions\Configuration\InstallationException;
 
 $site = elgg_get_site_entity();
-if (!$site) {
-	throw new InstallationException("The system is missing an ElggSite entity!");
-}
-if (!($site instanceof ElggSite)) {
-	throw new InstallationException("Passing a non-ElggSite to an ElggSite constructor!");
+if (!$site instanceof \ElggSite) {
+	throw new InstallationException('The system is missing an ElggSite entity!');
 }
 
 $site->description = get_input('sitedescription');
@@ -26,11 +23,11 @@ if (!$site->save()) {
 }
 
 // allow new user registration?
-$allow_registration = ('on' === get_input('allow_registration', false));
+$allow_registration = (get_input('allow_registration', false) === 'on');
 elgg_save_config('allow_registration', $allow_registration);
 
 // require admin validation for new users?
-$require_admin_validation = ('on' === get_input('require_admin_validation', false));
+$require_admin_validation = (get_input('require_admin_validation', false) === 'on');
 elgg_save_config('require_admin_validation', $require_admin_validation);
 
 // notify admins about pending validation
@@ -50,7 +47,7 @@ if ($remove_unvalidated_users_days < 1) {
 }
 
 // setup walled garden
-$walled_garden = ('on' === get_input('walled_garden', false));
+$walled_garden = (get_input('walled_garden', false) === 'on');
 elgg_save_config('walled_garden', $walled_garden);
 
 elgg_save_config('language', get_input('language'));
@@ -81,26 +78,26 @@ elgg_save_config('comments_latest_first', (bool) get_input('comments_latest_firs
 elgg_save_config('comments_per_page', (int) get_input('comments_per_page'));
 elgg_save_config('pagination_behaviour', get_input('pagination_behaviour', 'ajax-replace'));
 
-elgg_save_config('can_change_username', 'on' === get_input('can_change_username'));
+elgg_save_config('can_change_username', get_input('can_change_username') === 'on');
 
 if (!elgg()->config->hasInitialValue('simplecache_enabled')) {
-	if ('on' === get_input('simplecache_enabled')) {
+	if (get_input('simplecache_enabled') === 'on') {
 		elgg_enable_simplecache();
 	} else {
 		elgg_disable_simplecache();
 	}
 }
 
-if ('on' === get_input('cache_symlink_enabled')) {
+if (get_input('cache_symlink_enabled') === 'on') {
 	if (!_elgg_symlink_cache()) {
 		elgg_register_error_message(elgg_echo('installation:cache_symlink:error'));
 	}
 }
 
-elgg_save_config('simplecache_minify_js', 'on' === get_input('simplecache_minify_js'));
-elgg_save_config('simplecache_minify_css', 'on' === get_input('simplecache_minify_css'));
+elgg_save_config('simplecache_minify_js', get_input('simplecache_minify_js') === 'on');
+elgg_save_config('simplecache_minify_css', get_input('simplecache_minify_css') === 'on');
 
-if ('on' === get_input('system_cache_enabled')) {
+if (get_input('system_cache_enabled') === 'on') {
 	elgg_enable_system_cache();
 } else {
 	elgg_disable_system_cache();
@@ -108,7 +105,7 @@ if ('on' === get_input('system_cache_enabled')) {
 
 elgg_save_config('default_access', (int) get_input('default_access', ACCESS_PRIVATE));
 
-$user_default_access = ('on' === get_input('allow_user_default_access'));
+$user_default_access = (get_input('allow_user_default_access') === 'on');
 elgg_save_config('allow_user_default_access', $user_default_access);
 
 if (!elgg()->config->hasInitialValue('debug')) {
@@ -120,20 +117,21 @@ if (!elgg()->config->hasInitialValue('debug')) {
 	}
 }
 
-$remove_branding = ('on' === get_input('remove_branding', false));
+$remove_branding = (get_input('remove_branding', false) === 'on');
 elgg_save_config('remove_branding', $remove_branding);
 
 elgg_save_config('email_html_part', (bool) get_input('email_html_part'));
 elgg_save_config('email_html_part_images', get_input('email_html_part_images'));
 elgg_save_config('enable_delayed_email', (bool) get_input('enable_delayed_email'));
 
-$disable_rss = ('on' === get_input('disable_rss', false));
+$disable_rss = (get_input('disable_rss', false) === 'on');
 elgg_save_config('disable_rss', $disable_rss);
 
 $friendly_time_number_of_days = get_input('friendly_time_number_of_days', 30);
 if ($friendly_time_number_of_days === '') {
 	$friendly_time_number_of_days = 30;
 }
+
 elgg_save_config('friendly_time_number_of_days', (int) $friendly_time_number_of_days);
 elgg_save_config('message_delay', (int) get_input('message_delay', 6));
 

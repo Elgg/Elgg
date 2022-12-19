@@ -61,12 +61,6 @@
  *                      null = current URL.
  *                      "" = current URL.
  *                      "/" = site home page.
- *                      @warning If href is false, the <a> tag will
- *                      not appear, so the link_class will not apply. If you
- *                      put <a> tags in manually through the 'text' option
- *                      the default CSS selector .elgg-menu-$menu > li > a
- *                      may affect formatting. Wrap in a <span> if it does.)
- *
  *  contexts    => ARR  Page context strings
  *  section     => STR  Menu section identifier
  *  title       => STR  Menu item tooltip

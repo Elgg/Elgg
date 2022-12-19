@@ -20,13 +20,14 @@ $breadcrumbs = elgg_extract('breadcrumbs', $vars);
 if ($breadcrumbs === false) {
 	return;
 }
+
 if (is_string($breadcrumbs)) {
 	echo $breadcrumbs;
 	return;
 }
 
 $breadcrumbs = elgg_view('navigation/breadcrumbs', $vars);
-if (!$breadcrumbs) {
+if (empty($breadcrumbs)) {
 	return;
 }
 

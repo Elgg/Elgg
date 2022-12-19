@@ -69,6 +69,7 @@ if (isset($vars['match_target'])) {
 	} else {
 		$target_guid = (int) $target;
 	}
+	
 	$params['match_target'] = $target_guid;
 	unset($vars['match_target']);
 }

@@ -19,7 +19,6 @@ class RefreshCsrfToken {
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
 	public function __invoke(\Elgg\Http\Request $request) {
-
 		_elgg_services()->session->boot();
 		
 		// the page's session_token might have expired (not matching __elgg_session in the session), but
@@ -50,10 +49,9 @@ class RefreshCsrfToken {
 		];
 
 		$response = new Response();
-		$response->headers->set('Content-Type', "application/json;charset=utf-8", true);
+		$response->headers->set('Content-Type', 'application/json;charset=utf-8', true);
 		$response->headers->set('X-Content-Type-Options', 'nosniff', true);
 		
 		return $response->setContent(json_encode($data));
 	}
-
 }

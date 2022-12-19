@@ -61,6 +61,7 @@ class Cli {
 
 	/**
 	 * Add CLI tools to the console application
+	 *
 	 * @return void
 	 */
 	protected function bootstrap() {
@@ -74,6 +75,7 @@ class Cli {
 
 	/**
 	 * Returns the core cli commands
+	 *
 	 * @return array
 	 */
 	protected function getCoreCommands() {
@@ -83,6 +85,7 @@ class Cli {
 
 	/**
 	 * Returns the cli commands registered in plugins
+	 *
 	 * @return array
 	 */
 	protected function getPluginCommands() {
@@ -152,11 +155,13 @@ class Cli {
 		if ($bootstrap) {
 			$this->bootstrap();
 		}
+		
 		$this->console->run($this->input, $this->output);
 	}
 
 	/**
 	 * Returns console input
+	 *
 	 * @return InputInterface
 	 */
 	public function getInput() {
@@ -165,6 +170,7 @@ class Cli {
 
 	/**
 	 * Returns console output
+	 *
 	 * @return OutputInterface
 	 */
 	public function getOutput() {

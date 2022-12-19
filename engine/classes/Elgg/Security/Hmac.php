@@ -45,9 +45,11 @@ class Hmac {
 		if (!$data) {
 			throw new InvalidArgumentException('$data cannot be empty');
 		}
+		
 		if (!is_string($data)) {
 			$data = serialize($data);
 		}
+		
 		$this->data = $data;
 		$this->algo = $algo;
 	}

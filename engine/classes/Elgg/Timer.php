@@ -66,6 +66,7 @@ class Timer {
 			if (!isset($arr[$key])) {
 				$arr[$key] = [];
 			}
+			
 			$arr =& $arr[$key];
 		}
 

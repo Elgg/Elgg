@@ -110,7 +110,6 @@ class Plugins {
 	 */
 	protected $context;
 
-
 	/**
 	 * Constructor
 	 *
@@ -157,6 +156,7 @@ class Plugins {
 		if (!$path) {
 			$path = Paths::project() . 'mod/';
 		}
+		
 		return $path;
 	}
 
@@ -287,6 +287,7 @@ class Plugins {
 				unset($known_plugins[$i]);
 				continue;
 			}
+			
 			$id_map[$plugin->getID()] = $i;
 			$plugin->cache();
 			
@@ -325,6 +326,7 @@ class Plugins {
 					} catch (PluginException $e) {
 						// do nothing
 					}
+					
 					$plugin->setPriority('new');
 				}
 
@@ -383,6 +385,7 @@ class Plugins {
 		if (!$plugin->getID()) {
 			return;
 		}
+		
 		$this->cache->save($plugin->getID(), $plugin);
 	}
 
@@ -777,7 +780,7 @@ class Plugins {
 		}
 
 		$old_ia = $this->session_manager->setIgnoreAccess(true);
-		$plugins = elgg_get_entities($options) ? : [];
+		$plugins = elgg_get_entities($options) ?: [];
 		$this->session_manager->setIgnoreAccess($old_ia);
 
 		$result = $this->orderPluginsByPriority($plugins, $volatile_data_name);
@@ -856,6 +859,7 @@ class Plugins {
 					// remove the priority
 					unset($plugin->$name);
 				}
+				
 				continue;
 			}
 			
@@ -906,8 +910,7 @@ class Plugins {
 	 * @return int|false
 	 */
 	public function setPriority(\ElggPlugin $plugin, $priority) {
-
-		$old_priority = $plugin->getPriority() ? : 1;
+		$old_priority = $plugin->getPriority() ?: 1;
 
 		$name = \ElggPlugin::PRIORITY_SETTING_NAME;
 
@@ -924,10 +927,10 @@ class Plugins {
 			->andWhere($qb->compare('entity_guid', '!=', $plugin->guid, ELGG_VALUE_INTEGER));
 
 		if ($priority > $old_priority) {
-			$qb->set('value', "CAST(value AS UNSIGNED) - 1");
+			$qb->set('value', 'CAST(value AS UNSIGNED) - 1');
 			$qb->andWhere($qb->between('CAST(value AS UNSIGNED)', $old_priority, $priority, ELGG_VALUE_INTEGER));
 		} else {
-			$qb->set('value', "CAST(value AS UNSIGNED) + 1");
+			$qb->set('value', 'CAST(value AS UNSIGNED) + 1');
 			$qb->andWhere($qb->between('CAST(value AS UNSIGNED)', $priority, $old_priority, ELGG_VALUE_INTEGER));
 		}
 

@@ -32,7 +32,7 @@ class Entity {
 		$delete = $return->get('delete');
 		if ($delete instanceof \ElggMenuItem) {
 			$delete->setLinkClass('site-notifications-delete');
-			$delete->{"data-entity-ref"} = 'elgg-object-' . $entity->guid;
+			$delete->{'data-entity-ref'} = "elgg-object-{$entity->guid}";
 		}
 		
 		return $return;

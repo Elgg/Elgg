@@ -22,7 +22,7 @@ $content = elgg_view('river/listing/all', [
 
 // draw page
 echo elgg_view_page(elgg_echo('river:all'), [
-	'content' =>  $content,
+	'content' => $content,
 	'sidebar' => elgg_view('river/sidebar'),
 	'filter_value' => 'all',
 	'class' => 'elgg-river-layout',

@@ -36,6 +36,7 @@ class PrepareFields {
 				// this shouldn't happen, but just in case
 				continue;
 			}
+			
 			$body_vars[$key] = $value;
 		}
 		

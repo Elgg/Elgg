@@ -209,6 +209,7 @@ function notify_user(int|array $to, int $from = 0, string $subject = '', string 
 	} else {
 		$sender = elgg_get_site_entity();
 	}
+	
 	if (!$sender instanceof \ElggEntity) {
 		return [];
 	}
@@ -220,6 +221,7 @@ function notify_user(int|array $to, int $from = 0, string $subject = '', string 
 		if (!$recipient instanceof \ElggEntity) {
 			continue;
 		}
+		
 		$recipients[] = $recipient;
 	}
 

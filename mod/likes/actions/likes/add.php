@@ -50,30 +50,24 @@ $site = elgg_get_site_entity();
 
 // summary for site_notifications
 $summary = elgg_echo('likes:notifications:subject', [
-		$user->getDisplayName(),
-		$title_str,
-	],
-	(string) $owner->language
-);
+	$user->getDisplayName(),
+	$title_str,
+], (string) $owner->language);
 
 // prevent long subjects in mail
 $title_str = elgg_get_excerpt($title_str, 80);
 $subject = elgg_echo('likes:notifications:subject', [
-		$user->getDisplayName(),
-		$title_str,
-	],
-	(string) $owner->language
-);
+	$user->getDisplayName(),
+	$title_str,
+], (string) $owner->language);
 
 $body = elgg_echo('likes:notifications:body', [
-		$user->getDisplayName(),
-		$title_str,
-		$site->getDisplayName(),
-		$entity->getURL(),
-		$user->getURL(),
-	],
-	(string) $owner->language
-);
+	$user->getDisplayName(),
+	$title_str,
+	$site->getDisplayName(),
+	$entity->getURL(),
+	$user->getURL(),
+], (string) $owner->language);
 
 notify_user(
 	$entity->owner_guid,
