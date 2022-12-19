@@ -22,35 +22,12 @@ class ResponseFactory {
 
 	use Loggable;
 
-	/**
-	 * @var Request
-	 */
-	private $request;
-
-	/**
-	 * @var AjaxService
-	 */
-	private $ajax;
-
-	/**
-	 * @var EventsService
-	 */
-	private $events;
-
-	/**
-	 * @var ResponseTransport
-	 */
-	private $transport;
-
-	/**
-	 * @var SymfonyResponse|false
-	 */
-	private $response_sent = false;
-
-	/**
-	 * @var ResponseHeaderBag
-	 */
-	private $headers;
+	protected Request $request;
+	protected AjaxService $ajax;
+	protected EventsService $events;
+	protected ResponseTransport $transport;
+	protected ResponseHeaderBag $headers;
+	protected ?SymfonyResponse $response_sent = null;
 
 	/**
 	 * Constructor
@@ -74,6 +51,7 @@ class ResponseFactory {
 	 * @param string $name    Header name
 	 * @param string $value   Header value
 	 * @param bool   $replace Replace existing headers
+	 *
 	 * @return void
 	 */
 	public function setHeader(string $name, string $value, bool $replace = true): void {
@@ -86,6 +64,7 @@ class ResponseFactory {
 	 * To customize all cookies, register for the 'init:cookie', 'all' event.
 	 *
 	 * @param \ElggCookie $cookie The cookie that is being set
+	 *
 	 * @return bool
 	 */
 	public function setCookie(\ElggCookie $cookie): bool {
@@ -111,9 +90,10 @@ class ResponseFactory {
 	 * Get headers set to apply to all responses
 	 *
 	 * @param bool $remove_existing Remove existing headers found in headers_list()
+	 *
 	 * @return ResponseHeaderBag
 	 */
-	public function getHeaders($remove_existing = true) {
+	public function getHeaders(bool $remove_existing = true): ResponseHeaderBag {
 		// Add headers that have already been set by underlying views
 		// e.g. viewtype page shells set content-type headers
 		$headers_list = headers_list();
@@ -135,21 +115,19 @@ class ResponseFactory {
 	/**
 	 * Creates an HTTP response
 	 *
-	 * @param mixed   $content The response content
+	 * @param string  $content The response content
 	 * @param integer $status  The response status code
 	 * @param array   $headers An array of response headers
 	 *
 	 * @return SymfonyResponse
 	 */
-	public function prepareResponse($content = '', $status = 200, array $headers = []) {
+	public function prepareResponse(?string $content = '', int $status = 200, array $headers = []): SymfonyResponse {
 		$header_bag = $this->getHeaders();
 		$header_bag->add($headers);
 		
 		$response = new SymfonyResponse($content, $status, $header_bag->all());
 		
-		$response->prepare($this->request);
-		
-		return $response;
+		return $response->prepare($this->request);
 	}
 
 	/**
@@ -161,15 +139,13 @@ class ResponseFactory {
 	 *
 	 * @return SymfonyRedirectResponse
 	 */
-	public function prepareRedirectResponse($url, $status = 302, array $headers = []) {
+	public function prepareRedirectResponse(string $url, int $status = 302, array $headers = []): SymfonyRedirectResponse {
 		$header_bag = $this->getHeaders();
 		$header_bag->add($headers);
 		
 		$response = new SymfonyRedirectResponse($url, $status, $header_bag->all());
 		
-		$response->prepare($this->request);
-		
-		return $response;
+		return $response->prepare($this->request);
 	}
 	
 	/**
@@ -181,7 +157,7 @@ class ResponseFactory {
 	 *
 	 * @return JsonResponse
 	 */
-	public function prepareJsonResponse($content = '', $status = 200, array $headers = []) {
+	public function prepareJsonResponse($content = '', int $status = 200, array $headers = []): JsonResponse {
 		$header_bag = $this->getHeaders();
 		$header_bag->add($headers);
 		
@@ -195,9 +171,7 @@ class ResponseFactory {
 		
 		$response = new JsonResponse($content, $status, $header_bag->all());
 		
-		$response->prepare($this->request);
-		
-		return $response;
+		return $response->prepare($this->request);
 	}
 
 	/**
@@ -207,9 +181,9 @@ class ResponseFactory {
 	 *
 	 * @return SymfonyResponse|false
 	 */
-	public function send(SymfonyResponse $response) {
+	public function send(SymfonyResponse $response): SymfonyResponse|false {
 
-		if ($this->response_sent) {
+		if (isset($this->response_sent)) {
 			if ($this->response_sent !== $response) {
 				$this->getLogger()->error('Unable to send the following response: ' . PHP_EOL
 						. (string) $response . PHP_EOL
@@ -242,9 +216,9 @@ class ResponseFactory {
 	/**
 	 * Returns a response that was sent to the client
 	 *
-	 * @return SymfonyResponse|false
+	 * @return SymfonyResponse|null
 	 */
-	public function getSentResponse() {
+	public function getSentResponse(): ?SymfonyResponse {
 		return $this->response_sent;
 	}
 
@@ -253,11 +227,12 @@ class ResponseFactory {
 	 *
 	 * @param ResponseBuilder $response ResponseBuilder instance
 	 *                                  An instance of an ErrorResponse, OkResponse or RedirectResponse
+	 *
 	 * @return false|SymfonyResponse
+	 *
 	 * @throws UnexpectedValueException
 	 */
 	public function respond(ResponseBuilder $response) {
-
 		$response_type = $this->parseContext();
 		$response = $this->events->triggerResults('response', $response_type, [], $response);
 		if (!$response instanceof ResponseBuilder) {
@@ -275,10 +250,7 @@ class ResponseFactory {
 		
 		$is_xhr = $this->request->isXmlHttpRequest();
 
-		$is_action = false;
-		if (0 === strpos($response_type, 'action:')) {
-			$is_action = true;
-		}
+		$is_action = strpos($response_type, 'action:') === 0;
 
 		if ($is_action && $response->getForwardURL() === null) {
 			// actions must always set a redirect url
@@ -347,38 +319,39 @@ class ResponseFactory {
 
 		$forward_url = $this->getSiteRefererUrl();
 
-		if (!$this->isAction()) {
-			$params = [
-				'current_url' => $this->request->getCurrentURL(),
-				'forward_url' => $forward_url,
-			];
-			// For BC, let plugins serve their own error page
-			// @todo can this event be dropped
-			$forward_reason = (string) $status_code;
+		if ($this->isAction()) {
+			$forward_url = $this->makeSecureForwardUrl($forward_url);
+			return $this->send($this->prepareRedirectResponse($forward_url));
+		}
+		
+		$params = [
+			'current_url' => $this->request->getCurrentURL(),
+			'forward_url' => $forward_url,
+		];
+		
+		// For BC, let plugins serve their own error page
+		// @todo can this event be dropped
+		$forward_reason = (string) $status_code;
 
-			$this->events->triggerResults('forward', $forward_reason, $params, $forward_url);
+		$this->events->triggerResults('forward', $forward_reason, $params, $forward_url);
 
-			if ($this->response_sent) {
-				// Response was sent from a forward event
-				return $this->response_sent;
-			}
-
-			if (elgg_view_exists('resources/error')) {
-				$params['type'] = $forward_reason;
-				$params['exception'] = $response->getException();
-				if (!elgg_is_empty($error)) {
-					$params['params']['error'] = $error;
-				}
-				$error_page = elgg_view_resource('error', $params);
-			} else {
-				$error_page = $error;
-			}
-
-			return $this->send($this->prepareResponse($error_page, $status_code));
+		if (isset($this->response_sent)) {
+			// Response was sent from a forward event
+			return $this->response_sent;
 		}
 
-		$forward_url = $this->makeSecureForwardUrl($forward_url);
-		return $this->send($this->prepareRedirectResponse($forward_url));
+		if (elgg_view_exists('resources/error')) {
+			$params['type'] = $forward_reason;
+			$params['exception'] = $response->getException();
+			if (!elgg_is_empty($error)) {
+				$params['params']['error'] = $error;
+			}
+			$error_page = elgg_view_resource('error', $params);
+		} else {
+			$error_page = $error;
+		}
+
+		return $this->send($this->prepareResponse($error_page, $status_code));
 	}
 
 	/**
@@ -404,25 +377,21 @@ class ResponseFactory {
 	 *
 	 * @param string $content     Response content
 	 * @param string $forward_url Forward URL
+	 *
 	 * @return string
 	 */
-	public function wrapAjaxResponse($content = '', string $forward_url = null) {
-
+	public function wrapAjaxResponse($content = '', string $forward_url = null): string {
 		$content = $this->stringify($content);
 
 		if ($forward_url === REFERRER) {
 			$forward_url = $this->getSiteRefererUrl();
 		}
 
-		$params = [
-			'value' => '',
+		return $this->stringify([
+			'value' => $this->ajax->decodeJson($content),
 			'current_url' => $this->request->getCurrentURL(),
 			'forward_url' => elgg_normalize_url((string) $forward_url),
-		];
-
-		$params['value'] = $this->ajax->decodeJson($content);
-
-		return $this->stringify($params);
+		]);
 	}
 
 	/**
@@ -454,7 +423,7 @@ class ResponseFactory {
 
 		$forward_url = (string) $this->events->triggerResults('forward', $forward_reason, $params, $forward_url);
 		
-		if ($this->response_sent) {
+		if (isset($this->response_sent)) {
 			// Response was sent from a forward event
 			// Clearing handlers to void infinite loops
 			return $this->response_sent;
@@ -516,10 +485,10 @@ class ResponseFactory {
 
 	/**
 	 * Parses response type to be used as event type
+	 *
 	 * @return string
 	 */
-	public function parseContext() {
-
+	public function parseContext(): string {
 		$segments = $this->request->getUrlSegments();
 
 		$identifier = array_shift($segments);
@@ -528,41 +497,40 @@ class ResponseFactory {
 				$page = array_shift($segments);
 				if ($page === 'view') {
 					$view = implode('/', $segments);
-					return "view:$view";
+					return "view:{$view}";
 				} else if ($page === 'form') {
 					$form = implode('/', $segments);
-					return "form:$form";
+					return "form:{$form}";
 				}
+				
 				array_unshift($segments, $page);
 				break;
-
 			case 'action' :
 				$action = implode('/', $segments);
-				return "action:$action";
+				return "action:{$action}";
 		}
 
 		array_unshift($segments, $identifier);
 		$path = implode('/', $segments);
-		return "path:$path";
+		return "path:{$path}";
 	}
 
 	/**
 	 * Check if the request is an XmlHttpRequest
+	 *
 	 * @return bool
 	 */
-	public function isXhr() {
+	public function isXhr(): bool {
 		return $this->request->isXmlHttpRequest();
 	}
 
 	/**
 	 * Check if the requested path is an action
+	 *
 	 * @return bool
 	 */
-	public function isAction() {
-		if (0 === strpos($this->parseContext(), 'action:')) {
-			return true;
-		}
-		return false;
+	public function isAction(): bool {
+		return strpos($this->parseContext(), 'action:') === 0;
 	}
 
 	/**
@@ -570,17 +538,20 @@ class ResponseFactory {
 	 * and objectifying Elgg entities
 	 *
 	 * @param mixed $content Data to normalize
+	 *
 	 * @return mixed
 	 */
 	public function normalize($content = '') {
 		if ($content instanceof \ElggEntity) {
 			$content = (array) $content->toObject();
 		}
+		
 		if (is_array($content)) {
 			foreach ($content as $key => $value) {
 				$content[$key] = $this->normalize($value);
 			}
 		}
+		
 		return $content;
 	}
 
@@ -591,9 +562,10 @@ class ResponseFactory {
 	 * Serializes non-scalar values to JSON
 	 *
 	 * @param mixed $content Content to serialize
+	 *
 	 * @return string
 	 */
-	public function stringify($content = '') {
+	public function stringify($content = ''): string {
 		$content = $this->normalize($content);
 		
 		if (is_object($content) && is_callable([$content, '__toString'])) {
@@ -615,9 +587,10 @@ class ResponseFactory {
 	 * Replaces response transport
 	 *
 	 * @param ResponseTransport $transport Transport interface
+	 *
 	 * @return void
 	 */
-	public function setTransport(ResponseTransport $transport) {
+	public function setTransport(ResponseTransport $transport): void {
 		$this->transport = $transport;
 	}
 	
@@ -626,14 +599,8 @@ class ResponseFactory {
 	 *
 	 * @return string
 	 */
-	protected function getSiteRefererUrl() {
-		$unsafe_url = (string) $this->request->headers->get('Referer');
-		$safe_url = elgg_normalize_site_url($unsafe_url);
-		if (isset($safe_url)) {
-			return $safe_url;
-		}
-		
-		return '';
+	protected function getSiteRefererUrl(): string {
+		return (string) elgg_normalize_site_url((string) $this->request->headers->get('Referer'));
 	}
 	
 	/**
@@ -643,7 +610,7 @@ class ResponseFactory {
 	 *
 	 * @return string
 	 */
-	protected function makeSecureForwardUrl($url) {
+	protected function makeSecureForwardUrl(string $url): string {
 		$url = elgg_normalize_url($url);
 		if (!preg_match('/^(http|https|ftp|sftp|ftps):\/\//', $url)) {
 			return elgg_get_site_url();
@@ -662,7 +629,7 @@ class ResponseFactory {
 	 *
 	 * @return void
 	 */
-	protected function closeSession() {
+	protected function closeSession(): void {
 		$session = elgg_get_session();
 		if ($session->isStarted()) {
 			$session->save();
