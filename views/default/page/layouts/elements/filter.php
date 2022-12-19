@@ -31,7 +31,4 @@ if (!$filter) {
 	return;
 }
 
-?>
-<div class="elgg-layout-filter clearfix">
-	<?= $filter ?>
-</div>
+echo elgg_format_element('div', ['class' => 'elgg-layout-filter'], $filter);

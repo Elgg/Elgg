@@ -1,5 +1,5 @@
 .elgg-river-selector {
-	float: right;
+	text-align: right;
 	
 	.elgg-field-label, .elgg-field-input {
 		display: inline-block;

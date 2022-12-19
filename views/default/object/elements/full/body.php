@@ -13,6 +13,6 @@ if (!$body) {
 }
 
 $body_params = elgg_extract('body_params', $vars, []);
-$body_params['class'] = elgg_extract_class($body_params, ['elgg-listing-full-body', 'clearfix']);
+$body_params['class'] = elgg_extract_class($body_params, ['elgg-listing-full-body']);
 
 echo elgg_format_element('div', $body_params, $body);

@@ -81,7 +81,7 @@ for ($den = 1; $den <= count($units); $den++) {
 			</div>
 		</div>
 		<div class="elgg-col elgg-col-3of5">
-			<div class="elgg-inner clearfix elgg-border-plain elgg-justify-center pam mtl">
+			<div class="elgg-inner elgg-border-plain elgg-justify-center pam mtl">
 				<h3>3/5</h3>
 				<div class="elgg-grid theme-sandbox-grid-demo-outline">
 					<div class="elgg-col elgg-col-1of2">

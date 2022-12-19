@@ -18,8 +18,5 @@
 $filter = elgg_view('page/layouts/elements/filter', $vars);
 $content = elgg_view('page/layouts/elements/content', $vars);
 $footer = elgg_view('page/layouts/elements/footer', $vars);
-?>
 
-<div class="elgg-main elgg-body elgg-layout-body clearfix">
-	<?= $filter . $content . $footer ?>
-</div>
+echo elgg_format_element('div', ['class' => ['elgg-main', 'elgg-body', 'elgg-layout-body']], $filter . $content . $footer);

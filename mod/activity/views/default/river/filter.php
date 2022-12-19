@@ -42,7 +42,7 @@ if (empty($value)) {
 	}
 }
 
-$filter = elgg_view_field([
+echo elgg_view_field([
 	'#type' => 'select',
 	'#label' => elgg_echo('filter'),
 	'#class' => 'elgg-river-selector',
@@ -50,5 +50,3 @@ $filter = elgg_view_field([
 	'options_values' => $options,
 	'value' => $value,
 ]);
-
-echo elgg_format_element('div', ['class' => 'clearfix'], $filter);

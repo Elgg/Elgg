@@ -28,7 +28,7 @@ unset($vars['image']);
 $alt_image = elgg_extract('image_alt', $vars, '');
 unset($vars['image_alt']);
 
-$class = elgg_extract_class($vars, ['elgg-image-block', 'clearfix']);
+$class = elgg_extract_class($vars, ['elgg-image-block']);
 unset($vars['class']);
 
 $body = elgg_format_element('div', [

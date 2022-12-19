@@ -95,4 +95,4 @@ $right .= elgg_view('index/righthandside');
 $left = elgg_format_element('div', ['class' => ['elgg-col', 'elgg-col-1of2', 'custom-index-col1']], elgg_format_element('div', ['class' => 'elgg-inner'], $left));
 $right = elgg_format_element('div', ['class' => ['elgg-col', 'elgg-col-2of2', 'custom-index-col2']], elgg_format_element('div', ['class' => 'elgg-inner'], $right));
 
-echo elgg_format_element('div', ['class' => ['custom-index', 'elgg-main', 'elgg-grid', 'clearfix']], $left . $right);
+echo elgg_format_element('div', ['class' => ['custom-index', 'elgg-main', 'elgg-grid']], $left . $right);
