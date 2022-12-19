@@ -16,13 +16,14 @@ class Translator extends ElggTranslator {
 	 * @return bool
 	 * @internal
 	 */
-	protected function includeLanguageFile($path) {
-		$cache_key = "lang/" . sha1($path);
+	protected function includeLanguageFile($path): bool {
+		$cache_key = 'lang/' . sha1($path);
 		$result = elgg_get_system_cache()->load($cache_key);
 		if (!isset($result)) {
 			$result = includer::includeFile($path);
 			elgg_get_system_cache()->save($cache_key, $result);
 		}
+		
 		if (is_array($result)) {
 			$this->addTranslation(basename($path, '.php'), $result);
 			return true;
