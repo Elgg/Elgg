@@ -543,7 +543,7 @@ class Database {
 			$version = $driver->getServerVersion();
 			
 			if ($this->isMariaDB($type)) {
-				if (strpos($version, '5.5.5-') === 0) {
+				if (str_starts_with($version, '5.5.5-')) {
 					$version = substr($version, 6);
 				}
 			}

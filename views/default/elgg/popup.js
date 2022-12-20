@@ -41,6 +41,7 @@ define('elgg/popup', ['jquery', 'elgg', 'elgg/hooks', 'jquery-ui/position', 'jqu
 		 * but can be called by plugins to bind other triggers.
 		 *
 		 * @param {jQuery} $triggers A set of triggers to bind
+		 *
 		 * @return void
 		 */
 		bind: function ($triggers) {
@@ -71,6 +72,7 @@ define('elgg/popup', ['jquery', 'elgg', 'elgg/hooks', 'jquery-ui/position', 'jqu
 		 * @param {jQuery} $trigger Trigger element
 		 * @param {jQuery} $target  Target popup module
 		 * @param {object} position Positioning data of the $target module
+		 *
 		 * @return void
 		 */
 		open: function ($trigger, $target, position) {
@@ -145,6 +147,7 @@ define('elgg/popup', ['jquery', 'elgg', 'elgg/hooks', 'jquery-ui/position', 'jqu
 		 * Hides a set of $targets. If not defined, closes all visible popup modules.
 		 *
 		 * @param {jQuery} $targets Popup modules to hide
+		 *
 		 * @return void
 		 */
 		close: function ($targets) {

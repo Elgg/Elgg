@@ -30,10 +30,8 @@ class Seeder extends Seed {
 				'excerpt' => $this->faker()->sentence(),
 			];
 
+			/* @var $blog \ElggBlog */
 			$blog = $this->createObject($properties);
-			if (!$blog) {
-				continue;
-			}
 
 			$this->createComments($blog);
 			$this->createLikes($blog);

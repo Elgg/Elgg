@@ -123,7 +123,7 @@ class Site {
 				'priority' => 999,
 			]);
 			
-			foreach ($more as &$item) {
+			foreach ($more as $item) {
 				$item->setParentName('more');
 			}
 			

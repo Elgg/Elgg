@@ -23,6 +23,7 @@ elgg.assertTypeOf = function(type, val) {
  * elgg.normalize_url('//google.com/');      // no change
  *
  * @param {String} url The url to normalize
+ *
  * @return {String} The extended url
  */
 elgg.normalize_url = function(url) {
@@ -92,6 +93,7 @@ elgg.normalize_url = function(url) {
  *
  * @param {String} msg         The deprecation message to display
  * @param {String} dep_version The version the function was deprecated for
+ *
  * @since 1.9
  */
 elgg.deprecated_notice = function(msg, dep_version) {
@@ -129,7 +131,7 @@ elgg.forward = function(url) {
  * Parse a URL into its parts. Mimicks http://php.net/parse_url
  *
  * @param {String}  url       The URL to parse
- * @param {Number}  component A component to return
+ * @param {String}  component A component to return
  * @param {Boolean} expand    Expand the query into an object? Else it's a string.
  *
  * @return {Object} The parsed URL
@@ -200,6 +202,7 @@ elgg.parse_url = function(url, component, expand) {
  * Returns an object with key/values of the parsed query string.
  *
  * @param  {String} string The string to parse
+ *
  * @return {Object} The parsed object string
  */
 elgg.parse_str = function(string) {
@@ -240,6 +243,7 @@ elgg.parse_str = function(string) {
  *	http://elgg.org/download.php#a.class-name return a.class-name
  *
  * @param {String} url The URL
+ *
  * @return {String} The selector
  */
 elgg.getSelectorFromUrlFragment = function(url) {
@@ -299,6 +303,7 @@ elgg.get_site_url = function() {
  *
  * @param {String} view    The full view name
  * @param {String} subview If the first arg is "css" or "js", the rest of the view name
+ *
  * @return {String} The site URL.
  */
 elgg.get_simplecache_url = function(view, subview) {
@@ -318,7 +323,7 @@ elgg.get_simplecache_url = function(view, subview) {
 		elgg.assertTypeOf('string', subview);
 		
 		if ((view === 'js' || view === 'css') && 0 === subview.indexOf(view + '/')) {
-			subview = subview.substr(view.length + 1);
+			subview = subview.substring(view.length + 1);
 		}
 		
 		path = '/cache/' + lastcache + '/' + elgg.config.viewtype + '/' + view + '/' + subview;

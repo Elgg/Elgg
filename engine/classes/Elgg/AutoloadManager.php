@@ -183,10 +183,7 @@ class AutoloadManager {
 	 * @return \Elgg\AutoloadManager
 	 */
 	public function deleteCache() {
-		if ($this->cache) {
-			$this->cache->delete(self::FILENAME);
-		}
-		
+		$this->cache?->delete(self::FILENAME);
 		$this->loader->getClassMap()->setMap([])->setAltered(true);
 		$this->scannedDirs = [];
 		$this->altered = true;

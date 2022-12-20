@@ -139,7 +139,7 @@ class DbConfig {
 				break;
 		}
 
-		$config['encoding'] = $this->dbencoding ? $this->dbencoding : 'utf8';
+		$config['encoding'] = $this->dbencoding ?: 'utf8';
 		$config['prefix'] = $this->dbprefix;
 
 		return $config;

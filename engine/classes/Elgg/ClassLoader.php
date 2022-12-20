@@ -228,7 +228,7 @@ class ClassLoader {
 				. DIRECTORY_SEPARATOR
 				. str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
 			foreach ($this->namespaces as $ns => $dirs) {
-				if (strpos($namespace, $ns) !== 0) {
+				if (!str_starts_with($namespace, $ns)) {
 					continue;
 				}
 
@@ -243,7 +243,7 @@ class ClassLoader {
 			// PEAR-like class name
 			$normalizedClass = str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
 			foreach ($this->prefixes as $prefix => $dirs) {
-				if (strpos($class, $prefix) !== 0) {
+				if (!str_starts_with($class, $prefix)) {
 					continue;
 				}
 

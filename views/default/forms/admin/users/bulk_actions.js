@@ -28,7 +28,7 @@ define(['jquery', 'elgg/spinner'], function ($, spinner) {
 	});
 	
 	$(document).on('change', '.elgg-form-admin-users-bulk-actions input[type="checkbox"]', function() {
-		$checkboxes = $('.elgg-form-admin-users-bulk-actions input[type="checkbox"]:checked');
+		var $checkboxes = $('.elgg-form-admin-users-bulk-actions input[type="checkbox"]:checked');
 		if ($checkboxes.length) {
 			// enable submit
 			enable_submit();

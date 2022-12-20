@@ -62,7 +62,7 @@ class LocaleService {
 	 * @return array
 	 */
 	public function getLocaleForLanguage(string $language) {
-		return isset($this->locale[$language]) ? $this->locale[$language] : [];
+		return $this->locale[$language] ?? [];
 	}
 	
 	/**

@@ -13,10 +13,10 @@ define(['jquery', 'elgg', 'sprintf'], function ($, elgg, sprintf) {
 		/**
 		 * Initializes a language.
 		 *
-		 * @param {String} lang The language key (defaults to the current language)
+		 * @param {String} language The language key (defaults to the current language)
 		 */
-		initLanguage: function(lang) {
-			language = lang || elgg.config.current_language;
+		initLanguage: function(language) {
+			language = language || elgg.config.current_language;
 
 			if (typeof translations_data[language] !== 'undefined') {
 				// only init a language once
@@ -34,7 +34,7 @@ define(['jquery', 'elgg', 'sprintf'], function ($, elgg, sprintf) {
 		},
 		
 		/**
-		 * Analagous to the php version. Merges translations for a
+		 * Analogous to the php version. Merges translations for a
 		 * given language into the current translations map.
 		 *
 		 * @param {String} lang         The language key
@@ -67,13 +67,12 @@ define(['jquery', 'elgg', 'sprintf'], function ($, elgg, sprintf) {
 			this.initLanguage(language);
 			
 			//echo('str', [...], 'en')
-			var dlang = elgg.config.current_language,
-				map;
+			var dlang = elgg.config.current_language;
 		
 			language = language || dlang;
 			argv = argv || [];
 		
-			map = translations_data[language] || translations_data[dlang];
+			var map = translations_data[language] || translations_data[dlang];
 			if (map && (typeof map[key] === 'string')) {
 				return sprintf.vsprintf(map[key], argv);
 			}

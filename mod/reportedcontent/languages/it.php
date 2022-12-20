@@ -21,8 +21,7 @@ return array(
 	'reportedcontent:success' => 'La segnalazione è stata inviata agli amministratori del sito',
 	'reportedcontent:numbertodisplay' => 'Numero di segnalazioni da visualizzare',
 	'reportedcontent:user' => 'Segnala utente',
-	'reportedcontent:archived' => 'Segnalazione archiviata',
-
+	
 	'reportedcontent:failed' => 'Spiacenti, il tentativo di segnalare questo contenuto non è andato a buon fine.',
 	'reportedcontent:notarchived' => 'Non è stato possibile archiviare la segnalazione',
 	

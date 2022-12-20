@@ -21,8 +21,7 @@ return array(
 	'reportedcontent:success' => 'Hlášení bylo odesláno správci stránek',
 	'reportedcontent:numbertodisplay' => 'Počet zobrazených hlášení',
 	'reportedcontent:user' => 'Nahlásit uživatele',
-	'reportedcontent:archived' => 'Hlášení bylo archivováno',
-
+	
 	'reportedcontent:failed' => 'Pokus o nahlášení tohoto obsahu bohužel selhal.',
 	'reportedcontent:notarchived' => 'Nemůžeme archivovat toto hlášení',
 	

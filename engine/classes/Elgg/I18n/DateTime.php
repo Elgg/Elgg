@@ -2,7 +2,7 @@
 
 namespace Elgg\I18n;
 
-use \DateTime as PHPDateTime;
+use DateTime as PHPDateTime;
 
 /**
  * Extension of the DateTime class to support formating a date using the locale

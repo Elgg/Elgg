@@ -122,8 +122,7 @@ class Cli {
 		}
 
 		$command = new $command();
-		/* @var $command BaseCommand */
-
+		
 		$command->setLogger($this->getLogger());
 		
 		if (!is_subclass_of($command, Command::class)) {

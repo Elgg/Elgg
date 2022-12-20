@@ -21,8 +21,7 @@ return array(
 	'reportedcontent:success' => 'Η αναφορά σας στάλθηκε στο διαχειριστή του ιστότοπου',
 	'reportedcontent:numbertodisplay' => 'Αριθμός αναφορών για εμφάνιση',
 	'reportedcontent:user' => 'Αναφορά χρήστη',
-	'reportedcontent:archived' => 'Η αναφορά μπήκε στο αρχείο',
-
+	
 	'reportedcontent:failed' => 'Λυπούμαστε, η προσπάθεια αναφοράς αυτού του περιεχομένου απέτυχε',
 	'reportedcontent:notarchived' => 'Δεν ήταν δυνατή η αρχειοθέτηση αυτής της αναφοράς',
 	

@@ -8,7 +8,7 @@ define(['jquery', 'elgg/lightbox'], function($, lightbox) {
 	
 	$(document).on('click', '#elgg-lightbox-test-resize', function(event) {
 		event.preventDefault();
-		$body = $('#elgg-lightbox-test').find('.elgg-body');
+		var $body = $('#elgg-lightbox-test').find('.elgg-body');
 		$body.append($body.html());
 		
 		lightbox.resize();

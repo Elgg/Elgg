@@ -122,7 +122,7 @@ if ($text !== false && $text !== '') {
 $icon = elgg_extract('icon', $vars, '');
 unset($vars['icon']);
 
-if ($icon && !preg_match('/^</', $icon)) {
+if ($icon && !str_starts_with($icon, '<')) {
 	$icon = elgg_view_icon($icon, [
 		'class' => 'elgg-anchor-icon',
 	]);
@@ -131,7 +131,7 @@ if ($icon && !preg_match('/^</', $icon)) {
 $icon_alt = elgg_extract('icon_alt', $vars, '');
 unset($vars['icon_alt']);
 
-if ($icon_alt && !preg_match('/^</', $icon_alt)) {
+if ($icon_alt && !str_starts_with($icon_alt, '<')) {
 	$icon_alt = elgg_view_icon($icon_alt, [
 		'class' => 'elgg-anchor-icon-alt',
 	]);

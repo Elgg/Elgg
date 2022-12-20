@@ -545,7 +545,7 @@ class AccessCollections {
 
 		// @todo https://github.com/Elgg/Elgg/issues/10823
 		$result = $this->events->triggerResults('access:collections:add_user', 'collection', $event_params, true);
-		if ($result == false) {
+		if ($result === false) {
 			return false;
 		}
 

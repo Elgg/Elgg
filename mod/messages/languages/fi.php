@@ -18,7 +18,6 @@ return array(
 	'messages:message' => "Viesti",
 	'messages:title' => "Aihe",
 	'messages:to:help' => "Kirjoita vastaanottajan nimi.",
-	'messages:inbox' => "Saapuneet",
 	'messages:sendmessage' => "Lähetä viesti",
 	'messages:add' => "Kirjoita uusi viesti",
 	'messages:sentmessages' => "Lähetetyt",

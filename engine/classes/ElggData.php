@@ -225,15 +225,15 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @see \ArrayAccess::offsetSet()
 	 *
-	 * @param mixed $key   Name
+	 * @param mixed $offset   Name
 	 * @param mixed $value Value
 	 *
 	 * @return void
 	 */
 	#[\ReturnTypeWillChange]
-	public function offsetSet($key, $value) {
-		if (array_key_exists($key, $this->attributes)) {
-			$this->attributes[$key] = $value;
+	public function offsetSet($offset, $value) {
+		if (array_key_exists($offset, $this->attributes)) {
+			$this->attributes[$offset] = $value;
 		}
 	}
 
@@ -242,14 +242,14 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @see \ArrayAccess::offsetGet()
 	 *
-	 * @param mixed $key Name
+	 * @param mixed $offset Name
 	 *
 	 * @return mixed
 	 */
 	#[\ReturnTypeWillChange]
-	public function offsetGet($key) {
-		if (array_key_exists($key, $this->attributes)) {
-			return $this->$key;
+	public function offsetGet($offset) {
+		if (array_key_exists($offset, $this->attributes)) {
+			return $this->$offset;
 		}
 
 		return null;
@@ -265,10 +265,10 @@ abstract class ElggData implements CollectionItemInterface,
 	 * @return void
 	 */
 	#[\ReturnTypeWillChange]
-	public function offsetUnset($key) {
-		if (array_key_exists($key, $this->attributes)) {
+	public function offsetUnset($offset) {
+		if (array_key_exists($offset, $this->attributes)) {
 			// Full unsetting is dangerous for our objects
-			unset($this->$key);
+			unset($this->$offset);
 		}
 	}
 

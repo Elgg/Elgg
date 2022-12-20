@@ -21,8 +21,7 @@ return array(
 	'reportedcontent:success' => 'Enviouse a denuncia ao administrador do sitio.',
 	'reportedcontent:numbertodisplay' => 'Número de denuncias para mostrar',
 	'reportedcontent:user' => 'Denunciar o usuario',
-	'reportedcontent:archived' => 'Arquivouse a denuncia.',
-
+	
 	'reportedcontent:failed' => 'Non foi posíbel denunciar este contido.',
 	'reportedcontent:notarchived' => 'Non foi posíbel arquivar a denuncia.',
 	

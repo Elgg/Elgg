@@ -251,14 +251,12 @@ class SystemLog {
 
 		$dbprefix = $this->db->prefix;
 
-		$deleted_tables = false;
-
 		$results = $this->db->getConnection('read')->executeQuery("SHOW TABLES like '{$dbprefix}system_log_%'");
-		
 		if (empty($results) || empty($results->rowCount())) {
-			return $deleted_tables;
+			return false;
 		}
-
+		
+		$deleted_tables = false;
 		foreach ($results->fetchAllAssociative() as $result) {
 			$table_name = array_shift($result);
 

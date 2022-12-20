@@ -43,7 +43,7 @@ class Page {
 				]),
 			]);
 		} else {
-			// show link to mebership requests
+			// show link to membership requests
 			$count = elgg_count_entities([
 				'type' => 'user',
 				'relationship' => 'membership_request',
@@ -60,7 +60,7 @@ class Page {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'membership_requests',
 				'text' => $text,
-				'badge' => $count ? $count : null,
+				'badge' => $count ?: null,
 				'title' => $title,
 				'href' => elgg_generate_entity_url($page_owner, 'requests'),
 			]);

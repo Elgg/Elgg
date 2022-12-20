@@ -24,8 +24,7 @@ return array(
 	'reportedcontent:numbertodisplay' => 'Nombre de signalements à afficher',
 	'reportedcontent:user' => 'Signaler cet utilisateur',
 	'reportedcontent:new' => 'Nouveaux signalements',
-	'reportedcontent:archived' => 'Le signalement a bien été archivé',
-
+	
 	'reportedcontent:failed' => 'Désolé, la tentative de signaler ce contenu a échoué.',
 	'reportedcontent:notarchived' => 'Il a été impossible d\'archiver ce signalement',
 	

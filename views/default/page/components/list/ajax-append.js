@@ -24,7 +24,7 @@ define(['jquery', 'elgg/Ajax', 'elgg/system_messages'], function ($, Ajax, syste
 			success: function(result) {
 				var id_selector = '#' + $target.attr('id');
 
-				$new_html = $(result).find(id_selector).addBack(id_selector);
+				var $new_html = $(result).find(id_selector).addBack(id_selector);
 				if ($new_html.length) {
 					var list_items = $new_html.find('> .elgg-list').html();
 					var $target_list = $target.find('> .elgg-list');

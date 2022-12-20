@@ -302,13 +302,13 @@ class Collection implements CollectionInterface,
 	 * {@inheritdoc}
 	 */
 	#[\ReturnTypeWillChange]
-	public function seek($position) {
+	public function seek($offset) {
 		$keys = array_keys($this->items);
 
-		if (!isset($keys[$position])) {
+		if (!isset($keys[$offset])) {
 			throw new OutOfBoundsException();
 		}
 
-		$this->position = $position;
+		$this->position = $offset;
 	}
 }

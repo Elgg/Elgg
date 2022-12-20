@@ -195,13 +195,12 @@ class Service {
 	/**
 	 * Build a JsonResponse based on an API response object
 	 *
-	 * @param AjaxResponse $api_response           The API Response
-	 * @param bool         $allow_removing_headers Alter PHP's global headers to allow caching
+	 * @param AjaxResponse $api_response The API Response
 	 *
 	 * @return JsonResponse
 	 * @throws RuntimeException
 	 */
-	private function buildHttpResponse(AjaxResponse $api_response, bool $allow_removing_headers = false): JsonResponse {
+	private function buildHttpResponse(AjaxResponse $api_response): JsonResponse {
 		if ($api_response->isCancelled()) {
 			return new JsonResponse(['error' => 'The response was cancelled'], 400);
 		}
@@ -210,13 +209,6 @@ class Service {
 
 		$ttl = $api_response->getTtl();
 		if ($ttl > 0) {
-			// Required to remove headers set by PHP session
-			if ($allow_removing_headers) {
-				header_remove('Expires');
-				header_remove('Pragma');
-				header_remove('Cache-Control');
-			}
-
 			// JsonRequest sets a default Cache-Control header we don't want
 			$response->headers->remove('Cache-Control');
 

@@ -21,8 +21,7 @@ return array(
 	'reportedcontent:success' => 'Zgłoszenie zostało wysłane do administratora strony',
 	'reportedcontent:numbertodisplay' => 'Ilość wyświetlanych zgłoszeń',
 	'reportedcontent:user' => 'Zgłoś użytkownika',
-	'reportedcontent:archived' => 'Zgłoszenie zostało zarchiwizowane',
-
+	
 	'reportedcontent:failed' => 'Przykro nam, próba zgłoszenia tej treści zakończyła się niepowodzeniem.',
 	'reportedcontent:notarchived' => 'Nie powiodła się archiwizacja tego zgłoszenia',
 	

@@ -28,12 +28,8 @@ class SendEmailHandler {
 		}
 	
 		$sender = $message->getSender();
-		if (!$sender) {
-			return false;
-		}
-	
 		$recipient = $message->getRecipient();
-		if (!$recipient || !$recipient->email) {
+		if (!$recipient->email) {
 			return false;
 		}
 	

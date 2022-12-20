@@ -122,7 +122,6 @@ class Search {
 
 		// $search_type == all || entities || trigger plugin hook
 		$search_type = get_input('search_type', 'all');
-		$partial_match = true;
 		$fields = get_input('fields');
 		
 		$query = get_input('q', get_input('tag', ''));
@@ -206,7 +205,7 @@ class Search {
 			'sort_by' => $sort_by,
 			'search_type' => $search_type,
 			'fields' => $fields,
-			'partial_match' => $partial_match,
+			'partial_match' => true,
 			'tokenize' => $tokenize,
 			'type' => $entity_type,
 			'subtype' => $entity_subtype,

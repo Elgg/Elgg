@@ -16,7 +16,6 @@ return array(
 	'messages:sent' => "Sendte beskeder",
 	'messages:message' => "Besked",
 	'messages:title' => "Emne",
-	'messages:inbox' => "Indbakke",
 	'messages:sendmessage' => "Send en besked",
 	'messages:add' => "Opret en besked",
 	'messages:sentmessages' => "Sendte beskeder",

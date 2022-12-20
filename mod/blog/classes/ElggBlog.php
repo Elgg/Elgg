@@ -21,9 +21,8 @@ class ElggBlog extends ElggObject {
 	 * {@inheritDoc}
 	 */
 	public function canComment(int $user_guid = 0): bool {
-		$result = parent::canComment($user_guid);
-		if (!$result) {
-			return $result;
+		if (!parent::canComment($user_guid)) {
+			return false;
 		}
 
 		if ($this->comments_on === 'Off' || $this->status !== 'published') {

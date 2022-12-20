@@ -22,8 +22,7 @@ return array(
 	'reportedcontent:success' => 'あなたの報告をサイト管理者に送信しました。',
 	'reportedcontent:numbertodisplay' => '報告の表示数',
 	'reportedcontent:user' => '不適切なユーザを報告',
-	'reportedcontent:archived' => '報告を書庫に保存しました',
-
+	
 	'reportedcontent:failed' => '申し訳ありません、このコンテントを報告しようとしましたが、失敗しました。もう一度お試しください。',
 	'reportedcontent:notarchived' => 'この報告を書庫に保存することができませんでした。',
 	

@@ -12,6 +12,8 @@ class UnbanUserEventHandler extends NotificationEventHandler {
 	/**
 	 * Tells if the recipient is the user being unbanned
 	 *
+	 * @param \ElggUser $recipient the recipient to check
+	 *
 	 * @return bool
 	 */
 	protected function recipientIsBannedUser(\ElggUser $recipient): bool {

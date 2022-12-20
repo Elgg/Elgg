@@ -28,8 +28,6 @@ pre, code {
 	color: #000;
 	overflow: auto;
 
-	overflow-x: auto; /* Use horizontal scroller if needed; for Firefox 2, not needed in Firefox 3 */
-
 	white-space: pre-wrap;
 	word-wrap: break-word; /* IE 5.5-7 */
 

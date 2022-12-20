@@ -107,13 +107,12 @@ class AutoParagraph {
 		// http://www.php.net/manual/en/domdocument.loadhtml.php#95463
 		$use_internal_errors = libxml_use_internal_errors(true);
 
-		$test_html = "<html><meta http-equiv='content-type' content='text/html; charset={$this->encoding}'><body>{$html}</body></html>";
-		if (!$this->_doc->loadHTML($test_html, LIBXML_NOBLANKS)) {
-			libxml_use_internal_errors($use_internal_errors);
+		$load_result = $this->_doc->loadHTML("<html><meta http-equiv='content-type' content='text/html; charset={$this->encoding}'><body>{$html}</body></html>", LIBXML_NOBLANKS);
+		// restore warnings
+		libxml_use_internal_errors($use_internal_errors);
+		if (!$load_result) {
 			return false;
 		}
-
-		libxml_use_internal_errors($use_internal_errors);
 
 		$this->_xpath = new \DOMXPath($this->_doc);
 
@@ -151,12 +150,12 @@ class AutoParagraph {
 		// http://www.php.net/manual/en/domdocument.loadhtml.php#95463
 		$use_internal_errors = libxml_use_internal_errors(true);
 
-		if (!$this->_doc->loadHTML($html)) {
-			libxml_use_internal_errors($use_internal_errors);
+		$load_result = $this->_doc->loadHTML($html);
+		// restore warnings
+		libxml_use_internal_errors($use_internal_errors);
+		if (!$load_result) {
 			return false;
 		}
-
-		libxml_use_internal_errors($use_internal_errors);
 
 		// must re-create XPath object after DOM load
 		$this->_xpath = new \DOMXPath($this->_doc);
@@ -208,8 +207,7 @@ class AutoParagraph {
 		$html = str_replace('</autop>', "</p>\n", $html);
 		
 		$html = str_replace('<br>', '<br />', $html);
-		$html = str_replace($this->_unique . 'AMP', '&', $html);
-		return $html;
+		return str_replace($this->_unique . 'AMP', '&', $html);
 	}
 
 	/**
@@ -344,8 +342,6 @@ class AutoParagraph {
 							$inlinesToProcess[] = $node;
 						}
 					}
-					
-					continue;
 				} elseif ($node->nodeType === XML_TEXT_NODE) {
 					$text = $node->nodeValue;
 					if ($text[0] === "\n" && $ignoreLeadingNewline) {

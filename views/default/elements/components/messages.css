@@ -58,7 +58,7 @@
 		}
 		
 		> div:last-child {
-			border-bottom: 0px;
+			border-bottom: 0;
 		}
 		
 		> .elgg-body {

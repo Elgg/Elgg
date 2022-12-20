@@ -1,6 +1,6 @@
 <?php
 
-use \Michelf\MarkdownExtra;
+use Michelf\MarkdownExtra;
 
 elgg_set_context('admin');
 

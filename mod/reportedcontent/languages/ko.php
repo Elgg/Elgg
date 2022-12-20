@@ -21,8 +21,7 @@ return array(
 	'reportedcontent:success' => '관리자에게 신고가 보내졌습니다.',
 	'reportedcontent:numbertodisplay' => '표시할 신고의 개수',
 	'reportedcontent:user' => '사용자 신고',
-	'reportedcontent:archived' => '신고가 저장되었습니다',
-
+	
 	'reportedcontent:failed' => '죄송합니다. 이 내용을 신고하는데 실패하였습니다.',
 	'reportedcontent:notarchived' => '이 신고를 저장할 수 없었습니다',
 	

@@ -21,8 +21,7 @@ return array(
 	'reportedcontent:success' => 'Tu reporte ha sido enviado',
 	'reportedcontent:numbertodisplay' => 'N&uacute;mero de reportes a mostrar',
 	'reportedcontent:user' => 'Reportar usuario',
-	'reportedcontent:archived' => 'El reporta ha sido archivado',
-
+	
 	'reportedcontent:failed' => 'No se pudo enviar el reporte.',
 	'reportedcontent:notarchived' => 'No se pudo archivar el reporte',
 	

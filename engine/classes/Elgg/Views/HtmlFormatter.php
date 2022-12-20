@@ -177,7 +177,7 @@ class HtmlFormatter {
 		$attributes = [];
 
 		foreach ($attrs as $attr => $val) {
-			if (strpos($attr, 'data-') !== 0 && strpos($attr, '_') !== false) {
+			if (!str_starts_with($attr, 'data-') && str_contains($attr, '_')) {
 				// this is probably a view $vars variable not meant for output
 				continue;
 			}
@@ -254,19 +254,15 @@ class HtmlFormatter {
 		if ($tag_name === '') {
 			throw new InvalidArgumentException('$tag_name is required');
 		}
-
-		if (isset($options['is_void'])) {
-			$is_void = $options['is_void'];
-		} else {
-			// from http://www.w3.org/TR/html-markup/syntax.html#syntax-elements
-			$is_void = in_array(strtolower($tag_name), [
-				'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'menuitem',
-				'meta', 'param', 'source', 'track', 'wbr'
-			]);
-		}
+		
+		// from http://www.w3.org/TR/html-markup/syntax.html#syntax-elements
+		$is_void = $options['is_void'] ?? in_array(strtolower($tag_name), [
+			'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'menuitem',
+			'meta', 'param', 'source', 'track', 'wbr'
+		]);
 
 		if (!empty($options['encode_text']) && is_string($text)) {
-			$double_encode = empty($options['double_encode']) ? false : true;
+			$double_encode = !empty($options['double_encode']);
 			$text = htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', $double_encode);
 		}
 
@@ -339,12 +335,11 @@ class HtmlFormatter {
 			$string
 		);
 		$string = html_entity_decode($string, ENT_NOQUOTES, 'UTF-8');
-		$string = str_replace(
+		return str_replace(
 			['&amp;gt;', '&amp;lt;', '&amp;amp;', '&amp;quot;', '&amp;#039;'],
 			['&gt;', '&lt;', '&amp;', '&quot;', '&#039;'],
 			$string
 		);
-		return $string;
 	}
 	
 	/**

@@ -41,7 +41,7 @@ class MethodMatcher {
 		// We don't use the callable type-hint because it unnecessarily autoloads for static methods.
 
 		if (is_string($subject)) {
-			if (strpos($subject, '::') === false) {
+			if (!str_contains($subject, '::')) {
 				return false;
 			}
 

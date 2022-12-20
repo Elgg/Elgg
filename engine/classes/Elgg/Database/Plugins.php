@@ -217,7 +217,7 @@ class Plugins {
 		$plugin_dirs = [];
 		while (($plugin_dir = readdir($handle)) !== false) {
 			// must be directory and not begin with a .
-			if (substr($plugin_dir, 0, 1) !== '.' && is_dir($dir . $plugin_dir)) {
+			if (!str_starts_with($plugin_dir, '.') && is_dir($dir . $plugin_dir)) {
 				$plugin_dirs[] = $plugin_dir;
 			}
 		}
@@ -520,7 +520,6 @@ class Plugins {
 
 		$this->beginTimer([__METHOD__]);
 
-		/* @var $plugin \ElggPlugin */
 		foreach ($plugins as $plugin) {
 			try {
 				$plugin->register();

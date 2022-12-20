@@ -12,7 +12,7 @@ $input_filtered_views = (array) elgg_extract('input_filtered_views', $data);
 
 $root = elgg_get_root_path();
 $strip = function ($file) use ($root) {
-	return (strpos($file, $root) === 0) ? substr($file, strlen($root)) : $file;
+	return str_starts_with($file, $root) ? substr($file, strlen($root)) : $file;
 };
 
 $make_id = function ($view) {
@@ -89,7 +89,7 @@ foreach ($views as $view => $components) {
 			$last_view = $view;
 		}
 
-		if (strpos($priority, 'o:') === 0) {
+		if (str_starts_with($priority, 'o:')) {
 			echo elgg_format_element('td', ['style' => 'opacity: 0.6;'], 'over');
 			echo elgg_format_element('td', ['style' => 'opacity: 0.6;'], elgg_format_element('del', [], $file));
 		} elseif ($priority != 500) {

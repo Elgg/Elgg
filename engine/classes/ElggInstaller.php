@@ -775,7 +775,7 @@ class ElggInstaller {
 				}
 			}
 			
-			if ($this->has_completed['database'] == false) {
+			if ($this->has_completed['database'] === false) {
 				return;
 			}
 
@@ -804,8 +804,6 @@ class ElggInstaller {
 		} catch (DatabaseException $ex) {
 			throw new InstallationException('Elgg can not connect to the database: ' . $ex->getMessage(), $ex->getCode(), $ex);
 		}
-
-		return;
 	}
 
 	/**
@@ -841,15 +839,15 @@ class ElggInstaller {
 			return null;
 		}
 
-		if ($this->has_completed['database'] == false) {
+		if ($this->has_completed['database'] === false) {
 			return null;
 		}
 
-		if ($this->has_completed['settings'] == false) {
+		if ($this->has_completed['settings'] === false) {
 			return new \Elgg\Http\RedirectResponse('install.php?step=settings');
 		}
 
-		if ($this->has_completed['admin'] == false) {
+		if ($this->has_completed['admin'] === false) {
 			return new \Elgg\Http\RedirectResponse('install.php?step=admin');
 		}
 
@@ -1143,7 +1141,7 @@ class ElggInstaller {
 		$app = $this->getApp();
 
 		foreach ($formVars as $field => $info) {
-			if ($info['required'] == true && !$submissionVars[$field]) {
+			if ($info['required'] === true && !$submissionVars[$field]) {
 				$name = elgg_echo("install:database:label:{$field}");
 				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:requiredfield', [$name]));
 
@@ -1167,7 +1165,7 @@ class ElggInstaller {
 				return false;
 			}
 		} else {
-			if (strpos($submissionVars['dataroot'], '/') !== 0) {
+			if (!str_starts_with($submissionVars['dataroot'], '/')) {
 				$save_value = $this->sanitizeInputValue($submissionVars['dataroot']);
 				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:relative_path', [$save_value]));
 
@@ -1246,7 +1244,7 @@ class ElggInstaller {
 		try {
 			$db->getConnection('read')->executeQuery('SELECT 1');
 		} catch (DatabaseException $e) {
-			if (strpos($e->getMessage(), "Elgg couldn't connect") === 0) {
+			if (str_starts_with($e->getMessage(), "Elgg couldn't connect")) {
 				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:databasesettings'));
 			} else {
 				$save_value = $this->sanitizeInputValue($dbname);
@@ -1407,7 +1405,7 @@ class ElggInstaller {
 
 		foreach ($formVars as $field => $info) {
 			$submissionVars[$field] = trim($submissionVars[$field]);
-			if ($info['required'] == true && $submissionVars[$field] === '') {
+			if ($info['required'] === true && $submissionVars[$field] === '') {
 				$name = elgg_echo("install:settings:label:{$field}");
 				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:requiredfield', [$name]));
 
@@ -1520,7 +1518,7 @@ class ElggInstaller {
 		$app = $this->getApp();
 
 		foreach ($formVars as $field => $info) {
-			if ($info['required'] == true && !$submissionVars[$field]) {
+			if ($info['required'] === true && !$submissionVars[$field]) {
 				$name = elgg_echo("install:admin:label:{$field}");
 				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:requiredfield', [$name]));
 

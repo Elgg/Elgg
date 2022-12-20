@@ -35,7 +35,7 @@ class AddFileHelpTextHandler {
 		$upload_max_filesize = elgg_get_ini_setting_in_bytes('upload_max_filesize');
 	
 		// Determine the correct value
-		$max_upload = $upload_max_filesize > $post_max_size ? $post_max_size : $upload_max_filesize;
+		$max_upload = min($upload_max_filesize, $post_max_size);
 	
 		$help .= ' ' . elgg_echo('input:file:upload_limit', [elgg_format_bytes($max_upload)]);
 	

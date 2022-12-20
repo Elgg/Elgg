@@ -66,7 +66,7 @@ trait Loggable {
 
 		// PSR interface is void, but Monolog returns a boolean
 		$logged = $this->getLogger()->log($level, $message, $context);
-		return isset($logged) ? $logged : true;
+		return $logged ?? true;
 	}
 	
 	/**

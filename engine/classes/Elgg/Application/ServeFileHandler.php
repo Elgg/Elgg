@@ -92,7 +92,7 @@ class ServeFileHandler {
 		}
 
 		// Path may have been encoded to avoid problems with special chars in URLs
-		if (strpos($path_from_dataroot, ':') === 0) {
+		if (str_starts_with($path_from_dataroot, ':')) {
 			$path_from_dataroot = Base64Url::decode(substr($path_from_dataroot, 1));
 		}
 
@@ -119,7 +119,7 @@ class ServeFileHandler {
 			return $response;
 		}
 
-		$public = $use_cookie ? false : true;
+		$public = !(bool) $use_cookie;
 		$content_disposition = $disposition == 'i' ? 'inline' : 'attachment';
 
 		$headers = [

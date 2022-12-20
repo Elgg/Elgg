@@ -254,7 +254,7 @@ class ResponseFactory {
 		
 		$is_xhr = $this->request->isXmlHttpRequest();
 
-		$is_action = strpos($response_type, 'action:') === 0;
+		$is_action = str_starts_with($response_type, 'action:');
 
 		if ($is_action && $response->getForwardURL() === null) {
 			// actions must always set a redirect url
@@ -537,7 +537,7 @@ class ResponseFactory {
 	 * @return bool
 	 */
 	public function isAction(): bool {
-		return strpos($this->parseContext(), 'action:') === 0;
+		return str_starts_with($this->parseContext(), 'action:');
 	}
 
 	/**

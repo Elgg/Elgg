@@ -236,7 +236,7 @@ class RouteRegistrationService {
 		$props = array_merge(array_keys($requirements), array_keys($defaults));
 
 		foreach ($props as $prop) {
-			if (substr($prop, 0, 1) === '_') {
+			if (str_starts_with($prop, '_')) {
 				continue;
 			}
 

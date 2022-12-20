@@ -60,11 +60,7 @@ if (!elgg_is_empty($excerpt)) {
 
 if (elgg_strlen($url) > 25) {
 	$bits = parse_url($url);
-	if (isset($bits['host'])) {
-		$display_text = $bits['host'];
-	} else {
-		$display_text = elgg_get_excerpt($url, 100);
-	}
+	$display_text = $bits['host'] ?? elgg_get_excerpt($url, 100);
 }
 
 $link = elgg_view('output/url', [

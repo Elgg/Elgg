@@ -43,7 +43,7 @@ class Menu {
 	 * @return MenuSection|null
 	 */
 	public function getSection($name, $default = null) {
-		return isset($this->params['menu'][$name]) ? $this->params['menu'][$name] : $default;
+		return $this->params['menu'][$name] ?? $default;
 	}
 
 	/**

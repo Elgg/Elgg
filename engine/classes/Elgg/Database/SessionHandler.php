@@ -34,7 +34,7 @@ class SessionHandler implements \SessionHandlerInterface {
 	 * {@inheritDoc}
 	 */
 	#[\ReturnTypeWillChange]
-	public function open($save_path, $name) {
+	public function open($path, $name) {
 		return true;
 	}
 
@@ -42,10 +42,10 @@ class SessionHandler implements \SessionHandlerInterface {
 	 * {@inheritDoc}
 	 */
 	#[\ReturnTypeWillChange]
-	public function read($session_id) {
+	public function read($id) {
 		$select = Select::fromTable(self::TABLE_NAME);
 		$select->select('*')
-			->where($select->compare('session', '=', $session_id, ELGG_VALUE_STRING));
+			->where($select->compare('session', '=', $id, ELGG_VALUE_STRING));
 		
 		$result = $this->db->getDataRow($select);
 		
@@ -56,28 +56,31 @@ class SessionHandler implements \SessionHandlerInterface {
 	 * {@inheritDoc}
 	 */
 	#[\ReturnTypeWillChange]
-	public function write($session_id, $session_data) {
+	public function write($id, $data) {
 		if (elgg_get_config('_disable_session_save')) {
 			return true;
 		}
 		
-		if ($this->read($session_id)) {
+		if ($this->read($id)) {
 			$update = Update::table(self::TABLE_NAME);
-			$update->set('data', $update->param($session_data, ELGG_VALUE_STRING))
+			$update->set('data', $update->param($data, ELGG_VALUE_STRING))
 				->set('ts', $update->param($this->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP))
-				->where($update->compare('session', '=', $session_id, ELGG_VALUE_STRING));
+				->where($update->compare('session', '=', $id, ELGG_VALUE_STRING));
 			
 			return $this->db->updateData($update);
 		}
 		
 		$insert = Insert::intoTable(self::TABLE_NAME);
 		$insert->values([
-			'session' => $insert->param($session_id, ELGG_VALUE_STRING),
-			'data' => $insert->param($session_data, ELGG_VALUE_STRING),
+			'session' => $insert->param($id, ELGG_VALUE_STRING),
+			'data' => $insert->param($data, ELGG_VALUE_STRING),
 			'ts' => $insert->param($this->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP),
 		]);
 		
-		return $this->db->insertData($insert) !== false;
+		// not returning the result of the database call as the session table doesn't support an autoincrement column
+		// so the result of this call will always be 0
+		$this->db->insertData($insert);
+		return true;
 	}
 
 	/**
@@ -92,9 +95,9 @@ class SessionHandler implements \SessionHandlerInterface {
 	 * {@inheritDoc}
 	 */
 	#[\ReturnTypeWillChange]
-	public function destroy($session_id) {
+	public function destroy($id) {
 		$delete = Delete::fromTable(self::TABLE_NAME);
-		$delete->where($delete->compare('session', '=', $session_id, ELGG_VALUE_STRING));
+		$delete->where($delete->compare('session', '=', $id, ELGG_VALUE_STRING));
 		
 		$this->db->deleteData($delete);
 		

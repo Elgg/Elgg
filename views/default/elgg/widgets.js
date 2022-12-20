@@ -11,11 +11,11 @@ define(['jquery', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function ($, Ajax)
 	function moveWidget(event, ui) {
 		// elgg-widget-<guid>
 		var guidString = ui.item.attr('id');
-		guidString = guidString.substr(guidString.indexOf('elgg-widget-') + "elgg-widget-".length);
+		guidString = guidString.substring(guidString.indexOf('elgg-widget-') + "elgg-widget-".length);
 
 		// elgg-widget-col-<column>
 		var col = ui.item.parent().attr('id');
-		col = col.substr(col.indexOf('elgg-widget-col-') + "elgg-widget-col-".length);
+		col = col.substring(col.indexOf('elgg-widget-col-') + "elgg-widget-col-".length);
 		
 		var ajax = new Ajax(false);
 		ajax.action('widgets/move', {

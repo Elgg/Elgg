@@ -30,11 +30,9 @@ class Seeder extends Seed {
 				'excerpt' => $this->faker()->sentence(),
 			];
 
+			/* @var $discussion \ElggDiscussion */
 			$discussion = $this->createObject($properties);
-			if (!$discussion) {
-				continue;
-			}
-
+			
 			$this->createComments($discussion);
 			$this->createLikes($discussion);
 

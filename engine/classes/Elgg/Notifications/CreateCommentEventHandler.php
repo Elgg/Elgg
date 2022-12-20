@@ -8,9 +8,11 @@ namespace Elgg\Notifications;
  * @since 4.0
  */
 class CreateCommentEventHandler extends NotificationEventHandler {
-
+	
 	/**
 	 * Tells if the recipient is the owner of the entity commented on
+	 *
+	 * @param \ElggUser $recipient the recipient to check
 	 *
 	 * @return bool
 	 */

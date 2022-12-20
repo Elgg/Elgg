@@ -145,53 +145,53 @@ class LRUCache implements \ArrayAccess {
 	/**
 	 * Assigns a value for the specified key
 	 *
-	 * @param int|string $key   The key to assign the value to.
-	 * @param mixed      $value The value to set.
+	 * @param int|string $offset The key to assign the value to.
+	 * @param mixed      $value  The value to set.
 	 *
 	 * @return void
 	 * @see \ArrayAccess::offsetSet()
 	 */
 	#[\ReturnTypeWillChange]
-	public function offsetSet($key, $value) {
-		$this->set($key, $value);
+	public function offsetSet($offset, $value) {
+		$this->set($offset, $value);
 	}
 
 	/**
 	 * Get the value for specified key
 	 *
-	 * @param int|string $key The key to retrieve.
+	 * @param int|string $offset The key to retrieve.
 	 *
 	 * @return mixed
 	 * @see \ArrayAccess::offsetGet()
 	 */
 	#[\ReturnTypeWillChange]
-	public function offsetGet($key) {
-		return $this->get($key);
+	public function offsetGet($offset) {
+		return $this->get($offset);
 	}
 
 	/**
 	 * Unsets a key.
 	 *
-	 * @param int|string $key The key to unset.
+	 * @param int|string $offset The key to unset.
 	 *
 	 * @return void
 	 * @see \ArrayAccess::offsetUnset()
 	 */
 	#[\ReturnTypeWillChange]
-	public function offsetUnset($key) {
-		$this->remove($key);
+	public function offsetUnset($offset) {
+		$this->remove($offset);
 	}
 
 	/**
 	 * Does key exist?
 	 *
-	 * @param int|string $key A key to check for.
+	 * @param int|string $offset A key to check for.
 	 *
 	 * @return boolean
 	 * @see \ArrayAccess::offsetExists()
 	 */
 	#[\ReturnTypeWillChange]
-	public function offsetExists($key) {
-		return $this->containsKey($key);
+	public function offsetExists($offset) {
+		return $this->containsKey($offset);
 	}
 }

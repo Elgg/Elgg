@@ -33,7 +33,7 @@
 	}
 
 	.elgg-subscription-details {
-		margin-bottom: 0rem;
+		margin-bottom: 0;
 		
 		&:hover {
 			background: $(background-color-mild);

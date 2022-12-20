@@ -123,21 +123,21 @@ class Address extends ZendAddress {
 	 *
 	 * This is not very sophisticated and only used to provide a light BC effort.
 	 *
-	 * @param string $contact e.g. "Evan <evan@elgg.org>"
-	 * @param string $ignored Ignored (required for Laminas\Mail\Address)
+	 * @param string $address e.g. "Evan <evan@elgg.org>"
+	 * @param string $comment Ignored (required for Laminas\Mail\Address)
 	 *
 	 * @return \Elgg\Email\Address
 	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 * @since 3.0
 	 */
-	public static function fromString($contact, $ignored = null): Address {
-		$containsName = preg_match('/<(.*)>/', $contact, $matches) == 1;
+	public static function fromString($address, $comment = null): Address {
+		$containsName = preg_match('/<(.*)>/', $address, $matches) == 1;
 		if ($containsName) {
-			$name = trim(elgg_substr($contact, 0, elgg_strpos($contact, '<')));
+			$name = trim(elgg_substr($address, 0, elgg_strpos($address, '<')));
 			return new static($matches[1], $name);
-		} else {
-			return new static(trim($contact));
 		}
+		
+		return new static(trim($address));
 	}
 	
 	/**

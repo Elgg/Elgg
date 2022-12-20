@@ -22,8 +22,7 @@ return array(
 	'reportedcontent:success' => 'Raportul tău a fost trimis către adminul site-ului',
 	'reportedcontent:numbertodisplay' => 'Numărul de rapoarte de afișat',
 	'reportedcontent:user' => 'Raportează utilizatorul',
-	'reportedcontent:archived' => 'Raportul a fost arhivat',
-
+	
 	'reportedcontent:failed' => 'Scuze, încercarea de a raporta acest conținut a eșuat.',
 	'reportedcontent:notarchived' => 'Nu am putut arhiva acel raport',
 	

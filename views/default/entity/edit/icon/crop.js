@@ -19,7 +19,7 @@ define(['jquery', 'jquery-cropper/jquery-cropper'], function($) {
 			
 			$field.on('change', this.replaceImg);
 			
-			$remove = $fieldWrapper.siblings('.elgg-entity-edit-icon-remove').find('input[type="checkbox"]');
+			var $remove = $fieldWrapper.siblings('.elgg-entity-edit-icon-remove').find('input[type="checkbox"]');
 			$remove.on('change', this.checkRemoveState);
 			
 			if ($img[0].hasAttribute('src')) {

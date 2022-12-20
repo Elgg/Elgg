@@ -193,9 +193,7 @@ class ReleaseCleaner {
 	 */
 	protected function normalizeLanguageCode(string $code): string {
 		$code = strtolower($code);
-		$code = preg_replace('~[^a-z0-9]~', '_', $code);
-		
-		return $code;
+		return preg_replace('~[^a-z0-9]~', '_', $code);
 	}
 	
 	/**

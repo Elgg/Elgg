@@ -199,16 +199,16 @@ abstract class BaseCache implements \ArrayAccess {
 	/**
 	 * Assigns a value for the specified key
 	 *
-	 * @see \ArrayAccess::offsetSet()
-	 *
-	 * @param mixed $key   The key (offset) to assign the value to.
-	 * @param mixed $value The value to set.
+	 * @param mixed $offset The key (offset) to assign the value to.
+	 * @param mixed $value  The value to set.
 	 *
 	 * @return void
+	 *@see \ArrayAccess::offsetSet()
+	 *
 	 */
 	#[\ReturnTypeWillChange]
-	public function offsetSet($key, $value) {
-		$this->save($key, $value);
+	public function offsetSet($offset, $value) {
+		$this->save($offset, $value);
 	}
 
 	/**
@@ -216,13 +216,13 @@ abstract class BaseCache implements \ArrayAccess {
 	 *
 	 * @see \ArrayAccess::offsetGet()
 	 *
-	 * @param mixed $key The key (offset) to retrieve.
+	 * @param mixed $offset The key (offset) to retrieve.
 	 *
 	 * @return mixed
 	 */
 	#[\ReturnTypeWillChange]
-	public function offsetGet($key) {
-		return $this->load($key);
+	public function offsetGet($offset) {
+		return $this->load($offset);
 	}
 
 	/**
@@ -230,14 +230,14 @@ abstract class BaseCache implements \ArrayAccess {
 	 *
 	 * @see \ArrayAccess::offsetUnset()
 	 *
-	 * @param mixed $key The key (offset) to unset.
+	 * @param mixed $offset The key (offset) to unset.
 	 *
 	 * @return void
 	 */
 	#[\ReturnTypeWillChange]
-	public function offsetUnset($key) {
-		if (isset($this->$key)) {
-			unset($this->$key);
+	public function offsetUnset($offset) {
+		if (isset($this->$offset)) {
+			unset($this->$offset);
 		}
 	}
 
@@ -246,12 +246,12 @@ abstract class BaseCache implements \ArrayAccess {
 	 *
 	 * @see \ArrayAccess::offsetExists()
 	 *
-	 * @param mixed $key A key (offset) to check for.
+	 * @param mixed $offset A key (offset) to check for.
 	 *
 	 * @return bool
 	 */
 	#[\ReturnTypeWillChange]
-	public function offsetExists($key) {
-		return isset($this->$key);
+	public function offsetExists($offset) {
+		return isset($this->$offset);
 	}
 }

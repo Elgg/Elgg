@@ -85,7 +85,7 @@ class ActionsService {
 		$file = null;
 		$controller = null;
 
-		if (substr($handler, -4) === '.php') {
+		if (str_ends_with($handler, '.php')) {
 			$file = $handler;
 		} else {
 			$controller = $handler;
@@ -179,7 +179,7 @@ class ActionsService {
 		$actions = [];
 		$routes = $this->routes->all();
 		foreach ($routes as $name => $route) {
-			if (strpos($name, 'action:') !== 0) {
+			if (!str_starts_with($name, 'action:')) {
 				continue;
 			}
 

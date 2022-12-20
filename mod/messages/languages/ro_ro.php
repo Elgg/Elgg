@@ -18,7 +18,6 @@ return array(
 	'messages:message' => "Mesaj",
 	'messages:title' => "Subiect",
 	'messages:to:help' => "Scrie numele de utilizator al destinatarului aici",
-	'messages:inbox' => "Primite",
 	'messages:sendmessage' => "Trimite un mesaj",
 	'messages:add' => "Compune un mesaj",
 	'messages:sentmessages' => "Mesaje trimise",

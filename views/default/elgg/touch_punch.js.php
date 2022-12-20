@@ -1,7 +1,7 @@
 <?php
 
 $touch_punch = elgg_view('jquery.ui.touch-punch.js');
-if (substr($touch_punch, -9) === '(jQuery);') {
+if (str_ends_with($touch_punch, '(jQuery);')) {
 	$touch_punch = substr($touch_punch, 0, -9);
 }
 

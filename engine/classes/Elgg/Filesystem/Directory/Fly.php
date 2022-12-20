@@ -201,7 +201,7 @@ final class Fly implements Directory {
 	 */
 	private function normalize($path) {
 		$test_path = "/{$path}/";
-		if (strpos($test_path, '/./') !== false || strpos($test_path, '/../') !== false) {
+		if (str_contains($test_path, '/./') || str_contains($test_path, '/../')) {
 			throw new InvalidArgumentException('Paths cannot contain "." or ".."');
 		}
 

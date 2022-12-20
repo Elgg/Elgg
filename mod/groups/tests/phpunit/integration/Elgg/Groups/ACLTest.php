@@ -77,16 +77,13 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 	 * group's content access mode and container write permissions
 	 */
 	public function testWriteAccessArray() {
-		$membersonly = \ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY;
-		$unrestricted = \ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
-
 		$original_page_owner = elgg_get_page_owner_entity();
 		elgg_set_page_owner_guid($this->group->guid);
 		
 		$new_user = $this->createUser();
 		$this->assertInstanceOf(\ElggUser::class, $new_user);
 
-		elgg_call(ELGG_ENFORCE_ACCESS, function() use ($new_user, $membersonly, $unrestricted) {
+		elgg_call(ELGG_ENFORCE_ACCESS, function() use ($new_user) {
 			// User is not a member of the group
 			// Member-only group
 			$acl = $this->group->getOwnedAccessCollection('group_acl');
@@ -94,11 +91,11 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 			
 			$acl_id = $acl->id;
 			
-			$this->group->setContentAccessMode($membersonly);
+			$this->group->setContentAccessMode(\ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY);
 			$write_access = elgg_get_write_access_array($new_user->guid, true);
 			$this->assertArrayNotHasKey($acl_id, $write_access);
 			// Unrestricted group
-			$this->group->setContentAccessMode($unrestricted);
+			$this->group->setContentAccessMode(\ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED);
 			$write_access = elgg_get_write_access_array($new_user->guid, true);
 			$this->assertArrayNotHasKey($acl_id, $write_access);
 	
@@ -106,11 +103,11 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 			$this->group->join($new_user);
 	
 			// Member-only group
-			$this->group->setContentAccessMode($membersonly);
+			$this->group->setContentAccessMode(\ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY);
 			$write_access = elgg_get_write_access_array($new_user->guid, true);
 			$this->assertArrayHasKey($acl_id, $write_access);
 			// Unrestricted group
-			$this->group->setContentAccessMode($unrestricted);
+			$this->group->setContentAccessMode(\ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED);
 			$write_access = elgg_get_write_access_array($new_user->guid, true);
 			$this->assertArrayHasKey($acl_id, $write_access);
 		});
