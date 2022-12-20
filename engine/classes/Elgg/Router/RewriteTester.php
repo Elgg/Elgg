@@ -227,7 +227,7 @@ class RewriteTester {
 			];
 		}
 
-		if ($this->serverSupportsRemoteRead == false) {
+		if ($this->serverSupportsRemoteRead === false) {
 			$msg = _elgg_services()->translator->translate('install:warning:rewrite:unknown', [$url]);
 			$msg .= elgg_view('install/js_rewrite_check', ['url' => $url]);
 			
@@ -237,7 +237,7 @@ class RewriteTester {
 			];
 		}
 
-		if ($this->webserver == 'apache') {
+		if ($this->webserver === 'apache') {
 			$msg = _elgg_services()->translator->translate('install:error:rewrite:apache');
 			$msg .= PHP_EOL . PHP_EOL;
 			if (!isset($this->htaccessIssue)) {
@@ -257,7 +257,7 @@ class RewriteTester {
 			];
 		}
 
-		if ($this->webserver != 'unknown') {
+		if ($this->webserver !== 'unknown') {
 			$msg = _elgg_services()->translator->translate("install:error:rewrite:{$this->webserver}");
 			$msg .= PHP_EOL . PHP_EOL;
 			$msg .= _elgg_services()->translator->translate('install:error:rewrite:altserver');

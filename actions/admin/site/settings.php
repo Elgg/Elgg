@@ -10,9 +10,6 @@
 use Elgg\Exceptions\Configuration\InstallationException;
 
 $site = elgg_get_site_entity();
-if (!$site instanceof \ElggSite) {
-	throw new InstallationException('The system is missing an ElggSite entity!');
-}
 
 $site->description = get_input('sitedescription');
 $site->name = strip_tags(get_input('sitename', ''));

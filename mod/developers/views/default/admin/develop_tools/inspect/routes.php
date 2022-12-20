@@ -17,7 +17,7 @@ echo '<tbody>';
 foreach ($data as $key => $arr) {
 	echo '<tr>';
 	echo elgg_format_element('td', [], $key);
-	echo elgg_format_element('td', [], arr[0]);
+	echo elgg_format_element('td', [], $arr[0]);
 	echo '<td>';
 	if ($arr[1]) {
 		$view_id = 'z' . md5("resources/{$arr[1]}");
