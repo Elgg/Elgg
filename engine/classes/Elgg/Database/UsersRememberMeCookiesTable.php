@@ -19,11 +19,8 @@ class UsersRememberMeCookiesTable {
 	 * @var string name of the persistent cookies database table
 	 */
 	const TABLE_NAME = 'users_remember_me_cookies';
-	
-	/**
-	 * @var Database
-	 */
-	protected $database;
+
+	protected Database $database;
 	
 	/**
 	 * Create a new service

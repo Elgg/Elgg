@@ -266,6 +266,7 @@ class EntityTable {
 	 * Invalidate cache for entity
 	 *
 	 * @param int $guid GUID
+	 *
 	 * @return void
 	 */
 	public function invalidateCache(int $guid): void {

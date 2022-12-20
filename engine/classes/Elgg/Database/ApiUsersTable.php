@@ -12,21 +12,15 @@ use Elgg\Security\Crypto;
  * @internal
  */
 class ApiUsersTable {
-
-	/**
-	 * @var Database
-	 */
-	protected $database;
 	
 	/**
-	 * @var Crypto
+	 * @var string name of the api users database table
 	 */
-	protected $crypto;
+	const TABLE_NAME = 'api_users';
 	
-	/**
-	 * @var string Table being managed, DON'T CHANGE
-	 */
-	protected $table = 'api_users';
+	protected Database $database;
+	
+	protected Crypto $crypto;
 	
 	/**
 	 * Create a new table handler
@@ -48,7 +42,7 @@ class ApiUsersTable {
 		$public = $this->crypto->getRandomString(40, Crypto::CHARS_HEX);
 		$secret = $this->crypto->getRandomString(40, Crypto::CHARS_HEX);
 		
-		$insert = Insert::intoTable($this->table);
+		$insert = Insert::intoTable(self::TABLE_NAME);
 		$insert->values([
 			'api_key' => $insert->param($public, ELGG_VALUE_STRING),
 			'secret' => $insert->param($secret, ELGG_VALUE_STRING),
@@ -71,7 +65,7 @@ class ApiUsersTable {
 	 * @return false|\stdClass stdClass representing the database row or false
 	 */
 	public function getApiUser(string $public_api_key, bool $only_active = true) {
-		$select = Select::fromTable($this->table);
+		$select = Select::fromTable(self::TABLE_NAME);
 		$select->select('*')
 			->where($select->compare('api_key', '=', $public_api_key, ELGG_VALUE_STRING));
 		
@@ -79,12 +73,7 @@ class ApiUsersTable {
 			$select->andWhere($select->compare('active', '=', 1, ELGG_VALUE_INTEGER));
 		}
 		
-		$row = $this->database->getDataRow($select);
-		if (empty($row)) {
-			return false;
-		}
-		
-		return $row;
+		return $this->database->getDataRow($select) ?: false;
 	}
 	
 	/**
@@ -94,13 +83,13 @@ class ApiUsersTable {
 	 *
 	 * @return bool
 	 */
-	public function removeApiUser(string $public_api_key) {
+	public function removeApiUser(string $public_api_key): bool {
 		$row = $this->getApiUser($public_api_key);
 		if (empty($row)) {
 			return false;
 		}
 		
-		$delete = Delete::fromTable($this->table);
+		$delete = Delete::fromTable(self::TABLE_NAME);
 		$delete->where($delete->compare('id', '=', $row->id, ELGG_VALUE_ID));
 		
 		return (bool) $this->database->deleteData($delete);
@@ -113,8 +102,8 @@ class ApiUsersTable {
 	 *
 	 * @return bool
 	 */
-	public function enableAPIUser(string $public_api_key) {
-		$update = Update::table($this->table);
+	public function enableAPIUser(string $public_api_key): bool {
+		$update = Update::table(self::TABLE_NAME);
 		$update->set('active', $update->param(1, ELGG_VALUE_INTEGER))
 			->where($update->compare('api_key', '=', $public_api_key, ELGG_VALUE_STRING));
 		
@@ -128,8 +117,8 @@ class ApiUsersTable {
 	 *
 	 * @return bool
 	 */
-	public function disableAPIUser(string $public_api_key) {
-		$update = Update::table($this->table);
+	public function disableAPIUser(string $public_api_key): bool {
+		$update = Update::table(self::TABLE_NAME);
 		$update->set('active', $update->param(0, ELGG_VALUE_INTEGER))
 			->where($update->compare('api_key', '=', $public_api_key, ELGG_VALUE_STRING));
 		

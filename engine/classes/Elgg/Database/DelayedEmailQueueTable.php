@@ -20,11 +20,8 @@ class DelayedEmailQueueTable {
 	 * @var string name of the database table
 	 */
 	const TABLE_NAME = 'delayed_email_queue';
-	
-	/**
-	 * @var Database
-	 */
-	protected $db;
+
+	protected Database $db;
 	
 	/**
 	 * Create new service
@@ -61,7 +58,7 @@ class DelayedEmailQueueTable {
 	 *
 	 * @param int $id the ID to fetch
 	 *
-	 * @return null|DatabaseRecord database row
+	 * @return DatabaseRecord|null database row
 	 */
 	public function getRow(int $id): ?DatabaseRecord {
 		$select = Select::fromTable(self::TABLE_NAME);

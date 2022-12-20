@@ -170,10 +170,10 @@ class Application {
 	 *
 	 * This method loads the full Elgg engine, checks the installation
 	 * state, and triggers a series of events to finish booting Elgg:
-	 *    - {@elgg_event plugins_load system}
-	 *    - {@elgg_event plugins_boot system}
-	 *    - {@elgg_event init system}
-	 *    - {@elgg_event ready system}
+	 *    - plugins_load system
+	 *    - plugins_boot system
+	 *    - init system
+	 *    - ready system
 	 *
 	 * Please note that the Elgg session is started after all plugins are loader, there will therefore
 	 * be no information about a logged user available until plugins_load,system event is complete.

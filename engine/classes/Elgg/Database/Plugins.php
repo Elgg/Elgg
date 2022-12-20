@@ -68,47 +68,23 @@ class Plugins {
 	/**
 	 * @var \ElggPlugin[]
 	 */
-	protected $boot_plugins;
+	protected ?array $boot_plugins;
 
-	/**
-	 * @var Database
-	 */
-	protected $db;
+	protected Database $db;
 
-	/**
-	 * @var SessionManagerService
-	 */
-	protected $session_manager;
+	protected SessionManagerService $session_manager;
 
-	/**
-	 * @var EventsService
-	 */
-	protected $events;
+	protected EventsService $events;
 
-	/**
-	 * @var Translator
-	 */
-	protected $translator;
+	protected Translator $translator;
 
-	/**
-	 * @var ViewsService
-	 */
-	protected $views;
+	protected ViewsService $views;
 
-	/**
-	 * @var Config
-	 */
-	protected $config;
+	protected Config $config;
 
-	/**
-	 * @var SystemMessagesService
-	 */
-	protected $system_messages;
+	protected SystemMessagesService $system_messages;
 
-	/**
-	 * @var Context
-	 */
-	protected $context;
+	protected Context $context;
 
 	/**
 	 * Constructor
@@ -151,7 +127,7 @@ class Plugins {
 	 *
 	 * @return string
 	 */
-	public function getPath() {
+	public function getPath(): string {
 		$path = $this->config->plugins_path;
 		if (!$path) {
 			$path = Paths::project() . 'mod/';
@@ -168,7 +144,7 @@ class Plugins {
 	 *
 	 * @return void
 	 */
-	public function setBootPlugins($plugins, $order_plugins = true) {
+	public function setBootPlugins(array $plugins = null, bool $order_plugins = true): void {
 		if (!is_array($plugins)) {
 			unset($this->boot_plugins);
 			return;
@@ -200,9 +176,10 @@ class Plugins {
 
 	/**
 	 * Clear plugin caches
+	 *
 	 * @return void
 	 */
-	public function clear() {
+	public function clear(): void {
 		$this->cache->clear();
 	}
 	
@@ -211,7 +188,7 @@ class Plugins {
 	 *
 	 * @return void
 	 */
-	public function invalidate() {
+	public function invalidate(): void {
 		$this->cache->invalidate();
 	}
 	
@@ -223,7 +200,7 @@ class Plugins {
 	 *
 	 * @return array Array of directory names (not full paths)
 	 */
-	public function getDirsInDir($dir = null) {
+	public function getDirsInDir(string $dir = null): array {
 		if (!$dir) {
 			$dir = $this->getPath();
 		}
@@ -259,7 +236,6 @@ class Plugins {
 	 * @return bool
 	 */
 	public function generateEntities(): bool {
-
 		$mod_dir = $this->getPath();
 
 		// ignore access in case this is called with no admin logged in - needed for creating plugins perhaps?
@@ -381,7 +357,7 @@ class Plugins {
 	 *
 	 * @return void
 	 */
-	public function cache(\ElggPlugin $plugin) {
+	public function cache(\ElggPlugin $plugin): void {
 		if (!$plugin->getID()) {
 			return;
 		}
@@ -396,7 +372,7 @@ class Plugins {
 	 *
 	 * @return void
 	 */
-	public function invalidateCache($plugin_id) {
+	public function invalidateCache($plugin_id): void {
 		try {
 			$this->cache->delete($plugin_id);
 		} catch (InvalidArgumentException $ex) {
@@ -463,7 +439,7 @@ class Plugins {
 	 *
 	 * @return int
 	 */
-	public function getMaxPriority() {
+	public function getMaxPriority(): int {
 		$qb = Select::fromTable('entities', 'e');
 		$qb->select('MAX(CAST(md.value AS unsigned)) as max')
 			->join('e', 'metadata', 'md', 'e.guid = md.entity_guid')
@@ -508,12 +484,11 @@ class Plugins {
 	 *
 	 * @return bool
 	 */
-	public function build() {
-
+	public function build(): bool {
 		$plugins_path = $this->getPath();
 
 		// temporary disable all plugins if there is a file called 'disabled' in the plugin dir
-		if (file_exists("$plugins_path/disabled")) {
+		if (file_exists("{$plugins_path}/disabled")) {
 			if ($this->session_manager->isAdminLoggedIn() && $this->context->contains('admin')) {
 				$this->system_messages->addSuccessMessage($this->translator->translate('plugins:disabled'));
 			}
@@ -535,10 +510,9 @@ class Plugins {
 	 * Autoload plugin classes and files
 	 * Register views, translations and custom entity types
 	 *
-	 * @elgg_event plugins_load system
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$plugins = $this->find('active');
 		if (empty($plugins)) {
 			return;
@@ -561,10 +535,9 @@ class Plugins {
 	/**
 	 * Boot the plugins
 	 *
-	 * @elgg_event plugins_boot:before system
 	 * @return void
 	 */
-	public function boot() {
+	public function boot(): void {
 		$plugins = $this->find('active');
 		if (empty($plugins)) {
 			return;
@@ -586,10 +559,9 @@ class Plugins {
 	/**
 	 * Initialize plugins
 	 *
-	 * @elgg_event init system
 	 * @return void
 	 */
-	public function init() {
+	public function init(): void {
 		$plugins = $this->find('active');
 		if (empty($plugins)) {
 			return;
@@ -611,10 +583,9 @@ class Plugins {
 	/**
 	 * Run plugin ready handlers
 	 *
-	 * @elgg_event ready system
 	 * @return void
 	 */
-	public function ready() {
+	public function ready(): void {
 		$plugins = $this->find('active');
 		if (empty($plugins)) {
 			return;
@@ -636,10 +607,9 @@ class Plugins {
 	/**
 	 * Run plugin upgrade handlers
 	 *
-	 * @elgg_event upgrade system
 	 * @return void
 	 */
-	public function upgrade() {
+	public function upgrade(): void {
 		$plugins = $this->find('active');
 		if (empty($plugins)) {
 			return;
@@ -661,10 +631,9 @@ class Plugins {
 	/**
 	 * Run plugin shutdown handlers
 	 *
-	 * @elgg_event shutdown system
 	 * @return void
 	 */
-	public function shutdown() {
+	public function shutdown(): void {
 		$plugins = $this->find('active');
 		if (empty($plugins)) {
 			return;
@@ -691,7 +660,7 @@ class Plugins {
 	 *
 	 * @return void
 	 */
-	protected function disable(\ElggPlugin $plugin, \Exception $previous) {
+	protected function disable(\ElggPlugin $plugin, \Exception $previous): void {
 		$this->getLogger()->log(LogLevel::ERROR, $previous, [
 			'context' => [
 				'plugin' => $plugin,
@@ -711,7 +680,7 @@ class Plugins {
 				[$id, $plugin->guid, $previous->getMessage()]
 			);
 
-			elgg_add_admin_notice("cannot_start $id", $msg);
+			elgg_add_admin_notice("cannot_start {$id}", $msg);
 		} catch (PluginException $ex) {
 			$this->getLogger()->log(LogLevel::ERROR, $ex, [
 				'context' => [
@@ -801,7 +770,7 @@ class Plugins {
 	 *
 	 * @return \ElggPlugin[]
 	 */
-	protected function orderPluginsByPriority($plugins = [], $volatile_data_name = null) {
+	protected function orderPluginsByPriority(array $plugins = [], string $volatile_data_name = null): array {
 		$priorities = [];
 		$sorted_plugins = [];
 				
@@ -836,7 +805,7 @@ class Plugins {
 	 *
 	 * @return bool
 	 */
-	public function setPriorities(array $order) {
+	public function setPriorities(array $order): bool {
 		$name = \ElggPlugin::PRIORITY_SETTING_NAME;
 
 		$plugins = $this->find('any');
@@ -897,7 +866,7 @@ class Plugins {
 	 *
 	 * @return bool
 	 */
-	public function reindexPriorities() {
+	public function reindexPriorities(): bool {
 		return $this->setPriorities([]);
 	}
 
@@ -909,7 +878,7 @@ class Plugins {
 	 *
 	 * @return int|false
 	 */
-	public function setPriority(\ElggPlugin $plugin, $priority) {
+	public function setPriority(\ElggPlugin $plugin, int $priority): int|false {
 		$old_priority = $plugin->getPriority() ?: 1;
 
 		$name = \ElggPlugin::PRIORITY_SETTING_NAME;

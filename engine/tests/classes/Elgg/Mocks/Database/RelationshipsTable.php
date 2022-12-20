@@ -38,7 +38,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function add($guid_one, $relationship, $guid_two, $return_id = false) {
+	public function add(int $guid_one, string $relationship, int $guid_two, bool $return_id = false): bool|int {
 		// Check for duplicates
 		// note: escape $relationship after this call, we don't want to double-escape
 		if ($this->check($guid_one, $relationship, $guid_two)) {

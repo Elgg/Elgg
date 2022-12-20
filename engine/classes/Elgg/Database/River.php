@@ -82,11 +82,7 @@ class River extends Repository {
 
 		$result = _elgg_services()->db->getDataRow($qb);
 
-		if (empty($result)) {
-			return 0;
-		}
-
-		return (int) $result->total;
+		return $result ? (int) $result->total : 0;
 	}
 
 	/**
@@ -115,18 +111,14 @@ class River extends Repository {
 			$qb->addClause($annotation, $alias);
 		}
 
-		$qb->join('rv', 'annotations', $alias, "rv.annotation_id = $alias.id");
+		$qb->join('rv', 'annotations', $alias, "rv.annotation_id = {$alias}.id");
 		$qb->select("{$function}(n_table.value) AS calculation");
 
 		$qb = $this->buildQuery($qb);
 
 		$result = _elgg_services()->db->getDataRow($qb);
 
-		if (empty($result)) {
-			return 0;
-		}
-
-		return (int) $result->calculation;
+		return $result ? (int) $result->calculation : 0;
 	}
 
 	/**

@@ -89,11 +89,7 @@ class Annotations extends Repository {
 
 		$result = _elgg_services()->db->getDataRow($qb);
 
-		if (empty($result)) {
-			return 0;
-		}
-
-		return (int) $result->calculation;
+		return $result ? (int) $result->calculation : 0;
 	}
 
 	/**

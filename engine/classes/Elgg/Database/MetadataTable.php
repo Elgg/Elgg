@@ -19,28 +19,16 @@ use Elgg\Traits\TimeUsing;
 class MetadataTable {
 
 	use TimeUsing;
-
-	/**
-	 * @var MetadataCache
-	 */
-	protected $metadata_cache;
-
-	/**
-	 * @var Database
-	 */
-	protected $db;
-
-	/**
-	 * @var Events
-	 */
-	protected $events;
 	
-	/**
-	 * @var EntityTable
-	 */
-	protected $entityTable;
-
 	const MYSQL_TEXT_BYTE_LIMIT = 65535;
+	
+	protected MetadataCache $metadata_cache;
+
+	protected Database $db;
+
+	protected Events $events;
+	
+	protected EntityTable $entityTable;
 
 	/**
 	 * Constructor
@@ -163,11 +151,7 @@ class MetadataTable {
 		$qb->addClause($where);
 
 		$row = $this->db->getDataRow($qb);
-		if (!empty($row)) {
-			return new \ElggMetadata($row);
-		}
-
-		return null;
+		return $row ? new \ElggMetadata($row) : null;
 	}
 
 	/**
@@ -177,7 +161,7 @@ class MetadataTable {
 	 *
 	 * @return bool
 	 */
-	public function delete(\ElggMetadata $metadata) {
+	public function delete(\ElggMetadata $metadata): bool {
 		if (!$metadata->id) {
 			return false;
 		}
@@ -210,7 +194,7 @@ class MetadataTable {
 	 * @return int|false id of metadata or false if failure
 	 * @throws LogicException
 	 */
-	public function create(\ElggMetadata $metadata, $allow_multiple = false) {
+	public function create(\ElggMetadata $metadata, bool $allow_multiple = false): int|false {
 		if (!isset($metadata->value) || !isset($metadata->entity_guid)) {
 			elgg_log('Metadata must have a value and entity guid', 'ERROR');
 			return false;
@@ -279,17 +263,17 @@ class MetadataTable {
 		$metadata->id = (int) $id;
 		$metadata->time_created = $time_created;
 
-		if ($this->events->trigger('create', 'metadata', $metadata)) {
-			$this->metadata_cache->clear($metadata->entity_guid);
-
-			$this->events->triggerAfter('create', 'metadata', $metadata);
-
-			return $id;
-		} else {
+		if (!$this->events->trigger('create', 'metadata', $metadata)) {
 			$this->delete($metadata);
-
+			
 			return false;
 		}
+		
+		$this->metadata_cache->clear($metadata->entity_guid);
+
+		$this->events->triggerAfter('create', 'metadata', $metadata);
+
+		return $id;
 	}
 
 	/**
@@ -299,8 +283,7 @@ class MetadataTable {
 	 *
 	 * @return bool
 	 */
-	public function update(\ElggMetadata $metadata) {
-
+	public function update(\ElggMetadata $metadata): bool {
 		if (!$this->entityTable->exists($metadata->entity_guid)) {
 			elgg_log("Can't update metadata to a non-existing entity_guid", 'ERROR');
 			return false;
@@ -346,7 +329,6 @@ class MetadataTable {
 	 * @return \ElggMetadata[]|mixed
 	 */
 	public function getAll(array $options = []) {
-
 		$options['metastring_type'] = 'metadata';
 		$options = QueryOptions::normalizeMetastringOptions($options);
 
@@ -364,8 +346,7 @@ class MetadataTable {
 	 *
 	 * @internal
 	 */
-	public function getRowsForGuids(array $guids) {
-
+	public function getRowsForGuids(array $guids): array {
 		$qb = Select::fromTable('metadata');
 		$qb->select('*')
 			->where($qb->compare('entity_guid', 'IN', $guids, ELGG_VALUE_GUID))
@@ -448,7 +429,7 @@ class MetadataTable {
 	 *
 	 * @return int[]|int|null
 	 */
-	protected function getIDsByName($entity_guid, $name) {
+	protected function getIDsByName(int $entity_guid, string $name) {
 		if ($this->metadata_cache->isLoaded($entity_guid)) {
 			$ids = $this->metadata_cache->getSingleId($entity_guid, $name);
 		} else {

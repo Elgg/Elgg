@@ -352,6 +352,7 @@ Class function parameters
 * ``\ElggEntity::getMetadata()`` now requires a ``string`` for ``$name``
 * ``\ElggEntity::getVolatileData()`` now requires a ``string`` for ``$name``
 * ``\ElggEntity::hasIcon()`` now requires a ``string`` for ``$size`` and ``$type``
+* ``\ElggEntity::removeAllRelationships()`` no longer allows ``null`` to be passed to ``$relationship``
 * ``\ElggEntity::removeRelationship()`` now requires an ``int`` for ``$guid_two`` and a ``string`` for ``$relationship``
 * ``\ElggEntity::saveIconFromElggFile()`` now requires a ``string`` for ``$type``
 * ``\ElggEntity::saveIconFromLocalFile()`` now requires a ``string`` for ``$input_name`` and ``$type``

@@ -80,7 +80,7 @@ class ApiUsersTable extends dbApiUsersTable {
 		$this->clearQuerySpecs($row);
 		
 		// create
-		$insert = Insert::intoTable($this->table);
+		$insert = Insert::intoTable(self::TABLE_NAME);
 		$insert->values([
 			'api_key' => $insert->param($row->api_key, ELGG_VALUE_STRING),
 			'secret' => $insert->param($row->secret, ELGG_VALUE_STRING),
@@ -93,7 +93,7 @@ class ApiUsersTable extends dbApiUsersTable {
 		]);
 		
 		// select (only active)
-		$select = Select::fromTable($this->table);
+		$select = Select::fromTable(self::TABLE_NAME);
 		$select->select('*')
 			->where($select->compare('api_key', '=', $row->api_key, ELGG_VALUE_STRING))
 			->andWhere($select->compare('active', '=', $row->active, ELGG_VALUE_INTEGER));
@@ -111,7 +111,7 @@ class ApiUsersTable extends dbApiUsersTable {
 		]);
 		
 		// select (all)
-		$select_all = Select::fromTable($this->table);
+		$select_all = Select::fromTable(self::TABLE_NAME);
 		$select_all->select('*')
 			->where($select->compare('api_key', '=', $row->api_key, ELGG_VALUE_STRING));
 		
@@ -128,7 +128,7 @@ class ApiUsersTable extends dbApiUsersTable {
 		]);
 		
 		// delete
-		$delete = Delete::fromTable($this->table);
+		$delete = Delete::fromTable(self::TABLE_NAME);
 		$delete->where($delete->compare('id', '=', $row->id, ELGG_VALUE_ID));
 		
 		$this->query_specs[$row->id][] = $this->database->addQuerySpec([
@@ -147,8 +147,8 @@ class ApiUsersTable extends dbApiUsersTable {
 		]);
 		
 		// enable
-		$enable = Update::table($this->table);
-		$enable = Update::table($this->table);
+		$enable = Update::table(self::TABLE_NAME);
+		$enable = Update::table(self::TABLE_NAME);
 		$enable->set('active', $enable->param(1, ELGG_VALUE_INTEGER))
 			->where($enable->compare('api_key', '=', $row->api_key, ELGG_VALUE_STRING));
 		
@@ -167,7 +167,7 @@ class ApiUsersTable extends dbApiUsersTable {
 		]);
 		
 		// disable
-		$disable = Update::table($this->table);
+		$disable = Update::table(self::TABLE_NAME);
 		$disable->set('active', $disable->param(0, ELGG_VALUE_INTEGER))
 			->where($disable->compare('api_key', '=', $row->api_key, ELGG_VALUE_STRING));
 		

@@ -88,7 +88,7 @@ class Plugins extends DbPlugins {
 		return array_key_exists($plugin_id, $this->_plugins);
 	}
 
-	public function setPriority(ElggPlugin $plugin, $priority) {
+	public function setPriority(ElggPlugin $plugin, int $priority): int|false {
 
 		$old_priority = $plugin->getPriority();
 

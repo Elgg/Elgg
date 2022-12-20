@@ -28,7 +28,7 @@ class UsersApiSessionsTable extends dbUsersApiSessionsTable {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function createToken(int $user_guid, int $expires = 60) {
+	public function createToken(int $user_guid, int $expires = 60): string|false {
 		// lock the time to prevent testing issues
 		$this->setCurrentTime();
 		
@@ -75,7 +75,7 @@ class UsersApiSessionsTable extends dbUsersApiSessionsTable {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function validateToken(string $token) {
+	public function validateToken(string $token): int|false {
 		foreach ($this->rows as $row) {
 			if ($token !== $row->token) {
 				continue;
@@ -139,7 +139,7 @@ class UsersApiSessionsTable extends dbUsersApiSessionsTable {
 		
 		$this->clearQuerySpecs($row);
 		
-		$insert = Insert::intoTable($this->table);
+		$insert = Insert::intoTable(self::TABLE_NAME);
 		$insert->values([
 			'user_guid' => $insert->param($row->user_guid, ELGG_VALUE_GUID),
 			'token' => $insert->param($row->token, ELGG_VALUE_STRING),
@@ -152,7 +152,7 @@ class UsersApiSessionsTable extends dbUsersApiSessionsTable {
 			'insert_id' => $row->id,
 		]);
 		
-		$select = Select::fromTable($this->table);
+		$select = Select::fromTable(self::TABLE_NAME);
 		$select->select('*')
 			->where($select->compare('user_guid', '=', $row->user_guid, ELGG_VALUE_GUID));
 		
@@ -173,7 +173,7 @@ class UsersApiSessionsTable extends dbUsersApiSessionsTable {
 			},
 		]);
 		
-		$select = Select::fromTable($this->table);
+		$select = Select::fromTable(self::TABLE_NAME);
 		$select->select('*')
 			->where($select->compare('token', '=', $row->token, ELGG_VALUE_STRING))
 			->andWhere($select->compare('expires', '>', $this->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP));
@@ -198,7 +198,7 @@ class UsersApiSessionsTable extends dbUsersApiSessionsTable {
 			},
 		]);
 		
-		$delete = Delete::fromTable($this->table);
+		$delete = Delete::fromTable(self::TABLE_NAME);
 		$delete->where($delete->compare('token', '=', $row->token, ELGG_VALUE_STRING));
 		
 		$this->query_specs[$row->id][] = $this->database->addQuerySpec([

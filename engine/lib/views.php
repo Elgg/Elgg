@@ -1308,7 +1308,6 @@ function _elgg_has_rss_link(): bool {
  *
  * @return void
  * @internal
- * @elgg_event_handler boot system
  */
 function elgg_views_boot(): void {
 	_elgg_services()->viewCacher->registerCoreViews();

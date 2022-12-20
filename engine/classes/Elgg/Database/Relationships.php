@@ -69,16 +69,12 @@ class Relationships extends Repository {
 		$select = $this->buildQuery($select);
 		
 		$result = _elgg_services()->db->getDataRow($select);
-		if (empty($result)) {
-			return 0;
-		}
 		
-		return (int) $result->calculation;
+		return $result ? (int) $result->calculation : 0;
 	}
 	
 	/**
 	 * {@inheritDoc}
-	 * @see \Elgg\Database\QueryExecuting::count()
 	 */
 	public function count() {
 		$select = Select::fromTable('entity_relationships', 'er');

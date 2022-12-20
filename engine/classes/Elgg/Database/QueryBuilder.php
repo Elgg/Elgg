@@ -31,25 +31,13 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	const TABLE_METADATA = 'metadata';
 	const TABLE_RELATIONSHIPS = 'entity_relationships';
 
-	/**
-	 * @var array
-	 */
-	protected $joins = [];
+	protected array $joins = [];
 
-	/**
-	 * @var int
-	 */
-	protected $join_index = 0;
+	protected int $join_index = 0;
 
-	/**
-	 * @var string
-	 */
-	protected $table_name;
+	protected ?string $table_name;
 
-	/**
-	 * @var string
-	 */
-	protected $table_alias;
+	protected ?string $table_alias;
 
 	/**
 	 * Creates a new SelectQueryBuilder for join/where subqueries using the DB connection of the primary QueryBuilder

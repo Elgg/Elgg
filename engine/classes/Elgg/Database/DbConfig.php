@@ -82,7 +82,7 @@ class DbConfig {
 	 *
 	 * @return DbConfig
 	 */
-	public static function fromElggConfig(Config $config) {
+	public static function fromElggConfig(Config $config): DbConfig {
 		$obj = new \stdClass();
 		foreach (array_keys(get_class_vars(__CLASS__)) as $prop) {
 			$obj->{$prop} = $config->{$prop};
@@ -96,7 +96,7 @@ class DbConfig {
 	 *
 	 * @return string
 	 */
-	public function getTablePrefix() {
+	public function getTablePrefix(): string {
 		return (string) $this->dbprefix;
 	}
 
@@ -105,7 +105,7 @@ class DbConfig {
 	 *
 	 * @return bool
 	 */
-	public function isDatabaseSplit() {
+	public function isDatabaseSplit(): bool {
 		return $this->db['split'] ?? false;
 	}
 
@@ -125,9 +125,10 @@ class DbConfig {
 	 * )
 	 *
 	 * @param string $type The connection type: READ, WRITE, READ_WRITE
+	 *
 	 * @return array
 	 */
-	public function getConnectionConfig($type = self::READ_WRITE) {
+	public function getConnectionConfig(string $type = self::READ_WRITE): array {
 		switch ($type) {
 			case self::READ:
 			case self::WRITE:
@@ -149,7 +150,7 @@ class DbConfig {
 	 *
 	 * @return array
 	 */
-	protected function getGeneralConnectionConfig() {
+	protected function getGeneralConnectionConfig(): array {
 		return [
 			'host' => $this->dbhost,
 			'port' => $this->dbport,
@@ -163,30 +164,29 @@ class DbConfig {
 	 * Get connection information for reading or writing
 	 *
 	 * @param string $type Connection type: 'write' or 'read'
+	 *
 	 * @return array
 	 */
-	protected function getParticularConnectionConfig($type) {
+	protected function getParticularConnectionConfig(string $type): array {
 		if (array_key_exists('dbhost', $this->db[$type])) {
 			// single connection
-			$config = [
+			return [
 				'host' => $this->db[$type]['dbhost'],
 				'port' => $this->db[$type]['dbport'],
 				'user' => $this->db[$type]['dbuser'],
 				'password' => $this->db[$type]['dbpass'],
 				'database' => $this->db[$type]['dbname'],
 			];
-		} else {
-			// new style multiple connections
-			$index = array_rand($this->db[$type]);
-			$config = [
-				'host' => $this->db[$type][$index]['dbhost'],
-				'port' => $this->db[$type][$index]['dbport'],
-				'user' => $this->db[$type][$index]['dbuser'],
-				'password' => $this->db[$type][$index]['dbpass'],
-				'database' => $this->db[$type][$index]['dbname'],
-			];
 		}
-
-		return $config;
+		
+		// new style multiple connections
+		$index = array_rand($this->db[$type]);
+		return [
+			'host' => $this->db[$type][$index]['dbhost'],
+			'port' => $this->db[$type][$index]['dbport'],
+			'user' => $this->db[$type][$index]['dbuser'],
+			'password' => $this->db[$type][$index]['dbpass'],
+			'database' => $this->db[$type][$index]['dbname'],
+		];
 	}
 }

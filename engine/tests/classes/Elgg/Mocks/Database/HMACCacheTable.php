@@ -90,7 +90,7 @@ class HMACCacheTable extends dbHMACCacheTable {
 		
 		$this->clearQuerySpecs($row);
 		
-		$insert = Insert::intoTable($this->table);
+		$insert = Insert::intoTable(self::TABLE_NAME);
 		$insert->values([
 			'hmac' => $insert->param($row->hmac, ELGG_VALUE_STRING),
 			'ts' => $insert->param($row->ts, ELGG_VALUE_TIMESTAMP),
@@ -101,7 +101,7 @@ class HMACCacheTable extends dbHMACCacheTable {
 			'params' => $insert->getParameters(),
 		]);
 		
-		$select = Select::fromTable($this->table);
+		$select = Select::fromTable(self::TABLE_NAME);
 		$select->select('*');
 		$select->where($select->compare('hmac', '=', $row->hmac, ELGG_VALUE_STRING));
 		
@@ -115,7 +115,7 @@ class HMACCacheTable extends dbHMACCacheTable {
 			},
 		]);
 		
-		$delete = Delete::fromTable($this->table);
+		$delete = Delete::fromTable(self::TABLE_NAME);
 		$delete->where($delete->compare('hmac', '=', $row->hmac, ELGG_VALUE_STRING));
 		
 		$this->query_specs[$row->hmac][] = $this->database->addQuerySpec([

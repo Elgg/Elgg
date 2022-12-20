@@ -22,30 +22,15 @@ class RiverTable {
 	 */
 	const TABLE_NAME = 'river';
 	
-	/**
-	 * @var AnnotationsTable
-	 */
-	protected $annotationsTable;
+	protected AnnotationsTable $annotationsTable;
 	
-	/**
-	 * @var Database
-	 */
-	protected $db;
+	protected Database $db;
 	
-	/**
-	 * @var EntityTable
-	 */
-	protected $entityTable;
+	protected EntityTable $entityTable;
 	
-	/**
-	 * @var EventsService
-	 */
-	protected $events;
+	protected EventsService $events;
 	
-	/**
-	 * @var ViewsService
-	 */
-	protected $views;
+	protected ViewsService $views;
 	
 	/**
 	 * Create the river table service
@@ -77,11 +62,8 @@ class RiverTable {
 			->where($select->compare('id', '=', $id, ELGG_VALUE_ID));
 		
 		$row = $this->db->getDataRow($select);
-		if (empty($row)) {
-			return null;
-		}
 		
-		return new \ElggRiverItem($row);
+		return $row ? new \ElggRiverItem($row) : null;
 	}
 	
 	/**
