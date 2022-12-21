@@ -22,15 +22,9 @@ class ConfigTable {
 	 */
 	const TABLE_NAME = 'config';
 	
-	/**
-	 * @var Database
-	 */
-	protected $db;
+	protected Database $db;
 	
-	/**
-	 * @var BootService
-	 */
-	protected $boot;
+	protected BootService $boot;
 	
 	/**
 	 * Constructor

@@ -624,7 +624,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return bool
 	 * @since 4.3
 	 */
-	public function removeAllRelationships(string $relationship = null, bool $inverse_relationship = false): bool {
+	public function removeAllRelationships(string $relationship = '', bool $inverse_relationship = false): bool {
 		return _elgg_services()->relationshipsTable->removeAll($this->guid, $relationship, $inverse_relationship);
 	}
 

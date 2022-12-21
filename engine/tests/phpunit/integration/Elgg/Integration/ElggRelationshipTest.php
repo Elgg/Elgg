@@ -197,7 +197,7 @@ class ElggRelationshipTest extends IntegrationTestCase {
 
 		// remove all relationships
 		$this->assertTrue($this->entity1->removeAllRelationships());
-		$this->assertTrue($this->entity1->removeAllRelationships(null, true));
+		$this->assertTrue($this->entity1->removeAllRelationships('', true));
 		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
 		$this->assertFalse($this->entity1->hasRelationship($this->entity3->guid, 'test_relationship'));
 		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship2'));

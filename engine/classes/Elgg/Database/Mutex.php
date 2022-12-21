@@ -19,10 +19,7 @@ class Mutex {
 
 	use Loggable;
 
-	/**
-	 * @var Database
-	 */
-	protected $db;
+	protected Database $db;
 
 	/**
 	 * Constructor

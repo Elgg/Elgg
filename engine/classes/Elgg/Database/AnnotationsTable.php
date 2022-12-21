@@ -16,15 +16,9 @@ class AnnotationsTable {
 
 	use TimeUsing;
 
-	/**
-	 * @var Database
-	 */
-	protected $db;
+	protected Database $db;
 
-	/**
-	 * @var EventsService
-	 */
-	protected $events;
+	protected EventsService $events;
 
 	/**
 	 * Constructor
@@ -199,7 +193,7 @@ class AnnotationsTable {
 	 * @since 1.8
 	 */
 	public function disable(\ElggAnnotation $annotation): bool {
-		if ($annotation->enabled == 'no') {
+		if ($annotation->enabled === 'no') {
 			return true;
 		}
 
@@ -315,7 +309,7 @@ class AnnotationsTable {
 			}
 		}
 
-		return $success == $count;
+		return $success === $count;
 	}
 
 	/**
@@ -353,7 +347,7 @@ class AnnotationsTable {
 			}
 		}
 
-		return $success == $count;
+		return $success === $count;
 	}
 
 	/**
@@ -386,7 +380,7 @@ class AnnotationsTable {
 			}
 		}
 
-		return $success == $count;
+		return $success === $count;
 	}
 	
 	/**

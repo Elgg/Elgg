@@ -49,7 +49,7 @@ class AdminNotices {
 	 *
 	 * @return bool
 	 */
-	public function delete(string $id = '') {
+	public function delete(string $id = ''): bool {
 		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($id) {
 			$result = true;
 			
@@ -94,7 +94,7 @@ class AdminNotices {
 	 * @return bool
 	 * @since 1.8.0
 	 */
-	public function exists(string $id) {
+	public function exists(string $id): bool {
 		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($id) {
 			return (bool) elgg_count_entities([
 				'type' => 'object',

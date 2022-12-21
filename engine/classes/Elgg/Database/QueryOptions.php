@@ -65,7 +65,7 @@ use Elgg\Traits\Database\LegacyQueryOptionsAdapter;
  * @property boolean                     $batch_inc_offset
  * @property int                         $batch_size
  */
-class QueryOptions extends \ArrayObject implements QueryFiltering {
+class QueryOptions extends \ArrayObject {
 
 	use LegacyQueryOptionsAdapter;
 
@@ -108,7 +108,11 @@ class QueryOptions extends \ArrayObject implements QueryFiltering {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Return DISTINCT rows
+	 *
+	 * @param bool $distinct Distinct
+	 *
+	 * @return static
 	 */
 	public function distinct($distinct = true) {
 		$this->distinct = $distinct;
@@ -117,7 +121,11 @@ class QueryOptions extends \ArrayObject implements QueryFiltering {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Add where statement
+	 *
+	 * @param WhereClause $clause Clause
+	 *
+	 * @return static
 	 */
 	public function where(WhereClause $clause) {
 		$this->wheres[] = $clause;
@@ -126,7 +134,11 @@ class QueryOptions extends \ArrayObject implements QueryFiltering {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Add a select statement
+	 *
+	 * @param SelectClause $clause Clause
+	 *
+	 * @return $this
 	 */
 	public function select(SelectClause $clause) {
 		$this->selects[] = $clause;
@@ -135,7 +147,11 @@ class QueryOptions extends \ArrayObject implements QueryFiltering {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Add a join callback
+	 *
+	 * @param JoinClause $clause Clause
+	 *
+	 * @return static
 	 */
 	public function join(JoinClause $clause) {
 		$this->joins[] = $clause;
@@ -144,7 +160,11 @@ class QueryOptions extends \ArrayObject implements QueryFiltering {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Add group by statement
+	 *
+	 * @param GroupByClause $clause Clause
+	 *
+	 * @return static
 	 */
 	public function groupBy(GroupByClause $clause) {
 		$this->group_by[] = $clause;
@@ -153,7 +173,11 @@ class QueryOptions extends \ArrayObject implements QueryFiltering {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Add having statement
+	 *
+	 * @param HavingClause $clause Clause
+	 *
+	 * @return static
 	 */
 	public function having(HavingClause $clause) {
 		$this->having[] = $clause;
@@ -162,7 +186,11 @@ class QueryOptions extends \ArrayObject implements QueryFiltering {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Add order by statement
+	 *
+	 * @param OrderByClause $clause Clause
+	 *
+	 * @return static
 	 */
 	public function orderBy(OrderByClause $clause) {
 		$this->order_by[] = $clause;

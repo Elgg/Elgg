@@ -34,7 +34,7 @@ class MetadataTable extends DbMetadataTabe {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function create(ElggMetadata $metadata, $allow_multiple = false) {
+	public function create(ElggMetadata $metadata, bool $allow_multiple = false): int|false {
 		if (!isset($metadata->value) || !isset($metadata->entity_guid)) {
 			elgg_log("Metadata must have a value and entity guid", 'ERROR');
 			return false;
@@ -104,7 +104,7 @@ class MetadataTable extends DbMetadataTabe {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function update(ElggMetadata $metadata) {
+	public function update(ElggMetadata $metadata): bool {
 		if (!$this->entityTable->exists($metadata->entity_guid)) {
 			elgg_log("Can't updated metadata to a non-existing entity_guid", 'ERROR');
 			return false;
@@ -146,7 +146,7 @@ class MetadataTable extends DbMetadataTabe {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getRowsForGuids(array $guids) {
+	public function getRowsForGuids(array $guids): array {
 		
 		$rows = [];
 		foreach ($this->rows as $row) {

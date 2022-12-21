@@ -27,25 +27,13 @@ class RelationshipsTable {
 	 */
 	const RELATIONSHIP_COLUMN_LENGTH = 255;
 	
-	/**
-	 * @var Database
-	 */
-	protected $db;
+	protected Database $db;
 
-	/**
-	 * @var EntityTable
-	 */
-	protected $entities;
+	protected EntityTable $entities;
 
-	/**
-	 * @var MetadataTable
-	 */
-	protected $metadata;
+	protected MetadataTable $metadata;
 
-	/**
-	 * @var EventsService
-	 */
-	protected $events;
+	protected EventsService $events;
 
 	/**
 	 * Constructor
@@ -115,7 +103,7 @@ class RelationshipsTable {
 	 * @return bool|int
 	 * @throws LengthException
 	 */
-	public function add(int $guid_one, string $relationship, int $guid_two, bool $return_id = false) {
+	public function add(int $guid_one, string $relationship, int $guid_two, bool $return_id = false): bool|int {
 		if (strlen($relationship) > self::RELATIONSHIP_COLUMN_LENGTH) {
 			throw new LengthException('Relationship name cannot be longer than ' . self::RELATIONSHIP_COLUMN_LENGTH);
 		}
@@ -186,11 +174,7 @@ class RelationshipsTable {
 			->setMaxResults(1);
 		
 		$row = $this->db->getDataRow($select, [$this, 'rowToElggRelationship']);
-		if ($row instanceof \ElggRelationship) {
-			return $row;
-		}
-
-		return false;
+		return $row instanceof \ElggRelationship ? $row : false;
 	}
 
 	/**
@@ -225,8 +209,7 @@ class RelationshipsTable {
 	 *
 	 * @return true
 	 */
-	public function removeAll($guid, $relationship = '', $inverse_relationship = false, $type = '', bool $trigger_events = true) {
-		
+	public function removeAll(int $guid, string $relationship = '', bool $inverse_relationship = false, string $type = '', bool $trigger_events = true): bool {
 		if ($trigger_events) {
 			return $this->removeAllWithEvents($guid, $relationship, $inverse_relationship, $type);
 		}
@@ -247,10 +230,10 @@ class RelationshipsTable {
 	 *
 	 * @return true
 	 */
-	protected function removeAllWithoutEvents($guid, $relationship = '', $inverse_relationship = false, $type = '') {
+	protected function removeAllWithoutEvents(int $guid, string $relationship = '', bool $inverse_relationship = false, string $type = ''): bool {
 		$delete = Delete::fromTable('entity_relationships');
 		
-		if ((bool) $inverse_relationship) {
+		if ($inverse_relationship) {
 			$delete->where($delete->compare('guid_two', '=', $guid, ELGG_VALUE_GUID));
 		} else {
 			$delete->where($delete->compare('guid_one', '=', $guid, ELGG_VALUE_GUID));
@@ -265,7 +248,7 @@ class RelationshipsTable {
 			$entity_sub->select('guid')
 			->where($delete->compare('type', '=', $type, ELGG_VALUE_STRING));
 			
-			if (!(bool) $inverse_relationship) {
+			if (!$inverse_relationship) {
 				$delete->andWhere($delete->compare('guid_two', 'in', $entity_sub->getSQL()));
 			} else {
 				$delete->andWhere($delete->compare('guid_one', 'in', $entity_sub->getSQL()));
@@ -290,11 +273,11 @@ class RelationshipsTable {
 	 *
 	 * @return true
 	 */
-	protected function removeAllWithEvents($guid, $relationship = '', $inverse_relationship = false, $type = '') {
+	protected function removeAllWithEvents(int $guid, string $relationship = '', bool $inverse_relationship = false, string $type = ''): bool {
 		$select = Select::fromTable('entity_relationships');
 		$select->select('*');
 		
-		if ((bool) $inverse_relationship) {
+		if ($inverse_relationship) {
 			$select->where($select->compare('guid_two', '=', $guid, ELGG_VALUE_GUID));
 		} else {
 			$select->where($select->compare('guid_one', '=', $guid, ELGG_VALUE_GUID));
@@ -309,7 +292,7 @@ class RelationshipsTable {
 			$entity_sub->select('guid')
 			->where($select->compare('type', '=', $type, ELGG_VALUE_STRING));
 			
-			if (!(bool) $inverse_relationship) {
+			if (!$inverse_relationship) {
 				$select->andWhere($select->compare('guid_two', 'in', $entity_sub->getSQL()));
 			} else {
 				$select->andWhere($select->compare('guid_one', 'in', $entity_sub->getSQL()));
@@ -370,10 +353,6 @@ class RelationshipsTable {
 	 * @return \ElggRelationship|false
 	 */
 	public function rowToElggRelationship($row) {
-		if ($row instanceof \stdClass) {
-			return new \ElggRelationship($row);
-		}
-
-		return false;
+		return $row instanceof \stdClass ? new \ElggRelationship($row) : false;
 	}
 }

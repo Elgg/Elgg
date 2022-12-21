@@ -17,19 +17,13 @@ class UsersApiSessionsTable {
 	use TimeUsing;
 	
 	/**
-	 * @var Database
+	 * @var string name of the users api sessions database table
 	 */
-	protected $database;
+	const TABLE_NAME = 'users_apisessions';
 	
-	/**
-	 * @var Crypto
-	 */
-	protected $crypto;
+	protected Database $database;
 	
-	/**
-	 * @var string Table being managed, DON'T CHANGE
-	 */
-	protected $table = 'users_apisessions';
+	protected Crypto $crypto;
 	
 	/**
 	 * Create a new table handler
@@ -50,22 +44,18 @@ class UsersApiSessionsTable {
 	 *
 	 * @return false|string
 	 */
-	public function createToken(int $user_guid, int $expires = 60) {
+	public function createToken(int $user_guid, int $expires = 60): string|false {
 		$token = $this->crypto->getRandomString(32, Crypto::CHARS_HEX);
 		$expires = $this->getCurrentTime("+{$expires} minutes");
 		
-		$insert = Insert::intoTable($this->table);
+		$insert = Insert::intoTable(self::TABLE_NAME);
 		$insert->values([
 			'user_guid' => $insert->param($user_guid, ELGG_VALUE_GUID),
 			'token' => $insert->param($token, ELGG_VALUE_STRING),
 			'expires' => $insert->param($expires->getTimestamp(), ELGG_VALUE_TIMESTAMP),
 		]);
 		
-		if ($this->database->insertData($insert)) {
-			return $token;
-		}
-		
-		return false;
+		return $this->database->insertData($insert) ? $token : false;
 	}
 	
 	/**
@@ -76,7 +66,7 @@ class UsersApiSessionsTable {
 	 * @return false|\stdClass[]
 	 */
 	public function getUserTokens(int $user_guid) {
-		$select = Select::fromTable($this->table);
+		$select = Select::fromTable(self::TABLE_NAME);
 		$select->select('*')
 			->where($select->compare('user_guid', '=', $user_guid, ELGG_VALUE_GUID));
 		
@@ -90,18 +80,15 @@ class UsersApiSessionsTable {
 	 *
 	 * @return false|int the user guid attached to the token, or false
 	 */
-	public function validateToken(string $token) {
-		$select = Select::fromTable($this->table);
+	public function validateToken(string $token): int|false {
+		$select = Select::fromTable(self::TABLE_NAME);
 		$select->select('*')
 			->where($select->compare('token', '=', $token, ELGG_VALUE_STRING))
 			->andWhere($select->compare('expires', '>', $this->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP));
 		
 		$row = $this->database->getDataRow($select);
-		if (empty($row)) {
-			return false;
-		}
 		
-		return (int) $row->user_guid;
+		return $row ? (int) $row->user_guid : false;
 	}
 	
 	/**
@@ -112,7 +99,7 @@ class UsersApiSessionsTable {
 	 * @return bool
 	 */
 	public function removeToken(string $token) {
-		$delete = Delete::fromTable($this->table);
+		$delete = Delete::fromTable(self::TABLE_NAME);
 		$delete->where($delete->compare('token', '=', $token, ELGG_VALUE_STRING));
 		
 		return (bool) $this->database->deleteData($delete);
@@ -124,7 +111,7 @@ class UsersApiSessionsTable {
 	 * @return int Number of rows removed
 	 */
 	public function removeExpiresTokens() {
-		$delete = Delete::fromTable($this->table);
+		$delete = Delete::fromTable(self::TABLE_NAME);
 		$delete->where($delete->compare('expires', '<', $this->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP));
 		
 		return $this->database->deleteData($delete);

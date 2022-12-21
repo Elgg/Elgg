@@ -34,50 +34,23 @@ class AccessCollections {
 	 */
 	const MEMBERSHIP_TABLE_NAME = 'access_collection_membership';
 
-	/**
-	 * @var Config
-	 */
-	protected $config;
+	protected Config $config;
 
-	/**
-	 * @var Database
-	 */
-	protected $db;
+	protected Database $db;
 
-	/**
-	 * @vars BaseCache
-	 */
-	protected $access_cache;
+	protected BaseCache $access_cache;
 
-	/**
-	 * @var EventsService
-	 */
-	protected $events;
+	protected EventsService $events;
 
-	/**
-	 * @var SessionManagerService
-	 */
-	protected $session_manager;
+	protected SessionManagerService $session_manager;
 
-	/**
-	 * @var EntityTable
-	 */
-	protected $entities;
+	protected EntityTable $entities;
 
-	/**
-	 * @var UserCapabilities
-	 */
-	protected $capabilities;
+	protected UserCapabilities $capabilities;
 
-	/**
-	 * @var Translator
-	 */
-	protected $translator;
+	protected Translator $translator;
 
-	/**
-	 * @var bool
-	 */
-	protected $init_complete = false;
+	protected bool $init_complete = false;
 
 	/**
 	 * Constructor
@@ -115,7 +88,7 @@ class AccessCollections {
 	 *
 	 * @return void
 	 */
-	public function markInitComplete() {
+	public function markInitComplete(): void {
 		$this->init_complete = true;
 	}
 
@@ -143,14 +116,14 @@ class AccessCollections {
 	 *
 	 * @return array An array of access collections ids
 	 */
-	public function getAccessArray(int $user_guid = 0, bool $flush = false) {
+	public function getAccessArray(int $user_guid = 0, bool $flush = false): array {
 		$cache = $this->access_cache;
 
 		if ($flush) {
 			$cache->clear();
 		}
 
-		if ($user_guid == 0) {
+		if ($user_guid === 0) {
 			$user_guid = $this->session_manager->getLoggedInUserGuid();
 		}
 
@@ -273,18 +246,16 @@ class AccessCollections {
 	 *
 	 * @return array List of access permissions
 	 */
-	public function getWriteAccessArray($user_guid = 0, $flush = false, array $input_params = []) {
+	public function getWriteAccessArray(int $user_guid = 0, bool $flush = false, array $input_params = []): array {
 		$cache = $this->access_cache;
 
 		if ($flush) {
 			$cache->clear();
 		}
 
-		if ($user_guid == 0) {
+		if ($user_guid === 0) {
 			$user_guid = $this->session_manager->getLoggedInUserGuid();
 		}
-
-		$user_guid = (int) $user_guid;
 
 		$hash = $user_guid . 'get_write_access_array';
 
@@ -294,7 +265,7 @@ class AccessCollections {
 			$access_array = [
 				ACCESS_PRIVATE => $this->getReadableAccessLevel(ACCESS_PRIVATE),
 				ACCESS_LOGGED_IN => $this->getReadableAccessLevel(ACCESS_LOGGED_IN),
-				ACCESS_PUBLIC => $this->getReadableAccessLevel(ACCESS_PUBLIC)
+				ACCESS_PUBLIC => $this->getReadableAccessLevel(ACCESS_PUBLIC),
 			];
 
 			$access_array += $this->getCollectionsForWriteAccess($user_guid);
@@ -334,7 +305,7 @@ class AccessCollections {
 	 * @return array
 	 * @since 3.2
 	 */
-	protected function getCollectionsForWriteAccess(int $owner_guid) {
+	protected function getCollectionsForWriteAccess(int $owner_guid): array {
 		$subtypes = $this->events->triggerResults('access:collections:write:subtypes', 'user', ['owner_guid' => $owner_guid], []);
 		
 		$select = Select::fromTable(self::TABLE_NAME);
@@ -377,7 +348,7 @@ class AccessCollections {
 	 *
 	 * @return bool
 	 */
-	public function canEdit(int $collection_id, int $user_guid = null) {
+	public function canEdit(int $collection_id, int $user_guid = null): bool {
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {
@@ -535,11 +506,12 @@ class AccessCollections {
 	 *
 	 * @param int $user_guid     GUID of the user
 	 * @param int $collection_id ID of the collection
+	 *
 	 * @return bool
 	 */
-	public function hasUser($user_guid, $collection_id) {
+	public function hasUser(int $user_guid, int $collection_id): bool {
 		$options = [
-			'guids' => (int) $user_guid,
+			'guids' => $user_guid,
 			'count' => true,
 		];
 		return (bool) $this->getMembers($collection_id, $options);
@@ -556,7 +528,6 @@ class AccessCollections {
 	 * @return bool
 	 */
 	public function addUser(int $user_guid, int $collection_id): bool {
-
 		$collection = $this->get($collection_id);
 		if (!$collection instanceof \ElggAccessCollection) {
 			return false;
@@ -720,7 +691,7 @@ class AccessCollections {
 	 * @return string
 	 * @since 1.11
 	 */
-	public function getReadableAccessLevel(int $entity_access_id) {
+	public function getReadableAccessLevel(int $entity_access_id): string {
 		$translator = $this->translator;
 
 		// Check if entity access id is a defined global constant

@@ -2,6 +2,7 @@
 
 namespace Elgg\Database;
 
+use Elgg\Database;
 use Elgg\Traits\TimeUsing;
 
 /**
@@ -18,17 +19,14 @@ class SessionHandler implements \SessionHandlerInterface {
 	 */
 	const TABLE_NAME = 'users_sessions';
 
-	/**
-	 * @var \Elgg\Database $db
-	 */
-	protected $db;
+	protected Database $db;
 
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\Database $db The database
+	 * @param Database $db The database
 	 */
-	public function __construct(\Elgg\Database $db) {
+	public function __construct(Database $db) {
 		$this->db = $db;
 	}
 
@@ -50,11 +48,8 @@ class SessionHandler implements \SessionHandlerInterface {
 			->where($select->compare('session', '=', $session_id, ELGG_VALUE_STRING));
 		
 		$result = $this->db->getDataRow($select);
-		if (!empty($result)) {
-			return (string) $result->data;
-		}
 		
-		return '';
+		return $result ? (string) $result->data : '';
 	}
 
 	/**
@@ -62,7 +57,6 @@ class SessionHandler implements \SessionHandlerInterface {
 	 */
 	#[\ReturnTypeWillChange]
 	public function write($session_id, $session_data) {
-		
 		if (elgg_get_config('_disable_session_save')) {
 			return true;
 		}

@@ -16,20 +16,11 @@ use Elgg\Invoker;
  */
 class Seeder {
 
-	/**
-	 * @var EventsService
-	 */
-	protected $events;
+	protected EventsService $events;
 
-	/**
-	 * @var Progress
-	 */
-	protected $progress;
+	protected Progress $progress;
 	
-	/**
-	 * @var Invoker
-	 */
-	protected $invoker;
+	protected Invoker $invoker;
 
 	/**
 	 * Seeder constructor.
