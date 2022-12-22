@@ -67,9 +67,7 @@ trait LegacyQueryOptionsAdapter {
 		$options = $this->normalizeWhereClauses($options);
 		$options = $this->normalizeJoinClauses($options);
 		$options = $this->normalizeOrderByClauses($options);
-		$options = $this->normalizeGroupByClauses($options);
-
-		return $options;
+		return $this->normalizeGroupByClauses($options);
 	}
 
 	/**
@@ -155,10 +153,7 @@ trait LegacyQueryOptionsAdapter {
 	 * @return array
 	 */
 	protected function normalizeAccessOptions(array $options = []) {
-
-		$options = self::normalizePluralOptions($options, ['access_id']);
-
-		return $options;
+		return self::normalizePluralOptions($options, ['access_id']);
 	}
 
 	/**
@@ -732,7 +727,6 @@ trait LegacyQueryOptionsAdapter {
 			foreach ($options[$name] as $key => $value) {
 				if ($value === false || $value === '') {
 					unset($options[$name][$key]);
-					continue;
 				}
 			}
 		}
@@ -792,12 +786,12 @@ trait LegacyQueryOptionsAdapter {
 	protected function removeKeyPrefix($prefix, array $array = []) {
 		foreach ($array as $key => $value) {
 			$new_key = $key;
-			if (strpos($key, $prefix) === 0) {
+			if (str_starts_with($key, $prefix)) {
 				$new_key = substr($key, strlen($prefix));
 			}
 			
 			if (!isset($array[$new_key])) {
-				$array[$new_key] = $array[$key];
+				$array[$new_key] = $value;
 			}
 			
 			if ($new_key !== $key) {
@@ -896,7 +890,7 @@ trait LegacyQueryOptionsAdapter {
 				$condition = preg_replace('/\r|\n/', '', $parts[7]);
 
 				$dbprefix = elgg_get_config('dbprefix');
-				if (!elgg_is_empty($dbprefix) && strpos($table, $dbprefix) === 0) {
+				if (!elgg_is_empty($dbprefix) && str_starts_with($table, $dbprefix)) {
 					$table = substr($table, strlen($dbprefix));
 				}
 

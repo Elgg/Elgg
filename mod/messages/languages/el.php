@@ -17,7 +17,6 @@ return array(
 	'messages:sent' => "Στάλθηκε",
 	'messages:message' => "Μήνυμα",
 	'messages:title' => "Θέμα",
-	'messages:inbox' => "Εισερχόμενα",
 	'messages:sendmessage' => "Αποστολή μηνύματος",
 	'messages:add' => "Σύνθεση μηνύματος",
 	'messages:sentmessages' => "Απεσταλμένα μηνύματα",

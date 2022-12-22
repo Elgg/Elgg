@@ -21,8 +21,7 @@ return array(
 	'reportedcontent:success' => 'Ilmoitus lähetettiin sivuston ylläpitäjälle',
 	'reportedcontent:numbertodisplay' => 'Näytettävien kohteiden määrä',
 	'reportedcontent:user' => 'Ilmianna käyttäjä',
-	'reportedcontent:archived' => 'Ilmoitus arkistoitiin',
-
+	
 	'reportedcontent:failed' => 'Ilmoituksen tekeminen epäonnistui.',
 	'reportedcontent:notarchived' => 'Ilmoituksen arkistoiminen epäonnistui',
 	

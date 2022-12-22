@@ -35,16 +35,15 @@ class ElggApiKey extends ElggObject {
 	public function delete(bool $recursive = true): bool {
 		$public_key = $this->public_key;
 		
-		$result = parent::delete($recursive);
-		if (!$result) {
-			return $result;
+		if (!parent::delete($recursive)) {
+			return false;
 		}
 		
 		if (isset($public_key)) {
 			_elgg_services()->apiUsersTable->removeApiUser($public_key);
 		}
 		
-		return $result;
+		return true;
 	}
 	
 	/**

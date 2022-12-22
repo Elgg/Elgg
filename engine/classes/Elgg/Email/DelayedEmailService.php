@@ -120,8 +120,6 @@ class DelayedEmailService {
 			};
 			
 			$rows = $this->queue_table->getIntervalRows($delivery_interval, $timestamp);
-			
-			/* @var $row DatabaseRecord */
 			foreach ($rows as $row) {
 				$count++;
 				

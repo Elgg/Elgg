@@ -10,20 +10,12 @@ $offset = get_input('offset');
 
 $search_username = (string) get_input('search_username');
 if (!empty($search_username)) {
-	$user = elgg_get_user_by_username($search_username);
-	if ($user) {
-		$user_guid = $user->guid;
-	} else {
-		$user_guid = null;
-	}
+	$user_guid = elgg_get_user_by_username($search_username)?->guid;
 } else {
 	$user_guid = get_input('user_guid');
 	if ($user_guid) {
 		$user_guid = (int) $user_guid;
-		$user = get_entity($user_guid);
-		if ($user) {
-			$search_username = $user->username;
-		}
+		$search_username = get_user($user_guid)?->username;
 	} else {
 		$user_guid = null;
 	}

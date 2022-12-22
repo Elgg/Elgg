@@ -23,11 +23,9 @@ class Seeder extends Seed {
 				'write_access_id' => ACCESS_LOGGED_IN,
 			];
 
+			/* @var $age \ElggPage */
 			$page = $this->createObject($properties);
-			if (!$page) {
-				return;
-			}
-
+			
 			$this->createComments($page);
 			$this->createLikes($page);
 

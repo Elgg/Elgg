@@ -20,7 +20,7 @@ class Breadcrumbs {
 	 * @return void|PreparedMenu
 	 */
 	public static function cleanupBreadcrumbs(\Elgg\Event $event) {
-		/** @var $breadcrumbs PreparedMenu */
+		/* @var $breadcrumbs PreparedMenu */
 		$breadcrumbs = $event->getValue();
 		
 		$items = $breadcrumbs->getItems('default');
@@ -29,7 +29,6 @@ class Breadcrumbs {
 		}
 		
 		$last = null;
-		/** @var $crumb \ElggMenuItem */
 		foreach ($items as $crumb) {
 			$last = $crumb;
 			$crumb->setText(elgg_get_excerpt((string) $crumb->getText(), 100));

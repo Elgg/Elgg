@@ -107,7 +107,7 @@ class File {
 		$relative_path = '';
 		$root_prefix = _elgg_services()->config->dataroot;
 		$path = $this->file->getFilenameOnFilestore();
-		if (substr($path, 0, strlen($root_prefix)) == $root_prefix) {
+		if (str_starts_with($path, $root_prefix)) {
 			$relative_path = substr($path, strlen($root_prefix));
 		}
 

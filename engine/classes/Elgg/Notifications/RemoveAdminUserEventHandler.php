@@ -14,6 +14,8 @@ class RemoveAdminUserEventHandler extends NotificationEventHandler {
 	/**
 	 * Tells if the recipient is the user being changed
 	 *
+	 * @param \ElggUser $recipient the recipient to check
+	 *
 	 * @return bool
 	 */
 	protected function recipientIsChangedUser(\ElggUser $recipient): bool {

@@ -267,7 +267,6 @@ class ApiMethod implements CollectionItemInterface {
 	 * @throws \APIException
 	 */
 	protected function typeCastParameter(string $key, $value, string $type) {
-		
 		if (is_null($value)) {
 			return null;
 		}
@@ -303,8 +302,6 @@ class ApiMethod implements CollectionItemInterface {
 			default:
 				throw new \APIException(elgg_echo('APIException:UnrecognisedTypeCast', [$type, $key, $this->method]));
 		}
-		
-		return $value;
 	}
 	
 	/**

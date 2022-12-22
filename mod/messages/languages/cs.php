@@ -18,7 +18,6 @@ return array(
 	'messages:message' => "Zpráva",
 	'messages:title' => "Předmět",
 	'messages:to:help' => "Sem zadejte uživatelské jméno příjemce.",
-	'messages:inbox' => "Doručené",
 	'messages:sendmessage' => "Odeslat zprávu",
 	'messages:add' => "Vytvořit zprávu",
 	'messages:sentmessages' => "Odeslané zprávy",

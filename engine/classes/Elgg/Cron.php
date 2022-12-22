@@ -114,7 +114,7 @@ class Cron {
 		$msg = elgg_echo('admin:cron:started', [$interval, $time->format(DATE_RFC2822)]) . PHP_EOL;
 		$msg .= elgg_echo('admin:cron:started:actual', [$interval, $now->format(DATE_RFC2822)]) . PHP_EOL;
 
-		$this->log('output', $interval, $msg);
+		$this->cronLog('output', $interval, $msg);
 	}
 
 	/**
@@ -167,8 +167,8 @@ class Cron {
 
 		$time = new \DateTime();
 
-		$this->log('output', $interval, $output);
-		$this->log('completion', $interval, $time->getTimestamp());
+		$this->cronLog('output', $interval, $output);
+		$this->cronLog('completion', $interval, $time->getTimestamp());
 
 		$this->getLogger()->info($output);
 
@@ -184,7 +184,7 @@ class Cron {
 	 *
 	 * @return void
 	 */
-	protected function log($setting, $interval, $msg = '') {
+	protected function cronLog($setting, $interval, $msg = '') {
 		$suffix = $setting ?: 'output';
 		
 		$fh = new \ElggFile();

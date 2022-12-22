@@ -21,8 +21,7 @@ return array(
 	'reportedcontent:success' => 'Din rapport har skickats till webbplatsens admin',
 	'reportedcontent:numbertodisplay' => 'Antal anmälningar att visa',
 	'reportedcontent:user' => 'Anmäl användare',
-	'reportedcontent:archived' => 'Anmälan har arkiverats',
-
+	
 	'reportedcontent:failed' => 'Tyvärr, försöket att anmäla det här innehållet misslyckades.',
 	'reportedcontent:notarchived' => 'Vi kunde inte arkivera den anmälan',
 	

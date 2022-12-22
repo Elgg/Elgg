@@ -18,7 +18,6 @@ return array(
 	'messages:message' => "Wiadomość",
 	'messages:title' => "Tytuł",
 	'messages:to:help' => "Wpisz nazwę adresata.",
-	'messages:inbox' => "Skrzynka odbiorcza",
 	'messages:sendmessage' => "Wyślij wiadomość",
 	'messages:add' => "Utwórz wiadomość",
 	'messages:sentmessages' => "Wysłane wiadomości",

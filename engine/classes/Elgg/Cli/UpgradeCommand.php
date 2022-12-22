@@ -97,7 +97,7 @@ class UpgradeCommand extends BaseCommand {
 		$app->start();
 
 		// run async upgrades
-		$upgrades = _elgg_services()->upgrades->getPendingUpgrades($async);
+		$upgrades = _elgg_services()->upgrades->getPendingUpgrades(true);
 		$job = _elgg_services()->upgrades->run($upgrades);
 
 		$job->done(

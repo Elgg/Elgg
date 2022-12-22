@@ -18,7 +18,6 @@ return array(
 	'messages:message' => "Bericht",
 	'messages:title' => "Titel",
 	'messages:to:help' => "Schrijf hier de gebruikersnaam van de ontvanger.",
-	'messages:inbox' => "Postvak In",
 	'messages:sendmessage' => "Verstuur een bericht",
 	'messages:add' => "Schrijf een bericht",
 	'messages:sentmessages' => "Verstuurde berichten",

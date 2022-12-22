@@ -47,13 +47,3 @@
 		opacity: 1;
 	}
 }
-
-/* ***************************************
-	AVATAR UPLOADING & CROPPING
-*************************************** */
-#current-user-avatar {
-	border-right: 1px solid $(border-color-soft);
-}
-#avatar-croppingtool {
-	border-top: 1px solid $(border-color-soft);
-}

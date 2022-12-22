@@ -54,7 +54,7 @@ define(['jquery', 'elgg'], function ($, elgg) {
 						$container.find('.elgg-pagination a').each(function () {
 							if (normalize(this.href) === base_url) {
 								$(this).on('click', function () {
-									location.reload(true);
+									location.reload();
 								});
 							}
 						});

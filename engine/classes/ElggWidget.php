@@ -106,7 +106,7 @@ class ElggWidget extends \ElggObject {
 
 			// split the array in two and recombine with the moved widget in middle
 			$before = array_slice($widgets, 0, $rank);
-			array_push($before, $this);
+			$before[] = $this;
 			$after = array_slice($widgets, $rank);
 			$widgets = array_merge($before, $after);
 			ksort($widgets);

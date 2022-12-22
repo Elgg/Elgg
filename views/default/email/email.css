@@ -82,7 +82,7 @@ table td {border-collapse: collapse;}
 More info : http://www.campaignmonitor.com/blog/post/3694/removing-spacing-from-around-tables-in-outlook-2007-and-2010/
 Bring inline: Yes
 **/
-table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+table { border-collapse:collapse; mso-table-lspace:0; mso-table-rspace:0; }
 
 /* Styling your links has become much simpler with the new Yahoo.  In fact, it falls in line with the main credo of styling in email, bring your styles inline.
 Your link colors will be uniform across clients when brought inline.

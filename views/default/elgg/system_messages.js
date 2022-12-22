@@ -59,8 +59,8 @@ define(['jquery', 'elgg'], function ($, elgg) {
 			classes.push('elgg-message-' + type);
 		}
 		
-		//validate delay.  Must be a positive integer.
-		delay = parseInt(delay, 10);
+		// validate delay. Must be a positive integer.
+		delay = (typeof delay === 'string') ? parseInt(delay, 10) : delay;
 		if (isNaN(delay) || delay < 0) {
 			delay = 0;
 		}
@@ -70,7 +70,7 @@ define(['jquery', 'elgg'], function ($, elgg) {
 			messages_html.push('<li><div class="' + classes.join(' ') + '"><div class="elgg-inner"><div class="elgg-body">' + msg + '</div></div></div></li>');
 		});
 		
-		$new_messages = $(messages_html.join('')).appendTo($('ul.elgg-system-messages'));
+		var $new_messages = $(messages_html.join('')).appendTo($('ul.elgg-system-messages'));
 		if (delay > 0) {
 			$new_messages.animate({opacity: '1.0'}, delay).fadeOut('slow')
 		}

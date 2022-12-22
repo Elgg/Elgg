@@ -22,8 +22,7 @@ return array(
 	'reportedcontent:success' => 'Chaidh an aithris agad a chur don rianaire',
 	'reportedcontent:numbertodisplay' => 'An àireamh de dh\'aithrisean a chithear',
 	'reportedcontent:user' => 'Dèan aithris air a\' chleachdaiche',
-	'reportedcontent:archived' => 'Chaidh an aithris a chur san tasg-lann',
-
+	
 	'reportedcontent:failed' => 'Tha sinn duilich, dh\'fhàillig an oidhirp gus aithris a dhèanamh air an t-susbaint seo.',
 	'reportedcontent:notarchived' => 'Cha b\' urrainn dhuinn an aithris sin a chur san tasg-lann',
 	

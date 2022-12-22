@@ -107,7 +107,6 @@ abstract class ElggExtender extends \ElggData {
 					default:
 						$msg = "{$this->attributes['value_type']} is not a supported \ElggExtender value type.";
 						throw new ElggUnexpectedValueException($msg);
-						break;
 				}
 			}
 

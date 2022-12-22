@@ -46,7 +46,7 @@ class Logger {
 		// check if this event is part of a sequence and can't be logged yet
 		// so we can delay the logging to the :after event
 		$sequence_id = $event->getSequenceID();
-		if (isset($sequence_id) && strpos($name, ':after') === false && strpos($name, ':before')) {
+		if (isset($sequence_id) && str_ends_with($name, ':before')) {
 			$object = $event->getObject();
 			if ($object instanceof \ElggData && empty($object->getSystemLogID())) {
 				self::$sequence_ids[$sequence_id] = $sequence_id;
@@ -54,8 +54,8 @@ class Logger {
 		}
 		
 		// validate :before and :after events
-		if (strpos($name, ':after') > 0 || strpos($name, ':before') > 0) {
-			if (isset($sequence_id) && isset(self::$sequence_ids[$sequence_id]) && strpos($name, ':after') > 0) {
+		if (str_ends_with($name, ':after') || str_ends_with($name, ':before')) {
+			if (isset($sequence_id) && isset(self::$sequence_ids[$sequence_id]) && str_ends_with($name, ':after')) {
 				// this was a delayed event sequence
 				unset(self::$sequence_ids[$sequence_id]);
 			} elseif (!elgg()->events->hasHandler($name, $type) && !elgg()->events->hasHandler($name, 'all')) {

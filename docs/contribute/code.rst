@@ -180,20 +180,20 @@ Otherwise you may need to perform an interactive rebase:
 Coding Standards
 ================
 
-Elgg uses set of standards that are based partially on PEAR and PSR2 standards. You can view the ruleset in ``vendor/elgg/sniffs/elgg.xml``.
+Elgg uses set of standards that are based partially on PEAR and PSR2 standards. You can view the ruleset in ``vendor/elgg/sniffs/src/Elgg/ruleset.xml``.
 
 To check your code for standard violations (provided you have installed Elgg with dev dependencies), run:
 
 .. code-block:: sh
 
-    phpcs --standard=vendor/elgg/sniffs/elgg.xml -s path/to/dir/to/check
+    phpcs --standard=vendor/elgg/sniffs/src/Elgg -s path/to/dir/to/check
 
 
 To automatically fix fixable violations, run:
 
 .. code-block:: sh
 
-    phpcbf --standard=vendor/elgg/sniffs/elgg.xml path/to/dir/to/fix
+    phpcbf --standard=vendor/elgg/sniffs/src/Elgg path/to/dir/to/fix
 
 
 .. _contribute/code#testing:
@@ -516,9 +516,9 @@ It is OK to use ``<?=`` since it is always enabled as of PHP 5.4.
 When creating strings with variables:
 
 * use double-quoted strings
-* wrap variables with braces only when necessary.
+* wrap variables with braces
 
-Bad (hard to read, misuse of quotes and {}s):
+Bad (hard to read):
 
 .. code-block:: php
 
@@ -528,7 +528,7 @@ Good:
 
 .. code-block:: php
 
-	echo "Hello, $name!  How is your $time_of_day?";
+	echo "Hello, {$name}!  How is your {$time_of_day}?";
 
 Remove trailing whitespace at the end of lines.
 

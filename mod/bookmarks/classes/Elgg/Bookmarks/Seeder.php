@@ -23,11 +23,9 @@ class Seeder extends Seed {
 				'address' => $this->faker()->url,
 			];
 
+			/* @var $bookmark \ElggBookmark */
 			$bookmark = $this->createObject($properties);
-			if (!$bookmark) {
-				continue;
-			}
-
+			
 			$this->createComments($bookmark);
 			$this->createLikes($bookmark);
 

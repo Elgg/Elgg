@@ -32,7 +32,6 @@ class ThreadPreloaderService {
 		
 		$guids = [];
 		$container_guid = 0;
-		/* @var $comment \ElggComment */
 		foreach ($comments as $comment) {
 			$guids[] = $comment->guid;
 			$container_guid = $comment->container_guid;

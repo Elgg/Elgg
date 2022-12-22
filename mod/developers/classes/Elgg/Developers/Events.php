@@ -69,9 +69,8 @@ class Events {
 		
 		$output = $event->getValue();
 		$output = preg_replace('~^<nav\b[^>]+>~', '', $output);
-		$output = preg_replace('~^</nav>$~', '', $output);
 		
-		return $output;
+		return preg_replace('~^</nav>$~', '', $output);
 	}
 	
 	/**

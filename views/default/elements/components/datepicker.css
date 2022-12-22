@@ -8,7 +8,7 @@
 	border-radius: 2px;
 	overflow: hidden;
 	min-width: 300px;
-	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 	border-top: 1px solid $(border-color-soft);
 	background: #fff;
 }
@@ -87,7 +87,7 @@
 	.ui-state-active,
 	.ui-state-active.ui-state-hover {
 		border: 1px solid $(border-color-highlight);
-		box-shadow: 0 0 0 0px $(border-color-strong) inset;
+		box-shadow: 0 0 0 0 $(border-color-strong) inset;
 		font-weight: normal;
 		color: $(text-color-highlight);
 		background: $(background-color-soft);

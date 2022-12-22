@@ -223,7 +223,7 @@ class Composer {
 	public function assertRequiredPhpExtensions() {
 		$requirements = $this->configuration->dependencies();
 		foreach ($requirements as $name => $constraint) {
-			if (strpos($name, 'ext-') !== 0) {
+			if (!str_starts_with($name, 'ext-')) {
 				continue;
 			}
 			

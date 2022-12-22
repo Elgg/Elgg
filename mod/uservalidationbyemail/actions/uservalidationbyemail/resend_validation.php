@@ -19,7 +19,6 @@ $error = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function () use ($user_guids) {
 		// don't resend emails to validated users
 		if ($user->isValidated() !== false || !uservalidationbyemail_request_validation($guid)) {
 			$error = true;
-			continue;
 		}
 	}
 	

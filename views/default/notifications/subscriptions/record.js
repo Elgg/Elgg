@@ -2,10 +2,10 @@ define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 	$(document).on('click', '.elgg-subscription-details-toggle', function() {
 		var ajax = new Ajax();
 		
-		$subscription_container = $(this).closest('.elgg-subscription-container');
+		var $subscription_container = $(this).closest('.elgg-subscription-container');
 		$subscription_container.find('.elgg-subscription-details-toggle').toggleClass('hidden');
 		
-		$details_container = $subscription_container.next();
+		var $details_container = $subscription_container.next();
 		if ($details_container.is(':visible')) {
 			$details_container.hide();
 		} else {
@@ -24,14 +24,14 @@ define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 
 	$(document).on('change', '.elgg-subscription-details .elgg-input-checkbox', function() {
 		// mark container checkboxes as disabled
-		$record = $(this).closest('.elgg-subscription-record');
+		var $record = $(this).closest('.elgg-subscription-record');
 		$record.find('.elgg-subscription-methods .elgg-input-checkbox').prop('disabled', true).prop('checked', false);
 		$record.find('.elgg-subscription-details-toggle').addClass('elgg-state-active');
 	});
 	
 	$(document).on('click', '.elgg-subscription-container-details .elgg-subscriptions-details-reset', function() {
-		$record = $(this).closest('.elgg-subscription-record');
-		$details = $record.find('.elgg-subscription-container-details');
+		var $record = $(this).closest('.elgg-subscription-record');
+		var $details = $record.find('.elgg-subscription-container-details');
 		$details.find('.elgg-input-checkbox').prop('checked', false);
 		$details.hide();
 		

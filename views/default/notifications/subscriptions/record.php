@@ -33,7 +33,7 @@ $relationships_concat = $entity->getVolatileData('select:relationships');
 if (isset($relationships_concat)) {
 	$relationships = explode(',', $relationships_concat);
 	foreach ($relationships as $relationship) {
-		if (strpos($relationship, 'notify:') === false) {
+		if (!str_contains($relationship, 'notify:')) {
 			continue;
 		}
 		

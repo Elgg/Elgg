@@ -187,6 +187,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 *
 	 * @param mixed $key   String key or an associative array of key/value pairs
 	 * @param mixed $value The value if $key is a string
+	 *
 	 * @return void
 	 */
 	public function setData($key, $value = null) {
@@ -201,20 +202,18 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Get stored data
 	 *
 	 * @param string $key The key for the requested key/value pair
+	 *
 	 * @return mixed
 	 */
 	public function getData($key) {
-		if (isset($this->data[$key])) {
-			return $this->data[$key];
-		} else {
-			return null;
-		}
+		return $this->data[$key] ?? null;
 	}
 
 	/**
 	 * Set the identifier of the menu item
 	 *
 	 * @param string $name Unique identifier
+	 *
 	 * @return void
 	 */
 	public function setName($name) {
@@ -253,6 +252,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Set the URL of the menu item
 	 *
 	 * @param string $href URL or false if not a link
+	 *
 	 * @return void
 	 */
 	public function setHref($href) {
@@ -272,6 +272,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Set the contexts that this menu item is available for
 	 *
 	 * @param array $contexts An array of context strings. Use 'all' to match all contexts.
+	 *
 	 * @return void
 	 */
 	public function setContext($contexts) {
@@ -296,6 +297,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 *
 	 * @param string $context A context string (default is empty string for
 	 *                        current context stack).
+	 *
 	 * @return bool
 	 */
 	public function inContext($context = '') {
@@ -320,6 +322,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Set the selected flag
 	 *
 	 * @param bool $state Selected state (default is true)
+	 *
 	 * @return void
 	 */
 	public function setSelected($state = true) {
@@ -348,6 +351,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Set the tool tip text
 	 *
 	 * @param string $text The text of the tool tip
+	 *
 	 * @return void
 	 */
 	public function setTooltip($text) {
@@ -367,6 +371,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Set the confirm text shown when link is clicked
 	 *
 	 * @param string $text The text to show
+	 *
 	 * @return void
 	 */
 	public function setConfirmText($text) {
@@ -386,6 +391,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Set the anchor class
 	 *
 	 * @param mixed $class An array of class names, or a single string class name.
+	 *
 	 * @return void
 	 */
 	public function setLinkClass($class) {
@@ -409,6 +415,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Add a link class
 	 *
 	 * @param mixed $class An array of class names, or a single string class name.
+	 *
 	 * @return void
 	 */
 	public function addLinkClass($class) {
@@ -419,6 +426,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Set required AMD modules
 	 *
 	 * @param string[]|string $modules One or more required AMD modules
+	 *
 	 * @return void
 	 */
 	public function setDeps($modules) {
@@ -441,6 +449,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Add required AMD modules
 	 *
 	 * @param string[]|string $modules One or more required AMD modules
+	 *
 	 * @return void
 	 */
 	public function addDeps($modules) {
@@ -452,6 +461,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Set child menu options for a parent item
 	 *
 	 * @param array $options Options
+	 *
 	 * @return void
 	 */
 	public function setChildMenuOptions(array $options = []) {
@@ -471,6 +481,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Set the li classes
 	 *
 	 * @param mixed $class An array of class names, or a single string class name.
+	 *
 	 * @return void
 	 */
 	public function setItemClass($class) {
@@ -502,6 +513,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Add a li class
 	 *
 	 * @param mixed $class An array of class names, or a single string class name.
+	 *
 	 * @return void
 	 * @since 1.9.0
 	 */
@@ -514,6 +526,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 *
 	 * @param array $current    The current array of classes
 	 * @param mixed $additional Additional classes (either array of string)
+	 *
 	 * @return void
 	 */
 	protected function addClass(array &$current, $additional) {
@@ -528,6 +541,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Set the priority of the menu item
 	 *
 	 * @param int $priority The smaller numbers mean higher priority (1 before 100)
+	 *
 	 * @return void
 	 */
 	public function setPriority(int $priority) {
@@ -547,6 +561,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Set the section identifier
 	 *
 	 * @param string $section The identifier of the section
+	 *
 	 * @return void
 	 */
 	public function setSection($section) {
@@ -566,6 +581,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Set the parent identifier
 	 *
 	 * @param string $name The identifier of the parent \ElggMenuItem
+	 *
 	 * @return void
 	 */
 	public function setParentName($name) {
@@ -585,6 +601,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Set the parent menu item
 	 *
 	 * @param \ElggMenuItem $parent The parent of this menu item
+	 *
 	 * @return void
 	 *
 	 * @internal This is reserved for the \ElggMenuBuilder
@@ -608,6 +625,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Add a child menu item
 	 *
 	 * @param \ElggMenuItem $item A child menu item
+	 *
 	 * @return void
 	 *
 	 * @internal This is reserved for the \ElggMenuBuilder
@@ -620,6 +638,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Set the menu item's children
 	 *
 	 * @param ElggMenuItem[] $children Array of items
+	 *
 	 * @return void
 	 *
 	 * @internal This is reserved for the \ElggMenuBuilder
@@ -672,6 +691,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 
 	/**
 	 * Get unique item identifier within a collection
+	 *
 	 * @return string|int
 	 */
 	public function getID() {

@@ -21,8 +21,7 @@ return array(
 	'reportedcontent:success' => 'Din rapport er blevet sendt til administrationen',
 	'reportedcontent:numbertodisplay' => 'Antal rapporter, der skal vises',
 	'reportedcontent:user' => 'Rapporter bruger',
-	'reportedcontent:archived' => 'Rapporten er blevet arkiveret',
-
+	
 	'reportedcontent:failed' => 'Beklager, forsøget på at rapportere dette indhold fejlede.',
 	'reportedcontent:notarchived' => 'Vi kunne ikke arkivere denne rapport',
 	

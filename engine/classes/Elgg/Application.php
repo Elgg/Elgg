@@ -266,11 +266,7 @@ class Application {
 		$spec = array_merge($defaults, $spec);
 
 		if ($spec['set_start_time']) {
-			/**
-			 * The time with microseconds when the Elgg engine was started.
-			 *
-			 * @global float
-			 */
+			// The time with microseconds when the Elgg engine was started.
 			if (!isset($GLOBALS['START_MICROTIME'])) {
 				$GLOBALS['START_MICROTIME'] = microtime(true);
 			}
@@ -398,7 +394,6 @@ class Application {
 	 * Routes the request, booting core if not yet booted
 	 *
 	 * @return Response|false False if Elgg wants the PHP CLI server to handle the request
-	 * @throws PageNotFoundException
 	 */
 	public function run() {
 		$config = $this->internal_services->config;
@@ -416,7 +411,7 @@ class Application {
 				$config->wwwroot_cli_server = $www_root;
 			}
 
-			if (strpos($request->getElggPath(), '/cache/') === 0) {
+			if (str_starts_with($request->getElggPath(), '/cache/')) {
 				$config->_disable_session_save = true;
 				$response = $this->internal_services->cacheHandler->handleRequest($request, $this)->prepare($request);
 				self::getResponseTransport()->send($response);
@@ -433,7 +428,7 @@ class Application {
 				return $response;
 			}
 
-			if (strpos($request->getElggPath(), '/serve-file/') === 0) {
+			if (str_starts_with($request->getElggPath(), '/serve-file/')) {
 				$config->_disable_session_save = true;
 				$response = $this->internal_services->serveFileHandler->getResponse($request);
 				self::getResponseTransport()->send($response);

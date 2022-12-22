@@ -18,7 +18,6 @@ return array(
 	'messages:message' => "Сообщение",
 	'messages:title' => "Тема",
 	'messages:to:help' => "Напишите здесь имя пользователя получателя.",
-	'messages:inbox' => "Входящие",
 	'messages:sendmessage' => "Отправить сообщение",
 	'messages:add' => "Написать сообщение",
 	'messages:sentmessages' => "Отравленные сообщения",

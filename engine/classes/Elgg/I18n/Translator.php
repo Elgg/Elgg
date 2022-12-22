@@ -57,7 +57,7 @@ class Translator {
 		$this->config = $config;
 		$this->locale = $locale;
 		
-		$this->defaultPath = dirname(dirname(dirname(dirname(__DIR__)))) . '/languages/';
+		$this->defaultPath = dirname(__DIR__, 4) . '/languages/';
 		
 		$this->registerLanguagePath($this->defaultPath);
 	}
@@ -359,7 +359,7 @@ class Translator {
 		$return = true;
 		while (($language_file = readdir($handle)) !== false) {
 			// ignore bad files
-			if (substr($language_file, 0, 1) == '.' || substr($language_file, -4) !== '.php') {
+			if (str_starts_with($language_file, '.') || !str_ends_with($language_file, '.php')) {
 				continue;
 			}
 

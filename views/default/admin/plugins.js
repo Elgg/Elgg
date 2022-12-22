@@ -26,7 +26,7 @@ define(['jquery', 'elgg/spinner', 'elgg/Ajax', 'elgg/system_messages', 'elgg/sec
 	/**
 	 * Active or deactivate all the visible plugins
 	 *
-	 * @param {Event} e click event
+	 * @param {Event} event click event
 	 * @return void
 	 */
 	function toggleAllPlugins(event) {

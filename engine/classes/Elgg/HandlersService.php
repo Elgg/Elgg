@@ -130,7 +130,7 @@ class HandlersService {
 			$file = $ref->getFileName();
 			$line = $ref->getStartLine();
 
-			if ($file_root && strpos($file, $file_root) === 0) {
+			if ($file_root && str_starts_with($file, $file_root)) {
 				$file = substr($file, strlen($file_root));
 			}
 

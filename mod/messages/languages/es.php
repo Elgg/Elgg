@@ -17,7 +17,6 @@ return array(
 	'messages:sent' => "Enviado",
 	'messages:message' => "Mensaje",
 	'messages:title' => "Asunto",
-	'messages:inbox' => "Bandeja de entrada",
 	'messages:sendmessage' => "Enviar un mensaje",
 	'messages:add' => "Escribir un mensaje",
 	'messages:sentmessages' => "Mensajes enviados",

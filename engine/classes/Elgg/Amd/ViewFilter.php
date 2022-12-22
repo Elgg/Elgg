@@ -24,7 +24,7 @@ class ViewFilter {
 		}
 
 		// must be in "js/" dir
-		if (strpos($name, 'js/') !== 0) {
+		if (!str_starts_with($name, 'js/')) {
 			return '';
 		}
 		

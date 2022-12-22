@@ -5,7 +5,7 @@
 
 use Elgg\Exceptions\PluginException;
 
-$root = dirname(dirname(__DIR__));
+$root = dirname(__DIR__, 2);
 require_once "$root/autoloader.php";
 
 \Elgg\Application::start();

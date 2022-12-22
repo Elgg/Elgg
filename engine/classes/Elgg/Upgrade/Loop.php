@@ -186,7 +186,7 @@ class Loop {
 			$ts = $this->upgrade->getCompletedTime();
 			$dt = new \DateTime();
 			$dt->setTimestamp((int) $ts);
-			$format = elgg_get_config('date_format') ?: DATE_ISO8601;
+			$format = elgg_get_config('date_format') ?: DATE_ATOM;
 
 			if ($this->result->getFailureCount()) {
 				elgg_register_error_message(elgg_echo('admin:upgrades:completed:errors', [

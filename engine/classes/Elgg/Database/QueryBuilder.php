@@ -88,7 +88,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 			return $table;
 		}
 		
-		if (strpos($table, $prefix) !== 0) {
+		if (!str_starts_with($table, $prefix)) {
 			return "{$prefix}{$table}";
 		}
 
@@ -204,11 +204,11 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 *
 	 * @internal Use create() method on the extending class
 	 */
-	public function from($table, $alias = null) {
-		$this->table_name = $table;
+	public function from($from, $alias = null) {
+		$this->table_name = $from;
 		$this->table_alias = $alias;
 
-		return parent::from($this->prefix($table), $alias);
+		return parent::from($this->prefix($from), $alias);
 	}
 
 	/**
@@ -227,11 +227,11 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 *
 	 * @internal Use create() method on the extending class
 	 */
-	public function update($table = null, $alias = null) {
-		$this->table_name = $table;
+	public function update($update = null, $alias = null) {
+		$this->table_name = $update;
 		$this->table_alias = $alias;
 
-		return parent::update($this->prefix($table), $alias);
+		return parent::update($this->prefix($update), $alias);
 	}
 
 	/**
@@ -239,11 +239,11 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 *
 	 * @internal Use create() method on the extending class
 	 */
-	public function delete($table = null, $alias = null) {
-		$this->table_name = $table;
+	public function delete($delete = null, $alias = null) {
+		$this->table_name = $delete;
 		$this->table_alias = $alias;
 
-		return parent::delete($this->prefix($table), $alias);
+		return parent::delete($this->prefix($delete), $alias);
 	}
 
 	/**

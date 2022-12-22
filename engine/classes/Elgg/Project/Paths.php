@@ -29,7 +29,7 @@ class Paths {
 
 			// Assumes composer vendor location hasn't been customized...
 			if (!is_file("{$path}vendor/autoload.php")) {
-				$path = dirname(dirname(dirname($path))) . DIRECTORY_SEPARATOR;
+				$path = dirname($path, 3) . DIRECTORY_SEPARATOR;
 			}
 		}
 
@@ -42,7 +42,7 @@ class Paths {
 	 * @return string
 	 */
 	public static function elgg(): string {
-		return dirname(dirname(dirname(dirname(__DIR__)))) . DIRECTORY_SEPARATOR;
+		return dirname(__DIR__, 4) . DIRECTORY_SEPARATOR;
 	}
 
 	/**

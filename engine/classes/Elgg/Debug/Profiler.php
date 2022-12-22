@@ -155,7 +155,7 @@ class Profiler {
 			return false;
 		}
 		
-		$has_own_markers = isset($times[Timer::MARKER_BEGIN]) && isset($times[Timer::MARKER_BEGIN]);
+		$has_own_markers = isset($times[Timer::MARKER_BEGIN], $times[Timer::MARKER_BEGIN]);
 		unset($times[Timer::MARKER_BEGIN], $times[Timer::MARKER_END]);
 
 		$total = $this->diffMicrotime($begin, $end);

@@ -218,7 +218,7 @@ function _elgg_htmlawed_tag_post_processor(string $element, array|false $attribu
 
 			$style_str = '';
 			foreach ($styles as $style) {
-				if (!trim($style) || strpos($style, ':') === false) {
+				if (!trim($style) || !str_contains($style, ':')) {
 					continue;
 				}
 				

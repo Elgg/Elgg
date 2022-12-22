@@ -196,12 +196,12 @@ class ViewsService {
 		$extension = pathinfo($canonical, PATHINFO_EXTENSION);
 		$hasValidFileExtension = isset(CacheHandler::$extensions[$extension]);
 
-		if (strpos($canonical, 'js/') === 0) {
+		if (str_starts_with($canonical, 'js/')) {
 			$canonical = substr($canonical, 3);
 			if (!$hasValidFileExtension) {
 				$canonical .= '.js';
 			}
-		} else if (strpos($canonical, 'css/') === 0) {
+		} else if (str_starts_with($canonical, 'css/')) {
 			$canonical = substr($canonical, 4);
 			if (!$hasValidFileExtension) {
 				$canonical .= '.css';
@@ -369,11 +369,7 @@ class ViewsService {
 	 * @return string[]
 	 */
 	public function getViewList(string $view): array {
-		if (isset($this->extensions[$view])) {
-			return $this->extensions[$view];
-		} else {
-			return [self::BASE_VIEW_PRIORITY => $view];
-		}
+		return $this->extensions[$view] ?? [self::BASE_VIEW_PRIORITY => $view];
 	}
 
 	/**
@@ -393,7 +389,7 @@ class ViewsService {
 		$view = self::canonicalizeViewName($view);
 
 		// basic checking for bad paths
-		if (strpos($view, '..') !== false) {
+		if (str_contains($view, '..')) {
 			return '';
 		}
 
@@ -700,7 +696,7 @@ class ViewsService {
 		while (($view_type = readdir($handle)) !== false) {
 			$view_type_dir = $view_dir . $view_type;
 
-			if (substr($view_type, 0, 1) !== '.' && is_dir($view_type_dir)) {
+			if (!str_starts_with($view_type, '.') && is_dir($view_type_dir)) {
 				if (!$this->autoregisterViews('', $view_type_dir, $view_type)) {
 					return false;
 				}
@@ -733,7 +729,7 @@ class ViewsService {
 						$path = Directory\Local::projectRoot()->getPath($path);
 					}
 
-					if (substr($view, -1) === '/') {
+					if (str_ends_with($view, '/')) {
 						// prefix
 						$this->autoregisterViews($view, $path, $viewtype);
 					} else {

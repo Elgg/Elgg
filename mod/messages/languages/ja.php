@@ -18,7 +18,6 @@ return array(
 	'messages:message' => "メッセージ",
 	'messages:title' => "タイトル",
 	'messages:to:help' => "受取人のユーザ名を入力してください。",
-	'messages:inbox' => "受信箱",
 	'messages:sendmessage' => "メッセージの送信",
 	'messages:add' => "メッセージの作成",
 	'messages:sentmessages' => "送信済みメッセージ",

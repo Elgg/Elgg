@@ -332,7 +332,7 @@ class Request extends SymfonyRequest {
 		$base_url = $this->getBaseUrl();
 
 		// baseURL may end with the PHP script
-		if (substr($base_url, -4) === '.php') {
+		if (str_ends_with($base_url, '.php')) {
 			$base_url = dirname($base_url);
 		}
 

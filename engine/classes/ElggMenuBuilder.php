@@ -103,9 +103,8 @@ class ElggMenuBuilder {
 	protected function prepare(MenuItems $items, $sort_by = 'priority') {
 		$menu = $this->setupSections($items);
 		$menu = $this->setupTrees($menu);
-		$menu = $this->sort($menu, $sort_by);
-
-		return $menu;
+		
+		return $this->sort($menu, $sort_by);
 	}
 
 	/**
@@ -207,8 +206,6 @@ class ElggMenuBuilder {
 					// menu item already existed in parents children, report the duplicate registration
 					$message = _elgg_services()->translator->translate('ElggMenuBuilder:Trees:DuplicateChild', [$menu_item_name]);
 					_elgg_services()->logger->notice($message);
-
-					continue;
 				}
 			}
 			

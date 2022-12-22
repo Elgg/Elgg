@@ -604,12 +604,9 @@ trait Seeding {
 	 * @return int
 	 */
 	public function getRandomAccessId(\ElggUser $user = null, \ElggEntity $container = null) {
-
-		$params = [
-			'container_guid' => $container ? $container->guid : null,
-		];
-
-		$access_array = elgg_get_write_access_array($user->guid, false, $params);
+		$access_array = elgg_get_write_access_array($user->guid, false, [
+			'container_guid' => $container?->guid,
+		]);
 
 		return array_rand($access_array, 1);
 	}

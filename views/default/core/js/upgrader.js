@@ -68,12 +68,10 @@ define(['jquery', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup', 'elgg/system_messag
 	/**
 	 * Takes care of processing a single upgrade in multiple batches
 	 *
-	 * @param bool advanceToNextWhenDone when the upgrade is done shoul it continue to the next available
+	 * @param {bool} advanceToNextWhenDone when the upgrade is done should it continue to the next available
 	 */
 	function runUpgrade(advanceToNextWhenDone) {
-		
 		if (typeof advanceToNextWhenDone !== 'boolean') {
-			// IE doesn't support default function params
 			advanceToNextWhenDone = true;
 		}
 		
@@ -84,7 +82,7 @@ define(['jquery', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup', 'elgg/system_messag
 		timer = upgrade.find('.upgrade-timer');
 		messageList = upgrade.find('.upgrade-messages');
 		errorCounter = upgrade.find('.upgrade-error-counter');
-		data = upgrade.find('.upgrade-data');
+		var data = upgrade.find('.upgrade-data');
 
 		// The total amount of items to be upgraded
 		total = data.attr('data-total');
@@ -107,7 +105,7 @@ define(['jquery', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup', 'elgg/system_messag
 	/**
 	 * Takes care of upgrading a single batch of items
 	 *
-	 * @param bool advanceToNextWhenDone when the upgrade is done shoul it continue to the next available
+	 * @param {bool} advanceToNextWhenDone when the upgrade is done shoul it continue to the next available
 	 */
 	function processBatch(advanceToNextWhenDone) {
 		
@@ -158,7 +156,7 @@ define(['jquery', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup', 'elgg/system_messag
 					fakeDone = Math.round(FAKE_TOTAL - (FAKE_TOTAL - fakeDone) / 2);
 					progressbar.progressbar({value: fakeDone});
 				} else {
-					percentage = parseInt(numProcessed * 100 / total);
+					percentage = Math.round(numProcessed * 100 / total);
 					progressbar.progressbar({value: numProcessed});
 				}
 	
@@ -214,7 +212,7 @@ define(['jquery', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup', 'elgg/system_messag
 	
 				// carry on...
 				if (total != UNKNOWN_COUNT) {
-					percentage = parseInt(numProcessed * 100 / total);
+					percentage = Math.round(numProcessed * 100 / total);
 					// Increase percentage
 					percent.html(percentage + '%');
 				}
@@ -253,7 +251,7 @@ define(['jquery', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup', 'elgg/system_messag
 				var hours = '00';
 			} else {
 				var hours = Math.floor(timeLeft / 3600);
-				var timeLeft = timeLeft % 3600;
+				timeLeft = timeLeft % 3600;
 				var minutes = Math.floor(timeLeft / 60);
 				var seconds = timeLeft % 60;
 			}
@@ -272,10 +270,11 @@ define(['jquery', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup', 'elgg/system_messag
 	 * Rounds hours, minutes or seconds and adds a leading zero if necessary
 	 *
 	 * @param {String} time
+	 *
 	 * @return {String} time
 	 */
 	function formatDigits(time) {
-		time = Math.floor(time);
+		time = Math.floor(parseInt(time));
 
 		if (time < 1) {
 			return '00';

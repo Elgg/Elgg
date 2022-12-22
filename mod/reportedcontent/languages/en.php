@@ -24,8 +24,7 @@ return array(
 	'reportedcontent:numbertodisplay' => 'Number of reports to display',
 	'reportedcontent:user' => 'Report user',
 	'reportedcontent:new' => 'New reports',
-	'reportedcontent:archived' => 'Archived reports',
-
+	
 	'reportedcontent:failed' => 'Sorry, the attempt to report this content has failed.',
 	'reportedcontent:notarchived' => 'We were not able to archive that report',
 	

@@ -13,7 +13,7 @@ elgg_unregister_external_file('css', 'elgg');
 $segments = explode('/', trim(elgg_extract('segments', $vars, ''), '/'));
 
 // default to dashboard
-if (!isset($segments[0]) || empty($segments[0])) {
+if (empty($segments[0])) {
 	$segments = ['dashboard'];
 }
 

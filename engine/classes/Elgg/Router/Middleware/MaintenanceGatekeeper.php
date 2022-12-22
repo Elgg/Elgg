@@ -30,7 +30,7 @@ class MaintenanceGatekeeper {
 			return;
 		}
 		
-		if (strpos($request->getRoute(), 'action:') === 0) {
+		if (str_starts_with($request->getRoute(), 'action:')) {
 			if ($this->isAllowedAction($request)) {
 				return;
 			}

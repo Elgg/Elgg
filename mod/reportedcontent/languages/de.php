@@ -22,8 +22,7 @@ return array(
 	'reportedcontent:success' => 'Deine Meldung wurde an den Admin gesendet.',
 	'reportedcontent:numbertodisplay' => 'Anzahl der anzuzeigenden Meldungen',
 	'reportedcontent:user' => 'Benutzer melden',
-	'reportedcontent:archived' => 'Die Meldung wurde archiviert.',
-
+	
 	'reportedcontent:failed' => 'Entschuldigung, leider ist der Versuch, diesen Beitrag zu melden, gescheitert.',
 	'reportedcontent:notarchived' => 'Die Meldung konnte nicht archiviert werden.',
 	

@@ -367,7 +367,7 @@ class ElggPlugin extends ElggObject {
 		$settings = $this->getAllSettings();
 
 		foreach ($settings as $name => $value) {
-			if (strpos($name, 'elgg:internal:') === 0) {
+			if (str_starts_with($name, 'elgg:internal:')) {
 				continue;
 			}
 			

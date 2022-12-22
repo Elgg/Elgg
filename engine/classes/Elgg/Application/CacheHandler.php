@@ -189,7 +189,7 @@ class CacheHandler {
 	 */
 	public function parsePath($path) {
 		// no '..'
-		if (strpos($path, '..') !== false) {
+		if (str_contains($path, '..')) {
 			return [];
 		}
 
@@ -269,12 +269,13 @@ class CacheHandler {
 			return false;
 		}
 
-		// strip -gzip and leading /W
+		// strip leading W/
 		$if_none_match = trim($if_none_match);
-		if (strpos($if_none_match, 'W/') === 0) {
+		if (str_starts_with($if_none_match, 'W/')) {
 			$if_none_match = substr($if_none_match, 2);
 		}
 		
+		// strip -gzip
 		$if_none_match = str_replace('-gzip', '', $if_none_match);
 
 		return ($if_none_match === $etag);

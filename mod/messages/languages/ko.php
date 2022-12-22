@@ -18,7 +18,6 @@ return array(
 	'messages:message' => "쪽지",
 	'messages:title' => "주제",
 	'messages:to:help' => "받는이의 사용자이름을 적으세요.",
-	'messages:inbox' => "수신함",
 	'messages:sendmessage' => "쪽지 보내기",
 	'messages:add' => "쪽지 쓰기",
 	'messages:sentmessages' => "쪽지 보내기",

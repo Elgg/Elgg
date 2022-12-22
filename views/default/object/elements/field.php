@@ -16,7 +16,7 @@ if (!$value) {
 }
 
 $icon = elgg_extract('icon', $vars, '');
-if ($icon && !preg_match('/^</', $icon)) {
+if ($icon && !str_starts_with($icon, '<')) {
 	$icon = elgg_view_icon($icon);
 }
 

@@ -48,7 +48,7 @@ class EntityDirLocator {
 	 *
 	 * @return string The path with trailing '/' where the entity's data will be stored relative to the data dir.
 	 */
-	public function getPath() {
+	public function getPath(): string {
 		$bound = $this->getLowerBucketBound($this->guid);
 		
 		return "{$bound}/{$this->guid}/";
@@ -66,15 +66,11 @@ class EntityDirLocator {
 	/**
 	 * Return the lower bound for a guid with a bucket size
 	 *
-	 * @param int $guid        The guid to get a bound for. Must be > 0.
-	 * @param int $bucket_size The size of the bucket. (The number of entities per dir.)
+	 * @param int $guid The guid to get a bound for. Must be > 0.
+	 *
 	 * @return int
 	 */
-	private static function getLowerBucketBound(int $guid, int $bucket_size = 0) {
-		if ($bucket_size < 1) {
-			$bucket_size = self::BUCKET_SIZE;
-		}
-		
-		return (int) max(floor($guid / $bucket_size) * $bucket_size, 1);
+	private function getLowerBucketBound(int $guid): int {
+		return (int) max(floor($guid / self::BUCKET_SIZE) * self::BUCKET_SIZE, 1);
 	}
 }

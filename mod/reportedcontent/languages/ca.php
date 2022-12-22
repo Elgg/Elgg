@@ -21,8 +21,7 @@ return array(
 	'reportedcontent:success' => 'La seva denúncia ha estat enviada als administradors',
 	'reportedcontent:numbertodisplay' => 'Quantitat de denúncies a mostrar',
 	'reportedcontent:user' => 'Denunciar usuària',
-	'reportedcontent:archived' => 'La denúncia ha quedat desada',
-
+	
 	'reportedcontent:failed' => 'Ens sap greu, hi ha hagut una errada a l&acute;hora d&acute;intentar denunciar el contingut.',
 	'reportedcontent:notarchived' => 'No s&acute;ha pogut arxivar la denúncia',
 	

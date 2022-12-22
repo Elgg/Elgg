@@ -16,7 +16,7 @@ final class NullTranslator extends Translator {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function translate($key, $args = [], $lang = '') {
-		return $key;
+	public function translate($message_key, $args = [], $language = ''): string {
+		return $message_key;
 	}
 }

@@ -68,7 +68,7 @@ $info[elgg_echo('admin:plugins:label:licence')] = elgg_view('output/text', [
 
 $site_path = elgg_get_root_path();
 $path = $plugin->getPath();
-if (strpos($path, $site_path) === 0) {
+if (str_starts_with($path, $site_path)) {
 	$path = substr($path, strlen($site_path));
 }
 

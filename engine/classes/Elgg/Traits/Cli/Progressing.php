@@ -34,8 +34,6 @@ trait Progressing {
 	 * @return void
 	 */
 	public function advance(int $step = 1) {
-		if ($this->progress) {
-			$this->progress->advance($step);
-		}
+		$this->progress?->advance($step);
 	}
 }

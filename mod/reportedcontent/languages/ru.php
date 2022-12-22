@@ -24,8 +24,7 @@ return array(
 	'reportedcontent:numbertodisplay' => 'Количество жалоб для отображения',
 	'reportedcontent:user' => 'Пожаловаться на пользователя',
 	'reportedcontent:new' => 'Новые жалобы',
-	'reportedcontent:archived' => 'Жалоба заархивирована',
-
+	
 	'reportedcontent:failed' => 'Произошла ошибка при отправке жалобы на этот контент',
 	'reportedcontent:notarchived' => 'Не удалось заархивировать жалобу',
 	

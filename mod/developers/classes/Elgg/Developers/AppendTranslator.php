@@ -18,10 +18,10 @@ final class AppendTranslator extends Translator {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function translate($key, $args = [], $lang = '') {
+	public function translate($message_key, $args = [], $language = ''): string {
 		
-		$result = parent::translate($key, $args, $lang);
+		$result = parent::translate($message_key, $args, $language);
 		
-		return ($result === $key) ? $result : "{$result} ({$key})";
+		return ($result === $message_key) ? $result : "{$result} ({$message_key})";
 	}
 }

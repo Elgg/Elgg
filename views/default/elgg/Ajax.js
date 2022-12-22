@@ -253,7 +253,7 @@ define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages', 'elgg/security
 
 			// https://example.org/elgg/foo/?arg=1#bar => foo/?arg=1
 			if (path.indexOf(site_url) === 0) {
-				path = path.substr(site_url.length);
+				path = path.substring(site_url.length);
 			}
 			
 			path = path.replace(fragment_pattern, '');
@@ -342,7 +342,7 @@ define(['jquery', 'elgg', 'elgg/spinner', 'elgg/system_messages', 'elgg/security
 
 			// https://example.org/elgg/action/foo/?arg=1#bar => foo/?arg=1
 			if (action.indexOf(action_base) === 0) {
-				action = action.substr(action_base.length);
+				action = action.substring(action_base.length);
 			}
 			
 			action = action.replace(leading_slash_pattern, '').replace(fragment_pattern, '');

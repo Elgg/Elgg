@@ -68,26 +68,26 @@ class CompositeCache extends BaseCache {
 	/**
 	 * Save data in a cache.
 	 *
-	 * @param string        $key  Name
-	 * @param mixed         $data Value
-	 * @param int|\DateTime $ttl  Expire value after
+	 * @param string        $key          Name
+	 * @param mixed         $data         Value
+	 * @param int|\DateTime $expire_after Expire value after
 	 *
 	 * @return bool
 	 */
-	public function save($key, $data, $ttl = null) {
+	public function save($key, $data, $expire_after = null) {
 		if ($this->disabled) {
 			return false;
 		}
 		
-		$ttl = $ttl ?: $this->ttl;
+		$expire_after = $expire_after ?: $this->ttl;
 
 		$item = $this->pool->getItem($this->sanitizeItemKey($key));
 		$item->set($data);
 		
-		if (is_int($ttl)) {
-			$item->expiresAfter($ttl);
-		} elseif ($ttl instanceof \DateTime) {
-			$item->expiresAt($ttl);
+		if (is_int($expire_after)) {
+			$item->expiresAfter($expire_after);
+		} elseif ($expire_after instanceof \DateTime) {
+			$item->expiresAt($expire_after);
 		}
 			
 		return $this->pool->save($item);

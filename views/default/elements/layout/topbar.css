@@ -133,7 +133,7 @@
 	transition: ease-in-out 0.25s;
 	
 	&:nth-child(1) {
-		top: 0px;
+		top: 0;
 	}
 	
 	&:nth-child(2) {

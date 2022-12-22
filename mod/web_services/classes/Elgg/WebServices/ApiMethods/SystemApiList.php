@@ -21,8 +21,6 @@ class SystemApiList {
 		$apis = ApiRegistrationService::instance()->getAllApiMethods();
 		
 		$result = [];
-		
-		/* @var $api \Elgg\WebServices\ApiMethod */
 		foreach ($apis as $api) {
 			$result[$api->getID()] = [
 				'description' => $api->description,

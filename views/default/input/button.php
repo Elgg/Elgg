@@ -39,7 +39,7 @@ $text = elgg_format_element('span', [
 $icon = (string) elgg_extract('icon', $vars);
 unset($vars['icon']);
 
-if (!elgg_is_empty($icon) && !preg_match('/^</', $icon)) {
+if (!elgg_is_empty($icon) && !str_starts_with($icon, '<')) {
 	$icon = elgg_view_icon($icon, [
 		'class' => 'elgg-button-icon',
 	]);
@@ -48,7 +48,7 @@ if (!elgg_is_empty($icon) && !preg_match('/^</', $icon)) {
 $icon_alt = (string) elgg_extract('icon_alt', $vars);
 unset($vars['icon_alt']);
 
-if (!elgg_is_empty($icon_alt) && !preg_match('/^</', $icon_alt)) {
+if (!elgg_is_empty($icon_alt) && !str_starts_with($icon_alt, '<')) {
 	$icon_alt = elgg_view_icon($icon_alt, [
 		'class' => 'elgg-button-icon-alt',
 	]);

@@ -29,6 +29,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/hooks', 'jquery.colorbox'], functio
 		 * Returns lightbox settings
 		 *
 		 * @param {Object} opts Additional options
+		 *
 		 * @return {Object}
 		 */
 		getOptions: function (opts) {
@@ -55,6 +56,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/hooks', 'jquery.colorbox'], functio
 		 * @param {Object}  selector         CSS selector matching colorbox openers
 		 * @param {Object}  opts             Colorbox options. These are overridden by data-colorbox-opts options
 		 * @param {Boolean} use_element_data If set to false, selector will be bound directly as `$(selector).colorbox()`
+		 *
 		 * @return void
 		 */
 		bind: function (selector, opts, use_element_data) {
@@ -119,6 +121,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/hooks', 'jquery.colorbox'], functio
 		 * Open the colorbox
 		 *
 		 * @param {object} opts Colorbox options
+		 *
 		 * @return void
 		 */
 		open: function (opts) {
@@ -129,7 +132,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/hooks', 'jquery.colorbox'], functio
 				return;
 			}
 			
-			href = currentOpts.href;
+			var href = currentOpts.href;
 			currentOpts.href = false;
 			var data = currentOpts.data;
 			currentOpts.data = undefined;
@@ -151,12 +154,14 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/hooks', 'jquery.colorbox'], functio
 
 		/**
 		 * Close the colorbox
+		 *
 		 * @return void
 		 */
 		close: $.colorbox.close,
 		
 		/**
 		 * Resizes the colorbox
+		 *
 		 * @return void
 		 */
 		resize: $.colorbox.resize

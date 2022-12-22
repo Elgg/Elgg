@@ -48,7 +48,7 @@ class Urls {
 		$string = $this->buildUrl($url_array, false);
 	
 		// Restore relative protocol to url if missing and is provided as part of the initial url (see #9874)
-		if (!isset($url['scheme']) && (substr($url, 0, 2) == '//')) {
+		if (!isset($url_array['scheme']) && (str_starts_with($url, '//'))) {
 			$string = "//{$string}";
 		}
 		
@@ -311,7 +311,7 @@ class Urls {
 		foreach (array_shift($args) as $key => $val) {
 			for ($i = 0, $j = 0, $tmp = [$val], $count = count($args); $i < $count; $i++) {
 				if (is_array($val)) {
-					if (!isset($args[$i][$key]) || !is_array($args[$i][$key]) || empty($args[$i][$key])) {
+					if (empty($args[$i][$key]) || !is_array($args[$i][$key])) {
 						$j++;
 					} else {
 						$tmp[] = $args[$i][$key];

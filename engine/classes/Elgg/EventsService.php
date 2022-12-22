@@ -77,9 +77,8 @@ class EventsService {
 		// This starts as a string, but if a handler type-hints an object we convert it on-demand inside
 		// \Elgg\HandlersService::call and keep it alive during all handler calls. We do this because
 		// creating objects for every triggering is expensive.
+		/* @var $event Event|string */
 		$event = 'event';
-		/* @var Event|string */
-
 		foreach ($handlers as $handler) {
 			$handler_description = false;
 			if ($this->hasTimer() && $type === 'system' && $name !== 'shutdown') {
@@ -129,9 +128,8 @@ class EventsService {
 		// This starts as a string, but if a handler type-hints an object we convert it on-demand inside
 		// \Elgg\HandlersService::call and keep it alive during all handler calls. We do this because
 		// creating objects for every triggering is expensive.
+		/* @var $event Event|string */
 		$event = 'event';
-		/* @var Event|string */
-		
 		foreach ($this->getOrderedHandlers($name, $type) as $handler) {
 			list($success, $return, $event) = $this->handlers->call($handler, $event, [$name, $type, $value, $params]);
 			
@@ -501,7 +499,7 @@ class EventsService {
 	 * @return MethodMatcher|null
 	 */
 	protected function getMatcher($spec): ?MethodMatcher {
-		if (is_string($spec) && strpos($spec, '::') !== false) {
+		if (is_string($spec) && str_contains($spec, '::')) {
 			list ($type, $method) = explode('::', $spec, 2);
 			return new MethodMatcher($type, $method);
 		}
