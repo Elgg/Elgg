@@ -350,9 +350,9 @@ class RelationshipsTable {
 	 *
 	 * @param \stdClass $row Database row from the relationship table
 	 *
-	 * @return \ElggRelationship|false
+	 * @return \ElggRelationship
 	 */
-	public function rowToElggRelationship($row) {
-		return $row instanceof \stdClass ? new \ElggRelationship($row) : false;
+	public function rowToElggRelationship(\stdClass $row): \ElggRelationship {
+		return new \ElggRelationship($row);
 	}
 }
