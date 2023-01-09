@@ -424,6 +424,7 @@ return [
 	'validate:after' => [
 		'user' => [
 			'Elgg\Users\Validation::notifyUserAfterValidation' => [],
+			'Elgg\Users\Validation::addRiverActivityAfterValidation' => [],
 		],
 	],
 	'view_vars' => [

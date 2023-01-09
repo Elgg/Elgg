@@ -46,6 +46,25 @@ class Validation {
 		
 		notify_user($user->guid, $site->guid, $subject, $body, $params, ['email']);
 	}
+
+	/**
+	 * Adds river activity that a new user joined the site
+	 *
+	 * @param \Elgg\Event $event 'validate:after', 'user'
+	 *
+	 * @return void
+	 */
+	public static function addRiverActivityAfterValidation(\Elgg\Event $event) {
+		if (!(bool) elgg_get_config('user_joined_river')) {
+			return;
+		}
+		
+		elgg_create_river_item([
+			'action_type' => 'join',
+			'subject_guid' => $event->getObject()->guid,
+			'object_guid' => elgg_get_site_entity()->guid,
+		]);
+	}
 	
 	/**
 	 * Check if new users need to be validated by an administrator
