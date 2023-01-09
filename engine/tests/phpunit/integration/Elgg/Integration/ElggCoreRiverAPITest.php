@@ -69,6 +69,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		]);
 
 		$this->assertInstanceOf(\ElggRiverItem::class, $item);
+		$this->assertGreaterThan(0, $item->posted);
 		$this->assertTrue(elgg_delete_river(['id' => $item->id]));
 	}
 

@@ -103,7 +103,7 @@ class RiverTable {
 			return false;
 		}
 		
-		$created = $item->posted ?? $this->getCurrentTime()->getTimestamp();
+		$created = $item->posted ?: $this->getCurrentTime()->getTimestamp();
 		
 		if (!$this->events->triggerBefore('create', 'river', $item)) {
 			return false;
