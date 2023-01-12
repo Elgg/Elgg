@@ -75,6 +75,7 @@ elgg_save_config('comments_latest_first', (bool) get_input('comments_latest_firs
 elgg_save_config('comments_per_page', (int) get_input('comments_per_page'));
 elgg_save_config('pagination_behaviour', get_input('pagination_behaviour', 'ajax-replace'));
 
+elgg_save_config('user_joined_river', get_input('user_joined_river') === 'on');
 elgg_save_config('can_change_username', get_input('can_change_username') === 'on');
 
 if (!elgg()->config->hasInitialValue('simplecache_enabled')) {

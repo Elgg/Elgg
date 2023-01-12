@@ -114,6 +114,7 @@ use Elgg\Traits\Loggable;
  * @property bool          $system_cache_loaded
  * @property bool          $testing_mode  							Is the current application running (PHPUnit) tests
  * @property string        $time_format  							Preferred PHP time format
+ * @property bool          $user_joined_river						Do we need to create a river event when a user joins the site
  * @property string        $view         							Default viewtype (usually not set)
  * @property bool          $walled_garden							Is current site in walled garden mode?
  * @property string        $who_can_change_language					Who can change the language of a user
@@ -224,6 +225,7 @@ class Config {
 		'subresource_integrity_enabled' => false,
 		'system_cache_enabled' => false,
 		'testing_mode' => false,
+		'user_joined_river' => false,
 		'webp_enabled' => true,
 		'who_can_change_language' => 'everyone',
 	];

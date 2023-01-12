@@ -18,6 +18,14 @@ $result .= elgg_view_field([
 	'switch' => true,
 ]);
 
+$result .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('config:users:user_joined_river'),
+	'name' => 'user_joined_river',
+	'checked' => (bool) elgg_get_config('user_joined_river'),
+	'switch' => true,
+]);
+
 $classes = ['elgg-divide-left', 'plm', 'elgg-admin-users-admin-validation-notification'];
 if (!(bool) elgg_get_config('require_admin_validation')) {
 	$classes[] = 'hidden';
