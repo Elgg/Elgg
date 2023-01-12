@@ -16,6 +16,12 @@ if ($entity instanceof ElggPage && $entity->getOwnerEntity()) {
 	$can_change_access = $entity->getOwnerEntity()->canEdit();
 }
 
+echo elgg_view('entity/edit/header', [
+	'entity' => $entity,
+	'entity_type' => 'object',
+	'entity_subtype' => 'page',
+]);
+
 foreach ($fields as $field) {
 	$name = $field['name'];
 	

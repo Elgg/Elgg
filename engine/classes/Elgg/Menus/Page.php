@@ -175,32 +175,6 @@ class Page {
 	}
 	
 	/**
-	 * Add a link to the avatar edit page
-	 *
-	 * @param \Elgg\Event $event 'register', 'menu:page'
-	 *
-	 * @return void|MenuItems
-	 */
-	public static function registerAvatarEdit(\Elgg\Event $event) {
-		$user = $event->getParam('entity', elgg_get_page_owner_entity());
-		if (!$user instanceof \ElggUser || !$user->canEdit() || !elgg_in_context('settings')) {
-			return;
-		}
-		
-		/* @var $return MenuItems */
-		$return = $event->getValue();
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'edit_avatar',
-			'text' => elgg_echo('avatar:edit'),
-			'href' => elgg_generate_entity_url($user, 'edit', 'avatar'),
-			'section' => '1_profile',
-		]);
-		
-		return $return;
-	}
-	
-	/**
 	 * Moves menu items registered to the page to the admin header
 	 *
 	 * @param \Elgg\Event $event 'register', 'menu:page'

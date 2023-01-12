@@ -29,6 +29,9 @@ class UserHover {
 		}
 		
 		$return = $event->getValue();
+		
+		$return->remove('avatar:edit');
+		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'profile:edit',
 			'text' => elgg_echo('profile:edit'),

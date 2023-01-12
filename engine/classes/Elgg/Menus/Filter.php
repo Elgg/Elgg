@@ -217,4 +217,29 @@ class Filter {
 		
 		return $result;
 	}
+	
+	/**
+	 * Add a link to the profile/edit filter menu
+	 *
+	 * @param \Elgg\Event $event 'register', 'menu:filter:profile/edit'
+	 *
+	 * @return void|MenuItems
+	 */
+	public static function registerAvatarEdit(\Elgg\Event $event) {
+		$user = $event->getParam('entity', elgg_get_page_owner_entity());
+		if (!$user instanceof \ElggUser) {
+			return;
+		}
+		
+		/* @var $return MenuItems */
+		$return = $event->getValue();
+		
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'edit_avatar',
+			'text' => elgg_echo('avatar:edit'),
+			'href' => elgg_generate_entity_url($user, 'edit', 'avatar'),
+		]);
+		
+		return $return;
+	}
 }

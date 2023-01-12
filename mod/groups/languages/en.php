@@ -22,6 +22,7 @@ return array(
 	'groups:add' => "Create a new group",
 	'groups:edit' => "Edit group",
 	'groups:edit:profile' => "Profile",
+	'groups:edit:images' => "Images",
 	'groups:edit:access' => "Access",
 	'groups:edit:tools' => "Tools",
 	'groups:edit:settings' => "Settings",

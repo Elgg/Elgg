@@ -12,6 +12,7 @@ return array(
 	'admin:configure_utilities:profile_fields' => 'Edit Profile Fields',
 	
 	'profile:edit' => 'Edit profile',
+	'profile:edit:header' => 'Edit profile header',
 	'profile:description' => "About me",
 	'profile:briefdescription' => "Brief description",
 	'profile:location' => "Location",

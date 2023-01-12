@@ -168,8 +168,19 @@
 	}
 }
 
+html.elgg-nav-collapsed {
+	overflow: hidden;
+	
+	.elgg-page-topbar {
+		height: 100vh;
+		overflow-y: scroll;
+	}
+}
+
 .elgg-page-topbar {
 	background: $(topbar-background-color, $(background-color-highlight));
+	position: sticky;
+	top: 0;
 	
 	> .elgg-inner {
 		display: flex;

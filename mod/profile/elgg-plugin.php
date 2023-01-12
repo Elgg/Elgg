@@ -7,6 +7,7 @@ return [
 	],
 	'actions' => [
 		'profile/edit' => [],
+		'profile/edit/header' => [],
 		'profile/fields/reset' => [
 			'access' => 'admin',
 		],
@@ -30,6 +31,15 @@ return [
 			'resource' => 'profile/edit',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
+			],
+		],
+		'edit:user:header' => [
+			'path' => '/profile/{username}/edit_header',
+			'resource' => 'profile/edit_header',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
 	],
@@ -62,8 +72,8 @@ return [
 				'Elgg\Profile\Menus\AdminHeader::register' => [],
 				'Elgg\Profile\Menus\AdminHeader::registerAdminProfileFields' => [],
 			],
-			'menu:page' => [
-				'Elgg\Profile\Menus\Page::registerProfileEdit' => [],
+			'menu:filter:profile/edit' => [
+				'Elgg\Profile\Menus\Filter::registerProfileEdit' => [],
 			],
 			'menu:title' => [
 				'Elgg\Profile\Menus\Title::register' => [],

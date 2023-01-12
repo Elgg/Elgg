@@ -20,11 +20,13 @@ class Title {
 	public static function register(\Elgg\Event $event) {
 	
 		$user = $event->getEntityParam();
-		if (!($user instanceof \ElggUser) || !$user->canEdit()) {
+		if (!$user instanceof \ElggUser || !$user->canEdit() || !elgg_in_context('profile')) {
 			return;
 		}
 		
 		$return = $event->getValue();
+		
+		$return->remove('avatar:edit');
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'edit_profile',
@@ -32,7 +34,6 @@ class Title {
 			'text' => elgg_echo('profile:edit'),
 			'icon' => 'address-card',
 			'class' => ['elgg-button', 'elgg-button-action'],
-			'contexts' => ['profile', 'profile_edit'],
 		]);
 		
 		return $return;

@@ -15,6 +15,10 @@
 	z-index: 30;
 }
 
+.elgg-page-topbar {
+	z-index: 35;
+}
+
 #login-dropdown-box {
 	z-index: 40;
 }

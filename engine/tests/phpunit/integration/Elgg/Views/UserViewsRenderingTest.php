@@ -10,7 +10,6 @@ class UserViewsRenderingTest extends ViewRenderingTestCase {
 
 	public function getViewNames() {
 		return [
-			'core/avatar/crop',
 			'core/avatar/upload',
 			'core/settings/account/default_access',
 			'core/settings/account/email',
@@ -23,7 +22,6 @@ class UserViewsRenderingTest extends ViewRenderingTestCase {
 			'core/settings/account',
 			'core/settings/statistics',
 			'icon/user/default',
-			'forms/avatar/crop',
 			'forms/avatar/edit',
 			'forms/user/changepassword',
 			'forms/user/requestnewpassword',
@@ -43,7 +41,6 @@ class UserViewsRenderingTest extends ViewRenderingTestCase {
 			'page/components/column/user',
 			'resources/account/change_password',
 			'resources/account/forgotten_password',
-			'resources/avatar/edit',
 			'user/default',
 			'user/default/column',
 			'user/elements/summary',
