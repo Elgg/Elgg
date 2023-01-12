@@ -95,9 +95,9 @@ class Address extends ZendAddress {
 	}
 	
 	/**
-	 * Store the Entity related to this Address
+	 * Store the ElggEntity related to this Address
 	 *
-	 * @param \ElggEntity $entity
+	 * @param \ElggEntity $entity The entity
 	 *
 	 * @return void
 	 *

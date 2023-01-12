@@ -58,7 +58,7 @@ class Tool implements CollectionItemInterface {
 	}
 
 	/**
-	 *
+	 * {@inheritdoc}
 	 */
 	public function __set($name, $value) {
 		$this->options[$name] = $value;

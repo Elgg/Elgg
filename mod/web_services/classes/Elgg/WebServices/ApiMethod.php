@@ -61,6 +61,12 @@ class ApiMethod implements CollectionItemInterface {
 	 */
 	protected $supply_associative = false;
 	
+	/**
+	 * Api method
+	 *
+	 * @param string   $method   the API method name
+	 * @param callable $callback Callback function when the API method is called
+	 */
 	public function __construct(string $method, $callback) {
 		$this->method = $method;
 		$this->callback = $callback;

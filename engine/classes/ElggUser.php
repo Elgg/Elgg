@@ -291,8 +291,9 @@ class ElggUser extends \ElggEntity {
 	/**
 	 * Set the validation status for a user.
 	 *
-	 * @param bool   $status    Validated (true) or unvalidated (false)
-	 * @param string $method    Optional method to say how a user was validated
+	 * @param bool   $status Validated (true) or unvalidated (false)
+	 * @param string $method Optional method to say how a user was validated
+	 *
 	 * @return void
 	 */
 	public function setValidationStatus(bool $status, string $method = ''): void {
@@ -378,6 +379,7 @@ class ElggUser extends \ElggEntity {
 	 * Set the necessary metadata to store a hash of the user's password.
 	 *
 	 * @param string $password The password to be hashed
+	 *
 	 * @return void
 	 * @since 1.10.0
 	 */

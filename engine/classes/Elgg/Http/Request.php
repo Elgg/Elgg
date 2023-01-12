@@ -72,6 +72,8 @@ class Request extends SymfonyRequest {
 	/**
 	 * Configure trusted proxy servers to allow access to more client information
 	 *
+	 * @param Config $config Elgg config to read trusted proxy configuration from
+	 *
 	 * @return void
 	 */
 	public function initializeTrustedProxyConfiguration(Config $config) {

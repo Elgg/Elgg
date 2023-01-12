@@ -225,8 +225,8 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @see \ArrayAccess::offsetSet()
 	 *
-	 * @param mixed $offset   Name
-	 * @param mixed $value Value
+	 * @param mixed $offset The offset to assign the value to
+	 * @param mixed $value  The value to set
 	 *
 	 * @return void
 	 */
@@ -242,7 +242,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @see \ArrayAccess::offsetGet()
 	 *
-	 * @param mixed $offset Name
+	 * @param mixed $offset The offset to retrieve
 	 *
 	 * @return mixed
 	 */
@@ -260,7 +260,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @see \ArrayAccess::offsetUnset()
 	 *
-	 * @param mixed $key Name
+	 * @param mixed $offset The offset to unset
 	 *
 	 * @return void
 	 */
@@ -277,7 +277,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @see \ArrayAccess::offsetExists()
 	 *
-	 * @param int $offset Offset
+	 * @param int $offset An offset to check for
 	 *
 	 * @return bool
 	 */
