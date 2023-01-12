@@ -6262,12 +6262,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elgg/elgg-coding-standards.git",
-                "reference": "5f64222380dbaf2fa9586be312e1e2b4f3417074"
+                "reference": "d3a1c058dc8324a3db0602a9a57e319a1c01ba3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elgg/elgg-coding-standards/zipball/5f64222380dbaf2fa9586be312e1e2b4f3417074",
-                "reference": "5f64222380dbaf2fa9586be312e1e2b4f3417074",
+                "url": "https://api.github.com/repos/Elgg/elgg-coding-standards/zipball/d3a1c058dc8324a3db0602a9a57e319a1c01ba3b",
+                "reference": "d3a1c058dc8324a3db0602a9a57e319a1c01ba3b",
                 "shasum": ""
             },
             "require": {
@@ -6289,7 +6289,7 @@
                 "issues": "https://github.com/Elgg/elgg-coding-standards/issues",
                 "source": "https://github.com/Elgg/elgg-coding-standards/tree/master"
             },
-            "time": "2022-12-19T14:53:48+00:00"
+            "time": "2023-01-12T14:16:07+00:00"
         },
         {
             "name": "jms/metadata",

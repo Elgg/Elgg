@@ -3,7 +3,6 @@
 namespace Elgg;
 
 use Elgg\Di\PublicContainer;
-use ElggPlugin;
 
 /**
  * Plugin bootstrap
@@ -11,7 +10,7 @@ use ElggPlugin;
 abstract class PluginBootstrap implements PluginBootstrapInterface {
 
 	/**
-	 * @var ElggPlugin
+	 * @var \ElggPlugin
 	 */
 	protected $plugin;
 
@@ -23,10 +22,10 @@ abstract class PluginBootstrap implements PluginBootstrapInterface {
 	/**
 	 * Constructor
 	 *
-	 * @param ElggPlugin      $plugin
-	 * @param PublicContainer $dic
+	 * @param \ElggPlugin     $plugin The plugin
+	 * @param PublicContainer $dic    Public services
 	 */
-	public function __construct(ElggPlugin $plugin, PublicContainer $dic) {
+	public function __construct(\ElggPlugin $plugin, PublicContainer $dic) {
 		$this->plugin = $plugin;
 		$this->dic = $dic;
 	}

@@ -183,19 +183,19 @@ class ElggBatch implements \Countable, \Iterator {
 	 * objects, then requests more from the server.  This avoids OOM errors.
 	 *
 	 * @param callable $getter     The function used to get objects.  Usually
-	 *                           an elgg_get_*() function, but can be any valid PHP callback.
-	 * @param array  $options    The options array to pass to the getter function. If limit is
-	 *                           not set, 10 is used as the default. In most cases that is not
-	 *                           what you want.
-	 * @param mixed  $callback   An optional callback function that all results will be passed
-	 *                           to upon load.  The callback needs to accept $result, $getter,
-	 *                           $options.
-	 * @param int    $chunk_size The number of entities to pull in before requesting more.
-	 *                           You have to balance this between running out of memory in PHP
-	 *                           and hitting the db server too often.
-	 * @param bool   $inc_offset Increment the offset on each fetch. This must be false for
-	 *                           callbacks that delete rows. You can set this after the
-	 *                           object is created with {@link \ElggBatch::setIncrementOffset()}.
+	 *                             an elgg_get_*() function, but can be any valid PHP callback.
+	 * @param array    $options    The options array to pass to the getter function. If limit is
+	 *                             not set, 10 is used as the default. In most cases that is not
+	 *                             what you want.
+	 * @param mixed    $callback   An optional callback function that all results will be passed
+	 *                             to upon load.  The callback needs to accept $result, $getter,
+	 *                             $options.
+	 * @param int      $chunk_size The number of entities to pull in before requesting more.
+	 *                             You have to balance this between running out of memory in PHP
+	 *                             and hitting the db server too often.
+	 * @param bool     $inc_offset Increment the offset on each fetch. This must be false for
+	 *                             callbacks that delete rows. You can set this after the
+	 *                             object is created with {@link \ElggBatch::setIncrementOffset()}.
 	 */
 	public function __construct(callable $getter, array $options, $callback = null, int $chunk_size = 25, bool $inc_offset = true) {
 

@@ -203,7 +203,7 @@ class River extends Repository {
 	/**
 	 * Build a database query
 	 *
-	 * @param QueryBuilder $qb
+	 * @param QueryBuilder $qb the Elgg QueryBuilder
 	 *
 	 * @return QueryBuilder
 	 */

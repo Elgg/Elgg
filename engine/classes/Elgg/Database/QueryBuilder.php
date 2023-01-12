@@ -78,7 +78,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	/**
 	 * Prefixes the table name with installation DB prefix
 	 *
-	 * @param string $table
+	 * @param string $table the table to prefix
 	 *
 	 * @return string
 	 */
@@ -344,6 +344,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 * @param string $x     Comparison value (e.g. prefixed column name)
 	 * @param mixed  $lower Lower bound
 	 * @param mixed  $upper Upper bound
+	 * @param string $type  Value type for sanitization/casting
 	 *
 	 * @return CompositeExpression|null|string
 	 */

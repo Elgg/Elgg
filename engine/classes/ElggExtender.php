@@ -151,7 +151,7 @@ abstract class ElggExtender extends \ElggData {
 	 * Returns if a user can edit this entity extender.
 	 *
 	 * @param int $user_guid The GUID of the user doing the editing
-	 *                      (defaults to currently logged in user)
+	 *                       (defaults to currently logged in user)
 	 *
 	 * @return bool
 	 */

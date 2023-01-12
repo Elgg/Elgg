@@ -65,7 +65,7 @@ abstract class DiContainer extends Container {
 	/**
 	 * Unsets the service to force rebuild on next request
 	 *
-	 * @param string $name
+	 * @param string $name the name of the service to reset
 	 *
 	 * @return void
 	 */
@@ -84,6 +84,8 @@ abstract class DiContainer extends Container {
 	}
 
 	/**
+	 * Create a DI Container
+	 *
 	 * @param array $options additional options
 	 *
 	 * @return self
