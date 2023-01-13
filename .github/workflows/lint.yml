@@ -75,3 +75,19 @@ jobs:
           
       - name: PHP Code Style checks
         run: vendor/bin/phpcs --standard=vendor/elgg/sniffs/src/Elgg -sp engine/classes engine/lib actions mod views
+
+  languages_lint:
+    name: Validate language files are UTF-8 encoded
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v2
+
+      - name: Check encoding of Core language files
+        run: echo '! find ./languages/ -name "*.php" -type f -exec file --mime {} \; | grep -v "charset=utf-8$" | grep -v "charset=us-ascii$"' | bash
+
+      - name: Check encoding of Installation language files
+        run: echo '! find ./install/languages/ -name "*.php" -type f -exec file --mime {} \; | grep -v "charset=utf-8$" | grep -v "charset=us-ascii$"' | bash
+
+      - name: Check encoding of Plugin language files
+        run: echo '! find ./mod/*/languages/ -name "*.php" -type f -exec file --mime {} \; | grep -v "charset=utf-8$" | grep -v "charset=us-ascii$"' | bash
