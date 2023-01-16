@@ -2,12 +2,15 @@
 
 namespace Elgg\I18n;
 
+use Elgg\Includer;
+use Elgg\Project\Paths;
 use Elgg\UnitTestCase;
 
 class TranslationLoadingUnitTest extends UnitTestCase {
 
 	/**
 	 * Provides registered languages
+	 *
 	 * @return array
 	 */
 	public function languageProvider() {
@@ -20,6 +23,60 @@ class TranslationLoadingUnitTest extends UnitTestCase {
 			$provides[] = [$lang];
 		}
 
+		return $provides;
+	}
+	
+	public function coreLanguageProvider() {
+		self::createApplication();
+		
+		$path = Paths::elgg() . 'languages/';
+		if (!is_dir($path)) {
+			// how??
+			return [];
+		}
+		
+		$provides = [];
+		$codes = elgg()->locale->getLanguageCodes();
+		$dh = new \DirectoryIterator($path);
+		/* @var $file_info \DirectoryIterator */
+		foreach ($dh as $file_info) {
+			if (!$file_info->isFile() || $file_info->getExtension() !== 'php') {
+				continue;
+			}
+			
+			$language_code = $file_info->getBasename('.php');
+			if (in_array($language_code, $codes)) {
+				$provides[] = [$language_code];
+			}
+		}
+		
+		return $provides;
+	}
+	
+	public function installationLanguageProvider() {
+		self::createApplication();
+		
+		$path = Paths::elgg() . 'install/languages/';
+		if (!is_dir($path)) {
+			// how??
+			return [];
+		}
+		
+		$provides = [];
+		$codes = elgg()->locale->getLanguageCodes();
+		$dh = new \DirectoryIterator($path);
+		/* @var $file_info \DirectoryIterator */
+		foreach ($dh as $file_info) {
+			if (!$file_info->isFile() || $file_info->getExtension() !== 'php') {
+				continue;
+			}
+			
+			$language_code = $file_info->getBasename('.php');
+			if (in_array($language_code, $codes)) {
+				$provides[] = [$language_code];
+			}
+		}
+		
 		return $provides;
 	}
 
@@ -80,5 +137,41 @@ class TranslationLoadingUnitTest extends UnitTestCase {
 		} else {
 			$this->assertGreaterThan(0, $completeness);
 		}
+	}
+	
+	/**
+	 * Elgg uses Transifex, which sometimes produces language files with syntax errors
+	 * We will try to catch those
+	 *
+	 * @dataProvider coreLanguageProvider
+	 */
+	public function testCanEncodeCoreTranslations($language) {
+		$translations = Includer::includeFile(Paths::elgg() . "languages/{$language}.php");
+		$this->assertIsArray($translations);
+		// the JS translations are encoded to JSON, so try that
+		$encoded = json_encode($translations);
+		$this->assertNotEmpty($encoded);
+		$this->assertIsString($encoded);
+		
+		$decoded = json_decode($encoded, true);
+		$this->assertEquals($translations, $decoded);
+	}
+	
+	/**
+	 * Elgg uses Transifex, which sometimes produces language files with syntax errors
+	 * We will try to catch those
+	 *
+	 * @dataProvider installationLanguageProvider
+	 */
+	public function testCanEncodeInstallationTranslations($language) {
+		$translations = Includer::includeFile(Paths::elgg() . "install/languages/{$language}.php");
+		$this->assertIsArray($translations);
+		// the JS translations are encoded to JSON, so try that
+		$encoded = json_encode($translations);
+		$this->assertNotEmpty($encoded);
+		$this->assertIsString($encoded);
+		
+		$decoded = json_decode($encoded, true);
+		$this->assertEquals($translations, $decoded);
 	}
 }
