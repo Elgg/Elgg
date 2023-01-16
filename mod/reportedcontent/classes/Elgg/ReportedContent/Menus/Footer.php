@@ -31,7 +31,6 @@ class Footer {
 			'text' => elgg_echo('reportedcontent:this'),
 			'icon' => 'exclamation-triangle',
 			'priority' => 500,
-			'section' => 'default',
 			'link_class' => 'elgg-lightbox',
 			'deps' => 'elgg/reportedcontent',
 		]);

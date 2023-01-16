@@ -41,11 +41,6 @@ class Entity {
 				'guid' => $entity->guid,
 			]),
 			'section' => 'actions',
-			'data-colorbox-opts' => json_encode([
-				'width' => '85%',
-				'height' => '85%',
-				'iframe' => true,
-			]),
 		]);
 	
 		return $return;

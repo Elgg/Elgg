@@ -8,22 +8,43 @@ if (!$entity instanceof \ElggReportedContent) {
 	return;
 }
 
-$params = $vars;
-$params['content'] = $entity->description;
-$params['access'] = false;
+$report_address = elgg_view_url($entity->getAddress());
 
-$params['title'] = elgg_view('output/url', [
-	'text' => $entity->getDisplayName(),
-	'href' => $entity->address,
-	'is_trusted' => true,
-	'class' => [
-		'elgg-lightbox',
-	],
-	'data-colorbox-opts' => json_encode([
-		'width' => '85%',
-		'height' => '85%',
-		'iframe' => true,
-	]),
-]);
+$vars['imprint'] = (array) elgg_extract('imprint', $vars, []);
+$vars['access'] = false;
 
-echo elgg_view('object/elements/summary', $params);
+if (!empty($report_address)) {
+	$vars['imprint'][] = [
+		'icon_name' => 'globe',
+		'content' => $report_address,
+	];
+}
+
+if (!elgg_extract('full_view', $vars)) {
+	$vars['content'] = elgg_get_excerpt($entity->description);
+	
+	echo elgg_view('object/elements/summary', $vars);
+	
+	return;
+}
+
+$body = elgg_view('output/longtext', ['value' => $entity->description, 'class' => 'mbm']);
+
+if (!empty($report_address)) {
+	$body .= elgg_format_element('b', [], elgg_echo('reportedcontent:address')) . ': ' . $report_address;
+}
+
+$body .= elgg_view_message('info', elgg_echo('reportedcontent:comments:message'), ['title' => false, 'class' => ['mtl', 'mbn']]);
+
+if ($entity->state !== 'active') {
+	$vars['imprint'][] = [
+		'icon_name' => 'archive',
+		'content' => elgg_echo('reportedcontent:archived_reports'),
+	];
+}
+
+$vars['metadata'] = false;
+$vars['body'] = $body;
+$vars['show_summary'] = true;
+
+echo elgg_view('object/elements/full', $vars);

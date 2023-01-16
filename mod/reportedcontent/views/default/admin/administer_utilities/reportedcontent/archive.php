@@ -10,7 +10,7 @@ echo elgg_view('navigation/tabs', [
 			'href' => 'admin/administer_utilities/reportedcontent',
 		],
 		[
-			'text' => elgg_echo('reportedcontent:archived'),
+			'text' => elgg_echo('reportedcontent:archived_reports'),
 			'href' => 'admin/administer_utilities/reportedcontent/archive',
 		],
 	],
@@ -20,10 +20,7 @@ echo elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'reported_content',
 	'metadata_name_value_pairs' => [
-		[
-			'name' => 'state',
-			'value' => 'archived',
-		],
+		'state' => 'archived',
 	],
 	'no_results' => elgg_echo('reportedcontent:none'),
 ]);
