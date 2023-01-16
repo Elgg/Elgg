@@ -1374,4 +1374,59 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		
 		$this->assertTrue($found, 'No route deprecation message found');
 	}
+	
+	public function testRoutePriorities() {
+		$request = $this->prepareHttpRequest('base/deep');
+		$this->createService($request);
+		
+		$base_calls = 0;
+		$deep_calls = 0;
+		
+		elgg_register_route('base', [
+			'path' => '/base/{segments}',
+			'controller' => function (\Elgg\Request $request) use (&$base_calls) {
+				$base_calls++;
+				
+				return elgg_ok_response('');
+			}
+		]);
+		
+		elgg_register_route('deep', [
+			'path' => '/base/deep',
+			'controller' => function (\Elgg\Request $request) use (&$deep_calls) {
+				$deep_calls++;
+				
+				return elgg_ok_response('');
+			}
+		]);
+		
+		_elgg_services()->events->backup();
+		
+		$this->route($request);
+		
+		_elgg_services()->events->restore();
+
+		$this->assertEquals(1, $base_calls);
+		$this->assertEquals(0, $deep_calls);
+		
+		// register deep with a higher priority to take control routing if multiple routes match
+		elgg_register_route('deep', [
+			'path' => '/base/deep',
+			'priority' => 100,
+			'controller' => function (\Elgg\Request $request) use (&$deep_calls) {
+				$deep_calls++;
+			
+				return elgg_ok_response('');
+			}
+		]);
+		
+		_elgg_services()->events->backup();
+		
+		$this->route($request);
+		
+		_elgg_services()->events->restore();
+		
+		$this->assertEquals(1, $base_calls);
+		$this->assertEquals(1, $deep_calls);
+	}
 }
