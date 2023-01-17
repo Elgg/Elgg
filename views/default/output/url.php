@@ -56,6 +56,10 @@ if (!$url && isset($vars['value'])) {
 	unset($vars['value']);
 }
 
+if (elgg_is_empty($url)) {
+	return;
+}
+
 if (isset($vars['text'])) {
 	if (elgg_extract('encode_text', $vars, false)) {
 		$text = htmlspecialchars($vars['text'], ENT_QUOTES, 'UTF-8', false);
