@@ -13,7 +13,12 @@ class CacheHandlerUnitTest extends \Elgg\UnitTestCase {
 	protected $handler;
 
 	public function up() {
-		$this->handler = new CacheHandler(_elgg_services()->config, _elgg_services()->request, _elgg_services()->simpleCache);
+		$this->handler = new CacheHandler(
+			_elgg_services()->config,
+			_elgg_services()->request,
+			_elgg_services()->simpleCache,
+			_elgg_services()->configTable,
+		);
 	}
 
 	protected function _testParseFail($input) {

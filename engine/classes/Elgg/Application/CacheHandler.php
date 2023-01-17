@@ -5,6 +5,7 @@ namespace Elgg\Application;
 use Elgg\Application;
 use Elgg\Cache\SimpleCache;
 use Elgg\Config;
+use Elgg\Database\ConfigTable;
 use Elgg\Http\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -63,18 +64,32 @@ class CacheHandler {
 	 * @var SimpleCache
 	 */
 	protected $simplecache;
+	
+	/**
+	 * @var bool
+	 */
+	protected $simplecache_enabled;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Config      $config      Elgg configuration
-	 * @param Request     $request     HTTP request
-	 * @param SimpleCache $simplecache Simplecache
+	 * @param Config      $config       Elgg configuration
+	 * @param Request     $request      HTTP request
+	 * @param SimpleCache $simplecache  Simplecache
+	 * @param ConfigTable $config_table Config table
 	 */
-	public function __construct(Config $config, Request $request, SimpleCache $simplecache) {
+	public function __construct(Config $config, Request $request, SimpleCache $simplecache, ConfigTable $config_table) {
 		$this->config = $config;
 		$this->request = $request;
 		$this->simplecache = $simplecache;
+		
+		$this->simplecache_enabled = $config->simplecache_enabled;
+		if (!$this->config->hasInitialValue('simplecache_enabled')) {
+			$db_value = $config_table->get('simplecache_enabled');
+			if (isset($db_value)) {
+				$this->simplecache_enabled = (bool) $db_value;
+			}
+		}
 	}
 
 	/**
@@ -109,7 +124,7 @@ class CacheHandler {
 		
 		$response->headers->set('X-Content-Type-Options', 'nosniff', true);
 
-		if (!$this->simplecache->isEnabled()) {
+		if (!$this->simplecache_enabled) {
 			$app->bootCore();
 			if (!headers_sent()) {
 				header_remove('Cache-Control');
@@ -333,7 +348,7 @@ class CacheHandler {
 			return false;
 		}
 
-		$hook_name = $this->simplecache->isEnabled() ? 'simplecache:generate' : 'cache:generate';
+		$hook_name = $this->simplecache_enabled ? 'simplecache:generate' : 'cache:generate';
 		$hook_type = $this->getViewFileType($view);
 		$hook_params = [
 			'view' => $view,
