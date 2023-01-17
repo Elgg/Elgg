@@ -1385,6 +1385,9 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			$container->updateLastAction();
 		}
 		
+		// for BC reasons this event is still needed (for example for notifications)
+		_elgg_services()->events->trigger('create', $this->type, $this);
+		
 		_elgg_services()->events->triggerAfter('create', $this->type, $this);
 
 		return $guid;

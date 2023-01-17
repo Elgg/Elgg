@@ -23,6 +23,12 @@ Events and Hooks
 
 These two similar concepts have been merged and from now on we will only refer to events. The public service ``hooks`` no longer exists.
 
+Create event
+~~~~~~~~~~~~
+
+The ``create``, ``<object|group|user|site>`` events can no longer be used to prevent the creation of the entity.
+Use ``create:before`` if you wish to prevent the creation.
+
 Private Settings
 ----------------
 
@@ -31,7 +37,7 @@ The concept of private settings has been removed from the system. All private se
 Breadcrumbs integrated into menu system
 ---------------------------------------
 
-Helper functions for the breadcrumb menu have been changed to use `elgg_register_menu_item()` for adding items to the breadcrumb menu. 
+Helper functions for the breadcrumb menu have been changed to use ``elgg_register_menu_item()`` for adding items to the breadcrumb menu.
 Breadcrumb related events have been removed in favor of the regular menu events. 
 
 Upgrades
@@ -426,7 +432,6 @@ Removed events
 
 * ``access:collections:addcollection, collection`` use the ``create, access_collection`` sequence
 * ``access:collections:deletecollection, collection`` use the ``delete, access_collection`` sequence
-* ``create, <object|group|user|site>`` use the ``create:before, <type>`` or ``create:after, <type>`` event
 * ``prepare, breadcrumbs`` use ``register, menu:breadcrumbs``
 * ``widget_settings, <widget_handler>``
 

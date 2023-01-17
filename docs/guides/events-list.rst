@@ -361,9 +361,13 @@ Entity events
 **comments:count, <entity_type>** |results|
 	Return the number of comments on ``$params['entity']``.
 
+**create, <entity type>**
+    Triggered for user, group, object, and site entities after creation. Triggered just before the ``create:after`` event,
+    mostly for BC reasons. The use of the ``create:after`` event is preferred.
+
 **create:after, <entity type>**
     Triggered for user, group, object, and site entities after creation.
-	
+
 **create:before, <entity type>**
     Triggered for user, group, object, and site entities before creation. Return false to prevent creating the entity.
 
