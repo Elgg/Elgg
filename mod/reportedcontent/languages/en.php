@@ -24,6 +24,9 @@ return array(
 	'reportedcontent:numbertodisplay' => 'Number of reports to display',
 	'reportedcontent:user' => 'Report user',
 	'reportedcontent:new' => 'New reports',
+	'reportedcontent:archived_reports' => 'Archived',
+	'reportedcontent:related_reports' => 'Related reports',
+	'reportedcontent:comments:message' => 'Comments are only available for the admin. The reporter will not be notified about new comments.',
 	
 	'reportedcontent:failed' => 'Sorry, the attempt to report this content has failed.',
 	'reportedcontent:notarchived' => 'We were not able to archive that report',

@@ -1,12 +1,11 @@
 define(['jquery', 'elgg/Ajax', 'elgg/lightbox'], function ($, Ajax, lightbox) {
 
-	var submitReportedContent = function (event) {
+	function submitReportedContent(event) {
 		event.preventDefault();
-		
-		var $form = $(this);
+
 		var ajax = new Ajax();
 
-		ajax.action($form.attr('action'), {
+		ajax.action($(this).attr('action'), {
 			data: ajax.objectify(this),
 			success: function () {
 				lightbox.close();
@@ -14,7 +13,7 @@ define(['jquery', 'elgg/Ajax', 'elgg/lightbox'], function ($, Ajax, lightbox) {
 		});
 	};
 	
-	var cancelReportedContent = function () {
+	function cancelReportedContent() {
 		lightbox.close();
 		
 		return false;

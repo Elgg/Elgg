@@ -85,6 +85,7 @@ class RouteRegistrationService {
 		$deprecated = elgg_extract('deprecated', $params, '');
 		$required_plugins = elgg_extract('required_plugins', $params, []);
 		$detect_page_owner = (bool) elgg_extract('detect_page_owner', $params, false);
+		$priority = (int) elgg_extract('priority', $params);
 
 		if (!$path || (!$controller && !$resource && !$handler && !$file)) {
 			throw new InvalidArgumentException(
@@ -152,7 +153,7 @@ class RouteRegistrationService {
 			'utf8' => true,
 		], '', [], $methods);
 
-		$this->routes->add($name, $route);
+		$this->routes->add($name, $route, $priority);
 
 		return $route;
 	}

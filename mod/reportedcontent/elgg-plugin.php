@@ -11,7 +11,7 @@ return [
 			'subtype' => 'reported_content',
 			'class' => 'ElggReportedContent',
 			'capabilities' => [
-				'commentable' => false,
+				'commentable' => true,
 			],
 		],
 	],
@@ -29,7 +29,22 @@ return [
 	'view_options' => [
 		'forms/reportedcontent/add' => ['ajax' => true],
 	],
+	'routes' => [
+		'view:object:reported_content' => [
+			'path' => '/admin/reportedcontent/view/{guid}',
+			'resource' => 'reportedcontent/view',
+			'middleware' => [
+				\Elgg\Router\Middleware\AdminGatekeeper::class,
+			],
+			'priority' => 1,
+		],
+	],
 	'events' => [
+		'enqueue' => [
+			'notification' => [
+				'Elgg\ReportedContent\Notifications\PreventCommentNotification' => [],
+			],
+		],
 		'register' => [
 			'menu:admin_header' => [
 				'Elgg\ReportedContent\Menus\AdminHeader::register' => [],
