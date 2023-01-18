@@ -2,6 +2,7 @@
 
 namespace Elgg\Router\Middleware;
 
+use Elgg\Exceptions\Http\EntityNotFoundException;
 use Elgg\Exceptions\Http\EntityPermissionsException;
 use Elgg\Router\Route;
 
@@ -46,7 +47,7 @@ class PageOwnerCanEditGatekeeper {
 		
 		$page_owner = $route->resolvePageOwner();
 		if (!$page_owner instanceof \ElggEntity) {
-			return;
+			throw new EntityNotFoundException();
 		}
 		
 		if (!$page_owner->canEdit()) {
