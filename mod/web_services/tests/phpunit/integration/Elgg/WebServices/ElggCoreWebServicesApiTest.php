@@ -12,7 +12,7 @@ use Elgg\Exceptions\DomainException;
  */
 class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 
-	private $call_method;
+	protected $call_method;
 
 	public function up() {
 		$this->call_method = _elgg_services()->request->getMethod();
@@ -26,23 +26,6 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 	public function down() {
 		// Restore original request method
 		_elgg_services()->request->server->set('REQUEST_METHOD', $this->call_method);
-	}
-
-	public function testExposeFunctionBadParameters() {
-		$this->expectException(\TypeError::class);
-		elgg_ws_expose_function('test', 'test', 'BAD');
-	}
-
-	public function testExposeFunctionParametersBadArray() {
-		$this->expectException(InvalidArgumentException::class);
-		$this->expectExceptionMessage(elgg_echo('InvalidArgumentException:APIParametersArrayStructure', ['test']));
-		elgg_ws_expose_function('test', 'test', ['param1' => 'string']);
-	}
-
-	public function testExposeFunctionBadHttpMethod() {
-		$this->expectException(DomainException::class);
-		$this->expectExceptionMessage(elgg_echo('DomainException:UnrecognisedHttpMethod', ['BAD', 'test']));
-		elgg_ws_expose_function('test', 'test', [], '', 'BAD');
 	}
 
 	// api key methods
@@ -86,39 +69,5 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 		$this->expectException(\APIException::class);
 		$this->expectExceptionMessage(elgg_echo('APIException:BadAPIKey'));
 		$apikey();
-	}
-
-	public function methodCallback() {
-		return func_get_args();
-	}
-
-	public function methodCallbackAssoc($values) {
-		return $values;
-	}
-
-	protected function registerFunction($api_auth = false, $user_auth = false, $params = null, $assoc = false) {
-		$parameters = [
-			'param1' => [
-				'type' => 'int',
-				'required' => true
-			],
-			'param2' => [
-				'type' => 'bool',
-				'required' => false
-			],
-		];
-
-		if ($params == null) {
-			$params = $parameters;
-		}
-
-		$callback = ($assoc) ? [
-			$this,
-			'methodCallbackAssoc'
-		] : [
-			$this,
-			'methodCallback'
-		];
-		elgg_ws_expose_function('test', $callback, $params, '', 'POST', $api_auth, $user_auth);
 	}
 }

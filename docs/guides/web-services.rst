@@ -41,8 +41,11 @@ API clients to renew their keys.
 Exposing methods
 ----------------
 
-The function to use to expose a method is ``elgg_ws_expose_function()``. As an
-example, let's assume you want to expose a function that echos text back
+API methods can be exposed in one of two ways:
+- using the ``web_services`` section in the ``elgg-plugin.php`` file of your plugin
+- during the ``'register', 'api_methods'`` event
+
+As an example, let's assume you want to expose a function that echos text back
 to the calling application. The function could look like this
 
 .. code-block:: php
@@ -58,23 +61,45 @@ API framework:
 
 .. code-block:: php
 
-	elgg_ws_expose_function(
-		"test.echo",
-		"my_echo",
-		[
-			"string" => [
-				'type' => 'string',
-			]
-		],
-		'A testing method which echos back a string',
-		'GET',
-		false,
-		false
-	);
+    // as part of the elgg-plugin.php
+    'web_services' => [
+        'test.echo' => [
+            'GET' => [ // the HTTP call method (GET|POST)
+                'callback' => 'my_echo', // required
+                'description' => 'A testing method which echos back a string', // optional, the description of the API method
+                'params' => [ // optional, input parameters for the API method
+                    'string' => ['type' => 'string'],
+                ],
+                'require_api_auth' => false, // optional, requires API authentication (default: false)
+                'require_user_auth' => false, // optional, requires User authentication (default: false)
+                'associative' => false, // optional, provide the input params as an array to the callback function (default: false)
+            ],
+        ],
+    ],
+
+    // as part of the 'register', 'api_methods' event
+    function my_plugin_event_handler(\Elgg\Event $event) {
+        $results = $event->getValue();
+
+        $results['test.echo']['GET'] = [
+            'callback' => 'my_echo',
+            'description' => 'A testing method which echos back a string',
+            'params' => [
+                'string' => ['type' => 'string'],
+            ],
+        ];
+
+        return $results;
+    }
+
+.. note::
+
+    If no ``description`` is provided in the API method definition the system will check for the existence of the language key
+    ``web_services:api_methods:<method>:<http call method>:description``
 
 If you add this code to a plugin and then go to
 http://yoursite.com/services/api/rest/json/?method=system.api.list, you
-should now see your test.echo method listed as an API call. Further, to
+should now see your ``test.echo`` method listed as an API call. Further, to
 test the exposed method from a web browser, you could hit the url:
 http://yoursite.com/services/api/rest/json/?method=test.echo&string=testing
 and you should see JSON data like this:
@@ -95,7 +120,7 @@ Response formats
 JSON is the default format, however XML and serialized PHP can be fetched by enabling the ``data_views``
 plugin and substituting ``xml`` or ``php`` in place of ``json`` in the above URLs.
 
-You can also add additional response formats by defining new viewtypes.
+You can also add additional response formats by defining new view types.
 
 Parameters
 ~~~~~~~~~~
@@ -119,27 +144,28 @@ You can use additional fields to describe your parameter, e.g. ``description``.
 
 .. code-block:: php
 
-	elgg_ws_expose_function(
-		'test.greet',
-		'my_greeting',
-		[
-			'name' => [
-				'type' => 'string',
-				'required' => true,
-				'description' => 'Name of the person to be greeted by the API',
-			],
-			'greeting' => [
-				'type' => 'string',
-				'required' => false,
-				'default' => 'Hello',
-				'description' => 'Greeting to be used, e.g. "Good day" or "Hi"',
-			],
-		],
-		'A testing method which greets the user with a custom greeting',
-		'GET',
-		false,
-		false
-	);
+    // as part of the elgg-plugin.php
+    'web_services' => [
+        'test.greet' => [
+            'GET' => [
+                'callback' => 'my_greeting',
+                'description' => 'A testing method which greets the user with a custom greeting',
+                'params' => [
+                    'name' => [
+                        'type' => 'string',
+                        'required' => true,
+                        'description' => 'Name of the person to be greeted by the API',
+                    ],
+                    'greeting' => [
+                        'type' => 'string',
+                        'required' => false,
+                        'default' => 'Hello',
+                        'description' => 'Greeting to be used, e.g. "Good day" or "Hi"',
+                    ],
+                ],
+            ],
+        ],
+    ],
 
 .. note::
 
@@ -162,27 +188,30 @@ To do that, set ``$assoc`` to ``true`` in ``elgg_ws_expose_function()``.
 		return "$greeting, $name";
 	}
 
-	elgg_ws_expose_function(
-		"test.greet",
-		"greet_me",
-		[
-			"name" => [
-				'type' => 'string',
-			],
-			"greeting" => [
-				'type' => 'string',
-				'default' => 'Hello',
-				'required' => false,
-			],
-		],
-		'A testing method which echos a greeting',
-		'GET',
-		false,
-		false,
-		true // $assoc makes the callback receive an associative array
-	);
+    // as part of the elgg-plugin.php
+    'web_services' => [
+        'test.greet' => [
+            'GET' => [
+                'callback' => 'greet_me',
+                'description' => 'A testing method which echos a greeting',
+                'params' => [
+                    'name' => [
+                        'type' => 'string',
+                    ],
+                    'greeting' => [
+                        'type' => 'string',
+                        'required' => false,
+                        'default' => 'Hello',
+                    ],
+                ],
+                'associative' => true,
+            ],
+        ],
+    ],
 
-.. note:: If a missing parameter has no default value, ``null`` will be used.
+.. note::
+
+    If a missing parameter has no default value, ``null`` will be used.
 
 API authentication
 ------------------
@@ -213,32 +242,33 @@ that have registered on your site since a certain timestamp.
 
 .. code-block:: php
 
-    function count_new_users($since) {
+    function count_new_users(int $since) {
         return elgg_count_entities([
             'type' => 'user',
             'created_since' => $since,
         ]);
     }
 
-Now, let's expose it and make the number of minutes an optional
-parameter:
+Now, let's expose it and make the number of minutes a required parameter:
 
 .. code-block:: php
 
-	elgg_ws_expose_function(
-		"users.new",
-		"count_new_users",
-		[
-			"since" => [
-				'type' => 'int',
-				'required' => true,
-			],
-		],
-		'Number of users who have used the site in the past x minutes',
-		'GET',
-		true,
-		false
-	);
+	// as part of the elgg-plugin.php
+    'web_services' => [
+        'users.new' => [
+            'GET' => [
+                'callback' => 'count_new_users',
+                'description' => 'Number of users who have used the site in the past x minutes',
+                'params' => [
+                   'since' => [
+                        'type' => 'int',
+                        'required' => true,
+                    ],
+                ],
+                'require_api_auth' => true,
+            ],
+        ],
+    ],
 
 This function is now available and if you check ``system.api.list``, you
 will see that it requires API authentication. If you hit the method with
@@ -300,19 +330,22 @@ GET HTTP requests.
 
 .. code-block:: php
 
-	elgg_ws_expose_function(
-		"thewire.post",
-		"my_post_to_wire",
-		[
-			"text" => [
-				'type' => 'string',
-			],
-		],
-		'Post to the wire. 140 characters or less',
-		'POST',
-		true,
-		true
-	);
+	// as part of the elgg-plugin.php
+    'web_services' => [
+        'thewire.post' => [
+            'POST' => [
+                'callback' => 'my_post_to_wire',
+                'description' => 'Post to the wire. 140 characters or less',
+                'params' => [
+                   'text' => [
+                        'type' => 'string',
+                    ],
+                ],
+                'require_api_auth' => true,
+                'require_user_auth' => true,
+            ],
+        ],
+    ],
 
 Please note that you will not be able to test this using a web browser
 as you did with the other methods. You need to write some client code to
@@ -339,7 +372,7 @@ authenticated. This provides you the flexibility to add and remove
 authentication modules. Do you want to not use the default user
 authentication PAM but would prefer using OAuth? You can do this.
 
-The first step is registering a callback function for the *rest, init* event:
+The first step is registering a callback function for the ``'rest', 'init'`` event:
 
 .. code-block:: php
 

@@ -10,56 +10,36 @@ use Elgg\Request;
 /**
  * Describes an API method
  *
- * @property string $call_method        How should the API method be called (GET|POST)
- * @property string $description        Description of the API method
- * @property array  $params             Parameters supported by the API call
- * @property bool   $require_api_auth   Does this method require API authorization
- * @property bool   $require_user_auth  Does this method require user authorization
- * @property bool   $supply_associative If set to true, the callback function will receive a single argument that contains an associative array of parameter => input pairs for the method
+ * @property string      $call_method        How should the API method be called (GET|POST)
+ * @property string      $description        Description of the API method
+ * @property-read string $method             The API method name
+ * @property array       $params             Parameters supported by the API call
+ * @property bool        $require_api_auth   Does this method require API authorization
+ * @property bool        $require_user_auth  Does this method require user authorization
+ * @property bool        $supply_associative If set to true, the callback function will receive a single argument that contains an associative array of parameter => input pairs for the method
  *
  * @since 4.0
  */
 class ApiMethod implements CollectionItemInterface {
 
 	/**
-	 * @var string
-	 */
-	protected $method;
-	
-	/**
 	 * @var callable
 	 */
 	protected $callback;
 	
-	/**
-	 * @var array
-	 */
-	protected $params = [];
+	protected string $method;
 	
-	/**
-	 * @var string
-	 */
-	protected $description = '';
+	protected array $params = [];
 	
-	/**
-	 * @var string GET|POST
-	 */
-	protected $call_method = 'GET';
+	protected string $description = '';
 	
-	/**
-	 * @var bool
-	 */
-	protected $require_api_auth = false;
+	protected string $call_method = 'GET';
 	
-	/**
-	 * @var bool
-	 */
-	protected $require_user_auth = false;
+	protected bool $require_api_auth = false;
 	
-	/**
-	 * @var bool
-	 */
-	protected $supply_associative = false;
+	protected bool $require_user_auth = false;
+	
+	protected bool $supply_associative = false;
 	
 	/**
 	 * Api method
@@ -82,7 +62,7 @@ class ApiMethod implements CollectionItemInterface {
 	 * @throws \Elgg\Exceptions\DomainException
 	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
-	public function __set($name, $value) {
+	public function __set($name, $value): void {
 		
 		switch ($name) {
 			case 'method':
@@ -152,15 +132,82 @@ class ApiMethod implements CollectionItemInterface {
 	 * @return mixed
 	 */
 	public function __get($name) {
-		
-		// blacklist of actual protected values
-		switch ($name) {
-			case 'callback':
-			case 'method':
-				return null;
+		return $this->$name;
+	}
+	
+	/**
+	 * Check if a class property has a value
+	 *
+	 * @param $name the name of the property
+	 *
+	 * @return bool
+	 */
+	public function __isset($name): bool {
+		return isset($this->$name);
+	}
+	
+	/**
+	 * Create an ApiMethod from an associative array.
+	 *
+	 * Required keys are:
+	 * 	(string) method:   The API method name
+	 * 	(string) callback: Callback function when the API method is called
+	 *
+	 * Optional options are:
+	 * 	(bool)   associative:       Will the input params be provided as an array to the callback (default: false)
+	 * 	(string) call_method:       The HTTP call method (GET|POST) (default: GET)
+	 * 	(string) description:       The description of the API method
+	 * 	(array)  params:            The input parameters for the API call. In the format:
+	 *                              [
+	 *                                 'variable' = [
+	 *                                    'type' => 'int' | 'bool' | 'float' | 'string' | 'array',
+	 *                                    'required' => true (default) | false,
+	 *                                    'default' => value (optional),
+	 *                                 ],
+	 *                              ]
+	 * 	(bool)   require_api_auth:  Does the API require API authentication (default: false)
+	 * 	(bool)   require_user_auth: Does the API require user authentication (default: false)
+	 *
+	 * @param array $options Option array of key value pairs
+	 *
+	 * @return static
+	 * @throws InvalidArgumentException
+	 */
+	public static function factory(array $options): static {
+		$method = elgg_extract('method', $options);
+		$callback = elgg_extract('callback', $options);
+		if (empty($method) || empty($callback)) {
+			throw new InvalidArgumentException(__METHOD__ . ' requires at least a "method" and a "callback" in the $options array');
 		}
 		
-		return $this->$name;
+		$api_method = new static($method, $callback);
+		
+		$defaults = [
+			'params' => [],
+			'call_method' => 'GET',
+			'require_api_auth' => false,
+			'require_user_auth' => false,
+			'supply_associative' => false,
+		];
+		$options = array_merge($defaults, $options);
+		foreach ($defaults as $param_key => $default) {
+			// using magic __set() to force logic inside that function
+			$api_method->__set($param_key, elgg_extract($param_key, $options));
+		}
+		
+		$description = (string) elgg_extract('description', $options);
+		if (empty($description)) {
+			$lan_key = "web_services:api_methods:{$api_method->method}:" . strtolower($api_method->call_method) . ':description';
+			if (elgg_language_key_exists($lan_key)) {
+				$description = elgg_echo($lan_key);
+			}
+		}
+		
+		if (!empty($description)) {
+			$api_method->description = $description;
+		}
+		
+		return $api_method;
 	}
 	
 	/**

@@ -32,8 +32,8 @@ return array(
 	'SecurityException:DupePacket' => "Paketsignatur redan skickat.",
 	'SecurityException:InvalidAPIKey' => "Ogiltig eller saknad API-nyckel.",
 	
-	'system.api.list' => "Listar alla tillgängliga API-anrop i systemet.",
-	'auth.gettoken' => "Det här API-anropet låter en användare få en token för autentisering av användare, som kan användas för att autentisera framtida API-anrop. Skicka det vidare som parametern auth_token",
+	'web_services:api_methods:system.api.list:get:description' => "Listar alla tillgängliga API-anrop i systemet.",
+	'web_services:api_methods:auth.gettoken:post:description' => "Det här API-anropet låter en användare få en token för autentisering av användare, som kan användas för att autentisera framtida API-anrop. Skicka det vidare som parametern auth_token",
 	
 	'admin:configure_utilities:webservices' => "Webbservice",
 	'admin:configure_utilities:ws_list' => "Lista API-metoder",

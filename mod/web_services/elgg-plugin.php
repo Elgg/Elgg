@@ -1,6 +1,8 @@
 <?php
 
 use Elgg\Router\Middleware\AdminGatekeeper;
+use Elgg\WebServices\ApiMethods\AuthGetToken;
+use Elgg\WebServices\ApiMethods\SystemApiList;
 use Elgg\WebServices\Forms\PrepareFields;
 use Elgg\WebServices\Middleware\ApiContextMiddleware;
 use Elgg\WebServices\Middleware\RestApiErrorHandlingMiddleware;
@@ -15,7 +17,6 @@ return [
 	'plugin' => [
 		'name' => 'Web Services',
 	],
-	'bootstrap' => \Elgg\WebServices\Bootstrap::class,
 	'settings' => [
 		'auth_allow_key' => 1,
 		'auth_allow_hmac' => 1,
@@ -91,6 +92,22 @@ return [
 			],
 			'menu:entity' => [
 				'\Elgg\WebServices\EntityMenu' => [],
+			],
+		],
+	],
+	'web_services' => [
+		'auth.gettoken' => [
+			'POST' => [
+				'callback' => AuthGetToken::class,
+				'params' => [
+					'username' => ['type' => 'string'],
+					'password' => ['type' => 'string'],
+				],
+			],
+		],
+		'system.api.list' => [
+			'GET' => [
+				'callback' => SystemApiList::class,
 			],
 		],
 	],

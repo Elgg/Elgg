@@ -4,6 +4,7 @@ namespace Elgg\WebServices;
 
 use Elgg\IntegrationTestCase;
 use Elgg\Http\Request;
+use Elgg\WebServices\Di\ApiRegistrationService;
 use Elgg\WebServices\Middleware\ApiContextMiddleware;
 use Elgg\WebServices\Middleware\ViewtypeMiddleware;
 use Elgg\WebServices\Middleware\RestApiOutputMiddleware;
@@ -134,11 +135,15 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($this->plugin->setSetting('auth_allow_key', 1));
 		
 		$called = 0;
-		elgg_ws_expose_function('api_auth_test', function() use (&$called) {
-			$called++;
-			
-			return \SuccessResult::getInstance(['called' => $called]);
-		}, [], '', 'GET', true);
+		ApiRegistrationService::instance()->registerApiMethod(ApiMethod::factory([
+			'method' => 'api_auth_test',
+			'callback' => function() use (&$called) {
+				$called++;
+				
+				return \SuccessResult::getInstance(['called' => $called]);
+			},
+			'require_api_auth' => true,
+		]));
 		
 		/* @var $result Response */
 		$result = $this->executeRequest($request);
@@ -173,12 +178,15 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($this->plugin->setSetting('auth_allow_key', 0));
 		
 		$called = 0;
-		elgg_ws_expose_function('api_auth_test', function() use (&$called) {
-			$called++;
-			
-			return \SuccessResult::getInstance(['called' => $called]);
-		}, [], '', 'GET', true);
-		
+		ApiRegistrationService::instance()->registerApiMethod(ApiMethod::factory([
+			'method' => 'api_auth_test',
+			'callback' => function() use (&$called) {
+				$called++;
+				
+				return \SuccessResult::getInstance(['called' => $called]);
+			},
+			'require_api_auth' => true,
+		]));
 		$this->expectException(\APIException::class);
 		$this->executeRequest($request);
 	}
@@ -195,11 +203,15 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($this->plugin->setSetting('auth_allow_key', 1));
 		
 		$called = 0;
-		elgg_ws_expose_function('api_auth_test', function() use (&$called) {
-			$called++;
-			
-			return \SuccessResult::getInstance(['called' => $called]);
-		}, [], '', 'GET', true);
+		ApiRegistrationService::instance()->registerApiMethod(ApiMethod::factory([
+			'method' => 'api_auth_test',
+			'callback' => function() use (&$called) {
+				$called++;
+				
+				return \SuccessResult::getInstance(['called' => $called]);
+			},
+			'require_api_auth' => true,
+		]));
 		
 		$this->expectException(\APIException::class);
 		$this->executeRequest($request);
@@ -239,11 +251,15 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($this->plugin->setSetting('auth_allow_hmac', 1));
 		
 		$called = 0;
-		elgg_ws_expose_function('api_auth_test', function() use (&$called) {
-			$called++;
-			
-			return \SuccessResult::getInstance(['called' => $called]);
-		}, [], '', 'GET', true);
+		ApiRegistrationService::instance()->registerApiMethod(ApiMethod::factory([
+			'method' => 'api_auth_test',
+			'callback' => function() use (&$called) {
+				$called++;
+				
+				return \SuccessResult::getInstance(['called' => $called]);
+			},
+			'require_api_auth' => true,
+		]));
 			
 		/* @var $result Response */
 		$result = $this->executeRequest($request);
@@ -297,14 +313,18 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($this->plugin->setSetting('auth_allow_hmac', 0));
 		
 		$called = 0;
-		elgg_ws_expose_function('api_auth_test', function() use (&$called) {
-			$called++;
-			
-			return \SuccessResult::getInstance(['called' => $called]);
-		}, [], '', 'GET', true);
+		ApiRegistrationService::instance()->registerApiMethod(ApiMethod::factory([
+			'method' => 'api_auth_test',
+			'callback' => function() use (&$called) {
+				$called++;
+				
+				return \SuccessResult::getInstance(['called' => $called]);
+			},
+			'require_api_auth' => true,
+		]));
 			
 		$this->expectException(\APIException::class);
-		$result = $this->executeRequest($request);
+		$this->executeRequest($request);
 	}
 	
 	public function testApiAuthenticationWithInvalidHMACHeaders() {
@@ -341,11 +361,15 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($this->plugin->setSetting('auth_allow_hmac', 1));
 		
 		$called = 0;
-		elgg_ws_expose_function('api_auth_test', function() use (&$called) {
-			$called++;
-			
-			return \SuccessResult::getInstance(['called' => $called]);
-		}, [], '', 'GET', true);
+		ApiRegistrationService::instance()->registerApiMethod(ApiMethod::factory([
+			'method' => 'api_auth_test',
+			'callback' => function() use (&$called) {
+				$called++;
+				
+				return \SuccessResult::getInstance(['called' => $called]);
+			},
+			'require_api_auth' => true,
+		]));
 		
 		$this->expectException(\APIException::class);
 		$this->executeRequest($request);

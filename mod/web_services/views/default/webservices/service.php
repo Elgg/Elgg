@@ -15,7 +15,7 @@ if (!$service instanceof ApiMethod) {
 $content = '';
 
 // title
-$title = $service->getID();
+$title = $service->method;
 $title .= elgg_format_element('span', ['class' => ['mls', 'elgg-quiet']], $service->call_method);
 
 $content .= elgg_view('object/elements/summary/title', [
