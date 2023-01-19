@@ -52,6 +52,11 @@ Session
 
 If you use the session service directly (or via ``elgg_get_session()``) you might need to update your code. Various functions of this class have been moved to the ``elgg()->session_manager`` service.
 
+Gatekeepers
+-----------
+
+The ``PageOwnerCanEditGatekeeper`` middleware now requires a pageowner to be set.
+
 Files plugin
 ------------
 

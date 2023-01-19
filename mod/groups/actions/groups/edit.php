@@ -229,6 +229,13 @@ if (get_input('icon_remove')) {
 	$group->saveIconFromUploadedFile('icon');
 }
 
+if (get_input('header_remove')) {
+	$group->deleteIcon('header');
+} else {
+	// try to save new icon, will fail silently if no icon provided
+	$group->saveIconFromUploadedFile('header', 'header');
+}
+
 $data = [
 	'entity' => $group,
 ];

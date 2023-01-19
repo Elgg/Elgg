@@ -214,7 +214,7 @@ This gatekeeper will prevent access with non-xhr requests.
 PageOwnerCanEditGatekeeper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This gatekeeper will prevent access if there is a pageowner detected and the pageowner can't be editted.
+This gatekeeper will prevent access if there is no pageowner detected and the pageowner can't be editted.
 
 GroupPageOwnerCanEditGatekeeper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

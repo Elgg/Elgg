@@ -33,4 +33,10 @@ if (!$expages->save()) {
 	return elgg_error_response(elgg_echo('expages:error'));
 }
 
+if (get_input('header_remove')) {
+	$expages->deleteIcon('header');
+} else {
+	$expages->saveIconFromUploadedFile('header', 'header');
+}
+
 return elgg_ok_response('', elgg_echo('expages:posted'));

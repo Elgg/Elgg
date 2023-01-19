@@ -98,6 +98,12 @@ if (!$page->save()) {
 	return elgg_error_response(elgg_echo('pages:notsaved'));
 }
 
+if (get_input('header_remove')) {
+	$page->deleteIcon('header');
+} else {
+	$page->saveIconFromUploadedFile('header', 'header');
+}
+
 // Now save description as an annotation
 $page->annotate('page', $page->description ?? '', $page->access_id);
 

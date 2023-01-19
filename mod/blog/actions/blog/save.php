@@ -146,6 +146,12 @@ if ($blog->status == 'published' || !$save) {
 	]);
 }
 
+if (get_input('header_remove')) {
+	$blog->deleteIcon('header');
+} else {
+	$blog->saveIconFromUploadedFile('header', 'header');
+}
+
 return elgg_ok_response([
 	'guid' => $blog->guid,
 	'url' => $blog->getURL(),

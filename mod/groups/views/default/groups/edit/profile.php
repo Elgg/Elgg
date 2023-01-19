@@ -13,12 +13,6 @@ echo elgg_view_field([
 	'value' => elgg_extract('name', $vars),
 ]);
 
-echo elgg_view('entity/edit/icon', [
-	'entity' => elgg_extract('entity', $vars),
-	'entity_type' => 'group',
-	'entity_subtype' => 'group',
-]);
-
 // show the configured group profile fields
 $group_profile_fields = elgg()->fields->get('group', 'group');
 foreach ($group_profile_fields as $field) {

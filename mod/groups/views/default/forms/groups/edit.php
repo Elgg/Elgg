@@ -22,6 +22,14 @@ $tabs[] = [
 	'content' => elgg_view('groups/edit/profile', $vars),
 ];
 
+// build the group images
+$tabs[] = [
+	'name' => 'images',
+	'priority' => 150,
+	'text' => elgg_echo('groups:edit:images'),
+	'content' => elgg_view('groups/edit/images', $vars),
+];
+
 // build the group access options
 $tabs[] = [
 	'name' => 'access',

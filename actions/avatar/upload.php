@@ -53,4 +53,4 @@ elgg_create_river_item([
 	'object_guid' => $owner->guid,
 ]);
 
-return elgg_ok_response('', elgg_echo('avatar:upload:success'));
+return elgg_ok_response('', elgg_echo('avatar:upload:success'), $owner->getURL());

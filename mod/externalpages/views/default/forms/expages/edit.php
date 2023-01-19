@@ -36,6 +36,12 @@ echo elgg_view_field([
 	'value' => $guid,
 ]);
 
+echo elgg_view('entity/edit/header', [
+	'entity' => elgg_extract(0, $page_contents),
+	'entity_type' => 'object',
+	'entity_subtype' => $type,
+]);
+
 // set the required form variables
 echo elgg_view_field([
 	'#type' => 'longtext',

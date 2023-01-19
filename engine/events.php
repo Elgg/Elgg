@@ -139,6 +139,11 @@ return [
 			\Elgg\Icons\GetSiteFaviconSizesHandler::class => [],
 		],
 	],
+	'entity:header:sizes' => [
+		'all' => [
+			\Elgg\Icons\HeaderSizesHandler::class => [],
+		],
+	],
 	'entity:icon:file' => [
 		'user' => [
 			\Elgg\Icons\SetUserIconFileHandler::class => [],
@@ -280,6 +285,9 @@ return [
 		'menu:filter:filter' => [
 			'Elgg\Menus\Filter::registerFilterTabs' => ['priority' => 1],
 		],
+		'menu:filter:profile/edit' => [
+			'Elgg\Menus\Filter::registerAvatarEdit' => [],
+		],
 		'menu:filter:settings/notifications' => [
 			'Elgg\Menus\Filter::registerNotificationSettings' => [],
 		],
@@ -293,7 +301,6 @@ return [
 		],
 		'menu:page' => [
 			'Elgg\Menus\Page::registerAdminPluginSettings' => [],
-			'Elgg\Menus\Page::registerAvatarEdit' => [],
 			'Elgg\Menus\Page::registerUserSettings' => [],
 			'Elgg\Menus\Page::registerUserSettingsPlugins' => [],
 			'Elgg\Menus\Page::moveOldAdminSectionsToAdminHeader' => ['priority' => 9999],

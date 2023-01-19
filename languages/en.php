@@ -256,6 +256,11 @@ return array(
 	'avatar:remove:success' => 'Removing the avatar succeeded',
 	'avatar:remove:fail' => 'Avatar remove failed',
 	
+	'header:remove:success' => 'Removing the header succeeded',
+	'header:remove:fail' => 'Header remove failed',
+	'header:upload:success' => 'Uploading the header succeeded',
+	'header:upload:fail' => 'Header upload failed',
+	
 	'action:user:validate:already' => "%s was already validated",
 	'action:user:validate:success' => "%s has been validated",
 	'action:user:validate:error' => "An error occurred while validating %s",
@@ -1062,6 +1067,10 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'entity:edit:icon:file:label' => "Upload a new icon",
 	'entity:edit:icon:file:help' => "Leave blank to keep current icon.",
 	'entity:edit:icon:remove:label' => "Remove icon",
+
+	'entity:edit:header:file:label' => "Upload a new header",
+	'entity:edit:header:file:help' => "Leave blank to keep current header.",
+	'entity:edit:header:remove:label' => "Remove header image",
 
 /**
  * Generic action words

@@ -31,9 +31,15 @@ if (elgg_is_empty($name)) {
 	$name = elgg_extract('name', $vars, 'icon') . '_remove';
 }
 
+if (elgg_language_key_exists("entity:edit:{$icon_type}:remove:label")) {
+	$label = elgg_echo("entity:edit:{$icon_type}:remove:label");
+} else {
+	$label = elgg_echo('entity:edit:icon:remove:label');
+}
+
 echo elgg_view_field([
 	'#type' => 'checkbox',
-	'#label' => elgg_echo('entity:edit:icon:remove:label'),
+	'#label' => $label,
 	'#class' => 'elgg-entity-edit-icon-remove',
 	'name' => $name,
 	'value' => 1,

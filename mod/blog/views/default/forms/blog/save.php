@@ -7,6 +7,12 @@ elgg_require_js('forms/blog/save');
 
 $blog = elgg_extract('entity', $vars);
 
+echo elgg_view('entity/edit/header', [
+	'entity' => $blog,
+	'entity_type' => 'object',
+	'entity_subtype' => 'blog',
+]);
+
 $categories_vars = $vars;
 $categories_vars['#type'] = 'categories';
 

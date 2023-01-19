@@ -35,7 +35,7 @@ foreach ($blogs as $blog) {
 	
 	$subtitle = elgg_format_element('div', ['class' => ['elgg-listing-summary-subtitle', 'elgg-subtext']], $imprint);
 	
-	$image = elgg_view('output/img', ['src' => elgg_get_simplecache_url('widgets/elgg_blog/elgg-32.png')]);
+	$image = elgg_view('output/img', ['src' => elgg_get_simplecache_url('widgets/elgg_blog/elgg-32.png'), 'alt' => 'Elgg logo']);
 	
 	$item = elgg_view_image_block($image, $title . $subtitle);
 	
