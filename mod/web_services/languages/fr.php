@@ -37,8 +37,8 @@ return array(
 	'BadRequestException:MissingOutputViewInViewtype' => "Vue 'api/output' manquante dans le viewtype '%s'.",
 	'BadRequestException:MissingOutputViewInViewtype:DataViewsPlugin' => "Activez le plugin 'data_views' pour ajouter cette vue.",
 	
-	'system.api.list' => "Liste tous les appels d'API disponibles sur le système.",
-	'auth.gettoken' => "Cet appel à l'API permet à un utilisateur d'obtenir un jeton d'authentification utilisateur qui peut être utilisé pour authentifier les futurs appels à l'API. Passez-le en tant que paramètre auth_token",
+	'web_services:api_methods:system.api.list:get:description' => "Liste tous les appels d'API disponibles sur le système.",
+	'web_services:api_methods:auth.gettoken:post:description' => "Cet appel à l'API permet à un utilisateur d'obtenir un jeton d'authentification utilisateur qui peut être utilisé pour authentifier les futurs appels à l'API. Passez-le en tant que paramètre auth_token",
 	
 	'admin:configure_utilities:webservices' => "Webservices",
 	'admin:configure_utilities:ws_list' => "Lister les méthodes de l'API",

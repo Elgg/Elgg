@@ -37,8 +37,8 @@ return array(
 	'BadRequestException:MissingOutputViewInViewtype' => "Отсутствует представление 'api/output' в типе представления '%s'.",
 	'BadRequestException:MissingOutputViewInViewtype:DataViewsPlugin' => "Включите плагин 'data_views' чтобы добавить это представление.",
 	
-	'system.api.list' => "Список всех доступных вызовов API в системе.",
-	'auth.gettoken' => "Этот вызов API позволяет пользователю получить токен аутентификации пользователя, который можно использовать для аутентификации будущих вызовов API. Передайте его как параметр auth_token",
+	'web_services:api_methods:system.api.list:get:description' => "Список всех доступных вызовов API в системе.",
+	'web_services:api_methods:auth.gettoken:post:description' => "Этот вызов API позволяет пользователю получить токен аутентификации пользователя, который можно использовать для аутентификации будущих вызовов API. Передайте его как параметр auth_token",
 	
 	'admin:configure_utilities:webservices' => "Веб-сервисы",
 	'admin:configure_utilities:ws_list' => "Список методов API",

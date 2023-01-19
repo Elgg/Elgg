@@ -1323,13 +1323,16 @@ Groups
 Web Services
 ------------
 
+**register, api_methods``** |results|
+    Triggered when the ApiRegistrationService is constructed which allows to add/remove/edit webservice configurations
+
 **rest, init** |results|
 	Triggered by the web services rest handler. Plugins can set up their own authentication
 	handlers, then return ``true`` to prevent the default handlers from being registered.
 
 **rest:output, <method_name>** |results|
 	Filter the result (and subsequently the output) of the API method
-	
+
 
 .. |sequence| image:: https://raster.shields.io/badge/sequence-blue.png
 .. |results| image:: https://raster.shields.io/badge/expects%20results-brightgreen.png

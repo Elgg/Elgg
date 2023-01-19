@@ -382,6 +382,7 @@ Class function parameters
 * ``\ElggMenuItem::factory()`` now requires an ``array`` for ``$options``
 * ``\ElggTempFile::getDownloadURL()`` now requires a ``bool`` for ``$use_cookie`` and a ``string`` for ``$expires``
 * ``\ElggTempFile::getInlineURL()`` now requires a ``bool`` for ``$use_cookie`` and a ``string`` for ``$expires``
+* ``\Elgg\WebServices\Di\ApiRegistrationService::registerApiMethod()`` now requires a ``\Elgg\WebServices\ApiMethod`` as the only parameter
 
 Moved classes
 ~~~~~~~~~~~~~
@@ -420,6 +421,7 @@ Removed functions
 * ``elgg_pop_breadcrumb``
 * ``elgg_set_email_transport`` use ``_elgg_services()->set('mailer', ...)``
 * ``elgg_trigger_deprecated_plugin_hook``
+* ``elgg_ws_expose_function`` use ``elgg-plugin.php`` or ``'register', 'api_methods'`` event
 * ``file_prepare_form_vars``
 * ``get_user_by_email`` use ``elgg_get_user_by_email``
 * ``get_user_by_username`` use ``elgg_get_user_by_username``

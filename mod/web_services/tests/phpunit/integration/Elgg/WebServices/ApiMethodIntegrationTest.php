@@ -45,13 +45,6 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals('(' . __CLASS__ . ')->callbackTest', $api->describeCallable());
 	}
 	
-	public function testGetterForProtectedValues() {
-		$api = $this->getApiMethod();
-		
-		$this->assertNull($api->method);
-		$this->assertNull($api->callback);
-	}
-	
 	public function testCollectionItemInterface() {
 		$api = $this->getApiMethod();
 		
