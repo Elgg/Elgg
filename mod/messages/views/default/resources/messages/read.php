@@ -5,21 +5,20 @@
 
 $guid = (int) elgg_extract('guid', $vars);
 
-elgg_entity_gatekeeper($guid, 'object', 'messages');
+elgg_entity_gatekeeper($guid, 'object', 'messages', true);
 
-$message = get_entity($guid);
 /* @var ElggMessage $message */
+$message = get_entity($guid);
 
 // mark the message as read
 $message->readYet = true;
 
-elgg_set_page_owner_guid($message->getOwnerGUID());
 $page_owner = elgg_get_page_owner_entity();
 
 elgg_push_collection_breadcrumbs('object', 'messages', $page_owner);
 
 $inbox = false;
-if ($page_owner->getGUID() == $message->toId) {
+if ($page_owner->guid === $message->toId) {
 	$inbox = true;
 } else {
 	elgg_push_breadcrumb(elgg_echo('messages:sent'), elgg_generate_url('collection:object:messages:sent', ['username' => $page_owner->username]));

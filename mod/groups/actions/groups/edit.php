@@ -211,9 +211,6 @@ if (!$group->save()) {
 
 // group creator needs to be member of new group and river entry created
 if ($is_new_group) {
-	// @todo this should not be necessary...
-	elgg_set_page_owner_guid($group->guid);
-
 	$group->join($user);
 	elgg_create_river_item([
 		'view' => 'river/group/create',

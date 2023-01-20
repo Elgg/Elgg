@@ -21,10 +21,10 @@ return [
 	],
 	'routes' => [
 		'add:access_collection:friends' => [
-			'path' => '/friends/collections/add/{username?}',
+			'path' => '/friends/collections/add/{username}',
 			'resource' => 'friends/collections/add',
 			'middleware' => [
-				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
 		'edit:access_collection:friends' => [
@@ -48,10 +48,10 @@ return [
 			],
 		],
 		'collection:access_collection:friends:owner' => [
-			'path' => '/friends/collections/owner/{username?}',
+			'path' => '/friends/collections/owner/{username}',
 			'resource' => 'friends/collections/owner',
 			'middleware' => [
-				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
 	],

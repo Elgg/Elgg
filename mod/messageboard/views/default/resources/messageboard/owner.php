@@ -4,14 +4,10 @@
  */
 
 use Elgg\Database\Clauses\OrderByClause;
-use Elgg\Exceptions\Http\EntityNotFoundException;
 
 elgg_require_js('elgg/messageboard');
 
 $page_owner = elgg_get_page_owner_entity();
-if (!$page_owner instanceof \ElggUser) {
-	throw new EntityNotFoundException();
-}
 
 $history_username = (string) elgg_extract('history_username', $vars);
 $history_user = elgg_get_user_by_username($history_username);

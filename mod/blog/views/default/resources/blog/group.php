@@ -1,14 +1,11 @@
 <?php
 
-$group_guid = (int) elgg_extract('guid', $vars, elgg_extract('group_guid', $vars)); // group_guid for BC
 $lower = elgg_extract('lower', $vars);
 $upper = elgg_extract('upper', $vars);
 
-elgg_entity_gatekeeper($group_guid, 'group');
+elgg_group_tool_gatekeeper('blog');
 
-elgg_group_tool_gatekeeper('blog', $group_guid);
-
-$group = get_entity($group_guid);
+$group = elgg_get_page_owner_entity();
 
 elgg_register_title_button('add', 'object', 'blog');
 

@@ -1,13 +1,9 @@
 <?php
 
-$guid = (int) elgg_extract('guid', $vars);
-
 elgg_register_rss_link();
 
-elgg_entity_gatekeeper($guid, 'group');
-
-$group = get_entity($guid);
 /* @var $group ElggGroup */
+$group = elgg_get_page_owner_entity();
 
 elgg_push_context('group_profile');
 

@@ -1,17 +1,8 @@
 <?php
 
-$username = (string) elgg_extract('username', $vars);
-if (!empty($username)) {
-	$user = elgg_get_user_by_username($username);
-} else {
-	$user = elgg_get_logged_in_user_entity();
-}
-
-elgg_set_page_owner_guid($user?->guid);
-
 $page_owner = elgg_get_page_owner_entity();
 
-if ($page_owner->guid == elgg_get_logged_in_user_guid()) {
+if ($page_owner->guid === elgg_get_logged_in_user_guid()) {
 	$title = elgg_echo('groups:yours');
 } else {
 	$title = elgg_echo('groups:user', [$page_owner->getDisplayName()]);
@@ -19,7 +10,7 @@ if ($page_owner->guid == elgg_get_logged_in_user_guid()) {
 
 elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 
-if (elgg_get_plugin_setting('limited_groups', 'groups') != 'yes' || elgg_is_admin_logged_in()) {
+if (elgg_get_plugin_setting('limited_groups', 'groups') !== 'yes' || elgg_is_admin_logged_in()) {
 	elgg_register_title_button('add', 'group', 'group');
 }
 

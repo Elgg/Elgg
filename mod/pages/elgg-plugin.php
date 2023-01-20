@@ -38,12 +38,18 @@ return [
 		'collection:object:page:owner' => [
 			'path' => '/pages/owner/{username}',
 			'resource' => 'pages/owner',
+			'middleware' => [
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
+			],
 		],
 		'collection:object:page:friends' => [
 			'path' => '/pages/friends/{username}',
 			'resource' => 'pages/friends',
 			'required_plugins' => [
 				'friends',
+			],
+			'middleware' => [
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
 			],
 		],
 		'collection:object:page:group' => [
@@ -52,12 +58,16 @@ return [
 			'required_plugins' => [
 				'groups',
 			],
+			'middleware' => [
+				\Elgg\Router\Middleware\GroupPageOwnerGatekeeper::class,
+			],
 		],
 		'add:object:page' => [
 			'path' => '/pages/add/{guid}',
-			'resource' => 'pages/new',
+			'resource' => 'pages/add',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\PageOwnerGatekeeper::class,
 			],
 		],
 		'view:object:page' => [
@@ -74,10 +84,16 @@ return [
 		'history:object:page' => [
 			'path' => '/pages/history/{guid}',
 			'resource' => 'pages/history',
+			'middleware' => [
+				\Elgg\Router\Middleware\PageOwnerGatekeeper::class,
+			],
 		],
 		'revision:object:page' => [
 			'path' => '/pages/revision/{id}',
 			'resource' => 'pages/revision',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
 		],
 	],
 	'events' => [

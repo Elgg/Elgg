@@ -27,18 +27,27 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 	 * @return mixed
 	 */
 	abstract function getSubtype();
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function prepareHttpRequest($uri = '', $method = 'GET', $parameters = [], $ajax = 0, $add_csrf_tokens = false) {
+		$request = parent::prepareHttpRequest($uri, $method, $parameters, $ajax, $add_csrf_tokens);
+		
+		_elgg_services()->set('request', $request);
+		_elgg_services()->reset('pageOwner');
+		
+		return $request;
+	}
 
 	public function testAddRouteRespondsWithErrorWithoutAuthenticatedUser() {
 
 		$user = $this->createUser();
 
-		$url = elgg_generate_url("add:object:{$this->getSubtype()}", [
+		$request = $this->prepareHttpRequest(elgg_generate_url("add:object:{$this->getSubtype()}", [
 			'guid' => $user->guid,
-		]);
-
-		$request = $this->prepareHttpRequest($url);
-		_elgg_services()->set('request', $request);
-
+		]));
+		
 		$this->expectException(GatekeeperException::class);
 		_elgg_services()->router->route($request);
 	}
@@ -50,20 +59,13 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 		try {
 			$user = $this->createUser();
 
-			$handler = function () {
-				return false;
-			};
-
-			elgg_register_event_handler('container_permissions_check', 'object', $handler);
+			elgg_register_event_handler('container_permissions_check', 'object', '\Elgg\Values::getFalse');
 
 			_elgg_services()->session_manager->setLoggedInUser($user);
 
-			$url = elgg_generate_url("add:object:{$this->getSubtype()}", [
+			$request = $this->prepareHttpRequest(elgg_generate_url("add:object:{$this->getSubtype()}", [
 				'guid' => $user->guid,
-			]);
-
-			$request = $this->prepareHttpRequest($url);
-			_elgg_services()->set('request', $request);
+			]));
 
 			_elgg_services()->router->route($request);
 
@@ -73,7 +75,7 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 
 		_elgg_services()->session_manager->removeLoggedInUser();
 
-		elgg_unregister_event_handler('container_permissions_check', 'object', $handler);
+		elgg_unregister_event_handler('container_permissions_check', 'object', '\Elgg\Values::getFalse');
 
 		$this->assertInstanceOf(EntityPermissionsException::class, $ex);
 	}
@@ -82,20 +84,13 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 
 		$user = $this->createUser();
 
-		$handler = function () {
-			return true;
-		};
-
-		elgg_register_event_handler('container_permissions_check', 'object', $handler);
+		elgg_register_event_handler('container_permissions_check', 'object', '\Elgg\Values::getTrue');
 
 		_elgg_services()->session_manager->setLoggedInUser($user);
 
-		$url = elgg_generate_url("add:object:{$this->getSubtype()}", [
+		$request = $this->prepareHttpRequest(elgg_generate_url("add:object:{$this->getSubtype()}", [
 			'guid' => $user->guid,
-		]);
-
-		$request = $this->prepareHttpRequest($url);
-		_elgg_services()->set('request', $request);
+		]));
 
 		ob_start();
 		_elgg_services()->router->route($request);
@@ -107,7 +102,7 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 
 		_elgg_services()->session_manager->removeLoggedInUser();
 
-		elgg_unregister_event_handler('container_permissions_check', 'object', $handler);
+		elgg_unregister_event_handler('container_permissions_check', 'object', '\Elgg\Values::getTrue');
 	}
 
 	public function testEditRouteRespondsWithErrorWithoutAuthenticatedUser() {
@@ -118,12 +113,9 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 			'owner_guid' => $user->guid,
 		]);
 
-		$url = elgg_generate_url("edit:object:{$this->getSubtype()}", [
+		$request = $this->prepareHttpRequest(elgg_generate_url("edit:object:{$this->getSubtype()}", [
 			'guid' => $object->guid,
-		]);
-
-		$request = $this->prepareHttpRequest($url);
-		_elgg_services()->set('request', $request);
+		]));
 
 		$this->expectException(GatekeeperException::class);
 		_elgg_services()->router->route($request);
@@ -139,20 +131,13 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 			'owner_guid' => $user->guid,
 		]);
 
-		$handler = function () {
-			return false;
-		};
-
-		elgg_register_event_handler('permissions_check', 'object', $handler);
+		elgg_register_event_handler('permissions_check', 'object', '\Elgg\Values::getFalse');
 
 		_elgg_services()->session_manager->setLoggedInUser($user);
 
-		$url = elgg_generate_url("edit:object:{$this->getSubtype()}", [
+		$request = $this->prepareHttpRequest(elgg_generate_url("edit:object:{$this->getSubtype()}", [
 			'guid' => $object->guid,
-		]);
-
-		$request = $this->prepareHttpRequest($url);
-		_elgg_services()->set('request', $request);
+		]));
 
 		try {
 			_elgg_services()->router->route($request);
@@ -162,7 +147,7 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 
 		_elgg_services()->session_manager->removeLoggedInUser();
 
-		elgg_unregister_event_handler('permissions_check', 'object', $handler);
+		elgg_unregister_event_handler('permissions_check', 'object', '\Elgg\Values::getFalse');
 
 		$this->assertInstanceOf(EntityPermissionsException::class, $ex);
 	}
@@ -178,18 +163,11 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 
 		_elgg_services()->session_manager->setLoggedInUser($user);
 
-		$handler = function () {
-			return true;
-		};
+		elgg_register_event_handler('permissions_check', 'object', '\Elgg\Values::getTrue');
 
-		elgg_register_event_handler('permissions_check', 'object', $handler);
-
-		$url = elgg_generate_url("edit:object:{$this->getSubtype()}", [
+		$request = $this->prepareHttpRequest(elgg_generate_url("edit:object:{$this->getSubtype()}", [
 			'guid' => $object->guid,
-		]);
-
-		$request = $this->prepareHttpRequest($url);
-		_elgg_services()->set('request', $request);
+		]));
 
 		ob_start();
 		_elgg_services()->router->route($request);
@@ -201,7 +179,7 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 
 		_elgg_services()->session_manager->removeLoggedInUser();
 
-		elgg_unregister_event_handler('permissions_check', 'object', $handler);
+		elgg_unregister_event_handler('permissions_check', 'object', '\Elgg\Values::getTrue');
 	}
 
 	public function testViewRouteRespondsWithErrorIfEntityIsNotFound() {
@@ -215,12 +193,9 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 
 		$object->invalidateCache();
 
-		$url = elgg_generate_url("view:object:{$this->getSubtype()}", [
+		$request = $this->prepareHttpRequest(elgg_generate_url("view:object:{$this->getSubtype()}", [
 			'guid' => $object->guid,
-		]);
-
-		$request = $this->prepareHttpRequest($url);
-		_elgg_services()->set('request', $request);
+		]));
 
 		$this->expectException(EntityPermissionsException::class);
 		_elgg_services()->router->route($request);
@@ -235,12 +210,9 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 			'access_id' => ACCESS_PUBLIC,
 		]);
 
-		$url = elgg_generate_url("view:object:{$this->getSubtype()}", [
+		$request = $this->prepareHttpRequest(elgg_generate_url("view:object:{$this->getSubtype()}", [
 			'guid' => $object->guid,
-		]);
-
-		$request = $this->prepareHttpRequest($url);
-		_elgg_services()->set('request', $request);
+		]));
 
 		$this->expectException(EntityNotFoundException::class);
 		_elgg_services()->router->route($request);
@@ -272,12 +244,9 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 		$ex = null;
 
 		try {
-			$url = elgg_generate_url("view:object:{$this->getSubtype()}", [
+			$request = $this->prepareHttpRequest(elgg_generate_url("view:object:{$this->getSubtype()}", [
 				'guid' => $object->guid,
-			]);
-
-			$request = $this->prepareHttpRequest($url);
-			_elgg_services()->set('request', $request);
+			]));
 
 			_elgg_services()->router->route($request);
 		} catch (\Exception $ex) {
@@ -310,12 +279,9 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 		_elgg_services()->events->backup();
 
 		try {
-			$url = elgg_generate_url("collection:object:{$this->getSubtype()}:group", [
+			$request = $this->prepareHttpRequest(elgg_generate_url("collection:object:{$this->getSubtype()}:group", [
 				'guid' => $group->guid,
-			]);
-
-			$request = $this->prepareHttpRequest($url);
-			_elgg_services()->set('request', $request);
+			]));
 
 			_elgg_services()->router->route($request);
 		} catch (\Exception $ex) {
@@ -339,12 +305,9 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 			'access_id' => ACCESS_PUBLIC,
 		]);
 
-		$url = elgg_generate_url("view:object:{$this->getSubtype()}", [
+		$request = $this->prepareHttpRequest(elgg_generate_url("view:object:{$this->getSubtype()}", [
 			'guid' => $object->guid,
-		]);
-
-		$request = $this->prepareHttpRequest($url);
-		_elgg_services()->set('request', $request);
+		]));
 
 		ob_start();
 		_elgg_services()->router->route($request);
@@ -363,10 +326,7 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 			$params = $params();
 		}
 
-		$url = elgg_generate_url($route, $params);
-
-		$request = $this->prepareHttpRequest($url);
-		_elgg_services()->set('request', $request);
+		$request = $this->prepareHttpRequest(elgg_generate_url($route, $params));
 
 		ob_start();
 		_elgg_services()->router->route($request);
@@ -392,12 +352,9 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 		
 		$this->assertTrue($group->disableTool($tool_option));
 		
-		$url = elgg_generate_url($route_name, [
+		$request = $this->prepareHttpRequest(elgg_generate_url($route_name, [
 			'guid' => $group->guid,
-		]);
-
-		$request = $this->prepareHttpRequest($url);
-		_elgg_services()->set('request', $request);
+		]));
 
 		$this->expectException(GroupToolGatekeeperException::class);
 		_elgg_services()->router->route($request);
@@ -418,12 +375,9 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 		
 		$this->assertTrue($group->enableTool($tool_option));
 		
-		$url = elgg_generate_url($route_name, [
+		$request = $this->prepareHttpRequest(elgg_generate_url($route_name, [
 			'guid' => $group->guid,
-		]);
-
-		$request = $this->prepareHttpRequest($url);
-		_elgg_services()->set('request', $request);
+		]));
 
 		ob_start();
 		_elgg_services()->router->route($request);

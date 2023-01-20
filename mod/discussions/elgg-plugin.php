@@ -40,12 +40,14 @@ return [
 		'collection:object:discussion:owner' => [
 			'path' => '/discussion/owner/{username}',
 			'resource' => 'discussion/owner',
+			'middleware' => [
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
+			],
 		],
 		'collection:object:discussion:my_groups' => [
 			'path' => '/discussion/my_groups/{username}',
 			'resource' => 'discussion/my_groups',
 			'middleware' => [
-				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
@@ -55,12 +57,16 @@ return [
 			'required_plugins' => [
 				'groups',
 			],
+			'middleware' => [
+				\Elgg\Router\Middleware\GroupPageOwnerGatekeeper::class,
+			],
 		],
 		'add:object:discussion' => [
 			'path' => '/discussion/add/{guid}',
 			'resource' => 'discussion/add',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\PageOwnerGatekeeper::class,
 			],
 		],
 		'edit:object:discussion' => [

@@ -5,11 +5,7 @@
 
 use Elgg\Exceptions\Http\EntityPermissionsException;
 
-$guid = (int) elgg_extract('guid', $vars);
-elgg_entity_gatekeeper($guid);
-
-$page_owner = get_entity($guid);
-
+$page_owner = elgg_get_page_owner_entity();
 if (!$page_owner->canWriteToContainer(0, 'object', 'bookmarks')) {
 	throw new EntityPermissionsException();
 }

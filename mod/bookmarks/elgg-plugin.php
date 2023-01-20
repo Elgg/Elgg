@@ -36,12 +36,18 @@ return [
 		'collection:object:bookmarks:owner' => [
 			'path' => '/bookmarks/owner/{username}',
 			'resource' => 'bookmarks/owner',
+			'middleware' => [
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
+			],
 		],
 		'collection:object:bookmarks:friends' => [
 			'path' => '/bookmarks/friends/{username}',
 			'resource' => 'bookmarks/friends',
 			'required_plugins' => [
 				'friends',
+			],
+			'middleware' => [
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
 			],
 		],
 		'collection:object:bookmarks:group' => [
@@ -53,12 +59,16 @@ return [
 			'required_plugins' => [
 				'groups',
 			],
+			'middleware' => [
+				\Elgg\Router\Middleware\GroupPageOwnerGatekeeper::class,
+			],
 		],
 		'add:object:bookmarks' => [
 			'path' => '/bookmarks/add/{guid}',
 			'resource' => 'bookmarks/add',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\PageOwnerGatekeeper::class,
 			],
 		],
 		'view:object:bookmarks' => [

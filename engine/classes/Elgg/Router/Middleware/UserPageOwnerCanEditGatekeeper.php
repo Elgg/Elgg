@@ -11,9 +11,8 @@ class UserPageOwnerCanEditGatekeeper extends PageOwnerCanEditGatekeeper {
 
 	/**
 	 * {@inheritDoc}
-	 * @see \Elgg\Router\Middleware\PageOwnerCanEditGatekeeper::__invoke()
 	 */
-	public function __invoke(\Elgg\Request $request) {
-		$this->assertAccess($request, 'user');
+	protected function getType(): string {
+		return 'user';
 	}
 }

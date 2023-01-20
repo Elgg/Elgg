@@ -41,6 +41,9 @@ return [
 		'collection:object:thewire:owner' => [
 			'path' => '/thewire/owner/{username}',
 			'resource' => 'thewire/owner',
+			'middleware' => [
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
+			],
 		],
 		'collection:object:thewire:friends' => [
 			'path' => '/thewire/friends/{username}',
@@ -48,10 +51,16 @@ return [
 			'required_plugins' => [
 				'friends',
 			],
+			'middleware' => [
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
+			],
 		],
 		'collection:object:thewire:thread' => [
 			'path' => '/thewire/thread/{guid}',
 			'resource' => 'thewire/thread',
+			'middleware' => [
+				\Elgg\Router\Middleware\PageOwnerGatekeeper::class,
+			],
 		],
 		'collection:object:thewire:tag' => [
 			'path' => '/thewire/tag/{tag}',
@@ -66,6 +75,7 @@ return [
 			'resource' => 'thewire/reply',
 			'middleware' => [
 				Gatekeeper::class,
+				\Elgg\Router\Middleware\PageOwnerGatekeeper::class,
 			],
 		],
 	],
