@@ -1,3 +1,19 @@
+<a name="4.3.6"></a>
+### 4.3.6  (2023-01-20)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+
+#### Bug Fixes
+
+* **cache:** correctly load simplecache from database ([0f92673f](https://github.com/Elgg/Elgg/commit/0f92673f6b66bbccf97895305c432fc299780516))
+* **comments:**
+  * no longer add duplicate html ID in threaded comments ([242d9a5d](https://github.com/Elgg/Elgg/commit/242d9a5dc051fe25a402672858023c4d655d5ba7))
+  * correctly remove threaded comments ([65817a0e](https://github.com/Elgg/Elgg/commit/65817a0eef219e49d55324a744722aceeed4c70f))
+* **discussions:** correctly handle last comment ([bfc1700c](https://github.com/Elgg/Elgg/commit/bfc1700c5d8e7e285c4fa718985d09d5c52c02fa))
+
+
 <a name="4.3.5"></a>
 ### 4.3.5  (2022-12-07)
 
