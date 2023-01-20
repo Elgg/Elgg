@@ -117,16 +117,32 @@ function thewire_filter(string $text): string {
 	$text = elgg_parse_urls($text);
 
 	// usernames
-	$text = preg_replace(
-				'/(^|[^\w])@([\p{L}\p{Nd}._]+)/u',
-				'$1<a href="' . elgg_get_site_url() . 'thewire/owner/$2">@$2</a>',
-				$text);
+	$text = preg_replace_callback(
+		'/(^|[^\w])@([\p{L}\p{Nd}._]+)/u',
+		function ($matches) {
+			$username = elgg_extract(2, $matches);
+			$url = elgg_generate_url('collection:object:thewire:owner', [
+				'username' => $username,
+			]);
+			$link = elgg_view_url($url, "@{$username}");
+			
+			return elgg_extract(1, $matches) . $link;
+		},
+		$text);
 
 	// hashtags
-	$text = preg_replace(
-				'/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/',
-				'$1<a href="' . elgg_get_site_url() . 'thewire/tag/$2">#$2</a>',
-				$text);
+	$text = preg_replace_callback(
+		'/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/',
+		function ($matches) {
+			$tag = elgg_extract(2, $matches);
+			$url = elgg_generate_url('collection:object:thewire:tag', [
+				'tag' => $tag,
+			]);
+			$link = elgg_view_url($url, "#{$tag}");
+			
+			return elgg_extract(1, $matches) . $link;
+		},
+		$text);
 
 	return trim($text);
 }
