@@ -75,6 +75,9 @@ return [
 			'menu:filter:profile/edit' => [
 				'Elgg\Profile\Menus\Filter::registerProfileEdit' => [],
 			],
+			'menu:profile_admin' => [
+				'Elgg\Profile\Menus\ProfileAdmin::registerUserHover' => [],
+			],
 			'menu:title' => [
 				'Elgg\Profile\Menus\Title::register' => [],
 			],
