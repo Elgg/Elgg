@@ -13,7 +13,6 @@ return [
 			'path' => '/friends/{username}/invite',
 			'resource' => 'friends/invite',
 			'middleware' => [
-				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],

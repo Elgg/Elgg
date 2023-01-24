@@ -40,6 +40,6 @@ class PrepareFields {
 			}
 		}
 		
-		return array_merge($vars, $values);
+		return array_merge($values, $vars);
 	}
 }

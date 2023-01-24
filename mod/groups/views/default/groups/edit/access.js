@@ -1,7 +1,7 @@
 /**
  * JavaScript used on group creation/editing form
  */
-define(['jquery', 'elgg'], function($, elgg) {
+define(['jquery'], function($) {
 
 	/**
 	 * Toggle the availability of content access field
@@ -13,14 +13,14 @@ define(['jquery', 'elgg'], function($, elgg) {
 	 * @param {Object} event
 	 */
 	var toggleContentAccessMode = function(event) {
-		var accessModeField = $('#groups-content-access-mode');
+		var $accessModeField = $('#groups-content-access-mode');
 
 		if ($(this).val() == 0) {
 			// Group is hidden, so force members_only mode and disable the field
-			accessModeField.val('members_only').prop('disabled', true);
+			$accessModeField.val('members_only').prop('disabled', true);
 		} else {
 			// Enable the field
-			accessModeField.prop('disabled', false);
+			$accessModeField.prop('disabled', false);
 		}
 	};
 

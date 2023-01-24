@@ -211,6 +211,21 @@ AjaxGatekeeper
 
 This gatekeeper will prevent access with non-xhr requests.
 
+PageOwnerGatekeeper
+~~~~~~~~~~~~~~~~~~~
+
+This gatekeeper will prevent access if there is no pageowner entity.
+
+GroupPageOwnerGatekeeper
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+This gatekeeper extends the ``PageOwnerGatekeeper`` but also requires the pageowner to be a ``ElggGroup`` entity.
+
+UserPageOwnerGatekeeper
+~~~~~~~~~~~~~~~~~~~~~~~
+
+This gatekeeper extends the ``PageOwnerGatekeeper`` but also requires the pageowner to be an ``ElggUser`` entity.
+
 PageOwnerCanEditGatekeeper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 

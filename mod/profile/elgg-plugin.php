@@ -30,7 +30,6 @@ return [
 			'path' => '/profile/{username}/edit',
 			'resource' => 'profile/edit',
 			'middleware' => [
-				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
@@ -38,7 +37,6 @@ return [
 			'path' => '/profile/{username}/edit_header',
 			'resource' => 'profile/edit_header',
 			'middleware' => [
-				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],

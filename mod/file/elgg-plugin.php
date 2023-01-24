@@ -40,12 +40,18 @@ return [
 		'collection:object:file:owner' => [
 			'path' => '/file/owner/{username}',
 			'resource' => 'file/owner',
+			'middleware' => [
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
+			],
 		],
 		'collection:object:file:friends' => [
 			'path' => '/file/friends/{username}',
 			'resource' => 'file/friends',
 			'required_plugins' => [
 				'friends',
+			],
+			'middleware' => [
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
 			],
 		],
 		'collection:object:file:group' => [
@@ -54,12 +60,16 @@ return [
 			'required_plugins' => [
 				'groups',
 			],
+			'middleware' => [
+				\Elgg\Router\Middleware\GroupPageOwnerGatekeeper::class,
+			],
 		],
 		'add:object:file' => [
 			'path' => '/file/add/{guid}',
 			'resource' => 'file/upload',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\PageOwnerGatekeeper::class,
 			],
 		],
 		'edit:object:file' => [

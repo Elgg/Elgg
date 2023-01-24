@@ -3,20 +3,13 @@
  * History of revisions of a page
  */
 
-use Elgg\Exceptions\Http\EntityNotFoundException;
-
 $page_guid = (int) elgg_extract('guid', $vars);
 
-elgg_entity_gatekeeper($page_guid, 'object', 'page');
+elgg_entity_gatekeeper($page_guid, 'object', 'page', true);
 
 $page = get_entity($page_guid);
 
-$container = $page->getContainerEntity();
-if (!$container) {
-	throw new EntityNotFoundException();
-}
-
-elgg_set_page_owner_guid($container->getGUID());
+$container = elgg_get_page_owner_entity();
 
 elgg_push_collection_breadcrumbs('object', 'page', $container);
 

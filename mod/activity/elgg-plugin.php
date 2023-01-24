@@ -9,6 +9,9 @@ return [
 		'collection:river:owner' => [
 			'path' => '/activity/owner/{username}',
 			'resource' => 'activity/owner',
+			'middleware' => [
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
+			],
 		],
 		'collection:river:friends' => [
 			'path' => '/activity/friends/{username}',
@@ -16,12 +19,18 @@ return [
 			'required_plugins' => [
 				'friends',
 			],
+			'middleware' => [
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
+			],
 		],
 		'collection:river:group' => [
 			'path' => '/activity/group/{guid}',
 			'resource' => 'activity/group',
 			'required_plugins' => [
 				'groups',
+			],
+			'middleware' => [
+				\Elgg\Router\Middleware\GroupPageOwnerGatekeeper::class,
 			],
 		],
 		'collection:river:all' => [

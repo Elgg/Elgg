@@ -3,13 +3,9 @@
  * Lists discussions created inside a specific group
  */
 
-$guid = (int) elgg_extract('guid', $vars);
+elgg_group_tool_gatekeeper('forum');
 
-elgg_entity_gatekeeper($guid, 'group');
-
-elgg_group_tool_gatekeeper('forum', $guid);
-
-$group = get_entity($guid);
+$group = elgg_get_page_owner_entity();
 
 elgg_push_collection_breadcrumbs('object', 'discussion', $group);
 

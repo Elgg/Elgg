@@ -2,13 +2,7 @@
 
 use Elgg\Exceptions\Http\EntityPermissionsException;
 
-$guid = (int) elgg_extract('guid', $vars);
-
-elgg_entity_gatekeeper($guid);
-
-$container = get_entity($guid);
-
-// Make sure user has permissions to add a topic to container
+$container = elgg_get_page_owner_entity();
 if (!$container->canWriteToContainer(0, 'object', 'discussion')) {
 	throw new EntityPermissionsException();
 }

@@ -68,16 +68,21 @@ return [
 		'collection:group:group:owner' => [
 			'path' => '/groups/owner/{username}',
 			'resource' => 'groups/owner',
+			'middleware' => [
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
+			],
 		],
 		'collection:group:group:member' => [
 			'path' => '/groups/member/{username}',
 			'resource' => 'groups/member',
+			'middleware' => [
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
+			],
 		],
 		'collection:group:group:invitations' => [
 			'path' => '/groups/invitations/{username}',
 			'resource' => 'groups/invitations',
 			'middleware' => [
-				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
@@ -88,12 +93,14 @@ return [
 		'collection:user:user:group_members' => [
 			'path' => '/groups/members/{guid}',
 			'resource' => 'groups/members',
+			'middleware' => [
+				\Elgg\Router\Middleware\GroupPageOwnerGatekeeper::class,
+			],
 		],
 		'collection:user:user:group_invites' => [
 			'path' => '/groups/invites/{guid}',
 			'resource' => 'groups/invites',
 			'middleware' => [
-				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper::class,
 			],
 		],
@@ -102,37 +109,37 @@ return [
 			'resource' => 'groups/add',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
 				LimitedGroupCreation::class,
 			],
 		],
 		'view:group:group' => [
 			'path' => '/groups/profile/{guid}/{title?}',
 			'resource' => 'groups/profile',
+			'middleware' => [
+				\Elgg\Router\Middleware\GroupPageOwnerGatekeeper::class,
+			],
 		],
 		'edit:group:group' => [
 			'path' => '/groups/edit/{guid}',
 			'resource' => 'groups/edit',
 			'middleware' => [
-				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper::class,
 			],
 		],
 		'invite:group:group' => [
 			'path' => '/groups/invite/{guid}',
 			'resource' => 'groups/invite',
 			'middleware' => [
-				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper::class,
 			],
-			'detect_page_owner' => true,
 		],
 		'requests:group:group' => [
 			'path' => '/groups/requests/{guid}',
 			'resource' => 'groups/requests',
 			'middleware' => [
-				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper::class,
 			],
-			'detect_page_owner' => true,
 		],
 		'settings:notification:groups' => [
 			'path' => '/settings/notifications/groups/{username}',
@@ -140,7 +147,6 @@ return [
 			'middleware' => [
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
-			'detect_page_owner' => true,
 		],
 	],
 	'widgets' => [

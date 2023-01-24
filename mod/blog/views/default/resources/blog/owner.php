@@ -1,15 +1,9 @@
 <?php
 
-use Elgg\Exceptions\Http\EntityNotFoundException;
-
-$username = (string) elgg_extract('username', $vars);
 $lower = elgg_extract('lower', $vars);
 $upper = elgg_extract('upper', $vars);
 
-$user = elgg_get_user_by_username($username);
-if (!$user instanceof \ElggUser) {
-	throw new EntityNotFoundException();
-}
+$user = elgg_get_page_owner_entity();
 
 elgg_register_title_button('add', 'object', 'blog');
 
@@ -25,14 +19,12 @@ if ($lower) {
 	$title .= ': ' . elgg_echo('date:month:' . date('m', $lower), [date('Y', $lower)]);
 }
 
-$content = elgg_view('blog/listing/owner', [
-	'entity' => $user,
-	'created_after' => $lower,
-	'created_before' => $upper,
-]);
-
 echo elgg_view_page($title, [
-	'content' => $content,
+	'content' => elgg_view('blog/listing/owner', [
+		'entity' => $user,
+		'created_after' => $lower,
+		'created_before' => $upper,
+	]),
 	'sidebar' => elgg_view('blog/sidebar', [
 		'page' => 'owner',
 		'entity' => $user,

@@ -2,12 +2,11 @@
 
 namespace Elgg\Router\Middleware;
 
-use Elgg\Exceptions\Http\EntityPermissionsException;
-use Elgg\Exceptions\Http\Gatekeeper\LoggedInGatekeeperException;
+use Elgg\Exceptions\Http\EntityNotFoundException;
 use Elgg\IntegrationTestCase;
 
-class PageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase {
-
+class PageOwnerGatekeeperIntegrationTest extends IntegrationTestCase {
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -23,11 +22,9 @@ class PageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase {
 	/**
 	 * @dataProvider getGatekeepers
 	 */
-	public function testUserNotLoggedIn($middleware) {
-		$user = $this->createUser();
-		
+	public function testPageOwnerMissing($middleware) {
 		elgg_register_route('add:object:foo', [
-			'path' => '/foo/edit/{guid}',
+			'path' => '/foo/add/{username}',
 			'handler' => '\Elgg\Values::getTrue',
 			'middleware' => [
 				$middleware,
@@ -36,52 +33,22 @@ class PageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase {
 		]);
 		
 		$http_request = $this->prepareHttpRequest(elgg_generate_url('add:object:foo', [
-			'guid' => $user->guid,
+			'username' => 'unknown_username',
 		]));
 		
-		$this->expectException(LoggedInGatekeeperException::class);
+		$this->expectException(EntityNotFoundException::class);
 		_elgg_services()->router->route($http_request);
 	}
 	
 	/**
 	 * @dataProvider getGatekeepers
 	 */
-	public function testPageOwnerCantEdit($middleware, $content_type) {
-		$owner = $this->createUser();
+	public function testPageOwnerExists($middleware, $content_type) {
 		
-		$entity = $this->createOne($content_type, ['owner_guid' => $owner->guid]);
-		
-		$logged_in_user = $this->createUser();
-		_elgg_services()->session_manager->setLoggedInUser($logged_in_user);
+		$entity = $this->createOne($content_type);
 		
 		elgg_register_route('add:object:foo', [
-			'path' => '/foo/edit/{guid}',
-			'handler' => '\Elgg\Values::getTrue',
-			'middleware' => [
-				$middleware,
-			],
-			'walled' => false,
-		]);
-		
-		$http_request = $this->prepareHttpRequest(elgg_generate_url('add:object:foo', [
-			'guid' => $entity->guid,
-		]));
-		
-		$this->expectException(EntityPermissionsException::class);
-		_elgg_services()->router->route($http_request);
-	}
-
-	/**
-	 * @dataProvider getGatekeepers
-	 */
-	public function testPageOwnerCanEdit($middleware, $content_type) {
-		
-		$owner = $this->createUser();
-		$entity = $this->createOne($content_type, ['owner_guid' => $owner->guid]);
-		_elgg_services()->session_manager->setLoggedInUser($owner);
-		
-		elgg_register_route('add:object:foo', [
-			'path' => '/foo/edit/{guid}',
+			'path' => '/foo/add/{guid}',
 			'handler' => '\Elgg\Values::getTrue',
 			'middleware' => [
 				$middleware,
@@ -97,11 +64,41 @@ class PageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($response);
 	}
 	
+	/**
+	 * @dataProvider getInvalidGatekeepers
+	 */
+	public function testPageOwnerThrowsOnInvalidType($middleware, $content_type) {
+		$entity = $this->createOne($content_type);
+		
+		elgg_register_route('add:object:foo', [
+			'path' => '/foo/view/{guid}',
+			'handler' => '\Elgg\Values::getTrue',
+			'middleware' => [
+				$middleware,
+			],
+			'walled' => false,
+		]);
+		
+		$http_request = $this->prepareHttpRequest(elgg_generate_url('add:object:foo', [
+			'guid' => $entity->guid,
+		]));
+		
+		$this->expectException(EntityNotFoundException::class);
+		_elgg_services()->router->route($http_request);
+	}
+	
 	public function getGatekeepers() {
 		return [
-			[PageOwnerCanEditGatekeeper::class, 'object'],
-			[UserPageOwnerCanEditGatekeeper::class, 'user'],
-			[GroupPageOwnerCanEditGatekeeper::class, 'group'],
+			[PageOwnerGatekeeper::class, 'object'],
+			[UserPageOwnerGatekeeper::class, 'user'],
+			[GroupPageOwnerGatekeeper::class, 'group'],
+		];
+	}
+	
+	public function getInvalidGatekeepers() {
+		return [
+			[UserPageOwnerGatekeeper::class, 'group'],
+			[GroupPageOwnerGatekeeper::class, 'user'],
 		];
 	}
 }

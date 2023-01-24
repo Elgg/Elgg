@@ -5,16 +5,12 @@
 
 use Elgg\Exceptions\Http\EntityPermissionsException;
 
-$guid = (int) elgg_extract('guid', $vars);
-elgg_entity_gatekeeper($guid);
-
-$entity = get_entity($guid);
-
-if (!$entity->canWriteToContainer(0, 'object', 'file')) {
+$container = elgg_get_page_owner_entity();
+if (!$container->canWriteToContainer(0, 'object', 'file')) {
 	throw new EntityPermissionsException();
 }
 
-elgg_push_collection_breadcrumbs('object', 'file', $entity);
+elgg_push_collection_breadcrumbs('object', 'file', $container);
 
 echo elgg_view_page(elgg_echo('add:object:file'), [
 	'content' => elgg_view_form('file/upload', ['sticky_enabled' => true]),

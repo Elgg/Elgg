@@ -26,7 +26,7 @@ class PrepareFields {
 			'recipients' => [],
 		];
 		
-		$vars = array_merge($vars, $values);
+		$vars = array_merge($values, $vars);
 		
 		// make sure the recipients are users
 		if (!is_array($vars['recipients'])) {

@@ -6,6 +6,8 @@
  * eg: how can people join this group, who can see the group, etc
  */
 
+elgg_require_js('groups/edit/access');
+
 $entity = elgg_extract('entity', $vars, false);
 $membership = elgg_extract('membership', $vars);
 $visibility = elgg_extract('vis', $vars);

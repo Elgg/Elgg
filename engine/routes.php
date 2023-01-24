@@ -243,7 +243,6 @@ return [
 		'path' => '/avatar/edit/{username}',
 		'resource' => 'avatar/edit',
 		'middleware' => [
-			\Elgg\Router\Middleware\Gatekeeper::class,
 			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
 	],

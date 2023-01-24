@@ -75,6 +75,6 @@ class PrepareFields {
 			$values[$prop_name] = $enabled ? 'yes' : 'no';
 		}
 		
-		return array_merge($vars, $values);
+		return array_merge($values, $vars);
 	}
 }

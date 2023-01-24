@@ -26,15 +26,18 @@ return [
 	],
 	'routes' => [
 		'collection:object:blog:owner' => [
-			'path' => '/blog/owner/{username?}/{lower?}/{upper?}',
+			'path' => '/blog/owner/{username}/{lower?}/{upper?}',
 			'resource' => 'blog/owner',
 			'requirements' => [
 				'lower' => '\d+',
 				'upper' => '\d+',
 			],
+			'middleware' => [
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
+			],
 		],
 		'collection:object:blog:friends' => [
-			'path' => '/blog/friends/{username?}/{lower?}/{upper?}',
+			'path' => '/blog/friends/{username}/{lower?}/{upper?}',
 			'resource' => 'blog/friends',
 			'requirements' => [
 				'lower' => '\d+',
@@ -43,13 +46,8 @@ return [
 			'required_plugins' => [
 				'friends',
 			],
-		],
-		'collection:object:blog:archive' => [
-			'path' => '/blog/archive/{username?}/{lower?}/{upper?}',
-			'resource' => 'blog/owner',
-			'requirements' => [
-				'lower' => '\d+',
-				'upper' => '\d+',
+			'middleware' => [
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
 			],
 		],
 		'view:object:blog' => [
@@ -57,10 +55,11 @@ return [
 			'resource' => 'blog/view',
 		],
 		'add:object:blog' => [
-			'path' => '/blog/add/{guid?}',
+			'path' => '/blog/add/{guid}',
 			'resource' => 'blog/add',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\PageOwnerGatekeeper::class,
 			],
 		],
 		'edit:object:blog' => [
@@ -86,6 +85,9 @@ return [
 			],
 			'required_plugins' => [
 				'groups',
+			],
+			'middleware' => [
+				\Elgg\Router\Middleware\GroupPageOwnerGatekeeper::class,
 			],
 		],
 		'collection:object:blog:all' => [

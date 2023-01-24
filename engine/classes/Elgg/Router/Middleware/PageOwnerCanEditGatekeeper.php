@@ -2,63 +2,28 @@
 
 namespace Elgg\Router\Middleware;
 
-use Elgg\Exceptions\Http\EntityNotFoundException;
 use Elgg\Exceptions\Http\EntityPermissionsException;
-use Elgg\Router\Route;
 
 /**
  * Check if the current route page owner can be edited (by the current logged in user)
  *
  * @since 3.2
  */
-class PageOwnerCanEditGatekeeper {
-
-	/**
-	 * Validate the current request
-	 *
-	 * @param \Elgg\Request $request the current request
-	 *
-	 * @return void
-	 * @throws EntityPermissionsException
-	 */
-	public function __invoke(\Elgg\Request $request) {
-		$this->assertAccess($request);
-	}
+class PageOwnerCanEditGatekeeper extends PageOwnerGatekeeper {
 	
 	/**
-	 * Validate the current request
+	 * {@inheritdoc}
 	 *
-	 * @param \Elgg\Request $request the current request
-	 * @param string        $type    (optional) the required type of the page owner
-	 * @param string        $subtype (optional) the required subtype of the page owner
-	 *
-	 * @return void
 	 * @throws EntityPermissionsException
 	 */
-	protected function assertAccess(\Elgg\Request $request, string $type = '', string $subtype = '') {
+	protected function assert(\Elgg\Request $request, \Elgg\Router\Route $route): void {
 		
-		$route = $request->getHttpRequest()->getRoute();
-		if (!$route instanceof Route) {
-			return;
-		}
+		// assert we have a logged in user
+		$request->elgg()->gatekeeper->assertAuthenticatedUser();
 		
-		// force detection of page owner for legacy routes
-		$route->setDefault('_detect_page_owner', true);
+		parent::assert($request, $route);
 		
-		$page_owner = $route->resolvePageOwner();
-		if (!$page_owner instanceof \ElggEntity) {
-			throw new EntityNotFoundException();
-		}
-		
-		if (!$page_owner->canEdit()) {
-			throw new EntityPermissionsException();
-		}
-		
-		if (!empty($type) && $page_owner->getType() !== $type) {
-			throw new EntityPermissionsException();
-		}
-		
-		if (!empty($subtype) && $page_owner->getSubtype() !== $subtype) {
+		if (!$this->page_owner->canEdit()) {
 			throw new EntityPermissionsException();
 		}
 	}
