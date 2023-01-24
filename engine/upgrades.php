@@ -14,4 +14,5 @@ return [
 	\Elgg\Upgrades\DeleteNotificationsPlugin::class,
 	\Elgg\Upgrades\MigrateACLNotificationPreferences::class,
 	\Elgg\Upgrades\NotificationsPrefix::class,
+	\Elgg\Upgrades\RemoveOrphanedThreadedComments::class,
 ];

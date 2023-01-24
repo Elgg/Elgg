@@ -1973,4 +1973,7 @@ Global variables:
 	
 	'core:upgrade:2021060401:title' => "Add content owners to the subscribers",
 	'core:upgrade:2021060401:description' => "Content owners should be subscribed on their own content, this upgrade migrates all old content.",
+	
+	'core:upgrade:2023011701:title' => "Remove orphaned threaded comments",
+	'core:upgrade:2023011701:description' => "Due to an error in how threaded comments were removed, there was a chance to create orphaned comments, this upgrade will remove those orphans.",
 );

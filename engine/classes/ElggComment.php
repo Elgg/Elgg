@@ -31,7 +31,7 @@ class ElggComment extends \ElggObject {
 		
 		if ($result) {
 			// remove the threaded comments directly below this comment
-			elgg_call(ELGG_IGNORE_ACCESS & ELGG_SHOW_DISABLED_ENTITIES, function() use ($recursive) {
+			elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($recursive) {
 				$children = elgg_get_entities([
 					'type' => 'object',
 					'subtype' => 'comment',

@@ -882,6 +882,13 @@ function elgg_view_comments(\ElggEntity $entity, bool $add_comment = true, array
 	$vars['entity'] = $entity;
 	$vars['show_add_form'] = $add_comment;
 	$vars['class'] = elgg_extract('class', $vars, "{$entity->getSubtype()}-comments");
+	
+	$default_id = 'comments';
+	if ($entity instanceof \ElggComment) {
+		$default_id .= "-{$entity->guid}";
+	}
+	
+	$vars['id'] = elgg_extract('id', $vars, $default_id);
 
 	$output = elgg_trigger_event_results('comments', $entity->getType(), $vars, false);
 	if (is_string($output)) {

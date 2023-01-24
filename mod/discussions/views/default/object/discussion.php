@@ -66,19 +66,20 @@ if ($full_view) {
 			'metadata_name_value_pairs' => ['level' => 1],
 		]);
 		
-		/* @var ElggComment $last_comment */
-		$last_comment = $comments[0];
+		$last_comment = elgg_extract(0, $comments);
 		
-		$poster = $last_comment->getOwnerEntity();
-		
-		$comment_text = elgg_echo('discussion:updated', [$poster->getDisplayName(), elgg_view_friendly_time($last_comment->time_created)]);
-		$comment_text = elgg_format_element('span', ['class' => 'float-alt'], elgg_view_url($last_comment->getURL(), $comment_text));
+		if ($last_comment instanceof \ElggComment) {
+			$poster = $last_comment->getOwnerEntity();
+			
+			$comment_text = elgg_echo('discussion:updated', [$poster->getDisplayName(), elgg_view_friendly_time($last_comment->time_created)]);
+			$comment_text = elgg_format_element('span', ['class' => 'float-alt'], elgg_view_url($last_comment->getURL(), $comment_text));
+		}
 	}
 	
 	// brief view
 	$by_line = elgg_view('object/elements/imprint', $vars);
 	
-	$subtitle = "$by_line $comment_text";
+	$subtitle = "{$by_line} {$comment_text}";
 
 	$params = [
 		'subtitle' => $subtitle,
