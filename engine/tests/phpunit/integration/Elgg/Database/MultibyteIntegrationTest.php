@@ -1,0 +1,97 @@
+<?php
+
+namespace Elgg\Database;
+
+use Elgg\Database\Clauses\OrderByClause;
+use Elgg\IntegrationTestCase;
+
+/**
+ * @group Database
+ * @group Multibyte
+ */
+class MultibyteIntegrationTest extends IntegrationTestCase {
+
+	public function up() {
+		_elgg_services()->session_manager->setIgnoreAccess(true);
+	}
+
+	public function down() {
+		_elgg_services()->session_manager->setIgnoreAccess(false);
+	}
+
+	public function testCanUseMultibyteCharsInMetadata() {
+
+		$object = $this->createObject();
+
+		$title = "😀 Grinning Face";
+
+		$object->title = $title;
+
+		$object->save();
+
+		$object = get_entity($object->guid);
+
+		$this->assertMatchesRegularExpression('/\\x{1f600}/u', $object->title);
+		$this->assertEquals($title, $object->title);
+	}
+
+	public function testCanFindMetadataWithMultibyteChars() {
+
+		$object = $this->createObject();
+
+		$title = "😀 Grinning Face";
+
+		$object->title = $title;
+
+		$object->save();
+
+		$entities = elgg_get_entities([
+			'guids' => $object->guid,
+			'metadata_name_value_pairs' => [
+				[
+					'name' => 'title',
+					'value' => "%😀%",
+					'operand' => 'LIKE',
+				],
+			],
+		]);
+
+		$object = array_shift($entities);
+
+		$this->assertMatchesRegularExpression('/\\x{1f600}/u', $object->title);
+		$this->assertEquals($title, $object->title);
+	}
+
+	public function testDatabaseCollactionAllowsSearchForMultibyteCharactersByExactMatch() {
+
+		$grinning_face = $this->createObject([
+			'title' => "😀 Grinning Face",
+		]);
+
+		$monkey_face = $this->createObject([
+			'title' => "🐵 Monkey Face",
+		]);
+
+		$entities = elgg_get_entities([
+			'guids' => [
+				$grinning_face->guid,
+				$monkey_face->guid,
+			],
+			'metadata_name_value_pairs' => [
+				[
+					'name' => 'title',
+					'value' => "%😀%",
+					'operand' => 'LIKE',
+				],
+			],
+			'order_by' => new OrderByClause('e.guid', 'DESC'),
+			'limit' => false,
+		]);
+
+		$this->assertCount(1, $entities);
+
+		$grinning_face = array_shift($entities);
+
+		$this->assertMatchesRegularExpression('/\\x{1f600}/u', $grinning_face->title);
+	}
+}
