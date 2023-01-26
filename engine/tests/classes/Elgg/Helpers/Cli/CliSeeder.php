@@ -5,7 +5,7 @@ namespace Elgg\Helpers\Cli;
 use Elgg\Database\Seeds\Seed;
 
 /**
- * @see \Elgg\Cli\DatabaseSeedCommandTest
+ * @see \Elgg\Cli\DatabaseSeedCommandUnitTest
  */
 class CliSeeder extends Seed {
 	

@@ -5,7 +5,7 @@ namespace Elgg\Helpers\Cli;
 use Elgg\Cli\Command;
 
 /**
- * @see \Elgg\Cli\CommandTest
+ * @see \Elgg\Cli\CommandUnitTest
  */
 class TestingCommand extends Command {
 	

@@ -12,7 +12,7 @@ use Elgg\Database\Update;
  * @group Entities
  * @group EntityAnnotations
  */
-class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest {
+class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesIntegrationTestCase {
 
 	/**
 	 * Creates random annotations on $entity

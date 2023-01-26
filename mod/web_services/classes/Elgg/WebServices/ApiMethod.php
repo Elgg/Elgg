@@ -138,7 +138,7 @@ class ApiMethod implements CollectionItemInterface {
 	/**
 	 * Check if a class property has a value
 	 *
-	 * @param $name the name of the property
+	 * @param string $name the name of the property
 	 *
 	 * @return bool
 	 */

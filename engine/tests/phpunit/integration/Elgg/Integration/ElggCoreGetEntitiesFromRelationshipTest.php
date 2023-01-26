@@ -10,7 +10,7 @@ namespace Elgg\Integration;
  * @group Entities
  * @group EntityRelationships
  */
-class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTest {
+class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesIntegrationTestCase {
 
 	// Make sure metadata doesn't affect getting entities by relationship.  See #2274
 	public function testElggApiGettersEntityRelationshipWithMetadata() {

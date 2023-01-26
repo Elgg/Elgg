@@ -6,7 +6,7 @@ use Elgg\Upgrade\AsynchronousUpgrade;
 use Elgg\Upgrade\Result;
 
 /**
- * @see \Elgg\Actions\Admin\UpgradeTest
+ * @see \Elgg\Actions\Admin\UpgradeIntegrationTest
  */
 class UpgradeTestBatch extends AsynchronousUpgrade {
 	

@@ -11,7 +11,7 @@ use ElggObject;
  * @group Entities
  * @group EntityMetadata
  */
-class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
+class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesIntegrationTestCase {
 
 	public function testElggApiGettersEntityMetadataNameValidSingle() {
 		// create a new entity with a subtype we know

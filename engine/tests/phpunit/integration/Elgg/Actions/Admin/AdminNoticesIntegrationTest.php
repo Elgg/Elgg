@@ -1,0 +1,65 @@
+<?php
+
+namespace Elgg\Actions\Admin;
+
+use Elgg\ActionResponseTestCase;
+use Elgg\Http\OkResponse;
+
+/**
+ * @group ActionsService
+ * @group AdminNotices
+ * @group Admin
+ */
+class AdminNoticesIntegrationTest extends ActionResponseTestCase {
+
+	public function up() {
+		parent::up();
+		
+		_elgg_services()->session_manager->setLoggedInUser($this->getAdmin());
+	}
+
+	public function testDeletesSingleAdminNotice() {
+
+		elgg_delete_admin_notice('zen');
+
+		$notice = elgg_add_admin_notice('zen', 'Maybe the forces of the universe be with you');
+		$this->assertInstanceOf(\ElggAdminNotice::class, $notice);
+		$this->assertEquals('zen', $notice->admin_notice_id);
+
+		$this->assertTrue(elgg_admin_notice_exists('zen'));
+
+		$response = $this->executeAction('entity/delete', [
+			'guid' => $notice->guid,
+		]);
+
+		$this->assertInstanceOf(OkResponse::class, $response);
+
+		$this->assertFalse(elgg_admin_notice_exists('zen'));
+	}
+
+	public function testDeletesBatchAdminNotices() {
+
+		elgg_add_admin_notice('zen1', 'Maybe the forces of the universe be with you');
+		elgg_add_admin_notice('zen2', 'Maybe the forces of the universe be with you');
+		elgg_add_admin_notice('zen3', 'Maybe the forces of the universe be with you');
+
+		$count_zens = function() {
+			return elgg_get_admin_notices([
+				'metadata_name_value_pairs' => [
+					'name' => 'admin_notice_id',
+					'value' => 'zen%',
+					'operand' => 'LIKE',
+				],
+				'count' => true,
+			]);
+		};
+
+		$this->assertEquals(3, $count_zens());
+
+		$response = $this->executeAction('admin/delete_admin_notices');
+
+		$this->assertInstanceOf(OkResponse::class, $response);
+
+		$this->assertEquals(0, $count_zens());
+	}
+}

@@ -11,7 +11,7 @@ use Elgg\Database\QueryBuilder;
  * @group Entities
  * @group EntityTypeSubtypePairs
  */
-class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
+class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesIntegrationTestCase {
 
 	/***********************************
 	 * TYPE TESTS
