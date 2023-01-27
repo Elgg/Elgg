@@ -4,6 +4,7 @@ namespace Elgg;
 
 use Elgg\Database\EntityTable;
 use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\LogicException;
 use Elgg\Filesystem\MimeTypeService;
 use Elgg\Http\Request as HttpRequest;
 use Elgg\Traits\Loggable;
@@ -248,6 +249,22 @@ class EntityIconService {
 			if (!$store) {
 				$this->deleteIcon($entity, $type);
 				return false;
+			}
+			
+			// validate cropping coords to prevent out-of-bounds issues
+			try {
+				$sizes = $this->getSizes($entity->getType(), $entity->getSubtype(), $type);
+				$coords = array_merge($sizes['master'], $coords);
+				
+				$icon = $this->getIcon($entity, 'master', $type, false);
+				
+				$this->images->normalizeResizeParameters($icon->getFilenameOnFilestore(), $coords);
+			} catch (LogicException $e) {
+				// cropping coords are wrong, reset to 0
+				$x1 = 0;
+				$x2 = 0;
+				$y1 = 0;
+				$y2 = 0;
 			}
 		}
 
@@ -700,7 +717,7 @@ class EntityIconService {
 		];
 		
 		$auto_coords = array_filter($auto_coords, function($value) {
-			return !elgg_is_empty($value) && is_numeric($value);
+			return !elgg_is_empty($value) && is_numeric($value) && (int) $value >= 0;
 		});
 		
 		if (count($auto_coords) !== 4) {
@@ -711,6 +728,11 @@ class EntityIconService {
 		array_walk($auto_coords, function (&$value) {
 			$value = (int) $value;
 		});
+		
+		// make sure coords make sense x2 > x1 && y2 > y1
+		if ($auto_coords['x2'] <= $auto_coords['x1'] || $auto_coords['y2'] <= $auto_coords['y1']) {
+			return false;
+		}
 		
 		return $auto_coords;
 	}
