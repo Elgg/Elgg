@@ -1,3 +1,16 @@
+<a name="4.3.7"></a>
+### 4.3.7  (2023-02-10)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+
+#### Bug Fixes
+
+* **icons:** improved handling of invalid cropping coordinates ([db7cf911](https://github.com/Elgg/Elgg/commit/db7cf911e51406cdae65a713b99c09e9e6732d33))
+* **upgrades:** use correct function to report upgrade failure ([a860911e](https://github.com/Elgg/Elgg/commit/a860911e23311f06f2cb9f72b81515d3ae4a9eb7))
+
+
 <a name="4.3.6"></a>
 ### 4.3.6  (2023-01-20)
 
