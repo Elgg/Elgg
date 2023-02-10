@@ -98,13 +98,10 @@ class ImageService {
 		}
 
 		try {
+			$resize_params = $this->normalizeResizeParameters($source, $params);
+			
 			$image = $this->imagine->open($source);
-
-			$width = $image->getSize()->getWidth();
-			$height = $image->getSize()->getHeight();
-
-			$resize_params = $this->normalizeResizeParameters($width, $height, $params);
-
+			
 			$max_width = (int) elgg_extract('w', $resize_params);
 			$max_height = (int) elgg_extract('h', $resize_params);
 
@@ -178,19 +175,23 @@ class ImageService {
 	/**
 	 * Calculate the parameters for resizing an image
 	 *
-	 * @param int   $width  Natural width of the image
-	 * @param int   $height Natural height of the image
-	 * @param array $params Resize parameters
-	 *                      - 'w' maximum width of the resized image
-	 *                      - 'h' maximum height of the resized image
-	 *                      - 'upscale' allow upscaling
-	 *                      - 'square' constrain to a square
-	 *                      - 'x1', 'y1', 'x2', 'y2' cropping coordinates
+	 * @param string $source The source location of the image to validate the parameters for
+	 * @param array  $params Resize parameters
+	 *                       - 'w' maximum width of the resized image
+	 *                       - 'h' maximum height of the resized image
+	 *                       - 'upscale' allow upscaling
+	 *                       - 'square' constrain to a square
+	 *                       - 'x1', 'y1', 'x2', 'y2' cropping coordinates
 	 *
 	 * @return array
 	 * @throws LogicException
 	 */
-	public function normalizeResizeParameters($width, $height, array $params = []) {
+	public function normalizeResizeParameters(string $source, array $params = []) {
+
+		$image = $this->imagine->open($source);
+
+		$width = $image->getSize()->getWidth();
+		$height = $image->getSize()->getHeight();
 
 		$max_width = (int) elgg_extract('w', $params, 100, false);
 		$max_height = (int) elgg_extract('h', $params, 100, false);

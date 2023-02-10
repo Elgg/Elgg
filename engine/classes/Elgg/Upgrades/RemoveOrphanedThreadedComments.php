@@ -51,7 +51,7 @@ class RemoveOrphanedThreadedComments implements AsynchronousUpgrade {
 				continue;
 			}
 			
-			$result->addError();
+			$result->addFailures();
 		}
 		
 		return $result;

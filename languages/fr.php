@@ -2016,4 +2016,7 @@ Variables globales :
 	
 	'core:upgrade:2021060401:title' => "Ajouter les propriétaires de contenus aux abonnés",
 	'core:upgrade:2021060401:description' => "Les propriétaires de contenus devraient être abonnés à leur propres publications, cette mise à niveau migre tout l'ancien contenu.",
+	
+	'core:upgrade:2023011701:title' => "Supprimer les commentaires de fils de discussion orphelins",
+	'core:upgrade:2023011701:description' => "En raison d'une erreur dans la façon dont les commentaires des fils de discussion ont été supprimés, il y avait une chance de créer des commentaires orphelins, cette mise à jour supprimera ces orphelins.",
 );
