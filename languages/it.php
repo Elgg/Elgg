@@ -46,6 +46,8 @@ return array(
 
 	'ajax:error' => 'Errore inatteso durante una chiamata AJAX. Forse manca la connessione al server.',
 	'ajax:not_is_xhr' => 'Non si può accedere alle viste AJAX in modo diretto',
+	'ElggEntity:Error:SetEnabled' => 'Usa %s al posto dell\'impostazione magica per "abilitato"',
+	'ElggUser:Error:SetAdmin' => 'Usa %s al posto del setter magico per "admin"',
 
 	'PluginException:CannotStart' => 'Il plugin %s (guid: %s) è stato disattivato perché impossibile avviarlo. Motivo: %s',
 	'PluginException:InvalidID' => "%s non è un ID di plugin valido.",
@@ -70,6 +72,9 @@ return array(
 	'LoginException:Unknown' => 'Impossibile accedere a causa di un errore non identificato.',
 
 	'UserFetchFailureException' => 'Impossibile verificare i permessi per user_guid [%s] perchè l\'utente non esiste.',
+	'EntityNotFoundException' => 'Il contenuto, a cui stavi tentando di accedere, è stato rimosso o non disponi delle autorizzazioni per accedervi.',
+	'EntityPermissionsException' => 'Non disponi di autorizzazioni sufficienti per questa azione.',
+	'GatekeeperException' => 'Non disponi delle autorizzazioni per visualizzare la pagina a cui stai tentando di accedere',
 	'BadRequestException' => 'Richiesta non valida',
 
 	'viewfailure' => 'Si è verificato un errore interno nella vista %s',
@@ -116,6 +121,7 @@ return array(
 /**
  * Access
  */
+	'access:label:logged_out' => "Utenti disconnessi",
 	'access:label:friends' => "Amici",
 	'access' => "Accesso",
 	'access:limited:label' => "Limitato",
@@ -145,6 +151,7 @@ return array(
 	'widgets:add:failure' => "Impossibile aggiungere il tuo widget.",
 	'widgets:move:failure' => "Impossibile memorizzare la posizione del nuovo widget.",
 	'widgets:remove:failure' => "Impossibile rimuovere questo widget",
+	'widgets:not_configured' => "Questo widget non è ancora configurato",
 	
 /**
  * Groups
@@ -165,6 +172,7 @@ return array(
 	'collection:user' => 'Utenti',
 	'item:user:user' => 'Utente',
 	'collection:user:user' => 'Utenti',
+	'notification:user:user:remove_admin' => "Invia una notifica, quando i diritti di amministratore di un utente vengono revocati",
 
 	'friends' => "Amici",
 
@@ -176,6 +184,7 @@ return array(
 	'avatar:resize:fail' => 'Impossibile ridimensionare l\'immagine del profilo',
 	'avatar:remove:success' => 'Rimozione dell\'immagine del profilo completata',
 	'avatar:remove:fail' => 'Impossibile rimuovere l\'immagine del profilo',
+	'action:user:validate:error' => "Si è verificato un errore durante la convalida di %s",
 
 /**
  * Feeds
@@ -192,6 +201,7 @@ return array(
  * River
  */
 	'river' => "Attività",
+	'river:user:friend' => "%s è ora amico di %s",
 	'river:update:user:avatar' => '%s ha una nuova immagine del profilo',
 	'river:posted:generic' => '%s inviato',
 	'river:ingroup' => 'nel gruppo %s',
@@ -212,9 +222,20 @@ return array(
  * Notifications
  */
 	'notification:method:email' => 'Email',
+	'notification:method:delayed_email' => 'E-mail ritardata',
 	'usersettings:notifications:menu:filter:settings' => "Impostazioni",
+	'usersettings:notifications:timed_muting:help' => "Se non desideri ricevere notifiche, durante un certo periodo (ad esempio una vacanza), puoi impostare una data di inizio, e di fine, per disabilitare temporaneamente tutte le notifiche",
+	'usersettings:notifications:timed_muting:start' => "Primo giorno",
+	'usersettings:notifications:timed_muting:warning' => "Al momento le tue notifiche sono temporaneamente disabilitate",
+	
+	'usersettings:notifications:save:ok' => "Le impostazioni di notifica sono state salvate correttamente.",
 	'notification:subject' => 'Notifica su %s',
 	'notification:body' => 'Visualizza la nuova attività qui %s',
+
+	'notifications:mute:title' => "Silenzia le notifiche",
+	'notifications:mute:container' => "da '%s'",
+	'notifications:mute:group' => "scritto nel gruppo '%s'",
+	'notifications:mute:user' => "scritto dall'utente '%s'",
 
 /**
  * Search
@@ -306,11 +327,17 @@ return array(
 
 	'admin' => "Amministrazione",
 	'admin:description' => "Il pannello di amministrazione permette di controllare ogni aspetto del sistema, dalla gestione degli utenti al comportamento dei plugin. Selezionare un'opzione qui sotto per cominciare.",
+	'admin:performance:simplecache:settings:warning' => "Si consiglia di configurare l'impostazione simplecache in settings.php.
+L'impostazione di simplecache, nel file settings.php, migliora le prestazioni di memorizzazione nella cache.
+Consente a Elgg di saltare la connessione al database quando servono file JavaScript e CSS memorizzati nella cache",
+	'admin:performance:systemcache' => 'Cache di sistema',
+	'admin:performance:php:open_basedir:warning' => 'Sono in atto alcune limitazioni di open_basedir, che potrebbero influire sulle prestazioni.',
 	
 	'admin:statistics' => 'Statistiche',
 	'admin:server' => 'Server',
 	'admin:cron:msg' => 'Messaggio',
 	'admin:cron:started' => 'Cron job per "%s" avviati alle %s',
+	'admin:cron:started:actual' => 'Intervallo cron "%s" ha iniziato l\'elaborazione alle %s',
 	'admin:cron:complete' => 'Cron job per "%s" completati alle %s',
 
 	'admin:appearance' => 'Appearance',
@@ -324,6 +351,7 @@ return array(
 	'admin:users:newest' => 'Più recenti',
 	'admin:users:admins' => 'Amministratori',
 	'admin:users:banned' => 'Banned',
+	'admin:users:existingadmins' => 'Elenco degli amministratori esistenti',
 	'admin:users:add' => 'Aggiungi un nuovo utente',
 	'admin:users:description' => "Questo pannello di amministrazione permette di controllare le impostazioni del sito. Selezionare un'opzione qui sotto per iniziare.",
 	'admin:users:adduser:label' => "Cliccare qui per aggiungere un nuovo utente...",
@@ -332,15 +360,27 @@ return array(
 	'admin:users:find' => 'Trova',
 	'admin:users:unvalidated' => 'Utenti non ancora validati',
 	'admin:users:unvalidated:no_results' => 'Nessun utente non ancora validato',
+	'admin:users:unvalidated:registered' => 'Registrato: %s',
+	'admin:users:unvalidated:change_email' => 'Cambia indirizzo email',
 	'admin:users:details:statistics' => 'Statistiche sui contenuti',
 	
 	'admin:configure_utilities:maintenance' => 'Modalità di manutenzione',
 	'admin:upgrades' => 'Aggiornamenti',
+	'admin:upgrades:db' => 'Aggiornamenti del database',
+	'admin:upgrades:db:end_time' => 'Tempo scaduto',
+	'admin:upgrades:db:duration' => 'Durata',
+	'admin:upgrades:menu:completed' => 'Aggiornamenti completati',
+	'admin:upgrades:menu:db' => 'Aggiornamenti del database',
+	'admin:upgrades:run' => 'Esegui subito gli aggiornamenti',
+	'admin:upgrades:error:invalid_upgrade' => 'L\'entità %s non esiste o non è un\'istanza valida di ElggUpgrade',
+	'admin:upgrades:completed' => 'Aggiornamento "%s" completato alle %s',
+	'admin:upgrades:completed:errors' => 'Aggiornamento "%s" completato al %s, ma rilevato/i %s errore/i',
 
 	'admin:settings' => 'Impostazioni',
 	'admin:settings:basic' => 'Impostazioni di base',
 	'admin:settings:advanced' => 'Impostazioni avanzate',
 	'admin:settings:users' => 'Utenti',
+	'admin:site_settings' => "Configurazioni del Sito",
 	'admin:site:description' => "Questo pannello di amministrazione permette di gestire le impostazioni globali del sito. Selezionare un'opzione qui sotto per iniziare.",
 	'admin:site:opt:linktext' => "Configura sito...",
 	'admin:settings:in_settings_file' => 'Queste impostazioni sono definite in settings.php',
@@ -364,6 +404,7 @@ return array(
 	'admin:widget:content_stats:help' => 'Tiene traccia dei contenuti creati dagli utenti',
 	'admin:widget:cron_status' => 'Stato delle attività pianificate',
 	'admin:widget:cron_status:help' => 'Mostra lo stato dell\'ultimo lavoro completato da Attività pianificate',
+	'admin:statistics:numentities:other' => 'Altre entità',
 	'admin:statistics:queue:name' => 'Nome',
 
 	'admin:widget:admin_welcome' => 'Benvenuto',
@@ -378,6 +419,7 @@ return array(
 
 	'admin:cache:flush' => 'Rinfresca la cache',
 	'admin:cache:flushed' => "La cache del sito è stata rinfrescata",
+	'admin:cache:purged' => "Le cache, del sito, sono state eliminate",
 
 	'admin:footer:faq' => 'FAQ amministrative',
 	'admin:footer:manual' => 'Manuale dell\'amministratore',
@@ -406,18 +448,54 @@ return array(
 	'admin:plugins:markdown:unknown_file' => 'File sconosciuto.',
 	'admin:notices:could_not_delete' => 'Impossibile eliminare l\'avviso.',
 	'item:object:admin_notice' => 'Avviso amministrativo',
+	'collection:object:admin_notice' => 'Notifiche per l\'amministratore',
 
 	'admin:options' => 'Opzioni amministrative',
+	'admin:security:information:https:warning' => "Si consiglia di proteggere il tuo sito Web utilizzando HTTPS, questo aiuta a proteggere i dati (ad esempio le password) dall'essere sniffati tramite la connessione Internet.",
+	'admin:security:information:password_length' => 'Lunghezza minima della password',
+	'admin:security:information:username_length:warning' => "Si raccomanda che il nome utente sia di minimo 4 caratteri.",
+	'admin:security:information:php:session_gc:lifetime' => "Durata della sessione %s secondi",
 	
 	'admin:security:settings' => 'Impostazioni',
 	'admin:security:settings:label:account' => 'Profilo',
 	'admin:security:settings:label:notifications' => 'Notifiche',
+	'admin:security:settings:label:site_secret' => 'Chiave segreta del sito',
+	
+	'admin:security:settings:notify_admins' => 'Avvisa tutti gli amministratori del sito quando un amministratore viene aggiunto o rimosso',
+	
+	'admin:security:settings:notify_user_admin' => 'Avvisa l\'utente quando il ruolo di amministratore viene aggiunto o rimosso',
+	'admin:security:settings:notify_user_admin:help' => 'Questo invierà una notifica all\'utente che il ruolo di amministratore è stato aggiunto/rimosso dal proprio account.',
+	
+	'admin:security:settings:notify_user_ban' => 'Avvisa l\'utente quando il suo account viene (de)bannato',
+	'admin:security:settings:protect_upgrade:help' => 'Questo proteggerà upgrade.php, quindi avrai bisogno di un token valido o dovrai essere un amministratore.',
+	'admin:security:settings:protect_cron:help' => 'Questo proteggerà gli URL /cron con un token: solo se viene fornito un token valido verrà eseguito il cron.',
+	'admin:security:settings:protect_cron:toggle' => 'Mostra/nascondi URL cron',
+	'admin:security:settings:disable_password_autocomplete:help' => 'I dati inseriti in questi campi verranno memorizzati nella cache dal browser. Un utente malintenzionato, che possa accedere al browser della vittima, potrebbe rubare queste informazioni. Ciò è particolarmente importante se l\'applicazione viene comunemente utilizzata in computer condivisi come cyber cafè o terminal aeroportuali. Se lo disattivi, gli strumenti di gestione delle password non possono più compilare automaticamente questi campi. La configurazione dell\'attributo di completamento automatico, può essere specifico del browser.',
+	
+	'admin:security:settings:min_password_length' => "Lunghezza minima della password",
+	'admin:security:settings:min_password_special:help' => "Configura il numero minimo di caratteri speciali (!@$%^&*()<>,.?/[]{}-=_+) che devono essere inclusi in una password. Usa 0 per non includere, vuoto per nessun requisito.",
+	
+	'admin:site:secret:regenerated' => "La chiave del tuo sito è stato rigenerata",
+	
+	'admin:notification:make_admin:admin:subject' => 'Un nuovo amministratore del sito è stato aggiunto a %s',
+	'admin:notification:remove_admin:admin:subject' => 'Un amministratore del sito è stato rimosso da %s',
+	'user:notification:ban:subject' => 'Il tuo account su %s è stato bannato',
+	'user:notification:unban:body' => 'Il tuo account su %s non è più bannato. Puoi accedere nuovamente al sito.
+
+Per andare sul sito, clicca qui:
+%s',
+	
+	'admin:notification:unvalidated_users:subject' => "Utenti in attesa di approvazione su %s",
 
 /**
  * Plugins
  */
 
 	'plugins:settings:save:ok' => "Impostazioni per il plugin %s salvate con successo.",
+	'plugins:settings:save:fail' => "There was a problem saving settings for the %s plugin.",
+	'plugins:settings:remove:fail' => "Si è verificato un errore durante la rimozione di tutte le impostazioni per il plug-in %s",
+	'plugins:usersettings:save:ok' => "User settings for the %s plugin were saved successfully.",
+	'plugins:usersettings:save:fail' => "There was a problem saving user settings for the %s plugin.",
 	
 	'item:object:plugin' => 'Plugins',
 	'collection:object:plugin' => 'Plugins',
@@ -430,6 +508,7 @@ return array(
 	'admin:plugins:opt:linktext' => "Configure tools...",
 	'admin:plugins:label:id' => "ID",
 	'admin:plugins:label:name' => "Nome",
+	'admin:plugins:label:authors' => "Autori",
 	'admin:plugins:label:copyright' => "Copyright",
 	'admin:plugins:label:categories' => 'Categorie',
 	'admin:plugins:label:licence' => "Licenza",
@@ -462,6 +541,7 @@ return array(
 	'admin:statistics:description' => "Questa è una panoramica sulle statistiche di questo sito. Se si desiderano statistiche più dettagliate, è disponibile uno strumento di amministrazione professionale.",
 	'admin:statistics:opt:description' => "Visualizza informazioni statistiche sugli utenti e gli oggetti di questo sito.",
 	'admin:statistics:opt:linktext' => "Visualizza statistiche...",
+	'admin:statistics:label:user' => "Statistiche utente",
 	'admin:statistics:label:numentities' => "Entità nel sito",
 	'admin:statistics:label:numusers' => "Numero di utenti",
 	'admin:statistics:label:numonline' => "Numero di utenti online",
@@ -470,6 +550,7 @@ return array(
 	'admin:statistics:label:version' => "Versione di Elgg",
 	'admin:statistics:label:version:release' => "Versione",
 	'admin:statistics:label:version:version' => "Rilascio",
+	'admin:statistics:label:version:code' => "Versione Codice",
 	'admin:server:label:php' => 'PHP',
 	'admin:server:label:web_server' => 'Server Web',
 	'admin:server:label:server' => 'Server',
@@ -483,8 +564,15 @@ return array(
 	'admin:server:label:post_max_size' => 'Dimensione massima del POST',
 	'admin:server:label:upload_max_filesize' => 'Dimensione massima di upload',
 	'admin:server:warning:post_max_too_small' => '(Nota: post_max_size deve essere maggiore di questo valore per permettere degli upload di questa dimensione)',
+	'admin:server:redis:inactive' => 'Redis non è configurato su questo server o non è stato ancora configurato nella configurazione di Elgg.
+Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o memcache).',
+
+	'admin:server:label:opcache' => 'cache OP',
 	
 	'admin:server:requirements:php_extension' => "Estensione PHP: %s",
+	'admin:server:requirements:php_extension:required' => "Questa estensione PHP è necessaria per il corretto funzionamento di Elgg",
+	'admin:server:requirements:database:server:required' => "Elgg richiede MySQL v5.5.3, o superiore, per il suo database",
+	'admin:server:requirements:database:client:required' => "Elgg richiede pdo_mysql per connettersi al server del database",
 	
 	'admin:user:label:search' => "Trova utenti:",
 	'admin:user:label:searchbutton' => "Cerca",
@@ -508,11 +596,13 @@ return array(
 	'admin:user:removeadmin:no' => "Impossibile rimuovere i privilegi di amministratore a questo utente.",
 	'admin:user:self:removeadmin:no' => "Non puoi rimuovere i tuoi propri privilegi di amministratore.",
 	'admin:menu_items:configure' => 'Configura le voci del menu principale',
+	'admin:menu_items:description' => 'Seleziona l\'ordine delle voci di menu del sito. Gli elementi non configurati saranno aggiunti alla fine dell\'elenco.',
 	'admin:menu_items:hide_toolbar_entries' => 'Sicuri di voler rimuovere i collegamenti dalla barra dei menu?',
 	'admin:menu_items:saved' => 'Voci di menu salvate.',
 	'admin:add_menu_item' => 'Aggiungi una voce di menu personalizzata',
 	'admin:add_menu_item:description' => 'Specifica il nome da visualizzare e un URL per aggiungere una voce personalizzata al menu di navigazione.',
 	'admin:default_widgets:unknown_type' => 'Tipo di widget sconosciuto',
+	'admin:default_widgets:instructions' => 'Aggiungi, rimuovi, posiziona e configura widget predefiniti per la pagina widget selezionata. Queste modifiche riguarderanno solo i nuovi utenti del sito.',
 
 	'admin:robots.txt:instructions' => "Modifica qui sotto il file robots.txt di questo sito",
 	'admin:robots.txt:plugins' => "I plugin stanno aggiungendo le seguenti cose al file robots.txt",
@@ -626,6 +716,7 @@ return array(
 	'remove' => 'Rimuovi',
 	'revert' => 'Ripristina',
 	'validate' => 'Valida',
+	'read_more' => 'Per saperne di più',
 	'next' => 'Successivo',
 	'previous' => 'Precedente',
 	
@@ -694,6 +785,7 @@ return array(
 	'status:featured' => 'In evidenza',
 	'status:open' => 'Aperto',
 	'status:closed' => 'Chiuso',
+	'status:unavailable' => 'Non disponibile',
 	'status:active' => 'Attivi',
 
 /**
@@ -759,7 +851,9 @@ return array(
 /**
  * Time
  */
-	'input:date_format:datepicker' => '', // jQuery UI datepicker format
+
+	'input:date_format' => 'A-m-g',
+	'input:date_format:datepicker' => 'aa-mm-gg', // jQuery UI datepicker format
 	
 	'friendlytime:justnow' => "proprio ora",
 	'friendlytime:minutes' => "%s minuti fa",
@@ -769,6 +863,7 @@ return array(
 	'friendlytime:days' => "%s giorni fa",
 	'friendlytime:days:singular' => "ieri",
 	'friendlytime:date_format' => 'j F Y @ g:ia',
+	'friendlytime:date_format:short' => 'g M A',
 
 	'friendlytime:future:minutes' => "tra %s minuti",
 	'friendlytime:future:minutes:singular' => "tra un minuto",
@@ -848,6 +943,8 @@ return array(
 	// Walled Garden support
 	'installation:registration:description' => 'La registrazione degli utenti è abilitata in modo predefinito. Disabilitare questa opzione per impedire che gli utenti possano registrarsi in modo autonomo.',
 	'installation:registration:label' => 'Permetti ai nuovi utenti di registrarsi',
+	'installation:adminvalidation:notification:description' => 'Se abilitato, gli amministratori del sito, riceveranno una notifica che ci sono convalide utenti in sospeso. Un amministratore può disabilitare la notifica nella pagina delle impostazioni personali.',
+	'installation:adminvalidation:notification:direct' => 'Diretto',
 	'installation:walled_garden:description' => 'Abilitare questa opzione per impedire agli utenti non registrati di visualizzare i contenuti del sito ad eccezione delle pagine pubbliche (come ad esempio login e registrazione)',
 	'installation:walled_garden:label' => 'Limita le pagine agli utenti registrati',
 
@@ -883,7 +980,12 @@ return array(
 	'admin:legend:site_access' => 'Accesso al sito',
 	'admin:legend:debug' => 'Debug e Log',
 	'config:i18n:who_can_change_language:admin_only' => "Solo amministratori",
+	'config:remove_branding:label' => "Rimuovi il marchio Elgg",
+	'config:content:pagination_behaviour:ajax-append' => "Aggiungi i nuovi dati dell'elenco prima, o dopo, l'elenco",
+	'config:content:pagination_behaviour:ajax-append-auto' => "Aggiungi i nuovi dati dell'elenco prima o dopo l'elenco (automaticamente se scorri nella vista)",
 	'config:email' => "Email",
+	'config:email_html_part:help' => "La posta in uscita verrà racchiusa in un modello HTML",
+	'config:email_html_part_images:base64' => "Codifica Base64",
 
 	'upgrading' => 'Aggiornamento in corso...',
 	'upgrade:core' => 'L\'installazione di Elgg è stata aggiornata.',
@@ -895,6 +997,7 @@ return array(
 	'admin:pending_upgrades' => 'Il sito ha degli aggiornamenti in sospeso che richiedono la vostra immediata attenzione.',
 	'admin:view_upgrades' => 'Visualizza aggiornamenti in sospeso.',
 	'item:object:elgg_upgrade' => 'Aggiornamenti del sito',
+	'collection:object:elgg_upgrade' => 'Aggiornamenti del sito',
 	'admin:upgrades:none' => 'Questa installazione è aggiornata!',
 
 	'upgrade:success_count' => 'Aggiornati:',
@@ -927,10 +1030,16 @@ return array(
 	'friend:newfriend:subject' => "%s ti ha aggiunto agli amici!",
 
 	'email:changepassword:subject' => "Password cambiata!",
+	'email:changepassword:body' => "La tua password è stata modificata.",
 
 	'email:resetpassword:subject' => "Password azzerata!",
 
 	'email:changereq:subject' => "Richiesta di cambio password.",
+	'email:confirm:email:old:body' => "Il tuo indirizzo email su '%s' è stato cambiato-
+Da adesso in avanti riceverai le notifiche su '%s'
+
+Se non hai richiesto tu questa modifica, contatta un amministratore del sito.
+%s",
 
 /**
  * user default access
@@ -977,6 +1086,12 @@ return array(
 	'entity:delete:permission_denied' => 'Permessi insufficienti per visualizzare questo elemento.',
 	'entity:delete:success' => 'L\'elemento %s è stato eliminato',
 	'entity:delete:fail' => 'L\'elemento %s non può essere eliminato',
+	
+	'entity:subscribe' => "Sottoscrivi",
+	'entity:subscribe:fail' => "Si è verificato un errore durante l'iscrizione a %s",
+	'entity:unsubscribe:success' => "Hai annullato con successo l'iscrizione a %s",
+	
+	'entity:mute' => "Silenzia le notifiche",
 
 /**
  * Annotations
@@ -1011,6 +1126,22 @@ return array(
 /**
  * Cli commands
  */
+	'cli:cache:purge:description' => "Elimina le cache di Elgg",
+	
+	'cli:database:seed:description' => "alimenta il database con entità false",
+	'cli:database:seed:argument:create' => "Crea sempre nuove entità durante il seeding",
+	'cli:database:seed:log:error:faker' => "Questo è uno strumento per sviluppatori attualmente inteso solo a scopo di test. Si prega di astenersi dall'utilizzarlo.",
+	
+	'cli:database:unseed:description' => "Rimuove false entità con seeding dal database",
+	
+	'cli:plugins:list:description' => "Elenca tutti i plugin installati nel sito.",
+	'cli:plugins:list:error:status' => "%s non è uno stato valido. Le opzioni consentite sono: %s",
+	'cli:upgrade:batch:finished' => "Gli aggiornamenti in corso sono terminati",
+	'cli:upgrade:batch:notfound' => "Nessuna classe di aggiornamento trovata per %s",
+
+	'cli:upgrade:list:description' => "Elenca tutti gli aggiornamenti nel sistema",
+	'cli:upgrade:list:completed' => "Aggiornamenti completati",
+	'cli:upgrade:list:notfound' => "Non  ho trovato aggiornamenti",
 	
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
@@ -1167,4 +1298,6 @@ return array(
 	"zu" => "Zulu",
 
 	"field:required" => 'Richiesto',
+
+	"core:upgrade:2017080900:title" => "Modifica la codifica del database per il supporto multibyte",
 );
