@@ -40,7 +40,7 @@ jobs:
           ini-values: max_execution_time=180
         
       - name: Code checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           # Fetch 10 commits or Scrutinizer will throw ("Failed to retrieve commit parents. If you use a shallow git checkout, please checkout at least a depth of one."), see: RepositoryIntrospector at scrutinizer-ci/ocular GitHub repository
           # 10 commits is an arbitrary value that is more than 1 commit
@@ -51,7 +51,7 @@ jobs:
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
         
       - name: Restore Composer Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
