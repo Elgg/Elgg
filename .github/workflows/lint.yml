@@ -6,10 +6,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Code checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         
       - name: Check format
-        uses: gsactions/commit-message-checker@v1
+        uses: gsactions/commit-message-checker@v2
         with:
           pattern: '^((Merge )|(Revert )|((\w*)\(([\w]+)\)\: ([^\n]*)(\n\n?(.*))?)$)'
           flags: 'is'
@@ -20,7 +20,7 @@ jobs:
           accessToken: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Check line length
-        uses: gsactions/commit-message-checker@v1
+        uses: gsactions/commit-message-checker@v2
         with:
           pattern: '^.{1,160}(\n|$)'
           flags: ''
@@ -31,7 +31,7 @@ jobs:
           accessToken: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Check type
-        uses: gsactions/commit-message-checker@v1
+        uses: gsactions/commit-message-checker@v2
         with:
           pattern: '^((Merge )|(Revert )|(feat(ure)?|fix(es|ed)?|doc(s)?|chore|perf(ormance)?|security|deprecate(s|d)?|break(s)?|removed)?\()'
           flags: 'is'
@@ -53,14 +53,14 @@ jobs:
           extensions: gd,pdo,xml,json,mysqli,pdo_mysql
       
       - name: Code checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       
       - name: Get Composer Cache Directory
         id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
         
       - name: Restore Composer Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -81,7 +81,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Code checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Check encoding of Core language files
         run: echo '! find ./languages/ -name "*.php" -type f -exec file --mime {} \; | grep -v "charset=utf-8$" | grep -v "charset=us-ascii$"' | bash

@@ -12,9 +12,9 @@ Options +FollowSymLinks
 # Default handler
 DirectoryIndex index.php
 
-
 ############################
 # BROWSER CACHING
+############################
 
 # Make sure .ico has proper MIME type, allowing mod_expires to handle them.
 <IfModule mod_mime.c>
@@ -39,35 +39,23 @@ DirectoryIndex index.php
 
 ############################
 # PHP SETTINGS
-# Don't forget to keep these two IfModules in sync!
-<IfModule mod_php7.c>
-	# If using PHP 7.x
-
-	# limit the maximum memory consumed by the php script to 64 MB
-	php_value memory_limit 64M
-	# post_max_size is the maximum size of ALL the data that is POST'ed to php at a time (8 MB)
-	php_value post_max_size 8388608
-	# upload_max_filesize is the maximum size of a single uploaded file (5 MB)
-	php_value upload_max_filesize 5242880
-	# on development servers, set to 1 to display errors. Set to 0 on production servers.
-	php_value display_errors 0
-</IfModule>
-
+############################
 <IfModule mod_php.c>
 	# If using PHP 8+
 
 	# limit the maximum memory consumed by the php script to 64 MB
 	php_value memory_limit 64M
 	# post_max_size is the maximum size of ALL the data that is POST'ed to php at a time (8 MB)
-	php_value post_max_size 8388608
+	php_value post_max_size 8M
 	# upload_max_filesize is the maximum size of a single uploaded file (5 MB)
-	php_value upload_max_filesize 5242880
+	php_value upload_max_filesize 5M
 	# on development servers, set to 1 to display errors. Set to 0 on production servers.
 	php_value display_errors 0
 </IfModule>
 
 ############################
 # COMPRESSION
+############################
 
 # Turn on mod_gzip if available
 <IfModule mod_gzip.c>
@@ -95,9 +83,9 @@ DirectoryIndex index.php
 	BrowserMatch ^Mozilla/4\.[0678] no-gzip
 	BrowserMatch \bMSIE !no-gzip
 
-<IfModule mod_headers.c>
-	Header append Vary User-Agent env=!dont-vary
-</IfModule>
+	<IfModule mod_headers.c>
+		Header append Vary User-Agent env=!dont-vary
+	</IfModule>
 
 	# The following is to disable compression for actions. The reason being is that these
 	# may offer direct downloads which (since the initial request comes in as text/html and headers
@@ -110,66 +98,66 @@ DirectoryIndex index.php
 
 ############################
 # REWRITE RULES
-
+############################
 <IfModule mod_rewrite.c>
 
-RewriteEngine on
+	RewriteEngine on
 
-# If Elgg is in a subdirectory on your site, you might need to add a RewriteBase line
-# containing the path from your site root to elgg's root. e.g. If your site is
-# http://example.com/ and Elgg is in http://example.com/sites/elgg/, you might need
-#
-#RewriteBase /sites/elgg/
-#
-# here, only without the # in front.
-#
-# If you're not running Elgg in a subdirectory on your site, but still getting lots
-# of 404 errors beyond the front page, you could instead try:
-#
-#RewriteBase /
+	# If Elgg is in a subdirectory on your site, you might need to add a RewriteBase line
+	# containing the path from your site root to elgg's root. e.g. If your site is
+	# http://example.com/ and Elgg is in http://example.com/sites/elgg/, you might need
+	#
+	#RewriteBase /sites/elgg/
+	#
+	# here, only without the # in front.
+	#
+	# If you're not running Elgg in a subdirectory on your site, but still getting lots
+	# of 404 errors beyond the front page, you could instead try:
+	#
+	#RewriteBase /
 
 
-# If your users receive the message "Sorry, logging in from a different domain is not permitted"
-# you must make sure your login form is served from the same hostname as your site pages.
-# See http://learn.elgg.org/en/stable/appendix/faqs/general.html#login-token-mismatch for more info.
-#
-# If you must add RewriteRules to change hostname, add them directly below (above all the others)
+	# If your users receive the message "Sorry, logging in from a different domain is not permitted"
+	# you must make sure your login form is served from the same hostname as your site pages.
+	# See http://learn.elgg.org/en/stable/appendix/faqs/general.html#login-token-mismatch for more info.
+	#
+	# If you must add RewriteRules to change hostname, add them directly below (above all the others)
 
-# explicity allow access for the .well-known directory
-RewriteRule "^.well-known/" - [L]
+	# explicitly allow access for the .well-known directory
+	RewriteRule "^.well-known/" - [L]
 
-# hide all dot files/dirs (.git)
-RewriteRule (^\.|/\.) - [F]
+	# hide all dot files/dirs (.git)
+	RewriteRule (^\.|/\.) - [F]
 
-# Prevent access to the composer.json and .lock file
-RewriteRule /?(composer\.json|composer\.lock)$ - [F]
+	# Prevent access to the composer.json and .lock file
+	RewriteRule /?(composer\.json|composer\.lock)$ - [F]
 
-# Optional hardering rules to block access to files in the following directories
-# The following coditions can be enabled, when enabling at least one the last three lines NEED to be enabled  
-RewriteCond %{REQUEST_URI} ^/actions/ [OR]
-RewriteCond %{REQUEST_URI} ^/bower_components/ [OR]
-RewriteCond %{REQUEST_URI} ^/elgg_config/ [OR]
-RewriteCond %{REQUEST_URI} ^/engine/ [OR]
-RewriteCond %{REQUEST_URI} ^/grunt/ [OR]
-RewriteCond %{REQUEST_URI} ^/install/ [OR]
-RewriteCond %{REQUEST_URI} ^/languages/ [OR]
-RewriteCond %{REQUEST_URI} ^/vendor/ [OR]
-RewriteCond %{REQUEST_URI} ^/mod/(.*)/actions/ [OR]
-RewriteCond %{REQUEST_URI} ^/mod/(.*)/languages/ [OR]
-RewriteCond %{REQUEST_URI} ^/mod/(.*)/vendor/ [OR]
-RewriteCond %{REQUEST_URI} ^/mod/(.*)/classes/ [OR]
-# The following condition is needed in order to easily enable (some of the) previous conditions
-RewriteCond 1 2
-# The following files are whitelisted for the installer
-RewriteCond %{REQUEST_URI} !/vendor/npm-asset/jquery/dist/jquery.min.js
-RewriteCond %{REQUEST_URI} !/vendor/elgg/elgg/views/default/graphics/elgg_logo.png
-RewriteCond %{REQUEST_URI} !/vendor/elgg/elgg/views/default/graphics/favicon.ico
-RewriteCond %{REQUEST_FILENAME} -f
-RewriteRule ^(.*)$ - [F,L]
+	# Optional hardening rules to block access to files in the following directories
+	# The following conditions can be enabled, when enabling at least one the last three lines NEED to be enabled
+	RewriteCond %{REQUEST_URI} ^/actions/ [OR]
+	RewriteCond %{REQUEST_URI} ^/bower_components/ [OR]
+	RewriteCond %{REQUEST_URI} ^/elgg_config/ [OR]
+	RewriteCond %{REQUEST_URI} ^/engine/ [OR]
+	RewriteCond %{REQUEST_URI} ^/grunt/ [OR]
+	RewriteCond %{REQUEST_URI} ^/install/ [OR]
+	RewriteCond %{REQUEST_URI} ^/languages/ [OR]
+	RewriteCond %{REQUEST_URI} ^/vendor/ [OR]
+	RewriteCond %{REQUEST_URI} ^/mod/(.*)/actions/ [OR]
+	RewriteCond %{REQUEST_URI} ^/mod/(.*)/languages/ [OR]
+	RewriteCond %{REQUEST_URI} ^/mod/(.*)/vendor/ [OR]
+	RewriteCond %{REQUEST_URI} ^/mod/(.*)/classes/ [OR]
+	# The following condition is needed in order to easily enable (some of the) previous conditions
+	RewriteCond 1 2
+	# The following files are whitelisted for the installer
+	RewriteCond %{REQUEST_URI} !/vendor/npm-asset/jquery/dist/jquery.min.js
+	RewriteCond %{REQUEST_URI} !/vendor/elgg/elgg/views/default/graphics/elgg_logo.png
+	RewriteCond %{REQUEST_URI} !/vendor/elgg/elgg/views/default/graphics/favicon.ico
+	RewriteCond %{REQUEST_FILENAME} -f
+	RewriteRule ^(.*)$ - [F,L]
 
-# Everything else that isn't a file gets routed through Elgg
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php [QSA,L]
+	# Everything else that isn't a file gets routed through Elgg
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)$ index.php [QSA,L]
 
 </IfModule>

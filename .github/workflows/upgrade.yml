@@ -33,7 +33,7 @@ jobs:
         run: composer self-update --1
         
       - name: Code checkout Elgg 2.3
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: 'Elgg/Elgg'
           ref: '2.3'
@@ -43,7 +43,7 @@ jobs:
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
         
       - name: Restore Composer Cache for 2.3
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -66,7 +66,7 @@ jobs:
         run: php -f ./.scripts/seeder/seed.php
       
       - name: Code checkout Elgg 3.3
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: 'Elgg/Elgg'
           ref: '3.3'
@@ -87,7 +87,7 @@ jobs:
           composer self-update --2
              
       - name: Code checkout Elgg 4.3
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: 'Elgg/Elgg'
           ref: '4.3'
@@ -107,12 +107,12 @@ jobs:
           extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring
         
       - name: Code checkout PR
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           clean: false
       
       - name: Restore Composer Cache for PR
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
