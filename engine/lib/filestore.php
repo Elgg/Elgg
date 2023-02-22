@@ -4,6 +4,7 @@
  * This file contains functions for saving and retrieving data from files.
  */
 
+use Elgg\Project\Paths;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -48,6 +49,7 @@ function elgg_save_resized_image(string $source, string $destination = null, arr
  * @since 3.1
  */
 function elgg_delete_directory(string $directory, bool $leave_base_directory = false): bool {
+	$directory = Paths::sanitize($directory);
 	if (!file_exists($directory)) {
 		return true;
 	}
@@ -55,33 +57,23 @@ function elgg_delete_directory(string $directory, bool $leave_base_directory = f
 	if (!is_dir($directory)) {
 		return false;
 	}
-
-	// sanity check: must be a directory
-	$handle = opendir($directory);
-	if (empty($handle)) {
-		return false;
-	}
-
-	// loop through all files
-	while (($file = readdir($handle)) !== false) {
-		if (in_array($file, ['.', '..'])) {
+	
+	$dh = new \DirectoryIterator($directory);
+	/* @var $file_info \DirectoryIterator */
+	foreach ($dh as $file_info) {
+		if ($file_info->isDot()) {
 			continue;
 		}
-
-		$path = "$directory/$file";
-		if (is_dir($path)) {
+		
+		if ($file_info->isDir()) {
 			// recurse down through directory
-			if (!elgg_delete_directory($path)) {
+			if (!elgg_delete_directory($directory . $file_info->getFilename())) {
 				return false;
 			}
-		} else {
-			// delete file
-			unlink($path);
+		} elseif ($file_info->isFile()) {
+			unlink($file_info->getPathname());
 		}
 	}
-
-	// close file handler
-	closedir($handle);
 	
 	if ($leave_base_directory) {
 		return true;
