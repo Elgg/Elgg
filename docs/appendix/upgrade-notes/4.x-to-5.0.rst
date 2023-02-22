@@ -22,6 +22,8 @@ Events and Hooks
 ----------------
 
 These two similar concepts have been merged and from now on we will only refer to events. The public service ``hooks`` no longer exists.
+All hooks can now be registered in the `events` section of your plugin.
+If you use hook callbacks that expect a type hinted `Elgg\Hook` argument you will need to update this to `Elgg\Event`.
 
 Create event
 ~~~~~~~~~~~~
