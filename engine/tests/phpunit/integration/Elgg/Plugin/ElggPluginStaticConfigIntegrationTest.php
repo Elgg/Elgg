@@ -116,12 +116,14 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 		$this->assertFalse(elgg_action_exists('static_config/autodetect'));
 		$this->assertFalse(elgg_action_exists('static_config/custom_file'));
 		$this->assertFalse(elgg_action_exists('static_config/controller'));
+		$this->assertFalse(elgg_action_exists('static_config/logged_out'));
 		
 		$this->callReflectorMethod('registerActions');
 		
 		$this->assertTrue(elgg_action_exists('static_config/autodetect'));
 		$this->assertTrue(elgg_action_exists('static_config/custom_file'));
 		$this->assertTrue(elgg_action_exists('static_config/controller'));
+		$this->assertTrue(elgg_action_exists('static_config/logged_out'));
 		
 		$route1 = _elgg_services()->routes->get('action:static_config/autodetect');
 		$this->assertEquals($this->normalizeTestFilePath('mod/static_config/actions/static_config/autodetect.php'), $route1->getDefault('_file'));
@@ -137,6 +139,12 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals(\Elgg\StaticConfig\ActionController::class, $route3->getDefault('_controller'));
 		$this->assertIsArray($route1->getDefault('_middleware'));
 		$this->assertContains(\Elgg\Router\Middleware\AdminGatekeeper::class, $route3->getDefault('_middleware'));
+		
+		$route4 = _elgg_services()->routes->get('action:static_config/logged_out');
+		$this->assertEquals($this->normalizeTestFilePath('mod/static_config/actions/static_config/logged_out.php'), $route4->getDefault('_file'));
+		$this->assertIsArray($route4->getDefault('_middleware'));
+		$this->assertContains(\Elgg\Router\Middleware\LoggedOutGatekeeper::class, $route4->getDefault('_middleware'));
+		$this->assertContains(\Elgg\Router\Middleware\AjaxGatekeeper::class, $route4->getDefault('_middleware'));
 	}
 	
 	public function testRoutesRegistration() {

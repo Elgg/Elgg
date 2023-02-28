@@ -159,6 +159,21 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->expectExceptionMessage('Unrecognized value \'pblc\' for $access in Elgg\\ActionsService::register');
 		_elgg_services()->actions->register('test/output', "{$this->actionsDir}/output.php", 'pblc');
 	}
+	
+	public function testCanRegisterActionWithAdditionalMiddleware() {
+		$this->assertFalse(_elgg_services()->actions->exists('test/output'));
+		_elgg_services()->actions->register('test/output', "{$this->actionsDir}/output.php", 'public', [
+			'middleware' => \Elgg\Router\Middleware\AjaxGatekeeper::class,
+		]);
+		
+		$this->assertTrue(_elgg_services()->actions->exists('test/output'));
+		$route = _elgg_services()->routes->get('action:test/output');
+		$this->assertInstanceOf(\Elgg\Router\Route::class, $route);
+		
+		$middleware = $route->getDefault('_middleware');
+		$this->assertIsArray($middleware);
+		$this->assertContains(\Elgg\Router\Middleware\AjaxGatekeeper::class, $middleware);
+	}
 
 	public function testCanRegisterActionWithoutFilename() {
 		_elgg_services()->actions->register('login');

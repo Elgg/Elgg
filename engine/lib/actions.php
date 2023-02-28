@@ -12,7 +12,7 @@
  * $filename must be the full path of the file to register or a path relative
  * to the core actions/ dir.
  *
- * Actions should be namedspaced for your plugin.  Example:
+ * Actions should be namespaced for your plugin.  Example:
  * <code>
  * elgg_register_action('myplugin/save_settings', ...);
  * </code>
@@ -26,11 +26,13 @@
  *                         will assume the action is in elgg/actions/<action>.php
  * @param string $access   Who is allowed to execute this action: public, logged_in, admin.
  *                         (default: logged_in)
+ * @param array  $params   Additional params for the action route registration:
+ *                         - middleware: additional middleware on the action route
  *
  * @return void
  */
-function elgg_register_action(string $action, string $filename = '', string $access = 'logged_in'): void {
-	_elgg_services()->actions->register($action, $filename, $access);
+function elgg_register_action(string $action, string $filename = '', string $access = 'logged_in', array $params = []): void {
+	_elgg_services()->actions->register($action, $filename, $access, $params);
 }
 
 /**
