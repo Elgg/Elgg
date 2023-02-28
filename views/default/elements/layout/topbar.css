@@ -398,7 +398,7 @@ html.elgg-nav-collapsed {
 						width: 100%;
 					}
 					
-					.elgg-child-menu {
+					> .elgg-child-menu {
 						right: 0;
 						left: unset;
 					}
