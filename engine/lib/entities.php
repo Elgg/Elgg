@@ -62,7 +62,7 @@ function elgg_get_entity_as_row(int $guid): ?\stdClass {
  *
  * @param int $guid The GUID of the entity
  *
- * @return \ElggEntity|false The correct Elgg or custom object based upon entity type and subtype
+ * @return null|\ElggEntity The correct Elgg or custom object based upon entity type and subtype
  */
 function get_entity(int $guid): ?\ElggEntity {
 	if ($guid === 1) {
