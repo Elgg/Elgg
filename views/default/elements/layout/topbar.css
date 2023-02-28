@@ -274,6 +274,11 @@ html.elgg-nav-collapsed {
 	}
 }
 
+*[id] {
+	/* correcting for sticky topbar */
+	scroll-margin-top: 4rem;
+}
+
 @media only $(media-desktop-up) {
 	.elgg-nav-collapse {
 		align-items: center;
