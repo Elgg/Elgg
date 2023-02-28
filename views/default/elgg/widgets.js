@@ -46,19 +46,6 @@ define(['jquery', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function ($, Ajax)
 	};
 
 	/**
-	 * Toggle the collapse state of the widget
-	 *
-	 * @param {Object} event
-	 * @return void
-	 */
-	function toggleWidget(event) {
-		event.preventDefault();
-		
-		$(this).toggleClass('elgg-widget-collapsed');
-		$(this).parent().parent().find('.elgg-body').slideToggle('medium');
-	};
-
-	/**
 	 * Save a widget's settings
 	 *
 	 * Uses Ajax to save the settings and updates the HTML.
@@ -107,5 +94,4 @@ define(['jquery', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function ($, Ajax)
 
 	$(document).on('click', 'a.elgg-widget-delete-button', removeWidget);
 	$(document).on('submit', '.elgg-widget-edit > form ', saveWidgetSettings);
-	$(document).on('click', 'a.elgg-widget-collapse-button', toggleWidget);
 });

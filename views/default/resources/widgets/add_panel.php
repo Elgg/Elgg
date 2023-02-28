@@ -58,31 +58,31 @@ foreach ($widget_types as $handler => $widget_type) {
 	} else {
 		$class[] = 'elgg-state-available';
 	}
-
+	
 	$class[] = $widget_type->multiple ? 'elgg-widget-multiple' : 'elgg-widget-single';
-
+	
 	$action = '<div class="elgg-widgets-add-actions elgg-level">';
 	if (!$widget_type->multiple) {
 		$action .= elgg_format_element('span', ['class' => 'elgg-quiet'], elgg_echo('widget:unavailable'));
 	}
 	
 	$action .= elgg_view('output/url', [
-		'class' => 'elgg-button elgg-button-submit elgg-size-small',
+		'class' => ['elgg-button', 'elgg-button-submit', 'elgg-size-small'],
 		'text' => elgg_echo('add'),
 		'href' => elgg_generate_action_url('widgets/add', [
 			'handler' => $handler,
 			'page_owner_guid' => $owner_guid,
 			'context' => $context,
-			'show_access' => elgg_extract('show_access', $vars),
+			'show_access' => elgg_extract('show_access', $vars, get_input('show_access')),
 			'default_widgets' => elgg_in_context('default_widgets'),
 			'new_widget_column' => $new_widget_column,
 			'new_widget_position' => $new_widget_position,
 		]),
 	]);
 	$action .= '</div>';
-
+	
 	$description = elgg_format_element('h4', [], $widget_type->name);
-
+	
 	if ($widget_type->description) {
 		$description .= elgg_format_element('div', ['class' => 'elgg-quiet'], $widget_type->description);
 	}

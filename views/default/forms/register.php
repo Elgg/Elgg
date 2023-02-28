@@ -62,7 +62,7 @@ foreach ($fields as $field) {
 // view to extend to add more fields to the registration form
 echo elgg_view('register/extend', $vars);
 
-// Add captcha hook
+// Add captcha
 echo elgg_view('input/captcha', $vars);
 
 $footer = elgg_view_field([

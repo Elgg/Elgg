@@ -1,7 +1,7 @@
 define(['jquery', 'elgg'], function ($, elgg) {
 
-	// hide the current messages (not on admin pages)
-	$('.elgg-page-default .elgg-system-messages .elgg-message').each(function () {
+	// hide the current messages
+	$('.elgg-system-messages .elgg-message').each(function () {
 		var $message = $(this);
 		
 		var delay = $message.data().ttl;

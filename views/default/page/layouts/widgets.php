@@ -9,7 +9,7 @@
  * @uses $vars['owner_guid']       Widget owner GUID (optional, defaults to page owner GUID)
  */
 
-$num_columns = elgg_extract('num_columns', $vars, 3);
+$num_columns = (int) elgg_extract('num_columns', $vars, 3);
 $show_add_widgets = elgg_extract('show_add_widgets', $vars, true);
 $show_access = elgg_extract('show_access', $vars, true);
 $owner_guid = (int) elgg_extract('owner_guid', $vars);
@@ -33,7 +33,7 @@ if (elgg_is_empty($context)) {
 elgg_require_js('elgg/widgets');
 
 // Underlying views and functions assume that the page owner is the owner of the widgets
-if ($owner->guid != $page_owner->guid) {
+if (empty($page_owner) || $owner->guid != $page_owner->guid) {
 	elgg_set_page_owner_guid($owner->guid);
 }
 
@@ -72,7 +72,7 @@ foreach ($widgets as $index => $column_widgets) {
 	if ($index <= $num_columns) {
 		continue;
 	}
-		
+	
 	// append widgets to last column and retain order
 	foreach ($column_widgets as $column_widget) {
 		$widgets[$num_columns][] = $column_widget;
@@ -96,7 +96,7 @@ for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 			'register_rss_link' => false,
 		]);
 	}
-
+	
 	$grid .= elgg_format_element('div', [
 		'id' => "elgg-widget-col-{$column_index}",
 		'class' => [
@@ -121,6 +121,8 @@ echo elgg_format_element('div', [
 ], $result);
 
 // Restore original page owner
-if ($owner->guid != $page_owner->guid) {
+if (empty($page_owner)) {
+	elgg_set_page_owner_guid(0);
+} elseif ($owner->guid !== $page_owner->guid) {
 	elgg_set_page_owner_guid($page_owner->guid);
 }
