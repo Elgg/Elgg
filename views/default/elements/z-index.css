@@ -57,10 +57,6 @@
 	z-index: 1000;
 }
 
-.elgg-page-admin .elgg-page-topbar li:hover .elgg-child-menu {
-	z-index: 1010;
-}
-
 .elgg-spinner {
 	z-index: 2000;
 }

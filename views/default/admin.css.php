@@ -18,14 +18,6 @@ echo elgg_view('core.css');
 		margin: 0 auto;
 	}
 
-	.elgg-system-messages {
-		position: relative;
-		margin-top: 2rem;
-		width: 100%;
-		max-width: 100%;
-		top: 0;
-		right: 0;
-	}
 
 	.elgg-admin-notices-dismiss-all {
 		font-weight: 600;
@@ -33,6 +25,10 @@ echo elgg_view('core.css');
 		display: block;
 	}
 
+	.elgg-module-admin-notices {
+		margin-top: 2rem;
+	}
+	
 	.elgg-admin-notices > li {
 		padding: 0;
 		border: none;
