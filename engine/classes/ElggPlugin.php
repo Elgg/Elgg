@@ -950,8 +950,13 @@ class ElggPlugin extends ElggObject {
 					$handler = "{$root_path}actions/{$action}.php";
 				}
 			}
+			
+			// unset handled action specs, pass the rest to the action service
+			unset($action_spec['access']);
+			unset($action_spec['controller']);
+			unset($action_spec['filename']);
 
-			$actions->register($action, $handler, $access);
+			$actions->register($action, $handler, $access, $action_spec);
 		}
 	}
 

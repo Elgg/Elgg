@@ -63,12 +63,14 @@ class ActionsService {
 	 * @param string $handler Optionally, the filename where this action is located. If not specified,
 	 *                        will assume the action is in elgg/actions/<action>.php
 	 * @param string $access  Who is allowed to execute this action: public, logged_in, logged_out, admin. (default: logged_in)
+	 * @param array  $params  Additional params for the action route registration:
+	 *                        - middleware: additional middleware on the action route
 	 *
 	 * @return void
 	 * @throws \Elgg\Exceptions\DomainException
 	 * @see elgg_register_action()
 	 */
-	public function register(string $action, string $handler = '', string $access = 'logged_in'): void {
+	public function register(string $action, string $handler = '', string $access = 'logged_in', array $params = []): void {
 		if (!in_array($access, self::$access_levels)) {
 			throw new DomainException("Unrecognized value '{$access}' for \$access in " . __METHOD__);
 		}
@@ -106,6 +108,9 @@ class ActionsService {
 		}
 
 		$middleware[] = ActionMiddleware::class;
+		
+		$additional_middleware = (array) elgg_extract('middleware', $params);
+		$middleware = array_merge($middleware, $additional_middleware);
 
 		$this->routes->register("action:{$action}", [
 			'path' => "/action/{$action}",

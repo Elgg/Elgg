@@ -73,6 +73,10 @@ class StaticConfigTest extends UnitTestCase {
 			if (isset($action_spec['access'])) {
 				$this->assertTrue(in_array($action_spec['access'], ['public', 'logged_in', 'logged_out', 'admin']));
 			}
+			
+			if (isset($action_spec['middleware'])) {
+				$this->assertIsArray($action_spec['middleware']);
+			}
 		}
 	}
 

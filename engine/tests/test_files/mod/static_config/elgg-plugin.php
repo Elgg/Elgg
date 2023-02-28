@@ -11,6 +11,12 @@ return [
 			'controller' => \Elgg\StaticConfig\ActionController::class,
 			'access' => 'admin',
 		],
+		'static_config/logged_out' => [
+			'access' => 'logged_out',
+			'middleware' => [
+				\Elgg\Router\Middleware\AjaxGatekeeper::class,
+			],
+		],
 	],
 	'bootstrap' => \Elgg\StaticConfig\Bootstrap::class,
 	'entities' => [
