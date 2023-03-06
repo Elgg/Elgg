@@ -23,6 +23,7 @@ if ($container instanceof \ElggEntity) {
 		foreach ($keys as $key) {
 			if (elgg_language_key_exists($key)) {
 				$title = elgg_echo($key);
+				break;
 			}
 		}
 	}
