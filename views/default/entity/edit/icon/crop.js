@@ -37,6 +37,9 @@ define(['jquery', 'jquery-cropper/jquery-cropper'], function($) {
 			$img.cropper('destroy');
 			$img.attr('src', '');
 			
+			var data = $img.data().iconCropper;
+			data.aspectRatio = data.initialAspectRatio;
+						
 			that.resetMessages();
 			
 			// validate image
