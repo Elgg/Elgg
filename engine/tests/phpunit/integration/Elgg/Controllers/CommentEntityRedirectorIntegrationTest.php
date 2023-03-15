@@ -101,7 +101,7 @@ class CommentEntityRedirectorIntegrationTest extends IntegrationTestCase {
 		$this->createService($request);
 		
 		$this->expectException(EntityNotFoundException::class);
-		$this->expectErrorMessage(elgg_echo('generic_comment:notfound'));
+		$this->expectExceptionMessage(elgg_echo('generic_comment:notfound'));
 		$this->executeRequest($request);
 	}
 	
@@ -129,7 +129,7 @@ class CommentEntityRedirectorIntegrationTest extends IntegrationTestCase {
 		elgg()->session_manager->setLoggedInUser($other_user);
 		
 		$this->expectException(EntityNotFoundException::class);
-		$this->expectErrorMessage(elgg_echo('generic_comment:notfound'));
+		$this->expectExceptionMessage(elgg_echo('generic_comment:notfound'));
 		$this->executeRequest($request);
 		
 		$other_user->delete();

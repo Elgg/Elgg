@@ -32,7 +32,7 @@ $default_config = [
 
 $cropper_data = array_merge($default_config, (array) elgg_extract('cropper_config', $vars, []));
 
-// determin current cropping coordinates
+// determine current cropping coordinates
 $entity_coords = [];
 if ($entity instanceof ElggEntity) {
 	if ($icon_type === 'icon') {
@@ -50,6 +50,7 @@ if ($entity instanceof ElggEntity) {
 	array_walk($entity_coords, function(&$value) {
 		$value = (int) $value;
 	});
+	
 	// remove invalid values
 	$entity_coords = array_filter($entity_coords, function($value) {
 		return $value >= 0;
@@ -63,6 +64,10 @@ if ($entity instanceof ElggEntity) {
 			'width' => $entity_coords['x2'] - $entity_coords['x1'],
 			'height' => $entity_coords['y2'] - $entity_coords['y1'],
 		];
+		
+		if (!empty($cropper_data['data']['width']) && $cropper_data['data']['height']) {
+			$cropper_data['existingAspectRatio'] = $cropper_data['data']['width'] / $cropper_data['data']['height'];
+		}
 	}
 }
 
@@ -102,6 +107,7 @@ if (!isset($cropper_data['aspectRatio'])) {
 		}
 		
 		$cropper_data['aspectRatio'] = $width / $height;
+		$cropper_data['initialAspectRatio'] = $cropper_data['aspectRatio'];
 	};
 	$detect_aspect_ratio($vars);
 }
@@ -112,6 +118,12 @@ if ($entity instanceof ElggEntity && $entity->hasIcon('master', $icon_type)) {
 		'size' => 'master',
 		'type' => $icon_type,
 	]);
+}
+
+if (isset($cropper_data['existingAspectRatio'], $cropper_data['aspectRatio'])) {
+	// prevents math rounding issues with non square aspect ratios when showing existing cropped area
+	$cropper_data['aspectRatio'] = $cropper_data['existingAspectRatio'];
+	unset($cropper_data['existingAspectRatio']);
 }
 
 $img = elgg_format_element('img', [
