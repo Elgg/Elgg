@@ -206,18 +206,18 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
 
-		$this->notifications->enqueueEvent('create', $object->getType(), $object);
+		$this->notifications->enqueueEvent('create', $object);
 
 		$event = new SubscriptionNotificationEvent($object, 'create');
 		$this->assertEquals(unserialize(serialize($event)), $this->queue->dequeue());
 		$this->assertNull($this->queue->dequeue());
 
 		// unregistered action type
-		$this->notifications->enqueueEvent('null', $object->getType(), $object);
+		$this->notifications->enqueueEvent('null', $object);
 		$this->assertNull($this->queue->dequeue());
 
 		// unregistered object type
-		$this->notifications->enqueueEvent('create', $object->getType(), new \ElggObject());
+		$this->notifications->enqueueEvent('create', new \ElggObject());
 		$this->assertNull($this->queue->dequeue());
 	}
 	
@@ -228,18 +228,18 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
 
-		$this->notifications->enqueueEvent('create', $object->getType(), $object, $this->actor);
+		$this->notifications->enqueueEvent('create', $object, $this->actor);
 
 		$event = new SubscriptionNotificationEvent($object, 'create', $this->actor);
 		$this->assertEquals(unserialize(serialize($event)), $this->queue->dequeue());
 		$this->assertNull($this->queue->dequeue());
 
 		// unregistered action type
-		$this->notifications->enqueueEvent('null', $object->getType(), $object);
+		$this->notifications->enqueueEvent('null', $object);
 		$this->assertNull($this->queue->dequeue());
 
 		// unregistered object type
-		$this->notifications->enqueueEvent('create', $object->getType(), new \ElggObject());
+		$this->notifications->enqueueEvent('create', new \ElggObject());
 		$this->assertNull($this->queue->dequeue());
 	}
 	
@@ -255,18 +255,18 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
 
-		$this->notifications->enqueueEvent('create', $object->getType(), $object, $actor);
+		$this->notifications->enqueueEvent('create', $object, $actor);
 
 		$event = new SubscriptionNotificationEvent($object, 'create', $actor);
 		$this->assertEquals(unserialize(serialize($event)), $this->queue->dequeue());
 		$this->assertNull($this->queue->dequeue());
 
 		// unregistered action type
-		$this->notifications->enqueueEvent('null', $object->getType(), $object);
+		$this->notifications->enqueueEvent('null', $object);
 		$this->assertNull($this->queue->dequeue());
 
 		// unregistered object type
-		$this->notifications->enqueueEvent('create', $object->getType(), new \ElggObject());
+		$this->notifications->enqueueEvent('create', new \ElggObject());
 		$this->assertNull($this->queue->dequeue());
 	}
 
@@ -287,7 +287,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
 
-		$this->notifications->enqueueEvent('create', $object->getType(), $object);
+		$this->notifications->enqueueEvent('create', $object);
 		$this->assertNull($this->queue->dequeue());
 	}
 
@@ -317,9 +317,9 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 			'event3'
 		]);
 
-		$this->notifications->enqueueEvent('event1', $object->getType(), $object);
-		$this->notifications->enqueueEvent('event2', $object->getType(), $object);
-		$this->notifications->enqueueEvent('event3', $object->getType(), $object);
+		$this->notifications->enqueueEvent('event1', $object);
+		$this->notifications->enqueueEvent('event2', $object);
+		$this->notifications->enqueueEvent('event3', $object);
 
 		$this->session_manager->removeLoggedInUser();
 
@@ -348,9 +348,9 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 			'event3'
 		]);
 
-		$this->notifications->enqueueEvent('event1', $object->getType(), $object);
-		$this->notifications->enqueueEvent('event2', $object->getType(), $object);
-		$this->notifications->enqueueEvent('event3', $object->getType(), $object);
+		$this->notifications->enqueueEvent('event1', $object);
+		$this->notifications->enqueueEvent('event2', $object);
+		$this->notifications->enqueueEvent('event3', $object);
 
 		$this->session_manager->removeLoggedInUser();
 
@@ -398,7 +398,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
 
 		$this->assertEquals(0, $this->queue->size());
-		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
+		$this->notifications->enqueueEvent('test_event', $object);
 		$this->assertEquals(1, $call_count);
 		$this->assertEquals(0, $this->queue->size());
 
@@ -459,7 +459,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
 
 		$this->assertEquals(0, $this->queue->size());
-		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
+		$this->notifications->enqueueEvent('test_event', $object);
 		$this->assertEquals(1, $this->queue->size());
 
 		$this->session_manager->removeLoggedInUser();
@@ -526,7 +526,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
 
 		$this->assertEquals(0, $this->queue->size());
-		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
+		$this->notifications->enqueueEvent('test_event', $object);
 
 		$event = $this->queue->dequeue();
 		$this->assertInstanceOf(SubscriptionNotificationEvent::class, $event);
@@ -534,7 +534,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->assertEquals($object, $event->getObject());
 		$this->assertEquals("test_event:{$object->getType()}:{$object->getSubtype()}", $event->getDescription());
 
-		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
+		$this->notifications->enqueueEvent('test_event', $object);
 		$this->assertEquals(1, $this->queue->size());
 
 		$deliveries = [
@@ -631,7 +631,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->notifications->registerMethod('test_method');
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
-		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
+		$this->notifications->enqueueEvent('test_event', $object);
 
 		$this->session_manager->removeLoggedInUser();
 
@@ -702,7 +702,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->notifications->registerMethod('test_method');
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
-		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
+		$this->notifications->enqueueEvent('test_event', $object);
 
 		$this->session_manager->removeLoggedInUser();
 
@@ -732,7 +732,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->session_manager->setLoggedInUser($this->actor);
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
-		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
+		$this->notifications->enqueueEvent('test_event', $object);
 
 		$object->delete();
 
@@ -764,7 +764,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->session_manager->setLoggedInUser($this->actor);
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
-		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
+		$this->notifications->enqueueEvent('test_event', $object);
 
 		$this->session_manager->removeLoggedInUser();
 

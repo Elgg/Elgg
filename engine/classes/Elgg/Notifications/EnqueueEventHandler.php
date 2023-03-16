@@ -22,6 +22,11 @@ class EnqueueEventHandler {
 	 * @return void
 	 */
 	public function __invoke(\Elgg\Event $event) {
-		_elgg_services()->notifications->enqueueEvent($event->getName(), $event->getType(), $event->getObject());
+		$object = $event->getObject();
+		if (!$object instanceof \ElggData) {
+			return;
+		}
+		
+		_elgg_services()->notifications->enqueueEvent($event->getName(), $object);
 	}
 }

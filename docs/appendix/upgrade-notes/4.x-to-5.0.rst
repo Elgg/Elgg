@@ -180,6 +180,7 @@ Lib functions function parameters
 * ``elgg_define_js()`` now requires a ``string`` for ``$name`` and an ``array`` for ``$config``
 * ``elgg_delete_system_cache()`` now requires a ``string`` for ``$type``
 * ``elgg_echo()`` now requires a ``string`` for ``$message_key`` and a ``string`` for ``$language``
+* ``elgg_enqueue_notification_event()`` no longer requires a ``$type``
 * ``elgg_entity_exists()`` now requires a ``int`` for ``$guid``
 * ``elgg_entity_gatekeeper()`` now requires a ``int`` for ``$guid`` and a ``string`` for ``$type`` and a ``string`` for ``$subtype`` and a ``bool`` for ``$validate_can_edit``
 * ``elgg_error_response()`` now requires a ``string`` or ``array`` for ``$message`` and a ``string`` for ``$forward_url``

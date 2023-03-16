@@ -245,7 +245,6 @@ function elgg_send_email(\Elgg\Email $email): bool {
  * Only use this function if the default event based queueing can't be used.
  *
  * @param string      $action the action of the notification event
- * @param string      $type   the type of the notification event
  * @param \ElggData   $object the object used in the notification event
  * @param \ElggEntity $actor  (optional) the actor of the notification event (default: logged in user or owner of $object)
  *
@@ -254,6 +253,6 @@ function elgg_send_email(\Elgg\Email $email): bool {
  * @return void
  * @since 4.3
  */
-function elgg_enqueue_notification_event(string $action, string $type, \ElggData $object, \ElggEntity $actor = null): void {
-	_elgg_services()->notifications->enqueueEvent($action, $type, $object, $actor);
+function elgg_enqueue_notification_event(string $action, \ElggData $object, \ElggEntity $actor = null): void {
+	_elgg_services()->notifications->enqueueEvent($action, $object, $actor);
 }
