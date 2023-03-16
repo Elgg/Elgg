@@ -91,13 +91,13 @@ class NotificationsService {
 	 * Unregister a notification event
 	 *
 	 * @param string $type    'object', 'user', 'group', 'site'
-	 * @param string $subtype The type of the entity
+	 * @param string $subtype The subtype of the entity
 	 * @param array  $actions The notification action to unregister, leave empty for all actions
 	 *
 	 * @return void
 	 * @see elgg_unregister_notification_event()
 	 */
-	public function unregisterEvent($type, $subtype, array $actions = []): void {
+	public function unregisterEvent(string $type, string $subtype, array $actions = []): void {
 
 		if (empty($actions)) {
 			unset($this->events[$type][$subtype]);
@@ -114,6 +114,20 @@ class NotificationsService {
 		if (empty($this->events[$type])) {
 			unset($this->events[$type]);
 		}
+	}
+	
+	/**
+	 * Check if a notification event is registered
+	 *
+	 * @param string $type    'object', 'user', 'group', 'site'
+	 * @param string $subtype The subtype of the entity
+	 * @param string $action  The notification action to check
+	 *
+	 * @return bool
+	 * @since 5.0
+	 */
+	public function isRegisteredEvent(string $type, string $subtype, string $action): bool {
+		return isset($this->events[$type][$subtype][$action]);
 	}
 
 	/**
@@ -178,18 +192,12 @@ class NotificationsService {
 	 * Add a notification event to the queue
 	 *
 	 * @param string      $action Action name
-	 * @param string      $type   Type of the object of the action
 	 * @param \ElggData   $object The object of the action
 	 * @param \ElggEntity $actor  (optional) The actor of the notification (default: logged in user or owner of $object)
 	 *
 	 * @return void
 	 */
-	public function enqueueEvent($action, $type, $object, \ElggEntity $actor = null): void {
-		
-		if (!$object instanceof \ElggData) {
-			return;
-		}
-		
+	public function enqueueEvent(string $action, \ElggData $object, \ElggEntity $actor = null): void {
 		$object_type = $object->getType();
 		$object_subtype = $object->getSubtype();
 		$actor = $actor ?? elgg_get_logged_in_user_entity(); // default to logged in user
