@@ -3,8 +3,10 @@
 namespace Elgg\Views;
 
 use Elgg\EventsService;
+use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Traits\Loggable;
+use Elgg\Users\Accounts;
 use Elgg\ViewsService;
 use Pelago\Emogrifier\CssInliner;
 
@@ -14,21 +16,32 @@ use Pelago\Emogrifier\CssInliner;
 class HtmlFormatter {
 
 	use Loggable;
-
+	
 	/**
-	 * @var ViewsService
+	 * Mentions regex
+	 *
+	 * Match anchor tag with all attributes and wrapped html
+	 * we want to exclude matches that have already been wrapped in an anchor
+	 * '<a[^>]*?>.*?<\/a>'
+	 *
+	 * Match tag name and attributes
+	 * we want to exclude matches that found within tag attributes
+	 * '<.*?>'
+	 *
+	 * Match at least one space or punctuation char before a match
+	 * '(^|\s|\!|\.|\?|>|\G)+'
+	 *
+	 * Match @ followed by username
+	 * @see \Elgg\Users\Accounts::assertValidUsername()
+	 * '(@([^\s<&]+))'
 	 */
-	protected $views;
+	public const MENTION_REGEX = '/<a[^>]*?>.*?<\/a>|<.*?>|(^|\s|\!|\.|\?|>|\G)+(@([^\s<&]+))/iu';
 
-	/**
-	 * @var EventsService
-	 */
-	protected $events;
+	protected ViewsService $views;
 
-	/**
-	 * @var AutoParagraph
-	 */
-	protected $autop;
+	protected EventsService $events;
+	
+	protected AutoParagraph $autop;
 
 	/**
 	 * Output constructor.
@@ -64,6 +77,7 @@ class HtmlFormatter {
 		$options = array_merge([
 			'parse_urls' => true,
 			'parse_emails' => true,
+			'parse_mentions' => true,
 			'sanitize' => true,
 			'autop' => true,
 		], $options);
@@ -84,6 +98,10 @@ class HtmlFormatter {
 
 		if (elgg_extract('parse_emails', $options)) {
 			$html = $this->parseEmails($html);
+		}
+		
+		if (elgg_extract('parse_mentions', $options)) {
+			$html = $this->parseMentions($html);
 		}
 
 		if (elgg_extract('sanitize', $options)) {
@@ -123,6 +141,55 @@ class HtmlFormatter {
 		$linkify = new \Misd\Linkify\Linkify();
 
 		return $linkify->processEmails($text, ['attr' => ['rel' => 'nofollow']]);
+	}
+	
+	/**
+	 * Takes a string and turns any @ mentions into a formatted link
+	 *
+	 * @param string $text The input string
+	 *
+	 * @return string
+	 * @since 5.0
+	 */
+	public function parseMentions(string $text): string {
+		$callback = function (array $matches) {
+			$source = elgg_extract(0, $matches);
+			$preceding_char = elgg_extract(1, $matches);
+			$username = elgg_extract(3, $matches);
+			
+			if (empty($username)) {
+				return $source;
+			}
+			
+			try {
+				_elgg_services()->accounts->assertValidUsername($username);
+			} catch (RegistrationException $e) {
+				return $source;
+			}
+			
+			$user = elgg_get_user_by_username($username);
+			
+			// Catch the trailing period when used as punctuation and not a username.
+			$period = '';
+			if (!$user && str_ends_with($username, '.')) {
+				$user = elgg_get_user_by_username(rtrim($username, '.'));
+				$period = '.';
+			}
+			
+			if (!$user) {
+				return $source;
+			}
+			
+			if (elgg_get_config('mentions_display_format') === 'username') {
+				$replacement = elgg_view_url($user->getURL(), "@{$user->username}");
+			} else {
+				$replacement = elgg_view_url($user->getURL(), $user->getDisplayName());
+			}
+			
+			return $preceding_char . $replacement . $period;
+		};
+		
+		return preg_replace_callback(self::MENTION_REGEX, $callback, $text);
 	}
 
 	/**

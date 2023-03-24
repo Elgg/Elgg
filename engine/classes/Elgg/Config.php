@@ -74,6 +74,7 @@ use Elgg\Traits\Loggable;
  * @property bool          $memcache
  * @property string        $memcache_namespace_prefix
  * @property array         $memcache_servers
+ * @property string        $mentions_display_format                 How should a mention be displayed
  * @property int           $min_password_length                     The minimal length of a password
  * @property int           $min_password_lower                      The minimal number of lower case characters in a password
  * @property int           $min_password_upper                      The minimal number of upper case characters in a password
@@ -209,6 +210,7 @@ class Config {
 		'language' => 'en',
 		'language_detect_from_browser' => true,
 		'lastcache' => 0,
+		'mentions_display_format' => 'display_name',
 		'message_delay' => 6,
 		'min_password_length' => 6,
 		'minusername' => 4,

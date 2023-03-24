@@ -21,6 +21,6 @@ if (empty($text)) {
 	return;
 }
 
-unset($vars['parse_urls'], $vars['parse_emails'], $vars['sanitize'], $vars['autop']);
+unset($vars['parse_urls'], $vars['parse_emails'], $vars['parse_mentions'], $vars['sanitize'], $vars['autop']);
 
 echo elgg_format_element('div', $vars, $text);

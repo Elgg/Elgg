@@ -59,6 +59,8 @@ View and reply to the discussion topic:
 
 View and comment on the discussion:
 %s',
+	
+	'notification:mentions:object:discussion:subject' => '%s mentioned you in a discussion',
 
 	'groups:tool:forum' => 'Enable group discussions',
 	'groups:tool:forum:description' => 'Allow group members to start a discussion in this group.',

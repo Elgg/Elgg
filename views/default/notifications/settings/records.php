@@ -37,3 +37,10 @@ $params['description'] = elgg_echo('usersettings:notifications:create_comment:de
 $params['purpose'] = 'create_comment';
 
 echo elgg_view('notifications/settings/record', $params);
+
+// mention preferences
+$params = $vars;
+$params['description'] = elgg_echo('usersettings:notifications:mentions:description');
+$params['purpose'] = 'mentions';
+
+echo elgg_view('notifications/settings/record', $params);

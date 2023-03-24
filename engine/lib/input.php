@@ -180,73 +180,34 @@ function elgg_is_empty($value): bool {
 /**
  * Post processor for tags in htmlawed
  *
- * This runs after htmlawed has filtered. It runs for each tag and filters out
- * style attributes we don't want.
+ * This runs after htmlawed has filtered. It runs for each tag and allows sanitization of attributes.
  *
- * This function triggers the 'allowed_styles', 'htmlawed' event.
+ * This function triggers the 'attributes', 'htmlawed' event.
  *
- * @param string      $element    The tag element name
+ * @param string      $tag        The tag element name
  * @param array|false $attributes An array of attributes (false indicates a closing tag)
  *
  * @return string
  * @internal
  */
-function _elgg_htmlawed_tag_post_processor(string $element, array|false $attributes = false): string {
+function _elgg_htmlawed_tag_post_processor(string $tag, array|false $attributes = false): string {
+	
 	if ($attributes === false) {
 		// This is a closing tag. Prevent further processing to avoid inserting a duplicate tag
-		return "</{$element}>";
+		return "</{$tag}>";
 	}
+	
+	$attributes = (array) elgg_trigger_event_results('attributes', 'htmlawed', [
+		'attributes' => $attributes,
+		'tag' => $tag,
+	], $attributes);
 
-	// this list should be coordinated with the WYSIWYG editor used (tinymce, ckeditor, etc.)
-	$allowed_styles = [
-		'color', 'cursor', 'text-align', 'vertical-align', 'font-size',
-		'font-weight', 'font-style', 'border', 'border-top', 'background-color',
-		'border-bottom', 'border-left', 'border-right',
-		'margin', 'margin-top', 'margin-bottom', 'margin-left',
-		'margin-right',	'padding', 'float', 'text-decoration'
-	];
-
-	$params = ['tag' => $element];
-	$allowed_styles = elgg_trigger_event_results('allowed_styles', 'htmlawed', $params, $allowed_styles);
-
-	// must return something.
-	$string = '';
-
+	$result = '';
 	foreach ($attributes as $attr => $value) {
-		if ($attr == 'style') {
-			$styles = explode(';', $value);
-
-			$style_str = '';
-			foreach ($styles as $style) {
-				if (!trim($style) || !str_contains($style, ':')) {
-					continue;
-				}
-				
-				list($style_attr, $style_value) = explode(':', trim($style));
-				$style_attr = trim($style_attr);
-				$style_value = trim($style_value);
-
-				if (in_array($style_attr, $allowed_styles)) {
-					$style_str .= "{$style_attr}: {$style_value}; ";
-				}
-			}
-
-			if ($style_str) {
-				$style_str = trim($style_str);
-				$string .= " style=\"{$style_str}\"";
-			}
-		} else {
-			$string .= " {$attr}=\"{$value}\"";
-		}
+		$result .= " {$attr}=\"{$value}\"";
 	}
-
-	// Some WYSIWYG editors do not like tags like <p > so only add a space if needed.
-	$string = trim($string);
-	if (!elgg_is_empty($string)) {
-		$string = " {$string}";
-	}
-
-	return "<{$element}{$string}>";
+	
+	return "<{$tag}{$result}>";
 }
 
 /**

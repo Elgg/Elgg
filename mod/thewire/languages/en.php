@@ -17,9 +17,12 @@ return array(
 	'collection:object:thewire:all' => "All wire posts",
 	'collection:object:thewire:owner' => "%s's wire posts",
 	'collection:object:thewire:friends' => "Friends' wire posts",
+	'collection:object:thewire:mentions' => "Wire posts mentioning @%s",
 	'notification:object:thewire:create' => "Send a notification when a wire post is created",
 	'notifications:mute:object:thewire' => "about the wire post '%s'",
 
+	'thewire:menu:filter:mentions' => "Mentions",
+	
 	'thewire:replying' => "Replying to %s (@%s) who wrote",
 	'thewire:thread' => "Thread",
 	'thewire:charleft' => "characters remaining",
@@ -61,6 +64,8 @@ return array(
 	'thewire:notify:reply' => '%s responded to %s on the wire:',
 	'thewire:notify:post' => '%s posted on the wire:',
 	'thewire:notify:footer' => "View and reply:\n%s",
+	
+	'notification:mentions:object:thewire:subject' => '%s mentioned you in a wire post',
 
 	/**
 	 * Settings

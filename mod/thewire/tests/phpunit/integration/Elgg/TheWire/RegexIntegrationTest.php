@@ -6,24 +6,15 @@ use Elgg\IntegrationTestCase;
 
 class RegexIntegrationTest extends IntegrationTestCase {
 
-	public function up() {
-		if (!elgg_is_active_plugin('thewire')) {
-			$this->markTestSkipped();
-		}
-	}
-
 	/**
-	 * Get the link for a user's wire page
+	 * Get the link for a user's mention
 	 *
-	 * @param string $username Username
+	 * @param string $text the text to replace mentions in
 	 *
 	 * @return string
 	 */
-	protected function getUserWireLink($username) {
-		$url = elgg_generate_url('collection:object:thewire:owner', [
-			'username' => $username,
-		]);
-		return elgg_view_url($url, "@{$username}");
+	protected function getMentionLink($text) {
+		return elgg_parse_mentions($text);
 	}
 
 	/**
@@ -70,16 +61,27 @@ class RegexIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function filterDataProvider() {
+		$user = $this->createUser();
+		$user_digit = $this->createUser([
+			'username' => 'username' . time(),
+		]);
+		$user_underscore = $this->createUser([
+			'username' => 'username_' . time(),
+		]);
+		$user_utf8 = $this->createUser([
+			'username' => 'tyúkanyó' . time(),
+		]);
+		
 		return [
 			// usernames
-			["@user test", $this->getUserWireLink('user') . " test"], // beginning of text
-			["test @user test", "test " . $this->getUserWireLink('user') . " test"], // after space
-			["test @user, test", "test " . $this->getUserWireLink('user') . ", test"], // followed by comma
-			["test ,@user test", "test ," . $this->getUserWireLink('user') . " test"], // preceded by comma
-			["@3user test", $this->getUserWireLink('3user') . " test"], // include digit
-			["@user_name test", $this->getUserWireLink('user_name') . " test"], // include underscore
-			["test (@user) test", "test (" . $this->getUserWireLink('user') . ") test"], // parentheses
-			["@tyúkanyó", $this->getUserWireLink('tyúkanyó')], // utf8 characters
+			["@{$user->username} test", $this->getMentionLink("@{$user->username} test")], // beginning of text
+			["test @{$user->username} test", $this->getMentionLink("test @{$user->username} test")], // after space
+			["test @{$user->username}, test", $this->getMentionLink("test @{$user->username}, test")], // followed by comma
+			["test ,@{$user->username} test", $this->getMentionLink("test ,@{$user->username} test")], // preceded by comma
+			["@{$user_digit->username} test", $this->getMentionLink("@{$user_digit->username} test")], // include digit
+			["@{$user_underscore->username} test", $this->getMentionLink("@{$user_underscore->username} test")], // include underscore
+			["test (@{$user->username}) test", $this->getMentionLink("test (@{$user->username}) test")], // parentheses
+			["@{$user_utf8->username} test", $this->getMentionLink("@{$user_utf8->username} test")], // utf8 characters
 			
 			// hashtags
 			["#tag test", $this->getHashtagLink('tag') . " test"], // tag at beginning

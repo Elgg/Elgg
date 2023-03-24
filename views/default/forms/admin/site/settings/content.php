@@ -106,4 +106,16 @@ $body .= elgg_view_field([
 	'value' => 1,
 ]);
 
+$body .= elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('config:content:mentions_display_format'),
+	'#help' => elgg_echo('config:content:mentions_display_format:help'),
+	'name' => 'mentions_display_format',
+	'value' => elgg_get_config('mentions_display_format'),
+	'options_values' => [
+		'display_name' => elgg_echo('config:content:mentions_display_format:display_name'),
+		'username' => elgg_echo('config:content:mentions_display_format:username'),
+	],
+]);
+
 echo elgg_view_module('info', elgg_echo('admin:legend:content'), $body);

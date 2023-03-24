@@ -15,17 +15,16 @@ if (!$id) {
 	return;
 }
 
-$editor_type = elgg_extract('editor_type', $vars); // eg simple
+elgg_require_css('ckeditor/editor.css');
 
-// editor_type
-$config = 'elgg/ckeditor/config';
-if ($editor_type && elgg_view_exists("elgg/ckeditor/config/{$editor_type}.js")) {
-	$config = "elgg/ckeditor/config/{$editor_type}";
+$editor_language = elgg_get_current_language();
+if ($editor_language !== 'en' && elgg_view_exists("ckeditor/translations/{$editor_language}.js")) {
+	elgg_require_js("ckeditor/translations/{$editor_language}");
 }
 
 ?>
 <script>
-	require(['elgg-ckeditor'], function (elggCKEditor) {
-		elggCKEditor.bind('#<?php echo $id; ?>', '<?php echo $config; ?>');
+	require(['ckeditor/editor'], function (editor) {
+		editor.init('#<?php echo $id; ?>', '<?php echo elgg_extract('editor_type', $vars); ?>');
 	});
 </script>

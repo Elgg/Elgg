@@ -6,7 +6,7 @@
 use Elgg\Exceptions\Http\BadRequestException;
 
 $tag = elgg_extract('tag', $vars);
-if (!$tag) {
+if (elgg_is_empty($tag)) {
 	throw new BadRequestException();
 }
 
@@ -15,20 +15,9 @@ elgg_push_collection_breadcrumbs('object', 'thewire');
 // remove # from tag
 $tag = trim($tag, '# ');
 
-$title = elgg_echo('thewire:tags', [$tag]);
-
-$content = elgg_list_entities([
-	'type' => 'object',
-	'subtype' => 'thewire',
-	'limit' => 15,
-	'metadata_name_value_pairs' => [
-		'name' => 'tags',
-		'value' => $tag,
-		'case_sensitive' => false,
-	],
-]);
-
-echo elgg_view_page($title, [
-	'content' => $content,
+echo elgg_view_page(elgg_echo('thewire:tags', [$tag]), [
+	'content' => elgg_view('thewire/listing/tag', [
+		'tag' => $tag,
+	]),
 	'filter_value' => 'tag',
 ]);

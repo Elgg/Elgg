@@ -14,15 +14,11 @@ if (elgg_get_logged_in_user_guid() === $owner->guid) {
 	]);
 }
 
-$content .= elgg_list_entities([
-	'type' => 'object',
-	'subtype' => 'thewire',
-	'relationship' => 'friend',
-	'relationship_guid' => $owner->guid,
-	'relationship_join_on' => 'container_guid',
+$content .= elgg_view('thewire/listing/friends', [
+	'entity' => $owner,
 ]);
 
 echo elgg_view_page(elgg_echo('collection:object:thewire:friends'), [
-	'filter_value' => 'friends',
 	'content' => $content,
+	'filter_value' => 'friends',
 ]);

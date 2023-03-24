@@ -206,8 +206,7 @@ class NotificationsService {
 			$actor = $object->getOwnerEntity() ?: null;
 		}
 		
-		$registered = isset($this->events[$object_type][$object_subtype][$action]);
-		
+		$registered = $this->isRegisteredEvent($object_type, $object_subtype, $action);
 		if ($registered) {
 			$params = [
 				'action' => $action,

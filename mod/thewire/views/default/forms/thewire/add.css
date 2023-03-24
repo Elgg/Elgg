@@ -1,0 +1,17 @@
+#thewire-characters-remaining {
+	float: right;
+	font-weight: bold;
+	
+	&.thewire-characters-remaining-warning {
+		color: $(state-danger-font-color);
+	}
+}
+
+.ck.ck-editor.elgg-ckeditor-thewire {
+	margin-top: .5rem;
+	margin-bottom: .5rem;
+
+	> .ck-editor__top {
+		display: none;
+	}
+}
