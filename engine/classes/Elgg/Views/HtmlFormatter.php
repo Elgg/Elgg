@@ -171,7 +171,7 @@ class HtmlFormatter {
 			// Catch the trailing period when used as punctuation and not a username.
 			$period = '';
 			if (!$user && str_ends_with($username, '.')) {
-				$user = elgg_get_user_by_username(rtrim($username, '.'));
+				$user = elgg_get_user_by_username(substr($username, 0, -1));
 				$period = '.';
 			}
 			
