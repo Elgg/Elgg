@@ -1,6 +1,6 @@
 <?php
 
-use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
 
 /**
  * CKEditor filestore
@@ -17,17 +17,19 @@ class CKEditorFilestore extends \Elgg\Filesystem\Filestore\DiskFilestore {
 	
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
 	public function getFilenameOnFilestore(\ElggFile $file): string {
 		
 		$owner_guid = $file->getOwnerGuid() ?: _elgg_services()->session_manager->getLoggedInUserGuid();
 		if (!$owner_guid) {
-			throw new InvalidArgumentException("File {$file->getFilename()} is missing an owner!");
+			throw new ElggInvalidArgumentException("File {$file->getFilename()} is missing an owner!");
 		}
 		
 		$filename = $file->getFilename();
 		if (empty($filename)) {
-			throw new InvalidArgumentException("File {$file->getFilename()} is missing a filename!");
+			throw new ElggInvalidArgumentException("File {$file->getFilename()} is missing a filename!");
 		}
 		
 		// Windows has different separators

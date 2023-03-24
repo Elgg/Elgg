@@ -5,7 +5,7 @@
 
 use Elgg\Exceptions\Http\BadRequestException;
 
-$tag = elgg_extract('tag', $vars);
+$tag = (string) elgg_extract('tag', $vars);
 if (elgg_is_empty($tag)) {
 	throw new BadRequestException();
 }
