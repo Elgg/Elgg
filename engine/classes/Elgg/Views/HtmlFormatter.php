@@ -6,7 +6,6 @@ use Elgg\EventsService;
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Traits\Loggable;
-use Elgg\Users\Accounts;
 use Elgg\ViewsService;
 use Pelago\Emogrifier\CssInliner;
 
