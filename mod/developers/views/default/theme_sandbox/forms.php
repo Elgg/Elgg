@@ -590,7 +590,7 @@ $ipsum = elgg_view('developers/ipsum');
 			'#help' => 'Enter an integer number larger than zero',
 		]);
 
-		$dt = new \DateTime(null, new \DateTimeZone('UTC'));
+		$dt = new \DateTime('now', new \DateTimeZone('UTC'));
 		$hour_options = [];
 		$hour_options_ts = range(0, 24 * 60 * 60, 900); // step of 15 minutes
 		foreach ($hour_options_ts as $ts) {
