@@ -1,8 +1,8 @@
-#thewire-characters-remaining {
-	float: right;
+.elgg-field.thewire-characters-wrapper {
+	margin-left: auto;
 	font-weight: bold;
 	
-	&.thewire-characters-remaining-warning {
+	.thewire-characters-remaining-warning {
 		color: $(state-danger-font-color);
 	}
 }
