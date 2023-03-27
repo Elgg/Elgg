@@ -30,6 +30,7 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
  * ``group_tools`` - an array of available group tool options
  * ``view_options`` - an array of views with extra options
  * ``notifications`` - an array of notification events
+ * ``web_services`` - an array of exposed web service (used by the Web Services plugin)
 
 
 .. code-block:: php
@@ -218,6 +219,24 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 				],
 				'page' => [
 					'create' => MyPluginPageCreateEventHandler::class, // a custom event handler, needs to be an extension of a NotificationEventHandler
+				],
+			],
+		],
+		'web_services' => [
+			'test.echo' => [
+				'GET' => [ // the HTTP call method (GET|POST)
+					'callback' => 'my_echo', // required
+					'description' => 'A testing method which echos back a string', // optional, the description of the API method, a magic translation key is tried if not provided 'web_services:api_methods:<method>:<http call method>:description'
+					'params' => [ // optional, input parameters for the API method
+						'string' => [
+							'type' => 'string', // type of the parameter (int|integer|bool|string|float|array)
+							'default' => 'some value', // default value if not provided in the request
+							'required' => true|false, // required in the request
+						],
+					],
+					'require_api_auth' => false, // optional, requires API authentication (default: false)
+					'require_user_auth' => false, // optional, requires User authentication (default: false)
+					'associative' => false, // optional, provide the input params as an array to the callback function (default: false)
 				],
 			],
 		],
