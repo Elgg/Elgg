@@ -373,8 +373,10 @@ class ApiMethod implements CollectionItemInterface {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @return string
 	 */
-	public function getID() {
+	public function getID(): string {
 		return "{$this->call_method}:{$this->method}";
 	}
 }

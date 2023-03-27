@@ -6,7 +6,6 @@ use Elgg\EventsService;
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Traits\Loggable;
-use Elgg\Users\Accounts;
 use Elgg\ViewsService;
 use Pelago\Emogrifier\CssInliner;
 
@@ -172,7 +171,7 @@ class HtmlFormatter {
 			// Catch the trailing period when used as punctuation and not a username.
 			$period = '';
 			if (!$user && str_ends_with($username, '.')) {
-				$user = elgg_get_user_by_username(rtrim($username, '.'));
+				$user = elgg_get_user_by_username(substr($username, 0, -1));
 				$period = '.';
 			}
 			

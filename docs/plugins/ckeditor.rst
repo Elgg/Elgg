@@ -26,5 +26,5 @@ Toolbar configuration
 ---------------------
 This plugin provides a standard toolbar configuration for the default and simple editor. 
 The plugin settings allow you to configure a custom toolbar config.
-Almost all ckeditor plugins are available for use. 
+Almost all CKEditor plugins are available for use.
 Information on how to configure a toolbar can be found here: https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html

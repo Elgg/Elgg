@@ -16,7 +16,7 @@ define(['jquery', 'elgg', 'elgg/hooks', 'ckeditor/ckeditor'], function ($, elgg,
 			editor_type = editor_type || 'default';
 
 			require(['ckeditor/config/' + editor_type], function (config) {
-				config = hooks.trigger('config', 'ckeditor', {'editor': editor_type}, config);
+				config = hooks.trigger('config', 'ckeditor', {'editor': editor_type, 'selector': selector}, config);
 			
 				CKEDITOR.create(document.querySelector(selector), config)
 					.then(editor => {

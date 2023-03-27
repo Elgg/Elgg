@@ -36,7 +36,7 @@ class Upload {
 			return $response->setContent(['error' => ['message' => $upload->getErrorMessage()]]);
 		}
 
-		if (elgg()->mimetype->getSimpleType($upload->getMimeType()) !== 'image') {
+		if (elgg()->mimetype->getSimpleType((string) $upload->getMimeType()) !== 'image') {
 			return $response->setContent(['error' => ['message' => elgg_echo('ckeditor:upload:invalid_type')]]);
 		}
 		

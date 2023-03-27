@@ -36,8 +36,7 @@ if ($char_limit && !elgg_is_active_plugin('ckeditor')) {
 
 echo elgg_view('input/longtext', [
 	'name' => 'body',
-	'class' => 'mtm',
-	'id' => 'thewire-textarea',
+	'class' => 'thewire-textarea',
 	'rows' => $num_lines,
 	'data-max-length' => $char_limit,
 	'required' => true,
@@ -45,12 +44,27 @@ echo elgg_view('input/longtext', [
 	'editor_type' => 'thewire',
 ]);
 
-echo elgg_format_element('div', ['id' => 'thewire-characters-remaining'], $count_down);
+// form footer
+$fields = [
+	[
+		'#type' => 'submit',
+		'value' => $text,
+	],
+];
+
+if ($char_limit > 0) {
+	$chars = elgg_format_element('div', ['class' => 'elgg-field-input'], $count_down);
+	
+	$fields[] = [
+		'#html' => elgg_format_element('div', ['class' => ['elgg-field', 'thewire-characters-wrapper']], $chars),
+	];
+}
 
 $footer = elgg_view_field([
-	'#type' => 'submit',
-	'value' => $text,
-	'id' => 'thewire-submit-button',
+	'#type' => 'fieldset',
+	'align' => 'horizontal',
+	'class' => 'elgg-fieldset-wrap',
+	'fields' => $fields,
 ]);
 
 elgg_set_form_footer($footer);

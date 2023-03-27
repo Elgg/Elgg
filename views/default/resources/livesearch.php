@@ -28,7 +28,7 @@ foreach ($input_params as $name => $value) {
 }
 
 // term is used in jquery autocomplete, but sometimes q is passed as the query, this will put q into term
-$vars['term'] = trim(elgg_extract('term', $vars, elgg_extract('q', $vars)));
+$vars['term'] = trim((string) elgg_extract('term', $vars, elgg_extract('q', $vars)));
 
 // check if we have a query
 if (elgg_is_empty($vars['term'])) {
