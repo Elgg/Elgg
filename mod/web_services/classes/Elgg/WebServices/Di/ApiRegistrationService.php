@@ -2,6 +2,7 @@
 
 namespace Elgg\WebServices\Di;
 
+use Elgg\Collections\CollectionInterface;
 use Elgg\EventsService;
 use Elgg\Exceptions\ExceptionInterface;
 use Elgg\Exceptions\InvalidArgumentException;
@@ -84,7 +85,16 @@ class ApiRegistrationService {
 	 * @return ApiMethod[]
 	 */
 	public function getAllApiMethods() {
-		return $this->collection->all();
+		$result = $this->collection->all();
+		
+		usort($result, function (ApiMethod $a, ApiMethod $b) {
+			list(, $a_name) = explode(':', $a->getID());
+			list(, $b_name) = explode(':', $b->getID());
+			
+			return strnatcasecmp($a_name, $b_name);
+		});
+		
+		return $result;
 	}
 	
 	/**
