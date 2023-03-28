@@ -58,8 +58,6 @@ return array(
 	'groups:saved' => 'Gruppen sparad',
 	'groups:save_error' => 'Grupp kunde inte sparas',
 	'groups:featured' => 'Utvalda grupper',
-	'groups:makeunfeatured' => 'Ta bort utvald',
-	'groups:makefeatured' => 'Gör till utvald',
 	'groups:featuredon' => '%s är nu en utvald grupp.',
 	'groups:unfeatured' => '%s har tagits bort från de utvalda grupperna.',
 	'groups:featured_error' => 'Ogiltig grupp.',

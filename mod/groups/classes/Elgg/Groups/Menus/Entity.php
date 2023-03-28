@@ -67,7 +67,7 @@ class Entity {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'feature',
 			'icon' => 'arrow-up',
-			'text' => elgg_echo('groups:makefeatured'),
+			'text' => elgg_echo('feature'),
 			'href' => elgg_generate_action_url('groups/featured', [
 				'group_guid' => $entity->guid,
 				'action_type' => 'feature',
@@ -79,7 +79,7 @@ class Entity {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'unfeature',
 			'icon' => 'arrow-down',
-			'text' => elgg_echo('groups:makeunfeatured'),
+			'text' => elgg_echo('unfeature'),
 			'href' => elgg_generate_action_url('groups/featured', [
 				'group_guid' => $entity->guid,
 				'action_type' => 'unfeature',

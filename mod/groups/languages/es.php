@@ -52,8 +52,6 @@ return array(
 	'groups:saved' => 'Grupo guardado',
 	'groups:save_error' => 'El grupo no se ha podido guardar',
 	'groups:featured' => 'Grupos destacados',
-	'groups:makeunfeatured' => 'No destacar',
-	'groups:makefeatured' => 'Destacar',
 	'groups:featuredon' => '%s es miembro de un grupo destacado.',
 	'groups:unfeatured' => '%s se ha eliminado de los grupos destacados.',
 	'groups:featured_error' => 'Grupo no válido.',

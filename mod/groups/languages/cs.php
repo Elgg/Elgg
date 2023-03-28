@@ -52,8 +52,6 @@ return array(
 	'groups:saved' => 'Skupina uložena',
 	'groups:save_error' => 'Skupinu není možné uložit',
 	'groups:featured' => 'Zajímavé skupiny',
-	'groups:makeunfeatured' => 'Odstranit ze zajímavých',
-	'groups:makefeatured' => 'Zařadit do zajímavých',
 	'groups:featuredon' => '%s je nyní zajímavá skupina.',
 	'groups:unfeatured' => '%s přestala být zajímavou skupinou.',
 	'groups:featured_error' => 'Neplatná skupina.',

@@ -52,8 +52,6 @@ return array(
 	'groups:saved' => 'Gardouse o grupo.',
 	'groups:save_error' => 'Non foi posíbel gardar o grupo.',
 	'groups:featured' => 'Grupos destacados',
-	'groups:makeunfeatured' => 'Deixar de destacar',
-	'groups:makefeatured' => 'Descatar',
 	'groups:featuredon' => 'O grupo %s está destacado.',
 	'groups:unfeatured' => 'Deixo de destacarse %s.',
 	'groups:featured_error' => 'Grupo non válido.',

@@ -60,8 +60,6 @@ return array(
 	'groups:saved' => 'Groupe enregistré',
 	'groups:save_error' => 'Le groupe n\'a pas pu être enregistré',
 	'groups:featured' => 'Groupes à la Une',
-	'groups:makeunfeatured' => 'Retirer de la Une',
-	'groups:makefeatured' => 'Mettre en Une',
 	'groups:featuredon' => 'Le groupe %s est maintenant en Une.',
 	'groups:unfeatured' => 'Le groupe %s n\'est plus en Une.',
 	'groups:featured_error' => 'Groupe invalide.',

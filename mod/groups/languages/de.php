@@ -59,8 +59,6 @@ return array(
 	'groups:saved' => 'Gruppe angelegt.',
 	'groups:save_error' => 'Beim Anlegen der Gruppe ist ein Fehler aufgetreten.',
 	'groups:featured' => 'Besondere Gruppen',
-	'groups:makeunfeatured' => 'Aus "Besondere Gruppen" entfernen',
-	'groups:makefeatured' => 'Zu "Besondere Gruppen" hinzufügen',
 	'groups:featuredon' => '%s ist nun eine "Besondere Gruppe".',
 	'groups:unfeatured' => '%s wurde aus der Liste der "Besonderen Gruppen" entfernt.',
 	'groups:featured_error' => 'Ungültige Gruppe.',

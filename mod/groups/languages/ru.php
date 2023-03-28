@@ -60,8 +60,6 @@ return array(
 	'groups:saved' => 'Сохранено',
 	'groups:save_error' => 'Группа не может быть сохранена',
 	'groups:featured' => 'Избранные группы',
-	'groups:makeunfeatured' => 'Убрать из избранного',
-	'groups:makefeatured' => 'Добавить в избранные',
 	'groups:featuredon' => '%s теперь рекомендуемая группа.',
 	'groups:unfeatured' => '%s удалена из рекомендуемых групп.',
 	'groups:featured_error' => 'Ошибка с группой.',

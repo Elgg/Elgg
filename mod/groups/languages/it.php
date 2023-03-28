@@ -54,8 +54,6 @@ return array(
 	'groups:saved' => 'Gruppo salvato',
 	'groups:save_error' => 'Il gruppo non può essere salvato',
 	'groups:featured' => 'Gruppi in evidenza',
-	'groups:makeunfeatured' => 'Non in evidenza',
-	'groups:makefeatured' => 'Porta in evidenza',
 	'groups:featuredon' => '%s è ora un gruppo in evidenza',
 	'groups:unfeatured' => '%s è stato rimosso dai gruppi in evidenza',
 	'groups:featured_error' => 'Gruppo non valido.',
