@@ -11,11 +11,6 @@ return [
 			'resource' => 'search/index',
 		],
 	],
-	'view_extensions' => [
-		'elgg.css' => [
-			'search/search.css' => [],
-		],
-	],
 	'events' => [
 		'robots.txt' => [
 			'site' => [
@@ -26,6 +21,19 @@ return [
 			'output/tag' => [
 				'Elgg\Search\Views::setSearchHref' => [],
 			],
+		],
+	],
+	'theme' => [
+		'search-highlight-color' => '#BBDAF7',
+		'search-highlight-color-1' => '#BBDAF7',
+		'search-highlight-color-2' => '#A0FFFF',
+		'search-highlight-color-3' => '#FDFFC3',
+		'search-highlight-color-4' => '#CCCCCC',
+		'search-highlight-color-5' => '#08A7E7',
+	],
+	'view_extensions' => [
+		'elgg.css' => [
+			'search/search.css' => [],
 		],
 	],
 ];
