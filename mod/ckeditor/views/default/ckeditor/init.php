@@ -26,6 +26,6 @@ if ($editor_language !== 'en' && elgg_view_exists("ckeditor/translations/{$edito
 ?>
 <script>
 	require(['ckeditor/editor'], function (editor) {
-		editor.init('#<?php echo $id; ?>', '<?php echo elgg_extract('editor_type', $vars); ?>');
+		editor.init('#<?php echo $id; ?>');
 	});
 </script>
