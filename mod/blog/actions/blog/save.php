@@ -115,7 +115,7 @@ $status = $blog->status;
 
 // add to river if changing status or published, regardless of new post
 // because we remove it for drafts.
-if (($new_post || $old_status == 'draft') && $status == 'published') {
+if (($new_post || $old_status === 'draft') && $status === 'published') {
 	elgg_create_river_item([
 		'view' => 'river/object/blog/create',
 		'action_type' => 'create',
@@ -130,7 +130,7 @@ if (($new_post || $old_status == 'draft') && $status == 'published') {
 		$blog->time_created = time();
 		$blog->save();
 	}
-} elseif ($old_status == 'published' && $status == 'draft') {
+} elseif ($old_status === 'published' && $status === 'draft') {
 	elgg_delete_river([
 		'object_guid' => $blog->guid,
 		'action_type' => 'create',
