@@ -49,8 +49,6 @@ return array(
 	'groups:cantedit' => 'Δεν μπορείτε να επεξεργαστείτε αυτή την ομάδα',
 	'groups:saved' => 'Η ομάδα αποθηκεύτηκε',
 	'groups:featured' => 'Προβεβλημένες ομάδες',
-	'groups:makeunfeatured' => 'Μη προτεινόμενο',
-	'groups:makefeatured' => 'Προβάλλετε το',
 	'groups:featuredon' => '%s είναι πλέον προβεβλημένη ομάδα.',
 	'groups:unfeatured' => 'Η ομάδα %s έχει διαγραφεί πλέον από τις προβεβλημένες ομάδες.',
 	'groups:featured_error' => 'Μη έγκυρη ομάδα.',

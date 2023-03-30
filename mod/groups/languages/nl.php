@@ -60,8 +60,6 @@ return array(
 	'groups:saved' => 'Groep opgeslagen',
 	'groups:save_error' => 'Groep kon niet worden opgeslagen',
 	'groups:featured' => 'Aangeraden groepen',
-	'groups:makeunfeatured' => 'Afraden',
-	'groups:makefeatured' => 'Aanraden',
 	'groups:featuredon' => '%s is nu een aangeraden groep',
 	'groups:unfeatured' => '%s is verwijderd van de aangeraden groepen',
 	'groups:featured_error' => 'Ongeldige groep.',

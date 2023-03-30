@@ -50,8 +50,6 @@ return array(
 	'groups:cantedit' => 'Du kan ikke redigere denne gruppe',
 	'groups:saved' => 'Gruppe gemt',
 	'groups:featured' => 'Foretrukne grupper',
-	'groups:makeunfeatured' => 'Vælg fra',
-	'groups:makefeatured' => 'Vælg til',
 	'groups:featuredon' => '%s er nu en foretrukket gruppe',
 	'groups:featured_error' => 'Ugyldig gruppe.',
 	'groups:nofeatured' => 'No featured groups',

@@ -11,7 +11,7 @@ namespace Elgg\CKEditor;
 class Views {
 
 	/**
-	 * Adds an ID to the view vars if not set
+	 * Adds editor type information and an ID to the view vars if not set
 	 *
 	 * @param \Elgg\Event $event 'view_vars', 'input/longtext'
 	 *
@@ -19,15 +19,15 @@ class Views {
 	 */
 	public static function setInputLongTextIDViewVar(\Elgg\Event $event) {
 		$vars = $event->getValue();
-		$id = elgg_extract('id', $vars);
-		if ($id !== null) {
-			return;
+		
+		$vars['data-editor-type'] = elgg_extract('editor_type', $vars);
+		
+		if (elgg_extract('id', $vars) === null) {
+			// input/longtext view vars need to contain an id for editors to be initialized
+			// random id generator is the same as in input/longtext
+			$vars['id'] = 'elgg-input-' . base_convert(mt_rand(), 10, 36);
 		}
 		
-		// input/longtext view vars need to contain an id for editors to be initialized
-		// random id generator is the same as in input/longtext
-		$vars['id'] = 'elgg-input-' . base_convert(mt_rand(), 10, 36);
-	
 		return $vars;
 	}
 

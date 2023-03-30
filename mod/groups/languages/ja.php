@@ -59,8 +59,6 @@ return array(
 	'groups:saved' => 'グループを保存しました',
 	'groups:save_error' => 'グループを保存できませんでした',
 	'groups:featured' => 'クローズアップ',
-	'groups:makeunfeatured' => 'クローズアップをやめる',
-	'groups:makefeatured' => 'クローズアップに登録する',
 	'groups:featuredon' => '%s は、クローズアップ欄に表示されます',
 	'groups:unfeatured' => '%s は、クローズアップ欄から外されました',
 	'groups:featured_error' => '不正なグループです。',

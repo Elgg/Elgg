@@ -9,11 +9,15 @@
 define(['jquery', 'elgg', 'elgg/hooks', 'ckeditor/ckeditor'], function ($, elgg, hooks, CKEDITOR) {
 	return {
 		init: function (selector, editor_type) {
-			if ($(selector).length === 0) {
+			var $input = $(selector);
+			if (!$input.length) {
 				return;
 			}
-				
-			editor_type = editor_type || 'default';
+			
+			editor_type = editor_type || $input.data().editorType || 'default';
+			
+			// store used editor type
+			$input.data('editorType', editor_type);
 
 			require(['ckeditor/config/' + editor_type], function (config) {
 				config = hooks.trigger('config', 'ckeditor', {'editor': editor_type, 'selector': selector}, config);
@@ -32,6 +36,19 @@ define(['jquery', 'elgg', 'elgg/hooks', 'ckeditor/ckeditor'], function ($, elgg,
 						
 					});
 			});
+		},
+		destroy: function (selector) {
+			var $input = $(selector);
+			if (!$input.length) {
+				return;
+			}
+			
+			var $editable = $input.next().find('.ck-editor__editable');
+			if (!$editable.length) {
+				return;
+			}
+			
+			$editable[0].ckeditorInstance.destroy();
 		}
 	};
 });

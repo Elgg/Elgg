@@ -1088,6 +1088,8 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'save_go' => "Save, and go to %s",
 	'reset' => 'Reset',
 	'publish' => "Publish",
+	'feature' => "Feature",
+	'unfeature' => "Unfeature",
 	'cancel' => "Cancel",
 	'saving' => "Saving ...",
 	'update' => "Update",

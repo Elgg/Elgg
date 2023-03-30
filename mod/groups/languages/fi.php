@@ -52,8 +52,6 @@ return array(
 	'groups:saved' => 'Ryhmä tallennettu',
 	'groups:save_error' => 'Ryhmän tallentaminen epäonnistui',
 	'groups:featured' => 'Valikoidut ryhmät',
-	'groups:makeunfeatured' => 'Poista mainos',
-	'groups:makefeatured' => 'Mainosta ryhmää',
 	'groups:featuredon' => '%s on nyt mainostettu ryhmä.',
 	'groups:unfeatured' => '%s on poistettu mainostettavista ryhmistä.',
 	'groups:featured_error' => 'Virheellinen ryhmä.',

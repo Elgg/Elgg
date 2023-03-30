@@ -52,8 +52,6 @@ return array(
 	'groups:saved' => 'Grupa zapisana',
 	'groups:save_error' => 'Nie można zapisać grupy',
 	'groups:featured' => 'Promowane grupy',
-	'groups:makeunfeatured' => 'Przestań promować',
-	'groups:makefeatured' => 'Promuj',
 	'groups:featuredon' => '%s jest teraz promowaną grupą.',
 	'groups:unfeatured' => '%s przestała być promowaną grupą.',
 	'groups:featured_error' => 'Niepoprawna grupa.',

@@ -50,8 +50,6 @@ return array(
 	'groups:saved' => 'Група сачувана',
 	'groups:save_error' => 'Група се не може сачувати',
 	'groups:featured' => 'Издвојене групе',
-	'groups:makeunfeatured' => 'Уклони из истакнутих',
-	'groups:makefeatured' => 'Истакни',
 	'groups:featuredon' => '%s је сад истакнута група.',
 	'groups:unfeatured' => '%s је уклоњена из истакнутих група.',
 	'groups:featured_error' => 'Погрешна група.',

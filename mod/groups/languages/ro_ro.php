@@ -59,8 +59,6 @@ return array(
 	'groups:saved' => 'Grupul a fost salvat',
 	'groups:save_error' => 'Grupul nu a putut fi salvat',
 	'groups:featured' => 'Grupuri promovate',
-	'groups:makeunfeatured' => 'Retrogradează',
-	'groups:makefeatured' => 'Promovează',
 	'groups:featuredon' => '%s este acum un grup promovat.',
 	'groups:unfeatured' => '%s a fost îndepărtat din grupurile promovate.',
 	'groups:featured_error' => 'Grup invalid.',

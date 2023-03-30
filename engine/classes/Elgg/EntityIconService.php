@@ -5,7 +5,6 @@ namespace Elgg;
 use Elgg\Database\EntityTable;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\UnexpectedValueException;
-use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\LogicException;
 use Elgg\Filesystem\MimeTypeService;
 use Elgg\Http\Request as HttpRequest;

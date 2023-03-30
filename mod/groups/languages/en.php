@@ -61,8 +61,6 @@ return array(
 	'groups:saved' => 'Group saved',
 	'groups:save_error' => 'Group could not be saved',
 	'groups:featured' => 'Featured groups',
-	'groups:makeunfeatured' => 'Unfeature',
-	'groups:makefeatured' => 'Make featured',
 	'groups:featuredon' => '%s is now a featured group.',
 	'groups:unfeatured' => '%s has been removed from the featured groups.',
 	'groups:featured_error' => 'Invalid group.',
