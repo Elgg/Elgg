@@ -1,3 +1,15 @@
+<a name="4.3.8"></a>
+### 4.3.8  (2023-04-04)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+
+#### Bug Fixes
+
+* **core:** prevent fatal exception when opening a file ([07951e89](https://github.com/Elgg/Elgg/commit/07951e8992ea5579350530366c0d94a94146a8d0))
+
+
 <a name="4.3.7"></a>
 ### 4.3.7  (2023-02-10)
 
