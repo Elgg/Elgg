@@ -79,7 +79,7 @@ The process of setting up a new major version is:
  1. Pull latest translations from Transifex to the previous major version
  2. Merge the git branch of the previous version to the new to make sure all the
     latest translation keys are present
- 3. Create a new Transifex project to https://www.transifex.com/elgg/
+ 3. Create a new Transifex project to https://app.transifex.com/elgg/
  4. Update ``.tx/config`` file in the development branch of the new major version
 
     - Update the configuration to point to the new Transifex project
@@ -99,7 +99,7 @@ The process of setting up a new major version is:
 
 Later, once the dedicated branch (e.g. ``3.x`` has been created for the major version,
 configure Transifex to fetch new translation keys from it automatically in
-https://www.transifex.com/elgg/elgg-core-3/content/. This way you don't have to
+https://app.transifex.com/elgg/elgg-core-3/content/. This way you don't have to
 repeat step 5 manually every time new translation keys are added.
 
 It is important to always have a ``n.x`` branch besides the branches meant for

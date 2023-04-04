@@ -130,4 +130,4 @@ Add a mention in the :doc:`/appendix/upgrade-notes` documentation that the plugi
 .. _Elgg organisation: https://github.com/Elgg
 .. _Packagist: https://packagist.org/
 .. _Semver: http://semver.org/
-.. _Transifex: https://www.transifex.com/elgg/
+.. _Transifex: https://app.transifex.com/elgg/
