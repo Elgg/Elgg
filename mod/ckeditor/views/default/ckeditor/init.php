@@ -15,9 +15,6 @@ if (!$id) {
 	return;
 }
 
-// need to inline css as it can be used solely in popups
-echo elgg_format_element('link', ['rel' => 'stylesheet', 'href' => elgg_get_simplecache_url('ckeditor/editor.css')]);
-
 $editor_language = elgg_get_current_language();
 if ($editor_language !== 'en' && elgg_view_exists("ckeditor/translations/{$editor_language}.js")) {
 	elgg_require_js("ckeditor/translations/{$editor_language}");
