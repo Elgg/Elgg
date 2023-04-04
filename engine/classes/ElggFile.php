@@ -244,7 +244,7 @@ class ElggFile extends ElggObject {
 	 * @return bool
 	 */
 	public function close() {
-		if ($this->getFilestore()->close($this->handle)) {
+		if (is_resource($this->handle) && $this->getFilestore()->close($this->handle)) {
 			$this->handle = null;
 
 			return true;
