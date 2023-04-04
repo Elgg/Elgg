@@ -7,6 +7,11 @@
  * </code>
  */
 define(['jquery', 'elgg', 'elgg/hooks', 'ckeditor/ckeditor'], function ($, elgg, hooks, CKEDITOR) {
+	
+	if (!document.getElementById('ckeditor-css')) {
+		$('head').append('<link rel="stylesheet" type="text/css" id="ckeditor-css" href="' + elgg.get_simplecache_url('ckeditor/editor.css') + '">');
+	}
+	
 	return {
 		init: function (selector, editor_type) {
 			var $input = $(selector);
