@@ -281,7 +281,7 @@ return array(
 	'registration:usernamenotvalid' => 'Syöttämäsi käyttäjätunnus ei ole kelvollinen',
 
 	'adduser:ok' => "Olet lisännyt uuden käyttäjän.",
-
+	
 	'user:set:name' => "Tilin nimiasetukset",
 	'user:name:label' => "Nimi",
 	'user:name:success' => "Nimi vaihdettu.",
@@ -899,7 +899,6 @@ return array(
 	'installation:registration:label' => 'Salli käyttäjien vapaa rekisteröityminen',
 	'installation:walled_garden:description' => 'Rajoita sivusto yksityiseksi. Rekisteröitymättömät käyttäjät voivat nähdä vain sisällöt, jotka on erikseen määritetty julkisiksi.',
 	'installation:walled_garden:label' => 'Rajoita sivusto vain kirjautuneille käyttäjille',
-
 	'installation:default_limit' => "Listauksissa näytettävien kohteiden oletusmäärä",
 
 	'admin:site:access:warning' => "Tämä määrittää oletusasetuksen, kun ollaan luomassa uutta sisältöä. Tämän asetuksen muuttaminen ei vaikuta jo olemassa oleviin sisältöihin.",
@@ -950,6 +949,8 @@ return array(
 	'upgrade:finished' => 'Päivitys on valmis',
 	'upgrade:finished_with_errors' => '<p>Päivityksen aikana ilmeni virheitä. Päivitä sivu ja yritä ajaa päivitys uudelleen.<br /></p><p>Jos virheet toistuvat, yritä selvittää niiden syy palvelimen virhelokeista. Tarvittaessa voit pyytää apua Elggin yhteisön <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">teknisen tuen ryhmästä</a>.</p>',
 	
+	// Strings specific for the database guid columns reply upgrade
+	
 /**
  * Welcome
  */
@@ -960,7 +961,6 @@ return array(
 /**
  * Emails
  */
-
 	'email:subject' => 'Otsikko',
 	'email:body' => 'Viesti',
 
@@ -1113,7 +1113,6 @@ return array(
 	"id" => "Indonesian",
 	"ie" => "Interlingue",
 	"ik" => "Inupiak",
-	//"in" => "Indonesian",
 	"is" => "Icelandic",
 	"it" => "Italian",
 	"iu" => "Inuktitut",

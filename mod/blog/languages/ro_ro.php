@@ -28,7 +28,7 @@ return array(
 	'blog:save_status' => 'Ultima salvare:',
 
 	'blog:revision' => 'Revizuire',
-
+	
 	// messages
 	'blog:message:saved' => 'Postare de blog salvată.',
 	'blog:error:cannot_save' => 'Nu am putut salva postarea de blog.',

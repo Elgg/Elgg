@@ -40,7 +40,6 @@ return array(
 
 	'pages:title' => 'Side titel',
 	'pages:description' => 'Side indhold',
-	'pages:tags' => 'Tags',
 
 	/**
 	 * Status and error messages
@@ -49,6 +48,10 @@ return array(
 	'pages:saved' => 'Siden gemt',
 	'pages:notsaved' => 'Siden kunne ikke gemmes',
 	'entity:delete:object:page:success' => 'Din side er blevet slettet',
+
+	/**
+	 * History
+	 */
 
 	/**
 	 * Widget

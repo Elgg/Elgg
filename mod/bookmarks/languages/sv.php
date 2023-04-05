@@ -28,7 +28,7 @@ return array(
 
 	'bookmarks:notify:summary' => 'Nytt bokmärke med namnet %s',
 	'bookmarks:notify:subject' => 'Nytt bokmärke: %s',
-
+	
 	'bookmarks:numbertodisplay' => 'Antalet bokmärken att visa',
 
 	'river:object:bookmarks:create' => '%s bokmärkte %s',

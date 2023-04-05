@@ -37,9 +37,6 @@ return array(
 	'BadRequestException:MissingOutputViewInViewtype' => "Fehlende View 'api/output' für Viewtype '%s'.",
 	'BadRequestException:MissingOutputViewInViewtype:DataViewsPlugin' => "Installiere/aktiviere das 'data_views'-Plugin, um diese View hinzuzufügen.",
 	
-	'web_services:api_methods:system.api.list:get:description' => "Liste alle im System verfügbaren API-Aufrufe auf.",
-	'web_services:api_methods:auth.gettoken:post:description' => "Dieser API-Aufruf ermöglicht es einem Benutzer ein Authentifizierungs-Token zu beziehen, das für die Authentifizierung nachfolgender API-Aufrufe verwendet werden kann. Übergebe es als Parameter auth_token.",
-	
 	'admin:configure_utilities:webservices' => "Webservices",
 	'admin:configure_utilities:ws_list' => "API-Methoden anzeigen",
 	'admin:configure_utilities:ws_tokens' => "API-Tokens verwalten",

@@ -8,6 +8,7 @@
 return array(
 
 	'item:object:file' => '파일',
+	
 	'collection:object:file' => '파일들',
 	'collection:object:file:all' => "모든 파일",
 	'collection:object:file:owner' => "%s의 파일",

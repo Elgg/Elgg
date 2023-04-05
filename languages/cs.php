@@ -281,7 +281,7 @@ return array(
 	'registration:usernamenotvalid' => 'Uživatelské jméno které jste zadal/a je bohužel neplatné',
 
 	'adduser:ok' => "Úspěšně jste přidal/a nového uživatele.",
-
+	
 	'user:set:name' => "Nastavení jména účtu",
 	'user:name:label' => "Zobrazené jméno",
 	'user:name:success' => "Zobrazované jméno bylo úspěšně změněno.",
@@ -1117,7 +1117,6 @@ return array(
 	"id" => "Indonesian",
 	"ie" => "Interlingue",
 	"ik" => "Inupiak",
-	//"in" => "Indonesian",
 	"is" => "Icelandic",
 	"it" => "Italian",
 	"iu" => "Inuktitut",

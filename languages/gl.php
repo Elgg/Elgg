@@ -264,7 +264,7 @@ return array(
 	'registration:usernamenotvalid' => 'O seu nome de usuario non é válido.',
 
 	'adduser:ok' => "Engadiuse o usuario.",
-
+	
 	'user:set:name' => "Configuración do nome da conta",
 	'user:name:label' => "Nome para mostrar",
 	'user:name:success' => "Cambiouse o nome para mostrar.",
@@ -446,12 +446,10 @@ return array(
 	'admin:plugins:opt:linktext' => "Configurar as ferramentas…",
 	'admin:plugins:opt:description' => "Configurar as ferramentas instaladas no sitio.",
 	'admin:plugins:label:id' => "ID",
-	'admin:plugins:label:name' => "Name",
 	'admin:plugins:label:copyright' => "Dereitos de autor",
 	'admin:plugins:label:categories' => 'Categorías',
 	'admin:plugins:label:licence' => "Licenza",
 	'admin:plugins:label:website' => "URL",
-	'admin:plugins:label:info' => "Info",
 	'admin:plugins:label:repository' => "Código",
 	'admin:plugins:label:bugtracker' => "Informar dun problema",
 	'admin:plugins:label:donate' => "Doar",
@@ -968,7 +966,7 @@ Se o erro persiste, comprobe o rexistro de erros do servidor, a ver se pode inde
  */
 
 	'byline' => 'De %s',
-
+	
 /**
  * Annotations
  */
@@ -1059,7 +1057,6 @@ Se o erro persiste, comprobe o rexistro de erros do servidor, a ver se pode inde
 	"id" => "Indonesi",
 	"ie" => "Lingua occidental",
 	"ik" => "Inupiaq",
-	//"in" => "Indonesian",
 	"is" => "Islandés",
 	"it" => "Italiano",
 	"iu" => "Inuktitut",

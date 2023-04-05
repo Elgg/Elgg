@@ -9,7 +9,6 @@ return array(
 	'email:validate:subject' => "%s παρακαλούμε επιβεβαιώστε την ηλεκτρονική σας διεύθυνση (email) για %s!",
 	'email:confirm:success' => "Έχετε επιβεβαιώσει την ηλεκτρονική σας διεύθυνση (email)!",
 	'email:confirm:fail' => "Η ηλεκτρονική σας διεύθυνση δεν ήταν δυνατόν να επιβεβαιωθεί.",
-
 	'uservalidationbyemail:registerok' => "Για να ενεργοποιήσετε το λογαριασμό σας, παρακαλούμε επιβεβαιώστε την  ηλεκτρονική σας διεύθυνση (email) πατώντας στο σύνδεσμο που σας στάλθηκε.",
 
 	'uservalidationbyemail:admin:resend_validation' => 'Πρόσφατη επιβεβαίωση',

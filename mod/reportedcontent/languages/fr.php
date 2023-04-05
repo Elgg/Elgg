@@ -24,6 +24,9 @@ return array(
 	'reportedcontent:numbertodisplay' => 'Nombre de signalements à afficher',
 	'reportedcontent:user' => 'Signaler cet utilisateur',
 	'reportedcontent:new' => 'Nouveaux signalements',
+	'reportedcontent:archived_reports' => 'Archivé',
+	'reportedcontent:related_reports' => 'Signalements associés',
+	'reportedcontent:comments:message' => 'Les commentaires ne sont disponibles que pour l\'administrateur. La personne qui signale le contenu ne sera pas informé des nouveaux commentaires.',
 	
 	'reportedcontent:failed' => 'Désolé, la tentative de signaler ce contenu a échoué.',
 	'reportedcontent:notarchived' => 'Il a été impossible d\'archiver ce signalement',

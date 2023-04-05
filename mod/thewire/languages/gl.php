@@ -16,7 +16,7 @@ return array(
 	'collection:object:thewire:all' => "Todos os chíos",
 	'collection:object:thewire:owner' => "Chíos de %s",
 	'collection:object:thewire:friends' => "Chíos dos contactos",
-
+	
 	'thewire:replying' => "Resposta a %s (%s) que escribiu",
 	'thewire:thread' => "Fío",
 	'thewire:charleft' => "caracteres restantes",

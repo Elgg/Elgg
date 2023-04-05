@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-10 10:00+0100\n"
+"POT-Creation-Date: 2023-04-05 09:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -576,7 +576,7 @@ msgid "collecting garbage in the database (compacting the database by removing e
 msgstr ""
 
 #: ../../admin/cron.rst:23
-msgid "Plugins can add jobs by registering a plugin hook handler for one of the following cron intervals:"
+msgid "Plugins can add jobs by registering a event handler for one of the following cron intervals:"
 msgstr ""
 
 #: ../../admin/cron.rst:25
@@ -620,7 +620,7 @@ msgid "How does it work?"
 msgstr ""
 
 #: ../../admin/cron.rst:52
-msgid "``crontab`` must be setup in such a way as to activate Elgg cron handler every minute, or at a specific interval. Once cron tab activates the cron job, Elgg executes all hook handlers attached to that interval."
+msgid "``crontab`` must be setup in such a way as to activate Elgg cron handler every minute, or at a specific interval. Once cron tab activates the cron job, Elgg executes all event handlers attached to that interval."
 msgstr ""
 
 #: ../../admin/cron.rst:55

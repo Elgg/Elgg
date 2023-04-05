@@ -38,7 +38,9 @@ Adresse : %s
 
 Afficher et commenter le signet :
 %s',
-
+	
+	'notification:mentions:object:bookmarks:subject' => '%s vous a mentionné dans un signet',
+	
 	'bookmarks:numbertodisplay' => 'Nombre de signets à afficher',
 
 	'river:object:bookmarks:create' => '%s a mis en signet %s',

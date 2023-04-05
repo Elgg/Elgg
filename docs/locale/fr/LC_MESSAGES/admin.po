@@ -4,19 +4,18 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Jerôme Bakker, 2021
-# Jeroen Dalsem, 2021
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
+# Jerôme Bakker, 2023
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-20 13:38+0100\n"
-"PO-Revision-Date: 2021-06-09 13:31+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
-"Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
+"POT-Creation-Date: 2023-04-05 09:40+0200\n"
+"PO-Revision-Date: 2023-04-05 07:42+0000\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023\n"
+"Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -886,11 +885,11 @@ msgstr ""
 
 #: ../../admin/cron.rst:23
 msgid ""
-"Plugins can add jobs by registering a plugin hook handler for one of the "
-"following cron intervals:"
+"Plugins can add jobs by registering a event handler for one of the following"
+" cron intervals:"
 msgstr ""
-"Les plugins peuvent ajouter des tâches en enregistrant un gestionnaire de "
-"hook plugin pour l'un des intervalles de cron suivants :"
+"Les plugins peuvent ajouter des tâches en enregistrant un gestionnaire "
+"d'événement pour l'un des intervalles cron suivants :"
 
 #: ../../admin/cron.rst:25
 msgid "``minute`` - Run every minute"
@@ -936,12 +935,12 @@ msgstr "Comment ça marche ?"
 msgid ""
 "``crontab`` must be setup in such a way as to activate Elgg cron handler "
 "every minute, or at a specific interval. Once cron tab activates the cron "
-"job, Elgg executes all hook handlers attached to that interval."
+"job, Elgg executes all event handlers attached to that interval."
 msgstr ""
-"``crontab`` doit être configuré de telle manière qu'il active le "
-"gestionnaire de cron de Elgg chaque minute, ou à un intervalle spécifique. "
-"Une fois que l'entrée du cron active la tâche du cron, Elgg exécute chaque "
-"gestionnaire de hook attaché à cet intervalle."
+"``crontab`` doit être configuré de manière à activer le gestionnaire cron "
+"Elgg toutes les minutes ou à un intervalle spécifique. Une fois que l'entrée"
+" cron active la tâche cron, Elgg exécute tous les gestionnaires d'événements"
+" attachés à cet intervalle."
 
 #: ../../admin/cron.rst:55
 msgid ""

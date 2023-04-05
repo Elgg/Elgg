@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-10 10:00+0100\n"
+"POT-Creation-Date: 2023-04-05 09:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,7 +41,7 @@ msgid "Plugins"
 msgstr ""
 
 #: ../../intro/development.rst:20
-msgid "Plugins change the behavior or appearance of Elgg by overriding views, or by handling events and plugin hooks. All changes to an Elgg site should be implemented through plugins to ensure upgrading core is easy."
+msgid "Plugins change the behavior or appearance of Elgg by overriding views, or by handling events. All changes to an Elgg site should be implemented through plugins to ensure upgrading core is easy."
 msgstr ""
 
 #: ../../intro/development.rst:24
@@ -53,11 +53,11 @@ msgid "Actions are the primary way users interact with an Elgg site. Actions are
 msgstr ""
 
 #: ../../intro/development.rst:29
-msgid "Events and Plugin Hooks"
+msgid "Events"
 msgstr ""
 
 #: ../../intro/development.rst:31
-msgid "Events and Plugin Hooks are used in Elgg Plugins to interact with the Elgg engine under certain circumstances. Events and hooks are triggered at strategic times throughout Elgg's boot and execution process, and allows plugins to modify or cancel the default behavior."
+msgid "Events are used in Elgg Plugins to interact with the Elgg engine under certain circumstances. Events are triggered at strategic times throughout Elgg's boot and execution process, and allows plugins to modify or cancel the default behavior."
 msgstr ""
 
 #: ../../intro/development.rst:36
@@ -121,7 +121,7 @@ msgid "You can run the following commands to seed and unseed the database."
 msgstr ""
 
 #: ../../intro/development.rst:88
-msgid "Plugins can register their own seeds via ``'seeds', 'database'`` hook. The handler must return the class name of the seed, which must extend ``\\Elgg\\Database\\Seeder\\Seed`` class."
+msgid "Plugins can register their own seeds via ``'seeds', 'database'`` event. The handler must return the class name of the seed, which must extend ``\\Elgg\\Database\\Seeder\\Seed`` class."
 msgstr ""
 
 #: ../../intro/elgg-cli.rst:2
@@ -154,7 +154,7 @@ msgid "Adding custom commands"
 msgstr ""
 
 #: ../../intro/elgg-cli.rst:96
-msgid "Plugins can add their commands to the CLI application, by adding command class name via a configuration in ``elgg-plugin.php`` or via the ``'commands','cli'`` hook. Command class must extend ``\\Elgg\\CLI\\Command``."
+msgid "Plugins can add their commands to the CLI application, by adding command class name via a configuration in ``elgg-plugin.php`` or via the ``'commands','cli'`` event. Command class must extend ``\\Elgg\\CLI\\Command``."
 msgstr ""
 
 #: ../../intro/elgg-cli.rst:114
@@ -186,7 +186,7 @@ msgid "MySQL 5.7+ or MariaDB 10.3+"
 msgstr ""
 
 #: ../../intro/install.rst:14
-msgid "PHP 7.4+ with the following extensions:"
+msgid "PHP 8.0+ with the following extensions:"
 msgstr ""
 
 #: ../../intro/install.rst:16
@@ -302,7 +302,7 @@ msgid "Firefox"
 msgstr ""
 
 #: ../../intro/install.rst:67
-msgid "IE"
+msgid "Edge"
 msgstr ""
 
 #: ../../intro/install.rst:68

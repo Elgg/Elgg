@@ -28,7 +28,7 @@ return array(
 
 	'bookmarks:notify:summary' => '´Nou enllaç anomenat %s',
 	'bookmarks:notify:subject' => 'Nou enllaç: %s',
-
+	
 	'bookmarks:numbertodisplay' => 'Nombre d\'elements marcats com adreces d\'interès a mostrar',
 
 	'groups:tool:bookmarks' => 'Activa l\'agrupació d\'adreces d\'interés',
@@ -38,7 +38,6 @@ return array(
 	 */
 	'widgets:bookmarks:name' => 'Adreces d\'interès',
 	'widgets:bookmarks:description' => "Aquest giny mostra les darreres adreces d'interés",
-
 	'bookmarks:bookmarklet:descriptionie' => "Si estàs fent servir Internet Explorer, hauràs de fer botó dret sobre la icona del marcador dinàmic, escollir 'afegir a adreces d'interès' i aleshores a la barra d'enllaços.",
 	'bookmarks:bookmarklet:description:conclusion' => "Aleshores podràs desar qualsevol pàgina que visitis simplement prement-la cada cop.",
 

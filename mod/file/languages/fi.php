@@ -8,6 +8,7 @@
 return array(
 
 	'item:object:file' => 'Tiedostot',
+	
 	'collection:object:file' => 'Tiedostot',
 	'collection:object:file:all' => "Kaikki sivuston tiedostot",
 	'collection:object:file:owner' => "Käyttäjän %s tiedostot",

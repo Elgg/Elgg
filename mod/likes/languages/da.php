@@ -8,7 +8,6 @@
 return array(
 	'annotation:delete:likes:fail' => "Der opstod et problem med at fjerne tilkendegivelsen \"synes godt om\"",
 	'annotation:delete:likes:success' => "Din tilkendegivelse \"synes godt om\" er blevet fjernet",
-	
 	'likes:deleted' => 'Din tilkendegivelse "synes godt om" er blevet fjernet',
 	'likes:see' => 'Se hvem der synes godt om dette',
 	'likes:remove' => 'Synes ikke godt om længere',

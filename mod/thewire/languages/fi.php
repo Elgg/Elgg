@@ -16,7 +16,7 @@ return array(
 	'collection:object:thewire:all' => "Kaikki tilapäivitykset",
 	'collection:object:thewire:owner' => "Käyttäjän %s tilapäivitykset",
 	'collection:object:thewire:friends' => "Ystävien tilapäivitykset",
-
+	
 	'thewire:replying' => "Vastataan käyttäjälle %s (@%s), joka kirjoitti",
 	'thewire:thread' => "Aihe",
 	'thewire:charleft' => "merkkiä jäljellä",

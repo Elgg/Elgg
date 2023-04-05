@@ -16,7 +16,7 @@ return array(
 	'collection:object:thewire:all' => "Све објаве",
 	'collection:object:thewire:owner' => "%s објаве",
 	'collection:object:thewire:friends' => "Објаве пријатеља",
-
+	
 	'thewire:replying' => "Одговор на пост од %s (@%s) који је написао",
 	'thewire:thread' => "Дискусија",
 	'thewire:charleft' => "знакова остало",

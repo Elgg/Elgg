@@ -10,7 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
-	'item:object:bookmarks' => 'Σύνδεσμοι',
+	'item:object:bookmarks' => 'Σύνδεσμος',
 	'collection:object:bookmarks' => 'Σύνδεσμοι',
 	'collection:object:bookmarks:group' => 'Σύνδεσμοι ομάδας',
 	'collection:object:bookmarks:all' => "Όλοι οι σύνδεσμοι",
@@ -21,14 +21,14 @@ return array(
 
 	'bookmarks:this' => "Πρόσθηκη στους συνδέσμους μου",
 	'bookmarks:this:group' => "Σύνδεσμος σε %s",
-	'bookmarks:bookmarklet' => "Get bookmarklet",
-	'bookmarks:bookmarklet:group' => "Get group bookmarklet",
+	'bookmarks:bookmarklet' => "Λήψη σελιδοδείκτη",
+	'bookmarks:bookmarklet:group' => "Λήψη σελιδοδείκτη ομάδας",
 	'bookmarks:address' => "Διεύθυνση συνδέσμου",
 	'bookmarks:none' => 'Δεν υπάρχουν σύνδεσμοι',
 
-	'bookmarks:notify:summary' => 'Νέος σύνδεσμος με τίτλος %s',
+	'bookmarks:notify:summary' => 'Νέος σύνδεσμος με τίτλο %s',
 	'bookmarks:notify:subject' => 'Νέος σύνδεσμος: %s',
-
+	
 	'bookmarks:numbertodisplay' => 'Αριθμός συνδέσμων για εμφάνιση',
 
 	'groups:tool:bookmarks' => 'Ενεργοποίηση συνδέσμων ομάδας',
@@ -38,9 +38,8 @@ return array(
 	 */
 	'widgets:bookmarks:name' => 'Σύνδεσμοι',
 	'widgets:bookmarks:description' => "Προβολή των πιο πρόσφατων συνδέσμων σας.",
-
 	'bookmarks:bookmarklet:descriptionie' => "Εάν χρησιμοποιείτε τον Internet Explorer, θα πρέπει να κάντε δεξί κλικ στο εικονίδιο του σελιδοδείκτη, επιλέξτε «προσθήκη στα αγαπημένα».",
-	'bookmarks:bookmarklet:description:conclusion' => "Μπορείτε να αποθηκεύσετε οποιαδήποτε σελίδα που επισκέπτεστε πατώντας ανά πάσα στιγμή.",
+	'bookmarks:bookmarklet:description:conclusion' => "Μπορείτε να αποθηκεύσετε οποιαδήποτε σελίδα που επισκέπτεστε πατώντας στο κουμπί ανά πάσα στιγμή.",
 
 	/**
 	 * Status messages

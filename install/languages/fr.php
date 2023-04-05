@@ -134,6 +134,7 @@ Cliquez sur le bouton Suivant pour commencer l'installation.",
 
 	'install:error:htaccess' => 'Impossible de créer un fichier .htaccess',
 	'install:error:settings' => 'Impossible de créer le fichier de configuration',
+	'install:error:settings_mismatch' => 'La valeur du fichier de paramètres pour "%s" ne correspond pas aux $params donnés. Attendu : "%s" Réel : "%s"',
 	'install:error:databasesettings' => 'Impossible de se connecter à la base de données avec ces paramètres de configuration.',
 	'install:error:database_prefix' => 'Caractères non valides dans le préfixe de la base de données',
 	'install:error:oldmysql2' => 'MySQL doit être en version 5.5.3 ou supérieure. Votre serveur utilise la version %s.',

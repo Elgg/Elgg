@@ -304,7 +304,7 @@ return array(
 	'registration:usernamenotvalid' => '对不起，你输入的用户名无效',
 
 	'adduser:ok' => "您已经成功添加了一个新用户.",
-
+	
 	'user:set:name' => "账户名设置",
 	'user:name:label' => "姓名",
 	'user:name:success' => "名字修改成功.",
@@ -518,7 +518,7 @@ return array(
 	
 	'admin:site:secret:regenerated' => "您的站点密钥已被重新生成",
 	'admin:site:secret:prevented' => "站点秘密的再生被阻止。",
-	
+
 /**
  * Plugins
  */
@@ -672,7 +672,7 @@ return array(
 	'usersettings:user:opt:linktext' => "变更您的设置",
 
 	'usersettings:plugins:opt:linktext' => "配置你的工具",
-
+	
 	'usersettings:statistics:yourdetails' => "您的细节",
 	'usersettings:statistics:label:name' => "全名",
 	'usersettings:statistics:label:email' => "邮箱",
@@ -1224,7 +1224,6 @@ return array(
 	"id" => "Indonesian",
 	"ie" => "Interlingue",
 	"ik" => "Inupiak",
-	//"in" => "Indonesian",
 	"is" => "Icelandic",
 	"it" => "Italian",
 	"iu" => "Inuktitut",

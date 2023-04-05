@@ -39,7 +39,7 @@ return array(
 Просмотреть и комментировать закладку:
 %s
 ',
-
+	
 	'bookmarks:numbertodisplay' => 'Число отображаемых закладок',
 
 	'river:object:bookmarks:create' => '%s добавил в закладки %s',

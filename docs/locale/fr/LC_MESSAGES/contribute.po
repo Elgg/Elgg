@@ -4,19 +4,18 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Jerôme Bakker, 2021
-# Jeroen Dalsem, 2021
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2022
+# Jerôme Bakker, 2023
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-20 13:38+0100\n"
-"PO-Revision-Date: 2021-06-09 13:32+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2022\n"
-"Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
+"POT-Creation-Date: 2023-04-05 09:40+0200\n"
+"PO-Revision-Date: 2023-04-05 07:42+0000\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023\n"
+"Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -497,11 +496,12 @@ msgstr "Standards de développements"
 #: ../../contribute/code.rst:183
 msgid ""
 "Elgg uses set of standards that are based partially on PEAR and PSR2 "
-"standards. You can view the ruleset in ``vendor/elgg/sniffs/elgg.xml``."
+"standards. You can view the ruleset in "
+"``vendor/elgg/sniffs/src/Elgg/ruleset.xml``."
 msgstr ""
-"Elgg utilise des jeux de standards qui sont basés en partie sur les "
-"standards PEAR et PSR2. Vous pouvez voir le jeu de règles dans "
-"``vendor/elgg/sniffs/elgg.xml``."
+"Elgg utilise un ensemble de normes basées en partie sur les normes PEAR et "
+"PSR2. Vous pouvez voir le jeu de règles dans "
+"``vendor/elgg/sniffs/src/Elgg/ruleset.xml``."
 
 #: ../../contribute/code.rst:185
 msgid ""
@@ -644,12 +644,8 @@ msgstr ""
 "d'utiliser la fonctionnalité disponible dans les services eux-mêmes :"
 
 #: ../../contribute/code.rst:242
-msgid ""
-"The ``events`` and ``hooks`` services have methods ``backup()`` and "
-"``restore()``."
-msgstr ""
-"Les services ``events`` et ``hooks`` ont des méthodes ``backup()`` et "
-"``restore()``."
+msgid "The ``events`` service has methods ``backup()`` and ``restore()``."
+msgstr "Le service ``events`` a des méthodes ``backup()`` et ``restore()``."
 
 #: ../../contribute/code.rst:243
 msgid "The ``logger`` service has methods ``disable()`` and ``enable()``."
@@ -1187,13 +1183,12 @@ msgid "use double-quoted strings"
 msgstr "utilisez des chaînes de caractères avec des guillemets doubles"
 
 #: ../../contribute/code.rst:519
-msgid "wrap variables with braces only when necessary."
-msgstr ""
-"encadrez les variables avec des accolades seulement quand c'est nécessaire."
+msgid "wrap variables with braces"
+msgstr "enveloppez les variables avec des accolades"
 
 #: ../../contribute/code.rst:521
-msgid "Bad (hard to read, misuse of quotes and {}s):"
-msgstr "Mauvais (difficile à lire, mauvais usage des guillemets et des {}):"
+msgid "Bad (hard to read):"
+msgstr "Mauvais (difficile à lire) :"
 
 #: ../../contribute/code.rst:533
 msgid "Remove trailing whitespace at the end of lines."
@@ -2699,8 +2694,8 @@ msgstr ""
 "s'assurer que toutes les dernières clefs de traduction sont présentes"
 
 #: ../../contribute/i18n.rst:82
-msgid "Create a new Transifex project to https://www.transifex.com/elgg/"
-msgstr "Créez un nouveau projet Transifex sur https://www.transifex.com/elgg/"
+msgid "Create a new Transifex project to https://app.transifex.com/elgg/"
+msgstr "Créez un nouveau projet Transifex sur https://app.transifex.com/elgg/"
 
 #: ../../contribute/i18n.rst:83
 msgid ""
@@ -2745,16 +2740,16 @@ msgstr ""
 msgid ""
 "Later, once the dedicated branch (e.g. ``3.x`` has been created for the "
 "major version, configure Transifex to fetch new translation keys from it "
-"automatically in https://www.transifex.com/elgg/elgg-core-3/content/. This "
+"automatically in https://app.transifex.com/elgg/elgg-core-3/content/. This "
 "way you don't have to repeat step 5 manually every time new translation keys"
 " are added."
 msgstr ""
-"Plus tard, une fois que la branche dédiée (par ex. ``3.x``) a été créée pour"
-" la version majeure, configurez Transifex pour récupérer automatiquement les"
-" nouvelles clefs à partir de cette branche dans "
-"https://www.transifex.com/elgg/elgg-core-3/content/. De cette manière vous "
-"n'avez pas à répéter manuellement l'étape 5 à chaque fois que de nouvelles "
-"clefs de traduction sont ajoutées."
+"Plus tard, une fois que la branche dédiée (par exemple ``3.x``) a été créée "
+"pour la version majeure, configurez Transifex pour qu'il y récupère "
+"automatiquement les nouvelles clés de traduction depuis "
+"https://app.transifex.com/elgg/elgg-core- 3/content/. De cette façon, vous "
+"n'avez pas à répéter manuellement l'étape 5 chaque fois que de nouvelles "
+"clés de traduction sont ajoutées."
 
 #: ../../contribute/i18n.rst:105
 msgid ""

@@ -25,7 +25,7 @@ return array(
 	'blog:save_status' => 'Desat: ',
 
 	'blog:revision' => 'Revisió',
-
+	
 	// messages
 	'blog:message:saved' => 'Entrada del bloc desada.',
 	'blog:error:cannot_save' => 'No s\'ha pogut desar l\'entrada del bloc.',

@@ -4,18 +4,18 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Jerôme Bakker, 2021
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
+# Jerôme Bakker, 2023
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-20 13:38+0100\n"
-"PO-Revision-Date: 2021-06-09 13:32+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
-"Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
+"POT-Creation-Date: 2023-04-05 09:40+0200\n"
+"PO-Revision-Date: 2023-04-05 07:42+0000\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023\n"
+"Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -59,6 +59,76 @@ msgstr ""
 #: ../../plugins/blog.rst:10
 msgid "`Blogging on Wikipedia <http://en.wikipedia.org/wiki/Blog>`_"
 msgstr "`Blog sur Wikipédia <http://fr.wikipedia.org/wiki/Blog>`_"
+
+#: ../../plugins/ckeditor.rst:2
+msgid "CKEditor"
+msgstr "CKEditor"
+
+#: ../../plugins/ckeditor.rst:4
+msgid ""
+"With this plugin enabled the longtext input fields will get a WYSIWYG editor"
+" which allows for some additional markup options for your text."
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:6
+msgid ""
+"Depending on the configuration the editor can be enriched with various text "
+"style markup options. Have a look at the CKEditor website for a full "
+"featured editor."
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:10
+msgid "Images"
+msgstr "Images"
+
+#: ../../plugins/ckeditor.rst:11
+msgid ""
+"Elgg also supports uploading images in the editor. You can upload images "
+"using a file dialog or just drag/drop or copy/paste the image into the "
+"editor."
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:15
+msgid "Mentions"
+msgstr "Mentions"
+
+#: ../../plugins/ckeditor.rst:16
+msgid ""
+"With the CKEditor plugin you also enable mention capabilities. By default "
+"you can mention:"
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:18
+msgid "Users: use `@` to start autocompleting users"
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:19
+msgid "Groups: use `!` to start autocompleting groups"
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:20
+msgid "Searchable content: use `[` to start autocompleting content"
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:22
+msgid ""
+"When you select something from the autocomplete list a link to the selected "
+"user/group/content will be added to the content. Based on the mentioned "
+"users preference they will also be notified they have been mentioned."
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:26
+msgid "Toolbar configuration"
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:27
+msgid ""
+"This plugin provides a standard toolbar configuration for the default and "
+"simple editor. The plugin settings allow you to configure a custom toolbar "
+"config. Almost all CKEditor plugins are available for use. Information on "
+"how to configure a toolbar can be found here: "
+"https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html"
+msgstr ""
 
 #: ../../plugins/dashboard.rst:2
 msgid "Dashboard"
@@ -331,7 +401,7 @@ msgstr ""
 "Elgg est fourni avec un jeu de plugins. Ils fournissent les fonctionnalités "
 "fondamentales pour votre réseau social."
 
-#: ../../plugins/index.rst:24
+#: ../../plugins/index.rst:25
 msgid ""
 "The following plugins are also bundled with Elgg, but are not (yet) "
 "documented"
@@ -339,17 +409,13 @@ msgstr ""
 "Les plugins suivants sont également distribués avec Elgg, mais ne sont pas "
 "(encore) documentés"
 
-#: ../../plugins/index.rst:26
+#: ../../plugins/index.rst:27
 msgid "activity"
 msgstr "activity"
 
-#: ../../plugins/index.rst:27
+#: ../../plugins/index.rst:28
 msgid "bookmarks"
 msgstr "bookmarks"
-
-#: ../../plugins/index.rst:28
-msgid "ckeditor"
-msgstr "ckeditor"
 
 #: ../../plugins/index.rst:29
 msgid "custom_index"
@@ -360,46 +426,42 @@ msgid "developers"
 msgstr "developers"
 
 #: ../../plugins/index.rst:31
-msgid "embed"
-msgstr "embed"
-
-#: ../../plugins/index.rst:32
 msgid "externalpages"
 msgstr "externalpages"
 
-#: ../../plugins/index.rst:33
+#: ../../plugins/index.rst:32
 msgid "friends_collections"
 msgstr "friends_collections"
 
-#: ../../plugins/index.rst:34
+#: ../../plugins/index.rst:33
 msgid "garbagecollector"
 msgstr "garbagecollector"
 
-#: ../../plugins/index.rst:35
+#: ../../plugins/index.rst:34
 msgid "invitefriends"
 msgstr "invitefriends"
 
-#: ../../plugins/index.rst:36
+#: ../../plugins/index.rst:35
 msgid "members"
 msgstr "members"
 
-#: ../../plugins/index.rst:37
+#: ../../plugins/index.rst:36
 msgid "reportedcontent"
 msgstr "reportedcontent"
 
-#: ../../plugins/index.rst:38
+#: ../../plugins/index.rst:37
 msgid "search"
 msgstr "search"
 
-#: ../../plugins/index.rst:39
+#: ../../plugins/index.rst:38
 msgid "system_log"
 msgstr "system_log"
 
-#: ../../plugins/index.rst:40
+#: ../../plugins/index.rst:39
 msgid "tagcloud"
 msgstr "tagcloud"
 
-#: ../../plugins/index.rst:41
+#: ../../plugins/index.rst:40
 msgid "web_services"
 msgstr "web_services"
 
@@ -590,20 +652,12 @@ msgstr "Informations sur l'utilisateur"
 #: ../../plugins/profile.rst:17
 msgid ""
 "This provides information about a user, which is configurable with the "
-"``fields, user:user`` hook. You can change the available profile fields from"
-" the admin panel. Each profile field has its own access restriction, so "
+"``fields, user:user`` event. You can change the available profile fields "
+"from the admin panel. Each profile field has its own access restriction, so "
 "users can choose exactly who can see each individual element. Some of the "
 "fields contain tags (for example *skills*) limiting access to a field will "
 "also limit who can find you by that tag."
 msgstr ""
-"Ceci fournit des informations à propos d'un utilisateur, qui est "
-"configurable via le hook ``fields, user:user``. Vous pouvez changer les "
-"champs de profil disponibles depuis le panneau d'administration. Chaque "
-"champ de profil dispose de son propre niveau d'accès, de sorte que les "
-"membres peuvent choisir exactement qui peut voir quel élément précis. "
-"Certains des champs contiennent des tags (par exemple les compétences "
-"*skills*) : restreindre l'accès à ce champ va également limiter le nombre de"
-" personnes susceptibles de vous trouver via ce tag."
 
 #: ../../plugins/profile.rst:21
 msgid "User avatar"
@@ -652,13 +706,10 @@ msgstr "Ajouter des éléments au menu contextuel"
 
 #: ../../plugins/profile.rst:39
 msgid ""
-"The context menu can be expanded by registering a :ref:`plugin hook "
-"<design/events#plugin-hooks>` for 'register' 'menu:user_hover', the "
-"following sections have special meaning:"
+"The context menu can be expanded by registering a :doc:`event "
+"</design/events>` for 'register' 'menu:user_hover', the following sections "
+"have special meaning:"
 msgstr ""
-"Le menu contextuel peut être étendu en enregistrant un :ref:`hook plugin "
-"<design/events#plugin-hooks>` pour 'register' 'menu:user_hover' ; les "
-"sections suivantes ont une signification spéciale :"
 
 #: ../../plugins/profile.rst:41
 msgid "**default** for non-active links (eg to read a blog)"

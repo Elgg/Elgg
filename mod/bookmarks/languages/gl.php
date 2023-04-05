@@ -28,7 +28,7 @@ return array(
 
 	'bookmarks:notify:summary' => 'Novo marcador: «%s».',
 	'bookmarks:notify:subject' => 'Novo marcador: %s',
-
+	
 	'bookmarks:numbertodisplay' => 'Número de marcadores para mostrar',
 
 	'groups:tool:bookmarks' => 'Activar os marcadores do grupo',
@@ -38,7 +38,6 @@ return array(
 	 */
 	'widgets:bookmarks:name' => 'Marcadores',
 	'widgets:bookmarks:description' => "Mostrar os seus últimos marcadores.",
-
 	'bookmarks:bookmarklet:descriptionie' => "Se está a usar Internet Explorer, terá que premer a icona do miniaplicativo ligado co botón secundario, seleccionar «Engadir aos favoritos», e entón seleccionar a barra de ligazóns.",
 	'bookmarks:bookmarklet:description:conclusion' => "A partir de entón pode marcar calquera páxina que visite. Só ten que premer o botón no navegador en calquera momento",
 

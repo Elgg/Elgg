@@ -305,7 +305,7 @@ return array(
 	'registration:usernamenotvalid' => 'Lo sentimos, el nombre de usuario que ha ingresado es inv&aacute;lida en el sistema',
 
 	'adduser:ok' => "Se agreg&oacute; correctamente un nuevo usuario",
-
+	
 	'user:set:name' => "Configuraci&oacute;n del nombre de cuenta",
 	'user:name:label' => "Mi nombre para mostrar",
 	'user:name:success' => "Se modific&oacute; correctamente su nombre en la red",
@@ -1066,7 +1066,6 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
 	'email:settings' => "Configuraci&oacute;n de Email",
 	'email:address:label' => "Direcci&oacute;n de Email",
 	'email:address:password' => "Contraseña",
-
 	'email:save:fail' => "No se pudo guardar la nueva direcci&oacute;n de Email",
 
 	'friend:newfriend:subject' => "%s te ha puesto como amigo suyo!",
@@ -1139,7 +1138,6 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
 /**
  * Javascript
  */
-
 	'js:lightbox:current' => "imagen %s de %s",
 
 /**
@@ -1213,7 +1211,6 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
 	"id" => "Indonesian",
 	"ie" => "Interlingue",
 	"ik" => "Inupiak",
-	//"in" => "Indonesian",
 	"is" => "Icelandic",
 	"it" => "Italian",
 	"iu" => "Inuktitut",

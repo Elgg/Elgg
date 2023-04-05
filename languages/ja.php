@@ -99,7 +99,6 @@ return array(
 	'table_columns:fromView:entity_menu' => 'メニュー',
 	'table_columns:fromView:unvalidated_menu' => 'メニュー',
 
-
 /**
  * User details
  */
@@ -250,7 +249,7 @@ return array(
 	'registration:usernamenotvalid' => '申し訳ありません。入力されたログイン名は、このシステムで使えません。',
 
 	'adduser:ok' => "新しいユーザを登録しました。",
-
+	
 	'user:set:name' => "アカウント編集",
 	'user:name:label' => "表示名",
 	'user:name:success' => "表示名を変更しました。",
@@ -363,7 +362,6 @@ return array(
 	'admin:widget:cron_status:help' => '最後に cron jobs が完了したときの状態を表示する',
 	'admin:statistics:queue:name' => 'Name',
 
-	'admin:widget:admin_welcome' => 'Welcome',
 	'admin:widget:admin_welcome:help' => "Elggの管理エリアについての短い紹介",
 	'admin:widget:admin_welcome:intro' => 'Elggにようこそ！現在あなたが見ている画面は管理用のダッシュボードです。このページはサイトで何がおこっているかを追跡するのに便利なようにできています。',
 
@@ -429,12 +427,10 @@ return array(
 	'admin:plugins:description' => "この管理パネルでは、インストールしたツールの管理や構築設定を行います。",
 	'admin:plugins:opt:linktext' => "ツールの設定...",
 	'admin:plugins:opt:description' => "インストールされたツールを構築するための各種設定をします",
-	'admin:plugins:label:id' => "ID",
 	'admin:plugins:label:name' => "名前",
 	'admin:plugins:label:copyright' => "コピーライト",
 	'admin:plugins:label:categories' => 'カテゴリ',
 	'admin:plugins:label:licence' => "ライセンス",
-	'admin:plugins:label:info' => "Info",
 	'admin:plugins:label:files' => "ファイル",
 	'admin:plugins:label:resources' => "リソース",
 	'admin:plugins:label:screenshots' => "スクリーンショット",
@@ -477,11 +473,9 @@ return array(
 	'admin:statistics:label:version' => "Elgg バージョン",
 	'admin:statistics:label:version:release' => "リリース",
 	'admin:statistics:label:version:version' => "バージョン",
-	'admin:server:label:php' => 'PHP',
 	'admin:server:label:web_server' => 'Webサーバ',
 	'admin:server:label:server' => 'サーバ',
 	'admin:server:label:log_location' => 'ログ記録の保存場所',
-	'admin:server:label:php_version' => 'PHP version',
 	'admin:server:label:php_ini' => 'PHP ini ファイルの場所',
 	'admin:server:label:php_log' => 'PHP ログ',
 	'admin:server:label:mem_avail' => 'メモリの利用可能量',
@@ -964,7 +958,11 @@ return array(
 /**
  * Diagnostics
  */
-
+	
+/**
+ * Miscellaneous
+ */
+	
 /**
  * Cli commands
  */
@@ -1025,7 +1023,6 @@ return array(
 	"id" => "Indonesian",
 	"ie" => "Interlingue",
 	"ik" => "Inupiak",
-	//"in" => "Indonesian",
 	"is" => "Icelandic",
 	"it" => "Italian",
 	"iu" => "Inuktitut",

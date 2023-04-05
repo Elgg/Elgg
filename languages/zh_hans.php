@@ -213,6 +213,7 @@ return array(
 	'avatar' => '头像',
 	'avatar:edit' => '编辑头像',
 	'avatar:upload:instructions' => "头像在网站内显示，您可以根据自己的喜好随时更换.（头像文件类型：gif，jpg或png）",
+	'avatar:upload:success' => '头像上传成功',
 	'avatar:upload:fail' => '头像上传失败',
 	'avatar:resize:fail' => '调整头像大小失败',
 	'avatar:remove:success' => '删除头像成功',
@@ -303,7 +304,7 @@ return array(
 	'registration:usernamenotvalid' => '对不起，你输入的用户名无效',
 
 	'adduser:ok' => "您已经成功添加了一个新用户.",
-
+	
 	'user:set:name' => "账户名设置",
 	'user:name:label' => "我的名字",
 	'user:name:success' => "名字修改成功.",
@@ -518,7 +519,7 @@ return array(
 	
 	'admin:site:secret:regenerated' => "您的站点密钥已被重新生成",
 	'admin:site:secret:prevented' => "站点秘密的再生被阻止。",
-	
+
 /**
  * Plugins
  */
@@ -1222,7 +1223,6 @@ return array(
 	"id" => "Indonesian",
 	"ie" => "Interlingue",
 	"ik" => "Inupiak",
-	//"in" => "Indonesian",
 	"is" => "Icelandic",
 	"it" => "Italian",
 	"iu" => "Inuktitut",

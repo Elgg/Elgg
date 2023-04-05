@@ -34,7 +34,7 @@ return array(
 
 	'friends:none' => "現在友達はいません。",
 	'friends:of:owned' => "%s さんと友達の人",
-
+	
 	'friends:request:pending' => "友達申請の処理を中断する",
 	'friends:request:pending:none' => "友達申請の処理が中断しているものはありません。",
 	'friends:request:sent' => "友達申請をする",

@@ -8,6 +8,7 @@
 return array(
 
 	'item:object:file' => 'Файл',
+	
 	'collection:object:file' => 'Файлы',
 	'collection:object:file:all' => "Все файлы",
 	'collection:object:file:owner' => "Файлы %s",

@@ -9,6 +9,7 @@ return array(
 	'annotation:delete:likes:fail' => "Il y a eu un problème lors de la suppression de l'appréciation",
 	'annotation:delete:likes:success' => "Votre appréciation a été retirée",
 	
+	'likes:this' => '%s aime',
 	'likes:deleted' => 'Votre appréciation a été retirée',
 	'likes:see' => 'Voir les membres qui aiment',
 	'likes:remove' => 'N\'aime plus',

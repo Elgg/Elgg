@@ -377,7 +377,7 @@ return array(
 	'registration:usernamenotvalid' => 'Entschuldigung, der angegebene Benutzername ist auf dieser Seite nicht zulässig.',
 
 	'adduser:ok' => "Es wurde ein neuer Benutzer hinzugefügt.",
-
+	
 	'user:set:name' => "Benutzernamen-Einstellungen",
 	'user:name:label' => "Name",
 	'user:name:success' => "Dein auf der Seite angezeigter Name wurde geändert.",
@@ -1705,7 +1705,6 @@ Globale Variablen:
 	"id" => "Indonesisch",
 	"ie" => "Interlingue",
 	"ik" => "Inupiaq",
-	//"in" => "Indonesisch",
 	"is" => "Isländisch",
 	"it" => "Italienisch",
 	"iu" => "Inuit",

@@ -31,6 +31,8 @@ return array(
 	'APIException:CallMethodNotImplemented' => "L'appel à la méthode '%s' n'est actuellement pas supporté.",
 	'SecurityException:authenticationfailed' => "L'utilisateur n'a pas pu être authentifié",
 	'SecurityException:BannedUser' => "Ce compte utilisateur est banni, aucun jeton ne peut être fourni.",
+	'InvalidArgumentException:APIParametersArrayStructure' => "La structure du tableau de paramètres est incorrecte pour demander d'exposer la méthode \"%s\"",
+	'DomainException:UnrecognisedHttpMethod' => "Méthode http %s non reconnue pour la méthode api '\"%s\"",
 	'SecurityException:InvalidPostHash' => "Le hachage des données POST est invalide - %s attendu mais reçu %s.",
 	'SecurityException:DupePacket' => "La signature du paquet a déjà été vue.",
 	'SecurityException:InvalidAPIKey' => "Clé d'API incorrecte ou manquante.",
@@ -38,7 +40,7 @@ return array(
 	'BadRequestException:MissingOutputViewInViewtype:DataViewsPlugin' => "Activez le plugin 'data_views' pour ajouter cette vue.",
 	
 	'web_services:api_methods:system.api.list:get:description' => "Liste tous les appels d'API disponibles sur le système.",
-	'web_services:api_methods:auth.gettoken:post:description' => "Cet appel à l'API permet à un utilisateur d'obtenir un jeton d'authentification utilisateur qui peut être utilisé pour authentifier les futurs appels à l'API. Passez-le en tant que paramètre auth_token",
+	'web_services:api_methods:auth.gettoken:post:description' => "Cet appel API permet à un utilisateur d'obtenir un jeton d'authentification utilisateur qui peut être utilisé pour authentifier les futurs appels API. Passez-le comme paramètre auth_token",
 	
 	'admin:configure_utilities:webservices' => "Webservices",
 	'admin:configure_utilities:ws_list' => "Lister les méthodes de l'API",

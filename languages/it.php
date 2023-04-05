@@ -275,7 +275,7 @@ return array(
 	'registration:usernamenotvalid' => 'Spiacenti, il nome utente inserito non è valido in questo sistema',
 
 	'adduser:ok' => "Nuovo utente aggiunto",
-
+	
 	'user:set:name' => "Impostazioni del nome di profilo",
 	'user:name:label' => "Nome visualizzato",
 	'user:name:success' => "Il nome visualizzato è stato cambiato nel sistema.",
@@ -490,22 +490,8 @@ Per andare sul sito, clicca qui:
 /**
  * Plugins
  */
-
 	'plugins:settings:save:ok' => "Impostazioni per il plugin %s salvate con successo.",
-	'plugins:settings:save:fail' => "There was a problem saving settings for the %s plugin.",
 	'plugins:settings:remove:fail' => "Si è verificato un errore durante la rimozione di tutte le impostazioni per il plug-in %s",
-	'plugins:usersettings:save:ok' => "User settings for the %s plugin were saved successfully.",
-	'plugins:usersettings:save:fail' => "There was a problem saving user settings for the %s plugin.",
-	
-	'item:object:plugin' => 'Plugins',
-	'collection:object:plugin' => 'Plugins',
-
-	'admin:plugins' => "Plugins",
-	'admin:plugins:activate_all' => 'Activate All',
-	'admin:plugins:deactivate_all' => 'Deactivate All',
-	'admin:plugins:activate' => 'Activate',
-	'admin:plugins:deactivate' => 'Deactivate',
-	'admin:plugins:opt:linktext' => "Configure tools...",
 	'admin:plugins:label:id' => "ID",
 	'admin:plugins:label:name' => "Nome",
 	'admin:plugins:label:authors' => "Autori",
@@ -525,14 +511,8 @@ Per andare sul sito, clicca qui:
 	'admin:plugins:label:location' => 'Ubicazione',
 	'admin:plugins:label:priority' => 'Priorità',
 	'admin:plugins:label:dependencies' => 'Dipendenze',
-
 	'admin:plugins:already:active' => 'I plugin selezionati sono già attivi.',
 	'admin:plugins:already:inactive' => 'I plugin selezionati sono già inattivi.',
-
-	'admin:plugins:deactivate:yes' => "Deactivated %s.",
-	'admin:plugins:activate:yes' => "Activated %s.",
-	'admin:plugins:categories:all' => 'All categories',
-	'admin:plugins:plugin_website' => 'Plugin website',
 	'admin:plugins:author' => '%s',
 	'admin:plugins:version' => 'Versione %s',
 	'admin:plugin_settings' => 'Impostazioni plugin',
@@ -623,8 +603,6 @@ Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o 
 	'usersettings:statistics' => "Statistiche",
 	'usersettings:statistics:opt:linktext' => "Statistiche del profilo utente",
 
-	'usersettings:statistics:login_history:ip' => "IP Address",
-
 	'usersettings:user' => "Impostazioni di %s",
 	'usersettings:user:opt:linktext' => "Cambia le tue impostazioni",
 
@@ -659,6 +637,7 @@ Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o 
 	'icon:size:medium' => "Media",
 	'icon:size:large' => "Grande",
 	'icon:size:master' => "Grandissima",
+	'entity:edit:icon:file:help' => "Lascia vuoto per mantenere l'icona corrente.",
 
 /**
  * Generic action words
@@ -817,6 +796,7 @@ Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o 
 
 	'on' => 'On',
 	'off' => 'Off',
+	'number_counter:view:thousand' => "%sK",
 
 /**
  * Entity actions
@@ -930,6 +910,7 @@ Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o 
 
 	'installation:sitename' => "Nome del sito:",
 	'installation:sitedescription' => "Breve descrizione del sito (opzionale):",
+	'installation:sitedescription:help' => "Con i plug-in in bundle questo appare solo nel meta tag descrizione per i risultati dei motori di ricerca.",
 	'installation:sitepermissions' => "Permessi di accesso predefiniti:",
 	'installation:language' => "Lingua predefinita del sito:",
 	'installation:debug' => "Determina la quantità di informazioni scritte nel log del server.",
@@ -1003,6 +984,8 @@ Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o 
 	'upgrade:success_count' => 'Aggiornati:',
 	'upgrade:finished' => 'Aggiornamento completato',
 	'upgrade:finished_with_errors' => '<p>L\'aggiornamento è terminato con degli errori. Aggiornare la pagina e provare a eseguire nuovamente l\'aggiornamento.</p><br>Se l\'errore si manifesta nuovamente, controllare il log file degli errori del server per trovare le possibili cause. Per eliminare l\'errore si può cercare aiuto nel <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support group</a> della comunità di Elgg.',
+	
+	// Strings specific for the database guid columns reply upgrade
 	
 /**
  * Welcome
@@ -1199,7 +1182,6 @@ Se non hai richiesto tu questa modifica, contatta un amministratore del sito.
 	"id" => "Indonesian",
 	"ie" => "Interlingue",
 	"ik" => "Inupiak",
-	//"in" => "Indonesiano",
 	"is" => "Icelandic",
 	"it" => "Italiano",
 	"iu" => "Inuktitut",

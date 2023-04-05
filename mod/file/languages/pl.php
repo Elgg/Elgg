@@ -8,6 +8,7 @@
 return array(
 
 	'item:object:file' => 'Pliki',
+	
 	'collection:object:file' => 'Pliki',
 	'collection:object:file:all' => "Wszystkie pliki",
 	'collection:object:file:owner' => "Pliki użytkownika %s",

@@ -4,19 +4,18 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Jerôme Bakker, 2021
-# Jeroen Dalsem, 2021
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2022
+# Jerôme Bakker, 2023
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-20 13:38+0100\n"
-"PO-Revision-Date: 2021-06-09 13:32+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2022\n"
-"Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
+"POT-Creation-Date: 2023-04-05 09:40+0200\n"
+"PO-Revision-Date: 2023-04-05 07:42+0000\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023\n"
+"Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -71,13 +70,13 @@ msgstr "Plugins"
 #: ../../intro/development.rst:20
 msgid ""
 "Plugins change the behavior or appearance of Elgg by overriding views, or by"
-" handling events and plugin hooks. All changes to an Elgg site should be "
-"implemented through plugins to ensure upgrading core is easy."
+" handling events. All changes to an Elgg site should be implemented through "
+"plugins to ensure upgrading core is easy."
 msgstr ""
-"Les Plugins modifient le comportement ou l'apparence de Elgg en surchargeant"
-" les vues, ou en gérant des événements et des hooks plugin. Toutes les "
-"modifications d'un site Elgg devraient être implémentées via des plugins "
-"pour garantir que la mise à niveau du noyau reste simple."
+"Les plugins modifient le comportement ou l'apparence de Elgg en remplaçant "
+"les vues ou en gérant les événements. Toutes les modifications apportées à "
+"un site Elgg doivent être implémentées via des plugins pour garantir une "
+"mise à niveau facile du noyau."
 
 #: ../../intro/development.rst:24
 msgid "Actions"
@@ -93,21 +92,21 @@ msgstr ""
 "plugins."
 
 #: ../../intro/development.rst:29
-msgid "Events and Plugin Hooks"
-msgstr "Événements et Hooks plugin"
+msgid "Events"
+msgstr "Evénements"
 
 #: ../../intro/development.rst:31
 msgid ""
-"Events and Plugin Hooks are used in Elgg Plugins to interact with the Elgg "
-"engine under certain circumstances. Events and hooks are triggered at "
-"strategic times throughout Elgg's boot and execution process, and allows "
-"plugins to modify or cancel the default behavior."
+"Events are used in Elgg Plugins to interact with the Elgg engine under "
+"certain circumstances. Events are triggered at strategic times throughout "
+"Elgg's boot and execution process, and allows plugins to modify or cancel "
+"the default behavior."
 msgstr ""
-"Les Événements et les Hooks plugin sont utilisés dans les plugins Elgg pour "
-"interagir avec le moteur de Elgg dans certaines circonstances. Les "
-"Événements et les Hooks sont activés à des moments stratégiques lors des "
-"processus de démarrage et d'exécution de Elgg, et permettent aux plugins de "
-"modifier ou d'annuler le comportement par défaut."
+"Les événements sont utilisés dans les plugins Elgg pour interagir avec le "
+"moteur Elgg dans certaines circonstances. Les événements sont déclenchés à "
+"des moments stratégiques tout au long du processus de démarrage et "
+"d'exécution de Elgg, et permettent aux plugins de modifier ou d'annuler le "
+"comportement par défaut."
 
 #: ../../intro/development.rst:36
 msgid "Views"
@@ -207,13 +206,13 @@ msgstr ""
 
 #: ../../intro/development.rst:88
 msgid ""
-"Plugins can register their own seeds via ``'seeds', 'database'`` hook. The "
+"Plugins can register their own seeds via ``'seeds', 'database'`` event. The "
 "handler must return the class name of the seed, which must extend "
 "``\\Elgg\\Database\\Seeder\\Seed`` class."
 msgstr ""
-"Les plugins peuvent enregistrer leurs propres graines via le hook ``'seeds',"
-" 'database'``. Le gestionnaire doit retourner le nom de la classe de la "
-"graine, qui doit étendre la classe ``\\Elgg\\Database\\Seeder\\Seed``."
+"Les plugins peuvent enregistrer leurs propres graines via l'événement "
+"``'seeds', 'database'``. Le gestionnaire doit renvoyer le nom de classe de "
+"la graine, qui doit étendre la classe ``\\Elgg\\Database\\Seeder\\Seed``."
 
 #: ../../intro/elgg-cli.rst:2
 msgid "Elgg CLI"
@@ -260,13 +259,13 @@ msgstr "Ajouter des commandes personnalisées"
 msgid ""
 "Plugins can add their commands to the CLI application, by adding command "
 "class name via a configuration in ``elgg-plugin.php`` or via the "
-"``'commands','cli'`` hook. Command class must extend "
+"``'commands','cli'`` event. Command class must extend "
 "``\\Elgg\\CLI\\Command``."
 msgstr ""
-"Les plugins peuvent ajouter leurs propres commandes à l’application CLI, en "
-"ajoutant le nom de la classe de commande via une configuration dans ``elgg-"
-"plugin.php`` ou via le hook ``'commands','cli'``. La classe de commande doit"
-" étendre ``\\Elgg\\CLI\\Command``."
+"Les plugins peuvent ajouter leurs commandes à l'application CLI, en ajoutant"
+" le nom de la classe de commandes via une configuration dans ``elgg-"
+"plugin.php`` ou via l'événement ``'commands','cli'``. La classe de la "
+"commande doit étendre ``\\Elgg\\CLI\\Command``."
 
 #: ../../intro/elgg-cli.rst:114
 msgid ""
@@ -302,8 +301,8 @@ msgid "MySQL 5.7+ or MariaDB 10.3+"
 msgstr "MySQL 5.7+ ou MariaDB 10.3+"
 
 #: ../../intro/install.rst:14
-msgid "PHP 7.4+ with the following extensions:"
-msgstr "PHP 7.4+ avec les extensions suivantes :"
+msgid "PHP 8.0+ with the following extensions:"
+msgstr "PHP 8.0+ avec les extensions suivantes :"
 
 #: ../../intro/install.rst:16
 msgid "GD (for graphics processing)"
@@ -458,8 +457,8 @@ msgid "Firefox"
 msgstr "Firefox"
 
 #: ../../intro/install.rst:67
-msgid "IE"
-msgstr "IE"
+msgid "Edge"
+msgstr "Edge"
 
 #: ../../intro/install.rst:68
 msgid "Safari"

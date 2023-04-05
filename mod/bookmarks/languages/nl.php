@@ -38,7 +38,7 @@ Adres: %s
 
 Bekijk en reageer op de favoriet:
 %s',
-
+	
 	'bookmarks:numbertodisplay' => 'Aantal favorieten om weer te geven',
 
 	'river:object:bookmarks:create' => '%s heeft %s als favoriet toegevoegd',

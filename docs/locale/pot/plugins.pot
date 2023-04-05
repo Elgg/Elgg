@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-10 10:00+0100\n"
+"POT-Creation-Date: 2023-04-05 09:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,6 +30,58 @@ msgstr ""
 
 #: ../../plugins/blog.rst:10
 msgid "`Blogging on Wikipedia <http://en.wikipedia.org/wiki/Blog>`_"
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:2
+msgid "CKEditor"
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:4
+msgid "With this plugin enabled the longtext input fields will get a WYSIWYG editor which allows for some additional markup options for your text."
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:6
+msgid "Depending on the configuration the editor can be enriched with various text style markup options. Have a look at the CKEditor website for a full featured editor."
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:10
+msgid "Images"
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:11
+msgid "Elgg also supports uploading images in the editor. You can upload images using a file dialog or just drag/drop or copy/paste the image into the editor."
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:15
+msgid "Mentions"
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:16
+msgid "With the CKEditor plugin you also enable mention capabilities. By default you can mention:"
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:18
+msgid "Users: use `@` to start autocompleting users"
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:19
+msgid "Groups: use `!` to start autocompleting groups"
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:20
+msgid "Searchable content: use `[` to start autocompleting content"
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:22
+msgid "When you select something from the autocomplete list a link to the selected user/group/content will be added to the content. Based on the mentioned users preference they will also be notified they have been mentioned."
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:26
+msgid "Toolbar configuration"
+msgstr ""
+
+#: ../../plugins/ckeditor.rst:27
+msgid "This plugin provides a standard toolbar configuration for the default and simple editor. The plugin settings allow you to configure a custom toolbar config. Almost all CKEditor plugins are available for use. Information on how to configure a toolbar can be found here: https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html"
 msgstr ""
 
 #: ../../plugins/dashboard.rst:2
@@ -169,20 +221,16 @@ msgstr ""
 msgid "Elgg comes with a set of plugins. These provide the basic functionality for your social network."
 msgstr ""
 
-#: ../../plugins/index.rst:24
+#: ../../plugins/index.rst:25
 msgid "The following plugins are also bundled with Elgg, but are not (yet) documented"
 msgstr ""
 
-#: ../../plugins/index.rst:26
+#: ../../plugins/index.rst:27
 msgid "activity"
 msgstr ""
 
-#: ../../plugins/index.rst:27
-msgid "bookmarks"
-msgstr ""
-
 #: ../../plugins/index.rst:28
-msgid "ckeditor"
+msgid "bookmarks"
 msgstr ""
 
 #: ../../plugins/index.rst:29
@@ -194,46 +242,42 @@ msgid "developers"
 msgstr ""
 
 #: ../../plugins/index.rst:31
-msgid "embed"
-msgstr ""
-
-#: ../../plugins/index.rst:32
 msgid "externalpages"
 msgstr ""
 
-#: ../../plugins/index.rst:33
+#: ../../plugins/index.rst:32
 msgid "friends_collections"
 msgstr ""
 
-#: ../../plugins/index.rst:34
+#: ../../plugins/index.rst:33
 msgid "garbagecollector"
 msgstr ""
 
-#: ../../plugins/index.rst:35
+#: ../../plugins/index.rst:34
 msgid "invitefriends"
 msgstr ""
 
-#: ../../plugins/index.rst:36
+#: ../../plugins/index.rst:35
 msgid "members"
 msgstr ""
 
-#: ../../plugins/index.rst:37
+#: ../../plugins/index.rst:36
 msgid "reportedcontent"
 msgstr ""
 
-#: ../../plugins/index.rst:38
+#: ../../plugins/index.rst:37
 msgid "search"
 msgstr ""
 
-#: ../../plugins/index.rst:39
+#: ../../plugins/index.rst:38
 msgid "system_log"
 msgstr ""
 
-#: ../../plugins/index.rst:40
+#: ../../plugins/index.rst:39
 msgid "tagcloud"
 msgstr ""
 
-#: ../../plugins/index.rst:41
+#: ../../plugins/index.rst:40
 msgid "web_services"
 msgstr ""
 
@@ -326,7 +370,7 @@ msgid "User details"
 msgstr ""
 
 #: ../../plugins/profile.rst:17
-msgid "This provides information about a user, which is configurable with the ``fields, user:user`` hook. You can change the available profile fields from the admin panel. Each profile field has its own access restriction, so users can choose exactly who can see each individual element. Some of the fields contain tags (for example *skills*) limiting access to a field will also limit who can find you by that tag."
+msgid "This provides information about a user, which is configurable with the ``fields, user:user`` event. You can change the available profile fields from the admin panel. Each profile field has its own access restriction, so users can choose exactly who can see each individual element. Some of the fields contain tags (for example *skills*) limiting access to a field will also limit who can find you by that tag."
 msgstr ""
 
 #: ../../plugins/profile.rst:21
@@ -358,7 +402,7 @@ msgid "Adding to the context menu"
 msgstr ""
 
 #: ../../plugins/profile.rst:39
-msgid "The context menu can be expanded by registering a :ref:`plugin hook <design/events#plugin-hooks>` for 'register' 'menu:user_hover', the following sections have special meaning:"
+msgid "The context menu can be expanded by registering a :doc:`event </design/events>` for 'register' 'menu:user_hover', the following sections have special meaning:"
 msgstr ""
 
 #: ../../plugins/profile.rst:41

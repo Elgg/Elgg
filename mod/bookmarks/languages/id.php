@@ -28,7 +28,7 @@ return array(
 
 	'bookmarks:notify:summary' => 'Panggil bookmark baru %s',
 	'bookmarks:notify:subject' => 'Bookmark baru: %s',
-
+	
 	'bookmarks:numbertodisplay' => 'Jumlah bookmark untuk ditampilkan',
 
 	'river:object:bookmarks:create' => '%s bookmarked %s',

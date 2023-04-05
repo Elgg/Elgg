@@ -28,7 +28,7 @@ return array(
 
 	'bookmarks:notify:summary' => 'Nyt bogmærke kaldt %s',
 	'bookmarks:notify:subject' => 'Nyt bogmærk: %s',
-
+	
 	'bookmarks:numbertodisplay' => 'Antal bogmærker, der skal vises',
 
 	'groups:tool:bookmarks' => 'Aktiver gruppe bogmærker',
@@ -38,7 +38,6 @@ return array(
 	 */
 	'widgets:bookmarks:name' => 'Bogmærker',
 	'widgets:bookmarks:description' => "Vis dine nyeste bogmærker.",
-
 	'bookmarks:bookmarklet:descriptionie' => "Hvis du bruger Internet Explorer, er du nødt til at højreklikke på \"Bookmarklet\" ikonet og vælge \"Føj til Favoritter\" og derefter \"Linkbar\".",
 	'bookmarks:bookmarklet:description:conclusion' => "Du kan så gemme enhver side, du besøger ved at klikke på ikonet.",
 

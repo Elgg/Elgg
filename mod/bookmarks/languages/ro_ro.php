@@ -38,7 +38,7 @@ Adresă: %s
 
 Vezi și comentează la acest marcaj:
 %s',
-
+	
 	'bookmarks:numbertodisplay' => 'Numărul de marcaje pentru afișare',
 
 	'river:object:bookmarks:create' => '%s a marcat %s',
