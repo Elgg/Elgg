@@ -8,7 +8,6 @@
 return array(
 	'annotation:delete:likes:fail' => "Nie powiodło się usunięcie twojego polubienia",
 	'annotation:delete:likes:success' => "Przestałeś to lubić",
-	
 	'likes:deleted' => 'Przestałeś to lubić',
 	'likes:see' => 'Zobacz kto to lubi',
 	'likes:remove' => 'Przestań to lubić',

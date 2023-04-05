@@ -8,6 +8,7 @@
 return array(
 
 	'item:object:file' => 'Dateien',
+	
 	'collection:object:file' => 'Dateien',
 	'collection:object:file:all' => "Alle Dateien der Community",
 	'collection:object:file:owner' => "Dateien von %s",

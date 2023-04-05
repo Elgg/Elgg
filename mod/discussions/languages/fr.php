@@ -59,6 +59,8 @@ Voir le sujet de discussion et y répondre :
 
 Voir la discussion et y répondre :
 %s',
+	
+	'notification:mentions:object:discussion:subject' => '%s vous a mentionné dans une discussion',
 
 	'groups:tool:forum' => 'Activer les discussions du groupe',
 	'groups:tool:forum:description' => 'Autoriser les membres du groupe à démarrer des sujets de discussion dans ce groupe.',

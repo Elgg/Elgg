@@ -17,7 +17,7 @@ return array(
 	'collection:object:thewire:all' => "Alla nyhetsinlägg",
 	'collection:object:thewire:owner' => "%ss nyhetsinlägg",
 	'collection:object:thewire:friends' => "Vänners nyhetsinlägg",
-
+	
 	'thewire:replying' => "Svara %s (@%s) som skrev",
 	'thewire:thread' => "Tråd",
 	'thewire:charleft' => "Tecken kvar",

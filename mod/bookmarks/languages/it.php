@@ -28,7 +28,7 @@ return array(
 
 	'bookmarks:notify:summary' => 'Nuovo segnalibro chiamato %s',
 	'bookmarks:notify:subject' => 'Nuovo segnalibro: %s',
-
+	
 	'bookmarks:numbertodisplay' => 'Numero di segnalibri da visualizzare',
 
 	'river:object:bookmarks:create' => '%s ha aggiunto il segnalibro %s',
@@ -41,8 +41,6 @@ return array(
 	 */
 	'widgets:bookmarks:name' => 'Segnalibri',
 	'widgets:bookmarks:description' => "Visualizza i tuoi ultimi segnalibri.",
-
-	'bookmarks:bookmarklet:description' => "A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
 	'bookmarks:bookmarklet:descriptionie' => "Se stai usando Internet Explorer, bisogna cliccare col tasto destro sull'icona del Bookmarklet, selezionare ''aggiungi ai preferiti'' e poi scegliere la barra dei collegamenti.",
 	'bookmarks:bookmarklet:description:conclusion' => "Dopo sarà possibile aggiungere velocemente ai preferiti qualsiasi pagina visitata cliccando nel browser questo pulsate .",
 

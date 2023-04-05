@@ -25,7 +25,7 @@ return array(
 	'blog:save_status' => 'Sidst gemt: ',
 
 	'blog:revision' => 'Revision',
-
+	
 	// messages
 	'blog:message:saved' => 'Blogindlæg gemt.',
 	'blog:error:cannot_save' => 'Kan ikke gemme blogindlæg.',

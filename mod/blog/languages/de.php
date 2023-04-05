@@ -28,7 +28,7 @@ return array(
 	'blog:save_status' => 'Zuletzt gespeichert: ',
 
 	'blog:revision' => 'Revision',
-
+	
 	// messages
 	'blog:message:saved' => 'Dein Blog-Eintrag wurde gespeichert.',
 	'blog:error:cannot_save' => 'Dein Blog-Eintrag konnte nicht gespeichert werden.',

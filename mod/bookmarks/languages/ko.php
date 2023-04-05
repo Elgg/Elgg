@@ -28,7 +28,7 @@ return array(
 
 	'bookmarks:notify:summary' => '%s 라는 새 책갈피',
 	'bookmarks:notify:subject' => '새 책갈피: %s',
-
+	
 	'bookmarks:numbertodisplay' => '표시할 책갈피의 수',
 
 	'river:object:bookmarks:create' => '%s님이 %s를 책갈피에 추가하였습니다',

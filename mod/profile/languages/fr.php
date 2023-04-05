@@ -12,6 +12,7 @@ return array(
 	'admin:configure_utilities:profile_fields' => 'Modifier les champs du profil',
 	
 	'profile:edit' => 'Modifier le profil',
+	'profile:edit:header' => 'Modifier l\'entête du profil',
 	'profile:description' => "À mon propos",
 	'profile:briefdescription' => "Brève description",
 	'profile:location' => "Adresse",

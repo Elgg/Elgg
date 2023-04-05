@@ -398,14 +398,14 @@ return array(
 	'registration:usernametooshort' => 'Je gebruikersnaam moet minimaal %u karakters lang zijn.',
 	'registration:usernametoolong' => 'Je gebruikersnaam is te lang. Je kunt maximaal %u karakters gebruiken.',
 	'registration:dupeemail' => 'Dit e-mailadres is al geregistreerd.',
-	'registration:invalidchars' => 'Sorry, je gebruikersnaam bevat het volgende ongeldige karakter: %s
+	'registration:invalidchars' => 'Sorry, je gebruikersnaam bevat het volgende ongeldige karakter: %s 
 De volgende karakters zijn niet toegestaan: %s',
 	'registration:emailnotvalid' => 'Sorry, het opgegeven e-mailadres is ongeldig op dit systeem',
 	'registration:passwordnotvalid' => 'Sorry, het opgegeven wachtwoord is ongeldig op dit systeem',
 	'registration:usernamenotvalid' => 'Sorry, de opgegeven gebruikersnaam is ongeldig op dit systeem',
 
 	'adduser:ok' => "Nieuwe gebruiker is succesvol aangemaakt.",
-
+	
 	'user:set:name' => "Instellingen van accountnaam",
 	'user:name:label' => "Mijn weergavenaam",
 	'user:name:success' => "Je weergavenaam is succesvol gewijzigd.",
@@ -1830,7 +1830,6 @@ Global variables:
 	"id" => "Indonesian",
 	"ie" => "Interlingue",
 	"ik" => "Inupiak",
-	//"in" => "Indonesian",
 	"is" => "Icelandic",
 	"it" => "Italian",
 	"iu" => "Inuktitut",

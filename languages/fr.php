@@ -205,8 +205,8 @@ return array(
 	'dashboard:nowidgets' => "Votre tableau de bord vous permet de suivre l'activité et les contenus qui vous intéressent.",
 
 	'widgets:add' => 'Ajouter des widgets',
-	'widgets:add:description' => "Cliquez sur un widget ci-dessous pour l'ajouter à la page.
-Vous pouvez ensuite le déplacer et le configurer selon vos souhaits.
+	'widgets:add:description' => "Cliquez sur un widget ci-dessous pour l'ajouter à la page. 
+Vous pouvez ensuite le déplacer et le configurer selon vos souhaits. 
 Certains widgets peuvent être ajoutés plusieurs fois.",
 	'widget:unavailable' => 'Vous avez déjà ajouté ce widget',
 	'widget:numbertodisplay' => 'Nombre d\'éléments à afficher ',
@@ -289,6 +289,7 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
  */
 	'river' => "Flux d'activité",
 	'river:user:friend' => "%s est maintenant en contact avec  %s",
+	'river:site:site:join' => "%s a rejoint le site",
 	'river:update:user:avatar' => '%s a changé son image du profil',
 	'river:posted:generic' => '%s a publié',
 	'river:ingroup' => 'dans le groupe %s',
@@ -343,6 +344,8 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 %s',
 	'notification:subject' => 'Notification à propos de %s',
 	'notification:body' => 'Voir la nouvelle activité sur %s',
+	
+	'notification:mentions:subject' => '%s vous a mentionné',
 	
 	'notifications:delayed_email:subject:daily' => "Notification quotidiennes",
 	'notifications:delayed_email:subject:weekly' => "Notification mensuelles",
@@ -408,7 +411,7 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'registration:usernamenotvalid' => 'Désolé, l\'identfiant que vous avez indiqué est invalide sur ce site.',
 
 	'adduser:ok' => "Vous avez bien ajouté un nouvel utilisateur.",
-
+	
 	'user:set:name' => "Paramètres du nom du compte",
 	'user:name:label' => "Nom",
 	'user:name:success' => "Votre nom a été changé avec succès.",
@@ -466,6 +469,7 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'menu:page:header:develop' => 'Développer',
 	'menu:page:header:information' => 'Information',
 	'menu:page:header:default' => 'Autre',
+	'menu:page:header:plugin_settings' => 'Paramètres du plugin',
 
 	'admin:view_site' => 'Voir le site',
 	'admin:loggedin' => 'Connecté en tant que %s',
@@ -496,7 +500,7 @@ Cela permet à Elgg d'éviter la connexion à la base de données lors de l'envo
 	'admin:performance:php:open_basedir:not_configured' => 'Aucune limite n\'a été définie',
 	'admin:performance:php:open_basedir:warning' => 'Un faible nombre de limitations de open_basedir sont effectives, ceci pourrait affecter les performances.',
 	'admin:performance:php:open_basedir:error' => 'Un grand nombre de limitations de open_basedir sont effectives, ceci va probablement affecter les performances.',
-	'admin:performance:php:open_basedir:generic' => 'Avec open_basedir chaque accès à un fichier sera vérifié auprès de la liste des limitations.
+	'admin:performance:php:open_basedir:generic' => 'Avec open_basedir chaque accès à un fichier sera vérifié auprès de la liste des limitations. 
 Comme Elgg a un grand nombre d\'accès aux fichiers cela va avoir un effet négatif sur les performances. D\'autre part l\'opcache de PHP ne peut plus mettre en cache les chemins de fichiers dans la mémoire et doit les résoudre lors de chaque accès.',
 	
 	'admin:statistics' => 'Statistiques',
@@ -694,7 +698,7 @@ Comme Elgg a un grand nombre d\'accès aux fichiers cela va avoir un effet néga
 	'admin:security:information:php:session_gc' => "Nettoyage des sessions PHP",
 	'admin:security:information:php:session_gc:chance' => "Probabilité de nettoyage : %s %%",
 	'admin:security:information:php:session_gc:lifetime' => "Durée de vie d'une session %s secondes",
-	'admin:security:information:php:session_gc:error' => "Il est recommandé de définir 'session.gc_probability' et 'session.gc_divisor' dans vos paramètres PHP,
+	'admin:security:information:php:session_gc:error' => "Il est recommandé de définir 'session.gc_probability' et 'session.gc_divisor' dans vos paramètres PHP, 
 ceci va nettoyer les sessions expirées de votre base de données et empêcher les utilisateurs de réutiliser d'anciennes sessions.",
 	'admin:security:information:htaccess:hardening' => "Sécurisation des accès aux fichiers via .htaccess",
 	'admin:security:information:htaccess:hardening:help' => "Dans le fichier .htaccess il est possible de bloquer l'accès à certains fichiers pour augmenter la sécurité de votre site. Pour plus d'informations regardez dans votre fichier .htaccess.",
@@ -737,7 +741,7 @@ ceci va nettoyer les sessions expirées de votre base de données et empêcher l
 	'admin:security:settings:email_require_confirmation:help' => 'La nouvelle adresse e-mail doit être confirmée avant que la modification soit effective. Après une modification réussie une notification est envoyée à l\'ancienne adresse e-mail.',
 
 	'admin:security:settings:session_bound_entity_icons' => 'Icônes d\'entités liées aux sessions',
-	'admin:security:settings:session_bound_entity_icons:help' => 'Les icônes d’entité peuvent être liées par défaut à une session. Cela signifie que les URLs générées contiennent également des informations sur la session en cours.
+	'admin:security:settings:session_bound_entity_icons:help' => 'Les icônes d’entité peuvent être liées par défaut à une session. Cela signifie que les URLs générées contiennent également des informations sur la session en cours. 
 Le fait d’avoir des icônes liées à la session rend les URLs des icônes non partageables entre les sessions. L’effet secondaire est que la mise en cache de ces URLs ne bénéficiera qu\'à la session active.',
 
 	'admin:security:settings:subresource_integrity_enabled' => 'Intégrité des sous-ressources',
@@ -1457,6 +1461,7 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'config:content:pagination_behaviour:ajax-replace' => "Remplacer les données de la liste sans recharger toute la page",
 	'config:content:pagination_behaviour:ajax-append' => "Ajouter les nouvelles données au début ou à la fin de la liste",
 	'config:content:pagination_behaviour:ajax-append-auto' => "Ajoute les nouvelles données au début ou à la fin de la liste (automatiquement en cas de défilement dans la vue)",
+	'config:content:mentions_display_format:username' => "Identifiant",
 	'config:email' => "E-mail",
 	'config:email_html_part:label' => "Activer les e-mails en HTML",
 	'config:email_html_part:help' => "Les e-mails sortants seront intégrés dans un template HTML",
@@ -1837,7 +1842,6 @@ Variables globales :
 	"id" => "Indonésien",
 	"ie" => "Interlingue (ex Occidental)",
 	"ik" => "Inupiaq",
-	//"in" => "Indonésien",
 	"is" => "Islandais",
 	"it" => "Italien",
 	"iu" => "Inuktitut",

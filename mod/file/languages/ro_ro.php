@@ -8,6 +8,7 @@
 return array(
 
 	'item:object:file' => 'Fișier',
+	
 	'collection:object:file' => 'Fișiere',
 	'collection:object:file:all' => "Toate fișierele site-ului",
 	'collection:object:file:owner' => "Fișierele membrului %s",

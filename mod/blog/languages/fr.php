@@ -54,6 +54,8 @@ return array(
 
 Afficher et commenter l\'article :
 %s',
+	
+	'notification:mentions:object:blog:subject' => '%s vous a mentionné dans un article de blog',
 
 	// widget
 	'widgets:blog:name' => 'Articles de blog',

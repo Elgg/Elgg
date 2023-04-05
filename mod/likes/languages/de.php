@@ -8,7 +8,6 @@
 return array(
 	'annotation:delete:likes:fail' => "Beim Entfernen Deines \"Gefällt mir\" ist ein Problem aufgetreten.",
 	'annotation:delete:likes:success' => "Dein \"Gefällt mir\" wurde entfernt.",
-	
 	'likes:deleted' => 'Dein "Gefällt mir" wurde entfernt.',
 	'likes:see' => 'Nachschauen, wem das gefällt',
 	'likes:remove' => 'Gefällt mir nicht mehr',

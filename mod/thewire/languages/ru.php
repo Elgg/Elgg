@@ -19,7 +19,7 @@ return array(
 	'collection:object:thewire:friends' => "Публикации в лентах друзей",
 	'notification:object:thewire:create' => "Отправить уведомление при создании публикации в ленте",
 	'notifications:mute:object:thewire' => "о публикации в ленте '%s'",
-
+	
 	'thewire:replying' => "Ответить пользователю %s (@%s), который написал",
 	'thewire:thread' => "Ветка",
 	'thewire:charleft' => "символов осталось",

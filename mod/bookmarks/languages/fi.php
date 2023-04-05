@@ -28,7 +28,7 @@ return array(
 
 	'bookmarks:notify:summary' => 'Uusi kirjanmerkki: %s',
 	'bookmarks:notify:subject' => 'Uusi kirjanmerkki: %s',
-
+	
 	'bookmarks:numbertodisplay' => 'Näytettävien kohteiden määrä',
 
 	'groups:tool:bookmarks' => 'Ota käyttöön ryhmän kirjanmerkit',

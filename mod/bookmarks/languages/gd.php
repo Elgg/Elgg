@@ -38,7 +38,7 @@ Seòladh: %s
 
 Seall agus fàg beachd air a\' chomharra-lìn:
 %s',
-
+	
 	'bookmarks:numbertodisplay' => 'An àireamh de chomharran-lìn a chithear',
 
 	'river:object:bookmarks:create' => 'Chruthaich %s an comharra-lìn \'%s\'',

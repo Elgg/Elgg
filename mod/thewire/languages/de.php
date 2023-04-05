@@ -19,7 +19,7 @@ return array(
 	'collection:object:thewire:friends' => "Deine Freunde im Heißen Draht",
 	'notification:object:thewire:create' => "Sende eine Benachrichtigung, wenn eine neue Nachricht im Heißen Draht geschrieben wurde",
 	'notifications:mute:object:thewire' => "über die Nachricht '%s' im Heißen Draht",
-
+	
 	'thewire:replying' => "Antworten auf %s (@%s), der schrieb",
 	'thewire:charleft' => "Zeichen übrig",
 	'thewire:tags' => "Nachrichten im Heißen Draht mit dem Tag '%s'",

@@ -30,7 +30,7 @@ return array(
 
 	'bookmarks:notify:summary' => '新着ブックマーク「%s」があります。',
 	'bookmarks:notify:subject' => '新着ブックマーク: %s',
-
+	
 	'bookmarks:numbertodisplay' => '表示するブックマークの件数',
 
 	'river:object:bookmarks:create' => '%s さんが %s をブックマークしました',

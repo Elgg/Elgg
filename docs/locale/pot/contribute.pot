@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-10 10:00+0100\n"
+"POT-Creation-Date: 2023-04-05 09:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -346,7 +346,7 @@ msgid "Coding Standards"
 msgstr ""
 
 #: ../../contribute/code.rst:183
-msgid "Elgg uses set of standards that are based partially on PEAR and PSR2 standards. You can view the ruleset in ``vendor/elgg/sniffs/elgg.xml``."
+msgid "Elgg uses set of standards that are based partially on PEAR and PSR2 standards. You can view the ruleset in ``vendor/elgg/sniffs/src/Elgg/ruleset.xml``."
 msgstr ""
 
 #: ../../contribute/code.rst:185
@@ -430,7 +430,7 @@ msgid "Due to these local references, replacing services on the SP within a test
 msgstr ""
 
 #: ../../contribute/code.rst:242
-msgid "The ``events`` and ``hooks`` services have methods ``backup()`` and ``restore()``."
+msgid "The ``events`` service has methods ``backup()`` and ``restore()``."
 msgstr ""
 
 #: ../../contribute/code.rst:243
@@ -794,11 +794,11 @@ msgid "use double-quoted strings"
 msgstr ""
 
 #: ../../contribute/code.rst:519
-msgid "wrap variables with braces only when necessary."
+msgid "wrap variables with braces"
 msgstr ""
 
 #: ../../contribute/code.rst:521
-msgid "Bad (hard to read, misuse of quotes and {}s):"
+msgid "Bad (hard to read):"
 msgstr ""
 
 #: ../../contribute/code.rst:533
@@ -1813,7 +1813,7 @@ msgid "Merge the git branch of the previous version to the new to make sure all 
 msgstr ""
 
 #: ../../contribute/i18n.rst:82
-msgid "Create a new Transifex project to https://www.transifex.com/elgg/"
+msgid "Create a new Transifex project to https://app.transifex.com/elgg/"
 msgstr ""
 
 #: ../../contribute/i18n.rst:83
@@ -1841,7 +1841,7 @@ msgid "Copy the new configuration file temporarily (do not commit) to the previo
 msgstr ""
 
 #: ../../contribute/i18n.rst:100
-msgid "Later, once the dedicated branch (e.g. ``3.x`` has been created for the major version, configure Transifex to fetch new translation keys from it automatically in https://www.transifex.com/elgg/elgg-core-3/content/. This way you don't have to repeat step 5 manually every time new translation keys are added."
+msgid "Later, once the dedicated branch (e.g. ``3.x`` has been created for the major version, configure Transifex to fetch new translation keys from it automatically in https://app.transifex.com/elgg/elgg-core-3/content/. This way you don't have to repeat step 5 manually every time new translation keys are added."
 msgstr ""
 
 #: ../../contribute/i18n.rst:105

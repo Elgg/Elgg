@@ -277,7 +277,7 @@ return array(
 	'registration:usernamenotvalid' => 'متاسفانه کلمه عبور توسط سیستم معتبر شناخته نشد',
 
 	'adduser:ok' => "شما با موفقیت یک کاربر جدید اضافه کردید",
-
+	
 	'user:set:name' => "تنظیمات نام حساب کاربری",
 	'user:name:label' => "نام قابل نمایش",
 	'user:name:success' => "نام با موفقیت تغییر پیدا کرد",
@@ -1109,7 +1109,6 @@ return array(
 	"id" => "Indonesian",
 	"ie" => "Interlingue",
 	"ik" => "Inupiak",
-	//"in" => "Indonesian ",
 	"is" => "Icelandic",
 	"it" => "Italian",
 	"iu" => "Inuktitut",

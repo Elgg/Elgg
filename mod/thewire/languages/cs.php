@@ -13,7 +13,7 @@ return array(
 	'thewire' => "Telegraf",
 
 	'item:object:thewire' => "Telegrafní zprávy",
-
+	
 	'thewire:replying' => "Odpovídám na %s (@%s), který/á napsal/a",
 	'thewire:thread' => "Vlákno",
 	'thewire:charleft' => "znaků zbývá",

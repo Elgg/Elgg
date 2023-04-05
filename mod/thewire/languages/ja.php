@@ -19,7 +19,7 @@ return array(
 	'collection:object:thewire:friends' => "友達のつぶやき",
 	'notification:object:thewire:create' => "つぶやき記事が投稿されたときに通知を送る",
 	'notifications:mute:object:thewire' => "つぶやき記事 '%s' について",
-
+	
 	'thewire:replying' => "返信: %s (@%s) さんへ 内容",
 	'thewire:thread' => "スレッド",
 	'thewire:charleft' => "残りの文字数（半角文字で）",

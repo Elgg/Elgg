@@ -28,7 +28,7 @@ return array(
 
 	'bookmarks:notify:summary' => '新的书签是 %s',
 	'bookmarks:notify:subject' => '新的书签：%s',
-
+	
 	'bookmarks:numbertodisplay' => '显示的书签数量',
 
 	'river:object:bookmarks:create' => '%s 添加了书签 %s',

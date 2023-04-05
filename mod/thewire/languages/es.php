@@ -16,7 +16,7 @@ return array(
 	'collection:object:thewire:all' => "Todos los post",
 	'collection:object:thewire:owner' => "los posts de %s",
 	'collection:object:thewire:friends' => "Los post de tus amigos",
-
+	
 	'thewire:replying' => "Responder a %s (@%s) quien escribi&oacute;",
 	'thewire:thread' => "Hilo",
 	'thewire:charleft' => "caracteres restantes",
@@ -55,4 +55,8 @@ return array(
 	'thewire:notify:reply' => '%s ha respondido a %s en the wire:',
 	'thewire:notify:post' => '%s ha posteado en the wire:',
 	'thewire:notify:footer' => "Ver y responder:\n%s",
+
+	/**
+	 * Settings
+	 */
 );

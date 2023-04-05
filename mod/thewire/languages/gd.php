@@ -19,7 +19,7 @@ return array(
 	'collection:object:thewire:friends' => "Brathan-uèir mo chàirdean",
 	'notification:object:thewire:create' => "Leig fios nuair a thèid brath-uèir a chruthachadh",
 	'notifications:mute:object:thewire' => "mu dheidhinn a' bhrath-ùeir '%s'",
-
+	
 	'thewire:replying' => "Freagairt do %s (@%s) a sgrìobh",
 	'thewire:thread' => "Snàth",
 	'thewire:charleft' => "caractaran air fhàgail",

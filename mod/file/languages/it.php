@@ -8,6 +8,7 @@
 return array(
 
 	'item:object:file' => 'File',
+	
 	'collection:object:file' => 'File',
 	'collection:object:file:all' => "Tutti i file",
 	'collection:object:file:owner' => "File di %s",

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-10 10:00+0100\n"
+"POT-Creation-Date: 2023-04-05 09:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -943,7 +943,7 @@ msgid "Admins can edit anything"
 msgstr ""
 
 #: ../../design/database.rst:650
-msgid "You can override this behaviour using a :ref:`plugin hook <design/events#plugin-hooks>` called ``permissions_check``, which passes the entity in question to any function that has announced it wants to be referenced. Returning ``true`` will allow write access; returning ``false`` will deny it. See :ref:`the plugin hook reference for permissions\\_check <guides/hooks-list#permission-hooks>` for more details."
+msgid "You can override this behaviour using a :doc:`event </design/events>` called ``permissions_check``, which passes the entity in question to any function that has announced it wants to be referenced. Returning ``true`` will allow write access; returning ``false`` will deny it. See :ref:`the event reference for permissions\\_check <guides/events-list#permissions>` for more details."
 msgstr ""
 
 #: ../../design/database.rst:657
@@ -1142,182 +1142,182 @@ msgid "**subtype** the subtype of the access collection (eg. `friends` or `group
 msgstr ""
 
 #: ../../design/events.rst:2
-msgid "Events and Plugin Hooks"
+msgid "Events"
 msgstr ""
 
 #: ../../design/events.rst:11
 msgid "Elgg has an event system that can be used to replace or extend core functionality."
 msgstr ""
 
-#: ../../design/events.rst:14
-msgid "Plugins influence the system by creating handlers (`callables <http://php.net/manual/en/language.types.callable.php>`_ such as functions and methods) and registering them to handle two types of events: :ref:`design/events#events` and :ref:`design/events#plugin-hooks`."
+#: ../../design/events.rst:13
+msgid "Plugins influence the system by creating handlers (`callables <http://php.net/manual/en/language.types.callable.php>`_ such as functions and methods) and registering them to handle the events."
 msgstr ""
 
-#: ../../design/events.rst:18
+#: ../../design/events.rst:16
 msgid "When an event is triggered, a set of handlers is executed in order of priority. Each handler is passed arguments and has a chance to influence the process. After execution, the \"trigger\" function returns a value based on the behavior of the handlers."
 msgstr ""
 
-#: ../../design/events.rst:25
+#: ../../design/events.rst:21
 msgid ":doc:`/guides/events-list`"
 msgstr ""
 
-#: ../../design/events.rst:26
-msgid ":doc:`/guides/hooks-list`"
-msgstr ""
-
-#: ../../design/events.rst:29
-msgid "Elgg Events vs. Plugin Hooks"
-msgstr ""
-
-#: ../../design/events.rst:31
-msgid "The main differences between :ref:`design/events#events` and :ref:`design/events#plugin-hooks` are:"
-msgstr ""
-
-#: ../../design/events.rst:33
-msgid "Most Elgg events can be cancelled; unless the event is an \"after\" event, a handler that returns `false` can cancel the event, and no more handlers are called."
-msgstr ""
-
-#: ../../design/events.rst:36
-msgid "Plugin hooks cannot be cancelled; all handlers are always called."
-msgstr ""
-
-#: ../../design/events.rst:37
-msgid "Plugin hooks pass an arbitrary value through the handlers, giving each a chance to alter along the way."
-msgstr ""
-
-#: ../../design/events.rst:43
+#: ../../design/events.rst:24
 msgid "Elgg Events"
 msgstr ""
 
-#: ../../design/events.rst:45
+#: ../../design/events.rst:26
 msgid "Elgg Events are triggered when an Elgg object is created, updated, or deleted; and at important milestones while the Elgg framework is loading. Examples: a blog post being created or a user logging in."
 msgstr ""
 
-#: ../../design/events.rst:49
-msgid "Unlike :ref:`design/events#plugin-hooks`, *most Elgg events can be cancelled*, halting the execution of the handlers, and possibly cancelling an some action in the Elgg core."
+#: ../../design/events.rst:30
+msgid "These events are mostly used to notify the rest of the system that something has happened."
 msgstr ""
 
-#: ../../design/events.rst:53
-msgid "Each Elgg event has a name and an object type (system, user, object, relationship name, annotation, group) describing the type of object passed to the handlers."
+#: ../../design/events.rst:32
+msgid "There are also events that are used to influence output, configuration or behaviour of the system."
 msgstr ""
 
-#: ../../design/events.rst:60
+#: ../../design/events.rst:34
+msgid "Each Elgg event has a name and a type (system, user, object, relationship name, annotation, group) describing the type of object passed to the handlers."
+msgstr ""
+
+#: ../../design/events.rst:40
 msgid "Before and After Events"
 msgstr ""
 
-#: ../../design/events.rst:62
+#: ../../design/events.rst:42
 msgid "Some events are split into \"before\" and \"after\". This avoids confusion around the state of the system while in flux. E.g. Is the user logged in during the [login, user] event?"
 msgstr ""
 
-#: ../../design/events.rst:66
-msgid "Before Events have names ending in \":before\" and are triggered before something happens. Like traditional events, handlers can cancel the event by returning ``false``."
+#: ../../design/events.rst:46
+msgid "Before Events have names ending in \":before\" and are triggered before something happens. Handlers can cancel the event by returning ``false``. When ``false`` is returned by a handler, following handlers will not be called."
 msgstr ""
 
-#: ../../design/events.rst:70
-msgid "After Events, with names ending in \":after\", are triggered after something happens. Unlike traditional events, handlers *cannot* cancel these events; all handlers will always be called."
+#: ../../design/events.rst:50
+msgid "After Events, with names ending in \":after\", are triggered after something happened. Handlers *cannot* cancel these events; all handlers will always be called."
 msgstr ""
 
-#: ../../design/events.rst:74
+#: ../../design/events.rst:53
 msgid "Where before and after events are available, developers are encouraged to transition to them, though older events will be supported for backwards compatibility."
 msgstr ""
 
-#: ../../design/events.rst:79
+#: ../../design/events.rst:58
 msgid "Elgg Event Handlers"
 msgstr ""
 
-#: ../../design/events.rst:81
+#: ../../design/events.rst:60
 msgid "Elgg event handlers are callables:"
 msgstr ""
 
-#: ../../design/events.rst:96
+#: ../../design/events.rst:75
 msgid "In ``event_handler``, the ``Event`` object has various methods for getting the name, object type, and object of the event. See the ``Elgg\\Event`` class for details."
 msgstr ""
 
-#: ../../design/events.rst:99
-msgid "If a handler returns ``false``, the event is cancelled, preventing execution of the other handlers. All other return values are ignored."
-msgstr ""
-
-#: ../../design/events.rst:103
+#: ../../design/events.rst:79
 msgid "Register to handle an Elgg Event"
 msgstr ""
 
-#: ../../design/events.rst:105
+#: ../../design/events.rst:81
 msgid "Register your handler to an event using ``elgg_register_event_handler``:"
 msgstr ""
 
-#: ../../design/events.rst:113
-#: ../../design/events.rst:193
+#: ../../design/events.rst:89
+#: ../../design/events.rst:165
+#: ../../design/events.rst:197
 #: ../../design/events.rst:220
-#: ../../design/events.rst:277
-#: ../../design/events.rst:309
 msgid "Parameters:"
 msgstr ""
 
-#: ../../design/events.rst:115
-#: ../../design/events.rst:195
+#: ../../design/events.rst:91
+#: ../../design/events.rst:167
 #: ../../design/events.rst:222
 msgid "**$event** The event name."
 msgstr ""
 
-#: ../../design/events.rst:116
-msgid "**$object_type** The object type (e.g. \"user\" or \"object\") or 'all' for all types on which the event is fired."
+#: ../../design/events.rst:92
+msgid "**$type** The event type (e.g. \"user\" or \"object\") or 'all' for all types on which the event is fired."
 msgstr ""
 
-#: ../../design/events.rst:118
-#: ../../design/events.rst:281
+#: ../../design/events.rst:93
 msgid "**$handler** The callback of the handler function."
 msgstr ""
 
-#: ../../design/events.rst:119
-#: ../../design/events.rst:282
+#: ../../design/events.rst:94
 msgid "**$priority** The priority - 0 is first and the default is 500."
 msgstr ""
 
-#: ../../design/events.rst:121
-msgid "**Object** here does not refer to an ``ElggObject`` but rather a string describing any object in the framework: system, user, object, relationship, annotation, group."
-msgstr ""
-
-#: ../../design/events.rst:124
-#: ../../design/events.rst:287
+#: ../../design/events.rst:96
 msgid "Example:"
 msgstr ""
 
-#: ../../design/events.rst:136
+#: ../../design/events.rst:108
 msgid "If you handle the \"update\" event on an object, avoid calling ``save()`` in your event handler. For one it's probably not necessary as the object is saved after the event completes, but also because ``save()`` calls another \"update\" event and makes ``$object->getOriginalAttributes()`` no longer available."
 msgstr ""
 
-#: ../../design/events.rst:141
+#: ../../design/events.rst:113
 msgid "Invokable classes as handlers"
 msgstr ""
 
-#: ../../design/events.rst:143
-msgid "You may use a class with an ``__invoke()`` method as a handler. Just register the class name and it will be instantiated (with no arguments) for the lifetime of the event (or hook)."
+#: ../../design/events.rst:115
+msgid "You may use a class with an ``__invoke()`` method as a handler. Just register the class name and it will be instantiated (with no arguments) for the lifetime of the event."
 msgstr ""
 
-#: ../../design/events.rst:163
+#: ../../design/events.rst:135
 msgid "Trigger an Elgg Event"
 msgstr ""
 
-#: ../../design/events.rst:165
+#: ../../design/events.rst:137
 msgid "You can trigger a custom Elgg event using ``elgg_trigger_event``:"
 msgstr ""
 
-#: ../../design/events.rst:177
+#: ../../design/events.rst:149
 msgid "For events with ambiguous states, like logging in a user, you should use :ref:`before-after` by calling ``elgg_trigger_before_event`` or ``elgg_trigger_after_event``. This makes it clear for the event handler what state to expect and which events can be cancelled."
 msgstr ""
 
-#: ../../design/events.rst:196
+#: ../../design/events.rst:168
 #: ../../design/events.rst:223
 msgid "**$object_type** The object type (e.g. \"user\" or \"object\")."
 msgstr ""
 
-#: ../../design/events.rst:197
+#: ../../design/events.rst:169
 #: ../../design/events.rst:224
 msgid "**$object** The object (e.g. an instance of ``ElggUser`` or ``ElggGroup``)"
 msgstr ""
 
-#: ../../design/events.rst:199
+#: ../../design/events.rst:171
 msgid "The function will return ``false`` if any of the selected handlers returned ``false`` and the event is stoppable, otherwise it will return ``true``."
+msgstr ""
+
+#: ../../design/events.rst:177
+msgid "Trigger an Event with results"
+msgstr ""
+
+#: ../../design/events.rst:179
+msgid "Events with results provide a way for plugins to collaboratively determine or alter a value. For example, to decide whether a user has permission to edit an entity or to add additional configuration options to a plugin."
+msgstr ""
+
+#: ../../design/events.rst:183
+msgid "An event has a value passed into the trigger function, and each handler has an opportunity to alter the value before it's passed to the next handler. After the last handler has completed, the final value is returned by the trigger."
+msgstr ""
+
+#: ../../design/events.rst:188
+msgid "You can trigger a custom event using ``elgg_trigger_event_results``:"
+msgstr ""
+
+#: ../../design/events.rst:199
+msgid "**$name** The name of the event."
+msgstr ""
+
+#: ../../design/events.rst:200
+msgid "**$type** The type of the event or 'all' for all types."
+msgstr ""
+
+#: ../../design/events.rst:201
+msgid "**$params** Arbitrary data passed from the trigger to the handlers."
+msgstr ""
+
+#: ../../design/events.rst:202
+msgid "**$value** The initial value of the event."
 msgstr ""
 
 #: ../../design/events.rst:205
@@ -1348,101 +1348,31 @@ msgstr ""
 msgid "**$callable** Callable to run on successful event, before event:after"
 msgstr ""
 
+#: ../../design/events.rst:228
+msgid "Unregister Event Handlers"
+msgstr ""
+
 #: ../../design/events.rst:230
-msgid "Plugin Hooks"
+msgid "The functions ``elgg_unregister_event_handler`` can be used to remove handlers already registered by another plugin or Elgg core. The parameters are in the same order as the registration functions, except there's no priority parameter."
 msgstr ""
 
-#: ../../design/events.rst:232
-msgid "Plugin Hooks provide a way for plugins to collaboratively determine or alter a value. For example, to decide whether a user has permission to edit an entity or to add additional configuration options to a plugin."
-msgstr ""
-
-#: ../../design/events.rst:236
-msgid "A plugin hook has a value passed into the trigger function, and each handler has an opportunity to alter the value before it's passed to the next handler. After the last handler has completed, the final value is returned by the trigger."
-msgstr ""
-
-#: ../../design/events.rst:242
-msgid "Plugin Hook Handlers"
-msgstr ""
-
-#: ../../design/events.rst:244
-msgid "Hook handlers are callables with the following prototype:"
-msgstr ""
-
-#: ../../design/events.rst:259
-msgid "In ``plugin_hook_handler``, the ``Hook`` object has various methods for getting the name, type, value, and parameters of the hook. See the ``Elgg\\Hook`` interface for details."
-msgstr ""
-
-#: ../../design/events.rst:262
-msgid "If the handler returns no value (or ``null`` explicitly), the plugin hook value is not altered. Otherwise the returned value becomes the new value of the plugin hook, and it will then be available as ``$hook->getValue()`` in the next handler."
-msgstr ""
-
-#: ../../design/events.rst:267
-msgid "Register to handle a Plugin Hook"
-msgstr ""
-
-#: ../../design/events.rst:269
-msgid "Register your handler to a plugin hook using ``elgg_register_plugin_hook_handler``:"
-msgstr ""
-
-#: ../../design/events.rst:279
-#: ../../design/events.rst:311
-msgid "**$hook** The name of the plugin hook."
-msgstr ""
-
-#: ../../design/events.rst:280
-#: ../../design/events.rst:312
-msgid "**$type** The type of the hook or 'all' for all types."
-msgstr ""
-
-#: ../../design/events.rst:284
-msgid "**Type** can vary in meaning. It may mean an Elgg entity type or something specific to the plugin hook name."
-msgstr ""
-
-#: ../../design/events.rst:298
-msgid "Trigger a Plugin Hook"
-msgstr ""
-
-#: ../../design/events.rst:300
-msgid "You can trigger a custom plugin hook using ``elgg_trigger_plugin_hook``:"
-msgstr ""
-
-#: ../../design/events.rst:313
-msgid "**$params** Arbitrary data passed from the trigger to the handlers."
-msgstr ""
-
-#: ../../design/events.rst:314
-msgid "**$value** The initial value of the plugin hook."
-msgstr ""
-
-#: ../../design/events.rst:316
-msgid "The `$params` and `$value` arguments are reversed between the plugin hook handlers and trigger functions!"
-msgstr ""
-
-#: ../../design/events.rst:320
-msgid "Unregister Event/Hook Handlers"
-msgstr ""
-
-#: ../../design/events.rst:322
-msgid "The functions ``elgg_unregister_event_handler`` and ``elgg_unregister_plugin_hook_handler`` can be used to remove handlers already registered by another plugin or Elgg core. The parameters are in the same order as the registration functions, except there's no priority parameter."
-msgstr ""
-
-#: ../../design/events.rst:332
+#: ../../design/events.rst:240
 msgid "Anonymous functions or invokable objects cannot be unregistered, but dynamic method callbacks can be unregistered by giving the static version of the callback:"
 msgstr ""
 
-#: ../../design/events.rst:346
+#: ../../design/events.rst:254
 msgid "Even though the event handler references a dynamic method call, the code above will successfully remove the handler."
 msgstr ""
 
-#: ../../design/events.rst:350
+#: ../../design/events.rst:258
 msgid "Handler Calling Order"
 msgstr ""
 
-#: ../../design/events.rst:352
+#: ../../design/events.rst:260
 msgid "Handlers are called first in order of priority, then registration order."
 msgstr ""
 
-#: ../../design/events.rst:356
+#: ../../design/events.rst:264
 msgid "Before Elgg 2.0, registering with the ``all`` keywords caused handlers to be called later, even if they were registered with lower priorities."
 msgstr ""
 
@@ -1567,7 +1497,7 @@ msgid "Password validation"
 msgstr ""
 
 #: ../../design/security.rst:20
-msgid "The only restriction that Elgg places on a password is that it must be at least 6 characters long by default, though this may be changed in ``/elgg-config/settings.php``. Additional criteria can be added by a plugin by registering for the ``registeruser:validate:password`` plugin hook."
+msgid "The only restriction that Elgg places on a password is that it must be at least 6 characters long by default, though this may be changed in ``/elgg-config/settings.php``. Additional criteria can be added by a plugin by registering for the ``registeruser:validate:password`` event."
 msgstr ""
 
 #: ../../design/security.rst:25
@@ -1667,7 +1597,7 @@ msgid "Filtering is used in Elgg to make XSS attacks more difficult. The purpose
 msgstr ""
 
 #: ../../design/security.rst:93
-msgid "Filtering is performed through the function ``elgg_sanitize_input()``. This function takes in a string and returns a filtered string. It triggers a ``sanitize, input`` plugin hook."
+msgid "Filtering is performed through the function ``elgg_sanitize_input()``. This function takes in a string and returns a filtered string. It triggers a ``sanitize, input`` event."
 msgstr ""
 
 #: ../../design/security.rst:96

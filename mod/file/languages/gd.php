@@ -8,6 +8,7 @@
 return array(
 
 	'item:object:file' => 'Faidhle',
+	
 	'collection:object:file' => 'Faidhlichean',
 	'collection:object:file:all' => "Faidhlichean gu lèir",
 	'collection:object:file:owner' => "Faidhlichean aig %s",

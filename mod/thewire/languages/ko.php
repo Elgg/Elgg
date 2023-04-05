@@ -17,7 +17,7 @@ return array(
 	'collection:object:thewire:all' => "모든 쪽글",
 	'collection:object:thewire:owner' => "%s의 쪽글",
 	'collection:object:thewire:friends' => "친구들의 쪽글",
-
+	
 	'thewire:replying' => "%s (@%s) 의 쪽글에 답변",
 	'thewire:thread' => "글모음",
 	'thewire:charleft' => "글자 남음",

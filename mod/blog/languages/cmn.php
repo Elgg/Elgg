@@ -26,7 +26,7 @@ return array(
 	'blog:save_status' => '最后保存',
 
 	'blog:revision' => '修订',
-
+	
 	// messages
 	'blog:message:saved' => '博客已保存',
 	'blog:error:cannot_save' => '无法保存博客',

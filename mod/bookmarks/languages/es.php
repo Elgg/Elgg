@@ -28,7 +28,7 @@ return array(
 
 	'bookmarks:notify:summary' => 'Nuevo marcador llamado %s',
 	'bookmarks:notify:subject' => 'Nuevo marcador: %s',
-
+	
 	'bookmarks:numbertodisplay' => 'N&uacute;mero de marcadores a mostrar',
 
 	'river:object:bookmarks:create' => '%s marcó %s',

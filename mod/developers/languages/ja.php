@@ -32,6 +32,7 @@ return array(
 	'developers:help:show_strings' => "elgg_echo()で使われる翻訳キー(\$message_key)を表示します。",
 	'developers:label:show_modules' => "コンソールにロードされた AMD モジュールを表示する",
 	'developers:help:show_modules' => "ロードされたモジュールや値をあなたの JavaScript コンソールに配信します。",
+	'developers:label:wrap_views' => "Wrap views",
 	'developers:label:log_events' => "イベントとプラグインhooksを記録する",
 	'developers:help:log_events' => "イベントとプラグインhooksをログに記録します。【警告】１ページでも、たくさん吐き出しますので注意してください。",
 	'developers:label:show_gear' => "adminエリアの外側で %s を使用する",
@@ -57,7 +58,6 @@ return array(
 	'developers:inspect:functions' => 'Functions（関数）',
 	'developers:inspect:file' => 'ファイル',
 	'developers:inspect:middleware' => 'ファイル',
-	'developers:inspect:service:name' => 'Name',
 
 	// event logging
 	'developers:request_stats' => "リクエストの統計(シャットダウンイベントは除きます)",

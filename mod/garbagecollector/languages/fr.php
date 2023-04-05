@@ -17,5 +17,8 @@ return array(
 	'garbagecollector:done' => "Ramasse-miettes terminé",
 	'garbagecollector:optimize' => "Optimisation en cours %s",
 	
+	'garbagecollector:orphaned' => "Nettoyer les données orphelines de la table \"%s\"",
+	'garbagecollector:orphaned:done' => "Nettoyage des données orphelines terminé",
+	
 	'garbagecollector:cli:database:optimize:description' => "Optimiser les tables de la base de données",
 );

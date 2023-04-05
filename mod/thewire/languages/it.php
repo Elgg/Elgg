@@ -16,7 +16,7 @@ return array(
 	'collection:object:thewire:all' => "Tutti gli Aggiornamenti di stato",
 	'collection:object:thewire:owner' => "Aggiornamenti di stato di %s",
 	'collection:object:thewire:friends' => "Aggiornamenti di stato dei tuoi amici",
-
+	
 	'thewire:replying' => "Stai rispondendo a %s (@%s) che ha scritto",
 	'thewire:thread' => "Argomento",
 	'thewire:charleft' => "caratteri rimanenti",

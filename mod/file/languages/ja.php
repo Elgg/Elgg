@@ -8,6 +8,7 @@
 return array(
 
 	'item:object:file' => 'ファイル',
+	
 	'collection:object:file' => 'ファイル',
 	'collection:object:file:all' => "サイト全体のファイル",
 	'collection:object:file:owner' => "%s さんのファイル",

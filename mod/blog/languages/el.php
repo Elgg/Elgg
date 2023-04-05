@@ -6,13 +6,13 @@
  */
 
 return array(
-	'item:object:blog' => 'Ιστολόγια',
+	'item:object:blog' => 'Ιστολόγιο',
 	'collection:object:blog' => 'Ιστολόγια',
 	'collection:object:blog:all' => 'Όλα τα ιστολόγια',
-	'collection:object:blog:owner' => 'ιστολόγια του χρήστη %s',
+	'collection:object:blog:owner' => 'Ιστολόγια χρήστη %s',
 	'collection:object:blog:group' => 'Ιστολόγια ομάδων',
 	'collection:object:blog:friends' => 'Ιστολόγια φίλων',
-	'add:object:blog' => 'Προσθέστε μία νέα ανάρτηση',
+	'add:object:blog' => 'Προσθήκη ανάρτησης',
 	'edit:object:blog' => 'Επεξεργασία ανάρτησης',
 
 	'blog:revisions' => 'Αναθεωρήσεις',
@@ -26,9 +26,9 @@ return array(
 	'blog:save_status' => 'Τελευταία αποθήκευση:',
 
 	'blog:revision' => 'Αναθεώρηση',
-
+	
 	// messages
-	'blog:message:saved' => 'Η ανάρτηση αποθηκεύτηκε',
+	'blog:message:saved' => 'Η ανάρτηση αποθηκεύτηκε.',
 	'blog:error:cannot_save' => 'Αδύνατη η αποθήκευση της ανάρτησης',
 	'blog:error:cannot_write_to_container' => 'Μη έγκυρη πρόσβαση για αποθήκευση της ανάρτησης στην ομάδα',
 	'blog:edit_revision_notice' => '(Παλιά έκδοση)',

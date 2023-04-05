@@ -8,6 +8,7 @@
 return array(
 
 	'item:object:file' => 'Фајлови',
+	
 	'collection:object:file' => 'Фајлови',
 	'collection:object:file:all' => "Сви фајлови сајта",
 	'collection:object:file:owner' => "%s's фајлови",

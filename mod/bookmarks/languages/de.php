@@ -38,7 +38,7 @@ Adresse: %s
 
 Schau Dir das neue Lesezeichen an und schreibe einen Kommentar:
 %s',
-
+	
 	'bookmarks:numbertodisplay' => 'Anzahl der anzuzeigenden Lesezeichen-Einträge.',
 
 	'river:object:bookmarks:create' => '%s hat das Lesezeichen %s hinzugefügt',

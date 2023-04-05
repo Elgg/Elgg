@@ -17,9 +17,12 @@ return array(
 	'collection:object:thewire:all' => "Tous les messages du Fil",
 	'collection:object:thewire:owner' => "Le Fil de %s",
 	'collection:object:thewire:friends' => "Messages du Fil des contacts",
+	'collection:object:thewire:mentions' => "Messages du Fil mentionnant @%s",
 	'notification:object:thewire:create' => "Envoyer une notification lorsqu'un message est publié sur le Fil",
 	'notifications:mute:object:thewire' => "à propos du message du Fil '%s'",
 
+	'thewire:menu:filter:mentions' => "Mentions",
+	
 	'thewire:replying' => "Répondre à %s (@%s), qui a écrit",
 	'thewire:thread' => "Conversation",
 	'thewire:charleft' => "caractères restant",
@@ -61,6 +64,8 @@ return array(
 	'thewire:notify:reply' => '%s a répondu à %s sur le Fil :',
 	'thewire:notify:post' => '%s a publié sur le Fil :',
 	'thewire:notify:footer' => "Voir et répondre :\n%s",
+	
+	'notification:mentions:object:thewire:subject' => '%s vous a mentionné dans un message du Fil',
 
 	/**
 	 * Settings
