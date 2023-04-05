@@ -3,10 +3,16 @@
  * Elgg page header image
  */
 
+$header_url = elgg_extract('header_url', $vars);
+if ($header_url === false) {
+	// we do not want a header image
+	return;
+}
+
 $entity = elgg_extract('entity', $vars);
 $type = 'header';
 $size = 'header';
-$header_url = elgg_extract('header_url', $vars);
+
 $class = ['elgg-header-image'];
 
 if (empty($header_url)) {
