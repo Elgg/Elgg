@@ -72,8 +72,8 @@ class DiskFilestore extends Filestore {
 		if ($mode == 'write' || $mode == 'append') {
 			try {
 				$this->makeDirectoryRoot($path);
-			} catch (\Exception $e) {
-				_elgg_services()->logger->warning("Couldn't create directory: {$path}");
+			} catch (Exception $e) {
+				_elgg_services()->logger->warning($e);
 				return false;
 			}
 		}
@@ -283,8 +283,10 @@ class DiskFilestore extends Filestore {
 			return;
 		}
 		
+		error_clear_last();
 		if (!@mkdir($dirroot, 0755, true)) {
-			throw new IOException("Could not make {$dirroot}");
+			$last_error = error_get_last();
+			throw new IOException("Couldn't create directory: {$dirroot}" . $last_error ? ': ' . $last_error['message'] : '');
 		}
 	}
 
