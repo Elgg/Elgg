@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v2
         with:
             repository: Elgg/starter-project
-            ref: master
+            ref: 4.x
             path: ${{ steps.branch.outputs.ZIP_FOLDER }}
 
       - name: Composer Install
