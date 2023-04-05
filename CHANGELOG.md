@@ -1,3 +1,88 @@
+<a name="5.0.0-beta.1"></a>
+### 5.0.0-beta.1  (2023-04-05)
+
+#### Contributors
+
+* Jeroen Dalsem (108)
+* Jerôme Bakker (62)
+
+#### Features
+
+* **access_collection:** trigger 'create', 'update' and 'delete' events ([8a8e89a5](https://github.com/Elgg/Elgg/commit/8a8e89a5743b8abda258207041f6bdd1a6c0c427))
+* **actions:** action registration can support additional middleware ([90c786e1](https://github.com/Elgg/Elgg/commit/90c786e108ed75fe6cb5c1e2cc43f05735f3de81))
+* **activity:** commenting bumps related river activity last action ([00868b68](https://github.com/Elgg/Elgg/commit/00868b68a9230d5f532b5960cbb3f65d9f8aa517))
+* **admin:**
+  * added a widget for admins with a feed with latest Elgg news ([697481f1](https://github.com/Elgg/Elgg/commit/697481f1bcadf9e14dd19fd6d9188aa30143b8c5))
+  * moved page menu items to the topbar ([535d0eb2](https://github.com/Elgg/Elgg/commit/535d0eb24faf6ecb7857bcd16a3a69b01d46004e))
+  * admin account menu is now more in line with front end ([405b114e](https://github.com/Elgg/Elgg/commit/405b114e7ed4ceb44915f21b858db9c0fed25042))
+  * moved plugin settings menu items to own section ([6098f150](https://github.com/Elgg/Elgg/commit/6098f1509561930aa7408e4e288882b4eca1f08b))
+* **ckeditor:** replaced ckeditor4 with ckeditor5 ([52ea3488](https://github.com/Elgg/Elgg/commit/52ea34883819b615f4263fe72adb8c14f08d3e3a))
+* **core:**
+  * added download response ([12204ccd](https://github.com/Elgg/Elgg/commit/12204ccda890fb769993f380bdcd3f1afb637cf7))
+  * upgrade batches now have access to upgrade entity ([5cc3a108](https://github.com/Elgg/Elgg/commit/5cc3a108a6c77bf4b54b01db7e64fd0b790feffd))
+  * event and hook deprecation now have a default message ([992e7ef3](https://github.com/Elgg/Elgg/commit/992e7ef374e526dc05295c7ac26c3993c76826cc))
+* **db:** private settings are merged into metadata ([cb9951a5](https://github.com/Elgg/Elgg/commit/cb9951a5425145027579fc6f1e8625cf63197061))
+* **entities:** create event has been split into before and after event ([432b4dad](https://github.com/Elgg/Elgg/commit/432b4dadabf81cc2a4facc6d7ae722d82c5b8f1c))
+* **events:** event sequences have a unique ID ([0febd638](https://github.com/Elgg/Elgg/commit/0febd6383a2a50e82275e71f3d6d266ca4ccff97))
+* **files:**
+  * file plugin files are now stored with the entity ([9df0cd0a](https://github.com/Elgg/Elgg/commit/9df0cd0a8d97c7a009eaba641be18bd63d8cae8d))
+  * no longer show file type icons in regular listings ([fe263adf](https://github.com/Elgg/Elgg/commit/fe263adfdc6e42dd5eb5bfc666fdb1ccdfff9b33))
+* **forms:** automatically support sticky forms ([320a8110](https://github.com/Elgg/Elgg/commit/320a8110afeae54555cfa1c2949f2e62922bb4fd))
+* **garbagecollector:** cleanup orphaned data in the database ([230a8ee9](https://github.com/Elgg/Elgg/commit/230a8ee9bfa6f401740c02891a4bac1aa9ca878a))
+* **gatekeepers:**
+  * added PageOwner gatekeeper middleware ([443c6f27](https://github.com/Elgg/Elgg/commit/443c6f2703226955408eb1da91b544e17cd78b79))
+  * pageownercaneditgatekeeper now requires a pageowner ([6553b9a2](https://github.com/Elgg/Elgg/commit/6553b9a2f8313db24ed233464f8552eaba1fa84f))
+* **http:** added helper function to get a Http Guzzle Client ([d2f60974](https://github.com/Elgg/Elgg/commit/d2f6097434c814e19ef0c260632f2bee86e922ca))
+* **icons:** icon cropping is now default enabled in entity/edit/icon ([a845ce04](https://github.com/Elgg/Elgg/commit/a845ce044c9f20d3bbb15f40faa8d2d498e1f9f9))
+* **plugins:** it is now allowed to set arrays as private settings ([de415231](https://github.com/Elgg/Elgg/commit/de415231ce0528daacfa247afb70fae5fe3fc17a))
+* **reportedcontent:** added detail view for reports with comments ([90fc1195](https://github.com/Elgg/Elgg/commit/90fc119576826b952fccf1236d202d749f8f6399))
+* **routes:** added the ability to influence priority for similar routes ([d257f024](https://github.com/Elgg/Elgg/commit/d257f0243499829600f99bff03e017fd7813f28b))
+* **tests:** allow easier testing with multiple installations ([ac3035e0](https://github.com/Elgg/Elgg/commit/ac3035e0321766f2e2adbfa57d5acac9a979937c))
+* **users:** if configured a river activity is for a new user ([d5a1d944](https://github.com/Elgg/Elgg/commit/d5a1d9448814fa8f920e1ade05f6a72d114c4f12))
+* **views:** page header now has support for header image ([84929789](https://github.com/Elgg/Elgg/commit/84929789bb328b03bd849e7547198ccb885e528b))
+* **web_services:**
+  * API methods can be registered in the elgg-plugin.php ([6357e73e](https://github.com/Elgg/Elgg/commit/6357e73e71e2839042d2e86413afacb90fcbac56))
+  * allow different callbacks depending on HTTP request ([d67507e0](https://github.com/Elgg/Elgg/commit/d67507e0d3d93869e02b06e8db967a8cc6d2be4a))
+* **widgets:**
+  * it is now possible to filter the widgets in the add panel ([7d95d87c](https://github.com/Elgg/Elgg/commit/7d95d87c02f9c564774cf9594225327ff1223c89))
+  * target column and position can now be configured ([97d657c4](https://github.com/Elgg/Elgg/commit/97d657c410500640c8a44c2a9cf9fa44f9de4b8e))
+
+
+#### Documentation
+
+* **events:** added some additional information about migrating hooks ([6d607025](https://github.com/Elgg/Elgg/commit/6d607025d6aed9eef7022c587094c4533d095631))
+
+
+#### Bug Fixes
+
+* **core:** prevent issues with unsaved data and system log ([4048eeec](https://github.com/Elgg/Elgg/commit/4048eeec026267c6266ec6d1070d3bcbd0324798))
+* **filestore:** improved removal of a directory ([a6c09c81](https://github.com/Elgg/Elgg/commit/a6c09c8167e9e2f7327e9af8b08ea95830ff6945))
+* **forms:** draw fieldset legend on correct location ([c1a012ac](https://github.com/Elgg/Elgg/commit/c1a012acaaf6bc8f9214e82d4a4316ae6e48964c))
+* **likes:** use variable in translation string ([d39e33da](https://github.com/Elgg/Elgg/commit/d39e33da306db1c02f5f2157058627bc73b6e91a))
+* **search:** use correct container type title ([ba742d1f](https://github.com/Elgg/Elgg/commit/ba742d1f7cde24cb16d91107826903371a247f08))
+* **views:** output/url now returns nothing if there is no url ([db8b6e06](https://github.com/Elgg/Elgg/commit/db8b6e0617cac67fc3163ebbd2a019cc68d03dd5))
+
+
+#### Breaking Changes
+
+* **hooks:** hooks and events system has been merged ([720a38a5](https://github.com/Elgg/Elgg/commit/720a38a576718b8874b21efd81054da4b8eb0be8))
+* **menus:** elgg_register_title_button has its first argument removed ([ddb25972](https://github.com/Elgg/Elgg/commit/ddb259723073b65faad5ba02f8ab862593828ae1))
+
+
+#### Removed
+
+* **blogs:**
+  * no longer show a delete button on blog edit form ([8274c0e8](https://github.com/Elgg/Elgg/commit/8274c0e845133f492fef3d9c56a4ff5c043d3b78))
+  * auto save draft functionality has been removed ([bb71b807](https://github.com/Elgg/Elgg/commit/bb71b8075dd5aaf13eb09374e814ec0fa2af2899))
+* **core:**
+  * InvalidParameterException as removed ([aedb914c](https://github.com/Elgg/Elgg/commit/aedb914cb205235cd16322cefe8b59c915acc1b2))
+  * the REFERER constant is removed in favor of REFERRER ([a3137340](https://github.com/Elgg/Elgg/commit/a313734035fa1f24af81c642f0ddb8387c7b3867))
+  * it's no longer possible to set site secret in elgg-config ([80e91091](https://github.com/Elgg/Elgg/commit/80e91091376ebe88fd5cd6ed1ef0180efd8d5d96))
+* **files:** file plugin no longer uses custom file type icons ([92c50dd1](https://github.com/Elgg/Elgg/commit/92c50dd1e6c7dc48d9ecde4f7b0f9c1c51a3891a))
+* **plugins:** the embed plugin has been removed ([31a443c5](https://github.com/Elgg/Elgg/commit/31a443c56a48410333a08a1c0d61308f822151a9))
+* **widgets:** class function saveSettings has been removed ([3c58daee](https://github.com/Elgg/Elgg/commit/3c58daeea8bfc48c099827733cbe167462043d5f))
+
+
 <a name="4.3.8"></a>
 ### 4.3.8  (2023-04-04)
 
