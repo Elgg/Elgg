@@ -3,7 +3,7 @@
 namespace Elgg\SiteNotifications;
 
 /**
- * View hooks
+ * View events
  *
  * @since 4.0
  * @internal

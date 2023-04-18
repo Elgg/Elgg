@@ -36,7 +36,7 @@ class Preloader {
 
 		$this->preloadCurrentUserLikes($guids);
 
-		$guids_remaining = $this->preloadCountsFromHook($this->getEntities($guids));
+		$guids_remaining = $this->preloadCountsFromEvent($this->getEntities($guids));
 		if (!empty($guids_remaining)) {
 			$this->preloadCountsFromQuery($guids_remaining);
 		}
@@ -74,11 +74,11 @@ class Preloader {
 	 *
 	 * @return int[]
 	 */
-	protected function preloadCountsFromHook(array $entities) {
+	protected function preloadCountsFromEvent(array $entities) {
 		$guids_not_loaded = [];
 
 		foreach ($entities as $entity) {
-			// BC with likes_count(). If this hook is used this preloader may not be of much help.
+			// BC with likes_count(). If this event is used this preloader may not be of much help.
 			$type = $entity->getType();
 			$params = ['entity' => $entity];
 
@@ -199,7 +199,7 @@ class Preloader {
 	}
 	
 	/**
-	 * Hook handler for listings to determine if preloading is needed
+	 * Event handler for listings to determine if preloading is needed
 	 *
 	 * @param \Elgg\Event $event 'view_vars', 'page/components/list'
 	 *

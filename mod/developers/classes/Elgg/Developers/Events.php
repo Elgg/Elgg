@@ -76,7 +76,7 @@ class Events {
 	/**
 	 * Change the to address if a forwarding address isset
 	 *
-	 * @param \Elgg\Event $event The hook for 'prepare', 'system:email'
+	 * @param \Elgg\Event $event The event for 'prepare', 'system:email'
 	 *
 	 * @since 3.0
 	 * @return void|\Elgg\Email
@@ -107,7 +107,7 @@ class Events {
 	/**
 	 * Block outgoing emails
 	 *
-	 * @param \Elgg\Event $event The hook for 'transport', 'system:email'
+	 * @param \Elgg\Event $event The event for 'transport', 'system:email'
 	 *
 	 * @since 3.0
 	 * @return void|true

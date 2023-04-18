@@ -3,7 +3,7 @@
 namespace Elgg\Groups;
 
 /**
- * Handle access related hooks
+ * Handle access related events
  *
  * @since 3.2
  * @internal
@@ -19,7 +19,7 @@ class Access {
 	 */
 	public static function getDefaultAccess(\Elgg\Event $event) {
 		
-		$group = self::getGroupFromDefaultAccessHook($event);
+		$group = self::getGroupFromDefaultAccessEvent($event);
 		if (!$group instanceof \ElggGroup) {
 			return;
 		}
@@ -57,10 +57,9 @@ class Access {
 	 *
 	 * @param \Elgg\Event $event 'default', 'access'
 	 *
-	 * @return false|\ElggGroup
+	 * @return null|\ElggGroup
 	 */
-	protected static function getGroupFromDefaultAccessHook(\Elgg\Event $event) {
-		
+	protected static function getGroupFromDefaultAccessEvent(\Elgg\Event $event): ?\ElggGroup {
 		$input_params = (array) $event->getParam('input_params');
 		
 		// try supplied container guid
@@ -76,7 +75,7 @@ class Access {
 			return $page_owner;
 		}
 		
-		return false;
+		return null;
 	}
 	
 	/**

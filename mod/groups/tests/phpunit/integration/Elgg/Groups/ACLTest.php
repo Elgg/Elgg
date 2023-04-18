@@ -73,7 +73,7 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 	
 	/**
 	 * https://github.com/Elgg/Elgg/pull/6393
-	 * Hook handlers for 'access:collections:write','all' hook should respect
+	 * Event handlers for 'access:collections:write','all' event should respect
 	 * group's content access mode and container write permissions
 	 */
 	public function testWriteAccessArray() {

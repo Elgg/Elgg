@@ -16,7 +16,7 @@ if (elgg_annotation_exists($entity_guid, 'likes')) {
 	return elgg_ok_response('', elgg_echo('likes:alreadyliked'));
 }
 
-// limit likes through a plugin hook (to prevent liking your own content for example)
+// limit likes through an event (to prevent liking your own content for example)
 if (!$entity->canAnnotate(0, 'likes')) {
 	// plugins should register the error message to explain why liking isn't allowed
 	return elgg_error_response();
