@@ -1,6 +1,6 @@
 <?php
 
-echo elgg_format_element('script', [], elgg_view('initialize_elgg.js'));
+echo elgg_format_element('script', [], elgg_view('initialize_elgg.js', $vars));
 
 $js = elgg_get_loaded_external_resources('js', 'footer');
 foreach ($js as $resource) {
