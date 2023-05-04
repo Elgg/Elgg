@@ -11,7 +11,6 @@ namespace Elgg\Pages;
 class Views {
 
 	/**
-	 * Called on view_vars, input/access hook
 	 * Prevent ACCESS_PUBLIC from ending up as a write access option
 	 *
 	 * @param \Elgg\Event $event 'view_vars', 'input/access'

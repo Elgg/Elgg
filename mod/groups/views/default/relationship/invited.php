@@ -2,7 +2,7 @@
 /**
  * Relationship view of a group membership invitation
  *
- * @note To add or remove from the relationship menu, register handlers for the menu:relationship hook.
+ * @note To add or remove from the relationship menu, register handlers for the menu:relationship event.
  *
  * @uses $vars['relationship'] the group invitation
  */

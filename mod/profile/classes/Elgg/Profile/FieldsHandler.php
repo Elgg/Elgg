@@ -3,7 +3,7 @@
 namespace Elgg\Profile;
 
 /**
- * Hook callback for fields
+ * Event callback for fields
  *
  * @since 4.0
  */

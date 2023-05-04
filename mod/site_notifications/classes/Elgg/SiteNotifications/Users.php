@@ -3,7 +3,7 @@
 namespace Elgg\SiteNotifications;
 
 /**
- * User related hook / event handling
+ * User related event handling
  *
  * @since 4.0
  * @internal

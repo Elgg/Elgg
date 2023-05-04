@@ -3,7 +3,7 @@
 namespace Elgg\CKEditor;
 
 /**
- * Hook callbacks for views
+ * Event callbacks for views
  *
  * @since 5.0
  * @internal

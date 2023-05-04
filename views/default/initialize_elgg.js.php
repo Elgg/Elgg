@@ -4,5 +4,5 @@
  */
 ?>
 
-var elgg = <?php echo json_encode(_elgg_get_js_page_data()); ?>;
+var elgg = <?php echo json_encode(_elgg_get_js_page_data($vars)); ?>;
 <?php

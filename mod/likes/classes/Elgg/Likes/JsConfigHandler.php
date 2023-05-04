@@ -3,14 +3,14 @@
 namespace Elgg\Likes;
 
 /**
- * Javascript confif handler
+ * Javascript config handler
  */
 class JsConfigHandler {
 
 	/**
 	 * Send config data to the likes module
 	 *
-	 * @param \Elgg\Event $event Hook info
+	 * @param \Elgg\Event $event 'elgg.data', 'site'
 	 *
 	 * @return array
 	 */
