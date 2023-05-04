@@ -75,3 +75,8 @@ if ($position == 'after' || $position == 'both') {
 }
 
 elgg_pop_context();
+
+$limit = elgg_extract('limit', $vars);
+if (!$pagination && $limit !== false && !empty($items) && count($items) >= $limit) {
+	echo elgg_view('page/components/list/widget_more', $vars);
+}
