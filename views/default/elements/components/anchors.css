@@ -29,7 +29,7 @@
 	display: inline-block;
 	color: $(text-color-strong);
 	background-color: $(background-color-soft);
-	padding: .15rem .25rem;
+	padding: .15rem .5rem;
 	margin-top: -.15rem;
 	text-align: center;
 	white-space: nowrap;

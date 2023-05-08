@@ -52,6 +52,7 @@
     "build": "webpack --mode production"
   },
   "dependencies": {
+    "@samhammer/ckeditor5-simple-button-plugin": "^2.19.0",
     "mini-css-extract-plugin": "^2.7.5"
   }
 }

@@ -111,3 +111,8 @@ echo elgg_format_element('table', ['class' => $table_classes], $body);
 if ($position == 'after' || $position == 'both') {
 	echo $nav;
 }
+
+$limit = elgg_extract('limit', $vars);
+if (!$pagination && $limit !== false && !empty($items) && count($items) >= $limit) {
+	echo elgg_view('page/components/list/widget_more', $vars);
+}
