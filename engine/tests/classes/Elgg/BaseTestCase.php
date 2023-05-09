@@ -50,13 +50,13 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	 */
 	public static function getTestingConfig() {
 		return new Config([
-			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 'c_i_elgg_',
-			'dbname' => getenv('ELGG_DB_NAME') ? : '',
-			'dbuser' => getenv('ELGG_DB_USER') ? : '',
-			'dbpass' => getenv('ELGG_DB_PASS') ? : '',
-			'dbhost' => getenv('ELGG_DB_HOST') ? : 'localhost',
-			'dbport' => getenv('ELGG_DB_PORT') ? : 3306,
-			'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
+			'dbprefix' => getenv('ELGG_DB_PREFIX') !== false ? getenv('ELGG_DB_PREFIX') : 'c_i_elgg_',
+			'dbname' => getenv('ELGG_DB_NAME') ?: '',
+			'dbuser' => getenv('ELGG_DB_USER') ?: '',
+			'dbpass' => getenv('ELGG_DB_PASS') ?: '',
+			'dbhost' => getenv('ELGG_DB_HOST') ?: 'localhost',
+			'dbport' => getenv('ELGG_DB_PORT') ?: 3306,
+			'dbencoding' => getenv('ELGG_DB_ENCODING') ?: 'utf8mb4',
 
 			'memcache' => (bool) getenv('ELGG_MEMCACHE'),
 			'memcache_servers' => [
@@ -65,7 +65,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 					'port' => (int) getenv('ELGG_MEMCACHE_SERVER1_PORT'),
 				],
 			],
-			'memcache_namespace_prefix' => getenv('ELGG_MEMCACHE_NAMESPACE_PREFIX') ? : 'elgg_mc_prefix_',
+			'memcache_namespace_prefix' => getenv('ELGG_MEMCACHE_NAMESPACE_PREFIX') ?: 'elgg_mc_prefix_',
 
 			'redis' => (bool) getenv('ELGG_REDIS'),
 			'redis_servers' => [
@@ -76,11 +76,11 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 			],
 
 			// These are fixed, because tests rely on specific location of the dataroot for source files
-			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
+			'wwwroot' => getenv('ELGG_WWWROOT') ?: 'http://localhost/',
 			'dataroot' => Paths::elgg() . 'engine/tests/test_files/dataroot/',
 			'cacheroot' => Paths::elgg() . 'engine/tests/test_files/cacheroot/',
 			'assetroot' => Paths::elgg() . 'engine/tests/test_files/assetroot/',
-			'seeder_local_image_folder' => getenv('ELGG_SEEDER_LOCAL_IMAGE_FOLDER') ? : Paths::elgg() . '.scripts/seeder/images/',
+			'seeder_local_image_folder' => getenv('ELGG_SEEDER_LOCAL_IMAGE_FOLDER') ?: Paths::elgg() . '.scripts/seeder/images/',
 			
 			'system_cache_enabled' => false,
 			'simplecache_enabled' => false,
