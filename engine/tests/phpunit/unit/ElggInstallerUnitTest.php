@@ -53,7 +53,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		$config->system_cache_enabled = false;
 		$config->simplecache_enabled = false;
 		$config->lastcache = time();
-		$config->wwwroot = getenv('ELGG_WWWROOT') ? : 'http://localhost/';
+		$config->wwwroot = getenv('ELGG_WWWROOT') ?: 'http://localhost/';
 
 		$services = InternalContainer::factory(['config' => $config]);
 
@@ -91,15 +91,15 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		$template = Application::elggDir()->getContents("elgg-config/settings.example.php");
 
 		$params = [
-			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 'c_i_elgg_',
-			'dbname' => getenv('ELGG_DB_NAME') ? : '',
-			'dbuser' => getenv('ELGG_DB_USER') ? : '',
-			'dbpassword' => getenv('ELGG_DB_PASS') ? : '',
-			'dbhost' => getenv('ELGG_DB_HOST') ? : 'localhost',
-			'dbport' => getenv('ELGG_DB_PORT') ? : 3306,
-			'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
+			'dbprefix' => getenv('ELGG_DB_PREFIX') !== false ? getenv('ELGG_DB_PREFIX') : 'c_i_elgg_',
+			'dbname' => getenv('ELGG_DB_NAME') ?: '',
+			'dbuser' => getenv('ELGG_DB_USER') ?: '',
+			'dbpassword' => getenv('ELGG_DB_PASS') ?: '',
+			'dbhost' => getenv('ELGG_DB_HOST') ?: 'localhost',
+			'dbport' => getenv('ELGG_DB_PORT') ?: 3306,
+			'dbencoding' => getenv('ELGG_DB_ENCODING') ?: 'utf8mb4',
 			'dataroot' => Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/dataroot/'),
-			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
+			'wwwroot' => getenv('ELGG_WWWROOT') ?: 'http://localhost/',
 			'timezone' => 'UTC',
 			'cacheroot' => Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/cacheroot/'),
 			'assetroot' => Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/assetroot/'),
@@ -307,15 +307,15 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		mkdir($dataroot);
 
 		$request = $this->prepareHttpRequest('install.php?step=database', 'POST', [
-			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 'c_i_elgg_',
-			'dbname' => getenv('ELGG_DB_NAME') ? : '',
-			'dbuser' => getenv('ELGG_DB_USER') ? : '',
-			'dbpassword' => getenv('ELGG_DB_PASS') ? : '',
-			'dbhost' => getenv('ELGG_DB_HOST') ? : 'localhost',
-			'dbport' => getenv('ELGG_DB_PORT') ? : 3306,
-			'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
+			'dbprefix' => getenv('ELGG_DB_PREFIX') !== false ? getenv('ELGG_DB_PREFIX') : 'c_i_elgg_',
+			'dbname' => getenv('ELGG_DB_NAME') ?: '',
+			'dbuser' => getenv('ELGG_DB_USER') ?: '',
+			'dbpassword' => getenv('ELGG_DB_PASS') ?: '',
+			'dbhost' => getenv('ELGG_DB_HOST') ?: 'localhost',
+			'dbport' => getenv('ELGG_DB_PORT') ?: 3306,
+			'dbencoding' => getenv('ELGG_DB_ENCODING') ?: 'utf8mb4',
 			'dataroot' => $dataroot,
-			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
+			'wwwroot' => getenv('ELGG_WWWROOT') ?: 'http://localhost/',
 			'timezone' => 'UTC',
 		]);
 
@@ -341,14 +341,14 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$request = $this->prepareHttpRequest('install.php?step=database', 'POST', [
 			'dbprefix' => '',
-			'dbname' => getenv('ELGG_DB_NAME') ? : '',
-			'dbuser' => getenv('ELGG_DB_USER') ? : '',
-			'dbpassword' => getenv('ELGG_DB_PASS') ? : '',
-			'dbhost' => getenv('ELGG_DB_HOST') ? : 'localhost',
-			'dbport' => getenv('ELGG_DB_PORT') ? : 3306,
-			'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
+			'dbname' => getenv('ELGG_DB_NAME') ?: '',
+			'dbuser' => getenv('ELGG_DB_USER') ?: '',
+			'dbpassword' => getenv('ELGG_DB_PASS') ?: '',
+			'dbhost' => getenv('ELGG_DB_HOST') ?: 'localhost',
+			'dbport' => getenv('ELGG_DB_PORT') ?: 3306,
+			'dbencoding' => getenv('ELGG_DB_ENCODING') ?: 'utf8mb4',
 			'dataroot' => $dataroot,
-			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
+			'wwwroot' => getenv('ELGG_WWWROOT') ?: 'http://localhost/',
 			'timezone' => 'UTC',
 		]);
 
@@ -598,18 +598,18 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->getMock()->batchInstall([
 			// database settings
-			'dbuser' => getenv('ELGG_DB_USER') ? : 'c_i_elgg_dbuser',
-			'dbpassword' => getenv('ELGG_DB_PASS') ? : 'c_i_elgg_dbpwd',
-			'dbname' => getenv('ELGG_DB_NAME') ? : 'c_i_elgg_dbname',
-			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 'c_i_elgg_',
-			'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
-			'dbhost' => getenv('ELGG_DB_HOST') ? : 'localhost',
-			'dbport' => getenv('ELGG_DB_PORT') ? : '3306',
+			'dbuser' => getenv('ELGG_DB_USER') ?: 'c_i_elgg_dbuser',
+			'dbpassword' => getenv('ELGG_DB_PASS') ?: 'c_i_elgg_dbpwd',
+			'dbname' => getenv('ELGG_DB_NAME') ?: 'c_i_elgg_dbname',
+			'dbprefix' => getenv('ELGG_DB_PREFIX') !== false ? getenv('ELGG_DB_PREFIX') : 'c_i_elgg_',
+			'dbencoding' => getenv('ELGG_DB_ENCODING') ?: 'utf8mb4',
+			'dbhost' => getenv('ELGG_DB_HOST') ?: 'localhost',
+			'dbport' => getenv('ELGG_DB_PORT') ?: '3306',
 
 			// site settings
 			'sitename' => 'Elgg CI Site',
 			'siteemail' => 'no_reply@ci.elgg.org',
-			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
+			'wwwroot' => getenv('ELGG_WWWROOT') ?: 'http://localhost/',
 			'dataroot' => Paths::elgg() . '/engine/tests/test_files/dataroot/',
 
 			// admin account
