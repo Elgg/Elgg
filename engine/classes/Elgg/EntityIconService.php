@@ -3,9 +3,9 @@
 namespace Elgg;
 
 use Elgg\Database\EntityTable;
+use Elgg\Exceptions\ExceptionInterface;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\UnexpectedValueException;
-use Elgg\Exceptions\LogicException;
 use Elgg\Filesystem\MimeTypeService;
 use Elgg\Http\Request as HttpRequest;
 use Elgg\Traits\Loggable;
@@ -253,14 +253,14 @@ class EntityIconService {
 			}
 			
 			// validate cropping coords to prevent out-of-bounds issues
+			$sizes = $this->getSizes($entity->getType(), $entity->getSubtype(), $type);
+			$coords = array_merge($sizes['master'], $coords);
+			
+			$icon = $this->getIcon($entity, 'master', $type, false);
+			
 			try {
-				$sizes = $this->getSizes($entity->getType(), $entity->getSubtype(), $type);
-				$coords = array_merge($sizes['master'], $coords);
-				
-				$icon = $this->getIcon($entity, 'master', $type, false);
-				
 				$this->images->normalizeResizeParameters($icon->getFilenameOnFilestore(), $coords);
-			} catch (LogicException $e) {
+			} catch (ExceptionInterface $e) {
 				// cropping coords are wrong, reset to 0
 				$x1 = 0;
 				$x2 = 0;

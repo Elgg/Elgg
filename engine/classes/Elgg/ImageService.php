@@ -185,9 +185,10 @@ class ImageService {
 	 *                       - 'x1', 'y1', 'x2', 'y2' cropping coordinates
 	 *
 	 * @return array
-	 * @throws LogicException
+	 * @throws InvalidArgumentException
+	 * @throws RangeException
 	 */
-	public function normalizeResizeParameters(string $source, array $params = []) {
+	public function normalizeResizeParameters(string $source, array $params = []): array {
 
 		$image = $this->imagine->open($source);
 
