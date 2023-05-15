@@ -41,6 +41,8 @@ return array(
 
 Om de pagina te bekijken en te reageren, klik hier:
 %s',
+	
+	'notification:mentions:object:page:subject' => '%s heeft je vermeld in een pagina',
 
 	'pages:more' => 'Meer pagina\'s',
 	'pages:none' => 'Nog geen pagina\'s aangemaakt',

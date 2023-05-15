@@ -19,14 +19,14 @@ return array(
 	'collection:object:thewire:friends' => "Messages du Fil des contacts",
 	'collection:object:thewire:mentions' => "Messages du Fil mentionnant @%s",
 	'notification:object:thewire:create' => "Envoyer une notification lorsqu'un message est publié sur le Fil",
-	'notifications:mute:object:thewire' => "à propos du message du Fil '%s'",
+	'notifications:mute:object:thewire' => "à propos du message du Fil \"%s\"",
 
 	'thewire:menu:filter:mentions' => "Mentions",
 	
 	'thewire:replying' => "Répondre à %s (@%s), qui a écrit",
 	'thewire:thread' => "Conversation",
 	'thewire:charleft' => "caractères restant",
-	'thewire:tags' => "Messages du Fil avec '%s'",
+	'thewire:tags' => "Messages du Fil taggués \"%s\"",
 	'thewire:noposts' => "Il n'y a pas encore de message sur le Fil",
 
 	'thewire:by' => 'Message du Fil de %s',
@@ -36,7 +36,7 @@ return array(
 	/**
 	 * The wire river
 	 */
-	'river:object:thewire:create' => "%s a écrit %s",
+	'river:object:thewire:create' => "%s a écrit sur %s",
 	'thewire:wire' => 'le Fil',
 
 	/**
@@ -70,6 +70,6 @@ return array(
 	/**
 	 * Settings
 	 */
-	'thewire:settings:limit' => "Nombre maximum de caractères pour chaque commentaire :",
+	'thewire:settings:limit' => "Nombre maximum de caractères pour chaque message du Fil :",
 	'thewire:settings:limit:none' => "Pas de limite",
 );

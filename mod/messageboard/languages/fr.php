@@ -26,8 +26,8 @@ return array(
 	 * Status messages
 	 */
 
-	'annotation:delete:messageboard:fail' => "Désolé, ce message n'a pas pu être supprimé",
-	'annotation:delete:messageboard:success' => "Ce message a bien été supprimé",
+	'annotation:delete:messageboard:fail' => "Désolé, le message n'a pas pu être supprimé",
+	'annotation:delete:messageboard:success' => "Vous avez bien supprimé le message",
 	
 	'messageboard:posted' => "Votre message a bien été publié sur le tableau de messages.",
 
@@ -36,7 +36,7 @@ return array(
 	 */
 
 	'messageboard:email:subject' => 'Vous avez un nouveau message sur le tableau de messages !',
-	'messageboard:email:body' => "Vous avez un nouveau commentaire de %s sur votre tableau de messages :
+	'messageboard:email:body' => "Vous avez un nouveau commentaire de %s sur votre tableau :
 
 %s
 

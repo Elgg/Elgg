@@ -59,6 +59,8 @@ Bekijk en reageer hier op de discussie:
 
 Bekijk en reageer hier op de discussie:
 %s',
+	
+	'notification:mentions:object:discussion:subject' => '%s heeft je vermeld in een discussie',
 
 	'groups:tool:forum' => 'Activeer groepsdiscussies',
 	'groups:tool:forum:description' => 'Laat groepsleden een discussie starten in deze groep.',

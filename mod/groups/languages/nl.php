@@ -22,6 +22,7 @@ return array(
 	'groups:add' => "Maak een nieuwe groep",
 	'groups:edit' => "Bewerk groep",
 	'groups:edit:profile' => "Profiel",
+	'groups:edit:images' => "Afbeeldingen",
 	'groups:edit:access' => "Toegang",
 	'groups:edit:tools' => "Tools",
 	'groups:edit:settings' => "Instellingen",
@@ -139,7 +140,7 @@ return array(
 	'groups:invite:remove:check' => 'Weet je zeker dat je deze uitnodiging wilt verwijderen?',
 	'groups:invite:body' => "%s heeft je uitgenodigd om lid te worden van de groep '%s'.
 
-On al je uitnodigingen te bekijken, klik hier:
+Om al je uitnodigingen te bekijken, klik hier:
 %s",
 
 	'groups:welcome:subject' => "Welkom bij de groep '%s'!",
@@ -154,7 +155,7 @@ Je kunt direct beginnen in de groep!
 Om het profiel te bekijken, klik hier:
 %s
 
-of klik op de link om alle lidmaatschapsverzoeken te bekijken:
+of klik op onderstaande link om alle lidmaatschapsverzoeken te bekijken:
 %s",
 
 	'river:group:create' => '%s heeft de groep %s aangemaakt',

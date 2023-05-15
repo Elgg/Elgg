@@ -69,6 +69,9 @@ msgid ""
 "With this plugin enabled the longtext input fields will get a WYSIWYG editor"
 " which allows for some additional markup options for your text."
 msgstr ""
+"Avec ce plugin activé, les champs de saisie de texte long disposent d'un "
+"éditeur WYSIWYG avec des options de balisage supplémentaires pour votre "
+"texte."
 
 #: ../../plugins/ckeditor.rst:6
 msgid ""
@@ -76,6 +79,9 @@ msgid ""
 "style markup options. Have a look at the CKEditor website for a full "
 "featured editor."
 msgstr ""
+"Selon la configuration, l'éditeur peut être enrichi de diverses options de "
+"balisage de style de texte. Consultez le site web de CKEditor pour un "
+"éditeur complet."
 
 #: ../../plugins/ckeditor.rst:10
 msgid "Images"
@@ -87,6 +93,9 @@ msgid ""
 "using a file dialog or just drag/drop or copy/paste the image into the "
 "editor."
 msgstr ""
+"Elgg prend également en charge le téléchargement d'images dans l'éditeur. "
+"Vous pouvez charger des images à l'aide d'une boîte de dialogue de fichier "
+"ou simplement glisser/déposer ou copier/coller l'image dans l'éditeur."
 
 #: ../../plugins/ckeditor.rst:15
 msgid "Mentions"
@@ -97,18 +106,25 @@ msgid ""
 "With the CKEditor plugin you also enable mention capabilities. By default "
 "you can mention:"
 msgstr ""
+"Avec le plugin CKEditor, vous activez également les fonctionnalités de "
+"mention. Par défaut, vous pouvez mentionner :"
 
 #: ../../plugins/ckeditor.rst:18
 msgid "Users: use `@` to start autocompleting users"
 msgstr ""
+"Des utilisateurs : utilisez `@` pour lancer l'autocomplétion pour les "
+"utilisateurs"
 
 #: ../../plugins/ckeditor.rst:19
 msgid "Groups: use `!` to start autocompleting groups"
 msgstr ""
+"Des groupes : utilisez `@` pour lancer l'autocomplétion pour les groupes"
 
 #: ../../plugins/ckeditor.rst:20
 msgid "Searchable content: use `[` to start autocompleting content"
 msgstr ""
+"Du contenu indexé : utilisez ` [` pour lancer l'autocomplétion pour du "
+"contenu"
 
 #: ../../plugins/ckeditor.rst:22
 msgid ""
@@ -116,10 +132,14 @@ msgid ""
 "user/group/content will be added to the content. Based on the mentioned "
 "users preference they will also be notified they have been mentioned."
 msgstr ""
+"Lorsque vous sélectionnez quelque chose dans la liste d'autocomplétion, un "
+"lien vers l'utilisateur/groupe/contenu sélectionné sera ajouté au contenu. "
+"En fonction des préférences des utilisateurs mentionnés, ils seront "
+"également informés qu'ils ont été mentionnés."
 
 #: ../../plugins/ckeditor.rst:26
 msgid "Toolbar configuration"
-msgstr ""
+msgstr "Configuration de la barre d'outils"
 
 #: ../../plugins/ckeditor.rst:27
 msgid ""
@@ -129,6 +149,12 @@ msgid ""
 "how to configure a toolbar can be found here: "
 "https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html"
 msgstr ""
+"Ce plugin fournit une configuration de barre d'outils standard pour "
+"l'éditeur par défaut et l'éditeur simple. Les paramètres du plugin vous "
+"permettent de configurer une configuration personnalisée de barre d'outils. "
+"Presque tous les plugins CKEditor sont disponibles. Des informations sur la "
+"façon de configurer une barre d'outils peuvent être trouvées ici : "
+"https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html"
 
 #: ../../plugins/dashboard.rst:2
 msgid "Dashboard"
@@ -658,6 +684,13 @@ msgid ""
 "fields contain tags (for example *skills*) limiting access to a field will "
 "also limit who can find you by that tag."
 msgstr ""
+"Cela fournit des informations sur un utilisateur, qui sont configurables "
+"avec l'événement ``fields, user:user``. Vous pouvez modifier les champs de "
+"profil disponibles à partir du panneau d'administration. Chaque champ de "
+"profil a sa propre restriction d'accès, de sorte que les utilisateurs "
+"peuvent choisir exactement qui peut voir chaque élément individuel. Certains"
+" des champs contiennent des tags (par exemple *compétences*) qui limitent "
+"l'accès à un champ qui limite également qui peut vous trouver via ce tag."
 
 #: ../../plugins/profile.rst:21
 msgid "User avatar"
@@ -710,6 +743,9 @@ msgid ""
 "</design/events>` for 'register' 'menu:user_hover', the following sections "
 "have special meaning:"
 msgstr ""
+"Le menu contextuel peut être étendu en enregistrant un :doc:`event "
+"</design/events>` pour 'register' 'menu:user_hover', les sections suivantes "
+"ont une signification spécifique :"
 
 #: ../../plugins/profile.rst:41
 msgid "**default** for non-active links (eg to read a blog)"
