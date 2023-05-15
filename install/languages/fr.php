@@ -18,11 +18,11 @@ return array(
 	'install:refresh' => 'Rafraîchir',
 	'install:change_language' => 'Changer de langue',
 
-	'install:welcome:instructions' => "L'installation de Elgg comporte 6 étapes simples et commence par la lecture de cette page de bienvenue !
+	'install:welcome:instructions' => "L'installation de Elgg comporte 6 étapes simples et commence par cette page de bienvenue !
 
 Si vous ne l'avez pas déjà fait, lisez les instructions d'installation distribuées avec Elgg (ou cliquez sur le lien vers les instructions en bas de la page).
 
-Cliquez sur le bouton Suivant pour commencer l'installation.",
+Pour commencer l'installation, cliquez sur le bouton Suivant.",
 	
 	'install:footer:instructions' => "Instructions d'installation",
 	'install:footer:troubleshooting' => "Dépannage de l'installation",
@@ -37,18 +37,18 @@ Cliquez sur le bouton Suivant pour commencer l'installation.",
 	'install:require:settings' => 'Fichier de configuration',
 	'install:require:database' => 'Base de données',
 
-	'install:check:root' => 'Votre serveur web n\'a pas la permission de créer le fichier .htaccess dans le répertoire racine de Elgg. Vous avez deux options :
+	'install:check:root' => 'Votre serveur web n\'a pas les permissions pour créer le fichier .htaccess dans le répertoire racine de Elgg. Vous avez deux options :
 
 1. Changer les permissions du répertoire racine
 
 2. Copier le fichier install/config/htaccess.dist vers .htaccess',
 
-	'install:check:php:version' => 'Elgg a besoin de la version %s ou supérieure de PHP . Ce serveur utilise la version %s.',
+	'install:check:php:version' => 'Elgg a besoin de la version de PHP %s ou supérieure. Ce serveur utilise la version %s.',
 	'install:check:php:extension' => 'Elgg a besoin de l\'extension PHP %s.',
 	'install:check:php:extension:recommend' => 'Il est recommandé que l\'extension PHP %s soit installée.',
-	'install:check:php:open_basedir' => 'La directive "open_basedir" de PHP peut empêcher Elgg d\'enregistrer les fichiers dans son répertoire des données.',
+	'install:check:php:open_basedir' => 'La directive PHP open_basedir peut empêcher Elgg d\'enregistrer les fichiers dans son répertoire des données.',
 	'install:check:php:safe_mode' => 'Exécuter PHP en mode sans échec n\'est pas conseillé et peut poser des problèmes avec Elgg.',
-	'install:check:php:arg_separator' => 'Pour fonctionner, l\'option arg_separator.output doit "&", alors que la valeur actuelle sur votre serveur est %s',
+	'install:check:php:arg_separator' => 'Pour fonctionner, l\'option arg_separator.output doit valoir "&", alors que la valeur actuelle sur votre serveur est %s',
 	'install:check:php:register_globals' => 'L\'option "Register globals" doit être désactivée',
 	'install:check:php:session.auto_start' => "Pour fonctionner l'option session.auto_start doit être mise à \"off\". Vous devez soit modifier la configuration de votre serveur, soit ajouter cette directive au fichier .htaccess de Elgg.",
 
@@ -160,7 +160,7 @@ Cliquez sur le bouton Suivant pour commencer l'installation.",
 	'install:error:rewrite:nginx' => 'Nous pensons que votre serveur utilise un serveur web Nginx.',
 	'install:error:rewrite:lighttpd' => 'Nous pensons que votre serveur utilise un serveur web Lighttpd.',
 	'install:error:rewrite:iis' => 'Nous pensons que votre serveur utilise un serveur web IIS.',
-	'install:error:rewrite:allowoverride' => "Le test de réécriture des adresses a échoué, et la cause la plus probable est que l'option AllowOverride n'est pas définie à All pour le répertoire de Elgg. Ceci empêche Apache de traiter le fichier .htaccess qui contient les règles de réécriture.
+	'install:error:rewrite:allowoverride' => "Le test de réécriture des URLs a échoué, et la cause la plus probable est que l'option AllowOverride n'est pas définie à All pour le répertoire de Elgg. Ceci empêche Apache de traiter le fichier .htaccess qui contient les règles de réécriture.
 \n\nUne cause moins probable est qu'Apache est configuré avec un alias pour votre répertoire Elgg et que vous deviez alors définir le RewriteBase dans votre fichier .htaccess. Vous trouverez plus d'instructions dans le fichier .htaccess de votre répertoire Elgg.",
 	'install:error:rewrite:htaccess:write_permission' => 'Votre serveur web n\'a pas la permission de créer le fichier .htaccess dans le répertoire de Elgg. Vous devez copier manuellement le fichier install/config/htaccess.dist et le renommer en .htaccess ou modifier les permissions du répertoire.',
 	'install:error:rewrite:htaccess:read_permission' => 'Il y a un fichier .htaccess dans le répertoire de Elgg, mais votre serveur web n\'a pas la permission de le lire.',

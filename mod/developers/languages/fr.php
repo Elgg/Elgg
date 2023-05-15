@@ -37,8 +37,8 @@ return array(
 	'developers:label:show_modules' => "Montrer les modules AMD chargés dans la console",
 	'developers:help:show_modules' => "Envoie les modules chargés et les valeurs dans votre console JavaScript.",
 	'developers:label:wrap_views' => "Envelopper les Vues",
-	'developers:help:wrap_views' => "Ceci enveloppe presque toutes les vues avec des commentaires HTML. Pratique pour identifier la vue responsable d'un élément de code HTML particulier.
-									Cela peut casser les vues non HTML de l'affichage principal : images, RSS, XML, JSON, etc. Voir developers_wrap_views() pour plus d'informations.",
+	'developers:help:wrap_views' => "Ceci enveloppe presque toutes les vues avec des commentaires HTML. Pratique pour identifier la vue responsable d'un bloc HTML particulier.
+									Ceci peut casser les vues non HTML de l'affichage principal : images, RSS, XML, JSON, etc. Voir developers_wrap_views() pour plus d'informations.",
 	'developers:label:log_events' => "Journaliser les événements et les hooks des plugins.",
 	'developers:help:log_events' => "Écrit les événements et les hooks des plugins dans le journal. Attention : il y en a beaucoup pour chaque page.",
 	'developers:label:show_gear' => "Utiliser %s hors de la zone d'administration",

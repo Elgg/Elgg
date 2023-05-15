@@ -14,7 +14,7 @@ return array(
 	'collection:object:discussion:group' => 'Discussions du groupe',
 	'collection:object:discussion:my_groups' => 'Discussions dans mes groupes',
 	'notification:object:discussion:create' => "Envoyer une notification quand une discussion est créée",
-	'notifications:mute:object:discussion' => "à propos de la discussion '%s'",
+	'notifications:mute:object:discussion' => "à propos de la discussion \"%s'\"",
 	
 	'discussion:settings:enable_global_discussions' => 'Activer les discussions globales',
 	'discussion:settings:enable_global_discussions:help' => 'Permet de créer des discussions hors des groupes',
@@ -44,11 +44,11 @@ return array(
 	 */
 	'discussion:topic:notify:summary' => 'Nouveau sujet de discussion intitulé %s',
 	'discussion:topic:notify:subject' => 'Nouveau sujet de discussion : %s',
-	'discussion:topic:notify:body' => '%s a ajouté un nouveau sujet de discussion "%s":
+	'discussion:topic:notify:body' => '%s a ajouté un nouveau sujet de discussion "%s" :
 
 %s
 
-Voir le sujet de discussion et y répondre :
+Voir le sujet de discussion et répondre :
 %s',
 
 	'discussion:comment:notify:summary' => 'Nouvelle réponse dans la discussion : %s',
@@ -57,7 +57,7 @@ Voir le sujet de discussion et y répondre :
 
 %s
 
-Voir la discussion et y répondre :
+Voir la discussion et répondre :
 %s',
 	
 	'notification:mentions:object:discussion:subject' => '%s vous a mentionné dans une discussion',
@@ -65,14 +65,14 @@ Voir la discussion et y répondre :
 	'groups:tool:forum' => 'Activer les discussions du groupe',
 	'groups:tool:forum:description' => 'Autoriser les membres du groupe à démarrer des sujets de discussion dans ce groupe.',
 
-	'discussions:groups:edit:add_group_subscribers_to_discussion_comments' => 'Ajouter les membres du groupe aux notifications des commentaires de discussion',
+	'discussions:groups:edit:add_group_subscribers_to_discussion_comments' => 'Ajouter les membres du groupe aux notifications des réponses dans un sujet de discussion',
 	
 	/**
 	 * Discussion status
 	 */
 	'discussion:topic:status' => 'Statut de la discussion',
 	'discussion:topic:closed:title' => 'Cette discussion est fermée.',
-	'discussion:topic:closed:desc' => 'Cette discussion a été fermée et n\'accepte plus de nouveaux commentaires.',
+	'discussion:topic:closed:desc' => 'Cette discussion a été fermée et n\'accepte plus de nouveau message.',
 	'discussion:topic:container' => 'Sélectionnez un groupe (facultatif) pour démarrer cette discussion',
 	'discussion:topic:container:help' => 'Commencer une discussion dans un groupe limitera par défaut l\'accès aux membres du groupe',
 

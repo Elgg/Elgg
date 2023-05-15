@@ -8,6 +8,8 @@
 return array(
 	'annotation:delete:likes:fail' => "Er was een probleem tijdens het niet meer leuk vinden",
 	'annotation:delete:likes:success' => "Je vindt dit niet meer leuk",
+	
+	'likes:this' => '%svindt dit leuk',
 	'likes:deleted' => 'Je vindt dit niet meer leuk',
 	'likes:see' => 'Bekijk wie dit leuk vindt',
 	'likes:remove' => 'Niet meer leuk vinden',

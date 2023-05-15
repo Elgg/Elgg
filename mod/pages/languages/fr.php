@@ -35,7 +35,7 @@ return array(
 
 	'pages:notify:summary' => 'Nouvelle page intitulée %s',
 	'pages:notify:subject' => "Une nouvelle page : %s",
-	'pages:notify:body' => '%s a créé une page : %s
+	'pages:notify:body' => '%s a créé une nouvelle page : %s
 
 %s
 

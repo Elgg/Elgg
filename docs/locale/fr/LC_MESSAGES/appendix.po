@@ -16080,7 +16080,7 @@ msgstr "La version minimale de PHP est maintenant 8.0."
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:25
 msgid "Faker"
-msgstr ""
+msgstr "Faker"
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:27
 msgid ""
@@ -16090,7 +16090,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:30
 msgid "Events and Hooks"
-msgstr ""
+msgstr "Événements et Hooks"
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:32
 msgid ""
