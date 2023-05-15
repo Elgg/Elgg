@@ -77,7 +77,7 @@ return array(
 
 	'file:notify:summary' => 'Nouveau fichier intitulé %s',
 	'file:notify:subject' => 'Nouveau fichier : %s',
-	'file:notify:body' => '%s a téléchargé un nouveau fichier : %s
+	'file:notify:body' => '%s a chargé un nouveau fichier : %s
 
 %s
 

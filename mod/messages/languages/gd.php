@@ -43,17 +43,6 @@ return array(
 	*/
 
 	'messages:email:subject' => 'Tha thu air teachdaireachd ùr fhaighinn!',
-	'messages:email:body' => "Tha thu air teachdaireachd ùr fhaighinn bho %s.
-
-Tha e ag ràdh:
-
-%s
-
-Airson na teachdaireachdan agad fhaicinn, briog an-seo:
-%s
-
-Airson teachdairead a chur gu %s, briog an-seo:
-%s",
 
 	/**
 	* Error messages

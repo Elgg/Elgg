@@ -36,17 +36,6 @@ return array(
 	 */
 
 	'messageboard:email:subject' => 'Du hast eine neue Nachricht auf Deiner Pinnwand!',
-	'messageboard:email:body' => "Du hast eine neue Nachricht von %s auf Deiner Pinnwand.
-
-Die Nachricht lautet:
-
-%s
-
-Um Deine Pinnwand aufzurufen, folge dem Link:
-%s
-
-oder um das Profil von %s aufzurufen, folge dem Link:
-%s",
 
 	/**
 	 * Error messages

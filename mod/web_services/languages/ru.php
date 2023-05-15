@@ -31,11 +31,16 @@ return array(
 	'APIException:CallMethodNotImplemented' => "Метод вызова '%s' в настоящее время не поддерживается.",
 	'SecurityException:authenticationfailed' => "Пользователь не может быть аутентифицирован",
 	'SecurityException:BannedUser' => "Эта учетная запись пользователя заблокирована, токен не может быть предоставлен.",
+	'InvalidArgumentException:APIParametersArrayStructure' => "Структура массива параметров неверна для вызова метода expose '%s'",
+	'DomainException:UnrecognisedHttpMethod' => "Неизвестный http метод %s для api метода '%s'",
 	'SecurityException:InvalidPostHash' => "Хэш данных POST недействителен — Ожидалось %s получено %s.",
 	'SecurityException:DupePacket' => "Подпись пакета уже видна.",
 	'SecurityException:InvalidAPIKey' => "Недействительный или отсутствующий ключ API.",
 	'BadRequestException:MissingOutputViewInViewtype' => "Отсутствует представление 'api/output' в типе представления '%s'.",
 	'BadRequestException:MissingOutputViewInViewtype:DataViewsPlugin' => "Включите плагин 'data_views' чтобы добавить это представление.",
+	
+	'web_services:api_methods:system.api.list:get:description' => "Список всех доступных API вызовов в системе.",
+	'web_services:api_methods:auth.gettoken:post:description' => "Этот API вызов позволяет пользователю получить пользовательский токен аутентификации, который можно использовать для аутентификации будущих API вызовов. Передайте его, как параметр auth_token",
 	
 	'admin:configure_utilities:webservices' => "Веб-сервисы",
 	'admin:configure_utilities:ws_list' => "Список методов API",
@@ -71,7 +76,7 @@ return array(
 	'web_services:settings:authentication' => "Настройки аутентификации веб API",
 	'web_services:settings:authentication:description' => "Некоторые методы API требуют, чтобы внешние источники аутентифицировали себя. Этим внешним источникам необходимо предоставить пару ключей API (открытый и секретный ключ).
 
-Обратите внимание, что по крайней мере один метод аутентификации API должен быть активен для аутентификации запросов API.",
+Обратите внимание, что по крайней мере один метод аутентификации API должен быть активен для аутентификации запросов API..",
 	'web_services:settings:authentication:allow_key' => "Разрешить базовую аутентификацию с открытым ключом API",
 	'web_services:settings:authentication:allow_key:help' => "Открытый ключ API можно передать в качестве параметра в запросе.",
 	'web_services:settings:authentication:allow_hmac' => "Разрешить аутентификацию API заголовка HMAC",

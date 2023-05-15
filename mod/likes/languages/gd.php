@@ -23,13 +23,4 @@ return array(
 
 	// notifications. yikes.
 	'likes:notifications:subject' => 'Mhol %s am post agad \'%s\'',
-	'likes:notifications:body' => 'Mhol %1$s am post agad \'%2$s\' air %3$s
-
-Seall am post agad an seo:
-
-%4$s
-
-no seall a\' phròifil aig %1$s an seo:
-
-%5$s',
 );

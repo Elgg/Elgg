@@ -43,18 +43,6 @@ return array(
 	*/
 
 	'messages:email:subject' => 'Du hast eine neue Nachricht!',
-	'messages:email:body' => "Du hast eine neue Nachricht von %s erhalten.
-
-Die Nachricht lautet:
-
-%s
-
-
-Um zu Deiner Inbox zu kommen, folge dem Link:
-%s
-
-und um %s eine Nachricht zu schicken, folge dem Link:
-%s",
 
 	/**
 	* Error messages

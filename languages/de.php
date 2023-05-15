@@ -315,9 +315,6 @@ return array(
 	'usersettings:notifications:subscriptions:save:fail' => "Beim Speichern der Benachrichtigungs-Abonnements ist ein Fehler aufgetreten.",
 
 	'notification:default:salutation' => 'Hallo %s,',
-	'notification:default:sign-off' => 'Grüße
-
-%s',
 	'notification:subject' => 'Benachrichtigung über %s',
 	'notification:body' => 'Schau Dir die neue Aktivität hier an: %s',
 	
@@ -451,9 +448,6 @@ return array(
 	'admin:performance:label:generic' => 'Allgemein',
 	'admin:performance:generic:description' => 'Im Folgendes ist eine Auflistung von Vorschlägen, um die Performance Deiner Webseite zu verbessern',
 	'admin:performance:simplecache' => 'Simplecache',
-	'admin:performance:simplecache:settings:warning' => "Es ist empfehlenswert, den Simplecache über die entsprechende Konfigurationsvariable in settings.php zu aktivieren.
-Die Verwendung von Simplecache verbessert die Cache-Performance.
-Bei der Konfiguration der Simplecache-Option in settings.php kann eine Datenbankanfrage bei der Bereitstellung von Javascript- und CSS-Dateien eingespart werden.",
 	'admin:performance:systemcache' => 'Systemcache',
 	'admin:performance:apache:mod_cache' => 'Apache-mod_cache',
 	'admin:performance:php:open_basedir' => 'PHP-open_basedir',
@@ -664,7 +658,6 @@ Bei der Konfiguration der Simplecache-Option in settings.php kann eine Datenbank
 	'admin:security:settings:email_require_confirmation:help' => 'Bevor die neue Emailadresse verwendet werden kann muss die Änderung bestätigt werden. Nach der Änderung der Emailadresse wird an die alte Mailadresse auch noch eine Benachrichtigung gesendet.',
 
 	'admin:security:settings:session_bound_entity_icons' => 'Session-gebundene Entitäts-Bilder',
-	'admin:security:settings:session_bound_entity_icons:help' => 'Entitäts-Icons können standardmäßig an die PHP-Session gebunden sein. In diesem Fall sind auch die URLs dieser Icons Session-spezifisch. Bei Session-gebundenen Icons können die zugehörigen URLs nicht von unterschiedlichen PHP-Sessions verwendet werden. Dies bedeutet auch, dass ein Caching dieser URLs nur innerhalb der jeweils zugehörigen Session funktioniert.',
 	
 	'admin:security:settings:site_secret:intro' => 'Elgg verwendet einen seitenspezifischen Geheimschlüssel, um darauf basierend Sicherheits-Token zu generieren, die für verschiedene Authentifizierungszwecke verwendet werden.',
 	'admin:security:settings:site_secret:regenerate' => "Geheimschlüssel neu erzeugen",
@@ -692,53 +685,18 @@ Bei der Konfiguration der Simplecache-Option in settings.php kann eine Datenbank
 	'admin:site:secret:prevented' => "Die Neuerstellung des Geheimschlüssels Deiner Community-Seite wurde unterbunden.",
 	
 	'admin:notification:make_admin:admin:subject' => 'Neuer Admin auf %s',
-	'admin:notification:make_admin:admin:body' => '%s hat %s zu einem Administrator auf der Community-Seite %s gemacht.
-
-Um das Profil des neuen Administrators aufzurufen, folge diesem Link:
-%s',
 	
 	'admin:notification:make_admin:user:subject' => 'Du bist nun Admin auf %s',
-	'admin:notification:make_admin:user:body' => '%s hat Dich zu einem Administrator der Community-Seite %s gemacht.
-
-Um die Community-Seite aufzurufen, folge diesem Link:
-%s',
 	'admin:notification:remove_admin:admin:subject' => 'Zurückstufung eines Admins auf %s',
-	'admin:notification:remove_admin:admin:body' => '%s hat %s auf %s von einen Administrator zu einem normalen Benutzer zurückgestuft.
-
-Um das Profil des frühreren Administrators aufzurufen, folge diesem Link:
-%s',
 	
 	'admin:notification:remove_admin:user:subject' => 'Entlassung als Admin auf %s',
-	'admin:notification:remove_admin:user:body' => '%s hat Dich auf %s von einem Administrator zu einem normalen Benutzer zurückgestuft.
-
-Um die Community-Seite aufzurufen, folge diesem Link:
-%s',
 	'user:notification:ban:subject' => 'Dein Account auf %s wurde gesperrt',
-	'user:notification:ban:body' => 'Dein Account auf %s wurde gesperrt.
-
-Um die Community-Seite aufzurufen, folge diesem Link:
-%s',
 	
 	'user:notification:unban:subject' => 'Dein Account auf %s ist nicht länger gesperrt',
-	'user:notification:unban:body' => 'Dein Account auf %s ist nicht länger gesperrt. Du kannst Dich auf der Community-Seite wieder anmelden.
-
-Um die Community-Seite aufzurufen, folge diesem Link:
-%s',
 	
 	'user:notification:password_change:subject' => 'Dein Passwort wurde geändert!',
-	'user:notification:password_change:body' => "Dein Passwort auf '%s' wurde geändert! Wenn Du die Änderung vorgenommen hast, mußt Du nichts weiter unternehmen.
-
-Solltest Du allerdings die Änderung nicht vorgenommen haben, setze Dein Passwort bitte mit einem Klick auf den folgenden Link zurück:
-%s
-
-Oder kontaktiere einen Administrator der Seite:
-%s",
 	
 	'admin:notification:unvalidated_users:subject' => "Validierung von Benutzeraccounts auf %s",
-	'admin:notification:unvalidated_users:body' => "%d Benutzer warten auf die Validierung/Aktivierung ihrer Accounts auf der Community-Seite '%s' durch einen Administrator.
-
-Siehe die vollständige Liste dieser Benutzer hier:
-%s",
 
 /**
  * Plugins
@@ -1154,16 +1112,6 @@ Siehe die vollständige Liste dieser Benutzer hier:
  */
 
 	'useradd:subject' => 'Benutzeraccount erstellt',
-	'useradd:body' => 'Auf der Community-Seite %s wurde ein Benutzeraccount für Dich erstellt. Um Dich anzumelden, gehe zu:
-
-%s
-
-und melde Dich mit diesen Zugangsdaten an:
-
-Benutzername (Username): %s
-Passwort: %s
-
-Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.',
 
 /**
  * Messages
@@ -1397,11 +1345,6 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.',
 	'email:save:fail:password' => "Das eingegebene Passwort ist nicht gleich Deinem derzeitigen Passwort. Daher kann Deine neue Email-Adresse nicht gespeichert werden.",
 
 	'friend:newfriend:subject' => "Du bist nun mit %s befreundet!",
-	'friend:newfriend:body' => "%s ist nun mit Dir befreundet!
-
-Um ihr/sein Profil aufzurufen, folge diesem Link:
-
-%s",
 
 	'email:changepassword:subject' => "Änderung des Passworts!",
 	'email:changepassword:body' => "Dein Passwort wurde geändert.",
@@ -1410,39 +1353,15 @@ Um ihr/sein Profil aufzurufen, folge diesem Link:
 	'email:resetpassword:body' => "Dein Passwort wurde zurückgesetzt. Dein neues Passwort ist: %s",
 
 	'email:changereq:subject' => "Verifizierung der Änderung Deines Passworts.",
-	'email:changereq:body' => "Es wurde eine Änderung des Passworts Deines Accounts angefordert (von der IP-Adresse %s).
-
-Falls Du die Änderung des Passworts angefordert hast, klicke bitte auf den folgenden Link, um dies zu bestätigen:
-
-%s
-
-Andernfalls ignoriere bitte diese Email.",
 	
 	'account:email:request:success' => "Deine neue Emailadresse muss zunächst bestätigt werden. Bitte überprüfe den Posteingang der Adresse '%s' für weitere Informationen.",
 	'email:request:email:subject' => "Bitte bestätige Deine Emailadresse",
-	'email:request:email:body' => "Du hast eine Änderung Deiner Emailadresse auf '%s' angefordert.
-Wenn Du diese Änderung nicht angefordert hast, kannst Du diese Mail ignorieren.
-
-Um Deine Emailadressänderung zu bestätigen, klicke bitte auf diesen Link:
-%s
-
-Dieser Link ist 1 Stunde gültig.",
 	
 	'account:email:request:error:no_new_email' => "Keine ausstehenden Emailadressänderungen.",
 	
 	'email:confirm:email:old:subject' => "Deine Emailadresse wurde geändert.",
-	'email:confirm:email:old:body' => "Deine Emailadresse auf '%s' wurde geändert.
-Von nun an erhältst Du Benachrichtigungen an '%s'.
-
-Wenn Du das nicht angefordert hast, kontaktiere bitte einen Administrator.
-%s",
 	
 	'email:confirm:email:new:subject' => "Deine Emailadresse wurde geändert.",
-	'email:confirm:email:new:body' => "Deine Emailadresse auf '%s' wurde geändert.
-Von nun an erhältst Du Benachrichtigungen an diese Emailadresse.
-
-Wenn Du das nicht angefordert hast, kontaktiere bitte einen Administrator.
-%s",
 
 	'account:email:admin:validation_notification' => "Benachrichtige mich, wenn es Benutzer gibt, die durch einen Administrator überprüft werden müssen",
 	'account:email:admin:validation_notification:help' => "Aufgrund der Seiteneinstellungen, müssen neu registrierte Benutzer von einem Administrator manuell validiert werden. Mit dieser Option kannst Du die Benachrichtigung über ausstehende Validierungen deaktivieren.",
@@ -1451,10 +1370,6 @@ Wenn Du das nicht angefordert hast, kontaktiere bitte einen Administrator.
 	'account:validation:pending:content' => "Dein Benutzeraccount wurde erstellt! Allerdings ist der Account noch nicht aktiviert. Die Validierung/Aktivierung wird durch einen Administrator der Community-Seite durchgeführt. Du wirst eine Benachrichtigung per Email erhalten, sobald Dein Account aktiviert worden ist.",
 	
 	'account:notification:validation:subject' => "Dein Account auf %s wurde validiert!",
-	'account:notification:validation:body' => "Dein Benutzeraccount auf '%s' wurde validiert und aktiviert. Du kannst Deinen Account nun verwenden.
-
-Folge dem Link, um zur Community-Seite zu gelangen:
-%s",
 
 /**
  * user default access
@@ -1494,20 +1409,8 @@ Folge dem Link, um zur Community-Seite zu gelangen:
 
 	'generic_comment:notification:subject' => 'Re: %s',
 	'generic_comment:notification:owner:summary' => 'Neuer Kommentar zu: %s',
-	'generic_comment:notification:owner:body' => "Zu einem Deiner Beiträge wurde ein neuer Kommentar geschrieben. Er lautet:
-
-%s
-
-Um zu antworten oder Deinen ursprünglichen Beitrag aufzurufen, folge diesem Link:
-%s",
 	
 	'generic_comment:notification:user:summary' => 'Neuer Kommentar zu: %s',
-	'generic_comment:notification:user:body' => "Es wurde ein neuer Kommentar geschrieben. Er lautet:
-
-%s
-
-Um zu antworten oder den ursprünglichen Beitrag aufzurufen, folge diesem Link:
-%s",
 
 /**
  * Entities
@@ -1567,26 +1470,6 @@ Um zu antworten oder den ursprünglichen Beitrag aufzurufen, folge diesem Link:
  */
 	'diagnostics:report' => 'Report',
 	'diagnostics:description' => 'Der Report, der im folgenden erstellt werden kann, kann bei der Fehlersuche hilfreich sein. In manchen Fällen bitten die Entwickler von Elgg, dass er zu einem Bugreport beigefügt wird.',
-	'diagnostics:header' => '========================================================================
-Elgg-Diagnose-Report
-Generiert %s von %s
-========================================================================
-
-',
-	'diagnostics:report:php' => '
-PHP-Info:
-%s
-------------------------------------------------------------------------',
-	'diagnostics:report:md5' => '
-Installierte Dateien und Prüfsummen:
-
-%s
-------------------------------------------------------------------------',
-	'diagnostics:report:globals' => '
-Globale Variablen:
-
-%s
-------------------------------------------------------------------------',
 	
 /**
  * Miscellaneous

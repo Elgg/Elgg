@@ -135,25 +135,10 @@ return array(
 	'groups:invite:subject' => "%sさん、%s に招待されています。",
 	'groups:joinrequest:remove:check' => 'この招待リクエストを削除してよいですか？',
 	'groups:invite:remove:check' => 'この招待を破棄してもよろしいですか？',
-	'groups:invite:body' => "%s さんがあなたをグループ '%s' に招待しています。
-
-クリックして招待状を確認して見ましょう:
-%s",
 
 	'groups:welcome:subject' => "ようこそ、「 %s 」グループへ！",
-	'groups:welcome:body' => "あなたはグループ '%s' のメンバーとなりました。
-
-ここをクリックして投稿を始めましょう！
-%s",
 
 	'groups:request:subject' => "%s さんは「 %s 」に参加希望を申請しました。",
-	'groups:request:body' => "%s さんがグループ '%s' への参加を希望しています。
-
-プロフィールを見るには:
-%s
-
-グループ参加のリクエストを見るには:
-%s",
 
 	'river:group:create' => '%s さんはグループ「 %s 」を作成しました',
 	'river:group:join' => '%s さんは、グループ「 %s 」に参加しました',

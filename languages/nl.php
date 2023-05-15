@@ -101,6 +101,8 @@ return array(
 	'GatekeeperException' => 'Je hebt niet de juiste rechten om deze pagina te zien.',
 	'RegistrationAllowedGatekeeperException:invalid_invitecode' => "De opgegeven uitnodigingscode is niet geldig",
 	'BadRequestException' => 'Het verzoek is onjuist',
+	'BadRequestException:invalid_host_header' => 'Het verzoek bevat een ongeldige HOST header',
+	'BadRequestException:livesearch:no_query' => 'Livesearch vereist een zoekopdracht',
 	'ValidationException' => 'De opgestuurde data voldoet niet aan de vereisten, controleer de invoer',
 	'LogicException:InterfaceNotImplemented' => '%smoet %s implementeren',
 	
@@ -255,6 +257,11 @@ return array(
 	'avatar:remove:success' => 'Profielfoto succesvol verwijderd',
 	'avatar:remove:fail' => 'Profielfoto verwijderen is mislukt',
 	
+	'header:remove:success' => 'Kopafbeelding succesvol verwijderd',
+	'header:remove:fail' => 'Kopafbeelding verwijderen is mislukt',
+	'header:upload:success' => 'Kopafbeelding succesvol geüpload',
+	'header:upload:fail' => 'Kopafbeelding uploaden mislukt',
+	
 	'action:user:validate:already' => "%s was al gevalideerd",
 	'action:user:validate:success' => "%s is gevalideerd",
 	'action:user:validate:error' => "Een fout is opgetreden tijdens het valideren van %s",
@@ -286,6 +293,7 @@ return array(
  */
 	'river' => "River",
 	'river:user:friend' => "%s is nu bevriend met %s",
+	'river:site:site:join' => "%sis lid geworden van de site",
 	'river:update:user:avatar' => '%s heeft een nieuwe profielfoto',
 	'river:posted:generic' => '%s plaatste',
 	'river:ingroup' => 'in de groep %s',
@@ -321,6 +329,7 @@ return array(
 	'usersettings:notifications:default:description' => 'Standaard notificatie instellingen voor gebeurtenissen uit het systeem',
 	'usersettings:notifications:content_create:description' => 'Standaard notificatie instellingen voor nieuwe door jou aangemaakte content. Dit betreft notificaties die te maken hebben met acties op jouw content zoals het achterlaten van een reactie.',
 	'usersettings:notifications:create_comment:description' => "Standaard notificatie instellingen indien je een reactie achterlaat op content om van het vervolg op de hoogte te blijven",
+	'usersettings:notifications:mentions:description' => "Ontvang een notificatie wanneer iemand je ergens vermeld",
 
 	'usersettings:notifications:timed_muting' => "Tijdelijk notificaties uitschakelen",
 	'usersettings:notifications:timed_muting:help' => "Indien je voor een bepaalde periode geen notificaties wilt ontvangen (bijvoorbeeld een vakantie) dan kun je hier een start en einddatum opgeven om tijdelijk alle notificaties te blokkeren.",
@@ -340,6 +349,12 @@ return array(
 %s',
 	'notification:subject' => 'Notificatie over \'%s\'',
 	'notification:body' => 'Bekijk de nieuwe activiteit op %s',
+	
+	'notification:mentions:subject' => '%s heeft je vermeld',
+	'notification:mentions:body' => "%sheeft je vermeld in '%s'.
+
+Bekijk het volledige bericht hier:
+%s",
 	
 	'notifications:delayed_email:subject:daily' => "Dagelijkse notificaties",
 	'notifications:delayed_email:subject:weekly' => "Wekelijkse notificaties",
@@ -400,6 +415,7 @@ return array(
 	'registration:dupeemail' => 'Dit e-mailadres is al geregistreerd.',
 	'registration:invalidchars' => 'Sorry, je gebruikersnaam bevat het volgende ongeldige karakter: %s 
 De volgende karakters zijn niet toegestaan: %s',
+	'registration:invalidchars:route' => 'Sorry, je gebruikersnaam bevat het volgende ongeldige karakter: %s',
 	'registration:emailnotvalid' => 'Sorry, het opgegeven e-mailadres is ongeldig op dit systeem',
 	'registration:passwordnotvalid' => 'Sorry, het opgegeven wachtwoord is ongeldig op dit systeem',
 	'registration:usernamenotvalid' => 'Sorry, de opgegeven gebruikersnaam is ongeldig op dit systeem',
@@ -463,6 +479,7 @@ De volgende karakters zijn niet toegestaan: %s',
 	'menu:page:header:develop' => 'Ontwikkel',
 	'menu:page:header:information' => 'Informatie',
 	'menu:page:header:default' => 'Andere',
+	'menu:page:header:plugin_settings' => 'Plugin-instellingen',
 
 	'admin:view_site' => 'Bekijk website',
 	'admin:loggedin' => 'Aangemeld als %s',
@@ -597,6 +614,9 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:widget:content_stats:help' => 'Blijf op de hoogte van de inhoud die door de gebruikers is gemaakt',
 	'admin:widget:cron_status' => 'Cron status',
 	'admin:widget:cron_status:help' => 'Toont de status van de laatste afronding van de cron jobs',
+	'admin:widget:elgg_blog' => 'Elgg blog',
+	'admin:widget:elgg_blog:help' => 'Toont de laatste berichten van de Elgg blogs',
+	'admin:widget:elgg_blog:no_results' => 'Ophalen van het laatste Elgg nieuws mislukt',
 	'admin:statistics:numentities' => 'Inhoud statistieken',
 	'admin:statistics:numentities:type' => 'Content Type',
 	'admin:statistics:numentities:number' => 'Nummer',
@@ -1053,6 +1073,10 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'entity:edit:icon:file:help' => "Laat dit leeg om het huidige icoon te behouden.",
 	'entity:edit:icon:remove:label' => "Verwijder het icoon",
 
+	'entity:edit:header:file:label' => "Upload een nieuwe kopafbeelding",
+	'entity:edit:header:file:help' => "Laat dit leeg om de huidige afbeelding te behouden",
+	'entity:edit:header:remove:label' => "Verwijder kopafbeelding",
+
 /**
  * Generic action words
  */
@@ -1061,6 +1085,8 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'save_go' => "Opslaan en doorgaan naar %s",
 	'reset' => 'Reset',
 	'publish' => "Publiceer",
+	'feature' => "Aanraden",
+	'unfeature' => "Afraden",
 	'cancel' => "Annuleren",
 	'saving' => "Bezig met opslaan ...",
 	'update' => "Wijzig",
@@ -1429,6 +1455,7 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'config:users:remove_unvalidated_users_days:help' => "Ongevalideerde gebruikers zullen automatisch worden verwijderd na het opgegeven aantal dagen. Indien dit leeg wordt gelaten zullen de gebruikers niet automatisch worden verwijderd.",
 	'config:users:can_change_username' => "Sta gebruikers toe om hun gebruikersnaam te wijzigen",
 	'config:users:can_change_username:help' => "Indien het niet is toegestaan kan alleen een beheerder de gebruikersnaam van een gebruiker wijzigen",
+	'config:users:user_joined_river' => "Meldt het op de activiteitenstroom wanneer een gebruiker lid wordt van de site",
 	'config:remove_branding:label' => "Verwijder Elgg uitingen",
 	'config:remove_branding:help' => "Overal op de website zijn er verschillende links en logo's welke aantonen dat de website is gemaakt middels Elgg. Als je de uitingen verwijderd overweeg om een donatie te doen op https://elgg.org/about/supporters",
 	'config:disable_rss:label' => "Schakel RSS feeds uit",
@@ -1450,6 +1477,10 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'config:content:pagination_behaviour:ajax-replace' => "Vervang de lijst met de nieuwe pagina zonder verversing",
 	'config:content:pagination_behaviour:ajax-append' => "Plaats nieuwe data vóór of achter de lijst",
 	'config:content:pagination_behaviour:ajax-append-auto' => "Plaats nieuwe data vóór of achter de lijst (automatisch bij scrollen)",
+	'config:content:mentions_display_format' => "Mentions weergave",
+	'config:content:mentions_display_format:help' => "Hoe moeten vermeldingen worden weergegeven in de inhoud",
+	'config:content:mentions_display_format:username' => "Gebruikersnaam",
+	'config:content:mentions_display_format:display_name' => "Weergavenaam",
 	'config:email' => "E-mail",
 	'config:email_html_part:label' => "Activeer HTML mail",
 	'config:email_html_part:help' => "Uitgaande mail een HTML template worden vorm gegeven",
@@ -1526,7 +1557,7 @@ Klik hier om naar het profile te gaan:
 	'email:resetpassword:body' => "Je wachtwoord is gereset naar: %s",
 
 	'email:changereq:subject' => "Aanvraag om het wachtwoord te wijzigen.",
-	'email:changereq:body' => "Iemand (van het IP adres %s) heeft een nieuw wachtwoord aangevraagd voor dit account.
+	'email:changereq:body' => "Iemand (vanaf het IP adres %s) heeft een nieuw wachtwoord aangevraagd voor dit account.
 
 Indien je dit zelf hebt aangevraagd, klik op onderstaande link. Anders negeer deze e-mail.
 
@@ -1625,6 +1656,12 @@ Om te reageren of het originele item te bekijken, klik hier:
 Om te reageren of het originele item te bekijken, klik hier:
 %s",
 
+	'notification:mentions:object:comment:subject' => '%s heeft je vermeld in een reactie',
+	'notification:mentions:object:comment:body' => '%1$sheeft je vermeld in een reactie.
+
+Bekijk de volledige reactie hier:
+%3$s',
+
 /**
  * Entities
  */
@@ -1690,6 +1727,10 @@ Generated %s by %s
 ========================================================================
 
 ',
+	'diagnostics:report:basic' => '
+Elgg Release %s
+
+------------------------------------------------------------------------',
 	'diagnostics:report:php' => '
 PHP info:
 %s
@@ -1949,4 +1990,7 @@ Global variables:
 	
 	'core:upgrade:2021060401:title' => "Voeg content eigenaren toe als abonnees op hun eigen content",
 	'core:upgrade:2021060401:description' => "Content eigenaren behoren geabonneerd te zijn op hun eigen content. Deze  upgrade zorgt dat dat voor oude content ook het geval is.",
+	
+	'core:upgrade:2023011701:title' => "Verwijder verweesde reacties",
+	'core:upgrade:2023011701:description' => "Er zijn in sommige gevallen reacties op reacties achtergebleven in de database. Deze upgrade zal deze opruimen.",
 );

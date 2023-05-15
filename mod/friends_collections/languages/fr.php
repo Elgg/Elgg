@@ -8,14 +8,14 @@
 return array(
 	'friends:collections' => 'Collections',
 	'friends:collections:no_results' => 'Vous n\'avez créé aucune collection pour le moment',
-	'friends:collection:members:no_results' => 'Cette collection n\'a pas de membre pour le moment',
+	'friends:collection:members:no_results' => 'Cette collection n\'a pas encore de membre',
 	
 	'friends:collection:member_count' => '%s membres',
 	
 	'friends:collections:add' => 'Nouvelle collection',
 	'friends:collections:edit' => 'Ajouter des membres',
 
-	'friends:collections:name' => 'Nature de la collection',
+	'friends:collections:name' => 'Nom de la collection',
 	'friends:collections:friends' => 'Contacts',
 	'friends:collections:friends:help' => 'Sélectionnez un ou plusieurs contacts que vous souhaitez ajouter à la collection. Tapez les premières lettres du nom de votre contact et sélectionnez-le dans la liste',
 

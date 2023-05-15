@@ -327,9 +327,6 @@ return array(
 
 	'admin' => "Amministrazione",
 	'admin:description' => "Il pannello di amministrazione permette di controllare ogni aspetto del sistema, dalla gestione degli utenti al comportamento dei plugin. Selezionare un'opzione qui sotto per cominciare.",
-	'admin:performance:simplecache:settings:warning' => "Si consiglia di configurare l'impostazione simplecache in settings.php.
-L'impostazione di simplecache, nel file settings.php, migliora le prestazioni di memorizzazione nella cache.
-Consente a Elgg di saltare la connessione al database quando servono file JavaScript e CSS memorizzati nella cache",
 	'admin:performance:systemcache' => 'Cache di sistema',
 	'admin:performance:php:open_basedir:warning' => 'Sono in atto alcune limitazioni di open_basedir, che potrebbero influire sulle prestazioni.',
 	
@@ -480,10 +477,6 @@ Consente a Elgg di saltare la connessione al database quando servono file JavaSc
 	'admin:notification:make_admin:admin:subject' => 'Un nuovo amministratore del sito è stato aggiunto a %s',
 	'admin:notification:remove_admin:admin:subject' => 'Un amministratore del sito è stato rimosso da %s',
 	'user:notification:ban:subject' => 'Il tuo account su %s è stato bannato',
-	'user:notification:unban:body' => 'Il tuo account su %s non è più bannato. Puoi accedere nuovamente al sito.
-
-Per andare sul sito, clicca qui:
-%s',
 	
 	'admin:notification:unvalidated_users:subject' => "Utenti in attesa di approvazione su %s",
 
@@ -544,8 +537,6 @@ Per andare sul sito, clicca qui:
 	'admin:server:label:post_max_size' => 'Dimensione massima del POST',
 	'admin:server:label:upload_max_filesize' => 'Dimensione massima di upload',
 	'admin:server:warning:post_max_too_small' => '(Nota: post_max_size deve essere maggiore di questo valore per permettere degli upload di questa dimensione)',
-	'admin:server:redis:inactive' => 'Redis non è configurato su questo server o non è stato ancora configurato nella configurazione di Elgg.
-Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o memcache).',
 
 	'admin:server:label:opcache' => 'cache OP',
 	
@@ -1018,11 +1009,6 @@ Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o 
 	'email:resetpassword:subject' => "Password azzerata!",
 
 	'email:changereq:subject' => "Richiesta di cambio password.",
-	'email:confirm:email:old:body' => "Il tuo indirizzo email su '%s' è stato cambiato-
-Da adesso in avanti riceverai le notifiche su '%s'
-
-Se non hai richiesto tu questa modifica, contatta un amministratore del sito.
-%s",
 
 /**
  * user default access

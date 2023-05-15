@@ -36,17 +36,6 @@ return array(
 	 */
 
 	'messageboard:email:subject' => '伝言板にコメントがされています！',
-	'messageboard:email:body' => "%sさんから伝言板にコメントがあります。
-
-内容:
-
-%s
-
-伝言板のコメントをみるには:
-%s
-
-%sさんのプロフィールを見るには:
-%s",
 
 	/**
 	 * Error messages

@@ -24,6 +24,9 @@ return array(
 	'reportedcontent:numbertodisplay' => 'Количество жалоб для отображения',
 	'reportedcontent:user' => 'Пожаловаться на пользователя',
 	'reportedcontent:new' => 'Новые жалобы',
+	'reportedcontent:archived_reports' => 'В архиве',
+	'reportedcontent:related_reports' => 'Похожие жалобы',
+	'reportedcontent:comments:message' => 'Комментарии доступны только администратору. Отправитель жалобы не будет уведомлен о новых комментариях.',
 	
 	'reportedcontent:failed' => 'Произошла ошибка при отправке жалобы на этот контент',
 	'reportedcontent:notarchived' => 'Не удалось заархивировать жалобу',

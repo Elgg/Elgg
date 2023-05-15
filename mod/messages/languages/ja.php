@@ -43,17 +43,6 @@ return array(
 	*/
 
 	'messages:email:subject' => '新しいメッセージが届きました！',
-	'messages:email:body' => " %s さんからのメッセージがあります。
-
-内容:
-
-%s
-
-めっせーじをみるには:
-%s
-
-%s さんにメッセージを送るには:
-%s",
 
 	/**
 	* Error messages

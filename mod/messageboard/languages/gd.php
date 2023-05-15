@@ -36,17 +36,6 @@ return array(
 	 */
 
 	'messageboard:email:subject' => 'Tha post ùr air a\' bhòrd-brath agad!',
-	'messageboard:email:body' => "Tha %s air postadh air a' bhòrd-brath agad.
-
-Sgrìobh iad:
-
-%s
-
-Briog an-seo airson dol dhan a' bhòrd-brath agad:
-%s
-
-Briog an-seo airson dol dhan a' phròifil aig %s:
-%s",
 
 	/**
 	 * Error messages

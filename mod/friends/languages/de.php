@@ -12,8 +12,6 @@ return array(
 	'relationship:friendrequest:sent' => "Du hast eine Freundschaftsanfrage an %s gestellt.",
 	
 	// plugin settings
-	'friends:settings:request:description' => "Standardmäßig kann jedes Mitglied jedes andere Mitglied zu seiner Freundesliste hinzufügen. Dadurch kann das Mitglied den Aktivitäten des anderen Mitglieds einfacher folgen auch wenn dies Freunschaftsbeziehung nicht automatisch beidseitig ist.
-Durch die Aktivierung der Option für Freundschaftsanfragen kann ein Mitglied erstmal nur anfragen, ob das andere Mitglied mit einer Freundschaftsbeziehung einverstanden ist. Wenn das andere Mitglied die Anfrage akzeptiert, wird die Freundschaftsbeziehung dann allerdings automatisch beidseitig erstellt, d.h. Mitglied A wird Freund von Mitglied B und Mitglied B wird Freund von Mitglied A.",
 	'friends:settings:request:label' => "Bestätigung für Freundschaftsanfragen aktivieren",
 	'friends:settings:request:help' => "Benutzer können die Freundschaftsanfragen annehmen oder ablehnen. Die Freundschaftsbeziehung wird bei Zustimmung in beide Richtungen erstellt.",
 	
@@ -51,10 +49,6 @@ Durch die Aktivierung der Option für Freundschaftsanfragen kann ein Mitglied er
 	'widgets:friends_of:description' => "Auflistung der Mitglieder, die Dich als Freund haben.",
 	
 	'friends:notification:request:subject' => "%s möchte mit Dir befreundet sein!",
-	'friends:notification:request:message' => "%s möchte auf %s mir Dir befreundet sein.
-
-Folge dem Link, um die Freundschaftsanfrage anzuzeigen:
-%s",
 	
 	'friends:notification:request:decline:subject' => "%s hat Deine Freundschaftsanfrage abgelehnt",
 	'friends:notification:request:decline:message' => "%s hat deine Freundschaftsanfrage abgelehnt.",

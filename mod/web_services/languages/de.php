@@ -69,9 +69,6 @@ return array(
 	
 	// plugin settings
 	'web_services:settings:authentication' => "Web API-Authentifizierungs-Einstellungen",
-	'web_services:settings:authentication:description' => "Für einige API-Methoden ist es notwendig, dass sich die externen Quellen authentifizieren. Dafür ist für diese externen Quellen ein Schlüsselpaar notwendig (öffentlicher und geheimer Schlüssel).
-
-Beachte bitte, dass mindestens eine API-Authentifizierungsmethode aktiviert sein muss, damit API-Anfragen authentifiziert werden können.",
 	'web_services:settings:authentication:allow_key' => "Einfache Authentifizierung mit öffentlichem Schlüssel erlauben",
 	'web_services:settings:authentication:allow_key:help' => "Der öffentliche Schlüssel kann als Parameter bei der Anfrage übergeben werden.",
 	'web_services:settings:authentication:allow_hmac' => "HMAC-Header API-Authentifizierung erlauben",

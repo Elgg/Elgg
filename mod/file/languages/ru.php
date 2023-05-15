@@ -8,6 +8,21 @@
 return array(
 
 	'item:object:file' => 'Файл',
+	'item:object:file:application' => 'Приложение',
+	'item:object:file:archive' => 'Архив',
+	'item:object:file:excel' => 'Excel',
+	'item:object:file:image' => 'Изображение',
+	'item:object:file:music' => 'Музыка',
+	'item:object:file:openoffice' => 'OpenOffice',
+	'item:object:file:pdf' => 'PDF',
+	'item:object:file:ppt' => 'PowerPoint',
+	'item:object:file:text' => 'Текст',
+	'item:object:file:vcard' => 'vCard',
+	'item:object:file:video' => 'Видео',
+	'item:object:file:word' => 'Word',
+	
+	'file:upgrade:2022092801:title' => 'Переместить файлы',
+	'file:upgrade:2022092801:description' => 'Перемещает файлы, загруженные с помощью плагина "Файлы", в папку объекта, а не в папку владельца.',
 	
 	'collection:object:file' => 'Файлы',
 	'collection:object:file:all' => "Все файлы",
@@ -68,6 +83,8 @@ return array(
 
 Просмотреть и комментировать файл:
 %s',
+	
+	'notification:mentions:object:file:subject' => '%s упомянул вас в файле',
 
 	/**
 	 * Status messages

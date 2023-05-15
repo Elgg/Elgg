@@ -37,8 +37,6 @@ return array(
 	'developers:label:show_modules' => "Geladene AMD-Module in der JavaScript-Konsole anzeigen",
 	'developers:help:show_modules' => "Zeigt Informationen zu den auf der aktuellen Seite geladenen AMD-Modulen in der JavaScript-Konsole des Browsers an.",
 	'developers:label:wrap_views' => "Views einkapseln",
-	'developers:help:wrap_views' => "Diese Einstellung aktiviert die Einkapselung fast aller Views in HTML-Kommentare. Dies kann hilfreich sein, um den erzeugten HTML-Code einer View zuzuordnen.
-Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören. Siehe developers_wrap_views() für weitere Informationen.",
 	'developers:label:log_events' => "Events und Plugin Hooks protokollieren",
 	'developers:help:log_events' => "Einträge für Events und Plugin Hooks ins Log schreiben. Warnung: es gibt sehr viele davon bei jedem Seitenaufruf.",
 	'developers:label:show_gear' => "Verwende %s außerhalb des Admin-Backends",

@@ -102,6 +102,7 @@ return array(
 	'RegistrationAllowedGatekeeperException:invalid_invitecode' => "Le code d'invitation fourni n'est pas valide",
 	'BadRequestException' => 'Mauvaise requête',
 	'BadRequestException:invalid_host_header' => 'La requête contient un entête HOST invalide',
+	'BadRequestException:livesearch:no_query' => 'La recherche instantanée a besoin d\'une requête',
 	'ValidationException' => 'Les données envoyées ne satisfont pas les exigences, veuillez vérifier votre saisie.',
 	'LogicException:InterfaceNotImplemented' => '%s doit implémenter %s',
 	
@@ -258,6 +259,11 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'avatar:remove:success' => 'L\'image du profil a bien été supprimée',
 	'avatar:remove:fail' => 'Échec de la suppression de l\'image du profil',
 	
+	'header:remove:success' => 'L\'entête a bien été supprimée',
+	'header:remove:fail' => 'Échec de la suppression de l\'entête',
+	'header:upload:success' => 'Le chargement de l\'entête a réussi',
+	'header:upload:fail' => 'Le chargement de l\'entête a échoué.',
+	
 	'action:user:validate:already' => "%s a déjà été validé",
 	'action:user:validate:success' => "%s a été validé",
 	'action:user:validate:error' => "Une erreur est survenue lors de la validation de %s",
@@ -325,6 +331,7 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'usersettings:notifications:default:description' => 'Paramètres de notification par défaut pour les événements du système',
 	'usersettings:notifications:content_create:description' => 'Paramètres de notification par défaut pour vos propres publications. Ceci peut provoquer des notifications quand d\'autres personnes y réagissent, par exemple en ajoutant un commentaire',
 	'usersettings:notifications:create_comment:description' => "Paramètre de notification par défaut quand vous ajoutez un commentaire, afin de pouvoir suivre la suite de la conversation",
+	'usersettings:notifications:mentions:description' => "Recevez une notification quand vous êtes @mentionné⋅e",
 
 	'usersettings:notifications:timed_muting' => "Désactiver temporairement les notifications",
 	'usersettings:notifications:timed_muting:help' => "Si vous ne souhaitez pas recevoir de notifications pendant une certaine période (par exemple pendant des vacances ou un déplacement), vous pouvez définir une date de début et de fin pour désactiver temporairement toutes les notifications",
@@ -490,9 +497,6 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'admin:performance:label:generic' => 'Générique',
 	'admin:performance:generic:description' => 'Voici une liste de suggestions / valeurs qui pourraient aider aux réglages de performance de votre site',
 	'admin:performance:simplecache' => 'Cache simple - Simplecache',
-	'admin:performance:simplecache:settings:warning' => "Il est recommandé de configurer le réglage de simplecache dans le fichier settings.php.
-Configurer simplecache dans le fichier settings.php améliore les performances du cache.
-Cela permet à Elgg d'éviter la connexion à la base de données lors de l'envoi de fichiers JavaScript et CSS mis en cache",
 	'admin:performance:systemcache' => 'Systemcache',
 	'admin:performance:apache:mod_cache' => 'Apache mod_cache',
 	'admin:performance:apache:mod_cache:warning' => 'Le module mod_cache fournit des schémas de mise en cache compatibles HTTP. Ceci signifie que les fichiers seront mis en cache en fonction d\'une instruction qui spécifie combien de temps une page peut être considérée comme "fraîche".',
@@ -500,8 +504,6 @@ Cela permet à Elgg d'éviter la connexion à la base de données lors de l'envo
 	'admin:performance:php:open_basedir:not_configured' => 'Aucune limite n\'a été définie',
 	'admin:performance:php:open_basedir:warning' => 'Un faible nombre de limitations de open_basedir sont effectives, ceci pourrait affecter les performances.',
 	'admin:performance:php:open_basedir:error' => 'Un grand nombre de limitations de open_basedir sont effectives, ceci va probablement affecter les performances.',
-	'admin:performance:php:open_basedir:generic' => 'Avec open_basedir chaque accès à un fichier sera vérifié auprès de la liste des limitations. 
-Comme Elgg a un grand nombre d\'accès aux fichiers cela va avoir un effet négatif sur les performances. D\'autre part l\'opcache de PHP ne peut plus mettre en cache les chemins de fichiers dans la mémoire et doit les résoudre lors de chaque accès.',
 	
 	'admin:statistics' => 'Statistiques',
 	'admin:server' => 'Serveur',
@@ -605,6 +607,7 @@ Comme Elgg a un grand nombre d\'accès aux fichiers cela va avoir un effet néga
 	'admin:widget:content_stats:help' => 'Suivez le contenu créé par les membres',
 	'admin:widget:cron_status' => 'Statut du cron',
 	'admin:widget:cron_status:help' => 'Affiche le statut des dernières tâches cron terminées',
+	'admin:widget:elgg_blog' => 'Blog de Elgg',
 	'admin:statistics:numentities' => 'Statistiques des contenus',
 	'admin:statistics:numentities:type' => 'Type de contenu',
 	'admin:statistics:numentities:number' => 'Nombre',
@@ -626,13 +629,6 @@ Comme Elgg a un grand nombre d\'accès aux fichiers cela va avoir un effet néga
 	'admin:widget:admin_welcome:intro' => 'Bienvenue sur Elgg ! Vous êtes actuellement sur le tableau de bord de l\'administration. Il permet de suivre ce qui se passe sur le site.',
 
 	'admin:widget:admin_welcome:registration' => "L'inscription de nouveaux utilisateurs est actuellement désactivée ! Vous pouvez l'activer sur la page %s.",
-	'admin:widget:admin_welcome:admin_overview' => "La navigation dans la zone d'administration se fait à l'aide du menu de droite. Il est organisé en trois parties :
-	<dl>
-		<dt>Administrer</dt><dd>Des tâches de base telles que suivre le contenu signalé et activer des plugins.</dd>
-		<dt>Configurer</dt><dd>Des tâches occasionnelles comme définir le nom du site ou configurer les paramètres d'un plugin.</dd>
-		<dt>Information</dt><dd>Des informations à propos de votre site, telles que des statistiques.</dd>
-		<dt>Développer</dt><dd>Pour les développeurs qui créent des plugins ou conçoivent des thèmes. (Nécessite le plugin developer).</dd>
-	</dl>",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Pensez à consulter les ressources disponibles via les liens de bas de page, et merci d\'utiliser Elgg !',
@@ -698,8 +694,6 @@ Comme Elgg a un grand nombre d\'accès aux fichiers cela va avoir un effet néga
 	'admin:security:information:php:session_gc' => "Nettoyage des sessions PHP",
 	'admin:security:information:php:session_gc:chance' => "Probabilité de nettoyage : %s %%",
 	'admin:security:information:php:session_gc:lifetime' => "Durée de vie d'une session %s secondes",
-	'admin:security:information:php:session_gc:error' => "Il est recommandé de définir 'session.gc_probability' et 'session.gc_divisor' dans vos paramètres PHP, 
-ceci va nettoyer les sessions expirées de votre base de données et empêcher les utilisateurs de réutiliser d'anciennes sessions.",
 	'admin:security:information:htaccess:hardening' => "Sécurisation des accès aux fichiers via .htaccess",
 	'admin:security:information:htaccess:hardening:help' => "Dans le fichier .htaccess il est possible de bloquer l'accès à certains fichiers pour augmenter la sécurité de votre site. Pour plus d'informations regardez dans votre fichier .htaccess.",
 	
@@ -741,8 +735,6 @@ ceci va nettoyer les sessions expirées de votre base de données et empêcher l
 	'admin:security:settings:email_require_confirmation:help' => 'La nouvelle adresse e-mail doit être confirmée avant que la modification soit effective. Après une modification réussie une notification est envoyée à l\'ancienne adresse e-mail.',
 
 	'admin:security:settings:session_bound_entity_icons' => 'Icônes d\'entités liées aux sessions',
-	'admin:security:settings:session_bound_entity_icons:help' => 'Les icônes d’entité peuvent être liées par défaut à une session. Cela signifie que les URLs générées contiennent également des informations sur la session en cours. 
-Le fait d’avoir des icônes liées à la session rend les URLs des icônes non partageables entre les sessions. L’effet secondaire est que la mise en cache de ces URLs ne bénéficiera qu\'à la session active.',
 
 	'admin:security:settings:subresource_integrity_enabled' => 'Intégrité des sous-ressources',
 	'admin:security:settings:subresource_integrity_enabled:help' => 'Ajoute des métadonnées d\'intégrité aux sous-ressources telles que les fichiers JS et CSS. Cela permet au navigateur de valider le contenu de la ressource.',
@@ -773,58 +765,19 @@ Le fait d’avoir des icônes liées à la session rend les URLs des icônes non
 	'admin:site:secret:prevented' => "La régénération de la clef secrète du site a été empêchée",
 	
 	'admin:notification:make_admin:admin:subject' => 'Un nouvel administrateur du site a été ajouté pour %s',
-	'admin:notification:make_admin:admin:body' => '%s a rendu %s administrateur du site %s.
-
-Pour voir le profil du nouvel administrateur :
-%s',
 	
 	'admin:notification:make_admin:user:subject' => 'Vous avez été ajouté comme administrateur du site %s',
-	'admin:notification:make_admin:user:body' => '%s vous a rendu administrateur de %s.
-
-Pour vous rendre sur le site :
-%s',
 	'admin:notification:remove_admin:admin:subject' => 'Un administrateur du site a été retiré de %s',
-	'admin:notification:remove_admin:admin:body' => '%s a retiré %s des administrateurs de %s.
-
-Pour voir le profil de l\'ancien administrateur :
-%s',
 	
 	'admin:notification:remove_admin:user:subject' => 'Vous ne faites plus partie des administrateurs de %s',
-	'admin:notification:remove_admin:user:body' => '%s vous a retiré des administrateurs de %s.
-
-Pour vous rendre sur le site :
-%s',
 	'user:notification:validate:subject' => 'Votre compte sur %s est prêt à être utilisé',
-	'user:notification:validate:body' => 'Votre compte sur %s a été validé. Vous pouvez maintenant commencer à l\'utiliser.
-
-Pour vous rendre sur le site :
-%s',
 	'user:notification:ban:subject' => 'Votre compte sur %s a été banni',
-	'user:notification:ban:body' => 'Votre compte sur %s a été banni.
-
-Pour vous rendre sur le site :
-%s',
 	
 	'user:notification:unban:subject' => 'Votre compte sur %s n\'est plus banni',
-	'user:notification:unban:body' => 'Votre compte sur %s n\'est plus banni. Vous pouvez à nouveau vous connecter sur le site.
-
-Pour vous rendre sur le site :
-%s',
 	
 	'user:notification:password_change:subject' => 'Votre mot de passe a été modifié !',
-	'user:notification:password_change:body' => "Votre mot de passe sur '%s' a été modifié ! Si vous êtes à l'origine de cette modification alors tout va bien, veuillez ne pas tenir compte de ce message.
-
-Si vous n'êtes pas à l'origine de cette modification, veuillez réinitialiser votre mot de passe ici :
-%s
-
-Ou contactez un administrateur du site :
-%s",
 	
 	'admin:notification:unvalidated_users:subject' => "Utilisateurs en attente d'approbation sur %s",
-	'admin:notification:unvalidated_users:body' => "%d utilisateurs de '%s' attendent l'approbation par un administrateur.
-
-Voir la liste complète des utilisateurs :
-%s",
 
 /**
  * Plugins
@@ -929,16 +882,10 @@ Voir la liste complète des utilisateurs :
 	'admin:server:label:upload_max_filesize' => 'Taille maximale d\'envoi',
 	'admin:server:warning:post_max_too_small' => '(Remarque : la valeur de post_max_size doit être supérieure à cette valeur pour supporter des envois de cette taille)',
 	'admin:server:label:memcache' => 'Memcache',
-	'admin:server:memcache:inactive' => 'Memcache n\'est pas en place sur ce serveur ou n\'a pas encore été configuré dans la configuration de Elgg.
-Pour des performances améliorées, il est recommandé que vous activiez et configuriez memcache (ou redis).',
 
 	'admin:server:label:redis' => 'Redis',
-	'admin:server:redis:inactive' => 'Redis n\'est pas installé sur ce serveur ou n\'a pas encore été configuré dans la configuration de Elgg.
-Pour des performances améliorées, il est recommandé que vous activiez et configuriez redis (ou memcache).',
 
 	'admin:server:label:opcache' => 'OPcache',
-	'admin:server:opcache:inactive' => 'OPcache n\'est pas disponible sur ce serveur ou n\'a pas encore été activé.
-Pour des performances améliorées, il est recommandé que vous activiez et configuriez OPcache.',
 	
 	'admin:server:requirements:php_extension' => "Extension PHP : %s",
 	'admin:server:requirements:php_extension:required' => "Cette extension PHP est requise pour un fonctionnement correct de Elgg",
@@ -1063,6 +1010,10 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'entity:edit:icon:file:help' => "Laissez vide pour conserver l'icône actuelle.",
 	'entity:edit:icon:remove:label' => "Supprimer l'icône",
 
+	'entity:edit:header:file:label' => "Charger un nouvel entête",
+	'entity:edit:header:file:help' => "Laissez vide pour conserver l'entête actuelle.",
+	'entity:edit:header:remove:label' => "Supprimer l'image de l'entête",
+
 /**
  * Generic action words
  */
@@ -1071,6 +1022,8 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'save_go' => "Enregistrer, et aller vers %s",
 	'reset' => 'Réinitialiser',
 	'publish' => "Publier",
+	'feature' => "Mettre en avant",
+	'unfeature' => "Ne plus mettre en avant",
 	'cancel' => "Annuler",
 	'saving' => "Enregistrement en cours ...",
 	'update' => "Mettre à jour",
@@ -1265,17 +1218,6 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
  */
 
 	'useradd:subject' => 'Compte utilisateur créé',
-	'useradd:body' => 'Un compte utilisateur a été créé pour vous sur %s. Pour vous connecter :
-
-%s
-
-Et connectez-vous avec les informations suivantes :
-
-Identifiant : %s
-Mot de passe : %s
-Vous pouvez également utiliser votre adresse e-mail à la place de votre identifiant.
-
-Après connexion, nous vous recommandons de changer votre mot de passe.',
 
 /**
  * Messages
@@ -1461,7 +1403,9 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'config:content:pagination_behaviour:ajax-replace' => "Remplacer les données de la liste sans recharger toute la page",
 	'config:content:pagination_behaviour:ajax-append' => "Ajouter les nouvelles données au début ou à la fin de la liste",
 	'config:content:pagination_behaviour:ajax-append-auto' => "Ajoute les nouvelles données au début ou à la fin de la liste (automatiquement en cas de défilement dans la vue)",
+	'config:content:mentions_display_format' => "Format d'affichage des mentions",
 	'config:content:mentions_display_format:username' => "Identifiant",
+	'config:content:mentions_display_format:display_name' => "Nom affiché",
 	'config:email' => "E-mail",
 	'config:email_html_part:label' => "Activer les e-mails en HTML",
 	'config:email_html_part:help' => "Les e-mails sortants seront intégrés dans un template HTML",
@@ -1525,11 +1469,6 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'email:save:fail:password' => "Le mot de passe ne correspond pas à votre mot de passe actuel, impossible de modifier votre adresse e-mail",
 
 	'friend:newfriend:subject' => "%s vous a ajouté comme contact !",
-	'friend:newfriend:body' => "%s vous a ajouté comme contact !
-
-Pour voir son profil :
-
-%s",
 
 	'email:changepassword:subject' => "Mot de passe modifié !",
 	'email:changepassword:body' => "Votre mot de passe a été modifié.",
@@ -1538,37 +1477,15 @@ Pour voir son profil :
 	'email:resetpassword:body' => "Un nouveau mot de passe a été créé automatiquement : %s",
 
 	'email:changereq:subject' => "Demander un nouveau mot de passe.",
-	'email:changereq:body' => "Quelqu'un (depuis l'adresse IP %s) a demandé à changer le mot de passe de ce compte.
-
-Si vous êtes à l'origine de cette demande, cliquez sur le lien suivant. Sinon ignorez cet e-mail.
-
-%s",
 	
 	'account:email:request:success' => "Votre nouvelle adresse e-mail sera enregistrée après confirmation, veuillez vérifier la boîte de réception de '%s' pour plus d'instructions.",
 	'email:request:email:subject' => "Veuillez confirmer votre adresse e-mail",
-	'email:request:email:body' => "Vous avez demandé la modification de votre adresse e-mail sur '%s'.
-Si vous n'êtes pas à l'origine de cette demande, veuillez ignorer cet e-mail.
-
-Afin de confirmer la modification de l'adresse e-mail, veuillez cliquer sur ce lien :
-%s
-
-Veuillez noter que ce lien est valable seulement pendant 1 heure.",
 	
 	'account:email:request:error:no_new_email' => "Aucun changement d'adresse e-mail en attente",
 	
 	'email:confirm:email:old:subject' => "Votre adresse e-mail a été modifiée",
-	'email:confirm:email:old:body' => "Votre adresse e-mail sur '%s' a été modifiée.
-Désormais, vous recevrez les notifications sur '%s'.
-
-Si vous n'êtes pas à l'origine de cette modification, veuillez contacter un administrateur du site.
-%s",
 	
 	'email:confirm:email:new:subject' => "Votre adresse e-mail a été modifiée",
-	'email:confirm:email:new:body' => "Votre adresse e-mail sur '%s' a été modifiée.
-Désormais, vous recevrez les notifications sur cette adresse e-mail.
-
-Si vous n'êtes pas à l'origine de cette modification, veuillez contacter un administrateur du site.
-%s",
 
 	'account:email:admin:validation_notification' => "Me notifier quand des utilisateurs sont en attente de validation par un administrateur",
 	'account:email:admin:validation_notification:help' => "En raison des réglages du site, les utilisateurs nouvellement inscrits doivent être approuvés manuellement par un administrateur. Avec ce réglage, vous pouvez désactiver les notifications au sujet des demandes de validation en attente.",
@@ -1577,10 +1494,6 @@ Si vous n'êtes pas à l'origine de cette modification, veuillez contacter un ad
 	'account:validation:pending:content' => "Votre compte a bien été créé ! Toutefois, avant de pouvoir l'utiliser, un administrateur doit valider votre compte. Vous recevrez un e-mail quand votre compte aura été validé.",
 	
 	'account:notification:validation:subject' => "Votre compte sur %s a bien été validé !",
-	'account:notification:validation:body' => "Votre compte sur '%s' a été validé. Vous pouvez maintenant utiliser votre compte.
-
-Pour vous rendre sur le site :
-%s",
 
 /**
  * user default access
@@ -1622,20 +1535,10 @@ Pour vous rendre sur le site :
 
 	'generic_comment:notification:subject' => 'Re: %s',
 	'generic_comment:notification:owner:summary' => 'Vous avez un nouveau commentaire sur : %s',
-	'generic_comment:notification:owner:body' => "Vous avez un nouveau commentaire :
-
-%s
-
-Pour répondre ou voir la publication originale :
-%s",
 	
 	'generic_comment:notification:user:summary' => 'Nouveau commentaire sur : %s',
-	'generic_comment:notification:user:body' => "Un nouveau commentaire a été fait :
 
-%s
-
-Pour y répondre ou voir la publication originale :
-%s",
+	'notification:mentions:object:comment:subject' => '%s vous a mentionné dans un commentaire',
 
 /**
  * Entities
@@ -1697,22 +1600,26 @@ Pour y répondre ou voir la publication originale :
 	'diagnostics:report' => 'Rapport de diagnostic',
 	'diagnostics:description' => 'Le rapport de diagnostic suivant peut être utile pour diagnostiquer des problèmes avec Elgg. Les développeurs de Elgg peuvent vous demander de le joindre à un rapport de bogue.',
 	'diagnostics:header' => '========================================================================
-Rapport de diagnostic de Elgg
+Rapport de diagnostic Elgg
 Généré %s par %s
 ========================================================================
 
 ',
+	'diagnostics:report:basic' => '
+Version de Elgg %s
+
+------------------------------------------------------------------------',
 	'diagnostics:report:php' => '
 Informations PHP :
 %s
 ------------------------------------------------------------------------',
 	'diagnostics:report:md5' => '
-Fichiers installés et sommes de contrôle :
+Fichiers installés et sommes de vérification :
 
 %s
 ------------------------------------------------------------------------',
 	'diagnostics:report:globals' => '
-Variables globales :
+Variables Globales :
 
 %s
 ------------------------------------------------------------------------',

@@ -12,8 +12,8 @@ return array(
 	'relationship:friendrequest:sent' => "Vous avez demandé à faire partie des contacts de %s",
 	
 	// plugin settings
-	'friends:settings:request:description' => "Par défaut tout utilisateur peut être en contact avec n'importe quel autre utilisateur, comme s'il s'abonnait à l'activité de l'autre utilisateur.
-Après avoir activé les demandes de contact, quand l’utilisateur A veut être en contact avec l’utilisateur B, l’utilisateur B doit approuver la demande. En cas d'approbation, l’utilisateur A fera partie des contacts de l’utilisateur B et l’utilisateur B fera partie des contacts de l’utilisateur A.",
+	'friends:settings:request:description' => "Par défaut tout utilisateur peut être en contact avec n'importe quel autre utilisateur, cela revient à s'abonner à l'activité de l'autre utilisateur.
+Après avoir activé les demandes de contact, quand A veut être en contact avec B, B doit approuver la demande. En cas d'approbation, A fera partie des contacts de B et B fera partie des contacts de A.",
 	'friends:settings:request:label' => "Activer les demandes de contacts",
 	'friends:settings:request:help' => "Les membres doivent approuver les demandes de contact et les contacts deviennent réciproques",
 	
@@ -53,7 +53,7 @@ Après avoir activé les demandes de contact, quand l’utilisateur A veut être
 	'friends:notification:request:subject' => "%s souhaite faire partie de vos contacts !",
 	'friends:notification:request:message' => "%s a demandé à être en contact avec vous sur %s.
 
-Pour voir cette demande de contact, cliquez ici :
+Cliquez ci-dessous pour voir cette demande de contact :
 %s",
 	
 	'friends:notification:request:decline:subject' => "%s a décliné votre demande de contact",

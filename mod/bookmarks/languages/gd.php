@@ -30,14 +30,6 @@ return array(
 
 	'bookmarks:notify:summary' => 'Comharra-lìn ùr air a bheil an t-ainm \'%s\'',
 	'bookmarks:notify:subject' => 'Comharra-lìn ùr: %s',
-	'bookmarks:notify:body' => 'Chruthaich %s comharra-lìn ùr: %s
-
-Seòladh: %s
-
-%s
-
-Seall agus fàg beachd air a\' chomharra-lìn:
-%s',
 	
 	'bookmarks:numbertodisplay' => 'An àireamh de chomharran-lìn a chithear',
 

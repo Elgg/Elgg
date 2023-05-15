@@ -50,7 +50,7 @@ return array(
 Pour consulter vos messages :
 %s
 
-Pour écrire un message à %s :
+Pour envoyer un message à %s :
 %s",
 
 	/**
@@ -59,7 +59,7 @@ Pour écrire un message à %s :
 
 	'messages:blank' => "Désolé, vous devez écrire quelque chose dans votre message avant de pouvoir l'enregistrer.",
 	'messages:nomessages' => "Aucun message.",
-	'messages:user:nonexist' => "Le destinataire n'a pas pu être trouvé dans la base de données des utilisateurs.",
+	'messages:user:nonexist' => "Le destinataire n'a pas pu être trouvé parmi les membres du site.",
 	'messages:user:blank' => "Vous n'avez sélectionné personne à qui envoyer ce message.",
 	'messages:user:self' => "Vous ne pouvez pas vous envoyer un message à vous-même.",
 	'messages:user:notfriend' => "Vous ne pouvez pas envoyer un message à un membre avec qui vous n'êtes pas en contact.",

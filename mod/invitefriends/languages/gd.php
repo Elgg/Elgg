@@ -20,17 +20,4 @@ return array(
 	'invitefriends:already_members' => 'Tha na leanas nam buill mar-thà: %s',
 	'invitefriends:noemails' => 'Cha deach seòladh pùist-d a chur ann.',
 	
-	'invitefriends:message:default' => 'Halò,
-
-Tha thu air cuireadh fhaighinn gu %s.',
-
-	'invitefriends:email' => 'Tha thu air cuireadh gu %s fhaighinn bho %s.
-
-Chuir iad an teachdaireachd na leanas dhut:
-%s
-
-Briog air an ceangal na leanas ma tha thu airson gabhail ris a\' chuireadh:%s
-
-Thèid do chur ris an liosta-charaid aca gu f`èin-obrachail nuair a chruthaicheas tu cunntas.',
-	
 );

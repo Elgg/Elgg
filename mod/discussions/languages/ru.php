@@ -59,6 +59,8 @@ return array(
 
 Просмотр и комментирование дискуссии:
 %s',
+	
+	'notification:mentions:object:discussion:subject' => '%s упомянул вас в дискуссии',
 
 	'groups:tool:forum' => 'Включить дискуссии в группах',
 	'groups:tool:forum:description' => 'Разрешить участникам группы начинать дискуссию в этой группе.',

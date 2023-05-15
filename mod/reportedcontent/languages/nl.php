@@ -6,7 +6,7 @@
  */
 
 return array(
-	'item:object:reported_content' => 'Gemelde items',
+	'item:object:reported_content' => 'Gemeld item',
 	'collection:object:reported_content' => 'Gemelde items',
 	'admin:administer_utilities:reportedcontent' => 'Gemelde inhoud',
 	'admin:administer_utilities:reportedcontent:archive' => 'Gemelde inhoud - archief',
@@ -24,6 +24,9 @@ return array(
 	'reportedcontent:numbertodisplay' => 'Aantal meldingen om weer te geven',
 	'reportedcontent:user' => 'Meld deze gebruiker bij de sitebeheerder',
 	'reportedcontent:new' => 'Nieuwe meldingen',
+	'reportedcontent:archived_reports' => 'Gearchiveerd',
+	'reportedcontent:related_reports' => 'Gerelateerde meldingen',
+	'reportedcontent:comments:message' => 'Reacties zijn enkel zichtbaar voor beheerders. De melder zal niet op de hoogte worden gebracht van deze reacties.',
 	
 	'reportedcontent:failed' => 'Sorry, de poging om deze inhoud te melden is mislukt.',
 	'reportedcontent:notarchived' => 'Het was niet mogelijk om deze melding te archiveren',

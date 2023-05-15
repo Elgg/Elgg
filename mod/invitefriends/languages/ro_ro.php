@@ -20,19 +20,4 @@ return array(
 	'invitefriends:already_members' => 'Următorii sunt deja membri: %s',
 	'invitefriends:noemails' => 'Nu s-au introdus adrese de email.',
 	
-	'invitefriends:message:default' => 'Salutare,
-
-Te invit să te alături pe rețeaua mea de pe %s.',
-
-	'invitefriends:email' => 'Ai fost invitat/ă să te alături pe %s de către %s.
-
-Au inclus și următorul mesaj:
-
-%s
-
-Pentru a te alătura, apasă următorul link:
-%s
-
-Îi vei adăuga automat ca și prieteni când îți vei crea contul.',
-	
 );

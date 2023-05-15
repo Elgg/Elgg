@@ -47,12 +47,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Ein neuer Blog-Eintrag mit dem Titel %s wurde erstellt',
 	'blog:notify:subject' => 'Ein neuer Blog-Eintrag: %s',
-	'blog:notify:body' => '%s hat einen neuen Blog-Eintrag erstellt: %s
-
-%s
-
-Schau Dir den neuen Blog-Eintrag an und schreibe einen Kommentar:
-%s',
 
 	// widget
 	'widgets:blog:name' => 'Blog-Einträge',

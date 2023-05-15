@@ -136,29 +136,10 @@ return array(
 	'groups:invite:subject' => "Hallo %s, Du wurdest eingeladen, der Gruppe %s beizutreten!",
 	'groups:joinrequest:remove:check' => 'Bist Du sicher, dass Du diese Anfrage zum Gruppenbeitritt löschen willst?',
 	'groups:invite:remove:check' => 'Bist Du sicher, dass Du diese Einladung zum Gruppenbeitritt löschen willst?',
-	'groups:invite:body' => "%s hat Dich eingeladen, der Gruppe '%s' beizutreten.
-
-Folge dem Link um Deine ausstehenden Einladungen zum Beitreten in Gruppen zu sehen:
-
-%s",
 
 	'groups:welcome:subject' => "Willkommen in der Gruppe %s!",
-	'groups:welcome:body' => "Du bist nun ein Mitglied der Gruppe '%s'.
-
-Folge dem Link um einen Beitrag in der Gruppe zu schreiben!
-
-%s",
 
 	'groups:request:subject' => "%s hat beantragt, der Gruppe %s beitreten zu dürfen",
-	'groups:request:body' => "%s hat beantragt, der Gruppe '%s' beitreten zu dürfen.
-
-Folge dem Link um ihr/sein Profil zu sehen:
-
-%s
-
-oder folge dem nächsten Link, um die ausstehenden Anfragen zum Gruppenbeitritt zu sehen:
-
-%s",
 
 	'river:group:create' => '%s hat die Gruppe %s gegründet',
 	'river:group:join' => '%s ist der Gruppe %s beigetreten',
