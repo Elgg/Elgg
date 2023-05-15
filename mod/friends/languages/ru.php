@@ -53,7 +53,7 @@ return array(
 	'friends:notification:request:subject' => "%s хочет быть вашим другом!",
 	'friends:notification:request:message' => "%s запросил дружбу с вами на %s.
 
-Нажмите здесь,чтобы посмотреть запрос на дружбу:
+Нажмите здесь, чтобы посмотреть запрос на дружбу:
 %s",
 	
 	'friends:notification:request:decline:subject' => "%s отклонил ваш запрос на дружбу",

@@ -37,8 +37,9 @@ return array(
 %s
 
 Просмотреть и комментировать закладку:
-%s
-',
+%s',
+	
+	'notification:mentions:object:bookmarks:subject' => '%s упомянул вас в закладке',
 	
 	'bookmarks:numbertodisplay' => 'Число отображаемых закладок',
 

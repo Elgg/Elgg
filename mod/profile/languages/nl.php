@@ -12,6 +12,7 @@ return array(
 	'admin:configure_utilities:profile_fields' => 'Bewerk profielvelden',
 	
 	'profile:edit' => 'Bewerk profiel',
+	'profile:edit:header' => 'Bewerk kopafbeelding profiel',
 	'profile:description' => "Over mij",
 	'profile:briefdescription' => "Korte omschrijving",
 	'profile:location' => "Locatie",

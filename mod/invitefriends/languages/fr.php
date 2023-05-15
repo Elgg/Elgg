@@ -16,19 +16,19 @@ return array(
 
 	'invitefriends:success' => 'Vos contacts ont été invités.',
 	'invitefriends:invitations_sent' => 'Invitations envoyées : %s. Il y a eu les problèmes suivants :',
-	'invitefriends:email_error' => 'Les invitations ont été envoyées, sauf aux adresses suivantes qui comportent des erreurs : %s',
+	'invitefriends:email_error' => 'Les adresses suivantes ne sont pas valides : %s',
 	'invitefriends:already_members' => 'Les invités suivants sont déjà membres : %s',
 	'invitefriends:noemails' => 'Aucune adresse e-mail n\'a été renseignée.',
 	
 	'invitefriends:message:default' => 'Bonjour,
 
-Je vous invite à rejoindre mon réseau sur %s.',
+Je souhaiterais vous inviter à rejoindre mon réseau sur %s.',
 
-	'invitefriends:email' => 'Vous avez été invité à rejoindre %s par %s :
+	'invitefriends:email' => 'Vous avez été invité à rejoindre %s par %s.
 
 %s
 
-Pour accepter l’invitation et créer votre compte, cliquez sur le lien suivant :
+Pour accepter l\'invitation et créer votre compte, cliquez sur ce lien :
 %s
 
 Vous serez automatiquement en contact lorsque votre compte aura été créé.',

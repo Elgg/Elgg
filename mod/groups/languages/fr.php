@@ -138,24 +138,24 @@ return array(
 	'groups:invite:subject' => "%s vous êtes invité à rejoindre %s !",
 	'groups:joinrequest:remove:check' => 'Confirmez-vous vouloir supprimer cette demande d\'adhésion ?',
 	'groups:invite:remove:check' => 'Confirmez-vous vouloir supprimer cette invitation ?',
-	'groups:invite:body' => "%s vous invite à rejoindre le groupe '%s'.
+	'groups:invite:body' => "%s vous invite à rejoindre le groupe \"%s\".
 
-Cliquez sur le lien ci-dessous pour voir vos invitations :
+Cliquez ci-dessous pour voir toutes vos invitations :
 %s",
 
 	'groups:welcome:subject' => "Bienvenue dans le groupe %s !",
-	'groups:welcome:body' => "Vous êtes maintenant membre du groupe '%s'.
+	'groups:welcome:body' => "Vous êtes maintenant membre du groupe \"%s\".
 
-Cliquez le lien ci-dessous pour commencer à participer !
+Cliquez ci-dessous pour commencer à participer !
 %s",
 
 	'groups:request:subject' => "%s a demandé à rejoindre %s",
-	'groups:request:body' => "%s a demandé à rejoindre le groupe '%s'.
+	'groups:request:body' => "%s a demandé à rejoindre le groupe \"%s\".
 
 Pour voir son profil :
 %s
 
-ou pour voir les demandes d'adhésion au groupe :
+ou cliquez ci-dessous pour voir les demandes d'adhésion au groupe :
 %s",
 
 	'river:group:create' => '%s a créé le groupe %s',
