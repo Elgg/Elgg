@@ -348,9 +348,9 @@ class Application {
 	 *
 	 * @param ResponseBuilder $builder Response builder
 	 *
-	 * @return Response|false Sent response
+	 * @return Response|null Sent response
 	 */
-	public static function respond(ResponseBuilder $builder) {
+	public static function respond(ResponseBuilder $builder): ?Response {
 		if (self::$_instance) {
 			self::$_instance->internal_services->responseFactory->respond($builder);
 
@@ -393,7 +393,7 @@ class Application {
 	/**
 	 * Routes the request, booting core if not yet booted
 	 *
-	 * @return Response|false False if Elgg wants the PHP CLI server to handle the request
+	 * @return Response|null|false False if Elgg wants the PHP CLI server to handle the request
 	 */
 	public function run() {
 		$config = $this->internal_services->config;
