@@ -156,7 +156,7 @@ if ($is_new_group) {
 // Invisible group support
 // @todo this requires save to be called to create the acl for the group. This
 // is an odd requirement and should be removed. Either the acl creation happens
-// in the action or the visibility moves to a plugin hook
+// in the action or the visibility moves to an event handler
 if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 	$value = get_input('vis');
 	if ($is_new_group || $value !== null) {

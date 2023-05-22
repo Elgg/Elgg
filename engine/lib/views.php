@@ -1390,11 +1390,13 @@ function _elgg_get_js_site_data(): array {
 /**
  * Get the initial contents of "elgg" client side. Will be extended by elgg.js.
  *
+ * @param array $params page related parameters
+ *
  * @return array
  * @internal
  */
-function _elgg_get_js_page_data(): array {
-	$data = elgg_trigger_event_results('elgg.data', 'page', [], []);
+function _elgg_get_js_page_data(array $params = []): array {
+	$data = elgg_trigger_event_results('elgg.data', 'page', $params, []);
 	if (!is_array($data)) {
 		elgg_log('"elgg.data" Event handlers must return an array. Returned ' . gettype($data) . '.', 'ERROR');
 		$data = [];

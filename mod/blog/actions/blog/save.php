@@ -31,7 +31,7 @@ if ($guid) {
 	$blog = new \ElggBlog();
 }
 
-// set the previous status for the hooks to update the time_created and river entries
+// set the previous status for the events to update the time_created and river entries
 $old_status = $blog->status;
 
 // set defaults and required values.

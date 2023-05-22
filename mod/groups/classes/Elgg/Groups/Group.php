@@ -3,7 +3,7 @@
 namespace Elgg\Groups;
 
 /**
- * Handle group related hooks and events
+ * Handle group related events
  *
  * @since 4.0
  * @internal

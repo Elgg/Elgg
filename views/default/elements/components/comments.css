@@ -89,7 +89,7 @@
 	max-width: 300px;
 	position: relative;
 }
-	
+
 #comments {
 	.elgg-form-comment-save {
 		margin-top: 1rem;
@@ -104,8 +104,5 @@
 @keyframes comment-highlight {
 	from {
 		background: $(state-notice-background-color);
-	}
-	to {
-		background: white;
 	}
 }

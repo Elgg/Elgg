@@ -120,7 +120,7 @@ class Search {
 	 */
 	protected function initParams(array $params = []) {
 
-		// $search_type == all || entities || trigger plugin hook
+		// $search_type == all || entities || trigger event
 		$search_type = get_input('search_type', 'all');
 		$fields = get_input('fields');
 		

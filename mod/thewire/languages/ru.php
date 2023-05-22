@@ -17,8 +17,11 @@ return array(
 	'collection:object:thewire:all' => "Все публикации в ленте",
 	'collection:object:thewire:owner' => "Публикации в ленте пользователя %s",
 	'collection:object:thewire:friends' => "Публикации в лентах друзей",
+	'collection:object:thewire:mentions' => "Публикации с упоминанием @%s",
 	'notification:object:thewire:create' => "Отправить уведомление при создании публикации в ленте",
 	'notifications:mute:object:thewire' => "о публикации в ленте '%s'",
+
+	'thewire:menu:filter:mentions' => "Упоминания",
 	
 	'thewire:replying' => "Ответить пользователю %s (@%s), который написал",
 	'thewire:thread' => "Ветка",
@@ -61,6 +64,8 @@ return array(
 	'thewire:notify:reply' => '%s ответил %s в ленте:',
 	'thewire:notify:post' => '%s опубликовал в ленте:',
 	'thewire:notify:footer' => "Просмотреть и ответить:\n%s",
+	
+	'notification:mentions:object:thewire:subject' => '%s упомянул вас в публикации',
 
 	/**
 	 * Settings

@@ -54,6 +54,8 @@ return array(
 
 Просмотреть и прокомментировать запись в блоге:
 %s',
+	
+	'notification:mentions:object:blog:subject' => '%s упомянул вас в записи блога',
 
 	// widget
 	'widgets:blog:name' => 'Записи блога',

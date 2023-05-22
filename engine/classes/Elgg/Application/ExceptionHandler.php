@@ -73,7 +73,7 @@ class ExceptionHandler {
 		}
 
 		$services = $app->internal_services;
-		if ($services->responseFactory->getSentResponse() !== false) {
+		if ($services->responseFactory->getSentResponse() !== null) {
 			return;
 		}
 		

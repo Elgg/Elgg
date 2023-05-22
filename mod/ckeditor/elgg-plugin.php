@@ -50,6 +50,7 @@ return [
 			],
 			'output/longtext' => [
 				'Elgg\CKEditor\Views::setOutputLongTextClass' => [],
+				'Elgg\CKEditor\Views::stripEmptyClosingParagraph' => [],
 			],
 		],
 	],

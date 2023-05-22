@@ -28,10 +28,10 @@ class HandlerLogger {
 	}
 	
 	/**
-	 * Track the actual event / plugin hook
+	 * Track the actual event
 	 *
-	 * @param string $name name of the event / hook
-	 * @param string $type type of the event / hook
+	 * @param string $name name of the event
+	 * @param string $type type of the event
 	 *
 	 * @return void
 	 */

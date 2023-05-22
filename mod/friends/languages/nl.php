@@ -53,7 +53,7 @@ Na het inschakelen van de vriendschapsverzoeken moet indien gebruiker A vriend w
 	'friends:notification:request:subject' => "%s wil je vriend worden!",
 	'friends:notification:request:message' => "%s heeft een vriendschapsverzoek ingediend op %s.
 
-On het vriendschapsverzoek te bekijken, klik hier:
+Om het vriendschapsverzoek te bekijken, klik hier:
 %s",
 	
 	'friends:notification:request:decline:subject' => "%s heeft je vriendschapsverzoek afgewezen",

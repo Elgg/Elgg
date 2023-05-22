@@ -18,6 +18,12 @@ abstract class RouteResponseTestCase extends IntegrationTestCase {
 	use PluginTesting;
 
 	public function up() {
+		$this->createApplication([
+			'isolate' => true,
+			'custom_config_values' => [
+				'walled_garden' => false,
+			],
+		]);
 		$this->startPlugin(null, true, false, true);
 		_elgg_services()->logger->disable();
 	}

@@ -7,7 +7,7 @@
  * @uses $vars['options'] Options
  * @uses $vars['created_after']  Only show blogs created after a date
  * @uses $vars['created_before'] Only show blogs created before a date
- * @uess $vars['status'] Filter by status
+ * @uses $vars['status'] Filter by status
  */
 
 $defaults = [

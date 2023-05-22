@@ -1,4 +1,4 @@
-define(['hooks', 'elgg/Ajax'], function(hooks, Ajax) {
+define(['elgg/hooks', 'elgg/Ajax'], function(hooks, Ajax) {
 
 	var ajax = new Ajax();
 	var log = console.log.bind(console);
@@ -74,11 +74,11 @@ define(['hooks', 'elgg/Ajax'], function(hooks, Ajax) {
 			}
 			
 			if (got_metadata_from_server) {
-				log("PASS got metadata from server response hook");
+				log("PASS got metadata from server response event");
 			}
 			
 			if (obj.altered_value) {
-				log("PASS client response hook altered value");
+				log("PASS client response event altered value");
 			}
 
 			alert('Success!');

@@ -19,7 +19,7 @@ return array(
 	'add:object:bookmarks' => "Ajouter un signet",
 	'edit:object:bookmarks' => "Modifier le signet",
 	'notification:object:bookmarks:create' => "Envoyer une notification quand un signet est créé",
-	'notifications:mute:object:bookmarks' => "à propos du signet '%s'",
+	'notifications:mute:object:bookmarks' => "à propos du signet \"%s\"",
 
 	'bookmarks:this' => "Mettre cette page en signet",
 	'bookmarks:this:group' => "Mettre en signet dans %s",
@@ -30,7 +30,7 @@ return array(
 
 	'bookmarks:notify:summary' => 'Nouveau signet intitulé %s',
 	'bookmarks:notify:subject' => 'Nouveau signet : %s',
-	'bookmarks:notify:body' => '%s a jouté un nouveau signet : %s
+	'bookmarks:notify:body' => '%s a ajouté un nouveau signet : %s
 
 Adresse : %s
 

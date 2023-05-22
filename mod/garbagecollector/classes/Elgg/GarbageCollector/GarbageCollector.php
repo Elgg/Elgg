@@ -88,13 +88,13 @@ class GarbageCollector {
 	}
 	
 	/**
-	 * Listen to the garbage collection hook
+	 * Listen to the garbage collection event
 	 *
-	 * @param \Elgg\Hook $hook 'gc', 'system'
+	 * @param \Elgg\Event $event 'gc', 'system'
 	 *
 	 * @return void
 	 */
-	public static function gcCallback(\Elgg\Hook $hook): void {
+	public static function gcCallback(\Elgg\Event $event): void {
 		$results = self::instance()->cleanupOrphanedData();
 		
 		foreach ($results as $result) {

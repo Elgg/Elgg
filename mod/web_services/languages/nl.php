@@ -31,11 +31,16 @@ return array(
 	'APIException:CallMethodNotImplemented' => "Aanroep methode '%s' is op dit moment niet ondersteund.",
 	'SecurityException:authenticationfailed' => "Gebruiker kon niet worden geauthentiseerd.",
 	'SecurityException:BannedUser' => "Deze gebruiker is geblokkeerd. Er kan geen token worden overhandigd.",
+	'InvalidArgumentException:APIParametersArrayStructure' => "Parameters array structuur is incorrect voor de aanroep om de methode '%s' beschikbaar te stellen",
+	'DomainException:UnrecognisedHttpMethod' => "Onherkenbare http methode %s voor api method '%s'",
 	'SecurityException:InvalidPostHash' => "POST data hash is ongeldig - Verwachte %s, maar kreeg %s.",
 	'SecurityException:DupePacket' => "Packet signature is al eerder gezien",
 	'SecurityException:InvalidAPIKey' => "Ongeldige of ontbrekende API Key.",
 	'BadRequestException:MissingOutputViewInViewtype' => "Ontbrekende view 'api/output' in viewtype '%s'.",
 	'BadRequestException:MissingOutputViewInViewtype:DataViewsPlugin' => "Activeer de 'data_views' plugin om deze view toe te voegen.",
+	
+	'web_services:api_methods:system.api.list:get:description' => "Lijst van alle beschikbare API calls op het systeem.",
+	'web_services:api_methods:auth.gettoken:post:description' => "Deze API call geeft een gebruiker een user authentication token waarmee vervolg API calls kunnen worden geauthenticeerd. Geeft het token door als de parameter auth_token.",
 	
 	'admin:configure_utilities:webservices' => "Webservices",
 	'admin:configure_utilities:ws_list' => "Alle API methodes",

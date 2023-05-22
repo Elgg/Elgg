@@ -17,5 +17,8 @@ return array(
 	'garbagecollector:done' => "Garbage collector afgerond",
 	'garbagecollector:optimize' => "Optimaliseren van %s",
 	
+	'garbagecollector:orphaned' => "Opruimen van orphaned data uit tabel: '%s'",
+	'garbagecollector:orphaned:done' => "Opruimen van orphaned data afgerond",
+	
 	'garbagecollector:cli:database:optimize:description' => "Optimaliseer de database tabellen",
 );

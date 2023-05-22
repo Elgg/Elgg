@@ -4,13 +4,13 @@ elgg_register_event_handler('ajax_response', 'action:developers/ajax_demo', func
 	/* @var $response \Elgg\Services\AjaxResponse */
 	$response = $event->getValue();
 	
-	// check data added by client hook
+	// check data added by client event
 	if (get_input('client_request_altered') == '1') {
 		// add some data to the response
 		$response->getData()->server_response_altered = 2;
 	}
 	
-	elgg_register_error_message('Hello from ajax_response hook');
+	elgg_register_error_message('Hello from ajax_response event');
 	
 	return $response;
 });
