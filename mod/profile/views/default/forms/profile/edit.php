@@ -2,7 +2,7 @@
 /**
  * Edit profile form
  *
- * @tip Use 'fields', 'user:user' hook to modify profile fields configuration.
+ * @tip Use 'fields', 'user:user' event to modify profile fields configuration.
  *
  * @uses vars['entity']
  */

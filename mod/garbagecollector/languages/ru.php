@@ -17,5 +17,8 @@ return array(
 	'garbagecollector:done' => "Сбор мусора сделан",
 	'garbagecollector:optimize' => "Оптимизация %s",
 	
+	'garbagecollector:orphaned' => "Очистить потерянные данные из таблицы '%s'",
+	'garbagecollector:orphaned:done' => "Выполнена очистка потерянных данных",
+	
 	'garbagecollector:cli:database:optimize:description' => "Оптимизировать таблицы базы данных",
 );

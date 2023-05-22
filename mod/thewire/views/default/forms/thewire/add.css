@@ -14,4 +14,8 @@
 	> .ck-editor__top {
 		display: none;
 	}
+	
+	> .ck-editor__main > .ck-editor__editable {
+		min-height: 40px;
+	}
 }

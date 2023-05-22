@@ -102,6 +102,7 @@ return array(
 	'RegistrationAllowedGatekeeperException:invalid_invitecode' => "Le code d'invitation fourni n'est pas valide",
 	'BadRequestException' => 'Mauvaise requête',
 	'BadRequestException:invalid_host_header' => 'La requête contient un entête HOST invalide',
+	'BadRequestException:livesearch:no_query' => 'La recherche instantanée a besoin d\'une requête',
 	'ValidationException' => 'Les données envoyées ne satisfont pas les exigences, veuillez vérifier votre saisie.',
 	'LogicException:InterfaceNotImplemented' => '%s doit implémenter %s',
 	
@@ -258,6 +259,11 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'avatar:remove:success' => 'L\'image du profil a bien été supprimée',
 	'avatar:remove:fail' => 'Échec de la suppression de l\'image du profil',
 	
+	'header:remove:success' => 'L\'entête a bien été supprimée',
+	'header:remove:fail' => 'Échec de la suppression de l\'entête',
+	'header:upload:success' => 'Le chargement de l\'entête a réussi',
+	'header:upload:fail' => 'Le chargement de l\'entête a échoué.',
+	
 	'action:user:validate:already' => "%s a déjà été validé",
 	'action:user:validate:success' => "%s a été validé",
 	'action:user:validate:error' => "Une erreur est survenue lors de la validation de %s",
@@ -325,6 +331,7 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'usersettings:notifications:default:description' => 'Paramètres de notification par défaut pour les événements du système',
 	'usersettings:notifications:content_create:description' => 'Paramètres de notification par défaut pour vos propres publications. Ceci peut provoquer des notifications quand d\'autres personnes y réagissent, par exemple en ajoutant un commentaire',
 	'usersettings:notifications:create_comment:description' => "Paramètre de notification par défaut quand vous ajoutez un commentaire, afin de pouvoir suivre la suite de la conversation",
+	'usersettings:notifications:mentions:description' => "Recevez une notification quand vous êtes @mentionné⋅e",
 
 	'usersettings:notifications:timed_muting' => "Désactiver temporairement les notifications",
 	'usersettings:notifications:timed_muting:help' => "Si vous ne souhaitez pas recevoir de notifications pendant une certaine période (par exemple pendant des vacances ou un déplacement), vous pouvez définir une date de début et de fin pour désactiver temporairement toutes les notifications",
@@ -605,6 +612,7 @@ Comme Elgg a un grand nombre d\'accès aux fichiers cela va avoir un effet néga
 	'admin:widget:content_stats:help' => 'Suivez le contenu créé par les membres',
 	'admin:widget:cron_status' => 'Statut du cron',
 	'admin:widget:cron_status:help' => 'Affiche le statut des dernières tâches cron terminées',
+	'admin:widget:elgg_blog' => 'Blog de Elgg',
 	'admin:statistics:numentities' => 'Statistiques des contenus',
 	'admin:statistics:numentities:type' => 'Type de contenu',
 	'admin:statistics:numentities:number' => 'Nombre',
@@ -1063,6 +1071,10 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'entity:edit:icon:file:help' => "Laissez vide pour conserver l'icône actuelle.",
 	'entity:edit:icon:remove:label' => "Supprimer l'icône",
 
+	'entity:edit:header:file:label' => "Charger un nouvel entête",
+	'entity:edit:header:file:help' => "Laissez vide pour conserver l'entête actuelle.",
+	'entity:edit:header:remove:label' => "Supprimer l'image de l'entête",
+
 /**
  * Generic action words
  */
@@ -1071,6 +1083,8 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'save_go' => "Enregistrer, et aller vers %s",
 	'reset' => 'Réinitialiser',
 	'publish' => "Publier",
+	'feature' => "Mettre en avant",
+	'unfeature' => "Ne plus mettre en avant",
 	'cancel' => "Annuler",
 	'saving' => "Enregistrement en cours ...",
 	'update' => "Mettre à jour",
@@ -1461,7 +1475,9 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'config:content:pagination_behaviour:ajax-replace' => "Remplacer les données de la liste sans recharger toute la page",
 	'config:content:pagination_behaviour:ajax-append' => "Ajouter les nouvelles données au début ou à la fin de la liste",
 	'config:content:pagination_behaviour:ajax-append-auto' => "Ajoute les nouvelles données au début ou à la fin de la liste (automatiquement en cas de défilement dans la vue)",
+	'config:content:mentions_display_format' => "Format d'affichage des mentions",
 	'config:content:mentions_display_format:username' => "Identifiant",
+	'config:content:mentions_display_format:display_name' => "Nom affiché",
 	'config:email' => "E-mail",
 	'config:email_html_part:label' => "Activer les e-mails en HTML",
 	'config:email_html_part:help' => "Les e-mails sortants seront intégrés dans un template HTML",
@@ -1637,6 +1653,8 @@ Pour répondre ou voir la publication originale :
 Pour y répondre ou voir la publication originale :
 %s",
 
+	'notification:mentions:object:comment:subject' => '%s vous a mentionné dans un commentaire',
+
 /**
  * Entities
  */
@@ -1697,22 +1715,26 @@ Pour y répondre ou voir la publication originale :
 	'diagnostics:report' => 'Rapport de diagnostic',
 	'diagnostics:description' => 'Le rapport de diagnostic suivant peut être utile pour diagnostiquer des problèmes avec Elgg. Les développeurs de Elgg peuvent vous demander de le joindre à un rapport de bogue.',
 	'diagnostics:header' => '========================================================================
-Rapport de diagnostic de Elgg
+Rapport de diagnostic Elgg
 Généré %s par %s
 ========================================================================
 
 ',
+	'diagnostics:report:basic' => '
+Version de Elgg %s
+
+------------------------------------------------------------------------',
 	'diagnostics:report:php' => '
 Informations PHP :
 %s
 ------------------------------------------------------------------------',
 	'diagnostics:report:md5' => '
-Fichiers installés et sommes de contrôle :
+Fichiers installés et sommes de vérification :
 
 %s
 ------------------------------------------------------------------------',
 	'diagnostics:report:globals' => '
-Variables globales :
+Variables Globales :
 
 %s
 ------------------------------------------------------------------------',

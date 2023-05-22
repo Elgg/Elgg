@@ -13,7 +13,7 @@ class UserUnvalidated {
 	/**
 	 * Add a menu item to an unvalidated user
 	 *
-	 * @param \Elgg\Event $event the plugin hook 'register' 'menu:user:unvalidated'
+	 * @param \Elgg\Event $event 'register' 'menu:user:unvalidated'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */

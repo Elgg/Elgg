@@ -42,7 +42,7 @@ class User {
 		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function () use ($user) {
 			if ($user->isEnabled()) {
 				// Don't do a recursive disable.  Any entities owned by the user at this point
-				// are products of plugins that hook into create user and might need
+				// are products of plugins that listen to the create user event and might need
 				// access to the entities.
 				// @todo That ^ sounds like a specific case...would be nice to track it down...
 				$user->disable('uservalidationbyemail_new_user', false);

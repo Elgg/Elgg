@@ -8,8 +8,8 @@
 $title = elgg_echo('pages:history');
 $content = '';
 
-$page = elgg_extract('page', $vars);
-if ($page instanceof ElggPage) {
+$page = elgg_extract('page', $vars, elgg_extract('entity', $vars));
+if ($page instanceof \ElggPage) {
 	elgg_push_context('widgets');
 	
 	$content = elgg_list_annotations([

@@ -47,7 +47,6 @@ button {
 		color: $(button-cancel-font-color-hover);
 	}
 }
-	
 
 .elgg-button-action {
 	background: $(button-action-background-color);

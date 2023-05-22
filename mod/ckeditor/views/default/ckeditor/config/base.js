@@ -9,6 +9,9 @@ define(['elgg'], function(elgg) {
 				top: topbar_height
 			}
 		},
+		link: {
+			defaultProtocol: 'http://'
+		},
 		removePlugins: [
 			'MediaEmbedToolbar', // is not yet supported in CKEditor5 but throws console warning
 			'MediaEmbed', // this plugin only provides backend oembed support. Can be enabled by plugin that provides frontend support

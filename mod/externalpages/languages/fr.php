@@ -17,7 +17,7 @@ return array(
 	'expages:privacy' => "Informations personnelles",
 	'expages:contact' => "Contact",
 
-	'expages:notset' => "Cette page n'a pas été définie pour le moment.",
+	'expages:notset' => "Cette page n'a pas encore été définie.",
 
 	/**
 	 * Status messages

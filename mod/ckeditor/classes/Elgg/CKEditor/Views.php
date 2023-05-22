@@ -3,7 +3,7 @@
 namespace Elgg\CKEditor;
 
 /**
- * Hook callbacks for views
+ * Event callbacks for views
  *
  * @since 5.0
  * @internal
@@ -120,5 +120,24 @@ class Views {
 		preg_match_all($pattern, $text, $matches);
 		
 		return array_merge((array) $event->getValue(), elgg_extract(1, $matches, []));
+	}
+	
+	/**
+	 * Cleanup empty paragraphs (<p>&nbsp;</p>) from longtexts
+	 *
+	 * @param \Elgg\Event $event 'view_vars', 'output/longtext'
+	 *
+	 * @return null|array
+	 */
+	public static function stripEmptyClosingParagraph(\Elgg\Event $event): ?array {
+		
+		$vars = $event->getValue();
+		if (empty($vars['value'])) {
+			return null;
+		}
+		
+		$vars['value'] = preg_replace('/((\r\n|\r|\n)*<p>(&nbsp;)*<\/p>)+$/', '', trim($vars['value']));
+		
+		return $vars;
 	}
 }

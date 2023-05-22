@@ -22,7 +22,7 @@ class CronRunner {
 			return;
 		}
 
-		// Now, because we are nice, trigger a plugin hook to let other plugins do some GC
+		// Now, because we are nice, trigger an event to let other plugins do some GC
 		elgg_trigger_event_results('gc', 'system', ['period' => $period]);
 
 		$ops = GarbageCollector::instance()->optimize();

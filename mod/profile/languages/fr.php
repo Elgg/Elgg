@@ -45,12 +45,12 @@ return array(
 	'profile:defaultprofile:reset' => 'Réinitialisation des champs de profil aux valeurs système par défaut',
 	'profile:resetdefault' => 'Réinitialiser les champs de profil aux valeurs système par défaut',
 	'profile:resetdefault:confirm' => 'Confirmez-vous vouloir supprimer vos champs de profil personnalisés ?',
-	'profile:explainchangefields' => "Vous pouvez remplacer les champs du profil actuels par les vôtres.
-Cliquez sur le bouton 'Ajouter' et donnez un label au nouveau champ de profil, par exemple 'Équipe favorite', puis sélectionnez le type de champ (par ex. texte, URL, tags).
+	'profile:explainchangefields' => "Vous pouvez remplacer les champs du profil par défaut par les vôtres.
+Cliquez sur le bouton \"Ajouter\" et donnez un label au nouveau champ de profil, par exemple \"Équipe favorite\", puis sélectionnez le type de champ (par ex. texte, URL, tags).
 Pour ré-organiser les champs, cliquez au niveau de la poignée située à côté du label du champ.
 Pour modifier le label d'un champ - cliquez sur l'icône d'édition.
 
-A tout moment vous pouvez revenir au profil par défaut, mais vous perdrez les informations déjà saisies dans les pages de profil.",
+A tout moment vous pouvez revenir au profil par défaut, mais vous perdrez les informations déjà saisies dans les champs personnalisés des pages de profil.",
 	'profile:editdefault:success' => 'Nouveau champ de profil ajouté',
 	'profile:editdefault:fail' => 'Le profil par défaut n\'a pas pu être chargé',
 	'profile:noaccess' => "Vous n'avez pas la permission de modifier ce profil.",

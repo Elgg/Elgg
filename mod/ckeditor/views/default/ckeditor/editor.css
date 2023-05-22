@@ -4782,7 +4782,7 @@ label.ck.ck-color-grid__label {
 	}
 }
 
-.elgg-ckeditor-default > .ck-editor__main > .ck-editor__editable {
+.ck-editor > .ck-editor__main > .ck-editor__editable {
 	min-height: 250px;
 }
 

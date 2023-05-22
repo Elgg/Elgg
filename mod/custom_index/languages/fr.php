@@ -7,5 +7,5 @@
 
 return array(
 	'custom_index:settings:about' => "À propos",
-	'custom_index:settings:enable_module' => "Activer le module'%s'",
+	'custom_index:settings:enable_module' => "Activer le module \"%s\"",
 );

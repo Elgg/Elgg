@@ -105,7 +105,10 @@ function elgg_format_bytes(int $size, int $precision = 2): string {
 		return (string) $size;
 	}
 	
-	$precision = (int) $precision;
+	if ($size === 0) {
+		return '0 B';
+	}
+	
 	if ($precision < 0) {
 		$precision = 2;
 	}

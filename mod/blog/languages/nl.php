@@ -54,6 +54,8 @@ return array(
 
 Bekijk en reageer hier op de blog:
 %s',
+	
+	'notification:mentions:object:blog:subject' => '%s heeft je vermeld in een blog',
 
 	// widget
 	'widgets:blog:name' => 'Blogs',

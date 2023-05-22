@@ -14,6 +14,7 @@ $vars['options'] = [
 	'metadata_name_value_pairs' => [
 		'name' => 'wire_thread',
 		'value' => $entity->guid,
+		'type' => ELGG_VALUE_INTEGER,
 	],
 ];
 
