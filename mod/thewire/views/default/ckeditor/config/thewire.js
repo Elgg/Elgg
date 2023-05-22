@@ -35,12 +35,16 @@ define(['jquery', 'elgg/hooks', 'ckeditor/config/base', 'ckeditor/config/mention
 		return result;
 	});
 	
-	return $.extend(base, mentions, {
-		removePlugins: ['Autoformat', 'Link', 'AutoLink', 'ImageInsert', 'AutoImage', 'Bold', 'Italic', 'Underline'],
+	var config = $.extend(base, mentions, {
 		toolbar: [],
 		wordCount: {
 			displayCharacters: false,
 			displayWords: false
 		}
 	});
+	
+	// combine with extra plugins that need to be removed
+	config.removePlugins = config.removePlugins.concat(['Autoformat', 'Link', 'AutoLink', 'ImageInsert', 'AutoImage', 'Bold', 'Italic', 'Underline']);
+
+	return config;
 });
