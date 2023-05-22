@@ -1,3 +1,24 @@
+<a name="5.0.0-rc.1"></a>
+### 5.0.0-rc.1  (2023-05-22)
+
+#### Contributors
+
+* Jerôme Bakker (11)
+* Jeroen Dalsem (8)
+
+#### Features
+
+* **ckeditor:**
+  * strip empty paragraphs when outputting longtext fields ([dfd24629](https://github.com/Elgg/Elgg/commit/dfd246297220195286213db8793e996481393cb3))
+  * added the simpleButton plugin ([9334b61e](https://github.com/Elgg/Elgg/commit/9334b61ef6799049af6b4ad0c957ba1d483ca888))
+
+
+#### Bug Fixes
+
+* **icons:** show cropper messages for header images ([a09f7d36](https://github.com/Elgg/Elgg/commit/a09f7d3600817aa334dbc1c62576e4c04997b9cc))
+* **output:** correctly format 0 byte output ([1a27a14c](https://github.com/Elgg/Elgg/commit/1a27a14c8d1d192c97600b6ab34247e8a36764dc))
+
+
 <a name="5.0.0-beta.1"></a>
 ### 5.0.0-beta.1  (2023-04-05)
 
