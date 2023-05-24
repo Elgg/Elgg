@@ -279,14 +279,6 @@ trait LegacyQueryOptionsAdapter {
 
 			$pair = array_merge($defaults, $pair);
 
-			if (in_array(strtolower($pair['comparison']), ['in', 'eq', '=']) && is_string($pair['value'])) {
-				// Apparently this madness is supported
-				// \Elgg\Integration\ElggCoreGetEntitiesFromMetadataTest::testElggApiGettersEntityMetadataNVPValidNValidVOperandIn
-				$pair['value'] = array_map(function ($e) {
-					return trim($e, ' \"\'');
-				}, explode(',', $pair['value']));
-			}
-
 			if (in_array($pair['name'], \ElggEntity::PRIMARY_ATTR_NAMES)) {
 				$clause = new AttributeWhereClause();
 			} else {
@@ -354,14 +346,6 @@ trait LegacyQueryOptionsAdapter {
 			}
 
 			$pair = array_merge($defaults, $pair);
-
-			if (in_array(strtolower($pair['comparison']), ['in', 'eq', '=']) && is_string($pair['value'])) {
-				// Apparently this madness is supported
-				// \Elgg\Integration\ElggCoreGetEntitiesFromMetadataTest::testElggApiGettersEntityMetadataNVPValidNValidVOperandIn
-				$pair['value'] = array_map(function ($e) {
-					return trim($e, ' \"\'');
-				}, explode(',', $pair['value']));
-			}
 
 			if (in_array($pair['name'], \ElggEntity::PRIMARY_ATTR_NAMES)) {
 				$clause = new AttributeWhereClause();
