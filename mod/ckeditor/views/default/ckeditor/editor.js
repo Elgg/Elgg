@@ -12,6 +12,10 @@ define(['jquery', 'elgg', 'elgg/hooks', 'ckeditor/ckeditor'], function ($, elgg,
 		$('head').append('<link rel="stylesheet" type="text/css" id="ckeditor-css" href="' + elgg.get_simplecache_url('ckeditor/editor.css') + '">');
 	}
 	
+	$(document).on('submit', 'form', function() {
+		$(window).off('beforeunload.ckeditor');
+	});
+	
 	return {
 		init: function (selector, editor_type) {
 			var $input = $(selector);
@@ -33,12 +37,18 @@ define(['jquery', 'elgg', 'elgg/hooks', 'ckeditor/ckeditor'], function ($, elgg,
 						
 						// set classname based on type
 						$(editor.ui.view.element).addClass('elgg-ckeditor-' + editor_type);
-						
-						editor.model.document.on('change', () => {
-							// on change updateSourceElement()
+
+						editor.model.document.on('change:data', () => {
 							editor.updateSourceElement();
+							$(editor.sourceElement).data('dirty', true);
+							$(editor.sourceElement).trigger('change');
 						});
 						
+						$(window).on('beforeunload.ckeditor', function(event) {
+							if ($(editor.sourceElement).data('dirty') && $(editor.sourceElement).closest('form').is(':visible')) {
+								return true;
+							}
+						});
 					});
 			});
 		},

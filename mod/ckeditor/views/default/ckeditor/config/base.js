@@ -9,6 +9,10 @@ define(['elgg'], function(elgg) {
 				top: topbar_height
 			}
 		},
+		image: {
+			toolbar: ['toggleImageCaption', 'imageTextAlternative', 'imageStyle:inline', 'imageStyle:block', 'imageStyle:side', 'linkImage'],
+			resizeUnit: 'px'
+		},
 		link: {
 			defaultProtocol: 'http://'
 		},
