@@ -57,6 +57,7 @@ $picker = elgg_format_element('input', [
 	'type' => 'text',
 	'class' => 'elgg-input-user-picker',
 	'size' => 30,
+	'id' => elgg_extract('id', $vars),
 	'placeholder' => elgg_extract('placeholder', $vars),
 ]);
 
