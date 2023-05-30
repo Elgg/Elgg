@@ -25,6 +25,27 @@ define(['jquery', 'jquery-cropper/jquery-cropper'], function($) {
 			if ($img[0].hasAttribute('src')) {
 				this.reload();
 			}
+			
+			// enable/disable on tab changes
+			if ($field.not(':visible')) {
+				$field.data('resetNeeded', true);
+			}
+			
+			$field.parents('.elgg-tabs-component').find(' > .elgg-body > .elgg-menu-navigation-tabs-container > ul > li').on('open', function() {
+				if ($field.is(':visible')) {
+					$img.cropper('enable');
+					$img.cropper('resize');
+					
+					if ($field.data('resetNeeded')) {
+						$img.cropper('reset');
+						
+						// only need a reset once
+						$field.data('resetNeeded', false);
+					}
+				} else {
+					$img.cropper('disable');
+				}
+			});
 		};
 	
 		this.replaceImg = function() {
