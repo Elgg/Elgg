@@ -40,8 +40,8 @@ return array(
 	'developers:help:wrap_views' => "Dit omwikkeld alle views met een HTML comment block. Dit kan je helpen indien je wilt weten welke view de HTML heeft gegenereerd.
 
 Dit kan potentieel non-HTML views niet laten functioneren. Bekijk de developers_wrap_views() functie voor meer informatie.",
-	'developers:label:log_events' => "Log-events en plugin-hooks",
-	'developers:help:log_events' => "Schrijf events- en plugin-hook naar de log. Waarschuwing: dit zijn er veel per pagina.",
+	'developers:label:log_events' => "Log events",
+	'developers:help:log_events' => "Schrijf events naar de log. Waarschuwing: dit zijn er veel per pagina.",
 	'developers:label:show_gear' => "Gebruik %s buiten de admin sectie",
 	'developers:help:show_gear' => "Een icoon onderaan rechts van het venster dat administrators toegang geeft tot ontwikkelaars instellingen en links.",
 	'developers:label:block_email' => "Blokkeer alle uitgaande emails",
@@ -86,8 +86,8 @@ Dit kan potentieel non-HTML views niet laten functioneren. Bekijk de developers_
 	'developers:inspect:routes' => 'Routes',
 	'developers:inspect:views' => 'Views',
 	'developers:inspect:views:all_filtered' => "<b>Opmerking!</b>Alle view in/output word gefilterd door deze Plugin Hooks:",
-	'developers:inspect:views:input_filtered' => "(input gefilterd op plugin hook: %s)",
-	'developers:inspect:views:filtered' => "(gefilterd op plugin hook: %s)",
+	'developers:inspect:views:input_filtered' => "(invoer gefilterd door de event handler: %s)",
+	'developers:inspect:views:filtered' => "(gefilterd door de event handler: %s)",
 	'developers:inspect:widgets' => 'Widgets',
 	'developers:inspect:widgets:context' => 'Context',
 	'developers:inspect:functions' => 'Functies',
