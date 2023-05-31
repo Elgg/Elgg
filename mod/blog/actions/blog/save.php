@@ -46,6 +46,7 @@ $values = [
 	'comments_on' => 'On',
 	'excerpt' => '',
 	'tags' => '',
+	'events' => '',
 	'container_guid' => (int) get_input('container_guid'),
 ];
 
