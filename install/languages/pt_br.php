@@ -16,6 +16,15 @@ return array(
 
 	'install:next' => 'Proximo',
 	'install:refresh' => 'Atualiza',
+	'install:change_language' => 'Mudar idioma',
+
+	'install:welcome:instructions' => "A Instalação do Elgg tem 6 etapas simples. Esta é a primeira delas!
+Se você ainda não fez, leia as instruções de instalação inclusas no Elgg (ou clique no botão de link para instruções na parte inferior da página)
+Se você já está pronto para iniciar, clique no botão Próximo.",
+	
+	'install:footer:instructions' => "Instruções de instalação",
+	'install:footer:troubleshooting' => "Solução de problemas de instalação",
+	'install:footer:community' => "Fóruns da Comunidade Elgg",
 	
 	'install:requirements:instructions:success' => "Seu servidor passou na verificacao de requisitos.",
 	'install:requirements:instructions:failure' => "Seu servidor falhou na verificacao de requisitos. Depois que voce corrigir as situacoes apontadas abaixo, atualize a pagina. Verifique os links de solucao de problemas <i>(troubleshooting links)</i> no final da pagina se voce necessitar de ajuda adicional.",
@@ -47,13 +56,19 @@ return array(
 	'install:database:label:dbpassword' => 'Senha no banco de dados <i>(Database Password)</i>',
 	'install:database:label:dbname' => 'Nome da base de dados <i>(Database Name)</i>',
 	'install:database:label:dbhost' => 'Hospedagem da base de dados <i>(Database Host)</i>',
+	'install:database:label:dbport' => 'Número da porta do banco de dados',
 	'install:database:label:dbprefix' => 'Prefixo das tabelas no banco de dados <i>(Database Table Prefix)</i>',
+	'install:database:label:timezone' => "Fuso horário",
 
 	'install:database:help:dbuser' => 'Usuario que possui acesso pleno ao banco de dados MySQL que voce criou para o Elgg',
 	'install:database:help:dbpassword' => 'Senha para a conta do usuário da base de dados definida acima',
 	'install:database:help:dbname' => 'Nome da base de dados do Elgg',
 	'install:database:help:dbhost' => 'Hospedagem do servidor MySQL (geralmente <b>localhost</b>)',
+	'install:database:help:dbport' => 'Número da porta do servidor MySQL (geralmente 3306)',
 	'install:database:help:dbprefix' => "O prefixo a ser atribuido para todas as tabelas do Elgg (geralmente <b>elgg_</b>)",
+	'install:database:help:timezone' => "O fuso horário padrão para operação do site.",
+
+	'install:settings:instructions' => 'Precisaremos de algumas informações sobre o site durante a configuração do Elgg. Se você ainda não <a href="http://learn.elgg.org/en/stable/intro/install.html#create-a-data-folder" target="_blank">criou um diretório de armazenamento</a> para o Elgg, você precisará criá-lo agora.  ',
 
 	'install:settings:label:sitename' => 'Nome do Site <i>(Site Name)</i>',
 	'install:settings:label:siteemail' => 'Endereco de email do site <i>(Site Email Address)</i>',
@@ -93,6 +108,9 @@ return array(
 
 	'install:complete:instructions' => 'Seu site Elgg esta agora pronto para ser usado. Clique no botao abaixo para entrar no seu site.',
 	'install:complete:gotosite' => 'Ir para o  site',
+	'install:complete:admin_notice' => 'Bem-vindo ao seu site Elgg! Para mais opções, veja o%s.',
+	'install:complete:admin_notice:link_text' => 'páginas de configurações',
+	'install:complete:admin_notice:custom_index' => 'Habilitamos o plugin da Página de Demonstração para que você possa adminstrar sua página inicial. Configure aqui: %s.',
 
 	'InstallationException:CannotLoadSettings' => 'Elgg nao pode carregar os arquivos de configuracao. Ele nao existe ou existe uma questao de permissao de acesso ao arquivo.',
 
@@ -105,9 +123,13 @@ return array(
 	'install:error:databasesettings' => 'Não foi possivel conectar ao banco de dados com estas configurações.',
 	'install:error:database_prefix' => 'Caracteres invalidos no prefixo da base de dados (database prefix)',
 	'install:error:oldmysql2' => 'MySQL deve ser da versao 5.5.3 ou superior. Seu servidor está usando %s.',
+	'install:error:mysql_version' => 'A versão do MySQL deve ser %s ou superior. Seu servidor usa a versão %s.',
+	'install:error:database_version' => 'A versão do do banco de dados deve ser a %s ou superior. Seu servidor está usando a versão %s.',
 	'install:error:nodatabase' => 'Não foi possivel usar o banco de dados %s. Ele pode não existir.',
 	'install:error:cannotloadtables' => 'Não foi possivel carregar as tabelas da base de dados',
 	'install:error:tables_exist' => 'Já existem tabelas do Elgg no banco de dados. Voce precisa apagar estas tabelas ou reiniciar o instalador e nos tentaremos utiliza-las. Para reiniciar o instalar, remova o <b>\'?step=database\' </b> do URL no seu endereco na barra do navegador e pressione ENTER.',
+	'install:error:readsettingsphp' => 'Não foi possível ler o arquivo /elgg-config/settings.example.php',
+	'install:error:writesettingphp' => 'Não foi possível ler o arquivo /elgg-config/settings.php',
 	'install:error:requiredfield' => '%s é necessario',
 	'install:error:relative_path' => 'Nao acreditamos que "%s" seja um caminho absoluto para seu diretorio de dados (data directory)',
 	'install:error:datadirectoryexists' => 'Seu diretório de dados <i>(data directory)</i> %s não existe.',
@@ -123,6 +145,8 @@ return array(
 	'install:error:rewrite:nginx' => 'Nos achamos que seu servidor está funcionando em um servidor Nginx <i>(Nginx web server)</i>.',
 	'install:error:rewrite:lighttpd' => 'Nos achamos que seu servidor está funcionando em um servidor Lighttpd <i>(Lighttpd web server)</i>.',
 	'install:error:rewrite:iis' => 'Nos achamos que seu servidor está funcionando em um servidor IIS <i>(IIS web server)</i>.',
+	'install:error:rewrite:allowoverride' => "O teste de reescrita falhou. Esta falha pode ter ocorrido porque o AllowOverride não está configurado para todos os diretórios do Elgg. Isto previne o servidor Apache de processar o arquivo .htaccess que contem as regras de reescrita.
+\n\nOutro motivo menos comum está relacionado à configuração do Apache com um alias para o seu diretório Elgg e você precisa configurar uma regra Rewrite Base no arquivo .htaccess. Há mais instruções em seu arquivo .htaccess no diretório Elgg.",
 	'install:error:rewrite:htaccess:write_permission' => 'Seu servidor web nao possui permissao para criar o arquivo <b>.htaccess</b> no diretorio do Elgg. Voce precisa copiar manualmente o arquivo <b>htaccess_dist</b> para <b>.htaccess</b> ou alterar as permissoes no diretorio.',
 	'install:error:rewrite:htaccess:read_permission' => 'Existe um arquivo <b>.htaccess</b> no diretorio do Elgg, mas seu servidor web nao possui permissao para ler este arquivo.',
 	'install:error:rewrite:htaccess:non_elgg_htaccess' => 'Existe um arquivo <b>.htaccess</b> no diretorio do Elgg que nao foi criado pelo Elgg.  Por favor, remova o arquivo.',
@@ -131,6 +155,7 @@ return array(
 	'install:error:rewrite:altserver' => 'O teste com as regras de redirecionamento (rewrite rules) falhou. Voce precisa configurar seu servidor web com as regras de escrita do Elgg e tentar novamente.',
 	'install:error:rewrite:unknown' => 'Não foi possivel identificar qual o tipo de servidor web esta funcionando no seu servidor e ocorreu uma falha com as regras de redirecionamento (rewrite rules).  Não nos é possivel fornecer qualquer tipo de conselho. Por favor verifique o link de solução de problemas <i>(troubleshooting link)</i>.',
 	'install:warning:rewrite:unknown' => 'Seu servidor nao suporta testes automaticos das regras de redirecionamento (rewrite rules). Você pode continuar a instalação.  Contudo voce pode ter problemas com seu site. Voce pode realizar os testes manualmente com as regras de escrita clicando neste link: <a href="%s" target="_blank">teste</a>. Voce visualizará a palavra SUCESSO se as regras estiverem funcionando.',
+	'install:error:wwwroot' => '%s não é um endereço válido',
 
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => 'Um erro irrecuperavel ocorreu e foi registrado. se voce for o administrador do site verifique seus arquivos de configuracoes, ou entre em contato com o administrador do site com as seguintes informacoes:',
