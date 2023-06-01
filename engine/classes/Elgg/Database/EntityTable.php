@@ -440,7 +440,38 @@ class EntityTable {
 		return $user;
 	}
 
-	/**
+    /**
+     * soft delete entity
+     *
+     * @param \ElggEntity $entity Entity to soft delete
+     *
+     * @return bool
+     */
+    public function softDelete(\ElggEntity $entity): bool {
+        $qb = Update::table(self::TABLE_NAME);
+        $qb->set('soft_deleted', $qb->param('yes', ELGG_VALUE_STRING))
+            ->where($qb->compare('guid', '=', $entity->guid, ELGG_VALUE_GUID));
+
+        return $this->db->updateData($qb);
+    }
+
+    /**
+     * restore entity
+     *
+     * @param \ElggEntity $entity Entity to restore
+     *
+     * @return bool
+     */
+    public function restore(\ElggEntity $entity): bool {
+        $qb = Update::table(self::TABLE_NAME);
+        $qb->set('soft_deleted', $qb->param('no', ELGG_VALUE_STRING))
+            ->where($qb->compare('guid', '=', $entity->guid, ELGG_VALUE_GUID));
+
+        return $this->db->updateData($qb);
+    }
+
+
+    /**
 	 * Enables entity
 	 *
 	 * @param \ElggEntity $entity Entity to enable
