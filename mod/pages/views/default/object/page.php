@@ -32,7 +32,7 @@ if ($revision instanceof \ElggAnnotation) {
 		'prepare_dropdown' => true,
 	]);
 	
-	$description = $revision->value;
+	$description = (string) $revision->value;
 	
 	$owner = $revision->getOwnerEntity();
 	if ($owner instanceof \ElggEntity) {

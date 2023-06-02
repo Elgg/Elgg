@@ -1193,6 +1193,8 @@ For improved performance, it is recommended that you enable and configure OPcach
 	
 	'list:out_of_bounds' => "You have reached a part of the list without any content, however there is content available.",
 	'list:out_of_bounds:link' => "Go back to the first page",
+	'list:error:getter:user' => 'An error occurred while fetching the content',
+	'list:error:getter:admin' => "The getter '%s' returned a(n) '%s', however the viewer '%s' requires an array",
 
 	'link:text' => 'view link',
 

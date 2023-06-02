@@ -127,6 +127,35 @@ When setting an unsupported attribute an ``\Elgg\Exceptions\RuntimeException`` i
 	$item = new \ElggRiverItem();
 	$item->foo = 'bar';
 
+Metadata options in getter functions
+------------------------------------
+
+Previously there was a magic that would turn the ``metadata_value`` string into an array if it contained an ``,``.
+
+This magic has been removed. You now need to provide the array yourself. Because of this magic it was impossible to
+query for a metadata value that contained an ``,``.
+
+.. code-block:: php
+
+	// previously
+	$options = [
+		'metadata_name_value_pairs' => [
+			'some_name' => 'some_value1, some_value2',
+		],
+	];
+
+	// would result into, thus giving it an OR value
+	$options = [
+		'metadata_name_value_pairs' => [
+			'name' => 'some_name',
+			'value' => [
+				'some_value1',
+				'some_value2',
+			],
+			'operand' => '=',
+		],
+	];
+
 Changes in functions
 --------------------
 

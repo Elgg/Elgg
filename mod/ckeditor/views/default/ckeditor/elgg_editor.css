@@ -1,0 +1,50 @@
+.ck-editor .ck-content {
+	dt {
+		font-weight: bold;
+	}
+
+	dd {
+		margin: 0 0 1rem 1rem;
+	}
+	
+	ul,
+	ol {
+		margin: 0 1.5rem 1.5rem 0.5rem;
+		padding-left: 1rem;
+	}
+	
+	ul,
+	ul ul,
+	ul ul ul {
+		list-style-type: disc;
+	}
+	
+	ol,
+	ol ol,
+	ol ol ol {
+		list-style-type: decimal;
+	}
+	
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+}
+
+.ck-editor > .ck-editor__main > .ck-editor__editable {
+	min-height: 250px;
+}
+
+.elgg-ckeditor-simple > .ck-editor__main > .ck-editor__editable {
+	min-height: 150px;
+}
+
+.ck.ck-editor__editable .image .ck-progress-bar,
+.ck.ck-editor__editable .image-inline .ck-progress-bar {
+	background: $(state-notice-border-color);
+	height: .5rem;
+}
+
+:root {
+	--ck-image-upload-icon-is-visible: 1px;
+}

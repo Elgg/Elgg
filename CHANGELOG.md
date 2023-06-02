@@ -1,3 +1,31 @@
+<a name="5.0.0"></a>
+## 5.0.0  (2023-06-01)
+
+#### Contributors
+
+* Jerôme Bakker (10)
+* Jeroen Dalsem (4)
+
+#### Features
+
+* **ckeditor:** confirm page navigation on unsaved editor changes ([789c27b0](https://github.com/Elgg/Elgg/commit/789c27b072239e8155c21c664a4f2be43d7b8112))
+
+
+#### Bug Fixes
+
+* **ckeditor:**
+  * use pixels instead of percentages when resizing images ([4bd4e629](https://github.com/Elgg/Elgg/commit/4bd4e629637b602849f7dc57600adaf0e0c00ff4))
+  * image upload progress and icon are beter visible ([7c44af72](https://github.com/Elgg/Elgg/commit/7c44af72ec1ce02003cd2bd0a2802e24f9a39887))
+* **cropper:** fixed issue when the cropper is on a hidden tab ([7b7dcfae](https://github.com/Elgg/Elgg/commit/7b7dcfae43f82eadd735cb0ae425c14c5fc6bdc3))
+* **plugins:** correct layout when a plugin can't be (de)activated ([35a36232](https://github.com/Elgg/Elgg/commit/35a362322e7e2462945a9a79d7661bb52031991a))
+* **views:** validate elgg_list_entities getter return type ([b349f367](https://github.com/Elgg/Elgg/commit/b349f367c42c0f9a4c079e4c86007f5f05b95235))
+
+
+#### Breaking Changes
+
+* **core:** metadata value no longer magically turns into an array ([b0f4695f](https://github.com/Elgg/Elgg/commit/b0f4695f4516443dc306ebc5ab20c7a5b56f2609))
+
+
 <a name="5.0.0-rc.1"></a>
 ### 5.0.0-rc.1  (2023-05-22)
 

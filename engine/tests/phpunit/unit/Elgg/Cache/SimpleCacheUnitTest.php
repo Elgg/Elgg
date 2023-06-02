@@ -109,6 +109,10 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 	}
 	
 	public function testCanSymlinkCache() {
+		if (stripos(PHP_OS, 'WIN') !== false) {
+			$this->markTestSkipped('Unable to test symlinks on Windows');
+		}
+		
 		$root_path = elgg_get_root_path();
 		$asset_path = elgg_get_asset_path();
 		

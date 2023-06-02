@@ -11,6 +11,9 @@ return [
 		],
 	],
 	'view_extensions' => [
+		'ckeditor/editor.css' => [
+			'ckeditor/elgg_editor.css' => [],
+		],
 		'elgg.css' => [
 			'ckeditor/content.css' => [],
 		],

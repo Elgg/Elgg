@@ -11,8 +11,11 @@ if (!elgg_is_admin_logged_in()) {
 	return;
 }
 
-/* @var ElggPlugin $plugin */
 $plugin = elgg_extract('entity', $vars);
+if (!$plugin instanceof \ElggPlugin) {
+	return;
+}
+
 $reordering = elgg_extract('display_reordering', $vars, false);
 $active = $plugin->isActive();
 
@@ -42,7 +45,7 @@ if ($active) {
 
 // activate / deactivate button
 $options = [
-	'is_action' => true,
+	'href' => false,
 ];
 
 if ($active) {
@@ -57,8 +60,7 @@ if ($active) {
 		$classes[] = 'elgg-state-cannot-deactivate';
 		
 		$options['title'] = elgg_echo('admin:plugins:cannot_deactivate');
-		$options['class'] = 'elgg-button elgg-button-cancel';
-		$options['disabled'] = true;
+		$options['class'] = 'elgg-button elgg-button-cancel elgg-state-disabled';
 	}
 } else if ($can_activate) {
 	$classes[] = 'elgg-state-inactive';
@@ -72,9 +74,8 @@ if ($active) {
 	$classes[] = 'elgg-state-cannot-activate';
 	
 	$options['title'] = elgg_echo('admin:plugins:cannot_activate');
-	$options['class'] = 'elgg-button elgg-button-submit';
+	$options['class'] = 'elgg-button elgg-button-submit elgg-state-disabled';
 	$options['text'] = elgg_echo('admin:plugins:activate');
-	$options['disabled'] = true;
 }
 
 $action_button = elgg_trigger_event_results('action_button', 'plugin', ['entity' => $plugin], elgg_view('output/url', $options));

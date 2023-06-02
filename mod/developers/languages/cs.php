@@ -34,8 +34,6 @@ return array(
 	'developers:label:show_modules' => "Ukazovat AMD moduly načtené v konzoli",
 	'developers:help:show_modules' => "Posílá načtené moduly a hodnoty do vaší JavaScript konzole.",
 	'developers:label:wrap_views' => "Zabalit pohledy",
-	'developers:label:log_events' => "Vypisovat události a zapojení doplňků",
-	'developers:help:log_events' => "Do logu zapíše události a zapojení doplňků. Varování: na stránku je jich opravdu hodně.",
 	'developers:label:show_gear' => "Použít %s mimo správcovský prostor",
 	'developers:help:show_gear' => "Ikonka vpravo dole v zobrazené části, která poskytuje správci přístup k vývojářským nastavením a odkazům.",
 
@@ -65,8 +63,6 @@ return array(
 	'developers:inspect:simplecache' => 'Simple cache',
 	'developers:inspect:views' => 'Pohledy',
 	'developers:inspect:views:all_filtered' => "<b>Poznámka!</b> Veškerý vstup a výstup pohledu je filtrován přes tato zapojení doplňků:",
-	'developers:inspect:views:input_filtered' => "(vstup filtrován zapojením doplňku: %s)",
-	'developers:inspect:views:filtered' => "(filtrován zapojením doplňku: %s)",
 	'developers:inspect:widgets' => 'Udělátka',
 	'developers:inspect:widgets:context' => 'K dispozici',
 	'developers:inspect:functions' => 'Funkce',
