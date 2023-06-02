@@ -53,6 +53,9 @@ return [
 			'menu:entity' => [
 				'Elgg\Developers\Menus\Entity::registerEntityExplorer' => [],
 			],
+			'menu:entity_explorer' => [
+				'Elgg\Developers\Menus\EntityExplorer::register' => [],
+			],
 		],
 	],
 	'view_options' => [

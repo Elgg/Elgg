@@ -1197,8 +1197,16 @@ function elgg_view_field(array $params = []): string {
 	// field views get more data
 	$element_vars['input_type'] = $input_type;
 
+	// correct the label vars
+	$label_vars = $element_vars;
+	if (in_array($input_type, ['checkboxes', 'radio'])) {
+		// the field label shouldn't point to the wrapping <ul> as that isn't a valid target for a <label>
+		unset($label_vars['id']);
+	}
+
+	$element_vars['label'] = elgg_view('elements/forms/label', $label_vars);
+
 	// wrap if present
-	$element_vars['label'] = elgg_view('elements/forms/label', $element_vars);
 	$element_vars['help'] = elgg_view('elements/forms/help', $element_vars);
 
 	if ($make_special_checkbox_label) {

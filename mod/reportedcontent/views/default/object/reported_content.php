@@ -21,7 +21,7 @@ if (!empty($report_address)) {
 }
 
 if (!elgg_extract('full_view', $vars)) {
-	$vars['content'] = elgg_get_excerpt($entity->description);
+	$vars['content'] = elgg_get_excerpt((string) $entity->description);
 	
 	echo elgg_view('object/elements/summary', $vars);
 	

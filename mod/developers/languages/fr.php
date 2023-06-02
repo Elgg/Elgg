@@ -39,8 +39,6 @@ return array(
 	'developers:label:wrap_views' => "Envelopper les Vues",
 	'developers:help:wrap_views' => "Ceci enveloppe presque toutes les vues avec des commentaires HTML. Pratique pour identifier la vue responsable d'un bloc HTML particulier.
 									Ceci peut casser les vues non HTML de l'affichage principal : images, RSS, XML, JSON, etc. Voir developers_wrap_views() pour plus d'informations.",
-	'developers:label:log_events' => "Journaliser les événements et les hooks des plugins.",
-	'developers:help:log_events' => "Écrit les événements et les hooks des plugins dans le journal. Attention : il y en a beaucoup pour chaque page.",
 	'developers:label:show_gear' => "Utiliser %s hors de la zone d'administration",
 	'developers:help:show_gear' => "Une icône en bas à droite de l'affichage qui offre aux administrateurs un accès aux paramètres et liens pour développeurs.",
 	'developers:label:block_email' => "Bloquer tous les e-mails sortants",
@@ -85,8 +83,6 @@ return array(
 	'developers:inspect:routes' => 'Routes',
 	'developers:inspect:views' => 'Vues',
 	'developers:inspect:views:all_filtered' => "<b>Note !</b> Toutes les entrées/sorties des vues sont filtrées par ces hooks de plugin :",
-	'developers:inspect:views:input_filtered' => "(entrée filtrée par le hook de plugin : %s)",
-	'developers:inspect:views:filtered' => "(filtré par le hook de plugin : %s)",
 	'developers:inspect:widgets' => 'Widgets',
 	'developers:inspect:widgets:context' => 'Contexte',
 	'developers:inspect:functions' => 'Fonctions',

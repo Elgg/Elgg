@@ -12,9 +12,6 @@ define(['jquery', 'elgg', 'ckeditor/config/base', 'ckeditor/config/mentions', 'c
 				'RemoveFormat', 'sourceEditing'
 			]
 		},
-		image: {
-			toolbar: ['toggleImageCaption', 'imageTextAlternative', 'imageStyle:inline', 'imageStyle:block', 'imageStyle:side', 'linkImage']
-		},
 		table: {
 			contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableCellProperties', 'tableProperties']
 		},

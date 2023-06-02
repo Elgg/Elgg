@@ -331,14 +331,13 @@ class QueryOptionsUnitTest extends UnitTestCase {
 					'operand' => '!=',
 					'case_sensitive' => true,
 				],
-				'tags' => "'tag1', 'tag2'",
 			],
 			'metadata_created_time_lower' => $after,
 			'metadata_created_time_upper' => $before,
 			'metadata_case_sensitive' => false,
 		]);
 
-		$this->assertEquals(4, count($options['metadata_name_value_pairs']));
+		$this->assertCount(3, $options['metadata_name_value_pairs']);
 
 		$pair = array_shift($options['metadata_name_value_pairs']);
 
@@ -374,18 +373,6 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals($before, $pair->created_before);
 		$this->assertEquals('!=', $pair->comparison);
 		$this->assertTrue($pair->case_sensitive);
-		$this->assertEquals([1], $pair->entity_guids);
-
-		$pair = array_shift($options['metadata_name_value_pairs']);
-
-		$this->assertInstanceOf(MetadataWhereClause::class, $pair);
-		$this->assertEquals([5, 6, 7], $pair->ids);
-		$this->assertEquals(['tags'], $pair->names);
-		$this->assertEquals(['tag1', 'tag2'], $pair->values);
-		$this->assertEquals($after, $pair->created_after);
-		$this->assertEquals($before, $pair->created_before);
-		$this->assertEquals('=', $pair->comparison);
-		$this->assertFalse($pair->case_sensitive);
 		$this->assertEquals([1], $pair->entity_guids);
 	}
 
@@ -576,11 +563,10 @@ class QueryOptionsUnitTest extends UnitTestCase {
 					'created_before' => $before,
 					'ids' => [5, 6, 7],
 				],
-				'tags' => "'tag1', 'tag2'",
 			],
 		]);
 
-		$this->assertEquals(4, count($options['search_name_value_pairs']));
+		$this->assertCount(3, $options['search_name_value_pairs']);
 
 		$pair = array_shift($options['search_name_value_pairs']);
 
@@ -610,15 +596,6 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals($before, $pair->created_before);
 		$this->assertEquals('!=', $pair->comparison);
 		$this->assertFalse($pair->case_sensitive);
-		$this->assertEquals([1], $pair->entity_guids);
-
-		$pair = array_shift($options['search_name_value_pairs']);
-
-		$this->assertInstanceOf(MetadataWhereClause::class, $pair);
-		$this->assertEquals(['tags'], $pair->names);
-		$this->assertEquals(['tag1', 'tag2'], $pair->values);
-		$this->assertEquals('=', $pair->comparison);
-		$this->assertTrue($pair->case_sensitive);
 		$this->assertEquals([1], $pair->entity_guids);
 	}
 

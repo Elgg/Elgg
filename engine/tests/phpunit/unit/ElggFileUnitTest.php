@@ -240,6 +240,9 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanCreateAndReadSymlinks() {
+		if (stripos(PHP_OS, 'WIN') !== false) {
+			$this->markTestSkipped('Unable to test symlinks on Windows');
+		}
 
 		$symlink_name = "symlink.txt";
 
@@ -286,6 +289,9 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanDeleteSymlinkAndKeepTarget() {
+		if (stripos(PHP_OS, 'WIN') !== false) {
+			$this->markTestSkipped('Unable to test symlinks on Windows');
+		}
 
 		$to = new \ElggFile();
 		$to->owner_guid = 2;
@@ -309,6 +315,9 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanDeleteSymlinkAndTarget() {
+		if (stripos(PHP_OS, 'WIN') !== false) {
+			$this->markTestSkipped('Unable to test symlinks on Windows');
+		}
 
 		$to = new \ElggFile();
 		$to->owner_guid = 2;
@@ -332,6 +341,9 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanDeleteSymlinkWithMissingTarget() {
+		if (stripos(PHP_OS, 'WIN') !== false) {
+			$this->markTestSkipped('Unable to test symlinks on Windows');
+		}
 
 		$to = new \ElggFile();
 		$to->owner_guid = 2;
