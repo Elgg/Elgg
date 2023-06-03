@@ -115,7 +115,25 @@ class CreateEntitiesTable extends AbstractMigration {
 			],
 		]);
 
-		$table->addIndex(['type'], [
+        $table->addColumn('soft_deleted', 'enum', [
+            'null' => false,
+            'default' => 'no',
+            'limit' => 3,
+            'values' => [
+                'yes',
+                'no'
+            ],
+        ]);
+
+        $table->addColumn('time_soft_deleted', 'integer', [
+            'null' => false,
+            'default' => '0',
+            'limit' => MysqlAdapter::INT_REGULAR,
+            'precision' => 11,
+        ]);
+
+
+        $table->addIndex(['type'], [
 			'name' => "type",
 			'unique' => false,
 		]);
