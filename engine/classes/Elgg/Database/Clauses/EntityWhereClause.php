@@ -70,6 +70,11 @@ class EntityWhereClause extends WhereClause {
 	 */
 	public $enabled;
 
+    /**
+     * @var string
+     */
+    public $softDeleted;
+
 	/**
 	 * @var bool
 	 */
@@ -79,6 +84,11 @@ class EntityWhereClause extends WhereClause {
 	 * @var bool
 	 */
 	public $use_enabled_clause;
+
+    /**
+     * @var bool
+     */
+    public $show_softDeleted;
 
 	/**
 	 * @var int
@@ -99,6 +109,7 @@ class EntityWhereClause extends WhereClause {
 
 		$access = new AccessWhereClause();
 		$access->use_enabled_clause = $this->use_enabled_clause;
+        $access->show_softDeleted = $this->show_softDeleted;
 		$access->ignore_access = $this->ignore_access;
 		$access->viewer_guid = $this->viewer_guid;
 		$wheres[] = $access->prepare($qb, $table_alias);
@@ -114,6 +125,7 @@ class EntityWhereClause extends WhereClause {
 		$wheres[] = $qb->between($alias('time_updated'), $this->updated_after, $this->updated_before, ELGG_VALUE_TIMESTAMP);
 		$wheres[] = $qb->between($alias('last_action'), $this->last_action_after, $this->last_action_before, ELGG_VALUE_TIMESTAMP);
 		$wheres[] = $qb->compare($alias('enabled'), '=', $this->enabled, ELGG_VALUE_STRING);
+        $wheres[] = $qb->compare($alias('softDeleted'), '=', $this->softDeleted, ELGG_VALUE_STRING);
 		$wheres[] = $qb->compare($alias('access_id'), '=', $this->access_ids, ELGG_VALUE_ID);
 
 		return $qb->merge($wheres);

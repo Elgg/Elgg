@@ -29,6 +29,11 @@ class AccessWhereClause extends WhereClause {
 	 */
 	public $enabled_column = 'enabled';
 
+    /**
+     * @var string
+     */
+    public $softDeleted_column = 'softDeleted';
+
 	/**
 	 * @var bool
 	 */
@@ -38,6 +43,11 @@ class AccessWhereClause extends WhereClause {
 	 * @var bool
 	 */
 	public $use_enabled_clause;
+
+    /**
+     * @var bool
+     */
+    public $show_softDeleted;
 
 	/**
 	 * @var int
@@ -64,6 +74,13 @@ class AccessWhereClause extends WhereClause {
 			$this->use_enabled_clause = !_elgg_services()->session_manager->getDisabledEntityVisibility();
 		}
 
+        if (!isset($this->show_softDeleted)) {
+            $this->show_softDeleted = !_elgg_services()->session_manager->getSoftDeletedEntityVisibility();
+        }
+
+
+        //TODO: CHECK ABOVE ^^^^
+
 		$ors = [];
 		$ands = [];
 
@@ -83,6 +100,11 @@ class AccessWhereClause extends WhereClause {
 		if ($this->use_enabled_clause) {
 			$ands[] = $qb->compare($alias($this->enabled_column), '=', 'yes', ELGG_VALUE_STRING);
 		}
+
+        if ($this->show_softDeleted) {
+            $ands[] = $qb->compare($alias($this->softDeleted_column), '=', 'yes', ELGG_VALUE_STRING);
+        }
+
 
 		$params = [
 			'table_alias' => $table_alias,
