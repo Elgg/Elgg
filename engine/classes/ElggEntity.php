@@ -2009,6 +2009,23 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		return $posted;
 	}
 
+    /**
+     * Update the time_soft_deleted column in the entities table.
+     *
+     *
+     * @param int $posted Timestamp of last action
+     * @return int
+     * @internal
+     */
+    public function updateTimeSoftDeleted(int $posted = null): int {
+        $posted = _elgg_services()->entityTable->updateTimeSoftDeleted($this, $posted);
+
+        $this->attributes['time_soft_deleted'] = $posted;
+        $this->cache();
+
+        return $posted;
+    }
+
 	/**
 	 * Disable runtime caching for entity
 	 *

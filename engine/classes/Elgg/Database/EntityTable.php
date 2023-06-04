@@ -402,28 +402,52 @@ class EntityTable
 	/**
 	 * Update the last_action column in the entities table for $entity.
 	 *
-	 * @warning This is different to time_updated.  Time_updated is automatically set,
-	 * while last_action is only set when explicitly called.
-	 *
+
 	 * @param \ElggEntity $entity Entity annotation|relationship action carried out on
-	 * @param int         $posted Timestamp of last action
+	 * @param int         $posted Timestamp of soft delete
 	 *
 	 * @return int
 	 */
-	public function updateLastAction(\ElggEntity $entity, int $posted = null): int
+	public function updateTimeSoftDeleted(\ElggEntity $entity, int $posted = null): int
 	{
 		if ($posted === null) {
 			$posted = $this->getCurrentTime()->getTimestamp();
 		}
 
 		$update = Update::table(self::TABLE_NAME);
-		$update->set('last_action', $update->param($posted, ELGG_VALUE_TIMESTAMP))
+		$update->set('time_soft_deleted', $update->param($posted, ELGG_VALUE_TIMESTAMP))
 			->where($update->compare('guid', '=', $entity->guid, ELGG_VALUE_GUID));
 
 		$this->db->updateData($update);
 
 		return (int) $posted;
 	}
+
+    /**
+     * Update the last_action column in the entities table for $entity.
+     *
+     * @warning This is different to time_updated.  Time_updated is automatically set,
+     * while last_action is only set when explicitly called.
+     *
+     * @param \ElggEntity $entity Entity annotation|relationship action carried out on
+     * @param int         $posted Timestamp of last action
+     *
+     * @return int
+     */
+    public function updateLastAction(\ElggEntity $entity, int $posted = null): int
+    {
+        if ($posted === null) {
+            $posted = $this->getCurrentTime()->getTimestamp();
+        }
+
+        $update = Update::table(self::TABLE_NAME);
+        $update->set('last_action', $update->param($posted, ELGG_VALUE_TIMESTAMP))
+            ->where($update->compare('guid', '=', $entity->guid, ELGG_VALUE_GUID));
+
+        $this->db->updateData($update);
+
+        return (int) $posted;
+    }
 
 	/**
 	 * Get a user by GUID even if the entity is hidden or disabled
