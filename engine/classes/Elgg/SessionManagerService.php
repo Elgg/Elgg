@@ -48,7 +48,7 @@ class SessionManagerService {
     /**
      * @var bool
      */
-    protected $show_softDeleted_entities = false;
+    protected $show_softDeleted_entities = true;
 
 	
 	/**
