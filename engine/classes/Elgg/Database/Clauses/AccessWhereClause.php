@@ -32,7 +32,7 @@ class AccessWhereClause extends WhereClause {
     /**
      * @var string
      */
-    public $softDeleted_column = 'softDeleted';
+    public $soft_deleted_column = 'soft_deleted';
 
 	/**
 	 * @var bool
@@ -102,7 +102,7 @@ class AccessWhereClause extends WhereClause {
 		}
 
         if ($this->show_softDeleted) {
-            $ands[] = $qb->compare($alias($this->softDeleted_column), '=', 'yes', ELGG_VALUE_STRING);
+            $ands[] = $qb->compare($alias($this->soft_deleted_column), '=', 'no', ELGG_VALUE_STRING);
         }
 
 
@@ -115,6 +115,7 @@ class AccessWhereClause extends WhereClause {
 			'owner_guid_column' => $this->owner_guid_column,
 			'guid_column' => $this->guid_column,
 			'enabled_column' => $this->enabled_column,
+            'soft_deleted_column' => $this->soft_deleted_column,
 			'query_builder' => $qb,
 		];
 
