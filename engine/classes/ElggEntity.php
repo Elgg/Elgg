@@ -38,6 +38,7 @@ use Elgg\Traits\Entity\Subscriptions;
  * @property       int    $time_created   A UNIX timestamp of when the entity was created
  * @property-read  int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
  * @property-read  int    $last_action    A UNIX timestamp of when the entity was last acted upon
+ * @property-read  int    $time_soft_deleted    A UNIX timestamp of when the entity was soft deleted
  * @property-read  string $enabled        Is this entity enabled ('yes' or 'no')
  *
  * Metadata (the above are attributes)
@@ -1516,6 +1517,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
         $guid = (int) $this->guid;
 
+
         if ($recursive) {
             elgg_call(ELGG_IGNORE_ACCESS | ELGG_HIDE_DISABLED_ENTITIES, function () use ($guid) {
                 $base_options = [
@@ -1548,6 +1550,17 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
         //TODO: Link to database team method to write to softDelete column
         $softDeleted = _elgg_services()->entityTable->softDelete($this);
+
+        $now = $this->getCurrentTime()->getTimestamp();
+        $time_soft_deleted = isset($this->attributes['time_soft_deleted']) ? (int) $this->attributes['time_soft_deleted'] : $now;
+
+        $ret = _elgg_services()->entityTable->updateRow($guid, (object) [
+            'time_soft_deleted' => $time_soft_deleted,
+        ]);
+        if ($ret === false) {
+            return false;
+        }
+
 
         if ($unban_after) {
             $this->unban();

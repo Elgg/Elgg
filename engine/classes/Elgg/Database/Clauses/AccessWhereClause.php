@@ -32,7 +32,7 @@ class AccessWhereClause extends WhereClause {
     /**
      * @var string
      */
-    public $softDeleted_column = 'softDeleted';
+    public $softDeleted_column = 'soft_deleted';
 
 	/**
 	 * @var bool
