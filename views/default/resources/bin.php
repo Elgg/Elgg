@@ -7,38 +7,18 @@ $list_params = array(
     'list_type_toggle' => false,
     'pagination' => true,
     'owner_guid' => elgg_get_logged_in_user_guid(),
-    'where' => 'enabled = true',
+//    'where' => 'soft-deleted = true',
     'no_results' => elgg_echo('no entities')
 );
-
+$list_params['type_subtype_pairs'] = [ 'object' => ['blog', 'file', 'bookmarks', 'page'], 'group' => ['group']];
 // do we really need to get every item seperately??
-$list_params['subtype'] = 'blog';
-$blogs = elgg_list_entities($list_params, 'list/view');
-$blogs_with_buttons = addButtonsToEntities($blogs, 'blog');
-
-$list_params['subtype'] = 'bookmarks';
-$bookmarks = elgg_list_entities($list_params, 'list/view');
-$bookmarks_with_buttons = addButtonsToEntities($bookmarks, 'bookmarks');
-
-$list_params['subtype'] = 'file';
-$files = elgg_list_entities($list_params, 'list/view');
-$files_with_buttons = addButtonsToEntities($files, 'file');
-
-$list_params['subtype'] = 'page';
-$pages = elgg_list_entities($list_params, 'list/view');
-$pages_with_buttons = addButtonsToEntities($pages,'page');
-
-$list_params['type'] = 'group';
-$list_params['subtype'] = 'group';
-$groups = elgg_list_entities($list_params, 'list/view');
-$groups_with_buttons = addButtonsToEntities($groups, 'group');
-
-$content = $pages_with_buttons . " " . $files_with_buttons . " " . $blogs_with_buttons . " " . $groups_with_buttons . " " . $bookmarks_with_buttons;
+$content = elgg_list_entities($list_params);
+$content_with_buttons = addButtonsToEntities($content);
 
 
 
-// Function to add buttons to each entity
-function addButtonsToEntities($entities, $type) {
+// Function to add buttons to each entity this will change to registering menu items(maybe)
+function addButtonsToEntities($entities) {
     $output = '';
 
 //    if ($entities) {
@@ -49,9 +29,12 @@ function addButtonsToEntities($entities, $type) {
 //            // Extract entity details and add the button
 //            $entity_id = substr($entity, strpos($entity, 'id=elgg-object-') + 15, 2);
 //            $button = elgg_view('input/submit', array(
-//                'name' => 'delete',
-//                'value' => 'delete',
-//                'href' => elgg_generate_action_url('entity/delete', [
+//                'name' => 'restore',
+//                'value' => 'restore',
+//                'onclick' => "if (confirm('Are you sure you want to restore this item? {$entity_id}')) {
+//                    disable('{$entity_id}');
+//                 }",
+//                'href' => elgg_generate_action_url('entity/restore', [
 //                    'guid' => $entity_id,
 //                    'forward_url' => "/bin",
 //                ]),
