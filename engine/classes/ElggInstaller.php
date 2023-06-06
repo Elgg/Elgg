@@ -1477,18 +1477,20 @@ class ElggInstaller {
 
 			$app->internal_services->reset('plugins');
 			
-			$plugins = $app->internal_services->plugins->find('any');
-
-			foreach ($plugins as $plugin) {
-				$plugin_config = $plugin->getStaticConfig('plugin', []);
-				if (!elgg_extract('activate_on_install', $plugin_config, false)) {
-					continue;
-				}
-				
-				try {
-					$plugin->activate();
-				} catch (PluginException $e) {
-					// do nothing
+			if (elgg_extract('activate_plugins', $submissionVars, true)) {
+				$plugins = $app->internal_services->plugins->find('any');
+	
+				foreach ($plugins as $plugin) {
+					$plugin_config = $plugin->getStaticConfig('plugin', []);
+					if (!elgg_extract('activate_on_install', $plugin_config, false)) {
+						continue;
+					}
+					
+					try {
+						$plugin->activate();
+					} catch (PluginException $e) {
+						// do nothing
+					}
 				}
 			}
 

@@ -37,7 +37,9 @@ Available commands
     vendor/bin/elgg-cli list
 
     # Install Elgg
-    vendor/bin/elgg-cli install [-c|--config CONFIG]
+    # no-plugins: This is an optional argument, it'll prevent the activation of any plugins
+    # config: (string) Path to php file that returns an array with installation configuration, if not provided the config parameters will be questioned in the console.
+    vendor/bin/elgg-cli install [--no-plugins] [-c|--config CONFIG]
 
     # Seed the database with fake entities
     # limit: (int) number of items to seed
