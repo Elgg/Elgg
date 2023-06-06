@@ -1574,6 +1574,9 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
             _elgg_services()->events->triggerAfter('softDelete', $this->type, $this);
         }
 
+        $container = $this->getContainerEntity();
+        $container->updateTimeSoftDeleted();
+
         return $softDeleted;
     }
 
