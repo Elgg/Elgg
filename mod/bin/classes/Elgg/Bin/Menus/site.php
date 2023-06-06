@@ -5,8 +5,7 @@ namespace Elgg\Bin\Menus;
 /**
  * Event callbacks for menus
  *
- * @since 4.0
- * @internal
+ * @since 5.1
  */
 class Site {
 
@@ -23,8 +22,8 @@ class Site {
         $return[] = \ElggMenuItem::factory([
             'name' => 'bin',
             'icon' => 'edit-regular',
-            'text' => elgg_echo('bin'),
-            'href' => elgg_generate_url('bin'),
+            'text' => elgg_echo('item:object:bin'),
+            'href' => elgg_generate_url('default:bin'),
         ]);
 
         return $return;
