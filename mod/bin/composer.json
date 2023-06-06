@@ -3,7 +3,7 @@
   "type": "elgg-plugin",
   "description": "display soft deleted data",
   "license": "GPL-2.0-only",
-  "keywords": ["social", "widget", "users"],
+  "keywords": [],
   "homepage": "https://elgg.org",
   "authors": [
     {

@@ -2,16 +2,10 @@
 
 $list_params = array(
     'type' => 'object',
-    'limit' => 4,
-    'full_view' => false,
-    'list_type_toggle' => false,
-    'pagination' => true,
     'owner_guid' => elgg_get_logged_in_user_guid(),
-//    'where' => 'soft-deleted = true',
-    'no_results' => elgg_echo('no entities')
+    'no_results' => elgg_echo('no entities'),
+    'type_subtype_pairs' => elgg_entity_types_with_capability('soft_deletable')
 );
-$list_params['type_subtype_pairs'] = [ 'object' => ['blog', 'file', 'bookmarks', 'page'], 'group' => ['group']];
-// do we really need to get every item seperately??
 $content = elgg_list_entities($list_params);
 $content_with_buttons = addButtonsToEntities($content);
 
@@ -48,11 +42,10 @@ function addButtonsToEntities($entities) {
     return $entities;
 }
 
-$body = elgg_view_layout('admin', [
+echo elgg_view_page('bin', 
+elgg_view_layout('admin', [
     'title' => 'bin',
     'content' => $content,
     'filter_id' => 'admin',
-]);
-
-echo elgg_view_page('bin', $body, 'default');
+]), 'default');
 
