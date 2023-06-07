@@ -59,6 +59,10 @@ class Entity {
 		if (!$entity instanceof \ElggEntity || !elgg_is_logged_in()) {
 			return;
 		}
+
+        if ($entity->soft_deleted === 'yes'){
+            return;
+        }
 		
 		$report_this = (bool) $event->getParam('report_this', $entity->hasCapability('searchable'));
 		if (!$report_this) {

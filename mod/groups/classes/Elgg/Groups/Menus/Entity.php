@@ -56,8 +56,7 @@ class Entity {
 			return;
 		}
 
-        $isDeleted=$entity->soft_deleted === 'true';
-        if ($isDeleted){
+        if($entity->soft_deleted === 'yes'){
             return;
         }
 
@@ -95,38 +94,4 @@ class Entity {
 
 		return $return;
 	}
-
-    /**
-     * Add restore feature
-     *
-     * @param \Elgg\Event $event 'register', 'menu:entity:group:group'
-     *
-     * @return void|\Elgg\Menu\MenuItems
-     */
-    public static function registerRestore(\Elgg\Event $event){
-        $entity = $event->getEntityParam();
-        if (!$entity instanceof \ElggGroup) {
-            return;
-        }
-
-        $isDeleted=$entity->soft_deleted === 'true';
-        if (!($isDeleted)){
-            return;
-        }
-
-        $return = $event->getValue();
-
-        $return[] = \ElggMenuItem::factory([
-            'name' => 'restore',
-            'icon' => 'settings',
-            'text' => elgg_echo('restore'),
-            //need to change to restore
-            'href' => elgg_generate_action_url('entity/restore', [
-                'group_guid' => $entity->guid,
-            ]),
-            'data-toggle' => 'soft_deleted',
-        ]);
-
-        return $return;
-    }
 }

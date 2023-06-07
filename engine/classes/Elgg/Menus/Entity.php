@@ -32,6 +32,10 @@ class Entity {
 		if (empty($edit_url) || !$entity->canEdit()) {
 			return;
 		}
+
+        if ($entity->soft_deleted === 'yes'){
+            return;
+        }
 		
 		/* @var $return MenuItems */
 		$return = $event->getValue();
@@ -67,14 +71,31 @@ class Entity {
 		$delete_url = elgg_generate_action_url('entity/delete', [
 			'guid' => $entity->guid,
 		]);
+
+        $restore_url = elgg_generate_action_url('entity/restore',[
+            'guid' => $entity->guid,
+        ]);
 		
 		if (empty($delete_url) || !$entity->canDelete()) {
 			return;
 		}
-		
+
 		/* @var $return MenuItems */
 		$return = $event->getValue();
-		
+
+        //
+        if ($entity->soft_deleted === 'yes'){
+            $return[] = \ElggMenuItem::factory([
+                'name' => 'restore',
+                'icon' => 'settings',
+                'text' => elgg_echo('restore'),
+                'title' => elgg_echo('restore:this'),
+                'href' => $restore_url,
+                'confirm' => elgg_echo('restoreconfirm'),
+                'priority' => 950,
+            ]);
+        }
+
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'delete',
 			'icon' => 'delete',

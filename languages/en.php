@@ -1274,6 +1274,7 @@ For improved performance, it is recommended that you enable and configure OPcach
  */
 
 	'deleteconfirm' => "Are you sure you want to delete this item?",
+    'restoreconfirm' => "Are you sure you want to delete this item?",
 	'deleteconfirm:plural' => "Are you sure you want to delete these items?",
 	'fileexists' => "A file has already been uploaded. To replace it, select a new one below",
 	'input:file:upload_limit' => 'Maximum allowed file size is %s',

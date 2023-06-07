@@ -27,6 +27,10 @@ class Social {
 		if (!$entity->hasCapability('likable')) {
 			return;
 		}
+
+        if($entity->soft_deleted === 'yes'){
+            return;
+        }
 		
 		$return = $event->getValue();
 	
