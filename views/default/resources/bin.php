@@ -7,21 +7,11 @@ $list_params = [
     //'where' => 'soft-deleted = true'
 ];
 
-
-$content = elgg_list_entities($list_params);
-$content_with_buttons = addButtonsToEntities($content);
-
-
-// Function to add buttons to each entity this will change to registering menu items in the plugins themselves
-function addButtonsToEntities($entities) {
-    $output = '';
-    return $entities;
-}
-
-echo elgg_view_page(elgg_echo('collection:object:bin'),
-elgg_view_layout('admin', [
-    'title' => elgg_echo('collection:object:bin'),
-    'content' => $content,
-    'filter_id' => 'admin',
-]), 'default');
+echo elgg_view_page(
+    elgg_echo('collection:object:bin'),
+    elgg_view_layout('admin', [
+        'title' => elgg_echo('collection:object:bin'),
+        'content' => elgg_list_entities($list_params),
+        'filter_id' => 'admin',
+]));
 
