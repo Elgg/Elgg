@@ -1267,6 +1267,7 @@ For improved performance, it is recommended that you enable and configure OPcach
 
 	'edit:this' => 'Edit this',
 	'delete:this' => 'Delete this',
+    'restore:this' => 'Restore this',
 	'comment:this' => 'Comment on this',
 
 /**
@@ -1274,7 +1275,7 @@ For improved performance, it is recommended that you enable and configure OPcach
  */
 
 	'deleteconfirm' => "Are you sure you want to delete this item?",
-    'restoreconfirm' => "Are you sure you want to delete this item?",
+    'restoreconfirm' => "Are you sure you want to restore this item?",
 	'deleteconfirm:plural' => "Are you sure you want to delete these items?",
 	'fileexists' => "A file has already been uploaded. To replace it, select a new one below",
 	'input:file:upload_limit' => 'Maximum allowed file size is %s',
@@ -1678,6 +1679,12 @@ To see the full comment, click on the link below:
 	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
 	'entity:delete:success' => '%s has been deleted.',
 	'entity:delete:fail' => '%s could not be deleted.',
+
+    'entity:restore:item' => 'Item',
+    'entity:restore:item_not_found' => 'Item not found.',
+    'entity:restore:permission_denied' => 'You do not have permissions to restore this item.',
+    'entity:restore:success' => '%s has been restored.',
+    'entity:restore:fail' => '%s could not be restored.',
 	
 	'entity:subscribe' => "Subscribe",
 	'entity:subscribe:disabled' => "Your default notification settings prevent you from subscribing to this content",

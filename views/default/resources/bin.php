@@ -18,9 +18,9 @@ function addButtonsToEntities($entities) {
     return $entities;
 }
 
-echo elgg_view_page('bin', 
+echo elgg_view_page(elgg_echo('collection:object:bin'),
 elgg_view_layout('admin', [
-    'title' => 'bin',
+    'title' => elgg_echo('collection:object:bin'),
     'content' => $content,
     'filter_id' => 'admin',
 ]), 'default');

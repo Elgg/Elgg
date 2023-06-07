@@ -30,10 +30,10 @@ class Topbar {
 			'name' => 'bin',
 			'href' => elgg_generate_url('default:bin'),
 			'text' => elgg_echo('item:object:bin'),
-			'icon' => 'settings',
+			'icon' => 'trash',
 			'parent_name' => 'account',
 			'section' => 'alt',
-			'priority' => 100,
+			'priority' => 800,
 		]);
 		
 		return $return;

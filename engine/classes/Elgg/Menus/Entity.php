@@ -83,7 +83,6 @@ class Entity {
 		/* @var $return MenuItems */
 		$return = $event->getValue();
 
-        //
         if ($entity->soft_deleted === 'yes'){
             $return[] = \ElggMenuItem::factory([
                 'name' => 'restore',
@@ -92,7 +91,7 @@ class Entity {
                 'title' => elgg_echo('restore:this'),
                 'href' => $restore_url,
                 'confirm' => elgg_echo('restoreconfirm'),
-                'priority' => 950,
+                'priority' => 900,
             ]);
         }
 
