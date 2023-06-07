@@ -15,14 +15,9 @@ return array(
 	'bin:archives' => 'Archives',
 
 	// messages
-	'bin:message:saved' => 'bin post saved.',
-	'bin:error:cannot_save' => 'Cannot save bin post.',
 	'bin:error:cannot_write_to_container' => 'Insufficient access to save bin to group.',
 	'bin:edit_revision_notice' => '(Old version)',
 	'bin:none' => 'No bin posts',
-	'bin:error:missing:title' => 'Please enter a bin title!',
-	'bin:error:missing:description' => 'Please enter the body of your bin!',
-	'bin:error:post_not_found' => 'Cannot find specified bin post.',
 	'bin:error:revision_not_found' => 'Cannot find this revision.',
 
 	// river

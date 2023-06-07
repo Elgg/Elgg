@@ -9,8 +9,8 @@ return [
     ],
     'events' => [
         'register' => [
-            'menu:site' => [
-                'Elgg\Bin\Menus\site::register' => [],
+            'menu:topbar' => [
+                'Elgg\bin\Menus\Topbar::register' => [],
             ],
         ]
     ]

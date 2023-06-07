@@ -5,7 +5,8 @@ namespace Elgg\Bin\Menus;
 /**
  * Event callbacks for menus
  *
- * @since 5.1
+ * @since 4.0
+ * @internal
  */
 class Site {
 
