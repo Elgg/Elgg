@@ -84,6 +84,7 @@ Available commands
     # Activate plugins
     # List plugin ids separating them with spaces: vendor/bin/elgg-cli plugins:activate activity blog
     # use -f flag to resolve conflicts and dependencies
+    # you can set a plugin priority by using the format plugin_id:priority (eg. blog:last)
     vendor/bin/elgg-cli plugins:activate [<plugins>] [-f|--force]
 
     # Deactivate plugins

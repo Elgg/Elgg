@@ -109,7 +109,9 @@ jobs:
         run: php ./elgg-cli install --config ./install/cli/testing_app.php --verbose --no-ansi
       
       - name: Enable Elgg plugins
-        run: php -f ./.scripts/ci/enable_plugins.php
+        run: |
+          php ./elgg-cli plugins:activate activity blog bookmarks ckeditor dashboard developers discussions externalpages file friends friends_collections garbagecollector groups invitefriends likes members messageboard messages pages profile reportedcontent search site_notifications system_log tagcloud thewire uservalidationbyemail web_services custom_index:last
+          php ./elgg-cli plugins:list
       
       - name: Seed Elgg database
         run: php ./elgg-cli database:seed --limit=5 --image_folder=./.scripts/seeder/images/ -vv --no-ansi
