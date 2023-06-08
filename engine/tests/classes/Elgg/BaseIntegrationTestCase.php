@@ -112,6 +112,9 @@ abstract class BaseIntegrationTestCase extends BaseTestCase {
 			$app->internal_services->config->$key = $value;
 		}
 		
+		// make sure all languages are allowed
+		$app->internal_services->config->allowed_languages = null;
+		
 		// set correct base classes for testing purposes
 		$app->internal_services->entityTable->setEntityClass('object', 'plugin', \Elgg\Mocks\ElggPlugin::class);
 

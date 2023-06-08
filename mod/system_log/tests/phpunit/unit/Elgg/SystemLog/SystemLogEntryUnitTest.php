@@ -9,6 +9,10 @@ class SystemLogEntryUnitTest extends UnitTestCase {
 	protected \ElggObject $object;
 	protected \stdClass $row;
 	
+	public function up() {
+		$this->startPlugin();
+	}
+	
 	public function testConstructor() {
 		$int_columns = [
 			'id',
