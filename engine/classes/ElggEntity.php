@@ -1551,15 +1551,10 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
         //TODO: Link to database team method to write to softDelete column
         $softDeleted = _elgg_services()->entityTable->softDelete($this);
 
-        $now = $this->getCurrentTime()->getTimestamp();
         $time_soft_deleted = isset($this->attributes['time_soft_deleted']) ? (int) $this->attributes['time_soft_deleted'] : $now;
 
-        $ret = _elgg_services()->entityTable->updateRow($guid, (object) [
-            'time_soft_deleted' => $time_soft_deleted,
-        ]);
-        if ($ret === false) {
-            return false;
-        }
+        // Call updateTimeSoftDeleted function to update the time_soft_deleted attribute
+        $this->updateTimeSoftDeleted($time_soft_deleted);
 
 
         if ($unban_after) {
@@ -1573,9 +1568,6 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
             _elgg_services()->events->triggerAfter('softDelete', $this->type, $this);
         }
-
-        $container = $this->getContainerEntity();
-        $container->updateTimeSoftDeleted();
 
         return $softDeleted;
     }
