@@ -7,6 +7,14 @@ $list_params = [
     //'where' => 'soft-deleted = true'
 ];
 
+var_dump(elgg_list_entities_from_relationship_count([
+    'owner_guid' => elgg_get_logged_in_user_guid(),
+    'type' => 'group',
+    'relationship' => 'member',
+    'inverse_relationship' => false,
+    'no_results' => true
+]));
+
 echo elgg_view_page(
     elgg_echo('collection:object:bin'),
     elgg_view_layout('admin', [
