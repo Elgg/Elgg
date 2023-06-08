@@ -72,9 +72,7 @@ define(['jquery', 'elgg'], function ($, elgg) {
 							var $comment = $container.find('#elgg-object-' + comment_guid);
 							$comment.addClass('elgg-state-highlight');
 							
-							$([document.documentElement, document.body]).animate({
-								scrollTop: $comment.offset().top
-							}, 500);
+							$comment[0].scrollIntoView({behavior: 'smooth'});
 		
 							fix_pagination($container);
 						}

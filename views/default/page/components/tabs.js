@@ -21,7 +21,8 @@ define(['jquery', 'elgg/Ajax'], function ($, Ajax) {
 		}
 
 		// find the tabs that have the selected state and remove that state
-		$target.closest('.elgg-tabs-component').find('.elgg-tabs').eq(0).find('.elgg-state-selected').removeClass('elgg-state-selected');
+		var $tabs_component = $target.closest('.elgg-tabs-component');
+		$tabs_component.find('.elgg-tabs').eq(0).find('.elgg-state-selected').removeClass('elgg-state-selected');
 		
 		$link_item.addClass('elgg-state-selected');
 		
@@ -34,6 +35,18 @@ define(['jquery', 'elgg/Ajax'], function ($, Ajax) {
 		
 		if (trigger_open) {
 			$link_item.trigger('open');
+			
+			// scroll tabs into view if needed
+			var rect = $link_item[0].getBoundingClientRect();
+			
+			var isInViewport = rect.top >= 0 &&
+				rect.left >= 0 &&
+				rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+				rect.right <= (window.innerWidth || document.documentElement.clientWidth);
+				
+			if (!isInViewport) {
+				$tabs_component[0].scrollIntoView();
+			}
 		}
 		
 		return true;
