@@ -6,8 +6,6 @@ use Elgg\UnitTestCase;
 
 class ComposerTest extends UnitTestCase {
 
-	use PluginTesting;
-
 	/**
 	 * @var \ElggPlugin
 	 */

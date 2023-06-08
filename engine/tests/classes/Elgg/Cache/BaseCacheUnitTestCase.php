@@ -2,8 +2,8 @@
 
 namespace Elgg\Cache;
 
-use Elgg\UnitTestCase;
 use Elgg\Exceptions\ConfigurationException;
+use Elgg\UnitTestCase;
 
 abstract class BaseCacheUnitTestCase extends UnitTestCase {
 
@@ -13,6 +13,8 @@ abstract class BaseCacheUnitTestCase extends UnitTestCase {
 	protected $cache;
 
 	public function up() {
+		parent::up();
+		
 		try {
 			$this->cache = $this->createCache();
 		} catch (ConfigurationException $ex) {

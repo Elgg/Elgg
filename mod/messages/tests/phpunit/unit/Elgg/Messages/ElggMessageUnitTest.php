@@ -2,15 +2,8 @@
 
 namespace Elgg\Messages;
 
-use Elgg\Plugins\PluginTesting;
-
-/**
- * @group Plugins
- */
 class ElggMessageUnitTest extends \Elgg\UnitTestCase {
 	
-	use PluginTesting;
-
 	public function testCantComment() {
 		$this->startPlugin();
 		

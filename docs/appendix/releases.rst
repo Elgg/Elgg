@@ -112,6 +112,11 @@ to be removed from the system.
 	- ``shutdown``
 	- ``upgrade``
 
+Test suite
+==========
+
+The Elgg PHPUnit test suite files are not considered part of the public API and can be changed / removed at any time.
+
 Views
 =====
 

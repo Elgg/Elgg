@@ -1,23 +1,21 @@
 <?php
 
-namespace Elgg\Plugins\Integration;
+namespace Elgg\Plugins;
 
 use Elgg\Exceptions\Http\EntityNotFoundException;
 use Elgg\Exceptions\Http\EntityPermissionsException;
-use Elgg\Exceptions\Http\GatekeeperException;
 use Elgg\Exceptions\Http\Gatekeeper\GroupGatekeeperException;
 use Elgg\Exceptions\Http\Gatekeeper\GroupToolGatekeeperException;
-use Elgg\IntegrationTestCase;
-use Elgg\Plugins\PluginTesting;
+use Elgg\Exceptions\Http\GatekeeperException;
 
 /**
  * @group Router
  */
-abstract class RouteResponseTestCase extends IntegrationTestCase {
-
-	use PluginTesting;
+abstract class RouteResponseIntegrationTestCase extends IntegrationTestCase {
 
 	public function up() {
+		parent::up();
+		
 		$this->createApplication([
 			'isolate' => true,
 			'custom_config_values' => [

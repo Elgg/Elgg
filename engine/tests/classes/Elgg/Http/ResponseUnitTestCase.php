@@ -4,12 +4,9 @@ namespace Elgg\Http;
 
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\RangeException;
+use Elgg\UnitTestCase;
 
-/**
- * @group HttpService
- * @group UnitTests
- */
-abstract class ResponseUnitTestCase extends \Elgg\UnitTestCase {
+abstract class ResponseUnitTestCase extends UnitTestCase {
 
 	abstract public function getReponseClassName(): string;
 

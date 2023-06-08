@@ -21,6 +21,8 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 	protected int $time;
 
 	public function up() {
+		parent::up();
+		
 		$this->createApplication([
 			'isolate' => true,
 		]);
@@ -49,6 +51,8 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 	public function down() {
 		$this->session->invalidate();
 		$this->events->restore();
+		
+		parent::down();
 	}
 
 	protected function setupServices() {

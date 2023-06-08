@@ -2,14 +2,12 @@
 
 namespace Elgg\Plugins;
 
-use Elgg\IntegrationTestCase;
-
 /**
  * Test the functionality of the group tool based container logic
  *
  * @since 3.3
  */
-abstract class GroupToolContainerLogicIntegrationTest extends IntegrationTestCase {
+abstract class GroupToolContainerLogicIntegrationTestCase extends IntegrationTestCase {
 
 	/**
 	 * @var \ElggGroup

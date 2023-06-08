@@ -3,7 +3,7 @@
 namespace Elgg\Cli;
 
 use Elgg\GarbageCollector\OptimizeCommand;
-use Elgg\IntegrationTestCase;
+use Elgg\Plugins\IntegrationTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 

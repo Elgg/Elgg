@@ -2,11 +2,8 @@
 
 namespace Elgg\WebServices;
 
-use Elgg\IntegrationTestCase;
+use Elgg\Plugins\IntegrationTestCase;
 
-/**
- * @group WebServices
- */
 class ElggApiKeyIntegrationTest extends IntegrationTestCase {
 
 	public function testGetKeyFunctions() {

@@ -2,14 +2,9 @@
 
 namespace Elgg\WebServices;
 
-use Elgg\Exceptions\InvalidArgumentException;
-use Elgg\IntegrationTestCase;
+use Elgg\Plugins\IntegrationTestCase;
 use Elgg\WebServices\PAM\API\APIKey;
-use Elgg\Exceptions\DomainException;
 
-/**
- * @group WebServices
- */
 class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 
 	protected $call_method;
@@ -20,9 +15,6 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 		_elgg_services()->request->server->set('REQUEST_METHOD', 'GET');
 	}
 
-	/**
-	 * Called after each test method.
-	 */
 	public function down() {
 		// Restore original request method
 		_elgg_services()->request->server->set('REQUEST_METHOD', $this->call_method);

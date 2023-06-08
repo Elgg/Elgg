@@ -4,7 +4,7 @@ namespace Elgg\Traits\Entity;
 
 use Elgg\IntegrationTestCase;
 
-abstract class ElggEntityPluginSettingsIntegrationTestCase extends IntegrationTestCase {
+abstract class PluginSettingsIntegrationTestCase extends IntegrationTestCase {
 	
 	/**
 	 * @var \ElggUser
@@ -15,6 +15,8 @@ abstract class ElggEntityPluginSettingsIntegrationTestCase extends IntegrationTe
 	 * {@inheritDoc}
 	 */
 	public function up() {
+		parent::up();
+		
 		$this->createApplication([
 			'isolate' => true,
 			'plugins_path' => $this->normalizeTestFilePath('mod/'),
