@@ -40,7 +40,6 @@ class Invoker {
 	 *                          ELGG_SHOW_DISABLED_ENTITIES
 	 *                          ELGG_HIDE_DISABLED_ENTITIES
      *                          ELGG_SHOW_SOFT_DELETED_ENTITIES
-     *                          ELGG_HIDE_SOFT_DELETED_ENTITIES
 	 * @param \Closure $closure Callable to call
 	 *
 	 * @return mixed
@@ -65,8 +64,6 @@ class Invoker {
         $sd = $this->session_manager->getSoftDeletedEntityVisibility();
         if ($flags & ELGG_SHOW_SOFT_DELETED_ENTITIES) {
             $this->session_manager->setSoftDeletedEntityVisibility(true);
-        } else if ($flags & ELGG_HIDE_SOFT_DELETED_ENTITIES) {
-            $this->session_manager->setSoftDeletedEntityVisibility(false);
         }
 		
 		$system_log_enabled = null;

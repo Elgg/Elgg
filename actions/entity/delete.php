@@ -23,10 +23,18 @@ $type = $entity->getType();
 $subtype = $entity->getSubtype();
 $container = $entity->getContainerEntity();
 
-//TODO: CHECK FOR ENTITY CAPABILITIES
+$soft_deletable_entities = elgg_entity_types_with_capability('soft_deletable');
 
-if (!$entity->softDelete()) {
-	return elgg_error_response(elgg_echo('entity:delete:fail', [$display_name]));
+//TODO: discuss: above call returns nothing, but searching for 'commentable' does - why?
+
+if (empty($soft_deletable_entities)) {
+    if (!$entity->softDelete()) {
+        return elgg_error_response(elgg_echo('entity:delete:fail', [$display_name]));
+    }
+} else {
+    if (!$entity->delete()) {
+        return elgg_error_response(elgg_echo('entity:delete:fail', [$display_name]));
+    }
 }
 
 // determine forward URL

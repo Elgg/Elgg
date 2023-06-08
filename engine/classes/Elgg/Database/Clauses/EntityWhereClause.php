@@ -88,7 +88,7 @@ class EntityWhereClause extends WhereClause {
     /**
      * @var bool
      */
-    public $show_softDeleted;
+    public $show_soft_deleted;
 
 	/**
 	 * @var int
@@ -109,7 +109,7 @@ class EntityWhereClause extends WhereClause {
 
 		$access = new AccessWhereClause();
 		$access->use_enabled_clause = $this->use_enabled_clause;
-        $access->show_softDeleted = $this->show_softDeleted;
+        $access->show_soft_deleted = $this->show_soft_deleted;
 		$access->ignore_access = $this->ignore_access;
 		$access->viewer_guid = $this->viewer_guid;
 		$wheres[] = $access->prepare($qb, $table_alias);

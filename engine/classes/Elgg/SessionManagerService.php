@@ -48,7 +48,7 @@ class SessionManagerService {
     /**
      * @var bool
      */
-    protected $show_softDeleted_entities = true;
+    protected $show_soft_deleted_entities = false;
 
 	
 	/**
@@ -125,12 +125,12 @@ class SessionManagerService {
 	}
 
     /**
-     * Are softDeleted entities shown?
+     * Are soft deleted entities shown?
      *
      * @return bool
      */
     public function getSoftDeletedEntityVisibility(): bool {
-        return $this->show_softDeleted_entities;
+        return $this->show_soft_deleted_entities;
     }
 	
 	/**
@@ -148,15 +148,15 @@ class SessionManagerService {
 	}
 
     /**
-     * Include softDeleted entities in queries
+     * Include soft deleted entities in queries
      *
      * @param bool $show Visibility status
      *
      * @return bool Previous setting
      */
     public function setSoftDeletedEntityVisibility(bool $show = true): bool {
-        $prev = $this->show_softDeleted_entities;
-        $this->show_softDeleted_entities = $show;
+        $prev = $this->show_soft_deleted_entities;
+        $this->show_soft_deleted_entities = $show;
 
         return $prev;
     }
