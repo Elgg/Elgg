@@ -2,11 +2,9 @@
 
 namespace Elgg\Bookmarks;
 
-/**
- * @group Plugins
- * @group Bookmarks
- */
-class GroupToolContainerLogicIntegrationTest extends \Elgg\Plugins\GroupToolContainerLogicIntegrationTest {
+use Elgg\Plugins\GroupToolContainerLogicIntegrationTestCase;
+
+class GroupToolContainerLogicIntegrationTest extends GroupToolContainerLogicIntegrationTestCase {
 
 	/**
 	 * {@inheritDoc}

@@ -7,8 +7,6 @@ use Elgg\Includer;
 
 abstract class TranslatorUnitTest extends \Elgg\UnitTestCase {
 
-	use PluginTesting;
-
 	/**
 	 * @var Translator
 	 */

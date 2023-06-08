@@ -2,13 +2,9 @@
 
 namespace Elgg\FriendsCollections;
 
-use Elgg\Plugins\PluginTesting;
+use Elgg\Plugins\IntegrationTestCase;
 
-/**
- * @group IntegrationTests
- */
-class WriteAccessTest extends \Elgg\IntegrationTestCase {
-	use PluginTesting;
+class WriteAccessTest extends IntegrationTestCase {
 	
 	/**
 	 * @var \ElggUser

@@ -5,7 +5,7 @@ namespace Elgg\Traits\Entity;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\IntegrationTestCase;
 
-abstract class ElggEntitySubscriptionsIntegrationTestCase extends IntegrationTestCase {
+abstract class SubscriptionsIntegrationTestCase extends IntegrationTestCase {
 
 	/**
 	 * @var \ElggUser
@@ -21,6 +21,8 @@ abstract class ElggEntitySubscriptionsIntegrationTestCase extends IntegrationTes
 	 * {@inheritDoc}
 	 */
 	public function up() {
+		parent::up();
+		
 		$this->setupApplication();
 		
 		$this->user = $this->createUser();

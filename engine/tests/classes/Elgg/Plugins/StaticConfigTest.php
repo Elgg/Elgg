@@ -8,8 +8,6 @@ use Elgg\UnitTestCase;
 
 class StaticConfigTest extends UnitTestCase {
 
-	use PluginTesting;
-
 	/**
 	 * @var \ElggPlugin
 	 */

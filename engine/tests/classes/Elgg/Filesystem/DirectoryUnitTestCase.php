@@ -3,11 +3,9 @@
 namespace Elgg\Filesystem;
 
 use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\UnitTestCase;
 
-/**
- * @group UnitTests
- */
-abstract class DirectoryUnitTestCase extends \Elgg\UnitTestCase {
+abstract class DirectoryUnitTestCase extends UnitTestCase {
 
 	/**
 	 * Returns an array of one-element arrays. Those elements should

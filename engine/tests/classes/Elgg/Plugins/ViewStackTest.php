@@ -7,8 +7,6 @@ namespace Elgg\Plugins;
  */
 class ViewStackTest extends \Elgg\UnitTestCase {
 
-	use PluginTesting;
-
 	public function up() {
 		_elgg_services()->views->registerPluginViews($this->getPath());
 	}

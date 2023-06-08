@@ -2,11 +2,9 @@
 
 namespace Elgg\Discussions;
 
-/**
- * @group Plugins
- * @group Discussions
- */
-class GroupToolContainerLogicIntegrationTest extends \Elgg\Plugins\GroupToolContainerLogicIntegrationTest {
+use Elgg\Plugins\GroupToolContainerLogicIntegrationTestCase;
+
+class GroupToolContainerLogicIntegrationTest extends GroupToolContainerLogicIntegrationTestCase {
 
 	/**
 	 * {@inheritDoc}

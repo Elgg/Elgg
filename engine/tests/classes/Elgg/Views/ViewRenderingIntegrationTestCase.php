@@ -3,15 +3,12 @@
 namespace Elgg\Views;
 
 use Elgg\Exceptions\HttpException;
-use Elgg\IntegrationTestCase;
-use Elgg\Plugins\PluginTesting;
+use Elgg\Plugins\IntegrationTestCase;
 
 /**
  * Abstract class for testing view output
  */
 abstract class ViewRenderingIntegrationTestCase extends IntegrationTestCase {
-
-	use PluginTesting;
 
 	public function up() {
 		_elgg_services()->logger->disable();

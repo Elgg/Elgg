@@ -2,7 +2,7 @@
 
 namespace Elgg\WebServices\Di;
 
-use Elgg\IntegrationTestCase;
+use Elgg\Plugins\IntegrationTestCase;
 use Elgg\WebServices\ApiMethod;
 
 class ApiRegistrationServiceIntegrationTest extends IntegrationTestCase {

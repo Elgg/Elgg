@@ -2,14 +2,9 @@
 
 namespace Elgg\Blog;
 
-use Elgg\Plugins\PluginTesting;
+use Elgg\Plugins\IntegrationTestCase;
 
-/**
- * @group Plugins
- */
-class CanCommentIntegrationTest extends \Elgg\IntegrationTestCase {
-	
-	use PluginTesting;
+class CanCommentIntegrationTest extends IntegrationTestCase {
 	
 	/**
 	 * @dataProvider blogCommentStatusProvider

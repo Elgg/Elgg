@@ -2,7 +2,7 @@
 
 namespace Elgg\Traits\Entity;
 
-class ElggUserSubscriptionsIntegrationTest extends ElggEntitySubscriptionsIntegrationTestCase {
+class ElggUserSubscriptionsIntegrationTest extends SubscriptionsIntegrationTestCase {
 
 	protected function getEntity(): \ElggEntity {
 		return $this->createUser();

@@ -2,7 +2,7 @@
 
 namespace Elgg\Messages;
 
-use Elgg\IntegrationTestCase;
+use Elgg\Plugins\IntegrationTestCase;
 use Laminas\Mail\Message;
 
 /**
