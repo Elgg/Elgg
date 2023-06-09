@@ -1695,7 +1695,6 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
             return false;
         }
 
-        $entity->owner_guid = $group->guid;
         $entity->container_guid = $group->guid;
 
 
