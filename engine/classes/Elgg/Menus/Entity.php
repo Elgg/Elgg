@@ -84,13 +84,11 @@ class Entity {
 		$return = $event->getValue();
 
         if ($entity->soft_deleted === 'yes'){
-            $container = elgg_get_entities([
-                'annotation_guid' => $entity->container_guid,
-            ]);
-            if ($container->soft_deleted === 'yes'){
+            $container = get_entity($entity->container_guid);
+            if ($container->soft_deleted === 'yes' && !($container instanceof \ElggUser)){
                 $return[] = \ElggMenuItem::factory([
                     'name' => 'restore and move',
-                    'icon' => 'arrow',
+                    'icon' => 'arrow-up',
                     'text' => elgg_echo('restore and move'),
                     'title' => elgg_echo('restore:this'),
                     'href' => $restore_url,
