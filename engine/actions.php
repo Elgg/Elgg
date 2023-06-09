@@ -38,6 +38,7 @@ return [
 	'comment/save' => [],
 	'diagnostics/download' => ['access' => 'admin'],
 	'entity/delete' => [],
+    'entity/restore' => [],
 	'entity/mute' => [],
 	'entity/subscribe' => [],
 	'entity/unmute' => [],
