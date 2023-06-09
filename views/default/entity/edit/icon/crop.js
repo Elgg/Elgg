@@ -17,7 +17,8 @@ define(['jquery', 'jquery-cropper/jquery-cropper'], function($) {
 			
 			$messagesWrapper = $fieldWrapper.siblings('.elgg-entity-edit-icon-crop-messages');
 			
-			$field.on('change', this.replaceImg);
+			// we need to register on document to work in the correct order with change event from input/file.js
+			$(document).on('change', selector, this.replaceImg);
 			
 			var $remove = $fieldWrapper.siblings('.elgg-entity-edit-icon-remove').find('input[type="checkbox"]');
 			$remove.on('change', this.checkRemoveState);
