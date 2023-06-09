@@ -84,15 +84,28 @@ class Entity {
 		$return = $event->getValue();
 
         if ($entity->soft_deleted === 'yes'){
-            $return[] = \ElggMenuItem::factory([
-                'name' => 'restore',
-                'icon' => 'settings',
-                'text' => elgg_echo('restore'),
-                'title' => elgg_echo('restore:this'),
-                'href' => $restore_url,
-                'confirm' => elgg_echo('restoreconfirm'),
-                'priority' => 900,
-            ]);
+//            if (elgg_is_part_of_deleted_group($entity->container_guid, $entity->guid)){
+//                $return[] = \ElggMenuItem::factory([
+//                    'name' => 'restore and move',
+//                    'icon' => 'arrow',
+//                    'text' => elgg_echo('restore and move'),
+//                    'title' => elgg_echo('restore:this'),
+//                    'href' => $restore_url,
+//                    'confirm' => elgg_echo('restoreandmoveconfirm'),
+//                    'priority' => 900,
+//                ]);
+//            }else{
+                $return[] = \ElggMenuItem::factory([
+                    'name' => 'restore',
+                    'icon' => 'settings',
+                    'text' => elgg_echo('restore'),
+                    'title' => elgg_echo('restore:this'),
+                    'href' => $restore_url,
+                    'confirm' => elgg_echo('restoreconfirm'),
+                    'priority' => 900,
+                ]);
+           // }
+
         }
 
 		$return[] = \ElggMenuItem::factory([
