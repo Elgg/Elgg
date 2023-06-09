@@ -1488,6 +1488,129 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		return true;
 	}
 
+    //**SOFT DELETE TESTING */
+
+    public function softDelete(bool $recursive = true): bool {
+
+        if (!$this->guid) {
+            return false;
+        }
+
+
+        if (!_elgg_services()->events->trigger('softDelete', $this->type, $this)) {
+            return false;
+        }
+
+        if (!$this->canDelete()) {
+            return false;
+        }
+
+        if ($this instanceof ElggUser && !$this->isBanned()) {
+            // temporarily ban to prevent using the site during disable
+            $this->ban();
+            $unban_after = true;
+        } else {
+            $unban_after = false;
+        }
+
+
+        $guid = (int) $this->guid;
+
+        if ($recursive) {
+            elgg_call(ELGG_IGNORE_ACCESS | ELGG_HIDE_DISABLED_ENTITIES, function () use ($guid) {
+                $base_options = [
+                    'wheres' => [
+                        function(QueryBuilder $qb, $main_alias) use ($guid) {
+                            return $qb->compare("{$main_alias}.guid", '!=', $guid, ELGG_VALUE_GUID);
+                        },
+                    ],
+                    'limit' => false,
+                    'batch' => true,
+                    'batch_inc_offset' => false,
+                ];
+
+                foreach (['owner_guid', 'container_guid'] as $db_column) {
+                    $options = $base_options;
+                    $options[$db_column] = $guid;
+
+                    $subentities = elgg_get_entities($options);
+                    /* @var $subentity \ElggEntity */
+                    foreach ($subentities as $subentity) {
+
+                        $subentity->addRelationship($guid, 'softDeleted_with');
+                        $subentity->softDelete(true);
+                    }
+                }
+            });
+        }
+
+        $this->disableAnnotations();
+
+        //TODO: Link to database team method to write to softDelete column
+        $softDeleted = _elgg_services()->entityTable->softDelete($this);
+
+        if ($unban_after) {
+            $this->unban();
+        }
+
+        if ($softDeleted) {
+            $this->invalidateCache();
+
+            $this->attributes['softDeleted'] = 'yes';
+
+            _elgg_services()->events->triggerAfter('softDelete', $this->type, $this);
+        }
+
+        return $softDeleted;
+    }
+
+    public function restore(bool $recursive = true): bool {
+        if (empty($this->guid)) {
+            return false;
+        }
+
+        if (!_elgg_services()->events->trigger('restore', $this->type, $this)) {
+            return false;
+        }
+
+        if (!$this->canEdit()) {
+            return false;
+        }
+
+        $result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($recursive) {
+            //TODO: Link to database team method to write to softDelete column
+            $result = _elgg_services()->entityTable->restore($this);
+
+            $this->enableAnnotations();
+
+            if ($recursive) {
+                $softDeleted_with_it = elgg_get_entities([
+                    'relationship' => 'softDeleted_with',
+                    'relationship_guid' => $this->guid,
+                    'inverse_relationship' => true,
+                    'limit' => false,
+                    'batch' => true,
+                    'batch_inc_offset' => false,
+                ]);
+
+                foreach ($softDeleted_with_it as $e) {
+                    $e->enable($recursive);
+                    $e->removeRelationship($this->guid, 'softDeleted_with');
+                }
+            }
+
+            return $result;
+        });
+
+        if ($result) {
+            $this->attributes['softDeleted'] = 'no';
+            //TODO: Find out what enable events do, how to adapt to restore
+            _elgg_services()->events->triggerAfter('restore', $this->type, $this);
+        }
+
+        return $result;
+    }
+
 	/**
 	 * Disable this entity.
 	 *

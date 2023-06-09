@@ -44,6 +44,12 @@ class SessionManagerService {
 	 * @var bool
 	 */
 	protected $show_disabled_entities = false;
+
+    /**
+     * @var bool
+     */
+    protected $show_soft_deleted_entities = false;
+
 	
 	/**
 	 * @var \ElggSession
@@ -117,6 +123,15 @@ class SessionManagerService {
 	public function getDisabledEntityVisibility(): bool {
 		return $this->show_disabled_entities;
 	}
+
+    /**
+     * Are soft deleted entities shown?
+     *
+     * @return bool
+     */
+    public function getSoftDeletedEntityVisibility(): bool {
+        return $this->show_soft_deleted_entities;
+    }
 	
 	/**
 	 * Include disabled entities in queries
@@ -125,12 +140,26 @@ class SessionManagerService {
 	 *
 	 * @return bool Previous setting
 	 */
-	public function setDisabledEntityVisibility(bool $show = true): bool {
+	public function setDisabledEntityVisibility(bool $show = false): bool {
 		$prev = $this->show_disabled_entities;
 		$this->show_disabled_entities = $show;
 		
 		return $prev;
 	}
+
+    /**
+     * Include soft deleted entities in queries
+     *
+     * @param bool $show Visibility status
+     *
+     * @return bool Previous setting
+     */
+    public function setSoftDeletedEntityVisibility(bool $show = true): bool {
+        $prev = $this->show_soft_deleted_entities;
+        $this->show_soft_deleted_entities = $show;
+
+        return $prev;
+    }
 	
 	/**
 	 * Set a user specific token in the session for the currently logged in user
