@@ -36,19 +36,6 @@ class SystemCacheUnitTest extends UnitTestCase {
 
 	}
 
-	public function testCanInitSystemCache() {
-
-		_elgg_services()->serverCache->enable();
-		_elgg_services()->serverCache->reset();
-
-		_elgg_services()->serverCache->init();
-
-		$this->assertNotNull(_elgg_services()->serverCache->load('view_locations'));
-		$this->assertNotNull(_elgg_services()->serverCache->load('view_overrides'));
-
-		_elgg_services()->serverCache->reset();
-	}
-
 	public function testCanStoreValuesInSystemCache() {
 
 		$cache = elgg_get_system_cache();

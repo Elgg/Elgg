@@ -5,11 +5,8 @@ namespace Elgg\Actions;
 use Elgg\ActionResponseTestCase;
 use Elgg\Http\ResponseBuilder;
 
-/**
- * @group ActionsService
- */
-class ActionRegistrationIntegrationTest extends ActionResponseTestCase {
-
+abstract class RegistrationIntegrationTestCase extends ActionResponseTestCase {
+	
 	/**
 	 * Skip some actions that do not play well with testing suite
 	 * @var array
@@ -21,52 +18,41 @@ class ActionRegistrationIntegrationTest extends ActionResponseTestCase {
 		'logout',
 		'register', // handled by own test
 	];
-
+	
 	public function up() {
 		parent::up();
 		
 		// Logging in admin so all actions are accessible
 		_elgg_services()->session_manager->setLoggedInUser($this->getAdmin());
+		
+		_elgg_services()->reset('actions');
+		_elgg_services()->reset('routes');
+		_elgg_services()->reset('routeCollection');
 	}
-
-	public function actionsProvider() {
-		$this->createApplication([
-			'isolate' => true,
-		]);
-
-		$provides = [];
-
-		$actions = _elgg_services()->actions->getAllActions();
-		foreach ($actions as $name => $params) {
-			$provides[] = [$name, $params['access']];
-		}
-
-		return $provides;
-	}
-
+	
+	abstract public function actionsProvider(): array;
+	
 	/**
 	 * @dataProvider actionsProvider
 	 */
 	public function testCanRequestActionWithoutParameters($name, $access) {
-
 		if (in_array($name, $this->skips)) {
 			$this->markTestSkipped("Can not test action '{$name}'");
 		}
-
+		
 		if ($access === 'logged_out') {
 			_elgg_services()->session_manager->removeLoggedInUser();
 		}
 		
 		$response = $this->executeAction($name);
-
+		
 		$this->assertInstanceOf(ResponseBuilder::class, $response);
 	}
-
+	
 	/**
 	 * @dataProvider actionsProvider
 	 */
 	public function testCanRequestActionWithoutParametersViaAjax($name, $access) {
-
 		if (in_array($name, $this->skips)) {
 			$this->markTestSkipped("Can not test action '{$name}'");
 		}
@@ -74,9 +60,9 @@ class ActionRegistrationIntegrationTest extends ActionResponseTestCase {
 		if ($access === 'logged_out') {
 			_elgg_services()->session_manager->removeLoggedInUser();
 		}
-
+		
 		$response = $this->executeAction($name, [], 2);
-
+		
 		$this->assertInstanceOf(ResponseBuilder::class, $response);
 	}
 }
