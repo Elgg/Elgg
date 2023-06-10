@@ -4,6 +4,7 @@
  */
 
 $guid = (int) get_input('guid');
+$deleter_guid = (int) get_input('deleter_guid');
 
 $entity = get_entity($guid);
 if (!$entity instanceof \ElggEntity) {
@@ -27,14 +28,16 @@ $soft_deletable_entities = elgg_entity_types_with_capability('soft_deletable');
 
 //TODO: discuss: above call returns nothing, but searching for 'commentable' does - why?
 
-if ($entity->soft_deleted = 'no') {
+if ($entity->soft_deleted === 'no') {
     if (!$entity->softDelete()) {
         return elgg_error_response(elgg_echo('entity:delete:fail', [$display_name]));
     }
+    get_entity($deleter_guid)->addRelationship($entity->guid, 'deleted_by');
 } else {
     if (!$entity->delete()) {
         return elgg_error_response(elgg_echo('entity:delete:fail', [$display_name]));
     }
+    get_entity($deleter_guid)->removeRelationship($entity->guid, 'deleted_by');
 }
 
 // determine forward URL

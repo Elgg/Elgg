@@ -69,10 +69,12 @@ class Entity {
 		}
 		
 		$delete_url = elgg_generate_action_url('entity/delete', [
-			'guid' => $entity->guid,
+            'deleter_guid' => elgg_get_logged_in_user_guid(),
+            'guid' => $entity->guid,
 		]);
 
         $restore_url = elgg_generate_action_url('entity/restore',[
+            'deleter_guid' => elgg_get_logged_in_user_guid(),
             'guid' => $entity->guid,
         ]);
 		

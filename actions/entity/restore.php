@@ -4,6 +4,8 @@
  */
 
 $guid = (int) get_input('guid');
+$deleter_guid = (int) get_input('deleter_guid');
+
 
 $entity = get_entity($guid);
 if (!$entity instanceof \ElggEntity) {
@@ -26,6 +28,7 @@ if ($entity->soft_deleted = 'yes') {
     if (!$entity->restore()) {
         return elgg_error_response(elgg_echo('entity:restore:fail', [$display_name]));
     }
+    get_entity($deleter_guid)->removeRelationship($entity->guid, 'deleted_by');
 }
 // determine forward URL
 $forward_url = get_input('forward_url');
