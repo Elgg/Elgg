@@ -1491,7 +1491,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
     //**SOFT DELETE TESTING */
 
-    public function softDelete(bool $recursive = true): bool {
+    public function softDelete(int $deleter_guid, bool $recursive = true): bool {
 
         if (!$this->guid) {
             return false;
@@ -1518,7 +1518,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
         $guid = (int) $this->guid;
 
         if ($recursive) {
-            elgg_call(ELGG_IGNORE_ACCESS | ELGG_HIDE_DISABLED_ENTITIES, function () use ($guid) {
+            elgg_call(ELGG_IGNORE_ACCESS | ELGG_HIDE_DISABLED_ENTITIES, function () use ($deleter_guid, $guid) {
                 $base_options = [
                     'wheres' => [
                         function(QueryBuilder $qb, $main_alias) use ($guid) {
@@ -1540,10 +1540,12 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
                         $subentity->addRelationship($guid, 'softDeleted_with');
                         $subentity->softDelete(true);
+                        get_entity($deleter_guid)->addRelationship($subentity->guid, 'deleted_by');
                     }
                 }
             });
         }
+        get_entity($deleter_guid)->addRelationship($this->guid, 'deleted_by');
 
         $this->disableAnnotations();
 
@@ -1565,7 +1567,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
         return $softDeleted;
     }
 
-    public function restore(bool $recursive = true): bool {
+    public function restore(int $deleter_guid, bool $recursive = true): bool {
         if (empty($this->guid)) {
             return false;
         }
@@ -1578,7 +1580,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
             return false;
         }
 
-        $result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($recursive) {
+        $result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($deleter_guid, $recursive) {
             //TODO: Link to database team method to write to softDelete column
             $result = _elgg_services()->entityTable->restore($this);
 
@@ -1597,11 +1599,14 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
                 foreach ($softDeleted_with_it as $e) {
                     $e->enable($recursive);
                     $e->removeRelationship($this->guid, 'softDeleted_with');
+                    get_entity($deleter_guid)->removeRelationship($e->guid, 'deleted_by');
+
                 }
             }
 
             return $result;
         });
+        get_entity($deleter_guid)->removeRelationship($this->guid, 'deleted_by');
 
         if ($result) {
             $this->attributes['softDeleted'] = 'no';

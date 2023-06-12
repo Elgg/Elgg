@@ -28,11 +28,10 @@ $soft_deletable_entities = elgg_entity_types_with_capability('soft_deletable');
 
 //TODO: discuss: above call returns nothing, but searching for 'commentable' does - why?
 
-if ($entity->soft_deleted === 'no') {
-    if (!$entity->softDelete()) {
+if ($entity->soft_deleted === 'no' && $entity->hasCapability('soft_deletable')) {
+    if (!$entity->softDelete($deleter_guid)) {
         return elgg_error_response(elgg_echo('entity:delete:fail', [$display_name]));
     }
-    get_entity($deleter_guid)->addRelationship($entity->guid, 'deleted_by');
 } else {
     if (!$entity->delete()) {
         return elgg_error_response(elgg_echo('entity:delete:fail', [$display_name]));
