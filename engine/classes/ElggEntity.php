@@ -38,6 +38,7 @@ use Elgg\Traits\Entity\Subscriptions;
  * @property       int    $time_created   A UNIX timestamp of when the entity was created
  * @property-read  int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
  * @property-read  int    $last_action    A UNIX timestamp of when the entity was last acted upon
+ * @property-read  int    $time_soft_deleted    A UNIX timestamp of when the entity was soft deleted
  * @property-read  string $enabled        Is this entity enabled ('yes' or 'no')
  *
  * Metadata (the above are attributes)
@@ -1517,6 +1518,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
         $guid = (int) $this->guid;
 
+
         if ($recursive) {
             elgg_call(ELGG_IGNORE_ACCESS | ELGG_HIDE_DISABLED_ENTITIES, function () use ($deleter_guid, $guid) {
                 $base_options = [
@@ -1551,6 +1553,12 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
         //TODO: Link to database team method to write to softDelete column
         $softDeleted = _elgg_services()->entityTable->softDelete($this);
+
+        $time_soft_deleted = isset($this->attributes['time_soft_deleted']) ? (int) $this->attributes['time_soft_deleted'] : $now;
+
+        // Call updateTimeSoftDeleted function to update the time_soft_deleted attribute
+        $this->updateTimeSoftDeleted($time_soft_deleted);
+
 
         if ($unban_after) {
             $this->unban();
@@ -2028,6 +2036,23 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	
 		return $posted;
 	}
+
+    /**
+     * Update the time_soft_deleted column in the entities table.
+     *
+     *
+     * @param int $posted Timestamp of last action
+     * @return int
+     * @internal
+     */
+    public function updateTimeSoftDeleted(int $posted = null): int {
+        $posted = _elgg_services()->entityTable->updateTimeSoftDeleted($this, $posted);
+
+        $this->attributes['time_soft_deleted'] = $posted;
+        $this->cache();
+
+        return $posted;
+    }
 
 	/**
 	 * Disable runtime caching for entity
