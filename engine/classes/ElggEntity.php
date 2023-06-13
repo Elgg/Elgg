@@ -1805,6 +1805,33 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		}
 	}
 
+    /**
+     * this method overrides an entity id with id of the group/user.
+     * @param $entity_guid
+     * @param $group_guid
+     * @return bool
+     */
+    public static function overrideEntityID($entity_guid, $group_guid) {
+        $entity = get_entity($entity_guid);
+
+        if (!$entity) {
+            return false;
+        }
+
+        $group = get_entity($group_guid);
+
+        if (!$group) {
+            return false;
+        }
+
+        $entity->container_guid = $group->guid;
+
+
+        $entity->save();
+
+        return true;
+    }
+
 	/**
 	 * Export an entity
 	 *
