@@ -7,6 +7,7 @@ use Elgg\Exceptions\Http\EntityPermissionsException;
 use Elgg\Exceptions\Http\Gatekeeper\GroupGatekeeperException;
 use Elgg\Exceptions\Http\Gatekeeper\GroupToolGatekeeperException;
 use Elgg\Exceptions\Http\GatekeeperException;
+use Elgg\Router\Route;
 
 /**
  * @group Router
@@ -433,10 +434,19 @@ abstract class RouteResponseIntegrationTestCase extends IntegrationTestCase {
 			],
 		];
 		
+		$router = _elgg_services()->routes;
 		$protected_routes = $this->groupRoutesProtectedByToolOption();
 		
 		foreach ($result as $key => $route) {
 			$route_name = $route['route'];
+			
+			$route = $router->get($route_name);
+			if (!$route instanceof Route) {
+				// don't assume all plugins provide all collection routes
+				unset($result[$key]);
+				continue;
+			}
+			
 			foreach ($protected_routes as $protected_route) {
 				if ($protected_route['route'] === $route_name) {
 					unset($result[$key]);
