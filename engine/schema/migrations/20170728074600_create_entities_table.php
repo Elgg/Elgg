@@ -115,7 +115,10 @@ class CreateEntitiesTable extends AbstractMigration {
 			],
 		]);
 
-		$table->addIndex(['type'], [
+
+
+
+        $table->addIndex(['type'], [
 			'name' => "type",
 			'unique' => false,
 		]);

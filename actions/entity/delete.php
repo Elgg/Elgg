@@ -23,7 +23,9 @@ $type = $entity->getType();
 $subtype = $entity->getSubtype();
 $container = $entity->getContainerEntity();
 
-if (!$entity->delete()) {
+//TODO: CHECK FOR ENTITY CAPABILITIES
+
+if (!$entity->softDelete()) {
 	return elgg_error_response(elgg_echo('entity:delete:fail', [$display_name]));
 }
 
