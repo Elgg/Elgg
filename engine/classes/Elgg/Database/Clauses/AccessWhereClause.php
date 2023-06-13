@@ -101,9 +101,9 @@ class AccessWhereClause extends WhereClause {
 			$ands[] = $qb->compare($alias($this->enabled_column), '=', 'yes', ELGG_VALUE_STRING);
 		}
 
-//        if ($this->show_soft_deleted) {
-//            $ands[] = $qb->compare($alias($this->soft_deleted_column), '=', 'no', ELGG_VALUE_STRING);
-//        }
+        if ($this->show_soft_deleted) {
+            $ands[] = $qb->compare($alias($this->soft_deleted_column), '=', 'no', ELGG_VALUE_STRING);
+        }
 
 
 		$params = [

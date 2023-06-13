@@ -15,23 +15,26 @@ class RemoveSoftDeletedEntitiesHandler {
 	 * @return mixed
 	 */
 	public function __invoke(\Elgg\Event $event) {
-        $entities = elgg_get_entities([
-            'type' => 'object',
-            'subtype' => false,
-            'limit' => false,
-            'batch' => true,
-            'where' => [
-                function(QueryBuilder $qb, $main_alias) {
-                    return $qb->compare("{$main_alias}.soft_deleted", '=', true, ELGG_VALUE_BOOL);
-                },
-                function(QueryBuilder $qb, $main_alias) {
-                    return $qb->compare("{$main_alias}.soft_deleted_time", '<', \Elgg\Values::normalizeTimestamp('-30 days'));
-                }
-            ],
-        ]);
+        $entities = elgg_call(ELGG_SHOW_SOFT_DELETED_ENTITIES, function (){
+            return elgg_get_entities([
+                'type_subtype_pairs' => elgg_entity_types_with_capability('soft_deletable'),
+                'limit' => false,
+                'batch' => true,
+                'wheres' => [
+                    function(QueryBuilder $qb, $main_alias) {
+                        return $qb->compare("{$main_alias}.soft_deleted", '=', 'yes', ELGG_VALUE_STRING);
+                    },
+                    function(QueryBuilder $qb, $main_alias) {
+                        return $qb->compare("{$main_alias}.soft_deleted_time", '<', \Elgg\Values::normalizeTimestamp('-30 days'));
+                    }
+                ],
+            ]);
+        });
+
         foreach ($entities as $entity) {
             $entity->delete();
         }
+
 	}
 
 }
