@@ -173,7 +173,7 @@ class ElggRiverItem {
 	 * @return string
 	 */
 	public function getView(): string {
-		return $this->view;
+		return (string) $this->view;
 	}
 
 	/**
