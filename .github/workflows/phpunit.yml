@@ -125,13 +125,18 @@ jobs:
           sleep 3
           # check if the webserver is running
           curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg CI Site</title>"
-      
-      - name: Run PHPUnit
-        run: |
-          ./vendor/bin/phpunit --testsuite unit
-          ./vendor/bin/phpunit --testsuite integration
-          ./vendor/bin/phpunit --testsuite plugins-unit
-          ./vendor/bin/phpunit --testsuite plugins-integration
+
+      - name: Run PHPUnit - Core unit
+        run: ./vendor/bin/phpunit --testsuite unit
+
+      - name: Run PHPUnit - Core integration
+        run: ./vendor/bin/phpunit --testsuite integration
+
+      - name: Run PHPUnit - Plugins unit
+        run: ./vendor/bin/phpunit --testsuite plugins-unit
+
+      - name: Run PHPUnit - Plugins integration
+        run: ./vendor/bin/phpunit --testsuite plugins-integration
       
       - name: Unseed Elgg database
         if: ${{ always() }}
