@@ -1597,7 +1597,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
                 ]);
 
                 foreach ($softDeleted_with_it as $e) {
-                    $e->enable($recursive);
+                    $e->restore($recursive);
                     $e->removeRelationship($this->guid, 'softDeleted_with');
                     get_entity($deleter_guid)->removeRelationship($e->guid, 'deleted_by');
 
