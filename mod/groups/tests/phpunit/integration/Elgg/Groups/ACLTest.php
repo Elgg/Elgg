@@ -2,15 +2,10 @@
 
 namespace Elgg\Groups;
 
-use Elgg\Plugins\PluginTesting;
+use Elgg\Plugins\IntegrationTestCase;
 
-/**
- * @group IntegrationTests
- */
-class ACLTest extends \Elgg\IntegrationTestCase {
+class ACLTest extends IntegrationTestCase {
 
-	use PluginTesting;
-	
 	/**
 	 * @var \ElggGroup
 	 */

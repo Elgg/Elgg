@@ -2,14 +2,7 @@
 
 namespace Elgg\TheWire;
 
-use Elgg\Plugins\PluginTesting;
-
-/**
- * @group Plugins
- */
 class ElggWireUnitTest extends \Elgg\UnitTestCase {
-	
-	use PluginTesting;
 	
 	public function testCantComment() {
 		$this->startPlugin();

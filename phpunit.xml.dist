@@ -68,6 +68,7 @@
       <directory>./mod/*/tests/phpunit/unit/</directory>
     </testsuite>
     <testsuite name="plugins-integration">
+      <directory>./engine/tests/phpunit/plugins_integration/</directory>
       <directory>./mod/*/tests/phpunit/integration/</directory>
     </testsuite>
     <!-- The following suites are used to segment code coverage jobs -->

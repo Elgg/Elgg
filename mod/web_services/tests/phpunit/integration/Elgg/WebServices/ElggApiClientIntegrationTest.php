@@ -2,7 +2,7 @@
 
 namespace Elgg\WebServices;
 
-use Elgg\IntegrationTestCase;
+use Elgg\Plugins\IntegrationTestCase;
 
 class ElggApiClientIntegrationTest extends IntegrationTestCase {
 

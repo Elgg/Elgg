@@ -6,7 +6,7 @@ namespace Elgg\File;
  * @group Router
  * @group FileRoutes
  */
-class RouteResponseTest extends \Elgg\Plugins\Integration\RouteResponseTestCase {
+class RouteResponseTest extends \Elgg\Plugins\RouteResponseIntegrationTestCase {
 
 	public function getSubtype() {
 		return 'file';

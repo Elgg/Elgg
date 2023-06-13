@@ -2,7 +2,7 @@
 
 namespace Elgg\SystemLog;
 
-use Elgg\IntegrationTestCase;
+use Elgg\Plugins\IntegrationTestCase;
 use Elgg\Event;
 
 /**

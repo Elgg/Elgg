@@ -2,8 +2,8 @@
 
 namespace Elgg\WebServices;
 
-use Elgg\IntegrationTestCase;
 use Elgg\Http\Request;
+use Elgg\Plugins\IntegrationTestCase;
 use Elgg\WebServices\Di\ApiRegistrationService;
 use Elgg\WebServices\Middleware\ApiContextMiddleware;
 use Elgg\WebServices\Middleware\ViewtypeMiddleware;

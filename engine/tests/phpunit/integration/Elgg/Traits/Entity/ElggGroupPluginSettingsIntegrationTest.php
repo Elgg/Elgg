@@ -2,7 +2,7 @@
 
 namespace Elgg\Traits\Entity;
 
-class ElggGroupPluginSettingsIntegrationTest extends ElggEntityPluginSettingsIntegrationTestCase {
+class ElggGroupPluginSettingsIntegrationTest extends PluginSettingsIntegrationTestCase {
 
 	/**
 	 * {@inheritDoc}

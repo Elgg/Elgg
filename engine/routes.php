@@ -32,18 +32,6 @@ return [
 			\Elgg\Router\Middleware\RegistrationAllowedGatekeeper::class,
 		],
 	],
-	'action:register' => [
-		// this action is registered here because of the additional middleware
-		'path' => '/action/register',
-		'file' => dirname(__DIR__) . '/actions/register.php',
-		'middleware' => [
-			\Elgg\Router\Middleware\CsrfFirewall::class,
-			\Elgg\Router\Middleware\LoggedOutGatekeeper::class,
-			\Elgg\Router\Middleware\ActionMiddleware::class,
-			\Elgg\Router\Middleware\RegistrationAllowedGatekeeper::class,
-		],
-		'walled' => false,
-	],
 	'account:login' => [
 		'path' => '/login',
 		'resource' => 'account/login',
