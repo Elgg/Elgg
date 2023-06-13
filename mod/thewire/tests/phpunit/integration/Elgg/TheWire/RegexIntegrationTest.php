@@ -2,7 +2,7 @@
 
 namespace Elgg\TheWire;
 
-use Elgg\IntegrationTestCase;
+use Elgg\Plugins\IntegrationTestCase;
 
 class RegexIntegrationTest extends IntegrationTestCase {
 
