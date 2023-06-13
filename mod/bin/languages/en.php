@@ -6,8 +6,8 @@
  */
 
 return array(
-	'item:object:bin' => 'temporary bin',
-	'collection:object:bin' => 'temporary bin',
+	'item:object:bin' => 'Temporary bin',
+	'collection:object:bin' => 'Temporary bin',
 	'collection:object:bin:owner' => '%s\'s bin',
 
 
