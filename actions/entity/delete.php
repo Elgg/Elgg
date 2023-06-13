@@ -36,7 +36,6 @@ if ($entity->soft_deleted === 'no' && $entity->hasCapability('soft_deletable')) 
     if (!$entity->delete()) {
         return elgg_error_response(elgg_echo('entity:delete:fail', [$display_name]));
     }
-    get_entity($deleter_guid)->removeRelationship($entity->guid, 'deleted_by');
 }
 
 // determine forward URL
