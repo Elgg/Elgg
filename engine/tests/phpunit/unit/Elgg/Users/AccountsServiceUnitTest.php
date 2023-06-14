@@ -7,10 +7,6 @@ use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Helpers\CustomUser;
 use Elgg\UnitTestCase;
 
-/**
- * @group Accounts
- * @group Registration
- */
 class AccountsServiceUnitTest extends UnitTestCase {
 
 	/**

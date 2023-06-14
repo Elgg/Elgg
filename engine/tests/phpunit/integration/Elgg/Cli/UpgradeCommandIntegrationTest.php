@@ -6,10 +6,6 @@ use Elgg\IntegrationTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @group Cli
- * @group UpgradeService
- */
 class UpgradeCommandIntegrationTest extends IntegrationTestCase {
 
 	public function down() {

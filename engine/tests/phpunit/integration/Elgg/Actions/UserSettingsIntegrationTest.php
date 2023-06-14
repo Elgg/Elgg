@@ -5,12 +5,6 @@ namespace Elgg\Actions;
 use Elgg\ActionResponseTestCase;
 use Elgg\Http\OkResponse;
 
-/**
- * @group ActionsService
- * @group AccountActions
- * @group Settings
- * @group UserSettings
- */
 class UserSettingsIntegrationTest extends ActionResponseTestCase {
 
 	public function up() {

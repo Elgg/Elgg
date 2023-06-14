@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @group UnitTests
- * @group ElggData
- */
 class ElggRelationshipUnitTest extends \Elgg\UnitTestCase {
 
 	/**

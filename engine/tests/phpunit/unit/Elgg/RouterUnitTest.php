@@ -12,12 +12,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Elgg\Exceptions\Http\Gatekeeper\AjaxGatekeeperException;
 
-/**
- * @group HttpService
- * @group RouterService
- * @group Routing
- * @group UnitTests
- */
 class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	/**
@@ -528,9 +522,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		ob_start();
 	}
 
-	/**
-	 * @group Current
-	 */
 	public function testCanRespondToAjax2RequestFromOkResponseBuilder() {
 
 		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 2);
@@ -896,9 +887,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		ob_start();
 	}
 
-	/**
-	 * @group AjaxService
-	 */
 	public function testCanRespondWithErrorToAjax2ViewRequestForUnallowedView() {
 
 		$request = $this->prepareHttpRequest('ajax/view/unallowed', 'GET', [], 2);
@@ -918,8 +906,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @group AjaxService
-	 *
 	 * @see https://github.com/Elgg/Elgg/issues/9797
 	 */
 	public function testCanRespondToAjax2ViewRequestForCacheableView() {
@@ -948,8 +934,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @group AjaxService
-	 *
 	 * @see https://github.com/Elgg/Elgg/issues/9797
 	 */
 	public function testCanRespondToAjax2ViewRequestForCSS() {
@@ -976,8 +960,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @group AjaxService
-	 *
 	 * @see https://github.com/Elgg/Elgg/issues/9797
 	 */
 	public function testCanRespondToAjax2ViewRequestForJS() {
@@ -1003,9 +985,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($output, $response->getContent());
 	}
 
-	/**
-	 * @group AjaxService
-	 */
 	public function testCanRespondToAjax2ViewRequestForARegisteredView() {
 
 		$vars = [
@@ -1037,9 +1016,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($output, $response->getContent());
 	}
 
-	/**
-	 * @group AjaxService
-	 */
 	public function testCanFilterResponseToAjax2ViewRequestForARegisteredView() {
 		$vars = [
 			'query_value' => 'hello',
@@ -1074,9 +1050,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($output, $response->getContent());
 	}
 
-	/**
-	 * @group AjaxService
-	 */
 	public function testCanRespondToAjax2ViewRequestForARegisteredViewWhichForwards() {
 
 		$vars = [
@@ -1161,9 +1134,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 	}
 
-	/**
-	 * @group AjaxService
-	 */
 	public function testCanRespondToAjax2ViewRequestForARegisteredFormView() {
 
 		$vars = [
@@ -1195,9 +1165,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($output, $response->getContent());
 	}
 
-	/**
-	 * @group AjaxService
-	 */
 	public function testCanFilterResponseToAjax2ViewRequestForARegisteredFormView() {
 		$vars = [
 			'query_value' => 'hello',
@@ -1229,9 +1196,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($output, $response->getContent());
 	}
 
-	/**
-	 * @group Middleware
-	 */
 	public function testCanUseRouteMiddleware() {
 
 		$request = $this->prepareHttpRequest('bar/foo/baz', 'GET', [

@@ -2,9 +2,6 @@
 
 namespace Elgg\Structs\Collection;
 
-/**
- * @group UnitTests
- */
 class InMemoryUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCountIsAccurate() {

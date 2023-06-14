@@ -8,12 +8,6 @@ use Elgg\IntegrationTestCase;
 use ElggMetadata;
 use ElggObject;
 
-/**
- * Elgg Test metadata API
- *
- * @group IntegrationTests
- * @group Metadata
- */
 class ElggCoreMetadataAPITest extends IntegrationTestCase {
 
 	/**

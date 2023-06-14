@@ -2,9 +2,6 @@
 
 namespace Elgg\Database;
 
-/**
- * @group UnitTests
- */
 class MutexUnitTest extends \Elgg\UnitTestCase {
 
 	public function testMutexLocksIfNotAlreadyLocked() {

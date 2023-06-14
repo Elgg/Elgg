@@ -2,9 +2,6 @@
 
 namespace Elgg\Views;
 
-/**
- * @group UnitTests
- */
 class AutoParagraphUnitTest extends \Elgg\UnitTestCase {
 
 	/**

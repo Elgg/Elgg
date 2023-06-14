@@ -2,9 +2,6 @@
 
 namespace Elgg\Notifications;
 
-/**
- * @group NotificationsService
- */
 class NotificationsServiceElggRelationshipIntegrationTest extends NotificationsServiceIntegrationTestCase {
 
 	public function up() {

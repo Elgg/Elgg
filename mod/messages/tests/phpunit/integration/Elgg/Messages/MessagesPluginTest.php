@@ -5,9 +5,6 @@ namespace Elgg\Messages;
 use Elgg\Plugins\IntegrationTestCase;
 use Laminas\Mail\Message;
 
-/**
- * @group MessagesPlugin
- */
 class MessagesPluginTest extends IntegrationTestCase {
 
 	public function up() {

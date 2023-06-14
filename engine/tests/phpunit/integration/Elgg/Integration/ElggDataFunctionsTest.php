@@ -8,9 +8,6 @@ use Elgg\Database\Select;
 use Elgg\Database\Update;
 use ElggUser;
 
-/**
- * @group IntegrationTests
- */
 class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 
 	/**

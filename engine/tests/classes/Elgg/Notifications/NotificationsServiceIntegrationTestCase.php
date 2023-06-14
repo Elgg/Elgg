@@ -777,9 +777,6 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		_elgg_services()->reset('subscriptions');
 	}
 
-	/**
-	 * @group InstantNotificationsService
-	 */
 	public function testCanNotifyUser() {
 
 		$object = $this->getTestObject();
@@ -871,9 +868,6 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->assertEquals(2, $sent);
 	}
 
-	/**
-	 * @group InstantNotificationsService
-	 */
 	public function testCanNotifyUserWithoutAnObject() {
 
 		$from = $this->createUser();
@@ -957,9 +951,6 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->assertEquals(2, $sent);
 	}
 
-	/**
-	 * @group InstantNotificationsService
-	 */
 	public function testCanUseEventsBeforeAndAfterInstantNotificationsQueue() {
 
 		$object = $this->getTestObject();
@@ -1016,9 +1007,6 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->assertEquals(1, $after_call_count);
 	}
 
-	/**
-	 * @group InstantNotificationsService
-	 */
 	public function testCanNotifyUserViaCustomMethods() {
 		
 		$from = $this->createUser();

@@ -7,10 +7,6 @@ use Elgg\Database\Select;
 use Elgg\Exceptions\InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 
-/**
- * @group NotificationsService
- * @group UnitTests
- */
 class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	/**

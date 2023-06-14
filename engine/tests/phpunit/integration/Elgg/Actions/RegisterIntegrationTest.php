@@ -8,11 +8,6 @@ use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Elgg\Exceptions\Http\Gatekeeper\RegistrationAllowedGatekeeperException;
 
-/**
- * @group ActionsService
- * @group AccountActions
- * @group Registration
- */
 class RegisterIntegrationTest extends ActionResponseTestCase {
 
 	public function up() {

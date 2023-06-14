@@ -4,10 +4,6 @@ use Elgg\Application;
 use Elgg\Exceptions\ConfigurationException;
 use Elgg\Exceptions\InvalidArgumentException;
 
-/**
- * @group Plugins
- * @group ElggPlugin
- */
 class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
@@ -175,9 +171,6 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 		}
 	}
 
-	/**
-	 * @group UpgradeService
-	 */
 	public function testUsesBootstrapOnUpgrade() {
 
 		try {

@@ -4,9 +4,6 @@ namespace Elgg\Search;
 
 use Elgg\IntegrationTestCase;
 
-/**
- * @group Search
- */
 class SearchServiceIntegrationTest extends IntegrationTestCase {
 
 	public function up() {

@@ -10,11 +10,6 @@ use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Database\Clauses\RiverWhereClause;
 use Elgg\UnitTestCase;
 
-/**
- * @group River
- * @group QueryBuilder
- * @group Repository
- */
 class RiverUnitTest extends UnitTestCase {
 
 	public function buildQuery(QueryBuilder $qb, array $options = []) {
@@ -464,9 +459,6 @@ class RiverUnitTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	/**
-	 * @group RepositoryPairs
-	 */
 	public function testCanExecuteQueryWithRelationshipPairs() {
 
 		$options = [

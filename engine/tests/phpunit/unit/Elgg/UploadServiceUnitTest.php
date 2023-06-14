@@ -5,10 +5,6 @@ namespace Elgg;
 use ElggFile;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * @group UploadService
- * @group UnitTests
- */
 class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 
 	/**

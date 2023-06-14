@@ -4,13 +4,6 @@ namespace Elgg\Integration;
 
 use Elgg\IntegrationTestCase;
 
-/**
- * Elgg Test annotation api
- *
- * @group IntegrationTests
- * @group EntityAnnotations
- * @group Annotations
- */
 class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 
 	/**

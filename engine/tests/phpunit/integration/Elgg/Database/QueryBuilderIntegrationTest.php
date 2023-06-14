@@ -4,10 +4,6 @@ namespace Elgg\Database;
 
 use Elgg\IntegrationTestCase;
 
-/**
- * @group Current
- * @group QueryBuilder
- */
 class QueryBuilderIntegrationTest extends IntegrationTestCase {
 
 	public function testCanUseSubqueryInComparisonClause() {

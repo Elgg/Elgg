@@ -4,10 +4,6 @@ namespace Elgg\Email;
 
 use Elgg\Exceptions\InvalidArgumentException;
 
-/**
- * @group EmailService
- * @group UnitTests
- */
 class AddressUnitTest extends \Elgg\UnitTestCase {
 
 	/**

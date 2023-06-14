@@ -15,11 +15,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-/**
- * @group HttpService
- * @group HttpResponses
- * @group UnitTests
- */
 class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 
 	/**

@@ -5,10 +5,6 @@ namespace Elgg\SystemLog;
 use Elgg\Plugins\IntegrationTestCase;
 use Elgg\Event;
 
-/**
- * @group Plugins
- * @group SystemLogPlugin
- */
 class SystemLogApiTest extends IntegrationTestCase {
 
 	public function up() {

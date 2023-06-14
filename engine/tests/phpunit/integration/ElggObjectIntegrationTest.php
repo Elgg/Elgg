@@ -2,10 +2,6 @@
 
 use Elgg\IntegrationTestCase;
 
-/**
- * @group IntegrationTests
- * @group ElggObject
- */
 class ElggObjectIntegrationTest extends IntegrationTestCase {
 	
 	public function testCantCommentLoggedOut() {

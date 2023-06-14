@@ -5,10 +5,6 @@ namespace Elgg\Database;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\IntegrationTestCase;
 
-/**
- * @group Database
- * @group Multibyte
- */
 class MultibyteIntegrationTest extends IntegrationTestCase {
 
 	public function up() {

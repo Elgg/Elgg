@@ -5,12 +5,6 @@ namespace Elgg\Integration;
 use Elgg\Database\Select;
 use Elgg\Helpers\ElggUserWithExposableAttributes;
 
-/**
- * Elgg Test \ElggUser
- *
- * @group IntegrationTests
- * @group ElggUser
- */
 class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 
 	/**

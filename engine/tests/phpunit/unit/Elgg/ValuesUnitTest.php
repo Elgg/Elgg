@@ -5,9 +5,6 @@ namespace Elgg;
 use DateTime as PHPDateTime;
 use Elgg\I18n\DateTime as ElggDateTime;
 
-/**
- * @group Values
- */
 class ValuesUnitTest extends UnitTestCase {
 
 	/**

@@ -6,10 +6,6 @@ use Elgg\UnitTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @group Cli
- * @group Plugins
- */
 class PluginsListCommandUnitTest extends UnitTestCase {
 
 	public function up() {

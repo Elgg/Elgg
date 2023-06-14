@@ -18,9 +18,6 @@ use Elgg\Database\Clauses\SelectClause;
 use Elgg\Database\Clauses\WhereClause;
 use Elgg\UnitTestCase;
 
-/**
- * @group QueryBuilder
- */
 class QueryOptionsUnitTest extends UnitTestCase {
 
 	/**
@@ -248,9 +245,6 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals($before, $pair->created_before);
 	}
 
-	/**
-	 * @group Nesting
-	 */
 	public function testNormalizesMetadataOptionsFromTimeOptionsWithNestedPair() {
 
 		$after = (new \DateTime())->modify('-1 day');
@@ -1058,9 +1052,6 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals(new WhereClause($clause), $options['wheres'][3]);
 	}
 
-	/**
-	 * @group QueryBuilderJoins
-	 */
 	public function testNormalizeJoinClauses() {
 
 		$dbprefix = elgg_get_config('dbprefix');
@@ -1121,9 +1112,6 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals('inner', $join->join_type);
 	}
 
-	/**
-	 * @group QueryBuilderOrder
-	 */
 	public function testNormalizeOrderByOptions() {
 
 		$options = $this->options->normalizeOptions([
@@ -1153,9 +1141,6 @@ class QueryOptionsUnitTest extends UnitTestCase {
 
 	}
 
-	/**
-	 * @group QueryBuilderOrder
-	 */
 	public function testNormalizeOrderByOptionsAsArray() {
 
 		$options = $this->options->normalizeOptions([
@@ -1317,9 +1302,6 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals('foo.baz', $clause->expr);
 	}
 
-	/**
-	 * @group Setters
-	 */
 	public function testSetters() {
 
 		$this->assertFalse(isset($this->options->x));

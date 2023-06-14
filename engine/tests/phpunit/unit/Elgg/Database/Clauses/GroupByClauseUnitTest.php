@@ -7,9 +7,6 @@ use Elgg\Database\Select;
 use Elgg\Helpers\Database\Clauses\CallableGroupBy;
 use Elgg\UnitTestCase;
 
-/**
- * @group QueryBuilder
- */
 class GroupByClauseUnitTest extends UnitTestCase {
 
 	/**

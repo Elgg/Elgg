@@ -5,13 +5,6 @@ namespace Elgg\Integration;
 use Elgg\Database\Select;
 use Elgg\Helpers\ElggObjectWithExposableAttributes;
 
-/**
- * Elgg Test \ElggObject
- *
- * @group IntegrationTests
- * @group ElggObject
- * @group Tags
- */
 class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 
 	/**

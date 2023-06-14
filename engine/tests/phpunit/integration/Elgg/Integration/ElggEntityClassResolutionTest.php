@@ -4,9 +4,6 @@ namespace Elgg\Integration;
 
 use Elgg\IntegrationTestCase;
 
-/**
- * @group EntityClasses
- */
 class ElggEntityClassResolutionTest extends IntegrationTestCase {
 
 	/**

@@ -7,11 +7,6 @@ use Elgg\IntegrationTestCase;
 use Elgg\Project\Paths;
 use ElggFile;
 
-/**
- * Elgg Test Skeleton
- *
- * @group IntegrationTests
- */
 class ElggCoreFilestoreTest extends IntegrationTestCase {
 
 	/**

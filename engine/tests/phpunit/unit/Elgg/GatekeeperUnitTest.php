@@ -12,9 +12,6 @@ use Elgg\Exceptions\Http\Gatekeeper\GroupGatekeeperException;
 use Elgg\Exceptions\Http\Gatekeeper\LoggedInGatekeeperException;
 use Elgg\Exceptions\Http\Gatekeeper\LoggedOutGatekeeperException;
 
-/**
- * @group Gatekeeper
- */
 class GatekeeperUnitTest extends UnitTestCase {
 
 	/**

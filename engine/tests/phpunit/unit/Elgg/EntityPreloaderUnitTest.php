@@ -6,9 +6,6 @@ use Elgg\Cache\EntityCache;
 use Elgg\Helpers\PreloaderMock20140623;
 use PHPUnit\Framework\MockObject\MockObject;
 
-/**
- * @group UnitTests
- */
 class EntityPreloaderUnitTest extends \Elgg\UnitTestCase {
 
 	/**

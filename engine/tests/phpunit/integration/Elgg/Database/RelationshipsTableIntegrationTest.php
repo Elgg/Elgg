@@ -4,9 +4,6 @@ namespace Elgg\Database;
 
 use Elgg\IntegrationTestCase;
 
-/**
- * @group Database
- */
 class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 	
 	/**

@@ -6,10 +6,6 @@ use Elgg\UnitTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @group Cli
- * @group Cron
- */
 class CronCommandUnitTest extends UnitTestCase {
 
 	public function testExecuteWithoutOptions() {

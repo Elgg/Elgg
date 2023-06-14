@@ -5,9 +5,6 @@ namespace Elgg\Filesystem;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\UnitTestCase;
 
-/**
- * @group UnitTests
- */
 class MimeTypeServiceUnitTest extends UnitTestCase {
 
 	/**

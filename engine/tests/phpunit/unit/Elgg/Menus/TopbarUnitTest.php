@@ -4,9 +4,6 @@ namespace Elgg\Menus;
 
 use Elgg\UnitTestCase;
 
-/**
- * @group Menus
- */
 class TopbarUnitTest extends UnitTestCase {
 
 	public function up() {

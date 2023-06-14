@@ -6,10 +6,6 @@ use Elgg\Plugins\IntegrationTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @group Cli
- * @group GarbageCollector
- */
 class OptimizeCommandTest extends IntegrationTestCase {
 
 	public function testExecute() {

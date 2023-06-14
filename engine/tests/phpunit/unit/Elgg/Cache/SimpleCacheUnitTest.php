@@ -2,11 +2,6 @@
 
 namespace Elgg\Cache;
 
-/**
- * @group UnitTests
- * @group Cache
- * @group SimpleCache
- */
 class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 
 	/**

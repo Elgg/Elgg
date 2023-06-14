@@ -1,13 +1,9 @@
 <?php
 
 namespace Elgg\Cache;
+
 use Elgg\Values;
 
-/**
- * @group EntityCache
- * @group Cache
- * @group UnitTests
- */
 class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanGetEntityAfterDbQuery() {

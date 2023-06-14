@@ -2,9 +2,6 @@
 
 namespace Elgg\Http;
 
-/**
- * @group UnitTests
- */
 class RequestUnitTest extends \Elgg\UnitTestCase {
 
 	public function down() {

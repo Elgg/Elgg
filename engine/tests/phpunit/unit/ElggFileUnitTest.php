@@ -4,10 +4,6 @@ use Elgg\Exceptions\DomainException;
 use Elgg\Exceptions\Filesystem\IOException;
 use Elgg\Project\Paths;
 
-/**
- * @group UnitTests
- * @group FileService
- */
 class ElggFileUnitTest extends \Elgg\UnitTestCase {
 
 	/**

@@ -4,10 +4,6 @@ namespace Elgg\Groups;
 
 use Elgg\UnitTestCase;
 
-/**
- * @group Groups
- * @group GroupTools
- */
 class ToolsUnitTest extends UnitTestCase {
 
 	public function up() {

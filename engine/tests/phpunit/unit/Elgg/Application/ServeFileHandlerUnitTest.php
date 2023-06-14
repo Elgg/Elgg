@@ -4,10 +4,6 @@ namespace Elgg\Application;
 
 use Elgg\Exceptions\DomainException;
 
-/**
- * @group UnitTests
- * @group FileService
- */
 class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 
 	/**

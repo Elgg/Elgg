@@ -2,9 +2,6 @@
 
 namespace Elgg\Database;
 
-/**
- * @group UnitTests
- */
 class DbConfigUnitTest extends \Elgg\UnitTestCase {
 
 	public function testGetTablePrefix() {

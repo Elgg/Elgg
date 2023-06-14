@@ -9,10 +9,6 @@ use Elgg\Event;
 use Elgg\Mocks\Di\InternalContainer;
 use Elgg\UnitTestCase;
 
-/**
- * @group Application
- * @group Shutdown
- */
 class ShutdownHandlerUnitTest extends UnitTestCase {
 
 	/**

@@ -4,9 +4,6 @@ namespace Elgg;
 
 use Elgg\Project\Paths;
 
-/**
- * @group UnitTests
- */
 class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	/**

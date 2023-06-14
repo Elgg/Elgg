@@ -2,9 +2,6 @@
 
 namespace Elgg\Amd;
 
-/**
- * @group UnitTests
- */
 class ViewFilterUnitTest extends \Elgg\UnitTestCase {
 
 	public function testHandlesShortViewNames() {

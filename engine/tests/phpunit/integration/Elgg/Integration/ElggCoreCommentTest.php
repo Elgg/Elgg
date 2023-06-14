@@ -4,11 +4,6 @@ namespace Elgg\Integration;
 
 use Elgg\IntegrationTestCase;
 
-/**
- * Elgg Test \ElggComment
- *
- * @group IntegrationTests
- */
 class ElggCoreCommentTest extends IntegrationTestCase {
 	/**
 	 * @var \ElggComment

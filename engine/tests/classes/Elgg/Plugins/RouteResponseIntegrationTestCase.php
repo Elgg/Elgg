@@ -9,9 +9,6 @@ use Elgg\Exceptions\Http\Gatekeeper\GroupToolGatekeeperException;
 use Elgg\Exceptions\Http\GatekeeperException;
 use Elgg\Router\Route;
 
-/**
- * @group Router
- */
 abstract class RouteResponseIntegrationTestCase extends IntegrationTestCase {
 
 	public function up() {

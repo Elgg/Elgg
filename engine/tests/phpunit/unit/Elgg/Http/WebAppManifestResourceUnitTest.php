@@ -2,9 +2,6 @@
 
 namespace Elgg\Http;
 
-/**
- * @group UnitTests
- */
 class WebAppManifestResourceUnitTest extends \Elgg\UnitTestCase {
 
 	public function testPagesExposeARelManifestLink() {

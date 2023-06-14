@@ -2,10 +2,6 @@
 
 namespace Elgg;
 
-/**
- * @group UnitTests
- * @group UserCapabilities
- */
 class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 
 	/**
@@ -595,9 +591,6 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		});
 	}
 
-	/**
-	 * @group FileService
-	 */
 	public function testCanDownloadFileByDefault() {
 
 		elgg_set_entity_class('object', 'file', \ElggFile::class);
@@ -614,9 +607,6 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($entity->canDownload($viewer->guid));
 	}
 
-	/**
-	 * @group FileService
-	 */
 	public function testCanAlterDownloadPermissions() {
 
 		elgg_set_entity_class('object', 'file', \ElggFile::class);

@@ -2,9 +2,6 @@
 
 namespace Elgg\Database;
 
-/**
- * @group UnitTests
- */
 class PluginsUnitTest extends \Elgg\UnitTestCase {
 
 	public function testAfterPluginLoadActiveCheckIsFree() {
