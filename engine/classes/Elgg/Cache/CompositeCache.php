@@ -8,6 +8,7 @@ use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Values;
 use Phpfastcache\CacheManager;
 use Phpfastcache\Cluster\ClusterAggregator;
+use Phpfastcache\Config\ConfigurationOption;
 use Phpfastcache\Core\Pool\ExtendedCacheItemPoolInterface;
 
 /**
@@ -250,11 +251,11 @@ class CompositeCache extends BaseCache {
 		}
 		
 		$cluster_driver = $cluster->getCluster();
-		
-		$cluster_driver->getConfig()->setPreventCacheSlams(true);
-		$cluster_driver->getConfig()->setDefaultChmod(0770);
-		$cluster_driver->getConfig()->setUseStaticItemCaching(true);
-		$cluster_driver->getConfig()->setItemDetailedDate(true);
+		$cluster_driver->setConfig(new ConfigurationOption([
+			'preventCacheSlams' => true,
+			'useStaticItemCaching' => true,
+			'itemDetailedDate' => true,
+		]));
 		
 		return $cluster_driver;
 	}
