@@ -45,7 +45,7 @@
         "pelago/emogrifier": "~7.0.0",
         "peppeocchi/php-cron-scheduler": "~4.0",
         "php-di/php-di": "~6.4.0",
-        "phpfastcache/phpfastcache": "~8.1.2",
+        "phpfastcache/phpfastcache": "~9.1.3",
         "react/promise": "^2.5",
         "roave/security-advisories": "dev-master",
         "robmorgan/phinx": "~0.12.7",
@@ -79,8 +79,7 @@
         "psr-4": {
             "CssCrush\\": "engine/vendor_classes/CssCrush/",
             "Elgg\\": "engine/classes/Elgg/",
-            "Laminas\\Mime\\": "engine/vendor_classes/Laminas/Mime/",
-            "Phpfastcache\\": "engine/vendor_classes/Phpfastcache/"
+            "Laminas\\Mime\\": "engine/vendor_classes/Laminas/Mime/"
         }
     },
     "autoload-dev": {
