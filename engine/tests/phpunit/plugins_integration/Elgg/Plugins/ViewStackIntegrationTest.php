@@ -37,7 +37,8 @@ class ViewStackIntegrationTest extends PluginsIntegrationTestCase {
 			}
 			
 			_elgg_services()->reset('views');
-			_elgg_services()->views->registerPluginViews($plugin->getPath());
+			
+			$this->startPlugin($plugin->getID(), false);
 			
 			$data = _elgg_services()->views->getInspectorData();
 			foreach ($data['locations'] as $viewtype => $views) {
@@ -61,7 +62,7 @@ class ViewStackIntegrationTest extends PluginsIntegrationTestCase {
 	 * @dataProvider viewsProvider
 	 */
 	public function testViewStackRegistrations(\ElggPlugin $plugin, $view, $viewtype, $path, $is_simplecache_view) {
-		$this->views->registerPluginViews($plugin->getPath());
+		$this->startPlugin($plugin->getID(), false);
 		
 		$this->assertFileExists($path);
 		$this->assertFileIsReadable($path);
