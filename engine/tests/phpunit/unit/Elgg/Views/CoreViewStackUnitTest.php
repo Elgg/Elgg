@@ -5,9 +5,6 @@ namespace Elgg\Views;
 use Elgg\Project\Paths;
 use Elgg\UnitTestCase;
 
-/**
- * @group ViewsService
- */
 class CoreViewStackUnitTest extends UnitTestCase {
 
 	public function up() {

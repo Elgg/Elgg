@@ -4,13 +4,6 @@ namespace Elgg\Integration;
 
 use ElggObject;
 
-/**
- * Test elgg_get_entities() with metadata queries
- *
- * @group IntegrationTests
- * @group Entities
- * @group EntityMetadata
- */
 class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesIntegrationTestCase {
 
 	public function testElggApiGettersEntityMetadataNameValidSingle() {

@@ -2,11 +2,6 @@
 
 use Elgg\Exceptions\InvalidArgumentException;
 
-/**
- * @group User
- * @group UnitTests
- * @group ElggData
- */
 class ElggUserUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanConstructWithoutArguments() {

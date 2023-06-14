@@ -7,9 +7,6 @@ use Elgg\Database\Select;
 use Elgg\Helpers\Database\Clauses\CallableSelect;
 use Elgg\UnitTestCase;
 
-/**
- * @group QueryBuilder
- */
 class SelectClauseUnitTest extends UnitTestCase {
 
 	/**

@@ -2,10 +2,6 @@
 
 namespace Elgg\Http;
 
-/**
- * @group HttpService
- * @group UnitTests
- */
 class ErrorResponseUnitTest extends ResponseUnitTestCase {
 
 	public function getReponseClassName(): string {

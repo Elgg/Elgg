@@ -4,9 +4,6 @@ namespace Elgg\Database;
 
 use Elgg\UnitTestCase;
 
-/**
- * @group QueryBuilder
- */
 class QueryBuilderUnitTest extends UnitTestCase {
 
 	/**

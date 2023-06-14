@@ -6,23 +6,17 @@ use DI\Container;
 use Elgg\Application\Database;
 use Elgg\Database\Select;
 use Elgg\Helpers\Application\FooController;
-use Elgg\Helpers\Application\FooRedirectController;
 use Elgg\Helpers\Application\FooExceptionController;
+use Elgg\Helpers\Application\FooRedirectController;
+use Elgg\Helpers\Application\FooNonHttpExceptionController;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Elgg\Http\RedirectResponse;
-use Elgg\Menu\Service;
 use Elgg\Mocks\Di\InternalContainer;
 use Elgg\Security\UrlSigner;
-use Elgg\Views\TableColumn\ColumnFactory;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Elgg\Helpers\Application\FooNonHttpExceptionController;
 
-/**
- * @group UnitTests
- * @group Application
- */
 class ApplicationUnitTest extends \Elgg\UnitTestCase {
 
 	/**

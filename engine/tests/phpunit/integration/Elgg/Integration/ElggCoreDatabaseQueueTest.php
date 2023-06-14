@@ -5,11 +5,6 @@ namespace Elgg\Integration;
 use Elgg\IntegrationTestCase;
 use Elgg\Queue\DatabaseQueue;
 
-/**
- * \Elgg\Queue\DatabaseQueue tests
- *
- * @group IntegrationTests
- */
 class ElggCoreDatabaseQueueTest extends IntegrationTestCase {
 
 	public function testEnqueueAndDequeue() {

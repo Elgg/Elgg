@@ -4,12 +4,6 @@ namespace Elgg\Integration;
 
 use Elgg\IntegrationTestCase;
 
-/**
- * Elgg Test helper functions
- *
- * @group IntegrationTests
- * @group Helpers
- */
 class ElggCoreHelpersTest extends IntegrationTestCase {
 
 	/**

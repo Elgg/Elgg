@@ -5,11 +5,6 @@ namespace Elgg\Views;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\UnitTestCase;
 
-/**
- * @group HTML
- * @group Views
- * @group Output
- */
 class HtmlFormatterUnitTest extends UnitTestCase {
 
 	public function up() {

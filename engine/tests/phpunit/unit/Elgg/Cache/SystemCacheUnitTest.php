@@ -5,9 +5,6 @@ namespace Elgg\Cache;
 use Elgg\UnitTestCase;
 use Phpfastcache\Cluster\ClusterPoolInterface;
 
-/**
- * @group Cache
- */
 class SystemCacheUnitTest extends UnitTestCase {
 
 	/**

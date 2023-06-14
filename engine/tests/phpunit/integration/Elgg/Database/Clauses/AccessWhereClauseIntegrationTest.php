@@ -4,9 +4,6 @@ namespace Elgg\Database\Clauses;
 
 use Elgg\IntegrationTestCase;
 
-/**
- * @group Access
- */
 class AccessWhereClauseIntegrationTest extends IntegrationTestCase {
 
 	protected \ElggUser $user;

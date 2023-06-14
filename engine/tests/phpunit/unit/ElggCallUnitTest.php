@@ -2,9 +2,6 @@
 
 use Elgg\Exceptions\RuntimeException as ElggRuntimeException;
 
-/**
- * @group Functions
- */
 class ElggCallUnitTest extends \Elgg\UnitTestCase {
 
 	/**

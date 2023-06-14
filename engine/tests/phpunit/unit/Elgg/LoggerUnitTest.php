@@ -4,10 +4,6 @@ namespace Elgg;
 
 use Psr\Log\LogLevel;
 
-/**
- * @group UnitTests
- * @group Logger
- */
 class LoggerUnitTest extends \Elgg\UnitTestCase {
 
 	/**

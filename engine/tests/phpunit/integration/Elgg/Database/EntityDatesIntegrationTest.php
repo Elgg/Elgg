@@ -4,10 +4,6 @@ namespace Elgg\Database;
 
 use Elgg\IntegrationTestCase;
 
-/**
- * @group IntegrationTests
- * @group EntityDates
- */
 class EntityDatesIntegrationTest extends IntegrationTestCase {
 	
 	/**

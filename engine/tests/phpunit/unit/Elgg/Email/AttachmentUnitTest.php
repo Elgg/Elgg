@@ -5,10 +5,6 @@ namespace Elgg\Email;
 use Elgg\UnitTestCase;
 use Laminas\Mime\Mime;
 
-/**
- * @group EmailService
- * @group UnitTests
- */
 class AttachmentUnitTest extends UnitTestCase {
 	
 	/**

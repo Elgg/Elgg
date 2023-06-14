@@ -5,12 +5,6 @@ namespace Elgg\Integration;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Values;
 
-/**
- * Elgg Test river api
- *
- * @group IntegrationTests
- * @group River
- */
 class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 
 	/**

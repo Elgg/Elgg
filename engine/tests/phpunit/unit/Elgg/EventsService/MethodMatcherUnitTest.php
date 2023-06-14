@@ -4,9 +4,6 @@ namespace Elgg\EventsService;
 
 use Elgg\Helpers\MethodMatcherTestObject;
 
-/**
- * @group UnitTests
- */
 class MethodMatcherUnitTest extends \Elgg\UnitTestCase {
 
 	public function testMatchesStrings() {

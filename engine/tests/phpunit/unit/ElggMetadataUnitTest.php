@@ -8,10 +8,6 @@ use Elgg\UnitTestCase;
  * For elgg_get_metadata_from_id() to work with the mocks, the SQL query must be
  * an exact match, so any new commas, brackets and clauses need to be reflected in the
  * mock class.
- *
- * @group ElggMetadata
- * @group UnitTests
- * @group ElggData
  */
 class ElggMetadataUnitTest extends UnitTestCase {
 

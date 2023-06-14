@@ -2,11 +2,6 @@
 
 use Elgg\IntegrationTestCase;
 
-/**
- * @group IntegrationTests
- * @group Users
- * @group ElggUser
- */
 class ElggUserIntegrationTest extends IntegrationTestCase {
 
 	/**

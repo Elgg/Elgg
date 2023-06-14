@@ -7,11 +7,6 @@ use Elgg\Helpers\Actions\Admin\UpgradeTestBatch;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 
-/**
- * @group UpgradeService
- * @group UpgradeAction
- * @group Admin
- */
 class UpgradeIntegrationTest extends ActionResponseTestCase {
 
 	public function up() {

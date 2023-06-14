@@ -6,8 +6,6 @@ use Elgg\IntegrationTestCase;
 
 /**
  * The purpose of these tests is to catch validation problems in menu events
- *
- * @group Navigation
  */
 class MenuRenderingIntegrationTest extends IntegrationTestCase {
 	

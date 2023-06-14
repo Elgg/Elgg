@@ -2,8 +2,6 @@
 
 /**
  * @see \ElggCoreHelpersTest
- *
- * @group UnitTests
  */
 class ElggCoreUrlHelpersUnitTest extends \Elgg\UnitTestCase {
 

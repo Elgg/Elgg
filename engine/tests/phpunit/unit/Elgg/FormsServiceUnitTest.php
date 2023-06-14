@@ -4,10 +4,6 @@ namespace Elgg;
 
 use Elgg\Exceptions\LogicException;
 
-/**
- * @group FormsService
- * @group UnitTests
- */
 class FormsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	/**

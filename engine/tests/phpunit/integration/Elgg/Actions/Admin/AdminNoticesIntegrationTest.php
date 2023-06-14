@@ -5,11 +5,6 @@ namespace Elgg\Actions\Admin;
 use Elgg\ActionResponseTestCase;
 use Elgg\Http\OkResponse;
 
-/**
- * @group ActionsService
- * @group AdminNotices
- * @group Admin
- */
 class AdminNoticesIntegrationTest extends ActionResponseTestCase {
 
 	public function up() {

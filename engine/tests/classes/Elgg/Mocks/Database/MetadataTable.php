@@ -10,9 +10,6 @@ use Elgg\Database\Select;
 use Elgg\Database\Update;
 use ElggMetadata;
 
-/**
- * @group ElggMetadata
- */
 class MetadataTable extends DbMetadataTabe {
 
 	/**

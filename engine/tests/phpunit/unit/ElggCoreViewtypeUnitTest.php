@@ -1,8 +1,5 @@
 <?php
 
-/**
- * @group UnitTests
- */
 class ElggCoreViewtypeUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {

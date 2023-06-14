@@ -4,10 +4,6 @@ namespace Elgg\I18n;
 
 use Elgg\UnitTestCase;
 
-/**
- * @group UnitTests
- * @group I18n
- */
 class LocaleServiceUnitTest extends UnitTestCase{
 	
 	/**

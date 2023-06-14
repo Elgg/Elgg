@@ -2,14 +2,9 @@
 
 namespace Elgg;
 
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\MockObject\Matcher;
 use Elgg\Helpers\Database\DatabaseTestObj;
+use PHPUnit\Framework\MockObject\MockObject;
 
-/**
- * @group UnitTests
- * @group Database
- */
 class DatabaseUnitTest extends \Elgg\UnitTestCase {
 
 	public function testFingerprintingOfCallbacks() {

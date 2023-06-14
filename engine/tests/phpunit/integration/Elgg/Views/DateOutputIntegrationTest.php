@@ -4,11 +4,6 @@ namespace Elgg\Views;
 
 use Elgg\I18n\DateTime;
 
-/**
- * @group ViewRendering
- * @group ViewsService
- * @group DateTime
- */
 class DateOutputIntegrationTest extends ViewRenderingIntegrationTestCase {
 
 	protected DateTime $date;

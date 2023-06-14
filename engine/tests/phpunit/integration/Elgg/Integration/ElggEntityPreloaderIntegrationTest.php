@@ -5,9 +5,6 @@ namespace Elgg\Integration;
 use Elgg\EntityPreloader;
 use Elgg\Helpers\MockEntityPreloader20140623;
 
-/**
- * @group IntegrationTests
- */
 class ElggEntityPreloaderIntegrationTest extends \Elgg\IntegrationTestCase {
 
 	/**

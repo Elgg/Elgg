@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @group UnitTests
- * @group Crypto
- */
 class CryptoUnitTest extends \Elgg\UnitTestCase {
 
 	/**

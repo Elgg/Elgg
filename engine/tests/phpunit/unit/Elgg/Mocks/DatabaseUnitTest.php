@@ -8,10 +8,6 @@ use Elgg\Database\Select;
 use Elgg\Database\Update;
 use Elgg\Exceptions\DatabaseException;
 
-/**
- * @group Mocks
- * @group UnitTests
- */
 class DatabaseUnitTest extends \Elgg\UnitTestCase {
 
 	public function testThrowsWithUnknownInsertSpec() {

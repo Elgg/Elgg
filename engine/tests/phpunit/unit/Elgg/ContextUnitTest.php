@@ -2,9 +2,6 @@
 
 namespace Elgg;
 
-/**
- * @group UnitTests
- */
 class ContextUnitTest extends \Elgg\UnitTestCase {
 
 	protected $context;

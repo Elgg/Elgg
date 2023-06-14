@@ -4,10 +4,6 @@ namespace Elgg\Database;
 
 use Elgg\IntegrationTestCase;
 
-/**
- * @group IntegrationTests
- * @group Seeding
- */
 class SeedingIntegrationTest extends IntegrationTestCase {
 
 	public function testCanGetRandomUser() {

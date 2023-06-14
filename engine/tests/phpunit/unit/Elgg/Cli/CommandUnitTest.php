@@ -10,10 +10,6 @@ use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @group Cli
- * @group ErrorLog
- */
 class CommandUnitTest extends UnitTestCase {
 
 	public function executeCommand(\Closure $handler) {

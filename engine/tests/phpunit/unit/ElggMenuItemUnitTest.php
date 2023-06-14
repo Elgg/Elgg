@@ -2,8 +2,6 @@
 
 /**
  * Depends on elgg_normalize_url() in output.php
- *
- * @group UnitTests
  */
 class ElggMenuItemUnitTest extends \Elgg\UnitTestCase {
 

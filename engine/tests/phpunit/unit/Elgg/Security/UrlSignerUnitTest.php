@@ -5,10 +5,6 @@ namespace Elgg\Security;
 use Elgg\Exceptions\HttpException;
 use Elgg\Exceptions\InvalidArgumentException;
 
-/**
- * @group Security
- * @group UnitTests
- */
 class SignedUrlUnitTest extends \Elgg\UnitTestCase {
 
 	protected UrlSigner $service;

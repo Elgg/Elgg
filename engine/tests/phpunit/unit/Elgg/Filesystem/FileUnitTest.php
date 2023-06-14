@@ -2,9 +2,6 @@
 
 namespace Elgg\Filesystem;
 
-/**
- * @group UnitTests
- */
 class FileUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanCheckForItsOwnExistence() {

@@ -2,10 +2,6 @@
 
 namespace Elgg\Pages;
 
-/**
- * @group Router
- * @group PagesRoutes
- */
 class RouteResponseTest extends \Elgg\Plugins\RouteResponseIntegrationTestCase {
 
 	public function getSubtype() {

@@ -8,10 +8,6 @@ use Elgg\Http\OkResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Cookie;
 
-/**
- * @group ActionsService
- * @group AccountActions
- */
 class LoginIntegrationTest extends ActionResponseTestCase {
 
 	/**

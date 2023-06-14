@@ -4,9 +4,6 @@ namespace Elgg\Menu;
 
 use Elgg\UnitTestCase;
 
-/**
- * @group MenuService
- */
 class ServiceUnitTest extends UnitTestCase {
 
 	public function testCanUnpreparedMenu() {

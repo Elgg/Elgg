@@ -4,13 +4,6 @@ namespace Elgg\Database;
 
 use Elgg\Exceptions\Database\UserFetchFailureException;
 
-/**
- * @group Database
- * @group EntityTable
- * @group ElggEntity
- * @group EntityCache
- * @group UnitTests
- */
 class EntityTableUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanGetUserForPermissionsCheckWhileLoggedOut() {
