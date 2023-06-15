@@ -13,11 +13,7 @@ $entity = elgg_extract('entity', $vars);
 
 $entity_relationships = elgg_get_relationships([
 	'limit' => false,
-	'wheres' => [
-		function(QueryBuilder $qb, $main_alias) use ($entity) {
-			return $qb->compare("{$main_alias}.guid_one", '=', $entity->guid, ELGG_VALUE_GUID);
-		}
-	],
+	'relationship_guid' => $entity->guid,
 	'order_by' => new OrderByClause(function(QueryBuilder $qb, $main_alias) {
 		return "{$main_alias}.id";
 	}, 'asc'),
