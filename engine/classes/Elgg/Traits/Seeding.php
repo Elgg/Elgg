@@ -801,6 +801,10 @@ trait Seeding {
 	 * @return int Number of generated comments
 	 */
 	public function createComments(\ElggEntity $entity, $limit = null): int {
+		if (!elgg_entity_has_capability($entity->getType(), $entity->getSubtype(), 'commentable')) {
+			// the entity doesn't support comments
+			return 0;
+		}
 
 		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity, $limit) {
 			$tries = 0;
@@ -841,6 +845,10 @@ trait Seeding {
 	 * @return int
 	 */
 	public function createLikes(\ElggEntity $entity, $limit = null): int {
+		if (!elgg_entity_has_capability($entity->getType(), $entity->getSubtype(), 'likable')) {
+			// the entity doesn't support likes
+			return 0;
+		}
 
 		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity, $limit) {
 			$success = 0;
