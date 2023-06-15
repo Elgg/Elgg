@@ -15,15 +15,9 @@ class RegistrationIntegrationTest extends RegistrationIntegrationTestCase {
 	
 	protected function registerCoreActions(Application $app): void {
 		$boot = new BootHandler($app);
-		$reflector = new \ReflectionClass($boot);
 		
-		$actions = $reflector->getMethod('registerActions');
-		$actions->setAccessible(true);
-		$actions->invoke($boot);
-		
-		$routes = $reflector->getMethod('registerRoutes');
-		$routes->setAccessible(true);
-		$routes->invoke($boot);
+		$this->invokeInaccessableMethod($boot, 'registerActions');
+		$this->invokeInaccessableMethod($boot, 'registerRoutes');
 	}
 	
 	public function actionsProvider(): array {

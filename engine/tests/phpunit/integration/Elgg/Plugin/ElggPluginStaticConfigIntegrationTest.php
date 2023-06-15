@@ -39,27 +39,6 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 		});
 	}
 	
-	/**
-	 * Get a protected/private function to call
-	 *
-	 * @param string $method
-	 *
-	 * @return \ReflectionMethod
-	 */
-	protected function getReflectorMethod(string $method): \ReflectionMethod {
-		$reflector = new \ReflectionClass($this->plugin);
-		$method = $reflector->getMethod($method);
-		$method->setAccessible(true);
-		
-		return $method;
-	}
-	
-	protected function callReflectorMethod(string $method) {
-		$method = $this->getReflectorMethod($method);
-		
-		return $method->invoke($this->plugin);
-	}
-	
 	public function testBootstrapRegistration() {
 		$this->assertInstanceOf(\Elgg\StaticConfig\Bootstrap::class, $this->plugin->getBootstrap());
 	}
@@ -72,7 +51,7 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 		
 		elgg_set_config('system_cache_loaded', false);
 		
-		$this->callReflectorMethod('registerViews');
+		$this->invokeInaccessableMethod($this->plugin, 'registerViews');
 		
 		$this->assertTrue(elgg_view_exists($view_name));
 		$this->assertEquals($expected_view_output, elgg_view($view_name));
@@ -89,7 +68,7 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 	public function testEntitiesRegistration() {
 		$this->assertFalse(elgg_entity_has_capability('object', \StaticConfigObject::SUBTYPE, 'searchable'));
 		
-		$this->callReflectorMethod('registerEntities');
+		$this->invokeInaccessableMethod($this->plugin, 'registerEntities');
 		
 		$this->assertTrue(elgg_entity_has_capability('object', \StaticConfigObject::SUBTYPE, 'searchable'));
 	}
@@ -99,13 +78,13 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 		
 		$this->assertNotEquals(\StaticConfigObject::class, $class);
 		
-		$this->callReflectorMethod('activateEntities');
+		$this->invokeInaccessableMethod($this->plugin, 'activateEntities');
 		
 		$class = elgg_get_entity_class('object', \StaticConfigObject::SUBTYPE);
 		
 		$this->assertEquals(\StaticConfigObject::class, $class);
 		
-		$this->callReflectorMethod('deactivateEntities');
+		$this->invokeInaccessableMethod($this->plugin, 'deactivateEntities');
 		
 		$class = elgg_get_entity_class('object', \StaticConfigObject::SUBTYPE);
 		
@@ -118,7 +97,7 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 		$this->assertFalse(elgg_action_exists('static_config/controller'));
 		$this->assertFalse(elgg_action_exists('static_config/logged_out'));
 		
-		$this->callReflectorMethod('registerActions');
+		$this->invokeInaccessableMethod($this->plugin, 'registerActions');
 		
 		$this->assertTrue(elgg_action_exists('static_config/autodetect'));
 		$this->assertTrue(elgg_action_exists('static_config/custom_file'));
@@ -150,7 +129,7 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 	public function testRoutesRegistration() {
 		$this->assertFalse(elgg_route_exists('default:object:static_config_subtype'));
 		
-		$this->callReflectorMethod('registerRoutes');
+		$this->invokeInaccessableMethod($this->plugin, 'registerRoutes');
 		
 		$this->assertTrue(elgg_route_exists('default:object:static_config_subtype'));
 	}
@@ -160,7 +139,7 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 		
 		$this->assertFalse($widgets->validateType('static_config'));
 		
-		$this->callReflectorMethod('registerWidgets');
+		$this->invokeInaccessableMethod($this->plugin, 'registerWidgets');
 		
 		$this->assertTrue($widgets->validateType('static_config'));
 		$this->assertTrue($widgets->validateType('static_config', 'profile'));
@@ -176,7 +155,7 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 		$this->assertIsArray($ordered);
 		$this->assertCount(1, $ordered);
 		
-		$this->callReflectorMethod('registerEvents');
+		$this->invokeInaccessableMethod($this->plugin, 'registerEvents');
 		
 		$ordered = $events->getOrderedHandlers('prevent', 'something');
 		$this->assertIsArray($ordered);
@@ -192,7 +171,7 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 	public function testViewExtensionsRegistration() {
 		$views = _elgg_services()->views;
 		
-		$this->callReflectorMethod('registerViews');
+		$this->invokeInaccessableMethod($this->plugin, 'registerViews');
 		
 		$views->extendView('static_config/view', 'static_config/unextend');
 		
@@ -200,7 +179,7 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 		$this->assertIsArray($view_list);
 		$this->assertCount(2, $view_list);
 		
-		$this->callReflectorMethod('registerViewExtensions');
+		$this->invokeInaccessableMethod($this->plugin, 'registerViewExtensions');
 		
 		$view_list = $views->getViewList('static_config/view');
 		$this->assertIsArray($view_list);
@@ -218,7 +197,7 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 		
 		$group_tools->register('static_config_unregister', []);
 		
-		$this->callReflectorMethod('registerGroupTools');
+		$this->invokeInaccessableMethod($this->plugin, 'registerGroupTools');
 		
 		$this->assertEmpty($group_tools->get('static_config_unregister'));
 		$this->assertInstanceOf(\Elgg\Groups\Tool::class, $group_tools->get('static_config'));
@@ -228,14 +207,14 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 		$ajax = _elgg_services()->ajax;
 		$views = _elgg_services()->views;
 		
-		$this->callReflectorMethod('registerViews');
+		$this->invokeInaccessableMethod($this->plugin, 'registerViews');
 		
 		$ajax->registerView('static_config/view');
 		
 		$this->assertNotContains('static_config/viewoptions', $ajax->getViews());
 		$this->assertFalse($views->isCacheableView('static_config/viewoptions'));
 		
-		$this->callReflectorMethod('registerViewOptions');
+		$this->invokeInaccessableMethod($this->plugin, 'registerViewOptions');
 		
 		$this->assertNotContains('static_config/view', $ajax->getViews());
 		$this->assertContains('static_config/viewoptions', $ajax->getViews());
@@ -253,7 +232,7 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 		$this->assertArrayNotHasKey('create', $events['object']['static_config_subtype']);
 		$this->assertArrayHasKey('update', $events['object']['static_config_subtype']);
 		
-		$this->callReflectorMethod('registerNotifications');
+		$this->invokeInaccessableMethod($this->plugin, 'registerNotifications');
 		
 		$events = $notifications->getEvents();
 		$this->assertArrayHasKey('object', $events);

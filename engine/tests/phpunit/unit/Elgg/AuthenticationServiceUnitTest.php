@@ -27,17 +27,15 @@ class AuthenticationServiceUnitTest extends UnitTestCase {
 	}
 	
 	public function testRegisterHandler() {
-		$reflector = new \ReflectionClass($this->service);
-		$property = $reflector->getProperty('handlers');
-		$property->setAccessible(true);
+		$handlers = $this->getInaccessableProperty($this->service, 'handlers');
 		
-		$handlers = $property->getValue($this->service);
 		$this->assertIsArray($handlers);
 		$this->assertEmpty($handlers);
 		
 		$this->assertTrue($this->service->registerHandler('foo'));
 		
-		$handlers = $property->getValue($this->service);
+		$handlers = $this->getInaccessableProperty($this->service, 'handlers');
+		
 		$this->assertIsArray($handlers);
 		$this->assertArrayHasKey('user', $handlers);
 		$this->assertCount(1, $handlers['user']);
@@ -50,7 +48,8 @@ class AuthenticationServiceUnitTest extends UnitTestCase {
 		// reregister the same callback, should overrule
 		$this->assertTrue($this->service->registerHandler('foo', 'required'));
 		
-		$handlers = $property->getValue($this->service);
+		$handlers = $this->getInaccessableProperty($this->service, 'handlers');
+		
 		$this->assertIsArray($handlers);
 		$this->assertArrayHasKey('user', $handlers);
 		$this->assertCount(1, $handlers['user']);
@@ -62,22 +61,22 @@ class AuthenticationServiceUnitTest extends UnitTestCase {
 	}
 	
 	public function testUnregisterHandler() {
-		$reflector = new \ReflectionClass($this->service);
-		$property = $reflector->getProperty('handlers');
-		$property->setAccessible(true);
+		$handlers = $this->getInaccessableProperty($this->service, 'handlers');
 		
-		$handlers = $property->getValue($this->service);
 		$this->assertIsArray($handlers);
 		$this->assertEmpty($handlers);
 		
 		$this->assertTrue($this->service->registerHandler('foo'));
 		
-		$handlers = $property->getValue($this->service);
+		$handlers = $this->getInaccessableProperty($this->service, 'handlers');
+		
 		$this->assertArrayHasKey('user', $handlers);
 		$this->assertNotEmpty($handlers['user']);
 		
 		$this->assertNull($this->service->unregisterHandler('foo'));
-		$handlers = $property->getValue($this->service);
+		
+		$handlers = $this->getInaccessableProperty($this->service, 'handlers');
+		
 		$this->assertArrayHasKey('user', $handlers);
 		$this->assertEmpty($handlers['user']);
 	}
