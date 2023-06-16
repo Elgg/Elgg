@@ -78,11 +78,7 @@ abstract class BaseCacheUnitTestCase extends UnitTestCase {
 		$value = 'foobar';
 		$key = $this->makeKey();
 
-		$reflector = new \ReflectionClass($this->cache);
-		$property = $reflector->getProperty('pool');
-		$property->setAccessible(true);
-		
-		$pool = $property->getValue($this->cache);
+		$pool = $this->getInaccessableProperty($this->cache, 'pool');
 		
 		$this->assertNull($this->cache->load($key));
 
@@ -177,11 +173,7 @@ abstract class BaseCacheUnitTestCase extends UnitTestCase {
 			$cache1->clear();
 			$this->assertNull($cache1->load('foo1'));
 			
-			$reflector = new \ReflectionClass($cache2);
-			$property = $reflector->getProperty('pool');
-			$property->setAccessible(true);
-			
-			$pool = $property->getValue($cache2);
+			$pool = $this->getInaccessableProperty($cache2, 'pool');
 			
 			// need to detach to make sure the item is loaded from the backend and does not use static cache
 			$pool->detachAllItems();

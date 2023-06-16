@@ -101,13 +101,7 @@ class SystemCacheUnitTest extends UnitTestCase {
 		
 		elgg_save_system_cache('foo', 'bar', 1);
 		
-		$cache = elgg_get_system_cache();
-		
-		$reflector = new \ReflectionClass($cache);
-		$property = $reflector->getProperty('pool');
-		$property->setAccessible(true);
-		
-		$pool = $property->getValue($cache);
+		$pool = $this->getInaccessableProperty(elgg_get_system_cache(), 'pool');
 		
 		if ($pool instanceof ClusterPoolInterface) {
 			$this->markTestSkipped('Unable to test a cluster as it does not implement detachAllItems for all pool drivers');

@@ -8,7 +8,18 @@ use Elgg\IntegrationTestCase;
  * Elgg Test \ElggWidget
  */
 class WidgetsServiceIntegrationTest extends IntegrationTestCase {
-
+	
+	public function testHandlerRegistration() {
+		$this->assertFalse(elgg_is_widget_type('test_handler'));
+		elgg_unregister_widget_type('test_handler');
+		
+		elgg_register_widget_type(['id' => 'test_handler', 'context' => []]);
+		$this->assertTrue(elgg_is_widget_type('test_handler'));
+		
+		elgg_unregister_widget_type('test_handler');
+		$this->assertFalse(elgg_is_widget_type('test_handler'));
+	}
+	
 	/**
 	 * Tests if widget type is invalid if a required plugin is not active
 	 */

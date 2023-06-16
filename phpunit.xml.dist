@@ -29,9 +29,10 @@
     </exclude>
   </coverage>
   <php>
-    <!-- configure individual settings via env (copy this file to 'phpunix.xml' and fill in the values you need, it won't be committed to GitHub) -->
+    <!-- configure individual settings via env (copy this file to 'phpunit.xml' and fill in the values you need, it won't be committed to GitHub) -->
     <!--
         <env name="ELGG_DB_HOST" value="localhost"/>
+        <env name="ELGG_DB_PORT" value="3306"/>
         <env name="ELGG_DB_NAME" value=""/>
         <env name="ELGG_DB_USER" value=""/>
         <env name="ELGG_DB_PASS" value=""/>
