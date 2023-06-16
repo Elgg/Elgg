@@ -81,6 +81,13 @@ Available commands
     # Upgrade and execute all async upgrades
     vendor/bin/elgg-cli upgrade async [-v]
 
+    # List all upgrades
+    vendor/bin/elgg-cli upgrade:list
+
+    # Execute a specific upgrade
+    # <upgrades>: a space separated list of upgrade classes to execute (see the upgrade:list command for a list)
+    vendor/bin/elgg-cli upgrade:batch <upgrades>
+
     # List all, active or inactive plugins
     # STATUS = all | active | inactive
     vendor/bin/elgg-cli plugins:list [-s|--status STATUS]
