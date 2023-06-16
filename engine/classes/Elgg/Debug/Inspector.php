@@ -432,4 +432,13 @@ class Inspector {
 
 		return $tree;
 	}
+	
+	/**
+	 * Get the registered database CLI seeders
+	 *
+	 * @return string[]
+	 */
+	public function getSeeders(): array {
+		return _elgg_services()->seeder->getSeederClasses();
+	}
 }
