@@ -26,10 +26,6 @@ define('elgg', ['jquery'], function($) {
 	// iOS Hover Event Class Fix
 	$('.elgg-page').attr('onclick', 'return true');
 	
-	// Allow element to be highlighted using CSS if its id is found from the URL
-	var elementId = elgg.getSelectorFromUrlFragment(document.URL);
-	$(elementId).addClass('elgg-state-highlight');
-	
 	/**
 	 * Calls a confirm() and returns false if denied.
 	 *
