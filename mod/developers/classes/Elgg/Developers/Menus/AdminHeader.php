@@ -6,8 +6,6 @@ namespace Elgg\Developers\Menus;
  * Event callbacks for menus
  *
  * @since 5.0
- *
- * @internal
  */
 class AdminHeader {
 
@@ -19,7 +17,7 @@ class AdminHeader {
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
 	public static function register(\Elgg\Event $event) {
-		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
+		if (!elgg_is_admin_logged_in()) {
 			return;
 		}
 		
@@ -34,31 +32,25 @@ class AdminHeader {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'dev_settings',
 			'text' => elgg_echo('settings'),
-			'href' => 'admin/developers/settings',
+			'href' => 'admin/plugin_settings/developers',
 			'priority' => 10,
 			'parent_name' => 'develop',
 		]);
 	
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'error_log',
-			'text' => elgg_echo('admin:develop_tools:error_log'),
-			'href' => 'admin/develop_tools/error_log',
-			'parent_name' => 'develop',
-		]);
-		
+		if (elgg_get_plugin_setting('enable_error_log', 'developers')) {
+			$return[] = \ElggMenuItem::factory([
+				'name' => 'error_log',
+				'text' => elgg_echo('admin:develop_tools:error_log'),
+				'href' => 'admin/develop_tools/error_log',
+				'parent_name' => 'develop',
+			]);
+		}
+			
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'develop_tools:entity_explorer',
 			'text' => elgg_echo('admin:develop_tools:entity_explorer'),
 			'href' => 'admin/develop_tools/entity_explorer',
 			'parent_name' => 'develop',
-		]);
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'develop_tools:sandbox',
-			'text' => elgg_echo('admin:develop_tools:sandbox'),
-			'href' => 'theme_sandbox/intro',
-			'parent_name' => 'develop',
-			'target' => '_blank',
 		]);
 		
 		$return[] = \ElggMenuItem::factory([
@@ -88,7 +80,7 @@ class AdminHeader {
 	 *
 	 * @return array
 	 */
-	protected static function getInspectOptions() {
+	protected static function getInspectOptions(): array {
 		$options = [
 			'Actions' => elgg_echo('developers:inspect:actions'),
 			'Events' => elgg_echo('developers:inspect:events'),

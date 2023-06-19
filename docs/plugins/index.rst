@@ -37,4 +37,5 @@ The following plugins are also bundled with Elgg, but are not (yet) documented
 - search
 - system_log
 - tagcloud
+- theme_sandbox
 - web_services

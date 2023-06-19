@@ -9,7 +9,6 @@ return array(
 	'admin:develop_tools' => 'Tools',
 	
 	// menu
-	'admin:develop_tools:sandbox' => 'Theme Sandbox',
 	'admin:develop_tools:inspect' => 'Inspect',
 	'admin:inspect' => 'Inspect',
 	'admin:develop_tools:unit_tests' => 'Unit Tests',
@@ -38,19 +37,15 @@ return array(
 	'developers:help:show_modules' => "Streams loaded modules and values to your JavaScript console.",
 	'developers:label:wrap_views' => "Wrap views",
 	'developers:help:wrap_views' => "This wraps almost every view with HTML comments. Useful for finding the view creating particular HTML.
-									This can break non-HTML views in the default viewtype. See developers_wrap_views() for details.",
+									This can break non-HTML views in the default viewtype.",
 	'developers:label:log_events' => "Log events",
 	'developers:help:log_events' => "Write events to the log. Warning: there are many of these per page.",
-	'developers:label:show_gear' => "Use %s outside admin area",
-	'developers:help:show_gear' => "An icon on the bottom right of the viewport that gives admins access to developer settings and links.",
 	'developers:label:block_email' => "Block all outgoing e-mails",
 	'developers:help:block_email' => "You can block outgoing e-mail to regular users or to all users",
 	'developers:label:forward_email' => "Forward all outgoing e-mails to one address",
 	'developers:help:forward_email' => "All outgoing e-mails will be sent to the configured e-mail address",
 	'developers:label:enable_error_log' => "Enable error log",
 	'developers:help:enable_error_log' => "Maintain a separate log of errors and messages logged to the error_log() based on your trace level setting. The log is viewable via admin interface.",
-
-	'developers:label:submit' => "Save and flush caches",
 
 	'developers:block_email:forward' => 'Forward all e-mails',
 	'developers:block_email:users' => 'Only regular users',
@@ -111,29 +106,6 @@ return array(
 	'developers:log_queries' => "DB queries: %s",
 	'developers:boot_cache_rebuilt' => "The boot cache was rebuilt for this request",
 	'developers:elapsed_time' => "Elapsed time (s)",
-
-	// theme sandbox
-	'theme_sandbox:intro' => 'Introduction',
-	'theme_sandbox:breakout' => 'Break out of iframe',
-	'theme_sandbox:buttons' => 'Buttons',
-	'theme_sandbox:components' => 'Components',
-	'theme_sandbox:email' => 'Email',
-	'theme_sandbox:forms' => 'Forms',
-	'theme_sandbox:grid' => 'Grid',
-	'theme_sandbox:icons' => 'Icons',
-	'theme_sandbox:javascript' => 'JavaScript',
-	'theme_sandbox:layouts' => 'Layouts',
-	'theme_sandbox:modules' => 'Modules',
-	'theme_sandbox:navigation' => 'Navigation',
-	'theme_sandbox:typography' => 'Typography',
-
-	'theme_sandbox:icons:blurb' => 'Use <em>elgg_view_icon($name)</em> to display icons.',
-	
-	'theme_sandbox:test_email:button' => "Send Test Mail",
-	'theme_sandbox:test_email:success' => "Test mail sent to: %s",
-
-	// status messages
-	'developers:settings:success' => 'Settings saved and caches flushed',
 
 	'developers:amd' => 'AMD',
 
