@@ -100,6 +100,13 @@ html {
 	text-size-adjust: 100%;
 }
 
+/* Smooth scrolling IF user doesn't have a preference due to motion sensitivities */
+@media screen and (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
+}
+
 article,
 aside,
 figure,
@@ -127,6 +134,7 @@ pre {
 }
 
 body {
+	position: relative;
 	color: $(text-color-strong);
 	background: $(body-background-color);
 	font-size: 1rem;

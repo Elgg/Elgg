@@ -47,6 +47,14 @@ define('elgg', ['jquery'], function($) {
 	};
 
 	$(document).on('click', '*[data-confirm]', requiresConfirmation);
+	
+	document.addEventListener('scroll', function() {
+		if ($(document).scrollTop() > 1000) {
+			$('#elgg-scroll-to-top').show();
+		} else {
+			$('#elgg-scroll-to-top').hide();
+		}
+	}, { passive: true });
 
 	return elgg;
 });
