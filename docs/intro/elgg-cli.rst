@@ -50,6 +50,10 @@ Available commands
     # create: This is an argument, it'll force the creation of entities instead of building up to the limit
     vendor/bin/elgg-cli database:seed [-l|--limit LIMIT] [-t|--type TYPE] [--create_since DATE/TIME] [--create_until DATE/TIME] [--image_folder FOLDER] [create]
 
+    # List information about the seeded database content
+    # this will show the available seeders to be used with the database:seed and database:unseed command and the currently seeded amounts
+    vendor/bin/elgg-cli database:seeders
+
     # Remove seeded faked entities
     # type: (string) only unseed given entity type
     vendor/bin/elgg-cli database:unseed [-t|--type TYPE]
@@ -76,6 +80,13 @@ Available commands
 
     # Upgrade and execute all async upgrades
     vendor/bin/elgg-cli upgrade async [-v]
+
+    # List all upgrades
+    vendor/bin/elgg-cli upgrade:list
+
+    # Execute a specific upgrade
+    # <upgrades>: a space separated list of upgrade classes to execute (see the upgrade:list command for a list)
+    vendor/bin/elgg-cli upgrade:batch <upgrades>
 
     # List all, active or inactive plugins
     # STATUS = all | active | inactive

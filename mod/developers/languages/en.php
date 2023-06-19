@@ -81,6 +81,7 @@ return array(
 	'developers:inspect:events' => 'Events',
 	'developers:inspect:menus' => 'Menus',
 	'developers:inspect:priority' => 'Priority',
+	'developers:inspect:seeders' => 'Seeders',
 	'developers:inspect:simplecache' => 'Simple Cache',
 	'developers:inspect:routes' => 'Routes',
 	'developers:inspect:views' => 'Views',
