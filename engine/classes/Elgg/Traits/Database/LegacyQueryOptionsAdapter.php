@@ -644,9 +644,7 @@ trait LegacyQueryOptionsAdapter {
 				continue;
 			}
 
-			$pair = array_merge($defaults, $pair);
-
-			if (!$pair['relationship'] && !$pair['relationship_guid']) {
+			if (!$pair['relationship'] && !$pair['guid'] && !$pair['ids']) {
 				unset($options['relationship_pairs'][$key]);
 				continue;
 			}

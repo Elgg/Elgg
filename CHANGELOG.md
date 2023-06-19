@@ -1,3 +1,23 @@
+<a name="5.0.1"></a>
+### 5.0.1  (2023-06-19)
+
+#### Contributors
+
+* Jeroen Dalsem (6)
+* Jerôme Bakker (4)
+
+#### Bug Fixes
+
+* **cropper:** only register tab change fixes when cropper is ready ([33feb185](https://github.com/Elgg/Elgg/commit/33feb18571878b1c38cb7f5549efa0e463193904))
+* **db:**
+  * allow passing only relationship_ids to fetch relationships ([ad06ace9](https://github.com/Elgg/Elgg/commit/ad06ace9155f283b1dcaa4f09a2c8568be5c4cf6))
+  * querying relationships with only relationship_guid now works ([8bfe76e7](https://github.com/Elgg/Elgg/commit/8bfe76e72ae34245b42bbd156f37c13389c4f0a1))
+* **js:** use native scrollIntoView to respect element scroll margin ([9b1b1850](https://github.com/Elgg/Elgg/commit/9b1b1850d6bea942b8d307a9e6df5717b3669c99))
+* **registration:** send the new user notification to email ([b845f475](https://github.com/Elgg/Elgg/commit/b845f4753aa4bcc4ea3489bfa8a5e694bcc54d10))
+* **river:** always return a string for RiverItem->getView() function ([10437cf5](https://github.com/Elgg/Elgg/commit/10437cf5848058a7cacc3a9596fc3605f00b5366))
+* **seeder:** validate commentable and likeable capability during seeding ([fb151710](https://github.com/Elgg/Elgg/commit/fb151710b99b3f2ae5877fd598a8cb294be72cfc))
+
+
 <a name="5.0.0"></a>
 ## 5.0.0  (2023-06-01)
 
