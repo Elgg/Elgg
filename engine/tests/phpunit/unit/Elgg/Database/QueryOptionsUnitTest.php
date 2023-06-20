@@ -935,7 +935,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals(null, $pair->sort_by_direction);
 	}
 
-	public function testNormalizeReltionshipOptions() {
+	public function testNormalizeRelationshipOptions() {
 		$after = (new \DateTime())->modify('-1 day');
 		$before = (new \DateTime());
 
@@ -964,7 +964,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals($before, $pair->created_before);
 	}
 
-	public function testNormalizeReltionshipOptionsForInverseRelationship() {
+	public function testNormalizeRelationshipOptionsForInverseRelationship() {
 		$after = (new \DateTime())->modify('-1 day');
 		$before = (new \DateTime());
 
@@ -993,7 +993,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals($before, $pair->created_before);
 	}
 
-	public function testNormalizeReltionshipOnMultipleCalls() {
+	public function testNormalizeRelationshipOnMultipleCalls() {
 		$after = (new \DateTime())->modify('-1 day');
 		$before = (new \DateTime());
 
@@ -1008,6 +1008,20 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		]);
 
 		$this->assertEquals($options, $this->options->normalizeOptions($options));
+	}
+	
+	public function testIncompleteRelationshipPairOptions() {
+		$options = $this->options->normalizeOptions();
+		$this->assertEmpty($options['relationship_pairs']);
+		
+		$options = $this->options->normalizeOptions([
+			'inverse_relationship' => false,
+			'relationship_join_on' => 'guid',
+			'relationship_created_after' => (new \DateTime())->modify('-1 day'),
+			'relationship_created_before' => (new \DateTime()),
+		]);
+		
+		$this->assertEmpty($options['relationship_pairs']);
 	}
 
 	public function testNormalizeSelectClauses() {
