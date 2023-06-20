@@ -4,11 +4,6 @@ namespace Elgg\Integration;
 
 use Elgg\IntegrationTestCase;
 
-/**
- * Test configuration for site
- *
- * @group IntegrationTests
- */
 class ElggCoreConfigTest extends IntegrationTestCase {
 
 	public function testSetConfigWithTooLongName() {

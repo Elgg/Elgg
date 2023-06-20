@@ -2,9 +2,6 @@
 
 namespace Elgg\Forms;
 
-/**
- * @group UnitTests
- */
 class StickyFormsUnitTest extends \Elgg\UnitTestCase {
 
 	/**

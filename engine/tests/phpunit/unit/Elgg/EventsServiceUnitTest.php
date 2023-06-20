@@ -6,9 +6,6 @@ use Elgg\Helpers\EventsServiceTestInvokable;
 use Elgg\Helpers\TestEventHandler;
 use Psr\Log\LogLevel;
 
-/**
- * @group UnitTests
- */
 class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	public $counter = 0;

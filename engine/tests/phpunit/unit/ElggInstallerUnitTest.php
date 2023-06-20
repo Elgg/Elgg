@@ -5,9 +5,6 @@ use Elgg\Config;
 use Elgg\Mocks\Di\InternalContainer;
 use Elgg\Project\Paths;
 
-/**
- * @group Installer
- */
 class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 	/**

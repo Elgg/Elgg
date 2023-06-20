@@ -7,10 +7,6 @@ use Elgg\Database\Select;
 use Elgg\UnitTestCase;
 use ElggUser;
 
-/**
- * @group QueryBuilder
- * @group QueryBuilderWhere
- */
 class AccessWhereClauseUnitTest extends UnitTestCase {
 
 	/**

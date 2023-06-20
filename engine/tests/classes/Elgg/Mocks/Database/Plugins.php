@@ -7,9 +7,6 @@ use Elgg\Database\Plugins as DbPlugins;
 use ElggPlugin;
 use Elgg\Testing;
 
-/**
- * @group Plugins
- */
 class Plugins extends DbPlugins {
 
 	use Testing;

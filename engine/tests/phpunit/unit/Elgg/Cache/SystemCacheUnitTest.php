@@ -5,9 +5,6 @@ namespace Elgg\Cache;
 use Elgg\UnitTestCase;
 use Phpfastcache\Cluster\ClusterPoolInterface;
 
-/**
- * @group Cache
- */
 class SystemCacheUnitTest extends UnitTestCase {
 
 	/**
@@ -34,19 +31,6 @@ class SystemCacheUnitTest extends UnitTestCase {
 
 		$this->assertFalse(elgg_is_system_cache_enabled());
 
-	}
-
-	public function testCanInitSystemCache() {
-
-		_elgg_services()->serverCache->enable();
-		_elgg_services()->serverCache->reset();
-
-		_elgg_services()->serverCache->init();
-
-		$this->assertNotNull(_elgg_services()->serverCache->load('view_locations'));
-		$this->assertNotNull(_elgg_services()->serverCache->load('view_overrides'));
-
-		_elgg_services()->serverCache->reset();
 	}
 
 	public function testCanStoreValuesInSystemCache() {
@@ -117,13 +101,7 @@ class SystemCacheUnitTest extends UnitTestCase {
 		
 		elgg_save_system_cache('foo', 'bar', 1);
 		
-		$cache = elgg_get_system_cache();
-		
-		$reflector = new \ReflectionClass($cache);
-		$property = $reflector->getProperty('pool');
-		$property->setAccessible(true);
-		
-		$pool = $property->getValue($cache);
+		$pool = $this->getInaccessableProperty(elgg_get_system_cache(), 'pool');
 		
 		if ($pool instanceof ClusterPoolInterface) {
 			$this->markTestSkipped('Unable to test a cluster as it does not implement detachAllItems for all pool drivers');

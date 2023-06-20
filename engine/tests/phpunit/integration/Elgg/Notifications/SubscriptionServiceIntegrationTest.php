@@ -149,10 +149,6 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testFilterMutedNotificationsActor() {
-		$reflector = new \ReflectionClass($this->service);
-		$method = $reflector->getMethod('filterMutedNotifications');
-		$method->setAccessible(true);
-		
 		$user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
@@ -165,14 +161,10 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 			$user->guid => ['apples'],
 		];
 		
-		$this->assertEmpty($method->invoke($this->service, $subscriptions, $event));
+		$this->assertEmpty($this->invokeInaccessableMethod($this->service, 'filterMutedNotifications', $subscriptions, $event));
 	}
 	
 	public function testFilterMutedNotificationsOwner() {
-		$reflector = new \ReflectionClass($this->service);
-		$method = $reflector->getMethod('filterMutedNotifications');
-		$method->setAccessible(true);
-		
 		$user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
@@ -185,14 +177,10 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 			$user->guid => ['apples'],
 		];
 		
-		$this->assertEmpty($method->invoke($this->service, $subscriptions, $event));
+		$this->assertEmpty($this->invokeInaccessableMethod($this->service, 'filterMutedNotifications', $subscriptions, $event));
 	}
 	
 	public function testFilterMutedNotificationsContainer() {
-		$reflector = new \ReflectionClass($this->service);
-		$method = $reflector->getMethod('filterMutedNotifications');
-		$method->setAccessible(true);
-		
 		$user = $this->createUser();
 		
 		$event = $this->getSubscriptionNotificationEvent();
@@ -205,14 +193,10 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 			$user->guid => ['apples'],
 		];
 		
-		$this->assertEmpty($method->invoke($this->service, $subscriptions, $event));
+		$this->assertEmpty($this->invokeInaccessableMethod($this->service, 'filterMutedNotifications', $subscriptions, $event));
 	}
 	
 	public function testFilterMutedNotificationsEntity() {
-		$reflector = new \ReflectionClass($this->service);
-		$method = $reflector->getMethod('filterMutedNotifications');
-		$method->setAccessible(true);
-		
 		$user = $this->createUser();
 		$user = $this->createUser();
 		
@@ -226,14 +210,10 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 			$user->guid => ['apples'],
 		];
 		
-		$this->assertEmpty($method->invoke($this->service, $subscriptions, $event));
+		$this->assertEmpty($this->invokeInaccessableMethod($this->service, 'filterMutedNotifications', $subscriptions, $event));
 	}
 	
 	public function testFilterDelayedEmailSubscribers() {
-		$reflector = new \ReflectionClass($this->service);
-		$method = $reflector->getMethod('filterDelayedEmailSubscribers');
-		$method->setAccessible(true);
-		
 		$subscriptions = [
 			1 => ['apples'],
 			2 => ['email'],
@@ -252,7 +232,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 			6 => ['email', 'apples'],
 		];
 		
-		$this->assertEquals($expected, $method->invoke($this->service, $subscriptions));
+		$this->assertEquals($expected, $this->invokeInaccessableMethod($this->service, 'filterDelayedEmailSubscribers', $subscriptions));
 	}
 	
 	public function testFilterSubscriptionsUniqueMethods() {

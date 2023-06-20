@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @group ElggEntity
- * @group ElggObject
- * @group UnitTests
- * @group ElggData
- */
 class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
@@ -45,9 +39,6 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(['access_id' => ACCESS_PUBLIC], $object->getOriginalAttributes());
 	}
 
-	/**
-	 * @group current
-	 */
 	public function testCanSaveNewObject() {
 
 		$subtype = 'test_subtype';

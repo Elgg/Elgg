@@ -2,9 +2,6 @@
 
 namespace Elgg;
 
-/**
- * @group UnitTests
- */
 class ImageServiceUnitTest extends \Elgg\UnitTestCase {
 	
 	private $image_service;

@@ -2,9 +2,6 @@
 
 namespace Elgg\Http;
 
-/**
- * @group UnitTests
- */
 class InputUnitTest extends \Elgg\UnitTestCase {
 
 	public function testGetInputDefaultsToProvidedDefaultValue() {

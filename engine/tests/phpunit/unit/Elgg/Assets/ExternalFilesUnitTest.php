@@ -2,9 +2,6 @@
 
 namespace Elgg\Assets;
 
-/**
- * @group UnitTests
- */
 class ExternalFilesUnitTest extends \Elgg\UnitTestCase {
 	
 	/**

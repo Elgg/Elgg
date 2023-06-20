@@ -2,9 +2,6 @@
 
 namespace Elgg\Cache;
 
-/**
- * @group Cache
- */
 class FileSystemCacheUnitTest extends BaseCacheUnitTestCase {
 
 	function createCache(string $namespace = 'filesystem_test') {

@@ -5,7 +5,7 @@ namespace Elgg\WebServices;
 use Elgg\Collections\CollectionItemInterface;
 use Elgg\Exceptions\DomainException;
 use Elgg\Exceptions\InvalidArgumentException;
-use Elgg\IntegrationTestCase;
+use Elgg\Plugins\IntegrationTestCase;
 
 class ApiMethodIntegrationTest extends IntegrationTestCase {
 

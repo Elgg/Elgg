@@ -48,6 +48,12 @@ return [
 	'plugins/settings/remove' => ['access' => 'admin'],
 	'plugins/settings/save' => ['access' => 'admin'],
 	'plugins/usersettings/save' => [],
+	'register' => [
+		'access' => 'logged_out',
+		'middleware' => [
+			\Elgg\Router\Middleware\RegistrationAllowedGatekeeper::class,
+		],
+	],
 	'river/delete' => [],
 	'settings/notifications' => [],
 	'settings/notifications/subscriptions' => [],

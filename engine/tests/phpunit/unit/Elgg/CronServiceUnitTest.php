@@ -4,9 +4,6 @@ namespace Elgg;
 
 use Elgg\Exceptions\CronException;
 
-/**
- * @group Cron
- */
 class CronServiceUnitTest extends UnitTestCase {
 
 	/**

@@ -2,11 +2,9 @@
 
 namespace Elgg\Pages;
 
-/**
- * @group Plugins
- * @group Pages
- */
-class GroupToolContainerLogicIntegrationTest extends \Elgg\Plugins\GroupToolContainerLogicIntegrationTest {
+use Elgg\Plugins\GroupToolContainerLogicIntegrationTestCase;
+
+class GroupToolContainerLogicIntegrationTest extends GroupToolContainerLogicIntegrationTestCase {
 
 	/**
 	 * {@inheritDoc}

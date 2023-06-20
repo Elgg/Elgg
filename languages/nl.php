@@ -293,7 +293,7 @@ return array(
  */
 	'river' => "River",
 	'river:user:friend' => "%s is nu bevriend met %s",
-	'river:site:site:join' => "%sis lid geworden van de site",
+	'river:site:site:join' => "%s is lid geworden van de site",
 	'river:update:user:avatar' => '%s heeft een nieuwe profielfoto',
 	'river:posted:generic' => '%s plaatste',
 	'river:ingroup' => 'in de groep %s',
@@ -1190,6 +1190,8 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	
 	'list:out_of_bounds' => "Je bent op een deel van de lijst gekomen zonder content, echter is er wel content beschikbaar.",
 	'list:out_of_bounds:link' => "Terug naar de eerste pagina",
+	'list:error:getter:user' => 'Fout opgetreden tijdens het ophalen van de content',
+	'list:error:getter:admin' => "De getter '%s' resulteerde in een '%s', echter de viewer '%s' vereist een array",
 
 	'link:text' => 'bekijk link',
 

@@ -5,11 +5,6 @@ namespace Elgg\Integration;
 use Elgg\IntegrationTestCase;
 use ElggGroup;
 
-/**
- * Elgg Test \ElggGroup
- *
- * @group IntegrationTests
- */
 class ElggCoreGroupTest extends IntegrationTestCase {
 	/**
 	 * @var ElggGroup

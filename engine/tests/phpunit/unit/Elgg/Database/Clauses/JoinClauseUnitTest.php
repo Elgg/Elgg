@@ -7,9 +7,6 @@ use Elgg\Database\Select;
 use Elgg\Helpers\Database\Clauses\CallableJoin;
 use Elgg\UnitTestCase;
 
-/**
- * @group QueryBuilder
- */
 class JoinClauseUnitTest extends UnitTestCase {
 
 	/**

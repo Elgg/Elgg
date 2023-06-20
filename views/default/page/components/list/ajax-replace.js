@@ -32,9 +32,7 @@ define(['jquery', 'elgg/Ajax', 'elgg/system_messages'], function ($, Ajax, syste
 					$target_list.trigger('change');
 					
 					// scroll to top of new content
-					$('html, body').animate({
-						scrollTop: $(id_selector).offset().top
-					}, 500);
+					$(id_selector)[0].scrollIntoView({behavior: 'smooth'});
 				} else {
 					require(['elgg/i18n'], function(i18n) {
 						system_messages.error(i18n.echo('ajax:pagination:no_data'));

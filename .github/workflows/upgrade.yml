@@ -40,7 +40,7 @@ jobs:
 
       - name: Get Composer Cache Directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> ${GITHUB_OUTPUT}
         
       - name: Restore Composer Cache for 2.3
         uses: actions/cache@v3
@@ -77,7 +77,10 @@ jobs:
         
       - name: Elgg CLI upgrade to 3.3
         run: php ./elgg-cli upgrade async --verbose
- 
+
+      - name: Enable Elgg 3.3 plugins
+        run: php -f ./.scripts/ci/enable_plugins.php
+
       - name: Install Composer v2
         # make sure to remove the global fxp/composer-asset-plugin package as it's no longer needed
         # also remove the elgg/login_as plugin because after the Composer update it has a hard time removing it
@@ -98,7 +101,10 @@ jobs:
         
       - name: Elgg CLI upgrade to 4.3
         run: php ./elgg-cli upgrade async --verbose
-        
+
+      - name: Enable Elgg 4.3 plugins
+        run: php -f ./.scripts/ci/enable_plugins.php
+
       - name: Update PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -124,7 +130,12 @@ jobs:
       
       - name: Elgg CLI upgrade
         run: php ./elgg-cli upgrade async --verbose
-      
+
+      - name: Activate current plugins
+        run: |
+          php ./elgg-cli plugins:activate activity blog bookmarks ckeditor dashboard developers discussions externalpages file friends friends_collections garbagecollector groups invitefriends likes members messageboard messages pages profile reportedcontent search site_notifications system_log tagcloud thewire uservalidationbyemail web_services custom_index:last --no-ansi
+          php ./elgg-cli plugins:list --no-ansi
+
       - name: Start Elgg webserver
         run: |
           php -S localhost:8888 -c ./.scripts/ci/local_php_server.ini index.php &
@@ -132,14 +143,19 @@ jobs:
           sleep 3
           # check if the webserver is running
           curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg CI Site</title>"
-      
-      - name: Run PHPUnit
-        run: |
-          ./vendor/bin/phpunit --testsuite unit
-          ./vendor/bin/phpunit --testsuite integration
-          ./vendor/bin/phpunit --testsuite plugins-unit
-          ./vendor/bin/phpunit --testsuite plugins-integration
-      
+
+      - name: Run PHPUnit - Core unit
+        run: ./vendor/bin/phpunit --testsuite unit
+
+      - name: Run PHPUnit - Core integration
+        run: ./vendor/bin/phpunit --testsuite integration
+
+      - name: Run PHPUnit - Plugins unit
+        run: ./vendor/bin/phpunit --testsuite plugins-unit
+
+      - name: Run PHPUnit - Plugins integration
+        run: ./vendor/bin/phpunit --testsuite plugins-integration
+
       - name: Unseed Elgg database
         if: ${{ always() }}
         run: php ./elgg-cli database:unseed -vv

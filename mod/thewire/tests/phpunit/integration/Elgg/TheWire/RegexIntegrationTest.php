@@ -2,7 +2,7 @@
 
 namespace Elgg\TheWire;
 
-use Elgg\IntegrationTestCase;
+use Elgg\Plugins\IntegrationTestCase;
 
 class RegexIntegrationTest extends IntegrationTestCase {
 
@@ -25,7 +25,7 @@ class RegexIntegrationTest extends IntegrationTestCase {
 	 * @return string
 	 */
 	protected function getHashtagLink($tag) {
-		$url = elgg_generate_url('collection:object:thewire:tag', [
+		$url = (string) elgg_generate_url('collection:object:thewire:tag', [
 			'tag' => $tag,
 		]);
 		return elgg_view_url($url, "#{$tag}");

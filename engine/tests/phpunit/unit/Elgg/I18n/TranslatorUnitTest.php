@@ -4,10 +4,6 @@ namespace Elgg\I18n;
 
 use Psr\Log\LogLevel;
 
-/**
- * @group Translator
- * @group UnitTests
- */
 class TranslatorUnitTest extends \Elgg\UnitTestCase {
 
 	public $key = '__elgg_php_unit:test_key';

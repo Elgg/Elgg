@@ -4,10 +4,6 @@ namespace Elgg\Search;
 
 use Elgg\UnitTestCase;
 
-/**
- * @group Search
- * @group SearchPlugin
- */
 class SearchPluginTest extends UnitTestCase {
 
 	public function up() {

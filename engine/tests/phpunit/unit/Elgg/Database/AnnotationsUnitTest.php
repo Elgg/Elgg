@@ -11,11 +11,6 @@ use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Exceptions\DomainException;
 use Elgg\UnitTestCase;
 
-/**
- * @group Annotations
- * @group QueryBuilder
- * @group Repository
- */
 class AnnotationsUnitTest extends UnitTestCase {
 
 	public function testCanExecuteCount() {
@@ -743,9 +738,6 @@ class AnnotationsUnitTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	/**
-	 * @group RepositoryPairs
-	 */
 	public function testCanExecuteQueryWithRelationshipPairs() {
 
 		$select = Select::fromTable('annotations', 'n_table');

@@ -2,10 +2,6 @@
 
 namespace Elgg\lib\elgglib;
 
-/**
- * @group Elgglib
- * @group UnitTests
- */
 class ElggExtractClassUnitTest extends \Elgg\UnitTestCase {
 
 	function testCanExtract() {

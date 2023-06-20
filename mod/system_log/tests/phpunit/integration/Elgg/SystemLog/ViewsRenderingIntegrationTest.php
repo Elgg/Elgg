@@ -4,12 +4,6 @@ namespace Elgg\SystemLog;
 
 use Elgg\Views\ViewRenderingIntegrationTestCase;
 
-/**
- * @group ViewRendering
- * @group ViewsService
- * @group Plugins
- * @group SystemLogPlugin
- */
 class ViewsRenderingIntegrationTest extends ViewRenderingIntegrationTestCase {
 
 	public function up() {

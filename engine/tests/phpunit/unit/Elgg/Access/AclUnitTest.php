@@ -2,9 +2,6 @@
 
 namespace Elgg\Access;
 
-/**
- * @group UnitTests
- */
 class AclUnitTest extends \Elgg\UnitTestCase {
 
 	/**

@@ -4,9 +4,6 @@ namespace Elgg\Database;
 
 use Elgg\Exceptions\LengthException;
 
-/**
- * @group UnitTests
- */
 class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 
 	/**

@@ -5,9 +5,6 @@ namespace Elgg\Amd;
 use Elgg\EventsService;
 use Elgg\Exceptions\InvalidArgumentException;
 
-/**
- * @group UnitTests
- */
 class ConfigUnitTest extends \Elgg\UnitTestCase {
 
 	/**

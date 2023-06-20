@@ -4,7 +4,7 @@ namespace Elgg;
 
 use Elgg\Http\ResponseBuilder;
 
-abstract class ActionResponseTestCase extends IntegrationTestCase {
+abstract class ActionResponseTestCase extends \Elgg\Plugins\IntegrationTestCase {
 
 	public function up() {
 		$this->createApplication([

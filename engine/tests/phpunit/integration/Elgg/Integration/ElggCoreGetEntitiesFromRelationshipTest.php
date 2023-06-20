@@ -2,14 +2,6 @@
 
 namespace Elgg\Integration;
 
-/**
- * Test elgg_get_entities() with relationship options and
- * elgg_get_entities_from_relationship_count()
- *
- * @group IntegrationTests
- * @group Entities
- * @group EntityRelationships
- */
 class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesIntegrationTestCase {
 
 	// Make sure metadata doesn't affect getting entities by relationship.  See #2274

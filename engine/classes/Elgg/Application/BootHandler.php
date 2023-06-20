@@ -236,7 +236,12 @@ class BootHandler {
 				$handler = elgg_extract('filename', $action_spec) ?: "{$root_path}/actions/{$action}.php";
 			}
 			
-			$this->app->internal_services->actions->register($action, $handler, $access);
+			// unset handled action specs, pass the rest to the action service
+			unset($action_spec['access']);
+			unset($action_spec['controller']);
+			unset($action_spec['filename']);
+			
+			$this->app->internal_services->actions->register($action, $handler, $access, $action_spec);
 		}
 	}
 }

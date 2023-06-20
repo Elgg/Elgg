@@ -7,9 +7,6 @@ use Elgg\Database\Select;
 use Elgg\Exceptions\DomainException;
 use Elgg\UnitTestCase;
 
-/**
- * @group QueryBuilder
- */
 class EntitySortByClauseUnitTest extends UnitTestCase {
 
 	/**

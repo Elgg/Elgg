@@ -5,8 +5,6 @@ namespace Elgg\Integration;
 /**
  * Elgg Regression Tests -- GitHub Bugfixes
  * Any bugfixes from GitHub that require testing belong here.
- *
- * @group IntegrationTests
  */
 class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 

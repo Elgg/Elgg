@@ -5,14 +5,6 @@ namespace Elgg\Integration;
 use Elgg\Cache\MetadataCache;
 use Elgg\IntegrationTestCase;
 
-/**
- * Elgg Test metadata cache
- *
- * @group IntegrationTests
- * @group Metadata
- * @group MetadataCache
- * @group Cache
- */
 class ElggCoreMetadataCacheTest extends IntegrationTestCase {
 
 	/**

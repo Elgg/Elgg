@@ -810,6 +810,11 @@ class ViewsService {
 	 * @return void
 	 */
 	public function cacheConfiguration(SystemCache $cache): void {
+		if (empty($this->locations)) {
+			$cache->delete('view_locations');
+			return;
+		}
+		
 		$cache->save('view_locations', [
 			'version' => '2.0',
 			'locations' => $this->locations,

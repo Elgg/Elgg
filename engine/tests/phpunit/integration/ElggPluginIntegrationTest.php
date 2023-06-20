@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @group Plugins
- * @group ElggPlugin
- */
 class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 
 	/**

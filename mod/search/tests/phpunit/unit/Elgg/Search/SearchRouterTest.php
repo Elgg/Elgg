@@ -3,16 +3,9 @@
 namespace Elgg\Search;
 
 use Elgg\BaseTestCase;
-use Elgg\Plugins\PluginTesting;
 use Elgg\UnitTestCase;
 
-/**
- * @group SearchPlugin
- * @group Search
- */
 class SearchRouterTest extends UnitTestCase {
-
-	use PluginTesting;
 
 	public function up() {
 		$this->startPlugin();

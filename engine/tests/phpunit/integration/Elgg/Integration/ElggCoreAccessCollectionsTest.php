@@ -4,13 +4,6 @@ namespace Elgg\Integration;
 
 use Elgg\IntegrationTestCase;
 
-/**
- * Access Collections tests
- *
- * @group IntegrationTests
- * @group AccessCollections
- * @group Cache
- */
 class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 	
 	/**

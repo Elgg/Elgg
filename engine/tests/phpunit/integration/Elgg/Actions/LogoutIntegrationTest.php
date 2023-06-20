@@ -8,11 +8,6 @@ use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Elgg\Values;
 
-/**
- * @group ActionsService
- * @group AccountActions
- * @group Logout
- */
 class LogoutIntegrationTest extends ActionResponseTestCase {
 
 	public function up() {

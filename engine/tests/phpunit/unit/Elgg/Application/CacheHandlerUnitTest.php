@@ -2,9 +2,6 @@
 
 namespace Elgg\Application;
 
-/**
- * @group UnitTests
- */
 class CacheHandlerUnitTest extends \Elgg\UnitTestCase {
 
 	/**

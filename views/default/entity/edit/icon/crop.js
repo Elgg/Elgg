@@ -17,7 +17,8 @@ define(['jquery', 'jquery-cropper/jquery-cropper'], function($) {
 			
 			$messagesWrapper = $fieldWrapper.siblings('.elgg-entity-edit-icon-crop-messages');
 			
-			$field.on('change', this.replaceImg);
+			// we need to register on document to work in the correct order with change event from input/file.js
+			$(document).on('change', selector, this.replaceImg);
 			
 			var $remove = $fieldWrapper.siblings('.elgg-entity-edit-icon-remove').find('input[type="checkbox"]');
 			$remove.on('change', this.checkRemoveState);
@@ -26,25 +27,27 @@ define(['jquery', 'jquery-cropper/jquery-cropper'], function($) {
 				this.reload();
 			}
 			
-			// enable/disable on tab changes
-			if ($field.not(':visible')) {
-				$field.data('resetNeeded', true);
-			}
-			
-			$field.parents('.elgg-tabs-component').find(' > .elgg-body > .elgg-menu-navigation-tabs-container > ul > li').on('open', function() {
-				if ($field.is(':visible')) {
-					$img.cropper('enable');
-					$img.cropper('resize');
-					
-					if ($field.data('resetNeeded')) {
-						$img.cropper('reset');
-						
-						// only need a reset once
-						$field.data('resetNeeded', false);
-					}
-				} else {
-					$img.cropper('disable');
+			$img.on('ready', function() {
+				// enable/disable on tab changes
+				if ($field.not(':visible')) {
+					$field.data('resetNeeded', true);
 				}
+			
+				$field.parents('.elgg-tabs-component').find(' > .elgg-body > .elgg-menu-navigation-tabs-container > ul > li').on('open', function() {
+					if ($field.is(':visible')) {
+						$img.cropper('enable');
+						$img.cropper('resize');
+						
+						if ($field.data('resetNeeded')) {
+							$img.cropper('reset');
+							
+							// only need a reset once
+							$field.data('resetNeeded', false);
+						}
+					} else {
+						$img.cropper('disable');
+					}
+				});
 			});
 		};
 	

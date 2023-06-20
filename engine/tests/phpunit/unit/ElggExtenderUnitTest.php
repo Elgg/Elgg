@@ -2,9 +2,6 @@
 
 use Elgg\Helpers\ElggExtenderTestObject;
 
-/**
- * @group UnitTests
- */
 class ElggExtenderUnitTest extends \Elgg\UnitTestCase {
 
 	public function testSettingAndGettingAttribute() {

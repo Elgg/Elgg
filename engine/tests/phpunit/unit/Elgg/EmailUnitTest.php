@@ -5,10 +5,6 @@ namespace Elgg;
 use Elgg\Email\Address;
 use Laminas\Mime\Mime;
 
-/**
- * @group EmailService
- * @group UnitTests
- */
 class EmailUnitTest extends UnitTestCase {
 
 	public function up() {

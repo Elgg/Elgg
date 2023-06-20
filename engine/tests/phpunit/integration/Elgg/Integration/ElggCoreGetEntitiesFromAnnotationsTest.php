@@ -5,13 +5,6 @@ namespace Elgg\Integration;
 use Elgg\Database\Clauses\WhereClause;
 use Elgg\Database\Update;
 
-/**
- * Test elgg_get_entities() with annotation options
- *
- * @group IntegrationTests
- * @group Entities
- * @group EntityAnnotations
- */
 class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesIntegrationTestCase {
 
 	/**
@@ -314,8 +307,6 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesIntegrat
 
 	/**
 	 * Get entities ordered by various MySQL calculations on their annotations constrained by a where clause
-	 *
-	 * @group  AnnotationCalculation
 	 */
 	public function testElggGetEntitiesFromAnnotationsCalculateConstrainedByWhere() {
 

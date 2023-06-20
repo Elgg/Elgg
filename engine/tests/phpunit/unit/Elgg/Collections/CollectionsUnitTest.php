@@ -6,9 +6,6 @@ use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Helpers\Collections\TestItem;
 use Elgg\UnitTestCase;
 
-/**
- * @group Collections
- */
 class CollectionsUnitTest extends UnitTestCase {
 
 	public function testCanConstructEmptyCollection() {

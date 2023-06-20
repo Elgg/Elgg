@@ -6,10 +6,6 @@ use ElggUpgrade;
 use Elgg\Helpers\Upgrade\TestBatch;
 use Elgg\Helpers\Upgrade\NonRequiredTestBatch;
 
-/**
- * @group UpgradeService
- * @group UnitTests
- */
 class LocatorUnitTest extends \Elgg\UnitTestCase {
 
 	/**

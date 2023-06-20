@@ -4,9 +4,6 @@ namespace Elgg\I18n;
 
 use Elgg\UnitTestCase;
 
-/**
- * @group UnitTests
- */
 class DateTimeUnitTest extends UnitTestCase {
 
 	/**

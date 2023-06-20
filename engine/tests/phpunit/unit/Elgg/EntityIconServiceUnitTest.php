@@ -6,11 +6,6 @@ use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\UnexpectedValueException;
 use Elgg\Project\Paths;
 
-/**
- * @group EntityIconService
- * @group UnitTests
- * @group IconService
- */
 class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 	/**
@@ -511,9 +506,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->markTestIncomplete();
 	}
 
-	/**
-	 * @group IconService
-	 */
 	public function testCanPrepareInputFile() {
 
 		$file = new \ElggFile();
@@ -574,9 +566,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($size[0] < $size[1]);
 	}
 
-	/**
-	 * @group IconService
-	 */
 	public function testCanSaveIconsWithAnEventHandler() {
 
 		$file = new \ElggFile();
@@ -622,9 +611,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($service->hasIcon($this->entity, 'topbar'));
 	}
 
-	/**
-	 * @group IconService
-	 */
 	public function testCanDeleteIconsWithAnEventHandler() {
 
 		$file = new \ElggFile();
@@ -662,9 +648,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($service->hasIcon($this->entity, 'topbar'));
 	}
 
-	/**
-	 * @group IconService
-	 */
 	public function testCanListenToIconsSavedEvent() {
 
 		$file = new \ElggFile();
@@ -706,7 +689,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @group IconService
 	 * @dataProvider iconDimensionsProvider
 	 */
 	public function testIconDimensionsAfterResize($sw, $sh, $size, $ew, $eh, $crop, $cw = null, $ch = null) {

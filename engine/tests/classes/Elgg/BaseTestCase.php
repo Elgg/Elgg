@@ -331,5 +331,38 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 		parent::assertEquals($expected, $actual, $message, $delta, $maxDepth, $canonicalize, $ignoreCase);
 	}
-
+	
+	/**
+	 * Invokes an inaccessable method
+	 *
+	 * @param mixed  $argument object or class to invoke on
+	 * @param string $method   method to invoke
+	 * @param mixed  ...$args  zero or more arguments to pass to the method
+	 *
+	 * @return mixed
+	 */
+	protected function invokeInaccessableMethod($argument, string $method, ...$args) {
+		$reflector = new \ReflectionClass($argument);
+		
+		$inaccessable_method = $reflector->getMethod($method);
+		$inaccessable_method->setAccessible(true);
+		
+		return $inaccessable_method->invoke($argument, ...$args);
+	}
+	
+	/**
+	 * Retrieves an inaccessable property
+	 *
+	 * @param mixed  $argument object or class to get the property from
+	 * @param string $property name of the property
+	 *
+	 * @return mixed
+	 */
+	protected function getInaccessableProperty($argument, string $property) {
+		$reflector = new \ReflectionClass($argument);
+		$property = $reflector->getProperty($property);
+		$property->setAccessible(true);
+		
+		return $property->getValue($argument);
+	}
 }

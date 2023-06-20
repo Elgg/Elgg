@@ -3,9 +3,6 @@
 /**
  * Many methods for \ElggSession pass through to the storage class so we
  * don't test them here.
- *
- * @group Session
- * @group UnitTests
  */
 class ElggSessionUnitTest extends \Elgg\UnitTestCase {
 

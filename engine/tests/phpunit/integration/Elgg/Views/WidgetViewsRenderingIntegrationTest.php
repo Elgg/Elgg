@@ -2,11 +2,6 @@
 
 namespace Elgg\Views;
 
-/**
- * @group ViewRendering
- * @group ViewsService
- * @group Widgets
- */
 class WidgetViewsRenderingIntegrationTest extends ViewRenderingIntegrationTestCase {
 
 	public function getViewNames() {

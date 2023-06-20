@@ -64,7 +64,7 @@ try {
 		'object' => $new_user,
 		'password' => $password,
 		'apply_muting' => false,
-	]);
+	], ['email']);
 
 	return elgg_ok_response('', elgg_echo('adduser:ok', [elgg_get_site_entity()->getDisplayName()]));
 } catch (RegistrationException $r) {

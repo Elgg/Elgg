@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @group UnitTests
- * @group ElggData
- */
 class ElggGroupUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanConstructWithoutArguments() {

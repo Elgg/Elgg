@@ -21,11 +21,23 @@ trait PluginsHelper {
 	 * @return bool
 	 * @throws UnexpectedValueException
 	 */
-	public function activate($id, $force = false) {
+	public function activate(string $id, bool $force = false): bool {
+		$split = explode(':', $id);
 
-		$plugin = elgg_get_plugin_from_id($id);
+		$plugin_id = $split[0] ?? $id;
+		$priority = $split[1] ?? null;
+
+		$plugin = elgg_get_plugin_from_id($plugin_id);
 		if (!$plugin instanceof \ElggPlugin) {
-			throw new UnexpectedValueException(elgg_echo('PluginException:InvalidID', [$id]));
+			throw new UnexpectedValueException(elgg_echo('PluginException:InvalidID', [$plugin_id]));
+		}
+		
+		if ($plugin->isActive()) {
+			return true;
+		}
+		
+		if (isset($priority)) {
+			$plugin->setPriority($priority);
 		}
 
 		if (!$force) {
@@ -36,12 +48,12 @@ trait PluginsHelper {
 			}
 		}
 
-		$conflicts = $this->getConflicts($id);
+		$conflicts = $this->getConflicts($plugin_id);
 		foreach ($conflicts as $conflict) {
 			$this->deactivate($conflict, true);
 		}
 
-		$requires = $this->getRequires($id);
+		$requires = $this->getRequires($plugin_id);
 		foreach ($requires as $require) {
 			$this->activate($require, true);
 		}
@@ -62,10 +74,14 @@ trait PluginsHelper {
 	 * @return bool
 	 * @throws UnexpectedValueException
 	 */
-	public function deactivate($id, $force = false) {
+	public function deactivate(string $id, bool $force = false): bool {
 		$plugin = elgg_get_plugin_from_id($id);
 		if (!$plugin instanceof \ElggPlugin) {
 			throw new UnexpectedValueException(elgg_echo('PluginException:InvalidID', [$id]));
+		}
+
+		if (!$plugin->isActive()) {
+			return true;
 		}
 
 		if (!$force) {
@@ -95,7 +111,7 @@ trait PluginsHelper {
 	 *
 	 * @return string[]
 	 */
-	protected function getDependents($id) {
+	protected function getDependents(string $id): array {
 		$dependents = [];
 
 		$active_plugins = elgg_get_plugins();
@@ -105,7 +121,7 @@ trait PluginsHelper {
 			if (!array_key_exists($id, $dependencies)) {
 				continue;
 			}
-				
+			
 			if (elgg_extract('must_be_active', $dependencies[$id], true)) {
 				$dependents[] = $plugin->getID();
 			}
@@ -121,7 +137,7 @@ trait PluginsHelper {
 	 *
 	 * @return string[]
 	 */
-	public function getConflicts($id) {
+	public function getConflicts(string $id): array {
 		$result = [];
 
 		$plugin = elgg_get_plugin_from_id($id);
@@ -144,7 +160,7 @@ trait PluginsHelper {
 	 *
 	 * @return string[]
 	 */
-	public function getRequires($id) {
+	public function getRequires(string $id): array {
 		$result = [];
 
 		$plugin = elgg_get_plugin_from_id($id);

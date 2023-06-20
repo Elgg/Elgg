@@ -4,9 +4,6 @@ namespace Elgg\Integration;
 
 use Elgg\IntegrationTestCase;
 
-/**
- * @group IntegrationTests
- */
 class ElggRelationshipTest extends IntegrationTestCase {
 
 	/**

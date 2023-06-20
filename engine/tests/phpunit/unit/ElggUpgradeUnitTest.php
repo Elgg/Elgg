@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @group UpgradeService
- * @group UnitTests
- */
 class ElggUpgradeUnitTest extends \Elgg\UnitTestCase {
 
 	/**

@@ -488,9 +488,6 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 
 	/**
 	 * @see https://github.com/Elgg/Elgg/pull/11998
-	 *
-	 * @group AccessSQL
-	 * @group Access
 	 */
 	public function testDatabaseRowContainsCorrectParametersWhenJoined() {
 

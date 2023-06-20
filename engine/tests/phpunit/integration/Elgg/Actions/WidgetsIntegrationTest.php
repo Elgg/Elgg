@@ -6,10 +6,6 @@ use Elgg\ActionResponseTestCase;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 
-/**
- * @group ActionsService
- * @group WidgetActions
- */
 class WidgetsIntegrationTest extends ActionResponseTestCase {
 	/**
 	 * @var \ElggWidget

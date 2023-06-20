@@ -4,10 +4,6 @@ namespace Elgg\I18n;
 
 use Elgg\IntegrationTestCase;
 
-/**
- * @group IntegrationTests
- * @group Translator
- */
 class TranslatorIntegrationTest extends IntegrationTestCase {
 
 	/**

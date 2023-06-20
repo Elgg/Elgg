@@ -14,11 +14,6 @@ use Elgg\Project\Paths;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @group HttpService
- * @group ActionsService
- * @group UnitTests
- */
 class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	use MessageTesting;
@@ -381,9 +376,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->router->getResponse($request);
 	}
 
-	/**
-	 * @group AjaxService
-	 */
 	public function testCanDecodeJson() {
 		$data = ['foo' => 'bar'];
 		$json = json_encode($data);
@@ -448,7 +440,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * This test will implement the flow without triggering ajax forward event
-	 * @group AjaxService
 	 */
 	public function testCanRespondToAjax2Request() {
 
@@ -485,9 +476,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($output, $response->getContent());
 	}
 
-	/**
-	 * @group AjaxService
-	 */
 	public function testCanFilterAjax2Response() {
 
 		$request = $this->prepareHttpRequest('action/output3', 'POST', [], 2);
@@ -537,9 +525,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($output, $response->getContent());
 	}
 
-	/**
-	 * @group AjaxService
-	 */
 	public function testCanCancelAjax2Response() {
 
 		$request = $this->prepareHttpRequest('action/output3', 'POST', [], 2);
@@ -572,9 +557,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($output, $response->getContent());
 	}
 
-	/**
-	 * @group AjaxService
-	 */
 	public function testThrowsExceptionForInvalidAjax2ResponseFilter() {
 
 		$request = $this->prepareHttpRequest('action/output3', 'POST', [], 2);
@@ -642,9 +624,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($output, $response->getContent());
 	}
 
-	/**
-	 * @group AjaxService
-	 */
 	public function testCanRespondWithErrorToAjax2Request() {
 
 		$request = $this->prepareHttpRequest('action/output3', 'POST', [], 2);
@@ -827,9 +806,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		ob_start();
 	}
 
-	/**
-	 * @group AjaxService
-	 */
 	public function testCanRespondToAjax2RequestFromOkResponseBuilder() {
 
 		$request = $this->prepareHttpRequest('action/output4', 'POST', [], 2);
@@ -863,9 +839,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($output, $response->getContent());
 	}
 
-	/**
-	 * @group AjaxService
-	 */
 	public function testCanRespondToAjax2RequestFromErrorResponseBuilderWithOkStatusCode() {
 
 		$request = $this->prepareHttpRequest('action/output4', 'POST', [], 2);
@@ -899,9 +872,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($output, $response->getContent());
 	}
 
-	/**
-	 * @group AjaxService
-	 */
 	public function testCanRespondToAjax2RequestFromErrorResponseBuilderWithErrorStatusCode() {
 
 		$request = $this->prepareHttpRequest('action/output4', 'POST', [], 2);
@@ -929,9 +899,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($output, $response->getContent());
 	}
 
-	/**
-	 * @group AjaxService
-	 */
 	public function testCanRespondToAjax2RequestFromRedirectResponseBuilder() {
 
 		$request = $this->prepareHttpRequest('action/output4', 'POST', [], 2);
@@ -1007,9 +974,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		ob_start();
 	}
 
-	/**
-	 * @group AjaxService
-	 */
 	public function testCanRedirectOnAjax2Request() {
 		$request = $this->prepareHttpRequest('action/output5', 'POST', [], 2);
 		$this->createService($request);

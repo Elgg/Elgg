@@ -7,10 +7,6 @@ use Elgg\Helpers\Upgrade\TestBatch;
 use Elgg\Helpers\Upgrade\TestNoIncrementBatch;
 use Elgg\Helpers\Upgrade\UnknownSizeTestBatch;
 
-/**
- * @group UpgradeService
- * @group UnitTests
- */
 class BatchUpgraderUnitTest extends UnitTestCase {
 
 	public function up() {

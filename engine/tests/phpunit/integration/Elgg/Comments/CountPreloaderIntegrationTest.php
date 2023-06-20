@@ -38,11 +38,7 @@ class CountPreloaderIntegrationTest extends IntegrationTestCase {
 		
 		$service = \Elgg\Comments\DataService::instance();
 		
-		$reflector = new \ReflectionClass($service);
-		$property = $reflector->getProperty('counts');
-		$property->setAccessible(true);
-		
-		$counts = $property->getValue($service);
+		$counts = $this->getInaccessableProperty($service, 'counts');
 		
 		$this->assertEquals(0, $counts[$guids[0]]);
 		$this->assertEquals(2, $counts[$guids[1]]);

@@ -12,9 +12,9 @@ jobs:
       - name: Set ZIP filename
         id: branch
         run: |
-            echo ::set-output name=RELEASE::${GITHUB_REF#refs/tags/}
-            echo ::set-output name=ZIP_FOLDER::elgg-${GITHUB_REF#refs/tags/}
-            echo ::set-output name=ZIP_FILE::elgg-${GITHUB_REF#refs/tags/}.zip
+            echo RELEASE=${GITHUB_REF#refs/tags/} >> $GITHUB_OUTPUT
+            echo ZIP_FOLDER=elgg-${GITHUB_REF#refs/tags/} >> $GITHUB_OUTPUT
+            echo ZIP_FILE=elgg-${GITHUB_REF#refs/tags/}.zip >> $GITHUB_OUTPUT
        
       - name: Checkout Starter Project
         uses: actions/checkout@v3

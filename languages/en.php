@@ -1783,6 +1783,11 @@ Global variables:
 	'cli:database:seed:option:create_until' => "A PHP time string to set the upper bound creation time of seeded entities",
 	'cli:database:seed:log:error:faker' => "This is a developer tool currently intended for testing purposes only. Please refrain from using it.",
 	'cli:database:seed:log:error:logged_in' => "Database seeding should not be run with a logged in user",
+
+	'cli:database:seeders:description' => "List all available database seeders with the current count of seeded entities",
+	'cli:database:seeders:handler' => "Seed handler",
+	'cli:database:seeders:type' => "Seed type",
+	'cli:database:seeders:count' => "Seeded count",
 	
 	'cli:database:unseed:description' => "Removes seeded fake entities from the database",
 	

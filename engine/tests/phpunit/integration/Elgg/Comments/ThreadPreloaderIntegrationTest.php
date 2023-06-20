@@ -36,12 +36,9 @@ class ThreadPreloaderIntegrationTest extends IntegrationTestCase {
 		elgg_view('page/elements/comments', ['entity' => $entity, 'limit' => 10]);
 		
 		$service = elgg()->thread_preloader;
+
+		$children = $this->getInaccessableProperty($service, 'children');
 		
-		$reflector = new \ReflectionClass($service);
-		$property = $reflector->getProperty('children');
-		$property->setAccessible(true);
-		
-		$children = $property->getValue($service);
 		$this->assertCount(3, $children);
 		$this->assertArrayHasKey($top1->guid, $children);
 		$this->assertArrayHasKey($top2->guid, $children);

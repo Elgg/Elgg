@@ -4,12 +4,6 @@ namespace Elgg\Integration;
 
 use ElggPlugin;
 
-/**
- * Elgg Plugins Test
- *
- * @group IntegrationTests
- * @group Plugins
- */
 class ElggCorePluginsAPITest extends \Elgg\IntegrationTestCase {
 
 	// \ElggPlugin

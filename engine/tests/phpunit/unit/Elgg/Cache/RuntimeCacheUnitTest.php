@@ -2,9 +2,6 @@
 
 namespace Elgg\Cache;
 
-/**
- * @group Cache
- */
 class RuntimeCacheUnitTest extends BaseCacheUnitTestCase {
 
 	function createCache(string $namespace = 'runtime_test') {

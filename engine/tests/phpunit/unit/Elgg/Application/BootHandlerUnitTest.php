@@ -8,10 +8,6 @@ use Elgg\Mocks\Di\InternalContainer;
 use Elgg\UnitTestCase;
 use Elgg\Helpers\CustomUser;
 
-/**
- * @group Boot
- * @group Application
- */
 class BootHandlerUnitTest extends UnitTestCase {
 
 	/**

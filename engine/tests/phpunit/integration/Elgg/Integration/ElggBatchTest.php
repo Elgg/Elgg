@@ -5,9 +5,6 @@ namespace Elgg\Integration;
 use Elgg\IntegrationTestCase;
 use ElggBatch;
 
-/**
- * @group IntegrationTests
- */
 class ElggBatchTest extends IntegrationTestCase {
 
 	// see https://github.com/elgg/elgg/issues/4288

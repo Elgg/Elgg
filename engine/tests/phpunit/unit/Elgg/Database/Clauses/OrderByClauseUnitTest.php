@@ -7,9 +7,6 @@ use Elgg\Database\Select;
 use Elgg\Helpers\Database\Clauses\CallableOrderBy;
 use Elgg\UnitTestCase;
 
-/**
- * @group QueryBuilder
- */
 class OrderByClauseUnitTest extends UnitTestCase {
 
 	/**

@@ -4,12 +4,6 @@ namespace Elgg\Search;
 
 use Elgg\Views\ViewRenderingIntegrationTestCase;
 
-/**
- * @group ViewRendering
- * @group ViewsService
- * @group Search
- * @group SearchPlugin
- */
 class SearchViewsRenderingIntegrationTest extends ViewRenderingIntegrationTestCase {
 
 	public function up() {

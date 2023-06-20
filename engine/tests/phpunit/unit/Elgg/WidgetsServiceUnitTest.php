@@ -2,9 +2,6 @@
 
 namespace Elgg;
 
-/**
- * @group UnitTests
- */
 class WidgetsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	public function elgg_set_config($key, $val) {

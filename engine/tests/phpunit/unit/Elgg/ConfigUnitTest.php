@@ -4,10 +4,6 @@ namespace Elgg;
 
 use Elgg\Project\Paths;
 
-/**
- * @group Config
- * @group UnitTests
- */
 class ConfigUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanReadConfigDefaults() {

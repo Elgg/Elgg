@@ -10,9 +10,6 @@ use Elgg\Database\Select;
 use Elgg\Exceptions\DomainException;
 use Elgg\UnitTestCase;
 
-/**
- * @group Search
- */
 class SearchServiceTest extends UnitTestCase {
 
 	public function up() {

@@ -7,10 +7,6 @@ use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Laminas\Mail\Message;
 
-/**
- * @group Actions
- * @group MessagesPlugin
- */
 class SendActionTest extends ActionResponseTestCase {
 
 	public function up() {

@@ -2,10 +2,6 @@
 
 namespace Elgg\Views;
 
-/**
- * @group ViewRendering
- * @group ViewsService
- */
 class RiverViewsRenderingIntegrationTest extends ViewRenderingIntegrationTestCase {
 
 	public function getViewNames() {

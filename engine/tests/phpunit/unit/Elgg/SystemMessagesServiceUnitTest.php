@@ -2,9 +2,6 @@
 
 namespace Elgg;
 
-/**
- * @group UnitTests
- */
 class SystemMessagesServiceUnitTest extends \Elgg\UnitTestCase {
 
 	/**

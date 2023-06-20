@@ -2,13 +2,10 @@
 
 namespace Elgg\Groups;
 
-use Elgg\IntegrationTestCase;
-use Elgg\Plugins\PluginTesting;
+use Elgg\Plugins\IntegrationTestCase;
 
 class NotificationsIntegrationTest extends IntegrationTestCase {
 
-	use PluginTesting;
-	
 	/**
 	 * {@inheritDoc}
 	 */

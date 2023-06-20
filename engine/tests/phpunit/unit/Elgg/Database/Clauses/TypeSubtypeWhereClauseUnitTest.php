@@ -6,10 +6,6 @@ use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\UnitTestCase;
 
-/**
- * @group QueryBuilder
- * @group QueryBuilderWhere
- */
 class TypeSubtypeWhereClauseUnitTest extends UnitTestCase {
 
 	/**

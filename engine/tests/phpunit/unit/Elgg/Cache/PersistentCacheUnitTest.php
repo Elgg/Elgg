@@ -2,10 +2,6 @@
 
 namespace Elgg\Cache;
 
-/**
- * @group Cache
- * @group Memcache
- */
 class PersistentCacheUnitTest extends BaseCacheUnitTestCase {
 
 	function createCache(string $namespace = 'persistent_test') {

@@ -4,20 +4,22 @@ namespace Elgg\Cli;
 
 use Elgg\Helpers\Cli\CliSeeder;
 use Elgg\Logger;
+use Elgg\TestableEvent;
 use Elgg\UnitTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @group Cli
- * @group Database
- */
 class DatabaseSeedCommandUnitTest extends UnitTestCase {
 
 	/**
 	 * @var int previous log level
 	 */
 	protected $loglevel;
+	
+	/**
+	 * @var TestableEvent
+	 */
+	protected $event;
 	
 	public function up() {
 		// Need to adjust loglevel to make sure system messages go to screen output and not to logger
@@ -30,10 +32,14 @@ class DatabaseSeedCommandUnitTest extends UnitTestCase {
 		// restore loglevel
 		$app = \Elgg\Application::getInstance();
 		$app->internal_services->logger->setLevel($this->loglevel);
+		
+		if ($this->event instanceof TestableEvent) {
+			$this->event->unregister();
+		}
 	}
 
 	public function testSeedCommand() {
-		$event = $this->registerTestingEvent('seeds', 'database', function(\Elgg\Event $event) {
+		$this->event = $this->registerTestingEvent('seeds', 'database', function(\Elgg\Event $event) {
 			$value = $event->getValue();
 			$value[] = CliSeeder::class;
 			return $value;
@@ -51,12 +57,10 @@ class DatabaseSeedCommandUnitTest extends UnitTestCase {
 
 		$seeder = preg_quote(CliSeeder::class);
 		$this->assertMatchesRegularExpression("/{$seeder}::seed/im", $commandTester->getDisplay());
-
-		$event->unregister();
 	}
 	
 	public function testUnseedCommand() {
-		$event = $this->registerTestingEvent('seeds', 'database', function(\Elgg\Event $event) {
+		$this->event = $this->registerTestingEvent('seeds', 'database', function(\Elgg\Event $event) {
 			$value = $event->getValue();
 			$value[] = CliSeeder::class;
 			return $value;
@@ -73,7 +77,29 @@ class DatabaseSeedCommandUnitTest extends UnitTestCase {
 
 		$seeder = preg_quote(CliSeeder::class);
 		$this->assertMatchesRegularExpression("/{$seeder}::unseed/im", $commandTester->getDisplay());
-
-		$event->unregister();
+	}
+	
+	public function testSeedersCommand() {
+		$this->event = $this->registerTestingEvent('seeds', 'database', function(\Elgg\Event $event) {
+			$value = $event->getValue();
+			$value[] = CliSeeder::class;
+			return $value;
+		});
+		
+		$application = new Application();
+		$application->add(new DatabaseSeedersCommand());
+		
+		$command = $application->find('database:seeders');
+		$commandTester = new CommandTester($command);
+		$commandTester->execute([
+			'command' => $command->getName(),
+		]);
+		
+		// output should contain the seeder classname and the type of what is seeded
+		$seeder = preg_quote(CliSeeder::class);
+		$type = preg_quote(CliSeeder::getType());
+		
+		$this->assertMatchesRegularExpression("/{$seeder}/im", $commandTester->getDisplay());
+		$this->assertMatchesRegularExpression("/{$type}/im", $commandTester->getDisplay());
 	}
 }

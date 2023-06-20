@@ -4,10 +4,6 @@ namespace Elgg;
 
 use Elgg\Debug\Inspector;
 
-/**
- * @group IntegrationTests
- * @group TestingSuite
- */
 class IntegrationTestCaseTest extends IntegrationTestCase {
 
 	/**

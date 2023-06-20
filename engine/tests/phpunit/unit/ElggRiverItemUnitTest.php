@@ -4,7 +4,7 @@ use Elgg\UnitTestCase;
 
 class ElggRiverItemUnitTest extends UnitTestCase {
 	
-	public function testContstructorWithDatabaseRow() {
+	public function testConstructorWithDatabaseRow() {
 		$row = [
 			'id' => '1',
 			'subject_guid' => '2',
@@ -21,6 +21,10 @@ class ElggRiverItemUnitTest extends UnitTestCase {
 		$this->assertEquals($row['action_type'], $item->action_type);
 		$this->assertEquals($row['view'], $item->view);
 		
+		// check function returns
+		$this->assertEquals($row['posted'], $item->getTimePosted());
+		$this->assertEquals($row['view'], $item->getView());
+		
 		unset($row['action_type']);
 		unset($row['view']);
 		
@@ -29,6 +33,14 @@ class ElggRiverItemUnitTest extends UnitTestCase {
 			$this->assertIsInt($item->$name);
 			$this->assertEquals((int) $value, $item->$name);
 		}
+	}
+	
+	public function testFunctionsWithBlankAttributes() {
+		$item = new \ElggRiverItem();
+		
+		// check function returns
+		$this->assertIsInt($item->getTimePosted());
+		$this->assertIsString($item->getView());
 	}
 	
 	public function testGetTypeSubtype() {

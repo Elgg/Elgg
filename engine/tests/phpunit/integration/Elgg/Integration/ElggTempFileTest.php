@@ -6,11 +6,6 @@ use Elgg\Exceptions\Filesystem\IOException;
 use Elgg\IntegrationTestCase;
 use ElggTempFile;
 
-/**
- * Elgg Test Skeleton
- *
- * @group IntegrationTests
- */
 class ElggTempFileTest extends IntegrationTestCase {
 
 	/**

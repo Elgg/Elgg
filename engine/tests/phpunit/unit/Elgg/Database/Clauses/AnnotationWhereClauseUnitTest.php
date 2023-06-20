@@ -7,10 +7,6 @@ use Elgg\Database\Select;
 use Elgg\Exceptions\DomainException;
 use Elgg\UnitTestCase;
 
-/**
- * @group QueryBuilder
- * @group QueryBuilderWhere
- */
 class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 	/**

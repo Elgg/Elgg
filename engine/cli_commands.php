@@ -6,6 +6,7 @@ return [
 	\Elgg\Cli\CachePurgeCommand::class,
 	\Elgg\Cli\CronCommand::class,
 	\Elgg\Cli\DatabaseSeedCommand::class,
+	\Elgg\Cli\DatabaseSeedersCommand::class,
 	\Elgg\Cli\DatabaseUnseedCommand::class,
 	\Elgg\Cli\PluginsListCommand::class,
 	\Elgg\Cli\PluginsActivateCommand::class,

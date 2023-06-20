@@ -6,13 +6,6 @@ use Elgg\Database\Select;
 use Elgg\IntegrationTestCase;
 use ElggAnnotation;
 
-/**
- * Elgg Metastrings test
- *
- * @group IntegrationTests
- * @group Metadata
- * @group Annotations
- */
 class ElggCoreMetastringsTest extends IntegrationTestCase {
 
 	protected array $metastringTypes = [

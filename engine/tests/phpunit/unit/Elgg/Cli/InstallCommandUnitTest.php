@@ -6,9 +6,6 @@ use Elgg\UnitTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @group Cli
- */
 class InstallCommandUnitTest extends UnitTestCase {
 
 	public function testExecute() {
