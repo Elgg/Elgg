@@ -20,14 +20,21 @@ $regexp = '/^[0-9]+\.[0-9]+\.[0-9]+(?:-(?:alpha|beta|rc)\.[0-9]+)?$/';
 
 $matches = [];
 if (!preg_match($regexp, $version, $matches)) {
-	echo 'Bad version format. You must follow the format of X.Y.Z with an optional suffix of'
-	    . ' -alpha.N, -beta.N, or -rc.N (where N is a number).' . PHP_EOL;
+	echo 'Bad version format. You must follow the format of X.Y.Z with an optional suffix of';
+	echo ' -alpha.N, -beta.N, or -rc.N (where N is a number).' . PHP_EOL;
 	exit(1);
 }
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-function run_commands($commands) {
+/**
+ * Execute a command in the commandline
+ *
+ * @param array $commands all commands to execute
+ *
+ * @return void
+ */
+function run_commands(array $commands): void {
 	foreach ($commands as $command) {
 		echo $command . PHP_EOL;
 
@@ -62,16 +69,18 @@ $composer_config->version = $version;
 $json = json_encode($composer_config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL;
 file_put_contents($composer_path, $json);
 
+// write the changelog
+$changelog = new \Elgg\Project\ChangelogWriter([
+	'version' => $version,
+]);
+$changelog();
+
 // make the new release
-run_commands(array(
+run_commands([
 	// update hash in composer.lock, because version was updated and now there is a mismatch between .json and .lock
 	'composer update --lock',
-
-	// Generate changelog
-	'yarn install',
-	'node .scripts/write-changelog.js',
 
 	// commit everything to GitHub
 	'git add .',
 	"git commit -am \"chore(release): v{$version}\"",
-));
+]);

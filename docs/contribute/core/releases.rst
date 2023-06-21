@@ -110,13 +110,7 @@ Merge latest commits up from lowest supported branch.
 
 Visit ``https://github.com/Elgg/Elgg/compare/<new>...<old>`` and submit the PR if there is anything that needs to be merged up.
 
-Install the prerequisites:
-
-.. code-block:: sh
-
-    yarn install elgg-conventional-changelog
-
-.. note:: 
+.. note::
 
 	On Windows you need to run these command in a console with admin privileges
 
