@@ -1,0 +1,19 @@
+#elgg-scroll-to-top {
+	display: none;
+	font-size: 1.5rem;
+	padding: 0.5rem 1rem;
+	border-radius: 4px;
+	background: $(background-color-soft);
+	color: $(text-color-highlight);
+	border: 1px solid $(border-color-highlight);
+	position: fixed;
+	right: 2rem;
+	bottom: 2rem;
+	
+	text-decoration: none;
+	opacity: 0.8;
+	
+	&:hover {
+		opacity: 1;
+	}
+}

@@ -8,72 +8,6 @@ namespace Elgg\Developers;
 class Events {
 
 	/**
-	 * Alter input of menu sections in "gear" popup
-	 *
-	 * @param \Elgg\Event $event 'view_vars', 'navigation/menu/elements/section'
-	 *
-	 * @return mixed
-	 */
-	public static function alterMenuSectionVars(\Elgg\Event $event) {
-		if (!elgg_in_context('developers_gear')) {
-			return;
-		}
-		
-		$value = $event->getValue();
-		$idx = array_search('elgg-menu-page', $value['class']);
-		if ($idx !== false) {
-			unset($value['class'][$idx]);
-			$value['class'][] = 'elgg-menu-gear';
-		}
-
-		// remove the display options
-		foreach ($value['items'] as $item) {
-			/* @var \ElggMenuItem $item  */
-			$child_opts = $item->getChildMenuOptions();
-			unset($child_opts['display']);
-			$item->setChildMenuOptions($child_opts);
-		}
-
-		return $value;
-	}
-
-	/**
-	 * Alter output of menu sections in "gear" popup
-	 *
-	 * @param \Elgg\Event $event 'view', 'navigation/menu/elements/section'
-	 *
-	 * @return mixed
-	 */
-	public static function alterMenuSections(\Elgg\Event $event) {
-		if (!elgg_in_context('developers_gear')) {
-			return;
-		}
-		
-		$params = $event->getParams();
-		if (in_array('elgg-developers-gear', $params['vars']['class'])) {
-			return elgg_format_element('section', [], $event->getValue());
-		}
-	}
-
-	/**
-	 * Alter output of complete menu in "gear" popup
-	 *
-	 * @param \Elgg\Event $event 'view', 'navigation/menu/default'
-	 *
-	 * @return mixed
-	 */
-	public static function alterMenu(\Elgg\Event $event) {
-		if (!elgg_in_context('developers_gear')) {
-			return;
-		}
-		
-		$output = $event->getValue();
-		$output = preg_replace('~^<nav\b[^>]+>~', '', $output);
-		
-		return preg_replace('~^</nav>$~', '', $output);
-	}
-	
-	/**
 	 * Change the to address if a forwarding address isset
 	 *
 	 * @param \Elgg\Event $event The event for 'prepare', 'system:email'
@@ -92,7 +26,7 @@ class Events {
 		}
 		
 		$email = $event->getValue();
-		if (!($email instanceof \Elgg\Email)) {
+		if (!$email instanceof \Elgg\Email) {
 			return;
 		}
 		

@@ -60,6 +60,7 @@ class Plugins {
 		'site_notifications',
 		'system_log',
 		'tagcloud',
+		'theme_sandbox',
 		'thewire',
 		'uservalidationbyemail',
 		'web_services',

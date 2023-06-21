@@ -1197,6 +1197,8 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'list:error:getter:admin' => "The getter '%s' returned a(n) '%s', however the viewer '%s' requires an array",
 
 	'link:text' => 'view link',
+	
+	'scroll_to_top' => 'Scroll to top',
 
 /**
  * Generic questions

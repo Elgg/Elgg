@@ -6,8 +6,6 @@ namespace Elgg\Developers\Menus;
  * Event callbacks for menus
  *
  * @since 4.0
- *
- * @internal
  */
 class Entity {
 

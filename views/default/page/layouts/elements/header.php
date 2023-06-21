@@ -30,7 +30,5 @@ if (!isset($header)) {
 if (empty($header)) {
 	return;
 }
-?>
-<div class="elgg-head elgg-layout-header">
-	<?= $header ?>
-</div>
+
+echo elgg_format_element('div', ['class' => ['elgg-head', 'elgg-layout-header']], $header);

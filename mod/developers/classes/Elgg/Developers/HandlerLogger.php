@@ -6,7 +6,6 @@ namespace Elgg\Developers;
  * Track events
  *
  * @since 4.0
- * @internal
  */
 class HandlerLogger {
 	
