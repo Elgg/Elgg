@@ -154,19 +154,19 @@ class ApiMethod implements CollectionItemInterface {
 	 * 	(string) callback: Callback function when the API method is called
 	 *
 	 * Optional options are:
-	 * 	(bool)   associative:       Will the input params be provided as an array to the callback (default: false)
-	 * 	(string) call_method:       The HTTP call method (GET|POST) (default: GET)
-	 * 	(string) description:       The description of the API method
-	 * 	(array)  params:            The input parameters for the API call. In the format:
-	 *                              [
-	 *                                 'variable' = [
-	 *                                    'type' => 'int' | 'bool' | 'float' | 'string' | 'array',
-	 *                                    'required' => true (default) | false,
-	 *                                    'default' => value (optional),
-	 *                                 ],
-	 *                              ]
-	 * 	(bool)   require_api_auth:  Does the API require API authentication (default: false)
-	 * 	(bool)   require_user_auth: Does the API require user authentication (default: false)
+	 *  (string) call_method:        The HTTP call method (GET|POST) (default: GET)
+	 *  (string) description:        The description of the API method
+	 *  (array)  params:             The input parameters for the API call. In the format:
+	 *                               [
+	 *                                  'variable' = [
+	 *                                     'type' => 'int' | 'bool' | 'float' | 'string' | 'array',
+	 *                                     'required' => true (default) | false,
+	 *                                     'default' => value (optional),
+	 *                                  ],
+	 *                               ]
+	 *  (bool)   require_api_auth:   Does the API require API authentication (default: false)
+	 *  (bool)   require_user_auth:  Does the API require user authentication (default: false)
+	 *  (bool)   supply_associative: Will the input params be provided as an array to the callback (default: false)
 	 *
 	 * @param array $options Option array of key value pairs
 	 *
