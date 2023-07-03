@@ -381,6 +381,12 @@ trait Seeding {
 	 * @throws MaxAttemptsException
 	 */
 	public function createObject(array $properties = [], array $options = []): \ElggObject {
+		$default_properties = [
+			'title' => true,
+			'description' => true,
+			'tags' => true,
+		];
+		$properties = array_merge($default_properties, $properties);
 
 		$create = function () use ($properties, $options) {
 			$properties['__faker'] = true;
@@ -389,20 +395,26 @@ trait Seeding {
 				$properties['time_created'] = $this->getRandomCreationTimestamp();
 			}
 
-			if (empty($properties['title'])) {
+			if ($properties['title'] === true) {
 				$properties['title'] = $this->faker()->sentence();
+			} elseif ($properties['title'] === false) {
+				unset($properties['title']);
 			}
 
-			if (empty($properties['description'])) {
+			if ($properties['description'] === true) {
 				$properties['description'] = $this->faker()->text($this->faker()->numberBetween(500, 1000));
+			} elseif ($properties['description'] === false) {
+				unset($properties['description']);
 			}
 
 			if (empty($properties['subtype'])) {
 				$properties['subtype'] = $this->getRandomSubtype();
 			}
 
-			if (empty($properties['tags'])) {
+			if ($properties['tags'] === true) {
 				$properties['tags'] = $this->faker()->words(10);
+			} elseif ($properties['tags'] === false) {
+				unset($properties['tags']);
 			}
 
 			if (!isset($properties['owner_guid'])) {
