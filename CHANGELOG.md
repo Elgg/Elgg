@@ -1,3 +1,22 @@
+<a name="5.0.2"></a>
+### 5.0.2  (2023-07-03)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+
+#### Performance
+
+* **site_notifications:** simplify site_notification removal query ([ad8bd918](https://github.com/Elgg/Elgg/commit/ad8bd918edad2c312a4f6bbac042119b446cdc12))
+
+
+#### Bug Fixes
+
+* **thewire:** improved hashtag matching ([67277b2f](https://github.com/Elgg/Elgg/commit/67277b2fe84201b43637cca001be55da5e5faff8))
+* **user:** return correct type for getOwnerGuid ([72856546](https://github.com/Elgg/Elgg/commit/72856546ba14139efa355398514e751b08c5c97b))
+* **views:** correctly handle errors in mention parsing ([92dc5d6d](https://github.com/Elgg/Elgg/commit/92dc5d6df4b1afdd5359211711ec9d66a1dcbc7e))
+
+
 <a name="5.0.1"></a>
 ### 5.0.1  (2023-06-19)
 
