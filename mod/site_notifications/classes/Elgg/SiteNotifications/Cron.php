@@ -43,17 +43,20 @@ class Cron {
 			$batch = elgg_get_entities([
 				'type' => 'object',
 				'subtype' => 'site_notification',
+				'distinct' => false,
 				'limit' => false,
 				'wheres' => [
 					function (QueryBuilder $qb, $main_alias) {
 						$md = $qb->joinMetadataTable($main_alias, 'guid', 'linked_entity_guid', 'inner', 'lmd');
 						
 						$sub = $qb->subquery('entities');
-						$sub->select('guid');
+						$sub->select('guid')
+							->where($qb->compare('subtype', '!=', 'site_notification', ELGG_VALUE_STRING));
 						
 						return $qb->compare("{$md}.value", 'not in', $sub->getSQL());
 					},
 				],
+				'order_by' => false,
 				'batch' => true,
 				'batch_inc_offset' => false,
 				'batch_size' => 100,

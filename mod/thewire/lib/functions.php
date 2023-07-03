@@ -85,11 +85,11 @@ function thewire_save_post(string $text, int $userid, int $access_id, int $paren
  */
 function thewire_get_hashtags(string $text): array {
 	// beginning of text or white space followed by hashtag
-	// hashtag must begin with # and contain at least one character not digit, space, or punctuation
+	// the hashtag must begin with # and contain at least one character not digit, space, or punctuation
 	$matches = [];
-	preg_match_all('/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/', $text, $matches);
+	preg_match_all('/(^|[^\w])#(\w+[^\s\d[:punct:]\x{2018}-\x{201F}]+\w*)/u', $text, $matches);
 	
-	return $matches[2];
+	return $matches[2] ?? [];
 }
 
 /**
@@ -113,7 +113,7 @@ function thewire_filter(string $text): string {
 
 	// hashtags
 	$text = preg_replace_callback(
-		'/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/',
+		'/(^|[^\w])#(\w+[^\s\d[:punct:]\x{2018}-\x{201F}]+\w*)/u',
 		function ($matches) {
 			$tag = elgg_extract(2, $matches);
 			$url = elgg_generate_url('collection:object:thewire:tag', [
@@ -123,7 +123,7 @@ function thewire_filter(string $text): string {
 			
 			return elgg_extract(1, $matches) . $link;
 		},
-		$text);
+		$text) ?? $text;
 
 	return trim($text);
 }
