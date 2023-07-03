@@ -351,16 +351,17 @@ class ElggUser extends \ElggEntity {
 	/**
 	 * Get a user's owner GUID
 	 *
-	 * Returns it's own GUID if the user is not owned.
+	 * Returns its own GUID if the user is not owned.
 	 *
 	 * @return int
 	 */
 	public function getOwnerGUID(): int {
-		if ($this->owner_guid == 0) {
-			return $this->guid;
+		$owner_guid = parent::getOwnerGUID();
+		if ($owner_guid === 0) {
+			$owner_guid = (int) $this->guid;
 		}
 
-		return $this->owner_guid;
+		return $owner_guid;
 	}
 
 	/**

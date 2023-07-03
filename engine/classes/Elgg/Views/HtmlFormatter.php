@@ -188,7 +188,7 @@ class HtmlFormatter {
 			return $preceding_char . $replacement . $period;
 		};
 		
-		return preg_replace_callback(self::MENTION_REGEX, $callback, $text);
+		return preg_replace_callback(self::MENTION_REGEX, $callback, $text) ?? $text;
 	}
 
 	/**
