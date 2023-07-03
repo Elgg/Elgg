@@ -53,6 +53,7 @@ class SystemEventHandlers {
 		elgg_register_ajax_view('navigation/menu/user_hover/contents');
 		elgg_register_ajax_view('notifications/subscriptions/details');
 		elgg_register_ajax_view('object/plugin/details');
+		elgg_register_ajax_view('object/widget/edit');
 		elgg_register_ajax_view('page/elements/comments');
 		elgg_register_ajax_view('river/elements/responses');
 		

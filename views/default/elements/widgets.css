@@ -97,14 +97,6 @@
 	}
 }
 
-.elgg-widget-edit {
-	display: none;
-	width: auto;
-	padding: 10px;
-	border-bottom: 1px solid $(border-color-soft);
-	background-color: $(background-color-mild);
-}
-
 .elgg-widget-content {
 	padding: 1rem;
 }
