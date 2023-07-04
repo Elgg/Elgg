@@ -27,7 +27,7 @@ class AdminHeader {
 			'name' => 'administer_utilities:logbrowser',
 			'text' => elgg_echo('admin:administer_utilities:logbrowser'),
 			'href' => 'admin/administer_utilities/logbrowser',
-			'parent_name' => 'administer_utilities',
+			'parent_name' => 'utilities',
 		]);
 	
 		return $return;
