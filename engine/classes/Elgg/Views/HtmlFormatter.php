@@ -8,6 +8,7 @@ use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Traits\Loggable;
 use Elgg\ViewsService;
 use Pelago\Emogrifier\CssInliner;
+use Pelago\Emogrifier\HtmlProcessor\CssToAttributeConverter;
 
 /**
  * Various helper method for formatting and sanitizing output
@@ -424,9 +425,10 @@ class HtmlFormatter {
 			return $html;
 		}
 		
-		$inliner = CssInliner::fromHtml($html)->disableStyleBlocksParsing()->inlineCss($css);
+		$html_with_inlined_css = CssInliner::fromHtml($html)->disableStyleBlocksParsing()->inlineCss($css)->render();
+		$inlined_attribute_converter = CssToAttributeConverter::fromHtml($html_with_inlined_css)->convertCssToVisualAttributes();
 		
-		return $body_only ? $inliner->renderBodyContent() : $inliner->render();
+		return $body_only ? $inlined_attribute_converter->renderBodyContent() : $inlined_attribute_converter->render();
 	}
 	
 	/**

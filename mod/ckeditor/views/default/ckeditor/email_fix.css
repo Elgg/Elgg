@@ -1,0 +1,8 @@
+/*
+ * this fix will make sure resized images from editor content have a set width
+ * the core htmlformatter will transform this style to an attribute which will help showing it correctly in some email clients like outlook
+ */
+
+figure.image_resized img {
+	width: 100%;
+}

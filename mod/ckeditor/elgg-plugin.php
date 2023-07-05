@@ -17,6 +17,9 @@ return [
 		'elgg.css' => [
 			'ckeditor/content.css' => [],
 		],
+		'email/email.css' => [
+			'ckeditor/email_fix.css' => [],
+		],
 		'input/longtext' => [
 			'ckeditor/init' => [],
 		],
