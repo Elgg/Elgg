@@ -23,4 +23,5 @@ echo elgg_format_element('div', ['class' => 'elgg-widget-handle'], $title);
 echo elgg_view('object/widget/elements/controls', [
 	'widget' => $widget,
 	'show_edit' => elgg_extract('show_edit', $vars, $widget->canEdit()),
+	'show_access' => elgg_extract('show_access', $vars),
 ]);

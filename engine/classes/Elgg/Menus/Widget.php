@@ -36,8 +36,17 @@ class Widget {
 			'name' => 'settings',
 			'text' => elgg_view_icon('settings-alt'),
 			'title' => elgg_echo('widget:edit'),
-			'href' => "#widget-edit-{$widget->guid}",
-			'link_class' => ['elgg-widget-edit-button', 'elgg-toggle'],
+			'href' => elgg_http_add_url_query_elements('ajax/view/object/widget/edit', [
+				'guid' => $widget->guid,
+				'show_access' => $event->getParam('show_access', true),
+			]),
+			'data-colorbox-opts' => json_encode([
+				'width' => 750,
+				'max-height' => '80%',
+				'trapFocus' => false,
+				'fixed' => true,
+			]),
+			'link_class' => ['elgg-widget-edit-button', 'elgg-lightbox'],
 			'priority' => 800,
 		]);
 		

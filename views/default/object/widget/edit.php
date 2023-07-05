@@ -2,14 +2,18 @@
 /**
  * Elgg widget edit settings
  *
- * @uses $vars['widget']
+ * @uses $vars['entity'] the widget entity
  */
 
-elgg_deprecated_notice('This view is no longer used and will be removed in the next major version.', '5.1');
+use Elgg\Exceptions\Http\EntityPermissionsException;
 
-$widget = elgg_extract('widget', $vars);
-if (!$widget instanceof ElggWidget) {
+$widget = elgg_extract('entity', $vars);
+if (!$widget instanceof \ElggWidget) {
 	return;
+}
+
+if (!$widget->canEdit()) {
+	throw new EntityPermissionsException();
 }
 
 $form = elgg_view_form('widgets/save', [

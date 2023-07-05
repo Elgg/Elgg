@@ -475,6 +475,7 @@ To see the full post, click on the link below:
  */
 	'menu:page:header:administer' => 'Administer',
 	'menu:page:header:configure' => 'Configure',
+	'menu:page:header:utilities' => 'Utilities',
 	'menu:page:header:develop' => 'Develop',
 	'menu:page:header:information' => 'Information',
 	'menu:page:header:default' => 'Other',
@@ -642,9 +643,10 @@ Since Elgg has a lot of file access this will negatively impact performance. Als
 three sections:
 	<dl>
 		<dt>Administer</dt><dd>Basic tasks like managing users, monitoring reported content and activating plugins.</dd>
-		<dt>Configure</dt><dd>Occasional tasks like setting the site name or configuring settings of a plugin.</dd>
+		<dt>Configure</dt><dd>Occasional tasks like setting the site name or configuring security preferences.</dd>
+		<dt>Utilities</dt><dd>Various tools to support site maintenance.</dd>
 		<dt>Information</dt><dd>Information about your site like statistics.</dd>
-		<dt>Develop</dt><dd>For developers who are building plugins or designing themes. (Requires a developer plugin.)</dd>
+		<dt>Develop</dt><dd>For developers who are building plugins or debugging the site. (Requires a developer plugin.)</dd>
 	</dl>",
 
 	// argh, this is ugly

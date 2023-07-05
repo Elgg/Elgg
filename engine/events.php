@@ -250,12 +250,14 @@ return [
 			'Elgg\Menus\AdminControlPanel::register' => [],
 		],
 		'menu:admin_header' => [
+			'Elgg\Menus\AdminHeader::moveUtilities' => ['priority' => 9999],
 			'Elgg\Menus\AdminHeader::register' => [],
 			'Elgg\Menus\AdminHeader::registerMaintenance' => [],
 			'Elgg\Menus\AdminHeader::registerAdminAdminister' => [],
 			'Elgg\Menus\AdminHeader::registerAdminConfigure' => [],
 			'Elgg\Menus\AdminHeader::registerAdminDefaultWidgets' => [],
 			'Elgg\Menus\AdminHeader::registerAdminInformation' => [],
+			'Elgg\Menus\AdminHeader::registerAdminUtilities' => [],
 		],
 		'menu:admin_footer' => [
 			'Elgg\Menus\AdminFooter::registerHelpResources' => [],
