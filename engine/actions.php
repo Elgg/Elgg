@@ -8,6 +8,7 @@ return [
 	'admin/plugins/deactivate' => ['access' => 'admin'],
 	'admin/plugins/deactivate_all' => ['access' => 'admin'],
 	'admin/plugins/set_priority' => ['access' => 'admin'],
+	'admin/security/security_txt' => ['access' => 'admin'],
 	'admin/security/settings' => ['access' => 'admin'],
 	'admin/security/regenerate_site_secret' => ['access' => 'admin'],
 	'admin/site/cache/invalidate' => ['access' => 'admin'],

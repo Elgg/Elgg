@@ -17,6 +17,14 @@ $tabs = [
 		'selected' => $selected === 'settings',
 	],
 	[
+		'name' => 'security_txt',
+		'text' => elgg_echo('admin:security:security_txt'),
+		'href' => elgg_generate_url('admin', [
+			'segments' => 'security/security_txt',
+		]),
+		'selected' => $selected === 'security_txt',
+	],
+	[
 		'name' => 'information',
 		'text' => elgg_echo('admin:security:information'),
 		'href' => elgg_generate_url('admin', [

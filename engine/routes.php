@@ -150,6 +150,11 @@ return [
 			'match_on' => '\w+',
 		],
 	],
+	'security.txt' => [
+		'path' => '/security.txt',
+		'controller' => \Elgg\Controllers\SecurityTxt::class,
+		'walled' => false,
+	],
 	'settings:index' => [
 		'path' => '/settings',
 		'resource' => 'settings/account',
