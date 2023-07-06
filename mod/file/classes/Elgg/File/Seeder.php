@@ -3,6 +3,7 @@
 namespace Elgg\File;
 
 use Elgg\Database\Seeds\Seed;
+use Elgg\Exceptions\Seeding\MaxAttemptsException;
 
 /**
  * Add file seed
@@ -17,30 +18,25 @@ class Seeder extends Seed {
 	public function seed() {
 		$this->advance($this->getCount());
 		
-		$attributes = [
-			'subtype' => 'file',
-		];
-
 		while ($this->getCount() < $this->limit) {
-			$path = $this->faker()->image();
-
-			$filename = pathinfo($path, PATHINFO_FILENAME);
-
-			$file = $this->createObject($attributes);
-			if (!$file instanceof \ElggFile) {
+			try {
+				/* @var $file \ElggFile */
+				$file = $this->createObject([
+					'subtype' => 'file',
+				]);
+			} catch (MaxAttemptsException $e) {
+				// unable to create file with the given options
 				continue;
 			}
+
+			$path = $this->faker()->image();
+			$filename = pathinfo($path, PATHINFO_FILENAME);
 
 			$file->setFilename("file/{$filename}");
 			$file->open('write');
 			$file->close();
 
 			copy($path, $file->getFilenameOnFilestore());
-
-			if (!$file->save()) {
-				$file->delete();
-				continue;
-			}
 
 			$this->createComments($file);
 			$this->createLikes($file);
@@ -61,7 +57,6 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function unseed() {
-
 		/* @var $files \ElggBatch */
 		$files = elgg_get_entities([
 			'type' => 'object',
@@ -78,6 +73,8 @@ class Seeder extends Seed {
 				$this->log("Deleted file {$file->guid}");
 			} else {
 				$this->log("Failed to delete file {$file->guid}");
+				$files->reportFailure();
+				continue;
 			}
 
 			$this->advance();
