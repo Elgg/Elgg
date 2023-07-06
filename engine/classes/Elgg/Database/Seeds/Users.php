@@ -3,6 +3,7 @@
 namespace Elgg\Database\Seeds;
 
 use Elgg\Database\Update;
+use Elgg\Exceptions\Seeding\MaxAttemptsException;
 
 /**
  * Seed users
@@ -36,15 +37,12 @@ class Users extends Seed {
 		}
 		
 		while ($this->getCount() < $this->limit) {
-			if ($this->create) {
+			try {
 				$user = $this->createUser([], [
 					'profile_fields' => $profile_fields,
 				]);
-			} else {
-				$user = $this->getRandomUser($exclude);
-			}
-
-			if (!$user) {
+			} catch (MaxAttemptsException $e) {
+				// unable to create a user with the given options
 				continue;
 			}
 
@@ -113,7 +111,6 @@ class Users extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function unseed() {
-
 		/* @var $users \ElggBatch */
 		$users = elgg_get_entities([
 			'type' => 'user',
@@ -129,6 +126,8 @@ class Users extends Seed {
 				$this->log("Deleted user {$user->guid}");
 			} else {
 				$this->log("Failed to delete user {$user->guid}");
+				$users->reportFailure();
+				continue;
 			}
 
 			$this->advance();

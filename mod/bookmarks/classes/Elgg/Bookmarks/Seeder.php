@@ -3,6 +3,7 @@
 namespace Elgg\Bookmarks;
 
 use Elgg\Database\Seeds\Seed;
+use Elgg\Exceptions\Seeding\MaxAttemptsException;
 
 /**
  * Add bookmarks seed
@@ -18,13 +19,16 @@ class Seeder extends Seed {
 		$this->advance($this->getCount());
 
 		while ($this->getCount() < $this->limit) {
-			$properties = [
-				'subtype' => 'bookmarks',
-				'address' => $this->faker()->url,
-			];
-
-			/* @var $bookmark \ElggBookmark */
-			$bookmark = $this->createObject($properties);
+			try {
+				/* @var $bookmark \ElggBookmark */
+				$bookmark = $this->createObject([
+					'subtype' => 'bookmarks',
+					'address' => $this->faker()->url,
+				]);
+			} catch (MaxAttemptsException $e) {
+				// unable to create a bookmark with the given options
+				continue;
+			}
 			
 			$this->createComments($bookmark);
 			$this->createLikes($bookmark);
@@ -46,7 +50,6 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function unseed() {
-
 		/* @var $bookmarks \ElggBatch */
 		$bookmarks = elgg_get_entities([
 			'type' => 'object',
@@ -63,6 +66,8 @@ class Seeder extends Seed {
 				$this->log("Deleted bookmark {$bookmark->guid}");
 			} else {
 				$this->log("Failed to delete bookmark {$bookmark->guid}");
+				$bookmarks->reportFailure();
+				continue;
 			}
 
 			$this->advance();
