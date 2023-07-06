@@ -21,17 +21,17 @@ abstract class Seed implements Seedable {
 	/**
 	 * @var int Max number of items to be created by the seed
 	 */
-	protected $limit = 20;
+	protected int $limit;
 
 	/**
 	 * @var bool Create new entities
 	 */
-	protected $create = false;
+	protected bool $create = false;
 	
 	/**
 	 * @var int Number of seeded entities
 	 */
-	protected $seeded_counter = 0;
+	protected int $seeded_counter = 0;
 	
 	/**
 	 * Seed constructor.
@@ -46,6 +46,8 @@ abstract class Seed implements Seedable {
 		$limit = (int) elgg_extract('limit', $options);
 		if ($limit > 0) {
 			$this->limit = $limit;
+		} else {
+			$this->limit = static::getDefaultLimit();
 		}
 		
 		$this->create = (bool) elgg_extract('create', $options, $this->create);
@@ -97,6 +99,15 @@ abstract class Seed implements Seedable {
 		$this->seeded_counter += $step;
 		
 		$this->progressAdvance($step);
+	}
+	
+	/**
+	 * Get the default number of content to seed
+	 *
+	 * @return int
+	 */
+	public static function getDefaultLimit(): int {
+		return max(elgg_get_config('default_limit'), 20);
 	}
 
 	/**
