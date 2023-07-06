@@ -1,7 +1,7 @@
 /* ***************************************
-	USER PICKER This view is deprecated and replaced by input/entitypicker.css
+	ENTITY PICKER
 *************************************** */
-.elgg-user-picker-list {
+.elgg-entity-picker-list {
 	> li {
 		padding: 0 1rem;
 		border-bottom: 1px solid $(border-color-soft);
@@ -13,7 +13,7 @@
 	}
 }
 
-.elgg-user-picker.elgg-state-disabled {
+.elgg-entity-picker.elgg-state-disabled {
 	> input,
 	> label {
 		display: none;

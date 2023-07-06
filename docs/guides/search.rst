@@ -183,7 +183,7 @@ Elgg core only supports entity search. You can implement custom searches, e.g. u
 Autocomplete and livesearch endpoint
 ------------------------------------
 
-Core provides a JSON endpoint for searching users and groups. These endpoints are used by ``input/autocomplete`` and ``input/userpicker`` views.
+Core provides a JSON endpoint for searching users and groups. These endpoints are used by ``input/autocomplete`` and ``input/entitypicker`` views.
 
 .. code-block:: php
 

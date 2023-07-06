@@ -1,23 +1,19 @@
-/**
- * @module elgg/UserPicker
- * @deprecated use input/entitypicker
- */
 define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery.ui.autocomplete.html'], function($, elgg, Ajax) {
 	/**
 	 * @param {HTMLElement} wrapper outer div
 	 * @constructor
 	 * @alias module:elgg/UserPicker
 	 */
-	function UserPicker(wrapper) {
+	function EntityPicker(wrapper) {
 		this.$wrapper = $(wrapper);
-		this.$input = $('.elgg-input-user-picker', wrapper);
-		this.$ul = $('.elgg-user-picker-list', wrapper);
+		this.$input = $('.elgg-input-entity-picker', wrapper);
+		this.$ul = $('.elgg-entity-picker-list', wrapper);
 
-		var UserPicker = this,
+		var EntityPicker = this,
 			data = this.$wrapper.data();
 
-		this.name = data.name || 'members';
-		this.matchOn = data.matchOn || 'users';
+		this.name = data.name || 'entities';
+		this.matchOn = data.matchOn || 'entities';
 		this.handler = data.handler || 'livesearch';
 		this.limit = data.limit || 0;
 		this.minLength = data.minLength || 2;
@@ -29,16 +25,16 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery
 				// to an object created by the autocomplete component
 				var Autocomplete = this;
 
-				if (UserPicker.isSealed) {
+				if (EntityPicker.isSealed) {
 					return;
 				}
 
 				var ajax = new Ajax();
-				ajax.path(UserPicker.handler, {
+				ajax.path(EntityPicker.handler, {
 					data: {
 						term: Autocomplete.term,
-						match_on: UserPicker.getSearchType(),
-						name: UserPicker.name
+						match_on: EntityPicker.getSearchType(),
+						name: EntityPicker.name
 					},
 					method: 'GET',
 					success: function(data) {
@@ -46,10 +42,10 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery
 					}
 				});
 			},
-			minLength: UserPicker.minLength,
+			minLength: EntityPicker.minLength,
 			html: 'html',
 			select: function(event, ui) {
-				UserPicker.addUser(event, ui.item.guid, ui.item.html);
+				EntityPicker.addEntity(event, ui.item.guid, ui.item.html);
 			},
 			// turn off experimental live help - no i18n support and a little buggy
 			messages: {
@@ -59,26 +55,26 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery
 		});
 
 		this.$wrapper.on('click', '.elgg-autocomplete-item-remove', function(event) {
-			UserPicker.removeUser(event);
+			EntityPicker.removeEntity(event);
 		});
 
 		this.enforceLimit();
 	}
 
-	UserPicker.prototype = {
+	EntityPicker.prototype = {
 		/**
-		 * Adds a user to the select user list
+		 * Adds an entity to the selected entity list
 		 *
 		 * @param {Object} event
-		 * @param {Number} guid    GUID of autocomplete item selected by user
-		 * @param {String} html    HTML for autocomplete item selected by user
+		 * @param {Number} guid  GUID of autocomplete item selected by user
+		 * @param {String} html  HTML for autocomplete item selected by user
 		 */
-		addUser: function(event, guid, html) {
+		addEntity: function(event, guid, html) {
 			if (event.isDefaultPrevented()) {
 				return;
 			}
 			
-			// do not allow users to be added multiple times
+			// do not allow entities to be added multiple times
 			if (!$('li[data-guid="' + guid + '"]', this.$ul).length) {
 				this.$ul.append(html);
 			}
@@ -91,12 +87,12 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery
 		},
 
 		/**
-		 * Removes a user from the select user list
+		 * Removes an entity from the selected entities list
 		 *
 		 * @param {Object} event
 		 */
-		removeUser: function(event) {
-			$(event.target).closest('.elgg-user-picker-list > li').remove();
+		removeEntity: function(event) {
+			$(event.target).closest('.elgg-entity-picker-list > li').remove();
 
 			this.enforceLimit();
 
@@ -121,7 +117,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery
 		},
 
 		/**
-		 * Don't allow user to add users
+		 * Don't allow user to add entities
 		 */
 		seal: function() {
 			this.$input.prop('disabled', true);
@@ -130,7 +126,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery
 		},
 
 		/**
-		 * Allow user to add users
+		 * Allow user to add entities
 		 */
 		unseal: function() {
 			this.$input.prop('disabled', false);
@@ -153,15 +149,15 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery
 	/**
 	 * @param {String} selector
 	 */
-	UserPicker.setup = function(selector) {
+	EntityPicker.setup = function(selector) {
 		$(selector).each(function () {
 			// we only want to wrap each picker once
 			if (!$(this).data('initialized')) {
-				new UserPicker(this);
+				new EntityPicker(this);
 				$(this).data('initialized', 1);
 			}
 		});
 	};
 
-	return UserPicker;
+	return EntityPicker;
 });
