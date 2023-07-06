@@ -163,6 +163,9 @@ return [
 		],
 	],
 	'form:prepare:fields' => [
+		'admin/security/security_txt' => [
+			\Elgg\Forms\PrepareSecurityTxt::class => [],
+		],
 		'all' => [
 			\Elgg\Forms\PrepareFields::class => ['priority' => 9999],
 		],
