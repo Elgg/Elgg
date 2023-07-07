@@ -254,7 +254,7 @@ class ResponseFactory {
 		
 		$is_xhr = $this->request->isXmlHttpRequest();
 
-		$is_action = str_starts_with($response_type, 'action:');
+		$is_action = $this->isAction();
 
 		if ($is_action && $response->getForwardURL() === null) {
 			// actions must always set a redirect url
@@ -265,10 +265,10 @@ class ResponseFactory {
 			$response->setForwardURL((string) $this->request->headers->get('Referer'));
 		}
 
-		if ($response->getForwardURL() !== null && !$is_xhr) {
+		if ($response->getForwardURL() !== null && !$is_xhr && !$response->isRedirection()) {
 			// non-xhr requests should issue a forward if redirect url is set
 			// unless it's an error, in which case we serve an error page
-			if ($this->isAction() || (!$response->isClientError() && !$response->isServerError())) {
+			if ($is_action || (!$response->isClientError() && !$response->isServerError())) {
 				$response->setStatusCode(ELGG_HTTP_FOUND);
 			}
 		}
