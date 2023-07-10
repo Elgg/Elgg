@@ -378,6 +378,8 @@ Elgg offers some helper input types
 * ``input/captcha`` - placeholder view for plugins to extend
 * ``input/friendspicker`` - renders an Elgg friend autocomplete
 * ``input/userpicker`` - renders an Elgg user autocomplete
+* ``input/grouppicker`` - renders an Elgg group autocomplete
+* ``input/objectpicker`` - renders an Elgg object autocomplete
 * ``input/location`` renders an Elgg location input
 
 Files and images
