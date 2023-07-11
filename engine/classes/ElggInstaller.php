@@ -1239,7 +1239,7 @@ class ElggInstaller {
 			'dbname' => $dbname,
 			'dbencoding' => 'utf8mb4',
 		]);
-		$db = new Database($config, $app->internal_services->queryCache);
+		$db = new Database($config, $app->internal_services->queryCache, $app->internal_services->config);
 
 		try {
 			$db->getConnection('read')->executeQuery('SELECT 1');
