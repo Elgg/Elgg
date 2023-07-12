@@ -238,7 +238,6 @@ class ElggUser extends \ElggEntity {
 	 * @return void
 	 */
 	public function setLastLogin(): void {
-		
 		$time = $this->getCurrentTime()->getTimestamp();
 		
 		if ($this->last_login == $time) {
@@ -246,9 +245,11 @@ class ElggUser extends \ElggEntity {
 			return;
 		}
 		
-		// these writes actually work, we just type hint read-only.
-		$this->prev_last_login = $this->last_login;
-		$this->last_login = $time;
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_DISABLE_SYSTEM_LOG, function() use ($time) {
+			// these writes actually work, we just type hint read-only.
+			$this->prev_last_login = $this->last_login;
+			$this->last_login = $time;
+		});
 	}
 	
 	/**
