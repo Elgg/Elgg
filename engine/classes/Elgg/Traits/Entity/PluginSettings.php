@@ -28,7 +28,9 @@ trait PluginSettings {
 		
 		$name = $this->getNamespacedPluginSettingName($plugin_id, $name);
 		
-		return $this->setMetadata($name, $value);
+		return elgg_call(ELGG_DISABLE_SYSTEM_LOG, function() use ($name, $value) {
+			return $this->setMetadata($name, $value);
+		});
 	}
 	
 	/**
@@ -57,7 +59,9 @@ trait PluginSettings {
 	public function removePluginSetting(string $plugin_id, string $name): bool {
 		$name = $this->getNamespacedPluginSettingName($plugin_id, $name);
 		
-		return $this->deleteMetadata($name);
+		return elgg_call(ELGG_DISABLE_SYSTEM_LOG, function() use ($name) {
+			return $this->deleteMetadata($name);
+		});
 	}
 	
 	/**
