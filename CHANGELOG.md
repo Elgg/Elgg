@@ -1,3 +1,24 @@
+<a name="5.0.3"></a>
+### 5.0.3  (2023-07-14)
+
+#### Contributors
+
+* Jerôme Bakker (7)
+* Jeroen Dalsem (3)
+
+#### Bug Fixes
+
+* **admin:** admin layout now gets correct layout class ([f0c348c0](https://github.com/Elgg/Elgg/commit/f0c348c03973328f07918894d5cbe65ed8a0e9af))
+* **composer:** no longer try to symlink the mods on Windows ([5319f0ea](https://github.com/Elgg/Elgg/commit/5319f0eaf69071602b410a88857511ca80e8358a))
+* **database:** execute delayed queries immediately during CLI ([d2d23209](https://github.com/Elgg/Elgg/commit/d2d2320984994cbfe0cdcd2ec42d6cf1f277f9dc))
+* **email:** image styles will be converted to attributes if possible ([f306388b](https://github.com/Elgg/Elgg/commit/f306388b51d08aeb2a28154a83793775315423a8))
+* **http:** maintain set redirect code in response ([c4ad5037](https://github.com/Elgg/Elgg/commit/c4ad5037bbaa04343c733358931f513765932a19))
+* **icons:** make sure transparent images have a white background ([25d039b2](https://github.com/Elgg/Elgg/commit/25d039b258ad14f77b0193222193deaccc375f9b))
+* **settings:** prevent setting changes from being added to the systemlog ([708cb7ff](https://github.com/Elgg/Elgg/commit/708cb7ff51e8a98b946124f2bcf0c7f38b67f01c))
+* **site_notifications:** return correct actor ([a2ee148f](https://github.com/Elgg/Elgg/commit/a2ee148f954432c3ce876c257c9da15b5671ffaa))
+* **user:** prevent logging of changes to last_login and prev_last_login ([ba28f760](https://github.com/Elgg/Elgg/commit/ba28f760f562e1c493d757d49c2f7b36b1ccc8ba))
+
+
 <a name="5.0.2"></a>
 ### 5.0.2  (2023-07-03)
 
