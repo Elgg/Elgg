@@ -60,7 +60,8 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 			->onlyMethods(['updateData'])
 			->setConstructorArgs([
 				new \Elgg\Database\DbConfig((object) ['dbprefix' => 'test_']),
-				_elgg_services()->queryCache
+				_elgg_services()->queryCache,
+				_elgg_services()->config,
 			])
 			->getMock();
 	}

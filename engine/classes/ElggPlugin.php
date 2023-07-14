@@ -345,7 +345,9 @@ class ElggPlugin extends ElggObject {
 			return false;
 		}
 
-		return $this->setMetadata($name, $value);
+		return elgg_call(ELGG_DISABLE_SYSTEM_LOG, function() use ($name, $value) {
+			return $this->setMetadata($name, $value);
+		});
 	}
 
 	/**
@@ -356,7 +358,9 @@ class ElggPlugin extends ElggObject {
 	 * @return bool
 	 */
 	public function unsetSetting(string $name): bool {
-		return (bool) $this->deleteMetadata($name);
+		return elgg_call(ELGG_DISABLE_SYSTEM_LOG, function() use ($name) {
+			return (bool) $this->deleteMetadata($name);
+		});
 	}
 
 	/**

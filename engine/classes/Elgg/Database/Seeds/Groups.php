@@ -2,6 +2,8 @@
 
 namespace Elgg\Database\Seeds;
 
+use Elgg\Exceptions\Seeding\MaxAttemptsException;
+
 /**
  * Seed users
  *
@@ -34,7 +36,7 @@ class Groups extends Seed {
 		}
 		
 		while ($this->getCount() < $this->limit) {
-			if ($this->create) {
+			try {
 				$group = $this->createGroup([
 					'access_id' => $this->getRandomGroupVisibility(),
 					'content_access_mode' => $this->getRandomGroupContentAccessMode(),
@@ -43,11 +45,8 @@ class Groups extends Seed {
 					'profile_fields' => $profile_fields,
 					'group_tool_options' => _elgg_services()->group_tools->all(),
 				]);
-			} else {
-				$group = $this->getRandomGroup($exclude);
-			}
-			
-			if (!$group) {
+			} catch (MaxAttemptsException $e) {
+				// unable to create a group with the given options
 				continue;
 			}
 
@@ -107,7 +106,6 @@ class Groups extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function unseed() {
-
 		/* @var $groups \ElggBatch */
 		$groups = elgg_get_entities([
 			'type' => 'group',
@@ -123,6 +121,8 @@ class Groups extends Seed {
 				$this->log("Deleted group {$group->guid}");
 			} else {
 				$this->log("Failed to delete group {$group->guid}");
+				$groups->reportFailure();
+				continue;
 			}
 
 			$this->advance();

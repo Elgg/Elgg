@@ -142,10 +142,34 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 			$captured = $stmt;
 			return $stmt;
 		};
-		_elgg_services()->db->registerDelayedQuery($qb, $callback);
+		
+		// get a reflector to check the contents of the delayed queries property
+		$database = _elgg_services()->db;
+		$reflector = new \ReflectionClass($database);
+		$delayed_queries = $reflector->getProperty('delayed_queries');
+		$delayed_queries->setAccessible(true);
+		
+		$delayed_value = $delayed_queries->getValue($database); // backup
+		$delayed_queries->setValue($database, []);
+		
+		$this->assertIsArray($delayed_queries->getValue($database));
+		$this->assertEmpty($delayed_queries->getValue($database));
+		
+		// add query
+		$database->registerDelayedQuery($qb, $callback);
+		
+		$this->assertIsArray($delayed_queries->getValue($database));
+		$this->assertCount(1, $delayed_queries->getValue($database));
 
-		_elgg_services()->db->executeDelayedQueries();
-
+		// execute query
+		$database->executeDelayedQueries();
+		
+		$this->assertIsArray($delayed_queries->getValue($database));
+		$this->assertEmpty($delayed_queries->getValue($database));
+		
+		// restore old value
+		$delayed_queries->setValue($database, $delayed_value);
+		
 		/* @var \Doctrine\DBAL\Result $captured */
 		$this->assertInstanceOf(\Doctrine\DBAL\Result::class, $captured);
 
