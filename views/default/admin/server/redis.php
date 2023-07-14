@@ -12,7 +12,7 @@ if (!elgg_get_config('redis') || empty($servers) || !\Elgg\Cache\CompositeCache:
 $redis = new Redis();
 
 foreach ($servers as $server) {
-	$redis->connect($server[0], $server[1]);
+	$redis->connect($server['host'], $server['port']);
 }
 
 $password = elgg_extract('password', elgg_get_config('redis_options'));
