@@ -188,8 +188,14 @@ Uncomment and populate the following sections in ``settings.php``
     $CONFIG->memcache = true;
     
     $CONFIG->memcache_servers = array (
-        array('server1', 11211),
-        array('server2', 11211)
+        array (
+            'host' => 'server1',
+            'port' => 11211
+        ),
+        array (
+            'host' => 'server2',
+            'port' => 11211
+        )
     );
 
 Optionaly if you run multiple Elgg installations but use ony one Memcache server, you may want 
