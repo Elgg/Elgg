@@ -57,7 +57,7 @@ class Seeder extends Seed {
 		};
 		
 		while ($this->getCount() < $this->limit) {
-			$owner = $this->getRandomUser([], true);
+			$owner = $this->getRandomUser();
 
 			$wire_guid = thewire_save_post($this->faker()->text($max_chars), $owner->guid, $this->getRandomAccessId($owner));
 			if ($wire_guid === false) {
@@ -95,7 +95,6 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function unseed() {
-
 		/* @var $entities \ElggBatch */
 		$entities = elgg_get_entities([
 			'type' => 'object',
@@ -112,6 +111,8 @@ class Seeder extends Seed {
 				$this->log("Deleted wire post {$entity->guid}");
 			} else {
 				$this->log("Failed to delete wire post {$entity->guid}");
+				$entities->reportFailure();
+				continue;
 			}
 
 			$this->advance();

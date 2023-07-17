@@ -11,7 +11,7 @@ use Elgg\Notifications\NotificationEvent;
  * @property bool   $read               Has this notification been read yet
  * @property int    $linked_entity_guid Entity linked to this notification
  */
-class SiteNotification extends ElggObject {
+class SiteNotification extends \ElggObject {
 
 	const HAS_ACTOR = 'hasActor';
 
@@ -47,7 +47,7 @@ class SiteNotification extends ElggObject {
 		}
 		
 		$linked_entity = $this->getLinkedEntity();
-		if ($linked_entity instanceof ElggEntity) {
+		if ($linked_entity instanceof \ElggEntity) {
 			return $linked_entity->getURL();
 		}
 		
@@ -57,25 +57,31 @@ class SiteNotification extends ElggObject {
 	/**
 	 * Get the actor involved in the notification
 	 *
-	 * @return ElggEntity|null
+	 * @return \ElggEntity|null
 	 */
 	public function getActor(): ?\ElggEntity {
-		$actor = $this->getEntitiesFromRelationship(['relationship' => self::HAS_ACTOR]);
-		if ($actor) {
-			$actor = $actor[0];
+		$actor = $this->getEntitiesFromRelationship([
+			'relationship' => self::HAS_ACTOR,
+			'limit' => 1,
+		]);
+		if (empty($actor)) {
+			return null;
 		}
 		
-		return $actor;
+		return $actor[0];
 	}
 	
 	/**
 	 * Set the actor involved in the notification
 	 *
-	 * @param ElggEntity $entity Actor
+	 * @param \ElggEntity $entity Actor
 	 *
 	 * @return void
 	 */
 	public function setActor(\ElggEntity $entity): void {
+		// there can only be one actor
+		$this->removeAllRelationships(self::HAS_ACTOR);
+		
 		$this->addRelationship($entity->guid, self::HAS_ACTOR);
 	}
 	

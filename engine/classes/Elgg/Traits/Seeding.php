@@ -100,7 +100,6 @@ trait Seeding {
 	 * @param array $options    Seeding options
 	 *
 	 * @return \ElggUser
-	 * @throws Exception
 	 * @throws MaxAttemptsException
 	 */
 	public function createUser(array $properties = [], array $options = []): \ElggUser {

@@ -159,4 +159,33 @@ class ResponseFactoryIntegrationTest extends IntegrationTestCase {
 		
 		$this->assertTrue($exception_found, 'No exception found in view vars of resource/error');
 	}
+	
+	/**
+	 * @dataProvider redirectCodeProvider
+	 */
+	public function testRespondWithRedirectCode(int $status_code, int $expected_code) {
+		$request = $this->prepareHttpRequest('action/foo', 'POST', [], 0, true);
+		_elgg_services()->request = $request;
+		
+		$response = new OkResponse('', $status_code, '/forward');
+		
+		ob_start();
+		$result = $this->service->respond($response);
+		ob_end_clean();
+		
+		$this->assertInstanceOf(Response::class, $result);
+		$this->assertEquals($expected_code, $result->getStatusCode());
+	}
+	
+	public function redirectCodeProvider() {
+		return [
+			[ELGG_HTTP_OK, ELGG_HTTP_FOUND],
+			[ELGG_HTTP_CREATED, ELGG_HTTP_CREATED],
+			[ELGG_HTTP_MOVED_PERMANENTLY, ELGG_HTTP_MOVED_PERMANENTLY],
+			[ELGG_HTTP_FOUND, ELGG_HTTP_FOUND],
+			[ELGG_HTTP_SEE_OTHER, ELGG_HTTP_SEE_OTHER],
+			[ELGG_HTTP_TEMPORARY_REDIRECT, ELGG_HTTP_TEMPORARY_REDIRECT],
+			[ELGG_HTTP_PERMANENTLY_REDIRECT, ELGG_HTTP_PERMANENTLY_REDIRECT],
+		];
+	}
 }
