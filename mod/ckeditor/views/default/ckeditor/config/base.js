@@ -10,7 +10,16 @@ define(['elgg'], function(elgg) {
 			}
 		},
 		image: {
-			toolbar: ['toggleImageCaption', 'imageTextAlternative', 'imageStyle:inline', 'imageStyle:block', 'imageStyle:side', 'linkImage'],
+			toolbar: ['toggleImageCaption', 'imageTextAlternative',	{
+				title: '',
+				name: 'imageStyle:alignment',
+				items: [
+					'imageStyle:alignBlockLeft',
+					'imageStyle:block',
+					'imageStyle:alignBlockRight',
+				],
+				defaultItem: 'imageStyle:alignBlockLeft'
+			}, 'imageStyle:side', 'linkImage'],
 			resizeUnit: 'px'
 		},
 		link: {
