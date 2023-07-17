@@ -15,7 +15,7 @@ if (class_exists('Memcached')) {
 }
 
 foreach ($servers as $server) {
-	$memcache->addserver($server[0], $server[1]);
+	$memcache->addserver($server['host'], $server['port']);
 }
 
 if ($memcache instanceof Memcache) {
