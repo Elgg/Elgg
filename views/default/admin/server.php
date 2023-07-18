@@ -25,7 +25,7 @@ if (elgg_get_config('allow_phpinfo')) {
 		'text' => elgg_echo('admin:server:label:phpinfo'),
 		'content' => elgg_view('output/iframe', [
 			'src' => elgg_generate_url('phpinfo'),
-			'width' => '100%',
+			'style' => 'width: 100%;',
 			'height' => '2000px',
 		]),
 	];
