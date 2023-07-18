@@ -22,7 +22,8 @@ echo elgg_view_field([
 
 echo elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_view_icon('search'),
+	'icon' => 'search',
+	'aria-label' => elgg_echo('search'),
 ]);
 
 $values = [

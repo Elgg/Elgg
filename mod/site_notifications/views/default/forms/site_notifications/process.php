@@ -6,7 +6,7 @@ elgg_require_js('forms/site_notifications/process');
 $fields = [
 	[
 		'#type' => 'button',
-		'value' => elgg_echo('site_notifications:toggle_all'),
+		'text' => elgg_echo('site_notifications:toggle_all'),
 		'class' => 'elgg-button elgg-button-cancel',
 		'id' => 'site-notifications-toggle',
 	],

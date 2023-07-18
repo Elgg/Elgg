@@ -36,11 +36,11 @@ if ($comment instanceof \ElggComment && $comment->canEdit()) {
 		'value' => $comment->guid,
 	]);
 	$comment_label  = elgg_echo('generic_comments:edit');
-	$footer .= elgg_view('input/submit', ['value' => elgg_echo('save')]);
+	$footer .= elgg_view('input/submit', ['text' => elgg_echo('save')]);
 	$comment_text = $comment->description;
 } else {
 	$comment_label  = elgg_echo('generic_comments:add');
-	$footer .= elgg_view('input/submit', ['value' => elgg_echo('comment')]);
+	$footer .= elgg_view('input/submit', ['text' => elgg_echo('comment')]);
 }
 
 if ($inline) {
@@ -66,7 +66,7 @@ if ($inline) {
 	
 	if ($comment) {
 		$footer .= elgg_view('input/button', [
-			'value' => elgg_echo('cancel'),
+			'text' => elgg_echo('cancel'),
 			'class' => 'elgg-button-cancel mlm',
 			'href' => $entity ? $entity->getURL() : '#',
 		]);

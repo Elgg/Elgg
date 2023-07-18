@@ -33,7 +33,7 @@ foreach ($vars['data'] as $name => $info) {
 // form footer
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('developers:label:submit'),
+	'text' => elgg_echo('developers:label:submit'),
 ]);
 
 elgg_set_form_footer($footer);

@@ -82,6 +82,6 @@ foreach ($fields as $field) {
 
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'value' => $submit_label,
+	'text' => $submit_label,
 ]);
 elgg_set_form_footer($footer);
