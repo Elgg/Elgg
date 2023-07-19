@@ -28,7 +28,6 @@ if (!empty($revision_id)) {
 }
 
 $form_vars = [
-	'prevent_double_submit' => false, // action is using the submit buttons to determine type of submission, disabled buttons are not submitted
 	'sticky_enabled' => true,
 ];
 
