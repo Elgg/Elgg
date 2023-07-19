@@ -64,7 +64,7 @@ echo elgg_view_field([
 
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('search'),
+	'text' => elgg_echo('search'),
 ]);
 
 elgg_set_form_footer($footer);

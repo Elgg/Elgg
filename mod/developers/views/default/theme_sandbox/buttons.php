@@ -13,7 +13,7 @@ $getAnchor = function(array $options = []) {
 
 $getButton = function(array $options = []) {
 	$vars = [
-		'value' => elgg_echo('submit'),
+		'text' => elgg_echo('submit'),
 	];
 	
 	return elgg_view('input/button', array_merge($vars, $options));

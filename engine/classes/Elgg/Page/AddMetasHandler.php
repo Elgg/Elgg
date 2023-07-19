@@ -35,7 +35,7 @@ class AddMetasHandler {
 		// https://developer.chrome.com/multidevice/android/installtohomescreen
 		$head_params['metas']['viewport'] = [
 			'name' => 'viewport',
-			'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0',
+			'content' => 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=1',
 		];
 		
 		$head_params['metas']['mobile-web-app-capable'] = [

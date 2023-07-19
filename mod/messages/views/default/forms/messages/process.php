@@ -35,7 +35,7 @@ if (elgg_extract('folder', $vars) == 'inbox') {
 
 $buttons[] = [
 	'#type' => 'button',
-	'value' => elgg_echo('messages:toggle'),
+	'text' => elgg_echo('messages:toggle'),
 	'class' => 'elgg-button-cancel',
 	'id' => 'messages-toggle',
 ];

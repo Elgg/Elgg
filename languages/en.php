@@ -1072,6 +1072,7 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'entity:edit:icon:crop_messages:generic' => "The selected image doesn't meet the recommended image dimensions. This could result in low quality icons.",
 	'entity:edit:icon:crop_messages:width' => "It's recommended to use an image with a minimal width of at least %dpx.",
 	'entity:edit:icon:crop_messages:height' => "It's recommended to use an image with a minimal height of at least %dpx.",
+	'entity:edit:icon:crop:img:alt' => "Uploaded image",
 	'entity:edit:icon:file:label' => "Upload a new icon",
 	'entity:edit:icon:file:help' => "Leave blank to keep current icon.",
 	'entity:edit:icon:remove:label' => "Remove icon",

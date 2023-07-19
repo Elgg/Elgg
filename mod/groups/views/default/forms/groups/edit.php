@@ -82,7 +82,7 @@ if ($entity instanceof \ElggGroup) {
 				'#type' => 'button',
 				'id' => 'elgg-groups-edit-footer-navigate-next',
 				'icon_alt' => 'chevron-right',
-				'value' => elgg_echo('next'),
+				'text' => elgg_echo('next'),
 				'class' => 'elgg-button-action',
 			],
 		],

@@ -22,5 +22,5 @@ echo elgg_format_element('div', [
 	'class' => 'elgg-install-nav',
 ], elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('install:next'),
+	'text' => elgg_echo('install:next'),
 ]));
