@@ -10,7 +10,7 @@ define(['jquery'], function ($) {
 	 * @param {Function} callback a callback function to call when the loading of het menu was succesfull
 	 */
 	function loadMenu(mac, callback) {
-		var $all_placeholders = $(".elgg-menu-hover[rel='" + mac + "']");
+		var $all_placeholders = $(".elgg-menu-hover[data-menu-id='" + mac + "']");
 		
 		if (!$all_placeholders.length) {
 			return;
@@ -31,7 +31,7 @@ define(['jquery'], function ($) {
 					}
 				},
 				complete: function() {
-					$all_placeholders.removeAttr('data-menu-placeholder data-elgg-menu-data');
+					$all_placeholders.removeAttr('data-menu-id data-elgg-menu-data');
 				}
 			});
 		});
@@ -72,10 +72,10 @@ define(['jquery'], function ($) {
 
 		var $icon = $(this);
 
-		var $placeholder = $icon.parent().find('.elgg-menu-hover[data-menu-placeholder]');
+		var $placeholder = $icon.parent().find('.elgg-menu-hover[data-menu-id]');
 
 		if ($placeholder.length) {
-			loadMenu($placeholder.attr('rel'), function() {
+			loadMenu($placeholder.attr('data-menu-id'), function() {
 				showPopup($icon);
 			});
 		} else {
