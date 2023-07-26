@@ -36,6 +36,7 @@ class Breadcrumbs {
 		
 		// remove last crumb if it has no link
 		if (empty($last->getHref())) {
+			elgg_log("Having a breadcrumb at the end of the list without a link makes no sense. Please update your code for the '{$last->getText()}[{$last->getID()}]' breadcrumb.", 'NOTICE');
 			$breadcrumbs->getSection('default')->remove($last->getID());
 		}
 	}
