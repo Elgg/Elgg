@@ -1,3 +1,16 @@
+<a name="4.3.9"></a>
+### 4.3.9  (2023-07-26)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+* Nikolai Shcherbin (1)
+
+#### Bug Fixes
+
+* **admin:** use correct params for memcache and redis server information ([6ee26b94](https://github.com/Elgg/Elgg/commit/6ee26b94637a384af133187afb9fab766ef324da))
+
+
 <a name="4.3.8"></a>
 ### 4.3.8  (2023-04-04)
 
