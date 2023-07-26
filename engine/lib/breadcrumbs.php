@@ -27,7 +27,7 @@ function elgg_push_breadcrumb(string $text, string|false $href = false): void {
  * Resolves and pushes entity breadcrumbs based on named routes
  *
  * @param \ElggEntity $entity    Entity
- * @param bool        $link_self Use entity link in the last crumb
+ * @param bool        $link_self Add a link to the entity
  *
  * @return void
  */
@@ -35,11 +35,13 @@ function elgg_push_entity_breadcrumbs(\ElggEntity $entity, bool $link_self = tru
 
 	elgg_push_collection_breadcrumbs($entity->type, $entity->subtype, $entity->getContainerEntity());
 
-	elgg_register_menu_item('breadcrumbs', [
-		'name' => 'entity',
-		'text' => $entity->getDisplayName(),
-		'href' => $link_self ? $entity->getURL() : false,
-	]);
+	if ($link_self) {
+		elgg_register_menu_item('breadcrumbs', [
+			'name' => 'entity',
+			'text' => $entity->getDisplayName(),
+			'href' => $entity->getURL(),
+		]);
+	}
 }
 
 /**
