@@ -191,6 +191,18 @@
 * **plugins:** the embed plugin has been removed ([31a443c5](https://github.com/Elgg/Elgg/commit/31a443c56a48410333a08a1c0d61308f822151a9))
 * **widgets:** class function saveSettings has been removed ([3c58daee](https://github.com/Elgg/Elgg/commit/3c58daeea8bfc48c099827733cbe167462043d5f))
 
+<a name="4.3.9"></a>
+### 4.3.9  (2023-07-26)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+* Nikolai Shcherbin (1)
+
+#### Bug Fixes
+
+* **admin:** use correct params for memcache and redis server information ([6ee26b94](https://github.com/Elgg/Elgg/commit/6ee26b94637a384af133187afb9fab766ef324da))
+
 
 <a name="4.3.8"></a>
 ### 4.3.8  (2023-04-04)
