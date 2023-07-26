@@ -17,9 +17,9 @@ class Breadcrumbs {
 	 *
 	 * @param \Elgg\Event $event 'prepare', 'menu:breadcrumbs'
 	 *
-	 * @return void|PreparedMenu
+	 * @return void
 	 */
-	public static function cleanupBreadcrumbs(\Elgg\Event $event) {
+	public static function cleanupBreadcrumbs(\Elgg\Event $event): void {
 		/* @var $breadcrumbs PreparedMenu */
 		$breadcrumbs = $event->getValue();
 		
@@ -39,5 +39,40 @@ class Breadcrumbs {
 			elgg_log("Having a breadcrumb at the end of the list without a link makes no sense. Please update your code for the '{$last->getText()}[{$last->getID()}]' breadcrumb.", 'NOTICE');
 			$breadcrumbs->getSection('default')->remove($last->getID());
 		}
+	}
+	
+	/**
+	 * Adds a home item
+	 *
+	 * @param \Elgg\Event $event 'prepare', 'menu:breadcrumbs'
+	 *
+	 * @return null|PreparedMenu
+	 */
+	public static function addHomeItem(\Elgg\Event $event): ?PreparedMenu {
+		/* @var $return PreparedMenu */
+		$return = $event->getValue();
+		
+		/* @var $items \ElggMenuItem[] */
+		$items = $return->getItems('default');
+		if (empty($items)) {
+			return null;
+		}
+		
+		$href = elgg_get_site_url();
+		if (elgg_in_context('admin')) {
+			$href = elgg_generate_url('admin');
+		}
+		
+		array_unshift($items, \ElggMenuItem::factory([
+			'name' => 'home',
+			'icon' => 'home',
+			'text' => false,
+			'title' => elgg_get_site_entity()->getDisplayName(),
+			'href' => $href,
+		]));
+		
+		$return->getSection('default')->fill($items);
+		
+		return $return;
 	}
 }
