@@ -62,7 +62,7 @@ if (elgg_is_empty($url)) {
 
 if (isset($vars['text'])) {
 	if (elgg_extract('encode_text', $vars, false)) {
-		$text = htmlspecialchars($vars['text'], ENT_QUOTES, 'UTF-8', false);
+		$text = htmlspecialchars((string) $vars['text'], ENT_QUOTES, 'UTF-8', false);
 	} else {
 		$text = elgg_extract('text', $vars);
 	}
@@ -117,7 +117,11 @@ unset($vars['is_trusted']);
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-anchor');
 
-if ($text !== false && $text !== '') {
+if (!isset($vars['aria-label']) && !isset($vars['aria-labelledby']) && !isset($vars['title']) && empty(elgg_strip_tags((string) $text))) {
+	elgg_log('An output/url should have a discernible text (text, title, aria-label or aria-labelledby)', 'NOTICE');
+}
+
+if (!elgg_is_empty($text)) {
 	$text = elgg_format_element('span', [
 		'class' => 'elgg-anchor-label',
 	], $text);

@@ -48,7 +48,7 @@ echo elgg_view('input/longtext', [
 $fields = [
 	[
 		'#type' => 'submit',
-		'value' => $text,
+		'text' => $text,
 	],
 ];
 

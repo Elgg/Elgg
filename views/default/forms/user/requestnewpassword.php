@@ -19,6 +19,6 @@ echo elgg_view_field(['#type' => 'captcha']);
 
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('request'),
+	'text' => elgg_echo('request'),
 ]);
 elgg_set_form_footer($footer);

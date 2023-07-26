@@ -50,7 +50,7 @@ class DelayedEmailQueueTable {
 			'timestamp' => $insert->param($this->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP),
 		]);
 		
-		return $this->db->insertData($insert) !== false;
+		return $this->db->insertData($insert) !== 0;
 	}
 	
 	/**
@@ -71,39 +71,52 @@ class DelayedEmailQueueTable {
 	/**
 	 * Get all the rows in the queue for a given recipient
 	 *
-	 * @param int    $recipient_guid    the recipient
-	 * @param string $delivery_interval the interval for the recipient
-	 * @param int    $timestamp         (optional) all queue items before time (default: now)
+	 * @param int      $recipient_guid    the recipient
+	 * @param string   $delivery_interval the interval for the recipient
+	 * @param null|int $timestamp         (optional) all queue items before time (default: now)
+	 * @param int      $max_results       (optional) maximum number of rows to return
 	 *
 	 * @return DatabaseRecord[] database rows
 	 */
-	public function getRecipientRows(int $recipient_guid, string $delivery_interval, int $timestamp = null): array {
+	public function getRecipientRows(int $recipient_guid, string $delivery_interval, int $timestamp = null, int $max_results = 0): array {
 		$select = Select::fromTable(self::TABLE_NAME);
 		$select->select('*')
 			->where($select->compare('recipient_guid', '=', $recipient_guid, ELGG_VALUE_GUID))
 			->andWhere($select->compare('delivery_interval', '=', $delivery_interval, ELGG_VALUE_STRING))
-			->andWhere($select->compare('timestamp', '<', $timestamp ?? $this->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP));
+			->andWhere($select->compare('timestamp', '<', $timestamp ?? $this->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP))
+			->orderBy('timestamp', 'ASC')
+			->addOrderBy('id', 'ASC');
+		
+		if ($max_results > 0) {
+			$select->setMaxResults($max_results);
+		}
 		
 		return $this->db->getData($select, [$this, 'rowToRecord']);
 	}
 	
 	/**
-	 * Get the queued items from the database for a given interval
+	 * Fetch the GUID of the next recipient to process
 	 *
-	 * @param string $delivery_interval the delivery interval to get
-	 * @param int    $timestamp         (optional) all queue items before time (default: now)
+	 * @param string   $delivery_interval the delivery interval to get
+	 * @param null|int $timestamp         (optional) based on queue items before time (default: now)
 	 *
-	 * @return DatabaseRecord[]
+	 * @return null|int
 	 */
-	public function getIntervalRows(string $delivery_interval, int $timestamp = null): array {
+	public function getNextRecipientGUID(string $delivery_interval, int $timestamp = null): ?int {
 		$select = Select::fromTable(self::TABLE_NAME);
-		$select->select('*')
+		$select->select('recipient_guid')
 			->where($select->compare('delivery_interval', '=', $delivery_interval, ELGG_VALUE_STRING))
 			->andWhere($select->compare('timestamp', '<', $timestamp ?? $this->getCurrentTime()->getTimestamp()))
-			->orderBy('recipient_guid', 'ASC')
-			->addOrderBy('timestamp', 'ASC');
+			->orderBy('timestamp', 'ASC')
+			->addOrderBy('id', 'ASC')
+			->setMaxResults(1);
 		
-		return $this->db->getData($select, [$this, 'rowToRecord']);
+		$row = $this->db->getDataRow($select);
+		if (empty($row)) {
+			return null;
+		}
+		
+		return (int) $row->recipient_guid;
 	}
 	
 	/**
@@ -123,17 +136,24 @@ class DelayedEmailQueueTable {
 	/**
 	 * Delete all the queue items from the database for the given recipient and interval
 	 *
-	 * @param int    $recipient_guid    the recipient
-	 * @param string $delivery_interval the interval for the recipient
-	 * @param int    $timestamp         (optional) all queue items before time (default: now)
+	 * @param int      $recipient_guid    the recipient
+	 * @param string   $delivery_interval the interval for the recipient
+	 * @param null|int $timestamp         (optional) all queue items before time (default: now)
+	 * @param int      $max_id            (optional) the max row ID to remove (this includes the given row ID)
 	 *
 	 * @return int number of deleted rows
 	 */
-	public function deleteRecipientRows(int $recipient_guid, string $delivery_interval, int $timestamp = null): int {
+	public function deleteRecipientRows(int $recipient_guid, string $delivery_interval, int $timestamp = null, int $max_id = 0): int {
 		$delete = Delete::fromTable(self::TABLE_NAME);
 		$delete->where($delete->compare('recipient_guid', '=', $recipient_guid, ELGG_VALUE_GUID))
 			->andWhere($delete->compare('delivery_interval', '=', $delivery_interval, ELGG_VALUE_STRING))
-			->andWhere($delete->compare('timestamp', '<', $timestamp ?? $this->getCurrentTime()->getTimestamp(), ELGG_VALUE_INTEGER));
+			->andWhere($delete->compare('timestamp', '<', $timestamp ?? $this->getCurrentTime()->getTimestamp(), ELGG_VALUE_INTEGER))
+			->orderBy('timestamp', 'ASC')
+			->addOrderBy('id', 'ASC');
+		
+		if ($max_id > 0) {
+			$delete->andWhere($delete->compare('id', '<=', $max_id, ELGG_VALUE_ID));
+		}
 		
 		return $this->db->deleteData($delete);
 	}
@@ -169,7 +189,7 @@ class DelayedEmailQueueTable {
 	}
 	
 	/**
-	 * Convert a database row to a managable object
+	 * Convert a database row to a manageable object
 	 *
 	 * @param \stdClass $row the database record
 	 *
