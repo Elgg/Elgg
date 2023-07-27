@@ -6,7 +6,6 @@
 $page_owner = elgg_get_page_owner_entity();
 
 elgg_push_breadcrumb($page_owner->getDisplayName(), $page_owner->getURL());
-elgg_push_breadcrumb(elgg_echo('river:friends'), elgg_generate_url('collection:river:friends', ['username' => $page_owner->username]));
 
 $content = elgg_view('river/listing/friends', [
 	'entity' => $page_owner,

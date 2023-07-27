@@ -15,14 +15,12 @@ if (!$collection instanceof \ElggAccessCollection || !$collection->canEdit()) {
 }
 
 $user = $collection->getOwnerEntity();
-if (!$user instanceof ElggUser) {
+if (!$user instanceof \ElggUser) {
 	throw new EntityNotFoundException();
 }
 
 elgg_set_page_owner_guid($user->guid);
 
-elgg_push_breadcrumb($user->getDisplayName(), $user->getURL());
-elgg_push_breadcrumb(elgg_echo('friends'), elgg_generate_url('collection:friends:owner', ['username' => $user->username]));
 elgg_push_breadcrumb(elgg_echo('friends:collections'), elgg_generate_url('collection:access_collection:friends:owner', ['username' => $user->username]));
 
 echo elgg_view_page($collection->getDisplayName(), [
@@ -30,6 +28,5 @@ echo elgg_view_page($collection->getDisplayName(), [
 		'full_view' => true,
 		'item' => $collection,
 	]),
-	'show_owner_block_menu' => false,
 	'filter_id' => 'friends_collections/view',
 ]);

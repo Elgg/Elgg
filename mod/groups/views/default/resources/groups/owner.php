@@ -8,7 +8,7 @@ if ($page_owner->guid == elgg_get_logged_in_user_guid()) {
 	$title = elgg_echo('groups:owned:user', [$page_owner->getDisplayName()]);
 }
 
-elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
+elgg_push_collection_breadcrumbs('group', 'group');
 
 if (elgg_get_plugin_setting('limited_groups', 'groups') != 'yes' || elgg_is_admin_logged_in()) {
 	elgg_register_title_button('add', 'group', 'group');

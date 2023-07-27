@@ -15,7 +15,7 @@ if (!$target instanceof \ElggEntity) {
 	throw new EntityNotFoundException(elgg_echo('generic_comment:notfound'));
 }
 
-elgg_push_breadcrumb($target->getDisplayName(), $target->getURL());
+elgg_push_entity_breadcrumbs($target);
 
 echo elgg_view_page(elgg_echo('generic_comments:edit'), [
 	'content' => elgg_view_form('comment/save', [], [

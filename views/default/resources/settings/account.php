@@ -15,8 +15,6 @@ if (!$user->canEdit()) {
 	throw new EntityPermissionsException();
 }
 
-elgg_push_breadcrumb(elgg_echo('settings'), elgg_generate_url('settings:account', ['username' => $user->username]));
-
 $title = elgg_echo('usersettings:user', [$user->getDisplayName()]);
 
 echo elgg_view_page($title, [

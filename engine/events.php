@@ -226,6 +226,7 @@ return [
 			'Elgg\Menus\AdminUsersBulk::disableItems' => [],
 		],
 		'menu:breadcrumbs' => [
+			'\Elgg\Menus\Breadcrumbs::addHomeItem' => ['priority' => 10000],
 			'\Elgg\Menus\Breadcrumbs::cleanupBreadcrumbs' => ['priority' => 9999],
 		],
 		'menu:site' => [

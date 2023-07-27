@@ -3,7 +3,7 @@
  * Layout breadcrumbs
  *
  * @uses $vars['breadcrumbs']  Breadcrumbs
- *                             Will no be rendered if the value is 'false'
+ *                             Will not be rendered if the value is 'false'
  *                             Will override breadcrumbs view if set to a string
  *                             Will render 'navigation/breadcrumbs' view if
  *                             not set or is an array of breadcrumbs

@@ -21,7 +21,11 @@ function pages_prepare_parent_breadcrumbs(\ElggPage $page): void {
 		$page = $page->getParentEntity();
 	}
 
-	array_shift($crumbs);
+	if (elgg_http_url_is_identical(elgg_get_current_url(), $crumbs[0]['href'])) {
+		// do not add breadcrumb to self
+		array_shift($crumbs);
+	}
+	
 	$crumbs = array_reverse($crumbs);
 
 	foreach ($crumbs as $crumb) {

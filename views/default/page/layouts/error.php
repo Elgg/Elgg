@@ -14,7 +14,6 @@ $class = elgg_extract_class($vars, [
 ]);
 unset($vars['class']);
 
-$vars['breadcrumbs'] = false;
 $vars['filter'] = false;
 
 $header = elgg_view('page/layouts/elements/header', $vars);

@@ -10,7 +10,7 @@ elgg_entity_gatekeeper($guid, 'object', 'file');
 /* @var $file \ElggFile */
 $file = get_entity($guid);
 
-elgg_push_entity_breadcrumbs($file, false);
+elgg_push_entity_breadcrumbs($file);
 
 if ($file->canDownload()) {
 	elgg_register_menu_item('title', [
