@@ -31,7 +31,6 @@ elgg_push_collection_breadcrumbs('object', 'page', $container);
 
 if ($parent instanceof \ElggPage) {
 	pages_prepare_parent_breadcrumbs($parent);
-	elgg_push_breadcrumb($parent->getDisplayName(), $parent->getURL());
 }
 
 echo elgg_view_page(elgg_echo('add:object:page'), [

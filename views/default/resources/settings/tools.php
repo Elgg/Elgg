@@ -20,8 +20,6 @@ if (elgg_language_key_exists("{$plugin_id}:usersettings:title")) {
 	$title = $plugin->getDisplayName();
 }
 
-elgg_push_breadcrumb(elgg_echo('settings'), elgg_generate_url('settings:account', ['username' => $user->username]));
-
 $form_vars = [];
 if (elgg_action_exists("{$plugin_id}/usersettings/save")) {
 	$form_vars['action'] = "action/{$plugin_id}/usersettings/save";

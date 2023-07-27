@@ -15,10 +15,6 @@ if (!$user->canEdit()) {
 	throw new EntityPermissionsException();
 }
 
-elgg_push_breadcrumb(elgg_echo('settings'), elgg_generate_url('settings:account', [
-	'username' => $user->username,
-]));
-
 if ($user->guid === elgg_get_logged_in_user_guid()) {
 	$title = elgg_echo('usersettings:statistics');
 } else {

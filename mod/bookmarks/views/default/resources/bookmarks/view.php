@@ -9,7 +9,7 @@ elgg_entity_gatekeeper($guid, 'object', 'bookmarks');
 
 $entity = get_entity($guid);
 
-elgg_push_entity_breadcrumbs($entity, false);
+elgg_push_entity_breadcrumbs($entity);
 
 echo elgg_view_page($entity->getDisplayName(), [
 	'content' => elgg_view_entity($entity, [

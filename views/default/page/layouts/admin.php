@@ -13,8 +13,6 @@ $class = elgg_extract_class($vars, [
 ]);
 unset($vars['class']);
 
-$vars['breadcrumbs'] = false;
-
 $vars['sidebar'] = elgg_view('admin/sidebar', $vars);
 
 $header = elgg_view('page/layouts/elements/header', $vars);
