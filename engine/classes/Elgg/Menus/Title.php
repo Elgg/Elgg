@@ -99,6 +99,7 @@ class Title {
 			'icon' => 'ellipsis-v',
 			'href' => false,
 			'text' => '',
+			'title' => elgg_echo('more'),
 			'child_menu' => [
 				'display' => 'dropdown',
 				'data-position' => json_encode([

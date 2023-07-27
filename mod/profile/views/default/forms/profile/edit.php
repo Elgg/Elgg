@@ -75,7 +75,6 @@ echo elgg_view('input/hidden', ['name' => 'guid', 'value' => $entity->guid]);
 
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('save'),
-	'#class' => 'elgg-foot',
+	'text' => elgg_echo('save'),
 ]);
 elgg_set_form_footer($footer);

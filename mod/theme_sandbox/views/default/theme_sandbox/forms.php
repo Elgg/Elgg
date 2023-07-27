@@ -722,7 +722,7 @@ $body .= elgg_view_field([
 ]);
 $body .= elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('submit'),
+	'text' => elgg_echo('submit'),
 ]);
 
 echo elgg_view('input/form', [

@@ -18,8 +18,9 @@ echo elgg_format_element('div', ['class' => 'messages-container'], $list);
 $buttons = [];
 $buttons[] = [
 	'#type' => 'submit',
-	'value' => elgg_echo('delete'),
 	'name' => 'delete',
+	'value' => 1,
+	'text' => elgg_echo('delete'),
 	'class' => 'elgg-button-delete',
 	'title' => elgg_echo('deleteconfirm:plural'),
 	'data-confirm' => elgg_echo('deleteconfirm:plural'),
@@ -28,14 +29,14 @@ $buttons[] = [
 if (elgg_extract('folder', $vars) == 'inbox') {
 	$buttons[] = [
 		'#type' => 'submit',
-		'value' => elgg_echo('messages:markread'),
 		'name' => 'read',
+		'text' => elgg_echo('messages:markread'),
 	];
 }
 
 $buttons[] = [
 	'#type' => 'button',
-	'value' => elgg_echo('messages:toggle'),
+	'text' => elgg_echo('messages:toggle'),
 	'class' => 'elgg-button-cancel',
 	'id' => 'messages-toggle',
 ];

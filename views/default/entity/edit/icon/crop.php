@@ -129,6 +129,7 @@ if (isset($cropper_data['existingAspectRatio'], $cropper_data['aspectRatio'])) {
 $img = elgg_format_element('img', [
 	'data-icon-cropper' => json_encode($cropper_data),
 	'src' => $img_url,
+	'alt' => elgg_echo('entity:edit:icon:crop:img:alt'),
 ]);
 
 echo elgg_format_element('div', ['class' => ['elgg-entity-edit-icon-crop-wrapper', 'hidden', 'mbm']], $img);

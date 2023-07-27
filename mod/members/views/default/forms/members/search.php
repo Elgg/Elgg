@@ -9,7 +9,7 @@ echo elgg_view_field([
 
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('search'),
+	'text' => elgg_echo('search'),
 ]);
 
 $footer .= elgg_format_element('p', [

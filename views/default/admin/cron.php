@@ -28,6 +28,7 @@ foreach ($periods as $period) {
 
 	// cron output
 	$msg = $cron_service->getLog('output', $period);
+	$msg_class = [];
 	if (!empty($msg)) {
 		$msg = nl2br($msg);
 		
@@ -36,14 +37,17 @@ foreach ($periods as $period) {
 			$msg = elgg_view('output/url', [
 				'href' => false,
 				'text' => false,
+				'title' => elgg_echo('more_info'),
 				'icon' => 'info',
 				'class' => ['elgg-lightbox'],
 				'data-colorbox-opts' => json_encode(['html' => $msg]),
 			]);
+			
+			$msg_class[] = 'center';
 		}
 	}
 	
-	$row[] = elgg_format_element('td', [], $msg);
+	$row[] = elgg_format_element('td', ['class' => $msg_class], $msg);
 	
 	$table_content .= elgg_format_element('tr', [], implode(PHP_EOL, $row));
 }

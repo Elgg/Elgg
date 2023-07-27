@@ -1,3 +1,24 @@
+<a name="5.0.4"></a>
+### 5.0.4  (2023-07-26)
+
+#### Contributors
+
+* Jerôme Bakker (9)
+* Jeroen Dalsem (1)
+
+#### Bug Fixes
+
+* **ckeditor:** added all block level image alignments to toolbar ([6fff9429](https://github.com/Elgg/Elgg/commit/6fff94290017df4a9bf879236b73c1f0be92c62e))
+* **icons:** prevent racing condition when saving cropping coordinates ([b4993528](https://github.com/Elgg/Elgg/commit/b499352814c45d8fbfc1eefa3fa5294e27de68cb))
+* **notifications:** processing delayed emails could cause OOM issues ([5e0fcab1](https://github.com/Elgg/Elgg/commit/5e0fcab17eb701474d1d121933474eefa52b7aca))
+* **views:**
+  * input/button and output/url must have discernible text ([924b2cdc](https://github.com/Elgg/Elgg/commit/924b2cdcae2a97447a2094b7389fe9ebb1d2f74e))
+  * make sure the icon cropper img has an alt text ([0cc105c8](https://github.com/Elgg/Elgg/commit/0cc105c8b684ed756b4839c1d72df714f17a1865))
+  * allow mobile devices to zoom ([1cee1be1](https://github.com/Elgg/Elgg/commit/1cee1be17474da910172dd5cc829f10a67c7fd0b))
+  * correctly set iframe width for PHPInfo ([e72f476e](https://github.com/Elgg/Elgg/commit/e72f476eb62ce5e8253deaf7ea9ca71fe70c79c5))
+  * only generate listing ID when using pagination ([ffe94eab](https://github.com/Elgg/Elgg/commit/ffe94eab174e0984cf288585fd91d24ac8d07a55))
+
+
 <a name="5.0.3"></a>
 ### 5.0.3  (2023-07-14)
 
@@ -190,6 +211,18 @@
 * **files:** file plugin no longer uses custom file type icons ([92c50dd1](https://github.com/Elgg/Elgg/commit/92c50dd1e6c7dc48d9ecde4f7b0f9c1c51a3891a))
 * **plugins:** the embed plugin has been removed ([31a443c5](https://github.com/Elgg/Elgg/commit/31a443c56a48410333a08a1c0d61308f822151a9))
 * **widgets:** class function saveSettings has been removed ([3c58daee](https://github.com/Elgg/Elgg/commit/3c58daeea8bfc48c099827733cbe167462043d5f))
+
+<a name="4.3.9"></a>
+### 4.3.9  (2023-07-26)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+* Nikolai Shcherbin (1)
+
+#### Bug Fixes
+
+* **admin:** use correct params for memcache and redis server information ([6ee26b94](https://github.com/Elgg/Elgg/commit/6ee26b94637a384af133187afb9fab766ef324da))
 
 
 <a name="4.3.8"></a>
