@@ -42,7 +42,7 @@ elgg_set_http_header('Content-Type: text/xml; charset=utf-8');
 <channel>
 	<title><![CDATA[<?= $title; ?>}]]></title>
 	<link><?= $url; ?></link>
-	<atom:link href="<<?= $rssurl; ?>" rel="self" type="application/rss+xml" />
+	<atom:link href="<?= $rssurl; ?>" rel="self" type="application/rss+xml" />
 	<description><![CDATA[<?= $description; ?>}]]></description>
 	<?= $extensions; ?>
 	<?= $body; ?>
