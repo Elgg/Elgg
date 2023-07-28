@@ -385,7 +385,7 @@ class ViewsService {
 	 *
 	 * @see elgg_view()
 	 */
-	public function renderView(string $view, array $vars = [], string $viewtype = '', bool $issue_missing_notice = true, array $extensions_tree = []): string {
+	public function renderView(string $view, array $vars = [], string $viewtype = '', bool $issue_missing_notice = null, array $extensions_tree = []): string {
 		$view = self::canonicalizeViewName($view);
 
 		// basic checking for bad paths
@@ -405,6 +405,10 @@ class ViewsService {
 		// Get the current viewtype
 		if ($viewtype === '' || !$this->isValidViewtype($viewtype)) {
 			$viewtype = $this->getViewtype();
+		}
+		
+		if (!isset($issue_missing_notice)) {
+			$issue_missing_notice = $viewtype === 'default';
 		}
 
 		// allow altering $vars
