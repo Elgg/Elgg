@@ -27,14 +27,18 @@ class Entity {
 			return;
 		}
 		
-		$edit_url = elgg_generate_entity_url($entity, 'edit');
+		/* @var $return MenuItems */
+		$return = $event->getValue();
 		
+		if ($return->get('edit')) {
+			// a menu item for editting already exists
+			return;
+		}
+				
+		$edit_url = elgg_generate_entity_url($entity, 'edit');
 		if (empty($edit_url) || !$entity->canEdit()) {
 			return;
 		}
-		
-		/* @var $return MenuItems */
-		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'edit',
@@ -83,6 +87,35 @@ class Entity {
 			'href' => $delete_url,
 			'confirm' => elgg_echo('deleteconfirm'),
 			'priority' => 950,
+		]);
+		
+		return $return;
+	}
+	
+	/**
+	 * Registers menu items for the entity menu of a comment
+	 *
+	 * @param \Elgg\Event $event 'register', 'menu:entity:object:comment'
+	 *
+	 * @return void|MenuItems
+	 */
+	public static function registerComment(\Elgg\Event $event) {
+		$entity = $event->getEntityParam();
+		if (!$entity instanceof \ElggComment || !$entity->canEdit()) {
+			return;
+		}
+		
+		/* @var $return MenuItems */
+		$return = $event->getValue();
+		
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'edit',
+			'icon' => 'edit',
+			'text' => elgg_echo('edit'),
+			'title' => elgg_echo('edit:this'),
+			'href' => false,
+			'priority' => 900,
+			'data-comment-guid' => $entity->guid,
 		]);
 		
 		return $return;

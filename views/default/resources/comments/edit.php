@@ -3,6 +3,8 @@
 use Elgg\Exceptions\Http\EntityNotFoundException;
 use Elgg\Exceptions\Http\EntityPermissionsException;
 
+elgg_deprecated_notice('The resource "comments/edit" is deprecated. Do not use this view.', '5.1');
+
 $guid = (int) elgg_extract('guid', $vars);
 
 $comment = get_entity($guid);

@@ -1,0 +1,17 @@
+From 5.0 to 5.1
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+Deprecated Views
+----------------
+
+ * ``resources/comments/edit`` is deprecated: This resource is no longer in use
+
+Deprecated Routes
+-----------------
+
+ * ``edit:object:comment`` is deprecated: Editting comments uses an inline form
+ 
