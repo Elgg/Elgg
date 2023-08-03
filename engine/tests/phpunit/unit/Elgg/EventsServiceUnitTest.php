@@ -8,16 +8,24 @@ use Psr\Log\LogLevel;
 
 class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 
-	public $counter = 0;
-
-	/**
-	 * @var EventsService
-	 */
-	public $events;
+	protected int $counter = 0;
+	protected int $counter2 = 0;
+	protected EventsService $events;
 
 	public function up() {
 		$this->counter = 0;
+		$this->counter2 = 0;
 		$this->events = new EventsService(new HandlersService());
+	}
+
+	public function incrementCounter(): bool {
+		$this->counter++;
+		return true;
+	}
+	
+	public function incrementCounter2(): bool {
+		$this->counter2++;
+		return true;
 	}
 
 	public function testTriggerCallsRegisteredHandlersAndReturnsTrue() {
@@ -143,7 +151,7 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(2, $this->events->trigger('foo', 'bar', 1));
 	}
 	
-	public function testDeprecatedWithoutRegisteredHandlers() {
+	public function testTriggerDeprecatedWithoutRegisteredHandlers() {
 		
 		_elgg_services()->logger->disable();
 		
@@ -154,7 +162,7 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals([], $logged);
 	}
 	
-	public function testDeprecatedWithRegisteredHandlers() {
+	public function testTriggerDeprecatedWithRegisteredHandlers() {
 		
 		$this->events->registerHandler('foo', 'bar', [$this, 'incrementCounter']);
 		
@@ -173,12 +181,113 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertStringStartsWith("Deprecated in 1.0: The 'foo', 'bar' event is deprecated. Do not use it!", $message_details['message']);
 		$this->assertEquals(LogLevel::WARNING, $message_details['level']);
 	}
-
-	public function incrementCounter() {
-		$this->counter++;
-		return true;
+	
+	public function testTriggerDeprecatedResultsWithoutRegisteredHandlers() {
+		
+		_elgg_services()->logger->disable();
+		
+		$this->assertTrue($this->events->triggerDeprecatedResults('foo', 'bar', [], true, 'The event "foo":"bar" has been deprecated', '1.0'));
+		
+		$logged = _elgg_services()->logger->enable();
+		
+		$this->assertEquals([], $logged);
 	}
 	
+	public function testTriggerDeprecatedResultsWithRegisteredHandlers() {
+		
+		$this->events->registerHandler('foo', 'bar', [$this, 'incrementCounter']);
+		
+		_elgg_services()->logger->disable();
+		
+		$this->assertTrue($this->events->triggerDeprecatedResults('foo', 'bar', [], false, 'Do not use it!', '1.0'));
+		$this->assertEquals(1, $this->counter);
+		
+		$logged = _elgg_services()->logger->enable();
+		$this->assertCount(1, $logged);
+		
+		$message_details = $logged[0];
+		
+		$this->assertArrayHasKey('message', $message_details);
+		$this->assertArrayHasKey('level', $message_details);
+		$this->assertStringStartsWith("Deprecated in 1.0: The 'foo', 'bar' event is deprecated. Do not use it!", $message_details['message']);
+		$this->assertEquals(LogLevel::WARNING, $message_details['level']);
+	}
+	
+	public function testTriggerWithBeforeCallbackNotCalledWithoutRegisteredHandlers() {
+		$this->assertTrue($this->events->trigger('foo', 'bar', [], [
+			EventsService::OPTION_BEGIN_CALLBACK => [$this, 'incrementCounter'],
+		]));
+		
+		$this->assertEmpty($this->counter);
+	}
+	
+	public function testTriggerWithBeforeCallbackCalledWithRegisteredHandlers() {
+		$this->events->registerHandler('foo', 'bar', [$this, 'incrementCounter2']);
+		
+		$this->assertTrue($this->events->trigger('foo', 'bar', [], [
+			EventsService::OPTION_BEGIN_CALLBACK => [$this, 'incrementCounter'],
+		]));
+		
+		$this->assertEquals(1, $this->counter);
+		$this->assertEquals(1, $this->counter2);
+	}
+	
+	public function testTriggerResultsWithBeforeCallbackNotCalledWithoutRegisteredHandlers() {
+		$this->assertTrue($this->events->triggerResults('foo', 'bar', [], true, [
+			EventsService::OPTION_BEGIN_CALLBACK => [$this, 'incrementCounter'],
+		]));
+		
+		$this->assertEmpty($this->counter);
+	}
+	
+	public function testTriggerResultsWithBeforeCallbackCalledWithRegisteredHandlers() {
+		$this->events->registerHandler('foo', 'bar', [$this, 'incrementCounter2']);
+		
+		$this->assertTrue($this->events->triggerResults('foo', 'bar', [], false, [
+			EventsService::OPTION_BEGIN_CALLBACK => [$this, 'incrementCounter'],
+		]));
+		
+		$this->assertEquals(1, $this->counter);
+		$this->assertEquals(1, $this->counter2);
+	}
+	
+	public function testTriggerWithEndCallbackNotCalledWithoutRegisteredHandlers() {
+		$this->assertTrue($this->events->trigger('foo', 'bar', [], [
+			EventsService::OPTION_END_CALLBACK => [$this, 'incrementCounter'],
+		]));
+		
+		$this->assertEmpty($this->counter);
+	}
+	
+	public function testTriggerWithEndCallbackCalledWithRegisteredHandlers() {
+		$this->events->registerHandler('foo', 'bar', [$this, 'incrementCounter2']);
+		
+		$this->assertTrue($this->events->trigger('foo', 'bar', [], [
+			EventsService::OPTION_END_CALLBACK => [$this, 'incrementCounter'],
+		]));
+		
+		$this->assertEquals(1, $this->counter);
+		$this->assertEquals(1, $this->counter2);
+	}
+	
+	public function testTriggerResultsWithEndCallbackNotCalledWithoutRegisteredHandlers() {
+		$this->assertTrue($this->events->triggerResults('foo', 'bar', [], true, [
+			EventsService::OPTION_END_CALLBACK => [$this, 'incrementCounter'],
+		]));
+		
+		$this->assertEmpty($this->counter);
+	}
+	
+	public function testTriggerResultsWithEndCallbackCalledWithRegisteredHandlers() {
+		$this->events->registerHandler('foo', 'bar', [$this, 'incrementCounter2']);
+		
+		$this->assertTrue($this->events->triggerResults('foo', 'bar', [], false, [
+			EventsService::OPTION_END_CALLBACK => [$this, 'incrementCounter'],
+		]));
+		
+		$this->assertEquals(1, $this->counter);
+		$this->assertEquals(1, $this->counter2);
+	}
 	
 	public function testCanRegisterHandlers() {
 		$f = function () {
