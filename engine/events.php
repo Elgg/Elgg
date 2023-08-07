@@ -278,6 +278,9 @@ return [
 			'Elgg\Menus\Entity::registerUserHoverAdminSection' => [],
 			'Elgg\Menus\UserHover::registerLoginAs' => [],
 		],
+		'menu:entity:object:comment' => [
+			'Elgg\Menus\Entity::registerComment' => [],
+		],
 		'menu:entity:object:elgg_upgrade' => [
 			'Elgg\Menus\Entity::registerUpgrade' => [],
 		],

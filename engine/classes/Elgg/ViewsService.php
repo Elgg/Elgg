@@ -385,7 +385,7 @@ class ViewsService {
 	 *
 	 * @see elgg_view()
 	 */
-	public function renderView(string $view, array $vars = [], string $viewtype = '', bool $issue_missing_notice = true, array $extensions_tree = []): string {
+	public function renderView(string $view, array $vars = [], string $viewtype = '', bool $issue_missing_notice = null, array $extensions_tree = []): string {
 		$view = self::canonicalizeViewName($view);
 
 		// basic checking for bad paths
@@ -405,6 +405,10 @@ class ViewsService {
 		// Get the current viewtype
 		if ($viewtype === '' || !$this->isValidViewtype($viewtype)) {
 			$viewtype = $this->getViewtype();
+		}
+		
+		if (!isset($issue_missing_notice)) {
+			$issue_missing_notice = $viewtype === 'default';
 		}
 
 		// allow altering $vars
@@ -791,11 +795,6 @@ class ViewsService {
 			return false;
 		}
 		
-		// format changed, check version
-		if (empty($data['version']) || $data['version'] !== '2.0') {
-			return false;
-		}
-		
 		$this->locations = $data['locations'];
 		$this->cache = $cache;
 
@@ -815,10 +814,7 @@ class ViewsService {
 			return;
 		}
 		
-		$cache->save('view_locations', [
-			'version' => '2.0',
-			'locations' => $this->locations,
-		]);
+		$cache->save('view_locations', ['locations' => $this->locations]);
 
 		// this is saved just for the inspector and is not loaded in loadAll()
 		$cache->save('view_overrides', $this->overrides);
