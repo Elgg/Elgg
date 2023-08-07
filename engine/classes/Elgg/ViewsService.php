@@ -131,18 +131,6 @@ class ViewsService {
 	}
 
 	/**
-	 * If the current viewtype has no views, reset it to "default"
-	 *
-	 * @return void
-	 */
-	public function clampViewtypeToPopulatedViews(): void {
-		$viewtype = $this->getViewtype();
-		if (empty($this->locations[$viewtype])) {
-			$this->viewtype = 'default';
-		}
-	}
-
-	/**
 	 * Resolve the initial viewtype
 	 *
 	 * @return string
@@ -150,13 +138,13 @@ class ViewsService {
 	private function resolveViewtype(): string {
 		if ($this->request) {
 			$view = $this->request->getParam('view', '', false);
-			if ($this->isValidViewtype($view)) {
+			if ($this->isValidViewtype($view) && !empty($this->locations[$view])) {
 				return $view;
 			}
 		}
 
 		$view = (string) elgg_get_config('view');
-		if ($this->isValidViewtype($view)) {
+		if ($this->isValidViewtype($view) && !empty($this->locations[$view])) {
 			return $view;
 		}
 

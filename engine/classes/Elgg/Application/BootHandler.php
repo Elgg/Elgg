@@ -133,7 +133,6 @@ class BootHandler {
 
 		$events = $this->app->internal_services->events;
 
-		$this->app->internal_services->views->clampViewtypeToPopulatedViews();
 		$this->app->allowPathRewrite();
 
 		// Complete the boot process for both engine and plugins
