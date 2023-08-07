@@ -795,11 +795,6 @@ class ViewsService {
 			return false;
 		}
 		
-		// format changed, check version
-		if (empty($data['version']) || $data['version'] !== '2.0') {
-			return false;
-		}
-		
 		$this->locations = $data['locations'];
 		$this->cache = $cache;
 
@@ -819,10 +814,7 @@ class ViewsService {
 			return;
 		}
 		
-		$cache->save('view_locations', [
-			'version' => '2.0',
-			'locations' => $this->locations,
-		]);
+		$cache->save('view_locations', ['locations' => $this->locations]);
 
 		// this is saved just for the inspector and is not loaded in loadAll()
 		$cache->save('view_overrides', $this->overrides);
