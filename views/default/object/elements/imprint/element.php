@@ -16,4 +16,5 @@ if (elgg_is_empty($result)) {
 
 echo elgg_format_element('span', [
 	'class' => elgg_extract_class($vars),
+	'title' => elgg_extract('title', $vars),
 ], $result);
