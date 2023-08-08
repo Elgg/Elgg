@@ -15,7 +15,7 @@ elgg_unregister_external_file('css', 'elgg');
 elgg_load_external_file('css', 'maintenance');
 
 $body = elgg_format_element('div', ['class' => 'elgg-page-messages'], $messages);
-$body .= elgg_format_element('div', ['class' => 'elgg-body-maintenance'], $content);
+$body .= elgg_format_element('main', ['class' => 'elgg-body-maintenance'], $content);
 $body = elgg_format_element('div', ['class' => ['elgg-page', 'elgg-page-maintenance'], 'id' => 'elgg-maintenance-page-wrapper'], $body);
 
 $head = elgg_view('page/elements/head', elgg_extract('head', $vars, []));
