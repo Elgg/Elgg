@@ -15,6 +15,8 @@ return array(
 	'admin:develop_tools:entity_explorer' => 'Entity Explorer',
 	'admin:developers' => 'Developers',
 	'admin:developers:settings' => 'Settings',
+	'menu:entity_explorer:header' => 'Entity explorer',
+	'menu:developers_inspect_viewtype:header' => 'Inspect view types',
 
 	// settings
 	'elgg_dev_tools:settings:explanation' => 'Control your development and debugging settings below. Some of these settings are also available on other admin pages.',

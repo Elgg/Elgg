@@ -19,6 +19,7 @@ return array(
 	'collection:object:page:group' => "Group pages",
 	'add:object:page' => "Add a page",
 	'edit:object:page' => "Edit this page",
+	'menu:pages_nav:header' => "Sub-pages",
 	'notification:object:page:create' => "Send a notification when a page is created",
 	'notifications:mute:object:page' => "about the page '%s'",
 

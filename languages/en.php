@@ -1789,6 +1789,31 @@ Global variables:
  */
 	'aria:label:admin:users:search' => "User search",
 
+	'menu:admin_footer:header' => "Admin footer",
+	'menu:admin_header:header' => "Admin header",
+	'menu:admin:users:bulk:header' => "Users bulk actions",
+	'menu:annotation:header' => "Annotation",
+	'menu:breadcrumbs:header' => "Breadcrumbs",
+	'menu:comments:header' => "Comments",
+	'menu:entity:header' => "Entity",
+	'menu:entity_navigation:header' => "Entity navigation",
+	'menu:filter:header' => "Filter",
+	'menu:footer:header' => "Footer",
+	'menu:login:header' => "Login",
+	'menu:owner_block:header' => "Owner block",
+	'menu:page:header' => "Page",
+	'menu:relationship:header' => "Relationship",
+	'menu:river:header' => "River",
+	'menu:site:header' => "Site",
+	'menu:social:header' => "Social",
+	'menu:title:header' => "Title",
+	'menu:title:widgets:header' => "Widget administration",
+	'menu:topbar:header' => "Topbar",
+	'menu:user_hover:header' => "User hover",
+	'menu:user:unvalidated:header' => "Unvalidated user",
+	'menu:walled_garden:header' => "Walled garden",
+	'menu:widget:header' => "Widget controls",
+
 /**
  * Cli commands
  */
