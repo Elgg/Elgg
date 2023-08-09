@@ -178,4 +178,8 @@ or click below to view the group's join requests:
 	
 	'groups:usersettings:notifications:title' => 'Group notifications',
 	'groups:usersettings:notifications:description' => 'To receive notifications when new content is added to a group you are a member of, find it below and select the notification method(s) you would like to use.',
+	
+	// accessibility
+	'groups:aria:label:group_search' => "Search for groups",
+	'groups:aria:label:search_in_group' => "Search in this group",
 );

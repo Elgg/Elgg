@@ -12,4 +12,6 @@ return array(
 	'search:comment_on' => 'Comment on "%s"',
 	'search:unknown_entity' => 'Unknown Entity type',
 	'search:empty_query' => 'Please provide a valid search query',
+	
+	'search:aria:label:site_search' => "Search on the site",
 );

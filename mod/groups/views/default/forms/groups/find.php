@@ -4,11 +4,12 @@
  */
 
 echo elgg_view_field([
-	'#type' => 'text',
+	'#type' => 'search',
 	'name' => 'tag',
 	'required' => true,
 	'class' => 'elgg-input-search',
 	'placeholder' => elgg_echo('groups:search'),
+	'aria-label' => elgg_echo('groups:search'), // because we don't add #label
 ]);
 
 $footer = elgg_view_field([

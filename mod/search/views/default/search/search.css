@@ -39,7 +39,7 @@ Search plugin
 			width: 100%;
 		}
 		
-		[type="text"] {
+		[type="search"] {
 			box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
 			border: none;
 			background: transparent;

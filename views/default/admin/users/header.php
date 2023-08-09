@@ -33,6 +33,8 @@ echo elgg_view_form('admin/users/search', [
 	'action' => elgg_get_current_url(),
 	'disable_security' => true,
 	'class' => $search_class,
+	'role' => 'search',
+	'aria-label' => elgg_echo('aria:label:admin:users:search'),
 ], [
 	'additional_search_fields' => elgg_extract('additional_search_fields', $vars, []),
 ]);

@@ -9,6 +9,7 @@ return array(
 	'members:label:online' => 'Online',
 	'members:label:search' => 'Search results',
 	'members:search' => 'Search members',
+	'members:aria:label:member_search' => "Search for members",
 	'members:title:search' => "Member search for '%s'",
 	'members:total' => 'Total members: %s',
 	'members:title:all' => 'All members',

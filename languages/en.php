@@ -1782,7 +1782,13 @@ Global variables:
  * Miscellaneous
  */
 	'elgg:powered' => "Powered by Elgg",
-	
+	'field:required' => "Required",
+
+/**
+ * Accessibility
+ */
+	'aria:label:admin:users:search' => "User search",
+
 /**
  * Cli commands
  */
@@ -2006,8 +2012,9 @@ Global variables:
 	"zh_hans" => "Chinese Simplified",
 	"zu" => "Zulu",
 
-	"field:required" => 'Required',
-
+/**
+ * Upgrades
+ */
 	"core:upgrade:2017080900:title" => "Alter database encoding for multi-byte support",
 	"core:upgrade:2017080900:description" => "Alters database and table encoding to utf8mb4, in order to support multi-byte characters such as emoji",
 	
