@@ -27,6 +27,8 @@ $form = elgg_view_form('search', [
 	'action' => elgg_generate_url('default:search'),
 	'method' => 'get',
 	'disable_security' => true,
+	'role' => 'search',
+	'aria-label' => elgg_echo('search:aria:label:site_search'),
 ], $params);
 
 if (!preg_match('/[\pL\pN]+/', $query)) {

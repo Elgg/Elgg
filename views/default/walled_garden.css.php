@@ -43,16 +43,16 @@ echo elgg_view('core.css');
 	min-height: 100%;
 }
 
-.elgg-page-walled-garden > .elgg-inner > div {
-	&.elgg-page-body {
+.elgg-page-walled-garden > .elgg-inner {
+	> .elgg-page-body {
 		padding: 1.5rem 3rem;
 		background: #fff;
 		box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3), -1px -1px 1px rgba(0, 0, 0, 0.3);
 	}
-	&.elgg-page-header {
+	> .elgg-page-header {
 		padding: 3rem 0;
 	}
-	&.elgg-page-footer {
+	> .elgg-page-footer {
 		background: none;
 		a {
 			color: $(text-color-strong);

@@ -44,13 +44,32 @@ Admin menu
 You can also register ``page`` menu items to the admin backend menu. When registering for the admin menu you can set the context of
 the menu items to ``admin`` so the menu items only show in the ``admin`` context. There are 3 default sections to add your menu items to.
  
- - ``administer`` for daily tasks, usermanagement and other actionable tasks
+ - ``administer`` for daily tasks, user management and other actionable tasks
  - ``configure`` for settings, configuration and utilities that configure stuff
  - ``information`` for statistics, overview of information or status
 
 
 Advanced usage
 ==============
+
+Headers
+-------
+
+For accessibility reasons each menu will get an ``aria-label`` which defaults to the menu name, but can be translated by making sure
+the language key ``menu:<menu name>:header`` is available.
+
+It's also possible to show menu section headers by setting ``show_section_headers`` to ``true`` in ``elgg_view_menu()``
+
+.. code-block:: php
+
+	echo elgg_view_menu('my_menu', [
+		'show_section_headers' => true,
+	]);
+
+The headers have a magic language key available ``menu:<menu name>:header:<section name>`` in order to be able to translate the headers.
+
+Events
+------
 
 You can get more control over menus by using :doc:`events </design/events>`
 and the public methods provided by the ``ElggMenuItem`` class.

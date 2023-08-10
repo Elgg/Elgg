@@ -54,10 +54,17 @@ if (!$menu_view) {
 	return;
 }
 
+// make an ARIA label
+$aria_label = $name;
+if (elgg_language_key_exists("menu:{$name}:header")) {
+	$aria_label = elgg_echo("menu:{$name}:header");
+}
+
 echo elgg_format_element('nav', [
 	'class' => [
 		'elgg-menu-container',
 		"elgg-menu-{$name_class_selector}-container",
 	],
 	'data-menu-name' => $name,
+	'aria-label' => $aria_label,
 ], $menu_view);

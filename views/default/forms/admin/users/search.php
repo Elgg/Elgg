@@ -15,9 +15,10 @@ echo elgg_view_field([
 	'#type' => 'fieldset',
 	'fields' => [
 		[
-			'#type' => 'text',
+			'#type' => 'search',
 			'#class' => 'elgg-field-stretch',
 			'name' => 'q',
+			'aria-label' => elgg_echo('search'), // because we don't have a #label
 			'placeholder' => elgg_echo('search'),
 			'value' => get_input('q'),
 		],
