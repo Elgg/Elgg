@@ -1,3 +1,16 @@
+<a name="5.0.5"></a>
+### 5.0.5  (2023-08-16)
+
+#### Contributors
+
+* Jeroen Dalsem (1)
+* Jerôme Bakker (1)
+
+#### Bug Fixes
+
+* **rss:** invalid atom link href in rss channel ([0467cf87](https://github.com/Elgg/Elgg/commit/0467cf8703bb3ea4936bd73bfbb3813a434d9275))
+
+
 <a name="5.0.4"></a>
 ### 5.0.4  (2023-07-26)
 
