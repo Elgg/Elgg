@@ -61,6 +61,12 @@ define(['elgg/Ajax'], function(Ajax) {
 	}
 	
 	function findObjects(queryText) {
+		if (queryText.includes(']')) {
+			// to allow the use of 'some [text] more text'
+			// without triggering the mentions functionality
+			return [];
+		}
+		
 		return getLivesearch(queryText, 'objects');
 	}
 	
