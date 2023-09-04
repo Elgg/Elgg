@@ -1,0 +1,24 @@
+From 5.0 to 5.1
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+Changes in the DOM structure
+----------------------------
+
+In order to improve accessibility the HTML DOM structure has been changed slightly. Some sections of the page have been
+changed from a ``div`` to ``header``, ``main`` or ``footer``. The classes or place in the DOM has not been changed.
+
+Deprecated Views
+----------------
+
+ * ``page/elements/<section>/after`` is deprecated: Extend the correct ``page/elements/<section>``
+ * ``page/elements/<section>/before`` is deprecated: Prepend the correct ``page/elements/<section>``
+ * ``resources/comments/edit`` is deprecated: This resource is no longer in use
+
+Deprecated Routes
+-----------------
+
+ * ``edit:object:comment`` is deprecated: Editing comments uses an inline form

@@ -40,6 +40,6 @@ foreach ($fields as $field) {
 
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('changepassword'),
+	'text' => elgg_echo('changepassword'),
 ]);
 elgg_set_form_footer($footer);

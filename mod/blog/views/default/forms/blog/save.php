@@ -101,15 +101,17 @@ $saved = elgg_format_element('span', ['class' => 'blog-save-status-time'], $save
 $footer = elgg_format_element('div', ['class' => ['elgg-subtext', 'mbm']], elgg_echo('blog:save_status') . ' ' . $saved);
 
 $footer .= elgg_view('input/submit', [
-	'value' => elgg_echo('save'),
 	'name' => 'save',
+	'value' => 1,
+	'text' => elgg_echo('save'),
 ]);
 
 // published blogs do not get the preview button
 if (!$blog instanceof \ElggBlog || $blog->status != 'published') {
 	$footer .= elgg_view('input/button', [
-		'value' => elgg_echo('preview'),
 		'name' => 'preview',
+		'value' => 1,
+		'text' => elgg_echo('preview'),
 		'class' => 'elgg-button-action mls',
 	]);
 }

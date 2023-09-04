@@ -12,9 +12,7 @@ if (!isset($vars['name'])) {
 	$vars['name'] = 'groups';
 }
 
-$vars['show_friends'] = false;
 $vars['match_on'] = elgg_extract('match_on', $vars, 'groups');
 $vars['class'] = elgg_extract_class($vars, ['elgg-group-picker']);
 
-// @todo don't abuse userpicker, make it into generic entity picker
-echo elgg_view('input/userpicker', $vars);
+echo elgg_view('input/entitypicker', $vars);

@@ -58,7 +58,7 @@ class AdminHeader {
 			'name' => 'configure_utilities:profile_fields',
 			'text' => elgg_echo('admin:configure_utilities:profile_fields'),
 			'href' => 'admin/configure_utilities/profile_fields',
-			'parent_name' => 'configure_utilities',
+			'parent_name' => 'utilities',
 		]);
 		
 		return $return;

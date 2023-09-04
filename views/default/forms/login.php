@@ -39,7 +39,7 @@ ob_start();
 			</label>
 
 			<?php
-			echo elgg_view('input/submit', ['value' => elgg_echo('login')]);
+			echo elgg_view('input/submit', ['text' => elgg_echo('login')]);
 			?>
 		</div>
 		<?php

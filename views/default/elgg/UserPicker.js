@@ -1,4 +1,7 @@
-/** @module elgg/UserPicker */
+/**
+ * @module elgg/UserPicker
+ * @deprecated use input/entitypicker
+ */
 define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery.ui.autocomplete.html'], function($, elgg, Ajax) {
 	/**
 	 * @param {HTMLElement} wrapper outer div

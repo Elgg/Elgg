@@ -5,6 +5,8 @@
  * @uses $vars['widget']
  */
 
+elgg_deprecated_notice('This view is no longer used and will be removed in the next major version.', '5.1');
+
 $widget = elgg_extract('widget', $vars);
 if (!$widget instanceof ElggWidget) {
 	return;

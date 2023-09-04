@@ -42,7 +42,7 @@ Available commands
     vendor/bin/elgg-cli install [--no-plugins] [-c|--config CONFIG]
 
     # Seed the database with fake entities
-    # limit: (int) number of items to seed
+    # limit: (int) number of items to seed (will be asked interactively for each seeder unless the -n/--no-interaction is used or only one type is seeded)
     # type: (string) only seed given entity type
     # create_since: (string) a compatible PHP date/time string to set the lower bound entity time created (eg, '-5 months')
     # create_until: (string) a compatible PHP date/time string to set the upper bound entity time created (eg, 'yesterday')

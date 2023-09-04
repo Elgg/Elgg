@@ -9,18 +9,21 @@
 
 $class = elgg_extract_class($vars, [
 	'elgg-layout',
-	'elgg-layout-one-sidebar',
 	'elgg-layout-admin',
 ]);
 unset($vars['class']);
-
-$vars['breadcrumbs'] = false;
 
 $vars['sidebar'] = elgg_view('admin/sidebar', $vars);
 
 $header = elgg_view('page/layouts/elements/header', $vars);
 $sidebar = elgg_view('page/layouts/elements/sidebar', $vars);
 $body = elgg_view('page/layouts/elements/body', $vars);
+
+if ($sidebar) {
+	$class[] = 'elgg-layout-one-sidebar';
+} else {
+	$class[] = 'elgg-layout-one-column';
+}
 
 $layout = elgg_format_element('div', ['class' => 'elgg-layout-columns'], $sidebar . $body);
 

@@ -95,6 +95,15 @@ use Elgg\Traits\Loggable;
  * @property bool          $remove_branding 						Is Elgg branding disabled
  * @property int           $remove_unvalidated_users_days			The number of days after which unvalidated users will be removed
  * @property bool          $require_admin_validation
+ * @property string        $security_txt_acknowledgments			Security.txt link to acknowledgments
+ * @property string        $security_txt_canonical					Security.txt canonical url
+ * @property string        $security_txt_contact					Security.txt contact information (mailto or https)
+ * @property string        $security_txt_csaf						Security.txt link to CSAF provider
+ * @property string        $security_txt_encryption					Security.txt link to encryption key for communication
+ * @property int           $security_txt_expires					Security.txt expiration date
+ * @property string        $security_txt_hiring						Security.txt link to hiring page
+ * @property string        $security_txt_language					Security.txt preferred communication language
+ * @property string        $security_txt_policy						Security.txt link to security reporting policy
  * @property bool          $security_disable_password_autocomplete
  * @property bool          $security_email_require_password
  * @property bool          $security_notify_admins

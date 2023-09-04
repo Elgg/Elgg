@@ -2,12 +2,18 @@
 /**
  * Elgg widget edit settings
  *
- * @uses $vars['widget']
- * @uses $vars['show_access']
+ * @uses $vars['entity']      The widget entity
+ * @uses $vars['widget']      Deprecated; use 'entity' instead
+ * @uses $vars['show_access'] (bool) should widget access setting be available default: true
  */
 
 $widget = elgg_extract('widget', $vars);
-if (!$widget instanceof ElggWidget) {
+if ($widget !== null) {
+	elgg_deprecated_notice('Passing the widget entity in $vars["widget"] is deprecated. Update your code to provide it in $vars["entity"].', '5.1');
+}
+
+$widget = elgg_extract('entity', $vars, $widget);
+if (!$widget instanceof \ElggWidget) {
 	return;
 }
 
@@ -50,7 +56,7 @@ if (elgg_in_context('default_widgets')) {
 
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('save'),
+	'text' => elgg_echo('save'),
 ]);
 
 elgg_set_form_footer($footer);

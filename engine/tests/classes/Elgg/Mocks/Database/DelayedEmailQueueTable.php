@@ -32,13 +32,7 @@ class DelayedEmailQueueTable extends DbDelayedEmailQueueTable{
 	protected static $iterator = 100;
 	
 	/**
-	 * Insert a delayed email into the queue
-	 *
-	 * @param int    $recipient_guid    the recipient of the email
-	 * @param string $delivery_interval the desired interval of the recipient
-	 * @param mixed  $item              the email to queue
-	 *
-	 * @return bool
+	 * {@inheritdoc}
 	 */
 	public function queueEmail(int $recipient_guid, string $delivery_interval, $item): bool {
 		self::$iterator++;
@@ -65,15 +59,9 @@ class DelayedEmailQueueTable extends DbDelayedEmailQueueTable{
 	}
 	
 	/**
-	 * Get all the rows in the queue for a given recipient
-	 *
-	 * @param int    $recipient_guid    the recipient
-	 * @param string $delivery_interval the interval for the recipient
-	 * @param int    $timestamp         (optional) all queue items before time (default: now)
-	 *
-	 * @return DatabaseRecord[] database rows
+	 * {@inheritdoc}
 	 */
-	public function getRecipientRows(int $recipient_guid, string $delivery_interval, int $timestamp = null): array {
+	public function getRecipientRows(int $recipient_guid, string $delivery_interval, int $timestamp = null, int $max_results = 0): array {
 		$result = [];
 		
 		$timestamp = $timestamp ?? $this->getCurrentTime()->getTimestamp();
@@ -94,49 +82,23 @@ class DelayedEmailQueueTable extends DbDelayedEmailQueueTable{
 			$result[] = $this->rowToRecord($row);
 		}
 		
+		if ($max_results > 0) {
+			// first order
+			usort($result, function($row_a, $row_b) {
+				// this should be based on timestamp and id, but that's harder
+				return $row_a->id - $row_b->id;
+			});
+			
+			return array_slice($result, 0, $max_results);
+		}
+		
 		return $result;
 	}
 	
 	/**
-	 * Get the queued items from the database for a given interval
-	 *
-	 * @param string $delivery_interval the delivery interval to get
-	 * @param int    $timestamp         (optional) all queue items before time (default: now)
-	 *
-	 * @return DatabaseRecord[]
+	 * {@inheritdoc}
 	 */
-	public function getIntervalRows(string $delivery_interval, int $timestamp = null): array {
-		$result = [];
-		
-		$timestamp = $timestamp ?? $this->getCurrentTime()->getTimestamp();
-		
-		foreach ($this->rows as $row) {
-			if ($row->delivery_interval !== $delivery_interval) {
-				continue;
-			}
-			
-			if ($row->timestamp >= $timestamp) {
-				continue;
-			}
-			
-			$result[$row->timestamp . '_' . $row->recipient_guid] = $this->rowToRecord($row);
-		}
-		
-		uksort($result, 'strnatcasecmp');
-		
-		return array_values($result);
-	}
-	
-	/**
-	 * Delete all the queue items from the database for the given recipient and interval
-	 *
-	 * @param int    $recipient_guid    the recipient
-	 * @param string $delivery_interval the interval for the recipient
-	 * @param int    $timestamp         (optional) all queue items before time (default: now)
-	 *
-	 * @return int number of deleted rows
-	 */
-	public function deleteRecipientRows(int $recipient_guid, string $delivery_interval, int $timestamp = null): int {
+	public function deleteRecipientRows(int $recipient_guid, string $delivery_interval, int $timestamp = null, int $max_id = 0): int {
 		$result = 0;
 		
 		$timestamp = $timestamp ?? $this->getCurrentTime()->getTimestamp();
@@ -154,6 +116,10 @@ class DelayedEmailQueueTable extends DbDelayedEmailQueueTable{
 				continue;
 			}
 			
+			if ($max_id > 0 && $id > $max_id) {
+				continue;
+			}
+			
 			$this->clearQuerySpecs($row);
 			unset($this->rows[$id]);
 			
@@ -164,11 +130,7 @@ class DelayedEmailQueueTable extends DbDelayedEmailQueueTable{
 	}
 	
 	/**
-	 * Delete all the queue items from the database for the given recipient and interval
-	 *
-	 * @param int $recipient_guid the recipient
-	 *
-	 * @return int number of deleted rows
+	 * {@inheritdoc}
 	 */
 	public function deleteAllRecipientRows(int $recipient_guid): int {
 		$result = 0;
@@ -188,12 +150,7 @@ class DelayedEmailQueueTable extends DbDelayedEmailQueueTable{
 	}
 	
 	/**
-	 * Update the queued notifications for the recipient to a new delivery interval
-	 *
-	 * @param int    $recipient_guid    the recipient
-	 * @param string $delivery_interval the new delivery interval
-	 *
-	 * @return bool
+	 * {@inheritdoc}
 	 */
 	public function updateRecipientInterval(int $recipient_guid, string $delivery_interval): bool {
 		foreach ($this->rows as $row) {

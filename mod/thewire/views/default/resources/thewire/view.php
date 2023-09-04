@@ -6,14 +6,12 @@
 $guid = (int) elgg_extract('guid', $vars);
 elgg_entity_gatekeeper($guid, 'object', 'thewire');
 
-/* @var $post ElggWire */
+/* @var $post \ElggWire */
 $post = get_entity($guid);
 
-$title = elgg_echo('thewire:by', [$post->getOwnerEntity()->getDisplayName()]);
+elgg_push_entity_breadcrumbs($post);
 
-elgg_push_entity_breadcrumbs($post, false);
-
-echo elgg_view_page($title, [
+echo elgg_view_page(elgg_echo('thewire:by', [$post->getOwnerEntity()->getDisplayName()]), [
 	'content' => elgg_view_entity($post),
 	'entity' => $post,
 	'filter_id' => 'thewire/view',

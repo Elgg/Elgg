@@ -6,15 +6,16 @@
  */
 
 $group = elgg_extract('entity', $vars);
-if (!($group instanceof \ElggGroup)) {
+if (!$group instanceof \ElggGroup) {
 	return;
 }
 
 echo elgg_view_field([
-	'#type' => 'text',
+	'#type' => 'search',
 	'name' => 'q',
 	'required' => true,
-	'class' => 'elgg-input-search',
+	'placeholder' => elgg_echo('groups:search_in_group'),
+	'aria-label' => elgg_echo('groups:search_in_group'), // because we don't add #label
 ]);
 
 echo elgg_view_field([
@@ -25,7 +26,7 @@ echo elgg_view_field([
 
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('search:go'),
+	'text' => elgg_echo('search:go'),
 ]);
 
 elgg_set_form_footer($footer);

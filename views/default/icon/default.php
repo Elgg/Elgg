@@ -67,6 +67,7 @@ if ($url) {
 	$params = [
 		'href' => $url,
 		'text' => $img,
+		'title' => $entity->getDisplayName(),
 		'is_trusted' => true,
 	];
 	$link_class = elgg_extract_class($vars, [], 'link_class');

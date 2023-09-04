@@ -13,7 +13,6 @@ if (!isset($vars['name'])) {
 	$vars['name'] = 'guids';
 }
 
-$vars['show_friends'] = false;
 $vars['match_on'] = elgg_extract('match_on', $vars, 'objects');
 $vars['class'] = elgg_extract_class($vars, ['elgg-object-picker']);
 
@@ -22,5 +21,4 @@ $options['subtype'] = elgg_extract('subtype', $vars);
 
 $vars['options'] = $options;
 
-// @todo don't abuse userpicker, make it into generic entity picker
-echo elgg_view('input/userpicker', $vars);
+echo elgg_view('input/entitypicker', $vars);

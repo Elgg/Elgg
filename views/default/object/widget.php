@@ -19,13 +19,7 @@ $body = '';
 if ($widget->canEdit()) {
 	$widget_class[] = 'elgg-state-draggable';
 	
-	$settings = elgg_view('object/widget/elements/settings', [
-		'widget' => $widget,
-		'show_access' => elgg_extract('show_access', $vars, true),
-	]);
-	$body .= $settings;
-	
-	if (empty($settings)) {
+	if (!elgg_view_exists("widgets/{$widget->handler}/edit") && elgg_extract('show_access', $vars) === false) {
 		// store for determining the edit menu item
 		$vars['show_edit'] = false;
 	}

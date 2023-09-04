@@ -11,7 +11,6 @@ use Elgg\I18n\Translator;
  * easily tell what the available keys are for changing the wording of UI elements.
  *
  * @since 4.1
- * @internal
  */
 final class AppendTranslator extends Translator {
 	

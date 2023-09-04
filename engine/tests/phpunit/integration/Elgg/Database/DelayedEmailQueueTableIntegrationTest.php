@@ -5,6 +5,7 @@ namespace Elgg\Database;
 use Elgg\Email\DelayedQueue\DatabaseRecord;
 use Elgg\IntegrationTestCase;
 use Elgg\Notifications\Notification;
+use Elgg\Values;
 
 class DelayedEmailQueueTableIntegrationTest extends IntegrationTestCase {
 
@@ -32,7 +33,7 @@ class DelayedEmailQueueTableIntegrationTest extends IntegrationTestCase {
 		return new Notification($sender, $recipient, 'en', 'Test subject', 'Test body');
 	}
 	
-	public function testqueueEmail() {
+	public function testQueueEmail() {
 		$notification = $this->getTestNotification();
 		$recipient = $notification->getRecipient();
 		
@@ -67,31 +68,50 @@ class DelayedEmailQueueTableIntegrationTest extends IntegrationTestCase {
 		$this->assertEmpty($this->table->getRecipientRows($recipient->guid, 'daily', $dt->getTimestamp()));
 	}
 	
-	public function testGetIntervalRows() {
+	public function testGetRecipientRowsWithMaxResults() {
+		$notification = $this->getTestNotification();
+		$recipient = $notification->getRecipient();
 		
-		// add testing rows
+		// insert
 		for ($i = 0; $i < 5; $i++) {
-			$notification = $this->getTestNotification();
-			$recipient = $notification->getRecipient();
-			
-			// insert
 			$this->assertTrue($this->table->queueEmail($recipient->guid, 'daily', $notification));
-		}
-		
-		// different interval
-		for ($i = 0; $i < 5; $i++) {
-			$notification = $this->getTestNotification();
-			$recipient = $notification->getRecipient();
-			
-			// insert
-			$this->assertTrue($this->table->queueEmail($recipient->guid, 'weekly', $notification));
 		}
 		
 		$dt = $this->table->getCurrentTime('+10 seconds');
 		
-		// retrieve
-		$this->assertCount(5, $this->table->getIntervalRows('daily', $dt->getTimestamp()));
-		$this->assertCount(5, $this->table->getIntervalRows('weekly', $dt->getTimestamp()));
+		$rows = $this->table->getRecipientRows($recipient->guid, 'daily', $dt->getTimestamp(), 2);
+		$this->assertNotEmpty($rows);
+		$this->assertCount(2, $rows);
+		
+		$same_rows = $this->table->getRecipientRows($recipient->guid, 'daily', $dt->getTimestamp(), 2);
+		$this->assertNotEmpty($same_rows);
+		$this->assertCount(2, $same_rows);
+		$this->assertEquals($rows, $same_rows);
+		
+		// fetch too much
+		$rows = $this->table->getRecipientRows($recipient->guid, 'daily', $dt->getTimestamp(), 100);
+		$this->assertNotEmpty($rows);
+		$this->assertCount(5, $rows);
+	}
+	
+	public function testGetNextRecipientGUID() {
+		$recipients = [];
+		
+		// insert rows in reverse order
+		for ($i = 0; $i < 5; $i++) {
+			$notification = $this->getTestNotification();
+			$recipient = $notification->getRecipient();
+			$recipients[] = $recipient->guid;
+			
+			$this->table->setCurrentTime(Values::normalizeTime("-{$i} minutes"));
+			$this->table->queueEmail($recipient->guid, 'daily', $notification);
+		}
+		
+		$this->table->resetCurrentTime();
+		
+		$next_recipient = $this->table->getNextRecipientGUID('daily');
+		$this->assertNotEmpty($next_recipient);
+		$this->assertEquals(end($recipients), $next_recipient);
 	}
 	
 	public function testDeleteRecipientRows() {
@@ -113,6 +133,38 @@ class DelayedEmailQueueTableIntegrationTest extends IntegrationTestCase {
 		// verify
 		$this->assertEmpty($this->table->getRecipientRows($recipient->guid, 'daily', $dt->getTimestamp()));
 		$this->assertEmpty($this->table->getRecipientRows($recipient->guid, 'weekly', $dt->getTimestamp()));
+	}
+	
+	public function testDeleteRecipientRowsWithMaxID() {
+		$notification = $this->getTestNotification();
+		$recipient = $notification->getRecipient();
+		
+		// insert
+		for ($i = 0; $i < 5; $i++) {
+			$this->assertTrue($this->table->queueEmail($recipient->guid, 'daily', $notification));
+		}
+		
+		$dt = $this->table->getCurrentTime('+10 seconds');
+		
+		$rows = $this->table->getRecipientRows($recipient->guid, 'daily', $dt->getTimestamp(), 2);
+		$max_id = 0;
+		foreach ($rows as $row) {
+			$max_id = max($max_id, $row->id);
+		}
+		
+		// delete
+		$this->assertEquals(2, $this->table->deleteRecipientRows($recipient->guid, 'daily', $dt->getTimestamp(), $max_id));
+		
+		// verify still rows left
+		$rows = $this->table->getRecipientRows($recipient->guid, 'daily', $dt->getTimestamp());
+		$this->assertNotEmpty($rows);
+		$this->assertCount(3, $rows);
+		
+		// delete the rest
+		$this->assertEquals(3, $this->table->deleteRecipientRows($recipient->guid, 'daily', $dt->getTimestamp()));
+		
+		// verify all is now removed
+		$this->assertEmpty($this->table->getRecipientRows($recipient->guid, 'daily', $dt->getTimestamp()));
 	}
 	
 	public function testDeleteAllRecipientRows() {

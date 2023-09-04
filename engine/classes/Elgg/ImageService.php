@@ -118,7 +118,12 @@ class ImageService {
 			}
 
 			$target_size = new Box($max_width, $max_height);
-			$thumbnail = $image->resize($target_size);
+			$image->resize($target_size);
+			
+			// create new canvas with a background (default: white)
+			$background_color = elgg_extract('background_color', $params, 'ffffff');
+			$thumbnail = $this->imagine->create($image->getSize(), $image->palette()->color($background_color));
+			$thumbnail->paste($image, new Point(0, 0));
 
 			if (pathinfo($destination, PATHINFO_EXTENSION) === 'webp') {
 				$options = [

@@ -149,6 +149,8 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/hooks', 'jquery.colorbox'], functio
 				
 				// clear data so next fetch will refresh contents
 				currentOpts.html = undefined;
+			}).fail(function() {
+				$.colorbox.close();
 			});
 		},
 

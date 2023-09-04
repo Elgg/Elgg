@@ -18,4 +18,6 @@ echo elgg_view_form('search', [
 	'method' => 'get',
 	'disable_security' => true,
 	'class' => $class,
+	'role' => 'search',
+	'aria-label' => elgg_echo('search:aria:label:site_search'),
 ], $vars);

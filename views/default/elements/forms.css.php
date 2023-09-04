@@ -250,6 +250,6 @@ select:not([multiple]) {
 
 <?php
 echo elgg_view('elements/components/autocomplete.css', $vars);
-echo elgg_view('elements/components/userpicker.css', $vars);
 echo elgg_view('elements/components/datepicker.css', $vars);
+echo elgg_view('input/entitypicker.css', $vars);
 echo elgg_view('input/tags.css', $vars);

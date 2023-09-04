@@ -1,15 +1,17 @@
 <?php
 
 echo elgg_view_field([
-	'#type' => 'text',
+	'#type' => 'search',
 	'name' => 'member_query',
 	'value' => get_input('member_query'),
 	'required' => true,
+	'placeholder' => elgg_echo('members:search'),
+	'aria-label' => elgg_echo('members:search'), // because we don't use #label
 ]);
 
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('search'),
+	'text' => elgg_echo('search'),
 ]);
 
 $footer .= elgg_format_element('p', [

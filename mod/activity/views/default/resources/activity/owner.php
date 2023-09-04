@@ -14,7 +14,6 @@ if ($page_owner->guid === elgg_get_logged_in_user_guid()) {
 }
 
 elgg_push_breadcrumb($page_owner->getDisplayName(), $page_owner->getURL());
-elgg_push_breadcrumb($title, elgg_generate_url('collection:river:owner', ['username' => $page_owner->username]));
 
 $content = elgg_view('river/listing/owner', [
 	'entity' => $page_owner,

@@ -16,6 +16,7 @@ return array(
 	'edit:object:blog' => 'Edit blog post',
 	'notification:object:blog:publish' => "Send a notification when a blog is published",
 	'notifications:mute:object:blog' => "about the blog '%s'",
+	'menu:blog_archive:header' => "Blog archive",
 
 	'blog:revisions' => 'Revisions',
 	'blog:archives' => 'Archives',

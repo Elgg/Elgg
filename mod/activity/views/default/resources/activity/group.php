@@ -4,9 +4,7 @@ $page_owner = elgg_get_page_owner_entity();
 
 elgg_group_tool_gatekeeper('activity');
 
-// can't use elgg_push_collection_breadcrumbs() because of the routenames for river
 elgg_push_breadcrumb($page_owner->getDisplayName(), $page_owner->getURL());
-elgg_push_breadcrumb(elgg_echo('collection:river'), elgg_generate_url('collection:river:group', ['guid' => $page_owner->guid]));
 
 $content = elgg_view('river/listing/group', [
 	'entity' => $page_owner,

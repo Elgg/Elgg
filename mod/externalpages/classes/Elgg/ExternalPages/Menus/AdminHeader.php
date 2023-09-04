@@ -29,7 +29,7 @@ class AdminHeader {
 			'name' => 'configure_utilities:expages',
 			'text' => elgg_echo('admin:configure_utilities:expages'),
 			'href' => 'admin/configure_utilities/expages',
-			'parent_name' => 'configure_utilities',
+			'parent_name' => 'utilities',
 		]);
 	
 		return $return;

@@ -73,33 +73,6 @@ class DelayedEmailQueueTableUnitTest extends UnitTestCase {
 		$this->assertEmpty($this->table->getRecipientRows($recipient->guid, 'daily', $dt->getTimestamp()));
 	}
 	
-	public function testGetIntervalRows() {
-		
-		// add testing rows
-		for ($i = 0; $i < 5; $i++) {
-			$notification = $this->getTestNotification();
-			$recipient = $notification->getRecipient();
-			
-			// insert
-			$this->assertTrue($this->table->queueEmail($recipient->guid, 'daily', $notification));
-		}
-		
-		// different interval
-		for ($i = 0; $i < 5; $i++) {
-			$notification = $this->getTestNotification();
-			$recipient = $notification->getRecipient();
-			
-			// insert
-			$this->assertTrue($this->table->queueEmail($recipient->guid, 'weekly', $notification));
-		}
-		
-		$dt = $this->table->getCurrentTime('+10 seconds');
-		
-		// retrieve
-		$this->assertCount(5, $this->table->getIntervalRows('daily', $dt->getTimestamp()));
-		$this->assertCount(5, $this->table->getIntervalRows('weekly', $dt->getTimestamp()));
-	}
-	
 	public function testDeleteRecipientRows() {
 		$notification = $this->getTestNotification();
 		$recipient = $notification->getRecipient();

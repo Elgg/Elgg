@@ -475,6 +475,7 @@ To see the full post, click on the link below:
  */
 	'menu:page:header:administer' => 'Administer',
 	'menu:page:header:configure' => 'Configure',
+	'menu:page:header:utilities' => 'Utilities',
 	'menu:page:header:develop' => 'Develop',
 	'menu:page:header:information' => 'Information',
 	'menu:page:header:default' => 'Other',
@@ -642,9 +643,10 @@ Since Elgg has a lot of file access this will negatively impact performance. Als
 three sections:
 	<dl>
 		<dt>Administer</dt><dd>Basic tasks like managing users, monitoring reported content and activating plugins.</dd>
-		<dt>Configure</dt><dd>Occasional tasks like setting the site name or configuring settings of a plugin.</dd>
+		<dt>Configure</dt><dd>Occasional tasks like setting the site name or configuring security preferences.</dd>
+		<dt>Utilities</dt><dd>Various tools to support site maintenance.</dd>
 		<dt>Information</dt><dd>Information about your site like statistics.</dd>
-		<dt>Develop</dt><dd>For developers who are building plugins or designing themes. (Requires a developer plugin.)</dd>
+		<dt>Develop</dt><dd>For developers who are building plugins or debugging the site. (Requires a developer plugin.)</dd>
 	</dl>",
 
 	// argh, this is ugly
@@ -781,6 +783,28 @@ Having icons session bound makes icon urls not shareable between sessions. The s
 	
 	'admin:security:settings:min_password_special' => "Minimal number of special characters in a password",
 	'admin:security:settings:min_password_special:help' => "Configure the minimal number of special (!@$%^&*()<>,.?/[]{}-=_+) characters that should be present in a password. 0 for not present at all, empty for no requirements.",
+	
+	'admin:security:security_txt' => "Security.txt",
+	'admin:security:security_txt:description' => "When a security vulnerability is found in your website, where should it be reported? The security.txt is a standard to help structure the information the security researchers need in order to be able to contact the site administrators with the found vulnerability. More information about the standard can be found at %s. The contents of your security.txt can be found at %s.",
+	'admin:security:security_txt:expired' => "The content of your security.txt is expired, please check if all the information is still up-to-date.",
+	'admin:security:security_txt:contact' => "Contact",
+	'admin:security:security_txt:contact:help' => "A link or e-mail address for people to contact you about security issues. Remember to include 'https://' for URLs, and 'mailto:' for e-mails. See %s",
+	'admin:security:security_txt:expires' => "Expires",
+	'admin:security:security_txt:expires:help' => "The date and time when the content of the security.txt file should be considered stale (so security researchers should then not trust it). Make sure you update this value periodically and keep your file under review. See %s",
+	'admin:security:security_txt:encryption' => "Encryption",
+	'admin:security:security_txt:encryption:help' => "A link to a key which security researchers should use to securely talk to you. Remember to include 'https://'. See %s",
+	'admin:security:security_txt:acknowledgments' => "Acknowledgments",
+	'admin:security:security_txt:acknowledgments:help' => "A link to a web page where you say thank you to security researchers who have helped you. Remember to include 'https://'. See %s",
+	'admin:security:security_txt:language' => "Language",
+	'admin:security:security_txt:language:help' => "A comma-separated list of language codes that your security team speaks. You may include more than one language. See %s",
+	'admin:security:security_txt:canonical' => "Canonical",
+	'admin:security:security_txt:canonical:help' => "The URLs for accessing your security.txt file. It is important to include this if you are digitally signing the security.txt file, so that the location of the security.txt file can be digitally signed too. See %s",
+	'admin:security:security_txt:policy' => "Policy",
+	'admin:security:security_txt:policy:help' => "A link to a policy detailing what security researchers should do when searching for or reporting security issues. Remember to include 'https://'. See %s",
+	'admin:security:security_txt:hiring' => "Hiring",
+	'admin:security:security_txt:hiring:help' => "A link to any security-related job openings in your organisation. Remember to include 'https://'. See %s",
+	'admin:security:security_txt:csaf' => "CSAF",
+	'admin:security:security_txt:csaf:help' => "A link to the provider-metadata.json of your CSAF (Common Security Advisory Framework) provider. Remember to include 'https://'. See %s",
 	
 	'admin:site:secret:regenerated' => "Your site secret has been regenerated",
 	'admin:site:secret:prevented' => "The regeneration of the site secret was prevented",
@@ -1072,6 +1096,7 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'entity:edit:icon:crop_messages:generic' => "The selected image doesn't meet the recommended image dimensions. This could result in low quality icons.",
 	'entity:edit:icon:crop_messages:width' => "It's recommended to use an image with a minimal width of at least %dpx.",
 	'entity:edit:icon:crop_messages:height' => "It's recommended to use an image with a minimal height of at least %dpx.",
+	'entity:edit:icon:crop:img:alt' => "Uploaded image",
 	'entity:edit:icon:file:label' => "Upload a new icon",
 	'entity:edit:icon:file:help' => "Leave blank to keep current icon.",
 	'entity:edit:icon:remove:label' => "Remove icon",
@@ -1197,6 +1222,8 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'list:error:getter:admin' => "The getter '%s' returned a(n) '%s', however the viewer '%s' requires an array",
 
 	'link:text' => 'view link',
+	
+	'scroll_to_top' => 'Scroll to top',
 
 /**
  * Generic questions
@@ -1755,7 +1782,38 @@ Global variables:
  * Miscellaneous
  */
 	'elgg:powered' => "Powered by Elgg",
-	
+	'field:required' => "Required",
+
+/**
+ * Accessibility
+ */
+	'aria:label:admin:users:search' => "User search",
+
+	'menu:admin_footer:header' => "Admin footer",
+	'menu:admin_header:header' => "Admin header",
+	'menu:admin:users:bulk:header' => "Users bulk actions",
+	'menu:annotation:header' => "Annotation",
+	'menu:breadcrumbs:header' => "Breadcrumbs",
+	'menu:comments:header' => "Comments",
+	'menu:entity:header' => "Entity",
+	'menu:entity_navigation:header' => "Entity navigation",
+	'menu:filter:header' => "Filter",
+	'menu:footer:header' => "Footer",
+	'menu:login:header' => "Login",
+	'menu:owner_block:header' => "Owner block",
+	'menu:page:header' => "Page",
+	'menu:relationship:header' => "Relationship",
+	'menu:river:header' => "River",
+	'menu:site:header' => "Site",
+	'menu:social:header' => "Social",
+	'menu:title:header' => "Title",
+	'menu:title:widgets:header' => "Widget administration",
+	'menu:topbar:header' => "Topbar",
+	'menu:user_hover:header' => "User hover",
+	'menu:user:unvalidated:header' => "Unvalidated user",
+	'menu:walled_garden:header' => "Walled garden",
+	'menu:widget:header' => "Widget controls",
+
 /**
  * Cli commands
  */
@@ -1783,6 +1841,7 @@ Global variables:
 	'cli:database:seed:option:create_until' => "A PHP time string to set the upper bound creation time of seeded entities",
 	'cli:database:seed:log:error:faker' => "This is a developer tool currently intended for testing purposes only. Please refrain from using it.",
 	'cli:database:seed:log:error:logged_in' => "Database seeding should not be run with a logged in user",
+	'cli:database:seed:ask:limit' => "How many items to seed for the '%s' seeder",
 
 	'cli:database:seeders:description' => "List all available database seeders with the current count of seeded entities",
 	'cli:database:seeders:handler' => "Seed handler",
@@ -1978,8 +2037,9 @@ Global variables:
 	"zh_hans" => "Chinese Simplified",
 	"zu" => "Zulu",
 
-	"field:required" => 'Required',
-
+/**
+ * Upgrades
+ */
 	"core:upgrade:2017080900:title" => "Alter database encoding for multi-byte support",
 	"core:upgrade:2017080900:description" => "Alters database and table encoding to utf8mb4, in order to support multi-byte characters such as emoji",
 	

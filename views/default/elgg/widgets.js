@@ -1,4 +1,4 @@
-define(['jquery', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function ($, Ajax) {
+define(['jquery', 'elgg/Ajax', 'elgg/lightbox', 'jquery-ui/widgets/sortable'], function ($, Ajax, lightbox) {
 
 	/**
 	 * Persist the widget's new position
@@ -55,17 +55,15 @@ define(['jquery', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function ($, Ajax)
 	 */
 	function saveWidgetSettings(event) {
 		event.preventDefault();
-		
-		$(this).parent().slideToggle('medium');
-		var $widgetContent = $(this).parent().parent().children('.elgg-widget-content');
+				
+		var $widgetContent = $('#elgg-widget-content-' + $(this).find('input[name="guid"]').val());
 
-		// stick the ajax loader in there
-		$widgetContent.html('<div class="elgg-ajax-loader"></div>');
-
-		var ajax = new Ajax(false);
+		var ajax = new Ajax();
 		ajax.action('widgets/save', {
-			data: $(this).serialize(),
+			data: ajax.objectify(this),
 			success: function (result) {
+				lightbox.close();
+				
 				$widgetContent.html(result.content);
 				if (result.title !== '') {
 					var $widgetTitle = $widgetContent.parent().parent().find('.elgg-widget-title');

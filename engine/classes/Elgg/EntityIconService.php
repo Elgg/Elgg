@@ -269,6 +269,12 @@ class EntityIconService {
 			}
 		}
 
+		// first invalidate entity metadata cache, because of a high risk of racing condition to save the coordinates
+		// the racing condition occurs with 2 (or more) icon save calls and the time between clearing
+		// the coordinates in deleteIcon() and the new save here
+		$entity->invalidateCache();
+		
+		// save cropping coordinates
 		if ($type == 'icon') {
 			$entity->icontime = time();
 			if ($x1 || $y1 || $x2 || $y2) {

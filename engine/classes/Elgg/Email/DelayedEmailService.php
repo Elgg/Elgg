@@ -23,6 +23,8 @@ class DelayedEmailService {
 	
 	use Loggable;
 	
+	protected const NOTIFICATIONS_BATCH_SIZE = 500;
+	
 	/**
 	 * @var DelayedEmailQueueTable
 	 */
@@ -100,46 +102,47 @@ class DelayedEmailService {
 		
 		return ($this->invoker->call(ELGG_IGNORE_ACCESS, function() use ($delivery_interval, $timestamp) {
 			$count = 0;
-			$last_recipient_guid = null;
-			$notifications = [];
 			
 			// process one recipient
-			$processRecipient = function($row = null) use (&$last_recipient_guid, &$notifications, $delivery_interval, $timestamp) {
+			$processRecipient = function(int $recipient_guid, array $notifications, int $max_id) use ($delivery_interval, $timestamp) {
 				try {
-					$this->processRecipientNotifications($last_recipient_guid, $notifications, $delivery_interval);
+					$this->processRecipientNotifications($recipient_guid, $notifications, $delivery_interval);
 				} catch (\Throwable $t) {
 					$this->getLogger()->error($t);
 				}
 				
 				// cleanup the queue for this recipient
-				$this->queue_table->deleteRecipientRows($last_recipient_guid, $delivery_interval, $timestamp);
-				
-				// start collecting data for the new recipient
-				$last_recipient_guid = $row ? $row->recipient_guid : null;
-				$notifications = [];
+				return $this->queue_table->deleteRecipientRows($recipient_guid, $delivery_interval, $timestamp, $max_id);
 			};
 			
-			$rows = $this->queue_table->getIntervalRows($delivery_interval, $timestamp);
-			foreach ($rows as $row) {
-				$count++;
-				
-				if (!isset($last_recipient_guid)) {
-					$last_recipient_guid = $row->recipient_guid;
-				} elseif ($last_recipient_guid !== $row->recipient_guid) {
-					// process one recipient
-					$processRecipient($row);
+			// get the next recipient to process
+			$recipient_guid = $this->queue_table->getNextRecipientGUID($delivery_interval, $timestamp);
+			while ($recipient_guid > 0) {
+				// get a notification batch to process for this recipient
+				$rows = $this->queue_table->getRecipientRows($recipient_guid, $delivery_interval, $timestamp, self::NOTIFICATIONS_BATCH_SIZE);
+				while (!empty($rows)) {
+					$notifications = [];
+					$max_id = 0;
+					foreach ($rows as $row) {
+						$max_id = max($max_id, $row->id);
+						
+						$notification = $row->getNotification();
+						if (!$notification instanceof Notification) {
+							continue;
+						}
+						
+						$notifications[] = $notification;
+					}
+					
+					// send all notifications in this batch
+					$count += $processRecipient($recipient_guid, $notifications, $max_id);
+					
+					// get next batch
+					$rows = $this->queue_table->getRecipientRows($recipient_guid, $delivery_interval, $timestamp, static::NOTIFICATIONS_BATCH_SIZE);
 				}
 				
-				$notfication = $row->getNotification();
-				if (!$notfication instanceof Notification) {
-					continue;
-				}
-				
-				$notifications[] = $notfication;
-			}
-			
-			if (isset($last_recipient_guid)) {
-				$processRecipient();
+				// get next recipient to process
+				$recipient_guid = $this->queue_table->getNextRecipientGUID($delivery_interval, $timestamp);
 			}
 			
 			return $count;

@@ -1,6 +1,6 @@
 <?php
 
-elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
+elgg_push_collection_breadcrumbs('group', 'group');
 
 $tag = get_input('tag');
 $display_query = _elgg_get_display_query((string) $tag);

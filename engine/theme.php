@@ -25,7 +25,6 @@ return [
 	'h5-font-size' => '0.9rem',
 	'h6-font-size' => '0.8rem',
 	
-
 	// element colors
 	'text-color-soft' => '#969696',
 	'text-color-mild' => '#7d7d7d',

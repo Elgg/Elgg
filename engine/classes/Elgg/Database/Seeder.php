@@ -2,9 +2,11 @@
 
 namespace Elgg\Database;
 
+use Elgg\Cli\Command;
 use Elgg\Cli\Progress;
 use Elgg\Database\Seeds\Seed;
 use Elgg\EventsService;
+use Elgg\I18n\Translator;
 use Elgg\Invoker;
 
 /**
@@ -21,22 +23,27 @@ class Seeder {
 	protected Progress $progress;
 	
 	protected Invoker $invoker;
+	
+	protected Translator $translator;
 
 	/**
 	 * Seeder constructor.
 	 *
-	 * @param EventsService $events   Events service
-	 * @param Progress      $progress Progress helper
-	 * @param Invoker       $invoker  Invoker service
+	 * @param EventsService $events     Events service
+	 * @param Progress      $progress   Progress helper
+	 * @param Invoker       $invoker    Invoker service
+	 * @param Translator    $translator Translator
 	 */
 	public function __construct(
 		EventsService $events,
 		Progress $progress,
-		Invoker $invoker
+		Invoker $invoker,
+		Translator $translator
 	) {
 		$this->events = $events;
 		$this->progress = $progress;
 		$this->invoker = $invoker;
+		$this->translator = $translator;
 	}
 
 	/**
@@ -55,16 +62,16 @@ class Seeder {
 	public function seed(array $options = []): void {
 		$this->invoker->call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($options) {
 			$defaults = [
-				'limit' => max(elgg_get_config('default_limit'), 20),
+				'limit' => null,
 				'image_folder' => elgg_get_config('seeder_local_image_folder'),
 				'type' => '',
 				'create' => false,
 				'create_since' => 'now',
 				'create_until' => 'now',
+				'interactive' => true,
+				'cli_command' => null,
 			];
 			$options = array_merge($defaults, $options);
-
-			$seeds = $this->getSeederClasses();
 
 			// set global configuration
 			if ($options['image_folder'] !== $defaults['image_folder']) {
@@ -73,16 +80,38 @@ class Seeder {
 			
 			unset($options['image_folder']);
 
+			// fetch CLI command
+			$cli_command = $options['cli_command'];
+			unset($options['cli_command']);
+
+			// interactive mode
+			$interactive = $options['interactive'] && empty($options['type']);
+			unset($options['interactive']);
+
+			$seeds = $this->getSeederClasses();
 			foreach ($seeds as $seed) {
+				$seed_options = $options;
+
 				// check for type limitation
-				if (!empty($options['type']) && $options['type'] !== $seed::getType()) {
+				if (!empty($seed_options['type']) && $seed_options['type'] !== $seed::getType()) {
 					continue;
 				}
 
-				/* @var $seeder Seed */
-				$seeder = new $seed($options);
+				// check the seed limit
+				$seed_options['limit'] = $seed_options['limit'] ?? $seed::getDefaultLimit();
+				if ($interactive && $cli_command instanceof Command) {
+					$seed_options['limit'] = (int) $cli_command->ask($this->translator->translate('cli:database:seed:ask:limit', [$seed::getType()]), $seed_options['limit'], false, false);
+				}
 
-				$progress_bar = $this->progress->start($seed, $options['limit']);
+				if ($seed_options['limit'] < 1) {
+					// skip seeding
+					continue;
+				}
+				
+				/* @var $seeder Seed */
+				$seeder = new $seed($seed_options);
+
+				$progress_bar = $this->progress->start($seed, $seed_options['limit']);
 
 				$seeder->setProgressBar($progress_bar);
 

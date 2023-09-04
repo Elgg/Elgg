@@ -27,7 +27,7 @@ class AdminHeader {
 			'name' => 'administer_utilities:reportedcontent',
 			'text' => elgg_echo('admin:administer_utilities:reportedcontent'),
 			'href' => 'admin/administer_utilities/reportedcontent',
-			'parent_name' => 'administer_utilities',
+			'parent_name' => 'administer',
 		]);
 	
 		return $return;

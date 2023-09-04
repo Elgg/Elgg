@@ -45,6 +45,7 @@
 		margin-top: -1px;
 		padding: 0;
 		
+		&:target,
 		&.elgg-state-highlight {
 			> .elgg-listing-full > .elgg-listing-full-header {
 				animation: comment-highlight 5s;

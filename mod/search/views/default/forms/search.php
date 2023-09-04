@@ -8,7 +8,7 @@
 $value = (string) elgg_extract('value', $vars, get_input('q', get_input('tag')));
 
 echo elgg_view_field([
-	'#type' => 'text',
+	'#type' => 'search',
 	'class' => 'search-input',
 	'size' => '21',
 	'name' => 'q',
@@ -18,11 +18,13 @@ echo elgg_view_field([
 	'required' => true,
 	'value' => _elgg_get_display_query($value),
 	'placeholder' => elgg_echo('search'),
+	'aria-label' => elgg_echo('search'), // because we don't add #label
 ]);
 
 echo elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_view_icon('search'),
+	'icon' => 'search',
+	'aria-label' => elgg_echo('search'), // because we don't add text
 ]);
 
 $values = [

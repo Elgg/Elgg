@@ -13,6 +13,9 @@ define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 			return false;
 		}
 		
+		// tell the action this a preview save
+		formData.append('preview', 1);
+		
 		// open preview in blank window
 		ajax.action('blog/save', {
 			data: formData,

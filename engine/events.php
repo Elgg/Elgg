@@ -163,6 +163,9 @@ return [
 		],
 	],
 	'form:prepare:fields' => [
+		'admin/security/security_txt' => [
+			\Elgg\Forms\PrepareSecurityTxt::class => [],
+		],
 		'all' => [
 			\Elgg\Forms\PrepareFields::class => ['priority' => 9999],
 		],
@@ -223,6 +226,7 @@ return [
 			'Elgg\Menus\AdminUsersBulk::disableItems' => [],
 		],
 		'menu:breadcrumbs' => [
+			'\Elgg\Menus\Breadcrumbs::addHomeItem' => ['priority' => 10000],
 			'\Elgg\Menus\Breadcrumbs::cleanupBreadcrumbs' => ['priority' => 9999],
 		],
 		'menu:site' => [
@@ -250,12 +254,14 @@ return [
 			'Elgg\Menus\AdminControlPanel::register' => [],
 		],
 		'menu:admin_header' => [
+			'Elgg\Menus\AdminHeader::moveUtilities' => ['priority' => 9999],
 			'Elgg\Menus\AdminHeader::register' => [],
 			'Elgg\Menus\AdminHeader::registerMaintenance' => [],
 			'Elgg\Menus\AdminHeader::registerAdminAdminister' => [],
 			'Elgg\Menus\AdminHeader::registerAdminConfigure' => [],
 			'Elgg\Menus\AdminHeader::registerAdminDefaultWidgets' => [],
 			'Elgg\Menus\AdminHeader::registerAdminInformation' => [],
+			'Elgg\Menus\AdminHeader::registerAdminUtilities' => [],
 		],
 		'menu:admin_footer' => [
 			'Elgg\Menus\AdminFooter::registerHelpResources' => [],
@@ -271,6 +277,9 @@ return [
 			'Elgg\Menus\Entity::registerEdit' => [],
 			'Elgg\Menus\Entity::registerUserHoverAdminSection' => [],
 			'Elgg\Menus\UserHover::registerLoginAs' => [],
+		],
+		'menu:entity:object:comment' => [
+			'Elgg\Menus\Entity::registerComment' => [],
 		],
 		'menu:entity:object:elgg_upgrade' => [
 			'Elgg\Menus\Entity::registerUpgrade' => [],

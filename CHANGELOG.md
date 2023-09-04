@@ -1,3 +1,77 @@
+<a name="5.0.5"></a>
+### 5.0.5  (2023-08-16)
+
+#### Contributors
+
+* Jeroen Dalsem (1)
+* Jerôme Bakker (1)
+
+#### Bug Fixes
+
+* **rss:** invalid atom link href in rss channel ([0467cf87](https://github.com/Elgg/Elgg/commit/0467cf8703bb3ea4936bd73bfbb3813a434d9275))
+
+
+<a name="5.0.4"></a>
+### 5.0.4  (2023-07-26)
+
+#### Contributors
+
+* Jerôme Bakker (9)
+* Jeroen Dalsem (1)
+
+#### Bug Fixes
+
+* **ckeditor:** added all block level image alignments to toolbar ([6fff9429](https://github.com/Elgg/Elgg/commit/6fff94290017df4a9bf879236b73c1f0be92c62e))
+* **icons:** prevent racing condition when saving cropping coordinates ([b4993528](https://github.com/Elgg/Elgg/commit/b499352814c45d8fbfc1eefa3fa5294e27de68cb))
+* **notifications:** processing delayed emails could cause OOM issues ([5e0fcab1](https://github.com/Elgg/Elgg/commit/5e0fcab17eb701474d1d121933474eefa52b7aca))
+* **views:**
+  * input/button and output/url must have discernible text ([924b2cdc](https://github.com/Elgg/Elgg/commit/924b2cdcae2a97447a2094b7389fe9ebb1d2f74e))
+  * make sure the icon cropper img has an alt text ([0cc105c8](https://github.com/Elgg/Elgg/commit/0cc105c8b684ed756b4839c1d72df714f17a1865))
+  * allow mobile devices to zoom ([1cee1be1](https://github.com/Elgg/Elgg/commit/1cee1be17474da910172dd5cc829f10a67c7fd0b))
+  * correctly set iframe width for PHPInfo ([e72f476e](https://github.com/Elgg/Elgg/commit/e72f476eb62ce5e8253deaf7ea9ca71fe70c79c5))
+  * only generate listing ID when using pagination ([ffe94eab](https://github.com/Elgg/Elgg/commit/ffe94eab174e0984cf288585fd91d24ac8d07a55))
+
+
+<a name="5.0.3"></a>
+### 5.0.3  (2023-07-14)
+
+#### Contributors
+
+* Jerôme Bakker (7)
+* Jeroen Dalsem (3)
+
+#### Bug Fixes
+
+* **admin:** admin layout now gets correct layout class ([f0c348c0](https://github.com/Elgg/Elgg/commit/f0c348c03973328f07918894d5cbe65ed8a0e9af))
+* **composer:** no longer try to symlink the mods on Windows ([5319f0ea](https://github.com/Elgg/Elgg/commit/5319f0eaf69071602b410a88857511ca80e8358a))
+* **database:** execute delayed queries immediately during CLI ([d2d23209](https://github.com/Elgg/Elgg/commit/d2d2320984994cbfe0cdcd2ec42d6cf1f277f9dc))
+* **email:** image styles will be converted to attributes if possible ([f306388b](https://github.com/Elgg/Elgg/commit/f306388b51d08aeb2a28154a83793775315423a8))
+* **http:** maintain set redirect code in response ([c4ad5037](https://github.com/Elgg/Elgg/commit/c4ad5037bbaa04343c733358931f513765932a19))
+* **icons:** make sure transparent images have a white background ([25d039b2](https://github.com/Elgg/Elgg/commit/25d039b258ad14f77b0193222193deaccc375f9b))
+* **settings:** prevent setting changes from being added to the systemlog ([708cb7ff](https://github.com/Elgg/Elgg/commit/708cb7ff51e8a98b946124f2bcf0c7f38b67f01c))
+* **site_notifications:** return correct actor ([a2ee148f](https://github.com/Elgg/Elgg/commit/a2ee148f954432c3ce876c257c9da15b5671ffaa))
+* **user:** prevent logging of changes to last_login and prev_last_login ([ba28f760](https://github.com/Elgg/Elgg/commit/ba28f760f562e1c493d757d49c2f7b36b1ccc8ba))
+
+
+<a name="5.0.2"></a>
+### 5.0.2  (2023-07-03)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+
+#### Performance
+
+* **site_notifications:** simplify site_notification removal query ([ad8bd918](https://github.com/Elgg/Elgg/commit/ad8bd918edad2c312a4f6bbac042119b446cdc12))
+
+
+#### Bug Fixes
+
+* **thewire:** improved hashtag matching ([67277b2f](https://github.com/Elgg/Elgg/commit/67277b2fe84201b43637cca001be55da5e5faff8))
+* **user:** return correct type for getOwnerGuid ([72856546](https://github.com/Elgg/Elgg/commit/72856546ba14139efa355398514e751b08c5c97b))
+* **views:** correctly handle errors in mention parsing ([92dc5d6d](https://github.com/Elgg/Elgg/commit/92dc5d6df4b1afdd5359211711ec9d66a1dcbc7e))
+
+
 <a name="5.0.1"></a>
 ### 5.0.1  (2023-06-19)
 
@@ -150,6 +224,18 @@
 * **files:** file plugin no longer uses custom file type icons ([92c50dd1](https://github.com/Elgg/Elgg/commit/92c50dd1e6c7dc48d9ecde4f7b0f9c1c51a3891a))
 * **plugins:** the embed plugin has been removed ([31a443c5](https://github.com/Elgg/Elgg/commit/31a443c56a48410333a08a1c0d61308f822151a9))
 * **widgets:** class function saveSettings has been removed ([3c58daee](https://github.com/Elgg/Elgg/commit/3c58daeea8bfc48c099827733cbe167462043d5f))
+
+<a name="4.3.9"></a>
+### 4.3.9  (2023-07-26)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+* Nikolai Shcherbin (1)
+
+#### Bug Fixes
+
+* **admin:** use correct params for memcache and redis server information ([6ee26b94](https://github.com/Elgg/Elgg/commit/6ee26b94637a384af133187afb9fab766ef324da))
 
 
 <a name="4.3.8"></a>

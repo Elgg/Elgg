@@ -11,6 +11,8 @@ return array(
 	 * Menu items and titles
 	 */
 	'admin:configure_utilities:expages' => "Site Pages",
+	'menu:expages:header' => "Site pages",
+	
 	'expages:edit:viewpage' => "View page on site",
 	'expages:about' => "About",
 	'expages:terms' => "Terms",

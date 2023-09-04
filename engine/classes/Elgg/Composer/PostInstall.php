@@ -25,10 +25,12 @@ class PostInstall {
 
 		self::createProjectModFolder();
 
-		$managed_plugins = \Elgg\Database\Plugins::BUNDLED_PLUGINS;
-
-		foreach ($managed_plugins as $plugin) {
-			self::symlinkPluginFromRootToElgg($plugin);
+		if (stripos(PHP_OS, 'win') !== 0) {
+			// symlink the mods from Elgg /mod to the project /mod
+			$managed_plugins = \Elgg\Database\Plugins::BUNDLED_PLUGINS;
+			foreach ($managed_plugins as $plugin) {
+				self::symlinkPluginFromRootToElgg($plugin);
+			}
 		}
 	}
 

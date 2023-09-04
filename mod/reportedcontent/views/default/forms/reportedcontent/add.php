@@ -45,11 +45,11 @@ foreach ($fields as $field) {
 }
 
 $footer = elgg_view('input/submit', [
-	'value' => elgg_echo('reportedcontent:report'),
+	'text' => elgg_echo('reportedcontent:report'),
 ]);
 $footer .= elgg_view('input/button', [
 	'class' => 'elgg-button-cancel',
-	'value' => elgg_echo('cancel'),
+	'text' => elgg_echo('cancel'),
 ]);
 
 elgg_set_form_footer($footer);

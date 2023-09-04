@@ -95,7 +95,7 @@ define(['jquery', 'elgg'], function ($, elgg) {
 		// store object as data in the edit link
 		var dc = $(this).data('Comment');
 		if (!dc) {
-			var guid = this.href.split('/').pop();
+			var guid = $(this).data().commentGuid;
 			dc = new Comment(guid, $trigger.closest('.elgg-item-object-comment'));
 			$(this).data('Comment', dc);
 		}

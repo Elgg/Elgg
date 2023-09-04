@@ -1,6 +1,6 @@
 <?php
 /**
- * Item view for generating HTML of an entity in an input/autocomplete (or input/userpicker)
+ * Item view for generating HTML of an entity in an input/autocomplete (or input/entitypicker)
  *
  * @uses $vars['entity'] the selected entity
  * @uses $vars['input_name'] name of the returned data array

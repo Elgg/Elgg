@@ -64,18 +64,22 @@ class Database {
 	/**
 	 * @var \Elgg\Database\DbConfig $config Database configuration
 	 */
-	private $config;
+	private $db_config;
+	
+	protected Config $config;
 
 	/**
 	 * Constructor
 	 *
-	 * @param DbConfig   $config      DB configuration
+	 * @param DbConfig   $db_config   DB configuration
 	 * @param QueryCache $query_cache Query Cache
+	 * @param Config     $config      Elgg config
 	 */
-	public function __construct(DbConfig $config, QueryCache $query_cache) {
+	public function __construct(DbConfig $db_config, QueryCache $query_cache, Config $config) {
 		$this->query_cache = $query_cache;
+		$this->config = $config;
 		
-		$this->resetConnections($config);
+		$this->resetConnections($db_config);
 	}
 
 	/**
@@ -88,7 +92,7 @@ class Database {
 	public function resetConnections(DbConfig $config) {
 		$this->closeConnections();
 		
-		$this->config = $config;
+		$this->db_config = $config;
 		$this->table_prefix = $config->getTablePrefix();
 		$this->query_cache->enable();
 		$this->query_cache->clear();
@@ -138,7 +142,7 @@ class Database {
 	 * @return void
 	 */
 	public function setupConnections(): void {
-		if ($this->config->isDatabaseSplit()) {
+		if ($this->db_config->isDatabaseSplit()) {
 			$this->connect('read');
 			$this->connect('write');
 		} else {
@@ -157,7 +161,7 @@ class Database {
 	 * @throws DatabaseException
 	 */
 	public function connect(string $type = 'readwrite'): void {
-		$conf = $this->config->getConnectionConfig($type);
+		$conf = $this->db_config->getConnectionConfig($type);
 
 		$params = [
 			'dbname' => $conf['database'],
@@ -465,6 +469,24 @@ class Database {
 	 * @return void
 	 */
 	public function registerDelayedQuery(QueryBuilder $query, $callback = null): void {
+		if (Application::isCli() && !$this->config->testing_mode) {
+			// during CLI execute delayed queries immediately (unless in testing mode, during PHPUnit)
+			// this should prevent OOM during long-running jobs
+			// @see Database::executeDelayedQueries()
+			try {
+				$stmt = $this->executeQuery($query);
+				
+				if (is_callable($callback)) {
+					call_user_func($callback, $stmt);
+				}
+			} catch (\Throwable $t) {
+				// Suppress all exceptions to not allow the application to crash
+				$this->getLogger()->error($t);
+			}
+			
+			return;
+		}
+		
 		$this->delayed_queries[] = [
 			self::DELAYED_QUERY => $query,
 			self::DELAYED_HANDLER => $callback,
@@ -489,9 +511,9 @@ class Database {
 				if (is_callable($handler)) {
 					call_user_func($handler, $stmt);
 				}
-			} catch (\Exception $e) {
+			} catch (\Throwable $t) {
 				// Suppress all exceptions since page already sent to requestor
-				$this->getLogger()->error($e);
+				$this->getLogger()->error($t);
 			}
 		}
 

@@ -7,7 +7,7 @@
  * @uses $vars['class']        Additional CSS classes to apply to the layout
  *
  * @uses $vars['breadcrumbs']  Breadcrumbs
- *                             Will no be rendered if the value is 'false'
+ *                             Will not be rendered if the value is 'false'
  *                             Will render 'navigation/breadcrumbs' view if
  *                             not set or is an array of breadcrumbs
  *                             Will override breadcrumbs view if set to a string
@@ -70,12 +70,11 @@ if ($sidebar && $sidebar_alt) {
 
 $layout_attrs['class'] = elgg_extract_class($layout_attrs, $class);
 
-$breadcrumbs = elgg_view('page/layouts/elements/breadcrumbs', $vars);
-$header = elgg_view('page/layouts/elements/header', $vars);
+$layout = elgg_view('page/layouts/elements/breadcrumbs', $vars);
+$layout .= elgg_view('page/layouts/elements/header', $vars);
+
 $body = elgg_view('page/layouts/elements/body', $vars);
 
-$layout = $breadcrumbs;
-$layout .= $header;
 $layout .= elgg_format_element('div', [
 	'class' => 'elgg-layout-columns',
 ], $sidebar_alt . $body . $sidebar);
