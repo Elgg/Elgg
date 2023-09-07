@@ -1,3 +1,17 @@
+<a name="5.0.6"></a>
+### 5.0.6  (2023-09-07)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+* Nikolai Shcherbin (1)
+
+#### Bug Fixes
+
+* **ckeditor:** early abort object mentions on closing bracket ([b397601c](https://github.com/Elgg/Elgg/commit/b397601cd21212698c16e0ab00eb96d0e9f9679f))
+* **docs:** document correct function ([e9ba84a1](https://github.com/Elgg/Elgg/commit/e9ba84a15c4aeaeb9892ec252bdb5543135251fe))
+
+
 <a name="5.0.5"></a>
 ### 5.0.5  (2023-08-16)
 
