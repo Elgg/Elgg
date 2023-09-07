@@ -834,6 +834,7 @@ trait Seeding {
 				$comment->container_guid = $entity->guid;
 				$comment->description = $this->faker()->paragraph;
 				$comment->time_created = $this->getRandomCreationTimestamp();
+				$comment->access_id = $entity->access_id;
 	
 				$tries++;
 				if ($comment->save()) {
@@ -869,7 +870,7 @@ trait Seeding {
 			}
 	
 			while ($success < $limit) {
-				if ($entity->annotate('likes', true, $entity->access_id, $this->getRandomUser()->guid)) {
+				if ($entity->annotate('likes', true, ACCESS_PUBLIC, $this->getRandomUser()->guid)) {
 					$success++;
 				}
 			}

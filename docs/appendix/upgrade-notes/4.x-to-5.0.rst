@@ -440,7 +440,7 @@ Deprecated APIs
 
 * ``elgg_clear_plugin_hook_handlers`` use ``elgg_clear_event_handlers``
 * ``elgg_register_plugin_hook_handler`` use ``elgg_register_event_handler``
-* ``elgg_trigger_plugin_hook`` use ``elgg_trigger_event_result``
+* ``elgg_trigger_plugin_hook`` use ``elgg_trigger_event_results``
 * ``elgg_unregister_plugin_hook_handler`` use ``elgg_unregister_event_handler``
 * ``get_user_by_email`` use ``elgg_get_user_by_email``
 * ``get_user_by_username`` use ``elgg_get_user_by_username``
