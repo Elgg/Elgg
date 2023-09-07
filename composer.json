@@ -41,7 +41,7 @@
         "npm-asset/requirejs": "^2.3.6",
         "npm-asset/requirejs-text": "^2.0.4",
         "npm-asset/sprintf-js": "~1.1.2",
-        "npm-asset/yaireo--tagify": "~4.16.0",
+        "npm-asset/yaireo--tagify": "~4.17.0",
         "pelago/emogrifier": "~7.0.0",
         "peppeocchi/php-cron-scheduler": "~4.0",
         "php-di/php-di": "~6.4.0",
