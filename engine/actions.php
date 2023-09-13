@@ -16,6 +16,7 @@ return [
 	'admin/site/icons' => ['access' => 'admin'],
 	'admin/site/set_maintenance_mode' => ['access' => 'admin'],
 	'admin/site/set_robots' => ['access' => 'admin'],
+	'admin/site/theme' => ['access' => 'admin'],
 	'admin/site/unlock_upgrade' => ['access' => 'admin'],
 	'admin/site/settings' => ['access' => 'admin'],
 	'admin/upgrade' => ['access' => 'admin'],
