@@ -44,6 +44,15 @@ define(['jquery', 'elgg', 'elgg/hooks', 'ckeditor/ckeditor'], function ($, elgg,
 							$(editor.sourceElement).trigger('change');
 						});
 						
+						editor.keystrokes.set('Ctrl+Enter', (event, cancel ) => {
+							$submit_button = $(editor.sourceElement).closest('form').find('button[type="submit"]').eq(0);
+							if ($submit_button.length) {
+								$submit_button.trigger('click');
+							}
+							
+							cancel();
+						});
+						
 						$(window).on('beforeunload.ckeditor', function(event) {
 							if ($(editor.sourceElement).data('dirty') && $(editor.sourceElement).closest('form').is(':visible')) {
 								return true;
