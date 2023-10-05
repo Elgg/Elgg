@@ -15,6 +15,8 @@ define(['jquery', 'elgg'], function ($, elgg) {
 
 	$(document).on('submit', '.elgg-form-comment-save', function (event) {
 		var $form = $(this);
+		
+		$form.find('.elgg-button-submit').prop('disabled', true);
 
 		require(['elgg/Ajax'], function(Ajax) {
 			var ajax = new Ajax();
@@ -39,6 +41,7 @@ define(['jquery', 'elgg'], function ($, elgg) {
 					}
 					
 					if (!$container.length) {
+						$form.find('.elgg-button-submit').prop('disabled', true);
 						return;
 					}
 
@@ -75,8 +78,14 @@ define(['jquery', 'elgg'], function ($, elgg) {
 							$comment[0].scrollIntoView({behavior: 'smooth'});
 		
 							fix_pagination($container);
+						},
+						error: function() {
+							$form.find('.elgg-button-submit').prop('disabled', false);
 						}
 					});
+				},
+				error: function () {
+					$form.find('.elgg-button-submit').prop('disabled', false);
 				}
 			});
 		});
@@ -167,7 +176,8 @@ define(['jquery', 'elgg'], function ($, elgg) {
 
 		submitForm: function () {
 			var $form = this.getForm();
-
+			$form.find('.elgg-button-submit').prop('disabled', true);
+			
 			require(['elgg/Ajax'], function(Ajax) {
 				var ajax = new Ajax();
 				
@@ -178,6 +188,9 @@ define(['jquery', 'elgg'], function ($, elgg) {
 							// Update list item content
 							$form.closest('.elgg-item-object-comment').html(result.output);
 						}
+					},
+					error: function() {
+						$form.find('.elgg-button-submit').prop('disabled', false);
 					}
 				});
 			});
