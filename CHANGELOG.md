@@ -1,3 +1,17 @@
+<a name="5.0.7"></a>
+### 5.0.7  (2023-10-10)
+
+#### Contributors
+
+* Jeroen Dalsem (5)
+* Jerôme Bakker (2)
+
+#### Bug Fixes
+
+* **forms:** prevent double submit on comment forms ([1b057186](https://github.com/Elgg/Elgg/commit/1b057186899ceb119b461613f65ac4b1f82e9b3b))
+* **icons:** retry icon resize after failure ([e04e396b](https://github.com/Elgg/Elgg/commit/e04e396b428b850b173fbcc42f3ac4efeb4d08d1))
+
+
 <a name="5.0.6"></a>
 ### 5.0.6  (2023-09-07)
 
