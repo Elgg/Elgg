@@ -26,13 +26,13 @@ class Cron {
 	 *
 	 * @param \Elgg\Event $event 'cron', 'fiveminute'
 	 *
-	 * @return string
+	 * @return void
 	 */
-	public static function cleanupSiteNotificationsWithRemovedLinkedEntities(\Elgg\Event $event) {
+	public static function cleanupSiteNotificationsWithRemovedLinkedEntities(\Elgg\Event $event): void {
 		set_time_limit(0);
 		
-		$result = $event->getValue();
-		$result .= elgg_echo('site_notifications:cron:linked_cleanup:start') . PHP_EOL;
+		/* @var $cron_logger \Elgg\Logger\Cron */
+		$cron_logger = $event->getParam('logger');
 		
 		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() {
 			$count = 0;
@@ -80,8 +80,7 @@ class Cron {
 			return $count;
 		});
 		
-		$result .= elgg_echo('site_notifications:cron:linked_cleanup:end', [$count]) . PHP_EOL;
-		return $result;
+		$cron_logger->notice(elgg_echo('site_notifications:cron:linked_cleanup:end', [$count]));
 	}
 	
 	/**
@@ -89,9 +88,9 @@ class Cron {
 	 *
 	 * @param \Elgg\Event $event 'cron', 'daily'
 	 *
-	 * @return void|string
+	 * @return void
 	 */
-	public static function cleanupUnreadSiteNotifications(\Elgg\Event $event) {
+	public static function cleanupUnreadSiteNotifications(\Elgg\Event $event): void {
 		set_time_limit(0);
 		
 		$days = (int) elgg_get_plugin_setting('unread_cleanup_days', 'site_notifications');
@@ -100,10 +99,10 @@ class Cron {
 			return;
 		}
 		
-		$max_runtime = static::CLEANUP_MAX_DURATION[$event->getType()];
+		/* @var $cron_logger \Elgg\Logger\Cron */
+		$cron_logger = $event->getParam('logger');
 		
-		$result = $event->getValue();
-		$result .= elgg_echo('site_notifications:cron:unread_cleanup:start', [$days]) . PHP_EOL;
+		$max_runtime = static::CLEANUP_MAX_DURATION[$event->getType()];
 		
 		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($days, $max_runtime) {
 			$count = 0;
@@ -150,8 +149,7 @@ class Cron {
 			return $count;
 		});
 		
-		$result .= elgg_echo('site_notifications:cron:unread_cleanup:end', [$count]) . PHP_EOL;
-		return $result;
+		$cron_logger->notice(elgg_echo('site_notifications:cron:unread_cleanup:end', [$count]));
 	}
 	
 	/**
@@ -159,9 +157,9 @@ class Cron {
 	 *
 	 * @param \Elgg\Event $event 'cron', 'daily'
 	 *
-	 * @return void|string
+	 * @return void
 	 */
-	public static function cleanupReadSiteNotifications(\Elgg\Event $event) {
+	public static function cleanupReadSiteNotifications(\Elgg\Event $event): void {
 		set_time_limit(0);
 		
 		$days = (int) elgg_get_plugin_setting('read_cleanup_days', 'site_notifications');
@@ -170,10 +168,10 @@ class Cron {
 			return;
 		}
 		
-		$max_runtime = static::CLEANUP_MAX_DURATION[$event->getType()];
+		/* @var $cron_logger \Elgg\Logger\Cron */
+		$cron_logger = $event->getParam('logger');
 		
-		$result = $event->getValue();
-		$result .= elgg_echo('site_notifications:cron:read_cleanup:start', [$days]) . PHP_EOL;
+		$max_runtime = static::CLEANUP_MAX_DURATION[$event->getType()];
 		
 		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($days, $max_runtime) {
 			$count = 0;
@@ -220,8 +218,7 @@ class Cron {
 			return $count;
 		});
 		
-		$result .= elgg_echo('site_notifications:cron:read_cleanup:end', [$count]) . PHP_EOL;
-		return $result;
+		$cron_logger->notice(elgg_echo('site_notifications:cron:read_cleanup:end', [$count]));
 	}
 	
 	/**

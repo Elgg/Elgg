@@ -48,4 +48,4 @@ if (get_input('remove_font_awesome_zip')) {
 	elgg_save_config('font_awesome_zip', $zip->getClientOriginalName());
 }
 	
-return elgg_ok_response(elgg_echo('save:success'));
+return elgg_ok_response('', elgg_echo('save:success'));

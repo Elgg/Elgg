@@ -254,6 +254,14 @@ class AdminHeader {
 		]);
 		
 		$return[] = \ElggMenuItem::factory([
+			'name' => 'settings:theme',
+			'text' => elgg_echo('admin:theme'),
+			'href' => 'admin/theme',
+			'priority' => 25,
+			'parent_name' => 'configure',
+		]);
+		
+		$return[] = \ElggMenuItem::factory([
 			'name' => 'security',
 			'text' => elgg_echo('admin:security'),
 			'href' => 'admin/security',

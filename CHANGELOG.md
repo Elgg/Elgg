@@ -1,3 +1,31 @@
+<a name="5.0.7"></a>
+### 5.0.7  (2023-10-10)
+
+#### Contributors
+
+* Jeroen Dalsem (5)
+* Jerôme Bakker (2)
+
+#### Bug Fixes
+
+* **forms:** prevent double submit on comment forms ([1b057186](https://github.com/Elgg/Elgg/commit/1b057186899ceb119b461613f65ac4b1f82e9b3b))
+* **icons:** retry icon resize after failure ([e04e396b](https://github.com/Elgg/Elgg/commit/e04e396b428b850b173fbcc42f3ac4efeb4d08d1))
+
+
+<a name="5.0.6"></a>
+### 5.0.6  (2023-09-07)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+* Nikolai Shcherbin (1)
+
+#### Bug Fixes
+
+* **ckeditor:** early abort object mentions on closing bracket ([b397601c](https://github.com/Elgg/Elgg/commit/b397601cd21212698c16e0ab00eb96d0e9f9679f))
+* **docs:** document correct function ([e9ba84a1](https://github.com/Elgg/Elgg/commit/e9ba84a15c4aeaeb9892ec252bdb5543135251fe))
+
+
 <a name="5.0.5"></a>
 ### 5.0.5  (2023-08-16)
 

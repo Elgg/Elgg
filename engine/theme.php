@@ -6,7 +6,7 @@
 
 return [
 	// layout and shell
-	'body-background-color' => '#FFF',
+	'body-background-color' => '#FFFFFF',
 	'walled-garden-background-image' => 'graphics/walled_garden.jpg',
 	
 	// Typography

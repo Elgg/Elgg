@@ -1,6 +1,6 @@
 {
     "name": "elgg/elgg",
-    "version": "5.0.5",
+    "version": "5.0.7",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0-only",
     "minimum-stability": "dev",
@@ -13,7 +13,7 @@
         "ext-json": "*",
         "ext-xml": "*",
         "ckeditor/ckeditor": "~4.20.0",
-        "composer/semver": "~3.3.0",
+        "composer/semver": "~3.4.0",
         "css-crush/css-crush": "~4.1.0",
         "doctrine/dbal": "~3.4.4",
         "eloquent/composer-config-reader": "~3.0.0",
@@ -41,7 +41,7 @@
         "npm-asset/requirejs": "^2.3.6",
         "npm-asset/requirejs-text": "^2.0.4",
         "npm-asset/sprintf-js": "~1.1.2",
-        "npm-asset/yaireo--tagify": "~4.16.0",
+        "npm-asset/yaireo--tagify": "~4.17.0",
         "pelago/emogrifier": "~7.0.0",
         "peppeocchi/php-cron-scheduler": "~4.0",
         "php-di/php-di": "~6.4.0",
@@ -54,7 +54,7 @@
         "symfony/mime": "~5.3",
         "symfony/routing": "~5.3",
         "symfony/var-dumper": "~5.3",
-        "vanilla/htmlawed": "~2.2.0"
+        "vanilla/htmlawed": "2.2.5"
     },
     "config": {
         "process-timeout": 0,
