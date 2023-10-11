@@ -31,9 +31,9 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function($, elgg, Ajax) {
 			
 			if (context && page_owner_guid) {
 				// target the correct widget layout
-				selector = '.elgg-layout-widgets-' + context + '[data-page-owner-guid="' + page_owner_guid + '"] #elgg-widget-col-' + new_widget_column;
+				selector = '.elgg-layout-widgets-' + context + '[data-page-owner-guid="' + page_owner_guid + '"] .elgg-widget-col-' + new_widget_column;
 			} else {
-				selector = '#elgg-widget-col-' + new_widget_column;
+				selector = '.elgg-widget-col-' + new_widget_column;
 			}
 			
 			if (new_widget_position === 'top') {

@@ -98,11 +98,11 @@ for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 	}
 	
 	$grid .= elgg_format_element('div', [
-		'id' => "elgg-widget-col-{$column_index}",
 		'class' => [
 			'elgg-widgets',
+			"elgg-widget-col-{$column_index}",
 		],
-		
+		'data-widget-column' => $column_index,
 	], $widgets_content);
 }
 
