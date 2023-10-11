@@ -189,6 +189,9 @@ class CacheHandler {
 			$this->simplecache->cacheAsset($viewtype, $view, $content);
 		} else {
 			// if wrong timestamp, don't send HTTP cache
+			// also report that the resource has gone away
+			$response->setStatusCode(ELGG_HTTP_GONE);
+			
 			$content = $this->getProcessedView($view, $viewtype);
 		}
 
