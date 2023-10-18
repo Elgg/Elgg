@@ -164,6 +164,12 @@ source_file = mod/tagcloud/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
+[o:elgg:p:elgg-core-5:r:theme_sandbox]
+file_filter = mod/theme_sandbox/languages/<lang>.php
+source_file = mod/theme_sandbox/languages/en.php
+source_lang = en
+type        = PHP_ARRAY
+
 [o:elgg:p:elgg-core-5:r:thewire]
 file_filter = mod/thewire/languages/<lang>.php
 source_file = mod/thewire/languages/en.php
