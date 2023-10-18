@@ -1148,7 +1148,12 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
  * Miscellaneous
  */
 	'elgg:powered' => "Creado con Elgg",
-	
+	'field:required' => "Requerido",
+
+/**
+ * Accessibility
+ */
+
 /**
  * Cli commands
  */
@@ -1308,5 +1313,7 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
 	"zh_hans" => "Chino Simplificado",
 	"zu" => "Zulu",
 
-	"field:required" => 'Requerido',
+/**
+ * Upgrades
+ */
 );

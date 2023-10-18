@@ -9,7 +9,6 @@ return array(
 	'admin:develop_tools' => 'Herramientas',
 	
 	// menu
-	'admin:develop_tools:sandbox' => 'Sanbox del Tema',
 	'admin:develop_tools:inspect' => 'Inspecciona',
 	'admin:inspect' => 'Inspecciona',
 	'admin:develop_tools:unit_tests' => 'Tests unitarios',
@@ -36,10 +35,6 @@ return array(
 	'developers:label:wrap_views' => "Wrap de vistas",
 	'developers:label:log_events' => "Eventos de Logs",
 	'developers:help:log_events' => "Escribir eventos en el log. Precaución: hay varios de estos por página.",
-	'developers:label:show_gear' => "Usar %s fuera de la zona de administración",
-	'developers:help:show_gear' => "Un icono en la parte inferior derecha de la ventana que permite el acceso de los administradores a la configuración y enlaces de desarrollo.",
-
-	'developers:label:submit' => "Guardar y liberar cachés",
 	
 	'developers:debug:off' => 'Apagado',
 	'developers:debug:error' => 'Error',
@@ -78,26 +73,6 @@ return array(
 	'developers:log_queries' => "%s consultas de Base de Datos",
 	'developers:boot_cache_rebuilt' => "El caché de arranque se reconstruyó para esta solicitud",
 	'developers:elapsed_time' => "Tiempo transcurrido (s)",
-
-	// theme sandbox
-	'theme_sandbox:intro' => 'Introducción',
-	'theme_sandbox:breakout' => 'Fuera de iframe',
-	'theme_sandbox:buttons' => 'Botones',
-	'theme_sandbox:components' => 'Componentes',
-	'theme_sandbox:email' => 'Correo electr&oacute;nico',
-	'theme_sandbox:forms' => 'Formularios',
-	'theme_sandbox:grid' => 'Grilla',
-	'theme_sandbox:icons' => 'Iconos',
-	'theme_sandbox:javascript' => 'JavaScript',
-	'theme_sandbox:layouts' => 'Estructuras',
-	'theme_sandbox:modules' => 'Módulos',
-	'theme_sandbox:navigation' => 'Navegación',
-	'theme_sandbox:typography' => 'Tipografías',
-
-	'theme_sandbox:icons:blurb' => 'Use <em>elgg_view_icon($name)</em> ola clase elgg-icon-$name para mostrar iconos.',
-
-	// status messages
-	'developers:settings:success' => 'Configuraciones almacenadas',
 
 	'developers:amd' => 'AMD',
 );

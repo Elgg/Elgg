@@ -137,4 +137,6 @@ return array(
 	'groups:add:alreadymember' => "%s ya forma parte del grupo.",
 	
 	// Notification settings
+	
+	// accessibility
 );

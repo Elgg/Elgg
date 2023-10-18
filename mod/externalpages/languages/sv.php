@@ -11,6 +11,7 @@ return array(
 	 * Menu items and titles
 	 */
 	'admin:configure_utilities:expages' => "Webbplatsens Sidor",
+	
 	'expages:edit:viewpage' => "Visa sida på webbplatsen",
 	'expages:about' => "Om",
 	'expages:terms' => "Villkor",

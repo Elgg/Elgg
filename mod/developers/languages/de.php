@@ -9,7 +9,6 @@ return array(
 	'admin:develop_tools' => 'Entwickler-Werkzeuge',
 	
 	// menu
-	'admin:develop_tools:sandbox' => 'Theme-Sandbox',
 	'admin:develop_tools:inspect' => 'Prüfen',
 	'admin:inspect' => 'Prüfen',
 	'admin:develop_tools:unit_tests' => 'Modultests',
@@ -37,20 +36,14 @@ return array(
 	'developers:label:show_modules' => "Geladene AMD-Module in der JavaScript-Konsole anzeigen",
 	'developers:help:show_modules' => "Zeigt Informationen zu den auf der aktuellen Seite geladenen AMD-Modulen in der JavaScript-Konsole des Browsers an.",
 	'developers:label:wrap_views' => "Views einkapseln",
-	'developers:help:wrap_views' => "Diese Einstellung aktiviert die Einkapselung fast aller Views in HTML-Kommentare. Dies kann hilfreich sein, um den erzeugten HTML-Code einer View zuzuordnen.
-Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören. Siehe developers_wrap_views() für weitere Informationen.",
 	'developers:label:log_events' => "Events protokollieren",
 	'developers:help:log_events' => "Einträge für Events ins Log schreiben. Warnung: es gibt sehr viele davon bei jedem Seitenaufruf.",
-	'developers:label:show_gear' => "Verwende %s außerhalb des Admin-Backends",
-	'developers:help:show_gear' => "Ein (nur für Admins sichtbares) Icon in der unteren rechten Ecke des Viewports, mit dessen Hilfe Zugriff auf Entwicklungseinstellungen und -links möglich ist.",
 	'developers:label:block_email' => "Alle ausgehenden Emails blockieren",
 	'developers:help:block_email' => "Du kannst alle Emails oder an normale Benutzer gehenden Emails blockieren.",
 	'developers:label:forward_email' => "Alle ausgehenden Emails an eine Email-Adresse umleiten",
 	'developers:help:forward_email' => "Alle ausgehenden Emails werden an die angegebene Email-Adresse umgeleitet.",
 	'developers:label:enable_error_log' => "Error-Log aktivieren",
 	'developers:help:enable_error_log' => "Verwende ein separates Error-Log für Fehler und Meldungen, die von error_log() entsprechend dem eingestellten Log-Level erstellt werden. Du kannst dieses Log im Admin-Bereich einsehen.",
-
-	'developers:label:submit' => "Speichern und Caches zurücksetzen",
 
 	'developers:block_email:forward' => 'Alle Emails umleiten',
 	'developers:block_email:users' => 'Nur von normalen Benutzern',
@@ -110,29 +103,6 @@ Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören
 	'developers:log_queries' => "Datenbankabfragen: %s",
 	'developers:boot_cache_rebuilt' => "Der Boot-Cache wurde für diese Abfrage neu erzeugt.",
 	'developers:elapsed_time' => "Benötigte Zeit (s)",
-
-	// theme sandbox
-	'theme_sandbox:intro' => 'Einführung',
-	'theme_sandbox:breakout' => 'Theme-Preview in ganzen Browserfenster anzeigen',
-	'theme_sandbox:buttons' => 'Knöpfe',
-	'theme_sandbox:components' => 'Komponenten',
-	'theme_sandbox:email' => 'Email',
-	'theme_sandbox:forms' => 'Forms',
-	'theme_sandbox:grid' => 'Grid',
-	'theme_sandbox:icons' => 'Icons',
-	'theme_sandbox:javascript' => 'JavaScript',
-	'theme_sandbox:layouts' => 'Layouts',
-	'theme_sandbox:modules' => 'Module',
-	'theme_sandbox:navigation' => 'Navigation',
-	'theme_sandbox:typography' => 'Typographie',
-
-	'theme_sandbox:icons:blurb' => 'Verwende <em>elgg_view_icon($name)</em> zur Ausgabe von Icons.',
-	
-	'theme_sandbox:test_email:button' => "Sende Test-Email",
-	'theme_sandbox:test_email:success' => "Test-Email wurde gesendet an: %s",
-
-	// status messages
-	'developers:settings:success' => 'Einstellungen gespeichert und Caches zurückgesetzt.',
 
 	'developers:amd' => 'AMD',
 

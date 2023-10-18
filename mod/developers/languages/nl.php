@@ -9,13 +9,14 @@ return array(
 	'admin:develop_tools' => 'Tools',
 	
 	// menu
-	'admin:develop_tools:sandbox' => 'Theme Sandbox',
 	'admin:develop_tools:inspect' => 'Inspecteer',
 	'admin:inspect' => 'Inspecteer',
 	'admin:develop_tools:unit_tests' => 'Unittesten',
 	'admin:develop_tools:entity_explorer' => 'Entiteiten Verkenner',
 	'admin:developers' => 'Ontwikkelaars',
 	'admin:developers:settings' => 'Instellingen',
+	'menu:entity_explorer:header' => 'Entiteiten Verkenner',
+	'menu:developers_inspect_viewtype:header' => 'Inspecteer view types',
 
 	// settings
 	'elgg_dev_tools:settings:explanation' => 'Beheer je ontwikkel- en debuginstellingen hieronder. Sommige van de instellingen zijn ook beschikbaar op andere beheerpagina\'s.',
@@ -39,19 +40,15 @@ return array(
 	'developers:label:wrap_views' => "Omcirkel views",
 	'developers:help:wrap_views' => "Dit omwikkeld alle views met een HTML comment block. Dit kan je helpen indien je wilt weten welke view de HTML heeft gegenereerd.
 
-Dit kan potentieel non-HTML views niet laten functioneren. Bekijk de developers_wrap_views() functie voor meer informatie.",
+Dit kan potentieel non-HTML views niet laten functioneren.",
 	'developers:label:log_events' => "Log events",
 	'developers:help:log_events' => "Schrijf events naar de log. Waarschuwing: dit zijn er veel per pagina.",
-	'developers:label:show_gear' => "Gebruik %s buiten de admin sectie",
-	'developers:help:show_gear' => "Een icoon onderaan rechts van het venster dat administrators toegang geeft tot ontwikkelaars instellingen en links.",
 	'developers:label:block_email' => "Blokkeer alle uitgaande emails",
 	'developers:help:block_email' => "Het is mogelijk om alle uitgaande emails naar reguliere gebruikers of naar alle gebruikers",
 	'developers:label:forward_email' => "Stuur alle uitgaande emails naar één adres",
 	'developers:help:forward_email' => "Alle uitgaande emails zullen naar het geconfigureerde emailadres worden verzonden",
 	'developers:label:enable_error_log' => "Schakel error logging in",
 	'developers:help:enable_error_log' => "Maak een eigen logbestand aan met fouten en berichten welke gelogd worden via error_log() gebaseerd op je loglevel instellingen. Deze log is zichtbaar via de beheer pagina.",
-
-	'developers:label:submit' => "Opslaan en cache wissen",
 
 	'developers:block_email:forward' => 'Stuur alle emails door',
 	'developers:block_email:users' => 'Enkel voor gewone gebruikers',
@@ -82,6 +79,7 @@ Dit kan potentieel non-HTML views niet laten functioneren. Bekijk de developers_
 	'developers:inspect:events' => 'Events',
 	'developers:inspect:menus' => 'Menu\'s',
 	'developers:inspect:priority' => 'Prioriteit',
+	'developers:inspect:seeders' => 'Seeders',
 	'developers:inspect:simplecache' => 'Simple Cache',
 	'developers:inspect:routes' => 'Routes',
 	'developers:inspect:views' => 'Views',
@@ -111,29 +109,6 @@ Dit kan potentieel non-HTML views niet laten functioneren. Bekijk de developers_
 	'developers:log_queries' => "DB queries: %s",
 	'developers:boot_cache_rebuilt' => "De boot cache is herbouwd voor deze pagina",
 	'developers:elapsed_time' => "Tijd verstreken (s)",
-
-	// theme sandbox
-	'theme_sandbox:intro' => 'Introductie',
-	'theme_sandbox:breakout' => 'Verlaat het iframe',
-	'theme_sandbox:buttons' => 'Knoppen',
-	'theme_sandbox:components' => 'Componenten',
-	'theme_sandbox:email' => 'Email',
-	'theme_sandbox:forms' => 'Formulieren',
-	'theme_sandbox:grid' => 'Raster',
-	'theme_sandbox:icons' => 'Iconen',
-	'theme_sandbox:javascript' => 'JavaScript',
-	'theme_sandbox:layouts' => 'Lay-outs',
-	'theme_sandbox:modules' => 'Modules',
-	'theme_sandbox:navigation' => 'Paginanavigatie',
-	'theme_sandbox:typography' => 'Typografie',
-
-	'theme_sandbox:icons:blurb' => 'Gebruik <em>elgg_view_icon($name)</em> of de klasse <em>elgg-icon-$name</em> om iconen weer te geven.',
-	
-	'theme_sandbox:test_email:button' => "Stuur test email",
-	'theme_sandbox:test_email:success' => "Test email verzonden naar: %s",
-
-	// status messages
-	'developers:settings:success' => 'Instellingen opgeslagen',
 
 	'developers:amd' => 'AMD',
 

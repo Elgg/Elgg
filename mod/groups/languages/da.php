@@ -126,4 +126,6 @@ return array(
 	'groups:joinrequestkilled' => 'Anmodningen om tilslutning er blevet slettet.',
 	
 	// Notification settings
+	
+	// accessibility
 );

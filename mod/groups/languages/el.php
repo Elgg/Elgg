@@ -133,4 +133,6 @@ return array(
 	'groups:add:alreadymember' => "Ο/η %s είναι ήδη μέλος της ομάδας",
 	
 	// Notification settings
+	
+	// accessibility
 );

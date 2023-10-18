@@ -11,6 +11,7 @@ return array(
 	 * Menu items and titles
 	 */
 	'admin:configure_utilities:expages' => "Страницы сайта",
+	
 	'expages:edit:viewpage' => "Просмотр страницы на сайте",
 	'expages:about' => "О сайте",
 	'expages:terms' => "Правила",

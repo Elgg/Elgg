@@ -12,4 +12,6 @@ return array(
 	'search:comment_on' => 'Reacties op "%s"',
 	'search:unknown_entity' => 'Onbekend Entity type',
 	'search:empty_query' => 'Voer een geldige zoekopdracht in',
+	
+	'search:aria:label:site_search' => "Zoeken op de site",
 );

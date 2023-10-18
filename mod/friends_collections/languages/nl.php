@@ -6,6 +6,7 @@
  */
 
 return array(
+	'menu:friends:collection:header' => 'Vriendenlijst',
 	'friends:collections' => 'Vriendenlijsten',
 	'friends:collections:no_results' => 'Je hebt nog geen vriendenlijsten aangemaakt',
 	'friends:collection:members:no_results' => 'Deze vriendenlijst heeft nog geen leden',
