@@ -137,4 +137,6 @@ return array(
 	'groups:add:alreadymember' => "%s je již členem této skupiny",
 	
 	// Notification settings
+	
+	// accessibility
 );

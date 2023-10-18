@@ -1592,7 +1592,12 @@ Globale Variablen:
  * Miscellaneous
  */
 	'elgg:powered' => "Community-Seite erstellt mit Elgg",
-	
+	'field:required' => "Erforderlich",
+
+/**
+ * Accessibility
+ */
+
 /**
  * Cli commands
  */
@@ -1802,8 +1807,9 @@ Globale Variablen:
 	"zh_hans" => "Chinesisch (Kurzzeichen)",
 	"zu" => "Zulu",
 
-	"field:required" => 'Erforderlich',
-
+/**
+ * Upgrades
+ */
 	"core:upgrade:2017080900:title" => "Umwandlung des Datenbank-Encodings für Multi-Byte-Support",
 	"core:upgrade:2017080900:description" => "Damit wird das Encoding der Datenbank und der Datenbanktabellen auf UTF8mb4 umgestellt, damit Multi-Byte-Characters wie beispielsweise Emojies gespeichert werden können.",
 	

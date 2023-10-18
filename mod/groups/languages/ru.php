@@ -178,4 +178,6 @@ return array(
 	
 	'groups:usersettings:notifications:title' => 'Уведомления группы',
 	'groups:usersettings:notifications:description' => 'Чтобы получать уведомления, когда новый контент добавляется в группу, членом которой вы являетесь, найдите его ниже и выберите способ(ы) уведомления, который вы хотите использовать.',
+	
+	// accessibility
 );

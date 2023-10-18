@@ -178,4 +178,6 @@ ou cliquez ci-dessous pour voir les demandes d'adhésion au groupe :
 	
 	'groups:usersettings:notifications:title' => 'Notifications du groupe',
 	'groups:usersettings:notifications:description' => 'Pour recevoir des notifications quand de nouveaux contenus sont publiés dans un groupe dont vous êtes membre, cherchez et choisissez ci-dessous la ou les méthodes de notification que vous souhaitez utiliser.',
+	
+	// accessibility
 );

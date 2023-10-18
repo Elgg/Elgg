@@ -476,6 +476,7 @@ De volgende karakters zijn niet toegestaan: %s',
  */
 	'menu:page:header:administer' => 'Beheer',
 	'menu:page:header:configure' => 'Configureer',
+	'menu:page:header:utilities' => 'Hulpmiddelen',
 	'menu:page:header:develop' => 'Ontwikkel',
 	'menu:page:header:information' => 'Informatie',
 	'menu:page:header:default' => 'Andere',
@@ -590,6 +591,11 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:site_icons:font_awesome:zip:help' => "Upload hier je Font Awesome iconen. Je kunt deze downloaden van https://fontawesome.com/download. Het webfont wordt dan lokaal geserveerd.",
 	'admin:site_icons:font_awesome:zip:error' => "De ZIP kon niet worden uitgepakt",
 	'admin:site_icons:font_awesome:remove_zip' => "Verwijderd geüploade lettertype",
+	'admin:theme' => "Theme",
+	'admin:theme:info' => "Hier kunnen verschillende theme instellingen worden geconfigureerd. Deze configuratie zal de bestaande configuratie overschrijven.",
+	'admin:theme:warning' => "Houdt er rekening mee dat deze wijzigingen je design onbruikbaar kunnen maken.",
+	'admin:theme:css_variable:name' => "CSS variabelen",
+	'admin:theme:css_variable:value' => "Waarde",
 	'admin:site_settings' => "Instellingen",
 	'admin:site:description' => "Via dit beheerpaneel kun je de algemene instellingen van de site beheren. Kies een optie om te beginnen.",
 	'admin:site:opt:linktext' => "Configureer site",
@@ -778,6 +784,28 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	
 	'admin:security:settings:min_password_special' => "Minimaal aantal speciale tekens in een wachtwoord",
 	'admin:security:settings:min_password_special:help' => "Configureer het minimaal aantal speciale tekens (!@$%^&*()<>,.?/[]{}-=_+) welke aanwezig moeten zijn in een wachtwoord. 0 betekent dat het er niet in mag zitten. Laat het leeg voor geen vereisten.",
+	
+	'admin:security:security_txt' => "Security.txt",
+	'admin:security:security_txt:description' => "Wanneer er een beveiligingsprobleem op uw website wordt gevonden, waar moet dit dan worden gemeld? Security.txt is een standaard die helpt bij het structureren van de informatie die beveiligingsonderzoekers nodig hebben om contact op te kunnen nemen met de sitebeheerders met de gevonden kwetsbaarheid. Meer informatie over de standaard vindt u op %s. De inhoud van uw security.txt kunt u vinden op %s.",
+	'admin:security:security_txt:expired' => "De inhoud van je security.txt is verlopen, controleer of alle informatie nog steeds up-to-date is.",
+	'admin:security:security_txt:contact' => "Contactgegevens",
+	'admin:security:security_txt:contact:help' => "Een link of e-mail adres voor mensen om contact op te kunnen nemen over beveiligingsproblemen. Vergeet niet om 'https://' voor URLs en 'mailto:' voor e-mails op te nemen. Zie %s",
+	'admin:security:security_txt:expires' => "Verloopdatum",
+	'admin:security:security_txt:expires:help' => "De datum en tijd waarop de inhoud van het security.txt-bestand als verouderd moet worden beschouwd (beveiligingsonderzoekers moeten het dus niet vertrouwen). Zorg ervoor dat u deze waarde regelmatig bijwerkt en uw bestand regelmatig controleert. Zie %s",
+	'admin:security:security_txt:encryption' => "Encryptie",
+	'admin:security:security_txt:encryption:help' => "Een link naar een beveiligingssleutel welke beveiligingsonderzoekers kunnen gebruiken om beveiligd met jou te kunnen communiceren. Vergeet niet om 'https://' op te nemen. Zie %s",
+	'admin:security:security_txt:acknowledgments' => "Dankbetuigingen",
+	'admin:security:security_txt:acknowledgments:help' => "Een link naar een webpagina waar de de beveiligingsonderzoekers bedankt voor hun bijdrage. Vergeet niet om 'https://' op te nemen. Zie %s",
+	'admin:security:security_txt:language' => "Taal",
+	'admin:security:security_txt:language:help' => "Een komma gescheiden lijst van taalcodes welke je beveiligingsteam spreek. Je kunt meer dan één taal opnemen. Zie %s",
+	'admin:security:security_txt:canonical' => "Canonical",
+	'admin:security:security_txt:canonical:help' => "De URL's voor toegang tot uw security.txt bestand. Het is belangrijk om dit mee te nemen als u het security.txt bestand digitaal ondertekent, zodat de locatie van het security.txt bestand ook digitaal ondertekend kan worden. Zie %s",
+	'admin:security:security_txt:policy' => "Beleid",
+	'admin:security:security_txt:policy:help' => "Een link naar een beleid waarin wordt beschreven wat beveiligingsonderzoekers moeten doen bij het zoeken naar of melden van beveiligingsproblemen. Vergeet niet 'https://' toe te voegen. Zie %s",
+	'admin:security:security_txt:hiring' => "Werken bij",
+	'admin:security:security_txt:hiring:help' => "Een link naar eventuele veiligheidsgerelateerde vacatures binnen uw organisatie. Vergeet niet 'https://' toe te voegen. Zie %s",
+	'admin:security:security_txt:csaf' => "CSAF",
+	'admin:security:security_txt:csaf:help' => "Een link naar de provider-metadata.json van uw CSAF-provider (Common Security Advisory Framework). Vergeet niet 'https://' toe te voegen. Zie %s",
 	
 	'admin:site:secret:regenerated' => "Het site secret is geregenereerd",
 	'admin:site:secret:prevented' => "Het genereren van een nieuw sitegeheim code werd geblokeerd",
@@ -1069,6 +1097,7 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'entity:edit:icon:crop_messages:generic' => "De geselecteerde afbeelding voldoet niet aan de aanbevolen afmetingen van de afbeelding. Het resultaat hiervan kan lage kwaliteit iconen zijn.",
 	'entity:edit:icon:crop_messages:width' => "Het is aanbevolen om een afbeelding met een minimale breedte van tenminste %dpx te gebruiken.",
 	'entity:edit:icon:crop_messages:height' => "Het is aanbevolen om een afbeelding met een minimale hoogte van tenminste %dpx te gebruiken.",
+	'entity:edit:icon:crop:img:alt' => "Geüploade afbeelding",
 	'entity:edit:icon:file:label' => "Upload een nieuw icoon",
 	'entity:edit:icon:file:help' => "Laat dit leeg om het huidige icoon te behouden.",
 	'entity:edit:icon:remove:label' => "Verwijder het icoon",
@@ -1194,6 +1223,8 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'list:error:getter:admin' => "De getter '%s' resulteerde in een '%s', echter de viewer '%s' vereist een array",
 
 	'link:text' => 'bekijk link',
+	
+	'scroll_to_top' => 'Scroll naar boven',
 
 /**
  * Generic questions
@@ -1752,7 +1783,38 @@ Global variables:
  * Miscellaneous
  */
 	'elgg:powered' => "Aangedreven door Elgg",
-	
+	'field:required' => "Vereist",
+
+/**
+ * Accessibility
+ */
+	'aria:label:admin:users:search' => "Gebruikers zoeken",
+
+	'menu:admin_footer:header' => "Beheer footer",
+	'menu:admin_header:header' => "Beheer header",
+	'menu:admin:users:bulk:header' => "Bulk gebruikers acties",
+	'menu:annotation:header' => "Annotatie",
+	'menu:breadcrumbs:header' => "Broodkruimelpad",
+	'menu:comments:header' => "Reacties",
+	'menu:entity:header' => "Entiteit",
+	'menu:entity_navigation:header' => "Entiteit navigatie",
+	'menu:filter:header' => "Filter",
+	'menu:footer:header' => "Footer",
+	'menu:login:header' => "Aanmelden",
+	'menu:owner_block:header' => "Eigenaar blok",
+	'menu:page:header' => "Pagina",
+	'menu:relationship:header' => "Relatie",
+	'menu:river:header' => "River",
+	'menu:site:header' => "Site",
+	'menu:social:header' => "Sociaal",
+	'menu:title:header' => "Titel",
+	'menu:title:widgets:header' => "Widget beheer",
+	'menu:topbar:header' => "Topbar",
+	'menu:user_hover:header' => "Gebruiker zweef",
+	'menu:user:unvalidated:header' => "Niet-gevalideerde gebruiker",
+	'menu:walled_garden:header' => "Privénetwerk",
+	'menu:widget:header' => "Widget beheer",
+
 /**
  * Cli commands
  */
@@ -1780,6 +1842,12 @@ Global variables:
 	'cli:database:seed:option:create_until' => "Een PHP time string om de bovengrens van het creatie tijdstip van seeded entities in te stellen",
 	'cli:database:seed:log:error:faker' => "Dit is een functionaliteit voor ontwikkelaars ten behoeve van testen. Gelieve dit niet voor andere doeleinden te gebruiken.",
 	'cli:database:seed:log:error:logged_in' => "Het seeden van de database behoort niet uitgevoerd te worden met een aangemelde gebruiker",
+	'cli:database:seed:ask:limit' => "Hoeveel items moeten er worden gecreëerd door de '%s' seeder",
+
+	'cli:database:seeders:description' => "Toon alle beschikbare database seeders met het huidige aantal gecreëerde entiteiten",
+	'cli:database:seeders:handler' => "Seed handler",
+	'cli:database:seeders:type' => "Seed type",
+	'cli:database:seeders:count' => "Gecreëerde aantal",
 	
 	'cli:database:unseed:description' => "Verwijder de nep entiteiten uit de database",
 	
@@ -1970,8 +2038,9 @@ Global variables:
 	"zh_hans" => "Vereenvoudigd Chinees",
 	"zu" => "Zulu",
 
-	"field:required" => 'Vereist',
-
+/**
+ * Upgrades
+ */
 	"core:upgrade:2017080900:title" => "Wijzig de database codering om multi-byte te ondersteunen",
 	"core:upgrade:2017080900:description" => "Wijzigt de database codering naar utf8mb4 om ondersteuning te bieden voor multi-byte karakters zoals emoji's",
 	

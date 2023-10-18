@@ -176,4 +176,6 @@ sau apasă mai jos pentru a vedea cererile de alăturare ale grupului:
 	
 	'groups:usersettings:notifications:title' => 'Notificări de Grup',
 	'groups:usersettings:notifications:description' => 'Pentru a primii notificări atunci când se adaugă conținut nou pe un grup al cărui membru ești, găsește-l mai jos și selectează metoda(ele) de notificare pe care dorești să o(le) folosești.',
+	
+	// accessibility
 );

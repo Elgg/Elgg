@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-31 15:46+0200\n"
+"POT-Creation-Date: 2023-06-19 13:11+0200\n"
 "PO-Revision-Date: 2023-04-05 07:42+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -2657,16 +2657,16 @@ msgid "January 2020"
 msgstr "Janvier 2020"
 
 #: ../../appendix/support.rst:69
-msgid "3.3 LTS"
-msgstr "3.3 LTS"
+msgid "3.3"
+msgstr ""
 
 #: ../../appendix/support.rst:69
 msgid "September 2022"
 msgstr "Septembre 2022"
 
-#: ../../appendix/support.rst:69
-msgid "**Until 5.0**"
-msgstr "**Jusqu'à la 5.0**"
+#: ../../appendix/support.rst:69 ../../appendix/support.rst:79
+msgid "June 2023"
+msgstr ""
 
 #: ../../appendix/support.rst:71
 msgid "4.0"
@@ -2693,14 +2693,26 @@ msgid "July 2022"
 msgstr "Juillet 2022"
 
 #: ../../appendix/support.rst:77
-msgid "4.3"
-msgstr "4.3"
+msgid "4.3 LTS"
+msgstr ""
+
+#: ../../appendix/support.rst:77
+msgid "June 2024"
+msgstr ""
+
+#: ../../appendix/support.rst:77
+msgid "**Until 6.0**"
+msgstr ""
 
 #: ../../appendix/support.rst:79
 msgid "5.0"
 msgstr "5.0"
 
-#: ../../appendix/support.rst:79
+#: ../../appendix/support.rst:81
+msgid "6.0"
+msgstr ""
+
+#: ../../appendix/support.rst:81
 msgid "TBD"
 msgstr "A FAIRE"
 

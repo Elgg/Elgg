@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 13:11+0200\n"
+"POT-Creation-Date: 2023-10-18 11:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,6 +44,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/4.1-to-4.2.rst:6
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:6
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:6
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:6
 msgid "Contents"
 msgstr ""
 
@@ -1364,26 +1365,34 @@ msgid "``upgrade``"
 msgstr ""
 
 #: ../../appendix/releases.rst:116
-msgid "Views"
+msgid "Test suite"
 msgstr ""
 
 #: ../../appendix/releases.rst:118
-msgid "View names are API."
-msgstr ""
-
-#: ../../appendix/releases.rst:119
-msgid "View arguments ($vars array) are API."
-msgstr ""
-
-#: ../../appendix/releases.rst:120
-msgid "Removing views or renaming views follows API deprecation policies."
+msgid "The Elgg PHPUnit test suite files are not considered part of the public API and can be changed / removed at any time."
 msgstr ""
 
 #: ../../appendix/releases.rst:121
+msgid "Views"
+msgstr ""
+
+#: ../../appendix/releases.rst:123
+msgid "View names are API."
+msgstr ""
+
+#: ../../appendix/releases.rst:124
+msgid "View arguments ($vars array) are API."
+msgstr ""
+
+#: ../../appendix/releases.rst:125
+msgid "Removing views or renaming views follows API deprecation policies."
+msgstr ""
+
+#: ../../appendix/releases.rst:126
 msgid "Adding new views requires a minor version change."
 msgstr ""
 
-#: ../../appendix/releases.rst:122
+#: ../../appendix/releases.rst:127
 msgid "View output is not API and can be changed between patch releases."
 msgstr ""
 
@@ -3440,6 +3449,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/2.1-to-2.2.rst:19
 #: ../../appendix/upgrade-notes/2.2-to-2.3.rst:38
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:15
 msgid "Deprecated Views"
 msgstr ""
 
@@ -6807,6 +6817,7 @@ msgid "The legacy style hook and event callback arguments are deprecated. You sh
 msgstr ""
 
 #: ../../appendix/upgrade-notes/3.0-to-3.1.rst:76
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:22
 msgid "Deprecated Routes"
 msgstr ""
 
@@ -11345,7 +11356,7 @@ msgid "``elgg_register_plugin_hook_handler`` use ``elgg_register_event_handler``
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:443
-msgid "``elgg_trigger_plugin_hook`` use ``elgg_trigger_event_result``"
+msgid "``elgg_trigger_plugin_hook`` use ``elgg_trigger_event_results``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:444
@@ -11464,4 +11475,32 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:495
 msgid "The ``REFERRER`` constant has been changed to a string with the value ``__elgg_referrer``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:2
+msgid "From 5.0 to 5.1"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:9
+msgid "Changes in the DOM structure"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:11
+msgid "In order to improve accessibility the HTML DOM structure has been changed slightly. Some sections of the page have been changed from a ``div`` to ``header``, ``main`` or ``footer``. The classes or place in the DOM has not been changed."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:17
+msgid "``page/elements/<section>/after`` is deprecated: Extend the correct ``page/elements/<section>``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:18
+msgid "``page/elements/<section>/before`` is deprecated: Prepend the correct ``page/elements/<section>``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:19
+msgid "``resources/comments/edit`` is deprecated: This resource is no longer in use"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:24
+msgid "``edit:object:comment`` is deprecated: Editing comments uses an inline form"
 msgstr ""

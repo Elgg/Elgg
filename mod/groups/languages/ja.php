@@ -175,4 +175,6 @@ return array(
 	
 	'groups:usersettings:notifications:title' => 'グループの通知',
 	'groups:usersettings:notifications:description' => 'あなたの参加しているグループに新しいコンテンツが追加されたときの通知の受け取り方を、下から選択してください。（複数可）',
+	
+	// accessibility
 );

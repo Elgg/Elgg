@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	
 	'expages:edit:viewpage' => "Погледај страницу на сајту",
 	'expages:about' => "О сајту",
 	'expages:terms' => "Услови коришћења",

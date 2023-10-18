@@ -11,6 +11,7 @@ return array(
 	 * Menu items and titles
 	 */
 	'admin:configure_utilities:expages' => "Duilleagan na Làraich",
+	
 	'expages:edit:viewpage' => "Seall an duilleag air an làrach",
 	'expages:about' => "Mu dheidhinn",
 	'expages:terms' => "Cumhaichean",

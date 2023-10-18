@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	
 	'expages:edit:viewpage' => "Näytä sivu",
 	'expages:about' => "Tietoa",
 	'expages:terms' => "Käyttöehdot",

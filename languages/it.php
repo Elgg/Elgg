@@ -1105,7 +1105,12 @@ Se non hai richiesto tu questa modifica, contatta un amministratore del sito.
  * Miscellaneous
  */
 	'elgg:powered' => "Generato da Elgg",
-	
+	'field:required' => "Richiesto",
+
+/**
+ * Accessibility
+ */
+
 /**
  * Cli commands
  */
@@ -1279,7 +1284,8 @@ Se non hai richiesto tu questa modifica, contatta un amministratore del sito.
 	"zh_hans" => "Chinese Simplified",
 	"zu" => "Zulu",
 
-	"field:required" => 'Richiesto',
-
+/**
+ * Upgrades
+ */
 	"core:upgrade:2017080900:title" => "Modifica la codifica del database per il supporto multibyte",
 );

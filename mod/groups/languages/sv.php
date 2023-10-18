@@ -156,4 +156,6 @@ return array(
 	'groups:add:alreadymember' => "%s är redan medlem i den här gruppen",
 	
 	// Notification settings
+	
+	// accessibility
 );

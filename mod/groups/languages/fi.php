@@ -137,4 +137,6 @@ return array(
 	'groups:add:alreadymember' => "%s on jo tämän ryhmän jäsen",
 	
 	// Notification settings
+	
+	// accessibility
 );

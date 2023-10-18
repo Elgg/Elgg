@@ -178,4 +178,8 @@ of klik op onderstaande link om alle lidmaatschapsverzoeken te bekijken:
 	
 	'groups:usersettings:notifications:title' => 'Groepsnotificaties',
 	'groups:usersettings:notifications:description' => 'Om notificaties te ontvangen uit groepen waar je lid van bent kun je in onderstaande lijst aangeven of en hoe je op de hoogte moet worden gebracht',
+	
+	// accessibility
+	'groups:aria:label:group_search' => "Zoek naar groepen",
+	'groups:aria:label:search_in_group' => "Zoek in deze groep",
 );

@@ -16,6 +16,7 @@ return array(
 	'edit:object:blog' => 'Bewerk blog',
 	'notification:object:blog:publish' => "Stuur een notificatie wanneer een blog is gepubliceerd",
 	'notifications:mute:object:blog' => "over de blog '%s'",
+	'menu:blog_archive:header' => "Blog archief",
 
 	'blog:revisions' => 'Revisies',
 	'blog:archives' => 'Archieven',
