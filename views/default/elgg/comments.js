@@ -141,6 +141,8 @@ define(['jquery', 'elgg'], function ($, elgg) {
 		showForm: function () {
 			this.getForm().toggleClass('hidden');
 			this.getForm().prev().toggleClass('hidden');
+			
+			this.getForm().find('textarea, [contenteditable]').filter(':visible').first().focus();
 		},
 
 		loadForm: function () {
