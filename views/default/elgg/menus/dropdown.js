@@ -21,6 +21,7 @@ define(['jquery', 'elgg', 'elgg/popup'], function ($, elgg, popup) {
 						$trigger.addClass('elgg-menu-opened')
 								.removeClass('elgg-menu-closed');
 						$trigger.parent().addClass('elgg-state-selected');
+						$target.find('a:first').focus();
 					});
 
 					$target.on('close', function () {
