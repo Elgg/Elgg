@@ -355,12 +355,15 @@ html.elgg-nav-collapsed {
 				width: auto;
 				position: relative;
 				
-				&:hover > .elgg-child-menu {
-					display: flex;
-					animation: menuGrowDown 300ms ease-in-out forwards;
-					transform-origin: top center;
+				&:focus-within,
+				&:hover {
+					> .elgg-child-menu {
+						display: flex;
+						animation: menuGrowDown 300ms ease-in-out forwards;
+						transform-origin: top center;
+					}
 				}
-				
+
 				> a {
 					border: none;
 				}
