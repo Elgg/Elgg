@@ -27,10 +27,14 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/hooks'], function ($, elgg, Ajax, h
 		// warning: data is "live" and reflects changes from set_liked_state()
 		var data = $(this).data(),
 			guid = data.likesGuid,
-			current_state = data.likesState;
+			current_state = data.likesState,
+			$parent_menu = $(this).closest('.elgg-menu');
 
 		ajax.action(STATES[current_state].action, {
-			data: {guid: guid}
+			data: {guid: guid},
+			success: function() {
+				$parent_menu.find('.elgg-menu-item-likes > a[data-likes-guid=' + guid + ']').focus();
+			}
 		});
 
 		return false;
