@@ -6,6 +6,7 @@
  */
 
 return array(
+	'menu:friends:collection:header' => 'Группа друзей',
 	'friends:collections' => 'Группы друзей',
 	'friends:collections:no_results' => 'У вас пока не создано ни одной группы друзей',
 	'friends:collection:members:no_results' => 'В этой группе друзей пока нет участников',

@@ -9,6 +9,7 @@ return array(
 	'members:label:online' => 'Онлайн',
 	'members:label:search' => 'Результаты поиска',
 	'members:search' => 'Найти пользователей',
+	'members:aria:label:member_search' => "Поиск участников",
 	'members:title:search' => "Поиск пользователя '%s'",
 	'members:total' => 'Всего пользователей: %s',
 	'members:title:all' => 'Все участники',
