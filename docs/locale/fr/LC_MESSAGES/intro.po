@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 13:11+0200\n"
+"POT-Creation-Date: 2023-10-18 11:20+0200\n"
 "PO-Revision-Date: 2023-04-05 07:42+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -251,11 +251,11 @@ msgstr ""
 msgid "Available commands"
 msgstr "Commandes disponibles"
 
-#: ../../intro/elgg-cli.rst:94
+#: ../../intro/elgg-cli.rst:108
 msgid "Adding custom commands"
 msgstr "Ajouter des commandes personnalisées"
 
-#: ../../intro/elgg-cli.rst:96
+#: ../../intro/elgg-cli.rst:110
 msgid ""
 "Plugins can add their commands to the CLI application, by adding command "
 "class name via a configuration in ``elgg-plugin.php`` or via the "
@@ -267,7 +267,7 @@ msgstr ""
 "plugin.php`` ou via l'événement ``'commands','cli'``. La classe de la "
 "commande doit étendre ``\\Elgg\\CLI\\Command``."
 
-#: ../../intro/elgg-cli.rst:114
+#: ../../intro/elgg-cli.rst:128
 msgid ""
 "Custom commands are based on `Symfony Console Commands`_. Please refer to "
 "their documentation for more details."

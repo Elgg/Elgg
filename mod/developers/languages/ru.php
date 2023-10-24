@@ -15,6 +15,8 @@ return array(
 	'admin:develop_tools:entity_explorer' => 'Исследователь сущностей',
 	'admin:developers' => 'Разработчики',
 	'admin:developers:settings' => 'Настройки',
+	'menu:entity_explorer:header' => 'Исследователь сущностей',
+	'menu:developers_inspect_viewtype:header' => 'Проверка типов представлений',
 
 	// settings
 	'elgg_dev_tools:settings:explanation' => 'Управление настройками разработки и отладки. Некоторые из этих настроек также доступны на других страницах администрирования.',
