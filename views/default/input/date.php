@@ -23,8 +23,6 @@ use Elgg\Exceptions\DataFormatException;
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-date');
 
 $defaults = [
-	'value' => '',
-	'disabled' => false,
 	'timestamp' => false,
 	'autocomplete' => 'off',
 	'type' => 'text',

@@ -22,8 +22,7 @@ $vars['class'] = elgg_extract_class($vars, 'elgg-input-checkbox');
 
 $defaults = [
 	'default' => 0,
-	'disabled' => false,
-	'type' => 'checkbox'
+	'type' => 'checkbox',
 ];
 
 $vars = array_merge($defaults, $vars);

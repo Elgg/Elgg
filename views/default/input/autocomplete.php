@@ -21,13 +21,6 @@
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-autocomplete');
 
-$defaults = [
-	'value' => '',
-	'disabled' => false,
-];
-
-$vars = array_merge($defaults, $vars);
-
 $params = elgg_extract('options', $vars, []);
 
 if (!empty($params)) {

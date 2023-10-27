@@ -6,7 +6,6 @@
  * @uses $vars['value']    The current value, if any
  * @uses $vars['name']     The name of the input field
  * @uses $vars['class']    Additional CSS class
- * @uses $vars['disabled']
  */
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-plaintext');
@@ -14,7 +13,6 @@ $vars['class'] = elgg_extract_class($vars, 'elgg-input-plaintext');
 $defaults = [
 	'rows' => '10',
 	'cols' => '50',
-	'disabled' => false,
 ];
 
 $vars = array_merge($defaults, $vars);

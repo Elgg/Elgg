@@ -3,7 +3,6 @@
  * Elgg tag input
  * Displays a tag input field
  *
- * @uses $vars['disabled']
  * @uses $vars['class']          Additional CSS class
  * @uses $vars['value']          Array of tags or a string
  * @uses $vars['entity']         Optional. Entity whose tags are being displayed (metadata ->tags)
@@ -14,7 +13,6 @@ $vars['class'] = elgg_extract_class($vars, 'elgg-input-tags');
 
 $defaults = [
 	'value' => '',
-	'disabled' => false,
 	'autocapitalize' => 'off',
 	'type' => 'text',
 ];
