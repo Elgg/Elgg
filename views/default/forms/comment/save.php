@@ -50,10 +50,7 @@ if ($inline) {
 		'required' => true,
 	]);
 	
-	$form .= $footer;
-	echo elgg_format_element('div', [
-		'class' => 'elgg-level',
-	], $form);
+	echo elgg_format_element('div', ['class' => 'elgg-fieldset-horizontal'], $form . $footer);
 } else {
 	echo elgg_view_field([
 		'#type' => 'longtext',

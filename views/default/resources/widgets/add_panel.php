@@ -61,7 +61,7 @@ foreach ($widget_types as $handler => $widget_type) {
 	
 	$class[] = $widget_type->multiple ? 'elgg-widget-multiple' : 'elgg-widget-single';
 	
-	$action = '<div class="elgg-widgets-add-actions elgg-level">';
+	$action = '<div class="elgg-widgets-add-actions">';
 	if (!$widget_type->multiple) {
 		$action .= elgg_format_element('span', ['class' => 'elgg-quiet'], elgg_echo('widget:unavailable'));
 	}
