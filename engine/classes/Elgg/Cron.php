@@ -142,8 +142,6 @@ class Cron {
 		}
 		
 		try {
-			ob_start();
-			
 			$begin_callback = function (array $params) use ($cron_logger) {
 				$readable_callable = (string) elgg_extract('readable_callable', $params);
 				
@@ -156,37 +154,15 @@ class Cron {
 				$cron_logger->notice("Finished {$readable_callable}");
 			};
 			
-			$old_stdout = $this->events->triggerResults('cron', $interval, [
+			$this->events->trigger('cron', $interval, [
 				'time' => $time->getTimestamp(),
 				'dt' => $time,
 				'logger' => $cron_logger,
-			], '', [
+			], [
 				EventsService::OPTION_BEGIN_CALLBACK => $begin_callback,
 				EventsService::OPTION_END_CALLBACK => $end_callback,
 			]);
-			
-			$ob_output = ob_get_clean();
-			
-			if (!empty($ob_output)) {
-				elgg_deprecated_notice('Direct output (echo, print) in a CRON event will be removed, use the provided "logger"', '5.1');
-				
-				$cron_logger->notice($ob_output, ['ob_output']);
-			}
-			
-			if (!empty($old_stdout)) {
-				elgg_deprecated_notice('Output in a CRON event result will be removed, use the provided "logger"', '5.1');
-				
-				$cron_logger->notice($old_stdout, ['event_result']);
-			}
 		} catch (\Throwable $t) {
-			$ob_output = ob_get_clean();
-			
-			if (!empty($ob_output)) {
-				elgg_deprecated_notice('Direct output (echo, print) in a CRON event will be removed, use the provided "logger"', '5.1');
-				
-				$cron_logger->notice($ob_output, ['ob_output', 'throwable']);
-			}
-			
 			$this->getLogger()->error($t);
 		}
 

@@ -413,34 +413,4 @@ class AdminHeader {
 		
 		return $return;
 	}
-	
-	/**
-	 * Moves utility menu items to the new section
-	 *
-	 * @param \Elgg\Event $event 'register', 'menu:admin_header'
-	 *
-	 * @return void|MenuItems
-	 */
-	public static function moveUtilities(\Elgg\Event $event) {
-		if (!elgg_is_admin_logged_in()) {
-			return;
-		}
-		
-		/* @var $return MenuItems */
-		$return = $event->getValue();
-		
-		/* @var $menu_item \ElggMenuItem */
-		foreach ($return as $menu_item) {
-			if (in_array($menu_item->getParentName(), ['administer_utilities', 'configure_utilities'])) {
-				$message = 'The menu item ' . $menu_item->getName() . ' is using a deprecated parent.';
-				$message .= ' Utilities have been moved to a dedicated top menu item (utilities) in the admin header.';
-				
-				elgg_deprecated_notice($message, '5.1');
-				
-				$menu_item->setParentName('utilities');
-			}
-		}
-		
-		return $return;
-	}
 }
