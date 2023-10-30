@@ -9,9 +9,7 @@
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-location');
 
-$defaults = [
-	'disabled' => false,
-];
+$defaults = [];
 
 if (isset($vars['entity'])) {
 	$defaults['value'] = elgg_extract('entity', $vars)->location;

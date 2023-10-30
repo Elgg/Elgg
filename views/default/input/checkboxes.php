@@ -24,7 +24,6 @@ $defaults = [
 	'align' => 'vertical',
 	'value' => [],
 	'default' => 0,
-	'disabled' => false,
 	'options' => [],
 	'name' => '',
 ];

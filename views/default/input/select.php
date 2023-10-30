@@ -25,7 +25,6 @@
 $vars['class'] = elgg_extract_class($vars, ['elgg-input-select']);
 
 $defaults = [
-	'disabled' => false,
 	'value' => '',
 ];
 
