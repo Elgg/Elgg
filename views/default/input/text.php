@@ -9,9 +9,7 @@
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-text');
 
 $defaults = [
-	'value' => '',
-	'disabled' => false,
-	'type' => 'text'
+	'type' => 'text',
 ];
 
 $vars = array_merge($defaults, $vars);

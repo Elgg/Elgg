@@ -13,7 +13,6 @@
 $defaults = [
 	'align' => 'vertical',
 	'value' => [],
-	'disabled' => false,
 	'options' => [],
 	'name' => '',
 	'type' => 'radio',

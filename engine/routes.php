@@ -220,7 +220,7 @@ return [
 		'middleware' => [
 			\Elgg\Router\Middleware\Gatekeeper::class,
 		],
-		'deprecated' => true,
+		'deprecated' => '5.1',
 	],
 	'view:user' => [
 		'path' => '/user/{guid}',

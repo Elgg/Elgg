@@ -4,7 +4,8 @@
 .elgg-level {
 	display: flex;
 	align-items: center;
-	justify-content: flex-start;
+	justify-content: flex-end;
+	flex-wrap: wrap;
 	
 	> *:first-child {
 		margin-right: auto;
