@@ -19,6 +19,7 @@ return array(
 	'collection:object:page:group' => "Groepspagina's",
 	'add:object:page' => "Nieuwe pagina",
 	'edit:object:page' => "Bewerk deze pagina",
+	'menu:pages_nav:header' => "Subpagina's",
 	'notification:object:page:create' => "Stuur een notificatie wanneer een pagina is gemaakt",
 	'notifications:mute:object:page' => "over de pagina '%s'",
 

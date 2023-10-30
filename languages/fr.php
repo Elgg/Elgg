@@ -634,13 +634,6 @@ Comme Elgg a un grand nombre d\'accès aux fichiers cela va avoir un effet néga
 	'admin:widget:admin_welcome:intro' => 'Bienvenue sur Elgg ! Vous êtes actuellement sur le tableau de bord de l\'administration. Il permet de suivre ce qui se passe sur le site.',
 
 	'admin:widget:admin_welcome:registration' => "L'inscription de nouveaux utilisateurs est actuellement désactivée ! Vous pouvez l'activer sur la page %s.",
-	'admin:widget:admin_welcome:admin_overview' => "La navigation dans la zone d'administration se fait à l'aide du menu de droite. Il est organisé en trois parties :
-	<dl>
-		<dt>Administrer</dt><dd>Des tâches de base telles que suivre le contenu signalé et activer des plugins.</dd>
-		<dt>Configurer</dt><dd>Des tâches occasionnelles comme définir le nom du site ou configurer les paramètres d'un plugin.</dd>
-		<dt>Information</dt><dd>Des informations à propos de votre site, telles que des statistiques.</dd>
-		<dt>Développer</dt><dd>Pour les développeurs qui créent des plugins ou conçoivent des thèmes. (Nécessite le plugin developer).</dd>
-	</dl>",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Pensez à consulter les ressources disponibles via les liens de bas de page, et merci d\'utiliser Elgg !',
@@ -1743,7 +1736,12 @@ Variables Globales :
  * Miscellaneous
  */
 	'elgg:powered' => "Propulsé par Elgg",
-	
+	'field:required' => "Requis",
+
+/**
+ * Accessibility
+ */
+
 /**
  * Cli commands
  */
@@ -1961,8 +1959,9 @@ Variables Globales :
 	"zh_hans" => "Chinois simplifié",
 	"zu" => "Zoulou",
 
-	"field:required" => 'Requis',
-
+/**
+ * Upgrades
+ */
 	"core:upgrade:2017080900:title" => "Modifier l'encodage de la base de données pour le support multi-byte",
 	"core:upgrade:2017080900:description" => "Modifie l'encodage de la base de données et des tables pour utf8mb4, afin de supporter les caractères multi-bytes tels que des emojis",
 	

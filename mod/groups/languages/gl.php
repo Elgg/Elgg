@@ -136,4 +136,6 @@ return array(
 	'groups:add:alreadymember' => "%s xa pertence ao grupo.",
 	
 	// Notification settings
+	
+	// accessibility
 );

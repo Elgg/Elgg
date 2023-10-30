@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	
 	'expages:edit:viewpage' => "Zobacz stronę na portalu",
 	'expages:about' => "O nas",
 	'expages:terms' => "Regulamin",

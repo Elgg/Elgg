@@ -10,6 +10,7 @@ return array(
 	'profile:notfound' => 'Извините, не удается найти указанный профиль.',
 	
 	'admin:configure_utilities:profile_fields' => 'Изменить поля профиля',
+	'menu:profile_admin:header' => 'Администрирование профиля',
 	
 	'profile:edit' => 'Изменить профиль',
 	'profile:edit:header' => 'Изменить заголовок профиля',

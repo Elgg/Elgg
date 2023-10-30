@@ -1,3 +1,65 @@
+<a name="5.1.0"></a>
+## 5.1.0 (2023-10-24)
+
+#### Contributors
+
+* Jeroen Dalsem (37)
+* Jerôme Bakker (36)
+
+#### Features
+
+* **ckeditor:**
+  * updated to v40.0.0 [441c0f442](https://github.com/Elgg/Elgg//commit/441c0f442f87f43eef5c277708316f33a3a8091d)
+  * ctrl+enter in the editor field will submit the form [5b0bd6a8d](https://github.com/Elgg/Elgg//commit/5b0bd6a8d72e2872e447fb3e331356aa5b4f095b)
+* **css:** allow theme variables to be configured by the site admin [3eb7fe354](https://github.com/Elgg/Elgg//commit/3eb7fe3549ef2c7758541c4080d6914bf131815d)
+* **cron:** added custom cron logger class [6535d386b](https://github.com/Elgg/Elgg//commit/6535d386b22d27e8631e59c6cbcaf258e63f7b3e)
+* **a11y:**
+  * added menu aria labels [19869cfc9](https://github.com/Elgg/Elgg//commit/19869cfc9f3e1ddc90f5e15babcb3974dad083be)
+  * added aria search forms [091202e4a](https://github.com/Elgg/Elgg//commit/091202e4a0445d7d2fc37c3b217628f8e0e2f022)
+  * added header, main, footer aria landmarks [61315fe7e](https://github.com/Elgg/Elgg//commit/61315fe7edbb11a13f049517ac13631c57859ed1)
+* **views:** support a title on an imprint element [2ebfccb09](https://github.com/Elgg/Elgg//commit/2ebfccb096dba500bf2f496bd1807b923ca9cb63)
+* **breadcrumbs:**
+  * improved usability of elgg_push_collection_breadcrumb [68c6d069e](https://github.com/Elgg/Elgg//commit/68c6d069e785eeb56446b1db84c4f4bf402e471c)
+  * last item pointing to current page will be removed [95b305458](https://github.com/Elgg/Elgg//commit/95b3054585ca07c85de328a28e0346a51385ead6)
+  * added a home icon as a first item [e78e7ee68](https://github.com/Elgg/Elgg//commit/e78e7ee68519cd44c07721c9a1c95fd6080eea17)
+* **blog:** prevent double submit of the blog form [0a23cd09b](https://github.com/Elgg/Elgg//commit/0a23cd09b2d388a300b48f928b560a36fd9dcc5f)
+* **cli:**
+  * interactively set number of seeded items per seeder [337b1bd71](https://github.com/Elgg/Elgg//commit/337b1bd71040b0d83c41a70a745069b1fbe6f6fd)
+  * added database seeders command [12baa7c68](https://github.com/Elgg/Elgg//commit/12baa7c68317859257d7286ce14e399189d658ed)
+  * activate plugins CLI command supports plugin priority [160fcaf69](https://github.com/Elgg/Elgg//commit/160fcaf69b38e9c7596756708a4cfeb954af0e1f)
+  * installer now has the option to prevent plugin activation [1a20e79ef](https://github.com/Elgg/Elgg//commit/1a20e79eff94503081e29c63b6a1ebee9002126d)
+* **security:** add support for security.txt [2709c2db4](https://github.com/Elgg/Elgg//commit/2709c2db45a455c1e52ec3cc1e438b2155a4627a) closes [#14315](https://github.com/Elgg/Elgg//commit/14315)
+* **admin:** reorganized admin and configure utilities menu items [de1959ad5](https://github.com/Elgg/Elgg//commit/de1959ad580b6e4ea49fdd9f7a7560c0b02bea74)
+* **widgets:** the widget edit form now shows in a lightbox [15e68df90](https://github.com/Elgg/Elgg//commit/15e68df9056284cd3f6c4056be30081433a08dfd)
+* **input:** the value output view for an userpicker can be set [585903bb9](https://github.com/Elgg/Elgg//commit/585903bb94ecb97983bd0754e471fb5d3123cab0)
+* **developers:**
+  * the theme sandbox is now a separated plugin [22cd62e89](https://github.com/Elgg/Elgg//commit/22cd62e897c7c5760246926da24494069168b7d7)
+  * added inspection page for the database CLI seeders [e8255d3f6](https://github.com/Elgg/Elgg//commit/e8255d3f661b1e50d19252da32dbe54e5f9dc12d)
+* **html:** added a scroll to top button [58b1ae7d1](https://github.com/Elgg/Elgg//commit/58b1ae7d12eae286a48fde8afb1bd6e16704e26b)
+* **js:** client side validate max file size for file input [3b19a7071](https://github.com/Elgg/Elgg//commit/3b19a7071591f766fa51706f590c3255ecf3d086) closes [#7059](https://github.com/Elgg/Elgg//commit/7059)
+
+
+#### Bug fixes
+
+* **css:** fixed some margin issues on elgg-field form elements [1565a6d47](https://github.com/Elgg/Elgg//commit/1565a6d475d17124dcc84a77438180d2fb549cbb) closes [#14354](https://github.com/Elgg/Elgg//commit/14354)
+* **a11y:**
+  * topbar sub menu items are now keyboard accessible [6326c3902](https://github.com/Elgg/Elgg//commit/6326c39020e6421ecfbcb3d1890bbb17c610da90) closes [#6759](https://github.com/Elgg/Elgg//commit/6759)
+  * make sure widget edit/delete actions are keyboard accessible [d7b61ed15](https://github.com/Elgg/Elgg//commit/d7b61ed15952556ff394340fa38df16bbc5ba353) closes [#14471](https://github.com/Elgg/Elgg//commit/14471)
+  * tab to first item in opened dropdown menu [487d7370a](https://github.com/Elgg/Elgg//commit/487d7370a2edb4971ab6a66e1cb08d75c9dc0d84)
+  * edit comment form sets focus to comment textarea [477646730](https://github.com/Elgg/Elgg//commit/47764673071fd8301042569f672cd9d92c37578b)
+  * keep focus on toggled menu item [a18ad0057](https://github.com/Elgg/Elgg//commit/a18ad0057c4d79286768e77c14943315350c350d)
+* **cache:** report HTTP 410 Gone on stale cache urls [cfd488361](https://github.com/Elgg/Elgg//commit/cfd488361b7e2eb1783afcf7dd16f00127897c6b) closes [#14086](https://github.com/Elgg/Elgg//commit/14086)
+* **views:**
+  * prevent duplicate ids on widget layouts [b17877975](https://github.com/Elgg/Elgg//commit/b17877975ee5550d7c29b236e2252dacda59d22e) closes [#14428](https://github.com/Elgg/Elgg//commit/14428)
+  * do not use rel to track related hover menu placeholders [972f40873](https://github.com/Elgg/Elgg//commit/972f4087373cc5700a7cd7bd707d29f7193d522a) closes [#14430](https://github.com/Elgg/Elgg//commit/14430)
+* **breadcrumbs:** no longer add a breadcrumb if link to self is false [7a44a533c](https://github.com/Elgg/Elgg//commit/7a44a533c2d68f7402abb0b124698934e6626b75)
+
+
+#### Deprecations
+
+* **views:** resource and route for comment edit are not in use [84deb0e54](https://github.com/Elgg/Elgg//commit/84deb0e54ed887c883f67c5538f0d8d095efd19b)
+
+
 <a name="5.0.7"></a>
 ### 5.0.7  (2023-10-10)
 

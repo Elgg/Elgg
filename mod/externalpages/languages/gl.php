@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	
 	'expages:edit:viewpage' => "Ver a páxina no sitio",
 	'expages:about' => "Información",
 	'expages:terms' => "Condicións",

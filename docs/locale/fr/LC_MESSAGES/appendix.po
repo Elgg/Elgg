@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-31 15:46+0200\n"
+"POT-Creation-Date: 2023-10-18 11:20+0200\n"
 "PO-Revision-Date: 2023-04-05 07:42+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -49,6 +49,7 @@ msgstr "Ci-dessous quelques questions fréquemment posées à propos de Elgg."
 #: ../../appendix/upgrade-notes/4.1-to-4.2.rst:6
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:6
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:6
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:6
 msgid "Contents"
 msgstr "Contenu"
 
@@ -2233,29 +2234,39 @@ msgid "``upgrade``"
 msgstr "``upgrade``"
 
 #: ../../appendix/releases.rst:116
+msgid "Test suite"
+msgstr ""
+
+#: ../../appendix/releases.rst:118
+msgid ""
+"The Elgg PHPUnit test suite files are not considered part of the public API "
+"and can be changed / removed at any time."
+msgstr ""
+
+#: ../../appendix/releases.rst:121
 msgid "Views"
 msgstr "Vues"
 
-#: ../../appendix/releases.rst:118
+#: ../../appendix/releases.rst:123
 msgid "View names are API."
 msgstr "Les noms de vue sont des APIs."
 
-#: ../../appendix/releases.rst:119
+#: ../../appendix/releases.rst:124
 msgid "View arguments ($vars array) are API."
 msgstr "Les arguments de la vue (tableau $vars) sont des API."
 
-#: ../../appendix/releases.rst:120
+#: ../../appendix/releases.rst:125
 msgid "Removing views or renaming views follows API deprecation policies."
 msgstr ""
 "La suppression de vues ou le changement de nom de vues suit les stratégies "
 "de dépréciation de l’API."
 
-#: ../../appendix/releases.rst:121
+#: ../../appendix/releases.rst:126
 msgid "Adding new views requires a minor version change."
 msgstr ""
 "L’ajout de nouvelles vues nécessite une modification mineure de la version."
 
-#: ../../appendix/releases.rst:122
+#: ../../appendix/releases.rst:127
 msgid "View output is not API and can be changed between patch releases."
 msgstr ""
 "La sortie des vues n’est pas une API et peut être modifiée entre deux "
@@ -2657,16 +2668,16 @@ msgid "January 2020"
 msgstr "Janvier 2020"
 
 #: ../../appendix/support.rst:69
-msgid "3.3 LTS"
-msgstr "3.3 LTS"
+msgid "3.3"
+msgstr ""
 
 #: ../../appendix/support.rst:69
 msgid "September 2022"
 msgstr "Septembre 2022"
 
-#: ../../appendix/support.rst:69
-msgid "**Until 5.0**"
-msgstr "**Jusqu'à la 5.0**"
+#: ../../appendix/support.rst:69 ../../appendix/support.rst:79
+msgid "June 2023"
+msgstr ""
 
 #: ../../appendix/support.rst:71
 msgid "4.0"
@@ -2693,14 +2704,26 @@ msgid "July 2022"
 msgstr "Juillet 2022"
 
 #: ../../appendix/support.rst:77
-msgid "4.3"
-msgstr "4.3"
+msgid "4.3 LTS"
+msgstr ""
+
+#: ../../appendix/support.rst:77
+msgid "June 2024"
+msgstr ""
+
+#: ../../appendix/support.rst:77
+msgid "**Until 6.0**"
+msgstr ""
 
 #: ../../appendix/support.rst:79
 msgid "5.0"
 msgstr "5.0"
 
-#: ../../appendix/support.rst:79
+#: ../../appendix/support.rst:81
+msgid "6.0"
+msgstr ""
+
+#: ../../appendix/support.rst:81
 msgid "TBD"
 msgstr "A FAIRE"
 
@@ -5219,6 +5242,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/2.1-to-2.2.rst:19
 #: ../../appendix/upgrade-notes/2.2-to-2.3.rst:38
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:15
 msgid "Deprecated Views"
 msgstr "Vues obsolètes"
 
@@ -10455,6 +10479,7 @@ msgstr ""
 "possible."
 
 #: ../../appendix/upgrade-notes/3.0-to-3.1.rst:76
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:22
 msgid "Deprecated Routes"
 msgstr "Routes obsolètes"
 
@@ -17668,7 +17693,7 @@ msgid ""
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:443
-msgid "``elgg_trigger_plugin_hook`` use ``elgg_trigger_event_result``"
+msgid "``elgg_trigger_plugin_hook`` use ``elgg_trigger_event_results``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:444
@@ -17801,4 +17826,42 @@ msgstr ""
 msgid ""
 "The ``REFERRER`` constant has been changed to a string with the value "
 "``__elgg_referrer``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:2
+msgid "From 5.0 to 5.1"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:9
+msgid "Changes in the DOM structure"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:11
+msgid ""
+"In order to improve accessibility the HTML DOM structure has been changed "
+"slightly. Some sections of the page have been changed from a ``div`` to "
+"``header``, ``main`` or ``footer``. The classes or place in the DOM has not "
+"been changed."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:17
+msgid ""
+"``page/elements/<section>/after`` is deprecated: Extend the correct "
+"``page/elements/<section>``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:18
+msgid ""
+"``page/elements/<section>/before`` is deprecated: Prepend the correct "
+"``page/elements/<section>``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:19
+msgid ""
+"``resources/comments/edit`` is deprecated: This resource is no longer in use"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.0-to-5.1.rst:24
+msgid ""
+"``edit:object:comment`` is deprecated: Editing comments uses an inline form"
 msgstr ""

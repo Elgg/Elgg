@@ -17,6 +17,7 @@ define('elgg/popup', ['jquery', 'elgg', 'elgg/hooks', 'jquery-ui/position', 'jqu
 		 */
 		init: function () {
 			$(document).on('click', function (e) {
+				// close the popup when clicked outside the popup
 				if (e.isDefaultPrevented()) {
 					return;
 				}
@@ -28,6 +29,16 @@ define('elgg/popup', ['jquery', 'elgg', 'elgg/hooks', 'jquery-ui/position', 'jqu
 				
 				popup.close();
 			});
+			
+			$(document).on('keydown', function (e) {
+				// close the popup when the escape key is pressed
+				if (e.isDefaultPrevented() || e.key !== "Escape") {
+					return;
+				}
+				
+				popup.close();
+			});
+			
 			// Bind events only once
 			popup.init = function() {};
 		},
@@ -142,6 +153,14 @@ define('elgg/popup', ['jquery', 'elgg', 'elgg/hooks', 'jquery-ui/position', 'jqu
 			$trigger.addClass('elgg-state-active');
 
 			$target.trigger('open');
+			
+			if ($trigger.is('a')) {
+				$target.on('close', function() {
+					if ($target.find(':focus').length) {
+						$trigger.focus();
+					}
+				});
+			}
 		},
 		/**
 		 * Hides a set of $targets. If not defined, closes all visible popup modules.

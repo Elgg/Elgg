@@ -11,6 +11,7 @@ return array(
 	 * Menu items and titles
 	 */
 	'admin:configure_utilities:expages' => "Pagini de Site",
+	
 	'expages:edit:viewpage' => "Vezi pagina pe site",
 	'expages:about' => "Despre",
 	'expages:terms' => "Termeni",

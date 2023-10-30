@@ -88,12 +88,21 @@
 		width: 100%;
 	}
 	
-	.elgg-menu-widget-container {
-		display: none;
-	}
-	
-	&:hover .elgg-menu-widget-container {
-		display: inline-block;
+	&:not(:hover):not(:focus-within) {
+		.elgg-menu-widget-container {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			margin: -1px;
+			border: 0;
+			padding: 0;
+			
+			white-space: nowrap;
+			
+			clip-path: inset(100%);
+			clip: rect(0 0 0 0);
+			overflow: hidden;
+		}
 	}
 }
 

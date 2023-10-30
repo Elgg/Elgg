@@ -10,6 +10,7 @@ return array(
 	'profile:notfound' => 'Sorry. Het opgegeven profiel kon niet gevonden worden.',
 	
 	'admin:configure_utilities:profile_fields' => 'Bewerk profielvelden',
+	'menu:profile_admin:header' => 'Profielbeheer',
 	
 	'profile:edit' => 'Bewerk profiel',
 	'profile:edit:header' => 'Bewerk kopafbeelding profiel',

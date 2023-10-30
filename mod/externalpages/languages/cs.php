@@ -10,6 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
+	
 	'expages:edit:viewpage' => "Zobrazit na stránce",
 	'expages:about' => "O těchto stránkách",
 	'expages:terms' => "Podmínky",

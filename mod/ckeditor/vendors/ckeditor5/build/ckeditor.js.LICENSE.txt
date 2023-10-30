@@ -1,0 +1,28 @@
+/* istanbul ignore else -- @preserve */
+
+/* istanbul ignore else: This is always true because otherwise it would not register a reducer callback. -- @preserve */
+
+/* istanbul ignore file -- @preserve */
+
+/* istanbul ignore if -- @preserve */
+
+/* istanbul ignore if: paranoid check -- @preserve */
+
+/* istanbul ignore next -- @preserve */
+
+/* istanbul ignore next: paranoid check -- @preserve */
+
+/*!
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * For licensing, see LICENSE.md.
+ */
+
+/**
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ */
+
+/**
+ * @license Copyright (c) 2014-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ */

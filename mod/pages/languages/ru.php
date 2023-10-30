@@ -19,6 +19,7 @@ return array(
 	'collection:object:page:group' => "Страницы группы",
 	'add:object:page' => "Добавить страницу",
 	'edit:object:page' => "Изменить страницу",
+	'menu:pages_nav:header' => "Подстраницы",
 	'notification:object:page:create' => "Отправить уведомление при создании страницы",
 	'notifications:mute:object:page' => "о странице '%s'",
 

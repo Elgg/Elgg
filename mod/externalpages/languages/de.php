@@ -11,6 +11,7 @@ return array(
 	 * Menu items and titles
 	 */
 	'admin:configure_utilities:expages' => "Externe Seiten",
+	
 	'expages:edit:viewpage' => "Diese externe Seite anzeigen",
 	'expages:about' => "Impressum",
 	'expages:terms' => "AGBs",

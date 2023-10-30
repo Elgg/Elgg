@@ -19,7 +19,6 @@ use Elgg\Exceptions\DataFormatException;
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-time');
 
 $defaults = [
-	'value' => '',
 	'timestamp' => false,
 	'format' => elgg_get_config('time_format', elgg_echo('input:time_format')),
 ];

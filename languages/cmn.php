@@ -1163,7 +1163,12 @@ return array(
 /**
  * Miscellaneous
  */
-	
+	'field:required' => "需要的",
+
+/**
+ * Accessibility
+ */
+
 /**
  * Cli commands
  */
@@ -1321,5 +1326,7 @@ return array(
 	"zh_hans" => "简体中文",
 	"zu" => "Zulu",
 
-	"field:required" => '需要的',
+/**
+ * Upgrades
+ */
 );

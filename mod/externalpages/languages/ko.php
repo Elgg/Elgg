@@ -11,6 +11,7 @@ return array(
 	 * Menu items and titles
 	 */
 	'admin:configure_utilities:expages' => "사이트 페이지",
+	
 	'expages:edit:viewpage' => "사이트의 페이지 보기",
 	'expages:about' => "정보",
 	'expages:terms' => "용어",

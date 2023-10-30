@@ -9,6 +9,7 @@ return array(
 	'members:label:online' => 'Online',
 	'members:label:search' => 'Zoekresultaten',
 	'members:search' => 'Zoek leden',
+	'members:aria:label:member_search' => "Zoeken naar leden",
 	'members:title:search' => "Leden gezocht op '%s'",
 	'members:total' => 'Totaal aantal leden: %s',
 	'members:title:all' => 'Alle leden',

@@ -135,4 +135,6 @@ return array(
 	'groups:add:alreadymember' => "%s је већ члан ове групе",
 	
 	// Notification settings
+	
+	// accessibility
 );

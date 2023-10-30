@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-31 15:46+0200\n"
+"POT-Creation-Date: 2023-10-18 11:20+0200\n"
 "PO-Revision-Date: 2023-04-05 07:42+0000\n"
 "Last-Translator: Jerôme Bakker, 2023\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -849,19 +849,27 @@ msgstr ""
 "autocomplétion"
 
 #: ../../guides/actions.rst:381
+msgid "``input/grouppicker`` - renders an Elgg group autocomplete"
+msgstr ""
+
+#: ../../guides/actions.rst:382
+msgid "``input/objectpicker`` - renders an Elgg object autocomplete"
+msgstr ""
+
+#: ../../guides/actions.rst:383
 msgid "``input/location`` renders an Elgg location input"
 msgstr "``input/location`` affiche une entrée de type adresse"
 
-#: ../../guides/actions.rst:384
+#: ../../guides/actions.rst:386
 msgid "Files and images"
 msgstr "Fichiers et images"
 
-#: ../../guides/actions.rst:386
+#: ../../guides/actions.rst:388
 msgid "Use the ``input/file`` view in your form’s content view."
 msgstr ""
 "Utilisez la vue ``input/file`` dans la vue du contenu de votre formulaire."
 
-#: ../../guides/actions.rst:393
+#: ../../guides/actions.rst:395
 msgid ""
 "If you wish to upload an icon for entity you can use the helper view "
 "``entity/edit/icon``. This view shows a file input for uploading a new icon "
@@ -873,11 +881,11 @@ msgstr ""
 " téléchargement d’une nouvelle icône pour l’entité, une miniature de l’icône"
 " actuelle et l’option de supprimer l’icône actuelle."
 
-#: ../../guides/actions.rst:397
+#: ../../guides/actions.rst:399
 msgid "The view supports some variables to control the output"
 msgstr "La vue prend en charge quelques variables pour contrôler la sortie"
 
-#: ../../guides/actions.rst:399
+#: ../../guides/actions.rst:401
 msgid ""
 "``entity`` - the entity to add/remove the icon for. If provided based on "
 "this entity the thumbnail and remove option wil be shown"
@@ -886,7 +894,7 @@ msgstr ""
 "est fournie, la miniature et l’option de suppression s’affichent en fonction"
 " de cette entité"
 
-#: ../../guides/actions.rst:400
+#: ../../guides/actions.rst:402
 msgid ""
 "``entity_type`` - the entity type for which the icon will be uploaded. "
 "Plugins could find this useful, maybe to validate icon sizes"
@@ -895,7 +903,7 @@ msgstr ""
 " plugins pourraient trouver cela utile, peut-être pour valider les "
 "dimensions d’icônes"
 
-#: ../../guides/actions.rst:401
+#: ../../guides/actions.rst:403
 msgid ""
 "``entity_subtype`` - the entity subtype for which the icon will be uploaded."
 " Plugins could find this useful, maybe to validate icon sizes"
@@ -904,15 +912,15 @@ msgstr ""
 "téléchargée. Des plugins pourraient trouver cela utile, peut-être pour "
 "valider les dimensions d’icônes"
 
-#: ../../guides/actions.rst:402
+#: ../../guides/actions.rst:404
 msgid "``icon_type`` - the type of the icon (default: icon)"
 msgstr "``icon_type`` - le type de l’icône (par défaut : icon)"
 
-#: ../../guides/actions.rst:403
+#: ../../guides/actions.rst:405
 msgid "``name`` - name of the input/file (default: icon)"
 msgstr "``name`` - le nom du champ input/file (par défaut : icon)"
 
-#: ../../guides/actions.rst:404
+#: ../../guides/actions.rst:406
 msgid ""
 "``remove_name`` - name of the remove icon toggle (default: $vars['name'] . "
 "'_remove')"
@@ -920,36 +928,36 @@ msgstr ""
 "``remove_name`` - nom de la bascule de suppression de l'icône (par défaut : "
 "$vars['name'] . '_remove')"
 
-#: ../../guides/actions.rst:405
+#: ../../guides/actions.rst:407
 msgid "``required`` - is icon upload required (default: false)"
 msgstr ""
 "``required`` - est-ce que le téléchargement d'une icône est requis (par "
 "défaut : false)"
 
-#: ../../guides/actions.rst:406
+#: ../../guides/actions.rst:408
 msgid "``cropper_enabled`` - is icon cropping allowed (default: true)"
 msgstr ""
 
-#: ../../guides/actions.rst:407
+#: ../../guides/actions.rst:409
 msgid "``show_remove`` - show the remove icon option (default: true)"
 msgstr ""
 "``show_remove`` - affiche l’option pour supprimer l’icône (par défaut : "
 "true)"
 
-#: ../../guides/actions.rst:408
+#: ../../guides/actions.rst:410
 msgid ""
 "``show_thumb`` - show the thumb of the entity if available (default: true)"
 msgstr ""
 "``show_thumb`` - afficher la miniature de l’entité si elle est disponible "
 "(par défaut : true)"
 
-#: ../../guides/actions.rst:409
+#: ../../guides/actions.rst:411
 msgid "``thumb_size`` - the icon size to use as the thumb (default: medium)"
 msgstr ""
 "``thumb_size`` - la taille de l’icône à utiliser pour la miniature (par "
 "défaut : medium)"
 
-#: ../../guides/actions.rst:411
+#: ../../guides/actions.rst:413
 msgid ""
 "If using the helper view you can use the following code in you action to "
 "save the icon to the entity or remove the current icon."
@@ -957,12 +965,12 @@ msgstr ""
 "Si vous utilisez la vue, vous pouvez utiliser le code suivant dans votre "
 "action pour enregistrer l’icône dans l’entité ou supprimer l’icône actuelle."
 
-#: ../../guides/actions.rst:421
+#: ../../guides/actions.rst:423
 msgid "Set the enctype of the form to ``multipart/form-data``:"
 msgstr ""
 "Définissez le type d'encodage du formulaire sur ``multipart/form-data`` :"
 
-#: ../../guides/actions.rst:431
+#: ../../guides/actions.rst:433
 msgid ""
 "The ``enctype`` of all forms that use the method ``POST`` defaults to "
 "``multipart/form-data``."
@@ -970,7 +978,7 @@ msgstr ""
 "Le type d'encodage ``enctype`` de tous les formulaires qui utilisent la "
 "méthode ``POST`` est par défaut ``multipart/form-data``."
 
-#: ../../guides/actions.rst:433
+#: ../../guides/actions.rst:435
 msgid ""
 "In your action file, use ``elgg_get_uploaded_file('your-input-name')`` to "
 "access the uploaded file:"
@@ -978,11 +986,11 @@ msgstr ""
 "Dans votre fichier d’action, utilisez ``elgg_get_uploaded_file('nom-de-"
 "votre-input')`` pour accéder au fichier téléchargé :"
 
-#: ../../guides/actions.rst:440
+#: ../../guides/actions.rst:442
 msgid "Sticky forms"
 msgstr "Formulaires persistants"
 
-#: ../../guides/actions.rst:442
+#: ../../guides/actions.rst:444
 msgid ""
 "Sticky forms are forms that retain user input if saving fails. They are "
 "\"sticky\" because the user's data \"sticks\" in the form after submitting, "
@@ -999,17 +1007,17 @@ msgstr ""
 "fonctions d’assistance afin que vous puissiez rendre n’importe quel "
 "formulaire persistant."
 
-#: ../../guides/actions.rst:447 ../../guides/helpers.rst:2
+#: ../../guides/actions.rst:449 ../../guides/helpers.rst:2
 msgid "Helper functions"
 msgstr "Fonctions d'assistance"
 
-#: ../../guides/actions.rst:449
+#: ../../guides/actions.rst:451
 msgid "Sticky forms are implemented in Elgg by the following functions:"
 msgstr ""
 "Les formulaires persistants sont implémentés dans Elgg par les fonctions "
 "suivantes :"
 
-#: ../../guides/actions.rst:451
+#: ../../guides/actions.rst:453
 msgid ""
 "``elgg_make_sticky_form($name)`` - Tells the engine to make all input on a "
 "form sticky."
@@ -1017,7 +1025,7 @@ msgstr ""
 "``elgg_make_sticky_form($name)`` - Indique au moteur de persister les "
 "valeurs de toutes les entrées d'un formulaire."
 
-#: ../../guides/actions.rst:452
+#: ../../guides/actions.rst:454
 msgid ""
 "``elgg_clear_sticky_form($name)`` - Tells the engine to discard all sticky "
 "input on a form."
@@ -1025,14 +1033,14 @@ msgstr ""
 "``elgg_clear_sticky_form($name)`` - Indique au moteur de supprimer toutes "
 "les valeurs d'un formulaire."
 
-#: ../../guides/actions.rst:453
+#: ../../guides/actions.rst:455
 msgid ""
 "``elgg_is_sticky_form($name)`` - Checks if ``$name`` is a valid sticky form."
 msgstr ""
 "``elgg_is_sticky_form($name)`` - Vérifie si ``$name`` est un formulaire "
 "persistant valide."
 
-#: ../../guides/actions.rst:454
+#: ../../guides/actions.rst:456
 msgid ""
 "``elgg_get_sticky_values($name)`` - Returns all sticky values saved for "
 "``$name`` by ``elgg_make_sticky_form($name)``."
@@ -1040,16 +1048,16 @@ msgstr ""
 "``elgg_get_sticky_values($name)`` - Renvoie toutes les valeurs persistantes "
 "enregistrées pour ``$name`` par ``elgg_make_sticky_form($name)``."
 
-#: ../../guides/actions.rst:457 ../../guides/ajax.rst:11
+#: ../../guides/actions.rst:459 ../../guides/ajax.rst:11
 #: ../../guides/i18n.rst:15 ../../guides/plugins/dependencies.rst:11
 msgid "Overview"
 msgstr "Aperçu"
 
-#: ../../guides/actions.rst:459
+#: ../../guides/actions.rst:461
 msgid "The basic flow of using sticky forms is:"
 msgstr "Le déroulement de l’utilisation des formulaires persistants est :"
 
-#: ../../guides/actions.rst:461
+#: ../../guides/actions.rst:463
 msgid ""
 "Call ``elgg_make_sticky_form($name)`` at the top of actions for forms you "
 "want to be sticky."
@@ -1057,7 +1065,7 @@ msgstr ""
 "Appelez ``elgg_make_sticky_form($name)`` au début des actions des "
 "formulaires que vous voulez rendre persistants."
 
-#: ../../guides/actions.rst:462
+#: ../../guides/actions.rst:464
 msgid ""
 "Use ``elgg_is_sticky_form($name)`` and ``elgg_get_sticky_values($name)`` to "
 "get sticky values when rendering a form view."
@@ -1066,7 +1074,7 @@ msgstr ""
 " pour obtenir des valeurs persistantes lors du rendu d’une vue de "
 "formulaire."
 
-#: ../../guides/actions.rst:463
+#: ../../guides/actions.rst:465
 msgid ""
 "Call ``elgg_clear_sticky_form($name)`` after the action has completed "
 "successfully or after data has been loaded by "
@@ -1076,7 +1084,7 @@ msgstr ""
 "succès ou après que les données ont été chargées par "
 "``elgg_get_sticky_values($name)``."
 
-#: ../../guides/actions.rst:467
+#: ../../guides/actions.rst:469
 msgid ""
 "As of Elgg 5.0 forms rendered with ``elgg_view_form()`` can set the "
 "``$form_vars['sticky_enabled'] = true`` flag to automatically get sticky "
@@ -1084,34 +1092,34 @@ msgid ""
 "filled in the ``$body_vars`` when an error occured in the action."
 msgstr ""
 
-#: ../../guides/actions.rst:470
+#: ../../guides/actions.rst:472
 msgid ""
 "``elgg_view_form()`` supports the following ``$form_vars`` to help with "
 "sticky form support:"
 msgstr ""
 
-#: ../../guides/actions.rst:472
+#: ../../guides/actions.rst:474
 msgid "``sticky_enabled``: a ``bool`` to enable automatic sticky form support"
 msgstr ""
 
-#: ../../guides/actions.rst:473
+#: ../../guides/actions.rst:475
 msgid ""
 "``sticky_form_name``: an optional ``string`` to set where the sticky form "
 "values are saved. This defaults to the ``$action_name`` and should only be "
 "changed if the ``$action_name`` is different from the actual action"
 msgstr ""
 
-#: ../../guides/actions.rst:474
+#: ../../guides/actions.rst:476
 msgid ""
 "``sticky_ignored_fields: an ``array`` with the names fo the form fields that"
 " should be saved. For example password fields"
 msgstr ""
 
-#: ../../guides/actions.rst:477
+#: ../../guides/actions.rst:479
 msgid "Example: User registration"
 msgstr "Exemple : Inscription d'un utilisateur"
 
-#: ../../guides/actions.rst:479
+#: ../../guides/actions.rst:481
 msgid ""
 "Simple sticky forms require little logic to determine the input values for "
 "the form. This logic is placed at the top of the form body view itself."
@@ -1120,7 +1128,7 @@ msgstr ""
 "déterminer les valeurs d’entrée du formulaire. Cette logique est placée en "
 "haut de la vue du corps de formulaire."
 
-#: ../../guides/actions.rst:482
+#: ../../guides/actions.rst:484
 msgid ""
 "The registration form view first sets default values for inputs, then checks"
 " if there are sticky values. If so, it loads the sticky values before "
@@ -1131,7 +1139,7 @@ msgstr ""
 "c’est le cas, il charge les valeurs persistantes avant de supprimer le "
 "formulaire persistant :"
 
-#: ../../guides/actions.rst:498
+#: ../../guides/actions.rst:500
 msgid ""
 "The registration action sets creates the sticky form and clears it once the "
 "action is completed:"
@@ -1139,7 +1147,7 @@ msgstr ""
 "Les ensembles d’action d’inscription créent le formulaire persistant et "
 "l’effacent une fois l’action terminée :"
 
-#: ../../guides/actions.rst:516
+#: ../../guides/actions.rst:518
 msgid ""
 "The function ``elgg_make_sticky_form()`` supports an optional second "
 "argument ``$ignored_field_names``. This needs to be an ``array`` of the "
@@ -1151,11 +1159,11 @@ msgstr ""
 "champs que vous ne souhaitez pas rendre persistants. Ceci est utile pour les"
 " champs qui contiennent des données sensibles, comme les mots de passe."
 
-#: ../../guides/actions.rst:520
+#: ../../guides/actions.rst:522
 msgid "Example: Bookmarks"
 msgstr "Exemple : Signets - Bookmarks"
 
-#: ../../guides/actions.rst:522
+#: ../../guides/actions.rst:524
 msgid ""
 "The bundled plugin Bookmarks' save form and action is an example of a "
 "complex sticky form."
@@ -1163,7 +1171,7 @@ msgstr ""
 "Le formulaire et l’action d’enregistrement du plugin \"Bookmarks\" inclus "
 "est un exemple de formulaire persistant complexe."
 
-#: ../../guides/actions.rst:524
+#: ../../guides/actions.rst:526
 msgid ""
 "The form view for the save bookmark action uses ``elgg_extract()`` to pull "
 "values from the ``$vars`` array:"
@@ -1171,45 +1179,45 @@ msgstr ""
 "La vue du formulaire pour l’action d'enregistrement d'un signet utilise "
 "``elgg_extract()`` pour extraire des valeurs du tableau ``$vars`` :"
 
-#: ../../guides/actions.rst:538
+#: ../../guides/actions.rst:540
 msgid ""
 "The page handler scripts enables sticky form support by passing the correct "
 "values to ``elgg_view_form()``:"
 msgstr ""
 
-#: ../../guides/actions.rst:545
+#: ../../guides/actions.rst:547
 msgid ""
 "Similarly, ``mod/bookmarks/pages/edit.php`` uses the same sticky support, "
 "but passes the entity that is being edited:"
 msgstr ""
 
-#: ../../guides/actions.rst:556
+#: ../../guides/actions.rst:558
 msgid ""
 "The plugin has an event listener on the ``'form:prepare:fields', "
 "'bookmarks/save'`` event and the handler does 2 things:"
 msgstr ""
 
-#: ../../guides/actions.rst:558
+#: ../../guides/actions.rst:560
 msgid "Defines the input names and default values for form inputs."
 msgstr ""
 "Définit les noms et les valeurs par défaut pour les champs de formulaire."
 
-#: ../../guides/actions.rst:559
+#: ../../guides/actions.rst:561
 msgid "Extracts the values from a bookmark object if it's passed."
 msgstr "Extrait les valeurs d’un objet bookmark s’il est passé."
 
-#: ../../guides/actions.rst:606
+#: ../../guides/actions.rst:608
 msgid ""
 "The save action doesn't need to do anything with sticky form support as this"
 " is all handled by the system."
 msgstr ""
 
-#: ../../guides/actions.rst:609 ../../guides/ajax.rst:2
-#: ../../guides/events-list.rst:862
+#: ../../guides/actions.rst:611 ../../guides/ajax.rst:2
+#: ../../guides/events-list.rst:868
 msgid "Ajax"
 msgstr "Ajax"
 
-#: ../../guides/actions.rst:611
+#: ../../guides/actions.rst:613
 msgid ""
 "See the :doc:`Ajax guide</guides/ajax>` for instructions on calling actions "
 "from JavaScript."
@@ -1217,11 +1225,11 @@ msgstr ""
 "Voir le :doc:`guide Ajax</guides/ajax>` pour savoir comment appeler les "
 "actions depuis JavaScript."
 
-#: ../../guides/actions.rst:614 ../../guides/web-services.rst:27
+#: ../../guides/actions.rst:616 ../../guides/web-services.rst:27
 msgid "Security"
 msgstr "Sécurité"
 
-#: ../../guides/actions.rst:616
+#: ../../guides/actions.rst:618
 msgid ""
 "For enhanced security, all actions require an CSRF token. Calls to action "
 "URLs that do not include security tokens will be ignored and a warning will "
@@ -1231,30 +1239,30 @@ msgstr ""
 "Les appels aux URLs d’action qui n’incluent pas les jetons de sécurité "
 "seront ignorés et un avertissement sera généré."
 
-#: ../../guides/actions.rst:619
+#: ../../guides/actions.rst:621
 msgid "A few views and functions automatically generate security tokens:"
 msgstr ""
 "Quelques vues et fonctions génèrent automatiquement des jetons de sécurité :"
 
-#: ../../guides/actions.rst:628
+#: ../../guides/actions.rst:630
 msgid "In rare cases, you may need to generate tokens manually:"
 msgstr ""
 "Dans de rares cas, vous devrez peut-être générer des jetons manuellement :"
 
-#: ../../guides/actions.rst:635
+#: ../../guides/actions.rst:637
 msgid "You can also access the tokens from javascript:"
 msgstr "Vous pouvez aussi accéder aux jetons depuis JavaScript :"
 
-#: ../../guides/actions.rst:642
+#: ../../guides/actions.rst:644
 msgid "These are refreshed periodically so should always be up-to-date."
 msgstr ""
 "Ces jetonsci sont rafraîchis périodiquement aussi ils devraient être à jour."
 
-#: ../../guides/actions.rst:645
+#: ../../guides/actions.rst:647
 msgid "Security Tokens"
 msgstr "Jetons de sécurité"
 
-#: ../../guides/actions.rst:647
+#: ../../guides/actions.rst:649
 msgid ""
 "On occasion we need to pass data through an untrusted party or generate an "
 "\"unguessable token\" based on some data. The industry-standard `HMAC "
@@ -1272,7 +1280,7 @@ msgstr ""
 "fortes comme SHA-2 ne devraient *pas* être utilisés sans HMAC pour ces "
 "tâches."
 
-#: ../../guides/actions.rst:652
+#: ../../guides/actions.rst:654
 msgid ""
 "Elgg provides ``elgg_build_hmac()`` to generate and validate HMAC message "
 "authentication codes that are unguessable without the site's private key."
@@ -1281,7 +1289,7 @@ msgstr ""
 "d’authentification des messages HMAC qui ne puissent pas être devinés sans "
 "la clé privée du site."
 
-#: ../../guides/actions.rst:676
+#: ../../guides/actions.rst:678
 msgid ""
 "Note: If you use a non-string as HMAC data, you must use types consistently."
 " Consider the following:"
@@ -1289,11 +1297,11 @@ msgstr ""
 "Remarque : si vous utilisez une non-chaîne comme données HMAC, vous devez "
 "utiliser les types de manière cohérente. Considérez ce qui suit :"
 
-#: ../../guides/actions.rst:689
+#: ../../guides/actions.rst:691
 msgid "Signed URLs"
 msgstr "URLs signées"
 
-#: ../../guides/actions.rst:691
+#: ../../guides/actions.rst:693
 msgid ""
 "Signed URLs offer a limited level of security for situations where action "
 "tokens are not suitable, for example when sending a confirmation link via "
@@ -1307,7 +1315,7 @@ msgstr ""
 " a été générée par votre installation Elgg (en utilisant le secret du site) "
 "et que les éléments de l'URL de requête n’ont pas été trafiqués."
 
-#: ../../guides/actions.rst:695
+#: ../../guides/actions.rst:697
 msgid ""
 "URLs a signed with an unguessable SHA-256 HMAC key. See `Security Tokens`_ "
 "for more details."
@@ -1315,7 +1323,7 @@ msgstr ""
 "URLs signées avec une clef SHA-256 HMAC impossible à deviner. Pour plus de "
 "détails, consultez `Jetons de Sécurité`_ ."
 
-#: ../../guides/actions.rst:709
+#: ../../guides/actions.rst:711
 msgid ""
 "Signed URLs do not offer CSRF protection and should not be used instead of "
 "action tokens."
@@ -3500,7 +3508,7 @@ msgstr ""
 "de classes de commande. Les commandes doivent étendre "
 "``\\Elgg\\Cli\\Command`` pour être exécutables."
 
-#: ../../guides/events-list.rst:42
+#: ../../guides/events-list.rst:48
 msgid "**cron, <period>** |results|"
 msgstr ""
 
@@ -3508,35 +3516,58 @@ msgstr ""
 msgid "Triggered by cron for each period."
 msgstr "Déclenché par le cron pour chaque période."
 
-#: ../../guides/events-list.rst:45
+#: ../../guides/events-list.rst:44 ../../guides/events-list.rst:110
+#: ../../guides/events-list.rst:135 ../../guides/events-list.rst:256
+#: ../../guides/events-list.rst:297 ../../guides/events-list.rst:330
+#: ../../guides/events-list.rst:473 ../../guides/events-list.rst:480
+#: ../../guides/events-list.rst:560 ../../guides/events-list.rst:574
+#: ../../guides/events-list.rst:593
+msgid "The ``$params`` array will contain:"
+msgstr "Le tableau ``$params`` va contenir :"
+
+#: ../../guides/events-list.rst:46
+msgid "``time`` - the timestamp of when the cron command was started"
+msgstr ""
+
+#: ../../guides/events-list.rst:47
+msgid "``dt`` - the ``\\DateTime`` object of when the cron command was started"
+msgstr ""
+
+#: ../../guides/events-list.rst:48
+msgid ""
+"``logger`` - instance of ``\\Elgg\\Logger\\Cron`` to log any information to "
+"the cron log"
+msgstr ""
+
+#: ../../guides/events-list.rst:51
 msgid "**cron:intervals, system** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:45
+#: ../../guides/events-list.rst:51
 msgid "Allow the configuration of custom cron intervals"
 msgstr "Permet la configuration d’intervalles de cron personnalisés"
 
-#: ../../guides/events-list.rst:48
+#: ../../guides/events-list.rst:54
 msgid "**deactivate, plugin**"
 msgstr "**deactivate, plugin**"
 
-#: ../../guides/events-list.rst:48
+#: ../../guides/events-list.rst:54
 msgid "Return false to prevent deactivation of the plugin."
 msgstr "Renvoyez false pour éviter la désactivation du plugin."
 
-#: ../../guides/events-list.rst:51
+#: ../../guides/events-list.rst:57
 msgid "**diagnostics:report, system** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:51
+#: ../../guides/events-list.rst:57
 msgid "Filter the output for the diagnostics report download."
 msgstr "Filtre la sortie pour le téléchargement du rapport de diagnostic."
 
-#: ../../guides/events-list.rst:54
+#: ../../guides/events-list.rst:60
 msgid "**elgg.data, page** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:54
+#: ../../guides/events-list.rst:60
 msgid ""
 "Filters uncached, page-specific configuration data to pass to the client. "
 ":ref:`More info <guides/javascript#config>`"
@@ -3545,11 +3576,11 @@ msgstr ""
 "page à transmettre au client. :ref:`Plus d’informations "
 "<guides/javascript#config>`"
 
-#: ../../guides/events-list.rst:57
+#: ../../guides/events-list.rst:63
 msgid "**elgg.data, site** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:57
+#: ../../guides/events-list.rst:63
 msgid ""
 "Filters cached configuration data to pass to the client. :ref:`More info "
 "<guides/javascript#config>`"
@@ -3557,11 +3588,11 @@ msgstr ""
 "Filtre les données de configuration mises en cache pour les transmettre au "
 "client. :ref:`Plus d’informations <guides/javascript#config>`"
 
-#: ../../guides/events-list.rst:60
+#: ../../guides/events-list.rst:66
 msgid "**format, friendly:title** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:60
+#: ../../guides/events-list.rst:66
 msgid ""
 "Formats the \"friendly\" title for strings. This is used for generating "
 "URLs."
@@ -3569,19 +3600,19 @@ msgstr ""
 "Formate un titre \"sympathique\" pour les chaînes de caractères. Ceci est "
 "utilisé pour générer des URLs."
 
-#: ../../guides/events-list.rst:63
+#: ../../guides/events-list.rst:69
 msgid "**format, friendly:time** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:63
+#: ../../guides/events-list.rst:69
 msgid "Formats the \"friendly\" time for the timestamp ``$params['time']``."
 msgstr "Formate une date \"sympathique\" pour le timestamp ``$params['time']``."
 
-#: ../../guides/events-list.rst:67
+#: ../../guides/events-list.rst:73
 msgid "**format, strip_tags** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:66
+#: ../../guides/events-list.rst:72
 msgid ""
 "Filters a string to remove tags. The original string is passed as "
 "``$params['original_string']`` and an optional set of allowed tags is passed"
@@ -3591,38 +3622,38 @@ msgstr ""
 " par ``$params['original_string']`` et un ensemble facultatif de balises "
 "autorisées est passé par ``$params['allowed_tags']``."
 
-#: ../../guides/events-list.rst:70
+#: ../../guides/events-list.rst:76
 msgid "**gc, system** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:70
+#: ../../guides/events-list.rst:76
 msgid "Allows plugins to run garbage collection for ``$params['period']``."
 msgstr ""
 "Autorise les plugins à exécuter la collecte des déchets - \"garbage "
 "collection\" - pour ``$params['period']``."
 
-#: ../../guides/events-list.rst:73
+#: ../../guides/events-list.rst:79
 msgid "**generate, password** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:73
+#: ../../guides/events-list.rst:79
 msgid "Allows plugins to generate new random cleartext passwords."
 msgstr ""
 "Permet aux plugins de générer de nouveaux mots de passe textuels aléatoires."
 
-#: ../../guides/events-list.rst:76
+#: ../../guides/events-list.rst:82
 msgid "**init:cookie, <name>**"
 msgstr "**init:cookie, <name>**"
 
-#: ../../guides/events-list.rst:76
+#: ../../guides/events-list.rst:82
 msgid "Return false to override setting a cookie."
 msgstr "Renvoyez false pour remplacer la définition d’un cookie."
 
-#: ../../guides/events-list.rst:79
+#: ../../guides/events-list.rst:85
 msgid "**init, system** |sequence|"
 msgstr ""
 
-#: ../../guides/events-list.rst:79
+#: ../../guides/events-list.rst:85
 msgid ""
 "Plugins tend to use this event for initialization (extending views, "
 "registering callbacks, etc.)"
@@ -3630,11 +3661,11 @@ msgstr ""
 "Les plugins ont tendance à utiliser cet événement pour l’initialisation "
 "(extension des vues, enregistrement des rappels, etc.)"
 
-#: ../../guides/events-list.rst:82
+#: ../../guides/events-list.rst:88
 msgid "**languages, translations** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:82
+#: ../../guides/events-list.rst:88
 msgid ""
 "Allows plugins to add/remove languages from the configurable languages in "
 "the system."
@@ -3642,11 +3673,11 @@ msgstr ""
 "Permet aux plugins d'ajouter/supprimer des langues des langues configurables"
 " du système."
 
-#: ../../guides/events-list.rst:86
+#: ../../guides/events-list.rst:92
 msgid "**log, systemlog**"
 msgstr "**log, systemlog**"
 
-#: ../../guides/events-list.rst:85
+#: ../../guides/events-list.rst:91
 msgid ""
 "Called for all triggered events by ``system_log`` plugin. Used internally by"
 " ``Elgg\\SystemLog\\Logger::log()`` to populate the ``system_log`` table."
@@ -3655,22 +3686,22 @@ msgstr ""
 "Utilisé en interne par ``Elgg\\SystemLog\\Logger::log()`` pour remplir la "
 "table ``system_log``."
 
-#: ../../guides/events-list.rst:91
+#: ../../guides/events-list.rst:97
 msgid "**login_url, site** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:89
+#: ../../guides/events-list.rst:95
 msgid ""
 "Filters site's login URL. ``$params`` array contains an array of query "
 "elements added to the login URL by the invoking script. The event must "
 "return an absolute URL of the login page."
 msgstr ""
 
-#: ../../guides/events-list.rst:96
+#: ../../guides/events-list.rst:102
 msgid "**output:before, page** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:94
+#: ../../guides/events-list.rst:100
 msgid ""
 "In ``elgg_view_page()``, this filters ``$vars`` before it's passed to the "
 "page shell view (``page/<page_shell>``). To stop sending the X-Frame-Options"
@@ -3678,19 +3709,19 @@ msgid ""
 "``Elgg\\Page\\SetXFrameOptionsHeaderHandler::class`` from this event."
 msgstr ""
 
-#: ../../guides/events-list.rst:99
+#: ../../guides/events-list.rst:105
 msgid "**output, page** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:99
+#: ../../guides/events-list.rst:105
 msgid "In ``elgg_view_page()``, this filters the output return value."
 msgstr "Dans ``elgg_view_page()``, ceci filtre la valeur de retour renvoyée."
 
-#: ../../guides/events-list.rst:108
+#: ../../guides/events-list.rst:114
 msgid "**parameters, menu:<menu_name>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:102
+#: ../../guides/events-list.rst:108
 msgid ""
 "Triggered by ``elgg_view_menu()``. Used to change menu variables (like sort "
 "order) before rendering."
@@ -3698,31 +3729,23 @@ msgstr ""
 "Déclenché par ``elgg_view_menu()``. Utilisé pour modifier les variables de "
 "menu (comme l’ordre de tri) avant le rendu."
 
-#: ../../guides/events-list.rst:104 ../../guides/events-list.rst:129
-#: ../../guides/events-list.rst:250 ../../guides/events-list.rst:291
-#: ../../guides/events-list.rst:324 ../../guides/events-list.rst:467
-#: ../../guides/events-list.rst:474 ../../guides/events-list.rst:554
-#: ../../guides/events-list.rst:568 ../../guides/events-list.rst:587
-msgid "The ``$params`` array will contain:"
-msgstr "Le tableau ``$params`` va contenir :"
-
-#: ../../guides/events-list.rst:106
+#: ../../guides/events-list.rst:112
 msgid "``name`` - name of the menu"
 msgstr "``name`` - nom du menu"
 
-#: ../../guides/events-list.rst:107
+#: ../../guides/events-list.rst:113
 msgid "``sort_by`` - preferring sorting parameter"
 msgstr "``sort_by`` - paramètre de tri préféré"
 
-#: ../../guides/events-list.rst:108
+#: ../../guides/events-list.rst:114
 msgid "other parameters passed to ``elgg_view_menu()``"
 msgstr "d'autres paramètres passés à ``elgg_view_menu()``"
 
-#: ../../guides/events-list.rst:111
+#: ../../guides/events-list.rst:117
 msgid "**plugins_load, system** |sequence|"
 msgstr ""
 
-#: ../../guides/events-list.rst:111
+#: ../../guides/events-list.rst:117
 msgid ""
 "Triggered before the plugins are loaded. Rarely used. init, system is used "
 "instead. Can be used to load additional libraries."
@@ -3731,11 +3754,11 @@ msgstr ""
 "system est utilisé à la place. Peut être utilisé pour charger des "
 "bibliothèques supplémentaires."
 
-#: ../../guides/events-list.rst:114
+#: ../../guides/events-list.rst:120
 msgid "**plugins_boot, system** |sequence|"
 msgstr ""
 
-#: ../../guides/events-list.rst:114
+#: ../../guides/events-list.rst:120
 msgid ""
 "Triggered just after the plugins are loaded. Rarely used. init, system is "
 "used instead."
@@ -3743,34 +3766,34 @@ msgstr ""
 "Déclenché juste après le chargement des plugins. Rarement utilisé. init, "
 "system est utilisé à la place."
 
-#: ../../guides/events-list.rst:122
+#: ../../guides/events-list.rst:128
 msgid "**prepare, html** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:117
+#: ../../guides/events-list.rst:123
 msgid ""
 "Triggered by ``elgg_format_html()`` and used to prepare untrusted HTML."
 msgstr ""
 "Déclenché par ``elgg_format_html()`` et utilisé pour préparer du HTML non "
 "sûr."
 
-#: ../../guides/events-list.rst:119
+#: ../../guides/events-list.rst:125
 msgid "The ``$return`` value is an array:"
 msgstr "La valeur ``$return`` est un tableau :"
 
-#: ../../guides/events-list.rst:121
+#: ../../guides/events-list.rst:127
 msgid "``html`` - HTML string being prepared"
 msgstr "``html`` - La chaîne de caractères HTML en train d'être préparée"
 
-#: ../../guides/events-list.rst:122
+#: ../../guides/events-list.rst:128
 msgid "``options`` - Preparation options"
 msgstr "``options`` - Options de préparation"
 
-#: ../../guides/events-list.rst:134
+#: ../../guides/events-list.rst:140
 msgid "**prepare, menu:<menu_name>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:125
+#: ../../guides/events-list.rst:131
 msgid ""
 "Filters the array of menu sections before they're displayed. Each section is"
 " a string key mapping to an area of menu items. This is a good event to "
@@ -3778,13 +3801,13 @@ msgid ""
 "and ``elgg()->menus->prepareMenu()``."
 msgstr ""
 
-#: ../../guides/events-list.rst:131
+#: ../../guides/events-list.rst:137
 msgid "``selected_item`` - ``ElggMenuItem`` selected in the menu, if any"
 msgstr ""
 "``selected_item`` - ``ElggMenuItem`` sélectionné dans le menu, le cas "
 "échéant"
 
-#: ../../guides/events-list.rst:133
+#: ../../guides/events-list.rst:139
 msgid ""
 "The return value is an instance of ``\\Elgg\\Menu\\PreparedMenu``. The "
 "prepared menu is a collection of ``\\Elgg\\Menu\\MenuSection``, which in "
@@ -3794,17 +3817,17 @@ msgstr ""
 "menu préparé est une collection d’objets ``\\Elgg\\Menu\\MenuSection``, qui "
 "sont à leur tour des collections d’objets ``\\ElggMenuItem``."
 
-#: ../../guides/events-list.rst:142
+#: ../../guides/events-list.rst:148
 msgid "**prepare, menu:<menu_name>:<type>:<subtype>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:137
+#: ../../guides/events-list.rst:143
 msgid ""
 "More granular version of the menu event triggered before the **prepare, "
 "menu:<menu_name>** event."
 msgstr ""
 
-#: ../../guides/events-list.rst:139 ../../guides/events-list.rst:168
+#: ../../guides/events-list.rst:145 ../../guides/events-list.rst:174
 msgid ""
 "Only applied if menu params contain - params['entity'] with an "
 "``\\ElggEntity`` (``<type>`` is ``\\ElggEntity::type`` and ``<subtype>`` is "
@@ -3824,11 +3847,11 @@ msgstr ""
 "``\\ElggRelationship::getType()`` et ``<subtype>`` est "
 "``\\ElggRelationship::getSubtype( )``)"
 
-#: ../../guides/events-list.rst:146
+#: ../../guides/events-list.rst:152
 msgid "**ready, system** |sequence|"
 msgstr ""
 
-#: ../../guides/events-list.rst:145
+#: ../../guides/events-list.rst:151
 msgid ""
 "Triggered after the ``init, system`` event. All plugins are fully loaded and"
 " the engine is ready to serve pages."
@@ -3836,11 +3859,11 @@ msgstr ""
 "Déclenché après l’événement ``init, system``. Tous les plugins sont "
 "entièrement chargés et le moteur est prêt à servir les pages."
 
-#: ../../guides/events-list.rst:150
+#: ../../guides/events-list.rst:156
 msgid "**regenerate_site_secret:before, system**"
 msgstr "**regenerate_site_secret:before, system**"
 
-#: ../../guides/events-list.rst:149
+#: ../../guides/events-list.rst:155
 msgid ""
 "Return false to cancel regenerating the site secret. You should also provide"
 " a message to the user."
@@ -3848,19 +3871,19 @@ msgstr ""
 "Renvoyez false pour annuler la régénération du secret du site. Vous devez "
 "également fournir un message à l’utilisateur."
 
-#: ../../guides/events-list.rst:153
+#: ../../guides/events-list.rst:159
 msgid "**regenerate_site_secret:after, system**"
 msgstr "**regenerate_site_secret:after, system**"
 
-#: ../../guides/events-list.rst:153
+#: ../../guides/events-list.rst:159
 msgid "Triggered after the site secret has been regenerated."
 msgstr "Déclenché après que le secret du site a été régénéré."
 
-#: ../../guides/events-list.rst:163
+#: ../../guides/events-list.rst:169
 msgid "**register, menu:<menu_name>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:156
+#: ../../guides/events-list.rst:162
 msgid ""
 "Filters the initial list of menu items pulled from configuration, before the"
 " menu has been split into sections. Triggered by ``elgg_view_menu()`` and "
@@ -3870,13 +3893,13 @@ msgstr ""
 "avant que le menu n’ait été divisé en sections. Déclenché par "
 "``elgg_view_menu()`` et ``elgg()->menus->getMenu()``."
 
-#: ../../guides/events-list.rst:159
+#: ../../guides/events-list.rst:165
 msgid ""
 "The ``$params`` array will contain parameters returned by ``parameters, "
 "menu:<menu_name>`` event."
 msgstr ""
 
-#: ../../guides/events-list.rst:161
+#: ../../guides/events-list.rst:167
 msgid ""
 "The return value is an instance of ``\\Elgg\\Menu\\MenuItems`` containing "
 "``\\ElggMenuItem`` objects."
@@ -3884,34 +3907,34 @@ msgstr ""
 "La valeur de retour est une instance de ``\\Elgg\\Menu\\MenuItems`` "
 "contenant des objets ``\\ElggMenuItem``."
 
-#: ../../guides/events-list.rst:163
+#: ../../guides/events-list.rst:169
 msgid ""
 "Event handlers can add/remove items to the collection using the collection "
 "API, as well as array access operations."
 msgstr ""
 
-#: ../../guides/events-list.rst:171
+#: ../../guides/events-list.rst:177
 msgid "**register, menu:<menu_name>:<type>:<subtype>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:166
+#: ../../guides/events-list.rst:172
 msgid ""
 "More granular version of the menu event triggered before the **register, "
 "menu:<menu_name>** event."
 msgstr ""
 
-#: ../../guides/events-list.rst:191
+#: ../../guides/events-list.rst:197
 msgid "**register, menu:filter:<filter_id>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:174
+#: ../../guides/events-list.rst:180
 msgid ""
 "Allows plugins to modify layout filter tabs on layouts that specify "
 "``<filter_id>`` parameter. Parameters and return values are same as in "
 "``register, menu:<menu_name>`` event."
 msgstr ""
 
-#: ../../guides/events-list.rst:177
+#: ../../guides/events-list.rst:183
 msgid ""
 "If ``filter_id`` is ``filter`` (the default) then the ``all``, ``mine`` and "
 "``friends`` tabs will be generated base on some provided information or be "
@@ -3921,19 +3944,19 @@ msgstr ""
 "``all``, ``mine`` et ``friends`` seront générés sur la base d'informations "
 "fournies, ou seront testés pour des routes similaires à la route actuelle."
 
-#: ../../guides/events-list.rst:180
+#: ../../guides/events-list.rst:186
 msgid "params['all_link'] will be used for the ``all`` tab"
 msgstr "params['all_link'] sera utilisé pour l'onglet ``all``"
 
-#: ../../guides/events-list.rst:181
+#: ../../guides/events-list.rst:187
 msgid "params['mine_link'] will be used for the ``mine`` tab"
 msgstr "params['mine_link'] sera utilisé pour l'onglet ``mine``"
 
-#: ../../guides/events-list.rst:182
+#: ../../guides/events-list.rst:188
 msgid "params['friends_link'] will be used for the ``friend`` tab"
 msgstr "params['friends_link'] sera utilisé pour l'onglet ``friend``"
 
-#: ../../guides/events-list.rst:184
+#: ../../guides/events-list.rst:190
 msgid ""
 "If the above are not provided than a route will be tried based on "
 "``params['entity_type']`` and ``params['entity_subtype']``. If not provided "
@@ -3958,16 +3981,16 @@ msgstr ""
 "L'onglet `` friend`` sera basé sur la route "
 "``collection:<entity_type>:<entity_subtype>:friends``"
 
-#: ../../guides/events-list.rst:191
+#: ../../guides/events-list.rst:197
 msgid "If the routes aren't registered the tabs will not appear."
 msgstr ""
 "Si les routes ne sont pas enregistrés, les onglets n'apparaîtront pas."
 
-#: ../../guides/events-list.rst:196
+#: ../../guides/events-list.rst:202
 msgid "**registration_url, site** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:194
+#: ../../guides/events-list.rst:200
 msgid ""
 "Filters site's registration URL. Can be used by plugins to attach invitation"
 " codes, referrer codes etc. to the registration URL. ``$params`` array "
@@ -3976,19 +3999,19 @@ msgid ""
 "page."
 msgstr ""
 
-#: ../../guides/events-list.rst:199
+#: ../../guides/events-list.rst:205
 msgid "**reload:after, translations**"
 msgstr "**reload:after, translations**"
 
-#: ../../guides/events-list.rst:199
+#: ../../guides/events-list.rst:205
 msgid "Triggered after the translations are (re)loaded."
 msgstr "Déclenché après que les traductions ont été (re)chargées."
 
-#: ../../guides/events-list.rst:202
+#: ../../guides/events-list.rst:208
 msgid "**sanitize, input** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:202
+#: ../../guides/events-list.rst:208
 msgid ""
 "Filter GET and POST input. This is used by ``get_input()`` to sanitize user "
 "input."
@@ -3996,11 +4019,11 @@ msgstr ""
 "Filtre l'entrée GET et POST. Ceci est utilisé par ``get_input()`` pour "
 "assainir les entrées utilisateur."
 
-#: ../../guides/events-list.rst:206
+#: ../../guides/events-list.rst:212
 msgid "**seeds, database** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:205
+#: ../../guides/events-list.rst:211
 msgid ""
 "Allows plugins to register their own database seeds. Seeds populate the "
 "database with fake entities for testing purposes. Seeds must extend "
@@ -4013,11 +4036,11 @@ msgstr ""
 "``\\Elgg\\Database\\Seeds\\Seed`` pour qu’elle soit exécutable via ``elgg-"
 "cli database:seed``."
 
-#: ../../guides/events-list.rst:210
+#: ../../guides/events-list.rst:216
 msgid "**send:before, http_response**"
 msgstr "**send:before, http_response**"
 
-#: ../../guides/events-list.rst:209
+#: ../../guides/events-list.rst:215
 msgid ""
 "Triggered before an HTTP response is sent. Handlers will receive an instance"
 " of `\\Symfony\\Component\\HttpFoundation\\Response` that is to be sent to "
@@ -4029,11 +4052,11 @@ msgstr ""
 "doit être envoyée au demandeur. Les gestionnaires peuvent mettre fin à "
 "l’événement et empêcher l’envoi de la réponse en renvoyant `false`."
 
-#: ../../guides/events-list.rst:214
+#: ../../guides/events-list.rst:220
 msgid "**send:after, http_response**"
 msgstr "**send:after, http_response**"
 
-#: ../../guides/events-list.rst:213
+#: ../../guides/events-list.rst:219
 msgid ""
 "Triggered after an HTTP response is sent. Handlers will receive an instance "
 "of `\\Symfony\\Component\\HttpFoundation\\Response` that was sent to the "
@@ -4043,11 +4066,11 @@ msgstr ""
 "instance de la réponse `\\Symfony\\Component\\HttpFoundation\\Response` qui "
 "a été envoyée au demandeur."
 
-#: ../../guides/events-list.rst:218
+#: ../../guides/events-list.rst:224
 msgid "**shutdown, system**"
 msgstr "**shutdown, system**"
 
-#: ../../guides/events-list.rst:217
+#: ../../guides/events-list.rst:223
 msgid ""
 "Triggered after the page has been sent to the user. Expensive operations "
 "could be done here and not make the user wait."
@@ -4055,7 +4078,7 @@ msgstr ""
 "Déclenché après l’envoi de la page à l’utilisateur. Des opérations coûteuses"
 " pourraient être faites ici sans que cela fasse attendre l’utilisateur."
 
-#: ../../guides/events-list.rst:220
+#: ../../guides/events-list.rst:226
 msgid ""
 "Depending upon your server configuration the PHP output might not be shown "
 "until after the process is completed. This means that any long-running "
@@ -4065,7 +4088,7 @@ msgstr ""
 "affichée avant la fin du processus. Cela signifie que tous les processus "
 "longs retarderont toujours le chargement de la page."
 
-#: ../../guides/events-list.rst:224
+#: ../../guides/events-list.rst:230
 msgid ""
 "This event is prefered above using ``register_shutdown_function`` as you may"
 " not have access to all the Elgg services (eg. database) in the shutdown "
@@ -4076,7 +4099,7 @@ msgstr ""
 "base de données) dans la fonction d’arrêt, alors que vous l'aurez dans "
 "l’événement."
 
-#: ../../guides/events-list.rst:227
+#: ../../guides/events-list.rst:233
 msgid ""
 "The Elgg session is already closed before this event. Manipulating session "
 "is not possible."
@@ -4084,22 +4107,22 @@ msgstr ""
 "La session Elgg est déjà terminée avant cet événement. La manipulation de la"
 " session n’est plus possible."
 
-#: ../../guides/events-list.rst:230
+#: ../../guides/events-list.rst:236
 msgid "**simplecache:generate, <view>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:230
+#: ../../guides/events-list.rst:236
 msgid ""
 "Filters the view output for a ``/cache`` URL when simplecache is enabled."
 msgstr ""
 "Filtre la sortie de la vue pour une URL ``/cache`` quand simplecache est "
 "activé."
 
-#: ../../guides/events-list.rst:234
+#: ../../guides/events-list.rst:240
 msgid "**upgrade, system**"
 msgstr "**upgrade, system**"
 
-#: ../../guides/events-list.rst:233
+#: ../../guides/events-list.rst:239
 msgid ""
 "Triggered after a system upgrade has finished. All upgrade scripts have run,"
 " but the caches are not cleared."
@@ -4107,11 +4130,11 @@ msgstr ""
 "Déclenché une fois la mise à niveau du système terminée. Tous les scripts de"
 " mise à niveau sont exécutés, mais les caches ne sont pas effacés."
 
-#: ../../guides/events-list.rst:237
+#: ../../guides/events-list.rst:243
 msgid "**upgrade:execute, system** |sequence|"
 msgstr ""
 
-#: ../../guides/events-list.rst:237
+#: ../../guides/events-list.rst:243
 msgid ""
 "Triggered when executing an ``ElggUpgrade``. The ``$object`` of the event is"
 " the ``ElggUpgrade``."
@@ -4119,25 +4142,25 @@ msgstr ""
 "Déclenché lors de l’exécution d’un ``ElggUpgrade``. L'objet ``$object`` de "
 "l’événement est le ``ElggUpgrade``."
 
-#: ../../guides/events-list.rst:240
+#: ../../guides/events-list.rst:246
 msgid "User events"
 msgstr "Événements utilisateur"
 
-#: ../../guides/events-list.rst:243
+#: ../../guides/events-list.rst:249
 msgid "**ban, user**"
 msgstr "**ban, user**"
 
-#: ../../guides/events-list.rst:243
+#: ../../guides/events-list.rst:249
 msgid "Triggered before a user is banned. Return false to prevent."
 msgstr ""
 "Déclenché avant qu'un utilisateur ne soit banni. Retournez false pour "
 "l'éviter."
 
-#: ../../guides/events-list.rst:254
+#: ../../guides/events-list.rst:260
 msgid "**change:email, user** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:246
+#: ../../guides/events-list.rst:252
 msgid ""
 "Triggered before the user email is changed. Allows plugins to implement "
 "additional logic required to change email, e.g. additional email validation."
@@ -4145,78 +4168,78 @@ msgid ""
 " right away."
 msgstr ""
 
-#: ../../guides/events-list.rst:252 ../../guides/events-list.rst:326
+#: ../../guides/events-list.rst:258 ../../guides/events-list.rst:332
 msgid "``user`` - ``\\ElggUser``, whose settings are being saved"
 msgstr "``user`` - ``\\ElggUser``, dont les paramètres ont été sauvegardés"
 
-#: ../../guides/events-list.rst:253
+#: ../../guides/events-list.rst:259
 msgid "``email`` - Email address that passes sanity checks"
 msgstr "``email`` - Adresse e-mail qui passe les vérifications sanitaires"
 
-#: ../../guides/events-list.rst:254 ../../guides/events-list.rst:327
+#: ../../guides/events-list.rst:260 ../../guides/events-list.rst:333
 msgid "``request`` - ``\\Elgg\\Request`` to the action controller"
 msgstr "``request`` - ``\\Elgg\\Request`` vers le contrôleur de l'action"
 
-#: ../../guides/events-list.rst:257
+#: ../../guides/events-list.rst:263
 msgid "**invalidate:after, user**"
 msgstr "**invalidate:after, user**"
 
-#: ../../guides/events-list.rst:257
+#: ../../guides/events-list.rst:263
 msgid "Triggered when user's account validation has been revoked."
 msgstr ""
 "Déclenché lorsque la validation du compte de l’utilisateur a été révoquée."
 
-#: ../../guides/events-list.rst:260
+#: ../../guides/events-list.rst:266
 msgid "**login:after, user**"
 msgstr "**login:after, user**"
 
-#: ../../guides/events-list.rst:260
+#: ../../guides/events-list.rst:266
 msgid "Triggered after the user logs in."
 msgstr "Déclenché après que l'utilisateur se soit identifié."
 
-#: ../../guides/events-list.rst:263
+#: ../../guides/events-list.rst:269
 msgid "**login:before, user**"
 msgstr "**login:before, user**"
 
-#: ../../guides/events-list.rst:263
+#: ../../guides/events-list.rst:269
 msgid "Triggered during login. Returning false prevents the user from logging"
 msgstr ""
 "Déclenché lors de la connexion. Renvoyer false empêche l’utilisateur de se "
 "connecter"
 
-#: ../../guides/events-list.rst:266
+#: ../../guides/events-list.rst:272
 msgid "**login:forward, user** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:266
+#: ../../guides/events-list.rst:272
 msgid "Filters the URL to which the user will be forwarded after login."
 msgstr ""
 "Filtre l’URL vers laquelle l’utilisateur sera redirigé après la connexion."
 
-#: ../../guides/events-list.rst:269
+#: ../../guides/events-list.rst:275
 msgid "**login:first, user**"
 msgstr "**login:first, user**"
 
-#: ../../guides/events-list.rst:269
+#: ../../guides/events-list.rst:275
 msgid ""
 "Triggered after a successful login. Only if there is no previous login."
 msgstr ""
 "Déclenché après une connexion réussie. Uniquement s'il n'y a pas de "
 "connexion précédente."
 
-#: ../../guides/events-list.rst:272
+#: ../../guides/events-list.rst:278
 msgid "**logout:after, user**"
 msgstr "**logout:after, user**"
 
-#: ../../guides/events-list.rst:272
+#: ../../guides/events-list.rst:278
 msgid "Triggered after the user logouts."
 msgstr "Déclenché après que l'utilisateur se soit déconnecté."
 
-#: ../../guides/events-list.rst:275
+#: ../../guides/events-list.rst:281
 msgid "**logout:before, user**"
 msgstr "**logout:before, user**"
 
-#: ../../guides/events-list.rst:275
+#: ../../guides/events-list.rst:281
 msgid ""
 "Triggered during logout. Returning false should prevent the user from "
 "logging out."
@@ -4224,38 +4247,38 @@ msgstr ""
 "Déclenché pendant la déconnexion. Renvoyer false empêche l’utilisateur de se"
 " déconnecter."
 
-#: ../../guides/events-list.rst:278
+#: ../../guides/events-list.rst:284
 msgid "**make_admin, user**"
 msgstr "**make_admin, user**"
 
-#: ../../guides/events-list.rst:278
+#: ../../guides/events-list.rst:284
 msgid ""
 "Triggered before a user is promoted to an admin. Return false to prevent."
 msgstr ""
 "Déclenché avant qu’un utilisateur ne soit promu administrateur. Retournez "
 "false pour l'éviter."
 
-#: ../../guides/events-list.rst:281
+#: ../../guides/events-list.rst:287
 msgid "**profileiconupdate, user**"
 msgstr "**profileiconupdate, user**"
 
-#: ../../guides/events-list.rst:281
+#: ../../guides/events-list.rst:287
 msgid "User has changed profile icon"
 msgstr "L'utilisateur a modifié son icône de profil"
 
-#: ../../guides/events-list.rst:284
+#: ../../guides/events-list.rst:290
 msgid "**profileupdate, user**"
 msgstr "**profileupdate, user**"
 
-#: ../../guides/events-list.rst:284
+#: ../../guides/events-list.rst:290
 msgid "User has changed profile"
 msgstr "L'utilisateur a modifié son profil"
 
-#: ../../guides/events-list.rst:294
+#: ../../guides/events-list.rst:300
 msgid "**register, user** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:287
+#: ../../guides/events-list.rst:293
 msgid ""
 "Triggered by the ``register`` action after the user registers. Return "
 "``false`` to delete the user. Note the function ``register_user`` does *not*"
@@ -4264,11 +4287,11 @@ msgid ""
 "message to be displayed to the user."
 msgstr ""
 
-#: ../../guides/events-list.rst:293
+#: ../../guides/events-list.rst:299
 msgid "``user`` - Newly registered user entity"
 msgstr "``user`` - L'entité utilisateur nouvellement enregistrée"
 
-#: ../../guides/events-list.rst:294
+#: ../../guides/events-list.rst:300
 msgid ""
 "All parameters sent with the request to the action (incl. ``password``, "
 "``friend_guid``, ``invitecode`` etc)"
@@ -4276,11 +4299,11 @@ msgstr ""
 "Tous les paramètres envoyés avec la requête à l’action (comprend "
 "``password``, ``friend_guid``, ``invitecode``, etc.)"
 
-#: ../../guides/events-list.rst:298
+#: ../../guides/events-list.rst:304
 msgid "**registeruser:validate:email, all** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:297
+#: ../../guides/events-list.rst:303
 msgid ""
 "Return boolean for if the string in ``$params['email']`` is valid for an "
 "email address. Event handler can throw "
@@ -4288,11 +4311,11 @@ msgid ""
 "message to be shown to the user."
 msgstr ""
 
-#: ../../guides/events-list.rst:302
+#: ../../guides/events-list.rst:308
 msgid "**registeruser:validate:password, all** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:301
+#: ../../guides/events-list.rst:307
 msgid ""
 "Return boolean for if the string in ``$params['password']`` is valid for a "
 "password. Event handler can throw "
@@ -4300,11 +4323,11 @@ msgid ""
 "message to be shown to the user."
 msgstr ""
 
-#: ../../guides/events-list.rst:306
+#: ../../guides/events-list.rst:312
 msgid "**registeruser:validate:username, all** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:305
+#: ../../guides/events-list.rst:311
 msgid ""
 "Return boolean for if the string in ``$params['username']`` is valid for a "
 "username. Event handler can throw "
@@ -4312,32 +4335,32 @@ msgid ""
 "message to be shown to the user."
 msgstr ""
 
-#: ../../guides/events-list.rst:309
+#: ../../guides/events-list.rst:315
 msgid "**remove_admin, user**"
 msgstr "**remove_admin, user**"
 
-#: ../../guides/events-list.rst:309
+#: ../../guides/events-list.rst:315
 msgid ""
 "Triggered before a user is demoted from an admin. Return false to prevent."
 msgstr ""
 "Déclenché avant que le rôle d'administrateur ne soit retiré à un "
 "utilisateur. Retournez false pour l'éviter."
 
-#: ../../guides/events-list.rst:312
+#: ../../guides/events-list.rst:318
 msgid "**unban, user**"
 msgstr "**unban, user**"
 
-#: ../../guides/events-list.rst:312
+#: ../../guides/events-list.rst:318
 msgid "Triggered before a user is unbanned. Return false to prevent."
 msgstr ""
 "Déclenché avant qu’un utilisateur ne soit réintégré. Retournez false pour "
 "l'éviter."
 
-#: ../../guides/events-list.rst:317
+#: ../../guides/events-list.rst:323
 msgid "**username:character_blacklist, user** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:315
+#: ../../guides/events-list.rst:321
 msgid ""
 "Filters the string of blacklisted characters used to validate username "
 "during registration. The return value should be a string consisting of the "
@@ -4349,11 +4372,11 @@ msgstr ""
 "chaîne composée des caractères refusés. La chaîne par défaut se trouve dans "
 "``$params['blacklist']``."
 
-#: ../../guides/events-list.rst:327
+#: ../../guides/events-list.rst:333
 msgid "**usersettings:save, user** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:320
+#: ../../guides/events-list.rst:326
 msgid ""
 "Triggered in the aggregate action to save user settings. The event handler "
 "must return ``false`` to prevent sticky forms from being cleared (i.e. to "
@@ -4362,11 +4385,11 @@ msgid ""
 "return ``null`` to indicate successful operation."
 msgstr ""
 
-#: ../../guides/events-list.rst:332
+#: ../../guides/events-list.rst:338
 msgid "**validate, user**"
 msgstr "**validate, user**"
 
-#: ../../guides/events-list.rst:330
+#: ../../guides/events-list.rst:336
 msgid ""
 "When a user registers, the user's account is disabled. This event is "
 "triggered to allow a plugin to determine how the user should be validated "
@@ -4377,23 +4400,23 @@ msgstr ""
 " l’utilisateur doit être validé (par exemple, par le biais d’un e-mail avec "
 "un lien de validation)."
 
-#: ../../guides/events-list.rst:335
+#: ../../guides/events-list.rst:341
 msgid "**validate:after, user**"
 msgstr "**validate:after, user**"
 
-#: ../../guides/events-list.rst:335
+#: ../../guides/events-list.rst:341
 msgid "Triggered when user's account has been validated."
 msgstr "Déclenché lorsque le compte utilisateur a été validé."
 
-#: ../../guides/events-list.rst:338
+#: ../../guides/events-list.rst:344
 msgid "Relationship events"
 msgstr "Événements des relations"
 
-#: ../../guides/events-list.rst:342
+#: ../../guides/events-list.rst:348
 msgid "**create, relationship**"
 msgstr "**create, relationship**"
 
-#: ../../guides/events-list.rst:341
+#: ../../guides/events-list.rst:347
 msgid ""
 "Triggered after a relationship has been created. Returning false deletes the"
 " relationship that was just created."
@@ -4401,11 +4424,11 @@ msgstr ""
 "Déclenché après la création d’une relation. Renvoyez false pour supprimer la"
 " relation qui vient d’être créée."
 
-#: ../../guides/events-list.rst:346
+#: ../../guides/events-list.rst:352
 msgid "**delete, relationship**"
 msgstr "**delete, relationship**"
 
-#: ../../guides/events-list.rst:345
+#: ../../guides/events-list.rst:351
 msgid ""
 "Triggered before a relationship is deleted. Return false to prevent it from "
 "being deleted."
@@ -4413,11 +4436,11 @@ msgstr ""
 "Déclenché avant la suppression d’une relation. Renvoyez false pour éviter "
 "qu’elle soit supprimée."
 
-#: ../../guides/events-list.rst:349
+#: ../../guides/events-list.rst:355
 msgid "**join, group**"
 msgstr "**join, group**"
 
-#: ../../guides/events-list.rst:349
+#: ../../guides/events-list.rst:355
 msgid ""
 "Triggered after the user ``$params['user']`` has joined the group "
 "``$params['group']``."
@@ -4425,11 +4448,11 @@ msgstr ""
 "Déclenché après que l’utilisateur ``$params['user']`` a rejoint le groupe "
 "``$params['group']``."
 
-#: ../../guides/events-list.rst:352
+#: ../../guides/events-list.rst:358
 msgid "**leave, group**"
 msgstr "**leave, group**"
 
-#: ../../guides/events-list.rst:352
+#: ../../guides/events-list.rst:358
 msgid ""
 "Triggered before the user ``$params['user']`` has left the group "
 "``$params['group']``."
@@ -4437,15 +4460,15 @@ msgstr ""
 "Déclenché avant que l’utilisateur ``$params['user']`` n'ait quitté le groupe"
 " ``$params['group']``."
 
-#: ../../guides/events-list.rst:355
+#: ../../guides/events-list.rst:361
 msgid "Entity events"
 msgstr "Événements des entités"
 
-#: ../../guides/events-list.rst:359
+#: ../../guides/events-list.rst:365
 msgid "**comments, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:358
+#: ../../guides/events-list.rst:364
 msgid ""
 "Triggered in ``elgg_view_comments()``. If returning content, this overrides "
 "the ``page/elements/comments`` view."
@@ -4453,117 +4476,117 @@ msgstr ""
 "Déclenché dans ``elgg_view_comments()``. S'il renvoie du contenu, celui-ci "
 "remplace la vue ``page/elements/comments``."
 
-#: ../../guides/events-list.rst:362
+#: ../../guides/events-list.rst:368
 msgid "**comments:count, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:362
+#: ../../guides/events-list.rst:368
 msgid "Return the number of comments on ``$params['entity']``."
 msgstr "Renvoie le nombre de commentaires sur ``$params['entity']``."
 
-#: ../../guides/events-list.rst:366
+#: ../../guides/events-list.rst:372
 msgid "**create, <entity type>**"
 msgstr "**create, <entity type>**"
 
-#: ../../guides/events-list.rst:365
+#: ../../guides/events-list.rst:371
 msgid ""
 "Triggered for user, group, object, and site entities after creation. "
 "Triggered just before the ``create:after`` event, mostly for BC reasons. The"
 " use of the ``create:after`` event is preferred."
 msgstr ""
 
-#: ../../guides/events-list.rst:369
+#: ../../guides/events-list.rst:375
 msgid "**create:after, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:369
+#: ../../guides/events-list.rst:375
 msgid "Triggered for user, group, object, and site entities after creation."
 msgstr ""
 
-#: ../../guides/events-list.rst:372
+#: ../../guides/events-list.rst:378
 msgid "**create:before, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:372
+#: ../../guides/events-list.rst:378
 msgid ""
 "Triggered for user, group, object, and site entities before creation. Return"
 " false to prevent creating the entity."
 msgstr ""
 
-#: ../../guides/events-list.rst:375
+#: ../../guides/events-list.rst:381
 msgid "**delete, <entity type>**"
 msgstr "**delete, <entity type>**"
 
-#: ../../guides/events-list.rst:375
+#: ../../guides/events-list.rst:381
 msgid "Triggered before entity deletion."
 msgstr "Déclenché avant la suppression d'une entité."
 
-#: ../../guides/events-list.rst:378
+#: ../../guides/events-list.rst:384
 msgid "**delete:after, <entity type>**"
 msgstr "**delete:after, <entity type>**"
 
-#: ../../guides/events-list.rst:378
+#: ../../guides/events-list.rst:384
 msgid "Triggered after entity deletion."
 msgstr "Déclenché après la suppression d'une entité."
 
-#: ../../guides/events-list.rst:381
+#: ../../guides/events-list.rst:387
 msgid "**delete:before, <entity type>**"
 msgstr "**delete:before, <entity type>**"
 
-#: ../../guides/events-list.rst:381
+#: ../../guides/events-list.rst:387
 msgid "Triggered before entity deletion. Return false to prevent deletion."
 msgstr ""
 "Déclenché avant la suppression d'une entité. Retournez false pour éviter la "
 "suppression."
 
-#: ../../guides/events-list.rst:384
+#: ../../guides/events-list.rst:390
 msgid "**disable, <entity type>**"
 msgstr "**disable, <entity type>**"
 
-#: ../../guides/events-list.rst:384
+#: ../../guides/events-list.rst:390
 msgid ""
 "Triggered before the entity is disabled. Return false to prevent disabling."
 msgstr ""
 "Déclenché avant qu'une entité soit désactivée. Retournez false pour éviter "
 "la désactivation."
 
-#: ../../guides/events-list.rst:387
+#: ../../guides/events-list.rst:393
 msgid "**disable:after, <entity type>**"
 msgstr "**disable:after, <entity type>**"
 
-#: ../../guides/events-list.rst:387
+#: ../../guides/events-list.rst:393
 msgid "Triggered after the entity is disabled."
 msgstr "Déclenché après qu'une entité a été désactivée."
 
-#: ../../guides/events-list.rst:390
+#: ../../guides/events-list.rst:396
 msgid "**enable, <entity type>**"
 msgstr "**enable, <entity type>**"
 
-#: ../../guides/events-list.rst:390
+#: ../../guides/events-list.rst:396
 msgid "Return false to prevent enabling."
 msgstr "Retournez false pour éviter l'activation."
 
-#: ../../guides/events-list.rst:393
+#: ../../guides/events-list.rst:399
 msgid "**enable:after, <entity type>**"
 msgstr "**enable:after, <entity type>**"
 
-#: ../../guides/events-list.rst:393
+#: ../../guides/events-list.rst:399
 msgid "Triggered after the entity is enabled."
 msgstr "Déclenché après qu'une entité a été activée."
 
-#: ../../guides/events-list.rst:396
+#: ../../guides/events-list.rst:402
 msgid "**likes:count, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:396
+#: ../../guides/events-list.rst:402
 msgid "Return the number of likes for ``$params['entity']``."
 msgstr "Renvoie le nombre de mentions J’aime pour ``$params['entity']``."
 
-#: ../../guides/events-list.rst:401
+#: ../../guides/events-list.rst:407
 msgid "**update, <entity type>**"
 msgstr "**update, <entity type>**"
 
-#: ../../guides/events-list.rst:399
+#: ../../guides/events-list.rst:405
 msgid ""
 "Triggered before an update for the user, group, object, and site entities. "
 "Return false to prevent update. The entity method "
@@ -4575,11 +4598,11 @@ msgstr ""
 "``getOriginalAttributes()`` peut être utilisée pour identifier les attributs"
 " qui ont changé depuis la dernière fois que l’entité a été enregistrée."
 
-#: ../../guides/events-list.rst:406
+#: ../../guides/events-list.rst:412
 msgid "**update:after, <entity type>**"
 msgstr "**update:after, <entity type>**"
 
-#: ../../guides/events-list.rst:404
+#: ../../guides/events-list.rst:410
 msgid ""
 "Triggered after an update for the user, group, object, and site entities. "
 "The entity method ``getOriginalAttributes()`` can be used to identify which "
@@ -4590,15 +4613,15 @@ msgstr ""
 "pour identifier les attributs qui ont changé depuis la dernière fois que "
 "l’entité a été enregistrée."
 
-#: ../../guides/events-list.rst:409
+#: ../../guides/events-list.rst:415
 msgid "Metadata events"
 msgstr "Événements des métadonnées"
 
-#: ../../guides/events-list.rst:413
+#: ../../guides/events-list.rst:419
 msgid "**create, metadata**"
 msgstr "**create, metadata**"
 
-#: ../../guides/events-list.rst:412
+#: ../../guides/events-list.rst:418
 msgid ""
 "Called after the metadata has been created. Return false to delete the "
 "metadata that was just created."
@@ -4606,21 +4629,21 @@ msgstr ""
 "Appelé après qu'une métadonnée a été créée. Retournez false pour supprimer "
 "la métadonnée qui vient d'être créée."
 
-#: ../../guides/events-list.rst:416
+#: ../../guides/events-list.rst:422
 msgid "**delete, metadata**"
 msgstr "**delete, metadata**"
 
-#: ../../guides/events-list.rst:416
+#: ../../guides/events-list.rst:422
 msgid "Called before metadata is deleted. Return false to prevent deletion."
 msgstr ""
 "Appelé avant que métadonnée soit supprimée. Retournez false pour éviter la "
 "suppression."
 
-#: ../../guides/events-list.rst:419
+#: ../../guides/events-list.rst:425
 msgid "**update, metadata**"
 msgstr "**update, metadata**"
 
-#: ../../guides/events-list.rst:419
+#: ../../guides/events-list.rst:425
 msgid ""
 "Called after the metadata has been updated. Return false to *delete the "
 "metadata.*"
@@ -4628,15 +4651,15 @@ msgstr ""
 "Appelé après qu'une métadonnée a été modifiée. Retournez false pour "
 "*supprimer la métadonnée.*"
 
-#: ../../guides/events-list.rst:422
+#: ../../guides/events-list.rst:428
 msgid "Annotation events"
 msgstr "Événements des annotations"
 
-#: ../../guides/events-list.rst:426
+#: ../../guides/events-list.rst:432
 msgid "**annotate, <entity type>**"
 msgstr "**annotate, <entity type>**"
 
-#: ../../guides/events-list.rst:425
+#: ../../guides/events-list.rst:431
 msgid ""
 "Called before the annotation has been created. Return false to prevent "
 "annotation of this entity."
@@ -4644,11 +4667,11 @@ msgstr ""
 "Appelé avant que l'annotation soit créée. Retournez false pour éviter "
 "l'annotation de cette entité."
 
-#: ../../guides/events-list.rst:430
+#: ../../guides/events-list.rst:436
 msgid "**create, annotation**"
 msgstr "**create, annotation**"
 
-#: ../../guides/events-list.rst:429
+#: ../../guides/events-list.rst:435
 msgid ""
 "Called after the annotation has been created. Return false to delete the "
 "annotation."
@@ -4656,41 +4679,41 @@ msgstr ""
 "Appelé après que l'annotation a été créée. Retournez false pour supprimer "
 "l'annotation."
 
-#: ../../guides/events-list.rst:433
+#: ../../guides/events-list.rst:439
 msgid "**delete, annotation**"
 msgstr "**delete, annotation**"
 
-#: ../../guides/events-list.rst:433
+#: ../../guides/events-list.rst:439
 msgid "Called before annotation is deleted. Return false to prevent deletion."
 msgstr ""
 "Appelé avant que l'annotation soit supprimée. Retournez false pour éviter la"
 " suppression."
 
-#: ../../guides/events-list.rst:436
+#: ../../guides/events-list.rst:442
 msgid "**disable, annotations**"
 msgstr "**disable, annotations**"
 
-#: ../../guides/events-list.rst:436
+#: ../../guides/events-list.rst:442
 msgid "Called when disabling annotations. Return false to prevent disabling."
 msgstr ""
 "Appelé lors de la désactivation d'annotations. Retournez false pour éviter "
 "la désactivation."
 
-#: ../../guides/events-list.rst:439
+#: ../../guides/events-list.rst:445
 msgid "**enable, annotation**"
 msgstr "**enable, annotation**"
 
-#: ../../guides/events-list.rst:439
+#: ../../guides/events-list.rst:445
 msgid "Called when enabling annotations. Return false to prevent enabling."
 msgstr ""
 "Appelé lors de l'activation d'annotations. Retournez false pour éviter "
 "l'activation."
 
-#: ../../guides/events-list.rst:442
+#: ../../guides/events-list.rst:448
 msgid "**update, annotation**"
 msgstr "**update, annotation**"
 
-#: ../../guides/events-list.rst:442
+#: ../../guides/events-list.rst:448
 msgid ""
 "Called after the annotation has been updated. Return false to *delete the "
 "annotation.*"
@@ -4698,23 +4721,23 @@ msgstr ""
 "Appelé après qu'une annotation a été modifiée. Retournez false pour "
 "*supprimer l'annotation.*"
 
-#: ../../guides/events-list.rst:445
+#: ../../guides/events-list.rst:451
 msgid "River events"
 msgstr "Événements de la rivière"
 
-#: ../../guides/events-list.rst:448
+#: ../../guides/events-list.rst:454
 msgid "**create:after, river**"
 msgstr "**create:after, river**"
 
-#: ../../guides/events-list.rst:448
+#: ../../guides/events-list.rst:454
 msgid "Called after a river item is created."
 msgstr "Appelé après qu'un élément de la rivière a été créé."
 
-#: ../../guides/events-list.rst:451
+#: ../../guides/events-list.rst:457
 msgid "**create:before, river**"
 msgstr "**create:before, river**"
 
-#: ../../guides/events-list.rst:451
+#: ../../guides/events-list.rst:457
 msgid ""
 "Called before the river item is saved to the database. Return ``false`` to "
 "prevent the item from being created."
@@ -4722,19 +4745,19 @@ msgstr ""
 "Appelé avant que l'élément river ne soit enregistré dans la base de données."
 " Renvoie ``false`` pour empêcher la création de l'élément."
 
-#: ../../guides/events-list.rst:454
+#: ../../guides/events-list.rst:460
 msgid "**delete:after, river**"
 msgstr "**delete:after, river**"
 
-#: ../../guides/events-list.rst:454
+#: ../../guides/events-list.rst:460
 msgid "Triggered after a river item was deleted."
 msgstr "Déclenché après qu'un élément de la rivière a été supprimé."
 
-#: ../../guides/events-list.rst:457
+#: ../../guides/events-list.rst:463
 msgid "**delete:before, river**"
 msgstr "**delete:before, river**"
 
-#: ../../guides/events-list.rst:457
+#: ../../guides/events-list.rst:463
 msgid ""
 "Triggered before a river item is deleted. Returning false cancels the "
 "deletion."
@@ -4742,27 +4765,27 @@ msgstr ""
 "Déclenché avant qu'un élément de la rivière soit supprimé. Renvoyer false "
 "annule la suppression."
 
-#: ../../guides/events-list.rst:462
+#: ../../guides/events-list.rst:468
 msgid "Access events"
 msgstr ""
 
-#: ../../guides/events-list.rst:469
+#: ../../guides/events-list.rst:475
 msgid "**access_collection:url, access_collection** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:465
+#: ../../guides/events-list.rst:471
 msgid "Can be used to filter the URL of the access collection."
 msgstr "Peut être utilisé pour filtrer l’URL de la collection d’accès."
 
-#: ../../guides/events-list.rst:469 ../../guides/events-list.rst:476
+#: ../../guides/events-list.rst:475 ../../guides/events-list.rst:482
 msgid "``access_collection`` - `ElggAccessCollection`"
 msgstr "``access_collection`` - `ElggAccessCollection`"
 
-#: ../../guides/events-list.rst:476
+#: ../../guides/events-list.rst:482
 msgid "**access_collection:name, access_collection** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:472
+#: ../../guides/events-list.rst:478
 msgid ""
 "Can be used to filter the display name (readable access level) of the access"
 " collection."
@@ -4770,29 +4793,29 @@ msgstr ""
 "Peut être utilisé pour filtrer le nom affiché (niveau d’accès lisible) de la"
 " collection d’accès."
 
-#: ../../guides/events-list.rst:483
+#: ../../guides/events-list.rst:489
 msgid "**access:collections:read, user** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:479
+#: ../../guides/events-list.rst:485
 msgid ""
 "Filters an array of access IDs that the user ``$params['user_id']`` can see."
 msgstr ""
 "Filtre le tableau des IDs d’accès que l’utilisateur ``$params['user_id']`` "
 "peut voir."
 
-#: ../../guides/events-list.rst:482 ../../guides/events-list.rst:494
+#: ../../guides/events-list.rst:488 ../../guides/events-list.rst:500
 msgid ""
 "The handler needs to either not use parts of the API that use the access "
 "system (triggering the event again) or to ignore the second call. Otherwise,"
 " an infinite loop will be created."
 msgstr ""
 
-#: ../../guides/events-list.rst:495
+#: ../../guides/events-list.rst:501
 msgid "**access:collections:write, user** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:486
+#: ../../guides/events-list.rst:492
 msgid ""
 "Filters an array of access IDs that the user ``$params['user_id']`` can "
 "write to. In ``elgg_get_write_access_array()``, this event filters the "
@@ -4803,11 +4826,11 @@ msgid ""
 " entity value generally means the form is to create a new object."
 msgstr ""
 
-#: ../../guides/events-list.rst:499
+#: ../../guides/events-list.rst:505
 msgid "**access:collections:write:subtypes, user** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:498
+#: ../../guides/events-list.rst:504
 msgid ""
 "Returns an array of access collection subtypes to be used when retrieving "
 "access collections owned by a user as part of the "
@@ -4817,11 +4840,11 @@ msgstr ""
 " récupération des collections d’accès appartenant à un utilisateur, dans le "
 "cadre de la fonction ``elgg_get_write_access_array()``."
 
-#: ../../guides/events-list.rst:503
+#: ../../guides/events-list.rst:509
 msgid "**access:collections:add_user, collection** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:502
+#: ../../guides/events-list.rst:508
 msgid ""
 "Triggered before adding user ``$params['user_id']`` to collection "
 "``$params['collection_id']``. Return false to prevent adding."
@@ -4830,11 +4853,11 @@ msgstr ""
 "collection ``$params['collection_id']``. Retournez false pour éviter "
 "l’ajout."
 
-#: ../../guides/events-list.rst:507
+#: ../../guides/events-list.rst:513
 msgid "**access:collections:remove_user, collection** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:506
+#: ../../guides/events-list.rst:512
 msgid ""
 "Triggered before removing user ``$params['user_id']`` to collection "
 "``$params['collection_id']``. Return false to prevent removal."
@@ -4843,66 +4866,66 @@ msgstr ""
 "collection ``$params['collection_id']``. Renvoyez false pour éviter la "
 "suppression."
 
-#: ../../guides/events-list.rst:510
+#: ../../guides/events-list.rst:516
 msgid "**create, access_collection** |sequence|"
 msgstr ""
 
-#: ../../guides/events-list.rst:510
+#: ../../guides/events-list.rst:516
 msgid "Triggered during the creation of an ``ElggAccessCollection``."
 msgstr ""
 
-#: ../../guides/events-list.rst:513
+#: ../../guides/events-list.rst:519
 msgid "**delete, access_collection** |sequence|"
 msgstr ""
 
-#: ../../guides/events-list.rst:513
+#: ../../guides/events-list.rst:519
 msgid "Triggered during the deletion of an ``ElggAccessCollection``."
 msgstr ""
 
-#: ../../guides/events-list.rst:534
+#: ../../guides/events-list.rst:540
 msgid "**get_sql, access** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:516
+#: ../../guides/events-list.rst:522
 msgid ""
 "Filters SQL clauses restricting/allowing access to entities and annotations."
 msgstr ""
 "Filtre les clauses SQL limitant/autorisant l’accès aux entités et aux "
 "annotations."
 
-#: ../../guides/events-list.rst:519
+#: ../../guides/events-list.rst:525
 msgid ""
 "**The event is triggered regardless if the access is ignored**. The handlers"
 " may need to check if access is ignored and return early, if appended "
 "clauses should only apply to access controlled contexts."
 msgstr ""
 
-#: ../../guides/events-list.rst:523
+#: ../../guides/events-list.rst:529
 msgid "``$return`` value is a nested array of ``ands`` and ``ors``."
 msgstr ""
 "La valeur ``$return`` est un tableau imbriqué de ``ands`` et de ``ors``."
 
-#: ../../guides/events-list.rst:525
+#: ../../guides/events-list.rst:531
 msgid "``$params`` includes:"
 msgstr "``$params`` comprend :"
 
-#: ../../guides/events-list.rst:527
+#: ../../guides/events-list.rst:533
 msgid "``table_alias`` - alias of the main table used in select clause"
 msgstr ""
 "``table_alias`` - alias de la table principale utilisée dans la clause de "
 "sélection"
 
-#: ../../guides/events-list.rst:528
+#: ../../guides/events-list.rst:534
 msgid "``ignore_access`` - whether ignored access is enabled"
 msgstr "``ignore_access`` - selon que les accès sont ignorés ou activés"
 
-#: ../../guides/events-list.rst:529
+#: ../../guides/events-list.rst:535
 msgid "``use_enabled_clause`` - whether disabled entities are shown/hidden"
 msgstr ""
 "``use_enabled_clause`` - selon que les entités désactivées sont "
 "affichées/cachées"
 
-#: ../../guides/events-list.rst:530
+#: ../../guides/events-list.rst:536
 msgid ""
 "``access_column`` - column in the main table containing the access "
 "collection ID value"
@@ -4910,7 +4933,7 @@ msgstr ""
 "``access_column`` - colonne de la table principale contenant l'ID de la "
 "collection d’accès"
 
-#: ../../guides/events-list.rst:531
+#: ../../guides/events-list.rst:537
 msgid ""
 "``owner_guid_column`` - column in the main table referencing the GUID of the"
 " owner"
@@ -4918,7 +4941,7 @@ msgstr ""
 "``owner_guid_column`` - colonne de la table principale faisant référence au "
 "GUID du propriétaire"
 
-#: ../../guides/events-list.rst:532
+#: ../../guides/events-list.rst:538
 msgid ""
 "``guid_column`` - column in the main table referencing the GUID of the "
 "entity"
@@ -4926,7 +4949,7 @@ msgstr ""
 "``guid_column`` - colonne de la table principale faisant référence au GUID "
 "de l’entité"
 
-#: ../../guides/events-list.rst:533
+#: ../../guides/events-list.rst:539
 msgid ""
 "``enabled_column`` - column in the main table referencing the enabled status"
 " of the entity"
@@ -4934,27 +4957,27 @@ msgstr ""
 "``enabled_column`` - colonne de la table principale faisant référence à "
 "l’état activé de l’entité"
 
-#: ../../guides/events-list.rst:534
+#: ../../guides/events-list.rst:540
 msgid "``query_builder`` - an instance of the ``QueryBuilder``"
 msgstr "``query_builder`` - une instance de ``QueryBuilder``"
 
-#: ../../guides/events-list.rst:537
+#: ../../guides/events-list.rst:543
 msgid "**update, access_collection** |sequence|"
 msgstr ""
 
-#: ../../guides/events-list.rst:537
+#: ../../guides/events-list.rst:543
 msgid "Triggered during the update of an ``ElggAccessCollection``."
 msgstr ""
 
-#: ../../guides/events-list.rst:542
+#: ../../guides/events-list.rst:548
 msgid "Permission events"
 msgstr ""
 
-#: ../../guides/events-list.rst:558
+#: ../../guides/events-list.rst:564
 msgid "**container_logic_check, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:545
+#: ../../guides/events-list.rst:551
 msgid ""
 "Triggered by ``ElggEntity:canWriteToContainer()`` before triggering "
 "``permissions_check`` and ``container_permissions_check`` events. Unlike "
@@ -4964,7 +4987,7 @@ msgid ""
 "status logic, e.g. do disallow new replies for closed discussions."
 msgstr ""
 
-#: ../../guides/events-list.rst:550
+#: ../../guides/events-list.rst:556
 msgid ""
 "The handler should return ``false`` to prevent an entity from containing "
 "another entity. The default value passed to the event is ``null``, so the "
@@ -4974,27 +4997,27 @@ msgid ""
 " triggered."
 msgstr ""
 
-#: ../../guides/events-list.rst:556 ../../guides/events-list.rst:570
+#: ../../guides/events-list.rst:562 ../../guides/events-list.rst:576
 msgid "``container`` - An entity that will be used as a container"
 msgstr "``container`` - Une entité qui sera utilisée comme conteneur"
 
-#: ../../guides/events-list.rst:557 ../../guides/events-list.rst:571
+#: ../../guides/events-list.rst:563 ../../guides/events-list.rst:577
 msgid "``user`` - User who will own the entity to be written to container"
 msgstr ""
 "``user`` - L'utilisateur qui sera propriétaire de l’entité à écrire dans le "
 "conteneur"
 
-#: ../../guides/events-list.rst:558 ../../guides/events-list.rst:572
+#: ../../guides/events-list.rst:564 ../../guides/events-list.rst:578
 msgid ""
 "``subtype`` - Subtype of the entity to be written to container (entity type "
 "is assumed from event type)"
 msgstr ""
 
-#: ../../guides/events-list.rst:572
+#: ../../guides/events-list.rst:578
 msgid "**container_permissions_check, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:561
+#: ../../guides/events-list.rst:567
 msgid ""
 "Return boolean for if the user ``$params['user']`` can use the entity "
 "``$params['container']`` as a container for an entity of ``<entity_type>`` "
@@ -5004,7 +5027,7 @@ msgstr ""
 "utiliser l’entité ``$params['container']`` comme conteneur pour une entité "
 "``<entity_type>`` et le sous-type ``$params['subtype']``."
 
-#: ../../guides/events-list.rst:564
+#: ../../guides/events-list.rst:570
 msgid ""
 "In the rare case where an entity is created with neither the "
 "``container_guid`` nor the ``owner_guid`` matching the logged in user, this "
@@ -5012,11 +5035,11 @@ msgid ""
 " be the *owner*, not the entity's real container."
 msgstr ""
 
-#: ../../guides/events-list.rst:575
+#: ../../guides/events-list.rst:581
 msgid "**permissions_check, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:575
+#: ../../guides/events-list.rst:581
 msgid ""
 "Return boolean for if the user ``$params['user']`` can edit the entity "
 "``$params['entity']``."
@@ -5024,11 +5047,11 @@ msgstr ""
 "Renvoie un booléen pour indiquer si l’utilisateur ``$params['user']`` peut "
 "modifier l’entité ``$params['entity']``."
 
-#: ../../guides/events-list.rst:578
+#: ../../guides/events-list.rst:584
 msgid "**permissions_check:delete, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:578
+#: ../../guides/events-list.rst:584
 msgid ""
 "Return boolean for if the user ``$params['user']`` can delete the entity "
 "``$params['entity']``. Defaults to ``$entity->canEdit()``."
@@ -5037,11 +5060,11 @@ msgstr ""
 "supprimer l’entité ``$params['entity']``. Vaut par défaut "
 "``$entity->canEdit()``."
 
-#: ../../guides/events-list.rst:582
+#: ../../guides/events-list.rst:588
 msgid "**permissions_check:delete, river** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:581
+#: ../../guides/events-list.rst:587
 msgid ""
 "Return boolean for if the user ``$params['user']`` can delete the river item"
 " ``$params['item']``. Defaults to ``true`` for admins and ``false`` for "
@@ -5051,11 +5074,11 @@ msgstr ""
 "supprimer l’élément de la rivière ``$params['item']``. Par défaut à ``true``"
 " pour les administrateurs et ``false`` pour les autres utilisateurs."
 
-#: ../../guides/events-list.rst:590
+#: ../../guides/events-list.rst:596
 msgid "**permissions_check:download, file** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:585
+#: ../../guides/events-list.rst:591
 msgid ""
 "Return boolean for if the user ``$params['user']`` can download the file in "
 "``$params['entity']``."
@@ -5063,19 +5086,19 @@ msgstr ""
 "Renvoie un booléen pour indiquer si l’utilisateur ``$params['user']`` peut "
 "télécharger le fichier dans ``$params['entity']``."
 
-#: ../../guides/events-list.rst:589
+#: ../../guides/events-list.rst:595
 msgid "``entity`` - Instance of ``ElggFile``"
 msgstr "``entity`` - Instance de ``ElggFile``"
 
-#: ../../guides/events-list.rst:590
+#: ../../guides/events-list.rst:596
 msgid "``user`` - User who will download the file"
 msgstr "``user`` - Utilisateur qui va télécharger le fichier"
 
-#: ../../guides/events-list.rst:594
+#: ../../guides/events-list.rst:600
 msgid "**permissions_check, widget_layout** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:593
+#: ../../guides/events-list.rst:599
 msgid ""
 "Return boolean for if ``$params['user']`` can edit the widgets in the "
 "context passed as ``$params['context']`` and with a page owner of "
@@ -5085,11 +5108,11 @@ msgstr ""
 "widgets dans le contexte passé par ``$params['context']`` et avec le "
 "propriétaire de page ``$params['page_owner']``."
 
-#: ../../guides/events-list.rst:597
+#: ../../guides/events-list.rst:603
 msgid "**permissions_check:comment, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:597
+#: ../../guides/events-list.rst:603
 msgid ""
 "Return boolean for if the user ``$params['user']`` can comment on the entity"
 " ``$params['entity']``."
@@ -5097,12 +5120,12 @@ msgstr ""
 "Renvoie un booléen pour indiquer si l’utilisateur ``$params['user']`` peut "
 "commenter l’entité ``$params['entity']``."
 
-#: ../../guides/events-list.rst:603
+#: ../../guides/events-list.rst:609
 msgid ""
 "**permissions_check:annotate:<annotation_name>, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:600
+#: ../../guides/events-list.rst:606
 msgid ""
 "Return boolean for if the user ``$params['user']`` can create an annotation "
 "``<annotation_name>`` on the entity ``$params['entity']``. If logged in, the"
@@ -5113,17 +5136,17 @@ msgstr ""
 "``$params['entity']``. Si l'utilisateur est connecté, la valeur par défaut "
 "est true."
 
-#: ../../guides/events-list.rst:603
+#: ../../guides/events-list.rst:609
 msgid ""
 "This is called before the more general ``permissions_check:annotate`` event,"
 " and its return value is that event's initial value."
 msgstr ""
 
-#: ../../guides/events-list.rst:607
+#: ../../guides/events-list.rst:613
 msgid "**permissions_check:annotate, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:606
+#: ../../guides/events-list.rst:612
 msgid ""
 "Return boolean for if the user ``$params['user']`` can create an annotation "
 "``$params['annotation_name']`` on the entity ``$params['entity']``. if "
@@ -5134,11 +5157,11 @@ msgstr ""
 "``$params['entity']``. Si l'utilisateur est connecté, la valeur par défaut "
 "est true."
 
-#: ../../guides/events-list.rst:610
+#: ../../guides/events-list.rst:616
 msgid "**api_key, use** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:610
+#: ../../guides/events-list.rst:616
 msgid ""
 "Triggered in the class ``\\Elgg\\WebServices\\PAM\\API\\APIKey``. Returning "
 "false prevents the key from being authenticated."
@@ -5146,11 +5169,11 @@ msgstr ""
 "Déclenché dans la classe ``\\Elgg\\WebServices\\PAM\\API\\APIKey``. Renvoyer"
 " false empêche l'authentification de la clef."
 
-#: ../../guides/events-list.rst:622
+#: ../../guides/events-list.rst:628
 msgid "**gatekeeper, <entity_type>:<entity_subtype>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:613
+#: ../../guides/events-list.rst:619
 msgid ""
 "Filters the result of ``elgg_entity_gatekeeper()`` to prevent or allow "
 "access to an entity that user would otherwise have or not have access to. A "
@@ -5162,33 +5185,33 @@ msgid ""
 "bypass the access system."
 msgstr ""
 
-#: ../../guides/events-list.rst:619 ../../guides/events-list.rst:640
-#: ../../guides/events-list.rst:654 ../../guides/events-list.rst:674
-#: ../../guides/events-list.rst:729 ../../guides/events-list.rst:737
-#: ../../guides/events-list.rst:790 ../../guides/events-list.rst:800
-#: ../../guides/events-list.rst:823 ../../guides/events-list.rst:842
+#: ../../guides/events-list.rst:625 ../../guides/events-list.rst:646
+#: ../../guides/events-list.rst:660 ../../guides/events-list.rst:680
+#: ../../guides/events-list.rst:735 ../../guides/events-list.rst:743
+#: ../../guides/events-list.rst:796 ../../guides/events-list.rst:806
+#: ../../guides/events-list.rst:829 ../../guides/events-list.rst:848
 msgid "``$params`` array includes:"
 msgstr "le tableau ``$params`` comprend :"
 
-#: ../../guides/events-list.rst:621
+#: ../../guides/events-list.rst:627
 msgid "``entity`` - Entity that is being accessed"
 msgstr "``entity`` - Entité à laquelle on accède"
 
-#: ../../guides/events-list.rst:622
+#: ../../guides/events-list.rst:628
 msgid "``user`` - User accessing the entity (``null`` implies logged in user)"
 msgstr ""
 "``user`` - L’utilisateur qui accède à l’entité (``null`` implique "
 "l’utilisateur connecté)"
 
-#: ../../guides/events-list.rst:625
+#: ../../guides/events-list.rst:631
 msgid "Notifications events"
 msgstr "Événements des notifications"
 
-#: ../../guides/events-list.rst:628
+#: ../../guides/events-list.rst:634
 msgid "**dequeue, notifications**"
 msgstr "**dequeue, notifications**"
 
-#: ../../guides/events-list.rst:628
+#: ../../guides/events-list.rst:634
 msgid ""
 "Called when an ElggData object is removed from the notifications queue to be"
 " processed"
@@ -5196,39 +5219,39 @@ msgstr ""
 "Appelé lorsqu'un objet ElggData est supprimé de la file d'attente des "
 "notifications pour être traité"
 
-#: ../../guides/events-list.rst:631
+#: ../../guides/events-list.rst:637
 msgid "**enqueue, notifications**"
 msgstr "**enqueue, notifications**"
 
-#: ../../guides/events-list.rst:631
+#: ../../guides/events-list.rst:637
 msgid ""
 "Called when an ElggData object is being added to the notifications queue"
 msgstr ""
 "Appelé lorsqu'un objet ElggData est en train d'être ajouté à la file "
 "d'attente des notifications"
 
-#: ../../guides/events-list.rst:633
+#: ../../guides/events-list.rst:639
 msgid ""
 "The following events are listed chronologically in the lifetime of the "
 "notification event. Note that not all events apply to instant notifications."
 msgstr ""
 
-#: ../../guides/events-list.rst:643
+#: ../../guides/events-list.rst:649
 msgid "**enqueue, notification** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:637
+#: ../../guides/events-list.rst:643
 msgid ""
 "Can be used to prevent a notification event from sending **subscription** "
 "notifications. Event handler must return ``false`` to prevent a subscription"
 " notification event from being enqueued."
 msgstr ""
 
-#: ../../guides/events-list.rst:642
+#: ../../guides/events-list.rst:648
 msgid "``object`` - object of the notification event"
 msgstr "``object`` - objet de l’événement de notification"
 
-#: ../../guides/events-list.rst:643
+#: ../../guides/events-list.rst:649
 msgid ""
 "``action`` - action that triggered the notification event. E.g. corresponds "
 "to ``publish`` when ``elgg_trigger_event('publish', 'object', $object)`` is "
@@ -5238,11 +5261,11 @@ msgstr ""
 "exemple, correspond à ``publish`` quand ``elgg_trigger_event('publish', "
 "'object', $object)`` est appelé"
 
-#: ../../guides/events-list.rst:660
+#: ../../guides/events-list.rst:666
 msgid "**get, subscriptions** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:646
+#: ../../guides/events-list.rst:652
 msgid ""
 "Filters subscribers of the notification event. Applies to **subscriptions** "
 "and **instant** notifications. In case of a subscription event, by default, "
@@ -5259,7 +5282,7 @@ msgstr ""
 "abonnés se compose des utilisateurs précédemment passés en tant que "
 "destinataires à ``notify_user()``"
 
-#: ../../guides/events-list.rst:651
+#: ../../guides/events-list.rst:657
 msgid ""
 "**IMPORTANT** Always validate the notification event, object and/or action "
 "types before adding any new recipients to ensure that you do not "
@@ -5270,9 +5293,9 @@ msgid ""
 "wire thread) might end up sending notifications to wrong users."
 msgstr ""
 
-#: ../../guides/events-list.rst:656 ../../guides/events-list.rst:676
-#: ../../guides/events-list.rst:687 ../../guides/events-list.rst:704
-#: ../../guides/events-list.rst:739
+#: ../../guides/events-list.rst:662 ../../guides/events-list.rst:682
+#: ../../guides/events-list.rst:693 ../../guides/events-list.rst:710
+#: ../../guides/events-list.rst:745
 msgid ""
 "``event`` - ``\\Elgg\\Notifications\\NotificationEvent`` instance that "
 "describes the notification event"
@@ -5280,27 +5303,27 @@ msgstr ""
 "``event`` - instance de ``\\Elgg\\Notifications\\NotificationEvent`` qui "
 "décrit l’événement de notification"
 
-#: ../../guides/events-list.rst:657 ../../guides/events-list.rst:694
-#: ../../guides/events-list.rst:711
+#: ../../guides/events-list.rst:663 ../../guides/events-list.rst:700
+#: ../../guides/events-list.rst:717
 msgid "``origin`` - ``subscriptions_service`` or ``instant_notifications``"
 msgstr "``origin`` - ``subscriptions_service`` ou ``instant_notifications``"
 
-#: ../../guides/events-list.rst:658
+#: ../../guides/events-list.rst:664
 msgid ""
 "``methods_override`` - delivery method preference for instant notifications"
 msgstr ""
 "``methods_override`` - préférence de méthode de remise pour les "
 "notifications instantanées"
 
-#: ../../guides/events-list.rst:660
+#: ../../guides/events-list.rst:666
 msgid "Handlers must return an array in the form:"
 msgstr "Les gestionnaires doivent renvoyer un tableau de la forme :"
 
-#: ../../guides/events-list.rst:677
+#: ../../guides/events-list.rst:683
 msgid "**send:before, notifications** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:671
+#: ../../guides/events-list.rst:677
 msgid ""
 "Triggered before the notification event queue is processed. Can be used to "
 "terminate the notification event. Applies to **subscriptions** and "
@@ -5311,17 +5334,17 @@ msgstr ""
 "notification. S’applique aux notifications d'abonnement **subscriptions** et"
 " instantanées **instant**."
 
-#: ../../guides/events-list.rst:677 ../../guides/events-list.rst:740
+#: ../../guides/events-list.rst:683 ../../guides/events-list.rst:746
 msgid ""
 "``subscriptions`` - a list of subscriptions. See ``'get', 'subscriptions'`` "
 "event for details"
 msgstr ""
 
-#: ../../guides/events-list.rst:694
+#: ../../guides/events-list.rst:700
 msgid "**prepare, notification** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:680
+#: ../../guides/events-list.rst:686
 msgid ""
 "A high level event that can be used to alter an instance of "
 "``\\Elgg\\Notifications\\Notification`` before it is sent to the user. "
@@ -5332,13 +5355,13 @@ msgid ""
 "notification object."
 msgstr ""
 
-#: ../../guides/events-list.rst:685
+#: ../../guides/events-list.rst:691
 msgid "``$params`` may vary based on the notification type and may include:"
 msgstr ""
 "``$params`` peut varier en fonction du type de notification et peut "
 "comprendre :"
 
-#: ../../guides/events-list.rst:688 ../../guides/events-list.rst:705
+#: ../../guides/events-list.rst:694 ../../guides/events-list.rst:711
 msgid ""
 "``object`` - object of the notification ``event``. Can be ``null`` for "
 "instant notifications"
@@ -5346,7 +5369,7 @@ msgstr ""
 "``object`` - objet de la notification ``event``. Peut être ``null`` pour les"
 " notifications instantanées"
 
-#: ../../guides/events-list.rst:689 ../../guides/events-list.rst:706
+#: ../../guides/events-list.rst:695 ../../guides/events-list.rst:712
 msgid ""
 "``action`` - action that triggered the notification ``event``. May default "
 "to ``notify_user`` for instant notifications"
@@ -5354,28 +5377,28 @@ msgstr ""
 "``action`` - action qui a déclenché la notification ``event``. Peut avoir "
 "pour valeur par défaut ``notify_user`` pour les notifications instantanées"
 
-#: ../../guides/events-list.rst:690 ../../guides/events-list.rst:707
+#: ../../guides/events-list.rst:696 ../../guides/events-list.rst:713
 msgid "``method`` - delivery method (e.g. ``email``, ``site``)"
 msgstr "``method`` - méthode d'envoi (par ex. ``email``, ``site``)"
 
-#: ../../guides/events-list.rst:691 ../../guides/events-list.rst:708
+#: ../../guides/events-list.rst:697 ../../guides/events-list.rst:714
 msgid "``sender`` - sender"
 msgstr "``sender`` - expéditeur"
 
-#: ../../guides/events-list.rst:692 ../../guides/events-list.rst:709
+#: ../../guides/events-list.rst:698 ../../guides/events-list.rst:715
 msgid "``recipient`` - recipient"
 msgstr "``recipient`` - destinataire"
 
-#: ../../guides/events-list.rst:693 ../../guides/events-list.rst:710
+#: ../../guides/events-list.rst:699 ../../guides/events-list.rst:716
 msgid "``language`` - language of the notification (recipient's language)"
 msgstr "``language`` - langue de la notification (langue du destinataire)"
 
-#: ../../guides/events-list.rst:711
+#: ../../guides/events-list.rst:717
 msgid ""
 "**prepare, notification:<action>:<entity_type>:<entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:697
+#: ../../guides/events-list.rst:703
 msgid ""
 "A granular event that can be used to filter a notification "
 "``\\Elgg\\Notifications\\Notification`` before it is sent to the user. "
@@ -5386,15 +5409,15 @@ msgid ""
 "``notify_user``."
 msgstr ""
 
-#: ../../guides/events-list.rst:702
+#: ../../guides/events-list.rst:708
 msgid "``$params`` include:"
 msgstr "``$params`` comprend :"
 
-#: ../../guides/events-list.rst:722
+#: ../../guides/events-list.rst:728
 msgid "**format, notification:<method>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:714
+#: ../../guides/events-list.rst:720
 msgid ""
 "This event can be used to format a notification before it is passed to the "
 "``'send', 'notification:<method>'`` event. Applies to **subscriptions** and "
@@ -5403,7 +5426,7 @@ msgid ""
 "``$params``. Some of the use cases include:"
 msgstr ""
 
-#: ../../guides/events-list.rst:720
+#: ../../guides/events-list.rst:726
 msgid ""
 "Strip tags from notification title and body for plaintext email "
 "notifications"
@@ -5411,20 +5434,20 @@ msgstr ""
 "Supprime les balises du titre et du corps de la notification pour les "
 "notifications par e-mail en texte brut"
 
-#: ../../guides/events-list.rst:721
+#: ../../guides/events-list.rst:727
 msgid "Inline HTML styles for HTML email notifications"
 msgstr "Styles HTML en ligne pour les e-mails de notification HTML"
 
-#: ../../guides/events-list.rst:722
+#: ../../guides/events-list.rst:728
 msgid "Wrap notification in a template, add signature etc."
 msgstr ""
 "Envelopper la notification dans un modèle, ajouter une signature, etc."
 
-#: ../../guides/events-list.rst:731
+#: ../../guides/events-list.rst:737
 msgid "**send, notification:<method>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:725
+#: ../../guides/events-list.rst:731
 msgid ""
 "Delivers a notification. Applies to **subscriptions** and **instant** "
 "notifications. The handler must return ``true`` or ``false`` indicating the "
@@ -5434,7 +5457,7 @@ msgstr ""
 "**subscriptions** et instantanées **instant**. Le gestionnaire doit "
 "retourner ``true`` ou ``false`` pour indiquer le résultat de la remise."
 
-#: ../../guides/events-list.rst:731
+#: ../../guides/events-list.rst:737
 msgid ""
 "``notification`` - a notification object "
 "``\\Elgg\\Notifications\\Notification``"
@@ -5442,11 +5465,11 @@ msgstr ""
 "``notification`` - un objet de notification "
 "``\\Elgg\\Notifications\\Notification``"
 
-#: ../../guides/events-list.rst:741
+#: ../../guides/events-list.rst:747
 msgid "**send:after, notifications** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:734
+#: ../../guides/events-list.rst:740
 msgid ""
 "Triggered after all notifications in the queue for the notifications event "
 "have been processed. Applies to **subscriptions** and **instant** "
@@ -5456,7 +5479,7 @@ msgstr ""
 "l’événement notifications ont été traitées. S’applique aux notifications "
 "d'abonnement **subscriptions** et instantanées **instant**."
 
-#: ../../guides/events-list.rst:741
+#: ../../guides/events-list.rst:747
 msgid ""
 "``deliveries`` - a matrix of delivery statuses by user for each delivery "
 "method"
@@ -5464,15 +5487,15 @@ msgstr ""
 "``deliveries`` - une matrice des statuts de remise par utilisateur pour "
 "chaque méthode de livraison"
 
-#: ../../guides/events-list.rst:744
+#: ../../guides/events-list.rst:750
 msgid "Emails"
 msgstr "E-mails"
 
-#: ../../guides/events-list.rst:752
+#: ../../guides/events-list.rst:758
 msgid "**prepare, system:email** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:747
+#: ../../guides/events-list.rst:753
 msgid ""
 "Triggered by ``elgg_send_email()``. Applies to all outgoing system and "
 "notification emails. This event allows you to alter an instance of "
@@ -5481,7 +5504,7 @@ msgid ""
 "the email."
 msgstr ""
 
-#: ../../guides/events-list.rst:752
+#: ../../guides/events-list.rst:758
 msgid ""
 "``$params`` are empty. The ``$return`` value is an instance of "
 "``\\Elgg\\Email``."
@@ -5489,11 +5512,11 @@ msgstr ""
 "``$params`` est vide. La valeur de retour ``$return`` est une instance de "
 "``\\Elgg\\Email``."
 
-#: ../../guides/events-list.rst:762
+#: ../../guides/events-list.rst:768
 msgid "**transport, system:email** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:755
+#: ../../guides/events-list.rst:761
 msgid ""
 "Triggered by ``elgg_send_email()``. Applies to all outgoing system and "
 "notification emails. This event allows you to implement a custom email "
@@ -5502,21 +5525,21 @@ msgid ""
 "email was transported."
 msgstr ""
 
-#: ../../guides/events-list.rst:760 ../../guides/events-list.rst:770
-#: ../../guides/events-list.rst:779
+#: ../../guides/events-list.rst:766 ../../guides/events-list.rst:776
+#: ../../guides/events-list.rst:785
 msgid "``$params`` contains:"
 msgstr "``$params`` contient :"
 
-#: ../../guides/events-list.rst:762 ../../guides/events-list.rst:772
-#: ../../guides/events-list.rst:781
+#: ../../guides/events-list.rst:768 ../../guides/events-list.rst:778
+#: ../../guides/events-list.rst:787
 msgid "``email`` - An instance of ``\\Elgg\\Email``"
 msgstr "``email`` - Une instance de ``\\Elgg\\Email``"
 
-#: ../../guides/events-list.rst:772
+#: ../../guides/events-list.rst:778
 msgid "**validate, system:email** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:765
+#: ../../guides/events-list.rst:771
 msgid ""
 "Triggered by ``elgg_send_email()``. Applies to all outgoing system and "
 "notification emails. This event allows you to suppress or whitelist outgoing"
@@ -5524,11 +5547,11 @@ msgid ""
 "return ``false`` to supress the email delivery."
 msgstr ""
 
-#: ../../guides/events-list.rst:781
+#: ../../guides/events-list.rst:787
 msgid "**zend:message, system:email** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:775
+#: ../../guides/events-list.rst:781
 msgid ""
 "Triggered by the default email transport handler (Elgg uses "
 "``laminas/laminas-mail``). Applies to all outgoing system and notification "
@@ -5538,57 +5561,57 @@ msgid ""
 "transport."
 msgstr ""
 
-#: ../../guides/events-list.rst:784
+#: ../../guides/events-list.rst:790
 msgid "File events"
 msgstr "Événements des fichiers"
 
-#: ../../guides/events-list.rst:794
+#: ../../guides/events-list.rst:800
 msgid "**download:url, file** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:788
+#: ../../guides/events-list.rst:794
 msgid "Allows plugins to filter the download URL of the file."
 msgstr "Permet aux plugins de filtrer l’URL de téléchargement du fichier."
 
-#: ../../guides/events-list.rst:788
+#: ../../guides/events-list.rst:794
 msgid "By default, the download URL is generated by the file service."
 msgstr ""
 "Par défaut, l’URL de téléchargement est générée par le service de fichiers."
 
-#: ../../guides/events-list.rst:792 ../../guides/events-list.rst:802
+#: ../../guides/events-list.rst:798 ../../guides/events-list.rst:808
 msgid "``entity`` - instance of ``ElggFile``"
 msgstr "``entity`` - instance de ``ElggFile``"
 
-#: ../../guides/events-list.rst:793 ../../guides/events-list.rst:803
+#: ../../guides/events-list.rst:799 ../../guides/events-list.rst:809
 msgid ""
 "``use_cookie`` - whether or not to use a cookie to secure download link"
 msgstr ""
 
-#: ../../guides/events-list.rst:794 ../../guides/events-list.rst:804
+#: ../../guides/events-list.rst:800 ../../guides/events-list.rst:810
 msgid ""
 "``expires`` - a string representation of when the download link should "
 "expire"
 msgstr ""
 
-#: ../../guides/events-list.rst:804
+#: ../../guides/events-list.rst:810
 msgid "**inline:url, file** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:798
+#: ../../guides/events-list.rst:804
 msgid "Allows plugins to filter the inline URL of the image file."
 msgstr "Permet aux plugins de filtrer l’URL en ligne du fichier image."
 
-#: ../../guides/events-list.rst:798
+#: ../../guides/events-list.rst:804
 msgid "By default, the inline URL is generated by the file service."
 msgstr ""
 "Par défaut, l’URL en ligne - inline - est générée par le service de "
 "fichiers."
 
-#: ../../guides/events-list.rst:808
+#: ../../guides/events-list.rst:814
 msgid "**mime_type, file** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:807
+#: ../../guides/events-list.rst:813
 msgid ""
 "Return the mimetype for the filename ``$params['filename']`` with original "
 "filename ``$params['original_filename']`` and with the default detected "
@@ -5598,11 +5621,11 @@ msgstr ""
 "nom de fichier original ``$params['original_filename']`` et avec le type "
 "MIME détecté par défaut de ``$params['default']``."
 
-#: ../../guides/events-list.rst:814
+#: ../../guides/events-list.rst:820
 msgid "**simple_type, file** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:811
+#: ../../guides/events-list.rst:817
 msgid ""
 "The event provides ``$params['mime_type']`` (e.g. ``application/pdf`` or "
 "``image/jpeg``) and determines an overall category like ``document`` or "
@@ -5611,11 +5634,11 @@ msgid ""
 "serving icons and constructing ``ege*`` filters and menus."
 msgstr ""
 
-#: ../../guides/events-list.rst:826
+#: ../../guides/events-list.rst:832
 msgid "**upload, file** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:817
+#: ../../guides/events-list.rst:823
 msgid ""
 "Allows plugins to implement custom logic for moving an uploaded file into an"
 " instance of ``ElggFile``. The handler must return ``true`` to indicate that"
@@ -5632,19 +5655,19 @@ msgstr ""
 "``ElggFile::acceptUploadedFile`` devrait poursuivre la logique de "
 "téléchargement par défaut."
 
-#: ../../guides/events-list.rst:825
+#: ../../guides/events-list.rst:831
 msgid "``file`` - instance of ``ElggFile`` to write to"
 msgstr "``file`` - instance de ``ElggFile`` dans laquelle écrire"
 
-#: ../../guides/events-list.rst:826
+#: ../../guides/events-list.rst:832
 msgid "``upload`` - instance of Symfony's ``UploadedFile``"
 msgstr "``upload`` - instance de ``UploadedFile`` de Symfony"
 
-#: ../../guides/events-list.rst:831
+#: ../../guides/events-list.rst:837
 msgid "**upload:after, file**"
 msgstr "**upload:after, file**"
 
-#: ../../guides/events-list.rst:829
+#: ../../guides/events-list.rst:835
 msgid ""
 "Called after an uploaded file has been written to filestore. Receives an "
 "instance of ``ElggFile`` the uploaded file was written to. The ``ElggFile`` "
@@ -5655,15 +5678,15 @@ msgstr ""
 "téléchargé a été écrit. Le ``ElggFile`` peut ou non être une entité avec un "
 "GUID."
 
-#: ../../guides/events-list.rst:834
+#: ../../guides/events-list.rst:840
 msgid "Action events"
 msgstr ""
 
-#: ../../guides/events-list.rst:844
+#: ../../guides/events-list.rst:850
 msgid "**action:validate, <action>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:837
+#: ../../guides/events-list.rst:843
 msgid ""
 "Trigger before action script/controller is executed. This event should be "
 "used to validate/alter user input, before proceeding with the action. The "
@@ -5672,15 +5695,15 @@ msgid ""
 "terminate further execution."
 msgstr ""
 
-#: ../../guides/events-list.rst:844
+#: ../../guides/events-list.rst:850
 msgid "``request`` - instance of ``\\Elgg\\Request``"
 msgstr "``request`` - instance de ``\\Elgg\\Request``"
 
-#: ../../guides/events-list.rst:847
+#: ../../guides/events-list.rst:853
 msgid "**action_gatekeeper:permissions:check, all** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:847
+#: ../../guides/events-list.rst:853
 msgid ""
 "Triggered after a CSRF token is validated. Return false to prevent "
 "validation."
@@ -5688,11 +5711,11 @@ msgstr ""
 "Déclenché après la validation d’un jeton CSRF. Renvoyez false pour empêcher "
 "la validation."
 
-#: ../../guides/events-list.rst:851
+#: ../../guides/events-list.rst:857
 msgid "**forward, <reason>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:850
+#: ../../guides/events-list.rst:856
 msgid ""
 "Filter the URL to forward a user to when ``forward($url, $reason)`` is "
 "called. In certain cases, the ``params`` array will contain an instance of "
@@ -5703,11 +5726,11 @@ msgstr ""
 "une instance de ``\\Elgg\\Exceptions\\HttpException`` qui a déclenché "
 "l’erreur."
 
-#: ../../guides/events-list.rst:857
+#: ../../guides/events-list.rst:863
 msgid "**response, action:<action>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:854
+#: ../../guides/events-list.rst:860
 msgid ""
 "Filter an instance of ``\\Elgg\\Http\\ResponseBuilder`` before it is sent to"
 " the client. This event can be used to modify response content, status code,"
@@ -5717,62 +5740,62 @@ msgid ""
 "another action script file."
 msgstr ""
 
-#: ../../guides/events-list.rst:876
+#: ../../guides/events-list.rst:882
 msgid "**ajax_response, \\*** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:865
+#: ../../guides/events-list.rst:871
 msgid ""
 "When the ``elgg/Ajax`` AMD module is used, this event gives access to the "
 "response object (``\\Elgg\\Services\\AjaxResponse``) so it can be "
 "altered/extended. The event type depends on the method call:"
 msgstr ""
 
-#: ../../guides/events-list.rst:870
+#: ../../guides/events-list.rst:876
 msgid "elgg/Ajax method"
 msgstr "méthode elgg/Ajax"
 
-#: ../../guides/events-list.rst:870
+#: ../../guides/events-list.rst:876
 msgid "event type"
 msgstr ""
 
-#: ../../guides/events-list.rst:872
+#: ../../guides/events-list.rst:878
 msgid "action()"
 msgstr "action()"
 
-#: ../../guides/events-list.rst:872
+#: ../../guides/events-list.rst:878
 msgid "action:<action_name>"
 msgstr "action:<action_name>"
 
-#: ../../guides/events-list.rst:873
+#: ../../guides/events-list.rst:879
 msgid "path()"
 msgstr "path()"
 
-#: ../../guides/events-list.rst:873
+#: ../../guides/events-list.rst:879
 msgid "path:<url_path>"
 msgstr "path:<url_path>"
 
-#: ../../guides/events-list.rst:874
+#: ../../guides/events-list.rst:880
 msgid "view()"
 msgstr "view()"
 
-#: ../../guides/events-list.rst:874
+#: ../../guides/events-list.rst:880
 msgid "view:<view_name>"
 msgstr "view:<view_name>"
 
-#: ../../guides/events-list.rst:875
+#: ../../guides/events-list.rst:881
 msgid "form()"
 msgstr "form()"
 
-#: ../../guides/events-list.rst:875
+#: ../../guides/events-list.rst:881
 msgid "form:<action_name>"
 msgstr "form:<action_name>"
 
-#: ../../guides/events-list.rst:879
+#: ../../guides/events-list.rst:885
 msgid "**ajax_response, action:<action_name>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:879
+#: ../../guides/events-list.rst:885
 msgid ""
 "Filters ``action/`` responses before they're sent back to the ``elgg/Ajax`` "
 "module."
@@ -5780,22 +5803,22 @@ msgstr ""
 "Filtre les réponses ``action/`` avant qu’elles soient renvoyées au module "
 "``elgg/Ajax``."
 
-#: ../../guides/events-list.rst:883
+#: ../../guides/events-list.rst:889
 msgid "**ajax_response, path:<path>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:882
+#: ../../guides/events-list.rst:888
 msgid ""
 "Filters ajax responses before they're sent back to the ``elgg/Ajax`` module."
 " This event type will only be used if the path did not start with "
 "\"action/\" or \"ajax/\"."
 msgstr ""
 
-#: ../../guides/events-list.rst:886
+#: ../../guides/events-list.rst:892
 msgid "**ajax_response, view:<view>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:886
+#: ../../guides/events-list.rst:892
 msgid ""
 "Filters ``ajax/view/`` responses before they're sent back to the "
 "``elgg/Ajax`` module."
@@ -5803,11 +5826,11 @@ msgstr ""
 "Filtre les réponses ``ajax/view/`` avant qu’elles soient renvoyées au module"
 " ``elgg/Ajax``."
 
-#: ../../guides/events-list.rst:889
+#: ../../guides/events-list.rst:895
 msgid "**ajax_response, form:<action_name>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:889
+#: ../../guides/events-list.rst:895
 msgid ""
 "Filters ``ajax/form/`` responses before they're sent back to the "
 "``elgg/Ajax`` module."
@@ -5815,15 +5838,15 @@ msgstr ""
 "Filtre les réponses ``ajax/form/`` avant qu’elles soient renvoyées au module"
 " ``elgg/Ajax``."
 
-#: ../../guides/events-list.rst:892 ../../guides/routing.rst:2
+#: ../../guides/events-list.rst:898 ../../guides/routing.rst:2
 msgid "Routing"
 msgstr "Routage"
 
-#: ../../guides/events-list.rst:899
+#: ../../guides/events-list.rst:905
 msgid "**response, path:<path>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:895
+#: ../../guides/events-list.rst:901
 msgid ""
 "Filter an instance of ``\\Elgg\\Http\\ResponseBuilder`` before it is sent to"
 " the client. This event type will only be used if the path did not start "
@@ -5834,11 +5857,11 @@ msgid ""
 "response, or switch to using the ``route:rewrite`` event."
 msgstr ""
 
-#: ../../guides/events-list.rst:904
+#: ../../guides/events-list.rst:910
 msgid "**route:config, <route_name>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:902
+#: ../../guides/events-list.rst:908
 msgid ""
 "Allows altering the route configuration before it is registered. This event "
 "can be used to alter the path, default values, requirements, as well as to "
@@ -5847,11 +5870,11 @@ msgid ""
 "registered during ``plugins_boot`` event."
 msgstr ""
 
-#: ../../guides/events-list.rst:908
+#: ../../guides/events-list.rst:914
 msgid "**route:rewrite, <identifier>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:907
+#: ../../guides/events-list.rst:913
 msgid ""
 "Allows altering the site-relative URL path for an incoming request. See "
 ":doc:`routing` for details. Please note that the handler for this event "
@@ -5859,51 +5882,51 @@ msgid ""
 "rewrites take place after ``plugins_boot`` event has completed."
 msgstr ""
 
-#: ../../guides/events-list.rst:913
+#: ../../guides/events-list.rst:919
 #: ../../guides/plugins/plugin-skeleton.rst:141 ../../guides/views.rst:2
 msgid "Views"
 msgstr "Vues"
 
-#: ../../guides/events-list.rst:916
+#: ../../guides/events-list.rst:922
 msgid "**attributes, htmlawed** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:916
+#: ../../guides/events-list.rst:922
 msgid "Allows changes to individual attributes."
 msgstr ""
 
-#: ../../guides/events-list.rst:919
+#: ../../guides/events-list.rst:925
 msgid "**allowed_styles, htmlawed** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:919
+#: ../../guides/events-list.rst:925
 msgid "Configure allowed styles for HTMLawed."
 msgstr ""
 
-#: ../../guides/events-list.rst:922
+#: ../../guides/events-list.rst:928
 msgid "**config, htmlawed** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:922
+#: ../../guides/events-list.rst:928
 msgid "Filter the HTMLawed ``$config`` array."
 msgstr "Filtre le tableau HTMLawed ``$config``."
 
-#: ../../guides/events-list.rst:926
+#: ../../guides/events-list.rst:932
 msgid "**form:prepare:fields, <form_name>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:925
+#: ../../guides/events-list.rst:931
 msgid ""
 "Prepare field values for use in the form. Eg. when editing a blog, fill this"
 " with the current values of the blog. Sticky form values will automatically "
 "be added to the field values (when available)."
 msgstr ""
 
-#: ../../guides/events-list.rst:934
+#: ../../guides/events-list.rst:940
 msgid "**head, page** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:929
+#: ../../guides/events-list.rst:935
 msgid ""
 "In ``elgg_view_page()``, filters ``$vars['head']`` Return value contains an "
 "array with ``title``, ``metas`` and ``links`` keys, where ``metas`` is an "
@@ -5920,11 +5943,11 @@ msgstr ""
 "contient un ensemble de paires de clés/valeurs qui sont formatées en "
 "attributs de balise html, par ex."
 
-#: ../../guides/events-list.rst:968
+#: ../../guides/events-list.rst:974
 msgid "**layout, page** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:963
+#: ../../guides/events-list.rst:969
 msgid ""
 "In ``elgg_view_layout()``, filters the layout name. ``$params`` array "
 "includes:"
@@ -5932,23 +5955,23 @@ msgstr ""
 "Dans ``elgg_view_layout()``, filtre le nom de la disposition. Le tableau "
 "``$params`` comprend :"
 
-#: ../../guides/events-list.rst:966
+#: ../../guides/events-list.rst:972
 msgid "``identifier`` - ID of the page being rendered"
 msgstr "``identifier`` - identifiant de la page en cours de rendu"
 
-#: ../../guides/events-list.rst:967
+#: ../../guides/events-list.rst:973
 msgid "``segments`` - URL segments of the page being rendered"
 msgstr "``segments`` - Segments d’URL de la page en cours de rendu"
 
-#: ../../guides/events-list.rst:968
+#: ../../guides/events-list.rst:974
 msgid "other ``$vars`` received by ``elgg_view_layout()``"
 msgstr "autres ``$vars`` reçues par ``elgg_view_layout()``"
 
-#: ../../guides/events-list.rst:973
+#: ../../guides/events-list.rst:979
 msgid "**response, form:<form_name>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:971
+#: ../../guides/events-list.rst:977
 msgid ""
 "Filter an instance of ``\\Elgg\\Http\\ResponseBuilder`` before it is sent to"
 " the client. Applies to request to ``/ajax/form/<form_name>``. This event "
@@ -5956,11 +5979,11 @@ msgid ""
 "additional response headers."
 msgstr ""
 
-#: ../../guides/events-list.rst:978
+#: ../../guides/events-list.rst:984
 msgid "**response, view:<view_name>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:976
+#: ../../guides/events-list.rst:982
 msgid ""
 "Filter an instance of ``\\Elgg\\Http\\ResponseBuilder`` before it is sent to"
 " the client. Applies to request to ``/ajax/view/<view_name>``. This event "
@@ -5968,29 +5991,29 @@ msgid ""
 "additional response headers."
 msgstr ""
 
-#: ../../guides/events-list.rst:981
+#: ../../guides/events-list.rst:987
 msgid "**shell, page** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:981
+#: ../../guides/events-list.rst:987
 msgid "In ``elgg_view_page()``, filters the page shell name"
 msgstr ""
 "Dans ``elgg_view_page()``, filtre le nom de la coquille - page shell - de la"
 " page"
 
-#: ../../guides/events-list.rst:984
+#: ../../guides/events-list.rst:990
 msgid "**spec, htmlawed** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:984
+#: ../../guides/events-list.rst:990
 msgid "Filter the HTMLawed ``$spec`` string (default empty)."
 msgstr "Filtre la chaîne HTMLawed ``$spec`` (vide par défaut)."
 
-#: ../../guides/events-list.rst:990
+#: ../../guides/events-list.rst:996
 msgid "**table_columns:call, <name>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:987
+#: ../../guides/events-list.rst:993
 msgid ""
 "When the method ``elgg()->table_columns->$name()`` is called, this event is "
 "called to allow plugins to override or provide an implementation. Handlers "
@@ -5999,11 +6022,11 @@ msgid ""
 "column directly."
 msgstr ""
 
-#: ../../guides/events-list.rst:994
+#: ../../guides/events-list.rst:1000
 msgid "**vars:compiler, css** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:993
+#: ../../guides/events-list.rst:999
 msgid ""
 "Allows plugins to alter CSS variables passed to CssCrush during compilation."
 " See `CSS variables <_guides/theming#css-vars>`."
@@ -6012,31 +6035,31 @@ msgstr ""
 "pendant la compilation. Voyez les `variables CSS <_guides/theming#css-"
 "vars>`."
 
-#: ../../guides/events-list.rst:997
+#: ../../guides/events-list.rst:1003
 msgid "**view, <view_name>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:997
+#: ../../guides/events-list.rst:1003
 msgid "Filters the returned content of the view"
 msgstr "Filtre le contenu renvoyé par la vue"
 
-#: ../../guides/events-list.rst:1000
+#: ../../guides/events-list.rst:1006
 msgid "**view_vars, <view_name>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1000
+#: ../../guides/events-list.rst:1006
 msgid "Filters the ``$vars`` array passed to the view"
 msgstr "Filtre le tableau ``$vars`` passé à la vue"
 
-#: ../../guides/events-list.rst:1005 ../../guides/search.rst:2
+#: ../../guides/events-list.rst:1011 ../../guides/search.rst:2
 msgid "Search"
 msgstr "Recherche"
 
-#: ../../guides/events-list.rst:1010
+#: ../../guides/events-list.rst:1016
 msgid "**search:config, search_types** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1008
+#: ../../guides/events-list.rst:1014
 msgid ""
 "Implemented in the **search** plugin. Filters an array of custom search "
 "types. This allows plugins to add custom search types (e.g. tag or location "
@@ -6050,11 +6073,11 @@ msgstr ""
 "permettra d’étendre l’interface utilisateur du plugin de recherche avec des "
 "liens et des listes appropriés."
 
-#: ../../guides/events-list.rst:1015
+#: ../../guides/events-list.rst:1021
 msgid "**search:config, type_subtype_pairs** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1013
+#: ../../guides/events-list.rst:1019
 msgid ""
 "Implemented in the **search** plugin. Filters entity type/subtype pairs "
 "before entity search is performed. Allows plugins to remove certain entity "
@@ -6067,11 +6090,11 @@ msgstr ""
 " regrouper plusieurs sous-types, ou de réorganiser des sections de "
 "recherche."
 
-#: ../../guides/events-list.rst:1020
+#: ../../guides/events-list.rst:1026
 msgid "**search:fields, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1018
+#: ../../guides/events-list.rst:1024
 msgid ""
 "Triggered by ``elgg_search()``. Filters search fields before search clauses "
 "are prepared. ``$return`` value contains an array of names for each entity "
@@ -6086,23 +6109,23 @@ msgstr ""
 "tableau de paramètres de recherche transmis et filtrés par "
 "``elgg_search()``."
 
-#: ../../guides/events-list.rst:1031
+#: ../../guides/events-list.rst:1037
 msgid "**search:fields, <entity_type>:<entity_subtype>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1031 ../../guides/events-list.rst:1034
+#: ../../guides/events-list.rst:1037 ../../guides/events-list.rst:1040
 msgid "See **search:fields, <entity_type>**"
 msgstr "Voyez **search:fields, <entity_type>**"
 
-#: ../../guides/events-list.rst:1034
+#: ../../guides/events-list.rst:1040
 msgid "**search:fields, <search_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1039
+#: ../../guides/events-list.rst:1045
 msgid "**search:format, entity** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1037
+#: ../../guides/events-list.rst:1043
 msgid ""
 "Implemented in the **search** plugin. Allows plugins to populate entity's "
 "volatile data before it's passed to search view. This is used for "
@@ -6115,11 +6138,11 @@ msgstr ""
 "correspondances de la recherche, extraire les sous-chaînes pertinentes dans "
 "les champs de texte long, etc."
 
-#: ../../guides/events-list.rst:1042
+#: ../../guides/events-list.rst:1048
 msgid "**search:options, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1042
+#: ../../guides/events-list.rst:1048
 msgid ""
 "Triggered by ``elgg_search()``. Prepares search clauses (options) to be "
 "passed to ``elgg_get_entities()``."
@@ -6127,23 +6150,23 @@ msgstr ""
 "Déclenché par ``elgg_search()``. Prépare les clauses de recherche (options) "
 "à transmettre à ``elgg_get_entities()``."
 
-#: ../../guides/events-list.rst:1045
+#: ../../guides/events-list.rst:1051
 msgid "**search:options, <entity_type>:<entity_subtype>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1045 ../../guides/events-list.rst:1048
+#: ../../guides/events-list.rst:1051 ../../guides/events-list.rst:1054
 msgid "See **search:options, <entity_type>**"
 msgstr "Voyez **search:options, <entity_type>**"
 
-#: ../../guides/events-list.rst:1048
+#: ../../guides/events-list.rst:1054
 msgid "**search:options, <search_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1052
+#: ../../guides/events-list.rst:1058
 msgid "**search:params, <search_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1051
+#: ../../guides/events-list.rst:1057
 msgid ""
 "Triggered by ``elgg_search()``. Filters search parameters (query, sorting, "
 "search fields etc) before search clauses are prepared for a given search "
@@ -6154,11 +6177,11 @@ msgstr ""
 " ne soient préparées pour un type de recherche donné. Le noyau de Elgg ne "
 "prend en charge que le type de recherche ``entities``."
 
-#: ../../guides/events-list.rst:1056
+#: ../../guides/events-list.rst:1062
 msgid "**search:results, <search_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1055
+#: ../../guides/events-list.rst:1061
 msgid ""
 "Triggered by ``elgg_search()``. Receives normalized options suitable for "
 "``elgg_get_entities()`` call and must return an array of entities matching "
@@ -6166,15 +6189,15 @@ msgid ""
 "party indexing services, such as Solr and Elasticsearch."
 msgstr ""
 
-#: ../../guides/events-list.rst:1061
+#: ../../guides/events-list.rst:1067
 msgid "Other"
 msgstr "Autres"
 
-#: ../../guides/events-list.rst:1065
+#: ../../guides/events-list.rst:1071
 msgid "**config, comments_per_page** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1064
+#: ../../guides/events-list.rst:1070
 msgid ""
 "Filters the number of comments displayed per page. Default is 25. "
 "``$params['entity']`` will hold the containing entity or null if not "
@@ -6185,11 +6208,11 @@ msgstr ""
 "n'est pas fournie. Utilisez ``elgg_comments_per_page()`` pour obtenir la "
 "valeur."
 
-#: ../../guides/events-list.rst:1069
+#: ../../guides/events-list.rst:1075
 msgid "**config, comments_latest_first** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1068
+#: ../../guides/events-list.rst:1074
 msgid ""
 "Filters the order of comments. Default is ``true`` for latest first. "
 "``$params['entity']`` will hold the containing entity or null if not "
@@ -6199,11 +6222,11 @@ msgstr ""
 "récent en premier. ``$params['entity']`` indique l’entité contenante, ou "
 "null si elle n’est pas fournie."
 
-#: ../../guides/events-list.rst:1076
+#: ../../guides/events-list.rst:1082
 msgid "**default, access** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1072
+#: ../../guides/events-list.rst:1078
 msgid ""
 "In ``elgg_get_default_access()``, this event filters the return value, so it"
 " can be used to alter the default value in the input/access view. For core "
@@ -6213,30 +6236,30 @@ msgid ""
 " the form is to create a new object."
 msgstr ""
 
-#: ../../guides/events-list.rst:1080
+#: ../../guides/events-list.rst:1086
 msgid "**classes, icon** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1079
+#: ../../guides/events-list.rst:1085
 msgid ""
 "Can be used to filter CSS classes applied to icon glyphs. By default, Elgg "
 "uses FontAwesome. Plugins can use this event to switch to a different font "
 "family and remap icon classes."
 msgstr ""
 
-#: ../../guides/events-list.rst:1083
+#: ../../guides/events-list.rst:1089
 msgid "**config, amd** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1083
+#: ../../guides/events-list.rst:1089
 msgid "Filter the AMD config for the requirejs library."
 msgstr "Filtre la configuration AMD pour la bibliothèque requirejs."
 
-#: ../../guides/events-list.rst:1087
+#: ../../guides/events-list.rst:1093
 msgid "**entity:icon:sizes, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1086
+#: ../../guides/events-list.rst:1092
 msgid ""
 "Triggered by ``elgg_get_icon_sizes()`` and sets entity type/subtype specific"
 " icon sizes. ``entity_subtype`` will be passed with the ``$params`` array to"
@@ -6246,11 +6269,11 @@ msgstr ""
 "type de tailles d’icônes spécifiques. ``entity_subtype`` sera transmis dans "
 "le tableau ``$params`` à la fonction de rappel."
 
-#: ../../guides/events-list.rst:1104
+#: ../../guides/events-list.rst:1110
 msgid "**entity:<icon_type>:sizes, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1090
+#: ../../guides/events-list.rst:1096
 msgid ""
 "Allows filtering sizes for custom icon types, see ``entity:icon:sizes, "
 "<entity_type>``."
@@ -6258,26 +6281,26 @@ msgstr ""
 "Permet de filtrer les tailles pour les types d’icônes personnalisés, voir "
 "``entity:icon:sizes, <entity_type>``."
 
-#: ../../guides/events-list.rst:1092
+#: ../../guides/events-list.rst:1098
 msgid ""
 "The event must return an associative array where keys are the names of the "
 "icon sizes (e.g. \"large\"), and the values are arrays with the following "
 "keys:"
 msgstr ""
 
-#: ../../guides/events-list.rst:1095
+#: ../../guides/events-list.rst:1101
 msgid "``w`` - Width of the image in pixels"
 msgstr "``w`` - Largeur de l’image en pixels"
 
-#: ../../guides/events-list.rst:1096
+#: ../../guides/events-list.rst:1102
 msgid "``h`` - Height of the image in pixels"
 msgstr "``h`` - Hauteur de l’image en pixels"
 
-#: ../../guides/events-list.rst:1097
+#: ../../guides/events-list.rst:1103
 msgid "``square`` - Should the aspect ratio be a square (true/false)"
 msgstr "``square`` - Le ratio devrait-il être carré (true/false)"
 
-#: ../../guides/events-list.rst:1098
+#: ../../guides/events-list.rst:1104
 msgid ""
 "``upscale`` - Should the image be upscaled in case it is smaller than the "
 "given width and height (true/false)"
@@ -6285,7 +6308,7 @@ msgstr ""
 "``upscale`` - L'image doit-elle être agrandie si elle est plus petite que la"
 " largeur et la hauteur indiquées (true/false)"
 
-#: ../../guides/events-list.rst:1099
+#: ../../guides/events-list.rst:1105
 msgid ""
 "``crop`` - Is cropping allowed on this image size (true/false, default: "
 "true)"
@@ -6293,7 +6316,7 @@ msgstr ""
 "``crop`` - Est-ce que le recadrage est autorisé sur cette taille d’image "
 "(true/false, par défaut : true)"
 
-#: ../../guides/events-list.rst:1101
+#: ../../guides/events-list.rst:1107
 msgid ""
 "If the configuration array for an image size is empty, the image will be "
 "saved as an exact copy of the source without resizing or cropping."
@@ -6302,17 +6325,17 @@ msgstr ""
 "enregistrée en tant que copie exacte de la source sans redimensionnement ni "
 "recadrage."
 
-#: ../../guides/events-list.rst:1104 ../../guides/i18n.rst:51
+#: ../../guides/events-list.rst:1110 ../../guides/i18n.rst:51
 #: ../../guides/notifications.rst:24 ../../guides/notifications.rst:309
 #: ../../guides/notifications.rst:333 ../../guides/notifications.rst:381
 msgid "Example:"
 msgstr "Exemple :"
 
-#: ../../guides/events-list.rst:1136
+#: ../../guides/events-list.rst:1142
 msgid "**entity:icon:url, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1124
+#: ../../guides/events-list.rst:1130
 msgid ""
 "Triggered when entity icon URL is requested, see :ref:`entity icons "
 "<guides/database#entity-icons>`. Callback should return URL for the icon of "
@@ -6325,19 +6348,19 @@ msgstr ""
 "l’entité ``$params['entity']``. Les paramètres suivants sont disponibles via"
 " le tableau ``$params`` :"
 
-#: ../../guides/events-list.rst:1128
+#: ../../guides/events-list.rst:1134
 msgid "entity"
 msgstr "entity"
 
-#: ../../guides/events-list.rst:1129
+#: ../../guides/events-list.rst:1135
 msgid "Entity for which icon url is requested."
 msgstr "Entité pour laquelle l’url de l’icône est demandée."
 
-#: ../../guides/events-list.rst:1130
+#: ../../guides/events-list.rst:1136
 msgid "viewtype"
 msgstr "viewtype"
 
-#: ../../guides/events-list.rst:1131
+#: ../../guides/events-list.rst:1137
 msgid ""
 "The type of :ref:`view <guides/views#listing-entities>` e.g. ``'default'`` "
 "or ``'json'``."
@@ -6345,11 +6368,11 @@ msgstr ""
 "Le type de :ref:`vue <guides/views#listing-entities>`, par exemple "
 "``'default'`` ou ``'json'``."
 
-#: ../../guides/events-list.rst:1133
+#: ../../guides/events-list.rst:1139
 msgid "size"
 msgstr "size"
 
-#: ../../guides/events-list.rst:1133
+#: ../../guides/events-list.rst:1139
 msgid ""
 "Size requested, see :ref:`entity icons <guides/database#entity-icons>` for "
 "possible values."
@@ -6357,7 +6380,7 @@ msgstr ""
 "Dimension demandée, voir les :ref:`icônes des entités "
 "<guides/database#entity-icons>` pour les valeurs possibles."
 
-#: ../../guides/events-list.rst:1135
+#: ../../guides/events-list.rst:1141
 msgid ""
 "Example on how one could default to a Gravatar icon for users that have not "
 "yet uploaded an avatar:"
@@ -6365,11 +6388,11 @@ msgstr ""
 "Exemple sur comment mettre en place une icône par défaut Gravatar pour les "
 "utilisateurs qui n’ont pas encore téléchargé un avatar :"
 
-#: ../../guides/events-list.rst:1176
+#: ../../guides/events-list.rst:1182
 msgid "**entity:<icon_type>:url, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1176
+#: ../../guides/events-list.rst:1182
 msgid ""
 "Allows filtering URLs for custom icon types, see ``entity:icon:url, "
 "<entity_type>``"
@@ -6377,11 +6400,11 @@ msgstr ""
 "Permet de filtrer les URLs pour les types d’icônes personnalisés, voir "
 "``entity:icon:url, <entity_type>``"
 
-#: ../../guides/events-list.rst:1181
+#: ../../guides/events-list.rst:1187
 msgid "**entity:icon:file, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1179
+#: ../../guides/events-list.rst:1185
 msgid ""
 "Triggered by ``ElggEntity::getIcon()`` and allows plugins to provide an "
 "alternative ``ElggIcon`` object that points to a custom location of the icon"
@@ -6393,11 +6416,11 @@ msgstr ""
 "de l’icône dans le répertoire de fichiers. Le gestionnaire doit renvoyer une"
 " instance de ``ElggIcon`` ou une exception sera lancée."
 
-#: ../../guides/events-list.rst:1184
+#: ../../guides/events-list.rst:1190
 msgid "**entity:<icon_type>:file, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1184
+#: ../../guides/events-list.rst:1190
 msgid ""
 "Allows filtering icon file object for custom icon types, see "
 "``entity:icon:file, <entity_type>``"
@@ -6405,11 +6428,11 @@ msgstr ""
 "Permet de filtrer l’objet du fichier d’icône pour les types d’icônes "
 "personnalisés ; voyez ``entity:icon:file, <entity_type>``"
 
-#: ../../guides/events-list.rst:1196
+#: ../../guides/events-list.rst:1202
 msgid "**entity:<icon_type>:prepare, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1187
+#: ../../guides/events-list.rst:1193
 msgid ""
 "Triggered by ``ElggEntity::saveIcon*()`` methods and can be used to prepare "
 "an image from uploaded/linked file. This event can be used to e.g. rotate "
@@ -6420,26 +6443,26 @@ msgid ""
 "points to a temporary copy of the uploaded/linked file."
 msgstr ""
 
-#: ../../guides/events-list.rst:1193 ../../guides/events-list.rst:1289
-#: ../../guides/events-list.rst:1322
+#: ../../guides/events-list.rst:1199 ../../guides/events-list.rst:1295
+#: ../../guides/events-list.rst:1328
 msgid "The ``$params`` array contains:"
 msgstr "Le tableau ``$params`` contient :"
 
-#: ../../guides/events-list.rst:1195 ../../guides/events-list.rst:1203
-#: ../../guides/events-list.rst:1213 ../../guides/events-list.rst:1221
+#: ../../guides/events-list.rst:1201 ../../guides/events-list.rst:1209
+#: ../../guides/events-list.rst:1219 ../../guides/events-list.rst:1227
 msgid "``entity`` - entity that owns the icons"
 msgstr "``entity`` - entité propriétaire des icônes"
 
-#: ../../guides/events-list.rst:1196
+#: ../../guides/events-list.rst:1202
 msgid ""
 "``file`` - original input file before it has been modified by other events"
 msgstr ""
 
-#: ../../guides/events-list.rst:1205
+#: ../../guides/events-list.rst:1211
 msgid "**entity:<icon_type>:save, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1199
+#: ../../guides/events-list.rst:1205
 msgid ""
 "Triggered by ``ElggEntity::saveIcon*()`` methods and can be used to apply "
 "custom image manipulation logic to resizing/cropping icons. The handler must"
@@ -6452,7 +6475,7 @@ msgstr ""
 "``true`` pour empêcher les API du noyau de redimensionner/rogner les icônes."
 " Le tableau ``$params`` contient :"
 
-#: ../../guides/events-list.rst:1204
+#: ../../guides/events-list.rst:1210
 msgid ""
 "``file`` - ``ElggFile`` object that points to the image file to be used as "
 "source for icons"
@@ -6460,15 +6483,15 @@ msgstr ""
 "``file`` - objet ``ElggFile`` qui pointe vers le fichier image à utiliser "
 "comme source pour les icônes"
 
-#: ../../guides/events-list.rst:1205 ../../guides/events-list.rst:1214
+#: ../../guides/events-list.rst:1211 ../../guides/events-list.rst:1220
 msgid "``x1``, ``y1``, ``x2``, ``y2`` - cropping coordinates"
 msgstr "``x1``, ``y1``, ``x2``, ``y2`` - coordonnées de découpe"
 
-#: ../../guides/events-list.rst:1214
+#: ../../guides/events-list.rst:1220
 msgid "**entity:<icon_type>:saved, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1208
+#: ../../guides/events-list.rst:1214
 msgid ""
 "Triggered by ``ElggEntity::saveIcon*()`` methods once icons have been "
 "created. This event can be used by plugins to create river items, update "
@@ -6477,11 +6500,11 @@ msgid ""
 "contains:"
 msgstr ""
 
-#: ../../guides/events-list.rst:1221
+#: ../../guides/events-list.rst:1227
 msgid "**entity:<icon_type>:delete, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1217
+#: ../../guides/events-list.rst:1223
 msgid ""
 "Triggered by ``ElggEntity::deleteIcon()`` method and can be used for clean "
 "up operations. This event is triggered before the icons are deleted. The "
@@ -6489,11 +6512,11 @@ msgid ""
 "``$params`` array contains:"
 msgstr ""
 
-#: ../../guides/events-list.rst:1226
+#: ../../guides/events-list.rst:1232
 msgid "**entity:url, <entity_type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1224
+#: ../../guides/events-list.rst:1230
 msgid ""
 "Return the URL for the entity ``$params['entity']``. Note: Generally it is "
 "better to override the ``getUrl()`` method of ElggEntity. This event should "
@@ -6501,19 +6524,19 @@ msgid ""
 "bundled plugin without overriding many views)."
 msgstr ""
 
-#: ../../guides/events-list.rst:1229
+#: ../../guides/events-list.rst:1235
 msgid "**extender:url, <annotation|metadata>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1229
+#: ../../guides/events-list.rst:1235
 msgid "Return the URL for the annotation or metadata ``$params['extender']``."
 msgstr ""
 
-#: ../../guides/events-list.rst:1233
+#: ../../guides/events-list.rst:1239
 msgid "**fields, <entity_type>:<entity_subtype>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1232
+#: ../../guides/events-list.rst:1238
 msgid ""
 "Return an array of fields usable for ``elgg_view_field()``. The result "
 "should be returned as an array of fields. It is required to provide ``name``"
@@ -6523,11 +6546,11 @@ msgstr ""
 "résultat doit être renvoyé sous la forme d'un tableau de champs. Il est "
 "nécessaire de fournir ``name`` et ``#type`` pour chaque champ."
 
-#: ../../guides/events-list.rst:1248
+#: ../../guides/events-list.rst:1254
 msgid "**get_list, default_widgets** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1247
+#: ../../guides/events-list.rst:1253
 msgid ""
 "Filters a list of default widgets to add for newly registered users. The "
 "list is an array of arrays in the format:"
@@ -6536,11 +6559,11 @@ msgstr ""
 "nouvellement enregistrés. La liste est un tableau de tableaux dans le format"
 " :"
 
-#: ../../guides/events-list.rst:1266
+#: ../../guides/events-list.rst:1272
 msgid "**handlers, widgets** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1265
+#: ../../guides/events-list.rst:1271
 msgid ""
 "Triggered when a list of available widgets is needed. Plugins can "
 "conditionally add or remove widgets from this list or modify attributes of "
@@ -6551,11 +6574,11 @@ msgstr ""
 "conditionnelle, ou modifier des attributs de widgets existants comme "
 "``context`` ou ``multiple``."
 
-#: ../../guides/events-list.rst:1270
+#: ../../guides/events-list.rst:1276
 msgid "**maintenance:allow, url** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1270
+#: ../../guides/events-list.rst:1276
 msgid ""
 "Return boolean if the URL ``$params['current_url']`` and the path "
 "``$params['current_path']``"
@@ -6563,21 +6586,21 @@ msgstr ""
 "Retourne un booléen si l'URL ``$params['current_url']`` et le chemin "
 "``$params['current_path']``"
 
-#: ../../guides/events-list.rst:1270
+#: ../../guides/events-list.rst:1276
 msgid "is allowed during maintenance mode."
 msgstr "sont autorisés pendant le mode de maintenance."
 
-#: ../../guides/events-list.rst:1281
+#: ../../guides/events-list.rst:1287
 msgid "**plugin_setting, <entity type>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1273
+#: ../../guides/events-list.rst:1279
 msgid "Can be used to change the value of the setting being saved"
 msgstr ""
 "Peut être utilisé pour modifier la valeur du paramètre en cours "
 "d'enregistrement"
 
-#: ../../guides/events-list.rst:1275
+#: ../../guides/events-list.rst:1281
 msgid ""
 "Params contains: - ``entity`` - The ``ElggEntity`` where the plugin setting "
 "is being saved - ``plugin_id`` - The ID of the plugin for which the setting "
@@ -6589,7 +6612,7 @@ msgstr ""
 " enregistré - ``name`` - Le nom du paramètre en cours d'enregistrement - "
 "``valeur`` - La valeur d'origine du paramètre en cours d'enregistrement"
 
-#: ../../guides/events-list.rst:1281
+#: ../../guides/events-list.rst:1287
 msgid ""
 "Return value should be a scalar in order to be able to save it to the "
 "database. An error will be logged if this is not the case."
@@ -6597,11 +6620,11 @@ msgstr ""
 "La valeur de retour doit être un scalaire afin de pouvoir l'enregistrer dans"
 " la base de données. Une erreur sera journalisée si ce n'est pas le cas."
 
-#: ../../guides/events-list.rst:1291
+#: ../../guides/events-list.rst:1297
 msgid "**public_pages, walled_garden** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1284
+#: ../../guides/events-list.rst:1290
 msgid ""
 "Filters a list of URLs (paths) that can be seen by logged out users in a "
 "walled garden mode. Handlers must return an array of regex strings that will"
@@ -6610,58 +6633,58 @@ msgid ""
 "accidentally override these values."
 msgstr ""
 
-#: ../../guides/events-list.rst:1291
+#: ../../guides/events-list.rst:1297
 msgid "``url`` - URL of the page being tested for public accessibility"
 msgstr "``url`` - URL de la page testée pour l’accessibilité publique"
 
-#: ../../guides/events-list.rst:1294
+#: ../../guides/events-list.rst:1300
 msgid "**relationship:url, <relationship_name>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1294
+#: ../../guides/events-list.rst:1300
 msgid ""
 "Filter the URL for the relationship object ``$params['relationship']``."
 msgstr "Filtre l’URL pour l’objet de la relation ``$params['relationship']``."
 
-#: ../../guides/events-list.rst:1297
+#: ../../guides/events-list.rst:1303
 msgid "**robots.txt, site** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1297
+#: ../../guides/events-list.rst:1303
 msgid "Filter the robots.txt values for ``$params['site']``."
 msgstr "Filtre les valeurs de robots.txt pour ``$params['site']``."
 
-#: ../../guides/events-list.rst:1305
+#: ../../guides/events-list.rst:1311
 msgid "**setting, plugin** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1300
+#: ../../guides/events-list.rst:1306
 msgid "Filter plugin settings. ``$params`` contains:"
 msgstr "Filtre les paramètres du plugin. ``$params`` contient :"
 
-#: ../../guides/events-list.rst:1302
+#: ../../guides/events-list.rst:1308
 msgid "``plugin`` - An ElggPlugin instance"
 msgstr "``plugin`` - Une instance de ElggPlugin"
 
-#: ../../guides/events-list.rst:1303
+#: ../../guides/events-list.rst:1309
 msgid "``plugin_id`` - The plugin ID"
 msgstr "``plugin_id`` - L'ID du plugin"
 
-#: ../../guides/events-list.rst:1304
+#: ../../guides/events-list.rst:1310
 msgid "``name`` - The name of the setting"
 msgstr "``name`` - Le nom du paramètre"
 
-#: ../../guides/events-list.rst:1305
+#: ../../guides/events-list.rst:1311
 msgid "``value`` - The value to set"
 msgstr "``value`` - La valeur à définir"
 
-#: ../../guides/events-list.rst:1309
+#: ../../guides/events-list.rst:1315
 msgid ""
 "**to:object, <entity_type|metadata|annotation|relationship|river_item>**"
 msgstr ""
 "**to:object, <entity_type|metadata|annotation|relationship|river_item>**"
 
-#: ../../guides/events-list.rst:1308
+#: ../../guides/events-list.rst:1314
 msgid ""
 "Converts the entity ``$params['entity']`` to a StdClass object. This is used"
 " mostly for exporting entity properties for portable data formats like JSON "
@@ -6671,25 +6694,25 @@ msgstr ""
 " principalement pour exporter des propriétés d’entité vers des formats de "
 "données portables comme JSON et XML."
 
-#: ../../guides/events-list.rst:1312 ../../guides/helpers.rst:41
+#: ../../guides/events-list.rst:1318 ../../guides/helpers.rst:41
 #: ../../guides/plugins.rst:2
 msgid "Plugins"
 msgstr "Plugins"
 
-#: ../../guides/events-list.rst:1315
+#: ../../guides/events-list.rst:1321
 msgid "Groups"
 msgstr "Groupes"
 
-#: ../../guides/events-list.rst:1324
+#: ../../guides/events-list.rst:1330
 msgid "**tool_options, group** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1318
+#: ../../guides/events-list.rst:1324
 msgid "Filters a collection of tools available within a specific group:"
 msgstr ""
 "Filtre une collection d’outils disponibles au sein d’un groupe spécifique :"
 
-#: ../../guides/events-list.rst:1320
+#: ../../guides/events-list.rst:1326
 msgid ""
 "The ``$return`` is "
 "``\\Elgg\\Collections\\Collection<\\Elgg\\Groups\\Tool>``, a collection of "
@@ -6699,29 +6722,29 @@ msgstr ""
 "``\\Elgg\\Collections\\Collection<\\Elgg\\Groups\\Tool>``, une collection "
 "d'outils de groupe."
 
-#: ../../guides/events-list.rst:1324
+#: ../../guides/events-list.rst:1330
 msgid "``entity`` - ``\\ElggGroup``"
 msgstr "``entity`` - ``\\ElggGroup``"
 
-#: ../../guides/events-list.rst:1327
+#: ../../guides/events-list.rst:1333
 msgid "Web Services"
 msgstr "Web Services"
 
-#: ../../guides/events-list.rst:1330
+#: ../../guides/events-list.rst:1336
 msgid "**register, api_methods``** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1330
+#: ../../guides/events-list.rst:1336
 msgid ""
 "Triggered when the ApiRegistrationService is constructed which allows to "
 "add/remove/edit webservice configurations"
 msgstr ""
 
-#: ../../guides/events-list.rst:1334
+#: ../../guides/events-list.rst:1340
 msgid "**rest, init** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1333
+#: ../../guides/events-list.rst:1339
 msgid ""
 "Triggered by the web services rest handler. Plugins can set up their own "
 "authentication handlers, then return ``true`` to prevent the default "
@@ -6731,11 +6754,11 @@ msgstr ""
 "configurer leurs propres gestionnaires d’authentification, puis renvoyer "
 "``true`` pour empêcher les gestionnaires par défaut d’être enregistrés."
 
-#: ../../guides/events-list.rst:1338
+#: ../../guides/events-list.rst:1344
 msgid "**rest:output, <method_name>** |results|"
 msgstr ""
 
-#: ../../guides/events-list.rst:1337
+#: ../../guides/events-list.rst:1343
 msgid "Filter the result (and subsequently the output) of the API method"
 msgstr "Filtrer le résultat (et par la suite la sortie) de la méthode API"
 
@@ -7898,7 +7921,7 @@ msgstr "Guides de développement"
 msgid "Customize Elgg's behavior with plugins."
 msgstr "Personnalisez le comportement de Elgg avec des plugins."
 
-#: ../../guides/javascript.rst:2 ../../guides/menus.rst:280
+#: ../../guides/javascript.rst:2 ../../guides/menus.rst:299
 msgid "JavaScript"
 msgstr "JavaScript"
 
@@ -8779,7 +8802,7 @@ msgstr ""
 "Vous voudrez normalement les appeler à partir de la fonction "
 "d'initialisation de votre plugin."
 
-#: ../../guides/menus.rst:25 ../../guides/menus.rst:76
+#: ../../guides/menus.rst:25 ../../guides/menus.rst:95
 msgid "Examples"
 msgstr "Exemples"
 
@@ -8803,10 +8826,8 @@ msgstr ""
 
 #: ../../guides/menus.rst:47
 msgid ""
-"``administer`` for daily tasks, usermanagement and other actionable tasks"
+"``administer`` for daily tasks, user management and other actionable tasks"
 msgstr ""
-"``administer`` pour les tâches quotidiennes, la gestion des utilisateurs et "
-"d’autres tâches concrètes"
 
 #: ../../guides/menus.rst:48
 msgid ""
@@ -8825,17 +8846,44 @@ msgstr ""
 msgid "Advanced usage"
 msgstr "Utilisation avancée"
 
-#: ../../guides/menus.rst:55
+#: ../../guides/menus.rst:56
+msgid "Headers"
+msgstr ""
+
+#: ../../guides/menus.rst:58
+msgid ""
+"For accessibility reasons each menu will get an ``aria-label`` which "
+"defaults to the menu name, but can be translated by making sure the language"
+" key ``menu:<menu name>:header`` is available."
+msgstr ""
+
+#: ../../guides/menus.rst:61
+msgid ""
+"It's also possible to show menu section headers by setting "
+"``show_section_headers`` to ``true`` in ``elgg_view_menu()``"
+msgstr ""
+
+#: ../../guides/menus.rst:69
+msgid ""
+"The headers have a magic language key available ``menu:<menu "
+"name>:header:<section name>`` in order to be able to translate the headers."
+msgstr ""
+
+#: ../../guides/menus.rst:72
+msgid "Events"
+msgstr ""
+
+#: ../../guides/menus.rst:74
 msgid ""
 "You can get more control over menus by using :doc:`events </design/events>` "
 "and the public methods provided by the ``ElggMenuItem`` class."
 msgstr ""
 
-#: ../../guides/menus.rst:61
+#: ../../guides/menus.rst:80
 msgid "There are three events that can be used to modify a menu:"
 msgstr ""
 
-#: ../../guides/menus.rst:59
+#: ../../guides/menus.rst:78
 msgid ""
 "``'parameters', 'menu:<menu name>'`` to add or modify parameters use for the"
 " menu building (eg. sorting)"
@@ -8843,7 +8891,7 @@ msgstr ""
 "``'parameters', 'menu:'`` pour ajouter ou modifier les paramètres utilisés "
 "pour construire le menu (par exemple l'ordre de tri)"
 
-#: ../../guides/menus.rst:60
+#: ../../guides/menus.rst:79
 msgid ""
 "``'register', 'menu:<menu name>'`` to add or modify items (especially in "
 "dynamic menus)"
@@ -8851,7 +8899,7 @@ msgstr ""
 "``'register', 'menu:'`` pour ajouter ou modifier des éléments (en "
 "particulier dans les menus dynamiques)"
 
-#: ../../guides/menus.rst:61
+#: ../../guides/menus.rst:80
 msgid ""
 "``'prepare', 'menu:<menu name>'`` to modify the structure of the menu before"
 " it is displayed"
@@ -8859,13 +8907,13 @@ msgstr ""
 "``'prepare', 'menu:'`` pour modifier la structure du menu avant qu’il soit "
 "affiché"
 
-#: ../../guides/menus.rst:63
+#: ../../guides/menus.rst:82
 msgid ""
 "When you register an event handler, replace the ``<menu name>`` part with "
 "the internal name of the menu."
 msgstr ""
 
-#: ../../guides/menus.rst:66
+#: ../../guides/menus.rst:85
 msgid ""
 "The third parameter passed into a menu handler contains all the menu items "
 "that have been registered so far by Elgg core and other enabled plugins. In "
@@ -8878,7 +8926,7 @@ msgstr ""
 "une boucle à travers les éléments de menu et utiliser les méthodes de classe"
 " pour interagir avec les propriétés de l’élément de menu."
 
-#: ../../guides/menus.rst:71
+#: ../../guides/menus.rst:90
 msgid ""
 "In some cases a more granular version of the ``register`` and ``prepare`` "
 "menu events exist with ``menu:<menu name>:<type>:<subtype>``, this applies "
@@ -8887,7 +8935,7 @@ msgid ""
 "``\\ElggRelationship`` in ``$params['relationship']``."
 msgstr ""
 
-#: ../../guides/menus.rst:78
+#: ../../guides/menus.rst:97
 msgid ""
 "**Example 1:** Change the URL for menu item called \"albums\" in the "
 "``owner_block`` menu:"
@@ -8895,24 +8943,24 @@ msgstr ""
 "**Exemple 1 :** Modifier l’URL de l’élément de menu appelé \"albums\" dans "
 "le menu ``owner_block`` :"
 
-#: ../../guides/menus.rst:117
+#: ../../guides/menus.rst:136
 msgid "**Example 2:** Modify the ``entity`` menu for the ``ElggBlog`` objects"
 msgstr ""
 "**Exemple 2 :** Modifier le menu ``entity`` pour les objets ``ElggBlog``"
 
-#: ../../guides/menus.rst:116
+#: ../../guides/menus.rst:135
 msgid "Remove the thumb icon"
 msgstr "Supprimer l’icône du pouce"
 
-#: ../../guides/menus.rst:117
+#: ../../guides/menus.rst:136
 msgid "Change the \"Edit\" text into a custom icon"
 msgstr "Modifier le texte \"Modifier\" en une icône personnalisée"
 
-#: ../../guides/menus.rst:155
+#: ../../guides/menus.rst:174
 msgid "Creating a new menu"
 msgstr "Créer un nouveau menu"
 
-#: ../../guides/menus.rst:157
+#: ../../guides/menus.rst:176
 msgid ""
 "Elgg provides multiple different menus by default. Sometimes you may however"
 " need some menu items that don't fit in any of the existing menus. If this "
@@ -8926,7 +8974,7 @@ msgstr ""
 " la fonction ``elgg_view_menu()``. Vous devez appeler la fonction à partir "
 "de la vue dans laquelle vous souhaitez afficher le menu."
 
-#: ../../guides/menus.rst:163
+#: ../../guides/menus.rst:182
 msgid ""
 "**Example:** Display a menu called \"my_menu\" that displays it's menu items"
 " in alphapetical order:"
@@ -8934,22 +8982,22 @@ msgstr ""
 "**Exemple:** Afficher un menu appelé « my_menu » qui affiche ses éléments de"
 " menu dans l’ordre alphabétique :"
 
-#: ../../guides/menus.rst:171
+#: ../../guides/menus.rst:190
 msgid "You can now add new items to the menu like this:"
 msgstr ""
 "Vous pouvez maintenant ajouter de nouveaux éléments au menu comme ceci :"
 
-#: ../../guides/menus.rst:182
+#: ../../guides/menus.rst:201
 msgid ""
 "Furthermore it is now possible to modify the menu using the events "
 "``'register', 'menu:my_menu'`` and ``'prepare', 'menu:my_menu'``."
 msgstr ""
 
-#: ../../guides/menus.rst:186
+#: ../../guides/menus.rst:205
 msgid "Child Dropdown Menus"
 msgstr "Sous-menus déroulants"
 
-#: ../../guides/menus.rst:188
+#: ../../guides/menus.rst:207
 msgid ""
 "Child menus can be configured using ``child_menu`` factory option on the "
 "parent item."
@@ -8957,7 +9005,7 @@ msgstr ""
 "Les sous-menus peuvent être configurés à l’aide de l’option ``child_menu`` "
 "de l’élément parent."
 
-#: ../../guides/menus.rst:190
+#: ../../guides/menus.rst:209
 msgid ""
 "``child_menu`` options array accepts ``display`` parameter, which can be "
 "used to set the child menu to open as ``dropdown`` or be displayed via "
@@ -8970,11 +9018,11 @@ msgstr ""
 "Toutes les autres paires de clefs/valeurs seront transmises en tant "
 "qu’attributs à l’élément ``ul``."
 
-#: ../../guides/menus.rst:231
+#: ../../guides/menus.rst:250
 msgid "Theming"
 msgstr "Création de thèmes"
 
-#: ../../guides/menus.rst:233
+#: ../../guides/menus.rst:252
 msgid ""
 "The menu name, section names, and item names are all embedded into the HTML "
 "as CSS classes (normalized to contain only hyphens, rather that underscores "
@@ -8988,7 +9036,7 @@ msgstr ""
 "intégrateurs un haut degré de contrôle et de flexibilité lors de la mise en "
 "forme du site."
 
-#: ../../guides/menus.rst:238
+#: ../../guides/menus.rst:257
 msgid ""
 "**Example:** The following would be the output of the ``foo`` menu with "
 "sections ``alt`` and ``default`` containing items ``baz`` and ``bar`` "
@@ -8997,11 +9045,11 @@ msgstr ""
 "**Exemple :** Voici la sortie du menu ``foo`` avec les sections ``alt`` et "
 "``default`` contenant respectivement les éléments ``baz`` et ``bar``."
 
-#: ../../guides/menus.rst:251
+#: ../../guides/menus.rst:270
 msgid "Toggling Menu Items"
 msgstr "Basculer des éléments de menu"
 
-#: ../../guides/menus.rst:253
+#: ../../guides/menus.rst:272
 msgid ""
 "There are situations where you wish to toggle menu items that are actions "
 "that are the opposite of each other and ajaxify them. E.g. like/unlike, "
@@ -9018,7 +9066,7 @@ msgstr ""
 "menu (dans le même menu) qui doit être basculé. Un appel ajax sera fait en "
 "utilisant le href de l’élément de menu."
 
-#: ../../guides/menus.rst:276
+#: ../../guides/menus.rst:295
 msgid ""
 "The menu items are optimistically toggled. This means the menu items are "
 "toggled before the actions finish. If the actions fail, the menu items will "
@@ -9028,7 +9076,7 @@ msgstr ""
 "les éléments de menu sont basculés avant la fin des actions. Si les actions "
 "échouent, les éléments de menu seront rétablis."
 
-#: ../../guides/menus.rst:282
+#: ../../guides/menus.rst:301
 msgid ""
 "It is common that menu items rely on JavaScript. You can bind client-side "
 "events to menu items by placing your JavaScript into AMD module and defining"
@@ -9937,10 +9985,8 @@ msgstr ""
 #: ../../guides/plugins.rst:277
 msgid ""
 "See `PHP-DI documentation <http://php-di.org>`_ for a comprehensive list of "
-"definition and invokation possibilities."
+"definition and invocation possibilities."
 msgstr ""
-"Voyez la `documentation PHP-DI <https://php-di.org/>`_ pour une liste "
-"complète des possibilités de définition et d’invocation."
 
 #: ../../guides/plugins.rst:280
 msgid "composer.json"
@@ -10035,30 +10081,51 @@ msgstr ""
 
 #: ../../guides/plugins.rst:311
 msgid ""
-"An easy example of adding test is the ``ViewStackTest``, this will test that"
-" the views in your plugin are registered correctly and have no syntax "
-"errors. To add this test create a file ``ViewStackTest.php`` in the folder "
-"``tests/phpunit/unit/<YourNameSpace>/<YourPluginName>/`` with the content:"
+"Unit tests should extend the ``Elgg\\UnitTestCase`` class. Integration tests"
+" should extend the ``Elgg\\Plugins\\IntegrationTestCase``."
 msgstr ""
-"Un exemple simple d'ajout de test est le test ``ViewStackTest``, qui va "
-"vérifier que les vues de votre plugin sont enregistrées correctement et "
-"n’ont pas d’erreurs de syntaxe. Pour ajouter ce test, créez un fichier "
-"``ViewStackTest.php`` dans le dossier "
-"``tests/phpunit/unit/<YourNameSpace>/<YourPluginName>/`` avec le contenu "
-"suivant :"
 
-#: ../../guides/plugins.rst:328
+#: ../../guides/plugins.rst:313
 msgid ""
-"If you wish to see a better example, look in any of the Elgg core plugins."
+"There are a set of global plugin integration tests that run on all active "
+"plugins. These tests are:"
 msgstr ""
-"Si vous souhaitez voir un meilleur exemple, regardez dans l’un des plugins "
-"du noyau de Elgg."
 
-#: ../../guides/plugins.rst:332
+#: ../../guides/plugins.rst:315
+msgid ""
+"``Elgg\\Plugins\\ActionRegistrationIntegrationTest`` will test all "
+"registered actions of the plugin without supplying data"
+msgstr ""
+
+#: ../../guides/plugins.rst:316
+msgid ""
+"``Elgg\\Plugins\\ComposerIntegrationTest`` will test if the "
+"``composer.json`` is considered valid"
+msgstr ""
+
+#: ../../guides/plugins.rst:317
+msgid ""
+"``Elgg\\Plugins\\StaticConfigIntegrationTest`` will test the sections of the"
+" ``elgg-plugin.php`` and check for the correct format"
+msgstr ""
+
+#: ../../guides/plugins.rst:318
+msgid ""
+"``Elgg\\Plugins\\TranslationsIntegrationTest`` will test all language files "
+"for the correct format and encoding"
+msgstr ""
+
+#: ../../guides/plugins.rst:319
+msgid ""
+"``Elgg\\Plugins\\ViewStackIntegrationTest`` will test all views of the "
+"plugin if there are any PHP parsing errors"
+msgstr ""
+
+#: ../../guides/plugins.rst:323
 msgid ":doc:`/contribute/tests`"
 msgstr ":doc:`/contribute/tests`"
 
-#: ../../guides/plugins.rst:335 ../../guides/views.rst:647
+#: ../../guides/plugins.rst:326 ../../guides/views.rst:647
 #: ../../guides/web-services.rst:398
 msgid "Related"
 msgstr "Connexe"
@@ -11633,11 +11700,9 @@ msgstr "Points de terminaison pour l'autocomplétion et la recherche en direct"
 #: ../../guides/search.rst:186
 msgid ""
 "Core provides a JSON endpoint for searching users and groups. These "
-"endpoints are used by ``input/autocomplete`` and ``input/userpicker`` views."
+"endpoints are used by ``input/autocomplete`` and ``input/entitypicker`` "
+"views."
 msgstr ""
-"Le noyau fournit un point de terminaison JSON pour la recherche "
-"d’utilisateurs et de groupes. Ces points de terminaison sont utilisés par "
-"les vues ``input/autocomplete`` et ``input/userpicker``."
 
 #: ../../guides/search.rst:194
 msgid ""

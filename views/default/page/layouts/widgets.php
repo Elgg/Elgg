@@ -33,7 +33,7 @@ if (elgg_is_empty($context)) {
 elgg_require_js('elgg/widgets');
 
 // Underlying views and functions assume that the page owner is the owner of the widgets
-if (empty($page_owner) || $owner->guid != $page_owner->guid) {
+if (empty($page_owner) || $owner->guid !== $page_owner->guid) {
 	elgg_set_page_owner_guid($owner->guid);
 }
 
@@ -98,11 +98,11 @@ for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 	}
 	
 	$grid .= elgg_format_element('div', [
-		'id' => "elgg-widget-col-{$column_index}",
 		'class' => [
 			'elgg-widgets',
+			"elgg-widget-col-{$column_index}",
 		],
-		
+		'data-widget-column' => $column_index,
 	], $widgets_content);
 }
 

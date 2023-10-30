@@ -16,7 +16,7 @@ define(['jquery', 'elgg/hooks', 'elgg/Ajax'], function ($, hooks, Ajax) {
 		var $both_items = $item_clicked.add($other_item);
 		// Be optimistic about success
 		$both_items.toggleClass('hidden');
-		$other_item.focus();
+		$other_item.children('a').focus();
 
 		// Send the ajax request
 		
@@ -34,7 +34,7 @@ define(['jquery', 'elgg/hooks', 'elgg/Ajax'], function ($, hooks, Ajax) {
 			error: function() {
 				// Something went wrong, so undo the optimistic changes
 				$both_items.toggleClass('hidden');
-				$item_clicked.focus();
+				$item_clicked.children('a').focus();
 			}
 		});
 		

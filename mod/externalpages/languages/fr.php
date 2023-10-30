@@ -11,6 +11,7 @@ return array(
 	 * Menu items and titles
 	 */
 	'admin:configure_utilities:expages' => "Pages du site",
+	
 	'expages:edit:viewpage' => "Voir la page sur le site",
 	'expages:about' => "À propos",
 	'expages:terms' => "Mentions légales",
