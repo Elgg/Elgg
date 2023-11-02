@@ -92,7 +92,10 @@ if (!$new_page && $parent_guid && $parent_guid !== $page_guid) {
 }
 
 // set parent
-$page->setParentByGUID($parent_guid);
+if ($page->guid !== $parent_guid) {
+	// don't set parent to yourself
+	$page->setParentByGUID($parent_guid);
+}
 
 if (!$page->save()) {
 	return elgg_error_response(elgg_echo('pages:notsaved'));

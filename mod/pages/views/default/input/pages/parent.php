@@ -25,7 +25,11 @@ $options = [];
 foreach ($pages as $page) {
 	$spacing = str_repeat('--', $page['depth']);
 	
-	$options[$page['guid']] = trim("{$spacing} {$page['title']}");
+	$options[] = [
+		'text' => trim("{$spacing} {$page['title']}"),
+		'value' => $page['guid'],
+		'disabled' => $entity->guid === $page['guid'],
+	];
 }
 
 $defaults = [
