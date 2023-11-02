@@ -497,9 +497,10 @@ class EntityIconService {
 	 *
 	 * @return bool
 	 */
-	public function deleteIcon(\ElggEntity $entity, $type = 'icon', $retain_master = false) {
+	public function deleteIcon(\ElggEntity $entity, string $type = 'icon', bool $retain_master = false): bool {
 		$delete = $this->events->triggerResults("entity:{$type}:delete", $entity->getType(), [
 			'entity' => $entity,
+			'retain_master' => $retain_master, // just removing thumbs or everything?
 		], true);
 
 		if ($delete === false) {
