@@ -2,7 +2,6 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery
 	/**
 	 * @param {HTMLElement} wrapper outer div
 	 * @constructor
-	 * @alias module:elgg/UserPicker
 	 */
 	function EntityPicker(wrapper) {
 		this.$wrapper = $(wrapper);

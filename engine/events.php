@@ -254,7 +254,6 @@ return [
 			'Elgg\Menus\AdminControlPanel::register' => [],
 		],
 		'menu:admin_header' => [
-			'Elgg\Menus\AdminHeader::moveUtilities' => ['priority' => 9999],
 			'Elgg\Menus\AdminHeader::register' => [],
 			'Elgg\Menus\AdminHeader::registerMaintenance' => [],
 			'Elgg\Menus\AdminHeader::registerAdminAdminister' => [],
@@ -320,7 +319,6 @@ return [
 			'Elgg\Menus\Page::registerAdminPluginSettings' => [],
 			'Elgg\Menus\Page::registerUserSettings' => [],
 			'Elgg\Menus\Page::registerUserSettingsPlugins' => [],
-			'Elgg\Menus\Page::moveOldAdminSectionsToAdminHeader' => ['priority' => 9999],
 		],
 		'menu:river' => [
 			'Elgg\Menus\River::registerDelete' => [],

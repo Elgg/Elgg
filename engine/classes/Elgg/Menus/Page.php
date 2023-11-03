@@ -173,45 +173,4 @@ class Page {
 		
 		return $return;
 	}
-	
-	/**
-	 * Moves menu items registered to the page to the admin header
-	 *
-	 * @param \Elgg\Event $event 'register', 'menu:page'
-	 *
-	 * @return void
-	 *
-	 * @since 5.0
-	 */
-	public static function moveOldAdminSectionsToAdminHeader(\Elgg\Event $event) {
-		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
-			return;
-		}
-		
-		/* @var $return MenuItems */
-		$return = $event->getValue();
-		
-		$remove_items = [];
-		foreach ($return as $menu_item) {
-			$section_name = $menu_item->getSection();
-			if (!in_array($section_name, ['configure', 'administer', 'information'])) {
-				continue;
-			}
-			
-			$menu_item->setSection('default');
-			if (empty($menu_item->getParentName())) {
-				$menu_item->setParentName($section_name);
-			}
-			
-			elgg_register_menu_item('admin_header', $menu_item);
-			$remove_items[] = $menu_item->getID();
-			
-			elgg_deprecated_notice("The menu item [{$menu_item->getID()}] is using an old section of the admin page menu. These sections have been moved to the 'admin_header' menu. Please update your menu item configuration.", '5.0');
-		}
-		
-		foreach ($remove_items as $id) {
-			// need to remove separately because removing during a foreach has issues
-			$return->remove($id);
-		}
-	}
 }

@@ -214,14 +214,6 @@ return [
 		'path' => '/comment/view/{guid}/{container_guid?}',
 		'controller' => \Elgg\Controllers\CommentEntityRedirector::class,
 	],
-	'edit:object:comment' => [
-		'path' => '/comment/edit/{guid}',
-		'resource' => 'comments/edit',
-		'middleware' => [
-			\Elgg\Router\Middleware\Gatekeeper::class,
-		],
-		'deprecated' => '5.1',
-	],
 	'view:user' => [
 		'path' => '/user/{guid}',
 		'resource' => 'user/view',
