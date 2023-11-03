@@ -7,12 +7,14 @@ Before anything else, you need to :doc:`install Elgg</intro/install>`.
 
 In this tutorial we will pretend your site's URL is ``https://elgg.example.com``.
 
-First, create a directory that will contain the plugin's files. It should be located under the ``mod/`` directory which is located in your Elgg installation directory. So in this case, create ``mod/hello/``.
+First, create a directory that will contain the plugin's files. It should be located under the ``mod/`` directory
+which is located in your Elgg installation directory. So in this case, create ``mod/hello/``.
 
 Composer file
 =============
 
-Elgg requires that your plugin has a composer file that contains information about the plugin. Therefore, in the directory you just created, create a file called ``composer.json`` and copy this code into it:
+Elgg requires that your plugin has a composer file that contains information about the plugin. Therefore, in the
+directory you just created, create a file called ``composer.json`` and copy this code into it:
 
 .. code-block:: json
 
@@ -21,9 +23,6 @@ Elgg requires that your plugin has a composer file that contains information abo
 		"type": "elgg-plugin",
 		"description": "Hello World plugin",
 		"license": "GPL-2.0-only",
-		"require": {
-			"composer/installers": "^1.0.8"
-		}
 	}
 
 
@@ -78,6 +77,7 @@ This creates the basic layout for the page. The layout is then run through
 Last step
 =========
 
-Finally, activate the plugin through your Elgg administrator page: ``https://elgg.example.com/admin/plugins`` (the new plugin appears at the bottom).
+Finally, activate the plugin through your Elgg administrator page: ``https://elgg.example.com/admin/plugins`` (the new
+plugin appears at the bottom).
 
 You can now go to the address ``https://elgg.example.com/hello/`` and you should see your new page!
