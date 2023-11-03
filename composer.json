@@ -12,6 +12,7 @@
         "ext-gd": "*",
         "ext-json": "*",
         "ext-xml": "*",
+        "composer/installers": ">=1.0.8",
         "composer/semver": "~3.4.0",
         "css-crush/css-crush": "~4.1.0",
         "doctrine/dbal": "~3.7.1",
