@@ -216,7 +216,7 @@ class SessionManagerService {
 		
 		// #5933: set logged in user early so code in login event will be able to
 		// use elgg_get_logged_in_user_entity().
-		$this->setLoggedInUser($user);
+		$this->setLoggedInUser($user, true);
 		$this->setUserToken($user);
 		
 		// re-register at least the core language file for users with language other than site default
@@ -278,13 +278,23 @@ class SessionManagerService {
 	/**
 	 * Sets the logged in user
 	 *
-	 * @param \ElggUser $user The user who is logged in
+	 * @param \ElggUser $user    The user who is logged in
+	 * @param bool|null $migrate Migrate the session (default: !\Elgg\Application::isCli())
+	 *
 	 * @return void
 	 * @since 1.9
 	 */
-	public function setLoggedInUser(\ElggUser $user): void {
+	public function setLoggedInUser(\ElggUser $user, bool $migrate = null): void {
 		$current_user = $this->getLoggedInUser();
 		if ($current_user != $user) {
+			if (!isset($migrate)) {
+				$migrate = !\Elgg\Application::isCli();
+			}
+			
+			if ($migrate) {
+				$this->session->migrate(true);
+			}
+			
 			$this->session->set('guid', $user->guid);
 			$this->logged_in_user = $user;
 			$this->session_cache->clear();

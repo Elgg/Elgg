@@ -34,6 +34,8 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 		$user->setValidationStatus(true, 'login_test');
 
+		$session_id = _elgg_services()->session->getID();
+
 		$response = $this->executeAction('login', [
 			'username' => $user->username,
 			'password' => 123456,
@@ -47,6 +49,9 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$this->assertEquals(elgg_echo('loginok', [], $user->language), array_shift($messages['success']));
 
 		$this->assertEquals($user, _elgg_services()->session_manager->getLoggedInUser());
+		
+		// validate that the session id was migrated
+		$this->assertNotEquals($session_id, _elgg_services()->session->getID());
 	}
 
 	public function testLoginWithEmailAndPassword() {
@@ -57,6 +62,8 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 		$user->setValidationStatus(true, 'login_test');
 
+		$session_id = _elgg_services()->session->getID();
+
 		$response = $this->executeAction('login', [
 			'username' => $user->email,
 			'password' => 123456,
@@ -66,6 +73,9 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(OkResponse::class, $response);
 
 		$this->assertEquals($user, _elgg_services()->session_manager->getLoggedInUser());
+		
+		// validate that the session id was migrated
+		$this->assertNotEquals($session_id, _elgg_services()->session->getID());
 	}
 
 	public function testLoginFailsWithEmptyPassword() {

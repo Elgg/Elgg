@@ -47,6 +47,8 @@ class ElggSession {
 	
 		$this->start();
 	
+		$migrate_session = false;
+
 		// test whether we have a user session
 		if ($this->has('guid')) {
 			$user = _elgg_services()->entityTable->get($this->get('guid'), 'user');
@@ -62,11 +64,12 @@ class ElggSession {
 			$user = _elgg_services()->persistentLogin->bootSession();
 			if ($user instanceof ElggUser) {
 				_elgg_services()->persistentLogin->updateTokenUsage($user);
+				$migrate_session = true;
 			}
 		}
 	
 		if ($user instanceof ElggUser) {
-			_elgg_services()->session_manager->setLoggedInUser($user);
+			_elgg_services()->session_manager->setLoggedInUser($user, $migrate_session);
 			$user->setLastAction();
 	
 			// logout a user with open session who has been banned
@@ -103,7 +106,7 @@ class ElggSession {
 	 * @return boolean
 	 * @since 1.9
 	 */
-	public function migrate($destroy = false) {
+	public function migrate(bool $destroy = true) {
 		return $this->storage->migrate($destroy);
 	}
 

@@ -20,6 +20,34 @@ class SessionManagerServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 		$this->assertNull($session->getLoggedInUser());
 	}
 	
+	public function testSetLoggedInUserChangesSessionID() {
+		$user = $this->createUser();
+		
+		$session = _elgg_services()->session;
+		$session_manager = _elgg_services()->session_manager;
+		
+		$session->start();
+		$session_id = $session->getID();
+		
+		$session_manager->setLoggedInUser($user, true);
+		
+		$this->assertNotEquals($session_id, $session->getID());
+	}
+	
+	public function testSetLoggedInUserDoesntChangesSessionID() {
+		$user = $this->createUser();
+		
+		$session = _elgg_services()->session;
+		$session_manager = _elgg_services()->session_manager;
+		
+		$session->start();
+		$session_id = $session->getID();
+		
+		$session_manager->setLoggedInUser($user, false);
+		
+		$this->assertEquals($session_id, $session->getID());
+	}
+	
 	public function testUserTokenValidation() {
 		$user = $this->createUser();
 		$session = _elgg_services()->session_manager;
