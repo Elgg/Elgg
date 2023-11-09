@@ -261,6 +261,8 @@ $CONFIG->dbencoding = 'utf8mb4';
  *
  * To use, uncomment the appropriate sections below and update for your site.
  *
+ * @see https://www.php.net/manual/en/function.session-get-cookie-params.php
+ *
  * @global array $CONFIG->cookies
  */
 // get the default parameters from php.ini
@@ -271,6 +273,7 @@ $CONFIG->dbencoding = 'utf8mb4';
 //$CONFIG->cookies['session']['domain'] = "";
 //$CONFIG->cookies['session']['secure'] = false;
 //$CONFIG->cookies['session']['httponly'] = false;
+//$CONFIG->cookies['session']['samesite'] = '';
 
 // extended session cookie
 //$CONFIG->cookies['remember_me'] = session_get_cookie_params();
@@ -281,6 +284,7 @@ $CONFIG->dbencoding = 'utf8mb4';
 //$CONFIG->cookies['remember_me']['domain'] = "";
 //$CONFIG->cookies['remember_me']['secure'] = false;
 //$CONFIG->cookies['remember_me']['httponly'] = false;
+//$CONFIG->cookies['remember_me']['samesite'] = '';
 
 /**
  * Disable the database query cache
