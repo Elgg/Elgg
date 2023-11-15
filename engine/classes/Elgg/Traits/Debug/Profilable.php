@@ -11,10 +11,7 @@ use Elgg\Timer;
  */
 trait Profilable {
 
-	/**
-	 * @var Timer|null
-	 */
-	private $timer;
+	private Timer $timer;
 
 	/**
 	 * Set a timer that should collect begin/end times for events
@@ -43,7 +40,7 @@ trait Profilable {
 	 * @return void
 	 * @see \Elgg\Timer::begin()
 	 */
-	public function beginTimer(array $keys): void {
+	protected function beginTimer(array $keys): void {
 		if (!$this->hasTimer()) {
 			return;
 		}
@@ -59,7 +56,7 @@ trait Profilable {
 	 * @return void
 	 * @see \Elgg\Timer::end()
 	 */
-	public function endTimer(array $keys): void {
+	protected function endTimer(array $keys): void {
 		if (!$this->hasTimer()) {
 			return;
 		}
