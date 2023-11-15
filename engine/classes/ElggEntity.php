@@ -1251,10 +1251,10 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * Saves the base information in the entities table for the entity.  Saving
 	 * the type-specific information is handled in the calling class method.
 	 *
-	 * @return int|false The new entity's GUID or false on failure
+	 * @return int|false The new entity's GUID or false if prevented by an event handler
 	 *
 	 * @throws \Elgg\Exceptions\DomainException If the entity's type has not been set.
-	 * @throws \Elgg\Exceptions\InvalidArgumentException If the entity's subtype has not been set or access_id is invalid
+	 * @throws \Elgg\Exceptions\InvalidArgumentException If the entity's subtype has not been set, access_id is invalid or something is wrong with the owner or container
 	 * @throws \Elgg\Exceptions\Filesystem\IOException If the new row fails to write to the DB.
 	 */
 	protected function create() {
@@ -1282,11 +1282,11 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		
 		$container_guid = (int) $container_guid;
 
-		if ($access_id == ACCESS_DEFAULT) {
+		if ($access_id === ACCESS_DEFAULT) {
 			throw new ElggInvalidArgumentException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
 		}
 		
-		if ($access_id == ACCESS_FRIENDS) {
+		if ($access_id === ACCESS_FRIENDS) {
 			throw new ElggInvalidArgumentException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
 		}
 
@@ -1298,16 +1298,14 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			if (!$owner instanceof \ElggEntity) {
 				$error = "User {$user_guid} tried to create a ({$type}, {$subtype}),";
 				$error .= " but the given owner {$owner_guid} could not be loaded.";
-				_elgg_services()->logger->error($error);
-				return false;
+				throw new ElggInvalidArgumentException($error);
 			}
 
 			// If different owner than logged in, verify can write to container.
 			if ($user_guid !== $owner_guid && !$owner->canEdit() && !$owner->canWriteToContainer($user_guid, $type, $subtype)) {
 				$error = "User {$user_guid} tried to create a ({$type}, {$subtype}) with owner {$owner_guid},";
 				$error .= " but the user wasn't permitted to write to the owner's container.";
-				_elgg_services()->logger->error($error);
-				return false;
+				throw new ElggInvalidArgumentException($error);
 			}
 		}
 
@@ -1317,15 +1315,13 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			if (!$container instanceof \ElggEntity) {
 				$error = "User {$user_guid} tried to create a ({$type}, {$subtype}),";
 				$error .= " but the given container {$container_guid} could not be loaded.";
-				_elgg_services()->logger->error($error);
-				return false;
+				throw new ElggInvalidArgumentException($error);
 			}
 
 			if (!$container->canWriteToContainer($user_guid, $type, $subtype)) {
 				$error = "User {$user_guid} tried to create a ({$type}, {$subtype}),";
 				$error .= " but was not permitted to write to container {$container_guid}.";
-				_elgg_services()->logger->error($error);
-				return false;
+				throw new ElggInvalidArgumentException($error);
 			}
 		}
 		
