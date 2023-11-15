@@ -497,7 +497,7 @@ function elgg_get_site_entity(): \ElggSite {
  *
  * @param array $options Options
  *
- * @return \ElggEntity[]|int|mixed If count, int. Otherwise an array or an \ElggBatch. false on errors.
+ * @return \ElggEntity[]|int|mixed If count, int. Otherwise an array or an \ElggBatch
  *
  * @since 1.7.0
  */

@@ -8,6 +8,7 @@ use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Database\Clauses\RiverWhereClause;
+use Elgg\Exceptions\DataFormatException;
 use Elgg\UnitTestCase;
 
 class RiverUnitTest extends UnitTestCase {
@@ -115,14 +116,12 @@ class RiverUnitTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	public function testCanExecuteCountWithBadDataFormat() {
-		$options = [
+	public function testThrowsOnBadDataFormat() {
+		$this->expectException(DataFormatException::class);
+		River::find([
 			'count' => true,
 			'subject_guids' => 'abc',
-		];
-
-		$find = River::find($options);
-		$this->assertEquals(0, $find);
+		]);
 	}
 
 	public function testCanExecuteGet() {
@@ -222,18 +221,6 @@ class RiverUnitTest extends UnitTestCase {
 		$this->assertEquals($rows, $get);
 
 		_elgg_services()->db->removeQuerySpec($spec);
-	}
-
-	public function testCanExecuteGetWithBadDataFormat() {
-		$options = [
-			'limit' => 5,
-			'offset' => 5,
-			'callback' => false,
-			'subject_guids' => 'abc',
-		];
-
-		$find = River::find($options);
-		$this->assertEquals(false, $find);
 	}
 
 	public function testCanExecuteBatchGet() {

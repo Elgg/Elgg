@@ -108,11 +108,7 @@ abstract class Repository {
 	 * @return \ElggData[]|int|mixed
 	 */
 	public static function find(array $options = []) {
-		try {
-			return static::with($options)->execute();
-		} catch (DataFormatException $e) {
-			return elgg_extract('count', $options) ? 0 : false;
-		}
+		return static::with($options)->execute();
 	}
 
 	/**
