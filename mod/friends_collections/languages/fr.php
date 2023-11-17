@@ -6,6 +6,7 @@
  */
 
 return array(
+	'menu:friends:collection:header' => 'Collection',
 	'friends:collections' => 'Collections',
 	'friends:collections:no_results' => 'Vous n\'avez créé aucune collection pour le moment',
 	'friends:collection:members:no_results' => 'Cette collection n\'a pas encore de membre',

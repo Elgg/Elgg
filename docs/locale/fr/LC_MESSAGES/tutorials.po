@@ -5,15 +5,16 @@
 # 
 # Translators:
 # Jerôme Bakker, 2023
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 13:11+0200\n"
+"POT-Creation-Date: 2023-10-24 13:21+0200\n"
 "PO-Revision-Date: 2023-04-05 07:42+0000\n"
-"Last-Translator: Jerôme Bakker, 2023\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -806,9 +807,9 @@ msgid ""
 "TinyMCE_ support. However, if you have a wysiwyg that you prefer, you could "
 "use this tutorial to help you build your own."
 msgstr ""
-"Elgg est distribué avec un plugin pour CKEditor_, et était précédemment "
-"distribué avec le support de TinyMCE_. Cependant, s'il y a un éditeur "
-"wysiwyg que vous préférez, vous pourriez utiliser ce tutoriel pour "
+"Elgg est actuellement distribué avec un plugin pour CKEditor_, et était "
+"précédemment distribué avec le support de TinyMCE_. Cependant, s'il y a un "
+"éditeur wysiwyg que vous préférez, vous pourriez utiliser ce tutoriel pour "
 "construire le vôtre."
 
 #: ../../tutorials/wysiwyg.rst:12
@@ -821,7 +822,7 @@ msgstr ""
 "Tous les formulaires dans Elgg devraient essayer d'utiliser les vues de "
 "saisie situées dans ``views/default/input``. Si ces vues sont utilisées, il "
 "est plus aisé pour les auteurs de plugins de remplacer une vue, ici "
-"``input/longtext``, par leur vue avec wysiwyg."
+"``input/longtext``, par une vue avec leur wysiwyg."
 
 #: ../../tutorials/wysiwyg.rst:17
 msgid "Add the WYSIWYG library code"
@@ -836,7 +837,7 @@ msgstr ""
 "Vous devez maintenant télécharger TinyMCE dans un répertoire de votre "
 "plugin. Nous vous encourageons fortement à utiliser ``composer`` pour gérer "
 "les dépendances tierces, car il est tellement plus facile de mettre à niveau"
-" et de maintenir de cette façon :"
+" et de maintenir de cette façon :"
 
 #: ../../tutorials/wysiwyg.rst:28
 msgid "Tell Elgg when and how to load TinyMCE"
@@ -871,7 +872,7 @@ msgid ""
 "following code:"
 msgstr ""
 "Nous allons le faire en étendant la vue ``input/longtext`` et en incluant du"
-" javascript. Créez une vue ``tinymce/longtext`` et ajoutez le code suivant :"
+" javascript. Créez une vue ``tinymce/longtext`` et ajoutez le code suivant :"
 
 #: ../../tutorials/wysiwyg.rst:70
 msgid ""
@@ -879,12 +880,12 @@ msgid ""
 "``input/longtext`` view:"
 msgstr ""
 "Ensuite, dans le fichier ``elgg-plugin.php`` de votre plugin étendez la vue "
-"``input/longtext`` :"
+"``input/longtext`` :"
 
 #: ../../tutorials/wysiwyg.rst:82
 msgid ""
 "That's it! Now every time someone uses ``input/longtext`` TinyMCE will be "
 "loaded and applied to that textarea."
 msgstr ""
-"C'est ça! Maintenant, chaque fois que quelqu'un utilise ``input/longtext`` "
-"TinyMCE sera chargé et appliqué à ce textarea."
+"Et voilà ! Maintenant, chaque fois que quelqu'un utilise ``input/longtext`` "
+"TinyMCE sera chargé et appliqué à ce champ de saisie de texte."

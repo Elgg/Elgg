@@ -177,7 +177,9 @@ ou cliquez ci-dessous pour voir les demandes d'adhésion au groupe :
 	'groups:usersettings:notification:group_join:description' => "Paramètres de notification de groupe par défaut quand vous rejoignez un groupe",
 	
 	'groups:usersettings:notifications:title' => 'Notifications du groupe',
-	'groups:usersettings:notifications:description' => 'Pour recevoir des notifications quand de nouveaux contenus sont publiés dans un groupe dont vous êtes membre, cherchez et choisissez ci-dessous la ou les méthodes de notification que vous souhaitez utiliser.',
+	'groups:usersettings:notifications:description' => 'Pour recevoir des notifications quand de nouveaux contenus sont publiés dans un groupe dont vous êtes membre, cherchez et choisissez ci-dessous la ou les méthode(s) de notification que vous souhaitez utiliser.',
 	
 	// accessibility
+	'groups:aria:label:group_search' => "Rechercher des groupes",
+	'groups:aria:label:search_in_group' => "Chercher dans ce groupe",
 );

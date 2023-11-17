@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-24 13:21+0200\n"
+"POT-Creation-Date: 2023-11-17 10:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1717,11 +1717,20 @@ msgstr ""
 msgid "5.0"
 msgstr ""
 
+#: ../../appendix/support.rst:79
 #: ../../appendix/support.rst:81
-msgid "6.0"
+msgid "October 2023"
 msgstr ""
 
 #: ../../appendix/support.rst:81
+msgid "5.1"
+msgstr ""
+
+#: ../../appendix/support.rst:83
+msgid "6.0"
+msgstr ""
+
+#: ../../appendix/support.rst:83
 msgid "TBD"
 msgstr ""
 
@@ -10284,7 +10293,7 @@ msgid "``elgg.set_triggered_hook``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:102
-msgid "``elgg.trigger_hook`` use the ``trigger`` function provide by the ``elgg\\hooks`` module"
+msgid "``elgg.trigger_hook`` use the ``trigger`` function provided by the ``elgg\\hooks`` module"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:105
@@ -10396,7 +10405,7 @@ msgid "``elgg_get_system_cache()`` now returns an instance of ``\\Elgg\\Cache\\B
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:186
-msgid "``elgg_get_uploaded_file()`` now returns ``null`` no file could be found or the file was invalid"
+msgid "``elgg_get_uploaded_file()`` now returns ``null`` if no file could be found or the file was invalid"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:187

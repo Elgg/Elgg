@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-24 13:21+0200\n"
+"POT-Creation-Date: 2023-11-17 10:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -225,63 +225,63 @@ msgstr ""
 msgid "First, create a directory that will contain the plugin's files. It should be located under the ``mod/`` directory which is located in your Elgg installation directory. So in this case, create ``mod/hello/``."
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:13
+#: ../../tutorials/hello_world.rst:14
 msgid "Composer file"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:15
+#: ../../tutorials/hello_world.rst:16
 msgid "Elgg requires that your plugin has a composer file that contains information about the plugin. Therefore, in the directory you just created, create a file called ``composer.json`` and copy this code into it:"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:31
+#: ../../tutorials/hello_world.rst:30
 msgid "Registering a route"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:33
+#: ../../tutorials/hello_world.rst:32
 msgid "The next step is to register a route which has the purpose of handling request that users make to the URL ``https://elgg.example.com/hello``."
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:36
+#: ../../tutorials/hello_world.rst:35
 msgid "Update ``elgg-plugin.php`` to look like this:"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:51
+#: ../../tutorials/hello_world.rst:50
 msgid "This registration tells Elgg that it should call the resource view ``hello`` when a user navigates to ``https://elgg.example.com/hello``."
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:55
+#: ../../tutorials/hello_world.rst:54
 msgid "View file"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:57
+#: ../../tutorials/hello_world.rst:56
 msgid "Create ``mod/hello/views/default/resources/hello.php`` with this content:"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:69
+#: ../../tutorials/hello_world.rst:68
 msgid "The code creates an array of parameters to be given to the ``elgg_view_layout()`` function, including:"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:71
+#: ../../tutorials/hello_world.rst:70
 msgid "The title of the page"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:72
+#: ../../tutorials/hello_world.rst:71
 msgid "The contents of the page"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:73
+#: ../../tutorials/hello_world.rst:72
 msgid "Filter which is left empty because there's currently nothing to filter"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:75
+#: ../../tutorials/hello_world.rst:74
 msgid "This creates the basic layout for the page. The layout is then run through ``elgg_view_page()`` which assembles and outputs the full page."
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:79
+#: ../../tutorials/hello_world.rst:78
 msgid "Last step"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:81
+#: ../../tutorials/hello_world.rst:80
 msgid "Finally, activate the plugin through your Elgg administrator page: ``https://elgg.example.com/admin/plugins`` (the new plugin appears at the bottom)."
 msgstr ""
 

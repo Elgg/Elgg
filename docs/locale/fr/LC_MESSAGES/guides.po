@@ -5,15 +5,16 @@
 # 
 # Translators:
 # Jerôme Bakker, 2023
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-18 11:20+0200\n"
+"POT-Creation-Date: 2023-10-24 13:21+0200\n"
 "PO-Revision-Date: 2023-04-05 07:42+0000\n"
-"Last-Translator: Jerôme Bakker, 2023\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -563,7 +564,7 @@ msgstr "Personnaliser des actions"
 
 #: ../../guides/actions.rst:158
 msgid "Before executing any action, Elgg triggers an event:"
-msgstr ""
+msgstr "Avant d'exécuter chaque action, Elgg déclenche un événement :"
 
 #: ../../guides/actions.rst:164
 msgid ""
@@ -2331,7 +2332,7 @@ msgstr ""
 
 #: ../../guides/cron.rst:53
 msgid ":doc:`/design/events` has more information about events"
-msgstr ""
+msgstr ":doc:`/design/events` donne plus d'informations sur les événements"
 
 #: ../../guides/cron.rst:54
 msgid ""
@@ -3447,7 +3448,7 @@ msgstr "Renvoyez false pour empêcher l’activation du plugin."
 
 #: ../../guides/events-list.rst:25
 msgid "**cache:clear, system** |sequence|"
-msgstr ""
+msgstr "**cache:clear, system** |sequence|"
 
 #: ../../guides/events-list.rst:24
 msgid ""
@@ -3461,7 +3462,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:29
 msgid "**cache:generate, <view>** |results|"
-msgstr ""
+msgstr "**cache:generate, <view>** |results|"
 
 #: ../../guides/events-list.rst:28
 msgid ""
@@ -3475,7 +3476,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:32
 msgid "**cache:invalidate, system** |sequence|"
-msgstr ""
+msgstr "**cache:invalidate, system** |sequence|"
 
 #: ../../guides/events-list.rst:32
 msgid "Invalidate internal and external caches."
@@ -3483,7 +3484,7 @@ msgstr "Invalide les caches internes et externes."
 
 #: ../../guides/events-list.rst:35
 msgid "**cache:purge, system** |sequence|"
-msgstr ""
+msgstr "**cache:purge, system** |sequence|"
 
 #: ../../guides/events-list.rst:35
 msgid ""
@@ -3495,7 +3496,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:39
 msgid "**commands, cli** |results|"
-msgstr ""
+msgstr "**commands, cli** |results|"
 
 #: ../../guides/events-list.rst:38
 msgid ""
@@ -3510,7 +3511,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:48
 msgid "**cron, <period>** |results|"
-msgstr ""
+msgstr "**cron, <period>** |results|"
 
 #: ../../guides/events-list.rst:42
 msgid "Triggered by cron for each period."
@@ -3541,7 +3542,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:51
 msgid "**cron:intervals, system** |results|"
-msgstr ""
+msgstr "**cron:intervals, system** |results|"
 
 #: ../../guides/events-list.rst:51
 msgid "Allow the configuration of custom cron intervals"
@@ -3557,7 +3558,7 @@ msgstr "Renvoyez false pour éviter la désactivation du plugin."
 
 #: ../../guides/events-list.rst:57
 msgid "**diagnostics:report, system** |results|"
-msgstr ""
+msgstr "**diagnostics:report, system** |results|"
 
 #: ../../guides/events-list.rst:57
 msgid "Filter the output for the diagnostics report download."
@@ -3565,7 +3566,7 @@ msgstr "Filtre la sortie pour le téléchargement du rapport de diagnostic."
 
 #: ../../guides/events-list.rst:60
 msgid "**elgg.data, page** |results|"
-msgstr ""
+msgstr "**elgg.data, page** |results|"
 
 #: ../../guides/events-list.rst:60
 msgid ""
@@ -3578,7 +3579,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:63
 msgid "**elgg.data, site** |results|"
-msgstr ""
+msgstr "**elgg.data, site** |results|"
 
 #: ../../guides/events-list.rst:63
 msgid ""
@@ -3590,7 +3591,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:66
 msgid "**format, friendly:title** |results|"
-msgstr ""
+msgstr "**format, friendly:title** |results|"
 
 #: ../../guides/events-list.rst:66
 msgid ""
@@ -3602,7 +3603,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:69
 msgid "**format, friendly:time** |results|"
-msgstr ""
+msgstr "**format, friendly:time** |results|"
 
 #: ../../guides/events-list.rst:69
 msgid "Formats the \"friendly\" time for the timestamp ``$params['time']``."
@@ -3610,7 +3611,7 @@ msgstr "Formate une date \"sympathique\" pour le timestamp ``$params['time']``."
 
 #: ../../guides/events-list.rst:73
 msgid "**format, strip_tags** |results|"
-msgstr ""
+msgstr "**format, strip_tags** |results|"
 
 #: ../../guides/events-list.rst:72
 msgid ""
@@ -3624,7 +3625,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:76
 msgid "**gc, system** |results|"
-msgstr ""
+msgstr "**gc, system** |results|"
 
 #: ../../guides/events-list.rst:76
 msgid "Allows plugins to run garbage collection for ``$params['period']``."
@@ -3634,7 +3635,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:79
 msgid "**generate, password** |results|"
-msgstr ""
+msgstr "**generate, password** |results|"
 
 #: ../../guides/events-list.rst:79
 msgid "Allows plugins to generate new random cleartext passwords."
@@ -3651,7 +3652,7 @@ msgstr "Renvoyez false pour remplacer la définition d’un cookie."
 
 #: ../../guides/events-list.rst:85
 msgid "**init, system** |sequence|"
-msgstr ""
+msgstr "**init, system** |sequence|"
 
 #: ../../guides/events-list.rst:85
 msgid ""
@@ -3663,7 +3664,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:88
 msgid "**languages, translations** |results|"
-msgstr ""
+msgstr "**languages, translations** |results|"
 
 #: ../../guides/events-list.rst:88
 msgid ""
@@ -3688,7 +3689,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:97
 msgid "**login_url, site** |results|"
-msgstr ""
+msgstr "**login_url, site** |results|"
 
 #: ../../guides/events-list.rst:95
 msgid ""
@@ -3699,7 +3700,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:102
 msgid "**output:before, page** |results|"
-msgstr ""
+msgstr "**output:before, page** |results|"
 
 #: ../../guides/events-list.rst:100
 msgid ""
@@ -3711,7 +3712,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:105
 msgid "**output, page** |results|"
-msgstr ""
+msgstr "**output, page** |results|"
 
 #: ../../guides/events-list.rst:105
 msgid "In ``elgg_view_page()``, this filters the output return value."
@@ -3719,7 +3720,7 @@ msgstr "Dans ``elgg_view_page()``, ceci filtre la valeur de retour renvoyée."
 
 #: ../../guides/events-list.rst:114
 msgid "**parameters, menu:<menu_name>** |results|"
-msgstr ""
+msgstr "**parameters, menu:<menu_name>** |results|"
 
 #: ../../guides/events-list.rst:108
 msgid ""
@@ -3743,7 +3744,7 @@ msgstr "d'autres paramètres passés à ``elgg_view_menu()``"
 
 #: ../../guides/events-list.rst:117
 msgid "**plugins_load, system** |sequence|"
-msgstr ""
+msgstr "**plugins_load, system** |sequence|"
 
 #: ../../guides/events-list.rst:117
 msgid ""
@@ -3756,7 +3757,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:120
 msgid "**plugins_boot, system** |sequence|"
-msgstr ""
+msgstr "**plugins_boot, system** |sequence|"
 
 #: ../../guides/events-list.rst:120
 msgid ""
@@ -3768,7 +3769,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:128
 msgid "**prepare, html** |results|"
-msgstr ""
+msgstr "**prepare, html** |results|"
 
 #: ../../guides/events-list.rst:123
 msgid ""
@@ -3791,7 +3792,7 @@ msgstr "``options`` - Options de préparation"
 
 #: ../../guides/events-list.rst:140
 msgid "**prepare, menu:<menu_name>** |results|"
-msgstr ""
+msgstr "**prepare, menu:<menu_name>** |results|"
 
 #: ../../guides/events-list.rst:131
 msgid ""
@@ -3819,7 +3820,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:148
 msgid "**prepare, menu:<menu_name>:<type>:<subtype>** |results|"
-msgstr ""
+msgstr "**prepare, menu:<menu_name>:<type>:<subtype>** |results|"
 
 #: ../../guides/events-list.rst:143
 msgid ""
@@ -3849,7 +3850,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:152
 msgid "**ready, system** |sequence|"
-msgstr ""
+msgstr "**ready, system** |sequence|"
 
 #: ../../guides/events-list.rst:151
 msgid ""
@@ -3881,7 +3882,7 @@ msgstr "Déclenché après que le secret du site a été régénéré."
 
 #: ../../guides/events-list.rst:169
 msgid "**register, menu:<menu_name>** |results|"
-msgstr ""
+msgstr "**register, menu:<menu_name>** |results|"
 
 #: ../../guides/events-list.rst:162
 msgid ""
@@ -3915,7 +3916,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:177
 msgid "**register, menu:<menu_name>:<type>:<subtype>** |results|"
-msgstr ""
+msgstr "**register, menu:<menu_name>:<type>:<subtype>** |results|"
 
 #: ../../guides/events-list.rst:172
 msgid ""
@@ -3925,7 +3926,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:197
 msgid "**register, menu:filter:<filter_id>** |results|"
-msgstr ""
+msgstr "**register, menu:filter:<filter_id>** |results|"
 
 #: ../../guides/events-list.rst:180
 msgid ""
@@ -3988,7 +3989,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:202
 msgid "**registration_url, site** |results|"
-msgstr ""
+msgstr "**registration_url, site** |results|"
 
 #: ../../guides/events-list.rst:200
 msgid ""
@@ -4009,7 +4010,7 @@ msgstr "Déclenché après que les traductions ont été (re)chargées."
 
 #: ../../guides/events-list.rst:208
 msgid "**sanitize, input** |results|"
-msgstr ""
+msgstr "**sanitize, input** |results|"
 
 #: ../../guides/events-list.rst:208
 msgid ""
@@ -4021,7 +4022,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:212
 msgid "**seeds, database** |results|"
-msgstr ""
+msgstr "**seeds, database** |results|"
 
 #: ../../guides/events-list.rst:211
 msgid ""
@@ -4109,7 +4110,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:236
 msgid "**simplecache:generate, <view>** |results|"
-msgstr ""
+msgstr "**simplecache:generate, <view>** |results|"
 
 #: ../../guides/events-list.rst:236
 msgid ""
@@ -4132,7 +4133,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:243
 msgid "**upgrade:execute, system** |sequence|"
-msgstr ""
+msgstr "**upgrade:execute, system** |sequence|"
 
 #: ../../guides/events-list.rst:243
 msgid ""
@@ -4158,7 +4159,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:260
 msgid "**change:email, user** |results|"
-msgstr ""
+msgstr "**change:email, user** |results|"
 
 #: ../../guides/events-list.rst:252
 msgid ""
@@ -4209,7 +4210,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:272
 msgid "**login:forward, user** |results|"
-msgstr ""
+msgstr "**login:forward, user** |results|"
 
 #: ../../guides/events-list.rst:272
 msgid "Filters the URL to which the user will be forwarded after login."
@@ -4276,7 +4277,7 @@ msgstr "L'utilisateur a modifié son profil"
 
 #: ../../guides/events-list.rst:300
 msgid "**register, user** |results|"
-msgstr ""
+msgstr "**register, user** |results|"
 
 #: ../../guides/events-list.rst:293
 msgid ""
@@ -4301,7 +4302,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:304
 msgid "**registeruser:validate:email, all** |results|"
-msgstr ""
+msgstr "**registeruser:validate:email, all** |results|"
 
 #: ../../guides/events-list.rst:303
 msgid ""
@@ -4313,7 +4314,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:308
 msgid "**registeruser:validate:password, all** |results|"
-msgstr ""
+msgstr "**registeruser:validate:password, all** |results|"
 
 #: ../../guides/events-list.rst:307
 msgid ""
@@ -4325,7 +4326,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:312
 msgid "**registeruser:validate:username, all** |results|"
-msgstr ""
+msgstr "**registeruser:validate:username, all** |results|"
 
 #: ../../guides/events-list.rst:311
 msgid ""
@@ -4358,7 +4359,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:323
 msgid "**username:character_blacklist, user** |results|"
-msgstr ""
+msgstr "**username:character_blacklist, user** |results|"
 
 #: ../../guides/events-list.rst:321
 msgid ""
@@ -4374,7 +4375,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:333
 msgid "**usersettings:save, user** |results|"
-msgstr ""
+msgstr "**usersettings:save, user** |results|"
 
 #: ../../guides/events-list.rst:326
 msgid ""
@@ -4466,7 +4467,7 @@ msgstr "Événements des entités"
 
 #: ../../guides/events-list.rst:365
 msgid "**comments, <entity_type>** |results|"
-msgstr ""
+msgstr "**comments, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:364
 msgid ""
@@ -4478,7 +4479,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:368
 msgid "**comments:count, <entity_type>** |results|"
-msgstr ""
+msgstr "**comments:count, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:368
 msgid "Return the number of comments on ``$params['entity']``."
@@ -4497,7 +4498,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:375
 msgid "**create:after, <entity type>**"
-msgstr ""
+msgstr "**create:after, <entity type>**"
 
 #: ../../guides/events-list.rst:375
 msgid "Triggered for user, group, object, and site entities after creation."
@@ -4505,7 +4506,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:378
 msgid "**create:before, <entity type>**"
-msgstr ""
+msgstr "**create:before, <entity type>**"
 
 #: ../../guides/events-list.rst:378
 msgid ""
@@ -4576,7 +4577,7 @@ msgstr "Déclenché après qu'une entité a été activée."
 
 #: ../../guides/events-list.rst:402
 msgid "**likes:count, <entity_type>** |results|"
-msgstr ""
+msgstr "**likes:count, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:402
 msgid "Return the number of likes for ``$params['entity']``."
@@ -4767,11 +4768,11 @@ msgstr ""
 
 #: ../../guides/events-list.rst:468
 msgid "Access events"
-msgstr ""
+msgstr "Événements des accès"
 
 #: ../../guides/events-list.rst:475
 msgid "**access_collection:url, access_collection** |results|"
-msgstr ""
+msgstr "**access_collection:url, access_collection** |results|"
 
 #: ../../guides/events-list.rst:471
 msgid "Can be used to filter the URL of the access collection."
@@ -4783,7 +4784,7 @@ msgstr "``access_collection`` - `ElggAccessCollection`"
 
 #: ../../guides/events-list.rst:482
 msgid "**access_collection:name, access_collection** |results|"
-msgstr ""
+msgstr "**access_collection:name, access_collection** |results|"
 
 #: ../../guides/events-list.rst:478
 msgid ""
@@ -4795,7 +4796,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:489
 msgid "**access:collections:read, user** |results|"
-msgstr ""
+msgstr "**access:collections:read, user** |results|"
 
 #: ../../guides/events-list.rst:485
 msgid ""
@@ -4813,7 +4814,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:501
 msgid "**access:collections:write, user** |results|"
-msgstr ""
+msgstr "**access:collections:write, user** |results|"
 
 #: ../../guides/events-list.rst:492
 msgid ""
@@ -4828,7 +4829,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:505
 msgid "**access:collections:write:subtypes, user** |results|"
-msgstr ""
+msgstr "**access:collections:write:subtypes, user** |results|"
 
 #: ../../guides/events-list.rst:504
 msgid ""
@@ -4842,7 +4843,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:509
 msgid "**access:collections:add_user, collection** |results|"
-msgstr ""
+msgstr "**access:collections:add_user, collection** |results|"
 
 #: ../../guides/events-list.rst:508
 msgid ""
@@ -4855,7 +4856,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:513
 msgid "**access:collections:remove_user, collection** |results|"
-msgstr ""
+msgstr "**access:collections:remove_user, collection** |results|"
 
 #: ../../guides/events-list.rst:512
 msgid ""
@@ -4868,23 +4869,23 @@ msgstr ""
 
 #: ../../guides/events-list.rst:516
 msgid "**create, access_collection** |sequence|"
-msgstr ""
+msgstr "**create, access_collection** |sequence|"
 
 #: ../../guides/events-list.rst:516
 msgid "Triggered during the creation of an ``ElggAccessCollection``."
-msgstr ""
+msgstr "Déclenché durant la création d'une ``ElggAccessCollection``."
 
 #: ../../guides/events-list.rst:519
 msgid "**delete, access_collection** |sequence|"
-msgstr ""
+msgstr "**delete, access_collection** |sequence|"
 
 #: ../../guides/events-list.rst:519
 msgid "Triggered during the deletion of an ``ElggAccessCollection``."
-msgstr ""
+msgstr "Déclenché durant la suppression d'une ``ElggAccessCollection``."
 
 #: ../../guides/events-list.rst:540
 msgid "**get_sql, access** |results|"
-msgstr ""
+msgstr "**get_sql, access** |results|"
 
 #: ../../guides/events-list.rst:522
 msgid ""
@@ -4963,19 +4964,19 @@ msgstr "``query_builder`` - une instance de ``QueryBuilder``"
 
 #: ../../guides/events-list.rst:543
 msgid "**update, access_collection** |sequence|"
-msgstr ""
+msgstr "**update, access_collection** |sequence|"
 
 #: ../../guides/events-list.rst:543
 msgid "Triggered during the update of an ``ElggAccessCollection``."
-msgstr ""
+msgstr "Déclenché durant la mise à jour d'une ``ElggAccessCollection``."
 
 #: ../../guides/events-list.rst:548
 msgid "Permission events"
-msgstr ""
+msgstr "Événements des permissions"
 
 #: ../../guides/events-list.rst:564
 msgid "**container_logic_check, <entity_type>** |results|"
-msgstr ""
+msgstr "**container_logic_check, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:551
 msgid ""
@@ -5015,7 +5016,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:578
 msgid "**container_permissions_check, <entity_type>** |results|"
-msgstr ""
+msgstr "**container_permissions_check, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:567
 msgid ""
@@ -5037,7 +5038,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:581
 msgid "**permissions_check, <entity_type>** |results|"
-msgstr ""
+msgstr "**permissions_check, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:581
 msgid ""
@@ -5049,7 +5050,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:584
 msgid "**permissions_check:delete, <entity_type>** |results|"
-msgstr ""
+msgstr "**permissions_check:delete, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:584
 msgid ""
@@ -5062,7 +5063,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:588
 msgid "**permissions_check:delete, river** |results|"
-msgstr ""
+msgstr "**permissions_check:delete, river** |results|"
 
 #: ../../guides/events-list.rst:587
 msgid ""
@@ -5076,7 +5077,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:596
 msgid "**permissions_check:download, file** |results|"
-msgstr ""
+msgstr "**permissions_check:download, file** |results|"
 
 #: ../../guides/events-list.rst:591
 msgid ""
@@ -5096,7 +5097,7 @@ msgstr "``user`` - Utilisateur qui va télécharger le fichier"
 
 #: ../../guides/events-list.rst:600
 msgid "**permissions_check, widget_layout** |results|"
-msgstr ""
+msgstr "**permissions_check, widget_layout** |results|"
 
 #: ../../guides/events-list.rst:599
 msgid ""
@@ -5110,7 +5111,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:603
 msgid "**permissions_check:comment, <entity_type>** |results|"
-msgstr ""
+msgstr "**permissions_check:comment, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:603
 msgid ""
@@ -5124,6 +5125,7 @@ msgstr ""
 msgid ""
 "**permissions_check:annotate:<annotation_name>, <entity_type>** |results|"
 msgstr ""
+"**permissions_check:annotate:<annotation_name>, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:606
 msgid ""
@@ -5144,7 +5146,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:613
 msgid "**permissions_check:annotate, <entity_type>** |results|"
-msgstr ""
+msgstr "**permissions_check:annotate, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:612
 msgid ""
@@ -5159,7 +5161,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:616
 msgid "**api_key, use** |results|"
-msgstr ""
+msgstr "**api_key, use** |results|"
 
 #: ../../guides/events-list.rst:616
 msgid ""
@@ -5171,7 +5173,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:628
 msgid "**gatekeeper, <entity_type>:<entity_subtype>** |results|"
-msgstr ""
+msgstr "**gatekeeper, <entity_type>:<entity_subtype>** |results|"
 
 #: ../../guides/events-list.rst:619
 msgid ""
@@ -5238,7 +5240,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:649
 msgid "**enqueue, notification** |results|"
-msgstr ""
+msgstr "**enqueue, notification** |results|"
 
 #: ../../guides/events-list.rst:643
 msgid ""
@@ -5263,7 +5265,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:666
 msgid "**get, subscriptions** |results|"
-msgstr ""
+msgstr "**get, subscriptions** |results|"
 
 #: ../../guides/events-list.rst:652
 msgid ""
@@ -5321,7 +5323,7 @@ msgstr "Les gestionnaires doivent renvoyer un tableau de la forme :"
 
 #: ../../guides/events-list.rst:683
 msgid "**send:before, notifications** |results|"
-msgstr ""
+msgstr "**send:before, notifications** |results|"
 
 #: ../../guides/events-list.rst:677
 msgid ""
@@ -5342,7 +5344,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:700
 msgid "**prepare, notification** |results|"
-msgstr ""
+msgstr "**prepare, notification** |results|"
 
 #: ../../guides/events-list.rst:686
 msgid ""
@@ -5397,6 +5399,7 @@ msgstr "``language`` - langue de la notification (langue du destinataire)"
 msgid ""
 "**prepare, notification:<action>:<entity_type>:<entity_type>** |results|"
 msgstr ""
+"**prepare, notification:<action>:<entity_type>:<entity_type>** |results|"
 
 #: ../../guides/events-list.rst:703
 msgid ""
@@ -5415,7 +5418,7 @@ msgstr "``$params`` comprend :"
 
 #: ../../guides/events-list.rst:728
 msgid "**format, notification:<method>** |results|"
-msgstr ""
+msgstr "**format, notification:<method>** |results|"
 
 #: ../../guides/events-list.rst:720
 msgid ""
@@ -5445,7 +5448,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:737
 msgid "**send, notification:<method>** |results|"
-msgstr ""
+msgstr "**send, notification:<method>** |results|"
 
 #: ../../guides/events-list.rst:731
 msgid ""
@@ -5467,7 +5470,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:747
 msgid "**send:after, notifications** |results|"
-msgstr ""
+msgstr "**send:after, notifications** |results|"
 
 #: ../../guides/events-list.rst:740
 msgid ""
@@ -5493,7 +5496,7 @@ msgstr "E-mails"
 
 #: ../../guides/events-list.rst:758
 msgid "**prepare, system:email** |results|"
-msgstr ""
+msgstr "**prepare, system:email** |results|"
 
 #: ../../guides/events-list.rst:753
 msgid ""
@@ -5514,7 +5517,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:768
 msgid "**transport, system:email** |results|"
-msgstr ""
+msgstr "**transport, system:email** |results|"
 
 #: ../../guides/events-list.rst:761
 msgid ""
@@ -5537,7 +5540,7 @@ msgstr "``email`` - Une instance de ``\\Elgg\\Email``"
 
 #: ../../guides/events-list.rst:778
 msgid "**validate, system:email** |results|"
-msgstr ""
+msgstr "**validate, system:email** |results|"
 
 #: ../../guides/events-list.rst:771
 msgid ""
@@ -5549,7 +5552,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:787
 msgid "**zend:message, system:email** |results|"
-msgstr ""
+msgstr "**zend:message, system:email** |results|"
 
 #: ../../guides/events-list.rst:781
 msgid ""
@@ -5567,7 +5570,7 @@ msgstr "Événements des fichiers"
 
 #: ../../guides/events-list.rst:800
 msgid "**download:url, file** |results|"
-msgstr ""
+msgstr "**download:url, file** |results|"
 
 #: ../../guides/events-list.rst:794
 msgid "Allows plugins to filter the download URL of the file."
@@ -5595,7 +5598,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:810
 msgid "**inline:url, file** |results|"
-msgstr ""
+msgstr "**inline:url, file** |results|"
 
 #: ../../guides/events-list.rst:804
 msgid "Allows plugins to filter the inline URL of the image file."
@@ -5609,7 +5612,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:814
 msgid "**mime_type, file** |results|"
-msgstr ""
+msgstr "**mime_type, file** |results|"
 
 #: ../../guides/events-list.rst:813
 msgid ""
@@ -5623,7 +5626,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:820
 msgid "**simple_type, file** |results|"
-msgstr ""
+msgstr "**simple_type, file** |results|"
 
 #: ../../guides/events-list.rst:817
 msgid ""
@@ -5636,7 +5639,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:832
 msgid "**upload, file** |results|"
-msgstr ""
+msgstr "**upload, file** |results|"
 
 #: ../../guides/events-list.rst:823
 msgid ""
@@ -5680,11 +5683,11 @@ msgstr ""
 
 #: ../../guides/events-list.rst:840
 msgid "Action events"
-msgstr ""
+msgstr "Événements des actions"
 
 #: ../../guides/events-list.rst:850
 msgid "**action:validate, <action>** |results|"
-msgstr ""
+msgstr "**action:validate, <action>** |results|"
 
 #: ../../guides/events-list.rst:843
 msgid ""
@@ -5701,7 +5704,7 @@ msgstr "``request`` - instance de ``\\Elgg\\Request``"
 
 #: ../../guides/events-list.rst:853
 msgid "**action_gatekeeper:permissions:check, all** |results|"
-msgstr ""
+msgstr "**action_gatekeeper:permissions:check, all** |results|"
 
 #: ../../guides/events-list.rst:853
 msgid ""
@@ -5713,7 +5716,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:857
 msgid "**forward, <reason>** |results|"
-msgstr ""
+msgstr "**forward, <reason>** |results|"
 
 #: ../../guides/events-list.rst:856
 msgid ""
@@ -5728,7 +5731,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:863
 msgid "**response, action:<action>** |results|"
-msgstr ""
+msgstr "**response, action:<action>** |results|"
 
 #: ../../guides/events-list.rst:860
 msgid ""
@@ -5742,7 +5745,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:882
 msgid "**ajax_response, \\*** |results|"
-msgstr ""
+msgstr "**ajax_response, \\*** |results|"
 
 #: ../../guides/events-list.rst:871
 msgid ""
@@ -5757,7 +5760,7 @@ msgstr "méthode elgg/Ajax"
 
 #: ../../guides/events-list.rst:876
 msgid "event type"
-msgstr ""
+msgstr "type d'événement"
 
 #: ../../guides/events-list.rst:878
 msgid "action()"
@@ -5793,7 +5796,7 @@ msgstr "form:<action_name>"
 
 #: ../../guides/events-list.rst:885
 msgid "**ajax_response, action:<action_name>** |results|"
-msgstr ""
+msgstr "**ajax_response, action:<action_name>** |results|"
 
 #: ../../guides/events-list.rst:885
 msgid ""
@@ -5805,7 +5808,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:889
 msgid "**ajax_response, path:<path>** |results|"
-msgstr ""
+msgstr "**ajax_response, path:<path>** |results|"
 
 #: ../../guides/events-list.rst:888
 msgid ""
@@ -5816,7 +5819,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:892
 msgid "**ajax_response, view:<view>** |results|"
-msgstr ""
+msgstr "**ajax_response, view:<view>** |results|"
 
 #: ../../guides/events-list.rst:892
 msgid ""
@@ -5828,7 +5831,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:895
 msgid "**ajax_response, form:<action_name>** |results|"
-msgstr ""
+msgstr "**ajax_response, form:<action_name>** |results|"
 
 #: ../../guides/events-list.rst:895
 msgid ""
@@ -5844,7 +5847,7 @@ msgstr "Routage"
 
 #: ../../guides/events-list.rst:905
 msgid "**response, path:<path>** |results|"
-msgstr ""
+msgstr "**response, path:<path>** |results|"
 
 #: ../../guides/events-list.rst:901
 msgid ""
@@ -5859,7 +5862,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:910
 msgid "**route:config, <route_name>** |results|"
-msgstr ""
+msgstr "**route:config, <route_name>** |results|"
 
 #: ../../guides/events-list.rst:908
 msgid ""
@@ -5872,7 +5875,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:914
 msgid "**route:rewrite, <identifier>** |results|"
-msgstr ""
+msgstr "**route:rewrite, <identifier>** |results|"
 
 #: ../../guides/events-list.rst:913
 msgid ""
@@ -5889,23 +5892,23 @@ msgstr "Vues"
 
 #: ../../guides/events-list.rst:922
 msgid "**attributes, htmlawed** |results|"
-msgstr ""
+msgstr "**attributes, htmlawed** |results|"
 
 #: ../../guides/events-list.rst:922
 msgid "Allows changes to individual attributes."
-msgstr ""
+msgstr "Permet de modifier des attributs individuels."
 
 #: ../../guides/events-list.rst:925
 msgid "**allowed_styles, htmlawed** |results|"
-msgstr ""
+msgstr "**allowed_styles, htmlawed** |results|"
 
 #: ../../guides/events-list.rst:925
 msgid "Configure allowed styles for HTMLawed."
-msgstr ""
+msgstr "Configure les styles autorisés pour HTMLawed."
 
 #: ../../guides/events-list.rst:928
 msgid "**config, htmlawed** |results|"
-msgstr ""
+msgstr "**config, htmlawed** |results|"
 
 #: ../../guides/events-list.rst:928
 msgid "Filter the HTMLawed ``$config`` array."
@@ -5913,7 +5916,7 @@ msgstr "Filtre le tableau HTMLawed ``$config``."
 
 #: ../../guides/events-list.rst:932
 msgid "**form:prepare:fields, <form_name>** |results|"
-msgstr ""
+msgstr "**form:prepare:fields, <form_name>** |results|"
 
 #: ../../guides/events-list.rst:931
 msgid ""
@@ -5924,7 +5927,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:940
 msgid "**head, page** |results|"
-msgstr ""
+msgstr "**head, page** |results|"
 
 #: ../../guides/events-list.rst:935
 msgid ""
@@ -5945,7 +5948,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:974
 msgid "**layout, page** |results|"
-msgstr ""
+msgstr "**layout, page** |results|"
 
 #: ../../guides/events-list.rst:969
 msgid ""
@@ -5969,7 +5972,7 @@ msgstr "autres ``$vars`` reçues par ``elgg_view_layout()``"
 
 #: ../../guides/events-list.rst:979
 msgid "**response, form:<form_name>** |results|"
-msgstr ""
+msgstr "**response, form:<form_name>** |results|"
 
 #: ../../guides/events-list.rst:977
 msgid ""
@@ -5981,7 +5984,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:984
 msgid "**response, view:<view_name>** |results|"
-msgstr ""
+msgstr "**response, view:<view_name>** |results|"
 
 #: ../../guides/events-list.rst:982
 msgid ""
@@ -5993,7 +5996,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:987
 msgid "**shell, page** |results|"
-msgstr ""
+msgstr "**shell, page** |results|"
 
 #: ../../guides/events-list.rst:987
 msgid "In ``elgg_view_page()``, filters the page shell name"
@@ -6003,7 +6006,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:990
 msgid "**spec, htmlawed** |results|"
-msgstr ""
+msgstr "**spec, htmlawed** |results|"
 
 #: ../../guides/events-list.rst:990
 msgid "Filter the HTMLawed ``$spec`` string (default empty)."
@@ -6011,7 +6014,7 @@ msgstr "Filtre la chaîne HTMLawed ``$spec`` (vide par défaut)."
 
 #: ../../guides/events-list.rst:996
 msgid "**table_columns:call, <name>** |results|"
-msgstr ""
+msgstr "**table_columns:call, <name>** |results|"
 
 #: ../../guides/events-list.rst:993
 msgid ""
@@ -6024,7 +6027,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1000
 msgid "**vars:compiler, css** |results|"
-msgstr ""
+msgstr "**vars:compiler, css** |results|"
 
 #: ../../guides/events-list.rst:999
 msgid ""
@@ -6037,7 +6040,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1003
 msgid "**view, <view_name>** |results|"
-msgstr ""
+msgstr "**view, <view_name>** |results|"
 
 #: ../../guides/events-list.rst:1003
 msgid "Filters the returned content of the view"
@@ -6045,7 +6048,7 @@ msgstr "Filtre le contenu renvoyé par la vue"
 
 #: ../../guides/events-list.rst:1006
 msgid "**view_vars, <view_name>** |results|"
-msgstr ""
+msgstr "**view_vars, <view_name>** |results|"
 
 #: ../../guides/events-list.rst:1006
 msgid "Filters the ``$vars`` array passed to the view"
@@ -6057,7 +6060,7 @@ msgstr "Recherche"
 
 #: ../../guides/events-list.rst:1016
 msgid "**search:config, search_types** |results|"
-msgstr ""
+msgstr "**search:config, search_types** |results|"
 
 #: ../../guides/events-list.rst:1014
 msgid ""
@@ -6075,7 +6078,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1021
 msgid "**search:config, type_subtype_pairs** |results|"
-msgstr ""
+msgstr "**search:config, type_subtype_pairs** |results|"
 
 #: ../../guides/events-list.rst:1019
 msgid ""
@@ -6092,7 +6095,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1026
 msgid "**search:fields, <entity_type>** |results|"
-msgstr ""
+msgstr "**search:fields, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:1024
 msgid ""
@@ -6111,7 +6114,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1037
 msgid "**search:fields, <entity_type>:<entity_subtype>** |results|"
-msgstr ""
+msgstr "**search:fields, <entity_type>:<entity_subtype>** |results|"
 
 #: ../../guides/events-list.rst:1037 ../../guides/events-list.rst:1040
 msgid "See **search:fields, <entity_type>**"
@@ -6119,11 +6122,11 @@ msgstr "Voyez **search:fields, <entity_type>**"
 
 #: ../../guides/events-list.rst:1040
 msgid "**search:fields, <search_type>** |results|"
-msgstr ""
+msgstr "**search:fields, <search_type>** |results|"
 
 #: ../../guides/events-list.rst:1045
 msgid "**search:format, entity** |results|"
-msgstr ""
+msgstr "**search:format, entity** |results|"
 
 #: ../../guides/events-list.rst:1043
 msgid ""
@@ -6140,7 +6143,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1048
 msgid "**search:options, <entity_type>** |results|"
-msgstr ""
+msgstr "**search:options, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:1048
 msgid ""
@@ -6152,7 +6155,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1051
 msgid "**search:options, <entity_type>:<entity_subtype>** |results|"
-msgstr ""
+msgstr "**search:options, <entity_type>:<entity_subtype>** |results|"
 
 #: ../../guides/events-list.rst:1051 ../../guides/events-list.rst:1054
 msgid "See **search:options, <entity_type>**"
@@ -6160,11 +6163,11 @@ msgstr "Voyez **search:options, <entity_type>**"
 
 #: ../../guides/events-list.rst:1054
 msgid "**search:options, <search_type>** |results|"
-msgstr ""
+msgstr "**search:options, <search_type>** |results|"
 
 #: ../../guides/events-list.rst:1058
 msgid "**search:params, <search_type>** |results|"
-msgstr ""
+msgstr "**search:params, <search_type>** |results|"
 
 #: ../../guides/events-list.rst:1057
 msgid ""
@@ -6179,7 +6182,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1062
 msgid "**search:results, <search_type>** |results|"
-msgstr ""
+msgstr "**search:results, <search_type>** |results|"
 
 #: ../../guides/events-list.rst:1061
 msgid ""
@@ -6195,7 +6198,7 @@ msgstr "Autres"
 
 #: ../../guides/events-list.rst:1071
 msgid "**config, comments_per_page** |results|"
-msgstr ""
+msgstr "**config, comments_per_page** |results|"
 
 #: ../../guides/events-list.rst:1070
 msgid ""
@@ -6210,7 +6213,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1075
 msgid "**config, comments_latest_first** |results|"
-msgstr ""
+msgstr "**config, comments_latest_first** |results|"
 
 #: ../../guides/events-list.rst:1074
 msgid ""
@@ -6224,7 +6227,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1082
 msgid "**default, access** |results|"
-msgstr ""
+msgstr "**default, access** |results|"
 
 #: ../../guides/events-list.rst:1078
 msgid ""
@@ -6238,7 +6241,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1086
 msgid "**classes, icon** |results|"
-msgstr ""
+msgstr "**classes, icon** |results|"
 
 #: ../../guides/events-list.rst:1085
 msgid ""
@@ -6249,7 +6252,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1089
 msgid "**config, amd** |results|"
-msgstr ""
+msgstr "**config, amd** |results|"
 
 #: ../../guides/events-list.rst:1089
 msgid "Filter the AMD config for the requirejs library."
@@ -6257,7 +6260,7 @@ msgstr "Filtre la configuration AMD pour la bibliothèque requirejs."
 
 #: ../../guides/events-list.rst:1093
 msgid "**entity:icon:sizes, <entity_type>** |results|"
-msgstr ""
+msgstr "**entity:icon:sizes, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:1092
 msgid ""
@@ -6271,7 +6274,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1110
 msgid "**entity:<icon_type>:sizes, <entity_type>** |results|"
-msgstr ""
+msgstr "**entity:<icon_type>:sizes, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:1096
 msgid ""
@@ -6333,7 +6336,7 @@ msgstr "Exemple :"
 
 #: ../../guides/events-list.rst:1142
 msgid "**entity:icon:url, <entity_type>** |results|"
-msgstr ""
+msgstr "**entity:icon:url, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:1130
 msgid ""
@@ -6390,7 +6393,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1182
 msgid "**entity:<icon_type>:url, <entity_type>** |results|"
-msgstr ""
+msgstr "**entity:<icon_type>:url, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:1182
 msgid ""
@@ -6402,7 +6405,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1187
 msgid "**entity:icon:file, <entity_type>** |results|"
-msgstr ""
+msgstr "**entity:icon:file, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:1185
 msgid ""
@@ -6418,7 +6421,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1190
 msgid "**entity:<icon_type>:file, <entity_type>** |results|"
-msgstr ""
+msgstr "**entity:<icon_type>:file, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:1190
 msgid ""
@@ -6430,7 +6433,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1202
 msgid "**entity:<icon_type>:prepare, <entity_type>** |results|"
-msgstr ""
+msgstr "**entity:<icon_type>:prepare, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:1193
 msgid ""
@@ -6460,7 +6463,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1211
 msgid "**entity:<icon_type>:save, <entity_type>** |results|"
-msgstr ""
+msgstr "**entity:<icon_type>:save, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:1205
 msgid ""
@@ -6489,7 +6492,7 @@ msgstr "``x1``, ``y1``, ``x2``, ``y2`` - coordonnées de découpe"
 
 #: ../../guides/events-list.rst:1220
 msgid "**entity:<icon_type>:saved, <entity_type>** |results|"
-msgstr ""
+msgstr "**entity:<icon_type>:saved, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:1214
 msgid ""
@@ -6502,7 +6505,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1227
 msgid "**entity:<icon_type>:delete, <entity_type>** |results|"
-msgstr ""
+msgstr "**entity:<icon_type>:delete, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:1223
 msgid ""
@@ -6514,7 +6517,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1232
 msgid "**entity:url, <entity_type>** |results|"
-msgstr ""
+msgstr "**entity:url, <entity_type>** |results|"
 
 #: ../../guides/events-list.rst:1230
 msgid ""
@@ -6526,7 +6529,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1235
 msgid "**extender:url, <annotation|metadata>** |results|"
-msgstr ""
+msgstr "**extender:url, <annotation|metadata>** |results|"
 
 #: ../../guides/events-list.rst:1235
 msgid "Return the URL for the annotation or metadata ``$params['extender']``."
@@ -6534,7 +6537,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1239
 msgid "**fields, <entity_type>:<entity_subtype>** |results|"
-msgstr ""
+msgstr "**fields, <entity_type>:<entity_subtype>** |results|"
 
 #: ../../guides/events-list.rst:1238
 msgid ""
@@ -6548,7 +6551,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1254
 msgid "**get_list, default_widgets** |results|"
-msgstr ""
+msgstr "**get_list, default_widgets** |results|"
 
 #: ../../guides/events-list.rst:1253
 msgid ""
@@ -6561,7 +6564,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1272
 msgid "**handlers, widgets** |results|"
-msgstr ""
+msgstr "**handlers, widgets** |results|"
 
 #: ../../guides/events-list.rst:1271
 msgid ""
@@ -6576,7 +6579,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1276
 msgid "**maintenance:allow, url** |results|"
-msgstr ""
+msgstr "**maintenance:allow, url** |results|"
 
 #: ../../guides/events-list.rst:1276
 msgid ""
@@ -6592,7 +6595,7 @@ msgstr "sont autorisés pendant le mode de maintenance."
 
 #: ../../guides/events-list.rst:1287
 msgid "**plugin_setting, <entity type>** |results|"
-msgstr ""
+msgstr "**plugin_setting, <entity type>** |results|"
 
 #: ../../guides/events-list.rst:1279
 msgid "Can be used to change the value of the setting being saved"
@@ -6622,7 +6625,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1297
 msgid "**public_pages, walled_garden** |results|"
-msgstr ""
+msgstr "**public_pages, walled_garden** |results|"
 
 #: ../../guides/events-list.rst:1290
 msgid ""
@@ -6639,7 +6642,7 @@ msgstr "``url`` - URL de la page testée pour l’accessibilité publique"
 
 #: ../../guides/events-list.rst:1300
 msgid "**relationship:url, <relationship_name>** |results|"
-msgstr ""
+msgstr "**relationship:url, <relationship_name>** |results|"
 
 #: ../../guides/events-list.rst:1300
 msgid ""
@@ -6648,7 +6651,7 @@ msgstr "Filtre l’URL pour l’objet de la relation ``$params['relationship']``
 
 #: ../../guides/events-list.rst:1303
 msgid "**robots.txt, site** |results|"
-msgstr ""
+msgstr "**robots.txt, site** |results|"
 
 #: ../../guides/events-list.rst:1303
 msgid "Filter the robots.txt values for ``$params['site']``."
@@ -6656,7 +6659,7 @@ msgstr "Filtre les valeurs de robots.txt pour ``$params['site']``."
 
 #: ../../guides/events-list.rst:1311
 msgid "**setting, plugin** |results|"
-msgstr ""
+msgstr "**setting, plugin** |results|"
 
 #: ../../guides/events-list.rst:1306
 msgid "Filter plugin settings. ``$params`` contains:"
@@ -6705,7 +6708,7 @@ msgstr "Groupes"
 
 #: ../../guides/events-list.rst:1330
 msgid "**tool_options, group** |results|"
-msgstr ""
+msgstr "**tool_options, group** |results|"
 
 #: ../../guides/events-list.rst:1324
 msgid "Filters a collection of tools available within a specific group:"
@@ -6732,7 +6735,7 @@ msgstr "Web Services"
 
 #: ../../guides/events-list.rst:1336
 msgid "**register, api_methods``** |results|"
-msgstr ""
+msgstr "**register, api_methods``** |results|"
 
 #: ../../guides/events-list.rst:1336
 msgid ""
@@ -6742,7 +6745,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1340
 msgid "**rest, init** |results|"
-msgstr ""
+msgstr "**rest, init** |results|"
 
 #: ../../guides/events-list.rst:1339
 msgid ""
@@ -6756,7 +6759,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1344
 msgid "**rest:output, <method_name>** |results|"
-msgstr ""
+msgstr "**rest:output, <method_name>** |results|"
 
 #: ../../guides/events-list.rst:1343
 msgid "Filter the result (and subsequently the output) of the API method"
@@ -7198,7 +7201,7 @@ msgstr "page_handler/owner/<username>"
 
 #: ../../guides/guidelines.rst:32
 msgid "User friends'"
-msgstr ""
+msgstr "Contacts du membre"
 
 #: ../../guides/guidelines.rst:32
 msgid "page_handler/friends/<username>"
@@ -8014,7 +8017,7 @@ msgstr "Passer des paramètres aux modules"
 
 #: ../../guides/javascript.rst:78
 msgid "The ``elgg.data`` events"
-msgstr ""
+msgstr "Les événements ``elgg.data``"
 
 #: ../../guides/javascript.rst:80
 msgid ""
@@ -8266,7 +8269,7 @@ msgstr "Voir la page :doc:`ajax` pour plus de détails."
 
 #: ../../guides/javascript.rst:304
 msgid "Module ``elgg/hooks``"
-msgstr ""
+msgstr "Module ``elgg/hooks``"
 
 #: ../../guides/javascript.rst:306
 msgid ""
@@ -8848,7 +8851,7 @@ msgstr "Utilisation avancée"
 
 #: ../../guides/menus.rst:56
 msgid "Headers"
-msgstr ""
+msgstr "Entêtes"
 
 #: ../../guides/menus.rst:58
 msgid ""
@@ -8871,7 +8874,7 @@ msgstr ""
 
 #: ../../guides/menus.rst:72
 msgid "Events"
-msgstr ""
+msgstr "Événements"
 
 #: ../../guides/menus.rst:74
 msgid ""
@@ -9755,7 +9758,7 @@ msgstr ""
 
 #: ../../guides/permissions-check.rst:11
 msgid "Extending permissions_check"
-msgstr ""
+msgstr "Étendre permissions_check"
 
 #: ../../guides/permissions-check.rst:13
 msgid "In your plugin, you must register the event for ``permissions_check``."
@@ -11300,7 +11303,7 @@ msgstr "Ce gestionnaire d'accès empêchera l’accès à toute demande non-XHR.
 
 #: ../../guides/routing.rst:215
 msgid "PageOwnerGatekeeper"
-msgstr ""
+msgstr "PageOwnerGatekeeper"
 
 #: ../../guides/routing.rst:217
 msgid "This gatekeeper will prevent access if there is no pageowner entity."
@@ -11308,7 +11311,7 @@ msgstr ""
 
 #: ../../guides/routing.rst:220
 msgid "GroupPageOwnerGatekeeper"
-msgstr ""
+msgstr "GroupPageOwnerGatekeeper"
 
 #: ../../guides/routing.rst:222
 msgid ""
@@ -11318,7 +11321,7 @@ msgstr ""
 
 #: ../../guides/routing.rst:225
 msgid "UserPageOwnerGatekeeper"
-msgstr ""
+msgstr "UserPageOwnerGatekeeper"
 
 #: ../../guides/routing.rst:227
 msgid ""
@@ -11465,7 +11468,7 @@ msgstr ""
 
 #: ../../guides/routing.rst:329
 msgid "The ``route:rewrite`` event"
-msgstr ""
+msgstr "L'événement ``route:rewrite``"
 
 #: ../../guides/routing.rst:331
 msgid ""
@@ -12699,7 +12702,7 @@ msgstr ""
 
 #: ../../guides/upgrading-data.rst:212
 msgid "getUpgrade()"
-msgstr ""
+msgstr "getUpgrade()"
 
 #: ../../guides/upgrading-data.rst:214
 msgid ""
@@ -13294,7 +13297,7 @@ msgstr ""
 
 #: ../../guides/views.rst:342
 msgid "``$event`` - the string ``\"view_vars\"``"
-msgstr ""
+msgstr "``$event`` - la chaîne ``\"view_vars\"``"
 
 #: ../../guides/views.rst:343 ../../guides/views.rst:381
 msgid ""
@@ -13358,7 +13361,7 @@ msgstr ""
 
 #: ../../guides/views.rst:380
 msgid "``$event`` - the string ``\"view\"``"
-msgstr ""
+msgstr "``$event`` - la chaîne ``\"view\"``"
 
 #: ../../guides/views.rst:382
 msgid "``$result`` - the modified output of the view"

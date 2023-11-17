@@ -9,7 +9,7 @@ return array(
 	'admin:information:theme_sandbox' => 'Bac à sable du thème',
 	
 	'theme_sandbox:intro' => 'Introduction',
-	'theme_sandbox:breakout' => 'Sortir de l\'iframe',
+	'theme_sandbox:breakout' => 'Sortir de l\'Iframe',
 	'theme_sandbox:buttons' => 'Boutons',
 	'theme_sandbox:components' => 'Composants',
 	'theme_sandbox:email' => 'E-mail',
@@ -19,6 +19,7 @@ return array(
 	'theme_sandbox:javascript' => 'JavaScript',
 	'theme_sandbox:layouts' => 'Mises en page',
 	'theme_sandbox:modules' => 'Modules',
+	'theme_sandbox:navigation' => 'Navigation',
 	'theme_sandbox:typography' => 'Typographie',
 
 	'theme_sandbox:icons:blurb' => 'Utilisez <em>elgg_view_icon($name)</em> pour afficher des icônes. ',

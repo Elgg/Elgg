@@ -5,15 +5,16 @@
 # 
 # Translators:
 # Jerôme Bakker, 2023
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 13:11+0200\n"
+"POT-Creation-Date: 2023-10-24 13:21+0200\n"
 "PO-Revision-Date: 2023-04-05 07:42+0000\n"
-"Last-Translator: Jerôme Bakker, 2023\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -444,7 +445,7 @@ msgstr "Représente"
 
 #: ../../design/database.rst:83
 msgid "object"
-msgstr "objet"
+msgstr "object"
 
 #: ../../design/database.rst:83
 msgid "``ElggObject``"
@@ -458,7 +459,7 @@ msgstr ""
 
 #: ../../design/database.rst:84
 msgid "group"
-msgstr "groupe"
+msgstr "group"
 
 #: ../../design/database.rst:84
 msgid "``ElggGroup``"
@@ -470,7 +471,7 @@ msgstr "Un groupe organisé d'utilisateurs avec sa propre page de profil"
 
 #: ../../design/database.rst:85
 msgid "user"
-msgstr "utilisateur"
+msgstr "user"
 
 #: ../../design/database.rst:85
 msgid "``ElggUser``"
@@ -1538,6 +1539,13 @@ msgid ""
 "reference for permissions\\_check <guides/events-list#permissions>` for more"
 " details."
 msgstr ""
+"Vous pouvez remplacer ce comportement en utilisant un :doc:`event "
+"</design/events>` appelé ``permissions_check``, qui transmet l'entité en "
+"question à toute fonction ayant annoncé qu'elle souhaite être référencée. "
+"Renvoyer ``true`` autorisera l'accès en écriture ; renvoyer ``false`` le "
+"bloquera. Voir :ref:`le guide de référence des événement pour la "
+"vérification des permissions <guides/events-list#permissions>` pour plus de "
+"détails."
 
 #: ../../design/database.rst:657
 msgid "Schema"
@@ -1798,7 +1806,7 @@ msgstr ""
 
 #: ../../design/events.rst:2
 msgid "Events"
-msgstr ""
+msgstr "Événements"
 
 #: ../../design/events.rst:11
 msgid ""
@@ -1814,6 +1822,9 @@ msgid ""
 "<http://php.net/manual/en/language.types.callable.php>`_ such as functions "
 "and methods) and registering them to handle the events."
 msgstr ""
+"Les plugins modifient le système en créant des gestionnaires (`callables "
+"<http://php.net/manual/en/language.types.callable.php>`_ tels que des "
+"fonctions et des méthodes) et en les enregistrant pour gérer les événements."
 
 #: ../../design/events.rst:16
 msgid ""
@@ -1852,12 +1863,16 @@ msgid ""
 "These events are mostly used to notify the rest of the system that something"
 " has happened."
 msgstr ""
+"Ces événements sont principalement utilisés pour informer le reste du "
+"système que quelque chose s'est produit."
 
 #: ../../design/events.rst:32
 msgid ""
 "There are also events that are used to influence output, configuration or "
 "behaviour of the system."
 msgstr ""
+"Certains événements sont également utilisés pour modifier la sortie, la "
+"configuration ou le comportement du système."
 
 #: ../../design/events.rst:34
 msgid ""
@@ -1865,6 +1880,9 @@ msgid ""
 "name, annotation, group) describing the type of object passed to the "
 "handlers."
 msgstr ""
+"Chaque événement Elgg a un nom et un type (système, utilisateur, objet, nom "
+"de relation, annotation, groupe) décrivant le type d'objet passé aux "
+"gestionnaires."
 
 #: ../../design/events.rst:40
 msgid "Before and After Events"
@@ -1888,6 +1906,10 @@ msgid ""
 "When ``false`` is returned by a handler, following handlers will not be "
 "called."
 msgstr ""
+"Les événements Précédents ont des noms se terminant par \":before\" et sont "
+"déclenchés avant que quelque chose ne se produise. Les gestionnaires peuvent"
+" annuler l'événement en renvoyant ``false``. Lorsque ``false`` est renvoyé "
+"par un gestionnaire, les gestionnaires suivants ne seront pas appelés."
 
 #: ../../design/events.rst:50
 msgid ""
@@ -1895,6 +1917,10 @@ msgid ""
 " happened. Handlers *cannot* cancel these events; all handlers will always "
 "be called."
 msgstr ""
+"Les événements Suivants, dont les noms se terminent par \":after\", sont "
+"déclenchés après que quelque chose s'est produit. Les gestionnaires *ne "
+"peuvent pas* annuler ces événements ; tous les gestionnaires seront toujours"
+" appelés."
 
 #: ../../design/events.rst:53
 msgid ""
@@ -1950,6 +1976,8 @@ msgid ""
 "**$type** The event type (e.g. \"user\" or \"object\") or 'all' for all "
 "types on which the event is fired."
 msgstr ""
+"**$type** Le type d'événement (par exemple \"user\" ou \"object\") ou 'all' "
+"pour tous les types sur lesquels l'événement est déclenché."
 
 #: ../../design/events.rst:93
 msgid "**$handler** The callback of the handler function."
@@ -1988,6 +2016,9 @@ msgid ""
 "register the class name and it will be instantiated (with no arguments) for "
 "the lifetime of the event."
 msgstr ""
+"Vous pouvez utiliser une classe avec une méthode ``__invoke()`` comme "
+"gestionnaire. Enregistrez simplement le nom de la classe et il sera "
+"instancié (sans argument) pour toute la durée de vie de l'événement."
 
 #: ../../design/events.rst:135
 msgid "Trigger an Elgg Event"
@@ -2033,7 +2064,7 @@ msgstr ""
 
 #: ../../design/events.rst:177
 msgid "Trigger an Event with results"
-msgstr ""
+msgstr "Déclencher un Événement avec des résultats"
 
 #: ../../design/events.rst:179
 msgid ""
@@ -2041,6 +2072,10 @@ msgid ""
 "or alter a value. For example, to decide whether a user has permission to "
 "edit an entity or to add additional configuration options to a plugin."
 msgstr ""
+"Les Événements avec résultats permettent aux plugins de déterminer ou de "
+"modifier une valeur de manière collaborative. Par exemple, pour décider si "
+"un utilisateur est autorisé à modifier une entité ou à ajouter des options "
+"de configuration supplémentaires à un plugin."
 
 #: ../../design/events.rst:183
 msgid ""
@@ -2049,18 +2084,24 @@ msgid ""
 "After the last handler has completed, the final value is returned by the "
 "trigger."
 msgstr ""
+"Un événement a une valeur transmise à la fonction de déclenchement, et "
+"chaque gestionnaire a la possibilité de modifier cette valeur avant qu'elle "
+"ne soit transmise au gestionnaire suivant. Une fois le dernier gestionnaire "
+"terminé, la valeur finale est renvoyée par le déclencheur."
 
 #: ../../design/events.rst:188
 msgid "You can trigger a custom event using ``elgg_trigger_event_results``:"
 msgstr ""
+"Vous pouvez déclencher un événement personnalisé en utilisant "
+"``elgg_trigger_event_results`` :"
 
 #: ../../design/events.rst:199
 msgid "**$name** The name of the event."
-msgstr ""
+msgstr "**$name** Le nom de l'événement."
 
 #: ../../design/events.rst:200
 msgid "**$type** The type of the event or 'all' for all types."
-msgstr ""
+msgstr "**$type** Le type d'événement ou \"all\" pour tous les types."
 
 #: ../../design/events.rst:201
 msgid "**$params** Arbitrary data passed from the trigger to the handlers."
@@ -2070,7 +2111,7 @@ msgstr ""
 
 #: ../../design/events.rst:202
 msgid "**$value** The initial value of the event."
-msgstr ""
+msgstr "**$value** La valeur initiale de l'événement."
 
 #: ../../design/events.rst:205
 msgid "Trigger an Elgg Event sequence"
@@ -2115,7 +2156,7 @@ msgstr ""
 
 #: ../../design/events.rst:228
 msgid "Unregister Event Handlers"
-msgstr ""
+msgstr "Dés-inscrire des Gestionnaires d'événement"
 
 #: ../../design/events.rst:230
 msgid ""
@@ -2124,6 +2165,10 @@ msgid ""
 "are in the same order as the registration functions, except there's no "
 "priority parameter."
 msgstr ""
+"Les fonctions ``elgg_unregister_event_handler`` peuvent être utilisées pour "
+"supprimer les gestionnaires déjà enregistrés par un autre plugin ou le coeur"
+" de Elgg. Les paramètres sont dans le même ordre que les fonctions "
+"d'enregistrement, sauf qu'il n'y a pas de paramètre de priorité."
 
 #: ../../design/events.rst:240
 msgid ""
@@ -2352,6 +2397,11 @@ msgid ""
 "config/settings.php``. Additional criteria can be added by a plugin by "
 "registering for the ``registeruser:validate:password`` event."
 msgstr ""
+"La seule restriction que Elgg impose sur un mot de passe est qu'il doit "
+"contenir au moins 6 caractères par défaut, même si cela puisse être modifié "
+"dans ``/elgg-config/settings.php``. Des critères supplémentaires peuvent "
+"être ajoutés par un plugin en s'enregistrant auprès de l'événement "
+"``registeruser:validate:password``."
 
 #: ../../design/security.rst:25
 msgid "Password hashing"
@@ -2557,6 +2607,9 @@ msgid ""
 "function takes in a string and returns a filtered string. It triggers a "
 "``sanitize, input`` event."
 msgstr ""
+"Le filtrage est effectué via la fonction ``elgg_sanitize_input()``. Cette "
+"fonction récupère une chaîne et renvoie une chaîne filtrée. Il déclenche un "
+"événement ``sanitize, input``."
 
 #: ../../design/security.rst:96
 msgid ""

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-18 11:20+0200\n"
+"POT-Creation-Date: 2023-10-24 13:21+0200\n"
 "PO-Revision-Date: 2023-04-05 07:42+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -364,7 +364,7 @@ msgstr "une autre structure de répertoire avec pour contenu :"
 
 #: ../../admin/backup-restore.rst:127
 msgid "``/home/userx/public_html``"
-msgstr "\"/home/userx/public_html\""
+msgstr "``/home/userx/public_html``"
 
 #: ../../admin/backup-restore.rst:128
 msgid "``/home/userx/elggdata``"
