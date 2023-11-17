@@ -69,9 +69,6 @@ Make sure the ``composer.json`` of the plugin contains all the relevant informat
 			"source": "https://github.com/elgg/<name of the repository>",
 			"issues": "https://github.com/elgg/<name of the repository>/issues"
 		},
-		"require": {
-			"composer/installers": ">=1.0.8"
-		},
 		"conflict": {
 			"elgg/elgg": "< <minimal Elgg required version>"
 		}

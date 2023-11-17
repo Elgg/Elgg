@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 13:11+0200\n"
+"POT-Creation-Date: 2023-10-24 13:21+0200\n"
 "PO-Revision-Date: 2023-04-05 07:42+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -48,7 +48,7 @@ msgid ""
 "**Well-documented core API** that allows developers to kick start their new "
 "project with a simple learning curve"
 msgstr ""
-"**Une API bien documentée** qui permet aux développeurs d'accélérer leurs "
+"**Une API bien documentée** qui permet aux développeurs de démarrer leurs "
 "nouveaux projets avec une courbe d'apprentissage simple"
 
 #: ../../index.rst:11
@@ -64,7 +64,7 @@ msgid ""
 "**Flexible system of events** that allows plugins to extend and modify most "
 "aspects of application's functionality and behavior"
 msgstr ""
-"**Système flexible d'événements** qui permet aux plugins d'étendre et de "
+"Un **Système flexible d'événements** qui permet aux plugins d'étendre et de "
 "modifier la plupart des fonctionnalités et le comportement de l'application"
 
 #: ../../index.rst:13
@@ -140,16 +140,16 @@ msgstr ""
 
 #: ../../index.rst:21
 msgid "**Groups** - out of the box support for user groups"
-msgstr "**Groupes** - support intégré pour des groupes d'utilisateurs"
+msgstr "Des **Groupes** - support natif de groupes d'utilisateurs"
 
 #: ../../index.rst:22
 msgid ""
 "**File storage** powered by flexible API that allows plugins to store user-"
 "generated files and serve/stream them without booting the engine"
 msgstr ""
-"**Stockage de fichiers** supporté par une API flexible qui permet aux "
-"plugins de stocker les fichiers créés par les utilisateurs et de les "
-"servir/streamer sans démarrer le moteur"
+"Un système de **Stockage de fichiers** fourni par une API flexible qui "
+"permet aux plugins de stocker les fichiers créés par les utilisateurs et de "
+"les servir/streamer sans démarrer le moteur"
 
 #: ../../index.rst:23
 msgid ""
@@ -157,16 +157,16 @@ msgid ""
 "site and email notifications and implement integrations with other their-"
 "party services"
 msgstr ""
-"**Un Service de Notifications** qui permet aux applications d'abonner des "
-"utilisateurs aux notifications sur le site ou par e-mail, et d'implémenter "
-"l'intégration avec d'autres services tierce-partie"
+"Un **Service de Notifications** qui permet aux applications d'abonner des "
+"utilisateurs à des notifications sur le site ou par e-mail, et d'implémenter"
+" l'intégration avec d'autres services tierce-partie"
 
 #: ../../index.rst:24
 msgid ""
 "**RPC web services** that can be used for complex integrations with external"
 " applications and mobile clients"
 msgstr ""
-"**Des Services Web RPC** qui peuvent être utilisés pour des intégrations "
+"Des **Services Web RPC** qui peuvent être utilisés pour des intégrations "
 "complexes avec des applications externes et des clients mobiles"
 
 #: ../../index.rst:25
@@ -174,7 +174,7 @@ msgid ""
 "**Internationalization** and localization of Elgg applications is simple and"
 " can be integrated with third-party services such as Transifex"
 msgstr ""
-"**L'Internationalisation** et la localisation des applications Elgg est "
+"L'**Internationalisation** et la localisation des applications Elgg est "
 "simple et peut être intégrée avec des services tierce-partie tels que "
 "Transifex"
 
@@ -183,8 +183,8 @@ msgid ""
 "**Elgg community** that can help with any arising issues and hosts a "
 "repository of **1000+ open source plugins**"
 msgstr ""
-"**La communauté Elgg** peut aider sur n'importe quelle problématique, et "
-"héberge un répertoire de **plus de 1000 plugins open source**"
+"La **Communauté Elgg** peut aider sur n'importe quelle problématique, et "
+"héberge un répertoire de **plusieurs milliersde plugins open source**"
 
 #: ../../index.rst:28
 msgid "Under the hood:"
@@ -214,7 +214,7 @@ msgstr "Laminas Mail gère les e-mails sortants"
 
 #: ../../index.rst:35
 msgid "htmLawed XSS filters"
-msgstr "Filtres XSS htmLawed"
+msgstr "Des Filtres XSS htmLawed"
 
 #: ../../index.rst:36
 msgid "DBAL"
@@ -222,7 +222,7 @@ msgstr "DBAL"
 
 #: ../../index.rst:37
 msgid "Phinx database migrations"
-msgstr "Migrations de base de donnée Phinx"
+msgstr "Migrations de base de donnée avec Phinx"
 
 #: ../../index.rst:38
 msgid "CSS-Crush for CSS preprocessing"
@@ -263,11 +263,11 @@ msgstr "intranets privés ou professionnels"
 
 #: ../../index.rst:53
 msgid "dating"
-msgstr "rencontres"
+msgstr "sites de rencontres"
 
 #: ../../index.rst:54
 msgid "educational"
-msgstr "éducatifs"
+msgstr "plateformes éducatives"
 
 #: ../../index.rst:55
 msgid "company blog"

@@ -1,3 +1,21 @@
+<a name="5.1.1"></a>
+### 5.1.1 (2023-11-17)
+
+#### Contributors
+
+* Jerôme Bakker (9)
+* Jeroen Dalsem (5)
+
+#### Bug fixes
+
+* **webservices:** no longer expose parts of the system during an error [a0db26a40](https://github.com/Elgg/Elgg//commit/a0db26a40fb9b42a9794516890f9efd6a54f1f18)
+* **cli:** provide readable feedback when using incorrect cron interval [c658dd2b7](https://github.com/Elgg/Elgg//commit/c658dd2b7ba4d9c46a0229b8810862110c677b33)
+* **pages:** don't allow a page to be its own parent [f029d1e69](https://github.com/Elgg/Elgg//commit/f029d1e69b1a36b758348c104985ff9c4eaff757)
+* **views:** don't output a summary title if no display name [385475469](https://github.com/Elgg/Elgg//commit/385475469ea96ca3f7034811305fbbde866fc1af)
+* **css:** improved elgg-level behaviour on limited viewports [a1482000f](https://github.com/Elgg/Elgg//commit/a1482000fb9e509f4aa9082d52fd3bc0977ad6e4)
+* **routes:** correctly deprecate the comment/edit route [04bed5687](https://github.com/Elgg/Elgg//commit/04bed5687bb33b65fe8cd00caf03b61a7cd56f5b)
+
+
 <a name="5.1.0"></a>
 ## 5.1.0 (2023-10-24)
 
@@ -314,6 +332,19 @@
 * **files:** file plugin no longer uses custom file type icons ([92c50dd1](https://github.com/Elgg/Elgg/commit/92c50dd1e6c7dc48d9ecde4f7b0f9c1c51a3891a))
 * **plugins:** the embed plugin has been removed ([31a443c5](https://github.com/Elgg/Elgg/commit/31a443c56a48410333a08a1c0d61308f822151a9))
 * **widgets:** class function saveSettings has been removed ([3c58daee](https://github.com/Elgg/Elgg/commit/3c58daeea8bfc48c099827733cbe167462043d5f))
+
+
+<a name="4.3.10"></a>
+### 4.3.10  (2023-11-17)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+
+#### Bug Fixes
+
+* **session:** correctly invalidate session on privilege elevation ([6357da49](https://github.com/Elgg/Elgg/commit/6357da49080c1d339e57300ae111208fa95220e4))
+
 
 <a name="4.3.9"></a>
 ### 4.3.9  (2023-07-26)

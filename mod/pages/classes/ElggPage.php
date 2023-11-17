@@ -94,6 +94,10 @@ class ElggPage extends ElggObject {
 			return true;
 		}
 		
+		if ($guid === $this->guid) {
+			return false;
+		}
+		
 		$new_parent = get_entity($guid);
 		return $this->setParentEntity($new_parent);
 	}
@@ -108,13 +112,12 @@ class ElggPage extends ElggObject {
 	 * @since 3.0
 	 */
 	public function setParentEntity(\ElggPage $entity = null): bool {
-		
 		if (empty($entity)) {
 			$this->parent_guid = 0;
 			return true;
 		}
 		
-		if (empty($entity->guid)) {
+		if (empty($entity->guid) || $entity->guid === $this->guid) {
 			return false;
 		}
 		

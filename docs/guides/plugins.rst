@@ -294,13 +294,12 @@ Important parts in the ``composer.json`` file are:
 
 - ``name``: the name of your plugin, keep this inline with the name of your plugin folder to ensure correct installation
 - ``type``: this will tell Composer where to install your plugin, ALWAYS keep this as ``elgg-plugin``
-- ``require``: the ``composer/installers`` requirement is to make sure Composer knows where to install your plugin
 
-As a suggestion, include a ``conflict`` rule with any Elgg version below your mininal required version, this will help prevent the accidental 
-installation of your plugin on an incompatible Elgg version.
+As a suggestion, include a ``conflict`` rule with any Elgg version below your minimal required version, this will help
+prevent the accidental installation of your plugin on an incompatible Elgg version.
 
-After adding a ``composer.json`` file to your plugin project, you need to register your project on `Packagist`_ in order for other people to be able to 
-install your plugin.
+After adding a ``composer.json`` file to your plugin project, you need to register your project on `Packagist`_ in
+order for other people to be able to install your plugin.
 
 Tests
 =====

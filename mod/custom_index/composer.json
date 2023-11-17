@@ -15,9 +15,6 @@
 		"source": "https://github.com/elgg/elgg",
 		"issues": "https://github.com/elgg/elgg/issues"
 	},
-	"require": {
-		"composer/installers": "^1.0.8"
-	},
 	"conflict": {
 		"elgg/elgg": "<5.0"
 	}

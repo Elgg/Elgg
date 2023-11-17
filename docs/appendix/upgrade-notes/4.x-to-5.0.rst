@@ -99,7 +99,7 @@ Removed functions
 * ``elgg.register_hook_handler`` use the ``register`` function provide by the ``elgg\hooks`` module
 * ``elgg.register_instant_hook``
 * ``elgg.set_triggered_hook``
-* ``elgg.trigger_hook`` use the ``trigger`` function provide by the ``elgg\hooks`` module
+* ``elgg.trigger_hook`` use the ``trigger`` function provided by the ``elgg\hooks`` module
 
 Exceptions
 ----------
@@ -183,7 +183,7 @@ Lib functions return types
 * ``elgg_get_page_owner_entity()`` now returns ``null`` if page owner could not be found
 * ``elgg_get_river_item_from_id()`` now returns ``null`` if no river item could be found
 * ``elgg_get_system_cache()`` now returns an instance of ``\Elgg\Cache\BaseCache`` instead of an ``\ElggCache``
-* ``elgg_get_uploaded_file()`` now returns ``null`` no file could be found or the file was invalid
+* ``elgg_get_uploaded_file()`` now returns ``null`` if no file could be found or the file was invalid
 * ``elgg_normalize_site_url()`` now returns ``null`` when the url is not a site url
 * ``elgg_register_action()`` no longer returns a ``bool``
 * ``elgg_register_menu_item()`` no longer has a return value

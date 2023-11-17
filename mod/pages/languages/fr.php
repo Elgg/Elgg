@@ -19,6 +19,7 @@ return array(
 	'collection:object:page:group' => "Pages du groupe",
 	'add:object:page' => "Ajouter une page",
 	'edit:object:page' => "Modifier cette page",
+	'menu:pages_nav:header' => "Sous-pages",
 	'notification:object:page:create' => "Envoyer une notification quand une page est créée",
 	'notifications:mute:object:page' => "à propos de la page '%s'",
 
@@ -45,7 +46,7 @@ Voir et commenter la page :
 	'notification:mentions:object:page:subject' => '%s vous a mentionné dans une page',
 
 	'pages:more' => 'Plus de pages',
-	'pages:none' => 'Aucune page créé pour l\'instant',
+	'pages:none' => 'Aucune page créée pour l\'instant',
 
 	/**
 	* River

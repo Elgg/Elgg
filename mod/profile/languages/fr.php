@@ -10,6 +10,7 @@ return array(
 	'profile:notfound' => 'Désolé, nous n\'avons pas pu trouver le profil demandé.',
 	
 	'admin:configure_utilities:profile_fields' => 'Modifier les champs du profil',
+	'menu:profile_admin:header' => 'Administration du profil',
 	
 	'profile:edit' => 'Modifier le profil',
 	'profile:edit:header' => 'Modifier l\'entête du profil',

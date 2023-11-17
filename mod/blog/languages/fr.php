@@ -16,6 +16,7 @@ return array(
 	'edit:object:blog' => 'Modifier l\'article de blog',
 	'notification:object:blog:publish' => "Envoyer une notification quand un article est créé",
 	'notifications:mute:object:blog' => "à propos de l'article '%s'",
+	'menu:blog_archive:header' => "Archives des blogs",
 
 	'blog:revisions' => 'Révisions',
 	'blog:archives' => 'Archives',
