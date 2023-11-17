@@ -2,6 +2,7 @@
 
 namespace Elgg\Cli;
 
+use Elgg\Exceptions\CronException;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
@@ -42,14 +43,18 @@ class CronCommand extends Command {
 		}
 
 		$time = new \DateTime($time);
-
 		_elgg_services()->cron->setCurrentTime($time);
-		$jobs = _elgg_services()->cron->run($intervals, $this->option('force'));
-
-		if (!$this->option('quiet')) {
-			foreach ($jobs as $job) {
-				$this->write($job->getOutput());
+		
+		try {
+			$jobs = _elgg_services()->cron->run($intervals, $this->option('force'));
+			if (!$this->option('quiet')) {
+				foreach ($jobs as $job) {
+					$this->write($job->getOutput());
+				}
 			}
+		} catch (CronException $e) {
+			$this->error($e->getMessage());
+			return self::FAILURE;
 		}
 
 		return self::SUCCESS;

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-24 13:21+0200\n"
+"POT-Creation-Date: 2023-11-17 10:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6364,59 +6364,55 @@ msgstr ""
 msgid "``type``: this will tell Composer where to install your plugin, ALWAYS keep this as ``elgg-plugin``"
 msgstr ""
 
-#: ../../guides/plugins.rst:297
-msgid "``require``: the ``composer/installers`` requirement is to make sure Composer knows where to install your plugin"
+#: ../../guides/plugins.rst:298
+msgid "As a suggestion, include a ``conflict`` rule with any Elgg version below your minimal required version, this will help prevent the accidental installation of your plugin on an incompatible Elgg version."
 msgstr ""
 
-#: ../../guides/plugins.rst:299
-msgid "As a suggestion, include a ``conflict`` rule with any Elgg version below your mininal required version, this will help prevent the accidental installation of your plugin on an incompatible Elgg version."
-msgstr ""
-
-#: ../../guides/plugins.rst:302
+#: ../../guides/plugins.rst:301
 msgid "After adding a ``composer.json`` file to your plugin project, you need to register your project on `Packagist`_ in order for other people to be able to install your plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:306
+#: ../../guides/plugins.rst:305
 msgid "Tests"
 msgstr ""
 
-#: ../../guides/plugins.rst:308
+#: ../../guides/plugins.rst:307
 msgid "It's encouraged to create PHPUnit test for your plugin. All tests should be located in ``tests/phpunit/unit`` for unit tests and ``tests/phpunit/integration`` for integration tests."
 msgstr ""
 
-#: ../../guides/plugins.rst:311
+#: ../../guides/plugins.rst:310
 msgid "Unit tests should extend the ``Elgg\\UnitTestCase`` class. Integration tests should extend the ``Elgg\\Plugins\\IntegrationTestCase``."
 msgstr ""
 
-#: ../../guides/plugins.rst:313
+#: ../../guides/plugins.rst:312
 msgid "There are a set of global plugin integration tests that run on all active plugins. These tests are:"
 msgstr ""
 
-#: ../../guides/plugins.rst:315
+#: ../../guides/plugins.rst:314
 msgid "``Elgg\\Plugins\\ActionRegistrationIntegrationTest`` will test all registered actions of the plugin without supplying data"
 msgstr ""
 
-#: ../../guides/plugins.rst:316
+#: ../../guides/plugins.rst:315
 msgid "``Elgg\\Plugins\\ComposerIntegrationTest`` will test if the ``composer.json`` is considered valid"
 msgstr ""
 
-#: ../../guides/plugins.rst:317
+#: ../../guides/plugins.rst:316
 msgid "``Elgg\\Plugins\\StaticConfigIntegrationTest`` will test the sections of the ``elgg-plugin.php`` and check for the correct format"
 msgstr ""
 
-#: ../../guides/plugins.rst:318
+#: ../../guides/plugins.rst:317
 msgid "``Elgg\\Plugins\\TranslationsIntegrationTest`` will test all language files for the correct format and encoding"
 msgstr ""
 
-#: ../../guides/plugins.rst:319
+#: ../../guides/plugins.rst:318
 msgid "``Elgg\\Plugins\\ViewStackIntegrationTest`` will test all views of the plugin if there are any PHP parsing errors"
 msgstr ""
 
-#: ../../guides/plugins.rst:323
+#: ../../guides/plugins.rst:322
 msgid ":doc:`/contribute/tests`"
 msgstr ""
 
-#: ../../guides/plugins.rst:326
+#: ../../guides/plugins.rst:325
 #: ../../guides/views.rst:647
 #: ../../guides/web-services.rst:398
 msgid "Related"

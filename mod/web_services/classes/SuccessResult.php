@@ -1,9 +1,10 @@
 <?php
+
 /**
  * SuccessResult
  * Generic success result class, extend if you want to do something special.
  */
-class SuccessResult extends GenericResult {
+class SuccessResult extends \GenericResult {
 	
 	public const RESULT_SUCCESS = 0;
 
@@ -22,10 +23,9 @@ class SuccessResult extends GenericResult {
 	 *
 	 * @param mixed $result A result of some kind?
 	 *
-	 * @return SuccessResult
+	 * @return \SuccessResult
 	 */
-	public static function getInstance($result) {
-		// Return a new error object.
-		return new SuccessResult($result);
+	public static function getInstance($result): \SuccessResult {
+		return new self($result);
 	}
 }

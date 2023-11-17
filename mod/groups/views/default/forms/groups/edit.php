@@ -98,7 +98,7 @@ $footer .= elgg_view_field([
 	'fields' => [
 		[
 			'#type' => 'submit',
-			'value' => elgg_echo('save'),
+			'text' => elgg_echo('save'),
 		],
 	],
 	'align' => 'horizontal',

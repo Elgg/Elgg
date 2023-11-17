@@ -70,7 +70,7 @@ class Cron {
 
 		foreach ($intervals as $interval) {
 			if (!array_key_exists($interval, $allowed_intervals)) {
-				throw new CronException("{$interval} is not a recognized cron interval");
+				throw new CronException("{$interval} is not a recognized cron interval. Please use one of the following: " . implode(', ', array_keys($allowed_intervals)));
 			}
 
 			$cron_interval = $force ? $allowed_intervals['minute'] : $allowed_intervals[$interval];
