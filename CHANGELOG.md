@@ -1,3 +1,15 @@
+<a name="4.3.10"></a>
+### 4.3.10  (2023-11-17)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+
+#### Bug Fixes
+
+* **session:** correctly invalidate session on privilege elevation ([6357da49](https://github.com/Elgg/Elgg/commit/6357da49080c1d339e57300ae111208fa95220e4))
+
+
 <a name="4.3.9"></a>
 ### 4.3.9  (2023-07-26)
 
