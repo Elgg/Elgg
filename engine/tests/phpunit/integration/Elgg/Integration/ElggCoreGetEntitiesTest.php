@@ -592,13 +592,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesIntegrationTestCase {
 		}
 	}
 
-	public function testElggGetEntitiesBadWheres() {
-		$entities = elgg_get_entities([
-			'container_guid' => 'abc',
-		]);
-		$this->assertEmpty($entities);
-	}
-
 	public function testEGEEmptySubtypePlurality() {
 		$entities = elgg_get_entities([
 			'type' => 'user',

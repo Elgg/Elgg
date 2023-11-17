@@ -8,6 +8,7 @@ use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
+use Elgg\Exceptions\DataFormatException;
 use Elgg\Exceptions\DomainException;
 use Elgg\UnitTestCase;
 
@@ -44,15 +45,13 @@ class AnnotationsUnitTest extends UnitTestCase {
 
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
-
-	public function testCanExecuteCountWithBadDataFormat() {
-		$options = [
+	
+	public function testThrowsOnBadDataFormat() {
+		$this->expectException(DataFormatException::class);
+		Annotations::find([
 			'count' => true,
 			'guids' => 'abc',
-		];
-
-		$find = Annotations::find($options);
-		$this->assertEquals(0, $find);
+		]);
 	}
 
 	public function testCanExecuteGet() {
@@ -158,18 +157,6 @@ class AnnotationsUnitTest extends UnitTestCase {
 		$this->assertEquals($rows, $get);
 
 		_elgg_services()->db->removeQuerySpec($spec);
-	}
-
-	public function testCanExecuteGetWithBadDataFormat() {
-		$options = [
-			'limit' => 5,
-			'offset' => 5,
-			'callback' => false,
-			'guids' => 'abc',
-		];
-
-		$find = Annotations::find($options);
-		$this->assertEquals(false, $find);
 	}
 
 	public function testCanExecuteBatchGet() {
