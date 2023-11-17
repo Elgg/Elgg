@@ -315,6 +315,19 @@
 * **plugins:** the embed plugin has been removed ([31a443c5](https://github.com/Elgg/Elgg/commit/31a443c56a48410333a08a1c0d61308f822151a9))
 * **widgets:** class function saveSettings has been removed ([3c58daee](https://github.com/Elgg/Elgg/commit/3c58daeea8bfc48c099827733cbe167462043d5f))
 
+
+<a name="4.3.10"></a>
+### 4.3.10  (2023-11-17)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+
+#### Bug Fixes
+
+* **session:** correctly invalidate session on privilege elevation ([6357da49](https://github.com/Elgg/Elgg/commit/6357da49080c1d339e57300ae111208fa95220e4))
+
+
 <a name="4.3.9"></a>
 ### 4.3.9  (2023-07-26)
 
