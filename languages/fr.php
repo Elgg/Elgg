@@ -353,6 +353,10 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'notification:body' => 'Voir la nouvelle activité sur %s',
 	
 	'notification:mentions:subject' => '%s vous a mentionné',
+	'notification:mentions:body' => "%s vous a mentionné dans \"%s\".
+
+Pour voir l'article complet, cliquez sur le lien :
+%s",
 	
 	'notifications:delayed_email:subject:daily' => "Notification quotidiennes",
 	'notifications:delayed_email:subject:weekly' => "Notification mensuelles",
@@ -473,6 +477,7 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
  */
 	'menu:page:header:administer' => 'Administrer',
 	'menu:page:header:configure' => 'Configurer',
+	'menu:page:header:utilities' => 'Utilitaires',
 	'menu:page:header:develop' => 'Développer',
 	'menu:page:header:information' => 'Information',
 	'menu:page:header:default' => 'Autre',
@@ -588,6 +593,11 @@ Comme Elgg a un grand nombre d\'accès aux fichiers cela va avoir un effet néga
 	'admin:site_icons:font_awesome:zip:help' => "Vous pouvez charger ici un téléchargement de Font Awesome récupéré depuis https://fontawesome.com/download. Cette police web peut être servie localement.",
 	'admin:site_icons:font_awesome:zip:error' => "L'archive ZIP envoyée ne peut pas être extraite",
 	'admin:site_icons:font_awesome:remove_zip' => "Supprimer une police de caractères téléchargée",
+	'admin:theme' => "Thème",
+	'admin:theme:info' => "Diverses variables de thème peuvent être configurées sur ce formulaire. Cette configuration remplacera la configuration existante.",
+	'admin:theme:warning' => "Sachez que ces changements pourraient potentiellement perturber votre feuille de style.",
+	'admin:theme:css_variable:name' => "Variable CSS",
+	'admin:theme:css_variable:value' => "Valeur",
 	'admin:site_settings' => "Paramètres du site",
 	'admin:site:description' => "Ce menu vous permet de définir les paramètres globaux de votre site. Choisissez une option ci-dessous pour commencer.",
 	'admin:site:opt:linktext' => "Configurer le site...",
@@ -613,6 +623,8 @@ Comme Elgg a un grand nombre d\'accès aux fichiers cela va avoir un effet néga
 	'admin:widget:cron_status' => 'Statut du cron',
 	'admin:widget:cron_status:help' => 'Affiche le statut des dernières tâches cron terminées',
 	'admin:widget:elgg_blog' => 'Blog de Elgg',
+	'admin:widget:elgg_blog:help' => 'Affiche les derniers articles du blog de Elgg',
+	'admin:widget:elgg_blog:no_results' => 'Impossible de récupérer les dernières actualités de Elgg',
 	'admin:statistics:numentities' => 'Statistiques des contenus',
 	'admin:statistics:numentities:type' => 'Type de contenu',
 	'admin:statistics:numentities:number' => 'Nombre',
@@ -634,6 +646,14 @@ Comme Elgg a un grand nombre d\'accès aux fichiers cela va avoir un effet néga
 	'admin:widget:admin_welcome:intro' => 'Bienvenue sur Elgg ! Vous êtes actuellement sur le tableau de bord de l\'administration. Il permet de suivre ce qui se passe sur le site.',
 
 	'admin:widget:admin_welcome:registration' => "L'inscription de nouveaux utilisateurs est actuellement désactivée ! Vous pouvez l'activer sur la page %s.",
+	'admin:widget:admin_welcome:admin_overview' => "La navigation pour la zone d'administration se fait à l'aide du menu de droite. Elle est organisée en trois parties :
+	<dl>
+		<dt>Administrer</dt><dd>Des tâches de base telles que suivre le contenu signalé et activer des plugins.</dd>
+		<dt>Configurer</dt><dd>Des tâches occasionnelles comme définir le nom du site ou configurer les paramètres d'un plugin.</dd>
+		<dt>Utilitaires</dt><dd>Divers outils pour gérer la maintenance du site.</dd>
+		<dt>Information</dt><dd>Des informations à propos de votre site, telles que des statistiques.</dd>
+		<dt>Développer</dt><dd>Pour les développeurs qui créent des plugins ou conçoivent des thèmes. (Nécessite un plugin de développement).</dd>
+	</dl>",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Pensez à consulter les ressources disponibles via les liens de bas de page, et merci d\'utiliser Elgg !',
@@ -769,6 +789,28 @@ Le fait d’avoir des icônes liées à la session rend les URLs des icônes non
 	
 	'admin:security:settings:min_password_special' => "Nombre minimal de caractères spéciaux requis pour un mot de passe",
 	'admin:security:settings:min_password_special:help' => "Configurer le nombre minimal de caractères spéciaux (!@$%^&*()<>,.?/[]{}-=_+) qui devraient être présents dans un mot de passe. 0 pour aucun, vide pour aucune exigence.",
+	
+	'admin:security:security_txt' => "Security.txt",
+	'admin:security:security_txt:description' => "Lorsqu’une faille de sécurité est détectée sur votre site Web, où doit-elle être signalée ? Le security.txt est un standard qui permet de structurer les informations dont les chercheurs en sécurité ont besoin pour pouvoir contacter les administrateurs du site avec la vulnérabilité trouvée. De plus amples informations sur la norme peuvent être trouvées sur %s. Le contenu de votre security.txt peut être trouvé à l'adresse %s.",
+	'admin:security:security_txt:expired' => "Le contenu de votre security.txt est expiré, veuillez vérifier si toutes les informations sont toujours à jour.",
+	'admin:security:security_txt:contact' => "Contact",
+	'admin:security:security_txt:contact:help' => "Un lien ou une adresse e-mail permettant aux personnes de vous contacter au sujet de problèmes de sécurité. N'oubliez pas d'inclure \"https://\" pour les URL et \"mailto:\" pour les e-mails. Voir %s",
+	'admin:security:security_txt:expires' => "Expire",
+	'admin:security:security_txt:expires:help' => "La date et l'heure auxquelles le contenu du fichier security.txt doit être considéré comme obsolète (les chercheurs en sécurité ne devraient donc plus lui faire confiance). Assurez-vous de mettre à jour cette valeur périodiquement et de garder votre fichier sous nsurveillance. Voir %s",
+	'admin:security:security_txt:encryption' => "Chiffrement",
+	'admin:security:security_txt:encryption:help' => "Un lien vers une clef que les chercheurs en sécurité devraient utiliser pour vous parler en toute sécurité. N'oubliez pas d'inclure \"https://\". Voir %s",
+	'admin:security:security_txt:acknowledgments' => "Remerciements",
+	'admin:security:security_txt:acknowledgments:help' => "Un lien vers une page web où vous remerciez les chercheurs en sécurité qui vous ont aidé. N'oubliez pas d'inclure \"https://\". Voir %s",
+	'admin:security:security_txt:language' => "Langue",
+	'admin:security:security_txt:language:help' => "Une liste de codes de langue, séparés par des virgules, parlés par votre équipe de sécurité. Vous pouvez inclure plusieurs langues. Voir %s",
+	'admin:security:security_txt:canonical' => "Canonique",
+	'admin:security:security_txt:canonical:help' => "Les URLs pour accéder à votre fichier security.txt. Il est important de l'inclure si vous signez numériquement le fichier security.txt, afin que l'emplacement du fichier security.txt puisse également être signé numériquement. Voir %s",
+	'admin:security:security_txt:policy' => "Politique",
+	'admin:security:security_txt:policy:help' => "Un lien vers la politique détaillant ce que les chercheurs en sécurité doivent faire lorsqu'ils recherchent ou signalent des problèmes de sécurité. N'oubliez pas d'inclure \"https://\"\". Voir %s",
+	'admin:security:security_txt:hiring' => "Recrutement",
+	'admin:security:security_txt:hiring:help' => "Un lien vers toutes les offres d'emploi liées à la sécurité dans votre organisation. N'oubliez pas d'inclure \"https://\". Voir %s",
+	'admin:security:security_txt:csaf' => "CSAF",
+	'admin:security:security_txt:csaf:help' => "Un lien vers le provider-metadata.json de votre fournisseur CSAF (Common Security Advisory Framework). N'oubliez pas d'inclure « https:// ». Voir %s",
 	
 	'admin:site:secret:regenerated' => "La clef secrète du site a bien été régénérée",
 	'admin:site:secret:prevented' => "La régénération de la clef secrète du site a été empêchée",
@@ -1060,6 +1102,7 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'entity:edit:icon:crop_messages:generic' => "L'image sélectionnée ne correspond pas aux dimensions recommandées. Les icônes résultantes pourraient être de mauvaise qualité.",
 	'entity:edit:icon:crop_messages:width' => "Il est recommandé d'utiliser une image avec une largeur minimale d'au moins %d px.",
 	'entity:edit:icon:crop_messages:height' => "Il est recommandé d'utiliser une image avec une hauteur minimale d'au moins %d px.",
+	'entity:edit:icon:crop:img:alt' => "Image chargée",
 	'entity:edit:icon:file:label' => "Charger une nouvelle icône",
 	'entity:edit:icon:file:help' => "Laissez vide pour conserver l'icône actuelle.",
 	'entity:edit:icon:remove:label' => "Supprimer l'icône",
@@ -1181,8 +1224,12 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	
 	'list:out_of_bounds' => "Vous avez atteint une partie de la liste sans aucun contenu, toutefois il y a du contenu disponible.",
 	'list:out_of_bounds:link' => "Retour à la première page",
+	'list:error:getter:user' => 'Une erreur est survenue lors de la récupération du contenu',
+	'list:error:getter:admin' => "Le getter '%s' a renvoyé un(e) '%s', cependant le viewer '%s' requiert un tableau",
 
 	'link:text' => 'voir le lien',
+	
+	'scroll_to_top' => 'Haut de page',
 
 /**
  * Generic questions
@@ -1447,6 +1494,7 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'config:users:remove_unvalidated_users_days:help' => "Les utilisateurs non validés seront automatiquement supprimés après le nombre de jours configuré. Si vide, les utilisateurs non validés ne seront pas supprimés automatiquement.",
 	'config:users:can_change_username' => "Permettre aux membres de modifier leur identifiant",
 	'config:users:can_change_username:help' => "Si interdit, seuls les administrateurs peuvent changer l'identifiant d'un compte utilisateur",
+	'config:users:user_joined_river' => "Ajoute une activité dans la rivière lorsqu'un utilisateur rejoint le site",
 	'config:remove_branding:label' => "Retirer le logo Elgg",
 	'config:remove_branding:help' => "Il existe divers liens et logos à travers le site qui indiquent que ce site a été réalisé en utilisant Elgg. Si vous supprimez toute mention de Elgg veuillez envisager une donation via https://elgg.org/about/supporters",
 	'config:disable_rss:label' => "Désactiver les flux RSS",
@@ -1469,6 +1517,7 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'config:content:pagination_behaviour:ajax-append' => "Ajouter les nouvelles données au début ou à la fin de la liste",
 	'config:content:pagination_behaviour:ajax-append-auto' => "Ajoute les nouvelles données au début ou à la fin de la liste (automatiquement en cas de défilement dans la vue)",
 	'config:content:mentions_display_format' => "Format d'affichage des mentions",
+	'config:content:mentions_display_format:help' => "Cela décide de la manière dont un utilisateur mentionné sera visible dans votre contenu",
 	'config:content:mentions_display_format:username' => "Identifiant",
 	'config:content:mentions_display_format:display_name' => "Nom affiché",
 	'config:email' => "E-mail",
@@ -1647,6 +1696,10 @@ Pour y répondre ou voir la publication originale :
 %s",
 
 	'notification:mentions:object:comment:subject' => '%s vous a mentionné dans un commentaire',
+	'notification:mentions:object:comment:body' => '%1$s vous a mentionné dans un commentaire.
+	
+Pour voir le commentaire complet, cliquez sur le lien :
+%3$s',
 
 /**
  * Entities
@@ -1741,6 +1794,32 @@ Variables Globales :
 /**
  * Accessibility
  */
+	'aria:label:admin:users:search' => "Recherche d'utilisateurs",
+
+	'menu:admin_footer:header' => "Pied de page admin",
+	'menu:admin_header:header' => "Entête admin",
+	'menu:admin:users:bulk:header' => "Actions groupées des utilisateurs",
+	'menu:annotation:header' => "Annotation",
+	'menu:breadcrumbs:header' => "Fil d'Ariane",
+	'menu:comments:header' => "Commentaires",
+	'menu:entity:header' => "Entité",
+	'menu:entity_navigation:header' => "Navigation dans les entités",
+	'menu:filter:header' => "Filtre",
+	'menu:footer:header' => "Pied de page",
+	'menu:login:header' => "Connexion",
+	'menu:owner_block:header' => "Bloc du propriétaire",
+	'menu:page:header' => "Page",
+	'menu:relationship:header' => "Relation",
+	'menu:river:header' => "Rivière",
+	'menu:site:header' => "Site",
+	'menu:social:header' => "Social",
+	'menu:title:header' => "Titre",
+	'menu:title:widgets:header' => "Administrateur des widgets",
+	'menu:topbar:header' => "Barre supérieure",
+	'menu:user_hover:header' => "Survol de l'utilisateur",
+	'menu:user:unvalidated:header' => "Utilisateur non validé",
+	'menu:walled_garden:header' => "Réseau privé - \"Walled Garden\"",
+	'menu:widget:header' => "Contrôles des widgets",
 
 /**
  * Cli commands
@@ -1769,6 +1848,12 @@ Variables Globales :
 	'cli:database:seed:option:create_until' => "Une chaîne d'heure PHP pour définir la limite haute de l'heure de création des entités ensemencées",
 	'cli:database:seed:log:error:faker' => "Il s'agit d'un outil pour développeurs destiné exclusivement à des fins de tests. Veuillez éviter de l'utiliser.",
 	'cli:database:seed:log:error:logged_in' => "L'ensemencement de la base de donnée ne devrait pas être exécutée avec un utilisateur connecté",
+	'cli:database:seed:ask:limit' => "Combien d'éléments à semer pour le semoir '%s'",
+
+	'cli:database:seeders:description' => "Lister tous les semoirs de base de données disponibles avec le nombre actuel d'entités sémées",
+	'cli:database:seeders:handler' => "Gestionnaire d'ensemencement",
+	'cli:database:seeders:type' => "Type de graine",
+	'cli:database:seeders:count' => "Décompte des graines",
 	
 	'cli:database:unseed:description' => "Supprime de la base de donnée les entités factices issues de l'ensemencement",
 	
