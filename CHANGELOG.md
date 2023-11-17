@@ -1,3 +1,21 @@
+<a name="5.1.1"></a>
+### 5.1.1 (2023-11-17)
+
+#### Contributors
+
+* Jerôme Bakker (9)
+* Jeroen Dalsem (5)
+
+#### Bug fixes
+
+* **webservices:** no longer expose parts of the system during an error [a0db26a40](https://github.com/Elgg/Elgg//commit/a0db26a40fb9b42a9794516890f9efd6a54f1f18)
+* **cli:** provide readable feedback when using incorrect cron interval [c658dd2b7](https://github.com/Elgg/Elgg//commit/c658dd2b7ba4d9c46a0229b8810862110c677b33)
+* **pages:** don't allow a page to be its own parent [f029d1e69](https://github.com/Elgg/Elgg//commit/f029d1e69b1a36b758348c104985ff9c4eaff757)
+* **views:** don't output a summary title if no display name [385475469](https://github.com/Elgg/Elgg//commit/385475469ea96ca3f7034811305fbbde866fc1af)
+* **css:** improved elgg-level behaviour on limited viewports [a1482000f](https://github.com/Elgg/Elgg//commit/a1482000fb9e509f4aa9082d52fd3bc0977ad6e4)
+* **routes:** correctly deprecate the comment/edit route [04bed5687](https://github.com/Elgg/Elgg//commit/04bed5687bb33b65fe8cd00caf03b61a7cd56f5b)
+
+
 <a name="5.1.0"></a>
 ## 5.1.0 (2023-10-24)
 
