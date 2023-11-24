@@ -114,7 +114,7 @@ jobs:
           php ./elgg-cli plugins:list --no-ansi
       
       - name: Seed Elgg database
-        run: php ./elgg-cli database:seed --limit=5 --image_folder=./.scripts/seeder/images/ -vv --no-ansi
+        run: php ./elgg-cli database:seed --limit=5 --image_folder=./.scripts/seeder/images/ -vv --no-ansi --no-interaction
       
       - name: Start Elgg webserver
         # there is some weird issue with the PHP cli-server in PHP 8.1, so skipping this
