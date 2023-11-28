@@ -1,4 +1,4 @@
 docutils<0.18
 sphinxcontrib.phpdomain
 sphinx-intl
-sphinx_rtd_theme
+sphinx_rtd_theme < 2.0
