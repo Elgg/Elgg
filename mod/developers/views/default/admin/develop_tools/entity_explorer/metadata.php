@@ -7,7 +7,7 @@ $entity_metadata = elgg_get_metadata(['guid' => $entity->guid, 'limit' => false]
 if (empty($entity_metadata)) {
 	$metadata_info = elgg_echo('notfound');
 } else {
-	$md_columns = ['id', 'name', 'value', 'value_type', 'time_created', 'enabled'];
+	$md_columns = ['id', 'name', 'value', 'value_type', 'time_created'];
 	
 	$metadata_info = '<table class="elgg-table">';
 	$metadata_info .= '<thead><tr>';

@@ -2,7 +2,7 @@
 
 namespace Elgg\Database;
 
-use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Query\Expression\CompositeExpression;
 use Doctrine\DBAL\Query\QueryBuilder as DbalQueryBuilder;
@@ -165,9 +165,9 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 				$value = array_shift($value);
 			} else {
 				if ($type === ParameterType::INTEGER) {
-					$type = Connection::PARAM_INT_ARRAY;
+					$type = ArrayParameterType::INTEGER;
 				} elseif ($type === ParameterType::STRING) {
-					$type = Connection::PARAM_STR_ARRAY;
+					$type = ArrayParameterType::STRING;
 				}
 			}
 		}
