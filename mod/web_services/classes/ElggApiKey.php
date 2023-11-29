@@ -30,7 +30,7 @@ class ElggApiKey extends ElggObject {
 	protected function create() {
 		$result = parent::create();
 		
-		if ($result) {
+		if ($result !== false) {
 			$this->generateKeys();
 		}
 		
