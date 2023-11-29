@@ -1,7 +1,14 @@
 <?php
+/**
+ * Show all the Access Collections the entity is a member of
+ *
+ * @uses $vars['entity'] the inspected entity
+ */
 
-/** @var \ElggEntity $entity */
 $entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggEntity) {
+	return;
+}
 
 $acls = _elgg_services()->accessCollections->getCollectionsByMember($entity->guid);
 
@@ -17,18 +24,37 @@ if (empty($acls)) {
 	}
 	
 	$result .= '</tr></thead>';
-	$result .= '<tbody>';
 	
+	$rows = [];
 	foreach ($acls as $acl) {
-		$result .= '<tr>';
+		$row = [];
 		foreach ($acl_columns as $col_name) {
-			$result .= elgg_format_element('td', [], $acl->$col_name);
+			$value = $acl->$col_name;
+			$title = null;
+			
+			if ($col_name === 'owner_guid') {
+				$value = elgg_view('output/url', [
+					'text' => $value,
+					'href' => elgg_http_add_url_query_elements('admin/develop_tools/entity_explorer', [
+						'guid' => $value,
+					]),
+				]);
+				
+				$owner = get_entity($acl->$col_name);
+				if ($owner instanceof \ElggEntity) {
+					$title = $owner->getDisplayName();
+				}
+			} else {
+				$value = elgg_view('output/text', ['value' => $value]);
+			}
+			
+			$row[] = elgg_format_element('td', ['title' => $title], $value);
 		}
 		
-		$result .= '</tr>';
+		$rows[] = elgg_format_element('tr', [], implode('', $row));
 	}
 	
-	$result .= '</tbody>';
+	$result .= elgg_format_element('tbody', [], implode(PHP_EOL, $rows));
 	$result .= '</table>';
 }
 
