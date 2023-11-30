@@ -7,9 +7,12 @@
 
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\QueryBuilder;
+use Elgg\Values;
 
-/* @var $entity \ElggEntity */
 $entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggEntity) {
+	return;
+}
 
 $entity_relationships = elgg_get_relationships([
 	'limit' => false,
@@ -32,16 +35,48 @@ if (empty($entity_relationships)) {
 	
 	$relationship_info .= '<th>&nbsp;</th>';
 	$relationship_info .= '</tr></thead>';
-	$relationship_info .= '<tbody>';
 	
+	$rows = [];
 	foreach ($entity_relationships as $relationship) {
-		$relationship_info .= '<tr>';
+		$row = [];
+		
 		foreach ($relationship_columns as $relationship_col) {
-			$relationship_info .= elgg_format_element('td', [], $relationship->$relationship_col);
+			$value = $relationship->$relationship_col;
+			$title = null;
+			$is_text = true;
+			
+			switch ($relationship_col) {
+				case 'guid_one':
+				case 'guid_two':
+					$is_text = false;
+					$value = elgg_view('output/url', [
+						'text' => $value,
+						'href' => elgg_http_add_url_query_elements('admin/develop_tools/entity_explorer', [
+							'guid' => $value,
+						]),
+					]);
+					
+					$rel_entity = get_entity($relationship->$relationship_col);
+					if ($rel_entity instanceof \ElggEntity) {
+						$title = $rel_entity->getDisplayName();
+					}
+					break;
+				case 'time_created':
+					$title = Values::normalizeTime($value)->formatLocale(elgg_echo('friendlytime:date_format'));
+					break;
+			}
+			
+			if ($is_text) {
+				$value = elgg_view('output/text', ['value' => $value]);
+			}
+			
+			$row[] = elgg_format_element('td', ['title' => $title], $value);
 		}
 		
-		$relationship_info .= elgg_format_element('td', [], elgg_view('output/url', [
-			'text' => elgg_view_icon('remove'),
+		$row[] = elgg_format_element('td', [], elgg_view('output/url', [
+			'icon' => 'remove',
+			'text' => false,
+			'title' => elgg_echo('delete'),
 			'href' => elgg_http_add_url_query_elements('action/developers/entity_explorer_delete', [
 				'guid' => $entity->guid,
 				'type' => 'relationship',
@@ -49,10 +84,11 @@ if (empty($entity_relationships)) {
 			]),
 			'confirm' => true,
 		]));
-		$relationship_info .= '</tr>';
+		
+		$rows[] = elgg_format_element('tr', [], implode('', $row));
 	}
 	
-	$relationship_info .= '</tbody>';
+	$relationship_info .= elgg_format_element('tbody', [], implode(PHP_EOL, $rows));
 	$relationship_info .= '</table>';
 }
 
