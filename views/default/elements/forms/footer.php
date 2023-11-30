@@ -33,6 +33,4 @@ if (empty($footer)) {
 	return;
 }
 
-echo elgg_format_element('div', [
-	'class' => 'elgg-foot elgg-form-footer',
-], $footer);
+echo elgg_format_element('div', ['class' => 'elgg-form-footer'], $footer);

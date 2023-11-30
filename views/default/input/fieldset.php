@@ -25,11 +25,10 @@ if (!empty($justify)) {
 	$vars['class'][] = "elgg-justify-{$justify}";
 }
 
-$fieldset_vars = [];
 $legend = elgg_extract('legend', $vars, '');
 unset($vars['legend']);
 if (!empty($legend)) {
-	$fieldset_vars['class'][] = 'elgg-fieldset-has-legend';
+	$vars['class'][] = 'elgg-fieldset-has-legend';
 	$legend = elgg_format_element('legend', [], $legend);
 }
 
@@ -43,5 +42,4 @@ foreach ($fields as $field) {
 
 unset($vars['name']); // name isn't allowed on a DIV, but is commonly supplied to input views
 
-$fieldset = elgg_format_element('div', $vars, $fieldset);
-echo elgg_format_element('fieldset', $fieldset_vars, $legend . $fieldset);
+echo elgg_format_element('fieldset', $vars, $legend . $fieldset);
