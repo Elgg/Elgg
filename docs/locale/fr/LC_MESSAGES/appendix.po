@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-24 13:21+0200\n"
+"POT-Creation-Date: 2023-11-17 10:40+0100\n"
 "PO-Revision-Date: 2023-04-05 07:42+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -1398,6 +1398,12 @@ msgid ""
 "with the htmLawed filtering code as a plugin. Developers can drop in any "
 "additional or replacement filtering code as a plugin."
 msgstr ""
+"Le filtrage est effectué via la fonction ``elgg_sanitize_input()``. Cette "
+"fonction récupère une chaîne et renvoie une chaîne filtrée. Elle déclenche "
+"un :doc:`event </design/events>` *sanitize*, *input*. Par défaut, Elgg est "
+"livré avec la bibliothèque de filtrage htmLawed sous forme de plugin. Les "
+"développeurs peuvent ajouter n’importe quel code de filtrage supplémentaire "
+"ou de remplacement via un plugin."
 
 #: ../../appendix/faqs/security.rst:23 ../../appendix/faqs/security.rst:23
 msgid ""
@@ -2724,11 +2730,19 @@ msgstr "**Jusqu'à la 6.0**"
 msgid "5.0"
 msgstr "5.0"
 
+#: ../../appendix/support.rst:79 ../../appendix/support.rst:81
+msgid "October 2023"
+msgstr "Octobre 2023"
+
 #: ../../appendix/support.rst:81
+msgid "5.1"
+msgstr "5.1"
+
+#: ../../appendix/support.rst:83
 msgid "6.0"
 msgstr "6.0"
 
-#: ../../appendix/support.rst:81
+#: ../../appendix/support.rst:83
 msgid "TBD"
 msgstr "A FAIRE"
 
@@ -16325,11 +16339,11 @@ msgstr "``elgg.set_triggered_hook``"
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:102
 msgid ""
-"``elgg.trigger_hook`` use the ``trigger`` function provide by the "
+"``elgg.trigger_hook`` use the ``trigger`` function provided by the "
 "``elgg\\hooks`` module"
 msgstr ""
-"``elgg.trigger_hook`` utilise la fonction ``trigger`` fournie par le module "
-"``elgg\\hooks``"
+"``elgg.trigger_hook`` utilisez la fonction ``trigger`` fournie par le module"
+" ``elgg\\hooks``"
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:105
 msgid "Exceptions"
@@ -16524,11 +16538,11 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:186
 msgid ""
-"``elgg_get_uploaded_file()`` now returns ``null`` no file could be found or "
-"the file was invalid"
+"``elgg_get_uploaded_file()`` now returns ``null`` if no file could be found "
+"or the file was invalid"
 msgstr ""
-"``elgg_get_uploaded_file()`` renvoie maintenant ``null``si  aucun fichier "
-"n'a pu être trouvé ou si le fichier n'était pas valide"
+"``elgg_get_uploaded_file()`` renvoie désormais ``null`` si aucun fichier n'a"
+" pu être trouvé ou si le fichier n'était pas valide"
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:187
 msgid ""
@@ -17195,6 +17209,9 @@ msgid ""
 "removed and requires a ``string`` for ``$name``, ``$entity_type`` and "
 "``$entity_subtype``"
 msgstr ""
+"Le premier argument (``$handler``) de ``elgg_register_title_button()`` a été"
+" supprimé et requiert un ``string`` pour ``$name``, ``$entity_type`` et "
+"``$entity_subtype``"
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:290
 msgid ""
@@ -17209,6 +17226,8 @@ msgid ""
 "``elgg_register_widget_type()`` now only supports an ``array`` suitable for "
 "``\\Elgg\\WidgetDefinition::factory()`` for ``$options``"
 msgstr ""
+"``elgg_register_widget_type()`` ne supporte plus pour ``$options`` qu'un "
+"``array`` adapté pour ``\\Elgg\\WidgetDefinition::factory()`` "
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:292
 msgid "``elgg_remove_config()`` now requires a ``string`` for ``$name``"
@@ -17977,6 +17996,8 @@ msgid ""
 "``\\ElggEntity::removeAllRelationships()`` no longer allows ``null`` to be "
 "passed to ``$relationship``"
 msgstr ""
+"``\\ElggEntity::removeAllRelationships()`` ne permet plus de transmettre "
+"``null`` à ``$relationship``"
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:407
 msgid ""
@@ -18208,6 +18229,7 @@ msgstr "``Elgg\\WebServices\\ApiKeyForm``"
 msgid ""
 "``Loggable`` this interface has been merged into the ``ElggData`` class"
 msgstr ""
+"``Loggable`` cette interface a été fusionnée dans la classe ``ElggData``"
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:457
 msgid "``blog_prepare_form_vars``"
@@ -18285,12 +18307,16 @@ msgid ""
 "``access:collections:addcollection, collection`` use the ``create, "
 "access_collection`` sequence"
 msgstr ""
+"``access:collections:addcollection, collection`` utilisez la séquence "
+"``create, access_collection``"
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:482
 msgid ""
 "``access:collections:deletecollection, collection`` use the ``delete, "
 "access_collection`` sequence"
 msgstr ""
+"``access:collections:deletecollection, collection`` utilisez la séquence "
+"``delete, access_collection``"
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:483
 msgid "``prepare, breadcrumbs`` use ``register, menu:breadcrumbs``"
@@ -18313,12 +18339,16 @@ msgid ""
 "The misspelled ``REFERER`` constant has been removed. Use ``REFERRER`` "
 "instead."
 msgstr ""
+"La constante ``REFERER`` mal orthographiée a été supprimée. Utilisez plutôt "
+"``REFERRER``."
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:495
 msgid ""
 "The ``REFERRER`` constant has been changed to a string with the value "
 "``__elgg_referrer``"
 msgstr ""
+"La constante ``REFERRER`` a été remplacée par une chaîne de caractères avec "
+"la valeur ``__elgg_referrer``"
 
 #: ../../appendix/upgrade-notes/5.0-to-5.1.rst:2
 msgid "From 5.0 to 5.1"
@@ -18335,25 +18365,37 @@ msgid ""
 "``header``, ``main`` or ``footer``. The classes or place in the DOM has not "
 "been changed."
 msgstr ""
+"Afin d'améliorer l'accessibilité, la structure DOM HTML a été légèrement "
+"modifiée. Certaines sections de la page ont été modifiées de ``div`` à "
+"``header``, ``main`` ou ``footer``. Les classes ou la position dans le DOM "
+"n'ont pas été modifiées."
 
 #: ../../appendix/upgrade-notes/5.0-to-5.1.rst:17
 msgid ""
 "``page/elements/<section>/after`` is deprecated: Extend the correct "
 "``page/elements/<section>``"
 msgstr ""
+"``page/elements/<section>/after`` est obsolète : étendez le bon "
+"``page/elements/<section>``"
 
 #: ../../appendix/upgrade-notes/5.0-to-5.1.rst:18
 msgid ""
 "``page/elements/<section>/before`` is deprecated: Prepend the correct "
 "``page/elements/<section>``"
 msgstr ""
+"``page/elements/<section>/before`` est obsolète : ajoutez le bon préfixe "
+"``page/elements/<section>``"
 
 #: ../../appendix/upgrade-notes/5.0-to-5.1.rst:19
 msgid ""
 "``resources/comments/edit`` is deprecated: This resource is no longer in use"
 msgstr ""
+"``resources/comments/edit`` est obsolète : cette ressource n'est plus "
+"utilisée"
 
 #: ../../appendix/upgrade-notes/5.0-to-5.1.rst:24
 msgid ""
 "``edit:object:comment`` is deprecated: Editing comments uses an inline form"
 msgstr ""
+"``edit:object:comment`` est obsolète : la modification des commentaires "
+"utilise un formulaire en ligne"

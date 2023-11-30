@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-24 13:21+0200\n"
+"POT-Creation-Date: 2023-11-17 10:40+0100\n"
 "PO-Revision-Date: 2023-04-05 07:42+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -852,10 +852,14 @@ msgstr ""
 #: ../../guides/actions.rst:381
 msgid "``input/grouppicker`` - renders an Elgg group autocomplete"
 msgstr ""
+"``input/grouppicker`` - affiche un sélecteur de groupe Elgg par "
+"autocomplétion"
 
 #: ../../guides/actions.rst:382
 msgid "``input/objectpicker`` - renders an Elgg object autocomplete"
 msgstr ""
+"``input/objectpicker`` - affiche un sélecteur d'objet Elgg par "
+"autocomplétion"
 
 #: ../../guides/actions.rst:383
 msgid "``input/location`` renders an Elgg location input"
@@ -938,6 +942,8 @@ msgstr ""
 #: ../../guides/actions.rst:408
 msgid "``cropper_enabled`` - is icon cropping allowed (default: true)"
 msgstr ""
+"``cropper_enabled`` - le recadrage des icônes est-il autorisé (par défaut : "
+"true)"
 
 #: ../../guides/actions.rst:409
 msgid "``show_remove`` - show the remove icon option (default: true)"
@@ -1102,6 +1108,8 @@ msgstr ""
 #: ../../guides/actions.rst:474
 msgid "``sticky_enabled``: a ``bool`` to enable automatic sticky form support"
 msgstr ""
+"``sticky_enabled`` : un ``bool`` pour activer la prise en charge automatique"
+" de formulaire persistant"
 
 #: ../../guides/actions.rst:475
 msgid ""
@@ -2304,6 +2312,12 @@ msgid ""
 "provided in the event contain the original starting time of the cron, so you"
 " can always use that information."
 msgstr ""
+"Si le timing est important dans votre événement cron, sachez que les "
+"fonctions sont exécutées par ordre d'enregistrement. Cela pourrait signifier"
+" que votre fonction pourrait démarrer (beaucoup) plus tard que prévu. "
+"Cependant, les paramètres fournis dans l'événement contiennent l'heure de "
+"début d'origine du cron, vous pouvez donc toujours utiliser cette "
+"information."
 
 #: ../../guides/cron.rst:28
 msgid "Custom intervals"
@@ -2555,6 +2569,10 @@ msgid ""
 "Using specific parameters passed to ``$options`` array, you can retrieve "
 "entities by their attributes, metadata, annotations and relationships."
 msgstr ""
+"Vous pouvez récupérer des entités par leurs propriétés en utilisant "
+"``elgg_get_entities``. En utilisant des paramètres spécifiques passés au "
+"tableau ``$options``, vous pouvez récupérer des entités par leurs attributs,"
+" métadonnées, annotations et relations."
 
 #: ../../guides/database.rst:123 ../../guides/views.rst:433
 msgid "Displaying entities"
@@ -4385,6 +4403,13 @@ msgid ""
 "from your event handler, as you will override other events' output, instead "
 "return ``null`` to indicate successful operation."
 msgstr ""
+"Déclenché dans l'action globale pour enregistrer les paramètres utilisateur."
+" Le gestionnaire d'événements doit retourner ``false`` pour empêcher que les"
+" formulaires persistants ne soient effacés (c'est-à-dire pour indiquer que "
+"certaines valeurs n'ont pas été enregistrées). Ne renvoyez pas ``true`` "
+"depuis votre gestionnaire d'événements, car vous écraseriez la sortie des "
+"autres événements, mais renvoyez plutôt ``null`` pour indiquer une opération"
+" réussie."
 
 #: ../../guides/events-list.rst:338
 msgid "**validate, user**"
@@ -4987,6 +5012,14 @@ msgid ""
 "only be contained by discussions. This event can also be used to apply "
 "status logic, e.g. do disallow new replies for closed discussions."
 msgstr ""
+"Déclenché par ``ElggEntity:canWriteToContainer()`` avant de déclencher les "
+"événements ``permissions_check`` et ``container_permissions_check``. "
+"Contrairement aux événements des permissions, la vérification logique peut "
+"être utilisée pour empêcher certains types d'entités d'être contenus par "
+"d'autres types d'entités, par ex. les réponses aux discussions ne doivent "
+"être contenues que par les discussions. Cet événement peut également être "
+"utilisé pour appliquer une logique d'état, par ex. pour interdire les "
+"nouvelles réponses pour les discussions fermées."
 
 #: ../../guides/events-list.rst:556
 msgid ""
@@ -5186,6 +5219,14 @@ msgid ""
 " access and including disabled entities, so you have to be careful to not "
 "bypass the access system."
 msgstr ""
+"Filtre le résultat de ``elgg_entity_gatekeeper()`` pour bloquer ou autoriser"
+" l'accès à une entité à laquelle l'utilisateur aurait ou n'aurait pas accès "
+"autrement. Un gestionnaire peut renvoyer ``false`` ou une instance de "
+"``\\Elgg\\Exceptions\\HttpException`` pour empêcher l'accès à une entité. Un"
+" gestionnaire peut retourner             ``true`` pour remplacer le résultat"
+" du gatekeeper. **Important** l'entité reçue par cet événement est récupérée"
+" en ignorant les accès, et en incluant les entités désactivées, vous devez "
+"donc faire attention à ne pas contourner le système d'accès."
 
 #: ../../guides/events-list.rst:625 ../../guides/events-list.rst:646
 #: ../../guides/events-list.rst:660 ../../guides/events-list.rst:680
@@ -5294,6 +5335,15 @@ msgid ""
 "validating an event or action type (e.g. including an owner of the original "
 "wire thread) might end up sending notifications to wrong users."
 msgstr ""
+"**IMPORTANT** Validez toujours les types d'événement, d'objet et/ou d'action"
+" de notification avant d'ajouter de nouveaux destinataires pour vous assurer"
+" que vous n'envoyez pas accidentellement des notifications à des "
+"destinataires inattendus. Prenons une situation dans laquelle un plugin de "
+"mentions envoie une notification instantanée à un utilisateur mentionné - "
+"tout événement agissant sur un sujet ou un objet sans valider un événement "
+"ou un type d'action (par exemple, inclure un propriétaire du fil de "
+"discussion d'origine) pourrait finir par envoyer des notifications aux "
+"mauvais utilisateurs."
 
 #: ../../guides/events-list.rst:662 ../../guides/events-list.rst:682
 #: ../../guides/events-list.rst:693 ../../guides/events-list.rst:710
@@ -5411,6 +5461,13 @@ msgid ""
 "notifications that have not received an action name, it will default to "
 "``notify_user``."
 msgstr ""
+"Un événement granulaire qui peut être utilisé pour filtrer une notification "
+"``\\Elgg\\Notifications\\Notification`` avant qu'elle ne soit envoyée à "
+"l'utilisateur. S'applique aux **subscriptions** et aux notifications "
+"**instant**. En cas de notifications instantanées qui n'ont pas reçu "
+"d'objet, l'événement sera appelé ``'prepare', 'notification:<action>'``. "
+"Dans le cas de notifications instantanées qui n'ont pas reçu de nom "
+"d'action, il sera par défaut ``notify_user``."
 
 #: ../../guides/events-list.rst:708
 msgid "``$params`` include:"
@@ -5872,6 +5929,12 @@ msgid ""
 " registered outside of the ``init`` event handler, as core routes are "
 "registered during ``plugins_boot`` event."
 msgstr ""
+"Permet de modifier la configuration de la route avant son enregistrement. "
+"Cet événement peut être utilisé pour modifier le chemin, les valeurs par "
+"défaut, les pré-requis, ainsi que pour définir/supprimer un middleware. "
+"Veuillez noter que le gestionnaire de cet événement doit être enregistré en "
+"dehors du gestionnaire d'événement ``init``, car les routes principales sont"
+" enregistrées lors de l'événement ``plugins_boot``."
 
 #: ../../guides/events-list.rst:914
 msgid "**route:rewrite, <identifier>** |results|"
@@ -6238,6 +6301,12 @@ msgid ""
 "\"container_guid\" (int) are provided. An empty entity value generally means"
 " the form is to create a new object."
 msgstr ""
+"Dans ``elgg_get_default_access()``, cet événement filtre la valeur de "
+"retour, afin de pouvoir l'utiliser pour modifier la valeur par défaut dans "
+"la vue input/access. Pour les plugins principaux, la valeur \"input_params\""
+" fournit les clés \"entity\" (ElggEntity|false), \"entity_type\" (string), "
+"\"entity_subtype\" (string), \"container_guid\" (int). Une valeur d'entité "
+"vide signifie généralement que le formulaire doit créer un nouvel objet."
 
 #: ../../guides/events-list.rst:1086
 msgid "**classes, icon** |results|"
@@ -6290,6 +6359,9 @@ msgid ""
 "icon sizes (e.g. \"large\"), and the values are arrays with the following "
 "keys:"
 msgstr ""
+"L'événement doit renvoyer un tableau associatif où les clés sont les noms "
+"des tailles d'icônes (par ex. \"large\") et les valeurs sont des tableaux "
+"avec les clés suivantes :"
 
 #: ../../guides/events-list.rst:1101
 msgid "``w`` - Width of the image in pixels"
@@ -6445,6 +6517,15 @@ msgid ""
 "``$return`` value passed to the event is an instance of ``ElggFile`` that "
 "points to a temporary copy of the uploaded/linked file."
 msgstr ""
+"Déclenché par les méthodes ``ElggEntity::saveIcon*()`` et peut être utilisé "
+"pour préparer une image à partir d'un fichier téléchargé ou lié. Cet "
+"événement peut être utilisé par ex. pour faire pivoter l'image avant qu'elle"
+" ne soit redimensionnée/recadrée, ou peut être utilisé pour extraire une "
+"image si le fichier téléchargé est une vidéo. Le gestionnaire doit renvoyer "
+"une instance de ``ElggFile`` avec un `simpletype` qui se résout en `image`. "
+"La valeur ``$return`` transmise à l'événement est une instance de "
+"``ElggFile`` qui pointe vers une copie temporaire du fichier téléchargé ou "
+"lié."
 
 #: ../../guides/events-list.rst:1199 ../../guides/events-list.rst:1295
 #: ../../guides/events-list.rst:1328
@@ -7500,6 +7581,8 @@ msgstr ""
 msgid ""
 "Update the group profile 'widget' using blog or file plugins as example"
 msgstr ""
+"Mettez à jour le 'widget' du profil de groupe en utilisant des plugins de "
+"blog ou de fichiers comme exemple"
 
 #: ../../guides/guidelines.rst:112
 msgid "Update the forms"
@@ -8566,6 +8649,9 @@ msgid ""
 "are triggered and plugins can register functions to react or alter "
 "information."
 msgstr ""
+"Le moteur JS dispose d'un système de hooks similaire aux événements du "
+"moteur PHP : les hooks sont déclenchés et les plugins peuvent enregistrer "
+"des fonctions pour réagir ou modifier des informations."
 
 #: ../../guides/javascript.rst:631
 msgid "Registering hook handlers"
@@ -9379,6 +9465,16 @@ msgid ""
 "parameters in ``notify_user()`` or in the ``prepare, notifications`` event. "
 "You can change the salutation and sign-off texts in the translations."
 msgstr ""
+"Elgg ajoutera par défaut une formule de salutation au corps du message des "
+"notifications sortantes. Une signature sera également annexée. Cela signifie"
+" que vous n'aurez pas besoin d'ajouter du texte comme ``Bonjour "
+"Administrateur`` ou ``Cordialement, votre sympathique administrateur de "
+"site`` dans le corps de vos notifications. Si pour une raison quelconque "
+"vous n'avez pas besoin que cette magie se produise, vous pouvez l'empêcher "
+"en définissant le paramètre de notification ``add_salutation`` à ``false``. "
+"Vous pouvez le faire dans le cadre des paramètres de ``notify_user()`` ou de"
+" l'événement ``prepare, notifications``. Vous pouvez modifier les textes de "
+"salutation et de signature dans les traductions."
 
 #: ../../guides/notifications.rst:275
 msgid ""
@@ -9778,6 +9874,15 @@ msgid ""
 "the entity has write access, false if the entity does not, and null if this "
 "plugin doesn't care and the security system should consult other plugins."
 msgstr ""
+"Créez maintenant la fonction qui sera appelée par l'événement de "
+"vérification des autorisations. Dans cette fonction, nous déterminons si "
+"l'entité (dans les paramètres) a un accès en écriture. Puisqu'il est "
+"important de garantir la sécurité d'Elgg, l'accès en écriture ne doit être "
+"accordé qu'après avoir vérifié diverses situations, notamment le contexte de"
+" la page, l'utilisateur connecté, etc. Notez que cette fonction peut "
+"renvoyer 3 valeurs : true si l'entité a un accès en écriture, false si "
+"l'entité ne l'a pas, et null si ce plugin ne s'en préoccupe pas et que le "
+"système de sécurité devrait consulter d'autres plugins."
 
 #: ../../guides/permissions-check.rst:40
 msgid "Full Example"
@@ -10039,26 +10144,14 @@ msgstr ""
 "``type`` : indique à Composer où installer votre plugin, laissez TOUJOURS "
 "ceci sur ``elgg-plugin``"
 
-#: ../../guides/plugins.rst:297
-msgid ""
-"``require``: the ``composer/installers`` requirement is to make sure "
-"Composer knows where to install your plugin"
-msgstr ""
-"``require`` : l'exigence ``composer/installers`` vise à s'assurer que "
-"Composer sait où installer votre plugin"
-
-#: ../../guides/plugins.rst:299
+#: ../../guides/plugins.rst:298
 msgid ""
 "As a suggestion, include a ``conflict`` rule with any Elgg version below "
-"your mininal required version, this will help prevent the accidental "
+"your minimal required version, this will help prevent the accidental "
 "installation of your plugin on an incompatible Elgg version."
 msgstr ""
-"À titre de suggestion, incluez une règle de ``conflict`` avec n’importe "
-"quelle version de Elgg inférieure à votre version minimale requise, cela "
-"aidera à éviter l’installation accidentelle de votre plugin sur une version "
-"de Elgg incompatible."
 
-#: ../../guides/plugins.rst:302
+#: ../../guides/plugins.rst:301
 msgid ""
 "After adding a ``composer.json`` file to your plugin project, you need to "
 "register your project on `Packagist`_ in order for other people to be able "
@@ -10068,11 +10161,11 @@ msgstr ""
 "vous devez enregistrer votre projet sur `Packagist`_ afin que d’autres "
 "personnes puissent installer votre plugin."
 
-#: ../../guides/plugins.rst:306
+#: ../../guides/plugins.rst:305
 msgid "Tests"
 msgstr "Tests"
 
-#: ../../guides/plugins.rst:308
+#: ../../guides/plugins.rst:307
 msgid ""
 "It's encouraged to create PHPUnit test for your plugin. All tests should be "
 "located in ``tests/phpunit/unit`` for unit tests and "
@@ -10082,53 +10175,53 @@ msgstr ""
 "tests devraient être situés dans ``tests/phpunit/unit`` pour les tests "
 "unitaires et ``tests/phpunit/integration`` pour les tests d'intégration."
 
-#: ../../guides/plugins.rst:311
+#: ../../guides/plugins.rst:310
 msgid ""
 "Unit tests should extend the ``Elgg\\UnitTestCase`` class. Integration tests"
 " should extend the ``Elgg\\Plugins\\IntegrationTestCase``."
 msgstr ""
 
-#: ../../guides/plugins.rst:313
+#: ../../guides/plugins.rst:312
 msgid ""
 "There are a set of global plugin integration tests that run on all active "
 "plugins. These tests are:"
 msgstr ""
 
-#: ../../guides/plugins.rst:315
+#: ../../guides/plugins.rst:314
 msgid ""
 "``Elgg\\Plugins\\ActionRegistrationIntegrationTest`` will test all "
 "registered actions of the plugin without supplying data"
 msgstr ""
 
-#: ../../guides/plugins.rst:316
+#: ../../guides/plugins.rst:315
 msgid ""
 "``Elgg\\Plugins\\ComposerIntegrationTest`` will test if the "
 "``composer.json`` is considered valid"
 msgstr ""
 
-#: ../../guides/plugins.rst:317
+#: ../../guides/plugins.rst:316
 msgid ""
 "``Elgg\\Plugins\\StaticConfigIntegrationTest`` will test the sections of the"
 " ``elgg-plugin.php`` and check for the correct format"
 msgstr ""
 
-#: ../../guides/plugins.rst:318
+#: ../../guides/plugins.rst:317
 msgid ""
 "``Elgg\\Plugins\\TranslationsIntegrationTest`` will test all language files "
 "for the correct format and encoding"
 msgstr ""
 
-#: ../../guides/plugins.rst:319
+#: ../../guides/plugins.rst:318
 msgid ""
 "``Elgg\\Plugins\\ViewStackIntegrationTest`` will test all views of the "
 "plugin if there are any PHP parsing errors"
 msgstr ""
 
-#: ../../guides/plugins.rst:323
+#: ../../guides/plugins.rst:322
 msgid ":doc:`/contribute/tests`"
 msgstr ":doc:`/contribute/tests`"
 
-#: ../../guides/plugins.rst:326 ../../guides/views.rst:647
+#: ../../guides/plugins.rst:325 ../../guides/views.rst:647
 #: ../../guides/web-services.rst:398
 msgid "Related"
 msgstr "Connexe"
@@ -11515,7 +11608,7 @@ msgstr ""
 
 #: ../../guides/routing.rst:360
 msgid "Elgg triggers the event ``route:rewrite, news`` (see above)."
-msgstr ""
+msgstr "Elgg déclenche l'événement ``route:rewrite, news`` (voir ci-dessus)."
 
 #: ../../guides/routing.rst:361
 msgid ""
@@ -15060,6 +15153,12 @@ msgid ""
 " definition. If you want even more control you can also use the ``handlers, "
 "widgets`` event to change the widget definition."
 msgstr ""
+"Si, par exemple, vous souhaitez modifier les contextes autorisés d'un widget"
+" déjà enregistré, vous pouvez le faire en ré-enregistrant le widget avec "
+"``elgg_register_widget_type``, car cela remplacera une définition de widget "
+"déjà existante. Si vous souhaitez encore plus de contrôle, vous pouvez "
+"également utiliser l'événement ``handlers, widgets`` pour modifier la "
+"définition du widget."
 
 #: ../../guides/widgets.rst:188
 msgid "Default widgets"
@@ -15135,7 +15234,7 @@ msgstr ""
 
 #: ../../guides/widgets.rst:225
 msgid "To have widgets be created you need to register the following event:"
-msgstr ""
+msgstr "Pour créer des widgets, vous devez enregistrer l'événement suivant :"
 
 #: ../../guides/widgets.rst:231
 msgid ""
