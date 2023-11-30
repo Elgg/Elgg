@@ -1,3 +1,18 @@
+<a name="5.1.2"></a>
+### 5.1.2 (2023-11-30)
+
+#### Contributors
+
+* Jeroen Dalsem (4)
+* Jerôme Bakker (4)
+
+#### Bug fixes
+
+* **output:** link must have discernible text [8ed45c12d](https://github.com/Elgg/Elgg//commit/8ed45c12d49365306c463a461af7a10ae74bbb1d)
+* **web_services:** only create new tokens on initial save [a1904fc7c](https://github.com/Elgg/Elgg//commit/a1904fc7c64a5ee88ddb65aa5467528b58fde4db) closes [#14516](https://github.com/Elgg/Elgg//commit/14516)
+* **developers:** removed metadata enabled column in entity explorer [4256e4dd7](https://github.com/Elgg/Elgg//commit/4256e4dd7c6fac502de9c6fbc8b6432720667f57)
+
+
 <a name="5.1.1"></a>
 ### 5.1.1 (2023-11-17)
 
