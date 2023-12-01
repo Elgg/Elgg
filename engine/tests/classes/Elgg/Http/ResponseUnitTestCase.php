@@ -144,8 +144,8 @@ abstract class ResponseUnitTestCase extends UnitTestCase {
 			[REFERRER],
 			['foo'],
 			['/foo'],
-			['http://localhost/'],
-			['?foo=bar'],
+			[self::getTestingConfig()->wwwroot],
+			['a?foo=bar'],
 		];
 	}
 

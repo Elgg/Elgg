@@ -256,18 +256,19 @@ function elgg_error_response(string|array $message = '', string $forward_url = R
 /**
  * Prepare a silent redirect response to be returned by a page or an action handler
  *
- * @param string $forward_url Redirection URL
- *                            Relative or absolute URL to redirect the client to
- * @param int    $status_code HTTP status code
- *                            Status code of the HTTP response
- *                            Note that the Router and AJAX API will treat these responses
- *                            as redirection in spite of the HTTP code assigned
- *                            Note that non-redirection HTTP codes will throw an exception
+ * @param string $forward_url        Redirection URL
+ *                                   Relative or absolute URL to redirect the client to
+ * @param int    $status_code        HTTP status code
+ *                                   Status code of the HTTP response
+ *                                   Note that the Router and AJAX API will treat these responses
+ *                                   as redirection in spite of the HTTP code assigned
+ *                                   Note that non-redirection HTTP codes will throw an exception
+ * @param bool   $secure_forward_url Determines if the forward url needs to be secure
  *
  * @return \Elgg\Http\RedirectResponse
  */
-function elgg_redirect_response(string $forward_url = REFERRER, int $status_code = ELGG_HTTP_FOUND): \Elgg\Http\RedirectResponse {
-	return new Elgg\Http\RedirectResponse($forward_url, $status_code);
+function elgg_redirect_response(string $forward_url = REFERRER, int $status_code = ELGG_HTTP_FOUND, bool $secure_forward_url = true): \Elgg\Http\RedirectResponse {
+	return new Elgg\Http\RedirectResponse($forward_url, $status_code, $secure_forward_url);
 }
 
 /**

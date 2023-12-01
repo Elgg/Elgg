@@ -42,16 +42,13 @@ trait Testing {
 	 * @return Request
 	 */
 	public static function prepareHttpRequest($uri = '', $method = 'GET', $parameters = [], $ajax = 0, $add_csrf_tokens = false) {
-		$site_url = elgg_get_site_url();
-		$path = '/' . ltrim(substr(elgg_normalize_url($uri), strlen($site_url)), '/');
-
 		if ($add_csrf_tokens) {
 			$ts = _elgg_services()->csrf->getCurrentTime()->getTimestamp();
 			$parameters['__elgg_ts'] = $ts;
 			$parameters['__elgg_token'] = _elgg_services()->csrf->generateActionToken($ts);
 		}
 
-		$request = Request::create($path, $method, $parameters);
+		$request = Request::create(elgg_normalize_url($uri), $method, $parameters);
 
 		$cookie_name = _elgg_services()->config->getCookieConfig()['session']['name'];
 		$session_id = _elgg_services()->session->getID();

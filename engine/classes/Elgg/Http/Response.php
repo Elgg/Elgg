@@ -13,30 +13,17 @@ use Elgg\Exceptions\RangeException;
  */
 abstract class Response implements ResponseBuilder {
 
-	/**
-	 * @var string
-	 */
 	protected $content;
 
-	/**
-	 * @var int
-	 */
-	protected $status_code;
+	protected int $status_code;
 
-	/**
-	 * @var string
-	 */
-	protected $forward_url;
+	protected ?string $forward_url = null;
 
-	/**
-	 * @var array
-	 */
-	protected $headers;
+	protected array $headers = [];
 
-	/**
-	 * @var \Exception
-	 */
-	protected $exception;
+	protected ?\Exception $exception = null;
+	
+	protected bool $secure_forward_url = true;
 
 	/**
 	 * {@inheritdoc}
@@ -58,7 +45,7 @@ abstract class Response implements ResponseBuilder {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function setException(\Exception $e) {
 		$this->exception = $e;
@@ -66,7 +53,7 @@ abstract class Response implements ResponseBuilder {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function getException() {
 		return $this->exception;
@@ -103,7 +90,16 @@ abstract class Response implements ResponseBuilder {
 	 * {@inheritdoc}
 	 */
 	public function getForwardURL(): ?string {
-		return $this->forward_url;
+		if (!isset($this->forward_url)) {
+			return null;
+		}
+			
+		$forward_url = $this->forward_url;
+		if ($forward_url === REFERRER || !$this->secure_forward_url) {
+			return $forward_url;
+		}
+		
+		return elgg_normalize_site_url($forward_url) !== null ? $forward_url : '';
 	}
 
 	/**
@@ -118,7 +114,7 @@ abstract class Response implements ResponseBuilder {
 	 * {@inheritdoc}
 	 */
 	public function getHeaders() {
-		return (array) $this->headers;
+		return $this->headers;
 	}
 
 	/**

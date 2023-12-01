@@ -30,6 +30,18 @@ class RedirectResponseUnitTest extends ResponseUnitTestCase {
 		$this->assertEquals($forward_url, $response->getForwardURL());
 		$this->assertEquals([], $response->getHeaders());
 	}
+	
+	public function testCanNotSetInsecureForwardURL() {
+		$test_class = $this->getReponseClassName();
+		$response = new $test_class('http://unsafedomain.com');
+		$this->assertEquals('', $response->getForwardURL());
+	}
+	
+	public function testCanSetInsecureForwardURL() {
+		$test_class = $this->getReponseClassName();
+		$response = new $test_class('http://unsafedomain.com', ELGG_HTTP_FOUND, false);
+		$this->assertEquals('http://unsafedomain.com', $response->getForwardURL());
+	}
 
 	// Remaining tests are identical to ResponseUnitTest
 }
