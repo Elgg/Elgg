@@ -7,7 +7,7 @@
     "prefer-stable": true,
     "type": "project",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.0",
         "ext-pdo": "*",
         "ext-gd": "*",
         "ext-json": "*",
@@ -59,7 +59,7 @@
     "config": {
         "process-timeout": 0,
         "platform": {
-            "php": "8.1"
+            "php": "8.0"
         },
         "fxp-asset": {
             "enabled": false
