@@ -29,8 +29,4 @@ define(['jquery', 'elgg/Ajax', 'elgg/system_messages'], function ($, Ajax, syste
 			}
 		});
 	});
-	
-	$(document).on('submit', '.elgg-form-prevent-double-submit', function (e) {
-		$(this).find('button[type="submit"]').prop('disabled', true);
-	});
 });

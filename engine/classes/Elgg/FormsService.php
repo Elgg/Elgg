@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Amd\Config as AmdConfig;
 use Elgg\Exceptions\LogicException;
 use Elgg\Traits\Loggable;
 
@@ -15,35 +16,27 @@ class FormsService {
 
 	use Loggable;
 
-	/**
-	 * @var EventsService
-	 */
-	protected $events;
+	protected EventsService $events;
 	
-	/**
-	 * @var ViewsService
-	 */
-	protected $views;
+	protected ViewsService $views;
 
-	/**
-	 * @var bool
-	 */
-	protected $rendering;
+	protected AmdConfig $amdConfig;
 
-	/**
-	 * @var string
-	 */
-	protected $footer = '';
+	protected bool $rendering = false;
+
+	protected string $footer = '';
 
 	/**
 	 * Constructor
 	 *
-	 * @param ViewsService  $views  Views service
-	 * @param EventsService $events Events service
+	 * @param ViewsService  $views     Views service
+	 * @param EventsService $events    Events service
+	 * @param AmdConfig     $amdConfig AMD Configuration
 	 */
-	public function __construct(ViewsService $views, EventsService $events) {
+	public function __construct(ViewsService $views, EventsService $events, AmdConfig $amdConfig) {
 		$this->views = $views;
 		$this->events = $events;
+		$this->amdConfig = $amdConfig;
 	}
 
 	/**
@@ -104,6 +97,7 @@ class FormsService {
 		}
 
 		if (elgg_extract('ajax', $form_vars)) {
+			$this->amdConfig->addDependency('input/form-ajax');
 			$form_vars['class'][] = 'elgg-js-ajax-form';
 			unset($form_vars['ajax']);
 		}
@@ -125,6 +119,14 @@ class FormsService {
 			$body = $this->views->renderView("forms/{$action}", $body_vars);
 
 			if (!empty($body)) {
+				// wrap form body
+				$body = $this->views->renderView('elements/forms/body', [
+					'body' => $body,
+					'action_name' => $action,
+					'body_vars' => $body_vars,
+					'form_vars' => $form_vars,
+				]);
+				
 				// Grab the footer if one was set during form rendering
 				$body .= $this->views->renderView('elements/forms/footer', [
 					'footer' => $this->getFooter(),

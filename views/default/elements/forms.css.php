@@ -7,14 +7,16 @@
 /* ***************************************
 	Form Elements
 *************************************** */
-fieldset > div,
+.elgg-form-body,
+.elgg-form-body > div,
+.elgg-form-body fieldset > div,
 .elgg-field {
 	&:not(:last-child) {
 		margin-bottom: 1rem;
 	}
 }
 
-.elgg-form-alt > fieldset > .elgg-foot {
+.elgg-form-alt > .elgg-form-footer {
 	border-top: 1px solid $(border-color-soft);
 	padding: 10px 0;
 }

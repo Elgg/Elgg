@@ -14,22 +14,12 @@
  * @uses $vars['prevent_double_submit'] Boolean (default: true) disables submit button when form is submitted
  */
 
-elgg_require_js('input/form');
-
 $defaults = [
 	'method' => 'post',
 	'disable_security' => false,
 ];
 
 $vars = array_merge($defaults, $vars);
-
-$vars['class'] = elgg_extract_class($vars, 'elgg-form');
-if (elgg_extract('prevent_double_submit', $vars, true)) {
-	$vars['class'][] = 'elgg-form-prevent-double-submit';
-}
-
-$vars['action'] = elgg_normalize_url($vars['action']);
-$vars['method'] = strtolower($vars['method']);
 
 $ignore_empty_body = (bool) elgg_extract('ignore_empty_body', $vars, true);
 unset($vars['ignore_empty_body']);
@@ -41,6 +31,15 @@ if (!$ignore_empty_body && empty($body)) {
 	return;
 }
 
+$vars['class'] = elgg_extract_class($vars, 'elgg-form');
+if (elgg_extract('prevent_double_submit', $vars, true)) {
+	elgg_require_js('input/form-double-submit');
+	$vars['class'][] = 'elgg-form-prevent-double-submit';
+}
+
+$vars['action'] = elgg_normalize_url($vars['action']);
+$vars['method'] = strtolower($vars['method']);
+
 // Generate a security header
 if (!$vars['disable_security']) {
 	$body = elgg_view('input/securitytoken') . $body;
@@ -49,4 +48,4 @@ if (!$vars['disable_security']) {
 unset($vars['disable_security']);
 unset($vars['action_name']);
 
-echo elgg_format_element('form', $vars, "<fieldset>$body</fieldset>");
+echo elgg_format_element('form', $vars, $body);
