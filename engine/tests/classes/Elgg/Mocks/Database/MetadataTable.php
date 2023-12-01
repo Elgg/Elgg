@@ -181,7 +181,7 @@ class MetadataTable extends DbMetadataTabe {
 
 		$this->clearQuerySpecs($row);
 
-		$qb = Select::fromTable('metadata');
+		$qb = Select::fromTable(self::TABLE_NAME);
 		$qb->select('*');
 
 		$where = new MetadataWhereClause();
@@ -200,7 +200,7 @@ class MetadataTable extends DbMetadataTabe {
 		]);
 
 		// getIDsByName
-		$qb = Select::fromTable('metadata');
+		$qb = Select::fromTable(self::TABLE_NAME);
 		$qb->select('id');
 		$qb->where($qb->compare('entity_guid', '=', $row->entity_guid, ELGG_VALUE_INTEGER))
 			->andWhere($qb->compare('name', '=', $row->name, ELGG_VALUE_STRING));
@@ -216,7 +216,7 @@ class MetadataTable extends DbMetadataTabe {
 			},
 		]);
 		
-		$qb = Insert::intoTable('metadata');
+		$qb = Insert::intoTable(self::TABLE_NAME);
 		$qb->values([
 			'name' => $qb->param($row->name, ELGG_VALUE_STRING),
 			'entity_guid' => $qb->param($row->entity_guid, ELGG_VALUE_INTEGER),
@@ -231,7 +231,7 @@ class MetadataTable extends DbMetadataTabe {
 			'insert_id' => $row->id,
 		]);
 
-		$qb = Update::table('metadata');
+		$qb = Update::table(self::TABLE_NAME);
 		$qb->set('name', $qb->param($row->name, ELGG_VALUE_STRING))
 			->set('value', $qb->param($row->value, $row->value_type === 'integer' ? ELGG_VALUE_INTEGER : ELGG_VALUE_STRING))
 			->set('value_type', $qb->param($row->value_type, ELGG_VALUE_STRING))
@@ -248,7 +248,7 @@ class MetadataTable extends DbMetadataTabe {
 			},
 		]);
 
-		$qb = Delete::fromTable('metadata');
+		$qb = Delete::fromTable(self::TABLE_NAME);
 		$qb->where($qb->compare('id', '=', $row->id, ELGG_VALUE_INTEGER));
 
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([

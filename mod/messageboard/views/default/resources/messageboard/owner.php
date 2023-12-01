@@ -18,8 +18,8 @@ $options = [
 	'annotation_name' => 'messageboard',
 	'guid' => $page_owner->guid,
 	'order_by' => [
-		new OrderByClause('n_table.time_created', 'DESC'),
-		new OrderByClause('n_table.id', 'DESC'),
+		new OrderByClause('a_table.time_created', 'DESC'),
+		new OrderByClause('a_table.id', 'DESC'),
 	],
 	'no_results' => elgg_echo('messageboard:none'),
 ];

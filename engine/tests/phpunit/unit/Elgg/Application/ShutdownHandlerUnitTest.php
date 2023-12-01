@@ -4,6 +4,7 @@ namespace Elgg\Application;
 
 use Elgg\Application;
 use Elgg\AutoloadManager;
+use Elgg\Database\ConfigTable;
 use Elgg\Database\Insert;
 use Elgg\Event;
 use Elgg\Mocks\Di\InternalContainer;
@@ -41,7 +42,7 @@ class ShutdownHandlerUnitTest extends UnitTestCase {
 	public function testHandlesDbShutdown() {
 		$app = Application::getInstance();
 
-		$qb = Insert::intoTable('config');
+		$qb = Insert::intoTable(ConfigTable::TABLE_NAME);
 		$qb->values([
 			'name' => $qb->param('foo', ELGG_VALUE_STRING),
 			'value' => $qb->param(serialize('bar'), ELGG_VALUE_STRING),

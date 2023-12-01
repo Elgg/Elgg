@@ -24,8 +24,8 @@ $output = elgg_list_annotations([
 	'guid' => $owner->guid,
 	'pagination' => false,
 	'order_by' => [
-		new OrderByClause('n_table.time_created', 'DESC'),
-		new OrderByClause('n_table.id', 'DESC'),
+		new OrderByClause('a_table.time_created', 'DESC'),
+		new OrderByClause('a_table.id', 'DESC'),
 	],
 	'limit' => 1,
 ]);

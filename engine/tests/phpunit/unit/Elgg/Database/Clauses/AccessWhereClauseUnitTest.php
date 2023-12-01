@@ -2,15 +2,15 @@
 
 namespace Elgg\Database\Clauses;
 
+use Elgg\Database\EntityTable;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\UnitTestCase;
-use ElggUser;
 
 class AccessWhereClauseUnitTest extends UnitTestCase {
 
 	/**
-	 * @var ElggUser
+	 * @var \ElggUser
 	 */
 	protected $user;
 
@@ -20,7 +20,7 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::fromTable('entities', 'alias');
+		$this->qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 
 		$this->user = $this->createUser();
 		_elgg_services()->session_manager->setLoggedInUser($this->user);
@@ -32,7 +32,6 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 	}
 
 	public function testCanBuildAccessSqlClausesWithIgnoredAccess() {
-
 		$parts = [];
 		$parts[] = $this->qb->expr()->eq('alias.enabled', ':qb1');
 		$this->qb->param('yes', ELGG_VALUE_STRING);
@@ -41,23 +40,22 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		$query = new AccessWhereClause();
 		$query->ignore_access = true;
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 	}
 
 	public function testCanBuildAccessSqlClausesWithIgnoredAccessWithoutDisabledEntities() {
-
 		$expected = null;
 
 		$query = new AccessWhereClause();
 		$query->ignore_access = true;
 		$query->use_enabled_clause = false;
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -73,22 +71,21 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 			$this->getLoggedInAccessListClause('alias'),
 		], 'OR');
 
-		$parts[] = $this->qb->compare('alias.enabled', '=', 'yes', ELGG_VALUE_STRING);
+		$parts[] = $this->qb->compare("{$this->qb->getTableAlias()}.enabled", '=', 'yes', ELGG_VALUE_STRING);
 		$parts[] = $ors;
 
 		$expected = $this->qb->merge($parts);
 
 		$query = new AccessWhereClause();
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 	}
 
 	public function testCanBuildAccessSqlWithNoTableAlias() {
-
 		$parts = [];
 
 		$ors = $this->qb->merge([
@@ -103,8 +100,8 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AccessWhereClause();
 
-		$qb = Select::fromTable('entities', '');
-		$actual = $query->prepare($qb, '');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, '');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -118,7 +115,7 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 			$this->getLoggedInAccessListClause('alias'),
 		], 'OR');
 
-		$parts[] = $this->qb->compare('alias.enabled', '=', 'yes', ELGG_VALUE_STRING);
+		$parts[] = $this->qb->compare("{$this->qb->getTableAlias()}.enabled", '=', 'yes', ELGG_VALUE_STRING);
 		$parts[] = $ors;
 
 		$expected = $this->qb->merge($parts);
@@ -126,15 +123,14 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		$query = new AccessWhereClause();
 		$query->owner_guid_column = 'unit_test';
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 	}
 
 	public function testCanBuildAccessSqlForLoggedOutUser() {
-
 		$user = _elgg_services()->session_manager->getLoggedInUser();
 		_elgg_services()->session_manager->removeLoggedInUser();
 
@@ -144,15 +140,15 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 			$this->getLoggedOutAccessListClause('alias'),
 		], 'OR');
 
-		$parts[] = $this->qb->compare('alias.enabled', '=', 'yes', ELGG_VALUE_STRING);
+		$parts[] = $this->qb->compare("{$this->qb->getTableAlias()}.enabled", '=', 'yes', ELGG_VALUE_STRING);
 		$parts[] = $ors;
 
 		$expected = $this->qb->merge($parts);
 
 		$query = new AccessWhereClause();
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -177,8 +173,8 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		$query = new AccessWhereClause();
 		$query->ignore_access = true;
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -197,14 +193,14 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		elgg_register_event_handler('get_sql', 'access', $handler);
 
 		$parts = [];
-		$parts[] = $this->qb->compare('alias.enabled', '=', 'yes', ELGG_VALUE_STRING);
+		$parts[] = $this->qb->compare("{$this->qb->getTableAlias()}.enabled", '=', 'yes', ELGG_VALUE_STRING);
 		$expected = $this->qb->merge($parts);
 
 		$query = new AccessWhereClause();
 		$query->ignore_access = true;
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -224,7 +220,7 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		elgg_register_event_handler('get_sql', 'access', $handler);
 
 		$parts = [];
-		$parts[] = $this->qb->compare('alias.enabled', '=', 'yes', ELGG_VALUE_STRING);
+		$parts[] = $this->qb->compare("{$this->qb->getTableAlias()}.enabled", '=', 'yes', ELGG_VALUE_STRING);
 		$parts[] = $this->qb->merge([
 			$this->qb->compare(
 				$this->qb->param(57, ELGG_VALUE_INTEGER),
@@ -238,8 +234,8 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		$query = new AccessWhereClause();
 		$query->ignore_access = true;
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -259,7 +255,7 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		elgg_register_event_handler('get_sql', 'access', $handler);
 
 		$parts = [];
-		$parts[] = $this->qb->compare('alias.enabled', '=', 'yes', ELGG_VALUE_STRING);
+		$parts[] = $this->qb->compare("{$this->qb->getTableAlias()}.enabled", '=', 'yes', ELGG_VALUE_STRING);
 		$parts[] = $this->qb->compare(
 			$this->qb->param(57, ELGG_VALUE_INTEGER),
 			'>',
@@ -271,8 +267,8 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		$query = new AccessWhereClause();
 		$query->ignore_access = true;
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());

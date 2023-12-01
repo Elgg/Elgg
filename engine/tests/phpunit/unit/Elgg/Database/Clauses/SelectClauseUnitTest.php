@@ -2,6 +2,7 @@
 
 namespace Elgg\Database\Clauses;
 
+use Elgg\Database\EntityTable;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\Helpers\Database\Clauses\CallableSelect;
@@ -15,15 +16,14 @@ class SelectClauseUnitTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::fromTable('entities', 'alias');
+		$this->qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 	}
 
 	public function testBuildSelectClauseFromString() {
+		$this->qb->select("{$this->qb->getTableAlias()}.guid AS g");
 
-		$this->qb->select('alias.guid AS g');
-
-		$query = new SelectClause('alias.guid AS g');
-		$qb = Select::fromTable('entities', 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$query = new SelectClause("{$qb->getTableAlias()}.guid AS g");
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -31,14 +31,13 @@ class SelectClauseUnitTest extends UnitTestCase {
 	}
 
 	public function testBuildSelectClauseFromClosure() {
+		$this->qb->select("{$this->qb->getTableAlias()}.guid AS g");
 
-		$this->qb->select('alias.guid AS g');
-
-		$query = new SelectClause(function(QueryBuilder $qb) {
-			return 'alias.guid AS g';
+		$query = new SelectClause(function(QueryBuilder $qb, $main_alias) {
+			return "{$main_alias}.guid AS g";
 		});
 
-		$qb = Select::fromTable('entities', 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -46,12 +45,11 @@ class SelectClauseUnitTest extends UnitTestCase {
 	}
 	
 	public function testBuildSelectClauseFromInvokableClass() {
-
-		$this->qb->select('alias.guid AS g');
+		$this->qb->select("{$this->qb->getTableAlias()}.guid AS g");
 
 		$query = new SelectClause(CallableSelect::class);
 
-		$qb = Select::fromTable('entities', 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -59,12 +57,11 @@ class SelectClauseUnitTest extends UnitTestCase {
 	}
 	
 	public function testBuildSelectClauseFromStaticClassFunction() {
-
-		$this->qb->select('alias.guid AS g');
+		$this->qb->select("{$this->qb->getTableAlias()}.guid AS g");
 
 		$query = new SelectClause('\Elgg\Helpers\Database\Clauses\CallableSelect::callable');
 
-		$qb = Select::fromTable('entities', 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());

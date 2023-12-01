@@ -20,7 +20,7 @@ class ConfigTable {
 	/**
 	 * @var string name of the config database table
 	 */
-	const TABLE_NAME = 'config';
+	public const TABLE_NAME = 'config';
 	
 	protected Database $db;
 	

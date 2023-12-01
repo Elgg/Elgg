@@ -102,7 +102,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 		$this->clearQuerySpecs($row->id);
 
 		// Insert a new relationship
-		$insert = Insert::intoTable('entity_relationships');
+		$insert = Insert::intoTable(self::TABLE_NAME);
 		$insert->values([
 			'guid_one' => $insert->param($row->guid_one, ELGG_VALUE_GUID),
 			'relationship' => $insert->param($row->relationship, ELGG_VALUE_STRING),
@@ -117,7 +117,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 		]);
 
 		// Get relationship by its ID
-		$select = Select::fromTable('entity_relationships');
+		$select = Select::fromTable(self::TABLE_NAME);
 		$select->select('*')
 			->where($select->compare('id', '=', $row->id, ELGG_VALUE_ID));
 		
@@ -133,7 +133,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 		]);
 
 		// Delete relationship by its ID
-		$delete = Delete::fromTable('entity_relationships');
+		$delete = Delete::fromTable(self::TABLE_NAME);
 		$delete->where($delete->compare('id', '=', $row->id, ELGG_VALUE_ID));
 		
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
@@ -151,7 +151,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 		]);
 
 		// Check relationship between two GUIDs
-		$select = Select::fromTable('entity_relationships');
+		$select = Select::fromTable(self::TABLE_NAME);
 		$select->select('*')
 			->where($select->compare('guid_one', '=', $row->guid_one, ELGG_VALUE_GUID))
 			->andWhere($select->compare('relationship', '=', $row->relationship, ELGG_VALUE_STRING))

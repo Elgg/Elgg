@@ -2,6 +2,7 @@
 
 namespace Elgg\Database\Clauses;
 
+use Elgg\Database\EntityTable;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\UnitTestCase;
@@ -14,7 +15,7 @@ class MetadataWhereClauseUnitTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::fromTable('entities', 'alias');
+		$this->qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 	}
 
 	public function testBuildEmptyQuery() {
@@ -23,8 +24,8 @@ class MetadataWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new MetadataWhereClause();
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -40,8 +41,8 @@ class MetadataWhereClauseUnitTest extends UnitTestCase {
 		$query = new MetadataWhereClause();
 		$query->ids = 1;
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -57,8 +58,8 @@ class MetadataWhereClauseUnitTest extends UnitTestCase {
 		$query = new MetadataWhereClause();
 		$query->names = ['foo1', 'foo2'];
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -76,8 +77,8 @@ class MetadataWhereClauseUnitTest extends UnitTestCase {
 		$query->value_type = ELGG_VALUE_STRING;
 		$query->case_sensitive = false;
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -98,8 +99,8 @@ class MetadataWhereClauseUnitTest extends UnitTestCase {
 		$query->value_type = ELGG_VALUE_STRING;
 		$query->comparison = 'like';
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -115,8 +116,8 @@ class MetadataWhereClauseUnitTest extends UnitTestCase {
 		$query = new MetadataWhereClause();
 		$query->entity_guids = 1;
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -142,8 +143,8 @@ class MetadataWhereClauseUnitTest extends UnitTestCase {
 		$query->created_after = $after;
 		$query->created_before = $before;
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());

@@ -2,6 +2,8 @@
 
 namespace Elgg\Upgrades;
 
+use Elgg\Database\EntityTable;
+use Elgg\Database\MetadataTable;
 use Elgg\Upgrade\SystemUpgrade;
 use Elgg\Upgrade\Result;
 use Elgg\Database\Select;
@@ -39,11 +41,11 @@ class ChangeUserNotificationSettingsNamespace extends SystemUpgrade {
 	 * {@inheritDoc}
 	 */
 	public function countItems(): int {
-		$select = Select::fromTable('metadata', 'md');
-		$entities_table = $select->joinEntitiesTable('md', 'entity_guid');
+		$select = Select::fromTable(MetadataTable::TABLE_NAME, MetadataTable::DEFAULT_JOIN_ALIAS);
+		$entities_table = $select->joinEntitiesTable($select->getTableAlias(), 'entity_guid');
 		
 		$select->select('count(*) AS total')
-			->where($select->compare('md.name', 'like', 'notification:method:%', ELGG_VALUE_STRING))
+			->where($select->compare("{$select->getTableAlias()}.name", 'like', 'notification:method:%', ELGG_VALUE_STRING))
 			->andWhere($select->compare("{$entities_table}.type", '=', 'user', ELGG_VALUE_STRING));
 		
 		$result = _elgg_services()->db->getDataRow($select);
@@ -55,11 +57,11 @@ class ChangeUserNotificationSettingsNamespace extends SystemUpgrade {
 	 * {@inheritDoc}
 	 */
 	public function run(Result $result, $offset): Result {
-		$update = Update::table('metadata');
+		$update = Update::table(MetadataTable::TABLE_NAME);
 		$update->set('name', 'REPLACE(name, "notification:method:", "notification:default:")')
 			->where($update->compare('name', 'like', 'notification:method:%', ELGG_VALUE_STRING));
 		
-		$users = $update->subquery('entities');
+		$users = $update->subquery(EntityTable::TABLE_NAME);
 		$users->select('guid')
 			->where($update->compare('type', '=', 'user', ELGG_VALUE_STRING));
 		

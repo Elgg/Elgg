@@ -15,6 +15,10 @@ use Elgg\Traits\TimeUsing;
 class AnnotationsTable {
 
 	use TimeUsing;
+	
+	public const TABLE_NAME = 'annotations';
+	
+	public const DEFAULT_JOIN_ALIAS = 'a_table';
 
 	protected Database $db;
 
@@ -39,7 +43,7 @@ class AnnotationsTable {
 	 * @return \ElggAnnotation|null
 	 */
 	public function get(int $id): ?\ElggAnnotation {
-		$qb = Select::fromTable('annotations');
+		$qb = Select::fromTable(self::TABLE_NAME);
 		$qb->select('*');
 
 		$where = new AnnotationWhereClause();
@@ -66,7 +70,7 @@ class AnnotationsTable {
 			return false;
 		}
 
-		$qb = Delete::fromTable('annotations');
+		$qb = Delete::fromTable(self::TABLE_NAME);
 		$qb->where($qb->compare('id', '=', $annotation->id, ELGG_VALUE_INTEGER));
 		$deleted = $this->db->deleteData($qb);
 
@@ -112,7 +116,7 @@ class AnnotationsTable {
 
 		$time_created = $this->getCurrentTime()->getTimestamp();
 
-		$qb = Insert::intoTable('annotations');
+		$qb = Insert::intoTable(self::TABLE_NAME);
 		$qb->values([
 			'entity_guid' => $qb->param($annotation->entity_guid, ELGG_VALUE_INTEGER),
 			'name' => $qb->param($annotation->name, ELGG_VALUE_STRING),
@@ -164,7 +168,7 @@ class AnnotationsTable {
 			return false;
 		}
 
-		$qb = Update::table('annotations');
+		$qb = Update::table(self::TABLE_NAME);
 		$qb->set('name', $qb->param($annotation->name, ELGG_VALUE_STRING))
 			->set('value', $qb->param($annotation->value, $annotation->value_type === 'integer' ? ELGG_VALUE_INTEGER : ELGG_VALUE_STRING))
 			->set('value_type', $qb->param($annotation->value_type, ELGG_VALUE_STRING))
@@ -206,7 +210,7 @@ class AnnotationsTable {
 		}
 
 		if ($annotation->id) {
-			$qb = Update::table('annotations');
+			$qb = Update::table(self::TABLE_NAME);
 			$qb->set('enabled', $qb->param('no', ELGG_VALUE_STRING))
 				->where($qb->compare('id', '=', $annotation->id, ELGG_VALUE_INTEGER));
 
@@ -242,7 +246,7 @@ class AnnotationsTable {
 		}
 
 		if ($annotation->id) {
-			$qb = Update::table('annotations');
+			$qb = Update::table(self::TABLE_NAME);
 			$qb->set('enabled', $qb->param('yes', ELGG_VALUE_STRING))
 				->where($qb->compare('id', '=', $annotation->id, ELGG_VALUE_INTEGER));
 
@@ -422,7 +426,7 @@ class AnnotationsTable {
 			return false;
 		}
 
-		$qb = Select::fromTable('annotations');
+		$qb = Select::fromTable(self::TABLE_NAME);
 		$qb->select('id');
 		$qb->where($qb->compare('owner_guid', '=', $owner_guid, ELGG_VALUE_INTEGER))
 			->andWhere($qb->compare('entity_guid', '=', $entity_guid, ELGG_VALUE_INTEGER))

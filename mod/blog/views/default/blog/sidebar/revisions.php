@@ -19,8 +19,8 @@ if (!$blog->canEdit()) {
 $revisions = $blog->getAnnotations([
 	'annotation_name' => 'blog_revision',
 	'order_by' => [
-		new OrderByClause('n_table.time_created', 'DESC'),
-		new OrderByClause('n_table.id', 'DESC'),
+		new OrderByClause('a_table.time_created', 'DESC'),
+		new OrderByClause('a_table.id', 'DESC'),
 	],
 	'limit' => false,
 ]);

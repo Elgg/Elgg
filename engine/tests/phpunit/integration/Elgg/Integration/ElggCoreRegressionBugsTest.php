@@ -317,4 +317,36 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 
 		$this->assertEquals(1, $stats['object'][$subtype]);
 	}
+	
+	/**
+	 * Test that entities can be found with both metadata and annotation limitations
+	 *
+	 * @see https://github.com/Elgg/Elgg/issues/14405
+	 */
+	function testGetEntitiesWithMetadataAndAnnotations() {
+		$entity = $this->createObject();
+		
+		// make sure likes is supported
+		elgg_entity_enable_capability($entity->type, $entity->subtype, 'likable');
+		$this->createLikes($entity, 5);
+		
+		$this->assertNotEmpty($entity->__faker); // metadata
+		$this->assertNotEmpty($entity->countAnnotations('likes')); // annotations
+		
+		$entities = elgg_get_entities([
+			'type' => $entity->type,
+			'subtype' => $entity->subtype,
+			'metadata_names' => '__faker',
+			'annotation_name_value_pairs' => [
+				[
+					'name' => 'likes',
+					'value' => 'likes',
+					'case_sensitive' => false,
+					'type' => ELGG_VALUE_STRING,
+				],
+			],
+		]);
+		
+		$this->assertNotEmpty($entities);
+	}
 }

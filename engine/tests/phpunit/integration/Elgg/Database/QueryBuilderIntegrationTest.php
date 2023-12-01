@@ -11,20 +11,20 @@ class QueryBuilderIntegrationTest extends IntegrationTestCase {
 		$object = $this->createObject();
 		$object->foo = 'bar';
 
-		$qb = Select::fromTable('entities', 'e');
-		$qb->select('e.guid');
-		$qb->where($qb->compare('e.subtype', '=', $object->subtype, ELGG_VALUE_STRING));
-		$qb->orderBy('e.time_created', 'desc');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, EntityTable::DEFAULT_JOIN_ALIAS);
+		$qb->select("{$qb->getTableAlias()}.guid");
+		$qb->where($qb->compare("{$qb->getTableAlias()}.subtype", '=', $object->subtype, ELGG_VALUE_STRING));
+		$qb->orderBy("{$qb->getTableAlias()}.time_created", 'desc');
 
-		$subqb = $qb->subquery('metadata', 'md');
-		$subqb->select(1);
-		$subqb->where($qb->merge([
-			$qb->compare('md.entity_guid', '=', 'e.guid'),
-			$qb->compare('md.name', '=', 'foo', ELGG_VALUE_STRING),
-			$qb->compare('md.value', '=', 'bar', ELGG_VALUE_STRING),
+		$metadata = $qb->subquery(MetadataTable::TABLE_NAME, MetadataTable::DEFAULT_JOIN_ALIAS);
+		$metadata->select(1);
+		$metadata->where($qb->merge([
+			$qb->compare("{$metadata->getTableAlias()}.entity_guid", '=', "{$qb->getTableAlias()}.guid"),
+			$qb->compare("{$metadata->getTableAlias()}.name", '=', 'foo', ELGG_VALUE_STRING),
+			$qb->compare("{$metadata->getTableAlias()}.value", '=', 'bar', ELGG_VALUE_STRING),
 		]));
 
-		$qb->where($qb->compare(null, 'EXISTS', $subqb->getSQL()));
+		$qb->where("EXISTS ({$metadata->getSQL()})");
 
 		$row = elgg()->db->getDataRow($qb);
 
@@ -38,17 +38,17 @@ class QueryBuilderIntegrationTest extends IntegrationTestCase {
 			'container_guid' => $group->guid,
 		]);
 
-		$qb = Select::fromTable('entities', 'e');
-		$qb->select('e.guid');
-		$qb->where($qb->compare('e.subtype', '=', $object->subtype, ELGG_VALUE_STRING));
-		$qb->orderBy('e.time_created', 'desc');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, EntityTable::DEFAULT_JOIN_ALIAS);
+		$qb->select("{$qb->getTableAlias()}.guid");
+		$qb->where($qb->compare("{$qb->getTableAlias()}.subtype", '=', $object->subtype, ELGG_VALUE_STRING));
+		$qb->orderBy("{$qb->getTableAlias()}.time_created", 'desc');
 
-		$subqb = $qb->subquery('entities', 'e2');
-		$subqb->select('e2.guid');
-		$subqb->where($qb->compare('e2.subtype', '=', $group->subtype, ELGG_VALUE_STRING));
-		$subqb->orderBy('e2.time_created', 'desc');
+		$subqb = $qb->subquery(EntityTable::TABLE_NAME, 'e2');
+		$subqb->select("{$subqb->getTableAlias()}.guid");
+		$subqb->where($qb->compare("{$subqb->getTableAlias()}.subtype", '=', $group->subtype, ELGG_VALUE_STRING));
+		$subqb->orderBy("{$subqb->getTableAlias()}.time_created", 'desc');
 
-		$qb->where($qb->compare('e.container_guid', 'IN', $subqb->getSQL()));
+		$qb->where($qb->compare("{$qb->getTableAlias()}.container_guid", 'IN', $subqb->getSQL()));
 
 		$row = elgg()->db->getDataRow($qb);
 

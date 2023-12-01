@@ -3,6 +3,8 @@
  * History of revisions of a page
  */
 
+use Elgg\Database\Clauses\OrderByClause;
+
 $page_guid = (int) elgg_extract('guid', $vars);
 
 elgg_entity_gatekeeper($page_guid, 'object', 'page', true);
@@ -21,8 +23,8 @@ $content = elgg_list_annotations([
 	'annotation_name' => 'page',
 	'limit' => max(20, elgg_get_config('default_limit')),
 	'order_by' => [
-		new \Elgg\Database\Clauses\OrderByClause('n_table.time_created', 'desc'),
-		new \Elgg\Database\Clauses\OrderByClause('n_table.id', 'desc'),
+		new OrderByClause('a_table.time_created', 'desc'),
+		new OrderByClause('a_table.id', 'desc'),
 	],
 	'no_results' => elgg_echo('pages:none'),
 ]);

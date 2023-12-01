@@ -2,6 +2,7 @@
 
 namespace Elgg\Integration;
 
+use Elgg\Database\AnnotationsTable;
 use Elgg\Database\Clauses\WhereClause;
 use Elgg\Database\Update;
 
@@ -44,7 +45,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesIntegrat
 		// this one earlier
 		$yesterday = time() - 86400;
 		
-		$update = Update::table('annotations');
+		$update = Update::table(AnnotationsTable::TABLE_NAME);
 		$update->set('time_created', $update->param($yesterday, ELGG_VALUE_TIMESTAMP));
 		$update->where($update->compare('id', '=', $id1, ELGG_VALUE_ID));
 		elgg()->db->updateData($update);
@@ -137,11 +138,12 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesIntegrat
 		$guids[] = $valid2->getGUID();
 		$valid2->annotate($annotation_name2, $annotation_value2, ACCESS_PRIVATE, $user2->guid);
 
+		$annotation_alias = AnnotationsTable::DEFAULT_JOIN_ALIAS;
 		$entities = elgg_get_entities([
 			'annotation_owner_guid' => $user1->guid,
 			'annotation_name' => $annotation_name,
-			'selects' => ['MAX(n_table.time_created) AS maxtime'],
-			'group_by' => 'n_table.entity_guid',
+			'selects' => ["MAX({$annotation_alias}.time_created) AS maxtime"],
+			'group_by' => "{$annotation_alias}.entity_guid",
 			'order_by' => 'maxtime',
 		]);
 
@@ -372,7 +374,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesIntegrat
 			'annotation_values' => array_unique(call_user_func_array('array_merge', $values)),
 			'annotation_sort_by_calculation' => 'sum',
 			'wheres' => [
-				new WhereClause("CAST(n_table.value as DECIMAL(10, 2)) > 0"),
+				new WhereClause("CAST(a_table.value as DECIMAL(10, 2)) > 0"),
 			],
 		];
 
@@ -391,7 +393,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesIntegrat
 			$annotations = $e->getAnnotations([
 				'annotation_name' => $name,
 				'where' => [
-					new WhereClause("CAST(n_table.value AS DECIMAL(10, 2)) > 0"),
+					new WhereClause("CAST(a_table.value AS DECIMAL(10, 2)) > 0"),
 				],
 				'limit' => false,
 			]);

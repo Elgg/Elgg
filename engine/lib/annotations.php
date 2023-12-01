@@ -38,9 +38,7 @@ function elgg_delete_annotation_by_id(int $id): bool {
  *
  * Accepts all options supported by {@link elgg_get_entities()}
  *
- * The default 'order_by' is 'n_table.time_created, n_table.id',
- *
- * @see   elgg_get_entities()
+ * The default 'order_by' is 'a_table.time_created, a_table.id',
  *
  * @param array $options Options
  *

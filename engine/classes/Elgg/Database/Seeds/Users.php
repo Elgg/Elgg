@@ -2,6 +2,7 @@
 
 namespace Elgg\Database\Seeds;
 
+use Elgg\Database\RiverTable;
 use Elgg\Database\Update;
 use Elgg\Exceptions\Seeding\MaxAttemptsException;
 
@@ -92,7 +93,7 @@ class Users extends Seed {
 					]);
 					/* @var $item \ElggRiverItem */
 					foreach ($river as $item) {
-						$update = Update::table('river');
+						$update = Update::table(RiverTable::TABLE_NAME);
 						$update->set('posted', $update->param($this->getRandomCreationTimestamp(), ELGG_VALUE_TIMESTAMP))
 							->where($update->compare('id', '=', $item->id, ELGG_VALUE_ID));
 						

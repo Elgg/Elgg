@@ -28,19 +28,19 @@ class RiverUnitTest extends UnitTestCase {
 
 		$ands = [];
 		
-		$qb->joinEntitiesTable('rv', 'subject_guid', 'inner', 'se');
+		$qb->joinEntitiesTable($qb->getTableAlias(), 'subject_guid', 'inner', 'se');
 		$subject = new EntityWhereClause();
 		$subject->guids = elgg_extract('subject_guids', $options);
 		$ands[] = $subject->prepare($qb, 'se');
 
-		$qb->joinEntitiesTable('rv', 'object_guid', 'inner', 'oe');
+		$qb->joinEntitiesTable($qb->getTableAlias(), 'object_guid', 'inner', 'oe');
 		$object = new EntityWhereClause();
 		$object->type_subtype_pairs = elgg_extract('type_subtype_pairs', $options);
 		$object->guids = elgg_extract('object_guids', $options);
 		$ands[] = $object->prepare($qb, 'oe');
 
 		$target_ors = [];
-		$qb->joinEntitiesTable('rv', 'target_guid', 'left', 'te');
+		$qb->joinEntitiesTable($qb->getTableAlias(), 'target_guid', 'left', 'te');
 		$target = new EntityWhereClause();
 		$target->guids = elgg_extract('target_guids', $options);
 		$target_ors[] = $target->prepare($qb, 'te');
@@ -61,8 +61,8 @@ class RiverUnitTest extends UnitTestCase {
 			'target_guids' => [7, 8, 9],
 		];
 
-		$select = Select::fromTable('river', 'rv');
-		$select->select('COUNT(DISTINCT rv.id) AS total');
+		$select = Select::fromTable(RiverTable::TABLE_NAME, RiverTable::DEFAULT_JOIN_ALIAS);
+		$select->select("COUNT(DISTINCT {$select->getTableAlias()}.id) AS total");
 
 		$select = $this->buildQuery($select, $options);
 
@@ -86,8 +86,8 @@ class RiverUnitTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteWithIgnoredAccess() {
-		$select = Select::fromTable('river', 'rv');
-		$select->select('COUNT(DISTINCT rv.id) AS total');
+		$select = Select::fromTable(RiverTable::TABLE_NAME, RiverTable::DEFAULT_JOIN_ALIAS);
+		$select->select("COUNT(DISTINCT {$select->getTableAlias()}.id) AS total");
 
 		$select->addClause(new RiverWhereClause());
 
@@ -133,15 +133,15 @@ class RiverUnitTest extends UnitTestCase {
 				new OrderByClause('rv.id', 'ASC'),
 			]
 		];
-
-		$select = Select::fromTable('river', 'rv');
-		$select->select('DISTINCT rv.*');
+		
+		$select = Select::fromTable(RiverTable::TABLE_NAME, RiverTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
 
 		$select = $this->buildQuery($select, $options);
 
 		$select->setMaxResults(5);
 		$select->setFirstResult(5);
-		$select->addOrderBy('rv.id', 'asc');
+		$select->addOrderBy("{$select->getTableAlias()}.id", 'asc');
 
 		$rows = $this->getRows(5);
 
@@ -175,36 +175,36 @@ class RiverUnitTest extends UnitTestCase {
 				'rv.posted',
 			],
 			'having' => [
-				function (QueryBuilder $qb) {
-					return $qb->compare('rv.posted', 'IS NOT NULL');
+				function (QueryBuilder $qb, $main_alias) {
+					return $qb->compare("{$main_alias}.posted", 'IS NOT NULL');
 				}
 			],
 			'joins' => [
-				new JoinClause('annotations', 'n_table', 'rv.annotation_id = n_table.id'),
+				new JoinClause(AnnotationsTable::TABLE_NAME, 'n_table', 'rv.annotation_id = n_table.id'),
 			],
 			'wheres' => [
-				function (QueryBuilder $qb) {
-					$alias = $qb->joinEntitiesTable('rv', 'object_guid', 'object');
+				function (QueryBuilder $qb, $main_alias) {
+					$alias = $qb->joinEntitiesTable($main_alias, 'object_guid', 'object');
 
-					return $qb->compare("$alias.access_id", 'IN', [1, 2, 3], ELGG_VALUE_INTEGER);
+					return $qb->compare("{$alias}.access_id", 'IN', [1, 2, 3], ELGG_VALUE_INTEGER);
 				}
 			]
 		];
-
-		$select = Select::fromTable('river', 'rv');
-		$select->select('DISTINCT rv.*');
-		$select->addSelect('max(rv.posted) AS newest');
-		$select->groupBy('rv.posted');
-		$select->join('rv', 'annotations', 'n_table', 'rv.annotation_id = n_table.id');
-		$alias = $select->joinEntitiesTable('rv', 'object_guid', 'object');
-		$select->where($select->compare("$alias.access_id", 'IN', [1, 2, 3], ELGG_VALUE_INTEGER));
-		$select->having($select->compare('rv.posted', 'IS NOT NULL'));
+		
+		$select = Select::fromTable(RiverTable::TABLE_NAME, RiverTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
+		$select->addSelect("max({$select->getTableAlias()}.posted) AS newest");
+		$select->groupBy("{$select->getTableAlias()}.posted");
+		$select->join($select->getTableAlias(), AnnotationsTable::TABLE_NAME, 'n_table', "{$select->getTableAlias()}.annotation_id = n_table.id");
+		$alias = $select->joinEntitiesTable($select->getTableAlias(), 'object_guid', 'object');
+		$select->where($select->compare("{$alias}.access_id", 'IN', [1, 2, 3], ELGG_VALUE_INTEGER));
+		$select->having($select->compare("{$select->getTableAlias()}.posted", 'IS NOT NULL'));
 
 		$select = $this->buildQuery($select, $options);
 
 		$select->setMaxResults(5);
 		$select->setFirstResult(5);
-		$select->addOrderBy('rv.id', 'asc');
+		$select->addOrderBy("{$select->getTableAlias()}.id", 'asc');
 
 		$rows = $this->getRows(5);
 
@@ -233,15 +233,15 @@ class RiverUnitTest extends UnitTestCase {
 			],
 			'batch' => true,
 		];
-
-		$select = Select::fromTable('river', 'rv');
-		$select->select('DISTINCT rv.*');
+		
+		$select = Select::fromTable(RiverTable::TABLE_NAME, RiverTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
 
 		$select = $this->buildQuery($select, $options);
 
 		$select->setMaxResults(5);
 		$select->setFirstResult(5);
-		$select->addOrderBy('rv.id', 'asc');
+		$select->addOrderBy("{$select->getTableAlias()}.id", 'asc');
 
 		$rows = $this->getRows(5);
 
@@ -269,7 +269,6 @@ class RiverUnitTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteAnnotationCalculation() {
-
 		$annotation_names = ['foo'];
 
 		$options = [
@@ -280,11 +279,11 @@ class RiverUnitTest extends UnitTestCase {
 				'operand' => '>',
 			]
 		];
+		
+		$select = Select::fromTable(RiverTable::TABLE_NAME, RiverTable::DEFAULT_JOIN_ALIAS);
 
-		$select = Select::fromTable('river', 'rv');
-
-		$select->join('rv', 'annotations', 'n_table', "rv.annotation_id = n_table.id");
-		$select->select("avg(n_table.value) AS calculation");
+		$alias = $select->joinAnnotationTable($select->getTableAlias(), 'annotation_id', null, 'inner', AnnotationsTable::DEFAULT_JOIN_ALIAS);
+		$select->select("avg({$alias}.value) AS calculation");
 
 		$select = $this->buildQuery($select, $options);
 
@@ -294,7 +293,7 @@ class RiverUnitTest extends UnitTestCase {
 		$annotation->comparison = '>';
 		$annotation->value_type = ELGG_VALUE_INTEGER;
 
-		$select->addClause($annotation, 'n_table');
+		$select->addClause($annotation, $alias);
 
 		$spec = _elgg_services()->db->addQuerySpec([
 			'sql' => $select->getSQL(),
@@ -316,7 +315,6 @@ class RiverUnitTest extends UnitTestCase {
 	}
 
 	public function testThrowsOnAnnotationCalculationWithMultipleAndPairs() {
-
 		$options = [
 			'annotation_calculation' => 'min',
 			'annotation_name_value_pairs' => [
@@ -336,7 +334,6 @@ class RiverUnitTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteQueryWithAnnotationNameValuePairs() {
-
 		$options = [
 			'callback' => false,
 			'annotation_name_value_pairs' => [
@@ -348,23 +345,21 @@ class RiverUnitTest extends UnitTestCase {
 			],
 			'limit' => 10,
 		];
-
-		$select = Select::fromTable('river', 'rv');
-		$select->select('DISTINCT rv.*');
+		
+		$select = Select::fromTable(RiverTable::TABLE_NAME, RiverTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
 
 		$wheres = [];
 		
 		$select = $this->buildQuery($select, $options);
 
-		$alias1 = $select->getNextJoinAlias();
-		$select->join('rv', 'annotations', $alias1, "$alias1.id = rv.annotation_id");
+		$alias1 = $select->joinAnnotationTable($select->getTableAlias(), 'annotation_id', ['foo1']);
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = ['foo1'];
 		$annotation->values = ['bar1'];
 		$wheres[] = $annotation->prepare($select, $alias1);
 
-		$alias2 = $select->getNextJoinAlias();
-		$select->join('rv', 'annotations', $alias2, "$alias2.id = rv.annotation_id");
+		$alias2 = $select->joinAnnotationTable($select->getTableAlias(), 'annotation_id', ['foo2']);
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = ['foo2'];
 		$annotation->values = ['bar2'];
@@ -375,7 +370,7 @@ class RiverUnitTest extends UnitTestCase {
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('rv.id', 'asc');
+		$select->orderBy("{$select->getTableAlias()}.id", 'asc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -392,7 +387,6 @@ class RiverUnitTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteQueryWithAnnotationNameValuePairsJoinedByOr() {
-
 		$options = [
 			'callback' => false,
 			'annotation_name_value_pairs' => [
@@ -405,32 +399,32 @@ class RiverUnitTest extends UnitTestCase {
 			],
 			'limit' => 10,
 		];
-
-		$select = Select::fromTable('river', 'rv');
-		$select->select('DISTINCT rv.*');
+		
+		$select = Select::fromTable(RiverTable::TABLE_NAME, RiverTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
 		
 		$wheres = [];
 		
 		$select = $this->buildQuery($select, $options);
 
-		$select->join('rv', 'annotations', 'n_table', "n_table.id = rv.annotation_id");
+		$alias = $select->joinAnnotationTable($select->getTableAlias(), 'annotation_id');
 
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = ['foo1'];
 		$annotation->values = ['bar1'];
-		$wheres[] = $annotation->prepare($select, 'n_table');
+		$wheres[] = $annotation->prepare($select, $alias);
 
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = ['foo2'];
 		$annotation->values = ['bar2'];
-		$wheres[] = $annotation->prepare($select, 'n_table');
+		$wheres[] = $annotation->prepare($select, $alias);
 
 		$select->andWhere($select->merge($wheres, 'OR'));
 
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('rv.id', 'asc');
+		$select->orderBy("{$select->getTableAlias()}.id", 'asc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -447,7 +441,6 @@ class RiverUnitTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteQueryWithRelationshipPairs() {
-
 		$options = [
 			'callback' => false,
 			'relationship_pairs' => [
@@ -466,21 +459,21 @@ class RiverUnitTest extends UnitTestCase {
 			],
 			'limit' => 10,
 		];
-
-		$select = Select::fromTable('river', 'rv');
-		$select->select('DISTINCT rv.*');
+		
+		$select = Select::fromTable(RiverTable::TABLE_NAME, RiverTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
 		
 		$wheres = [];
 		
 		$select = $this->buildQuery($select, $options);
 
-		$alias1 = $select->joinRelationshipTable('rv', 'subject_guid', ['foo1']);
+		$alias1 = $select->joinRelationshipTable($select->getTableAlias(), 'subject_guid', ['foo1']);
 		$rel1 = new RelationshipWhereClause();
 		$rel1->names = ['foo1'];
 		$rel1->subject_guids = [1, 2, 3];
 		$wheres[] = $rel1->prepare($select, $alias1);
 
-		$alias2 = $select->joinRelationshipTable('rv', 'subject_guid', ['foo2'], true);
+		$alias2 = $select->joinRelationshipTable($select->getTableAlias(), 'subject_guid', ['foo2'], true);
 		$rel2 = new RelationshipWhereClause();
 		$rel2->names = ['foo2'];
 		$rel2->object_guids = [4, 5, 6];
@@ -491,7 +484,7 @@ class RiverUnitTest extends UnitTestCase {
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('rv.id', 'asc');
+		$select->orderBy("{$select->getTableAlias()}.id", 'asc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -518,15 +511,15 @@ class RiverUnitTest extends UnitTestCase {
 			],
 			'limit' => 10,
 		];
-
-		$select = Select::fromTable('river', 'rv');
-		$select->select('DISTINCT rv.*');
+		
+		$select = Select::fromTable(RiverTable::TABLE_NAME, RiverTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
 		
 		$wheres = [];
 		
 		$select = $this->buildQuery($select, $options);
 
-		$select->joinRelationshipTable('rv', 'subject_guid', null, false, 'inner', 'r');
+		$select->joinRelationshipTable($select->getTableAlias(), 'subject_guid', null, false, 'inner', 'r');
 
 		$relationship = new RelationshipWhereClause();
 		$relationship->names = ['foo1'];
@@ -538,7 +531,7 @@ class RiverUnitTest extends UnitTestCase {
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('rv.id', 'asc');
+		$select->orderBy("{$select->getTableAlias()}.id", 'asc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([

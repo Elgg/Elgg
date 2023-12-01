@@ -441,12 +441,12 @@ class Plugins {
 	 * @return int
 	 */
 	public function getMaxPriority(): int {
-		$qb = Select::fromTable('entities', 'e');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, EntityTable::DEFAULT_JOIN_ALIAS);
 		$qb->select('MAX(CAST(md.value AS unsigned)) as max')
-			->join('e', 'metadata', 'md', 'e.guid = md.entity_guid')
+			->join($qb->getTableAlias(), MetadataTable::TABLE_NAME, 'md', "{$qb->getTableAlias()}.guid = md.entity_guid")
 			->where($qb->compare('md.name', '=', \ElggPlugin::PRIORITY_SETTING_NAME, ELGG_VALUE_STRING))
-			->andWhere($qb->compare('e.type', '=', 'object', ELGG_VALUE_STRING))
-			->andWhere($qb->compare('e.subtype', '=', 'plugin', ELGG_VALUE_STRING));
+			->andWhere($qb->compare("{$qb->getTableAlias()}.type", '=', 'object', ELGG_VALUE_STRING))
+			->andWhere($qb->compare("{$qb->getTableAlias()}.subtype", '=', 'plugin', ELGG_VALUE_STRING));
 
 		$data = $this->db->getDataRow($qb);
 		if (empty($data)) {
@@ -726,7 +726,7 @@ class Plugins {
 				
 				// shorten callstack
 				$volatile_data_name = 'select:value';
-				$options['select'] = ['n_table.value'];
+				$options['select'] = [MetadataTable::DEFAULT_JOIN_ALIAS . '.value'];
 				$options['metadata_names'] = [
 					\ElggPlugin::PRIORITY_SETTING_NAME,
 				];
@@ -891,7 +891,7 @@ class Plugins {
 			return false;
 		}
 
-		$qb = Update::table('metadata');
+		$qb = Update::table(MetadataTable::TABLE_NAME);
 		$qb->where($qb->compare('name', '=', $name, ELGG_VALUE_STRING))
 			->andWhere($qb->compare('entity_guid', '!=', $plugin->guid, ELGG_VALUE_INTEGER));
 

@@ -39,7 +39,7 @@ class Relationships extends Repository {
 		
 		$join_column = $this->getJoinColumn();
 		
-		$select = Select::fromTable('entity_relationships', 'er');
+		$select = Select::fromTable(RelationshipsTable::TABLE_NAME, 'er');
 		
 		switch ($property_type) {
 			case 'attribute':
@@ -47,21 +47,21 @@ class Relationships extends Repository {
 					throw new DomainException("'{$property}' is not a valid attribute");
 				}
 				
-				$alias = $select->joinEntitiesTable('er', $join_column, 'inner', 'e');
+				$alias = $select->joinEntitiesTable($select->getTableAlias(), $join_column, 'inner', 'e');
 				$select->select("{$function}({$alias}.{$property}) AS calculation");
 				break;
 				
 			case 'annotation':
-				$alias = 'n_table';
+				$alias = AnnotationsTable::DEFAULT_JOIN_ALIAS;
 				if (!empty($this->options->annotation_name_value_pairs) && $this->options->annotation_name_value_pairs[0]->names != $property) {
-					$alias = $select->joinAnnotationTable('er', $join_column, $property);
+					$alias = $select->joinAnnotationTable($select->getTableAlias(), $join_column, $property);
 				}
 				
-				$select->select("{$function}($alias.value) AS calculation");
+				$select->select("{$function}({$alias}.value) AS calculation");
 				break;
 				
 			case 'metadata':
-				$alias = $select->joinMetadataTable('er', $join_column, $property);
+				$alias = $select->joinMetadataTable($select->getTableAlias(), $join_column, $property);
 				$select->select("{$function}({$alias}.value) AS calculation");
 				break;
 		}
@@ -77,9 +77,9 @@ class Relationships extends Repository {
 	 * {@inheritDoc}
 	 */
 	public function count() {
-		$select = Select::fromTable('entity_relationships', 'er');
+		$select = Select::fromTable(RelationshipsTable::TABLE_NAME, 'er');
 		
-		$count_expr = $this->options->distinct ? 'DISTINCT er.id' : '*';
+		$count_expr = $this->options->distinct ? "DISTINCT {$select->getTableAlias()}.id" : '*';
 		$select->select("COUNT({$count_expr}) AS total");
 		
 		$select = $this->buildQuery($select);
@@ -127,20 +127,20 @@ class Relationships extends Repository {
 	 * {@inheritDoc}
 	 */
 	public function get($limit = null, $offset = null, $callback = null) {
-		$select = Select::fromTable('entity_relationships', 'er');
+		$select = Select::fromTable(RelationshipsTable::TABLE_NAME, 'er');
 		
-		$distinct = $this->options->distinct ? 'DISTINCT' : '';
-		$select->select("$distinct er.*");
+		$distinct = $this->options->distinct ? 'DISTINCT ' : '';
+		$select->select("{$distinct}{$select->getTableAlias()}.*");
 		
-		$this->expandInto($select, 'er');
+		$this->expandInto($select, $select->getTableAlias());
 		
 		$select = $this->buildQuery($select);
 		
 		// Keeping things backwards compatible
 		$original_order = elgg_extract('order_by', $this->options->__original_options);
 		if (empty($original_order) && $original_order !== false) {
-			$select->addOrderBy('er.time_created', 'desc');
-			$select->addOrderBy('er.id', 'desc');
+			$select->addOrderBy("{$select->getTableAlias()}.time_created", 'desc');
+			$select->addOrderBy("{$select->getTableAlias()}.id", 'desc');
 		}
 		
 		if ($limit > 0) {
@@ -181,11 +181,11 @@ class Relationships extends Repository {
 		$ands = [];
 		
 		foreach ($this->options->joins as $join) {
-			$join->prepare($qb, 'er');
+			$join->prepare($qb, $qb->getTableAlias());
 		}
 		
 		foreach ($this->options->wheres as $where) {
-			$ands[] = $where->prepare($qb, 'er');
+			$ands[] = $where->prepare($qb, $qb->getTableAlias());
 		}
 		
 		$ands[] = $this->buildEntityClause($qb);
@@ -211,7 +211,7 @@ class Relationships extends Repository {
 	 * @return \Closure|CompositeExpression|mixed|null|string
 	 */
 	protected function buildEntityClause(QueryBuilder $qb) {
-		$joined_alias = $qb->joinEntitiesTable('er', $this->getJoinColumn(), 'inner', 'e');
+		$joined_alias = $qb->joinEntitiesTable($qb->getTableAlias(), $this->getJoinColumn(), 'inner', 'e');
 		return EntityWhereClause::factory($this->options)->prepare($qb, $joined_alias);
 	}
 	
@@ -233,9 +233,9 @@ class Relationships extends Repository {
 		foreach ($clauses as $clause) {
 			if ($clause instanceof MetadataWhereClause) {
 				if (strtoupper($boolean) === 'OR' || count($clauses) === 1) {
-					$joined_alias = $qb->joinMetadataTable('er', $join_column, null, 'inner', 'md');
+					$joined_alias = $qb->joinMetadataTable($qb->getTableAlias(), $join_column, null, 'inner', 'md');
 				} else {
-					$joined_alias = $qb->joinMetadataTable('er', $join_column, $clause->names);
+					$joined_alias = $qb->joinMetadataTable($qb->getTableAlias(), $join_column, $clause->names);
 				}
 				
 				$parts[] = $clause->prepare($qb, $joined_alias);
@@ -262,9 +262,9 @@ class Relationships extends Repository {
 		
 		foreach ($clauses as $clause) {
 			if (strtoupper($boolean) === 'OR' || count($clauses) === 1) {
-				$joined_alias = $qb->joinAnnotationTable('er', $join_column, null, 'inner', 'an');
+				$joined_alias = $qb->joinAnnotationTable($qb->getTableAlias(), $join_column, null, 'inner', AnnotationsTable::DEFAULT_JOIN_ALIAS);
 			} else {
-				$joined_alias = $qb->joinAnnotationTable('er', $join_column, $clause->names);
+				$joined_alias = $qb->joinAnnotationTable($qb->getTableAlias(), $join_column, $clause->names);
 			}
 			
 			$parts[] = $clause->prepare($qb, $joined_alias);
@@ -286,7 +286,7 @@ class Relationships extends Repository {
 		$parts = [];
 		
 		foreach ($clauses as $clause) {
-			$parts[] = $clause->prepare($qb, 'er');
+			$parts[] = $clause->prepare($qb, $qb->getTableAlias());
 		}
 		
 		return $qb->merge($parts, $boolean);

@@ -3,6 +3,7 @@
 namespace Elgg\Notifications;
 
 use Elgg\Database;
+use Elgg\Database\RelationshipsTable;
 use Elgg\Database\Select;
 use Elgg\Exceptions\InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -102,7 +103,7 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 		];
 
 		$guids = array_unique(array_filter([$this->object->container_guid, $this->object->guid]));
-		$select = Select::fromTable('entity_relationships');
+		$select = Select::fromTable(RelationshipsTable::TABLE_NAME);
 		$select->select('guid_one AS guid')
 			->addSelect("GROUP_CONCAT(relationship SEPARATOR ',') AS methods")
 			->where($select->compare('guid_two', 'in', $guids, ELGG_VALUE_GUID))

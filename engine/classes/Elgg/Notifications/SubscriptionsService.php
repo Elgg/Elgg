@@ -265,7 +265,7 @@ class SubscriptionsService {
 			return false;
 		}
 		
-		$select = Select::fromTable('entity_relationships');
+		$select = Select::fromTable(RelationshipsTable::TABLE_NAME);
 		$select->select('count(*) as total')
 			->where($select->compare('guid_one', '=', $user_guid, ELGG_VALUE_GUID))
 			->andWhere($select->compare('guid_two', '=', $target_guid, ELGG_VALUE_GUID));
@@ -330,7 +330,7 @@ class SubscriptionsService {
 	 * @since 4.0
 	 */
 	public function removeSubscriptions(int $user_guid, int $target_guid, array $methods = []): bool {
-		$delete = Delete::fromTable('entity_relationships');
+		$delete = Delete::fromTable(RelationshipsTable::TABLE_NAME);
 		$delete->where($delete->compare('guid_one', '=', $user_guid, ELGG_VALUE_GUID))
 			->andWhere($delete->compare('guid_two', '=', $target_guid, ELGG_VALUE_GUID));
 		
@@ -561,7 +561,7 @@ class SubscriptionsService {
 		}
 		
 		// get muted relations
-		$select = Select::fromTable('entity_relationships');
+		$select = Select::fromTable(RelationshipsTable::TABLE_NAME);
 		$select->select('guid_one')
 			->where($select->compare('relationship', '=', self::MUTE_NOTIFICATIONS_RELATIONSHIP, ELGG_VALUE_STRING))
 			->andWhere($select->compare('guid_two', 'in', $guids_to_check, ELGG_VALUE_GUID));
@@ -653,7 +653,7 @@ class SubscriptionsService {
 			return [];
 		}
 
-		$select = Select::fromTable('entity_relationships');
+		$select = Select::fromTable(RelationshipsTable::TABLE_NAME);
 		$select->select('guid_one AS guid')
 			->addSelect("GROUP_CONCAT(relationship SEPARATOR ',') AS methods")
 			->where($select->compare('guid_two', 'in', $container_guid, ELGG_VALUE_GUID))

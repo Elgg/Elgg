@@ -20,7 +20,9 @@ class RiverTable {
 	/**
 	 * @var string name of the river database table
 	 */
-	const TABLE_NAME = 'river';
+	public const TABLE_NAME = 'river';
+	
+	public const DEFAULT_JOIN_ALIAS = 'rv';
 	
 	protected AnnotationsTable $annotationsTable;
 	

@@ -15,10 +15,10 @@ use Elgg\UnitTestCase;
 class MetadataUnitTest extends UnitTestCase {
 
 	public function testCanExecuteCount() {
-		$select = Select::fromTable('metadata', 'n_table');
-		$select->select('COUNT(DISTINCT n_table.id) AS total');
+		$select = Select::fromTable(MetadataTable::TABLE_NAME, MetadataTable::DEFAULT_JOIN_ALIAS);
+		$select->select("COUNT(DISTINCT {$select->getTableAlias()}.id) AS total");
 
-		$select->join('n_table', 'entities', 'e', 'e.guid = n_table.entity_guid');
+		$select->join($select->getTableAlias(), EntityTable::TABLE_NAME, 'e', "e.guid = {$select->getTableAlias()}.entity_guid");
 		$select->addClause(new EntityWhereClause(), 'e');
 
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -53,15 +53,15 @@ class MetadataUnitTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteGet() {
-		$select = Select::fromTable('metadata', 'n_table');
-		$select->select('DISTINCT n_table.*');
+		$select = Select::fromTable(MetadataTable::TABLE_NAME, MetadataTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
 
-		$select->join('n_table', 'entities', 'e', 'e.guid = n_table.entity_guid');
+		$select->join($select->getTableAlias(), EntityTable::TABLE_NAME, 'e', "e.guid = {$select->getTableAlias()}.entity_guid");
 		$select->addClause(new EntityWhereClause(), 'e');
 
 		$select->setMaxResults(5);
 		$select->setFirstResult(5);
-		$select->addOrderBy('n_table.id', 'asc');
+		$select->addOrderBy("{$select->getTableAlias()}.id", 'asc');
 
 		$rows = $this->getRows(5);
 
@@ -90,22 +90,22 @@ class MetadataUnitTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteGetWithClauses() {
-		$select = Select::fromTable('metadata', 'n_table');
-		$select->select('DISTINCT n_table.*');
+		$select = Select::fromTable(MetadataTable::TABLE_NAME, MetadataTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
 		$select->addSelect('max(e.time_created) AS newest');
-		$select->groupBy('n_table.entity_guid');
-		$select->join('n_table', 'annotations', 'an', ' n_table.entity_guid = an.entity_guid');
-		$alias = $select->joinMetadataTable('n_table', 'entity_guid', 'status');
-		$select->where($select->compare("$alias.value", 'IN', ['draft'], ELGG_VALUE_STRING));
+		$select->groupBy("{$select->getTableAlias()}.entity_guid");
+		$select->join($select->getTableAlias(), AnnotationsTable::TABLE_NAME, 'an', "{$select->getTableAlias()}.entity_guid = an.entity_guid");
+		$alias = $select->joinMetadataTable($select->getTableAlias(), 'entity_guid', 'status');
+		$select->where($select->compare("{$alias}.value", 'IN', ['draft'], ELGG_VALUE_STRING));
 		$select->having($select->compare('e.time_updated', 'IS NOT NULL'));
 
 
-		$select->join('n_table', 'entities', 'e', 'e.guid = n_table.entity_guid');
+		$select->join($select->getTableAlias(), EntityTable::TABLE_NAME, 'e', "e.guid = {$select->getTableAlias()}.entity_guid");
 		$select->addClause(new EntityWhereClause(), 'e');
 
 		$select->setMaxResults(5);
 		$select->setFirstResult(5);
-		$select->addOrderBy('n_table.id', 'asc');
+		$select->addOrderBy("{$select->getTableAlias()}.id", 'asc');
 
 		$rows = $this->getRows(5);
 
@@ -134,13 +134,13 @@ class MetadataUnitTest extends UnitTestCase {
 				}
 			],
 			'joins' => [
-				new JoinClause('annotations', 'an', 'n_table.entity_guid = an.entity_guid', 'inner'),
+				new JoinClause(AnnotationsTable::TABLE_NAME, 'an', 'n_table.entity_guid = an.entity_guid', 'inner'),
 			],
 			'wheres' => [
-				function (QueryBuilder $qb) {
-					$alias = $qb->joinMetadataTable('n_table', 'entity_guid', 'status');
+				function (QueryBuilder $qb, $main_alias) {
+					$alias = $qb->joinMetadataTable($main_alias, 'entity_guid', 'status');
 
-					return $qb->compare("$alias.value", 'IN', ['draft'], ELGG_VALUE_STRING);
+					return $qb->compare("{$alias}.value", 'IN', ['draft'], ELGG_VALUE_STRING);
 				}
 			]
 		];
@@ -155,15 +155,15 @@ class MetadataUnitTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteBatchGet() {
-		$select = Select::fromTable('metadata', 'n_table');
-		$select->select('DISTINCT n_table.*');
+		$select = Select::fromTable(MetadataTable::TABLE_NAME, MetadataTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
 
-		$select->join('n_table', 'entities', 'e', 'e.guid = n_table.entity_guid');
+		$select->join($select->getTableAlias(), EntityTable::TABLE_NAME, 'e', "e.guid = {$select->getTableAlias()}.entity_guid");
 		$select->addClause(new EntityWhereClause(), 'e');
 
 		$select->setMaxResults(5);
 		$select->setFirstResult(5);
-		$select->addOrderBy('n_table.id', 'asc');
+		$select->addOrderBy("{$select->getTableAlias()}.id", 'asc');
 
 		$rows = $this->getRows(5);
 
@@ -201,17 +201,16 @@ class MetadataUnitTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteMetadataCalculation() {
-
 		$metadata_names = ['foo'];
-
-		$select = Select::fromTable('metadata', 'n_table');
-		$select->select("min(n_table.value) AS calculation");
+		
+		$select = Select::fromTable(MetadataTable::TABLE_NAME, MetadataTable::DEFAULT_JOIN_ALIAS);
+		$select->select("min({$select->getTableAlias()}.value) AS calculation");
 
 		$metadata = new MetadataWhereClause();
 		$metadata->names = $metadata_names;
-		$select->addClause($metadata, 'n_table');
+		$select->addClause($metadata, $select->getTableAlias());
 
-		$select->join('n_table', 'entities', 'e', 'e.guid = n_table.entity_guid');
+		$select->join($select->getTableAlias(), EntityTable::TABLE_NAME, 'e', "e.guid = {$select->getTableAlias()}.entity_guid");
 		$select->addClause(new EntityWhereClause(), 'e');
 
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -239,20 +238,19 @@ class MetadataUnitTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteMetadataCalculationByMetadataNotInMetadataWheres() {
-
 		$metadata_names = ['foo'];
 		$metadata_calculation_names = ['bar'];
 
-		$select = Select::fromTable('metadata', 'n_table');
+		$select = Select::fromTable(MetadataTable::TABLE_NAME, MetadataTable::DEFAULT_JOIN_ALIAS);
 
-		$alias = $select->joinMetadataTable('n_table', 'entity_guid', $metadata_calculation_names);
-		$select->select("min($alias.value) AS calculation");
+		$alias = $select->joinMetadataTable($select->getTableAlias(), 'entity_guid', $metadata_calculation_names);
+		$select->select("min({$alias}.value) AS calculation");
 
 		$metadata = new MetadataWhereClause();
 		$metadata->names = $metadata_names;
-		$select->addClause($metadata, 'n_table');
+		$select->addClause($metadata, $select->getTableAlias());
 
-		$select->join('n_table', 'entities', 'e', 'e.guid = n_table.entity_guid');
+		$select->join($select->getTableAlias(), EntityTable::TABLE_NAME, 'e', "e.guid = {$select->getTableAlias()}.entity_guid");
 		$select->addClause(new EntityWhereClause(), 'e');
 
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -278,13 +276,12 @@ class MetadataUnitTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteMetadataCalculationWithoutPropertyType() {
-
 		$metadata_name = 'foo';
 
-		$select = Select::fromTable('metadata', 'n_table');
-		$select->select("min(n_table.value) AS calculation");
+		$select = Select::fromTable(MetadataTable::TABLE_NAME, MetadataTable::DEFAULT_JOIN_ALIAS);
+		$select->select("min({$select->getTableAlias()}.value) AS calculation");
 
-		$select->join('n_table', 'entities', 'e', 'e.guid = n_table.entity_guid');
+		$select->join($select->getTableAlias(), EntityTable::TABLE_NAME, 'e', "e.guid = {$select->getTableAlias()}.entity_guid");
 		$select->addClause(new EntityWhereClause(), 'e');
 
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -305,15 +302,14 @@ class MetadataUnitTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteAnnotationCalculation() {
-
 		$annotation_names = ['foo'];
 
-		$select = Select::fromTable('metadata', 'n_table');
+		$select = Select::fromTable(MetadataTable::TABLE_NAME, MetadataTable::DEFAULT_JOIN_ALIAS);
 
-		$alias = $select->joinAnnotationTable('n_table', 'entity_guid', $annotation_names);
-		$select->select("avg($alias.value) AS calculation");
+		$alias = $select->joinAnnotationTable($select->getTableAlias(), 'entity_guid', $annotation_names, 'inner', AnnotationsTable::DEFAULT_JOIN_ALIAS);
+		$select->select("avg({$alias}.value) AS calculation");
 
-		$select->join('n_table', 'entities', 'e', 'e.guid = n_table.entity_guid');
+		$select->join($select->getTableAlias(), EntityTable::TABLE_NAME, 'e', "e.guid = {$select->getTableAlias()}.entity_guid");
 		$select->addClause(new EntityWhereClause(), 'e');
 
 		$annotation = new AnnotationWhereClause();
@@ -350,12 +346,11 @@ class MetadataUnitTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteAttributeCalculation() {
-
-		$select = Select::fromTable('metadata', 'n_table');
+		$select = Select::fromTable(MetadataTable::TABLE_NAME, MetadataTable::DEFAULT_JOIN_ALIAS);
 
 		$select->select("max(e.guid) AS calculation");
 
-		$select->join('n_table', 'entities', 'e', 'e.guid = n_table.entity_guid');
+		$select->join($select->getTableAlias(), EntityTable::TABLE_NAME, 'e', "e.guid = {$select->getTableAlias()}.entity_guid");
 		$select->addClause(new EntityWhereClause(), 'e');
 
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -381,8 +376,8 @@ class MetadataUnitTest extends UnitTestCase {
 	}
 
 	public function testThrowsOnMetadataCalculationWithMultipleAndPairs() {
-
-		$options = [
+		$this->expectException(\LogicException::class);
+		Metadata::find([
 			'metadata_calculation' => 'min',
 			'metadata_name_value_pairs' => [
 				[
@@ -392,17 +387,14 @@ class MetadataUnitTest extends UnitTestCase {
 				[
 					'name' => 'category',
 					'value' => 'blogs',
-				]
-			]
-		];
-
-		$this->expectException(\LogicException::class);
-		Metadata::find($options);
+				],
+			],
+		]);
 	}
 
 	public function testThrowsOnAnnotationCalculationWithMultipleAndPairs() {
-
-		$options = [
+		$this->expectException(\LogicException::class);
+		Metadata::find([
 			'annotation_calculation' => 'min',
 			'annotation_name_value_pairs' => [
 				[
@@ -412,18 +404,14 @@ class MetadataUnitTest extends UnitTestCase {
 				[
 					'name' => 'category',
 					'value' => 'blogs',
-				]
-			]
-		];
-
-		$this->expectException(\LogicException::class);
-		Metadata::find($options);
+				],
+			],
+		]);
 	}
 
 	public function testCanExecuteQueryWithMetadataNameValuePairs() {
-
-		$select = Select::fromTable('metadata', 'n_table');
-		$select->select('DISTINCT n_table.*');
+		$select = Select::fromTable(MetadataTable::TABLE_NAME, MetadataTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
 
 		$wheres = [];
 		
@@ -432,18 +420,18 @@ class MetadataUnitTest extends UnitTestCase {
 		$metadata->values = ['bar1'];
 		$metadata->ids = [1, 2];
 		$metadata->entity_guids = [1, 2];
-		$wheres[] = $metadata->prepare($select, 'n_table');
+		$wheres[] = $metadata->prepare($select, $select->getTableAlias());
 
 		$metadata = new MetadataWhereClause();
 		$metadata->names = ['foo2'];
 		$metadata->values = ['bar2'];
 		$metadata->ids = [1, 2];
 		$metadata->entity_guids = [1, 2];
-		$wheres[] = $metadata->prepare($select, 'n_table');
+		$wheres[] = $metadata->prepare($select, $select->getTableAlias());
 
 		$select->andWhere($select->merge($wheres));
 
-		$select->join('n_table', 'entities', 'e', 'e.guid = n_table.entity_guid');
+		$select->join($select->getTableAlias(), EntityTable::TABLE_NAME, 'e', "e.guid = {$select->getTableAlias()}.entity_guid");
 		$where = new EntityWhereClause();
 		$where->guids = [1, 2];
 		$where->owner_guids = [3, 4];
@@ -453,7 +441,7 @@ class MetadataUnitTest extends UnitTestCase {
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('n_table.id', 'asc');
+		$select->orderBy("{$select->getTableAlias()}.id", 'asc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -485,31 +473,30 @@ class MetadataUnitTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteQueryWithMetadataNameValuePairsJoinedByOr() {
-
-		$select = Select::fromTable('metadata', 'n_table');
-		$select->select('DISTINCT n_table.*');
+		$select = Select::fromTable(MetadataTable::TABLE_NAME, MetadataTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
 		
 		$wheres = [];
 		
 		$metadata = new MetadataWhereClause();
 		$metadata->names = ['foo1'];
 		$metadata->values = ['bar1'];
-		$wheres[] = $metadata->prepare($select, 'n_table');
+		$wheres[] = $metadata->prepare($select, $select->getTableAlias());
 
 		$metadata = new MetadataWhereClause();
 		$metadata->names = ['foo2'];
 		$metadata->values = ['bar2'];
-		$wheres[] = $metadata->prepare($select, 'n_table');
+		$wheres[] = $metadata->prepare($select, $select->getTableAlias());
 
 		$select->andWhere($select->merge($wheres, 'OR'));
 
-		$select->join('n_table', 'entities', 'e', 'e.guid = n_table.entity_guid');
+		$select->join($select->getTableAlias(), EntityTable::TABLE_NAME, 'e', "e.guid = {$select->getTableAlias()}.entity_guid");
 		$select->addClause(new EntityWhereClause(), 'e');
 
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('n_table.id', 'asc');
+		$select->orderBy("{$select->getTableAlias()}.id", 'asc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -538,22 +525,21 @@ class MetadataUnitTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteQueryWithAnnotationNameValuePairs() {
-
-		$select = Select::fromTable('metadata', 'n_table');
-		$select->select('DISTINCT n_table.*');
+		$select = Select::fromTable(MetadataTable::TABLE_NAME, MetadataTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
 		
 		$wheres = [];
 		
-		$select->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');
-		$select->addClause(new EntityWhereClause(), 'e');
+		$alias = $select->joinEntitiesTable($select->getTableAlias(), 'entity_guid', 'inner', EntityTable::DEFAULT_JOIN_ALIAS);
+		$select->addClause(new EntityWhereClause(), $alias);
 
-		$alias1 = $select->joinAnnotationTable('n_table', 'entity_guid');
+		$alias1 = $select->joinAnnotationTable($select->getTableAlias(), 'entity_guid', ['foo1']);
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = ['foo1'];
 		$annotation->values = ['bar1'];
 		$wheres[] = $annotation->prepare($select, $alias1);
 
-		$alias2 = $select->joinAnnotationTable('n_table', 'entity_guid');
+		$alias2 = $select->joinAnnotationTable($select->getTableAlias(), 'entity_guid', ['foo2']);
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = ['foo2'];
 		$annotation->values = ['bar2'];
@@ -564,7 +550,7 @@ class MetadataUnitTest extends UnitTestCase {
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('n_table.id', 'asc');
+		$select->orderBy("{$select->getTableAlias()}.id", 'asc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -592,16 +578,15 @@ class MetadataUnitTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteQueryWithAnnotationNameValuePairsJoinedByOr() {
-
-		$select = Select::fromTable('metadata', 'n_table');
-		$select->select('DISTINCT n_table.*');
+		$select = Select::fromTable(MetadataTable::TABLE_NAME, MetadataTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
 		
 		$wheres = [];
 		
-		$select->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');
+		$select->joinEntitiesTable($select->getTableAlias(), 'entity_guid', 'inner', 'e');
 		$select->addClause(new EntityWhereClause(), 'e');
 
-		$alias = $select->joinAnnotationTable('n_table', 'entity_guid', null);
+		$alias = $select->joinAnnotationTable($select->getTableAlias(), 'entity_guid', null, 'inner', AnnotationsTable::DEFAULT_JOIN_ALIAS);
 
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = ['foo1'];
@@ -618,7 +603,7 @@ class MetadataUnitTest extends UnitTestCase {
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('n_table.id', 'asc');
+		$select->orderBy("{$select->getTableAlias()}.id", 'asc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -647,22 +632,21 @@ class MetadataUnitTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteQueryWithRelationshipPairs() {
-
-		$select = Select::fromTable('metadata', 'n_table');
-		$select->select('DISTINCT n_table.*');
+		$select = Select::fromTable(MetadataTable::TABLE_NAME, MetadataTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
 		
 		$wheres = [];
 		
-		$select->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');
+		$select->joinEntitiesTable($select->getTableAlias(), 'entity_guid', 'inner', 'e');
 		$select->addClause(new EntityWhereClause(), 'e');
 
-		$alias1 = $select->joinRelationshipTable('n_table', 'entity_guid', null);
+		$alias1 = $select->joinRelationshipTable($select->getTableAlias(), 'entity_guid', ['foo1']);
 		$rel1 = new RelationshipWhereClause();
 		$rel1->names = ['foo1'];
 		$rel1->subject_guids = [1, 2, 3];
 		$wheres[] = $rel1->prepare($select, $alias1);
 
-		$alias2 = $select->joinRelationshipTable('n_table', 'entity_guid', null, true);
+		$alias2 = $select->joinRelationshipTable($select->getTableAlias(), 'entity_guid', ['foo2'], true);
 		$rel2 = new RelationshipWhereClause();
 		$rel2->names = ['foo2'];
 		$rel2->object_guids = [4, 5, 6];
@@ -673,7 +657,7 @@ class MetadataUnitTest extends UnitTestCase {
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('n_table.id', 'asc');
+		$select->orderBy("{$select->getTableAlias()}.id", 'asc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([
@@ -708,16 +692,15 @@ class MetadataUnitTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteQueryWithRelationship() {
-
-		$select = Select::fromTable('metadata', 'n_table');
-		$select->select('DISTINCT n_table.*');
+		$select = Select::fromTable(MetadataTable::TABLE_NAME, MetadataTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
 		
 		$wheres = [];
 		
-		$select->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');
+		$select->joinEntitiesTable($select->getTableAlias(), 'entity_guid', 'inner', 'e');
 		$select->addClause(new EntityWhereClause(), 'e');
 
-		$alias = $select->joinRelationshipTable('n_table', 'entity_guid', ['foo1'], false);
+		$alias = $select->joinRelationshipTable($select->getTableAlias(), 'entity_guid', null, false, 'inner', RelationshipsTable::DEFAULT_JOIN_ALIAS);
 
 		$rel = new RelationshipWhereClause();
 		$rel->names = ['foo1'];
@@ -729,7 +712,7 @@ class MetadataUnitTest extends UnitTestCase {
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
-		$select->orderBy('n_table.id', 'asc');
+		$select->orderBy("{$select->getTableAlias()}.id", 'asc');
 
 		$rows = $this->getRows(5);
 		$spec = _elgg_services()->db->addQuerySpec([

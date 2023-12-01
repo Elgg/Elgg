@@ -2,6 +2,7 @@
 
 namespace Elgg\Database\Clauses;
 
+use Elgg\Database\EntityTable;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\UnitTestCase;
@@ -14,7 +15,7 @@ class AttributeWhereClauseUnitTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::fromTable('entities', 'alias');
+		$this->qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 	}
 
 	public function down() {
@@ -27,8 +28,8 @@ class AttributeWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AttributeWhereClause();
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -46,8 +47,8 @@ class AttributeWhereClauseUnitTest extends UnitTestCase {
 		$query->names = 'attribute';
 		$query->values = ['value'];
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -67,8 +68,8 @@ class AttributeWhereClauseUnitTest extends UnitTestCase {
 		$query->names = ['attribute1', 'attribute2'];
 		$query->values = ['value'];
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());

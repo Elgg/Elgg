@@ -870,7 +870,7 @@ trait Seeding {
 			}
 	
 			while ($success < $limit) {
-				if ($entity->annotate('likes', true, ACCESS_PUBLIC, $this->getRandomUser()->guid)) {
+				if ($entity->annotate('likes', 'likes', ACCESS_PUBLIC, $this->getRandomUser()->guid)) {
 					$success++;
 				}
 			}

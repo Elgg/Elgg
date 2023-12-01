@@ -16,7 +16,7 @@ class ApiUsersTable {
 	/**
 	 * @var string name of the api users database table
 	 */
-	const TABLE_NAME = 'api_users';
+	public const TABLE_NAME = 'api_users';
 	
 	protected Database $database;
 	

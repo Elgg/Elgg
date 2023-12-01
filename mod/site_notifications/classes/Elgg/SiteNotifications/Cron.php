@@ -2,8 +2,17 @@
 
 namespace Elgg\SiteNotifications;
 
+use Elgg\Database\AccessCollections;
+use Elgg\Database\AnnotationsTable;
+use Elgg\Database\DelayedEmailQueueTable;
 use Elgg\Database\Delete;
+use Elgg\Database\EntityTable;
+use Elgg\Database\MetadataTable;
 use Elgg\Database\QueryBuilder;
+use Elgg\Database\RelationshipsTable;
+use Elgg\Database\RiverTable;
+use Elgg\Database\UsersApiSessionsTable;
+use Elgg\Database\UsersRememberMeCookiesTable;
 
 /**
  * Cron handler
@@ -49,7 +58,7 @@ class Cron {
 					function (QueryBuilder $qb, $main_alias) {
 						$md = $qb->joinMetadataTable($main_alias, 'guid', 'linked_entity_guid', 'inner', 'lmd');
 						
-						$sub = $qb->subquery('entities');
+						$sub = $qb->subquery(EntityTable::TABLE_NAME);
 						$sub->select('guid')
 							->where($qb->compare('subtype', '!=', 'site_notification', ELGG_VALUE_STRING));
 						
@@ -237,19 +246,19 @@ class Cron {
 		}
 		
 		// access collection membership
-		$acl_membership = Delete::fromTable('access_collection_membership');
+		$acl_membership = Delete::fromTable(AccessCollections::MEMBERSHIP_TABLE_NAME);
 		$acl_membership->where($acl_membership->compare('user_guid', 'in', $guids, ELGG_VALUE_GUID));
 		
 		elgg()->db->deleteData($acl_membership);
 		
 		// access collections
-		$acl = Delete::fromTable('access_collections');
+		$acl = Delete::fromTable(AccessCollections::TABLE_NAME);
 		$acl->where($acl->compare('owner_guid', 'in', $guids, ELGG_VALUE_GUID));
 		
 		elgg()->db->deleteData($acl);
 		
 		// annotations
-		$annotations = Delete::fromTable('annotations');
+		$annotations = Delete::fromTable(AnnotationsTable::TABLE_NAME);
 		$annotations->where($annotations->merge([
 			$annotations->compare('entity_guid', 'in', $guids, ELGG_VALUE_GUID),
 			$annotations->compare('owner_guid', 'in', $guids, ELGG_VALUE_GUID),
@@ -258,13 +267,13 @@ class Cron {
 		elgg()->db->deleteData($annotations);
 		
 		// delayed email queue
-		$delayed = Delete::fromTable('delayed_email_queue');
+		$delayed = Delete::fromTable(DelayedEmailQueueTable::TABLE_NAME);
 		$delayed->where($delayed->compare('recipient_guid', 'in', $guids, ELGG_VALUE_GUID));
 		
 		elgg()->db->deleteData($delayed);
 		
 		// entity relationships
-		$rels = Delete::fromTable('entity_relationships');
+		$rels = Delete::fromTable(RelationshipsTable::TABLE_NAME);
 		$rels->where($rels->merge([
 			$rels->compare('guid_one', 'in', $guids, ELGG_VALUE_GUID),
 			$rels->compare('guid_two', 'in', $guids, ELGG_VALUE_GUID),
@@ -273,13 +282,13 @@ class Cron {
 		elgg()->db->deleteData($rels);
 		
 		// metadata
-		$md = Delete::fromTable('metadata');
+		$md = Delete::fromTable(MetadataTable::TABLE_NAME);
 		$md->where($md->compare('entity_guid', 'in', $guids, ELGG_VALUE_GUID));
 		
 		elgg()->db->deleteData($md);
 		
 		// river
-		$river = Delete::fromTable('river');
+		$river = Delete::fromTable(RiverTable::TABLE_NAME);
 		$river->where($river->merge([
 			$river->compare('subject_guid', 'in', $guids, ELGG_VALUE_GUID),
 			$river->compare('object_guid', 'in', $guids, ELGG_VALUE_GUID),
@@ -289,19 +298,19 @@ class Cron {
 		elgg()->db->deleteData($river);
 		
 		// users api sessions
-		$users_api = Delete::fromTable('users_apisessions');
+		$users_api = Delete::fromTable(UsersApiSessionsTable::TABLE_NAME);
 		$users_api->where($users_api->compare('user_guid', 'in', $guids, ELGG_VALUE_GUID));
 		
 		elgg()->db->deleteData($users_api);
 		
 		// users remember me cookies
-		$cookies = Delete::fromTable('users_remember_me_cookies');
+		$cookies = Delete::fromTable(UsersRememberMeCookiesTable::TABLE_NAME);
 		$cookies->where($cookies->compare('guid', 'in', $guids, ELGG_VALUE_GUID));
 		
 		elgg()->db->deleteData($cookies);
 		
 		// entities
-		$entities = Delete::fromTable('entities');
+		$entities = Delete::fromTable(EntityTable::TABLE_NAME);
 		$entities->where($entities->merge([
 			$entities->compare('guid', 'in', $guids, ELGG_VALUE_GUID),
 			$entities->compare('owner_guid', 'in', $guids, ELGG_VALUE_GUID),

@@ -753,7 +753,7 @@ class ElggInstaller {
 			}
 
 			// check that the config table has entries
-			$qb = \Elgg\Database\Select::fromTable('config');
+			$qb = \Elgg\Database\Select::fromTable(\Elgg\Database\ConfigTable::TABLE_NAME);
 			$qb->select('COUNT(*) AS total');
 
 			$result = $db->getDataRow($qb);
@@ -764,7 +764,7 @@ class ElggInstaller {
 			}
 
 			// check that the users entity table has an entry
-			$qb = \Elgg\Database\Select::fromTable('entities', 'e');
+			$qb = \Elgg\Database\Select::fromTable(\Elgg\Database\EntityTable::TABLE_NAME, \Elgg\Database\EntityTable::DEFAULT_JOIN_ALIAS);
 			$qb->select('COUNT(*) AS total')
 				->where($qb->compare('type', '=', 'user', ELGG_VALUE_STRING));
 

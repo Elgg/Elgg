@@ -24,8 +24,8 @@ echo elgg_list_annotations([
 	'limit' => $num_display,
 	'pagination' => false,
 	'order_by' => [
-		new OrderByClause('n_table.time_created', 'DESC'),
-		new OrderByClause('n_table.id', 'DESC'),
+		new OrderByClause('a_table.time_created', 'DESC'),
+		new OrderByClause('a_table.id', 'DESC'),
 	],
 	'widget_more' => $more_link,
 ]);

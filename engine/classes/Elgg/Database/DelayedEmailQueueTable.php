@@ -19,7 +19,7 @@ class DelayedEmailQueueTable {
 	/**
 	 * @var string name of the database table
 	 */
-	const TABLE_NAME = 'delayed_email_queue';
+	public const TABLE_NAME = 'delayed_email_queue';
 
 	protected Database $db;
 	
