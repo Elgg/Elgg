@@ -5,6 +5,14 @@ From 5.x to 6.0
    :local:
    :depth: 1
 
+Composer
+--------
+
+PHP Requirements
+~~~~~~~~~~~~~~~~
+
+The minimal PHP version is now 8.1.
+
 Annotations
 -----------
 

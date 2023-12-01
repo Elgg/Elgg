@@ -11,7 +11,7 @@ Requirements
 ============
 
 - MySQL 5.7+ or MariaDB 10.3+
-- PHP 8.0+ with the following extensions:
+- PHP 8.1+ with the following extensions:
 
    -  GD (for graphics processing)
    -  PDO (for database connection)

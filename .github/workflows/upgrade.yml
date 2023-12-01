@@ -89,6 +89,16 @@ jobs:
           composer remove elgg/login_as
           composer self-update --2
              
+
+
+
+
+
+
+
+
+
+
       - name: Code checkout Elgg 4.3
         uses: actions/checkout@v3
         with:
@@ -105,10 +115,35 @@ jobs:
       - name: Enable Elgg 4.3 plugins
         run: php -f ./.scripts/ci/enable_plugins.php
 
-      - name: Update PHP
+      - name: Update PHP to 8.0
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.0'
+          coverage: none
+          extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring
+
+      - name: Code checkout Elgg 5.1
+        uses: actions/checkout@v3
+        with:
+          repository: 'Elgg/Elgg'
+          ref: '5.1'
+          clean: false
+      
+      - name: Composer install Elgg 5.1 dependencies
+        run: composer install --prefer-dist --no-suggest
+        
+      - name: Elgg CLI upgrade to 5.1
+        run: php ./elgg-cli upgrade async --verbose
+
+      - name: Enable Elgg 5.1 plugins
+        run: |
+          php ./elgg-cli plugins:activate activity blog bookmarks ckeditor dashboard developers discussions externalpages file friends friends_collections garbagecollector groups invitefriends likes members messageboard messages pages profile reportedcontent search site_notifications system_log tagcloud theme_sandbox thewire uservalidationbyemail web_services custom_index:last --no-ansi
+          php ./elgg-cli plugins:list --no-ansi
+
+      - name: Update PHP to 8.1
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
           coverage: none
           extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring
         

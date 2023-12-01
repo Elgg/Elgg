@@ -42,7 +42,7 @@ class ElggInstaller {
 	
 	public const MARIADB_MINIMAL_VERSION = '10.3';
 	public const MYSQL_MINIMAL_VERSION = '5.7';
-	public const PHP_MINIMAL_VERSION = '8.0.0';
+	public const PHP_MINIMAL_VERSION = '8.1.0';
 	
 	protected array $steps = [
 		'welcome',

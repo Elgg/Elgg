@@ -34,7 +34,7 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.1'
           coverage: xdebug
           extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring,intl
           ini-values: max_execution_time=180
