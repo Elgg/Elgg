@@ -192,7 +192,7 @@ select:not([multiple]) {
 	.elgg-fieldset-horizontal {
 		display: flex;
 		
-		.elgg-field {
+		> .elgg-field {
 			margin: 0 1rem 0 0;
 			vertical-align: top;
 			
@@ -231,7 +231,7 @@ select:not([multiple]) {
 		&.elgg-fieldset-wrap {
 			flex-wrap: wrap;
 			
-			.elgg-field {
+			> .elgg-field {
 				margin-bottom: 0.5rem;
 			}
 		}
@@ -239,7 +239,7 @@ select:not([multiple]) {
 		&.elgg-justify-right {
 			justify-content: flex-end;
 			
-			.elgg-field {
+			> .elgg-field {
 				margin: 0 0 0 1rem;
 			}
 		}
@@ -247,7 +247,7 @@ select:not([multiple]) {
 		&.elgg-justify-center {
 			justify-content: center;
 		
-			.elgg-field {
+			> .elgg-field {
 				margin: 0 5px;
 			}
 		}
