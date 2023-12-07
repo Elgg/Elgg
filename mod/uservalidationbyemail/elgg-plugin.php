@@ -29,6 +29,7 @@ return [
 			'controller' => \Elgg\UserValidationByEmail\ConfirmController::class,
 			'walled' => false,
 			'middleware' => [
+				\Elgg\Router\Middleware\LoggedOutGatekeeper::class,
 				\Elgg\Router\Middleware\SignedRequestGatekeeper::class,
 			],
 		],
