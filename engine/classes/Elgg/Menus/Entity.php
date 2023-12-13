@@ -34,9 +34,14 @@ class Entity {
 			// a menu item for editting already exists
 			return;
 		}
-				
+		
+		if (!$entity->canEdit()) {
+			// checking this before generating the url to prevent notices from deprecated routes
+			return;
+		}
+		
 		$edit_url = elgg_generate_entity_url($entity, 'edit');
-		if (empty($edit_url) || !$entity->canEdit()) {
+		if (empty($edit_url)) {
 			return;
 		}
 		
