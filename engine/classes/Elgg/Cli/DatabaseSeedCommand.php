@@ -61,6 +61,7 @@ class DatabaseSeedCommand extends Command {
 		}
 
 		_elgg_services()->set('mailer', new \Laminas\Mail\Transport\InMemory());
+		_elgg_services()->events->registerHandler('enqueue', 'notification', '\Elgg\Values::getFalse', 99999);
 
 		$options = [
 			'limit' => $this->option('limit'),
