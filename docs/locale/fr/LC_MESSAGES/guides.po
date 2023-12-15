@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-17 10:40+0100\n"
+"POT-Creation-Date: 2023-11-30 10:27+0100\n"
 "PO-Revision-Date: 2023-04-05 07:42+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -1390,7 +1390,7 @@ msgstr ""
 
 #: ../../guides/ajax.rst:19
 msgid "The response object is filtered by the event ``ajax_response``."
-msgstr ""
+msgstr "L'objet de réponse est filtré par l'événement ``ajax_response``."
 
 #: ../../guides/ajax.rst:20
 msgid "The response object is used to create the HTTP response."
@@ -4528,6 +4528,7 @@ msgstr "**create:after, <entity type>**"
 #: ../../guides/events-list.rst:375
 msgid "Triggered for user, group, object, and site entities after creation."
 msgstr ""
+"Déclenché pour les entités user, group, object et site après la création."
 
 #: ../../guides/events-list.rst:378
 msgid "**create:before, <entity type>**"
@@ -6615,6 +6616,7 @@ msgstr "**extender:url, <annotation|metadata>** |results|"
 #: ../../guides/events-list.rst:1235
 msgid "Return the URL for the annotation or metadata ``$params['extender']``."
 msgstr ""
+"Renvoie l'URL de l'annotation ou les métadonnées ``$params['extender']``."
 
 #: ../../guides/events-list.rst:1239
 msgid "**fields, <entity_type>:<entity_subtype>** |results|"
@@ -6716,6 +6718,12 @@ msgid ""
 "as the default value to the event, and plugins must take care to not "
 "accidentally override these values."
 msgstr ""
+"Filtre une liste d'URLs (chemins) qui peuvent être vues par les utilisateurs"
+" déconnectés en mode jardin clos - walled garden. Les gestionnaires doivent "
+"renvoyer un tableau de chaînes regex qui autoriseront l'accès si elles "
+"correspondent. Veuillez noter que les routes publiques du système sont "
+"transmises comme valeur par défaut à l'événement et que les plugins doivent "
+"veiller à ne pas remplacer accidentellement ces valeurs."
 
 #: ../../guides/events-list.rst:1297
 msgid "``url`` - URL of the page being tested for public accessibility"
@@ -7396,6 +7404,9 @@ msgid ""
 "Call ``elgg_push_entity_breadcrumbs()`` or "
 "``elgg_push_collection_breadcrumbs()`` in the page handler scripts."
 msgstr ""
+"Appelle ``elgg_push_entity_breadcrumbs()`` ou "
+"``elgg_push_collection_breadcrumbs()`` dans les scripts du gestionnaire de "
+"page."
 
 #: ../../guides/guidelines.rst:57
 msgid ""
@@ -10198,6 +10209,8 @@ msgid ""
 "``Elgg\\Plugins\\ComposerIntegrationTest`` will test if the "
 "``composer.json`` is considered valid"
 msgstr ""
+"``Elgg\\Plugins\\ComposerIntegrationTest`` va tester si ``composer.json`` "
+"est considéré comme valide"
 
 #: ../../guides/plugins.rst:316
 msgid ""
@@ -13262,10 +13275,14 @@ msgstr ""
 #: ../../guides/views.rst:264
 msgid "You can `alter a view's inputs <#altering-view-input>`_ by event."
 msgstr ""
+"Vous pouvez `modifier les entrées d'une vue <#altering-view-input>`_ par "
+"événement."
 
 #: ../../guides/views.rst:265
 msgid "You can `alter a view's output <#altering-view-output>`_ by event."
 msgstr ""
+"Vous pouvez `modifier la sortie d'une vue <#altering-view-output>`_ via un "
+"événement."
 
 #: ../../guides/views.rst:268
 msgid "Overriding views"
