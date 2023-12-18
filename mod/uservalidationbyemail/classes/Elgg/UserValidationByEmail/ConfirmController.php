@@ -42,7 +42,7 @@ class ConfirmController {
 			try {
 				elgg_login($user);
 			} catch (LoginException $e) {
-				return elgg_error_response($e->getMessage());
+				return elgg_error_response($e->getMessage(), REFERRER, ELGG_HTTP_UNAUTHORIZED);
 			}
 			
 			return elgg_ok_response('', elgg_echo('email:confirm:success'), elgg_get_site_url());
