@@ -91,9 +91,7 @@ foreach ($widget_types as $handler => $widget_type) {
 		'class' => 'elgg-widgets-add-description',
 	], $description);
 
-	$item_content = elgg_format_element('div', [
-		'class' => 'elgg-level',
-	], $description . $action);
+	$item_content = $description . $action;
 
 	$list_items .= elgg_format_element('li', [
 		'class' => $class,
