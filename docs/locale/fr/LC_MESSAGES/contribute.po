@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-24 13:21+0200\n"
+"POT-Creation-Date: 2023-11-17 10:40+0100\n"
 "PO-Revision-Date: 2023-04-05 07:42+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2023\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -1085,7 +1085,7 @@ msgstr ""
 "La compatibilité avec `PSR-1`__ est encouragée, mais pas strictement "
 "requise."
 
-#: ../../contribute/code.rst:479 ../../contribute/core/move_plugin.rst:124
+#: ../../contribute/code.rst:479 ../../contribute/core/move_plugin.rst:121
 msgid "Documentation"
 msgstr "Documentation"
 
@@ -1487,7 +1487,7 @@ msgstr ""
 "Assurez-vous que le ``composer.json`` du plugin contient bien toutes les "
 "informations pertinentes. Voici un exemple :"
 
-#: ../../contribute/core/move_plugin.rst:80
+#: ../../contribute/core/move_plugin.rst:77
 msgid ""
 "The ``conflict`` rule is there to help prevent the installation of this "
 "plugin in an unsupported Elgg version."
@@ -1495,7 +1495,7 @@ msgstr ""
 "La règle ``conflict`` est ici pour aider à éviter l'installation de ce "
 "plugin dans une version de Elgg non supportée."
 
-#: ../../contribute/core/move_plugin.rst:82
+#: ../../contribute/core/move_plugin.rst:79
 msgid ""
 "Add the repository to `Packagist`_, for the existing repositories this was "
 "already done. Make sure `Packagist`_ is updated correctly with all the "
@@ -1505,11 +1505,11 @@ msgstr ""
 "fait. Assurez-vous que `Packagist`_ est mis à jour correctement avec tous "
 "les commits."
 
-#: ../../contribute/core/move_plugin.rst:86
+#: ../../contribute/core/move_plugin.rst:83
 msgid "Tag a release"
 msgstr "Taguer une release"
 
-#: ../../contribute/core/move_plugin.rst:88
+#: ../../contribute/core/move_plugin.rst:85
 msgid ""
 "In order for Composer to be able to cache the plugin for faster "
 "installation, a release has to be made on the repository. Probably the first"
@@ -1523,12 +1523,12 @@ msgstr ""
 "mentionnée dans ``elgg-plugin.php`` ou ``composer.json``. Après cela le "
 "développement peut commencer, en suivant le schéma de version `Semver`_."
 
-#: ../../contribute/core/move_plugin.rst:93
-#: ../../contribute/core/move_plugin.rst:109 ../../contribute/i18n.rst:2
+#: ../../contribute/core/move_plugin.rst:90
+#: ../../contribute/core/move_plugin.rst:106 ../../contribute/i18n.rst:2
 msgid "Translations"
 msgstr "Traductions"
 
-#: ../../contribute/core/move_plugin.rst:95
+#: ../../contribute/core/move_plugin.rst:92
 msgid ""
 "If the translations for the plugin need to be managed by `Transifex`_, add "
 "the plugin to `Transifex`_."
@@ -1536,11 +1536,11 @@ msgstr ""
 "Si les traductions pour le plugin doivent être gérées par `Transifex`_, "
 "ajoutez le plugin à `Transifex`_."
 
-#: ../../contribute/core/move_plugin.rst:98
+#: ../../contribute/core/move_plugin.rst:95
 msgid "Elgg core cleanup"
 msgstr "Nettoyage du noyau de Elgg"
 
-#: ../../contribute/core/move_plugin.rst:100
+#: ../../contribute/core/move_plugin.rst:97
 msgid ""
 "Now that the plugin has been moved to it's own repository, it's time to make"
 " a Pull Request on Elgg core to remove the original code."
@@ -1549,15 +1549,15 @@ msgstr ""
 "de faire une Pull Request sur le noyau de Elgg pour supprimer le code "
 "originel."
 
-#: ../../contribute/core/move_plugin.rst:103
+#: ../../contribute/core/move_plugin.rst:100
 msgid "Remove the plugin"
 msgstr "Supprimez le plugin"
 
-#: ../../contribute/core/move_plugin.rst:105
+#: ../../contribute/core/move_plugin.rst:102
 msgid "Delete the ``mod`` folder for the plugin"
 msgstr "Supprimez le plugin du dossier ``mod``"
 
-#: ../../contribute/core/move_plugin.rst:106
+#: ../../contribute/core/move_plugin.rst:103
 msgid ""
 "Search for the plugin name in core to find any references which also need to"
 " be removed (eg. old docs, special tests, etc.)"
@@ -1566,7 +1566,7 @@ msgstr ""
 "aurait également besoin d'être retirée (par ex. anciennes documentations, "
 "tests spéciaux, etc.)"
 
-#: ../../contribute/core/move_plugin.rst:111
+#: ../../contribute/core/move_plugin.rst:108
 msgid ""
 "Since the plugin no longer is part of Elgg core, make sure the configuration"
 " of `Transifex`_ no longer contains the plugin."
@@ -1574,11 +1574,11 @@ msgstr ""
 "Dans la mesure où le plugin ne fait plus partie du noyau de Elgg, assurez-"
 "vous que la configuration de `Transifex`_ ne contient plus le plugin."
 
-#: ../../contribute/core/move_plugin.rst:114
+#: ../../contribute/core/move_plugin.rst:111
 msgid "Bundled"
 msgstr "Plugins inclus"
 
-#: ../../contribute/core/move_plugin.rst:116
+#: ../../contribute/core/move_plugin.rst:113
 msgid ""
 "If the plugin still comes bundled with the release of a new Elgg version, "
 "make sure to add the plugin to the ``composer.json``."
@@ -1587,11 +1587,11 @@ msgstr ""
 "nouvelle version de Elgg, assurez-vous d'ajouter le plugin dans "
 "``composer.json``."
 
-#: ../../contribute/core/move_plugin.rst:119
+#: ../../contribute/core/move_plugin.rst:116
 msgid "Composer"
 msgstr "Composer"
 
-#: ../../contribute/core/move_plugin.rst:121
+#: ../../contribute/core/move_plugin.rst:118
 msgid ""
 "Check the core composer dependencies if requirements that were specific for "
 "the removed plugin can also be removed in the core dependencies."
@@ -1600,7 +1600,7 @@ msgstr ""
 "qui étaient spécifiques pour le plugin retiré peuvent également être "
 "retirées des dépendances du noyau."
 
-#: ../../contribute/core/move_plugin.rst:126
+#: ../../contribute/core/move_plugin.rst:123
 msgid ""
 "Add a mention in the :doc:`/appendix/upgrade-notes` documentation that the "
 "plugin was removed from Elgg core."
