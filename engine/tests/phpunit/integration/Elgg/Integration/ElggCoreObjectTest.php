@@ -2,6 +2,7 @@
 
 namespace Elgg\Integration;
 
+use Elgg\Database\EntityTable;
 use Elgg\Database\Select;
 use Elgg\Helpers\ElggObjectWithExposableAttributes;
 
@@ -171,13 +172,13 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		$this->assertEmpty(get_entity($guid1));
 		$this->assertEmpty(get_entity($guid2));
 
-		$select1 = Select::fromTable('entities')->select('*');
+		$select1 = Select::fromTable(EntityTable::TABLE_NAME)->select('*');
 		$select1->where($select1->compare('guid', '=', $guid1, ELGG_VALUE_GUID));
 		
 		$r = elgg()->db->getDataRow($select1);
 		$this->assertEquals('no', $r->enabled);
 
-		$select2 = Select::fromTable('entities')->select('*');
+		$select2 = Select::fromTable(EntityTable::TABLE_NAME)->select('*');
 		$select2->where($select2->compare('guid', '=', $guid2, ELGG_VALUE_GUID));
 		
 		$r = elgg()->db->getDataRow($select2);
@@ -210,7 +211,7 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 			});
 
 			foreach ([$parent->guid, $child->guid, $child2->guid, $grandchild->guid] as $guid) {
-				$entities = Select::fromTable('entities')->select('*');
+				$entities = Select::fromTable(EntityTable::TABLE_NAME)->select('*');
 				$entities->where($entities->compare('guid', '=', $guid, ELGG_VALUE_GUID));
 				
 				$this->assertEmpty(elgg()->db->getData($entities));
@@ -223,7 +224,7 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		$obj->owner_guid = $obj->guid;
 		$obj->save();
 
-		$entities = Select::fromTable('entities')->select('*');
+		$entities = Select::fromTable(EntityTable::TABLE_NAME)->select('*');
 		$entities->where($entities->compare('guid', '=', $obj->guid, ELGG_VALUE_GUID));
 				
 		$r = elgg()->db->getDataRow($entities);
@@ -280,7 +281,7 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 	}
 
 	protected function get_entity_row($guid) {
-		$select = Select::fromTable('entities')->select('*');
+		$select = Select::fromTable(EntityTable::TABLE_NAME)->select('*');
 		$select->where($select->compare('guid', '=', $guid, ELGG_VALUE_GUID));
 
 		return elgg()->db->getDataRow($select);

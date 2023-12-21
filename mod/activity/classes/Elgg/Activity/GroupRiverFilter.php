@@ -2,6 +2,7 @@
 
 namespace Elgg\Activity;
 
+use Elgg\Database\EntityTable;
 use Elgg\Database\QueryBuilder;
 
 /**
@@ -36,9 +37,9 @@ class GroupRiverFilter {
 		$wheres[] = $qb->compare("{$main_alias}.object_guid", '=', $this->group->guid, ELGG_VALUE_GUID);
 		$wheres[] = $qb->compare("{$main_alias}.target_guid", '=', $this->group->guid, ELGG_VALUE_GUID);
 		
-		$sub = $qb->subquery('entities', 'ce');
-		$sub->select('ce.guid')
-			->where($qb->compare('ce.container_guid', 'in', $this->group->guid, ELGG_VALUE_GUID));
+		$sub = $qb->subquery(EntityTable::TABLE_NAME, 'ce');
+		$sub->select("{$sub->getTableAlias()}.guid")
+			->where($qb->compare("{$sub->getTableAlias()}.container_guid", 'in', $this->group->guid, ELGG_VALUE_GUID));
 		
 		$wheres[] = $qb->compare("{$main_alias}.object_guid", 'in', $sub->getSQL());
 	

@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Database\EntityTable;
+use Elgg\Database\Select;
 use Elgg\Exceptions\SecurityException;
 
 /**
@@ -56,13 +58,11 @@ class ElggSite extends \ElggEntity {
 	 * {@inheritdoc}
 	 */
 	public function save(): bool {
-		$db = $this->getDatabase();
-		$qb = \Elgg\Database\Select::fromTable('entities', 'e');
-		$qb->select('e.*')
-			->where($qb->compare('e.type', '=', 'site', ELGG_VALUE_STRING));
+		$qb = Select::fromTable(EntityTable::TABLE_NAME);
+		$qb->select('*')
+			->where($qb->compare('type', '=', 'site', ELGG_VALUE_STRING));
 
-		$row = $db->getDataRow($qb);
-
+		$row = $this->getDatabase()->getDataRow($qb);
 		if (!empty($row)) {
 			if ($row->guid == $this->attributes['guid']) {
 				// can save active site

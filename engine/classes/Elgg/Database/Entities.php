@@ -8,16 +8,11 @@ use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Exceptions\DomainException;
-use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\LogicException;
 
 /**
  * Entities repository contains methods for fetching entities from database or performing
  * calculations on entity properties.
- *
- * @todo   Resolve table alias collissions when querying for both annotationa and metadata name value pairs
- *         Currently, n_table is expected across core and plugins, we need to refactor that code
- *         and remove n_table joins here
  *
  * @internal
  */
@@ -27,9 +22,9 @@ class Entities extends Repository {
 	 * {@inheritdoc}
 	 */
 	public function count() {
-		$qb = Select::fromTable('entities', 'e');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, EntityTable::DEFAULT_JOIN_ALIAS);
 
-		$count_expr = $this->options->distinct ? 'DISTINCT e.guid' : '*';
+		$count_expr = $this->options->distinct ? "DISTINCT {$qb->getTableAlias()}.guid" : '*';
 		$qb->select("COUNT({$count_expr}) AS total");
 
 		$qb = $this->buildQuery($qb);
@@ -66,7 +61,7 @@ class Entities extends Repository {
 			}
 		}
 
-		$qb = Select::fromTable('entities', 'e');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, EntityTable::DEFAULT_JOIN_ALIAS);
 
 		switch ($property_type) {
 			case 'attribute':
@@ -74,16 +69,16 @@ class Entities extends Repository {
 					throw new DomainException("'{$property}' is not a valid attribute");
 				}
 
-				$qb->addSelect("{$function}(e.{$property}) AS calculation");
+				$qb->addSelect("{$function}({$qb->getTableAlias()}.{$property}) AS calculation");
 				break;
 
 			case 'metadata':
-				$alias = $qb->joinMetadataTable('e', 'guid', $property, 'inner', 'n_table');
+				$alias = $qb->joinMetadataTable($qb->getTableAlias(), 'guid', $property, 'inner', MetadataTable::DEFAULT_JOIN_ALIAS);
 				$qb->addSelect("{$function}({$alias}.value) AS calculation");
 				break;
 
 			case 'annotation':
-				$alias = $qb->joinAnnotationTable('e', 'guid', $property, 'inner', 'n_table');
+				$alias = $qb->joinAnnotationTable($qb->getTableAlias(), 'guid', $property, 'inner', AnnotationsTable::DEFAULT_JOIN_ALIAS);
 				$qb->addSelect("{$function}({$alias}.value) AS calculation");
 				break;
 		}
@@ -106,21 +101,21 @@ class Entities extends Repository {
 	 * @return \ElggEntity[]
 	 */
 	public function get($limit = null, $offset = null, $callback = null) {
-		$qb = Select::fromTable('entities', 'e');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, EntityTable::DEFAULT_JOIN_ALIAS);
 
-		$distinct = $this->options->distinct ? 'DISTINCT' : '';
-		$qb->select("{$distinct} e.*");
+		$distinct = $this->options->distinct ? 'DISTINCT ' : '';
+		$qb->select("{$distinct}{$qb->getTableAlias()}.*");
 
-		$this->expandInto($qb, 'e');
+		$this->expandInto($qb, $qb->getTableAlias());
 
 		$qb = $this->buildQuery($qb);
 
 		// Keeping things backwards compatible
 		$original_order = elgg_extract('order_by', $this->options->__original_options);
 		if (empty($original_order) && $original_order !== false) {
-			$qb->addOrderBy('e.time_created', 'desc');
+			$qb->addOrderBy("{$qb->getTableAlias()}.time_created", 'desc');
 			// also add order by guid, to rely less on internals of MySQL fallback ordering
-			$qb->addOrderBy('e.guid', 'desc');
+			$qb->addOrderBy("{$qb->getTableAlias()}.guid", 'desc');
 		}
 
 		if ($limit > 0) {
@@ -152,11 +147,11 @@ class Entities extends Repository {
 	 * @return array An array months as YYYYMM
 	 */
 	public function getDates(): array {
-		$qb = Select::fromTable('entities', 'e');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, EntityTable::DEFAULT_JOIN_ALIAS);
 
-		$qb->select('DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(e.time_created)) AS yearmonth');
+		$qb->select("DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME({$qb->getTableAlias()}.time_created)) AS yearmonth");
 
-		$this->expandInto($qb, 'e');
+		$this->expandInto($qb, $qb->getTableAlias());
 
 		$qb = $this->buildQuery($qb);
 
@@ -179,7 +174,7 @@ class Entities extends Repository {
 	/**
 	 * Execute the query resolving calculation, count and/or batch options
 	 *
-	 * @return array|\ElggData[]|\ElggEntity[]|false|int
+	 * @return array|\ElggData[]|\ElggEntity[]|int|\ElggBatch
 	 * @throws LogicException
 	 */
 	public function execute() {
@@ -221,11 +216,11 @@ class Entities extends Repository {
 		$ands = [];
 
 		foreach ($this->options->joins as $join) {
-			$join->prepare($qb, 'e');
+			$join->prepare($qb, $qb->getTableAlias());
 		}
 
 		foreach ($this->options->wheres as $where) {
-			$ands[] = $where->prepare($qb, 'e');
+			$ands[] = $where->prepare($qb, $qb->getTableAlias());
 		}
 
 		$ands[] = $this->buildEntityClause($qb);
@@ -252,7 +247,7 @@ class Entities extends Repository {
 	 * @return \Closure|CompositeExpression|mixed|null|string
 	 */
 	protected function buildEntityClause(QueryBuilder $qb) {
-		return EntityWhereClause::factory($this->options)->prepare($qb, 'e');
+		return EntityWhereClause::factory($this->options)->prepare($qb, $qb->getTableAlias());
 	}
 
 	/**
@@ -271,9 +266,9 @@ class Entities extends Repository {
 		foreach ($clauses as $clause) {
 			if ($clause instanceof MetadataWhereClause) {
 				if (strtoupper($boolean) === 'OR' || count($clauses) === 1) {
-					$joined_alias = $qb->joinMetadataTable('e', 'guid', null, 'inner', 'n_table');
+					$joined_alias = $qb->joinMetadataTable($qb->getTableAlias(), 'guid', null, 'inner', MetadataTable::DEFAULT_JOIN_ALIAS);
 				} else {
-					$joined_alias = $qb->joinMetadataTable('e', 'guid', $clause->names);
+					$joined_alias = $qb->joinMetadataTable($qb->getTableAlias(), 'guid', $clause->names);
 				}
 				
 				$parts[] = $clause->prepare($qb, $joined_alias);
@@ -298,9 +293,9 @@ class Entities extends Repository {
 
 		foreach ($clauses as $clause) {
 			if (strtoupper($boolean) === 'OR' || count($clauses) === 1) {
-				$joined_alias = $qb->joinAnnotationTable('e', 'guid', null, 'inner', 'n_table');
+				$joined_alias = $qb->joinAnnotationTable($qb->getTableAlias(), 'guid', null, 'inner', AnnotationsTable::DEFAULT_JOIN_ALIAS);
 			} else {
-				$joined_alias = $qb->joinAnnotationTable('e', 'guid', $clause->names);
+				$joined_alias = $qb->joinAnnotationTable($qb->getTableAlias(), 'guid', $clause->names);
 			}
 			
 			$parts[] = $clause->prepare($qb, $joined_alias);
@@ -322,10 +317,10 @@ class Entities extends Repository {
 		$parts = [];
 
 		foreach ($clauses as $clause) {
-			if (strtoupper($boolean) == 'OR' || count($clauses) === 1) {
-				$joined_alias = $qb->joinRelationshipTable('e', $clause->join_on, null, $clause->inverse, 'inner', 'r');
+			if (strtoupper($boolean) === 'OR' || count($clauses) === 1) {
+				$joined_alias = $qb->joinRelationshipTable($qb->getTableAlias(), $clause->join_on, null, $clause->inverse, 'inner', RelationshipsTable::DEFAULT_JOIN_ALIAS);
 			} else {
-				$joined_alias = $qb->joinRelationshipTable('e', $clause->join_on, $clause->names, $clause->inverse);
+				$joined_alias = $qb->joinRelationshipTable($qb->getTableAlias(), $clause->join_on, $clause->names, $clause->inverse);
 			}
 			
 			$parts[] = $clause->prepare($qb, $joined_alias);

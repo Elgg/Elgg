@@ -17,7 +17,7 @@ class SessionHandler implements \SessionHandlerInterface {
 	/**
 	 * @var string name of the users sessions database table
 	 */
-	const TABLE_NAME = 'users_sessions';
+	public const TABLE_NAME = 'users_sessions';
 
 	protected Database $db;
 

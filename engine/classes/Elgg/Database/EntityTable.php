@@ -31,7 +31,9 @@ class EntityTable {
 	/**
 	 * @var string name of the entities database table
 	 */
-	const TABLE_NAME = 'entities';
+	public const TABLE_NAME = 'entities';
+	
+	public const DEFAULT_JOIN_ALIAS = 'e';
 
 	protected Config $config;
 
@@ -135,8 +137,8 @@ class EntityTable {
 		$where->guids = $guid;
 		$where->viewer_guid = $user_guid;
 
-		$select = Select::fromTable(self::TABLE_NAME, 'e');
-		$select->select('e.*');
+		$select = Select::fromTable(self::TABLE_NAME, self::DEFAULT_JOIN_ALIAS);
+		$select->select("{$select->getTableAlias()}.*");
 		$select->addClause($where);
 
 		return $this->db->getDataRow($select) ?: null;

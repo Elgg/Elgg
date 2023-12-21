@@ -4,6 +4,7 @@ namespace Elgg;
 
 use DI\Container;
 use Elgg\Application\Database;
+use Elgg\Database\EntityTable;
 use Elgg\Database\Select;
 use Elgg\Helpers\Application\FooController;
 use Elgg\Helpers\Application\FooExceptionController;
@@ -55,7 +56,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	function testCanCallService() {
-		$qb = Select::fromTable('entities', 'e');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, EntityTable::DEFAULT_JOIN_ALIAS);
 		$qb->select('1');
 
 		_elgg_services()->db->addQuerySpec([

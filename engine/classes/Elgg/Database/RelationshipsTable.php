@@ -25,7 +25,11 @@ class RelationshipsTable {
 	/**
 	 * @var integer The max length of the relationship column data
 	 */
-	const RELATIONSHIP_COLUMN_LENGTH = 255;
+	public const RELATIONSHIP_COLUMN_LENGTH = 255;
+	
+	public const TABLE_NAME = 'entity_relationships';
+	
+	public const DEFAULT_JOIN_ALIAS = 'r';
 	
 	protected Database $db;
 
@@ -58,7 +62,7 @@ class RelationshipsTable {
 	 * @return \ElggRelationship|null
 	 */
 	public function get(int $id): ?\ElggRelationship {
-		$select = Select::fromTable('entity_relationships');
+		$select = Select::fromTable(self::TABLE_NAME);
 		$select->select('*')
 			->where($select->compare('id', '=', $id, ELGG_VALUE_ID));
 		
@@ -83,7 +87,7 @@ class RelationshipsTable {
 			return false;
 		}
 
-		$delete = Delete::fromTable('entity_relationships');
+		$delete = Delete::fromTable(self::TABLE_NAME);
 		$delete->where($delete->compare('id', '=', $id, ELGG_VALUE_ID));
 		
 		return (bool) $this->db->deleteData($delete);
@@ -120,7 +124,7 @@ class RelationshipsTable {
 			return false;
 		}
 		
-		$insert = Insert::intoTable('entity_relationships');
+		$insert = Insert::intoTable(self::TABLE_NAME);
 		$insert->values([
 			'guid_one' => $insert->param($guid_one, ELGG_VALUE_GUID),
 			'relationship' => $insert->param($relationship, ELGG_VALUE_STRING),
@@ -166,7 +170,7 @@ class RelationshipsTable {
 	 * @return \ElggRelationship|false Depending on success
 	 */
 	public function check(int $guid_one, string $relationship, int $guid_two) {
-		$select = Select::fromTable('entity_relationships');
+		$select = Select::fromTable(self::TABLE_NAME);
 		$select->select('*')
 			->where($select->compare('guid_one', '=', $guid_one, ELGG_VALUE_GUID))
 			->andWhere($select->compare('relationship', '=', $relationship, ELGG_VALUE_STRING))
@@ -231,7 +235,7 @@ class RelationshipsTable {
 	 * @return true
 	 */
 	protected function removeAllWithoutEvents(int $guid, string $relationship = '', bool $inverse_relationship = false, string $type = ''): bool {
-		$delete = Delete::fromTable('entity_relationships');
+		$delete = Delete::fromTable(self::TABLE_NAME);
 		
 		if ($inverse_relationship) {
 			$delete->where($delete->compare('guid_two', '=', $guid, ELGG_VALUE_GUID));
@@ -244,7 +248,7 @@ class RelationshipsTable {
 		}
 		
 		if (!empty($type)) {
-			$entity_sub = $delete->subquery('entities');
+			$entity_sub = $delete->subquery(EntityTable::TABLE_NAME);
 			$entity_sub->select('guid')
 			->where($delete->compare('type', '=', $type, ELGG_VALUE_STRING));
 			
@@ -274,7 +278,7 @@ class RelationshipsTable {
 	 * @return true
 	 */
 	protected function removeAllWithEvents(int $guid, string $relationship = '', bool $inverse_relationship = false, string $type = ''): bool {
-		$select = Select::fromTable('entity_relationships');
+		$select = Select::fromTable(self::TABLE_NAME);
 		$select->select('*');
 		
 		if ($inverse_relationship) {
@@ -288,9 +292,9 @@ class RelationshipsTable {
 		}
 		
 		if (!empty($type)) {
-			$entity_sub = $select->subquery('entities');
+			$entity_sub = $select->subquery(EntityTable::TABLE_NAME);
 			$entity_sub->select('guid')
-			->where($select->compare('type', '=', $type, ELGG_VALUE_STRING));
+				->where($select->compare('type', '=', $type, ELGG_VALUE_STRING));
 			
 			if (!$inverse_relationship) {
 				$select->andWhere($select->compare('guid_two', 'in', $entity_sub->getSQL()));
@@ -319,7 +323,7 @@ class RelationshipsTable {
 				continue;
 			}
 			
-			$delete = Delete::fromTable('entity_relationships');
+			$delete = Delete::fromTable(self::TABLE_NAME);
 			$delete->where($delete->compare('id', 'in', $chunk));
 			
 			$this->db->deleteData($delete);
@@ -338,8 +342,8 @@ class RelationshipsTable {
 	 * @return \ElggEntity[]|int|boolean If count, int. If not count, array. false on errors.
 	 */
 	public function getEntitiesFromCount(array $options = []) {
-		$options['selects'][] = new SelectClause('COUNT(e.guid) AS total');
-		$options['group_by'][] = new GroupByClause('r.guid_two');
+		$options['selects'][] = new SelectClause('COUNT(' . EntityTable::DEFAULT_JOIN_ALIAS . '.guid) AS total');
+		$options['group_by'][] = new GroupByClause(self::DEFAULT_JOIN_ALIAS . '.guid_two');
 		$options['order_by'][] = new OrderByClause('total', 'desc');
 
 		return Entities::find($options);

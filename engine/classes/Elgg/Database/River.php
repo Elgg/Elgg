@@ -73,9 +73,9 @@ class River extends Repository {
 	 * {@inheritdoc}
 	 */
 	public function count() {
-		$qb = Select::fromTable('river', 'rv');
+		$qb = Select::fromTable(RiverTable::TABLE_NAME, RiverTable::DEFAULT_JOIN_ALIAS);
 
-		$count_expr = $this->options->distinct ? 'DISTINCT rv.id' : '*';
+		$count_expr = $this->options->distinct ? "DISTINCT {$qb->getTableAlias()}.id" : '*';
 		$qb->select("COUNT({$count_expr}) AS total");
 
 		$qb = $this->buildQuery($qb);
@@ -100,9 +100,9 @@ class River extends Repository {
 			throw new DomainException("'{$function}' is not a valid numeric function");
 		}
 
-		$qb = Select::fromTable('river', 'rv');
+		$qb = Select::fromTable(RiverTable::TABLE_NAME, RiverTable::DEFAULT_JOIN_ALIAS);
 
-		$alias = 'n_table';
+		$alias = AnnotationsTable::DEFAULT_JOIN_ALIAS;
 		if (!empty($this->options->annotation_name_value_pairs) && $this->options->annotation_name_value_pairs[0]->names != $property) {
 			$alias = $qb->getNextJoinAlias();
 
@@ -111,8 +111,8 @@ class River extends Repository {
 			$qb->addClause($annotation, $alias);
 		}
 
-		$qb->join('rv', 'annotations', $alias, "rv.annotation_id = {$alias}.id");
-		$qb->select("{$function}(n_table.value) AS calculation");
+		$qb->joinAnnotationTable($qb->getTableAlias(), 'annotation_id', null, 'inner', $alias);
+		$qb->select("{$function}({$alias}.value) AS calculation");
 
 		$qb = $this->buildQuery($qb);
 
@@ -131,19 +131,19 @@ class River extends Repository {
 	 * @return \ElggEntity[]
 	 */
 	public function get($limit = null, $offset = null, $callback = null) {
-		$qb = Select::fromTable('river', 'rv');
+		$qb = Select::fromTable(RiverTable::TABLE_NAME, RiverTable::DEFAULT_JOIN_ALIAS);
 
-		$distinct = $this->options->distinct ? 'DISTINCT' : '';
-		$qb->select("{$distinct} rv.*");
+		$distinct = $this->options->distinct ? 'DISTINCT ' : '';
+		$qb->select("{$distinct}{$qb->getTableAlias()}.*");
 
-		$this->expandInto($qb, 'rv');
+		$this->expandInto($qb, $qb->getTableAlias());
 
 		$qb = $this->buildQuery($qb);
 
 		// Keeping things backwards compatible
 		$original_order = elgg_extract('order_by', $this->options->__original_options);
 		if (empty($original_order) && $original_order !== false) {
-			$qb->addOrderBy('rv.posted', 'desc');
+			$qb->addOrderBy("{$qb->getTableAlias()}.posted", 'desc');
 		}
 
 		if ($limit > 0) {
@@ -178,7 +178,7 @@ class River extends Repository {
 	/**
 	 * Execute the query resolving calculation, count and/or batch options
 	 *
-	 * @return array|\ElggData[]|\ElggEntity[]|false|int
+	 * @return array|\ElggData[]|\ElggEntity[]|int|\ElggBatch
 	 * @throws LogicException
 	 */
 	public function execute() {
@@ -211,11 +211,11 @@ class River extends Repository {
 		$ands = [];
 
 		foreach ($this->options->joins as $join) {
-			$join->prepare($qb, 'rv');
+			$join->prepare($qb, $qb->getTableAlias());
 		}
 
 		foreach ($this->options->wheres as $where) {
-			$ands[] = $where->prepare($qb, 'rv');
+			$ands[] = $where->prepare($qb, $qb->getTableAlias());
 		}
 
 		$ands[] = $this->buildRiverClause($qb);
@@ -251,7 +251,7 @@ class River extends Repository {
 		$where->created_before = $this->options->created_before;
 		$where->annotation_ids = $this->options->river_annotation_ids;
 
-		return $where->prepare($qb, 'rv');
+		return $where->prepare($qb, $qb->getTableAlias());
 	}
 
 	/**
@@ -268,14 +268,14 @@ class River extends Repository {
 		$ands = [];
 
 		if (!empty($this->options->subject_guids) || $use_access_clause) {
-			$qb->joinEntitiesTable('rv', 'subject_guid', 'inner', 'se');
+			$qb->joinEntitiesTable($qb->getTableAlias(), 'subject_guid', 'inner', 'se');
 			$subject = new EntityWhereClause();
 			$subject->guids = $this->options->subject_guids;
 			$ands[] = $subject->prepare($qb, 'se');
 		}
 
 		if (!empty($this->options->object_guids) || $use_access_clause || !empty($this->options->type_subtype_pairs)) {
-			$qb->joinEntitiesTable('rv', 'object_guid', 'inner', 'oe');
+			$qb->joinEntitiesTable($qb->getTableAlias(), 'object_guid', 'inner', 'oe');
 			$object = new EntityWhereClause();
 			$object->guids = $this->options->object_guids;
 			$object->type_subtype_pairs = $this->options->type_subtype_pairs;
@@ -284,7 +284,7 @@ class River extends Repository {
 
 		if (!empty($this->options->target_guids) || $use_access_clause) {
 			$target_ors = [];
-			$qb->joinEntitiesTable('rv', 'target_guid', 'left', 'te');
+			$qb->joinEntitiesTable($qb->getTableAlias(), 'target_guid', 'left', 'te');
 			$target = new EntityWhereClause();
 			$target->guids = $this->options->target_guids;
 			$target_ors[] = $target->prepare($qb, 'te');
@@ -311,23 +311,9 @@ class River extends Repository {
 
 		foreach ($clauses as $clause) {
 			if (strtoupper($boolean) === 'OR' || count($clauses) === 1) {
-				$joined_alias = 'n_table';
+				$joined_alias = $qb->joinAnnotationTable($qb->getTableAlias(), 'annotation_id');
 			} else {
-				$joined_alias = $qb->getNextJoinAlias();
-			}
-			
-			$joins = $qb->getQueryPart('join');
-			$is_joined = false;
-			if (!empty($joins['rv'])) {
-				foreach ($joins['rv'] as $join) {
-					if ($join['joinAlias'] === $joined_alias) {
-						$is_joined = true;
-					}
-				}
-			}
-
-			if (!$is_joined) {
-				$qb->join('rv', 'annotations', $joined_alias, "$joined_alias.id = rv.annotation_id");
+				$joined_alias = $qb->joinAnnotationTable($qb->getTableAlias(), 'annotation_id', $clause->names);
 			}
 
 			$parts[] = $clause->prepare($qb, $joined_alias);
@@ -350,10 +336,10 @@ class River extends Repository {
 
 		foreach ($clauses as $clause) {
 			$join_on = $clause->join_on === 'guid' ? 'subject_guid' : $clause->join_on;
-			if (strtoupper($boolean) == 'OR' || count($clauses) === 1) {
-				$joined_alias = $qb->joinRelationshipTable('rv', $join_on, null, $clause->inverse, 'inner', 'r');
+			if (strtoupper($boolean) === 'OR' || count($clauses) === 1) {
+				$joined_alias = $qb->joinRelationshipTable($qb->getTableAlias(), $join_on, null, $clause->inverse, 'inner', RelationshipsTable::DEFAULT_JOIN_ALIAS);
 			} else {
-				$joined_alias = $qb->joinRelationshipTable('rv', $join_on, $clause->names, $clause->inverse);
+				$joined_alias = $qb->joinRelationshipTable($qb->getTableAlias(), $join_on, $clause->names, $clause->inverse);
 			}
 			
 			$parts[] = $clause->prepare($qb, $joined_alias);

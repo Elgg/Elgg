@@ -19,7 +19,7 @@ class HMACCacheTable {
 	/**
 	 * @var string name of the hmac cache database table
 	 */
-	const TABLE_NAME = 'hmac_cache';
+	public const TABLE_NAME = 'hmac_cache';
 	
 	protected Database $database;
 	

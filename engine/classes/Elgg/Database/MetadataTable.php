@@ -20,7 +20,11 @@ class MetadataTable {
 
 	use TimeUsing;
 	
-	const MYSQL_TEXT_BYTE_LIMIT = 65535;
+	protected const MYSQL_TEXT_BYTE_LIMIT = 65535;
+	
+	public const TABLE_NAME = 'metadata';
+	
+	public const DEFAULT_JOIN_ALIAS = 'n_table';
 	
 	protected MetadataCache $metadata_cache;
 
@@ -143,7 +147,7 @@ class MetadataTable {
 	 * @return \ElggMetadata|null
 	 */
 	public function get(int $id): ?\ElggMetadata {
-		$qb = Select::fromTable('metadata');
+		$qb = Select::fromTable(self::TABLE_NAME);
 		$qb->select('*');
 
 		$where = new MetadataWhereClause();
@@ -170,7 +174,7 @@ class MetadataTable {
 			return false;
 		}
 
-		$qb = Delete::fromTable('metadata');
+		$qb = Delete::fromTable(self::TABLE_NAME);
 		$qb->where($qb->compare('id', '=', $metadata->id, ELGG_VALUE_INTEGER));
 
 		$deleted = $this->db->deleteData($qb);
@@ -245,7 +249,7 @@ class MetadataTable {
 
 		$time_created = $this->getCurrentTime()->getTimestamp();
 
-		$qb = Insert::intoTable('metadata');
+		$qb = Insert::intoTable(self::TABLE_NAME);
 		$qb->values([
 			'name' => $qb->param($metadata->name, ELGG_VALUE_STRING),
 			'entity_guid' => $qb->param($metadata->entity_guid, ELGG_VALUE_INTEGER),
@@ -297,7 +301,7 @@ class MetadataTable {
 			elgg_log("Metadata '{$metadata->name}' is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
 		}
 
-		$qb = Update::table('metadata');
+		$qb = Update::table(self::TABLE_NAME);
 		$qb->set('name', $qb->param($metadata->name, ELGG_VALUE_STRING))
 			->set('value', $qb->param($metadata->value, $metadata->value_type === 'integer' ? ELGG_VALUE_INTEGER : ELGG_VALUE_STRING))
 			->set('value_type', $qb->param($metadata->value_type, ELGG_VALUE_STRING))
@@ -347,7 +351,7 @@ class MetadataTable {
 	 * @internal
 	 */
 	public function getRowsForGuids(array $guids): array {
-		$qb = Select::fromTable('metadata');
+		$qb = Select::fromTable(self::TABLE_NAME);
 		$qb->select('*')
 			->where($qb->compare('entity_guid', 'IN', $guids, ELGG_VALUE_GUID))
 			->orderBy('entity_guid', 'asc')
@@ -433,7 +437,7 @@ class MetadataTable {
 		if ($this->metadata_cache->isLoaded($entity_guid)) {
 			$ids = $this->metadata_cache->getSingleId($entity_guid, $name);
 		} else {
-			$qb = Select::fromTable('metadata');
+			$qb = Select::fromTable(self::TABLE_NAME);
 			$qb->select('id')
 				->where($qb->compare('entity_guid', '=', $entity_guid, ELGG_VALUE_INTEGER))
 				->andWhere($qb->compare('name', '=', $name, ELGG_VALUE_STRING));

@@ -2,6 +2,8 @@
 
 namespace Elgg\Integration;
 
+use Elgg\Database\AnnotationsTable;
+use Elgg\Database\EntityTable;
 use Elgg\Database\Select;
 
 class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
@@ -118,7 +120,6 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testElggEntityGetAndSetAnnotations() {
-
 		$this->assertEquals([], $this->entity->getAnnotations([
 			'annotation_name' => 'non_existent',
 		]));
@@ -173,13 +174,13 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->assertTrue($this->entity->disable());
 
 		// ensure disabled by comparing directly with database
-		$select_entity = Select::fromTable('entities')->select('*');
+		$select_entity = Select::fromTable(EntityTable::TABLE_NAME)->select('*');
 		$select_entity->where($select_entity->compare('guid', '=', $this->entity->guid, ELGG_VALUE_GUID));
 		
 		$entity = elgg()->db->getDataRow($select_entity);
 		$this->assertEquals('no', $entity->enabled);
 
-		$select_annotation = Select::fromTable('annotations')->select('*');
+		$select_annotation = Select::fromTable(AnnotationsTable::TABLE_NAME)->select('*');
 		$select_annotation->where($select_annotation->compare('id', '=', $annotation_id, ELGG_VALUE_ID));
 		
 		$annotation = elgg()->db->getDataRow($select_annotation);
@@ -218,7 +219,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		// disable entities container by $this->entity
 		$this->assertTrue($this->entity->disable());
 		
-		$select_entity = Select::fromTable('entities')->select('*');
+		$select_entity = Select::fromTable(EntityTable::TABLE_NAME)->select('*');
 		$select_entity->where($select_entity->compare('guid', '=', $obj1->guid, ELGG_VALUE_GUID));
 		
 		$entity = elgg()->db->getDataRow($select_entity);
@@ -229,7 +230,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$entity = elgg()->db->getDataRow($select_entity);
 		$this->assertEquals('yes', $entity->enabled);
 		
-		$select_sub_entity = Select::fromTable('entities')->select('*');
+		$select_sub_entity = Select::fromTable(EntityTable::TABLE_NAME)->select('*');
 		$select_sub_entity->where($select_sub_entity->compare('guid', '=', $obj2->guid, ELGG_VALUE_GUID));
 		
 		$entity = elgg()->db->getDataRow($select_sub_entity);
@@ -242,7 +243,6 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testElggEntityGetIconURL() {
-
 		$handler = function(\Elgg\Event $event) {
 			$size = (string) $event->getParam('size');
 

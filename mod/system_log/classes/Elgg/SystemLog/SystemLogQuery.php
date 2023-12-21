@@ -102,7 +102,7 @@ class SystemLogQuery extends Repository {
 	public function count(): int {
 		$this->normalizeOptions();
 
-		$qb = Select::fromTable('system_log');
+		$qb = Select::fromTable(SystemLog::TABLE_NAME);
 		$qb->select('COUNT(*) as total');
 		$wheres = $this->buildQuery($qb);
 		if ($wheres) {
@@ -141,10 +141,9 @@ class SystemLogQuery extends Repository {
 	 * @return \ElggData[]|false
 	 */
 	public function get($limit = null, $offset = null, $callback = null) {
-
 		$this->normalizeOptions();
 
-		$qb = Select::fromTable('system_log');
+		$qb = Select::fromTable(SystemLog::TABLE_NAME);
 		$qb->select('*');
 		$wheres = $this->buildQuery($qb);
 		if ($wheres) {
@@ -169,7 +168,6 @@ class SystemLogQuery extends Repository {
 	 * @return mixed
 	 */
 	public function execute() {
-
 		if ($this->count) {
 			return $this->count();
 		}
@@ -227,7 +225,6 @@ class SystemLogQuery extends Repository {
 	 * @return CompositeExpression|string
 	 */
 	protected function buildQuery(QueryBuilder $qb) {
-
 		$wheres = [];
 
 		if (!elgg_is_empty($this->performed_by_guid)) {

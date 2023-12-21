@@ -2,6 +2,7 @@
 
 namespace Elgg\Database\Clauses;
 
+use Elgg\Database\EntityTable;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\UnitTestCase;
@@ -14,7 +15,7 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::fromTable('entities', 'alias');
+		$this->qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 	}
 
 	public function testBuildEmptyQuery() {
@@ -25,8 +26,8 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		$query->ignore_access = true;
 		$query->use_enabled_clause = false;
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -44,8 +45,8 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		$query->use_enabled_clause = false;
 		$query->guids = 1;
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -66,8 +67,8 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		$query->owner_guids = [2, 3];
 		$query->container_guids = [4, 5, 6];
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -95,8 +96,8 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		$query->created_after = $after;
 		$query->created_before = $before;
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -125,8 +126,8 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		$query->updated_after = $after;
 		$query->updated_before = $before;
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -155,8 +156,8 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		$query->last_action_after = $after;
 		$query->last_action_before = $before;
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -175,8 +176,8 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		$query->use_enabled_clause = false;
 		$query->enabled = 'no';
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -194,8 +195,8 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		$query->use_enabled_clause = false;
 		$query->access_ids = ACCESS_PUBLIC;
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -236,8 +237,8 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		];
 		$query->guids = 1;
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -260,8 +261,8 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		$query->viewer_guid = 5;
 		$query->guids = 1;
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());

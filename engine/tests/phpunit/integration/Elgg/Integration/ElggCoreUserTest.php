@@ -2,6 +2,7 @@
 
 namespace Elgg\Integration;
 
+use Elgg\Database\EntityTable;
 use Elgg\Database\Select;
 use Elgg\Helpers\ElggUserWithExposableAttributes;
 
@@ -288,9 +289,9 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 	}
 
 	protected function fetchUser($guid) {
-		$qb = Select::fromTable('entities', 'e');
-		$qb->select('e.*');
-		$qb->where($qb->compare('e.guid', '=', $guid, ELGG_VALUE_INTEGER));
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, EntityTable::DEFAULT_JOIN_ALIAS);
+		$qb->select("{$qb->getTableAlias()}.*");
+		$qb->where($qb->compare("{$qb->getTableAlias()}.guid", '=', $guid, ELGG_VALUE_INTEGER));
 
 		return _elgg_services()->db->getDataRow($qb);
 	}

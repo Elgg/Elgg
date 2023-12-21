@@ -5,7 +5,8 @@
  * @uses $vars['page']
  */
 
-$title = elgg_echo('pages:history');
+use Elgg\Database\Clauses\OrderByClause;
+
 $content = '';
 
 $page = elgg_extract('page', $vars, elgg_extract('entity', $vars));
@@ -17,12 +18,16 @@ if ($page instanceof \ElggPage) {
 		'annotation_name' => 'page',
 		'limit' => max(20, elgg_get_config('default_limit')),
 		'order_by' => [
-			new \Elgg\Database\Clauses\OrderByClause('n_table.time_created', 'desc'),
-			new \Elgg\Database\Clauses\OrderByClause('n_table.id', 'desc'),
+			new OrderByClause('a_table.time_created', 'desc'),
+			new OrderByClause('a_table.id', 'desc'),
 		],
 	]);
 	
 	elgg_pop_context();
 }
 
-echo elgg_view_module('aside', $title, $content);
+if (empty($content)) {
+	return;
+}
+
+echo elgg_view_module('aside', elgg_echo('pages:history'), $content);

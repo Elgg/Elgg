@@ -2,6 +2,7 @@
 
 namespace Elgg\Upgrades;
 
+use Elgg\Database\EntityTable;
 use Elgg\Database\QueryBuilder;
 use Elgg\Upgrade\AsynchronousUpgrade;
 use Elgg\Upgrade\Result;
@@ -80,7 +81,7 @@ class RemoveOrphanedThreadedComments extends AsynchronousUpgrade {
 			],
 			'wheres' => [
 				function (QueryBuilder $qb, $main_alias) {
-					$sub = $qb->subquery('entities');
+					$sub = $qb->subquery(EntityTable::TABLE_NAME);
 					$sub->select('guid')
 						->where($qb->compare('type', '=', 'object', ELGG_VALUE_STRING))
 						->andWhere($qb->compare('subtype', '=', 'comment', ELGG_VALUE_STRING));

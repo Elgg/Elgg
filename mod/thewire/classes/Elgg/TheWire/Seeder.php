@@ -2,6 +2,7 @@
 
 namespace Elgg\TheWire;
 
+use Elgg\Database\RiverTable;
 use Elgg\Database\Seeds\Seed;
 use Elgg\Database\Update;
 
@@ -46,7 +47,7 @@ class Seeder extends Seed {
 			]);
 			/* @var $item \ElggRiverItem */
 			foreach ($river as $item) {
-				$update = Update::table('river');
+				$update = Update::table(RiverTable::TABLE_NAME);
 				$update->set('posted', $update->param($entity->time_created, ELGG_VALUE_TIMESTAMP))
 					->where($update->compare('id', '=', $item->id, ELGG_VALUE_ID));
 				

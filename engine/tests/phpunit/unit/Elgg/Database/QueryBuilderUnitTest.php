@@ -61,7 +61,7 @@ class QueryBuilderUnitTest extends UnitTestCase {
 		$this->assertEquals('e', $alias);
 
 		$expected = Select::fromTable('foo', 'f');
-		$expected->join('f', $this->qb->prefix('entities'), 'e', 'e.guid = f.entity_guid')
+		$expected->join('f', $this->qb->prefix(EntityTable::TABLE_NAME), 'e', 'e.guid = f.entity_guid')
 			->where($this->qb->expr()->eq('e.guid', $expected->param(1, ELGG_VALUE_GUID)));
 
 		$this->assertEquals($expected->getSQL(), $this->qb->getSQL());
@@ -74,16 +74,16 @@ class QueryBuilderUnitTest extends UnitTestCase {
 		$alias2 = $this->qb->joinEntitiesTable('f', 'entity_guid', 'inner');
 		$alias3 = $this->qb->joinEntitiesTable('f', 'entity_guid', 'left');
 		$alias4 = $this->qb->joinEntitiesTable('f', 'entity_guid', 'inner', $alias1);
-		$this->qb->where($this->qb->compare("$alias3.guid", '=', 1, ELGG_VALUE_GUID));
+		$this->qb->where($this->qb->compare("{$alias3}.guid", '=', 1, ELGG_VALUE_GUID));
 
 		$this->assertEquals($alias1, $alias2);
 		$this->assertEquals($alias1, $alias4);
 		$this->assertNotEquals($alias1, $alias3);
 
 		$expected = Select::fromTable('foo', 'f');
-		$expected->join('f', $this->qb->prefix('entities'), $alias1, "$alias1.guid = f.entity_guid")
-			->leftJoin('f', $this->qb->prefix('entities'), $alias3, "$alias3.guid = f.entity_guid")
-			->where($this->qb->expr()->eq("$alias3.guid", $expected->param(1, ELGG_VALUE_GUID)));
+		$expected->join('f', $this->qb->prefix(EntityTable::TABLE_NAME), $alias1, "{$alias1}.guid = f.entity_guid")
+			->leftJoin('f', $this->qb->prefix(EntityTable::TABLE_NAME), $alias3, "{$alias3}.guid = f.entity_guid")
+			->where($this->qb->expr()->eq("{$alias3}.guid", $expected->param(1, ELGG_VALUE_GUID)));
 
 		$this->assertEquals($expected->getSQL(), $this->qb->getSQL());
 		$this->assertEquals($expected->getParameters(), $this->qb->getParameters());

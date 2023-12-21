@@ -3,6 +3,7 @@
  * Procedural code for creating, loading, and modifying \ElggEntity objects.
  */
 
+use Elgg\Database\EntityTable;
 use Elgg\Database\Select;
 
 /**
@@ -655,8 +656,7 @@ function elgg_search(array $options = []) {
  * @since 4.3
  */
 function elgg_get_entity_statistics(int $owner_guid = 0): array {
-
-	$select = Select::fromTable('entities');
+	$select = Select::fromTable(EntityTable::TABLE_NAME);
 	$select->select('type')
 		->addSelect('subtype')
 		->addSelect('count(*) AS total')

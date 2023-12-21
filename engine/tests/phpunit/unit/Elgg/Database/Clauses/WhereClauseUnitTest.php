@@ -2,6 +2,7 @@
 
 namespace Elgg\Database\Clauses;
 
+use Elgg\Database\EntityTable;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\Helpers\Database\Clauses\CallableWhere;
@@ -15,17 +16,17 @@ class WhereClauseUnitTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::fromTable('entities', 'alias');
+		$this->qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 	}
 
 	public function testBuildWhereClauseFromString() {
 
-		$expected = "alias.guid = 25";
+		$expected = "{$this->qb->getTableAlias()}.guid = 25";
 
-		$query = new WhereClause('alias.guid = 25');
+		$query = new WhereClause("{$this->qb->getTableAlias()}.guid = 25");
 
-		$qb = Select::fromTable('entities', 'alias');
-		$actual = $query->prepare($qb, 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
@@ -33,15 +34,15 @@ class WhereClauseUnitTest extends UnitTestCase {
 
 	public function testBuildWhereClauseFromClosure() {
 
-		$expected = $this->qb->compare('alias.guid', '=', 25, ELGG_VALUE_INTEGER);
+		$expected = $this->qb->compare("{$this->qb->getTableAlias()}.guid", '=', 25, ELGG_VALUE_INTEGER);
 
 		$closure = function (QueryBuilder $qb) {
-			return $qb->compare('alias.guid', '=', 25, ELGG_VALUE_INTEGER);
+			return $qb->compare("{$this->qb->getTableAlias()}.guid", '=', 25, ELGG_VALUE_INTEGER);
 		};
 
 		$query = new WhereClause($closure);
 
-		$qb = Select::fromTable('entities', 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -56,7 +57,7 @@ class WhereClauseUnitTest extends UnitTestCase {
 
 		$query = new WhereClause($expr);
 
-		$qb = Select::fromTable('entities', 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -71,7 +72,7 @@ class WhereClauseUnitTest extends UnitTestCase {
 
 		$query = new WhereClause(CallableWhere::class);
 
-		$qb = Select::fromTable('entities', 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -86,7 +87,7 @@ class WhereClauseUnitTest extends UnitTestCase {
 
 		$query = new WhereClause('\Elgg\Helpers\Database\Clauses\CallableWhere::callable');
 
-		$qb = Select::fromTable('entities', 'alias');
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);

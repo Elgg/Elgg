@@ -19,7 +19,7 @@ class UsersApiSessionsTable {
 	/**
 	 * @var string name of the users api sessions database table
 	 */
-	const TABLE_NAME = 'users_apisessions';
+	public const TABLE_NAME = 'users_apisessions';
 	
 	protected Database $database;
 	

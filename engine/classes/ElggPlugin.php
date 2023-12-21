@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Database\Delete;
+use Elgg\Database\MetadataTable;
 use Elgg\Database\Plugins;
 use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
@@ -392,7 +393,7 @@ class ElggPlugin extends ElggObject {
 		$result = $this->unsetAllSettings();
 		
 		// entity plugin settings are stored with the entity
-		$delete = Delete::fromTable('metadata');
+		$delete = Delete::fromTable(MetadataTable::TABLE_NAME);
 		$delete->andWhere($delete->compare('name', 'like', "plugin:%_setting:{$this->getID()}:%", ELGG_VALUE_STRING));
 		
 		try {

@@ -1,5 +1,6 @@
 <?php
 use Elgg\Database\Select;
+use Elgg\Queue\DatabaseQueue;
 
 // show queue database statistics
 
@@ -8,7 +9,7 @@ $header .= '<th>' . elgg_echo('admin:statistics:queue:row_count') . '</th>';
 $header .= '<th>' . elgg_echo('admin:statistics:queue:oldest') . '</th>';
 $header .= '<th>' . elgg_echo('admin:statistics:queue:newest') . '</th></tr>';
 
-$qb = Select::fromTable('queue');
+$qb = Select::fromTable(DatabaseQueue::TABLE_NAME);
 $qb->select('DISTINCT name');
 
 $queue_names = _elgg_services()->db->getData($qb);
@@ -18,14 +19,14 @@ if (empty($queue_names)) {
 
 $rows = '';
 foreach ($queue_names as $queue) {
-	$qb = Select::fromTable('queue');
+	$qb = Select::fromTable(DatabaseQueue::TABLE_NAME);
 	$qb->select('COUNT(*) AS total');
 	$qb->where($qb->compare('name', '=', $queue->name, ELGG_VALUE_STRING, true));
 
 	$row_count = _elgg_services()->db->getDataRow($qb);
 	$row_count = empty($row_count) ? 0 : (int) $row_count->total;
 	
-	$qb = Select::fromTable('queue');
+	$qb = Select::fromTable(DatabaseQueue::TABLE_NAME);
 	$qb->select('MIN(timestamp) AS min');
 	$qb->where($qb->compare('name', '=', $queue->name, ELGG_VALUE_STRING, true));
 	
@@ -33,7 +34,7 @@ foreach ($queue_names as $queue) {
 	$oldest = empty($oldest) ? 0 : (int) $oldest->min;
 	$oldest = elgg_view('output/datetime-local', ['value' => $oldest]);
 	
-	$qb = Select::fromTable('queue');
+	$qb = Select::fromTable(DatabaseQueue::TABLE_NAME);
 	$qb->select('MAX(timestamp) AS max');
 	$qb->where($qb->compare('name', '=', $queue->name, ELGG_VALUE_STRING, true));
 	

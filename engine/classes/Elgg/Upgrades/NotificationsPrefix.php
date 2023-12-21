@@ -4,6 +4,7 @@ namespace Elgg\Upgrades;
 
 use Elgg\Database\Delete;
 use Elgg\Database\QueryBuilder;
+use Elgg\Database\RelationshipsTable;
 use Elgg\Database\Select;
 use Elgg\Database\Update;
 use Elgg\Notifications\SubscriptionsService;
@@ -59,27 +60,27 @@ class NotificationsPrefix extends AsynchronousUpgrade {
 		]));
 		
 		foreach ($methods as $method) {
-			$select = Select::fromTable('entity_relationships', 'r1');
+			$select = Select::fromTable(RelationshipsTable::TABLE_NAME, 'r1');
 			
 			// exclude already migrated relationships
-			$exists = $select->subquery('entity_relationships', 'r2');
+			$exists = $select->subquery(RelationshipsTable::TABLE_NAME, 'r2');
 			$exists->select('1')
-				->where($select->compare('r1.guid_one', '=', 'r2.guid_one'))
-				->andWhere($select->compare('r1.guid_two', '=', 'r2.guid_two'))
-				->andWhere($select->compare('r2.relationship', '=', "{$relationship_prefix}:{$method}", ELGG_VALUE_STRING));
+				->where($select->compare("{$select->getTableAlias()}.guid_one", '=', "{$exists->getTableAlias()}.guid_one"))
+				->andWhere($select->compare("{$select->getTableAlias()}.guid_two", '=', "{$exists->getTableAlias()}.guid_two"))
+				->andWhere($select->compare("{$exists->getTableAlias()}.relationship", '=', "{$relationship_prefix}:{$method}", ELGG_VALUE_STRING));
 			
 			// get old relationships
 			$select->select('id')
-				->where($select->compare('r1.relationship', '=', "{$relationship_prefix}{$method}", ELGG_VALUE_STRING))
-				->andWhere($select->compare('r1.guid_one', 'in', $guids, ELGG_VALUE_GUID))
-				->andWhere($select->compare(null, 'not exists', $exists->getSQL()));
+				->where($select->compare("{$select->getTableAlias()}.relationship", '=', "{$relationship_prefix}{$method}", ELGG_VALUE_STRING))
+				->andWhere($select->compare("{$select->getTableAlias()}.guid_one", 'in', $guids, ELGG_VALUE_GUID))
+				->andWhere("NOT EXISTS ({$exists->getSQL()})");
 			
 			$ids = _elgg_services()->db->getData($select, function($row) {
 				return (int) $row->id;
 			});
 			if (!empty($ids)) {
 				// update old relationships to new relationship
-				$update = Update::table('entity_relationships');
+				$update = Update::table(RelationshipsTable::TABLE_NAME);
 				$update->set('relationship', $update->param("{$relationship_prefix}:{$method}", ELGG_VALUE_STRING))
 					->where($update->compare('relationship', '=', "{$relationship_prefix}{$method}", ELGG_VALUE_STRING))
 					->andWhere($update->compare('id', 'in', $ids, ELGG_VALUE_ID));
@@ -88,7 +89,7 @@ class NotificationsPrefix extends AsynchronousUpgrade {
 			}
 			
 			// delete old relationships that couldn't be migrated because of key constraints
-			$delete = Delete::fromTable('entity_relationships');
+			$delete = Delete::fromTable(RelationshipsTable::TABLE_NAME);
 			$delete->where($delete->compare('guid_one', 'in', $guids, ELGG_VALUE_GUID))
 				->andWhere($delete->compare('relationship', '=', "{$relationship_prefix}{$method}", ELGG_VALUE_STRING));
 			

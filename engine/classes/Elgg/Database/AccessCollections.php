@@ -27,12 +27,12 @@ class AccessCollections {
 	/**
 	 * @var string name of the access collections database table
 	 */
-	const TABLE_NAME = 'access_collections';
+	public const TABLE_NAME = 'access_collections';
 	
 	/**
 	 * @var string name of the access collection membership database table
 	 */
-	const MEMBERSHIP_TABLE_NAME = 'access_collection_membership';
+	public const MEMBERSHIP_TABLE_NAME = 'access_collection_membership';
 
 	protected Config $config;
 
@@ -665,9 +665,9 @@ class AccessCollections {
 	 */
 	public function getCollectionsByMember(int $member_guid): array {
 		$select = Select::fromTable(self::TABLE_NAME, 'ac');
-		$select->join('ac', self::MEMBERSHIP_TABLE_NAME, 'acm', $select->compare('ac.id', '=', 'acm.access_collection_id'));
+		$select->join($select->getTableAlias(), self::MEMBERSHIP_TABLE_NAME, 'acm', $select->compare("{$select->getTableAlias()}.id", '=', 'acm.access_collection_id'));
 
-		$select->select('ac.*')
+		$select->select("{$select->getTableAlias()}.*")
 			->where($select->compare('acm.user_guid', '=', $member_guid, ELGG_VALUE_GUID))
 			->orderBy('name', 'ASC');
 

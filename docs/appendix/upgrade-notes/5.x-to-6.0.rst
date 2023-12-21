@@ -1,0 +1,15 @@
+From 5.x to 6.0
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+Annotations
+-----------
+
+Due to a naming conflict in the default join alias between the ``annotations`` and ``metadata`` table, the default join
+alias for the ``annotations`` table has been changed from ``n_table`` to ``a_table``.
+
+If your code uses very specific clauses (select, where, order_by, etc.) you need to update your code. If you use the
+``\Elgg\Database\QueryBuilder`` for your query parts you should be ok.

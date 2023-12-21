@@ -21,7 +21,7 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 	/**
 	 * @var string name of the queue database table
 	 */
-	const TABLE_NAME = 'queue';
+	public const TABLE_NAME = 'queue';
 	
 	/**
 	 * @var string Name of the queue

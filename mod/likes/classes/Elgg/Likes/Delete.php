@@ -2,6 +2,7 @@
 
 namespace Elgg\Likes;
 
+use Elgg\Database\AnnotationsTable;
 use Elgg\Database\Delete as DbDelete;
 
 /**
@@ -20,7 +21,6 @@ class Delete {
 	 * @return void
 	 */
 	public static function deleteLikes(\Elgg\Event $event): void {
-		
 		$entity = $event->getObject();
 		if (!$entity instanceof \ElggEntity) {
 			return;
@@ -28,7 +28,7 @@ class Delete {
 		
 		// Let's do a bulk delete of all likes annotations, instead of for each individually
 		// this will save performance
-		$delete = DbDelete::fromTable('annotations');
+		$delete = DbDelete::fromTable(AnnotationsTable::TABLE_NAME);
 		$delete->where($delete->compare('entity_guid', '=', $entity->guid, ELGG_VALUE_GUID))
 			->andWhere($delete->compare('name', '=', 'likes', ELGG_VALUE_STRING));
 		
