@@ -2,9 +2,6 @@
 
 namespace Elgg\Structs;
 
-use Countable;
-use Iterator;
-
 /**
  * A read-only interface to a (possibly mutable) group of items.
  *
@@ -28,7 +25,7 @@ use Iterator;
  * @since 1.10
  * @internal
  */
-interface Collection extends Countable, Iterator {
+interface Collection extends \Countable, \Iterator {
 	
 	/**
 	 * Returns a new collection only containing the elements which pass the filter.

@@ -3,7 +3,6 @@
 namespace Elgg;
 
 use Elgg\Di\PublicContainer;
-use ElggPlugin;
 
 /**
  * Plugin bootstrap interface
@@ -81,13 +80,15 @@ interface PluginBootstrapInterface {
 
 	/**
 	 * Returns Elgg's public DI container
+	 *
 	 * @return PublicContainer
 	 */
 	public function elgg();
 
 	/**
 	 * Returns plugin entity this bootstrap is related to
-	 * @return ElggPlugin
+	 *
+	 * @return \ElggPlugin
 	 */
 	public function plugin();
 }

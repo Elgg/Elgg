@@ -2,13 +2,12 @@
 
 namespace Elgg\Integration;
 
-use ElggPlugin;
 
 class ElggCorePluginsAPITest extends \Elgg\IntegrationTestCase {
 
 	// \ElggPlugin
 	public function testElggPluginIsValid() {
-		$test_plugin = ElggPlugin::fromId('profile');
+		$test_plugin = \ElggPlugin::fromId('profile');
 		$this->assertTrue($test_plugin->isValid());
 
 		// check if no exceptions are thrown
@@ -16,7 +15,7 @@ class ElggCorePluginsAPITest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testElggPluginGetID() {
-		$test_plugin = ElggPlugin::fromId('profile');
+		$test_plugin = \ElggPlugin::fromId('profile');
 		$this->assertEquals('profile', $test_plugin->getID());
 	}
 

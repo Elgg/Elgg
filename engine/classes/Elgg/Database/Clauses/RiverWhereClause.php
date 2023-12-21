@@ -2,10 +2,7 @@
 
 namespace Elgg\Database\Clauses;
 
-use DateTime;
 use Elgg\Database\QueryBuilder;
-use ElggAnnotation;
-use ElggEntity;
 
 /**
  * Builds queries for matching river items against their properties
@@ -33,32 +30,32 @@ class RiverWhereClause extends WhereClause {
 	public $views;
 
 	/**
-	 * @var int[]|ElggEntity[]
+	 * @var int[]|\ElggEntity[]
 	 */
 	public $subject_guids;
 
 	/**
-	 * @var int[]|ElggEntity[]
+	 * @var int[]|\ElggEntity[]
 	 */
 	public $object_guids;
 
 	/**
-	 * @var int[]|ElggEntity[]
+	 * @var int[]|\ElggEntity[]
 	 */
 	public $target_guids;
 
 	/**
-	 * @var int[]|ElggAnnotation[]
+	 * @var int[]|\ElggAnnotation[]
 	 */
 	public $annotation_ids;
 
 	/**
-	 * @var int|string|DateTime
+	 * @var int|string|\DateTime
 	 */
 	public $created_after;
 
 	/**
-	 * @var int|string|DateTime
+	 * @var int|string|\DateTime
 	 */
 	public $created_before;
 

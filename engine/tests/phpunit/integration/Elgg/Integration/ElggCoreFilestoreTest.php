@@ -4,8 +4,6 @@ namespace Elgg\Integration;
 
 use Elgg\EntityDirLocator;
 use Elgg\IntegrationTestCase;
-use Elgg\Project\Paths;
-use ElggFile;
 
 class ElggCoreFilestoreTest extends IntegrationTestCase {
 
@@ -26,7 +24,7 @@ class ElggCoreFilestoreTest extends IntegrationTestCase {
 		$dir = new EntityDirLocator($user->guid);
 
 		// setup a test file
-		$file = new ElggFile();
+		$file = new \ElggFile();
 		$file->owner_guid = $user->guid;
 		$file->setFilename('testing/filestore.txt');
 		$file->open('write');
@@ -48,7 +46,7 @@ class ElggCoreFilestoreTest extends IntegrationTestCase {
 	function testElggFileDelete() {
 		$user = $this->owner;
 		
-		$file = new ElggFile();
+		$file = new \ElggFile();
 		$file->owner_guid = $user->guid;
 		$file->save();
 		
