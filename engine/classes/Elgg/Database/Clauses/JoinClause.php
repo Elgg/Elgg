@@ -2,7 +2,6 @@
 
 namespace Elgg\Database\Clauses;
 
-use Closure;
 use Doctrine\DBAL\Query\Expression\CompositeExpression;
 use Elgg\Database\QueryBuilder;
 
@@ -22,7 +21,7 @@ class JoinClause extends Clause {
 	public $joined_alias;
 
 	/**
-	 * @var CompositeExpression|Closure|string
+	 * @var CompositeExpression|\Closure|string
 	 */
 	public $condition;
 
@@ -34,10 +33,10 @@ class JoinClause extends Clause {
 	/**
 	 * Constructor
 	 *
-	 * @param string                             $joined_table Table to join
-	 * @param string                             $joined_alias Alias of the joined table
-	 * @param CompositeExpression|Closure|string $condition    On expression
-	 * @param string                             $join_type    Join type INNER|LEFT|RIGHT
+	 * @param string                              $joined_table Table to join
+	 * @param string                              $joined_alias Alias of the joined table
+	 * @param CompositeExpression|\Closure|string $condition    On expression
+	 * @param string                              $join_type    Join type INNER|LEFT|RIGHT
 	 */
 	public function __construct($joined_table, $joined_alias = null, $condition = null, $join_type = 'inner') {
 		$this->joined_table = $joined_table;

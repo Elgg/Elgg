@@ -3,7 +3,6 @@
 namespace Elgg\Menu;
 
 use Elgg\Collections\Collection;
-use ElggMenuItem;
 
 /**
  * Represents a menu that has been broken down into sections,
@@ -27,7 +26,7 @@ class PreparedMenu extends Collection {
 	 *
 	 * @param string $section_id Section ID
 	 *
-	 * @return ElggMenuItem[]
+	 * @return \ElggMenuItem[]
 	 */
 	public function getItems($section_id) {
 		if ($this->has($section_id)) {

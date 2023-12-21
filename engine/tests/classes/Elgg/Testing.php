@@ -2,10 +2,9 @@
 
 namespace Elgg;
 
+use Elgg\Exceptions\RuntimeException;
 use Elgg\Http\Request;
 use Elgg\Project\Paths;
-use ElggUser;
-use RuntimeException;
 
 /**
  * Testing trait that provides utility methods agnostic to testing framework
@@ -13,7 +12,7 @@ use RuntimeException;
 trait Testing {
 
 	/**
-	 * @var ElggUser
+	 * @var \ElggUser
 	 */
 	protected $_testing_admin;
 
@@ -71,11 +70,11 @@ trait Testing {
 
 	/**
 	 * Returns an admin user. This user will persist within a test case.
-	 * @return ElggUser
+	 *
+	 * @return \ElggUser
 	 * @throws RuntimeException
 	 */
 	public function getAdmin() {
-
 		$admin = $this->_testing_admin;
 		if (!$admin) {
 			$admins = elgg_get_admins([

@@ -2,7 +2,6 @@
 
 namespace Elgg\Database\Clauses;
 
-use Closure;
 use Doctrine\DBAL\Query\Expression\CompositeExpression;
 use Elgg\Database\QueryBuilder;
 
@@ -12,7 +11,7 @@ use Elgg\Database\QueryBuilder;
 class OrderByClause extends Clause {
 
 	/**
-	 * @var Closure|CompositeExpression|null|string
+	 * @var \Closure|CompositeExpression|null|string
 	 */
 	public $expr;
 
@@ -24,8 +23,8 @@ class OrderByClause extends Clause {
 	/**
 	 * Constructor
 	 *
-	 * @param CompositeExpression|Closure|string $expr      Expression
-	 * @param string                             $direction Direction
+	 * @param CompositeExpression|\Closure|string $expr      Expression
+	 * @param string                              $direction Direction
 	 */
 	public function __construct($expr = null, $direction = null) {
 		$this->expr = $expr;

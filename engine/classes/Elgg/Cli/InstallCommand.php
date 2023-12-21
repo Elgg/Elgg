@@ -2,7 +2,6 @@
 
 namespace Elgg\Cli;
 
-use ElggInstaller;
 use Elgg\Exceptions\Configuration\InstallationException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -71,7 +70,7 @@ class InstallCommand extends BaseCommand {
 		}
 		
 		try {
-			$installer = new ElggInstaller();
+			$installer = new \ElggInstaller();
 			$htaccess = !is_file(\Elgg\Application::projectDir()->getPath('.htaccess'));
 			$installer->batchInstall($params, $htaccess);
 		} catch (InstallationException $ex) {

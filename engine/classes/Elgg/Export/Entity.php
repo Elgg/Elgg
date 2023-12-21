@@ -2,7 +2,8 @@
 
 namespace Elgg\Export;
 
-use DateTime;
+use Elgg\I18n\DateTime;
+use Elgg\Values;
 
 /**
  * Entity export representation
@@ -15,12 +16,12 @@ use DateTime;
  * @property string $time_updated
  * @property string $url
  * @property int    $read_access
- *
  */
 class Entity extends Data {
 
 	/**
 	 * Get updated tme
+	 *
 	 * @return DateTime|null
 	 */
 	public function getTimeUpdated() {
@@ -28,6 +29,6 @@ class Entity extends Data {
 			return null;
 		}
 
-		return new DateTime($this->time_created);
+		return Values::normalizeTime($this->time_created);
 	}
 }
