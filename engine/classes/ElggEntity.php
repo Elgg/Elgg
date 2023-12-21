@@ -1516,7 +1516,8 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
 		if ($this instanceof ElggUser && !$this->isBanned()) {
 			// temporarily ban to prevent using the site during disable
-			$this->ban();
+			// not using ban function to bypass events
+			$this->setMetadata('banned', 'yes');
 			$unban_after = true;
 		} else {
 			$unban_after = false;
@@ -1564,7 +1565,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		$disabled = _elgg_services()->entityTable->disable($this);
 
 		if ($unban_after) {
-			$this->unban();
+			$this->setMetadata('banned', 'no');
 		}
 
 		if ($disabled) {

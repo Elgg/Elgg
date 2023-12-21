@@ -7,8 +7,8 @@
 :root {
 	--ck-color-image-caption-background: hsl(0, 0%, 97%);
 	--ck-color-image-caption-text: hsl(0, 0%, 20%);
-	--ck-color-mention-background: hsla(341, 100%, 30%, 0.1);
-	--ck-color-mention-text: hsl(341, 100%, 30%);
+	--ck-color-mention-background: none !important;
+	--ck-color-mention-text: $(anchor-color) !important;
 	--ck-color-selector-caption-background: hsl(0, 0%, 97%);
 	--ck-color-selector-caption-text: hsl(0, 0%, 20%);
 	--ck-highlight-marker-blue: hsl(201, 97%, 72%);

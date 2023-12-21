@@ -1,3 +1,33 @@
+<a name="5.1.3"></a>
+### 5.1.3 (2023-12-15)
+
+#### Contributors
+
+* Jeroen Dalsem (5)
+* Jerôme Bakker (2)
+
+#### Bug fixes
+
+* **cli:** database seed command no longer queues notifications [7fb4139fe](https://github.com/Elgg/Elgg//commit/7fb4139fea6b61243838adf31beccd09812c453c)
+* **uservalidationbyemail:** only allow confirm link for logged out users [89ba96f5d](https://github.com/Elgg/Elgg//commit/89ba96f5da04ec392d027d4b26c75b6a8946e273)
+* **users:** prevent ban/unban notifications for users during disable [623a2fe6a](https://github.com/Elgg/Elgg//commit/623a2fe6acfa1104414b57cc88ce4ab408c715e1)
+
+
+<a name="5.1.2"></a>
+### 5.1.2 (2023-11-30)
+
+#### Contributors
+
+* Jeroen Dalsem (4)
+* Jerôme Bakker (4)
+
+#### Bug fixes
+
+* **output:** link must have discernible text [8ed45c12d](https://github.com/Elgg/Elgg//commit/8ed45c12d49365306c463a461af7a10ae74bbb1d)
+* **web_services:** only create new tokens on initial save [a1904fc7c](https://github.com/Elgg/Elgg//commit/a1904fc7c64a5ee88ddb65aa5467528b58fde4db) closes [#14516](https://github.com/Elgg/Elgg//commit/14516)
+* **developers:** removed metadata enabled column in entity explorer [4256e4dd7](https://github.com/Elgg/Elgg//commit/4256e4dd7c6fac502de9c6fbc8b6432720667f57)
+
+
 <a name="5.1.1"></a>
 ### 5.1.1 (2023-11-17)
 

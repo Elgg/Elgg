@@ -18,13 +18,12 @@ $params = elgg_extract('params', $vars, []);
 $params['exception'] = elgg_extract('exception', $params, $exception);
 
 $title = elgg_echo('error:default:title');
+if (elgg_language_key_exists("error:{$type}:title")) {
+	// use custom error title is available
+	$title = elgg_echo("error:{$type}:title");
+}
 
 if (elgg_view_exists("errors/{$type}")) {
-	if (elgg_language_key_exists("error:{$type}:title")) {
-		// use custom error title is available
-		$title = elgg_echo("error:{$type}:title");
-	}
-	
 	$content = elgg_view("errors/{$type}", $params);
 } else {
 	$content = elgg_view('errors/default', $params);
