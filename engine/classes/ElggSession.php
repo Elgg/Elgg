@@ -283,6 +283,7 @@ class ElggSession {
 			'cookie_secure' => $params['secure'],
 			'cookie_httponly' => $params['httponly'],
 			'cookie_lifetime' => $params['lifetime'],
+			'cookie_samesite' => $params['samesite'],
 		];
 
 		$handler = new ElggSessionHandler($db);
