@@ -88,16 +88,6 @@ jobs:
           composer global remove fxp/composer-asset-plugin
           composer remove elgg/login_as
           composer self-update --2
-             
-
-
-
-
-
-
-
-
-
 
       - name: Code checkout Elgg 4.3
         uses: actions/checkout@v3
@@ -146,6 +136,7 @@ jobs:
           php-version: '8.1'
           coverage: none
           extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring
+          ini-values: zend.enable_gc=0
         
       - name: Code checkout PR
         uses: actions/checkout@v3
@@ -179,6 +170,9 @@ jobs:
 
       - name: Run PHPUnit - Plugins unit
         run: ./vendor/bin/phpunit --testsuite plugins-unit
+
+      - name: Run PHPUnit - Plugins integration generic
+        run: ./vendor/bin/phpunit --testsuite plugins-integration-generic
 
       - name: Run PHPUnit - Plugins integration
         run: ./vendor/bin/phpunit --testsuite plugins-integration

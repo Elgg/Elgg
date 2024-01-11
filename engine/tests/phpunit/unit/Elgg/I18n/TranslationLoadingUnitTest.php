@@ -13,7 +13,7 @@ class TranslationLoadingUnitTest extends UnitTestCase {
 	 *
 	 * @return array
 	 */
-	public function languageProvider() {
+	public static function languageProvider() {
 		self::createApplication();
 
 		_elgg_services()->translator->reloadAllTranslations();
@@ -26,7 +26,7 @@ class TranslationLoadingUnitTest extends UnitTestCase {
 		return $provides;
 	}
 	
-	public function coreLanguageProvider() {
+	public static function coreLanguageProvider() {
 		self::createApplication();
 		
 		$path = Paths::elgg() . 'languages/';
@@ -53,7 +53,7 @@ class TranslationLoadingUnitTest extends UnitTestCase {
 		return $provides;
 	}
 	
-	public function installationLanguageProvider() {
+	public static function installationLanguageProvider() {
 		self::createApplication();
 		
 		$path = Paths::elgg() . 'install/languages/';

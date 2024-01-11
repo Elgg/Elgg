@@ -17,7 +17,7 @@ class DateOutputIntegrationTest extends ViewRenderingIntegrationTestCase {
 	}
 
 
-	public function getViewNames() {
+	public static function getViewNames() {
 		return [
 			'input/date',
 			'input/time',

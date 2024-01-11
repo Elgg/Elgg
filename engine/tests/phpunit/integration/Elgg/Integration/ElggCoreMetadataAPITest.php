@@ -99,7 +99,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 		$this->object->delete();
 	}
 
-	public function caseSensitivePairsProvider() {
+	public static function caseSensitivePairsProvider() {
 		return [
 			['=', 'CaseSensitive', true, 1],
 			['=', 'CaseSensitive', false, 1],
@@ -180,7 +180,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 		$this->object->delete();
 	}
 
-	public function booleanPairsProvider() {
+	public static function booleanPairsProvider() {
 		return [
 			[true, true, null],
 			[true, 1, null],

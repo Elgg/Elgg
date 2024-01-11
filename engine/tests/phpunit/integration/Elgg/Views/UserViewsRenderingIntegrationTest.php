@@ -4,7 +4,7 @@ namespace Elgg\Views;
 
 class UserViewsRenderingIntegrationTest extends ViewRenderingIntegrationTestCase {
 
-	public function getViewNames() {
+	public static function getViewNames() {
 		return [
 			'core/avatar/upload',
 			'core/settings/account/default_access',

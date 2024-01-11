@@ -80,7 +80,7 @@ class LRUCacheUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($default_value, $pool->get($name, $default_value));
 	}
 	
-	public function setGetRemoveProvider() {
+	public static function setGetRemoveProvider() {
 		return [
 			['foo', 'bar', false],
 			['foo', 1, 'bar'],

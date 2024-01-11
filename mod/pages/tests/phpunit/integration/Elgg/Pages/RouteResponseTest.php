@@ -4,14 +4,14 @@ namespace Elgg\Pages;
 
 class RouteResponseTest extends \Elgg\Plugins\RouteResponseIntegrationTestCase {
 
-	public function getSubtype() {
+	protected static function getSubtype() {
 		return 'page';
 	}
 	
-	public function groupRoutesProtectedByToolOption() {
+	public static function groupRoutesProtectedByToolOption() {
 		return [
 			[
-				'route' => "collection:object:{$this->getSubtype()}:group",
+				'route' => 'collection:object:' . self::getSubtype() . ':group',
 				'tool' => 'pages',
 			],
 		];

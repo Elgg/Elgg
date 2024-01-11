@@ -36,7 +36,7 @@ abstract class BaseCacheUnitTestCase extends UnitTestCase {
 	 */
 	abstract function createCache(string $namespace);
 
-	public function cacheableValuesProvider() {
+	public static function cacheableValuesProvider() {
 		return [
 			['lorem ipsum'],
 			[[1, 2, 'abc', true]],

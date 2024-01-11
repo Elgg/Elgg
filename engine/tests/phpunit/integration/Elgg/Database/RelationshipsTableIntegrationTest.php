@@ -28,7 +28,7 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		_elgg_services()->events->restore();
 	}
 	
-	public function removeAllEventToggleProvider() {
+	public static function removeAllEventToggleProvider() {
 		return [
 			[true],
 			[false],

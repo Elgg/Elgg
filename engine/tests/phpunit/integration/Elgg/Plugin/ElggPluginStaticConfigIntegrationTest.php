@@ -57,7 +57,7 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals($expected_view_output, elgg_view($view_name));
 	}
 		
-	public function viewsRegistrationProvider() {
+	public static function viewsRegistrationProvider() {
 		return [
 			['custom_view', 'custom view'],
 			['custom_directory/view1', 'view1'],

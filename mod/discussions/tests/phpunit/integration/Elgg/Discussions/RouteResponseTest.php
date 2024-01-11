@@ -27,14 +27,14 @@ class RouteResponseTest extends RouteResponseIntegrationTestCase {
 		parent::down();
 	}
 	
-	public function getSubtype() {
+	protected static function getSubtype() {
 		return 'discussion';
 	}
 	
-	public function groupRoutesProtectedByToolOption() {
+	public static function groupRoutesProtectedByToolOption() {
 		return [
 			[
-				'route' => "collection:object:{$this->getSubtype()}:group",
+				'route' => 'collection:object:' . self::getSubtype() . ':group',
 				'tool' => 'forum',
 			],
 		];

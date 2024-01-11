@@ -239,7 +239,7 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 		], $list);
 	}
 
-	public function getExampleNormalizedViews() {
+	public static function getExampleNormalizedViews() {
 		return [
 			// [canonical, alias]
 			// js namespace should be removed and .js added to all JS views

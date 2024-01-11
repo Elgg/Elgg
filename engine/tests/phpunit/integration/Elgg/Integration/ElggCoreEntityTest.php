@@ -612,7 +612,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		}
 	}
 	
-	public function entitiesFromCacheProvider() {
+	public static function entitiesFromCacheProvider() {
 		return [
 			['object', 'foo', null, null],
 			['object', 'foo', 'object', null],
@@ -637,7 +637,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->assertNull(_elgg_services()->entityTable->get($guid, $check_type, $check_subtype));
 	}
 	
-	public function entitiesNotTypesMatch() {
+	public static function entitiesNotTypesMatch() {
 		return [
 			['object', 'foo', 0, null],
 			['object', 'foo', 0, 0],
@@ -669,7 +669,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->assertTrue($object->setMetadata('foo', $empty_value));
 	}
 	
-	public function emptyValues() {
+	public static function emptyValues() {
 		return [
 			[''],
 			[null],

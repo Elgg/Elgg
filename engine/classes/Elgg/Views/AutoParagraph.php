@@ -152,6 +152,7 @@ class AutoParagraph {
 
 		$load_result = $this->_doc->loadHTML($html);
 		// restore warnings
+		libxml_clear_errors();
 		libxml_use_internal_errors($use_internal_errors);
 		if (!$load_result) {
 			return false;

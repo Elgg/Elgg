@@ -279,7 +279,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$mock = $this->createMock(EventsService::class, ['trigger']);
 		$mock->expects($this->once())
 			->method('triggerResults')
-			->will($this->returnValue(false));
+			->willReturn(false);
 
 		$this->events = $mock;
 
@@ -305,7 +305,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$mock = $this->createMock(SubscriptionsService::class, ['getNotificationEventSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(3))
 			->method('getNotificationEventSubscriptions')
-			->will($this->returnValue([]));
+			->willReturn([]);
 
 		_elgg_services()->subscriptions = $mock;
 
@@ -336,8 +336,8 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$mock = $this->createMock(SubscriptionsService::class, ['getNotificationEventSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(0))
 			->method('getNotificationEventSubscriptions')
-			->will($this->returnValue([]));
-
+			->willReturn([]);
+		
 		_elgg_services()->subscriptions = $mock;
 
 		$this->setupServices();
@@ -376,12 +376,12 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$mock = $this->createMock(SubscriptionsService::class, ['getNotificationEventSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(0))
 			->method('getNotificationEventSubscriptions')
-			->will($this->returnValue([
+			->willReturn([
 				$recipient->guid => [
 					'test_method',
 					'bad_method'
 				],
-			]));
+			]);
 
 		_elgg_services()->subscriptions = $mock;
 
@@ -430,10 +430,10 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$mock = $this->createMock(SubscriptionsService::class, ['getNotificationEventSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(1))
 			->method('getNotificationEventSubscriptions')
-			->will($this->returnValue($subscribers));
+			->willReturn($subscribers);
 		$mock->expects($this->exactly(1))
 			->method('filterSubscriptions')
-			->will($this->returnValue($subscribers));
+			->willReturn($subscribers);
 
 		_elgg_services()->subscriptions = $mock;
 
@@ -487,20 +487,20 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$mock = $this->createMock(SubscriptionsService::class, ['getNotificationEventSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(1))
 			->method('getNotificationEventSubscriptions')
-			->will($this->returnValue([
+			->willReturn([
 				$recipient->guid => [
 					'test_method',
 					'bad_method'
 				],
-			]));
+			]);
 		$mock->expects($this->exactly(1))
 			->method('filterSubscriptions')
-			->will($this->returnValue([
+			->willReturn([
 				$recipient->guid => [
 					'test_method',
 					'bad_method'
 				],
-			]));
+			]);
 
 		_elgg_services()->subscriptions = $mock;
 
@@ -535,7 +535,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$event = $this->queue->dequeue();
 		$this->assertInstanceOf(SubscriptionNotificationEvent::class, $event);
 		$this->assertEquals(elgg_get_logged_in_user_entity(), $event->getActor());
-		$this->assertEquals($object, $event->getObject());
+		$this->assertElggDataEquals($object, $event->getObject());
 		$this->assertEquals("test_event:{$object->getType()}:{$object->getSubtype()}", $event->getDescription());
 
 		$this->notifications->enqueueEvent('test_event', $object);
@@ -572,20 +572,20 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$mock = $this->createMock(SubscriptionsService::class, ['getNotificationEventSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(1))
 			->method('getNotificationEventSubscriptions')
-			->will($this->returnValue([
+			->willReturn([
 				$recipient->guid => [
 					'test_method',
 					'bad_method'
 				],
-			]));
+			]);
 		$mock->expects($this->exactly(1))
 			->method('filterSubscriptions')
-			->will($this->returnValue([
+			->willReturn([
 				$recipient->guid => [
 					'test_method',
 					'bad_method'
 				],
-			]));
+			]);
 			
 		_elgg_services()->subscriptions = $mock;
 
@@ -657,13 +657,12 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$mock = $this->createMock(SubscriptionsService::class, ['getNotificationEventSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(1))
 			->method('getNotificationEventSubscriptions')
-			->will($this->returnValue([
-					$recipient->guid => [
-						'test_method',
-						'bad_method'
-					],
-				]
-			));
+			->willReturn([
+				$recipient->guid => [
+					'test_method',
+					'bad_method'
+				],
+			]);
 
 		_elgg_services()->subscriptions = $mock;
 
@@ -725,7 +724,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$mock = $this->createMock(SubscriptionsService::class, ['getNotificationEventSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(0))
 			->method('getNotificationEventSubscriptions')
-			->will($this->returnValue([]));
+			->willReturn([]);
 
 		_elgg_services()->subscriptions = $mock;
 
@@ -757,7 +756,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$mock = $this->createMock(SubscriptionsService::class, ['getNotificationEventSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(0))
 			->method('getNotificationEventSubscriptions')
-			->will($this->returnValue([]));
+			->willReturn([]);
 
 		_elgg_services()->subscriptions = $mock;
 

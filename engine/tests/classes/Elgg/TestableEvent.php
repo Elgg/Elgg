@@ -140,7 +140,7 @@ class TestableEvent {
 	 * @param mixed  $value Value
 	 */
 	public function assertParamBefore($name, $value) {
-		$this->test_case->assertEquals($this->before_state->getParam($name), $value);
+		$this->test_case->assertElggDataEquals($this->before_state->getParam($name), $value);
 	}
 	
 	/**
@@ -150,7 +150,7 @@ class TestableEvent {
 	 * @param mixed  $value Value
 	 */
 	public function assertParamAfter($name, $value) {
-		$this->test_case->assertEquals($this->after_state->getParam($name), $value);
+		$this->test_case->assertElggDataEquals($this->after_state->getParam($name), $value);
 	}
 	
 	/**
@@ -159,7 +159,7 @@ class TestableEvent {
 	 * @param mixed $value Value
 	 */
 	public function assertValueBefore($value) {
-		$this->test_case->assertEquals($this->before_state->getValue(), $value);
+		$this->test_case->assertElggDataEquals($this->before_state->getValue(), $value);
 	}
 	
 	/**
@@ -168,6 +168,6 @@ class TestableEvent {
 	 * @param mixed $value Value
 	 */
 	public function assertValueAfter($value) {
-		$this->test_case->assertEquals($this->after_state->getValue(), $value);
+		$this->test_case->assertElggDataEquals($this->after_state->getValue(), $value);
 	}
 }

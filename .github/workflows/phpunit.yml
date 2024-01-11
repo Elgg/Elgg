@@ -86,7 +86,7 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           coverage: none
           extensions: gd,pdo,xml,json,memcached,redis-5.3.7,mysqli,pdo_mysql,libxml,mbstring,intl
-          ini-values: max_execution_time=180
+          ini-values: max_execution_time=180,zend.enable_gc=0
         
       - name: Code checkout
         uses: actions/checkout@v3
@@ -124,6 +124,9 @@ jobs:
 
       - name: Run PHPUnit - Plugins unit
         run: ./vendor/bin/phpunit --testsuite plugins-unit
+
+      - name: Run PHPUnit - Plugins integration generic
+        run: ./vendor/bin/phpunit --testsuite plugins-integration-generic
 
       - name: Run PHPUnit - Plugins integration
         run: ./vendor/bin/phpunit --testsuite plugins-integration

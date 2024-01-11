@@ -368,7 +368,7 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($expected, $service->parseContext());
 	}
 
-	public function requestContextDataProvider() {
+	public static function requestContextDataProvider() {
 		return [
 			['ajax/view/foo/bar/', 'view:foo/bar'],
 			['ajax/form/foo/bar/baz/', 'form:foo/bar/baz'],
@@ -390,7 +390,7 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($expected_output, $this->response_factory->stringify($input));
 	}
 	
-	public function stringifyProvider() {
+	public static function stringifyProvider() {
 		$std = new \stdClass();
 		$std->foo = 'bar';
 		

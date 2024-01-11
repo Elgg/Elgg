@@ -16,7 +16,7 @@ class PathsUnitTest extends UnitTestCase {
 		$this->assertEquals($expected, $path);
 	}
 	
-	public function sanitizePathProvider() {
+	public static function sanitizePathProvider() {
 		return [
 			[''],
 			['/'],

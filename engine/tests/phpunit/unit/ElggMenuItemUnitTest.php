@@ -215,7 +215,7 @@ class ElggMenuItemUnitTest extends \Elgg\UnitTestCase {
 		elgg_register_menu_item('foo', $options);
 	}
 	
-	public function invalidMenuRegistrationOptions() {
+	public static function invalidMenuRegistrationOptions() {
 		return [
 			[[]],
 			[['text' => 'bar']],

@@ -38,7 +38,7 @@ class ElggRelationshipUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($expected, $rel->$name);
 	}
 	
-	public function setterDataProvider() {
+	public static function setterDataProvider() {
 		return [
 			['id', 123, null],
 			['guid_one', 123, 123],
@@ -143,7 +143,7 @@ class ElggRelationshipUnitTest extends \Elgg\UnitTestCase {
 		}
 	}
 	
-	public function originalAttributesProvider() {
+	public static function originalAttributesProvider() {
 		return [
 			['id', 123, false],
 			['guid_one', 123, true],

@@ -12,7 +12,7 @@ class SearchViewsRenderingIntegrationTest extends ViewRenderingIntegrationTestCa
 		$this->startPlugin();
 	}
 
-	public function getViewNames() {
+	public static function getViewNames() {
 		return [
 			'forms/search',
 			'resources/search/index',

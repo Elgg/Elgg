@@ -24,7 +24,7 @@ jobs:
       fail-fast: false
       matrix:
         # Keep number of suites inline with Scrutinizer waiting for the same amount of coverage runs
-        testsuite: ['unit', 'integration-a-to-d', 'integration-e-to-s', 'integration-t-to-all', 'plugins-unit', 'plugins-integration']
+        testsuite: ['unit', 'integration-a-to-d', 'integration-e-to-s', 'integration-t-to-all', 'plugins-unit', 'plugins-integration-generic', 'plugins-integration']
 
     steps:
       - name: Check if run on the Elgg repo
@@ -37,7 +37,7 @@ jobs:
           php-version: '8.1'
           coverage: xdebug
           extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring,intl
-          ini-values: max_execution_time=180
+          ini-values: max_execution_time=180,zend.enable_gc=0
         
       - name: Code checkout
         uses: actions/checkout@v3

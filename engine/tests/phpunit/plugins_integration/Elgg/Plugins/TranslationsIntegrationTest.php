@@ -26,8 +26,8 @@ class TranslationsIntegrationTest extends PluginsIntegrationTestCase {
 	 *
 	 * @return array
 	 */
-	public function languageProvider(): array {
-		$this->createApplication([
+	public static function languageProvider(): array {
+		self::createApplication([
 			'isolate' => true,
 		]);
 		

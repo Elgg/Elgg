@@ -68,7 +68,7 @@ class SeedingUnitTest extends UnitTestCase {
 		}
 	}
 	
-	public function propertyProvider() {
+	public static function propertyProvider() {
 		return [
 			[true],
 			[false],

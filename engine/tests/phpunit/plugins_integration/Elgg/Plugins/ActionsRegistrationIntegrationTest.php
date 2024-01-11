@@ -6,15 +6,15 @@ use Elgg\Actions\RegistrationIntegrationTestCase;
 
 class ActionsRegistrationIntegrationTest extends RegistrationIntegrationTestCase {
 	
-	protected function registerPluginActions(\ElggPlugin $plugin) {
+	protected static function registerPluginActions(\ElggPlugin $plugin) {
 		$plugin->register();
 		$plugin->boot();
 		$plugin->init();
 		$plugin->getBootstrap()->ready();
 	}
 	
-	public function actionsProvider(): array {
-		$this->createApplication([
+	public static function actionsProvider(): array {
+		self::createApplication([
 			'isolate' => true,
 		]);
 		
@@ -26,7 +26,7 @@ class ActionsRegistrationIntegrationTest extends RegistrationIntegrationTestCase
 			_elgg_services()->reset('routes');
 			_elgg_services()->reset('routeCollection');
 			
-			$this->registerPluginActions($plugin);
+			self::registerPluginActions($plugin);
 			
 			$actions = _elgg_services()->actions->getAllActions();
 			foreach ($actions as $name => $params) {

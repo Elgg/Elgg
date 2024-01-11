@@ -9,12 +9,12 @@ class CryptoUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
 		$this->stub = $this->getMockBuilder('\Elgg\Security\Crypto')
-			->setMethods(array('getRandomBytes'))
+			->addMethods(['getRandomBytes'])
 			->getMock();
 
 		$this->stub->expects($this->any())
 			->method('getRandomBytes')
-			->will($this->returnCallback(array($this, 'mock_getRandomBytes')));
+			->willReturnCallback([$this, 'mock_getRandomBytes']);
 	}
 
 	protected function getCrypto() {

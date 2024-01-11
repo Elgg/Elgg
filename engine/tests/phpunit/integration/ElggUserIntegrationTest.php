@@ -43,7 +43,7 @@ class ElggUserIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals($boolean_value, $user->isAdmin());
 	}
 	
-	public function correctAdminBannedValues() {
+	public static function correctAdminBannedValues() {
 		return [
 			['no', false],
 			['yes', true],

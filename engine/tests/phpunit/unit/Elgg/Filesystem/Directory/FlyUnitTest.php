@@ -6,7 +6,7 @@ use Elgg\Filesystem\DirectoryUnitTestCase;
 
 class FlyUnitTest extends DirectoryUnitTestCase {
 
-	public function emptyDirectoryProvider() {
+	public static function emptyDirectoryProvider() {
 		return [
 			[Fly::createInMemory()],
 		];

@@ -743,7 +743,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($ch, $image_size[1]);
 	}
 
-	public function iconDimensionsProvider() {
+	public static function iconDimensionsProvider() {
 		return [
 			// resize 600x300 source image
 			[600, 300, 'master', 600, 300, false],

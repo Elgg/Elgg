@@ -16,13 +16,13 @@ class LocatorUnitTest extends \Elgg\UnitTestCase {
 	public function up() {
 		$this->plugin = $this->getMockBuilder(\ElggPlugin::class)
 			->disableOriginalConstructor()
-			->setMethods(['getStaticConfig', 'getID'])
+			->onlyMethods(['getStaticConfig', 'getID'])
 			->getMock();
 
 		$this->plugin
 			->expects($this->any())
 			->method('getID')
-			->will($this->returnValue('test_plugin'));
+			->willReturn('test_plugin');
 	}
 
 	public function testRunner() {

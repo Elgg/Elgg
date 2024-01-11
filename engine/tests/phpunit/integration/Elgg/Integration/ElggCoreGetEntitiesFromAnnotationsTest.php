@@ -298,7 +298,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesIntegrat
 		$this->assertEquals($num_entities, $es_count);
 	}
 
-	public function calculationTypesProvider() {
+	public static function calculationTypesProvider() {
 		return [
 			['sum'],
 			['avg'],

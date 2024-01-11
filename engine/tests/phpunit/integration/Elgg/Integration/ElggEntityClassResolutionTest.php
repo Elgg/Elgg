@@ -38,7 +38,7 @@ class ElggEntityClassResolutionTest extends IntegrationTestCase {
 		$this->assertInstanceOf($class, $entity);
 	}
 
-	public function entityClasses() {
+	public static function entityClasses() {
 		return [
 			['user', 'user', \ElggUser::class],
 			['group', 'group', \ElggGroup::class],

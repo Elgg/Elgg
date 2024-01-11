@@ -67,7 +67,7 @@ class ElggRiverItemIntegrationTest extends IntegrationTestCase {
 		
 		$subject = $item->getSubjectEntity();
 		$this->assertInstanceOf(\ElggEntity::class, $subject);
-		$this->assertEquals($this->subject, $subject);
+		$this->assertElggDataEquals($this->subject, $subject);
 	}
 	
 	public function testGetTargetEntity() {
@@ -75,7 +75,7 @@ class ElggRiverItemIntegrationTest extends IntegrationTestCase {
 		
 		$target = $item->getTargetEntity();
 		$this->assertInstanceOf(\ElggEntity::class, $target);
-		$this->assertEquals($this->target, $target);
+		$this->assertElggDataEquals($this->target, $target);
 	}
 	
 	public function testGetObjectEntity() {
@@ -83,7 +83,7 @@ class ElggRiverItemIntegrationTest extends IntegrationTestCase {
 		
 		$object = $item->getObjectEntity();
 		$this->assertInstanceOf(\ElggEntity::class, $object);
-		$this->assertEquals($this->object, $object);
+		$this->assertElggDataEquals($this->object, $object);
 	}
 	
 	public function testGetAnnotation() {

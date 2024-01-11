@@ -42,7 +42,7 @@ abstract class PluginSettingsIntegrationTestCase extends IntegrationTestCase {
 		$this->assertEquals("plugin:{$this->entity->getType()}_setting:{$plugin_id}:{$setting_name}", $result);
 	}
 	
-	public function namespaceProvider() {
+	public static function namespaceProvider() {
 		return [
 			['test_plugin', 'foo'],
 			['test_plugin', 'bar'],
@@ -73,7 +73,7 @@ abstract class PluginSettingsIntegrationTestCase extends IntegrationTestCase {
 		$this->assertEmpty($this->entity->getMetadata($plugin_setting_name));
 	}
 	
-	public function setPluginSettingProvider() {
+	public static function setPluginSettingProvider() {
 		return [
 			['test_plugin', 'foo', 'bar'],
 			['test_plugin', 'bar', 'foo'],
@@ -110,7 +110,7 @@ abstract class PluginSettingsIntegrationTestCase extends IntegrationTestCase {
 		$this->assertEquals(serialize($invalid_value), $this->entity->getPluginSetting('test_plugin', 'foo'));
 	}
 	
-	public function invalidPluginSettingValueProvider() {
+	public static function invalidPluginSettingValueProvider() {
 		return [
 			[new \stdClass()],
 		];

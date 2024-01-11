@@ -14,7 +14,7 @@ interface Testable {
 	 *
 	 * @return string
 	 */
-	public function normalizeTestFilePath($filename = '');
+	public static function normalizeTestFilePath($filename = '');
 
 	/**
 	 * Create an HTTP request

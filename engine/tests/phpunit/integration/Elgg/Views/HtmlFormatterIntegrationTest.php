@@ -17,21 +17,25 @@ class HtmlFormatterIntegrationTest extends \Elgg\IntegrationTestCase {
 		$this->service = _elgg_services()->html_formatter;
 	}
 	
-	/**
-	 * @dataProvider mentionsProvider
-	 */
-	public function testParseMentions($input, $expected) {
-		$result = $this->service->parseMentions($input);
-		
-		$this->assertEquals($expected, $result);
-		
-		// doing this again shouldn't change anything
-		$result = $this->service->parseMentions($result);
-		
-		$this->assertEquals($expected, $result);
+	public function testParseMentions() {
+		$test_data = $this->getMentionsTestData();
+		foreach ($test_data as $test_array) {
+			$input = $test_array['input'];
+			$expected = $test_array['expected'];
+			
+			$result = $this->service->parseMentions($input);
+			
+			$this->assertEquals($expected, $result);
+			
+			// doing this again shouldn't change anything
+			$result = $this->service->parseMentions($result);
+			
+			$this->assertEquals($expected, $result);
+		}
 	}
 	
-	public function mentionsProvider() {
+	// not using a static provider as we need an instanciated user
+	protected function getMentionsTestData() {
 		$user = $this->createUser();
 		$mention_url = elgg_view_url($user->getURL(), "@{$user->username}");
 		

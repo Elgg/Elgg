@@ -177,8 +177,8 @@ class ElggHtmLawedTest extends IntegrationTestCase {
 		$this->assertEquals($expected, $result);
 	}
 	
-	public function htmlawedFilterTagsProvider() {
-		$tests = [
+	public static function htmlawedFilterTagsProvider() {
+		return [
 			// duplicate closing tags, #311
 			['<ul><li>item</li></ul>', '<ul><li>item</li></ul>'],
 			
@@ -199,7 +199,5 @@ class ElggHtmLawedTest extends IntegrationTestCase {
 			['<form>Test</form>', 'Test'],
 			['<textarea>Test</textarea>', 'Test'],
 		];
-		
-		return $tests;
 	}
 }

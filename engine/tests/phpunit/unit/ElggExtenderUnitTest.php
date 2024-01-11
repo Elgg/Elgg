@@ -1,22 +1,24 @@
 <?php
 
+use Elgg\Helpers\ElggExtenderExtension;
 use Elgg\Helpers\ElggExtenderTestObject;
 
 class ElggExtenderUnitTest extends \Elgg\UnitTestCase {
-
+	
 	public function testSettingAndGettingAttribute() {
-		$obj = $this->getMockForAbstractClass('\ElggExtender');
+		$obj = new ElggExtenderExtension();
+		
 		$obj->name = 'comment';
 		$this->assertEquals('comment', $obj->name);
 	}
 
 	public function testGettingNonexistentAttribute() {
-		$obj = $this->getMockForAbstractClass('\ElggExtender');
+		$obj = new ElggExtenderExtension();
 		$this->assertNull($obj->foo);
 	}
 
 	public function testSettingValueAttribute() {
-		$obj = $this->getMockForAbstractClass('\ElggExtender');
+		$obj = new ElggExtenderExtension();
 		$obj->value = '36';
 		$this->assertSame('36', $obj->value);
 		$this->assertEquals('text', $obj->value_type);
@@ -26,7 +28,7 @@ class ElggExtenderUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testSettingValueExplicitly() {
-		$obj = $this->getMockForAbstractClass('\ElggExtender');
+		$obj = new ElggExtenderExtension();
 		$obj->setValue('36', 'integer');
 		$this->assertSame(36, $obj->value);
 		$this->assertEquals('integer', $obj->value_type);

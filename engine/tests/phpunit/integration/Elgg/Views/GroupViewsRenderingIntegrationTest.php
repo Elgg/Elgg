@@ -4,7 +4,7 @@ namespace Elgg\Views;
 
 class GroupViewsRenderingIntegrationTest extends ViewRenderingIntegrationTestCase {
 
-	public function getViewNames() {
+	public static function getViewNames() {
 		return [
 			'group/elements/summary',
 			'group/default',

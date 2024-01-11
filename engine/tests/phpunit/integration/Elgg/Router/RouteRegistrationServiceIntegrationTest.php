@@ -65,7 +65,7 @@ class RouteRegistrationServiceIntegrationTest extends IntegrationTestCase {
 		]));
 	}
 	
-	public function validUsernames() {
+	public static function validUsernames() {
 		return [
 			['username'],
 			['úsernâmé'],

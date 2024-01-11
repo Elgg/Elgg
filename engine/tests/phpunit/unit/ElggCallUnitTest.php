@@ -69,7 +69,7 @@ class ElggCallUnitTest extends \Elgg\UnitTestCase {
 		elgg()->session_manager->setDisabledEntityVisibility($ha);
 	}
 
-	public function flagsDataProvider() {
+	public static function flagsDataProvider() {
 		return [
 			[false, false, false, false],
 			[false, false, false, true],

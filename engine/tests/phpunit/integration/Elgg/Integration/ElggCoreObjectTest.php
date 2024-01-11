@@ -119,7 +119,7 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 
 		// check container
 		$this->assertEquals($guid, $this->entity->getContainerGUID());
-		$this->assertEquals($group, $this->entity->getContainerEntity());
+		$this->assertElggDataEquals($group, $this->entity->getContainerEntity());
 	}
 
 	public function testElggObjectToObject() {

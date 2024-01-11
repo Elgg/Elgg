@@ -12,7 +12,7 @@ class ViewsRenderingIntegrationTest extends ViewRenderingIntegrationTestCase {
 		$this->startPlugin();
 	}
 
-	public function getViewNames() {
+	public static function getViewNames() {
 		return [
 			'admin/administer_utilities',
 			'core/settings/account/login_history',

@@ -439,7 +439,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals($expected, $pair->case_sensitive);
 	}
 	
-	public function singlePairProvider() {
+	public static function singlePairProvider() {
 		return [
 			[null, true],
 			[true, true],

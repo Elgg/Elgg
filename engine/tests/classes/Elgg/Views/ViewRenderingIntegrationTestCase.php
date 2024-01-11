@@ -19,7 +19,7 @@ abstract class ViewRenderingIntegrationTestCase extends IntegrationTestCase {
 	 *
 	 * @return array
 	 */
-	abstract public function getViewNames();
+	abstract public static function getViewNames();
 
 	/**
 	 * Returns default view vars to testing rendering
@@ -32,7 +32,7 @@ abstract class ViewRenderingIntegrationTestCase extends IntegrationTestCase {
 	 *
 	 * @return array
 	 */
-	public function viewListProvider() {
+	public static function viewListProvider() {
 		self::createApplication();
 
 		$provides = [];
@@ -41,7 +41,7 @@ abstract class ViewRenderingIntegrationTestCase extends IntegrationTestCase {
 
 		foreach ($data['locations'] as $viewtype => $views) {
 			foreach ($views as $view => $path) {
-				if (in_array($view, $this->getViewNames())) {
+				if (in_array($view, static::getViewNames())) {
 					$provides[] = [$view, $viewtype];
 				}
 			}

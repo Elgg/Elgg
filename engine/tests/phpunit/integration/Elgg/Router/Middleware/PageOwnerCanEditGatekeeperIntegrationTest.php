@@ -93,11 +93,10 @@ class PageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase {
 			'guid' => $entity->guid,
 		]));
 		
-		$response = _elgg_services()->router->route($http_request);
-		$this->assertTrue($response);
+		_elgg_services()->router->route($http_request);
 	}
 	
-	public function getGatekeepers() {
+	public static function getGatekeepers() {
 		return [
 			[PageOwnerCanEditGatekeeper::class, 'object'],
 			[UserPageOwnerCanEditGatekeeper::class, 'user'],

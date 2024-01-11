@@ -20,7 +20,7 @@ class PageOwnerIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals($expected, _elgg_services()->pageOwner->getPageOwnerGuid());
 	}
 	
-	public function setterProvider() {
+	public static function setterProvider() {
 		return [
 			[999, 1, 1],
 			[999, 0, 0],
@@ -40,7 +40,7 @@ class PageOwnerIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals($expected, _elgg_services()->pageOwner->getPageOwnerGuid());
 	}
 	
-	public function libSetSetterProvider() {
+	public static function libSetSetterProvider() {
 		return [
 			[999, 1, 1],
 			[999, 0, 0], // different behaviour in getter function
@@ -76,7 +76,7 @@ class PageOwnerIntegrationTest extends IntegrationTestCase {
 		}
 	}
 
-	public function routeProvider() {
+	public static function routeProvider() {
 		return [
 			['view', 'username'],
 			['view', 'guid'],

@@ -54,7 +54,7 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($simple_type, $this->file->getSimpleType());
 	}
 
-	function providerSimpleTypeMap() {
+	public static function providerSimpleTypeMap() {
 		return [
 			[
 				'x-world/x-svr',
@@ -471,7 +471,7 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($expected_path, $file->getFilenameOnFilestore());
 	}
 	
-	public function pathTraversalProvider() {
+	public static function pathTraversalProvider() {
 		$dataroot = elgg_get_data_path();
 		
 		return [

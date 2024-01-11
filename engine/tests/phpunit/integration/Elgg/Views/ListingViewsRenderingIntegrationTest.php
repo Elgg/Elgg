@@ -4,7 +4,7 @@ namespace Elgg\Views;
 
 class ListingViewsRenderingIntegrationTest extends ViewRenderingIntegrationTestCase {
 
-	public function getViewNames() {
+	public static function getViewNames() {
 		return [
 			'page/components/list',
 			'page/components/gallery',

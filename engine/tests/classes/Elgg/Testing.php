@@ -24,10 +24,10 @@ trait Testing {
 	 *
 	 * @return string
 	 */
-	public function normalizeTestFilePath($filename = '') {
+	public static function normalizeTestFilePath($filename = '') {
 		$filename = ltrim($filename, '/');
 		$append_slash = substr($filename, -1, 1) === '/';
-		return Paths::sanitize(Paths::elgg() . "/engine/tests/test_files/$filename", $append_slash);
+		return Paths::sanitize(Paths::elgg() . "/engine/tests/test_files/{$filename}", $append_slash);
 	}
 
 	/**

@@ -43,21 +43,21 @@ class Database extends DbDatabase {
 
 		$connection->expects(BaseTestCase::$_instance->any())
 			->method('query')
-			->will(BaseTestCase::$_instance->returnCallback([$this, 'executeDatabaseQuery']));
+			->willReturnCallback([$this, 'executeDatabaseQuery']);
 
 		$connection->expects(BaseTestCase::$_instance->any())
 			->method('executeQuery')
-			->will(BaseTestCase::$_instance->returnCallback([$this, 'executeDatabaseQuery']));
+			->willReturnCallback([$this, 'executeDatabaseQuery']);
 		
 		$connection->expects(BaseTestCase::$_instance->any())
 			->method('executeStatement')
-			->will(BaseTestCase::$_instance->returnCallback([$this, 'executeDatabaseStatement']));
+			->willReturnCallback([$this, 'executeDatabaseStatement']);
 
 		$connection->expects(BaseTestCase::$_instance->any())
 			->method('lastInsertId')
-			->will(BaseTestCase::$_instance->returnCallback(function () {
+			->willReturnCallback(function () {
 				return $this->last_insert_id;
-			}));
+			});
 
 		$expression_builder = new ExpressionBuilder($connection);
 
@@ -67,9 +67,9 @@ class Database extends DbDatabase {
 
 		$connection->expects(BaseTestCase::$_instance->any())
 			->method('quote')
-			->will(BaseTestCase::$_instance->returnCallback(function ($input, $type = null) {
+			->willReturnCallback(function ($input, $type = null) {
 				return "'" . $input . "''";
-			}));
+			});
 
 
 		return $connection;
@@ -195,19 +195,19 @@ class Database extends DbDatabase {
 
 		$result->expects(BaseTestCase::$_instance->any())
 			->method('fetchAssociative')
-			->will(BaseTestCase::$_instance->returnCallback(function () use (&$results) {
+			->willReturnCallback(function () use (&$results) {
 				return array_shift($results);
-			}));
+			});
 		
 		$result->expects(BaseTestCase::$_instance->any())
 			->method('fetchAllAssociative')
-			->will(BaseTestCase::$_instance->returnCallback(function () use ($results) {
+			->willReturnCallback(function () use ($results) {
 				return $results;
-			}));
+			});
 
 		$result->expects(BaseTestCase::$_instance->any())
 			->method('rowCount')
-			->will(BaseTestCase::$_instance->returnValue($row_count));
+			->willReturn($row_count);
 
 		return $result;
 	}

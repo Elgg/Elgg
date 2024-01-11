@@ -4,7 +4,7 @@ namespace Elgg\Views;
 
 class UrlOutputIntegrationTest extends ViewRenderingIntegrationTestCase {
 
-	public function getViewNames() {
+	public static function getViewNames() {
 		return ['output/url'];
 	}
 
@@ -49,8 +49,7 @@ class UrlOutputIntegrationTest extends ViewRenderingIntegrationTestCase {
 		]);
 	}
 	
-	public function anchorTextProvider() {
-		
+	public static function anchorTextProvider() {
 		return [
 			[
 				'text_input' => 'sample text',
