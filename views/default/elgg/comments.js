@@ -13,6 +13,29 @@ define(['jquery', 'elgg'], function ($, elgg) {
 		}
 	});
 
+	$(document).on('click', '.elgg-toggle-comment', function (event) {
+		var $anchor = $(this);
+		var comment_guid = $anchor.data().loadComment;
+		
+		require(['elgg/Ajax', 'elgg/toggle'], function(Ajax) {
+			var ajax = new Ajax();
+				
+			ajax.form('comment/save', {
+				data: {
+					guid: comment_guid
+				},
+				success: function(result) {
+					$('div[data-comments-placeholder=' + comment_guid + ']')
+						.html(result)
+						.slideToggle('medium')
+						.find('textarea, [contenteditable]').filter(':visible').first().focus();
+					
+					$anchor.toggleClass('elgg-toggle elgg-toggle-comment');
+				}
+			});
+		});
+	});
+
 	$(document).on('submit', '.elgg-form-comment-save', function (event) {
 		var $form = $(this);
 		

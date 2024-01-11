@@ -102,31 +102,36 @@ $show_login_form = $comments_list ? $show_add_form : false;
 $show_login_form = elgg_extract('show_login_form', $vars, $show_login_form);
 
 if ($show_add_form && $entity->canComment()) {
-	$form_vars = [
-		'id' => "elgg-form-comment-save-{$entity->guid}",
-		'prevent_double_submit' => false,
-	];
 	if ($entity instanceof \ElggComment) {
-		$form_vars['class'] = 'hidden';
-	}
-	
-	if (!$entity instanceof \ElggComment && $latest_first && $comments_list && elgg_get_config('comment_box_collapses')) {
-		$form_vars['class'] = 'hidden';
-		
-		$module_vars['menu'] = elgg_view_menu('comments', [
-			'items' => [
-				[
-					'name' => 'add',
-					'text' => elgg_echo('generic_comments:add'),
-					'href' => '#' . $form_vars['id'],
-					'icon' => 'plus',
-					'class' => ['elgg-button', 'elgg-button-action', 'elgg-toggle'],
-				],
-			],
+		$form = elgg_format_element('div', [
+			'id' => "elgg-form-comment-save-{$entity->guid}",
+			'data-comments-placeholder' => $entity->guid,
+			'class' => 'hidden',
 		]);
+	} else {
+		$form_vars = [
+			'id' => "elgg-form-comment-save-{$entity->guid}",
+			'prevent_double_submit' => false,
+		];
+		
+		if (!$entity instanceof \ElggComment && $latest_first && $comments_list && elgg_get_config('comment_box_collapses')) {
+			$form_vars['class'] = 'hidden';
+			
+			$module_vars['menu'] = elgg_view_menu('comments', [
+				'items' => [
+					[
+						'name' => 'add',
+						'text' => elgg_echo('generic_comments:add'),
+						'href' => '#' . $form_vars['id'],
+						'icon' => 'plus',
+						'class' => ['elgg-button', 'elgg-button-action', 'elgg-toggle'],
+					],
+				],
+			]);
+		}
+	
+		$form = elgg_view_form('comment/save', $form_vars, $vars);
 	}
-
-	$form = elgg_view_form('comment/save', $form_vars, $vars);
 } elseif (!elgg_is_logged_in() && $show_login_form) {
 	$login_form_contents = elgg_view_form('login', [], ['returntoreferer' => true]);
 	

@@ -35,10 +35,13 @@ if ($full_view) {
 		]);
 	
 		if (elgg_extract('show_add_form', $vars, true) && $comment->canComment()) {
+			elgg_require_js('elgg/comments');
+			
 			$body .= elgg_view('output/url', [
 				'text' => elgg_echo('generic_comments:add'),
 				'href' => "#elgg-form-comment-save-{$comment->guid}",
-				'class' => ['elgg-toggle', 'elgg-subtext'],
+				'data-load-comment' => $comment->guid,
+				'class' => ['elgg-subtext', 'elgg-toggle-comment'],
 			]);
 		}
 	}
