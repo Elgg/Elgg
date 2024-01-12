@@ -9,13 +9,13 @@
  *
  * Since this is called through a handler, we need to manually get the post data
  *
- * @return false|string POST data as string encoded as multipart/form-data
+ * @return false|string POST data as string encoded when using content-type=application/x-www-form-urlencoded
  *
  * @link https://www.php.net/manual/en/wrappers.php.php#wrappers.php.input
  * @internal
  */
 function elgg_ws_get_post_data(): string|false {
-	return file_get_contents('php://input');
+	return _elgg_services()->request->getContent();
 }
 
 /**

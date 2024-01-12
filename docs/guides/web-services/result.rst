@@ -19,7 +19,7 @@ A successful API result looks like this:
 
 Depending on the API call ``result`` can contain any type of content (string, number, array, object, etc.). 	
 
-An example of a numberic result (for example a user count):
+An example of a numeric result (for example a user count):
 
 .. code-block:: json
 
@@ -72,5 +72,5 @@ on the error message to know what went wrong.
 .. note::
 
 	``result`` and ``message`` can contain messages in different languages. This is depending on the user language when using 
-	user authenticated API calls or the site langauge for other API calls. Keep in mind that the language can change, eighter by the user
+	user authenticated API calls or the site language for other API calls. Keep in mind that the language can change, eighter by the user
 	or by a site administrator for the site language.
