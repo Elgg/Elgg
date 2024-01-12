@@ -2,7 +2,6 @@
 
 namespace Elgg;
 
-use ElggUpgrade;
 use Elgg\Helpers\Upgrade\TestBatch;
 use Elgg\Helpers\Upgrade\TestNoIncrementBatch;
 use Elgg\Helpers\Upgrade\UnknownSizeTestBatch;
@@ -14,8 +13,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 	}
 
 	public function testCanRunIncrementedUpgrade() {
-
-		$upgrade = new ElggUpgrade();
+		$upgrade = new \ElggUpgrade();
 		$upgrade->setClass(TestBatch::class);
 		$upgrade->setId("test_plugin:2016101900");
 		$upgrade->title = 'test_plugin:upgrade:2016101900:title';
@@ -39,8 +37,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 	}
 
 	public function testCanRunIncrementedUpgradeWithInitialOffset() {
-
-		$upgrade = new ElggUpgrade();
+		$upgrade = new \ElggUpgrade();
 		$upgrade->setClass(TestBatch::class);
 		$upgrade->setId("test_plugin:2016101903");
 		$upgrade->title = 'test_plugin:upgrade:2016101903:title';
@@ -68,8 +65,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 	}
 
 	public function testCanRunUnincrementedUpgrade() {
-
-		$upgrade = new ElggUpgrade();
+		$upgrade = new \ElggUpgrade();
 		$upgrade->setClass(TestNoIncrementBatch::class);
 		$upgrade->setId("test_plugin:2016101901");
 		$upgrade->title = 'test_plugin:upgrade:2016101901:title';
@@ -93,8 +89,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 	}
 
 	public function testCanRunUpgradeWithoutTotal() {
-
-		$upgrade = new ElggUpgrade();
+		$upgrade = new \ElggUpgrade();
 		$upgrade->setClass(UnknownSizeTestBatch::class);
 		$upgrade->setId("test_plugin:2016101902");
 		$upgrade->title = 'test_plugin:upgrade:2016101902:title';

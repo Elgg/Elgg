@@ -5,7 +5,6 @@ namespace Elgg;
 use DateTime as PHPDateTime;
 use Elgg\I18n\DateTime as ElggDateTime;
 use Elgg\Exceptions\DataFormatException;
-use Exception;
 
 /**
  * Functions for use as event handlers or other situations where you need a
@@ -40,6 +39,7 @@ class Values {
 	 * @since 1.12.0
 	 */
 	public static function getNull() {
+		return null;
 	}
 
 	/**
@@ -86,7 +86,7 @@ class Values {
 			} else {
 				$dt = new ElggDateTime();
 			}
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			throw new DataFormatException($e->getMessage());
 		}
 
@@ -170,13 +170,13 @@ class Values {
 	/**
 	 * Return array with __view_output set to prevent view output during view_vars event
 	 *
-	 * @see   ViewsService->renderView()
+	 * @see ViewsService->renderView()
 	 *
 	 * @return array
 	 * @since 3.0
 	 */
 	public static function preventViewOutput() {
-		return ['__view_output' => ''];
+		return [ViewsService::OUTPUT_KEY => ''];
 	}
 	
 	/**
@@ -190,7 +190,6 @@ class Values {
 	 * @since 3.0.0
 	 */
 	public static function isEmpty($value): bool {
-		
 		if ($value === 0 || $value === '0' || $value === 0.0) {
 			return false;
 		}
@@ -205,8 +204,8 @@ class Values {
 	 *
 	 * @param mixed $n         input integer or string
 	 * @param int   $precision number of digits in decimal place (default = 0)
-	 * @return string|int
 	 *
+	 * @return string|int
 	 * @since 3.1
 	 */
 	public static function shortFormatOutput($n, $precision = 0) {

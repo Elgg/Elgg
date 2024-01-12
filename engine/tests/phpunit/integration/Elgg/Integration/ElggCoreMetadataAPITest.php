@@ -5,13 +5,11 @@ namespace Elgg\Integration;
 use Elgg\Database\Select;
 use Elgg\Database\Update;
 use Elgg\IntegrationTestCase;
-use ElggMetadata;
-use ElggObject;
 
 class ElggCoreMetadataAPITest extends IntegrationTestCase {
 
 	/**
-	 * @var ElggObject
+	 * @var \ElggObject
 	 */
 	protected $object;
 
@@ -30,7 +28,6 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 	}
 
 	public function testElggGetEntitiesFromMetadata() {
-
 		$this->object->title = 'Meta Unit Test';
 		$this->object->save();
 
@@ -75,7 +72,6 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 	 * @dataProvider caseSensitivePairsProvider
 	 */
 	public function testElggGetEntitiesFromMetadataCaseSensitive($comparison, $value, $case_sensitive, $count) {
-
 		$this->object->setSubtype($this->getRandomSubtype());
 		$this->object->metadata = 'CaseSensitive';
 		$this->object->save();
@@ -157,7 +153,6 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 	 * @dataProvider booleanPairsProvider
 	 */
 	public function testElggGetEntitiesFromBooleanMetadata($value, $query, $type) {
-
 		$this->object->setSubtype($this->getRandomSubtype());
 		$this->object->metadata = $value;
 		$this->object->save();
@@ -215,7 +210,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 	}
 
 	public function testElggDeleteMetadata() {
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->setSubtype($this->getRandomSubtype());
 		$e->save();
 
@@ -314,7 +309,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 		$md_values = null;
 		
 		elgg_call(ELGG_IGNORE_ACCESS, function() use (&$obj, &$md_values) {
-			$obj = new ElggObject();
+			$obj = new \ElggObject();
 			$obj->setSubtype($this->getRandomSubtype());
 			$obj->owner_guid = elgg_get_site_entity()->guid;
 			$obj->container_guid = elgg_get_site_entity()->guid;
@@ -346,7 +341,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 				'metadata_names' => 'test_md',
 			]);
 	
-			$md_values = array_map(function (ElggMetadata $md) {
+			$md_values = array_map(function (\ElggMetadata $md) {
 				return (int) $md->value;
 			}, $mds);
 			$this->assertEquals([1, 2, 3], $md_values);
@@ -369,7 +364,6 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 	}
 
 	public function testCanDeleteMetadataByObject() {
-
 		$entity = $this->createObject([
 			'foo' => 'bar',
 			'bar' => 'baz',

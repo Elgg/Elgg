@@ -6,12 +6,11 @@ use Elgg\Database\Delete;
 use Elgg\Database\Insert;
 use Elgg\Database\Select;
 use Elgg\Database\Update;
-use ElggUser;
 
 class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 
 	/**
-	 * @var ElggUser
+	 * @var \ElggUser
 	 */
 	protected $user;
 
@@ -20,7 +19,6 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testCanGetData() {
-		
 		$select = Select::fromTable('entities');
 		$select->select('*');
 		$select->where($select->compare('guid', '=', $this->user->guid, ELGG_VALUE_GUID));

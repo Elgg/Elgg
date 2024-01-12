@@ -1,3 +1,18 @@
+<a name="5.1.4"></a>
+### 5.1.4 (2024-01-12)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+* Jeroen Dalsem (2)
+
+#### Bug fixes
+
+* **comments:** only load comment form when needed [1eaa55b48](https://github.com/Elgg/Elgg//commit/1eaa55b48bd3fc55ac00580627e254e0f8124fa5)
+* **session:** allow samesite cookie configuration [1dcb96c26](https://github.com/Elgg/Elgg//commit/1dcb96c2688da0b7e6cb87d78de12043f05dc8c0)
+* **notifications:** prevent unneeded content subscriptions [3ffedc0ad](https://github.com/Elgg/Elgg//commit/3ffedc0ad92992f930377e5261a24ba51580e61c) closes [#14301](https://github.com/Elgg/Elgg//commit/14301)
+
+
 <a name="5.1.3"></a>
 ### 5.1.3 (2023-12-15)
 
