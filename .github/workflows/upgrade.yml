@@ -136,14 +136,6 @@ jobs:
           php ./elgg-cli plugins:activate activity blog bookmarks ckeditor dashboard developers discussions externalpages file friends friends_collections garbagecollector groups invitefriends likes members messageboard messages pages profile reportedcontent search site_notifications system_log tagcloud theme_sandbox thewire uservalidationbyemail web_services custom_index:last --no-ansi
           php ./elgg-cli plugins:list --no-ansi
 
-      - name: Start Elgg webserver
-        run: |
-          php -S localhost:8888 -c ./.scripts/ci/local_php_server.ini index.php &
-          # give Web server some time to bind to sockets, etc
-          sleep 3
-          # check if the webserver is running
-          curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg CI Site</title>"
-
       - name: Run PHPUnit - Core unit
         run: ./vendor/bin/phpunit --testsuite unit
 
