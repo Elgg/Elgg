@@ -28,7 +28,7 @@ If you are sending POST data you must also send:
 
 - **X-Elgg-posthash** - The hash of the POST data
 - **X-Elgg-posthash-algo** - The algorithm used to produce the POST data hash
-- **Content-type** - The content type of the data you are sending (if in doubt use ``application/octet-stream``)
+- **Content-type** - The content type of the data you are sending (this can be ``application/x-www-form-urlencoded`` or ``multipart/form-data``)
 - **Content-Length** - The length in bytes of your POST data
 
 Elgg provides a sample API client that implements this HMAC signature: ``\Elgg\WebServices\ElggApiClient``. It serves as a good 
@@ -41,12 +41,22 @@ Supported hashing algorithms
 - ``sha1``: fast however less secure
 - ``md5``: weak and will be removed in the future
 
-Post hash calculation
+POST hash calculation
 ---------------------
 
-The post hash needs to be calculated over all the post data using one of the supported hashing algorithms.
-The result of the hashing needs to be reported in the ``X-Elgg-posthash`` header and the used hashing algorithm must be 
+When sending the POST data as ``Content-Type: application/x-www-form-urlencoded;`` the post hash needs to be calculated
+over all the post data using one of the supported hashing algorithms.
+
+When sending the POST data as ``Content-Type: multipart/form-data;`` the post hash needs to be calculated
+over an empty string.
+
+The result of the hashing needs to be reported in the ``X-Elgg-posthash`` header and the used hashing algorithm must be
 reported in the ``X-Elgg-posthash-algo`` header.
+
+.. warning::
+
+	Since the POST hash isn't calculated when using ``Content-Type: multipart/form-data;`` only use this when calling
+	APIs that need an file input.
 
 HMAC hash calculation
 ---------------------
@@ -60,7 +70,7 @@ of the supported hashing algorithms:
 4. the url query string (for example ``method=test.test&foo=bar``)
 5. when the request is a POST add the ``posthash`` as reported in the ``X-Elgg-posthash`` header
 
-The resulting string needs to be base64 encoded and then url encoded and be repoted in the ``X-Elgg-hmac`` header.
+The resulting string needs to be base64 encoded and then url encoded and be reported in the ``X-Elgg-hmac`` header.
 The used hashing algorithm needs to be reported in the ``X-Elgg-hmac-algo``.
 
 Hashing cache
