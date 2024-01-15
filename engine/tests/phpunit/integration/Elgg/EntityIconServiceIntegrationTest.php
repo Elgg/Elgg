@@ -21,7 +21,6 @@ class EntityIconServiceIntegrationTest extends IntegrationTestCase {
 		$service = _elgg_services()->iconService;
 		$inspector = new \ReflectionClass($service);
 		$method = $inspector->getMethod('detectCroppingCoordinates');
-		$method->setAccessible(true);
 		
 		$this->assertFalse($method->invoke($service, $input_name));
 	}

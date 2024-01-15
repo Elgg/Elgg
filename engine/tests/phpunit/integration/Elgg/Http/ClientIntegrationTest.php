@@ -15,10 +15,8 @@ class ClientIntegrationTest extends IntegrationTestCase {
 		
 		$reflector = new \ReflectionClass($client);
 		$reflector = $reflector->getParentClass();
-		$property = $reflector->getProperty('config');
-		$property->setAccessible(true);
 		
-		$config = $property->getValue($client);
+		$config = $reflector->getProperty('config')->getValue($client);
 		
 		$this->assertArrayHasKey('foo', $config);
 		$this->assertEquals('bar', $config['foo']);

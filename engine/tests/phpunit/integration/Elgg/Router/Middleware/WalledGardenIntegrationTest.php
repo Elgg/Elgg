@@ -57,7 +57,6 @@ class WalledGardenIntegrationTest extends IntegrationTestCase {
 	public function testCanDetectPublicPage($path, $expected) {
 		$class = new \ReflectionClass(WalledGarden::class);
 		$method = $class->getMethod('isPublicPage');
-		$method->setAccessible(true);
 		
 		$instance = new WalledGarden();
 		
@@ -87,7 +86,6 @@ class WalledGardenIntegrationTest extends IntegrationTestCase {
 		
 		$class = new \ReflectionClass(WalledGarden::class);
 		$method = $class->getMethod('isPublicPage');
-		$method->setAccessible(true);
 		
 		$instance = new WalledGarden();
 		
