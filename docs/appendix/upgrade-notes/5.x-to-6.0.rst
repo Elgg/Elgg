@@ -5,6 +5,15 @@ From 5.x to 6.0
    :local:
    :depth: 1
 
+Databases
+---------
+
+DB Requirements
+~~~~~~~~~~~~~~~
+
+The minimal MariaDB is now 10.6.
+
+
 Composer
 --------
 
