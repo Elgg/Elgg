@@ -11,7 +11,8 @@ Databases
 DB Requirements
 ~~~~~~~~~~~~~~~
 
-The minimal MariaDB is now 10.6.
+ - The minimal MySQL version is now 8.0
+ - The minimal MariaDB version is now 10.6
 
 
 Composer
