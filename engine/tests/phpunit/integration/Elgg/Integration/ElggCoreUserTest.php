@@ -4,19 +4,18 @@ namespace Elgg\Integration;
 
 use Elgg\Database\EntityTable;
 use Elgg\Database\Select;
-use Elgg\Helpers\ElggUserWithExposableAttributes;
 
 class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 
 	/**
-	 * @var ElggUserWithExposableAttributes
+	 * @var \ElggUser
 	 */
 	private $user;
 
 	public function up() {
 		_elgg_services()->session_manager->setLoggedInUser($this->getAdmin());
 
-		$this->user = new ElggUserWithExposableAttributes();
+		$this->user = new \ElggUser();
 		$this->user->username = $this->getRandomUsername();
 		$this->user->setSubtype($this->getRandomSubtype());
 		$this->user->owner_guid = 0;
@@ -255,7 +254,7 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$this->assertEquals($value, $profile_user->getProfileData($name));
 	}
 	
-	public function profileDataProvider() {
+	public static function profileDataProvider() {
 		return [
 			['field_a', 'value'],
 			['field_b', 123],
@@ -281,7 +280,7 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$this->assertEmpty($user->getProfileData('foo'));
 	}
 	
-	public function emptyProfileDataProvider() {
+	public static function emptyProfileDataProvider() {
 		return [
 			[''],
 			[null],

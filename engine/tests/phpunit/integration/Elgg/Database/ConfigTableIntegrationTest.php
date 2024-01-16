@@ -40,7 +40,7 @@ class ConfigTableIntegrationTest extends IntegrationTestCase {
 		$this->assertNull($this->service->get('foo'));
 	}
 	
-	public function setValueProvider() {
+	public static function setValueProvider() {
 		return [
 			['bar'],
 			[123],

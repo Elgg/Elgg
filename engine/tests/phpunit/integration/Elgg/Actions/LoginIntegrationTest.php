@@ -72,7 +72,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(OkResponse::class, $response);
 
-		$this->assertEquals($user, _elgg_services()->session_manager->getLoggedInUser());
+		$this->assertElggDataEquals($user, _elgg_services()->session_manager->getLoggedInUser());
 		
 		// validate that the session id was migrated
 		$this->assertNotEquals($session_id, _elgg_services()->session->getID());
@@ -308,7 +308,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$forward_handler = function (\Elgg\Event $event) use ($user, $last_forward_form, $forward_to, &$event_calls) {
 			$this->assertEquals($last_forward_form, $event->getValue());
 			$this->assertEquals('last_forward_from', $event->getParam('source'));
-			$this->assertEquals($user, $event->getParam('user'));
+			$this->assertElggDataEquals($user, $event->getParam('user'));
 			$event_calls++;
 			return $forward_to;
 		};
@@ -328,7 +328,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(OkResponse::class, $response);
 		$this->assertEquals($forward_to, $response->getForwardURL());
 
-		$this->assertEquals($user, _elgg_services()->session_manager->getLoggedInUser());
+		$this->assertElggDataEquals($user, _elgg_services()->session_manager->getLoggedInUser());
 
 		_elgg_services()->session_manager->removeLoggedInUser();
 

@@ -149,7 +149,6 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 		$database = _elgg_services()->db;
 		$reflector = new \ReflectionClass($database);
 		$delayed_queries = $reflector->getProperty('delayed_queries');
-		$delayed_queries->setAccessible(true);
 		
 		$delayed_value = $delayed_queries->getValue($database); // backup
 		$delayed_queries->setValue($database, []);

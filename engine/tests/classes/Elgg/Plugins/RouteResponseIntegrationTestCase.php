@@ -28,7 +28,7 @@ abstract class RouteResponseIntegrationTestCase extends IntegrationTestCase {
 	 * Get object subtype
 	 * @return mixed
 	 */
-	abstract function getSubtype();
+	abstract protected static function getSubtype();
 	
 	/**
 	 * {@inheritDoc}
@@ -325,7 +325,7 @@ abstract class RouteResponseIntegrationTestCase extends IntegrationTestCase {
 	 */
 	public function testCollectionRoutesRespondOk($route, $params) {
 		if ($params instanceof \Closure) {
-			$params = $params();
+			$params = $params($this);
 		}
 
 		$request = $this->prepareHttpRequest(elgg_generate_url($route, $params));
@@ -390,30 +390,32 @@ abstract class RouteResponseIntegrationTestCase extends IntegrationTestCase {
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 	}
 
-	public function collectionRoutes() {
+	public static function collectionRoutes() {
 		self::createApplication();
+		$subtype = static::getSubtype();
+		
 		$result = [
 			[
-				'route' => "default:object:{$this->getSubtype()}",
+				'route' => "default:object:{$subtype}",
 				'params' => [],
 			],
 			[
-				'route' => "collection:object:{$this->getSubtype()}:all",
+				'route' => "collection:object:{$subtype}:all",
 				'params' => [],
 			],
 			[
-				'route' => "collection:object:{$this->getSubtype()}:owner",
-				'params' => function () {
+				'route' => "collection:object:{$subtype}:owner",
+				'params' => function (RouteResponseIntegrationTestCase $testcase) {
 					return [
-						'username' => $this->createUser()->username,
+						'username' => $testcase->createUser()->username,
 					];
 				},
 			],
 			[
-				'route' => "collection:object:{$this->getSubtype()}:group",
-				'params' => function () {
+				'route' => "collection:object:{$subtype}:group",
+				'params' => function (RouteResponseIntegrationTestCase $testcase) {
 					return [
-						'guid' => $this->createGroup([
+						'guid' => $testcase->createGroup([
 							'access_id' => ACCESS_PUBLIC,
 							'membership' => ACCESS_PUBLIC,
 							'content_access_mode'=> \ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED,
@@ -422,17 +424,17 @@ abstract class RouteResponseIntegrationTestCase extends IntegrationTestCase {
 				},
 			],
 			[
-				'route' => "collection:object:{$this->getSubtype()}:friends",
-				'params' => function () {
+				'route' => "collection:object:{$subtype}:friends",
+				'params' => function (RouteResponseIntegrationTestCase $testcase) {
 					return [
-						'username' => $this->createUser()->username,
+						'username' => $testcase->createUser()->username,
 					];
 				},
 			],
 		];
 		
 		$router = _elgg_services()->routes;
-		$protected_routes = $this->groupRoutesProtectedByToolOption();
+		$protected_routes = static::groupRoutesProtectedByToolOption();
 		
 		foreach ($result as $key => $route) {
 			$route_name = $route['route'];
@@ -460,7 +462,7 @@ abstract class RouteResponseIntegrationTestCase extends IntegrationTestCase {
 	 *
 	 * @return array
 	 */
-	public function groupRoutesProtectedByToolOption() {
+	public static function groupRoutesProtectedByToolOption() {
 		return [];
 	}
 }

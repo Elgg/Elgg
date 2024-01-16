@@ -13,15 +13,15 @@ class RegistrationIntegrationTest extends RegistrationIntegrationTestCase {
 		$this->registerCoreActions(Application::$_instance);
 	}
 	
-	protected function registerCoreActions(Application $app): void {
+	protected static function registerCoreActions(Application $app): void {
 		$boot = new BootHandler($app);
 		
-		$this->invokeInaccessableMethod($boot, 'registerActions');
-		$this->invokeInaccessableMethod($boot, 'registerRoutes');
+		self::invokeInaccessableMethod($boot, 'registerActions');
+		self::invokeInaccessableMethod($boot, 'registerRoutes');
 	}
 	
-	public function actionsProvider(): array {
-		$app = $this->createApplication([
+	public static function actionsProvider(): array {
+		$app = self::createApplication([
 			'isolate' => true,
 		]);
 		
@@ -29,7 +29,7 @@ class RegistrationIntegrationTest extends RegistrationIntegrationTestCase {
 		_elgg_services()->reset('routes');
 		_elgg_services()->reset('routeCollection');
 		
-		$this->registerCoreActions($app);
+		self::registerCoreActions($app);
 		
 		$result = [];
 		

@@ -31,7 +31,7 @@ class PluginsListCommandUnitTest extends UnitTestCase {
 		$this->assertEquals($exit_code, $commandTester->getStatusCode());
 	}
 
-	public function statusProvider() {
+	public static function statusProvider() {
 		return [
 			[null, 1], // should default to all
 			['all', 0],

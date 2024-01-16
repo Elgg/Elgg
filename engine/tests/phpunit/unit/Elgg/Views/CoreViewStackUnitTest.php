@@ -11,7 +11,7 @@ class CoreViewStackUnitTest extends UnitTestCase {
 		_elgg_services()->views->registerPluginViews(Paths::elgg());
 	}
 	
-	public function viewsProvider() {
+	public static function viewsProvider() {
 
 		self::createApplication();
 

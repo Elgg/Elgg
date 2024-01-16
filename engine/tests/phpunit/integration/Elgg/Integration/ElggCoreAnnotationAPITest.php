@@ -157,7 +157,7 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 		$this->assertEquals(1, $result);
 	}
 
-	public function booleanPairsProvider() {
+	public static function booleanPairsProvider() {
 		return [
 			[true, true, null],
 			[true, 1, null],

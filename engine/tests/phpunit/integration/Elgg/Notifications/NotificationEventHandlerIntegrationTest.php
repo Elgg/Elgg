@@ -33,10 +33,8 @@ class NotificationEventHandlerIntegrationTest extends IntegrationTestCase {
 		$filtered = $this->prepareNotificationEventHandler($event);
 		
 		$class = new \ReflectionClass($filtered);
-		$method = $class->getMethod('prepareSubscriptions');
-		$method->setAccessible(true);
 		
-		$subscribers = $method->invoke($filtered);
+		$subscribers = $class->getMethod('prepareSubscriptions')->invoke($filtered);
 		$this->assertIsArray($subscribers);
 		$this->assertArrayHasKey($subscribed->guid, $subscribers);
 		$this->assertArrayNotHasKey($muted->guid, $subscribers);
@@ -44,10 +42,8 @@ class NotificationEventHandlerIntegrationTest extends IntegrationTestCase {
 		$not_filtered = $this->prepareNotificationEventHandler($event, ['apply_muting' => false]);
 		
 		$class = new \ReflectionClass($not_filtered);
-		$method = $class->getMethod('prepareSubscriptions');
-		$method->setAccessible(true);
 		
-		$subscribers = $method->invoke($not_filtered);
+		$subscribers = $class->getMethod('prepareSubscriptions')->invoke($not_filtered);
 		$this->assertIsArray($subscribers);
 		$this->assertArrayHasKey($subscribed->guid, $subscribers);
 		$this->assertArrayHasKey($muted->guid, $subscribers);

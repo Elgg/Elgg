@@ -56,7 +56,7 @@ class PasswordGeneratorServiceIntegrationTest extends IntegrationTestCase {
 		_elgg_services()->passwordGenerator->assertValidPassword($password);
 	}
 	
-	public function invalidPasswordProvider() {
+	public static function invalidPasswordProvider() {
 		return [
 			[6, null, null, null, null, '12345'],
 			[6, 1, null, null, null, '123456'],
@@ -106,7 +106,7 @@ class PasswordGeneratorServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertEmpty(_elgg_services()->passwordGenerator->assertValidPassword($password));
 	}
 	
-	public function validPasswordProvider() {
+	public static function validPasswordProvider() {
 		return [
 			[6, null, null, null, null, 'ac12CD#$'],
 			[6, 1, null, null, null, 'ac12CD#$'],
@@ -247,7 +247,7 @@ class PasswordGeneratorServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals(implode(' ', $result), _elgg_services()->passwordGenerator->getPasswordRequirementsDescription());
 	}
 	
-	public function getInputRegexProvider() {
+	public static function getInputRegexProvider() {
 		return [
 			[null, null, null, null],
 			[0, 0, 0, 0],

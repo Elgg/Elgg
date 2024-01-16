@@ -14,7 +14,7 @@ class ElggAccessCollectionUnitTest extends UnitTestCase {
 		$acl->$name = $value;
 	}
 	
-	public function invalidValuesProvider() {
+	public static function invalidValuesProvider() {
 		return [
 			['subtype', str_repeat('a', 300)],
 			['name', ''],

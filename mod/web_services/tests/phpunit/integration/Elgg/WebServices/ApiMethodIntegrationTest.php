@@ -64,7 +64,7 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 		$api->$name = 'string';
 	}
 	
-	public function setterArrayNameProvider() {
+	public static function setterArrayNameProvider() {
 		return [
 			['params'],
 		];
@@ -80,7 +80,7 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 		$api->$name = [];
 	}
 	
-	public function setterStringNameProvider() {
+	public static function setterStringNameProvider() {
 		return [
 			['description'],
 			['call_method'],
@@ -97,7 +97,7 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 		$api->$name = 'foo';
 	}
 	
-	public function setterBooleanNameProvider() {
+	public static function setterBooleanNameProvider() {
 		return [
 			['require_api_auth'],
 			['require_user_auth'],
@@ -165,7 +165,7 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals(strtoupper($value), $api->call_method);
 	}
 	
-	public function supportedCallMethods() {
+	public static function supportedCallMethods() {
 		return [
 			['get'],
 			['GET'],
@@ -189,7 +189,7 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals($expected, $result);
 	}
 	
-	public function typeCastParameterProvider() {
+	public static function typeCastParameterProvider() {
 		return [
 			['foo', null, 'string', null],
 			['foo', '1', 'int', 1],

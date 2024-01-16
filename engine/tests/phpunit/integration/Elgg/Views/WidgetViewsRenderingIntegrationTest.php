@@ -4,7 +4,7 @@ namespace Elgg\Views;
 
 class WidgetViewsRenderingIntegrationTest extends ViewRenderingIntegrationTestCase {
 
-	public function getViewNames() {
+	public static function getViewNames() {
 		$views = [
 			'forms/widgets/save',
 			'object/widget',

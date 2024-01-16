@@ -26,7 +26,7 @@ class CanCommentIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals($expected, $blog->canComment());
 	}
 	
-	public function blogCommentStatusProvider() {
+	public static function blogCommentStatusProvider() {
 		return [
 			['On', 'published', true],
 			['On', 'draft', false],

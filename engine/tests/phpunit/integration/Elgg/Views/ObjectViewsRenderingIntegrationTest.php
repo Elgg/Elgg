@@ -4,7 +4,7 @@ namespace Elgg\Views;
 
 class ObjectViewsRenderingIntegrationTest extends ViewRenderingIntegrationTestCase {
 
-	public function getViewNames() {
+	public static function getViewNames() {
 		return [
 			'object/default',
 			'object/elements/access',

@@ -21,12 +21,11 @@ class EntityIconServiceIntegrationTest extends IntegrationTestCase {
 		$service = _elgg_services()->iconService;
 		$inspector = new \ReflectionClass($service);
 		$method = $inspector->getMethod('detectCroppingCoordinates');
-		$method->setAccessible(true);
 		
 		$this->assertFalse($method->invoke($service, $input_name));
 	}
 	
-	public function invalidCoordinatesProvider() {
+	public static function invalidCoordinatesProvider() {
 		return [
 			['foo', []], // no input
 			['foo', ['x1' => '1', 'x2' => '100', 'y1' => '10']], // missing one coordinate (using fallback coords)
@@ -53,7 +52,7 @@ class EntityIconServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals($expected_value, $result);
 	}
 	
-	public function detectCroppingCoordinatesDataProvider() {
+	public static function detectCroppingCoordinatesDataProvider() {
 		return [
 			['icon', ['x1' => '1', 'x2' => '100', 'y1' => '10', 'y2' => '100'], ['x1' => 1, 'x2' => 100, 'y1' => 10, 'y2' => 100]],
 			['icon', ['x1' => '1.0', 'x2' => '100.2', 'y1' => '10', 'y2' => '100'], ['x1' => 1, 'x2' => 100, 'y1' => 10, 'y2' => 100]], // handle floats

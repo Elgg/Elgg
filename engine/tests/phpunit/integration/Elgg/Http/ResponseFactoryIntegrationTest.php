@@ -132,7 +132,7 @@ class ResponseFactoryIntegrationTest extends IntegrationTestCase {
 		$this->assertStringContainsString(elgg_echo("error:{$elgg_echo_part}:content"), $content);
 	}
 	
-	public function respondWithErrorProvider() {
+	public static function respondWithErrorProvider() {
 		return [
 			[ELGG_HTTP_BAD_REQUEST, 400],
 			[ELGG_HTTP_FORBIDDEN, 403],
@@ -177,7 +177,7 @@ class ResponseFactoryIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals($expected_code, $result->getStatusCode());
 	}
 	
-	public function redirectCodeProvider() {
+	public static function redirectCodeProvider() {
 		return [
 			[ELGG_HTTP_OK, ELGG_HTTP_FOUND],
 			[ELGG_HTTP_CREATED, ELGG_HTTP_CREATED],

@@ -30,7 +30,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 			->getMock();
 		
 		foreach ($methods as $method => $callback) {
-			$mock->method($method)->will($this->returnCallback($callback));
+			$mock->method($method)->willReturnCallback($callback);
 		}
 		
 		return $mock;

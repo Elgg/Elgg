@@ -37,7 +37,7 @@ class ConfigIntegrationTest extends IntegrationTestCase {
 		$this->assertNull($this->service->{'foo'});
 	}
 	
-	public function setValueProvider() {
+	public static function setValueProvider() {
 		return [
 			['bar'],
 			[123],

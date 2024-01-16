@@ -25,7 +25,7 @@ abstract class ResponseUnitTestCase extends UnitTestCase {
 		$this->assertEquals($value, $response->getContent());
 	}
 
-	public function validContentValuesProvider() {
+	public static function validContentValuesProvider() {
 		return [
 			['foo'],
 			[['foo' => 'bar']],
@@ -50,7 +50,7 @@ abstract class ResponseUnitTestCase extends UnitTestCase {
 		$response->setContent($value);
 	}
 
-	public function invalidContentValuesProvider() {
+	public static function invalidContentValuesProvider() {
 		self::createApplication();
 
 		return [
@@ -75,7 +75,7 @@ abstract class ResponseUnitTestCase extends UnitTestCase {
 		$this->assertEquals($value, $response->getStatusCode());
 	}
 
-	public function validStatusCodesProvider() {
+	public static function validStatusCodesProvider() {
 		return [
 			[100],
 			[200],
@@ -95,7 +95,7 @@ abstract class ResponseUnitTestCase extends UnitTestCase {
 		$response->setStatusCode($value);
 	}
 
-	public function invalidStatusCodesProvider() {
+	public static function invalidStatusCodesProvider() {
 		return [
 			[true],
 			[false],
@@ -118,7 +118,7 @@ abstract class ResponseUnitTestCase extends UnitTestCase {
 		$response->setStatusCode($value);
 	}
 
-	public function invalidStatusCodesTypesProvider() {
+	public static function invalidStatusCodesTypesProvider() {
 		return [
 			['foo'],
 			[[200]],
@@ -139,7 +139,7 @@ abstract class ResponseUnitTestCase extends UnitTestCase {
 		$this->assertEquals($value, $response->getForwardURL());
 	}
 
-	public function validForwardURLsProvider() {
+	public static function validForwardURLsProvider() {
 		return [
 			[REFERRER],
 			['foo'],
@@ -175,7 +175,7 @@ abstract class ResponseUnitTestCase extends UnitTestCase {
 		$this->assertEquals($status[6], $response->isNotModified());
 	}
 
-	public function statusCodesProvider() {
+	public static function statusCodesProvider() {
 		$codes = [];
 		foreach (range(100, 599) as $code) {
 			$codes[] = [

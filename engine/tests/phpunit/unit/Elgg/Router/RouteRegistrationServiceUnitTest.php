@@ -185,7 +185,7 @@ class RouteRegistrationServiceUnitTest extends UnitTestCase {
 	 *
 	 * @return array
 	 */
-	public function validUsernameProvider() {
+	public static function validUsernameProvider() {
 		return [
 			['username'],
 			['úsernâmé'],
@@ -218,7 +218,7 @@ class RouteRegistrationServiceUnitTest extends UnitTestCase {
 	 *
 	 * @return array
 	 */
-	public function invalidUsernameProvider() {
+	public static function invalidUsernameProvider() {
 		return [
 			['username#'],
 			['username@'],

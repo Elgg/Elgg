@@ -104,7 +104,7 @@ abstract class SubscriptionsIntegrationTestCase extends IntegrationTestCase {
 		$this->target->removeSubscription($this->user->guid, $methods);
 	}
 	
-	public function invalidMethodsProvider() {
+	public static function invalidMethodsProvider() {
 		return [
 			[''],
 			[['']],

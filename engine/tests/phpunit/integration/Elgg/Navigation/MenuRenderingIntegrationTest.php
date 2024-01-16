@@ -20,7 +20,7 @@ class MenuRenderingIntegrationTest extends IntegrationTestCase {
 		$this->group = $this->createGroup();
 	}
 
-	public function entityMenuNamesProvider() {
+	public static function entityMenuNamesProvider() {
 		return [
 			['entity'],
 			['user_hover'],
@@ -69,7 +69,7 @@ class MenuRenderingIntegrationTest extends IntegrationTestCase {
 		}
 	}
 
-	public function layoutMenuNamesProvider() {
+	public static function layoutMenuNamesProvider() {
 		return [
 			['title'],
 			['page'],

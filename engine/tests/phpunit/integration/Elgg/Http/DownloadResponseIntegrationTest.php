@@ -39,7 +39,7 @@ class DownloadResponseIntegrationTest extends IntegrationTestCase {
 		}
 	}
 	
-	public function getDownloadResponseProvider() {
+	public static function getDownloadResponseProvider() {
 		return [
 			['foo'],
 			['foo', 'bar.txt'],

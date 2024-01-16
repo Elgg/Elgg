@@ -189,6 +189,17 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 			_elgg_services()->system_messages->dumpRegister();
 		}
 		
+		// performing some additional cleanup as we can't rely on php garbage collection
+		foreach (CacheManager::getInstances() as $instance) {
+			if ($instance instanceof \Phpfastcache\Drivers\Memcached\Driver) {
+				$memcached_software = $this->getInaccessableProperty($instance, 'instance');
+				$memcached_software->quit();
+			} elseif ($instance instanceof \Phpfastcache\Drivers\Redis\Driver) {
+				$redis_software = $this->getInaccessableProperty($instance, 'instance');
+				$redis_software->close();
+			}
+		}
+
 		CacheManager::clearInstances();
 		
 		// close the database connections to prevent 'too many connections'
@@ -214,22 +225,21 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	 * @return \Doctrine\DBAL\Platforms\AbstractPlatform|MockObject
 	 */
 	public function getDatabasePlatformMock() {
-		$mock = $this->getAbstractMock(
-			'Doctrine\DBAL\Platforms\AbstractPlatform',
-			[
+		$mock = $this->getMockBuilder('Doctrine\DBAL\Platforms\MySQLPlatform')
+			->onlyMethods([
 				'getName',
 				'getTruncateTableSQL',
-			]
-		);
+			])
+			->getMock();
 
 		$mock->expects($this->any())
 			->method('getName')
-			->will($this->returnValue('mysql'));
+			->willReturn('mysql');
 
 		$mock->expects($this->any())
 			->method('getTruncateTableSQL')
 			->with($this->anything())
-			->will($this->returnValue('#TRUNCATE {table}'));
+			->willReturn('#TRUNCATE {table}');
 
 		return $mock;
 	}
@@ -241,7 +251,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	public function getConnectionMock() {
 		$mock = $this->getMockBuilder('Doctrine\DBAL\Connection')
 			->disableOriginalConstructor()
-			->setMethods(
+			->onlyMethods(
 				[
 					'beginTransaction',
 					'commit',
@@ -258,78 +268,31 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 				]
 			)
 			->getMock();
-
-		$mock->expects($this->any())
-			->method('prepare')
-			->will($this->returnValue($this->getStatementMock()));
-
-//		$mock->expects($this->any())
-//			->method('query')
-//			->will($this->returnValue($this->getStatementMock()));
-
+			
 		$mock->expects($this->any())
 			->method('getDatabasePlatform')
-			->will($this->returnValue($this->getDatabasePlatformMock()));
+			->willReturn($this->getDatabasePlatformMock());
 
 		return $mock;
 	}
-
+	
 	/**
-	 * @source https://gist.github.com/gnutix/7746893
-	 * @return \Doctrine\DBAL\Driver\Statement|MockObject
-	 */
-	public function getStatementMock() {
-		$mock = $this->getAbstractMock(
-			'Doctrine\DBAL\Driver\Statement',
-			[
-				'bindValue',
-				'execute',
-				'rowCount',
-				'fetchColumn',
-			]
-		);
-
-		$mock->expects($this->any())
-			->method('fetchColumn')
-			->will($this->returnValue(1));
-
-		return $mock;
-	}
-
-	/**
-	 * @source https://gist.github.com/gnutix/7746893
+	 * Tests if two inputs are equal. If the inputs are \ElggData object they will be transformed to plain objects
 	 *
-	 * @param string $class   The class name
-	 * @param array  $methods The available methods
-	 *
-	 * @return MockObject
+	 * @param mixed  $expected Expected result
+	 * @param mixed  $actual   Actual results
+	 * @param string $message  Message to report
 	 */
-	protected function getAbstractMock($class, array $methods) {
-		return $this->getMockForAbstractClass(
-			$class,
-			[],
-			'',
-			true,
-			true,
-			true,
-			$methods,
-			false
-		);
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function assertEquals($expected, $actual, $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false): void {
+	public static function assertElggDataEquals(mixed $expected, mixed $actual, string $message = ''): void {
 		if ($expected instanceof \ElggData) {
 			$expected = $expected->toObject();
 		}
-
+		
 		if ($actual instanceof \ElggData) {
 			$actual = $actual->toObject();
 		}
-
-		parent::assertEquals($expected, $actual, $message, $delta, $maxDepth, $canonicalize, $ignoreCase);
+		
+		parent::assertEquals($expected, $actual, $message);
 	}
 	
 	/**
@@ -341,13 +304,10 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	 *
 	 * @return mixed
 	 */
-	protected function invokeInaccessableMethod($argument, string $method, ...$args) {
+	protected static function invokeInaccessableMethod($argument, string $method, ...$args) {
 		$reflector = new \ReflectionClass($argument);
 		
-		$inaccessable_method = $reflector->getMethod($method);
-		$inaccessable_method->setAccessible(true);
-		
-		return $inaccessable_method->invoke($argument, ...$args);
+		return $reflector->getMethod($method)->invoke($argument, ...$args);
 	}
 	
 	/**
@@ -358,11 +318,9 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	 *
 	 * @return mixed
 	 */
-	protected function getInaccessableProperty($argument, string $property) {
+	protected static function getInaccessableProperty($argument, string $property) {
 		$reflector = new \ReflectionClass($argument);
-		$property = $reflector->getProperty($property);
-		$property->setAccessible(true);
 		
-		return $property->getValue($argument);
+		return $reflector->getProperty($property)->getValue($argument);
 	}
 }

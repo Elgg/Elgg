@@ -46,7 +46,7 @@ class ElggApiClientIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals(strtoupper($method), $client->getMethod());
 	}
 	
-	public function validMethodProvider() {
+	public static function validMethodProvider() {
 		return [
 			['get'],
 			['GET'],
@@ -73,7 +73,7 @@ class ElggApiClientIntegrationTest extends IntegrationTestCase {
 		$client->setMethod($method);
 	}
 	
-	public function invalidMethodProvider() {
+	public static function invalidMethodProvider() {
 		return [
 			['PUT'],
 			['HEAD'],

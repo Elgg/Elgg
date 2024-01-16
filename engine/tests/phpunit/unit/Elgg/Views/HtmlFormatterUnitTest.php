@@ -26,7 +26,7 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 		$this->assertXmlStringEqualsXmlString($after, $actual);
 	}
 
-	public function htmlBlockProvider() {
+	public static function htmlBlockProvider() {
 
 		$attrs = _elgg_services()->html_formatter->formatAttributes([
 			'foo' => 'http://example.com',
@@ -148,7 +148,7 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 		elgg_format_element('');
 	}
 
-	function providerElggFormatElement() {
+	public static function providerElggFormatElement() {
 		$data = [
 			'<span>a & b</span>' => array(
 				'tag_name' => 'span',
@@ -200,7 +200,7 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 		$this->assertSame(elgg_get_friendly_time($current_time + $num_seconds, $current_time), $friendlytime);
 	}
 
-	function providerElggGetFriendlyTime() {
+	public static function providerElggGetFriendlyTime() {
 		self::createApplication();
 
 		return [

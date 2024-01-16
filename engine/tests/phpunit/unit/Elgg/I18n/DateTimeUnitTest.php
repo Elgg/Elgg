@@ -29,7 +29,7 @@ class DateTimeUnitTest extends UnitTestCase {
 		$this->assertEquals($expected, $date->formatLocale($date_format, $language));
 	}
 	
-	public function formatLocaleProvider() {
+	public static function formatLocaleProvider() {
 		return [
 			['January 9, 2018 12:00', 'l d, F Y H:i:s', 'en', 'Tuesday 09, January 2018 12:00:00'],
 			['January 9, 2018 12:00', 'l d, F Y H:i:s', 'nl', 'dinsdag 09, januari 2018 12:00:00'],

@@ -4,7 +4,7 @@ namespace Elgg\Views;
 
 class PageElementViewsRenderingIntegrationTest extends ViewRenderingIntegrationTestCase {
 
-	public function getViewNames() {
+	public static function getViewNames() {
 		return [
 			'errors/400',
 			'errors/403',

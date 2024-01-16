@@ -13,7 +13,7 @@ abstract class DirectoryUnitTestCase extends UnitTestCase {
 	 *
 	 * @return array
 	 */
-	abstract public function emptyDirectoryProvider();
+	abstract public static function emptyDirectoryProvider();
 
 	/**
 	 * @dataProvider emptyDirectoryProvider

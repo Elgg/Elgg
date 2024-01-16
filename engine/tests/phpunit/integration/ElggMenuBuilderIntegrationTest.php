@@ -95,7 +95,7 @@ class ElggMenuBuilderIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals($expected, $actual_order);
 	}
 	
-	public function getMenuSortingProvider() {
+	public static function getMenuSortingProvider() {
 		return [
 			['priority', ['b_menu_item', 'c_menu_item', 'a_menu_item']],
 			['text', ['c_menu_item', 'b_menu_item', 'a_menu_item']],
@@ -127,7 +127,7 @@ class ElggMenuBuilderIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals($expected, $actual_order);
 	}
 	
-	public function filterByContextProvider() {
+	public static function filterByContextProvider() {
 		return [
 			[null, ['b_menu_item', 'c_menu_item', 'a_menu_item']],
 			['foo', ['b_menu_item', 'a_menu_item']],

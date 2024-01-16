@@ -30,7 +30,7 @@ abstract class RegistrationIntegrationTestCase extends ActionResponseTestCase {
 		_elgg_services()->reset('routeCollection');
 	}
 	
-	abstract public function actionsProvider(): array;
+	abstract public static function actionsProvider(): array;
 	
 	/**
 	 * @dataProvider actionsProvider

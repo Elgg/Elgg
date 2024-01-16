@@ -14,7 +14,7 @@ class ElggCoreUrlHelpersUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($output, elgg_http_add_url_query_elements($input, $params));
 	}
 
-	function providerElggHttpAddURLQueryElementsPreserveURL() {
+	public static function providerElggHttpAddURLQueryElementsPreserveURL() {
 		return[
 			array('', array(), '?'),
 			array('/', array(), '/'),
@@ -48,7 +48,7 @@ class ElggCoreUrlHelpersUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($output, elgg_http_add_url_query_elements($input, $params));
 	}
 
-	function providerElggHttpAddURLQueryElementsAddElements() {
+	public static function providerElggHttpAddURLQueryElementsAddElements() {
 		return [
 			array('', array('foo' => 'bar'), '?foo=bar'),
 			array('/', array('foo' => 'bar'), '/?foo=bar'),
@@ -86,7 +86,7 @@ class ElggCoreUrlHelpersUnitTest extends \Elgg\UnitTestCase {
 		}
 	}
 
-	function providerElggHttpAddURLQueryElementsRemoveElements() {
+	public static function providerElggHttpAddURLQueryElementsRemoveElements() {
 		return [
 			array('?foo=bar', array('foo' => ''), '?foo='),
 			array('?foo=bar', array('foo' => 0), '?foo=0'),
@@ -127,7 +127,7 @@ class ElggCoreUrlHelpersUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue(elgg_http_url_is_identical($input, $output), "Failed to determine URLs as identical for: '$input' and '$output'");
 	}
 
-	function providerHttpUrlIsIdentical() {
+	public static function providerHttpUrlIsIdentical() {
 		self::createApplication();
 
 		$data = [
@@ -187,7 +187,7 @@ class ElggCoreUrlHelpersUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse(elgg_http_url_is_identical($input, $output), "Failed to determine URLs as NOT identical for: '$input' and '$output'");
 	}
 
-	function providerHttpUrlIsNotIdentical() {
+	public static function providerHttpUrlIsNotIdentical() {
 		self::createApplication();
 
 		$data = [
@@ -219,7 +219,7 @@ class ElggCoreUrlHelpersUnitTest extends \Elgg\UnitTestCase {
 			. ($result ? 'identical' : 'different') . " for: '$url2', '$url1' and ignore params set to " . print_r($ignore_params, true));
 	}
 
-	function providerHttpUrlIsIdenticalIgnoreParamsHandling() {
+	public static function providerHttpUrlIsIdenticalIgnoreParamsHandling() {
 		self::createApplication();
 
 		return [

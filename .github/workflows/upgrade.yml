@@ -10,11 +10,11 @@ env:
 
 jobs:
   upgrade:
-    name: Upgrade from 2.3
+    name: Upgrade from 4.3
     runs-on: ubuntu-20.04
     services:
       elggdb:
-        image: mysql:5.7
+        image: 'mysql:8.0'
         env:
           MYSQL_DATABASE: elgg
           MYSQL_ROOT_PASSWORD: password
@@ -25,92 +25,64 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.0'
           coverage: none
           extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring
-      
-      - name: Install Composer v1
-        run: composer self-update --1
-        
-      - name: Code checkout Elgg 2.3
-        uses: actions/checkout@v3
-        with:
-          repository: 'Elgg/Elgg'
-          ref: '2.3'
 
-      - name: Get Composer Cache Directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> ${GITHUB_OUTPUT}
-        
-      - name: Restore Composer Cache for 2.3
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
-          
-      - name: Composer install
-        run: |
-          composer global require fxp/composer-asset-plugin:^1.1.4 --prefer-dist
-          composer install
-      
-      - name: Install Elgg 2.3
-        run: |
-          mkdir ${HOME}/elgg_data
-          php -f ./install/cli/ci_installer.php
-      
-      - name: Enable Elgg 2.3 plugins
-        run: php -f ./.scripts/ci/enable_plugins.php
-      
-      - name: Seed Elgg 2.3 database
-        run: php -f ./.scripts/seeder/seed.php
-      
-      - name: Code checkout Elgg 3.3
-        uses: actions/checkout@v3
-        with:
-          repository: 'Elgg/Elgg'
-          ref: '3.3'
-          clean: false
-      
-      - name: Composer install Elgg 3.3 dependencies
-        run: composer install --prefer-dist --no-suggest
-        
-      - name: Elgg CLI upgrade to 3.3
-        run: php ./elgg-cli upgrade async --verbose
-
-      - name: Enable Elgg 3.3 plugins
-        run: php -f ./.scripts/ci/enable_plugins.php
-
-      - name: Install Composer v2
-        # make sure to remove the global fxp/composer-asset-plugin package as it's no longer needed
-        # also remove the elgg/login_as plugin because after the Composer update it has a hard time removing it
-        run: |
-          composer global remove fxp/composer-asset-plugin
-          composer remove elgg/login_as
-          composer self-update --2
-             
       - name: Code checkout Elgg 4.3
         uses: actions/checkout@v3
         with:
           repository: 'Elgg/Elgg'
           ref: '4.3'
-          clean: false
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> ${GITHUB_OUTPUT}
+        
+      - name: Restore Composer Cache for 4.3
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
       
       - name: Composer install Elgg 4.3 dependencies
-        run: composer install --prefer-dist --no-suggest
+        run: composer install
         
-      - name: Elgg CLI upgrade to 4.3
-        run: php ./elgg-cli upgrade async --verbose
+      - name: Elgg CLI install Elgg 4.3
+        run: php ./elgg-cli install --config ./install/cli/testing_app.php --verbose --no-ansi
 
       - name: Enable Elgg 4.3 plugins
         run: php -f ./.scripts/ci/enable_plugins.php
 
-      - name: Update PHP
+      - name: Seed Elgg 4.3 database
+        run: php ./elgg-cli database:seed --limit=5 --image_folder=./.scripts/seeder/images/ -vv --no-ansi
+
+      - name: Code checkout Elgg 5.1
+        uses: actions/checkout@v3
+        with:
+          repository: 'Elgg/Elgg'
+          ref: '5.1'
+          clean: false
+      
+      - name: Composer install Elgg 5.1 dependencies
+        run: composer install --prefer-dist --no-suggest
+        
+      - name: Elgg CLI upgrade to 5.1
+        run: php ./elgg-cli upgrade async --verbose
+
+      - name: Enable Elgg 5.1 plugins
+        run: |
+          php ./elgg-cli plugins:activate activity blog bookmarks ckeditor dashboard developers discussions externalpages file friends friends_collections garbagecollector groups invitefriends likes members messageboard messages pages profile reportedcontent search site_notifications system_log tagcloud theme_sandbox thewire uservalidationbyemail web_services custom_index:last --no-ansi
+          php ./elgg-cli plugins:list --no-ansi
+
+      - name: Update PHP to 8.1
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.1'
           coverage: none
           extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring
+          ini-values: zend.enable_gc=0
         
       - name: Code checkout PR
         uses: actions/checkout@v3
@@ -136,14 +108,6 @@ jobs:
           php ./elgg-cli plugins:activate activity blog bookmarks ckeditor dashboard developers discussions externalpages file friends friends_collections garbagecollector groups invitefriends likes members messageboard messages pages profile reportedcontent search site_notifications system_log tagcloud theme_sandbox thewire uservalidationbyemail web_services custom_index:last --no-ansi
           php ./elgg-cli plugins:list --no-ansi
 
-      - name: Start Elgg webserver
-        run: |
-          php -S localhost:8888 -c ./.scripts/ci/local_php_server.ini index.php &
-          # give Web server some time to bind to sockets, etc
-          sleep 3
-          # check if the webserver is running
-          curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg CI Site</title>"
-
       - name: Run PHPUnit - Core unit
         run: ./vendor/bin/phpunit --testsuite unit
 
@@ -152,6 +116,9 @@ jobs:
 
       - name: Run PHPUnit - Plugins unit
         run: ./vendor/bin/phpunit --testsuite plugins-unit
+
+      - name: Run PHPUnit - Plugins integration generic
+        run: ./vendor/bin/phpunit --testsuite plugins-integration-generic
 
       - name: Run PHPUnit - Plugins integration
         run: ./vendor/bin/phpunit --testsuite plugins-integration

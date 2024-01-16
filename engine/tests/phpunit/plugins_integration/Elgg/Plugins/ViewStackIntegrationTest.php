@@ -15,6 +15,9 @@ class ViewStackIntegrationTest extends PluginsIntegrationTestCase {
 	public function up() {
 		parent::up();
 		
+		elgg_set_config('system_cache_loaded', false);
+		_elgg_services()->reset('views');
+		
 		$this->views = _elgg_services()->views;
 	}
 	
@@ -23,7 +26,7 @@ class ViewStackIntegrationTest extends PluginsIntegrationTestCase {
 	 *
 	 * @return array
 	 */
-	public function viewsProvider(): array {
+	public static function viewsProvider(): array {
 		self::createApplication([
 			'isolate' => true,
 		]);
@@ -36,9 +39,13 @@ class ViewStackIntegrationTest extends PluginsIntegrationTestCase {
 				continue;
 			}
 			
+			elgg_set_config('system_cache_loaded', false);
 			_elgg_services()->reset('views');
 			
-			$this->startPlugin($plugin->getID(), false);
+			// can not use ->startPlugin() as it needs to be static
+			$plugin->register();
+			$plugin->boot();
+			$plugin->init();
 			
 			$data = _elgg_services()->views->getInspectorData();
 			foreach ($data['locations'] as $viewtype => $views) {
@@ -49,7 +56,6 @@ class ViewStackIntegrationTest extends PluginsIntegrationTestCase {
 						$viewtype,
 						$path,
 						elgg_extract($view, $data['simplecache'], false),
-						$plugin->getID(),
 					];
 				}
 			}

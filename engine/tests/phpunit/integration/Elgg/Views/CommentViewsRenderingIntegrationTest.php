@@ -4,7 +4,7 @@ namespace Elgg\Views;
 
 class CommentViewsRenderingIntegrationTest extends ViewRenderingIntegrationTestCase {
 
-	public function getViewNames() {
+	public static function getViewNames() {
 		return [
 			'object/comment',
 			'forms/comment/save',

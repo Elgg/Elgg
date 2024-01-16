@@ -190,7 +190,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->actions->register($name, "{$this->actionsDir}/output.php", 'public');
 	}
 
-	public function invalidActionNamesDataProvider() {
+	public static function invalidActionNamesDataProvider() {
 		return [
 			['http://test/test'],
 			['test//test'],

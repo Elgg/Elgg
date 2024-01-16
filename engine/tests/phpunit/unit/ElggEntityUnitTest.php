@@ -8,17 +8,11 @@ use Elgg\Exceptions\InvalidArgumentException;
  */
 class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 
-	/** @var \ElggEntity */
+	/** @var \ElggObject */
 	protected $obj;
 
 	public function up() {
-		$this->obj = $this->getMockForAbstractClass('\ElggObject');
-		$reflection = new ReflectionClass('\ElggObject');
-		$method = $reflection->getMethod('initializeAttributes');
-		if (method_exists($method, 'setAccessible')) {
-			$method->setAccessible(true);
-			$method->invokeArgs($this->obj, array());
-		}
+		$this->obj = new \ElggObject();
 	}
 
 	public function testDefaultAttributes() {
@@ -55,7 +49,7 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		unset($this->obj->$attribute);
 	}
 	
-	public function protectedAttributeProvider() {
+	public static function protectedAttributeProvider() {
 		return [
 			['subtype'],
 			['enabled'],
@@ -76,7 +70,7 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		$this->assertSame(77, $this->obj->$attribute);
 	}
 	
-	public function integerAttributeProvider() {
+	public static function integerAttributeProvider() {
 		return [
 			['access_id'],
 			['owner_guid'],
@@ -92,7 +86,7 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		$this->assertNotEquals('foo', $this->obj->$attribute);
 	}
 	
-	public function unsettableAttributeProvider() {
+	public static function unsettableAttributeProvider() {
 		return [
 			['guid'],
 			['last_action'],
@@ -142,7 +136,7 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('', $this->obj->$attribute);
 	}
 	
-	public function unsetSuccessfullProvider() {
+	public static function unsetSuccessfullProvider() {
 		return [
 			['access_id', 2],
 			
@@ -161,7 +155,7 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($current_value, $this->obj->$attribute);
 	}
 	
-	public function unsetUnsuccessfullProvider() {
+	public static function unsetUnsuccessfullProvider() {
 		return [
 			['guid', 123456],
 			['last_action', 1234],
@@ -216,7 +210,7 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($long, $this->obj->getLongitude());
 	}
 	
-	public function latLongProvider() {
+	public static function latLongProvider() {
 		return [
 			[1, 2],
 			[1.13, 222.132],

@@ -41,10 +41,10 @@ class MessagesPluginTest extends IntegrationTestCase {
 			$this->assertEquals($body, $message->description);
 			
 			$this->assertEquals($recipient->guid, $message->toId);
-			$this->assertEquals($recipient, $message->getRecipient());
+			$this->assertElggDataEquals($recipient, $message->getRecipient());
 			
 			$this->assertEquals($sender->guid, $message->fromId);
-			$this->assertEquals($sender, $message->getSender());
+			$this->assertElggDataEquals($sender, $message->getSender());
 		});
 		
 		$this->assertTrue($message->hasAccess($recipient->guid));

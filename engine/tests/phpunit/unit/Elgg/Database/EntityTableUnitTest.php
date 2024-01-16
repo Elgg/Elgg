@@ -10,19 +10,19 @@ class EntityTableUnitTest extends \Elgg\UnitTestCase {
 		$this->assertNull(_elgg_services()->entityTable->getUserForPermissionsCheck());
 		
 		$user = $this->createUser();
-		$this->assertEquals($user, _elgg_services()->entityTable->getUserForPermissionsCheck($user->guid));
+		$this->assertElggDataEquals($user, _elgg_services()->entityTable->getUserForPermissionsCheck($user->guid));
 	}
 
 	public function testCanGetUserForPermissionsCheckWhileLoggedIn() {
 		$user = $this->createUser();
 		_elgg_services()->session_manager->setLoggedInUser($user);
 
-		$this->assertEquals($user, _elgg_services()->session_manager->getLoggedInUser());
+		$this->assertElggDataEquals($user, _elgg_services()->session_manager->getLoggedInUser());
 		
-		$this->assertEquals($user, _elgg_services()->entityTable->getUserForPermissionsCheck());
+		$this->assertElggDataEquals($user, _elgg_services()->entityTable->getUserForPermissionsCheck());
 
 		$user2 = $this->createUser();
-		$this->assertEquals($user2, _elgg_services()->entityTable->getUserForPermissionsCheck($user2->guid));
+		$this->assertElggDataEquals($user2, _elgg_services()->entityTable->getUserForPermissionsCheck($user2->guid));
 	}
 
 	public function testThrowsWhenGettingUserForPermissionsCheckWithNonUserGuid() {

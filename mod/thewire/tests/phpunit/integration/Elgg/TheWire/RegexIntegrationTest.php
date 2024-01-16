@@ -53,14 +53,14 @@ class RegexIntegrationTest extends IntegrationTestCase {
 		return elgg_parse_urls($address);
 	}
 	
-	/**
-	 * @dataProvider filterDataProvider
-	 */
-	public function testTheWireFilter($input, $expected) {
-		$this->assertEquals($expected, thewire_filter($input));
+	public function testTheWireFilter() {
+		foreach ($this->getFilterData() as $data) {
+			$this->assertEquals($data[1], thewire_filter($data[0]));
+		}
 	}
 	
-	public function filterDataProvider() {
+	// can't use dataprovider as we need instanciated users
+	protected function getFilterData() {
 		$user = $this->createUser();
 		$user_digit = $this->createUser([
 			'username' => 'username' . time(),

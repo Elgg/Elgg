@@ -22,21 +22,11 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 	 * @var array backup of plugin settings
 	 */
 	protected $plugin_settings;
-	
-	/**
-	 * @var bool
-	 */
-	protected $gc_enabled;
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function up() {
-		// there is some wierd issue in the Memcache tests with the HMACTable destruct function.
-		// disabling the circular reference collector solves this
-		$this->gc_enabled = gc_enabled();
-		gc_disable();
-		
 		$this->plugin = elgg_get_plugin_from_id('web_services');
 		$this->plugin_settings = $this->plugin->getAllSettings();
 	}
@@ -48,10 +38,6 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 		// restore plugin settings
 		foreach ($this->plugin_settings as $name => $value) {
 			$this->plugin->setSetting($name, $value);
-		}
-		
-		if ($this->gc_enabled) {
-			gc_enable();
 		}
 	}
 	

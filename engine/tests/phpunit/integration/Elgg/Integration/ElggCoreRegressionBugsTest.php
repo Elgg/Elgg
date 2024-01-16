@@ -82,7 +82,7 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 		$this->assertEquals($expected, $actual);
 	}
 	
-	public function friendlyTitleProvider() {
+	public static function friendlyTitleProvider() {
 		$cases = [
 			// acid test
 			["B&N > Amazon, OK? <bold> 'hey!' $34", "bn-amazon-ok-bold-hey-34"],
@@ -116,7 +116,7 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 		$this->assertEquals($expected, elgg_parse_urls($input));
 	}
 	
-	public function parseUrlsProvider() {
+	public static function parseUrlsProvider() {
 		return [
 			['no.link.here', 'no.link.here'],
 			['simple link http://example.org test', 'simple link <a href="http://example.org" rel="nofollow">http://example.org</a> test'],
@@ -161,7 +161,7 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 		$this->assertEquals($expected, elgg_parse_emails($input));
 	}
 	
-	public function elggParseEmailsProvider() {
+	public static function elggParseEmailsProvider() {
 		return [
 			['no.email.here', 'no.email.here'],
 			['simple email mail@test.com test', 'simple email <a href="mailto:mail@test.com" rel="nofollow">mail@test.com</a> test'],
@@ -204,7 +204,7 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 		$this->assertNull($entity->_nonexistent_test_column, "Additional select columns are leaking to attributes for '$type'");
 	}
 	
-	public function extraColumnsDontAppearInAttributesProvider() {
+	public static function extraColumnsDontAppearInAttributesProvider() {
 		return [
 			['site'],
 			['user'],

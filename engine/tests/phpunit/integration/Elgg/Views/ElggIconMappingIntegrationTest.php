@@ -4,7 +4,7 @@ namespace Elgg\Views;
 
 class ElggIconMappingIntegrationTest extends ViewRenderingIntegrationTestCase {
 
-	public function getViewNames() {
+	public static function getViewNames() {
 		return [
 			'output/icon',
 		];

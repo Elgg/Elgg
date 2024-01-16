@@ -22,8 +22,8 @@ abstract class PluginsIntegrationTestCase extends IntegrationTestCase {
 	 *
 	 * @return array
 	 */
-	public function activePluginsProvider(): array {
-		$this->createApplication([
+	public static function activePluginsProvider(): array {
+		self::createApplication([
 			'isolate' => true,
 		]);
 		

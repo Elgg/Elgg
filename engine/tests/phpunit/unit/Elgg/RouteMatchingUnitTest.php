@@ -80,7 +80,7 @@ class RouteMatchingUnitTest extends \Elgg\UnitTestCase {
 		elgg_unregister_route('foo');
 	}
 
-	public function patternProvider() {
+	public static function patternProvider() {
 
 		$config = [
 			[

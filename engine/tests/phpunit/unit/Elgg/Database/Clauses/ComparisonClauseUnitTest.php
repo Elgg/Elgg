@@ -28,7 +28,7 @@ class ComparisonClauseUnitTest extends UnitTestCase {
 		$this->assertEquals(null, $clause->prepare($this->qb));
 	}
 
-	public function operators() {
+	public static function operators() {
 		return [
 			['eq'],
 			['in'],
@@ -429,7 +429,7 @@ class ComparisonClauseUnitTest extends UnitTestCase {
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 	}
 
-	public function operatorComparison() {
+	public static function operatorComparison() {
 		return [
 			['%elgg', ELGG_VALUE_STRING, '%elgg', 'LIKE', 'like', 'or'],
 			['%elgg', ELGG_VALUE_STRING, '%elgg', 'like', 'like', 'or'],

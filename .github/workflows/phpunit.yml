@@ -38,42 +38,42 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['8.0', '8.1', '8.2']
+        php-versions: ['8.1', '8.2', '8.3']
         experimental: [false]
         extra-title: ['']
         memcache: [0]
-        db-image: ['mysql:5.7']
+        db-image: ['mysql:8.0']
         redis: [0]
         include:
-          - php-versions: '8.0'
+          - php-versions: '8.1'
             experimental: false
             extra-title: '- Memcache'
             memcache: 1
-            db-image: 'mysql:5.7'
+            db-image: 'mysql:8.0'
             redis: 0
-          - php-versions: '8.0'
+          - php-versions: '8.1'
             experimental: false
             extra-title: '- Redis'
             memcache: 0
-            db-image: 'mysql:5.7'
-            redis: 1
-          - php-versions: '8.0'
-            experimental: false
-            extra-title: ''
-            memcache: 0
             db-image: 'mysql:8.0'
-            redis: 0
-          - php-versions: '8.0'
+            redis: 1
+          - php-versions: '8.1'
             experimental: false
             extra-title: ''
             memcache: 0
-            db-image: 'mariadb:10.3'
+            db-image: 'mysql:8.2'
             redis: 0
-          - php-versions: '8.0'
+          - php-versions: '8.1'
             experimental: false
             extra-title: ''
             memcache: 0
             db-image: 'mariadb:10.6'
+            redis: 0
+          - php-versions: '8.1'
+            experimental: false
+            extra-title: ''
+            memcache: 0
+            db-image: 'mariadb:10.11'
             redis: 0
     env:
       ELGG_MEMCACHE: ${{ matrix.memcache }}
@@ -86,7 +86,7 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           coverage: none
           extensions: gd,pdo,xml,json,memcached,redis-5.3.7,mysqli,pdo_mysql,libxml,mbstring,intl
-          ini-values: max_execution_time=180
+          ini-values: max_execution_time=180,zend.enable_gc=0
         
       - name: Code checkout
         uses: actions/checkout@v3
@@ -115,16 +115,6 @@ jobs:
       
       - name: Seed Elgg database
         run: php ./elgg-cli database:seed --limit=5 --image_folder=./.scripts/seeder/images/ -vv --no-ansi --no-interaction
-      
-      - name: Start Elgg webserver
-        # there is some weird issue with the PHP cli-server in PHP 8.1, so skipping this
-        if: ${{ !contains(fromJSON('["8.1", "8.2"]'), matrix.php-versions) }}
-        run: |
-          php -S localhost:8888 -c ./.scripts/ci/local_php_server.ini index.php &
-          # give Web server some time to bind to sockets, etc
-          sleep 3
-          # check if the webserver is running
-          curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg CI Site</title>"
 
       - name: Run PHPUnit - Core unit
         run: ./vendor/bin/phpunit --testsuite unit
@@ -134,6 +124,9 @@ jobs:
 
       - name: Run PHPUnit - Plugins unit
         run: ./vendor/bin/phpunit --testsuite plugins-unit
+
+      - name: Run PHPUnit - Plugins integration generic
+        run: ./vendor/bin/phpunit --testsuite plugins-integration-generic
 
       - name: Run PHPUnit - Plugins integration
         run: ./vendor/bin/phpunit --testsuite plugins-integration

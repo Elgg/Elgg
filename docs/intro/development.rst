@@ -9,7 +9,7 @@ See the :doc:`/guides/index` for tutorials or the :doc:`/design/index` for in-de
 Database and Persistence
 ========================
 
-Elgg uses MySQL 5.7 or higher for data persistence, and maps database values into Entities (a
+Elgg uses MySQL for data persistence, and maps database values into Entities (a
 representation of an atomic unit of information) and Extenders (additional information and
 descriptions about Entities). Elgg supports additional information such as relationships between
 Entities, activity streams, and various types of settings.

@@ -4,7 +4,7 @@ namespace Elgg\Views;
 
 class RiverViewsRenderingIntegrationTest extends ViewRenderingIntegrationTestCase {
 
-	public function getViewNames() {
+	public static function getViewNames() {
 		return [
 			'river/elements/body',
 			'river/elements/image',

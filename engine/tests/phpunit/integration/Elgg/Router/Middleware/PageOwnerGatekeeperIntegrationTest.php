@@ -87,7 +87,7 @@ class PageOwnerGatekeeperIntegrationTest extends IntegrationTestCase {
 		_elgg_services()->router->route($http_request);
 	}
 	
-	public function getGatekeepers() {
+	public static function getGatekeepers() {
 		return [
 			[PageOwnerGatekeeper::class, 'object'],
 			[UserPageOwnerGatekeeper::class, 'user'],
@@ -95,7 +95,7 @@ class PageOwnerGatekeeperIntegrationTest extends IntegrationTestCase {
 		];
 	}
 	
-	public function getInvalidGatekeepers() {
+	public static function getInvalidGatekeepers() {
 		return [
 			[UserPageOwnerGatekeeper::class, 'group'],
 			[GroupPageOwnerGatekeeper::class, 'user'],

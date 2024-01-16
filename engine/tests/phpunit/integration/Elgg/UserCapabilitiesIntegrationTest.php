@@ -84,8 +84,8 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->events->registerHandler('permissions_check', 'object', function(\Elgg\Event $event) use ($entity, $user) {
 			$this->assertInstanceOf(\ElggEntity::class, $event->getEntityParam());
 			$this->assertInstanceOf(\ElggUser::class, $event->getUserParam());
-			$this->assertEquals($entity, $event->getEntityParam());
-			$this->assertEquals($user, $event->getUserParam());
+			$this->assertElggDataEquals($entity, $event->getEntityParam());
+			$this->assertElggDataEquals($user, $event->getUserParam());
 			$this->assertTrue($event->getValue());
 			return false;
 		});
@@ -131,8 +131,8 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->events->registerHandler('permissions_check:delete', 'object', function(\Elgg\Event $event) use ($entity, $owner) {
 			$this->assertInstanceOf(\ElggEntity::class, $event->getEntityParam());
 			$this->assertInstanceOf(\ElggUser::class, $event->getUserParam());
-			$this->assertEquals($entity, $event->getEntityParam());
-			$this->assertEquals($owner, $event->getUserParam());
+			$this->assertElggDataEquals($entity, $event->getEntityParam());
+			$this->assertElggDataEquals($owner, $event->getUserParam());
 			$this->assertTrue($event->getValue());
 			return false;
 		});
@@ -186,8 +186,8 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 			
 			$this->assertInstanceOf(\ElggEntity::class, $event->getParam('container'));
 			$this->assertInstanceOf(\ElggUser::class, $event->getUserParam());
-			$this->assertEquals($entity, $event->getParam('container'));
-			$this->assertEquals($owner, $event->getUserParam());
+			$this->assertElggDataEquals($entity, $event->getParam('container'));
+			$this->assertElggDataEquals($owner, $event->getUserParam());
 			$this->assertTrue($event->getValue());
 			return false;
 		});
@@ -300,15 +300,14 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 			$this->assertInstanceOf(\ElggEntity::class, $event->getEntityParam());
 			$this->assertInstanceOf(\ElggUser::class, $event->getUserParam());
 			$this->assertInstanceOf(\ElggAnnotation::class, $event->getParam('annotation'));
-			$this->assertEquals($entity, $event->getEntityParam());
-			$this->assertEquals($owner, $event->getUserParam());
-			$this->assertEquals($annotation, $event->getParam('annotation'));
+			$this->assertElggDataEquals($entity, $event->getEntityParam());
+			$this->assertElggDataEquals($owner, $event->getUserParam());
+			$this->assertElggDataEquals($annotation, $event->getParam('annotation'));
 			$this->assertTrue($event->getValue());
 			return false;
 		});
 
 		$this->assertFalse($annotation->canEdit($owner->guid));
-
 
 		$admin_user = $this->createUser([
 			'admin' => 'yes',
@@ -335,21 +334,21 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		]);
 
 		$entity = $this->getMockBuilder(\ElggEntity::class)
-			->setMethods(['__get', 'getDisplayName', 'setDisplayName', 'getSubtype', 'getType']) // keep origin canComment method
+			->onlyMethods(['__get', 'getDisplayName', 'setDisplayName', 'getSubtype', 'getType']) // keep origin canComment method
 			->disableOriginalConstructor()
 			->getMock();
 
 		$entity->expects($this->any())
 			->method('__get')
-			->will($this->returnValueMap([
+			->willReturnMap([
 				['owner_guid', $owner->guid]
-			]));
+			]);
 		$entity->expects($this->any())
 			->method('getSubtype')
-			->will($this->returnValue('foo'));
+			->willReturn('foo');
 		$entity->expects($this->any())
 			->method('getType')
-			->will($this->returnValue('object'));
+			->willReturn('object');
 
 		$this->assertFalse($owner->canComment());
 		$this->assertFalse($object->canComment());
@@ -409,8 +408,8 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->events->registerHandler('permissions_check:comment', 'object', function(\Elgg\Event $event) use ($entity, $owner) {
 			$this->assertInstanceOf(\ElggEntity::class, $event->getEntityParam());
 			$this->assertInstanceOf(\ElggUser::class, $event->getUserParam());
-			$this->assertEquals($entity, $event->getEntityParam());
-			$this->assertEquals($owner, $event->getUserParam());
+			$this->assertElggDataEquals($entity, $event->getEntityParam());
+			$this->assertElggDataEquals($owner, $event->getUserParam());
 			$this->assertEquals('object', $event->getType());
 			$this->assertIsBool($event->getValue()); // called from ElggObject, no default value
 			return false;
@@ -456,8 +455,8 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->events->registerHandler('permissions_check:annotate:baz', 'object', function(\Elgg\Event $event) use ($entity, $owner) {
 			$this->assertInstanceOf(\ElggEntity::class, $event->getEntityParam());
 			$this->assertInstanceOf(\ElggUser::class, $event->getUserParam());
-			$this->assertEquals($entity, $event->getEntityParam());
-			$this->assertEquals($owner, $event->getUserParam());
+			$this->assertElggDataEquals($entity, $event->getEntityParam());
+			$this->assertElggDataEquals($owner, $event->getUserParam());
 			$this->assertEquals('baz', $event->getParam('annotation_name'));
 			$this->assertEquals('object', $event->getType());
 			$this->assertTrue($event->getValue());
@@ -486,8 +485,8 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->events->registerHandler('permissions_check:annotate', 'object', function(\Elgg\Event $event) use ($entity, $owner) {
 			$this->assertInstanceOf(\ElggEntity::class, $event->getEntityParam());
 			$this->assertInstanceOf(\ElggUser::class, $event->getUserParam());
-			$this->assertEquals($entity, $event->getEntityParam());
-			$this->assertEquals($owner, $event->getUserParam());
+			$this->assertElggDataEquals($entity, $event->getEntityParam());
+			$this->assertElggDataEquals($owner, $event->getUserParam());
 			$this->assertEquals('baz', $event->getParam('annotation_name'));
 			$this->assertEquals('object', $event->getType());
 			$this->assertTrue($event->getValue());
@@ -516,8 +515,8 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->events->registerHandler('permissions_check:annotate:baz', 'object', function(\Elgg\Event $event) use ($entity, $owner) {
 			$this->assertInstanceOf(\ElggEntity::class, $event->getEntityParam());
 			$this->assertInstanceOf(\ElggUser::class, $event->getUserParam());
-			$this->assertEquals($entity, $event->getEntityParam());
-			$this->assertEquals($owner, $event->getUserParam());
+			$this->assertElggDataEquals($entity, $event->getEntityParam());
+			$this->assertElggDataEquals($owner, $event->getUserParam());
 			$this->assertEquals('baz', $event->getParam('annotation_name'));
 			$this->assertEquals('object', $event->getType());
 			$this->assertTrue($event->getValue());
@@ -529,8 +528,8 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->events->registerHandler('permissions_check:annotate', 'object', function(\Elgg\Event $event) use ($entity, $owner) {
 			$this->assertInstanceOf(\ElggEntity::class, $event->getEntityParam());
 			$this->assertInstanceOf(\ElggUser::class, $event->getUserParam());
-			$this->assertEquals($entity, $event->getEntityParam());
-			$this->assertEquals($owner, $event->getUserParam());
+			$this->assertElggDataEquals($entity, $event->getEntityParam());
+			$this->assertElggDataEquals($owner, $event->getUserParam());
 			$this->assertEquals('baz', $event->getParam('annotation_name'));
 			$this->assertEquals('object', $event->getType());// return from named event
 			return true;
@@ -551,8 +550,8 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		$this->events->registerHandler('container_logic_check', 'object', function(\Elgg\Event $event) use ($entity, $owner) {
 			$this->assertInstanceOf(\ElggEntity::class, $event->getParam('container'));
 			$this->assertInstanceOf(\ElggUser::class, $event->getUserParam());
-			$this->assertEquals($entity, $event->getParam('container'));
-			$this->assertEquals($owner, $event->getUserParam());
+			$this->assertElggDataEquals($entity, $event->getParam('container'));
+			$this->assertElggDataEquals($owner, $event->getUserParam());
 			$this->assertEquals('object', $event->getType());
 			$this->assertEquals('bar', $event->getParam('subtype'));
 			$this->assertNull($event->getValue());

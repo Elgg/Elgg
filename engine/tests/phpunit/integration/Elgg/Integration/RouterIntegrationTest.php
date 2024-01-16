@@ -62,7 +62,7 @@ class RouterIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals("{$site_url}foo/bar/test", $url);
 	}
 	
-	public function urlProvider() {
+	public static function urlProvider() {
 		return [
 			['http://localhost/'],
 			['http://localhost/sub/'],

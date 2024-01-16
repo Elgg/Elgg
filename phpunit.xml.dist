@@ -1,33 +1,5 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="./engine/tests/phpunit/bootstrap.php" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage includeUncoveredFiles="true">
-    <include>
-      <directory suffix=".php">./actions</directory>
-      <directory suffix=".php">./engine/classes</directory>
-      <directory suffix=".php">./engine/lib</directory>
-      <directory suffix=".php">./mod/*/actions</directory>
-      <directory suffix=".php">./mod/*/lib</directory>
-      <directory suffix=".php">./mod/*/classes</directory>
-    </include>
-    <exclude>
-      <directory suffix=".php">./elgg-config</directory>
-      <directory suffix=".php">./install</directory>
-      <directory suffix=".php">*/vendor/*</directory>
-      <directory suffix=".php">*/vendors/*</directory>
-      <directory suffix=".php">*/tests/*</directory>
-      <directory suffix=".php">*/bower_components/*</directory>
-      <directory suffix=".php">*/node_modules/*</directory>
-      <directory suffix=".php">*/docs/*</directory>
-      <directory suffix=".php">./engine/schema/*</directory>
-      <directory suffix=".php">./engine/vendor_classes/*</directory>
-      <directory suffix=".php">./languages</directory>
-      <directory suffix=".php">./views</directory>
-      <directory suffix=".php">./mod/*/languages</directory>
-      <directory suffix=".php">./mod/*/views</directory>
-      <file>./engine/lib/deprecated-*.php</file>
-      <file>./engine/lib/constants.php</file>
-    </exclude>
-  </coverage>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="./engine/tests/phpunit/bootstrap.php" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" cacheDirectory=".phpunit.cache">
   <php>
     <!-- configure individual settings via env (copy this file to 'phpunit.xml' and fill in the values you need, it won't be committed to GitHub) -->
     <!--
@@ -68,8 +40,10 @@
     <testsuite name="plugins-unit">
       <directory>./mod/*/tests/phpunit/unit/</directory>
     </testsuite>
-    <testsuite name="plugins-integration">
+    <testsuite name="plugins-integration-generic">
       <directory>./engine/tests/phpunit/plugins_integration/</directory>
+    </testsuite>
+    <testsuite name="plugins-integration">
       <directory>./mod/*/tests/phpunit/integration/</directory>
     </testsuite>
     <!-- The following suites are used to segment code coverage jobs -->
@@ -97,7 +71,6 @@
     </testsuite>
     <testsuite name="integration-t-to-all">
       <directory>./engine/tests/phpunit/integration/</directory>
-      
       <exclude>engine/tests/phpunit/integration/Elgg/Actions/</exclude>
       <exclude>engine/tests/phpunit/integration/Elgg/Ajax/</exclude>
       <exclude>engine/tests/phpunit/integration/Elgg/Assets/</exclude>
@@ -118,4 +91,32 @@
       <exclude>engine/tests/phpunit/integration/Elgg/Security/</exclude>
     </testsuite>
   </testsuites>
+  <source>
+    <include>
+      <directory suffix=".php">./actions</directory>
+      <directory suffix=".php">./engine/classes</directory>
+      <directory suffix=".php">./engine/lib</directory>
+      <directory suffix=".php">./mod/*/actions</directory>
+      <directory suffix=".php">./mod/*/lib</directory>
+      <directory suffix=".php">./mod/*/classes</directory>
+    </include>
+    <exclude>
+      <directory suffix=".php">./elgg-config</directory>
+      <directory suffix=".php">./install</directory>
+      <directory suffix=".php">*/vendor/*</directory>
+      <directory suffix=".php">*/vendors/*</directory>
+      <directory suffix=".php">*/tests/*</directory>
+      <directory suffix=".php">*/bower_components/*</directory>
+      <directory suffix=".php">*/node_modules/*</directory>
+      <directory suffix=".php">*/docs/*</directory>
+      <directory suffix=".php">./engine/schema/*</directory>
+      <directory suffix=".php">./engine/vendor_classes/*</directory>
+      <directory suffix=".php">./languages</directory>
+      <directory suffix=".php">./views</directory>
+      <directory suffix=".php">./mod/*/languages</directory>
+      <directory suffix=".php">./mod/*/views</directory>
+      <file>./engine/lib/deprecated-*.php</file>
+      <file>./engine/lib/constants.php</file>
+    </exclude>
+  </source>
 </phpunit>

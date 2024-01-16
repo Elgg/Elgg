@@ -11,7 +11,6 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 		$db = $this->getDbMock();
 		
 		$reflection_method = new \ReflectionMethod($db, 'fingerprintCallback');
-		$reflection_method->setAccessible(true);
 		
 		$prints = [];
 		$uniques = 0;

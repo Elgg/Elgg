@@ -18,7 +18,7 @@ class ValuesUnitTest extends UnitTestCase {
 		$this->assertEquals($dt->getTimestamp(), Values::normalizeTimestamp($time));
 	}
 
-	public function timeProvider() {
+	public static function timeProvider() {
 		return [
 			['January 9, 2018 12:00'],
 			[1515496794],
@@ -37,7 +37,7 @@ class ValuesUnitTest extends UnitTestCase {
 		$this->assertEquals($expected_result, Values::isEmpty($value));
 	}
 	
-	public function emptyProvider() {
+	public static function emptyProvider() {
 		return [
 			[0, false],
 			[0.0, false],
@@ -67,7 +67,7 @@ class ValuesUnitTest extends UnitTestCase {
 		$this->assertEquals($time, $dt->getTimestamp());
 	}
 	
-	public function timezoneProvider() {
+	public static function timezoneProvider() {
 		return [
 			['UTC'],
 			['Australia/Adelaide'],
@@ -83,7 +83,7 @@ class ValuesUnitTest extends UnitTestCase {
 		$this->assertEquals($expected, Values::shortFormatOutput($number, $precision));
 	}
 	
-	public function shortNumberProvider() {
+	public static function shortNumberProvider() {
 		return [
 			['a', 1, 'a'],
 			[1, 1, 1],

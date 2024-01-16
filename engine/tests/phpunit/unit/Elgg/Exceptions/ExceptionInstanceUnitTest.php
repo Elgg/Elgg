@@ -20,7 +20,7 @@ class ExceptionInstanceUnitTest extends UnitTestCase {
 		$this->assertInstanceOf('\Elgg\Exceptions\ExceptionInterface', $exception);
 	}
 	
-	public function exceptionProvider() {
+	public static function exceptionProvider() {
 		$result = [];
 		$path = Paths::elgg() . 'engine/classes/Elgg/Exceptions/';
 		$path = Paths::sanitize($path);
