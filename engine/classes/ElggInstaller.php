@@ -992,6 +992,7 @@ class ElggInstaller {
 			'json',
 			'xml',
 			'gd',
+			'intl',
 		];
 		foreach ($requiredExtensions as $extension) {
 			if (!in_array($extension, $extensions)) {

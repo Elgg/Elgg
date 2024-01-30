@@ -21,7 +21,7 @@ Composer
 PHP Requirements
 ~~~~~~~~~~~~~~~~
 
-The minimal PHP version is now 8.1.
+The minimal PHP version is now 8.1. Also the ``intl`` module is now required to be enabled.
 
 PHPUnit
 ~~~~~~~
