@@ -47,6 +47,7 @@ $requiredExtensions = [
 	'json',
 	'xml',
 	'gd',
+	'intl',
 ];
 foreach ($requiredExtensions as $extension) {
 	$icon = $icon_ok;
