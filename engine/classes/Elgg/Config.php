@@ -121,7 +121,6 @@ use Elgg\Traits\Loggable;
  * @property string[]      $site_featured_menu_names
  * @property bool          $subresource_integrity_enabled			Should subresources (js/css) get integrity information
  * @property bool          $system_cache_enabled					Is the system cache enabled?
- * @property bool          $system_cache_loaded
  * @property bool          $testing_mode  							Is the current application running (PHPUnit) tests
  * @property string        $time_format  							Preferred PHP time format
  * @property bool          $user_joined_river						Do we need to create a river event when a user joins the site

@@ -12,24 +12,12 @@ use Elgg\Config;
 class ViewCacher {
 
 	/**
-	 * @var ViewsService
-	 */
-	private $views;
-
-	/**
-	 * @var Config
-	 */
-	private $config;
-
-	/**
 	 * Constructor
 	 *
 	 * @param ViewsService $views  Views
 	 * @param Config       $config Config
 	 */
-	public function __construct(ViewsService $views, Config $config) {
-		$this->views = $views;
-		$this->config = $config;
+	public function __construct(protected ViewsService $views, protected Config $config) {
 	}
 
 	/**
@@ -38,12 +26,12 @@ class ViewCacher {
 	 * @return void
 	 */
 	public function registerCoreViews() {
-		if ($this->config->system_cache_loaded) {
+		if ($this->views->isViewLocationsLoadedFromCache()) {
 			return;
 		}
 		
 		// Core view files in /views
-		$this->views->registerPluginViews(Paths::elgg());
+		$this->views->registerViewsFromPath(Paths::elgg());
 
 		// Core view definitions in /engine/views.php
 		$file = Paths::elgg() . 'engine/views.php';
@@ -54,7 +42,7 @@ class ViewCacher {
 		$spec = Includer::includeFile($file);
 		if (is_array($spec)) {
 			// check for uploaded fontawesome font
-			if (elgg_get_config('font_awesome_zip')) {
+			if ($this->config->font_awesome_zip) {
 				$spec['default']['font-awesome/'] = elgg_get_data_path() . 'fontawesome/webfont/';
 			}
 			

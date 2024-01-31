@@ -180,7 +180,7 @@ return [
 	'usersApiSessionsTable' => DI\autowire(\Elgg\Database\UsersApiSessionsTable::class),
 	'users_remember_me_cookies_table' => DI\autowire(\Elgg\Database\UsersRememberMeCookiesTable::class),
 	'upgradeLocator' => DI\autowire(\Elgg\Upgrade\Locator::class),
-	'views' => DI\autowire(\Elgg\ViewsService::class),
+	'views' => DI\autowire(\Elgg\ViewsService::class)->constructorParameter('server_cache', DI\get('serverCache')),
 	'viewCacher' => DI\autowire(\Elgg\Cache\ViewCacher::class),
 	'widgets' => DI\autowire(\Elgg\WidgetsService::class),
 	

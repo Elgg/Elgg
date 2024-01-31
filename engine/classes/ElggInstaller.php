@@ -160,7 +160,7 @@ class ElggInstaller {
 
 			$app->internal_services->views->setViewtype('installation');
 			$app->internal_services->views->registerViewtypeFallback('installation');
-			$app->internal_services->views->registerPluginViews(Paths::elgg());
+			$app->internal_services->views->registerViewsFromPath(Paths::elgg());
 			$app->internal_services->translator->registerTranslations(Paths::elgg() . 'install/languages/', true);
 
 			return $this->app;

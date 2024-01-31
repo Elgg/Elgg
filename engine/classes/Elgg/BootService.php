@@ -79,9 +79,7 @@ class BootService {
 		$debug = $config->getInitialValue('debug') ?? ($config->debug ?: LogLevel::CRITICAL);
 		$services->logger->setLevel($debug);
 
-		if ($config->system_cache_enabled) {
-			$config->system_cache_loaded = $services->views->configureFromCache($services->serverCache);
-		}
+		$services->views->configureFromCache();
 	}
 
 	/**
@@ -92,7 +90,6 @@ class BootService {
 	public function clearCache() {
 		$this->cache->clear();
 		_elgg_services()->plugins->setBootPlugins(null);
-		_elgg_services()->config->system_cache_loaded = false;
 		_elgg_services()->config->_boot_cache_hit = false;
 	}
 

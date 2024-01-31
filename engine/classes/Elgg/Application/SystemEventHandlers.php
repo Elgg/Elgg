@@ -117,7 +117,7 @@ class SystemEventHandlers {
 	 * @return void
 	 */
 	public static function ready() {
-		_elgg_services()->systemCache->init();
+		_elgg_services()->views->cacheConfiguration();
 	}
 	
 	/**

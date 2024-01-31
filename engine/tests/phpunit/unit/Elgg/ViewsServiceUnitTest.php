@@ -23,7 +23,7 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->events = new EventsService(_elgg_services()->handlers);
 		$logger = $this->createMock('\Elgg\Logger', array(), array(), '', false);
 
-		$this->views = new ViewsService($this->events, _elgg_services()->request);
+		$this->views = new ViewsService($this->events, _elgg_services()->request, _elgg_services()->config, _elgg_services()->serverCache);
 		$this->views->setLogger($logger);
 		$this->views->autoregisterViews('', "{$this->viewsDir}/default", 'default');
 		$this->views->autoregisterViews('', "{$this->viewsDir}/json", 'json');
@@ -167,22 +167,6 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 		});
 
 		$this->assertSame("123", $this->views->renderView('js/interpreted.js'));
-	}
-
-	public function testThrowsOnCircularAliases() {
-		$this->markTestIncomplete();
-	}
-
-	public function testEmitsDeprecationWarningWhenOldViewNameIsReferenced() {
-		$this->markTestIncomplete();
-		// elgg_view
-		// elgg_extend_view
-		// elgg_unextend_view
-		// views/*
-		// engine/views.php
-		// elgg_get_simplecache_url
-		// elgg_set_view_location
-		// elgg_get_view_location
 	}
 
 	/**
