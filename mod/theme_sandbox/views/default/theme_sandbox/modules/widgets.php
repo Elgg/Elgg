@@ -64,19 +64,20 @@ echo '</div>';
 
 ?>
 </div>
-<script>
-require(['elgg', 'jquery'], function (elgg, $) {
-	// widgets do not have guids so we override the edit toggle and delete button
-	$(function() {
-		$('.elgg-widget-edit-button').unbind('click')
-			.on('click', function() {
-				$(this).closest('.elgg-module-widget').find('.elgg-widget-edit').slideToggle('medium');
-				return false;
-			});
-		$('.elgg-widget-delete-button').on('click', function() {
-			$(this).closest('.elgg-module-widget').remove();
+<script type='module'>
+import 'jquery';
+import elgg from 'elgg';
+
+// widgets do not have guids so we override the edit toggle and delete button
+$(function() {
+	$('.elgg-widget-edit-button').unbind('click')
+		.on('click', function() {
+			$(this).closest('.elgg-module-widget').find('.elgg-widget-edit').slideToggle('medium');
 			return false;
 		});
+	$('.elgg-widget-delete-button').on('click', function() {
+		$(this).closest('.elgg-module-widget').remove();
+		return false;
 	});
 });
 </script>

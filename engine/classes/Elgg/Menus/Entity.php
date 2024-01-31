@@ -243,7 +243,7 @@ class Entity {
 				'text' => elgg_echo('admin:upgrades:menu:run_single'),
 				'href' => false,
 				'deps' => [
-					'core/js/upgrader',
+					'admin/upgrades',
 				],
 				'data-guid' => $entity->guid,
 				'priority' => 600,

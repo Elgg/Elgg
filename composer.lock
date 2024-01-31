@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "16793d5f6811a0130c67936aa5b92b75",
+    "content-hash": "d0f7c27cb8c6eef4baafaffa67001011",
     "packages": [
         {
             "name": "cakephp/cache",
@@ -2862,30 +2862,6 @@
             "dist": {
                 "type": "tar",
                 "url": "https://registry.npmjs.org/normalize.css/-/normalize.css-8.0.1.tgz"
-            },
-            "type": "npm-asset",
-            "license": [
-                "MIT"
-            ]
-        },
-        {
-            "name": "npm-asset/requirejs",
-            "version": "2.3.6",
-            "dist": {
-                "type": "tar",
-                "url": "https://registry.npmjs.org/requirejs/-/requirejs-2.3.6.tgz"
-            },
-            "type": "npm-asset",
-            "license": [
-                "MIT"
-            ]
-        },
-        {
-            "name": "npm-asset/requirejs-text",
-            "version": "2.0.16",
-            "dist": {
-                "type": "tar",
-                "url": "https://registry.npmjs.org/requirejs-text/-/requirejs-text-2.0.16.tgz"
             },
             "type": "npm-asset",
             "license": [
@@ -8861,5 +8837,5 @@
     "platform-overrides": {
         "php": "8.1"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }

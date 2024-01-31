@@ -11,7 +11,7 @@ if (!elgg_is_logged_in()) {
 	return;
 }
 
-elgg_require_js('elgg/comments');
+elgg_import_esm('elgg/comments');
 
 /* @var \ElggEntity $entity */
 $entity = elgg_extract('entity', $vars);

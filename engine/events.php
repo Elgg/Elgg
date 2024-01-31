@@ -51,9 +51,6 @@ return [
 		'css' => [
 			\Elgg\Views\PreProcessCssHandler::class => [],
 		],
-		'js' => [
-			\Elgg\Views\AddAmdModuleNameHandler::class => [],
-		],
 	],
 	'cache:invalidate' => [
 		'system' => [
@@ -136,9 +133,6 @@ return [
 	],
 	'elgg.data' => [
 		'page' => [
-			\Elgg\Javascript\AddSRIConfig::class => [],
-		],
-		'site' => [
 			\Elgg\Javascript\SetLightboxConfigHandler::class => [],
 		],
 	],
@@ -410,7 +404,6 @@ return [
 			\Elgg\Views\MinifyHandler::class => [],
 		],
 		'js' => [
-			\Elgg\Views\AddAmdModuleNameHandler::class => [],
 			\Elgg\Views\CalculateSRI::class => ['priority' => 999],
 			\Elgg\Views\MinifyHandler::class => [],
 		],

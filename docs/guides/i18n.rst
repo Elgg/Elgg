@@ -93,12 +93,10 @@ Javascript API
 
 This function is like ``elgg_echo`` in PHP.
 
-Client-side translations are loaded asynchronously. Ensure translations are available by requiring the "elgg" AMD module:
+Client-side translations are loaded asynchronously. Ensure translations are available by requiring the "elgg/i18n" module:
 
 .. code-block:: js
 
-	define(['elgg/i18n'], function(i18n) {
-		alert(i18n.echo('my_key'));
-	});
-
-Translations are also available after the ``init, system`` JavaScript event.
+	import i18n from 'elgg/i18n';
+	
+	alert(i18n.echo('my_key'));

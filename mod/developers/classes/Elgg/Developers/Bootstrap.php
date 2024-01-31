@@ -108,10 +108,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 			elgg()->set('translator', $translator);
 		}
 	
-		if (!empty($settings['show_modules'])) {
-			elgg_require_js('developers/amd_monitor');
-		}
-	
 		if (!empty($settings['wrap_views'])) {
 			$events->registerHandler('view', 'all', __NAMESPACE__ . '\ViewWrapperHandler', 600);
 		}

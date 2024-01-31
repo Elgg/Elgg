@@ -35,8 +35,6 @@ return array(
 	'developers:show_strings:key_only' => "Show translation key only",
 	'developers:label:show_strings' => "Show raw translation strings",
 	'developers:help:show_strings' => "This displays the translation strings used by elgg_echo().",
-	'developers:label:show_modules' => "Show AMD modules loaded in console",
-	'developers:help:show_modules' => "Streams loaded modules and values to your JavaScript console.",
 	'developers:label:wrap_views' => "Wrap views",
 	'developers:help:wrap_views' => "This wraps almost every view with HTML comments. Useful for finding the view creating particular HTML.
 									This can break non-HTML views in the default viewtype.",
@@ -108,8 +106,6 @@ return array(
 	'developers:log_queries' => "DB queries: %s",
 	'developers:boot_cache_rebuilt' => "The boot cache was rebuilt for this request",
 	'developers:elapsed_time' => "Elapsed time (s)",
-
-	'developers:amd' => 'AMD',
 
 	'admin:develop_tools:error_log' => 'Error Log',
 	'developers:logs:empty' => 'Error log is empty',

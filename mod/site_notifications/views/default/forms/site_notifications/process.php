@@ -1,6 +1,6 @@
 <?php
 
-elgg_require_js('forms/site_notifications/process');
+elgg_import_esm('forms/site_notifications/process');
 
 // footer
 $fields = [

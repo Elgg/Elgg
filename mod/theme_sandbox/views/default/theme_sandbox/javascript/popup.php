@@ -1,6 +1,6 @@
 <?php
 
-elgg_require_js('elgg/popup');
+elgg_import_esm('elgg/popup');
 
 $ipsum = elgg_view('theme_sandbox/demo/ipsum');
 
@@ -30,4 +30,4 @@ echo elgg_format_element('div', [
 	'class' => 'hidden theme-sandbox-content-thin elgg-module-popup',
 ]);
 
-elgg_require_js('theme_sandbox/javascript/popup');
+elgg_import_esm('theme_sandbox/javascript/popup');

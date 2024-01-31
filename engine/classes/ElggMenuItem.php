@@ -53,7 +53,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 		// array Classes to apply to the anchor tag
 		'linkClass' => [],
 
-		// array AMD modules required by this menu item
+		// array ES modules required by this menu item
 		'deps' => [],
 		
 		// which view should be used to output the menu item contents
@@ -118,7 +118,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 *    title       => STR  Menu item tooltip
 	 *    selected    => BOOL Is this menu item currently selected?
 	 *    confirm     => STR  If set, the link will be drawn with the output/confirmlink view instead of output/url.
-	 *    deps        => ARR  AMD modules required by this menu item
+	 *    deps        => ARR  ES modules required by this menu item
 	 *    child_menu  => ARR  Options for the child menu
 	 *    data        => ARR  Custom attributes stored in the menu item.
 	 *
@@ -423,9 +423,9 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	}
 
 	/**
-	 * Set required AMD modules
+	 * Set required ES modules
 	 *
-	 * @param string[]|string $modules One or more required AMD modules
+	 * @param string[]|string $modules One or more required ES modules
 	 *
 	 * @return void
 	 */
@@ -434,7 +434,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	}
 
 	/**
-	 * Get required AMD modules
+	 * Get required ES modules
 	 *
 	 * @return string[]
 	 */
@@ -446,9 +446,9 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	}
 
 	/**
-	 * Add required AMD modules
+	 * Add required ES modules
 	 *
-	 * @param string[]|string $modules One or more required AMD modules
+	 * @param string[]|string $modules One or more required ES modules
 	 *
 	 * @return void
 	 */

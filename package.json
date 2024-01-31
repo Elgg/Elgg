@@ -1,7 +1,6 @@
 {
   "name": "Elgg",
   "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
-  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/Elgg/Elgg.git"
@@ -11,25 +10,13 @@
     "url": "https://github.com/Elgg/Elgg/issues"
   },
   "homepage": "https://github.com/Elgg/Elgg",
-  "scripts": {
-    "test": "karma start engine/tests/js/karma.conf.js --single-run",
-    "chrome": "karma start engine/tests/js/karma.conf.js --browsers Chrome"
-  },
   "devDependencies": {
-    "formdata-polyfill": "~3.0.20",
     "grunt": "~1.0.1",
-    "grunt-contrib-clean": "~0.6.0",
-    "grunt-contrib-connect": "~0.9.0",
-    "grunt-contrib-watch": "~0.6.1",
-    "grunt-exec": "~0.4.6",
-    "grunt-open": "~0.2.3",
-    "jquery-mockjax": "^2.6.0",
-    "karma": "^1.6",
-    "karma-chrome-launcher": "^0.2.3",
-    "karma-jasmine": "~0.2.0",
-    "karma-phantomjs-launcher": "^1.0.4",
-    "karma-requirejs": "~0.2",
-    "load-grunt-config": "~0.16.0",
-    "requirejs": "^2.3.6"
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-connect": "^0.9.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-exec": "^0.4.7",
+    "grunt-open": "^0.2.4",
+    "load-grunt-config": "^0.16.0"
   }
 }

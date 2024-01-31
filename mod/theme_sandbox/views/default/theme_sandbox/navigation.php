@@ -23,7 +23,7 @@ echo elgg_view_module('info', 'Owner Block Menu (.elgg-menu-owner-block)', elgg_
 
 echo elgg_view_module('info', 'Footer Menu (.elgg-menu-footer)', elgg_view('theme_sandbox/navigation/footer'));
 
-echo elgg_view_module('info', 'Menu Item with AMD require', elgg_view('theme_sandbox/navigation/require'));
+echo elgg_view_module('info', 'Menu Item with module require', elgg_view('theme_sandbox/navigation/require'));
 
 echo elgg_view_module('info', 'Menu Item with a dropdown submenu', elgg_view('theme_sandbox/navigation/dropdown'));
 

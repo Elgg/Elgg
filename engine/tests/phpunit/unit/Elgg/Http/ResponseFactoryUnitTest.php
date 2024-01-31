@@ -39,11 +39,6 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 	private $input;
 
 	/**
-	 * @var Config
-	 */
-	private $amd_config;
-
-	/**
 	 * @var SystemMessagesService
 	 */
 	private $system_messages;
@@ -69,9 +64,8 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		$this->events = new EventsService(new HandlersService());
 		$this->request = $this->createRequest('', 'GET');
 
-		$this->amd_config = new Config($this->events);
 		$this->system_messages = new SystemMessagesService($this->session);
-		$this->ajax = new Service($this->events, $this->system_messages, $this->request, $this->amd_config);
+		$this->ajax = new Service($this->events, $this->system_messages, $this->request, _elgg_services()->esm);
 
 		_elgg_services()->logger->disable();
 	}
@@ -83,7 +77,6 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		$svc->set('config', $this->config);
 		$svc->set('events', $this->events);
 		$svc->set('request', $this->request);
-		$svc->set('amd_config', $this->amd_config);
 		$svc->set('system_messages', $this->system_messages);
 		$svc->set('ajax', $this->ajax);
 

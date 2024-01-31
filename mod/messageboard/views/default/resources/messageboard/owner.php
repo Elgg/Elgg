@@ -5,7 +5,7 @@
 
 use Elgg\Database\Clauses\OrderByClause;
 
-elgg_require_js('elgg/messageboard');
+elgg_import_esm('elgg/messageboard');
 
 $page_owner = elgg_get_page_owner_entity();
 

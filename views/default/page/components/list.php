@@ -140,8 +140,8 @@ if ($pagination && ($pagination_behaviour !== 'navigate')) {
 		$container_classes[] = 'elgg-list-container-ajax-append';
 	}
 
-	if (elgg_view_exists("page/components/list/{$pagination_behaviour}.js")) {
-		elgg_require_js("page/components/list/{$pagination_behaviour}");
+	if (elgg_view_exists("page/components/list/{$pagination_behaviour}.mjs")) {
+		elgg_import_esm("page/components/list/{$pagination_behaviour}");
 	}
 }
 

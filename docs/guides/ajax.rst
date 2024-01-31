@@ -1,7 +1,7 @@
 Ajax
 ####
 
-The ``elgg/Ajax`` AMD module (introduced in Elgg 2.1) provides a set of methods for communicating with the server in a concise and uniform way, which allows plugins to collaborate on the request data, the server response, and the returned client-side data.
+The ``elgg/Ajax`` module (introduced in Elgg 2.1) provides a set of methods for communicating with the server in a concise and uniform way, which allows plugins to collaborate on the request data, the server response, and the returned client-side data.
 
 .. contents:: Contents
    :local:
@@ -32,7 +32,7 @@ More notes:
 * If a non-empty ``options.data`` is given, the default method is always ``POST``.
 * For client caching, set ``options.method`` to ``"GET"`` and ``options.data.elgg_response_ttl`` to the max-age you want in seconds.
 * To save system messages for the next page load, set ``options.data.elgg_fetch_messages = 0``. You may want to do this if you intent to redirect the user based on the response.
-* To stop client-side API from requiring AMD modules required server-side with ``elgg_require_js()``, set ``options.data.elgg_fetch_deps = 0``.
+* To stop client-side API from requiring modules required server-side with ``elgg_import_esm()``, set ``options.data.elgg_fetch_deps = 0``.
 * All methods accept a query string in the first argument. This is passed on to the fetch URL, but does not appear in the hook types.
 
 Performing actions
@@ -350,12 +350,12 @@ The first and third case are the most common cases in the system. Use the ``done
         // handle error condition if needed
     });
 
-Requiring AMD modules
----------------------
+Requiring ES modules
+--------------------
 
-Each response from an Ajax service will contain a list of AMD modules required server side with `elgg_require_js()`.
+Each response from an Ajax service will contain a list of ES modules required server side with `elgg_import_esm()`.
 When response data is unwrapped, these modules will be loaded asynchronously - plugins should not expect these
-modules to be loaded in their `$.done()` and `$.then()` handlers and must use `require()` for any modules they depend on.
-Additionally AMD modules should not expect the DOM to have been altered by an Ajax request when they are loaded -
+modules to be loaded in their `$.done()` and `$.then()` handlers and must use `import` for any modules they depend on.
+Additionally modules should not expect the DOM to have been altered by an Ajax request when they are loaded -
 DOM events should be delegated and manipulations on DOM elements should be delayed until all Ajax requests have been
 resolved.

@@ -8,7 +8,7 @@
  */
 
 elgg_require_css('forms/admin/users/bulk_actions');
-elgg_require_js('forms/admin/users/bulk_actions');
+elgg_import_esm('forms/admin/users/bulk_actions');
 
 // did we search
 $query = get_input('q');

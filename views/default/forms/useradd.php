@@ -3,7 +3,7 @@
  * Elgg add user form
  */
 
-elgg_require_js('forms/useradd');
+elgg_import_esm('forms/useradd');
 
 echo elgg_view_field([
 	'#type' => 'text',

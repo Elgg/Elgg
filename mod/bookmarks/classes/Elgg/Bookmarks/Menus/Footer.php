@@ -35,6 +35,7 @@ class Footer {
 			]),
 			'title' => elgg_echo('bookmarks:this'),
 			'rel' => 'nofollow',
+			'deps' => ['bookmarks/bookmarks'],
 		]);
 		
 		return $return;

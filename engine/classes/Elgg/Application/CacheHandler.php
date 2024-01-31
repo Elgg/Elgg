@@ -29,6 +29,7 @@ class CacheHandler {
 		'js' => 'application/javascript',
 		'json' => 'application/json',
 		'map' => 'application/json',
+		'mjs' => 'application/javascript',
 		'otf' => 'application/font-otf',
 		'png' => 'image/png',
 		'svg' => 'image/svg+xml',
@@ -355,6 +356,12 @@ class CacheHandler {
 
 		$name = $this->simplecache_enabled ? 'simplecache:generate' : 'cache:generate';
 		$type = $this->getViewFileType($view);
+		
+		// treat mjs as js
+		if ($type === 'mjs') {
+			$type = 'js';
+		}
+		
 		$params = [
 			'view' => $view,
 			'viewtype' => $viewtype,

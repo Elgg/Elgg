@@ -36,7 +36,7 @@ return [
 			],
 		],
 		'elgg.data' => [
-			'site' => [
+			'page' => [
 				'\Elgg\CKEditor\Views::setToolbarConfig' => [],
 			],
 		],

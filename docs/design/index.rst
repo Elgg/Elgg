@@ -11,6 +11,5 @@ and why it's built the way it is.
    database
    events
    i18n
-   amd
    security
    loggable

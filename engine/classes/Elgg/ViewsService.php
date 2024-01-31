@@ -808,6 +808,31 @@ class ViewsService {
 	public function isViewLocationsLoadedFromCache(): bool {
 		return $this->locations_loaded_from_cache;
 	}
+	
+	/**
+	 * Returns an array of names of ES modules detected based on view location
+	 *
+	 * @return array
+	 */
+	public function getESModules(): array {
+		$modules = $this->server_cache->load('esmodules');
+		if (is_array($modules)) {
+			return $modules;
+		}
+		
+		$modules = [];
+		foreach ($this->locations['default'] as $name => $path) {
+			if (!str_ends_with($name, '.mjs')) {
+				continue;
+			}
+			
+			$modules[] = $name;
+		}
+		
+		$this->server_cache->save('esmodules', $modules);
+		
+		return $modules;
+	}
 
 	/**
 	 * Update the location of a view file

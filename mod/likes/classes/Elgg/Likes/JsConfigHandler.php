@@ -10,7 +10,7 @@ class JsConfigHandler {
 	/**
 	 * Send config data to the likes module
 	 *
-	 * @param \Elgg\Event $event 'elgg.data', 'site'
+	 * @param \Elgg\Event $event 'elgg.data', 'page'
 	 *
 	 * @return array
 	 */

@@ -2,8 +2,8 @@
 
 namespace Elgg;
 
-use Elgg\Amd\Config as AmdConfig;
 use Elgg\Exceptions\LogicException;
+use Elgg\Javascript\ESMService;
 use Elgg\Traits\Loggable;
 
 /**
@@ -16,12 +16,6 @@ class FormsService {
 
 	use Loggable;
 
-	protected EventsService $events;
-	
-	protected ViewsService $views;
-
-	protected AmdConfig $amdConfig;
-
 	protected bool $rendering = false;
 
 	protected string $footer = '';
@@ -29,14 +23,15 @@ class FormsService {
 	/**
 	 * Constructor
 	 *
-	 * @param ViewsService  $views     Views service
-	 * @param EventsService $events    Events service
-	 * @param AmdConfig     $amdConfig AMD Configuration
+	 * @param ViewsService  $views  Views service
+	 * @param EventsService $events Events service
+	 * @param ESMService    $esm    ESM service
 	 */
-	public function __construct(ViewsService $views, EventsService $events, AmdConfig $amdConfig) {
-		$this->views = $views;
-		$this->events = $events;
-		$this->amdConfig = $amdConfig;
+	public function __construct(
+		protected ViewsService $views,
+		protected EventsService $events,
+		protected ESMService $esm
+	) {
 	}
 
 	/**
@@ -97,7 +92,7 @@ class FormsService {
 		}
 
 		if (elgg_extract('ajax', $form_vars)) {
-			$this->amdConfig->addDependency('input/form-ajax');
+			$this->esm->import('input/form-ajax');
 			$form_vars['class'][] = 'elgg-js-ajax-form';
 			unset($form_vars['ajax']);
 		}

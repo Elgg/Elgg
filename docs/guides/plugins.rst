@@ -169,9 +169,6 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 		],
 		
 		'view_extensions' => [
-			'elgg.js' => [
-				'bookmarks.js' => [],
-			],
 			'page/components/list' => [
 				'list/extension' => [
 					'priority' => 600,

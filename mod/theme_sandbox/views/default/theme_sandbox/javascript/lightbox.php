@@ -22,7 +22,7 @@ echo elgg_view('output/url', [
 	'class' => 'elgg-lightbox-inline mll',
 ]);
 
-elgg_require_js('theme_sandbox/javascript/lightbox');
+elgg_import_esm('theme_sandbox/javascript/lightbox');
 
 ?>
 <div class="hidden">
