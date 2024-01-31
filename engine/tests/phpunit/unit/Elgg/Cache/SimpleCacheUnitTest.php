@@ -26,24 +26,6 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 		$this->assertMatchesRegularExpression("#default/view.js#", $url);
 	}
 
-	public function testGetUrlHandlesTwoArguments() {
-		elgg_register_simplecache_view('js/view.js');
-		$url = $this->service->getUrl('js', 'view.js');
-
-		$this->assertMatchesRegularExpression("#default/view.js$#", $url);
-	}
-
-	public function testGetUrlHandlesTwoArgumentsWhereSecondArgHasRedundantPrefix() {
-		elgg_register_simplecache_view('js/view.js');
-		$url = $this->service->getUrl('js', 'js/view.js');
-
-		$this->assertMatchesRegularExpression("#default/view.js$#", $url);
-	}
-
-	public function testRespectsViewAliases() {
-		$this->markTestIncomplete();
-	}
-
 	public function testCanEnableSimplecache() {
 
 		$is_enabled = _elgg_services()->config->simplecache_enabled;
@@ -59,7 +41,6 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue(elgg_is_simplecache_enabled());
 
 		_elgg_services()->config->save('simplecache_enabled', $is_enabled);
-
 	}
 	
 	public function testClearSimplecacheSymlinked() {

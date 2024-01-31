@@ -36,3 +36,11 @@ alias for the ``annotations`` table has been changed from ``n_table`` to ``a_tab
 
 If your code uses very specific clauses (select, where, order_by, etc.) you need to update your code. If you use the
 ``\Elgg\Database\QueryBuilder`` for your query parts you should be ok.
+
+Changes in functions
+--------------------
+
+Lib functions function parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* ``elgg_get_simplecache_url()`` has the second argument (``$subview``) removed. The full ``$view`` name needs to be provided as the first argument.
