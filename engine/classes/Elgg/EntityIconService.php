@@ -277,21 +277,10 @@ class EntityIconService {
 		// save cropping coordinates
 		if ($type == 'icon') {
 			$entity->icontime = time();
-			if ($x1 || $y1 || $x2 || $y2) {
-				$entity->x1 = $x1;
-				$entity->y1 = $y1;
-				$entity->x2 = $x2;
-				$entity->y2 = $y2;
-			}
-		} else {
-			if ($x1 || $y1 || $x2 || $y2) {
-				$entity->{"{$type}_coords"} = serialize([
-					'x1' => $x1,
-					'y1' => $y1,
-					'x2' => $x2,
-					'y2' => $y2,
-				]);
-			}
+		}
+		
+		if ($x1 || $y1 || $x2 || $y2) {
+			$entity->saveIconCoordinates($coords);
 		}
 		
 		$this->events->triggerResults("entity:{$type}:saved", $entity->getType(), [
@@ -471,17 +460,7 @@ class EntityIconService {
 			return $icon;
 		}
 		
-		if ($type === 'icon') {
-			$coords = [
-				'x1' => $entity->x1,
-				'y1' => $entity->y1,
-				'x2' => $entity->x2,
-				'y2' => $entity->y2,
-			];
-		} else {
-			$coords = $entity->{"{$type}_coords"};
-			$coords = empty($coords) ? [] : unserialize($coords);
-		}
+		$coords = $entity->getIconCoordinates($type);
 		
 		$this->generateIcon($entity, $master_icon, $type, $coords, $size);
 		
@@ -546,13 +525,9 @@ class EntityIconService {
 
 		if ($type == 'icon') {
 			unset($entity->icontime);
-			unset($entity->x1);
-			unset($entity->y1);
-			unset($entity->x2);
-			unset($entity->y2);
-		} else {
-			unset($entity->{"{$type}_coords"});
 		}
+		
+		$entity->removeIconCoordinates($type);
 		
 		return $result;
 	}
