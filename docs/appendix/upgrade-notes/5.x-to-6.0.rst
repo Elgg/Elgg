@@ -44,3 +44,8 @@ Lib functions function parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * ``elgg_get_simplecache_url()`` has the second argument (``$subview``) removed. The full ``$view`` name needs to be provided as the first argument.
+
+Miscellaneous API changes
+-------------------------
+
+* The interface ``\Elgg\EntityIcon`` has been removed. Implemented functions in ``\ElggEntity`` have been moved to ``\Elgg\Traits\Entity\Icons``
