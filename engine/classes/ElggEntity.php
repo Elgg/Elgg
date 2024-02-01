@@ -1,11 +1,11 @@
 <?php
 
-use Elgg\EntityIcon;
 use Elgg\Database\QueryBuilder;
 use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\Filesystem\IOException;
 use Elgg\Exceptions\DomainException as ElggDomainException;
 use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
+use Elgg\Traits\Entity\Icons;
 use Elgg\Traits\Entity\Subscriptions;
 
 /**
@@ -43,8 +43,9 @@ use Elgg\Traits\Entity\Subscriptions;
  * Metadata (the above are attributes)
  * @property       string $location       A location of the entity
  */
-abstract class ElggEntity extends \ElggData implements EntityIcon {
+abstract class ElggEntity extends \ElggData {
 
+	use Icons;
 	use Subscriptions;
 	
 	public const PRIMARY_ATTR_NAMES = [
@@ -89,7 +90,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 
 	/**
 	 * Volatile data structure for this object, allows for storage of data
-	 * in-memory that isn't sync'd back to the metadata table.
+	 * in-memory that isn't synced back to the metadata table.
 	 * @var array
 	 */
 	protected $volatile = [];
@@ -294,6 +295,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * $name key.
 	 *
 	 * @param string $name Name of the attribute or metadata
+	 *
 	 * @return mixed
 	 */
 	public function __get($name) {
@@ -317,6 +319,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * Sets the title or name of this entity.
 	 *
 	 * @param string $display_name The title or name of this entity.
+	 *
 	 * @return void
 	 */
 	public function setDisplayName(string $display_name): void {
@@ -646,6 +649,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @warning Calling this with no or empty arguments will clear all annotations on the entity.
 	 *
 	 * @param string $name An optional name of annotations to remove.
+	 *
 	 * @return bool
 	 * @since 1.8
 	 */
@@ -672,6 +676,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * If you pass a name, only annotations matching that name will be deleted.
 	 *
 	 * @param string $name An optional name of annotations to delete.
+	 *
 	 * @return bool
 	 * @since 1.8
 	 */
@@ -691,6 +696,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * Disables annotations for this entity, optionally based on name.
 	 *
 	 * @param string $name An optional name of annotations to disable.
+	 *
 	 * @return bool
 	 * @since 1.8
 	 */
@@ -706,6 +712,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * Enables annotations for this entity, optionally based on name.
 	 *
 	 * @param string $name An optional name of annotations to enable.
+	 *
 	 * @return bool
 	 * @since 1.8
 	 */
@@ -722,6 +729,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @param string $name        The annotation name.
 	 * @param string $calculation A valid MySQL function to run its values through
+	 *
 	 * @return mixed
 	 */
 	private function getAnnotationCalculation($name, $calculation) {
@@ -1133,102 +1141,6 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	}
 
 	/**
-	 * Saves icons using an uploaded file as the source.
-	 *
-	 * @param string $input_name Form input name
-	 * @param string $type       The name of the icon. e.g., 'icon', 'cover_photo'
-	 * @param array  $coords     An array of cropping coordinates x1, y1, x2, y2
-	 * @return bool
-	 */
-	public function saveIconFromUploadedFile(string $input_name, string $type = 'icon', array $coords = []): bool {
-		return _elgg_services()->iconService->saveIconFromUploadedFile($this, $input_name, $type, $coords);
-	}
-
-	/**
-	 * Saves icons using a local file as the source.
-	 *
-	 * @param string $filename The full path to the local file
-	 * @param string $type     The name of the icon. e.g., 'icon', 'cover_photo'
-	 * @param array  $coords   An array of cropping coordinates x1, y1, x2, y2
-	 * @return bool
-	 */
-	public function saveIconFromLocalFile(string $filename, string $type = 'icon', array $coords = []): bool {
-		return _elgg_services()->iconService->saveIconFromLocalFile($this, $filename, $type, $coords);
-	}
-
-	/**
-	 * Saves icons using a file located in the data store as the source.
-	 *
-	 * @param string $file   An ElggFile instance
-	 * @param string $type   The name of the icon. e.g., 'icon', 'cover_photo'
-	 * @param array  $coords An array of cropping coordinates x1, y1, x2, y2
-	 * @return bool
-	 */
-	public function saveIconFromElggFile(\ElggFile $file, string $type = 'icon', array $coords = []): bool {
-		return _elgg_services()->iconService->saveIconFromElggFile($this, $file, $type, $coords);
-	}
-
-	/**
-	 * Returns entity icon as an ElggIcon object
-	 * The icon file may or may not exist on filestore
-	 *
-	 * @param string $size Size of the icon
-	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
-	 * @return \ElggIcon
-	 */
-	public function getIcon(string $size, string $type = 'icon'): \ElggIcon {
-		return _elgg_services()->iconService->getIcon($this, $size, $type);
-	}
-
-	/**
-	 * Removes all icon files and metadata for the passed type of icon.
-	 *
-	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
-	 * @return bool
-	 */
-	public function deleteIcon(string $type = 'icon'): bool {
-		return _elgg_services()->iconService->deleteIcon($this, $type);
-	}
-
-	/**
-	 * Returns the timestamp of when the icon was changed.
-	 *
-	 * @param string $size The size of the icon
-	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
-	 *
-	 * @return int|null A unix timestamp of when the icon was last changed, or null if not set.
-	 */
-	public function getIconLastChange(string $size, string $type = 'icon'): ?int {
-		return _elgg_services()->iconService->getIconLastChange($this, $size, $type);
-	}
-
-	/**
-	 * Returns if the entity has an icon of the passed type.
-	 *
-	 * @param string $size The size of the icon
-	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
-	 * @return bool
-	 */
-	public function hasIcon(string $size, string $type = 'icon'): bool {
-		return _elgg_services()->iconService->hasIcon($this, $size, $type);
-	}
-
-	/**
-	 * Get the URL for this entity's icon
-	 *
-	 * Plugins can register for the 'entity:icon:url', '<type>' event
-	 * to customize the icon for an entity.
-	 *
-	 * @param mixed $params A string defining the size of the icon (e.g. tiny, small, medium, large)
-	 *                      or an array of parameters including 'size'
-	 * @return string The URL
-	 * @since 1.8.0
-	 */
-	public function getIconURL(string|array $params = []): string {
-		return _elgg_services()->iconService->getIconURL($this, $params);
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	public function save(): bool {
@@ -1582,7 +1494,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * Enable the entity
 	 *
 	 * @param bool $recursive Recursively enable all entities disabled with the entity?
-	 * @see access_show_hiden_entities()
+	 *
 	 * @return bool
 	 */
 	public function enable(bool $recursive = true): bool {
@@ -1677,6 +1589,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * Export an entity
 	 *
 	 * @param array $params Params to pass to the event
+	 *
 	 * @return \Elgg\Export\Entity
 	 */
 	public function toObject(array $params = []) {
@@ -1691,6 +1604,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * Prepare an object copy for toObject()
 	 *
 	 * @param \Elgg\Export\Entity $object Object representation of the entity
+	 *
 	 * @return \Elgg\Export\Entity
 	 */
 	protected function prepareObject(\Elgg\Export\Entity $object) {
@@ -1858,6 +1772,7 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * while last_action is only set when explicitly called.
 	 *
 	 * @param int $posted Timestamp of last action
+	 *
 	 * @return int
 	 * @internal
 	 */
