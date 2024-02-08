@@ -2,6 +2,9 @@
 
 namespace Elgg\Traits\Entity;
 
+use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\RangeException;
+
 /**
  * Adds helper functions to \ElggEntity in relation to icons.
  *
@@ -110,5 +113,67 @@ trait Icons {
 	 */
 	public function getIconURL(string|array $params = []): string {
 		return _elgg_services()->iconService->getIconURL($this, $params);
+	}
+	
+	/**
+	 * Save cropping coordinates for an icon type
+	 *
+	 * @param array  $coords An array of cropping coordinates x1, y1, x2, y2
+	 * @param string $type   The name of the icon. e.g., 'icon', 'cover_photo'
+	 *
+	 * @return void
+	 */
+	public function saveIconCoordinates(array $coords, string $type = 'icon'): void {
+		// remove noise from the coords array
+		$allowed_keys = ['x1', 'x2', 'y1', 'y2'];
+		$coords = array_filter($coords, function($value, $key) use ($allowed_keys) {
+			return in_array($key, $allowed_keys) && is_int($value);
+		}, ARRAY_FILTER_USE_BOTH);
+		
+		if (!isset($coords['x1']) || !isset($coords['x2']) || !isset($coords['y1']) || !isset($coords['y2'])) {
+			throw new InvalidArgumentException('Please provide correct coordinates [x1, x2, y1, y2]');
+		}
+		
+		if ($coords['x1'] < 0 || $coords['x2'] < 0 || $coords['y1'] < 0 || $coords['y2'] < 0) {
+			throw new RangeException("Coordinates can't have negative numbers");
+		}
+		
+		$this->{"{$type}_coords"} = serialize($coords);
+	}
+	
+	/**
+	 * Get the cropping coordinates for an icon type
+	 *
+	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
+	 *
+	 * @return null|array
+	 */
+	public function getIconCoordinates(string $type = 'icon'): array {
+		if (!isset($this->{"{$type}_coords"})) {
+			return [];
+		}
+		
+		$coords = unserialize($this->{"{$type}_coords"}) ?: [];
+		
+		// cast to integers
+		array_walk($coords, function(&$value) {
+			$value = (int) $value;
+		});
+		
+		// remove invalid values
+		return array_filter($coords, function($value) {
+			return $value >= 0;
+		});
+	}
+	
+	/**
+	 * Remove the cropping coordinates of an icon type
+	 *
+	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
+	 *
+	 * @return void
+	 */
+	public function removeIconCoordinates(string $type = 'icon'): void {
+		unset($this->{"{$type}_coords"});
 	}
 }

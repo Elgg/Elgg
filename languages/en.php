@@ -2071,4 +2071,7 @@ Global variables:
 	
 	'core:upgrade:2023011701:title' => "Remove orphaned threaded comments",
 	'core:upgrade:2023011701:description' => "Due to an error in how threaded comments were removed, there was a chance to create orphaned comments, this upgrade will remove those orphans.",
+	
+	'core:upgrade:2024020101:title' => "Migrate icon cropping coordinates",
+	'core:upgrade:2024020101:description' => "Cropping coordinates are stored in a uniform way, this upgrade migrates the old x1, x2, y1 and y2 metadata values",
 );

@@ -37,6 +37,15 @@ alias for the ``annotations`` table has been changed from ``n_table`` to ``a_tab
 If your code uses very specific clauses (select, where, order_by, etc.) you need to update your code. If you use the
 ``\Elgg\Database\QueryBuilder`` for your query parts you should be ok.
 
+Entity Icons
+------------
+
+Cropping coordinates
+~~~~~~~~~~~~~~~~~~~~
+
+The cropping coordinates of the default icon (``icon``) are now stored in a uniform way, same as those of the other icon types.
+The metadata ``x1``, ``x2``, ``y1`` and ``y2`` no longer exist. Use the new ``\ElggEntity`` function ``getIconCoordinates()``.
+
 Changes in functions
 --------------------
 

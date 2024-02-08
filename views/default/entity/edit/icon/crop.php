@@ -34,27 +34,8 @@ $cropper_data = array_merge($default_config, (array) elgg_extract('cropper_confi
 
 // determine current cropping coordinates
 $entity_coords = [];
-if ($entity instanceof ElggEntity) {
-	if ($icon_type === 'icon') {
-		$entity_coords = [
-			'x1' => $entity->x1,
-			'y1' => $entity->y1,
-			'x2' => $entity->x2,
-			'y2' => $entity->y2,
-		];
-	} elseif (isset($entity->{"{$icon_type}_coords"})) {
-		$entity_coords = unserialize($entity->{"{$icon_type}_coords"});
-	}
-	
-	// cast to ints
-	array_walk($entity_coords, function(&$value) {
-		$value = (int) $value;
-	});
-	
-	// remove invalid values
-	$entity_coords = array_filter($entity_coords, function($value) {
-		return $value >= 0;
-	});
+if ($entity instanceof \ElggEntity) {
+	$entity_coords = $entity->getIconCoordinates($icon_type);
 	
 	// still enough for cropping
 	if (isset($entity_coords['x1'], $entity_coords['x2'], $entity_coords['y1'], $entity_coords['y2'])) {
@@ -113,7 +94,7 @@ if (!isset($cropper_data['aspectRatio'])) {
 }
 
 $img_url = null;
-if ($entity instanceof ElggEntity && $entity->hasIcon('master', $icon_type)) {
+if ($entity instanceof \ElggEntity && $entity->hasIcon('master', $icon_type)) {
 	$img_url = $entity->getIconURL([
 		'size' => 'master',
 		'type' => $icon_type,

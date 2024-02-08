@@ -71,30 +71,7 @@ class CropIcon {
 			return;
 		}
 		
-		$current = [];
-		if ($icon_type === 'icon') {
-			$current = [
-				'x1' => $entity->x1,
-				'y1' => $entity->y1,
-				'x2' => $entity->x2,
-				'y2' => $entity->y2,
-			];
-		} elseif (isset($entity->{"{$icon_type}_coords"})) {
-			$current = unserialize($entity->{"{$icon_type}_coords"});
-			
-			if (!is_array($current)) {
-				$current = [];
-			}
-		}
-		
-		// cast to ints
-		array_walk($current, function(&$value) {
-			$value = (int) $value;
-		});
-		// remove invalid values
-		$current = array_filter($current, function($value) {
-			return $value >= 0;
-		});
+		$current = $entity->getIconCoordinates($icon_type);
 		
 		$input_cropping_coords = [
 			'x1' => (int) get_input("{$input_name}_x1", get_input('x1')),
