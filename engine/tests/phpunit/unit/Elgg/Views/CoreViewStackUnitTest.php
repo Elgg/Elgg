@@ -8,7 +8,7 @@ use Elgg\UnitTestCase;
 class CoreViewStackUnitTest extends UnitTestCase {
 
 	public function up() {
-		_elgg_services()->views->registerPluginViews(Paths::elgg());
+		_elgg_services()->views->registerViewsFromPath(Paths::elgg());
 	}
 	
 	public static function viewsProvider() {
@@ -17,7 +17,7 @@ class CoreViewStackUnitTest extends UnitTestCase {
 
 		$provides = [];
 
-		_elgg_services()->views->registerPluginViews(Paths::elgg());
+		_elgg_services()->views->registerViewsFromPath(Paths::elgg());
 		$data = _elgg_services()->views->getInspectorData();
 
 		foreach ($data['locations'] as $viewtype => $views) {

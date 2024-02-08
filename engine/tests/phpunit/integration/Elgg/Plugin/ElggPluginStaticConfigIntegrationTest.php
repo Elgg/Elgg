@@ -19,6 +19,8 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 			'isolate' => true,
 		]);
 		
+		_elgg_services()->reset('views'); // needed to make sure views will get loaded correctly
+		
 		$this->plugin = \ElggPlugin::fromId('static_config', $this->normalizeTestFilePath('mod/'));
 		$this->plugin->autoload();
 		
@@ -48,8 +50,6 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 	 */
 	public function testViewsRegistration(string $view_name, string $expected_view_output) {
 		$this->assertFalse(elgg_view_exists($view_name));
-		
-		elgg_set_config('system_cache_loaded', false);
 		
 		$this->invokeInaccessableMethod($this->plugin, 'registerViews');
 		

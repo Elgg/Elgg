@@ -887,7 +887,7 @@ class ElggPlugin extends ElggObject {
 	 * @throws \Elgg\Exceptions\PluginException
 	 */
 	protected function registerViews(): void {
-		if (_elgg_services()->config->system_cache_loaded) {
+		if (_elgg_services()->views->isViewLocationsLoadedFromCache()) {
 			return;
 		}
 
@@ -900,7 +900,7 @@ class ElggPlugin extends ElggObject {
 		}
 
 		// Allow /views directory files to override
-		if (!$views->registerPluginViews($this->getPath())) {
+		if (!$views->registerViewsFromPath($this->getPath())) {
 			$msg = elgg_echo('ElggPlugin:Exception:CannotRegisterViews', [$this->getID(), $this->guid, $this->getPath()]);
 
 			throw PluginException::factory([

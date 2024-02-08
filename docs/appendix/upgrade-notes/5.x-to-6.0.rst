@@ -49,3 +49,8 @@ Miscellaneous API changes
 -------------------------
 
 * The interface ``\Elgg\EntityIcon`` has been removed. Implemented functions in ``\ElggEntity`` have been moved to ``\Elgg\Traits\Entity\Icons``
+
+Removed Config values
+------------------------
+
+* ``system_cache_loaded``

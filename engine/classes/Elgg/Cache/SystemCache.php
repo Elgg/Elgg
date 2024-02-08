@@ -16,19 +16,13 @@ class SystemCache {
 	use Cacheable;
 
 	/**
-	 * @var Config
-	 */
-	protected $config;
-
-	/**
 	 * Constructor
 	 *
 	 * @param BaseCache $cache  Elgg disk cache
 	 * @param Config    $config Elgg config
 	 */
-	public function __construct(BaseCache $cache, Config $config) {
+	public function __construct(BaseCache $cache, protected Config $config) {
 		$this->cache = $cache;
-		$this->config = $config;
 	}
 
 	/**
@@ -118,21 +112,5 @@ class SystemCache {
 	public function disable() {
 		$this->config->save('system_cache_enabled', 0);
 		$this->reset();
-	}
-	
-	/**
-	 * Initializes the system cache
-	 *
-	 * @return void
-	 */
-	public function init() {
-		if (!$this->isEnabled()) {
-			return;
-		}
-
-		// cache system data if enabled and not loaded
-		if (!$this->config->system_cache_loaded) {
-			_elgg_services()->views->cacheConfiguration(_elgg_services()->serverCache);
-		}
 	}
 }

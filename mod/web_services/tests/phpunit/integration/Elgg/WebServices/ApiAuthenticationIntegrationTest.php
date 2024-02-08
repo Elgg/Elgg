@@ -74,7 +74,7 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 		]);
 		
 		// in some cases there was a failure with missing view
-		$app->internal_services->views->registerPluginViews($this->plugin->getPath());
+		$app->internal_services->views->registerViewsFromPath($this->plugin->getPath());
 	}
 	
 	/**

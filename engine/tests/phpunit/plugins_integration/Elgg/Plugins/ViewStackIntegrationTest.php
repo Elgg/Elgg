@@ -15,7 +15,6 @@ class ViewStackIntegrationTest extends PluginsIntegrationTestCase {
 	public function up() {
 		parent::up();
 		
-		elgg_set_config('system_cache_loaded', false);
 		_elgg_services()->reset('views');
 		
 		$this->views = _elgg_services()->views;
@@ -39,7 +38,6 @@ class ViewStackIntegrationTest extends PluginsIntegrationTestCase {
 				continue;
 			}
 			
-			elgg_set_config('system_cache_loaded', false);
 			_elgg_services()->reset('views');
 			
 			// can not use ->startPlugin() as it needs to be static
