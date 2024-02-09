@@ -275,10 +275,6 @@ class EntityIconService {
 		$entity->invalidateCache();
 		
 		// save cropping coordinates
-		if ($type == 'icon') {
-			$entity->icontime = time();
-		}
-		
 		if ($x1 || $y1 || $x2 || $y2) {
 			$entity->saveIconCoordinates($coords);
 		}
@@ -523,10 +519,6 @@ class EntityIconService {
 			}
 		}
 
-		if ($type == 'icon') {
-			unset($entity->icontime);
-		}
-		
 		$entity->removeIconCoordinates($type);
 		
 		return $result;

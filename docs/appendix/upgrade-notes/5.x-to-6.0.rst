@@ -46,6 +46,14 @@ Cropping coordinates
 The cropping coordinates of the default icon (``icon``) are now stored in a uniform way, same as those of the other icon types.
 The metadata ``x1``, ``x2``, ``y1`` and ``y2`` no longer exist. Use the new ``\ElggEntity`` function ``getIconCoordinates()``.
 
+Icontime
+~~~~~~~~
+
+The metadata ``icontime`` has been removed from the database. This was an unreliable way to check if an icon was uploaded.
+This was only stored for the icon type ``icon``.
+
+A reliable way to check if an icon was uploaded is to use the ``\ElggEntity::hasIcon()`` function.
+
 Changes in functions
 --------------------
 
