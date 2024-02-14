@@ -223,6 +223,8 @@ class EntityIconService {
 			return false;
 		}
 		
+		$entity->lockIconThumbnailGeneration($type);
+		
 		$this->prepareIcon($file->getFilenameOnFilestore());
 		
 		$x1 = (int) elgg_extract('x1', $coords);
@@ -286,6 +288,8 @@ class EntityIconService {
 			'x2' => $x2,
 			'y2' => $y2,
 		]);
+		
+		$entity->unlockIconThumbnailGeneration($type);
 		
 		return true;
 	}
@@ -447,6 +451,10 @@ class EntityIconService {
 		
 		if ($size === 'master') {
 			// don't try to generate for master
+			return $icon;
+		}
+		
+		if ($entity->isIconThumbnailGenerationLocked($type)) {
 			return $icon;
 		}
 		
