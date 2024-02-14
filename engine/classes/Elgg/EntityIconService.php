@@ -23,41 +23,6 @@ class EntityIconService {
 	use TimeUsing;
 
 	/**
-	 * @var Config
-	 */
-	private $config;
-
-	/**
-	 * @var EventsService
-	 */
-	private $events;
-
-	/**
-	 * @var EntityTable
-	 */
-	private $entities;
-
-	/**
-	 * @var UploadService
-	 */
-	private $uploads;
-
-	/**
-	 * @var ImageService
-	 */
-	private $images;
-	
-	/**
-	 * @var MimeTypeService
-	 */
-	protected $mimetype;
-	
-	/**
-	 * @var HttpRequest
-	 */
-	protected $request;
-
-	/**
 	 * Constructor
 	 *
 	 * @param Config          $config   Config
@@ -69,21 +34,14 @@ class EntityIconService {
 	 * @param Request         $request  Http Request service
 	 */
 	public function __construct(
-		Config $config,
-		EventsService $events,
-		EntityTable $entities,
-		UploadService $uploads,
-		ImageService $images,
-		MimeTypeService $mimetype,
-		HttpRequest $request
+		protected Config $config,
+		protected EventsService $events,
+		protected EntityTable $entities,
+		protected UploadService $uploads,
+		protected ImageService $images,
+		protected MimeTypeService $mimetype,
+		protected HttpRequest $request
 	) {
-		$this->config = $config;
-		$this->events = $events;
-		$this->entities = $entities;
-		$this->uploads = $uploads;
-		$this->images = $images;
-		$this->mimetype = $mimetype;
-		$this->request = $request;
 	}
 
 	/**
@@ -96,7 +54,7 @@ class EntityIconService {
 	 *
 	 * @return bool
 	 */
-	public function saveIconFromUploadedFile(\ElggEntity $entity, $input_name, $type = 'icon', array $coords = []) {
+	public function saveIconFromUploadedFile(\ElggEntity $entity, string $input_name, string $type = 'icon', array $coords = []): bool {
 		$input = $this->uploads->getFile($input_name);
 		if (empty($input)) {
 			return false;
@@ -138,7 +96,7 @@ class EntityIconService {
 	 * @return bool
 	 * @throws InvalidArgumentException
 	 */
-	public function saveIconFromLocalFile(\ElggEntity $entity, $filename, $type = 'icon', array $coords = []) {
+	public function saveIconFromLocalFile(\ElggEntity $entity, string $filename, string $type = 'icon', array $coords = []): bool {
 		if (!file_exists($filename) || !is_readable($filename)) {
 			throw new InvalidArgumentException(__METHOD__ . " expects a readable local file. {$filename} is not readable");
 		}
@@ -171,7 +129,7 @@ class EntityIconService {
 	 * @return bool
 	 * @throws InvalidArgumentException
 	 */
-	public function saveIconFromElggFile(\ElggEntity $entity, \ElggFile $file, $type = 'icon', array $coords = []) {
+	public function saveIconFromElggFile(\ElggEntity $entity, \ElggFile $file, string $type = 'icon', array $coords = []): bool {
 		if (!$file->exists()) {
 			throw new InvalidArgumentException(__METHOD__ . ' expects an instance of ElggFile with an existing file on filestore');
 		}
@@ -203,9 +161,7 @@ class EntityIconService {
 	 *
 	 * @return bool
 	 */
-	public function saveIcon(\ElggEntity $entity, \ElggFile $file, $type = 'icon', array $coords = []) {
-
-		$type = (string) $type;
+	public function saveIcon(\ElggEntity $entity, \ElggFile $file, string $type = 'icon', array $coords = []): bool {
 		if (!strlen($type)) {
 			$this->getLogger()->error('Icon type passed to ' . __METHOD__ . ' can not be empty');
 			return false;
@@ -276,7 +232,6 @@ class EntityIconService {
 		// the coordinates in deleteIcon() and the new save here
 		$entity->invalidateCache();
 		
-		// save cropping coordinates
 		if ($x1 || $y1 || $x2 || $y2) {
 			$entity->saveIconCoordinates($coords);
 		}
@@ -301,8 +256,7 @@ class EntityIconService {
 	 *
 	 * @return void
 	 */
-	protected function prepareIcon($filename) {
-		
+	protected function prepareIcon(string $filename): void {
 		// fix orientation
 		$temp_file = new \ElggTempFile();
 		$temp_file->setFilename(uniqid() . basename($filename));
@@ -329,8 +283,7 @@ class EntityIconService {
 	 *
 	 * @return bool
 	 */
-	protected function generateIcon(\ElggEntity $entity, \ElggFile $file, $type = 'icon', $coords = [], $icon_size = '') {
-		
+	protected function generateIcon(\ElggEntity $entity, \ElggFile $file, string $type = 'icon', array $coords = [], string $icon_size = ''): bool {
 		if (!$file->exists()) {
 			$this->getLogger()->error('Trying to generate an icon from a non-existing file');
 			return false;
@@ -418,8 +371,7 @@ class EntityIconService {
 	 *
 	 * @throws UnexpectedValueException
 	 */
-	public function getIcon(\ElggEntity $entity, $size, $type = 'icon', $generate = true) {
-
+	public function getIcon(\ElggEntity $entity, string $size, string $type = 'icon', bool $generate = true): \ElggIcon {
 		$size = elgg_strtolower($size);
 
 		$params = [
@@ -585,7 +537,7 @@ class EntityIconService {
 	 *
 	 * @return string
 	 */
-	public function getFallbackIconUrl(\ElggEntity $entity, array $params = []) {
+	public function getFallbackIconUrl(\ElggEntity $entity, array $params = []): string {
 		$type = elgg_extract('type', $params, 'icon', false);
 		$size = elgg_extract('size', $params, 'medium', false);
 		
@@ -609,6 +561,8 @@ class EntityIconService {
 		if (elgg_view_exists("{$type}/default/{$size}.png", 'default')) {
 			return elgg_get_simplecache_url("{$type}/default/{$size}.png");
 		}
+		
+		return '';
 	}
 
 	/**
@@ -620,11 +574,13 @@ class EntityIconService {
 	 *
 	 * @return int|null A unix timestamp of when the icon was last changed, or null if not set.
 	 */
-	public function getIconLastChange(\ElggEntity $entity, $size, $type = 'icon') {
+	public function getIconLastChange(\ElggEntity $entity, string $size, string $type = 'icon'): ?int {
 		$icon = $this->getIcon($entity, $size, $type);
 		if ($icon->exists()) {
 			return $icon->getModifiedTime();
 		}
+		
+		return null;
 	}
 
 	/**
@@ -636,7 +592,7 @@ class EntityIconService {
 	 *
 	 * @return bool
 	 */
-	public function hasIcon(\ElggEntity $entity, $size, $type = 'icon') {
+	public function hasIcon(\ElggEntity $entity, string $size, string $type = 'icon'): bool {
 		$icon = $this->getIcon($entity, $size, $type);
 		return $icon->exists() && $icon->getSize() > 0;
 	}
@@ -697,10 +653,9 @@ class EntityIconService {
 	 *
 	 * @param string $input_name the file input name which is the prefix for the cropping coordinates
 	 *
-	 * @return false|array
+	 * @return null|array
 	 */
-	protected function detectCroppingCoordinates(string $input_name) {
-		
+	protected function detectCroppingCoordinates(string $input_name): ?array {
 		$auto_coords = [
 			'x1' => get_input("{$input_name}_x1", get_input('x1')), // x1 is BC fallback
 			'x2' => get_input("{$input_name}_x2", get_input('x2')), // x2 is BC fallback
@@ -713,7 +668,7 @@ class EntityIconService {
 		});
 		
 		if (count($auto_coords) !== 4) {
-			return false;
+			return null;
 		}
 		
 		// make ints
@@ -723,7 +678,7 @@ class EntityIconService {
 		
 		// make sure coords make sense x2 > x1 && y2 > y1
 		if ($auto_coords['x2'] <= $auto_coords['x1'] || $auto_coords['y2'] <= $auto_coords['y1']) {
-			return false;
+			return null;
 		}
 		
 		return $auto_coords;
