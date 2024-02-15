@@ -141,4 +141,41 @@ abstract class IconsIntegrationTestCase extends IntegrationTestCase {
 		$entity->removeIconCoordinates($icon_type2);
 		$this->assertEmpty($entity->getIconCoordinates($icon_type2));
 	}
+	
+	public function testIconGenerationLocking() {
+		$entity = $this->entity;
+		
+		$icon_type1 = 'icon';
+		$icon_type2 = 'avatar';
+		
+		$this->assertFalse($entity->isIconThumbnailGenerationLocked($icon_type1));
+		$this->assertFalse($entity->isIconThumbnailGenerationLocked($icon_type2));
+		
+		// lock generation
+		$entity->lockIconThumbnailGeneration($icon_type1);
+		
+		$this->assertTrue($entity->isIconThumbnailGenerationLocked($icon_type1));
+		$this->assertFalse($entity->isIconThumbnailGenerationLocked($icon_type2));
+		
+		// check ttl
+		$this->assertFalse($entity->isIconThumbnailGenerationLocked($icon_type1, -1));
+		
+		// lock other icon generation
+		$entity->lockIconThumbnailGeneration($icon_type2);
+		
+		$this->assertTrue($entity->isIconThumbnailGenerationLocked($icon_type1));
+		$this->assertTrue($entity->isIconThumbnailGenerationLocked($icon_type2));
+		
+		// unlock
+		$entity->unlockIconThumbnailGeneration($icon_type1);
+		
+		$this->assertFalse($entity->isIconThumbnailGenerationLocked($icon_type1));
+		$this->assertTrue($entity->isIconThumbnailGenerationLocked($icon_type2));
+		
+		// unlock other icon
+		$entity->unlockIconThumbnailGeneration($icon_type2);
+		
+		$this->assertFalse($entity->isIconThumbnailGenerationLocked($icon_type1));
+		$this->assertFalse($entity->isIconThumbnailGenerationLocked($icon_type2));
+	}
 }

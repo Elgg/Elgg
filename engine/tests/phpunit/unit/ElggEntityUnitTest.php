@@ -101,9 +101,37 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		$this->obj->foo = 'overwrite';
 		$this->assertEquals('overwrite', $this->obj->foo);
 	}
+	
+	public function testUnsettingMetadataNoDatabase() {
+		$this->obj->foo = 'bar';
+		$this->assertEquals('bar', $this->obj->foo);
+		unset($this->obj->foo);
+		$this->assertNull($this->obj->foo);
+	}
 
 	public function testGettingNonexistentMetadataNoDatabase() {
 		$this->assertNull($this->obj->foo);
+	}
+	
+	public function testSettingMetadataWithDatabase() {
+		$entity = $this->createObject();
+		$entity->foo = 'test';
+		$this->assertEquals('test', $entity->foo);
+		$entity->foo = 'overwrite';
+		$this->assertEquals('overwrite',$entity->foo);
+	}
+	
+	public function testUnsettingMetadataWithDatabase() {
+		$entity = $this->createObject();
+		$entity->foo = 'bar';
+		$this->assertEquals('bar', $entity->foo);
+		unset($entity->foo);
+		$this->assertNull($entity->foo);
+	}
+
+	public function testGettingNonexistentMetadataWithDatabase() {
+		$entity = $this->createObject();
+		$this->assertNull($entity->foo);
 	}
 	
 	public function testAnnotationsNoDatabase() {

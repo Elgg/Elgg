@@ -2074,4 +2074,7 @@ Global variables:
 	
 	'core:upgrade:2024020101:title' => "Migrate icon cropping coordinates",
 	'core:upgrade:2024020101:description' => "Cropping coordinates are stored in a uniform way, this upgrade migrates the old x1, x2, y1 and y2 metadata values",
+
+	'core:upgrade:2024020901:title' => "Remove icontime metadata",
+	'core:upgrade:2024020901:description' => "Remove the unreliable metadata icontime from the database",
 );

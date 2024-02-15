@@ -122,6 +122,7 @@ trait Icons {
 	 * @param string $type   The name of the icon. e.g., 'icon', 'cover_photo'
 	 *
 	 * @return void
+	 * @since 6.0
 	 */
 	public function saveIconCoordinates(array $coords, string $type = 'icon'): void {
 		// remove noise from the coords array
@@ -147,6 +148,7 @@ trait Icons {
 	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
 	 *
 	 * @return null|array
+	 * @since 6.0
 	 */
 	public function getIconCoordinates(string $type = 'icon'): array {
 		if (!isset($this->{"{$type}_coords"})) {
@@ -172,8 +174,54 @@ trait Icons {
 	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
 	 *
 	 * @return void
+	 * @since 6.0
 	 */
 	public function removeIconCoordinates(string $type = 'icon'): void {
 		unset($this->{"{$type}_coords"});
+	}
+	
+	/**
+	 * Lock thumbnail generation during icon upload/resize
+	 *
+	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
+	 *
+	 * @return void
+	 * @since 6.0
+	 * @internal for use in the \Elgg\EntityIconService
+	 */
+	public function lockIconThumbnailGeneration(string $type = 'icon'): void {
+		$this->{"{$type}_thumbnail_locked"} = time();
+	}
+	
+	/**
+	 * Is thumbnail generation prevented
+	 *
+	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
+	 * @param int    $ttl  Time-to-live for the lock in seconds (in case of errors)
+	 *
+	 * @return bool
+	 * @since 6.0
+	 * @internal for use in the \Elgg\EntityIconService
+	 */
+	public function isIconThumbnailGenerationLocked(string $type = 'icon', int $ttl = 30): bool {
+		if (!isset($this->{"{$type}_thumbnail_locked"})) {
+			return false;
+		}
+		
+		$locked = (int) $this->{"{$type}_thumbnail_locked"};
+		return $locked > (time() - $ttl);
+	}
+	
+	/**
+	 * Unlock thumbnail generation when upload/resize is complete
+	 *
+	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
+	 *
+	 * @return void
+	 * @since 6.0
+	 * @internal for use in the \Elgg\EntityIconService
+	 */
+	public function unlockIconThumbnailGeneration(string $type = 'icon'): void {
+		unset($this->{"{$type}_thumbnail_locked"});
 	}
 }

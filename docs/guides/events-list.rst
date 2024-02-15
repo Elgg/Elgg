@@ -1151,14 +1151,15 @@ Other
 	 *
 	 * @param \Elgg\Event $event 'entity:icon:url', 'user'
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	function gravatar_icon_handler(\Elgg\Event $event) {
+	function gravatar_icon_handler(\Elgg\Event $event): ?string {
 		$entity = $event->getEntityParam();
-		
+		$size = $event->getParam('size');
+
 		// Allow users to upload avatars
-		if ($entity->icontime) {
-			return $url;
+		if ($entity->hasIcon($size)) {
+			return null;
 		}
 
 		// Generate gravatar hash for user email
@@ -1175,7 +1176,7 @@ Other
 		}
 
 		// Produce URL used to retrieve icon
-		return "http://www.gravatar.com/avatar/$hash?s=$size";
+		return "https://www.gravatar.com/avatar/{$hash}?s={$size}";
 	}
 
 **entity:<icon_type>:url, <entity_type>** |results|

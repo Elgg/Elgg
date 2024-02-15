@@ -22,7 +22,7 @@ class EntityIconServiceIntegrationTest extends IntegrationTestCase {
 		$inspector = new \ReflectionClass($service);
 		$method = $inspector->getMethod('detectCroppingCoordinates');
 		
-		$this->assertFalse($method->invoke($service, $input_name));
+		$this->assertNull($method->invoke($service, $input_name));
 	}
 	
 	public static function invalidCoordinatesProvider() {
