@@ -147,35 +147,6 @@ class ViewsService {
 	}
 
 	/**
-	 * Takes a view name and returns the canonical name for that view.
-	 *
-	 * @param string $alias The possibly non-canonical view name.
-	 *
-	 * @return string The canonical view name.
-	 */
-	public function canonicalizeViewName(string $alias): string {
-
-		$canonical = $alias;
-
-		$extension = pathinfo($canonical, PATHINFO_EXTENSION);
-		$hasValidFileExtension = isset(CacheHandler::$extensions[$extension]);
-
-		if (str_starts_with($canonical, 'js/')) {
-			$canonical = substr($canonical, 3);
-			if (!$hasValidFileExtension) {
-				$canonical .= '.js';
-			}
-		} else if (str_starts_with($canonical, 'css/')) {
-			$canonical = substr($canonical, 4);
-			if (!$hasValidFileExtension) {
-				$canonical .= '.css';
-			}
-		}
-
-		return $canonical;
-	}
-
-	/**
 	 * Auto-registers views from a location.
 	 *
 	 * @param string $view_base Optional The base of the view name without the view type.
@@ -260,18 +231,16 @@ class ViewsService {
 	 * @see elgg_set_view_location()
 	 */
 	public function setViewDir(string $view, string $location, string $viewtype = ''): void {
-		$view = $this->canonicalizeViewName($view);
-
 		if (empty($viewtype)) {
 			$viewtype = 'default';
 		}
 
 		$location = rtrim($location, '/\\');
 
-		if ($this->fileExists("$location/$viewtype/$view.php")) {
-			$this->setViewLocation($view, $viewtype, "$location/$viewtype/$view.php");
-		} else if ($this->fileExists("$location/$viewtype/$view")) {
-			$this->setViewLocation($view, $viewtype, "$location/$viewtype/$view");
+		if ($this->fileExists("{$location}/{$viewtype}/{$view}.php")) {
+			$this->setViewLocation($view, $viewtype, "{$location}/{$viewtype}/{$view}.php");
+		} elseif ($this->fileExists("{$location}/{$viewtype}/{$view}")) {
+			$this->setViewLocation($view, $viewtype, "{$location}/{$viewtype}/{$view}");
 		}
 	}
 
@@ -313,8 +282,6 @@ class ViewsService {
 	 * @see elgg_view()
 	 */
 	public function renderDeprecatedView(string $view, array $vars, string $suggestion, string $version): string {
-		$view = $this->canonicalizeViewName($view);
-
 		$rendered = $this->renderView($view, $vars, '', false);
 		if ($rendered) {
 			$this->logDeprecatedMessage("The '{$view}' view has been deprecated. {$suggestion}", $version);
@@ -350,8 +317,6 @@ class ViewsService {
 	 * @see elgg_view()
 	 */
 	public function renderView(string $view, array $vars = [], string $viewtype = '', bool $issue_missing_notice = null, array $extensions_tree = []): string {
-		$view = $this->canonicalizeViewName($view);
-
 		// basic checking for bad paths
 		if (str_contains($view, '..')) {
 			return '';
@@ -488,8 +453,6 @@ class ViewsService {
 	 * @see elgg_view_exists()
 	 */
 	public function viewExists(string $view, string $viewtype = '', bool $recurse = true): bool {
-		$view = $this->canonicalizeViewName($view);
-
 		if (empty($view)) {
 			return false;
 		}
@@ -536,9 +499,6 @@ class ViewsService {
 	 * @see elgg_extend_view()
 	 */
 	public function extendView(string $view, string $view_extension, int $priority = 501): void {
-		$view = $this->canonicalizeViewName($view);
-		$view_extension = $this->canonicalizeViewName($view_extension);
-
 		if ($view === $view_extension) {
 			// do not allow direct extension on self with self
 			return;
@@ -568,9 +528,6 @@ class ViewsService {
 	 * @see elgg_unextend_view()
 	 */
 	public function unextendView(string $view, string $view_extension): bool {
-		$view = $this->canonicalizeViewName($view);
-		$view_extension = $this->canonicalizeViewName($view_extension);
-
 		if (!isset($this->extensions[$view])) {
 			return false;
 		}
@@ -787,7 +744,6 @@ class ViewsService {
 	 * @return void
 	 */
 	protected function setViewLocation(string $view, string $viewtype, string $path): void {
-		$view = $this->canonicalizeViewName($view);
 		$path = strtr($path, '\\', '/');
 
 		if (isset($this->locations[$viewtype][$view]) && $path !== $this->locations[$viewtype][$view]) {

@@ -744,7 +744,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanRespondToAjaxViewRequestForCSS() {
 
-		$request = $this->prepareHttpRequest('ajax/view/css/styles.css', 'GET', [], 1);
+		$request = $this->prepareHttpRequest('ajax/view/styles.css', 'GET', [], 1);
 		$this->createService($request);
 
 		$this->route($request);
@@ -759,7 +759,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanRespondToAjaxViewRequestForJS() {
 
-		$request = $this->prepareHttpRequest('ajax/view/js/javascript.js', 'GET', [], 1);
+		$request = $this->prepareHttpRequest('ajax/view/javascript.js', 'GET', [], 1);
 		$this->createService($request);
 
 		$this->route($request);
@@ -902,7 +902,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	 */
 	public function testCanRespondToAjax2ViewRequestForCSS() {
 
-		$request = $this->prepareHttpRequest('ajax/view/css/styles.css', 'GET', [], 2);
+		$request = $this->prepareHttpRequest('ajax/view/styles.css', 'GET', [], 2);
 		$this->createService($request);
 
 		$this->route($request);
@@ -914,7 +914,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'value' => file_get_contents($this->viewsDir . '/default/styles.css'),
-			'current_url' => elgg_normalize_url('ajax/view/css/styles.css'),
+			'current_url' => elgg_normalize_url('ajax/view/styles.css'),
 			'forward_url' => elgg_normalize_url(''),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
@@ -928,7 +928,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	 */
 	public function testCanRespondToAjax2ViewRequestForJS() {
 
-		$request = $this->prepareHttpRequest('ajax/view/js/javascript.js', 'GET', [], 2);
+		$request = $this->prepareHttpRequest('ajax/view/javascript.js', 'GET', [], 2);
 		$this->createService($request);
 
 		$this->route($request);
@@ -940,7 +940,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'value' => file_get_contents($this->viewsDir . '/default/javascript.js'),
-			'current_url' => elgg_normalize_url('ajax/view/js/javascript.js'),
+			'current_url' => elgg_normalize_url('ajax/view/javascript.js'),
 			'forward_url' => elgg_normalize_url(''),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],

@@ -48,9 +48,6 @@ class SimpleCache {
 	 * @return string
 	 */
 	public function getUrl(string $view): string {
-		$view = $this->views->canonicalizeViewName($view);
-
-		// should be normalized to canonical form by now: `getUrl('blog/save_draft.js')`
 		$this->registerCacheableView($view);
 
 		return $this->getRoot() . $view;
@@ -80,8 +77,6 @@ class SimpleCache {
 	 * @return void
 	 */
 	public function registerCacheableView(string $view): void {
-		$view = $this->views->canonicalizeViewName($view);
-		
 		$this->simplecache_views[$view] = true;
 	}
 	
@@ -93,7 +88,6 @@ class SimpleCache {
 	 * @return bool
 	 */
 	public function isCacheableView(string $view): bool {
-		$view = $this->views->canonicalizeViewName($view);
 		if (isset($this->simplecache_views[$view])) {
 			return true;
 		}
