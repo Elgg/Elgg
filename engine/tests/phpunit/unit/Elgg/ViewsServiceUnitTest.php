@@ -111,11 +111,6 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals("// PHPin", $this->views->renderView('hello/world.js', ['in' => 'in']));
 	}
 
-	public function testCanSetViewsDirs() {
-		$this->views->setViewDir('static.css', $this->normalizeTestFilePath('views2/'));
-		$this->assertEquals('body{}', $this->views->renderView('static.css'));
-	}
-
 	public function testViewtypesCanFallBack() {
 		$this->views->registerViewtypeFallback('mobile');
 		$this->assertTrue($this->views->doesViewtypeFallBack('mobile'));

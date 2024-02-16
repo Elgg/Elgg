@@ -220,31 +220,6 @@ class ViewsService {
 	}
 
 	/**
-	 * Set an alternative base location for a view
-	 *
-	 * @param string $view     Name of the view
-	 * @param string $location Full path to the view file
-	 * @param string $viewtype The viewtype to register this under
-	 *
-	 * @return void
-	 *
-	 * @see elgg_set_view_location()
-	 */
-	public function setViewDir(string $view, string $location, string $viewtype = ''): void {
-		if (empty($viewtype)) {
-			$viewtype = 'default';
-		}
-
-		$location = rtrim($location, '/\\');
-
-		if ($this->fileExists("{$location}/{$viewtype}/{$view}.php")) {
-			$this->setViewLocation($view, $viewtype, "{$location}/{$viewtype}/{$view}.php");
-		} elseif ($this->fileExists("{$location}/{$viewtype}/{$view}")) {
-			$this->setViewLocation($view, $viewtype, "{$location}/{$viewtype}/{$view}");
-		}
-	}
-
-	/**
 	 * Register a viewtype to fall back to a default view if a view isn't
 	 * found for that viewtype.
 	 *

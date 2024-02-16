@@ -76,6 +76,7 @@ Removed lib functions
 ~~~~~~~~~~~~~~~~~~~~~
 
 * ``elgg_unrequire_css()`` has been removed. Use ``elgg_unregister_external_file('css', $view)`` as replacement.
+* ``elgg_set_view_location()`` has been removed
 
 Lib functions function parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
