@@ -72,6 +72,11 @@ The metadata ``x1``, ``x2``, ``y1`` and ``y2`` no longer exist. Use the new ``\E
 Changes in functions
 --------------------
 
+Removed lib functions
+~~~~~~~~~~~~~~~~~~~~~
+
+* ``elgg_unrequire_css()`` has been removed. Use ``elgg_unregister_external_file('css', $view)`` as replacement.
+
 Lib functions function parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

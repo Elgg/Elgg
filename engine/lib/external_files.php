@@ -49,18 +49,6 @@ function elgg_require_css(string $view): void {
 }
 
 /**
- * Unregister a CSS view name to be included in the HTML head
- *
- * @param string $view The css view name
- *
- * @return void
- * @since 3.1
- */
-function elgg_unrequire_css(string $view): void {
-	elgg_unregister_external_file('css', $view);
-}
-
-/**
  * Core registration function for external files
  *
  * @param string $type     Type of external resource (js or css)
