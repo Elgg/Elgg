@@ -29,7 +29,7 @@ foreach ($pages as $page_name) {
 	]);
 }
 
-elgg_require_js('theme_sandbox/theme_sandbox');
+elgg_import_esm('theme_sandbox/theme_sandbox');
 
 $title = elgg_echo("theme_sandbox:{$page}");
 

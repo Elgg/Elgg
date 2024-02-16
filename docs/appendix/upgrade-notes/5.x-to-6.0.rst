@@ -14,6 +14,29 @@ DB Requirements
  - The minimal MySQL version is now 8.0
  - The minimal MariaDB version is now 10.6
 
+ES Modules
+----------
+
+We no longer use RequireJS for inclusion of AMD JavaScript modules. Instead we now rely on the native use of ECMAScript modules.
+All modules can be referenced under the same name as an importable module.
+
+Related functions changes
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* ``elgg_define_js()`` this function has been removed. You might need ``elgg_register_esm()`` as a replacement.
+* ``elgg_require_js()`` this function has been removed. You might need ``elgg_import_esm()`` as a replacement.
+* ``elgg_unrequire_js()`` this function has been removed
+
+The event 'config', 'amd' has been removed.
+The event 'elgg.data', 'site' has been removed. You can switch to the 'elgg.data', 'page' event.
+
+.. note::
+
+	With the switch to ECMAScript modules we can no longer add Sub-Resource Integrity checks to the imported modules.
+
+.. note::
+
+	With the switch to ECMAScript modules we temporarily dropped Javascript testing features. This will be added in the future.
 
 Composer
 --------

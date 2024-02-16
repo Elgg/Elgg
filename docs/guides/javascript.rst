@@ -5,14 +5,12 @@ JavaScript
    :local:
    :depth: 2
 
-AMD
-===
+JavaScript Modules
+==================
 
-Developers should use the `AMD (Asynchronous Module
-Definition) <http://requirejs.org/docs/whyamd.html>`_ standard for writing JavaScript code in Elgg.
+Developers should use the browser native `ECMAScript modules <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules>`_ for writing JavaScript code in Elgg.
 
-Here we'll describe making and executing AMD modules. The RequireJS documentation for
-`defining modules <http://requirejs.org/docs/api.html#define>`_ may also be of use.
+Here we'll describe making and importing these modules in Elgg.
 
 Executing a module in the current page
 --------------------------------------
@@ -22,54 +20,26 @@ Telling Elgg to load an existing module in the current page is easy:
 .. code-block:: php
 
     <?php
-    elgg_require_js("myplugin/say_hello");
+    elgg_import_esm('myplugin/say_hello');
 
 On the client-side, this will asynchronously load the module, load any dependencies, and
-execute the module's definition function, if it has one.
+execute the module's code, if it has any.
 
 Defining the Module
 -------------------
 
-Here we define a basic module that alters the page, by passing a "definition function" to ``define()``:
+Files with the extension ".mjs" are automatically added to an importmap so they can be imported based on their view name.
 
-.. code-block:: js
+For example if we have a file in "views/default/myplugin/say_hello.mjs" we can import from php with ``elgg_import_esm('myplugin/say_hello')``
+or from javascript using the ``import`` statement ``import 'myplugin/say_hello';`` or on demand with the ``import()`` function. 
 
-    // in views/default/myplugin/say_hello.js
+If your modules do not have an ".mjs" extension, for example when they come from a dependency, you might need to register it to the importmap.
+After registration they can be imported under their registered name.
 
-    define(['jquery', 'elgg/i18n'], function($, i18n) {
-        $('body').append(i18n.echo('hello_world'));
-    });
+.. code-block:: php
 
-The module's name is determined by the view name, which here is ``myplugin/say_hello.js``.
-We strip the ``.js`` extension, leaving ``myplugin/say_hello``.
-
-.. warning::
-
-    The definition function **must** have one argument named ``require``.
-
-Making modules dependent on other modules
------------------------------------------
-
-Below we refactor a bit so that the module depends on a new ``myplugin/hello`` module to provide
-the greeting:
-
-.. code-block:: js
-
-    // in views/default/myplugin/hello.js
-
-    define(['elgg/i18n'], function(i18n) {
-        return i18n.echo('hello_world');
-    });
-
-.. code-block:: js
-
-    // in views/default/myplugin/say_hello.js
-
-    define(['jquery', 'myplugin/hello'], function($, hello) {
-        $('body').append(hello);
-    });
-
-.. _guides/javascript#config:
+    <?php
+    elgg_register_esm('myplugin/say_hello', elgg_get_simplecache_url('external/dependency/modulename.js'));
 
 Passing settings to modules
 ---------------------------
@@ -79,8 +49,7 @@ The ``elgg.data`` events
 
 The ``elgg`` module provides an object ``elgg.data`` which is populated from two server side events:
 
-- **elgg.data, site**: This filters an associative array of site-specific data passed to the client and cached.
-- **elgg.data, page**: This filters an associative array of uncached, page-specific data passed to the client.
+- **elgg.data, page**: This filters an associative array of data passed to the client.
 
 Let's pass some data to a module:
 
@@ -88,30 +57,19 @@ Let's pass some data to a module:
 
     <?php
 
-    function myplugin_config_site(\Elgg\Event $event) {
+    function myplugin_config_page(\Elgg\Event $event) {
         $value = $event->getValue();
-    	
-        // this will be cached client-side
         $value['myplugin']['api'] = elgg_get_site_url() . 'myplugin-api';
         $value['myplugin']['key'] = 'none';
         
-        return $value;
-    }
-
-    function myplugin_config_page(\Elgg\Event $event) {
         $user = elgg_get_logged_in_user_entity();
-        if (!$user) {
-        	return;
+        if ($user) {
+        	$value['myplugin']['key'] = $user->myplugin_api_key;
         }
         
-        $value = $event->getValue();
-        
-        $value['myplugin']['key'] = $user->myplugin_api_key;
-        
         return $value;
     }
 
-    elgg_register_event_handler('elgg.data', 'site', 'myplugin_config_site');
     elgg_register_event_handler('elgg.data', 'page', 'myplugin_config_page');
 
 .. code-block:: js
@@ -122,43 +80,6 @@ Let's pass some data to a module:
 
         // ...
     });
-
-.. note::
-
-    In ``elgg.data``, page data overrides site data. Also note ``json_encode()`` is used to copy
-    data client-side, so the data must be JSON-encodable.
-
-Making a config module
-^^^^^^^^^^^^^^^^^^^^^^
-
-You can use a PHP-based module to pass values from the server. To make the module ``myplugin/settings``,
-create the view file ``views/default/myplugin/settings.js.php`` (note the double extension
-``.js.php``).
-
-.. code-block:: php
-
-    <?php
-
-    // this will be cached client-side
-    $settings = [
-        'api' => elgg_get_site_url() . 'myplugin-api',
-        'key' => null,
-    ];
-    ?>
-    define(<?php echo json_encode($settings); ?>);
-
-You must also manually register the view as an external resource:
-
-.. code-block:: php
-
-    <?php
-    // note the view name does not include ".php"
-    elgg_register_simplecache_view('myplugin/settings.js');
-
-.. note::
-
-    The PHP view is cached, so you should treat the output as static (the same for all users) and
-    avoid session-specific logic.
 
 
 Setting the URL of a module
@@ -195,38 +116,6 @@ you can use something like this instead:
     ];
 
 That's it! Elgg will now load this file whenever the "underscore" module is requested.
-
-
-Using traditional JS libraries as modules
------------------------------------------
-
-It's possible to support JavaScript libraries that do not declare themselves as AMD
-modules (i.e. they declare global variables instead) if you shim them by
-setting ``exports`` and ``deps`` in ``elgg_define_js``:
-
-.. code-block:: php
-
-    // set the path, define its dependencies, and what value it returns
-    elgg_define_js('jquery.form', [
-        'deps' => ['jquery'],
-        'exports' => 'jQuery.fn.ajaxForm',
-    ]);
-
-When this is requested client-side:
-
-#. The jQuery module is loaded, as it's marked as a dependency.
-#. ``https://elgg.example.org/cache/125235034/views/default/jquery.form.js`` is loaded and executed.
-#. The value of ``window.jQuery.fn.ajaxForm`` is returned by the module.
-
-.. warning:: Calls to ``elgg_define_js()`` must be in an ``init, system`` event handler.
-
-Some things to note
-^^^^^^^^^^^^^^^^^^^
-
-#. Return the value of the module instead of adding to a global variable.
-#. Static (.js,.css,etc.) files are automatically minified and cached by Elgg's simplecache system.
-#. The configuration is also cached in simplecache, and should not rely on user-specific values
-   like ``elgg_get_current_language()``.
 
 Modules provided with Elgg
 ==========================
@@ -405,7 +294,7 @@ attribute and defining target module with a ``href`` (or ``data-href``) attribut
    ]);
 
    // Button with custom positioning of the popup
-   elgg_require_js('elgg/popup');
+   elgg_import_esm('elgg/popup');
    echo elgg_format_element('button', [
       'class' => 'elgg-button elgg-button-submit elgg-popup',
       'text' => 'Show popup',
@@ -480,8 +369,8 @@ Plugins that load a widget layout via Ajax should initialize via this module:
 
 .. code-block:: js
 
-   require(['elgg/widgets'], function (widgets) {
-       widgets.init();
+   import('elgg/widgets').then((widgets) => {
+       widgets.default.init();
    });
 
 Module ``elgg/lightbox``
@@ -533,12 +422,12 @@ To support gallery sets (via ``rel`` attribute), you need to bind colorbox direc
 
 .. code-block:: js
 
-   require(['elgg/lightbox'], function(lightbox) {
+   import('elgg/lightbox').then((lightbox) => {
       var options = {
          photo: true,
          width: 500
       };
-      lightbox.bind('a[rel="my-gallery"]', options, false); // 3rd attribute ensures binding is done without proxies
+      lightbox.default.bind('a[rel="my-gallery"]', options, false); // 3rd attribute ensures binding is done without proxies
    });
 
 You can also resize the lightbox programmatically if needed:
@@ -570,19 +459,19 @@ Note that WYSIWYG will be automatically attached to all instances of ``.elgg-inp
 
 .. code-block:: js
 
-   require(['elgg/ckeditor'], function (elggCKEditor) {
-      elggCKEditor.bind('#my-text-area');
+   import('elgg/ckeditor').then((elggCKEditor) => {
+      elggCKEditor.default.bind('#my-text-area');
 
       // Toggle CKEditor
-      elggCKEditor.toggle('#my-text-area');
+      elggCKEditor.default.toggle('#my-text-area');
 
       // Focus on CKEditor input
-      elggCKEditor.focus('#my-text-area');
+      elggCKEditor.default.focus('#my-text-area');
       // or
       $('#my-text-area').trigger('focus');
 
       // Reset CKEditor input
-      elggCKEditor.reset('#my-text-area');
+      elggCKEditor.default.reset('#my-text-area');
       // or
       $('#my-text-area').trigger('reset');
 
@@ -597,17 +486,15 @@ Inline tabs component fires an ``open`` event whenever a tabs is open and, in ca
 .. code-block:: js
 
 	// Add custom animation to tab content
-	require(['jquery'], function($) {
-		$(document).on('open', '.theme-sandbox-tab-callback', function() {
-			$(this).find('a').text('Clicked!');
-			$(this).data('target').hide().show('slide', {
-				duration: 2000,
-				direction: 'right',
-				complete: function() {
-					alert('Thank you for clicking. We hope you enjoyed the show!');
-					$(this).css('display', ''); // .show() adds display property
-				}
-			});
+	$(document).on('open', '.theme-sandbox-tab-callback', function() {
+		$(this).find('a').text('Clicked!');
+		$(this).data('target').hide().show('slide', {
+			duration: 2000,
+			direction: 'right',
+			complete: function() {
+				alert('Thank you for clicking. We hope you enjoyed the show!');
+				$(this).css('display', ''); // .show() adds display property
+			}
 		});
 	});
 

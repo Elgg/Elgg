@@ -103,4 +103,4 @@ unset($vars['module']);
 
 echo elgg_view_module($module, (string) elgg_extract('title', $vars), $tabs . $content, $vars);
 
-elgg_require_js('page/components/tabs');
+elgg_import_esm('page/components/tabs');

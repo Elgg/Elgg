@@ -88,7 +88,7 @@ if (isset($vars['id'])) {
 }
 ?>
 <script>
-	require(['input/date'], function (datepicker) {
-		datepicker.init(<?= json_encode($selector) ?>);
+	import('input/date').then((datepicker) => {
+		datepicker.default.init(<?= json_encode($selector) ?>);
 	});
 </script>

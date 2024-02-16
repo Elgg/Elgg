@@ -1,6 +1,6 @@
 <?php
 
-elgg_require_js('plugins/developers/settings');
+elgg_import_esm('plugins/developers/settings');
 
 /* @var $plugin \ElggPlugin */
 $plugin = elgg_extract('entity', $vars);
@@ -86,16 +86,6 @@ echo elgg_view_field([
 		2 => elgg_echo('developers:show_strings:key_only'),
 	],
 	'value' => $plugin->show_strings,
-]);
-
-echo elgg_view_field([
-	'#type' => 'checkbox',
-	'#label' => elgg_echo('developers:label:show_modules'),
-	'#help' => elgg_echo('developers:help:show_modules'),
-	'name' => 'params[show_modules]',
-	'value' => 1,
-	'checked' => $plugin->show_modules === '1',
-	'switch' => true,
 ]);
 
 echo elgg_view_field([

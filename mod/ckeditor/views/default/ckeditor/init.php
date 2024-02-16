@@ -16,13 +16,16 @@ if (!$id) {
 }
 
 $editor_language = elgg_get_current_language();
-if ($editor_language !== 'en' && elgg_view_exists("ckeditor/translations/{$editor_language}.js")) {
-	elgg_require_js("ckeditor/translations/{$editor_language}");
-}
 
 ?>
 <script>
-	require(['ckeditor/editor'], function (editor) {
-		editor.init('#<?php echo $id; ?>');
+	<?php
+	if ($editor_language !== 'en' && elgg_view_exists("ckeditor/translations/{$editor_language}.js")) {
+		$simple_cache_url = elgg_get_simplecache_url("ckeditor/translations/{$editor_language}.js");
+		echo "import('{$simple_cache_url}');" . PHP_EOL;
+	}
+	?>
+	import('ckeditor/editor').then((editor) => {
+		editor.default.init('#<?php echo $id; ?>');
 	});
 </script>

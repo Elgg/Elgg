@@ -6,7 +6,7 @@
  * eg: how can people join this group, who can see the group, etc
  */
 
-elgg_require_js('groups/edit/access');
+elgg_import_esm('groups/edit/access');
 
 $entity = elgg_extract('entity', $vars, false);
 $membership = elgg_extract('membership', $vars);

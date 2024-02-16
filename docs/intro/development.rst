@@ -42,10 +42,7 @@ view.
 JavaScript
 ==========
 
-Elgg uses an AMD-compatible JavaScript system provided by RequireJs. Bundled with Elgg are jQuery, jQuery UI, 
-jQuery Form, and jQuery UI Autocomplete.
-
-Plugins can load their own JS libs.
+Elgg uses native ES modules. Plugins can register their own modules or load their own JS libs.
 
 Internationalization
 ====================
@@ -61,7 +58,7 @@ Elgg uses two caches to improve performance: a system cache and SimpleCache.
 ===================
 
 The use of 3rd party libraries in Elgg is managed by using `Composer`_ dependencies. Examples of 3rd party libraries are
-jQuery, RequireJs or Laminas mail.
+jQuery, CSS Crush or Laminas mail.
 
 To get a list of all the Elgg dependencies check out the `Packagist`_ page for Elgg.
 

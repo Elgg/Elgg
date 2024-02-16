@@ -33,7 +33,7 @@ if (!$ignore_empty_body && empty($body)) {
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-form');
 if (elgg_extract('prevent_double_submit', $vars, true)) {
-	elgg_require_js('input/form-double-submit');
+	elgg_import_esm('input/form-double-submit');
 	$vars['class'][] = 'elgg-form-prevent-double-submit';
 }
 

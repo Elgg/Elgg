@@ -2,7 +2,7 @@
 /**
  * Topbar
  */
-elgg_require_js('page/elements/topbar');
+elgg_import_esm('page/elements/topbar');
 
 ?>
 <div class="elgg-nav-logo">

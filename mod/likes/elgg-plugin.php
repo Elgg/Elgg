@@ -40,7 +40,7 @@ return [
 			],
 		],
 		'elgg.data' => [
-			'site' => [
+			'page' => [
 				Elgg\Likes\JsConfigHandler::class => [],
 			],
 		],

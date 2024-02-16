@@ -31,7 +31,7 @@ if ($char_limit > 140) {
 }
 
 if ($char_limit && !elgg_is_active_plugin('ckeditor')) {
-	elgg_require_js('forms/thewire/add');
+	elgg_import_esm('forms/thewire/add');
 }
 
 echo elgg_view('input/longtext', [

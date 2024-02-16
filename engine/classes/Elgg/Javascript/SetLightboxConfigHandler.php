@@ -12,7 +12,7 @@ class SetLightboxConfigHandler {
 	/**
 	 * Set lightbox config
 	 *
-	 * @param \Elgg\Event $event 'elgg.data', 'site'
+	 * @param \Elgg\Event $event 'elgg.data', 'page'
 	 *
 	 * @return array
 	 */

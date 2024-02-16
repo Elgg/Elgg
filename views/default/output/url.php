@@ -154,11 +154,11 @@ if (!is_null($badge)) {
 
 $classes = elgg_extract_class($vars);
 if (in_array('elgg-popup', $classes)) {
-	elgg_require_js('elgg/popup');
+	elgg_import_esm('elgg/popup');
 }
 
 if (in_array('elgg-toggle', $classes)) {
-	elgg_require_js('elgg/toggle');
+	elgg_import_esm('elgg/toggle');
 }
 
 echo elgg_format_element('a', $vars, $icon . $text . $icon_alt . $badge);

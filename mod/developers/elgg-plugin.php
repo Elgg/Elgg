@@ -7,7 +7,6 @@ return [
 	'settings' => [
 		'screen_log' => 0,
 		'show_strings' => 0,
-		'show_modules' => 0,
 		'wrap_views' => 0,
 		'log_events' => 0,
 		'enable_error_log' => 0,

@@ -21,6 +21,8 @@ foreach ($links as $attributes) {
 	echo elgg_format_element('link', $attributes);
 }
 
+echo elgg_view('page/elements/importmap.json');
+
 $js_foot = elgg_get_loaded_external_resources('js', 'footer');
 foreach ($js_foot as $resource) {
 	$options = [
@@ -66,14 +68,17 @@ foreach ($js_head as $resource) {
 	echo elgg_format_element('script', $options);
 }
 
-// A non-empty script *must* come below the CSS links, otherwise Firefox will exhibit FOUC
-// See https://github.com/Elgg/Elgg/issues/8328
+
+$imports = _elgg_services()->esm->getImports();
+if (empty($imports)) {
+	return;
+}
+
 ?>
-<script>
-	<?php // Do not convert this to a regular function declaration. It gets redefined later. ?>
-	require = function () {
-		// handled in the view "elgg.js"
-		_require_queue.push(arguments);
-	};
-	_require_queue = [];
+<script type="module">
+<?php
+foreach ($imports as $module) {
+	echo "import '{$module}';" . PHP_EOL;
+}
+?>
 </script>

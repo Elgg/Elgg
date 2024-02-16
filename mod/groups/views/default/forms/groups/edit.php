@@ -72,7 +72,7 @@ if ($entity instanceof \ElggGroup) {
 		'value' => $entity->guid,
 	]);
 } else {
-	elgg_require_js('forms/groups/create_navigation');
+	elgg_import_esm('forms/groups/create_navigation');
 	
 	$footer .= elgg_view_field([
 		'#type' => 'fieldset',

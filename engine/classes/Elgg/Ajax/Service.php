@@ -2,10 +2,10 @@
 
 namespace Elgg\Ajax;
 
-use Elgg\Amd\Config;
 use Elgg\EventsService;
 use Elgg\Exceptions\RuntimeException;
 use Elgg\Http\Request;
+use Elgg\Javascript\ESMService;
 use Elgg\Services\AjaxResponse;
 use Elgg\SystemMessagesService;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,50 +18,24 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class Service {
 
-	/**
-	 * @var EventsService
-	 */
-	private $events;
+	protected bool $response_sent = false;
 
-	/**
-	 * @var SystemMessagesService
-	 */
-	private $msgs;
-
-	/**
-	 * @var Request
-	 */
-	private $request;
-
-	/**
-	 * @var Config
-	 */
-	private $amd_config;
-
-	/**
-	 * @var bool
-	 */
-	private $response_sent = false;
-
-	/**
-	 * @var array
-	 */
-	private $allowed_views = [];
+	protected array $allowed_views = [];
 
 	/**
 	 * Constructor
 	 *
-	 * @param EventsService         $events    Events service
-	 * @param SystemMessagesService $msgs      System messages service
-	 * @param Request               $request   Http Request
-	 * @param Config                $amdConfig AMD config
+	 * @param EventsService         $events  Events service
+	 * @param SystemMessagesService $msgs    System messages service
+	 * @param Request               $request Http Request
+	 * @param ESMService            $esm     ESM service
 	 */
-	public function __construct(EventsService $events, SystemMessagesService $msgs, Request $request, Config $amdConfig) {
-		$this->events = $events;
-		$this->msgs = $msgs;
-		$this->request = $request;
-		$this->amd_config = $amdConfig;
-
+	public function __construct(
+		protected EventsService $events,
+		protected SystemMessagesService $msgs,
+		protected Request $request,
+		protected ESMService $esm
+	) {
 		$message_filter = [$this, 'prepareResponse'];
 		$this->events->registerHandler(AjaxResponse::RESPONSE_EVENT, 'all', $message_filter, 999);
 	}
@@ -222,7 +196,7 @@ class Service {
 	}
 
 	/**
-	 * Prepare the response with additional metadata, like system messages and required AMD modules
+	 * Prepare the response with additional metadata, like system messages and required ES modules
 	 *
 	 * @param \Elgg\Event $event "ajax_response", "all"
 	 *
@@ -247,7 +221,7 @@ class Service {
 		}
 
 		if ($this->request->getParam('elgg_fetch_deps', true)) {
-			$response->getData()->_elgg_deps = (array) $this->amd_config->getDependencies();
+			$response->getData()->_elgg_deps = $this->esm->getImports();
 		}
 
 		return $response;

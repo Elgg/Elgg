@@ -1,34 +1,15 @@
 <?php
 
-/**
- * Topbar
- */
-elgg_require_js('page/elements/topbar');
-?>
+elgg_import_esm('page/elements/topbar');
 
-<div class="elgg-nav-logo">
-	<?php
-	echo elgg_view('page/elements/header_logo');
-	?>
-</div>
+echo elgg_format_element('div', ['class' => 'elgg-nav-logo'], elgg_view('page/elements/header_logo'));
 
-<?= elgg_view('core/account/login_dropdown') ?>
+echo elgg_view('core/account/login_dropdown');
 
-<div class="elgg-nav-button">
-	<span></span>
-	<span></span>
-	<span></span>
-</div>
+echo elgg_format_element('div', ['class' => 'elgg-nav-button'], '<span></span><span></span><span></span>');
 
-<div class="elgg-nav-collapse">
-	<?php
-	echo elgg_format_element('div', [
-		'class' => 'elgg-nav-search',
-	], elgg_view('search/search_box'));
+$contents = elgg_format_element('div', ['class' => 'elgg-nav-search'], elgg_view('search/search_box'));
+$contents .= elgg_view_menu('site', ['sort_by' => 'text']);
+$contents .= elgg_view_menu('topbar');
 
-	echo elgg_view_menu('site', [
-		'sort_by' => 'text',
-	]);
-	echo elgg_view_menu('topbar');
-	?>
-</div>
+echo elgg_format_element('div', ['class' => 'elgg-nav-collapse'], $contents);

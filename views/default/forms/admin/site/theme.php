@@ -1,6 +1,6 @@
 <?php
 
-elgg_require_js('forms/admin/site/theme');
+elgg_import_esm('forms/admin/site/theme');
 
 echo elgg_view('output/longtext', ['value' => elgg_echo('admin:theme:info')]);
 

@@ -30,7 +30,7 @@ if (elgg_is_empty($context)) {
 	return;
 }
 
-elgg_require_js('elgg/widgets');
+elgg_import_esm('elgg/widgets');
 
 // Underlying views and functions assume that the page owner is the owner of the widgets
 if (empty($page_owner) || $owner->guid !== $page_owner->guid) {

@@ -299,7 +299,7 @@ JavaScript
 ==========
 
 It is common that menu items rely on JavaScript. You can bind client-side events
-to menu items by placing your JavaScript into AMD module and defining the
+to menu items by placing your JavaScript into a module and defining the
 requirement during the registration.
 
 .. code-block:: php
@@ -315,12 +315,10 @@ requirement during the registration.
 
 .. code-block:: js
 
-    // in navigation/menu/item/hide_on_click.js
-    define(function(require) {
-        var $ = require('jquery');
+    // in navigation/menu/item/hide_on_click.mjs
+    import 'jquery';
 
-        $(document).on('click', '.hide-on-click', function(e) {
-            e.preventDefault();
-            $(this).hide();
-        });
+    $(document).on('click', '.hide-on-click', function(e) {
+        e.preventDefault();
+        $(this).hide();
     });

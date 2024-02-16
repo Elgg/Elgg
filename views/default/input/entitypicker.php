@@ -78,7 +78,7 @@ echo elgg_format_element('div', $wrapper_options, $picker);
 
 ?>
 <script>
-	require(['input/entitypicker'], function (entitypicker) {
-		entitypicker.setup('.elgg-entity-picker[data-name="' + <?= json_encode($name) ?> + '"]');
+	import('input/entitypicker').then((entitypicker) => {
+		entitypicker.default.setup('.elgg-entity-picker[data-name="' + <?= json_encode($name) ?> + '"]');
 	});
 </script>

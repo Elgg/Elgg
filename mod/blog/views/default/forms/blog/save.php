@@ -3,7 +3,7 @@
  * Edit blog form
  */
 
-elgg_require_js('forms/blog/save');
+elgg_import_esm('forms/blog/save');
 
 $blog = elgg_extract('entity', $vars);
 

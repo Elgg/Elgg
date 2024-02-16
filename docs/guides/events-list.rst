@@ -57,10 +57,7 @@ System events
 	Filter the output for the diagnostics report download.
 
 **elgg.data, page** |results|
-   Filters uncached, page-specific configuration data to pass to the client. :ref:`More info <guides/javascript#config>`
-   
-**elgg.data, site** |results|
-   Filters cached configuration data to pass to the client. :ref:`More info <guides/javascript#config>`
+   Filters uncached, page-specific configuration data to pass to the client. :doc:`More info </guides/javascript>`
    
 **format, friendly:title** |results|
 	Formats the "friendly" title for strings. This is used for generating URLs.
@@ -868,7 +865,7 @@ Ajax
 ====
 
 **ajax_response, \*** |results|
-	When the ``elgg/Ajax`` AMD module is used, this event gives access to the response object
+	When the ``elgg/Ajax`` module is used, this event gives access to the response object
 	(``\Elgg\Services\AjaxResponse``) so it can be altered/extended. The event type depends on
 	the method call:
 
@@ -1084,9 +1081,6 @@ Other
 **classes, icon** |results|
 	Can be used to filter CSS classes applied to icon glyphs. By default, Elgg uses FontAwesome. Plugins can use this
 	event to switch to a different font family and remap icon classes.
-
-**config, amd** |results|
-	Filter the AMD config for the requirejs library.
 	
 **entity:icon:sizes, <entity_type>** |results|
 	Triggered by ``elgg_get_icon_sizes()`` and sets entity type/subtype specific icon sizes.

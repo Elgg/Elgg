@@ -3,7 +3,7 @@
  * Admin area: edit default profile fields
  */
 
-elgg_require_js('admin/configure_utilities/profile_fields');
+elgg_import_esm('admin/configure_utilities/profile_fields');
 
 echo elgg_view('output/longtext', [
 	'value' => elgg_echo('profile:explainchangefields'),

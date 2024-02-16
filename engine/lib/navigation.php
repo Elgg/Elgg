@@ -68,7 +68,7 @@
  *  parent_name => STR  Identifier of the parent menu item
  *  link_class  => STR  A class or classes for the <a> tag
  *  item_class  => STR  A class or classes for the <li> tag
- *  deps     => STR  One or more AMD modules to require
+ *  deps     => STR  One or more ES modules to require
  *
  *  Additional options that the view output/url takes can be
  *	passed in the array. Custom options can be added by using

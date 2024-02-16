@@ -1,0 +1,46 @@
+/**
+ * Adds menu item toggle features
+ */
+
+import 'jquery';
+import hooks from 'elgg/hooks';
+import Ajax from 'elgg/Ajax';
+
+$(document).on('click', '.elgg-menu a[data-toggle]', function() {
+	var $item_clicked = $(this).closest('li');
+	var $menu = $item_clicked.closest('.elgg-menu');
+	var other_menuitem_name = $(this).data().toggle.replace('_', '-');
+	var $other_item = $menu.find('.elgg-menu-item-' + other_menuitem_name).eq(0);
+	
+	if (!$other_item) {
+		return;
+	}
+	
+	var $both_items = $item_clicked.add($other_item);
+	// Be optimistic about success
+	$both_items.toggleClass('hidden');
+	$other_item.children('a').focus();
+
+	// Send the ajax request
+	
+	var ajax = new Ajax();
+	ajax.action($(this).attr('href'), {
+		success: function(result) {
+			// let others know we toggled the menu item
+			hooks.trigger('toggle', 'menu_item', {
+				itemClicked: $item_clicked,
+				itemToggled: $other_item,
+				menu: $menu,
+				data: result
+			});
+		},
+		error: function() {
+			// Something went wrong, so undo the optimistic changes
+			$both_items.toggleClass('hidden');
+			$item_clicked.children('a').focus();
+		}
+	});
+	
+	// Don't want to actually click the link
+	return false;
+});

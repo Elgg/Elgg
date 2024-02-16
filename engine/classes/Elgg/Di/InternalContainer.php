@@ -21,7 +21,6 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Users\Accounts                              $accounts
  * @property-read \Elgg\Database\AdminNotices                       $adminNotices
  * @property-read \Elgg\Ajax\Service                                $ajax
- * @property-read \Elgg\Amd\Config                                  $amdConfig
  * @property-read \Elgg\Database\AnnotationsTable                   $annotationsTable
  * @property-read \Elgg\Database\ApiUsersTable                      $apiUsersTable
  * @property-read \Elgg\AuthenticationService                       $authentication
@@ -51,6 +50,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\EntityCapabilitiesService                   $entity_capabilities
  * @property-read \Elgg\EntityPreloader                             $entityPreloader
  * @property-read \Elgg\Database\EntityTable                        $entityTable
+ * @property-read \Elgg\Javascript\ESMService                       $esm
  * @property-read \Elgg\EventsService                               $events
  * @property-read \Elgg\Assets\ExternalFiles                        $externalFiles
  * @property-read \Elgg\Forms\FieldsService                         $fields

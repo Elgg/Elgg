@@ -30,4 +30,4 @@ echo elgg_list_annotations([
 	'widget_more' => $more_link,
 ]);
 
-elgg_require_js('elgg/messageboard');
+elgg_import_esm('elgg/messageboard');

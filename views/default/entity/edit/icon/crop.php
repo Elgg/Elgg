@@ -143,9 +143,8 @@ echo elgg_view('entity/edit/icon/crop_messages', $vars);
 
 ?>
 <script>
-	require(['entity/edit/icon/crop'], function(Cropper) {
-		var cropper = new Cropper();
-		
+	import('entity/edit/icon/crop').then((Cropper) => {
+		var cropper = new Cropper.default();
 		cropper.init('input[type="file"][name="<?php echo elgg_extract('name', $vars, 'icon'); ?>"]');
 	});
 </script>

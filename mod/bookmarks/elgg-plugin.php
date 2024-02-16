@@ -138,11 +138,6 @@ return [
 	'group_tools' => [
 		'bookmarks' => [],
 	],
-	'view_extensions' => [
-		'elgg.js' => [
-			'bookmarks.js' => [],
-		],
-	],
 	'notifications' => [
 		'object' => [
 			'bookmarks' => [

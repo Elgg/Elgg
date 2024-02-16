@@ -394,7 +394,7 @@ class Request extends SymfonyRequest {
 
 		// http://php.net/manual/en/features.commandline.webserver.php
 		$extensions = '.3gp, .apk, .avi, .bmp, .css, .csv, .doc, .docx, .flac, .gif, .gz, .gzip, .htm, .html, .ics,';
-		$extensions .= ' .jpe, .jpeg, .jpg, .js, .kml, .kmz, .m4a, .mov, .mp3, .mp4, .mpeg, .mpg, .odp, .ods, .odt,';
+		$extensions .= ' .jpe, .jpeg, .jpg, .js, .kml, .kmz, .m4a, .mjs, .mov, .mp3, .mp4, .mpeg, .mpg, .odp, .ods, .odt,';
 		$extensions .= ' .oga, .ogg, .ogv, .pdf, .pdf, .png, .pps, .pptx, .qt, .svg, .swf, .tar, .text, .tif, .txt,';
 		$extensions .= ' .wav, .webm, .wmv, .xls, .xlsx, .xml, .xsl, .xsd, and .zip';
 

@@ -20,7 +20,7 @@ if (empty($methods)) {
 	return;
 }
 
-elgg_require_js('notifications/subscriptions/record');
+elgg_import_esm('notifications/subscriptions/record');
 elgg_require_css('notifications/subscriptions/record');
 
 $icon = elgg_view_entity_icon($entity, 'tiny');

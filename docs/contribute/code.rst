@@ -242,70 +242,6 @@ Due to these local references, replacing services on the SP within a test often 
 * The ``events`` service has methods ``backup()`` and ``restore()``.
 * The ``logger`` service has methods ``disable()`` and ``enable()``.
 
-Jasmine Tests
--------------
-
-Test files must be named ``*Test.js`` and should go in either ``js/tests/`` or next
-to their source files in ``views/default/**.js``. Karma will automatically pick up
-on new ``*Test.js`` files and run those tests.
-
-Test boilerplate
-----------------
-
-.. code-block:: js
-
-	define(['elgg'], function(elgg) {
-		describe("This new test", function() {
-			it("fails automatically", function() {
-				expect(true).toBe(false);
-			});
-		});
-	});
-
-Running the tests
------------------
-Elgg uses `Karma`_ with `Jasmine`_ to run JS unit tests.
-
-.. _Karma: http://karma-runner.github.io/0.8/index.html
-.. _Jasmine: http://pivotal.github.io/jasmine/
-
-You will need to have nodejs and yarn installed.
-
-First install all the development dependencies:
-
-.. code-block:: sh
-
-   yarn
-
-Run through the tests just once and then quit:
-
-.. code-block:: sh
-
-   yarn test
-
-You can also run tests continuously during development so they run on each save:
-
-.. code-block:: sh
-
-   karma start js/tests/karma.conf.js
-
-Debugging JS tests
-^^^^^^^^^^^^^^^^^^
-
-You can run the test suite inside Chrome dev tools:
-
-.. code-block:: sh
-
-   yarn run chrome
-
-This will output a URL like ``http://localhost:9876/``.
-
-#. Open the URL in Chrome, and click "Debug".
-#. Open Chrome dev tools and the Console tab.
-#. Reload the page.
-
-If you alter a test you'll have to quit Karma with ``Ctrl-c`` and restart it.
-
 Coding best practices
 =====================
 
@@ -780,19 +716,9 @@ Javascript guidelines
 
 Same formatting standards as PHP apply.
 
-Related functions should be in a namespaced ``AMD`` module.
+Related functions should be in a namespaced ``ECMAScript`` module.
 
 Function expressions should end with a semi-colon.
-
-.. code-block:: js
-
-	define(['elgg'], function(elgg) {
-		function toggles(event) {
-			event.preventDefault();
-			$(target).slideToggle('medium');
-		};
-	});
-
 
 Deprecating APIs
 ================

@@ -7,7 +7,7 @@
  * @uses $vars['list_only']
  */
 
-elgg_require_js('admin/plugins');
+elgg_import_esm('admin/plugins');
 
 $list_only = (bool) elgg_extract('list_only', $vars, false);
 $active_filter = elgg_strtolower(get_input('filter', 'all'));

@@ -25,4 +25,4 @@ $footer = elgg_view_field([
 
 elgg_set_form_footer($footer);
 
-elgg_require_js('elgg/messageboard');
+elgg_import_esm('elgg/messageboard');

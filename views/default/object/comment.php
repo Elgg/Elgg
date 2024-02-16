@@ -21,7 +21,7 @@ if (!$entity || !$commenter) {
 }
 
 if ($comment->canEdit()) {
-	elgg_require_js('elgg/comments');
+	elgg_import_esm('elgg/comments');
 }
 
 if ($full_view) {

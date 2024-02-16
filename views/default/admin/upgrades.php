@@ -14,7 +14,7 @@ if (empty($upgrades)) {
 	return;
 }
 
-elgg_require_js('core/js/upgrader');
+elgg_import_esm('admin/upgrades');
 
 elgg_register_menu_item('title', [
 	'name' => 'run_upgrades',

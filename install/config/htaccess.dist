@@ -32,7 +32,7 @@ DirectoryIndex index.php
 # Elgg sets these on dynamically generated cacheable files so this is just for
 # static files. Note: Apache sends Last-Modified by default on static files so
 # I don't think we need to be sending ETag for these files.
-<FilesMatch "\.(jpg|jpeg|gif|png|mp3|flv|mov|avi|3pg|html|htm|swf|js|css|ico)$">
+<FilesMatch "\.(jpg|jpeg|gif|png|mp3|flv|mov|avi|3pg|html|htm|swf|js|mjs|css|ico)$">
 	FileETag MTime Size
 </FilesMatch>
 

@@ -55,7 +55,7 @@ if (elgg_extract('data-toggle', $item->getValues())) {
 }
 
 foreach ($deps as $module) {
-	elgg_require_js($module);
+	elgg_import_esm($module);
 }
 
 $item_vars['data-menu-item'] = $item->getName();

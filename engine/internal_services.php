@@ -12,11 +12,6 @@ return [
 	'accounts' => DI\autowire(\Elgg\Users\Accounts::class),
 	'adminNotices' => DI\autowire(\Elgg\Database\AdminNotices::class),
 	'ajax' => DI\autowire(\Elgg\Ajax\Service::class),
-	'amdConfig' => DI\factory(function (ContainerInterface $c) {
-		$obj = new \Elgg\Amd\Config($c->events);
-		$obj->setBaseUrl($c->simpleCache->getRoot());
-		return $obj;
-	}),
 	'annotationsTable' => DI\autowire(\Elgg\Database\AnnotationsTable::class),
 	'apiUsersTable' => DI\autowire(\Elgg\Database\ApiUsersTable::class),
 	'authentication' => DI\autowire(\Elgg\AuthenticationService::class),
@@ -54,6 +49,7 @@ return [
 	'entity_capabilities' => DI\autowire(\Elgg\EntityCapabilitiesService::class),
 	'entityPreloader' => DI\autowire(\Elgg\EntityPreloader::class),
 	'entityTable' => DI\autowire(\Elgg\Database\EntityTable::class),
+	'esm' => DI\autowire(\Elgg\Javascript\ESMService::class),
 	'events' => DI\autowire(\Elgg\EventsService::class),
 	'externalFiles' => DI\autowire(\Elgg\Assets\ExternalFiles::class)->constructorParameter('serverCache', DI\get('serverCache')),
 	'fields' => DI\autowire(\Elgg\Forms\FieldsService::class),
@@ -188,7 +184,6 @@ return [
 	\ElggSession::class => DI\get('session'),
 	\Elgg\ActionsService::class => DI\get('actions'),
 	\Elgg\Ajax\Service::class => DI\get('ajax'),
-	\Elgg\Amd\Config::class => DI\get('amdConfig'),
 	\Elgg\Application\CacheHandler::class => DI\get('cacheHandler'),
 	\Elgg\Application\Database::class => DI\get('publicDb'),
 	\Elgg\Application\ServeFileHandler::class => DI\get('serveFileHandler'),
@@ -249,6 +244,7 @@ return [
 	\Elgg\I18n\LocaleService::class => DI\get('locale'),
 	\Elgg\I18n\Translator::class => DI\get('translator'),
 	\Elgg\ImageService::class => DI\get('imageService'),
+	\Elgg\Javascript\ESMService::class => DI\get('esm'),
 	\Elgg\Invoker::class => DI\get('invoker'),
 	\Elgg\Logger::class => DI\get('logger'),
 	\Elgg\Menu\Service::class => DI\get('menus'),

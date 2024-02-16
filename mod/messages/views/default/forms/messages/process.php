@@ -8,7 +8,7 @@
  * @uses $vars['folder'] The folder currently looking at
  */
 
-elgg_require_js('forms/messages/process');
+elgg_import_esm('forms/messages/process');
 
 $list = (string) elgg_extract('list', $vars);
 
