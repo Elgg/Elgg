@@ -731,7 +731,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('ajax/view/cacheable.xml', 'GET', [], 1);
 		$this->createService($request);
 
-		$this->assertTrue(_elgg_services()->views->isCacheableView('cacheable.xml'));
+		$this->assertTrue(_elgg_services()->simpleCache->isCacheableView('cacheable.xml'));
 
 		$this->route($request);
 
@@ -877,7 +877,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('ajax/view/cacheable.xml', 'GET', [], 2);
 		$this->createService($request);
 
-		$this->assertTrue(_elgg_services()->views->isCacheableView('cacheable.xml'));
+		$this->assertTrue(_elgg_services()->simpleCache->isCacheableView('cacheable.xml'));
 
 		$this->route($request);
 

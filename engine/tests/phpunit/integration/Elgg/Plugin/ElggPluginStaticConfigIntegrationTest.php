@@ -205,20 +205,20 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 	
 	public function testViewOptionsRegistration() {
 		$ajax = _elgg_services()->ajax;
-		$views = _elgg_services()->views;
+		$cache = _elgg_services()->simpleCache;
 		
 		$this->invokeInaccessableMethod($this->plugin, 'registerViews');
 		
 		$ajax->registerView('static_config/view');
 		
 		$this->assertNotContains('static_config/viewoptions', $ajax->getViews());
-		$this->assertFalse($views->isCacheableView('static_config/viewoptions'));
+		$this->assertFalse($cache->isCacheableView('static_config/viewoptions'));
 		
 		$this->invokeInaccessableMethod($this->plugin, 'registerViewOptions');
 		
 		$this->assertNotContains('static_config/view', $ajax->getViews());
 		$this->assertContains('static_config/viewoptions', $ajax->getViews());
-		$this->assertTrue($views->isCacheableView('static_config/viewoptions'));
+		$this->assertTrue($cache->isCacheableView('static_config/viewoptions'));
 	}
 	
 	public function testNotificationsRegistration() {

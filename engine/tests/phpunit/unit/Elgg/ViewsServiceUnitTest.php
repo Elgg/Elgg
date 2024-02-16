@@ -127,18 +127,6 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('// PHP', $this->views->renderView('js/interpreted.js', array(), 'mobile'));
 	}
 
-	public function testCanRegisterViewsAsCacheable() {
-		$this->assertFalse($this->views->isCacheableView('js/interpreted.js'));
-
-		$this->views->registerCacheableView('js/interpreted.js');
-
-		$this->assertTrue($this->views->isCacheableView('js/interpreted.js'));
-	}
-
-	public function testStaticViewsAreAlwaysCacheable() {
-		$this->assertTrue($this->views->isCacheableView('js/static.js'));
-	}
-
 	public function testCanAlterViewInput() {
 		$this->events->registerHandler('view_vars', 'js/interpreted.js', function (\Elgg\Event $event) {
 			$vars = $event->getValue();
@@ -173,7 +161,7 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 	 * @dataProvider getExampleNormalizedViews
 	 */
 	public function testDefaultNormalizeBehavior($canonical, $alias) {
-		$this->assertEquals($canonical, ViewsService::canonicalizeViewName($alias));
+		$this->assertEquals($canonical, $this->views->canonicalizeViewName($alias));
 	}
 
 	public function testCanListViews() {

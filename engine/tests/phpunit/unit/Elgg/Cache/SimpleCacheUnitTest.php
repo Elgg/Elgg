@@ -16,6 +16,20 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 	public function down() {
 		$this->service->clear();
 	}
+	
+	public function testCanRegisterViewsAsCacheable() {
+		$this->assertFalse($this->service->isCacheableView('js/interpreted.js'));
+		
+		$this->service->registerCacheableView('js/interpreted.js');
+		
+		$this->assertTrue($this->service->isCacheableView('js/interpreted.js'));
+	}
+	
+	public function testStaticViewsAreAlwaysCacheable() {
+		_elgg_services()->views->autoregisterViews('', $this->normalizeTestFilePath('views') . '/default', 'default');
+		$this->assertTrue(_elgg_services()->views->viewExists('js/static.js'));
+		$this->assertTrue($this->service->isCacheableView('js/static.js'));
+	}
 
 	public function testGetUrlHandlesSingleArgument() {
 		$view = 'view.js';

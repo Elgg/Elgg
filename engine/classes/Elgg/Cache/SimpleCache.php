@@ -13,16 +13,13 @@ use Elgg\ViewsService;
  * @since 1.10.0
  */
 class SimpleCache {
-
+	
 	/**
-	 * @var Config
+	 * @var array Simplecache views (view names are keys)
+	 *
+	 * [view] = true
 	 */
-	protected $config;
-
-	/**
-	 * @var ViewsService
-	 */
-	protected $views;
+	protected array $simplecache_views = [];
 
 	/**
 	 * Constructor
@@ -31,11 +28,9 @@ class SimpleCache {
 	 * @param ViewsService $views  Views service
 	 */
 	public function __construct(
-		Config $config,
-		ViewsService $views
+		protected Config $config,
+		protected ViewsService $views
 	) {
-		$this->config = $config;
-		$this->views = $views;
 	}
 
 	/**
@@ -53,10 +48,10 @@ class SimpleCache {
 	 * @return string
 	 */
 	public function getUrl(string $view): string {
-		$view = ViewsService::canonicalizeViewName($view);
+		$view = $this->views->canonicalizeViewName($view);
 
 		// should be normalized to canonical form by now: `getUrl('blog/save_draft.js')`
-		$this->views->registerCacheableView($view);
+		$this->registerCacheableView($view);
 
 		return $this->getRoot() . $view;
 	}
@@ -75,6 +70,66 @@ class SimpleCache {
 		}
 
 		return elgg_normalize_url("/cache/{$lastcache}/{$viewtype}/");
+	}
+	
+	/**
+	 * Register a view as cacheable
+	 *
+	 * @param string $view the view name
+	 *
+	 * @return void
+	 */
+	public function registerCacheableView(string $view): void {
+		$view = $this->views->canonicalizeViewName($view);
+		
+		$this->simplecache_views[$view] = true;
+	}
+	
+	/**
+	 * Is the view cacheable
+	 *
+	 * @param string $view the view name
+	 *
+	 * @return bool
+	 */
+	public function isCacheableView(string $view): bool {
+		$view = $this->views->canonicalizeViewName($view);
+		if (isset($this->simplecache_views[$view])) {
+			return true;
+		}
+		
+		// build list of viewtypes to check
+		$current_viewtype = $this->views->getViewtype();
+		$viewtypes = [$current_viewtype];
+		
+		if ($this->views->doesViewtypeFallback($current_viewtype) && $current_viewtype != 'default') {
+			$viewtypes[] = 'default';
+		}
+		
+		// If a static view file is found in any viewtype, it's considered cacheable
+		foreach ($viewtypes as $viewtype) {
+			$file = $this->views->findViewFile($view, $viewtype);
+			
+			if ($file && pathinfo($file, PATHINFO_EXTENSION) !== 'php') {
+				$this->simplecache_views[$view] = true;
+				
+				return true;
+			}
+		}
+		
+		// Assume not-cacheable by default
+		return false;
+	}
+	
+	/**
+	 * Returns the cacheable views
+	 *
+	 * @return array
+	 *
+	 * @internal
+	 */
+	public function getCacheableViews(): array {
+		return $this->simplecache_views;
 	}
 
 	/**

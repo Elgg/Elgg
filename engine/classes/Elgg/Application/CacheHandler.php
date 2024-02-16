@@ -245,7 +245,7 @@ class CacheHandler {
 			return in_array($matches[1],  _elgg_services()->locale->getLanguageCodes());
 		}
 
-		return _elgg_services()->views->isCacheableView($view);
+		return _elgg_services()->simpleCache->isCacheableView($view);
 	}
 
 	/**
