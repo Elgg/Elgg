@@ -29,9 +29,6 @@ function Cropper() {
 			this.reload();
 		}
 		
-		console.log(globalThis.cropper);
-		console.log(window);
-		
 		$img.on('ready', function() {
 			// enable/disable on tab changes
 			if ($field.not(':visible')) {
