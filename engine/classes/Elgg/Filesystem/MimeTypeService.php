@@ -12,15 +12,12 @@ use Elgg\Exceptions\InvalidArgumentException;
  */
 class MimeTypeService {
 
-	protected $events;
-	
 	/**
 	 * Constructor
 	 *
 	 * @param EventsService $events Events service
 	 */
-	public function __construct(EventsService $events) {
-		$this->events = $events;
+	public function __construct(protected EventsService $events) {
 	}
 	
 	/**

@@ -10,19 +10,13 @@ namespace Elgg\Menu;
 class Menu {
 
 	/**
-	 * @var array
-	 */
-	private $params;
-
-	/**
 	 * Constructor
 	 *
 	 * @param array $params Params. Must include:
 	 *                      "name" menu name
 	 *                      "menu" array of sections (each an array of items)
 	 */
-	public function __construct(array $params) {
-		$this->params = $params;
+	public function __construct(protected array $params) {
 	}
 
 	/**

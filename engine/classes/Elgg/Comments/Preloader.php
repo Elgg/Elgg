@@ -11,17 +11,11 @@ namespace Elgg\Comments;
 class Preloader {
 
 	/**
-	 * @var \Elgg\Comments\DataService
-	 */
-	protected $data;
-
-	/**
 	 * Create a preloader
 	 *
 	 * @param \Elgg\Comments\DataService $data a dataservice
 	 */
-	public function __construct(DataService $data) {
-		$this->data = $data;
+	public function __construct(protected DataService $data) {
 	}
 
 	/**

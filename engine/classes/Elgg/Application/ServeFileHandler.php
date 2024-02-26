@@ -19,31 +19,17 @@ use Elgg\Security\HmacFactory;
 class ServeFileHandler {
 
 	/**
-	 * @var HmacFactory
-	 */
-	private $hmac;
-
-	/**
-	 * @var Config
-	 */
-	private $config;
-	
-	/**
-	 * @var MimeTypeService
-	 */
-	protected $mimetype;
-
-	/**
 	 * Constructor
 	 *
 	 * @param HmacFactory     $hmac     HMAC service
 	 * @param Config          $config   Config service
 	 * @param MimeTypeService $mimetype MimeType service
 	 */
-	public function __construct(HmacFactory $hmac, Config $config, MimeTypeService $mimetype) {
-		$this->hmac = $hmac;
-		$this->config = $config;
-		$this->mimetype = $mimetype;
+	public function __construct(
+		protected HmacFactory $hmac,
+		protected Config $config,
+		protected MimeTypeService $mimetype
+	) {
 	}
 
 	/**

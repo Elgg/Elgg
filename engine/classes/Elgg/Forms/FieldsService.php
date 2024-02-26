@@ -15,20 +15,7 @@ class FieldsService {
 
 	use Loggable;
 	
-	/**
-	 * @var array
-	 */
-	protected $fields = [];
-
-	/**
-	 * @var EventsService
-	 */
-	protected $events;
-
-	/**
-	 * @var Translator
-	 */
-	protected $translator;
+	protected array $fields = [];
 
 	/**
 	 * Constructor
@@ -36,9 +23,7 @@ class FieldsService {
 	 * @param EventsService $events     events service
 	 * @param Translator    $translator translator service
 	 */
-	public function __construct(EventsService $events, Translator $translator) {
-		$this->events = $events;
-		$this->translator = $translator;
+	public function __construct(protected EventsService $events, protected Translator $translator) {
 	}
 	
 	/**

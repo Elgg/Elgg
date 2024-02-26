@@ -25,20 +25,7 @@ class SiteSecret {
 
 	const CONFIG_KEY = '__site_secret__';
 
-	/**
-	 * @var string
-	 */
-	private $key;
-	
-	/**
-	 * @var Crypto
-	 */
-	protected $crypto;
-	
-	/**
-	 * @var ConfigTable
-	 */
-	protected $table;
+	protected string $key;
 
 	/**
 	 * Constructor
@@ -46,10 +33,7 @@ class SiteSecret {
 	 * @param Crypto      $crypto Crypto service
 	 * @param ConfigTable $table  Config table
 	 */
-	public function __construct(Crypto $crypto, ConfigTable $table) {
-		$this->crypto = $crypto;
-		$this->table = $table;
-		
+	public function __construct(protected Crypto $crypto, protected ConfigTable $table) {
 		$key = $table->get(self::CONFIG_KEY);
 		if (!$key) {
 			throw new InstallationException('Site secret is not in the config table.');

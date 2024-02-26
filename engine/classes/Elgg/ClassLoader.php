@@ -47,16 +47,11 @@ namespace Elgg;
  */
 class ClassLoader {
 
-	protected $namespaces = [];
+	protected array $namespaces = [];
 	
-	protected $prefixes = [];
+	protected array $prefixes = [];
 	
-	protected $fallbacks = [];
-
-	/**
-	 * @var Config
-	 */
-	protected $config;
+	protected array $fallbacks = [];
 	
 	/**
 	 * @var \Elgg\ClassMap Map of classes to files
@@ -66,16 +61,15 @@ class ClassLoader {
 	/**
 	 * @var array of checked but not found files
 	 */
-	protected $missing = [];
+	protected array $missing = [];
 
 	/**
 	 * Constructor
 	 *
 	 * @param \Elgg\Config $config Site config
 	 */
-	public function __construct(Config $config) {
+	public function __construct(protected Config $config) {
 		$this->map = new \Elgg\ClassMap();
-		$this->config = $config;
 		
 		$this->register();
 	}

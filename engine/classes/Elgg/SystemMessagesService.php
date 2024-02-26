@@ -18,17 +18,11 @@ class SystemMessagesService {
 	const SESSION_KEY = '_elgg_msgs';
 
 	/**
-	 * @var \ElggSession
-	 */
-	protected $session;
-
-	/**
 	 * Constructor
 	 *
 	 * @param \ElggSession $session The Elgg session
 	 */
-	public function __construct(\ElggSession $session) {
-		$this->session = $session;
+	public function __construct(protected \ElggSession $session) {
 	}
 
 	/**

@@ -9,15 +9,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ResponseTransport implements \Elgg\Http\ResponseTransport {
 
-	private $command;
-
 	/**
 	 * ResponseTransport constructor.
 	 *
 	 * @param Command $command Cli command
 	 */
-	public function __construct(Command $command) {
-		$this->command = $command;
+	public function __construct(protected Command $command) {
 	}
 
 	/**

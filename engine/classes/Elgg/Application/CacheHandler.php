@@ -50,26 +50,8 @@ class CacheHandler {
 		'image/svg+xml',
 		'text/xml',
 	];
-
-	/**
-	 * @var Config
-	 */
-	protected $config;
-
-	/**
-	 * @var Request
-	 */
-	protected $request;
 	
-	/**
-	 * @var SimpleCache
-	 */
-	protected $simplecache;
-	
-	/**
-	 * @var bool
-	 */
-	protected $simplecache_enabled;
+	protected bool $simplecache_enabled;
 
 	/**
 	 * Constructor
@@ -79,11 +61,12 @@ class CacheHandler {
 	 * @param SimpleCache $simplecache  Simplecache
 	 * @param ConfigTable $config_table Config table
 	 */
-	public function __construct(Config $config, Request $request, SimpleCache $simplecache, ConfigTable $config_table) {
-		$this->config = $config;
-		$this->request = $request;
-		$this->simplecache = $simplecache;
-		
+	public function __construct(
+		protected Config $config,
+		protected Request $request,
+		protected SimpleCache $simplecache,
+		ConfigTable $config_table
+	) {
 		$this->simplecache_enabled = $config->simplecache_enabled;
 		if (!$this->config->hasInitialValue('simplecache_enabled')) {
 			$db_value = $config_table->get('simplecache_enabled');

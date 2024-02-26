@@ -20,15 +20,12 @@ class UsersRememberMeCookiesTable {
 	 */
 	public const TABLE_NAME = 'users_remember_me_cookies';
 
-	protected Database $database;
-	
 	/**
 	 * Create a new service
 	 *
 	 * @param Database $database the database service
 	 */
-	public function __construct(Database $database) {
-		$this->database = $database;
+	public function __construct(protected Database $database) {
 	}
 	
 	/**

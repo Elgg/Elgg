@@ -20,16 +20,13 @@ class DelayedEmailQueueTable {
 	 * @var string name of the database table
 	 */
 	public const TABLE_NAME = 'delayed_email_queue';
-
-	protected Database $db;
 	
 	/**
 	 * Create new service
 	 *
 	 * @param Database $db the database service
 	 */
-	public function __construct(Database $db) {
-		$this->db = $db;
+	public function __construct(protected Database $db) {
 	}
 	
 	/**

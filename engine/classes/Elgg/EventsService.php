@@ -27,33 +27,21 @@ class EventsService {
 	const OPTION_BEGIN_CALLBACK = 'begin_callback';
 	const OPTION_END_CALLBACK = 'end_callback';
 
-	/**
-	 * @var HandlersService
-	 */
-	protected $handlers;
-	
-	/**
-	 * @var int
-	 */
-	protected $next_index = 0;
+	protected int $next_index = 0;
 	
 	/**
 	 * @var array [name][type][] = registration
 	 */
-	protected $registrations = [];
+	protected array $registrations = [];
 	
-	/**
-	 * @var array
-	 */
-	protected $backups = [];
+	protected array $backups = [];
 
 	/**
 	 * Constructor
 	 *
 	 * @param HandlersService $handlers Handlers
 	 */
-	public function __construct(HandlersService $handlers) {
-		$this->handlers = $handlers;
+	public function __construct(protected HandlersService $handlers) {
 	}
 
 	/**

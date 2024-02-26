@@ -20,20 +20,14 @@ class AuthenticationService {
 	 *
 	 * @var array
 	 */
-	protected $handlers = [];
-	
-	/**
-	 * @var HandlersService
-	 */
-	protected $handlerService;
+	protected array $handlers = [];
 	
 	/**
 	 * Create new service
 	 *
 	 * @param HandlersService $handlerService handler service
 	 */
-	public function __construct(HandlersService $handlerService) {
-		$this->handlerService = $handlerService;
+	public function __construct(protected HandlersService $handlerService) {
 	}
 	
 	/**

@@ -28,21 +28,6 @@ class SubscriptionsService {
 	 * @var string Used when an entity no longer wishes to recieve notifications
 	 */
 	const MUTE_NOTIFICATIONS_RELATIONSHIP = 'mute_notifications';
-	
-	/**
-	 * @var Database
-	 */
-	protected $db;
-	
-	/**
-	 * @var RelationshipsTable
-	 */
-	protected $relationshipsTable;
-	
-	/**
-	 * @var EventsService
-	 */
-	protected $events;
 
 	/**
 	 * Constructor
@@ -51,10 +36,11 @@ class SubscriptionsService {
 	 * @param RelationshipsTable $relationshipsTable Relationship database table
 	 * @param EventsService      $events             Events service
 	 */
-	public function __construct(Database $db, RelationshipsTable $relationshipsTable, EventsService $events) {
-		$this->db = $db;
-		$this->relationshipsTable = $relationshipsTable;
-		$this->events = $events;
+	public function __construct(
+		protected Database $db,
+		protected RelationshipsTable $relationshipsTable,
+		protected EventsService $events
+	) {
 	}
 
 	/**

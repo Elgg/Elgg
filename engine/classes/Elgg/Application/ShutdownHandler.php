@@ -16,17 +16,11 @@ class ShutdownHandler {
 	use Loggable;
 
 	/**
-	 * @var Application
-	 */
-	protected $app;
-
-	/**
 	 * Constructor
 	 *
 	 * @param Application $app Application
 	 */
-	public function __construct(Application $app) {
-		$this->app = $app;
+	public function __construct(protected Application $app) {
 	}
 
 	/**

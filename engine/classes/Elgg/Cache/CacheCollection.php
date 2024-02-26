@@ -12,20 +12,14 @@ abstract class CacheCollection {
 	/**
 	 * @var CompositeCache[]
 	 */
-	protected $caches = [];
-
-	/**
-	 * @var Config
-	 */
-	protected $config;
+	protected array $caches = [];
 
 	/**
 	 * Constructor
 	 *
 	 * @param Config $config Elgg config
 	 */
-	public function __construct(Config $config) {
-		$this->config = $config;
+	public function __construct(protected Config $config) {
 	}
 
 	/**

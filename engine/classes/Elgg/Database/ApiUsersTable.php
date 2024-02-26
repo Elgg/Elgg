@@ -18,19 +18,13 @@ class ApiUsersTable {
 	 */
 	public const TABLE_NAME = 'api_users';
 	
-	protected Database $database;
-	
-	protected Crypto $crypto;
-	
 	/**
 	 * Create a new table handler
 	 *
 	 * @param Database $database the Elgg database handler
 	 * @param Crypto   $crypto   crypto handler
 	 */
-	public function __construct(Database $database, Crypto $crypto) {
-		$this->database = $database;
-		$this->crypto = $crypto;
+	public function __construct(protected Database $database, protected Crypto $crypto) {
 	}
 	
 	/**

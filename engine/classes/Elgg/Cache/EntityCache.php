@@ -11,23 +11,14 @@ class EntityCache {
 
 	const MAX_SIZE = 256;
 
-	/**
-	 * @var BaseCache
-	 */
-	protected $cache;
-
-	/**
-	 * @var int
-	 */
-	protected $size = 0;
+	protected int $size = 0;
 
 	/**
 	 * Constructor
 	 *
 	 * @param BaseCache $cache Cache
 	 */
-	public function __construct(BaseCache $cache) {
-		$this->cache = $cache;
+	public function __construct(protected BaseCache $cache) {
 	}
 
 	/**

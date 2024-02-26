@@ -20,19 +20,13 @@ class AnnotationsTable {
 	
 	public const DEFAULT_JOIN_ALIAS = 'a_table';
 
-	protected Database $db;
-
-	protected EventsService $events;
-
 	/**
 	 * Constructor
 	 *
 	 * @param Database      $db     Database
 	 * @param EventsService $events Events
 	 */
-	public function __construct(Database $db, EventsService $events) {
-		$this->db = $db;
-		$this->events = $events;
+	public function __construct(protected Database $db, protected EventsService $events) {
 	}
 
 	/**

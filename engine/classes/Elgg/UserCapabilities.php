@@ -14,31 +14,17 @@ use Elgg\Exceptions\Database\UserFetchFailureException;
 class UserCapabilities {
 
 	/**
-	 * @var EventsService
-	 */
-	protected $events;
-
-	/**
-	 * @var EntityTable
-	 */
-	protected $entities;
-
-	/**
-	 * @var SessionManagerService
-	 */
-	protected $session_manager;
-
-	/**
 	 * Constructor
 	 *
 	 * @param EventsService         $events          Events service
 	 * @param EntityTable           $entities        Entity table
 	 * @param SessionManagerService $session_manager Session
 	 */
-	public function __construct(EventsService $events, EntityTable $entities, SessionManagerService $session_manager) {
-		$this->events = $events;
-		$this->entities = $entities;
-		$this->session_manager = $session_manager;
+	public function __construct(
+		protected EventsService $events,
+		protected EntityTable $entities,
+		protected SessionManagerService $session_manager
+	) {
 	}
 
 	/**
