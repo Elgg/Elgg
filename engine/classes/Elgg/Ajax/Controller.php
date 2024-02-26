@@ -56,7 +56,7 @@ class Controller {
 		$allowed_views = $ajax_api->getViews();
 		
 		// cacheable views are always allowed
-		if (!in_array($view, $allowed_views) && !_elgg_services()->views->isCacheableView($view)) {
+		if (!in_array($view, $allowed_views) && !_elgg_services()->simpleCache->isCacheableView($view)) {
 			return elgg_error_response("Ajax view '{$view}' was not registered", REFERRER, ELGG_HTTP_FORBIDDEN);
 		}
 		
@@ -83,24 +83,15 @@ class Controller {
 			$output = elgg_view($view, $vars);
 			
 			// Try to guess the mime-type
-			switch ($segments[1]) {
-				case 'js':
-					$content_type = 'text/javascript;charset=utf-8';
-					break;
-				case 'css':
-					$content_type = 'text/css;charset=utf-8';
-					break;
-				default:
-					if (_elgg_services()->views->isCacheableView($view)) {
-						$file = _elgg_services()->views->findViewFile($view, elgg_get_viewtype());
-						$content_type = 'text/html';
-						try {
-							$content_type = _elgg_services()->mimetype->getMimeType($file, $content_type);
-						} catch (InvalidArgumentException $e) {
-							// nothing for now
-						}
-					}
-					break;
+			if (_elgg_services()->simpleCache->isCacheableView($view)) {
+				$file = _elgg_services()->views->findViewFile($view, elgg_get_viewtype());
+				$content_type = 'text/html';
+				
+				try {
+					$content_type = _elgg_services()->mimetype->getMimeType($file, $content_type);
+				} catch (InvalidArgumentException $e) {
+					// nothing for now
+				}
 			}
 		} else {
 			$action = implode('/', array_slice($segments, 1));

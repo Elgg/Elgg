@@ -38,9 +38,6 @@
  *
  * @note Internal: Plugin views are autoregistered before their init functions
  * are called, so the init order doesn't affect views.
- *
- * @note Internal: The file that determines the output of the view is the last
- * registered by {@link elgg_set_view_location()}.
  */
 
 use Elgg\Exceptions\Http\PageNotFoundException;
@@ -118,24 +115,6 @@ function elgg_register_ajax_view(string $view): void {
  */
 function elgg_unregister_ajax_view(string $view): void {
 	_elgg_services()->ajax->unregisterView($view);
-}
-
-/**
- * Set an alternative base location for a view.
- *
- * Views are expected to be in plugin_name/views/.  This function can
- * be used to change that location.
- *
- * @tip This is useful to optionally register views in a plugin.
- *
- * @param string $view     The name of the view
- * @param string $location The full path to the view
- * @param string $viewtype The view type
- *
- * @return void
- */
-function elgg_set_view_location(string $view, string $location, string $viewtype = ''): void {
-	_elgg_services()->views->setViewDir($view, $location, $viewtype);
 }
 
 /**

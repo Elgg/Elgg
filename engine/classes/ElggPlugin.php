@@ -1181,7 +1181,7 @@ class ElggPlugin extends ElggObject {
 			}
 			
 			if (isset($options['simplecache']) && $options['simplecache'] === true) {
-				_elgg_services()->views->registerCacheableView($view_name);
+				_elgg_services()->simpleCache->registerCacheableView($view_name);
 			}
 		}
 	}

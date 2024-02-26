@@ -26,10 +26,10 @@ class CacheHandler {
 		'ico' => 'image/x-icon',
 		'jpeg' => 'image/jpeg',
 		'jpg' => 'image/jpeg',
-		'js' => 'application/javascript',
+		'js' => 'text/javascript',
 		'json' => 'application/json',
 		'map' => 'application/json',
-		'mjs' => 'application/javascript',
+		'mjs' => 'text/javascript',
 		'otf' => 'application/font-otf',
 		'png' => 'image/png',
 		'svg' => 'image/svg+xml',
@@ -45,7 +45,7 @@ class CacheHandler {
 	public static $utf8_content_types = [
 		'text/css',
 		'text/html',
-		'application/javascript',
+		'text/javascript',
 		'application/json',
 		'image/svg+xml',
 		'text/xml',
@@ -245,7 +245,7 @@ class CacheHandler {
 			return in_array($matches[1],  _elgg_services()->locale->getLanguageCodes());
 		}
 
-		return _elgg_services()->views->isCacheableView($view);
+		return _elgg_services()->simpleCache->isCacheableView($view);
 	}
 
 	/**

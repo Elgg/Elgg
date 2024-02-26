@@ -32,7 +32,8 @@ class MimeTypeDetector {
 		'html' => 'text/html',
 		'php' => 'text/html',
 		'css' => 'text/css',
-		'js' => 'application/javascript',
+		'js' => 'text/javascript',
+		'mjs' => 'text/javascript',
 		'json' => 'application/json',
 		'xml' => 'application/xml',
 		'swf' => 'application/x-shockwave-flash',
@@ -177,6 +178,11 @@ class MimeTypeDetector {
 		// check for bad ppt detection
 		if ($type === 'application/vnd.ms-office' && $extension === 'ppt') {
 			return 'application/vnd.ms-powerpoint';
+		}
+
+		// bad css/js detection
+		if ($type === 'text/plain' && in_array($extension, ['css', 'js', 'mjs'])) {
+			return $this->extensions[$extension];
 		}
 		
 		// try extension detection as a fallback for octet-stream

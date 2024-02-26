@@ -111,11 +111,6 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals("// PHPin", $this->views->renderView('hello/world.js', ['in' => 'in']));
 	}
 
-	public function testCanSetViewsDirs() {
-		$this->views->setViewDir('static.css', $this->normalizeTestFilePath('views2/'));
-		$this->assertEquals('body{}', $this->views->renderView('static.css'));
-	}
-
 	public function testViewtypesCanFallBack() {
 		$this->views->registerViewtypeFallback('mobile');
 		$this->assertTrue($this->views->doesViewtypeFallBack('mobile'));
@@ -125,18 +120,6 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->views->registerViewtypeFallback('mobile');
 		$this->assertTrue($this->views->viewExists('js/interpreted.js', 'mobile'));
 		$this->assertEquals('// PHP', $this->views->renderView('js/interpreted.js', array(), 'mobile'));
-	}
-
-	public function testCanRegisterViewsAsCacheable() {
-		$this->assertFalse($this->views->isCacheableView('js/interpreted.js'));
-
-		$this->views->registerCacheableView('js/interpreted.js');
-
-		$this->assertTrue($this->views->isCacheableView('js/interpreted.js'));
-	}
-
-	public function testStaticViewsAreAlwaysCacheable() {
-		$this->assertTrue($this->views->isCacheableView('js/static.js'));
 	}
 
 	public function testCanAlterViewInput() {
@@ -169,17 +152,10 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertSame("123", $this->views->renderView('js/interpreted.js'));
 	}
 
-	/**
-	 * @dataProvider getExampleNormalizedViews
-	 */
-	public function testDefaultNormalizeBehavior($canonical, $alias) {
-		$this->assertEquals($canonical, ViewsService::canonicalizeViewName($alias));
-	}
-
 	public function testCanListViews() {
 		$views = $this->views->listViews('default');
-		$this->assertTrue(in_array('interpreted.js', $views));
-		$this->assertTrue(in_array('static.js', $views));
+		$this->assertTrue(in_array('js/interpreted.js', $views));
+		$this->assertTrue(in_array('js/static.js', $views));
 
 		$this->assertEmpty($this->views->listViews('fake_viewtype'));
 	}
@@ -221,24 +197,6 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 			500 => 'output/1',
 			501 => 'output/2',
 		], $list);
-	}
-
-	public static function getExampleNormalizedViews() {
-		return [
-			// [canonical, alias]
-			// js namespace should be removed and .js added to all JS views
-			['view.js', 'js/view'],
-			['view.js', 'js/view.js'],
-			['view.css', 'js/view.css'],
-			['view.png', 'js/view.png'],
-			// ".form" in this case is not an extension, just a delimiter. Ignore.
-			['jquery.form.js', 'js/jquery.form'],
-			// css namespace should be removed and .css added to all CSS views
-			['view.css', 'css/view'],
-			['view.css', 'css/view.css'],
-			['view.png', 'css/view.png'],
-			['view.jpg', 'css/view.jpg'],
-		];
 	}
 	
 	public function testSetViewtype() {

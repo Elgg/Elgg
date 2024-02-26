@@ -80,6 +80,12 @@ A reliable way to check if an icon was uploaded is to use the ``\ElggEntity::has
 Changes in functions
 --------------------
 
+Removed lib functions
+~~~~~~~~~~~~~~~~~~~~~
+
+* ``elgg_unrequire_css()`` has been removed. Use ``elgg_unregister_external_file('css', $view)`` as replacement.
+* ``elgg_set_view_location()`` has been removed
+
 Lib functions function parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -89,6 +95,7 @@ Miscellaneous API changes
 -------------------------
 
 * The interface ``\Elgg\EntityIcon`` has been removed. Implemented functions in ``\ElggEntity`` have been moved to ``\Elgg\Traits\Entity\Icons``
+* View names from a 'css' or 'js' view folder now always need to be referenced by their full view name (previously is was possible to omit the first folder if it was 'css' or 'js')
 
 Removed Config values
 ------------------------

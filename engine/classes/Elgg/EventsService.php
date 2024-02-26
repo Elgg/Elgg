@@ -332,14 +332,9 @@ class EventsService {
 			return false;
 		}
 		
-		if (($name == 'view' || $name == 'view_vars') && $type !== 'all') {
-			$type = ViewsService::canonicalizeViewName($type);
-		}
-				
-		$services = _elgg_services();
 		if (in_array($this->getLogger()->getLevel(false), [LogLevel::WARNING, LogLevel::NOTICE, LogLevel::INFO, LogLevel::DEBUG])) {
-			if (!$services->handlers->isCallable($callback)) {
-				$this->getLogger()->warning('Handler: ' . $services->handlers->describeCallable($callback) . ' is not callable');
+			if (!$this->handlers->isCallable($callback)) {
+				$this->getLogger()->warning('Handler: ' . $this->handlers->describeCallable($callback) . ' is not callable');
 			}
 		}
 		
@@ -364,10 +359,6 @@ class EventsService {
 	 * @return void
 	 */
 	public function unregisterHandler(string $name, string $type, $callback): void {
-		if (($name === 'view' || $name === 'view_vars') && $type !== 'all') {
-			$type = ViewsService::canonicalizeViewName($type);
-		}
-		
 		if (empty($this->registrations[$name][$type])) {
 			return;
 		}

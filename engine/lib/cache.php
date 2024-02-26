@@ -109,7 +109,7 @@ function elgg_disable_system_cache(): void {
  * @since 1.8.0
  */
 function elgg_register_simplecache_view(string $view_name): void {
-	_elgg_services()->views->registerCacheableView($view_name);
+	_elgg_services()->simpleCache->registerCacheableView($view_name);
 }
 
 /**

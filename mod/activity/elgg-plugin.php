@@ -56,7 +56,7 @@ return [
 		'activity' => [],
 	],
 	'view_extensions' => [
-		'css/elgg' => [
+		'elgg.css' => [
 			'river/filter.css' => [],
 		],
 	],

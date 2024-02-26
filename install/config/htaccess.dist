@@ -66,8 +66,6 @@ DirectoryIndex index.php
 	mod_gzip_maximum_file_size 1000000
 	mod_gzip_maximum_inmem_size 1000000
 	mod_gzip_item_include mime ^text/.*
-	mod_gzip_item_include mime ^application/javascript$
-	mod_gzip_item_include mime ^application/x-javascript$
 	# Exclude old browsers and images since IE has trouble with this
 	mod_gzip_item_exclude reqheader "User-Agent: .*Mozilla/4\..*\["
 	mod_gzip_item_exclude mime ^image/.*
@@ -78,7 +76,7 @@ DirectoryIndex index.php
 ## Important note: mod_headers is required for correct functioning across proxies.
 ##
 <IfModule mod_deflate.c>
-	AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript image/svg+xml
+	AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript image/svg+xml
 	BrowserMatch ^Mozilla/4 gzip-only-text/html
 	BrowserMatch ^Mozilla/4\.[0678] no-gzip
 	BrowserMatch \bMSIE !no-gzip

@@ -62,6 +62,6 @@ class CoreViewStackUnitTest extends UnitTestCase {
 		$this->assertNotEmpty($view_list);
 		$this->assertEquals(count($view_list) > 1, !empty(elgg_get_view_extensions($view)));
 
-		$this->assertEquals($is_simplecache_view, _elgg_services()->views->isCacheableView($view));
+		$this->assertEquals($is_simplecache_view, _elgg_services()->simpleCache->isCacheableView($view));
 	}
 }
