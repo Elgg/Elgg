@@ -4,20 +4,21 @@
  *
  * Note: this view has a corresponding view in the default view type, changes should be reflected
  *
- * @uses $vars['entity'] the user
+ * @uses $vars['options'] Additional listing options
+ * @uses $vars['entity']  The user to list content for
  */
 
+$options = (array) elgg_extract('options', $vars);
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggEntity) {
+if (!$entity instanceof \ElggUser) {
 	return;
 }
 
-echo elgg_list_entities([
-	'type' => 'object',
-	'subtype' => 'page',
-	'metadata_name_value_pairs' => [
-		'parent_guid' => 0,
-	],
+$owner_options = [
 	'owner_guid' => $entity->guid,
-	'pagination' => false,
-]);
+	'preload_owners' => false,
+];
+
+$vars['options'] = array_merge($options, $owner_options);
+
+echo elgg_view('pages/listing/all', $vars);
