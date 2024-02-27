@@ -4,13 +4,13 @@
  *
  * Note: this view has a corresponding view in the rss view type, changes should be reflected
  *
- * @uses $vars['entity'] the user
+ * @uses $vars['options'] Additional listing options
+ * @uses $vars['entity']  the user to list group content for
  */
 
-use Elgg\Database\Clauses\OrderByClause;
-
+$options = (array) elgg_extract('options', $vars);
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggUser) {
+if (!$entity instanceof \ElggUser) {
 	return;
 }
 
@@ -29,11 +29,10 @@ if (empty($user_groups)) {
 	return;
 }
 
-echo elgg_list_entities([
-	'type' => 'object',
-	'subtype' => 'discussion',
+$user_options = [
 	'container_guids' => $user_groups,
-	'limit' => max(20, elgg_get_config('default_limit')),
-	'order_by' => new OrderByClause('e.last_action', 'desc'),
-	'no_results' => elgg_echo('discussion:none'),
-]);
+];
+
+$vars['options'] = array_merge($options, $user_options);
+
+echo elgg_view('discussion/listing/all', $vars);
