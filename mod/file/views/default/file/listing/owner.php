@@ -4,18 +4,21 @@
  *
  * Note: this view has a corresponding view in the rss view type, changes should be reflected
  *
- * @uses $vars['entity'] the user to list for
+ * @uses $vars['options'] Additional listing options
+ * @uses $vars['entity']  The user to list content for
  */
 
-$owner = elgg_extract('entity', $vars);
+$options = (array) elgg_extract('options', $vars);
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggUser) {
+	return;
+}
 
-file_register_toggle();
+$owner_options = [
+	'owner_guid' => $entity->guid,
+	'preload_owners' => false,
+];
 
-// List files
-echo elgg_list_entities([
-	'type' => 'object',
-	'subtype' => 'file',
-	'owner_guid' => $owner->guid,
-	'no_results' => elgg_echo('file:none'),
-	'distinct' => false,
-]);
+$vars['options'] = array_merge($options, $owner_options);
+
+echo elgg_view('file/listing/all', $vars);

@@ -4,17 +4,21 @@
  *
  * Note: this view has a corresponding view in the default view type, changes should be reflected
  *
- * @uses $vars['entity'] the group to list for
+ * @uses $vars['options'] Additional listing options
+ * @uses $vars['entity']  Group to list content for
  */
 
-$container = elgg_extract('entity', $vars);
+$options = (array) elgg_extract('options', $vars);
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggGroup) {
+	return;
+}
 
-// List files
-echo elgg_list_entities([
-	'type' => 'object',
-	'subtype' => 'file',
-	'container_guid' => $container->guid,
-	'no_results' => elgg_echo('file:none'),
-	'distinct' => false,
-	'pagination' => false,
-]);
+$group_options = [
+	'container_guid' => $entity->guid,
+	'preload_containers' => false,
+];
+
+$vars['options'] = array_merge($options, $group_options);
+
+echo elgg_view('file/listing/all', $vars);
