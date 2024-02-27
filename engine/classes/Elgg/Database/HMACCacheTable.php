@@ -21,8 +21,6 @@ class HMACCacheTable {
 	 */
 	public const TABLE_NAME = 'hmac_cache';
 	
-	protected Database $database;
-	
 	/**
 	 * @var int HMAC lifetime is 25 hours (this should be related to the time drift allowed in header validation)
 	 */
@@ -32,11 +30,8 @@ class HMACCacheTable {
 	 * Create a new table handler
 	 *
 	 * @param Database $database the Elgg database handler
-	 *
-	 * @return void
 	 */
-	public function __construct(Database $database) {
-		$this->database = $database;
+	public function __construct(protected Database $database) {
 	}
 	
 	/**

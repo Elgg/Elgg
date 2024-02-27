@@ -16,10 +16,7 @@ use Elgg\ViewsService;
  */
 class ExternalFiles {
 
-	/**
-	 * @var array
-	 */
-	protected $files = [];
+	protected array $files = [];
 
 	/**
 	 * Subresource integrity data (loaded on first use)
@@ -27,31 +24,6 @@ class ExternalFiles {
 	 * @var array
 	 */
 	protected $sri;
-	
-	/**
-	 * @var Config
-	 */
-	protected $config;
-	
-	/**
-	 * @var Urls
-	 */
-	protected $urls;
-	
-	/**
-	 * @var ViewsService
-	 */
-	protected $views;
-	
-	/**
-	 * @var SimpleCache
-	 */
-	protected $simpleCache;
-	
-	/**
-	 * @var SystemCache
-	 */
-	protected $serverCache;
 	
 	/**
 	 * Constructor
@@ -62,12 +34,13 @@ class ExternalFiles {
 	 * @param SimpleCache  $simpleCache simplecache
 	 * @param SystemCache  $serverCache server cache
 	 */
-	public function __construct(Config $config, Urls $urls, ViewsService $views, SimpleCache $simpleCache, SystemCache $serverCache) {
-		$this->config = $config;
-		$this->urls = $urls;
-		$this->views = $views;
-		$this->simpleCache = $simpleCache;
-		$this->serverCache = $serverCache;
+	public function __construct(
+		protected Config $config,
+		protected Urls $urls,
+		protected ViewsService $views,
+		protected SimpleCache $simpleCache,
+		protected SystemCache $serverCache
+	) {
 	}
 
 	/**

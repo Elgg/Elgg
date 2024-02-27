@@ -12,24 +12,14 @@ use Elgg\Config;
  */
 class LocaleService {
 	
-	/**
-	 * @var Config
-	 */
-	protected $config;
-	
-	/**
-	 * @var array
-	 */
-	protected $locale;
+	protected array $locale;
 	
 	/**
 	 * Create new service
 	 *
 	 * @param Config $config Elgg config
 	 */
-	public function __construct(Config $config) {
-		$this->config = $config;
-		
+	public function __construct(protected Config $config) {
 		$this->initializeElggLocale();
 	}
 	

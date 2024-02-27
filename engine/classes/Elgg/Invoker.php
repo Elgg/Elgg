@@ -10,24 +10,12 @@ use Elgg\Di\PublicContainer;
 class Invoker {
 
 	/**
-	 * @var SessionManagerService
-	 */
-	protected $session_manager;
-
-	/**
-	 * @var PublicContainer
-	 */
-	protected $dic;
-
-	/**
 	 * Constructor
 	 *
 	 * @param SessionManagerService $session_manager Session
 	 * @param PublicContainer       $dic             DI container
 	 */
-	public function __construct(SessionManagerService $session_manager, PublicContainer $dic) {
-		$this->session_manager = $session_manager;
-		$this->dic = $dic;
+	public function __construct(protected SessionManagerService $session_manager, protected PublicContainer $dic) {
 	}
 
 	/**

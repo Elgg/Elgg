@@ -21,12 +21,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ResponseFactory {
 
 	use Loggable;
-
-	protected Request $request;
-	
-	protected AjaxService $ajax;
-	
-	protected EventsService $events;
 	
 	protected ResponseTransport $transport;
 	
@@ -41,11 +35,11 @@ class ResponseFactory {
 	 * @param AjaxService   $ajax    AJAX service
 	 * @param EventsService $events  Events service
 	 */
-	public function __construct(Request $request, AjaxService $ajax, EventsService $events) {
-		$this->request = $request;
-		$this->ajax = $ajax;
-		$this->events = $events;
-		
+	public function __construct(
+		protected Request $request,
+		protected AjaxService $ajax,
+		protected EventsService $events
+	) {
 		$this->transport = \Elgg\Application::getResponseTransport();
 		$this->headers = new ResponseHeaderBag();
 	}

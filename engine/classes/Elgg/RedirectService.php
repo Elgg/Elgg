@@ -6,25 +6,11 @@ namespace Elgg;
  */
 class RedirectService {
 
-	/**
-	 * @var \ElggSession
-	 */
-	protected $session;
+	protected bool $is_xhr;
 
-	/**
-	 * @var bool
-	 */
-	protected $is_xhr;
+	protected string $site_url;
 
-	/**
-	 * @var string
-	 */
-	protected $site_url;
-
-	/**
-	 * @var string
-	 */
-	protected $current_url;
+	protected string $current_url;
 
 	/**
 	 * Constructor
@@ -33,8 +19,11 @@ class RedirectService {
 	 * @param \Elgg\Http\Request $request Request
 	 * @param \Elgg\Config       $config  Configuration
 	 */
-	public function __construct(\ElggSession $session, \Elgg\Http\Request $request, \Elgg\Config $config) {
-		$this->session = $session;
+	public function __construct(
+		protected \ElggSession $session,
+		\Elgg\Http\Request $request,
+		\Elgg\Config $config
+	) {
 		$this->is_xhr = $request->isXmlHttpRequest();
 		$this->site_url = $config->wwwroot;
 		$this->current_url = $request->getCurrentURL();

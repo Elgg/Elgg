@@ -10,24 +10,12 @@ use Elgg\Di\PublicContainer;
 abstract class PluginBootstrap implements PluginBootstrapInterface {
 
 	/**
-	 * @var \ElggPlugin
-	 */
-	protected $plugin;
-
-	/**
-	 * @var PublicContainer
-	 */
-	protected $dic;
-
-	/**
 	 * Constructor
 	 *
 	 * @param \ElggPlugin     $plugin The plugin
 	 * @param PublicContainer $dic    Public services
 	 */
-	public function __construct(\ElggPlugin $plugin, PublicContainer $dic) {
-		$this->plugin = $plugin;
-		$this->dic = $dic;
+	public function __construct(protected \ElggPlugin $plugin, protected PublicContainer $dic) {
 	}
 
 	/**

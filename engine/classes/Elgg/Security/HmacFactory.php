@@ -10,26 +10,14 @@ use Elgg\Traits\TimeUsing;
 class HmacFactory {
 
 	use TimeUsing;
-	
-	/**
-	 * @var SiteSecret
-	 */
-	protected $site_secret;
-
-	/**
-	 * @var Crypto
-	 */
-	protected $crypto;
 
 	/**
 	 * Constructor
 	 *
-	 * @param SiteSecret $secret Site secret
-	 * @param Crypto     $crypto Elgg crypto service
+	 * @param SiteSecret $site_secret Site secret
+	 * @param Crypto     $crypto      Elgg crypto service
 	 */
-	public function __construct(SiteSecret $secret, Crypto $crypto) {
-		$this->site_secret = $secret;
-		$this->crypto = $crypto;
+	public function __construct(protected SiteSecret $site_secret, protected Crypto $crypto) {
 	}
 
 	/**

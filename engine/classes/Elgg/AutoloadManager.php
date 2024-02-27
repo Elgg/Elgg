@@ -18,19 +18,14 @@ class AutoloadManager {
 	const KEY_SCANNED_DIRS = 'scannedDirs';
 
 	/**
-	 * @var \Elgg\ClassLoader
-	 */
-	protected $loader;
-
-	/**
 	 * @var array directories that have already been scanned for classes
 	 */
-	protected $scannedDirs = [];
+	protected array $scannedDirs = [];
 
 	/**
 	 * @var bool was data in the manager altered?
 	 */
-	protected $altered = false;
+	protected bool $altered = false;
 
 	/**
 	 * Constructor
@@ -39,9 +34,7 @@ class AutoloadManager {
 	 * @param \Elgg\Config          $config Config
 	 * @param \Elgg\Cache\BaseCache $cache  local file cache
 	 */
-	public function __construct(\Elgg\ClassLoader $loader, \Elgg\Config $config, \Elgg\Cache\BaseCache $cache) {
-		$this->loader = $loader;
-		
+	public function __construct(protected \Elgg\ClassLoader $loader, \Elgg\Config $config, \Elgg\Cache\BaseCache $cache) {
 		if (!$config->AutoloaderManager_skip_storage) {
 			$this->setCache($cache);
 			$this->loadCache();

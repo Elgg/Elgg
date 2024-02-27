@@ -22,16 +22,6 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 	 * @var string name of the queue database table
 	 */
 	public const TABLE_NAME = 'queue';
-	
-	/**
-	 * @var string Name of the queue
-	 */
-	protected $name;
-
-	/**
-	 * @var \Elgg\Database Database adapter
-	 */
-	protected $db;
 
 	/**
 	 * @var string The identifier of the worker pulling from the queue
@@ -44,9 +34,7 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 	 * @param string         $name Name of the queue. Must be less than 256 characters.
 	 * @param \Elgg\Database $db   Database adapter
 	 */
-	public function __construct(string $name, \Elgg\Database $db) {
-		$this->db = $db;
-		$this->name = $name;
+	public function __construct(protected string $name, protected \Elgg\Database $db) {
 		$this->workerId = md5(microtime() . getmypid());
 	}
 

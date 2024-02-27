@@ -14,17 +14,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class UploadService {
 
 	/**
-	 * @var \Elgg\Http\Request
-	 */
-	private $request;
-
-	/**
 	 * Constructor
 	 *
 	 * @param \Elgg\Http\Request $request Http request
 	 */
-	public function __construct(HttpRequest $request) {
-		$this->request = $request;
+	public function __construct(protected HttpRequest $request) {
 	}
 
 	/**

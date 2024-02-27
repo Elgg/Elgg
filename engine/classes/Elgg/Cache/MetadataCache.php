@@ -16,17 +16,11 @@ use Elgg\Values;
 class MetadataCache {
 
 	/**
-	 * @var BaseCache
-	 */
-	protected $cache;
-
-	/**
 	 * Constructor
 	 *
 	 * @param BaseCache $cache Cache
 	 */
-	public function __construct(BaseCache $cache) {
-		$this->cache = $cache;
+	public function __construct(protected BaseCache $cache) {
 	}
 
 	/**

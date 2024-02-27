@@ -67,7 +67,12 @@ class ViewsService {
 	 * @param \Elgg\Config            $config       Elgg configuration
 	 * @param \Elgg\Cache\SystemCache $server_cache Server cache
 	 */
-	public function __construct(protected EventsService $events, protected HttpRequest $request, protected Config $config, protected SystemCache $server_cache) {
+	public function __construct(
+		protected EventsService $events,
+		protected HttpRequest $request,
+		protected Config $config,
+		protected SystemCache $server_cache
+	) {
 	}
 
 	/**

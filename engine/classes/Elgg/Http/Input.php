@@ -11,17 +11,11 @@ namespace Elgg\Http;
 class Input {
 
 	/**
-	 * @var Request
-	 */
-	protected $request;
-
-	/**
 	 * Constructor
 	 *
 	 * @param Request $request Http Request object
 	 */
-	public function __construct(Request $request) {
-		$this->request = $request;
+	public function __construct(protected Request $request) {
 	}
 
 	/**

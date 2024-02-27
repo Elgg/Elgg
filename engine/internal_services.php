@@ -164,12 +164,8 @@ return [
 	'translator' => DI\autowire(\Elgg\I18n\Translator::class),
 	'uploads' => DI\autowire(\Elgg\UploadService::class),
 	'upgrades' => DI\autowire(\Elgg\UpgradeService::class),
-	'urlGenerator' => DI\factory(function (ContainerInterface $c) {
-        return new \Elgg\Router\UrlGenerator($c->routeCollection, $c->requestContext);
-    }),
-	'urlMatcher' => DI\factory(function (ContainerInterface $c) {
-        return new \Elgg\Router\UrlMatcher($c->routeCollection, $c->requestContext);
-    }),
+	'urlGenerator' => DI\autowire(\Elgg\Router\UrlGenerator::class),
+	'urlMatcher' => DI\autowire(\Elgg\Router\UrlMatcher::class),
 	'urlSigner' => DI\autowire(\Elgg\Security\UrlSigner::class),
 	'urls' => DI\autowire(\Elgg\Http\Urls::class),
 	'userCapabilities' => DI\autowire(\Elgg\UserCapabilities::class),

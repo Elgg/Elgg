@@ -31,22 +31,12 @@ class ImageService {
 	protected $imagine;
 
 	/**
-	 * @var Config
-	 */
-	protected $config;
-	
-	/**
-	 * @var MimeTypeService
-	 */
-	protected $mimetype;
-
-	/**
 	 * Constructor
 	 *
 	 * @param Config          $config   Elgg config
 	 * @param MimeTypeService $mimetype MimeType service
 	 */
-	public function __construct(Config $config, MimeTypeService $mimetype) {
+	public function __construct(protected Config $config, protected MimeTypeService $mimetype) {
 		
 		switch ($config->image_processor) {
 			case 'imagick':
@@ -61,9 +51,6 @@ class ImageService {
 				$this->imagine = new \Imagine\Gd\Imagine();
 				break;
 		}
-
-		$this->config = $config;
-		$this->mimetype = $mimetype;
 	}
 
 	/**

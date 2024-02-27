@@ -1675,41 +1675,6 @@ abstract class ElggEntity extends \ElggData {
 	}
 
 	/**
-	 * Returns tags for this entity.
-	 *
-	 * @param array $tag_names Optionally restrict by tag metadata names. Defaults to metadata with the name 'tags'.
-	 *
-	 * @return array
-	 */
-	public function getTags($tag_names = null) {
-		if (!isset($tag_names)) {
-			$tag_names = ['tags'];
-		}
-		
-		if ($tag_names && !is_array($tag_names)) {
-			$tag_names = [$tag_names];
-		}
-
-		$entity_tags = [];
-		foreach ($tag_names as $tag_name) {
-			$tags = $this->$tag_name;
-			if (elgg_is_empty($tags)) {
-				continue;
-			}
-			
-			// if a single tag, metadata returns a string.
-			// if multiple tags, metadata returns an array.
-			if (is_array($tags)) {
-				$entity_tags = array_merge($entity_tags, $tags);
-			} else {
-				$entity_tags[] = $tags;
-			}
-		}
-
-		return $entity_tags;
-	}
-
-	/**
 	 * Remove the membership of all access collections for this entity (if the entity is a user)
 	 *
 	 * @return bool

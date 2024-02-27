@@ -19,15 +19,12 @@ class Mutex {
 
 	use Loggable;
 
-	protected Database $db;
-
 	/**
 	 * Constructor
 	 *
 	 * @param Database $db Database
 	 */
-	public function __construct(Database $db) {
-		$this->db = $db;
+	public function __construct(protected Database $db) {
 	}
 
 	/**

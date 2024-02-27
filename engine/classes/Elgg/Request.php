@@ -12,19 +12,9 @@ use Elgg\Validation\ValidationResults;
 class Request {
 
 	/**
-	 * @var HttpRequest
-	 */
-	private $http_request;
-
-	/**
-	 * @var PublicContainer
-	 */
-	private $dic;
-
-	/**
 	 * @var ValidationResults
 	 */
-	private $validation;
+	protected $validation;
 
 	/**
 	 * Constructor
@@ -32,9 +22,7 @@ class Request {
 	 * @param PublicContainer $dic          DI container
 	 * @param HttpRequest     $http_request Request
 	 */
-	public function __construct(PublicContainer $dic, HttpRequest $http_request) {
-		$this->http_request = $http_request;
-		$this->dic = $dic;
+	public function __construct(protected PublicContainer $dic, protected HttpRequest $http_request) {
 		$this->validation = new ValidationResults();
 	}
 

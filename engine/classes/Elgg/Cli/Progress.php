@@ -11,17 +11,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Progress {
 
 	/**
-	 * @var OutputInterface
-	 */
-	protected $output;
-
-	/**
 	 * Constructor
 	 *
 	 * @param OutputInterface $output Output
 	 */
-	public function __construct(OutputInterface $output) {
-		$this->output = $output;
+	public function __construct(protected OutputInterface $output) {
 	}
 
 	/**

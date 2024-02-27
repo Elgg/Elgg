@@ -36,24 +36,12 @@ class ActionsService {
 	];
 
 	/**
-	 * @var RouteRegistrationService
-	 */
-	protected $routes;
-
-	/**
-	 * @var HandlersService
-	 */
-	protected $handlers;
-
-	/**
 	 * Constructor
 	 *
 	 * @param RouteRegistrationService $routes   Routes
 	 * @param HandlersService          $handlers Handlers service
 	 */
-	public function __construct(RouteRegistrationService $routes, HandlersService $handlers) {
-		$this->routes = $routes;
-		$this->handlers = $handlers;
+	public function __construct(protected RouteRegistrationService $routes, protected HandlersService $handlers) {
 	}
 
 	/**

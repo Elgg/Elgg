@@ -38,19 +38,12 @@ class Database {
 	/**
 	 * @var Connection[]
 	 */
-	private $connections = [];
+	private array $connections = [];
 
 	/**
 	 * @var int $query_count The number of queries made
 	 */
-	private $query_count = 0;
-
-	/**
-	 * Query cache for select queries.
-	 *
-	 * @var \Elgg\Cache\QueryCache $query_cache The cache
-	 */
-	protected $query_cache;
+	private int $query_count = 0;
 
 	/**
 	 * Queries are saved as an array with the DELAYED_* constants as keys.
@@ -65,8 +58,6 @@ class Database {
 	 * @var \Elgg\Database\DbConfig $config Database configuration
 	 */
 	private $db_config;
-	
-	protected Config $config;
 
 	/**
 	 * Constructor
@@ -75,10 +66,7 @@ class Database {
 	 * @param QueryCache $query_cache Query Cache
 	 * @param Config     $config      Elgg config
 	 */
-	public function __construct(DbConfig $db_config, QueryCache $query_cache, Config $config) {
-		$this->query_cache = $query_cache;
-		$this->config = $config;
-		
+	public function __construct(DbConfig $db_config, protected QueryCache $query_cache, protected Config $config) {
 		$this->resetConnections($db_config);
 	}
 

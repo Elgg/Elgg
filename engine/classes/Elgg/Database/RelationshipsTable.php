@@ -30,14 +30,6 @@ class RelationshipsTable {
 	public const TABLE_NAME = 'entity_relationships';
 	
 	public const DEFAULT_JOIN_ALIAS = 'r';
-	
-	protected Database $db;
-
-	protected EntityTable $entities;
-
-	protected MetadataTable $metadata;
-
-	protected EventsService $events;
 
 	/**
 	 * Constructor
@@ -47,11 +39,12 @@ class RelationshipsTable {
 	 * @param MetadataTable $metadata Metadata table
 	 * @param EventsService $events   Events service
 	 */
-	public function __construct(Database $db, EntityTable $entities, MetadataTable $metadata, EventsService $events) {
-		$this->db = $db;
-		$this->entities = $entities;
-		$this->metadata = $metadata;
-		$this->events = $events;
+	public function __construct(
+		protected Database $db,
+		protected EntityTable $entities,
+		protected MetadataTable $metadata,
+		protected EventsService $events
+	) {
 	}
 
 	/**

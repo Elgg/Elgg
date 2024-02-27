@@ -21,21 +21,6 @@ use Elgg\Traits\Database\LegacyQueryOptionsAdapter;
  */
 class SearchService {
 
-	/**
-	 * @var Config
-	 */
-	private $config;
-
-	/**
-	 * @var EventsService
-	 */
-	private $events;
-
-	/**
-	 * @var Database
-	 */
-	private $db;
-
 	use LegacyQueryOptionsAdapter;
 	
 	/**
@@ -45,10 +30,11 @@ class SearchService {
 	 * @param \Elgg\EventsService $events Events service
 	 * @param Database            $db     Database
 	 */
-	public function __construct(Config $config, EventsService $events, Database $db) {
-		$this->config = $config;
-		$this->events = $events;
-		$this->db = $db;
+	public function __construct(
+		protected Config $config,
+		protected EventsService $events,
+		protected Database $db
+	) {
 	}
 
 	/**

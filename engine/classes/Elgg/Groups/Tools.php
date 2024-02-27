@@ -18,18 +18,12 @@ class Tools {
 	protected $tools;
 
 	/**
-	 * @var EventsService
-	 */
-	protected $events;
-
-	/**
 	 * Constructor
 	 *
 	 * @param EventsService $events Events
 	 */
-	public function __construct(EventsService $events) {
+	public function __construct(protected EventsService $events) {
 		$this->tools = new Collection([], Tool::class);
-		$this->events = $events;
 	}
 
 	/**

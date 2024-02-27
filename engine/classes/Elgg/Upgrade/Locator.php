@@ -16,17 +16,11 @@ use Elgg\Project\Paths;
 class Locator {
 
 	/**
-	 * @var Plugins $plugins
-	 */
-	private $plugins;
-
-	/**
 	 * Constructor
 	 *
 	 * @param Plugins $plugins Plugins
 	 */
-	public function __construct(Plugins $plugins) {
-		$this->plugins = $plugins;
+	public function __construct(protected Plugins $plugins) {
 	}
 
 	/**

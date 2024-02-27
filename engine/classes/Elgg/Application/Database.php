@@ -16,19 +16,11 @@ use Elgg\Database as ElggDb;
 class Database {
 
 	/**
-	 * The "real" database instance
-	 *
-	 * @var ElggDb
-	 */
-	private $db;
-
-	/**
 	 * Constructor
 	 *
 	 * @param ElggDb $db The Elgg database
 	 */
-	public function __construct(ElggDb $db) {
-		$this->db = $db;
+	public function __construct(protected ElggDb $db) {
 	}
 
 	/**

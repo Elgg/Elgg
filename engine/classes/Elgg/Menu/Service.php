@@ -11,16 +11,6 @@ use Elgg\EventsService;
 class Service {
 
 	/**
-	 * @var EventsService
-	 */
-	protected $events;
-
-	/**
-	 * @var Config
-	 */
-	protected $config;
-
-	/**
 	 * @var \ElggMenuItem[]
 	 */
 	protected $menus = [];
@@ -31,9 +21,7 @@ class Service {
 	 * @param EventsService $events Events
 	 * @param Config        $config Elgg config
 	 */
-	public function __construct(EventsService $events, Config $config) {
-		$this->events = $events;
-		$this->config = $config;
+	public function __construct(protected EventsService $events, protected Config $config) {
 	}
 
 	/**

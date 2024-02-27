@@ -34,19 +34,13 @@ class Cron {
 		'yearly' => '0 0 1 1 *',
 	];
 
-	protected EventsService $events;
-
-	protected Translator $translator;
-
 	/**
 	 * Constructor
 	 *
 	 * @param EventsService $events     Events service
 	 * @param Translator    $translator Translator service
 	 */
-	public function __construct(EventsService $events, Translator $translator) {
-		$this->events = $events;
-		$this->translator = $translator;
+	public function __construct(protected EventsService $events, protected Translator $translator) {
 	}
 
 	/**

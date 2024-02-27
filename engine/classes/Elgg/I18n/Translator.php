@@ -17,10 +17,6 @@ class Translator {
 
 	use Loggable;
 	
-	protected Config $config;
-
-	protected LocaleService $locale;
-
 	protected array $translations = [];
 
 	protected string $defaultPath;
@@ -53,10 +49,7 @@ class Translator {
 	 * @param Config        $config Elgg config
 	 * @param LocaleService $locale locale service
 	 */
-	public function __construct(Config $config, LocaleService $locale) {
-		$this->config = $config;
-		$this->locale = $locale;
-		
+	public function __construct(protected Config $config, protected LocaleService $locale) {
 		$this->defaultPath = dirname(__DIR__, 4) . '/languages/';
 		
 		$this->registerLanguagePath($this->defaultPath);
