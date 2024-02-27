@@ -30,7 +30,7 @@ jobs:
           extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring
 
       - name: Code checkout Elgg 4.3
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'Elgg/Elgg'
           ref: '4.3'
@@ -40,7 +40,7 @@ jobs:
         run: echo "dir=$(composer config cache-files-dir)" >> ${GITHUB_OUTPUT}
         
       - name: Restore Composer Cache for 4.3
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -59,7 +59,7 @@ jobs:
         run: php ./elgg-cli database:seed --limit=5 --image_folder=./.scripts/seeder/images/ -vv --no-ansi
 
       - name: Code checkout Elgg 5.1
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'Elgg/Elgg'
           ref: '5.1'
@@ -85,12 +85,12 @@ jobs:
           ini-values: zend.enable_gc=0
         
       - name: Code checkout PR
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           clean: false
       
       - name: Restore Composer Cache for PR
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
