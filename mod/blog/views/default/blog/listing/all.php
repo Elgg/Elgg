@@ -4,10 +4,10 @@
  *
  * Note: this view has a corresponding view in the default rss type, changes should be reflected
  *
- * @uses $vars['options'] Options
+ * @uses $vars['options']        Additional listing options
  * @uses $vars['created_after']  Only show blogs created after a date
  * @uses $vars['created_before'] Only show blogs created before a date
- * @uses $vars['status'] Filter by status
+ * @uses $vars['status']         Filter by status
  */
 
 $defaults = [
