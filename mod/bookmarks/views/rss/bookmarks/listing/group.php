@@ -4,17 +4,21 @@
  *
  * Note: this view has a corresponding view in the default view type, changes should be reflected
  *
- * @uses $vars['entity']
+ * @uses $vars['options'] Additional listing options
+ * @uses $vars['entity']  Group to list content for
  */
 
+$options = (array) elgg_extract('options', $vars);
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggEntity) {
+if (!$entity instanceof \ElggGroup) {
 	return;
 }
 
-echo elgg_list_entities([
-	'type' => 'object',
-	'subtype' => 'bookmarks',
-	'container_guids' => $entity->guid,
-	'pagination' => false,
-]);
+$group_options = [
+	'container_guid' => $entity->guid,
+	'preload_containers' => false,
+];
+
+$vars['options'] = array_merge($options, $group_options);
+
+echo elgg_view('bookmarks/listing/all', $vars);
