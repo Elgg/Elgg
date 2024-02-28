@@ -8,6 +8,9 @@
 
 $options = (array) elgg_extract('options', $vars);
 $entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggUser) {
+	return;
+}
 
 $owner_options = [
 	'subject_guid' => $entity->guid,

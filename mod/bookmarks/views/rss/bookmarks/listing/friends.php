@@ -4,19 +4,22 @@
  *
  * Note: this view has a corresponding view in the default view type, changes should be reflected
  *
- * @uses $vars['entity']
+ * @uses $vars['options'] Additional listing options
+ * @uses $vars['entity']  User to list friends content for
  */
 
+$options = (array) elgg_extract('options', $vars);
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggUser) {
+if (!$entity instanceof \ElggUser) {
 	return;
 }
 
-echo elgg_list_entities([
-	'type' => 'object',
-	'subtype' => 'bookmarks',
+$friends_options = [
 	'relationship' => 'friend',
 	'relationship_guid' => $entity->guid,
 	'relationship_join_on' => 'owner_guid',
-	'pagination' => false,
-]);
+];
+
+$vars['options'] = array_merge($options, $friends_options);
+
+echo elgg_view('bookmarks/listing/all', $vars);

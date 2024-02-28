@@ -3,12 +3,18 @@
  * Renders a list of groups with most members
  *
  * Note: this view has a corresponding view in the default view type, changes should be reflected
+ *
+ * @uses $vars['options'] Additional listing options
  */
 
-echo elgg_list_entities_from_relationship_count([
-	'type' => 'group',
+$options = (array) elgg_extract('options', $vars);
+
+$popular_options = [
 	'relationship' => 'member',
 	'inverse_relationship' => false,
-	'full_view' => false,
-	'pagination' => false,
-]);
+];
+
+$vars['options'] = array_merge($options, $popular_options);
+$vars['getter'] = 'elgg_get_entities_from_relationship_count';
+
+echo elgg_view('groups/listing/all', $vars);

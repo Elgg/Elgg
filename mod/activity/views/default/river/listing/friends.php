@@ -8,6 +8,9 @@
 
 $options = (array) elgg_extract('options', $vars);
 $entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggUser) {
+	return;
+}
 
 $friends_options = [
 	'relationship' => 'friend',

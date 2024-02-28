@@ -4,27 +4,21 @@
  *
  * Note: this view has a corresponding view in the default view type, changes should be reflected
  *
- * @uses $vars['entity'] the user
+ * @uses $vars['options'] Additional listing options
+ * @uses $vars['entity']  The user to list content for
  */
 
-use Elgg\Database\Clauses\OrderByClause;
-
+$options = (array) elgg_extract('options', $vars);
 $entity = elgg_extract('entity', $vars);
-
-$options = [
-	'type' => 'object',
-	'subtype' => 'discussion',
-	'limit' => max(20, elgg_get_config('default_limit')),
-	'order_by' => new OrderByClause('e.last_action', 'desc'),
-	'pagination' => false,
-];
-
-if ($entity instanceof ElggUser) {
-	// Display all discussions started by the user regardless of
-	// the entity that is working as a container. See #4878.
-	$options['owner_guid'] = (int) $entity->guid;
-} else {
-	$options['container_guid'] = (int) $entity->guid;
+if (!$entity instanceof \ElggUser) {
+	return;
 }
 
-echo elgg_list_entities($options);
+$owner_options = [
+	'owner_guid' => $entity->guid,
+	'preload_owners' => false,
+];
+
+$vars['options'] = array_merge($options, $owner_options);
+
+echo elgg_view('discussion/listing/all', $vars);

@@ -4,20 +4,21 @@
  *
  * Note: this view has a corresponding view in the rss view type, changes should be reflected
  *
- * @uses $vars['entity'] the group
+ * @uses $vars['options'] Additional listing options
+ * @uses $vars['entity']  Group to list content for
  */
 
+$options = (array) elgg_extract('options', $vars);
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggEntity) {
+if (!$entity instanceof \ElggGroup) {
 	return;
 }
 
-echo elgg_list_entities([
-	'type' => 'object',
-	'subtype' => 'page',
-	'metadata_name_value_pairs' => [
-		'parent_guid' => 0,
-	],
+$group_options = [
 	'container_guid' => $entity->guid,
-	'no_results' => elgg_echo('pages:none'),
-]);
+	'preload_containers' => false,
+];
+
+$vars['options'] = array_merge($options, $group_options);
+
+echo elgg_view('pages/listing/all', $vars);

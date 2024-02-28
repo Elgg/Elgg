@@ -9,6 +9,7 @@ use Elgg\Traits\Entity\PluginSettings;
  * @property      string $name                A short name that captures the purpose of the group
  * @property      string $description         A longer body of content that gives more details about the group
  * @property-read string $content_access_mode Content access mode for this group
+ * @property      int    $membership          Type of group membership
  */
 class ElggGroup extends \ElggEntity {
 
@@ -57,7 +58,7 @@ class ElggGroup extends \ElggEntity {
 	 * @return bool
 	 */
 	public function isPublicMembership(): bool {
-		return ($this->membership == ACCESS_PUBLIC);
+		return ($this->membership === ACCESS_PUBLIC);
 	}
 
 	/**
