@@ -92,7 +92,105 @@ class AnnotationsUnitTest extends UnitTestCase {
 
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
-
+	
+	/**
+	 * @dataProvider orderBys
+	 */
+	public function testCanExecuteGetWithCorrectDefaultOrderBy($additional_options, $query_orders) {
+		$select = Select::fromTable(AnnotationsTable::TABLE_NAME, AnnotationsTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
+		
+		$select->addClause(new AnnotationWhereClause(), $select->getTableAlias());
+		
+		$select->join($select->getTableAlias(), EntityTable::TABLE_NAME, 'e', "e.guid = {$select->getTableAlias()}.entity_guid");
+		$select->addClause(new EntityWhereClause(), 'e');
+		
+		foreach ($query_orders as $order_part => $direction) {
+			$select->addOrderBy($order_part, $direction);
+		}
+		
+		$rows = $this->getRows(5);
+		
+		$spec = _elgg_services()->db->addQuerySpec([
+			'sql' => $select->getSQL(),
+			'params' => $select->getParameters(),
+			'results' => $rows,
+		]);
+		
+		$options = [
+			'limit' => false,
+			'callback' => false,
+		];
+		
+		$options = array_merge($options, $additional_options);
+		
+		$find = Annotations::find($options);
+		
+		$this->assertEquals($rows, $find);
+		
+		_elgg_services()->db->removeQuerySpec($spec);
+	}
+	
+	public function testCanExecuteGetWithNoOrderByIfUsingSortBy() {
+		$select = Select::fromTable(AnnotationsTable::TABLE_NAME, AnnotationsTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
+		
+		$select->addClause(new AnnotationWhereClause(), $select->getTableAlias());
+		
+		$select->join($select->getTableAlias(), EntityTable::TABLE_NAME, 'qbt1', "qbt1.guid = {$select->getTableAlias()}.entity_guid");
+		$select->join($select->getTableAlias(), EntityTable::TABLE_NAME, 'e', "e.guid = {$select->getTableAlias()}.entity_guid");
+		$select->addClause(new EntityWhereClause(), 'e');
+		
+		$select->addOrderBy('qbt1.time_created', 'desc');
+		
+		$rows = $this->getRows(5);
+		
+		$spec = _elgg_services()->db->addQuerySpec([
+			'sql' => $select->getSQL(),
+			'params' => $select->getParameters(),
+			'results' => $rows,
+		]);
+		
+		$find = Annotations::find([
+			'limit' => false,
+			'callback' => false,
+			'sort_by' => [
+				'property_type' => 'attribute',
+				'property' => 'time_created',
+				'direction' => 'desc',
+			],
+		]);
+		
+		// test default order by is not applied if sort_by is used
+		$this->assertEquals($rows, $find);
+		
+		_elgg_services()->db->removeQuerySpec($spec);
+	}
+	
+	public static function orderBys() {
+		return [
+			// test defaults are applied
+			[
+				[],
+				[
+					AnnotationsTable::DEFAULT_JOIN_ALIAS . '.time_created' => 'asc',
+					AnnotationsTable::DEFAULT_JOIN_ALIAS . '.id' => 'asc',
+				],
+			],
+			
+			// test no default is applied if order by is disabled
+			[
+				['order_by' => false],
+				[],
+			],
+			// test default only is applied if there is no custom order_by
+			[
+				['order_by' => AnnotationsTable::DEFAULT_JOIN_ALIAS . '.time_created desc'],
+				[AnnotationsTable::DEFAULT_JOIN_ALIAS . '.time_created' => 'desc'],
+			],
+		];
+	}
+	
 	public function testCanExecuteGetWithClauses() {
 		$select = Select::fromTable(AnnotationsTable::TABLE_NAME, AnnotationsTable::DEFAULT_JOIN_ALIAS);
 		$select->select("DISTINCT {$select->getTableAlias()}.*");

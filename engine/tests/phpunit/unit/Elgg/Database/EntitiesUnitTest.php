@@ -86,7 +86,98 @@ class EntitiesUnitTest extends UnitTestCase {
 
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
-
+	
+	/**
+	 * @dataProvider orderBys
+	 */
+	public function testCanExecuteGetWithCorrectDefaultOrderBy($additional_options, $query_orders) {
+		$select = Select::fromTable(EntityTable::TABLE_NAME, EntityTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
+		
+		$select->addClause(new AccessWhereClause());
+		
+		foreach ($query_orders as $order_part => $direction) {
+			$select->addOrderBy($order_part, $direction);
+		}
+		
+		$rows = $this->getRows(5);
+		
+		$spec = _elgg_services()->db->addQuerySpec([
+			'sql' => $select->getSQL(),
+			'params' => $select->getParameters(),
+			'results' => $rows,
+		]);
+		
+		$options = [
+			'limit' => false,
+			'callback' => false,
+		];
+		
+		$options = array_merge($options, $additional_options);
+		
+		$find = Entities::find($options);
+		
+		$this->assertEquals($rows, $find);
+		
+		_elgg_services()->db->removeQuerySpec($spec);
+	}
+	
+	public function testCanExecuteGetWithNoOrderByIfUsingSortBy() {
+		$select = Select::fromTable(EntityTable::TABLE_NAME, EntityTable::DEFAULT_JOIN_ALIAS);
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
+		
+		$select->addClause(new AccessWhereClause());
+		
+		$select->addOrderBy('e.time_created', 'desc');
+		
+		$rows = $this->getRows(5);
+		
+		$spec = _elgg_services()->db->addQuerySpec([
+			'sql' => $select->getSQL(),
+			'params' => $select->getParameters(),
+			'results' => $rows,
+		]);
+		
+		$find = Entities::find([
+			'limit' => false,
+			'callback' => false,
+			'sort_by' => [
+				'property_type' => 'attribute',
+				'property' => 'time_created',
+				'direction' => 'desc',
+			],
+		]);
+		
+		// test default order by is not applied if sort_by is used
+		$this->assertEquals($rows, $find);
+		
+		_elgg_services()->db->removeQuerySpec($spec);
+	}
+	
+	public static function orderBys() {
+		return [
+			// test defaults are applied
+			[
+				[],
+				[
+					EntityTable::DEFAULT_JOIN_ALIAS . '.time_created' => 'desc',
+					EntityTable::DEFAULT_JOIN_ALIAS . '.guid' => 'desc',
+				],
+			],
+			
+			// test no default is applied if order by is disabled
+			[
+				['order_by' => false],
+				[],
+			],
+			// test default only is applied if there is no custom order_by
+			[
+				['order_by' => EntityTable::DEFAULT_JOIN_ALIAS . '.time_created asc'],
+				[EntityTable::DEFAULT_JOIN_ALIAS . '.time_created' => 'asc'],
+			],
+		];
+	}
+	
 	public function testCanExecuteGetWithClauses() {
 		$select = Select::fromTable(EntityTable::TABLE_NAME, EntityTable::DEFAULT_JOIN_ALIAS);
 		$select->select("DISTINCT {$select->getTableAlias()}.*");

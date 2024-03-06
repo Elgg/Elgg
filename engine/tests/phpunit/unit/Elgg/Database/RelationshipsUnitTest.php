@@ -92,6 +92,100 @@ class RelationshipsUnitTest extends UnitTestCase {
 
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
+	
+	/**
+	 * @dataProvider orderBys
+	 */
+	public function testCanExecuteGetWithCorrectDefaultOrderBy($additional_options, $query_orders) {
+		$select = Select::fromTable(RelationshipsTable::TABLE_NAME, 'er');
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
+		
+		$select->joinEntitiesTable($select->getTableAlias(), 'guid_one', 'inner', 'e');
+		$select->addClause(new EntityWhereClause(), 'e');
+		
+		foreach ($query_orders as $order_part => $direction) {
+			$select->addOrderBy($order_part, $direction);
+		}
+		
+		$rows = $this->getRows(5);
+		
+		$spec = _elgg_services()->db->addQuerySpec([
+			'sql' => $select->getSQL(),
+			'params' => $select->getParameters(),
+			'results' => $rows,
+		]);
+		
+		$options = [
+			'limit' => false,
+			'callback' => false,
+		];
+		
+		$options = array_merge($options, $additional_options);
+		
+		$find = Relationships::find($options);
+		
+		$this->assertEquals($rows, $find);
+		
+		_elgg_services()->db->removeQuerySpec($spec);
+	}
+	
+	public function testCanExecuteGetWithNoOrderByIfUsingSortBy() {
+		$select = Select::fromTable(RelationshipsTable::TABLE_NAME, 'er');
+		$select->select("DISTINCT {$select->getTableAlias()}.*");
+		
+		$select->join($select->getTableAlias(), EntityTable::TABLE_NAME, 'qbt1', "qbt1.guid = {$select->getTableAlias()}.guid_one");
+		$select->joinEntitiesTable($select->getTableAlias(), 'guid_one', 'inner', 'e');
+		$select->addClause(new EntityWhereClause(), 'e');
+		
+		$select->addOrderBy('qbt1.time_created', 'desc');
+		
+		$rows = $this->getRows(5);
+		
+		$spec = _elgg_services()->db->addQuerySpec([
+			'sql' => $select->getSQL(),
+			'params' => $select->getParameters(),
+			'results' => $rows,
+		]);
+		
+		$find = Relationships::find([
+			'limit' => false,
+			'callback' => false,
+			'sort_by' => [
+				'property_type' => 'attribute',
+				'property' => 'time_created',
+				'direction' => 'desc',
+			],
+		]);
+		
+		// test default order by is not applied if sort_by is used
+		$this->assertEquals($rows, $find);
+		
+		_elgg_services()->db->removeQuerySpec($spec);
+	}
+	
+	public static function orderBys() {
+		return [
+			// test defaults are applied
+			[
+				[],
+				[
+					'er.time_created' => 'desc',
+					'er.id' => 'desc',
+				],
+			],
+			
+			// test no default is applied if order by is disabled
+			[
+				['order_by' => false],
+				[],
+			],
+			// test default only is applied if there is no custom order_by
+			[
+				['order_by' => RelationshipsTable::DEFAULT_JOIN_ALIAS . '.time_created asc'],
+				[RelationshipsTable::DEFAULT_JOIN_ALIAS . '.time_created' => 'asc'],
+			],
+		];
+	}
 
 	public function testCanExecuteGetWithClauses() {
 		$select = Select::fromTable(RelationshipsTable::TABLE_NAME, 'er');
