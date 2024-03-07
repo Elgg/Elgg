@@ -1377,7 +1377,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals([$order_by], $this->options->order_by);
 	}
 
-	public function testNomralizesNonArrayProps() {
+	public function testNormalizesNonArrayProps() {
 		$join = new JoinClause('table', 'alias');
 		$options = [
 			'wheres' => 'x = y',

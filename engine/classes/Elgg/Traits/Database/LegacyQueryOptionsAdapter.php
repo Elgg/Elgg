@@ -31,7 +31,7 @@ trait LegacyQueryOptionsAdapter {
 	 *
 	 * @return array
 	 */
-	public function normalizeOptions(array $options = []) {
+	public function normalizeOptions(array $options = []): array {
 
 		if (!isset($options['__original_options'])) {
 			$options['__original_options'] = $options;
@@ -41,40 +41,28 @@ trait LegacyQueryOptionsAdapter {
 
 		$options = $this->normalizeGuidOptions($options);
 		$options = $this->normalizeTimeOptions($options);
-
 		$options = $this->normalizeAccessOptions($options);
-
 		$options = $this->normalizeTypeSubtypeOptions($options);
-
 		$options = $this->normalizeRelationshipOptions($options);
 		$options = $this->normalizeAnnotationOptions($options);
 		$options = $this->normalizeMetadataOptions($options);
 		$options = $this->normalizeMetadataSearchOptions($options);
-
-		foreach (['selects', 'joins', 'wheres'] as $prop) {
-			if (empty($options[$prop])) {
-				$options[$prop] = [];
-			}
-
-			if (!is_array($options[$prop])) {
-				if ($options[$prop]) {
-					$options[$prop] = [$options[$prop]];
-				}
-			}
-		}
-
 		$options = $this->normalizeSelectClauses($options);
 		$options = $this->normalizeWhereClauses($options);
 		$options = $this->normalizeJoinClauses($options);
+		$options = $this->normalizeGroupByClauses($options);
+		$options = $this->normalizeHavingClauses($options);
 		$options = $this->normalizeOrderByClauses($options);
-		return $this->normalizeGroupByClauses($options);
+		
+		return $options;
 	}
 
 	/**
 	 * Returns defaults array
+	 *
 	 * @return array
 	 */
-	protected function getDefaults() {
+	protected function getDefaults(): array {
 		return [
 			'types' => null,
 			'subtypes' => null,
@@ -100,6 +88,7 @@ trait LegacyQueryOptionsAdapter {
 			'selects' => [],
 			'wheres' => [],
 			'joins' => [],
+			'having' => null,
 			'group_by' => null,
 
 			'metadata_name_value_pairs' => null,
@@ -152,8 +141,8 @@ trait LegacyQueryOptionsAdapter {
 	 *
 	 * @return array
 	 */
-	protected function normalizeAccessOptions(array $options = []) {
-		return self::normalizePluralOptions($options, ['access_id']);
+	protected function normalizeAccessOptions(array $options = []): array {
+		return $this->normalizePluralOptions($options, ['access_id']);
 	}
 
 	/**
@@ -164,14 +153,11 @@ trait LegacyQueryOptionsAdapter {
 	 * @return array
 	 * @throws InvalidArgumentException
 	 */
-	protected function normalizeTypeSubtypeOptions(array $options = []) {
-
-		$singulars = [
+	protected function normalizeTypeSubtypeOptions(array $options = []): array {
+		$options = $this->normalizePluralOptions($options, [
 			'type',
 			'subtype',
-		];
-
-		$options = self::normalizePluralOptions($options, $singulars);
+		]);
 
 		// can't use helper function with type_subtype_pair because
 		// it's already an array...just need to merge it
@@ -218,15 +204,13 @@ trait LegacyQueryOptionsAdapter {
 	 *
 	 * @return array
 	 */
-	protected function normalizeMetadataOptions(array $options = []) {
-		$singulars = [
+	protected function normalizeMetadataOptions(array $options = []): array {
+		$options = $this->normalizePluralOptions($options, [
 			'metadata_id',
 			'metadata_name',
 			'metadata_value',
 			'metadata_name_value_pair',
-		];
-
-		$options = self::normalizePluralOptions($options, $singulars);
+		]);
 
 		$options = $this->normalizePairedOptions('metadata', $options);
 
@@ -309,12 +293,8 @@ trait LegacyQueryOptionsAdapter {
 	 *
 	 * @return array
 	 */
-	protected function normalizeMetadataSearchOptions(array $options = []) {
-		$singulars = [
-			'search_name_value_pair',
-		];
-
-		$options = self::normalizePluralOptions($options, $singulars);
+	protected function normalizeMetadataSearchOptions(array $options = []): array {
+		$options = $this->normalizePluralOptions($options, ['search_name_value_pair']);
 
 		$options = $this->normalizePairedOptions('search', $options);
 
@@ -376,15 +356,13 @@ trait LegacyQueryOptionsAdapter {
 	 *
 	 * @return array
 	 */
-	protected function normalizeAnnotationOptions(array $options = []) {
-		$singulars = [
+	protected function normalizeAnnotationOptions(array $options = []): array {
+		$options = $this->normalizePluralOptions($options, [
 			'annotation_id',
 			'annotation_name',
 			'annotation_value',
 			'annotation_name_value_pair',
-		];
-
-		$options = self::normalizePluralOptions($options, $singulars);
+		]);
 
 		$options = $this->normalizePairedOptions('annotation', $options);
 
@@ -476,7 +454,7 @@ trait LegacyQueryOptionsAdapter {
 	 *
 	 * @return array
 	 */
-	protected function normalizePairedOptions($type = 'metadata', array $options = []) {
+	protected function normalizePairedOptions($type = 'metadata', array $options = []): array {
 		if (!is_array($options["{$type}_name_value_pairs"])) {
 			$options["{$type}_name_value_pairs"] = [];
 		}
@@ -498,6 +476,7 @@ trait LegacyQueryOptionsAdapter {
 				'comparison' => elgg_extract('operand', $options["{$type}_name_value_pairs"], '='),
 				'case_sensitive' => elgg_extract('case_sensitive', $options["{$type}_name_value_pairs"], $case_sensitive_default)
 			];
+			
 			unset($options["{$type}_name_value_pairs"]['name']);
 			unset($options["{$type}_name_value_pairs"]['value']);
 			unset($options["{$type}_name_value_pairs"]['operand']);
@@ -604,10 +583,7 @@ trait LegacyQueryOptionsAdapter {
 	 *
 	 * @return array
 	 */
-	protected function normalizeRelationshipOptions(array $options = []) {
-
-		$pair = [];
-
+	protected function normalizeRelationshipOptions(array $options = []): array {
 		$defaults = [
 			'relationship_ids' => null,
 			'relationship' => null,
@@ -618,16 +594,17 @@ trait LegacyQueryOptionsAdapter {
 			'relationship_created_before' => null,
 		];
 
+		$simple_pair = [];
 		foreach (array_keys($defaults) as $prop) {
 			if (isset($options[$prop])) {
-				$pair[$prop] = $options[$prop];
+				$simple_pair[$prop] = $options[$prop];
 			}
 			
 			unset($options[$prop]);
 		}
 
 		$options['relationship_pairs'] = (array) $options['relationship_pairs'];
-		$options['relationship_pairs'][] = $pair;
+		$options['relationship_pairs'][] = $simple_pair;
 
 		foreach ($options['relationship_pairs'] as $index => $relationship_pair) {
 			if ($relationship_pair instanceof WhereClause) {
@@ -678,16 +655,13 @@ trait LegacyQueryOptionsAdapter {
 	 *
 	 * @return array
 	 */
-	protected function normalizeGuidOptions(array $options = []) {
-
-		$singulars = [
+	protected function normalizeGuidOptions(array $options = []): array {
+		$options = $this->normalizePluralOptions($options, [
 			'guid',
 			'owner_guid',
 			'container_guid',
 			'annotation_owner_guid',
-		];
-
-		$options = self::normalizePluralOptions($options, $singulars);
+		]);
 
 		$names = [
 			'guids',
@@ -723,8 +697,7 @@ trait LegacyQueryOptionsAdapter {
 	 *
 	 * @return array
 	 */
-	protected function normalizeTimeOptions(array $options = []) {
-
+	protected function normalizeTimeOptions(array $options = []): array {
 		$props = [
 			'modified',
 			'created',
@@ -765,7 +738,7 @@ trait LegacyQueryOptionsAdapter {
 	 *
 	 * @return array
 	 */
-	protected function removeKeyPrefix($prefix, array $array = []) {
+	protected function removeKeyPrefix(string $prefix, array $array = []): array {
 		foreach ($array as $key => $value) {
 			$new_key = $key;
 			if (str_starts_with($key, $prefix)) {
@@ -795,9 +768,18 @@ trait LegacyQueryOptionsAdapter {
 	 *
 	 * @return array
 	 */
-	protected function normalizeSelectClauses(array $options = []) {
-
-		$options = self::normalizePluralOptions($options, ['select']);
+	protected function normalizeSelectClauses(array $options = []): array {
+		$options = $this->normalizePluralOptions($options, ['select']);
+		
+		if (empty($options['selects'])) {
+			$options['selects'] = [];
+			
+			return $options;
+		}
+		
+		if (!is_array($options['selects'])) {
+			$options['selects'] = [$options['selects']];
+		}
 
 		foreach ($options['selects'] as $key => $clause) {
 			if (empty($clause)) {
@@ -822,10 +804,19 @@ trait LegacyQueryOptionsAdapter {
 	 *
 	 * @return array
 	 */
-	protected function normalizeWhereClauses(array $options = []) {
+	protected function normalizeWhereClauses(array $options = []): array {
+		$options = $this->normalizePluralOptions($options, ['where']);
 
-		$options = self::normalizePluralOptions($options, ['where']);
-
+		if (empty($options['wheres'])) {
+			$options['wheres'] = [];
+			
+			return $options;
+		}
+		
+		if (!is_array($options['wheres'])) {
+			$options['wheres'] = [$options['wheres']];
+		}
+		
 		foreach ($options['wheres'] as $key => $clause) {
 			if (empty($clause)) {
 				unset($options['wheres'][$key]);
@@ -849,9 +840,18 @@ trait LegacyQueryOptionsAdapter {
 	 *
 	 * @return array
 	 */
-	protected function normalizeJoinClauses(array $options = []) {
-
-		$options = self::normalizePluralOptions($options, ['join']);
+	protected function normalizeJoinClauses(array $options = []): array {
+		$options = $this->normalizePluralOptions($options, ['join']);
+		
+		if (empty($options['joins'])) {
+			$options['joins'] = [];
+			
+			return $options;
+		}
+		
+		if (!is_array($options['joins'])) {
+			$options['joins'] = [$options['joins']];
+		}
 
 		foreach ($options['joins'] as $key => $join) {
 			if (empty($join)) {
@@ -891,18 +891,15 @@ trait LegacyQueryOptionsAdapter {
 	 *
 	 * @return array
 	 */
-	protected function normalizeOrderByClauses(array $options = []) {
-
-		$order_by = $options['order_by'];
+	protected function normalizeOrderByClauses(array $options = []): array {
+		$orders = $options['order_by'];
 		$options['order_by'] = [];
 
-		if (!empty($order_by)) {
-			if (is_string($order_by)) {
-				$orders = explode(',', $order_by);
-			} else if (is_array($order_by)) {
-				$orders = $order_by;
-			} else {
-				$orders = [$order_by];
+		if (!empty($orders)) {
+			if (is_string($orders)) {
+				$orders = explode(',', $orders);
+			} elseif (!is_array($orders)) {
+				$orders = [$orders];
 			}
 
 			foreach ($orders as $order) {
@@ -926,7 +923,7 @@ trait LegacyQueryOptionsAdapter {
 				$options['order_by'][] = new OrderByClause($column, $direction);
 			}
 		}
-
+		
 		$sort_by = $options['sort_by'];
 		if (isset($sort_by['property'])) {
 			// single array variant, convert to an array of sort_by specs
@@ -950,36 +947,50 @@ trait LegacyQueryOptionsAdapter {
 	}
 
 	/**
+	 * Normalize 'having' statements
+	 *
+	 * @param array $options Options
+	 *
+	 * @return array
+	 */
+	protected function normalizeHavingClauses(array $options = []): array {
+		if (empty($options['having'])) {
+			$options['having'] = [];
+			
+			return $options;
+		}
+		
+		if (!is_array($options['having'])) {
+			$options['having'] = [$options['having']];
+		}
+
+		foreach ($options['having'] as $key => $expr) {
+			if ($expr instanceof HavingClause) {
+				continue;
+			}
+
+			$options['having'][$key] = new HavingClause($expr);
+		}
+
+		return $options;
+	}
+	
+	/**
 	 * Normalize 'group_by' statements
 	 *
 	 * @param array $options Options
 	 *
 	 * @return array
 	 */
-	protected function normalizeGroupByClauses(array $options = []) {
-
-		if (!isset($options['having'])) {
-			$options['having'] = [];
-		} else {
-			if (!is_array($options['having'])) {
-				$options['having'] = [$options['having']];
-			}
-
-			foreach ($options['having'] as $key => $expr) {
-				if ($expr instanceof HavingClause) {
-					continue;
-				}
-
-				$options['having'][$key] = new HavingClause($expr);
-			}
-		}
-
+	protected function normalizeGroupByClauses(array $options = []): array {
 		if (empty($options['group_by'])) {
 			$options['group_by'] = [];
+			
+			return $options;
 		}
 
-		if (is_string($options['group_by'])) {
-			$options['group_by'] = (array) trim($options['group_by']);
+		if (!is_array($options['group_by'])) {
+			$options['group_by'] = [$options['group_by']];
 		}
 
 		foreach ($options['group_by'] as $key => $expr) {
@@ -997,10 +1008,11 @@ trait LegacyQueryOptionsAdapter {
 	 * Normalizes metadata / annotation option names to their corresponding metastrings name.
 	 *
 	 * @param array $options An options array
+	 *
 	 * @return array
 	 * @internal
 	 */
-	public static function normalizeMetastringOptions(array $options = []) {
+	public static function normalizeMetastringOptions(array $options = []): array {
 
 		// support either metastrings_type or metastring_type
 		// because I've made this mistake many times and hunting it down is a pain...
@@ -1051,7 +1063,7 @@ trait LegacyQueryOptionsAdapter {
 	 * @return array
 	 * @internal
 	 */
-	public static function normalizePluralOptions($options, $singulars) {
+	public static function normalizePluralOptions(array $options, array $singulars): array {
 		foreach ($singulars as $singular) {
 			$plural = $singular . 's';
 
