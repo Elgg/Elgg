@@ -140,9 +140,9 @@ class River extends Repository {
 
 		$qb = $this->buildQuery($qb);
 
-		// Keeping things backwards compatible
+		// add default ordering
 		$original_order = elgg_extract('order_by', $this->options->__original_options);
-		if (empty($original_order) && $original_order !== false) {
+		if (empty($this->options->order_by) && $original_order !== false) {
 			$qb->addOrderBy("{$qb->getTableAlias()}.posted", 'desc');
 		}
 

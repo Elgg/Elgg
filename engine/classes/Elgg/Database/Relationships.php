@@ -136,9 +136,9 @@ class Relationships extends Repository {
 		
 		$select = $this->buildQuery($select);
 		
-		// Keeping things backwards compatible
+		// add default ordering
 		$original_order = elgg_extract('order_by', $this->options->__original_options);
-		if (empty($original_order) && $original_order !== false) {
+		if (empty($this->options->order_by) && $original_order !== false) {
 			$select->addOrderBy("{$select->getTableAlias()}.time_created", 'desc');
 			$select->addOrderBy("{$select->getTableAlias()}.id", 'desc');
 		}
