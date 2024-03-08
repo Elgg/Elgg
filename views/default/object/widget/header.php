@@ -16,7 +16,7 @@ if (!empty($url)) {
 	$title_text = elgg_view_url($url, $title_text);
 }
 
-$title = elgg_format_element('h3', ['class' => 'elgg-widget-title'], $title_text);
+$title = elgg_format_element('h2', ['class' => 'elgg-widget-title'], $title_text);
 
 echo elgg_format_element('div', ['class' => 'elgg-widget-handle'], $title);
 

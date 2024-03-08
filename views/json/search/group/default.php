@@ -1,7 +1,7 @@
 <?php
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggGroup) {
+if (!$entity instanceof \ElggGroup) {
 	return;
 }
 
@@ -16,11 +16,7 @@ $icon = elgg_view_entity_icon($entity, 'tiny', [
 	'href' => false,
 ]);
 
-$title = elgg_format_element('h3', [], $entity->getDisplayName());
-
-$label = elgg_view_image_block($icon, $title, [
-	'class' => 'elgg-autocomplete-item',
-]);
+$label = elgg_view_image_block($icon, $entity->getDisplayName(), ['class' => 'elgg-autocomplete-item']);
 
 $data = $entity->toObject();
 $data->label = $label;

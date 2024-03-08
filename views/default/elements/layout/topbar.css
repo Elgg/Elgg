@@ -2,7 +2,7 @@
 	left: 0;
 	flex-grow: 1;
 	
-	h1 {
+	.elgg-heading-site {
 		font-size: 1.3rem;
 		line-height: 3rem;
 		font-weight: 700;

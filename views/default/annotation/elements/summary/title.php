@@ -12,9 +12,9 @@ if ($title === false) {
 }
 
 $annotation = elgg_extract('annotation', $vars);
-if ($title === '' && $annotation instanceof ElggAnnotation) {
+if ($title === '' && $annotation instanceof \ElggAnnotation) {
 	$owner = $annotation->getOwnerEntity();
-	if (!$owner instanceof ElggEntity) {
+	if (!$owner instanceof \ElggEntity) {
 		return;
 	}
 	
@@ -25,6 +25,4 @@ if (elgg_is_empty($title)) {
 	return;
 }
 
-echo elgg_format_element('div', ['class' => [
-	'elgg-listing-summary-title',
-]], $title);
+echo elgg_format_element('div', ['class' => 'elgg-listing-summary-title'], $title);

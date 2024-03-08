@@ -15,10 +15,6 @@
 }
 
 .elgg-item {
-	h3 a {
-		padding-bottom: 0.25rem;
-	}
-	
 	.elgg-content {
 		margin: 0.5rem 0;
 	}
@@ -38,6 +34,8 @@
 .elgg-listing-summary-title {
 	line-height: 1.5rem;
 	margin-bottom: 0.25rem;
+	font-weight: 500;
+	font-size: 1.2rem;
 }
 
 .elgg-listing-full-header {

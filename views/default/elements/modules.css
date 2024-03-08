@@ -13,6 +13,10 @@
 		> .elgg-module-menu {
 			margin-left: auto;
 		}
+		
+		h2 {
+			font-size: 1.3rem;
+		}
 	}
 }
 

@@ -2,8 +2,8 @@
 /**
  * Outputs object title
  *
- * @uses $vars['entity']    ElggEntity
- * @uses $vars['title']     Title link (optional) false = no title, '' = default
+ * @uses $vars['entity'] ElggEntity
+ * @uses $vars['title']  Title link (optional) false = no title, '' = default
  */
 
 $title = elgg_extract('title', $vars);
@@ -29,8 +29,4 @@ if (elgg_is_empty($title)) {
 	return;
 }
 
-echo elgg_format_element('div', [
-	'class' => [
-		'elgg-listing-summary-title',
-	]
-], elgg_format_element('h3', [], $title));
+echo elgg_format_element('div', ['class' => 'elgg-listing-summary-title'], $title);

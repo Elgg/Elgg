@@ -2,15 +2,15 @@
 /**
  * Elgg module element
  *
- * @uses $vars['type']         The type of module (main, info, popup, aside, etc.)
- * @uses $vars['title']        Optional title text (do not pass header with this option)
- * @uses $vars['menu']         Module menu do display in the header
- * @uses $vars['header']       Optional HTML content of the header
- * @uses $vars['body']         HTML content of the body
- * @uses $vars['footer']       Optional HTML content of the footer
- * @uses $vars['class']        Optional additional class for module
- * @uses $vars['id']           Optional id for module
- * @uses $vars['show_inner']   Optional flag to leave out inner div (default: false)
+ * @uses $vars['type']       The type of module (main, info, popup, aside, etc.)
+ * @uses $vars['title']      Optional title text (do not pass header with this option)
+ * @uses $vars['menu']       Module menu do display in the header
+ * @uses $vars['header']     Optional HTML content of the header
+ * @uses $vars['body']       HTML content of the body
+ * @uses $vars['footer']     Optional HTML content of the footer
+ * @uses $vars['class']      Optional additional class for module
+ * @uses $vars['id']         Optional id for module
+ * @uses $vars['show_inner'] Optional flag to leave out inner div (default: false)
  */
 
 $type = (string) elgg_extract('type', $vars);
@@ -30,7 +30,7 @@ if (!elgg_is_empty($type)) {
 
 $header = elgg_extract('header', $vars);
 if (!elgg_is_empty($title)) {
-	$header = elgg_format_element('h3', [], $title);
+	$header = elgg_format_element('h2', [], $title);
 }
 
 if ($header !== null) {

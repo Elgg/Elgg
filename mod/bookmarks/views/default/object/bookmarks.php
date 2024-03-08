@@ -6,29 +6,16 @@
  */
 
 $entity = elgg_extract('entity', $vars, false);
-if (!$entity instanceof ElggBookmark) {
-	return;
-}
-
-$owner = $entity->getOwnerEntity();
-
-$link = elgg_view('output/url', [
-	'href' => $entity->address,
-	'icon' => 'thumbtack',
-]);
-
-if (elgg_in_context('gallery')) {
-	$owner_link = elgg_view_entity_url($owner);
-	$date = elgg_view_friendly_time($entity->time_created);
-
-	$content = elgg_format_element('h3', [], $entity->getDisplayName());
-	$content .= elgg_format_element('p', ['class' => 'subtitle'], $owner_link . ' ' . $date);
-	
-	echo elgg_format_element('div', ['bookmarks-gallery-item'], $content);
+if (!$entity instanceof \ElggBookmark) {
 	return;
 }
 
 if (elgg_extract('full_view', $vars)) {
+	$link = elgg_view('output/url', [
+		'href' => $entity->address,
+		'icon' => 'thumbtack',
+	]);
+	
 	$body = elgg_format_element('span', ['class' => ['elgg-heading-basic', 'mbs']], $link);
 	$body .= elgg_view('output/longtext', [
 		'value' => $entity->description,
@@ -74,4 +61,5 @@ $params = [
 	'icon' => true,
 ];
 $params = $params + $vars;
+
 echo elgg_view('object/elements/summary', $params);
