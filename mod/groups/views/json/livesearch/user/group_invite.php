@@ -7,7 +7,7 @@
  */
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggUser) {
+if (!$entity instanceof \ElggUser) {
 	return;
 }
 
@@ -24,22 +24,18 @@ $icon = elgg_view_entity_icon($entity, 'tiny', [
 	'use_hover' => false,
 ]);
 
-$title_text = $entity->getDisplayName();
+$title = $entity->getDisplayName();
 
 $group = get_entity($vars['group_guid']);
-if ($group instanceof ElggGroup) {
+if ($group instanceof \ElggGroup) {
 	if ($group->isMember($entity)) {
-		$title_text .= elgg_format_element('span', ['class' => ['mls', 'elgg-subtext']], elgg_echo('groups:invite:member'));
+		$title .= elgg_format_element('span', ['class' => ['mls', 'elgg-subtext']], elgg_echo('groups:invite:member'));
 	} elseif ($group->hasRelationship($entity->guid, 'invited')) {
-		$title_text .= elgg_format_element('span', ['class' => ['mls', 'elgg-subtext']], elgg_echo('groups:invite:invited'));
+		$title .= elgg_format_element('span', ['class' => ['mls', 'elgg-subtext']], elgg_echo('groups:invite:invited'));
 	}
 }
 
-$title = elgg_format_element('h3', [], $title_text);
-
-$label = elgg_view_image_block($icon, $title, [
-	'class' => 'elgg-autocomplete-item',
-]);
+$label = elgg_view_image_block($icon, $title, ['class' => 'elgg-autocomplete-item']);
 
 $data = $entity->toObject();
 $data->label = $label;

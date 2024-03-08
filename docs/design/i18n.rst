@@ -1,7 +1,0 @@
-Internationalization
-####################
-
-Elgg 1.0+ departs from previous versions in that it uses a custom text array rather than gettext.
-This improves system performance and reliability of the translation system.
-
-TODO: more plz

@@ -1,0 +1,53 @@
+Accessibility
+#############
+
+This document describes various design choices to improve accessibility of an Elgg site.
+
+.. toctree::
+   :maxdepth: 2
+
+Forms
+=====
+
+Input fields should always have an associated label. When using ``elgg_view_field($options)`` to draw fields on a form you will need to 
+pass ``$options['#label']  = elgg_echo('my_field:label')`` to have a correct label with your field.
+
+If you have a form that will perform a search when submitted it is recommended to add ``'role' => 'search'`` to your form attributes.
+You can provide this in ``$form_vars`` when using ``elgg_view_form()``.
+
+Images
+======
+
+When using ``elgg_view('output/img', $options)`` it is recommended to provide an ``alt`` description of the image. 
+Elgg will report notices in the error log to let developers know when an ``alt`` attribute is missing.
+
+Headings
+========
+
+Headings should be used to give structure to a page.
+There should always be a ``h1`` on the page and there should also be no gaps (so no ``h3`` without a ``h2``).
+
+Elgg uses ``h1`` for the page title (like 'All blogs', the title of a blog or the name of a group on the group profile page).
+The ``h2`` heading is used by modules on a page, like an 'info' module, a widget or a module in the sidebar.
+
+User generated content with markup, for example a description of a blog, should not allow ``h1`` to be used, 
+but should start with ``h2`` as the first level heading. The configuration of the CKEditor plugin already handles this.
+
+Sections
+========
+
+A webpage in Elgg is typically sectioned into the following sections:
+
+* ``header`` for the topbar contents like the site logo, site navigation and search
+* ``main`` the main content like the blog page or an overview of members
+* ``footer`` typically found at the bottom of the page containing some links or other site related information 
+
+Menus
+=====
+
+All our menus should be keyboard accessible. This is especially important with menus with multiple levels or submenus. 
+If you rely on the default menu functionality of Elgg by using the function ``elgg_view_menu()`` Elgg will take care of this.
+
+When using ``elgg_view_menu()`` the menu items will be wrapped inside a ``nav`` html tag. To allow screenreaders to know what menu is being listed,
+the ``aria-label`` attribute is added to the ``nav`` element to describe the menu. By default Elgg uses the ``name`` of the menu, but it is
+possible to provide a translation. You need to register this translation with the following key: ``menu:name_of_the_menu:header``.

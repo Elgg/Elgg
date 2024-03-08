@@ -14,7 +14,7 @@ if (!$user instanceof \ElggUser || !$user->canEdit()) {
 	return;
 }
 
-echo elgg_view_title(elgg_echo('admin:users:unvalidated:change_email:user', [$user->getDisplayName()]));
+echo elgg_view_title(elgg_echo('admin:users:unvalidated:change_email:user', [$user->getDisplayName()]), ['tag' => 'h2']);
 
 echo elgg_view_field([
 	'#type' => 'hidden',
@@ -34,4 +34,5 @@ $footer = elgg_view_field([
 	'#type' => 'submit',
 	'text' => elgg_echo('save'),
 ]);
+
 elgg_set_form_footer($footer);

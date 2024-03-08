@@ -81,7 +81,7 @@ foreach ($widget_types as $handler => $widget_type) {
 	]);
 	$action .= '</div>';
 	
-	$description = elgg_format_element('h4', [], $widget_type->name);
+	$description = elgg_format_element('div', ['class' => 'elgg-loud'], $widget_type->name);
 	
 	if ($widget_type->description) {
 		$description .= elgg_format_element('div', ['class' => 'elgg-quiet'], $widget_type->description);

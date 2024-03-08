@@ -23,7 +23,7 @@ $user_params = [
 	'full_view' => false,
 ];
 
-$user_params['title'] = elgg_format_element('h3', [], elgg_view_entity_url($entity_one));
+$user_params['title'] = elgg_view_entity_url($entity_one);
 
 $subtitle = '';
 $location = $entity_one->getProfileData('location');

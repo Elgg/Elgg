@@ -9,19 +9,17 @@ if (!$annotation instanceof \ElggAnnotation) {
 }
 
 $page = $annotation->getEntity();
-if (!$page instanceof ElggPage) {
+if (!$page instanceof \ElggPage) {
 	return;
 }
 
 $owner = $annotation->getOwnerEntity();
-if (!$owner instanceof ElggEntity) {
+if (!$owner instanceof \ElggEntity) {
 	return;
 }
 
-$title_link = elgg_view_url($annotation->getURL(), $page->getDisplayName());
-
 $params = [
-	'title' => elgg_format_element('h3', [], $title_link),
+	'title' => elgg_view_url($annotation->getURL(), $page->getDisplayName()),
 	'byline' => true,
 	'content' => false,
 ];

@@ -77,6 +77,18 @@ This was only stored for the icon type ``icon``.
 
 A reliable way to check if an icon was uploaded is to use the ``\ElggEntity::hasIcon()`` function.
 
+Headings
+--------
+
+The use of headings (h1, h2, h3) have been revisited throughout the entire codebase to make sure they are used when appropriate
+and that they also are used in the correct order. You can read more about the intended usage in :doc:`/design/a11y`.
+
+Most notable changes are the following:
+
+* H1 is always the page title (and no longer the logo / site name)
+* Modules (info, sidebar, widgets) use the H2 heading
+* H3 headings on entity / relationship / annotation summary titles have been replaced by a regular text element 
+
 Changes in functions
 --------------------
 

@@ -11,8 +11,8 @@
 	text-align: center;
 	width: 10rem;
 	
-	h3 {
-		font-size: 90%;
+	.elgg-listing-summary-title {
+		font-weight: 500;
 		margin-bottom: .5rem;
 	}
 	
