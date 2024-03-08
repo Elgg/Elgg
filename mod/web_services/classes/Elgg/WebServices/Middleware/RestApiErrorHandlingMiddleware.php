@@ -4,6 +4,8 @@ namespace Elgg\WebServices\Middleware;
 
 use Elgg\Request;
 use Elgg\WebServices\Di\RestApiErrorHandler;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Set custom error/exception handlers during rest api calls
@@ -44,14 +46,27 @@ class RestApiErrorHandlingMiddleware {
 	 *
 	 * @return void
 	 */
-	public function exceptionHandler(\Throwable $throwable) {
+	public function exceptionHandler(\Throwable $throwable): void {
 		error_log('*** FATAL EXCEPTION (API) *** : ' . $throwable);
 		
 		$code = $throwable->getCode() === 0 ? \ErrorResult::RESULT_FAIL : $throwable->getCode();
 		$result = new \ErrorResult($throwable->getMessage(), $code);
 		
-		echo elgg_view_page($throwable->getMessage(), elgg_view('api/output', [
+		$output = elgg_view('api/output', [
 			'result' => $result,
-		]));
+		]);
+		
+		$viewtype = elgg_get_viewtype();
+		switch ($viewtype) {
+			case 'json':
+				$response = new JsonResponse($output);
+				break;
+			default:
+				$response = new Response($output);
+				break;
+		}
+		
+		$response->prepare(_elgg_services()->request);
+		$response->send();
 	}
 }
