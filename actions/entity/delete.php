@@ -5,7 +5,7 @@
 
 $guid = (int) get_input('guid');
 $deleter_guid = (int) get_input('deleter_guid');
-$entity = elgg_call(ELGG_SHOW_SOFT_DELETED_ENTITIES, function () use ($guid){
+$entity = elgg_call(ELGG_SHOW_DELETED_ENTITIES, function() use ($guid) {
 	return get_entity($guid);
 });
 if (!$entity instanceof \ElggEntity) {
@@ -24,9 +24,6 @@ $display_name = $entity->getDisplayName() ?: elgg_echo('entity:delete:item');
 $type = $entity->getType();
 $subtype = $entity->getSubtype();
 $container = $entity->getContainerEntity();
-
-$soft_deletable_entities = elgg_entity_types_with_capability('soft_deletable');
-
 
 $non_recursive_delete = (bool) get_input('recursive', true);
 if ($entity->soft_deleted === 'no' && $entity->hasCapability('soft_deletable')) {

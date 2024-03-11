@@ -33,6 +33,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 */
 	protected function initializeAttributes() {
 		$this->attributes['time_created'] = null;
+		$this->attributes['soft_deleted'] = 'no';
 	}
 
 	/**
@@ -98,15 +99,6 @@ abstract class ElggData implements CollectionItemInterface,
 	 */
 	public function getTimeCreated(): int {
 		return (int) $this->attributes['time_created'];
-	}
-
-	/**
-	 * Returns the state of the entity if it is soft_deleted
-	 *
-	 * @return string
-	 */
-	public function getSoftDeleted(): string {
-		return $this->attributes['soft_deleted'];
 	}
 
 	/**

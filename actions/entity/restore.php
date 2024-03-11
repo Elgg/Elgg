@@ -7,7 +7,7 @@ $guid = (int) get_input('guid');
 $deleter_guid = (int) get_input('deleter_guid');
 $recursive = (bool) get_input('recursive', true);
 
-$entity = elgg_call(ELGG_SHOW_SOFT_DELETED_ENTITIES, function () use ($guid){
+$entity = elgg_call(ELGG_SHOW_DELETED_ENTITIES, function() use ($guid) {
 	return get_entity($guid);
 });
 if (!$entity instanceof \ElggEntity) {
@@ -23,11 +23,7 @@ $type = $entity->getType();
 $subtype = $entity->getSubtype();
 $container = $entity->getContainerEntity();
 
-$soft_deletable_entities = elgg_entity_types_with_capability('soft_deletable');
-
-
-
-if ($entity->getSoftDeleted() === 'yes') {
+if ($entity->soft_deleted === 'yes') {
 	if (!$entity->restore($recursive)) {
 		return elgg_error_response(elgg_echo('entity:restore:fail', [$display_name]));
 	}
@@ -44,7 +40,7 @@ if (empty($forward_url)) {
 	$referrer_url = elgg_extract('HTTP_REFERER', $_SERVER, '');
 	$site_url = elgg_get_site_url();
 
-	$find_forward_url = function (\ElggEntity $container = null) use ($type, $subtype) {
+	$find_forward_url = function(\ElggEntity $container = null) use ($type, $subtype) {
 		$routes = _elgg_services()->routes;
 
 		// check if there is a collection route (eg. blog/owner/username)

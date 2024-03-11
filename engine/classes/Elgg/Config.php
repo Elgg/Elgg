@@ -22,6 +22,7 @@ use Elgg\Traits\Loggable;
  * @property int           $authentication_failures_limit           Number of allowed authentication failures
  * @property bool          $auto_disable_plugins					Are unbootable plugins automatically disabled
  * @property int           $batch_run_time_in_secs					Max time for a single upgrade loop
+ * @property int           $bin_cleanup_grace_period				Number of days before content is removed from the database
  * @property int           $boot_cache_ttl                          Time to live for boot cache in seconds
  * @property string        $cacheroot            					Path of cache storage with trailing "/"
  * @property bool          $can_change_username						Is user allowed to change the username
@@ -191,6 +192,7 @@ class Config {
 		'authentication_failures_limit' => 5,
 		'auto_disable_plugins' => true,
 		'batch_run_time_in_secs' => 4,
+		'bin_cleanup_grace_period' => 30,
 		'boot_cache_ttl' => 3600,
 		'can_change_username' => false,
 		'class_loader_verify_file_existence' => true,

@@ -25,7 +25,6 @@ use Elgg\Traits\TimeUsing;
  */
 class EntityTable {
 
-
 	use Loggable;
 	use TimeUsing;
 
@@ -53,7 +52,7 @@ class EntityTable {
 	protected Translator $translator;
 
 	protected array $deleted_guids = [];
-
+	
 	protected array $entity_classes = [];
 
 	/**
@@ -190,7 +189,7 @@ class EntityTable {
 			->set('time_created', $update->param($row->time_created, ELGG_VALUE_TIMESTAMP))
 			->set('time_updated', $update->param($row->time_updated, ELGG_VALUE_TIMESTAMP))
 			->set('soft_deleted', $update->param($row->soft_deleted, ELGG_VALUE_STRING))
-			->set('time_soft_deleted', $update->param($row->time_soft_deleted, ELGG_VALUE_INTEGER))
+			->set('time_soft_deleted', $update->param($row->time_soft_deleted, ELGG_VALUE_TIMESTAMP))
 			->where($update->compare('guid', '=', $guid, ELGG_VALUE_GUID));
 
 		return $this->db->updateData($update);
@@ -277,7 +276,7 @@ class EntityTable {
 	 * @return void
 	 */
 	public function invalidateCache(int $guid): void {
-		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function () use ($guid) {
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
 			$entity = $this->get($guid);
 			if ($entity instanceof \ElggEntity) {
 				$entity->invalidateCache();
@@ -345,7 +344,7 @@ class EntityTable {
 	 * @return bool
 	 */
 	public function exists(int $guid): bool {
-		return elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function () use ($guid) {
+		return elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
 			// need to ignore access and show hidden entities to check existence
 			return !empty($this->getRow($guid));
 		});
@@ -374,14 +373,14 @@ class EntityTable {
 		$preload = array_filter($results, function ($e) {
 			return $e instanceof \ElggEntity;
 		});
-
+		
 		$this->metadata_cache->populateFromEntities($preload);
-
+		
 		$props_to_preload = [];
 		if (elgg_extract('preload_owners', $options, false)) {
 			$props_to_preload[] = 'owner_guid';
 		}
-
+		
 		if (elgg_extract('preload_containers', $options, false)) {
 			$props_to_preload[] = 'container_guid';
 		}
@@ -394,26 +393,25 @@ class EntityTable {
 	}
 
 	/**
-	 * Update the last_action column in the entities table for $entity.
+	 * Update the time_soft_deleted column in the entities table for $entity.
 	 *
-
-	 * @param \ElggEntity $entity Entity annotation|relationship action carried out on
-	 * @param int         $posted Timestamp of soft delete
+	 * @param \ElggEntity $entity  Entity to update
+	 * @param int         $deleted Timestamp of soft delete
 	 *
 	 * @return int
 	 */
-	public function updateTimeSoftDeleted(\ElggEntity $entity, int $posted = null): int {
-		if ($posted === null) {
-			$posted = $this->getCurrentTime()->getTimestamp();
+	public function updateTimeDeleted(\ElggEntity $entity, int $deleted = null): int {
+		if ($deleted === null) {
+			$deleted = $this->getCurrentTime()->getTimestamp();
 		}
 
 		$update = Update::table(self::TABLE_NAME);
-		$update->set('time_soft_deleted', $update->param($posted, ELGG_VALUE_TIMESTAMP))
+		$update->set('time_soft_deleted', $update->param($deleted, ELGG_VALUE_TIMESTAMP))
 			->where($update->compare('guid', '=', $entity->guid, ELGG_VALUE_GUID));
 
 		$this->db->updateData($update);
 
-		return (int) $posted;
+		return (int) $deleted;
 	}
 
 	/**
@@ -454,7 +452,7 @@ class EntityTable {
 			return $this->session_manager->getLoggedInUser();
 		}
 
-		$user = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function () use ($guid) {
+		$user = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
 			// need to ignore access and show hidden entities for potential hidden/disabled users
 			return $this->get($guid, 'user');
 		});
@@ -471,7 +469,7 @@ class EntityTable {
 	}
 
 	/**
-	 * soft delete entity
+	 * Soft delete entity
 	 *
 	 * @param \ElggEntity $entity Entity to soft delete
 	 *
@@ -486,7 +484,7 @@ class EntityTable {
 	}
 
 	/**
-	 * restore entity
+	 * Restore entity
 	 *
 	 * @param \ElggEntity $entity Entity to restore
 	 *
@@ -527,7 +525,7 @@ class EntityTable {
 		$qb = Update::table(self::TABLE_NAME);
 		$qb->set('enabled', $qb->param('no', ELGG_VALUE_STRING))
 			->where($qb->compare('guid', '=', $entity->guid, ELGG_VALUE_GUID));
-
+		
 		return $this->db->updateData($qb);
 	}
 
@@ -548,7 +546,7 @@ class EntityTable {
 		if (!$this->events->triggerBefore('delete', $entity->type, $entity)) {
 			return false;
 		}
-
+		
 		$this->events->trigger('delete', $entity->type, $entity);
 
 		if ($entity instanceof \ElggUser) {
@@ -558,7 +556,7 @@ class EntityTable {
 
 		// we're going to delete this entity, log the guid to prevent deadloops
 		$this->deleted_guids[] = $entity->guid;
-
+		
 		if ($recursive) {
 			$this->deleteRelatedEntities($entity);
 		}
@@ -584,7 +582,7 @@ class EntityTable {
 	 */
 	protected function deleteRelatedEntities(\ElggEntity $entity): void {
 		// Temporarily overriding access controls
-		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function () use ($entity) {
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($entity) {
 			/* @var $batch \ElggBatch */
 			$batch = elgg_get_entities([
 				'wheres' => function (QueryBuilder $qb, $main_alias) use ($entity) {
@@ -592,7 +590,7 @@ class EntityTable {
 						$qb->compare("{$main_alias}.owner_guid", '=', $entity->guid, ELGG_VALUE_GUID),
 						$qb->compare("{$main_alias}.container_guid", '=', $entity->guid, ELGG_VALUE_GUID),
 					], 'OR');
-
+					
 					return $qb->merge([
 						$ors,
 						$qb->compare("{$main_alias}.guid", 'neq', $entity->guid, ELGG_VALUE_GUID),
@@ -602,7 +600,7 @@ class EntityTable {
 				'batch' => true,
 				'batch_inc_offset' => false,
 			]);
-
+			
 			/* @var $e \ElggEntity */
 			foreach ($batch as $e) {
 				if (in_array($e->guid, $this->deleted_guids)) {
@@ -610,7 +608,7 @@ class EntityTable {
 					$batch->reportFailure();
 					continue;
 				}
-
+				
 				if (!$this->delete($e, true)) {
 					$batch->reportFailure();
 				}
@@ -627,7 +625,7 @@ class EntityTable {
 	 */
 	protected function deleteEntityProperties(\ElggEntity $entity): void {
 		// Temporarily overriding access controls and disable system_log to save performance
-		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function () use ($entity) {
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($entity) {
 			$entity->removeAllRelatedRiverItems();
 			$entity->deleteOwnedAccessCollections();
 			$entity->deleteAccessCollectionMemberships();
@@ -640,7 +638,7 @@ class EntityTable {
 			$entity->deleteMetadata();
 			_elgg_services()->delayedEmailQueueTable->deleteAllRecipientRows($entity->guid);
 		});
-
+		
 		$dir = new \Elgg\EntityDirLocator($entity->guid);
 		$file_path = _elgg_services()->config->dataroot . $dir;
 		elgg_delete_directory($file_path);

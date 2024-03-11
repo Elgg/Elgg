@@ -6,11 +6,6 @@
  */
 
 return array(
-	'item:object:bin' => 'Temporary Bin',
-	'collection:object:bin' => 'Temporary Bin',
-	'collection:object:bin:owner' => '%s\'s Bin',
-
-
-	'bin:edit_revision_notice' => '(Old version)',
-
+	'default:bin' => 'Temporary Bin',
+	'default:bin:owner' => '%s\'s Bin',
 );

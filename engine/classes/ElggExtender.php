@@ -52,7 +52,6 @@ abstract class ElggExtender extends \ElggData {
 		$this->attributes['owner_guid'] = null;
 		$this->attributes['access_id'] = ACCESS_PRIVATE;
 		$this->attributes['enabled'] = 'yes';
-		$this->attributes['soft_deleted'] = 'no';
 	}
 
 	/**

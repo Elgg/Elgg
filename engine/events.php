@@ -109,7 +109,7 @@ return [
 			'Elgg\Users\Validation::removeUnvalidatedUsers' => [],
 			'Elgg\Users\Validation::notifyAdminsAboutPendingUsers' => [],
 			\Elgg\Users\CleanupPersistentLoginHandler::class => [],
-			\Elgg\Database\RemoveSoftDeletedEntitiesHandler::class => [],
+			\Elgg\Entity\RemoveDeletedEntitiesHandler::class => [],
 		],
 		'minute' => [
 			\Elgg\Notifications\ProcessQueueCronHandler::class => ['priority' => 100],

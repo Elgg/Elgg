@@ -51,8 +51,8 @@ class EntityTable extends DbEntityTable {
 				'time_updated' => time(),
 				'last_action' => time(),
 				'enabled' => 'yes',
-                'soft_deleted' => 'no',
-                'time_soft_deleted' => 0
+				'soft_deleted' => 'no',
+				'time_soft_deleted' => 0,
 			];
 		}
 
@@ -154,8 +154,8 @@ class EntityTable extends DbEntityTable {
 			'time_updated' => $time,
 			'last_action' => $time,
 			'enabled' => 'yes',
-            'soft_deleted' => 'no',
-            'time_soft_deleted' => 0
+			'soft_deleted' => 'no',
+			'time_soft_deleted' => 0,
 		];
 
 		$map = array_merge($primary_attributes, $attributes);
@@ -386,9 +386,9 @@ class EntityTable extends DbEntityTable {
 			'time_created' => $insert->param($row->time_created, ELGG_VALUE_TIMESTAMP),
 			'time_updated' => $insert->param($row->time_updated, ELGG_VALUE_TIMESTAMP),
 			'last_action' => $insert->param($row->last_action, ELGG_VALUE_TIMESTAMP),
-            'soft_deleted' => $insert->param($row->soft_deleted, ELGG_VALUE_STRING),
-            'time_soft_deleted' => $insert->param($row->time_soft_deleted, ELGG_VALUE_INTEGER),
-        ]);
+			'soft_deleted' => $insert->param($row->soft_deleted, ELGG_VALUE_STRING),
+			'time_soft_deleted' => $insert->param($row->time_soft_deleted, ELGG_VALUE_TIMESTAMP),
+		]);
 		
 		$this->query_specs[$row->guid][] = _elgg_services()->db->addQuerySpec([
 			'sql' => $insert->getSQL(),
@@ -411,8 +411,8 @@ class EntityTable extends DbEntityTable {
 			->set('access_id', $update->param($row->access_id, ELGG_VALUE_ID))
 			->set('time_created', $update->param($row->time_created, ELGG_VALUE_TIMESTAMP))
 			->set('time_updated', $update->param($row->time_updated, ELGG_VALUE_TIMESTAMP))
-            ->set('soft_deleted', $update->param($row->soft_deleted, ELGG_VALUE_STRING))
-            ->set('time_soft_deleted', $update->param($row->time_soft_deleted, ELGG_VALUE_STRING))
+			->set('soft_deleted', $update->param($row->soft_deleted, ELGG_VALUE_STRING))
+			->set('time_soft_deleted', $update->param($row->time_soft_deleted, ELGG_VALUE_TIMESTAMP))
 			->where($update->compare('guid', '=', $row->guid, ELGG_VALUE_GUID));
 		
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
@@ -451,27 +451,27 @@ class EntityTable extends DbEntityTable {
 			'times' => 1,
 		]);
 
-        // soft delete
-        $qb = Update::table(self::TABLE_NAME);
-        $qb->set('soft_deleted', $qb->param('yes', ELGG_VALUE_STRING))
-            ->where($qb->compare('guid', '=', $row->guid, ELGG_VALUE_GUID));
-
-        $this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-            'sql' => $qb->getSQL(),
-            'params' => $qb->getParameters(),
-            'results' => function () use ($row) {
-                if (isset($this->rows[$row->guid])) {
-                    $row->soft_deleted = 'yes';
-                    $this->rows[$row->guid] = $row;
-                    $this->addQuerySpecs($row);
-
-                    return [$row->guid];
-                }
-
-                return [];
-            },
-            'times' => 1,
-        ]);
+		// soft delete
+		$qb = Update::table(self::TABLE_NAME);
+		$qb->set('soft_deleted', $qb->param('yes', ELGG_VALUE_STRING))
+			->where($qb->compare('guid', '=', $row->guid, ELGG_VALUE_GUID));
+		
+		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
+			'sql' => $qb->getSQL(),
+			'params' => $qb->getParameters(),
+			'results' => function () use ($row) {
+				if (isset($this->rows[$row->guid])) {
+					$row->soft_deleted = 'yes';
+					$this->rows[$row->guid] = $row;
+					$this->addQuerySpecs($row);
+					
+					return [$row->guid];
+				}
+				
+				return [];
+			},
+			'times' => 1,
+		]);
 
 		// Enable
 		$qb = Update::table(self::TABLE_NAME);
@@ -495,27 +495,27 @@ class EntityTable extends DbEntityTable {
 			'times' => 1,
 		]);
 
-        // restore
-        $qb = Update::table(self::TABLE_NAME);
-        $qb->set('soft_deleted', $qb->param('no', ELGG_VALUE_STRING))
-            ->where($qb->compare('guid', '=', $row->guid, ELGG_VALUE_GUID));
-
-        $this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-            'sql' => $qb->getSQL(),
-            'params' => $qb->getParameters(),
-            'results' => function () use ($row) {
-                if (isset($this->rows[$row->guid])) {
-                    $row->soft_deleted = 'no';
-                    $this->rows[$row->guid] = $row;
-                    $this->addQuerySpecs($row);
-
-                    return [$row->guid];
-                }
-
-                return [];
-            },
-            'times' => 1,
-        ]);
+		// restore
+		$qb = Update::table(self::TABLE_NAME);
+		$qb->set('soft_deleted', $qb->param('no', ELGG_VALUE_STRING))
+			->where($qb->compare('guid', '=', $row->guid, ELGG_VALUE_GUID));
+		
+		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
+			'sql' => $qb->getSQL(),
+			'params' => $qb->getParameters(),
+			'results' => function () use ($row) {
+				if (isset($this->rows[$row->guid])) {
+					$row->soft_deleted = 'no';
+					$this->rows[$row->guid] = $row;
+					$this->addQuerySpecs($row);
+					
+					return [$row->guid];
+				}
+				
+				return [];
+			},
+			'times' => 1,
+		]);
 
 		// Update last action
 		$time = $this->getCurrentTime()->getTimestamp();

@@ -31,7 +31,7 @@ class Entity {
 		$return = $event->getValue();
 		
 		if ($return->get('edit')) {
-			// a menu item for editting already exists
+			// a menu item for editing already exists
 			return;
 		}
 
@@ -80,35 +80,33 @@ class Entity {
 		if (!$entity->canDelete()) {
 			return;
 		}
-
+		
 		/* @var $return MenuItems */
 		$return = $event->getValue();
 
 		if ($entity->soft_deleted === 'yes') {
 			$container = get_entity($entity->container_guid);
-			if (!($container instanceof \ElggUser)) {
+			if (!$container instanceof \ElggUser) {
 				$return[] = \ElggMenuItem::factory([
-					'name' => 'restore and move',
+					'name' => 'restore_and_move',
 					'icon' => 'arrow-up',
-					'text' => elgg_echo('Restore and Move'),
+					'text' => elgg_echo('entity:restore:move'),
 					'title' => elgg_echo('restore:this'),
 					'href' => elgg_http_add_url_query_elements('ajax/form/entity/chooserestoredestination', [
-						'address' => $entity->getURL(),
-						'title' => $entity->getDisplayName(),
 						'entity_guid' => $entity->guid,
 						'deleter_guid' => elgg_get_logged_in_user_guid(),
 						'entity_owner_guid' => $entity->owner_guid,
 					]),
-					'link_class' => 'elgg-lightbox', // !!
+					'link_class' => 'elgg-lightbox',
 					'priority' => 800,
 				]);
 			}
-
+			
 			if ($entity instanceof \ElggGroup) {
 				$return[] = \ElggMenuItem::factory([
-					'name' => 'restore non-recursive',
+					'name' => 'restore_non_recursive',
 					'icon' => 'arrow-up',
-					'text' => elgg_echo('Restore Non-Recursively'),
+					'text' => elgg_echo('entity:restore:non_recursive'),
 					'title' => elgg_echo('restore:this'),
 					'href' => elgg_generate_action_url('entity/restore', [
 						'deleter_guid' => elgg_get_logged_in_user_guid(),
@@ -119,13 +117,12 @@ class Entity {
 					'priority' => 800,
 				]);
 			}
-
-			if (!($container->soft_deleted === 'yes')) {
+			
+			if ($container->soft_deleted !== 'yes') {
 				$return[] = \ElggMenuItem::factory([
 					'name' => 'restore',
 					'icon' => 'settings',
-					'text' => elgg_echo('Restore'),
-					'title' => elgg_echo('restore:this'),
+					'text' => elgg_echo('restore:this'),
 					'href' => elgg_generate_action_url('entity/restore', [
 						'deleter_guid' => elgg_get_logged_in_user_guid(),
 						'guid' => $entity->guid,
@@ -139,7 +136,7 @@ class Entity {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'delete',
 			'icon' => 'delete',
-			'text' => elgg_echo('Delete'),
+			'text' => elgg_echo('delete'),
 			'title' => elgg_echo('delete:this'),
 			'href' => elgg_generate_action_url('entity/delete', [
 				'deleter_guid' => elgg_get_logged_in_user_guid(),
@@ -148,10 +145,10 @@ class Entity {
 			'confirm' => elgg_echo('deleteconfirm'),
 			'priority' => 950,
 		]);
-
+		
 		return $return;
 	}
-
+	
 	/**
 	 * Registers menu items for the entity menu of a comment
 	 *

@@ -8,7 +8,7 @@ $guid = (int) get_input('entity_guid');
 $deleter_guid = (int) get_input('deleter_guid');
 $destination_container_guid = (int) get_input('destination_container_guid');
 
-$entity = elgg_call(ELGG_SHOW_SOFT_DELETED_ENTITIES, function () use ($guid){
+$entity = elgg_call(ELGG_SHOW_DELETED_ENTITIES, function () use ($guid) {
 	return get_entity($guid);
 });
 if (!$entity instanceof \ElggEntity) {
@@ -20,17 +20,13 @@ set_time_limit(0);
 // determine what name to show on success
 $display_name = $entity->getDisplayName() ?: elgg_echo('entity:restore:item');
 
-
-$soft_deletable_entities = elgg_entity_types_with_capability('soft_deletable');
-
-
-if ($entity->getSoftDeleted() === 'yes') {
+if ($entity->soft_deleted === 'yes') {
 	// restore-and-move: move the entity to new container. Currently NOT fail-safe against fail restore.
 	if (!$entity->restore(false)) {
 		return elgg_error_response(elgg_echo('entity:restore:fail', [$display_name]));
 	}
 
-	if (!($entity->overrideEntityContainerID($entity->guid, $entity->type, $entity->subtype, $destination_container_guid))) {
+	if (!$entity->overrideEntityContainerID($destination_container_guid)) {
 		return elgg_error_response(elgg_echo('entity:restore:fail', [$display_name]));
 	}
 }

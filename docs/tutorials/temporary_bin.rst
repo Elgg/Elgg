@@ -11,16 +11,15 @@ When an entity with the soft_deletable capability is deleted, it is marked as so
 Database changes
 ----------------
 
-To accomodate the temporary bin, new columns have been added to the Elgg database.
+To accommodate the temporary bin, new columns have been added to the Elgg database.
 The Entities and the Annotations tables have been given two extra columns:
 
 -  **soft\_deleted** If this is 'yes' an entity is marked for soft deletion, 
-   if 'no' (default) the entity is visibile within the regular site.
+   if 'no' (default) the entity is visible within the regular site.
    If the bin plugin is enabled, soft deleted content is stored in the Temporary Bin.
 -  **time\_soft\_deleted** Unix timestamp of when the entity was soft deleted.
 
 Columns have been added in the migration file ``/engine/schema/migrations/20230606155735_add_columns_to_entities_and_annotations_tables.php``.
-
 
 Defining an entity as soft deletable
 ------------------------------------
@@ -62,9 +61,6 @@ to the ``softDelete()`` action in ``/actions/entity/delete.php``.
 
     <?php
 
-    $soft_deletable_entities = elgg_entity_types_with_capability('soft_deletable');
-
-
     $non_recursive_delete = (bool) get_input('recursive', true);
     if ($entity->soft_deleted === 'no' && $entity->hasCapability('soft_deletable')) {
 	    if (!$entity->softDelete($deleter_guid)) {
@@ -84,9 +80,8 @@ Otherwise it will delete the entity with a ``delete()`` action, either recursive
 Soft Delete
 -----------
 
-The ``softDelete()`` method of ``/engine/classes/ElggEntity.php/`` is responsible for the 
-actual database update of the **soft\_deleted** and **time\_soft\_deleted** columns. These are set to 'yes' and to a current Unix
-timestamp, respectively.
+The ``softDelete()`` method of ``/engine/classes/ElggEntity.php/`` is responsible for the actual database update of the
+**soft\_deleted** and **time\_soft\_deleted** columns. These are set to 'yes' and to a current Unix timestamp, respectively.
 
 .. code-block:: php
 
@@ -127,7 +122,7 @@ timestamp, respectively.
 
 	$soft_deleted = _elgg_services()->entityTable->softDelete($this);
 
-	$this->updateTimeSoftDeleted();
+	$this->updateTimeDeleted();
 
 	if ($soft_deleted) {
 		$this->invalidateCache();
@@ -138,7 +133,6 @@ timestamp, respectively.
 	}
 
 	return $soft_deleted;
-	}
 
 If ``$recurvise`` is true, base options for retrieving subentities linked to the entity are setup. 
 Iterations over the columns 'owner_guid' and 'container_guid' are done and ``elgg_get_entities()`` 
@@ -147,33 +141,32 @@ is called to find linked subentities to the current entity based on the options 
 The **soft\_deleted** and **time\_soft\_deleted** values of linked subentities and the entity itself are then updated
 and the ``soft_deleted`` attribute set.
 
-
 Temporary Bin page
 ------------------
 
 The Temporary Bin page is populated by soft deleted content of which the logged in user is the owner.
 
-To display content on the Temporary Bin page, the page fetches a list of all entities that have the relationship of 'deleted_by' attached to the current user
+To display content on the Temporary Bin page, the page fetches a list of all entities that have the relationship of
+'deleted_by' attached to the current user
 
 .. code-block:: php
 
 	$list_params = [
-	'relationship' => 'deleted_by',
-	'type_subtype_pairs' => elgg_entity_types_with_capability('soft_deletable'),
-	'inverse_relationship' => false,
-	'no_results' => true
+		'relationship' => 'deleted_by',
+		'type_subtype_pairs' => elgg_entity_types_with_capability('soft_deletable'),
+		'inverse_relationship' => false,
+		'no_results' => true
 	];
 
 	if (!elgg_is_admin_logged_in()) {
 		$list_params['owner_guid'] = elgg_get_logged_in_user_guid();
 	}
 
-	$content = elgg_call(ELGG_SHOW_SOFT_DELETED_ENTITIES, function () use ($list_params) {
+	$content = elgg_call(ELGG_SHOW_DELETED_ENTITIES, function () use ($list_params) {
 		return elgg_list_entities($list_params);
 	});
 
 This call will fetch all existing entities that are soft deleted and should be viewable in the temporary bin page.
-
 
 .. code-block:: php
 
@@ -188,11 +181,9 @@ This call will fetch all existing entities that are soft deleted and should be v
 
 The content will then be passed through ``elgg_view_page()`` to display the content properly on the page
 
-
 There are several actions that can be done by the user to restore or permanently delete content.
 These actions are defined by whether the entity is a group or not.
 These actions are created in the generic ``/engine/classes/Elgg/Menus/Entity.php`` class
-
 
 - Restore: this action is created for every entity and for every entity which their container is not soft deleted
 
@@ -230,13 +221,13 @@ These actions are created in the generic ``/engine/classes/Elgg/Menus/Entity.php
 		'priority' => 950,
 	]);
 
-- Restore and Move: specifically for entities that belong to a group(either active or soft_deleted)
+- Restore and Move: specifically for entities that belong to a group (either active or soft_deleted)
 
 This option is always there for group owned entities, but is forced whenever the owning group is soft deleted
 
 .. code-block:: php
 
-    if (!($container instanceof \ElggUser)) {
+    if (!$container instanceof \ElggUser) {
         $return[] = \ElggMenuItem::factory([
             'name' => 'restore and move',
             'icon' => 'arrow-up',
@@ -284,8 +275,8 @@ Clicking the restore button on an entity in the temporary bin will invoke ``/act
     <?php
     $recursive = (bool) get_input('recursive', true);
 
-    $entity = elgg_call(ELGG_SHOW_SOFT_DELETED_ENTITIES, function () use ($guid){
-	return get_entity($guid);
+    $entity = elgg_call(ELGG_SHOW_DELETED_ENTITIES, function () use ($guid) {
+		return get_entity($guid);
     });
 
 This call will fetch the entity based on the $guid of the entity. A check is done to see if the entity should be restored recursively
@@ -293,13 +284,13 @@ This call will fetch the entity based on the $guid of the entity. A check is don
 .. code-block:: php
 
     <?php
-    if ($entity->getSoftDeleted() === 'yes') {
+    if ($entity->soft_deleted === 'yes') {
 	    if (!$entity->restore($recursive)) {
 		    return elgg_error_response(elgg_echo('entity:restore:fail', [$display_name]));
 	    }
     }
 
-If ``getSoftDeleted()`` confirms that the entity is soft deleted, the entity will be restored either recurisvely or non-recursively.
+If ``soft_deleted`` confirms that the entity is soft deleted, the entity will be restored either recursively or non-recursively.
 The ``restore()`` function of ``/engine/classes/ElggEntity.php/`` is then called.
 
 The ``restore()`` function is responsible for the resetting the **soft\_deleted** and **time\_soft\_deleted** database
@@ -308,7 +299,7 @@ columns to 'no' and '0', respectively.
 .. code-block:: php
 
     <?php
-	$result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_SOFT_DELETED_ENTITIES, function() use ($recursive) {
+	$result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($recursive) {
 
 		$result = _elgg_services()->entityTable->restore($this);
 
@@ -333,6 +324,7 @@ columns to 'no' and '0', respectively.
 
 		return $result;
 	});
+
 	$this->removeAllRelationships('deleted_by', true);
 
 	if ($result) {
@@ -341,7 +333,6 @@ columns to 'no' and '0', respectively.
 	}
 
 	return $result;
-	}
 
 The ``restore($this)`` of the ``entityTable`` updates the **soft\_deleted** and **time\_soft\_deleted** database
 values for the current entity. If ``$recursive`` is true, entities with a ``soft_deleted_with`` relationship
@@ -443,7 +434,7 @@ as seen in the previous section, then overrides the old container with the desti
         return elgg_error_response(elgg_echo('entity:restore:fail', [$display_name]));
     }
 
-    if (!($entity->overrideEntityContainerID($entity->guid, $entity->type, $entity->subtype, $destination_container_guid))) {
+    if (!$entity->overrideEntityContainerID($destination_container_guid)) {
         return elgg_error_response(elgg_echo('entity:restore:fail', [$display_name]));
     }
 
@@ -466,17 +457,17 @@ aged soft deleted content, older than an admin defined period.
 
     <?php
     'cron' => [
-	'daily' => [
-		\Elgg\Database\RemoveSoftDeletedEntitiesHandler::class => [],
+		'daily' => [
+			\Elgg\Entity\RemoveDeletedEntitiesHandler::class => [],
 	    ],
     ]
 
-This invokes ``engine/classes/Elgg/Database/RemoveSoftDeletedEntitiesHandler.php`` which contains the clean up logic.
+This invokes ``\Elgg\Database\RemoveDeletedEntitiesHandler`` which contains the cleanup logic.
 
 .. code-block:: php
 
     <?php
-    $entities = elgg_call(ELGG_SHOW_SOFT_DELETED_ENTITIES, function (){
+    $entities = elgg_call(ELGG_SHOW_DELETED_ENTITIES, function (){
 		return elgg_get_entities([
 			'type_subtype_pairs' => elgg_entity_types_with_capability('soft_deletable'),
 			'limit' => false,
@@ -500,7 +491,7 @@ An ``elgg_call()`` is performed to retrieve all entities which have the ``soft_d
 have a **soft\_deleted** value of 'yes' and **time\_soft\_deleted** Unix value which is aged more than retention (grace) period.
 These entities are then deleted from the database.
 
-The retention period can be edited from the administrators Site Settings page. It is saved as a config setting in the Elgg_Config table.
+The retention period can be edited from the administrators Site Settings page. It is saved as a config setting in the elgg_config table.
 It has a default value of 30 days.
 This is done in ``actions/admin/site/settings.php``
 

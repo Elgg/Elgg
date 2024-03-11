@@ -91,7 +91,7 @@ class Entity {
 			'item_class' => $isFeatured ? '' : 'hidden',
 			'data-toggle' => 'feature',
 		]);
-
+		
 		return $return;
 	}
 }

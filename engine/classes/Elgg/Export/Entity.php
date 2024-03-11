@@ -2,8 +2,6 @@
 
 namespace Elgg\Export;
 
-use DateTime;
-
 /**
  * Entity export representation
  *
@@ -17,19 +15,19 @@ use DateTime;
  * @property int    $read_access
  * @property string $soft_deleted
  * @property string $time_soft_deleted
- *
  */
 class Entity extends Data {
 
 	/**
-	 * Get updated tme
-	 * @return DateTime|null
+	 * Get updated time
+	 *
+	 * @return \DateTime|null
 	 */
 	public function getTimeUpdated() {
 		if (!$this->time_updated) {
 			return null;
 		}
 
-		return new DateTime($this->time_created);
+		return new \DateTime($this->time_created);
 	}
 }

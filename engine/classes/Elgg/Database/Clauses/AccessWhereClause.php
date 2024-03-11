@@ -75,11 +75,8 @@ class AccessWhereClause extends WhereClause {
 		}
 
 		if (!isset($this->show_soft_deleted)) {
-			$this->show_soft_deleted = !_elgg_services()->session_manager->getSoftDeletedEntityVisibility();
+			$this->show_soft_deleted = !_elgg_services()->session_manager->getDeletedEntityVisibility();
 		}
-
-
-		//TODO: CHECK ABOVE ^^^^
 
 		$ors = [];
 		$ands = [];
@@ -105,7 +102,6 @@ class AccessWhereClause extends WhereClause {
 			$ands[] = $qb->compare($alias($this->soft_deleted_column), '=', 'no', ELGG_VALUE_STRING);
 		}
 
-
 		$params = [
 			'table_alias' => $table_alias,
 			'user_guid' => $this->viewer_guid,
@@ -119,12 +115,10 @@ class AccessWhereClause extends WhereClause {
 			'query_builder' => $qb,
 		];
 
-		$clauses = _elgg_services()->events->triggerResults(
-			'get_sql', 'access', $params, [
-				'ors' => $ors,
-				'ands' => $ands,
-			]
-		);
+		$clauses = _elgg_services()->events->triggerResults('get_sql', 'access', $params, [
+			'ors' => $ors,
+			'ands' => $ands,
+		]);
 
 		$ors = array_filter($clauses['ors']);
 		$ands = array_filter($clauses['ands']);
