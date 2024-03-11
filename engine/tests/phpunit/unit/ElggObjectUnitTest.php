@@ -64,6 +64,7 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		$object->access_id = ACCESS_LOGGED_IN;
 		$object->time_created = time();
 
+
 		$object->setCurrentTime(); // We should be able to match timestamps
 		
 		$this->assertTrue($object->save());
@@ -167,6 +168,8 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		$prep->container_guid = $object->getContainerGUID();
 		$prep->time_created = date('c', $object->getTimeCreated());
 		$prep->time_updated = date('c', $object->getTimeUpdated());
+        $prep->soft_deleted = $object->getSoftDeleted();
+        $prep->time_soft_deleted = $object->time_soft_deleted;
 		$prep->url = $object->getURL();
 		$prep->read_access = (int) $object->access_id;
 

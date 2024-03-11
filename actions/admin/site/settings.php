@@ -131,7 +131,13 @@ if ($friendly_time_number_of_days === '') {
 	$friendly_time_number_of_days = 30;
 }
 
+$bin_cleanup_grace_period = get_input('bin_cleanup_grace_period', 30);
+if ($bin_cleanup_grace_period === '') {
+	$bin_cleanup_grace_period = 30;
+}
+
 elgg_save_config('friendly_time_number_of_days', (int) $friendly_time_number_of_days);
+elgg_save_config('bin_cleanup_grace_period', (int) $bin_cleanup_grace_period);
 elgg_save_config('message_delay', (int) get_input('message_delay', 6));
 
 elgg_invalidate_caches();

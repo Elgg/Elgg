@@ -25,7 +25,11 @@ class Entity {
 		if (!$entity instanceof \ElggWire) {
 			return;
 		}
-		
+
+		if ($entity->soft_deleted === 'yes') {
+			return;
+		}
+
 		$menu = $event->getValue();
 		$menu->remove('edit');
 	

@@ -3,6 +3,7 @@
 namespace Elgg\Database;
 
 use Elgg\Exceptions\Database\UserFetchFailureException;
+use Elgg\Traits\TimeUsing;
 
 /**
  * @group Database
@@ -12,8 +13,9 @@ use Elgg\Exceptions\Database\UserFetchFailureException;
  * @group UnitTests
  */
 class EntityTableUnitTest extends \Elgg\UnitTestCase {
+    use TimeUsing;
 
-	public function testCanGetUserForPermissionsCheckWhileLoggedOut() {
+    public function testCanGetUserForPermissionsCheckWhileLoggedOut() {
 		$this->assertNull(_elgg_services()->entityTable->getUserForPermissionsCheck());
 		
 		$user = $this->createUser();
@@ -70,7 +72,54 @@ class EntityTableUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($last_action, $new_last_action);
 		$this->assertEquals($last_action, $object->last_action);
 	}
-	
+
+    public function testCanUpdateTimeSoftDeleted() {
+        // Set up the current time
+        _elgg_services()->entityTable->setCurrentTime();
+        $currentTime = time();
+
+        // Create an object
+        $object = $this->createObject();
+
+        // Create the update query for empty params
+        $update = Update::table(EntityTable::TABLE_NAME);
+        $update->set('time_soft_deleted', $update->param($this->getCurrentTime()->getTimestamp(), ELGG_VALUE_TIMESTAMP))
+            ->where($update->compare('guid', '=', $object->guid, ELGG_VALUE_GUID));
+
+        // Add the testing query specification
+        $updateQuerySpec = [
+            'sql' => $update->getSQL(),
+            'params' => $update->getParameters(),
+            'row_count' => 1,
+        ];
+        _elgg_services()->db->addQuerySpec($updateQuerySpec);
+
+        // Call the updateTimeSoftDeleted function without passing a timestamp
+        $time_soft_deleted = $object->updateTimeSoftDeleted();
+        $this->assertEquals($currentTime, $time_soft_deleted);
+        $this->assertEquals($currentTime, $object->time_soft_deleted);
+
+        // Call the updateTimeSoftDeleted function with a new timestamp
+        $new_time_soft_deleted = $currentTime + 3600; // Add 1 hour
+
+        // Create the update query
+        $update = Update::table(EntityTable::TABLE_NAME);
+        $update->set('time_soft_deleted', $update->param($new_time_soft_deleted, ELGG_VALUE_TIMESTAMP))
+            ->where($update->compare('guid', '=', $object->guid, ELGG_VALUE_GUID));
+
+        // Add the testing query specification
+        $updateQuerySpec = [
+            'sql' => $update->getSQL(),
+            'params' => $update->getParameters(),
+            'row_count' => 1,
+        ];
+        _elgg_services()->db->addQuerySpec($updateQuerySpec);
+
+        $time_soft_deleted = $object->updateTimeSoftDeleted($new_time_soft_deleted);
+        $this->assertEquals($new_time_soft_deleted, $time_soft_deleted);
+        $this->assertEquals($new_time_soft_deleted, $object->time_soft_deleted);
+
+	}
 	public function testGetRowWithNonExistingGUID() {
 		$this->assertNull(_elgg_services()->entityTable->getRow(-1));
 	}

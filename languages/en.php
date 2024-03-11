@@ -54,6 +54,7 @@ return array(
 
 	'ElggEntity:Error:SetSubtype' => 'Use %s instead of the magic setter for "subtype"',
 	'ElggEntity:Error:SetEnabled' => 'Use %s instead of the magic setter for "enabled"',
+    'ElggEntity:Error:SetSoftDeleted' => 'Use %s instead of the magic setter for "soft_deleted"',
 	'ElggUser:Error:SetAdmin' => 'Use %s instead of the magic setter for "admin"',
 	'ElggUser:Error:SetBanned' => 'Use %s instead of the magic setter for "banned"',
 
@@ -1269,6 +1270,7 @@ For improved performance, it is recommended that you enable and configure OPcach
 
 	'edit:this' => 'Edit this',
 	'delete:this' => 'Delete this',
+    'restore:this' => 'Restore this',
 	'comment:this' => 'Comment on this',
 
 /**
@@ -1276,6 +1278,8 @@ For improved performance, it is recommended that you enable and configure OPcach
  */
 
 	'deleteconfirm' => "Are you sure you want to delete this item?",
+    'restoreconfirm' => "Are you sure you want to restore this item?",
+    'restoreandmoveconfirm'=> "Are you sure you want to restore and move this item?",
 	'deleteconfirm:plural' => "Are you sure you want to delete these items?",
 	'fileexists' => "A file has already been uploaded. To replace it, select a new one below",
 	'input:file:upload_limit' => 'Maximum allowed file size is %s',
@@ -1467,6 +1471,8 @@ Once you have logged in, we highly recommend that you change your password.',
 	'config:disable_rss:help' => "Disable this to no longer promote the availability of RSS feeds",
 	'config:friendly_time_number_of_days:label' => "Number of days friendly time is presented",
 	'config:friendly_time_number_of_days:help' => "You can configure how many days the friendly time notation is used. After the set amount of days the friendly time will change into a regular date format. Setting this to 0 will disable the friendly time format.",
+    'config:bin_cleanup_grace_period:label' => "Number of days content will remain soft deleted",
+    'config:bin_cleanup_grace_period:help' => "You can configure how many days soft deleted entities are stored in the temporary bin. After the soft deleted entities have been soft deleted for longer than the grace period determined here, they will be permanently deleted.",
 	'config:content:comment_box_collapses' => "The comment box collapses after the first comment on content",
 	'config:content:comment_box_collapses:help' => "This only applies if the comments list is sorted latest first",
 	'config:content:comments_group_only' => "Only group members can comment on group content",
@@ -1679,6 +1685,12 @@ To see the full comment, click on the link below:
 	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
 	'entity:delete:success' => '%s has been deleted.',
 	'entity:delete:fail' => '%s could not be deleted.',
+
+    'entity:restore:item' => 'Item',
+    'entity:restore:item_not_found' => 'Item not found.',
+    'entity:restore:permission_denied' => 'You do not have permissions to restore this item.',
+    'entity:restore:success' => '%s has been restored.',
+    'entity:restore:fail' => '%s could not be restored.',
 	
 	'entity:subscribe' => "Subscribe",
 	'entity:subscribe:disabled' => "Your default notification settings prevent you from subscribing to this content",

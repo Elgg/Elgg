@@ -35,6 +35,8 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 		$row->enabled = 'yes';
 		$row->time_created = $plugin->time_created;
 		$row->time_updated = null;
+        $row->soft_deleted = 'no';
+        $row->time_soft_deleted = 0;
 
 		$constructed = new ElggPlugin($row);
 
@@ -66,6 +68,7 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanLoadStaticConfig() {
 		$plugin = ElggPlugin::fromId('test_plugin', $this->normalizeTestFilePath('mod/'));
+//        var_dump($plugin->getVersion());
 
 		$config = [
 			'entities' => [
