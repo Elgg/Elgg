@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<ruleset name="Elgg">
+	<description>Elgg coding standards</description>
+
+	<arg name="tab-width" value="4"/>
+	<arg name="warning-severity" value="0"/>
+	
+	<exclude-pattern>*/deprecated*</exclude-pattern>
+	<exclude-pattern>*/languages/*</exclude-pattern>
+	<exclude-pattern>*/tests/*</exclude-pattern>
+	<exclude-pattern>*/upgrades/*</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/vendors/*</exclude-pattern>
+	
+	<!-- Generic standards -->
+	<rule ref="Generic.Arrays.ArrayIndent"/>
+	<rule ref="Generic.Arrays.ArrayIndent.CloseBraceNotNewLine">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+
+	<rule ref="Generic.Classes.DuplicateClassName"/>
+	<rule ref="Generic.Classes.OpeningBraceSameLine"/>
+
+	<rule ref="Generic.CodeAnalysis.AssignmentInCondition"/>
+	<rule ref="Generic.CodeAnalysis.EmptyPHPStatement"/>
+	<rule ref="Generic.CodeAnalysis.EmptyStatement"/>
+	<rule ref="Generic.CodeAnalysis.EmptyStatement.DetectedCatch">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Generic.CodeAnalysis.ForLoopShouldBeWhileLoop"/>
+	<rule ref="Generic.CodeAnalysis.JumbledIncrementer"/>
+	<rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
+	<rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
+	<rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+	<rule ref="Generic.CodeAnalysis.UselessOverridingMethod"/>
+
+	<rule ref="Generic.ControlStructures.DisallowYodaConditions"/>
+	<!-- Use warnings for inline control structures -->
+	<rule ref="Generic.ControlStructures.InlineControlStructure">
+		<properties>
+			<property name="error" value="false"/>
+		</properties>
+	</rule>
+
+	<rule ref="Generic.Files.ByteOrderMark"/>
+	<rule ref="Generic.Files.EndFileNewline"/>
+	<rule ref="Generic.Files.ExecutableFile"/>
+	<rule ref="Generic.Files.LineEndings">
+		<properties>
+			<property name="eolChar" value="\n"/>
+		</properties>
+	</rule>
+	<!-- The soft limit on line length MUST be 120 characters; automated style checkers MUST warn but MUST NOT error at the soft limit. -->
+	<rule ref="Generic.Files.LineLength">
+		<properties>
+			<property name="lineLimit" value="120"/>
+			<property name="absoluteLineLimit" value="0"/>
+		</properties>
+	</rule>
+	<rule ref="Generic.Files.OneClassPerFile"/>
+	<rule ref="Generic.Files.OneInterfacePerFile"/>
+	<rule ref="Generic.Files.OneObjectStructurePerFile"/>
+	<rule ref="Generic.Files.OneTraitPerFile"/>
+
+	<rule ref="Generic.Formatting.DisallowMultipleStatements"/>
+	<rule ref="Generic.Formatting.SpaceAfterCast"/>
+
+	<rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
+	<!-- This message is not required as spaces are allowed for alignment -->
+	<rule ref="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/>
+
+	<rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+
+	<rule ref="Generic.PHP.BacktickOperator"/>
+	<rule ref="Generic.PHP.CharacterBeforePHPOpeningTag"/>
+	<rule ref="Generic.PHP.DisallowAlternativePHPTags"/>
+	<rule ref="Generic.PHP.DisallowRequestSuperglobal"/>
+	<rule ref="Generic.PHP.DisallowShortOpenTag"/>
+	<rule ref="Generic.PHP.DisallowShortOpenTag.EchoFound">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Generic.PHP.DiscourageGoto"/>
+	<rule ref="Generic.PHP.ForbiddenFunctions"/>
+	<rule ref="Generic.PHP.LowerCaseConstant"/>
+	<rule ref="Generic.PHP.LowerCaseKeyword"/>
+	<rule ref="Generic.PHP.LowerCaseType"/>
+	<rule ref="Generic.PHP.SAPIUsage"/>
+
+	<rule ref="Generic.Strings.UnnecessaryStringConcat"/>
+
+	<rule ref="Generic.VersionControl.GitMergeConflict"/>
+
+	<rule ref="Generic.WhiteSpace.ArbitraryParenthesesSpacing"/>
+	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
+	<rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
+	<rule ref="Generic.WhiteSpace.LanguageConstructSpacing"/>
+	<!-- Code MUST use an indent of 4 spaces, and MUST use tabs for indenting. -->
+	<rule ref="Generic.WhiteSpace.ScopeIndent">
+		<properties>
+			<property name="indent" value="4"/>
+			<property name="tabIndent" value="true"/>
+			<property name="exact" value="false"/>
+			<property name="ignoreIndentationTokens" type="array" value="T_COMMENT,T_DOC_COMMENT_OPEN_TAG"/>
+		</properties>
+	</rule>
+	<rule ref="Generic.WhiteSpace.SpreadOperatorSpacingAfter"/>
+
+	<!-- PEAR standards -->
+	<rule ref="PEAR.Functions.ValidDefaultValue"/>
+
+	<!-- PSR2 standards -->
+	<rule ref="PSR2.Classes.PropertyDeclaration"/>
+
+	<rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
+	<rule ref="PSR2.ControlStructures.SwitchDeclaration"/>
+
+	<rule ref="PSR2.Files.ClosingTag"/>
+
+	<rule ref="PSR2.Methods.FunctionClosingBrace"/>
+	<rule ref="PSR2.Methods.MethodDeclaration"/>
+
+	<rule ref="PSR2.Namespaces.NamespaceDeclaration"/>
+	<rule ref="PSR2.Namespaces.UseDeclaration"/>
+
+	<!-- Squiz standards -->
+	<rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
+
+	<rule ref="Squiz.Classes.ClassFileName"/>
+	<rule ref="Squiz.Classes.DuplicateProperty"/>
+	<rule ref="Squiz.Classes.LowercaseClassKeywords"/>
+	<rule ref="Squiz.Classes.SelfMemberReference"/>
+	<rule ref="Squiz.Classes.ValidClassName"/>
+
+	<rule ref="Squiz.Commenting.ClassComment"/>
+	<rule ref="Squiz.Commenting.DocCommentAlignment"/>
+	<rule ref="Squiz.Commenting.EmptyCatchComment"/>
+
+	<rule ref="Squiz.ControlStructures.ControlSignature"/>
+	<rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
+	<rule ref="Squiz.ControlStructures.ForLoopDeclaration"/>
+	<rule ref="Squiz.ControlStructures.InlineIfDeclaration"/>
+	<rule ref="Squiz.ControlStructures.InlineIfDeclaration.NoBrackets">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
+
+	<!-- Method names MUST NOT be declared with a space after the method name. The opening brace MUST go on its own line, and the closing brace MUST go on the next line following the body. There MUST NOT be a space after the opening parenthesis, and there MUST NOT be a space before the closing parenthesis. -->
+	<!-- checked in Methods/FunctionClosingBraceSniff -->
+	<rule ref="Squiz.Functions.FunctionDeclaration"/>
+	<!-- In the argument list, there MUST NOT be a space before each comma, and there MUST be one space after each comma. -->
+	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
+		<properties>
+			<property name="equalsSpacing" value="1"/>
+		</properties>
+	</rule>
+	<rule ref="Squiz.Functions.FunctionDuplicateArgument"/>
+	<rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
+
+	<rule rel="Squiz.Operators.ValidLogicalOperators"/>
+
+	<rule ref="Squiz.PHP.CommentedOutCode"/>
+	<rule ref="Squiz.PHP.DisallowMultipleAssignments"/>
+	<rule ref="Squiz.PHP.DiscouragedFunctions"/>
+	<rule ref="Squiz.PHP.Eval"/>
+	<rule ref="Squiz.PHP.Heredoc"/>
+	<rule ref="Squiz.PHP.LowercasePHPFunctions"/>
+	<rule ref="Squiz.PHP.NonExecutableCode"/>
+
+	<rule ref="Squiz.Scope.MemberVarScope"/>
+	<rule ref="Squiz.Scope.MethodScope"/>
+	<rule ref="Squiz.Scope.StaticThisUsage"/>
+
+	<rule ref="Squiz.Strings.DoubleQuoteUsage"/>
+	<rule ref="Squiz.Strings.DoubleQuoteUsage.ContainsVar">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Squiz.Strings.EchoedStrings"/>
+
+	<rule ref="Squiz.WhiteSpace.CastSpacing"/>
+	<rule ref="Squiz.WhiteSpace.ControlStructureSpacing"/>
+	<rule ref="Squiz.WhiteSpace.FunctionSpacing">
+		<properties>
+			<property name="spacing" value="1"/>
+			<property name="spacingAfterLast" value="0"/>
+		</properties>
+	</rule>
+	<rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
+	<rule ref="Squiz.WhiteSpace.MemberVarSpacing"/>
+	<rule ref="Squiz.WhiteSpace.OperatorSpacing"/>
+	<rule ref="Squiz.WhiteSpace.PropertyLabelSpacing"/>
+	<rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
+	<rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
+	<rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
+	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
+		<properties>
+			<property name="ignoreBlankLines" value="true"/>
+		</properties>
+	</rule>
+</ruleset>

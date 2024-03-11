@@ -45,6 +45,8 @@ class ElggSite extends \ElggEntity {
 		$this->attributes['time_updated'] = null;
 		$this->attributes['last_action'] = null;
 		$this->attributes['enabled'] = 'yes';
+		$this->attributes['soft_deleted'] = 'no';
+		$this->attributes['time_soft_deleted'] = 0;
 	}
 
 	/**

@@ -11,6 +11,8 @@ namespace Elgg\Export;
  * @property string $name
  * @property mixed  $value
  * @property int    $read_access
+ * @property string $soft_deleted
+ * @property int    $time_soft_deleted
  */
 class Extender extends Data {
 

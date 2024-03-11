@@ -13,16 +13,18 @@ use Elgg\Exceptions\UnexpectedValueException as ElggUnexpectedValueException;
  * @see        \ElggAnnotation
  * @see        \ElggMetadata
  *
- * @property string $type         annotation or metadata (read-only after save)
- * @property int    $id           The unique identifier (read-only)
- * @property int    $entity_guid  The GUID of the entity that this extender describes
- * @property int    $owner_guid   The GUID of the owner of this extender
- * @property int    $access_id    Specifies the visibility level of this extender
- * @property string $name         The name of this extender
- * @property mixed  $value        The value of the extender (int or string)
- * @property int    $time_created A UNIX timestamp of when the extender was created (read-only, set on first save)
- * @property string $value_type   'integer' or 'text'
- * @property string $enabled      Is this extender enabled ('yes' or 'no')
+ * @property string $type              annotation or metadata (read-only after save)
+ * @property int    $id                The unique identifier (read-only)
+ * @property int    $entity_guid       The GUID of the entity that this extender describes
+ * @property int    $owner_guid        The GUID of the owner of this extender
+ * @property int    $access_id         Specifies the visibility level of this extender
+ * @property string $name              The name of this extender
+ * @property mixed  $value             The value of the extender (int or string)
+ * @property int    $time_created      A UNIX timestamp of when the extender was created (read-only, set on first save)
+ * @property string $value_type        'integer' or 'text'
+ * @property string $enabled           Is this extender enabled ('yes' or 'no')
+ * @property string $soft_deleted      Is this extender soft_deleted ('yes' or 'no')
+ * @property int    $time_soft_deleted When is this extender soft_deleted
  */
 abstract class ElggExtender extends \ElggData {
 
@@ -35,6 +37,7 @@ abstract class ElggExtender extends \ElggData {
 		'owner_guid',
 		'access_id',
 		'time_created',
+		'time_soft_deleted'
 	];
 
 	/**
@@ -49,6 +52,7 @@ abstract class ElggExtender extends \ElggData {
 		$this->attributes['owner_guid'] = null;
 		$this->attributes['access_id'] = ACCESS_PRIVATE;
 		$this->attributes['enabled'] = 'yes';
+		$this->attributes['soft_deleted'] = 'no';
 	}
 
 	/**
@@ -170,6 +174,8 @@ abstract class ElggExtender extends \ElggData {
 		$object->value = $this->value;
 		$object->time_created = date('c', $this->getTimeCreated());
 		$object->read_access = $this->access_id;
+		$object->soft_deleted = $this->soft_deleted;
+		$object->time_soft_deleted = $this->time_soft_deleted;
 
 		$params[$this->getType()] = $this;
 				

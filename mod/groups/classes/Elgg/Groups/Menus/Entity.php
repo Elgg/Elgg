@@ -55,7 +55,11 @@ class Entity {
 		if (!$entity instanceof \ElggGroup) {
 			return;
 		}
-		
+
+		if ($entity->soft_deleted === 'yes') {
+			return;
+		}
+
 		if (!elgg_is_admin_logged_in()) {
 			return;
 		}
@@ -87,7 +91,7 @@ class Entity {
 			'item_class' => $isFeatured ? '' : 'hidden',
 			'data-toggle' => 'feature',
 		]);
-		
+
 		return $return;
 	}
 }

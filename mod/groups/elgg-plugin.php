@@ -24,6 +24,7 @@ return [
 				'commentable' => false,
 				'searchable' => true,
 				'likable' => true,
+				'soft_deletable' => true
 			],
 		],
 	],

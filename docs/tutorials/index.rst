@@ -13,3 +13,4 @@ The instructions are detailed enough that you don't need much previous experienc
    blog
    wysiwyg
    widget
+   temporary_bin
