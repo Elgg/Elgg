@@ -272,12 +272,9 @@ Annotations are stored as instances of the ``ElggAnnotation`` class.
 Each annotation has:
 
 -  An internal annotation type (like *comment*)
--  A value (which can be a string or integer)
+-  A value (which can be a string, a boolean or an integer)
 -  An access permission distinct from the entity it's attached to
 -  An owner
-
-Like metadata, values are stored as strings unless the value given is a PHP integer (``is_int($value)`` is true),
-or unless the ``$vartype`` is manually specified as ``integer``.
 
 Adding an annotation
 --------------------
@@ -356,6 +353,7 @@ reference). What you need to know is:
 -  You can potentially have multiple items of each type of metadata
    attached to a single entity
 -  Like annotations, values are stored as strings, booleans or integers
+-  The metadata name is case sensitive
 
 The simple case
 ---------------
@@ -408,7 +406,7 @@ described in the *finer control* section below.
 
 If you stored multiple values in this piece of metadata (as in the
 "tags" example above), you will get an array of all those values back.
-If you stored only one value, you will get a string or integer back.
+If you stored only one value, you will get a string, boolean or integer back.
 Storing an array with only one value will return a string back to you.
 E.g.
 
@@ -447,6 +445,11 @@ Or to get all metadata objects:
         'guid' => $user_guid,
         'limit' => false,
     ]);
+
+.. note::
+
+    When retrieving metadata by name the names are matched case-insensitive. 
+    Keep your code clean and do not mix uppercase and lowercase metadata names.
 
 Common mistakes
 ---------------
@@ -693,6 +696,7 @@ It contains the following fields:
 -  **access\_id** Access controls on this entity
 -  **time\_created** Unix timestamp of when the entity is created
 -  **time\_updated** Unix timestamp of when the entity was updated
+-  **last\_action** Unix timestamp of when the user last performed an action or when within the entity as container something happened 
 -  **enabled** If this is 'yes' an entity is accessible, if 'no' the entity
    has been disabled (Elgg treats it as if it were deleted without actually
    removing it from the database)
@@ -706,9 +710,8 @@ This table contains `Metadata`_, extra information attached to an entity.
 -  **entity\_guid** The entity this is attached to
 -  **name** The name string
 -  **value** The value string
--  **value\_type** The value class, either text or an integer
+-  **value\_type** The value class, either text, bool or an integer
 -  **time\_created** Unix timestamp of when the metadata is created
--  **enabled** If this is 'yes' an item is accessible, if 'no' the item has been disabled
 
 Table: annotations
 ~~~~~~~~~~~~~~~~~~
@@ -719,7 +722,7 @@ This table contains `Annotations`_, this is distinct from `Metadata`_.
 -  **entity\_guid** The entity this is attached to
 -  **name** The name string
 -  **value** The value string
--  **value\_type** The value class, either text or an integer
+-  **value\_type** The value class, either text, bool or an integer
 -  **owner\_guid** The owner GUID of the owner who set this annotation
 -  **access\_id** An Access controls on this annotation
 -  **time\_created** Unix timestamp of when the annotation is created.
@@ -733,6 +736,7 @@ This table defines `Relationships`_, these link one entity with another.
 -  **guid\_one** The GUID of the subject entity.
 -  **relationship** The type of the relationship.
 -  **guid\_two** The GUID of the target entity.
+-  **time\_created** Unix timestamp of when the relationship is created.
 
 Secundairy tables
 -----------------
@@ -743,6 +747,6 @@ Table: access_collections
 This table defines Access Collections, which grant users access to `Entities`_ or `Annotations`_.
 
 - **id** A unique IDentifier
-- ***name**  The name of the access collection
+- **name**  The name of the access collection
 - **owner_guid** The GUID of the owning entity (eg. a user or a group)
 - **subtype** the subtype of the access collection (eg. `friends` or `group_acl`)
