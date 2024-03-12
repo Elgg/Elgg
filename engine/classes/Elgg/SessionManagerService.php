@@ -203,40 +203,46 @@ class SessionManagerService {
 		if ($user->isBanned()) {
 			throw new LoginException($this->translator->translate('LoginException:BannedUser'));
 		}
-
-		// give plugins a chance to reject the login of this user (no user in session!)
-		if (!$this->events->triggerBefore('login', 'user', $user)) {
-			throw new LoginException($this->translator->translate('LoginException:Unknown'));
-		}
-		
-		if (!$user->isEnabled()) {
-			// fallback if no plugin provided a reason
-			throw new LoginException($this->translator->translate('LoginException:DisabledUser'));
-		}
-		
-		// #5933: set logged in user early so code in login event will be able to
-		// use elgg_get_logged_in_user_entity().
-		$this->setLoggedInUser($user, true);
-		$this->setUserToken($user);
-		
-		// re-register at least the core language file for users with language other than site default
-		$this->translator->registerTranslations(\Elgg\Project\Paths::elgg() . 'languages/');
-		
-		// if remember me checked, set cookie with token and store hash(token) for user
-		if ($persistent) {
-			$this->persistent_login->makeLoginPersistent($user);
-		}
-		
-		// User's privilege has been elevated, so change the session id (prevents session fixation)
-		$this->session->migrate();
 		
 		// check before updating last login to determine first login
 		$first_login = empty($user->last_login);
 		
-		$user->setLastLogin();
-		_elgg_services()->accounts->resetAuthenticationFailures($user); // can't inject DI service because of circular reference
+		$this->events->triggerSequence('login', 'user', $user, function(\ElggUser $user) use ($persistent) {
+			if (!$user->isEnabled()) {
+				return false;
+			}
+			
+			$this->setLoggedInUser($user, true);
+			$this->setUserToken($user);
+			
+			// re-register at least the core language file for users with language other than site default
+			$this->translator->registerTranslations(\Elgg\Project\Paths::elgg() . 'languages/');
+			
+			// if remember me checked, set cookie with token and store hash(token) for user
+			if ($persistent) {
+				$this->persistent_login->makeLoginPersistent($user);
+			}
+			
+			// User's privilege has been elevated, so change the session id (prevents session fixation)
+			$this->session->migrate();
+			
+			$user->setLastLogin();
+			
+			_elgg_services()->accounts->resetAuthenticationFailures($user); // can't inject DI service because of circular reference
+			
+			return true;
+		});
 		
-		$this->events->triggerAfter('login', 'user', $user);
+		if (!$user->isEnabled()) {
+			$this->removeLoggedInUser();
+			
+			throw new LoginException($this->translator->translate('LoginException:DisabledUser'));
+		}
+		
+		if (!elgg_is_logged_in()) {
+			// login might be prevented without throwing a custom exception
+			throw new LoginException($this->translator->translate('LoginException:Unknown'));
+		}
 		
 		if ($first_login) {
 			$this->events->trigger('login:first', 'user', $user);
