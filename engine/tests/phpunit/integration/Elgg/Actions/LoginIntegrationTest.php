@@ -209,6 +209,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$user = $this->user = $this->createUser();
 		
 		$login_before_event = $this->registerTestingEvent('login:before', 'user', function(\Elgg\Event $event) {});
+		$login_event = $this->registerTestingEvent('login', 'user', function(\Elgg\Event $event) {});
 		$login_after_event = $this->registerTestingEvent('login:after', 'user', function(\Elgg\Event $event) {});
 		$first_login_event = $this->registerTestingEvent('login:first', 'user', function(\Elgg\Event $event) {});
 		
@@ -217,6 +218,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		elgg_login($user);
 		
 		$login_before_event->assertNumberOfCalls(1);
+		$login_event->assertNumberOfCalls(1);
 		$login_after_event->assertNumberOfCalls(1);
 		$first_login_event->assertNumberOfCalls(1);
 		$first_login = $user->first_login;
@@ -225,6 +227,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$this->assertEquals($first_login - 1, $user->first_login);
 		
 		$login_before_event->assertObject($user);
+		$login_event->assertObject($user);
 		$login_after_event->assertObject($user);
 		$first_login_event->assertObject($user);
 		
@@ -235,6 +238,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$this->assertEquals($first_login - 1, $user->first_login);
 		
 		$login_before_event->assertNumberOfCalls(2);
+		$login_event->assertNumberOfCalls(2);
 		$login_after_event->assertNumberOfCalls(2);
 		$first_login_event->assertNumberOfCalls(1);
 		
