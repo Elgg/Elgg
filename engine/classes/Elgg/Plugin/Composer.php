@@ -193,7 +193,14 @@ class Composer {
 	 * @return boolean
 	 */
 	public function checkConstraints($version, $constraints) {
-		return Semver::satisfies($version, $constraints);
+		try {
+			return Semver::satisfies($version, $constraints);
+		} catch (\UnexpectedValueException $e) {
+			// something is wrong with the version number
+			elgg_log($e, 'ERROR');
+		}
+		
+		return false;
 	}
 	
 	/**

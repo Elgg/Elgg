@@ -28,7 +28,7 @@ foreach ($pages as $page) {
 	$options[] = [
 		'text' => trim("{$spacing} {$page['title']}"),
 		'value' => $page['guid'],
-		'disabled' => $entity->guid === $page['guid'],
+		'disabled' => $entity ? $entity->guid === $page['guid'] : null,
 	];
 }
 
