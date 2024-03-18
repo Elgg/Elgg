@@ -17,13 +17,13 @@ class AccessWhereClause extends WhereClause {
 
 	public string $enabled_column = 'enabled';
 
-	public string $soft_deleted_column = 'soft_deleted';
+	public string $deleted_column = 'deleted';
 
 	public ?bool $ignore_access = null;
 
 	public ?bool $use_enabled_clause = null;
 	
-	public ?bool $show_soft_deleted = null;
+	public ?bool $show_deleted = null;
 
 	public ?int $viewer_guid = null;
 
@@ -47,8 +47,8 @@ class AccessWhereClause extends WhereClause {
 			$this->use_enabled_clause = !_elgg_services()->session_manager->getDisabledEntityVisibility();
 		}
 
-		if (!isset($this->show_soft_deleted)) {
-			$this->show_soft_deleted = !_elgg_services()->session_manager->getDeletedEntityVisibility();
+		if (!isset($this->show_deleted)) {
+			$this->show_deleted = !_elgg_services()->session_manager->getDeletedEntityVisibility();
 		}
 
 		$ors = [];
@@ -71,8 +71,8 @@ class AccessWhereClause extends WhereClause {
 			$ands[] = $qb->compare($alias($this->enabled_column), '=', 'yes', ELGG_VALUE_STRING);
 		}
 
-		if ($this->show_soft_deleted) {
-			$ands[] = $qb->compare($alias($this->soft_deleted_column), '=', 'no', ELGG_VALUE_STRING);
+		if ($this->show_deleted) {
+			$ands[] = $qb->compare($alias($this->deleted_column), '=', 'no', ELGG_VALUE_STRING);
 		}
 
 		$params = [
@@ -84,7 +84,7 @@ class AccessWhereClause extends WhereClause {
 			'owner_guid_column' => $this->owner_guid_column,
 			'guid_column' => $this->guid_column,
 			'enabled_column' => $this->enabled_column,
-			'soft_deleted_column' => $this->soft_deleted_column,
+			'deleted_column' => $this->deleted_column,
 			'query_builder' => $qb,
 		];
 

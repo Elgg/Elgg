@@ -23,8 +23,6 @@ use Elgg\Exceptions\UnexpectedValueException as ElggUnexpectedValueException;
  * @property int    $time_created      A UNIX timestamp of when the extender was created (read-only, set on first save)
  * @property string $value_type        'integer' or 'text'
  * @property string $enabled           Is this extender enabled ('yes' or 'no')
- * @property string $soft_deleted      Is this extender soft_deleted ('yes' or 'no')
- * @property int    $time_soft_deleted When is this extender soft_deleted
  */
 abstract class ElggExtender extends \ElggData {
 
@@ -37,7 +35,6 @@ abstract class ElggExtender extends \ElggData {
 		'owner_guid',
 		'access_id',
 		'time_created',
-		'time_soft_deleted'
 	];
 
 	/**
@@ -173,8 +170,6 @@ abstract class ElggExtender extends \ElggData {
 		$object->value = $this->value;
 		$object->time_created = date('c', $this->getTimeCreated());
 		$object->read_access = $this->access_id;
-		$object->soft_deleted = $this->soft_deleted;
-		$object->time_soft_deleted = $this->time_soft_deleted;
 
 		$params[$this->getType()] = $this;
 				

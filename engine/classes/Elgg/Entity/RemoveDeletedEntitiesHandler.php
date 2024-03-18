@@ -20,17 +20,17 @@ class RemoveDeletedEntitiesHandler {
 		elgg_call(ELGG_SHOW_DELETED_ENTITIES | ELGG_IGNORE_ACCESS, function() {
 			/* @var $entities \ElggBatch */
 			$entities = elgg_get_entities([
-				'type_subtype_pairs' => elgg_entity_types_with_capability('soft_deletable'),
+				'type_subtype_pairs' => elgg_entity_types_with_capability('restorable'),
 				'limit' => false,
 				'batch' => true,
 				'batch_inc_offset' => false,
 				'wheres' => [
 					function(QueryBuilder $qb, $main_alias) {
-						return $qb->compare("{$main_alias}.soft_deleted", '=', 'yes', ELGG_VALUE_STRING);
+						return $qb->compare("{$main_alias}.deleted", '=', 'yes', ELGG_VALUE_STRING);
 					},
 					function(QueryBuilder $qb, $main_alias) {
 						$grace_period = (int) elgg_get_config('bin_cleanup_grace_period');
-						return $qb->compare("{$main_alias}.time_soft_deleted", '<', \Elgg\Values::normalizeTimestamp("-{$grace_period} days"), ELGG_VALUE_TIMESTAMP);
+						return $qb->compare("{$main_alias}.time_deleted", '<', \Elgg\Values::normalizeTimestamp("-{$grace_period} days"), ELGG_VALUE_TIMESTAMP);
 					},
 				],
 			]);

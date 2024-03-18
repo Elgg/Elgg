@@ -33,7 +33,6 @@ abstract class ElggData implements CollectionItemInterface,
 	 */
 	protected function initializeAttributes() {
 		$this->attributes['time_created'] = null;
-		$this->attributes['soft_deleted'] = 'no';
 	}
 
 	/**

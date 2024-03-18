@@ -20,7 +20,7 @@ set_time_limit(0);
 // determine what name to show on success
 $display_name = $entity->getDisplayName() ?: elgg_echo('entity:restore:item');
 
-if ($entity->soft_deleted === 'yes') {
+if ($entity->deleted === 'yes') {
 	// restore-and-move: move the entity to new container. Currently NOT fail-safe against fail restore.
 	if (!$entity->restore(false)) {
 		return elgg_error_response(elgg_echo('entity:restore:fail', [$display_name]));

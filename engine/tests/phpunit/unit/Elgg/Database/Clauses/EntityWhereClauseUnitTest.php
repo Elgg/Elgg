@@ -25,7 +25,7 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		$query = new EntityWhereClause();
 		$query->ignore_access = true;
 		$query->use_enabled_clause = false;
-		$query->show_soft_deleted = false;
+		$query->show_deleted = false;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, $qb->getTableAlias());
@@ -44,7 +44,7 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		$query = new EntityWhereClause();
 		$query->ignore_access = true;
 		$query->use_enabled_clause = false;
-		$query->show_soft_deleted = false;
+		$query->show_deleted = false;
 		$query->guids = 1;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
@@ -66,7 +66,7 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		$query = new EntityWhereClause();
 		$query->ignore_access = true;
 		$query->use_enabled_clause = false;
-		$query->show_soft_deleted = false;
+		$query->show_deleted = false;
 		$query->owner_guids = [2, 3];
 		$query->container_guids = [4, 5, 6];
 
@@ -96,7 +96,7 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		$query = new EntityWhereClause();
 		$query->ignore_access = true;
 		$query->use_enabled_clause = false;
-		$query->show_soft_deleted = false;
+		$query->show_deleted = false;
 		$query->created_after = $after;
 		$query->created_before = $before;
 
@@ -127,7 +127,7 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		$query = new EntityWhereClause();
 		$query->ignore_access = true;
 		$query->use_enabled_clause = false;
-		$query->show_soft_deleted = false;
+		$query->show_deleted = false;
 		$query->updated_after = $after;
 		$query->updated_before = $before;
 
@@ -158,7 +158,7 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		$query = new EntityWhereClause();
 		$query->ignore_access = true;
 		$query->use_enabled_clause = false;
-		$query->show_soft_deleted = false;
+		$query->show_deleted = false;
 		$query->last_action_after = $after;
 		$query->last_action_before = $before;
 
@@ -180,7 +180,7 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		$query = new EntityWhereClause();
 		$query->ignore_access = true;
 		$query->use_enabled_clause = false;
-		$query->show_soft_deleted = false;
+		$query->show_deleted = false;
 		$query->enabled = 'no';
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
@@ -200,7 +200,7 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		$query = new EntityWhereClause();
 		$query->ignore_access = true;
 		$query->use_enabled_clause = false;
-		$query->show_soft_deleted = false;
+		$query->show_deleted = false;
 		$query->access_ids = ACCESS_PUBLIC;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
@@ -239,7 +239,7 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 		$query = new EntityWhereClause();
 		$query->ignore_access = true;
 		$query->use_enabled_clause = false;
-		$query->show_soft_deleted = false;
+		$query->show_deleted = false;
 		$query->type_subtype_pairs = [
 			'object' => ['blog', 'file'],
 			'group' => ['community'],

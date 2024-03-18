@@ -24,7 +24,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AnnotationWhereClause();
 		$query->ignore_access = true;
-		$query->show_soft_deleted = false;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, $qb->getTableAlias());
@@ -41,7 +40,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AnnotationWhereClause();
 		$query->ignore_access = true;
-		$query->show_soft_deleted = false;
 		$query->ids = 1;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
@@ -59,7 +57,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AnnotationWhereClause();
 		$query->ignore_access = true;
-		$query->show_soft_deleted = false;
 		$query->names = ['foo1', 'foo2'];
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
@@ -80,8 +77,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 		$query->values = ['foo1', 'foo2'];
 		$query->value_type = ELGG_VALUE_STRING;
 		$query->case_sensitive = false;
-		$query->show_soft_deleted = false;
-
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, $qb->getTableAlias());
 
@@ -99,7 +94,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AnnotationWhereClause();
 		$query->ignore_access = true;
-		$query->show_soft_deleted = false;
 		$query->names = ['foo1', 'foo2'];
 		$query->values = '%bar%';
 		$query->value_type = ELGG_VALUE_STRING;
@@ -120,7 +114,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AnnotationWhereClause();
 		$query->ignore_access = true;
-		$query->show_soft_deleted = false;
 		$query->entity_guids = 1;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
@@ -138,7 +131,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AnnotationWhereClause();
 		$query->ignore_access = true;
-		$query->show_soft_deleted = false;
 		$query->owner_guids = [2, 3];
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
@@ -165,7 +157,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AnnotationWhereClause();
 		$query->ignore_access = true;
-		$query->show_soft_deleted = false;
 		$query->created_after = $after;
 		$query->created_before = $before;
 
@@ -184,7 +175,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AnnotationWhereClause();
 		$query->ignore_access = true;
-		$query->show_soft_deleted = false;
 		$query->access_ids = ACCESS_PUBLIC;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
@@ -199,6 +189,7 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
+		$access->show_deleted = false;
 		$access->use_enabled_clause = false;
 		$parts[] = $access->prepare($this->qb, 'alias');
 
@@ -227,6 +218,7 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
+		$access->show_deleted = false;
 		$access->use_enabled_clause = false;
 		
 		$parts[] = $access->prepare($this->qb, 'alias');
@@ -250,7 +242,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 	public function testThrowsOnInvalidSortByCalculation() {
 		$query = new AnnotationWhereClause();
-		$query->show_soft_deleted = false;
 		$query->viewer_guid = 5;
 		$query->entity_guids = 1;
 		$query->sort_by_calculation = 'invalid';
@@ -269,6 +260,7 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
+		$access->show_deleted = false;
 		$access->use_enabled_clause = false;
 		
 		$parts[] = $access->prepare($this->qb, 'alias');
@@ -296,6 +288,7 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
+		$access->show_deleted = false;
 		$access->use_enabled_clause = false;
 		
 		$parts[] = $access->prepare($this->qb, $this->qb->getTableAlias());

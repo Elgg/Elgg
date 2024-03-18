@@ -56,7 +56,7 @@ class Entity {
 			return;
 		}
 
-		if ($entity->soft_deleted === 'yes') {
+		if ($entity->deleted === 'yes') {
 			return;
 		}
 

@@ -54,7 +54,7 @@ return array(
 
 	'ElggEntity:Error:SetSubtype' => 'Use %s instead of the magic setter for "subtype"',
 	'ElggEntity:Error:SetEnabled' => 'Use %s instead of the magic setter for "enabled"',
-	'ElggEntity:Error:SetSoftDeleted' => 'Use %s instead of the magic setter for "soft_deleted"',
+	'ElggEntity:Error:SetDeleted' => 'Use %s instead of the magic setter for "deleted"',
 	'ElggUser:Error:SetAdmin' => 'Use %s instead of the magic setter for "admin"',
 	'ElggUser:Error:SetBanned' => 'Use %s instead of the magic setter for "banned"',
 

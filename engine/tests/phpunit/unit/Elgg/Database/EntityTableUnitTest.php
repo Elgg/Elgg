@@ -74,7 +74,7 @@ class EntityTableUnitTest extends \Elgg\UnitTestCase {
 		
 		// Create the update query for empty params
 		$update = Update::table(EntityTable::TABLE_NAME);
-		$update->set('time_soft_deleted', $update->param($currentTime, ELGG_VALUE_TIMESTAMP))
+		$update->set('time_deleted', $update->param($currentTime, ELGG_VALUE_TIMESTAMP))
 			->where($update->compare('guid', '=', $object->guid, ELGG_VALUE_GUID));
 		
 		// Add the testing query specification
@@ -86,16 +86,16 @@ class EntityTableUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->db->addQuerySpec($updateQuerySpec);
 		
 		// Call the updateTimeSoftDeleted function without passing a timestamp
-		$time_soft_deleted = $object->updateTimeDeleted();
-		$this->assertEquals($currentTime, $time_soft_deleted);
-		$this->assertEquals($currentTime, $object->time_soft_deleted);
+		$time_deleted = $object->updateTimeDeleted();
+		$this->assertEquals($currentTime, $time_deleted);
+		$this->assertEquals($currentTime, $object->time_deleted);
 		
 		// Call the updateTimeSoftDeleted function with a new timestamp
-		$new_time_soft_deleted = $currentTime + 3600; // Add 1 hour
+		$new_time_deleted = $currentTime + 3600; // Add 1 hour
 		
 		// Create the update query
 		$update = Update::table(EntityTable::TABLE_NAME);
-		$update->set('time_soft_deleted', $update->param($new_time_soft_deleted, ELGG_VALUE_TIMESTAMP))
+		$update->set('time_deleted', $update->param($new_time_deleted, ELGG_VALUE_TIMESTAMP))
 			->where($update->compare('guid', '=', $object->guid, ELGG_VALUE_GUID));
 		
 		// Add the testing query specification
@@ -106,9 +106,9 @@ class EntityTableUnitTest extends \Elgg\UnitTestCase {
 		];
 		_elgg_services()->db->addQuerySpec($updateQuerySpec);
 		
-		$time_soft_deleted = $object->updateTimeDeleted($new_time_soft_deleted);
-		$this->assertEquals($new_time_soft_deleted, $time_soft_deleted);
-		$this->assertEquals($new_time_soft_deleted, $object->time_soft_deleted);
+		$time_deleted = $object->updateTimeDeleted($new_time_deleted);
+		$this->assertEquals($new_time_deleted, $time_deleted);
+		$this->assertEquals($new_time_deleted, $object->time_deleted);
 	}
 	
 	public function testGetRowWithNonExistingGUID() {

@@ -3,7 +3,7 @@
 $user = elgg_get_page_owner_entity();
 
 $list_params = [
-	'type_subtype_pairs' => elgg_entity_types_with_capability('soft_deletable'),
+	'type_subtype_pairs' => elgg_entity_types_with_capability('restorable'),
 	'owner_guid' => $user->guid,
 	'relationship' => 'deleted_by',
 	'inverse_relationship' => false,

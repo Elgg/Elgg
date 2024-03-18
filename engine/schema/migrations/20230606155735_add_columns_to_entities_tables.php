@@ -1,0 +1,41 @@
+<?php
+declare(strict_types=1);
+
+use Phinx\Db\Adapter\MysqlAdapter;
+use Phinx\Migration\AbstractMigration;
+
+final class AddColumnsToEntitiesTables extends AbstractMigration {
+	/**
+	 * Add the deleted and time_deleted columns to the entities table
+	 */
+	public function change(): void {
+		$table = $this->table('entities');
+		if ($table->hasColumn('deleted')) {
+			return;
+		}
+		
+		$table->addColumn('deleted', 'enum', [
+			'null' => false,
+			'default' => 'no',
+			'limit' => 3,
+			'values' => [
+				'yes',
+				'no',
+			],
+		]);
+		
+		$table->addIndex(['deleted'], [
+			'name' => 'deleted',
+			'unique' => false,
+		]);
+		
+		$table->addColumn('time_deleted', 'integer', [
+			'null' => false,
+			'default' => '0',
+			'limit' => MysqlAdapter::INT_REGULAR,
+			'precision' => 11,
+		]);
+		
+		$table->update();
+    }
+}

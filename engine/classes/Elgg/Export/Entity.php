@@ -13,8 +13,8 @@ namespace Elgg\Export;
  * @property string $time_updated
  * @property string $url
  * @property int    $read_access
- * @property string $soft_deleted
- * @property string $time_soft_deleted
+ * @property string $deleted
+ * @property string $time_deleted
  */
 class Entity extends Data {
 
