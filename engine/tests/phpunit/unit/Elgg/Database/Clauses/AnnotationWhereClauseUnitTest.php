@@ -24,7 +24,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AnnotationWhereClause();
 		$query->ignore_access = true;
-		$query->use_enabled_clause = false;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, $qb->getTableAlias());
@@ -41,7 +40,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AnnotationWhereClause();
 		$query->ignore_access = true;
-		$query->use_enabled_clause = false;
 		$query->ids = 1;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
@@ -59,7 +57,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AnnotationWhereClause();
 		$query->ignore_access = true;
-		$query->use_enabled_clause = false;
 		$query->names = ['foo1', 'foo2'];
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
@@ -77,7 +74,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AnnotationWhereClause();
 		$query->ignore_access = true;
-		$query->use_enabled_clause = false;
 		$query->values = ['foo1', 'foo2'];
 		$query->value_type = ELGG_VALUE_STRING;
 		$query->case_sensitive = false;
@@ -99,7 +95,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AnnotationWhereClause();
 		$query->ignore_access = true;
-		$query->use_enabled_clause = false;
 		$query->names = ['foo1', 'foo2'];
 		$query->values = '%bar%';
 		$query->value_type = ELGG_VALUE_STRING;
@@ -120,7 +115,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AnnotationWhereClause();
 		$query->ignore_access = true;
-		$query->use_enabled_clause = false;
 		$query->entity_guids = 1;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
@@ -138,7 +132,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AnnotationWhereClause();
 		$query->ignore_access = true;
-		$query->use_enabled_clause = false;
 		$query->owner_guids = [2, 3];
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
@@ -165,27 +158,8 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AnnotationWhereClause();
 		$query->ignore_access = true;
-		$query->use_enabled_clause = false;
 		$query->created_after = $after;
 		$query->created_before = $before;
-
-		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
-		$actual = $query->prepare($qb, $qb->getTableAlias());
-
-		$this->assertEquals($expected, $actual);
-		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
-	}
-
-	public function testBuildQueryFromEnabled() {
-		$parts = [];
-		$parts[] = $this->qb->expr()->eq("{$this->qb->getTableAlias()}.enabled", ':qb1');
-		$this->qb->param('no', ELGG_VALUE_STRING);
-		$expected = $this->qb->merge($parts);
-
-		$query = new AnnotationWhereClause();
-		$query->ignore_access = true;
-		$query->use_enabled_clause = false;
-		$query->enabled = 'no';
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, $qb->getTableAlias());
@@ -202,7 +176,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AnnotationWhereClause();
 		$query->ignore_access = true;
-		$query->use_enabled_clause = false;
 		$query->access_ids = ACCESS_PUBLIC;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
@@ -217,9 +190,10 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
+		$access->use_enabled_clause = false;
 		$parts[] = $access->prepare($this->qb, 'alias');
 
-		$parts[] = $this->qb->expr()->eq("{$this->qb->getTableAlias()}.entity_guid", ':qb4');
+		$parts[] = $this->qb->expr()->eq("{$this->qb->getTableAlias()}.entity_guid", ':qb3');
 		$this->qb->param(1, ELGG_VALUE_INTEGER);
 
 		$expected = $this->qb->merge($parts);
@@ -244,8 +218,10 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
+		$access->use_enabled_clause = false;
+		
 		$parts[] = $access->prepare($this->qb, 'alias');
-		$parts[] = $this->qb->expr()->eq("{$this->qb->getTableAlias()}.entity_guid", ':qb4');
+		$parts[] = $this->qb->expr()->eq("{$this->qb->getTableAlias()}.entity_guid", ':qb3');
 		$this->qb->param(1, ELGG_VALUE_INTEGER);
 		$expr = $this->qb->merge($parts);
 		$this->qb->andWhere($expr);
@@ -283,8 +259,10 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
+		$access->use_enabled_clause = false;
+		
 		$parts[] = $access->prepare($this->qb, 'alias');
-		$parts[] = $this->qb->expr()->eq("{$this->qb->getTableAlias()}.entity_guid", ':qb4');
+		$parts[] = $this->qb->expr()->eq("{$this->qb->getTableAlias()}.entity_guid", ':qb3');
 		$this->qb->param(1, ELGG_VALUE_INTEGER);
 		$expr = $this->qb->merge($parts);
 		$this->qb->andWhere($expr);
@@ -308,8 +286,10 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
+		$access->use_enabled_clause = false;
+		
 		$parts[] = $access->prepare($this->qb, $this->qb->getTableAlias());
-		$parts[] = $this->qb->expr()->eq("{$this->qb->getTableAlias()}.entity_guid", ':qb4');
+		$parts[] = $this->qb->expr()->eq("{$this->qb->getTableAlias()}.entity_guid", ':qb3');
 		$this->qb->param(1, ELGG_VALUE_INTEGER);
 		$expr = $this->qb->merge($parts);
 		$this->qb->andWhere($expr);
