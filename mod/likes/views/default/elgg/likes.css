@@ -1,5 +1,11 @@
 .elgg-likes-popup {
 	width: 345px;
+	
+	.elgg-listing-summary-title {
+		line-height: 1rem;
+		font-weight: 400;
+		font-size: 1rem;
+	}
 }
 
 .elgg-menu .elgg-menu-item-likes + .elgg-menu-item-likes-count {
