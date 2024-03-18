@@ -166,6 +166,8 @@ class EntityTable {
 			'time_created' => $insert->param($row->time_created, ELGG_VALUE_TIMESTAMP),
 			'time_updated' => $insert->param($row->time_updated, ELGG_VALUE_TIMESTAMP),
 			'last_action' => $insert->param($row->last_action, ELGG_VALUE_TIMESTAMP),
+			'deleted' => $insert->param($row->deleted, ELGG_VALUE_STRING),
+			'time_deleted' => $insert->param($row->time_deleted, ELGG_VALUE_INTEGER),
 		]);
 
 		return $this->db->insertData($insert);
@@ -186,6 +188,8 @@ class EntityTable {
 			->set('access_id', $update->param($row->access_id, ELGG_VALUE_ID))
 			->set('time_created', $update->param($row->time_created, ELGG_VALUE_TIMESTAMP))
 			->set('time_updated', $update->param($row->time_updated, ELGG_VALUE_TIMESTAMP))
+			->set('deleted', $update->param($row->deleted, ELGG_VALUE_STRING))
+			->set('time_deleted', $update->param($row->time_deleted, ELGG_VALUE_TIMESTAMP))
 			->where($update->compare('guid', '=', $guid, ELGG_VALUE_GUID));
 
 		return $this->db->updateData($update);
@@ -389,6 +393,28 @@ class EntityTable {
 	}
 
 	/**
+	 * Update the time_deleted column in the entities table for $entity.
+	 *
+	 * @param \ElggEntity $entity  Entity to update
+	 * @param int         $deleted Timestamp of soft delete
+	 *
+	 * @return int
+	 */
+	public function updateTimeDeleted(\ElggEntity $entity, int $deleted = null): int {
+		if ($deleted === null) {
+			$deleted = $this->getCurrentTime()->getTimestamp();
+		}
+
+		$update = Update::table(self::TABLE_NAME);
+		$update->set('time_deleted', $update->param($deleted, ELGG_VALUE_TIMESTAMP))
+			->where($update->compare('guid', '=', $entity->guid, ELGG_VALUE_GUID));
+
+		$this->db->updateData($update);
+
+		return (int) $deleted;
+	}
+
+	/**
 	 * Update the last_action column in the entities table for $entity.
 	 *
 	 * @warning This is different to time_updated.  Time_updated is automatically set,
@@ -440,6 +466,37 @@ class EntityTable {
 		}
 
 		return $user;
+	}
+
+	/**
+	 * Soft delete entity
+	 *
+	 * @param \ElggEntity $entity Entity to soft delete
+	 *
+	 * @return bool
+	 */
+	public function softDelete(\ElggEntity $entity): bool {
+		$qb = Update::table(self::TABLE_NAME);
+		$qb->set('deleted', $qb->param('yes', ELGG_VALUE_STRING))
+			->where($qb->compare('guid', '=', $entity->guid, ELGG_VALUE_GUID));
+
+		return $this->db->updateData($qb);
+	}
+
+	/**
+	 * Restore entity
+	 *
+	 * @param \ElggEntity $entity Entity to restore
+	 *
+	 * @return bool
+	 */
+	public function restore(\ElggEntity $entity): bool {
+		$qb = Update::table(self::TABLE_NAME);
+		$qb->set('deleted', $qb->param('no', ELGG_VALUE_STRING))
+			->set('time_deleted', $qb->param(0, ELGG_VALUE_TIMESTAMP))
+			->where($qb->compare('guid', '=', $entity->guid, ELGG_VALUE_GUID));
+
+		return $this->db->updateData($qb);
 	}
 
 	/**

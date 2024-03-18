@@ -27,25 +27,34 @@ class Invoker {
 	 *                          ELGG_ENFORCE_ACCESS
 	 *                          ELGG_SHOW_DISABLED_ENTITIES
 	 *                          ELGG_HIDE_DISABLED_ENTITIES
+	 *                          ELGG_SHOW_DELETED_ENTITIES
+	 *                          ELGG_HIDE_DELETED_ENTITIES
 	 * @param \Closure $closure Callable to call
 	 *
 	 * @return mixed
-	 * @throws \Exception
+	 * @throws \Throwable
 	 */
 	public function call(int $flags, \Closure $closure) {
 
-		$ia = $this->session_manager->getIgnoreAccess();
+		$access = $this->session_manager->getIgnoreAccess();
 		if ($flags & ELGG_IGNORE_ACCESS) {
 			$this->session_manager->setIgnoreAccess(true);
-		} else if ($flags & ELGG_ENFORCE_ACCESS) {
+		} elseif ($flags & ELGG_ENFORCE_ACCESS) {
 			$this->session_manager->setIgnoreAccess(false);
 		}
 
-		$ha = $this->session_manager->getDisabledEntityVisibility();
+		$disabled = $this->session_manager->getDisabledEntityVisibility();
 		if ($flags & ELGG_SHOW_DISABLED_ENTITIES) {
 			$this->session_manager->setDisabledEntityVisibility(true);
-		} else if ($flags & ELGG_HIDE_DISABLED_ENTITIES) {
+		} elseif ($flags & ELGG_HIDE_DISABLED_ENTITIES) {
 			$this->session_manager->setDisabledEntityVisibility(false);
+		}
+
+		$deleted = $this->session_manager->getDeletedEntityVisibility();
+		if ($flags & ELGG_SHOW_DELETED_ENTITIES) {
+			$this->session_manager->setDeletedEntityVisibility(true);
+		} elseif ($flags & ELGG_HIDE_DELETED_ENTITIES) {
+			$this->session_manager->setDeletedEntityVisibility(false);
 		}
 		
 		$system_log_enabled = null;
@@ -65,9 +74,10 @@ class Invoker {
 			}
 		}
 
-		$restore = function () use ($ia, $ha, $system_log_service, $system_log_enabled) {
-			$this->session_manager->setIgnoreAccess($ia);
-			$this->session_manager->setDisabledEntityVisibility($ha);
+		$restore = function () use ($access, $disabled, $deleted, $system_log_service, $system_log_enabled) {
+			$this->session_manager->setIgnoreAccess($access);
+			$this->session_manager->setDisabledEntityVisibility($disabled);
+			$this->session_manager->setDeletedEntityVisibility($deleted);
 			
 			if (isset($system_log_service)) {
 				if ($system_log_enabled) {

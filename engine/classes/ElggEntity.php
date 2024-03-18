@@ -29,16 +29,18 @@ use Elgg\Traits\Entity\Subscriptions;
  *
  * @tip Plugin authors will want to extend the \ElggObject class, not this class.
  *
- * @property-read  string $type           object, user, group, or site (read-only after save)
- * @property-read  string $subtype        Further clarifies the nature of the entity
- * @property-read  int    $guid           The unique identifier for this entity (read only)
- * @property       int    $owner_guid     The GUID of the owner of this entity (usually the creator)
- * @property       int    $container_guid The GUID of the entity containing this entity
- * @property       int    $access_id      Specifies the visibility level of this entity
- * @property       int    $time_created   A UNIX timestamp of when the entity was created
- * @property-read  int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
- * @property-read  int    $last_action    A UNIX timestamp of when the entity was last acted upon
- * @property-read  string $enabled        Is this entity enabled ('yes' or 'no')
+ * @property-read  string $type              object, user, group, or site (read-only after save)
+ * @property-read  string $subtype           Further clarifies the nature of the entity
+ * @property-read  int    $guid              The unique identifier for this entity (read only)
+ * @property       int    $owner_guid        The GUID of the owner of this entity (usually the creator)
+ * @property       int    $container_guid    The GUID of the entity containing this entity
+ * @property       int    $access_id         Specifies the visibility level of this entity
+ * @property       int    $time_created      A UNIX timestamp of when the entity was created
+ * @property-read  int    $time_updated      A UNIX timestamp of when the entity was last updated (automatically updated on save)
+ * @property-read  int    $last_action       A UNIX timestamp of when the entity was last acted upon
+ * @property-read  int    $time_deleted      A UNIX timestamp of when the entity was deleted
+ * @property-read  string $deleted           Is this entity deleted ('yes' or 'no')
+ * @property-read  string $enabled           Is this entity enabled ('yes' or 'no')
  *
  * Metadata (the above are attributes)
  * @property       string $location       A location of the entity
@@ -59,6 +61,8 @@ abstract class ElggEntity extends \ElggData {
 		'time_updated',
 		'last_action',
 		'enabled',
+		'deleted',
+		'time_deleted',
 	];
 
 	/**
@@ -72,6 +76,7 @@ abstract class ElggEntity extends \ElggData {
 		'time_created',
 		'time_updated',
 		'last_action',
+		'time_deleted',
 	];
 
 	/**
@@ -161,6 +166,8 @@ abstract class ElggEntity extends \ElggData {
 		$this->attributes['time_updated'] = null;
 		$this->attributes['last_action'] = null;
 		$this->attributes['enabled'] = 'yes';
+		$this->attributes['deleted'] = 'no';
+		$this->attributes['time_deleted'] = 0;
 	}
 
 	/**
@@ -201,7 +208,7 @@ abstract class ElggEntity extends \ElggData {
 				$metadata_names[] = $metadata->name;
 			}
 			
-			// arrays are stored with multiple enties per name
+			// arrays are stored with multiple entries per name
 			$metadata_names = array_unique($metadata_names);
 
 			// move the metadata over
@@ -265,6 +272,8 @@ abstract class ElggEntity extends \ElggData {
 						$this->attributes[$name] = null;
 					}
 					break;
+				case 'deleted':
+					throw new ElggInvalidArgumentException(elgg_echo('ElggEntity:Error:SetDeleted', ['softDelete() / restore()']));
 				default:
 					$this->attributes[$name] = $value;
 					break;
@@ -1153,6 +1162,8 @@ abstract class ElggEntity extends \ElggData {
 		$access_id = (int) $this->attributes['access_id'];
 		$now = $this->getCurrentTime()->getTimestamp();
 		$time_created = isset($this->attributes['time_created']) ? (int) $this->attributes['time_created'] : $now;
+		$deleted = $this->attributes['deleted'];
+		$time_deleted = (int) $this->attributes['time_deleted'];
 
 		$container_guid = $this->attributes['container_guid'];
 		if ($container_guid == 0) {
@@ -1219,6 +1230,8 @@ abstract class ElggEntity extends \ElggData {
 			'time_created' => $time_created,
 			'time_updated' => $now,
 			'last_action' => $now,
+			'deleted' => $deleted,
+			'time_deleted' => $time_deleted
 		], $this->attributes);
 
 		if (!$guid) {
@@ -1231,6 +1244,8 @@ abstract class ElggEntity extends \ElggData {
 		$this->attributes['time_updated'] = (int) $now;
 		$this->attributes['last_action'] = (int) $now;
 		$this->attributes['container_guid'] = (int) $container_guid;
+		$this->attributes['deleted'] = $deleted;
+		$this->attributes['time_deleted'] = (int) $time_deleted;
 
 		// We are writing this new entity to cache to make sure subsequent calls
 		// to get_entity() load the entity from cache and not from the DB. This
@@ -1296,11 +1311,13 @@ abstract class ElggEntity extends \ElggData {
 		$container_guid = (int) $this->container_guid;
 		$time_created = (int) $this->time_created;
 		$time = $this->getCurrentTime()->getTimestamp();
+		$deleted = $this->deleted;
+		$time_deleted = (int) $this->time_deleted;
 
 		if ($access_id == ACCESS_DEFAULT) {
 			throw new ElggInvalidArgumentException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
 		}
-	
+		
 		if ($access_id == ACCESS_FRIENDS) {
 			throw new ElggInvalidArgumentException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
 		}
@@ -1313,6 +1330,8 @@ abstract class ElggEntity extends \ElggData {
 			'time_created' => $time_created,
 			'time_updated' => $time,
 			'guid' => $guid,
+			'deleted' => $deleted,
+			'time_deleted' => $time_deleted
 		]);
 		if ($ret === false) {
 			return false;
@@ -1364,6 +1383,153 @@ abstract class ElggEntity extends \ElggData {
 		return true;
 	}
 
+	/**
+	 * Softdelete this entity.
+	 *
+	 * Softdeleted entities are not returned by getter functions.
+	 * To restore an entity, use {@link \ElggEntity::restore()}.
+	 *
+	 * Recursively soft deleting an entity will soft delete all entities
+	 * owned or contained by the parent entity.
+	 *
+	 * @note Internal: Soft deleting an entity sets the 'deleted' column to 'yes'.
+	 *
+	 * @param int  $deleter_guid GUID of the deleting user
+	 * @param bool $recursive    Recursively soft delete all contained entities?
+	 *
+	 * @return bool
+	 * @see \ElggEntity::restore()
+	 */
+	public function softDelete(int $deleter_guid, bool $recursive = true): bool {
+		if (!$this->guid) {
+			return false;
+		}
+		
+		if (!_elgg_services()->events->trigger('soft_delete', $this->type, $this)) {
+			return false;
+		}
+		
+		if (!$this->canDelete()) {
+			return false;
+		}
+		
+		if ($this instanceof \ElggUser && !$this->isBanned()) {
+			// temporarily ban to prevent using the site during disable
+			$this->ban();
+			$unban_after = true;
+		} else {
+			$unban_after = false;
+		}
+		
+		$guid = (int) $this->guid;
+		
+		if ($recursive) {
+			elgg_call(ELGG_IGNORE_ACCESS | ELGG_HIDE_DISABLED_ENTITIES, function () use ($deleter_guid, $guid) {
+				$base_options = [
+					'wheres' => [
+						function(QueryBuilder $qb, $main_alias) use ($guid) {
+							return $qb->compare("{$main_alias}.guid", '!=', $guid, ELGG_VALUE_GUID);
+						},
+					],
+					'limit' => false,
+					'batch' => true,
+					'batch_inc_offset' => false,
+				];
+				
+				foreach (['owner_guid', 'container_guid'] as $db_column) {
+					$options = $base_options;
+					$options[$db_column] = $guid;
+					
+					$subentities = elgg_get_entities($options);
+					/* @var $subentity \ElggEntity */
+					foreach ($subentities as $subentity) {
+						$subentity->addRelationship($guid, 'deleted_with');
+						get_entity($deleter_guid)?->addRelationship($subentity->guid, 'deleted_by');
+						$subentity->softDelete($deleter_guid, true);
+					}
+				}
+			});
+		}
+		
+		get_entity($deleter_guid)?->addRelationship($this->guid, 'deleted_by');
+		
+		$this->disableAnnotations();
+		
+		$deleted = _elgg_services()->entityTable->softDelete($this);
+		
+		$this->updateTimeDeleted();
+		
+		if ($unban_after) {
+			$this->unban();
+		}
+		
+		if ($deleted) {
+			$this->invalidateCache();
+			
+			$this->attributes['deleted'] = 'yes';
+			
+			_elgg_services()->events->triggerAfter('soft_delete', $this->type, $this);
+		}
+		
+		return $deleted;
+	}
+
+	/**
+	 * Restore the entity
+	 *
+	 * @param bool $recursive Recursively restores all entities soft deleted with the entity?
+	 *
+	 * @return bool
+	 * @see access_show_hiden_entities()
+	 */
+	public function restore(bool $recursive = true): bool {
+		if (empty($this->guid)) {
+			return false;
+		}
+		
+		if (!_elgg_services()->events->trigger('restore', $this->type, $this)) {
+			return false;
+		}
+		
+		if (!$this->canEdit()) {
+			return false;
+		}
+		
+		$result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($recursive) {
+			$result = _elgg_services()->entityTable->restore($this);
+			
+			$this->enableAnnotations();
+			
+			if ($recursive) {
+				$deleted_with_it = elgg_get_entities([
+					'relationship' => 'deleted_with',
+					'relationship_guid' => $this->guid,
+					'inverse_relationship' => true,
+					'limit' => false,
+					'batch' => true,
+					'batch_inc_offset' => false,
+				]);
+				
+				foreach ($deleted_with_it as $e) {
+					$e->restore($recursive);
+					$e->removeRelationship($this->guid, 'deleted_with');
+					$e->removeAllRelationships('deleted_by', true);
+				}
+			}
+			
+			return $result;
+		});
+		
+		$this->removeAllRelationships('deleted_by', true);
+		
+		if ($result) {
+			$this->attributes['deleted'] = 'no';
+			_elgg_services()->events->triggerAfter('restore', $this->type, $this);
+		}
+		
+		return $result;
+	}
+	
 	/**
 	 * Disable this entity.
 	 *
@@ -1478,7 +1644,7 @@ abstract class ElggEntity extends \ElggData {
 
 		$result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($recursive) {
 			$result = _elgg_services()->entityTable->enable($this);
-				
+			
 			$this->deleteMetadata('disable_reason');
 
 			if ($recursive) {
@@ -1551,6 +1717,30 @@ abstract class ElggEntity extends \ElggData {
 	}
 
 	/**
+	 * This method overrides an entity id with id of the group/user.
+	 *
+	 * @param int $container_guid the GUID of the new container
+	 *
+	 * @return bool
+	 * @since 6.0
+	 */
+	public function overrideEntityContainerID(int $container_guid): bool {
+		$container = get_entity($container_guid);
+		if (!$container instanceof \ElggEntity) {
+			return false;
+		}
+
+		if (!$container->canWriteToContainer(0, $this->type, $this->subtype)) {
+			return false;
+		}
+
+		// @todo check if $container allows $entity->type. If not return false.
+		$this->container_guid = $container->guid;
+
+		return $this->save();
+	}
+
+	/**
 	 * Export an entity
 	 *
 	 * @param array $params Params to pass to the event
@@ -1580,6 +1770,8 @@ abstract class ElggEntity extends \ElggData {
 		$object->container_guid = $this->getContainerGUID();
 		$object->time_created = date('c', $this->getTimeCreated());
 		$object->time_updated = date('c', $this->getTimeUpdated());
+		$object->deleted = $this->deleted;
+		$object->time_deleted = $this->time_deleted;
 		$object->url = $this->getURL();
 		$object->read_access = (int) $this->access_id;
 		return $object;
@@ -1711,8 +1903,25 @@ abstract class ElggEntity extends \ElggData {
 		
 		$this->attributes['last_action'] = $posted;
 		$this->cache();
-	
+		
 		return $posted;
+	}
+
+	/**
+	 * Update the time_deleted column in the entities table.
+	 *
+	 * @param int $deleted Timestamp of deletion
+	 *
+	 * @return int
+	 * @internal
+	 */
+	public function updateTimeDeleted(int $deleted = null): int {
+		$deleted = _elgg_services()->entityTable->updateTimeDeleted($this, $deleted);
+		
+		$this->attributes['time_deleted'] = $deleted;
+		$this->cache();
+		
+		return $deleted;
 	}
 
 	/**

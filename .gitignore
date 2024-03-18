@@ -16,6 +16,7 @@
 /vendor
 
 # don't ignore bundled plugins
+!/mod/bin
 !/mod/activity
 !/mod/blog/
 !/mod/bookmarks/

@@ -78,6 +78,7 @@ class AnnotationWhereClause extends WhereClause {
 
 		$access = new AccessWhereClause();
 		$access->ignore_access = $this->ignore_access;
+		$access->show_deleted = false;
 		$access->use_enabled_clause = false;
 		$access->viewer_guid = $this->viewer_guid;
 		$access->guid_column = 'entity_guid';

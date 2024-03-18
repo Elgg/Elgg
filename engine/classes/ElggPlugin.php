@@ -617,7 +617,7 @@ class ElggPlugin extends ElggObject {
 			if (!array_key_exists($this->getID(), $dependencies)) {
 				continue;
 			}
-				
+			
 			if (elgg_extract('must_be_active', $dependencies[$this->getID()], true)) {
 				$dependents[$plugin->getID()] = $plugin;
 			}

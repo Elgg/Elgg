@@ -15,50 +15,13 @@ use Elgg\I18n\Translator;
  */
 class SessionManagerService {
 
-	/**
-	 * @var EntityCache
-	 */
-	protected $entity_cache;
+	protected bool $ignore_access = false;
 	
-	/**
-	 * @var EventsService
-	 */
-	protected $events;
-	
-	/**
-	 * @var bool
-	 */
-	protected $ignore_access = false;
-	
-	/**
-	 * @var \ElggUser|null
-	 */
-	protected $logged_in_user;
-	
-	/**
-	 * @var PersistentLoginService
-	 */
-	protected $persistent_login;
-	
-	/**
-	 * @var bool
-	 */
-	protected $show_disabled_entities = false;
-	
-	/**
-	 * @var \ElggSession
-	 */
-	protected $session;
-	
-	/**
-	 * @var SessionCache
-	 */
-	protected $session_cache;
-	
-	/**
-	 * @var Translator
-	 */
-	protected $translator;
+	protected ?\ElggUser $logged_in_user = null;
+
+	protected bool $show_disabled_entities = false;
+
+	protected bool $show_deleted_entities = false;
 	
 	/**
 	 * Constructor
@@ -71,19 +34,13 @@ class SessionManagerService {
 	 * @param EntityCache            $entity_cache     the entity cache
 	 */
 	public function __construct(
-		\ElggSession $session,
-		EventsService $events,
-		Translator $translator,
-		PersistentLoginService $persistent_login,
-		SessionCache $session_cache,
-		EntityCache $entity_cache
+		protected \ElggSession $session,
+		protected EventsService $events,
+		protected Translator $translator,
+		protected PersistentLoginService $persistent_login,
+		protected SessionCache $session_cache,
+		protected EntityCache $entity_cache
 		) {
-		$this->session = $session;
-		$this->events = $events;
-		$this->translator = $translator;
-		$this->persistent_login = $persistent_login;
-		$this->session_cache = $session_cache;
-		$this->entity_cache = $entity_cache;
 	}
 	
 	/**
@@ -117,7 +74,7 @@ class SessionManagerService {
 	public function getDisabledEntityVisibility(): bool {
 		return $this->show_disabled_entities;
 	}
-	
+
 	/**
 	 * Include disabled entities in queries
 	 *
@@ -129,6 +86,31 @@ class SessionManagerService {
 		$prev = $this->show_disabled_entities;
 		$this->show_disabled_entities = $show;
 		
+		return $prev;
+	}
+
+	/**
+	 * Are deleted entities shown?
+	 *
+	 * @return bool
+	 * @since 6.0
+	 */
+	public function getDeletedEntityVisibility(): bool {
+		return $this->show_deleted_entities;
+	}
+	
+	/**
+	 * Include deleted entities in queries
+	 *
+	 * @param bool $show Visibility status
+	 *
+	 * @return bool Previous setting
+	 * @since 6.0
+	 */
+	public function setDeletedEntityVisibility(bool $show = true): bool {
+		$prev = $this->show_deleted_entities;
+		$this->show_deleted_entities = $show;
+
 		return $prev;
 	}
 	

@@ -77,7 +77,6 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 		$query->values = ['foo1', 'foo2'];
 		$query->value_type = ELGG_VALUE_STRING;
 		$query->case_sensitive = false;
-
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, $qb->getTableAlias());
 
@@ -190,6 +189,7 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
+		$access->show_deleted = false;
 		$access->use_enabled_clause = false;
 		$parts[] = $access->prepare($this->qb, 'alias');
 
@@ -218,6 +218,7 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
+		$access->show_deleted = false;
 		$access->use_enabled_clause = false;
 		
 		$parts[] = $access->prepare($this->qb, 'alias');
@@ -259,6 +260,7 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
+		$access->show_deleted = false;
 		$access->use_enabled_clause = false;
 		
 		$parts[] = $access->prepare($this->qb, 'alias');
@@ -286,6 +288,7 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
+		$access->show_deleted = false;
 		$access->use_enabled_clause = false;
 		
 		$parts[] = $access->prepare($this->qb, $this->qb->getTableAlias());

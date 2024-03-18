@@ -22,6 +22,10 @@ class Entity {
 		if (!$entity instanceof \ElggPage) {
 			return;
 		}
+
+		if ($entity->deleted === 'yes') {
+			return;
+		}
 		
 		if (!$entity->canEdit()) {
 			return;

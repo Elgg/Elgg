@@ -55,7 +55,11 @@ class Entity {
 		if (!$entity instanceof \ElggGroup) {
 			return;
 		}
-		
+
+		if ($entity->deleted === 'yes') {
+			return;
+		}
+
 		if (!elgg_is_admin_logged_in()) {
 			return;
 		}

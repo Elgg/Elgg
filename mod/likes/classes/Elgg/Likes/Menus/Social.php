@@ -27,6 +27,10 @@ class Social {
 		if (!$entity->hasCapability('likable')) {
 			return;
 		}
+
+		if ($entity->deleted === 'yes') {
+			return;
+		}
 		
 		$return = $event->getValue();
 	

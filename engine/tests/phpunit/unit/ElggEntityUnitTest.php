@@ -25,7 +25,9 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(null, $this->obj->time_created);
 		$this->assertEquals(null, $this->obj->time_updated);
 		$this->assertEquals(null, $this->obj->last_action);
+		$this->assertEquals(null, $this->obj->time_deleted);
 		$this->assertEquals('yes', $this->obj->enabled);
+		$this->assertEquals('no', $this->obj->deleted);
 	}
 
 	/**
@@ -53,6 +55,7 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		return [
 			['subtype'],
 			['enabled'],
+			['deleted'],
 		];
 	}
 	
@@ -213,6 +216,8 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 			'time_updated',
 			'container_guid',
 			'owner_guid',
+			'deleted',
+			'time_deleted',
 			'url',
 			'read_access',
 		);
