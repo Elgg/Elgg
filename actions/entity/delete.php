@@ -26,7 +26,7 @@ $subtype = $entity->getSubtype();
 $container = $entity->getContainerEntity();
 
 $non_recursive_delete = (bool) get_input('recursive', true);
-if ($entity->soft_deleted === 'no' && $entity->hasCapability('soft_deletable')) {
+if ($entity->deleted === 'no' && $entity->hasCapability('soft_deletable')) {
 	if (!$entity->softDelete($deleter_guid)) {
 		return elgg_error_response(elgg_echo('entity:delete:fail', [$display_name]));
 	}

@@ -26,11 +26,11 @@ class RemoveDeletedEntitiesHandler {
 				'batch_inc_offset' => false,
 				'wheres' => [
 					function(QueryBuilder $qb, $main_alias) {
-						return $qb->compare("{$main_alias}.soft_deleted", '=', 'yes', ELGG_VALUE_STRING);
+						return $qb->compare("{$main_alias}.deleted", '=', 'yes', ELGG_VALUE_STRING);
 					},
 					function(QueryBuilder $qb, $main_alias) {
 						$grace_period = (int) elgg_get_config('bin_cleanup_grace_period');
-						return $qb->compare("{$main_alias}.time_soft_deleted", '<', \Elgg\Values::normalizeTimestamp("-{$grace_period} days"), ELGG_VALUE_TIMESTAMP);
+						return $qb->compare("{$main_alias}.time_deleted", '<', \Elgg\Values::normalizeTimestamp("-{$grace_period} days"), ELGG_VALUE_TIMESTAMP);
 					},
 				],
 			]);

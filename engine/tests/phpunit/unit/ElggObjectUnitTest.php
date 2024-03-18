@@ -158,8 +158,8 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		$prep->container_guid = $object->getContainerGUID();
 		$prep->time_created = date('c', $object->getTimeCreated());
 		$prep->time_updated = date('c', $object->getTimeUpdated());
-		$prep->soft_deleted = $object->soft_deleted;
-		$prep->time_soft_deleted = $object->time_soft_deleted;
+		$prep->deleted = $object->deleted;
+		$prep->time_deleted = $object->time_deleted;
 		$prep->url = $object->getURL();
 		$prep->read_access = (int) $object->access_id;
 

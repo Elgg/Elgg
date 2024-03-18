@@ -51,8 +51,8 @@ class EntityTable extends DbEntityTable {
 				'time_updated' => time(),
 				'last_action' => time(),
 				'enabled' => 'yes',
-				'soft_deleted' => 'no',
-				'time_soft_deleted' => 0,
+				'deleted' => 'no',
+				'time_deleted' => 0,
 			];
 		}
 
@@ -154,8 +154,8 @@ class EntityTable extends DbEntityTable {
 			'time_updated' => $time,
 			'last_action' => $time,
 			'enabled' => 'yes',
-			'soft_deleted' => 'no',
-			'time_soft_deleted' => 0,
+			'deleted' => 'no',
+			'time_deleted' => 0,
 		];
 
 		$map = array_merge($primary_attributes, $attributes);
@@ -386,8 +386,8 @@ class EntityTable extends DbEntityTable {
 			'time_created' => $insert->param($row->time_created, ELGG_VALUE_TIMESTAMP),
 			'time_updated' => $insert->param($row->time_updated, ELGG_VALUE_TIMESTAMP),
 			'last_action' => $insert->param($row->last_action, ELGG_VALUE_TIMESTAMP),
-			'soft_deleted' => $insert->param($row->soft_deleted, ELGG_VALUE_STRING),
-			'time_soft_deleted' => $insert->param($row->time_soft_deleted, ELGG_VALUE_TIMESTAMP),
+			'deleted' => $insert->param($row->deleted, ELGG_VALUE_STRING),
+			'time_deleted' => $insert->param($row->time_deleted, ELGG_VALUE_TIMESTAMP),
 		]);
 		
 		$this->query_specs[$row->guid][] = _elgg_services()->db->addQuerySpec([
@@ -411,8 +411,8 @@ class EntityTable extends DbEntityTable {
 			->set('access_id', $update->param($row->access_id, ELGG_VALUE_ID))
 			->set('time_created', $update->param($row->time_created, ELGG_VALUE_TIMESTAMP))
 			->set('time_updated', $update->param($row->time_updated, ELGG_VALUE_TIMESTAMP))
-			->set('soft_deleted', $update->param($row->soft_deleted, ELGG_VALUE_STRING))
-			->set('time_soft_deleted', $update->param($row->time_soft_deleted, ELGG_VALUE_TIMESTAMP))
+			->set('deleted', $update->param($row->deleted, ELGG_VALUE_STRING))
+			->set('time_deleted', $update->param($row->time_deleted, ELGG_VALUE_TIMESTAMP))
 			->where($update->compare('guid', '=', $row->guid, ELGG_VALUE_GUID));
 		
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
@@ -453,7 +453,7 @@ class EntityTable extends DbEntityTable {
 
 		// soft delete
 		$qb = Update::table(self::TABLE_NAME);
-		$qb->set('soft_deleted', $qb->param('yes', ELGG_VALUE_STRING))
+		$qb->set('deleted', $qb->param('yes', ELGG_VALUE_STRING))
 			->where($qb->compare('guid', '=', $row->guid, ELGG_VALUE_GUID));
 		
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
@@ -461,7 +461,7 @@ class EntityTable extends DbEntityTable {
 			'params' => $qb->getParameters(),
 			'results' => function () use ($row) {
 				if (isset($this->rows[$row->guid])) {
-					$row->soft_deleted = 'yes';
+					$row->deleted = 'yes';
 					$this->rows[$row->guid] = $row;
 					$this->addQuerySpecs($row);
 					
@@ -497,7 +497,7 @@ class EntityTable extends DbEntityTable {
 
 		// restore
 		$qb = Update::table(self::TABLE_NAME);
-		$qb->set('soft_deleted', $qb->param('no', ELGG_VALUE_STRING))
+		$qb->set('deleted', $qb->param('no', ELGG_VALUE_STRING))
 			->where($qb->compare('guid', '=', $row->guid, ELGG_VALUE_GUID));
 		
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
@@ -505,7 +505,7 @@ class EntityTable extends DbEntityTable {
 			'params' => $qb->getParameters(),
 			'results' => function () use ($row) {
 				if (isset($this->rows[$row->guid])) {
-					$row->soft_deleted = 'no';
+					$row->deleted = 'no';
 					$this->rows[$row->guid] = $row;
 					$this->addQuerySpecs($row);
 					

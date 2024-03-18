@@ -51,8 +51,8 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		$attributes['time_updated'] = null;
 		$attributes['last_action'] = null;
 		$attributes['enabled'] = 'yes';
-		$attributes['soft_deleted'] = 'no';
-		$attributes['time_soft_deleted'] = 0;
+		$attributes['deleted'] = 'no';
+		$attributes['time_deleted'] = 0;
 		ksort($attributes);
 
 		$entity_attributes = $this->entity->expose_attributes();
@@ -138,8 +138,8 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 			'title',
 			'description',
 			'tags',
-			'soft_deleted',
-			'time_soft_deleted',
+			'deleted',
+			'time_deleted',
 		];
 		sort($keys);
 		

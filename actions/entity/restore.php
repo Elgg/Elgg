@@ -23,7 +23,7 @@ $type = $entity->getType();
 $subtype = $entity->getSubtype();
 $container = $entity->getContainerEntity();
 
-if ($entity->soft_deleted === 'yes') {
+if ($entity->deleted === 'yes') {
 	if (!$entity->restore($recursive)) {
 		return elgg_error_response(elgg_echo('entity:restore:fail', [$display_name]));
 	}

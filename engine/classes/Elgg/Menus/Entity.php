@@ -35,7 +35,7 @@ class Entity {
 			return;
 		}
 
-		if ($entity->soft_deleted === 'yes') {
+		if ($entity->deleted === 'yes') {
 			return;
 		}
 		
@@ -84,7 +84,7 @@ class Entity {
 		/* @var $return MenuItems */
 		$return = $event->getValue();
 
-		if ($entity->soft_deleted === 'yes') {
+		if ($entity->deleted === 'yes') {
 			$container = get_entity($entity->container_guid);
 			if (!$container instanceof \ElggUser) {
 				$return[] = \ElggMenuItem::factory([
@@ -118,7 +118,7 @@ class Entity {
 				]);
 			}
 			
-			if ($container->soft_deleted !== 'yes') {
+			if ($container->deleted !== 'yes') {
 				$return[] = \ElggMenuItem::factory([
 					'name' => 'restore',
 					'icon' => 'settings',

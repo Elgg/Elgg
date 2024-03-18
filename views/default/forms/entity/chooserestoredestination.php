@@ -12,7 +12,7 @@ $entity_owner_guid = (int) get_input('entity_owner_guid');
 // If an admin is currently logged in, he will have the rights to all active groups.
 // If a mere user is currently logged in, he will only have the rights to groups he has joined.
 if (elgg_is_admin_logged_in()) {
-	$soft_deleted_groups = elgg_get_entities([
+	$deleted_groups = elgg_get_entities([
 		'type' => 'group',
 		'limit' => false,
 		'batch' => true,
@@ -22,7 +22,7 @@ if (elgg_is_admin_logged_in()) {
 		],
 	]);
 } else {
-	$soft_deleted_groups = elgg_get_entities([
+	$deleted_groups = elgg_get_entities([
 		'type' => 'group',
 		'limit' => false,
 		'batch' => true,
@@ -39,7 +39,7 @@ if (elgg_is_admin_logged_in()) {
 $destination_container_names = [
 	$entity_owner_guid => 'assign back to creator',
 ];
-foreach ($soft_deleted_groups as $group) {
+foreach ($deleted_groups as $group) {
 	$destination_container_names[] = [
 		$group->guid => $group->getDisplayName(),
 	];
