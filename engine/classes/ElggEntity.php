@@ -693,38 +693,6 @@ abstract class ElggEntity extends \ElggData {
 	}
 
 	/**
-	 * Disables annotations for this entity, optionally based on name.
-	 *
-	 * @param string $name An optional name of annotations to disable.
-	 *
-	 * @return bool
-	 * @since 1.8
-	 */
-	public function disableAnnotations(string $name = null): bool {
-		return elgg_disable_annotations([
-			'guid' => $this->guid,
-			'limit' => false,
-			'annotation_name' => $name,
-		]);
-	}
-
-	/**
-	 * Enables annotations for this entity, optionally based on name.
-	 *
-	 * @param string $name An optional name of annotations to enable.
-	 *
-	 * @return bool
-	 * @since 1.8
-	 */
-	public function enableAnnotations(string $name = null) {
-		return elgg_enable_annotations([
-			'guid' => $this->guid,
-			'limit' => false,
-			'annotation_name' => $name,
-		]);
-	}
-
-	/**
 	 * Helper function to return annotation calculation results
 	 *
 	 * @param string $name        The annotation name.
@@ -1472,8 +1440,6 @@ abstract class ElggEntity extends \ElggData {
 			});
 		}
 
-		$this->disableAnnotations();
-
 		$disabled = _elgg_services()->entityTable->disable($this);
 
 		if ($unban_after) {
@@ -1514,7 +1480,6 @@ abstract class ElggEntity extends \ElggData {
 			$result = _elgg_services()->entityTable->enable($this);
 				
 			$this->deleteMetadata('disable_reason');
-			$this->enableAnnotations();
 
 			if ($recursive) {
 				$disabled_with_it = elgg_get_entities([

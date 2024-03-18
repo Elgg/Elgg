@@ -431,12 +431,6 @@ Annotation events
 
 **delete, annotation**
     Called before annotation is deleted. Return false to prevent deletion.
-
-**disable, annotations**
-	Called when disabling annotations. Return false to prevent disabling.
-	
-**enable, annotation**
-	Called when enabling annotations. Return false to prevent enabling.
 	
 **update, annotation**
     Called after the annotation has been updated. Return false to *delete the annotation.*

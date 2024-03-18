@@ -168,9 +168,6 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testElggEntityDisableAndEnable() {
-		// add annotations and metadata to check if they're disabled.
-		$annotation_id = $this->entity->annotate('test_annotation_' . rand(), 'test_value_' . rand());
-		
 		$this->assertTrue($this->entity->disable());
 
 		// ensure disabled by comparing directly with database
@@ -180,30 +177,18 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$entity = elgg()->db->getDataRow($select_entity);
 		$this->assertEquals('no', $entity->enabled);
 
-		$select_annotation = Select::fromTable(AnnotationsTable::TABLE_NAME)->select('*');
-		$select_annotation->where($select_annotation->compare('id', '=', $annotation_id, ELGG_VALUE_ID));
-		
-		$annotation = elgg()->db->getDataRow($select_annotation);
-		$this->assertEquals('no', $annotation->enabled);
-
 		// re-enable for deletion to work
 		$this->assertTrue($this->entity->enable());
 
 		// check enabled
-		// check annotations and metadata enabled.
 		$entity = elgg()->db->getDataRow($select_entity);
 		$this->assertEquals('yes', $entity->enabled);
-
-		$annotation = elgg()->db->getDataRow($select_annotation);
-		$this->assertEquals('yes', $annotation->enabled);
 
 		$this->assertTrue($this->entity->delete());
 		$this->entity = null;
 	}
 
 	public function testElggEntityRecursiveDisableAndEnable() {
-		$CONFIG = _elgg_services()->config;
-
 		$obj1 = new \ElggObject();
 		$obj1->setSubtype($this->getRandomSubtype());
 		$obj1->container_guid = $this->entity->getGUID();

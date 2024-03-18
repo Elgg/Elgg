@@ -82,7 +82,6 @@ class AnnotationsTable extends DbAnnotations {
 			'value' => $annotation->value,
 			'value_type' => $annotation->value_type,
 			'time_created' => $this->getCurrentTime()->getTimestamp(),
-			'enabled' => $annotation->enabled,
 		];
 		
 		$this->rows[$id] = $row;

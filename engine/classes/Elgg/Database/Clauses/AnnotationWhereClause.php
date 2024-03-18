@@ -26,11 +26,6 @@ class AnnotationWhereClause extends WhereClause {
 	public $owner_guids;
 
 	/**
-	 * @var string
-	 */
-	public $enabled;
-
-	/**
 	 * @var int|int[]
 	 */
 	public $access_ids;
@@ -40,25 +35,16 @@ class AnnotationWhereClause extends WhereClause {
 	 */
 	public $names;
 	
-	/**
-	 * @var string
-	 */
-	public $comparison = '=';
+	public string $comparison = '=';
 
 	/**
 	 * @var string|string[]
 	 */
 	public $values;
 
-	/**
-	 * @var string
-	 */
-	public $value_type = ELGG_VALUE_STRING;
+	public string $value_type = ELGG_VALUE_STRING;
 
-	/**
-	 * @var bool
-	 */
-	public $case_sensitive = true;
+	public bool $case_sensitive = true;
 
 	/**
 	 * @var int|string|\DateTime
@@ -70,30 +56,13 @@ class AnnotationWhereClause extends WhereClause {
 	 */
 	public $created_before;
 
-	/**
-	 * @var string
-	 */
-	public $sort_by_direction;
+	public ?string $sort_by_direction = null;
 
-	/**
-	 * @var string
-	 */
-	public $sort_by_calculation;
+	public ?string $sort_by_calculation = null;
 
-	/**
-	 * @var bool
-	 */
-	public $ignore_access;
+	public ?bool $ignore_access = null;
 
-	/**
-	 * @var bool
-	 */
-	public $use_enabled_clause;
-
-	/**
-	 * @var int
-	 */
-	public $viewer_guid;
+	public ?int $viewer_guid = null;
 
 	/**
 	 * {@inheritdoc}
@@ -108,8 +77,8 @@ class AnnotationWhereClause extends WhereClause {
 		$wheres[] = parent::prepare($qb, $table_alias);
 
 		$access = new AccessWhereClause();
-		$access->use_enabled_clause = $this->use_enabled_clause;
 		$access->ignore_access = $this->ignore_access;
+		$access->use_enabled_clause = false;
 		$access->viewer_guid = $this->viewer_guid;
 		$access->guid_column = 'entity_guid';
 		$wheres[] = $access->prepare($qb, $table_alias);
@@ -119,7 +88,6 @@ class AnnotationWhereClause extends WhereClause {
 		$wheres[] = $qb->compare($alias('value'), $this->comparison, $this->values, $this->value_type, $this->case_sensitive);
 		$wheres[] = $qb->compare($alias('entity_guid'), '=', $this->entity_guids, ELGG_VALUE_GUID);
 		$wheres[] = $qb->compare($alias('owner_guid'), '=', $this->owner_guids, ELGG_VALUE_GUID);
-		$wheres[] = $qb->compare($alias('enabled'), '=', $this->enabled, ELGG_VALUE_STRING);
 		$wheres[] = $qb->compare($alias('access_id'), '=', $this->access_ids, ELGG_VALUE_ID);
 		$wheres[] = $qb->between($alias('time_created'), $this->created_after, $this->created_before, ELGG_VALUE_TIMESTAMP);
 
