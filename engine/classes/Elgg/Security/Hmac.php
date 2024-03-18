@@ -10,24 +10,11 @@ use Elgg\Exceptions\InvalidArgumentException;
 class Hmac {
 
 	/**
-	 * @var string
-	 */
-	private $key;
-
-	/**
 	 * @var callable
 	 */
-	private $comparator;
+	protected $comparator;
 
-	/**
-	 * @var string
-	 */
-	private $data;
-
-	/**
-	 * @var string
-	 */
-	private $algo;
+	protected string $data;
 
 	/**
 	 * Constructor
@@ -39,8 +26,7 @@ class Hmac {
 	 *
 	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
-	public function __construct($key, callable $comparator, $data, $algo = 'sha256') {
-		$this->key = $key;
+	public function __construct(protected string $key, callable $comparator, $data, protected string $algo = 'sha256') {
 		$this->comparator = $comparator;
 		if (!$data) {
 			throw new InvalidArgumentException('$data cannot be empty');
@@ -51,7 +37,6 @@ class Hmac {
 		}
 		
 		$this->data = $data;
-		$this->algo = $algo;
 	}
 
 	/**
@@ -59,7 +44,7 @@ class Hmac {
 	 *
 	 * @return string
 	 */
-	public function getToken() {
+	public function getToken(): string {
 		$bytes = hash_hmac($this->algo, $this->data, $this->key, true);
 		return Base64Url::encode($bytes);
 	}
@@ -68,9 +53,10 @@ class Hmac {
 	 * Does the MAC match the given token?
 	 *
 	 * @param string $token HMAC token in Base64URL encoding
+	 *
 	 * @return bool
 	 */
-	public function matchesToken($token) {
+	public function matchesToken($token): bool {
 		$expected_token = $this->getToken();
 		return call_user_func($this->comparator, $expected_token, $token);
 	}

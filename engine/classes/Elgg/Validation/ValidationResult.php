@@ -7,25 +7,9 @@ namespace Elgg\Validation;
  */
 class ValidationResult {
 
-	/**
-	 * @var string
-	 */
-	protected $name;
+	protected string $message = '';
 
-	/**
-	 * @var mixed
-	 */
-	protected $value;
-
-	/**
-	 * @var string
-	 */
-	protected $message;
-
-	/**
-	 * @var string
-	 */
-	protected $error;
+	protected string $error = '';
 
 	/**
 	 * Constructor
@@ -33,9 +17,7 @@ class ValidationResult {
 	 * @param string $name  Parameter name
 	 * @param mixed  $value Parameter value
 	 */
-	public function __construct($name, $value) {
-		$this->name = $name;
-		$this->value = $value;
+	public function __construct(protected string $name, protected $value) {
 	}
 
 	/**
@@ -45,7 +27,7 @@ class ValidationResult {
 	 *
 	 * @return void
 	 */
-	public function pass($message = '') {
+	public function pass(string $message = ''): void {
 		$this->message = $message;
 	}
 
@@ -56,7 +38,7 @@ class ValidationResult {
 	 *
 	 * @return void
 	 */
-	public function fail($error = '') {
+	public function fail(string $error = ''): void {
 		$this->error = $error;
 	}
 
@@ -65,8 +47,8 @@ class ValidationResult {
 	 *
 	 * @return bool
 	 */
-	public function isValid() {
-		return !isset($this->error);
+	public function isValid(): bool {
+		return $this->error === '';
 	}
 
 	/**
@@ -74,7 +56,7 @@ class ValidationResult {
 	 *
 	 * @return string
 	 */
-	public function getName() {
+	public function getName(): string {
 		return $this->name;
 	}
 
@@ -90,18 +72,18 @@ class ValidationResult {
 	/**
 	 * Get error message
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getError() {
+	public function getError(): string {
 		return $this->error;
 	}
 
 	/**
 	 * Get success message
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getMessage() {
+	public function getMessage(): string {
 		return $this->message;
 	}
 }

@@ -11,31 +11,6 @@ use Elgg\Di\PublicContainer;
 class Event {
 	
 	/**
-	 * @var PublicContainer
-	 */
-	protected $dic;
-	
-	/**
-	 * @var string
-	 */
-	protected $name;
-	
-	/**
-	 * @var string
-	 */
-	protected $type;
-	
-	/**
-	 * @var mixed
-	 */
-	protected $value;
-	
-	/**
-	 * @var mixed
-	 */
-	protected $params;
-	
-	/**
 	 * Constructor
 	 *
 	 * @param PublicContainer $dic    DI container
@@ -44,12 +19,13 @@ class Event {
 	 * @param mixed           $value  Event value
 	 * @param mixed           $params Event params
 	 */
-	public function __construct(PublicContainer $dic, string $name, string $type, $value = null, $params = []) {
-		$this->dic = $dic;
-		$this->name = $name;
-		$this->type = $type;
-		$this->value = $value;
-		$this->params = $params;
+	public function __construct(
+		protected PublicContainer $dic,
+		protected string $name,
+		protected string $type,
+		protected $value = null,
+		protected $params = []
+	) {
 	}
 	
 	/**

@@ -15,17 +15,11 @@ abstract class Batch {
 	const UNKNOWN_COUNT = -1;
 
 	/**
-	 * @var \ElggUpgrade
-	 */
-	protected $upgrade;
-
-	/**
 	 * Constructs a upgrade batch
 	 *
 	 * @param \ElggUpgrade $upgrade the upgrade related to this batch
 	 */
-	public function __construct(\ElggUpgrade $upgrade = null) {
-		$this->upgrade = $upgrade;
+	public function __construct(protected ?\ElggUpgrade $upgrade = null) {
 	}
 	
 	/**

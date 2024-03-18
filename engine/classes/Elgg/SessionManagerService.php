@@ -14,51 +14,12 @@ use Elgg\I18n\Translator;
  * @since 5.0
  */
 class SessionManagerService {
-
-	/**
-	 * @var EntityCache
-	 */
-	protected $entity_cache;
 	
-	/**
-	 * @var EventsService
-	 */
-	protected $events;
+	protected bool $ignore_access = false;
 	
-	/**
-	 * @var bool
-	 */
-	protected $ignore_access = false;
+	protected ?\ElggUser $logged_in_user = null;
 	
-	/**
-	 * @var \ElggUser|null
-	 */
-	protected $logged_in_user;
-	
-	/**
-	 * @var PersistentLoginService
-	 */
-	protected $persistent_login;
-	
-	/**
-	 * @var bool
-	 */
-	protected $show_disabled_entities = false;
-	
-	/**
-	 * @var \ElggSession
-	 */
-	protected $session;
-	
-	/**
-	 * @var SessionCache
-	 */
-	protected $session_cache;
-	
-	/**
-	 * @var Translator
-	 */
-	protected $translator;
+	protected bool $show_disabled_entities = false;
 	
 	/**
 	 * Constructor
@@ -71,19 +32,13 @@ class SessionManagerService {
 	 * @param EntityCache            $entity_cache     the entity cache
 	 */
 	public function __construct(
-		\ElggSession $session,
-		EventsService $events,
-		Translator $translator,
-		PersistentLoginService $persistent_login,
-		SessionCache $session_cache,
-		EntityCache $entity_cache
-		) {
-		$this->session = $session;
-		$this->events = $events;
-		$this->translator = $translator;
-		$this->persistent_login = $persistent_login;
-		$this->session_cache = $session_cache;
-		$this->entity_cache = $entity_cache;
+		protected \ElggSession $session,
+		protected EventsService $events,
+		protected Translator $translator,
+		protected PersistentLoginService $persistent_login,
+		protected SessionCache $session_cache,
+		protected EntityCache $entity_cache
+	) {
 	}
 	
 	/**

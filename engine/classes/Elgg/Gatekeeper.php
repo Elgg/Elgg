@@ -24,36 +24,6 @@ use Elgg\I18n\Translator;
 class Gatekeeper {
 
 	/**
-	 * @var SessionManagerService
-	 */
-	protected $session_manager;
-
-	/**
-	 * @var \Elgg\Http\Request
-	 */
-	protected $request;
-
-	/**
-	 * @var RedirectService
-	 */
-	protected $redirects;
-
-	/**
-	 * @var EntityTable
-	 */
-	protected $entities;
-
-	/**
-	 * @var AccessCollections
-	 */
-	protected $access;
-
-	/**
-	 * @var Translator
-	 */
-	protected $translator;
-
-	/**
 	 * Constructor
 	 *
 	 * @param SessionManagerService $session_manager Session manager
@@ -64,27 +34,22 @@ class Gatekeeper {
 	 * @param Translator            $translator      Translator
 	 */
 	public function __construct(
-		SessionManagerService $session_manager,
-		HttpRequest $request,
-		RedirectService $redirects,
-		EntityTable $entities,
-		AccessCollections $access,
-		Translator $translator
+		protected SessionManagerService $session_manager,
+		protected HttpRequest $request,
+		protected RedirectService $redirects,
+		protected EntityTable $entities,
+		protected AccessCollections $access,
+		protected Translator $translator
 	) {
-		$this->session_manager = $session_manager;
-		$this->request = $request;
-		$this->redirects = $redirects;
-		$this->entities = $entities;
-		$this->access = $access;
-		$this->translator = $translator;
 	}
 
 	/**
 	 * Require a user to be authenticated to with code execution
+	 *
 	 * @return void
 	 * @throws LoggedInGatekeeperException
 	 */
-	public function assertAuthenticatedUser() {
+	public function assertAuthenticatedUser(): void {
 		if ($this->session_manager->isLoggedIn()) {
 			return;
 		}
@@ -96,10 +61,11 @@ class Gatekeeper {
 
 	/**
 	 * Require a user to be not authenticated (logged out) to with code execution
+	 *
 	 * @return void
 	 * @throws LoggedOutGatekeeperException
 	 */
-	public function assertUnauthenticatedUser() {
+	public function assertUnauthenticatedUser(): void {
 		if (!$this->session_manager->isLoggedIn()) {
 			return;
 		}
@@ -112,11 +78,12 @@ class Gatekeeper {
 
 	/**
 	 * Require an admin user to be authenticated to proceed with code execution
+	 *
 	 * @return void
 	 * @throws GatekeeperException
 	 * @throws AdminGatekeeperException
 	 */
-	public function assertAuthenticatedAdmin() {
+	public function assertAuthenticatedAdmin(): void {
 		$this->assertAuthenticatedUser();
 
 		$user = $this->session_manager->getLoggedInUser();
@@ -307,7 +274,7 @@ class Gatekeeper {
 	 * @return void
 	 * @throws AjaxGatekeeperException
 	 */
-	public function assertXmlHttpRequest() {
+	public function assertXmlHttpRequest(): void {
 		if ($this->request->isXmlHttpRequest()) {
 			return;
 		}

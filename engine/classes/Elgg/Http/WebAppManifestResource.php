@@ -13,17 +13,13 @@ namespace Elgg\Http;
  * @internal
  */
 class WebAppManifestResource {
-	
-	/** @var \ElggSite */
-	private $site;
-	
+
 	/**
 	 * Constructor
 	 *
 	 * @param \ElggSite $site The site serving this manifest.
 	 */
-	public function __construct(\ElggSite $site) {
-		$this->site = $site;
+	public function __construct(protected \ElggSite $site) {
 	}
 	
 	/**
@@ -31,7 +27,7 @@ class WebAppManifestResource {
 	 *
 	 * @return array
 	 */
-	public function get() {
+	public function get(): array {
 		return [
 			'display' => 'standalone',
 			'name' => $this->site->getDisplayName(),

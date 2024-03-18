@@ -20,36 +20,6 @@ use Elgg\Validation\ValidationResults;
 class Accounts {
 
 	/**
-	 * @var Config
-	 */
-	protected $config;
-
-	/**
-	 * @var Translator
-	 */
-	protected $translator;
-
-	/**
-	 * @var PasswordService
-	 */
-	protected $passwords;
-
-	/**
-	 * @var EventsService
-	 */
-	protected $events;
-	
-	/**
-	 * @var EmailService
-	 */
-	protected $email;
-	
-	/**
-	 * @var PasswordGeneratorService
-	 */
-	protected $password_generator;
-
-	/**
 	 * Constructor
 	 *
 	 * @param Config                   $config             Config
@@ -60,19 +30,13 @@ class Accounts {
 	 * @param PasswordGeneratorService $password_generator Password generator service
 	 */
 	public function __construct(
-		Config $config,
-		Translator $translator,
-		PasswordService $passwords,
-		EventsService $events,
-		EmailService $email,
-		PasswordGeneratorService $password_generator
+		protected Config $config,
+		protected Translator $translator,
+		protected PasswordService $passwords,
+		protected EventsService $events,
+		protected EmailService $email,
+		protected PasswordGeneratorService $password_generator
 	) {
-		$this->config = $config;
-		$this->translator = $translator;
-		$this->passwords = $passwords;
-		$this->events = $events;
-		$this->email = $email;
-		$this->password_generator = $password_generator;
 	}
 
 	/**

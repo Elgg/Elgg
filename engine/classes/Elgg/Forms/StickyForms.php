@@ -9,19 +9,13 @@ namespace Elgg\Forms;
  * @internal
  */
 class StickyForms {
-	
-	/**
-	 * @var \ElggSession
-	 */
-	protected $session;
-	
+
 	/**
 	 * Constructor
 	 *
 	 * @param \ElggSession $session Session for storage
 	 */
-	public function __construct(\ElggSession $session) {
-		$this->session = $session;
+	public function __construct(protected \ElggSession $session) {
 	}
 	
 	/**

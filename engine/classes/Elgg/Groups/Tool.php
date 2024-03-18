@@ -14,15 +14,7 @@ use Elgg\Collections\CollectionItemInterface;
  */
 class Tool implements CollectionItemInterface {
 
-	/**
-	 * @var string
-	 */
-	public $name;
-
-	/**
-	 * @var array
-	 */
-	protected $options;
+	protected array $options;
 
 	/**
 	 * Constructor
@@ -30,9 +22,7 @@ class Tool implements CollectionItemInterface {
 	 * @param string $name    Tool name
 	 * @param array  $options Tool options
 	 */
-	public function __construct($name, array $options = []) {
-		$this->name = $name;
-
+	public function __construct(public string $name, array $options = []) {
 		$defaults = [
 			'label' => null,
 			'default_on' => true,
@@ -83,7 +73,7 @@ class Tool implements CollectionItemInterface {
 	 *
 	 * @return string
 	 */
-	public function getLabel() {
+	public function getLabel(): string {
 		$label = elgg_extract('label', $this->options);
 		if (isset($label)) {
 			return $label;
@@ -108,9 +98,10 @@ class Tool implements CollectionItemInterface {
 
 	/**
 	 * Is the tool enabled by default?
+	 *
 	 * @return bool
 	 */
-	public function isEnabledByDefault() {
+	public function isEnabledByDefault(): bool {
 		$default_on = elgg_extract('default_on', $this->options, true);
 
 		if ($default_on === true || $default_on === 'yes') {
@@ -122,9 +113,10 @@ class Tool implements CollectionItemInterface {
 
 	/**
 	 * Get metadata name for DB storage
+	 *
 	 * @return string
 	 */
-	public function mapMetadataName() {
+	public function mapMetadataName(): string {
 		return "{$this->name}_enable";
 	}
 
@@ -136,7 +128,7 @@ class Tool implements CollectionItemInterface {
 	 *
 	 * @return string
 	 */
-	public function mapMetadataValue($value = null) {
+	public function mapMetadataValue($value = null): string {
 		if (!isset($value)) {
 			$value = $this->default_on;
 		}
